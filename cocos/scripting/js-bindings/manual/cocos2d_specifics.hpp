@@ -27,6 +27,8 @@
 #include "ScriptingCore.h"
 #include "platform/CCSAXParser.h"
 
+static int retainCount = 0;
+
 class JSScheduleWrapper;
 
 // JSScheduleWrapper* --> Array* since one js function may correspond to many targets.
@@ -257,6 +259,9 @@ private:
     bool _isStoringCharacters;
     std::string _currentValue;
 };
+
+extern JSClass  *jsb_FinalizeHook_class;
+extern JSObject *jsb_FinalizeHook_prototype;
 
 bool js_cocos2dx_Node_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_onExit(JSContext *cx, uint32_t argc, jsval *vp);

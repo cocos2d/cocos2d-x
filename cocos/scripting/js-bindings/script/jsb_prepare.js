@@ -236,17 +236,21 @@ var ClassManager = {
 //
 cc.Class = function(){};
 cc.Class.extend = function (prop) {
-    var _super = this.prototype;
+    var _super = this.prototype,
+        _isNative = _super.__nativeObj,
+        prototype, Class, classId,
+        className = prop._className || "",
+        name, desc;
 
     // Instantiate a base class (but only create the instance,
     // don't run the init constructor)
     initializing = true;
-    var prototype = Object.create(_super);
+    prototype = _isNative ? jsb.create_prototype(className, _super) : Object.create(_super);
     initializing = false;
     fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
 
     // Copy the properties over onto the new prototype
-    for (var name in prop) {
+    for (name in prop) {
         // Check if we're overwriting an existing function
         prototype[name] = typeof prop[name] == "function" &&
             typeof _super[name] == "function" && fnTest.test(prop[name]) ?
@@ -269,35 +273,28 @@ cc.Class.extend = function (prop) {
             prop[name];
     }
 
-    // The dummy class constructor
-    function Class() {
+    Class = function () {
         if (!initializing) {
+            if (this.__is_ref) {
+                this.__hook = new jsb.FinalizeHook(this);
+            }
             this.__instanceId = ClassManager.getNewInstanceId();
-            if (!this.ctor) {
-                if (this.__nativeObj)
-                    cc.log("No ctor function found! Please check whether `classes_need_extend` section in `ini` file like which in `tools/tojs/cocos2dx.ini`");
-            }
-            else {
-                this.ctor.apply(this, arguments);
-            }
+            this.ctor && this.ctor.apply(this, arguments);
         }
     }
+    // Populate our constructed prototype object
+    Class.prototype = prototype;
+    // Enforce the constructor to be what we expect
+    Class.prototype.constructor = Class;
+    // And make this class extendable
+    Class.extend = cc.Class.extend;
 
-    var classId = ClassManager.getNewID();
+    classId = ClassManager.getNewID();
     ClassManager[classId] = _super;
-    var desc = { writable: true, enumerable: false, configurable: true };
+    desc = { writable: true, enumerable: false, configurable: true };
     Class.id = classId;
     desc.value = classId;
     Object.defineProperty(prototype, '__pid', desc);
-
-    // Populate our constructed prototype object
-    Class.prototype = prototype;
-
-    // Enforce the constructor to be what we expect
-    Class.prototype.constructor = Class;
-
-    // And make this class extendable
-    Class.extend = arguments.callee;
 
     return Class;
 };

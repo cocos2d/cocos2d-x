@@ -5837,7 +5837,6 @@ bool js_cocos2dx_PolygonInfo_constructor(JSContext *cx, uint32_t argc, jsval *vp
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
     JS::RootedObject proto(cx, typeClass->proto.get());
     JS::RootedObject parent(cx, typeClass->parentProto.get());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
@@ -6028,7 +6027,6 @@ bool js_cocos2dx_AutoPolygon_constructor(JSContext *cx, uint32_t argc, jsval *vp
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
     JS::RootedObject proto(cx, typeClass->proto.get());
     JS::RootedObject parent(cx, typeClass->parentProto.get());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
@@ -6129,6 +6127,152 @@ bool js_cocos2dx_ComponentJS_getScriptObject(JSContext *cx, uint32_t argc, jsval
     return false;
 }
 
+bool jsb_check_finalize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.get(0).toObjectOrNull());
+    const JSClass *the_class = JS_GetClass(obj);
+
+    if (the_class->finalize) {
+        args.rval().set(JSVAL_TRUE);
+    }
+    else {
+        args.rval().set(JSVAL_FALSE);
+    }
+    return true;
+}
+
+static bool js_extended_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    // Collect class, prototype
+    JS::RootedObject callee(cx, &args.callee());
+    JS::RootedValue protoValue(cx);
+    JS_GetProperty(cx, callee, "prototype", &protoValue);
+    JS::RootedObject proto(cx, protoValue.toObjectOrNull());
+    const JSClass *jsclass = JS_GetClass(proto);
+    // Create new object
+    JS::RootedObject obj(cx, JS_NewObject(cx, jsclass, proto, JS::NullPtr()));
+    
+    JS::RootedObject global(cx, ScriptingCore::getInstance()->getGlobalObject());
+    // this.__instanceId = ClassManager.getNewInstanceId();
+    JS::RootedObject classManager(cx);
+    get_or_create_js_obj(cx, global, "ClassManager", &classManager);
+    JS::RootedValue classManagerValue(cx, OBJECT_TO_JSVAL(classManager));
+    if (!classManagerValue.isNullOrUndefined()) {
+        JS::RootedValue retVal(cx);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(classManagerValue, "getNewInstanceId", 0, vp, &retVal);
+        JS_SetProperty(cx, obj, "__instanceId", retVal);
+    }
+    // if (this.ctor) this.ctor.apply(this, arguments);
+    bool ok = false;
+    if (JS_HasProperty(cx, obj, "ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "ctor", args);
+    
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    return true;
+}
+
+// jsb.create_prototype("UserClassName", superProto);
+bool jsb_create_prototype(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    std::string className;
+    
+    if (!jsval_to_std_string(cx, args.get(0), &className))
+    {
+        return false;
+    }
+    JS::RootedObject super_prototype(cx, args.get(1).toObjectOrNull());
+    const JSClass *super_class = JS_GetClass(super_prototype);
+    
+    JS::RootedObject global(cx, ScriptingCore::getInstance()->getGlobalObject());
+    JSClass *js_class;
+    
+    js_class = (JSClass *)calloc(1, sizeof(JSClass));
+    js_class->name = className.c_str();
+    js_class->addProperty = JS_PropertyStub;
+    js_class->delProperty = JS_DeletePropertyStub;
+    js_class->getProperty = JS_PropertyStub;
+    js_class->setProperty = JS_StrictPropertyStub;
+    js_class->enumerate = JS_EnumerateStub;
+    js_class->resolve = JS_ResolveStub;
+    js_class->convert = JS_ConvertStub;
+    // Important!
+    js_class->finalize = super_class->finalize;
+    js_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+    
+    JSObject *jsb_prototype = JS_InitClass(cx, global,
+                                           super_prototype,
+                                           js_class,
+                                           js_extended_constructor, 0, // constructor
+                                           NULL, NULL, NULL, NULL);
+    
+    jsval jsret = JSVAL_NULL;
+    if (jsb_prototype) {
+        jsret = OBJECT_TO_JSVAL(jsb_prototype);
+    }
+    args.rval().set(jsret);
+    
+    return true;
+}
+
+JSClass  *jsb_FinalizeHook_class;
+JSObject *jsb_FinalizeHook_prototype;
+
+static bool jsb_FinalizeHook_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    // Create new object
+    JS::RootedObject proto(cx, jsb_FinalizeHook_prototype);
+    JS::RootedObject obj(cx, JS_NewObject(cx, jsb_FinalizeHook_class, proto, JS::NullPtr()));
+    // this.owner = arguments[0];
+    JS_SetProperty(cx, obj, "owner", JS::RootedValue(cx, args.get(0)));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    return true;
+}
+void jsb_FinalizeHook_finalize(JSFreeOp *fop, JSObject *obj) {
+    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+    JS::RootedValue ownerValue(cx);
+    JS_GetProperty(cx, JS::RootedObject(cx, obj), "owner", &ownerValue);
+    JS::RootedObject owner(cx, ownerValue.toObjectOrNull());
+    CCLOGINFO("jsbindings: finalizing JS object via Finalizehook %p", owner.get());
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(owner);
+    if (jsproxy) {
+        cocos2d::Ref *refObj = static_cast<cocos2d::Ref *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+        
+        jsb_remove_proxy(nproxy, jsproxy);
+        if (refObj) {
+            refObj->release();
+            retainCount--;
+            CCLOG("------RELEASED------ %d ref count: %d", retainCount, refObj->getReferenceCount());
+        }
+    }
+}
+
+void jsb_register_FinalizeHook(JSContext *cx, JS::HandleObject global) {
+    jsb_FinalizeHook_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_FinalizeHook_class->name = "FinalizeHook";
+    jsb_FinalizeHook_class->addProperty = JS_PropertyStub;
+    jsb_FinalizeHook_class->delProperty = JS_DeletePropertyStub;
+    jsb_FinalizeHook_class->getProperty = JS_PropertyStub;
+    jsb_FinalizeHook_class->setProperty = JS_StrictPropertyStub;
+    jsb_FinalizeHook_class->enumerate = JS_EnumerateStub;
+    jsb_FinalizeHook_class->resolve = JS_ResolveStub;
+    jsb_FinalizeHook_class->convert = JS_ConvertStub;
+    jsb_FinalizeHook_class->finalize = jsb_FinalizeHook_finalize;
+    jsb_FinalizeHook_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+    
+    jsb_FinalizeHook_prototype = JS_InitClass(cx, global,
+                                                JS::NullPtr(), // parent proto
+                                                jsb_FinalizeHook_class,
+                                                jsb_FinalizeHook_constructor, 0, // constructor
+                                                NULL, NULL, NULL, NULL);
+}
+
 void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
 {
     JS::RootedObject ccObj(cx);
@@ -6137,6 +6281,11 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     JS::RootedObject tmpObj(cx);
     get_or_create_js_obj(cx, global, "cc", &ccObj);
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);
+    
+    // Memory management related
+    jsb_register_FinalizeHook(cx, jsbObj);
+    JS_DefineFunction(cx, jsbObj, "create_prototype", jsb_create_prototype, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsbObj, "check_finalize", jsb_check_finalize, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
     js_register_cocos2dx_PolygonInfo(cx, jsbObj);
     js_register_cocos2dx_AutoPolygon(cx, jsbObj);
