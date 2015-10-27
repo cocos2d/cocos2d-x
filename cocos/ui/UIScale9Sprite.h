@@ -28,6 +28,7 @@
 
 #include "2d/CCSprite.h"
 #include "ui/GUIExport.h"
+#include "renderer/CCTrianglesCommand.h"
 
 /**
  * @addtogroup ui
@@ -514,7 +515,13 @@ namespace ui {
          */
         virtual const Size& getContentSize() const override;
     protected:
-        void caculateSlicedVertices();
+        void caculatePolygonInfo();
+        std::vector<Vec2> caculateUV(Texture2D *tex, const Rect& capInsets,
+                                     const Size& spriteRectSize);
+        std::vector<Vec2> caculateVertices(const Rect& capInsets, const Size& spriteRectSize);
+        TrianglesCommand::Triangles caculateTriangles(const std::vector<Vec2>& uv,
+                                                      const std::vector<Vec2>& vertices);
+        
         void updateCapInset();
 
         Type _type;

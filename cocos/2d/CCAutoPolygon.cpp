@@ -87,10 +87,15 @@ void PolygonInfo::setQuad(V3F_C4B_T2F_Quad *quad)
     triangles.verts = (V3F_C4B_T2F*)quad;
 }
 
-void PolygonInfo::reset()
+void PolygonInfo::setTriangles(TrianglesCommand::Triangles other)
 {
     this->releaseVertsAndIndices();
     isVertsOwner = false;
+    
+    this->triangles.vertCount = other.vertCount;
+    this->triangles.indexCount = other.indexCount;
+    this->triangles.verts = other.verts;
+    this->triangles.indices = other.indices;
 }
 
 void PolygonInfo::releaseVertsAndIndices()
