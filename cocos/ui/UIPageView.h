@@ -264,6 +264,12 @@ public:
      *@return True if using custom scroll threshold, false otherwise.
      */
     bool isUsingCustomScrollThreshold()const;
+  
+    /**
+     *@brief Set size of the page - allows to have for ex. 2 pages visible (when page size is set to half of a pageView size). 
+     * Applies to width when HORIZONTAL and height when VERTICAL.
+     */
+    void setPageSize(float pageSize);
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
@@ -316,7 +322,8 @@ protected:
    
     Widget* _leftBoundaryChild;
     Widget* _rightBoundaryChild;
-    
+  
+    float _pageSize;
     float _leftBoundary;
     float _rightBoundary;
     float _customScrollThreshold;
