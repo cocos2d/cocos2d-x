@@ -2309,26 +2309,30 @@ bool js_forceGC(JSContext *cx, uint32_t argc, jsval *vp) {
 
 bool js_cocos2dx_retain(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Ref* cobj = (cocos2d::Ref *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_retain : Invalid Native Object");
+    // In new JSB memory mode, no need to invoke retain and release manually
     
-    cobj->retain();
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+//    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+//    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+//    cocos2d::Ref* cobj = (cocos2d::Ref *)(proxy ? proxy->ptr : NULL);
+//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_retain : Invalid Native Object");
+//    
+//    cobj->retain();
     args.rval().setUndefined();
     return true;
 }
 
 bool js_cocos2dx_release(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Ref* cobj = (cocos2d::Ref *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_release : Invalid Native Object");
+    // In new JSB memory mode, no need to invoke retain and release manually
     
-    cobj->release();
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+//    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+//    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+//    cocos2d::Ref* cobj = (cocos2d::Ref *)(proxy ? proxy->ptr : NULL);
+//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_release : Invalid Native Object");
+//    
+//    cobj->release();
     args.rval().setUndefined();
     return true;
 }
@@ -4182,70 +4186,6 @@ bool js_cocos2dx_CCTMXLayer_getTileFlagsAt(JSContext *cx, uint32_t argc, jsval *
         return true;
     }
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-
-//#pragma mark - DrawNode
-
-// Arguments: Array of points, fill color (Color4F), width(float), border color (Color4F)
-// Ret value: void
-bool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *vp)
-{
-
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    DrawNode* cobj = (DrawNode*)(proxy ? proxy->ptr : NULL);
-    TEST_NATIVE_OBJECT(cx, cobj)
-
-    if ( argc == 4) {
-        bool ok = true;
-        JS::RootedObject argArray(cx);
-        Color4F argFillColor = Color4F(0.0f, 0.0f, 0.0f, 0.0f);
-        double argWidth = 0.0;
-        Color4F argBorderColor = Color4F(0.0f, 0.0f, 0.0f, 0.0f);
-
-        // Points
-        ok &= JS_ValueToObject(cx, args.get(0), &argArray);
-        JSB_PRECONDITION2( (argArray && JS_IsArrayObject(cx, argArray)) , cx, false, "Vertex should be anArray object");
-
-        // Color 4F
-        ok &= jsval_to_cccolor4f(cx, args.get(1), &argFillColor);
-
-        // Width
-        ok &= JS::ToNumber( cx, args.get(2), &argWidth );
-
-        // Color Border (4F)
-        ok &= jsval_to_cccolor4f(cx, args.get(3), &argBorderColor);
-
-        JSB_PRECONDITION2(ok, cx, false, "Error parsing arguments");
-
-        {
-            uint32_t l;
-            if( ! JS_GetArrayLength(cx, argArray, &l) )
-                return false;
-
-            Point* verts = new Point[ l ];
-            Point p;
-
-            for( uint32_t i=0; i<l; i++ ) {
-                JS::RootedValue pointvp(cx);
-                ok &= JS_GetElement(cx, argArray, i, &pointvp);
-                JSB_PRECONDITION2(ok, cx, false, "JS_GetElement fails.");
-                
-                ok &= jsval_to_ccpoint(cx, pointvp, &p);
-                JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-                verts[i] = p;
-            }
-
-            cobj->drawPolygon(verts, l, argFillColor, argWidth, argBorderColor);
-            CC_SAFE_DELETE_ARRAY(verts);
-        }
-        args.rval().setUndefined();
-        return true;    
-    }
-
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 4);
     return false;
 }
 
@@ -6377,9 +6317,6 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     tmpObj.set(jsb_cocos2d_TMXLayer_prototype);
     JS_DefineFunction(cx, tmpObj, "getTileFlagsAt", js_cocos2dx_CCTMXLayer_getTileFlagsAt, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    tmpObj.set(jsb_cocos2d_DrawNode_prototype);
-    JS_DefineFunction(cx, tmpObj, "drawPoly", js_cocos2dx_CCDrawNode_drawPolygon, 4, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-
     tmpObj.set(jsb_cocos2d_Texture2D_prototype);
     JS_DefineFunction(cx, tmpObj, "setTexParameters", js_cocos2dx_CCTexture2D_setTexParameters, 4, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
 
@@ -6470,6 +6407,9 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     tmpObj.set(jsb_cocos2d_SpriteFrame_prototype);
+    JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    tmpObj.set(jsb_cocos2d_Texture2D_prototype);
     JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     tmpObj.set(jsb_cocos2d_MenuItem_prototype);

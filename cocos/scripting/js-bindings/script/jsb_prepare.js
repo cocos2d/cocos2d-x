@@ -237,7 +237,6 @@ var ClassManager = {
 cc.Class = function(){};
 cc.Class.extend = function (prop) {
     var _super = this.prototype,
-        _isNative = _super.__nativeObj,
         prototype, Class, classId,
         className = prop._className || "",
         name, desc;
@@ -245,7 +244,7 @@ cc.Class.extend = function (prop) {
     // Instantiate a base class (but only create the instance,
     // don't run the init constructor)
     initializing = true;
-    prototype = _isNative ? jsb.create_prototype(className, _super) : Object.create(_super);
+    prototype = Object.create(_super);
     initializing = false;
     fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
 
