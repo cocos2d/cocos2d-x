@@ -51,7 +51,7 @@ namespace ui {
         ,_brightState(State::NORMAL)
         ,_sliceVertices(nullptr)
         ,_sliceIndices(nullptr)
-        ,_originalAnchor(Vec2::ANCHOR_MIDDLE)
+        ,_nonSliceSpriteAnchor(Vec2::ANCHOR_MIDDLE)
     {
         this->setAnchorPoint(Vec2(0.5,0.5));
     }
@@ -434,8 +434,6 @@ namespace ui {
         Rect rect(textureRect);
         Size size(originalSize);
         
-        _capInsets = capInsets;
-
         // If there is no given rect
         if ( rect.equals(Rect::ZERO) )
         {
@@ -452,7 +450,6 @@ namespace ui {
 
         // Set the given rect's size as original size
         _spriteRect = rect;
-        _offset = offset;
         _spriteFrameRotated = rotated;
         _originalSize = size;
         _preferredSize = size;
@@ -538,9 +535,9 @@ namespace ui {
         if ( pReturn && pReturn->init(_scale9Image,
                                       _spriteRect,
                                       _spriteFrameRotated,
-                                      _offset,
+                                      Vec2::ZERO,
                                       _originalSize,
-                                      _capInsets) )
+                                      _capInsetsInternal) )
         {
             pReturn->autorelease();
             return pReturn;
@@ -627,7 +624,7 @@ namespace ui {
         this->updateWithSprite(this->_scale9Image,
                                _spriteRect,
                                _spriteFrameRotated,
-                               _offset,
+                               Vec2::ZERO,
                                _originalSize,
                                capInsets);
         this->_insetLeft = capInsets.origin.x;
@@ -743,7 +740,7 @@ namespace ui {
 
     Rect Scale9Sprite::getCapInsets()const
     {
-        return _capInsets;
+        return _capInsetsInternal;
     }
 
 
@@ -787,9 +784,9 @@ namespace ui {
                 this->updateWithSprite(this->_scale9Image,
                                        _spriteRect,
                                        _spriteFrameRotated,
-                                       _offset,
+                                       Vec2::ZERO,
                                        _originalSize,
-                                       _capInsets);
+                                       _capInsetsInternal);
             }
         }
         else
@@ -818,7 +815,7 @@ namespace ui {
         {
             if (_scale9Image)
             {
-                _originalAnchor = position;
+                _nonSliceSpriteAnchor = position;
                 _scale9Image->setAnchorPoint(position);
                 this->adjustScale9ImagePosition();
             }
@@ -830,7 +827,7 @@ namespace ui {
         if (_scale9Image)
         {
             if (!_scale9Enabled) {
-                _scale9Image->setAnchorPoint(_originalAnchor);
+                _scale9Image->setAnchorPoint(_nonSliceSpriteAnchor);
                 _scale9Image->setPosition(_contentSize.width * _scale9Image->getAnchorPoint().x,
                                           _contentSize.height * _scale9Image->getAnchorPoint().y);
 
@@ -1167,7 +1164,7 @@ namespace ui {
         const unsigned short indicesOffset = 6;
         const unsigned short quadIndices[]={4,0,5, 1,5,0};
         
-        Color4B color4 = Color4B(_scale9Image->getColor());
+        Color4B color4 = Color4B(_scale9Image->getDisplayedColor());
         
         for (int j = 0; j <= 3; ++j)
         {

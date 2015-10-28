@@ -673,17 +673,11 @@ namespace ui {
         
         /** Original sprite's size. */
         Size _originalSize;
-        Vec2 _offset;
         /** Preferred sprite's size. By default the preferred size is the original size. */
         
         //if the preferredSize component is given as -1, it is ignored
         Size _preferredSize;
-        /**
-         * The end-cap insets.
-         * On a non-resizeable sprite, this property is set to CGRect::ZERO; the sprite
-         * does not use end caps and the entire sprite is subject to stretching.
-         */
-        Rect _capInsets;
+        
         /** Sets the left side inset */
         float _insetLeft;
         /** Sets the top side inset */
@@ -697,7 +691,7 @@ namespace ui {
         bool _flippedY;
         bool _isPatch9;
         State _brightState;
-        Vec2 _originalAnchor;
+        Vec2 _nonSliceSpriteAnchor;
         
         V3F_C4B_T2F* _sliceVertices;
         unsigned short* _sliceIndices;
