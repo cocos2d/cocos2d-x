@@ -180,6 +180,13 @@ public:
 	CC_DEPRECATED_ATTRIBUTE void scrollToPage(ssize_t idx);
 
     /**
+     * Scroll to a page with a given index.
+     *
+     * @param idx   A given index in the PageView. Index start from 0 to pageCount -1.
+     */
+    void scrollToItem(ssize_t itemIndex);
+
+    /**
      * Gets current displayed page index.
      * @return current page index.
      *

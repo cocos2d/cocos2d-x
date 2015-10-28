@@ -135,7 +135,12 @@ void PageView::setCurrentPageIndex(ssize_t index)
 
 void PageView::scrollToPage(ssize_t idx)
 {
-	scrollToItem(idx, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
+    scrollToItem(idx);
+}
+
+void PageView::scrollToItem(ssize_t itemIndex)
+{
+    ListView::scrollToItem(itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
 }
 
 void PageView::setCustomScrollThreshold(float threshold)
@@ -238,7 +243,7 @@ void PageView::handleReleaseLogic(Touch *touch)
             }
             _currentPageIndex = MIN(_currentPageIndex, _items.size());
             _currentPageIndex = MAX(_currentPageIndex, 0);
-            scrollToItem(_currentPageIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
+            scrollToItem(_currentPageIndex);
         }
     }
 }
