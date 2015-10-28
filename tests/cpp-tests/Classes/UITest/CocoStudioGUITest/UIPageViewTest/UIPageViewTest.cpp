@@ -259,11 +259,8 @@ bool UIPageViewCustomScrollThreshold::init()
         PageView* pageView = PageView::create();
         pageView->setContentSize(Size(240.0f, 100.0f));
         Size backgroundSize = background->getContentSize();
-        pageView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                   (backgroundSize.width - pageView->getContentSize().width) / 2.0f,
-                                   (widgetSize.height - backgroundSize.height) / 2.0f +
-                                   (backgroundSize.height - pageView->getContentSize().height) / 2.0f + 20));
-        
+		pageView->setPosition(Vec2(widgetSize - pageView->getContentSize()) / 2.0f + Vec2(0, 20));
+
         int pageCount = 4;
         for (int i = 0; i < pageCount; ++i)
         {
@@ -273,12 +270,12 @@ bool UIPageViewCustomScrollThreshold::init()
             ImageView* imageView = ImageView::create("cocosui/scrollviewbg.png");
             imageView->setScale9Enabled(true);
             imageView->setContentSize(Size(240, 130));
-            imageView->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
+            imageView->setPosition(layout->getContentSize() / 2.0f);
             layout->addChild(imageView);
             
             Text* label = Text::create(StringUtils::format("page %d",(i+1)), "fonts/Marker Felt.ttf", 30);
             label->setColor(Color3B(192, 192, 192));
-            label->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
+            label->setPosition(layout->getContentSize() / 2.0f);
             layout->addChild(label);
             
             pageView->insertCustomItem(layout, i);
@@ -558,6 +555,7 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         pageView->setPosition(Vec2(widgetSize.width / 2.0f ,widgetSize.height / 2.0f));
         pageView->setBackGroundColor(Color3B::GREEN);
         pageView->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
+        pageView->setIndicatorEnabled(true);
         
         int pageCount = 4;
         for (int i = 0; i < pageCount; ++i)
@@ -741,7 +739,7 @@ bool UIPageViewJumpToPageTest::init()
                                   (backgroundSize.width - pageView->getContentSize().width) / 2.0f,
                                   (widgetSize.height - backgroundSize.height) / 2.0f +
                                   (backgroundSize.height - pageView->getContentSize().height) / 2.0f));
-
+        pageView->setIndicatorEnabled(true);
         pageView->removeAllItems();
 
         int pageCount = 4;
@@ -846,6 +844,7 @@ bool UIPageViewVerticalTest::init()
         
         // Create the page view
         PageView* pageView = PageView::create();
+        pageView->setIndicatorEnabled(true);
         pageView->setDirection(ui::PageView::Direction::VERTICAL);
         pageView->setContentSize(Size(240.0f, 130.0f));
         Size backgroundSize = background->getContentSize();
@@ -853,7 +852,6 @@ bool UIPageViewVerticalTest::init()
                                    (backgroundSize.width - pageView->getContentSize().width) / 2.0f,
                                    (widgetSize.height - backgroundSize.height) / 2.0f +
                                    (backgroundSize.height - pageView->getContentSize().height) / 2.0f));
-        
         pageView->removeAllItems();
         
         int pageCount = 4;
