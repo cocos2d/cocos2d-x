@@ -457,7 +457,8 @@ namespace ui {
         
         // overrides
         virtual void setContentSize(const Size & size) override;
-        
+        virtual void setAnchorPoint(const Vec2& anchorPoint) override;
+
         /**
          * Change the state of 9-slice sprite.
          * @see `State`
@@ -696,6 +697,7 @@ namespace ui {
         bool _flippedY;
         bool _isPatch9;
         State _brightState;
+        Vec2 _originalAnchor;
         
         V3F_C4B_T2F* _sliceVertices;
         unsigned short* _sliceIndices;

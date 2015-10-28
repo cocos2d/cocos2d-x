@@ -51,7 +51,7 @@ namespace ui {
         ,_brightState(State::NORMAL)
         ,_sliceVertices(nullptr)
         ,_sliceIndices(nullptr)
-
+        ,_originalAnchor(Vec2::ANCHOR_MIDDLE)
     {
         this->setAnchorPoint(Vec2(0.5,0.5));
     }
@@ -411,16 +411,19 @@ namespace ui {
                 _scale9Image = sprite;
                 _scale9Image->retain();
             }
-            
-//            _scale9Image->setSpriteFrame(sprite->getSpriteFrame());
-            
+            else
+            {
+                _scale9Image->setSpriteFrame(sprite->getSpriteFrame());
+            }
         }
 
         if (!_scale9Image)
         {
             return false;
         }
-
+        _scale9Image->setAnchorPoint(Vec2::ZERO);
+        _scale9Image->setPosition(Vec2::ZERO);
+        
         SpriteFrame *spriteFrame = _scale9Image->getSpriteFrame();
 
         if (!spriteFrame)
@@ -526,6 +529,7 @@ namespace ui {
         Node::setContentSize(size);
         _preferredSize = size;
         this->createSlicedSprites();
+        this->adjustScale9ImagePosition();
     }
 
     Scale9Sprite* Scale9Sprite::resizableSpriteWithCapInsets(const Rect& capInsets) const
@@ -680,7 +684,6 @@ namespace ui {
         int i = 0;      // used by _children
 
         sortAllChildren();
-        this->adjustScale9ImagePosition();
 
         //
         // draw children and protectedChildren zOrder < 0
@@ -800,19 +803,38 @@ namespace ui {
             }
           
         }
+        this->adjustScale9ImagePosition();
     }
 
     bool Scale9Sprite::isScale9Enabled() const
     {
         return _scale9Enabled;
     }
+    
+    void Scale9Sprite::setAnchorPoint(const cocos2d::Vec2 &position)
+    {
+        Node::setAnchorPoint(position);
+        if (!_scale9Enabled)
+        {
+            if (_scale9Image)
+            {
+                _originalAnchor = position;
+                _scale9Image->setAnchorPoint(position);
+                this->adjustScale9ImagePosition();
+            }
+        }
+    }
 
     void Scale9Sprite::adjustScale9ImagePosition()
     {
         if (_scale9Image)
         {
-            _scale9Image->setPosition(_contentSize.width * _scale9Image->getAnchorPoint().x,
-                                      _contentSize.height * _scale9Image->getAnchorPoint().y);
+            if (!_scale9Enabled) {
+                _scale9Image->setAnchorPoint(_originalAnchor);
+                _scale9Image->setPosition(_contentSize.width * _scale9Image->getAnchorPoint().x,
+                                          _contentSize.height * _scale9Image->getAnchorPoint().y);
+
+            }
         }
     }
 
