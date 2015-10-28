@@ -248,20 +248,74 @@ public:
     //override methods
     virtual std::string getDescription() const override;
 
+    /**
+     * @brief Toggle page indicator enabled.
+     *
+     * @param enabled True if enable page indicator, false otherwise.
+     */
     void setIndicatorEnabled(bool enabled);
 
+    /**
+     * @brief Query page indicator state.
+     *
+     * @return True if page indicator is enabled, false otherwise.
+     */
     bool getIndicatorEnabled() const { return _indicatorEnabled; }
 
+    /**
+     * @brief Set the page indicator's position using anchor point.
+     *
+     * @param positionAsAnchorPoint The position as anchor point.
+     */
     void setIndicatorPositionAsAnchorPoint(const Vec2& positionAsAnchorPoint);
+
+    /**
+     * @brief Get the page indicator's position as anchor point.
+     *
+     * @return positionAsAnchorPoint
+     */
     const Vec2& getIndicatorPositionAsAnchorPoint() const;
 
+    /**
+     * @brief Set the page indicator's position in page view.
+     *
+     * @param position The position in page view
+     */
     void setIndicatorPosition(const Vec2& position);
+    
+    /**
+     * @brief Get the page indicator's position.
+     *
+     * @return positionAsAnchorPoint
+     */
     const Vec2& getIndicatorPosition() const;
 
+    /**
+     * @brief Set space between page indicator's index nodes.
+     *
+     * @param spaceBetweenIndexNodes Space between nodes in pixel.
+     */
     void setIndicatorSpaceBetweenIndexNodes(float spaceBetweenIndexNodes);
+
+    /**
+     * @brief Get the space between page indicator's index nodes.
+     *
+     * @return spaceBetweenIndexNodes
+     */
     float getIndicatorSpaceBetweenIndexNodes() const;
 
+    /**
+     * @brief Set color of page indicator's selected index.
+     *
+     * @param spaceBetweenIndexNodes Space between nodes in pixel.
+     */
     void setIndicatorSelectedIndexColor(const Color3B& color);
+
+    /**
+     * @brief Get the color of page indicator's selected index.
+     *
+     * @return color
+     */
     const Color3B& getIndicatorSelectedIndexColor() const;
 
     /**
