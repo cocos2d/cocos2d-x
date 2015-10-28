@@ -32,7 +32,6 @@ namespace ui {
 IMPLEMENT_CLASS_GUI_INFO(PageView)
 
 PageView::PageView():
-_indicatorEnabled(false),
 _indicator(nullptr),
 _indicatorPositionAsAnchorPoint(Vec2(0.5f, 0.1f)),
 _currentPageIndex(-1),
@@ -65,9 +64,6 @@ PageView* PageView::create()
     
 bool PageView::init()
 {
-    _indicator = PageViewIndicator::create();
-    addProtectedChild(_indicator, 10000);
-
     if (ListView::init())
     {
         setDirection(Direction::HORIZONTAL);
@@ -89,8 +85,12 @@ void PageView::setDirection(PageView::Direction direction)
     {
         _indicatorPositionAsAnchorPoint = Vec2(0.1f, 0.5f);
     }
-	_indicator->setDirection(direction);
-    refreshIndicatorPosition();
+
+    if(_indicator != nullptr)
+    {
+        _indicator->setDirection(direction);
+        refreshIndicatorPosition();
+    }
 }
 
 void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool forceCreate)
@@ -164,14 +164,20 @@ void PageView::moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack
 {
     ListView::moveInnerContainer(deltaMove, canStartBounceBack);
     _currentPageIndex = getIndex(getCenterItemInCurrentView());
-    _indicator->indicate(_currentPageIndex);
+    if(_indicator != nullptr)
+    {
+        _indicator->indicate(_currentPageIndex);
+    }
 }
 
 void PageView::onItemListChanged()
 {
     ListView::onItemListChanged();
     ssize_t index = getIndex(getCenterItemInCurrentView());
-    _indicator->reset(_items.size(), index);
+    if(_indicator != nullptr)
+    {
+        _indicator->reset(_items.size(), index);
+    }
 }
 
 void PageView::onSizeChanged()
@@ -182,10 +188,13 @@ void PageView::onSizeChanged()
 
 void PageView::refreshIndicatorPosition()
 {
-    const Size& contentSize = getContentSize();
-    float posX = contentSize.width * _indicatorPositionAsAnchorPoint.x;
-    float posY = contentSize.height * _indicatorPositionAsAnchorPoint.y;
-    _indicator->setPosition(Vec2(posX, posY));
+    if(_indicator != nullptr)
+    {
+        const Size& contentSize = getContentSize();
+        float posX = contentSize.width * _indicatorPositionAsAnchorPoint.x;
+        float posY = contentSize.height * _indicatorPositionAsAnchorPoint.y;
+        _indicator->setPosition(Vec2(posX, posY));
+    }
 }
 
 void PageView::handleReleaseLogic(Touch *touch)
@@ -327,8 +336,23 @@ void PageView::copySpecialProperties(Widget *widget)
 
 void PageView::setIndicatorEnabled(bool enabled)
 {
-    _indicatorEnabled = enabled;
-    _indicator->setVisible(_indicatorEnabled);
+    if(enabled == (_indicator != nullptr))
+    {
+        return;
+    }
+
+    if(!enabled)
+    {
+        removeProtectedChild(_indicator);
+        _indicator = nullptr;
+    }
+    else
+    {
+        _indicator = PageViewIndicator::create();
+        addProtectedChild(_indicator, 10000);
+        setIndicatorSelectedIndexColor(Color3B(100, 100, 255));
+        refreshIndicatorPosition();
+    }
 }
 
 void PageView::setIndicatorPositionAsAnchorPoint(const Vec2& positionAsAnchorPoint)
@@ -344,33 +368,45 @@ const Vec2& PageView::getIndicatorPositionAsAnchorPoint() const
 
 void PageView::setIndicatorPosition(const Vec2& position)
 {
-    const Size& contentSize = getContentSize();
-    _indicatorPositionAsAnchorPoint.x = position.x / contentSize.width;
-    _indicatorPositionAsAnchorPoint.y = position.y / contentSize.height;
-    _indicator->setPosition(position);
+    if(_indicator != nullptr)
+    {
+        const Size& contentSize = getContentSize();
+        _indicatorPositionAsAnchorPoint.x = position.x / contentSize.width;
+        _indicatorPositionAsAnchorPoint.y = position.y / contentSize.height;
+        _indicator->setPosition(position);
+    }
 }
 
 const Vec2& PageView::getIndicatorPosition() const
 {
+    CCASSERT(_indicator != nullptr, "");
     return _indicator->getPosition();
 }
 
 void PageView::setIndicatorSpaceBetweenIndexNodes(float spaceBetweenIndexNodes)
 {
-    _indicator->setSpaceBetweenIndexNodes(spaceBetweenIndexNodes);
+    if(_indicator != nullptr)
+    {
+        _indicator->setSpaceBetweenIndexNodes(spaceBetweenIndexNodes);
+    }
 }
 float PageView::getIndicatorSpaceBetweenIndexNodes() const
 {
+    CCASSERT(_indicator != nullptr, "");
     return _indicator->getSpaceBetweenIndexNodes();
 }
 
 void PageView::setIndicatorSelectedIndexColor(const Color3B& color)
 {
-    _indicator->setSelectedIndexColor(color);
+    if(_indicator != nullptr)
+    {
+        _indicator->setSelectedIndexColor(color);
+    }
 }
 
 const Color3B& PageView::getIndicatorSelectedIndexColor() const
 {
+    CCASSERT(_indicator != nullptr, "");
     return _indicator->getSelectedIndexColor();
 }
 

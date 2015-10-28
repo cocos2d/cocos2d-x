@@ -260,7 +260,7 @@ public:
      *
      * @return True if page indicator is enabled, false otherwise.
      */
-    bool getIndicatorEnabled() const { return _indicatorEnabled; }
+    bool getIndicatorEnabled() const { return _indicator != nullptr; }
 
     /**
      * @brief Set the page indicator's position using anchor point.
@@ -360,7 +360,6 @@ protected:
     void refreshIndicatorPosition();
 
 protected:
-    bool _indicatorEnabled;
     PageViewIndicator* _indicator;
     Vec2 _indicatorPositionAsAnchorPoint;
 
