@@ -180,13 +180,14 @@ protected:
     void barRendererScaleChangedWithSize();
 
     void setupTexture();
-    void loadTexture(SpriteFrame* spriteframe);
     
     virtual void adaptRenderers() override;
     
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
 protected:
+    void updateRendererAnchorPoint();
+    void updateRendererPosition();
     Direction _direction;
     float _percent;
     float _totalLength;
@@ -197,6 +198,7 @@ protected:
     bool _prevIgnoreSize;
     Rect _capInsets;
     bool _barRendererAdaptDirty;
+    std::string _textureFile;
 };
 
 }

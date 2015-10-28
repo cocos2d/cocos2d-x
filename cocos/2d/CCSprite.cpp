@@ -287,6 +287,7 @@ Sprite::Sprite(void)
 , _texture(nullptr)
 , _spriteFrame(nullptr)
 , _insideBounds(true)
+, _isDefaultTexture(false)
 {
 #if CC_SPRITE_DEBUG_DRAW
     _debugDrawNode = DrawNode::create();
@@ -342,7 +343,7 @@ void Sprite::setTexture(Texture2D *texture)
     CCASSERT(! _batchNode || (texture &&  texture->getName() == _batchNode->getTexture()->getName()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
-
+    _isDefaultTexture = false;
     if (texture == nullptr)
     {
         // Gets the texture by key firstly.
@@ -358,6 +359,20 @@ void Sprite::setTexture(Texture2D *texture)
 
             texture = Director::getInstance()->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
             CC_SAFE_RELEASE(image);
+        }
+    }
+    //the originalSize is valid when sprite is not in atlas
+    _originalSize = texture->getContentSize();
+    
+    auto  defaultTexture = Director::getInstance()->getTextureCache()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
+    
+    // If texture wasn't in cache, create it from RAW data.
+    if (defaultTexture != nullptr)
+    {
+        GLuint defaultTextureName =  defaultTexture->getName();
+        if (defaultTextureName == texture->getName())
+        {
+            _isDefaultTexture = true;
         }
     }
 
@@ -1028,6 +1043,7 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
 
     // update rect
     _rectRotated = spriteFrame->isRotated();
+    _originalSize = spriteFrame->getOriginalSize();
     setTextureRect(spriteFrame->getRect(), _rectRotated, spriteFrame->getOriginalSize());
     
     if(spriteFrame->hasPolygonInfo())
@@ -1143,6 +1159,17 @@ PolygonInfo Sprite::getPolygonInfo() const
 void Sprite::setPolygonInfo(const PolygonInfo& info)
 {
     _polyInfo = info;
+}
+
+
+bool Sprite::isUsingDefaultTexture()const
+{
+    return this->_isDefaultTexture;
+}
+
+const Size& Sprite::getOriginalSize()const
+{
+    return _originalSize;
 }
 
 NS_CC_END
