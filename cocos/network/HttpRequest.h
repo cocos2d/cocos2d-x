@@ -242,7 +242,13 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(Ref* pTarget, SEL_CallFuncND pSelector)
     {
-        setResponseCallback(pTarget, (SEL_HttpResponse) pSelector);
+        _pTarget = pTarget;
+        _pSelector = (SEL_HttpResponse)pSelector;
+
+        if (_pTarget)
+        {
+            _pTarget->retain();
+        }
     }
     
     /**
