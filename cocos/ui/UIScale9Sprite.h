@@ -584,38 +584,6 @@ namespace ui {
         /// @} end of Children and Parent
         
         virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
-        virtual void cleanup() override;
-        
-        /**
-         * @lua NA
-         */
-        virtual void onEnter() override;
-        
-        /** Event callback that is invoked when the Node enters in the 'stage'.
-         * If the Node enters the 'stage' with a transition, this event is called when the transition finishes.
-         * If you override onEnterTransitionDidFinish, you shall call its parent's one, e.g. Node::onEnterTransitionDidFinish()
-         * @js NA
-         * @lua NA
-         */
-        virtual void onEnterTransitionDidFinish() override;
-        
-        /**
-         * Event callback that is invoked every time the Node leaves the 'stage'.
-         * If the Node leaves the 'stage' with a transition, this event is called when the transition finishes.
-         * During onExit you can't access a sibling node.
-         * If you override onExit, you shall call its parent's one, e.g., Node::onExit().
-         * @js NA
-         * @lua NA
-         */
-        virtual void onExit() override;
-        
-        /**
-         * Event callback that is called every time the Node leaves the 'stage'.
-         * If the Node leaves the 'stage' with a transition, this callback is called when the transition starts.
-         * @js NA
-         * @lua NA
-         */
-        virtual void onExitTransitionDidStart() override;
         
         virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
         virtual void updateDisplayedColor(const Color3B& parentColor) override;
@@ -687,12 +655,7 @@ namespace ui {
         void adjustScale9ImagePosition();
         void applyBlendFunc();
         void updateBlendFunc(Texture2D *texture);
-        /**
-         * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
-         * This approach can improves the performance massively.
-         * @note Don't call this manually unless a child added needs to be removed in the same frame
-         */
-        virtual void sortAllProtectedChildren();
+    
         
         bool _spritesGenerated;
         Rect _spriteRect;
@@ -701,15 +664,6 @@ namespace ui {
         bool _positionsAreDirty;
         
         Sprite* _scale9Image; //the original sprite
-        Sprite* _topLeftSprite;
-        Sprite* _topSprite;
-        Sprite* _topRightSprite;
-        Sprite* _leftSprite;
-        Sprite* _centerSprite;
-        Sprite* _rightSprite;
-        Sprite* _bottomLeftSprite;
-        Sprite* _bottomSprite;
-        Sprite* _bottomRightSprite;
         
         bool _scale9Enabled;
         BlendFunc _blendFunc;
@@ -740,12 +694,6 @@ namespace ui {
         float _insetRight;
         /** Sets the bottom side inset */
         float _insetBottom;
-        
-        /// helper that reorder a child
-        void addProtectedChild(Node* child);
-        
-        Vector<Node*> _protectedChildren;        ///holds the 9 sprites
-        bool _reorderProtectedChildDirty;
         
         bool _flippedX;
         bool _flippedY;
