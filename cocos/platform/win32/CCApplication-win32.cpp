@@ -217,6 +217,11 @@ Application::Platform Application::getTargetPlatform()
     return Platform::OS_WINDOWS;
 }
 
+std::string Application::getVersion()
+{
+    return "";
+}
+
 bool Application::openURL(const std::string &url)
 {
     WCHAR *temp = new WCHAR[url.size() + 1];
