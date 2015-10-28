@@ -39,7 +39,6 @@ namespace ui {
     Scale9Sprite::Scale9Sprite()
         : _spritesGenerated(false)
         , _spriteFrameRotated(false)
-        , _positionsAreDirty(true)
         , _scale9Image(nullptr)
         , _scale9Enabled(true)
         , _insetLeft(0)
@@ -50,6 +49,8 @@ namespace ui {
         ,_flippedY(false)
         ,_isPatch9(false)
         ,_brightState(State::NORMAL)
+        ,_sliceVertices(nullptr)
+        ,_sliceIndices(nullptr)
 
     {
         this->setAnchorPoint(Vec2(0.5,0.5));
@@ -324,7 +325,8 @@ namespace ui {
 
     void Scale9Sprite::cleanupSlicedSprites()
     {
-        //TODO:  cleanup all the vertices and indices
+        CC_SAFE_DELETE_ARRAY(_sliceIndices);
+        CC_SAFE_DELETE_ARRAY(_sliceVertices);
     }
 
 
@@ -409,10 +411,9 @@ namespace ui {
                 _scale9Image = sprite;
                 _scale9Image->retain();
             }
-            else
-            {
-                _scale9Image->setSpriteFrame(sprite->getSpriteFrame());
-            }
+            
+//            _scale9Image->setSpriteFrame(sprite->getSpriteFrame());
+            
         }
 
         if (!_scale9Image)
@@ -483,23 +484,49 @@ namespace ui {
     void Scale9Sprite::createSlicedSprites()
     {
         //todo create sliced sprite
-
+        if (_scale9Enabled)
+        {
+            Texture2D *tex = _scale9Image ? _scale9Image->getTexture() : nullptr;
+            
+            if (tex == nullptr)
+            {
+                return;
+            }
+            
+            auto capInsets = CC_RECT_POINTS_TO_PIXELS(_capInsetsInternal);
+            auto textureRect = CC_RECT_POINTS_TO_PIXELS(_spriteRect);
+            auto spriteRectSize = CC_SIZE_POINTS_TO_PIXELS(_originalSize);
+            
+            //handle .9.png
+            if (_isPatch9)
+            {
+                spriteRectSize = Size(spriteRectSize.width - 2, spriteRectSize.height-2);
+            }
+            
+            
+            if(capInsets.equals(Rect::ZERO))
+            {
+                capInsets = Rect(spriteRectSize.width/3, spriteRectSize.height/3,
+                                 spriteRectSize.width/3, spriteRectSize.height/3);
+            }
+            
+            auto uv = this->caculateUV(tex, capInsets, spriteRectSize);
+            auto vertices = this->caculateVertices(capInsets, spriteRectSize);
+            auto triangles = this->caculateTriangles(uv, vertices);
+            
+            PolygonInfo polyInfo;
+            polyInfo.setTriangles(triangles);
+            
+            _scale9Image->setPolygonInfo(polyInfo);
+        }
     }
 
     void Scale9Sprite::setContentSize(const Size &size)
     {
         Node::setContentSize(size);
-        this->_positionsAreDirty = true;
+        _preferredSize = size;
+        this->createSlicedSprites();
     }
-
-    void Scale9Sprite::updatePositions()
-    {
-        Size size = this->_contentSize;
-        //todo update posotion
-
-    }
-
-
 
     Scale9Sprite* Scale9Sprite::resizableSpriteWithCapInsets(const Rect& capInsets) const
     {
@@ -587,7 +614,6 @@ namespace ui {
     void Scale9Sprite::setPreferredSize(const Size& preferredSize)
     {
         this->setContentSize(preferredSize);
-        this->_preferredSize = preferredSize;
     }
 
 
@@ -654,6 +680,7 @@ namespace ui {
         int i = 0;      // used by _children
 
         sortAllChildren();
+        this->adjustScale9ImagePosition();
 
         //
         // draw children and protectedChildren zOrder < 0
@@ -762,7 +789,17 @@ namespace ui {
                                        _capInsets);
             }
         }
-        _positionsAreDirty = true;
+        else
+        {
+            if (_scale9Image)
+            {
+                auto quad = _scale9Image->getQuad();
+                PolygonInfo polyInfo;
+                polyInfo.setQuad(&quad);
+                _scale9Image->setPolygonInfo(polyInfo);
+            }
+          
+        }
     }
 
     bool Scale9Sprite::isScale9Enabled() const
@@ -776,19 +813,6 @@ namespace ui {
         {
             _scale9Image->setPosition(_contentSize.width * _scale9Image->getAnchorPoint().x,
                                       _contentSize.height * _scale9Image->getAnchorPoint().y);
-        }
-    }
-
-    void Scale9Sprite::setAnchorPoint(const cocos2d::Vec2 &position)
-    {
-        Node::setAnchorPoint(position);
-        if (!_scale9Enabled)
-        {
-            if (_scale9Image)
-            {
-                _scale9Image->setAnchorPoint(position);
-                _positionsAreDirty = true;
-            }
         }
     }
 
@@ -946,6 +970,227 @@ namespace ui {
 
         if(_scale9Image)
             _scale9Image->setCameraMask(mask,applyChildren);
+    }
+    
+    // (0,0)  O = capInsets.origin
+    // v0----------------------
+    // |        |      |      |
+    // |        |      |      |
+    // v1-------O------+------|
+    // |        |      |      |
+    // |        |      |      |
+    // v2-------+------+------|
+    // |        |      |      |
+    // |        |      |      |
+    // v3-------------------- (1,1)  (texture coordinate is flipped)
+    // u0       u1     u2     u3
+    std::vector<Vec2> Scale9Sprite::caculateUV(Texture2D *tex,
+                                               const Rect& capInsets,
+                                               const Size& spriteRectSize)
+    {
+        auto atlasWidth = tex->getPixelsWide();
+        auto atlasHeight = tex->getPixelsHigh();
+        
+        //caculate texture coordinate
+        float leftWidth = 0, centerWidth = 0, rightWidth = 0;
+        float topHeight = 0, centerHeight = 0, bottomHeight = 0;
+        
+        if (_spriteFrameRotated)
+        {
+            rightWidth = capInsets.origin.y;
+            centerWidth = capInsets.size.height;
+            leftWidth = spriteRectSize.height - centerWidth - rightWidth;
+            
+            topHeight = capInsets.origin.x;
+            centerHeight = capInsets.size.width;
+            bottomHeight = spriteRectSize.width - (topHeight + centerHeight);
+        }
+        else
+        {
+            leftWidth = capInsets.origin.x;
+            centerWidth = capInsets.size.width;
+            rightWidth = spriteRectSize.width - (leftWidth + centerWidth);
+            
+            topHeight = capInsets.origin.y;
+            centerHeight = capInsets.size.height;
+            bottomHeight =spriteRectSize.height - (topHeight + centerHeight);
+        }
+        
+        auto textureRect = CC_RECT_POINTS_TO_PIXELS(_spriteRect);
+        //handle .9.png
+        if (_isPatch9)
+        {
+            //This magic number is used to avoiding artifact with .9.png format.
+            float offset = 1.3f;
+            textureRect = Rect(textureRect.origin.x +  offset,
+                               textureRect.origin.y +  offset,
+                               textureRect.size.width - 2,
+                               textureRect.size.height - 2);
+        }
+        
+        //uv computation should take spritesheet into account.
+        float u0, u1, u2, u3;
+        float v0, v1, v2, v3;
+        if (_spriteFrameRotated)
+        {
+            u0 = textureRect.origin.x / atlasWidth;
+            u1 = (leftWidth + textureRect.origin.x) / atlasWidth;
+            u2 = (leftWidth + centerWidth + textureRect.origin.x) / atlasWidth;
+            u3 = (textureRect.origin.x + textureRect.size.height) / atlasWidth;
+            
+            v3 = textureRect.origin.y / atlasHeight;
+            v2 = (topHeight + textureRect.origin.y) / atlasHeight;
+            v1 = (topHeight + centerHeight + textureRect.origin.y) / atlasHeight;
+            v0 = (textureRect.origin.y + textureRect.size.width) / atlasHeight;
+        }
+        else
+        {
+            u0 = textureRect.origin.x / atlasWidth;
+            u1 = (leftWidth + textureRect.origin.x) / atlasWidth;
+            u2 = (leftWidth + centerWidth + textureRect.origin.x) / atlasWidth;
+            u3 = (textureRect.origin.x + textureRect.size.width) / atlasWidth;
+            
+            v0 = textureRect.origin.y / atlasHeight;
+            v1 = (topHeight + textureRect.origin.y) / atlasHeight;
+            v2 = (topHeight + centerHeight + textureRect.origin.y) / atlasHeight;
+            v3 = (textureRect.origin.y + textureRect.size.height) / atlasHeight;
+        }
+        
+        std::vector<Vec2> uvCoordinates = {Vec2(u0,v3), Vec2(u1,v2), Vec2(u2,v1), Vec2(u3,v0)};
+        
+        return uvCoordinates;
+    }
+    
+    //
+    // y3----------------------(preferedSize.width, preferedSize.height)
+    // |        |      |      |
+    // |        |      |      |
+    // y2-------O------+------|
+    // |        |      |      |
+    // |        |      |      |
+    // y1-------+------+------|
+    // |        |      |      |
+    // |        |      |      |
+    //x0,y0--------------------
+    //         x1     x2     x3
+    std::vector<Vec2> Scale9Sprite::caculateVertices(const Rect& capInsets,
+                                                     const Size& spriteRectSize)
+    {
+        float leftWidth = 0, centerWidth = 0, rightWidth = 0;
+        float topHeight = 0, centerHeight = 0, bottomHeight = 0;
+        
+        leftWidth = capInsets.origin.x;
+        centerWidth = capInsets.size.width;
+        rightWidth = spriteRectSize.width - (leftWidth + centerWidth);
+        
+        topHeight = capInsets.origin.y;
+        centerHeight = capInsets.size.height;
+        bottomHeight = spriteRectSize.height - (topHeight + centerHeight);
+        
+        
+        leftWidth = leftWidth / CC_CONTENT_SCALE_FACTOR();
+        rightWidth = rightWidth / CC_CONTENT_SCALE_FACTOR();
+        topHeight = topHeight / CC_CONTENT_SCALE_FACTOR();
+        bottomHeight = bottomHeight / CC_CONTENT_SCALE_FACTOR();
+        float sizableWidth = _preferredSize.width - leftWidth - rightWidth;
+        float sizableHeight = _preferredSize.height - topHeight - bottomHeight;
+        float x0,x1,x2,x3;
+        float y0,y1,y2,y3;
+        if(sizableWidth >= 0)
+        {
+            x0 = 0;
+            x1 = leftWidth;
+            x2 = leftWidth + sizableWidth;
+            x3 = _preferredSize.width;
+        }
+        else
+        {
+            float xScale = _preferredSize.width / (leftWidth + rightWidth);
+            x0 = 0;
+            x1 = x2 = leftWidth * xScale;
+            x3 = (leftWidth + rightWidth) * xScale;
+        }
+        
+        if(sizableHeight >= 0)
+        {
+            y0 = 0;
+            y1 = bottomHeight;
+            y2 = bottomHeight + sizableHeight;
+            y3 = _preferredSize.height;
+        }
+        else
+        {
+            float yScale = _preferredSize.height / (topHeight + bottomHeight);
+            y0 = 0;
+            y1 = y2= bottomHeight * yScale;
+            y3 = (bottomHeight + topHeight) * yScale;
+        }
+        
+        std::vector<Vec2> vertices = {Vec2(x0,y0), Vec2(x1,y1), Vec2(x2,y2), Vec2(x3,y3)};
+        return vertices;
+    }
+    
+    TrianglesCommand::Triangles Scale9Sprite::caculateTriangles(const std::vector<Vec2>& uv,
+                                                                const std::vector<Vec2>& vertices)
+    {
+        const unsigned short slicedTotalVertexCount = 16;
+        const unsigned short slicedTotalIndices = 54;
+        CC_SAFE_DELETE_ARRAY(_sliceVertices);
+        CC_SAFE_DELETE_ARRAY(_sliceIndices);
+        
+        _sliceVertices = new V3F_C4B_T2F[slicedTotalVertexCount];
+        _sliceIndices = new unsigned short[slicedTotalIndices];
+        
+        unsigned short indicesStart = 0;
+        const unsigned short indicesOffset = 6;
+        const unsigned short quadIndices[]={4,0,5, 1,5,0};
+        
+        Color4B color4 = Color4B(_scale9Image->getColor());
+        
+        for (int j = 0; j <= 3; ++j)
+        {
+            for (int i = 0; i <= 3; ++i)
+            {
+                V3F_C4B_T2F vertextData;
+                vertextData.vertices.x = vertices[i].x;
+                vertextData.vertices.y = vertices[j].y;
+                
+                if (_spriteFrameRotated)
+                {
+                    vertextData.texCoords.u = uv[j].x;
+                    vertextData.texCoords.v = uv[i].y;
+                }
+                else
+                {
+                    vertextData.texCoords.u = uv[i].x;
+                    vertextData.texCoords.v = uv[j].y;
+                }
+                
+                vertextData.colors = color4;
+                
+                if (i < 3 && j < 3)
+                {
+                    memcpy(_sliceIndices + indicesStart, quadIndices, indicesOffset * sizeof(unsigned short));
+                    
+                    for (int k = 0; k  < indicesOffset; ++k)
+                    {
+                        unsigned short actualIndex = (i  + j * 3) * indicesOffset;
+                        _sliceIndices[k + actualIndex] = _sliceIndices[k + actualIndex] + j * 4 + i;
+                    }
+                    indicesStart = indicesStart + indicesOffset;
+                }
+                
+                memcpy(_sliceVertices + i + j * 4, &vertextData, sizeof(V3F_C4B_T2F));
+            }
+        }
+        
+        TrianglesCommand::Triangles triangles;
+        triangles.vertCount = slicedTotalVertexCount;
+        triangles.indexCount = slicedTotalIndices;
+        triangles.verts = _sliceVertices;
+        triangles.indices = _sliceIndices;
+        
+        return triangles;
     }
 
 }}

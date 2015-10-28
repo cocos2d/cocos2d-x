@@ -30,6 +30,7 @@
 #include "2d/CCSpriteBatchNode.h"
 #include "platform/CCPlatformMacros.h"
 #include "ui/GUIExport.h"
+#include "renderer/CCTrianglesCommand.h"
 
 /**
  * @addtogroup ui
@@ -456,7 +457,6 @@ namespace ui {
         
         // overrides
         virtual void setContentSize(const Size & size) override;
-        virtual void setAnchorPoint(const Vec2& anchorPoint) override;
         
         /**
          * Change the state of 9-slice sprite.
@@ -649,29 +649,26 @@ namespace ui {
         virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
     protected:
         void updateCapInset();
-        void updatePositions();
         void createSlicedSprites();
         void cleanupSlicedSprites();
         void adjustScale9ImagePosition();
         void applyBlendFunc();
         void updateBlendFunc(Texture2D *texture);
-    
+        std::vector<Vec2> caculateUV(Texture2D *tex, const Rect& capInsets,
+                                     const Size& spriteRectSize);
+        std::vector<Vec2> caculateVertices(const Rect& capInsets, const Size& spriteRectSize);
+        TrianglesCommand::Triangles caculateTriangles(const std::vector<Vec2>& uv,
+                                                      const std::vector<Vec2>& vertices);
         
         bool _spritesGenerated;
         Rect _spriteRect;
         bool   _spriteFrameRotated;
         Rect _capInsetsInternal;
-        bool _positionsAreDirty;
         
         Sprite* _scale9Image; //the original sprite
         
         bool _scale9Enabled;
         BlendFunc _blendFunc;
-        
-        Size _topLeftSize;
-        Size _centerSize;
-        Size _bottomRightSize;
-        Vec2 _centerOffset;
         
         /** Original sprite's size. */
         Size _originalSize;
@@ -699,6 +696,9 @@ namespace ui {
         bool _flippedY;
         bool _isPatch9;
         State _brightState;
+        
+        V3F_C4B_T2F* _sliceVertices;
+        unsigned short* _sliceIndices;
     };
     
 }}  //end of namespace
