@@ -122,6 +122,7 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
         // linebreak
         if (info->width > 0) {
             if ([string sizeWithAttributes:tokenAttributesDict].width > info->width) {
+                int nextLineTop = 0;
                 NSMutableString *lineBreak = [[[NSMutableString alloc] init] autorelease];
                 NSUInteger length = [string length];
                 NSRange range = NSMakeRange(0, 1);
@@ -136,8 +137,6 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
                         lastBreakLocation = i + insertCount;
                     }
                     textSize = [lineBreak sizeWithAttributes:tokenAttributesDict];
-                    if(info->height > 0 && (int)textSize.height > info->height)
-                        break;
                     if ((int)textSize.width > info->width) {
                         if(lastBreakLocation > 0) {
                             [lineBreak insertString:@"\r" atIndex:lastBreakLocation];
@@ -147,6 +146,10 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
                             [lineBreak insertString:@"\r" atIndex:[lineBreak length] - 1];
                         }
                         insertCount += 1;
+                        
+                        nextLineTop += (int)textSize.height;
+                        if(info->height > 0 && nextLineTop > (int)info->height)
+                            break;
                     }
                 }
                 
