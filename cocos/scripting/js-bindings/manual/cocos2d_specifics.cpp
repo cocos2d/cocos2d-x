@@ -2309,30 +2309,30 @@ bool js_forceGC(JSContext *cx, uint32_t argc, jsval *vp) {
 
 bool js_cocos2dx_retain(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    // In new JSB memory mode, no need to invoke retain and release manually
-    
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-//    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-//    cocos2d::Ref* cobj = (cocos2d::Ref *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_retain : Invalid Native Object");
-//    
-//    cobj->retain();
+#if CC_NATIVE_CONTROL_SCRIPT
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Ref* cobj = (cocos2d::Ref *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_retain : Invalid Native Object");
+    
+    cobj->retain();
+#endif
     args.rval().setUndefined();
     return true;
 }
 
 bool js_cocos2dx_release(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    // In new JSB memory mode, no need to invoke retain and release manually
-    
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-//    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-//    cocos2d::Ref* cobj = (cocos2d::Ref *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_release : Invalid Native Object");
-//    
-//    cobj->release();
+#if CC_NATIVE_CONTROL_SCRIPT
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Ref* cobj = (cocos2d::Ref *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_release : Invalid Native Object");
+    
+    cobj->release();
+#endif
     args.rval().setUndefined();
     return true;
 }
@@ -6187,8 +6187,8 @@ void jsb_FinalizeHook_finalize(JSFreeOp *fop, JSObject *obj) {
         jsb_remove_proxy(nproxy, jsproxy);
         if (refObj) {
             refObj->release();
-            retainCount--;
-            CCLOG("------RELEASED------ %d ref count: %d", retainCount, refObj->getReferenceCount());
+            ScriptingCore::retainCount--;
+            CCLOG("------RELEASED------ %d ref count: %d", ScriptingCore::retainCount, refObj->getReferenceCount());
         }
     }
 }

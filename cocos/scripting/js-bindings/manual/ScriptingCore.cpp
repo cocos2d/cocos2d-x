@@ -78,6 +78,8 @@
 
 using namespace cocos2d;
 
+int ScriptingCore::retainCount = 0;
+
 static std::string inData;
 static std::string outData;
 static std::vector<std::string> g_queue;

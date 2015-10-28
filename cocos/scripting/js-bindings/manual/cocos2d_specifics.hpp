@@ -27,8 +27,6 @@
 #include "ScriptingCore.h"
 #include "platform/CCSAXParser.h"
 
-static int retainCount = 0;
-
 class JSScheduleWrapper;
 
 // JSScheduleWrapper* --> Array* since one js function may correspond to many targets.
