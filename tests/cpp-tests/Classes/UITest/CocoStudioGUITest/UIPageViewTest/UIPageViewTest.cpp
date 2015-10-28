@@ -59,6 +59,7 @@ bool UIPageViewTest::init()
         Size backgroundSize = background->getContentSize();
         pageView->setPosition((widgetSize - pageView->getContentSize()) / 2.0f);
         pageView->removeAllItems();
+        pageView->setIndicatorEnabled(true);
         
         int pageCount = 4;
         for (int i = 0; i < pageCount; ++i)
@@ -81,8 +82,7 @@ bool UIPageViewTest::init()
         }
         
         pageView->removeItem(0);
-        pageView->scrollToItem(pageCount - 2, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
-        
+        pageView->scrollToItem(pageCount - 2);
         pageView->addEventListener(CC_CALLBACK_2(UIPageViewTest::pageViewEvent, this));
         
         _uiLayer->addChild(pageView);
@@ -100,7 +100,7 @@ void UIPageViewTest::pageViewEvent(Ref *pSender, PageView::EventType type)
         {
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             
-            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurPageIndex() + 1));
+            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurrentPageIndex() + 1));
         }
             break;
             
@@ -154,7 +154,7 @@ bool UIPageViewButtonTest::init()
                                    (widgetSize.height - backgroundSize.height) / 2.0f +
                                    (backgroundSize.height - pageView->getContentSize().height) / 2.0f));
         
-        pageView->removeAllPages();
+        pageView->removeAllItems();
         
         int pageCount = 4;
         for (int i = 0; i < pageCount; ++i)
@@ -182,10 +182,10 @@ bool UIPageViewButtonTest::init()
 
             }
             
-            pageView->insertPage(outerBox,i);
+            pageView->insertCustomItem(outerBox, i);
         }
         
-        pageView->removePageAtIndex(0);
+        pageView->removeItem(0);
         
         pageView->addEventListener(CC_CALLBACK_2(UIPageViewButtonTest::pageViewEvent, this));
         
@@ -210,7 +210,7 @@ void UIPageViewButtonTest::pageViewEvent(Ref *pSender, PageView::EventType type)
         {
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             
-            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurPageIndex() + 1));
+            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurrentPageIndex() + 1));
         }
             break;
             
@@ -281,7 +281,7 @@ bool UIPageViewCustomScrollThreshold::init()
             label->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
             layout->addChild(label);
             
-            pageView->insertPage(layout,i);
+            pageView->insertCustomItem(layout, i);
         }
         
         _uiLayer->addChild(pageView);
@@ -389,7 +389,7 @@ bool UIPageViewTouchPropagationTest::init()
                 
             }
             
-            pageView->insertPage(outerBox,i);
+            pageView->insertCustomItem(outerBox, i);
         }
         
         pageView->addEventListener(CC_CALLBACK_2(UIPageViewTouchPropagationTest::pageViewEvent, this));
@@ -506,7 +506,7 @@ void UIPageViewTouchPropagationTest::pageViewEvent(Ref *pSender, PageView::Event
         {
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             
-            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurPageIndex() + 1));
+            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurrentPageIndex() + 1));
         }
             break;
             
@@ -586,7 +586,7 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
                 
             }
             
-            pageView->insertPage(outerBox,i);
+            pageView->insertCustomItem(outerBox, i);
         }
         
         pageView->addEventListener(CC_CALLBACK_2(UIPageViewDynamicAddAndRemoveTest::pageViewEvent, this));
@@ -622,9 +622,9 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
                 outerBox->addChild(innerBox);
             }
             
-            pageView->addPage(outerBox);
-            _displayValueLabel->setString(StringUtils::format("page count = %ld", pageView->getPages().size()));
-            CCLOG("current page index = %zd", pageView->getCurPageIndex());
+            pageView->pushBackCustomItem(outerBox);
+            _displayValueLabel->setString(StringUtils::format("page count = %ld", pageView->getItems().size()));
+            CCLOG("current page index = %zd", pageView->getCurrentPageIndex());
         });
         _uiLayer->addChild(button);
         
@@ -636,16 +636,16 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         button2->setTitleColor(Color3B::RED);
         button2->addClickEventListener([=](Ref* sender)
         {
-            if (pageView->getPages().size() > 0)
+            if (pageView->getItems().size() > 0)
             {
-                pageView->removePageAtIndex(pageView->getPages().size()-1);
+                pageView->removeItem(pageView->getItems().size()-1);
             }
             else
             {
                 CCLOG("There is no page to remove!");
             }
-            _displayValueLabel->setString(StringUtils::format("page count = %ld", pageView->getPages().size()));
-            CCLOG("current page index = %zd", pageView->getCurPageIndex());
+            _displayValueLabel->setString(StringUtils::format("page count = %ld", pageView->getItems().size()));
+            CCLOG("current page index = %zd", pageView->getCurrentPageIndex());
 
         });
         _uiLayer->addChild(button2);
@@ -658,9 +658,9 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         button3->setTitleColor(Color3B::RED);
         button3->addClickEventListener([=](Ref* sender)
         {
-            pageView->removeAllPages();
-            _displayValueLabel->setString(StringUtils::format("page count = %ld", pageView->getPages().size()));
-            CCLOG("current page index = %zd", pageView->getCurPageIndex());
+            pageView->removeAllItems();
+            _displayValueLabel->setString(StringUtils::format("page count = %ld", pageView->getItems().size()));
+            CCLOG("current page index = %zd", pageView->getCurrentPageIndex());
 
         });
         _uiLayer->addChild(button3);
@@ -669,8 +669,8 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         button4->setTitleText("Scroll to Page4");
         button4->setNormalizedPosition(Vec2(0.85,0.5));
         button4->addClickEventListener([=](Ref* sender){
-            pageView->scrollToPage(3);
-            CCLOG("current page index = %zd", pageView->getCurPageIndex());
+            pageView->scrollToItem(3);
+            CCLOG("current page index = %zd", pageView->getCurrentPageIndex());
         });
         _uiLayer->addChild(button4);
         
@@ -688,7 +688,7 @@ void UIPageViewDynamicAddAndRemoveTest::pageViewEvent(Ref *pSender, PageView::Ev
         {
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             
-            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurPageIndex() + 1));
+            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurrentPageIndex() + 1));
         }
             break;
             
@@ -716,7 +716,7 @@ bool UIPageViewJumpToPageTest::init()
         Size widgetSize = _widget->getContentSize();
 
         // Add a label in which the dragpanel events will be displayed
-        _displayValueLabel = Text::create("setCurPageIndex API Test", "fonts/Marker Felt.ttf", 32);
+        _displayValueLabel = Text::create("setCurrentPageIndex API Test", "fonts/Marker Felt.ttf", 32);
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
                                               widgetSize.height / 2.0f +
@@ -742,7 +742,7 @@ bool UIPageViewJumpToPageTest::init()
                                   (widgetSize.height - backgroundSize.height) / 2.0f +
                                   (backgroundSize.height - pageView->getContentSize().height) / 2.0f));
 
-        pageView->removeAllPages();
+        pageView->removeAllItems();
 
         int pageCount = 4;
         for (int i = 0; i < pageCount; ++i)
@@ -761,10 +761,10 @@ bool UIPageViewJumpToPageTest::init()
             label->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
             layout->addChild(label);
 
-            pageView->insertPage(layout,i);
+            pageView->insertCustomItem(layout, i);
         }
 
-        pageView->setCurPageIndex(1);
+        pageView->setCurrentPageIndex(1);
 
         //add buttons to jump to specific page
         auto button1 = ui::Button::create();
@@ -773,7 +773,7 @@ bool UIPageViewJumpToPageTest::init()
         CCLOG("button1 content Size = %f, %f", button1->getContentSize().width,
               button1->getContentSize().height);
         button1->addClickEventListener([=](Ref*){
-            pageView->setCurPageIndex(0);
+            pageView->setCurrentPageIndex(0);
         });
         _uiLayer->addChild(button1);
 
@@ -783,7 +783,7 @@ bool UIPageViewJumpToPageTest::init()
         CCLOG("button2 content Size = %f, %f", button2->getContentSize().width,
               button2->getContentSize().height);
         button2->addClickEventListener([=](Ref*){
-            pageView->setCurPageIndex(1);
+            pageView->setCurrentPageIndex(1);
         });
         _uiLayer->addChild(button2);
 
@@ -791,7 +791,7 @@ bool UIPageViewJumpToPageTest::init()
         button3->setTitleText("Jump to Page3");
         button3->setNormalizedPosition(Vec2(0.9, 0.75));
         button3->addClickEventListener([=](Ref*){
-            pageView->setCurPageIndex(2);
+            pageView->setCurrentPageIndex(2);
         });
         _uiLayer->addChild(button3);
 
@@ -799,7 +799,7 @@ bool UIPageViewJumpToPageTest::init()
         button4->setTitleText("Jump to Page4");
         button4->setNormalizedPosition(Vec2(0.9, 0.65));
         button4->addClickEventListener([=](Ref*){
-            pageView->setCurPageIndex(3);
+            pageView->setCurrentPageIndex(3);
         });
         _uiLayer->addChild(button4);
         _uiLayer->addChild(pageView);
@@ -854,7 +854,7 @@ bool UIPageViewVerticalTest::init()
                                    (widgetSize.height - backgroundSize.height) / 2.0f +
                                    (backgroundSize.height - pageView->getContentSize().height) / 2.0f));
         
-        pageView->removeAllPages();
+        pageView->removeAllItems();
         
         int pageCount = 4;
         for (int i = 0; i < pageCount; ++i)
@@ -873,7 +873,7 @@ bool UIPageViewVerticalTest::init()
             label->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
             layout->addChild(label);
             
-            pageView->insertPage(layout,i);
+            pageView->insertCustomItem(layout, i);
         }
         
         pageView->addEventListener(CC_CALLBACK_2(UIPageViewVerticalTest::pageViewEvent, this));
@@ -893,7 +893,7 @@ void UIPageViewVerticalTest::pageViewEvent(Ref *pSender, PageView::EventType typ
         {
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             
-            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurPageIndex() + 1));
+            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurrentPageIndex() + 1));
         }
             break;
             
@@ -947,7 +947,7 @@ bool UIPageViewDisableTouchTest::init()
                                    (backgroundSize.height - pageView->getContentSize().height) / 2.0f));
         pageView->setDirection(ui::PageView::Direction::VERTICAL);
         pageView->setTouchEnabled(false);
-        pageView->removeAllPages();
+        pageView->removeAllItems();
         
         int pageCount = 4;
         for (int i = 0; i < pageCount; ++i)
@@ -966,7 +966,7 @@ bool UIPageViewDisableTouchTest::init()
             label->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
             layout->addChild(label);
             
-            pageView->insertPage(layout,i);
+            pageView->insertCustomItem(layout, i);
         }
         
         _uiLayer->addChild(pageView);
