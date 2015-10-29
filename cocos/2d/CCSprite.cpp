@@ -1135,7 +1135,7 @@ std::string Sprite::getDescription() const
     return StringUtils::format("<Sprite | Tag = %d, TextureID = %d>", _tag, texture_id );
 }
 
-PolygonInfo Sprite::getPolygonInfo() const
+PolygonInfo& Sprite::getPolygonInfo()
 {
     return _polyInfo;
 }
