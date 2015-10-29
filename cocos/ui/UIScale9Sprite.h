@@ -652,7 +652,7 @@ namespace ui {
         void updateCapInset();
         void createSlicedSprites();
         void cleanupSlicedSprites();
-        void adjustScale9ImagePosition();
+        void adjustNoneScale9ImagePosition();
         void applyBlendFunc();
         void updateBlendFunc(Texture2D *texture);
         std::vector<Vec2> calculateUV(Texture2D *tex, const Rect& capInsets,
@@ -695,6 +695,7 @@ namespace ui {
         
         V3F_C4B_T2F* _sliceVertices;
         unsigned short* _sliceIndices;
+        bool _sliceSpriteDirty;
     };
     
 }}  //end of namespace

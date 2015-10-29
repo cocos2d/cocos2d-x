@@ -52,6 +52,7 @@ namespace ui {
         ,_nonSliceSpriteAnchor(Vec2::ANCHOR_MIDDLE)
         ,_sliceVertices(nullptr)
         ,_sliceIndices(nullptr)
+        ,_sliceSpriteDirty(false)
     {
         this->setAnchorPoint(Vec2(0.5,0.5));
     }
@@ -453,7 +454,7 @@ namespace ui {
         {
             _scale9Image->setAnchorPoint(Vec2::ZERO);
             _scale9Image->setPosition(Vec2::ZERO);
-            this->createSlicedSprites();
+            _sliceSpriteDirty = true;
         }
 
         applyBlendFunc();
@@ -521,8 +522,8 @@ namespace ui {
         }
         Node::setContentSize(size);
         _preferredSize = size;
-        this->createSlicedSprites();
-        this->adjustScale9ImagePosition();
+        _sliceSpriteDirty = true;
+        this->adjustNoneScale9ImagePosition();
     }
 
     Scale9Sprite* Scale9Sprite::resizableSpriteWithCapInsets(const Rect& capInsets) const
@@ -533,7 +534,7 @@ namespace ui {
                                       _spriteFrameRotated,
                                       Vec2::ZERO,
                                       _originalSize,
-                                      _capInsetsInternal) )
+                                      capInsets) )
         {
             pReturn->autorelease();
             return pReturn;
@@ -662,6 +663,10 @@ namespace ui {
         if (!_visible)
         {
             return;
+        }
+        if (_scale9Enabled && _sliceSpriteDirty) {
+            this->createSlicedSprites();
+            _sliceSpriteDirty = false;
         }
 
         uint32_t flags = processParentFlags(parentTransform, parentFlags);
@@ -796,7 +801,7 @@ namespace ui {
             }
           
         }
-        this->adjustScale9ImagePosition();
+        this->adjustNoneScale9ImagePosition();
     }
 
     bool Scale9Sprite::isScale9Enabled() const
@@ -813,12 +818,12 @@ namespace ui {
             {
                 _nonSliceSpriteAnchor = position;
                 _scale9Image->setAnchorPoint(position);
-                this->adjustScale9ImagePosition();
+                this->adjustNoneScale9ImagePosition();
             }
         }
     }
 
-    void Scale9Sprite::adjustScale9ImagePosition()
+    void Scale9Sprite::adjustNoneScale9ImagePosition()
     {
         if (_scale9Image)
         {
