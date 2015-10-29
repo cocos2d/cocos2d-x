@@ -49,9 +49,9 @@ namespace ui {
         ,_flippedY(false)
         ,_isPatch9(false)
         ,_brightState(State::NORMAL)
+        ,_nonSliceSpriteAnchor(Vec2::ANCHOR_MIDDLE)
         ,_sliceVertices(nullptr)
         ,_sliceIndices(nullptr)
-        ,_nonSliceSpriteAnchor(Vec2::ANCHOR_MIDDLE)
     {
         this->setAnchorPoint(Vec2(0.5,0.5));
     }
@@ -138,6 +138,7 @@ namespace ui {
                             const Size &originalSize,
                             const Rect& capInsets)
     {
+        bool ret = true;
         if(sprite)
         {
             auto texture = sprite->getTexture();
@@ -157,16 +158,16 @@ namespace ui {
 
                 }
             }
-           
-            this->updateWithSprite(sprite,
-                                   rect,
-                                   rotated,
-                                   offset,
-                                   originalSize,
-                                   actualCapInsets);
+
+            ret = this->updateWithSprite(sprite,
+                                         rect,
+                                         rotated,
+                                         offset,
+                                         originalSize,
+                                         actualCapInsets);
         }
 
-        return true;
+        return ret;
     }
 
     bool Scale9Sprite::initWithBatchNode(cocos2d::SpriteBatchNode *batchnode,
@@ -391,6 +392,7 @@ namespace ui {
                                         const Size &originalSize,
                                         const Rect& capInsets)
     {
+        
         GLubyte opacity = getOpacity();
         Color3B color = getColor();
 
@@ -418,15 +420,6 @@ namespace ui {
         }
 
         if (!_scale9Image)
-        {
-            return false;
-        }
-        _scale9Image->setAnchorPoint(Vec2::ZERO);
-        _scale9Image->setPosition(Vec2::ZERO);
-        
-        SpriteFrame *spriteFrame = _scale9Image->getSpriteFrame();
-
-        if (!spriteFrame)
         {
             return false;
         }
@@ -458,6 +451,8 @@ namespace ui {
 
         if (_scale9Enabled)
         {
+            _scale9Image->setAnchorPoint(Vec2::ZERO);
+            _scale9Image->setPosition(Vec2::ZERO);
             this->createSlicedSprites();
         }
 
@@ -487,33 +482,33 @@ namespace ui {
         if (_scale9Enabled)
         {
             Texture2D *tex = _scale9Image ? _scale9Image->getTexture() : nullptr;
-            
+
             if (tex == nullptr)
             {
                 return;
             }
-            
+
             auto capInsets = CC_RECT_POINTS_TO_PIXELS(_capInsetsInternal);
             auto textureRect = CC_RECT_POINTS_TO_PIXELS(_spriteRect);
             auto spriteRectSize = CC_SIZE_POINTS_TO_PIXELS(_originalSize);
-            
+
             //handle .9.png
             if (_isPatch9)
             {
                 spriteRectSize = Size(spriteRectSize.width - 2, spriteRectSize.height-2);
             }
-            
-            
+
+
             if(capInsets.equals(Rect::ZERO))
             {
                 capInsets = Rect(spriteRectSize.width/3, spriteRectSize.height/3,
                                  spriteRectSize.width/3, spriteRectSize.height/3);
             }
-            
+
             auto uv = this->calculateUV(tex, capInsets, spriteRectSize);
             auto vertices = this->calculateVertices(capInsets, spriteRectSize);
             auto triangles = this->calculateTriangles(uv, vertices);
-            
+
             _scale9Image->getPolygonInfo().setTriangles(triangles);
         }
     }
