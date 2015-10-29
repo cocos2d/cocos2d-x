@@ -90,6 +90,14 @@ public:
     void setQuad(V3F_C4B_T2F_Quad *quad);
 
     /**
+     * set the data to be a pointer to a triangles
+     * the member verts will not be released when this PolygonInfo destructs
+     * as the verts memory are managed by other objects
+     * @param triangles  a pointer to the TrianglesCommand::Triangles object
+     */
+    void setTriangles(TrianglesCommand::Triangles triangles);
+
+    /**
      * get vertex count
      * @return number of vertices
      */
@@ -110,7 +118,6 @@ public:
     Rect rect;
     std::string filename;
     TrianglesCommand::Triangles triangles;
-    
 protected:
     bool isVertsOwner;
     
