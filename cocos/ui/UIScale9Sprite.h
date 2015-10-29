@@ -78,6 +78,12 @@ namespace ui {
             GRAY
         };
         
+        enum class RenderingType
+        {
+            SIMPLE,
+            SLICE
+        };
+        
     public:
         
         /**
@@ -648,6 +654,19 @@ namespace ui {
         virtual float getScale() const override;
         using Node::getScaleZ;
         virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
+        
+        /**
+         * Set the slice sprite rendering type.
+         * When setting to SIMPLE, only 4 vertexes is used to rendering.
+         * otherwise 16 vertexes will be used to rendering.
+         * @see RenderingType
+         */
+        void setRenderingType(RenderingType type);
+        
+        /**
+         * Return the slice sprite rendering type.
+         */
+        RenderingType getRenderingType()const;
     protected:
         void updateCapInset();
         void createSlicedSprites();
@@ -696,6 +715,7 @@ namespace ui {
         V3F_C4B_T2F* _sliceVertices;
         unsigned short* _sliceIndices;
         bool _sliceSpriteDirty;
+        RenderingType _renderingType;
     };
     
 }}  //end of namespace

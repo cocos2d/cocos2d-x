@@ -53,6 +53,7 @@ namespace ui {
         ,_sliceVertices(nullptr)
         ,_sliceIndices(nullptr)
         ,_sliceSpriteDirty(false)
+        ,_renderingType(RenderingType::SLICE)
     {
         this->setAnchorPoint(Vec2(0.5,0.5));
     }
@@ -1076,7 +1077,16 @@ namespace ui {
             v3 = (textureRect.origin.y + textureRect.size.height) / atlasHeight;
         }
 
-        std::vector<Vec2> uvCoordinates = {Vec2(u0,v3), Vec2(u1,v2), Vec2(u2,v1), Vec2(u3,v0)};
+        
+        std::vector<Vec2> uvCoordinates;
+        if (_renderingType == RenderingType::SIMPLE)
+        {
+            uvCoordinates = {Vec2(u0,v3), Vec2(u3,v0)};
+        }
+        else
+        {
+            uvCoordinates = {Vec2(u0,v3), Vec2(u1,v2), Vec2(u2,v1), Vec2(u3,v0)};
+        }
 
         return uvCoordinates;
     }
@@ -1146,15 +1156,24 @@ namespace ui {
             y3 = (bottomHeight + topHeight) * yScale;
         }
 
-        std::vector<Vec2> vertices = {Vec2(x0,y0), Vec2(x1,y1), Vec2(x2,y2), Vec2(x3,y3)};
+        std::vector<Vec2> vertices;
+        
+        if (_renderingType == RenderingType::SIMPLE)
+        {
+            vertices = {Vec2(x0,y0), Vec2(x3,y3)};
+        }
+        else
+        {
+           vertices = {Vec2(x0,y0), Vec2(x1,y1), Vec2(x2,y2), Vec2(x3,y3)};
+        }
         return vertices;
     }
 
     TrianglesCommand::Triangles Scale9Sprite::calculateTriangles(const std::vector<Vec2>& uv,
                                                                 const std::vector<Vec2>& vertices)
     {
-        const unsigned short slicedTotalVertexCount = 16;
-        const unsigned short slicedTotalIndices = 54;
+        const unsigned short slicedTotalVertexCount = powf(uv.size(),2);
+        const unsigned short slicedTotalIndices = 6 * powf(uv.size() -1, 2);
         CC_SAFE_DELETE_ARRAY(_sliceVertices);
         CC_SAFE_DELETE_ARRAY(_sliceIndices);
 
@@ -1163,13 +1182,16 @@ namespace ui {
 
         unsigned short indicesStart = 0;
         const unsigned short indicesOffset = 6;
-        const unsigned short quadIndices[]={4,0,5, 1,5,0};
+        const unsigned short sliceQuadIndices[] = {4,0,5, 1,5,0};
+        const unsigned short simpleQuadIndices[] = {0,1,2, 3,2,1};
+        
 
         Color4B color4 = Color4B(_scale9Image->getDisplayedColor());
+        int vertexCount = (int)(vertices.size() - 1);
 
-        for (int j = 0; j <= 3; ++j)
+        for (int j = 0; j <= vertexCount; ++j)
         {
-            for (int i = 0; i <= 3; ++i)
+            for (int i = 0; i <= vertexCount; ++i)
             {
                 V3F_C4B_T2F vertextData;
                 vertextData.vertices.x = vertices[i].x;
@@ -1187,21 +1209,44 @@ namespace ui {
                 }
 
                 vertextData.colors = color4;
-
-                if (i < 3 && j < 3)
+                
+                //if slice mode
+                if (_renderingType == RenderingType::SLICE)
                 {
-                    memcpy(_sliceIndices + indicesStart, quadIndices, indicesOffset * sizeof(unsigned short));
-
-                    for (int k = 0; k  < indicesOffset; ++k)
-                    {
-                        unsigned short actualIndex = (i  + j * 3) * indicesOffset;
-                        _sliceIndices[k + actualIndex] = _sliceIndices[k + actualIndex] + j * 4 + i;
-                    }
-                    indicesStart = indicesStart + indicesOffset;
+                    memcpy(_sliceVertices + i + j * 4, &vertextData, sizeof(V3F_C4B_T2F));
                 }
-
-                memcpy(_sliceVertices + i + j * 4, &vertextData, sizeof(V3F_C4B_T2F));
+                else
+                {
+                    memcpy(_sliceVertices + i + j * 2, &vertextData, sizeof(V3F_C4B_T2F));
+                }
             }
+        }
+        
+        if (_renderingType == RenderingType::SLICE)
+        {
+            for (int j = 0; j <= vertexCount; ++j)
+            {
+                for (int i = 0; i <= vertexCount; ++i)
+                {
+                    if (i < 3 && j < 3)
+                    {
+                        memcpy(_sliceIndices + indicesStart, sliceQuadIndices, indicesOffset * sizeof(unsigned short));
+                        
+                        for (int k = 0; k  < indicesOffset; ++k)
+                        {
+                            unsigned short actualIndex = (i  + j * 3) * indicesOffset;
+                            _sliceIndices[k + actualIndex] = _sliceIndices[k + actualIndex] + j * 4 + i;
+                        }
+                        indicesStart = indicesStart + indicesOffset;
+                    }
+                    
+                }
+            }
+        }
+        
+        if (_renderingType == RenderingType::SIMPLE)
+        {
+            memcpy(_sliceIndices, simpleQuadIndices, indicesOffset * sizeof(unsigned short));
         }
 
         TrianglesCommand::Triangles triangles;
@@ -1211,6 +1256,23 @@ namespace ui {
         triangles.indices = _sliceIndices;
 
         return triangles;
+    }
+    
+    void Scale9Sprite::setRenderingType(cocos2d::ui::Scale9Sprite::RenderingType type)
+    {
+        _renderingType = type;
+        if (_renderingType == RenderingType::SIMPLE)
+        {
+            this->setInsetTop(0);
+            this->setInsetBottom(0);
+            this->setInsetLeft(0);
+            this->setInsetRight(0);
+        }
+    }
+    
+    Scale9Sprite::RenderingType Scale9Sprite::getRenderingType()const
+    {
+        return _renderingType;
     }
 
 }}

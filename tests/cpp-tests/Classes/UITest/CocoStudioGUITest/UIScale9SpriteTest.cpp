@@ -345,7 +345,7 @@ bool UIS9FrameNameSpriteSheetCropped::init()
         SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
         
         auto blocks = ui::Scale9Sprite::createWithSpriteFrameName("blocks9c.png");
-        
+        blocks->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
         blocks->setPosition(Vec2(x, y));
         
         this->addChild(blocks);
@@ -366,7 +366,7 @@ bool UIS9FrameNameSpriteSheetCroppedRotated::init()
         SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
         
         auto blocks = ui::Scale9Sprite::createWithSpriteFrameName("blocks9cr.png");
-        
+        blocks->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
         blocks->setPosition(Vec2(x, y));
         
         this->addChild(blocks);
