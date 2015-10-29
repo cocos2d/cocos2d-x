@@ -132,15 +132,6 @@ namespace cocos2d { namespace network {
                     }
                 }
 
-                // open file
-                _fp = fopen(util->getSuitableFOpen(_tempFileName).c_str(), "ab");
-                if (nullptr == _fp)
-                {
-                    _errCode = DownloadTask::ERROR_FILE_OP_FAILED;
-                    _errCodeInternal = 0;
-                    _errDescription = "Can't open file:";
-                    _errDescription.append(_tempFileName);
-                }
                 ret = true;
             } while (0);
 
@@ -165,6 +156,19 @@ namespace cocos2d { namespace network {
         {
             lock_guard<mutex> lock(_mutex);
             size_t ret = 0;
+
+            if (!_fp && _tempFileName.length())
+            {
+                auto util = FileUtils::getInstance();
+                // open file
+                _fp = fopen(util->getSuitableFOpen(_tempFileName).c_str(), "ab");
+                if (!_fp)
+                {
+                    // This will cause CURLE_WRITE_ERROR
+                    return 0;
+                }
+            }
+
             if (_fp)
             {
                 ret = fwrite(buffer, size, count, _fp);
@@ -851,5 +855,5 @@ namespace cocos2d { namespace network {
             DLLOG("    DownloaderCURL: finish Task: Id(%d)", coTask.serialId);
         }
     }
-    
+
 }}  //  namespace cocos2d::network
