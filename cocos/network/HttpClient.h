@@ -68,7 +68,7 @@ public:
     static HttpClient *getInstance();
     
     /** 
-     * Relase the instance of HttpClient. 
+     * Release the instance of HttpClient. 
      */
     static void destroyInstance();
 

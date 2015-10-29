@@ -80,7 +80,7 @@ public:
     /** Returns the Command type. */
     inline Type getType() const { return _type; }
     
-    /** Retruns whether is transparent. */
+    /** Returns whether is transparent. */
     inline bool isTransparent() const { return _isTransparent; }
     
     /** Set transparent flag. */

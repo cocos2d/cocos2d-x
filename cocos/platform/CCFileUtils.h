@@ -58,7 +58,7 @@ public:
     /**
      * You can inherit from platform dependent implementation of FileUtils, such as FileUtilsAndroid,
      * and use this function to set delegate, then FileUtils will invoke delegate's implementation.
-     * Fox example, your resources are encrypted, so you need to decrypt it after reading data from
+     * For example, your resources are encrypted, so you need to decrypt it after reading data from
      * resources, then you can implement all getXXX functions, and engine will invoke your own getXX
      * functions when reading data of resources.
      *

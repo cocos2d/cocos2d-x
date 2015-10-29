@@ -197,7 +197,7 @@ public:
      
     /**
      * @brief Get all the pages in the PageView.
-     * @return A vector of Layout pionters.
+     * @return A vector of Layout pointers.
      */
     Vector<Layout*>& getPages();
     
