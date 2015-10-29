@@ -37,16 +37,18 @@ schedTarget_proxy_t *_schedObj_target_ht = NULL;
 JSTouchDelegate::TouchDelegateMap JSTouchDelegate::sTouchDelegateMap;
 
 JSTouchDelegate::JSTouchDelegate()
-: _obj(nullptr)
-, _needUnroot(false)
+: _needUnroot(false)
 , _touchListenerAllAtOnce(nullptr)
 , _touchListenerOneByOne(nullptr)
 {
+    auto cx = ScriptingCore::getInstance()->getGlobalContext();
+    _obj.construct(cx);
 }
 
 JSTouchDelegate::~JSTouchDelegate()
 {
     CCLOGINFO("In the destructor of JSTouchDelegate.");
+    _obj.destroyIfConstructed();
 }
 
 void JSTouchDelegate::setDelegateForJSObject(JSObject* pJSObj, JSTouchDelegate* pDelegate)
@@ -74,17 +76,9 @@ void JSTouchDelegate::removeDelegateForJSObject(JSObject* pJSObj)
     sTouchDelegateMap.erase(pJSObj);
 }
 
-void JSTouchDelegate::setJSObject(JSObject *obj)
+void JSTouchDelegate::setJSObject(JS::HandleObject obj)
 {
-    _obj = obj;
-    
-    js_proxy_t *p = jsb_get_js_proxy(_obj);
-    if (!p)
-    {
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS::AddNamedObjectRoot(cx, &_obj, "JSB_TouchDelegateTarget, target");
-        _needUnroot = true;
-    }
+    _obj.ref() = obj;
 }
 
 void JSTouchDelegate::registerStandardDelegate(int priority)
@@ -123,12 +117,6 @@ void JSTouchDelegate::registerTargetedDelegate(int priority, bool swallowsTouche
 
 void JSTouchDelegate::unregisterTouchDelegate()
 {
-    if (_needUnroot)
-    {
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS::RemoveObjectRoot(cx, &_obj);
-    }
-    
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeEventListener(_touchListenerAllAtOnce);
     dispatcher->removeEventListener(_touchListenerOneByOne);
@@ -143,8 +131,7 @@ bool JSTouchDelegate::onTouchBegan(Touch *touch, Event *event)
     JS::RootedValue retval(cx);
     bool bRet = false;
     
-    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::BEGAN,
-        touch, _obj.get(), &retval);
+    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::BEGAN, touch, _obj.ref(), &retval);
     
     if(retval.isBoolean())
     {
@@ -159,48 +146,45 @@ void JSTouchDelegate::onTouchMoved(Touch *touch, Event *event)
 {
     CC_UNUSED_PARAM(event);
 
-    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::MOVED,
-        touch, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::MOVED, touch, _obj.ref());
 }
 
 void JSTouchDelegate::onTouchEnded(Touch *touch, Event *event)
 {
     CC_UNUSED_PARAM(event);
 
-    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::ENDED,
-        touch, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::ENDED, touch, _obj.ref());
 }
 
 void JSTouchDelegate::onTouchCancelled(Touch *touch, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::CANCELLED,
-        touch, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::CANCELLED, touch, _obj.ref());
 }
 
 // optional
 void JSTouchDelegate::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::BEGAN, touches, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::BEGAN, touches, _obj.ref());
 }
 
 void JSTouchDelegate::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::MOVED, touches, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::MOVED, touches, _obj.ref());
 }
 
 void JSTouchDelegate::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::ENDED, touches, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::ENDED, touches, _obj.ref());
 }
 
 void JSTouchDelegate::onTouchesCancelled(const std::vector<Touch*>& touches, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::CANCELLED, touches, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::CANCELLED, touches, _obj.ref());
 }
 
 // cc.EventTouch#getTouches
@@ -798,7 +782,6 @@ bool js_cocos2dx_JSTouchDelegate_registerStandardDelegate(JSContext *cx, uint32_
     if (argc == 1 || argc == 2)
     {
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        JSObject* jsobj = NULL;
 
         JSTouchDelegate *touch = new JSTouchDelegate();
         
@@ -810,7 +793,7 @@ bool js_cocos2dx_JSTouchDelegate_registerStandardDelegate(JSContext *cx, uint32_
         
         touch->registerStandardDelegate(priority);
         
-        jsobj = args.get(0).toObjectOrNull();
+        JS::RootedObject jsobj(cx, args.get(0).toObjectOrNull());
         touch->setJSObject(jsobj);
         JSTouchDelegate::setDelegateForJSObject(jsobj, touch);
         return true;
@@ -824,12 +807,11 @@ bool js_cocos2dx_JSTouchDelegate_registerTargetedDelegate(JSContext *cx, uint32_
     if (argc == 3)
     {
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        JSObject* jsobj = NULL;
 
         JSTouchDelegate *touch = new JSTouchDelegate();
         touch->registerTargetedDelegate(args.get(0).toInt32(), args.get(1).toBoolean());
         
-        jsobj = args.get(2).toObjectOrNull();
+        JS::RootedObject jsobj(cx, args.get(2).toObjectOrNull());
         touch->setJSObject(jsobj);
         JSTouchDelegate::setDelegateForJSObject(jsobj, touch);
 
@@ -5773,7 +5755,6 @@ bool js_cocos2dx_PolygonInfo_constructor(JSContext *cx, uint32_t argc, jsval *vp
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
     JS::RootedObject proto(cx, typeClass->proto.get());
     JS::RootedObject parent(cx, typeClass->parentProto.get());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
@@ -5964,7 +5945,6 @@ bool js_cocos2dx_AutoPolygon_constructor(JSContext *cx, uint32_t argc, jsval *vp
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
     JS::RootedObject proto(cx, typeClass->proto.get());
     JS::RootedObject parent(cx, typeClass->parentProto.get());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
