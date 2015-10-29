@@ -857,6 +857,11 @@ void AssetsManagerEx::onError(const network::DownloadTask& task,
 
         if (_totalWaitToDownload <= _failedUnits.size())
         {
+            // Save current download manifest information for resuming
+            _tempManifest->saveToFile(_tempManifestPath);
+
+            decompressDownloadedZip();
+
             _updateState = State::FAIL_TO_UPDATE;
             dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_FAILED);
         }
