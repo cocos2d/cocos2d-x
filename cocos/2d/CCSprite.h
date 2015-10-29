@@ -404,12 +404,11 @@ public:
     CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flippedY) { setFlippedY(flippedY); };
 
     /**
-     * returns a copy of the polygon information associated with this sprite
-     * because this is a copy process it is slower than getting the reference, so use wisely
+     * returns a reference of the polygon information associated with this sprite
      *
      * @return a copy of PolygonInfo
      */
-    PolygonInfo getPolygonInfo() const;
+    PolygonInfo& getPolygonInfo();
 
     /**
      * set the sprite to use this new PolygonInfo

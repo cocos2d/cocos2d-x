@@ -655,10 +655,10 @@ namespace ui {
         void adjustScale9ImagePosition();
         void applyBlendFunc();
         void updateBlendFunc(Texture2D *texture);
-        std::vector<Vec2> caculateUV(Texture2D *tex, const Rect& capInsets,
+        std::vector<Vec2> calculateUV(Texture2D *tex, const Rect& capInsets,
                                      const Size& spriteRectSize);
-        std::vector<Vec2> caculateVertices(const Rect& capInsets, const Size& spriteRectSize);
-        TrianglesCommand::Triangles caculateTriangles(const std::vector<Vec2>& uv,
+        std::vector<Vec2> calculateVertices(const Rect& capInsets, const Size& spriteRectSize);
+        TrianglesCommand::Triangles calculateTriangles(const std::vector<Vec2>& uv,
                                                       const std::vector<Vec2>& vertices);
         
         bool _spritesGenerated;

@@ -510,14 +510,11 @@ namespace ui {
                                  spriteRectSize.width/3, spriteRectSize.height/3);
             }
             
-            auto uv = this->caculateUV(tex, capInsets, spriteRectSize);
-            auto vertices = this->caculateVertices(capInsets, spriteRectSize);
-            auto triangles = this->caculateTriangles(uv, vertices);
+            auto uv = this->calculateUV(tex, capInsets, spriteRectSize);
+            auto vertices = this->calculateVertices(capInsets, spriteRectSize);
+            auto triangles = this->calculateTriangles(uv, vertices);
             
-            PolygonInfo polyInfo;
-            polyInfo.setTriangles(triangles);
-            
-            _scale9Image->setPolygonInfo(polyInfo);
+            _scale9Image->getPolygonInfo().setTriangles(triangles);
         }
     }
 
@@ -1003,7 +1000,7 @@ namespace ui {
     // |        |      |      |
     // v3-------------------- (1,1)  (texture coordinate is flipped)
     // u0       u1     u2     u3
-    std::vector<Vec2> Scale9Sprite::caculateUV(Texture2D *tex,
+    std::vector<Vec2> Scale9Sprite::calculateUV(Texture2D *tex,
                                                const Rect& capInsets,
                                                const Size& spriteRectSize)
     {
@@ -1092,7 +1089,7 @@ namespace ui {
     // |        |      |      |
     //x0,y0--------------------
     //         x1     x2     x3
-    std::vector<Vec2> Scale9Sprite::caculateVertices(const Rect& capInsets,
+    std::vector<Vec2> Scale9Sprite::calculateVertices(const Rect& capInsets,
                                                      const Size& spriteRectSize)
     {
         float leftWidth = 0, centerWidth = 0, rightWidth = 0;
@@ -1149,7 +1146,7 @@ namespace ui {
         return vertices;
     }
     
-    TrianglesCommand::Triangles Scale9Sprite::caculateTriangles(const std::vector<Vec2>& uv,
+    TrianglesCommand::Triangles Scale9Sprite::calculateTriangles(const std::vector<Vec2>& uv,
                                                                 const std::vector<Vec2>& vertices)
     {
         const unsigned short slicedTotalVertexCount = 16;
