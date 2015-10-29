@@ -520,6 +520,10 @@ namespace ui {
 
     void Scale9Sprite::setContentSize(const Size &size)
     {
+        if (_contentSize.equals(size))
+        {
+            return;
+        }
         Node::setContentSize(size);
         _preferredSize = size;
         this->createSlicedSprites();
@@ -1006,17 +1010,17 @@ namespace ui {
     {
         auto atlasWidth = tex->getPixelsWide();
         auto atlasHeight = tex->getPixelsHigh();
-        
+
         //caculate texture coordinate
         float leftWidth = 0, centerWidth = 0, rightWidth = 0;
         float topHeight = 0, centerHeight = 0, bottomHeight = 0;
-        
+
         if (_spriteFrameRotated)
         {
             rightWidth = capInsets.origin.y;
             centerWidth = capInsets.size.height;
             leftWidth = spriteRectSize.height - centerWidth - rightWidth;
-            
+
             topHeight = capInsets.origin.x;
             centerHeight = capInsets.size.width;
             bottomHeight = spriteRectSize.width - (topHeight + centerHeight);
@@ -1026,12 +1030,12 @@ namespace ui {
             leftWidth = capInsets.origin.x;
             centerWidth = capInsets.size.width;
             rightWidth = spriteRectSize.width - (leftWidth + centerWidth);
-            
+
             topHeight = capInsets.origin.y;
             centerHeight = capInsets.size.height;
             bottomHeight =spriteRectSize.height - (topHeight + centerHeight);
         }
-        
+
         auto textureRect = CC_RECT_POINTS_TO_PIXELS(_spriteRect);
         //handle .9.png
         if (_isPatch9)
@@ -1043,7 +1047,7 @@ namespace ui {
                                textureRect.size.width - 2,
                                textureRect.size.height - 2);
         }
-        
+
         //uv computation should take spritesheet into account.
         float u0, u1, u2, u3;
         float v0, v1, v2, v3;
@@ -1053,7 +1057,7 @@ namespace ui {
             u1 = (leftWidth + textureRect.origin.x) / atlasWidth;
             u2 = (leftWidth + centerWidth + textureRect.origin.x) / atlasWidth;
             u3 = (textureRect.origin.x + textureRect.size.height) / atlasWidth;
-            
+
             v3 = textureRect.origin.y / atlasHeight;
             v2 = (topHeight + textureRect.origin.y) / atlasHeight;
             v1 = (topHeight + centerHeight + textureRect.origin.y) / atlasHeight;
@@ -1065,18 +1069,18 @@ namespace ui {
             u1 = (leftWidth + textureRect.origin.x) / atlasWidth;
             u2 = (leftWidth + centerWidth + textureRect.origin.x) / atlasWidth;
             u3 = (textureRect.origin.x + textureRect.size.width) / atlasWidth;
-            
+
             v0 = textureRect.origin.y / atlasHeight;
             v1 = (topHeight + textureRect.origin.y) / atlasHeight;
             v2 = (topHeight + centerHeight + textureRect.origin.y) / atlasHeight;
             v3 = (textureRect.origin.y + textureRect.size.height) / atlasHeight;
         }
-        
+
         std::vector<Vec2> uvCoordinates = {Vec2(u0,v3), Vec2(u1,v2), Vec2(u2,v1), Vec2(u3,v0)};
-        
+
         return uvCoordinates;
     }
-    
+
     //
     // y3----------------------(preferedSize.width, preferedSize.height)
     // |        |      |      |
@@ -1094,16 +1098,16 @@ namespace ui {
     {
         float leftWidth = 0, centerWidth = 0, rightWidth = 0;
         float topHeight = 0, centerHeight = 0, bottomHeight = 0;
-        
+
         leftWidth = capInsets.origin.x;
         centerWidth = capInsets.size.width;
         rightWidth = spriteRectSize.width - (leftWidth + centerWidth);
-        
+
         topHeight = capInsets.origin.y;
         centerHeight = capInsets.size.height;
         bottomHeight = spriteRectSize.height - (topHeight + centerHeight);
-        
-        
+
+
         leftWidth = leftWidth / CC_CONTENT_SCALE_FACTOR();
         rightWidth = rightWidth / CC_CONTENT_SCALE_FACTOR();
         topHeight = topHeight / CC_CONTENT_SCALE_FACTOR();
@@ -1126,7 +1130,7 @@ namespace ui {
             x1 = x2 = leftWidth * xScale;
             x3 = (leftWidth + rightWidth) * xScale;
         }
-        
+
         if(sizableHeight >= 0)
         {
             y0 = 0;
@@ -1141,11 +1145,11 @@ namespace ui {
             y1 = y2= bottomHeight * yScale;
             y3 = (bottomHeight + topHeight) * yScale;
         }
-        
+
         std::vector<Vec2> vertices = {Vec2(x0,y0), Vec2(x1,y1), Vec2(x2,y2), Vec2(x3,y3)};
         return vertices;
     }
-    
+
     TrianglesCommand::Triangles Scale9Sprite::calculateTriangles(const std::vector<Vec2>& uv,
                                                                 const std::vector<Vec2>& vertices)
     {
@@ -1153,16 +1157,16 @@ namespace ui {
         const unsigned short slicedTotalIndices = 54;
         CC_SAFE_DELETE_ARRAY(_sliceVertices);
         CC_SAFE_DELETE_ARRAY(_sliceIndices);
-        
+
         _sliceVertices = new V3F_C4B_T2F[slicedTotalVertexCount];
         _sliceIndices = new unsigned short[slicedTotalIndices];
-        
+
         unsigned short indicesStart = 0;
         const unsigned short indicesOffset = 6;
         const unsigned short quadIndices[]={4,0,5, 1,5,0};
-        
+
         Color4B color4 = Color4B(_scale9Image->getDisplayedColor());
-        
+
         for (int j = 0; j <= 3; ++j)
         {
             for (int i = 0; i <= 3; ++i)
@@ -1170,7 +1174,7 @@ namespace ui {
                 V3F_C4B_T2F vertextData;
                 vertextData.vertices.x = vertices[i].x;
                 vertextData.vertices.y = vertices[j].y;
-                
+
                 if (_spriteFrameRotated)
                 {
                     vertextData.texCoords.u = uv[j].x;
@@ -1181,13 +1185,13 @@ namespace ui {
                     vertextData.texCoords.u = uv[i].x;
                     vertextData.texCoords.v = uv[j].y;
                 }
-                
+
                 vertextData.colors = color4;
-                
+
                 if (i < 3 && j < 3)
                 {
                     memcpy(_sliceIndices + indicesStart, quadIndices, indicesOffset * sizeof(unsigned short));
-                    
+
                     for (int k = 0; k  < indicesOffset; ++k)
                     {
                         unsigned short actualIndex = (i  + j * 3) * indicesOffset;
@@ -1195,17 +1199,17 @@ namespace ui {
                     }
                     indicesStart = indicesStart + indicesOffset;
                 }
-                
+
                 memcpy(_sliceVertices + i + j * 4, &vertextData, sizeof(V3F_C4B_T2F));
             }
         }
-        
+
         TrianglesCommand::Triangles triangles;
         triangles.vertCount = slicedTotalVertexCount;
         triangles.indexCount = slicedTotalIndices;
         triangles.verts = _sliceVertices;
         triangles.indices = _sliceIndices;
-        
+
         return triangles;
     }
 
