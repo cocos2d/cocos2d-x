@@ -854,6 +854,12 @@ void AssetsManagerEx::onError(const network::DownloadTask& task,
             _failedUnits.emplace(unit.customId, unit);
         }
         dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_UPDATING, task.identifier, errorStr, errorCode, errorCodeInternal);
+
+        if (_totalWaitToDownload <= _failedUnits.size())
+        {
+            _updateState = State::FAIL_TO_UPDATE;
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_FAILED);
+        }
     }
 }
 
@@ -957,7 +963,7 @@ void AssetsManagerEx::onSuccess(const std::string &srcUrl, const std::string &st
             _failedUnits.erase(unitIt);
         }
         
-        if (_totalWaitToDownload <= 0)
+        if (_totalWaitToDownload <= _failedUnits.size())
         {
             // Finished with error check
             if (_failedUnits.size() > 0)
