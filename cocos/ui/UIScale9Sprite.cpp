@@ -477,6 +477,14 @@ namespace ui {
 
         return true;
     }
+    
+    void Scale9Sprite::configureSimpleModeRendering()
+    {
+        this->setInsetTop(0);
+        this->setInsetBottom(0);
+        this->setInsetLeft(0);
+        this->setInsetRight(0);
+    }
 
     void Scale9Sprite::createSlicedSprites()
     {
@@ -488,6 +496,11 @@ namespace ui {
             if (tex == nullptr)
             {
                 return;
+            }
+            
+            if (_renderingType == RenderingType::SIMPLE)
+            {
+                this->configureSimpleModeRendering();
             }
 
             auto capInsets = CC_RECT_POINTS_TO_PIXELS(_capInsetsInternal);
@@ -1261,13 +1274,6 @@ namespace ui {
     void Scale9Sprite::setRenderingType(cocos2d::ui::Scale9Sprite::RenderingType type)
     {
         _renderingType = type;
-        if (_renderingType == RenderingType::SIMPLE)
-        {
-            this->setInsetTop(0);
-            this->setInsetBottom(0);
-            this->setInsetLeft(0);
-            this->setInsetRight(0);
-        }
     }
     
     Scale9Sprite::RenderingType Scale9Sprite::getRenderingType()const

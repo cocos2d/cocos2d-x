@@ -672,6 +672,7 @@ namespace ui {
         void createSlicedSprites();
         void cleanupSlicedSprites();
         void adjustNoneScale9ImagePosition();
+        void configureSimpleModeRendering();
         void applyBlendFunc();
         void updateBlendFunc(Texture2D *texture);
         std::vector<Vec2> calculateUV(Texture2D *tex, const Rect& capInsets,
