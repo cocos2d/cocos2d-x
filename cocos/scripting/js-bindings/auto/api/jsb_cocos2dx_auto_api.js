@@ -11414,6 +11414,24 @@ int
 },
 
 /**
+ * @method drawPolygon
+ * @param {vec2_object} arg0
+ * @param {int} arg1
+ * @param {color4f_object} arg2
+ * @param {float} arg3
+ * @param {color4f_object} arg4
+ */
+drawPolygon : function (
+vec2, 
+int, 
+color4f, 
+float, 
+color4f 
+)
+{
+},
+
+/**
  * @method drawDot
  * @param {vec2_object} arg0
  * @param {float} arg1
@@ -11606,22 +11624,6 @@ color4f
 drawSolidRect : function (
 vec2, 
 vec2, 
-color4f 
-)
-{
-},
-
-/**
- * @method drawPoly
- * @param {vec2_object} arg0
- * @param {unsigned int} arg1
- * @param {bool} arg2
- * @param {color4f_object} arg3
- */
-drawPoly : function (
-vec2, 
-int, 
-bool, 
 color4f 
 )
 {
