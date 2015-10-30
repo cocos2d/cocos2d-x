@@ -54,6 +54,7 @@ UIScale9SpriteTests::UIScale9SpriteTests()
     ADD_TEST_CASE(UIS9ChangeAnchorPoint);
     ADD_TEST_CASE(UIS9NinePatchTest);
     ADD_TEST_CASE(UIS9BatchTest);
+    ADD_TEST_CASE(UIS9ToggleRenderingTypeTest);
 }
 
 // UIScale9SpriteTest
@@ -949,6 +950,44 @@ bool UIS9BatchTest::init()
         });
         this->addChild(addSliceSpriteButton);
         
+        
+        return true;
+    }
+    return false;
+}
+
+bool UIS9ToggleRenderingTypeTest::init()
+{
+    if (UIScene::init()) {
+        
+        auto winSize = Director::getInstance()->getWinSize();
+        float x = winSize.width / 2;
+        float y = 0 + (winSize.height / 2 - 20);
+        
+        auto label = Label::createWithSystemFont("Click Button to toggle rendering type", "Arial", 15);
+        label->setPosition(Vec2(winSize.width/2, winSize.height - 60));
+        this->addChild(label);
+        
+        auto blocks = ui::Scale9Sprite::create("Images/blocks9.png");
+      
+        blocks->setPosition(Vec2(x, y));
+        blocks->setPreferredSize(Size(96*2, 96));
+        this->addChild(blocks);
+        
+        auto addSliceSpriteButton = ui::Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        addSliceSpriteButton->setPosition(Vec2(winSize.width/2,winSize.height - 100));
+        addSliceSpriteButton->setTitleText("Slice Rendering");
+        addSliceSpriteButton->addClickEventListener([=](Ref*){
+            if (blocks->getRenderingType() == Scale9Sprite::RenderingType::SLICE) {
+                blocks->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+                addSliceSpriteButton->setTitleText("Simple Rendering");
+            }else{
+                blocks->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+                addSliceSpriteButton->setTitleText("Slice Rendering");
+                blocks->setCapInsets(Rect(96/3,96/3,96/3,96/3));
+            }
+        });
+        this->addChild(addSliceSpriteButton);
         
         return true;
     }

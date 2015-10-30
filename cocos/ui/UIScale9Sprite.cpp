@@ -1273,7 +1273,12 @@ namespace ui {
     
     void Scale9Sprite::setRenderingType(cocos2d::ui::Scale9Sprite::RenderingType type)
     {
+        if (_renderingType == type)
+        {
+            return;
+        }
         _renderingType = type;
+        _sliceSpriteDirty = true;
     }
     
     Scale9Sprite::RenderingType Scale9Sprite::getRenderingType()const
