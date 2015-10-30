@@ -467,7 +467,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                 }
                 else if (!dirname.empty() && !textureName.empty())
                 {
-                	textureName = dirname + textureName;
+                    textureName = dirname + textureName;
                 }
                 
                 Texture2D *tex = nullptr;
@@ -579,7 +579,7 @@ bool ParticleSystem::initWithTotalParticles(int numberOfParticles)
 ParticleSystem::~ParticleSystem()
 {
     // Since the scheduler retains the "target (in this case the ParticleSystem)
-	// it is not needed to call "unscheduleUpdate" here. In fact, it will be called in "cleanup"
+    // it is not needed to call "unscheduleUpdate" here. In fact, it will be called in "cleanup"
     //unscheduleUpdate();
     _particleData.release();
     CC_SAFE_RELEASE(_texture);
@@ -587,62 +587,65 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::addParticles(int count)
 {
+#define SET_COLOR(c, b, v) c[i] = clampf( b + v * RANDOM_M11(&RANDSEED) , 0 , 1 );
+#define SET_DELTA_COLOR(c, dc) dc[i] = (dc[i] - c[i]) / _particleData.timeToLive[i];
+
     uint32_t RANDSEED = rand();
 
     int start = _particleCount;
     _particleCount += count;
     
-    //life
+    // start position
+    Vec2 pos;
+    if (_positionType == PositionType::FREE)
+    {
+        pos = this->convertToWorldSpace(Vec2::ZERO);
+    }
+    else if (_positionType == PositionType::RELATIVE)
+    {
+        pos = _position;
+    }
+
     for (int i = start; i < _particleCount ; ++i)
     {
+        // start position
+        _particleData.startPosX[i] = pos.x;
+        _particleData.startPosY[i] = pos.y;
+
+        //life
         float theLife = _life + _lifeVar * RANDOM_M11(&RANDSEED);
         _particleData.timeToLive[i] = MAX(0, theLife);
-    }
-    
-    //position
-    for (int i = start; i < _particleCount; ++i)
-    {
+        
+        //position
         _particleData.posx[i] = _sourcePosition.x + _posVar.x * RANDOM_M11(&RANDSEED);
-    }
-    
-    for (int i = start; i < _particleCount; ++i)
-    {
         _particleData.posy[i] = _sourcePosition.y + _posVar.y * RANDOM_M11(&RANDSEED);
-    }
+
+        //color
+        SET_COLOR(_particleData.colorR, _startColor.r, _startColorVar.r);
+        SET_COLOR(_particleData.colorG, _startColor.g, _startColorVar.g);
+        SET_COLOR(_particleData.colorB, _startColor.b, _startColorVar.b);
+        SET_COLOR(_particleData.colorA, _startColor.a, _startColorVar.a);
     
-    //color
-#define SET_COLOR(c, b, v)\
-for (int i = start; i < _particleCount; ++i)\
-{\
-c[i] = clampf( b + v * RANDOM_M11(&RANDSEED) , 0 , 1 );\
-}
+        SET_COLOR(_particleData.deltaColorR, _endColor.r, _endColorVar.r);
+        SET_COLOR(_particleData.deltaColorG, _endColor.g, _endColorVar.g);
+        SET_COLOR(_particleData.deltaColorB, _endColor.b, _endColorVar.b);
+        SET_COLOR(_particleData.deltaColorA, _endColor.a, _endColorVar.a);
     
-    SET_COLOR(_particleData.colorR, _startColor.r, _startColorVar.r);
-    SET_COLOR(_particleData.colorG, _startColor.g, _startColorVar.g);
-    SET_COLOR(_particleData.colorB, _startColor.b, _startColorVar.b);
-    SET_COLOR(_particleData.colorA, _startColor.a, _startColorVar.a);
+        //delta color
+        SET_DELTA_COLOR(_particleData.colorR, _particleData.deltaColorR);
+        SET_DELTA_COLOR(_particleData.colorG, _particleData.deltaColorG);
+        SET_DELTA_COLOR(_particleData.colorB, _particleData.deltaColorB);
+        SET_DELTA_COLOR(_particleData.colorA, _particleData.deltaColorA);
     
-    SET_COLOR(_particleData.deltaColorR, _endColor.r, _endColorVar.r);
-    SET_COLOR(_particleData.deltaColorG, _endColor.g, _endColorVar.g);
-    SET_COLOR(_particleData.deltaColorB, _endColor.b, _endColorVar.b);
-    SET_COLOR(_particleData.deltaColorA, _endColor.a, _endColorVar.a);
-    
-#define SET_DELTA_COLOR(c, dc)\
-for (int i = start; i < _particleCount; ++i)\
-{\
-dc[i] = (dc[i] - c[i]) / _particleData.timeToLive[i];\
-}
-    
-    SET_DELTA_COLOR(_particleData.colorR, _particleData.deltaColorR);
-    SET_DELTA_COLOR(_particleData.colorG, _particleData.deltaColorG);
-    SET_DELTA_COLOR(_particleData.colorB, _particleData.deltaColorB);
-    SET_DELTA_COLOR(_particleData.colorA, _particleData.deltaColorA);
-    
-    //size
-    for (int i = start; i < _particleCount; ++i)
-    {
+        //size
         _particleData.size[i] = _startSize + _startSizeVar * RANDOM_M11(&RANDSEED);
         _particleData.size[i] = MAX(0, _particleData.size[i]);
+
+        // rotation
+        _particleData.rotation[i] = _startSpin + _startSpinVar * RANDOM_M11(&RANDSEED);
+
+        float endA = _endSpin + _endSpinVar * RANDOM_M11(&RANDSEED);
+        _particleData.deltaRotation[i] = (endA - _particleData.rotation[i]) / _particleData.timeToLive[i];
     }
     
     if (_endSize != START_SIZE_EQUAL_TO_END_SIZE)
@@ -661,50 +664,16 @@ dc[i] = (dc[i] - c[i]) / _particleData.timeToLive[i];\
             _particleData.deltaSize[i] = 0.0f;
         }
     }
-    
-    // rotation
-    for (int i = start; i < _particleCount; ++i)
-    {
-        _particleData.rotation[i] = _startSpin + _startSpinVar * RANDOM_M11(&RANDSEED);
-    }
-    for (int i = start; i < _particleCount; ++i)
-    {
-        float endA = _endSpin + _endSpinVar * RANDOM_M11(&RANDSEED);
-        _particleData.deltaRotation[i] = (endA - _particleData.rotation[i]) / _particleData.timeToLive[i];
-    }
-    
-    // position
-    Vec2 pos;
-    if (_positionType == PositionType::FREE)
-    {
-        pos = this->convertToWorldSpace(Vec2::ZERO);
-    }
-    else if (_positionType == PositionType::RELATIVE)
-    {
-        pos = _position;
-    }
-    for (int i = start; i < _particleCount; ++i)
-    {
-        _particleData.startPosX[i] = pos.x;
-    }
-    for (int i = start; i < _particleCount; ++i)
-    {
-        _particleData.startPosY[i] = pos.y;
-    }
-    
+        
     // Mode Gravity: A
     if (_emitterMode == Mode::GRAVITY)
-    {
-        
-        // radial accel
+    {  
         for (int i = start; i < _particleCount; ++i)
         {
+            // radial accel
             _particleData.modeA.radialAccel[i] = modeA.radialAccel + modeA.radialAccelVar * RANDOM_M11(&RANDSEED);
-        }
-        
-        // tangential accel
-        for (int i = start; i < _particleCount; ++i)
-        {
+            
+            // tangential accel
             _particleData.modeA.tangentialAccel[i] = modeA.tangentialAccel + modeA.tangentialAccelVar * RANDOM_M11(&RANDSEED);
         }
         
@@ -745,15 +714,7 @@ dc[i] = (dc[i] - c[i]) / _particleData.timeToLive[i];\
         for (int i = start; i < _particleCount; ++i)
         {
             _particleData.modeB.radius[i] = modeB.startRadius + modeB.startRadiusVar * RANDOM_M11(&RANDSEED);
-        }
-
-        for (int i = start; i < _particleCount; ++i)
-        {
             _particleData.modeB.angle[i] = CC_DEGREES_TO_RADIANS( _angle + _angleVar * RANDOM_M11(&RANDSEED));
-        }
-        
-        for (int i = start; i < _particleCount; ++i)
-        {
             _particleData.modeB.degreesPerSecond[i] = CC_DEGREES_TO_RADIANS(modeB.rotatePerSecond + modeB.rotatePerSecondVar * RANDOM_M11(&RANDSEED));
         }
         
@@ -773,6 +734,9 @@ dc[i] = (dc[i] - c[i]) / _particleData.timeToLive[i];\
             }
         }
     }
+
+#undef SET_COLOR
+#undef SET_DELTA_COLOR
 }
 
 void ParticleSystem::onEnter()
@@ -860,10 +824,7 @@ void ParticleSystem::update(float dt)
         for (int i = 0; i < _particleCount; ++i)
         {
             _particleData.timeToLive[i] -= dt;
-        }
-        
-        for (int i = 0; i < _particleCount; ++i)
-        {
+
             if (_particleData.timeToLive[i] <= 0.0f)
             {
                 int j = _particleCount - 1;
@@ -935,52 +896,26 @@ void ParticleSystem::update(float dt)
             for (int i = 0; i < _particleCount; ++i)
             {
                 _particleData.modeB.angle[i] += _particleData.modeB.degreesPerSecond[i] * dt;
-            }
-            
-            for (int i = 0; i < _particleCount; ++i)
-            {
                 _particleData.modeB.radius[i] += _particleData.modeB.deltaRadius[i] * dt;
-            }
-            
-            for (int i = 0; i < _particleCount; ++i)
-            {
+
                 _particleData.posx[i] = - cosf(_particleData.modeB.angle[i]) * _particleData.modeB.radius[i];
-            }
-            for (int i = 0; i < _particleCount; ++i)
-            {
                 _particleData.posy[i] = - sinf(_particleData.modeB.angle[i]) * _particleData.modeB.radius[i] * _yCoordFlipped;
             }
         }
         
-        //color r,g,b,a
         for (int i = 0 ; i < _particleCount; ++i)
         {
+            //color r,g,b,a
             _particleData.colorR[i] += _particleData.deltaColorR[i] * dt;
-        }
-        
-        for (int i = 0 ; i < _particleCount; ++i)
-        {
             _particleData.colorG[i] += _particleData.deltaColorG[i] * dt;
-        }
-        
-        for (int i = 0 ; i < _particleCount; ++i)
-        {
             _particleData.colorB[i] += _particleData.deltaColorB[i] * dt;
-        }
-        
-        for (int i = 0 ; i < _particleCount; ++i)
-        {
             _particleData.colorA[i] += _particleData.deltaColorA[i] * dt;
-        }
-        //size
-        for (int i = 0 ; i < _particleCount; ++i)
-        {
+            
+            //size
             _particleData.size[i] += (_particleData.deltaSize[i] * dt);
             _particleData.size[i] = MAX(0, _particleData.size[i]);
-        }
-        //angle
-        for (int i = 0 ; i < _particleCount; ++i)
-        {
+            
+            //angle
             _particleData.rotation[i] += _particleData.deltaRotation[i] * dt;
         }
         
@@ -1293,11 +1228,12 @@ ParticleBatchNode* ParticleSystem::getBatchNode(void) const
 
 void ParticleSystem::setBatchNode(ParticleBatchNode* batchNode)
 {
-    if( _batchNode != batchNode ) {
-
+    if( _batchNode != batchNode ) 
+    {
         _batchNode = batchNode; // weak reference
 
-        if( batchNode ) {
+        if( batchNode ) 
+        {
             //each particle needs a unique index
             for (int i = 0; i < _totalParticles; i++)
             {
