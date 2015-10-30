@@ -1311,7 +1311,7 @@
             node.setDebugDrawLength(length);
 
         var blendFunc = json["BlendFunc"];
-        if(blendFunc)
+        if(blendFunc && blendFunc["Src"] !== undefined && blendFunc["Dst"] !== undefined)
             node.setBlendFunc(new cc.BlendFunc(blendFunc["Src"] || 0, blendFunc["Dst"] || 0));
 
         parser.generalAttributes(node, json);
