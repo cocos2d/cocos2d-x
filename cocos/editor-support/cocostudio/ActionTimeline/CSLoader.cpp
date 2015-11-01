@@ -162,11 +162,6 @@ static const char* TEXTURES_PNG = "texturesPng";
 
 static const char* MONO_COCOS2D_VERSION     = "cocos2dVersion";
 
-// hide the logs of CSLoader --add by vincent
-#define CCLOG(...)       do {} while (0)
-#define CCLOGINFO(...)   do {} while (0)
-#define CCLOGERROR(...)  do {} while (0)
-#define CCLOGWARN(...)   do {} while (0)
 
 // CSLoader
 static CSLoader* _sharedCSLoader = nullptr;
