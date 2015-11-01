@@ -88,6 +88,10 @@ public:
      */
     void update();
     
+    /** @brief Start to download.
+     */
+    void batchDownload();
+    
     /** @brief Reupdate all failed assets under the current AssetsManagerEx context
      */
     void downloadFailedAssets();
@@ -107,6 +111,13 @@ public:
     /** @brief Function for retrieve the remote manifest object
      */
     const Manifest* getRemoteManifest() const;
+    
+    /** @brief Function for get total file size need to be downloaded
+     */
+    inline double getTotalSize() const
+    {
+        return _totalSize;
+    };
     
 CC_CONSTRUCTOR_ACCESS:
     
@@ -188,7 +199,6 @@ protected:
     virtual void onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
     
 private:
-    void batchDownload();
     
     //! The event of the current AssetsManagerEx in event dispatcher
     std::string _eventName;

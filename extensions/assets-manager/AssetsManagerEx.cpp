@@ -563,8 +563,16 @@ void AssetsManagerEx::startUpdate()
     {
         _tempManifest->genResumeAssetsList(&_downloadUnits);
         _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
-        this->batchDownload();
         
+        for (auto &units : _downloadUnits)
+        {
+            auto unit = units.second;
+            _totalSize += unit.size;
+        }
+        if (_totalSize == 0)
+        {
+            this->batchDownload();
+        }
         std::string msg = StringUtils::format("Resuming from previous unfinished update, %d files remains to be finished.", _totalToDownload);
         dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "", msg);
     }
@@ -604,6 +612,8 @@ void AssetsManagerEx::startUpdate()
                     unit.customId = it->first;
                     unit.srcUrl = packageUrl + path;
                     unit.storagePath = _storagePath + path;
+                    unit.size = diff.asset.size;
+                    _totalSize += unit.size;
                     _downloadUnits.emplace(unit.customId, unit);
                 }
             }
@@ -619,13 +629,18 @@ void AssetsManagerEx::startUpdate()
                 }
             }
             _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
-            this->batchDownload();
-            
+            if (_totalSize == 0)
+            {
+                this->batchDownload();
+            }
             std::string msg = StringUtils::format("Start to update %d files from remote package.", _totalToDownload);
             dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "", msg);
         }
     }
-
+    if (_totalSize > 0)
+    {
+        _totalEnabled = true;
+    }
     _waitToUpdate = false;
 }
 
@@ -887,12 +902,16 @@ void AssetsManagerEx::onProgress(double total, double downloaded, const std::str
             _tempManifest->setAssetDownloadState(customId, Manifest::DownloadState::DOWNLOADING);
             // Register the download size information
             _downloadedSize.emplace(customId, downloaded);
-            _totalSize += total;
             _sizeCollected++;
-            // All collected, enable total size
-            if (_sizeCollected == _totalToDownload)
+            
+            if (!_totalEnabled)
             {
-                _totalEnabled = true;
+                _totalSize += total;
+                // All collected, enable total size
+                if (_sizeCollected == _totalToDownload)
+                {
+                    _totalEnabled = true;
+                }
             }
         }
         
@@ -944,7 +963,10 @@ void AssetsManagerEx::onSuccess(const std::string &srcUrl, const std::string &st
             
             _percentByFile = 100 * (float)(_totalToDownload - _totalWaitToDownload) / _totalToDownload;
             // Notify progression event
-            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "");
+            if (!_totalEnabled)
+            {
+                dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "");
+            }
         }
         // Notify asset updated event
         dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ASSET_UPDATED, customId);
