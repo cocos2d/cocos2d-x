@@ -2,6 +2,7 @@
     "debugMode"     : 1,
     "showFPS"       : true,
     "frameRate"     : 60,
+    "noCache"       : false,
     "id"            : "gameCanvas",
     "renderMode"    : 0,
     "engineDir"     : "../../web/",
