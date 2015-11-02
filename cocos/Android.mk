@@ -221,6 +221,7 @@ navmesh/CCNavMeshUtils.cpp \
 ../external/unzip/unzip.cpp \
 ../external/edtaa3func/edtaa3func.cpp \
 ../external/xxhash/xxhash.c \
+../external/xxtea/xxtea.cpp \
 ../external/poly2tri/common/shapes.cc \
 ../external/poly2tri/sweep/advancing_front.cc \
 ../external/poly2tri/sweep/cdt.cc \

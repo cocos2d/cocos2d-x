@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		074ED7691B5C2687007D2161 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 074ED7671B5C2687007D2161 /* xxtea.cpp */; };
+		074ED76A1B5C2687007D2161 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 074ED7671B5C2687007D2161 /* xxtea.cpp */; };
+		074ED76B1B5C2687007D2161 /* xxtea.h in Headers */ = {isa = PBXBuildFile; fileRef = 074ED7681B5C2687007D2161 /* xxtea.h */; };
+		074ED76C1B5C2687007D2161 /* xxtea.h in Headers */ = {isa = PBXBuildFile; fileRef = 074ED7681B5C2687007D2161 /* xxtea.h */; };
 		15AE180819AAD2F700C27E9E /* CCAABB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AE17E419AAD2F700C27E9E /* CCAABB.cpp */; };
 		15AE180919AAD2F700C27E9E /* CCAABB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AE17E419AAD2F700C27E9E /* CCAABB.cpp */; };
 		15AE180A19AAD2F700C27E9E /* CCAABB.h in Headers */ = {isa = PBXBuildFile; fileRef = 15AE17E519AAD2F700C27E9E /* CCAABB.h */; };
@@ -3691,6 +3695,8 @@
 		06CAAABF186AD63B0012A414 /* TriggerMng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerMng.h; sourceTree = "<group>"; };
 		06CAAAC0186AD63B0012A414 /* TriggerObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerObj.cpp; sourceTree = "<group>"; };
 		06CAAAC1186AD63B0012A414 /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
+		074ED7671B5C2687007D2161 /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xxtea.cpp; sourceTree = "<group>"; };
+		074ED7681B5C2687007D2161 /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxtea.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		15AE17E419AAD2F700C27E9E /* CCAABB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAABB.cpp; sourceTree = "<group>"; };
@@ -5683,6 +5689,16 @@
 			path = ActionTimeline;
 			sourceTree = "<group>";
 		};
+		074ED7661B5C2687007D2161 /* xxtea */ = {
+			isa = PBXGroup;
+			children = (
+				074ED7671B5C2687007D2161 /* xxtea.cpp */,
+				074ED7681B5C2687007D2161 /* xxtea.h */,
+			);
+			name = xxtea;
+			path = ../external/xxtea;
+			sourceTree = "<group>";
+		};
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
@@ -6201,6 +6217,7 @@
 		1A57033E180BD0490088DEC7 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				074ED7661B5C2687007D2161 /* xxtea */,
 				68B39B391B1C5C670084F72C /* clipper */,
 				B6DD2F731B04820C00E47F5F /* recast */,
 				B6CAB0021AF9A9EE00B9B856 /* bullet */,
@@ -9114,6 +9131,7 @@
 				B68779061A8CA82E00643ABF /* CCParticleSystem3D.h in Headers */,
 				50ABBD3E1925AB0000A911A9 /* CCGeometry.h in Headers */,
 				B6CAB34F1AF9AA1A00B9B856 /* gim_geom_types.h in Headers */,
+				074ED76B1B5C2687007D2161 /* xxtea.h in Headers */,
 				15AE1A7719AAD40300C27E9E /* b2EdgeAndPolygonContact.h in Headers */,
 				B6DD2FD11B04825B00E47F5F /* DetourNode.h in Headers */,
 				15AE18F719AAD35000C27E9E /* CCBatchNode.h in Headers */,
@@ -10337,6 +10355,7 @@
 				3E2BDADE19C030ED0055CDCD /* AudioEngine.h in Headers */,
 				B665E3011AA80A6500DDB1C5 /* CCPUMaterialTranslator.h in Headers */,
 				50ABBD9A1925AB4100A911A9 /* CCGLProgramStateCache.h in Headers */,
+				074ED76C1B5C2687007D2161 /* xxtea.h in Headers */,
 				15AE181D19AAD2F700C27E9E /* CCBundle3D.h in Headers */,
 				15AE192519AAD35100C27E9E /* CocoLoader.h in Headers */,
 				15AE1BBB19AADFF000C27E9E /* HttpRequest.h in Headers */,
@@ -11598,6 +11617,7 @@
 				B29A7DC719EE1B7700872B35 /* SkeletonRenderer.cpp in Sources */,
 				15AE1A7C19AAD40300C27E9E /* b2MotorJoint.cpp in Sources */,
 				15AE1A2619AAD3D500C27E9E /* b2CollideEdge.cpp in Sources */,
+				074ED7691B5C2687007D2161 /* xxtea.cpp in Sources */,
 				B6CAB1F11AF9AA1A00B9B856 /* btCollisionAlgorithm.cpp in Sources */,
 				1A5702EE180BCE750088DEC7 /* CCTMXLayer.cpp in Sources */,
 				15AE1BD619AAE01E00C27E9E /* CCControlSlider.cpp in Sources */,
@@ -12250,6 +12270,7 @@
 				1A5701A6180BCB590088DEC7 /* CCFontAtlasCache.cpp in Sources */,
 				15AE192B19AAD35100C27E9E /* TriggerObj.cpp in Sources */,
 				B6CAAFEB1AF9A9E100B9B856 /* CCPhysics3DConstraint.cpp in Sources */,
+				074ED76A1B5C2687007D2161 /* xxtea.cpp in Sources */,
 				B677B0D21B18492D006762CB /* CCNavMeshDebugDraw.cpp in Sources */,
 				4D76BE3B1A4AAF0A00102962 /* CCActionTimelineNode.cpp in Sources */,
 				15AE198519AAD36400C27E9E /* WidgetReader.cpp in Sources */,
