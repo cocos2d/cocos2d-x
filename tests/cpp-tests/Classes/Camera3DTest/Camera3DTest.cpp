@@ -444,8 +444,6 @@ void Camera3DTestDemo::move3D(float elapsedTime)
         Vec3 offset = newFaceDir * 25.0f * elapsedTime;
         curPos+=offset;
         _sprite3D->setPosition3D(curPos);
-        offset.x=offset.x;
-        offset.z=offset.z;
         if(_cameraType==CameraType::ThirdPerson)
         {
             Vec3 cameraPos= _camera->getPosition3D();
