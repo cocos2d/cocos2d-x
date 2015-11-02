@@ -22,9 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __cocos2d_libs__Sprite3DReader__
-#define __cocos2d_libs__Sprite3DReader__
-
+#ifndef __cocos2d_libs__Light3DReader__
+#define __cocos2d_libs__Light3DReader__
 #include "cocos2d.h"
 #include "cocostudio/CocosStudioExport.h"
 #include "cocostudio/WidgetReader/NodeReaderProtocol.h"
