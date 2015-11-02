@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C261F281BE7528900707478 /* Light3DReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0C261F261BE7528900707478 /* Light3DReader.cpp */; };
+		0C261F291BE7528900707478 /* Light3DReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0C261F261BE7528900707478 /* Light3DReader.cpp */; };
+		0C261F2A1BE7528900707478 /* Light3DReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C261F271BE7528900707478 /* Light3DReader.h */; };
+		0C261F2B1BE7528900707478 /* Light3DReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C261F271BE7528900707478 /* Light3DReader.h */; };
 		15AE180819AAD2F700C27E9E /* CCAABB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AE17E419AAD2F700C27E9E /* CCAABB.cpp */; };
 		15AE180919AAD2F700C27E9E /* CCAABB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AE17E419AAD2F700C27E9E /* CCAABB.cpp */; };
 		15AE180A19AAD2F700C27E9E /* CCAABB.h in Headers */ = {isa = PBXBuildFile; fileRef = 15AE17E519AAD2F700C27E9E /* CCAABB.h */; };
@@ -3691,6 +3695,8 @@
 		06CAAABF186AD63B0012A414 /* TriggerMng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerMng.h; sourceTree = "<group>"; };
 		06CAAAC0186AD63B0012A414 /* TriggerObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerObj.cpp; sourceTree = "<group>"; };
 		06CAAAC1186AD63B0012A414 /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
+		0C261F261BE7528900707478 /* Light3DReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Light3DReader.cpp; sourceTree = "<group>"; };
+		0C261F271BE7528900707478 /* Light3DReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Light3DReader.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		15AE17E419AAD2F700C27E9E /* CCAABB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAABB.cpp; sourceTree = "<group>"; };
@@ -5681,6 +5687,15 @@
 				0634A4CF194B19E400E608AF /* CCTimelineMacro.h */,
 			);
 			path = ActionTimeline;
+			sourceTree = "<group>";
+		};
+		0C261F251BE7528900707478 /* Light3DReader */ = {
+			isa = PBXGroup;
+			children = (
+				0C261F261BE7528900707478 /* Light3DReader.cpp */,
+				0C261F271BE7528900707478 /* Light3DReader.h */,
+			);
+			path = Light3DReader;
 			sourceTree = "<group>";
 		};
 		1551A334158F2AB200E66CFE = {
@@ -7750,6 +7765,7 @@
 		50FCEB6818C72017004AD434 /* WidgetReader */ = {
 			isa = PBXGroup;
 			children = (
+				0C261F251BE7528900707478 /* Light3DReader */,
 				A045F6EC1BA81821005076C7 /* GameNode3DReader */,
 				C503066F1B60B590001E6D43 /* SkeletonReader */,
 				18956BAF1A9DFBEC006E9155 /* Particle3DReader */,
@@ -9094,6 +9110,7 @@
 				B665E28C1AA80A6500DDB1C5 /* CCPUDynamicAttribute.h in Headers */,
 				B665E3941AA80A6500DDB1C5 /* CCPUPlaneColliderTranslator.h in Headers */,
 				46A170E71807CECA005B8026 /* CCPhysicsBody.h in Headers */,
+				0C261F2A1BE7528900707478 /* Light3DReader.h in Headers */,
 				B665E22C1AA80A6500DDB1C5 /* CCPUBoxCollider.h in Headers */,
 				B6CAB4011AF9AA1A00B9B856 /* btMultiBodyConstraintSolver.h in Headers */,
 				B6CAB2FB1AF9AA1A00B9B856 /* btTriangleCallback.h in Headers */,
@@ -10921,6 +10938,7 @@
 				B6CAB50C1AF9AA1A00B9B856 /* btHashMap.h in Headers */,
 				15AE185819AAD31200C27E9E /* CDAudioManager.h in Headers */,
 				B6CAB3841AF9AA1A00B9B856 /* btMinkowskiPenetrationDepthSolver.h in Headers */,
+				0C261F2B1BE7528900707478 /* Light3DReader.h in Headers */,
 				B665E38D1AA80A6500DDB1C5 /* CCPUPlane.h in Headers */,
 				B6CAB3501AF9AA1A00B9B856 /* gim_geom_types.h in Headers */,
 				B6CAB3941AF9AA1A00B9B856 /* btSimplexSolverInterface.h in Headers */,
@@ -11629,6 +11647,7 @@
 				826294351AAF004C00CB7CF7 /* HttpCookie.cpp in Sources */,
 				1A5702F6180BCE750088DEC7 /* CCTMXTiledMap.cpp in Sources */,
 				1A5702FA180BCE750088DEC7 /* CCTMXXMLParser.cpp in Sources */,
+				0C261F281BE7528900707478 /* Light3DReader.cpp in Sources */,
 				B665E3621AA80A6500DDB1C5 /* CCPUOnTimeObserver.cpp in Sources */,
 				15AE18DF19AAD35000C27E9E /* TriggerBase.cpp in Sources */,
 				15AE1A7219AAD40300C27E9E /* b2ContactSolver.cpp in Sources */,
@@ -12740,6 +12759,7 @@
 				B6CAB26E1AF9AA1A00B9B856 /* btSphereSphereCollisionAlgorithm.cpp in Sources */,
 				50ABBED01925AB6F00A911A9 /* TGAlib.cpp in Sources */,
 				50693C5F1B6BF2AE005C5820 /* CCDownloader.cpp in Sources */,
+				0C261F291BE7528900707478 /* Light3DReader.cpp in Sources */,
 				1A01C68518F57BE800EFE3A6 /* CCArray.cpp in Sources */,
 				B665E2AF1AA80A6500DDB1C5 /* CCPUFlockCenteringAffectorTranslator.cpp in Sources */,
 				B29A7E2219EE1B7700872B35 /* PolygonBatch.cpp in Sources */,
