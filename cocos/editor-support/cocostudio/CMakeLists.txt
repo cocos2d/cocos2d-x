@@ -74,6 +74,7 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/WidgetReader/ButtonReader/ButtonReader.cpp
   editor-support/cocostudio/WidgetReader/ScrollViewReader/ScrollViewReader.cpp
   editor-support/cocostudio/WidgetReader/GameNode3DReader/GameNode3DReader.cpp
+  editor-support/cocostudio/WidgetReader/Light3DReader/Light3DReader.cpp
   editor-support/cocostudio/ActionTimeline/CCActionTimelineCache.cpp
   editor-support/cocostudio/ActionTimeline/CCActionTimeline.cpp
   editor-support/cocostudio/ActionTimeline/CCActionTimelineNode.cpp
