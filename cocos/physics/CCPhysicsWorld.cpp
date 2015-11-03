@@ -963,8 +963,8 @@ void PhysicsDebugDraw::end()
 
 void PhysicsDebugDraw::drawShape(PhysicsShape& shape)
 {
-    const Color4F fillColor(1.0f, 0.0f, 0.0f, 0.3f);
-    const Color4F outlineColor(1.0f, 0.0f, 0.0f, 1.0f);
+    const Color4F fillColor(shape.getDebugFillColor());
+    const Color4F outlineColor(shape.getDebugOutlineColor());
     
     for (auto it = shape._cpShapes.begin(); it != shape._cpShapes.end(); ++it)
     {
@@ -974,12 +974,11 @@ void PhysicsDebugDraw::drawShape(PhysicsShape& shape)
         {
             case CP_CIRCLE_SHAPE:
             {
-                
                 float radius = PhysicsHelper::cpfloat2float(cpCircleShapeGetRadius(subShape));
                 Vec2 centre = PhysicsHelper::cpv2point(cpBodyGetPos(cpShapeGetBody(subShape)));
                 Vec2 offset = PhysicsHelper::cpv2point(cpCircleShapeGetOffset(subShape));
                 Vec2 rotation(PhysicsHelper::cpv2point(cpBodyGetRot(cpShapeGetBody(subShape))));
-		              centre += offset.rotate(rotation);
+                centre += offset.rotate(rotation);
                 
                 static const int CIRCLE_SEG_NUM = 12;
                 Vec2 seg[CIRCLE_SEG_NUM] = {};
@@ -1022,13 +1021,12 @@ void PhysicsDebugDraw::drawShape(PhysicsShape& shape)
 
 void PhysicsDebugDraw::drawJoint(PhysicsJoint& joint)
 {
-    const Color4F lineColor(0.0f, 0.0f, 1.0f, 1.0f);
-    const Color4F jointPointColor(0.0f, 1.0f, 0.0f, 1.0f);
+    const Color4F lineColor(joint.getDebugLineColor());
+    const Color4F jointPointColor(joint.getDebugJointPointColor());
     
     for (auto it = joint._cpConstraints.begin(); it != joint._cpConstraints.end(); ++it)
     {
-        cpConstraint *constraint = *it;
-        
+        cpConstraint *constraint = *it;  
         
         cpBody *body_a = constraint->a;
         cpBody *body_b = constraint->b;

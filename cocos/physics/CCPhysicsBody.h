@@ -346,6 +346,35 @@ public:
      */
     int getGroup() const;
     
+    /**
+    * Set the debug outlines color.
+    *
+    * @param outlineColor The outline color.
+    */
+    void setDebugOutlineColor(const Color4F& outlineColor);
+
+    /**
+    * Gets the debug outline color.
+    *
+    * @return The outline color.
+    */
+    Color4F getDebugOutlineColor() const;
+
+    /**
+    * Set the debug fill color.
+    *
+    * @param fillColor The fill color.
+    */
+    void setDebugFillColor(const Color4F& fillColor);
+
+    /**
+    * Gets the debug fill color
+    *
+    * @return The fill color.
+    */
+    Color4F getDebugFillColor() const;
+
+
     /** get the body position. */
     Vec2 getPosition() const;
 

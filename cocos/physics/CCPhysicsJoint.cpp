@@ -43,6 +43,8 @@ PhysicsJoint::PhysicsJoint()
 , _tag(0)
 , _maxForce(PHYSICS_INFINITY)
 , _initDirty(true)
+, _lineColor(0.0f, 0.0f, 1.0f, 1.0f)
+, _jointPointColor(0.0f, 1.0f, 0.0f, 1.0f)
 {
 
 }

@@ -855,6 +855,46 @@ int PhysicsBody::getGroup() const
     }
 }
 
+void PhysicsBody::setDebugOutlineColor(const Color4F& outlineColor)
+{ 
+    for (auto& shape : _shapes)
+    {
+        shape->setDebugOutlineColor(outlineColor);
+    }
+}
+
+Color4F PhysicsBody::getDebugOutlineColor() const
+{
+    if (!_shapes.empty())
+    {
+        return _shapes.front()->getDebugOutlineColor();
+    }
+    else
+    {
+        return Color4F(1.0f, 0.0f, 0.0f, 1.0f);
+    }
+}
+
+void PhysicsBody::setDebugFillColor(const Color4F& fillColor)
+{ 
+    for (auto& shape : _shapes)
+    {
+        shape->setDebugFillColor(fillColor);
+    }
+}
+
+Color4F PhysicsBody::getDebugFillColor() const
+{ 
+    if (!_shapes.empty())
+    {
+        return _shapes.front()->getDebugFillColor();
+    }
+    else
+    {
+        return Color4F(1.0f, 0.0f, 0.0f, 0.3f);
+    }
+}
+
 void PhysicsBody::setRotationOffset(float rotation)
 {
     if (std::abs(_rotationOffset - rotation) > 0.5f)

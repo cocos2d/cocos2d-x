@@ -29,6 +29,7 @@
 #if CC_USE_PHYSICS
 
 #include "base/CCRef.h"
+#include "base/ccTypes.h"
 #include "math/CCGeometry.h"
 
 struct cpShape;
@@ -328,6 +329,34 @@ public:
      * @return An integer number.
      */
     inline int getGroup() { return _group; }
+
+    /**
+    * Set the debug outline color of this shape.
+    * The default outline color is red
+    * @param outlineColor The outline color.
+    */
+    inline void setDebugOutlineColor(const Color4F& outlineColor) { _outlineColor = outlineColor; }
+
+    /**
+    * Gets the debug outline color of this shape.
+    *
+    * @return The outline color.
+    */
+    inline const Color4F& getDebugOutlineColor()  const { return _outlineColor; }
+
+    /**
+    * Set the debug fill color of this shape.
+    * The default fill color is red with an opacity of 30 percent
+    * @param fillColor The fill color.
+    */
+    inline void setDebugFillColor(const Color4F& fillColor) { _fillColor = fillColor; }
+
+    /**
+    * Gets the debug fill color of this shape.
+    *
+    * @return The fill color.
+    */
+    inline const Color4F& getDebugFillColor() const { return _fillColor; }
     
 protected:
     void setBody(PhysicsBody* body);
@@ -363,6 +392,9 @@ protected:
     int    _contactTestBitmask;
     int    _group;
     
+    Color4F _outlineColor;
+    Color4F _fillColor;
+
     friend class PhysicsWorld;
     friend class PhysicsBody;
     friend class PhysicsJoint;

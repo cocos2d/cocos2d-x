@@ -171,7 +171,12 @@ Sprite* PhysicsDemo::makeBall(Vec2 point, float radius, PhysicsMaterial material
     
     ball->setScale(0.13f * radius);
     
-    ball->addComponent(PhysicsBody::createCircle(ball->getContentSize().width / 2, material));
+    // create a circle body with a green debug color
+    auto circleBody = PhysicsBody::createCircle(ball->getContentSize().width / 2, material);
+    circleBody->setDebugFillColor(Color4F(0.0f, 1.0f, 0.0f, 0.3f));
+    circleBody->setDebugOutlineColor(Color4F(0.0f, 1.0f, 0.0f, 1.0f));
+
+    ball->addComponent(circleBody);
     ball->setPosition(Vec2(point.x, point.y));
     
     return ball;
@@ -712,6 +717,8 @@ void PhysicsDemoJoints::onEnter()
                     sp2PhysicsBody->setTag(DRAG_BODYS_TAG);
                     
                     PhysicsJointPin* joint = PhysicsJointPin::construct(sp1PhysicsBody, sp2PhysicsBody, offset);
+                    joint->setDebugLineColor(Color4F::GREEN);
+                    joint->setDebugJointPointColor(Color4F::RED);
                     getPhysicsWorld()->addJoint(joint);
                     
                     this->addChild(sp1);
