@@ -411,6 +411,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReaderDefine.h" />
@@ -1020,6 +1021,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReaderDefine.cpp" />
