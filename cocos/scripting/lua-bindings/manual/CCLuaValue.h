@@ -171,7 +171,7 @@ public:
     
     
     /**
-     * Default constuctor of LuaValue.
+     * Default constructor of LuaValue.
      * Set the default value for _type(LuaValueTypeInt) and _ccobjectType(nullptr),and init the _field.
      */
     LuaValue(void)
