@@ -572,7 +572,7 @@ public:
     virtual std::string getDescription() const override;
     
     /**
-     * @brief Get the the renderer size in auto mode.
+     * @brief Get the renderer size in auto mode.
      *
      * @return A delimitation zone.
      */

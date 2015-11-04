@@ -179,7 +179,7 @@ extern bool luaval_to_long_long(lua_State* L,int lo,long long* outValue, const c
  * @param lo the given accpetable index of stack.
  * @param outValue the pointer to store std::string value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is is a string or a number convertible to a string, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a string or a number convertible to a string, otherwise return false.
  */
 extern bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, const char* funcName = "");
 
@@ -837,7 +837,7 @@ extern bool luaval_to_std_map_string_string(lua_State* L, int lo, std::map<std::
 
 /**
  * @name native_to_luaval
- * The following function are all used to convert native c++ values to the the corresponding Lua values,then push it into the Lua stack.
+ * The following function are all used to convert native c++ values to the corresponding Lua values, then push it into the Lua stack.
  *
  * @{
  **/

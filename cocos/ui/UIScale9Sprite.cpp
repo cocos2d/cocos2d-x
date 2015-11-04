@@ -1092,7 +1092,7 @@ namespace ui {
     }
 
 /** sets the opacity.
-    @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modifed.
+    @warning If the texture has premultiplied alpha then, the R, G and B channels will be modifed.
     Values goes from 0 to 255, where 255 means fully opaque.
 */
 

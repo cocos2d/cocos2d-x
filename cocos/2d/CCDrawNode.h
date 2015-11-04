@@ -143,7 +143,7 @@ public:
      * @param origin The origin of the bezier path.
      * @param control The control of the bezier path.
      * @param destination The destination of the bezier path.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @param color Set the quad bezier color.
      */
     void drawQuadBezier(const Vec2 &origin, const Vec2 &control, const Vec2 &destination, unsigned int segments, const Color4F &color);
@@ -154,7 +154,7 @@ public:
      * @param control1 The first control of the bezier path.
      * @param control2 The second control of the bezier path.
      * @param destination The destination of the bezier path.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @param color Set the cubic bezier color.
      */
     void drawCubicBezier(const Vec2 &origin, const Vec2 &control1, const Vec2 &control2, const Vec2 &destination, unsigned int segments, const Color4F &color);
@@ -163,7 +163,7 @@ public:
      *
      * @param config A array point.
      * @param tension The tension of the spline.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @param color Set the Spline color.
      */
     void drawCardinalSpline(PointArray *config, float tension,  unsigned int segments, const Color4F &color);
@@ -171,7 +171,7 @@ public:
     /** Draws a Catmull Rom path.
      *
      * @param points A point array  of control point.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @param color The Catmull Rom color.
      */
     void drawCatmullRom(PointArray *points, unsigned int segments, const Color4F &color);
@@ -274,7 +274,7 @@ public:
      * @param from The origin of the bezier path.
      * @param control The control of the bezier path.
      * @param to The destination of the bezier path.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @param color The quadratic bezier color.
      * @js NA
      */
