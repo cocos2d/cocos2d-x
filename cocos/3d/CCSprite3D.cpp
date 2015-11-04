@@ -476,6 +476,13 @@ void Sprite3D::genMaterial(bool useLight)
     for (auto& mesh: _meshes)
     {
         auto material = materials[mesh->getMeshIndexData()->getMeshVertexData()];
+        
+        //keep original state block if exist
+        auto oldmaterial = mesh->getMaterial();
+        if (oldmaterial)
+        {
+            material->setStateBlock(oldmaterial->getStateBlock());
+        }
 
         if (material->getReferenceCount() == 1)
             mesh->setMaterial(material);
