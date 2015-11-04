@@ -42,7 +42,7 @@ struct _ccArray;
 /** @class ParallaxNode
  * @brief ParallaxNode: A node that simulates a parallax scroller
 
-The children will be moved faster / slower than the parent according the the parallax ratio.
+The children will be moved faster / slower than the parent according the parallax ratio.
 
 */
 class CC_DLL ParallaxNode : public Node

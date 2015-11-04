@@ -222,7 +222,7 @@ public:
     /**
      * Pushes a lua table onto the stack.
      * The key of table is the key of LuaValueDict which is std::map.
-     * The value of table is according to the the type of LuaValue of LuaValueDict by calling pushLuaValue,@see pushLuaValue.
+     * The value of table is according to the type of LuaValue of LuaValueDict by calling pushLuaValue,@see pushLuaValue.
      *
      * @param dict a LuaValueDict object.
      */
@@ -231,7 +231,7 @@ public:
     /**
      * Pushes a lua array table onto the stack.
      * The index of array table is begin at 1.
-     * The value of array table is according to the the type of LuaValue of LuaValueDict by calling pushLuaValue,@see pushLuaValue.
+     * The value of array table is according to the type of LuaValue of LuaValueDict by calling pushLuaValue,@see pushLuaValue.
      */
     virtual void pushLuaValueArray(const LuaValueArray& array);
     

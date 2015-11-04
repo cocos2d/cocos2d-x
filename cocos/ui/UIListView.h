@@ -136,7 +136,7 @@ public:
     void setItemModel(Widget* model);
     
     /**
-     * Insert a  a default item(create by a cloned model) at the end of the listview.
+     * Insert a default item(create by a cloned model) at the end of the listview.
      */
     void pushBackDefaultItem();
     
