@@ -38,6 +38,9 @@
 #include <signal.h>
 #include <errno.h>
 
+#include <iostream>
+#include <sstream>
+
 #include "libwebsockets.h"
 
 #define WS_WRITE_BUFFER_SIZE 2048
@@ -451,8 +454,12 @@ void WebSocket::onSubThreadStarted()
             
             if (_wsProtocols[i+1].callback != nullptr) name += ", ";
         }
+
+        std::stringstream ss;
+		ss << _port;        
+        std::string hostWithPort = _host+":"+ss.str();
         _wsInstance = libwebsocket_client_connect(_wsContext, _host.c_str(), _port, _SSLConnection,
-                                             _path.c_str(), _host.c_str(), _host.c_str(),
+                                             _path.c_str(), hostWithPort.c_str(), _host.c_str(),
                                              name.c_str(), -1);
                                              
         if(nullptr == _wsInstance) {
