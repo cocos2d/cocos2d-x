@@ -263,6 +263,9 @@
     <Filter Include="cocostudio\reader\WidgetReader\GameNodeDReader">
       <UniqueIdentifier>{0760e708-a93e-41f5-abaf-a7e422882920}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Light3DReader">
+      <UniqueIdentifier>{549d5ddb-02ff-4b34-8e49-8fb7570ecff4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cocos2d.cpp" />
@@ -1965,6 +1968,9 @@
     </ClCompile>
     <ClCompile Include="..\..\network\CCDownloader-curl.cpp">
       <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\Light3DReader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3844,6 +3850,9 @@
     </ClInclude>
     <ClInclude Include="..\..\network\CCIDownloaderImpl.h">
       <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\Light3DReader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
