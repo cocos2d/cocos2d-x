@@ -455,7 +455,7 @@ public:
     void debugProcessInput(const std::string& str);
     /**@~english
      * Enable the debug environment, mozilla Firefox's remote debugger or Code IDE can connect to it.
-     * @param port @~english The port to connect with the debug enviroment, default value is 5086
+     * @param port @~english The port to connect with the debug environment, default value is 5086
      */
     void enableDebugger(unsigned int port = 5086);
     /**@~english

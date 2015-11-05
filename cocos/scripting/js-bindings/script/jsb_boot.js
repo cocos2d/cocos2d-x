@@ -1753,7 +1753,7 @@ cc.game = /** @lends cc.game# */{
         var CONFIG_KEY = this.CONFIG_KEY;
 
         // Configs adjustment
-        config[CONFIG_KEY.showFPS] = config[CONFIG_KEY.showFPS] || true;
+        config[CONFIG_KEY.showFPS] = typeof config[CONFIG_KEY.showFPS] === 'undefined' ? true : config[CONFIG_KEY.showFPS];
         config[CONFIG_KEY.engineDir] = config[CONFIG_KEY.engineDir] || "frameworks/cocos2d-html5";
         if (config[CONFIG_KEY.debugMode] == null)
             config[CONFIG_KEY.debugMode] = 0;

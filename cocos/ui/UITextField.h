@@ -59,7 +59,7 @@ public:
     virtual void onEnter() override;
     
     /**
-     * Create a UICCTextField intance with a placeholder, a fontName and a fontSize.
+     * Create a UICCTextField instance with a placeholder, a fontName and a fontSize.
      *@param placeholder Placeholder in string.
      *@param fontName Font name in string.
      *@param fontSize Font size in float.
@@ -104,8 +104,8 @@ public:
     bool isMaxLengthEnabled()const;
 
     /**
-     * Set maxmize length.
-     *@param length  The maxmize length in integer.
+     * Set maximize length.
+     *@param length  The maximize length in integer.
      */
     void setMaxLength(int length);
 
@@ -116,7 +116,7 @@ public:
     int getMaxLength()const;
 
     /**
-     * Return the total inputed charaters.
+     * Return the total inputed characters.
      *@return Total inputed character count.
      */
     int getCharCount()const;
@@ -572,12 +572,12 @@ public:
     virtual std::string getDescription() const override;
     
     /**
-     * @brief Get the the renderer size in auto mode.
+     * @brief Get the renderer size in auto mode.
      *
      * @return A delimitation zone.
      */
     virtual Size getAutoRenderSize();
-    //overide functions.
+    //override functions.
     virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     virtual void onEnter() override;

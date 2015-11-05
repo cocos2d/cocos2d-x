@@ -37,16 +37,18 @@ schedTarget_proxy_t *_schedObj_target_ht = NULL;
 JSTouchDelegate::TouchDelegateMap JSTouchDelegate::sTouchDelegateMap;
 
 JSTouchDelegate::JSTouchDelegate()
-: _obj(nullptr)
-, _needUnroot(false)
+: _needUnroot(false)
 , _touchListenerAllAtOnce(nullptr)
 , _touchListenerOneByOne(nullptr)
 {
+    auto cx = ScriptingCore::getInstance()->getGlobalContext();
+    _obj.construct(cx);
 }
 
 JSTouchDelegate::~JSTouchDelegate()
 {
     CCLOGINFO("In the destructor of JSTouchDelegate.");
+    _obj.destroyIfConstructed();
 }
 
 void JSTouchDelegate::setDelegateForJSObject(JSObject* pJSObj, JSTouchDelegate* pDelegate)
@@ -74,17 +76,9 @@ void JSTouchDelegate::removeDelegateForJSObject(JSObject* pJSObj)
     sTouchDelegateMap.erase(pJSObj);
 }
 
-void JSTouchDelegate::setJSObject(JSObject *obj)
+void JSTouchDelegate::setJSObject(JS::HandleObject obj)
 {
-    _obj = obj;
-    
-    js_proxy_t *p = jsb_get_js_proxy(_obj);
-    if (!p)
-    {
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS::AddNamedObjectRoot(cx, &_obj, "JSB_TouchDelegateTarget, target");
-        _needUnroot = true;
-    }
+    _obj.ref() = obj;
 }
 
 void JSTouchDelegate::registerStandardDelegate(int priority)
@@ -123,12 +117,6 @@ void JSTouchDelegate::registerTargetedDelegate(int priority, bool swallowsTouche
 
 void JSTouchDelegate::unregisterTouchDelegate()
 {
-    if (_needUnroot)
-    {
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS::RemoveObjectRoot(cx, &_obj);
-    }
-    
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeEventListener(_touchListenerAllAtOnce);
     dispatcher->removeEventListener(_touchListenerOneByOne);
@@ -143,8 +131,7 @@ bool JSTouchDelegate::onTouchBegan(Touch *touch, Event *event)
     JS::RootedValue retval(cx);
     bool bRet = false;
     
-    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::BEGAN,
-        touch, _obj.get(), &retval);
+    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::BEGAN, touch, _obj.ref(), &retval);
     
     if(retval.isBoolean())
     {
@@ -159,48 +146,45 @@ void JSTouchDelegate::onTouchMoved(Touch *touch, Event *event)
 {
     CC_UNUSED_PARAM(event);
 
-    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::MOVED,
-        touch, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::MOVED, touch, _obj.ref());
 }
 
 void JSTouchDelegate::onTouchEnded(Touch *touch, Event *event)
 {
     CC_UNUSED_PARAM(event);
 
-    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::ENDED,
-        touch, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::ENDED, touch, _obj.ref());
 }
 
 void JSTouchDelegate::onTouchCancelled(Touch *touch, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::CANCELLED,
-        touch, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::CANCELLED, touch, _obj.ref());
 }
 
 // optional
 void JSTouchDelegate::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::BEGAN, touches, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::BEGAN, touches, _obj.ref());
 }
 
 void JSTouchDelegate::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::MOVED, touches, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::MOVED, touches, _obj.ref());
 }
 
 void JSTouchDelegate::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::ENDED, touches, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::ENDED, touches, _obj.ref());
 }
 
 void JSTouchDelegate::onTouchesCancelled(const std::vector<Touch*>& touches, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::CANCELLED, touches, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::CANCELLED, touches, _obj.ref());
 }
 
 // cc.EventTouch#getTouches
@@ -798,7 +782,6 @@ bool js_cocos2dx_JSTouchDelegate_registerStandardDelegate(JSContext *cx, uint32_
     if (argc == 1 || argc == 2)
     {
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        JSObject* jsobj = NULL;
 
         JSTouchDelegate *touch = new JSTouchDelegate();
         
@@ -810,7 +793,7 @@ bool js_cocos2dx_JSTouchDelegate_registerStandardDelegate(JSContext *cx, uint32_
         
         touch->registerStandardDelegate(priority);
         
-        jsobj = args.get(0).toObjectOrNull();
+        JS::RootedObject jsobj(cx, args.get(0).toObjectOrNull());
         touch->setJSObject(jsobj);
         JSTouchDelegate::setDelegateForJSObject(jsobj, touch);
         return true;
@@ -824,12 +807,11 @@ bool js_cocos2dx_JSTouchDelegate_registerTargetedDelegate(JSContext *cx, uint32_
     if (argc == 3)
     {
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        JSObject* jsobj = NULL;
 
         JSTouchDelegate *touch = new JSTouchDelegate();
         touch->registerTargetedDelegate(args.get(0).toInt32(), args.get(1).toBoolean());
         
-        jsobj = args.get(2).toObjectOrNull();
+        JS::RootedObject jsobj(cx, args.get(2).toObjectOrNull());
         touch->setJSObject(jsobj);
         JSTouchDelegate::setDelegateForJSObject(jsobj, touch);
 
@@ -4185,70 +4167,6 @@ bool js_cocos2dx_CCTMXLayer_getTileFlagsAt(JSContext *cx, uint32_t argc, jsval *
     return false;
 }
 
-//#pragma mark - DrawNode
-
-// Arguments: Array of points, fill color (Color4F), width(float), border color (Color4F)
-// Ret value: void
-bool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *vp)
-{
-
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    DrawNode* cobj = (DrawNode*)(proxy ? proxy->ptr : NULL);
-    TEST_NATIVE_OBJECT(cx, cobj)
-
-    if ( argc == 4) {
-        bool ok = true;
-        JS::RootedObject argArray(cx);
-        Color4F argFillColor = Color4F(0.0f, 0.0f, 0.0f, 0.0f);
-        double argWidth = 0.0;
-        Color4F argBorderColor = Color4F(0.0f, 0.0f, 0.0f, 0.0f);
-
-        // Points
-        ok &= JS_ValueToObject(cx, args.get(0), &argArray);
-        JSB_PRECONDITION2( (argArray && JS_IsArrayObject(cx, argArray)) , cx, false, "Vertex should be anArray object");
-
-        // Color 4F
-        ok &= jsval_to_cccolor4f(cx, args.get(1), &argFillColor);
-
-        // Width
-        ok &= JS::ToNumber( cx, args.get(2), &argWidth );
-
-        // Color Border (4F)
-        ok &= jsval_to_cccolor4f(cx, args.get(3), &argBorderColor);
-
-        JSB_PRECONDITION2(ok, cx, false, "Error parsing arguments");
-
-        {
-            uint32_t l;
-            if( ! JS_GetArrayLength(cx, argArray, &l) )
-                return false;
-
-            Point* verts = new Point[ l ];
-            Point p;
-
-            for( uint32_t i=0; i<l; i++ ) {
-                JS::RootedValue pointvp(cx);
-                ok &= JS_GetElement(cx, argArray, i, &pointvp);
-                JSB_PRECONDITION2(ok, cx, false, "JS_GetElement fails.");
-                
-                ok &= jsval_to_ccpoint(cx, pointvp, &p);
-                JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-                verts[i] = p;
-            }
-
-            cobj->drawPolygon(verts, l, argFillColor, argWidth, argBorderColor);
-            CC_SAFE_DELETE_ARRAY(verts);
-        }
-        args.rval().setUndefined();
-        return true;    
-    }
-
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 4);
-    return false;
-}
-
 static bool jsval_to_string_vector(JSContext* cx, jsval v, std::vector<std::string>& ret) {
     JS::RootedObject jsobj(cx);
     bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, v), &jsobj );
@@ -5837,7 +5755,6 @@ bool js_cocos2dx_PolygonInfo_constructor(JSContext *cx, uint32_t argc, jsval *vp
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
     JS::RootedObject proto(cx, typeClass->proto.get());
     JS::RootedObject parent(cx, typeClass->parentProto.get());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
@@ -6028,7 +5945,6 @@ bool js_cocos2dx_AutoPolygon_constructor(JSContext *cx, uint32_t argc, jsval *vp
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
     JS::RootedObject proto(cx, typeClass->proto.get());
     JS::RootedObject parent(cx, typeClass->parentProto.get());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
@@ -6228,10 +6144,9 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     tmpObj.set(jsb_cocos2d_TMXLayer_prototype);
     JS_DefineFunction(cx, tmpObj, "getTileFlagsAt", js_cocos2dx_CCTMXLayer_getTileFlagsAt, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    tmpObj.set(jsb_cocos2d_DrawNode_prototype);
-    JS_DefineFunction(cx, tmpObj, "drawPoly", js_cocos2dx_CCDrawNode_drawPolygon, 4, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-
     tmpObj.set(jsb_cocos2d_Texture2D_prototype);
+    JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "setTexParameters", js_cocos2dx_CCTexture2D_setTexParameters, 4, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
 
     tmpObj.set(jsb_cocos2d_Menu_prototype);

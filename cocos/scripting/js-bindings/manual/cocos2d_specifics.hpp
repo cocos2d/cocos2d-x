@@ -197,7 +197,7 @@ public:
     // Remove the delegate by the key (pJSObj).
     static void removeDelegateForJSObject(JSObject* pJSObj);
 
-    void setJSObject(JSObject *obj);
+    void setJSObject(JS::HandleObject obj);
     void registerStandardDelegate(int priority);
     void registerTargetedDelegate(int priority, bool swallowsTouches);
     // unregister touch delegate.
@@ -217,7 +217,7 @@ public:
     void onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
 
 private:
-    JS::Heap<JSObject*> _obj;
+    mozilla::Maybe<JS::PersistentRootedObject> _obj;
     typedef std::unordered_map<JSObject*, JSTouchDelegate*> TouchDelegateMap;
     typedef std::pair<JSObject*, JSTouchDelegate*> TouchDelegatePair;
     static TouchDelegateMap sTouchDelegateMap;

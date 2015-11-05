@@ -1591,7 +1591,9 @@ cc.Touch.prototype.getLocationY = function(){
 cc.Director.EVENT_PROJECTION_CHANGED = "director_projection_changed";
 cc.Director.EVENT_AFTER_DRAW = "director_after_draw";
 cc.Director.EVENT_AFTER_VISIT = "director_after_visit";
+cc.Director.EVENT_BEFORE_UPDATE = "director_before_update";
 cc.Director.EVENT_AFTER_UPDATE = "director_after_update";
+cc.Director.EVENT_BEFORE_SCENE_LAUNCH = "director_before_scene_launch";
 
 cc.Director.prototype.runScene = function(scene){
     if (!this.getRunningScene()) {
@@ -1774,6 +1776,9 @@ cc.cardinalSplineAt = function (p0, p1, p2, p3, tension, t) {
 };
 
 cc._DrawNode = cc.DrawNode;
+cc._DrawNode.prototype.drawPoly = function (verts, fillColor, borderWidth, borderColor) {
+    cc._DrawNode.prototype.drawPolygon.call(this, verts, verts.length, fillColor, borderWidth, borderColor);
+}
 cc.DrawNode = cc._DrawNode.extend({
     _drawColor: cc.color(255, 255, 255, 255),
     _lineWidth: 1,
