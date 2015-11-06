@@ -821,6 +821,10 @@ void Director::replaceScene(Scene *scene)
     ssize_t index = _scenesStack.size();
 
     _sendCleanupToScene = true;
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, scene);
+    ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _scenesStack.at(index-1));
+#endif
     _scenesStack.replace(index - 1, scene);
 
     _nextScene = scene;
@@ -831,7 +835,10 @@ void Director::pushScene(Scene *scene)
     CCASSERT(scene, "the scene should not null");
 
     _sendCleanupToScene = false;
-
+    
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, scene);
+#endif
     _scenesStack.pushBack(scene);
     _nextScene = scene;
 }
@@ -839,7 +846,10 @@ void Director::pushScene(Scene *scene)
 void Director::popScene(void)
 {
     CCASSERT(_runningScene != nullptr, "running scene should not null");
-
+    
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _scenesStack.back());
+#endif
     _scenesStack.popBack();
     ssize_t c = _scenesStack.size();
 
@@ -878,6 +888,9 @@ void Director::popToSceneStackLevel(int level)
     auto fisrtOnStackScene = _scenesStack.back();
     if (fisrtOnStackScene == _runningScene)
     {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _scenesStack.back());
+#endif
         _scenesStack.popBack();
         --c;
     }
@@ -893,6 +906,9 @@ void Director::popToSceneStackLevel(int level)
         }
 
         current->cleanup();
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _scenesStack.back());
+#endif
         _scenesStack.popBack();
         --c;
     }
@@ -917,6 +933,9 @@ void Director::reset()
 {    
     if (_runningScene)
     {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _runningScene);
+#endif
         _runningScene->onExit();
         _runningScene->cleanup();
         _runningScene->release();
@@ -936,6 +955,14 @@ void Director::reset()
     
     // remove all objects, but don't release it.
     // runWithScene might be executed after 'end'.
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    for (int i = 0 i < _scenesStack.size(); i++)
+    {
+        auto scene = _scenesStack.at(i);
+        if (scene)
+            ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, scene);
+    }
+#endif
     _scenesStack.clear();
     
     stopAnimation();
