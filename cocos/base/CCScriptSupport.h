@@ -641,6 +641,16 @@ public:
      * @js NA
      */
     virtual ccScriptType getScriptType() { return kScriptTypeNone; };
+    
+    /**
+     * Reflect the retain relationship to script scope
+     */
+    virtual void retainScriptObject(Ref* owner, Ref* target) = 0;
+    
+    /**
+     * Reflect the release relationship to script scope
+     */
+    virtual void releaseScriptObject(Ref* owner, Ref* target) = 0;
 
     /** 
      * Remove script object,The specific meaning should refer to the ScriptType.

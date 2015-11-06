@@ -112,6 +112,16 @@ public:
     virtual cocos2d::ccScriptType getScriptType() override { return cocos2d::kScriptTypeJavascript; };
     
     /**
+     * Reflect the retain relationship to script scope
+     */
+    virtual void retainScriptObject(cocos2d::Ref* owner, cocos2d::Ref* target) override;
+    
+    /**
+     * Reflect the release relationship to script scope
+     */
+    virtual void releaseScriptObject(cocos2d::Ref* owner, cocos2d::Ref* target) override;
+    
+    /**
      * @brief @~english Removes the C++ object's linked JavaScript proxy object from JavaScript context
      * @param obj @~english Object to be removed
      */

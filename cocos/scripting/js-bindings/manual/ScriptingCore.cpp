@@ -233,6 +233,24 @@ void removeJSObject(JSContext* cx, void* nativeObj)
     }
 }
 
+int arrayIndexOfElement(JSContext* cx, JS::HandleObject array, JS::HandleValue elem) {
+    bool equal = false;
+    uint32_t len = 0;
+    JS_GetArrayLength(cx, array, &len);
+    for (uint32_t i=0; i < len; i++)
+    {
+        JS::RootedValue value(cx);
+        if (JS_GetElement(cx, array, i, &value))
+        {
+            if (JS_StrictlyEqual(cx, value, elem, &equal) && equal)
+            {
+                return i;
+            }
+        }
+    }
+    return -1;
+}
+
 void ScriptingCore::executeJSFunctionWithThisObj(JS::HandleValue thisObj, JS::HandleValue callback)
 {
     JS::RootedValue retVal(_cx);
@@ -865,6 +883,82 @@ bool ScriptingCore::log(JSContext* cx, uint32_t argc, jsval *vp)
     }
     args.rval().setUndefined();
     return true;
+}
+
+
+void ScriptingCore::retainScriptObject(cocos2d::Ref* owner, cocos2d::Ref* target)
+{
+#if !CC_NATIVE_CONTROL_SCRIPT
+    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+    js_proxy_t *pOwner = jsb_get_native_proxy(owner);
+    js_proxy_t *pTarget = jsb_get_native_proxy(target);
+    if (!pOwner || !pTarget)
+    {
+        return;
+    }
+    
+    JS::RootedValue valOwner(cx, OBJECT_TO_JSVAL(pOwner->obj));
+    JS::RootedValue valTarget(cx, OBJECT_TO_JSVAL(pTarget->obj));
+    if (valOwner.isNullOrUndefined() || valTarget.isNullOrUndefined())
+    {
+        return;
+    }
+    
+    JS::RootedObject jsOwner(cx, pOwner->obj);
+    JS::RootedObject jsTarget(cx, pTarget->obj);
+    JS::RootedValue refsVal(cx);
+    JS::RootedObject refs(cx);
+    JS_GetProperty(cx, jsOwner, "__nativeRefs", &refsVal);
+    if (refsVal.isNullOrUndefined())
+    {
+        refs.set(JS_NewArrayObject(cx, 0));
+        refsVal.set(OBJECT_TO_JSVAL(refs));
+        JS_SetProperty(cx, jsOwner, "__nativeRefs", refsVal);
+    }
+    
+    if (arrayIndexOfElement(cx, refs, valTarget) == -1)
+    {
+        uint32_t length = 0;
+        JS_GetArrayLength(cx, refs, &length);
+        JS_SetElement(cx, refs, length, valTarget);
+    }
+#endif
+}
+
+void ScriptingCore::releaseScriptObject(cocos2d::Ref* owner, cocos2d::Ref* target)
+{
+#if !CC_NATIVE_CONTROL_SCRIPT
+    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+    js_proxy_t *pOwner = jsb_get_native_proxy(owner);
+    js_proxy_t *pTarget = jsb_get_native_proxy(target);
+    if (!pOwner || !pTarget)
+    {
+        return;
+    }
+    
+    JS::RootedValue valOwner(cx, OBJECT_TO_JSVAL(pOwner->obj));
+    JS::RootedValue valTarget(cx, OBJECT_TO_JSVAL(pTarget->obj));
+    if (valOwner.isNullOrUndefined() || valTarget.isNullOrUndefined())
+    {
+        return;
+    }
+    
+    JS::RootedObject jsOwner(cx, pOwner->obj);
+    JS::RootedObject jsTarget(cx, pTarget->obj);
+    JS::RootedValue refsVal(cx);
+    JS::RootedObject refs(cx);
+    JS_GetProperty(cx, jsOwner, "__nativeRefs", &refsVal);
+    if (refsVal.isNullOrUndefined())
+    {
+        return;
+    }
+    
+    int index = arrayIndexOfElement(cx, refs, valTarget);
+    if (index != -1)
+    {
+        JS_DeleteElement(cx, refs, index);
+    }
+#endif
 }
 
 
