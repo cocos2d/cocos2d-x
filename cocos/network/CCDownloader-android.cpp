@@ -65,9 +65,6 @@ namespace cocos2d { namespace network {
         : _id(++sDownloaderCounter)
         , _impl(nullptr)
         {
-            // use local static variable make sure native methods registered once
-            if(!_registered)
-                _registered = _registerNativeMethods(JniHelper::getEnv());
             DLLOG("Construct DownloaderAndroid: %p", this);
             JniMethodInfo methodInfo;
             if (JniHelper::getStaticMethodInfo(methodInfo,
