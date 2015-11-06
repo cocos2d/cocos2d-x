@@ -39,8 +39,8 @@ ProtectedNode::ProtectedNode() : _reorderProtectedChildDirty(false)
 
 ProtectedNode::~ProtectedNode()
 {
-    
     CCLOGINFO( "deallocing ProtectedNode: %p - tag: %i", this, _tag );
+    removeAllProtectedChildren();
 }
 
 ProtectedNode * ProtectedNode::create(void)
@@ -171,6 +171,9 @@ void ProtectedNode::removeProtectedChild(cocos2d::Node *child, bool cleanup)
         // set parent nil at the end
         child->setParent(nullptr);
         
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, child);
+#endif
         _protectedChildren.erase(index);
     }
 }
@@ -198,6 +201,9 @@ void ProtectedNode::removeAllProtectedChildrenWithCleanup(bool cleanup)
         {
             child->cleanup();
         }
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, child);
+#endif
         // set parent nil at the end
         child->setParent(nullptr);
     }
@@ -224,6 +230,9 @@ void ProtectedNode::removeProtectedChildByTag(int tag, bool cleanup)
 // helper used by reorderChild & add
 void ProtectedNode::insertProtectedChild(cocos2d::Node *child, int z)
 {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, child);
+#endif
     _reorderProtectedChildDirty = true;
     _protectedChildren.pushBack(child);
     child->setLocalZOrder(z);
