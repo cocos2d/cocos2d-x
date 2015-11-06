@@ -87,6 +87,10 @@ bool ProgressTimer::initWithSprite(Sprite* sp)
 
 ProgressTimer::~ProgressTimer(void)
 {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    if (_sprite)
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _sprite);
+#endif
     CC_SAFE_FREE(_vertexData);
     CC_SAFE_RELEASE(_sprite);
 }
@@ -104,6 +108,12 @@ void ProgressTimer::setSprite(Sprite *sprite)
 {
     if (_sprite != sprite)
     {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+        if (_sprite)
+            ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _sprite);
+        if (sprite)
+            ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, sprite);
+#endif
         CC_SAFE_RETAIN(sprite);
         CC_SAFE_RELEASE(_sprite);
         _sprite = sprite;

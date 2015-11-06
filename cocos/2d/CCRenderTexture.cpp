@@ -73,6 +73,10 @@ RenderTexture::RenderTexture()
 
 RenderTexture::~RenderTexture()
 {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    if (_sprite)
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _sprite);
+#endif
     CC_SAFE_RELEASE(_sprite);
     CC_SAFE_RELEASE(_textureCopy);
     
@@ -293,6 +297,19 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
     CC_SAFE_FREE(data);
     
     return ret;
+}
+
+void RenderTexture::setSprite(Sprite* sprite)
+{
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    if (sprite)
+        ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, sprite);
+    if (_sprite)
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _sprite);
+#endif
+    CC_SAFE_RETAIN(sprite);
+    CC_SAFE_RELEASE(_sprite);
+    _sprite = sprite;
 }
 
 void RenderTexture::setKeepMatrix(bool keepMatrix)

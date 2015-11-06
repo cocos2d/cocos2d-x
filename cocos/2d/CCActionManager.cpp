@@ -70,6 +70,9 @@ void ActionManager::deleteHashElement(tHashElement *element)
 {
     ccArrayFree(element->actions);
     HASH_DEL(_targets, element);
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, element->target);
+#endif
     element->target->release();
     free(element);
 }
@@ -180,6 +183,9 @@ void ActionManager::addAction(Action *action, Node *target, bool paused)
         element = (tHashElement*)calloc(sizeof(*element), 1);
         element->paused = paused;
         target->retain();
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+        ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, target);
+#endif
         element->target = target;
         HASH_ADD_PTR(_targets, target, element);
     }

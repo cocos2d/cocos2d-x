@@ -83,6 +83,9 @@ ClippingNode::~ClippingNode()
 {
     if (_stencil)
     {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, stencil);
+#endif
         _stencil->stopAllActions();
         _stencil->release();
     }
@@ -125,9 +128,7 @@ bool ClippingNode::init()
 
 bool ClippingNode::init(Node *stencil)
 {
-    CC_SAFE_RELEASE(_stencil);
-    _stencil = stencil;
-    CC_SAFE_RETAIN(_stencil);
+    setStencil(stencil);
     
     _alphaThreshold = 1;
     _inverted = false;
@@ -362,6 +363,12 @@ Node* ClippingNode::getStencil() const
 
 void ClippingNode::setStencil(Node *stencil)
 {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    if (_stencil)
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _stencil);
+    if (stencil)
+        ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, stencil);
+#endif
     CC_SAFE_RETAIN(stencil);
     CC_SAFE_RELEASE(_stencil);
     _stencil = stencil;

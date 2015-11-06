@@ -165,6 +165,10 @@ Node::~Node()
 
     // User object has to be released before others, since userObject may have a weak reference of this node
     // It may invoke `node->stopAllAction();` while `_actionManager` is null if the next line is after `CC_SAFE_RELEASE_NULL(_actionManager)`.
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    if (_userObject)
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _userObject);
+#endif
     CC_SAFE_RELEASE_NULL(_userObject);
     
     // attributes
@@ -706,6 +710,12 @@ void Node::setOrderOfArrival(int orderOfArrival)
 
 void Node::setUserObject(Ref* userObject)
 {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    if (userObject)
+        ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, userObject);
+    if (_userObject)
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _userObject);
+#endif
     CC_SAFE_RETAIN(userObject);
     CC_SAFE_RELEASE(_userObject);
     _userObject = userObject;

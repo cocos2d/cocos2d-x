@@ -53,6 +53,10 @@ ListView::~ListView()
     _listViewEventListener = nullptr;
     _listViewEventSelector = nullptr;
     _items.clear();
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    if (_model)
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _model);
+#endif
     CC_SAFE_RELEASE(_model);
 }
 
@@ -85,6 +89,12 @@ void ListView::setItemModel(Widget *model)
         CCLOG("Can't set a nullptr to item model!");
         return;
     }
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    if (_model)
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _model);
+    if (model)
+        ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, model);
+#endif
     CC_SAFE_RELEASE_NULL(_model);
     _model = model;
     CC_SAFE_RETAIN(_model);

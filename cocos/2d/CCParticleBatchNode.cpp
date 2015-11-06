@@ -262,7 +262,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
             _children.insert(newIndex, child);
             child->release();
 
-            // save old altasIndex
+            // save old atlasIndex
             int oldAtlasIndex = child->getAtlasIndex();
 
             // update atlas index
