@@ -176,6 +176,9 @@ Node::~Node()
 
     for (auto& child : _children)
     {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, child);
+#endif
         child->_parent = nullptr;
     }
 
@@ -1083,6 +1086,9 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
         {
             child->cleanup();
         }
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, child);
+#endif
         // set parent nil at the end
         child->setParent(nullptr);
     }
@@ -1107,7 +1113,10 @@ void Node::detachChild(Node *child, ssize_t childIndex, bool doCleanup)
     {
         child->cleanup();
     }
-
+    
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, child);
+#endif
     // set parent nil at the end
     child->setParent(nullptr);
 
@@ -1118,6 +1127,9 @@ void Node::detachChild(Node *child, ssize_t childIndex, bool doCleanup)
 // helper used by reorderChild & add
 void Node::insertChild(Node* child, int z)
 {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, child);
+#endif
     _transformUpdated = true;
     _reorderChildDirty = true;
     _children.pushBack(child);
