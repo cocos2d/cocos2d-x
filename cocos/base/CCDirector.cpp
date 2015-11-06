@@ -956,9 +956,8 @@ void Director::reset()
     // remove all objects, but don't release it.
     // runWithScene might be executed after 'end'.
 #if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
-    for (int i = 0 i < _scenesStack.size(); i++)
+    for (const auto &scene : _scenesStack)
     {
-        auto scene = _scenesStack.at(i);
         if (scene)
             ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, scene);
     }

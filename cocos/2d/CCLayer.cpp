@@ -829,6 +829,9 @@ LayerMultiplex::LayerMultiplex()
 LayerMultiplex::~LayerMultiplex()
 {
     for(const auto &layer : _layers) {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, layer);
+#endif
         layer->cleanup();
     }
 }
@@ -904,6 +907,9 @@ LayerMultiplex* LayerMultiplex::createWithArray(const Vector<Layer*>& arrayOfLay
 
 void LayerMultiplex::addLayer(Layer* layer)
 {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, layer);
+#endif
     _layers.pushBack(layer);
 }
 
@@ -922,10 +928,16 @@ bool LayerMultiplex::initWithLayers(Layer *layer, va_list params)
     if (Layer::init())
     {
         _layers.reserve(5);
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+        ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, layer);
+#endif
         _layers.pushBack(layer);
 
         Layer *l = va_arg(params,Layer*);
         while( l ) {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+            ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, l);
+#endif
             _layers.pushBack(l);
             l = va_arg(params,Layer*);
         }
@@ -942,6 +954,13 @@ bool LayerMultiplex::initWithArray(const Vector<Layer*>& arrayOfLayers)
 {
     if (Layer::init())
     {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+        for (const auto &layer : arrayOfLayers)
+        {
+            if (layer)
+                ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, layer);
+        }
+#endif
         _layers.reserve(arrayOfLayers.size());
         _layers.pushBack(arrayOfLayers);
 
@@ -969,6 +988,9 @@ void LayerMultiplex::switchToAndReleaseMe(int n)
 
     this->removeChild(_layers.at(_enabledLayer), true);
 
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _layers.at(_enabledLayer));
+#endif
     _layers.replace(_enabledLayer, nullptr);
 
     _enabledLayer = n;
