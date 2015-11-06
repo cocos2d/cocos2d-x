@@ -110,7 +110,7 @@ FontAtlas::~FontAtlas()
 #endif
 
     _font->release();
-    relaseTextures();
+    releaseTextures();
 
     delete []_currentPageData;
 
@@ -123,7 +123,7 @@ FontAtlas::~FontAtlas()
 #endif
 }
 
-void FontAtlas::relaseTextures()
+void FontAtlas::releaseTextures()
 {
     for( auto &item: _atlasTextures)
     {

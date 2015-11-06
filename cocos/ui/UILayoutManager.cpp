@@ -203,7 +203,7 @@ Widget* RelativeLayoutManager::getRelativeWidget(Widget* widget)
     return relativeWidget;
 }
     
-bool RelativeLayoutManager::caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout)
+bool RelativeLayoutManager::calculateFinalPositionWithRelativeWidget(LayoutProtocol *layout)
 {
     Vec2 ap = _widget->getAnchorPoint();
     Size cs = _widget->getContentSize();
@@ -426,7 +426,7 @@ bool RelativeLayoutManager::caculateFinalPositionWithRelativeWidget(LayoutProtoc
     return true;
 }
     
-void RelativeLayoutManager::caculateFinalPositionWithRelativeAlign()
+void RelativeLayoutManager::calculateFinalPositionWithRelativeAlign()
 {
     RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(_widget->getLayoutParameter());
     
@@ -543,12 +543,12 @@ void RelativeLayoutManager::doLayout(LayoutProtocol *layout)
                 }
                 
                
-                bool ret = this->caculateFinalPositionWithRelativeWidget(layout);
+                bool ret = this->calculateFinalPositionWithRelativeWidget(layout);
                 if (!ret) {
                     continue;
                 }
                 
-                this->caculateFinalPositionWithRelativeAlign();
+                this->calculateFinalPositionWithRelativeAlign();
             
             
                 _widget->setPosition(Vec2(_finalPositionX, _finalPositionY));

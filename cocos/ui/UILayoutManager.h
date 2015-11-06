@@ -115,8 +115,8 @@ private:
     
     Vector<Widget*> getAllWidgets(LayoutProtocol *layout);
     Widget* getRelativeWidget(Widget* widget);
-    bool caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout);
-    void caculateFinalPositionWithRelativeAlign();
+    bool calculateFinalPositionWithRelativeWidget(LayoutProtocol *layout);
+    void calculateFinalPositionWithRelativeAlign();
     
     ssize_t _unlayoutChildCount;
     Vector<Widget*> _widgetChildren;
