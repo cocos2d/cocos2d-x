@@ -174,81 +174,80 @@ We are happy to announce the release of Cocos2d-x v3.9. Following are the highli
 ### 3D Module
 
 1. 3D MotionStreak
-	
-	In this version, 3D MotionStreak is added to support streak effect. Check the testcase of Sprite3Dtest to see how to use it.  
+    
+    In this version, 3D MotionStreak is added to support streak effect. Check the testcase: [Sprite3DTest](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/Sprite3DTest/Sprite3DTest.cpp#L2472) to see how to use it.
 
 2. Sprite3D
 
-	Added Sprite3D material class. It will be easy and convenient to create internal material. 
+    Added Sprite3D material class. It will be easy and convenient to create internal material. 
 
 ### 2D Module
 
 1. Frame callback function and animation callback function
 
-	Three interfaces are added in ActionTimelineData class, which are addFrameEndCallFunc, removeFrameEndCall and clearFrameEndCalls. It will be easy to add or remove specific frame event. 
+    Three interfaces are added in ActionTimelineData class, which are addFrameEndCallFunc, removeFrameEndCall and clearFrameEndCalls. It will be easy to add or remove specific frame event. 
 
 2. Script Component 
 
-	Script component is used to extend c++ Nodes. You can add a script component to a Node, then the script component will receive onEnter,onExit and update events. For example:
+    Script component is used to extend c++ Nodes. You can add a script component to a Node, then the script component will receive onEnter,onExit and update events. For example:
 
-	```c++ 
-	// create a sprite and add a lua component auto player =
-	Sprite::create("player.png");
-	
-	auto luaComponent = ComponentLua::create("player.lua");
-	player->addComponent(luaComponent);
-	```
-	
-	```lua
-	// player.lua
-	local player = { 
-	    onEnter = function(self)
-	    -- do some things in onEnter 
-	    end
-	    
-	    onExit = function(slef) 
-	    -- do some things in onExit 
-	    end
-	    
-	    update = function(self)
-	    -- do some things every frame 
-	    end
-	}
-	
-	-- it is needed to return player to let c++ nodes know it 
-	return player 
-	```
-	
-	Javascript can work as the same way, just use ComponentJS instead of ComponentLua. 
-	
-	There are some differences between lua component and Javascript component:
-	
-	Should return the object in lua component, in Javascript, you only have to extend cc.ComponentJS, and ensure the result of the last statement is the class of Component.
-	
-	Lua component can only be used in lua projects, Javascript component can only be used in Javascript projects.
-	
-	More detail usage please refer to: `tests/lua-tests/src/ComponentTest` and `tests/js-tests/src/ComponentTest`
+    ```c++ 
+    // create a sprite and add a lua component auto player =
+    Sprite::create("player.png");
+    
+    auto luaComponent = ComponentLua::create("player.lua");
+    player->addComponent(luaComponent);
+    ```
+    
+    ```lua
+    // player.lua
+    local player = { 
+        onEnter = function(self)
+        -- do some things in onEnter 
+        end
+        
+        onExit = function(slef) 
+        -- do some things in onExit 
+        end
+        
+        update = function(self)
+        -- do some things every frame 
+        end
+    }
+    
+    -- it is needed to return player to let c++ nodes know it 
+    return player 
+    ```
+    
+    Javascript can work as the same way, just use ComponentJS instead of ComponentLua. 
+    
+    There are some differences between lua component and Javascript component:
+    
+    Should return the object in lua component, in Javascript, you only have to extend cc.ComponentJS, and ensure the result of the last statement is the class of Component.
+    
+    Lua component can only be used in lua projects, Javascript component can only be used in Javascript projects.
+    
+    More detail usage please refer to: `tests/lua-tests/src/ComponentTest` and `tests/js-tests/src/ComponentTest`
 
 
 3. 2D Physics
 
-	Before v3.9, there are many physics related codes in Node, such as Node::setPhysicsBody(). Since v3.9, we move these codes into physics component.
+    Before v3.9, there are many physics related codes in Node, such as Node::setPhysicsBody(). Since v3.9, we move these codes into physics component.
 
-	After using physics component, the way to use physics is changed. Before
-	v3.9, you can use physics like this:
-	
-	```
-	auto node = Node::create(); 
-	node->setPhysicsBody(PhysicsBody::createEdgeBox(...));
-	```
-	
-	Since v3.9 you should use like this:
-	
-	```
-	auto node = Node::create();
-	node->addComponent(PhysicsBody::createEdgeBox(...));
+    After using physics component, the way to use physics is changed. Before v3.9, you can use physics like this:
+    
+    ```
+    auto node = Node::create(); 
+    node->setPhysicsBody(PhysicsBody::createEdgeBox(...));
+    ```
+    
+    Since v3.9 you should use like this:
+    
+    ```
+    auto node = Node::create();
+    node->addComponent(PhysicsBody::createEdgeBox(...));
 
-	```
+    ```
 
 4. EditBox implemention on iOS and Win32 platform
 
@@ -259,9 +258,9 @@ We are happy to announce the release of Cocos2d-x v3.9. Following are the highli
 
 5. Remove dependence of curl on AssetsManager, AssetsManagerEx and Downloader (iOS & Android)
 
-	>From v3.9, iOS and Android version will not depend on libcurl, which make
-	the game package smaller and solve some bugs caused by libcurl. Stability has
-	been improved with the updated iOS and Android system. 
+    From v3.9, iOS and Android version will not depend on libcurl, which make
+    the game package smaller and solve some bugs caused by libcurl. Stability has
+    been improved with the updated iOS and Android system. 
 
 6. Improved particle performance. 
 
@@ -269,19 +268,18 @@ We are happy to announce the release of Cocos2d-x v3.9. Following are the highli
 
 1. Supported Action inheritance, update function overwriting in JSB
 
-	In previous version of JSB, developers cannot inherit Action class in JS script,
-	such as Action / ActionInterval / ActionInstant, for their update function will not be called. In v3.9, developers can create subclass of Action and make extensions. More detail usage please refer to the textcase in ActionTest
-	/ ActionCustomTest.
+    In previous version of JSB, developers cannot inherit Action class in JS script, such as Action / ActionInterval / ActionInstant, for their update function will not be called. In v3.9, developers can create subclass of Action and make extensions. More detail usage please refer to the textcase in ActionTest
+    / ActionCustomTest.
 
 2. ScrollView performance on Web engine
 
-	ScrollView and ListView are the popular UI controls in Web engine. Their
-	performance is not perfect in previous versions, especially when there are multiple sub-controls. In v3.9, we have improved its rendering performance. They only act on the contents displayed on the current screen. Test
-	date shows that, comparing with v3.8, rendering efficiency of v3.9 have been improved for twice to four times in different devices and browsers. 
+    ScrollView and ListView are the popular UI controls in Web engine. Their
+    performance is not perfect in previous versions, especially when there are multiple sub-controls. In v3.9, we have improved its rendering performance. They only act on the contents displayed on the current screen. Test
+    date shows that, comparing with v3.8, rendering efficiency of v3.9 have been improved for twice to four times in different devices and browsers. 
 
 3. Scale9Sprite performance on Web engine
 
-	In this version, we have changed the way to construct 9-slice sprite. The engine uses 9 rendering commands instead of the 9 nodes in previous versions. This helps to reduce memory usage and improve rendering performance. 
+    In this version, we have changed the way to construct 9-slice sprite. The engine uses 9 rendering commands instead of the 9 nodes in previous versions. This helps to reduce memory usage and improve rendering performance. 
 
 4. Decoupled Sprite's setTexture and updateColor in Web engine.
 
@@ -388,57 +386,48 @@ wheel.
 [REFINE]        Doc: Fixed a minor typo and renamed INTIAL_CAPS_ALL_CHARACTERS to INITIAL_CAPS_ALL_CHARACTERS 
 in UIEditBox.
 
-You can also take a look at the full changelog.
+You can also take a look at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
 
 
 ## NEW APIS
 
-1. Script component 
+1. JSB Module
 
-	Added ComponentLua and ComponentJS components, easy to add Lua and JS scripts.     
+    Added cc.fileUtils.writeDataToFile
 
-2. 3D MotionStreak
+2. Sprite3D
 
-	Added MotionStreak3D class to support 3D streak effects, see the following link for detailed information, https://github.com/cocos2d/cocos2d-x/pull/13647/files.
+    Added Sprite3Dmaterial class to make it easy to create innate material. 
 
-3. JSB Module
+3. ActionTimelineData 
 
-	Added cc.fileUtils.writeDataToFile, please see https://github.com/cocos2d/cocos2d-x/pull/13726
+    Three interfaces are added in ActionTimelineData class, which are addFrameEndCallFunc, removeFrameEndCall and clearFrameEndCalls.
 
-4. Sprite3D
+4. ActionTimeline::removeFrameEndCallFunc 
 
-	Added Sprite3Dmaterial class to make it easy to create innate material. 
-
-5. ActionTimelineData 
-
-	Three interfaces are added in ActionTimelineData class, which are addFrameEndCallFunc, removeFrameEndCall and clearFrameEndCalls.
-
-6. ActionTimeline::removeFrameEndCallFunc 
-
-7. Improvements for ListView
+5. Improvements for ListView
 
     - Add APIs to scroll to specific item in list.
     - Add APIs to get an item in specific position like center, leftmost, rightmost, topmost and bottommost.
     - Add a feature for magnetic scrolling.
 
-	For more information: https://github.com/cocos2d/cocos2d-x/pull/13723
+    For more information: https://github.com/cocos2d/cocos2d-x/pull/13723
 
-8. Node
+6. Node
 
-	Added the missing API getChildByTag
+    Added the missing API getChildByTag
 
-9. Label
+7. Label
 
-	Added setLineSpacing, getLineSpacing
+    Added setLineSpacing, getLineSpacing
 
-10. CSLoader
+8. CSLoader
 
-	Added createNodeWithVisibleSize, createNodeWithVisibleSize
+    Added createNodeWithVisibleSize, createNodeWithVisibleSize
+9. ComponentContainer
 
-11. ComponentContainer
+    Removed isEmpty
 
-	Removed isEmpty
+10. Sprite
 
-12. Sprite
-
-	Removed debugDraw(bool on)
+    Removed debugDraw(bool on)
