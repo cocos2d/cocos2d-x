@@ -268,8 +268,7 @@ We are happy to announce the release of Cocos2d-x v3.9. Following are the highli
 
 1. Supported Action inheritance, update function overwriting in JSB
 
-    In previous version of JSB, developers cannot inherit Action class in JS script, such as Action / ActionInterval / ActionInstant, for their update function will not be called. In v3.9, developers can create subclass of Action and make extensions. More detail usage please refer to the textcase in ActionTest
-    / ActionCustomTest.
+    In previous version of JSB, developers cannot inherit Action class in JS script, such as Action / ActionInterval / ActionInstant, for their update function will not be called. In v3.9, developers can create subclass of Action and make extensions. More detail usage please refer to the textcase in ActionTest / ActionCustomTest.
 
 2. ScrollView performance on Web engine
 
@@ -393,7 +392,7 @@ You can also take a look at the [full changelog](https://github.com/cocos2d/coco
 
 1. JSB Module
 
-    Added cc.fileUtils.writeDataToFile
+    Added jsb.fileUtils.writeDataToFile
 
 2. Sprite3D
 
