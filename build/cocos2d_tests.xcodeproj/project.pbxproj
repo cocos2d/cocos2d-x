@@ -9189,6 +9189,7 @@
 				6372172A19C87BA6002C1D2E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 		A035ACBC1782469800987F6C /* Build configuration list for PBXAggregateTarget "build all tests Mac" */ = {
 			isa = XCConfigurationList;
