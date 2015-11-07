@@ -275,4 +275,61 @@ namespace cocos2d {
         return strValue;
     }
 
+    std::string JniHelper::getJNISignature() {
+        return "";
+    }
+
+    template <>
+    std::string JniHelper::getJNISignature(bool) {
+        return "Z";
+    }
+
+    template <>
+    std::string JniHelper::getJNISignature(char) {
+        return "C";
+    }
+
+    template <>
+    std::string JniHelper::getJNISignature(short) {
+        return "S";
+    }
+
+    template <>
+    std::string JniHelper::getJNISignature(int) {
+        return "I";
+    }
+
+    template <>
+    std::string JniHelper::getJNISignature(long) {
+        return "J";
+    }
+
+    template <>
+    std::string JniHelper::getJNISignature(float) {
+        return "F";
+    }
+
+    template <>
+    std::string JniHelper::getJNISignature(double) {
+        return "D";
+    }
+
+    template <>
+    std::string JniHelper::getJNISignature(const char*) {
+        return "Ljava/lang/String;";
+    }
+
+    template <>
+    std::string JniHelper::getJNISignature(std::string) {
+        return "Ljava/lang/String;";
+    }
+
+    jstring JniHelper::convert(cocos2d::JniMethodInfo& t, const char* x) {
+        return t.env->NewStringUTF(x ? x : "");
+    }
+
+    jstring JniHelper::convert(cocos2d::JniMethodInfo& t, std::string x) {
+        return t.env->NewStringUTF(x.c_str());
+    }
+
 } //namespace cocos2d
