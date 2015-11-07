@@ -1,5 +1,5 @@
 #include "JNITest.h"
-#include "jni/JNIHelper.h"
+#include "platform/android/jni/JNIHelper.h"
 
 #include <string>
 
