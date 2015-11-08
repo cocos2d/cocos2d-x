@@ -1299,10 +1299,12 @@ void TransitionCrossFade::onEnter()
     // in which we are going to add our rendertextures
     Color4B  color(0,0,0,0);
     Size size = Director::getInstance()->getWinSize();
+    Size screenSize = Director::getInstance()->getOpenGLView()->getFrameSize();
+    Size textureSize = Size(std::roundf(screenSize.width/CC_CONTENT_SCALE_FACTOR()), std::roundf(screenSize.height/CC_CONTENT_SCALE_FACTOR()));
     LayerColor* layer = LayerColor::create(color);
 
     // create the first render texture for inScene
-    RenderTexture* inTexture = RenderTexture::create((int)size.width, (int)size.height,Texture2D::PixelFormat::RGBA8888,GL_DEPTH24_STENCIL8);
+    RenderTexture* inTexture = RenderTexture::create((int)textureSize.width, (int)textureSize.height, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
 
     if (nullptr == inTexture)
     {
@@ -1312,6 +1314,8 @@ void TransitionCrossFade::onEnter()
     inTexture->getSprite()->setAnchorPoint( Vec2(0.5f,0.5f) );
     inTexture->setPosition(size.width/2, size.height/2);
     inTexture->setAnchorPoint( Vec2(0.5f,0.5f) );
+    inTexture->setScale(size.width/textureSize.width, size.height/textureSize.height);
+    inTexture->setKeepMatrix(true);
 
     // render inScene to its texturebuffer
     inTexture->begin();
@@ -1319,10 +1323,12 @@ void TransitionCrossFade::onEnter()
     inTexture->end();
 
     // create the second render texture for outScene
-    RenderTexture* outTexture = RenderTexture::create((int)size.width, (int)size.height,Texture2D::PixelFormat::RGBA8888,GL_DEPTH24_STENCIL8);
+    RenderTexture* outTexture = RenderTexture::create((int)textureSize.width, (int)textureSize.height,Texture2D::PixelFormat::RGBA8888,GL_DEPTH24_STENCIL8);
     outTexture->getSprite()->setAnchorPoint( Vec2(0.5f,0.5f) );
     outTexture->setPosition(size.width/2, size.height/2);
     outTexture->setAnchorPoint( Vec2(0.5f,0.5f) );
+    outTexture->setScale(size.width/textureSize.width, size.height/textureSize.height);
+    outTexture->setKeepMatrix(true);
 
     // render outScene to its texturebuffer
     outTexture->begin();
