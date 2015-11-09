@@ -279,7 +279,7 @@ public:
     
     /** @~english
      * Calculate the default moment value.
-     * This function should be overrided in inherit classes.
+     * This function should be overridden in inherit classes.
      * @~chinese 
      * 计算默认的力矩。
      * 这个函数应该在继承类中被覆盖。
@@ -290,7 +290,7 @@ public:
     
     /**@~english
      * Get this shape's position offset.
-     * This function should be overrided in inherit classes.
+     * This function should be overridden in inherit classes.
      * @~chinese 
      * 得到这个形状的位置偏移量。
      * 这个函数应该在继承类中被覆盖。
@@ -301,7 +301,7 @@ public:
     
     /**@~english
      * Get this shape's center position.
-     * This function should be overrided in inherit classes.
+     * This function should be overridden in inherit classes.
      * @~chinese 
      * 这个形状的中心位置。
      * 这个函数应该在继承类中被覆盖。

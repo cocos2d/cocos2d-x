@@ -1,4 +1,4 @@
-ï»¿/***************************************************************************
+/***************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -49,7 +49,7 @@ class Physics3DRigidBody;
 /**
     @class Physics3DConstraint
     @brief @~english Constraint affects the movement of physics object, it usually connet one or two physics object. There are some types of physics constraints.
-    @~chinese çº¦æŸå½±å“ç‰©ç†å¯¹è±¡çš„è¿åŠ¨ï¼Œå®ƒé€šå¸¸è¿æ¥ä¸€ä¸ªæˆ–ä¸¤ä¸ªç‰©ç†å¯¹è±¡ã€‚
+    @~chinese Ô¼ÊøÓ°ÏìÎïÀí¶ÔÏóµÄÔË¶¯£¬ËüÍ¨³£Á¬½ÓÒ»¸ö»òÁ½¸öÎïÀí¶ÔÏó¡£
 */
 class CC_DLL Physics3DConstraint : public Ref
 {
@@ -64,68 +64,68 @@ public:
         SIX_DOF,
     };
     /** @~english get the impulse that break the constraint
-        @~chinese è·å–æ‰“ç ´çº¦æŸçš„é˜€å€¼
-        @return @~english the impulse that break the constraint @~chinese æ‰“ç ´çº¦æŸçš„é˜€å€¼
+        @~chinese »ñÈ¡´òÆÆÔ¼ÊøµÄ·§Öµ
+        @return @~english the impulse that break the constraint @~chinese ´òÆÆÔ¼ÊøµÄ·§Öµ
     */
     float getBreakingImpulse() const;
 
     /** @~english set the impulse that break the constraint
-        @~chinese è®¾ç½®æ‰“ç ´çº¦æŸçš„é˜€å€¼
-        @param impulse @~english  the impulse that break the constraint @~chinese æ‰“ç ´çº¦æŸçš„é˜€å€¼
+        @~chinese ÉèÖÃ´òÆÆÔ¼ÊøµÄ·§Öµ
+        @param impulse @~english  the impulse that break the constraint @~chinese ´òÆÆÔ¼ÊøµÄ·§Öµ
     */
     void setBreakingImpulse(float impulse);
 
     /** @~english is it enabled
-        @~chinese çº¦æŸæ˜¯å¦å¯ç”¨
-        @return @~english whether the constraint is enabled @~chinese çº¦æŸæ˜¯å¦å¯ç”¨
+        @~chinese Ô¼ÊøÊÇ·ñÆôÓÃ
+        @return @~english whether the constraint is enabled @~chinese Ô¼ÊøÊÇ·ñÆôÓÃ
     */
     bool isEnabled() const;
 
     /** @~english set enable or not
-        @~chinese å¯ç”¨çº¦æŸ
-        @param enabled @~english  whether the constraint will be enabled @~chinese çº¦æŸæ˜¯å¦å¯ç”¨
+        @~chinese ÆôÓÃÔ¼Êø
+        @param enabled @~english  whether the constraint will be enabled @~chinese Ô¼ÊøÊÇ·ñÆôÓÃ
     */
     void setEnabled(bool enabled);
 
     /** @~english get rigid body a
-        @~chinese å¾—åˆ°åˆšä½“a
-        @return @~english the Physics3DRigidBody A @~chinese åˆšä½“a
+        @~chinese µÃµ½¸ÕÌåa
+        @return @~english the Physics3DRigidBody A @~chinese ¸ÕÌåa
     */
     Physics3DRigidBody* getBodyA() const { return _bodyA; }
 
     /** @~english get rigid body b
-        @~chinese å¾—åˆ°åˆšä½“b
-        @return @~english the Physics3DRigidBody B @~chinese åˆšä½“b
+        @~chinese µÃµ½¸ÕÌåb
+        @return @~english the Physics3DRigidBody B @~chinese ¸ÕÌåb
     */
     Physics3DRigidBody* getBodyB() const { return _bodyB; }
 
     /** @~english get constraint type
-        @~chinese å¾—åˆ°çº¦æŸç±»å‹
-        @return @~english the constraint type @~chinese çº¦æŸç±»å‹
+        @~chinese µÃµ½Ô¼ÊøÀàĞÍ
+        @return @~english the constraint type @~chinese Ô¼ÊøÀàĞÍ
     */
     ConstraintType getConstraintType() const { return _type; }
 
     /** @~english get user data
-        @~chinese è®¾ç½®ç”¨æˆ·æ•°æ®
-        @param userData @~english the user data will be seted @~chinese ç”¨æˆ·æ•°æ®
+        @~chinese ÉèÖÃÓÃ»§Êı¾İ
+        @param userData @~english the user data will be seted @~chinese ÓÃ»§Êı¾İ
     */
     void setUserData(void* userData) { _userData = userData; }
 
     /** @~english get user data
-        @~chinese è·å–ç”¨æˆ·æ•°æ®
-        @return @~english the user data @~chinese ç”¨æˆ·æ•°æ®
+        @~chinese »ñÈ¡ÓÃ»§Êı¾İ
+        @return @~english the user data @~chinese ÓÃ»§Êı¾İ
     */
     void* getUserData() const { return _userData; }
 
     /** @~english get override number of solver iterations
-        @~chinese å¾—åˆ°è¦†ç›–æ±‚è§£è¿­ä»£æ¬¡æ•°
-        @return @~english the override number of solver iterations @~chinese è¦†ç›–æ±‚è§£è¿­ä»£æ¬¡æ•°
+        @~chinese µÃµ½¸²¸ÇÇó½âµü´ú´ÎÊı
+        @return @~english the override number of solver iterations @~chinese ¸²¸ÇÇó½âµü´ú´ÎÊı
     */
     int getOverrideNumSolverIterations() const;
 
     /** @~english override the number of constraint solver iterations used to solve this constraint, -1 will use the default number of iterations, as specified in SolverInfo.m_numIterations
-        @~chinese è¦†ç›–çº¦æŸæ±‚è§£çš„æ±‚è§£è¿­ä»£æ¬¡æ•°ï¼Œ-1å°†ä½¿ç”¨é»˜è®¤è¿­ä»£æ¬¡æ•°
-        @param overideNumIterations @~english  the number of constraint solver iterations @~chinese çº¦æŸæ±‚è§£çš„è¿­ä»£æ¬¡æ•°
+        @~chinese ¸²¸ÇÔ¼ÊøÇó½âµÄÇó½âµü´ú´ÎÊı£¬-1½«Ê¹ÓÃÄ¬ÈÏµü´ú´ÎÊı
+        @param overideNumIterations @~english  the number of constraint solver iterations @~chinese Ô¼ÊøÇó½âµÄµü´ú´ÎÊı
     */
     void setOverrideNumSolverIterations(int overideNumIterations);
 
@@ -155,44 +155,44 @@ class CC_DLL Physics3DPointToPointConstraint : public Physics3DConstraint
 {
 public:
     /** @~english create point to point constraint, limits the translation of local pivot point of rigid body A
-        @~chinese å»ºç«‹ç‚¹å¯¹ç‚¹çš„çº¦æŸï¼Œé™åˆ¶åˆšä½“Açš„æ¢è½´çš„å¹³ç§»
-        @param rbA @~english  The rigid body going to be fixed @~chinese åˆšä½“A
-        @param pivotPointInA @~english  local pivot point in A's local space @~chinese åœ¨ä¸€ä¸ªå±€éƒ¨ç©ºé—´çš„å±€éƒ¨æ”¯ç‚¹
-        @return @~english created constraint @~chinese åˆ›å»ºçº¦æŸ
+        @~chinese ½¨Á¢µã¶ÔµãµÄÔ¼Êø£¬ÏŞÖÆ¸ÕÌåAµÄÊàÖáµÄÆ½ÒÆ
+        @param rbA @~english  The rigid body going to be fixed @~chinese ¸ÕÌåA
+        @param pivotPointInA @~english  local pivot point in A's local space @~chinese ÔÚÒ»¸ö¾Ö²¿¿Õ¼äµÄ¾Ö²¿Ö§µã
+        @return @~english created constraint @~chinese ´´½¨Ô¼Êø
     */
     static Physics3DPointToPointConstraint* create(Physics3DRigidBody* rbA, const cocos2d::Vec3& pivotPointInA);
 
     /** @~english create point to point constraint, make the local pivot points of 2 rigid bodies match in worldspace.
-        @~chinese å»ºç«‹ç‚¹å¯¹ç‚¹çš„çº¦æŸï¼Œä½¿ä¸¤ä¸ªåˆšä½“çš„æ¢è½´åœ¨ä¸–ç•Œç©ºé—´å†…ç›¸åŒ¹é…ã€‚
-        @param rbA @~english  The rigid body A going to be fixed @~chinese è¦çº¦æŸçš„åˆšä½“A
-        @param rbB @~english  The rigid body B going to be fixed @~chinese è¦çº¦æŸçš„åˆšä½“B
-        @param pivotPointInA @~english  local pivot point in A's local space @~chinese åœ¨Açš„å±€éƒ¨ç©ºé—´çš„å±€éƒ¨æ”¯ç‚¹
-        @param pivotPointInB @~english  local pivot point in B's local space @~chinese åœ¨Bçš„å±€éƒ¨ç©ºé—´çš„å±€éƒ¨æ”¯ç‚¹
-        @return @~english created constraint @~chinese åˆ›å»ºçº¦æŸ
+        @~chinese ½¨Á¢µã¶ÔµãµÄÔ¼Êø£¬Ê¹Á½¸ö¸ÕÌåµÄÊàÖáÔÚÊÀ½ç¿Õ¼äÄÚÏàÆ¥Åä¡£
+        @param rbA @~english  The rigid body A going to be fixed @~chinese ÒªÔ¼ÊøµÄ¸ÕÌåA
+        @param rbB @~english  The rigid body B going to be fixed @~chinese ÒªÔ¼ÊøµÄ¸ÕÌåB
+        @param pivotPointInA @~english  local pivot point in A's local space @~chinese ÔÚAµÄ¾Ö²¿¿Õ¼äµÄ¾Ö²¿Ö§µã
+        @param pivotPointInB @~english  local pivot point in B's local space @~chinese ÔÚBµÄ¾Ö²¿¿Õ¼äµÄ¾Ö²¿Ö§µã
+        @return @~english created constraint @~chinese ´´½¨Ô¼Êø
     */
     static Physics3DPointToPointConstraint* create(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Vec3& pivotPointInA, const cocos2d::Vec3& pivotPointInB);
 
     /** @~english set pivot point in A's local space
-        @~chinese åœ¨Açš„å±€éƒ¨ç©ºé—´è®¾ç½®æ”¯ç‚¹
-        @param pivotA @~english  pivot point in A's local space @~chinese åœ¨Açš„å±€éƒ¨ç©ºé—´çš„æ”¯ç‚¹
+        @~chinese ÔÚAµÄ¾Ö²¿¿Õ¼äÉèÖÃÖ§µã
+        @param pivotA @~english  pivot point in A's local space @~chinese ÔÚAµÄ¾Ö²¿¿Õ¼äµÄÖ§µã
     */
     void setPivotPointInA(const cocos2d::Vec3& pivotA);
 
     /** @~english set pivot point in B's local space
-        @~chinese åœ¨Bçš„å±€éƒ¨ç©ºé—´è®¾ç½®æ”¯ç‚¹
-        @param pivotB @~english  pivot point in B's local space @~chinese åœ¨Bçš„å±€éƒ¨ç©ºé—´çš„æ”¯ç‚¹
+        @~chinese ÔÚBµÄ¾Ö²¿¿Õ¼äÉèÖÃÖ§µã
+        @param pivotB @~english  pivot point in B's local space @~chinese ÔÚBµÄ¾Ö²¿¿Õ¼äµÄÖ§µã
     */
     void setPivotPointInB(const cocos2d::Vec3& pivotB);
 
     /** @~english get pivot point in A's local space
-        @~chinese å¾—åˆ°Açš„å±€éƒ¨ç©ºé—´çš„æ”¯ç‚¹
-        @return @~english pivot point in A's local space @~chinese Açš„å±€éƒ¨ç©ºé—´çš„æ”¯ç‚¹
+        @~chinese µÃµ½AµÄ¾Ö²¿¿Õ¼äµÄÖ§µã
+        @return @~english pivot point in A's local space @~chinese AµÄ¾Ö²¿¿Õ¼äµÄÖ§µã
     */
     cocos2d::Vec3 getPivotPointInA() const;
 
     /** @~english get pivot point in B's local space
-        @~chinese å¾—åˆ°Bçš„å±€éƒ¨ç©ºé—´çš„æ”¯ç‚¹
-        @return @~english pivot point in B's local space @~chinese Bçš„å±€éƒ¨ç©ºé—´çš„æ”¯ç‚¹
+        @~chinese µÃµ½BµÄ¾Ö²¿¿Õ¼äµÄÖ§µã
+        @return @~english pivot point in B's local space @~chinese BµÄ¾Ö²¿¿Õ¼äµÄÖ§µã
     */
     cocos2d::Vec3 getPivotPointInB() const;
 
@@ -205,112 +205,112 @@ CC_CONSTRUCTOR_ACCESS:
 };
 
 /** @~english Hinge constraint restricts two additional angular degrees of freedom, so the body can only rotate around one axis, the hinge axis. This can be useful to represent doors or wheels rotating around one axis.    hinge constraint between two rigidbodies each with a pivotpoint that descibes the axis location in local space
-    @~chinese é“°é“¾çº¦æŸé™åˆ¶ä¸¤ä¸ªé™„åŠ çš„è§’è‡ªç”±åº¦ï¼Œæ‰€ä»¥åˆšä½“åªèƒ½ç»•ä¸€ä¸ªè½´ï¼Œé“°é“¾è½´ã€‚é“°é“¾ååˆ†é€‚åˆè¡¨ç¤ºé—¨æˆ–è½¦è½®å›´ç»•ä¸€ä¸ªè½´æ—‹è½¬ã€‚ä¸¤ä¸ªåˆšä½“ä¹‹é—´çš„é“°é“¾çº¦æŸç”±å„è‡ªå±€éƒ¨ç©ºé—´å†…çš„æ¢è½´æ¥è¡¨ç¤º
+    @~chinese ½ÂÁ´Ô¼ÊøÏŞÖÆÁ½¸ö¸½¼ÓµÄ½Ç×ÔÓÉ¶È£¬ËùÒÔ¸ÕÌåÖ»ÄÜÈÆÒ»¸öÖá£¬½ÂÁ´Öá¡£½ÂÁ´Ê®·ÖÊÊºÏ±íÊ¾ÃÅ»ò³µÂÖÎ§ÈÆÒ»¸öÖáĞı×ª¡£Á½¸ö¸ÕÌåÖ®¼äµÄ½ÂÁ´Ô¼ÊøÓÉ¸÷×Ô¾Ö²¿¿Õ¼äÄÚµÄÊàÖáÀ´±íÊ¾
 */
 class CC_DLL Physics3DHingeConstraint : public Physics3DConstraint
 {
 public:
     /** @~english create hinge constraint
-        @~chinese åˆ›å»ºé“°é“¾çº¦æŸ
-        @param rbA @~english  rigid body A @~chinese åˆšä½“A
-        @param rbAFrame @~english  rigid body A's frame @~chinese åˆšä½“çš„çŸ©é˜µ
-        @param useReferenceFrameA @~english  use frame A as reference @~chinese ä½¿ç”¨çŸ©é˜µä½œä¸ºå‚è€ƒ
-        @return @~english return an autoreleased Physics3DHingeConstraint object. @~chinese è¿”å›ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„physics3dhingeconstraintã€‚
+        @~chinese ´´½¨½ÂÁ´Ô¼Êø
+        @param rbA @~english  rigid body A @~chinese ¸ÕÌåA
+        @param rbAFrame @~english  rigid body A's frame @~chinese ¸ÕÌåµÄ¾ØÕó
+        @param useReferenceFrameA @~english  use frame A as reference @~chinese Ê¹ÓÃ¾ØÕó×÷Îª²Î¿¼
+        @return @~english return an autoreleased Physics3DHingeConstraint object. @~chinese ·µ»ØÒ»¸ö×Ô¶¯ÊÍ·ÅµÄphysics3dhingeconstraint¡£
     */
     static Physics3DHingeConstraint* create(Physics3DRigidBody* rbA, const cocos2d::Mat4& rbAFrame, bool useReferenceFrameA = false);
 
     /** @~english create hinge constraint
-        @~chinese åˆ›å»ºé“°é“¾çº¦æŸ
-        @param rbA @~english  rigid body A @~chinese åˆšä½“A
-        @param pivotInA @~english  pivot in rigid body A's local space @~chinese åœ¨åˆšä½“Açš„å±€éƒ¨ç©ºé—´å†…çš„æ¢è½´
-        @param axisInA @~english  axis in rigid body A's local space @~chinese åœ¨åˆšä½“Açš„å±€éƒ¨ç©ºé—´å†…çš„è½´å‘
-        @param useReferenceFrameA @~english  use frame A as reference @~chinese ä½¿ç”¨çŸ©é˜µä½œä¸ºå¼•ç”¨
-        @return @~english return an autoreleased Physics3DHingeConstraint object. @~chinese è¿”å›ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„physics3dhingeconstraintã€‚
+        @~chinese ´´½¨½ÂÁ´Ô¼Êø
+        @param rbA @~english  rigid body A @~chinese ¸ÕÌåA
+        @param pivotInA @~english  pivot in rigid body A's local space @~chinese ÔÚ¸ÕÌåAµÄ¾Ö²¿¿Õ¼äÄÚµÄÊàÖá
+        @param axisInA @~english  axis in rigid body A's local space @~chinese ÔÚ¸ÕÌåAµÄ¾Ö²¿¿Õ¼äÄÚµÄÖáÏò
+        @param useReferenceFrameA @~english  use frame A as reference @~chinese Ê¹ÓÃ¾ØÕó×÷ÎªÒıÓÃ
+        @return @~english return an autoreleased Physics3DHingeConstraint object. @~chinese ·µ»ØÒ»¸ö×Ô¶¯ÊÍ·ÅµÄphysics3dhingeconstraint¡£
     */
     static Physics3DHingeConstraint* create(Physics3DRigidBody* rbA, const cocos2d::Vec3& pivotInA, const cocos2d::Vec3& axisInA, bool useReferenceFrameA = false);
 
     /** @~english create hinge constraint
-        @~chinese åˆ›å»ºé“°é“¾çº¦æŸ
-        @param rbA @~english  rigid body A @~chinese åˆšä½“A
-        @param rbB @~english  rigid body B @~chinese åˆšä½“B
-        @param pivotInA @~english  pivot point in A's local space @~chinese åœ¨Açš„å±€éƒ¨ç©ºé—´çš„æ¢è½´
-        @param pivotInB @~english  pivot point in B's local space @~chinese åœ¨Bçš„å±€éƒ¨ç©ºé—´çš„æ¢è½´
-        @param axisInA @~english  axis in A's local space @~chinese åœ¨Açš„å±€éƒ¨ç©ºé—´è½´
-        @param axisInB @~english  axis in B's local space @~chinese åœ¨Bçš„å±€éƒ¨ç©ºé—´è½´
-        @param useReferenceFrameA @~english  use frame A as reference @~chinese ä½¿ç”¨å¸§ä½œä¸ºå‚è€ƒ
-        @return @~english return an autoreleased Physics3DHingeConstraint object. @~chinese è¿”å›ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„physics3dhingeconstraintã€‚
+        @~chinese ´´½¨½ÂÁ´Ô¼Êø
+        @param rbA @~english  rigid body A @~chinese ¸ÕÌåA
+        @param rbB @~english  rigid body B @~chinese ¸ÕÌåB
+        @param pivotInA @~english  pivot point in A's local space @~chinese ÔÚAµÄ¾Ö²¿¿Õ¼äµÄÊàÖá
+        @param pivotInB @~english  pivot point in B's local space @~chinese ÔÚBµÄ¾Ö²¿¿Õ¼äµÄÊàÖá
+        @param axisInA @~english  axis in A's local space @~chinese ÔÚAµÄ¾Ö²¿¿Õ¼äÖá
+        @param axisInB @~english  axis in B's local space @~chinese ÔÚBµÄ¾Ö²¿¿Õ¼äÖá
+        @param useReferenceFrameA @~english  use frame A as reference @~chinese Ê¹ÓÃÖ¡×÷Îª²Î¿¼
+        @return @~english return an autoreleased Physics3DHingeConstraint object. @~chinese ·µ»ØÒ»¸ö×Ô¶¯ÊÍ·ÅµÄphysics3dhingeconstraint¡£
     */
     static Physics3DHingeConstraint* create(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Vec3& pivotInA,const cocos2d::Vec3& pivotInB, cocos2d::Vec3& axisInA, cocos2d::Vec3& axisInB, bool useReferenceFrameA = false);
 
     /** @~english create hinge constraint
-        @~chinese åˆ›å»ºé“°é“¾çº¦æŸ
-        @param rbA @~english  rigid body A @~chinese åˆšä½“A
-        @param rbB @~english  rigid body B @~chinese åˆšä½“B
-        @param rbAFrame @~english  rigid body A's frame @~chinese åˆšä½“Açš„çŸ©é˜µ
-        @param rbBFrame @~english  rigid body B's frame @~chinese åˆšä½“Bçš„çŸ©é˜µ
-        @param useReferenceFrameA @~english  use frame A as reference @~chinese ä½¿ç”¨å¸§ä½œä¸ºå‚è€ƒ
-        @return @~english return an autoreleased Physics3DHingeConstraint object. @~chinese è¿”å›ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„physics3dhingeconstraintã€‚
+        @~chinese ´´½¨½ÂÁ´Ô¼Êø
+        @param rbA @~english  rigid body A @~chinese ¸ÕÌåA
+        @param rbB @~english  rigid body B @~chinese ¸ÕÌåB
+        @param rbAFrame @~english  rigid body A's frame @~chinese ¸ÕÌåAµÄ¾ØÕó
+        @param rbBFrame @~english  rigid body B's frame @~chinese ¸ÕÌåBµÄ¾ØÕó
+        @param useReferenceFrameA @~english  use frame A as reference @~chinese Ê¹ÓÃÖ¡×÷Îª²Î¿¼
+        @return @~english return an autoreleased Physics3DHingeConstraint object. @~chinese ·µ»ØÒ»¸ö×Ô¶¯ÊÍ·ÅµÄphysics3dhingeconstraint¡£
     */
     static Physics3DHingeConstraint* create(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Mat4& rbAFrame, const cocos2d::Mat4& rbBFrame, bool useReferenceFrameA = false);
 
     /** @~english get rigid body A's frame offset
-        @~chinese å¾—åˆ°åˆšä½“çš„å¸§åç§»
-        @return @~english rigid body A's frame offset @~chinese åˆšä½“çš„å¸§åç§»
+        @~chinese µÃµ½¸ÕÌåµÄÖ¡Æ«ÒÆ
+        @return @~english rigid body A's frame offset @~chinese ¸ÕÌåµÄÖ¡Æ«ÒÆ
     */
     cocos2d::Mat4 getFrameOffsetA() const;
 
     /** @~english get rigid body B's frame offset
-        @~chinese å¾—åˆ°åˆšä½“Bå¸§åç§»
-        @return @~english rigid body B's frame offset @~chinese åˆšä½“Bå¸§åç§»
+        @~chinese µÃµ½¸ÕÌåBÖ¡Æ«ÒÆ
+        @return @~english rigid body B's frame offset @~chinese ¸ÕÌåBÖ¡Æ«ÒÆ
     */
     cocos2d::Mat4 getFrameOffsetB() const;
 
     /** @~english set frames for rigid body A and B
-        @~chinese ä¸ºåˆšä½“Aå’ŒBè®¾ç½®å¸§
-        @param frameA @~english  frame will be seted to rigid body A @~chinese è®¾ç½®ç»™åˆšä½“Açš„çŸ©é˜µ
-        @param frameB @~english  frame will be seted to rigid body B @~chinese è®¾ç½®ç»™åˆšä½“Bçš„çŸ©é˜µ
+        @~chinese Îª¸ÕÌåAºÍBÉèÖÃÖ¡
+        @param frameA @~english  frame will be seted to rigid body A @~chinese ÉèÖÃ¸ø¸ÕÌåAµÄ¾ØÕó
+        @param frameB @~english  frame will be seted to rigid body B @~chinese ÉèÖÃ¸ø¸ÕÌåBµÄ¾ØÕó
     */
     void setFrames(const cocos2d::Mat4& frameA, const cocos2d::Mat4& frameB);
 
     /** @~english set angular only
-        @~chinese è®¾ç½®è§’
-        @param angularOnly @~english  angular will be set @~chinese å°†è¦è®¾ç½®çš„è§’
+        @~chinese ÉèÖÃ½Ç
+        @param angularOnly @~english  angular will be set @~chinese ½«ÒªÉèÖÃµÄ½Ç
     */
     void setAngularOnly(bool angularOnly);
 
     /** @~english enable angular motor
-        @~chinese ä½¿è§’ç”µæœº
-        @param enableMotor @~english  whether to enable AngularMotor @~chinese æ˜¯å¦å¯ç”¨angularmotor
-        @param targetVelocity @~english  target velocity @~chinese ç›®æ ‡é€Ÿåº¦
-        @param maxMotorImpulse @~english  max motor impulse @~chinese æœ€å¤§ç”µæœºè„‰å†²
+        @~chinese Ê¹½Çµç»ú
+        @param enableMotor @~english  whether to enable AngularMotor @~chinese ÊÇ·ñÆôÓÃangularmotor
+        @param targetVelocity @~english  target velocity @~chinese Ä¿±êËÙ¶È
+        @param maxMotorImpulse @~english  max motor impulse @~chinese ×î´óµç»úÂö³å
     */
     void enableAngularMotor(bool enableMotor, float targetVelocity, float maxMotorImpulse);
 
     /** @~english extra motor API, including ability to set a target rotation (as opposed to angular velocity)
-        @~chinese é¢å¤–çš„ç”µæœºçš„APIï¼ŒåŒ…æ‹¬è®¾å®šä¸€ä¸ªç›®æ ‡æ—‹è½¬èƒ½åŠ›ï¼ˆä¸è§’é€Ÿåº¦ï¼‰
-        @param enableMotor @~english  whether to enable AngularMotor @~chinese æ˜¯å¦å¯ç”¨angularmotor
+        @~chinese ¶îÍâµÄµç»úµÄAPI£¬°üÀ¨Éè¶¨Ò»¸öÄ¿±êĞı×ªÄÜÁ¦£¨Óë½ÇËÙ¶È£©
+        @param enableMotor @~english  whether to enable AngularMotor @~chinese ÊÇ·ñÆôÓÃangularmotor
         @note: setMotorTarget sets angular velocity under the hood, so you must call it every tick to
            maintain a given angular target.
     */
     void enableMotor(bool enableMotor);
 
     /** @~english set max motor impulse
-        @~chinese è®¾ç½®æœ€å¤§ç”µæœºè„‰å†²
-        @param maxMotorImpulse @~english   max motor impulse @~chinese æœ€å¤§ç”µæœºè„‰å†²
+        @~chinese ÉèÖÃ×î´óµç»úÂö³å
+        @param maxMotorImpulse @~english   max motor impulse @~chinese ×î´óµç»úÂö³å
     */
     void setMaxMotorImpulse(float maxMotorImpulse);
 
     /** @~english set motor target
-        @~chinese è®¾ç½®ç”µæœºçš„ç›®æ ‡
+        @~chinese ÉèÖÃµç»úµÄÄ¿±ê
     */
     void setMotorTarget(const cocos2d::Quaternion& qAinB, float dt);
     /** @~english set motor target
-        @~chinese è®¾ç½®è¿åŠ¨ç›®æ ‡
+        @~chinese ÉèÖÃÔË¶¯Ä¿±ê
     */
     void setMotorTarget(float targetAngle, float dt);
 
     /** @~english set limit
-        @~chinese è®¾ç½®é™åˆ¶
+        @~chinese ÉèÖÃÏŞÖÆ
     */
     void setLimit(float low, float high, float _softness = 0.9f, float _biasFactor = 0.3f, float _relaxationFactor = 1.0f);
     /** set axis
@@ -318,53 +318,53 @@ public:
     */
     void setAxis(const cocos2d::Vec3& axisInA);
     /** @~english get lower limit
-        @~chinese è·å¾—è¾ƒä½çš„æé™
+        @~chinese »ñµÃ½ÏµÍµÄ¼«ÏŞ
     */
     float getLowerLimit() const;
     /** @~english get upper limit
-        @~chinese è·å¾—ä¸Šé™
+        @~chinese »ñµÃÉÏÏŞ
     */
     float getUpperLimit() const;
     /** @~english get hinge angle
-        @~chinese æŠŠé“°é“¾è½¬è§’
+        @~chinese °Ñ½ÂÁ´×ª½Ç
     */
     float getHingeAngle() const;
     /** @~english get hinge angle
-        @~chinese æŠŠé“°é“¾è½¬è§’
+        @~chinese °Ñ½ÂÁ´×ª½Ç
     */
     float getHingeAngle(const cocos2d::Mat4& transA, const cocos2d::Mat4& transB);
 
     /** @~english get A's frame
-        @~chinese å¾—åˆ°Açš„çŸ©é˜µ
+        @~chinese µÃµ½AµÄ¾ØÕó
     */
     cocos2d::Mat4 getAFrame() const;
     /** @~english get B's frame
-        @~chinese å¾—åˆ°Bçš„çŸ©é˜µ
+        @~chinese µÃµ½BµÄ¾ØÕó
     */
     cocos2d::Mat4 getBFrame() const;
     /** @~english get angular only
-        @~chinese åªæœ‰è·å¾—è§’
+        @~chinese Ö»ÓĞ»ñµÃ½Ç
     */
     bool getAngularOnly() const;
     /** @~english get enable angular motor
-        @~chinese èƒ½ä½¿è§’ç”µæœº
+        @~chinese ÄÜÊ¹½Çµç»ú
     */
     bool getEnableAngularMotor() const;
     /** @~english get motor target velosity
-        @~chinese å¾—åˆ°è¿åŠ¨ç›®æ ‡é€Ÿåº¦
+        @~chinese µÃµ½ÔË¶¯Ä¿±êËÙ¶È
     */
     float getMotorTargetVelosity() const;
     /** @~english get max motor impulse
-        @~chinese æœ€å¤§ç”µæœºè„‰å†²
+        @~chinese ×î´óµç»úÂö³å
     */
     float getMaxMotorImpulse() const;
 
     /** @~english access for UseFrameOffset
-        @~chinese è®¿é—®useframeoffset
+        @~chinese ·ÃÎÊuseframeoffset
     */
     bool getUseFrameOffset() const;
     /** @~english set use frame offset
-        @~chinese ä½¿ç”¨å¸§åç§»
+        @~chinese Ê¹ÓÃÖ¡Æ«ÒÆ
     */
     void setUseFrameOffset(bool frameOffsetOnOff);
 
@@ -389,58 +389,58 @@ class CC_DLL Physics3DSliderConstraint : public Physics3DConstraint
 {
 public:
     /** @~english create slider constraint
-        @~chinese åˆ›å»ºæ»‘å—çº¦æŸ
+        @~chinese ´´½¨»¬¿éÔ¼Êø
 
-        @param rbA @~english  rigid body A @~chinese åˆšä½“A
-        @param rbB @~english  rigid body B @~chinese åˆšä½“B
-        @param frameInA @~english  frame in A's local space @~chinese åœ¨Açš„å±€éƒ¨ç©ºé—´çŸ©é˜µ
-        @param frameInB @~english  frame in B's local space @~chinese åœ¨Bçš„å±€éƒ¨ç©ºé—´çŸ©é˜µ
-        @param useLinearReferenceFrameA @~english  use fixed frame A for linear limits @~chinese ä½¿ç”¨å›ºå®šçŸ©é˜µçš„çº¿æ€§èŒƒå›´
+        @param rbA @~english  rigid body A @~chinese ¸ÕÌåA
+        @param rbB @~english  rigid body B @~chinese ¸ÕÌåB
+        @param frameInA @~english  frame in A's local space @~chinese ÔÚAµÄ¾Ö²¿¿Õ¼ä¾ØÕó
+        @param frameInB @~english  frame in B's local space @~chinese ÔÚBµÄ¾Ö²¿¿Õ¼ä¾ØÕó
+        @param useLinearReferenceFrameA @~english  use fixed frame A for linear limits @~chinese Ê¹ÓÃ¹Ì¶¨¾ØÕóµÄÏßĞÔ·¶Î§
     */
     static Physics3DSliderConstraint* create(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Mat4& frameInA, const cocos2d::Mat4& frameInB ,bool useLinearReferenceFrameA);
 
     /** @~english get A's frame offset
-        @~chinese å¾—åˆ°çš„å¸§åç§»
+        @~chinese µÃµ½µÄÖ¡Æ«ÒÆ
     */
     cocos2d::Mat4 getFrameOffsetA() const;
     /** @~english get B's frame offset
-        @~chinese å¾—åˆ°Bçš„å¸§åç§»
+        @~chinese µÃµ½BµÄÖ¡Æ«ÒÆ
     */
     cocos2d::Mat4 getFrameOffsetB() const;
     /** @~english get lower linear limit
-        @~chinese è·å¾—è¾ƒä½çš„çº¿æ€§é™åˆ¶
+        @~chinese »ñµÃ½ÏµÍµÄÏßĞÔÏŞÖÆ
     */
     float getLowerLinLimit() const;
     /** @~english set lower linear limit
-        @~chinese è®¾ç½®è¾ƒä½çš„çº¿æ€§é™åˆ¶
+        @~chinese ÉèÖÃ½ÏµÍµÄÏßĞÔÏŞÖÆ
     */
     void setLowerLinLimit(float lowerLimit);
     /** @~english get upper linear limit
-        @~chinese æ‹¿ä¸Šçº¿æ€§æé™
+        @~chinese ÄÃÉÏÏßĞÔ¼«ÏŞ
     */
     float getUpperLinLimit() const;
     /** @~english set upper linear limit
-        @~chinese é›†ä¸Šçš„çº¿æ€§é™åˆ¶
+        @~chinese ¼¯ÉÏµÄÏßĞÔÏŞÖÆ
     */
     void setUpperLinLimit(float upperLimit);
     /** @~english get lower angular limit
-        @~chinese è·å¾—è¾ƒä½çš„æé™è§’
+        @~chinese »ñµÃ½ÏµÍµÄ¼«ÏŞ½Ç
     */
     float getLowerAngLimit() const;
     /** @~english set lower angualr limit
-        @~chinese ä½è§’é™åˆ¶
+        @~chinese µÍ½ÇÏŞÖÆ
     */
     void setLowerAngLimit(float lowerLimit);
     /** @~english get upper anglular limit
-        @~chinese æœ‰ä¸Šè§’çš„é™åˆ¶
+        @~chinese ÓĞÉÏ½ÇµÄÏŞÖÆ
     */
     float getUpperAngLimit() const;
     /** @~english set upper anglular limit
-        @~chinese å¥—ä¸Šè§’é™åˆ¶
+        @~chinese Ì×ÉÏ½ÇÏŞÖÆ
     */
     void setUpperAngLimit(float upperLimit);
     /** @~english use A's frame as linear refference
-        @~chinese ä½¿ç”¨çº¿æ€§å‚è€ƒçš„çŸ©é˜µ
+        @~chinese Ê¹ÓÃÏßĞÔ²Î¿¼µÄ¾ØÕó
     */
     bool getUseLinearReferenceFrameA() const;
 
@@ -497,16 +497,16 @@ public:
     float getAngularPos() const;
 
     /** @~english access for UseFrameOffset
-        @~chinese è·å–useframeoffset
+        @~chinese »ñÈ¡useframeoffset
     */
     bool getUseFrameOffset() const;
     /** @~english set use frame offset
-        @~chinese ä½¿ç”¨å¸§åç§»
+        @~chinese Ê¹ÓÃÖ¡Æ«ÒÆ
     */
     void setUseFrameOffset(bool frameOffsetOnOff);
 
     /** @~english set frames for rigid body A and B
-        @~chinese è®¾ç½®åˆšä½“Aå’ŒBçš„å¸§
+        @~chinese ÉèÖÃ¸ÕÌåAºÍBµÄÖ¡
     */
     void setFrames(const cocos2d::Mat4& frameA, const cocos2d::Mat4& frameB);
 
@@ -526,13 +526,13 @@ class CC_DLL Physics3DConeTwistConstraint : public Physics3DConstraint
 {
 public:
     /** @~english create cone twist constraint
-        @~chinese åˆ›å»ºåœ†é”¥æ‰­è½¬çº¦æŸ
+        @~chinese ´´½¨Ô²×¶Å¤×ªÔ¼Êø
         rbA rigid body A
         frameA A's local frame
     */
     static Physics3DConeTwistConstraint* create(Physics3DRigidBody* rbA, const cocos2d::Mat4& frameA);
     /** @~english create cone twist constraint
-        @~chinese åˆ›å»ºåœ†é”¥æ‰­è½¬çº¦æŸ
+        @~chinese ´´½¨Ô²×¶Å¤×ªÔ¼Êø
         rbA rigid body A
         rbB rigid body B
         frameA rigid body A's local frame
@@ -541,97 +541,97 @@ public:
     static Physics3DConeTwistConstraint* create(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Mat4& frameA, const cocos2d::Mat4& frameB);
 
     /** @~english set limits
-        @~chinese è®¾å®šé™åˆ¶
+        @~chinese Éè¶¨ÏŞÖÆ
 
-        @param swingSpan1 @~english  swing span1 @~chinese æ‘†span1
-        @param swingSpan2 @~english  swing span2 @~chinese æ‘†span2
-        @param twistSpan @~english  twist span @~chinese æ‰­è·¨
-        @param softness @~english  0->1, recommend ~0.8->1. Describes % of limits where movement is free. Beyond this softness %, the limit is gradually enforced until the "hard" (1.0) limit is reached. @~chinese 0 -> 1ï¼Œæ¨è~ 0.8 -> 1ã€‚æé™è¿åŠ¨çš„è‡ªç”±äº†ã€‚é™¤æ­¤ä¹‹å¤–çš„æŸ”è½¯æ€§ï¼Œé™åˆ¶é€æ­¥æ‰§è¡Œç›´åˆ°â€œç¡¬â€ï¼ˆ1ï¼‰è¾¾åˆ°æé™ã€‚
-        @param biasFactor @~english  0->1?, recommend 0.3 +/-0.3 or so. Strength with which constraint resists zeroth order (angular, not angular velocity) limit violation. @~chinese 0ï¼1ï¼Ÿï¼Œæ¨è0.3 / 0.3å·¦å³ã€‚åŠ›é‡ä¸çº¦æŸæŠµåˆ¶é›¶é˜¶ï¼ˆè§’ï¼Œæ²¡æœ‰è§’é€Ÿåº¦ï¼‰è¿åé™åˆ¶ã€‚
-        @param relaxationFactor @~english  0->1, recommend to stay near 1. the lower the value, the less the constraint will fight velocities which violate the angular limits. @~chinese 0 -> 1ï¼Œå»ºè®®åœ¨1é™„è¿‘ã€‚å€¼è¶Šä½ï¼Œè¶Šå°‘çš„çº¦æŸå°†æ‰“å‡»è¿åè§’æé™é€Ÿåº¦ã€‚
+        @param swingSpan1 @~english  swing span1 @~chinese °Úspan1
+        @param swingSpan2 @~english  swing span2 @~chinese °Úspan2
+        @param twistSpan @~english  twist span @~chinese Å¤¿ç
+        @param softness @~english  0->1, recommend ~0.8->1. Describes % of limits where movement is free. Beyond this softness %, the limit is gradually enforced until the "hard" (1.0) limit is reached. @~chinese 0 -> 1£¬ÍÆ¼ö~ 0.8 -> 1¡£¼«ÏŞÔË¶¯µÄ×ÔÓÉÁË¡£³ı´ËÖ®ÍâµÄÈáÈíĞÔ£¬ÏŞÖÆÖğ²½Ö´ĞĞÖ±µ½¡°Ó²¡±£¨1£©´ïµ½¼«ÏŞ¡£
+        @param biasFactor @~english  0->1?, recommend 0.3 +/-0.3 or so. Strength with which constraint resists zeroth order (angular, not angular velocity) limit violation. @~chinese 0£¾1£¿£¬ÍÆ¼ö0.3 / 0.3×óÓÒ¡£Á¦Á¿ÓëÔ¼ÊøµÖÖÆÁã½×£¨½Ç£¬Ã»ÓĞ½ÇËÙ¶È£©Î¥·´ÏŞÖÆ¡£
+        @param relaxationFactor @~english  0->1, recommend to stay near 1. the lower the value, the less the constraint will fight velocities which violate the angular limits. @~chinese 0 -> 1£¬½¨ÒéÔÚ1¸½½ü¡£ÖµÔ½µÍ£¬Ô½ÉÙµÄÔ¼Êø½«´ò»÷Î¥·´½Ç¼«ÏŞËÙ¶È¡£
     */
     void setLimit(float swingSpan1,float swingSpan2,float twistSpan, float softness = 1.f, float biasFactor = 0.3f, float relaxationFactor = 1.0f);
 
     /** @~english get A's frame
-        @~chinese å¾—åˆ°çš„çŸ©é˜µ
+        @~chinese µÃµ½µÄ¾ØÕó
     */
     cocos2d::Mat4 getAFrame() const;
     /** @~english get B's frame
-        @~chinese å¾—åˆ°Bçš„çŸ©é˜µ
+        @~chinese µÃµ½BµÄ¾ØÕó
     */
     cocos2d::Mat4 getBFrame() const;
 
     /** @~english get swing span1
-        @~chinese å¾—åˆ°span1æ‘†åŠ¨
+        @~chinese µÃµ½span1°Ú¶¯
     */
     float getSwingSpan1() const;
     /** @~english get swing span2
-        @~chinese å¾—åˆ°span2æ‘†åŠ¨
+        @~chinese µÃµ½span2°Ú¶¯
     */
     float getSwingSpan2() const;
     /** @~english get twist span
-        @~chinese å¾—åˆ°æ‰­è·¨
+        @~chinese µÃµ½Å¤¿ç
     */
     float getTwistSpan() const;
     /** @~english get twist angle
-        @~chinese å¾—åˆ°æ‰­è§’
+        @~chinese µÃµ½Å¤½Ç
     */
     float getTwistAngle() const;
 
     /** @~english set damping
-        @~chinese è®¾ç½®é˜»å°¼
+        @~chinese ÉèÖÃ×èÄá
     */
     void setDamping(float damping);
 
     /** @~english enable motor
-        @~chinese ä½¿ç”µæœº
+        @~chinese Ê¹µç»ú
     */
     void enableMotor(bool b);
     /** @~english set max motor impulse
-        @~chinese è®¾ç½®æœ€å¤§ç”µæœºè„‰å†²
+        @~chinese ÉèÖÃ×î´óµç»úÂö³å
     */
     void setMaxMotorImpulse(float maxMotorImpulse);
     /** @~english set max motor impulse normalize
-        @~chinese è®¾ç½®æœ€å¤§ç”µæœºè„‰å†²è§„èŒƒ
+        @~chinese ÉèÖÃ×î´óµç»úÂö³å¹æ·¶
     */
     void setMaxMotorImpulseNormalized(float maxMotorImpulse);
     /** @~english get fix thresh
-        @~chinese å¾—åˆ°å›ºå®šé˜ˆå€¼
+        @~chinese µÃµ½¹Ì¶¨ãĞÖµ
     */
     float getFixThresh() const;
     /** @~english set fix thresh
-        @~chinese è®¾å®šå›ºå®šé˜ˆå€¼
+        @~chinese Éè¶¨¹Ì¶¨ãĞÖµ
     */
     void setFixThresh(float fixThresh);
 
     /** @~english setMotorTarget
         @~chinese setmotortarget
-        @param q @~english  the desired rotation of bodyA wrt bodyB. Note: if q violates the joint limits, the internal target is clamped to avoid conflicting impulses (very bad for stability), also don't forget to enableMotor() @~chinese å…³äºèº«ä½“çš„ä½“å†…æ‰€éœ€çš„æ—‹è½¬ã€‚æ³¨æ„ï¼šå¦‚æœQä¾µçŠ¯å…³èŠ‚é™åˆ¶ï¼Œå†…éƒ¨ç›®æ ‡æ˜¯å¤¹ç´§é¿å…å†²çªçš„å†²åŠ¨ï¼ˆç¨³å®šæ€§å¾ˆå·®ï¼‰ï¼Œä¹Ÿåˆ«å¿˜äº†enablemotor()
+        @param q @~english  the desired rotation of bodyA wrt bodyB. Note: if q violates the joint limits, the internal target is clamped to avoid conflicting impulses (very bad for stability), also don't forget to enableMotor() @~chinese ¹ØÓÚÉíÌåµÄÌåÄÚËùĞèµÄĞı×ª¡£×¢Òâ£ºÈç¹ûQÇÖ·¸¹Ø½ÚÏŞÖÆ£¬ÄÚ²¿Ä¿±êÊÇ¼Ğ½ô±ÜÃâ³åÍ»µÄ³å¶¯£¨ÎÈ¶¨ĞÔºÜ²î£©£¬Ò²±ğÍüÁËenablemotor()
     */
     void setMotorTarget(const btQuaternion& q);
 
     /** @~english setMotorTarget, q is the desired rotation of frameA wrt frameB in constraint space
-        @~chinese setmotortargetï¼ŒQæ˜¯ç†æƒ³çš„æ—‹è½¬åæ ‡WRT FRAMEBåœ¨çº¦æŸç©ºé—´
+        @~chinese setmotortarget£¬QÊÇÀíÏëµÄĞı×ª×ø±êWRT FRAMEBÔÚÔ¼Êø¿Õ¼ä
     */
     void setMotorTargetInConstraintSpace(const btQuaternion& q);
 
     /** @~english get point for angle
-        @~chinese è·å–Angleçš„ç‚¹
+        @~chinese »ñÈ¡AngleµÄµã
     */
     cocos2d::Vec3 GetPointForAngle(float fAngleInRadians, float fLength) const;
 
     /** @~english set A and B's frame
-        @~chinese é›†åˆAå’ŒBçš„çŸ©é˜µ
+        @~chinese ¼¯ºÏAºÍBµÄ¾ØÕó
     */
     virtual void setFrames(const cocos2d::Mat4& frameA, const cocos2d::Mat4& frameB);
 
     /** @~english get A's frame offset
-        @~chinese å¾—åˆ°çš„å¸§åç§»
+        @~chinese µÃµ½µÄÖ¡Æ«ÒÆ
     */
     cocos2d::Mat4 getFrameOffsetA() const;
 
     /** @~english get B's frame offset
-        @~chinese å¾—åˆ°Bçš„å¸§åç§»
+        @~chinese µÃµ½BµÄÖ¡Æ«ÒÆ
     */
     cocos2d::Mat4 getFrameOffsetB() const;
 
@@ -659,75 +659,75 @@ class CC_DLL Physics3D6DofConstraint : public Physics3DConstraint
 {
 public:
     /** @~english create 6 dof constraint
-        @~chinese å»ºç«‹6è‡ªç”±åº¦çº¦æŸ
-        @param rbA @~english  rigid body A @~chinese åˆšä½“A
-        @param rbB @~english  rigid body B @~chinese åˆšä½“B
-        @param frameInA @~english  frame in A's local space @~chinese åœ¨Açš„å±€éƒ¨ç©ºé—´çŸ©é˜µ
-        @param frameInB @~english  frame in B's local space @~chinese åœ¨Bçš„å±€éƒ¨ç©ºé—´çŸ©é˜µ
-        @param useLinearReferenceFrameA @~english  use fixed frame A for linear limits @~chinese ä½¿ç”¨å›ºå®šçŸ©é˜µçš„çº¿æ€§èŒƒå›´
+        @~chinese ½¨Á¢6×ÔÓÉ¶ÈÔ¼Êø
+        @param rbA @~english  rigid body A @~chinese ¸ÕÌåA
+        @param rbB @~english  rigid body B @~chinese ¸ÕÌåB
+        @param frameInA @~english  frame in A's local space @~chinese ÔÚAµÄ¾Ö²¿¿Õ¼ä¾ØÕó
+        @param frameInB @~english  frame in B's local space @~chinese ÔÚBµÄ¾Ö²¿¿Õ¼ä¾ØÕó
+        @param useLinearReferenceFrameA @~english  use fixed frame A for linear limits @~chinese Ê¹ÓÃ¹Ì¶¨¾ØÕóµÄÏßĞÔ·¶Î§
     */
     static Physics3D6DofConstraint* create(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Mat4& frameInA, const cocos2d::Mat4& frameInB, bool useLinearReferenceFrameA);
 
     /** @~english create 6 dof constraint
-        @~chinese å»ºç«‹6è‡ªç”±åº¦çº¦æŸ
-        @param rbB @~english  rigid body B @~chinese åˆšä½“B
-        @param frameInB @~english  frame in B's local space @~chinese åœ¨Bçš„å±€éƒ¨ç©ºé—´çŸ©é˜µ
-        @param useLinearReferenceFrameB @~english  use fixed frame B for linear limits @~chinese ä½¿ç”¨å›ºå®šçš„Bå¸§çš„çº¿æ€§èŒƒå›´
+        @~chinese ½¨Á¢6×ÔÓÉ¶ÈÔ¼Êø
+        @param rbB @~english  rigid body B @~chinese ¸ÕÌåB
+        @param frameInB @~english  frame in B's local space @~chinese ÔÚBµÄ¾Ö²¿¿Õ¼ä¾ØÕó
+        @param useLinearReferenceFrameB @~english  use fixed frame B for linear limits @~chinese Ê¹ÓÃ¹Ì¶¨µÄBÖ¡µÄÏßĞÔ·¶Î§
     */
     static Physics3D6DofConstraint* create(Physics3DRigidBody* rbB, const cocos2d::Mat4& frameInB, bool useLinearReferenceFrameB);
 
     /** @~english set linear lower limit
-        @~chinese è®¾ç½®çº¿æ€§ä¸‹é™
+        @~chinese ÉèÖÃÏßĞÔÏÂÏŞ
     */
     void setLinearLowerLimit(const cocos2d::Vec3& linearLower);
 
     /** @~english get linear lower limit
-        @~chinese å¾—åˆ°çº¿æ€§ä¸‹é™
+        @~chinese µÃµ½ÏßĞÔÏÂÏŞ
     */
     cocos2d::Vec3 getLinearLowerLimit() const;
 
     /** @~english set linear upper limit
-        @~chinese è®¾ç½®çº¿æ€§ä¸Šé™
+        @~chinese ÉèÖÃÏßĞÔÉÏÏŞ
     */
     void setLinearUpperLimit(const cocos2d::Vec3& linearUpper);
 
     /** @~english get linear upper limit
-        @~chinese å¾—åˆ°çº¿æ€§ä¸Šé™
+        @~chinese µÃµ½ÏßĞÔÉÏÏŞ
     */
     cocos2d::Vec3 getLinearUpperLimit() const;
 
     /** @~english set angular lower limit
-        @~chinese è®¾ç½®è§’ä¸‹é™
+        @~chinese ÉèÖÃ½ÇÏÂÏŞ
     */
     void setAngularLowerLimit(const cocos2d::Vec3& angularLower);
 
     /** @~english get angular lower limit
-        @~chinese è·å¾—è§’ä¸‹é™
+        @~chinese »ñµÃ½ÇÏÂÏŞ
     */
     cocos2d::Vec3 getAngularLowerLimit() const;
 
     /** @~english set angular upper limit
-        @~chinese è®¾ç½®è§’ä¸Šé™
+        @~chinese ÉèÖÃ½ÇÉÏÏŞ
     */
     void setAngularUpperLimit(const cocos2d::Vec3& angularUpper);
 
     /** @~english get angular upper limit
-        @~chinese è·å¾—è§’ä¸Šé™
+        @~chinese »ñµÃ½ÇÉÏÏŞ
     */
     cocos2d::Vec3 getAngularUpperLimit() const;
 
     /** @~english is limited?
-        @~chinese æ˜¯æœ‰é™çš„ï¼Ÿ
-        @param limitIndex @~english  first 3 are linear, next 3 are angular @~chinese å‰3ä¸ªéƒ½æ˜¯çº¿æ€§çš„ï¼Œæ¥ä¸‹æ¥çš„3è§’
+        @~chinese ÊÇÓĞÏŞµÄ£¿
+        @param limitIndex @~english  first 3 are linear, next 3 are angular @~chinese Ç°3¸ö¶¼ÊÇÏßĞÔµÄ£¬½ÓÏÂÀ´µÄ3½Ç
     */
     bool isLimited(int limitIndex) const;
 
     /** @~english access for UseFrameOffset
-        @~chinese è®¿é—®useframeoffset
+        @~chinese ·ÃÎÊuseframeoffset
     */
     bool getUseFrameOffset() const;
     /** @~english set use frame offset
-        @~chinese ä½¿ç”¨å¸§åç§»
+        @~chinese Ê¹ÓÃÖ¡Æ«ÒÆ
     */
     void setUseFrameOffset(bool frameOffsetOnOff) const;
 

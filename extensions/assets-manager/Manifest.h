@@ -32,24 +32,32 @@
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 #include "network/CCDownloader.h"
-
+#include "platform/CCFileUtils.h"
 
 #include "json/document.h"
 
 NS_CC_EXT_BEGIN
 
+struct DownloadUnit
+{
+    std::string srcUrl;
+    std::string storagePath;
+    std::string customId;
+};
 /**
  * @addtogroup assets_manager
  * @{
  */
 
+typedef std::unordered_map<std::string, DownloadUnit> DownloadUnits;
+
 /**
  * @~english Manifest is an abstraction of the assets list. 
  * It's initialized and parsed with a manifest file.
  * It contains all defined assets, and can be compared to generate difference between local and remote manifest.
- * @~chinese Manifestæ˜¯èµ„æºåˆ—è¡¨çš„æŠ½è±¡ã€‚
- * å®ƒå¯ä»¥é€šè¿‡ä¸€ä¸ªmanifestæ–‡ä»¶æ¥åˆå§‹åŒ–å¹¶è§£æå‡ºèµ„æºåˆ—è¡¨ä¿¡æ¯ã€‚
- * å®ƒåŒ…å«æ‰€æœ‰manifestæ–‡ä»¶ä¸­å®šä¹‰çš„èµ„æºï¼Œå¹¶ä¸”å¯ä»¥ç”¨æ¥æ¯”è¾ƒæœ¬åœ°å’Œè¿œç¨‹manifestèµ„æºçš„å·®å¼‚ï¼Œä»¥ä¾¿åç»­çš„æ›´æ–°è¿‡ç¨‹ä¸­ä½¿ç”¨ã€‚
+ * @~chinese ManifestÊÇ×ÊÔ´ÁĞ±íµÄ³éÏó¡£
+ * Ëü¿ÉÒÔÍ¨¹ıÒ»¸ömanifestÎÄ¼şÀ´³õÊ¼»¯²¢½âÎö³ö×ÊÔ´ÁĞ±íĞÅÏ¢¡£
+ * Ëü°üº¬ËùÓĞmanifestÎÄ¼şÖĞ¶¨ÒåµÄ×ÊÔ´£¬²¢ÇÒ¿ÉÒÔÓÃÀ´±È½Ï±¾µØºÍÔ¶³Ìmanifest×ÊÔ´µÄ²îÒì£¬ÒÔ±ãºóĞøµÄ¸üĞÂ¹ı³ÌÖĞÊ¹ÓÃ¡£
  */
 class CC_EX_DLL Manifest : public Ref
 {
@@ -58,183 +66,183 @@ public:
     friend class AssetsManagerEx;
     
     /** @~english Type of difference between local and remote asset
-     * @~chinese æœ¬åœ°å’Œè¿œç¨‹èµ„æºçš„å·®å¼‚ç±»å‹
+     * @~chinese ±¾µØºÍÔ¶³Ì×ÊÔ´µÄ²îÒìÀàĞÍ
      */
     enum class DiffType {
         /** @~english Added in remote, absent in local
-         * @~chinese åœ¨è¿œç¨‹èµ„æºåˆ—è¡¨ä¸­å­˜åœ¨ï¼Œåœ¨æœ¬åœ°ä¸å­˜åœ¨
+         * @~chinese ÔÚÔ¶³Ì×ÊÔ´ÁĞ±íÖĞ´æÔÚ£¬ÔÚ±¾µØ²»´æÔÚ
          */
         ADDED,
         /** @~english Deleted in remote, present in local
-         * @~chinese åœ¨è¿œç¨‹èµ„æºåˆ—è¡¨ä¸­å·²åˆ é™¤ï¼Œåœ¨å½“åœ°ä»ç„¶å­˜åœ¨
+         * @~chinese ÔÚÔ¶³Ì×ÊÔ´ÁĞ±íÖĞÒÑÉ¾³ı£¬ÔÚµ±µØÈÔÈ»´æÔÚ
          */
         DELETED,
         /** @~english Updated in remote, local version is old
-         * @~chinese åœ¨è¿œç¨‹èµ„æºåˆ—è¡¨ä¸­å·²æ›´æ–°ï¼Œæœ¬åœ°çš„ç‰ˆæœ¬æ˜¯æ—§çš„
+         * @~chinese ÔÚÔ¶³Ì×ÊÔ´ÁĞ±íÖĞÒÑ¸üĞÂ£¬±¾µØµÄ°æ±¾ÊÇ¾ÉµÄ
          */
         MODIFIED
     };
 
     /** @~english Download state of a updating asset
-     * @~chinese ä¸‹è½½æ›´æ–°èµ„æºçš„çŠ¶æ€
+     * @~chinese ÏÂÔØ¸üĞÂ×ÊÔ´µÄ×´Ì¬
      */
     enum class DownloadState {
         /** @~english Wait to be updated
-         * @~chinese ç­‰å¾…æ›´æ–°
+         * @~chinese µÈ´ı¸üĞÂ
          */
         UNSTARTED,
         /** @~english Downloading
-         * @~chinese ä¸‹è½½ä¸­
+         * @~chinese ÏÂÔØÖĞ
          */
         DOWNLOADING,
         /** @~english Updated
-         * @~chinese å·²æ›´æ–°
+         * @~chinese ÒÑ¸üĞÂ
          */
         SUCCESSED
     };
     
     /** @~english The asset object
-     * @~chinese èµ„æºå¯¹è±¡
+     * @~chinese ×ÊÔ´¶ÔÏó
      */
     struct Asset {
         /** @~english The version number string, suggested to use md5.
-         * @~chinese ç‰ˆæœ¬å·çš„å­—ç¬¦ä¸²ï¼Œå»ºè®®ä½¿ç”¨md5ã€‚
+         * @~chinese °æ±¾ºÅµÄ×Ö·û´®£¬½¨ÒéÊ¹ÓÃmd5¡£
          */
         std::string md5;
         /** @~english The url address of the remote asset
-         * @~chinese è¿œç¨‹èµ„æºçš„urlåœ°å€
+         * @~chinese Ô¶³Ì×ÊÔ´µÄurlµØÖ·
          */
         std::string path;
         /** @~english Indicate whether the asset is compressed or not
-         * @~chinese æŒ‡ç¤ºèµ„æºæ˜¯å¦è¢«å‹ç¼©
+         * @~chinese Ö¸Ê¾×ÊÔ´ÊÇ·ñ±»Ñ¹Ëõ
          */
         bool compressed;
         /** @~english The download state
-         * @~chinese ä¸‹è½½çš„çŠ¶æ€
+         * @~chinese ÏÂÔØµÄ×´Ì¬
          */
         DownloadState downloadState;
     };
 
     /** @~english Object indicate the difference between two Assets
-     * @~chinese æ˜¾ç¤ºä¸¤ç§èµ„æºä¹‹é—´åŒºåˆ«çš„å¯¹è±¡
+     * @~chinese ÏÔÊ¾Á½ÖÖ×ÊÔ´Ö®¼äÇø±ğµÄ¶ÔÏó
      */
     struct AssetDiff {
         /** @~english The asset object
-         * @~chinese èµ„æºå¯¹è±¡
+         * @~chinese ×ÊÔ´¶ÔÏó
          */
         Asset asset;
         /** @~english Type of difference between local and remote asset
-         * @~chinese æœ¬åœ°å’Œè¿œç¨‹èµ„æºçš„åŒºåˆ«ç±»å‹
+         * @~chinese ±¾µØºÍÔ¶³Ì×ÊÔ´µÄÇø±ğÀàĞÍ
          */
         DiffType type;
     };
     
     /** @brief @~english Check whether the version informations have been fully loaded
-     * @~chinese æ£€æŸ¥ç‰ˆæœ¬ä¿¡æ¯æ˜¯å¦å·²åŠ è½½
+     * @~chinese ¼ì²é°æ±¾ĞÅÏ¢ÊÇ·ñÒÑ¼ÓÔØ
      * @return @~english The version informations have been loaded or not
-     * @~chinese è¿”å›ç‰ˆæœ¬ä¿¡æ¯æ˜¯å¦å·²åŠ è½½
+     * @~chinese ·µ»Ø°æ±¾ĞÅÏ¢ÊÇ·ñÒÑ¼ÓÔØ
      */
     bool isVersionLoaded() const;
     
     /** @brief @~english Check whether the manifest have been fully loaded
-     * @~chinese æ£€æŸ¥èµ„æºæ¸…å•æ˜¯å¦å·²æ»¡è½½
+     * @~chinese ¼ì²é×ÊÔ´Çåµ¥ÊÇ·ñÒÑÂúÔØ
      * @return @~english The manifest have been loaded or not
-     * @~chinese è¿”å›æ¸…å•æ˜¯å¦å·²ç»è¢«åŠ è½½
+     * @~chinese ·µ»ØÇåµ¥ÊÇ·ñÒÑ¾­±»¼ÓÔØ
      */
     bool isLoaded() const;
     
     /** @brief @~english Gets remote package url.
-     * @~chinese è·å–è¿œç¨‹èµ„æºåŒ…urlã€‚
+     * @~chinese »ñÈ¡Ô¶³Ì×ÊÔ´°üurl¡£
      * @return @~english The remote package url
-     * @~chinese è¿œç¨‹èµ„æºåŒ…url
+     * @~chinese Ô¶³Ì×ÊÔ´°üurl
      */
     const std::string& getPackageUrl() const;
     
     /** @brief @~english Gets remote manifest file url.
-     * @~chinese è·å–è¿œç¨‹èµ„æºæ¸…å•æ–‡ä»¶çš„urlã€‚
+     * @~chinese »ñÈ¡Ô¶³Ì×ÊÔ´Çåµ¥ÎÄ¼şµÄurl¡£
      * @return @~english The remote manifest file url
-     * @~chinese è¿œç¨‹èµ„æºæ¸…å•æ–‡ä»¶çš„url
+     * @~chinese Ô¶³Ì×ÊÔ´Çåµ¥ÎÄ¼şµÄurl
      */
     const std::string& getManifestFileUrl() const;
     
     /** @brief @~english Gets remote version file url.
-     * @~chinese è·å–è¿œç¨‹ç‰ˆæœ¬æ–‡ä»¶çš„urlã€‚
+     * @~chinese »ñÈ¡Ô¶³Ì°æ±¾ÎÄ¼şµÄurl¡£
      * @return @~english The remote version file url
-     * @~chinese è¿œç¨‹ç‰ˆæœ¬æ–‡ä»¶çš„url
+     * @~chinese Ô¶³Ì°æ±¾ÎÄ¼şµÄurl
      */
     const std::string& getVersionFileUrl() const;
     
     /** @brief @~english Gets manifest version.
-     * @~chinese è·å–èµ„æºæ¸…å•çš„ç‰ˆæœ¬ã€‚
+     * @~chinese »ñÈ¡×ÊÔ´Çåµ¥µÄ°æ±¾¡£
      * @return @~english The manifest version
-     * @~chinese èµ„æºæ¸…å•çš„ç‰ˆæœ¬
+     * @~chinese ×ÊÔ´Çåµ¥µÄ°æ±¾
      */
     const std::string& getVersion() const;
     
     /** @brief @~english Get the search paths list related to the Manifest.
-     * @~chinese Manifestç›¸å…³æœç´¢è·¯å¾„åˆ—è¡¨ã€‚
+     * @~chinese ManifestÏà¹ØËÑË÷Â·¾¶ÁĞ±í¡£
      * @return @~english The search paths
-     * @~chinese æœç´¢è·¯å¾„åˆ—è¡¨
+     * @~chinese ËÑË÷Â·¾¶ÁĞ±í
      */
     std::vector<std::string> getSearchPaths() const;
     
 protected:
     
     /** @brief @~english Constructor for Manifest class
-     * @~chinese Manifestèµ„æºæ¸…å•ç±»çš„æ„é€ å‡½æ•°
+     * @~chinese Manifest×ÊÔ´Çåµ¥ÀàµÄ¹¹Ôìº¯Êı
      * @param manifestUrl @~english Url of the local manifest
-     * @~chinese æœ¬åœ°èµ„æºæ¸…å•åœ°å€
+     * @~chinese ±¾µØ×ÊÔ´Çåµ¥µØÖ·
      */
     Manifest(const std::string& manifestUrl = "");
     
     /** @brief @~english Load the json file into local json object
-     * @~chinese åŠ è½½jsonæ–‡ä»¶åˆ°jsonå¯¹è±¡
+     * @~chinese ¼ÓÔØjsonÎÄ¼şµ½json¶ÔÏó
      * @param url @~english Url of the json file
-     * @~chinese jsonæ–‡ä»¶çš„Url
+     * @~chinese jsonÎÄ¼şµÄUrl
      */
     void loadJson(const std::string& url);
     
     /** @brief @~english Parse the version file information into this manifest
-     * @~chinese è§£æç‰ˆæœ¬æ–‡ä»¶çš„ç‰ˆæœ¬ä¿¡æ¯åˆ°è¿™ä¸ªManifest
+     * @~chinese ½âÎö°æ±¾ÎÄ¼şµÄ°æ±¾ĞÅÏ¢µ½Õâ¸öManifest
      * @param versionUrl @~english Url of the local version file
-     * @~chinese ç‰ˆæœ¬æ–‡ä»¶çš„Url
+     * @~chinese °æ±¾ÎÄ¼şµÄUrl
      */
     void parseVersion(const std::string& versionUrl);
     
     /** @brief @~english Parse the manifest file information into this manifest
-     * @~chinese è§£æManifestæ–‡ä»¶ä¿¡æ¯
+     * @~chinese ½âÎöManifestÎÄ¼şĞÅÏ¢
      * @param manifestUrl @~english Url of the local manifest
-     * @~chinese Manifestçš„æœ¬åœ°urlåœ°å€
+     * @~chinese ManifestµÄ±¾µØurlµØÖ·
      */
     void parse(const std::string& manifestUrl);
     
     /** @brief @~english Check whether the version of this manifest equals to another.
-     * @~chinese æ£€æŸ¥è¿™ä¸ªManifestçš„ç‰ˆæœ¬æ˜¯å¦ç­‰äºå¦ä¸€ä¸ªManifestå¯¹è±¡
+     * @~chinese ¼ì²éÕâ¸öManifestµÄ°æ±¾ÊÇ·ñµÈÓÚÁíÒ»¸öManifest¶ÔÏó
      * @param b   @~english The other manifest
-     * @~chinese å¦ä¸€ä¸ªManifestå¯¹è±¡
+     * @~chinese ÁíÒ»¸öManifest¶ÔÏó
      * @return @~english Return true if the version of this manifest equals to b, otherwise return false.
-     * @~chinese å¦‚æœæƒ³ç­‰åˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹ûÏëµÈÔò·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     bool versionEquals(const Manifest *b) const;
     
     /** @brief @~english Generate difference between this Manifest and another.
-     * @~chinese ç”Ÿæˆè¿™ä¸ªManifestå¯¹è±¡å’Œå¦ä¸€ä¸ªä¹‹é—´çš„åŒºåˆ«ã€‚
+     * @~chinese Éú³ÉÕâ¸öManifest¶ÔÏóºÍÁíÒ»¸öÖ®¼äµÄÇø±ğ¡£
      * @param b   @~english The other manifest
-     * @~chinese å¦ä¸€ä¸ªManifestå¯¹è±¡
+     * @~chinese ÁíÒ»¸öManifest¶ÔÏó
      * @return @~english Return the different assets between this manifest and b.
-     * @~chinese è¿™ä¸ªManifestå¯¹è±¡å’Œå¦ä¸€ä¸ªä¹‹é—´çš„å·®å¼‚èµ„æºåˆ—è¡¨ã€‚
+     * @~chinese Õâ¸öManifest¶ÔÏóºÍÁíÒ»¸öÖ®¼äµÄ²îÒì×ÊÔ´ÁĞ±í¡£
      */
     std::unordered_map<std::string, AssetDiff> genDiff(const Manifest *b) const;
     
     /** @brief @~english Generate assets list for resuming previous download.
-     * @~chinese ç”Ÿæˆå¯ä»¥ç”¨äºæ¢å¤ä¹‹å‰ä¸€æ¬¡ä¸‹è½½çš„èµ„æºåˆ—è¡¨ã€‚
+     * @~chinese Éú³É¿ÉÒÔÓÃÓÚ»Ö¸´Ö®Ç°Ò»´ÎÏÂÔØµÄ×ÊÔ´ÁĞ±í¡£
      * @param units   @~english The download units reference to be modified by the generation result
-     * @~chinese ä¸‹è½½èµ„æºåˆ—è¡¨ï¼Œç»“æœä¼šè¢«ä¿å­˜åœ¨è¿™ä¸ªå‚æ•°ä¸­
+     * @~chinese ÏÂÔØ×ÊÔ´ÁĞ±í£¬½á¹û»á±»±£´æÔÚÕâ¸ö²ÎÊıÖĞ
      */
-    void genResumeAssetsList(network::DownloadUnits *units) const;
+    void genResumeAssetsList(DownloadUnits *units) const;
     
     /** @brief @~english Prepend all search paths to the FileUtils.
-     * @~chinese å‘FileUtilsä¸­ä¼˜å…ˆæ’å…¥è¿™ä¸ªManifestå¯¹è±¡ç›¸å…³çš„æœç´¢è·¯å¾„ã€‚
+     * @~chinese ÏòFileUtilsÖĞÓÅÏÈ²åÈëÕâ¸öManifest¶ÔÏóÏà¹ØµÄËÑË÷Â·¾¶¡£
      */
     void prependSearchPaths();
     
@@ -249,34 +257,34 @@ protected:
     void clear();
     
     /** @brief @~english Gets all groups.
-     * @~chinese è·å–æ‰€æœ‰ç»„ã€‚
+     * @~chinese »ñÈ¡ËùÓĞ×é¡£
      */
     const std::vector<std::string>& getGroups() const;
     
     /** @brief @~english Gets all groups version.
-     * @~chinese å¾—åˆ°æ‰€æœ‰ç»„çš„ç‰ˆæœ¬ã€‚
+     * @~chinese µÃµ½ËùÓĞ×éµÄ°æ±¾¡£
      */
     const std::unordered_map<std::string, std::string>& getGroupVerions() const;
     
     /** @brief @~english Gets version for the given group.
-     * @~chinese ç»™å®šç»„çš„ç‰ˆæœ¬ã€‚
+     * @~chinese ¸ø¶¨×éµÄ°æ±¾¡£
      * @param group   @~english Key of the requested group
-     * @~chinese ç»„çš„é”®å€¼
+     * @~chinese ×éµÄ¼üÖµ
      */
     const std::string& getGroupVersion(const std::string &group) const;
     
     /** 
      * @brief @~english Gets assets.
-     * @~chinese è·å¾—æ‰€æœ‰èµ„æºã€‚
+     * @~chinese »ñµÃËùÓĞ×ÊÔ´¡£
      */
     const std::unordered_map<std::string, Asset>& getAssets() const;
     
     /** @brief @~english Set the download state for an asset
-     * @~chinese ä¸ºä¸€ä¸ªèµ„æºè®¾ç½®ä¸‹è½½çŠ¶æ€
+     * @~chinese ÎªÒ»¸ö×ÊÔ´ÉèÖÃÏÂÔØ×´Ì¬
      * @param key   @~english Key of the asset to set
-     * @~chinese è¦ä¿®æ”¹çš„èµ„æºé”®å€¼
+     * @~chinese ÒªĞŞ¸ÄµÄ×ÊÔ´¼üÖµ
      * @param state @~english The current download state of the asset
-     * @~chinese èµ„æºçš„å½“å‰ä¸‹è½½çŠ¶æ€
+     * @~chinese ×ÊÔ´µÄµ±Ç°ÏÂÔØ×´Ì¬
      */
     void setAssetDownloadState(const std::string &key, const DownloadState &state);
     

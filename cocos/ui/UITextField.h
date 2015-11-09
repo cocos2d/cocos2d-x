@@ -1,4 +1,4 @@
-ï»¿/****************************************************************************
+/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -41,8 +41,8 @@ namespace ui {
 *@brief @~english A helper class which inherit from @see `TextFieldTTF` and implements the @see `TextFieldDelegate` protocol.
  It is mainly be used internally by @see `UITextField` class.
 
- @~chinese ä»TextFieldTTFæ´¾ç”Ÿè€Œæ¥ï¼Œå¹¶ä¸”å®ç°äº†TextFieldDelegateå®šä¹‰çš„åè®®çš„å¸®åŠ©ç±»ã€‚
- å®ƒä¸»è¦æ˜¯åœ¨UITextFieldç±»ä¸­ä½¿ç”¨ã€‚
+ @~chinese ´ÓTextFieldTTFÅÉÉú¶øÀ´£¬²¢ÇÒÊµÏÖÁËTextFieldDelegate¶¨ÒåµÄĞ­ÒéµÄ°ïÖúÀà¡£
+ ËüÖ÷ÒªÊÇÔÚUITextFieldÀàÖĞÊ¹ÓÃ¡£
  @js NA
  @lua NA
 */
@@ -51,13 +51,13 @@ class CC_GUI_DLL UICCTextField: public TextFieldTTF, public TextFieldDelegate
 public:
     /**
     * @~english Default constructor.
-    * @~chinese é»˜è®¤æ„é€ å™¨
+    * @~chinese Ä¬ÈÏ¹¹ÔìÆ÷
     */
     UICCTextField();
 
     /**
     * @~english Default destructor.
-    * @~chinese é»˜è®¤ææ„å™¨
+    * @~chinese Ä¬ÈÏÎö¹¹Æ÷
     */
     ~UICCTextField();
     
@@ -65,11 +65,11 @@ public:
     
     /**
     * @~english Create a UICCTextField intance with a placeholder, a fontName and a fontSize.
-    * @~chinese é€šè¿‡ä¸€ä¸ªå ä½ç¬¦ï¼Œå­—ä½“åç§°å’Œå­—ä½“å¤§å°æ¥åˆ›å»ºä¸€ä¸ªUICCTextFieldã€‚
-    * @param placeholder @~english Placeholder in string. @~chinese å ä½ç¬¦ã€‚
-    * @param fontName @~english Font name in string. @~chinese å­—ä½“åç§°ã€‚
-    * @param fontSize @~english Font size in float. @~chinese å­—ä½“å¤§å°ã€‚
-    * @return @~english A UICCTextField instance. @~chinese ä¸€ä¸ªUICCTextFieldå®ä¾‹ã€‚
+    * @~chinese Í¨¹ıÒ»¸öÕ¼Î»·û£¬×ÖÌåÃû³ÆºÍ×ÖÌå´óĞ¡À´´´½¨Ò»¸öUICCTextField¡£
+    * @param placeholder @~english Placeholder in string. @~chinese Õ¼Î»·û¡£
+    * @param fontName @~english Font name in string. @~chinese ×ÖÌåÃû³Æ¡£
+    * @param fontSize @~english Font size in float. @~chinese ×ÖÌå´óĞ¡¡£
+    * @return @~english A UICCTextField instance. @~chinese Ò»¸öUICCTextFieldÊµÀı¡£
     */
     static UICCTextField* create(const std::string& placeholder,
                                  const std::string& fontName,
@@ -89,134 +89,134 @@ public:
     
     /**
     * @~english Open up the IME.
-    * @~chinese æ‰“å¼€è¾“å…¥æ³•ç¼–è¾‘å™¨
+    * @~chinese ´ò¿ªÊäÈë·¨±à¼­Æ÷
     */
     void openIME();
 
     /**
     * @~english Close the IME.
-    * @~chinese å…³é—­è¾“å…¥æ³•ç¼–è¾‘å™¨
+    * @~chinese ¹Ø±ÕÊäÈë·¨±à¼­Æ÷
     */
     void closeIME();
     
     /**
     * @~english Toggle enable max length limitation.
-    * @~chinese å¼€å…³æœ€å¤§é•¿åº¦é™åˆ¶
-    * @param enable @~english True to enable max length, false otherwise. @~chinese Trueè¡¨ç¤ºå¯ç”¨æœ€å¤§é•¿åº¦é™åˆ¶ï¼Œåä¹‹å…³é—­ã€‚
+    * @~chinese ¿ª¹Ø×î´ó³¤¶ÈÏŞÖÆ
+    * @param enable @~english True to enable max length, false otherwise. @~chinese True±íÊ¾ÆôÓÃ×î´ó³¤¶ÈÏŞÖÆ£¬·´Ö®¹Ø±Õ¡£
     */
     void setMaxLengthEnabled(bool enable);
 
     /**
     * @~english Query max length enable state.
-    * @~chinese è¯·æ±‚æœ€å¤§é•¿åº¦é™åˆ¶çš„å¼€å…³çŠ¶æ€ã€‚
-    * @return @~english Whether max length is enabled or not. @~chinese æœ€å¤§é•¿åº¦é™åˆ¶æ˜¯å¦å¯ç”¨ã€‚
+    * @~chinese ÇëÇó×î´ó³¤¶ÈÏŞÖÆµÄ¿ª¹Ø×´Ì¬¡£
+    * @return @~english Whether max length is enabled or not. @~chinese ×î´ó³¤¶ÈÏŞÖÆÊÇ·ñÆôÓÃ¡£
     */
     bool isMaxLengthEnabled()const;
 
     /**
     * @~english Set maxmize length.
-    * @~chinese è®¾ç½®æœ€å¤§é•¿åº¦ã€‚
-    * @param length  @~english The maxmize length in integer. @~chinese æ•´å‹å•ä½çš„æœ€å¤§é•¿åº¦å€¼ã€‚
+    * @~chinese ÉèÖÃ×î´ó³¤¶È¡£
+    * @param length  @~english The maxmize length in integer. @~chinese ÕûĞÍµ¥Î»µÄ×î´ó³¤¶ÈÖµ¡£
     */
     void setMaxLength(int length);
 
     /**
     * @~english Get maximize length.
-    * @~chinese è·å¾—æœ€å¤§é•¿åº¦ã€‚
-    * @return @~english Maximize length. @~chinese æœ€å¤§é•¿åº¦ã€‚
+    * @~chinese »ñµÃ×î´ó³¤¶È¡£
+    * @return @~english Maximize length. @~chinese ×î´ó³¤¶È¡£
     */
     int getMaxLength()const;
 
     /**
     * @~english Return the total inputed charaters.
-    * @~chinese è·å–æ€»å…±è¾“å…¥çš„å­—ç¬¦æ•°ã€‚
-    *@return @~english Total inputed character count. @~chinese æ€»å…±è¾“å…¥çš„å­—ç¬¦æ•°ã€‚
+    * @~chinese »ñÈ¡×Ü¹²ÊäÈëµÄ×Ö·ûÊı¡£
+    *@return @~english Total inputed character count. @~chinese ×Ü¹²ÊäÈëµÄ×Ö·ûÊı¡£
     */
     int getCharCount()const;
     
     
     /**
     * @~english Toggle password input mode.
-    * @~chinese å¼€å…³å¯†ç è¾“å…¥æ¨¡å¼ã€‚
-    * @param enable @~english True if enable password input, false otherwise. @~chinese Trueè¡¨ç¤ºå¼€å¯å¯†ç è¾“å…¥æ¨¡å¼ï¼Œåä¹‹å…³é—­ã€‚
+    * @~chinese ¿ª¹ØÃÜÂëÊäÈëÄ£Ê½¡£
+    * @param enable @~english True if enable password input, false otherwise. @~chinese True±íÊ¾¿ªÆôÃÜÂëÊäÈëÄ£Ê½£¬·´Ö®¹Ø±Õ¡£
     */
     void setPasswordEnabled(bool enable);
     
     /**
     * @~english Query whether password input mode is enabled or not.
-    * @~chinese è¯·æ±‚å¯†ç è¾“å…¥æ¨¡å¼æ˜¯å¦å¼€å¯ã€‚
-    * @return @~english True if password input is enabled, false otherwise. @~chinese Trueè¡¨ç¤ºå¼€å¯å¯†ç è¾“å…¥æ¨¡å¼ï¼Œåä¹‹å…³é—­ã€‚
+    * @~chinese ÇëÇóÃÜÂëÊäÈëÄ£Ê½ÊÇ·ñ¿ªÆô¡£
+    * @return @~english True if password input is enabled, false otherwise. @~chinese True±íÊ¾¿ªÆôÃÜÂëÊäÈëÄ£Ê½£¬·´Ö®¹Ø±Õ¡£
     */
     bool isPasswordEnabled()const;
     
     /**
     * @~english Change password style text.
-    * @~chinese æ”¹å˜å¯†ç æ¨¡å¼ä¸‹çš„æ–‡æœ¬æ ·å¼ã€‚
-    * @param styleText @~english The styleText for password mask, the default value is "*". @~chinese å¯†ç æ©ç çš„æ–‡æœ¬æ ·å¼ï¼Œé»˜è®¤ä¸ºâ€œ*â€ã€‚
+    * @~chinese ¸Ä±äÃÜÂëÄ£Ê½ÏÂµÄÎÄ±¾ÑùÊ½¡£
+    * @param styleText @~english The styleText for password mask, the default value is "*". @~chinese ÃÜÂëÑÚÂëµÄÎÄ±¾ÑùÊ½£¬Ä¬ÈÏÎª¡°*¡±¡£
     */
     void setPasswordStyleText(const std::string& styleText);
     
     /**
     * @~english Set the password text content.
-    * @~chinese è®¾ç½®å¯†ç ã€‚
-    * @param text @~english The content of password. @~chinese å¯†ç ã€‚
+    * @~chinese ÉèÖÃÃÜÂë¡£
+    * @param text @~english The content of password. @~chinese ÃÜÂë¡£
     */
     void setPasswordText(const std::string& text);
 
     
     /**
     * @~english Toggle attach with IME.
-    * @~chinese æ˜¯å¦å…³è”è¾“å…¥æ³•ç¼–è¾‘å™¨ã€‚
-    * @param attach @~english True if attach with IME, false otherwise. @~chinese Trueè¡¨æ˜å…³è”è¾“å…¥æ³•ç¼–è¾‘å™¨ï¼Œåä¹‹ä¸å…³è”ã€‚
+    * @~chinese ÊÇ·ñ¹ØÁªÊäÈë·¨±à¼­Æ÷¡£
+    * @param attach @~english True if attach with IME, false otherwise. @~chinese True±íÃ÷¹ØÁªÊäÈë·¨±à¼­Æ÷£¬·´Ö®²»¹ØÁª¡£
     */
     void setAttachWithIME(bool attach);
     
     /**
     * @~english Query whether the IME is attached or not.
-    * @~chinese è¯·æ±‚æ˜¯å¦å…³è”è¾“å…¥æ³•ç¼–è¾‘å™¨ã€‚
-    * @return @~english True if IME is attached, false otherwise. @~chinese Trueè¡¨æ˜å…³è”è¾“å…¥æ³•ç¼–è¾‘å™¨ï¼Œåä¹‹ä¸å…³è”ã€‚
+    * @~chinese ÇëÇóÊÇ·ñ¹ØÁªÊäÈë·¨±à¼­Æ÷¡£
+    * @return @~english True if IME is attached, false otherwise. @~chinese True±íÃ÷¹ØÁªÊäÈë·¨±à¼­Æ÷£¬·´Ö®²»¹ØÁª¡£
     */
     bool getAttachWithIME()const;
     
     /**
     * @~english  Toggle detach with IME.
-    * @~chinese æ˜¯å¦å–æ¶ˆå…³è”è¾“å…¥æ³•ç¼–è¾‘å™¨ã€‚
-    * @param detach @~english True if detach with IME, false otherwise. @~chinese Trueè¡¨æ˜ä¸å…³è”è¾“å…¥æ³•ç¼–è¾‘å™¨ï¼Œåä¹‹å…³è”ã€‚
+    * @~chinese ÊÇ·ñÈ¡Ïû¹ØÁªÊäÈë·¨±à¼­Æ÷¡£
+    * @param detach @~english True if detach with IME, false otherwise. @~chinese True±íÃ÷²»¹ØÁªÊäÈë·¨±à¼­Æ÷£¬·´Ö®¹ØÁª¡£
     */
     void setDetachWithIME(bool detach);
     
     /**
     * @~english Query whether IME is detached or not.
-    * @~chinese è¯·æ±‚æ˜¯å¦ä¸å…³è”è¾“å…¥æ³•ç¼–è¾‘å™¨ã€‚
-    * @return True @~english if IME is detached, false otherwise. @~chinese Trueè¡¨æ˜ä¸å…³è”è¾“å…¥æ³•ç¼–è¾‘å™¨ï¼Œåä¹‹å…³è”ã€‚
+    * @~chinese ÇëÇóÊÇ·ñ²»¹ØÁªÊäÈë·¨±à¼­Æ÷¡£
+    * @return True @~english if IME is detached, false otherwise. @~chinese True±íÃ÷²»¹ØÁªÊäÈë·¨±à¼­Æ÷£¬·´Ö®¹ØÁª¡£
     */
     bool getDetachWithIME()const;
     
     /**
     * @~english Toggle enable text insert.
-    * @~chinese å¼€å…³æ˜¯å¦å…è®¸æ–‡æœ¬è¾“å…¥ã€‚
-    * @param insert @~english True if enable insert text, false otherwise. @~chinese Trueè¡¨ç¤ºå…è®¸æ–‡æœ¬è¾“å…¥ï¼Œåä¹‹ä¸å…è®¸ã€‚
+    * @~chinese ¿ª¹ØÊÇ·ñÔÊĞíÎÄ±¾ÊäÈë¡£
+    * @param insert @~english True if enable insert text, false otherwise. @~chinese True±íÊ¾ÔÊĞíÎÄ±¾ÊäÈë£¬·´Ö®²»ÔÊĞí¡£
     */
     void setInsertText(bool insert);
     
     /**
     * @~english Query whether insert text is enabled or not.
-    * @~chinese è¯·æ±‚æ˜¯å¦å…è®¸æ–‡æœ¬è¾“å…¥ã€‚
-    * @return @~english True if insert text is enabled, false otherwise. @~chinese Trueè¡¨ç¤ºå…è®¸æ–‡æœ¬è¾“å…¥ï¼Œåä¹‹ä¸å…è®¸ã€‚
+    * @~chinese ÇëÇóÊÇ·ñÔÊĞíÎÄ±¾ÊäÈë¡£
+    * @return @~english True if insert text is enabled, false otherwise. @~chinese True±íÊ¾ÔÊĞíÎÄ±¾ÊäÈë£¬·´Ö®²»ÔÊĞí¡£
     */
     bool getInsertText()const;
      
     /**
     * @~english Toggle enable delete backward.
-    * @~chinese å¼€å…³å…è®¸å›åˆ ã€‚
-    * @param deleteBackward @~english True if enable delete backward, false otherwise. @~chinese Trueè¡¨ç¤ºå¼€å¯å›åˆ ï¼Œåä¹‹å…³é—­ã€‚
+    * @~chinese ¿ª¹ØÔÊĞí»ØÉ¾¡£
+    * @param deleteBackward @~english True if enable delete backward, false otherwise. @~chinese True±íÊ¾¿ªÆô»ØÉ¾£¬·´Ö®¹Ø±Õ¡£
     */
     void setDeleteBackward(bool deleteBackward);
     
     /**
     * @~english Query whether delete backward is enabled   or not.
-    * @~chinese è¯·æ±‚æ˜¯å¦å¼€å¯å›åˆ ã€‚
-    * @return @~english True if delete backward is enabled, false otherwise. @~chinese Trueè¡¨ç¤ºå¼€å¯å›åˆ ï¼Œåä¹‹å…³é—­ã€‚
+    * @~chinese ÇëÇóÊÇ·ñ¿ªÆô»ØÉ¾¡£
+    * @return @~english True if delete backward is enabled, false otherwise. @~chinese True±íÊ¾¿ªÆô»ØÉ¾£¬·´Ö®¹Ø±Õ¡£
     */
     bool getDeleteBackward()const;
 protected:
@@ -254,9 +254,9 @@ typedef void (Ref::*SEL_TextFieldEvent)(Ref*, TextFiledEventType);
  The rendering of the input text are based on @see `TextFieldTTF'.
  If you want to use system control behavior, please use @see `EditBox` instead.
 
- @~chinese ä¸€ä¸ªæ¥å—ç”¨æˆ·è¾“å…¥çš„widgetã€‚
- è¾“å…¥æ–‡æœ¬çš„æ¸²æŸ“åŸºäºTextFieldTTFã€‚
- å¦‚æœä½ æƒ³ç”¨ç³»ç»Ÿæ§åˆ¶è¡Œä¸ºï¼Œè¯·ä½¿ç”¨EditBoxæ¥æ›¿ä»£ã€‚
+ @~chinese Ò»¸ö½ÓÊÜÓÃ»§ÊäÈëµÄwidget¡£
+ ÊäÈëÎÄ±¾µÄäÖÈ¾»ùÓÚTextFieldTTF¡£
+ Èç¹ûÄãÏëÓÃÏµÍ³¿ØÖÆĞĞÎª£¬ÇëÊ¹ÓÃEditBoxÀ´Ìæ´ú¡£
  @js NA
  @lua NA
 */
@@ -278,38 +278,38 @@ public:
     };
     /**
     * @~english A callback which would be called when a TextField event happens.
-    * @~chinese å½“TextFieldçš„ä¸€ä¸ªäº‹ä»¶å‘ç”Ÿæ—¶è¿›è¡Œçš„å›è°ƒã€‚
+    * @~chinese µ±TextFieldµÄÒ»¸öÊÂ¼ş·¢ÉúÊ±½øĞĞµÄ»Øµ÷¡£
     */
     typedef std::function<void(Ref*, EventType)> ccTextFieldCallback;
     
     
     /**
     * @~english Default constructor.
-    * @~chinese é»˜è®¤æ„é€ å™¨ã€‚
+    * @~chinese Ä¬ÈÏ¹¹ÔìÆ÷¡£
     *
     */
     TextField();
     
     /**
     * @~english Default destructor.
-    * @~chinese é»˜è®¤ææ„å™¨ã€‚
+    * @~chinese Ä¬ÈÏÎö¹¹Æ÷¡£
     */
     virtual ~TextField();
     
     /**
     * @~english Create an empty TextField.
-    * @~chinese åˆ›å»ºä¸€ä¸ªç©ºçš„TextFieldã€‚
-    * @return @~english A TextField instance. @~chinese  TextFieldå®ä¾‹ã€‚
+    * @~chinese ´´½¨Ò»¸ö¿ÕµÄTextField¡£
+    * @return @~english A TextField instance. @~chinese  TextFieldÊµÀı¡£
     */
     static TextField* create();
     
     /**
     * @~english Create a TextField with a placeholder, a font name and a font size.
-    * @~chinese é€šè¿‡ä¸€ä¸ªå ä½ç¬¦ï¼Œä¸€ä¸ªå­—ä½“åç§°å’Œå­—ä½“å¤§å°æ¥åˆ›å»ºä¸€ä¸ªTextFieldã€‚
-    * @param placeholder @~english The placeholder string. @~chinese å ä½ç¬¦ã€‚
-    * @param fontName @~english The font name. @~chinese å­—ä½“åç§°ã€‚
-    * @param fontSize @~english The font size. @~chinese å­—ä½“å¤§å°ã€‚
-    * @return @~english A TextField instance. @~chinese TextFieldå®ä¾‹ã€‚
+    * @~chinese Í¨¹ıÒ»¸öÕ¼Î»·û£¬Ò»¸ö×ÖÌåÃû³ÆºÍ×ÖÌå´óĞ¡À´´´½¨Ò»¸öTextField¡£
+    * @param placeholder @~english The placeholder string. @~chinese Õ¼Î»·û¡£
+    * @param fontName @~english The font name. @~chinese ×ÖÌåÃû³Æ¡£
+    * @param fontSize @~english The font size. @~chinese ×ÖÌå´óĞ¡¡£
+    * @return @~english A TextField instance. @~chinese TextFieldÊµÀı¡£
     */
     static TextField* create(const std::string& placeholder,
                              const std::string& fontName,
@@ -318,23 +318,23 @@ public:
     /**
     * @~english Set the touch size
     * The touch size is used for @see `hitTest`.
-    * @~chinese è®¾ç½®è§¦æ‘¸åŒºåŸŸå¤§å°ã€‚
-    * è§¦æ‘¸å¤§å°ç”¨äºhitTestã€‚
-    * @param size @~english A delimitation zone. @~chinese ä¸€ä¸ªé™å®šåŒºåŸŸã€‚
+    * @~chinese ÉèÖÃ´¥ÃşÇøÓò´óĞ¡¡£
+    * ´¥Ãş´óĞ¡ÓÃÓÚhitTest¡£
+    * @param size @~english A delimitation zone. @~chinese Ò»¸öÏŞ¶¨ÇøÓò¡£
     */
     void setTouchSize(const Size &size);
     
     /**
     * @~english Get current touch size of TextField.
-    * @~chinese è·å–å½“å‰çš„è§¦æ‘¸åŒºåŸŸå¤§å°ã€‚
-    * @return @~english The TextField's touch size. @~chinese è§¦æ‘¸åŒºåŸŸå¤§å°ã€‚
+    * @~chinese »ñÈ¡µ±Ç°µÄ´¥ÃşÇøÓò´óĞ¡¡£
+    * @return @~english The TextField's touch size. @~chinese ´¥ÃşÇøÓò´óĞ¡¡£
     */
     Size getTouchSize()const;
     
     /**
     * @~english Toggle enable touch area.
-    * @~chinese å¯ç”¨æˆ–å…³é—­è§¦æ‘¸åŒºåŸŸã€‚
-    * @param enable @~english True if enable touch area, false otherwise. @~chinese Trueè¡¨æ˜å¼€å¯è§¦æ‘¸åŒºåŸŸï¼Œåä¹‹å…³é—­ã€‚
+    * @~chinese ÆôÓÃ»ò¹Ø±Õ´¥ÃşÇøÓò¡£
+    * @param enable @~english True if enable touch area, false otherwise. @~chinese True±íÃ÷¿ªÆô´¥ÃşÇøÓò£¬·´Ö®¹Ø±Õ¡£
     */
     void setTouchAreaEnabled(bool enable);
     
@@ -343,115 +343,115 @@ public:
     
     /**
     * @~english Set placeholder of TextField.
-    * @~chinese è®¾ç½®å ä½ç¬¦ã€‚
-    * @param value @~english The string value of placeholder. @~chinese å ä½ç¬¦ã€‚
+    * @~chinese ÉèÖÃÕ¼Î»·û¡£
+    * @param value @~english The string value of placeholder. @~chinese Õ¼Î»·û¡£
     */
     void setPlaceHolder(const std::string& value);
     
     /**
     * @~english Get the placeholder of TextField.
-    * @~chinese è·å–å ä½ç¬¦ã€‚
-    * @return @~english A placeholder string. @~chinese å ä½ç¬¦ã€‚
+    * @~chinese »ñÈ¡Õ¼Î»·û¡£
+    * @return @~english A placeholder string. @~chinese Õ¼Î»·û¡£
     */
     const std::string& getPlaceHolder()const;
     
     /**
     * @~english Query the placeholder string color.
-    * @~chinese è¯·æ±‚å ä½ç¬¦ä½¿ç”¨é¢œè‰²ã€‚
-    * @return @~english The color of placeholder. @~chinese å ä½ç¬¦é¢œè‰²ã€‚
+    * @~chinese ÇëÇóÕ¼Î»·ûÊ¹ÓÃÑÕÉ«¡£
+    * @return @~english The color of placeholder. @~chinese Õ¼Î»·ûÑÕÉ«¡£
     */
     const Color4B& getPlaceHolderColor()const;
     
     /**
     * @~english Change the placeholder color.
-    * @~chinese æ”¹å˜å ä½ç¬¦é¢œè‰²ã€‚
-    * @param color @~english A color value in `Color3B`. @~chinese å ä½ç¬¦é¢œè‰²ã€‚
+    * @~chinese ¸Ä±äÕ¼Î»·ûÑÕÉ«¡£
+    * @param color @~english A color value in `Color3B`. @~chinese Õ¼Î»·ûÑÕÉ«¡£
     */
     void setPlaceHolderColor(const Color3B& color);
     
     /**
     * @~english Change the placeholder color.
-    * @~chinese æ”¹å˜å ä½ç¬¦é¢œè‰²ã€‚
-    * @param color @~english A color value in `Color4B`. @~chinese å ä½ç¬¦é¢œè‰²ã€‚
+    * @~chinese ¸Ä±äÕ¼Î»·ûÑÕÉ«¡£
+    * @param color @~english A color value in `Color4B`. @~chinese Õ¼Î»·ûÑÕÉ«¡£
     */
     void setPlaceHolderColor(const Color4B& color);
     
     /**
     * @~english Query the text string color.
-    * @~chinese è¯·æ±‚æ–‡æœ¬é¢œè‰²ã€‚
-    * @return @~english The color of the text. @~chinese æ–‡æœ¬é¢œè‰²ã€‚
+    * @~chinese ÇëÇóÎÄ±¾ÑÕÉ«¡£
+    * @return @~english The color of the text. @~chinese ÎÄ±¾ÑÕÉ«¡£
     */
     const Color4B& getTextColor()const;
     
     /**
     * @~english Change the text color.
-    * @~chinese æ”¹å˜æ–‡æœ¬é¢œè‰²ã€‚
-    * @param textColor @~english The color value in `Color4B`. @~chinese æ–‡æœ¬é¢œè‰²ã€‚
+    * @~chinese ¸Ä±äÎÄ±¾ÑÕÉ«¡£
+    * @param textColor @~english The color value in `Color4B`. @~chinese ÎÄ±¾ÑÕÉ«¡£
     */
     void setTextColor(const Color4B& textColor);
      
     /**
     * @~english Change font size of TextField.
-    * @~chinese æ”¹å˜å­—ä½“å¤§å°ã€‚
-    * @param size @~english The integer font size. @~chinese å­—ä½“å¤§å°ã€‚
+    * @~chinese ¸Ä±ä×ÖÌå´óĞ¡¡£
+    * @param size @~english The integer font size. @~chinese ×ÖÌå´óĞ¡¡£
     */
     void setFontSize(int size);
     
     /**
     * @~english Query the font size.
-    * @~chinese è¯·æ±‚è·å–å­—ä½“å¤§å°ã€‚
-    * @return @~english The integer font size. @~chinese å­—ä½“å¤§å°ã€‚
+    * @~chinese ÇëÇó»ñÈ¡×ÖÌå´óĞ¡¡£
+    * @return @~english The integer font size. @~chinese ×ÖÌå´óĞ¡¡£
     */
     int getFontSize()const;
     
     /**
     * @~english Change the font name of TextField.
-    * @~chinese æ”¹å˜å­—ä½“åç§°ã€‚
-    * @param name @~english The font name string. @~chinese å­—ä½“åç§°ã€‚
+    * @~chinese ¸Ä±ä×ÖÌåÃû³Æ¡£
+    * @param name @~english The font name string. @~chinese ×ÖÌåÃû³Æ¡£
     */
     void setFontName(const std::string& name);
     
     /**
     * @~english Query the TextField's font name.
-    * @~chinese è¯·æ±‚è·å–å­—ä½“åç§°ã€‚
-    * @return @~english The font name string. @~chinese å­—ä½“åç§°ã€‚
+    * @~chinese ÇëÇó»ñÈ¡×ÖÌåÃû³Æ¡£
+    * @return @~english The font name string. @~chinese ×ÖÌåÃû³Æ¡£
     */
     const std::string& getFontName()const;
     
     
     /**
     * @~english Detach the IME.
-    * @~chinese å–æ¶ˆå…³è”è¾“å…¥æ³•ç¼–è¾‘å™¨ã€‚
+    * @~chinese È¡Ïû¹ØÁªÊäÈë·¨±à¼­Æ÷¡£
     */
     virtual void didNotSelectSelf();
     
     /**
     * @~english Change content of TextField.
-    * @~chinese æ”¹å˜æ–‡æœ¬å†…å®¹ã€‚
+    * @~chinese ¸Ä±äÎÄ±¾ÄÚÈİ¡£
     * @deprecated Use @see `setString(const std::string&)` instead.
-    * @param text @~english A string content. @~chinese æ–‡æœ¬å†…å®¹ã€‚
+    * @param text @~english A string content. @~chinese ÎÄ±¾ÄÚÈİ¡£
     */
     CC_DEPRECATED_ATTRIBUTE void setText(const std::string& text){this->setString(text);}
 
     /**
     * @~english Query the content of TextField.
-    * @~chinese è¯·æ±‚è·å–æ–‡æœ¬å†…å®¹ã€‚
+    * @~chinese ÇëÇó»ñÈ¡ÎÄ±¾ÄÚÈİ¡£
     * @deprecated Use @see `getString` instead.
-    * @return @~english The string value of TextField. @~chinese æ–‡æœ¬å†…å®¹ã€‚
+    * @return @~english The string value of TextField. @~chinese ÎÄ±¾ÄÚÈİ¡£
     */
     CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue()const{return this->getString();}
     
     /**
     * @~english Change content of TextField.
-    * @~chinese æ”¹å˜æ–‡æœ¬å†…å®¹ã€‚
-    * @param text @~english A string content. @~chinese æ–‡æœ¬å†…å®¹ã€‚
+    * @~chinese ¸Ä±äÎÄ±¾ÄÚÈİ¡£
+    * @param text @~english A string content. @~chinese ÎÄ±¾ÄÚÈİ¡£
     */
     void setString(const std::string& text);
     
     /**
     * @~english Query the content of TextField.
-    * @~chinese è¯·æ±‚è·å–æ–‡æœ¬å†…å®¹ã€‚
-    * @return @~english The string value of TextField. @~chinese æ–‡æœ¬å†…å®¹ã€‚
+    * @~chinese ÇëÇó»ñÈ¡ÎÄ±¾ÄÚÈİ¡£
+    * @return @~english The string value of TextField. @~chinese ÎÄ±¾ÄÚÈİ¡£
     */
     const std::string& getString()const;
     
@@ -460,64 +460,64 @@ public:
     
     /**
     * @~english Toggle maximize length enable
-    * @~chinese å¼€å…³æœ€å¤§é•¿åº¦é™åˆ¶ã€‚
-    * @param enable @~english True if enable maximize length, false otherwise. @~chinese Trueè¡¨æ˜å¼€å¯æœ€å¤§é•¿åº¦é™åˆ¶ï¼Œåä¹‹å…³é—­ã€‚
+    * @~chinese ¿ª¹Ø×î´ó³¤¶ÈÏŞÖÆ¡£
+    * @param enable @~english True if enable maximize length, false otherwise. @~chinese True±íÃ÷¿ªÆô×î´ó³¤¶ÈÏŞÖÆ£¬·´Ö®¹Ø±Õ¡£
     */
     void setMaxLengthEnabled(bool enable);
     
     /**
     * @~english Query whether max length is enabled or not.
-    * @~chinese è¯·æ±‚æ˜¯å¦å¼€å¯äº†æœ€å¤§é•¿åº¦é™åˆ¶ã€‚
-    * @return @~english True if maximize length is enabled, false otherwise. @~chinese Trueè¡¨æ˜å¼€å¯æœ€å¤§é•¿åº¦é™åˆ¶ï¼Œåä¹‹å…³é—­ã€‚
+    * @~chinese ÇëÇóÊÇ·ñ¿ªÆôÁË×î´ó³¤¶ÈÏŞÖÆ¡£
+    * @return @~english True if maximize length is enabled, false otherwise. @~chinese True±íÃ÷¿ªÆô×î´ó³¤¶ÈÏŞÖÆ£¬·´Ö®¹Ø±Õ¡£
     */
     bool isMaxLengthEnabled()const;
     
     /**
     * @~english Change maximize input length limitation.
-    * @~chinese æ”¹å˜æœ€å¤§è¾“å…¥é•¿åº¦é™åˆ¶ã€‚
-    * @param length @~english A character count in integer. @~chinese æœ€å¤§é•¿åº¦ã€‚
+    * @~chinese ¸Ä±ä×î´óÊäÈë³¤¶ÈÏŞÖÆ¡£
+    * @param length @~english A character count in integer. @~chinese ×î´ó³¤¶È¡£
     */
     void setMaxLength(int length);
     
     /**
     * @~english Query maximize input length of TextField.
-    * @~chinese  è¯·æ±‚æœ€å¤§è¾“å…¥é•¿åº¦ã€‚
-    * @return @~english The integer value of maximize input length. @~chinese æœ€å¤§é•¿åº¦ã€‚
+    * @~chinese  ÇëÇó×î´óÊäÈë³¤¶È¡£
+    * @return @~english The integer value of maximize input length. @~chinese ×î´ó³¤¶È¡£
     */
     int getMaxLength()const;
     
     /**
     * @~english Query the input string length.
-    * @~chinese è¯·æ±‚è¾“å…¥å­—ç¬¦ä¸²é•¿åº¦ã€‚
-    * @return @~english A integer length value. @~chinese å­—ç¬¦ä¸²é•¿åº¦ã€‚
+    * @~chinese ÇëÇóÊäÈë×Ö·û´®³¤¶È¡£
+    * @return @~english A integer length value. @~chinese ×Ö·û´®³¤¶È¡£
     */
     int getStringLength() const;
     
     /**
     * @~english Toggle enable password input mode.
-    * @~chinese å¼€å…³å¯†ç è¾“å…¥æ¨¡å¼ã€‚
-    * @param enable @~english True if enable password input mode, false otherwise. @~chinese Trueè¡¨ç¤ºå¼€å¯å¯†ç è¾“å…¥æ¨¡å¼ï¼Œåä¹‹å…³é—­ã€‚
+    * @~chinese ¿ª¹ØÃÜÂëÊäÈëÄ£Ê½¡£
+    * @param enable @~english True if enable password input mode, false otherwise. @~chinese True±íÊ¾¿ªÆôÃÜÂëÊäÈëÄ£Ê½£¬·´Ö®¹Ø±Õ¡£
     */
     void setPasswordEnabled(bool enable);
     
     /**
     * @~english Query whether password is enabled or not.
-    * @~chinese è¯·æ±‚å¯†ç è¾“å…¥æ¨¡å¼æ˜¯å¦å¼€å¯ã€‚
-    * @return @~english True if password is enabled, false otherwise. @~chinese Trueè¡¨ç¤ºå¼€å¯å¯†ç è¾“å…¥æ¨¡å¼ï¼Œåä¹‹å…³é—­ã€‚
+    * @~chinese ÇëÇóÃÜÂëÊäÈëÄ£Ê½ÊÇ·ñ¿ªÆô¡£
+    * @return @~english True if password is enabled, false otherwise. @~chinese True±íÊ¾¿ªÆôÃÜÂëÊäÈëÄ£Ê½£¬·´Ö®¹Ø±Õ¡£
     */
     bool isPasswordEnabled()const;
 
     /**
     * @~english Change password style text.
-    * @~chinese æ”¹å˜å¯†ç æ¨¡å¼ä¸‹çš„æ–‡æœ¬æ ·å¼ã€‚
-    * @param styleText @~english The styleText for password mask, the default value is "*". @~chinese å¯†ç æ©ç çš„æ–‡æœ¬æ ·å¼ï¼Œé»˜è®¤ä¸ºâ€œ*â€ã€‚
+    * @~chinese ¸Ä±äÃÜÂëÄ£Ê½ÏÂµÄÎÄ±¾ÑùÊ½¡£
+    * @param styleText @~english The styleText for password mask, the default value is "*". @~chinese ÃÜÂëÑÚÂëµÄÎÄ±¾ÑùÊ½£¬Ä¬ÈÏÎª¡°*¡±¡£
     */
     void setPasswordStyleText(const char* styleText);
     
     /**
     * @~english Query the password style text.
-    * @~chinese è¯·æ±‚å¯†ç æ¨¡å¼çš„æ–‡æœ¬æ ·å¼ã€‚
-    * @return @~english A password style text. @~chinese å¯†ç æ¨¡å¼çš„æ–‡æœ¬æ ·å¼ã€‚
+    * @~chinese ÇëÇóÃÜÂëÄ£Ê½µÄÎÄ±¾ÑùÊ½¡£
+    * @return @~english A password style text. @~chinese ÃÜÂëÄ£Ê½µÄÎÄ±¾ÑùÊ½¡£
     */
     const char* getPasswordStyleText()const;
     
@@ -525,133 +525,133 @@ public:
     
     /**
     * @~english Query whether the IME is attached or not.
-    * @~chinese è¯·æ±‚æ˜¯å¦è¾“å…¥æ³•ç¼–è¾‘å™¨å·²è¢«å…³è”ã€‚
-    * @return @~english True if IME is attached, false otherwise. @~chinese Trueè¡¨ç¤ºå·²è¢«å…³è”ï¼Œåä¹‹æœªå…³è”ã€‚
+    * @~chinese ÇëÇóÊÇ·ñÊäÈë·¨±à¼­Æ÷ÒÑ±»¹ØÁª¡£
+    * @return @~english True if IME is attached, false otherwise. @~chinese True±íÊ¾ÒÑ±»¹ØÁª£¬·´Ö®Î´¹ØÁª¡£
     */
     bool getAttachWithIME()const;
     
     /**
     * @~english Toggle attach with IME.
-    * @~chinese è®¾ç½®å…³è”è¾“å…¥æ³•ç¼–è¾‘å™¨ã€‚
-    * @param attach @~english True if attach with IME, false otherwise. @~chinese Trueè¡¨ç¤ºå·²è¢«å…³è”ï¼Œåä¹‹æœªå…³è”ã€‚
+    * @~chinese ÉèÖÃ¹ØÁªÊäÈë·¨±à¼­Æ÷¡£
+    * @param attach @~english True if attach with IME, false otherwise. @~chinese True±íÊ¾ÒÑ±»¹ØÁª£¬·´Ö®Î´¹ØÁª¡£
     */
     void setAttachWithIME(bool attach);
     
     /**
     * @~english Query whether IME is detached or not.
-    * @~chinese è¯·æ±‚æ˜¯å¦è¾“å…¥æ³•ç¼–è¾‘å™¨å·²è¢«å–æ¶ˆå…³è”ã€‚
-    * @return @~english True if IME is detached, false otherwise. @~chinese Trueè¡¨ç¤ºå·²è¢«å–æ¶ˆå…³è”ï¼Œåä¹‹å·²å…³è”ã€‚
+    * @~chinese ÇëÇóÊÇ·ñÊäÈë·¨±à¼­Æ÷ÒÑ±»È¡Ïû¹ØÁª¡£
+    * @return @~english True if IME is detached, false otherwise. @~chinese True±íÊ¾ÒÑ±»È¡Ïû¹ØÁª£¬·´Ö®ÒÑ¹ØÁª¡£
     */
     bool getDetachWithIME()const;
     
     /**
     * @~english Toggle detach with IME.
-    * @~chinese è®¾ç½®å–æ¶ˆå…³è”è¾“å…¥æ³•ç¼–è¾‘å™¨ã€‚
-    * @param detach @~english True if detach with IME, false otherwise. @~chinese Trueè¡¨ç¤ºå·²è¢«å–æ¶ˆå…³è”ï¼Œåä¹‹å·²å…³è”ã€‚
+    * @~chinese ÉèÖÃÈ¡Ïû¹ØÁªÊäÈë·¨±à¼­Æ÷¡£
+    * @param detach @~english True if detach with IME, false otherwise. @~chinese True±íÊ¾ÒÑ±»È¡Ïû¹ØÁª£¬·´Ö®ÒÑ¹ØÁª¡£
     */
     void setDetachWithIME(bool detach);
     
     
     /**
     * @~english Whether it is ready to get the inserted text or not.
-    * @~chinese æ˜¯å¦å¼€å¯æ’å…¥æ–‡æœ¬æ¨¡å¼ã€‚
-    * @return @~english True if the insert text is ready, false otherwise. @~chinese Trueè¡¨ç¤ºå¼€å¯æ’å…¥æ–‡æœ¬æ¨¡å¼ï¼Œåä¹‹æœªå¼€å¯ã€‚
+    * @~chinese ÊÇ·ñ¿ªÆô²åÈëÎÄ±¾Ä£Ê½¡£
+    * @return @~english True if the insert text is ready, false otherwise. @~chinese True±íÊ¾¿ªÆô²åÈëÎÄ±¾Ä£Ê½£¬·´Ö®Î´¿ªÆô¡£
     */
     bool getInsertText()const;
     
     /**
     * @~english Toggle enable insert text mode
-    * @~chinese å¼€å…³æ’å…¥æ–‡æœ¬æ¨¡å¼ã€‚
-    * @param insertText @~english True if enable insert text, false otherwise. @~chinese Trueè¡¨ç¤ºå¼€å¯æ’å…¥æ–‡æœ¬æ¨¡å¼ï¼Œåä¹‹æœªå¼€å¯ã€‚
+    * @~chinese ¿ª¹Ø²åÈëÎÄ±¾Ä£Ê½¡£
+    * @param insertText @~english True if enable insert text, false otherwise. @~chinese True±íÊ¾¿ªÆô²åÈëÎÄ±¾Ä£Ê½£¬·´Ö®Î´¿ªÆô¡£
     */
     void setInsertText(bool insertText);
      
     /**
     * @~english Whether it is ready to delete backward in TextField.
-    * @~chinese æ˜¯å¦å…è®¸å›åˆ ã€‚
-    * @return @~english True is the delete backward is enabled, false otherwise. @~chinese Trueè¡¨ç¤ºå…è®¸å›åˆ ï¼Œåä¹‹ä¸å…è®¸ã€‚
+    * @~chinese ÊÇ·ñÔÊĞí»ØÉ¾¡£
+    * @return @~english True is the delete backward is enabled, false otherwise. @~chinese True±íÊ¾ÔÊĞí»ØÉ¾£¬·´Ö®²»ÔÊĞí¡£
     */
     bool getDeleteBackward()const;
     
     /**
     * @~english Toggle enable delete backward mode.
-    * @~chinese å¼€å…³å›åˆ æ¨¡å¼ã€‚
-    * @param deleteBackward @~english True is delete backward is enabled, false otherwise. @~chinese Trueè¡¨ç¤ºå…è®¸å›åˆ ï¼Œåä¹‹ä¸å…è®¸ã€‚
+    * @~chinese ¿ª¹Ø»ØÉ¾Ä£Ê½¡£
+    * @param deleteBackward @~english True is delete backward is enabled, false otherwise. @~chinese True±íÊ¾ÔÊĞí»ØÉ¾£¬·´Ö®²»ÔÊĞí¡£
     */
     void setDeleteBackward(bool deleteBackward);
     
     /**
     * @~english Add a event listener to TextField, when some predefined event happens, the callback will be called.
-    * @~chinese æ·»åŠ ä¸€ä¸ªç›‘å¬å™¨ï¼Œå½“ä¸€äº›é¢„å®šä¹‰äº‹ä»¶å‘ç”Ÿæ—¶è¿›è¡Œå›è°ƒæ“ä½œã€‚
+    * @~chinese Ìí¼ÓÒ»¸ö¼àÌıÆ÷£¬µ±Ò»Ğ©Ô¤¶¨ÒåÊÂ¼ş·¢ÉúÊ±½øĞĞ»Øµ÷²Ù×÷¡£
     * @deprecated Use @see `addEventListener` instead.
-    * @param target @~english A pointer of `Ref*` type. @~chinese Refç±»å‹çš„æŒ‡é’ˆã€‚
-    * @param selecor @~english A member function pointer with type of `SEL_TextFieldEvent`. @~chinese ç”¨ä»¥ç›‘å¬çš„å›è°ƒå‡½æ•°ã€‚
+    * @param target @~english A pointer of `Ref*` type. @~chinese RefÀàĞÍµÄÖ¸Õë¡£
+    * @param selecor @~english A member function pointer with type of `SEL_TextFieldEvent`. @~chinese ÓÃÒÔ¼àÌıµÄ»Øµ÷º¯Êı¡£
     */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerTextField(Ref* target, SEL_TextFieldEvent selecor);
     /**
     * @~english Add a event listener to TextField, when some predefined event happens, the callback will be called.
-    * @~chinese æ·»åŠ ä¸€ä¸ªç›‘å¬å™¨ï¼Œå½“ä¸€äº›é¢„å®šä¹‰äº‹ä»¶å‘ç”Ÿæ—¶è¿›è¡Œå›è°ƒæ“ä½œã€‚
-    * @param callback @~english A callback function with type of `ccTextFieldCallback`. @~chinese ç”¨ä»¥ç›‘å¬çš„å›è°ƒå‡½æ•°ã€‚
+    * @~chinese Ìí¼ÓÒ»¸ö¼àÌıÆ÷£¬µ±Ò»Ğ©Ô¤¶¨ÒåÊÂ¼ş·¢ÉúÊ±½øĞĞ»Øµ÷²Ù×÷¡£
+    * @param callback @~english A callback function with type of `ccTextFieldCallback`. @~chinese ÓÃÒÔ¼àÌıµÄ»Øµ÷º¯Êı¡£
     */
     void addEventListener(const ccTextFieldCallback& callback);
     
     /**
     * @~english Returns the "class name" of widget.
-    * @~chinese è¿”å›widgetçš„ç±»åç§°ã€‚
-    * @return @~english The "class name" of widget. @~chinese widgetçš„ç±»åç§°ã€‚
+    * @~chinese ·µ»ØwidgetµÄÀàÃû³Æ¡£
+    * @return @~english The "class name" of widget. @~chinese widgetµÄÀàÃû³Æ¡£
     */
     virtual std::string getDescription() const override;
     
     /**
     * @~english Get the the renderer size in auto mode.
-    * @~chinese è·å–æ¸²æŸ“æ—¶çš„å¤§å°ã€‚
+    * @~chinese »ñÈ¡äÖÈ¾Ê±µÄ´óĞ¡¡£
     *
-    * @return @~english A delimitation zone. @~chinese ä¸€ä¸ªé™å®šåŒºåŸŸã€‚
+    * @return @~english A delimitation zone. @~chinese Ò»¸öÏŞ¶¨ÇøÓò¡£
     */
     virtual Size getAutoRenderSize();
-    //overide functions.
+    //override functions.
     virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     virtual void onEnter() override;
     
     /**
     * @~english Attach the IME for inputing.
-    * @~chinese å…³è”è¾“å…¥æ³•ç¼–è¾‘å™¨ç”¨ä»¥è¾“å…¥ã€‚
+    * @~chinese ¹ØÁªÊäÈë·¨±à¼­Æ÷ÓÃÒÔÊäÈë¡£
     */
     void attachWithIME();
     
     /**
     * @~english Change the text area size.
-    * @~chinese æ”¹å˜æ–‡æœ¬åŒºåŸŸå¤§å°ã€‚
-    * @param size @~english A delimitation zone. @~chinese ä¸€ä¸ªé™å®šåŒºåŸŸã€‚
+    * @~chinese ¸Ä±äÎÄ±¾ÇøÓò´óĞ¡¡£
+    * @param size @~english A delimitation zone. @~chinese Ò»¸öÏŞ¶¨ÇøÓò¡£
     */
     void setTextAreaSize(const Size &size);
     
     /**
     * @~english Change horizontal text alignment.
-    * @~chinese æ”¹å˜æ–‡æœ¬æ°´å¹³å¯¹é½ç±»å‹ã€‚
-    * @param alignment @~english A alignment arguments in @see `TextHAlignment`. @~chinese æ°´å¹³å¯¹é½ç±»å‹ã€‚
+    * @~chinese ¸Ä±äÎÄ±¾Ë®Æ½¶ÔÆëÀàĞÍ¡£
+    * @param alignment @~english A alignment arguments in @see `TextHAlignment`. @~chinese Ë®Æ½¶ÔÆëÀàĞÍ¡£
     */
     void setTextHorizontalAlignment(TextHAlignment alignment);
 
     /**
     * @~english Inquire the horizontal alignment
-    * @~chinese è·å–æ°´å¹³å¯¹é½ç±»å‹ã€‚
-    * @return @~english The horizontal alignment @~chinese æ°´å¹³å¯¹é½ç±»å‹ã€‚
+    * @~chinese »ñÈ¡Ë®Æ½¶ÔÆëÀàĞÍ¡£
+    * @return @~english The horizontal alignment @~chinese Ë®Æ½¶ÔÆëÀàĞÍ¡£
     */
     TextHAlignment getTextHorizontalAlignment() const;
     
     /**
     * @~english Change the vertical text alignment.
-    * @~chinese æ”¹å˜æ–‡æœ¬å‚ç›´å¯¹é½ç±»å‹ã€‚
-    * @param alignment @~english A alignment arguments in @see `TextVAlignment`. @~chinese å‚ç›´å¯¹é½ç±»å‹ã€‚
+    * @~chinese ¸Ä±äÎÄ±¾´¹Ö±¶ÔÆëÀàĞÍ¡£
+    * @param alignment @~english A alignment arguments in @see `TextVAlignment`. @~chinese ´¹Ö±¶ÔÆëÀàĞÍ¡£
     */
     void setTextVerticalAlignment(TextVAlignment alignment);
 
     /**
     * @~english Inquire the horizontal alignment
-    * @~chinese è·å–æ–‡æœ¬å‚ç›´å¯¹é½ç±»å‹ã€‚
-    * @return @~english The horizontal alignment @~chinese å‚ç›´å¯¹é½ç±»å‹ã€‚
+    * @~chinese »ñÈ¡ÎÄ±¾´¹Ö±¶ÔÆëÀàĞÍ¡£
+    * @return @~english The horizontal alignment @~chinese ´¹Ö±¶ÔÆëÀàĞÍ¡£
     */
     TextVAlignment getTextVerticalAlignment() const;
     

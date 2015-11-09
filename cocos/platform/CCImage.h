@@ -36,7 +36,7 @@ THE SOFTWARE.
 
 /** @~english premultiply alpha, or the effect will wrong when want to use other pixel format in Texture2D,
 // such as RGB888, RGB5A1
-    @~chinese é€æ˜åƒç´ å¤åˆ å¦‚æœæˆ‘ä»¬åœ¨Texture2Dä¸­ä½¿ç”¨å…¶ä»–çš„åƒç´ æ ¼å¼ï¼ˆå¦‚ï¼šRGB888, RGB5A1ï¼‰ï¼Œæ•ˆæœå°±ä¼šå‡ºé”™
+    @~chinese Í¸Ã÷ÏñËØ¸´ºÏ Èç¹ûÎÒÃÇÔÚTexture2DÖĞÊ¹ÓÃÆäËûµÄÏñËØ¸ñÊ½£¨Èç£ºRGB888, RGB5A1£©£¬Ğ§¹û¾Í»á³ö´í
 */
 #define CC_RGB_PREMULTIPLY_ALPHA(vr, vg, vb, va) \
     (unsigned)(((unsigned)((unsigned char)(vr) * ((unsigned char)(va) + 1)) >> 8) | \
@@ -53,7 +53,7 @@ NS_CC_BEGIN
 
 /**
  @brief @~english Structure which can tell where mipmap begins and how long is it
- * @~chinese ç”¨æ¥è¾¨åˆ«mipmapèµ·å§‹ä½ç½®å’Œé•¿åº¦çš„ç»“æ„ä½“
+ * @~chinese ÓÃÀ´±æ±ğmipmapÆğÊ¼Î»ÖÃºÍ³¤¶ÈµÄ½á¹¹Ìå
  */
 typedef struct _MipmapInfo
 {
@@ -76,7 +76,7 @@ public:
      */
     virtual ~Image();
 
-    /** @~english Supported formats for Image  @~chinese æ”¯æŒçš„å›¾ç‰‡æ ¼å¼*/
+    /** @~english Supported formats for Image  @~chinese Ö§³ÖµÄÍ¼Æ¬¸ñÊ½*/
     enum class Format
     {
         //! JPEG
@@ -97,38 +97,38 @@ public:
         ATITC,
         //! TGA
         TGA,
-        //! åŸå§‹æ•°æ®
+        //! Ô­Ê¼Êı¾İ
         RAW_DATA,
-        //! æœªçŸ¥æ ¼å¼
+        //! Î´Öª¸ñÊ½
         UNKNOWN
     };
 
     /**
     @brief @~english Load the image from the specified path.
-     * @~chinese ä»æŒ‡å®šçš„è·¯å¾„åŠ è½½å›¾ç‰‡
+     * @~chinese ´ÓÖ¸¶¨µÄÂ·¾¶¼ÓÔØÍ¼Æ¬
     @param path   @~english the absolute file path.
-     * @~chinese æ–‡ä»¶çš„ç»å¯¹è·¯å¾„
+     * @~chinese ÎÄ¼şµÄ¾ø¶ÔÂ·¾¶
     @return @~english true if loaded correctly.
-     * @~chinese å¦‚æœæ­£ç¡®åŠ è½½åˆ™è¿”å›true
+     * @~chinese Èç¹ûÕıÈ·¼ÓÔØÔò·µ»Øtrue
     */
     bool initWithImageFile(const std::string& path);
 
     /**
     @brief @~english Load image from stream buffer.
-     * @~chinese ä»æµç¼“å†²åŒºåŠ è½½å›¾ç‰‡
+     * @~chinese ´ÓÁ÷»º³åÇø¼ÓÔØÍ¼Æ¬
     @param data  @~english stream buffer which holds the image data.
-     * @~chinese å­˜æ”¾å›¾ç‰‡æ•°æ®çš„æµç¼“å†²åŒº
+     * @~chinese ´æ·ÅÍ¼Æ¬Êı¾İµÄÁ÷»º³åÇø
     @param dataLen  @~english data length expressed in (number of) bytes.
-     * @~chinese æ•°æ®çš„å­—èŠ‚æ•°
+     * @~chinese Êı¾İµÄ×Ö½ÚÊı
     @return @~english true if loaded correctly.
-     * @~chinese å¦‚æœæ­£ç¡®åŠ è½½åˆ™è¿”å›true
+     * @~chinese Èç¹ûÕıÈ·¼ÓÔØÔò·µ»Øtrue
     * @js NA
     * @lua NA
     */
     bool initWithImageData(const unsigned char * data, ssize_t dataLen);
 
-    /** @~english Load image from raw data @~chinese ä»åŸå§‹æ•°æ®ä¸­åŠ è½½å›¾ç‰‡
-    // @warning kFmtRawData @~english only support RGBA8888 @~chinese åªæ”¯æŒRGBA8888
+    /** @~english Load image from raw data @~chinese ´ÓÔ­Ê¼Êı¾İÖĞ¼ÓÔØÍ¼Æ¬
+    // @warning kFmtRawData @~english only support RGBA8888 @~chinese Ö»Ö§³ÖRGBA8888
     */
     bool initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti = false);
 
@@ -151,11 +151,11 @@ public:
 
     /**
      @brief    @~english Save Image data to the specified file, with specified format.
-     * @~chinese ä»¥æŒ‡å®šçš„æ ¼å¼æŠŠå›¾ç‰‡æ•°æ®ä¿å­˜åˆ°æŒ‡å®šçš„æ–‡ä»¶ä¸­
+     * @~chinese ÒÔÖ¸¶¨µÄ¸ñÊ½°ÑÍ¼Æ¬Êı¾İ±£´æµ½Ö¸¶¨µÄÎÄ¼şÖĞ
      @param    filePath        @~english the file's absolute path, including file suffix.
-     * @~chinese åŒ…æ‹¬æ–‡ä»¶åç¼€çš„ç»å¯¹è·¯å¾„
+     * @~chinese °üÀ¨ÎÄ¼şºó×ºµÄ¾ø¶ÔÂ·¾¶
      @param    isToRGB        @~english whether the image is saved as RGB format.
-     * @~chinese å›¾ç‰‡æ˜¯å¦ä»¥RGBæ ¼å¼ä¿å­˜ã€‚
+     * @~chinese Í¼Æ¬ÊÇ·ñÒÔRGB¸ñÊ½±£´æ¡£
      */
     bool saveToFile(const std::string &filename, bool isToRGB = true);
     
@@ -165,11 +165,11 @@ public:
      possible load them as if they have (or not) the alpha channel premultiplied.
      
      By default it is disabled.
-     * @~chinese è®¾ç½®PVRæ–‡ä»¶æ˜¯å¦è¿›è¡Œé€æ˜åƒç´ æ··åˆã€‚
-     * å› ä¸ºä¸å¯èƒ½çŸ¥é“åœ¨è¿è¡Œæ—¶PVRå›¾åƒæ˜¯å¦å·²æœ‰alphaé€šé“çš„æ··åˆ,
-     * å¯èƒ½åŠ è½½å®ƒä»¬æ—¶æœ‰(æˆ–æ²¡æœ‰)é€æ˜é€šé“æ··åˆã€‚
+     * @~chinese ÉèÖÃPVRÎÄ¼şÊÇ·ñ½øĞĞÍ¸Ã÷ÏñËØ»ìºÏ¡£
+     * ÒòÎª²»¿ÉÄÜÖªµÀÔÚÔËĞĞÊ±PVRÍ¼ÏñÊÇ·ñÒÑÓĞalphaÍ¨µÀµÄ»ìºÏ,
+     * ¿ÉÄÜ¼ÓÔØËüÃÇÊ±ÓĞ(»òÃ»ÓĞ)Í¸Ã÷Í¨µÀ»ìºÏ¡£
      * 
-     * åœ¨é»˜è®¤æƒ…å†µä¸‹æ˜¯ç¦ç”¨çš„ã€‚
+     * ÔÚÄ¬ÈÏÇé¿öÏÂÊÇ½ûÓÃµÄ¡£
      */
     static void setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
 
@@ -199,9 +199,9 @@ protected:
 protected:
     /**
      @brief @~english Determine how many mipmaps can we have.
-     Its same as define but it respects namespaces
-     * @~chinese å†³å®šmipmapå…è®¸çš„æœ€å¤§æ•°é‡
-     * è¿™ä¸ªå’Œä½¿ç”¨defineæ˜¯ä¸€æ ·çš„ï¼Œåªä¸è¿‡å®ƒéµå®ˆå‘½åç©ºé—´çš„è§„åˆ™
+     It's same as define but it respects namespaces
+     * @~chinese ¾ö¶¨mipmapÔÊĞíµÄ×î´óÊıÁ¿
+     * Õâ¸öºÍÊ¹ÓÃdefineÊÇÒ»ÑùµÄ£¬Ö»²»¹ıËü×ñÊØÃüÃû¿Õ¼äµÄ¹æÔò
      */
     static const int MIPMAP_MAX = 16;
     unsigned char *_data;
@@ -213,7 +213,7 @@ protected:
     Texture2D::PixelFormat _renderFormat;
     MipmapInfo _mipmaps[MIPMAP_MAX];   // pointer to mipmap images
     int _numberOfMipmaps;
-    // false if we cann't auto detect the image is premultiplied or not.
+    // false if we can't auto detect the image is premultiplied or not.
     bool _hasPremultipliedAlpha;
     std::string _filePath;
 
@@ -226,13 +226,13 @@ protected:
     /*
      @brief @~english The same result as with initWithImageFile, but thread safe. It is caused by
      loadImage() in TextureCache.cpp.
-     * @~chinese å®ƒå’Œä½¿ç”¨initWithImageFileçš„ç»“æœæ˜¯ä¸€æ ·çš„ï¼Œåªä¸è¿‡çº¿ç¨‹ç›¸å¯¹å®‰å…¨ã€‚å®ƒè¢«TextureCache.cppä¸­çš„ loadImage()æ‰€è°ƒç”¨
+     * @~chinese ËüºÍÊ¹ÓÃinitWithImageFileµÄ½á¹ûÊÇÒ»ÑùµÄ£¬Ö»²»¹ıÏß³ÌÏà¶Ô°²È«¡£Ëü±»TextureCache.cppÖĞµÄ loadImage()Ëùµ÷ÓÃ
      @param fullpath  @~english full path of the file.
-     * @~chinese æ–‡ä»¶çš„å®Œæ•´è·¯å¾„ã€‚
+     * @~chinese ÎÄ¼şµÄÍêÕûÂ·¾¶¡£
      @param imageType @~english the type of image, currently only supporting two types.
-     * @~chinese å›¾ç‰‡ç±»å‹ï¼Œå½“å‰åªæ”¯æŒä¸¤ä¸ªç±»å‹
+     * @~chinese Í¼Æ¬ÀàĞÍ£¬µ±Ç°Ö»Ö§³ÖÁ½¸öÀàĞÍ
      @return  @~english true if loaded correctly.
-     * @~chinese å¦‚æœæ­£ç¡®åŠ è½½åˆ™è¿”å›true
+     * @~chinese Èç¹ûÕıÈ·¼ÓÔØÔò·µ»Øtrue
      */
     bool initWithImageFileThreadSafe(const std::string& fullpath);
     

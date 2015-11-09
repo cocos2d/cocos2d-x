@@ -45,7 +45,7 @@ class CC_DLL CCFileUtilsWinRT : public FileUtils
     friend class FileUtils;
     CCFileUtilsWinRT();
 public:
-    /* override funtions */
+    /* override functions */
     bool init();
     virtual std::string getWritablePath() const;
     virtual bool isAbsolutePath(const std::string& strPath) const;

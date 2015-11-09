@@ -45,7 +45,7 @@ class EventListenerCustom;
 VertexBuffer is an abstraction of low level openGL Vertex Buffer Object.
 It is used to save an array of vertices.
  * @~chinese 
-VertexBufferæ˜¯openGLåº•å±‚çš„é¡¶ç‚¹ç¼“å†²VBOçš„æŠ½è±¡ï¼Œç”¨æ¥å­˜åœ¨ä¸€ç»„é¡¶ç‚¹æ•°æ®ã€‚
+VertexBufferÊÇopenGLµ×²ãµÄ¶¥µã»º³åVBOµÄ³éÏó£¬ÓÃÀ´´æÔÚÒ»×é¶¥µãÊı¾İ¡£
 *@js NA
 */
 class CC_DLL VertexBuffer : public Ref
@@ -54,72 +54,72 @@ public:
     /**@~english
     Create an instance of VertexBuffer.
      * @~chinese 
-     * åˆ›å»ºVertexBufferçš„ä¸€ä¸ªå®ä¾‹ã€‚
+     * ´´½¨VertexBufferµÄÒ»¸öÊµÀı¡£
     @param sizePerVertex @~english Size in bytes of one vertex.
-     * @~chinese ä¸€ä¸ªé¡¶ç‚¹çš„å­—èŠ‚æ•°ã€‚
+     * @~chinese Ò»¸ö¶¥µãµÄ×Ö½ÚÊı¡£
     @param vertexNumber @~english The number of vertex.
-     * @~chinese é¡¶ç‚¹çš„ä¸ªæ•°ã€‚
+     * @~chinese ¶¥µãµÄ¸öÊı¡£
     @param usage @~english A hint to indicate whether the vertexBuffer are updated frequently or not to let GL optimise it.
-     * @~chinese ç»™åº•å±‚é©±åŠ¨çš„æ ‡ç¤ºï¼Œè¡¨æ˜VertexBufferæ˜¯å¦ç»å¸¸æ›´æ–°ï¼Œè¿™æ ·å¯ä»¥æ½œåœ¨çš„è®©openGLä¼˜åŒ–å…¶æ€§èƒ½ã€‚
+     * @~chinese ¸øµ×²ãÇı¶¯µÄ±êÊ¾£¬±íÃ÷VertexBufferÊÇ·ñ¾­³£¸üĞÂ£¬ÕâÑù¿ÉÒÔÇ±ÔÚµÄÈÃopenGLÓÅ»¯ÆäĞÔÄÜ¡£
     */
     static VertexBuffer* create(int sizePerVertex, int vertexNumber, GLenum usage = GL_STATIC_DRAW);
     /**
     @~english Get the size in bytes of one vertex. 
-    @~chinese å¾—åˆ°ä¸€ä¸ªé¡¶ç‚¹çš„å­—èŠ‚æ•°ã€‚
+    @~chinese µÃµ½Ò»¸ö¶¥µãµÄ×Ö½ÚÊı¡£
     */
     int getSizePerVertex() const;
     /**
     @~english Get the number of vertices. 
-    @~chinese å¾—åˆ°é¡¶ç‚¹çš„æ•°é‡ã€‚
+    @~chinese µÃµ½¶¥µãµÄÊıÁ¿¡£
     */
     int getVertexNumber() const;
     /**@~english
-    Update all or part of vertice data, if the range specified exceeds the vertex buffer, it will be clipped.
+    Update all or part of vertices data, if the range specified exceeds the vertex buffer, it will be clipped.
      * @~chinese 
-     * æ›´æ–°æ‰€æœ‰æˆ–éƒ¨åˆ†é¡¶ç‚¹æ•°æ®,å¦‚æœæŒ‡å®šçš„èŒƒå›´è¶…è¿‡äº†é¡¶ç‚¹ç¼“å†²åŒº,å®ƒå°†è¢«æˆªæ–­ã€‚
+     * ¸üĞÂËùÓĞ»ò²¿·Ö¶¥µãÊı¾İ,Èç¹ûÖ¸¶¨µÄ·¶Î§³¬¹ıÁË¶¥µã»º³åÇø,Ëü½«±»½Ø¶Ï¡£
     @param verts @~english The pointer of the vertex data.
-     * @~chinese é¡¶ç‚¹æ•°æ®çš„æŒ‡é’ˆã€‚
+     * @~chinese ¶¥µãÊı¾İµÄÖ¸Õë¡£
     @param count @~english The number of vertices to update.
-     * @~chinese é¡¶ç‚¹æ›´æ–°çš„æ•°é‡ã€‚
+     * @~chinese ¶¥µã¸üĞÂµÄÊıÁ¿¡£
     @param begin @~english The first vertex to update.
-     * @~chinese è¦æ›´æ–°çš„ç¬¬ä¸€ä¸ªé¡¶ç‚¹çš„ä½ç½®ã€‚
+     * @~chinese Òª¸üĞÂµÄµÚÒ»¸ö¶¥µãµÄÎ»ÖÃ¡£
     */
     bool updateVertices(const void* verts, int count, int begin);
 
     /**@~english
     Get the size of the vertex array in bytes, equals getSizePerVertex() * getVertexNumber().
      * @~chinese 
-     * å¾—åˆ°æ•´ä¸ªvertexBufferä¸­æ‰€æœ‰é¡¶ç‚¹çš„å¤§å°ï¼Œä»¥å­—èŠ‚ä¸ºå•ä½ï¼Œç­‰åŒäºgetSizePerVertex() * getVertexNumber()ã€‚
+     * µÃµ½Õû¸övertexBufferÖĞËùÓĞ¶¥µãµÄ´óĞ¡£¬ÒÔ×Ö½ÚÎªµ¥Î»£¬µÈÍ¬ÓÚgetSizePerVertex() * getVertexNumber()¡£
     */
     int getSize() const;
     /**@~english
     Get the internal openGL handle.
      * @~chinese 
-     * å¾—åˆ°å†…éƒ¨openGLå¥æŸ„ã€‚
+     * µÃµ½ÄÚ²¿openGL¾ä±ú¡£
     */
     GLuint getVBO() const;
     
 protected:
     /**@~english
     Constructor.
-    @~chinese æ„é€ å‡½æ•°ã€‚
+    @~chinese ¹¹Ôìº¯Êı¡£
     */
     VertexBuffer();
     /**@~english
     Destructor.
-    @~chinese ææ„å‡½æ•°ã€‚
+    @~chinese Îö¹¹º¯Êı¡£
     */
     virtual ~VertexBuffer();
     /**@~english
     Init the storage of vertex buffer.
      * @~chinese 
-     * åˆå§‹åŒ–å­˜å‚¨é¡¶ç‚¹ç¼“å†²åŒºã€‚
+     * ³õÊ¼»¯´æ´¢¶¥µã»º³åÇø¡£
     @param sizePerVertex @~english Size in bytes of one vertex.
-     * @~chinese ä¸€ä¸ªé¡¶ç‚¹çš„å­—èŠ‚æ•°ã€‚
+     * @~chinese Ò»¸ö¶¥µãµÄ×Ö½ÚÊı¡£
     @param vertexNumber @~english The number of vertex.
-     * @~chinese é¡¶ç‚¹çš„ä¸ªæ•°ã€‚
+     * @~chinese ¶¥µãµÄ¸öÊı¡£
     @param usage @~english A hint to indicate whether the vertexBuffer are updated frequently or not to let GL optimise it.
-     * @~chinese ç»™åº•å±‚é©±åŠ¨çš„æ ‡ç¤ºï¼Œè¡¨æ˜VertexBufferæ˜¯å¦ç»å¸¸æ›´æ–°ï¼Œè¿™æ ·å¯ä»¥æ½œåœ¨çš„è®©openGLä¼˜åŒ–å…¶æ€§èƒ½ã€‚
+     * @~chinese ¸øµ×²ãÇı¶¯µÄ±êÊ¾£¬±íÃ÷VertexBufferÊÇ·ñ¾­³£¸üĞÂ£¬ÕâÑù¿ÉÒÔÇ±ÔÚµÄÈÃopenGLÓÅ»¯ÆäĞÔÄÜ¡£
     */
     bool init(int sizePerVertex, int vertexNumber, GLenum usage = GL_STATIC_DRAW);
 protected:
@@ -163,13 +163,13 @@ public:
     /**@~english
     Static getter for shadowCopy.
      * @~chinese 
-     * å¾—åˆ°ShdowCopyçš„å¼€å¯çŠ¶æ€ï¼Œå¦‚æœå¼€å¯ï¼Œé‚£ä¹ˆéœ€è¦åœ¨å†…å­˜ä¿å­˜ä¸€ä»½æ•°æ®æ¥æ›´æ–°openGLèµ„æºã€‚
+     * µÃµ½ShdowCopyµÄ¿ªÆô×´Ì¬£¬Èç¹û¿ªÆô£¬ÄÇÃ´ĞèÒªÔÚÄÚ´æ±£´æÒ»·İÊı¾İÀ´¸üĞÂopenGL×ÊÔ´¡£
     */
     static bool isShadowCopyEnabled() { return _enableShadowCopy; }
     /**@~english
      Static setter for shadowCopy.
      * @~chinese 
-     * è®¾ç½®ShdowCopyçš„å¼€å¯çŠ¶æ€ï¼Œå¦‚æœå¼€å¯ï¼Œé‚£ä¹ˆéœ€è¦åœ¨å†…å­˜ä¿å­˜ä¸€ä»½æ•°æ®æ¥æ›´æ–°openGLèµ„æºã€‚
+     * ÉèÖÃShdowCopyµÄ¿ªÆô×´Ì¬£¬Èç¹û¿ªÆô£¬ÄÇÃ´ĞèÒªÔÚÄÚ´æ±£´æÒ»·İÊı¾İÀ´¸üĞÂopenGL×ÊÔ´¡£
      */
     static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
 };
@@ -181,8 +181,8 @@ public:
 IndexBuffer is an abstraction of low level openGL Buffer Object.
 It used to save an array of indices.
  * @~chinese 
- * ä¸VertexBufferï¼ŒIndexBufferä¹Ÿæ˜¯åº•å±‚openGLç´¢å¼•ç¼“å†²çš„å°è£…ã€‚
- * å®ƒç”¨äºä¿å­˜ç´¢å¼•æ•°ç»„ã€‚
+ * ÓëVertexBuffer£¬IndexBufferÒ²ÊÇµ×²ãopenGLË÷Òı»º³åµÄ·â×°¡£
+ * ËüÓÃÓÚ±£´æË÷ÒıÊı×é¡£
 @js NA
 */
 class CC_DLL IndexBuffer : public Ref
@@ -191,13 +191,13 @@ public:
     /**@~english
     Enum for the type of index, short indices and int indices could be used.
      * @~chinese 
-     * æšä¸¾ç±»å‹çš„æŒ‡æ•°,æ¯ä¸€ä¸ªç´¢å¼•å¯èƒ½æ˜¯shortå’Œintç±»å‹ã€‚
+     * Ã¶¾ÙÀàĞÍµÄÖ¸Êı,Ã¿Ò»¸öË÷Òı¿ÉÄÜÊÇshortºÍintÀàĞÍ¡£
     */
     enum class IndexType
     {
-        /**@~english Short index will be used. @~chinese å°†ä½¿ç”¨shortä½œä¸ºç´¢å¼•ã€‚*/
+        /**@~english Short index will be used. @~chinese ½«Ê¹ÓÃshort×÷ÎªË÷Òı¡£*/
         INDEX_TYPE_SHORT_16,
-        /**@~english Int index will be used. @~chinese å°†ä½¿ç”¨Intä½œä¸ºç´¢å¼•ã€‚*/
+        /**@~english Int index will be used. @~chinese ½«Ê¹ÓÃInt×÷ÎªË÷Òı¡£*/
         INDEX_TYPE_UINT_32
     };
     
@@ -205,55 +205,55 @@ public:
     /**@~english
     Create an instance of IndexBuffer.
      * @~chinese 
-     * åˆ›å»ºä¸€ä¸ªIndexBufferå®ä¾‹ã€‚
+     * ´´½¨Ò»¸öIndexBufferÊµÀı¡£
     @param type @~english type of index.
-     * @~chinese ç´¢å¼•çš„ç±»å‹ã€‚
+     * @~chinese Ë÷ÒıµÄÀàĞÍ¡£
     @param number @~english The number of indices.
-     * @~chinese ç´¢å¼•çš„æ•°é‡ã€‚
+     * @~chinese Ë÷ÒıµÄÊıÁ¿¡£
     @param usage @~english A hint to indicate whether the indexBuffer are updated frequently or not to let GL optimise it.
-     @~chinese ç»™åº•å±‚é©±åŠ¨çš„æ ‡ç¤ºï¼Œè¡¨æ˜indexBufferæ˜¯å¦ç»å¸¸æ›´æ–°ï¼Œè¿™æ ·å¯ä»¥æ½œåœ¨çš„è®©openGLä¼˜åŒ–å…¶æ€§èƒ½ã€‚
+     @~chinese ¸øµ×²ãÇı¶¯µÄ±êÊ¾£¬±íÃ÷indexBufferÊÇ·ñ¾­³£¸üĞÂ£¬ÕâÑù¿ÉÒÔÇ±ÔÚµÄÈÃopenGLÓÅ»¯ÆäĞÔÄÜ¡£
     */
     static IndexBuffer* create(IndexType type, int number, GLenum usage = GL_STATIC_DRAW);
     /**@~english
     Getter for type of indices.
      * @~chinese 
-     * å¾—åˆ°ç´¢å¼•çš„ç±»å‹ã€‚
+     * µÃµ½Ë÷ÒıµÄÀàĞÍ¡£
     */
     IndexType getType() const;
     /**@~english
     Get the size in bytes for one index, will be 2 for INDEX_TYPE_SHORT_16 and 4 for INDEX_TYPE_UINT_32.
      * @~chinese 
-     * è·å¾—ä¸€ä¸ªç´¢å¼•çš„å¤§å°(ä»¥å­—èŠ‚ä¸ºå•ä½ï¼‰,shortç±»å‹çš„è¿”å›2ï¼Œintç±»å‹çš„è¿”å›4ã€‚
+     * »ñµÃÒ»¸öË÷ÒıµÄ´óĞ¡(ÒÔ×Ö½ÚÎªµ¥Î»£©,shortÀàĞÍµÄ·µ»Ø2£¬intÀàĞÍµÄ·µ»Ø4¡£
     */
     int getSizePerIndex() const;
     /**@~english
     Get the number of indices.
      * @~chinese 
-     * å¾—åˆ°ç´¢å¼•çš„æ•°é‡ã€‚
+     * µÃµ½Ë÷ÒıµÄÊıÁ¿¡£
     */
     int getIndexNumber() const;
     /**@~english
     Update all or part of indices data, if the range specified exceeds the vertex buffer, it will be clipped.
      * @~chinese 
-     * æ›´æ–°æ‰€æœ‰æˆ–éƒ¨åˆ†æŒ‡æ•°æ•°æ®,å¦‚æœæŒ‡å®šçš„èŒƒå›´è¶…è¿‡äº†é¡¶ç‚¹ç¼“å†²åŒº,å®ƒå°†è¢«æˆªæ–­ã€‚
+     * ¸üĞÂËùÓĞ»ò²¿·ÖÖ¸ÊıÊı¾İ,Èç¹ûÖ¸¶¨µÄ·¶Î§³¬¹ıÁË¶¥µã»º³åÇø,Ëü½«±»½Ø¶Ï¡£
     @param indices @~english The pointer of the index data.
-     * @~chinese ç´¢å¼•æ•°æ®çš„æŒ‡é’ˆã€‚
+     * @~chinese Ë÷ÒıÊı¾İµÄÖ¸Õë¡£
     @param count @~english The number of indices to update.
-     * @~chinese è¦æ›´æ–°çš„ç´¢å¼•ä¸ªæ•°.
+     * @~chinese Òª¸üĞÂµÄË÷Òı¸öÊı.
     @param begin @~english The start index to update.
-     * @~chinese ç¬¬ä¸€ä¸ªè¦æ›´æ–°çš„ç´¢å¼•ä½ç½®ã€‚
+     * @~chinese µÚÒ»¸öÒª¸üĞÂµÄË÷ÒıÎ»ÖÃ¡£
     */
     bool updateIndices(const void* indices, int count, int begin);
     /**@~english
     Get the size in bytes of the array of indices.
      * @~chinese 
-     * å¾—åˆ°æ‰€æœ‰ç´¢å¼•çš„å¤§å°ï¼Œä»¥å­—èŠ‚ä¸ºå•ä½ã€‚
+     * µÃµ½ËùÓĞË÷ÒıµÄ´óĞ¡£¬ÒÔ×Ö½ÚÎªµ¥Î»¡£
     */
     int getSize() const;
     /**@~english
     Get the openGL handle for index buffer.
      * @~chinese 
-     * è·å¾—å†…éƒ¨openGLå¥æŸ„ã€‚
+     * »ñµÃÄÚ²¿openGL¾ä±ú¡£
     */
     GLuint getVBO() const;
 
@@ -261,25 +261,25 @@ protected:
     /**@~english
     Constructor.
      * @~chinese 
-     * æ„é€ å‡½æ•°ã€‚
+     * ¹¹Ôìº¯Êı¡£
     */
     IndexBuffer();
     /**@~english
     Destructor.
      * @~chinese 
-     * ææ„å‡½æ•°ã€‚
+     * Îö¹¹º¯Êı¡£
     */
     virtual ~IndexBuffer();
     /**@~english
     Init the storage of IndexBuffer.
      * @~chinese 
-     * åˆå§‹åŒ–IndexBufferçš„å­˜å‚¨ã€‚
+     * ³õÊ¼»¯IndexBufferµÄ´æ´¢¡£
     @param type @~english type of index.
-     * @~chinese ç´¢å¼•çš„ç±»å‹ã€‚
+     * @~chinese Ë÷ÒıµÄÀàĞÍ¡£
     @param number @~english The number of indices.
-     * @~chinese ç´¢å¼•çš„æ•°é‡ã€‚
+     * @~chinese Ë÷ÒıµÄÊıÁ¿¡£
     @param usage @~english A hint to indicate whether the indexBuffer are updated frequently or not to let GL optimise it.
-     @~chinese ç»™åº•å±‚é©±åŠ¨çš„æ ‡ç¤ºï¼Œè¡¨æ˜indexBufferæ˜¯å¦ç»å¸¸æ›´æ–°ï¼Œè¿™æ ·å¯ä»¥æ½œåœ¨çš„è®©openGLä¼˜åŒ–å…¶æ€§èƒ½ã€‚
+     @~chinese ¸øµ×²ãÇı¶¯µÄ±êÊ¾£¬±íÃ÷indexBufferÊÇ·ñ¾­³£¸üĞÂ£¬ÕâÑù¿ÉÒÔÇ±ÔÚµÄÈÃopenGLÓÅ»¯ÆäĞÔÄÜ¡£
     */
     bool init(IndexType type, int number, GLenum usage = GL_STATIC_DRAW);
     
@@ -325,13 +325,13 @@ public:
     /**@~english
     Static getter for shadowCopy.
      * @~chinese 
-     * å¾—åˆ°ShdowCopyçš„å¼€å¯çŠ¶æ€ï¼Œå¦‚æœå¼€å¯ï¼Œé‚£ä¹ˆéœ€è¦åœ¨å†…å­˜ä¿å­˜ä¸€ä»½æ•°æ®æ¥æ›´æ–°openGLèµ„æºã€‚
+     * µÃµ½ShdowCopyµÄ¿ªÆô×´Ì¬£¬Èç¹û¿ªÆô£¬ÄÇÃ´ĞèÒªÔÚÄÚ´æ±£´æÒ»·İÊı¾İÀ´¸üĞÂopenGL×ÊÔ´¡£
     */
     static bool isShadowCopyEnabled() { return _enableShadowCopy; }
     /**@~english
      Static setter for shadowCopy.
      * @~chinese 
-     * è®¾ç½®ShdowCopyçš„å¼€å¯çŠ¶æ€ï¼Œå¦‚æœå¼€å¯ï¼Œé‚£ä¹ˆéœ€è¦åœ¨å†…å­˜ä¿å­˜ä¸€ä»½æ•°æ®æ¥æ›´æ–°openGLèµ„æºã€‚
+     * ÉèÖÃShdowCopyµÄ¿ªÆô×´Ì¬£¬Èç¹û¿ªÆô£¬ÄÇÃ´ĞèÒªÔÚÄÚ´æ±£´æÒ»·İÊı¾İÀ´¸üĞÂopenGL×ÊÔ´¡£
      */
     static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
 };

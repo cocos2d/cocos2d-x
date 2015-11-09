@@ -40,7 +40,7 @@ NS_CC_BEGIN
 
 /** @class ActionInstant
  * @brief @~english Instant actions are immediate actions. They don't have a duration like the ActionInterval actions.
- * @~chinese å³æ—¶åŠ¨ä½œæ˜¯ä¼šç«‹å³è¢«æ‰§è¡Œçš„åŠ¨ä½œã€‚ä»–ä»¬æ²¡æœ‰æŒç»­æ—¶é—´åŠ¨ä½œï¼ˆActionIntervalï¼‰çš„æŒç»­æ—¶é—´å±æ€§ã€‚
+ * @~chinese ¼´Ê±¶¯×÷ÊÇ»áÁ¢¼´±»Ö´ĞĞµÄ¶¯×÷¡£ËûÃÇÃ»ÓĞ³ÖĞøÊ±¼ä¶¯×÷£¨ActionInterval£©µÄ³ÖĞøÊ±¼äÊôĞÔ¡£
  **/
 class CC_DLL ActionInstant : public FiniteTimeAction //<NSCopying>
 {
@@ -69,17 +69,17 @@ public:
 
 /** @class Show
  * @brief @~english Show the node instantly.
- * @~chinese æ˜¾ç¤ºåŠ¨ä½œç”¨æ¥ç«‹å³æ˜¾ç¤ºä¸€ä¸ªèŠ‚ç‚¹ã€‚
+ * @~chinese ÏÔÊ¾¶¯×÷ÓÃÀ´Á¢¼´ÏÔÊ¾Ò»¸ö½Úµã¡£
  **/
 class CC_DLL Show : public ActionInstant
 {
 public:
     /** @~english Allocates and initializes the action.
      *
-     * @~chinese åˆ›å»ºå¹¶åˆå§‹åŒ–åŠ¨ä½œã€‚
+     * @~chinese ´´½¨²¢³õÊ¼»¯¶¯×÷¡£
      * 
      * @return @~english  An autoreleased Show object.
-     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„ShowåŠ¨ä½œå¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄShow¶¯×÷¶ÔÏó¡£
      */
     static Show * create();
 
@@ -100,17 +100,17 @@ private:
 
 /** @class Hide
  * @brief @~english Hide the node.
- * @~chinese éšè—åŠ¨ä½œç”¨æ¥ç«‹å³éšè—ä¸€ä¸ªèŠ‚ç‚¹
+ * @~chinese Òş²Ø¶¯×÷ÓÃÀ´Á¢¼´Òş²ØÒ»¸ö½Úµã
  */
 class CC_DLL Hide : public ActionInstant
 {
 public:
     /** @~english Allocates and initializes the action.
      *
-     * @~chinese åˆ›å»ºå¹¶åˆå§‹åŒ–åŠ¨ä½œã€‚
+     * @~chinese ´´½¨²¢³õÊ¼»¯¶¯×÷¡£
      * 
      * @return @~english An autoreleased Hide object.
-     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„HideåŠ¨ä½œå¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄHide¶¯×÷¶ÔÏó¡£
      */
     static Hide * create();
 
@@ -131,17 +131,17 @@ private:
 
 /** @class ToggleVisibility
  * @brief @~english Toggles the visibility of a node.
- * @~chinese ToggleVisibilityåŠ¨ä½œç”¨æ¥åˆ‡æ¢ä¸€ä¸ªèŠ‚ç‚¹çš„å¯è§æ€§ã€‚
+ * @~chinese ToggleVisibility¶¯×÷ÓÃÀ´ÇĞ»»Ò»¸ö½ÚµãµÄ¿É¼ûĞÔ¡£
  */
 class CC_DLL ToggleVisibility : public ActionInstant
 {
 public:
     /** @~english Allocates and initializes the action.
      *
-     * @~chinese åˆ›å»ºå¹¶åˆå§‹åŒ–åŠ¨ä½œã€‚
+     * @~chinese ´´½¨²¢³õÊ¼»¯¶¯×÷¡£
      * 
      * @return @~english An autoreleased ToggleVisibility object.
-     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„ToggleVisibilityåŠ¨ä½œå¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄToggleVisibility¶¯×÷¶ÔÏó¡£
      */
     static ToggleVisibility * create();
 
@@ -162,19 +162,19 @@ private:
 
 /** @class RemoveSelf
  * @brief @~english Remove the node.
- * @~chinese RemoveSelfåŠ¨ä½œç”¨æ¥åˆ é™¤æ‰§è¡ŒåŠ¨ä½œçš„èŠ‚ç‚¹ã€‚
+ * @~chinese RemoveSelf¶¯×÷ÓÃÀ´É¾³ıÖ´ĞĞ¶¯×÷µÄ½Úµã¡£
  */
 class CC_DLL RemoveSelf : public ActionInstant
 {
 public:
     /** @~english Create the action.
      *
-     * @~chinese åˆ›å»ºåŠ¨ä½œã€‚
+     * @~chinese ´´½¨¶¯×÷¡£
      * 
      * @param isNeedCleanUp @~english Is need to clean up, the default value is true.
-     * @~chinese æ˜¯å¦éœ€è¦æ¸…ç†ï¼Œé»˜è®¤å€¼æ˜¯trueã€‚
+     * @~chinese ÊÇ·ñĞèÒªÇåÀí£¬Ä¬ÈÏÖµÊÇtrue¡£
      * @return @~english An autoreleased RemoveSelf object.
-     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„RemoveSelfåŠ¨ä½œå¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄRemoveSelf¶¯×÷¶ÔÏó¡£
      */
     static RemoveSelf * create(bool isNeedCleanUp = true);
 
@@ -189,7 +189,7 @@ CC_CONSTRUCTOR_ACCESS:
     RemoveSelf() : _isNeedCleanUp(true){}
     virtual ~RemoveSelf(){}
 
-    /** @~english init the action  @~chinese åˆå§‹åŒ–åŠ¨ä½œ */
+    /** @~english init the action  @~chinese ³õÊ¼»¯¶¯×÷ */
     bool init(bool isNeedCleanUp);
 
 protected:
@@ -201,7 +201,7 @@ private:
 
 /** @class FlipX
  * @brief @~english Flips the sprite horizontally.
- * @~chinese FlipXå¯ä»¥ç«‹å³æ°´å¹³ç¿»è½¬ä¸€ä¸ªç²¾çµã€‚
+ * @~chinese FlipX¿ÉÒÔÁ¢¼´Ë®Æ½·­×ªÒ»¸ö¾«Áé¡£
  * @since v0.99.0
  */
 class CC_DLL FlipX : public ActionInstant
@@ -209,12 +209,12 @@ class CC_DLL FlipX : public ActionInstant
 public:
     /** @~english Create the action.
      *
-     * @~chinese åˆ›å»ºåŠ¨ä½œã€‚
+     * @~chinese ´´½¨¶¯×÷¡£
      * 
      * @param x @~english Flips the sprite horizontally if true.
-     * @~chinese å¦‚æœä¸ºtrueåˆ™æ°´å¹³ç¿»è½¬ç²¾çµï¼Œå€¼ä¸ºfalseæ—¶åˆ™æ¢å¤ç²¾çµåŸå§‹çŠ¶æ€ã€‚
+     * @~chinese Èç¹ûÎªtrueÔòË®Æ½·­×ª¾«Áé£¬ÖµÎªfalseÊ±Ôò»Ö¸´¾«ÁéÔ­Ê¼×´Ì¬¡£
      * @return @~english  An autoreleased FlipX object.
-     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„FlipXå¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄFlipX¶ÔÏó¡£
      */
     static FlipX * create(bool x);
 
@@ -229,7 +229,7 @@ CC_CONSTRUCTOR_ACCESS:
     FlipX() :_flipX(false) {}
     virtual ~FlipX() {}
 
-    /** @~english init the action  @~chinese åˆå§‹åŒ–åŠ¨ä½œ */
+    /** @~english init the action  @~chinese ³õÊ¼»¯¶¯×÷ */
     bool initWithFlipX(bool x);
 
 protected:
@@ -241,7 +241,7 @@ private:
 
 /** @class FlipY
  * @brief @~english Flips the sprite vertically.
- * @~chinese FlipYå¯ä»¥ç«‹å³å‚ç›´ç¿»è½¬ä¸€ä¸ªç²¾çµã€‚
+ * @~chinese FlipY¿ÉÒÔÁ¢¼´´¹Ö±·­×ªÒ»¸ö¾«Áé¡£
  * @since v0.99.0
  */
 class CC_DLL FlipY : public ActionInstant
@@ -249,12 +249,12 @@ class CC_DLL FlipY : public ActionInstant
 public:
     /** @~english Create the action.
      *
-     * @~chinese åˆ›å»ºåŠ¨ä½œã€‚
+     * @~chinese ´´½¨¶¯×÷¡£
      * 
      * @param y @~english Flips the sprite vertically if true.
-     * @~chinese å¦‚æœä¸ºtrueåˆ™å‚ç›´ç¿»è½¬ç²¾çµï¼Œå€¼ä¸ºfalseæ—¶åˆ™æ¢å¤ç²¾çµåŸå§‹çŠ¶æ€ã€‚
+     * @~chinese Èç¹ûÎªtrueÔò´¹Ö±·­×ª¾«Áé£¬ÖµÎªfalseÊ±Ôò»Ö¸´¾«ÁéÔ­Ê¼×´Ì¬¡£
      * @return @~english An autoreleased FlipY object.
-     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„FlipYå¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄFlipY¶ÔÏó¡£
      */
     static FlipY * create(bool y);
 
@@ -269,7 +269,7 @@ CC_CONSTRUCTOR_ACCESS:
     FlipY() :_flipY(false) {}
     virtual ~FlipY() {}
 
-    /** @~english init the action  @~chinese åˆå§‹åŒ–åŠ¨ä½œ */
+    /** @~english init the action  @~chinese ³õÊ¼»¯¶¯×÷ */
     bool initWithFlipY(bool y);
 
 protected:
@@ -281,7 +281,7 @@ private:
 
 /** @class Place
  * @brief @~english Places the node in a certain position.
- * @~chinese PlaceåŠ¨ä½œå¯ä»¥å°†èŠ‚ç‚¹æ”¾ç½®åœ¨ç‰¹å®šä½ç½®ã€‚
+ * @~chinese Place¶¯×÷¿ÉÒÔ½«½Úµã·ÅÖÃÔÚÌØ¶¨Î»ÖÃ¡£
  */
 class CC_DLL Place : public ActionInstant //<NSCopying>
 {
@@ -289,12 +289,12 @@ public:
 
     /** @~english Creates a Place action with a position.
      *
-     * @~chinese ç”¨ä½ç½®å‚æ•°åˆ›å»ºä¸€ä¸ªåŠ¨ä½œã€‚
+     * @~chinese ÓÃÎ»ÖÃ²ÎÊı´´½¨Ò»¸ö¶¯×÷¡£
      * 
      * @param pos  @~english A certain position.
-     * @~chinese ä¸€ä¸ªç‰¹å®šçš„ä½ç½®ã€‚
+     * @~chinese Ò»¸öÌØ¶¨µÄÎ»ÖÃ¡£
      * @return @~english  An autoreleased Place object.
-     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„Placeå¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄPlace¶ÔÏó¡£
      */
     static Place * create(const Vec2& pos);
 
@@ -309,7 +309,7 @@ CC_CONSTRUCTOR_ACCESS:
     Place(){}
     virtual ~Place(){}
 
-    /** @~english Initializes a Place action with a position  @~chinese ç”¨ä¸€ä¸ªä½ç½®åˆå§‹åŒ–åŠ¨ä½œ */
+    /** @~english Initializes a Place action with a position  @~chinese ÓÃÒ»¸öÎ»ÖÃ³õÊ¼»¯¶¯×÷ */
     bool initWithPosition(const Vec2& pos);
 
 protected:
@@ -322,33 +322,33 @@ private:
 
 /** @class CallFunc
  * @brief @~english Calls a 'callback'.
- * @~chinese è°ƒç”¨ä¸€ä¸ªå›è°ƒå‡½æ•°ã€‚
+ * @~chinese µ÷ÓÃÒ»¸ö»Øµ÷º¯Êı¡£
  */
 class CC_DLL CallFunc : public ActionInstant //<NSCopying>
 {
 public:
     /** @~english Creates the action with the callback of type `std::function<void()>`.
      * This is the preferred way to create the callback.
-     * When this funtion bound in js or lua ,the input param will be changed.
+     * When this function bound in js or lua ,the input param will be changed.
      * In lua:local create(local funcID).
      *
-     * @~chinese ç”¨ä¸€ä¸ªå›è°ƒå‡½æ•°åˆ›å»ºCallFuncåŠ¨ä½œï¼Œå›è°ƒå‡½æ•°çš„ç±»å‹æ˜¯`std::function<void()>`ã€‚
-     * è¿™æ˜¯åˆ›å»ºå›è°ƒå‡½æ•°çš„é¦–é€‰æ–¹æ³•ã€‚
-     * è¿™ä¸ªAPIç»‘å®šåœ¨jsæˆ–luaä¸­ï¼Œè¾“å…¥å‚æ•°ä¼šè¢«æ”¹å˜ã€‚
+     * @~chinese ÓÃÒ»¸ö»Øµ÷º¯Êı´´½¨CallFunc¶¯×÷£¬»Øµ÷º¯ÊıµÄÀàĞÍÊÇ`std::function<void()>`¡£
+     * ÕâÊÇ´´½¨»Øµ÷º¯ÊıµÄÊ×Ñ¡·½·¨¡£
+     * Õâ¸öAPI°ó¶¨ÔÚjs»òluaÖĞ£¬ÊäÈë²ÎÊı»á±»¸Ä±ä¡£
      * lua: local create(local funcID).
      * 
      * @param func  @~english A callback function need to be executed.
-     * @~chinese éœ€è¦è¢«æ‰§è¡Œçš„å›è°ƒå‡½æ•°ã€‚
+     * @~chinese ĞèÒª±»Ö´ĞĞµÄ»Øµ÷º¯Êı¡£
      * @return @~english  An autoreleased CallFunc object.
-     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„CallFuncå¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄCallFunc¶ÔÏó¡£
      */
     static CallFunc * create(const std::function<void()>& func);
 
     /** @~english Creates the action with the callback
      * typedef void (Ref::*SEL_CallFunc)();
-     * @~chinese ç”¨ä¸‹é¢çš„å‡½æ•°ç±»å‹åˆ›å»ºCallFuncåŠ¨ä½œ
+     * @~chinese ÓÃÏÂÃæµÄº¯ÊıÀàĞÍ´´½¨CallFunc¶¯×÷
      * typedef void (Ref::*SEL_CallFunc)();
-     * @deprecated @~english Use the std::function API instead. @~chinese ä½¿ç”¨`std::function`APIæ›¿ä»£
+     * @deprecated @~english Use the std::function API instead. @~chinese Ê¹ÓÃ`std::function`APIÌæ´ú
      * @js NA
      * @lua NA
      */
@@ -356,16 +356,16 @@ public:
 
 public:
     /** @~english Executes the callback.
-     * @~chinese æ‰§è¡Œå›è°ƒã€‚
+     * @~chinese Ö´ĞĞ»Øµ÷¡£
      */
     virtual void execute();
 
     /** @~english Get the selector target.
      *
-     * @~chinese è·å–å›è°ƒå‡½æ•°çš„æ‰§è¡Œä¸»ä½“ã€‚
+     * @~chinese »ñÈ¡»Øµ÷º¯ÊıµÄÖ´ĞĞÖ÷Ìå¡£
      * 
      * @return @~english The selector target.
-     * @~chinese å›è°ƒå‡½æ•°çš„æ‰§è¡Œä¸»ä½“ã€‚
+     * @~chinese »Øµ÷º¯ÊıµÄÖ´ĞĞÖ÷Ìå¡£
      */
     inline Ref* getTargetCallback()
     {
@@ -374,10 +374,10 @@ public:
 
     /** @~english Set the selector target.
      *
-     * @~chinese è®¾ç½®å›è°ƒå‡½æ•°çš„æ‰§è¡Œä¸»ä½“ã€‚
+     * @~chinese ÉèÖÃ»Øµ÷º¯ÊıµÄÖ´ĞĞÖ÷Ìå¡£
      * 
      * @param sel @~english The selector target.
-     * @~chinese å›è°ƒå‡½æ•°çš„æ‰§è¡Œä¸»ä½“ã€‚
+     * @~chinese »Øµ÷º¯ÊıµÄÖ´ĞĞÖ÷Ìå¡£
      */
     inline void setTargetCallback(Ref* sel)
     {
@@ -406,20 +406,20 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** @~english Initializes the action with the callback
      * typedef void (Ref::*SEL_CallFunc)();
-     * @~chinese ç”¨ä¸‹é¢çš„å‡½æ•°ç±»å‹åˆå§‹åŒ–æ“CallFuncåŠ¨ä½œ
+     * @~chinese ÓÃÏÂÃæµÄº¯ÊıÀàĞÍ³õÊ¼»¯²ÙCallFunc¶¯×÷
      * typedef void (Ref::*SEL_CallFunc)();
      * @deprecated Use the std::function API instead.
      */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target);
     
     /** @~english initializes the action with the `std::function<void()>`
-     * @~chinese ç”¨`std::function<void()>`å›è°ƒå‡½æ•°åˆå§‹åŒ–åŠ¨ä½œ
+     * @~chinese ÓÃ`std::function<void()>`»Øµ÷º¯Êı³õÊ¼»¯¶¯×÷
      * @lua NA
      */
     bool initWithFunction(const std::function<void()>& func);
 
 protected:
-    /** @~english Target that will be called  @~chinese å›è°ƒå‡½æ•°çš„æ‰§è¡Œä¸»ä½“ */
+    /** @~english Target that will be called  @~chinese »Øµ÷º¯ÊıµÄÖ´ĞĞÖ÷Ìå */
     Ref*   _selectorTarget;
 
     union
@@ -428,7 +428,7 @@ protected:
         SEL_CallFuncN    _callFuncN;
     };
     
-    /** @~english function that will be called  @~chinese å›è°ƒå‡½æ•°*/
+    /** @~english function that will be called  @~chinese »Øµ÷º¯Êı*/
     std::function<void()> _function;
 
 private:
@@ -437,7 +437,7 @@ private:
 
 /** @class CallFuncN
  * @brief @~english Calls a 'callback' with the node as the first argument. N means Node.
- * @~chinese ä½¿ç”¨èŠ‚ç‚¹ä½œä¸ºç¬¬ä¸€ä¸ªå‚æ•°è°ƒç”¨å›è°ƒå‡½æ•°çš„CallFuncNåŠ¨ä½œã€‚Nä»£è¡¨èŠ‚ç‚¹ã€‚
+ * @~chinese Ê¹ÓÃ½Úµã×÷ÎªµÚÒ»¸ö²ÎÊıµ÷ÓÃ»Øµ÷º¯ÊıµÄCallFuncN¶¯×÷¡£N´ú±í½Úµã¡£
  * @js NA
  */
 class CC_DLL CallFuncN : public CallFunc
@@ -446,19 +446,19 @@ public:
     /** @~english Creates the action with the callback of type `std::function<void()>`.
      * This is the preferred way to create the callback.
      *
-     * @~chinese ç”¨ä¸€ä¸ªå›è°ƒå‡½æ•°åˆ›å»ºCallFuncåŠ¨ä½œï¼Œå›è°ƒå‡½æ•°çš„ç±»å‹æ˜¯`std::function<void()>`ã€‚
-     * è¿™æ˜¯åˆ›å»ºå›è°ƒçš„é¦–é€‰æ–¹æ³•ã€‚
+     * @~chinese ÓÃÒ»¸ö»Øµ÷º¯Êı´´½¨CallFunc¶¯×÷£¬»Øµ÷º¯ÊıµÄÀàĞÍÊÇ`std::function<void()>`¡£
+     * ÕâÊÇ´´½¨»Øµ÷µÄÊ×Ñ¡·½·¨¡£
      * 
      * @param func  @~english A callback function need to be excuted.
-     * @~chinese å°†ä¼šè¢«æ‰§è¡Œçš„å›è°ƒå‡½æ•°ã€‚
+     * @~chinese ½«»á±»Ö´ĞĞµÄ»Øµ÷º¯Êı¡£
      * @return @~english  An autoreleased CallFuncN object.
-     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„CallFuncNå¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄCallFuncN¶ÔÏó¡£
      */
     static CallFuncN * create(const std::function<void(Node*)>& func);
 
     /** @~english Creates the action with the callback.
      * typedef void (Ref::*SEL_CallFuncN)(Node*);
-     * @~chinese ç”¨ä¸‹é¢çš„æ–¹æ³•åˆ›å»ºCallFuncNåŠ¨ä½œã€‚
+     * @~chinese ÓÃÏÂÃæµÄ·½·¨´´½¨CallFuncN¶¯×÷¡£
      * typedef void (Ref::*SEL_CallFuncN)(Node*);
      * @deprecated Use the std::function API instead.
      */
@@ -474,19 +474,19 @@ CC_CONSTRUCTOR_ACCESS:
     CallFuncN():_functionN(nullptr){}
     virtual ~CallFuncN(){}
 
-    /** @~english initializes the action with the `std::function<void(Node*)>`  @~chinese ç”¨`std::function<void(Node*)>`åˆå§‹åŒ–åŠ¨ä½œ */
+    /** @~english initializes the action with the `std::function<void(Node*)>`  @~chinese ÓÃ`std::function<void(Node*)>`³õÊ¼»¯¶¯×÷ */
     bool initWithFunction(const std::function<void(Node*)>& func);
     
     /** @~english initializes the action with the callback
      * typedef void (Ref::*SEL_CallFuncN)(Node*);
-     * @~chinese ç”¨ä¸‹é¢çš„å›è°ƒç±»å‹åˆå§‹åŒ–åŠ¨ä½œ
+     * @~chinese ÓÃÏÂÃæµÄ»Øµ÷ÀàĞÍ³õÊ¼»¯¶¯×÷
      * typedef void (Ref::*SEL_CallFuncN)(Node*);
      * @deprecated Use the std::function API instead.
      */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target, SEL_CallFuncN selector);
 
 protected:
-    /** @~english function that will be called with the "sender" as the 1st argument  @~chinese å›è°ƒå‡½æ•°ï¼Œå°†åŒ…å«`sender`ä½œä¸ºç¬¬ä¸€ä¸ªå‚æ•° */
+    /** @~english function that will be called with the "sender" as the 1st argument  @~chinese »Øµ÷º¯Êı£¬½«°üº¬`sender`×÷ÎªµÚÒ»¸ö²ÎÊı */
     std::function<void(Node*)> _functionN;
 
 private:
@@ -497,8 +497,8 @@ private:
  * @deprecated Please use CallFuncN instead.
  * @brief @~english Calls a 'callback' with the node as the first argument and the 2nd argument is data.
  * ND means: Node and Data. Data is void *, so it could be anything.
- * @~chinese ä½¿ç”¨èŠ‚ç‚¹ä½œä¸ºç¬¬ä¸€ä¸ªå‚æ•°ï¼Œæ•°æ®ä½œä¸ºç¬¬äºŒä¸ªå‚æ•°æ¥è°ƒç”¨å›è°ƒçš„__CCCallFuncNDåŠ¨ä½œã€‚
- * NDçš„æ„æ€æ˜¯ï¼šèŠ‚ç‚¹å’Œæ•°æ®ã€‚æ•°æ®ç±»å‹æ˜¯void *ï¼Œæ‰€ä»¥å®ƒå¯ä»¥æ˜¯ä»»ä½•ä¸œè¥¿ã€‚
+ * @~chinese Ê¹ÓÃ½Úµã×÷ÎªµÚÒ»¸ö²ÎÊı£¬Êı¾İ×÷ÎªµÚ¶ş¸ö²ÎÊıÀ´µ÷ÓÃ»Øµ÷µÄ__CCCallFuncND¶¯×÷¡£
+ * NDµÄÒâË¼ÊÇ£º½ÚµãºÍÊı¾İ¡£Êı¾İÀàĞÍÊÇvoid *£¬ËùÒÔËü¿ÉÒÔÊÇÈÎºÎ¶«Î÷¡£
  * @js NA
  */
 class CC_DLL  __CCCallFuncND : public CallFunc
@@ -506,16 +506,16 @@ class CC_DLL  __CCCallFuncND : public CallFunc
 public:
     /** @~english Creates the action with the callback and the data to pass as an argument.
      *
-     * @~chinese ä»¥ç›®æ ‡èŠ‚ç‚¹ï¼Œå›è°ƒå‡½æ•°å’Œæ•°æ®ä½œä¸ºå‚æ•°æ¥åˆ›å»ºåŠ¨ä½œã€‚
+     * @~chinese ÒÔÄ¿±ê½Úµã£¬»Øµ÷º¯ÊıºÍÊı¾İ×÷Îª²ÎÊıÀ´´´½¨¶¯×÷¡£
      * 
      * @param target    @~english A certain target.
-     * @~chinese ç›®æ ‡èŠ‚ç‚¹ã€‚
+     * @~chinese Ä¿±ê½Úµã¡£
      * @param selector  @~english The callback need to be excuted.
-     * @~chinese å›è°ƒå‡½æ•°ã€‚
+     * @~chinese »Øµ÷º¯Êı¡£
      * @param d @~english Data, is void* type.
-     * @~chinese æ•°æ®ï¼Œç±»å‹æ˜¯void *ã€‚
+     * @~chinese Êı¾İ£¬ÀàĞÍÊÇvoid *¡£
      * @return @~english An autoreleased __CCCallFuncND object.
-     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„__CCCallFuncNDå¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄ__CCCallFuncND¶ÔÏó¡£
      */
     CC_DEPRECATED_ATTRIBUTE static __CCCallFuncND * create(Ref* target, SEL_CallFuncND selector, void* d);
     
@@ -529,7 +529,7 @@ CC_CONSTRUCTOR_ACCESS:
     __CCCallFuncND() {}
     virtual ~__CCCallFuncND() {}
     
-    /** @~english initializes the action with the callback and the data to pass as an argument  @~chinese ä»¥ç›®æ ‡èŠ‚ç‚¹ï¼Œå›è°ƒå‡½æ•°å’Œæ•°æ®ä½œä¸ºå‚æ•°æ¥åˆå§‹åŒ–åŠ¨ä½œ */
+    /** @~english initializes the action with the callback and the data to pass as an argument  @~chinese ÒÔÄ¿±ê½Úµã£¬»Øµ÷º¯ÊıºÍÊı¾İ×÷Îª²ÎÊıÀ´³õÊ¼»¯¶¯×÷ */
     bool initWithTarget(Ref* target, SEL_CallFuncND selector, void* d);
 
 protected:
@@ -544,7 +544,7 @@ private:
 /** @class __CCCallFuncO
  * @deprecated Please use CallFuncN instead.
  * @brief @~english Calls a 'callback' with an object as the first argument. O means Object.
- * @~chinese ä»¥ä¸€ä¸ªå¯¹è±¡ä½œä¸ºå›è°ƒå‡½æ•°çš„ç¬¬ä¸€ä¸ªå‚æ•°çš„__CCCallFuncOåŠ¨ä½œã€‚Oæ„å‘³ç€å¯¹è±¡ã€‚
+ * @~chinese ÒÔÒ»¸ö¶ÔÏó×÷Îª»Øµ÷º¯ÊıµÄµÚÒ»¸ö²ÎÊıµÄ__CCCallFuncO¶¯×÷¡£OÒâÎ¶×Å¶ÔÏó¡£
  * @since v0.99.5
  * @js NA
  */
@@ -555,17 +555,17 @@ public:
     /** @~english Creates the action with the callback.
      * typedef void (Ref::*SEL_CallFuncO)(Ref*);
      *
-     * @~chinese ä½¿ç”¨ç›®æ ‡èŠ‚ç‚¹ï¼Œå›è°ƒå‡½æ•°å’Œå¯¹è±¡åˆ›å»ºåŠ¨ä½œ
+     * @~chinese Ê¹ÓÃÄ¿±ê½Úµã£¬»Øµ÷º¯ÊıºÍ¶ÔÏó´´½¨¶¯×÷
      * typedef void (Ref::*SEL_CallFuncO)(Ref*);
      * 
      * @param target    @~english A certain target.
-     * @~chinese ä¸€ä¸ªç‰¹å®šçš„ç›®æ ‡èŠ‚ç‚¹ã€‚
+     * @~chinese Ò»¸öÌØ¶¨µÄÄ¿±ê½Úµã¡£
      * @param selector  @~english The callback need to be excuted.
-     * @~chinese å›è°ƒå‡½æ•°ã€‚
+     * @~chinese »Øµ÷º¯Êı¡£
      * @param object    @~english An object as the callback's first argument.
-     * @~chinese ä½œä¸ºå›è°ƒå‡½æ•°çš„ç¬¬ä¸€ä¸ªå‚æ•°çš„å¯¹è±¡ã€‚
+     * @~chinese ×÷Îª»Øµ÷º¯ÊıµÄµÚÒ»¸ö²ÎÊıµÄ¶ÔÏó¡£
      * @return @~english An autoreleased __CCCallFuncO object.
-     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„ __CCCallFuncOå¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄ __CCCallFuncO¶ÔÏó¡£
      */
     CC_DEPRECATED_ATTRIBUTE static __CCCallFuncO * create(Ref* target, SEL_CallFuncO selector, Ref* object);
     //

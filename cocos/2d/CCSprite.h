@@ -82,28 +82,28 @@ struct transformValues_;
  *
  * The default anchorPoint in Sprite is (0.5, 0.5).
  * @~chinese 
- * Sprite æ˜¯ä¸€ä¸ª2Då›¾åƒèŠ‚ç‚¹(http://en.wikipedia.org/wiki/Sprite_(computer_graphics) ).
+ * Sprite ÊÇÒ»¸ö2DÍ¼Ïñ½Úµã(http://en.wikipedia.org/wiki/Sprite_(computer_graphics) ).
  * 
- * å¯ä»¥ä½¿ç”¨ä¸€ä¸ªå›¾ç‰‡æˆ–è€…å›¾ç‰‡çš„ä¸€ä¸ªçŸ©å½¢åŒºåŸŸæ¥åˆ›å»º Sprite å¯¹è±¡ã€‚
+ * ¿ÉÒÔÊ¹ÓÃÒ»¸öÍ¼Æ¬»òÕßÍ¼Æ¬µÄÒ»¸ö¾ØĞÎÇøÓòÀ´´´½¨ Sprite ¶ÔÏó¡£
  * 
- * ä¸ºäº†ä¼˜åŒ– Sprite çš„æ¸²æŸ“,è¯·éµå¾ªä»¥ä¸‹æœ€ä½³å®ç°:
- * - å°†æ‰€æœ‰çš„ Sprite æ”¾åœ¨åŒä¸€ä¸ª spritesheet ä¸­(http://www.codeandweb.com/what-is-a-sprite-sheet)ã€‚
- * - æ‰€æœ‰çš„ Sprite ä½¿ç”¨ç›¸åŒçš„æ··åˆå‡½æ•°ã€‚
- * - â€¦è¿™æ ·æ¸²æŸ“å™¨å°±ä¼šè‡ªåŠ¨â€œæ‰¹å¤„ç†â€æ‰€æœ‰çš„ Sprite (å°†æ‰€æœ‰çš„ Sprite æ”¾åœ¨ä¸€æ¬¡OpenGLè°ƒç”¨ä¸­æ¸²æŸ“å‡ºæ¥)ã€‚
+ * ÎªÁËÓÅ»¯ Sprite µÄäÖÈ¾,Çë×ñÑ­ÒÔÏÂ×î¼ÑÊµÏÖ:
+ * - ½«ËùÓĞµÄ Sprite ·ÅÔÚÍ¬Ò»¸ö spritesheet ÖĞ(http://www.codeandweb.com/what-is-a-sprite-sheet)¡£
+ * - ËùÓĞµÄ Sprite Ê¹ÓÃÏàÍ¬µÄ»ìºÏº¯Êı¡£
+ * - ¡­ÕâÑùäÖÈ¾Æ÷¾Í»á×Ô¶¯¡°Åú´¦Àí¡±ËùÓĞµÄ Sprite (½«ËùÓĞµÄ Sprite ·ÅÔÚÒ»´ÎOpenGLµ÷ÓÃÖĞäÖÈ¾³öÀ´)¡£
  * 
- * é€šè¿‡å°† Sprite æ”¾å…¥ä¸€ä¸ª SpriteBatchNode çˆ¶èŠ‚ç‚¹ä¸­ï¼Œå¯ä»¥è·å¾—é¢å¤–çš„ 5% ~ 10% çš„æ¸²æŸ“ä¼˜åŒ–ã€‚
- * ä½†æ˜¯è¿™æ ·åšæœ‰ä»¥ä¸‹é™åˆ¶:
- * - åªèƒ½è®¾ç½® SpriteBatchNode èŠ‚ç‚¹çš„åˆ«åï¼Œæ— æ³•ä¸ºæ¯ä¸ª Sprite è®¾ç½®ä¸åŒçš„åˆ«åã€‚
- * - åªèƒ½è®¾ç½® SpriteBatchNode èŠ‚ç‚¹çš„æ··åˆå‡½æ•°ï¼Œæ— æ³•ä¸ºæ¯ä¸ª Sprite è®¾ç½®ä¸åŒçš„æ··åˆå‡½æ•°ã€‚
- * - ä¸æ”¯æŒ ParallaxNodeï¼Œä½†æ˜¯å¯ä»¥ä½¿ç”¨ä»£ç† Sprite æ¥æ¨¡æ‹Ÿã€‚
- * - æ¯ä¸ª Sprite çš„å­èŠ‚ç‚¹åªèƒ½æ˜¯ Sprite æˆ–è€…å…¶å­ç±»çš„å¯¹è±¡ã€‚
+ * Í¨¹ı½« Sprite ·ÅÈëÒ»¸ö SpriteBatchNode ¸¸½ÚµãÖĞ£¬¿ÉÒÔ»ñµÃ¶îÍâµÄ 5% ~ 10% µÄäÖÈ¾ÓÅ»¯¡£
+ * µ«ÊÇÕâÑù×öÓĞÒÔÏÂÏŞÖÆ:
+ * - Ö»ÄÜÉèÖÃ SpriteBatchNode ½ÚµãµÄ±ğÃû£¬ÎŞ·¨ÎªÃ¿¸ö Sprite ÉèÖÃ²»Í¬µÄ±ğÃû¡£
+ * - Ö»ÄÜÉèÖÃ SpriteBatchNode ½ÚµãµÄ»ìºÏº¯Êı£¬ÎŞ·¨ÎªÃ¿¸ö Sprite ÉèÖÃ²»Í¬µÄ»ìºÏº¯Êı¡£
+ * - ²»Ö§³Ö ParallaxNode£¬µ«ÊÇ¿ÉÒÔÊ¹ÓÃ´úÀí Sprite À´Ä£Äâ¡£
+ * - Ã¿¸ö Sprite µÄ×Ó½ÚµãÖ»ÄÜÊÇ Sprite »òÕßÆä×ÓÀàµÄ¶ÔÏó¡£
  * 
- * é»˜è®¤é”šç‚¹(0.5,0.5)ã€‚
+ * Ä¬ÈÏÃªµã(0.5,0.5)¡£
  */
 class CC_DLL Sprite : public Node, public TextureProtocol
 {
 public:
-     /** @~english Sprite invalid index on the SpriteBatchNode.  @~chinese åœ¨ SpriteBatchNode ä¸­çš„æ— æ•ˆç´¢å¼•å€¼ã€‚*/
+     /** @~english Sprite invalid index on the SpriteBatchNode.  @~chinese ÔÚ SpriteBatchNode ÖĞµÄÎŞĞ§Ë÷ÒıÖµ¡£*/
     static const int INDEX_NOT_INITIALIZED = -1;
 
     /// @name Creators
@@ -113,12 +113,12 @@ public:
      * Creates an empty sprite without texture. You can call setTexture method subsequently.
      *
      * @~chinese 
-     * åˆ›å»ºä¸€ä¸ªæ²¡æœ‰çº¹ç†çš„ç©º Spriteã€‚å¯ä»¥åœ¨ç¨åè°ƒç”¨ setTexture æ–¹æ³•è®¾ç½®çº¹ç†ã€‚
+     * ´´½¨Ò»¸öÃ»ÓĞÎÆÀíµÄ¿Õ Sprite¡£¿ÉÒÔÔÚÉÔºóµ÷ÓÃ setTexture ·½·¨ÉèÖÃÎÆÀí¡£
      * 
      * @memberof @~english Sprite
      * @~chinese Sprite
      * @return @~english An autoreleased sprite object.
-     * @~chinese ä¸€ä¸ª Sprite å®ä¾‹ï¼ˆå·²ç»è¢« autoreleseï¼‰ã€‚
+     * @~chinese Ò»¸ö Sprite ÊµÀı£¨ÒÑ¾­±» autorelese£©¡£
      */
     static Sprite* create();
 
@@ -129,14 +129,14 @@ public:
      * and the offset will be (0,0).
      *
      * @~chinese 
-     * ä½¿ç”¨ä¸€ä¸ªå›¾ç‰‡æ–‡ä»¶åˆ›å»º Spriteã€‚
+     * Ê¹ÓÃÒ»¸öÍ¼Æ¬ÎÄ¼ş´´½¨ Sprite¡£
      * 
-     * åˆ›å»ºæˆåŠŸä¹‹åï¼ŒSprite çš„å¤§å°ä¸å›¾ç‰‡å¤§å°ä¸€è‡´ã€‚åç§»é‡ä¸º (0,0)ã€‚
+     * ´´½¨³É¹¦Ö®ºó£¬Sprite µÄ´óĞ¡ÓëÍ¼Æ¬´óĞ¡Ò»ÖÂ¡£Æ«ÒÆÁ¿Îª (0,0)¡£
      * 
      * @param   filename @~english A path to image file, e.g., "scene1/monster.png".
-     * @~chinese å›¾åƒæ–‡ä»¶çš„è·¯å¾„ï¼Œä¾‹å¦‚ï¼š"scene1/monster.png"
+     * @~chinese Í¼ÏñÎÄ¼şµÄÂ·¾¶£¬ÀıÈç£º"scene1/monster.png"
      * @return  @~english An autoreleased sprite object.
-     * @~chinese ä¸€ä¸ª Sprite å®ä¾‹ï¼ˆå·²ç»è¢« autoreleseï¼‰ã€‚
+     * @~chinese Ò»¸ö Sprite ÊµÀı£¨ÒÑ¾­±» autorelese£©¡£
      */
     static Sprite* create(const std::string& filename);
     
@@ -144,12 +144,12 @@ public:
      * Creates a polygon sprite with a polygon info.
      *
      * @~chinese 
-     * ä½¿ç”¨ä¸€ä¸ªPolygonInfoåˆ›å»º Spriteã€‚
+     * Ê¹ÓÃÒ»¸öPolygonInfo´´½¨ Sprite¡£
      * 
      * @param polygonInfo @~english A specified polygon info, you can get that from AutoPolygon.
-     * @~chinese ä¸€ä¸ªæŒ‡å®šçš„polygon infoã€‚ä½ å¯ä»¥ä»AutoPolygonç±»è·å–polygon info.
+     * @~chinese Ò»¸öÖ¸¶¨µÄpolygon info¡£Äã¿ÉÒÔ´ÓAutoPolygonÀà»ñÈ¡polygon info.
      * @return @~english An autoreleased sprite object.
-     * @~chinese ä¸€ä¸ª Sprite å®ä¾‹ï¼ˆå·²ç»è¢« autoreleseï¼‰ã€‚
+     * @~chinese Ò»¸ö Sprite ÊµÀı£¨ÒÑ¾­±» autorelese£©¡£
      */
     static Sprite* create(const PolygonInfo& info);
 
@@ -157,14 +157,14 @@ public:
      * Creates a sprite with an image filename and a rect.
      *
      * @~chinese 
-     * ä½¿ç”¨å›¾ç‰‡æ–‡ä»¶å’ŒæŒ‡å®šçš„çŸ©å½¢åŒºåŸŸåˆ›å»ºä¸€ä¸ª Spriteã€‚
+     * Ê¹ÓÃÍ¼Æ¬ÎÄ¼şºÍÖ¸¶¨µÄ¾ØĞÎÇøÓò´´½¨Ò»¸ö Sprite¡£
      * 
      * @param   filename @~english A path to image file, e.g., "scene1/monster.png".
-     * @~chinese å›¾åƒæ–‡ä»¶çš„è·¯å¾„ï¼Œä¾‹å¦‚ï¼š"scene1/monster.png"
+     * @~chinese Í¼ÏñÎÄ¼şµÄÂ·¾¶£¬ÀıÈç£º"scene1/monster.png"
      * @param   rect     @~english A subrect of the image file.
-     * @~chinese æŒ‡å®šçš„çŸ©å½¢åŒºåŸŸã€‚
+     * @~chinese Ö¸¶¨µÄ¾ØĞÎÇøÓò¡£
      * @return  @~english An autoreleased sprite object.
-     * @~chinese ä¸€ä¸ª Sprite å®ä¾‹ï¼ˆå·²ç»è¢« autoreleseï¼‰ã€‚
+     * @~chinese Ò»¸ö Sprite ÊµÀı£¨ÒÑ¾­±» autorelese£©¡£
      */
     static Sprite* create(const std::string& filename, const Rect& rect);
 
@@ -174,14 +174,14 @@ public:
      * After creation, the rect will be the size of the texture, and the offset will be (0,0).
      *
      * @~chinese 
-     * ä½¿ç”¨æŒ‡å®šçš„çº¹ç†åˆ›å»º Spriteã€‚
+     * Ê¹ÓÃÖ¸¶¨µÄÎÆÀí´´½¨ Sprite¡£
      * 
-     * åˆ›å»ºåï¼ŒSprite çš„å¤§å°ä¸æŒ‡å®šçš„çº¹ç†ä¸€è‡´ï¼Œå¹¶ä¸”åç§»é‡ä¸º (0,0)ã€‚
+     * ´´½¨ºó£¬Sprite µÄ´óĞ¡ÓëÖ¸¶¨µÄÎÆÀíÒ»ÖÂ£¬²¢ÇÒÆ«ÒÆÁ¿Îª (0,0)¡£
      * 
      * @param   texture    @~english A pointer to a Texture2D object.
-     * @~chinese æŒ‡å®šçš„çº¹ç†å¯¹è±¡ã€‚
+     * @~chinese Ö¸¶¨µÄÎÆÀí¶ÔÏó¡£
      * @return  @~english An autoreleased sprite object.
-     * @~chinese ä¸€ä¸ª Sprite å®ä¾‹ï¼ˆå·²ç»è¢« autoreleseï¼‰ã€‚
+     * @~chinese Ò»¸ö Sprite ÊµÀı£¨ÒÑ¾­±» autorelese£©¡£
      */
     static Sprite* createWithTexture(Texture2D *texture);
 
@@ -191,20 +191,20 @@ public:
      * After creation, the offset will be (0,0).
      *
      * @~chinese 
-     * ä½¿ç”¨æŒ‡å®šçš„çº¹ç†ä¸çŸ©å½¢åŒºåŸŸåˆ›å»º Spriteã€‚
+     * Ê¹ÓÃÖ¸¶¨µÄÎÆÀíÓë¾ØĞÎÇøÓò´´½¨ Sprite¡£
      * 
-     * åˆ›å»ºåï¼Œåç§»é‡ä¸º (0,0)ã€‚
+     * ´´½¨ºó£¬Æ«ÒÆÁ¿Îª (0,0)¡£
      * 
      * @param   texture     @~english A pointer to an existing Texture2D object.
      *                      You can use a Texture2D object for many sprites.
-     * @~chinese å·²æœ‰çš„çº¹ç†å¯¹è±¡ã€‚
-     * ä¸€ä¸ªçº¹ç†å¯¹è±¡å¯ä»¥è¢«å¤šä¸ª Sprite ä½¿ç”¨ã€‚
+     * @~chinese ÒÑÓĞµÄÎÆÀí¶ÔÏó¡£
+     * Ò»¸öÎÆÀí¶ÔÏó¿ÉÒÔ±»¶à¸ö Sprite Ê¹ÓÃ¡£
      * @param   rect        @~english Only the contents inside the rect of this texture will be applied for this sprite.
-     * @~chinese æŒ‡å®šçš„çŸ©å½¢åŒºåŸŸã€‚
+     * @~chinese Ö¸¶¨µÄ¾ØĞÎÇøÓò¡£
      * @param   rotated     @~english Whether or not the rect is rotated.
-     * @~chinese æ˜¯å¦æ—‹è½¬ã€‚
+     * @~chinese ÊÇ·ñĞı×ª¡£
      * @return  @~english An autoreleased sprite object.
-     * @~chinese ä¸€ä¸ª Sprite å®ä¾‹ï¼ˆå·²ç»è¢« autoreleseï¼‰ã€‚
+     * @~chinese Ò»¸ö Sprite ÊµÀı£¨ÒÑ¾­±» autorelese£©¡£
      */
     static Sprite* createWithTexture(Texture2D *texture, const Rect& rect, bool rotated=false);
 
@@ -212,12 +212,12 @@ public:
      * Creates a sprite with an sprite frame.
      *
      * @~chinese 
-     * ä½¿ç”¨ SpriteFrame åˆ›å»ºä¸€ä¸ª Spriteã€‚
+     * Ê¹ÓÃ SpriteFrame ´´½¨Ò»¸ö Sprite¡£
      * 
      * @param   spriteFrame    @~english A sprite frame which involves a texture and a rect.
-     * @~chinese SpriteFrame å®ä¾‹ã€‚
+     * @~chinese SpriteFrame ÊµÀı¡£
      * @return  @~english An autoreleased sprite object.
-     * @~chinese ä¸€ä¸ª Sprite å®ä¾‹ï¼ˆå·²ç»è¢« autoreleseï¼‰ã€‚
+     * @~chinese Ò»¸ö Sprite ÊµÀı£¨ÒÑ¾­±» autorelese£©¡£
      */
     static Sprite* createWithSpriteFrame(SpriteFrame *spriteFrame);
 
@@ -228,15 +228,15 @@ public:
      * If the SpriteFrame doesn't exist it will raise an exception.
      *
      * @~chinese 
-     * ä½¿ç”¨ SpriteFrame çš„åç§°æ¥åˆ›å»º Spriteã€‚
+     * Ê¹ÓÃ SpriteFrame µÄÃû³ÆÀ´´´½¨ Sprite¡£
      * 
-     * é€šè¿‡æŒ‡å®šçš„åç§°ä» SpriteFrameCache ä¸­å–å¾— SpriteFrame å¯¹è±¡ï¼Œç„¶ååˆå§‹åŒ– Spriteã€‚
-     * å¦‚æœä¸å­˜åœ¨ SpriteFrame å°†å¼•å‘ä¸€ä¸ªå¼‚å¸¸ã€‚
+     * Í¨¹ıÖ¸¶¨µÄÃû³Æ´Ó SpriteFrameCache ÖĞÈ¡µÃ SpriteFrame ¶ÔÏó£¬È»ºó³õÊ¼»¯ Sprite¡£
+     * Èç¹û²»´æÔÚ SpriteFrame ½«Òı·¢Ò»¸öÒì³£¡£
      * 
      * @param   spriteFrameName @~english A null terminated string which indicates the sprite frame name.
-     * @~chinese æŒ‡å®šçš„ SpriteFrame åç§°ã€‚
+     * @~chinese Ö¸¶¨µÄ SpriteFrame Ãû³Æ¡£
      * @return  @~english An autoreleased sprite object.
-     * @~chinese ä¸€ä¸ª Sprite å®ä¾‹ï¼ˆå·²ç»è¢« autoreleseï¼‰ã€‚
+     * @~chinese Ò»¸ö Sprite ÊµÀı£¨ÒÑ¾­±» autorelese£©¡£
      */
     static Sprite* createWithSpriteFrameName(const std::string& spriteFrameName);
 
@@ -250,7 +250,7 @@ public:
     /**@~english
      * Updates the quad according the rotation, position, scale values.
      * @~chinese 
-     * é€šè¿‡æ—‹è½¬ï¼Œä½ç½®ä»¥åŠç¼©æ”¾çš„å€¼æ¥æ›´æ–° Sprite çš„ç»˜åˆ¶å±æ€§ã€‚
+     * Í¨¹ıĞı×ª£¬Î»ÖÃÒÔ¼°Ëõ·ÅµÄÖµÀ´¸üĞÂ Sprite µÄ»æÖÆÊôĞÔ¡£
      */
     virtual void updateTransform() override;
 
@@ -258,17 +258,17 @@ public:
      * Returns the batch node object if this sprite is rendered by SpriteBatchNode.
      *
      * @~chinese 
-     * å¦‚æœå½“å‰ Sprite é€šè¿‡ SpriteBatchNode æ¸²æŸ“ï¼Œè¿”å› SpriteBatchNode å®ä¾‹ã€‚
+     * Èç¹ûµ±Ç° Sprite Í¨¹ı SpriteBatchNode äÖÈ¾£¬·µ»Ø SpriteBatchNode ÊµÀı¡£
      * 
      * @return @~english The SpriteBatchNode object if this sprite is rendered by SpriteBatchNode,
      *         nullptr if the sprite isn't used batch node.
-     * @~chinese å¦‚æœå½“å‰ Sprite é€šè¿‡ SpriteBatchNode æ¸²æŸ“ï¼Œè¿”å› SpriteBatchNode å®ä¾‹ï¼›å¦åˆ™è¿”å› nullptrã€‚
+     * @~chinese Èç¹ûµ±Ç° Sprite Í¨¹ı SpriteBatchNode äÖÈ¾£¬·µ»Ø SpriteBatchNode ÊµÀı£»·ñÔò·µ»Ø nullptr¡£
      */
     virtual SpriteBatchNode* getBatchNode() const;
     /**@~english
      * Sets the batch node to sprite.
      * @~chinese 
-     * è®¾ç½®æ¸²æŸ“æ­¤ Sprite çš„ SpriteBatchNode å¯¹è±¡ã€‚
+     * ÉèÖÃäÖÈ¾´Ë Sprite µÄ SpriteBatchNode ¶ÔÏó¡£
      * @warning @~english This method is not recommended for game developers. Sample code for using batch node
      * @code
      * SpriteBatchNode *batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 15);
@@ -276,7 +276,7 @@ public:
      * batch->addChild(sprite);
      * layer->addChild(batch);
      * @endcode
-     * @~chinese ä¸æ¨èå¼€å‘è€…ç›´æ¥è°ƒç”¨è¿™ä¸ªæ–¹æ³•ã€‚ä½¿ç”¨ SpriteBatchNode çš„ç¤ºä¾‹ä»£ç ï¼š
+     * @~chinese ²»ÍÆ¼ö¿ª·¢ÕßÖ±½Óµ÷ÓÃÕâ¸ö·½·¨¡£Ê¹ÓÃ SpriteBatchNode µÄÊ¾Àı´úÂë£º
      * @code
      * SpriteBatchNode *batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 15);
      * Sprite *sprite = Sprite::createWithTexture(batch->getTexture(), Rect(0, 0, 57, 57));
@@ -294,14 +294,14 @@ public:
 
     /** @~english Sets a new texture (from a filename) to the sprite.
      *
-     * @~chinese è®¾ç½®ä¸€ä¸ªæ–°çš„çº¹ç†ï¼ˆä½¿ç”¨æŒ‡å®šçš„æ–‡ä»¶ï¼‰ã€‚
+     * @~chinese ÉèÖÃÒ»¸öĞÂµÄÎÆÀí£¨Ê¹ÓÃÖ¸¶¨µÄÎÄ¼ş£©¡£
      * 
      *  @memberof @~english Sprite
      *  It will call `setTextureRect()` with the texture's content size.
      * @~chinese Sprite
-     * æ­¤å‡½æ•°ä¼šè·å–çº¹ç†çš„å¤§å°å¹¶è°ƒç”¨ `setTextureRect()`
+     * ´Ëº¯Êı»á»ñÈ¡ÎÆÀíµÄ´óĞ¡²¢µ÷ÓÃ `setTextureRect()`
      * @param filename @~english The file path of the image file.
-     * @~chinese å›¾ç‰‡æ–‡ä»¶çš„è·¯å¾„ã€‚
+     * @~chinese Í¼Æ¬ÎÄ¼şµÄÂ·¾¶¡£
      */
     virtual void setTexture(const std::string &filename );
 
@@ -310,7 +310,7 @@ public:
      *  The Texture's rect is not changed.
      * @~chinese @overload
      * 
-     * çº¹ç†çš„çŸ©å½¢åŒºåŸŸæ˜¯æ²¡æœ‰æ”¹å˜çš„ã€‚
+     * ÎÆÀíµÄ¾ØĞÎÇøÓòÊÇÃ»ÓĞ¸Ä±äµÄ¡£
      */
     virtual void setTexture(Texture2D *texture) override;
 
@@ -321,22 +321,22 @@ public:
      *
      * It will call `setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize)` with \p rotated = false, and \p utrimmedSize = rect.size.
      * @~chinese 
-     * æ›´æ–°çº¹ç†çš„çŸ©å½¢åŒºåŸŸã€‚
+     * ¸üĞÂÎÆÀíµÄ¾ØĞÎÇøÓò¡£
      * 
-     * å®ƒå°†è°ƒç”¨ `setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize)` å…¶ä¸­ \p rotated = false, \p utrimmedSize = rect.sizeã€‚
+     * Ëü½«µ÷ÓÃ `setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize)` ÆäÖĞ \p rotated = false, \p utrimmedSize = rect.size¡£
      */
     virtual void setTextureRect(const Rect& rect);
 
     /** @~english
      * It will update the texture coordinates and the vertex rectangle.
      * @~chinese
-     * æ›´æ–° Sprite çš„é¡¶ç‚¹åæ ‡å’Œçº¹ç†åæ ‡ã€‚
+     * ¸üĞÂ Sprite µÄ¶¥µã×ø±êºÍÎÆÀí×ø±ê¡£
      * @param rect @~english The used rect of the texture.
-     * @~chinese ä½¿ç”¨çš„çº¹ç†çŸ©å½¢åŒºåŸŸã€‚
+     * @~chinese Ê¹ÓÃµÄÎÆÀí¾ØĞÎÇøÓò¡£
      * @param rotated @~english Whether rotate or not.
-     * @~chinese æ˜¯å¦æ—‹è½¬ã€‚
+     * @~chinese ÊÇ·ñĞı×ª¡£
      * @param untrimmedSize @~english The size before trimmed.
-     * @~chinese è£å‰ªå‰çš„å¤§å°ã€‚
+     * @~chinese ²Ã¼ôÇ°µÄ´óĞ¡¡£
      */
     virtual void setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize);
 
@@ -347,18 +347,18 @@ public:
      * Useful if you want to create 2x images from SD images in Retina Display.
      * Do not call it manually. Use setTextureRect instead.
      * @~chinese 
-     * è®¾ç½®é¡¶ç‚¹åæ ‡ã€‚
+     * ÉèÖÃ¶¥µã×ø±ê¡£
      * 
-     * æ­¤æ–¹æ³•è¢« setTextureRect è°ƒç”¨ã€‚
-     * å¦‚æœéœ€è¦ä»å›¾ç‰‡æ–‡ä»¶åˆ›å»º 2x çš„ Retina å±å¹•çº¹ç†ï¼Œåˆ™éœ€è¦ä½¿ç”¨è¿™ä¸ªå‡½æ•°ã€‚
-     * ä¸è¦æ‰‹åŠ¨è°ƒç”¨å®ƒã€‚ä½¿ç”¨setTextureRectæ¥ä»£æ›¿ã€‚
+     * ´Ë·½·¨±» setTextureRect µ÷ÓÃ¡£
+     * Èç¹ûĞèÒª´ÓÍ¼Æ¬ÎÄ¼ş´´½¨ 2x µÄ Retina ÆÁÄ»ÎÆÀí£¬ÔòĞèÒªÊ¹ÓÃÕâ¸öº¯Êı¡£
+     * ²»ÒªÊÖ¶¯µ÷ÓÃËü¡£Ê¹ÓÃsetTextureRectÀ´´úÌæ¡£
      */
     virtual void setVertexRect(const Rect& rect);
 
     /** @{@~english
      * Sets a new SpriteFrame to the Sprite.
      * @~chinese 
-     * è®¾ç½®ä¸€ä¸ªæ–°çš„SpriteFrameã€‚
+     * ÉèÖÃÒ»¸öĞÂµÄSpriteFrame¡£
      */
     virtual void setSpriteFrame(const std::string &spriteFrameName);
     virtual void setSpriteFrame(SpriteFrame* newFrame);
@@ -370,14 +370,14 @@ public:
     /**@~english
      * Returns whether or not a SpriteFrame is being displayed.
      * @~chinese 
-     * è¿”å› SpriteFrame æ˜¯å¦è¢«æ˜¾ç¤ºäº†ã€‚
+     * ·µ»Ø SpriteFrame ÊÇ·ñ±»ÏÔÊ¾ÁË¡£
      */
     virtual bool isFrameDisplayed(SpriteFrame *frame) const;
 
     /**@~english
      * Returns the current displayed frame.
      * @~chinese 
-     * è¿”å›å½“å‰æ˜¾ç¤ºçš„ SpriteFrame å®ä¾‹ã€‚
+     * ·µ»Øµ±Ç°ÏÔÊ¾µÄ SpriteFrame ÊµÀı¡£
      */
     virtual SpriteFrame* getSpriteFrame() const;
     /** @deprecated Use `getSpriteFrame()` instead.
@@ -396,8 +396,8 @@ public:
      * Changes the display frame with animation name and index.
      * The animation name will be get from the AnimationCache.
      * @~chinese 
-     * ä»å¸§åŠ¨ç”»ä¸­é€‰å–æŒ‡å®šçš„å¸§ç”¨äºå½“å‰æ˜¾ç¤ºã€‚
-     * å¸§åŠ¨ç”»æ˜¯æ ¹æ®åç§°ä» AnimationCache è·å–çš„ã€‚
+     * ´ÓÖ¡¶¯»­ÖĞÑ¡È¡Ö¸¶¨µÄÖ¡ÓÃÓÚµ±Ç°ÏÔÊ¾¡£
+     * Ö¡¶¯»­ÊÇ¸ù¾İÃû³Æ´Ó AnimationCache »ñÈ¡µÄ¡£
      */
     virtual void setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex);
     /// @}
@@ -410,24 +410,24 @@ public:
      * Whether or not the Sprite needs to be updated in the Atlas.
      *
      * @~chinese 
-     * Spriteæ˜¯å¦éœ€è¦åœ¨atlasé‡Œé¢æ›´æ–°ã€‚
+     * SpriteÊÇ·ñĞèÒªÔÚatlasÀïÃæ¸üĞÂ¡£
      * 
      * @return @~english True if the sprite needs to be updated in the Atlas, false otherwise.
-     * @~chinese å¦‚æœéœ€è¦æ›´æ–°ï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› false
+     * @~chinese Èç¹ûĞèÒª¸üĞÂ£¬·µ»Ø true£»·ñÔò·µ»Ø false
      */
     virtual bool isDirty() const { return _dirty; }
 
     /**@~english
      * Makes the Sprite to be updated in the Atlas.
      * @~chinese 
-     * è®¾ç½® Sprite çš„ Atlas æ˜¯å¦éœ€è¦æ›´æ–°ã€‚
+     * ÉèÖÃ Sprite µÄ Atlas ÊÇ·ñĞèÒª¸üĞÂ¡£
      */
     virtual void setDirty(bool dirty) { _dirty = dirty; }
 
     /**@~english
      * Returns the quad (tex coords, vertex coords and color) information.
      * @~chinese 
-     * è·å– Sprite çš„ é¡¶ç‚¹åæ ‡ï¼Œçº¹ç†åæ ‡ä»¥åŠé¢œè‰²ä¿¡æ¯ã€‚
+     * »ñÈ¡ Sprite µÄ ¶¥µã×ø±ê£¬ÎÆÀí×ø±êÒÔ¼°ÑÕÉ«ĞÅÏ¢¡£
      * @js  NA
      * @lua NA
      */
@@ -436,14 +436,14 @@ public:
     /**@~english
      * Returns whether or not the texture rectangle is rotated.
      * @~chinese 
-     * è¿”å›çº¹ç†çŸ©å½¢æ˜¯å¦æ—‹è½¬ã€‚
+     * ·µ»ØÎÆÀí¾ØĞÎÊÇ·ñĞı×ª¡£
      */
     inline bool isTextureRectRotated() const { return _rectRotated; }
 
     /**@~english
      * Returns the index used on the TextureAtlas.
      * @~chinese 
-     * è¿”å› TextureAtlas çš„ç´¢å¼•å€¼ã€‚
+     * ·µ»Ø TextureAtlas µÄË÷ÒıÖµ¡£
      */
     inline ssize_t getAtlasIndex() const { return _atlasIndex; }
 
@@ -451,38 +451,38 @@ public:
      * Sets the index used on the TextureAtlas.
      *
      * @~chinese 
-     * è®¾ç½® TextureAtlas çš„ç´¢å¼•å€¼ã€‚
+     * ÉèÖÃ TextureAtlas µÄË÷ÒıÖµ¡£
      * 
      * @warning @~english Don't modify this value unless you know what you are doing.
-     * @~chinese ä¸è¦éšæ„ä¿®æ”¹è¿™ä¸ªå€¼ï¼Œé™¤éä½ çŸ¥é“ä½ åœ¨åšä»€ä¹ˆã€‚
+     * @~chinese ²»ÒªËæÒâĞŞ¸ÄÕâ¸öÖµ£¬³ı·ÇÄãÖªµÀÄãÔÚ×öÊ²Ã´¡£
      */
     inline void setAtlasIndex(ssize_t atlasIndex) { _atlasIndex = atlasIndex; }
 
     /**@~english
      * Returns the rect of the Sprite in points.
      * @~chinese 
-     * è¿”å› Sprite çš„çŸ©å½¢åŒºåŸŸã€‚
+     * ·µ»Ø Sprite µÄ¾ØĞÎÇøÓò¡£
      */
     inline const Rect& getTextureRect() const { return _rect; }
 
     /**@~english
      * Gets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode.
      * @~chinese 
-     * å½“ä½¿ç”¨ SpriteBatchNode è¿›è¡Œæ¸²æŸ“æ—¶ï¼Œæ­¤æ–¹æ³•å¯ä»¥è·å–ä½¿ç”¨çš„ TextureAtlas å®ä¾‹ã€‚
+     * µ±Ê¹ÓÃ SpriteBatchNode ½øĞĞäÖÈ¾Ê±£¬´Ë·½·¨¿ÉÒÔ»ñÈ¡Ê¹ÓÃµÄ TextureAtlas ÊµÀı¡£
      */
     inline TextureAtlas* getTextureAtlas() const { return _textureAtlas; }
 
     /**@~english
      * Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode.
      * @~chinese 
-     * å½“ä½¿ç”¨ SpriteBatchNode è¿›è¡Œæ¸²æŸ“æ—¶ï¼Œé€šè¿‡æ­¤æ–¹æ³•å¯ä»¥è®¾ç½®ä½¿ç”¨çš„ TextureAtlas å®ä¾‹ã€‚
+     * µ±Ê¹ÓÃ SpriteBatchNode ½øĞĞäÖÈ¾Ê±£¬Í¨¹ı´Ë·½·¨¿ÉÒÔÉèÖÃÊ¹ÓÃµÄ TextureAtlas ÊµÀı¡£
      */
     inline void setTextureAtlas(TextureAtlas *textureAtlas) { _textureAtlas = textureAtlas; }
 
     /**@~english
      * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
      * @~chinese 
-     * è·å– Sprite çš„åç§»ä½ç½®ã€‚Zwoptex ç­‰ç¼–è¾‘å™¨å¯ä»¥è‡ªåŠ¨è®¡ç®—è¿™ä¸ªå€¼ã€‚
+     * »ñÈ¡ Sprite µÄÆ«ÒÆÎ»ÖÃ¡£Zwoptex µÈ±à¼­Æ÷¿ÉÒÔ×Ô¶¯¼ÆËãÕâ¸öÖµ¡£
      */
     inline const Vec2& getOffsetPosition() const { return _offsetPosition; }
 
@@ -496,25 +496,25 @@ public:
      * sprite->setScaleX(sprite->getScaleX() * -1);
      *
      * @~chinese 
-     * è¿”å› Sprite æ˜¯å¦æ°´å¹³ç¿»è½¬ã€‚
+     * ·µ»Ø Sprite ÊÇ·ñË®Æ½·­×ª¡£
      * 
-     * å®ƒåªç¿»è½¬å½“å‰ Sprite çº¹ç†ï¼Œè€Œä¸å½±å“å­èŠ‚ç‚¹ã€‚
-     * æ­¤å¤–ï¼Œç¿»è½¬çº¹ç†ä¸æ”¹å˜é”šç‚¹ã€‚
-     * å¦‚æœä½ æƒ³ç¿»è½¬é”šç‚¹ï¼Œå¹¶ä¸”/æˆ–è€…ç¿»è½¬å­èŠ‚ç‚¹ï¼Œè¯·ä½¿ç”¨ï¼š
+     * ËüÖ»·­×ªµ±Ç° Sprite ÎÆÀí£¬¶ø²»Ó°Ïì×Ó½Úµã¡£
+     * ´ËÍâ£¬·­×ªÎÆÀí²»¸Ä±äÃªµã¡£
+     * Èç¹ûÄãÏë·­×ªÃªµã£¬²¢ÇÒ/»òÕß·­×ª×Ó½Úµã£¬ÇëÊ¹ÓÃ£º
      * sprite->setScaleX(sprite->getScaleX() * -1);
      * 
      * @return @~english true if the sprite is flipped horizontally, false otherwise.
-     * @~chinese å¦‚æœæ˜¯æ°´å¹³ç¿»è½¬ï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹ûÊÇË®Æ½·­×ª£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
      */
     bool isFlippedX() const;
     /**@~english
      * Sets whether the sprite should be flipped horizontally or not.
      *
      * @~chinese 
-     * è®¾ç½®æ˜¯å¦è¿›è¡Œæ°´å¹³ç¿»è½¬ã€‚
+     * ÉèÖÃÊÇ·ñ½øĞĞË®Æ½·­×ª¡£
      * 
      * @param flippedX @~english true if the sprite should be flipped horizontally, false otherwise.
-     * @~chinese true è¡¨ç¤ºè¦æ°´å¹³ç¿»è½¬ï¼›å¦åˆ™è¡¨ç¤ºä¸æ°´å¹³ç¿»è½¬ã€‚
+     * @~chinese true ±íÊ¾ÒªË®Æ½·­×ª£»·ñÔò±íÊ¾²»Ë®Æ½·­×ª¡£
      */
     void setFlippedX(bool flippedX);
 
@@ -537,25 +537,25 @@ public:
      * sprite->setScaleY(sprite->getScaleY() * -1);
      *
      * @~chinese 
-     * è¿”å›æ˜¯å¦å‚ç›´ç¿»è½¬ã€‚
+     * ·µ»ØÊÇ·ñ´¹Ö±·­×ª¡£
      * 
-     * å®ƒåªç¿»è½¬å½“å‰ Sprite çº¹ç†ï¼Œè€Œä¸å½±å“å­èŠ‚ç‚¹ã€‚
-     * æ­¤å¤–ï¼Œçº¹ç†ç¿»è½¬ä¸æ”¹å˜é”šç‚¹ã€‚
-     * å¦‚æœä½ æƒ³ç¿»è½¬é”šç‚¹ï¼Œå¹¶ä¸”/æˆ–è€…ç¿»è½¬å­èŠ‚ç‚¹ï¼Œè¯·ä½¿ç”¨ï¼š
+     * ËüÖ»·­×ªµ±Ç° Sprite ÎÆÀí£¬¶ø²»Ó°Ïì×Ó½Úµã¡£
+     * ´ËÍâ£¬ÎÆÀí·­×ª²»¸Ä±äÃªµã¡£
+     * Èç¹ûÄãÏë·­×ªÃªµã£¬²¢ÇÒ/»òÕß·­×ª×Ó½Úµã£¬ÇëÊ¹ÓÃ£º
      * sprite->setScaleY(sprite->getScaleY() * -1);
      * 
      * @return @~english true if the sprite is flipped vertically, false otherwise.
-     * @~chinese å¦‚æœæ˜¯å‚ç›´ç¿»è½¬è¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹ûÊÇ´¹Ö±·­×ª·µ»Ø true£»·ñÔò·µ»Ø false¡£
      */
     bool isFlippedY() const;
     /**@~english
      * Sets whether the sprite should be flipped vertically or not.
      *
      * @~chinese 
-     * è®¾ç½®æ˜¯å¦è¿›è¡Œå‚ç›´ç¿»è½¬ã€‚
+     * ÉèÖÃÊÇ·ñ½øĞĞ´¹Ö±·­×ª¡£
      * 
      * @param flippedY @~english true if the sprite should be flipped vertically, false otherwise.
-     * @~chinese true è¡¨ç¤ºè¦å‚ç›´ç¿»è½¬ï¼›å¦åˆ™è¡¨ç¤ºä¸å‚ç›´ç¿»è½¬ã€‚
+     * @~chinese true ±íÊ¾Òª´¹Ö±·­×ª£»·ñÔò±íÊ¾²»´¹Ö±·­×ª¡£
      */
     void setFlippedY(bool flippedY);
 
@@ -584,9 +584,9 @@ public:
      * @endcode
      * @~chinese 
      * @code
-     * å½“è¿™ä¸ªå‡½æ•°ç»‘å®šåˆ°jsæˆ–lua,å‚æ•°å°†è¢«æ”¹å˜ã€‚
-     * åœ¨js ä¸­: var setBlendFunc(var src, var dst)ã€‚
-     * åœ¨luaä¸­: local setBlendFunc(local src, local dst)ã€‚
+     * µ±Õâ¸öº¯Êı°ó¶¨µ½js»òlua,²ÎÊı½«±»¸Ä±ä¡£
+     * ÔÚjs ÖĞ: var setBlendFunc(var src, var dst)¡£
+     * ÔÚluaÖĞ: local setBlendFunc(local src, local dst)¡£
      * @endcode
     */
     inline void setBlendFunc(const BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
@@ -642,7 +642,7 @@ CC_CONSTRUCTOR_ACCESS:
     Sprite();
     virtual ~Sprite();
 
-    /* @~english Initializes an empty sprite with nothing init.  @~chinese åˆå§‹åŒ–ä¸€ä¸ªç©ºçš„Spriteã€‚*/
+    /* @~english Initializes an empty sprite with nothing init.  @~chinese ³õÊ¼»¯Ò»¸ö¿ÕµÄSprite¡£*/
     virtual bool init() override;
 
     /**@~english
@@ -651,15 +651,15 @@ CC_CONSTRUCTOR_ACCESS:
      * After initialization, the rect used will be the size of the texture, and the offset will be (0,0).
      *
      * @~chinese 
-     * ä½¿ç”¨æŒ‡å®šçš„çº¹ç†åˆå§‹åŒ–ä¸€ä¸ªSpriteã€‚
+     * Ê¹ÓÃÖ¸¶¨µÄÎÆÀí³õÊ¼»¯Ò»¸öSprite¡£
      * 
-     * åˆå§‹åŒ–åï¼ŒSprite çš„å¤§å°ä¸çº¹ç†ä¸€è‡´ï¼Œåç§»é‡ä¸º (0,0)ã€‚
+     * ³õÊ¼»¯ºó£¬Sprite µÄ´óĞ¡ÓëÎÆÀíÒ»ÖÂ£¬Æ«ÒÆÁ¿Îª (0,0)¡£
      * 
      * @param   texture    @~english A pointer to an existing Texture2D object.
      *                      You can use a Texture2D object for many sprites.
-     * @~chinese å·²æœ‰çš„ Texture2D å¯¹è±¡çš„æŒ‡é’ˆã€‚ä¸€ä¸ªçº¹ç†å¯ä»¥è¢«å¤šä¸ª Sprite ä½¿ç”¨ã€‚
+     * @~chinese ÒÑÓĞµÄ Texture2D ¶ÔÏóµÄÖ¸Õë¡£Ò»¸öÎÆÀí¿ÉÒÔ±»¶à¸ö Sprite Ê¹ÓÃ¡£
      * @return  @~english True if the sprite is initialized properly, false otherwise.
-     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
      */
     virtual bool initWithTexture(Texture2D *texture);
     
@@ -680,17 +680,17 @@ CC_CONSTRUCTOR_ACCESS:
      * After initialization, the offset will be (0,0).
      *
      * @~chinese 
-     * ä½¿ç”¨æŒ‡å®šçš„çº¹ç†ä¸çŸ©å½¢åŒºåŸŸåˆå§‹åŒ–ä¸€ä¸ª Spriteã€‚
+     * Ê¹ÓÃÖ¸¶¨µÄÎÆÀíÓë¾ØĞÎÇøÓò³õÊ¼»¯Ò»¸ö Sprite¡£
      * 
-     * åˆå§‹åŒ–åï¼Œåç§»é‡ä¸º (0,0)ã€‚
+     * ³õÊ¼»¯ºó£¬Æ«ÒÆÁ¿Îª (0,0)¡£
      * 
      * @param   texture    @~english A pointer to an exisiting Texture2D object.
      *                      You can use a Texture2D object for many sprites.
-     * @~chinese å·²æœ‰çš„ Texture2D å¯¹è±¡çš„æŒ‡é’ˆã€‚ä¸€ä¸ªçº¹ç†å¯ä»¥è¢«å¤šä¸ª Sprite ä½¿ç”¨ã€‚
+     * @~chinese ÒÑÓĞµÄ Texture2D ¶ÔÏóµÄÖ¸Õë¡£Ò»¸öÎÆÀí¿ÉÒÔ±»¶à¸ö Sprite Ê¹ÓÃ¡£
      * @param   rect        @~english Only the contents inside rect of this texture will be applied for this sprite.
-     * @~chinese éœ€è¦ä»æŒ‡å®šçš„çº¹ç†ä¸­æˆªå–çš„çŸ©å½¢åŒºåŸŸã€‚
+     * @~chinese ĞèÒª´ÓÖ¸¶¨µÄÎÆÀíÖĞ½ØÈ¡µÄ¾ØĞÎÇøÓò¡£
      * @return  @~english True if the sprite is initialized properly, false otherwise.
-     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
      */
     virtual bool initWithTexture(Texture2D *texture, const Rect& rect);
 
@@ -699,21 +699,21 @@ CC_CONSTRUCTOR_ACCESS:
      *
      * After initialization, the offset will be (0,0).
      * @~chinese 
-     * ä½¿ç”¨æŒ‡å®šçš„çº¹ç†ï¼ŒçŸ©å½¢åŒºåŸŸå’Œæ˜¯å¦æ—‹è½¬åˆå§‹åŒ–ä¸€ä¸ªSpriteã€‚
+     * Ê¹ÓÃÖ¸¶¨µÄÎÆÀí£¬¾ØĞÎÇøÓòºÍÊÇ·ñĞı×ª³õÊ¼»¯Ò»¸öSprite¡£
      * 
-     * åˆå§‹åŒ–åï¼Œåç§»é‡ä¸º (0,0)ã€‚
+     * ³õÊ¼»¯ºó£¬Æ«ÒÆÁ¿Îª (0,0)¡£
      * @note    @~english This is the designated initializer.
      *
-     * @~chinese è¿™æ˜¯ç‰¹å®šçš„åˆå§‹åŒ–æ–¹æ³•ã€‚
+     * @~chinese ÕâÊÇÌØ¶¨µÄ³õÊ¼»¯·½·¨¡£
      * 
      * @param   texture    @~english A Texture2D object whose texture will be applied to this sprite.
-     * @~chinese å·²æœ‰çš„ Texture2D å¯¹è±¡çš„æŒ‡é’ˆã€‚
+     * @~chinese ÒÑÓĞµÄ Texture2D ¶ÔÏóµÄÖ¸Õë¡£
      * @param   rect        @~english A rectangle assigned the contents of texture.
-     * @~chinese éœ€è¦ä»æŒ‡å®šçš„çº¹ç†ä¸­æˆªå–çš„çŸ©å½¢åŒºåŸŸã€‚
+     * @~chinese ĞèÒª´ÓÖ¸¶¨µÄÎÆÀíÖĞ½ØÈ¡µÄ¾ØĞÎÇøÓò¡£
      * @param   rotated     @~english Whether or not the texture rectangle is rotated.
-     * @~chinese æ˜¯å¦æ—‹è½¬çº¹ç†ã€‚
+     * @~chinese ÊÇ·ñĞı×ªÎÆÀí¡£
      * @return  @~english True if the sprite is initialized properly, false otherwise.
-     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
      */
     virtual bool initWithTexture(Texture2D *texture, const Rect& rect, bool rotated);
 
@@ -721,12 +721,12 @@ CC_CONSTRUCTOR_ACCESS:
      * Initializes a sprite with an SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite.
      *
      * @~chinese 
-     * ä½¿ç”¨æŒ‡å®šçš„ SpriteFrame åˆå§‹åŒ–ä¸€ä¸ª Spriteã€‚
+     * Ê¹ÓÃÖ¸¶¨µÄ SpriteFrame ³õÊ¼»¯Ò»¸ö Sprite¡£
      * 
      * @param   spriteFrame  @~english A SpriteFrame object. It should includes a valid texture and a rect.
-     * @~chinese SpriteFrame å¯¹è±¡ã€‚å®ƒåŒ…æ‹¬ä¸€ä¸ªæœ‰æ•ˆçš„çº¹ç†å’ŒçŸ©å½¢åŒºåŸŸã€‚
+     * @~chinese SpriteFrame ¶ÔÏó¡£Ëü°üÀ¨Ò»¸öÓĞĞ§µÄÎÆÀíºÍ¾ØĞÎÇøÓò¡£
      * @return  @~english True if the sprite is initialized properly, false otherwise.
-     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
      */
     virtual bool initWithSpriteFrame(SpriteFrame *spriteFrame);
 
@@ -737,15 +737,15 @@ CC_CONSTRUCTOR_ACCESS:
      * If the SpriteFrame doesn't exist it will raise an exception.
      *
      * @~chinese 
-     * ä½¿ç”¨æŒ‡å®šçš„ SpriteFrame åç§°åˆå§‹åŒ–ä¸€ä¸ª Spriteã€‚
+     * Ê¹ÓÃÖ¸¶¨µÄ SpriteFrame Ãû³Æ³õÊ¼»¯Ò»¸ö Sprite¡£
      * 
-     * é¦–å…ˆä» SpriteFrameCache ä¸­è·å–æŒ‡å®šåç§°çš„ SpriteFrameã€‚
-     * ç„¶åä½¿ç”¨è¿™ä¸ª SpriteFrame åˆå§‹åŒ– Spriteã€‚
+     * Ê×ÏÈ´Ó SpriteFrameCache ÖĞ»ñÈ¡Ö¸¶¨Ãû³ÆµÄ SpriteFrame¡£
+     * È»ºóÊ¹ÓÃÕâ¸ö SpriteFrame ³õÊ¼»¯ Sprite¡£
      * 
      * @param   spriteFrameName  @~english A key string that can fected a valid SpriteFrame from SpriteFrameCache.
-     * @~chinese ä¸€ä¸ªå­—ç¬¦ä¸²ï¼Œç”¨äºä» SpriteFrameCache ä¸­è·å– SpriteFrame å¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×Ö·û´®£¬ÓÃÓÚ´Ó SpriteFrameCache ÖĞ»ñÈ¡ SpriteFrame ¶ÔÏó¡£
      * @return  @~english True if the sprite is initialized properly, false otherwise.
-     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
      */
     virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
 
@@ -757,16 +757,16 @@ CC_CONSTRUCTOR_ACCESS:
      * After initialization, the rect used will be the size of the image. The offset will be (0,0).
      *
      * @~chinese 
-     * ä½¿ç”¨æŒ‡å®šçš„å›¾ç‰‡æ–‡ä»¶åˆå§‹åŒ–ä¸€ä¸ª Spriteã€‚
+     * Ê¹ÓÃÖ¸¶¨µÄÍ¼Æ¬ÎÄ¼ş³õÊ¼»¯Ò»¸ö Sprite¡£
      * 
-     * è¯¥æ–¹æ³•å°†ä»æœ¬åœ°æ–‡ä»¶ç³»ç»Ÿä¸­æ‰¾åˆ°æ–‡ä»¶ï¼Œå°†å…¶åŠ è½½ä¸º Texture2D å¯¹è±¡ï¼Œ
-     * ç„¶åä½¿ç”¨ Texture2D å¯¹è±¡åˆå§‹åŒ– Spriteã€‚
-     * åˆå§‹åŒ–åï¼ŒSprite å¤§å°ä¸å›¾ç‰‡å¤§å°ä¸€è‡´ï¼Œåç§»é‡ä¸º (0,0)ã€‚
+     * ¸Ã·½·¨½«´Ó±¾µØÎÄ¼şÏµÍ³ÖĞÕÒµ½ÎÄ¼ş£¬½«Æä¼ÓÔØÎª Texture2D ¶ÔÏó£¬
+     * È»ºóÊ¹ÓÃ Texture2D ¶ÔÏó³õÊ¼»¯ Sprite¡£
+     * ³õÊ¼»¯ºó£¬Sprite ´óĞ¡ÓëÍ¼Æ¬´óĞ¡Ò»ÖÂ£¬Æ«ÒÆÁ¿Îª (0,0)¡£
      * 
      * @param   filename @~english The path to an image file in local file system.
-     * @~chinese å›¾ç‰‡æ–‡ä»¶çš„è·¯å¾„ã€‚
+     * @~chinese Í¼Æ¬ÎÄ¼şµÄÂ·¾¶¡£
      * @return  @~english True if the sprite is initialized properly, false otherwise.
-     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename);
@@ -779,23 +779,21 @@ CC_CONSTRUCTOR_ACCESS:
      * After initialization, the offset will be (0,0).
      *
      * @~chinese 
-     * ä½¿ç”¨æŒ‡å®šå›¾ç‰‡æ–‡ä»¶çš„ç‰¹å®šçŸ©å½¢åŒºåŸŸåˆå§‹åŒ–ä¸€ä¸ª Spriteã€‚
+     * Ê¹ÓÃÖ¸¶¨Í¼Æ¬ÎÄ¼şµÄÌØ¶¨¾ØĞÎÇøÓò³õÊ¼»¯Ò»¸ö Sprite¡£
      * 
-     * è¯¥æ–¹æ³•å°†ä»æœ¬åœ°æ–‡ä»¶ç³»ç»Ÿä¸­æ‰¾åˆ°æ–‡ä»¶ï¼Œå°†å…¶åŠ è½½ä¸º Texture2D å¯¹è±¡ï¼Œ
-     * ç„¶åä½¿ç”¨ Texture2D å¯¹è±¡åˆå§‹åŒ– Spriteã€‚
-     * åˆå§‹åŒ–åï¼ŒSprite å¤§å°ä¸å›¾ç‰‡å¤§å°ä¸€è‡´ï¼Œåç§»é‡ä¸º (0,0)ã€‚
+     * ¸Ã·½·¨½«´Ó±¾µØÎÄ¼şÏµÍ³ÖĞÕÒµ½ÎÄ¼ş£¬½«Æä¼ÓÔØÎª Texture2D ¶ÔÏó£¬
+     * È»ºóÊ¹ÓÃ Texture2D ¶ÔÏó³õÊ¼»¯ Sprite¡£
+     * ³õÊ¼»¯ºó£¬Sprite ´óĞ¡ÓëÍ¼Æ¬´óĞ¡Ò»ÖÂ£¬Æ«ÒÆÁ¿Îª (0,0)¡£
      * 
      * @param   filename @~english The path to an image file in local file system.
-     * @~chinese å›¾ç‰‡æ–‡ä»¶çš„è·¯å¾„ã€‚
+     * @~chinese Í¼Æ¬ÎÄ¼şµÄÂ·¾¶¡£
      * @param   rect        @~english The rectangle assigned the content area from texture.
-     * @~chinese éœ€è¦ä»å›¾ç‰‡ä¸­æˆªå–çš„çŸ©å½¢åŒºåŸŸã€‚
+     * @~chinese ĞèÒª´ÓÍ¼Æ¬ÖĞ½ØÈ¡µÄ¾ØĞÎÇøÓò¡£
      * @return  @~english True if the sprite is initialized properly, false otherwise.
-     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
-
-    void debugDraw(bool on);
     
     /**
      * returns a copy of the polygon information associated with this sprite
@@ -840,14 +838,15 @@ protected:
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
     SpriteFrame*     _spriteFrame;
     TrianglesCommand _trianglesCommand;     ///
-
-
+#if CC_SPRITE_DEBUG_DRAW
+    DrawNode *_debugDrawNode;
+#endif //CC_SPRITE_DEBUG_DRAW
     //
     // Shared data
     //
 
     // texture
-    Rect _rect;                             /// Retangle of Texture2D
+    Rect _rect;                             /// Rectangle of Texture2D
     bool   _rectRotated;                    /// Whether the texture is rotated
 
     // Offset Position (used by Zwoptex)

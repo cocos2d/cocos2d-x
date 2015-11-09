@@ -51,6 +51,7 @@ class Layer;
 class MenuItem;
 class CallFunc;
 class Acceleration;
+class Action;
 
 enum ccScriptType {
     kScriptTypeNone = 0,
@@ -61,7 +62,7 @@ enum ccScriptType {
 /**@~english
  * This classes is wrapped to store the handler corresponding to the Lua function pointer and assign the handler a unique id
  * @~chinese 
- * è¿™ä¸ªç±»ç”¨äºå°è£…Luaå‡½æ•°æŒ‡é’ˆå¯¹åº”çš„handlerï¼Œæ¯ä¸€ä¸ªhandlerå¯¹åº”ä¸€ä¸ªå”¯ä¸€id.
+ * Õâ¸öÀàÓÃÓÚ·â×°Luaº¯ÊıÖ¸Õë¶ÔÓ¦µÄhandler£¬Ã¿Ò»¸öhandler¶ÔÓ¦Ò»¸öÎ¨Ò»id.
  * @lua NA
  * @js NA
  */
@@ -73,12 +74,12 @@ public:
      * create a ScriptHandlerEntry instance by the handler.
      *
      * @~chinese 
-     * åˆ›æ ¹æ®handleråˆ›å»ºä¸€ä¸ªScriptHandlerEntryå®ä¾‹ã€‚
+     * ´´¸ù¾İhandler´´½¨Ò»¸öScriptHandlerEntryÊµÀı¡£
      * 
      * @param handler @~english corresponding to the Lua function pointer.
-     * @~chinese Luaå‡½æ•°çš„å¼•ç”¨idã€‚
+     * @~chinese Luaº¯ÊıµÄÒıÓÃid¡£
      * @return @~english ScriptHandlerEntry instance.
-     * @~chinese ScriptHandlerEntryå®ä¾‹ã€‚
+     * @~chinese ScriptHandlerEntryÊµÀı¡£
      * @js NA
      */
     static ScriptHandlerEntry* create(int handler);
@@ -86,7 +87,7 @@ public:
     /**@~english
      * Destructor of ScriptHandlerEntry.
      * @~chinese 
-     * ScriptHandlerEntryçš„ææ„å‡½æ•°ã€‚
+     * ScriptHandlerEntryµÄÎö¹¹º¯Êı¡£
      * @js NA
      */
     virtual ~ScriptHandlerEntry();
@@ -95,10 +96,10 @@ public:
      * Get the handler corresponding to the Lua function pointer.
      *
      * @~chinese 
-     * è·å–å¯¹åº”Luaå‡½æ•°çš„handlerã€‚
+     * »ñÈ¡¶ÔÓ¦Luaº¯ÊıµÄhandler¡£
      * 
      * @return @~english the handler corresponding to the Lua function pointer.
-     * @~chinese å¯¹åº”Luaå‡½æ•°çš„handlerã€‚
+     * @~chinese ¶ÔÓ¦Luaº¯ÊıµÄhandler¡£
      * @js NA
      */
     int getHandler(void) {
@@ -109,10 +110,10 @@ public:
      * Get the unique id corresponding to the handler.
      *
      * @~chinese 
-     * è·å–å¯¹åº”handlerçš„å”¯ä¸€IDã€‚
+     * »ñÈ¡¶ÔÓ¦handlerµÄÎ¨Ò»ID¡£
      * 
      * @return @~english the unique id corresponding to the handler.
-     * @~chinese handlerçš„å”¯ä¸€idã€‚
+     * @~chinese handlerµÄÎ¨Ò»id¡£
      * @js NA
      */
     int getEntryId(void) {
@@ -136,7 +137,7 @@ protected:
  * The SchedulerScriptHandlerEntry is used to store the handler corresponding to the Lua function pointer and assign the handler a unique id like ScriptHandlerEntry.
  * Meanwhile,create a timer that named TimerScriptHandler to execute the Lua function corresponding to the handler in the interval time if the SchedulerScriptHandlerEntry object isn't paused.
  * @~chinese 
- * SchedulerScriptHandlerEntryå’ŒScriptHandlerEntryç±»ä¼¼ï¼Œå°†å¯¹åº”Luaå‡½æ•°çš„handlerè¿›è¡Œå°è£…å¹¶ä¸”ç»™è¿™ä¸ªhandleråˆ†é…ä¸€ä¸ªå”¯ä¸€id.åŒæ—¶ï¼Œå®ƒä¼šåˆ›å»ºä¸€ä¸ªTimerScriptHandlerç±»å‹çš„å®šæ—¶å™¨ï¼Œå¦‚æœSchedulerScriptHandlerEntryå¯¹è±¡æ²¡æœ‰æš‚åœï¼Œå®ƒå°†ä¼šæŒ‰ä¸€å®šçš„é—´éš”æ—¶é—´æ‰§è¡Œhandlerå¯¹åº”çš„Luaå‡½æ•°ã€‚
+ * SchedulerScriptHandlerEntryºÍScriptHandlerEntryÀàËÆ£¬½«¶ÔÓ¦Luaº¯ÊıµÄhandler½øĞĞ·â×°²¢ÇÒ¸øÕâ¸öhandler·ÖÅäÒ»¸öÎ¨Ò»id.Í¬Ê±£¬Ëü»á´´½¨Ò»¸öTimerScriptHandlerÀàĞÍµÄ¶¨Ê±Æ÷£¬Èç¹ûSchedulerScriptHandlerEntry¶ÔÏóÃ»ÓĞÔİÍ££¬Ëü½«»á°´Ò»¶¨µÄ¼ä¸ôÊ±¼äÖ´ĞĞhandler¶ÔÓ¦µÄLuaº¯Êı¡£
  * @lua NA
  * @js NA
  */
@@ -147,23 +148,23 @@ public:
      * create a SchedulerScriptHandlerEntry object.
      * 
      * @~chinese 
-     * åˆ›å»ºä¸€ä¸ªSchedulerScriptHandlerEntryå¯¹è±¡ã€‚
+     * ´´½¨Ò»¸öSchedulerScriptHandlerEntry¶ÔÏó¡£
      * 
      * @param handler @~english the index corresponding to the Lua function pointer.
-     * @~chinese å¯¹åº”Luaå‡½æ•°çš„å¼•ç”¨idã€‚
+     * @~chinese ¶ÔÓ¦Luaº¯ÊıµÄÒıÓÃid¡£
      * @param interval @~english the interval to execute the Lua function. If the value is 0, then the lua function will be scheduled every frame.
-     * @~chinese æ‰§è¡ŒLuaå‡½æ•°çš„æ—¶é—´é—´éš”ã€‚å¦‚æœå€¼ä¸º0ï¼Œé‚£ä¹ˆLuaå‡½æ•°æ¯å¸§ä¼šæ‰§è¡Œä¸€æ¬¡ã€‚
+     * @~chinese Ö´ĞĞLuaº¯ÊıµÄÊ±¼ä¼ä¸ô¡£Èç¹ûÖµÎª0£¬ÄÇÃ´Luaº¯ÊıÃ¿Ö¡»áÖ´ĞĞÒ»´Î¡£
      * @param paused @~english if paused is true, then the timer won't be started until it is resumed.
-     * @~chinese å¦‚æœpausedå€¼ä¸ºtrue,é‚£ä¹ˆå®šæ—¶å™¨åªæœ‰è¢«æ¢å¤åæ‰èƒ½å¼€å§‹è¿è¡Œã€‚
+     * @~chinese Èç¹ûpausedÖµÎªtrue,ÄÇÃ´¶¨Ê±Æ÷Ö»ÓĞ±»»Ö¸´ºó²ÅÄÜ¿ªÊ¼ÔËĞĞ¡£
      * @return @~english a SchedulerScriptHandlerEntry object.
-     * @~chinese SchedulerScriptHandlerEntryå¯¹è±¡ã€‚
+     * @~chinese SchedulerScriptHandlerEntry¶ÔÏó¡£
      */
     static SchedulerScriptHandlerEntry* create(int handler, float interval, bool paused);
     
     /**@~english
      * Destructor of SchedulerScriptHandlerEntry.
      * @~chinese 
-     * SchedulerScriptHandlerEntryçš„ææ„å‡½æ•°ã€‚
+     * SchedulerScriptHandlerEntryµÄÎö¹¹º¯Êı¡£
      */
     virtual ~SchedulerScriptHandlerEntry();
     
@@ -171,10 +172,10 @@ public:
      * Get the pointer of TimerScriptHandler object.
      *
      * @~chinese 
-     * è·å–TimerScriptHandlerå¯¹è±¡çš„æŒ‡é’ˆã€‚
+     * »ñÈ¡TimerScriptHandler¶ÔÏóµÄÖ¸Õë¡£
      * 
      * @return @~english the pointer of TimerScriptHandler object.
-     * @~chinese TimerScriptHandlerå¯¹è±¡æŒ‡é’ˆã€‚
+     * @~chinese TimerScriptHandler¶ÔÏóÖ¸Õë¡£
      */
     TimerScriptHandler* getTimer(void) {
         return _timer;
@@ -184,10 +185,10 @@ public:
      * Get the flag whether paused or not.
      *
      * @~chinese 
-     * è·å–æ˜¯å¦pausedçš„æ ‡è®°ã€‚
+     * »ñÈ¡ÊÇ·ñpausedµÄ±ê¼Ç¡£
      * 
      * @return @~english the flag whether paused or not.
-     * @~chinese æ˜¯å¦pausedçš„æ ‡è®°ã€‚
+     * @~chinese ÊÇ·ñpausedµÄ±ê¼Ç¡£
      */
     bool isPaused(void) {
         return _paused;
@@ -195,7 +196,7 @@ public:
     /**@~english
      * Set the markedForDeletion flag true.
      * @~chinese 
-     * è®¾ç½®markedForDeletionæ ‡è®°ä¸ºtrueã€‚
+     * ÉèÖÃmarkedForDeletion±ê¼ÇÎªtrue¡£
      */
     void markedForDeletion(void) {
         _markedForDeletion = true;
@@ -204,10 +205,10 @@ public:
      * Get the flag whether markedForDeletion or not.
      *
      * @~chinese 
-     * è·å–markedForDeletionæ ‡è®°ã€‚
+     * »ñÈ¡markedForDeletion±ê¼Ç¡£
      * 
      * @return @~english the flag whether markedForDeletion or not.
-     * @~chinese markedForDeletionçš„æ ‡è®°ã€‚
+     * @~chinese markedForDeletionµÄ±ê¼Ç¡£
      */
     bool isMarkedForDeletion(void) {
         return _markedForDeletion;
@@ -273,7 +274,7 @@ private:
  * @js NA
  */
 
-/** @~english ScriptEventType enum @~chinese ScriptEventTypeæšä¸¾*/
+/** @~english ScriptEventType enum @~chinese ScriptEventTypeÃ¶¾Ù*/
 enum ScriptEventType
 {
     kNodeEvent = 0,
@@ -287,13 +288,14 @@ enum ScriptEventType
     kControlEvent,
     kCommonEvent,
     kComponentEvent,
-    kRestartGame
+    kRestartGame,
+    kScriptActionEvent
 };
 
 /**@~english
  * For Lua, Wrapper the script data that should be used to find the handler corresponding to the Lua function by the nativeobject pointer and store the value pointer which would be converted concretely by the different events,then the converted data would be passed into the Lua stack.
  * @~chinese 
- * å¯¹äºLua,è¿™æ˜¯ä¸€ä¸ªåŸºç¡€æ•°æ®å°è£…ç±»ã€‚å…¶ä¸­,nativeObjectç”¨äºæŸ¥æ‰¾å¯¹äºLuaå‡½æ•°çš„handlerï¼Œvalueçš„å€¼æ ¹æ®ä¸åŒçš„äº‹ä»¶ç±»å‹è½¬æ¢æˆå…·ä½“ç±»å‹çš„æ•°æ®ï¼Œå¹¶ä¸”è½¬æ¢åçš„æ•°æ®å°†ä¼šå‹å…¥åˆ°Luaå †æ ˆï¼Œåšä¸ºLuaå‡½æ•°ä¸­çš„ä¼ å…¥å‚æ•°ã€‚
+ * ¶ÔÓÚLua,ÕâÊÇÒ»¸ö»ù´¡Êı¾İ·â×°Àà¡£ÆäÖĞ,nativeObjectÓÃÓÚ²éÕÒ¶ÔÓÚLuaº¯ÊıµÄhandler£¬valueµÄÖµ¸ù¾İ²»Í¬µÄÊÂ¼şÀàĞÍ×ª»»³É¾ßÌåÀàĞÍµÄÊı¾İ£¬²¢ÇÒ×ª»»ºóµÄÊı¾İ½«»áÑ¹Èëµ½Lua¶ÑÕ»£¬×öÎªLuaº¯ÊıÖĞµÄ´«Èë²ÎÊı¡£
  * @js NA
  * @lua NA
  */
@@ -303,7 +305,7 @@ struct BasicScriptData
      * For Lua, nativeobject is used to get handler corresponding to the Lua function.
      *
      * @~chinese 
-     * å¯¹äºLua, nativeobjectç”¨äºè·å–å¯¹äºLuaå‡½æ•°çš„handlerã€‚
+     * ¶ÔÓÚLua, nativeobjectÓÃÓÚ»ñÈ¡¶ÔÓÚLuaº¯ÊıµÄhandler¡£
      * 
      */
     void* nativeObject;
@@ -312,7 +314,7 @@ struct BasicScriptData
      * A pointer point to the value data which would be converted by different events.
      *
      * @~chinese 
-     * ä¸€ä¸ªéœ€è¦æ ¹æ®ä¸åŒäº‹ä»¶è¿›è¡Œå…·ä½“è½¬æ¢çš„æ•°æ®æŒ‡é’ˆã€‚
+     * Ò»¸öĞèÒª¸ù¾İ²»Í¬ÊÂ¼ş½øĞĞ¾ßÌå×ª»»µÄÊı¾İÖ¸Õë¡£
      */
     void* value;
     
@@ -320,7 +322,7 @@ struct BasicScriptData
      * Constructor of BasicScriptData.
      *
      * @~chinese 
-     * BasicScriptDataçš„æ„é€ å‡½æ•°ã€‚
+     * BasicScriptDataµÄ¹¹Ôìº¯Êı¡£
      */
     BasicScriptData(void* inObject,void* inValue = nullptr)
     : nativeObject(inObject),value(inValue)
@@ -329,9 +331,51 @@ struct BasicScriptData
 };
 
 /**@~english
+ * For Lua, Wrapper the script data that should be used to find the handler corresponding to the Lua function by the nativeobject pointer and store the value pointer which would be converted concretely by the different events,then the converted data would be passed into the Lua stack.
+ * @js NA
+ */
+struct ActionObjectScriptData
+{
+    /**
+     * For Lua, nativeobject is used to get handler corresponding to the Lua function.
+     *
+     * @js NA
+     * @lua NA
+     */
+    void* nativeObject;
+    
+    /**
+     * A pointer point to the value data which event action
+     *
+     * @js NA
+     * @lua NA
+     */
+    int* eventType;
+    
+    /**
+     * A pointer point to the value data which would be converted by different events.
+     *
+     * @js NA
+     * @lua NA
+     */
+    void* param;
+    
+    /**
+     * Constructor of BasicScriptData.
+     *
+     * @js NA
+     * @lua NA
+     */
+    ActionObjectScriptData(void* inObject,int* inValue = nullptr, void* inParam = nullptr)
+    : nativeObject(inObject),eventType(inValue), param(inParam)
+    {
+    }
+};
+
+/**
  * For Lua, the SchedulerScriptData is used to find the Lua function pointer by the handler, then call the Lua function by push the elapse into the Lua stack as a parameter when scheduler update event is triggered.
  * @~chinese 
- * @~chinese å¯¹äºLua, SchedulerScriptDataä¹Ÿæ˜¯ä¸€ä¸ªæ•°æ®å°è£…ç±»ã€‚å½“å®šæ—¶å™¨updateäº‹ä»¶è¢«è§¦å‘æ—¶ï¼Œå®ƒé€šè¿‡handleræ‰¾åˆ°å¯¹åº”çš„Luaå‡½æ•°ï¼Œç„¶åå°†elpaseå‹å…¥Luaå †æ ˆä½œä¸ºLuaå‡½æ•°çš„å‚æ•°ã€‚
+ * @~chinese ¶ÔÓÚLua, SchedulerScriptDataÒ²ÊÇÒ»¸öÊı¾İ·â×°Àà¡£µ±¶¨Ê±Æ÷updateÊÂ¼ş±»´¥·¢Ê±£¬ËüÍ¨¹ıhandlerÕÒµ½¶ÔÓ¦µÄLuaº¯Êı£¬È»ºó½«elpaseÑ¹ÈëLua¶ÑÕ»×÷ÎªLuaº¯ÊıµÄ²ÎÊı¡£
  * @js NA
  * @lua NA
  */
@@ -341,14 +385,14 @@ struct SchedulerScriptData
      * the handler corresponding to the Lua function pointer, only use in the Lua.
      *
      * @~chinese 
-     * å¯¹åº”Luaå‡½æ•°çš„å¼•ç”¨id,åªç”¨äºLuaã€‚
+     * ¶ÔÓ¦Luaº¯ÊıµÄÒıÓÃid,Ö»ÓÃÓÚLua¡£
      */
     int handler;
     /** @~english
      * the parameter would be passed in to the Lua function, only use in the Lua.
      *
      * @~chinese 
-     * ä¼ å…¥Luaå‡½æ•°çš„å‚æ•°ï¼Œåªç”¨äºLua
+     * ´«ÈëLuaº¯ÊıµÄ²ÎÊı£¬Ö»ÓÃÓÚLua
      */
     float elapse;
     // js use
@@ -358,7 +402,7 @@ struct SchedulerScriptData
      * constructor of SchedulerScriptData.
      *
      * @~chinese 
-     * SchedulerScriptDataçš„æ„é€ å‡½æ•°ã€‚
+     * SchedulerScriptDataµÄ¹¹Ôìº¯Êı¡£
      */
     SchedulerScriptData(int inHandler,float inElapse,void* inNode = nullptr)
     : handler(inHandler),
@@ -371,7 +415,7 @@ struct SchedulerScriptData
 /**@~english
  * For Lua, the TouchesScriptData is used to find the Lua function pointer by the nativeObject, then call the Lua function by push touches data and actionType into the Lua stack as the parameters when the touches event is triggered.
  * @~chinese 
- * å¯¹äºLua, TouchesScriptDataå°è£…äº†touchesç›¸å…³æ•°æ®ã€‚å½“touchesäº‹ä»¶è¢«è§¦å‘ï¼Œå®ƒå°†é€šè¿‡nativeObjectæŸ¥æ‰¾å¯¹äºLuaå‡½æ•°çš„handler,ç„¶åå°†touchesæ•°æ®å’ŒactionTypeå‹å…¥Luaå †æ ˆä½œä¸ºLuaå‡½æ•°å‚æ•°è°ƒç”¨Luaå‡½æ•°ã€‚
+ * ¶ÔÓÚLua, TouchesScriptData·â×°ÁËtouchesÏà¹ØÊı¾İ¡£µ±touchesÊÂ¼ş±»´¥·¢£¬Ëü½«Í¨¹ınativeObject²éÕÒ¶ÔÓÚLuaº¯ÊıµÄhandler,È»ºó½«touchesÊı¾İºÍactionTypeÑ¹ÈëLua¶ÑÕ»×÷ÎªLuaº¯Êı²ÎÊıµ÷ÓÃLuaº¯Êı¡£
  * @js NA
  * @lua NA
  */
@@ -381,28 +425,28 @@ struct TouchesScriptData
      * The EventTouch::EventCode type. 
      *
      * @~chinese 
-     * EventTouch::EventCodeç±»å‹çš„å€¼ã€‚
+     * EventTouch::EventCodeÀàĞÍµÄÖµ¡£
      */
     EventTouch::EventCode actionType;
     /** @~english
      * For Lua, it Used to find the Lua function pointer by the ScriptHandlerMgr.
      *
      * @~chinese 
-     * å¯¹äºLuaï¼ŒnativeObjectç”¨äºæŸ¥æ‰¾å¯¹Luaå‡½æ•°çš„handlerã€‚
+     * ¶ÔÓÚLua£¬nativeObjectÓÃÓÚ²éÕÒ¶ÔLuaº¯ÊıµÄhandler¡£
      */
     void* nativeObject;
     /** @~english
      * The vector of Touch.For Lua, it would be convert to the Lua table form to be pushed into the Lua stack. 
      *
      * @~chinese 
-     * å…³äºTouchçš„std::vectorã€‚å¯¹äºLua, è¿™ä¸ªvectorä¼šè½¬æˆå¯¹åº”çš„Lua tableå‹å…¥å¯¹åº”çš„Lua stackã€‚
+     * ¹ØÓÚTouchµÄstd::vector¡£¶ÔÓÚLua, Õâ¸övector»á×ª³É¶ÔÓ¦µÄLua tableÑ¹Èë¶ÔÓ¦µÄLua stack¡£
      */
     const std::vector<Touch*>& touches;
     /** @~english
      * event information, it is useless for Lua.
      *
      * @~chinese 
-     * äº‹ä»¶ä¿¡æ¯ï¼ŒLuaä¸éœ€ç”¨åˆ°è¿™ä¸ªå˜é‡ã€‚
+     * ÊÂ¼şĞÅÏ¢£¬Lua²»ĞèÓÃµ½Õâ¸ö±äÁ¿¡£
      */
     Event* event;
     
@@ -410,7 +454,7 @@ struct TouchesScriptData
      * Constructor of TouchesScriptData.
      *
      * @~chinese 
-     * TouchesScriptDataçš„æ„é€ å‡½æ•°ã€‚
+     * TouchesScriptDataµÄ¹¹Ôìº¯Êı¡£
      */
     TouchesScriptData(EventTouch::EventCode inActionType, void* inNativeObject, const std::vector<Touch*>& inTouches, Event* evt)
     : actionType(inActionType),
@@ -422,9 +466,9 @@ struct TouchesScriptData
 };
 
 /**@~english
- * For Lua, the TouchScriptData is used to find the Lua function pointer by the nativeObject, then call the Lua function by push touch data and actionType convered to string type into the Lua stack as the parameters when the touch event is triggered.
+ * For Lua, the TouchScriptData is used to find the Lua function pointer by the nativeObject, then call the Lua function by push touch data and actionType converted to string type into the Lua stack as the parameters when the touch event is triggered.
  * @~chinese 
- * å¯¹äºLua, TouchScriptDataå°è£…äº†touchç›¸å…³æ•°æ®ã€‚å½“touchäº‹ä»¶è¢«è§¦å‘ï¼Œå®ƒå°†é€šè¿‡nativeObjectæŸ¥æ‰¾å¯¹äºLuaå‡½æ•°çš„handler,ç„¶åå°†touchæ•°æ®å’ŒactionTypeå‹å…¥Luaå †æ ˆä½œä¸ºLuaå‡½æ•°çš„å‚æ•°è°ƒç”¨Luaå‡½æ•°ã€‚
+ * ¶ÔÓÚLua, TouchScriptData·â×°ÁËtouchÏà¹ØÊı¾İ¡£µ±touchÊÂ¼ş±»´¥·¢£¬Ëü½«Í¨¹ınativeObject²éÕÒ¶ÔÓÚLuaº¯ÊıµÄhandler,È»ºó½«touchÊı¾İºÍactionTypeÑ¹ÈëLua¶ÑÕ»×÷ÎªLuaº¯ÊıµÄ²ÎÊıµ÷ÓÃLuaº¯Êı¡£
  * @js NA
  * @lua NA
  */
@@ -434,28 +478,28 @@ struct TouchScriptData
      * The EventTouch::EventCode type.
      *
      * @~chinese 
-     * EventTouch::EventCodeç±»å‹çš„å€¼ã€‚
+     * EventTouch::EventCodeÀàĞÍµÄÖµ¡£
      */
     EventTouch::EventCode actionType;
     /** @~english
      * For Lua, it Used to find the Lua function pointer by the ScriptHandlerMgr.
      *
      * @~chinese 
-     * å¯¹äºLuaï¼ŒnativeObjectç”¨äºæŸ¥æ‰¾å¯¹Luaå‡½æ•°æŒ‡é’ˆçš„handlerã€‚
+     * ¶ÔÓÚLua£¬nativeObjectÓÃÓÚ²éÕÒ¶ÔLuaº¯ÊıÖ¸ÕëµÄhandler¡£
      */
     void* nativeObject;
     /** @~english
      * touch information. it would be in x,y form to push into the Lua stack.
      *
      * @~chinese 
-     * touchä¿¡æ¯ï¼Œå®ƒå°†ä»¥x,yå½¢å¼å‹å…¥Luaå †æ ˆã€‚
+     * touchĞÅÏ¢£¬Ëü½«ÒÔx,yĞÎÊ½Ñ¹ÈëLua¶ÑÕ»¡£
      */
     Touch* touch;
     /**@~english
      * event information,it is useless for Lua.
      *
      * @~chinese 
-     * äº‹ä»¶ä¿¡æ¯ï¼ŒLuaä¸éœ€ç”¨åˆ°è¿™ä¸ªå˜é‡ã€‚
+     * ÊÂ¼şĞÅÏ¢£¬Lua²»ĞèÓÃµ½Õâ¸ö±äÁ¿¡£
      */
     Event* event;
     
@@ -463,7 +507,7 @@ struct TouchScriptData
      * Constructor of TouchScriptData.
      *
      * @~chinese 
-     * TouchScriptDataçš„æ„é€ å‡½æ•°ã€‚
+     * TouchScriptDataµÄ¹¹Ôìº¯Êı¡£
      */
     TouchScriptData(EventTouch::EventCode inActionType, void* inNativeObject, Touch* inTouch, Event* evt)
     : actionType(inActionType),
@@ -476,9 +520,9 @@ struct TouchScriptData
 
 
 /**@~english
- * For Lua, the KeypadScriptData is used to find the Lua function pointer by the nativeObject, then call the Lua function by push the actionType convered to string type into the Lua stack as the parameters when the Keypad event is triggered.
+ * For Lua, the KeypadScriptData is used to find the Lua function pointer by the nativeObject, then call the Lua function by push the actionType converted to string type into the Lua stack as the parameters when the Keypad event is triggered.
  * @~chinese 
- * å¯¹äºLuaï¼ŒKeypadScriptDataå°è£…äº†å…³äºKeypadä¿¡æ¯çš„ç›¸å…³æ•°æ®ã€‚å½“Keypadäº‹ä»¶è¢«è§¦å‘ï¼Œå®ƒå°†é€šè¿‡nativeObjectæŸ¥æ‰¾å¯¹åº”Luaå‡½æ•°çš„handler,ç„¶åå°†actionTypeè½¬æˆå¯¹åº”çš„å­—ç¬¦ä¸²å‹å…¥Luaå †æ ˆåšä¸ºLuaå‡½æ•°çš„å‚æ•°è°ƒç”¨Luaå‡½æ•°ã€‚
+ * ¶ÔÓÚLua£¬KeypadScriptData·â×°ÁË¹ØÓÚKeypadĞÅÏ¢µÄÏà¹ØÊı¾İ¡£µ±KeypadÊÂ¼ş±»´¥·¢£¬Ëü½«Í¨¹ınativeObject²éÕÒ¶ÔÓ¦Luaº¯ÊıµÄhandler,È»ºó½«actionType×ª³É¶ÔÓ¦µÄ×Ö·û´®Ñ¹ÈëLua¶ÑÕ»×öÎªLuaº¯ÊıµÄ²ÎÊıµ÷ÓÃLuaº¯Êı¡£
  * @js NA
  * @lua NA
  */
@@ -488,14 +532,14 @@ struct KeypadScriptData
      * The specific type of EventKeyboard::KeyCode
      *
      * @~chinese 
-     * EventKeyboard::KeyCodeç±»å‹çš„å€¼ã€‚
+     * EventKeyboard::KeyCodeÀàĞÍµÄÖµ¡£
      */
     EventKeyboard::KeyCode actionType;
     /** @~english
      * For Lua, it Used to find the Lua function pointer by the ScriptHandlerMgr.
      *
      * @~chinese 
-     * å¯¹äºLuaï¼ŒnativeObjectç”¨äºæŸ¥æ‰¾å¯¹Luaå‡½æ•°æŒ‡é’ˆçš„handlerã€‚
+     * ¶ÔÓÚLua£¬nativeObjectÓÃÓÚ²éÕÒ¶ÔLuaº¯ÊıÖ¸ÕëµÄhandler¡£
      */
     void* nativeObject;
     
@@ -503,7 +547,7 @@ struct KeypadScriptData
      * Constructor of KeypadScriptData.
      *
      * @~chinese 
-     * KeypadScriptDataçš„æ„é€ å‡½æ•°ã€‚
+     * KeypadScriptDataµÄ¹¹Ôìº¯Êı¡£
      */
     KeypadScriptData(EventKeyboard::KeyCode inActionType,void* inNativeObject)
     : actionType(inActionType),nativeObject(inNativeObject)
@@ -515,7 +559,7 @@ struct KeypadScriptData
 /**@~english
  * For Lua, the CommonScriptData is used to find the Lua function pointer by the handler, then call the Lua function by push the eventName, eventSource(if it not nullptr), eventSourceClassName(if it is nullptr or "", and the eventSource is not nullptr,would give the default string "cc.Ref") into the Lua stack as the parameter when the common event such as is triggered.
  * @~chinese
- * å¯¹äºLuaï¼ŒCommonScriptDataå°è£…äº†ä¸€èˆ¬æ•°æ®ã€‚å½“ä¸€èˆ¬äº‹ä»¶è§¦å‘æ—¶ï¼Œå®ƒå°†é€šè¿‡handleræ‰¾åˆ°å¯¹åº”çš„Luaå‡½æ•°æŒ‡é’ˆï¼Œç„¶åå°†eventNameï¼ŒeventSource(å¦‚æœä¸ä¸ºç©º)ï¼ŒeventSourceClassName(å¦‚æœeventSourceClassNameä¸ä¸ºnullptrï¼Œå¹¶ä¸”eventSourceClassNameä¸ºç©ºæˆ–è€…""ï¼Œå®ƒå°†ä¼šå°†é»˜è®¤åœ°å°†"cc.Ref"å‹å…¥åˆ°Luaæ ˆä¸­)å‹å…¥Luaæ ˆä¸­ä½œä¸ºLuaå‡½æ•°çš„å‚æ•°è°ƒç”¨Luaå‡½æ•°ã€‚
+ * ¶ÔÓÚLua£¬CommonScriptData·â×°ÁËÒ»°ãÊı¾İ¡£µ±Ò»°ãÊÂ¼ş´¥·¢Ê±£¬Ëü½«Í¨¹ıhandlerÕÒµ½¶ÔÓ¦µÄLuaº¯ÊıÖ¸Õë£¬È»ºó½«eventName£¬eventSource(Èç¹û²»Îª¿Õ)£¬eventSourceClassName(Èç¹ûeventSourceClassName²»Îªnullptr£¬²¢ÇÒeventSourceClassNameÎª¿Õ»òÕß""£¬Ëü½«»á½«Ä¬ÈÏµØ½«"cc.Ref"Ñ¹Èëµ½LuaÕ»ÖĞ)Ñ¹ÈëLuaÕ»ÖĞ×÷ÎªLuaº¯ÊıµÄ²ÎÊıµ÷ÓÃLuaº¯Êı¡£
  * @js NA
  * @lua NA
  */
@@ -525,28 +569,28 @@ struct CommonScriptData
      * The index to find the corresponding to the Lua function pointer.
      *
      * @~chinese 
-     * å¯¹åº”Luaå‡½æ•°çš„å¼•ç”¨id,åªç”¨äºLuaã€‚
+     * ¶ÔÓ¦Luaº¯ÊıµÄÒıÓÃid,Ö»ÓÃÓÚLua¡£
      */
     int handler;
     /** @~english
      * The string value to be pushed into the Lua stack.
      *
      * @~chinese 
-     * å‹å…¥Luaæ ˆçš„äº‹ä»¶åã€‚
+     * Ñ¹ÈëLuaÕ»µÄÊÂ¼şÃû¡£
      */
     char eventName[64];
     /** @~english
      * The source object trigger the event,could be nullptr.
      *
      * @~chinese 
-     * äº‹ä»¶è§¦å‘æºå¯¹è±¡çš„æŒ‡é’ˆï¼Œå¯ä»¥ä¸ºnullptrã€‚
+     * ÊÂ¼ş´¥·¢Ô´¶ÔÏóµÄÖ¸Õë£¬¿ÉÒÔÎªnullptr¡£
      */
     Ref* eventSource;
     /**@~english
      * The class name of source object trigger the event, could be 0.
      *
      * @~chinese 
-     * äº‹ä»¶è§¦å‘æºå¯¹è±¡çš„ç±»å,å¯ä»¥ä¸ºç©ºã€‚
+     * ÊÂ¼ş´¥·¢Ô´¶ÔÏóµÄÀàÃû,¿ÉÒÔÎª¿Õ¡£
      */
     char eventSourceClassName[64];
     
@@ -554,7 +598,7 @@ struct CommonScriptData
      * Constructor of  CommonScriptData.
      *
      * @~chinese 
-     * CommonScriptDataçš„æ„é€ å‡½æ•°ã€‚
+     * CommonScriptDataµÄ¹¹Ôìº¯Êı¡£
      */
     CommonScriptData(int inHandler,const char* inName, Ref* inSource = nullptr,const char* inClassName = nullptr)
     : handler(inHandler),
@@ -577,8 +621,8 @@ struct CommonScriptData
  * The ScriptEvent wrapper the different script data corresponding to the ScriptEventType in to the unified struct.
  * when the corresponding event is triggered, we could call the `sendEvent` of ScriptEngineProtocol to handle the event.
  * @~chinese 
- * ScriptEventå°†ä¸åŒç±»å‹çš„ScriptEventTypeå¯¹åº”çš„è„šæœ¬æ•°æ®å°è£…åˆ°ä¸€ä¸ªç»Ÿä¸€çš„ç»“æ„é‡Œé¢ã€‚
- * å½“å¯¹åº”çš„äº‹ä»¶è¢«è§¦å‘, å°†è°ƒç”¨ScriptEngineProtocolçš„`sendEvent`æ¥å¤„ç†è¿™ä¸ªeventã€‚
+ * ScriptEvent½«²»Í¬ÀàĞÍµÄScriptEventType¶ÔÓ¦µÄ½Å±¾Êı¾İ·â×°µ½Ò»¸öÍ³Ò»µÄ½á¹¹ÀïÃæ¡£
+ * µ±¶ÔÓ¦µÄÊÂ¼ş±»´¥·¢, ½«µ÷ÓÃScriptEngineProtocolµÄ`sendEvent`À´´¦ÀíÕâ¸öevent¡£
  * @js NA
  * @lua NA
  */
@@ -588,14 +632,14 @@ struct ScriptEvent
      * The specific type of ScriptEventType.
      *
      * @~chinese 
-     * ç‰¹å®šScriptEventTypeçš„å€¼ã€‚
+     * ÌØ¶¨ScriptEventTypeµÄÖµ¡£
      */
     ScriptEventType type;
     /** @~english
      * Pointer point to the different data.
      *
      * @~chinese 
-     * æŒ‡å‘ä¸åŒæ•°æ®çš„æŒ‡é’ˆã€‚
+     * Ö¸Ïò²»Í¬Êı¾İµÄÖ¸Õë¡£
      */
     void* data;
     
@@ -603,7 +647,7 @@ struct ScriptEvent
      * Constructor of ScriptEvent.
      *
      * @~chinese 
-     * ScriptEventçš„æ„é€ å‡½æ•°ã€‚
+     * ScriptEventµÄ¹¹Ôìº¯Êı¡£
      */
     ScriptEvent(ScriptEventType inType,void* inData)
     : type(inType),
@@ -617,9 +661,9 @@ struct ScriptEvent
  * It will affect the lifecycle of ScriptEngine instance, the autorelease pool will be destroyed before destructing ScriptEngine.
  * So a crash will appear on Win32 if you click the close button.
  * @~chinese 
- * ç”±äºScriptEngineProtocolå¯¹è±¡åœ¨AppDelegate.cppä¸­é€šè¿‡setScriptEngineè®¾ç½®åå°†ä¸€ç›´å­˜åœ¨ï¼Œæ‰€ä»¥å®ƒä¸éœ€è¦ä»Refæ´¾ç”Ÿã€‚
- * å¹¶ä¸”å®ƒå°†ä¼šå½±å“åˆ°è„šæœ¬å¼•æ“å®ä¾‹çš„ç”Ÿå‘½æœŸï¼Œè€Œautorelease poolä¼šåœ¨è„šæœ¬å¼•æ“è¢«ææ„å‰è°ƒç”¨ã€‚
- * å¦‚æœä½ ç‚¹å‡»å…³é—­æŒ‰é’®ï¼Œåœ¨win32å¹³å°ä¸Šä¼šå‡ºç°å´©æºƒã€‚
+ * ÓÉÓÚScriptEngineProtocol¶ÔÏóÔÚAppDelegate.cppÖĞÍ¨¹ısetScriptEngineÉèÖÃºó½«Ò»Ö±´æÔÚ£¬ËùÒÔËü²»ĞèÒª´ÓRefÅÉÉú¡£
+ * ²¢ÇÒËü½«»áÓ°Ïìµ½½Å±¾ÒıÇæÊµÀıµÄÉúÃüÆÚ£¬¶øautorelease pool»áÔÚ½Å±¾ÒıÇæ±»Îö¹¹Ç°µ÷ÓÃ¡£
+ * Èç¹ûÄãµã»÷¹Ø±Õ°´Å¥£¬ÔÚwin32Æ½Ì¨ÉÏ»á³öÏÖ±ÀÀ£¡£
  * @js NA
  * @lua NA
  */
@@ -631,7 +675,7 @@ public:
      * Constructor of ScriptEngineProtocol.
      *
      * @~chinese 
-     * ScriptEngineProtocolçš„æ„é€ å‡½æ•°ã€‚
+     * ScriptEngineProtocolµÄ¹¹Ôìº¯Êı¡£
      */
     ScriptEngineProtocol()
     {};
@@ -640,7 +684,7 @@ public:
      * Destructor of ScriptEngineProtocol.
      *
      * @~chinese 
-     * ScriptEngineProtocolçš„ææ„å‡½æ•°ã€‚
+     * ScriptEngineProtocolµÄÎö¹¹º¯Êı¡£
      */
     virtual ~ScriptEngineProtocol() {};
     
@@ -648,11 +692,11 @@ public:
      * Get the specific script type.
      *
      * @~chinese 
-     * è·å–è„šæœ¬å¼•æ“çš„ç±»å‹ã€‚
+     * »ñÈ¡½Å±¾ÒıÇæµÄÀàĞÍ¡£
      * 
      * @return @~english the specific script type.
      *
-     * @~chinese è·å–è„šæœ¬å¼•æ“çš„ç±»å‹ã€‚
+     * @~chinese »ñÈ¡½Å±¾ÒıÇæµÄÀàĞÍ¡£
      */
     virtual ccScriptType getScriptType() { return kScriptTypeNone; };
 
@@ -660,15 +704,15 @@ public:
      * Remove script object,the specific meaning should refer to the ScriptType.
      * For Lua, @see removeScriptObjectByObject of LuaEngine
      * @~chinese 
-     * ç§»é™¤è„šæœ¬å¯¹è±¡ï¼Œä¸åŒçš„ScriptTypeæœ‰ä¸åŒçš„æ“ä½œã€‚
-     * å¯¹äºLua, @see removeScriptObjectByObject of LuaEngine.
+     * ÒÆ³ı½Å±¾¶ÔÏó£¬²»Í¬µÄScriptTypeÓĞ²»Í¬µÄ²Ù×÷¡£
+     * ¶ÔÓÚLua, @see removeScriptObjectByObject of LuaEngine.
      */
     virtual void removeScriptObjectByObject(Ref* obj) = 0;
     
     /** @~english
      * Remove script function handler, only LuaEngine class need to implement this function.
      * @~chinese 
-     * ç§»é™¤handlerçš„å¼•ç”¨,åªæœ‰LuaEngineéœ€è¦å®ç°è¿™ä¸ªå‡½æ•°ã€‚
+     * ÒÆ³ıhandlerµÄÒıÓÃ,Ö»ÓĞLuaEngineĞèÒªÊµÏÖÕâ¸öº¯Êı¡£
      * @see removeScriptHandler of LuaEngine.
      */
     virtual void removeScriptHandler(int handler) {};
@@ -676,7 +720,7 @@ public:
     /** @~english
      * Reallocate script function handler, only LuaEngine class need to implement this function.
      * @~chinese 
-     * é‡æ–°åˆ†é…è„šæœ¬å‡½æ•°çš„handler,åªæœ‰LuaEngineç±»éœ€è¦å®ç°è¿™ä¸ªå‡½æ•°ã€‚
+     * ÖØĞÂ·ÖÅä½Å±¾º¯ÊıµÄhandler,Ö»ÓĞLuaEngineÀàĞèÒªÊµÏÖÕâ¸öº¯Êı¡£
      * @see reallocateScriptHandler of LuaEngine.
      */
     virtual int reallocateScriptHandler(int handler) { return 0;}
@@ -685,12 +729,12 @@ public:
      * Execute script code contained in the given string.
      *
      * @~chinese 
-     * æ‰§è¡Œç»™å®šå­—ç¬¦ä¸²ä¸­åŒ…å«çš„è„šæœ¬ä»£ç ã€‚
+     * Ö´ĞĞ¸ø¶¨×Ö·û´®ÖĞ°üº¬µÄ½Å±¾´úÂë¡£
      * 
      * @param codes @~english holding the valid script code that should be executed.
-     * @~chinese å°†è¢«æ‰§è¡Œçš„è„šæœ¬å­—ç¬¦ä¸²ã€‚
+     * @~chinese ½«±»Ö´ĞĞµÄ½Å±¾×Ö·û´®¡£
      * @return @~english 0 if the string is executed correctly,other if the string is executed wrongly.
-     * @~chinese æ‰§è¡Œæ­£ç¡®è¿”å›0ï¼Œå¦åˆ™è¿”å›å…¶å®ƒå€¼ã€‚
+     * @~chinese Ö´ĞĞÕıÈ··µ»Ø0£¬·ñÔò·µ»ØÆäËüÖµ¡£
      */
     virtual int executeString(const char* codes) = 0;
     
@@ -698,12 +742,12 @@ public:
      * Execute a script file.
      * 
      * @~chinese 
-     * æ‰§è¡Œä¸€ä¸ªè„šæœ¬æ–‡ä»¶ã€‚
+     * Ö´ĞĞÒ»¸ö½Å±¾ÎÄ¼ş¡£
      * 
      * @param filename @~english String object holding the filename of the script file that is to be executed.
-     * @~chinese è„šæœ¬æ–‡ä»¶çš„æ–‡ä»¶åã€‚
+     * @~chinese ½Å±¾ÎÄ¼şµÄÎÄ¼şÃû¡£
      * @return @~english 0 if it happen the error or it hasn't return value, otherwise it return the value by calling the lua function.
-     * @~chinese å¦‚æœç¢°åˆ°é”™è¯¯æˆ–è€…è°ƒç”¨çš„Luaå‡½æ•°æ²¡æœ‰è¿”å›å€¼ï¼Œè¿”å›0ï¼›å¦åˆ™è¿”å›è°ƒç”¨Luaå‡½æ•°çš„è¿”å›å€¼ã€‚
+     * @~chinese Èç¹ûÅöµ½´íÎó»òÕßµ÷ÓÃµÄLuaº¯ÊıÃ»ÓĞ·µ»ØÖµ£¬·µ»Ø0£»·ñÔò·µ»Øµ÷ÓÃLuaº¯ÊıµÄ·µ»ØÖµ¡£
      */
     virtual int executeScriptFile(const char* filename) = 0;
     
@@ -712,13 +756,13 @@ public:
      * The function should not take any parameters and should return an integer for Lua.
      *
      * @~chinese 
-     * æ‰§è¡Œå…¨å±€çš„è„šæœ¬å‡½æ•°ã€‚
-     * å¯¹äºLua,è¯¥å…¨å±€å‡½æ•°ä¸åº”è¯¥æœ‰å‡½æ•°å‚æ•°å¹¶ä¸”å®ƒå°†è¿”å›ä¸€ä¸ªæ•´æ•°å€¼ã€‚
+     * Ö´ĞĞÈ«¾ÖµÄ½Å±¾º¯Êı¡£
+     * ¶ÔÓÚLua,¸ÃÈ«¾Öº¯Êı²»Ó¦¸ÃÓĞº¯Êı²ÎÊı²¢ÇÒËü½«·µ»ØÒ»¸öÕûÊıÖµ¡£
      * 
      * @param functionName @~english String object holding the name of the function, in the global script environment, that is to be executed.
-     * @~chinese å…¨å±€è„šæœ¬å‡½æ•°çš„å­—ç¬¦ä¸²åç§°ã€‚
+     * @~chinese È«¾Ö½Å±¾º¯ÊıµÄ×Ö·û´®Ãû³Æ¡£
      * @return @~english The integer value returned from the script function.
-     * @~chinese ä»è„šæœ¬å‡½æ•°è¿”å›çš„æ•´æ•°å€¼ã€‚
+     * @~chinese ´Ó½Å±¾º¯Êı·µ»ØµÄÕûÊıÖµ¡£
      */
     virtual int executeGlobalFunction(const char* functionName) = 0;
     
@@ -727,7 +771,7 @@ public:
      *
      *
      * @~chinese 
-     * å½“c++ä¸­è§¦å‘çš„ä¸€äº›äº‹ä»¶éœ€è¦ä¼ é€’åˆ°è„šæœ¬å±‚å¤„ç†æ—¶,å°†ä¼šè°ƒç”¨è¿™ä¸ªå‡½æ•°æ¥å¤„ç†ã€‚ScriptEventä¸­åŒ…å«äº†è¦ä¼ åˆ°è„šæœ¬å±‚å¤„ç†çš„æ•°æ®ã€‚
+     * µ±c++ÖĞ´¥·¢µÄÒ»Ğ©ÊÂ¼şĞèÒª´«µİµ½½Å±¾²ã´¦ÀíÊ±,½«»áµ÷ÓÃÕâ¸öº¯ÊıÀ´´¦Àí¡£ScriptEventÖĞ°üº¬ÁËÒª´«µ½½Å±¾²ã´¦ÀíµÄÊı¾İ¡£
      */
     virtual int sendEvent(ScriptEvent* evt) = 0;
     
@@ -735,11 +779,11 @@ public:
      * Handle the assert message.
      *
      * @~chinese 
-     * å¤„ç†æ–­è¨€ä¿¡æ¯ã€‚
+     * ´¦Àí¶ÏÑÔĞÅÏ¢¡£
      * 
      * @return @~english return true if current _callFromLua of LuaStack is not equal to 0 otherwise return false for Lua.
      *
-     * @~chinese è¿”å›true,å¦‚æœå½“å‰LuaStackçš„_callFromLuaä¸ç­‰äº0,å¦åˆ™è¿”å›å‡ã€‚
+     * @~chinese ·µ»Øtrue,Èç¹ûµ±Ç°LuaStackµÄ_callFromLua²»µÈÓÚ0,·ñÔò·µ»Ø¼Ù¡£
      */
     virtual bool handleAssert(const char *msg) = 0;
     
@@ -747,9 +791,9 @@ public:
      * Set whether the call comes from the script or not, only use for the js.
      *
      * @~chinese 
-     * è®¾ç½®è¿™ä¸ªè°ƒç”¨æ˜¯å¦æ˜¯ç”±è„šæœ¬å±‚è§¦å‘çš„ï¼Œåªç”¨äºjsã€‚
+     * ÉèÖÃÕâ¸öµ÷ÓÃÊÇ·ñÊÇÓÉ½Å±¾²ã´¥·¢µÄ£¬Ö»ÓÃÓÚjs¡£
      * @param callFromScript @~english whether the call comes from the script or not.
-     * @~chinese è°ƒç”¨æ˜¯å¦ç”¨è„šæœ¬å±‚è§¦å‘ã€‚
+     * @~chinese µ÷ÓÃÊÇ·ñÓÃ½Å±¾²ã´¥·¢¡£
      */
     virtual void setCalledFromScript(bool callFromScript) { CC_UNUSED_PARAM(callFromScript); };
     
@@ -757,16 +801,16 @@ public:
      * Get the flag that represents whether the call comes from the script or not,only use for the js.
      *
      * @~chinese 
-     * è·å–è°ƒç”¨æ˜¯å¦æ˜¯ç”±è„šæœ¬å±‚è§¦å‘çš„æ ‡è®°ï¼Œåªç”¨äºjsã€‚
+     * »ñÈ¡µ÷ÓÃÊÇ·ñÊÇÓÉ½Å±¾²ã´¥·¢µÄ±ê¼Ç£¬Ö»ÓÃÓÚjs¡£
      * 
      * @return @~english false.
-     * @~chinese falseã€‚
+     * @~chinese false¡£
      * @lua NA
      * @js NA
      */
     virtual bool isCalledFromScript() { return false; };
     
-    /** @~english ConfigType enum.  @~chinese ConfigTypeæšä¸¾ç±»ã€‚*/
+    /** @~english ConfigType enum.  @~chinese ConfigTypeÃ¶¾ÙÀà¡£*/
     enum class ConfigType
     {
         NONE,
@@ -776,13 +820,13 @@ public:
      * Parse configuration file.
      * 
      * @~chinese 
-     * è§£æé…ç½®æ–‡ä»¶ã€‚
+     * ½âÎöÅäÖÃÎÄ¼ş¡£
      * 
      * @param type @~english the specific type value.
-     * @~chinese ç‰¹å®šConfigTypeçš„å€¼ã€‚
+     * @~chinese ÌØ¶¨ConfigTypeµÄÖµ¡£
      * @param str @~english the information data.
      *
-     * @~chinese æ•°æ®ä¿¡æ¯ã€‚
+     * @~chinese Êı¾İĞÅÏ¢¡£
      */
     virtual bool parseConfig(ConfigType type, const std::string& str) = 0;
 };
@@ -792,7 +836,7 @@ class Node;
  * ScriptEngineManager is a singleton which manager an object instance of ScriptEngineProtocl, such as LuaEngine.
  *
  * @~chinese 
- * ScriptEngineManageræ˜¯ä¸€ä¸ªç”¨æ¥ç®¡ç†ScriptEngineProtoclå®ä¾‹å¯¹è±¡çš„å•ä¾‹ï¼Œä¾‹å¦‚LuaEngineå®ä¾‹å¯¹è±¡ã€‚
+ * ScriptEngineManagerÊÇÒ»¸öÓÃÀ´¹ÜÀíScriptEngineProtoclÊµÀı¶ÔÏóµÄµ¥Àı£¬ÀıÈçLuaEngineÊµÀı¶ÔÏó¡£
  * 
  * @since v0.99.5-x-0.8.5
  * @js NA
@@ -805,121 +849,128 @@ public:
      * Constructor of ScriptEngineManager.
      *
      * @~chinese 
-     * ScriptEngineManagerçš„æ„é€ å‡½æ•°ã€‚
+     * ScriptEngineManagerµÄ¹¹Ôìº¯Êı¡£
      */
     ~ScriptEngineManager(void);
     /** @~english
      * Get the ScriptEngineProtocol object.
      *
      * @~chinese 
-     * è·å–ScriptEngineProtocolå¯¹è±¡å®ä¾‹ã€‚
+     * »ñÈ¡ScriptEngineProtocol¶ÔÏóÊµÀı¡£
      * 
      * @return @~english the ScriptEngineProtocol object.
      *
-     * @~chinese ScriptEngineProtocolå¯¹è±¡å®ä¾‹ã€‚
+     * @~chinese ScriptEngineProtocol¶ÔÏóÊµÀı¡£
      */
     ScriptEngineProtocol* getScriptEngine(void) {
         return _scriptEngine;
     }
     /**@~english
-     * Set the ScriptEngineProtocol object should be managered.
+     * Set the ScriptEngineProtocol object should be managed.
      *
      * @~chinese 
-     * è®¾ç½®éœ€è¦è¢«ç®¡ç†çš„ScriptEngineProtocolå¯¹è±¡ã€‚
+     * ÉèÖÃĞèÒª±»¹ÜÀíµÄScriptEngineProtocol¶ÔÏó¡£
      * 
      * @param scriptEngine @~english the ScriptEngineProtocol object should be managered.
      *
-     * @~chinese éœ€è¦è¢«ç®¡ç†çš„ScriptEngineProtocolå¯¹è±¡ã€‚
+     * @~chinese ĞèÒª±»¹ÜÀíµÄScriptEngineProtocol¶ÔÏó¡£
      */
     void setScriptEngine(ScriptEngineProtocol *scriptEngine);
     
     /**@~english
-     * Remove the ScriptEngineProtocol object managered.
+     * Remove the ScriptEngineProtocol object managed.
      *
      *
      * @~chinese 
-     * åˆ é™¤è¢«ç®¡ç†çš„ScriptEngineProtocolã€‚
+     * É¾³ı±»¹ÜÀíµÄScriptEngineProtocol¡£
      */
     void removeScriptEngine(void);
     /**@~english
      * Get the instance of ScriptEngineManager object.
      *
      * @~chinese 
-     * è·å–ScriptEngineManagerå¯¹è±¡çš„å®ä¾‹ã€‚
+     * »ñÈ¡ScriptEngineManager¶ÔÏóµÄÊµÀı¡£
      * 
      * @return @~english the instance of ScriptEngineManager object.
      *
-     * @~chinese ScriptEngineManagerå¯¹è±¡çš„å®ä¾‹ã€‚
+     * @~chinese ScriptEngineManager¶ÔÏóµÄÊµÀı¡£
      */
     static ScriptEngineManager* getInstance();
     /**@~english
      * Destroy the singleton of ScriptEngineManager.
      *
      * @~chinese 
-     * é”€æ¯ScriptEngineManagerçš„å•ä¾‹ã€‚
+     * Ïú»ÙScriptEngineManagerµÄµ¥Àı¡£
      */
     static void destroyInstance();
     /**@~english
      * send the node event to JS
      *
      * @~chinese 
-     * å‘é€nodeäº‹ä»¶åˆ°JSã€‚
+     * ·¢ËÍnodeÊÂ¼şµ½JS¡£
      * @param node @~english the pointer of node object.
      *
      * @~chinese
-     * nodeå¯¹è±¡æŒ‡é’ˆã€‚
+     * node¶ÔÏóÖ¸Õë¡£
      *
      * @param action @~english action.
      *
      * @~chinese
-     * äº‹ä»¶ç±»å‹ã€‚
+     * ÊÂ¼şÀàĞÍ¡£
      *
      * @return @~english true if execute successfully,otherwise false.
      *
-     * @~chinese æ‰§è¡ŒæˆåŠŸè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Ö´ĞĞ³É¹¦·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     */
+    static bool sendActionEventToJS(Action* actionObject, int eventType, void* param);
+    /**
+     *
+     *
+     * @lua NA
+     * @js NA
      */
     static bool sendNodeEventToJS(Node* node, int action);
     /**@~english
      * send the extended event of Node to JS
      *
      * @~chinese 
-     * å‘é€æ‰©å±•çš„nodeäº‹ä»¶åˆ°JSã€‚
+     * ·¢ËÍÀ©Õ¹µÄnodeÊÂ¼şµ½JS¡£
      * @param node @~english the pointer of node object.
      *
      * @~chinese
-     * nodeå¯¹è±¡æŒ‡é’ˆã€‚
+     * node¶ÔÏóÖ¸Õë¡£
      *
      * @param action @~english action.
      *
      * @~chinese
-     * äº‹ä»¶ç±»å‹ã€‚
+     * ÊÂ¼şÀàĞÍ¡£
      *
      * @return @~english true if execute successfully,otherwise false.
      *
-     * @~chinese æ‰§è¡ŒæˆåŠŸè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Ö´ĞĞ³É¹¦·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     static bool sendNodeEventToJSExtended(Node* node, int action);
     /**@~english
      * Call the Lua function when the event of node is triggered.
      * 
      * @~chinese 
-     * å½“nodeäº‹ä»¶è§¦å‘æ—¶å›è°ƒLuaå‡½æ•°ã€‚
+     * µ±nodeÊÂ¼ş´¥·¢Ê±»Øµ÷Luaº¯Êı¡£
      * 
      * @param node @~english the nativeobject triggers the event.
-     * @~chinese è§¦å‘äº‹ä»¶çš„nodeå¯¹è±¡ã€‚
+     * @~chinese ´¥·¢ÊÂ¼şµÄnode¶ÔÏó¡£
      * @param action @~english the specific action type.
      *
-     * @~chinese äº‹ä»¶ç±»å‹ã€‚
+     * @~chinese ÊÂ¼şÀàĞÍ¡£
      */
     static void sendNodeEventToLua(Node* node, int action);
     /**
      * @deprecated @~english Use getInstance() instead.
-     * @~chinese ä½¿ç”¨getInstanceæ›¿ä»£ã€‚
+     * @~chinese Ê¹ÓÃgetInstanceÌæ´ú¡£
      */
     CC_DEPRECATED_ATTRIBUTE static ScriptEngineManager* sharedManager() { return ScriptEngineManager::getInstance(); };
     /**
      * @deprecated @~english Use destroyInstance() instead.
-     * @~chinese ä½¿ç”¨destroyInstanceæ›¿ä»£
+     * @~chinese Ê¹ÓÃdestroyInstanceÌæ´ú
      */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedManager() { ScriptEngineManager::destroyInstance(); };
     

@@ -72,18 +72,18 @@ namespace experimental{
  * For further information, please see the programming guide:
  * http://www.cocos2d-iphone.org/wiki/doku.php/prog_guide:tiled_maps
  
- * @~chinese FastTMXLayerç”¨æ¥è¡¨ç¤ºTMX layerï¼Œ
- * ç»§æ‰¿è‡ªSpriteBatchNodeã€‚tilesé»˜è®¤ä½¿ç”¨TextureAtlasè¿›è¡Œæ¸²æŸ“ã€‚
- * å¦‚æœè¿è¡Œæ—¶ä¿®æ”¹ä¸€ä¸ªtileï¼Œé‚£ä¹ˆtileå°†å˜æˆä¸€ä¸ªSpriteï¼Œåä¹‹ï¼Œåˆ™ä¸ä¼šæœ‰Spriteå¯¹è±¡è¢«åˆ›å»ºã€‚
- * ä½¿ç”¨Spriteå¯¹è±¡ä½œä¸ºTileçš„å¥½å¤„æ˜¯:
- * -  tiles(å³Sprite)å¯ä»¥é€šè¿‡å®Œå–„çš„APIè¿›è¡Œæ—‹è½¬/ç¼©æ”¾/ç§»åŠ¨
- * å¦‚æœlayeråŒ…å«ä¸€ä¸ªå±æ€§åä¸º"cc_vertexz"çš„æ•´æ•°(æ­£æ•´æ•°/è´Ÿæ•´æ•°)ï¼Œé‚£ä¹ˆå±äºlayerçš„tileså°†ä½¿ç”¨è¯¥å±æ€§å€¼ä½œä¸ºå®ƒä»¬OpenGLç”¨æ¥æ¸²æŸ“æ˜¾ç¤ºå±‚æ¬¡çš„Zå€¼ã€‚
- * å¦å¤–,å¦‚æœâ€œcc_vertexzâ€å±æ€§å€¼ä¸ºâ€œautomaticâ€ï¼Œé‚£ä¹ˆè¿™äº›tileså°†ä½¿ç”¨ä¸€ä¸ªè‡ªåˆ†é…çš„Zå€¼ã€‚
- * åœ¨ç»˜åˆ¶è¿™äº›tilesæ—¶ï¼Œåœ¨ç»˜åˆ¶å‰ï¼Œå¿…é¡»è®¾ç½®GL_ALPHA_TESTä¸ºå¯ç”¨ï¼Œç»˜åˆ¶åè®¾ç½®ä¸ºç¦ç”¨ã€‚ä½¿ç”¨çš„Alphaå‡½æ•°å¦‚ä¸‹ï¼š
+ * @~chinese FastTMXLayerÓÃÀ´±íÊ¾TMX layer£¬
+ * ¼Ì³Ğ×ÔSpriteBatchNode¡£tilesÄ¬ÈÏÊ¹ÓÃTextureAtlas½øĞĞäÖÈ¾¡£
+ * Èç¹ûÔËĞĞÊ±ĞŞ¸ÄÒ»¸ötile£¬ÄÇÃ´tile½«±ä³ÉÒ»¸öSprite£¬·´Ö®£¬Ôò²»»áÓĞSprite¶ÔÏó±»´´½¨¡£
+ * Ê¹ÓÃSprite¶ÔÏó×÷ÎªTileµÄºÃ´¦ÊÇ:
+ * -  tiles(¼´Sprite)¿ÉÒÔÍ¨¹ıÍêÉÆµÄAPI½øĞĞĞı×ª/Ëõ·Å/ÒÆ¶¯
+ * Èç¹ûlayer°üº¬Ò»¸öÊôĞÔÃûÎª"cc_vertexz"µÄÕûÊı(ÕıÕûÊı/¸ºÕûÊı)£¬ÄÇÃ´ÊôÓÚlayerµÄtiles½«Ê¹ÓÃ¸ÃÊôĞÔÖµ×÷ÎªËüÃÇOpenGLÓÃÀ´äÖÈ¾ÏÔÊ¾²ã´ÎµÄZÖµ¡£
+ * ÁíÍâ,Èç¹û¡°cc_vertexz¡±ÊôĞÔÖµÎª¡°automatic¡±£¬ÄÇÃ´ÕâĞ©tiles½«Ê¹ÓÃÒ»¸ö×Ô·ÖÅäµÄZÖµ¡£
+ * ÔÚ»æÖÆÕâĞ©tilesÊ±£¬ÔÚ»æÖÆÇ°£¬±ØĞëÉèÖÃGL_ALPHA_TESTÎª¿ÉÓÃ£¬»æÖÆºóÉèÖÃÎª½ûÓÃ¡£Ê¹ÓÃµÄAlphaº¯ÊıÈçÏÂ£º
  * glAlphaFunc( GL_GREATER, value ).
- * â€œvalueâ€é»˜è®¤ä¸º0,ä½†æ˜¯ä½ å¯ä»¥é€šè¿‡å‘å±‚æ·»åŠ â€œcc_alpha_funcâ€å±æ€§æ¥æ”¹å˜è¯¥å€¼.
- * å¤§å¤šæ•°æƒ…å†µvalueçš„å€¼æ˜¯0ï¼Œä½†å¦‚æœæœ‰äº›tilesæ˜¯åŠé€æ˜çš„ï¼Œé‚£ä¹ˆè¯¥å€¼åˆ™å¯èƒ½ä¼šæœ‰æ‰€ä¸åŒï¼Œæ¯”å¦‚0.5ã€‚
- * è¿›ä¸€æ­¥çš„ä¿¡æ¯,è¯·å‚è§ç¼–ç¨‹æŒ‡å—(æ³¨ï¼šæ­¤é“¾æ¥å·²ä¸å¯ç”¨):
+ * ¡°value¡±Ä¬ÈÏÎª0,µ«ÊÇÄã¿ÉÒÔÍ¨¹ıÏò²ãÌí¼Ó¡°cc_alpha_func¡±ÊôĞÔÀ´¸Ä±ä¸ÃÖµ.
+ * ´ó¶àÊıÇé¿övalueµÄÖµÊÇ0£¬µ«Èç¹ûÓĞĞ©tilesÊÇ°ëÍ¸Ã÷µÄ£¬ÄÇÃ´¸ÃÖµÔò¿ÉÄÜ»áÓĞËù²»Í¬£¬±ÈÈç0.5¡£
+ * ½øÒ»²½µÄĞÅÏ¢,Çë²Î¼û±à³ÌÖ¸ÄÏ(×¢£º´ËÁ´½ÓÒÑ²»¿ÉÓÃ):
  * http://www.cocos2d-iphone.org/wiki/doku.php/prog_guide:tiled_maps
  * 
  * @since v3.2
@@ -95,16 +95,16 @@ class CC_DLL TMXLayer : public Node
 public:
     /** @~english Creates a FastTMXLayer with an tileset info, a layer info and a map info.
      *
-     * @~chinese é€šè¿‡æŒ‡å®šTMXTilesetInfo,TMXLayerInfoå’ŒTMXMapInfoåˆ›å»ºä¸€ä¸ªTMXLayer
+     * @~chinese Í¨¹ıÖ¸¶¨TMXTilesetInfo,TMXLayerInfoºÍTMXMapInfo´´½¨Ò»¸öTMXLayer
      * 
      * @param tilesetInfo @~english An tileset info.
-     * @~chinese TMXTilesetInfoæ•°æ®.
+     * @~chinese TMXTilesetInfoÊı¾İ.
      * @param layerInfo @~english A layer info.
-     * @~chinese TMXLayerInfoæ•°æ®.
+     * @~chinese TMXLayerInfoÊı¾İ.
      * @param mapInfo @~english A map info.
-     * @~chinese TMXMapInfoæ•°æ®.
+     * @~chinese TMXMapInfoÊı¾İ.
      * @return @~english An autorelease object.
-     * @~chinese ä¸€ä¸ªautoreleaseå¯¹è±¡.
+     * @~chinese Ò»¸öautorelease¶ÔÏó.
      */
     static TMXLayer * create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     /**
@@ -119,29 +119,29 @@ public:
 
     /** @~english Returns the tile gid at a given tile coordinate. It also returns the tile flags.
      * 
-     * @~chinese é€šè¿‡ç»™å®šçš„ç“¦ç‰‡åæ ‡ã€flagsï¼ˆå¯é€‰ï¼‰è¿”å›ç“¦ç‰‡GID.
-     * è¯¥æ–¹æ³•è¦æ±‚ç“¦ç‰‡åœ°å›¾ä¹‹å‰æ²¡æœ‰è¢«é‡Šæ”¾è¿‡(å¦‚ï¼šæ²¡æœ‰è°ƒç”¨è¿‡layer->releaseMap()).
+     * @~chinese Í¨¹ı¸ø¶¨µÄÍßÆ¬×ø±ê¡¢flags£¨¿ÉÑ¡£©·µ»ØÍßÆ¬GID.
+     * ¸Ã·½·¨ÒªÇóÍßÆ¬µØÍ¼Ö®Ç°Ã»ÓĞ±»ÊÍ·Å¹ı(Èç£ºÃ»ÓĞµ÷ÓÃ¹ılayer->releaseMap()).
      * 
      * @param tileCoordinate @~english The tile coordinate.
-     * @~chinese ç“¦ç‰‡åæ ‡.
+     * @~chinese ÍßÆ¬×ø±ê.
      * @param flags @~english Tile flags.
-     * @~chinese ç“¦ç‰‡flags.
+     * @~chinese ÍßÆ¬flags.
      * @return @~english Returns the tile gid at a given tile coordinate. It also returns the tile flags.
-     * @~chinese è¿”å›è¿‡ç»™å®šçš„ç“¦ç‰‡åæ ‡ã€flagsï¼ˆå¯é€‰ï¼‰çš„ç“¦ç‰‡GID.
+     * @~chinese ·µ»Ø¹ı¸ø¶¨µÄÍßÆ¬×ø±ê¡¢flags£¨¿ÉÑ¡£©µÄÍßÆ¬GID.
      */
     int getTileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr);
 
     /** @~english Sets the tile gid (gid = tile global id) at a given tile coordinate.
      * The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
      * If a tile is already placed at that position, then it will be removed.
-     * @~chinese è®¾ç½®ç»™å®šåæ ‡çš„ç“¦ç‰‡çš„gid(gid =ç“¦ç‰‡å…¨å±€id)
-     * ç“¦ç‰‡GIDå¯ä»¥ä½¿ç”¨æ–¹æ³•â€œtileGIDAtâ€æ¥è·å¾—ï¼Œæˆ–ä½¿ç”¨TMXç¼–è¾‘å™¨ -> Tileset Mgr +1å¾—åˆ°.
-     * å¦‚æœè¯¥ä½ç½®ä¸Šå·²æœ‰ä¸€ä¸ªtileï¼Œé‚£ä¹ˆè¯¥ä½ç½®ä¸Šå·²æœ‰çš„tileå°†ä¼šè¢«ç§»é™¤ã€‚
+     * @~chinese ÉèÖÃ¸ø¶¨×ø±êµÄÍßÆ¬µÄgid(gid =ÍßÆ¬È«¾Öid)
+     * ÍßÆ¬GID¿ÉÒÔÊ¹ÓÃ·½·¨¡°tileGIDAt¡±À´»ñµÃ£¬»òÊ¹ÓÃTMX±à¼­Æ÷ -> Tileset Mgr +1µÃµ½.
+     * Èç¹û¸ÃÎ»ÖÃÉÏÒÑÓĞÒ»¸ötile£¬ÄÇÃ´¸ÃÎ»ÖÃÉÏÒÑÓĞµÄtile½«»á±»ÒÆ³ı¡£
      * 
      * @param gid @~english The tile gid.
-     * @~chinese ç“¦ç‰‡gid.
+     * @~chinese ÍßÆ¬gid.
      * @param tileCoordinate @~english The tile coordinate.
-     * @~chinese ç“¦ç‰‡åæ ‡.
+     * @~chinese ÍßÆ¬×ø±ê.
      */
     void setTileGID(int gid, const Vec2& tileCoordinate);
 
@@ -150,113 +150,113 @@ public:
      * If a tile is already placed at that position, then it will be removed.
      * Use withFlags if the tile flags need to be changed as well.
      *
-     * @~chinese è®¾ç½®ç»™å®šåæ ‡ã€flagsçš„ç“¦ç‰‡çš„gid(gid =ç“¦ç‰‡å…¨å±€id)
-     * ç“¦ç‰‡GIDå¯ä»¥ä½¿ç”¨æ–¹æ³•â€œtileGIDAtâ€æ¥è·å¾—ï¼Œæˆ–ä½¿ç”¨TMXç¼–è¾‘å™¨ -> Tileset Mgr +1.
-     * å¦‚æœä¸€ä¸ªç“¦ç‰‡å·²ç»æ”¾åœ¨é‚£ä¸ªä½ç½®,é‚£ä¹ˆå®ƒå°†è¢«åˆ é™¤.
-     * ä½¿ç”¨flagså¦‚æœç“¦ç‰‡flagséœ€è¦æ›´æ”¹.
+     * @~chinese ÉèÖÃ¸ø¶¨×ø±ê¡¢flagsµÄÍßÆ¬µÄgid(gid =ÍßÆ¬È«¾Öid)
+     * ÍßÆ¬GID¿ÉÒÔÊ¹ÓÃ·½·¨¡°tileGIDAt¡±À´»ñµÃ£¬»òÊ¹ÓÃTMX±à¼­Æ÷ -> Tileset Mgr +1.
+     * Èç¹ûÒ»¸öÍßÆ¬ÒÑ¾­·ÅÔÚÄÇ¸öÎ»ÖÃ,ÄÇÃ´Ëü½«±»É¾³ı.
+     * Ê¹ÓÃflagsÈç¹ûÍßÆ¬flagsĞèÒª¸ü¸Ä.
      * 
      * @param gid @~english The tile gid.
-     * @~chinese ç“¦ç‰‡gid.
+     * @~chinese ÍßÆ¬gid.
      * @param tileCoordinate @~english The tile coordinate.
-     * @~chinese ç“¦ç‰‡åæ ‡.
+     * @~chinese ÍßÆ¬×ø±ê.
      * @param flags @~english The tile flags.
-     * @~chinese ç“¦ç‰‡çš„flags.
+     * @~chinese ÍßÆ¬µÄflags.
      */
     void setTileGID(int gid, const Vec2& tileCoordinate, TMXTileFlags flags);
 
     /** @~english Removes a tile at given tile coordinate.
      *
-     * @~chinese åˆ é™¤æŒ‡å®šåæ ‡ä¸Šçš„ç“¦ç‰‡.
+     * @~chinese É¾³ıÖ¸¶¨×ø±êÉÏµÄÍßÆ¬.
      * 
      * @param tileCoordinate @~english The tile coordinate.
-     * @~chinese ç“¦ç‰‡åæ ‡.
+     * @~chinese ÍßÆ¬×ø±ê.
      */
     void removeTileAt(const Vec2& tileCoordinate);
 
     /** @~english Returns the position in points of a given tile coordinate.
      *
-     * @~chinese è·å–æŒ‡å®šåæ ‡çš„ä½ç½®(ä»¥ç‚¹ä¸ºå•ä½)
+     * @~chinese »ñÈ¡Ö¸¶¨×ø±êµÄÎ»ÖÃ(ÒÔµãÎªµ¥Î»)
      * 
      * @param tileCoordinate @~english The tile coordinate.
-     * @~chinese ç“¦ç‰‡åæ ‡.
+     * @~chinese ÍßÆ¬×ø±ê.
      * @return @~english The position in points of a given tile coordinate.
-     * @~chinese ç»™å®šç“¦ç‰‡åæ ‡ç‚¹çš„ä½ç½®.
+     * @~chinese ¸ø¶¨ÍßÆ¬×ø±êµãµÄÎ»ÖÃ.
      */
     Vec2 getPositionAt(const Vec2& tileCoordinate);
 
     /** @~english Return the value for the specific property name.
      *
-    * @~chinese è·å–æŒ‡å®šå±æ€§å(propertyName)çš„å€¼
+    * @~chinese »ñÈ¡Ö¸¶¨ÊôĞÔÃû(propertyName)µÄÖµ
      * 
      * @param propertyName @~english The specific property name.
-     * @~chinese ç‰¹å®šçš„å±æ€§å.
+     * @~chinese ÌØ¶¨µÄÊôĞÔÃû.
      * @return @~english Return the value for the specific property name.
-     * @~chinese è¿”å›æŒ‡å®šå±æ€§å(propertyName)çš„å€¼.
+     * @~chinese ·µ»ØÖ¸¶¨ÊôĞÔÃû(propertyName)µÄÖµ.
      */
     Value getProperty(const std::string& propertyName) const;
 
-    /** @~english Creates the tiles.  @~chinese åˆ›é€ ç“¦ç‰‡ã€‚*/
+    /** @~english Creates the tiles.  @~chinese ´´ÔìÍßÆ¬¡£*/
     void setupTiles();
     
     /** @~english Get the tile layer name.
      *
-     * @~chinese è·å–å±‚çš„åç§°.
+     * @~chinese »ñÈ¡²ãµÄÃû³Æ.
      * 
      * @return @~english The layer name.
-     * @~chinese å±‚çš„åç§°.
+     * @~chinese ²ãµÄÃû³Æ.
      */
     inline const std::string& getLayerName(){ return _layerName; }
     
     /** @~english Set the tile layer name.
      *
-     * @~chinese è®¾ç½®å±‚çš„åç§°.
+     * @~chinese ÉèÖÃ²ãµÄÃû³Æ.
      * 
      * @param layerName @~english The layer name.
-     * @~chinese å±‚çš„åç§°.
+     * @~chinese ²ãµÄÃû³Æ.
      */
     inline void setLayerName(const std::string& layerName){ _layerName = layerName; }
 
     /** @~english Size of the layer in tiles.
      *
-     * @~chinese è·å–å±‚çš„å°ºå¯¸.
+     * @~chinese »ñÈ¡²ãµÄ³ß´ç.
      * 
      * @return @~english Size of the layer in tiles.
-     * @~chinese ç“¦ç‰‡å±‚çš„å°ºå¯¸.
+     * @~chinese ÍßÆ¬²ãµÄ³ß´ç.
      */
     inline const Size& getLayerSize() const { return _layerSize; };
     
     /** @~english Set the size of the layer in tiles. 
      *
-     * @~chinese è®¾ç½®å±‚ç“¦ç‰‡å±‚çš„å°ºå¯¸.
+     * @~chinese ÉèÖÃ²ãÍßÆ¬²ãµÄ³ß´ç.
      * 
      * @param size @~english Size of the layer in tiles.
-     * @~chinese ç“¦ç‰‡å±‚çš„å°ºå¯¸.
+     * @~chinese ÍßÆ¬²ãµÄ³ß´ç.
      */
     inline void setLayerSize(const Size& size) { _layerSize = size; };
     
     /** @~english Size of the map's tile (could be different from the tile's size).
      *
-     * @~chinese è·å–ç“¦ç‰‡çš„å°ºå¯¸(ç“¦ç‰‡çš„å°ºå¯¸å¯èƒ½ä¼šæœ‰æ‰€ä¸åŒ).
+     * @~chinese »ñÈ¡ÍßÆ¬µÄ³ß´ç(ÍßÆ¬µÄ³ß´ç¿ÉÄÜ»áÓĞËù²»Í¬).
      * 
      * @return @~english The size of the map's tile.
-     * @~chinese ç“¦ç‰‡çš„å°ºå¯¸(ç“¦ç‰‡çš„å°ºå¯¸å¯èƒ½ä¼šæœ‰æ‰€ä¸åŒ).
+     * @~chinese ÍßÆ¬µÄ³ß´ç(ÍßÆ¬µÄ³ß´ç¿ÉÄÜ»áÓĞËù²»Í¬).
      */
     inline const Size& getMapTileSize() const { return _mapTileSize; };
     
     /** @~english Set the size of the map's tile. 
      *
-     * @~chinese è®¾ç½®ç“¦ç‰‡çš„å°ºå¯¸.
+     * @~chinese ÉèÖÃÍßÆ¬µÄ³ß´ç.
      * 
      * @param size @~english The size of the map's tile.
-     * @~chinese ç“¦ç‰‡çš„å°ºå¯¸.
+     * @~chinese ÍßÆ¬µÄ³ß´ç.
      */
     inline void setMapTileSize(const Size& size) { _mapTileSize = size; };
     
     /** @~english Pointer to the map of tiles.
-     * @~chinese è·å–æŒ‡å‘tilesåœ°å›¾çš„æŒ‡é’ˆ.
+     * @~chinese »ñÈ¡Ö¸ÏòtilesµØÍ¼µÄÖ¸Õë.
      *
      * @return @~english Pointer to the map of tiles.
-     * @~chinese æŒ‡å‘tilesåœ°å›¾çš„æŒ‡é’ˆ.
+     * @~chinese Ö¸ÏòtilesµØÍ¼µÄÖ¸Õë.
      *
      * @js NA
      * @lua NA
@@ -265,28 +265,28 @@ public:
     
     /** @~english Set the pointer to the map of tiles.
      *
-     * @~chinese è®¾ç½®æŒ‡å‘tilesåœ°å›¾çš„æŒ‡é’ˆã€‚
+     * @~chinese ÉèÖÃÖ¸ÏòtilesµØÍ¼µÄÖ¸Õë¡£
      * 
      * @param tiles @~english A pointer to the map of tiles.
-     * @~chinese æŒ‡å‘tilesåœ°å›¾çš„æŒ‡é’ˆ
+     * @~chinese Ö¸ÏòtilesµØÍ¼µÄÖ¸Õë
      */
     void setTiles(uint32_t* tiles) { _tiles = tiles; _quadsDirty = true;};
     
     /** @~english Tileset information for the layer.
      *
-     * @~chinese è·å–å±‚çš„tilesetä¿¡æ¯ã€‚
+     * @~chinese »ñÈ¡²ãµÄtilesetĞÅÏ¢¡£
      * 
      * @return @~english Tileset information for the layer.
-     * @~chinese å±‚çš„tilesetä¿¡æ¯ã€‚
+     * @~chinese ²ãµÄtilesetĞÅÏ¢¡£
      */
     inline TMXTilesetInfo* getTileSet() const { return _tileSet; };
     
     /** @~english Set the tileset information for the layer. 
      *
-     * @~chinese è®¾ç½®layerçš„Tilesetä¿¡æ¯
+     * @~chinese ÉèÖÃlayerµÄTilesetĞÅÏ¢
      * 
      * @param info @~english The tileset information for the layer.
-     * @~chinese layerçš„Tilesetä¿¡æ¯
+     * @~chinese layerµÄTilesetĞÅÏ¢
      */
     inline void setTileSet(TMXTilesetInfo* info) {
         CC_SAFE_RETAIN(info);
@@ -296,46 +296,46 @@ public:
     
     /** @~english Layer orientation, which is the same as the map orientation.
      *
-     * @~chinese  è·å–Layeræ–¹å‘(åŒåœ°å›¾æ–¹å‘)
+     * @~chinese  »ñÈ¡Layer·½Ïò(Í¬µØÍ¼·½Ïò)
      * 
      * @return @~english Layer orientation, which is the same as the map orientation.
-     * @~chinese  Layeræ–¹å‘(åŒåœ°å›¾æ–¹å‘)
+     * @~chinese  Layer·½Ïò(Í¬µØÍ¼·½Ïò)
      */
     inline int getLayerOrientation() const { return _layerOrientation; };
     
     /** @~english Set Layer orientation, which is the same as the map orientation. 
      *
-     * @~chinese è®¾ç½® Layeræ–¹å‘(åŒåœ°å›¾æ–¹å‘)
+     * @~chinese ÉèÖÃ Layer·½Ïò(Í¬µØÍ¼·½Ïò)
      * 
      * @param orientation @~english Layer orientation,which is the same as the map orientation.
-     * @~chinese  Layeræ–¹å‘(åŒåœ°å›¾æ–¹å‘)
+     * @~chinese  Layer·½Ïò(Í¬µØÍ¼·½Ïò)
      */
     inline void setLayerOrientation(int orientation) { _layerOrientation = orientation; };
     
     /** @~english Properties from the layer. They can be added using Tiled. 
      *
-     * @~chinese è·å–layerçš„å±æ€§ï¼Œå¯ä»¥è¢«å½“ä½œTileæ·»åŠ 
+     * @~chinese »ñÈ¡layerµÄÊôĞÔ£¬¿ÉÒÔ±»µ±×÷TileÌí¼Ó
      * 
      * @return @~english Properties from the layer. They can be added using Tiled.
-     * @~chinese layerçš„å±æ€§
+     * @~chinese layerµÄÊôĞÔ
      */
     inline const ValueMap& getProperties() const { return _properties; };
     
     /** @~english Properties from the layer. They can be added using Tiled.
      *
-     * @~chinese è·å–layerçš„å±æ€§ï¼Œå¯ä»¥è¢«å½“ä½œTileæ·»åŠ 
+     * @~chinese »ñÈ¡layerµÄÊôĞÔ£¬¿ÉÒÔ±»µ±×÷TileÌí¼Ó
      * 
      * @return @~english Properties from the layer. They can be added using Tiled.
-     * @~chinese layerçš„å±æ€§
+     * @~chinese layerµÄÊôĞÔ
      */
     inline ValueMap& getProperties() { return _properties; };
     
     /** @~english Set the properties to the layer.
      *
-     * @~chinese è®¾ç½®å±‚å±æ€§.
+     * @~chinese ÉèÖÃ²ãÊôĞÔ.
      * 
      * @param properties @~english It is used to set the layer Properties.
-     * @~chinese å®ƒæ˜¯ç”¨æ¥è®¾ç½®å›¾å±‚çš„å±æ€§.
+     * @~chinese ËüÊÇÓÃÀ´ÉèÖÃÍ¼²ãµÄÊôĞÔ.
      */
     inline void setProperties(const ValueMap& properties)
     {
@@ -348,29 +348,29 @@ public:
      * You can remove either by calling:
      * - layer->removeChild(sprite, cleanup);
      *
-     * @~chinese  é€šè¿‡æŒ‡å®šçš„tileåæ ‡è·å–å¯¹åº”çš„tile(Sprite)ã€‚
-     * è¿”å›çš„tile(Sprite)åº”æ˜¯å·²ç»æ·»åŠ åˆ°TMXLayerï¼Œè¯·ä¸è¦é‡å¤æ·»åŠ ã€‚
-     * è¿™ä¸ªtile(Sprite)å¦‚åŒå…¶ä»–çš„Spriteä¸€æ ·ï¼Œå¯ä»¥æ—‹è½¬ã€ç¼©æ”¾ã€ç¿»è½¬ã€é€æ˜åŒ–ã€è®¾ç½®é¢œè‰²ç­‰ã€‚
-     * ä½ å¯ä»¥é€šè¿‡è°ƒç”¨ä»¥ä¸‹æ–¹æ³•æ¥å¯¹å®ƒè¿›è¡Œåˆ é™¤:
+     * @~chinese  Í¨¹ıÖ¸¶¨µÄtile×ø±ê»ñÈ¡¶ÔÓ¦µÄtile(Sprite)¡£
+     * ·µ»ØµÄtile(Sprite)Ó¦ÊÇÒÑ¾­Ìí¼Óµ½TMXLayer£¬Çë²»ÒªÖØ¸´Ìí¼Ó¡£
+     * Õâ¸ötile(Sprite)ÈçÍ¬ÆäËûµÄSpriteÒ»Ñù£¬¿ÉÒÔĞı×ª¡¢Ëõ·Å¡¢·­×ª¡¢Í¸Ã÷»¯¡¢ÉèÖÃÑÕÉ«µÈ¡£
+     * Äã¿ÉÒÔÍ¨¹ıµ÷ÓÃÒÔÏÂ·½·¨À´¶ÔËü½øĞĞÉ¾³ı:
      * - layer->removeChild(sprite, cleanup);
      * 
      * @param tileCoordinate @~english A tile coordinate.
-     * @~chinese ç“¦ç‰‡åæ ‡.
+     * @~chinese ÍßÆ¬×ø±ê.
      * @return @~english Returns the tile (Sprite) at a given a tile coordinate.
-     * @~chinese è¿”å›æŒ‡å®šåæ ‡ä½ç½®çš„ç“¦ç‰‡(Sprite).
+     * @~chinese ·µ»ØÖ¸¶¨×ø±êÎ»ÖÃµÄÍßÆ¬(Sprite).
      */
     Sprite* getTileAt(const Vec2& tileCoordinate);
     
     /** @~english Set an sprite to the tile,with the tile coordinate and gid.
      *
-     * @~chinese è®¾ç½®ä¸€ä¸ªç“¦ç‰‡çš„spriteã€‚
+     * @~chinese ÉèÖÃÒ»¸öÍßÆ¬µÄsprite¡£
      * 
      * @param sprite @~english A Sprite.
-     * @~chinese ä¸€ä¸ªSpriteã€‚
+     * @~chinese Ò»¸öSprite¡£
      * @param pos @~english The tile coordinate.
-     * @~chinese ç“¦ç‰‡åæ ‡ã€‚
+     * @~chinese ÍßÆ¬×ø±ê¡£
      * @param gid @~english The tile gid.
-     * @~chinese ç“¦ç‰‡gidã€‚
+     * @~chinese ÍßÆ¬gid¡£
      */
     void setupTileSprite(Sprite* sprite, Vec2 pos, int gid);
 
@@ -387,7 +387,7 @@ protected:
     void updateTiles(const Rect& culledRect);
     Vec2 calculateLayerOffset(const Vec2& offset);
 
-    /* @~english The layer recognizes some special properties, like cc_vertez  @~chinese å±‚è®¤è¯†åˆ°ä¸€äº›ç‰¹æ®Šçš„å±æ€§,æ¯”å¦‚cc_vertez*/
+    /* @~english The layer recognizes some special properties, like cc_vertez  @~chinese ²ãÈÏÊ¶µ½Ò»Ğ©ÌØÊâµÄÊôĞÔ,±ÈÈçcc_vertez*/
     void parseInternalProperties();
     
     Mat4 tileToNodeTransform();
@@ -412,15 +412,15 @@ protected:
     //! name of the layer
     std::string _layerName;
 
-    /** @~english size of the layer in tiles  @~chinese ä»¥ç“¦ç‰‡ä¸ºå•ä½çš„å±‚çš„å¤§å°*/
+    /** @~english size of the layer in tiles  @~chinese ÒÔÍßÆ¬Îªµ¥Î»µÄ²ãµÄ´óĞ¡*/
     Size _layerSize;
-    /** @~english size of the map's tile (could be different from the tile's size)  @~chinese åœ°å›¾ç“¦ç‰‡çš„å¤§å°(ç“¦ç‰‡çš„å¤§å°å¯èƒ½ä¼šæœ‰æ‰€ä¸åŒ)*/
+    /** @~english size of the map's tile (could be different from the tile's size)  @~chinese µØÍ¼ÍßÆ¬µÄ´óĞ¡(ÍßÆ¬µÄ´óĞ¡¿ÉÄÜ»áÓĞËù²»Í¬)*/
     Size _mapTileSize;
-    /** @~english pointer to the map of tiles  @~chinese æŒ‡å‘åœ°å›¾ç“¦ç‰‡çš„æŒ‡é’ˆ*/
+    /** @~english pointer to the map of tiles  @~chinese Ö¸ÏòµØÍ¼ÍßÆ¬µÄÖ¸Õë*/
     uint32_t* _tiles;
-    /** @~english Tileset information for the layer  @~chinese ç¡®å®šä¿¡æ¯å±‚*/
+    /** @~english Tileset information for the layer  @~chinese È·¶¨ĞÅÏ¢²ã*/
     TMXTilesetInfo* _tileSet;
-    /** @~english Layer orientation, which is the same as the map orientation  @~chinese å±‚å–å‘,å®ƒæ˜¯ä¸€æ ·çš„åœ°å›¾å®šä½*/
+    /** @~english Layer orientation, which is the same as the map orientation  @~chinese ²ãÈ¡Ïò,ËüÊÇÒ»ÑùµÄµØÍ¼¶¨Î»*/
     int _layerOrientation;
     /** @~english properties from the layer. They can be added using Tiled  @~chinese The properties from the layer. They can be added using Tiled*/
     ValueMap _properties;
@@ -439,9 +439,9 @@ protected:
     int _vertexZvalue;
     bool _useAutomaticVertexZ;
     
-    /** @~english tile coordinate to node coordinate transform  @~chinese ç“·ç –åè°ƒèŠ‚ç‚¹åæ ‡å˜æ¢*/
+    /** @~english tile coordinate to node coordinate transform  @~chinese ´É×©Ğ­µ÷½Úµã×ø±ê±ä»»*/
     Mat4 _tileToNodeTransform;
-    /** @~english data for rendering  @~chinese æ•°æ®å‘ˆç°*/
+    /** @~english data for rendering  @~chinese Êı¾İ³ÊÏÖ*/
     bool _quadsDirty;
     std::vector<int> _tileToQuadIndex;
     std::vector<V3F_C4B_T2F_Quad> _totalQuads;
@@ -460,7 +460,7 @@ protected:
     Map<int , Primitive*> _primitives;
     
 public:
-    /** @~english Possible orientations of the TMX map  @~chinese TMXçš„å¯èƒ½æ–¹å‘åœ°å›¾*/
+    /** @~english Possible orientations of the TMX map  @~chinese TMXµÄ¿ÉÄÜ·½ÏòµØÍ¼*/
     static const int FAST_TMX_ORIENTATION_ORTHO;
     static const int FAST_TMX_ORIENTATION_HEX;
     static const int FAST_TMX_ORIENTATION_ISO;

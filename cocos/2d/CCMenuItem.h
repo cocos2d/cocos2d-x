@@ -54,77 +54,77 @@ class SpriteFrame;
  * @brief @~english MenuItem base class.
  *  Subclass MenuItem (or any subclass) to create your custom MenuItem objects.
  *
- * @~chinese èœå•é¡¹åŸºç±»ã€‚
- * ä½¿ç”¨ç»§æ‰¿MenuItemçš„æ´¾ç”Ÿç±»åˆ›å»ºè‡ªå®šä¹‰èœå•é¡¹ã€‚
+ * @~chinese ²Ëµ¥Ïî»ùÀà¡£
+ * Ê¹ÓÃ¼Ì³ĞMenuItemµÄÅÉÉúÀà´´½¨×Ô¶¨Òå²Ëµ¥Ïî¡£
  */
 class CC_DLL MenuItem : public Node
 {
 public:
     /** @~english Creates a MenuItem with no callback.
-     * @~chinese åˆ›å»ºä¸€ä¸ªæ²¡æœ‰æŒ‡å®šå›è°ƒçš„èœå•é¡¹ã€‚
+     * @~chinese ´´½¨Ò»¸öÃ»ÓĞÖ¸¶¨»Øµ÷µÄ²Ëµ¥Ïî¡£
      *
      * @return @~english A initialized MenuItem object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„èœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄ²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItem* create();
 
     CC_DEPRECATED_ATTRIBUTE static MenuItem* create(Ref *rec, SEL_MenuHandler selector);
 
     /** @~english Creates a MenuItem with a callback.
-     * @~chinese åˆ›å»ºä¸€ä¸ªæŒ‡å®šå›è°ƒçš„èœå•é¡¹ã€‚
-     * @param callback @~english The callback be invoked if the item is actived. @~chinese èœå•é¡¹è¢«æ¿€æ´»æ—¶è°ƒç”¨çš„å›è°ƒã€‚
+     * @~chinese ´´½¨Ò»¸öÖ¸¶¨»Øµ÷µÄ²Ëµ¥Ïî¡£
+     * @param callback @~english The callback be invoked if the item is actived. @~chinese ²Ëµ¥Ïî±»¼¤»îÊ±µ÷ÓÃµÄ»Øµ÷¡£
      *
      * @return @~english A initialized MenuItem object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„èœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄ²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItem* create(const ccMenuCallback& callback);
 
     /** @~english Returns the outside box.
-     * @~chinese è¿”å›èœå•é¡¹çš„å¤–æ¡†ã€‚
-     * @return @~english The outside box. @~chinese èœå•é¡¹å¤–æ¡†ã€‚
+     * @~chinese ·µ»Ø²Ëµ¥ÏîµÄÍâ¿ò¡£
+     * @return @~english The outside box. @~chinese ²Ëµ¥ÏîÍâ¿ò¡£
      */
     Rect rect() const;
 
     /** @~english Activate the item.
-     * @~chinese æ¿€æ´»èœå•é¡¹ã€‚
+     * @~chinese ¼¤»î²Ëµ¥Ïî¡£
      */
     virtual void activate();
 
     /** @~english The item was selected (not activated), similar to "mouse-over".
-     * @~chinese è®¾å®šèœå•é¡¹ä¸ºé€‰ä¸­çŠ¶æ€ (æ²¡æœ‰æ¿€æ´»), ç±»ä¼¼é¼ æ ‡æ‚¬åœã€‚
+     * @~chinese Éè¶¨²Ëµ¥ÏîÎªÑ¡ÖĞ×´Ì¬ (Ã»ÓĞ¼¤»î), ÀàËÆÊó±êĞüÍ£¡£
      */
     virtual void selected();
 
     /** @~english The item was unselected.
-     * @~chinese å–æ¶ˆé€‰ä¸­çŠ¶æ€ã€‚
+     * @~chinese È¡ÏûÑ¡ÖĞ×´Ì¬¡£
      */
     virtual void unselected();
 
     /** @~english Returns whether or not the item is enabled.
-     * @~chinese è¿”å›èœå•é¡¹æ˜¯å¦è¢«å¯ç”¨ï¼ˆå“åº”ç‚¹å‡»ï¼‰ã€‚
-     * @return @~english Whether or not the item is enabled. @~chinese èœå•é¡¹æ˜¯å¦è¢«å¯ç”¨ã€‚
+     * @~chinese ·µ»Ø²Ëµ¥ÏîÊÇ·ñ±»ÆôÓÃ£¨ÏìÓ¦µã»÷£©¡£
+     * @return @~english Whether or not the item is enabled. @~chinese ²Ëµ¥ÏîÊÇ·ñ±»ÆôÓÃ¡£
      */
     virtual bool isEnabled() const;
 
     /** @~english Enables or disables the item.
-     * @~chinese å¯ç”¨æˆ–ç¦ç”¨èœå•é¡¹ã€‚
-     * @param enabled @~english trueï¼Œenable the menu itemï¼›falseï¼Œdisabled the menuitem. 
-     * @~chinese trueï¼Œå¯ç”¨èœå•é¡¹ï¼›falseï¼Œç¦ç”¨èœå•é¡¹ã€‚
+     * @~chinese ÆôÓÃ»ò½ûÓÃ²Ëµ¥Ïî¡£
+     * @param enabled @~english true£¬enable the menu item£»false£¬disabled the menuitem. 
+     * @~chinese true£¬ÆôÓÃ²Ëµ¥Ïî£»false£¬½ûÓÃ²Ëµ¥Ïî¡£
      */
     virtual void setEnabled(bool enabled);
 
     /** @~english Returns whether or not the item is selected.
-     * @~chinese è¿”å›èœå•é¡¹æ˜¯å¦è¢«é€‰ä¸­ã€‚
-     * @return @~english Return true if the item is selected. @~chinese èœå•é¡¹è¢«é€‰ä¸­è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese ·µ»Ø²Ëµ¥ÏîÊÇ·ñ±»Ñ¡ÖĞ¡£
+     * @return @~english Return true if the item is selected. @~chinese ²Ëµ¥Ïî±»Ñ¡ÖĞ·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     virtual bool isSelected() const;
 
     /** @~english Set the callback to the menu item.
-     * In js,can contain two params,the second param is js callbackâ€˜s caller.
-     * @~chinese è®¾ç½®èœå•é¡¹å›è°ƒã€‚
-     * åœ¨jsé‡Œï¼Œå¯ä»¥åŒ…å«ä¸¤ä¸ªå‚æ•°ï¼Œç¬¬äºŒä¸ªå‚æ•°æ˜¯jså›è°ƒå‡½æ•°çš„è°ƒç”¨è€…ã€‚
+     * In js,can contain two params,the second param is js callback¡®s caller.
+     * @~chinese ÉèÖÃ²Ëµ¥Ïî»Øµ÷¡£
+     * ÔÚjsÀï£¬¿ÉÒÔ°üº¬Á½¸ö²ÎÊı£¬µÚ¶ş¸ö²ÎÊıÊÇjs»Øµ÷º¯ÊıµÄµ÷ÓÃÕß¡£
      * @param callback @~english One callback be invoked if the item is actived. 
-     * @~chinese ä¸€ä¸ªèœå•é¡¹è¢«æ¿€æ´»æ—¶è°ƒç”¨çš„å›è°ƒã€‚
+     * @~chinese Ò»¸ö²Ëµ¥Ïî±»¼¤»îÊ±µ÷ÓÃµÄ»Øµ÷¡£
      * @lua NA
      */
     void setCallback(const ccMenuCallback& callback);
@@ -162,8 +162,8 @@ private:
  * Supported nodes:
  * - LabelAtlas
  * - Label
- * @~chinese ä¸€ä¸ª"label"å½¢å¼çš„æ–‡æœ¬èœå•é¡¹åŸºç±»ã€‚
- * æ”¯æŒä»»ä½•å®ç°LabelProtocolæ¥å£çš„èŠ‚ç‚¹:
+ * @~chinese Ò»¸ö"label"ĞÎÊ½µÄÎÄ±¾²Ëµ¥Ïî»ùÀà¡£
+ * Ö§³ÖÈÎºÎÊµÏÖLabelProtocol½Ó¿ÚµÄ½Úµã:
  * - LabelAtlas
  * - Label
  */
@@ -174,67 +174,67 @@ public:
 
     /**
      * @~english Creates a MenuItemLabel with a Label and a callback.
-     * @~chinese ä½¿ç”¨ç»™å®šçš„æ ‡ç­¾åŠå›è°ƒåˆ›å»ºä¸€ä¸ªæ ‡ç­¾èœå•é¡¹ã€‚
+     * @~chinese Ê¹ÓÃ¸ø¶¨µÄ±êÇ©¼°»Øµ÷´´½¨Ò»¸ö±êÇ©²Ëµ¥Ïî¡£
      *
      * @param label @~english One Node that supports the LabelProtocol protocol. 
-     * @~chinese ä¸€ä¸ªå®ç°äº†LabelProtocolæ¥å£çš„èŠ‚ç‚¹ã€‚
+     * @~chinese Ò»¸öÊµÏÖÁËLabelProtocol½Ó¿ÚµÄ½Úµã¡£
      * @param callback @~english One callback be invoked if the item is actived. 
-     * @~chinese ä¸€ä¸ªèœå•é¡¹è¢«æ¿€æ´»æ—¶è°ƒç”¨çš„å›è°ƒã€‚
+     * @~chinese Ò»¸ö²Ëµ¥Ïî±»¼¤»îÊ±µ÷ÓÃµÄ»Øµ÷¡£
      *
      * @return @~english A initialized MenuItemLabel object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„æ–‡æœ¬èœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄÎÄ±¾²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemLabel * create(Node* label, const ccMenuCallback& callback);
 
     /**
      * @~english Creates a MenuItemLabel with a Label without callback.
-     * @~chinese ä½¿ç”¨ç»™å®šçš„æ ‡ç­¾åˆ›å»ºä¸€ä¸ªæ²¡æœ‰è®¾å®šå›è°ƒçš„æ ‡ç­¾èœå•é¡¹ã€‚
+     * @~chinese Ê¹ÓÃ¸ø¶¨µÄ±êÇ©´´½¨Ò»¸öÃ»ÓĞÉè¶¨»Øµ÷µÄ±êÇ©²Ëµ¥Ïî¡£
      *
      * @param label @~english One Node that supports the LabelProtocol protocol. 
-     * @~chinese ä¸€ä¸ªå®ç°LabelProtocolæ¥å£çš„èŠ‚ç‚¹ã€‚
+     * @~chinese Ò»¸öÊµÏÖLabelProtocol½Ó¿ÚµÄ½Úµã¡£
      *
      * @return @~english A initialized MenuItemLabel object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„æ–‡æœ¬èœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄÎÄ±¾²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemLabel* create(Node *label);
 
     /**
      * @~english Sets a new string to the inner label.
-     * @~chinese ä¸ºå†…ç½®çš„æ ‡ç­¾è®¾ç½®æ–°çš„å­—ç¬¦ä¸²ã€‚
+     * @~chinese ÎªÄÚÖÃµÄ±êÇ©ÉèÖÃĞÂµÄ×Ö·û´®¡£
      * @param text @~english The text to display.
-     * @~chinese è¦æ˜¾ç¤ºçš„æ–‡æœ¬ã€‚
+     * @~chinese ÒªÏÔÊ¾µÄÎÄ±¾¡£
      */
     void setString(const std::string& text);
 
     /**
      * @~english Gets the color that will be used to disable the item.
-     * @~chinese è·å–èœå•é¡¹ç¦ç”¨çŠ¶æ€ä¸‹çš„ç€è‰²ã€‚
-     * @return @~english The color that used for disable the item. @~chinese ç¦ç”¨çŠ¶æ€ä¸‹çš„ç€è‰²ã€‚
+     * @~chinese »ñÈ¡²Ëµ¥Ïî½ûÓÃ×´Ì¬ÏÂµÄ×ÅÉ«¡£
+     * @return @~english The color that used for disable the item. @~chinese ½ûÓÃ×´Ì¬ÏÂµÄ×ÅÉ«¡£
      */
     inline const Color3B& getDisabledColor() const { return _disabledColor; };
 
     /**
      * @~english Sets the color that will be used to disable the item.
-     * @~chinese è®¾ç½®èœå•é¡¹ç¦ç”¨çŠ¶æ€ä¸‹çš„ç€è‰²ã€‚
+     * @~chinese ÉèÖÃ²Ëµ¥Ïî½ûÓÃ×´Ì¬ÏÂµÄ×ÅÉ«¡£
      *
      * @param color @~english The color that will be used to disable the item.
-     * @~chinese ç¦ç”¨çŠ¶æ€ä¸‹çš„ç€è‰²ã€‚
+     * @~chinese ½ûÓÃ×´Ì¬ÏÂµÄ×ÅÉ«¡£
      */
     inline void setDisabledColor(const Color3B& color) { _disabledColor = color; };
     
     /**
      * @~english Gets the label that is rendered.
-     * @~chinese è·å–èœå•é¡¹ä¸­è¢«ç”¨äºæ˜¾ç¤ºæ–‡æœ¬çš„èŠ‚ç‚¹ã€‚
-     * @return @~english The label that is rendered. @~chinese ç”¨äºæ¸²æŸ“æ–‡æœ¬çš„èŠ‚ç‚¹ã€‚
+     * @~chinese »ñÈ¡²Ëµ¥ÏîÖĞ±»ÓÃÓÚÏÔÊ¾ÎÄ±¾µÄ½Úµã¡£
+     * @return @~english The label that is rendered. @~chinese ÓÃÓÚäÖÈ¾ÎÄ±¾µÄ½Úµã¡£
      */
     inline Node* getLabel() const { return _label; };
     
     /**
      * @~english Sets the label that is rendered.
-     * @~chinese ç»™èœå•é¡¹æŒ‡å®šä¸€ä¸ªç”¨äºæ˜¾ç¤ºæ–‡æœ¬çš„èŠ‚ç‚¹ã€‚
+     * @~chinese ¸ø²Ëµ¥ÏîÖ¸¶¨Ò»¸öÓÃÓÚÏÔÊ¾ÎÄ±¾µÄ½Úµã¡£
      *
      * @param node @~english One Node that supports the LabelProtocol protocol.
-     * @~chinese ä¸€ä¸ªå®ç°äº†LabelProtocolæ¥å£çš„èŠ‚ç‚¹ã€‚
+     * @~chinese Ò»¸öÊµÏÖÁËLabelProtocol½Ó¿ÚµÄ½Úµã¡£
      */
     void setLabel(Node* node);
     
@@ -271,23 +271,23 @@ private:
 
 /** @class MenuItemAtlasFont
  * @brief @~english Helper class that creates a MenuItemLabel class with a LabelAtlas.
- * @~chinese ä¸€ä¸ªåŸºäºç»™å®šçš„å­—ç¬¦é›†é…ç½®åˆ›å»ºæ–‡æœ¬èœå•é¡¹çš„åŸºç±»ã€‚
+ * @~chinese Ò»¸ö»ùÓÚ¸ø¶¨µÄ×Ö·û¼¯ÅäÖÃ´´½¨ÎÄ±¾²Ëµ¥ÏîµÄ»ùÀà¡£
  */
 class CC_DLL MenuItemAtlasFont : public MenuItemLabel
 {
 public:
     /**
      * @~english Creates a menu item from a string and atlas configuration.
-     * @~chinese ä½¿ç”¨ç»™å®šçš„å­—ç¬¦ä¸²åŠå­—ç¬¦é›†é…ç½®åˆ›å»ºèœå•é¡¹ã€‚
+     * @~chinese Ê¹ÓÃ¸ø¶¨µÄ×Ö·û´®¼°×Ö·û¼¯ÅäÖÃ´´½¨²Ëµ¥Ïî¡£
      *
-     * @param text @~english The text to display. @~chinese è¦æ˜¾ç¤ºçš„æ–‡æœ¬ã€‚
-     * @param charMapFilePath @~english The file path of char map font. @~chinese å­—ç¬¦é›†å­—ä½“çš„æ–‡ä»¶è·¯å¾„ã€‚
-     * @param itemWidth @~english The width of character. @~chinese å­—ç¬¦çš„å®½åº¦ã€‚
-     * @param itemHeight @~english The height of character. @~chinese å­—ç¬¦çš„é«˜åº¦ã€‚
-     * @param startingCharacter @~english The starting character. @~chinese èµ·å§‹å­—ç¬¦ã€‚
+     * @param text @~english The text to display. @~chinese ÒªÏÔÊ¾µÄÎÄ±¾¡£
+     * @param charMapFilePath @~english The file path of char map font. @~chinese ×Ö·û¼¯×ÖÌåµÄÎÄ¼şÂ·¾¶¡£
+     * @param itemWidth @~english The width of character. @~chinese ×Ö·ûµÄ¿í¶È¡£
+     * @param itemHeight @~english The height of character. @~chinese ×Ö·ûµÄ¸ß¶È¡£
+     * @param startingCharacter @~english The starting character. @~chinese ÆğÊ¼×Ö·û¡£
      *
      * @return @~english A initialized MenuItemLabel object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„æ–‡æœ¬èœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄÎÄ±¾²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemAtlasFont* create(const std::string& text, const std::string& charMapFilePath, int itemWidth, int itemHeight, char startingCharacter);
 
@@ -295,17 +295,17 @@ public:
 
     /**
      * @~english Creates a menu item from a string, atlas configuration and callback.
-     * @~chinese ä½¿ç”¨ç»™å®šçš„å­—ç¬¦ä¸²ã€å­—ç¬¦é›†é…ç½®åŠå›è°ƒåˆ›å»ºèœå•é¡¹ã€‚
+     * @~chinese Ê¹ÓÃ¸ø¶¨µÄ×Ö·û´®¡¢×Ö·û¼¯ÅäÖÃ¼°»Øµ÷´´½¨²Ëµ¥Ïî¡£
      *
-     * @param text @~english The text to display. @~chinese è¦æ˜¾ç¤ºçš„æ–‡æœ¬ã€‚
-     * @param charMapFilePath @~english The file path of char map font. @~chinese å­—ç¬¦é›†å­—ä½“çš„æ–‡ä»¶è·¯å¾„ã€‚
-     * @param itemWidth @~english The width of character. @~chinese å­—ç¬¦çš„å®½åº¦ã€‚
-     * @param itemHeight @~english The height of character. @~chinese å­—ç¬¦çš„é«˜åº¦ã€‚
-     * @param startingCharacter @~english The starting character. @~chinese èµ·å§‹å­—ç¬¦ã€‚
-     * @param callback @~english The callback be invoked if the item is actived. @~chinese èœå•é¡¹è¢«æ¿€æ´»æ—¶è°ƒç”¨çš„å›è°ƒã€‚
+     * @param text @~english The text to display. @~chinese ÒªÏÔÊ¾µÄÎÄ±¾¡£
+     * @param charMapFilePath @~english The file path of char map font. @~chinese ×Ö·û¼¯×ÖÌåµÄÎÄ¼şÂ·¾¶¡£
+     * @param itemWidth @~english The width of character. @~chinese ×Ö·ûµÄ¿í¶È¡£
+     * @param itemHeight @~english The height of character. @~chinese ×Ö·ûµÄ¸ß¶È¡£
+     * @param startingCharacter @~english The starting character. @~chinese ÆğÊ¼×Ö·û¡£
+     * @param callback @~english The callback be invoked if the item is actived. @~chinese ²Ëµ¥Ïî±»¼¤»îÊ±µ÷ÓÃµÄ»Øµ÷¡£
      *
      * @return @~english A initialized MenuItemLabel object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„æ–‡æœ¬èœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄÎÄ±¾²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemAtlasFont* create(const std::string& text, const std::string& charMapFilePath, int itemWidth, int itemHeight, char startingCharacter, const ccMenuCallback& callback);
     
@@ -326,54 +326,54 @@ private:
 /** @class MenuItemFont
  * @brief @~english A MenuItemFont.
  * Helper class that creates a MenuItemLabel class with a Label.
- * @~chinese MenuItemFont Aã€‚
- * ä¸€ä¸ªç”¨ç»™å®šå­—ä½“é…ç½®åˆ›å»ºMenuItemLabelèœå•é¡¹çš„åŠ©æ‰‹ç±»ã€‚
+ * @~chinese MenuItemFont A¡£
+ * Ò»¸öÓÃ¸ø¶¨×ÖÌåÅäÖÃ´´½¨MenuItemLabel²Ëµ¥ÏîµÄÖúÊÖÀà¡£
  */
 class CC_DLL MenuItemFont : public MenuItemLabel
 {
 public:
     /** @~english Creates a menu item from a string without callback with default font setting. 
-     * @~chinese åŸºäºç»™å®šçš„å­—ç¬¦ä¸²åŠé»˜è®¤å­—ä½“é…ç½®åˆ›å»ºä¸€ä¸ªæ²¡æœ‰å›è°ƒçš„èœå•é¡¹ã€‚
+     * @~chinese »ùÓÚ¸ø¶¨µÄ×Ö·û´®¼°Ä¬ÈÏ×ÖÌåÅäÖÃ´´½¨Ò»¸öÃ»ÓĞ»Øµ÷µÄ²Ëµ¥Ïî¡£
      *
-     * @param text @~english The text to display. @~chinese è¦æ˜¾ç¤ºçš„æ–‡æœ¬ã€‚
+     * @param text @~english The text to display. @~chinese ÒªÏÔÊ¾µÄÎÄ±¾¡£
      *
      * @return @~english A initialized MenuItemFont object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„MenuItemFontèœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄMenuItemFont²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemFont * create(const std::string& text = "");
 
     CC_DEPRECATED_ATTRIBUTE static MenuItemFont * create(const std::string& value, Ref* target, SEL_MenuHandler selector);
 
     /** @~english Creates a menu item from a string with a callback with default font setting. 
-     * @~chinese åŸºäºç»™å®šçš„å­—ç¬¦ä¸²ï¼Œå­—ä½“é…ç½®åŠå›è°ƒåˆ›å»ºèœå•é¡¹ã€‚
+     * @~chinese »ùÓÚ¸ø¶¨µÄ×Ö·û´®£¬×ÖÌåÅäÖÃ¼°»Øµ÷´´½¨²Ëµ¥Ïî¡£
      *
-     * @param text @~english The text to display. @~chinese è¦æ˜¾ç¤ºçš„æ–‡æœ¬ã€‚
-     * @param callback @~english The callback be invoked if the item is actived. @~chinese èœå•é¡¹è¢«æ¿€æ´»æ—¶è°ƒç”¨çš„å›è°ƒã€‚
+     * @param text @~english The text to display. @~chinese ÒªÏÔÊ¾µÄÎÄ±¾¡£
+     * @param callback @~english The callback be invoked if the item is actived. @~chinese ²Ëµ¥Ïî±»¼¤»îÊ±µ÷ÓÃµÄ»Øµ÷¡£
      *
      * @return @~english A initialized MenuItemFont object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„MenuItemFontèœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄMenuItemFont²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemFont * create(const std::string& text, const ccMenuCallback& callback);
 
-    /** @~english Set default font size.  @~chinese è®¾ç½®é»˜è®¤å­—ä½“å¤§å°ã€‚
-     * @param defaultFontSize @~english The default font size. @~chinese é»˜è®¤å­—ä½“å¤§å°ã€‚
+    /** @~english Set default font size.  @~chinese ÉèÖÃÄ¬ÈÏ×ÖÌå´óĞ¡¡£
+     * @param defaultFontSize @~english The default font size. @~chinese Ä¬ÈÏ×ÖÌå´óĞ¡¡£
      */
     static void setFontSize(int defaultFontSize);
 
-    /** @~english Get default font size.  @~chinese è·å–é»˜è®¤å­—ä½“å¤§å°ã€‚
-     * @return @~english The default font size. @~chinese é»˜è®¤å­—ä½“å¤§å°ã€‚
+    /** @~english Get default font size.  @~chinese »ñÈ¡Ä¬ÈÏ×ÖÌå´óĞ¡¡£
+     * @return @~english The default font size. @~chinese Ä¬ÈÏ×ÖÌå´óĞ¡¡£
      */
     static int getFontSize();
 
     CC_DEPRECATED_ATTRIBUTE static int fontSize() { return MenuItemFont::getFontSize(); };
 
-    /** @~english Set the default font name.  @~chinese è®¾ç½®é»˜è®¤å­—ä½“åã€‚
-     * @param defaultFontName @~english The default font name. @~chinese é»˜è®¤å­—ä½“åã€‚
+    /** @~english Set the default font name.  @~chinese ÉèÖÃÄ¬ÈÏ×ÖÌåÃû¡£
+     * @param defaultFontName @~english The default font name. @~chinese Ä¬ÈÏ×ÖÌåÃû¡£
      */
     static void setFontName(const std::string& defaultFontName);
 
-    /** @~english Get the default font name.  @~chinese è·å–é»˜è®¤å­—ä½“åã€‚
-     * @return @~english The default font name. @~chinese é»˜è®¤å­—ä½“åã€‚
+    /** @~english Get the default font name.  @~chinese »ñÈ¡Ä¬ÈÏ×ÖÌåÃû¡£
+     * @return @~english The default font name. @~chinese Ä¬ÈÏ×ÖÌåÃû¡£
      */
     static const std::string& getFontName();
 
@@ -382,19 +382,19 @@ public:
     /** @~english Set the font size.
      * c++ can not overload static and non-static member functions with the same parameter types.
      * so change the name to setFontSizeObj.
-     * @~chinese è®¾ç½®å­—ä½“å¤§å°ã€‚
-     * c++ä¸èƒ½é‡è½½ç›¸åŒå‚æ•°ç±»å‹çš„é™æ€åŠéé™æ€æˆå‘˜å‡½æ•°ã€‚
-     * æ‰€ä»¥æ”¹åsetFontSizeObjã€‚
+     * @~chinese ÉèÖÃ×ÖÌå´óĞ¡¡£
+     * c++²»ÄÜÖØÔØÏàÍ¬²ÎÊıÀàĞÍµÄ¾²Ì¬¼°·Ç¾²Ì¬³ÉÔ±º¯Êı¡£
+     * ËùÒÔ¸ÄÃûsetFontSizeObj¡£
      *
-     * @param fontSize @~english The font size. @~chinese å­—ä½“å¤§å°ã€‚
+     * @param fontSize @~english The font size. @~chinese ×ÖÌå´óĞ¡¡£
      *
      * @js setFontSize
      */
     void setFontSizeObj(int fontSize);
     
     /** @~english Get the font size .
-     * @~chinese è·å–å­—ä½“å¤§å°ã€‚
-     * @return @~english The font size. @~chinese å­—ä½“å¤§å°ã€‚
+     * @~chinese »ñÈ¡×ÖÌå´óĞ¡¡£
+     * @return @~english The font size. @~chinese ×ÖÌå´óĞ¡¡£
      * @js getFontSize
      */
     int getFontSizeObj() const;
@@ -406,20 +406,20 @@ public:
      * c++ can not overload static and non-static member functions with the same parameter types.
      * so change the name to setFontNameObj.
      * @~chinese 
-     * è®¾ç½®å­—ä½“çš„åå­—ã€‚
-     * c++ä¸èƒ½é‡è½½ç›¸åŒå‚æ•°ç±»å‹çš„é™æ€åŠéé™æ€æˆå‘˜å‡½æ•°ã€‚
-     * æ‰€ä»¥æ”¹åsetFontNameObjã€‚
+     * ÉèÖÃ×ÖÌåµÄÃû×Ö¡£
+     * c++²»ÄÜÖØÔØÏàÍ¬²ÎÊıÀàĞÍµÄ¾²Ì¬¼°·Ç¾²Ì¬³ÉÔ±º¯Êı¡£
+     * ËùÒÔ¸ÄÃûsetFontNameObj¡£
      *
-     * @param fontName @~english The font name. @~chinese å­—ä½“åã€‚
+     * @param fontName @~english The font name. @~chinese ×ÖÌåÃû¡£
      *
      * @js setFontName
      */
     void setFontNameObj(const std::string& fontName);
 
     /** @~english Returns the name of the font.
-     * @~chinese è¿”å›å­—ä½“çš„åç§°ã€‚
+     * @~chinese ·µ»Ø×ÖÌåµÄÃû³Æ¡£
      *
-     * @return @~english The font name. @~chinese å­—ä½“åã€‚
+     * @return @~english The font name. @~chinese ×ÖÌåÃû¡£
      *
      * @js getFontName
      */
@@ -452,11 +452,11 @@ private:
  * - selected
  * - disabled
  * 
- * @~chinese MenuItemSpriteæ¥å—å®ç°äº†Node<RGBAProtocol>æ¥å£çš„ä»»ä½•èŠ‚ç‚¹å¯¹è±¡ä½œä¸ºæ˜¾ç¤ºé¡¹ã€‚
- * æ˜¾ç¤ºé¡¹æœ‰3ä¸ªä¸åŒçš„çŠ¶æ€:
- * - æ­£å¸¸
- * - é€‰ä¸­
- * - ä¸å¯ç”¨
+ * @~chinese MenuItemSprite½ÓÊÜÊµÏÖÁËNode<RGBAProtocol>½Ó¿ÚµÄÈÎºÎ½Úµã¶ÔÏó×÷ÎªÏÔÊ¾Ïî¡£
+ * ÏÔÊ¾ÏîÓĞ3¸ö²»Í¬µÄ×´Ì¬:
+ * - Õı³£
+ * - Ñ¡ÖĞ
+ * - ²»¿ÉÓÃ
  * 
  @since v0.8.0
  */
@@ -464,14 +464,14 @@ class CC_DLL MenuItemSprite : public MenuItem
 {
 public:
     /** @~english Creates a menu item with a normal, selected and disabled node. 
-     * @~chinese åŸºäºç»™å®šçš„ä¸åŒçŠ¶æ€ä¸‹æ˜¾ç¤ºçš„èŠ‚ç‚¹åˆ›å»ºèœå•é¡¹ã€‚
+     * @~chinese »ùÓÚ¸ø¶¨µÄ²»Í¬×´Ì¬ÏÂÏÔÊ¾µÄ½Úµã´´½¨²Ëµ¥Ïî¡£
      *
-     * @param normalNode @~english The normal node to display. @~chinese æ­£å¸¸çŠ¶æ€æ˜¾ç¤ºçš„èŠ‚ç‚¹ã€‚
-     * @param selectedNode @~english The selected node to display. @~chinese é€‰ä¸­çŠ¶æ€æ˜¾ç¤ºçš„èŠ‚ç‚¹ã€‚
-     * @param disabledNode @~english The disabled node to display. @~chinese ç¦ç”¨çŠ¶æ€æ˜¾ç¤ºçš„èŠ‚ç‚¹ã€‚
+     * @param normalNode @~english The normal node to display. @~chinese Õı³£×´Ì¬ÏÔÊ¾µÄ½Úµã¡£
+     * @param selectedNode @~english The selected node to display. @~chinese Ñ¡ÖĞ×´Ì¬ÏÔÊ¾µÄ½Úµã¡£
+     * @param disabledNode @~english The disabled node to display. @~chinese ½ûÓÃ×´Ì¬ÏÔÊ¾µÄ½Úµã¡£
      *
      * @return @~english A initialized MenuItemSprite object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„MenuItemSpriteèœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄMenuItemSprite²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemSprite * create(Node* normalNode, Node* selectedNode, Node* disabledNode = nullptr);
     
@@ -480,57 +480,57 @@ public:
     CC_DEPRECATED_ATTRIBUTE static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, Ref* target, SEL_MenuHandler selector);
 
     /** @~english Creates a menu item with a normal and selected node with a callback.  
-     * @~chinese åŸºäºç»™å®šçš„ä¸åŒçŠ¶æ€ä¸‹æ˜¾ç¤ºçš„èŠ‚ç‚¹åŠå›è°ƒåˆ›å»ºèœå•é¡¹ã€‚
+     * @~chinese »ùÓÚ¸ø¶¨µÄ²»Í¬×´Ì¬ÏÂÏÔÊ¾µÄ½Úµã¼°»Øµ÷´´½¨²Ëµ¥Ïî¡£
      *
-     * @param normalNode @~english The normal node to display. @~chinese æ­£å¸¸çŠ¶æ€æ˜¾ç¤ºçš„èŠ‚ç‚¹ã€‚
-     * @param selectedNode @~english The selected node to display. @~chinese é€‰ä¸­çŠ¶æ€æ˜¾ç¤ºçš„èŠ‚ç‚¹ã€‚
-     * @param callback @~english The callback be invoked if the item is actived. @~chinese èœå•é¡¹è¢«æ¿€æ´»æ—¶è°ƒç”¨çš„å›è°ƒã€‚
+     * @param normalNode @~english The normal node to display. @~chinese Õı³£×´Ì¬ÏÔÊ¾µÄ½Úµã¡£
+     * @param selectedNode @~english The selected node to display. @~chinese Ñ¡ÖĞ×´Ì¬ÏÔÊ¾µÄ½Úµã¡£
+     * @param callback @~english The callback be invoked if the item is actived. @~chinese ²Ëµ¥Ïî±»¼¤»îÊ±µ÷ÓÃµÄ»Øµ÷¡£
      *
      * @return @~english A initialized MenuItemSprite object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„MenuItemSpriteèœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄMenuItemSprite²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemSprite * create(Node* normalNode, Node* selectedNode, const ccMenuCallback& callback);
 
     /** @~english Creates a menu item with a normal,selected and disabled node with callback. 
-     * @~chinese åŸºäºç»™å®šçš„ä¸åŒçŠ¶æ€ä¸‹æ˜¾ç¤ºçš„èŠ‚ç‚¹åŠå›è°ƒåˆ›å»ºèœå•é¡¹ã€‚
+     * @~chinese »ùÓÚ¸ø¶¨µÄ²»Í¬×´Ì¬ÏÂÏÔÊ¾µÄ½Úµã¼°»Øµ÷´´½¨²Ëµ¥Ïî¡£
      *
-     * @param normalNode @~english The normal node to display. @~chinese æ­£å¸¸çŠ¶æ€æ˜¾ç¤ºçš„èŠ‚ç‚¹ã€‚
-     * @param selectedNode @~english The selected node to display. @~chinese é€‰ä¸­çŠ¶æ€æ˜¾ç¤ºçš„èŠ‚ç‚¹ã€‚
-     * @param disabledNode @~english The disabled node to display. @~chinese ç¦ç”¨çŠ¶æ€æ˜¾ç¤ºçš„èŠ‚ç‚¹ã€‚
-     * @param callback @~english The callback be invoked if the item is actived. @~chinese èœå•é¡¹è¢«æ¿€æ´»æ—¶è°ƒç”¨çš„å›è°ƒã€‚
+     * @param normalNode @~english The normal node to display. @~chinese Õı³£×´Ì¬ÏÔÊ¾µÄ½Úµã¡£
+     * @param selectedNode @~english The selected node to display. @~chinese Ñ¡ÖĞ×´Ì¬ÏÔÊ¾µÄ½Úµã¡£
+     * @param disabledNode @~english The disabled node to display. @~chinese ½ûÓÃ×´Ì¬ÏÔÊ¾µÄ½Úµã¡£
+     * @param callback @~english The callback be invoked if the item is actived. @~chinese ²Ëµ¥Ïî±»¼¤»îÊ±µ÷ÓÃµÄ»Øµ÷¡£
      *
      * @return @~english A initialized MenuItemSprite object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„MenuItemSpriteèœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄMenuItemSprite²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemSprite * create(Node* normalNode, Node* selectedNode, Node* disabledNode, const ccMenuCallback& callback);
 
-    /** @~english Gets the node used when the item is not selected.  @~chinese è·å–æ­£å¸¸çŠ¶æ€ä¸‹ä½¿ç”¨çš„èŠ‚ç‚¹ã€‚
-     * @return @~english The normal node to display. @~chinese æ­£å¸¸çŠ¶æ€æ˜¾ç¤ºçš„èŠ‚ç‚¹ã€‚
+    /** @~english Gets the node used when the item is not selected.  @~chinese »ñÈ¡Õı³£×´Ì¬ÏÂÊ¹ÓÃµÄ½Úµã¡£
+     * @return @~english The normal node to display. @~chinese Õı³£×´Ì¬ÏÔÊ¾µÄ½Úµã¡£
      */
     inline Node* getNormalImage() const { return _normalImage; };
     
-    /** @~english Sets the node used when the item is not selected.  @~chinese è®¾ç½®ç”¨äºæ­£å¸¸çŠ¶æ€ä¸‹çš„èŠ‚ç‚¹ã€‚
-     * @param normalNode @~english The normal node to display. @~chinese æ­£å¸¸çŠ¶æ€æ˜¾ç¤ºçš„èŠ‚ç‚¹ã€‚
+    /** @~english Sets the node used when the item is not selected.  @~chinese ÉèÖÃÓÃÓÚÕı³£×´Ì¬ÏÂµÄ½Úµã¡£
+     * @param normalNode @~english The normal node to display. @~chinese Õı³£×´Ì¬ÏÔÊ¾µÄ½Úµã¡£
      */
     void setNormalImage(Node* normalNode);
     
-    /** @~english Gets the node used when the item is selected.  @~chinese è·å–é€‰ä¸­çŠ¶æ€ä¸‹ä½¿ç”¨çš„èŠ‚ç‚¹ã€‚
-     * @return @~english The selected node to display. @~chinese é€‰ä¸­çŠ¶æ€æ˜¾ç¤ºçš„èŠ‚ç‚¹ã€‚
+    /** @~english Gets the node used when the item is selected.  @~chinese »ñÈ¡Ñ¡ÖĞ×´Ì¬ÏÂÊ¹ÓÃµÄ½Úµã¡£
+     * @return @~english The selected node to display. @~chinese Ñ¡ÖĞ×´Ì¬ÏÔÊ¾µÄ½Úµã¡£
      */
     inline Node* getSelectedImage() const { return _selectedImage; };
     
-    /** @~english Sets the node used when the item is selected.  @~chinese è®¾ç½®ç”¨äºé€‰ä¸­çŠ¶æ€ä¸‹çš„èŠ‚ç‚¹ã€‚
-     * @param selectedNode @~english The selected node to display. @~chinese é€‰ä¸­çŠ¶æ€æ˜¾ç¤ºçš„èŠ‚ç‚¹ã€‚
+    /** @~english Sets the node used when the item is selected.  @~chinese ÉèÖÃÓÃÓÚÑ¡ÖĞ×´Ì¬ÏÂµÄ½Úµã¡£
+     * @param selectedNode @~english The selected node to display. @~chinese Ñ¡ÖĞ×´Ì¬ÏÔÊ¾µÄ½Úµã¡£
      */
     void setSelectedImage(Node* selectedNode);
     
-    /** @~english Gets the node used when the item is disabled.  @~chinese è·å–ä¸å¯ç”¨çŠ¶æ€ä¸‹ä½¿ç”¨çš„èŠ‚ç‚¹ã€‚
-     * @return @~english The disabled node to display. @~chinese ç¦ç”¨çŠ¶æ€æ˜¾ç¤ºçš„èŠ‚ç‚¹ã€‚
+    /** @~english Gets the node used when the item is disabled.  @~chinese »ñÈ¡²»¿ÉÓÃ×´Ì¬ÏÂÊ¹ÓÃµÄ½Úµã¡£
+     * @return @~english The disabled node to display. @~chinese ½ûÓÃ×´Ì¬ÏÔÊ¾µÄ½Úµã¡£
      */
     inline Node* getDisabledImage() const { return _disabledImage; };
     
-    /** @~english Sets the node used when the item is disabled.  @~chinese è®¾ç½®ç”¨äºä¸å¯ç”¨çŠ¶æ€ä¸‹çš„èŠ‚ç‚¹ã€‚
-     * @param disabledNode @~english The disabled node to display. @~chinese ç¦ç”¨çŠ¶æ€æ˜¾ç¤ºçš„èŠ‚ç‚¹ã€‚
+    /** @~english Sets the node used when the item is disabled.  @~chinese ÉèÖÃÓÃÓÚ²»¿ÉÓÃ×´Ì¬ÏÂµÄ½Úµã¡£
+     * @param disabledNode @~english The disabled node to display. @~chinese ½ûÓÃ×´Ì¬ÏÔÊ¾µÄ½Úµã¡£
      */
     void setDisabledImage(Node* disabledNode);
     
@@ -572,77 +572,77 @@ private:
  * - disabled
  * 
  * For best results try that all images are of the same size.
- * @~chinese å›¾ç‰‡èœå•é¡¹ï¼Œæ¥å—å›¾åƒèµ„æºä½œä¸ºæ˜¾ç¤ºé¡¹ã€‚
- * æ˜¾ç¤ºé¡¹æœ‰3ä¸ªä¸åŒçš„çŠ¶æ€:
- * - æ­£å¸¸
- * - é€‰ä¸­
- * - ä¸å¯ç”¨
+ * @~chinese Í¼Æ¬²Ëµ¥Ïî£¬½ÓÊÜÍ¼Ïñ×ÊÔ´×÷ÎªÏÔÊ¾Ïî¡£
+ * ÏÔÊ¾ÏîÓĞ3¸ö²»Í¬µÄ×´Ì¬:
+ * - Õı³£
+ * - Ñ¡ÖĞ
+ * - ²»¿ÉÓÃ
  * 
- * ä¸ºäº†è·å–æœ€ä½³æ•ˆæœï¼Œæ‰€æœ‰å›¾ç‰‡èµ„æºçš„å¤§å°åº”è¯¥ä¿æŒä¸€è‡´ã€‚
+ * ÎªÁË»ñÈ¡×î¼ÑĞ§¹û£¬ËùÓĞÍ¼Æ¬×ÊÔ´µÄ´óĞ¡Ó¦¸Ã±£³ÖÒ»ÖÂ¡£
  */
 class CC_DLL MenuItemImage : public MenuItemSprite
 {
 public:
-    /** @~english Creates an empty MenuItemImage.  @~chinese åˆ›å»ºä¸€ä¸ªç©ºçš„å›¾ç‰‡èœå•é¡¹ã€‚
+    /** @~english Creates an empty MenuItemImage.  @~chinese ´´½¨Ò»¸ö¿ÕµÄÍ¼Æ¬²Ëµ¥Ïî¡£
      * @return @~english A initialized MenuItemImage object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„å›¾ç‰‡èœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄÍ¼Æ¬²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemImage* create();
 
-    /** @~english Creates a menu item with a normal and selected image. @~chinese åŸºäºç»™å®šçš„æ­£å¸¸åŠé€‰ä¸­çŠ¶æ€çš„å›¾ç‰‡èµ„æºåˆ›å»ºèœå•é¡¹ã€‚
+    /** @~english Creates a menu item with a normal and selected image. @~chinese »ùÓÚ¸ø¶¨µÄÕı³£¼°Ñ¡ÖĞ×´Ì¬µÄÍ¼Æ¬×ÊÔ´´´½¨²Ëµ¥Ïî¡£
      *
-     * @param normalImage @~english The normal image to display. @~chinese æ­£å¸¸çŠ¶æ€æ˜¾ç¤ºçš„å›¾ç‰‡è·¯å¾„ã€‚
-     * @param selectedImage @~english The selected image to display. @~chinese é€‰ä¸­çŠ¶æ€æ˜¾ç¤ºçš„å›¾ç‰‡è·¯å¾„ã€‚
+     * @param normalImage @~english The normal image to display. @~chinese Õı³£×´Ì¬ÏÔÊ¾µÄÍ¼Æ¬Â·¾¶¡£
+     * @param selectedImage @~english The selected image to display. @~chinese Ñ¡ÖĞ×´Ì¬ÏÔÊ¾µÄÍ¼Æ¬Â·¾¶¡£
      *
      * @return @~english A initialized MenuItemImage object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„å›¾ç‰‡èœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄÍ¼Æ¬²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage);
 
-    /** @~english Creates a menu item with a normal,selected  and disabled image. @~chinese åŸºäºç»™å®šçš„æ­£å¸¸ã€é€‰ä¸­åŠä¸å¯ç”¨çŠ¶æ€çš„å›¾ç‰‡èµ„æºåˆ›å»ºèœå•é¡¹ã€‚
+    /** @~english Creates a menu item with a normal,selected  and disabled image. @~chinese »ùÓÚ¸ø¶¨µÄÕı³£¡¢Ñ¡ÖĞ¼°²»¿ÉÓÃ×´Ì¬µÄÍ¼Æ¬×ÊÔ´´´½¨²Ëµ¥Ïî¡£
      *
-     * @param normalImage @~english The normal image to display. @~chinese æ­£å¸¸çŠ¶æ€æ˜¾ç¤ºçš„å›¾ç‰‡è·¯å¾„ã€‚
-     * @param selectedImage @~english The selected image to display. @~chinese é€‰ä¸­çŠ¶æ€æ˜¾ç¤ºçš„å›¾ç‰‡è·¯å¾„ã€‚
-     * @param disabledImage @~english The disabled image to display. @~chinese ç¦ç”¨çŠ¶æ€æ˜¾ç¤ºçš„å›¾ç‰‡è·¯å¾„ã€‚
+     * @param normalImage @~english The normal image to display. @~chinese Õı³£×´Ì¬ÏÔÊ¾µÄÍ¼Æ¬Â·¾¶¡£
+     * @param selectedImage @~english The selected image to display. @~chinese Ñ¡ÖĞ×´Ì¬ÏÔÊ¾µÄÍ¼Æ¬Â·¾¶¡£
+     * @param disabledImage @~english The disabled image to display. @~chinese ½ûÓÃ×´Ì¬ÏÔÊ¾µÄÍ¼Æ¬Â·¾¶¡£
      *
      * @return @~english A initialized MenuItemImage object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„å›¾ç‰‡èœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄÍ¼Æ¬²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage);
 
     CC_DEPRECATED_ATTRIBUTE static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage, Ref* target, SEL_MenuHandler selector);
 
-    /** @~english Creates a menu item with a normal and selected image with a callback. @~chinese åŸºäºç»™å®šçš„æ­£å¸¸åŠé€‰ä¸­çŠ¶æ€çš„å›¾ç‰‡èµ„æºåŠå›è°ƒåˆ›å»ºèœå•é¡¹ã€‚
+    /** @~english Creates a menu item with a normal and selected image with a callback. @~chinese »ùÓÚ¸ø¶¨µÄÕı³£¼°Ñ¡ÖĞ×´Ì¬µÄÍ¼Æ¬×ÊÔ´¼°»Øµ÷´´½¨²Ëµ¥Ïî¡£
      *
-     * @param normalImage @~english The normal image to display. @~chinese æ­£å¸¸çŠ¶æ€æ˜¾ç¤ºçš„å›¾ç‰‡è·¯å¾„ã€‚
-     * @param selectedImage @~english The selected image to display. @~chinese é€‰ä¸­çŠ¶æ€æ˜¾ç¤ºçš„å›¾ç‰‡è·¯å¾„ã€‚
-     * @param callback @~english The callback be invoked if the item is actived. @~chinese èœå•é¡¹è¢«æ¿€æ´»æ—¶è°ƒç”¨çš„å›è°ƒã€‚
+     * @param normalImage @~english The normal image to display. @~chinese Õı³£×´Ì¬ÏÔÊ¾µÄÍ¼Æ¬Â·¾¶¡£
+     * @param selectedImage @~english The selected image to display. @~chinese Ñ¡ÖĞ×´Ì¬ÏÔÊ¾µÄÍ¼Æ¬Â·¾¶¡£
+     * @param callback @~english The callback be invoked if the item is actived. @~chinese ²Ëµ¥Ïî±»¼¤»îÊ±µ÷ÓÃµÄ»Øµ÷¡£
      *
      * @return @~english A initialized MenuItemImage object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„å›¾ç‰‡èœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄÍ¼Æ¬²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage, const ccMenuCallback& callback);
 
     CC_DEPRECATED_ATTRIBUTE static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, Ref* target, SEL_MenuHandler selector);
     
     /** @~english Creates a menu item with a normal,selected and disabled image with a callable object.  
-     * @~chinese åŸºäºç»™å®šçš„ä¸åŒçŠ¶æ€ä¸‹çš„å›¾ç‰‡èµ„æºåŠå›è°ƒåˆ›å»ºèœå•é¡¹ã€‚
+     * @~chinese »ùÓÚ¸ø¶¨µÄ²»Í¬×´Ì¬ÏÂµÄÍ¼Æ¬×ÊÔ´¼°»Øµ÷´´½¨²Ëµ¥Ïî¡£
      *
-     * @param normalImage @~english The normal image to display. @~chinese æ­£å¸¸çŠ¶æ€æ˜¾ç¤ºçš„å›¾ç‰‡è·¯å¾„ã€‚
-     * @param selectedImage @~english The selected image to display. @~chinese é€‰ä¸­çŠ¶æ€æ˜¾ç¤ºçš„å›¾ç‰‡è·¯å¾„ã€‚
-     * @param disabledImage @~english The disabled image to display. @~chinese ç¦ç”¨çŠ¶æ€æ˜¾ç¤ºçš„å›¾ç‰‡è·¯å¾„ã€‚
-     * @param callback @~english The callback be invoked if the item is actived. @~chinese èœå•é¡¹è¢«æ¿€æ´»æ—¶è°ƒç”¨çš„å›è°ƒã€‚
+     * @param normalImage @~english The normal image to display. @~chinese Õı³£×´Ì¬ÏÔÊ¾µÄÍ¼Æ¬Â·¾¶¡£
+     * @param selectedImage @~english The selected image to display. @~chinese Ñ¡ÖĞ×´Ì¬ÏÔÊ¾µÄÍ¼Æ¬Â·¾¶¡£
+     * @param disabledImage @~english The disabled image to display. @~chinese ½ûÓÃ×´Ì¬ÏÔÊ¾µÄÍ¼Æ¬Â·¾¶¡£
+     * @param callback @~english The callback be invoked if the item is actived. @~chinese ²Ëµ¥Ïî±»¼¤»îÊ±µ÷ÓÃµÄ»Øµ÷¡£
      *
      * @return @~english A initialized MenuItemImage object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„å›¾ç‰‡èœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄÍ¼Æ¬²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, const ccMenuCallback& callback);
 
-    /** @~english Sets the sprite frame for the normal image.  @~chinese è®¾ç½®ä¸€ä¸ªSpriteFrameå¯¹è±¡ç»™æ­£å¸¸çŠ¶æ€ä¸‹æ‰€ä½¿ç”¨çš„å›¾ç‰‡ã€‚*/
+    /** @~english Sets the sprite frame for the normal image.  @~chinese ÉèÖÃÒ»¸öSpriteFrame¶ÔÏó¸øÕı³£×´Ì¬ÏÂËùÊ¹ÓÃµÄÍ¼Æ¬¡£*/
     void setNormalSpriteFrame(SpriteFrame* frame);
-    /** @~english Sets the sprite frame for the selected image.  @~chinese è®¾ç½®ä¸€ä¸ªSpriteFrameå¯¹è±¡ç»™é€‰ä¸­çŠ¶æ€ä¸‹æ‰€ä½¿ç”¨çš„å›¾ç‰‡ã€‚*/
+    /** @~english Sets the sprite frame for the selected image.  @~chinese ÉèÖÃÒ»¸öSpriteFrame¶ÔÏó¸øÑ¡ÖĞ×´Ì¬ÏÂËùÊ¹ÓÃµÄÍ¼Æ¬¡£*/
     void setSelectedSpriteFrame(SpriteFrame* frame);
-    /** @~english Sets the sprite frame for the disabled image.  @~chinese è®¾ç½®ä¸€ä¸ªSpriteFrameå¯¹è±¡ç»™ä¸å¯ç”¨çŠ¶æ€ä¸‹æ‰€ä½¿ç”¨çš„å›¾ç‰‡ã€‚*/
+    /** @~english Sets the sprite frame for the disabled image.  @~chinese ÉèÖÃÒ»¸öSpriteFrame¶ÔÏó¸ø²»¿ÉÓÃ×´Ì¬ÏÂËùÊ¹ÓÃµÄÍ¼Æ¬¡£*/
     void setDisabledSpriteFrame(SpriteFrame* frame);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -665,9 +665,9 @@ private:
  * @brief @~english A MenuItemToggle.
  * A simple container class that "toggles" it's inner items.
  * The inner items can be any MenuItem.
- * @~chinese è§¦å‘å™¨èœå•é¡¹ã€‚
- * ä¸€ä¸ªå®ç°åˆ‡æ¢å†…éƒ¨èœå•é¡¹çš„ç®€å•å®¹å™¨ç±»ã€‚
- * å†…éƒ¨é¡¹å¯ä»¥æ˜¯ä»»ä½•MenuItemå¯¹è±¡ã€‚
+ * @~chinese ´¥·¢Æ÷²Ëµ¥Ïî¡£
+ * Ò»¸öÊµÏÖÇĞ»»ÄÚ²¿²Ëµ¥ÏîµÄ¼òµ¥ÈİÆ÷Àà¡£
+ * ÄÚ²¿Ïî¿ÉÒÔÊÇÈÎºÎMenuItem¶ÔÏó¡£
  */
 class CC_DLL MenuItemToggle : public MenuItem
 {
@@ -678,13 +678,13 @@ public:
     
     /**
      *@brief @~english Creates a menu item toggle from a Vector of MenuItem with a callback.
-     * @~chinese åŸºäºç»™å®šçš„å›è°ƒåŠèœå•é¡¹æ•°ç»„åˆ›å»ºèœå•é¡¹è§¦å‘å™¨ã€‚
+     * @~chinese »ùÓÚ¸ø¶¨µÄ»Øµ÷¼°²Ëµ¥ÏîÊı×é´´½¨²Ëµ¥Ïî´¥·¢Æ÷¡£
      *
-     * @param callback @~english The callback be invoked if the item is actived. @~chinese èœå•é¡¹è¢«æ¿€æ´»æ—¶è°ƒç”¨çš„å›è°ƒã€‚
-     * @param menuItems @~english A array of MenuItem object. @~chinese èœå•é¡¹æ•°ç»„ã€‚
+     * @param callback @~english The callback be invoked if the item is actived. @~chinese ²Ëµ¥Ïî±»¼¤»îÊ±µ÷ÓÃµÄ»Øµ÷¡£
+     * @param menuItems @~english A array of MenuItem object. @~chinese ²Ëµ¥ÏîÊı×é¡£
      *
      * @return @~english A initialized MenuItemToggle object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„è§¦å‘å™¨èœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄ´¥·¢Æ÷²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemToggle * createWithCallback(const ccMenuCallback& callback, const Vector<MenuItem*>& menuItems);
 
@@ -707,49 +707,49 @@ public:
 #else
     static MenuItemToggle* createWithCallback(const ccMenuCallback& callback, MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
 #endif
-    /** @~english Creates a menu item toggle with no callback. @~chinese åˆ›å»ºä¸€ä¸ªæ²¡æœ‰å›è°ƒçš„èœå•é¡¹è§¦å‘å™¨ã€‚
+    /** @~english Creates a menu item toggle with no callback. @~chinese ´´½¨Ò»¸öÃ»ÓĞ»Øµ÷µÄ²Ëµ¥Ïî´¥·¢Æ÷¡£
      *
      * @return @~english A initialized MenuItemToggle object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„è§¦å‘å™¨èœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄ´¥·¢Æ÷²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemToggle* create();
     
-    /** @~english Creates a menu item toggle with a item.  @~chinese åŸºäºä¸€ä¸ªç»™å®šçš„èœå•é¡¹åˆ›å»ºèœå•é¡¹è§¦å‘å™¨ã€‚
+    /** @~english Creates a menu item toggle with a item.  @~chinese »ùÓÚÒ»¸ö¸ø¶¨µÄ²Ëµ¥Ïî´´½¨²Ëµ¥Ïî´¥·¢Æ÷¡£
      *
-     * @param item @~english One MenuItem object. @~chinese ä¸€ä¸ªèœå•é¡¹å¯¹è±¡ã€‚
+     * @param item @~english One MenuItem object. @~chinese Ò»¸ö²Ëµ¥Ïî¶ÔÏó¡£
      *
      * @return @~english A initialized MenuItemToggle object which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„è§¦å‘å™¨èœå•é¡¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄ´¥·¢Æ÷²Ëµ¥Ïî£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static MenuItemToggle* create(MenuItem *item);
     
-    /** @~english Add more menu item.  @~chinese ç»™è§¦å‘å™¨æ·»åŠ èœå•é¡¹ã€‚
-     * @param item @~english One MenuItem object. @~chinese ä¸€ä¸ªèœå•é¡¹å¯¹è±¡ã€‚
+    /** @~english Add more menu item.  @~chinese ¸ø´¥·¢Æ÷Ìí¼Ó²Ëµ¥Ïî¡£
+     * @param item @~english One MenuItem object. @~chinese Ò»¸ö²Ëµ¥Ïî¶ÔÏó¡£
      */
     void addSubItem(MenuItem *item);
     
-    /** @~english Return the selected item.  @~chinese è¿”å›è¢«é€‰ä¸­çš„èœå•é¡¹ã€‚
-     * @return @~english The selected item. @~chinese è¢«é€‰ä¸­çš„èœå•é¡¹æŒ‡é’ˆã€‚
+    /** @~english Return the selected item.  @~chinese ·µ»Ø±»Ñ¡ÖĞµÄ²Ëµ¥Ïî¡£
+     * @return @~english The selected item. @~chinese ±»Ñ¡ÖĞµÄ²Ëµ¥ÏîÖ¸Õë¡£
      */
     MenuItem* getSelectedItem();
     
     CC_DEPRECATED_ATTRIBUTE MenuItem* selectedItem() { return getSelectedItem(); }
 
-    /** @~english Gets the index of the selected item. @~chinese è·å–è¢«é€‰ä¸­çš„èœå•é¡¹ç´¢å¼•ã€‚
-     * @return @~english Return the index of the selected item. @~chinese è¿”å›è¢«é€‰ä¸­çš„èœå•é¡¹ç´¢å¼•ã€‚
+    /** @~english Gets the index of the selected item. @~chinese »ñÈ¡±»Ñ¡ÖĞµÄ²Ëµ¥ÏîË÷Òı¡£
+     * @return @~english Return the index of the selected item. @~chinese ·µ»Ø±»Ñ¡ÖĞµÄ²Ëµ¥ÏîË÷Òı¡£
      */
     inline unsigned int getSelectedIndex() const { return _selectedIndex; };
     
-    /** @~english Sets the index of the selected item. @~chinese è®¾ç½®è¢«é€‰ä¸­çš„èœå•é¡¹ç´¢å¼•ã€‚
-     * @param index @~english The index of the selected item. @~chinese è¢«é€‰ä¸­çš„èœå•é¡¹ç´¢å¼•ã€‚
+    /** @~english Sets the index of the selected item. @~chinese ÉèÖÃ±»Ñ¡ÖĞµÄ²Ëµ¥ÏîË÷Òı¡£
+     * @param index @~english The index of the selected item. @~chinese ±»Ñ¡ÖĞµÄ²Ëµ¥ÏîË÷Òı¡£
      */
     void setSelectedIndex(unsigned int index);
     
     /** @~english Gets the array that contains the subitems.
      *You can add/remove items in runtime, and you can replace the array with a new one.
-     * @~chinese è·å–è§¦å‘å™¨åŒ…å«çš„èœå•é¡¹ã€‚
-     * æ‚¨å¯ä»¥åœ¨è¿è¡Œæ—¶æ·»åŠ æˆ–è€…åˆ é™¤èœå•é¡¹ï¼Œæˆ–è€…æ›¿æ¢æ•´ä¸ªèœå•é¡¹æ•°ç»„ã€‚
-     * @return @~english The array that contains the subitems. @~chinese è§¦å‘å™¨åŒ…å«çš„èœå•é¡¹ã€‚
+     * @~chinese »ñÈ¡´¥·¢Æ÷°üº¬µÄ²Ëµ¥Ïî¡£
+     * Äú¿ÉÒÔÔÚÔËĞĞÊ±Ìí¼Ó»òÕßÉ¾³ı²Ëµ¥Ïî£¬»òÕßÌæ»»Õû¸ö²Ëµ¥ÏîÊı×é¡£
+     * @return @~english The array that contains the subitems. @~chinese ´¥·¢Æ÷°üº¬µÄ²Ëµ¥Ïî¡£
      * @since v0.7.2
      * @js NA
      * @lua NA
@@ -757,8 +757,8 @@ public:
     inline const Vector<MenuItem*>& getSubItems() const { return _subItems; };
     inline Vector<MenuItem*>& getSubItems() { return _subItems; };
 
-    /** @~english Sets the array that contains the subitems. @~chinese è®¾å®šè§¦å‘å™¨åŒ…å«çš„èœå•é¡¹ã€‚
-     * @param items @~english A array of MenuItem object. @~chinese ä¸€ä¸ªèœå•é¡¹å¯¹è±¡æ•°ç»„ã€‚
+    /** @~english Sets the array that contains the subitems. @~chinese Éè¶¨´¥·¢Æ÷°üº¬µÄ²Ëµ¥Ïî¡£
+     * @param items @~english A array of MenuItem object. @~chinese Ò»¸ö²Ëµ¥Ïî¶ÔÏóÊı×é¡£
      */
     inline void setSubItems(const Vector<MenuItem*>& items) {
         _subItems = items;
@@ -773,6 +773,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     MenuItemToggle()
     : _selectedIndex(0)
+    , _selectedItem(nullptr)
     {}
 
     virtual ~MenuItemToggle();
@@ -785,7 +786,11 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     unsigned int _selectedIndex;
-    
+    MenuItem* _selectedItem;
+
+    /** Array that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
+     @since v0.7.2
+     */
     Vector<MenuItem*> _subItems;
 
 private:

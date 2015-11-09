@@ -289,6 +289,11 @@ LayoutComponent* Widget::getOrCreateLayoutComponent()
 
 void Widget::setContentSize(const cocos2d::Size &contentSize)
 {
+    Size previousSize = ProtectedNode::getContentSize();
+    if(previousSize.equals(contentSize))
+    {
+        return;
+    }
     ProtectedNode::setContentSize(contentSize);
 
     _customSize = contentSize;
@@ -602,9 +607,9 @@ bool Widget::isHighlighted() const
     return _highlight;
 }
 
-void Widget::setHighlighted(bool hilight)
+void Widget::setHighlighted(bool highlight)
 {
-    _highlight = hilight;
+    _highlight = highlight;
     if (_bright)
     {
         if (_highlight)
@@ -767,8 +772,8 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
         auto camera = Camera::getVisitingCamera();
         if(hitTest(_touchBeganPosition, camera, nullptr))
         {
-            _hittedByCamera = camera;
             if (isClippingParentContainsPoint(_touchBeganPosition)) {
+                _hittedByCamera = camera;
                 _hitted = true;
             }
         }
@@ -971,7 +976,9 @@ bool Widget::isClippingParentContainsPoint(const Vec2 &pt)
     if (clippingParent)
     {
         bool bRet = false;
-        if (clippingParent->hitTest(pt, _hittedByCamera, nullptr))
+        auto camera = Camera::getVisitingCamera();
+        // Camera isn't null means in touch begin process, otherwise use _hittedByCamera instead.
+        if (clippingParent->hitTest(pt, (camera ? camera : _hittedByCamera), nullptr))
         {
             bRet = true;
         }

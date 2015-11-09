@@ -46,7 +46,7 @@ namespace ui {
 /**@~english
  * Touch event type.
  * @~chinese 
- * è§¦æ‘¸äº‹ä»¶ç±»å‹ã€‚
+ * ´¥ÃşÊÂ¼şÀàĞÍ¡£
  *@deprecated use `Widget::TouchEventType` instead
  */
 typedef enum
@@ -60,7 +60,7 @@ typedef enum
 /**@~english
  * Touch event callback.
  * @~chinese 
- * è§¦æ‘¸äº‹ä»¶å›è°ƒã€‚
+ * ´¥ÃşÊÂ¼ş»Øµ÷¡£
  *@deprecated use `Widget::ccWidgetTouchCallback` instead
  */
 typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
@@ -77,9 +77,9 @@ typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
  *@brief @~english Base class for all ui widgets.
  * This class inherent from `ProtectedNode` and `LayoutParameterProtocol`.
  * If you want to implements your own ui widget, you should subclass it.
- * @~chinese æ‰€æœ‰UIæ§ä»¶çš„åŸºç±»ã€‚
- * è¿™ç±»ç»§æ‰¿è‡ª`ProtectedNode`å’Œ`LayoutParameterProtocol`ã€‚
- * å¦‚æœä½ æƒ³å®ç°è‡ªå·±çš„UIæ§ä»¶ï¼Œä½ åº”è¯¥ç»§æ‰¿è¿™ä¸ªç±»ã€‚
+ * @~chinese ËùÓĞUI¿Ø¼şµÄ»ùÀà¡£
+ * ÕâÀà¼Ì³Ğ×Ô`ProtectedNode`ºÍ`LayoutParameterProtocol`¡£
+ * Èç¹ûÄãÏëÊµÏÖ×Ô¼ºµÄUI¿Ø¼ş£¬ÄãÓ¦¸Ã¼Ì³ĞÕâ¸öÀà¡£
  */
 class CC_GUI_DLL Widget : public ProtectedNode, public LayoutParameterProtocol
 {
@@ -87,7 +87,7 @@ public:
     /**@~english
      * Widget focus direction.
      * @~chinese 
-     * æ§ä»¶ç„¦ç‚¹æ–¹å‘ã€‚
+     * ¿Ø¼ş½¹µã·½Ïò¡£
      */
     enum class FocusDirection
     {
@@ -100,7 +100,7 @@ public:
     /**@~english
      * Widget position type for layout.
      * @~chinese 
-     * å¸ƒå±€ç³»ç»Ÿä¸­çš„æ§ä»¶ä½ç½®ç±»å‹ã€‚
+     * ²¼¾ÖÏµÍ³ÖĞµÄ¿Ø¼şÎ»ÖÃÀàĞÍ¡£
      */
     enum class PositionType
     {
@@ -111,7 +111,7 @@ public:
     /**@~english
      * Widget size type for layout.
      * @~chinese 
-     * å¸ƒå±€ç³»ç»Ÿä¸­çš„æ§ä»¶å°ºå¯¸ç±»å‹ã€‚
+     * ²¼¾ÖÏµÍ³ÖĞµÄ¿Ø¼ş³ß´çÀàĞÍ¡£
      */
     enum class SizeType
     {
@@ -122,7 +122,7 @@ public:
     /**@~english
      * Touch event type.
      * @~chinese 
-     * è§¦æ‘¸äº‹ä»¶ç±»å‹ã€‚
+     * ´¥ÃşÊÂ¼şÀàĞÍ¡£
      */
     enum class TouchEventType
     {
@@ -137,9 +137,9 @@ public:
      * - LOCAL: It means the texture is loaded from image.
      * - PLIST: It means the texture is loaded from texture atlas.
      * @~chinese 
-     * çº¹ç†èµ„æºç±»å‹ã€‚
-     * - LOCALï¼šè¿™æ„å‘³ç€çº¹ç†ä»ç‹¬ç«‹å›¾åƒåŠ è½½ã€‚
-     * - PLISTï¼šè¿™æ„å‘³ç€çº¹ç†ä»çº¹ç†å›¾é›†ä¸­åŠ è½½ã€‚
+     * ÎÆÀí×ÊÔ´ÀàĞÍ¡£
+     * - LOCAL£ºÕâÒâÎ¶×ÅÎÆÀí´Ó¶ÀÁ¢Í¼Ïñ¼ÓÔØ¡£
+     * - PLIST£ºÕâÒâÎ¶×ÅÎÆÀí´ÓÎÆÀíÍ¼¼¯ÖĞ¼ÓÔØ¡£
      */
     enum class TextureResType
     {
@@ -150,7 +150,7 @@ public:
     /**@~english
      * Widget bright style.
      * @~chinese 
-     * æ§ä»¶çš„é«˜äº®å±æ€§ã€‚
+     * ¿Ø¼şµÄ¸ßÁÁÊôĞÔ¡£
      */
     enum class BrightStyle
     {
@@ -163,27 +163,27 @@ public:
     /**@~english
      * Widget touch event callback.
      * @~chinese 
-     * æ§ä»¶è§¦æ‘¸äº‹ä»¶å›è°ƒã€‚
+     * ¿Ø¼ş´¥ÃşÊÂ¼ş»Øµ÷¡£
      */
     typedef std::function<void(Ref*,Widget::TouchEventType)> ccWidgetTouchCallback;
     /**@~english
      * Widget click event callback.
      * @~chinese 
-     * æ§ä»¶ç‚¹å‡»äº‹ä»¶å›è°ƒã€‚
+     * ¿Ø¼şµã»÷ÊÂ¼ş»Øµ÷¡£
      */
     typedef std::function<void(Ref*)> ccWidgetClickCallback;
     /**@~english
      * Widget custom event callback.
      * It is mainly used together with Cocos Studio.
      * @~chinese 
-     * æ§ä»¶ç”¨æˆ·å®šåˆ¶äº‹ä»¶å›è°ƒã€‚
-     * å®ƒä¸»è¦å’ŒCocos Studioä¸€èµ·ä½¿ç”¨ã€‚
+     * ¿Ø¼şÓÃ»§¶¨ÖÆÊÂ¼ş»Øµ÷¡£
+     * ËüÖ÷ÒªºÍCocos StudioÒ»ÆğÊ¹ÓÃ¡£
      */
     typedef std::function<void(Ref*, int)> ccWidgetEventCallback;
     /**@~english
      * Default constructor
      * @~chinese 
-     * é»˜è®¤æ„é€ å‡½æ•°
+     * Ä¬ÈÏ¹¹Ôìº¯Êı
      * @js ctor
      * @lua new
      */
@@ -192,7 +192,7 @@ public:
     /**@~english
      * Default destructor
      * @~chinese 
-     * é»˜è®¤çš„ææ„å‡½æ•°
+     * Ä¬ÈÏµÄÎö¹¹º¯Êı
      * @js NA
      * @lua NA
      */
@@ -200,7 +200,7 @@ public:
     /**@~english
      * Create and return a empty Widget instance pointer.
      * @~chinese 
-     * åˆ›å»ºå¹¶è¿”å›ä¸€ä¸ªç©ºçš„æ§ä»¶å®ä¾‹çš„æŒ‡é’ˆã€‚
+     * ´´½¨²¢·µ»ØÒ»¸ö¿ÕµÄ¿Ø¼şÊµÀıµÄÖ¸Õë¡£
      */
     static Widget* create();
 
@@ -214,16 +214,16 @@ public:
      * The default value is true, a widget is default to enable touch.
      *
      * @~chinese 
-     * è®¾ç½®æ˜¯å¦å¯ç”¨äº†æ§ä»¶
+     * ÉèÖÃÊÇ·ñÆôÓÃÁË¿Ø¼ş
      * 
-     * å¦‚æœè®¾ç½®ä¸ºtrueåˆ™å¯ç”¨äº†æ§ä»¶ï¼Œéƒ¨ä»¶å¯ä»¥å“åº”è§¦æ‘¸äº‹ä»¶ï¼Œå¦‚æœè®¾ç½®ä¸ºfalseåˆ™æ§ä»¶æ˜¯ç¦ç”¨çš„ï¼Œä¸ä¼šå“åº”è§¦æ‘¸äº‹ä»¶ã€‚
+     * Èç¹ûÉèÖÃÎªtrueÔòÆôÓÃÁË¿Ø¼ş£¬²¿¼ş¿ÉÒÔÏìÓ¦´¥ÃşÊÂ¼ş£¬Èç¹ûÉèÖÃÎªfalseÔò¿Ø¼şÊÇ½ûÓÃµÄ£¬²»»áÏìÓ¦´¥ÃşÊÂ¼ş¡£
      * 
-     * æé†’ï¼šå¦‚æœä½ æƒ³æ”¹å˜ä¸€ä¸ªæ§ä»¶çš„å¤–è§‚ä¸ºä¸å¯ç”¨çŠ¶æ€ï¼Œé™¤äº†`setEnabled(false)`ä»¥å¤–ï¼Œè¿˜éœ€è¦è°ƒç”¨`setBright(false)`ï¼Œå¦åˆ™å¤–è§‚ä¸ä¼šæ”¹å˜ã€‚
+     * ÌáĞÑ£ºÈç¹ûÄãÏë¸Ä±äÒ»¸ö¿Ø¼şµÄÍâ¹ÛÎª²»¿ÉÓÃ×´Ì¬£¬³ıÁË`setEnabled(false)`ÒÔÍâ£¬»¹ĞèÒªµ÷ÓÃ`setBright(false)`£¬·ñÔòÍâ¹Û²»»á¸Ä±ä¡£
      * 
-     * é»˜è®¤å€¼æ˜¯true,ä¸€ä¸ªæ§ä»¶æ˜¯é»˜è®¤å¯ç”¨è§¦æ‘¸ã€‚
+     * Ä¬ÈÏÖµÊÇtrue,Ò»¸ö¿Ø¼şÊÇÄ¬ÈÏÆôÓÃ´¥Ãş¡£
      * 
      * @param enabled @~english Set to true to enable touch, false otherwise.
-     * @~chinese è®¾ç½®ä¸ºtrueæ¥å¯ç”¨è§¦æ‘¸ï¼Œå¦åˆ™ä¸å¯ç”¨è§¦æ‘¸å“åº”ã€‚
+     * @~chinese ÉèÖÃÎªtrueÀ´ÆôÓÃ´¥Ãş£¬·ñÔò²»ÆôÓÃ´¥ÃşÏìÓ¦¡£
      */
     virtual void setEnabled(bool enabled);
 
@@ -231,10 +231,10 @@ public:
      * Determines if the widget is enabled or not.
      *
      * @~chinese 
-     * æ£€æŸ¥æ§ä»¶æ˜¯å¦å¯ç”¨äº†ã€‚
+     * ¼ì²é¿Ø¼şÊÇ·ñÆôÓÃÁË¡£
      * 
      * @return @~english true if the widget is enabled, false if the widget is disabled.
-     * @~chinese å¦‚æœå¯ç”¨äº†æ§ä»¶è¿”å›trueï¼Œæ§ä»¶æ˜¯ç¦ç”¨çš„è¿”å›falseã€‚
+     * @~chinese Èç¹ûÆôÓÃÁË¿Ø¼ş·µ»Øtrue£¬¿Ø¼şÊÇ½ûÓÃµÄ·µ»Øfalse¡£
      */
     bool isEnabled() const;
 
@@ -243,10 +243,10 @@ public:
      * The default value is true, a widget is default to bright
      *
      * @~chinese 
-     * è®¾ç½®æ§ä»¶æ˜¯å¦é«˜äº®ï¼Œé»˜è®¤å€¼æ˜¯trueï¼Œè‹¥è®¾ç½®ä¸ºfalseï¼Œåˆ™æ§ä»¶å¤–è§‚æ˜¯æš—çš„ã€‚
+     * ÉèÖÃ¿Ø¼şÊÇ·ñ¸ßÁÁ£¬Ä¬ÈÏÖµÊÇtrue£¬ÈôÉèÖÃÎªfalse£¬Ôò¿Ø¼şÍâ¹ÛÊÇ°µµÄ¡£
      * 
      * @param bright @~english true if the widget is bright, false if the widget is dark.
-     * @~chinese è®¾ç½®trueåˆ™æ§ä»¶æ˜¯é«˜äº®çš„ï¼Œå¦åˆ™è®¾ç½®falseã€‚
+     * @~chinese ÉèÖÃtrueÔò¿Ø¼şÊÇ¸ßÁÁµÄ£¬·ñÔòÉèÖÃfalse¡£
      */
     void setBright(bool bright);
 
@@ -254,10 +254,10 @@ public:
      * Determines if the widget is bright
      *
      * @~chinese 
-     * è¿”å›æ§ä»¶æ˜¯å¦é«˜äº®
+     * ·µ»Ø¿Ø¼şÊÇ·ñ¸ßÁÁ
      * 
      * @return @~english true if the widget is bright, false if the widget is dark.
-     * @~chinese å¦‚æœæ§ä»¶æ˜¯é«˜äº®çš„è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹û¿Ø¼şÊÇ¸ßÁÁµÄ·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     bool isBright() const;
 
@@ -267,12 +267,12 @@ public:
      * The default value is false, a widget is default to touch disabled.
      *
      * @~chinese 
-     * è®¾ç½®æ˜¯å¦å“åº”è§¦æ‘¸äº‹ä»¶ã€‚
+     * ÉèÖÃÊÇ·ñÏìÓ¦´¥ÃşÊÂ¼ş¡£
      * 
-     * é»˜è®¤å€¼æ˜¯falseï¼Œæ§ä»¶é»˜è®¤æ˜¯ç¦ç”¨è§¦æ‘¸çš„ã€‚
+     * Ä¬ÈÏÖµÊÇfalse£¬¿Ø¼şÄ¬ÈÏÊÇ½ûÓÃ´¥ÃşµÄ¡£
      * 
      * @param enabled   @~english True if the widget is touch enabled, false if the widget is touch disabled.
-     * @~chinese å¦‚æœè®¾ç½®trueåˆ™å¯ç”¨è§¦æ‘¸ï¼Œå¦åˆ™ç¦ç”¨ã€‚
+     * @~chinese Èç¹ûÉèÖÃtrueÔòÆôÓÃ´¥Ãş£¬·ñÔò½ûÓÃ¡£
      */
     virtual void setTouchEnabled(bool enabled);
 
@@ -280,12 +280,12 @@ public:
      * To set the bright style of widget.
      *
      * @~chinese 
-     * è®¾ç½®æ§ä»¶çš„é«˜äº®é£æ ¼ã€‚
+     * ÉèÖÃ¿Ø¼şµÄ¸ßÁÁ·ç¸ñ¡£
      * 
      * @see BrightStyle
      *
      * @param style   @~english BrightStyle::NORMAL means the widget is in normal state, BrightStyle::HIGHLIGHT means the widget is in highlight state.
-     * @~chinese BrightStyle::NORMALæ„å‘³ç€éƒ¨ä»¶åœ¨æ­£å¸¸çŠ¶æ€ï¼ŒBrightStyle::HIGHLIGHTæ„å‘³ç€éƒ¨ä»¶å¤„äºé«˜äº®çŠ¶æ€ã€‚
+     * @~chinese BrightStyle::NORMALÒâÎ¶×Å²¿¼şÔÚÕı³£×´Ì¬£¬BrightStyle::HIGHLIGHTÒâÎ¶×Å²¿¼ş´¦ÓÚ¸ßÁÁ×´Ì¬¡£
      */
     void setBrightStyle(BrightStyle style);
 
@@ -293,10 +293,10 @@ public:
      * Determines if the widget is touch enabled
      *
      * @~chinese 
-     * è·å–è§¦æ‘¸æ˜¯å¦å¯ç”¨
+     * »ñÈ¡´¥ÃşÊÇ·ñÆôÓÃ
      * 
      * @return @~english true if the widget is touch enabled, false if the widget is touch disabled.
-     * @~chinese å¦‚æœè§¦æ‘¸å¯ç”¨åˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹û´¥ÃşÆôÓÃÔò·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     bool isTouchEnabled() const;
 
@@ -304,98 +304,98 @@ public:
      * Determines if the widget is highlighted
      *
      * @~chinese 
-     * è·å–æ˜¯å¦é«˜äº®æ˜¾ç¤º
+     * »ñÈ¡ÊÇ·ñ¸ßÁÁÏÔÊ¾
      * 
      * @return @~english true if the widget is highlighted, false if the widget is not hignlighted .
-     * @~chinese å¦‚æœé«˜äº®æ˜¾ç¤ºåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹û¸ßÁÁÏÔÊ¾Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     bool isHighlighted() const;
 
     /**@~english
-     * Sets whether the widget is hilighted
+     * Sets whether the widget is highlighted
      *
-     * The default value is false, a widget is default to not hilighted
+     * The default value is false, a widget is default to not highlighted
      *
      * @~chinese 
-     * è®¾ç½®æ˜¯å¦é«˜äº®æ˜¾ç¤º
+     * ÉèÖÃÊÇ·ñ¸ßÁÁÏÔÊ¾
      * 
-     * é»˜è®¤å€¼æ˜¯falseï¼Œæ§ä»¶é»˜è®¤ä¸é«˜äº®æ˜¾ç¤º
+     * Ä¬ÈÏÖµÊÇfalse£¬¿Ø¼şÄ¬ÈÏ²»¸ßÁÁÏÔÊ¾
      * 
      * @param hilight   @~english true if the widget is hilighted, false if the widget is not hilighted.
-     * @~chinese å¦‚æœè®¾ç½®trueåˆ™å¯ç”¨é«˜äº®ã€‚
+     * @~chinese Èç¹ûÉèÖÃtrueÔòÆôÓÃ¸ßÁÁ¡£
      */
-    void setHighlighted(bool hilight);
+    void setHighlighted(bool highlight);
 
     /**@~english
      * Gets the left boundary position of this widget in parent's coordination system.
      * @~chinese 
-     * è·å–è¿™ä¸ªæ§ä»¶çš„å·¦è¾¹ç•Œåœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ã€‚
+     * »ñÈ¡Õâ¸ö¿Ø¼şµÄ×ó±ß½çÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ¡£
      * @deprecated use `getLeftBoundary` instead.
      * @return @~english The left boundary position of this widget.
-     * @~chinese è¿™ä¸ªæ§ä»¶çš„å·¦è¾¹ç•Œåœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ã€‚
+     * @~chinese Õâ¸ö¿Ø¼şµÄ×ó±ß½çÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ¡£
      */
     CC_DEPRECATED_ATTRIBUTE float getLeftInParent(){return this->getLeftBoundary();}
 
     /**@~english
      * Gets the left boundary position of this widget in parent's coordination system.
      * @~chinese 
-     * è·å–è¿™ä¸ªæ§ä»¶çš„å·¦è¾¹ç•Œåœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ã€‚
+     * »ñÈ¡Õâ¸ö¿Ø¼şµÄ×ó±ß½çÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ¡£
      * @return @~english The left boundary position of this widget.
-     * @~chinese è¿™ä¸ªæ§ä»¶çš„å·¦è¾¹ç•Œåœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ã€‚
+     * @~chinese Õâ¸ö¿Ø¼şµÄ×ó±ß½çÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ¡£
      */
     float getLeftBoundary() const;
 
     /**@~english
      * Gets the bottom boundary position of this widget in parent's coordination system.
      * @~chinese 
-     * è·å–è¿™ä¸ªæ§ä»¶çš„åº•è¾¹ç•Œåœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ã€‚
+     * »ñÈ¡Õâ¸ö¿Ø¼şµÄµ×±ß½çÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ¡£
      * @deprecated use `getBottomBoundary` instead.
      * @return @~english The bottom boundary position of this widget.
-     * @~chinese è¿™ä¸ªæ§ä»¶çš„åº•è¾¹ç•Œåœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ã€‚
+     * @~chinese Õâ¸ö¿Ø¼şµÄµ×±ß½çÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ¡£
      */
     CC_DEPRECATED_ATTRIBUTE float getBottomInParent(){return this->getBottomBoundary();}
     /**@~english
      * Gets the bottom boundary position of this widget in parent's coordination system.
      * @~chinese 
-     * è·å–è¿™ä¸ªæ§ä»¶çš„åº•è¾¹ç•Œåœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ã€‚
+     * »ñÈ¡Õâ¸ö¿Ø¼şµÄµ×±ß½çÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ¡£
      * @return @~english The bottom boundary position of this widget.
-     * @~chinese è¿™ä¸ªæ§ä»¶çš„åº•è¾¹ç•Œåœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ã€‚
+     * @~chinese Õâ¸ö¿Ø¼şµÄµ×±ß½çÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ¡£
      */
     float getBottomBoundary() const;
 
     /**@~english
      * Gets the right boundary position of this widget in parent's coordination system.
      * @~chinese 
-     * è·å–è¿™ä¸ªæ§ä»¶çš„å³è¾¹ç•Œåœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ã€‚
+     * »ñÈ¡Õâ¸ö¿Ø¼şµÄÓÒ±ß½çÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ¡£
      * @deprecated use `getRightBoundary` instead.
      * @return @~english The right boundary position of this widget.
-     * @~chinese è¿™ä¸ªæ§ä»¶çš„å³è¾¹ç•Œåœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ã€‚
+     * @~chinese Õâ¸ö¿Ø¼şµÄÓÒ±ß½çÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ¡£
      */
     CC_DEPRECATED_ATTRIBUTE float getRightInParent(){return this->getRightBoundary();}
     /**@~english
      * Gets the right boundary position of this widget in parent's coordination system.
      * @~chinese 
-     * è·å–è¿™ä¸ªæ§ä»¶çš„å³è¾¹ç•Œåœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ã€‚
+     * »ñÈ¡Õâ¸ö¿Ø¼şµÄÓÒ±ß½çÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ¡£
      * @return @~english The right boundary position of this widget.
-     * @~chinese è¿™ä¸ªæ§ä»¶çš„å³è¾¹ç•Œåœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ã€‚
+     * @~chinese Õâ¸ö¿Ø¼şµÄÓÒ±ß½çÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ¡£
      */
     float getRightBoundary() const;
 
     /**@~english
      * Gets the top boundary position of this widget in parent's coordination system.
      * @~chinese 
-     * è·å–è¿™ä¸ªæ§ä»¶çš„ä¸Šè¾¹ç•Œåœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ã€‚
+     * »ñÈ¡Õâ¸ö¿Ø¼şµÄÉÏ±ß½çÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ¡£
      * @deprecated use `getTopBoundary` instead.
      * @return @~english The top boundary position of this widget.
-     * @~chinese è¿™ä¸ªæ§ä»¶çš„ä¸Šè¾¹ç•Œåœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ã€‚
+     * @~chinese Õâ¸ö¿Ø¼şµÄÉÏ±ß½çÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ¡£
      */
     CC_DEPRECATED_ATTRIBUTE float getTopInParent(){return this->getTopBoundary();}
     /**@~english
      * Gets the top boundary position of this widget in parent's coordination system.
      * @~chinese 
-     * è·å–è¿™ä¸ªæ§ä»¶çš„ä¸Šè¾¹ç•Œåœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ã€‚
+     * »ñÈ¡Õâ¸ö¿Ø¼şµÄÉÏ±ß½çÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ¡£
      * @return @~english The top boundary position of this widget.
-     * @~chinese è¿™ä¸ªæ§ä»¶çš„ä¸Šè¾¹ç•Œåœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ã€‚
+     * @~chinese Õâ¸ö¿Ø¼şµÄÉÏ±ß½çÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ¡£
      */
     float getTopBoundary() const;
 
@@ -404,32 +404,32 @@ public:
     /**@~english
      * Sets the touch event target/selector to the widget
      * @~chinese 
-     * è®¾ç½®è§¦æ‘¸äº‹ä»¶çš„å“åº”é€‰æ‹©å™¨å’Œç›®æ ‡ã€‚
+     * ÉèÖÃ´¥ÃşÊÂ¼şµÄÏìÓ¦Ñ¡ÔñÆ÷ºÍÄ¿±ê¡£
      */
     CC_DEPRECATED_ATTRIBUTE void addTouchEventListener(Ref* target,SEL_TouchEvent selector);
     /**@~english
      * Set a callback to touch vent listener.
      * @~chinese 
-     * è®¾ç½®è§¦æ‘¸äº‹ä»¶çš„å›è°ƒå‡½æ•°ã€‚
+     * ÉèÖÃ´¥ÃşÊÂ¼şµÄ»Øµ÷º¯Êı¡£
      *@param callback  @~english The callback in `ccWidgetEventCallback.`
-     * @~chinese å›è°ƒå‡½æ•°
+     * @~chinese »Øµ÷º¯Êı
      */
     void addTouchEventListener(const ccWidgetTouchCallback& callback);
     
     /**@~english
      * Set a click event handler to the widget.
      * @~chinese 
-     * è®¾ç½®ä¸€ä¸ªç‚¹å‡»äº‹ä»¶çš„å›è°ƒå‡½æ•°ã€‚
+     * ÉèÖÃÒ»¸öµã»÷ÊÂ¼şµÄ»Øµ÷º¯Êı¡£
      * @param callback @~english The callback in `ccWidgetClickCallback`.
-     * @~chinese å›è°ƒå‡½æ•°ã€‚
+     * @~chinese »Øµ÷º¯Êı¡£
      */
     void addClickEventListener(const ccWidgetClickCallback& callback);
     /**@~english
      * Set a event handler to the widget in order to use cocostudio editor and framework
      * @~chinese 
-     * è®¾ç½®ä¸€ä¸ªç”¨äºCocos Studioäº‹ä»¶å¤„ç†çš„å›è°ƒå‡½æ•°
+     * ÉèÖÃÒ»¸öÓÃÓÚCocos StudioÊÂ¼ş´¦ÀíµÄ»Øµ÷º¯Êı
      * @param callback @~english The callback in `ccWidgetEventCallback`.
-     * @~chinese å›è°ƒå‡½æ•°ã€‚
+     * @~chinese »Øµ÷º¯Êı¡£
      * @lua NA
      */
     virtual void addCCSEventListener(const ccWidgetEventCallback& callback);
@@ -441,13 +441,13 @@ public:
      * The original point (0,0) is at the left-bottom corner of screen.
      *
      * @~chinese 
-     * åœ¨OpenGLåæ ‡ç³»ä¸­è®¾ç½®æ§ä»¶ä½ç½®(x,y)
+     * ÔÚOpenGL×ø±êÏµÖĞÉèÖÃ¿Ø¼şÎ»ÖÃ(x,y)
      * 
-     * é€šå¸¸æˆ‘ä»¬ä½¿ç”¨p(x,y)ç»„æˆä¸€ä¸ªVec2å¯¹è±¡ã€‚
-     * åŸç‚¹(0,0)æ˜¯å±å¹•çš„å·¦ä¸‹è§’ã€‚
+     * Í¨³£ÎÒÃÇÊ¹ÓÃp(x,y)×é³ÉÒ»¸öVec2¶ÔÏó¡£
+     * Ô­µã(0,0)ÊÇÆÁÄ»µÄ×óÏÂ½Ç¡£
      * 
      * @param pos  @~english The position (x,y) of the widget in OpenGL coordinates
-     * @~chinese æ§ä»¶åœ¨OpenGLåæ ‡ç³»ä¸­çš„ä½ç½®(x,y)
+     * @~chinese ¿Ø¼şÔÚOpenGL×ø±êÏµÖĞµÄÎ»ÖÃ(x,y)
      */
     virtual void setPosition(const Vec2 &pos) override;
 
@@ -455,10 +455,10 @@ public:
      * Set the percent(x,y) of the widget in OpenGL coordinates
      *
      * @~chinese 
-     * è®¾ç½®æ§ä»¶åœ¨OpenGLåæ ‡ç³»ä¸­çš„ç™¾åˆ†æ¯”ä½ç½®(x,y)
+     * ÉèÖÃ¿Ø¼şÔÚOpenGL×ø±êÏµÖĞµÄ°Ù·Ö±ÈÎ»ÖÃ(x,y)
      * 
      * @param percent  @~english The percent (x,y) of the widget in OpenGL coordinates
-     * @~chinese æ§ä»¶åœ¨OpenGLåæ ‡ç³»ä¸­çš„ç™¾åˆ†æ¯”ä½ç½®
+     * @~chinese ¿Ø¼şÔÚOpenGL×ø±êÏµÖĞµÄ°Ù·Ö±ÈÎ»ÖÃ
      */
     void setPositionPercent(const Vec2 &percent);
 
@@ -466,12 +466,12 @@ public:
      * Gets the percent (x,y) of the widget in OpenGL coordinates
      *
      * @~chinese 
-     * è·å–æ§ä»¶åœ¨OpenGLåæ ‡ç³»ä¸­çš„ç™¾åˆ†æ¯”ä½ç½®(x,y)
+     * »ñÈ¡¿Ø¼şÔÚOpenGL×ø±êÏµÖĞµÄ°Ù·Ö±ÈÎ»ÖÃ(x,y)
      * 
      * @see setPosition(const Vec2&)
      *
      * @return @~english The percent (x,y) of the widget in OpenGL coordinates
-     * @~chinese æ§ä»¶åœ¨OpenGLåæ ‡ç³»ä¸­çš„ç™¾åˆ†æ¯”ä½ç½®
+     * @~chinese ¿Ø¼şÔÚOpenGL×ø±êÏµÖĞµÄ°Ù·Ö±ÈÎ»ÖÃ
      */
     const Vec2& getPositionPercent();
 
@@ -479,12 +479,12 @@ public:
      * Changes the position type of the widget
      *
      * @~chinese 
-     * è®¾ç½®æ§ä»¶çš„ä½ç½®ç±»å‹
+     * ÉèÖÃ¿Ø¼şµÄÎ»ÖÃÀàĞÍ
      * 
      * @see `PositionType`
      *
      * @param type  @~english the position type of widget
-     * @~chinese ä½ç½®ç±»å‹
+     * @~chinese Î»ÖÃÀàĞÍ
      */
     void setPositionType(PositionType type);
 
@@ -492,12 +492,12 @@ public:
      * Gets the position type of the widget
      *
      * @~chinese 
-     * è·å–æ§ä»¶çš„ä½ç½®ç±»å‹
+     * »ñÈ¡¿Ø¼şµÄÎ»ÖÃÀàĞÍ
      * 
      * @see `PositionType`
      *
      * @return @~english The position type of widget
-     * @~chinese ä½ç½®ç±»å‹
+     * @~chinese Î»ÖÃÀàĞÍ
      */
     PositionType getPositionType() const;
 
@@ -505,10 +505,10 @@ public:
      * Sets whether the widget should be flipped horizontally or not.
      *
      * @~chinese 
-     * è®¾ç½®æ§ä»¶æ˜¯å¦åº”è¯¥æ°´å¹³ç¿»è½¬ã€‚
+     * ÉèÖÃ¿Ø¼şÊÇ·ñÓ¦¸ÃË®Æ½·­×ª¡£
      * 
      * @param flippedX @~english true if the widget should be flipped horizaontally, false otherwise.
-     * @~chinese è®¾ç½®trueåˆ™æ§ä»¶æ°´å¹³ç¿»è½¬ï¼Œå¦åˆ™ä¸ç¿»è½¬ã€‚
+     * @~chinese ÉèÖÃtrueÔò¿Ø¼şË®Æ½·­×ª£¬·ñÔò²»·­×ª¡£
      */
     virtual void setFlippedX(bool flippedX);
 
@@ -520,14 +520,14 @@ public:
      * Internally, it just use setScaleX(-1) to flip the widget.
      *
      * @~chinese 
-     * è¿”å›æ§ä»¶æ˜¯å¦æ°´å¹³ç¿»è½¬ã€‚
+     * ·µ»Ø¿Ø¼şÊÇ·ñË®Æ½·­×ª¡£
      * 
-     * å®ƒä¸ä»…ç¿»è½¬æ§ä»¶æœ¬èº«çš„çº¹ç†ï¼Œè€Œä¸”è¿˜ä¼šç¿»è½¬æ§ä»¶æ‰€æœ‰å­èŠ‚ç‚¹çš„çº¹ç†ã€‚
-     * å¦å¤–ï¼Œç¿»è½¬è½´æ˜¯æ§ä»¶çš„é”šç‚¹æ§åˆ¶çš„ã€‚
-     * å†…éƒ¨å®ç°ä¸Šï¼Œå®ƒåªæ˜¯ä½¿ç”¨`setScaleX(-1)`æ¥å®ç°ç¿»è½¬ã€‚
+     * Ëü²»½ö·­×ª¿Ø¼ş±¾ÉíµÄÎÆÀí£¬¶øÇÒ»¹»á·­×ª¿Ø¼şËùÓĞ×Ó½ÚµãµÄÎÆÀí¡£
+     * ÁíÍâ£¬·­×ªÖáÊÇ¿Ø¼şµÄÃªµã¿ØÖÆµÄ¡£
+     * ÄÚ²¿ÊµÏÖÉÏ£¬ËüÖ»ÊÇÊ¹ÓÃ`setScaleX(-1)`À´ÊµÏÖ·­×ª¡£
      * 
      * @return @~english true if the widget is flipped horizaontally, false otherwise.
-     * @~chinese trueåˆ™æ§ä»¶æ°´å¹³ç¿»è½¬ï¼Œå¦åˆ™ä¸ç¿»è½¬ã€‚
+     * @~chinese trueÔò¿Ø¼şË®Æ½·­×ª£¬·ñÔò²»·­×ª¡£
      */
     virtual bool isFlippedX()const{return _flippedX;};
 
@@ -535,10 +535,10 @@ public:
      * Sets whether the widget should be flipped vertically or not.
      *
      * @~chinese 
-     * è®¾ç½®æ§ä»¶æ˜¯å¦åº”å‚ç›´ç¿»è½¬ã€‚
+     * ÉèÖÃ¿Ø¼şÊÇ·ñÓ¦´¹Ö±·­×ª¡£
      * 
      * @param flippedY @~english true if the widget should be flipped vertically, flase otherwise.
-     * @~chinese è®¾ç½®trueåˆ™æ§ä»¶å‚ç›´ç¿»è½¬ï¼Œå¦åˆ™ä¸ç¿»è½¬ã€‚
+     * @~chinese ÉèÖÃtrueÔò¿Ø¼ş´¹Ö±·­×ª£¬·ñÔò²»·­×ª¡£
      */
     virtual void setFlippedY(bool flippedY);
 
@@ -550,14 +550,14 @@ public:
      * Internally, it just use setScaleY(-1) to flip the widget.
      *
      * @~chinese 
-     * è¿”å›æ§ä»¶æ˜¯å¦å‚ç›´ç¿»è½¬ã€‚
+     * ·µ»Ø¿Ø¼şÊÇ·ñ´¹Ö±·­×ª¡£
      * 
-     * å®ƒä¸ä»…ç¿»è½¬æ§ä»¶æœ¬èº«çš„çº¹ç†ï¼Œè€Œä¸”è¿˜ä¼šç¿»è½¬æ§ä»¶æ‰€æœ‰å­èŠ‚ç‚¹çš„çº¹ç†ã€‚
-     * å¦å¤–ï¼Œç¿»è½¬è½´æ˜¯æ§ä»¶çš„é”šç‚¹æ§åˆ¶çš„ã€‚
-     * å†…éƒ¨å®ç°ä¸Šï¼Œå®ƒåªæ˜¯ä½¿ç”¨`setScaleY(-1)`æ¥å®ç°ç¿»è½¬ã€‚
+     * Ëü²»½ö·­×ª¿Ø¼ş±¾ÉíµÄÎÆÀí£¬¶øÇÒ»¹»á·­×ª¿Ø¼şËùÓĞ×Ó½ÚµãµÄÎÆÀí¡£
+     * ÁíÍâ£¬·­×ªÖáÊÇ¿Ø¼şµÄÃªµã¿ØÖÆµÄ¡£
+     * ÄÚ²¿ÊµÏÖÉÏ£¬ËüÖ»ÊÇÊ¹ÓÃ`setScaleY(-1)`À´ÊµÏÖ·­×ª¡£
      * 
      * @return @~english true if the widget is flipped vertically, flase otherwise.
-     * @~chinese trueåˆ™æ§ä»¶å‚ç›´ç¿»è½¬ï¼Œå¦åˆ™ä¸ç¿»è½¬ã€‚
+     * @~chinese trueÔò¿Ø¼ş´¹Ö±·­×ª£¬·ñÔò²»·­×ª¡£
      */
     virtual bool isFlippedY()const{return _flippedY;};
 
@@ -584,171 +584,171 @@ public:
     /**@~english
      * Checks a point if in parent's area.
      * @~chinese 
-     * æ£€æŸ¥ä¸€ä¸ªä½ç½®ç‚¹æ˜¯å¦åœ¨çˆ¶èŠ‚ç‚¹åŒºåŸŸå†…ã€‚
+     * ¼ì²éÒ»¸öÎ»ÖÃµãÊÇ·ñÔÚ¸¸½ÚµãÇøÓòÄÚ¡£
      * 
      * @deprecated  use `isClippingParentContainsPoint` instead.
      * @param pt @~english A point in `Vec2`.
-     * @~chinese Vec2ç±»å‹çš„ä½ç½®ç‚¹ã€‚
+     * @~chinese Vec2ÀàĞÍµÄÎ»ÖÃµã¡£
      * @return @~english true if the point is in parent's area, flase otherwise.
-     * @~chinese å¦‚æœç‚¹æ˜¯åœ¨çˆ¶èŠ‚ç‚¹åŒºåŸŸå†…ï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹ûµãÊÇÔÚ¸¸½ÚµãÇøÓòÄÚ£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     CC_DEPRECATED_ATTRIBUTE bool clippingParentAreaContainPoint(const Vec2 &pt){return this->isClippingParentContainsPoint(pt);}
 
     /**@~english
      * Checks a point if in parent's area.
      * @~chinese 
-     * æ£€æŸ¥ä¸€ä¸ªä½ç½®ç‚¹æ˜¯å¦åœ¨çˆ¶èŠ‚ç‚¹åŒºåŸŸå†…ã€‚
+     * ¼ì²éÒ»¸öÎ»ÖÃµãÊÇ·ñÔÚ¸¸½ÚµãÇøÓòÄÚ¡£
      * 
      * @param pt @~english A point in `Vec2`.
-     * @~chinese Vec2ç±»å‹çš„ä½ç½®ç‚¹ã€‚
+     * @~chinese Vec2ÀàĞÍµÄÎ»ÖÃµã¡£
      * @return @~english true if the point is in parent's area, flase otherwise.
-     * @~chinese å¦‚æœç‚¹æ˜¯åœ¨çˆ¶èŠ‚ç‚¹åŒºåŸŸå†…ï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹ûµãÊÇÔÚ¸¸½ÚµãÇøÓòÄÚ£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     bool isClippingParentContainsPoint(const Vec2& pt);
 
     /**@~english
      * Gets the touch began point of widget when widget is selected.
      * @~chinese 
-     * è·å–è§¦ç‚¹åœ¨æ§ä»¶è¢«é€‰ä¸­æ—¶çš„èµ·å§‹ä½ç½®ã€‚
+     * »ñÈ¡´¥µãÔÚ¿Ø¼ş±»Ñ¡ÖĞÊ±µÄÆğÊ¼Î»ÖÃ¡£
      * @deprecated use `getTouchBeganPosition` instead.
      * @return @~english the touch began point.
-     * @~chinese è§¦ç‚¹çš„èµ·å§‹ä½ç½®ã€‚
+     * @~chinese ´¥µãµÄÆğÊ¼Î»ÖÃ¡£
      */
     CC_DEPRECATED_ATTRIBUTE const Vec2& getTouchStartPos()const{return this->getTouchBeganPosition();}
     /**@~english
      * Gets the touch began point of widget when widget is selected.
      * @~chinese 
-     * è·å–è§¦ç‚¹åœ¨æ§ä»¶è¢«é€‰ä¸­æ—¶çš„èµ·å§‹ä½ç½®ã€‚
+     * »ñÈ¡´¥µãÔÚ¿Ø¼ş±»Ñ¡ÖĞÊ±µÄÆğÊ¼Î»ÖÃ¡£
      * @return @~english the touch began point.
-     * @~chinese è§¦ç‚¹çš„èµ·å§‹ä½ç½®ã€‚
+     * @~chinese ´¥µãµÄÆğÊ¼Î»ÖÃ¡£
      */
     const Vec2& getTouchBeganPosition()const;
 
     /*@~english
      * Gets the touch move point of widget when widget is selected.
      * @~chinese 
-     * è·å–è§¦ç‚¹åœ¨æ§ä»¶è¢«é€‰ä¸­æ—¶çš„å½“å‰ç§»åŠ¨ä½ç½®ã€‚
+     * »ñÈ¡´¥µãÔÚ¿Ø¼ş±»Ñ¡ÖĞÊ±µÄµ±Ç°ÒÆ¶¯Î»ÖÃ¡£
      * @deprecated use `getTouchMovePosition` instead.
      * @return @~english the touch move point.
-     * @~chinese è§¦ç‚¹çš„å½“å‰ç§»åŠ¨ä½ç½®ã€‚
+     * @~chinese ´¥µãµÄµ±Ç°ÒÆ¶¯Î»ÖÃ¡£
      */
     CC_DEPRECATED_ATTRIBUTE const Vec2& getTouchMovePos()const{ return this->getTouchMovePosition();}
     /*@~english
      * Gets the touch move point of widget when widget is selected.
      * @~chinese 
-     * è·å–è§¦ç‚¹åœ¨æ§ä»¶è¢«é€‰ä¸­æ—¶çš„å½“å‰ç§»åŠ¨ä½ç½®ã€‚
+     * »ñÈ¡´¥µãÔÚ¿Ø¼ş±»Ñ¡ÖĞÊ±µÄµ±Ç°ÒÆ¶¯Î»ÖÃ¡£
      * @return @~english the touch move point.
-     * @~chinese è§¦ç‚¹çš„å½“å‰ç§»åŠ¨ä½ç½®ã€‚
+     * @~chinese ´¥µãµÄµ±Ç°ÒÆ¶¯Î»ÖÃ¡£
      */
     const Vec2& getTouchMovePosition()const;
 
     /*@~english
      * Gets the touch end point of widget when widget is selected.
      * @~chinese 
-     * è·å–è§¦ç‚¹åœ¨æ§ä»¶è¢«é€‰ä¸­æ—¶çš„ç»ˆç‚¹ä½ç½®ã€‚
+     * »ñÈ¡´¥µãÔÚ¿Ø¼ş±»Ñ¡ÖĞÊ±µÄÖÕµãÎ»ÖÃ¡£
      * @deprecated use `getTouchEndPosition` instead.
      * @return @~english the touch end point.
-     * @~chinese è§¦ç‚¹çš„ç»ˆç‚¹ä½ç½®ã€‚
+     * @~chinese ´¥µãµÄÖÕµãÎ»ÖÃ¡£
      */
     CC_DEPRECATED_ATTRIBUTE const Vec2& getTouchEndPos()const{return this->getTouchEndPosition();}
     /*@~english
      * Gets the touch end point of widget when widget is selected.
      * @~chinese 
-     * è·å–è§¦ç‚¹åœ¨æ§ä»¶è¢«é€‰ä¸­æ—¶çš„ç»ˆç‚¹ä½ç½®ã€‚
+     * »ñÈ¡´¥µãÔÚ¿Ø¼ş±»Ñ¡ÖĞÊ±µÄÖÕµãÎ»ÖÃ¡£
      * @return @~english the touch end point.
-     * @~chinese è§¦ç‚¹çš„ç»ˆç‚¹ä½ç½®ã€‚
+     * @~chinese ´¥µãµÄÖÕµãÎ»ÖÃ¡£
      */
     const Vec2& getTouchEndPosition()const;
 
     /**@~english
      * Changes the widget's size
      * @~chinese 
-     * è®¾ç½®æ§ä»¶çš„å°ºå¯¸
+     * ÉèÖÃ¿Ø¼şµÄ³ß´ç
      * @deprecated use `setContentSize` instead.
      * @param size @~english Widget's size
-     * @~chinese æ§ä»¶çš„å°ºå¯¸
+     * @~chinese ¿Ø¼şµÄ³ß´ç
      */
     CC_DEPRECATED_ATTRIBUTE virtual void setSize(const Size &size);
     /**@~english
      * Changes the widget's size
      * @~chinese 
-     * è®¾ç½®æ§ä»¶çš„å°ºå¯¸
+     * ÉèÖÃ¿Ø¼şµÄ³ß´ç
      * @param contentSize @~english Widget's size
-     * @~chinese æ§ä»¶çš„å°ºå¯¸
+     * @~chinese ¿Ø¼şµÄ³ß´ç
      */
     virtual void setContentSize(const Size& contentSize) override;
 
     /**@~english
      * Changes the widget's size in percentage
      * @~chinese 
-     * è®¾ç½®æ§ä»¶çš„ç™¾åˆ†æ¯”å°ºå¯¸
+     * ÉèÖÃ¿Ø¼şµÄ°Ù·Ö±È³ß´ç
      * 
      * @param percent @~english Widget's size in percentage
-     * @~chinese æ§ä»¶çš„ç™¾åˆ†æ¯”å°ºå¯¸
+     * @~chinese ¿Ø¼şµÄ°Ù·Ö±È³ß´ç
      */
     virtual void setSizePercent(const Vec2 &percent);
 
     /**@~english
      * Changes the size type of widget.
      * @~chinese 
-     * æ”¹å˜æ§ä»¶çš„å°ºå¯¸ç±»å‹ã€‚
+     * ¸Ä±ä¿Ø¼şµÄ³ß´çÀàĞÍ¡£
      * 
      * @see `SizeType`
      *
      * @param type @~english Widget's size type
-     * @~chinese æ§ä»¶çš„å°ºå¯¸ç±»å‹ã€‚
+     * @~chinese ¿Ø¼şµÄ³ß´çÀàĞÍ¡£
      */
     void setSizeType(SizeType type);
 
     /**@~english
      * Gets the size type of widget.
      * @~chinese 
-     * è·å–æ§ä»¶çš„å°ºå¯¸ç±»å‹ã€‚
+     * »ñÈ¡¿Ø¼şµÄ³ß´çÀàĞÍ¡£
      * 
      * @see `SizeType`
      *
      * @return @~english Widget's size type
-     * @~chinese æ§ä»¶çš„å°ºå¯¸ç±»å‹ã€‚
+     * @~chinese ¿Ø¼şµÄ³ß´çÀàĞÍ¡£
      */
     SizeType getSizeType() const;
 
     /**@~english
      * Get the size of widget
      * @~chinese 
-     * è·å–æ§ä»¶çš„å°ºå¯¸
+     * »ñÈ¡¿Ø¼şµÄ³ß´ç
      * 
      * @return @~english Widget content size.
-     * @~chinese æ§ä»¶å†…å®¹å°ºå¯¸ã€‚
+     * @~chinese ¿Ø¼şÄÚÈİ³ß´ç¡£
      */
     CC_DEPRECATED_ATTRIBUTE const Size& getSize() const;
     
     /**@~english
      * Get the user defined widget size.
      * @~chinese 
-     * è·å–ç”¨æˆ·å®šä¹‰çš„æ§ä»¶å°ºå¯¸ã€‚
+     * »ñÈ¡ÓÃ»§¶¨ÒåµÄ¿Ø¼ş³ß´ç¡£
      *@return @~english User defined size.
-     * @~chinese ç”¨æˆ·å®šä¹‰çš„å°ºå¯¸ã€‚
+     * @~chinese ÓÃ»§¶¨ÒåµÄ³ß´ç¡£
      */
     const Size& getCustomSize() const;
     
     /**@~english
      * Get the content size of widget.
      * @~chinese 
-     * è·å–æ§ä»¶å°ºå¯¸ã€‚
+     * »ñÈ¡¿Ø¼ş³ß´ç¡£
      * @warning @~english This API exists mainly for keeping back compatibility.
-     * @~chinese è¿™ä¸ªAPIçš„å­˜åœ¨ä¸»è¦ç”¨äºä¿æŒå…¼å®¹æ€§ã€‚
+     * @~chinese Õâ¸öAPIµÄ´æÔÚÖ÷ÒªÓÃÓÚ±£³Ö¼æÈİĞÔ¡£
      * @return  @~english User defined size.
-     * @~chinese ç”¨æˆ·å®šä¹‰çš„å°ºå¯¸ã€‚
+     * @~chinese ÓÃ»§¶¨ÒåµÄ³ß´ç¡£
      */
     virtual const Size& getLayoutSize() {return _contentSize;};
 
     /**@~english
      * Get size percent of widget.
      * @~chinese 
-     * è·å–æ§ä»¶çš„ç™¾åˆ†æ¯”å°ºå¯¸ã€‚
+     * »ñÈ¡¿Ø¼şµÄ°Ù·Ö±È³ß´ç¡£
      * 
      * @return @~english Percent size.
-     * @~chinese æ§ä»¶çš„ç™¾åˆ†æ¯”å°ºå¯¸ã€‚
+     * @~chinese ¿Ø¼şµÄ°Ù·Ö±È³ß´ç¡£
      */
     const Vec2& getSizePercent();
 
@@ -756,98 +756,98 @@ public:
      * Checks a point is in widget's content space.
      * This function is used for determining touch area of widget.
      * @~chinese 
-     * æ£€æŸ¥ä¸€ä¸ªç‚¹æ˜¯å¦åœ¨æ§ä»¶çš„å†…å®¹ç©ºé—´é‡Œã€‚
-     * è¿™ä¸ªå‡½æ•°æ˜¯ç”¨äºæ£€æµ‹æ§ä»¶çš„è§¦æ‘¸å“åº”åŒºåŸŸã€‚
+     * ¼ì²éÒ»¸öµãÊÇ·ñÔÚ¿Ø¼şµÄÄÚÈİ¿Õ¼äÀï¡£
+     * Õâ¸öº¯ÊıÊÇÓÃÓÚ¼ì²â¿Ø¼şµÄ´¥ÃşÏìÓ¦ÇøÓò¡£
      * 
      * @param pt @~english The point in `Vec2`.
-     * @~chinese Vec2ç±»å‹çš„ç‚¹ã€‚
+     * @~chinese Vec2ÀàĞÍµÄµã¡£
      * @param camera    @~english The camera look at widget, used to convert GL screen point to near/far plane.
-     * @~chinese æŒ‡å®šè§‚å¯Ÿæ§ä»¶çš„æ‘„åƒæœºCameraï¼Œç”¨æ¥è½¬æ¢GLå±å¹•åæ ‡åˆ°3Dè¿‘å¹³é¢å’Œè¿œå¹³é¢
+     * @~chinese Ö¸¶¨¹Û²ì¿Ø¼şµÄÉãÏñ»úCamera£¬ÓÃÀ´×ª»»GLÆÁÄ»×ø±êµ½3D½üÆ½ÃæºÍÔ¶Æ½Ãæ
      * @param p         @~english Point to a Vec3 for store the intersect point, if don't need them set to nullptr.
-     * @~chinese ä¸€ä¸ªç”¨æ¥ä¿å­˜äº¤æ±‡ç‚¹çš„3Dåæ ‡ç‚¹ï¼Œå¦‚æœä¸éœ€è¦å¯ä»¥è®¾ç½®ä¸ºnullptr
+     * @~chinese Ò»¸öÓÃÀ´±£´æ½»»ãµãµÄ3D×ø±êµã£¬Èç¹û²»ĞèÒª¿ÉÒÔÉèÖÃÎªnullptr
      * @return @~english true if the point is in widget's content space, flase otherwise.
-     * @~chinese å¦‚æœç‚¹åœ¨æ§ä»¶çš„å†…å®¹ç©ºé—´å†…è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹ûµãÔÚ¿Ø¼şµÄÄÚÈİ¿Õ¼äÄÚ·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const;
 
     /**@~english
      * A callback which will be called when touch began event is issued.
      * @~chinese 
-     * è§¦æ‘¸äº‹ä»¶å¼€å§‹æ—¶çš„å›è°ƒå‡½æ•°ã€‚
+     * ´¥ÃşÊÂ¼ş¿ªÊ¼Ê±µÄ»Øµ÷º¯Êı¡£
      *@param touch @~english The touch info.
-     * @~chinese è§¦ç‚¹ä¿¡æ¯ã€‚
+     * @~chinese ´¥µãĞÅÏ¢¡£
      *@param unusedEvent @~english The touch event info.
-     * @~chinese è§¦æ‘¸äº‹ä»¶ä¿¡æ¯ã€‚
+     * @~chinese ´¥ÃşÊÂ¼şĞÅÏ¢¡£
      *@return @~english True if user want to handle touches, false otherwise.
-     * @~chinese å¦‚æœéœ€è¦å“åº”è¿™ä¸ªè§¦æ‘¸äº‹ä»¶åˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹ûĞèÒªÏìÓ¦Õâ¸ö´¥ÃşÊÂ¼şÔò·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent);
 
     /**@~english
      * A callback which will be called when touch moved event is issued.
      * @~chinese 
-     * è§¦æ‘¸äº‹ä»¶ä¸­è§¦ç‚¹ç§»åŠ¨æ—¶çš„å›è°ƒå‡½æ•°ã€‚
+     * ´¥ÃşÊÂ¼şÖĞ´¥µãÒÆ¶¯Ê±µÄ»Øµ÷º¯Êı¡£
      *@param touch @~english The touch info.
-     * @~chinese è§¦ç‚¹ä¿¡æ¯ã€‚
+     * @~chinese ´¥µãĞÅÏ¢¡£
      *@param unusedEvent @~english The touch event info.
-     * @~chinese è§¦æ‘¸äº‹ä»¶ä¿¡æ¯ã€‚
+     * @~chinese ´¥ÃşÊÂ¼şĞÅÏ¢¡£
      */
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent);
 
     /**@~english
      * A callback which will be called when touch ended event is issued.
      * @~chinese 
-     * è§¦æ‘¸äº‹ä»¶ç»“æŸæ—¶çš„å›è°ƒå‡½æ•°ã€‚
+     * ´¥ÃşÊÂ¼ş½áÊøÊ±µÄ»Øµ÷º¯Êı¡£
      *@param touch @~english The touch info.
-     * @~chinese è§¦ç‚¹ä¿¡æ¯ã€‚
+     * @~chinese ´¥µãĞÅÏ¢¡£
      *@param unusedEvent @~english The touch event info.
-     * @~chinese è§¦æ‘¸äº‹ä»¶ä¿¡æ¯ã€‚
+     * @~chinese ´¥ÃşÊÂ¼şĞÅÏ¢¡£
      */
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent);
 
     /**@~english
      * A callback which will be called when touch cancelled event is issued.
      * @~chinese 
-     * è§¦æ‘¸äº‹ä»¶å–æ¶ˆæ—¶çš„å›è°ƒå‡½æ•°ã€‚
+     * ´¥ÃşÊÂ¼şÈ¡ÏûÊ±µÄ»Øµ÷º¯Êı¡£
      *@param touch @~english The touch info.
-     * @~chinese è§¦ç‚¹ä¿¡æ¯ã€‚
+     * @~chinese ´¥µãĞÅÏ¢¡£
      *@param unusedEvent @~english The touch event info.
-     * @~chinese è§¦æ‘¸äº‹ä»¶ä¿¡æ¯ã€‚
+     * @~chinese ´¥ÃşÊÂ¼şĞÅÏ¢¡£
      */
     virtual void onTouchCancelled(Touch *touch, Event *unusedEvent);
 
     /**@~english
      * Sets a LayoutParameter to widget.
      * @~chinese 
-     * çµ¦æ§ä»¶è®¾ç½®ä¸€ä¸ªå¸ƒå±€å‚æ•°ï¼ˆLayoutParameterï¼‰ã€‚
+     * ½o¿Ø¼şÉèÖÃÒ»¸ö²¼¾Ö²ÎÊı£¨LayoutParameter£©¡£
      * 
      * @see LayoutParameter
      * @param parameter @~english LayoutParameter pointer
-     * @~chinese å¸ƒå±€å‚æ•°å¯¹è±¡æŒ‡é’ˆ
+     * @~chinese ²¼¾Ö²ÎÊı¶ÔÏóÖ¸Õë
      */
     void setLayoutParameter(LayoutParameter* parameter);
 
     /**@~english
      * Gets LayoutParameter of widget.
      * @~chinese 
-     * è·å–æ§ä»¶çš„å¸ƒå±€å‚æ•°ï¼ˆLayoutParameterï¼‰ã€‚
+     * »ñÈ¡¿Ø¼şµÄ²¼¾Ö²ÎÊı£¨LayoutParameter£©¡£
      * 
      * @see LayoutParameter
      * @return @~english LayoutParameter
-     * @~chinese å¸ƒå±€å‚æ•°å¯¹è±¡æŒ‡é’ˆ
+     * @~chinese ²¼¾Ö²ÎÊı¶ÔÏóÖ¸Õë
      */
     LayoutParameter* getLayoutParameter()const override;
     /**@~english
      * Gets LayoutParameter of widget.
      * @~chinese 
-     * æ ¹æ®ç±»å‹è·å–æ§ä»¶çš„å¸ƒå±€å‚æ•°ï¼ˆLayoutParameterï¼‰ã€‚
+     * ¸ù¾İÀàĞÍ»ñÈ¡¿Ø¼şµÄ²¼¾Ö²ÎÊı£¨LayoutParameter£©¡£
      * 
      * @see LayoutParameter
      * @deprecated use `getLayoutParameter()` instead.
      * @param type  @~english Relative or Linear
-     * @~chinese å¸ƒå±€å‚æ•°ç±»å‹ï¼Œç›¸å¯¹æˆ–çº¿æ€§
+     * @~chinese ²¼¾Ö²ÎÊıÀàĞÍ£¬Ïà¶Ô»òÏßĞÔ
      * @return @~english LayoutParameter
-     * @~chinese å¸ƒå±€å‚æ•°å¯¹è±¡æŒ‡é’ˆ
+     * @~chinese ²¼¾Ö²ÎÊı¶ÔÏóÖ¸Õë
      */
     CC_DEPRECATED_ATTRIBUTE LayoutParameter* getLayoutParameter(LayoutParameter::Type type);
 
@@ -857,31 +857,31 @@ public:
      * Set true will ignore user defined content size which means 
      * the widget size is always equal to the return value of `getVirtualRendererSize`.
      * @~chinese 
-     * è®¾ç½®æ˜¯å¦å¿½ç•¥ç”¨æˆ·å®šä¹‰é€šè¿‡`setContentSize`è®¾å®šçš„æ§ä»¶å°ºå¯¸ã€‚
-     * è®¾ç½®ä¸ºtrueå°†å¿½ç•¥ç”¨æˆ·å®šä¹‰çš„å°ºå¯¸ï¼Œæ„å‘³ç€æ§ä»¶å°ºå¯¸æ°¸è¿œç­‰äº`getVirtualRendererSize`çš„è¿”å›å€¼ã€‚
+     * ÉèÖÃÊÇ·ñºöÂÔÓÃ»§¶¨ÒåÍ¨¹ı`setContentSize`Éè¶¨µÄ¿Ø¼ş³ß´ç¡£
+     * ÉèÖÃÎªtrue½«ºöÂÔÓÃ»§¶¨ÒåµÄ³ß´ç£¬ÒâÎ¶×Å¿Ø¼ş³ß´çÓÀÔ¶µÈÓÚ`getVirtualRendererSize`µÄ·µ»ØÖµ¡£
      * 
      * @param ignore @~english Set member variabl _ignoreSize to ignore
-     * @~chinese æ˜¯å¦å¿½ç•¥æ§ä»¶å°ºå¯¸ï¼Œå°†è®¾ç½®`_ignoreSize`å±æ€§ã€‚
+     * @~chinese ÊÇ·ñºöÂÔ¿Ø¼ş³ß´ç£¬½«ÉèÖÃ`_ignoreSize`ÊôĞÔ¡£
      */
     virtual void ignoreContentAdaptWithSize(bool ignore);
 
     /**@~english
-     * Query whether the widget ignores user deinfed content size or not
+     * Query whether the widget ignores user defined content size or not
      * @~chinese 
-     * æŸ¥è¯¢æ˜¯å¦å¿½ç•¥ç”¨æˆ·å®šä¹‰çš„æ§ä»¶å°ºå¯¸ã€‚
+     * ²éÑ¯ÊÇ·ñºöÂÔÓÃ»§¶¨ÒåµÄ¿Ø¼ş³ß´ç¡£
      * 
      * @return @~english True means ignore user defined content size, false otherwise.
-     * @~chinese è¿”å›trueæ„å‘³ç€å¿½ç•¥ç”¨æˆ·å®šä¹‰çš„å°ºå¯¸ï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese ·µ»ØtrueÒâÎ¶×ÅºöÂÔÓÃ»§¶¨ÒåµÄ³ß´ç£¬·ñÔò·µ»Øfalse¡£
      */
     bool isIgnoreContentAdaptWithSize() const;
 
     /**@~english
      * Gets position of widget in world space.
      * @~chinese 
-     * è·å–åœ¨ä¸–ç•Œç©ºé—´ä¸­æ§ä»¶çš„ä½ç½®ã€‚
+     * »ñÈ¡ÔÚÊÀ½ç¿Õ¼äÖĞ¿Ø¼şµÄÎ»ÖÃ¡£
      * 
      * @return @~english Position of widget in world space.
-     * @~chinese ä¸–ç•Œç©ºé—´ä¸­æ§ä»¶çš„ä½ç½®ã€‚
+     * @~chinese ÊÀ½ç¿Õ¼äÖĞ¿Ø¼şµÄÎ»ÖÃ¡£
      */
     Vec2 getWorldPosition()const;
 
@@ -889,11 +889,11 @@ public:
      * Gets the inner Renderer node of widget.
      * For example, a button's Virtual Renderer is its texture renderer.
      * @~chinese 
-     * æ§ä»¶çš„å†…éƒ¨æ¸²æŸ“èŠ‚ç‚¹ã€‚
-     * ä¾‹å¦‚ï¼Œä¸€ä¸ªæŒ‰é’®çš„è™šæ‹Ÿæ¸²æŸ“èŠ‚ç‚¹æ˜¯å®ƒçš„çº¹ç†èŠ‚ç‚¹ã€‚
+     * ¿Ø¼şµÄÄÚ²¿äÖÈ¾½Úµã¡£
+     * ÀıÈç£¬Ò»¸ö°´Å¥µÄĞéÄâäÖÈ¾½ÚµãÊÇËüµÄÎÆÀí½Úµã¡£
      * 
      * @return @~english Node pointer.
-     * @~chinese çº¹ç†èŠ‚ç‚¹çš„æŒ‡é’ˆã€‚
+     * @~chinese ÎÆÀí½ÚµãµÄÖ¸Õë¡£
      */
     virtual Node* getVirtualRenderer();
 
@@ -901,9 +901,9 @@ public:
     /**@~english
      * Get the virtual renderer's size
      * @~chinese 
-     * è·å–è™šæ‹Ÿæ¸²æŸ“èŠ‚ç‚¹çš„å°ºå¯¸
+     * »ñÈ¡ĞéÄâäÖÈ¾½ÚµãµÄ³ß´ç
      * @return @~english Widget virtual renderer size.
-     * @~chinese è™šæ‹Ÿæ¸²æŸ“èŠ‚ç‚¹çš„å°ºå¯¸ã€‚
+     * @~chinese ĞéÄâäÖÈ¾½ÚµãµÄ³ß´ç¡£
      */
     virtual Size getVirtualRendererSize() const;
     
@@ -911,18 +911,18 @@ public:
     /**@~english
      * Returns the string representation of widget class name
      * @~chinese 
-     * è¿”å›æ§ä»¶ç±»çš„æè¿°
+     * ·µ»Ø¿Ø¼şÀàµÄÃèÊö
      * @return @~english get the class description.
-     * @~chinese æ§ä»¶ç±»çš„æè¿°ã€‚
+     * @~chinese ¿Ø¼şÀàµÄÃèÊö¡£
      */
     virtual std::string getDescription() const override;
 
     /**@~english
      * Create a new widget copy of the original one.
      * @~chinese 
-     * åˆ›å»ºä¸€ä¸ªæ–°çš„æ§ä»¶æ‹·è´ã€‚
+     * ´´½¨Ò»¸öĞÂµÄ¿Ø¼ş¿½±´¡£
      * @return @~english A cloned widget copy of original.
-     * @~chinese ä¸€ä¸ªå…‹éš†çš„æ§ä»¶ã€‚
+     * @~chinese Ò»¸ö¿ËÂ¡µÄ¿Ø¼ş¡£
      */
     Widget* clone();
 
@@ -933,7 +933,7 @@ public:
     /**@~english
      * Update all children's contents size and position recursively.
      * @~chinese 
-     * é€’å½’åœ°æ›´æ–°æ‰€æœ‰å­èŠ‚ç‚¹çš„å°ºå¯¸å’Œä½ç½®ã€‚
+     * µİ¹éµØ¸üĞÂËùÓĞ×Ó½ÚµãµÄ³ß´çºÍÎ»ÖÃ¡£
      * @see `updateSizeAndPosition(const Size&)`
      */
     void updateSizeAndPosition();
@@ -941,33 +941,33 @@ public:
     /**@~english
      * Update all children's contents size and position recursively.
      * @~chinese 
-     * é€’å½’åœ°æ›´æ–°æ‰€æœ‰å­èŠ‚ç‚¹çš„å°ºå¯¸å’Œä½ç½®ã€‚
+     * µİ¹éµØ¸üĞÂËùÓĞ×Ó½ÚµãµÄ³ß´çºÍÎ»ÖÃ¡£
      */
     void updateSizeAndPosition(const Size& parentSize);
     
     /**@~english
      * Set the tag of action.
      * @~chinese 
-     * è®¾ç½®åŠ¨ä½œçš„æ ‡ç­¾ã€‚
+     * ÉèÖÃ¶¯×÷µÄ±êÇ©¡£
      * @param tag  @~english A integer tag value.
-     * @~chinese ä¸€ä¸ªæ•´æ•°æ ‡ç­¾å€¼ã€‚
+     * @~chinese Ò»¸öÕûÊı±êÇ©Öµ¡£
      */
     void setActionTag(int tag);
 
     /**@~english
      * Get the action tag.
      * @~chinese 
-     * è·å–åŠ¨ä½œæ ‡ç­¾ã€‚
+     * »ñÈ¡¶¯×÷±êÇ©¡£
      *@return @~english Action tag.
-     * @~chinese åŠ¨ä½œæ ‡ç­¾ã€‚
+     * @~chinese ¶¯×÷±êÇ©¡£
      */
     int getActionTag()const;
     
     /**
      * @brief @~english Allow widget touch events to propagate to its parents. Set false will disable propagation
-     * @~chinese å…è®¸æ§ä»¶çš„è§¦æ‘¸äº‹ä»¶å‘ä¸Šä¼ æ’­åˆ°çˆ¶èŠ‚ç‚¹ï¼Œè®¾ç½®ä¸ºfalseä¼šé˜»æ­¢å‘ä¸Šä¼ æ’­ã€‚
+     * @~chinese ÔÊĞí¿Ø¼şµÄ´¥ÃşÊÂ¼şÏòÉÏ´«²¥µ½¸¸½Úµã£¬ÉèÖÃÎªfalse»á×èÖ¹ÏòÉÏ´«²¥¡£
      * @param isPropagate  @~english True to allow propagation, false otherwise.
-     * @~chinese trueå…è®¸å‘ä¸Šä¼ æ’­ï¼Œfalseä¸å…è®¸ã€‚
+     * @~chinese trueÔÊĞíÏòÉÏ´«²¥£¬false²»ÔÊĞí¡£
      * @since v3.3
      */
     void setPropagateTouchEvents(bool isPropagate);
@@ -975,7 +975,7 @@ public:
     /**@~english
      * Return whether the widget is propagate touch events to its parents or not
      * @~chinese 
-     * è¿”å›æ§ä»¶æ˜¯å¦å…è®¸è§¦æ‘¸äº‹ä»¶ä¼ æ’­åˆ°å…¶çˆ¶èŠ‚ç‚¹
+     * ·µ»Ø¿Ø¼şÊÇ·ñÔÊĞí´¥ÃşÊÂ¼ş´«²¥µ½Æä¸¸½Úµã
      * @return @~english whether touch event propagation is allowed or not.
      * @~chinese Been touch event propagation charges or not.
      * @since v3.3
@@ -985,9 +985,9 @@ public:
     /**@~english
      * Toggle widget to swallow touches or not.
      * @~chinese 
-     * è®¾ç½®æ§ä»¶æ˜¯å¦åå™¬è§¦æ‘¸äº‹ä»¶ã€‚
+     * ÉèÖÃ¿Ø¼şÊÇ·ñÍÌÊÉ´¥ÃşÊÂ¼ş¡£
      * @param swallow @~english True to swallow touch, false otherwise.
-     * @~chinese trueåˆ™åå™¬è§¦æ‘¸äº‹ä»¶ï¼Œfalseä¸åå™¬ã€‚
+     * @~chinese trueÔòÍÌÊÉ´¥ÃşÊÂ¼ş£¬false²»ÍÌÊÉ¡£
      * @since v3.3
      */
     void setSwallowTouches(bool swallow);
@@ -995,9 +995,9 @@ public:
     /**@~english
      * Return whether the widget is swallowing touch or not
      * @~chinese 
-     * æŸ¥è¯¢æ§ä»¶æ˜¯å¦åå™¬è§¦æ‘¸äº‹ä»¶
+     * ²éÑ¯¿Ø¼şÊÇ·ñÍÌÊÉ´¥ÃşÊÂ¼ş
      * @return @~english Whether touch is swallowed.
-     * @~chinese æ˜¯å¦åå™¬è§¦æ‘¸äº‹ä»¶ã€‚
+     * @~chinese ÊÇ·ñÍÌÊÉ´¥ÃşÊÂ¼ş¡£
      * @since v3.3
      */
     bool isSwallowTouches()const;
@@ -1005,36 +1005,36 @@ public:
     /**@~english
      * Query whether widget is focused or not.
      * @~chinese 
-     * æŸ¥è¯¢æ§ä»¶æ˜¯å¦æ‹¥æœ‰ç„¦ç‚¹ã€‚
+     * ²éÑ¯¿Ø¼şÊÇ·ñÓµÓĞ½¹µã¡£
      * @return @~english  whether the widget is focused or not
-     * @~chinese æ˜¯å¦æ‹¥æœ‰ç„¦ç‚¹
+     * @~chinese ÊÇ·ñÓµÓĞ½¹µã
      */
     bool isFocused()const;
     
     /**@~english
      * Toggle widget focus status.
      * @~chinese 
-     * åˆ‡æ¢æ§ä»¶æ˜¯å¦æ‹¥æœ‰ç„¦ç‚¹ã€‚
+     * ÇĞ»»¿Ø¼şÊÇ·ñÓµÓĞ½¹µã¡£
      * @param focus  @~english pass true to let the widget get focus or pass false to let the widget lose focus
-     * @~chinese ä¼ trueä½¿æ§ä»¶è·å¾—ç„¦ç‚¹ï¼Œå¦åˆ™è®©æ§ä»¶å¤±å»ç„¦ç‚¹
+     * @~chinese ´«trueÊ¹¿Ø¼ş»ñµÃ½¹µã£¬·ñÔòÈÃ¿Ø¼şÊ§È¥½¹µã
      */
     void setFocused(bool focus);
     
     /**@~english
      * Query widget's focus enable state.
      * @~chinese 
-     * æŸ¥è¯¢æ§ä»¶æ˜¯å¦æ‹¥æœ‰ç„¦ç‚¹ã€‚
+     * ²éÑ¯¿Ø¼şÊÇ·ñÓµÓĞ½¹µã¡£
      * @return @~english true represent the widget could accept focus, false represent the widget couldn't accept focus
-     * @~chinese è¿”å›trueä»£è¡¨æ§ä»¶æ‹¥æœ‰ç„¦ç‚¹ï¼Œåä¹‹è¿”å›falseã€‚
+     * @~chinese ·µ»Øtrue´ú±í¿Ø¼şÓµÓĞ½¹µã£¬·´Ö®·µ»Øfalse¡£
      */
     bool isFocusEnabled()const;
     
     /**@~english
      * Allow widget to accept focus.
      * @~chinese 
-     * å…è®¸æ§ä»¶æ¥å—ç„¦ç‚¹ã€‚
+     * ÔÊĞí¿Ø¼ş½ÓÊÜ½¹µã¡£
      * @param enable @~english pass true/false to enable/disable the focus ability of a widget
-     * @~chinese é€šè¿‡ä¼ é€’true/falseæ¥å¯ç”¨æˆ–ç¦ç”¨ä¸€ä¸ªæ§ä»¶è·å–ç„¦ç‚¹
+     * @~chinese Í¨¹ı´«µİtrue/falseÀ´ÆôÓÃ»ò½ûÓÃÒ»¸ö¿Ø¼ş»ñÈ¡½¹µã
      */
     void setFocusEnabled(bool enable);
     
@@ -1042,21 +1042,21 @@ public:
      *  When a widget is in a layout, you could call this method to get the next focused widget within a specified direction. 
      *  If the widget is not in a layout, it will return itself
      * @~chinese 
-     * å½“ä¸€ä¸ªæ§ä»¶åœ¨ä¸€ä¸ªå¸ƒå±€ä¸­ï¼Œæ‚¨å¯ä»¥è°ƒç”¨è¿™ä¸ªæ–¹æ³•å¾—åˆ°åœ¨æŒ‡å®šçš„æ–¹å‘ä¸Šçš„ä¸‹ä¸€ä¸ªæ§ä»¶ï¼Œæ–¹å‘åˆ†ä¸ºä¸Šä¸‹å·¦å³ã€‚
-     * å¦‚æœæ§ä»¶æ²¡æœ‰åœ¨å¸ƒå±€ä¸­ï¼Œå®ƒå°†è¿”å›è‡ªèº«
+     * µ±Ò»¸ö¿Ø¼şÔÚÒ»¸ö²¼¾ÖÖĞ£¬Äú¿ÉÒÔµ÷ÓÃÕâ¸ö·½·¨µÃµ½ÔÚÖ¸¶¨µÄ·½ÏòÉÏµÄÏÂÒ»¸ö¿Ø¼ş£¬·½Ïò·ÖÎªÉÏÏÂ×óÓÒ¡£
+     * Èç¹û¿Ø¼şÃ»ÓĞÔÚ²¼¾ÖÖĞ£¬Ëü½«·µ»Ø×ÔÉí
      *@param direction @~english the direction to look for the next focused widget in a layout
-     * @~chinese æŒ‡å®šçš„æ–¹å‘
+     * @~chinese Ö¸¶¨µÄ·½Ïò
      *@param current  @~english the current focused widget
-     * @~chinese å½“å‰æ‹¥æœ‰ç„¦ç‚¹çš„æ§ä»¶
+     * @~chinese µ±Ç°ÓµÓĞ½¹µãµÄ¿Ø¼ş
      *@return @~english the next focused widget in a layout
-     * @~chinese å¸ƒå±€ä¸­ä¸‹ä¸€ä¸ªè·å–ç„¦ç‚¹çš„æ§ä»¶
+     * @~chinese ²¼¾ÖÖĞÏÂÒ»¸ö»ñÈ¡½¹µãµÄ¿Ø¼ş
      */
     virtual Widget* findNextFocusedWidget(FocusDirection direction, Widget* current);
     
     /**@~english
      * when a widget calls this method, it will get focus immediately.
      * @~chinese 
-     * å½“è°ƒç”¨è¿™ä¸ªæ–¹æ³•æ—¶ï¼Œæ§ä»¶ä¼šç«‹å³æ‹¥æœ‰ç„¦ç‚¹ã€‚
+     * µ±µ÷ÓÃÕâ¸ö·½·¨Ê±£¬¿Ø¼ş»áÁ¢¼´ÓµÓĞ½¹µã¡£
      */
     void requestFocus();
 
@@ -1064,10 +1064,10 @@ public:
      * Return a current focused widget in your UI scene.
      * No matter what widget object you call this method on, it will return you the exact one focused widget.
      * @~chinese 
-     * è·å–å½“å‰æ‹¥æœ‰ç„¦ç‚¹çš„æ§ä»¶ã€‚
-     * ä¸ç®¡å¯¹ä»€ä¹ˆæ§ä»¶å¯¹è±¡è°ƒç”¨è¿™ä¸ªæ–¹æ³•ï¼Œå®ƒå°†è¿”å›å½“å‰æ‹¥æœ‰ç„¦ç‚¹çš„æ§ä»¶ã€‚
+     * »ñÈ¡µ±Ç°ÓµÓĞ½¹µãµÄ¿Ø¼ş¡£
+     * ²»¹Ü¶ÔÊ²Ã´¿Ø¼ş¶ÔÏóµ÷ÓÃÕâ¸ö·½·¨£¬Ëü½«·µ»Øµ±Ç°ÓµÓĞ½¹µãµÄ¿Ø¼ş¡£
      * @param isWidget  @~english Unused parameter
-     * @~chinese æ— ç”¨çš„å‚æ•°
+     * @~chinese ÎŞÓÃµÄ²ÎÊı
      * @deprecated use `getCurrentFocusedWidget` instead.
      */
     CC_DEPRECATED_ATTRIBUTE Widget* getCurrentFocusedWidget(bool isWidget){
@@ -1079,17 +1079,17 @@ public:
      * Return a current focused widget in your UI scene.
      * No matter what widget object you call this method on, it will return you the exact one focused widget.
      * @~chinese 
-     * è·å–å½“å‰æ‹¥æœ‰ç„¦ç‚¹çš„æ§ä»¶ã€‚
-     * ä¸ç®¡å¯¹ä»€ä¹ˆæ§ä»¶å¯¹è±¡è°ƒç”¨è¿™ä¸ªæ–¹æ³•ï¼Œå®ƒå°†è¿”å›å½“å‰æ‹¥æœ‰ç„¦ç‚¹çš„æ§ä»¶ã€‚
+     * »ñÈ¡µ±Ç°ÓµÓĞ½¹µãµÄ¿Ø¼ş¡£
+     * ²»¹Ü¶ÔÊ²Ã´¿Ø¼ş¶ÔÏóµ÷ÓÃÕâ¸ö·½·¨£¬Ëü½«·µ»Øµ±Ç°ÓµÓĞ½¹µãµÄ¿Ø¼ş¡£
      */
     Widget* getCurrentFocusedWidget()const;
 
     /*@~english
      * Enable or disable the Android Dpad focus navigation feature
      * @~chinese 
-     * å¼€å¯æˆ–å…³é—­Androidç³»ç»Ÿçš„Dpadç„¦ç‚¹å¯¼èˆªåŠŸèƒ½
+     * ¿ªÆô»ò¹Ø±ÕAndroidÏµÍ³µÄDpad½¹µãµ¼º½¹¦ÄÜ
      * @param enable  @~english set true to enable dpad focus navigation, otherwise disenable dpad focus navigation
-     * @~chinese è®¾ç½®ä¸ºtrueå¼€å¯Androidç³»ç»Ÿçš„Dpadç„¦ç‚¹å¯¼èˆªåŠŸèƒ½ï¼Œå¦åˆ™å…³é—­
+     * @~chinese ÉèÖÃÎªtrue¿ªÆôAndroidÏµÍ³µÄDpad½¹µãµ¼º½¹¦ÄÜ£¬·ñÔò¹Ø±Õ
      */
     static void enableDpadNavigation(bool enable);
 
@@ -1097,42 +1097,42 @@ public:
      * When a widget lose/get focus, this method will be called. Be Caution when you provide your own version of focus system, 
      * you must call widget->setFocused(true/false) to change the focus state of the current focused widget;
      * @~chinese 
-     * å½“ä¸€ä¸ªæ§ä»¶å¤±å»æˆ–è€…è·å¾—ç„¦ç‚¹ï¼Œè¿™ä¸ªå›è°ƒå‡½æ•°å°†è¢«è°ƒç”¨ã€‚å½“ä½ æä¾›è‡ªå·±çš„ç‰ˆæœ¬çš„ç„¦ç‚¹ç³»ç»Ÿæ—¶ï¼Œ
-     * è¯·æ³¨æ„ä¸€å®šè¦è°ƒç”¨widget->setFocused(true/false)æ¥æ”¹å˜æ§ä»¶çš„ç„¦ç‚¹çŠ¶æ€;
+     * µ±Ò»¸ö¿Ø¼şÊ§È¥»òÕß»ñµÃ½¹µã£¬Õâ¸ö»Øµ÷º¯Êı½«±»µ÷ÓÃ¡£µ±ÄãÌá¹©×Ô¼ºµÄ°æ±¾µÄ½¹µãÏµÍ³Ê±£¬
+     * Çë×¢ÒâÒ»¶¨Òªµ÷ÓÃwidget->setFocused(true/false)À´¸Ä±ä¿Ø¼şµÄ½¹µã×´Ì¬;
      */
     std::function<void(Widget*,Widget*)> onFocusChanged;
 
     /**@~english
      * Use this function to manually specify the next focused widget regards to each direction
      * @~chinese 
-     * å®ç°è¿™ä¸ªå‡½æ•°æ¥æ‰‹åŠ¨æŒ‡å®šå„ä¸ªæ–¹å‘ä¸Šçš„ä¸‹ä¸€ä¸ªç„¦ç‚¹æ§ä»¶
+     * ÊµÏÖÕâ¸öº¯ÊıÀ´ÊÖ¶¯Ö¸¶¨¸÷¸ö·½ÏòÉÏµÄÏÂÒ»¸ö½¹µã¿Ø¼ş
      */
     std::function<Widget*(FocusDirection)> onNextFocusedWidget;
     
     /**@~english
      * Toggle use unify size.
      * @~chinese 
-     * è®¾ç½®æ˜¯å¦ä½¿ç”¨å½’ä¸€åŒ–çš„å°ºå¯¸ã€‚
+     * ÉèÖÃÊÇ·ñÊ¹ÓÃ¹éÒ»»¯µÄ³ß´ç¡£
      * @param enable @~english True to use unify size, false otherwise.
-     * @~chinese ä¼ é€’trueåˆ™ä½¿ç”¨å½’ä¸€åŒ–å°ºå¯¸ï¼Œå¦åˆ™ä¸ä½¿ç”¨ã€‚
+     * @~chinese ´«µİtrueÔòÊ¹ÓÃ¹éÒ»»¯³ß´ç£¬·ñÔò²»Ê¹ÓÃ¡£
      */
     void setUnifySizeEnabled(bool enable);
 
     /**@~english
      * Query whether unify size enable state. 
      * @~chinese 
-     * æŸ¥è¯¢æ˜¯å¦ä½¿ç”¨å½’ä¸€åŒ–çš„å°ºå¯¸ã€‚
+     * ²éÑ¯ÊÇ·ñÊ¹ÓÃ¹éÒ»»¯µÄ³ß´ç¡£
      * @return @~english true represent the widget use Unify Size, false represent the widget couldn't use Unify Size
-     * @~chinese trueåˆ™ä½¿ç”¨å½’ä¸€åŒ–å°ºå¯¸ï¼Œå¦åˆ™ä¸ä½¿ç”¨ã€‚
+     * @~chinese trueÔòÊ¹ÓÃ¹éÒ»»¯³ß´ç£¬·ñÔò²»Ê¹ÓÃ¡£
      */
     bool isUnifySizeEnabled()const;
 
     /**@~english
      * Set callback name.
      * @~chinese 
-     * è®¾ç½®å›è°ƒå‡½æ•°çš„åç§°ã€‚
+     * ÉèÖÃ»Øµ÷º¯ÊıµÄÃû³Æ¡£
      * @param callbackName @~english A string representation of callback name.
-     * @~chinese å›è°ƒå‡½æ•°çš„åç§°ã€‚
+     * @~chinese »Øµ÷º¯ÊıµÄÃû³Æ¡£
      */
     void setCallbackName(const std::string& callbackName) { _callbackName = callbackName; }
 
@@ -1140,45 +1140,45 @@ public:
     /**@~english
      * Query callback name.
      * @~chinese 
-     * æŸ¥è¯¢å›è°ƒå‡½æ•°çš„åç§°ã€‚
+     * ²éÑ¯»Øµ÷º¯ÊıµÄÃû³Æ¡£
      * @return @~english The callback name.
-     * @~chinese å›è°ƒå‡½æ•°çš„åç§°ã€‚
+     * @~chinese »Øµ÷º¯ÊıµÄÃû³Æ¡£
      */
     const std::string& getCallbackName() const{ return _callbackName; }
     
     /**@~english
      * Set callback type.
      * @~chinese 
-     * è®¾ç½®å›è°ƒå‡½æ•°ç±»å‹ã€‚
+     * ÉèÖÃ»Øµ÷º¯ÊıÀàĞÍ¡£
      * @param callbackType @~english A string representation of callback type.
-     * @~chinese å›è°ƒå‡½æ•°çš„ç±»å‹ã€‚
+     * @~chinese »Øµ÷º¯ÊıµÄÀàĞÍ¡£
      */
     void setCallbackType(const std::string& callbackType) { _callbackType = callbackType; }
 
     /**@~english
      * Query callback type.
      * @~chinese 
-     * æŸ¥è¯¢å›è°ƒå‡½æ•°ç±»å‹ã€‚
+     * ²éÑ¯»Øµ÷º¯ÊıÀàĞÍ¡£
      * @return @~english Callback type string.
-     * @~chinese å›è°ƒå‡½æ•°çš„ç±»å‹ã€‚
+     * @~chinese »Øµ÷º¯ÊıµÄÀàĞÍ¡£
      */
     const std::string& getCallbackType() const{ return _callbackType; }
 
     /**@~english
      * Toggle layout component enable.
      * @~chinese 
-     * è®¾ç½®æ˜¯å¦å¯ç”¨å¸ƒå±€ç»„ä»¶ã€‚
+     * ÉèÖÃÊÇ·ñÆôÓÃ²¼¾Ö×é¼ş¡£
      * @param enable @~english Enable layout Component or not
-     * @~chinese æ˜¯å¦å¯ç”¨å¸ƒå±€ç»„ä»¶ã€‚
+     * @~chinese ÊÇ·ñÆôÓÃ²¼¾Ö×é¼ş¡£
      */
     void setLayoutComponentEnabled(bool enable);
 
     /**@~english
      * Query whether layout component is enabled or not. 
      * @~chinese 
-     * æŸ¥è¯¢æ˜¯å¦å¯ç”¨å¸ƒå±€ç»„ä»¶ã€‚
+     * ²éÑ¯ÊÇ·ñÆôÓÃ²¼¾Ö×é¼ş¡£
      * @return @~english true represent the widget use Layout Component, false represent the widget couldn't use Layout Component.
-     * @~chinese è¿”å›trueä»£è¡¨ä½¿ç”¨å¸ƒå±€ç»„ä»¶ï¼Œå¦åˆ™ä¸ä½¿ç”¨ã€‚
+     * @~chinese ·µ»Øtrue´ú±íÊ¹ÓÃ²¼¾Ö×é¼ş£¬·ñÔò²»Ê¹ÓÃ¡£
      */
     bool isLayoutComponentEnabled()const;
 
@@ -1189,20 +1189,20 @@ CC_CONSTRUCTOR_ACCESS:
 
     /*
      * @brief @~english Sends the touch event to widget's parent, if a widget wants to handle touch event under another widget, 
-     *        it must overide this function.
-     * @~chinese å°†è§¦æ‘¸äº‹ä»¶å‘é€ç»™æ§ä»¶çš„èŠ‚ç‚¹ï¼Œå¦‚æœä¸€ä¸ªæ§ä»¶æƒ³å¤„ç†è§¦æ‘¸äº‹ä»¶åˆ™å¿…é¡»é‡è½½è¿™ä¸ªå‡½æ•°ï¼Œ
+     *        it must override this function.
+     * @~chinese ½«´¥ÃşÊÂ¼ş·¢ËÍ¸ø¿Ø¼şµÄ½Úµã£¬Èç¹ûÒ»¸ö¿Ø¼şÏë´¦Àí´¥ÃşÊÂ¼şÔò±ØĞëÖØÔØÕâ¸öº¯Êı£¬
      * @param  event  @~english the touch event type, it could be BEGAN/MOVED/CANCELED/ENDED
-     * @~chinese è§¦æ‘¸äº‹ä»¶ç±»å‹ï¼Œå¯èƒ½çš„å€¼æ˜¯ï¼šBEGAN/MOVED/CANCELED/ENDED
+     * @~chinese ´¥ÃşÊÂ¼şÀàĞÍ£¬¿ÉÄÜµÄÖµÊÇ£ºBEGAN/MOVED/CANCELED/ENDED
      * @param @~english parent
-     * @~chinese çˆ¶èŠ‚ç‚¹
+     * @~chinese ¸¸½Úµã
      * @param @~english point
-     * @~chinese è§¦ç‚¹
+     * @~chinese ´¥µã
      */
     virtual void interceptTouchEvent(TouchEventType event, Widget* sender, Touch *touch);
     
     /**
      *@brief @~english Propagate touch events to its parents
-     * @~chinese å‘ä¸Šä¼ æ’­è§¦æ‘¸äº‹ä»¶åˆ°å…¶çˆ¶èŠ‚ç‚¹
+     * @~chinese ÏòÉÏ´«²¥´¥ÃşÊÂ¼şµ½Æä¸¸½Úµã
      */
     void propagateTouchEvent(TouchEventType event, Widget* sender, Touch *touch);
     
@@ -1210,22 +1210,22 @@ CC_CONSTRUCTOR_ACCESS:
     /**@~english
      * This method is called when a focus change event happens
      * @~chinese 
-     * ç„¦ç‚¹æ›´æ”¹äº‹ä»¶å‘ç”Ÿæ—¶ä¼šè°ƒç”¨æ­¤æ–¹æ³•
+     * ½¹µã¸ü¸ÄÊÂ¼ş·¢ÉúÊ±»áµ÷ÓÃ´Ë·½·¨
      * @param widgetLostFocus  @~english The widget which lose its focus
-     * @~chinese å¤±å»ç„¦ç‚¹çš„æ§ä»¶
+     * @~chinese Ê§È¥½¹µãµÄ¿Ø¼ş
      * @param widgetGetFocus  @~english The widget which get its focus
-     * @~chinese è·å¾—ç„¦ç‚¹çš„æ§ä»¶
+     * @~chinese »ñµÃ½¹µãµÄ¿Ø¼ş
      */
     void onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus);
     
     /**@~english
      * Dispatch a EventFocus through a EventDispatcher
      * @~chinese 
-     * é€šè¿‡EventDispatcheråˆ†å‘ç„¦ç‚¹æ›´æ”¹äº‹ä»¶
+     * Í¨¹ıEventDispatcher·Ö·¢½¹µã¸ü¸ÄÊÂ¼ş
      * @param widgetLoseFocus  @~english The widget which lose its focus
-     * @~chinese å¤±å»ç„¦ç‚¹çš„æ§ä»¶
+     * @~chinese Ê§È¥½¹µãµÄ¿Ø¼ş
      * @param widgetGetFocus  @~english The widget which get its focus
-     * @~chinese è·å¾—ç„¦ç‚¹çš„æ§ä»¶
+     * @~chinese »ñµÃ½¹µãµÄ¿Ø¼ş
      */
     void dispatchFocusEvent(Widget* widgetLoseFocus, Widget* widgetGetFocus);
     
@@ -1233,7 +1233,7 @@ protected:
     /**@~english
      * Get GLProgramState under normal state 
      * @~chinese 
-     * è·å–æ­£å¸¸çŠ¶æ€ä¸‹çš„GLProgramState
+     * »ñÈ¡Õı³£×´Ì¬ÏÂµÄGLProgramState
      * @since v3.4
      */
     GLProgramState* getNormalGLProgramState()const;
@@ -1241,7 +1241,7 @@ protected:
     /**@~english
      * Get GLProgramState under disabled state 
      * @~chinese 
-     * è·å–ç¦ç”¨çŠ¶æ€ä¸‹çš„GLProgramState
+     * »ñÈ¡½ûÓÃ×´Ì¬ÏÂµÄGLProgramState
      * @since v3.4
      */
     GLProgramState* getGrayGLProgramState()const;

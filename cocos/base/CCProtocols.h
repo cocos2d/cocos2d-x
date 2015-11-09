@@ -39,7 +39,7 @@ NS_CC_BEGIN
  * @~english
  * RGBA protocol that affects Node's color and opacity
  * @~chinese 
- * RGBAåè®®å½±å“èŠ‚ç‚¹çš„é¢œè‰²å’Œä¸é€æ˜åº¦
+ * RGBAĞ­ÒéÓ°Ïì½ÚµãµÄÑÕÉ«ºÍ²»Í¸Ã÷¶È
  */
 class CC_DLL __RGBAProtocol
 {
@@ -51,10 +51,10 @@ public:
      * Changes the color with R,G,B bytes
      *
      * @~chinese 
-     * æ”¹å˜é¢œè‰²çš„R,G,Bå€¼
+     * ¸Ä±äÑÕÉ«µÄR,G,BÖµ
      * 
      * @param color @~english Example: Color3B(255,100,0) means R=255, G=100, B=0
-     * @~chinese ä¾‹å¦‚:Color3B(255,100,0) çš„æ„æ€å…¶å®æ˜¯ R=255, G=100, B=0
+     * @~chinese ÀıÈç:Color3B(255,100,0) µÄÒâË¼ÆäÊµÊÇ R=255, G=100, B=0
      * @js NA
      * @lua NA
      */
@@ -65,10 +65,10 @@ public:
      * Returns color that is currently used.
      *
      * @~chinese 
-     * è¿”å›å½“å‰ä½¿ç”¨çš„é¢œè‰²ã€‚
+     * ·µ»Øµ±Ç°Ê¹ÓÃµÄÑÕÉ«¡£
      * 
      * @return @~english The Color3B contains R,G,B bytes.
-     * @~chinese Color3BåŒ…å«R,G,Bå€¼ã€‚
+     * @~chinese Color3B°üº¬R,G,BÖµ¡£
      * @js NA
      * @lua NA
      */
@@ -79,10 +79,10 @@ public:
      * Returns the displayed color.
      *
      * @~chinese 
-     * è¿”å›æ˜¾ç¤ºé¢œè‰²ã€‚
+     * ·µ»ØÏÔÊ¾ÑÕÉ«¡£
      * 
      * @return @~english The Color3B contains R,G,B bytes.
-     * @~chinese Color3BåŒ…å«R,G,Bå€¼ã€‚
+     * @~chinese Color3B°üº¬R,G,BÖµ¡£
      * @js NA
      * @lua NA
      */
@@ -93,10 +93,10 @@ public:
      * Returns the displayed opacity.
      *
      * @~chinese 
-     * è¿”å›æ˜¾ç¤ºä¸é€æ˜åº¦ã€‚
+     * ·µ»ØÏÔÊ¾²»Í¸Ã÷¶È¡£
      * 
      * @return  @~english The opacity of sprite, from 0 ~ 255
-     * @~chinese ç²¾çµçš„ä¸é€æ˜åº¦ï¼ŒèŒƒå›´ä»0 ~ 255
+     * @~chinese ¾«ÁéµÄ²»Í¸Ã÷¶È£¬·¶Î§´Ó0 ~ 255
      * @js NA
      * @lua NA
      */
@@ -110,13 +110,13 @@ public:
      * 0 indicates fully transparent and 255 is fully opaque.
      *
      * @~chinese 
-     * è¿”å›ä¸é€æ˜åº¦ã€‚
+     * ·µ»Ø²»Í¸Ã÷¶È¡£
      * 
-     * ä¸é€æ˜åº¦,è¡¨ç¤ºèŠ‚ç‚¹é€æ˜æˆ–ä¸é€æ˜ã€‚
-     * 0è¡¨ç¤ºå®Œå…¨é€æ˜å’Œ255æ˜¯å®Œå…¨ä¸é€æ˜çš„ã€‚
+     * ²»Í¸Ã÷¶È,±íÊ¾½ÚµãÍ¸Ã÷»ò²»Í¸Ã÷¡£
+     * 0±íÊ¾ÍêÈ«Í¸Ã÷ºÍ255ÊÇÍêÈ«²»Í¸Ã÷µÄ¡£
      * 
      * @return  @~english The opacity of sprite, from 0 ~ 255
-     * @~chinese ç²¾çµçš„é€æ˜åº¦ï¼ŒèŒƒå›´ä»0 ~ 255
+     * @~chinese ¾«ÁéµÄÍ¸Ã÷¶È£¬·¶Î§´Ó0 ~ 255
      * @js NA
      * @lua NA
      */
@@ -127,10 +127,10 @@ public:
      * Changes the opacity.
      *
      * @~chinese 
-     * æ”¹å˜ä¸é€æ˜åº¦ã€‚
+     * ¸Ä±ä²»Í¸Ã÷¶È¡£
      * 
      * @param opacity   @~english Goes from 0 to 255, where 255 means fully opaque and 0 means fully transparent.
-     * @~chinese ä»0åˆ°255,255æ„å‘³ç€å®Œå…¨ä¸é€æ˜,0è¡¨ç¤ºå®Œå…¨é€æ˜ã€‚
+     * @~chinese ´Ó0µ½255,255ÒâÎ¶×ÅÍêÈ«²»Í¸Ã÷,0±íÊ¾ÍêÈ«Í¸Ã÷¡£
      * @js NA
      * @lua NA
      */
@@ -141,18 +141,18 @@ public:
     /**
      * @~english
      * Changes the OpacityModifyRGB property.
-     * If thie property is set to true, then the rendered color will be affected by opacity.
+     * If this property is set to true, then the rendered color will be affected by opacity.
      * Normally, r = r * opacity/255, g = g * opacity/255, b = b * opacity/255.
      *
      * @~chinese 
-     * OpacityModifyRGBå±æ€§å˜åŒ–ã€‚
-     * å¦‚æœè¯¥å±æ€§è®¾ç½®ä¸ºtrue,é‚£ä¹ˆå°†å—åˆ°ä¸é€æ˜åº¦çš„å½±å“å‘ˆç°é¢œè‰²ã€‚
-     * é€šå¸¸æƒ…å†µä¸‹,r = r * opacity/255, g = g * opacity/255, b = b * opacity/255.
+     * OpacityModifyRGBÊôĞÔ±ä»¯¡£
+     * Èç¹û¸ÃÊôĞÔÉèÖÃÎªtrue,ÄÇÃ´½«ÊÜµ½²»Í¸Ã÷¶ÈµÄÓ°Ïì³ÊÏÖÑÕÉ«¡£
+     * Í¨³£Çé¿öÏÂ,r = r * opacity/255, g = g * opacity/255, b = b * opacity/255.
      * 
      * @param value @~english If true, then the opacity will be applied as: glColor(R,G,B,opacity);
      *              If false, then the opacity will be applied as: glColor(opacity, opacity, opacity, opacity);
-     * @~chinese å¦‚æœè®¾ç½®ä¸ºtrue,é‚£ä¹ˆä¸é€æ˜å°†è¢«è¿™æ ·ä½¿ç”¨: glColor(R,G,B,opacity);
-     * å¦‚æœä¸ºfalse,ä¸é€æ˜åº¦å°†è¢«è¿™æ ·ä½¿ç”¨: glColor(opacity, opacity, opacity, opacity);
+     * @~chinese Èç¹ûÉèÖÃÎªtrue,ÄÇÃ´²»Í¸Ã÷½«±»ÕâÑùÊ¹ÓÃ: glColor(R,G,B,opacity);
+     * Èç¹ûÎªfalse,²»Í¸Ã÷¶È½«±»ÕâÑùÊ¹ÓÃ: glColor(opacity, opacity, opacity, opacity);
      *
      * @js NA
      * @lua NA
@@ -165,11 +165,11 @@ public:
      * or glColor(opacity, opacity, opacity, opacity)
      *
      * @~chinese 
-     * è¿”å›æ˜¯å¦å°†é‡‡ç”¨ä¸é€æ˜åº¦ï¼ŒglColorï¼ˆRï¼ŒGï¼ŒBï¼Œopacityï¼‰
-     * æˆ–è€…glColor(opacity, opacity, opacity, opacity)
+     * ·µ»ØÊÇ·ñ½«²ÉÓÃ²»Í¸Ã÷¶È£¬glColor£¨R£¬G£¬B£¬opacity£©
+     * »òÕßglColor(opacity, opacity, opacity, opacity)
      * 
      * @return  @~english Returns opacity modify flag.
-     * @~chinese è¿”å›ä¸é€æ˜åº¦ä¿®æ”¹æ ‡å¿—ã€‚
+     * @~chinese ·µ»Ø²»Í¸Ã÷¶ÈĞŞ¸Ä±êÖ¾¡£
      * @js NA
      * @lua NA
      */
@@ -179,7 +179,7 @@ public:
      * @~english
      *  whether or not color should be propagated to its children.
      * @~chinese 
-     * é¢œè‰²æ˜¯å¦åº”è¯¥ä¼ æ’­åˆ°å…¶å­èŠ‚ç‚¹ã€‚
+     * ÑÕÉ«ÊÇ·ñÓ¦¸Ã´«²¥µ½Æä×Ó½Úµã¡£
      * @js NA
      * @lua NA
      */
@@ -189,11 +189,11 @@ public:
      * @~english
      *  Set whether or not color should be propagated to its children.
      * @~chinese
-     * è®¾ç½®é¢œè‰²æ˜¯å¦åº”è¯¥ä¼ æ’­åˆ°å…¶å­èŠ‚ç‚¹ã€‚
+     * ÉèÖÃÑÕÉ«ÊÇ·ñÓ¦¸Ã´«²¥µ½Æä×Ó½Úµã¡£
      *
      * @param cascadeColorEnabled @~english whether or not color should be propagated to its children.
      * @~chinese
-     * é¢œè‰²æ˜¯å¦åº”è¯¥ä¼ æ’­åˆ°å…¶å­èŠ‚ç‚¹ã€‚
+     * ÑÕÉ«ÊÇ·ñÓ¦¸Ã´«²¥µ½Æä×Ó½Úµã¡£
      *
      * @js NA
      * @lua NA
@@ -204,7 +204,7 @@ public:
      * @~english
      *  recursive method that updates display color
      * @~chinese 
-     * ä½¿ç”¨é€’å½’çš„æ–¹æ³•å»æ›´æ–°æ˜¾ç¤ºçš„é¢œè‰²
+     * Ê¹ÓÃµİ¹éµÄ·½·¨È¥¸üĞÂÏÔÊ¾µÄÑÕÉ«
      * @js NA
      * @lua NA
      */
@@ -214,7 +214,7 @@ public:
      * @~english
      *  whether or not opacity should be propagated to its children.
      * @~chinese 
-     * ä¸é€æ˜åº¦æ˜¯å¦åº”è¯¥ä¼ æ’­åˆ°å…¶å­èŠ‚ç‚¹ã€‚
+     * ²»Í¸Ã÷¶ÈÊÇ·ñÓ¦¸Ã´«²¥µ½Æä×Ó½Úµã¡£
      * @js NA
      * @lua NA
      */
@@ -223,7 +223,7 @@ public:
     /**
      * @~english Set whether or not opacity should be propagated to its children.
      * @~chinese
-     * è®¾ç½®ä¸é€æ˜åº¦æ˜¯å¦åº”è¯¥ä¼ æ’­åˆ°å…¶å­èŠ‚ç‚¹ã€‚
+     * ÉèÖÃ²»Í¸Ã÷¶ÈÊÇ·ñÓ¦¸Ã´«²¥µ½Æä×Ó½Úµã¡£
      * @js NA
      * @lua NA
      */
@@ -233,7 +233,7 @@ public:
      * @~english
      *  recursive method that updates the displayed opacity.
      * @~chinese 
-     * ä½¿ç”¨é€’å½’çš„æ–¹æ³•å»æ›´æ–°æ˜¾ç¤ºçš„ä¸é€æ˜åº¦ã€‚
+     * Ê¹ÓÃµİ¹éµÄ·½·¨È¥¸üĞÂÏÔÊ¾µÄ²»Í¸Ã÷¶È¡£
      * @js NA
      * @lua NA
      */
@@ -246,8 +246,8 @@ public:
  * Please refer to glBlendFunc in OpenGL ES Manual
  * http://www.khronos.org/opengles/sdk/docs/man/xhtml/glBlendFunc.xml for more details.
  * @~chinese 
- * æŒ‡å®šglBlendFuncæ··åˆå‡½æ•°
- * è¯·å‚é˜…glBlendFuncåœ¨OpenGL ESæ‰‹å†Œ
+ * Ö¸¶¨glBlendFunc»ìºÏº¯Êı
+ * Çë²ÎÔÄglBlendFuncÔÚOpenGL ESÊÖ²á
  * http://www.khronos.org/opengles/sdk/docs/man/xhtml/glBlendFunc.xml for more details.
  */
 class CC_DLL BlendProtocol
@@ -260,12 +260,12 @@ public:
      * Sets the source blending function.
      *
      * @~chinese 
-     * è®¾ç½®æºæ··åˆå‡½æ•°ã€‚
+     * ÉèÖÃÔ´»ìºÏº¯Êı¡£
      * 
      * @param blendFunc @~english A structure with source and destination factor to specify pixel arithmetic, 
      *                  e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.
-     * @~chinese ç»“æ„ä¸æºå’Œç›®æ ‡å› ç´ æŒ‡å®šåƒç´ è¿ç®—,
-     * ä¾‹å¦‚GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.
+     * @~chinese ½á¹¹ÓëÔ´ºÍÄ¿±êÒòËØÖ¸¶¨ÏñËØÔËËã,
+     * ÀıÈçGL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.
      * @js NA
      * @lua NA
      */
@@ -276,10 +276,10 @@ public:
      * Returns the blending function that is currently being used.
      * 
      * @~chinese 
-     * è¿”å›å½“å‰æ­£åœ¨ä½¿ç”¨çš„æ··åˆå‡½æ•°ã€‚
+     * ·µ»Øµ±Ç°ÕıÔÚÊ¹ÓÃµÄ»ìºÏº¯Êı¡£
      * 
      * @return @~english A BlendFunc structure with source and destination factor which specified pixel arithmetic.
-     * @~chinese BlendFuncç»“æ„æŒ‡å®šæºå’Œç›®æ ‡å› ç´ åƒç´ è¿ç®—ã€‚
+     * @~chinese BlendFunc½á¹¹Ö¸¶¨Ô´ºÍÄ¿±êÒòËØÏñËØÔËËã¡£
      * @js NA
      * @lua NA
      */
@@ -296,13 +296,13 @@ public:
  *   src=GL_SRC_ALPHA dst= GL_ONE_MINUS_SRC_ALPHA
  * But you can change the blending function at any time.
  * @~chinese 
- * èŠ‚ç‚¹å¯¹è±¡ä½¿ç”¨Texture2Dæ˜¾ç¤ºå›¾åƒã€‚
- * çº¹ç†å¯ä»¥æ··åˆå‡½æ•°ã€‚
- * å¦‚çº¹ç†é€æ˜åº¦å·¦ä¹˜é»˜è®¤æ··åˆå‡½æ•°æ˜¯:
+ * ½Úµã¶ÔÏóÊ¹ÓÃTexture2DÏÔÊ¾Í¼Ïñ¡£
+ * ÎÆÀí¿ÉÒÔ»ìºÏº¯Êı¡£
+ * ÈçÎÆÀíÍ¸Ã÷¶È×ó³ËÄ¬ÈÏ»ìºÏº¯ÊıÊÇ:
  * src = GL_ONE dst = GL_ONE_MINUS_SRC_ALPHA
- * å…¶ä»–:
+ * ÆäËû:
  * src = GL_SRC_ALPHA dst = GL_ONE_MINUS_SRC_ALPHA
- * ä½ å¯ä»¥åœ¨ä»»ä½•æ—¶å€™æ”¹å˜æ··åˆå‡½æ•°ã€‚
+ * Äã¿ÉÒÔÔÚÈÎºÎÊ±ºò¸Ä±ä»ìºÏº¯Êı¡£
  */
 class CC_DLL TextureProtocol : public BlendProtocol
 {
@@ -314,10 +314,10 @@ public:
      * Returns the currently used texture
      *
      * @~chinese 
-     * è¿”å›å½“å‰ä½¿ç”¨çš„çº¹ç†
+     * ·µ»Øµ±Ç°Ê¹ÓÃµÄÎÆÀí
      * 
      * @return  @~english The texture that is currently being used.
-     * @~chinese ç°åœ¨æ­£åœ¨ä½¿ç”¨çš„çº¹ç†ã€‚
+     * @~chinese ÏÖÔÚÕıÔÚÊ¹ÓÃµÄÎÆÀí¡£
      * @js NA
      * @lua NA
      */
@@ -328,10 +328,10 @@ public:
      * Sets a new texture. It will be retained.
      *
      * @~chinese 
-     * è®¾ç½®ä¸€ä¸ªæ–°çš„çº¹ç†ã€‚
+     * ÉèÖÃÒ»¸öĞÂµÄÎÆÀí¡£
      * 
      * @param texture @~english A valid Texture2D object, which will be applied to this sprite object.
-     * @~chinese ä¸€ä¸ªæœ‰æ•ˆTexture2Då¯¹è±¡,å®ƒå°†è¢«åº”ç”¨åˆ°è¿™ä¸ªç²¾çµã€‚
+     * @~chinese Ò»¸öÓĞĞ§Texture2D¶ÔÏó,Ëü½«±»Ó¦ÓÃµ½Õâ¸ö¾«Áé¡£
      * @js NA
      * @lua NA
      */
@@ -342,7 +342,7 @@ public:
  * @~english
  * Common interface for Labels
  * @~chinese 
- * é€šç”¨æ¥å£çš„æ ‡ç­¾
+ * Í¨ÓÃ½Ó¿ÚµÄ±êÇ©
  */
 class CC_DLL LabelProtocol
 {
@@ -354,10 +354,10 @@ public:
      * Sets a new label using a string
      *
      * @~chinese 
-     * ä½¿ç”¨ä¸€ä¸ªå­—ç¬¦ä¸²è®¾ç½®ä¸€ä¸ªæ–°çš„Label
+     * Ê¹ÓÃÒ»¸ö×Ö·û´®ÉèÖÃÒ»¸öĞÂµÄLabel
      * 
      * @param label @~english A null terminated string
-     * @~chinese ä»¥ç©ºå­—ç¬¦ç»“å°¾çš„å­—ç¬¦ä¸²
+     * @~chinese ÒÔ¿Õ×Ö·û½áÎ²µÄ×Ö·û´®
      * @js NA
      * @lua NA
      */
@@ -368,10 +368,10 @@ public:
      * Returns the string that is currently being used in this label 
      *
      * @~chinese 
-     * è¿”å›å­—ç¬¦ä¸²ä¸­ç›®å‰ä½¿ç”¨çš„è¿™ä¸ªæ ‡ç­¾
+     * ·µ»Ø×Ö·û´®ÖĞÄ¿Ç°Ê¹ÓÃµÄÕâ¸ö±êÇ©
      * 
      * @return @~english The string that is currently being used in this label
-     * @~chinese è¿™ä¸ªLabelæ­£åœ¨ä½¿ç”¨çš„å­—ç¬¦ä¸²
+     * @~chinese Õâ¸öLabelÕıÔÚÊ¹ÓÃµÄ×Ö·û´®
      * @js NA
      * @lua NA
      */
@@ -382,7 +382,7 @@ public:
  * @~english
  * OpenGL projection protocol 
  * @~chinese 
- * OpenGLæŠ•å½±åè®®
+ * OpenGLÍ¶Ó°Ğ­Òé
  */
 class CC_DLL DirectorDelegate
 {
@@ -393,7 +393,7 @@ public:
      * @~english
      * Will be called by Director when the projection is updated, and "custom" projection is used
      * @~chinese 
-     * åœ¨DirectoræŠ•å½±æ—¶æ›´æ–°,å¹¶ä¸”ä½¿ç”¨â€œcustomâ€æŠ•å½±çš„æ–¹æ³•
+     * ÔÚDirectorÍ¶Ó°Ê±¸üĞÂ,²¢ÇÒÊ¹ÓÃ¡°custom¡±Í¶Ó°µÄ·½·¨
      * @js NA
      * @lua NA
      */

@@ -26,10 +26,14 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "Keyboard-winrt.h"
+#include "base/CCEventKeyboard.h"
+#include "CCGLViewImpl-winrt.h"
+#include "base/CCIMEDispatcher.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 
 using namespace cocos2d;
 using namespace Platform;
-using namespace Concurrency;
 using namespace Windows::System;
 using namespace Windows::System::Threading;
 using namespace Windows::UI::Core;
@@ -117,9 +121,9 @@ static keyCodeItem g_keyCodeStructArray [] = {
     { (int) VirtualKey::Left, EventKeyboard::KeyCode::KEY_LEFT_ARROW },
     { (int) VirtualKey::Down, EventKeyboard::KeyCode::KEY_DOWN_ARROW },
     { (int) VirtualKey::Up, EventKeyboard::KeyCode::KEY_UP_ARROW },
-    { VK_PRIOR, EventKeyboard::KeyCode::KEY_KP_PG_UP },
-    { VK_NEXT, EventKeyboard::KeyCode::KEY_KP_PG_DOWN },
-    { VK_HOME, EventKeyboard::KeyCode::KEY_KP_HOME },
+    { VK_PRIOR, EventKeyboard::KeyCode::KEY_PG_UP },
+    { VK_NEXT, EventKeyboard::KeyCode::KEY_PG_DOWN },
+    { VK_HOME, EventKeyboard::KeyCode::KEY_HOME },
     { VK_END, EventKeyboard::KeyCode::KEY_END },
     { VK_CAPITAL, EventKeyboard::KeyCode::KEY_CAPS_LOCK },
     { VK_SCROLL, EventKeyboard::KeyCode::KEY_SCROLL_LOCK },

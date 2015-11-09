@@ -56,28 +56,28 @@ NS_CC_BEGIN
 * From version 3.0, TextureCache will never to treated as a singleton, it will be owned by director.
 * All call by TextureCache::getInstance() should be replaced by Director::getInstance()->getTextureCache().
  * @~chinese 
- * ä»3.0ç‰ˆæœ¬å¼€å§‹ï¼ŒTextureCache å°†ä¸å†ä½œä¸ºä¸€ä¸ªå•ä¾‹ï¼Œå°†ç”± `Director` æ¥ç®¡ç†ã€‚
- * TextureCache::getInstance() çš„è°ƒç”¨éƒ½åº”è¯¥ç”± Director::getInstance()->getTextureCache() æ¥ä»£æ›¿ã€‚
+ * ´Ó3.0°æ±¾¿ªÊ¼£¬TextureCache ½«²»ÔÙ×÷ÎªÒ»¸öµ¥Àı£¬½«ÓÉ `Director` À´¹ÜÀí¡£
+ * TextureCache::getInstance() µÄµ÷ÓÃ¶¼Ó¦¸ÃÓÉ Director::getInstance()->getTextureCache() À´´úÌæ¡£
 */
 
 /** @brief @~english Singleton that handles the loading of textures.
 * Once the texture is loaded, the next time it will return.
 * A reference of the previously loaded texture reducing GPU & CPU memory.
- * @~chinese ç”¨äºå¤„ç†çº¹ç†åŠ è½½çš„å•ä¾‹ç±»ã€‚
- * ä¸€æ—¦ä¸€ä¸ªçº¹ç†è¢«åŠ è½½ï¼Œä¸‹æ¬¡ä½¿ç”¨æ—¶å°†ç›´æ¥è¿”å›è¯¥çº¹ç†ã€‚
- * å¼•ç”¨ä¹‹å‰åŠ è½½çš„çº¹ç†å¯ä»¥å‡å°‘ GPU ä¸ CPU çš„å†…å­˜æ¶ˆè€—ã€‚
+ * @~chinese ÓÃÓÚ´¦ÀíÎÆÀí¼ÓÔØµÄµ¥ÀıÀà¡£
+ * Ò»µ©Ò»¸öÎÆÀí±»¼ÓÔØ£¬ÏÂ´ÎÊ¹ÓÃÊ±½«Ö±½Ó·µ»Ø¸ÃÎÆÀí¡£
+ * ÒıÓÃÖ®Ç°¼ÓÔØµÄÎÆÀí¿ÉÒÔ¼õÉÙ GPU Óë CPU µÄÄÚ´æÏûºÄ¡£
 */
 class CC_DLL TextureCache : public Ref
 {
 public:
-    /** @~english Returns the shared instance of the cache.  @~chinese è¿”å› TextureCache çš„å®ä¾‹ã€‚*/
+    /** @~english Returns the shared instance of the cache.  @~chinese ·µ»Ø TextureCache µÄÊµÀı¡£*/
     CC_DEPRECATED_ATTRIBUTE static TextureCache * getInstance();
 
     /** @deprecated Use getInstance() instead. */
     CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache();
 
     /** @~english Purges the cache. It releases the retained instance.
-     * @~chinese æ¸…ç†ç¼“å­˜ã€‚å°†é‡Šæ”¾æ‰€æœ‰ retain çš„å®ä¾‹ã€‚
+     * @~chinese ÇåÀí»º´æ¡£½«ÊÍ·ÅËùÓĞ retain µÄÊµÀı¡£
      @since v0.99.0
      */
     CC_DEPRECATED_ATTRIBUTE static void destroyInstance();
@@ -88,9 +88,9 @@ public:
     /** @~english Reload all textures.
      * Should not call it, called by frame work.
      * Now the function do nothing, use VolatileTextureMgr::reloadAllTextures.
-     * @~chinese é‡æ–°åŠ è½½æ‰€æœ‰çš„çº¹ç†ã€‚
-     * ä¸è¦è°ƒç”¨æ­¤æ¥å£ï¼Œè¿™ä¸ªæ¥å£æ˜¯æä¾›ç»™å¼•æ“æ¡†æ¶è°ƒç”¨çš„ã€‚
-     * ç°åœ¨æ­¤æ¥å£ä»€ä¹ˆä¹Ÿæ²¡æœ‰åšï¼Œç›®å‰ä½¿ç”¨ VolatileTextureMgr:reloadAllTexturesã€‚
+     * @~chinese ÖØĞÂ¼ÓÔØËùÓĞµÄÎÆÀí¡£
+     * ²»Òªµ÷ÓÃ´Ë½Ó¿Ú£¬Õâ¸ö½Ó¿ÚÊÇÌá¹©¸øÒıÇæ¿ò¼Üµ÷ÓÃµÄ¡£
+     * ÏÖÔÚ´Ë½Ó¿ÚÊ²Ã´Ò²Ã»ÓĞ×ö£¬Ä¿Ç°Ê¹ÓÃ VolatileTextureMgr:reloadAllTextures¡£
      */
     CC_DEPRECATED_ATTRIBUTE static void reloadAllTextures();
 
@@ -117,12 +117,12 @@ public:
      * Object and it will return it. It will use the filename as a key to cache the Texture2D object.
      * Otherwise it will return a reference of a previously loaded image.
      * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr.
-     * @~chinese åŠ è½½æŒ‡å®šçš„çº¹ç†æ–‡ä»¶ï¼Œå¹¶è¿”å›ä¸€ä¸ª Texture2D å®ä¾‹ã€‚
-     * å¦‚æœæ–‡ä»¶ä¹‹å‰æœªåŠ è½½ï¼Œå°†åˆ›å»ºä¸€ä¸ªæ–°çš„ Texture2D å®ä¾‹ï¼Œå¹¶è¿”å›è¿™ä¸ªå®ä¾‹ã€‚ä½¿ç”¨æ–‡ä»¶ååšä¸º key å°†çº¹ç†ç¼“å­˜ã€‚
-     * å¦åˆ™ï¼Œå°†è¿”å›ä¸€ä¸ªä¹‹å‰åŠ è½½çš„çº¹ç†å®ä¾‹ã€‚
-     * æ”¯æŒçš„æ–‡ä»¶æ‰©å±•åï¼š.pngï¼Œ.bmpï¼Œ.tiffï¼Œ.jpegï¼Œ.pvrã€‚
+     * @~chinese ¼ÓÔØÖ¸¶¨µÄÎÆÀíÎÄ¼ş£¬²¢·µ»ØÒ»¸ö Texture2D ÊµÀı¡£
+     * Èç¹ûÎÄ¼şÖ®Ç°Î´¼ÓÔØ£¬½«´´½¨Ò»¸öĞÂµÄ Texture2D ÊµÀı£¬²¢·µ»ØÕâ¸öÊµÀı¡£Ê¹ÓÃÎÄ¼şÃû×öÎª key ½«ÎÆÀí»º´æ¡£
+     * ·ñÔò£¬½«·µ»ØÒ»¸öÖ®Ç°¼ÓÔØµÄÎÆÀíÊµÀı¡£
+     * Ö§³ÖµÄÎÄ¼şÀ©Õ¹Ãû£º.png£¬.bmp£¬.tiff£¬.jpeg£¬.pvr¡£
      * @param filepath @~english The path of the image file.
-     * @~chinese å›¾ç‰‡æ–‡ä»¶çš„è·¯å¾„ã€‚
+     * @~chinese Í¼Æ¬ÎÄ¼şµÄÂ·¾¶¡£
      */
     Texture2D* addImage(const std::string &filepath);
 
@@ -131,15 +131,15 @@ public:
      * Otherwise it will load a texture in a new thread, and when the image is loaded, the callback will be called with the Texture2D as a parameter.
      * The callback will be called from the main thread, so it is safe to create any cocos2d object from the callback.
      * Supported image extensions: .png, .jpg
-     * @~chinese å¼‚æ­¥åŠ è½½æŒ‡å®šçš„çº¹ç†æ–‡ä»¶ã€‚
-     * å¦‚æœæ–‡ä»¶å›¾åƒå…ˆå‰æ²¡æœ‰è¢«åŠ è½½,å®ƒå°†åˆ›å»ºä¸€ä¸ªæ–°çš„ Texture2D å¯¹è±¡ã€‚
-     * å¦åˆ™å®ƒå°†ä¼šåœ¨ä¸€ä¸ªæ–°çº¿ç¨‹åŠ è½½çº¹ç†ï¼ŒåŠ è½½å®Œæˆæ—¶ï¼ŒTexture2D å¯¹è±¡ä¼šä½œä¸ºå‚æ•°è°ƒç”¨ callback å›è°ƒå‡½æ•°ã€‚
-     * å›è°ƒå‡½æ•°å°†ä»ä¸»çº¿ç¨‹è°ƒç”¨ï¼Œæ‰€ä»¥åœ¨å›è°ƒå‡½æ•°ä¸­å¯ä»¥åˆ›å»ºä»»ä½• cocos2d å¯¹è±¡ã€‚
-     * æ”¯æŒå›¾åƒæ‰©å±•ï¼š.pngï¼Œ.jpg
+     * @~chinese Òì²½¼ÓÔØÖ¸¶¨µÄÎÆÀíÎÄ¼ş¡£
+     * Èç¹ûÎÄ¼şÍ¼ÏñÏÈÇ°Ã»ÓĞ±»¼ÓÔØ,Ëü½«´´½¨Ò»¸öĞÂµÄ Texture2D ¶ÔÏó¡£
+     * ·ñÔòËü½«»áÔÚÒ»¸öĞÂÏß³Ì¼ÓÔØÎÆÀí£¬¼ÓÔØÍê³ÉÊ±£¬Texture2D ¶ÔÏó»á×÷Îª²ÎÊıµ÷ÓÃ callback »Øµ÷º¯Êı¡£
+     * »Øµ÷º¯Êı½«´ÓÖ÷Ïß³Ìµ÷ÓÃ£¬ËùÒÔÔÚ»Øµ÷º¯ÊıÖĞ¿ÉÒÔ´´½¨ÈÎºÎ cocos2d ¶ÔÏó¡£
+     * Ö§³ÖÍ¼ÏñÀ©Õ¹£º.png£¬.jpg
      * @param filepath @~english The path of the image file.
-     * @~chinese å›¾ç‰‡æ–‡ä»¶çš„è·¯å¾„ã€‚
+     * @~chinese Í¼Æ¬ÎÄ¼şµÄÂ·¾¶¡£
      * @param callback @~english A callback function would be invoked after the image is loaded.
-     * @~chinese å›¾åƒåŠ è½½å®Œæˆåè¢«è°ƒç”¨çš„å›è°ƒå‡½æ•°ã€‚
+     * @~chinese Í¼Ïñ¼ÓÔØÍê³Éºó±»µ÷ÓÃµÄ»Øµ÷º¯Êı¡£
      * @since v0.8
      */
     virtual void addImageAsync(const std::string &filepath, const std::function<void(Texture2D*)>& callback);
@@ -147,16 +147,16 @@ public:
     /** @~english Unbind a specified bound image asynchronous callback.
      * In the case an object who was bound to an image asynchronous callback was destroyed before the callback is invoked,
      * the object always need to unbind this callback manually.
-     * @~chinese è§£é™¤å¼‚æ­¥åŠ è½½çº¹ç†æ–‡ä»¶æ—¶ç»‘å®šçš„å›è°ƒå‡½æ•°ã€‚
-     * å¦‚æœå¼‚æ­¥åŠ è½½å›è°ƒå‡½æ•°æ‰€åœ¨å¯¹è±¡ï¼Œåœ¨å›è°ƒå‡½æ•°è¢«è°ƒç”¨ä¹‹å‰è¢«ææ„äº†ï¼Œéœ€è¦è°ƒç”¨æ­¤æ–¹æ³•æ‰‹åŠ¨è§£é™¤å›è°ƒå‡½æ•°çš„ç»‘å®šã€‚
+     * @~chinese ½â³ıÒì²½¼ÓÔØÎÆÀíÎÄ¼şÊ±°ó¶¨µÄ»Øµ÷º¯Êı¡£
+     * Èç¹ûÒì²½¼ÓÔØ»Øµ÷º¯ÊıËùÔÚ¶ÔÏó£¬ÔÚ»Øµ÷º¯Êı±»µ÷ÓÃÖ®Ç°±»Îö¹¹ÁË£¬ĞèÒªµ÷ÓÃ´Ë·½·¨ÊÖ¶¯½â³ı»Øµ÷º¯ÊıµÄ°ó¶¨¡£
      * @param filename @~english It's the related/absolute path of the file image.
-     * @~chinese å¼‚æ­¥åŠ è½½çš„çº¹ç†æ–‡ä»¶çš„ç»å¯¹è·¯å¾„æˆ–ç›¸å¯¹è·¯å¾„ã€‚
+     * @~chinese Òì²½¼ÓÔØµÄÎÆÀíÎÄ¼şµÄ¾ø¶ÔÂ·¾¶»òÏà¶ÔÂ·¾¶¡£
      * @since v3.1
      */
     virtual void unbindImageAsync(const std::string &filename);
     
     /** @~english Unbind all bound image asynchronous load callbacks.
-     * @~chinese è§£é™¤æ‰€æœ‰å¼‚æ­¥åŠ è½½çº¹ç†æ–‡ä»¶æ—¶ç»‘å®šçš„å›è°ƒå‡½æ•°ã€‚
+     * @~chinese ½â³ıËùÓĞÒì²½¼ÓÔØÎÆÀíÎÄ¼şÊ±°ó¶¨µÄ»Øµ÷º¯Êı¡£
      * @since v3.1
      */
     virtual void unbindAllImageAsync();
@@ -164,26 +164,26 @@ public:
     /** @~english Returns a Texture2D object given an Image.
      * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
      * Otherwise it will return a reference of a previously loaded image.
-     * @~chinese è¿”å›ä¸€ä¸ªä½¿ç”¨æŒ‡å®šçš„ `Image` å¯¹è±¡åˆ›å»ºçš„ `Texture2D` å¯¹è±¡ã€‚
-     * å¦‚æœä¹‹å‰æ²¡æœ‰åŠ è½½è¯¥ `Image` å¯¹è±¡çš„çº¹ç†ï¼Œä¼šåˆ›å»ºä¸€ä¸ªæ–°çš„ `Texture2D` å¯¹è±¡ï¼Œå¹¶è¿”å›è¯¥å¯¹è±¡ã€‚
-     * å¦åˆ™ï¼Œè¿”å›ä¸€ä¸ªä¹‹å‰åŠ è½½è¿‡çš„çº¹ç†å¯¹è±¡çš„å¼•ç”¨ã€‚
-     * @param image @~english The image to be added. @~chinese è¦æ·»åŠ çš„Imageå¯¹è±¡
+     * @~chinese ·µ»ØÒ»¸öÊ¹ÓÃÖ¸¶¨µÄ `Image` ¶ÔÏó´´½¨µÄ `Texture2D` ¶ÔÏó¡£
+     * Èç¹ûÖ®Ç°Ã»ÓĞ¼ÓÔØ¸Ã `Image` ¶ÔÏóµÄÎÆÀí£¬»á´´½¨Ò»¸öĞÂµÄ `Texture2D` ¶ÔÏó£¬²¢·µ»Ø¸Ã¶ÔÏó¡£
+     * ·ñÔò£¬·µ»ØÒ»¸öÖ®Ç°¼ÓÔØ¹ıµÄÎÆÀí¶ÔÏóµÄÒıÓÃ¡£
+     * @param image @~english The image to be added. @~chinese ÒªÌí¼ÓµÄImage¶ÔÏó
      * @param key @~english The "key" parameter will be used as the "key" for the cache.
      * If "key" is nil, then a new texture will be created each time.
-     * @~chinese key å‚æ•°å°†ä½œä¸ºç¼“å­˜ä¸­çš„å…³é”®å­—ä»¥ä¾¿ä¹‹åè¿›è¡ŒæŸ¥æ‰¾ã€‚
-     * å¦‚æœ key å€¼ä¸º nullptrï¼Œé‚£ä¹ˆç›´æ¥åˆ›å»ºä¸€ä¸ªæ–°çš„ `Texture2D` å¯¹è±¡ã€‚
+     * @~chinese key ²ÎÊı½«×÷Îª»º´æÖĞµÄ¹Ø¼ü×ÖÒÔ±ãÖ®ºó½øĞĞ²éÕÒ¡£
+     * Èç¹û key ÖµÎª nullptr£¬ÄÇÃ´Ö±½Ó´´½¨Ò»¸öĞÂµÄ `Texture2D` ¶ÔÏó¡£
      * @return @~english A texture object using specified `Image`.
-     * @~chinese ä½¿ç”¨æŒ‡å®š `Image` å¯¹è±¡çš„çº¹ç†å¯¹è±¡ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨ `Image` ¶ÔÏóµÄÎÆÀí¶ÔÏó¡£
      */
     Texture2D* addImage(Image *image, const std::string &key);
     CC_DEPRECATED_ATTRIBUTE Texture2D* addUIImage(Image *image, const std::string& key) { return addImage(image,key); }
 
     /** @~english Returns an already created texture. Returns nil if the texture doesn't exist.
-     * @~chinese è·å–ä¸€ä¸ªå·²åˆ›å»ºçš„çº¹ç†ã€‚å¦‚æœçº¹ç†ä¸å­˜åœ¨è¿”å›ç©ºæŒ‡é’ˆã€‚
+     * @~chinese »ñÈ¡Ò»¸öÒÑ´´½¨µÄÎÆÀí¡£Èç¹ûÎÆÀí²»´æÔÚ·µ»Ø¿ÕÖ¸Õë¡£
      * @param key @~english It's the related/absolute path of the file image.
-     * @~chinese å›¾ç‰‡æ–‡ä»¶çš„ç»å¯¹è·¯å¾„æˆ–ç›¸å¯¹è·¯å¾„ã€‚
+     * @~chinese Í¼Æ¬ÎÄ¼şµÄ¾ø¶ÔÂ·¾¶»òÏà¶ÔÂ·¾¶¡£
      * @return @~english A texture object found by the key.
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„ key æŸ¥æ‰¾åˆ°çš„çº¹ç†å¯¹è±¡ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄ key ²éÕÒµ½µÄÎÆÀí¶ÔÏó¡£
      * @since v0.99.5
      */
     Texture2D* getTextureForKey(const std::string& key) const;
@@ -192,13 +192,13 @@ public:
     /** @~english Reload texture from the image file.
      * If the file image hasn't loaded before, load it.
      * Otherwise the texture will be reloaded from the file image.
-     * @~chinese é‡æ–°åŠ è½½æŒ‡å®šçš„å›¾ç‰‡æ–‡ä»¶ã€‚
-     * å¦‚æœæ–‡ä»¶å›¾ç‰‡ä¹‹å‰æ²¡æœ‰åŠ è½½ï¼Œé‚£ä¹ˆåŠ è½½è¯¥å›¾ç‰‡æ–‡ä»¶ã€‚
-     * å¦åˆ™å°†é‡æ–°åŠ è½½è¯¥å›¾ç‰‡æ–‡ä»¶ã€‚
+     * @~chinese ÖØĞÂ¼ÓÔØÖ¸¶¨µÄÍ¼Æ¬ÎÄ¼ş¡£
+     * Èç¹ûÎÄ¼şÍ¼Æ¬Ö®Ç°Ã»ÓĞ¼ÓÔØ£¬ÄÇÃ´¼ÓÔØ¸ÃÍ¼Æ¬ÎÄ¼ş¡£
+     * ·ñÔò½«ÖØĞÂ¼ÓÔØ¸ÃÍ¼Æ¬ÎÄ¼ş¡£
      * @param fileName @~english It's the related/absolute path of the file image.
-     * @~chinese å›¾ç‰‡æ–‡ä»¶çš„ç»å¯¹è·¯å¾„æˆ–ç›¸å¯¹è·¯å¾„ã€‚
+     * @~chinese Í¼Æ¬ÎÄ¼şµÄ¾ø¶ÔÂ·¾¶»òÏà¶ÔÂ·¾¶¡£
      * @return @~english True if the reloading is succeed, otherwise return false.
-     * @~chinese å¦‚æœé‡æ–°é‡æ–°åŠ è½½æˆåŠŸè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹ûÖØĞÂÖØĞÂ¼ÓÔØ³É¹¦·µ»Ø true£»·ñÔò·µ»Ø false¡£
      */
     bool reloadTexture(const std::string& fileName);
 
@@ -207,35 +207,35 @@ public:
      * In the short term: it will free some resources preventing your app from being killed.
      * In the medium term: it will allocate more resources.
      * In the long term: it will be the same.
-     * @~chinese æ¸…ç†æ‰€æœ‰ç¼“å­˜çš„çº¹ç†å¯¹è±¡ã€‚
-     * å½“æ”¶åˆ°å†…å­˜è­¦å‘Šæ—¶ï¼Œå¯ä»¥è°ƒç”¨è¿™ä¸ªæ–¹æ³•å¦‚å›æ”¶å†…å­˜ã€‚
-     * åœ¨çŸ­æœŸå†…ï¼šé‡Šæ”¾éƒ¨åˆ†å†…å­˜èµ„æºä»¥é˜²æ­¢ç¨‹åºè¢«ç»ˆæ­¢ã€‚
-     * åœ¨ä¸­æœŸï¼šä¼šåˆ†é…æ›´å¤šçš„èµ„æºã€‚
-     * ä»é•¿è¿œæ¥çœ‹ï¼šæ²¡æœ‰ä»€ä¹ˆåŒºåˆ«ã€‚
+     * @~chinese ÇåÀíËùÓĞ»º´æµÄÎÆÀí¶ÔÏó¡£
+     * µ±ÊÕµ½ÄÚ´æ¾¯¸æÊ±£¬¿ÉÒÔµ÷ÓÃÕâ¸ö·½·¨Èç»ØÊÕÄÚ´æ¡£
+     * ÔÚ¶ÌÆÚÄÚ£ºÊÍ·Å²¿·ÖÄÚ´æ×ÊÔ´ÒÔ·ÀÖ¹³ÌĞò±»ÖÕÖ¹¡£
+     * ÔÚÖĞÆÚ£º»á·ÖÅä¸ü¶àµÄ×ÊÔ´¡£
+     * ´Ó³¤Ô¶À´¿´£ºÃ»ÓĞÊ²Ã´Çø±ğ¡£
      */
     void removeAllTextures();
 
     /** @~english Removes unused textures.
      * Textures that have a retain count of 1 will be deleted.
      * It is convenient to call this method after when starting a new Scene.
-     * @~chinese åˆ é™¤æœªä½¿ç”¨çš„çº¹ç†ã€‚
-     * å¼•ç”¨è®¡æ•°ä¸º 1 çš„çº¹ç†å¯¹è±¡å°†è¢«åˆ é™¤ã€‚
-     * åœ¨è¿›å…¥æ–°çš„åœºæ™¯æ—¶ï¼Œå¯ä»¥è°ƒç”¨æ­¤æ–¹æ³•æ–¹ä¾¿çš„åˆ é™¤æœªä½¿ç”¨çš„çº¹ç†ã€‚
+     * @~chinese É¾³ıÎ´Ê¹ÓÃµÄÎÆÀí¡£
+     * ÒıÓÃ¼ÆÊıÎª 1 µÄÎÆÀí¶ÔÏó½«±»É¾³ı¡£
+     * ÔÚ½øÈëĞÂµÄ³¡¾°Ê±£¬¿ÉÒÔµ÷ÓÃ´Ë·½·¨·½±ãµÄÉ¾³ıÎ´Ê¹ÓÃµÄÎÆÀí¡£
      * @since v0.8
      */
     void removeUnusedTextures();
 
     /** @~english Deletes a texture from the cache given a texture.
-     * @~chinese ä»ç¼“å­˜ä¸­åˆ é™¤æŒ‡å®šçš„çº¹ç†å¯¹è±¡ã€‚
+     * @~chinese ´Ó»º´æÖĞÉ¾³ıÖ¸¶¨µÄÎÆÀí¶ÔÏó¡£
      * @param texture @~english The texture object will be removed.
-     * @~chinese éœ€è¦åˆ é™¤çš„çº¹ç†å¯¹è±¡ã€‚
+     * @~chinese ĞèÒªÉ¾³ıµÄÎÆÀí¶ÔÏó¡£
      */
     void removeTexture(Texture2D* texture);
 
     /** @~english Deletes a texture from the cache given a its key name.
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„ key åœ¨ç¼“å­˜ä¸­æŸ¥æ‰¾å¹¶åˆ é™¤çº¹ç†ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄ key ÔÚ»º´æÖĞ²éÕÒ²¢É¾³ıÎÆÀí¡£
      * @param key @~english It's the related/absolute path of the file image.
-     * @~chinese å›¾ç‰‡æ–‡ä»¶çš„ç»å¯¹è·¯å¾„æˆ–ç›¸å¯¹è·¯å¾„ã€‚
+     * @~chinese Í¼Æ¬ÎÄ¼şµÄ¾ø¶ÔÂ·¾¶»òÏà¶ÔÂ·¾¶¡£
      * @since v0.99.4
      */
     void removeTextureForKey(const std::string &key);
@@ -243,8 +243,8 @@ public:
     /** @~english Output to CCLOG the current contents of this TextureCache.
      * This will attempt to calculate the size of each texture, and the total texture memory in use.
      *
-     * @~chinese ä½¿ç”¨ CCLOG è¾“å‡º TextureCache çš„å½“å‰ä¿¡æ¯ã€‚
-     * è¿™å°†å°è¯•è®¡ç®—æ¯ä¸ªçº¹ç†çš„å¤§å°å’Œæ€»çš„çº¹ç†å†…å­˜ä½¿ç”¨ã€‚
+     * @~chinese Ê¹ÓÃ CCLOG Êä³ö TextureCache µÄµ±Ç°ĞÅÏ¢¡£
+     * Õâ½«³¢ÊÔ¼ÆËãÃ¿¸öÎÆÀíµÄ´óĞ¡ºÍ×ÜµÄÎÆÀíÄÚ´æÊ¹ÓÃ¡£
      * 
      * @since v1.0
      */
@@ -252,8 +252,8 @@ public:
 
     /**@~english Wait for texture cache to quit befor destroy instance.
      * Called by director, please do not called outside.
-     * @~chinese åœ¨é”€æ¯å¯¹è±¡ä¹‹å‰ç­‰å¾…ç¼“å­˜é€€å‡ºã€‚
-     * è¢« Director è°ƒç”¨çš„æ–¹æ³•ï¼Œè¯·ä¸è¦åœ¨å¼•æ“å¤–è°ƒç”¨ã€‚
+     * @~chinese ÔÚÏú»Ù¶ÔÏóÖ®Ç°µÈ´ı»º´æÍË³ö¡£
+     * ±» Director µ÷ÓÃµÄ·½·¨£¬Çë²»ÒªÔÚÒıÇæÍâµ÷ÓÃ¡£
      */
     void waitForQuit();
 
@@ -261,14 +261,14 @@ public:
      * Get the file path of the texture
      *
      * @~chinese 
-     * è·å–çº¹ç†å¯¹è±¡å¯¹åº”çš„æ–‡ä»¶è·¯å¾„ã€‚
+     * »ñÈ¡ÎÆÀí¶ÔÏó¶ÔÓ¦µÄÎÄ¼şÂ·¾¶¡£
      * 
      * @param texture @~english A Texture2D object pointer.
      *
-     * @~chinese `Texture2D` å¯¹è±¡æŒ‡é’ˆã€‚
+     * @~chinese `Texture2D` ¶ÔÏóÖ¸Õë¡£
      * 
      * @return @~english The full path of the file.
-     * @~chinese å¯¹åº”æ–‡ä»¶çš„å®Œæ•´è·¯å¾„ã€‚
+     * @~chinese ¶ÔÓ¦ÎÄ¼şµÄÍêÕûÂ·¾¶¡£
      */
     const std::string getTextureFilePath(Texture2D* texture)const;
 

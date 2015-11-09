@@ -60,14 +60,14 @@ public:
     //The maximum number of simultaneous audio instance.
     unsigned int maxInstances;
     
-    /* @~english Minimum delay in between sounds  @~chinese æœ€å°å£°éŸ³ä¹‹é—´çš„å»¶è¿Ÿ*/
+    /* @~english Minimum delay in between sounds  @~chinese ×îĞ¡ÉùÒôÖ®¼äµÄÑÓ³Ù*/
     double minDelay;
     
     /**@~english
-     * Defautl constructor
+     * Default constructor
      *
      * @~chinese 
-     * é»˜è®¤æ„é€ å‡½æ•°
+     * Ä¬ÈÏ¹¹Ôìº¯Êı
      * 
      * @lua new
      */
@@ -86,16 +86,16 @@ class AudioEngineImpl;
  * 
  * @brief @~english Offers a interface to play audio.
  *
- * @~chinese æä¾›äº†ä¸€ä¸ªéŸ³é¢‘æ’­æ”¾æ¥å£ã€‚
+ * @~chinese Ìá¹©ÁËÒ»¸öÒôÆµ²¥·Å½Ó¿Ú¡£
  * 
  * @note @~english Make sure to call AudioEngine::end() when the audio engine is not needed anymore to release resources.
- * @~chinese å½“éŸ³é¢‘å¼•æ“ä¸å†éœ€è¦æ—¶ç¡®ä¿è°ƒç”¨AudioEngine::end()ä»¥é‡Šæ”¾èµ„æºã€‚
+ * @~chinese µ±ÒôÆµÒıÇæ²»ÔÙĞèÒªÊ±È·±£µ÷ÓÃAudioEngine::end()ÒÔÊÍ·Å×ÊÔ´¡£
  * @js NA
  */
 class EXPORT_DLL AudioEngine
 {
 public:
-    /** @~english AudioState enum,all possible states of an audio instance. @~chinese éŸ³é¢‘çŠ¶æ€æšä¸¾,éŸ³é¢‘çš„æ‰€æœ‰å¯èƒ½çŠ¶æ€ã€‚*/
+    /** @~english AudioState enum,all possible states of an audio instance. @~chinese ÒôÆµ×´Ì¬Ã¶¾Ù,ÒôÆµµÄËùÓĞ¿ÉÄÜ×´Ì¬¡£*/
     enum class AudioState
     {
         ERROR  = -1,
@@ -114,10 +114,10 @@ public:
      * Release objects relating to AudioEngine.
      *
      * @~chinese 
-     * é‡Šæ”¾éŸ³é¢‘å¼•æ“çš„ç›¸å…³å¯¹è±¡.
+     * ÊÍ·ÅÒôÆµÒıÇæµÄÏà¹Ø¶ÔÏó.
      * 
      * @warning @~english It must be called before the application exit.
-     * @~chinese åœ¨åº”ç”¨ç¨‹åºé€€å‡ºä¹‹å‰å¿…é¡»è¦è°ƒç”¨å®ƒã€‚
+     * @~chinese ÔÚÓ¦ÓÃ³ÌĞòÍË³öÖ®Ç°±ØĞëÒªµ÷ÓÃËü¡£
      */
     static void end();
     
@@ -125,10 +125,10 @@ public:
      * Gets the default profile of audio instances.
      *
      * @~chinese 
-     * å¾—åˆ°éŸ³é¢‘çš„é»˜è®¤çš„é…ç½®ã€‚
+     * µÃµ½ÒôÆµµÄÄ¬ÈÏµÄÅäÖÃ¡£
      * 
      * @return @~english The default profile of audio instances.
-     * @~chinese éŸ³é¢‘çš„é»˜è®¤çš„é…ç½®ã€‚
+     * @~chinese ÒôÆµµÄÄ¬ÈÏµÄÅäÖÃ¡£
      */
     static AudioProfile* getDefaultProfile();
     
@@ -139,16 +139,16 @@ public:
      * Play 2d sound.
      * 
      * @param filePath @~english The path of an audio file.
-     * @~chinese ä¸€ä¸ªéŸ³é¢‘æ–‡ä»¶çš„è·¯å¾„ã€‚
+     * @~chinese Ò»¸öÒôÆµÎÄ¼şµÄÂ·¾¶¡£
      * @param loop @~english Whether audio instance loop or not.
-     * @~chinese éŸ³é¢‘æ˜¯å¦å¾ªç¯æ’­æ”¾ã€‚
+     * @~chinese ÒôÆµÊÇ·ñÑ­»·²¥·Å¡£
      * @param volume @~english Volume value (range from 0.0 to 1.0).
-     * @~chinese éŸ³é‡å€¼(èŒƒå›´ä»0.0åˆ°1.0)ã€‚
+     * @~chinese ÒôÁ¿Öµ(·¶Î§´Ó0.0µ½1.0)¡£
      * @param profile @~english A profile for audio instance. When profile is not specified, default profile will be used.
-     * @~chinese éŸ³é¢‘çš„ä¸€ä¸ªé…ç½®æ–‡ä»¶ã€‚å½“æ²¡æœ‰æŒ‡å®šé…ç½®æ–‡ä»¶,å°†ä½¿ç”¨é»˜è®¤çš„é…ç½®ã€‚
+     * @~chinese ÒôÆµµÄÒ»¸öÅäÖÃÎÄ¼ş¡£µ±Ã»ÓĞÖ¸¶¨ÅäÖÃÎÄ¼ş,½«Ê¹ÓÃÄ¬ÈÏµÄÅäÖÃ¡£
      * @return @~english An audio ID. It allows you to dynamically change the behavior of an audio instance on the fly.
      *
-     * @~chinese ä¸€ä¸ªéŸ³é¢‘IDã€‚å®ƒå…è®¸æ‚¨åŠ¨æ€åœ°æ”¹å˜ä¸€ä¸ªéŸ³é¢‘å®ä¾‹çš„è¡Œä¸ºã€‚
+     * @~chinese Ò»¸öÒôÆµID¡£ËüÔÊĞíÄú¶¯Ì¬µØ¸Ä±äÒ»¸öÒôÆµÊµÀıµÄĞĞÎª¡£
      * 
      * @see `AudioProfile`
      */
@@ -158,12 +158,12 @@ public:
      * Sets whether an audio instance loop or not.
      *
      * @~chinese 
-     * è®¾ç½®ä¸€ä¸ªéŸ³é¢‘å®ä¾‹æ˜¯å¦å¾ªç¯æ’­æ”¾ã€‚
+     * ÉèÖÃÒ»¸öÒôÆµÊµÀıÊÇ·ñÑ­»·²¥·Å¡£
      * 
      * @param audioID @~english An audioID returned by the play2d function.
-     * @~chinese ä¸€ä¸ªplay2då‡½æ•°è¿”å›çš„éŸ³é¢‘IDã€‚
+     * @~chinese Ò»¸öplay2dº¯Êı·µ»ØµÄÒôÆµID¡£
      * @param loop @~english Whether audio instance loop or not.
-     * @~chinese æ˜¯å¦å¾ªç¯æ’­æ”¾ã€‚
+     * @~chinese ÊÇ·ñÑ­»·²¥·Å¡£
      */
     static void setLoop(int audioID, bool loop);
 
@@ -171,12 +171,12 @@ public:
      * Checks whether an audio instance is loop.
      *
      * @~chinese 
-     * æ£€æŸ¥ä¸€ä¸ªéŸ³é¢‘å®ä¾‹æ˜¯å¦å¾ªç¯æ’­æ”¾ã€‚
+     * ¼ì²éÒ»¸öÒôÆµÊµÀıÊÇ·ñÑ­»·²¥·Å¡£
      * 
      * @param audioID @~english An audioID returned by the play2d function.
-     * @~chinese ä¸€ä¸ªplay2då‡½æ•°è¿”å›çš„éŸ³é¢‘IDã€‚
+     * @~chinese Ò»¸öplay2dº¯Êı·µ»ØµÄÒôÆµID¡£
      * @return @~english Whether or not an audio instance is loop.
-     * @~chinese æ˜¯å¦å¾ªç¯æ’­æ”¾ã€‚
+     * @~chinese ÊÇ·ñÑ­»·²¥·Å¡£
      */
     static bool isLoop(int audioID);
 
@@ -184,12 +184,12 @@ public:
      * Sets volume for an audio instance.
      *
      * @~chinese 
-     * è®¾ç½®ä¸€ä¸ªéŸ³é¢‘å®ä¾‹çš„éŸ³é‡å¤§å°ã€‚
+     * ÉèÖÃÒ»¸öÒôÆµÊµÀıµÄÒôÁ¿´óĞ¡¡£
      * 
      * @param audioID @~english An audioID returned by the play2d function.
-     * @~chinese ä¸€ä¸ªplay2då‡½æ•°è¿”å›çš„éŸ³é¢‘IDã€‚
+     * @~chinese Ò»¸öplay2dº¯Êı·µ»ØµÄÒôÆµID¡£
      * @param volume @~english Volume value (range from 0.0 to 1.0).
-     * @~chinese éŸ³é‡å€¼(èŒƒå›´ä»0.0åˆ°1.0)ã€‚
+     * @~chinese ÒôÁ¿Öµ(·¶Î§´Ó0.0µ½1.0)¡£
      */
     static void setVolume(int audioID, float volume);
 
@@ -197,12 +197,12 @@ public:
      * Gets the volume value of an audio instance.
      *
      * @~chinese 
-     * è¿”å›ä¸€ä¸ªéŸ³é¢‘å®ä¾‹çš„éŸ³é‡å€¼ã€‚
+     * ·µ»ØÒ»¸öÒôÆµÊµÀıµÄÒôÁ¿Öµ¡£
      * 
      * @param audioID @~english An audioID returned by the play2d function.
-     * @~chinese ä¸€ä¸ªplay2då‡½æ•°è¿”å›çš„éŸ³é¢‘IDã€‚
+     * @~chinese Ò»¸öplay2dº¯Êı·µ»ØµÄÒôÆµID¡£
      * @return @~english Volume value (range from 0.0 to 1.0).
-     * @~chinese éŸ³é‡å€¼(èŒƒå›´ä»0.0åˆ°1.0)ã€‚
+     * @~chinese ÒôÁ¿Öµ(·¶Î§´Ó0.0µ½1.0)¡£
      */
     static float getVolume(int audioID);
 
@@ -210,54 +210,54 @@ public:
      * Pause an audio instance.
      *
      * @~chinese 
-     * æš‚åœä¸€ä¸ªéŸ³é¢‘å®ä¾‹ã€‚
+     * ÔİÍ£Ò»¸öÒôÆµÊµÀı¡£
      * 
      * @param audioID @~english An audioID returned by the play2d function.
-     * @~chinese ä¸€ä¸ªplay2då‡½æ•°è¿”å›çš„éŸ³é¢‘IDã€‚
+     * @~chinese Ò»¸öplay2dº¯Êı·µ»ØµÄÒôÆµID¡£
      */
     static void pause(int audioID);
 
-    /** @~english Pause all playing audio instances.  @~chinese æš‚åœæ‰€æœ‰æ­£åœ¨æ’­æ”¾çš„éŸ³é¢‘å®ä¾‹ã€‚ */
+    /** @~english Pause all playing audio instances.  @~chinese ÔİÍ£ËùÓĞÕıÔÚ²¥·ÅµÄÒôÆµÊµÀı¡£ */
     static void pauseAll();
 
     /** @~english
      * Resume an audio instance.
      *
      * @~chinese 
-     * æ¢å¤ä¸€ä¸ªå·²æš‚åœçš„éŸ³é¢‘å®ä¾‹ã€‚
+     * »Ö¸´Ò»¸öÒÑÔİÍ£µÄÒôÆµÊµÀı¡£
      * 
      * @param audioID @~english An audioID returned by the play2d function.
-     * @~chinese ä¸€ä¸ªplay2då‡½æ•°è¿”å›çš„éŸ³é¢‘IDã€‚
+     * @~chinese Ò»¸öplay2dº¯Êı·µ»ØµÄÒôÆµID¡£
      */
     static void resume(int audioID);
 
-    /** @~english Resume all suspended audio instances.  @~chinese æ¢å¤æ‰€æœ‰æš‚åœéŸ³é¢‘å®ä¾‹ã€‚*/
+    /** @~english Resume all suspended audio instances.  @~chinese »Ö¸´ËùÓĞÔİÍ£ÒôÆµÊµÀı¡£*/
     static void resumeAll();
 
     /** @~english
      * Stop an audio instance.
      *
      * @~chinese 
-     * åœæ­¢ä¸€ä¸ªéŸ³é¢‘å®ä¾‹ã€‚
+     * Í£Ö¹Ò»¸öÒôÆµÊµÀı¡£
      * 
      * @param audioID @~english An audioID returned by the play2d function.
-     * @~chinese ä¸€ä¸ªplay2då‡½æ•°è¿”å›çš„éŸ³é¢‘IDã€‚
+     * @~chinese Ò»¸öplay2dº¯Êı·µ»ØµÄÒôÆµID¡£
      */
     static void stop(int audioID);
 
-    /** @~english Stop all audio instances.  @~chinese åœæ­¢æ‰€æœ‰éŸ³é¢‘å®ä¾‹ã€‚*/
+    /** @~english Stop all audio instances.  @~chinese Í£Ö¹ËùÓĞÒôÆµÊµÀı¡£*/
     static void stopAll();
 
     /**@~english
      * Sets the current playback position of an audio instance.
      *
      * @~chinese 
-     * è®¾ç½®ä¸€ä¸ªéŸ³é¢‘å®ä¾‹çš„å½“å‰æ’­æ”¾ä½ç½®ã€‚
+     * ÉèÖÃÒ»¸öÒôÆµÊµÀıµÄµ±Ç°²¥·ÅÎ»ÖÃ¡£
      * 
      * @param audioID   @~english An audioID returned by the play2d function.
-     * @~chinese ä¸€ä¸ªplay2då‡½æ•°è¿”å›çš„éŸ³é¢‘IDã€‚
+     * @~chinese Ò»¸öplay2dº¯Êı·µ»ØµÄÒôÆµID¡£
      * @param sec       @~english The offset in seconds from the start to seek to.
-     * @~chinese ä»¥ç§’ä¸ºå•ä½çš„ç›¸å¯¹äºå¼€å§‹ä½ç½®çš„åç§»é‡ã€‚
+     * @~chinese ÒÔÃëÎªµ¥Î»µÄÏà¶ÔÓÚ¿ªÊ¼Î»ÖÃµÄÆ«ÒÆÁ¿¡£
      * @return 
      */
     static bool setCurrentTime(int audioID, float sec);
@@ -266,12 +266,12 @@ public:
      * Gets the current playback position of an audio instance.
      *
      * @~chinese 
-     * è¿”å›ä¸€ä¸ªéŸ³é¢‘å®ä¾‹çš„å½“å‰æ’­æ”¾ä½ç½®ã€‚
+     * ·µ»ØÒ»¸öÒôÆµÊµÀıµÄµ±Ç°²¥·ÅÎ»ÖÃ¡£
      * 
      * @param audioID @~english An audioID returned by the play2d function.
-     * @~chinese ä¸€ä¸ªplay2då‡½æ•°è¿”å›çš„éŸ³é¢‘IDã€‚
+     * @~chinese Ò»¸öplay2dº¯Êı·µ»ØµÄÒôÆµID¡£
      * @return @~english The current playback position of an audio instance.
-     * @~chinese éŸ³é¢‘å®ä¾‹çš„å½“å‰æ’­æ”¾ä½ç½®ã€‚
+     * @~chinese ÒôÆµÊµÀıµÄµ±Ç°²¥·ÅÎ»ÖÃ¡£
      */
     static float getCurrentTime(int audioID);
 
@@ -279,12 +279,12 @@ public:
      * Gets the duration of an audio instance.
      *
      * @~chinese 
-     * å¾—åˆ°ä¸€ä¸ªéŸ³é¢‘å®ä¾‹çš„æŒç»­æ—¶é—´ã€‚
+     * µÃµ½Ò»¸öÒôÆµÊµÀıµÄ³ÖĞøÊ±¼ä¡£
      * 
      * @param audioID @~english An audioID returned by the play2d function.
-     * @~chinese ä¸€ä¸ªplay2då‡½æ•°è¿”å›çš„éŸ³é¢‘IDã€‚
+     * @~chinese Ò»¸öplay2dº¯Êı·µ»ØµÄÒôÆµID¡£
      * @return @~english The duration of an audio instance.
-     * @~chinese ä¸€ä¸ªéŸ³é¢‘çš„æŒç»­æ—¶é—´ã€‚
+     * @~chinese Ò»¸öÒôÆµµÄ³ÖĞøÊ±¼ä¡£
      */
     static float getDuration(int audioID);
 
@@ -292,12 +292,12 @@ public:
      * Returns the state of an audio instance.
      *
      * @~chinese 
-     * è¿”å›ä¸€ä¸ªéŸ³é¢‘å®ä¾‹çš„çŠ¶æ€ã€‚
+     * ·µ»ØÒ»¸öÒôÆµÊµÀıµÄ×´Ì¬¡£
      * 
      * @param audioID @~english An audioID returned by the play2d function.
-     * @~chinese ä¸€ä¸ªplay2då‡½æ•°è¿”å›çš„éŸ³é¢‘IDã€‚
+     * @~chinese Ò»¸öplay2dº¯Êı·µ»ØµÄÒôÆµID¡£
      * @return @~english The status of an audio instance.
-     * @~chinese éŸ³é¢‘å®ä¾‹çš„çŠ¶æ€ã€‚
+     * @~chinese ÒôÆµÊµÀıµÄ×´Ì¬¡£
      */
     static AudioState getState(int audioID);
 
@@ -305,19 +305,19 @@ public:
      * Register a callback to be invoked when an audio instance has completed playing.
      *
      * @~chinese 
-     * è®¾ç½®ä¸€ä¸ªåœ¨éŸ³é¢‘å®ä¾‹æ’­æ”¾å®Œæˆæ—¶è¦è¿›è¡Œçš„å›è°ƒã€‚
+     * ÉèÖÃÒ»¸öÔÚÒôÆµÊµÀı²¥·ÅÍê³ÉÊ±Òª½øĞĞµÄ»Øµ÷¡£
      * 
      * @param audioID @~english An audioID returned by the play2d function.
-     * @~chinese ä¸€ä¸ªplay2då‡½æ•°è¿”å›çš„éŸ³é¢‘IDã€‚
+     * @~chinese Ò»¸öplay2dº¯Êı·µ»ØµÄÒôÆµID¡£
      * @param callback @~english callback
-     * @~chinese å›è°ƒ
+     * @~chinese »Øµ÷
      */
     static void setFinishCallback(int audioID, const std::function<void(int,const std::string&)>& callback);
     
     /**@~english
      * Gets the maximum number of simultaneous audio instance of AudioEngine.
      * @~chinese 
-     * è¿”å›éŸ³é¢‘å¼•æ“çš„æœ€å¤§å¹¶å‘æ•°ã€‚
+     * ·µ»ØÒôÆµÒıÇæµÄ×î´ó²¢·¢Êı¡£
      */
     static int getMaxAudioInstance() {return _maxInstances;}
     
@@ -325,10 +325,10 @@ public:
      * Sets the maximum number of simultaneous audio instance for AudioEngine.
      *
      * @~chinese 
-     * è®¾ç½®éŸ³é¢‘å¼•æ“çš„æœ€å¤§å¹¶å‘æ•°ã€‚
+     * ÉèÖÃÒôÆµÒıÇæµÄ×î´ó²¢·¢Êı¡£
      * 
      * @param maxInstances @~english The maximum number of simultaneous audio instance.
-     * @~chinese åŒæ—¶å¯æ’­æ”¾çš„éŸ³é¢‘å®ä¾‹æœ€å¤§æ•°é‡ã€‚
+     * @~chinese Í¬Ê±¿É²¥·ÅµÄÒôÆµÊµÀı×î´óÊıÁ¿¡£
      */
     static bool setMaxAudioInstance(int maxInstances);
     
@@ -337,13 +337,13 @@ public:
      * AudioEngine cache audio data on ios,mac, and win32 platform.
      *
      * @~chinese 
-     * ä»å†…éƒ¨ç¼“å†²åŒºå–æ¶ˆä¸€ä¸ªéŸ³é¢‘æ•°æ®çš„ç¼“å­˜ã€‚
-     * éŸ³é¢‘å¼•æ“ä¼šåœ¨iosã€macå’Œwin32å¹³å°ä¸Šç¼“å­˜éŸ³é¢‘æ•°æ®ã€‚
+     * ´ÓÄÚ²¿»º³åÇøÈ¡ÏûÒ»¸öÒôÆµÊı¾İµÄ»º´æ¡£
+     * ÒôÆµÒıÇæ»áÔÚios¡¢macºÍwin32Æ½Ì¨ÉÏ»º´æÒôÆµÊı¾İ¡£
      * 
      * @warning @~english This can lead to stop related audio first.
-     * @~chinese è¿™å¯èƒ½å¯¼è‡´åœæ­¢ç›¸å…³çš„éŸ³é¢‘ã€‚
+     * @~chinese Õâ¿ÉÄÜµ¼ÖÂÍ£Ö¹Ïà¹ØµÄÒôÆµ¡£
      * @param filePath @~english Audio file path.
-     * @~chinese éŸ³é¢‘æ–‡ä»¶è·¯å¾„ã€‚
+     * @~chinese ÒôÆµÎÄ¼şÂ·¾¶¡£
      */
     static void uncache(const std::string& filePath);
     
@@ -351,10 +351,10 @@ public:
      * Uncache all audio data from internal buffer.
      *
      * @~chinese 
-     * ä»å†…éƒ¨ç¼“å†²åŒºå–æ¶ˆæ‰€æœ‰éŸ³é¢‘ç¼“å­˜æ•°æ®ã€‚
+     * ´ÓÄÚ²¿»º³åÇøÈ¡ÏûËùÓĞÒôÆµ»º´æÊı¾İ¡£
      * 
      * @warning @~english All audio will be stopped first.
-     * @~chinese æ‰€æœ‰éŸ³é¢‘å°†è¢«åœæ­¢ã€‚
+     * @~chinese ËùÓĞÒôÆµ½«±»Í£Ö¹¡£
      */
     static void uncacheAll();
     
@@ -362,12 +362,12 @@ public:
      * Gets the audio profile by id of audio instance.
      *
      * @~chinese 
-     * é€šè¿‡éŸ³é¢‘IDè¿”å›å®ƒçš„é…ç½®ã€‚
+     * Í¨¹ıÒôÆµID·µ»ØËüµÄÅäÖÃ¡£
      * 
      * @param audioID @~english An audioID returned by the play2d function.
-     * @~chinese ä¸€ä¸ªplay2då‡½æ•°è¿”å›çš„éŸ³é¢‘IDã€‚
+     * @~chinese Ò»¸öplay2dº¯Êı·µ»ØµÄÒôÆµID¡£
      * @return @~english The audio profile.
-     * @~chinese éŸ³é¢‘é…ç½®ã€‚
+     * @~chinese ÒôÆµÅäÖÃ¡£
      */
     static AudioProfile* getProfile(int audioID);
 
@@ -375,12 +375,12 @@ public:
      * Gets an audio profile by name.
      *
      * @~chinese 
-     * é€šè¿‡éŸ³é¢‘é…ç½®æ–‡ä»¶è¿”å›ä¸€ä¸ªéŸ³é¢‘é…ç½®ã€‚
+     * Í¨¹ıÒôÆµÅäÖÃÎÄ¼ş·µ»ØÒ»¸öÒôÆµÅäÖÃ¡£
      * 
      * @param profileName @~english A name of audio profile.
-     * @~chinese éŸ³é¢‘é…ç½®æ–‡ä»¶ã€‚
+     * @~chinese ÒôÆµÅäÖÃÎÄ¼ş¡£
      * @return @~english The audio profile.
-     * @~chinese éŸ³é¢‘é…ç½®ã€‚
+     * @~chinese ÒôÆµÅäÖÃ¡£
      */
     static AudioProfile* getProfile(const std::string &profileName);
 

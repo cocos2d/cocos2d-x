@@ -89,8 +89,8 @@ typedef union {
  * The general types supported are as follows:int,float,bool,std::string,const char*,LuaValueDict,LuaValueArray,Ref object.
  *
  * @~chinese 
- * LuaValueæ˜¯ä¸€äº›å¸¸è§„ç±»å‹æ•°æ®çš„é«˜çº§å°è£…ã€‚
- * æ”¯æŒçš„å¸¸è§„ç±»å‹å¦‚ä¸‹:int,float,bool,std::string,const char*,LuaValueDict,LuaValueArray,Ref object.
+ * LuaValueÊÇÒ»Ğ©³£¹æÀàĞÍÊı¾İµÄ¸ß¼¶·â×°¡£
+ * Ö§³ÖµÄ³£¹æÀàĞÍÈçÏÂ:int,float,bool,std::string,const char*,LuaValueDict,LuaValueArray,Ref object.
  * 
  * @lua NA
  * @js NA
@@ -103,12 +103,12 @@ public:
      * Construct a LuaValue object by a int value.
      *
      * @~chinese 
-     * é€šè¿‡ä¸€ä¸ªintå€¼æ„å»ºä¸€ä¸ªLuaValueå¯¹è±¡ã€‚
+     * Í¨¹ıÒ»¸öintÖµ¹¹½¨Ò»¸öLuaValue¶ÔÏó¡£
      * 
      * @param intValue @~english a int value.
-     * @~chinese intå€¼ã€‚
+     * @~chinese intÖµ¡£
      * @return @~english a LuaValue object.
-     * @~chinese LuaValueå¯¹è±¡ã€‚
+     * @~chinese LuaValue¶ÔÏó¡£
      */
     static const LuaValue intValue(const int intValue);
     
@@ -116,12 +116,12 @@ public:
      * Construct a LuaValue object by a float value.
      *
      * @~chinese 
-     * é€šè¿‡ä¸€ä¸ªfloatå€¼æ„å»ºä¸€ä¸ªLuaValueå¯¹è±¡ã€‚
+     * Í¨¹ıÒ»¸öfloatÖµ¹¹½¨Ò»¸öLuaValue¶ÔÏó¡£
      * 
      * @param floatValue @~english a float value.
-     * @~chinese floatå€¼ã€‚
+     * @~chinese floatÖµ¡£
      * @return @~english a LuaValue object.
-     * @~chinese LuaValueå¯¹è±¡ã€‚
+     * @~chinese LuaValue¶ÔÏó¡£
      */
     static const LuaValue floatValue(const float floatValue);
     
@@ -129,12 +129,12 @@ public:
      * Construct a LuaValue object by a boolean value.
      *
      * @~chinese 
-     * é€šè¿‡ä¸€ä¸ªboolå€¼æ„å»ºä¸€ä¸ªLuaValueå¯¹è±¡ã€‚
+     * Í¨¹ıÒ»¸öboolÖµ¹¹½¨Ò»¸öLuaValue¶ÔÏó¡£
      * 
      * @param booleanValue @~english a bool value.
-     * @~chinese boolå€¼ã€‚
+     * @~chinese boolÖµ¡£
      * @return @~english a LuaValue object.
-     * @~chinese LuaValueå¯¹è±¡ã€‚
+     * @~chinese LuaValue¶ÔÏó¡£
      */
     static const LuaValue booleanValue(const bool booleanValue);
     
@@ -142,12 +142,12 @@ public:
      * Construct a LuaValue object by a string pointer.
      *
      * @~chinese 
-     * é€šè¿‡ä¸€ä¸ªå­—ç¬¦ä¸²æŒ‡é’ˆæ„å»ºä¸€ä¸ªLuaValueå¯¹è±¡ã€‚
+     * Í¨¹ıÒ»¸ö×Ö·û´®Ö¸Õë¹¹½¨Ò»¸öLuaValue¶ÔÏó¡£
      * 
      * @param stringValue @~english a string pointer.
-     * @~chinese å­—ç¬¦ä¸²æŒ‡é’ˆã€‚
+     * @~chinese ×Ö·û´®Ö¸Õë¡£
      * @return @~english a LuaValue object.
-     * @~chinese LuaValueå¯¹è±¡ã€‚
+     * @~chinese LuaValue¶ÔÏó¡£
      */
     static const LuaValue stringValue(const char* stringValue);
     
@@ -155,12 +155,12 @@ public:
      * Construct a LuaValue object by a std::string object.
      *
      * @~chinese 
-     * é€šè¿‡ä¸€ä¸ªstd::stringå­—ç¬¦ä¸²æ„å»ºä¸€ä¸ªLuaValueå¯¹è±¡ã€‚
+     * Í¨¹ıÒ»¸östd::string×Ö·û´®¹¹½¨Ò»¸öLuaValue¶ÔÏó¡£
      * 
      * @param stringValue @~english a std::string object.
-     * @~chinese std::stringå­—ç¬¦ä¸²ã€‚
+     * @~chinese std::string×Ö·û´®¡£
      * @return @~english a LuaValue object.
-     * @~chinese LuaValueå¯¹è±¡ã€‚
+     * @~chinese LuaValue¶ÔÏó¡£
      */
     static const LuaValue stringValue(const std::string& stringValue);
     
@@ -168,12 +168,12 @@ public:
      * Construct a LuaValue object by a LuaValueDict value.
      *
      * @~chinese 
-     * é€šè¿‡ä¸€ä¸ªLuaValueDictå¯¹è±¡æ„é€ ä¸€ä¸ªLuaValueå¯¹è±¡ã€‚
+     * Í¨¹ıÒ»¸öLuaValueDict¶ÔÏó¹¹ÔìÒ»¸öLuaValue¶ÔÏó¡£
      * 
      * @param dictValue @~english a LuaValueDict object.
-     * @~chinese LuaValueDictå¯¹è±¡ã€‚
+     * @~chinese LuaValueDict¶ÔÏó¡£
      * @return @~english a LuaValue object.
-     * @~chinese LuaValueå¯¹è±¡ã€‚
+     * @~chinese LuaValue¶ÔÏó¡£
      */
     static const LuaValue dictValue(const LuaValueDict& dictValue);
     
@@ -181,12 +181,12 @@ public:
      * Construct a LuaValue object by a LuaValueArray value.
      *
      * @~chinese 
-     * é€šè¿‡ä¸€ä¸ªLuaValueArrayå¯¹è±¡æ„é€ ä¸€ä¸ªLuaValueå¯¹è±¡ã€‚
+     * Í¨¹ıÒ»¸öLuaValueArray¶ÔÏó¹¹ÔìÒ»¸öLuaValue¶ÔÏó¡£
      * 
      * @param arrayValue @~english a LuaValueArray object.
-     * @~chinese LuaValueArrayå¯¹è±¡ã€‚
+     * @~chinese LuaValueArray¶ÔÏó¡£
      * @return @~english a LuaValue object.
-     * @~chinese LuaValueå¯¹è±¡ã€‚
+     * @~chinese LuaValue¶ÔÏó¡£
      */
     static const LuaValue arrayValue(const LuaValueArray& arrayValue);
     
@@ -194,14 +194,14 @@ public:
      * Construct a LuaValue object by a Ref object and the type name of object.
      *
      * @~chinese 
-     * é€šè¿‡ä¸€ä¸ªRefå¯¹è±¡ä»¥åŠå¯¹åº”çš„ç±»å‹åå­—æ„é€ ä¸€ä¸ªLuaValueå¯¹è±¡ã€‚
+     * Í¨¹ıÒ»¸öRef¶ÔÏóÒÔ¼°¶ÔÓ¦µÄÀàĞÍÃû×Ö¹¹ÔìÒ»¸öLuaValue¶ÔÏó¡£
      * 
      * @param ccobjectValue @~english a Ref object.
-     * @~chinese Refå¯¹è±¡ã€‚
+     * @~chinese Ref¶ÔÏó¡£
      * @param objectTypename @~english a string pointer point to the typename of object.
-     * @~chinese ä¸€ä¸ªæŒ‡å‘å¯¹è±¡ç±»å‹åå­—çš„å­—ç¬¦ä¸²æŒ‡é’ˆã€‚
+     * @~chinese Ò»¸öÖ¸Ïò¶ÔÏóÀàĞÍÃû×ÖµÄ×Ö·û´®Ö¸Õë¡£
      * @return @~english a LuaValue object.
-     * @~chinese LuaValueå¯¹è±¡ã€‚
+     * @~chinese LuaValue¶ÔÏó¡£
      */
     static const LuaValue ccobjectValue(Ref* ccobjectValue, const char* objectTypename);
     
@@ -209,24 +209,24 @@ public:
      * Construct a LuaValue object by a Ref object.
      *
      * @~chinese 
-     * é€šè¿‡ä¸€ä¸ªRefå¯¹è±¡ä»¥åŠå¯¹åº”çš„ç±»å‹åå­—æ„é€ ä¸€ä¸ªLuaValueå¯¹è±¡
+     * Í¨¹ıÒ»¸öRef¶ÔÏóÒÔ¼°¶ÔÓ¦µÄÀàĞÍÃû×Ö¹¹ÔìÒ»¸öLuaValue¶ÔÏó
      * 
      * @param ccobjectValue @~english a Ref object.
-     * @~chinese Refå¯¹è±¡ã€‚
+     * @~chinese Ref¶ÔÏó¡£
      * @param objectTypename @~english a std::string object represent the typename of object.
-     * @~chinese ä¸€ä¸ªç”¨std::stringè¡¨ç¤ºçš„å¯¹è±¡ç±»å‹åå­—ã€‚
+     * @~chinese Ò»¸öÓÃstd::string±íÊ¾µÄ¶ÔÏóÀàĞÍÃû×Ö¡£
      * @return @~english a LuaValue object.
-     * @~chinese LuaValueå¯¹è±¡ã€‚
+     * @~chinese LuaValue¶ÔÏó¡£
      */
     static const LuaValue ccobjectValue(Ref* ccobjectValue, const std::string& objectTypename);
     
     
     /**@~english
-     * Default constuctor of LuaValue.
+     * Default constructor of LuaValue.
      * Set the default value for _type and _ccobjectType,and init the _field.
      * @~chinese 
-     * LuaValueçš„é»˜è®¤æ„é€ å‡½æ•°ã€‚
-     * è®¾ç½®_typeï¼Œ_ccobjectTypeçš„é»˜è®¤å€¼,åŒæ—¶åˆå§‹åŒ–_fieldã€‚
+     * LuaValueµÄÄ¬ÈÏ¹¹Ôìº¯Êı¡£
+     * ÉèÖÃ_type£¬_ccobjectTypeµÄÄ¬ÈÏÖµ,Í¬Ê±³õÊ¼»¯_field¡£
      */
     LuaValue(void)
     : _type(LuaValueTypeInt)
@@ -238,21 +238,21 @@ public:
     /**@~english
      * Copy constructor of LuaValue.
      * @~chinese 
-     * æ‹·è´æ„é€ å‡½æ•°ã€‚
+     * ¿½±´¹¹Ôìº¯Êı¡£
      */
     LuaValue(const LuaValue& rhs);
     
     /**@~english
      * Override of operator= .
      * @~chinese 
-     * èµ‹å€¼æ“ä½œç¬¦é‡è½½å‡½æ•°ã€‚
+     * ¸³Öµ²Ù×÷·ûÖØÔØº¯Êı¡£
      */
     LuaValue& operator=(const LuaValue& rhs);
     
     /**@~english
      * Destructor.
      * @~chinese 
-     * ææ„å‡½æ•°ã€‚
+     * Îö¹¹º¯Êı¡£
      */
     ~LuaValue(void);
     
@@ -260,10 +260,10 @@ public:
      * Get the type of LuaValue object.
      * 
      * @~chinese 
-     * LuaValueå¯¹è±¡çš„ç±»å‹ã€‚
+     * LuaValue¶ÔÏóµÄÀàĞÍ¡£
      * 
      * @return @~english the type of LuaValue object.
-     * @~chinese LuaValueå¯¹è±¡çš„ç±»å‹ã€‚
+     * @~chinese LuaValue¶ÔÏóµÄÀàĞÍ¡£
      */
     const LuaValueType getType(void) const {
         return _type;
@@ -273,10 +273,10 @@ public:
      * Get the typename of the Ref object.
      *
      * @~chinese 
-     * å¾—åˆ°Refå¯¹è±¡çš„ç±»å‹åå­—ã€‚
+     * µÃµ½Ref¶ÔÏóµÄÀàĞÍÃû×Ö¡£
      * 
      * @return @~english the type name of Ref object.
-     * @~chinese Refå¯¹è±¡çš„ç±»å‹åå­—ã€‚
+     * @~chinese Ref¶ÔÏóµÄÀàĞÍÃû×Ö¡£
      */
     const std::string& getObjectTypename(void) const {
         return *_ccobjectType;
@@ -286,10 +286,10 @@ public:
      * Get the int value of LuaValue object.
      *
      * @~chinese 
-     * è·å–LuaValueå¯¹è±¡çš„intå€¼ã€‚
+     * »ñÈ¡LuaValue¶ÔÏóµÄintÖµ¡£
      * 
      * @return @~english the int value.
-     * @~chinese intå€¼ã€‚
+     * @~chinese intÖµ¡£
      */
     int intValue(void) const {
         return _field.intValue;
@@ -299,10 +299,10 @@ public:
      * Get the float value of LuaValue object.
      *
      * @~chinese 
-     * è·å–LuaValueå¯¹è±¡çš„floatå€¼ã€‚
+     * »ñÈ¡LuaValue¶ÔÏóµÄfloatÖµ¡£
      * 
      * @return @~english the float value.
-     * @~chinese floatå€¼ã€‚
+     * @~chinese floatÖµ¡£
      */
     float floatValue(void) const {
         return _field.floatValue;
@@ -312,10 +312,10 @@ public:
      * Get the boolean value of LuaValue object.
      *
      * @~chinese 
-     * è·å–LuaValueå¯¹è±¡çš„boolå€¼ã€‚
+     * »ñÈ¡LuaValue¶ÔÏóµÄboolÖµ¡£
      * 
      * @return @~english the boolean value.
-     * @~chinese boolå€¼ã€‚
+     * @~chinese boolÖµ¡£
      */
     bool booleanValue(void) const {
         return _field.booleanValue;
@@ -325,10 +325,10 @@ public:
      * Get the std::string value of LuaValue object.
      *
      * @~chinese 
-     * è·å–LuaValueå¯¹è±¡çš„std::stringå€¼ã€‚
+     * »ñÈ¡LuaValue¶ÔÏóµÄstd::stringÖµ¡£
      * 
      * @return @~english the refrence about string value.
-     * @~chinese std::stringå€¼ã€‚
+     * @~chinese std::stringÖµ¡£
      */
     const std::string& stringValue(void) const {
         return *_field.stringValue;
@@ -338,10 +338,10 @@ public:
      * Get the LuaValueDict value of LuaValue object.
      *
      * @~chinese 
-     * è·å–LuaValueå¯¹è±¡çš„LuaValueDictå€¼ã€‚
+     * »ñÈ¡LuaValue¶ÔÏóµÄLuaValueDictÖµ¡£
      * 
      * @return @~english the LuaValueDict value.
-     * @~chinese LuaValueDictå€¼ã€‚
+     * @~chinese LuaValueDictÖµ¡£
      */
     const LuaValueDict& dictValue(void) const {
         return *_field.dictValue;
@@ -351,10 +351,10 @@ public:
      * Get the LuaValueArray value of LuaValue object.
      *
      * @~chinese 
-     * è·å–LuaValueå¯¹è±¡çš„LuaValueArrayå€¼ã€‚
+     * »ñÈ¡LuaValue¶ÔÏóµÄLuaValueArrayÖµ¡£
      * 
      * @return @~english the LuaValueArray value.
-     * @~chinese LuaValueArrayå€¼ã€‚
+     * @~chinese LuaValueArrayÖµ¡£
      */
     const LuaValueArray& arrayValue(void) const {
         return *_field.arrayValue;
@@ -364,10 +364,10 @@ public:
      * Get the Ref object of LuaValue object.
      *
      * @~chinese 
-     * è·å–LuaValueå¯¹è±¡çš„Refå¯¹è±¡æŒ‡é’ˆã€‚
+     * »ñÈ¡LuaValue¶ÔÏóµÄRef¶ÔÏóÖ¸Õë¡£
      * 
      * @return @~english the pointer point to a Ref object.
-     * @~chinese Refå¯¹è±¡æŒ‡é’ˆã€‚
+     * @~chinese Ref¶ÔÏóÖ¸Õë¡£
      */
     Ref* ccobjectValue(void) const {
         return _field.ccobjectValue;

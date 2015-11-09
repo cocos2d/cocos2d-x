@@ -176,7 +176,7 @@ static void printFileUtils(int fd)
         mydprintf(fd, "%s\n", item.c_str());
     }
 
-    mydprintf(fd, "\nWriteble Path:\n");
+    mydprintf(fd, "\nWritable Path:\n");
     mydprintf(fd, "%s\n", fu->getWritablePath().c_str());
 
     mydprintf(fd, "\nFull Path Cache:\n");
@@ -404,7 +404,7 @@ bool Console::listenOnTCP(int port)
         setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, (const char*)&on, sizeof(on));
 
         // bind address
-        if (_bindAddress.length() > 0)
+        if (!_bindAddress.empty())
         {
             if (res->ai_family == AF_INET)
             {
@@ -533,7 +533,7 @@ void Console::commandFileUtils(int fd, const std::string &args)
     {
         FileUtils::getInstance()->purgeCachedEntries();
     }
-    else if( args.length()==0)
+    else if( args.empty())
     {
         sched->performFunctionInCocosThread( std::bind(&printFileUtils, fd) );
     }
@@ -555,7 +555,7 @@ void Console::commandConfig(int fd, const std::string& args)
 
 void Console::commandResolution(int fd, const std::string& args)
 {
-    if(args.length()==0) {
+    if(args.empty()) {
         auto director = Director::getInstance();
         Size points = director->getWinSize();
         Size pixels = director->getWinSizeInPixels();
@@ -598,7 +598,7 @@ void Console::commandProjection(int fd, const std::string& args)
     auto director = Director::getInstance();
     Scheduler *sched = director->getScheduler();
 
-    if(args.length()==0)
+    if(args.empty())
     {
         char buf[20];
         auto proj = director->getProjection();
@@ -648,7 +648,7 @@ void Console::commandTextures(int fd, const std::string& args)
         }
                                             );
     }
-    else if(args.length()==0)
+    else if(args.empty())
     {
         sched->performFunctionInCocosThread( [=](){
             mydprintf(fd, "%s", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
@@ -1146,7 +1146,7 @@ void Console::loop()
         }
         else if( nready == 0 )
         {
-            /* timeout. do somethig ? */
+            /* timeout. do something ? */
         }
         else
         {
@@ -1189,7 +1189,7 @@ void Console::loop()
                 }
             }
 
-            /* remove closed conections */
+            /* remove closed connections */
             for(int fd: to_remove) {
                 FD_CLR(fd, &_read_set);
                 _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());

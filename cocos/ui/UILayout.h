@@ -49,7 +49,7 @@ class Scale9Sprite;
 
 /**
  * @brief @~english Layout interface for creating LayoutManger and do actual layout.
- * @~chinese å¸ƒå±€ç•Œé¢ï¼Œç”¨äºåˆ›å»ºLayoutMangerå¸ƒå±€ã€‚
+ * @~chinese ²¼¾Ö½çÃæ£¬ÓÃÓÚ´´½¨LayoutManger²¼¾Ö¡£
  * @js NA
  */
 class CC_GUI_DLL LayoutProtocol
@@ -57,40 +57,40 @@ class CC_GUI_DLL LayoutProtocol
 public:
     /**
      * @brief @~english Default constructor.
-     * @~chinese é»˜è®¤æ„é€ å‡½æ•°ã€‚
+     * @~chinese Ä¬ÈÏ¹¹Ôìº¯Êı¡£
      */
     LayoutProtocol(){}
 
     /**
      * @brief @~english Default destructor.
-     * @~chinese é»˜è®¤çš„ææ„å‡½æ•°ã€‚
+     * @~chinese Ä¬ÈÏµÄÎö¹¹º¯Êı¡£
      */
     virtual ~LayoutProtocol(){}
 
     /**
      * @brief @~english Create a custom layout manager.
-     * @~chinese åˆ›å»ºä¸€ä¸ªå¸ƒå±€ç®¡ç†å™¨ã€‚
+     * @~chinese ´´½¨Ò»¸ö²¼¾Ö¹ÜÀíÆ÷¡£
      * 
      * @return @~english A LayoutManager descendants instance.
-     * @~chinese LayoutManageråä»£å®ä¾‹ã€‚
+     * @~chinese LayoutManagerºó´úÊµÀı¡£
      */
     virtual LayoutManager* createLayoutManager() = 0;
     
     /**
      * @brief @~english Return the content size of layout.
-     * @~chinese è¿”å›Layoutçš„contentå¤§å°ã€‚
+     * @~chinese ·µ»ØLayoutµÄcontent´óĞ¡¡£
      * 
      * @return @~english A content size in Size.
-     * @~chinese ä¸€ä¸ªcontentå°ºå¯¸ã€‚
+     * @~chinese Ò»¸öcontent³ß´ç¡£
      */
     virtual Size getLayoutContentSize()const = 0;
     
     /**
      * @brief @~english Get all elements of the layout.
-     * @~chinese è·å–Layoutå†…æ‰€æœ‰çš„å…ƒç´ ã€‚
+     * @~chinese »ñÈ¡LayoutÄÚËùÓĞµÄÔªËØ¡£
      * 
      * @return @~english A vector of Node pointers.
-     * @~chinese ä¸€ä¸ªåŒ…å«èŠ‚ç‚¹çš„æŒ‡é’ˆçš„æ•°ç»„ã€‚
+     * @~chinese Ò»¸ö°üº¬½ÚµãµÄÖ¸ÕëµÄÊı×é¡£
      */
     virtual const Vector<Node*>& getLayoutElements()const = 0;
     
@@ -98,8 +98,8 @@ public:
      * @brief @~english The main function to do the layout job.
      *  Different layout manager should implement its own layout algorithm.
      *
-     * @~chinese å¸ƒå±€åŠŸèƒ½çš„ä¸»è¦å‡½æ•°ã€‚
-     * ä¸åŒçš„å¸ƒå±€ç®¡ç†å™¨åº”è¯¥å®ç°è‡ªå·±çš„å¸ƒå±€ç®—æ³•ã€‚
+     * @~chinese ²¼¾Ö¹¦ÄÜµÄÖ÷Òªº¯Êı¡£
+     * ²»Í¬µÄ²¼¾Ö¹ÜÀíÆ÷Ó¦¸ÃÊµÏÖ×Ô¼ºµÄ²¼¾ÖËã·¨¡£
      * 
      */
     virtual void doLayout() = 0;
@@ -121,14 +121,14 @@ public:
  * - Vertical layout: child elements are arranged vertically.
  * - Relative layout: child elements are arranged relative to certain rules.
  *
- * @~chinese ä¸€ä¸ªåŒ…å«æ§ä»¶çš„å®¹å™¨ã€‚
- * å­èŠ‚ç‚¹å¯ä»¥æ ¹æ®å¸ƒå±€ç±»å‹é‡æ–°æ’åº,å®ƒè¿˜å¯ä»¥å¼€å¯å‰ªè£,è®¾ç½®èƒŒæ™¯å›¾åƒå’Œé¢œè‰²ã€‚
+ * @~chinese Ò»¸ö°üº¬¿Ø¼şµÄÈİÆ÷¡£
+ * ×Ó½Úµã¿ÉÒÔ¸ù¾İ²¼¾ÖÀàĞÍÖØĞÂÅÅĞò,Ëü»¹¿ÉÒÔ¿ªÆô¼ô²Ã,ÉèÖÃ±³¾°Í¼ÏñºÍÑÕÉ«¡£
  * 
- * ä¸»è¦æœ‰å››ç§ç±»å‹çš„å¸ƒå±€:
- * - ç»å¯¹å¸ƒå±€:è¿™ä¸ªé»˜è®¤çš„å¸ƒå±€ç±»å‹ã€å­å…ƒç´ æŒ‰ç…§ç»å¯¹ä½ç½®æ’åˆ—ã€‚
- * - æ°´å¹³å¸ƒå±€:å­å…ƒç´ æ°´å¹³æ’åˆ—ã€‚
- * - å‚ç›´å¸ƒå±€:å­å…ƒç´ å‚ç›´æ’åˆ—ã€‚
- * - ç›¸å¯¹å¸ƒå±€:å­å…ƒç´ ç›¸å¯¹äºä¸€å®šçš„è§„åˆ™æ’åˆ—ã€‚
+ * Ö÷ÒªÓĞËÄÖÖÀàĞÍµÄ²¼¾Ö:
+ * - ¾ø¶Ô²¼¾Ö:Õâ¸öÄ¬ÈÏµÄ²¼¾ÖÀàĞÍ¡¢×ÓÔªËØ°´ÕÕ¾ø¶ÔÎ»ÖÃÅÅÁĞ¡£
+ * - Ë®Æ½²¼¾Ö:×ÓÔªËØË®Æ½ÅÅÁĞ¡£
+ * - ´¹Ö±²¼¾Ö:×ÓÔªËØ´¹Ö±ÅÅÁĞ¡£
+ * - Ïà¶Ô²¼¾Ö:×ÓÔªËØÏà¶ÔÓÚÒ»¶¨µÄ¹æÔòÅÅÁĞ¡£
  * 
  */
 class CC_GUI_DLL Layout : public Widget, public LayoutProtocol
@@ -141,7 +141,7 @@ public:
      * @~english
      * Layout type, default is ABSOLUTE.
      * @~chinese 
-     * å¸ƒå±€ç±»å‹,é»˜è®¤æ˜¯ç»å¯¹(ABSOLUTE)å¸ƒå±€ã€‚
+     * ²¼¾ÖÀàĞÍ,Ä¬ÈÏÊÇ¾ø¶Ô(ABSOLUTE)²¼¾Ö¡£
      */
     enum class Type
     {
@@ -155,7 +155,7 @@ public:
      * @~english
      * Clipping Type, default is STENCIL.
      * @~chinese 
-     * å‰ªè£ç±»å‹,é»˜è®¤æ˜¯STENCILã€‚
+     * ¼ô²ÃÀàĞÍ,Ä¬ÈÏÊÇSTENCIL¡£
      */
     enum class ClippingType
     {
@@ -167,7 +167,7 @@ public:
      * @~english
      * Background color type, default is NONE.
      * @~chinese 
-     * èƒŒæ™¯é¢œè‰²ç±»å‹, é»˜è®¤æ˜¯NONE.
+     * ±³¾°ÑÕÉ«ÀàĞÍ, Ä¬ÈÏÊÇNONE.
      */
     enum class BackGroundColorType
     {
@@ -180,7 +180,7 @@ public:
      * @~english
      * Default constructor
      * @~chinese 
-     * é»˜è®¤æ„é€ å‡½æ•°
+     * Ä¬ÈÏ¹¹Ôìº¯Êı
      * @js ctor
      * @lua new
      */
@@ -190,7 +190,7 @@ public:
      * @~english
      * Default destructor
      * @~chinese 
-     * é»˜è®¤çš„ææ„å‡½æ•°
+     * Ä¬ÈÏµÄÎö¹¹º¯Êı
      * @js NA
      * @lua NA
      */
@@ -200,7 +200,7 @@ public:
      * @~english
      * Create a empty layout.
      * @~chinese 
-     * åˆ›å»ºä¸€ä¸ªç©ºçš„layoutã€‚
+     * ´´½¨Ò»¸ö¿ÕµÄlayout¡£
      */
     static Layout* create();
     
@@ -208,10 +208,10 @@ public:
      * @~english
      * Sets a background image for layout.
      * @~chinese 
-     * è®¾ç½®layoutçš„èƒŒæ™¯å›¾åƒã€‚
+     * ÉèÖÃlayoutµÄ±³¾°Í¼Ïñ¡£
      * 
      * @param fileName @~english image file path.
-     * @~chinese å›¾åƒæ–‡ä»¶è·¯å¾„ã€‚
+     * @~chinese Í¼ÏñÎÄ¼şÂ·¾¶¡£
      * @param texType @see TextureResType. 
      */
     void setBackGroundImage(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
@@ -220,10 +220,10 @@ public:
      * @~english
      * Sets a background image capInsets for layout, it only affects the scale9 enabled background image
      * @~chinese 
-     * è®¾ç½®layoutèƒŒæ™¯çš„capInsets,å®ƒåªåœ¨å¼€å¯scale9åå½±å“èƒŒæ™¯å›¾çš„æ¸²æŸ“
+     * ÉèÖÃlayout±³¾°µÄcapInsets,ËüÖ»ÔÚ¿ªÆôscale9ºóÓ°Ïì±³¾°Í¼µÄäÖÈ¾
      * 
      * @param capInsets @~english The capInsets in Rect.
-     * @~chinese capInsetsçš„çŸ©å½¢ã€‚
+     * @~chinese capInsetsµÄ¾ØĞÎ¡£
      * 
      */
     void setBackGroundImageCapInsets(const Rect& capInsets);
@@ -232,9 +232,9 @@ public:
      * @~english
      * Query background image's capInsets size.
      * @~chinese 
-     * æŸ¥è¯¢èƒŒæ™¯å›¾åƒçš„capInsetsã€‚
+     * ²éÑ¯±³¾°Í¼ÏñµÄcapInsets¡£
      * @return @~english The background image capInsets.
-     * @~chinese èƒŒæ™¯å›¾åƒçš„capInsetsã€‚
+     * @~chinese ±³¾°Í¼ÏñµÄcapInsets¡£
      */
     const Rect& getBackGroundImageCapInsets()const;
     
@@ -242,7 +242,7 @@ public:
      * @~english
      * Sets Color Type for layout's background
      * @~chinese 
-     * è®¾ç½®å¸ƒå±€çš„èƒŒæ™¯é¢œè‰²ç±»å‹
+     * ÉèÖÃ²¼¾ÖµÄ±³¾°ÑÕÉ«ÀàĞÍ
      * 
      * @param type   @see `BackGroundColorType`
      */
@@ -252,9 +252,9 @@ public:
      * @~english
      * Query the layout's background color type.
      * @~chinese 
-     * æŸ¥è¯¢å¸ƒå±€çš„èƒŒæ™¯é¢œè‰²ç±»å‹ã€‚
+     * ²éÑ¯²¼¾ÖµÄ±³¾°ÑÕÉ«ÀàĞÍ¡£
      * @return @~english The layout's background color type.
-     * @~chinese å¸ƒå±€çš„èƒŒæ™¯é¢œè‰²ç±»å‹ã€‚
+     * @~chinese ²¼¾ÖµÄ±³¾°ÑÕÉ«ÀàĞÍ¡£
      */
     BackGroundColorType getBackGroundColorType()const;
     
@@ -262,10 +262,10 @@ public:
      * @~english
      * Enable background image scale9 rendering.
      * @~chinese 
-     * å¼€å¯èƒŒæ™¯å›¾åƒscale9çš„æ¸²æŸ“æ¨¡å¼ã€‚
+     * ¿ªÆô±³¾°Í¼Ïñscale9µÄäÖÈ¾Ä£Ê½¡£
      * 
      * @param enabled @~english True means enable scale9 rendering for background image, false otherwise.
-     * @~chinese ä¼ å…¥trueåˆ™å¼€å¯ï¼Œfalseåˆ™å…³é—­scale9æ¸²æŸ“
+     * @~chinese ´«ÈëtrueÔò¿ªÆô£¬falseÔò¹Ø±Õscale9äÖÈ¾
      */
     void setBackGroundImageScale9Enabled(bool enabled);
     
@@ -273,9 +273,9 @@ public:
      * @~english
      * Query background image scale9 enable status.
      * @~chinese 
-     * æŸ¥è¯¢èƒŒæ™¯å›¾åƒscale9å¯ç”¨çŠ¶æ€ã€‚
+     * ²éÑ¯±³¾°Í¼Ïñscale9ÆôÓÃ×´Ì¬¡£
      * @return @~english Whether background image is scale9 enabled or not.
-     * @~chinese æ˜¯å¦å¯ç”¨scale9èƒŒæ™¯å›¾åƒã€‚
+     * @~chinese ÊÇ·ñÆôÓÃscale9±³¾°Í¼Ïñ¡£
      */
     bool isBackGroundImageScale9Enabled()const;
     
@@ -285,11 +285,11 @@ public:
      * The color only applies to layout when it's color type is BackGroundColorType::SOLID
      *
      * @~chinese 
-     * è®¾ç½®layoutçš„èƒŒæ™¯é¢œè‰²
-     * ä»…å½“é¢œè‰²ç±»å‹ä¸ºBackGroundColorType::SOLIDçš„æ—¶å€™ï¼Œæ‰ä¼šå½±å“Layout
+     * ÉèÖÃlayoutµÄ±³¾°ÑÕÉ«
+     * ½öµ±ÑÕÉ«ÀàĞÍÎªBackGroundColorType::SOLIDµÄÊ±ºò£¬²Å»áÓ°ÏìLayout
      * 
      * @param color @~english Color in Color3B.
-     * @~chinese Color3Bç±»å‹çš„é¢œè‰²ã€‚
+     * @~chinese Color3BÀàĞÍµÄÑÕÉ«¡£
      */
     void setBackGroundColor(const Color3B &color);
     
@@ -297,10 +297,10 @@ public:
      * @~english
      * Query the layout's background color.
      * @~chinese 
-     * æŸ¥è¯¢å¸ƒå±€çš„èƒŒæ™¯é¢œè‰²ã€‚
+     * ²éÑ¯²¼¾ÖµÄ±³¾°ÑÕÉ«¡£
      *
      * @return @~english Background color in Color3B.
-     * @~chinese Color3Bç±»å‹çš„èƒŒæ™¯é¢œè‰²ã€‚
+     * @~chinese Color3BÀàĞÍµÄ±³¾°ÑÕÉ«¡£
      */
     const Color3B& getBackGroundColor()const;
     
@@ -309,13 +309,13 @@ public:
      * Set start and end background color for layout.
      * This setting only take effect when the layout's  color type is BackGroundColorType::GRADIENT
      * @~chinese 
-     * ä¸ºå¸ƒå±€è®¾ç½®å¼€å§‹å’Œç»“æŸçš„èƒŒæ™¯é¢œè‰²ã€‚
-     * è¯¥è®¾ç½®åªå½“å¸ƒå±€çš„é¢œè‰²ç±»å‹æ˜¯BackGroundColorType::GRADIENTæ—¶ç”Ÿæ•ˆ
+     * Îª²¼¾ÖÉèÖÃ¿ªÊ¼ºÍ½áÊøµÄ±³¾°ÑÕÉ«¡£
+     * ¸ÃÉèÖÃÖ»µ±²¼¾ÖµÄÑÕÉ«ÀàĞÍÊÇBackGroundColorType::GRADIENTÊ±ÉúĞ§
      * 
      * @param startColor @~english Color value in Color3B.
-     * @~chinese Color3Bç±»å‹çš„é¢œè‰²ã€‚
+     * @~chinese Color3BÀàĞÍµÄÑÕÉ«¡£
      * @param endColor @~english Color value in Color3B.
-     * @~chinese Color3Bç±»å‹çš„é¢œè‰²ã€‚
+     * @~chinese Color3BÀàĞÍµÄÑÕÉ«¡£
      */
     void setBackGroundColor(const Color3B &startColor, const Color3B &endColor);
     
@@ -323,9 +323,9 @@ public:
      * @~english
      * Get the gradient background start color.
      * @~chinese 
-     * è·å–æ¸å˜èƒŒæ™¯é¢œè‰²å¼€å§‹çš„å€¼ã€‚
+     * »ñÈ¡½¥±ä±³¾°ÑÕÉ«¿ªÊ¼µÄÖµ¡£
      * @return @~english Gradient background start color value.
-     * @~chinese æ¸å˜èƒŒæ™¯é¢œè‰²å¼€å§‹çš„å€¼ã€‚
+     * @~chinese ½¥±ä±³¾°ÑÕÉ«¿ªÊ¼µÄÖµ¡£
      */
     const Color3B& getBackGroundStartColor()const;
     
@@ -333,9 +333,9 @@ public:
      * @~english
      * Get the gradient background end color.
      * @~chinese 
-     * è·å–æ¸å˜èƒŒæ™¯é¢œè‰²çš„ç»“æŸå€¼ã€‚
+     * »ñÈ¡½¥±ä±³¾°ÑÕÉ«µÄ½áÊøÖµ¡£
      * @return @~english Gradient background end color value.
-     * @~chinese æ¸å˜èƒŒæ™¯é¢œè‰²ç»“æŸçš„å€¼ã€‚
+     * @~chinese ½¥±ä±³¾°ÑÕÉ«½áÊøµÄÖµ¡£
      */
     const Color3B& getBackGroundEndColor()const;
     
@@ -343,10 +343,10 @@ public:
      * @~english
      * Sets background color opacity of layout.
      * @~chinese 
-     * è®¾ç½®å¸ƒå±€çš„èƒŒæ™¯é¢œè‰²ä¸é€æ˜åº¦ã€‚
+     * ÉèÖÃ²¼¾ÖµÄ±³¾°ÑÕÉ«²»Í¸Ã÷¶È¡£
      * 
      * @param opacity @~english The opacity in `GLubyte`.
-     * @~chinese â€œGLubyteâ€ä¸é€æ˜åº¦ã€‚
+     * @~chinese ¡°GLubyte¡±²»Í¸Ã÷¶È¡£
      */
     void setBackGroundColorOpacity(GLubyte opacity);
     
@@ -354,9 +354,9 @@ public:
      * @~english
      * Get the layout's background color opacity.
      * @~chinese 
-     * è·å–å¸ƒå±€çš„èƒŒæ™¯é¢œè‰²ä¸é€æ˜åº¦ã€‚
+     * »ñÈ¡²¼¾ÖµÄ±³¾°ÑÕÉ«²»Í¸Ã÷¶È¡£
      * @return @~english Background color opacity value.
-     * @~chinese èƒŒæ™¯é¢œè‰²çš„ä¸é€æ˜å€¼ã€‚
+     * @~chinese ±³¾°ÑÕÉ«µÄ²»Í¸Ã÷Öµ¡£
      */
     GLubyte getBackGroundColorOpacity()const;
     
@@ -365,11 +365,11 @@ public:
      * Sets background color vector for layout.
      * This setting only take effect when layout's color type is BackGroundColorType::GRADIENT
      * @~chinese 
-     * è®¾ç½®å¸ƒå±€çš„èƒŒæ™¯é¢œè‰²çŸ¢é‡ã€‚
-     * è¯¥è®¾ç½®åªå½“å¸ƒå±€çš„é¢œè‰²ç±»å‹æ˜¯BackGroundColorType::GRADIENTæ—¶ç”Ÿæ•ˆ
+     * ÉèÖÃ²¼¾ÖµÄ±³¾°ÑÕÉ«Ê¸Á¿¡£
+     * ¸ÃÉèÖÃÖ»µ±²¼¾ÖµÄÑÕÉ«ÀàĞÍÊÇBackGroundColorType::GRADIENTÊ±ÉúĞ§
      * 
      * @param vector @~english The color vector in `Vec2`.
-     * @~chinese Vec2ç±»å‹çš„é¢œè‰²å‘é‡ã€‚
+     * @~chinese Vec2ÀàĞÍµÄÑÕÉ«ÏòÁ¿¡£
      */
     void setBackGroundColorVector(const Vec2 &vector);
     
@@ -377,9 +377,9 @@ public:
      * @~english
      * Get the layout's background color vector.
      * @~chinese 
-     * è·å–layoutçš„èƒŒæ™¯é¢œè‰²å‘é‡ã€‚
+     * »ñÈ¡layoutµÄ±³¾°ÑÕÉ«ÏòÁ¿¡£
      * @return @~english Background color vector.
-     * @~chinese èƒŒæ™¯é¢œè‰²å‘é‡ã€‚
+     * @~chinese ±³¾°ÑÕÉ«ÏòÁ¿¡£
      */
     const Vec2& getBackGroundColorVector()const;
     
@@ -387,9 +387,9 @@ public:
      * @~english
      * Set layout's background image color.
      * @~chinese 
-     * è®¾ç½®layoutèƒŒæ™¯å›¾åƒçš„é¢œè‰²ã€‚
+     * ÉèÖÃlayout±³¾°Í¼ÏñµÄÑÕÉ«¡£
      * @param color @~english Background color value in `Color3B`.
-     * @~chinese Color3Bç±»å‹çš„èƒŒæ™¯é¢œè‰²å€¼ã€‚
+     * @~chinese Color3BÀàĞÍµÄ±³¾°ÑÕÉ«Öµ¡£
      */
     void setBackGroundImageColor(const Color3B& color);
     
@@ -397,9 +397,9 @@ public:
      * @~english
      * Set opacity of background image.
      * @~chinese 
-     * è®¾ç½®èƒŒæ™¯å›¾åƒçš„ä¸é€æ˜åº¦ã€‚
+     * ÉèÖÃ±³¾°Í¼ÏñµÄ²»Í¸Ã÷¶È¡£
      * @param opacity @~english Background image opacity in GLubyte.
-     * @~chinese èƒŒæ™¯å›¾åƒåœ¨GLubyteçš„ä¸é€æ˜åº¦ã€‚
+     * @~chinese ±³¾°Í¼ÏñÔÚGLubyteµÄ²»Í¸Ã÷¶È¡£
      */
     void setBackGroundImageOpacity(GLubyte opacity);
     
@@ -407,10 +407,10 @@ public:
      * @~english
      * Get color of layout's background image.
      * @~chinese 
-     * å¾—åˆ°layoutçš„èƒŒæ™¯å›¾åƒé¢œè‰²ã€‚
+     * µÃµ½layoutµÄ±³¾°Í¼ÏñÑÕÉ«¡£
      *
      * @return @~english Layout's background image color.
-     * @~chinese layoutçš„èƒŒæ™¯å›¾åƒçš„é¢œè‰²ã€‚
+     * @~chinese layoutµÄ±³¾°Í¼ÏñµÄÑÕÉ«¡£
      */
     const Color3B& getBackGroundImageColor()const;
     
@@ -418,10 +418,10 @@ public:
      * @~english
      * Get the opacity of layout's background image.
      * @~chinese 
-     * è·å–layoutçš„èƒŒæ™¯å›¾åƒä¸é€æ˜åº¦ã€‚
+     * »ñÈ¡layoutµÄ±³¾°Í¼Ïñ²»Í¸Ã÷¶È¡£
      *
      * @return @~english The opacity of layout's background image.
-     * @~chinese layoutèƒŒæ™¯å›¾ç‰‡çš„ä¸é€æ˜åº¦.
+     * @~chinese layout±³¾°Í¼Æ¬µÄ²»Í¸Ã÷¶È.
      */
     GLubyte getBackGroundImageOpacity()const;
     
@@ -429,7 +429,7 @@ public:
      * @~english
      * Remove the background image of layout.
      * @~chinese 
-     * åˆ é™¤layoutçš„èƒŒæ™¯å›¾åƒã€‚
+     * É¾³ılayoutµÄ±³¾°Í¼Ïñ¡£
      */
     void removeBackGroundImage();
     
@@ -437,10 +437,10 @@ public:
      * @~english
      * Gets background image texture size.
      * @~chinese 
-     * è·å–èƒŒæ™¯å›¾åƒçº¹ç†å¤§å°ã€‚
+     * »ñÈ¡±³¾°Í¼ÏñÎÆÀí´óĞ¡¡£
      * 
      * @return @~english background image texture size.
-     * @~chinese èƒŒæ™¯å›¾åƒçº¹ç†å¤§å°ã€‚
+     * @~chinese ±³¾°Í¼ÏñÎÆÀí´óĞ¡¡£
      */
     const Size& getBackGroundImageTextureSize() const;
     
@@ -449,11 +449,11 @@ public:
      * Toggle layout clipping.
      * If you do need clipping, you pass true to this function.
      * @~chinese 
-     * åˆ‡æ¢å¸ƒå±€å‰ªè£ã€‚
-     * å¦‚æœä½ éœ€è¦è£å‰ª,ä½ éœ€è¦ä¼ é€’trueç»™è¿™ä¸ªå‡½æ•°ã€‚
+     * ÇĞ»»²¼¾Ö¼ô²Ã¡£
+     * Èç¹ûÄãĞèÒª²Ã¼ô,ÄãĞèÒª´«µİtrue¸øÕâ¸öº¯Êı¡£
      * 
      * @param enabled @~english Pass true to enable clipping, false otherwise.
-     * @~chinese ä¼ å…¥trueåˆ™å¼€å¯è£å‰ªæ¨¡å¼ï¼Œfalseåˆ™å…³é—­
+     * @~chinese ´«ÈëtrueÔò¿ªÆô²Ã¼ôÄ£Ê½£¬falseÔò¹Ø±Õ
      */
     virtual void setClippingEnabled(bool enabled);
     
@@ -463,11 +463,11 @@ public:
      * Change the clipping type of layout.
      * On default, the clipping type is `ClippingType::STENCIL`.
      * @~chinese 
-     * æ”¹å˜layoutçš„å‰ªè£ç±»å‹ã€‚
-     * åœ¨é»˜è®¤æƒ…å†µä¸‹,å‰ªåˆ‡ç±»å‹æ˜¯â€œClippingType:STENCILâ€ã€‚
+     * ¸Ä±älayoutµÄ¼ô²ÃÀàĞÍ¡£
+     * ÔÚÄ¬ÈÏÇé¿öÏÂ,¼ôÇĞÀàĞÍÊÇ¡°ClippingType:STENCIL¡±¡£
      * @see `ClippingType`
      * @param type @~english The clipping type of .
-     * @~chinese layoutçš„å‰ªè£ç±»å‹ã€‚
+     * @~chinese layoutµÄ¼ô²ÃÀàĞÍ¡£
      */
     void setClippingType(ClippingType type);
 
@@ -480,10 +480,10 @@ public:
      * @~english
      * Gets if layout is clipping enabled.
      * @~chinese 
-     * è·å–layoutæ˜¯å¦å¼€å¯äº†å‰ªè£ã€‚
+     * »ñÈ¡layoutÊÇ·ñ¿ªÆôÁË¼ô²Ã¡£
      * 
      * @return @~english if layout is clipping enabled.
-     * @~chinese æ˜¯å¦å¯ç”¨äº†å¸ƒå±€æ˜¯å‰ªè£ã€‚
+     * @~chinese ÊÇ·ñÆôÓÃÁË²¼¾ÖÊÇ¼ô²Ã¡£
      */
     virtual bool isClippingEnabled()const;
     
@@ -491,7 +491,7 @@ public:
      * @~english
      * Returns the "class name" of widget.
      * @~chinese 
-     * è¿”å›ç»„ä»¶çš„ç±»å
+     * ·µ»Ø×é¼şµÄÀàÃû
      */
     virtual std::string getDescription() const override;
     
@@ -499,9 +499,9 @@ public:
      * @~english
      * Change the layout type.
      * @~chinese 
-     * æ”¹å˜å¸ƒå±€ç±»å‹ã€‚
+     * ¸Ä±ä²¼¾ÖÀàĞÍ¡£
      *@param type @~english Layout type.
-     * @~chinese å¸ƒå±€ç±»å‹ã€‚
+     * @~chinese ²¼¾ÖÀàĞÍ¡£
      */
     virtual void setLayoutType(Type type);
     
@@ -509,9 +509,9 @@ public:
      * @~english
      * Query layout type.
      * @~chinese 
-     * æŸ¥è¯¢layoutç±»å‹ã€‚
+     * ²éÑ¯layoutÀàĞÍ¡£
      * @return @~english Get the layout type.
-     * @~chinese layoutç±»å‹
+     * @~chinese layoutÀàĞÍ
      */
     virtual  Type getLayoutType() const;
 
@@ -524,15 +524,15 @@ public:
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @~chinese 
-     * æ ¹æ®z orderå’Œæ ‡ç­¾æ·»åŠ ä¸€ä¸ªå­èŠ‚ç‚¹åˆ°å®¹å™¨
-     * å¦‚æœå­èŠ‚ç‚¹è¢«æ·»åŠ åˆ°ä¸€ä¸ªæ­£åœ¨è¿è¡Œçš„èŠ‚ç‚¹,â€œonEnterâ€å’Œâ€œonEnterTransitionDidFinishâ€å°†ç«‹å³è¢«æ‰§è¡Œã€‚
+     * ¸ù¾İz orderºÍ±êÇ©Ìí¼ÓÒ»¸ö×Ó½Úµãµ½ÈİÆ÷
+     * Èç¹û×Ó½Úµã±»Ìí¼Óµ½Ò»¸öÕıÔÚÔËĞĞµÄ½Úµã,¡°onEnter¡±ºÍ¡°onEnterTransitionDidFinish¡±½«Á¢¼´±»Ö´ĞĞ¡£
      * 
      * @param child @~english A child node
-     * @~chinese ä¸€ä¸ªå­èŠ‚ç‚¹
+     * @~chinese Ò»¸ö×Ó½Úµã
      * @param localZOrder @~english Z order for drawing priority. Please refer to setLocalZOrder(int)
-     * @~chinese z orderç»˜åˆ¶ä¼˜å…ˆçº§ã€‚è¯·å‚é˜…setLocalZOrder(int)
+     * @~chinese z order»æÖÆÓÅÏÈ¼¶¡£Çë²ÎÔÄsetLocalZOrder(int)
      * @param tag @~english A integer  to identify the node easily. Please refer to setTag(int)
-     * @~chinese ä¸€ä¸ªæ•´æ•°ï¼Œç”¨äºè¯†åˆ«èŠ‚ç‚¹ã€‚è¯·å‚é˜…setTag(int)
+     * @~chinese Ò»¸öÕûÊı£¬ÓÃÓÚÊ¶±ğ½Úµã¡£Çë²ÎÔÄsetTag(int)
      */
     virtual void addChild(Node* child, int localZOrder, int tag) override;
     virtual void addChild(Node* child, int localZOrder, const std::string &name) override;
@@ -546,7 +546,7 @@ public:
      * Removes all children from the container with a cleanup.
      *
      * @~chinese 
-     * ä»å®¹å™¨ä¸­åˆ é™¤æ‰€æœ‰çš„å­èŠ‚ç‚¹ã€‚
+     * ´ÓÈİÆ÷ÖĞÉ¾³ıËùÓĞµÄ×Ó½Úµã¡£
      * 
      * @see `removeAllChildrenWithCleanup(bool)`
      */
@@ -557,10 +557,10 @@ public:
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      *
      * @~chinese 
-     * ä»å®¹å™¨ä¸­åˆ é™¤æ‰€æœ‰å­èŠ‚ç‚¹ï¼Œå¹¶åšå¯¹åº”çš„æ¸…ç†å·¥ä½œ - æ ¹æ®ä¸åŒçš„å‚æ•°ï¼Œæ¸…ç†æ‰€æœ‰æ­£åœ¨è¿è¡Œçš„actionsã€‚
+     * ´ÓÈİÆ÷ÖĞÉ¾³ıËùÓĞ×Ó½Úµã£¬²¢×ö¶ÔÓ¦µÄÇåÀí¹¤×÷ - ¸ù¾İ²»Í¬µÄ²ÎÊı£¬ÇåÀíËùÓĞÕıÔÚÔËĞĞµÄactions¡£
      * 
      * @param cleanup @~english true if all running actions on all children nodes should be cleanup, false otherwise.
-     * @~chinese å¦‚æœä¼ å…¥trueåˆ™æ¸…ç†æ‰€æœ‰å­èŠ‚ç‚¹çš„actionsï¼Œfalseåˆ™ä¸æ¸…ç†
+     * @~chinese Èç¹û´«ÈëtrueÔòÇåÀíËùÓĞ×Ó½ÚµãµÄactions£¬falseÔò²»ÇåÀí
      * @js removeAllChildren
      * @lua removeAllChildren
      */
@@ -570,7 +570,7 @@ public:
      * @~english
      * force refresh widget layout
      * @~chinese 
-     * å¼ºåˆ¶åˆ·æ–°æ§ä»¶çš„å¸ƒå±€
+     * Ç¿ÖÆË¢ĞÂ¿Ø¼şµÄ²¼¾Ö
      */
     virtual void forceDoLayout();
     
@@ -578,9 +578,9 @@ public:
      * @~english
      * request to refresh widget layout
      * @~chinese 
-     * è¯·æ±‚åˆ·æ–°æ§ä»¶çš„å¸ƒå±€
+     * ÇëÇóË¢ĞÂ¿Ø¼şµÄ²¼¾Ö
      */
-    void requestDoLayout();
+    virtual void requestDoLayout();
     
     /**
      * @lua NA
@@ -596,27 +596,27 @@ public:
      * @~english
      * If a layout is loop focused which means that the focus movement will be inside the layout
      * @~chinese 
-     * å¦‚æœä¸€ä¸ªå¸ƒå±€æ˜¯å¾ªç¯è·å–ç„¦ç‚¹ï¼Œè¿™æ„å‘³ç€ç„¦ç‚¹åœ¨layoutä¸­ç§»åŠ¨
+     * Èç¹ûÒ»¸ö²¼¾ÖÊÇÑ­»·»ñÈ¡½¹µã£¬ÕâÒâÎ¶×Å½¹µãÔÚlayoutÖĞÒÆ¶¯
      * @param loop @~english pass true to let the focus movement loop inside the layout
-     * @~chinese ä¼ å…¥trueåˆ™è®¾ç½®å†…éƒ¨ç„¦ç‚¹å¯ä»¥å¾ªç¯ä¼ é€’
+     * @~chinese ´«ÈëtrueÔòÉèÖÃÄÚ²¿½¹µã¿ÉÒÔÑ­»·´«µİ
      */
     void setLoopFocus(bool loop);
     
     /**
      * @return @~english If focus loop is enabled, then it will return true, otherwise it returns false. The default value is false.
-     * @~chinese å¦‚æœå¯ç”¨äº†ç„¦ç‚¹å¾ªç¯,é‚£ä¹ˆå®ƒå°†è¿”å›true,å¦åˆ™è¿”å›falseã€‚é»˜è®¤å€¼æ˜¯falseã€‚
+     * @~chinese Èç¹ûÆôÓÃÁË½¹µãÑ­»·,ÄÇÃ´Ëü½«·µ»Øtrue,·ñÔò·µ»Øfalse¡£Ä¬ÈÏÖµÊÇfalse¡£
      */
     bool isLoopFocus()const;
     
     /**
      * @param pass @~english To specify whether the layout pass its focus to its child
-     * @~chinese è¦æŒ‡å®šlayoutæ˜¯å¦ä¼ é€’ç„¦ç‚¹åˆ°å®ƒçš„å­èŠ‚ç‚¹ä¸Š
+     * @~chinese ÒªÖ¸¶¨layoutÊÇ·ñ´«µİ½¹µãµ½ËüµÄ×Ó½ÚµãÉÏ
      */
     void setPassFocusToChild(bool pass);
     
     /**
      * @return @~english To query whether the layout will pass the focus to its children or not. The default value is true
-     * @~chinese æŸ¥è¯¢å¸ƒå±€æ˜¯å¦ä¼šä¼ é€’ç„¦ç‚¹åˆ°å­èŠ‚ç‚¹ä¸Šã€‚é»˜è®¤å€¼ä¸ºtrue
+     * @~chinese ²éÑ¯²¼¾ÖÊÇ·ñ»á´«µİ½¹µãµ½×Ó½ÚµãÉÏ¡£Ä¬ÈÏÖµÎªtrue
      */
     bool isPassFocusToChild()const;
     
@@ -625,14 +625,14 @@ public:
      *  When a widget is in a layout, you could call this method to get the next focused widget within a specified direction.
      *  If the widget is not in a layout, it will return itself
      * @~chinese 
-     * å½“ä¸€ä¸ªæ§ä»¶æ˜¯åœ¨layoutä¸­ï¼Œä½ å¯ä»¥è°ƒç”¨è¿™ä¸ªæ–¹æ³•æ¥è·å¾—æŒ‡å®šçš„æ–¹å‘ä¸­çš„ä¸‹ä¸€ä¸ªç„¦ç‚¹æ§ä»¶ã€‚
-     * å¦‚æœæ²¡æœ‰åœ¨å¸ƒå±€æ§ä»¶,å®ƒå°†è¿”å›è‡ªå·±
+     * µ±Ò»¸ö¿Ø¼şÊÇÔÚlayoutÖĞ£¬Äã¿ÉÒÔµ÷ÓÃÕâ¸ö·½·¨À´»ñµÃÖ¸¶¨µÄ·½ÏòÖĞµÄÏÂÒ»¸ö½¹µã¿Ø¼ş¡£
+     * Èç¹ûÃ»ÓĞÔÚ²¼¾Ö¿Ø¼ş,Ëü½«·µ»Ø×Ô¼º
      * @param direction @~english the direction to look for the next focused widget in a layout
-     * @~chinese å¯»æ‰¾ä¸‹ä¸€ä¸ªæ–¹å‘ä¸Šçš„ç„¦ç‚¹æ§ä»¶
+     * @~chinese Ñ°ÕÒÏÂÒ»¸ö·½ÏòÉÏµÄ½¹µã¿Ø¼ş
      * @param current  @~english the current focused widget
-     * @~chinese å½“å‰çš„ç„¦ç‚¹æ§ä»¶
+     * @~chinese µ±Ç°µÄ½¹µã¿Ø¼ş
      * @return @~english the next focused widget in a layout
-     * @~chinese layoutä¸­çš„ä¸‹ä¸€ä¸ªç„¦ç‚¹æ§ä»¶
+     * @~chinese layoutÖĞµÄÏÂÒ»¸ö½¹µã¿Ø¼ş
      */
     virtual Widget* findNextFocusedWidget(FocusDirection direction, Widget* current) override;
     
@@ -640,13 +640,13 @@ public:
      * @~english
      * To specify a user-defined functor to decide which child widget of the layout should get focused
      * @~chinese 
-     * è¦æŒ‡å®šä¸€ä¸ªç”¨æˆ·å®šä¹‰çš„å‡½æ¥å†³å®šå“ªäº›å¸ƒå±€çš„å­èŠ‚ç‚¹æ§ä»¶åº”è¯¥å¾—åˆ°ç„¦ç‚¹
+     * ÒªÖ¸¶¨Ò»¸öÓÃ»§¶¨ÒåµÄº¯À´¾ö¶¨ÄÄĞ©²¼¾ÖµÄ×Ó½Úµã¿Ø¼şÓ¦¸ÃµÃµ½½¹µã
      * @param FocusDirection @~english the finding direction
-     * @~chinese æŸ¥æ‰¾çš„æ–¹å‘
+     * @~chinese ²éÕÒµÄ·½Ïò
      * @param this @~english previous focused widget
-     * @~chinese ä¹‹å‰çš„ç„¦ç‚¹æ§ä»¶
+     * @~chinese Ö®Ç°µÄ½¹µã¿Ø¼ş
      * @return @~english return the index of widget in the layout
-     * @~chinese è¿”å›æ‰¾åˆ°çš„æ§ä»¶
+     * @~chinese ·µ»ØÕÒµ½µÄ¿Ø¼ş
      */
     std::function<int(FocusDirection, Widget*)> onPassFocusToChild;
     
@@ -691,7 +691,7 @@ protected:
 
     /**
      * @~english draw fullscreen quad to clear stencil bits
-     * @~chinese ç»˜åˆ¶å±å¹•å››ä¸ªè§’å»æ¸…é™¤æ¨¡æ¿
+     * @~chinese »æÖÆÆÁÄ»ËÄ¸ö½ÇÈ¥Çå³ıÄ£°å
      */
     void drawFullScreenQuadClearStencil();
     
@@ -705,7 +705,7 @@ protected:
      * @~english
      * get the content size of the layout, it will accumulate all its children's content size
      * @~chinese 
-     * è·å¾—layoutçš„å†…å®¹çš„å¤§å°ï¼Œå®ƒå°†åŒ…å«å…¶æ‰€æœ‰å­èŠ‚ç‚¹çš„å†…å®¹å¤§å°
+     * »ñµÃlayoutµÄÄÚÈİµÄ´óĞ¡£¬Ëü½«°üº¬ÆäËùÓĞ×Ó½ÚµãµÄÄÚÈİ´óĞ¡
      */
     Size getLayoutAccumulatedSize() const;
     
@@ -714,12 +714,12 @@ protected:
      * When the layout get focused, it the layout pass the focus to its child, it will use this method to determine which child 
      * will get the focus.  The current algorithm to determine which child will get focus is nearest-distance-priority algorithm
      * @~chinese 
-     * å½“layoutå¾—åˆ°ç„¦ç‚¹ï¼Œå®ƒä¼šç”¨è¿™ç§æ–¹æ³•æ¥ç¡®å®šä¼ é€’ç„¦ç‚¹åˆ°å“ªäº›å­èŠ‚ç‚¹
-     * å°†å¾—åˆ°çš„ç„¦ç‚¹ã€‚ç›®å‰æ˜¯ä¾æ®è·ç¦»ä¼˜å…ˆç®—æ³•æ¥ç¡®å®šå“ªäº›å­èŠ‚ç‚¹å°†å¾—åˆ°ç„¦ç‚¹
+     * µ±layoutµÃµ½½¹µã£¬Ëü»áÓÃÕâÖÖ·½·¨À´È·¶¨´«µİ½¹µãµ½ÄÄĞ©×Ó½Úµã
+     * ½«µÃµ½µÄ½¹µã¡£Ä¿Ç°ÊÇÒÀ¾İ¾àÀëÓÅÏÈËã·¨À´È·¶¨ÄÄĞ©×Ó½Úµã½«µÃµ½½¹µã
      * @param dir @~english next focused widget direction
-     * @~chinese æ¥ä¸‹æ¥æŸ¥æ‰¾ç„¦ç‚¹çš„æ–¹å‘
+     * @~chinese ½ÓÏÂÀ´²éÕÒ½¹µãµÄ·½Ïò
      * @return @~english The index of child widget in the container
-     * @~chinese å­æ§ä»¶åœ¨å®¹å™¨ä¸­çš„ç´¢å¼•
+     * @~chinese ×Ó¿Ø¼şÔÚÈİÆ÷ÖĞµÄË÷Òı
      */
      int findNearestChildWidgetIndex(FocusDirection direction, Widget* baseWidget);
     
@@ -728,12 +728,12 @@ protected:
      * When the layout get focused, it the layout pass the focus to its child, it will use this method to determine which child
      * will get the focus.  The current algorithm to determine which child will get focus is farthest-distance-priority algorithm
      * @~chinese 
-     * å½“layoutå¾—åˆ°ç„¦ç‚¹ï¼Œå®ƒä¼šç”¨è¿™ç§æ–¹æ³•æ¥ç¡®å®šä¼ é€’ç„¦ç‚¹åˆ°å“ªäº›å­èŠ‚ç‚¹
-     * å°†å¾—åˆ°çš„ç„¦ç‚¹ã€‚ç›®å‰æ˜¯ä¾æ®è·ç¦»ä¼˜å…ˆç®—æ³•æ¥ç¡®å®šå“ªäº›å­èŠ‚ç‚¹å°†å¾—åˆ°ç„¦ç‚¹
+     * µ±layoutµÃµ½½¹µã£¬Ëü»áÓÃÕâÖÖ·½·¨À´È·¶¨´«µİ½¹µãµ½ÄÄĞ©×Ó½Úµã
+     * ½«µÃµ½µÄ½¹µã¡£Ä¿Ç°ÊÇÒÀ¾İ¾àÀëÓÅÏÈËã·¨À´È·¶¨ÄÄĞ©×Ó½Úµã½«µÃµ½½¹µã
      * @param dir @~english next focused widget direction
-     * @~chinese æ¥ä¸‹æ¥æŸ¥æ‰¾ç„¦ç‚¹çš„æ–¹å‘
+     * @~chinese ½ÓÏÂÀ´²éÕÒ½¹µãµÄ·½Ïò
      * @return @~english The index of child widget in the container
-     * @~chinese å­æ§ä»¶åœ¨å®¹å™¨ä¸­çš„ç´¢å¼•
+     * @~chinese ×Ó¿Ø¼şÔÚÈİÆ÷ÖĞµÄË÷Òı
      */
     int findFarthestChildWidgetIndex(FocusDirection direction, Widget* baseWidget);
     
@@ -741,13 +741,13 @@ protected:
      * @~english
      * calculate the nearest distance between the baseWidget and the children of the layout
      * @~chinese 
-     * è®¡ç®—åŸºæœ¬æ§ä»¶å’Œlayoutçš„å­èŠ‚ç‚¹ä¹‹é—´çš„æœ€è¿‘è·ç¦»
+     * ¼ÆËã»ù±¾¿Ø¼şºÍlayoutµÄ×Ó½ÚµãÖ®¼äµÄ×î½ü¾àÀë
      *
      * @param the @~english base widget which will be used to calculate the distance between the layout's children and itself
-     * @~chinese å°†è¢«ç”¨äºè®¡ç®—layoutçš„å­èŠ‚ç‚¹å’Œè‡ªèº«ä¹‹é—´çš„è·ç¦»çš„åŸºæœ¬æ§ä»¶
+     * @~chinese ½«±»ÓÃÓÚ¼ÆËãlayoutµÄ×Ó½ÚµãºÍ×ÔÉíÖ®¼äµÄ¾àÀëµÄ»ù±¾¿Ø¼ş
      *
      * @return @~english return the nearest distance between the baseWidget and the layout's children
-     * @~chinese è¿”å›åŸºæœ¬æ§ä»¶å’Œæœ€è¿‘çš„layoutçš„å­èŠ‚ç‚¹ä¹‹é—´çš„è·ç¦»
+     * @~chinese ·µ»Ø»ù±¾¿Ø¼şºÍ×î½üµÄlayoutµÄ×Ó½ÚµãÖ®¼äµÄ¾àÀë
      */
     float calculateNearestDistance(Widget* baseWidget);
     
@@ -755,13 +755,13 @@ protected:
      * @~english
      * calculate the farthest distance between the baseWidget and the children of the layout
      * @~chinese 
-     * è®¡ç®—åŸºæœ¬æ§ä»¶å’Œlayoutçš„å­èŠ‚ç‚¹ä¹‹é—´çš„æœ€è¿‘è·ç¦»
+     * ¼ÆËã»ù±¾¿Ø¼şºÍlayoutµÄ×Ó½ÚµãÖ®¼äµÄ×î½ü¾àÀë
      *
      * @param the @~english base widget which will be used to calculate the distance between the layout's children and itself
-     * @~chinese å°†è¢«ç”¨äºè®¡ç®—layoutçš„å­èŠ‚ç‚¹å’Œè‡ªèº«ä¹‹é—´çš„è·ç¦»çš„åŸºæœ¬æ§ä»¶
+     * @~chinese ½«±»ÓÃÓÚ¼ÆËãlayoutµÄ×Ó½ÚµãºÍ×ÔÉíÖ®¼äµÄ¾àÀëµÄ»ù±¾¿Ø¼ş
      *
      * @return @~english return the farthest distance between the baseWidget and the layout's children
-     * @~chinese è¿”å›åŸºæœ¬æ§ä»¶å’Œæœ€è¿‘çš„layoutçš„å­èŠ‚ç‚¹ä¹‹é—´çš„è·ç¦»
+     * @~chinese ·µ»Ø»ù±¾¿Ø¼şºÍ×î½üµÄlayoutµÄ×Ó½ÚµãÖ®¼äµÄ¾àÀë
      */
     float calculateFarthestDistance(Widget* baseWidget);
     
@@ -769,7 +769,7 @@ protected:
      * @~english
      *  when a layout pass the focus to it's child, use this method to determine which algorithm to use, nearest or farthest distance algorithm or not
      * @~chinese 
-     * å½“ä¸€ä¸ªå¸ƒå±€å°†ç„¦ç‚¹ä¼ é€’ç»™å®ƒçš„å­èŠ‚ç‚¹,åˆ™ä¼šä½¿ç”¨è¿™ç§æ–¹æ³•æ¥ç¡®å®šä½¿ç”¨å“ªä¸ªç®—æ³•ä¼ é€’ï¼ˆæœ€è¿‘æˆ–æœ€è¿œçš„è·ç¦»ç®—æ³•ï¼‰
+     * µ±Ò»¸ö²¼¾Ö½«½¹µã´«µİ¸øËüµÄ×Ó½Úµã,Ôò»áÊ¹ÓÃÕâÖÖ·½·¨À´È·¶¨Ê¹ÓÃÄÄ¸öËã·¨´«µİ£¨×î½ü»ò×îÔ¶µÄ¾àÀëËã·¨£©
      */
     void findProperSearchingFunctor(FocusDirection dir, Widget* baseWidget);
     
@@ -777,7 +777,7 @@ protected:
      * @~english
      * find the first non-layout widget in this layout
      * @~chinese 
-     * æŸ¥æ‰¾è¿™ä¸ªå¸ƒå±€ä¸­ç¬¬ä¸€ä¸ªä¸æ˜¯ layout ç±»å‹çš„æ§ä»¶
+     * ²éÕÒÕâ¸ö²¼¾ÖÖĞµÚÒ»¸ö²»ÊÇ layout ÀàĞÍµÄ¿Ø¼ş
      */
     Widget *findFirstNonLayoutWidget();
     
@@ -785,14 +785,14 @@ protected:
      * @~english
      * find the first focus enabled widget index in the layout, it will recursive searching the child widget
      * @~chinese 
-     * å‘ç°åœ¨layoutä¸­çš„ç¬¬ä¸€ä¸ªå¯ç”¨ç„¦ç‚¹çš„æ§ä»¶ç´¢å¼•ï¼Œå®ƒä¼šé€’å½’æœç´¢å­æ§ä»¶
+     * ·¢ÏÖÔÚlayoutÖĞµÄµÚÒ»¸öÆôÓÃ½¹µãµÄ¿Ø¼şË÷Òı£¬Ëü»áµİ¹éËÑË÷×Ó¿Ø¼ş
      */
     int findFirstFocusEnabledWidgetIndex();
     
     /**@~english
      * find a focus enabled child Widget in the layout by index
      * @~chinese 
-     * æŒ‰ç´¢å¼•æ‰¾åˆ°ä¸€ä¸ªå¯ç”¨ç„¦ç‚¹çš„å­æ§ä»¶
+     * °´Ë÷ÒıÕÒµ½Ò»¸öÆôÓÃ½¹µãµÄ×Ó¿Ø¼ş
      */
     Widget* findFocusEnabledChildWidgetByIndex(ssize_t index);
     
@@ -800,7 +800,7 @@ protected:
      * @~english
      * get the center point of a widget in world space
      * @~chinese 
-     * å¾—åˆ°ä¸€ä¸ªæ§ä»¶åœ¨ä¸–ç•Œç©ºé—´ä¸­å¿ƒç‚¹
+     * µÃµ½Ò»¸ö¿Ø¼şÔÚÊÀ½ç¿Õ¼äÖĞĞÄµã
      */
     Vec2 getWorldCenterPoint(Widget* node)const;
     
@@ -808,13 +808,13 @@ protected:
      * @~english
      * this method is called internally by nextFocusedWidget. When the dir is Right/Down, then this method will be called
      * @~chinese 
-     * nextFocusedWidgetå†…éƒ¨è°ƒç”¨æ­¤æ–¹æ³•ã€‚å½“diræ˜¯å‘å³/å‘ä¸‹ï¼Œåˆ™æ­¤æ–¹æ³•å°†è¢«è°ƒç”¨
+     * nextFocusedWidgetÄÚ²¿µ÷ÓÃ´Ë·½·¨¡£µ±dirÊÇÏòÓÒ/ÏòÏÂ£¬Ôò´Ë·½·¨½«±»µ÷ÓÃ
      * @param dir  @~english the direction.
-     * @~chinese æ–¹å‘ã€‚
+     * @~chinese ·½Ïò¡£
      * @param current  @~english the current focused widget
-     * @~chinese å½“å‰ç„¦ç‚¹çš„æ§ä»¶
+     * @~chinese µ±Ç°½¹µãµÄ¿Ø¼ş
      * @return @~english the next focused widget
-     * @~chinese ä¸‹ä¸€ä¸ªç„¦ç‚¹æ§ä»¶
+     * @~chinese ÏÂÒ»¸ö½¹µã¿Ø¼ş
      */
     Widget* getNextFocusedWidget(FocusDirection direction,Widget *current);
     
@@ -822,13 +822,13 @@ protected:
      * @~english
      * this method is called internally by nextFocusedWidget. When the dir is Left/Up, then this method will be called
      * @~chinese 
-     * nextFocusedWidgetå†…éƒ¨è°ƒç”¨æ­¤æ–¹æ³•ã€‚å½“diræ˜¯å·¦/ä¸Šï¼Œé‚£ä¹ˆè¿™ä¸ªæ–¹æ³•ä¼šè¢«è°ƒç”¨
+     * nextFocusedWidgetÄÚ²¿µ÷ÓÃ´Ë·½·¨¡£µ±dirÊÇ×ó/ÉÏ£¬ÄÇÃ´Õâ¸ö·½·¨»á±»µ÷ÓÃ
      * @param dir  @~english the direction.
-     * @~chinese æ–¹å‘ã€‚
+     * @~chinese ·½Ïò¡£
      *@param current  @~english the current focused widget
-     * @~chinese å½“å‰ç„¦ç‚¹æ§ä»¶
+     * @~chinese µ±Ç°½¹µã¿Ø¼ş
      *@return @~english the next focused widget
-     * @~chinese ä¸‹ä¸€ä¸ªç„¦ç‚¹æ§ä»¶
+     * @~chinese ÏÂÒ»¸ö½¹µã¿Ø¼ş
      */
     Widget* getPreviousFocusedWidget(FocusDirection direction, Widget *current);
     
@@ -836,9 +836,9 @@ protected:
      * @~english
      * find the nth element in the _children array. Only the Widget descendant object will be returned
      * @~chinese 
-     * æ‰¾åˆ°_childrenç¬¬nä¸ªå…ƒç´ ã€‚åªæœ‰ç»§æ‰¿è‡ªWidgetçš„å¯¹è±¡ä¼šè¢«è¿”å›
+     * ÕÒµ½_childrenµÚn¸öÔªËØ¡£Ö»ÓĞ¼Ì³Ğ×ÔWidgetµÄ¶ÔÏó»á±»·µ»Ø
      * @param index  @~english The index of a element in the _children array
-     * @~chinese _childrenæ•°ç»„ä¸­çš„ä¸€ä¸ªå…ƒç´ çš„ç´¢å¼•
+     * @~chinese _childrenÊı×éÖĞµÄÒ»¸öÔªËØµÄË÷Òı
      */
     Widget* getChildWidgetByIndex(ssize_t index)const;
 
@@ -846,7 +846,7 @@ protected:
      * @~english
      * whether it is the last element according to all their parents
      * @~chinese 
-     * æ˜¯å¦æ˜¯å…¶çˆ¶èŠ‚ç‚¹çš„æœ€åä¸€ä¸ªå…ƒç´ 
+     * ÊÇ·ñÊÇÆä¸¸½ÚµãµÄ×îºóÒ»¸öÔªËØ
      */
     bool  isLastWidgetInContainer(Widget* widget, FocusDirection direction)const;
     
@@ -854,8 +854,8 @@ protected:
      * @~english Lookup any parent widget with a layout type as the direction,
      * if the layout is loop focused, then return true, otherwise
      * It returns false
-     * @~chinese æŸ¥æ‰¾ä»»ä½•çˆ¶æ§ä»¶çš„å¸ƒå±€ç±»å‹ã€æ–¹å‘,
-     * å¦‚æœå¼€å¯äº†å¾ªç¯ç„¦ç‚¹,åˆ™è¿”å›true,å¦åˆ™è¿”å›false
+     * @~chinese ²éÕÒÈÎºÎ¸¸¿Ø¼şµÄ²¼¾ÖÀàĞÍ¡¢·½Ïò,
+     * Èç¹û¿ªÆôÁËÑ­»·½¹µã,Ôò·µ»Øtrue,·ñÔò·µ»Øfalse
      */
     bool  isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection direction)const;
     
@@ -863,7 +863,7 @@ protected:
      * @~english
      * pass the focus to the layout's next focus enabled child
      * @~chinese 
-     * ä¼ é€’ç„¦ç‚¹ç»™ä¸‹ä¸€ä¸ªè·å–ç„¦ç‚¹çš„å­èŠ‚ç‚¹
+     * ´«µİ½¹µã¸øÏÂÒ»¸ö»ñÈ¡½¹µãµÄ×Ó½Úµã
      */
     Widget* passFocusToChild(FocusDirection direction, Widget* current);
     
@@ -871,7 +871,7 @@ protected:
      * @~english
      * If there are no focus enabled child in the layout, it will return false, otherwise it returns true
      * @~chinese 
-     * å¦‚æœæœ‰layoutä¸­ç„¦ç‚¹å¯ç”¨çš„å­èŠ‚ç‚¹æ²¡æœ‰ç„¦ç‚¹ï¼Œåˆ™è¿”å›falseï¼Œå¦åˆ™è¿”å›true
+     * Èç¹ûÓĞlayoutÖĞ½¹µãÆôÓÃµÄ×Ó½ÚµãÃ»ÓĞ½¹µã£¬Ôò·µ»Øfalse£¬·ñÔò·µ»Øtrue
      */
     bool checkFocusEnabledChild()const;
     

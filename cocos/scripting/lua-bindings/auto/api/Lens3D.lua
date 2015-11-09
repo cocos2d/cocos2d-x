@@ -63,7 +63,7 @@
 -- param gridSize Specify the size of the grid.<br>
 -- param position Specify the center position of the lens.<br>
 -- param radius Specify the radius of the lens.<br>
--- return If the creation sucess, return a pointer of Lens3D action; otherwise, return nil.
+-- return If the creation success, return a pointer of Lens3D action; otherwise, return nil.
 -- @function [parent=#Lens3D] create 
 -- @param self
 -- @param #float duration

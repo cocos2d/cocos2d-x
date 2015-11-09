@@ -38,8 +38,8 @@ namespace ui {
     /**
      * @brief @~english A component class used for layout.
      * The LayoutComponent holds all the data for layouting.
-     * @~chinese ç”¨äºlayoutçš„ç»„ä»¶ç±»ã€‚
-     * LayoutComponentä¿å­˜çš„æ‰€æœ‰ç”¨äºå¸ƒå±€çš„æ•°æ®ã€‚
+     * @~chinese ÓÃÓÚlayoutµÄ×é¼şÀà¡£
+     * LayoutComponent±£´æµÄËùÓĞÓÃÓÚ²¼¾ÖµÄÊı¾İ¡£
      */
     class CC_GUI_DLL LayoutComponent : public Component
     {
@@ -50,7 +50,7 @@ namespace ui {
          * Default constructor
          *
          * @~chinese 
-         * é»˜è®¤æ„é€ å‡½æ•°
+         * Ä¬ÈÏ¹¹Ôìº¯Êı
          * 
          * @lua new
          */
@@ -61,7 +61,7 @@ namespace ui {
          * Default destructor
          *
          * @~chinese 
-         * é»˜è®¤çš„ææ„å‡½æ•°
+         * Ä¬ÈÏµÄÎö¹¹º¯Êı
          * 
          * @lua NA
          */
@@ -73,7 +73,7 @@ namespace ui {
          * @~english
          * Create a LayoutComponent instance with default settings.
          * @~chinese 
-         * ç”¨é»˜è®¤è®¾ç½®åˆ›å»ºä¸€ä¸ªLayoutComponentå®ä¾‹ã€‚
+         * ÓÃÄ¬ÈÏÉèÖÃ´´½¨Ò»¸öLayoutComponentÊµÀı¡£
          */
         CREATE_FUNC(LayoutComponent);
 
@@ -83,13 +83,13 @@ namespace ui {
          * If the node has already binded a LayoutComponent named __LAYOUT_COMPONENT_NAME, just return the LayoutComponent.
          * Otherwise, create a new LayoutComponent and bind the LayoutComponent to the node.
          * @~chinese 
-         * å°†LayoutComponentç»‘å®šåˆ°ä¸€ä¸ªæŒ‡å®šçš„èŠ‚ç‚¹ã€‚
-         * å¦‚æœèŠ‚ç‚¹å·²ç»ç»‘å®šä¸€ä¸ªåå«__LAYOUT_COMPONENT_NAMEçš„LayoutComponent,åˆ™åªè¿”å›LayoutComponentã€‚
-         * å¦åˆ™ï¼Œåˆ›å»ºä¸€ä¸ªæ–°çš„LayoutComponentå¹¶ç»‘å®šLayoutComponentåˆ°èŠ‚ç‚¹ã€‚
+         * ½«LayoutComponent°ó¶¨µ½Ò»¸öÖ¸¶¨µÄ½Úµã¡£
+         * Èç¹û½ÚµãÒÑ¾­°ó¶¨Ò»¸öÃû½Ğ__LAYOUT_COMPONENT_NAMEµÄLayoutComponent,ÔòÖ»·µ»ØLayoutComponent¡£
+         * ·ñÔò£¬´´½¨Ò»¸öĞÂµÄLayoutComponent²¢°ó¶¨LayoutComponentµ½½Úµã¡£
          * @param node @~english A Node* instance pointer.
-         * @~chinese ä¸€ä¸ªèŠ‚ç‚¹æŒ‡é’ˆ
+         * @~chinese Ò»¸ö½ÚµãÖ¸Õë
          * @return @~english The binded LayoutComponent instance pointer.
-         * @~chinese ç»‘å®šLayoutComponentå®ä¾‹çš„æŒ‡é’ˆã€‚
+         * @~chinese °ó¶¨LayoutComponentÊµÀıµÄÖ¸Õë¡£
          */
         static LayoutComponent* bindLayoutComponent(Node* node);
 
@@ -97,7 +97,7 @@ namespace ui {
          * @~english
          * Horizontal dock position type.
          * @~chinese 
-         * æ°´å¹³åœé ä½ç½®ç±»å‹ã€‚
+         * Ë®Æ½Í£¿¿Î»ÖÃÀàĞÍ¡£
          */
         enum class HorizontalEdge
         {
@@ -111,7 +111,7 @@ namespace ui {
          * @~english
          * Vertical dock position type.
          * @~chinese 
-         * å‚ç›´åœé ä½ç½®ç±»å‹ã€‚
+         * ´¹Ö±Í£¿¿Î»ÖÃÀàĞÍ¡£
          */
         enum class VerticalEdge
         {
@@ -126,11 +126,11 @@ namespace ui {
          * Percent content size is used to adapt node's content size based on parent's content size.
          * If set to true then node's content size will be changed based on the value setted by @see setPercentContentSize
          * @~chinese 
-         * æ ¹æ®çˆ¶èŠ‚ç‚¹çš„å†…å®¹å¤§å°æŒ‰ç™¾åˆ†æ¯”è°ƒæ•´èŠ‚ç‚¹çš„å†…å®¹å¤§å°ã€‚
-         * å¦‚æœè®¾ç½®ä¸ºtrueï¼Œåˆ™åŸºäºçˆ¶èŠ‚ç‚¹æ¥æ”¹å˜è‡ªèº«çš„å¤§å°ï¼Œ@see setPercentContentSize
+         * ¸ù¾İ¸¸½ÚµãµÄÄÚÈİ´óĞ¡°´°Ù·Ö±Èµ÷Õû½ÚµãµÄÄÚÈİ´óĞ¡¡£
+         * Èç¹ûÉèÖÃÎªtrue£¬Ôò»ùÓÚ¸¸½ÚµãÀ´¸Ä±ä×ÔÉíµÄ´óĞ¡£¬@see setPercentContentSize
          *
          * @param isUsed @~english True to enable percent content size, false otherwise.
-         * @~chinese å¯ç”¨åˆ™è¿”å›trueï¼Œæœªå¯ç”¨åˆ™è¿”å›falseã€‚
+         * @~chinese ÆôÓÃÔò·µ»Øtrue£¬Î´ÆôÓÃÔò·µ»Øfalse¡£
          */
         void setUsingPercentContentSize(bool isUsed);
 
@@ -138,9 +138,9 @@ namespace ui {
          * @~english
          * Query whether use percent content size or not.
          * @~chinese 
-         * æŸ¥è¯¢æ˜¯å¦å¼€å¯äº†ç™¾åˆ†æ¯”æ§åˆ¶å†…å®¹å¤§å°ã€‚
+         * ²éÑ¯ÊÇ·ñ¿ªÆôÁË°Ù·Ö±È¿ØÖÆÄÚÈİ´óĞ¡¡£
          * @return @~english True if using percent content size, false otherwise.
-         * @~chinese å¦‚æœå¼€å¯äº†ç™¾åˆ†æ¯”æ§åˆ¶å¤§å°åˆ™è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+         * @~chinese Èç¹û¿ªÆôÁË°Ù·Ö±È¿ØÖÆ´óĞ¡Ôò·µ»Øtrue,·ñÔò·µ»Øfalse¡£
          */
         bool getUsingPercentContentSize()const;
 
@@ -150,11 +150,11 @@ namespace ui {
          * The value should be [0-1], 0 means the child's content size will be 0
          * and 1 means the child's content size is the same as its parents.
          * @~chinese 
-         * è®¾ç½®ç™¾åˆ†æ¯”å¤§å°ã€‚
-         * å€¼åº”è¯¥åœ¨0 - 1ä¹‹é—´, 0æ„å‘³ç€å­èŠ‚ç‚¹çš„å†…å®¹å¤§å°ä¸º0
-         * 1æ„å‘³ç€å­èŠ‚ç‚¹çš„å†…å®¹å¤§å°å’Œå…¶çˆ¶èŠ‚ç‚¹ä¸€æ ·ã€‚
+         * ÉèÖÃ°Ù·Ö±È´óĞ¡¡£
+         * ÖµÓ¦¸ÃÔÚ0 - 1Ö®¼ä, 0ÒâÎ¶×Å×Ó½ÚµãµÄÄÚÈİ´óĞ¡Îª0
+         * 1ÒâÎ¶×Å×Ó½ÚµãµÄÄÚÈİ´óĞ¡ºÍÆä¸¸½ÚµãÒ»Ñù¡£
          * @param percent @~english The percent (x,y) of the node in [0-1] scope.
-         * @~chinese ç™¾åˆ†æ¯”(x,y)ï¼Œåœ¨(0 - 1)èŒƒå›´å†…ã€‚
+         * @~chinese °Ù·Ö±È(x,y)£¬ÔÚ(0 - 1)·¶Î§ÄÚ¡£
          */
         void setPercentContentSize(const Vec2 &percent);
 
@@ -162,9 +162,9 @@ namespace ui {
          * @~english
          * Query the percent content size value.
          * @~chinese 
-         * æŸ¥è¯¢å†…å®¹å¤§å°ç™¾åˆ†æ¯”å€¼ã€‚
+         * ²éÑ¯ÄÚÈİ´óĞ¡°Ù·Ö±ÈÖµ¡£
          * @return @~english Percet (x,y) in Vec2.
-         * @~chinese Vec2ç±»å‹çš„ç™¾åˆ†æ¯”æ•°æ®(x,y)ã€‚
+         * @~chinese Vec2ÀàĞÍµÄ°Ù·Ö±ÈÊı¾İ(x,y)¡£
          */
         Vec2 getPercentContentSize()const;
 
@@ -172,9 +172,9 @@ namespace ui {
          * @~english
          * Query the anchor position.
          * @~chinese 
-         * æŸ¥è¯¢é”šç‚¹çš„ä½ç½®ã€‚
+         * ²éÑ¯ÃªµãµÄÎ»ÖÃ¡£
          * @return @~english Anchor position to it's parent
-         * @~chinese é”šç‚¹çš„ä½ç½®
+         * @~chinese ÃªµãµÄÎ»ÖÃ
          */
         const Point& getAnchorPosition()const;
 
@@ -182,9 +182,9 @@ namespace ui {
          * @~english
          * Change the anchor position to it's parent.
          * @~chinese 
-         * è®¾ç½®é”šç‚¹çš„ä½ç½®
+         * ÉèÖÃÃªµãµÄÎ»ÖÃ
          * @param point @~english A value in (x,y) format.
-         * @~chinese ä¸€ä¸ª(x,y)æ ¼å¼çš„å€¼ã€‚
+         * @~chinese Ò»¸ö(x,y)¸ñÊ½µÄÖµ¡£
          */
         void setAnchorPosition(const Point& point);
 
@@ -192,9 +192,9 @@ namespace ui {
          * @~english
          * Query the owner's position.
          * @~chinese 
-         * æŸ¥è¯¢è¿™ä¸ªcomponentæ‰€æœ‰è€…çš„ä½ç½®ã€‚
+         * ²éÑ¯Õâ¸öcomponentËùÓĞÕßµÄÎ»ÖÃ¡£
          * @return @~english The owner's position.
-         * @~chinese ä½ç½®æ•°æ®
+         * @~chinese Î»ÖÃÊı¾İ
          */
         const Point& getPosition()const;
 
@@ -202,9 +202,9 @@ namespace ui {
          * @~english
          * Change the position of component owner.
          * @~chinese 
-         * æ›´æ”¹componentæ‰€æœ‰è€…çš„ä½ç½®
+         * ¸ü¸ÄcomponentËùÓĞÕßµÄÎ»ÖÃ
          * @param position @~english A position in (x,y)
-         * @~chinese ä½ç½®æ•°æ®(x,y)
+         * @~chinese Î»ÖÃÊı¾İ(x,y)
          */ 
         void setPosition(const Point& position);
 
@@ -212,9 +212,9 @@ namespace ui {
          * @~english
          * Whether position percentX is enabled or not. 
          * @~chinese 
-         * æ˜¯å¦å¯ç”¨percentXæ¥è®¡ç®—ä½ç½®ã€‚
+         * ÊÇ·ñÆôÓÃpercentXÀ´¼ÆËãÎ»ÖÃ¡£
          * @return @~english True if position percertX is enable, false otherwise.
-         * @~chinese å¦‚æœå¯ç”¨åˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+         * @~chinese Èç¹ûÆôÓÃÔò·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
          */
         bool isPositionPercentXEnabled()const;
         
@@ -222,9 +222,9 @@ namespace ui {
          * @~english
          * Toggle position percentX enabled.
          * @~chinese 
-         * percentXç™¾åˆ†æ¯”å®šä½å¼€å…³ã€‚
+         * percentX°Ù·Ö±È¶¨Î»¿ª¹Ø¡£
          * @param isUsed  @~english True if enable position percentX, false otherwise.
-         * @~chinese å¦‚æœä¼ å…¥trueåˆ™å¼€å¯ï¼Œä¼ å…¥falseå…³é—­ã€‚
+         * @~chinese Èç¹û´«ÈëtrueÔò¿ªÆô£¬´«Èëfalse¹Ø±Õ¡£
          */
         void setPositionPercentXEnabled(bool isUsed);
 
@@ -232,9 +232,9 @@ namespace ui {
          * @~english
          * Query the position percent X value.
          * @~chinese 
-         * æŸ¥è¯¢xè½´çš„ç™¾åˆ†æ¯”å®šä½ä¿¡æ¯
+         * ²éÑ¯xÖáµÄ°Ù·Ö±È¶¨Î»ĞÅÏ¢
          *@return @~english Position percent X value in float.
-         * @~chinese ä¸€ä¸ªç™¾åˆ†æ¯”çš„xæµ®ç‚¹å€¼
+         * @~chinese Ò»¸ö°Ù·Ö±ÈµÄx¸¡µãÖµ
          */
         float getPositionPercentX()const;
 
@@ -242,9 +242,9 @@ namespace ui {
          * @~english
          * Change position percent X value.
          * @~chinese 
-         * æ”¹å˜xè½´ä¸Šçš„ç™¾åˆ†æ¯”å®šä½å€¼
+         * ¸Ä±äxÖáÉÏµÄ°Ù·Ö±È¶¨Î»Öµ
          * @param percentMargin @~english Margin in float.
-         * @~chinese ä¸€ä¸ªæµ®ç‚¹æ•°
+         * @~chinese Ò»¸ö¸¡µãÊı
          */
         void setPositionPercentX(float percentMargin);
 
@@ -252,10 +252,10 @@ namespace ui {
          * @~english
          * Whether position percentY is enabled or not.
          * @~chinese 
-         * æ˜¯å¦å¼€å¯percentYï¼Œyè½´çš„ç™¾åˆ†æ¯”å®šä½
+         * ÊÇ·ñ¿ªÆôpercentY£¬yÖáµÄ°Ù·Ö±È¶¨Î»
          * @see `setPositionPercentYEnabled`
          * @return @~english True if position percentY is enabled, false otherwise.
-         * @~chinese å¦‚æœå¯ç”¨åˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
+         * @~chinese Èç¹ûÆôÓÃÔò·µ»Øtrue£¬·ñÔò·µ»Øfalse
          */
         bool isPositionPercentYEnabled()const;
 
@@ -263,9 +263,9 @@ namespace ui {
          * @~english
          * Toggle position percentY enabled.
          * @~chinese 
-         * yè½´ç™¾åˆ†æ¯”å®šä½percentYå¯ç”¨å¼€å…³
+         * yÖá°Ù·Ö±È¶¨Î»percentYÆôÓÃ¿ª¹Ø
          * @param isUsed @~english True if position percentY is enabled, false otherwise.
-         * @~chinese å¦‚æœä¼ å…¥trueåˆ™å¼€å¯yè½´çš„ç™¾åˆ†æ¯”å®šä½ï¼Œä¼ å…¥falseåˆ™å…³é—­
+         * @~chinese Èç¹û´«ÈëtrueÔò¿ªÆôyÖáµÄ°Ù·Ö±È¶¨Î»£¬´«ÈëfalseÔò¹Ø±Õ
          */
         void setPositionPercentYEnabled(bool isUsed);
 
@@ -273,9 +273,9 @@ namespace ui {
          * @~english
          * Query the position percentY Y value.
          * @~chinese 
-         * æŸ¥è¯¢yè½´çš„ç™¾åˆ†æ¯”å®šä½å€¼percentY
+         * ²éÑ¯yÖáµÄ°Ù·Ö±È¶¨Î»ÖµpercentY
          * @return @~english Position percent Y value in float.
-         * @~chinese yè½´çš„ç™¾åˆ†æ¯”å®šä½æµ®ç‚¹å€¼
+         * @~chinese yÖáµÄ°Ù·Ö±È¶¨Î»¸¡µãÖµ
          */
         float getPositionPercentY()const;
 
@@ -283,9 +283,9 @@ namespace ui {
          * @~english
          * Change position percentY value.
          * @~chinese 
-         * æ”¹å˜yè½´çš„ç™¾åˆ†æ¯”å®šä½ä¿¡æ¯percentY
+         * ¸Ä±äyÖáµÄ°Ù·Ö±È¶¨Î»ĞÅÏ¢percentY
          * @param percentMargin @~english Margin in float.
-         * @~chinese ä¸€ä¸ªæµ®ç‚¹å€¼
+         * @~chinese Ò»¸ö¸¡µãÖµ
          */
         void setPositionPercentY(float percentMargin);
 
@@ -293,9 +293,9 @@ namespace ui {
          * @~english
          * Query element horizontal dock type.
          * @~chinese 
-         * æŸ¥è¯¢å…ƒç´ æ°´å¹³å¯¹é½çš„ç±»å‹ã€‚
+         * ²éÑ¯ÔªËØË®Æ½¶ÔÆëµÄÀàĞÍ¡£
          * @return @~english Horizontal dock type.
-         * @~chinese æ°´å¹³å¯¹é½ç±»å‹ã€‚
+         * @~chinese Ë®Æ½¶ÔÆëÀàĞÍ¡£
          */
         HorizontalEdge getHorizontalEdge()const;
 
@@ -303,9 +303,9 @@ namespace ui {
          * @~english
          * Change element's horizontal dock type.
          * @~chinese 
-         * æ›´æ”¹å…ƒç´ çš„æ°´å¹³å¯¹é½ç±»å‹
+         * ¸ü¸ÄÔªËØµÄË®Æ½¶ÔÆëÀàĞÍ
          * @param hEage @~english Horizontal dock type @see `HorizontalEdge`
-         * @~chinese æ°´å¹³å¯¹é½ç±»å‹
+         * @~chinese Ë®Æ½¶ÔÆëÀàĞÍ
          */
         void setHorizontalEdge(HorizontalEdge hEage);
 
@@ -313,9 +313,9 @@ namespace ui {
          * @~english
          * Query element vertical dock type.
          * @~chinese 
-         * æŸ¥è¯¢å…ƒç´ å‚ç›´å®šä½ç±»å‹ã€‚
+         * ²éÑ¯ÔªËØ´¹Ö±¶¨Î»ÀàĞÍ¡£
          *@return @~english Vertical dock type.
-         * @~chinese å‚ç›´å®šä½ç±»å‹ã€‚
+         * @~chinese ´¹Ö±¶¨Î»ÀàĞÍ¡£
          */
         VerticalEdge getVerticalEdge()const;
 
@@ -323,9 +323,9 @@ namespace ui {
          * @~english
          * Change element's vertical dock type.
          * @~chinese 
-         * æ”¹å˜å…ƒç´ çš„å‚ç›´å®šä½ç±»å‹ã€‚
+         * ¸Ä±äÔªËØµÄ´¹Ö±¶¨Î»ÀàĞÍ¡£
          * @param vEage @~english Vertical dock type @see `VerticalEdge`.
-         * @~chinese å‚ç›´å®šä½ç±»å‹
+         * @~chinese ´¹Ö±¶¨Î»ÀàĞÍ
          */
         void setVerticalEdge(VerticalEdge vEage);
 
@@ -333,9 +333,9 @@ namespace ui {
          * @~english
          * Query left margin of owner relative to its parent.
          * @~chinese 
-         * è·å–æ‰€æœ‰è€…çš„å·¦è¾¹è·
+         * »ñÈ¡ËùÓĞÕßµÄ×ó±ß¾à
          * @return @~english Left margin in float.
-         * @~chinese å·¦è¾¹è·æµ®ç‚¹æ•°
+         * @~chinese ×ó±ß¾à¸¡µãÊı
          */
         float getLeftMargin()const;
 
@@ -343,9 +343,9 @@ namespace ui {
          * @~english
          * Change left margin of owner relative to its parent.
          * @~chinese 
-         * è®¾ç½®æ‰€æœ‰è€…çš„å·¦è¾¹è·
+         * ÉèÖÃËùÓĞÕßµÄ×ó±ß¾à
          * @param margin @~english Margin in float.
-         * @~chinese å·¦è¾¹è·æµ®ç‚¹æ•°
+         * @~chinese ×ó±ß¾à¸¡µãÊı
          */
         void setLeftMargin(float margin);
 
@@ -353,9 +353,9 @@ namespace ui {
          * @~english
          * Query the right margin of owner relative to its parent.
          * @~chinese 
-         * è·å–æ‰€æœ‰è€…çš„å³è¾¹è·
+         * »ñÈ¡ËùÓĞÕßµÄÓÒ±ß¾à
          * @return @~english Right margin in float.
-         * @~chinese å³è¾¹è·æµ®ç‚¹æ•°
+         * @~chinese ÓÒ±ß¾à¸¡µãÊı
          */
         float getRightMargin()const;
 
@@ -363,9 +363,9 @@ namespace ui {
          * @~english
          * Change right margin of owner relative to its parent.
          * @~chinese 
-         * è®¾ç½®æ‰€æœ‰è€…çš„å³è¾¹è·
+         * ÉèÖÃËùÓĞÕßµÄÓÒ±ß¾à
          * @param margin @~english Margin in float.
-         * @~chinese å³è¾¹è·æµ®ç‚¹æ•°
+         * @~chinese ÓÒ±ß¾à¸¡µãÊı
          */
         void setRightMargin(float margin);
 
@@ -373,9 +373,9 @@ namespace ui {
          * @~english
          * Query the top margin of owner relative to its parent.
          * @~chinese 
-         * è·å–æ‰€æœ‰è€…çš„ä¸Šè¾¹è·
+         * »ñÈ¡ËùÓĞÕßµÄÉÏ±ß¾à
          * @return @~english Top margin in float.
-         * @~chinese ä¸Šè¾¹è·æµ®ç‚¹æ•°
+         * @~chinese ÉÏ±ß¾à¸¡µãÊı
          */
         float getTopMargin()const;
 
@@ -383,9 +383,9 @@ namespace ui {
          * @~english
          * Change the top margin of owner relative to its parent.
          * @~chinese 
-         * è®¾ç½®æ‰€æœ‰è€…çš„ä¸Šè¾¹è·
+         * ÉèÖÃËùÓĞÕßµÄÉÏ±ß¾à
          * @param margin @~english Margin in float.
-         * @~chinese ä¸Šè¾¹è·æµ®ç‚¹æ•°
+         * @~chinese ÉÏ±ß¾à¸¡µãÊı
          */
         void setTopMargin(float margin);
 
@@ -393,9 +393,9 @@ namespace ui {
          * @~english
          * Query the bottom margin of owner relative to its parent.
          * @~chinese 
-         * è·å–æ‰€æœ‰è€…çš„ä¸‹è¾¹è·
+         * »ñÈ¡ËùÓĞÕßµÄÏÂ±ß¾à
          * @return @~english Bottom margin in float.
-         * @~chinese ä¸‹è¾¹è·æµ®ç‚¹æ•°
+         * @~chinese ÏÂ±ß¾à¸¡µãÊı
          */
         float getBottomMargin()const;
 
@@ -403,9 +403,9 @@ namespace ui {
          * @~english
          * Change the bottom margin of owner relative to its parent.
          * @~chinese 
-         * è®¾ç½®æ‰€æœ‰è€…çš„ä¸‹è¾¹è·
+         * ÉèÖÃËùÓĞÕßµÄÏÂ±ß¾à
          * @param margin @~english in float.
-         * @~chinese ä¸‹è¾¹è·æµ®ç‚¹æ•°
+         * @~chinese ÏÂ±ß¾à¸¡µãÊı
          */
         void setBottomMargin(float margin);
 
@@ -413,9 +413,9 @@ namespace ui {
          * @~english
          * Query owner's content size.
          * @~chinese 
-         * è·å–æ‰€æœ‰è€…å†…å®¹çš„å°ºå¯¸
+         * »ñÈ¡ËùÓĞÕßÄÚÈİµÄ³ß´ç
          * @return @~english Owner's content size.
-         * @~chinese æ‰€æœ‰è€…çš„å†…å®¹å°ºå¯¸
+         * @~chinese ËùÓĞÕßµÄÄÚÈİ³ß´ç
          */
         const Size& getSize()const;
 
@@ -423,9 +423,9 @@ namespace ui {
          * @~english
          * Change the content size of owner.
          * @~chinese 
-         * æ›´æ”¹æ‰€æœ‰è€…çš„å†…å®¹å°ºå¯¸
+         * ¸ü¸ÄËùÓĞÕßµÄÄÚÈİ³ß´ç
          * @param size @~english Content size in @see `Size`.
-         * @~chinese å†…å®¹å°ºå¯¸
+         * @~chinese ÄÚÈİ³ß´ç
          */
         void setSize(const Size& size);
 
@@ -433,9 +433,9 @@ namespace ui {
          * @~english
          * Query whether percent width is enabled or not.
          * @~chinese 
-         * æŸ¥è¯¢æ˜¯å¦å¯ç”¨äº†ç™¾åˆ†æ¯”æ§åˆ¶å®½åº¦
+         * ²éÑ¯ÊÇ·ñÆôÓÃÁË°Ù·Ö±È¿ØÖÆ¿í¶È
          * @return @~english True if percent width is enabled, false, otherwise.
-         * @~chinese å¦‚æœå¯ç”¨åˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
+         * @~chinese Èç¹ûÆôÓÃÔò·µ»Øtrue£¬·ñÔò·µ»Øfalse
          */
         bool isPercentWidthEnabled()const;
 
@@ -443,9 +443,9 @@ namespace ui {
          * @~english
          * Toggle enable percent width.
          * @~chinese 
-         * ç™¾åˆ†æ¯”æ§åˆ¶å®½åº¦çš„å¼€å…³
+         * °Ù·Ö±È¿ØÖÆ¿í¶ÈµÄ¿ª¹Ø
          * @param isUsed @~english True if percent width is enabled, false otherwise.
-         * @~chinese å¦‚æœä¼ å…¥trueåˆ™å¼€å¯ç™¾åˆ†æ¯”æ§åˆ¶å®½åº¦ï¼Œä¼ å…¥falseåˆ™ä¸ºå…³é—­
+         * @~chinese Èç¹û´«ÈëtrueÔò¿ªÆô°Ù·Ö±È¿ØÖÆ¿í¶È£¬´«ÈëfalseÔòÎª¹Ø±Õ
          */
         void setPercentWidthEnabled(bool isUsed);
 
@@ -453,9 +453,9 @@ namespace ui {
          * @~english
          * Query content size width of owner.
          * @~chinese 
-         * æŸ¥è¯¢æ‰€æœ‰è€…çš„å†…å®¹å®½åº¦ã€‚
+         * ²éÑ¯ËùÓĞÕßµÄÄÚÈİ¿í¶È¡£
          * @return @~english Content size width in float.
-         * @~chinese å†…å®¹å®½åº¦æµ®ç‚¹æ•°ã€‚
+         * @~chinese ÄÚÈİ¿í¶È¸¡µãÊı¡£
          */
         float getSizeWidth()const;
 
@@ -463,9 +463,9 @@ namespace ui {
          * @~english
          * Change content size width of owner.
          * @~chinese 
-         * è®¾ç½®æ‰€æœ‰è€…çš„å†…å®¹å®½åº¦
+         * ÉèÖÃËùÓĞÕßµÄÄÚÈİ¿í¶È
          * @param width @~english Content size width in float.
-         * @~chinese å†…å®¹å®½åº¦æµ®ç‚¹æ•°
+         * @~chinese ÄÚÈİ¿í¶È¸¡µãÊı
          */
         void setSizeWidth(float width);
 
@@ -473,9 +473,9 @@ namespace ui {
          * @~english
          * Query percent width of owner.
          * @~chinese 
-         * æŸ¥è¯¢æ‰€æœ‰è€…çš„ç™¾åˆ†æ¯”å®½åº¦ã€‚
+         * ²éÑ¯ËùÓĞÕßµÄ°Ù·Ö±È¿í¶È¡£
          * @return @~english percent width in float.
-         * @~chinese ç™¾åˆ†æ¯”å®½åº¦æµ®ç‚¹æ•°ã€‚
+         * @~chinese °Ù·Ö±È¿í¶È¸¡µãÊı¡£
          */
         float getPercentWidth()const;
 
@@ -483,9 +483,9 @@ namespace ui {
          * @~english
          * Change percent width of owner.
          * @~chinese 
-         * è®¾ç½®æ‰€æœ‰è€…çš„ç™¾åˆ†æ¯”å®½åº¦
+         * ÉèÖÃËùÓĞÕßµÄ°Ù·Ö±È¿í¶È
          * @param percentWidth @~english Percent Width in float.
-         * @~chinese ç™¾åˆ†æ¯”å®½åº¦æµ®ç‚¹æ•°
+         * @~chinese °Ù·Ö±È¿í¶È¸¡µãÊı
          */
         void setPercentWidth(float percentWidth);
 
@@ -493,9 +493,9 @@ namespace ui {
          * @~english
          * Query whether percent height is enabled or not.
          * @~chinese 
-         * æŸ¥è¯¢æ˜¯å¦å¯ç”¨ç™¾åˆ†æ¯”æ§åˆ¶é«˜åº¦
+         * ²éÑ¯ÊÇ·ñÆôÓÃ°Ù·Ö±È¿ØÖÆ¸ß¶È
          * @return @~english True if percent height is enabled, false otherwise.
-         * @~chinese å¦‚æœå¯ç”¨åˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
+         * @~chinese Èç¹ûÆôÓÃÔò·µ»Øtrue£¬·ñÔò·µ»Øfalse
          */
         bool isPercentHeightEnabled()const;
 
@@ -503,9 +503,9 @@ namespace ui {
          * @~english
          * Toggle enable percent height.
          * @~chinese 
-         * ç™¾åˆ†æ¯”æ§åˆ¶é«˜åº¦çš„å¼€å…³
+         * °Ù·Ö±È¿ØÖÆ¸ß¶ÈµÄ¿ª¹Ø
          * @param isUsed @~english True if percent height is enabled, false otherwise.
-         * @~chinese ä¼ å…¥trueåˆ™å¼€å¯ç™¾åˆ†æ¯”æ§åˆ¶é«˜åº¦ï¼Œå¦åˆ™ä¸ºå…³é—­
+         * @~chinese ´«ÈëtrueÔò¿ªÆô°Ù·Ö±È¿ØÖÆ¸ß¶È£¬·ñÔòÎª¹Ø±Õ
          */
         void setPercentHeightEnabled(bool isUsed);
 
@@ -513,9 +513,9 @@ namespace ui {
          * @~english
          * Query size height of owner.
          * @~chinese 
-         * æŸ¥è¯¢æ‰€æœ‰è€…çš„é«˜åº¦å¤§å°
+         * ²éÑ¯ËùÓĞÕßµÄ¸ß¶È´óĞ¡
          * @return @~english Size height in float.
-         * @~chinese é«˜åº¦æµ®ç‚¹æ•°
+         * @~chinese ¸ß¶È¸¡µãÊı
          */
         float getSizeHeight()const;
 
@@ -523,9 +523,9 @@ namespace ui {
          * @~english
          * Change size height of owner.
          * @~chinese 
-         * æ”¹å˜æ‰€æœ‰è€…çš„é«˜åº¦
+         * ¸Ä±äËùÓĞÕßµÄ¸ß¶È
          * @param height @~english Size height in float.
-         * @~chinese é«˜åº¦(æµ®ç‚¹æ•°)
+         * @~chinese ¸ß¶È(¸¡µãÊı)
          */
         void setSizeHeight(float height);
 
@@ -533,9 +533,9 @@ namespace ui {
          * @~english
          * Query percent height of owner.
          * @~chinese 
-         * è·å–æ‰€æœ‰è€…çš„ç™¾åˆ†æ¯”é«˜åº¦
+         * »ñÈ¡ËùÓĞÕßµÄ°Ù·Ö±È¸ß¶È
          * @return @~english Percent height in float.
-         * @~chinese é«˜åº¦ç™¾åˆ†æ¯”(æµ®ç‚¹æ•°)
+         * @~chinese ¸ß¶È°Ù·Ö±È(¸¡µãÊı)
          */
         float getPercentHeight()const;
 
@@ -543,9 +543,9 @@ namespace ui {
          * @~english
          * Change percent height value of owner.
          * @~chinese 
-         * è®¾ç½®é«˜åº¦ç™¾åˆ†æ¯”
+         * ÉèÖÃ¸ß¶È°Ù·Ö±È
          * @param percentHeight @~english Percent height in float.
-         * @~chinese é«˜åº¦ç™¾åˆ†æ¯”(æµ®ç‚¹æ•°)
+         * @~chinese ¸ß¶È°Ù·Ö±È(¸¡µãÊı)
          */
         void setPercentHeight(float percentHeight);
 
@@ -553,9 +553,9 @@ namespace ui {
          * @~english
          * Query whether stretch width is enabled or not.
          * @~chinese 
-         * æŸ¥è¯¢æ˜¯å¦å¯ç”¨è‡ªåŠ¨ä¼¸ç¼©å®½åº¦ã€‚
+         * ²éÑ¯ÊÇ·ñÆôÓÃ×Ô¶¯ÉìËõ¿í¶È¡£
          * @return @~english True if stretch width is enabled, false otherwise.
-         * @~chinese å¦‚æœå¯ç”¨äº†åˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
+         * @~chinese Èç¹ûÆôÓÃÁËÔò·µ»Øtrue£¬·ñÔò·µ»Øfalse
          */
         bool isStretchWidthEnabled()const;
 
@@ -563,9 +563,9 @@ namespace ui {
          * @~english
          * Toggle enable stretch width.
          * @~chinese 
-         * å¯ç”¨å…³é—­è‡ªåŠ¨ä¼¸ç¼©å®½åº¦çš„å¼€å…³
+         * ÆôÓÃ¹Ø±Õ×Ô¶¯ÉìËõ¿í¶ÈµÄ¿ª¹Ø
          * @param isUsed @~english True if enable stretch width, false otherwise.
-         * @~chinese å¦‚æœä¼ å…¥trueåˆ™å¼€å¯ï¼Œä¼ å…¥falseåˆ™å…³é—­
+         * @~chinese Èç¹û´«ÈëtrueÔò¿ªÆô£¬´«ÈëfalseÔò¹Ø±Õ
          */
         void setStretchWidthEnabled(bool isUsed);
 
@@ -573,9 +573,9 @@ namespace ui {
          * @~english
          * Query whether stretch height is enabled or not.
          * @~chinese 
-         * æŸ¥è¯¢æ˜¯å¦å¯ç”¨è‡ªåŠ¨ä¼¸ç¼©é«˜åº¦
+         * ²éÑ¯ÊÇ·ñÆôÓÃ×Ô¶¯ÉìËõ¸ß¶È
          * @return @~english True if stretch height is enabled, false otherwise.
-         * @~chinese å¦‚æœå¯ç”¨äº†åˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
+         * @~chinese Èç¹ûÆôÓÃÁËÔò·µ»Øtrue£¬·ñÔò·µ»Øfalse
          */
         bool isStretchHeightEnabled()const;
 
@@ -583,9 +583,9 @@ namespace ui {
          * @~english
          * Toggle enable stretch height.
          * @~chinese 
-         * å¯ç”¨å…³é—­è‡ªåŠ¨ä¼¸ç¼©é«˜åº¦çš„å¼€å…³
+         * ÆôÓÃ¹Ø±Õ×Ô¶¯ÉìËõ¸ß¶ÈµÄ¿ª¹Ø
          * @param isUsed @~english True if stretch height is enabled, false otherwise.
-         * @~chinese å¦‚æœä¼ å…¥trueåˆ™å¼€å¯ï¼Œä¼ å…¥falseåˆ™å…³é—­
+         * @~chinese Èç¹û´«ÈëtrueÔò¿ªÆô£¬´«ÈëfalseÔò¹Ø±Õ
          */
         void setStretchHeightEnabled(bool isUsed);
         
@@ -593,9 +593,9 @@ namespace ui {
          * @~english
          * Toggle enable percent only.
          * @~chinese 
-         * ä»…ä»…ä½¿ç”¨ç™¾åˆ†æ¯”çš„å¼€å…³
+         * ½ö½öÊ¹ÓÃ°Ù·Ö±ÈµÄ¿ª¹Ø
          * @param enable @~english True if percent only is enabled, false otherwise.
-         * @~chinese ä¼ å…¥trueåˆ™ä»…ä½¿ç”¨ç™¾åˆ†æ¯”æ•°æ®ï¼Œfalseåˆ™å¯ä½¿ç”¨ç‚¹æ•°æ®
+         * @~chinese ´«ÈëtrueÔò½öÊ¹ÓÃ°Ù·Ö±ÈÊı¾İ£¬falseÔò¿ÉÊ¹ÓÃµãÊı¾İ
          */
         void setPercentOnlyEnabled(bool enable);
 
@@ -603,9 +603,9 @@ namespace ui {
          * @~english
          * Toggle active enabled of LayoutComponent's owner.
          * @~chinese 
-         * LayoutComponentæ‰€æœ‰è€…æ˜¯å¦æ¿€æ´»çš„å¼€å…³
+         * LayoutComponentËùÓĞÕßÊÇ·ñ¼¤»îµÄ¿ª¹Ø
          * @param enable @~english True if active layout component, false otherwise.
-         * @~chinese å¦‚æœä¼ å…¥trueåˆ™æ¿€æ´»ï¼Œå¦åˆ™å…³é—­
+         * @~chinese Èç¹û´«ÈëtrueÔò¼¤»î£¬·ñÔò¹Ø±Õ
          */
         void setActiveEnabled(bool enable);
 
@@ -613,7 +613,7 @@ namespace ui {
          * @~english
          * Refresh layout of the owner.
          * @~chinese 
-         * åˆ·æ–°æ‰€æœ‰è€…çš„å¸ƒå±€ä¿¡æ¯ã€‚
+         * Ë¢ĞÂËùÓĞÕßµÄ²¼¾ÖĞÅÏ¢¡£
          */
         void refreshLayout();
 

@@ -2014,6 +2014,39 @@ var WrapAlgorithmTest = AtlasDemo.extend({
     }
 });
 
+var labelTTFDrawModeTest = AtlasDemo.extend({
+    ctor:function () {
+        this._super();
+        var cacheLabel = new cc.LabelTTF();
+        cacheLabel.font = "32px 'Courier New'";
+        cacheLabel.string = "This is a labelTTF \ndrawn On cached Canvas!";
+        cacheLabel.setHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
+        this.addChild(cacheLabel);
+        cacheLabel.x = winSize.width / 2;
+        cacheLabel.y = 3*winSize.height / 4 - cacheLabel.height;
+
+
+        var directLabel = new cc.LabelTTF();
+        if(cc._renderType === cc._RENDER_TYPE_CANVAS) {
+            directLabel.setDrawMode(false);
+            directLabel.string = "This is a labelTTF \ndrawn On Screen";
+        }
+        else
+            directLabel.string = "WebGL does NOT support to \ndraw labelTTF on Screen";
+        directLabel.font = "32px 'Courier New'";
+        directLabel.setHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER);
+        this.addChild(directLabel);
+        directLabel.x = winSize.width / 2;
+        directLabel.y = winSize.height / 4 ;
+    },
+    title:function () {
+        return "LabelTTF DrawMode Test";
+    },
+    subtitle:function() {
+        return "Compare cacheMode to directMode";
+    }
+});
+
 //
 // Flow control
 //
@@ -2047,7 +2080,8 @@ var arrayOfLabelTest = [
     LabelTTFAlignment,
 
     LabelsEmpty,
-    LabelTTFStrokeShadowTest
+    LabelTTFStrokeShadowTest,
+    labelTTFDrawModeTest
 ];
 
 if (!cc.sys.isNative || cc.sys.isMobile) {

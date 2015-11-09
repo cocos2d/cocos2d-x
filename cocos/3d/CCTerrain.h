@@ -1,4 +1,4 @@
-ï»¿/****************************************************************************
+/****************************************************************************
 Copyright (c) 2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -82,20 +82,20 @@ NS_CC_BEGIN
 
     We can use ray-terrain intersection to pick a point of the terrain;
     Also we can get an arbitrary point of the terrain's height and normal vector for convenience .
-    @~chinese å®šä¹‰ä¸€ä¸ªåœ°å½¢ï¼Œå®ƒèƒ½å¤Ÿä»2Då›¾åƒé«˜åº¦å›¾ç”Ÿæˆã€‚
-    åœ°å½¢å¯ä»¥ä»å‡ ä¸ªä¸åŒçš„å†…éƒ¨æ ¼å¼é«˜åº¦å›¾æ¥æ„æˆï¼š
+    @~chinese ¶¨ÒåÒ»¸öµØĞÎ£¬ËüÄÜ¹»´Ó2DÍ¼Ïñ¸ß¶ÈÍ¼Éú³É¡£
+    µØĞÎ¿ÉÒÔ´Ó¼¸¸ö²»Í¬µÄÄÚ²¿¸ñÊ½¸ß¶ÈÍ¼À´¹¹³É£º
      1. RGB888
      2. RGBA8888
-     3.äº®åº¦ï¼ˆç°åº¦ç­‰çº§ï¼‰8
+     3.ÁÁ¶È£¨»Ò¶ÈµÈ¼¶£©8
 
-    è¡¨é¢ç»†èŠ‚æ˜¯é€šè¿‡å¤šä¸ªç»†èŠ‚çš„çº¹ç†å åŠ å®ç°
+    ±íÃæÏ¸½ÚÊÇÍ¨¹ı¶à¸öÏ¸½ÚµÄÎÆÀíµş¼ÓÊµÏÖ
   **/
 class CC_DLL Terrain : public Node
 {
 public:
 
     /** @~english the crack fix type. use to fix the gaps between different LOD chunks
-        @~chinese è£‚çº¹ä¿®å¤ç±»å‹ã€‚ç”¨æ¥ä¿®å¤ä¸åŒLODå—ä¹‹é—´çš„é—´éš™
+        @~chinese ÁÑÎÆĞŞ¸´ÀàĞÍ¡£ÓÃÀ´ĞŞ¸´²»Í¬LOD¿éÖ®¼äµÄ¼äÏ¶
     */
     enum class CrackFixedType
     {
@@ -138,51 +138,51 @@ public:
     struct CC_DLL TerrainData
     {
         /** @~english empty constructor
-            @~chinese ç©ºçš„æ„é€ å‡½æ•°
+            @~chinese ¿ÕµÄ¹¹Ôìº¯Êı
         */
         TerrainData();
         /** @~english constructor, this constructor construct a simple terrain which only have 1 detailmap
-            @~chinese æ„é€ å‡½æ•°ï¼Œè¯¥æ„é€ å‡½æ•°æ„é€ ä¸€ä¸ªç®€å•çš„åœ°å½¢ï¼Œåªæœ‰1 detailmap
+            @~chinese ¹¹Ôìº¯Êı£¬¸Ã¹¹Ôìº¯Êı¹¹ÔìÒ»¸ö¼òµ¥µÄµØĞÎ£¬Ö»ÓĞ1 detailmap
         */
         TerrainData(const char* heightMapsrc, const char* textureSrc, const Size& chunksize = Size(32,32), float mapHeight = 2, float mapScale = 0.1);
         /** @~english constructor, this constructor construct a terrain which have 4 detailmaps, 1 alpha map
-            @~chinese æ„é€ å‡½æ•°ï¼Œè¯¥æ„é€ å‡½æ•°æ„é€ ä¸€ä¸ªåœ°å½¢ï¼Œæœ‰4ä¸ªdetailmapsï¼Œ1ä¸ªAlphaåœ°å›¾
+            @~chinese ¹¹Ôìº¯Êı£¬¸Ã¹¹Ôìº¯Êı¹¹ÔìÒ»¸öµØĞÎ£¬ÓĞ4¸ödetailmaps£¬1¸öAlphaµØÍ¼
         */
         TerrainData(const char* heightMapsrc, const char* alphamap, const DetailMap& detail1,const DetailMap& detail2, const DetailMap& detail3, const DetailMap& detail4, const Size& chunksize = Size(32,32), float mapHeight = 2, float mapScale = 0.1);
         /** @~english constructor, this constructor construct a terrain which have 3 detailmaps, 1 alpha map
-            @~chinese æ„é€ å‡½æ•°ï¼Œè¯¥æ„é€ å‡½æ•°æ„é€ ä¸€ä¸ªåœ°å½¢ï¼Œæœ‰3ä¸ªdetailmapsï¼Œ1ä¸ªAlphaåœ°å›¾
+            @~chinese ¹¹Ôìº¯Êı£¬¸Ã¹¹Ôìº¯Êı¹¹ÔìÒ»¸öµØĞÎ£¬ÓĞ3¸ödetailmaps£¬1¸öAlphaµØÍ¼
         */
         TerrainData(const char* heightMapsrc, const char* alphamap, const DetailMap& detail1,const DetailMap& detail2, const DetailMap& detail3, const Size& chunksize = Size(32,32), float mapHeight = 2, float mapScale = 0.1);
         /** @~english deterimine the chunk size,chunk is the minimal subdivision of the Terrain
-            @~chinese ç¡®å®šå—å¤§å°ï¼Œå—æ˜¯åœ°å½¢çš„æœ€å°ç»†åˆ†
+            @~chinese È·¶¨¿é´óĞ¡£¬¿éÊÇµØĞÎµÄ×îĞ¡Ï¸·Ö
         */
         Size _chunkSize;
         /** @~english height Map source path
-            @~chinese é«˜åº¦å›¾çš„æºè·¯å¾„
+            @~chinese ¸ß¶ÈÍ¼µÄÔ´Â·¾¶
         */
         std::string _heightMapSrc;
         /** @~english the source path of the alpha map
-            @~chinese alphaé€šé“è´´å›¾çš„æºè·¯å¾„
+            @~chinese alphaÍ¨µÀÌùÍ¼µÄÔ´Â·¾¶
         */
         char* _alphaMapSrc;
         /** @~english detail maps
-            @~chinese è¯¦ç»†çš„åœ°å›¾
+            @~chinese ÏêÏ¸µÄµØÍ¼
         */
         DetailMap _detailMaps[4];
         /** @~english terrain Maximum height
-            @~chinese åœ°å½¢æœ€å¤§é«˜åº¦
+            @~chinese µØĞÎ×î´ó¸ß¶È
         */
         float _mapHeight;
         /** @~english terrain scale factor,you can combine setScale later.
-            @~chinese åœ°å½¢å› å­ï¼Œä½ å¯ä»¥ç»“åˆsetScaleä»¥åã€‚
+            @~chinese µØĞÎÒò×Ó£¬Äã¿ÉÒÔ½áºÏsetScaleÒÔºó¡£
         */
         float _mapScale;
         /** @~english the amount of detailmap
-            @~chinese å¯¹detailmapé‡
+            @~chinese ¶ÔdetailmapÁ¿
         */
         int _detailMapAmount;
         /** @~english the skirt height ratio, only effect when terrain use skirt to fix crack
-            @~chinese è£™è¾¹çš„é«˜åº¦æ¯”ï¼Œä»…å½“åœ°å½¢ä½¿ç”¨è£™è¾¹ç±»å‹ä¿®å¤è£‚ç¼æ—¶æœ‰æ•ˆ
+            @~chinese È¹±ßµÄ¸ß¶È±È£¬½öµ±µØĞÎÊ¹ÓÃÈ¹±ßÀàĞÍĞŞ¸´ÁÑ·ìÊ±ÓĞĞ§
         */
         float _skirtHeightRatio;
     };
@@ -232,19 +232,19 @@ private:
     struct Chunk
     {
         /** @~english Constructor
-            @~chinese æ„é€ å‡½æ•°
+            @~chinese ¹¹Ôìº¯Êı
         */
         Chunk();
         /** @~english destructor
-            @~chinese ææ„å‡½æ•°
+            @~chinese Îö¹¹º¯Êı
         */
         ~Chunk();
         /*  @~english vertices
-            @~chinese é¡¶ç‚¹
+            @~chinese ¶¥µã
         */
         std::vector<TerrainVertexData> _originalVertices;
         /*  @~english LOD indices
-            @~chinese LODç´¢å¼•
+            @~chinese LODË÷Òı
         */
         struct LOD
         {
@@ -253,15 +253,15 @@ private:
         GLuint _vbo;
         ChunkIndices _chunkIndices;
         /** @~english we now support four levels of detail
-            @~chinese æˆ‘ä»¬ç°åœ¨æ”¯æŒå››ä¸ªçº§åˆ«çš„è¯¦ç»†
+            @~chinese ÎÒÃÇÏÖÔÚÖ§³ÖËÄ¸ö¼¶±ğµÄÏêÏ¸
         */
         LOD _lod[4];
         /** @~english AABB in local space
-            @~chinese åœ¨å±€éƒ¨ç©ºé—´AABB
+            @~chinese ÔÚ¾Ö²¿¿Õ¼äAABB
         */
         AABB _aabb;
         /** @~english setup Chunk data
-            @~chinese è®¾ç½®æ•°æ®å—
+            @~chinese ÉèÖÃÊı¾İ¿é
         */
         void generate(int map_width, int map_height, int m, int n, const unsigned char* data);
         /** @~english calculateAABB
@@ -269,15 +269,15 @@ private:
         */
         void calculateAABB();
         /** @~english internal use draw function
-            @~chinese å†…éƒ¨ä½¿ç”¨çš„ç»˜åˆ¶å‡½æ•°
+            @~chinese ÄÚ²¿Ê¹ÓÃµÄ»æÖÆº¯Êı
         */
         void bindAndDraw();
         /** @~english finish opengl setup
-            @~chinese OpenGLè®¾ç½®å®Œæˆ
+            @~chinese OpenGLÉèÖÃÍê³É
         */
         void finish();
         /*  @~english use linear-sample vertices for LOD mesh
-            @~chinese ä½¿ç”¨çº¿æ€§é‡‡æ ·LODç½‘æ ¼é¡¶ç‚¹
+            @~chinese Ê¹ÓÃÏßĞÔ²ÉÑùLODÍø¸ñ¶¥µã
         */
         void updateVerticesForLOD();
         /*  @~english updateIndices
@@ -288,14 +288,14 @@ private:
         void updateIndicesLODSkirt();
 
         /** @~english calculate the average slop of chunk
-            @~chinese è®¡ç®—å—çš„å¹³å‡æ–œç‡
+            @~chinese ¼ÆËã¿éµÄÆ½¾ùĞ±ÂÊ
         */
         void calculateSlope();
 
         bool getInsterctPointWithRay(const Ray& ray, Vec3 &interscetPoint);
 
         /** @~english current LOD of the chunk
-            @~chinese å½“å‰çš„å—LOD
+            @~chinese µ±Ç°µÄ¿éLOD
         */
         int _currentLod;
 
@@ -311,23 +311,23 @@ private:
         QuadTree* _parent;
 
         /** @~english the position X in terrain space
-            @~chinese ä½ç½®xåœ¨åœ°å½¢ç©ºé—´
+            @~chinese Î»ÖÃxÔÚµØĞÎ¿Õ¼ä
         */
         int _posX;
         /** @~english the position Y in terrain space
-            @~chinese ä½ç½®åœ¨åœ°å½¢ç©ºé—´
+            @~chinese Î»ÖÃÔÚµØĞÎ¿Õ¼ä
         */
         int _posY;
         /** @~english parent terrain
-            @~chinese çˆ¶æ¯çš„åœ°å½¢
+            @~chinese ¸¸Ä¸µÄµØĞÎ
         */
         Terrain* _terrain;
         /** @~english chunk size
-            @~chinese å—çš„å¤§å°
+            @~chinese ¿éµÄ´óĞ¡
         */
         Size _size;
         /** @~english chunk's estimated slope
-            @~chinese å¤§å—çš„æ–œç‡ä¼°è®¡å€¼
+            @~chinese ´ó¿éµÄĞ±ÂÊ¹À¼ÆÖµ
         */
         float _slope;
         std::vector<TerrainVertexData> _currentVertices;
@@ -342,27 +342,27 @@ private:
     struct QuadTree
     {
         /** @~english constructor
-            @~chinese æ„é€ å‡½æ•°
+            @~chinese ¹¹Ôìº¯Êı
         */
         QuadTree(int x, int y, int width, int height, Terrain* terrain);
         /** @~english destructor
-            @~chinese ææ„å‡½æ•°
+            @~chinese Îö¹¹º¯Êı
         */
         ~QuadTree();
         /** @~english recursively draw
-            @~chinese é€’å½’ç”»
+            @~chinese µİ¹é»­
         */
         void draw();
         /** @~english recursively set itself and its children is need to draw
-            @~chinese é€’å½’çš„ç»˜åˆ¶è‡ªå·±å’Œå®ƒçš„å­©å­
+            @~chinese µİ¹éµÄ»æÖÆ×Ô¼ººÍËüµÄº¢×Ó
         */
         void resetNeedDraw(bool value);
         /** @~english recursively potential visible culling
-            @~chinese é€’å½’é‡ç½®å¯è§æ€§
+            @~chinese µİ¹éÖØÖÃ¿É¼ûĞÔ
         */
         void cullByCamera(const Camera* camera, const Mat4& worldTransform);
         /** @~english precalculate the AABB(In world space) of each quad
-            @~chinese é¢„å…ˆè®¡ç®—çš„AABBï¼ˆä¸–ç•Œç©ºé—´ï¼‰
+            @~chinese Ô¤ÏÈ¼ÆËãµÄAABB£¨ÊÀ½ç¿Õ¼ä£©
         */
         void preCalculateAABB(const Mat4& worldTransform);
         QuadTree* _tl;
@@ -378,16 +378,16 @@ private:
         int _width;
         QuadTree* _parent;
         /** @~english AABB's cache (in local space)
-            @~chinese AABBçš„ç¼“å­˜ï¼ˆå±€éƒ¨ç©ºé—´ï¼‰
+            @~chinese AABBµÄ»º´æ£¨¾Ö²¿¿Õ¼ä£©
         */
         AABB _localAABB;
         /** @~english AABB's cache (in world space)
-            @~chinese AABBçš„ç¼“å­˜ï¼ˆä¸–ç•Œç©ºé—´ï¼‰
+            @~chinese AABBµÄ»º´æ£¨ÊÀ½ç¿Õ¼ä£©
         */
         AABB _worldSpaceAABB;
         Terrain* _terrain;
         /** @~english  a flag determine whether a quadTree node need draw
-            @~chinese ä¸€ä¸ªæ ‡å¿—ç¡®å®šæ˜¯å¦éœ€è¦ç»˜åˆ¶å››å‰æ ‘èŠ‚ç‚¹
+            @~chinese Ò»¸ö±êÖ¾È·¶¨ÊÇ·ñĞèÒª»æÖÆËÄ²æÊ÷½Úµã
         */
         bool _needDraw;
     };
@@ -395,106 +395,106 @@ private:
     friend Chunk;
 public:
     /** @~english set light map texture
-        @~chinese è®¾ç½®å…‰ç…§è´´å›¾
+        @~chinese ÉèÖÃ¹âÕÕÌùÍ¼
     */
     void setLightMap(const std::string& fileName);
 
     /** @~english set directional light for the terrain
-        @~chinese è®¾ç½®åœ°å½¢å…‰ç…§çš„æ–¹å‘
+        @~chinese ÉèÖÃµØĞÎ¹âÕÕµÄ·½Ïò
         @param lightDir @~english The direction of directional light, Note that lightDir is in the terrain's local space. Most of the time terrain is placed at (0,0,0) and without rotation, so lightDir is also in the world space.
-                        @~chinese æ–¹å‘å…‰æºçš„æœå‘ï¼Œæ³¨æ„è¯¥æ–¹å‘å®šä¹‰åœ¨åœ°å½¢çš„å±€éƒ¨ç©ºé—´ï¼Œä½†ç”±äºåœ°å½¢å¤§éƒ¨åˆ†æ—¶å€™éƒ½æ˜¯å®šä¹‰åœ¨ä¸–ç•Œåæ ‡ç³»åŸç‚¹ï¼Œå¹¶ä¸”æ²¡æœ‰æ—‹è½¬ï¼Œæ‰€ä»¥å¯ä»¥æŠŠè¯¥å…‰æºå½“åšå®šä¹‰åœ¨ä¸–ç•Œåæ ‡ç³»ä¸­ã€‚
+                        @~chinese ·½Ïò¹âÔ´µÄ³¯Ïò£¬×¢Òâ¸Ã·½Ïò¶¨ÒåÔÚµØĞÎµÄ¾Ö²¿¿Õ¼ä£¬µ«ÓÉÓÚµØĞÎ´ó²¿·ÖÊ±ºò¶¼ÊÇ¶¨ÒåÔÚÊÀ½ç×ø±êÏµÔ­µã£¬²¢ÇÒÃ»ÓĞĞı×ª£¬ËùÒÔ¿ÉÒÔ°Ñ¸Ã¹âÔ´µ±×ö¶¨ÒåÔÚÊÀ½ç×ø±êÏµÖĞ¡£
     */
     void setLightDir(const Vec3& lightDir);
 
     /*init function*/
     /** @~english initialize all Properties which terrain need
-        @~chinese åˆå§‹åŒ–æ‰€æœ‰åœ°å½¢éœ€è¦çš„å±æ€§
+        @~chinese ³õÊ¼»¯ËùÓĞµØĞÎĞèÒªµÄÊôĞÔ
     */
     bool initProperties();
 
     /** @~english initialize heightMap data
-        @~chinese é«˜åº¦å›¾æ•°æ®åˆå§‹åŒ–
+        @~chinese ¸ß¶ÈÍ¼Êı¾İ³õÊ¼»¯
     */
     bool initHeightMap(const char* heightMap);
 
     /** @~english initialize alphaMap ,detailMaps textures
-        @~chinese åˆå§‹åŒ–alphamapï¼Œdetailmapsçº¹ç†
+        @~chinese ³õÊ¼»¯alphamap£¬detailmapsÎÆÀí
     */
     bool initTextures();
 
     /** @~english create and initialize terrain
-        @~chinese åˆ›å»ºå’Œåˆå§‹åŒ–çš„åœ°å½¢
-        @param parameter @~english  all parameter that Terrain need to create @~chinese åˆ›å»ºåœ°å½¢éœ€è¦çš„æ‰€æœ‰å‚æ•°
-        @param fixedType @~english  the crack fix type. use to fix the gaps between different LOD chunks @~chinese è£‚çº¹ä¿®å¤å‹ï¼Œç”¨æ¥ä¿®å¤ä¸åŒLODå—ä¹‹é—´çš„é—´éš™
-        @return @~english A initialized terrain which is marked as "autorelease @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„åœ°å½¢è¢«æ ‡è®°ä¸ºâ€œè‡ªåŠ¨é‡Šæ”¾
+        @~chinese ´´½¨ºÍ³õÊ¼»¯µÄµØĞÎ
+        @param parameter @~english  all parameter that Terrain need to create @~chinese ´´½¨µØĞÎĞèÒªµÄËùÓĞ²ÎÊı
+        @param fixedType @~english  the crack fix type. use to fix the gaps between different LOD chunks @~chinese ÁÑÎÆĞŞ¸´ĞÍ£¬ÓÃÀ´ĞŞ¸´²»Í¬LOD¿éÖ®¼äµÄ¼äÏ¶
+        @return @~english A initialized terrain which is marked as "autorelease @~chinese Ò»¸ö³õÊ¼»¯µÄµØĞÎ±»±ê¼ÇÎª¡°×Ô¶¯ÊÍ·Å
     */
     static Terrain* create(TerrainData& parameter, CrackFixedType fixedType = CrackFixedType::INCREASE_LOWER);
 
     /** @~english get specified position's height mapping to the terrain,use bi-linear interpolation method
-        @~chinese è·å–æŒ‡å®šä½ç½®çš„é«˜åº¦æ˜ å°„åˆ°åœ°å½¢ï¼Œä½¿ç”¨åŒçº¿æ€§æ’å€¼æ–¹æ³•
-        @param x @~english  the X position @~chinese Xçš„ä½ç½®
-        @param z @~english  the Z position @~chinese Zä½ç½®
-        @param normal @~english  the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip. @~chinese åœ¨æŒ‡å®šä½ç½®çš„æ³•çº¿çŸ¢é‡åœ°å½¢ã€‚å¦‚æœè¿™ä¸ªå‚æ•°ä¸ºç©ºæˆ–nullptrï¼Œæ­£å¸¸è®¡ç®—åº”è·³è¿‡ã€‚
-        @return @~english the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0; @~chinese åœ°å½¢çš„æŒ‡å®šä½ç½®çš„é«˜åº¦å€¼ï¼Œå¦‚æœï¼ˆxï¼Œzï¼‰ä½ç½®çš„åœ°å½¢è¾¹ç•Œï¼Œå®ƒå°†è¿”å›0ï¼›
+        @~chinese »ñÈ¡Ö¸¶¨Î»ÖÃµÄ¸ß¶ÈÓ³Éäµ½µØĞÎ£¬Ê¹ÓÃË«ÏßĞÔ²åÖµ·½·¨
+        @param x @~english  the X position @~chinese XµÄÎ»ÖÃ
+        @param z @~english  the Z position @~chinese ZÎ»ÖÃ
+        @param normal @~english  the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip. @~chinese ÔÚÖ¸¶¨Î»ÖÃµÄ·¨ÏßÊ¸Á¿µØĞÎ¡£Èç¹ûÕâ¸ö²ÎÊıÎª¿Õ»ònullptr£¬Õı³£¼ÆËãÓ¦Ìø¹ı¡£
+        @return @~english the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0; @~chinese µØĞÎµÄÖ¸¶¨Î»ÖÃµÄ¸ß¶ÈÖµ£¬Èç¹û£¨x£¬z£©Î»ÖÃµÄµØĞÎ±ß½ç£¬Ëü½«·µ»Ø0£»
      **/
     float getHeight(float x, float z, Vec3 * normal= nullptr) const;
 
     /** @~english get specified position's height mapping to the terrain,use bi-linear interpolation method
-        @~chinese è·å–æŒ‡å®šä½ç½®çš„é«˜åº¦æ˜ å°„åˆ°åœ°å½¢ï¼Œä½¿ç”¨åŒçº¿æ€§æ’å€¼æ–¹æ³•
-        @param pos @~english  the position (X,Z) @~chinese çš„ä½ç½®ï¼ˆxï¼Œzï¼‰
-        @param normal @~english  the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip. @~chinese åœ¨æŒ‡å®šä½ç½®çš„æ³•çº¿çŸ¢é‡åœ°å½¢ã€‚å¦‚æœè¿™ä¸ªå‚æ•°ä¸ºç©ºæˆ–nullptrï¼Œæ­£å¸¸è®¡ç®—åº”è·³è¿‡ã€‚
-        @return @~english the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0; @~chinese åœ°å½¢çš„æŒ‡å®šä½ç½®çš„é«˜åº¦å€¼ï¼Œå¦‚æœï¼ˆxï¼Œzï¼‰ä½ç½®çš„åœ°å½¢è¾¹ç•Œï¼Œå®ƒå°†è¿”å›0ï¼›
+        @~chinese »ñÈ¡Ö¸¶¨Î»ÖÃµÄ¸ß¶ÈÓ³Éäµ½µØĞÎ£¬Ê¹ÓÃË«ÏßĞÔ²åÖµ·½·¨
+        @param pos @~english  the position (X,Z) @~chinese µÄÎ»ÖÃ£¨x£¬z£©
+        @param normal @~english  the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip. @~chinese ÔÚÖ¸¶¨Î»ÖÃµÄ·¨ÏßÊ¸Á¿µØĞÎ¡£Èç¹ûÕâ¸ö²ÎÊıÎª¿Õ»ònullptr£¬Õı³£¼ÆËãÓ¦Ìø¹ı¡£
+        @return @~english the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0; @~chinese µØĞÎµÄÖ¸¶¨Î»ÖÃµÄ¸ß¶ÈÖµ£¬Èç¹û£¨x£¬z£©Î»ÖÃµÄµØĞÎ±ß½ç£¬Ëü½«·µ»Ø0£»
      **/
     float getHeight(Vec2 pos, Vec3*Normal = nullptr) const;
 
     /** @~english get the normal of the specified pistion in terrain
-        @~chinese å¾—åˆ°æŒ‡å®šä½ç½®çš„æ³•çº¿
-        @return @~english the normal vector of the specified position of the terrain. @~chinese åœ°å½¢çš„æŒ‡å®šä½ç½®çš„æ³•å‘é‡ã€‚
+        @~chinese µÃµ½Ö¸¶¨Î»ÖÃµÄ·¨Ïß
+        @return @~english the normal vector of the specified position of the terrain. @~chinese µØĞÎµÄÖ¸¶¨Î»ÖÃµÄ·¨ÏòÁ¿¡£
         @note the fast normal calculation may not get precise normal vector.
      **/
     Vec3 getNormal(int pixelX, int pixelY) const;
 
     /** @~english get height from the raw height filed
-        @~chinese å¾—åˆ°é«˜åº¦
-        @param pixelX @~english  the position of x in raw height @~chinese Xåœ¨åŸé«˜åº¦çš„ä½ç½®
-        @param pixelY @~english  the position of y in raw height @~chinese Yåœ¨åŸé«˜åº¦çš„ä½ç½®
-        @return @~english the height of position(x,y) @~chinese ä½ç½®ï¼ˆxï¼Œyï¼‰çš„é«˜åº¦
+        @~chinese µÃµ½¸ß¶È
+        @param pixelX @~english  the position of x in raw height @~chinese XÔÚÔ­¸ß¶ÈµÄÎ»ÖÃ
+        @param pixelY @~english  the position of y in raw height @~chinese YÔÚÔ­¸ß¶ÈµÄÎ»ÖÃ
+        @return @~english the height of position(x,y) @~chinese Î»ÖÃ£¨x£¬y£©µÄ¸ß¶È
     */
     float getImageHeight(int pixelX, int pixelY) const;
 
     /** @~english show the wireline instead of the surface,Debug Use only
-        @~chinese æ˜¾ç¤ºçº¿æ¡†æ¨¡å¼ï¼Œè°ƒè¯•ä½¿ç”¨
-        @param value @~english  the switching vale of method. @~chinese æ–¹æ³•çš„åˆ‡ã€‚
+        @~chinese ÏÔÊ¾Ïß¿òÄ£Ê½£¬µ÷ÊÔÊ¹ÓÃ
+        @param value @~english  the switching vale of method. @~chinese ·½·¨µÄÇĞ¡£
         @Note only support desktop platform
      **/
     void setDrawWire(bool boolValue);
 
     /** @~english Set threshold distance of each LOD level,must equal or gereater than the chunk size
-        @~chinese æ¯ä¸ªçº§åˆ«è®¾ç½®é˜ˆå€¼çš„è·ç¦»ï¼Œå¿…é¡»ç­‰äºæˆ–å¤§äºå—å¤§å°gereater
-        @param lod1 @~english  the threshold of LOD level 1 @~chinese LOD 1çº§é˜ˆå€¼
-        @param lod2 @~english  the threshold of LOD level 2 @~chinese LOD 2çº§é˜ˆå€¼
-        @param lod3 @~english  the threshold of LOD level 3 @~chinese LOD 3çº§é˜ˆå€¼
+        @~chinese Ã¿¸ö¼¶±ğÉèÖÃãĞÖµµÄ¾àÀë£¬±ØĞëµÈÓÚ»ò´óÓÚ¿é´óĞ¡gereater
+        @param lod1 @~english  the threshold of LOD level 1 @~chinese LOD 1¼¶ãĞÖµ
+        @param lod2 @~english  the threshold of LOD level 2 @~chinese LOD 2¼¶ãĞÖµ
+        @param lod3 @~english  the threshold of LOD level 3 @~chinese LOD 3¼¶ãĞÖµ
         @Note when invoke initHeightMap, the LOD distance will be automatic calculated.
     */
     void setLODDistance(float lod1, float lod2, float lod3);
 
     /** @~english Switch frustum Culling Flag
-        @~chinese è§†é”¥å‰”é™¤æ ‡å¿—å¼€å…³
-        @param boolValue @~english  the switching vale of method. @~chinese æ–¹æ³•çš„åˆ‡æ¢é˜€ã€‚
+        @~chinese ÊÓ×¶ÌŞ³ı±êÖ¾¿ª¹Ø
+        @param boolValue @~english  the switching vale of method. @~chinese ·½·¨µÄÇĞ»»·§¡£
         @Note frustum culling will remarkable improve your terrain rendering performance.
     */
     void setIsEnableFrustumCull(bool boolValue);
 
     /** @~english  set the alpha map
-        @~chinese è®¾ç½®alphaåœ°å›¾
-        @param newAlphaMapTexture @~english  a texture2d to be used as alpha map. @~chinese ä¸€ä¸ªTexture2Dä½œä¸ºÎ±-åœ°å›¾ã€‚
+        @~chinese ÉèÖÃalphaµØÍ¼
+        @param newAlphaMapTexture @~english  a texture2d to be used as alpha map. @~chinese Ò»¸öTexture2D×÷Îª¦Á-µØÍ¼¡£
     */
     void setAlphaMap(cocos2d::Texture2D* newAlphaMapTexture);
 
     /** @~english set the Detail Map
-        @~chinese è®¾ç½®è¯¦ç»†çš„åœ°å›¾
-        @param index @~english  the index of detailmap to be seted. @~chinese å¯¹detailmapæŒ‡æ•°è¢«è®¾å®šã€‚
-        @param detailMap @~english  the detailMap to be seted. @~chinese è¦å»ºç«‹çš„detailmapã€‚
+        @~chinese ÉèÖÃÏêÏ¸µÄµØÍ¼
+        @param index @~english  the index of detailmap to be seted. @~chinese ¶ÔdetailmapÖ¸Êı±»Éè¶¨¡£
+        @param detailMap @~english  the detailMap to be seted. @~chinese Òª½¨Á¢µÄdetailmap¡£
     */
     void setDetailMap(unsigned int index, DetailMap detailMap);
 
@@ -503,83 +503,83 @@ public:
 
    /**
     * @~english Ray-Terrain intersection.
-    * @~chinese å°„çº¿åœ°å½¢ç›¸äº¤ã€‚
-    * @param ray @~english  The ray used for intersection @~chinese å°„çº¿ç”¨äºäº¤å‰å£
-    * @param intersectionPoint @~english Hit point if hitted. @~chinese å°„çº¿ä¸åœ°å½¢çš„äº¤ç‚¹ï¼ˆå¦‚æœæœ‰äº¤ç‚¹ï¼‰ã€‚
-    * @return @~english true if hit, false otherwise. @~chinese è¿”å›trueå¦‚æœæœ‰äº¤ç‚¹ï¼Œå¦åˆ™è¿”å›falseã€‚
+    * @~chinese ÉäÏßµØĞÎÏà½»¡£
+    * @param ray @~english  The ray used for intersection @~chinese ÉäÏßÓÃÓÚ½»²æ¿Ú
+    * @param intersectionPoint @~english Hit point if hitted. @~chinese ÉäÏßÓëµØĞÎµÄ½»µã£¨Èç¹ûÓĞ½»µã£©¡£
+    * @return @~english true if hit, false otherwise. @~chinese ·µ»ØtrueÈç¹ûÓĞ½»µã£¬·ñÔò·µ»Øfalse¡£
     */
     bool getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) const;
 
     /** @~english Ray-Terrain intersection.
-        @~chinese å°„çº¿åœ°å½¢ç›¸äº¤ã€‚
-        @param ray @~english  the ray used for intersection @~chinese å°„çº¿ç”¨äºäº¤å‰å£
-        @return @~english the intersection point @~chinese äº¤å‰ç‚¹
+        @~chinese ÉäÏßµØĞÎÏà½»¡£
+        @param ray @~english  the ray used for intersection @~chinese ÉäÏßÓÃÓÚ½»²æ¿Ú
+        @return @~english the intersection point @~chinese ½»²æµã
     */
     Vec3 getIntersectionPoint(const Ray& ray) const;
 
     /** @~english set the MaxDetailAmount.
-        @~chinese è®¾ç½®maxdetailamountã€‚
-        @param maxValue @~english  the maximum of detail map @~chinese ç»†èŠ‚å›¾æœ€å¤§
+        @~chinese ÉèÖÃmaxdetailamount¡£
+        @param maxValue @~english  the maximum of detail map @~chinese Ï¸½ÚÍ¼×î´ó
     */
     void setMaxDetailMapAmount(int maxValue);
 
     /** @~english Convert a world Space position (X,Z) to terrain space position (X,Z)
-        @~chinese å°†ä¸€ä¸ªä¸–ç•Œç©ºé—´ä½ç½®ï¼ˆxï¼Œzï¼‰åœ°å½¢çš„ç©ºé—´ä½ç½®ï¼ˆxï¼Œzï¼‰
-        @param worldSpace @~english  a world space position will be converted @~chinese ä¸€ä¸ªä¸–ç•Œç©ºé—´ä½ç½®å°†è¢«è½¬æ¢
-        @return @~english a terrain space position @~chinese åœ°å½¢çš„ç©ºé—´ä½ç½®
+        @~chinese ½«Ò»¸öÊÀ½ç¿Õ¼äÎ»ÖÃ£¨x£¬z£©µØĞÎµÄ¿Õ¼äÎ»ÖÃ£¨x£¬z£©
+        @param worldSpace @~english  a world space position will be converted @~chinese Ò»¸öÊÀ½ç¿Õ¼äÎ»ÖÃ½«±»×ª»»
+        @return @~english a terrain space position @~chinese µØĞÎµÄ¿Õ¼äÎ»ÖÃ
     */
     Vec2 convertToTerrainSpace(Vec2 worldSpace)const;
 
     /** @~english reset the heightmap data.
-        @~chinese å¤ä½é«˜åº¦å›¾æ•°æ®ã€‚
-        @param heightmap @~english  the new height map @~chinese æ–°çš„é«˜åº¦å›¾
+        @~chinese ¸´Î»¸ß¶ÈÍ¼Êı¾İ¡£
+        @param heightmap @~english  the new height map @~chinese ĞÂµÄ¸ß¶ÈÍ¼
     */
     void resetHeightMap(const char* heightMap);
 
     /** @~english get the terrain's mininal height.
-        @~chinese å¾—åˆ°åœ°å½¢çš„æœ€å°é«˜åº¦ã€‚
-        @return @~english the min height of map @~chinese å›¾çš„æœ€å°é«˜åº¦
+        @~chinese µÃµ½µØĞÎµÄ×îĞ¡¸ß¶È¡£
+        @return @~english the min height of map @~chinese Í¼µÄ×îĞ¡¸ß¶È
     */
     float getMinHeight();
 
     /** @~english get the terrain's maximum height.
-        @~chinese å¾—åˆ°åœ°å½¢çš„æœ€å¤§é«˜åº¦ã€‚
-        @return @~english the max height of map @~chinese åœ°å›¾çš„æœ€å¤§é«˜åº¦
+        @~chinese µÃµ½µØĞÎµÄ×î´ó¸ß¶È¡£
+        @return @~english the max height of map @~chinese µØÍ¼µÄ×î´ó¸ß¶È
     */
     float getMaxHeight();
 
     /** @~english get the terrain's AABB(in world space)
-        @~chinese å¾—åˆ°åœ°å½¢çš„AABBï¼ˆä¸–ç•Œç©ºé—´ï¼‰
-        @return @~english the AABB of map @~chinese åœ°å›¾çš„AABB
+        @~chinese µÃµ½µØĞÎµÄAABB£¨ÊÀ½ç¿Õ¼ä£©
+        @return @~english the AABB of map @~chinese µØÍ¼µÄAABB
     */
     AABB getAABB();
 
     /** @~english set the skirt height ratio
-        @~chinese æŠŠè£™å­çš„é«˜åº¦æ¯”
-        @param ratio @~english  the ratio of skirt height @~chinese è£™åº§é«˜åº¦æ¯”
+        @~chinese °ÑÈ¹×ÓµÄ¸ß¶È±È
+        @param ratio @~english  the ratio of skirt height @~chinese È¹×ù¸ß¶È±È
     */
     void setSkirtHeightRatio(float ratio);
 
     /** @~english get the terrain's quad tree which is also the root node.
-        @~chinese å¾—åˆ°åœ°å½¢çš„å››å‰æ ‘çš„æ ¹èŠ‚ç‚¹ã€‚
-        @return @~english the terrain's quad tree @~chinese åœ°å½¢çš„å››å‰æ ‘
+        @~chinese µÃµ½µØĞÎµÄËÄ²æÊ÷µÄ¸ù½Úµã¡£
+        @return @~english the terrain's quad tree @~chinese µØĞÎµÄËÄ²æÊ÷
     */
     QuadTree* getQuadTree();
 
     /** @~english reload sky box after GLESContext reconstructed.
-        @~chinese å¤©ç©ºç›’glescontexté‡è£…åé‡å»ºã€‚
+        @~chinese Ìì¿ÕºĞglescontextÖØ×°ºóÖØ½¨¡£
     */
     void reload();
 
     /** @~english get the terrain's size
-        @~chinese å¾—åˆ°åœ°å½¢çš„å¤§å°
-        @return @~english the size of terrain @~chinese åœ°å½¢çš„å¤§å°
+        @~chinese µÃµ½µØĞÎµÄ´óĞ¡
+        @return @~english the size of terrain @~chinese µØĞÎµÄ´óĞ¡
     */
     Size getTerrainSize() const { return Size(_imageWidth, _imageHeight); }
 
     /** @~english get the terrain's height data
-        @~chinese å¾—åˆ°çš„åœ°å½¢é«˜åº¦æ•°æ®
-        @return @~english the terrain's height data @~chinese åœ°å½¢é«˜åº¦æ•°æ®
+        @~chinese µÃµ½µÄµØĞÎ¸ß¶ÈÊı¾İ
+        @return @~english the terrain's height data @~chinese µØĞÎ¸ß¶ÈÊı¾İ
     */
     std::vector<float> getHeightData() const;
 
@@ -591,18 +591,18 @@ protected:
     void onDraw(const Mat4 &transform, uint32_t flags);
 
     /** @~english recursively set each chunk's LOD
-        @~chinese é€’å½’çš„è®¾ç½®æ¯ä¸ªåœ°å½¢å—çš„LOD
-        @param cameraPos @~english  the camera postion in world space @~chinese åœ¨ä¸–ç•Œç©ºé—´ä¸­çš„æ‘„åƒæœºä½ç½®
+        @~chinese µİ¹éµÄÉèÖÃÃ¿¸öµØĞÎ¿éµÄLOD
+        @param cameraPos @~english  the camera postion in world space @~chinese ÔÚÊÀ½ç¿Õ¼äÖĞµÄÉãÏñ»úÎ»ÖÃ
      **/
     void setChunksLOD(Vec3 cameraPos);
 
     /** @~english load Vertices from height filed for the whole terrain.
-        @~chinese ä»é«˜åº¦å›¾åŠ è½½åœ°å½¢é¡¶ç‚¹ã€‚
+        @~chinese ´Ó¸ß¶ÈÍ¼¼ÓÔØµØĞÎ¶¥µã¡£
      **/
     void loadVertices();
 
     /** @~english calculate Normal Line for each Vertex
-        @~chinese è®¡ç®—æ¯ä¸ªé¡¶ç‚¹çš„æ³•çº¿
+        @~chinese ¼ÆËãÃ¿¸ö¶¥µãµÄ·¨Ïß
      **/
     void calculateNormal();
 
@@ -610,7 +610,7 @@ protected:
     virtual void onEnter() override;
 
     /** @~english cache all unifrom loactions in GLSL.
-        @~chinese ç¼“å­˜GLSLä¸­æ‰€æœ‰uniformçš„ä½ç½®ã€‚
+        @~chinese »º´æGLSLÖĞËùÓĞuniformµÄÎ»ÖÃ¡£
      **/
     void cacheUniformAttribLocation();
 

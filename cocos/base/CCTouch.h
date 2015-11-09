@@ -39,25 +39,25 @@ NS_CC_BEGIN
 /** @class Touch
  * @brief @~english Encapsulates the Touch information, such as touch point, id and so on,
  and provides the methods that commonly used.
- * @~chinese å°è£…äº†è§¦æ‘¸ç›¸å…³çš„ä¿¡æ¯ï¼Œå¦‚è§¦æ‘¸ç‚¹ï¼Œidç­‰ç­‰ã€‚
- * å¹¶ä¸”æä¾›äº†å¸¸ç”¨çš„æ–¹æ³•ã€‚
+ * @~chinese ·â×°ÁË´¥ÃşÏà¹ØµÄĞÅÏ¢£¬Èç´¥Ãşµã£¬idµÈµÈ¡£
+ * ²¢ÇÒÌá¹©ÁË³£ÓÃµÄ·½·¨¡£
  */
 class CC_DLL Touch : public Ref
 {
 public:
     /** @~english
-     * Dispatch mode, how the touches are dispathced.
+     * Dispatch mode, how the touches are dispatched.
      * @~chinese 
-     * æ¶ˆæ¯åˆ†å‘æ¨¡å¼ï¼Œå®šä¹‰å¦‚ä½•åˆ†å‘è§¦æ‘¸äº‹ä»¶ã€‚
+     * ÏûÏ¢·Ö·¢Ä£Ê½£¬¶¨ÒåÈçºÎ·Ö·¢´¥ÃşÊÂ¼ş¡£
      * @js NA
      */
     enum class DispatchMode {
-        ALL_AT_ONCE, /** @~english All at once. @~chinese å¤šç‚¹è§¦æ‘¸ã€‚ */
-        ONE_BY_ONE,  /** @~english One by one. @~chinese å•ç‚¹è§¦æ‘¸ã€‚ */
+        ALL_AT_ONCE, /** @~english All at once. @~chinese ¶àµã´¥Ãş¡£ */
+        ONE_BY_ONE,  /** @~english One by one. @~chinese µ¥µã´¥Ãş¡£ */
     };
 
     /** @~english Constructor.
-     * @~chinese æ„é€ å‡½æ•°ã€‚
+     * @~chinese ¹¹Ôìº¯Êı¡£
      * @js ctor
      */
     Touch() 
@@ -67,71 +67,71 @@ public:
 
     /** @~english Returns the current touch location in OpenGL coordinates.
      *
-     * @~chinese è·å–å½“å‰çš„è§¦æ‘¸ç‚¹åœ¨ OpenGL åæ ‡ç³»ä¸‹çš„åæ ‡ã€‚
+     * @~chinese »ñÈ¡µ±Ç°µÄ´¥ÃşµãÔÚ OpenGL ×ø±êÏµÏÂµÄ×ø±ê¡£
      * 
      * @return @~english The current touch location in OpenGL coordinates.
-     * @~chinese å½“å‰çš„è§¦æ‘¸ç‚¹åœ¨ OpenGL åæ ‡ç³»ä¸‹çš„åæ ‡ã€‚
+     * @~chinese µ±Ç°µÄ´¥ÃşµãÔÚ OpenGL ×ø±êÏµÏÂµÄ×ø±ê¡£
      */
     Vec2 getLocation() const;
     /** @~english Returns the previous touch location in OpenGL coordinates.
      *
-     * @~chinese è·å–ä¹‹å‰çš„è§¦æ‘¸ç‚¹åœ¨ OpenGL åæ ‡ç³»ä¸‹çš„åæ ‡ã€‚
+     * @~chinese »ñÈ¡Ö®Ç°µÄ´¥ÃşµãÔÚ OpenGL ×ø±êÏµÏÂµÄ×ø±ê¡£
      * 
      * @return @~english The previous touch location in OpenGL coordinates.
-     * @~chinese ä¹‹å‰çš„è§¦æ‘¸ç‚¹åœ¨ OpenGL åæ ‡ç³»ä¸‹çš„åæ ‡ã€‚
+     * @~chinese Ö®Ç°µÄ´¥ÃşµãÔÚ OpenGL ×ø±êÏµÏÂµÄ×ø±ê¡£
      */
     Vec2 getPreviousLocation() const;
     /** @~english Returns the start touch location in OpenGL coordinates.
      *
-     * @~chinese è·å–è§¦æ‘¸èµ·å§‹ç‚¹åœ¨ OpenGL åæ ‡ç³»ä¸‹çš„åæ ‡ã€‚
+     * @~chinese »ñÈ¡´¥ÃşÆğÊ¼µãÔÚ OpenGL ×ø±êÏµÏÂµÄ×ø±ê¡£
      * 
      * @return @~english The start touch location in OpenGL coordinates.
-     * @~chinese è§¦æ‘¸èµ·å§‹ç‚¹åœ¨ OpenGL åæ ‡ç³»ä¸‹çš„åæ ‡ã€‚
+     * @~chinese ´¥ÃşÆğÊ¼µãÔÚ OpenGL ×ø±êÏµÏÂµÄ×ø±ê¡£
      */
     Vec2 getStartLocation() const;
     /** @~english Returns the delta of 2 current touches locations in screen coordinates.
      *
-     * @~chinese è·å–å½“å‰ä¸¤ä¸ªè§¦æ‘¸ç‚¹åœ¨å±å¹•åæ ‡ç³»ä¸‹çš„å·®å€¼ã€‚
+     * @~chinese »ñÈ¡µ±Ç°Á½¸ö´¥ÃşµãÔÚÆÁÄ»×ø±êÏµÏÂµÄ²îÖµ¡£
      * 
      * @return @~english The delta of 2 current touches locations in screen coordinates.
-     * @~chinese å½“å‰ä¸¤ä¸ªè§¦æ‘¸ç‚¹åœ¨å±å¹•åæ ‡ç³»ä¸‹çš„å·®å€¼ã€‚
+     * @~chinese µ±Ç°Á½¸ö´¥ÃşµãÔÚÆÁÄ»×ø±êÏµÏÂµÄ²îÖµ¡£
      */
     Vec2 getDelta() const;
     /** @~english Returns the current touch location in screen coordinates.
      *
-     * @~chinese è·å–å½“å‰è§¦æ‘¸ç‚¹åœ¨å±å¹•åæ ‡ç³»ä¸‹çš„åæ ‡ã€‚
+     * @~chinese »ñÈ¡µ±Ç°´¥ÃşµãÔÚÆÁÄ»×ø±êÏµÏÂµÄ×ø±ê¡£
      * 
      * @return @~english The current touch location in screen coordinates.
-     * @~chinese å½“å‰è§¦æ‘¸ç‚¹åœ¨å±å¹•åæ ‡ç³»ä¸‹çš„åæ ‡ã€‚
+     * @~chinese µ±Ç°´¥ÃşµãÔÚÆÁÄ»×ø±êÏµÏÂµÄ×ø±ê¡£
      */
     Vec2 getLocationInView() const;
     /** @~english Returns the previous touch location in screen coordinates. 
      *
-     * @~chinese è·å–ä¹‹å‰çš„è§¦æ‘¸ç‚¹åœ¨å±å¹•åæ ‡ç³»ä¸‹çš„åæ ‡ã€‚
+     * @~chinese »ñÈ¡Ö®Ç°µÄ´¥ÃşµãÔÚÆÁÄ»×ø±êÏµÏÂµÄ×ø±ê¡£
      * 
      * @return @~english The previous touch location in screen coordinates.
-     * @~chinese ä¹‹å‰çš„è§¦æ‘¸ç‚¹åœ¨å±å¹•åæ ‡ç³»ä¸‹çš„åæ ‡ã€‚
+     * @~chinese Ö®Ç°µÄ´¥ÃşµãÔÚÆÁÄ»×ø±êÏµÏÂµÄ×ø±ê¡£
      */
     Vec2 getPreviousLocationInView() const;
     /** @~english Returns the start touch location in screen coordinates.
      *
-     * @~chinese è·å–è§¦æ‘¸èµ·å§‹ç‚¹åœ¨å±å¹•åæ ‡ç³»ä¸‹çš„åæ ‡ã€‚
+     * @~chinese »ñÈ¡´¥ÃşÆğÊ¼µãÔÚÆÁÄ»×ø±êÏµÏÂµÄ×ø±ê¡£
      * 
      * @return @~english The start touch location in screen coordinates.
-     * @~chinese è§¦æ‘¸èµ·å§‹ç‚¹åœ¨å±å¹•åæ ‡ç³»ä¸‹çš„åæ ‡ã€‚
+     * @~chinese ´¥ÃşÆğÊ¼µãÔÚÆÁÄ»×ø±êÏµÏÂµÄ×ø±ê¡£
      */
     Vec2 getStartLocationInView() const;
     
     /** @~english Set the touch infomation. It always used to monitor touch event.
      *
-     * @~chinese è®¾ç½®è§¦æ‘¸ç›¸å…³çš„ä¿¡æ¯ã€‚ç”¨äºç›‘æ§è§¦æ‘¸äº‹ä»¶ã€‚
+     * @~chinese ÉèÖÃ´¥ÃşÏà¹ØµÄĞÅÏ¢¡£ÓÃÓÚ¼à¿Ø´¥ÃşÊÂ¼ş¡£
      * 
      * @param id @~english A given id
-     * @~chinese ä¸€ä¸ªç»™å®šçš„id
+     * @~chinese Ò»¸ö¸ø¶¨µÄid
      * @param x @~english A given x coordinate.
-     * @~chinese ä¸€ä¸ªç»™å®šçš„xåæ ‡ã€‚
+     * @~chinese Ò»¸ö¸ø¶¨µÄx×ø±ê¡£
      * @param y @~english A given y coordinate.
-     * @~chinese ä¸€ä¸ªç»™å®šçš„yåæ ‡ã€‚
+     * @~chinese Ò»¸ö¸ø¶¨µÄy×ø±ê¡£
      */
     void setTouchInfo(int id, float x, float y)
     {
@@ -147,10 +147,10 @@ public:
         }
     }
     /** @~english Get touch id.
-     * @~chinese è·å–è§¦æ‘¸idã€‚
+     * @~chinese »ñÈ¡´¥Ãşid¡£
      *
      * @return @~english The id of touch.
-     * @~chinese è§¦æ‘¸id
+     * @~chinese ´¥Ãşid
      * @js getId
      * @lua getId
      */

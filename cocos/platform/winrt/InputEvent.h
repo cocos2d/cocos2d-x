@@ -23,20 +23,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __INPUT_EVENT__
-#define __INPUT_EVENT__
+#ifndef __WINRT_INPUT_EVENT__
+#define __WINRT_INPUT_EVENT__
 
-#include "cocos2d.h"
+#include "CCPlatformMacros.h"
 #include "InputEventTypes.h"
+#include "base/ccTypes.h"
 #include <agile.h>
 
 NS_CC_BEGIN
+
 
 enum PointerEventType
 {
     PointerPressed,
     PointerMoved,
     PointerReleased,
+    MousePressed,
+    MouseMoved,
+    MouseReleased,
+    MouseWheelChanged,
+};
+enum MouseButton
+{
+    Left = 0,
+    Right = 1,
+    Middle = 2,
+    None
 };
 
 class CC_DLL InputEvent
@@ -132,5 +145,5 @@ private:
 
 NS_CC_END
 
-#endif // #ifndef __INPUT_EVENT__
+#endif // #ifndef __WINRT_INPUT_EVENT__
 

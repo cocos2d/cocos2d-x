@@ -32,8 +32,8 @@ extern "C" {
  * Build a bridge between Java and Lua script.
  * This mechanism make Lua and Java call each other easily.
  * @~chinese 
- * æ„å»ºä¸€ä¸ªJavaå’ŒLuaä¹‹é—´çš„æ¡¥æ¢ã€‚
- * å®ƒä½¿Javaå’ŒLuaé—´å¯ä»¥æ–¹ä¾¿åœ°äº’ç›¸è°ƒç”¨ã€‚
+ * ¹¹½¨Ò»¸öJavaºÍLuaÖ®¼äµÄÇÅÁº¡£
+ * ËüÊ¹JavaºÍLua¼ä¿ÉÒÔ·½±ãµØ»¥Ïàµ÷ÓÃ¡£
  */
 class LuaJavaBridge
 {
@@ -41,12 +41,12 @@ public:
     ///@cond
     /**@~english
      * Bind callStaticMethod of LuaJavaBridge to Lua.
-     * In current mechanism,we could call LuaJavaBridge.callStaticMethod(className, methodName, args) in Lua directly.
+     * In current mechanism, we could call LuaJavaBridge.callStaticMethod(className, methodName, args) in Lua directly.
      * Meanwhile the callStaticMethod of LuaObjcBridge binding function is wrapped in the luaj.lua
      * @~chinese d
-     * ç»‘å®šLuaJavaBridgeçš„callStaticMethodåˆ°Luaä¸­ã€‚
-     * å½“å‰çš„æœºåˆ¶ä¸‹,æˆ‘ä»¬å¯ä»¥åœ¨Luaè„šæœ¬ä¸­ç›´æ¥è°ƒç”¨LuaJavaBridge.callStaticMethod(className, methodName, args)
-     * åŒæ—¶,callStaticMethodç»‘å®šåœ¨luaj.luaè¿˜è¿›è¡Œäº†ä¸€å±‚å°è£…ã€‚
+     * °ó¶¨LuaJavaBridgeµÄcallStaticMethodµ½LuaÖĞ¡£
+     * µ±Ç°µÄ»úÖÆÏÂ,ÎÒÃÇ¿ÉÒÔÔÚLua½Å±¾ÖĞÖ±½Óµ÷ÓÃLuaJavaBridge.callStaticMethod(className, methodName, args)
+     * Í¬Ê±,callStaticMethod°ó¶¨ÔÚluaj.lua»¹½øĞĞÁËÒ»²ã·â×°¡£
      */
     static void luaopen_luaj(lua_State *L);
     ///@endcond
@@ -55,13 +55,13 @@ public:
      * Add a reference count for the Lua functionId(+1),and save this reference in the Lua table named luaj_function_id_retain.
      * 
      * @~chinese 
-     * å¢åŠ functionIdçš„å¼•ç”¨è®¡æ•°(+1)ï¼ŒåŒæ—¶æŠŠè¿™ä¸ªå€¼å­˜åœ¨luaj_function_id_retain tableä¸­ã€‚
+     * Ôö¼ÓfunctionIdµÄÒıÓÃ¼ÆÊı(+1)£¬Í¬Ê±°ÑÕâ¸öÖµ´æÔÚluaj_function_id_retain tableÖĞ¡£
      * 
      * @param functionId @~english the reference id of Lua function.
-     * @~chinese Luaå‡½æ•°çš„å¼•ç”¨idã€‚
+     * @~chinese Luaº¯ÊıµÄÒıÓÃid¡£
      * @return @~english the reference count of the functionId if luaj_function_id_retain table exists and the corresponding value for functionId exists, otherwise return 0.
      *
-     * @~chinese å¦‚æœåœ¨luaj_function_id_retain tableä¸­å¯ä»¥æ‰¾åˆ°å¯¹åº”functionIdçš„å¼•ç”¨è®¡æ•°å€¼,å¼•ç”¨è®¡æ•°åŠ 1ï¼Œè¿”å›æ›´æ–°åçš„å¼•ç”¨è®¡æ•°,å¦åˆ™è¿”å›0ã€‚
+     * @~chinese Èç¹ûÔÚluaj_function_id_retain tableÖĞ¿ÉÒÔÕÒµ½¶ÔÓ¦functionIdµÄÒıÓÃ¼ÆÊıÖµ,ÒıÓÃ¼ÆÊı¼Ó1£¬·µ»Ø¸üĞÂºóµÄÒıÓÃ¼ÆÊı,·ñÔò·µ»Ø0¡£
      * 
      * @lua NA
      * @js NA
@@ -70,17 +70,17 @@ public:
 
     /**@~english
      * Release a reference count for the Lua functionId(-1).If the reference count is still greater than 0,save this reference in the Lua table named luaj_function_id_retain.
-     * Otherwise, remove the refrence about this functionId in the luaj_function_id table and the luaj_function_id_retain table by set the corresponding value nil. 
+     * Otherwise, remove the reference about this functionId in the luaj_function_id table and the luaj_function_id_retain table by set the corresponding value nil. 
      * 
      * @~chinese 
-     * ã€‚
-     * å‡å°‘functionIdå¯¹åº”çš„å¼•ç”¨è®¡æ•°(-1)ã€‚å¦‚æœæ›´æ–°åçš„å¼•ç”¨è®¡æ•°è¿˜æ˜¯å¤§äº0ï¼Œé‚£ä¹ˆæ›´æ–°luaj_function_id_retainä¸­å¯¹åº”çš„å€¼ã€‚å¦åˆ™,é€šè¿‡è®¾ç½®å¯¹åº”çš„å€¼è®¾ç½®ä¸ºnilç§»é™¤å…³äºfunctionIdåœ¨luaj_function_id tableå’Œluaj_function_id_retain tableçš„å¼•ç”¨ã€‚
+     * ¡£
+     * ¼õÉÙfunctionId¶ÔÓ¦µÄÒıÓÃ¼ÆÊı(-1)¡£Èç¹û¸üĞÂºóµÄÒıÓÃ¼ÆÊı»¹ÊÇ´óÓÚ0£¬ÄÇÃ´¸üĞÂluaj_function_id_retainÖĞ¶ÔÓ¦µÄÖµ¡£·ñÔò,Í¨¹ıÉèÖÃ¶ÔÓ¦µÄÖµÉèÖÃÎªnilÒÆ³ı¹ØÓÚfunctionIdÔÚluaj_function_id tableºÍluaj_function_id_retain tableµÄÒıÓÃ¡£
      * 
      * @param functionId @~english the reference id of Lua function.
-     * @~chinese Luaå‡½æ•°çš„å¼•ç”¨idã€‚
+     * @~chinese Luaº¯ÊıµÄÒıÓÃid¡£
      * @return @~english the retain count or 0.
      *
-     * @~chinese å¼•ç”¨è®¡æ•°æˆ–0ã€‚
+     * @~chinese ÒıÓÃ¼ÆÊı»ò0¡£
      * 
      * @lua NA
      * @js NA
@@ -91,15 +91,15 @@ public:
      * Call the Lua function corresponding to the functionId with the string pointer arg.
      * 
      * @~chinese 
-     * ä»¥argä¸ºå‡½æ•°å‚æ•°ï¼Œè°ƒç”¨functionIdå¯¹åº”çš„Luaå‡½æ•°æŒ‡é’ˆã€‚
+     * ÒÔargÎªº¯Êı²ÎÊı£¬µ÷ÓÃfunctionId¶ÔÓ¦µÄLuaº¯ÊıÖ¸Õë¡£
      * 
      * @param functionId @~english the reference id to the Lua function.
-     * @~chinese Luaå‡½æ•°çš„å¼•ç”¨idã€‚
+     * @~chinese Luaº¯ÊıµÄÒıÓÃid¡£
      * @param arg @~english the string pointer point to the argument.
-     * @~chinese ä½œä¸ºå‡½æ•°å‚æ•°çš„å­—ç¬¦ä¸²æŒ‡é’ˆã€‚
+     * @~chinese ×÷Îªº¯Êı²ÎÊıµÄ×Ö·û´®Ö¸Õë¡£
      * @return @~english a number value returned from the Lua function when call sucessfully, otherwise return -1 or the opposite number for one of the three numbers LUA_ERRRUN,LUA_ERRMEM and LUA_ERRERR.
      *
-     * @~chinese è°ƒç”¨æˆåŠŸï¼Œè¿”å›Luaå‡½æ•°çš„è¿”å›å€¼ã€‚å¦åˆ™ï¼Œè¿”å›-1æˆ–LUA_ERRRUN,LUA_ERRMEM LUA_ERRERRä¸‰ä¸ªé”™è¯¯ç å…¶ä¸­ä¸€ä¸ªçš„ç›¸åæ•°ã€‚
+     * @~chinese µ÷ÓÃ³É¹¦£¬·µ»ØLuaº¯ÊıµÄ·µ»ØÖµ¡£·ñÔò£¬·µ»Ø-1»òLUA_ERRRUN,LUA_ERRMEM LUA_ERRERRÈı¸ö´íÎóÂëÆäÖĞÒ»¸öµÄÏà·´Êı¡£
      * 
      * @lua NA
      * @js NA
@@ -110,15 +110,15 @@ public:
      * Call a global Lua function named functionName with the string pointer arg.
      * 
      * @~chinese 
-     * ä»¥argä¸ºå‡½æ•°å‚æ•°ï¼Œè°ƒç”¨ä¸€ä¸ªåå­—ä¸ºfunctionNameçš„Luaå…¨å±€å‡½æ•°ã€‚
+     * ÒÔargÎªº¯Êı²ÎÊı£¬µ÷ÓÃÒ»¸öÃû×ÖÎªfunctionNameµÄLuaÈ«¾Öº¯Êı¡£
      * 
      * @param functionName @~english the name of global function.
-     * @~chinese å…¨å±€å‡½æ•°åã€‚
+     * @~chinese È«¾Öº¯ÊıÃû¡£
      * @param arg @~english the string pointer point to the argument.
-     * @~chinese ä½œä¸ºå‡½æ•°å‚æ•°çš„å­—ç¬¦ä¸²æŒ‡é’ˆã€‚
+     * @~chinese ×÷Îªº¯Êı²ÎÊıµÄ×Ö·û´®Ö¸Õë¡£
      * @return @~english a number value returned frome the Lua function when call sucessfully, otherwise return -1 or the opposite number for one of the three numbers LUA_ERRRUN,LUA_ERRMEM and LUA_ERRERR.
      *
-     * @~chinese è°ƒç”¨æˆåŠŸï¼Œè¿”å›Luaå‡½æ•°çš„è¿”å›å€¼ã€‚å¦åˆ™ï¼Œè¿”å›-1æˆ–LUA_ERRRUN,LUA_ERRMEM LUA_ERRERRä¸‰ä¸ªé”™è¯¯ç å…¶ä¸­ä¸€ä¸ªçš„ç›¸åæ•°ã€‚
+     * @~chinese µ÷ÓÃ³É¹¦£¬·µ»ØLuaº¯ÊıµÄ·µ»ØÖµ¡£·ñÔò£¬·µ»Ø-1»òLUA_ERRRUN,LUA_ERRMEM LUA_ERRERRÈı¸ö´íÎóÂëÆäÖĞÒ»¸öµÄÏà·´Êı¡£
      * 
      * @lua NA
      * @js NA

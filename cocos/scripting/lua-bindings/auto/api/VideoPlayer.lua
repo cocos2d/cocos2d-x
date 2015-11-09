@@ -5,7 +5,7 @@
 -- @parent_module ccexp
 
 --------------------------------
--- brief Get the local video filie name.<br>
+-- brief Get the local video file name.<br>
 -- return The video file name.
 -- @function [parent=#VideoPlayer] getFileName 
 -- @param self

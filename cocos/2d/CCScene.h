@@ -161,8 +161,6 @@ private:
     
 #if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION))
 public:
-    virtual void addChild(Node* child, int zOrder, int tag) override;
-    virtual void addChild(Node* child, int zOrder, const std::string &name) override;
     
 #if CC_USE_PHYSICS
     /** @~english Get the physics world of the scene.
@@ -171,7 +169,7 @@ public:
      * @~chinese 物理世界对象。
      * @js NA
      */
-    inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
+    inline PhysicsWorld* getPhysicsWorld() const { return _physicsWorld; }
 #endif
     
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
@@ -227,8 +225,8 @@ public:
     void setNavMeshDebugCamera(Camera *camera);
 
 protected:
-    NavMesh*       _navMesh;
-    Camera *       _navMeshDebugCamera;
+    NavMesh*        _navMesh;
+    Camera *        _navMeshDebugCamera;
 #endif
     
 #if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)

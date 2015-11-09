@@ -44,113 +44,113 @@ NS_CC_BEGIN
 /** @class PhysicsHelper
  * @brief @~english A physics helper class.
  * Support for conversion between the chipmunk types and cocos types, eg: cpVect to Vec2, cpVect to Size, cpFloat to float.
- * @~chinese ä¸€ä¸ªç‰©ç†åŠ©æ‰‹ç±»ã€‚
- * æ”¯æŒchipmunkå’Œcocos2d-xå¼•æ“é—´ç›¸å…³ç±»å‹çš„è½¬æ¢ï¼Œä¾‹å¦‚cpVect <--> Vec2, cpVect <--> Size, cpFloat <--> float.
+ * @~chinese Ò»¸öÎïÀíÖúÊÖÀà¡£
+ * Ö§³ÖchipmunkºÍcocos2d-xÒıÇæ¼äÏà¹ØÀàĞÍµÄ×ª»»£¬ÀıÈçcpVect <--> Vec2, cpVect <--> Size, cpFloat <--> float.
  */
 class PhysicsHelper
 {
 public:
     /**
      * @~english Make cpVect type convert to Vec2 type.
-     * @~chinese é€šè¿‡ç»™å®šçš„cpVectå¯¹è±¡è½¬æ¢å¾—åˆ°Vec2å¯¹è±¡ã€‚
+     * @~chinese Í¨¹ı¸ø¶¨µÄcpVect¶ÔÏó×ª»»µÃµ½Vec2¶ÔÏó¡£
      *
-     * @param vec @~english The Object to convert. @~chinese è¦è½¬æ¢çš„å¯¹è±¡ã€‚
+     * @param vec @~english The Object to convert. @~chinese Òª×ª»»µÄ¶ÔÏó¡£
      *
      * @return @~english A value of type Vec2, converted from cpVect. 
-     * @~chinese è¿”å›è½¬æ¢ç»“æœï¼Œä¸€ä¸ªVec2å¯¹è±¡ã€‚
+     * @~chinese ·µ»Ø×ª»»½á¹û£¬Ò»¸öVec2¶ÔÏó¡£
      */
     static Vec2 cpv2point(const cpVect& vec) { return Vec2(vec.x, vec.y); }
 
     /**
      * @~english Make Vec2 type convert to cpVect type.
-     * @~chinese é€šè¿‡ç»™å®šçš„Vec2å¯¹è±¡è½¬æ¢å¾—åˆ°cpVectå¯¹è±¡ã€‚
+     * @~chinese Í¨¹ı¸ø¶¨µÄVec2¶ÔÏó×ª»»µÃµ½cpVect¶ÔÏó¡£
      *
-     * @param point @~english The Object to convert. @~chinese è¦è½¬æ¢çš„å¯¹è±¡ã€‚
+     * @param point @~english The Object to convert. @~chinese Òª×ª»»µÄ¶ÔÏó¡£
      *
      * @return @~english A value of type cpVect, converted from Vec2. 
-     * @~chinese è¿”å›è½¬æ¢ç»“æœï¼Œä¸€ä¸ªcpVectå¯¹è±¡ã€‚
+     * @~chinese ·µ»Ø×ª»»½á¹û£¬Ò»¸öcpVect¶ÔÏó¡£
      */
     static cpVect point2cpv(const Vec2& point) { return cpv(point.x, point.y); }
     
     /**
      * @~english Make cpVect type convert to Size type.
-     * @~chinese é€šè¿‡ç»™å®šçš„cpVectå¯¹è±¡è½¬æ¢å¾—åˆ°Sizeå¯¹è±¡ã€‚
+     * @~chinese Í¨¹ı¸ø¶¨µÄcpVect¶ÔÏó×ª»»µÃµ½Size¶ÔÏó¡£
      *
-     * @param vec @~english The Object to convert. @~chinese è¦è½¬æ¢çš„å¯¹è±¡ã€‚
+     * @param vec @~english The Object to convert. @~chinese Òª×ª»»µÄ¶ÔÏó¡£
      *
      * @return @~english A value of type Size, converted from cpVect. 
-     * @~chinese è¿”å›è½¬æ¢ç»“æœï¼Œä¸€ä¸ªSizeå¯¹è±¡ã€‚
+     * @~chinese ·µ»Ø×ª»»½á¹û£¬Ò»¸öSize¶ÔÏó¡£
      */
     static Size cpv2size(const cpVect& vec) { return Size(vec.x, vec.y); }
     
     /**
      * @~english Make Size type convert to cpVect type.
-     * @~chinese é€šè¿‡ç»™å®šçš„Sizeå¯¹è±¡è½¬æ¢å¾—åˆ°Vec2å¯¹è±¡ã€‚
+     * @~chinese Í¨¹ı¸ø¶¨µÄSize¶ÔÏó×ª»»µÃµ½Vec2¶ÔÏó¡£
      *
-     * @param size @~english The Object to convert. @~chinese è¦è½¬æ¢çš„å¯¹è±¡ã€‚
+     * @param size @~english The Object to convert. @~chinese Òª×ª»»µÄ¶ÔÏó¡£
      *
      * @return @~english A value of type cpVect, converted from Size. 
-     * @~chinese è¿”å›è½¬æ¢ç»“æœï¼Œä¸€ä¸ªcpVectå¯¹è±¡ã€‚
+     * @~chinese ·µ»Ø×ª»»½á¹û£¬Ò»¸öcpVect¶ÔÏó¡£
      */
     static cpVect size2cpv(const Size& size) { return cpv(size.width, size.height); }
     
     /**
      * @~english Make cpFloat type convert to float type.
-     * @~chinese é€šè¿‡ç»™å®šçš„cpFloatç±»å‹æ•°å€¼è½¬æ¢å¾—åˆ°æµ®ç‚¹æ•°å€¼ã€‚
+     * @~chinese Í¨¹ı¸ø¶¨µÄcpFloatÀàĞÍÊıÖµ×ª»»µÃµ½¸¡µãÊıÖµ¡£
      *
-     * @param f @~english The Object to convert. @~chinese è¦è½¬æ¢çš„å¯¹è±¡ã€‚
+     * @param f @~english The Object to convert. @~chinese Òª×ª»»µÄ¶ÔÏó¡£
      *
      * @return @~english A value of type float, converted from cpFloat. 
-     * @~chinese è¿”å›è½¬æ¢ç»“æœï¼Œä¸€ä¸ªæµ®ç‚¹æ•°å€¼ã€‚
+     * @~chinese ·µ»Ø×ª»»½á¹û£¬Ò»¸ö¸¡µãÊıÖµ¡£
      */
     static float cpfloat2float(cpFloat f) { return f; }
     
     /**
      * @~english Make float type convert to cpFloat type.
-     * @~chinese é€šè¿‡ç»™å®šçš„æµ®ç‚¹æ•°å€¼è½¬æ¢å¾—åˆ°cpFloatç±»å‹æ•°å€¼ã€‚
+     * @~chinese Í¨¹ı¸ø¶¨µÄ¸¡µãÊıÖµ×ª»»µÃµ½cpFloatÀàĞÍÊıÖµ¡£
      *
-     * @param f @~english The Object to convert. @~chinese è¦è½¬æ¢çš„å¯¹è±¡ã€‚
+     * @param f @~english The Object to convert. @~chinese Òª×ª»»µÄ¶ÔÏó¡£
      *
      * @return @~english A value of type cpFloat, converted from float. 
-     * @~chinese è¿”å›è½¬æ¢ç»“æœï¼Œä¸€ä¸ªcpFloatç±»å‹æ•°å€¼ã€‚
+     * @~chinese ·µ»Ø×ª»»½á¹û£¬Ò»¸öcpFloatÀàĞÍÊıÖµ¡£
      */
     static cpFloat float2cpfloat(float f) { return f; }
     
     /**
      * @~english Make Rect type convert to cpBB type.
-     * @~chinese é€šè¿‡ç»™å®šçš„Rectå¯¹è±¡è½¬æ¢å¾—åˆ°cpBBå¯¹è±¡ã€‚
+     * @~chinese Í¨¹ı¸ø¶¨µÄRect¶ÔÏó×ª»»µÃµ½cpBB¶ÔÏó¡£
      *
-     * @param rect @~english The Object to convert. @~chinese è¦è½¬æ¢çš„å¯¹è±¡ã€‚
+     * @param rect @~english The Object to convert. @~chinese Òª×ª»»µÄ¶ÔÏó¡£
      *
      * @return @~english A value of type cpBB, converted from Rect. 
-     * @~chinese è¿”å›è½¬æ¢ç»“æœï¼Œä¸€ä¸ªcpBBå¯¹è±¡ã€‚
+     * @~chinese ·µ»Ø×ª»»½á¹û£¬Ò»¸öcpBB¶ÔÏó¡£
      */
     static cpBB rect2cpbb(const Rect& rect) { return cpBBNew(rect.origin.x, rect.origin.y, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height); }
     
     /**
      * @~english Make cpBB type convert to Rect type.
-     * @~chinese é€šè¿‡ç»™å®šçš„cpBBå¯¹è±¡è½¬æ¢å¾—åˆ°Rectå¯¹è±¡ã€‚
+     * @~chinese Í¨¹ı¸ø¶¨µÄcpBB¶ÔÏó×ª»»µÃµ½Rect¶ÔÏó¡£
      *
-     * @param bb @~english The Object to convert. @~chinese è¦è½¬æ¢çš„å¯¹è±¡ã€‚
+     * @param bb @~english The Object to convert. @~chinese Òª×ª»»µÄ¶ÔÏó¡£
      *
      * @return @~english A value of type Rect, converted from cpBB. 
-     * @~chinese è¿”å›è½¬æ¢ç»“æœï¼Œä¸€ä¸ªRectå¯¹è±¡ã€‚
+     * @~chinese ·µ»Ø×ª»»½á¹û£¬Ò»¸öRect¶ÔÏó¡£
      */
     static Rect cpbb2rect(const cpBB& bb) { return Rect(bb.l, bb.b, bb.r -  bb.l, bb.t - bb.b); }
     
     /** 
      * @~english Make cpVect array convert to Vec2 array.
-     * @~chinese é€šè¿‡ç»™å®šçš„cpVectå¯¹è±¡æ•°ç»„è½¬æ¢å¾—åˆ°Vec2å¯¹è±¡æ•°ç»„ã€‚
+     * @~chinese Í¨¹ı¸ø¶¨µÄcpVect¶ÔÏóÊı×é×ª»»µÃµ½Vec2¶ÔÏóÊı×é¡£
      * 
      * @param cpvs @~english The be converted object, it's a cpVect array.
-     * @~chinese è¦è½¬æ¢çš„å¯¹è±¡ï¼Œä¸€ä¸ªcpVectå¯¹è±¡æ•°ç»„ã€‚
+     * @~chinese Òª×ª»»µÄ¶ÔÏó£¬Ò»¸öcpVect¶ÔÏóÊı×é¡£
      * @param out @~english The coverted object, it's a Vec2 array.
-     * @~chinese è½¬æ¢åçš„å¯¹è±¡ï¼Œä¸€ä¸ªVec2å¯¹è±¡æ•°ç»„ã€‚
+     * @~chinese ×ª»»ºóµÄ¶ÔÏó£¬Ò»¸öVec2¶ÔÏóÊı×é¡£
      * @param count @~english It's cpvs array length.
-     * @~chinese cpVectå¯¹è±¡æ•°ç»„çš„å…ƒç´ ä¸ªæ•°ã€‚
+     * @~chinese cpVect¶ÔÏóÊı×éµÄÔªËØ¸öÊı¡£
      *
      * @return @~english The out object's pointer. 
-     * @~chinese è¾“å‡ºå¯¹è±¡æ•°ç»„çš„æŒ‡é’ˆã€‚
+     * @~chinese Êä³ö¶ÔÏóÊı×éµÄÖ¸Õë¡£
      */
     static Vec2* cpvs2points(const cpVect* cpvs, Vec2* out, int count)
     {
@@ -166,14 +166,14 @@ public:
      * @~english Make Vec2 array convert to cpVect array.
      * 
      * @param points @~english The be converted object, it's a Vec2 array.
-     * @~chinese è¦è½¬æ¢çš„å¯¹è±¡ï¼Œä¸€ä¸ªVec2å¯¹è±¡æ•°ç»„ã€‚
+     * @~chinese Òª×ª»»µÄ¶ÔÏó£¬Ò»¸öVec2¶ÔÏóÊı×é¡£
      * @param out @~english The coverted object, it's a cpVect array.
-     * @~chinese è½¬æ¢åçš„å¯¹è±¡ï¼Œä¸€ä¸ªcpVectå¯¹è±¡æ•°ç»„ã€‚
+     * @~chinese ×ª»»ºóµÄ¶ÔÏó£¬Ò»¸öcpVect¶ÔÏóÊı×é¡£
      * @param count @~english It's points array length.
-     * @~chinese Vec2å¯¹è±¡æ•°ç»„çš„å…ƒç´ ä¸ªæ•°ã€‚
+     * @~chinese Vec2¶ÔÏóÊı×éµÄÔªËØ¸öÊı¡£
      *
      * @return @~english The out object's pointer. 
-     * @~chinese è¾“å‡ºå¯¹è±¡æ•°ç»„çš„æŒ‡é’ˆã€‚
+     * @~chinese Êä³ö¶ÔÏóÊı×éµÄÖ¸Õë¡£
      */
     static cpVect* points2cpvs(const Vec2* points, cpVect* out, int count)
     {

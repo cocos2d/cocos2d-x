@@ -48,12 +48,12 @@ class WebViewImpl;
 /**
  * @brief @~english A View that displays web pages. 
  *
- * @~chinese ä¸€ä¸ªç”¨æ¥æ˜¾ç¤ºwebé¡µé¢çš„æ§ä»¶ã€‚
+ * @~chinese Ò»¸öÓÃÀ´ÏÔÊ¾webÒ³ÃæµÄ¿Ø¼ş¡£
  * 
  * @note @~english WebView displays web pages base on system widget.
  * It's mean WebView displays web pages above all graphical elements of cocos2d-x.
- * @~chinese WebViewä½¿ç”¨æ“ä½œç³»ç»Ÿç»„ä»¶æ¥æ˜¾ç¤ºç½‘é¡µå†…å®¹ã€‚
- * è¿™æ„å‘³ç€WebViewä¼šå¤„äºæ‰€æœ‰çš„Cocos2D-Xæ¸²æŸ“èŠ‚ç‚¹çš„ä¸Šé¢ã€‚
+ * @~chinese WebViewÊ¹ÓÃ²Ù×÷ÏµÍ³×é¼şÀ´ÏÔÊ¾ÍøÒ³ÄÚÈİ¡£
+ * ÕâÒâÎ¶×ÅWebView»á´¦ÓÚËùÓĞµÄCocos2D-XäÖÈ¾½ÚµãµÄÉÏÃæ¡£
  * @js NA
  */
 class CC_GUI_DLL WebView : public cocos2d::ui::Widget {
@@ -61,7 +61,7 @@ public:
     /**@~english
      * Allocates and initializes a WebView.
      * @~chinese 
-     * åˆ†é…å’Œåˆå§‹åŒ–ä¸€ä¸ªWebViewã€‚
+     * ·ÖÅäºÍ³õÊ¼»¯Ò»¸öWebView¡£
      */
     static WebView *create();
 
@@ -69,7 +69,7 @@ public:
      * Set javascript interface scheme.
      *
      * @~chinese 
-     * è®¾ç½®javascriptæ¥å£schemeã€‚
+     * ÉèÖÃjavascript½Ó¿Úscheme¡£
      * 
      * @see WebView::setOnJSCallback()
      */
@@ -79,14 +79,14 @@ public:
      * Sets the main page contents, MIME type, content encoding, and base URL.
      *
      * @~chinese 
-     * è®¾ç½®ä¸»é¡µå†…å®¹ã€MIMEç±»å‹ã€å†…å®¹ç¼–ç å’ŒbaseURL
+     * ÉèÖÃÖ÷Ò³ÄÚÈİ¡¢MIMEÀàĞÍ¡¢ÄÚÈİ±àÂëºÍbaseURL
      * 
      * @param data @~english The content for the main page.
-     * @~chinese ä¸»é¡µé¢çš„å†…å®¹ã€‚
+     * @~chinese Ö÷Ò³ÃæµÄÄÚÈİ¡£
      * @param MIMEType @~english The MIME type of the data.
-     * @~chinese MIMEç±»å‹çš„æ•°æ®ã€‚
+     * @~chinese MIMEÀàĞÍµÄÊı¾İ¡£
      * @param encoding @~english The encoding of the data.
-     * @~chinese æ•°æ®çš„ç¼–ç ã€‚
+     * @~chinese Êı¾İµÄ±àÂë¡£
      * @param baseURL @~english The base URL for the content.
      * @~chinese baseURL
      */
@@ -99,10 +99,10 @@ public:
      * Sets the main page content and base URL.
      *
      * @~chinese 
-     * è®¾ç½®ä¸»é¡µå†…å®¹å’ŒbaseURLã€‚
+     * ÉèÖÃÖ÷Ò³ÄÚÈİºÍbaseURL¡£
      * 
      * @param string @~english The content for the main page.
-     * @~chinese ä¸»é¡µé¢çš„å†…å®¹ã€‚
+     * @~chinese Ö÷Ò³ÃæµÄÄÚÈİ¡£
      * @param baseURL @~english The base URL for the content.
      * @~chinese baseURL
      */
@@ -112,10 +112,10 @@ public:
      * Loads the given URL.
      *
      * @~chinese 
-     * åŠ è½½ç»™å®šURLçš„ç½‘é¡µ
+     * ¼ÓÔØ¸ø¶¨URLµÄÍøÒ³
      * 
      * @param url @~english Content URL.
-     * @~chinese ä¸€ä¸ªURLå­—ç¬¦ä¸²
+     * @~chinese Ò»¸öURL×Ö·û´®
      */
     void loadURL(const std::string &url);
 
@@ -123,24 +123,24 @@ public:
      * Loads the given fileName.
      *
      * @~chinese 
-     * åŠ è½½æŒ‡å®šçš„ç½‘é¡µæ–‡ä»¶
+     * ¼ÓÔØÖ¸¶¨µÄÍøÒ³ÎÄ¼ş
      * 
      * @param fileName @~english WebPage fileName.
-     * @~chinese ç½‘é¡µæ–‡ä»¶å
+     * @~chinese ÍøÒ³ÎÄ¼şÃû
      */
     void loadFile(const std::string &fileName);
 
     /**@~english
      * Stops the current load.
      * @~chinese 
-     * åœæ­¢å½“å‰é¡µé¢çš„åŠ è½½
+     * Í£Ö¹µ±Ç°Ò³ÃæµÄ¼ÓÔØ
      */
     void stopLoading();
 
     /**@~english
      * Reloads the current URL.
      * @~chinese 
-     * é‡æ–°åŠ è½½å½“å‰URLã€‚
+     * ÖØĞÂ¼ÓÔØµ±Ç°URL¡£
      */
     void reload();
 
@@ -148,10 +148,10 @@ public:
      * Gets whether this WebView has a back history item.
      *
      * @~chinese 
-     * åˆ¤æ–­å½“å‰WebViewæ˜¯å¦æœ‰å›é€€å†å²è®°å½•
+     * ÅĞ¶Ïµ±Ç°WebViewÊÇ·ñÓĞ»ØÍËÀúÊ·¼ÇÂ¼
      * 
      * @return @~english WebView has a back history item.
-     * @~chinese å¦‚æœWebViewæœ‰å›é€€å†å²è®°å½•ï¼Œåˆ™è¿”å›True;å¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹ûWebViewÓĞ»ØÍËÀúÊ·¼ÇÂ¼£¬Ôò·µ»ØTrue;·ñÔò·µ»Øfalse¡£
      */
     bool canGoBack();
 
@@ -159,38 +159,38 @@ public:
      * Gets whether this WebView has a forward history item.
      *
      * @~chinese 
-     * åˆ¤æ–­å½“å‰WebViewæ˜¯å¦æœ‰å‰è¿›å†å²è®°å½•
+     * ÅĞ¶Ïµ±Ç°WebViewÊÇ·ñÓĞÇ°½øÀúÊ·¼ÇÂ¼
      * 
      * @return @~english WebView has a forward history item.
-     * @~chinese å¦‚æœWebViewæœ‰å‰è¿›å†å²è®°å½•ï¼Œåˆ™è¿”å›True;å¦åˆ™è¿”å›false
+     * @~chinese Èç¹ûWebViewÓĞÇ°½øÀúÊ·¼ÇÂ¼£¬Ôò·µ»ØTrue;·ñÔò·µ»Øfalse
      */
     bool canGoForward();
 
     /**@~english
      * Goes back in the history.
      * @~chinese 
-     * å›é€€ä¸€ä¸ªå†å²é¡µé¢
+     * »ØÍËÒ»¸öÀúÊ·Ò³Ãæ
      */
     void goBack();
 
     /**@~english
      * Goes forward in the history.
      * @~chinese 
-     * å‰è¿›ä¸€ä¸ªå†å²é¡µé¢
+     * Ç°½øÒ»¸öÀúÊ·Ò³Ãæ
      */
     void goForward();
 
     /**@~english
      * Evaluates JavaScript in the context of the currently displayed page.
      * @~chinese 
-     * åœ¨å½“å‰æ˜¾ç¤ºé¡µé¢çš„ä¸Šä¸‹æ–‡ä¸­ç¯å¢ƒä¸­æ‰§è¡Œä¸€æ®µjsè„šæœ¬ã€‚
+     * ÔÚµ±Ç°ÏÔÊ¾Ò³ÃæµÄÉÏÏÂÎÄÖĞ»·¾³ÖĞÖ´ĞĞÒ»¶Îjs½Å±¾¡£
      */
     void evaluateJS(const std::string &js);
 
     /**@~english
      * Set WebView should support zooming. The default value is false.
      * @~chinese 
-     * è®¾ç½®WebViewæ˜¯å¦æ”¯æŒç¼©æ”¾ã€‚é»˜è®¤å€¼æ˜¯False
+     * ÉèÖÃWebViewÊÇ·ñÖ§³ÖËõ·Å¡£Ä¬ÈÏÖµÊÇFalse
      */
     void setScalesPageToFit(const bool scalesPageToFit);
     
@@ -198,19 +198,19 @@ public:
      * Call before a web view begins loading.
      *
      * @~chinese 
-     * åœ¨WebViewå¼€å§‹åŠ è½½ä¸€ä¸ªé¡µé¢ä¹‹å‰å›è°ƒçš„å‡½æ•°
+     * ÔÚWebView¿ªÊ¼¼ÓÔØÒ»¸öÒ³ÃæÖ®Ç°»Øµ÷µÄº¯Êı
      * 
      * @param callback @~english The web view that is about to load new content.
-     * @~chinese ä¸€ä¸ªå›è°ƒå‡½æ•°ï¼Œç”¨æ¥æŒ‡å®šé¢å¤–éœ€è¦æ·»åŠ çš„å†…å®¹ã€‚
+     * @~chinese Ò»¸ö»Øµ÷º¯Êı£¬ÓÃÀ´Ö¸¶¨¶îÍâĞèÒªÌí¼ÓµÄÄÚÈİ¡£
      * @return @~english YES if the web view should begin loading content; otherwise, NO .
-     * @~chinese å¦‚æœä¼ True,åˆ™WebViewåº”è¯¥å¼€å§‹åŠ è½½å†…å®¹;å¦åˆ™,ä¼ False.
+     * @~chinese Èç¹û´«True,ÔòWebViewÓ¦¸Ã¿ªÊ¼¼ÓÔØÄÚÈİ;·ñÔò,´«False.
      */
     void setOnShouldStartLoading(const std::function<bool(WebView *sender, const std::string &url)>& callback);
     
     /**@~english
      * A callback which will be called when a WebView event happens.
      * @~chinese 
-     * ä¸€ä¸ªå›è°ƒå‡½æ•°ï¼Œå®ƒå°†åœ¨WebViewäº‹ä»¶å‘ç”Ÿçš„æ—¶å€™è¢«è°ƒç”¨ã€‚
+     * Ò»¸ö»Øµ÷º¯Êı£¬Ëü½«ÔÚWebViewÊÂ¼ş·¢ÉúµÄÊ±ºò±»µ÷ÓÃ¡£
      */
     typedef std::function<void(WebView *sender, const std::string &url)> ccWebViewCallback;
 
@@ -218,10 +218,10 @@ public:
      * Call after a web view finishes loading.
      *
      * @~chinese 
-     * è®¾ç½®WebViewåŠ è½½é¡µé¢å®Œæˆåè°ƒç”¨çš„å›è°ƒå‡½ã€‚
+     * ÉèÖÃWebView¼ÓÔØÒ³ÃæÍê³Éºóµ÷ÓÃµÄ»Øµ÷º¯¡£
      * 
      * @param callback @~english A @see ccWebViewCallback callback.
-     * @~chinese ä¸€ä¸ªccWebViewCallbackå›è°ƒ
+     * @~chinese Ò»¸öccWebViewCallback»Øµ÷
      */
     void setOnDidFinishLoading(const ccWebViewCallback& callback);
     
@@ -229,45 +229,45 @@ public:
      * Call if a web view failed to load content.
      *
      * @~chinese 
-     * è®¾ç½®WebViewåŠ è½½é¡µé¢å¤±è´¥æ—¶ä¼šè°ƒç”¨çš„å›è°ƒå‡½æ•°ã€‚
+     * ÉèÖÃWebView¼ÓÔØÒ³ÃæÊ§°ÜÊ±»áµ÷ÓÃµÄ»Øµ÷º¯Êı¡£
      * 
      * @param callback @~english A @see ccWebViewCallback callback.
-     * @~chinese ä¸€ä¸ªccWebViewCallbackå›è°ƒ
+     * @~chinese Ò»¸öccWebViewCallback»Øµ÷
      */
     void setOnDidFailLoading(const ccWebViewCallback& callback);
     
     /**@~english
      * This callback called when load URL that start with javascript interface scheme.
      * @~chinese 
-     * è¿™ä¸ªå›è°ƒä»…åœ¨è®¾ç½®äº†javascriptæ¥å£schemeçš„æ—¶å€™è¢«è°ƒç”¨ã€‚
+     * Õâ¸ö»Øµ÷½öÔÚÉèÖÃÁËjavascript½Ó¿ÚschemeµÄÊ±ºò±»µ÷ÓÃ¡£
      */
     void setOnJSCallback(const ccWebViewCallback& callback);
     
     /**@~english
      * Get the callback when WebView is about to start.
      * @~chinese 
-     * è®¾ç½®WebViewå¼€å§‹åŠ è½½é¡µé¢çš„å›è°ƒå‡½æ•°ã€‚
+     * ÉèÖÃWebView¿ªÊ¼¼ÓÔØÒ³ÃæµÄ»Øµ÷º¯Êı¡£
      */
     std::function<bool(WebView *sender, const std::string &url)> getOnShouldStartLoading()const;
     
     /**@~english
      * Get the callback when WebView has finished loading.
      * @~chinese 
-     * è·å–å½“å‰WebViewå·²å®ŒæˆåŠ è½½æ—¶è°ƒç”¨çš„å›è°ƒå‡½æ•°
+     * »ñÈ¡µ±Ç°WebViewÒÑÍê³É¼ÓÔØÊ±µ÷ÓÃµÄ»Øµ÷º¯Êı
      */
     ccWebViewCallback getOnDidFinishLoading()const;
     
     /**@~english
      * Get the callback when WebView has failed loading.
      * @~chinese 
-     * è·å–å½“å‰WebViewåŠ è½½å¤±è´¥æ—¶è°ƒç”¨çš„å›è°ƒå‡½æ•°
+     * »ñÈ¡µ±Ç°WebView¼ÓÔØÊ§°ÜÊ±µ÷ÓÃµÄ»Øµ÷º¯Êı
      */
     ccWebViewCallback getOnDidFailLoading()const;
 
     /**@~english
      *Get the Javascript callback.
      * @~chinese 
-     * è·å–Javascriptå›è°ƒå‡½æ•°ã€‚
+     * »ñÈ¡Javascript»Øµ÷º¯Êı¡£
      */
     ccWebViewCallback getOnJSCallback()const;
 
@@ -276,7 +276,7 @@ public:
     /**@~english
      * Toggle visibility of WebView.
      * @~chinese 
-     * è®¾ç½®WebViewçš„å¯è§æ€§ã€‚
+     * ÉèÖÃWebViewµÄ¿É¼ûĞÔ¡£
      */
     virtual void setVisible(bool visible) override;
     
@@ -296,14 +296,14 @@ CC_CONSTRUCTOR_ACCESS:
     /**@~english
      * Default constructor.
      * @~chinese 
-     * é»˜è®¤æ„é€ å‡½æ•°ã€‚
+     * Ä¬ÈÏ¹¹Ôìº¯Êı¡£
      */
     WebView();
     
     /**@~english
      * Default destructor.
      * @~chinese 
-     * é»˜è®¤ææ„å‡½æ•°ã€‚
+     * Ä¬ÈÏÎö¹¹º¯Êı¡£
      */
     virtual ~WebView();
 

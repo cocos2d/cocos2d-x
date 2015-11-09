@@ -38,14 +38,14 @@ NS_CC_BEGIN
 /**
  @brief @~english This action simulates a page turn from the bottom right hand corner of the screen.
  
- * @~chinese è¿™ä¸ªåŠ¨ä½œæ¨¡æ‹Ÿä¸€ä¸ªé¡µé¢ä»å±å¹•çš„å³ä¸‹è§’ç¿»é¡µçš„æ•ˆæœã€‚
+ * @~chinese Õâ¸ö¶¯×÷Ä£ÄâÒ»¸öÒ³Ãæ´ÓÆÁÄ»µÄÓÒÏÂ½Ç·­Ò³µÄĞ§¹û¡£
  * 
  @details @~english It's not much use by itself but is used by the PageTurnTransition.
          Based on an original paper by L Hong et al.
          http://www.parc.com/publication/1638/turning-pages-of-3d-electronic-books.html
   
- * @~chinese ç”¨æˆ·ä½¿ç”¨å®ƒçš„åœºæ™¯å¹¶ä¸å¤šï¼Œä½†æ˜¯PageTurnTransitionç±»åŸºäºå®ƒæ¥å®ç°ã€‚
- * å®ç°åŸºäºL Hongç­‰äººçš„åŸå§‹è®ºæ–‡ã€‚
+ * @~chinese ÓÃ»§Ê¹ÓÃËüµÄ³¡¾°²¢²»¶à£¬µ«ÊÇPageTurnTransitionÀà»ùÓÚËüÀ´ÊµÏÖ¡£
+ * ÊµÏÖ»ùÓÚL HongµÈÈËµÄÔ­Ê¼ÂÛÎÄ¡£
  * http://www.parc.com/publication/1638/turning-pages-of-3d-electronic-books.html
  * 
  @since v0.8.2
@@ -60,13 +60,13 @@ public:
 
     /**
     @brief @~english Create an action with duration, grid size.
-     * @~chinese ä½¿ç”¨æŒç»­æ—¶é—´ï¼Œç½‘æ ¼çš„å¤§å°åˆ›å»ºä¸€ä¸ªåŠ¨ä½œã€‚
+     * @~chinese Ê¹ÓÃ³ÖĞøÊ±¼ä£¬Íø¸ñµÄ´óĞ¡´´½¨Ò»¸ö¶¯×÷¡£
     @param duration @~english Specify the duration of the PageTurn3D action. It's a value in seconds.
-     * @~chinese æŒ‡å®šçš„æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
+     * @~chinese Ö¸¶¨µÄ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
+     * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
     @return @~english If the creation sucess, return a pointer of PageTurn3D action; otherwise, return nil.
-     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªPageTurn3DåŠ¨ä½œæŒ‡é’ˆï¼Œå¦åˆ™ï¼Œè¿”å›ç©ºæŒ‡é’ˆã€‚
+     * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öPageTurn3D¶¯×÷Ö¸Õë£¬·ñÔò£¬·µ»Ø¿ÕÖ¸Õë¡£
     */
     static PageTurn3D* create(float duration, const Size& gridSize);
 

@@ -172,7 +172,7 @@ public:
     virtual void setMargins(int marginH, int marginV);
 
     /** Adjust the background image. YES by default. If the property is set to NO, the
-     background will use the prefered size of the background image. */
+     background will use the preferred size of the background image. */
     bool doesAdjustBackgroundImage();
     void setAdjustBackgroundImage(bool adjustBackgroundImage);
 
@@ -223,7 +223,7 @@ protected:
     /** The current background sprite. */
     CC_SYNTHESIZE_RETAIN(cocos2d::ui::Scale9Sprite*, _backgroundSprite, BackgroundSprite);
 
-    /** The prefered size of the button, if label is larger it will be expanded. */
+    /** The preferred size of the button, if label is larger it will be expanded. */
     CC_PROPERTY_PASS_BY_REF(Size, _preferredSize, PreferredSize);
 
     /** Adjust the button zooming on touchdown. Default value is YES. */

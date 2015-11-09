@@ -1,4 +1,4 @@
-ï»¿/****************************************************************************
+/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -42,7 +42,7 @@ NS_CC_BEGIN
 /**
  * @class BundleReader
  * @brief @~english BundleReader is an interface for reading sequence of bytes.
- * @~chinese BundleReaderæä¾›äº†æ¥å£ç”¨äºè¯»å–å­—èŠ‚åºåˆ—
+ * @~chinese BundleReaderÌá¹©ÁË½Ó¿ÚÓÃÓÚ¶ÁÈ¡×Ö½ÚĞòÁĞ
  * @js NA
  * @lua NA
  */
@@ -61,119 +61,119 @@ public:
     
     /**
      * @~english Initialise
-     * @~chinese åˆå§‹åŒ–
+     * @~chinese ³õÊ¼»¯
      * @param buffer @~english The data buffer pointer
-     * @~chinese æ•°æ®ç¼“å†²æŒ‡é’ˆ
+     * @~chinese Êı¾İ»º³åÖ¸Õë
      * @param length @~english The data buffer size
-     * @~chinese æ•°æ®ç¼“å†²å¤§å°
+     * @~chinese Êı¾İ»º³å´óĞ¡
      */
     void init(char* buffer, ssize_t length);
 
     /**
      * @~english Reads an array of elements.
-     * @~chinese è¯»å–ä¸€ç³»åˆ—å…ƒç´ 
+     * @~chinese ¶ÁÈ¡Ò»ÏµÁĞÔªËØ
      * @param ptr   @~english The pointer to the memory to copy into.
      *              The available size should be at least bytes.
-     * @~chinese æŒ‡å‘è¢«æ‹·è´ç»“æœçš„æŒ‡é’ˆï¼Œè¯¥æŒ‡é’ˆæ‰€åœ¨å¤„çš„å†…å­˜å¤§å°å¿…é¡»èƒ½å¤Ÿå­˜æ”¾æ‰€æœ‰è¯»å–å…ƒç´ 
+     * @~chinese Ö¸Ïò±»¿½±´½á¹ûµÄÖ¸Õë£¬¸ÃÖ¸ÕëËùÔÚ´¦µÄÄÚ´æ´óĞ¡±ØĞëÄÜ¹»´æ·ÅËùÓĞ¶ÁÈ¡ÔªËØ
      * @param size  @~english The size of each element to be read, in bytes.
-     * @~chinese æ¯ä¸ªå…ƒç´ çš„æ•°æ®å¤§å°ï¼Œä»¥å­—èŠ‚è®¡
+     * @~chinese Ã¿¸öÔªËØµÄÊı¾İ´óĞ¡£¬ÒÔ×Ö½Ú¼Æ
      * @param count @~english The number of elements to read.
-     * @~chinese éœ€è¦è¯»å–çš„å…ƒç´ ä¸ªæ•°
+     * @~chinese ĞèÒª¶ÁÈ¡µÄÔªËØ¸öÊı
      * @return @~english The number of elements read.
-     * @~chinese è¯»å–çš„å…ƒç´ ä¸ªæ•°
+     * @~chinese ¶ÁÈ¡µÄÔªËØ¸öÊı
      */
     ssize_t read(void* ptr, ssize_t size, ssize_t count);
 
     /**
      * @~english Reads a line from the buffer.
-     * @~chinese æŒ‰è¡Œè¯»å–æ•°æ®ï¼Œå¹¶å°†å…¶æ”¾å…¥æŒ‡å®šçš„ç¼“å†²ä¸­
+     * @~chinese °´ĞĞ¶ÁÈ¡Êı¾İ£¬²¢½«Æä·ÅÈëÖ¸¶¨µÄ»º³åÖĞ
      * @param num @~english The amount of lines to reads
-     * @~chinese éœ€è¦è¯»å–çš„è¡Œæ•°
+     * @~chinese ĞèÒª¶ÁÈ¡µÄĞĞÊı
      * @param line @~english The result
-     * @~chinese ç¼“å†²åŒºåŸŸ
+     * @~chinese »º³åÇøÓò
      * @return @~english The result, same as line.
-     * @~chinese è¢«è¯»å–ç¼“å†²åŒºçš„æŒ‡é’ˆï¼Œä¸lineå‚æ•°ç­‰åŒ
+     * @~chinese ±»¶ÁÈ¡»º³åÇøµÄÖ¸Õë£¬Óëline²ÎÊıµÈÍ¬
      */
     char* readLine(int num, char* line);
 
     /**
      * @~english Check if the file pointer is at the end of the buffer or not.
-     * @~chinese æ£€æŸ¥å½“å‰çš„æ–‡ä»¶æŒ‡é’ˆ(æµæŒ‡é’ˆ)æ˜¯å¦åœ¨ç¼“å†²åŒºçš„ç»“å°¾
+     * @~chinese ¼ì²éµ±Ç°µÄÎÄ¼şÖ¸Õë(Á÷Ö¸Õë)ÊÇ·ñÔÚ»º³åÇøµÄ½áÎ²
      * @return @~english Returns true if the end of the buffer has been reached, otherwise returns false.
-     * @~chinese å¦‚æœåœ¨ç¼“å­˜åŒºæœ«å°¾è¿”å›trueï¼Œåä¹‹è¿”å›false
+     * @~chinese Èç¹ûÔÚ»º´æÇøÄ©Î²·µ»Øtrue£¬·´Ö®·µ»Øfalse
      */
     bool eof();
 
     /**
      * @~english Returns the length of the buffer in bytes.
-     * @~chinese è¿”å›ç¼“å†²å¤§å°ï¼Œä»¥å­—èŠ‚è®¡
+     * @~chinese ·µ»Ø»º³å´óĞ¡£¬ÒÔ×Ö½Ú¼Æ
      */
     ssize_t length();
 
     /**
      * @~english Returns the position of the file pointer.
-     * @~chinese è¿”å›å½“å‰æ–‡ä»¶æŒ‡é’ˆï¼ˆæµæŒ‡é’ˆï¼‰æ‰€åœ¨ç¼“å†²åŒºçš„ä½ç½®
+     * @~chinese ·µ»Øµ±Ç°ÎÄ¼şÖ¸Õë£¨Á÷Ö¸Õë£©ËùÔÚ»º³åÇøµÄÎ»ÖÃ
      * @return @~english @~english The position of the file pointer
-     * @~chinese æ–‡ä»¶æŒ‡é’ˆåœ¨ç¼“å†²åŒºçš„ä½ç½®
+     * @~chinese ÎÄ¼şÖ¸ÕëÔÚ»º³åÇøµÄÎ»ÖÃ
      */
     ssize_t tell();
 
     /**
      * @~english Sets the position of the file pointer.
-     * @~chinese è®¾ç½®æ–‡ä»¶æŒ‡é’ˆï¼ˆæµæŒ‡é’ˆï¼‰çš„ä½ç½®ï¼Œæœ€ç»ˆä½ç½®ç­‰äº åŸºä½ç½® + åç§»é‡
+     * @~chinese ÉèÖÃÎÄ¼şÖ¸Õë£¨Á÷Ö¸Õë£©µÄÎ»ÖÃ£¬×îÖÕÎ»ÖÃµÈÓÚ »ùÎ»ÖÃ + Æ«ÒÆÁ¿
      * @param offset @~english The offset
-     * @~chinese ä½ç½®çš„åç§»é‡
+     * @~chinese Î»ÖÃµÄÆ«ÒÆÁ¿
      * @param origin @~english The base position.
-     * @~chinese ä½ç½®çš„åŸºä½ç½®
+     * @~chinese Î»ÖÃµÄ»ùÎ»ÖÃ
      * @return @~english The result of the seek
-     * @~chinese è®¾ç½®ç»“æœ
+     * @~chinese ÉèÖÃ½á¹û
      */
     bool seek(long int offset, int origin);
 
     /**
      * @~english Sets the file pointer at the start of the file.
-     * @~chinese å°†æ–‡ä»¶æŒ‡é’ˆï¼ˆæµæŒ‡é’ˆï¼‰è®¾ä¸ºæ–‡ä»¶çš„å¼€å§‹ä½ç½®
+     * @~chinese ½«ÎÄ¼şÖ¸Õë£¨Á÷Ö¸Õë£©ÉèÎªÎÄ¼şµÄ¿ªÊ¼Î»ÖÃ
      * @return @~english The result of the rewind.
-     * @~chinese è®¾ç½®ç»“æœ
+     * @~chinese ÉèÖÃ½á¹û
      */
     bool rewind();
 
     /**
      * @~english Read binary typed value.
-     * @~chinese ä»¥äºŒè¿›åˆ¶æ–¹å¼è¯»å–æŒ‡å®šç±»å‹çš„å€¼
+     * @~chinese ÒÔ¶ş½øÖÆ·½Ê½¶ÁÈ¡Ö¸¶¨ÀàĞÍµÄÖµ
      * @param ptr @~english The specified type pointer. 
-     * @~chinese æŒ‡å®šç±»å‹çš„æ•°æ®æ¥å—æŒ‡é’ˆ
+     * @~chinese Ö¸¶¨ÀàĞÍµÄÊı¾İ½ÓÊÜÖ¸Õë
      * @return @~english The result of the read.
-     * @~chinese è¯»å–ç»“æœ
+     * @~chinese ¶ÁÈ¡½á¹û
      */
     template<typename T> bool read(T* ptr);
 
     /**
      * Read binary typed value array.
-     * @~chinese ä»¥äºŒè¿›åˆ¶æ–¹å¼è¯»å–æŒ‡å®šç±»å‹çš„å€¼æ•°ç»„
-     * @param length @~english Length of the array @~chinese æ•°ç»„çš„é•¿åº¦
-     * @param values @~english Output array to store the result @~chinese ç”¨äºä¿å­˜ç»“æœçš„æ•°ç»„
+     * @~chinese ÒÔ¶ş½øÖÆ·½Ê½¶ÁÈ¡Ö¸¶¨ÀàĞÍµÄÖµÊı×é
+     * @param length @~english Length of the array @~chinese Êı×éµÄ³¤¶È
+     * @param values @~english Output array to store the result @~chinese ÓÃÓÚ±£´æ½á¹ûµÄÊı×é
      * @return the result of the read.
      */
     template<typename T> bool readArray(unsigned int* length, std::vector<T>* values);
 
     /**
      * @~english Read the string from the bundle, first read length, then read string text.
-     * @~chinese ä»bundleä¸­è¯»å–å­—ç¬¦ä¸²ï¼Œé¦–å…ˆå°†ä¼šè¯»å–é•¿åº¦ï¼Œç„¶åè¯»å–å­—ç¬¦ä¸²çš„æ–‡æœ¬
+     * @~chinese ´ÓbundleÖĞ¶ÁÈ¡×Ö·û´®£¬Ê×ÏÈ½«»á¶ÁÈ¡³¤¶È£¬È»ºó¶ÁÈ¡×Ö·û´®µÄÎÄ±¾
      * @return @~english The result string.
-     * @~chinese è¿”å›è¢«è¯»å–çš„å­—ç¬¦ä¸²
+     * @~chinese ·µ»Ø±»¶ÁÈ¡µÄ×Ö·û´®
      */
     std::string readString();
 
     /**
      * @~english Read the matrix.
-     * @~chinese è¯»å–çŸ©é˜µ
+     * @~chinese ¶ÁÈ¡¾ØÕó
      * @note @~english the matrix type must be the 4*4 float matrix
-     * @~chinese è¯¥çŸ©é˜µå¿…é¡»æ˜¯4*4çš„floatå‹çŸ©é˜µ
+     * @~chinese ¸Ã¾ØÕó±ØĞëÊÇ4*4µÄfloatĞÍ¾ØÕó
      * @param m @~english The result matrix.
-     * @~chinese ç›®æ ‡çŸ©é˜µ
+     * @~chinese Ä¿±ê¾ØÕó
      * @return @~english The result of the reading.
-     * @~chinese è¯»å–çš„ç»“æœ
+     * @~chinese ¶ÁÈ¡µÄ½á¹û
      */
     bool readMatrix(float* m);
 
@@ -187,11 +187,11 @@ private:
 
 /**
 * @~english Template read routines
-* @~chinese ç”¨äºè¯»å–Bundleå•ä¸ªæ•°æ®çš„æ¨¡æ¿å‡½æ•°
+* @~chinese ÓÃÓÚ¶ÁÈ¡Bundleµ¥¸öÊı¾İµÄÄ£°åº¯Êı
 * @param ptr  @~english The generic type pointer to get the value.
-* @~chinese ç”¨ä»¥æ¥æ”¶æ•°æ®çš„æ³›å‹æŒ‡é’ˆ
+* @~chinese ÓÃÒÔ½ÓÊÕÊı¾İµÄ·ºĞÍÖ¸Õë
 * @return @~english The result of the load.
-* @~chinese è¯»å–ç»“æœ
+* @~chinese ¶ÁÈ¡½á¹û
 */
 template<typename T>
 inline bool BundleReader::read(T *ptr)
@@ -201,13 +201,13 @@ inline bool BundleReader::read(T *ptr)
 
 /**
 * @~english Template function to read array of value.
-* @~chinese ç”¨äºä»bundleä¸­è¯»å–æ•°ç»„çš„æ¨¡æ¿å‡½æ•°
+* @~chinese ÓÃÓÚ´ÓbundleÖĞ¶ÁÈ¡Êı×éµÄÄ£°åº¯Êı
 * @param length @~english The length of the array.
-* @~chinese æ•°ç»„çš„é•¿åº¦
+* @~chinese Êı×éµÄ³¤¶È
 * @param values @~english The result array of value.
-* @~chinese è·å–æ•°æ®çš„æ¥å—æ•°ç»„
+* @~chinese »ñÈ¡Êı¾İµÄ½ÓÊÜÊı×é
 * @return @~english The result of the reading.
-* @~chinese è¯»å–ç»“æœ
+* @~chinese ¶ÁÈ¡½á¹û
 */
 template<typename T>
 inline bool BundleReader::readArray(unsigned int *length, std::vector<T> *values)
@@ -230,7 +230,7 @@ inline bool BundleReader::readArray(unsigned int *length, std::vector<T> *values
 
 /**
 * @~english Specalization for char
-* @~chinese æ¨¡æ¿å‡½æ•°çš„ç‰¹åŒ–ç‰ˆæœ¬ï¼Œä¸“ç”¨äºè¯»å–å­—ç¬¦
+* @~chinese Ä£°åº¯ÊıµÄÌØ»¯°æ±¾£¬×¨ÓÃÓÚ¶ÁÈ¡×Ö·û
 */
 template<>
 inline bool BundleReader::read<char>(char *ptr)
@@ -248,7 +248,7 @@ inline bool BundleReader::read<char>(char *ptr)
 
 /**
 * @~english Specalization for std::string
-* @~chinese æ¨¡æ¿å‡½æ•°çš„ç‰¹åŒ–ç‰ˆæœ¬ï¼Œä¸“é—¨ç”¨äºè¯»å–std::stringå‹å­—ç¬¦ä¸²
+* @~chinese Ä£°åº¯ÊıµÄÌØ»¯°æ±¾£¬×¨ÃÅÓÃÓÚ¶ÁÈ¡std::stringĞÍ×Ö·û´®
 */
 template<>
 inline bool BundleReader::read<std::string>(std::string *ptr)
@@ -259,13 +259,13 @@ inline bool BundleReader::read<std::string>(std::string *ptr)
 
 /**
 * @~english Template function to read array of value.
-* @~chinese ç”¨äºä»bundleä¸­è¯»å–å­—ç¬¦ä¸²æ•°ç»„çš„æ¨¡æ¿å‡½æ•°ç‰¹åŒ–ç‰ˆæœ¬
+* @~chinese ÓÃÓÚ´ÓbundleÖĞ¶ÁÈ¡×Ö·û´®Êı×éµÄÄ£°åº¯ÊıÌØ»¯°æ±¾
 * @param length @~english The length of the array.
-* @~chinese æ•°ç»„çš„é•¿åº¦
+* @~chinese Êı×éµÄ³¤¶È
 * @param values @~english The result array of value.
-* @~chinese è·å–æ•°æ®æ¥å—å­—ç¬¦ä¸²æ•°ç»„
+* @~chinese »ñÈ¡Êı¾İ½ÓÊÜ×Ö·û´®Êı×é
 * @return @~english The result of the reading.
-* @~chinese è¯»å–ç»“æœ
+* @~chinese ¶ÁÈ¡½á¹û
 */
 template<>
 inline bool BundleReader::readArray<std::string>(unsigned int *length, std::vector<std::string> *values)

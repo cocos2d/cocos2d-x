@@ -29,14 +29,17 @@ THE SOFTWARE.
 namespace cocostudio {
 
 IMPLEMENT_CLASS_COMPONENT_INFO(ComAudio)
-ComAudio::ComAudio(void)
+
+const std::string ComAudio::COMPONENT_NAME = "CCComAudio";
+
+ComAudio::ComAudio()
 : _filePath("")
 , _loop(false)
 {
-    _name = "CCComAudio";
+    _name = COMPONENT_NAME;
 }
 
-ComAudio::~ComAudio(void)
+ComAudio::~ComAudio()
 {
     
 }
@@ -65,17 +68,6 @@ void ComAudio::onRemove()
     stopBackgroundMusic(true);
     stopAllEffects();
 }
-
-bool ComAudio::isEnabled() const
-{
-    return _enabled;
-}
-
-void ComAudio::setEnabled(bool b)
-{
-    _enabled = b;
-}
-
 
 bool ComAudio::serialize(void* r)
 {
@@ -142,7 +134,7 @@ bool ComAudio::serialize(void* r)
 			setLoop(loop);
 			playBackgroundMusic(filePath.c_str(), loop);
 		}
-		else if(strcmp(className, "CCComAudio") == 0)
+		else if(strcmp(className, COMPONENT_NAME.c_str()) == 0)
 		{
 			preloadEffect(filePath.c_str());
 		}
@@ -155,7 +147,7 @@ bool ComAudio::serialize(void* r)
 	return ret;
 }
 
-ComAudio* ComAudio::create(void)
+ComAudio* ComAudio::create()
 {
     ComAudio * pRet = new (std::nothrow) ComAudio();
     if (pRet && pRet->init())

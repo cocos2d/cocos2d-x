@@ -50,7 +50,7 @@ typedef void (cocos2d::Ref::*SEL_HttpResponse)(HttpClient* client, HttpResponse*
 /** @~english
  * Defines the object which users must packed for HttpClient::send(HttpRequest*) method.
  * @~chinese 
- * ä¸€ä¸ªè¯·æ±‚æ•°æ®å°è£…ç±»ï¼Œç”¨äºHttpClient::sendã€‚
+ * Ò»¸öÇëÇóÊı¾İ·â×°Àà£¬ÓÃÓÚHttpClient::send¡£
  * @see tests/test-cpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp
  * @since v2.0.2
  *
@@ -69,7 +69,7 @@ public:
     /**@~english
      * The HttpRequest type enum used in the HttpRequest::setRequestType.
      * @~chinese 
-     * HttpRequestæšä¸¾ç±»ï¼Œè°ƒç”¨HttpRequest::setRequestTypeæ—¶ç”¨åˆ°ã€‚
+     * HttpRequestÃ¶¾ÙÀà£¬µ÷ÓÃHttpRequest::setRequestTypeÊ±ÓÃµ½¡£
      */
     enum class Type
     {
@@ -82,14 +82,14 @@ public:
     
     /** @~english
      *  Constructor.
-     *   Because HttpRequest object will be used between UI thead and network thread,
+     *   Because HttpRequest object will be used between UI thread and network thread,
          requestObj->autorelease() is forbidden to avoid crashes in AutoreleasePool
          new/retain/release still works, which means you need to release it manually
      * @~chinese 
-     * æ„é€ å‡½æ•°ã€‚
-     * å› ä¸ºHttpRequestå¯¹è±¡å°†ä¼šåœ¨UIçº¿ç¨‹å’Œç½‘ç»œçº¿ç¨‹ä¸­ä½¿ç”¨ï¼Œæ‰€ä»¥requestObj->autorelease()æ˜¯è¢«ç¦æ­¢çš„ï¼Œè¿™æ ·å¯ä»¥é¿å…AutoreleasePoolä¸­çš„å´©æºƒã€‚
-     * new/retain/releaseè¿˜æ˜¯æœ‰æ•ˆï¼Œè¿™æ„å‘³ç€ä½ éœ€è¦æ‰‹åŠ¨çš„è°ƒç”¨releaseå‡½æ•°ã€‚
-     * @see httprequest.cppã€‚
+     * ¹¹Ôìº¯Êı¡£
+     * ÒòÎªHttpRequest¶ÔÏó½«»áÔÚUIÏß³ÌºÍÍøÂçÏß³ÌÖĞÊ¹ÓÃ£¬ËùÒÔrequestObj->autorelease()ÊÇ±»½ûÖ¹µÄ£¬ÕâÑù¿ÉÒÔ±ÜÃâAutoreleasePoolÖĞµÄ±ÀÀ£¡£
+     * new/retain/release»¹ÊÇÓĞĞ§£¬ÕâÒâÎ¶×ÅÄãĞèÒªÊÖ¶¯µÄµ÷ÓÃreleaseº¯Êı¡£
+     * @see httprequest.cpp¡£
      */
     HttpRequest()
     {
@@ -103,7 +103,7 @@ public:
         _pUserData = nullptr;
     };
     
-    /** @~english Destructor.  @~chinese ææ„å‡½æ•°ã€‚*/
+    /** @~english Destructor.  @~chinese Îö¹¹º¯Êı¡£*/
     virtual ~HttpRequest()
     {
         if (_pTarget)
@@ -117,11 +117,11 @@ public:
      * If this function was called, it would trigger assert in debug mode
      *
      * @~chinese 
-     * é‡è½½autoreleaseå‡½æ•°é¿å…å¼€å‘è€…è°ƒç”¨ã€‚
-     * å¦‚æœè¿™ä¸ªå‡½æ•°è¢«è°ƒç”¨ï¼Œåœ¨debugæ¨¡å¼ä¸‹å°†ä¼šè§¦å‘assert
+     * ÖØÔØautoreleaseº¯Êı±ÜÃâ¿ª·¢Õßµ÷ÓÃ¡£
+     * Èç¹ûÕâ¸öº¯Êı±»µ÷ÓÃ£¬ÔÚdebugÄ£Ê½ÏÂ½«»á´¥·¢assert
      * 
      * @return Ref* @~english always return nullptr.
-     * @~chinese å§‹ç»ˆè¿”å›nullptrã€‚
+     * @~chinese Ê¼ÖÕ·µ»Ønullptr¡£
      */
     Ref* autorelease(void)
     {
@@ -136,10 +136,10 @@ public:
      * Set request type of HttpRequest object before being sent,now it support the enum value of HttpRequest::Type.
      *
      * @~chinese 
-     * åœ¨å‘é€HttpRequestå¯¹è±¡å‰ï¼Œè®¾ç½®HttpRequestçš„ç±»å‹å€¼ï¼Œå®ƒå¯ä»¥æ˜¯HttpRequest::Typeçš„æšä¸¾ç±»å‹ä¸­çš„ä»»æ„ä¸€ä¸ªå€¼ã€‚
+     * ÔÚ·¢ËÍHttpRequest¶ÔÏóÇ°£¬ÉèÖÃHttpRequestµÄÀàĞÍÖµ£¬Ëü¿ÉÒÔÊÇHttpRequest::TypeµÄÃ¶¾ÙÀàĞÍÖĞµÄÈÎÒâÒ»¸öÖµ¡£
      * 
      * @param type @~english the request type.
-     * @~chinese è¯·æ±‚ç±»å‹ã€‚
+     * @~chinese ÇëÇóÀàĞÍ¡£
      */
     inline void setRequestType(Type type)
     {
@@ -149,10 +149,10 @@ public:
      * Get the request type of HttpRequest object.
      *
      * @~chinese 
-     * è·å–HttpRequestå¯¹è±¡çš„è¯·æ±‚ç±»å‹ã€‚
+     * »ñÈ¡HttpRequest¶ÔÏóµÄÇëÇóÀàĞÍ¡£
      * 
      * @return @~english HttpRequest::Type.
-     * @~chinese HttpRequest::Typeã€‚
+     * @~chinese HttpRequest::Type¡£
      */
     inline Type getRequestType()
     {
@@ -164,11 +164,11 @@ public:
      * The url value could be like these: "http://httpbin.org/ip" or "https://httpbin.org/get"
      *
      * @~chinese
-     * è®¾ç½®HttpRequestå¯¹è±¡çš„urlã€‚
-     * urlçš„å€¼å¦‚ä¸‹:â€œhttp://httpbin.org/ipâ€æˆ–â€œhttps://httpbin.org/getâ€
+     * ÉèÖÃHttpRequest¶ÔÏóµÄurl¡£
+     * urlµÄÖµÈçÏÂ:¡°http://httpbin.org/ip¡±»ò¡°https://httpbin.org/get¡±
      * 
      * @param url @~english the string pointer to the url.
-     * @~chinese urlå­—ç¬¦ä¸²æŒ‡é’ˆã€‚
+     * @~chinese url×Ö·û´®Ö¸Õë¡£
      */
     inline void setUrl(const char* url)
     {
@@ -178,10 +178,10 @@ public:
      * Get the url address of HttpRequest object.
      *
      * @~chinese 
-     * è·å–HttpRequestå¯¹è±¡çš„urlå­—ç¬¦ä¸²æŒ‡é’ˆã€‚
+     * »ñÈ¡HttpRequest¶ÔÏóµÄurl×Ö·û´®Ö¸Õë¡£
      * 
      * @return @~english const char* the pointer of _url.
-     * @~chinese æŒ‡å‘urlçš„å­—ç¬¦ä¸²æŒ‡é’ˆã€‚
+     * @~chinese Ö¸ÏòurlµÄ×Ö·û´®Ö¸Õë¡£
      */
     inline const char* getUrl()
     {
@@ -192,12 +192,12 @@ public:
      * Set the request data of HttpRequest object.
      *
      * @~chinese 
-     * è®¾ç½®HttpRequestå¯¹è±¡çš„è¯·æ±‚æ•°æ®ã€‚
+     * ÉèÖÃHttpRequest¶ÔÏóµÄÇëÇóÊı¾İ¡£
      * 
      * @param buffer @~english the buffer of request data, it support binary data.
-     * @~chinese è¯·æ±‚æ•°æ®çš„ç¼“å­˜æŒ‡é’ˆ,å®ƒæ”¯æŒäºŒè¿›åˆ¶æ•°æ®ã€‚
+     * @~chinese ÇëÇóÊı¾İµÄ»º´æÖ¸Õë,ËüÖ§³Ö¶ş½øÖÆÊı¾İ¡£
      * @param len @~english the size of request data.
-     * @~chinese è¯·æ±‚æ•°æ®çš„å¤§å°ã€‚
+     * @~chinese ÇëÇóÊı¾İµÄ´óĞ¡¡£
      */
     inline void setRequestData(const char* buffer, size_t len)
     {
@@ -207,10 +207,10 @@ public:
      * Get the request data pointer of HttpRequest object.
      *
      * @~chinese 
-     * è·å–HttpRequestå¯¹è±¡è¯·æ±‚æ•°æ®çš„æŒ‡é’ˆã€‚
+     * »ñÈ¡HttpRequest¶ÔÏóÇëÇóÊı¾İµÄÖ¸Õë¡£
      * 
      * @return @~english char* the request data pointer.
-     * @~chinese æŒ‡å‘è¯·æ±‚æ•°æ®çš„æŒ‡é’ˆã€‚
+     * @~chinese Ö¸ÏòÇëÇóÊı¾İµÄÖ¸Õë¡£
      */
     inline char* getRequestData()
     {
@@ -223,10 +223,10 @@ public:
      * Get the size of request data
      *
      * @~chinese 
-     * è·å¾—è¯·æ±‚æ•°æ®çš„å¤§å°
+     * »ñµÃÇëÇóÊı¾İµÄ´óĞ¡
      * 
      * @return @~english ssize_t the size of request data
-     * @~chinese è¯·æ±‚æ•°æ®çš„å¤§å°
+     * @~chinese ÇëÇóÊı¾İµÄ´óĞ¡
      */
     inline ssize_t getRequestDataSize()
     {
@@ -238,11 +238,11 @@ public:
      * This tag can be found in HttpResponse->getHttpRequest->getTag().
      *
      * @~chinese 
-     * è®¾ç½®å­—ç¬¦ä¸²æ ‡ç­¾ç”¨äºè¯†åˆ«requestã€‚
-     * è¿™ä¸ªå­—ç¬¦ä¸²æ ‡ç­¾å¯ä»¥é€šè¿‡HttpResponse->getHttpRequest->getTag()è·å¾—ã€‚
+     * ÉèÖÃ×Ö·û´®±êÇ©ÓÃÓÚÊ¶±ğrequest¡£
+     * Õâ¸ö×Ö·û´®±êÇ©¿ÉÒÔÍ¨¹ıHttpResponse->getHttpRequest->getTag()»ñµÃ¡£
      * 
      * @param tag @~english the string pointer to tag
-     * @~chinese æŒ‡å‘æ ‡ç­¾çš„å­—ç¬¦ä¸²æŒ‡é’ˆã€‚
+     * @~chinese Ö¸Ïò±êÇ©µÄ×Ö·û´®Ö¸Õë¡£
      */
     inline void setTag(const char* tag)
     {
@@ -253,11 +253,11 @@ public:
      * The best practice is to use it in your MyClass::onMyHttpRequestCompleted(sender, HttpResponse*) callback.
      *
      * @~chinese 
-     * è·å–ç”¨äºè¯†åˆ«requestçš„å­—ç¬¦ä¸²æ ‡ç­¾ã€‚
-     * æœ€ä½³çš„ä½¿ç”¨ç‚¹æ˜¯åœ¨MyClass::onMyHttpRequestCompleted(å‘é€æ–¹,HttpResponse *)å›è°ƒä¸­ä½¿ç”¨ã€‚
+     * »ñÈ¡ÓÃÓÚÊ¶±ğrequestµÄ×Ö·û´®±êÇ©¡£
+     * ×î¼ÑµÄÊ¹ÓÃµãÊÇÔÚMyClass::onMyHttpRequestCompleted(·¢ËÍ·½,HttpResponse *)»Øµ÷ÖĞÊ¹ÓÃ¡£
      * 
      * @return @~english const char* the pointer of _tag
-     * @~chinese æŒ‡å‘_tagçš„å­—ç¬¦ä¸²æŒ‡é’ˆ
+     * @~chinese Ö¸Ïò_tagµÄ×Ö·û´®Ö¸Õë
      */
     inline const char* getTag()
     {
@@ -267,15 +267,15 @@ public:
     /**@~english
      * Set user-customed data of HttpRequest object.
      * You can attach a customed data in each request, and get it back in response callback.
-     * But you need to new/delete the data pointer manully.
+     * But you need to new/delete the data pointer manually.
      *
      * @~chinese 
-     * è®¾ç½®HttpRequestå¯¹è±¡çš„ç”¨æˆ·è‡ªå®šä¹‰æ•°æ®ã€‚
-     * ä½ å¯ä»¥åœ¨æ¯ä¸€ä¸ªrequestä¸­é™„åŠ ä¸€ä¸ªè‡ªå®šä¹‰æ•°æ®ï¼Œç„¶ååœ¨å“åº”å›è°ƒä¸­å–åŠ è¿™ä¸ªæ•°æ®ã€‚
-     * è®¾ç½®è‡ªå®šä¹‰æ•°æ®ï¼Œä½ éœ€è¦æ‰‹åŠ¨åœ°new/deleteæ•°æ®æŒ‡é’ˆ
+     * ÉèÖÃHttpRequest¶ÔÏóµÄÓÃ»§×Ô¶¨ÒåÊı¾İ¡£
+     * Äã¿ÉÒÔÔÚÃ¿Ò»¸örequestÖĞ¸½¼ÓÒ»¸ö×Ô¶¨ÒåÊı¾İ£¬È»ºóÔÚÏìÓ¦»Øµ÷ÖĞÈ¡¼ÓÕâ¸öÊı¾İ¡£
+     * ÉèÖÃ×Ô¶¨ÒåÊı¾İ£¬ÄãĞèÒªÊÖ¶¯µØnew/deleteÊı¾İÖ¸Õë
      * 
      * @param pUserData @~english the pointer point to customed data
-     * @~chinese è‡ªå®šä¹‰æ•°æ®æŒ‡é’ˆ
+     * @~chinese ×Ô¶¨ÒåÊı¾İÖ¸Õë
      */
     inline void setUserData(void* pUserData)
     {
@@ -286,11 +286,11 @@ public:
      * Don't forget to delete it. HttpClient/HttpResponse/HttpRequest will do nothing with this pointer.
      *
      * @~chinese 
-     * è·å–é¢„è®¾çš„ç”¨æˆ·è‡ªå®šä¹‰æ•°æ®æŒ‡é’ˆã€‚
-     * ä¸è¦å¿˜è®°deleteå®ƒã€‚HttpClientã€HttpResponseå’ŒHttpRequestéƒ½ä¸ä¼šå¯¹è¿™ä¸ªæŒ‡é’ˆè¿›è¡Œå¤„ç†ã€‚
+     * »ñÈ¡Ô¤ÉèµÄÓÃ»§×Ô¶¨ÒåÊı¾İÖ¸Õë¡£
+     * ²»ÒªÍü¼ÇdeleteËü¡£HttpClient¡¢HttpResponseºÍHttpRequest¶¼²»»á¶ÔÕâ¸öÖ¸Õë½øĞĞ´¦Àí¡£
      * 
      * @return @~english void* the pointer of user-customed data.
-     * @~chinese æŒ‡å‘ç”¨æˆ·è‡ªå®šä¹‰æ•°æ®çš„æŒ‡é’ˆã€‚
+     * @~chinese Ö¸ÏòÓÃ»§×Ô¶¨ÒåÊı¾İµÄÖ¸Õë¡£
      */
     inline void* getUserData()
     {
@@ -302,13 +302,13 @@ public:
      * When response come back, it would call (pTarget->*pSelector) to process something.
      *
      * @~chinese 
-     * è®¾ç½®targetå’Œç›¸å…³çš„å›è°ƒå‡½å‡½æ•°ã€‚
-     * å½“å“åº”è¿”å›æ—¶,å®ƒå°†è°ƒç”¨(pTarget->*pSelector)æ¥å¤„ç†ä¸€äº›äº‹æƒ…ã€‚
+     * ÉèÖÃtargetºÍÏà¹ØµÄ»Øµ÷º¯º¯Êı¡£
+     * µ±ÏìÓ¦·µ»ØÊ±,Ëü½«µ÷ÓÃ(pTarget->*pSelector)À´´¦ÀíÒ»Ğ©ÊÂÇé¡£
      * 
      * @param pTarget @~english the target object pointer.
-     * @~chinese ç›®æ ‡å¯¹è±¡æŒ‡é’ˆã€‚
+     * @~chinese Ä¿±ê¶ÔÏóÖ¸Õë¡£
      * @param pSelector @~english the callback function.
-     * @~chinese å›è°ƒå‡½æ•°ã€‚
+     * @~chinese »Øµ÷º¯Êı¡£
      */
     CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(Ref* pTarget, SEL_CallFuncND pSelector)
     {
@@ -320,13 +320,13 @@ public:
      * When response come back, we would call (pTarget->*pSelector) to process response data.
      *
      * @~chinese 
-     * è®¾ç½®targetå’Œç›¸å…³å›è°ƒå‡½æ•°ã€‚
-     * å½“å“åº”è¿”å›æ—¶,æˆ‘ä»¬å°†è°ƒç”¨(pTarget->*pSelector)æ¥å¤„ç†å“åº”æ•°æ®ã€‚
+     * ÉèÖÃtargetºÍÏà¹Ø»Øµ÷º¯Êı¡£
+     * µ±ÏìÓ¦·µ»ØÊ±,ÎÒÃÇ½«µ÷ÓÃ(pTarget->*pSelector)À´´¦ÀíÏìÓ¦Êı¾İ¡£
      * 
      * @param pTarget @~english the target object pointer.
-     * @~chinese ç›®æ ‡å¯¹è±¡æŒ‡é’ˆã€‚
+     * @~chinese Ä¿±ê¶ÔÏóÖ¸Õë¡£
      * @param pSelector @~english the SEL_HttpResponse function.
-     * @~chinese å›è°ƒå‡½æ•°ã€‚
+     * @~chinese »Øµ÷º¯Êı¡£
      */
     CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
     {
@@ -343,11 +343,11 @@ public:
      * When response come back, we would call _pCallback to process response data.
      *
      * @~chinese 
-     * è®¾ç½®HttpRequestå¯¹è±¡çš„å“åº”å›è°ƒå‡½æ•°ã€‚
-     * å½“å“åº”è¿”å›æ—¶,å°†ä¼šè°ƒç”¨_pCallbackæ¥å¤„ç†å“åº”æ•°æ®ã€‚
+     * ÉèÖÃHttpRequest¶ÔÏóµÄÏìÓ¦»Øµ÷º¯Êı¡£
+     * µ±ÏìÓ¦·µ»ØÊ±,½«»áµ÷ÓÃ_pCallbackÀ´´¦ÀíÏìÓ¦Êı¾İ¡£
      * 
      * @param callback @~english the ccHttpRequestCallback function.
-     * @~chinese ccHttpRequestCallbackå‡½æ•°ã€‚
+     * @~chinese ccHttpRequestCallbackº¯Êı¡£
      */
     inline void setResponseCallback(const ccHttpRequestCallback& callback)
     {
@@ -355,13 +355,13 @@ public:
     }
     
     /** @~english
-     * Get the target of callback selector funtion, mainly used by HttpClient.
+     * Get the target of callback selector function, mainly used by HttpClient.
      *
      * @~chinese 
-     * è·å–å›è°ƒå‡½æ•°çš„targetå¯¹è±¡ï¼Œä¸»è¦ç”¨äºHttpClientã€‚
+     * »ñÈ¡»Øµ÷º¯ÊıµÄtarget¶ÔÏó£¬Ö÷ÒªÓÃÓÚHttpClient¡£
      * 
      * @return @~english Ref* the target of callback selector funtion
-     * @~chinese å›è°ƒå‡½æ•°çš„targetå¯¹è±¡
+     * @~chinese »Øµ÷º¯ÊıµÄtarget¶ÔÏó
      */
     inline Ref* getTarget()
     {
@@ -372,18 +372,18 @@ public:
      * This sub class is just for migration SEL_CallFuncND to SEL_HttpResponse,someday this way will be removed.
      * 
      * @~chinese 
-     * ç”¨äºå°†SEL_CallFuncNDè½¬æ¢æˆSEL_HttpResponseçš„å­ç±»ï¼Œè¿™ä¸ªç±»å°†ä¼šè¢«ç§»é™¤ã€‚
+     * ÓÃÓÚ½«SEL_CallFuncND×ª»»³ÉSEL_HttpResponseµÄ×ÓÀà£¬Õâ¸öÀà½«»á±»ÒÆ³ı¡£
      * 
      * @lua NA
      */
     class _prxy
     {
     public:
-        /** @~english Constructor.  @~chinese æ„é€ å‡½æ•°ã€‚*/
+        /** @~english Constructor.  @~chinese ¹¹Ôìº¯Êı¡£*/
         _prxy( SEL_HttpResponse cb ) :_cb(cb) {}
-        /** @~english Destructor.  @~chinese ææ„å‡½æ•°ã€‚*/
+        /** @~english Destructor.  @~chinese Îö¹¹º¯Êı¡£*/
         ~_prxy(){};
-        /** @~english operator override.  @~chinese æ“ä½œç¬¦é‡è½½ã€‚*/
+        /** @~english operator override.  @~chinese ²Ù×÷·ûÖØÔØ¡£*/
         operator SEL_HttpResponse() const { return _cb; }
         CC_DEPRECATED_ATTRIBUTE operator SEL_CallFuncND()   const { return (SEL_CallFuncND) _cb; }
     protected:
@@ -394,10 +394,10 @@ public:
      * Get _prxy object by the _pSelector.
      *
      * @~chinese 
-     * æ ¹æ®_pSelectorè·å–_prxyå¯¹è±¡ã€‚
+     * ¸ù¾İ_pSelector»ñÈ¡_prxy¶ÔÏó¡£
      * 
      * @return @~english the _prxy object
-     * @~chinese _prxyå¯¹è±¡
+     * @~chinese _prxy¶ÔÏó
      */
     inline _prxy getSelector()
     {
@@ -408,10 +408,10 @@ public:
      * Get ccHttpRequestCallback callback function.
      *
      * @~chinese 
-     * è·å–ccHttpRequestCallbackå›è°ƒå‡½æ•°ã€‚
+     * »ñÈ¡ccHttpRequestCallback»Øµ÷º¯Êı¡£
      * 
      * @return @~english ccHttpRequestCallback callback function.
-     * @~chinese ccHttpRequestCallbackå›è°ƒå‡½æ•°ã€‚
+     * @~chinese ccHttpRequestCallback»Øµ÷º¯Êı¡£
      */
     inline const ccHttpRequestCallback& getCallback()
     {
@@ -422,10 +422,10 @@ public:
      * Set custom-defined headers.
      *
      * @~chinese 
-     * è®¾ç½®è‡ªå®šä¹‰çš„è¯·æ±‚å¤´ã€‚
+     * ÉèÖÃ×Ô¶¨ÒåµÄÇëÇóÍ·¡£
      * 
      * @param pHeaders @~english the string vector of custom-defined headers.
-     * @~chinese åŒ…å«è‡ªå®šä¹‰è¯·æ±‚å¤´çš„std::vector<std::string>ã€‚
+     * @~chinese °üº¬×Ô¶¨ÒåÇëÇóÍ·µÄstd::vector<std::string>¡£
      */
     inline void setHeaders(std::vector<std::string> pHeaders)
    	{
@@ -436,10 +436,10 @@ public:
      * Get custom headers.
      *
      * @~chinese 
-     * è·å–è‡ªå®šä¹‰çš„è¯·æ±‚å¤´ã€‚
+     * »ñÈ¡×Ô¶¨ÒåµÄÇëÇóÍ·¡£
      * 
      * @return @~english the string vector of custom-defined headers.
-     * @~chinese åŒ…å«è‡ªå®šä¹‰è¯·æ±‚å¤´çš„std::vector<std::string>ã€‚
+     * @~chinese °üº¬×Ô¶¨ÒåÇëÇóÍ·µÄstd::vector<std::string>¡£
      */
    	inline std::vector<std::string> getHeaders()
    	{

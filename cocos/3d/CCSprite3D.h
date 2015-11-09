@@ -1,4 +1,4 @@
-ï»¿/****************************************************************************
+/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -53,26 +53,26 @@ struct NodeData;
 
 /** @class Sprite3D
     @brief @~english a sprite3D can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite
-    @~chinese ä¸€ä¸ªsprite3Då¯ä»¥ä»3Dæ¨¡å‹æ–‡ä»¶ï¼Œ OBJï¼Œ .c3t ï¼Œ .c3bä¸­è¢«åŠ è½½ï¼Œç„¶åå°±å¯ä»¥åƒç²¾çµä¸€æ ·è¢«ç»˜åˆ¶
+    @~chinese Ò»¸ösprite3D¿ÉÒÔ´Ó3DÄ£ĞÍÎÄ¼ş£¬ OBJ£¬ .c3t £¬ .c3bÖĞ±»¼ÓÔØ£¬È»ºó¾Í¿ÉÒÔÏñ¾«ÁéÒ»Ñù±»»æÖÆ
 */
 class CC_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
     /** @~english  Creates an empty sprite3D without 3D model and texture.
-        @~chinese åˆ›å»ºä¸€ä¸ªç©ºçš„Sprite3Dæ²¡æœ‰3Dæ¨¡å‹å’Œçº¹ç†ã€‚
-        @return @~english an autoreleased sprite3D object. @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„Sprite3Då¯¹è±¡ã€‚
+        @~chinese ´´½¨Ò»¸ö¿ÕµÄSprite3DÃ»ÓĞ3DÄ£ĞÍºÍÎÆÀí¡£
+        @return @~english an autoreleased sprite3D object. @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅµÄSprite3D¶ÔÏó¡£
     */
     static Sprite3D* create();
 
     /** @~english creates a Sprite3D
-        @~chinese åˆ›å»ºä¸€ä¸ªSprite3D
-        @return @~english an autoreleased sprite3D object. @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„Sprite3Då¯¹è±¡ã€‚
+        @~chinese ´´½¨Ò»¸öSprite3D
+        @return @~english an autoreleased sprite3D object. @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅµÄSprite3D¶ÔÏó¡£
     */
     static Sprite3D* create(const std::string& modelPath);
 
     /** @~english creates a Sprite3D. It only supports one texture, and overrides the internal texture with 'texturePath'
-        @~chinese åˆ›å»ºä¸€ä¸ªSprite3Dã€‚å®ƒåªæ”¯æŒä¸€ä¸ªçº¹ç†ï¼Œå¹¶é‡å†™å†…éƒ¨çº¹ç†çš„texturepathâ€
-        @return @~english an autoreleased sprite3D object. @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„Sprite3Då¯¹è±¡ã€‚
+        @~chinese ´´½¨Ò»¸öSprite3D¡£ËüÖ»Ö§³ÖÒ»¸öÎÆÀí£¬²¢ÖØĞ´ÄÚ²¿ÎÆÀíµÄtexturepath¡±
+        @return @~english an autoreleased sprite3D object. @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅµÄSprite3D¶ÔÏó¡£
     */
     static Sprite3D* create(const std::string& modelPath, const std::string& texturePath);
 
@@ -80,209 +80,209 @@ public:
         If the 3d model was previously loaded, it will create a new 3d sprite and the callback will be called at once.
         Otherwise it will load the model file in a new thread, and when the 3d sprite is loaded, the callback will be called with the created Sprite3D and a userdefined parameter.
         The callback will be called from the main thread, so it is safe to create any cocos2d object from the callback.
-        @~chinese å¼‚æ­¥åˆ›å»º3Dç²¾çµ
-        å¦‚æœä¸‰ç»´æ¨¡å‹å·²ç»è¢«åŠ è½½ï¼Œå®ƒä¼šç«‹å³åˆ›å»ºä¸€ä¸ªæ–°çš„3Dç²¾çµå¹¶ä¸”å›è°ƒä¼šè¢«è°ƒç”¨ä¸€æ¬¡ã€‚
-        å¦åˆ™ä¼šåœ¨ä¸€ä¸ªæ–°çš„çº¿ç¨‹åŠ è½½æ¨¡å‹æ–‡ä»¶ï¼Œä¸€æ—¦åŠ è½½å®Œæˆï¼Œå®ƒä¼šæ‰§è¡Œå›è°ƒå‡½æ•°ï¼Œå¹¶ä½¿ç”¨æ–°åˆ›å»ºçš„æ¨¡å‹å’Œè‡ªå®šä¹‰çš„ç”¨æˆ·æ•°æ®åšä¸ºå‚æ•°ã€‚
-        è¿™ä¸ªå›è°ƒå°†åœ¨ä¸»çº¿ç¨‹è°ƒç”¨ï¼Œå› æ­¤åœ¨å›è°ƒå‡½æ•°ä¸­åˆ›å»ºä»»ä½•çš„cocos2då¯¹è±¡æ˜¯å®‰å…¨çš„ã€‚
-        @param modelPath @~english  model to be loaded @~chinese è¢«åŠ è½½çš„æ¨¡å‹
-        @param callback @~english  callback after loading @~chinese åŠ è½½å®Œæˆåçš„å›è°ƒå‡½æ•°
-        @param callbackparam @~english  user defined parameter for the callback @~chinese ç”¨æˆ·å®šä¹‰çš„å‚æ•°
+        @~chinese Òì²½´´½¨3D¾«Áé
+        Èç¹ûÈıÎ¬Ä£ĞÍÒÑ¾­±»¼ÓÔØ£¬Ëü»áÁ¢¼´´´½¨Ò»¸öĞÂµÄ3D¾«Áé²¢ÇÒ»Øµ÷»á±»µ÷ÓÃÒ»´Î¡£
+        ·ñÔò»áÔÚÒ»¸öĞÂµÄÏß³Ì¼ÓÔØÄ£ĞÍÎÄ¼ş£¬Ò»µ©¼ÓÔØÍê³É£¬Ëü»áÖ´ĞĞ»Øµ÷º¯Êı£¬²¢Ê¹ÓÃĞÂ´´½¨µÄÄ£ĞÍºÍ×Ô¶¨ÒåµÄÓÃ»§Êı¾İ×öÎª²ÎÊı¡£
+        Õâ¸ö»Øµ÷½«ÔÚÖ÷Ïß³Ìµ÷ÓÃ£¬Òò´ËÔÚ»Øµ÷º¯ÊıÖĞ´´½¨ÈÎºÎµÄcocos2d¶ÔÏóÊÇ°²È«µÄ¡£
+        @param modelPath @~english  model to be loaded @~chinese ±»¼ÓÔØµÄÄ£ĞÍ
+        @param callback @~english  callback after loading @~chinese ¼ÓÔØÍê³ÉºóµÄ»Øµ÷º¯Êı
+        @param callbackparam @~english  user defined parameter for the callback @~chinese ÓÃ»§¶¨ÒåµÄ²ÎÊı
     */
     static void createAsync(const std::string& modelPath, const std::function<void(Sprite3D*, void*)>& callback, void* callbackparam);
 
     static void createAsync(const std::string& modelPath, const std::string& texturePath, const std::function<void(Sprite3D*, void*)>& callback, void* callbackparam);
 
     /** @~english set texture, set the first if multiple textures exist
-        @~chinese è®¾ç½®çº¹ç†ï¼Œåªè®¾ç½®ç¬¬ä¸€ä¸ªï¼Œå¦‚æœå¤šé‡çº¹ç†çš„å­˜åœ¨
+        @~chinese ÉèÖÃÎÆÀí£¬Ö»ÉèÖÃµÚÒ»¸ö£¬Èç¹û¶àÖØÎÆÀíµÄ´æÔÚ
     */
     void setTexture(const std::string& texFile);
 
     /** @~english set texture, set the first if multiple textures exist
-        @~chinese è®¾ç½®çº¹ç†ï¼Œåªè®¾ç½®ç¬¬ä¸€ä¸ªï¼Œå¦‚æœå¤šé‡çº¹ç†çš„å­˜åœ¨
+        @~chinese ÉèÖÃÎÆÀí£¬Ö»ÉèÖÃµÚÒ»¸ö£¬Èç¹û¶àÖØÎÆÀíµÄ´æÔÚ
     */
     void setTexture(Texture2D* texture);
 
     /** @~english get Mesh by index
-        @~chinese é€šè¿‡ç´¢å¼•å¾—åˆ°ç½‘æ ¼
-        @param index @~english  the specified index of a mesh @~chinese ä¸€ä¸ªç´¢å¼•ç”¨äºæŒ‡å®šç½‘æ ¼
-        @return @~english a mesh in the specified index @~chinese æŒ‡å®šçš„ç½‘æ ¼
+        @~chinese Í¨¹ıË÷ÒıµÃµ½Íø¸ñ
+        @param index @~english  the specified index of a mesh @~chinese Ò»¸öË÷ÒıÓÃÓÚÖ¸¶¨Íø¸ñ
+        @return @~english a mesh in the specified index @~chinese Ö¸¶¨µÄÍø¸ñ
     */
     Mesh* getMeshByIndex(int index) const;
 
     /** @~english get Mesh by Name, it returns the first one if there are more than one mesh with the same name
-        @~chinese é€šè¿‡åç§°å¾—åˆ°ç½‘æ ¼ï¼Œå®ƒè¿”å›ç¬¬ä¸€ä¸ªå¦‚æœæœ‰å¤šä¸ªå…·æœ‰ç›¸åŒåç§°çš„ç½‘æ ¼
-        @param name @~english  the specified name of a mesh @~chinese ä¸€ä¸ªæŒ‡å®šçš„åç§°
-        @return @~english a mesh with the specified name @~chinese å…·æœ‰æŒ‡å®šåç§°çš„ç½‘æ ¼
+        @~chinese Í¨¹ıÃû³ÆµÃµ½Íø¸ñ£¬Ëü·µ»ØµÚÒ»¸öÈç¹ûÓĞ¶à¸ö¾ßÓĞÏàÍ¬Ãû³ÆµÄÍø¸ñ
+        @param name @~english  the specified name of a mesh @~chinese Ò»¸öÖ¸¶¨µÄÃû³Æ
+        @return @~english a mesh with the specified name @~chinese ¾ßÓĞÖ¸¶¨Ãû³ÆµÄÍø¸ñ
     */
     Mesh* getMeshByName(const std::string& name) const;
 
     /** @~english get mesh array by name
-        @~chinese é€šè¿‡åç§°å¾—åˆ°ç½‘æ ¼é˜Ÿåˆ—
-        @param name @~english  the specified name of mesh @~chinese æŒ‡å®šçš„åç§°
-        @return @~english all meshes with the given name @~chinese ä¸ç»™å®šåç§°ç›¸ç¬¦çš„æ‰€æœ‰çš„ç½‘æ ¼
+        @~chinese Í¨¹ıÃû³ÆµÃµ½Íø¸ñ¶ÓÁĞ
+        @param name @~english  the specified name of mesh @~chinese Ö¸¶¨µÄÃû³Æ
+        @return @~english all meshes with the given name @~chinese Óë¸ø¶¨Ãû³ÆÏà·ûµÄËùÓĞµÄÍø¸ñ
         @lua NA
     */
     std::vector<Mesh*> getMeshArrayByName(const std::string& name) const;
 
     /** @~english get mesh
-        @~chinese å¾—åˆ°ç½‘æ ¼
-        @return @~english a mesh a index 0 @~chinese ç½‘æ ¼ç´¢å¼•0
+        @~chinese µÃµ½Íø¸ñ
+        @return @~english a mesh a index 0 @~chinese Íø¸ñË÷Òı0
     */
     Mesh* getMesh() const { return _meshes.at(0); }
 
-    /** @return @~english mesh count @~chinese å¾—åˆ°ç½‘æ ¼çš„æ•°é‡
+    /** @return @~english mesh count @~chinese µÃµ½Íø¸ñµÄÊıÁ¿
     */
     ssize_t getMeshCount() const { return _meshes.size(); }
 
-    /** @return @~english the skin @~chinese å¾—åˆ°çš®è‚¤
+    /** @return @~english the skin @~chinese µÃµ½Æ¤·ô
     */
     CC_DEPRECATED_ATTRIBUTE MeshSkin* getSkin() const;
 
-    /** @return @~english the skeleton of sprite3d @~chinese å¾—åˆ°Sprite3Dçš„éª¨æ¶
+    /** @return @~english the skeleton of sprite3d @~chinese µÃµ½Sprite3DµÄ¹Ç¼Ü
     */
     Skeleton3D* getSkeleton() const { return _skeleton; }
 
     /** @~english get AttachNode by bone name
-        @~chinese å¾—åˆ°attachnodeé€šè¿‡éª¨éª¼çš„åå­—
-        @param boneName @~english  the bone name @~chinese éª¨éª¼çš„åå­—
-        @return @~english AttachNode of the bone, nullptr if not exist @~chinese å¦‚æœéª¨éª¼ä¸å­˜åœ¨è¿”å›nullptr
+        @~chinese µÃµ½attachnodeÍ¨¹ı¹Ç÷ÀµÄÃû×Ö
+        @param boneName @~english  the bone name @~chinese ¹Ç÷ÀµÄÃû×Ö
+        @return @~english AttachNode of the bone, nullptr if not exist @~chinese Èç¹û¹Ç÷À²»´æÔÚ·µ»Ønullptr
     */
         AttachNode* getAttachNode(const std::string& boneName);
 
     /** @~english remove attach node of a bone
-        @~chinese åˆ é™¤éª¨éª¼æ‰€è¿æ¥çš„attach node
-        @param boneName @~english  the bone name @~chinese éª¨çš„åå­—
+        @~chinese É¾³ı¹Ç÷ÀËùÁ¬½ÓµÄattach node
+        @param boneName @~english  the bone name @~chinese ¹ÇµÄÃû×Ö
     */
     void removeAttachNode(const std::string& boneName);
 
     /** @~english remove all attach nodes
-        @~chinese åˆ é™¤æ‰€æœ‰è¿æ¥èŠ‚ç‚¹
+        @~chinese É¾³ıËùÓĞÁ¬½Ó½Úµã
     */
     void removeAllAttachNode();
 
     /** @~english set the blend methods for all meshes
-        @~chinese è®¾ç½®æ‰€æœ‰ç½‘æ ¼çš„æ··åˆæ–¹æ³•
-        @param blendFunc @~english  the new blendFunc object @~chinese æ–°blendfuncå¯¹è±¡
+        @~chinese ÉèÖÃËùÓĞÍø¸ñµÄ»ìºÏ·½·¨
+        @param blendFunc @~english  the new blendFunc object @~chinese ĞÂblendfunc¶ÔÏó
     */
     virtual void setBlendFunc(const BlendFunc& blendFunc) override;
 
     /** @~english get the blend method
-        @~chinese å¾—åˆ°æ··åˆçš„æ–¹æ³•
-        @return @~english the blendFunc object @~chinese blendfuncå¯¹è±¡
+        @~chinese µÃµ½»ìºÏµÄ·½·¨
+        @return @~english the blendFunc object @~chinese blendfunc¶ÔÏó
     */
     virtual const BlendFunc& getBlendFunc() const override;
 
     // overrides
     /** @~english set GLProgramState, you should bind attributes by yourself
-        @~chinese è®¾ç½®glprogramstateï¼Œä½ åº”è¯¥è‡ªå·±ç»‘å®šå±æ€§
-        @param glProgramState @~english  the new GLProgramState to render with @~chinese æ–°çš„glprogramstate
+        @~chinese ÉèÖÃglprogramstate£¬ÄãÓ¦¸Ã×Ô¼º°ó¶¨ÊôĞÔ
+        @param glProgramState @~english  the new GLProgramState to render with @~chinese ĞÂµÄglprogramstate
     */
     virtual void setGLProgramState(GLProgramState* glProgramState) override;
 
     /** @~english set GLProgram, you should bind attributes by yourself
-        @~chinese è®¾ç½®glprogramï¼Œä½ åº”è¯¥è‡ªå·±ç»‘å®šå±æ€§
-        @param glprogram @~english  the new glprogram to render with @~chinese æ–°çš„glprogram
+        @~chinese ÉèÖÃglprogram£¬ÄãÓ¦¸Ã×Ô¼º°ó¶¨ÊôĞÔ
+        @param glprogram @~english  the new glprogram to render with @~chinese ĞÂµÄglprogram
     */
     virtual void setGLProgram(GLProgram* glprogram) override;
 
     /** @~english Get AABB
-        @~chinese å¾—åˆ°AABB
+        @~chinese µÃµ½AABB
         @warning If the sprite has animation, it can't be calculated accuratly,
         because bone can drive the vertices, we just use the origin vertices
         to calculate the AABB.
-        @return @~english the AABB object @~chinese AABBå¯¹è±¡
+        @return @~english the AABB object @~chinese AABB¶ÔÏó
     */
     const AABB& getAABB() const;
 
     /** @~english Get AABB Recursively,it will merge the aabb its own and all descendants
-        @~chinese é€’å½’å¾—åˆ°AABB(é€’å½’çš„åˆå¹¶è‡ªèº«åŠå…¶å­©å­çš„AABB)
+        @~chinese µİ¹éµÃµ½AABB(µİ¹éµÄºÏ²¢×ÔÉí¼°Æäº¢×ÓµÄAABB)
         @warning Because some times we may have an empty Sprite3D Node as parent, but
         the Sprite3D don't contain any meshes, so getAABB()
         will return a wrong value at that time.
-        @return @~english the AABB object @~chinese AABBå¯¹è±¡
+        @return @~english the AABB object @~chinese AABB¶ÔÏó
     */
     AABB getAABBRecursively();
 
     /** @~english  Executes an action, and returns the action that is executed. For Sprite3D special logic are needed to take care of Fading.
         This node becomes the action's target. Refer to Action::getTarget()
-        @~chinese æ‰§è¡Œä¸€ä¸ªaction
+        @~chinese Ö´ĞĞÒ»¸öaction
         @warning Actions don't retain their target.
-        @param action @~english  the action will be excuted @~chinese å°†è¢«æ‰§è¡Œçš„action
-        @return @~english An Action pointer @~chinese ä¸€ä¸ªactionçš„æŒ‡é’ˆ
+        @param action @~english  the action will be excuted @~chinese ½«±»Ö´ĞĞµÄaction
+        @return @~english An Action pointer @~chinese Ò»¸öactionµÄÖ¸Õë
     */
     virtual Action* runAction(Action* action) override;
 
     /** @~english  Force to write to depth buffer, this is useful if you want to achieve effects like fading.
-        @~chinese å¼ºåˆ¶å†™å…¥æ·±åº¦ç¼“å†²åŒºï¼Œå¦‚æœä½ æƒ³ä½¿ç”¨æ·¡å‡ºæ•ˆæœï¼Œè¿™æ ·åšä¹Ÿæ˜¯æœ‰æ•ˆçš„
-        @param value @~english  the switching vale of method @~chinese æ–¹æ³•çš„åˆ‡æ¢é˜€
+        @~chinese Ç¿ÖÆĞ´ÈëÉî¶È»º³åÇø£¬Èç¹ûÄãÏëÊ¹ÓÃµ­³öĞ§¹û£¬ÕâÑù×öÒ²ÊÇÓĞĞ§µÄ
+        @param value @~english  the switching vale of method @~chinese ·½·¨µÄÇĞ»»·§
     */
     void setForceDepthWrite(bool value) { _forceDepthWrite = value; }
 
     /** @~english whether force to write to depth buffer
-        @~chinese æ˜¯å¦å¼ºåˆ¶å†™å…¥æ·±åº¦ç¼“å†²åŒº
-        @return @~english the switching vale of method @~chinese æ–¹æ³•çš„åˆ‡æ¢é˜€
+        @~chinese ÊÇ·ñÇ¿ÖÆĞ´ÈëÉî¶È»º³åÇø
+        @return @~english the switching vale of method @~chinese ·½·¨µÄÇĞ»»·§
     */
     bool isForceDepthWrite() const { return _forceDepthWrite;};
 
     /** @~english  Returns 2d bounding-box
-        @~chinese è¿”å›äºŒç»´åŒ…å›´ç›’
+        @~chinese ·µ»Ø¶şÎ¬°üÎ§ºĞ
         @warning the bouding-box is just get from the AABB which as Z=0, so that is not very accurate.
-        @return @~english the rect of boundingbox @~chinese åŒ…å›´ç›’çš„çŸ©å½¢æ¡†
+        @return @~english the rect of boundingbox @~chinese °üÎ§ºĞµÄ¾ØĞÎ¿ò
     */
     virtual Rect getBoundingBox() const override;
 
     /** @~english set which face is going to cull, default GL_BACK
-        @~chinese è®¾ç½®å“ªä¸ªé¢å°†è¦è¢«å‰”é™¤ï¼Œé»˜è®¤gl_back
-        @param cullFace @~english  which face is going to cull, GL_BACK, GL_FRONT, GL_FRONT_AND_BACK @~chinese å“ªä¸ªé¢å°†è¦è¢«å‰”é™¤ï¼Œgl_backï¼Œgl_frontï¼Œgl_front_and_back
+        @~chinese ÉèÖÃÄÄ¸öÃæ½«Òª±»ÌŞ³ı£¬Ä¬ÈÏgl_back
+        @param cullFace @~english  which face is going to cull, GL_BACK, GL_FRONT, GL_FRONT_AND_BACK @~chinese ÄÄ¸öÃæ½«Òª±»ÌŞ³ı£¬gl_back£¬gl_front£¬gl_front_and_back
     */
     void setCullFace(GLenum cullFace);
 
     /** @~english set cull face enable or not
-        @~chinese è®¾ç½®æ˜¯å¦å¯ç”¨å‰”é™¤
-        @param enable @~english  the switching vale of method @~chinese æ˜¯å¦å‰”é™¤
+        @~chinese ÉèÖÃÊÇ·ñÆôÓÃÌŞ³ı
+        @param enable @~english  the switching vale of method @~chinese ÊÇ·ñÌŞ³ı
     */
     void setCullFaceEnabled(bool enable);
 
     /** @~english light mask getter & setter, light works only when _lightmask & light's flag is true, default value of _lightmask is 0xffff
-        @~chinese è®¾ç½®ç¯å…‰æ©ç 
-        @param mask @~english  the lightmask @~chinese ç¯å…‰æ©ç 
+        @~chinese ÉèÖÃµÆ¹âÑÚÂë
+        @param mask @~english  the lightmask @~chinese µÆ¹âÑÚÂë
     */
     void setLightMask(unsigned int mask) { _lightMask = mask; }
 
     /** @~english light mask getter & setter, light works only when _lightmask & light's flag is true, default value of _lightmask is 0xffff
-        @~chinese è¿”å›ç¯å…‰æ©ç 
-        @return @~english the lightmask @~chinese ç¯å…‰æ©ç 
+        @~chinese ·µ»ØµÆ¹âÑÚÂë
+        @return @~english the lightmask @~chinese µÆ¹âÑÚÂë
     */
     unsigned int getLightMask() const { return _lightMask; }
 
     /** @~english draw
-        @~chinese ç”»
+        @~chinese »­
     */
     virtual void draw(Renderer* renderer, const Mat4& transform, uint32_t flags) override;
 
     /** @~english Adds a new material to the sprite.
         The Material will be applied to all the meshes that belong to the sprite.
         Internally it will call `setMaterial(material,-1)`
-        @~chinese ç»™å¯¹è±¡æ·»åŠ ä¸€ä¸ªæ–°çš„æè´¨
-        @param material @~english  the material to be applied @~chinese ææ–™è¢«åº”ç”¨
+        @~chinese ¸ø¶ÔÏóÌí¼ÓÒ»¸öĞÂµÄ²ÄÖÊ
+        @param material @~english  the material to be applied @~chinese ²ÄÁÏ±»Ó¦ÓÃ
     */
     void setMaterial(Material* material);
 
     /** @~english Adds a new material to a particular mesh of the sprite.
         meshIndex is the mesh that will be applied to.
         if meshIndex == -1, then it will be applied to all the meshes that belong to the sprite.
-        @~chinese ç»™å¯¹è±¡çš„ä¸€ä¸ªæŒ‡å®šçš„ç½‘æ ¼æ·»åŠ æè´¨
-        @param material @~english  the material to be applied @~chinese è¢«æ·»åŠ çš„æè´¨
-        @param meshIndex @~english  the mesh index of whom want to apply the material @~chinese æ·»åŠ æè´¨çš„ç½‘æ ¼çš„ç´¢å¼•
+        @~chinese ¸ø¶ÔÏóµÄÒ»¸öÖ¸¶¨µÄÍø¸ñÌí¼Ó²ÄÖÊ
+        @param material @~english  the material to be applied @~chinese ±»Ìí¼ÓµÄ²ÄÖÊ
+        @param meshIndex @~english  the mesh index of whom want to apply the material @~chinese Ìí¼Ó²ÄÖÊµÄÍø¸ñµÄË÷Òı
     */
     void setMaterial(Material* material, int meshIndex);
 
     /** @~english Get material of a particular mesh of the sprite.
         meshIndex is the mesh that will be applied to.
         if meshIndex == -1, then it will be applied to all the meshes that belong to the sprite.
-        @~chinese å¯¹è±¡çš„ä¸€ä¸ªæŒ‡å®šçš„ç½‘æ ¼çš„æè´¨
-        @param meshIndex @~english  the mesh index @~chinese ç½‘æ ¼ç´¢å¼•
-        @return @~english the material of given mesh index @~chinese æŒ‡å®šé£æ ¼çš„æè´¨
+        @~chinese ¶ÔÏóµÄÒ»¸öÖ¸¶¨µÄÍø¸ñµÄ²ÄÖÊ
+        @param meshIndex @~english  the mesh index @~chinese Íø¸ñË÷Òı
+        @return @~english the material of given mesh index @~chinese Ö¸¶¨·ç¸ñµÄ²ÄÖÊ
     */
     Material* getMaterial(int meshIndex) const;
     
@@ -313,8 +313,8 @@ CC_CONSTRUCTOR_ACCESS:
     */
     virtual void visit(Renderer* renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
 
-    /**generate default GLProgramState*/
-    void genGLProgramState(bool useLight = false);
+    /**generate default material*/
+    void genMaterial(bool useLight = false);
 
     void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite);
     void createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& matrialdatas);
@@ -368,7 +368,7 @@ protected:
 ///////////////////////////////////////////////////////
 /** @class Sprite3DCache
     @brief @~english the cache data of Sprite3D, use to speed up Sprite3D::create
-    @~chinese ä¸€ä¸ªç¼“å­˜å¯¹è±¡ï¼Œç”¨æ¥åŠ é€ŸSprite3Dçš„åˆ›å»º
+    @~chinese Ò»¸ö»º´æ¶ÔÏó£¬ÓÃÀ´¼ÓËÙSprite3DµÄ´´½¨
 */
 class CC_DLL Sprite3DCache
 {
@@ -391,41 +391,41 @@ public:
     };
 
     /** @~english get the instance of this object
-        @~chinese è·å¾—æ­¤å¯¹è±¡çš„å®ä¾‹
-        @return @~english the instance of this object @~chinese æ­¤å¯¹è±¡çš„å®ä¾‹
+        @~chinese »ñµÃ´Ë¶ÔÏóµÄÊµÀı
+        @return @~english the instance of this object @~chinese ´Ë¶ÔÏóµÄÊµÀı
     */
     static Sprite3DCache* getInstance();
 
     /** @~english destroy the instance
-        @~chinese é”€æ¯å®ä¾‹
+        @~chinese Ïú»ÙÊµÀı
     */
     static void destroyInstance();
 
     /** @~english get the SpriteData struct
-        @~chinese å¾—åˆ°spritedataç»“æ„
-        @param key @~english  the key of sprite3DData @~chinese sprite3ddataçš„key
-        @return @~english the Sprite3DData @~chinese sprite3ddataå¯¹è±¡
+        @~chinese µÃµ½spritedata½á¹¹
+        @param key @~english  the key of sprite3DData @~chinese sprite3ddataµÄkey
+        @return @~english the Sprite3DData @~chinese sprite3ddata¶ÔÏó
         @lua NA
     */
     Sprite3DData* getSpriteData(const std::string& key) const;
 
     /** @~english  add the SpriteData into Sprite3D by given the specified key
-        @~chinese æ·»åŠ spritedataåˆ°Sprite3Dé€šè¿‡æŒ‡å®šçš„å…³é”®å­—
-        @param key @~english  the key of sprite3DData @~chinese sprite3ddataçš„å…³é”®å­—
-        @param spritedata @~english  the spritedata to add @~chinese è¦æ·»åŠ çš„spritedata
-        @return @~english Whether or not the operation is successful @~chinese æ“ä½œæ˜¯å¦æˆåŠŸ
+        @~chinese Ìí¼Óspritedataµ½Sprite3DÍ¨¹ıÖ¸¶¨µÄ¹Ø¼ü×Ö
+        @param key @~english  the key of sprite3DData @~chinese sprite3ddataµÄ¹Ø¼ü×Ö
+        @param spritedata @~english  the spritedata to add @~chinese ÒªÌí¼ÓµÄspritedata
+        @return @~english Whether or not the operation is successful @~chinese ²Ù×÷ÊÇ·ñ³É¹¦
         @lua NA
     */
     bool addSprite3DData(const std::string& key, Sprite3DData* spritedata);
 
     /** @~english remove the SpriteData from Sprite3D by given the specified key
-        @~chinese åˆ é™¤spritedataä»Sprite3Dé€šè¿‡æŒ‡å®šé”®
-        @param key @~english  the key of sprite3DData @~chinese sprite3ddataçš„é”®
+        @~chinese É¾³ıspritedata´ÓSprite3DÍ¨¹ıÖ¸¶¨¼ü
+        @param key @~english  the key of sprite3DData @~chinese sprite3ddataµÄ¼ü
     */
     void removeSprite3DData(const std::string& key);
 
     /** @~english remove all the SpriteData from Sprite3D
-        @~chinese ä»Sprite3Dåˆ é™¤æ‰€æœ‰spritedata
+        @~chinese ´ÓSprite3DÉ¾³ıËùÓĞspritedata
     */
     void removeAllSprite3DData();
 
@@ -436,7 +436,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
 
     static Sprite3DCache*                        _cacheInstance;
-    std::unordered_map<std::string, Sprite3DData*> _spriteDatas; //cached sprite datas
+    std::unordered_map<std::string, Sprite3DData*> _spriteDatas; //cached sprite data
 };
 
 // end of 3d group

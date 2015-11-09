@@ -20,8 +20,8 @@ using namespace cocosbuilder;
  * CCBProxy is a proxy for cocosbuilder.
  * By using CCBProxy we could create a CCBReader object conveniently and set the Lua callback function when some events triggered should be passed onto Lua.
  * @~chinese 
- * CCBProxyæ˜¯cocosbuilderä»£ç†ç±»ã€‚
- * é€šè¿‡ä½¿ç”¨CCBProxyï¼Œæˆ‘ä»¬å¯ä»¥æ–¹ä¾¿åœ°åˆ›å»ºä¸€ä¸ªCCBReaderå¯¹è±¡ï¼Œå¹¶è®¾ç½®å›è°ƒå‡½æ•°ç”¨äºå¤„ç†ä¸€äº›éœ€è¦ä¼ é€’ç»™Luaçš„äº‹ä»¶ã€‚
+ * CCBProxyÊÇcocosbuilder´úÀíÀà¡£
+ * Í¨¹ıÊ¹ÓÃCCBProxy£¬ÎÒÃÇ¿ÉÒÔ·½±ãµØ´´½¨Ò»¸öCCBReader¶ÔÏó£¬²¢ÉèÖÃ»Øµ÷º¯ÊıÓÃÓÚ´¦ÀíÒ»Ğ©ĞèÒª´«µİ¸øLuaµÄÊÂ¼ş¡£
  */
 class CCBProxy : public Layer{
 public:
@@ -29,7 +29,7 @@ public:
      * Default constructor,do nothing.
      *
      * @~chinese 
-     * é»˜è®¤æ„é€ å‡½æ•°,ä¸åšä»»ä½•äº‹æƒ…ã€‚
+     * Ä¬ÈÏ¹¹Ôìº¯Êı,²»×öÈÎºÎÊÂÇé¡£
      * 
      * @lua NA
      * @js NA
@@ -40,7 +40,7 @@ public:
      * Destructor.
      *
      * @~chinese 
-     * ææ„å‡½æ•°ã€‚
+     * Îö¹¹º¯Êı¡£
      * 
      * @lua NA
      * @js NA
@@ -51,11 +51,11 @@ public:
      * Create a CCBProxy object.
      * 
      * @~chinese 
-     * åˆ›å»ºä¸€ä¸ªCCBProxyå¯¹è±¡ã€‚
+     * ´´½¨Ò»¸öCCBProxy¶ÔÏó¡£
      * 
      * @return @~english a CCBProxy object.
      *
-     * @~chinese CCBProxyå¯¹è±¡ã€‚
+     * @~chinese CCBProxy¶ÔÏó¡£
      * 
      * @lua NA
      * @js NA
@@ -63,14 +63,14 @@ public:
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(CCBProxy, create);
     
     /**@~english
-     * Createa a CCBReader object.
+     * Create a CCBReader object.
      * 
      * @~chinese 
-     * åˆ›å»ºä¸€ä¸ªCCBReaderå¯¹è±¡ã€‚
+     * ´´½¨Ò»¸öCCBReader¶ÔÏó¡£
      * 
      * @return @~english a CCBReader object.
      *
-     * @~chinese CCBReaderå¯¹è±¡ã€‚
+     * @~chinese CCBReader¶ÔÏó¡£
      * 
      * @lua NA
      * @js NA
@@ -81,16 +81,16 @@ public:
      * Read a ccb file.
      *
      * @~chinese 
-     * è¯»å–ä¸€ä¸ªccbæ–‡ä»¶ã€‚
+     * ¶ÁÈ¡Ò»¸öccbÎÄ¼ş¡£
      * 
      * @param pszFileName @~english the string pointer point to the file name.
-     * @~chinese ccbæ–‡ä»¶åç§°ã€‚
+     * @~chinese ccbÎÄ¼şÃû³Æ¡£
      * @param pCCBReader @~english the CCBreader object pointer.
-     * @~chinese CCBreaderå¯¹è±¡æŒ‡é’ˆã€‚
+     * @~chinese CCBreader¶ÔÏóÖ¸Õë¡£
      * @param bSetOwner @~english whether to set the owner or not.
-     * @~chinese æ˜¯å¦è®¾ç½®æ‰€æœ‰è€…ã€‚
+     * @~chinese ÊÇ·ñÉèÖÃËùÓĞÕß¡£
      * @return @~english a Node object pointer.
-     * @~chinese ä¸€ä¸ªNodeå¯¹è±¡æŒ‡é’ˆã€‚
+     * @~chinese Ò»¸öNode¶ÔÏóÖ¸Õë¡£
      * @js NA
      */
     Node* readCCBFromFile(const char *pszFileName,CCBReader* pCCBReader,bool bSetOwner = false);
@@ -100,13 +100,13 @@ public:
      * By using the dynamic_cast function, we could get the real type name of pNode.
      *
      * @~chinese 
-     * è·å–pNodeçš„çœŸå®ç±»å‹åã€‚
-     * é€šè¿‡è°ƒç”¨dynamic_castå‡½æ•°,æˆ‘ä»¬å¯ä»¥è·å–pNodeçš„çœŸå®ç±»å‹åã€‚
+     * »ñÈ¡pNodeµÄÕæÊµÀàĞÍÃû¡£
+     * Í¨¹ıµ÷ÓÃdynamic_castº¯Êı,ÎÒÃÇ¿ÉÒÔ»ñÈ¡pNodeµÄÕæÊµÀàĞÍÃû¡£
      * 
      * @param pNode @~english the Node object used to query.
-     * @~chinese ç”¨äºæŸ¥è¯¢çš„Nodeå¯¹è±¡æŒ‡é’ˆã€‚
+     * @~chinese ÓÃÓÚ²éÑ¯µÄNode¶ÔÏóÖ¸Õë¡£
      * @return @~english a string pointer point to the real type name or return "No Support".
-     * @~chinese è¿”å›ä¸€ä¸ªçœŸå®ç±»å‹åæˆ–è€…â€œNo Supportâ€ã€‚
+     * @~chinese ·µ»ØÒ»¸öÕæÊµÀàĞÍÃû»òÕß¡°No Support¡±¡£
      * @js NA
      */
     const char* getNodeTypeName(Node* pNode);
@@ -118,16 +118,16 @@ public:
      * Finally. call the Lua function.
      * 
      * @~chinese 
-     * è®¾ç½®å¯¹åº”Luaå›è°ƒå‡½æ•°çš„handleå’Œnodeå¯¹è±¡çš„æ˜ å°„å…³ç³»ã€‚
-     * åŒæ—¶æ ¹æ®ä¸åŒcontrolEventså€¼,æˆ‘ä»¬ä¼šé€‰æ‹©ä¸åŒçš„ScriptHandlerMgr::HandlerTypæ¥æ„å»ºæ˜ å°„å…³ç³»ã€‚
-     * å½“nodeæ¥æ”¶åˆ°éœ€è¦ä¼ é€’åˆ°Luaçš„äº‹ä»¶æ—¶ï¼Œå®ƒä¼šé€šè¿‡handleæ‰¾åˆ°å¯¹åº”çš„Luaå‡½æ•°ï¼Œç„¶åå°†æ•°æ®ä¿¡æ¯ä½œä¸ºå‡½æ•°å‚æ•°å‹å…¥Luaæ ˆä¸­ï¼Œæœ€åè°ƒç”¨Luaå‡½æ•°ã€‚
+     * ÉèÖÃ¶ÔÓ¦Lua»Øµ÷º¯ÊıµÄhandleºÍnode¶ÔÏóµÄÓ³Éä¹ØÏµ¡£
+     * Í¬Ê±¸ù¾İ²»Í¬controlEventsÖµ,ÎÒÃÇ»áÑ¡Ôñ²»Í¬µÄScriptHandlerMgr::HandlerTypÀ´¹¹½¨Ó³Éä¹ØÏµ¡£
+     * µ±node½ÓÊÕµ½ĞèÒª´«µİµ½LuaµÄÊÂ¼şÊ±£¬Ëü»áÍ¨¹ıhandleÕÒµ½¶ÔÓ¦µÄLuaº¯Êı£¬È»ºó½«Êı¾İĞÅÏ¢×÷Îªº¯Êı²ÎÊıÑ¹ÈëLuaÕ»ÖĞ£¬×îºóµ÷ÓÃLuaº¯Êı¡£
      * 
-     * @param node @~english the node object have related with handle.And it would be push into the Lua stack as the function parameterï¼Œwhen the events are triggered.
-     * @~chinese å’Œhandlå…³è”çš„nodeå¯¹è±¡ã€‚åœ¨äº‹ä»¶è§¦å‘æ—¶ï¼Œå®ƒå°†ä½œä¸ºLuaå‡½æ•°çš„å‚æ•°å‹å…¥åˆ°Luaæ ˆä¸­ã€‚
+     * @param node @~english the node object have related with handle.And it would be push into the Lua stack as the function parameter£¬when the events are triggered.
+     * @~chinese ºÍhandl¹ØÁªµÄnode¶ÔÏó¡£ÔÚÊÂ¼ş´¥·¢Ê±£¬Ëü½«×÷ÎªLuaº¯ÊıµÄ²ÎÊıÑ¹Èëµ½LuaÕ»ÖĞ¡£
      * @param handle @~english the Lua callback function reference id.
-     * @~chinese Luaå‡½æ•°çš„reference idã€‚
+     * @~chinese Luaº¯ÊıµÄreference id¡£
      * @param controlEvents @~english the combination value of Control::EventType, default 0.
-     * @~chinese Control::EventTypeçš„ç»„åˆå€¼,é»˜è®¤ä¸º0ã€‚
+     * @~chinese Control::EventTypeµÄ×éºÏÖµ,Ä¬ÈÏÎª0¡£
      * @js NA
      */
     void setCallback(Node* node,int handle, int controlEvents = 0);

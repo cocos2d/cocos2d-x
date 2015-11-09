@@ -46,14 +46,14 @@ class Node;
  *  @brief @~english The base class of event listener.
  *  If you need custom listener which with different callback, you need to inherit this class.
  *  For instance, you could refer to EventListenerAcceleration, EventListenerKeyboard, EventListenerTouchOneByOne, EventListenerCustom.
- * @~chinese äº‹ä»¶ç›‘å¬å™¨çš„åŸºç±»ã€‚
- * å¦‚æœä½ éœ€è¦è‡ªå®šä¹‰æœ‰ä¸åŒå›è°ƒçš„ç›‘å¬å™¨æ—¶,ä½ éœ€è¦ç»§æ‰¿è¿™ä¸ªç±»ã€‚
- * ä¾‹å¦‚,ä½ å¯ä»¥å‚è€ƒEventListenerAcceleration,EventListenerKeyboard,EventListenerTouchOneByOne EventListenerCustomã€‚
+ * @~chinese ÊÂ¼ş¼àÌıÆ÷µÄ»ùÀà¡£
+ * Èç¹ûÄãĞèÒª×Ô¶¨ÒåÓĞ²»Í¬»Øµ÷µÄ¼àÌıÆ÷Ê±,ÄãĞèÒª¼Ì³ĞÕâ¸öÀà¡£
+ * ÀıÈç,Äã¿ÉÒÔ²Î¿¼EventListenerAcceleration,EventListenerKeyboard,EventListenerTouchOneByOne EventListenerCustom¡£
  */
 class CC_DLL EventListener : public Ref
 {
 public:
-    /** @~english Type Event type. @~chinese äº‹ä»¶ç±»å‹ã€‚*/
+    /** @~english Type Event type. @~chinese ÊÂ¼şÀàĞÍ¡£*/
     enum class Type
     {
         UNKNOWN,
@@ -73,7 +73,7 @@ CC_CONSTRUCTOR_ACCESS:
     /**@~english
      * Constructor
      * @~chinese 
-     * æ„é€ å‡½æ•°
+     * ¹¹Ôìº¯Êı
      * @js ctor
      */
     EventListener();
@@ -81,54 +81,54 @@ CC_CONSTRUCTOR_ACCESS:
     /** @~english
      * Initializes event with type and callback function
      * @~chinese 
-     * åˆå§‹åŒ–äº‹ä»¶å’Œå›è°ƒå‡½æ•°
+     * ³õÊ¼»¯ÊÂ¼şºÍ»Øµ÷º¯Êı
      * @js NA
      */
     bool init(Type t, const ListenerID& listenerID, const std::function<void(Event*)>& callback);
 public:
     /** @~english Destructor.
-     * @~chinese ææ„å‡½æ•°ã€‚
+     * @~chinese Îö¹¹º¯Êı¡£
      * @js NA 
      */
     virtual ~EventListener();
 
     /** @~english Checks whether the listener is available.
      * 
-     * @~chinese æ£€æŸ¥æ˜¯å¦ç›‘å¬å™¨æ˜¯å¯ç”¨çš„ã€‚
+     * @~chinese ¼ì²éÊÇ·ñ¼àÌıÆ÷ÊÇ¿ÉÓÃµÄ¡£
      * 
      * @return @~english True if the listener is available.
-     * @~chinese å¦‚æœç›‘å¬å™¨æ˜¯å¯ç”¨çš„,è¿”å›trueã€‚
+     * @~chinese Èç¹û¼àÌıÆ÷ÊÇ¿ÉÓÃµÄ,·µ»Øtrue¡£
      */
     virtual bool checkAvailable() = 0;
 
     /** @~english Clones the listener, its subclasses have to override this method.
-     * @~chinese å…‹éš†ç›‘å¬å™¨,å®ƒçš„å­ç±»å¿…é¡»é‡å†™æ­¤æ–¹æ³•ã€‚
+     * @~chinese ¿ËÂ¡¼àÌıÆ÷,ËüµÄ×ÓÀà±ØĞëÖØĞ´´Ë·½·¨¡£
      */
     virtual EventListener* clone() = 0;
 
     /** @~english Enables or disables the listener.
-     * @~chinese å¯ç”¨æˆ–ç¦ç”¨ç›‘å¬å™¨ã€‚
+     * @~chinese ÆôÓÃ»ò½ûÓÃ¼àÌıÆ÷¡£
      * @note @~english Only listeners with `enabled` state will be able to receive events.
      *        When an listener was initialized, it's enabled by default.
      *        An event listener can receive events when it is enabled and is not paused.
      *        paused state is always false if it is a fixed priority listener.
      *
-     * @~chinese åªæœ‰ç›‘å¬å™¨å¤„äºâ€œå¯ç”¨â€çŠ¶æ€æ—¶æ‰èƒ½å¤Ÿæ¥æ”¶äº‹ä»¶ã€‚
-     * å½“ä¸€ä¸ªç›‘å¬å™¨åˆå§‹åŒ–,å®ƒé»˜è®¤æ˜¯å¯ç”¨çš„ã€‚
-     * å½“ä¸€ä¸ªç›‘å¬å™¨å¤„äºå¯ç”¨çŠ¶æ€ä¸”æ²¡è¢«æš‚åœï¼Œå®ƒå¯ä»¥æ”¶åˆ°äº‹ä»¶ã€‚
-     * å¦‚æœå®ƒæ˜¯ä¸€ä¸ªå›ºå®šä¼˜å…ˆçº§çš„ç›‘å¬å™¨,å¤„äºæš‚åœçŠ¶æ€çš„æ—¶å€™ï¼Œè¿™ä¸ªå€¼å§‹ç»ˆä¸ºfalseã€‚
+     * @~chinese Ö»ÓĞ¼àÌıÆ÷´¦ÓÚ¡°ÆôÓÃ¡±×´Ì¬Ê±²ÅÄÜ¹»½ÓÊÕÊÂ¼ş¡£
+     * µ±Ò»¸ö¼àÌıÆ÷³õÊ¼»¯,ËüÄ¬ÈÏÊÇÆôÓÃµÄ¡£
+     * µ±Ò»¸ö¼àÌıÆ÷´¦ÓÚÆôÓÃ×´Ì¬ÇÒÃ»±»ÔİÍ££¬Ëü¿ÉÒÔÊÕµ½ÊÂ¼ş¡£
+     * Èç¹ûËüÊÇÒ»¸ö¹Ì¶¨ÓÅÏÈ¼¶µÄ¼àÌıÆ÷,´¦ÓÚÔİÍ£×´Ì¬µÄÊ±ºò£¬Õâ¸öÖµÊ¼ÖÕÎªfalse¡£
      * 
      * @param enabled @~english True if enables the listener.
-     * @~chinese å¦‚æœå¼€å¯ç›‘å¬å™¨å€¼ä¸ºtrueã€‚
+     * @~chinese Èç¹û¿ªÆô¼àÌıÆ÷ÖµÎªtrue¡£
      */
     inline void setEnabled(bool enabled) { _isEnabled = enabled; };
 
     /** @~english Checks whether the listener is enabled.
      *
-     * @~chinese æ£€æŸ¥ç›‘å¬å™¨æ˜¯å¦å¯ç”¨ã€‚
+     * @~chinese ¼ì²é¼àÌıÆ÷ÊÇ·ñ¿ÉÓÃ¡£
      * 
      * @return @~english True if the listenrt is enabled.
-     * @~chinese å¦‚æœç›‘å¬å™¨å¯ç”¨ï¼Œå€¼ä¸ºtrueã€‚
+     * @~chinese Èç¹û¼àÌıÆ÷¿ÉÓÃ£¬ÖµÎªtrue¡£
      */
     inline bool isEnabled() const { return _isEnabled; };
 
@@ -138,81 +138,81 @@ protected:
      *  The paused state is only used for scene graph priority listeners.
      *  `EventDispatcher::resumeAllEventListenersForTarget(node)` will set the paused state to `true`,
      *  while `EventDispatcher::pauseAllEventListenersForTarget(node)` will set it to `false`.
-     * @~chinese è®¾ç½®ç›‘å¬å™¨çš„æš‚åœçŠ¶æ€
-     * æš‚åœçŠ¶æ€ä»…è¢«ç”¨äºåœºæ™¯å›¾åƒä¼˜å…ˆçº§ç›‘å¬å™¨
-     * `EventDispatcher::resumeAllEventListenersForTarget(node)` å°†ä¼šè®¾ç½®æš‚åœçŠ¶æ€ä¸º `true`,
-     *  ç„¶è€Œ `EventDispatcher::pauseAllEventListenersForTarget(node)` å°†ä¼šè®¾ç½®æš‚åœçŠ¶æ€ä¸º `false`.
+     * @~chinese ÉèÖÃ¼àÌıÆ÷µÄÔİÍ£×´Ì¬
+     * ÔİÍ£×´Ì¬½ö±»ÓÃÓÚ³¡¾°Í¼ÏñÓÅÏÈ¼¶¼àÌıÆ÷
+     * `EventDispatcher::resumeAllEventListenersForTarget(node)` ½«»áÉèÖÃÔİÍ£×´Ì¬Îª `true`,
+     *  È»¶ø `EventDispatcher::pauseAllEventListenersForTarget(node)` ½«»áÉèÖÃÔİÍ£×´Ì¬Îª `false`.
      *  @note @~english 1) Fixed priority listeners will never get paused. If a fixed priority doesn't want to receive events,
      *           call `setEnabled(false)` instead.
      *        2) In `Node`'s onEnter and onExit, the `paused state` of the listeners which associated with that node will be automatically updated.
-     * @~chinese 1) å›ºå®šä¼˜å…ˆçº§çš„ç›‘å¬å™¨ä¸ä¼šæœ‰æš‚åœ.  å¦‚æœä¸ªä¸€ä¸ªå›ºå®šä¼˜å…ˆçº§çš„ç›‘å¬å™¨ä¸æƒ³æ¥æ”¶äº‹ä»¶,è°ƒç”¨
-     *           `setEnabled(false)` ä»£æ›¿.
-     *           2) åœ¨èŠ‚ç‚¹(`Node`)çš„ onEnter å’Œ onExit æ–¹æ³•ä¸­, å°†ä¼šè‡ªåŠ¨æ›´æ–°å…³è”èŠ‚ç‚¹çš„ç›‘å¬å™¨çš„æš‚åœçŠ¶æ€.
+     * @~chinese 1) ¹Ì¶¨ÓÅÏÈ¼¶µÄ¼àÌıÆ÷²»»áÓĞÔİÍ£.  Èç¹û¸öÒ»¸ö¹Ì¶¨ÓÅÏÈ¼¶µÄ¼àÌıÆ÷²»Ïë½ÓÊÕÊÂ¼ş,µ÷ÓÃ
+     *           `setEnabled(false)` ´úÌæ.
+     *           2) ÔÚ½Úµã(`Node`)µÄ onEnter ºÍ onExit ·½·¨ÖĞ, ½«»á×Ô¶¯¸üĞÂ¹ØÁª½ÚµãµÄ¼àÌıÆ÷µÄÔİÍ£×´Ì¬.
      */
     inline void setPaused(bool paused) { _paused = paused; };
 
-    /** @~english Checks whether the listener is paused  @~chinese æ£€æŸ¥ç›‘å¬å™¨æ˜¯å¦è¢«æš‚åœ*/
+    /** @~english Checks whether the listener is paused  @~chinese ¼ì²é¼àÌıÆ÷ÊÇ·ñ±»ÔİÍ£*/
     inline bool isPaused() const { return _paused; };
 
-    /** @~english Marks the listener was registered by EventDispatcher  @~chinese æ ‡è®°ç›‘å¬å™¨å·²ç»è¢«åŠ å…¥åˆ°äº‹ä»¶æ´¾å‘å™¨(EventDispatcher)*/
+    /** @~english Marks the listener was registered by EventDispatcher  @~chinese ±ê¼Ç¼àÌıÆ÷ÒÑ¾­±»¼ÓÈëµ½ÊÂ¼şÅÉ·¢Æ÷(EventDispatcher)*/
     inline void setRegistered(bool registered) { _isRegistered = registered; };
 
-    /** @~english Checks whether the listener was registered by EventDispatcher  @~chinese æ£€æŸ¥ç›‘å¬å™¨æ˜¯å¦è¢«æ³¨å†Œåˆ°äº‹ä»¶æ´¾å‘å™¨(EventDispatcher)*/
+    /** @~english Checks whether the listener was registered by EventDispatcher  @~chinese ¼ì²é¼àÌıÆ÷ÊÇ·ñ±»×¢²áµ½ÊÂ¼şÅÉ·¢Æ÷(EventDispatcher)*/
     inline bool isRegistered() const { return _isRegistered; };
 
     /** @~english Gets the type of this listener
-     * @~chinese è·å–ç›‘å¬å™¨(listener)çš„ç±»å‹
+     * @~chinese »ñÈ¡¼àÌıÆ÷(listener)µÄÀàĞÍ
      *  @note @~english It's different from `EventType`, e.g. TouchEvent has two kinds of event listeners - EventListenerOneByOne, EventListenerAllAtOnce
-     * @~chinese å®ƒä¸åŒäº`EventType`, ä¾‹å¦‚. TouchEventæœ‰ä¸¤ç§äº‹ä»¶ç›‘å¬å™¨ - EventListenerOneByOne, EventListenerAllAtOnce
+     * @~chinese Ëü²»Í¬ÓÚ`EventType`, ÀıÈç. TouchEventÓĞÁ½ÖÖÊÂ¼ş¼àÌıÆ÷ - EventListenerOneByOne, EventListenerAllAtOnce
      */
     inline Type getType() const { return _type; };
 
     /** @~english Gets the listener ID of this listener
      *  When event is being dispatched, listener ID is used as key for searching listeners according to event type.
-     * @~chinese è·å–ç›‘å¬å™¨çš„ID 
-     * å½“äº‹ä»¶æ´¾å‘,ç›‘å¬å™¨IDæ˜¯ç”¨äºæŸ¥æ‰¾ç¬¦åˆäº‹ä»¶ç±»å‹çš„ç›‘å¬å™¨çš„å…³é”®å­—.
+     * @~chinese »ñÈ¡¼àÌıÆ÷µÄID 
+     * µ±ÊÂ¼şÅÉ·¢,¼àÌıÆ÷IDÊÇÓÃÓÚ²éÕÒ·ûºÏÊÂ¼şÀàĞÍµÄ¼àÌıÆ÷µÄ¹Ø¼ü×Ö.
      */
     inline const ListenerID& getListenerID() const { return _listenerID; };
 
     /** @~english Sets the fixed priority for this listener
-     * @~chinese ä¸ºç›‘å¬å™¨è®¾ç½®å›ºå®šä¼˜å…ˆçº§
+     * @~chinese Îª¼àÌıÆ÷ÉèÖÃ¹Ì¶¨ÓÅÏÈ¼¶
      *  @note @~english This method is only used for `fixed priority listeners`, it needs to access a non-zero value.
      *  0 is reserved for scene graph priority listeners
-     * @~chinese æ­¤æ–¹æ³•ä»…ç”¨äº `fixed priority listeners`, å®ƒéœ€è¦ä¼ äººä¸€ä¸ªéé›¶(non-zero)å€¼.
-     * 0 è¢«ä¿ç•™ç”¨äºåœºæ™¯å›¾åƒç›‘å¬å™¨çš„ä¼˜å…ˆçº§
+     * @~chinese ´Ë·½·¨½öÓÃÓÚ `fixed priority listeners`, ËüĞèÒª´«ÈËÒ»¸ö·ÇÁã(non-zero)Öµ.
+     * 0 ±»±£ÁôÓÃÓÚ³¡¾°Í¼Ïñ¼àÌıÆ÷µÄÓÅÏÈ¼¶
      */
     inline void setFixedPriority(int fixedPriority) { _fixedPriority = fixedPriority; };
 
     /** @~english Gets the fixed priority of this listener
-     * @~chinese è·å–ç›‘å¬å™¨çš„ä¼˜å…ˆçº§
+     * @~chinese »ñÈ¡¼àÌıÆ÷µÄÓÅÏÈ¼¶
      *  @return @~english 0 if it's a scene graph priority listener, non-zero for fixed priority listener
-     * @~chinese å¦‚æœæ˜¯åœºæ™¯å›¾åƒç›‘å¬å™¨åˆ™è¿”å›0,å…¶ä»–å›ºå®šä¼˜å…ˆçº§çš„ç›‘å¬å™¨è¿”å›éé›¶(non-zero)å€¼
+     * @~chinese Èç¹ûÊÇ³¡¾°Í¼Ïñ¼àÌıÆ÷Ôò·µ»Ø0,ÆäËû¹Ì¶¨ÓÅÏÈ¼¶µÄ¼àÌıÆ÷·µ»Ø·ÇÁã(non-zero)Öµ
      */
     inline int getFixedPriority() const { return _fixedPriority; };
 
-    /** @~english Sets the node associated with this listener  @~chinese è®¾ç½®å’Œç›‘å¬å™¨å…³è”çš„èŠ‚ç‚¹*/
+    /** @~english Sets the node associated with this listener  @~chinese ÉèÖÃºÍ¼àÌıÆ÷¹ØÁªµÄ½Úµã*/
     inline void setAssociatedNode(Node* node) { _node = node; };
 
     /** @~english Gets the node associated with this listener
-     * @~chinese è·å–å’Œç›‘å¬å™¨å…³è”çš„èŠ‚ç‚¹
+     * @~chinese »ñÈ¡ºÍ¼àÌıÆ÷¹ØÁªµÄ½Úµã
      *  @return @~english nullptr if it's a fixed priority listener, otherwise return non-nullptr
-     * @~chinese å¦‚æœæ˜¯å›ºå®šä¼˜å…ˆçº§çš„ç›‘å¬å™¨åˆ™è¿”å›ç©ºæŒ‡é’ˆ(nullptr),å¦åˆ™è¿”å›éç©ºæŒ‡é’ˆ(non-nullptr)
+     * @~chinese Èç¹ûÊÇ¹Ì¶¨ÓÅÏÈ¼¶µÄ¼àÌıÆ÷Ôò·µ»Ø¿ÕÖ¸Õë(nullptr),·ñÔò·µ»Ø·Ç¿ÕÖ¸Õë(non-nullptr)
      */
     inline Node* getAssociatedNode() const { return _node; };
 
     ///////////////
     // Properties
     //////////////
-    std::function<void(Event*)> _onEvent;   /// @~english Event callback function @~chinese äº‹ä»¶å›è°ƒå‡½æ•°
+    std::function<void(Event*)> _onEvent;   /// @~english Event callback function @~chinese ÊÂ¼ş»Øµ÷º¯Êı
 
-    Type _type;                             /// @~english Event listener type @~chinese äº‹ä»¶ç›‘å¬å™¨çš„ç±»å‹
-    ListenerID _listenerID;                 /// @~english Event listener ID @~chinese äº‹ä»¶ç›‘å¬å™¨çš„ID
-    bool _isRegistered;                     /// @~english Whether the listener has been added to dispatcher. @~chinese ç›‘å¬å™¨æ˜¯å¦è¢«åŠ å…¥åˆ°æ´¾å‘å™¨ 
+    Type _type;                             /// @~english Event listener type @~chinese ÊÂ¼ş¼àÌıÆ÷µÄÀàĞÍ
+    ListenerID _listenerID;                 /// @~english Event listener ID @~chinese ÊÂ¼ş¼àÌıÆ÷µÄID
+    bool _isRegistered;                     /// @~english Whether the listener has been added to dispatcher. @~chinese ¼àÌıÆ÷ÊÇ·ñ±»¼ÓÈëµ½ÅÉ·¢Æ÷ 
 
-    int   _fixedPriority;   // @~english The higher the number, the higher the priority, 0 is for scene graph base priority. @~chinese æ•°å€¼è¶Šé«˜ï¼Œä¼˜å…ˆçº§è¶Šé«˜. 0 æ˜¯åœºæ™¯å›¾åƒçš„åŸºç¡€ä¼˜å…ˆçº§.
-    Node* _node;            // @~english scene graph based priority @~chinese äº‹ä»¶ç›‘å¬å™¨å…³è”çš„èŠ‚ç‚¹
-    bool _paused;           // @~english Whether the listener is paused @~chinese ç›‘å¬å™¨æ˜¯å¦æš‚åœ
-    bool _isEnabled;        // @~english Whether the listener is enabled @~chinese ç›‘å¬å™¨æ˜¯å¦å¯ç”¨
+    int   _fixedPriority;   // @~english The higher the number, the higher the priority, 0 is for scene graph base priority. @~chinese ÊıÖµÔ½¸ß£¬ÓÅÏÈ¼¶Ô½¸ß. 0 ÊÇ³¡¾°Í¼ÏñµÄ»ù´¡ÓÅÏÈ¼¶.
+    Node* _node;            // @~english scene graph based priority @~chinese ÊÂ¼ş¼àÌıÆ÷¹ØÁªµÄ½Úµã
+    bool _paused;           // @~english Whether the listener is paused @~chinese ¼àÌıÆ÷ÊÇ·ñÔİÍ£
+    bool _isEnabled;        // @~english Whether the listener is enabled @~chinese ¼àÌıÆ÷ÊÇ·ñÆôÓÃ
     friend class EventDispatcher;
 };
 

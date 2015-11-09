@@ -63,106 +63,106 @@ class GLProgram;
  * The created Texture2D object will always have power-of-two dimensions.
  * Depending on how you create the Texture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
  * Be aware that the content of the generated textures will be upside-down!
- * @~chinese Texture2D ç±»ã€‚è¿™ä¸ªç±»å¯ä»¥è½»æ¾åœ°ä»å›¾ç‰‡ï¼Œæ–‡æœ¬æˆ–è€…æ•°æ®åˆ›å»º OpenGL 2D çº¹ç†ã€‚
- * åˆ›å»ºçš„ Texture2D å¯¹è±¡çš„å®½ä¸é«˜æ€»æ˜¯ä¿æŒä¸º 2 çš„å¹‚æ¬¡æ–¹ã€‚
- * å®é™…çº¹ç†çš„å›¾åƒå¤§å°å¯èƒ½å°äºåˆ›å»ºçš„çº¹ç†å¤§å°ã€‚æ¯”å¦‚ï¼šcontentSize != (pixelsWide, pixelsHigh) å’Œ (maxS, maxT) != (1.0,1.0)ã€‚
- * æ³¨æ„ï¼šç”Ÿæˆçš„çº¹ç†å¯¹è±¡å†…å®¹æ˜¯ä¸Šä¸‹é¢ å€’çš„ã€‚
+ * @~chinese Texture2D Àà¡£Õâ¸öÀà¿ÉÒÔÇáËÉµØ´ÓÍ¼Æ¬£¬ÎÄ±¾»òÕßÊı¾İ´´½¨ OpenGL 2D ÎÆÀí¡£
+ * ´´½¨µÄ Texture2D ¶ÔÏóµÄ¿íÓë¸ß×ÜÊÇ±£³ÖÎª 2 µÄÃİ´Î·½¡£
+ * Êµ¼ÊÎÆÀíµÄÍ¼Ïñ´óĞ¡¿ÉÄÜĞ¡ÓÚ´´½¨µÄÎÆÀí´óĞ¡¡£±ÈÈç£ºcontentSize != (pixelsWide, pixelsHigh) ºÍ (maxS, maxT) != (1.0,1.0)¡£
+ * ×¢Òâ£ºÉú³ÉµÄÎÆÀí¶ÔÏóÄÚÈİÊÇÉÏÏÂµßµ¹µÄ¡£
  */
 class CC_DLL Texture2D : public Ref
 {
 public:
     /** @typedef Texture2D::PixelFormat
      * @~english Possible texture pixel formats
-     * @~chinese çº¹ç†çš„åƒç´ æ ¼å¼ã€‚
+     * @~chinese ÎÆÀíµÄÏñËØ¸ñÊ½¡£
      */
     enum class PixelFormat
     {
         /** @~english auto detect the type
-        * @~chinese è‡ªåŠ¨æ£€æµ‹ç±»å‹ã€‚
+        * @~chinese ×Ô¶¯¼ì²âÀàĞÍ¡£
         */
         AUTO,
         /**@~english  32-bit texture: BGRA8888
-        * @~chinese 32ä½çº¹ç†ï¼šBGRA8888
+        * @~chinese 32Î»ÎÆÀí£ºBGRA8888
         */
         BGRA8888,
         /**@~english  32-bit texture: RGBA8888
-        * @~chinese 32ä½çº¹ç†ï¼šRGBA8888
+        * @~chinese 32Î»ÎÆÀí£ºRGBA8888
         */
         RGBA8888,
         /**@~english  24-bit texture: RGB888
-        * @~chinese 24ä½çº¹ç†ï¼šRGB888
+        * @~chinese 24Î»ÎÆÀí£ºRGB888
         */
         RGB888,
         /**@~english  16-bit texture without Alpha channel
-        * @~chinese ä¸åŒ…å« alpha é€šé“çš„ 16ä½çº¹ç†
+        * @~chinese ²»°üº¬ alpha Í¨µÀµÄ 16Î»ÎÆÀí
         */
         RGB565,
         /**@~english  8-bit textures used as masks
-        * @~chinese å½“åšé®ç½©ä½¿ç”¨çš„ 8ä½çº¹ç†
+        * @~chinese µ±×öÕÚÕÖÊ¹ÓÃµÄ 8Î»ÎÆÀí
         */
         A8,
         /**@~english  8-bit intensity texture
-        * @~chinese 8ä½äº®åº¦çº¹ç†
+        * @~chinese 8Î»ÁÁ¶ÈÎÆÀí
         */
         I8,
         /**@~english  16-bit textures used as masks
-        * @~chinese å½“åšé®ç½©ä½¿ç”¨çš„ 16 ä½çº¹ç†
+        * @~chinese µ±×öÕÚÕÖÊ¹ÓÃµÄ 16 Î»ÎÆÀí
         */
         AI88,
         /**@~english  16-bit textures: RGBA4444
-        * @~chinese 16ä½çº¹ç†ï¼šRGBA4444
+        * @~chinese 16Î»ÎÆÀí£ºRGBA4444
         */
         RGBA4444,
         /**@~english  16-bit textures: RGB5A1
-        * @~chinese 16ä½çº¹ç† RGB5A1
+        * @~chinese 16Î»ÎÆÀí RGB5A1
         */
         RGB5A1,
         /**@~english  4-bit PVRTC-compressed texture: PVRTC4
-        * @~chinese 4ä½ PVRTC å‹ç¼©çº¹ç†ï¼šPVRTC4
+        * @~chinese 4Î» PVRTC Ñ¹ËõÎÆÀí£ºPVRTC4
         */
         PVRTC4,
         /**@~english  4-bit PVRTC-compressed texture: PVRTC4 (has alpha channel)
-        * @~chinese 4ä½ PVRTC å‹ç¼©çº¹ç†ï¼šPVRTC4ï¼ˆæœ‰ alpha é€šé“ï¼‰
+        * @~chinese 4Î» PVRTC Ñ¹ËõÎÆÀí£ºPVRTC4£¨ÓĞ alpha Í¨µÀ£©
         */
         PVRTC4A,
         /**@~english  2-bit PVRTC-compressed texture: PVRTC2
-        * @~chinese 2ä½ PVRTC å‹ç¼©çº¹ç†ï¼šPVRTC2
+        * @~chinese 2Î» PVRTC Ñ¹ËõÎÆÀí£ºPVRTC2
         */
         PVRTC2,
         /**@~english  2-bit PVRTC-compressed texture: PVRTC2 (has alpha channel)
-        * @~chinese 2ä½ PVRTC å‹ç¼©çº¹ç†ï¼šPVRTC2ï¼ˆæœ‰ alpha é€šé“ï¼‰
+        * @~chinese 2Î» PVRTC Ñ¹ËõÎÆÀí£ºPVRTC2£¨ÓĞ alpha Í¨µÀ£©
         */
         PVRTC2A,
         /**@~english  ETC-compressed texture: ETC
-        * @~chinese ETC å‹ç¼©çº¹ç†ï¼šETC
+        * @~chinese ETC Ñ¹ËõÎÆÀí£ºETC
         */
         ETC,
         /**@~english  S3TC-compressed texture: S3TC_Dxt1
-        * @~chinese S3TC å‹ç¼©çº¹ç†ï¼šS3TC_Dxt1
+        * @~chinese S3TC Ñ¹ËõÎÆÀí£ºS3TC_Dxt1
         */
         S3TC_DXT1,
         /**@~english  S3TC-compressed texture: S3TC_Dxt3
-        * @~chinese S3TC å‹ç¼©çº¹ç†ï¼šS3TC_Dxt3
+        * @~chinese S3TC Ñ¹ËõÎÆÀí£ºS3TC_Dxt3
         */
         S3TC_DXT3,
         /**@~english  S3TC-compressed texture: S3TC_Dxt5
-        * @~chinese S3TC å‹ç¼©çº¹ç†ï¼šS3TC_Dxt5
+        * @~chinese S3TC Ñ¹ËõÎÆÀí£ºS3TC_Dxt5
         */
         S3TC_DXT5,
         /**@~english  ATITC-compressed texture: ATC_RGB
-        * @~chinese ATITC å‹ç¼©çº¹ç†ï¼šATC_RGB
+        * @~chinese ATITC Ñ¹ËõÎÆÀí£ºATC_RGB
         */
         ATC_RGB,
         /**@~english  ATITC-compressed texture: ATC_EXPLICIT_ALPHA
-        * @~chinese ATITC å‹ç¼©çº¹ç†ï¼šATC_EXPLICIT_ALPHA
+        * @~chinese ATITC Ñ¹ËõÎÆÀí£ºATC_EXPLICIT_ALPHA
         */
         ATC_EXPLICIT_ALPHA,
         /**@~english  ATITC-compresed texture: ATC_INTERPOLATED_ALPHA
-        * @~chinese ATITC å‹ç¼©çº¹ç†ï¼šATC_INTERPOLATED_ALPHA
+        * @~chinese ATITC Ñ¹ËõÎÆÀí£ºATC_INTERPOLATED_ALPHA
         */
         ATC_INTERPOLATED_ALPHA,
         /**@~english  Default texture format: AUTO
-        * @~chinese é»˜è®¤çº¹ç†æ ¼å¼ä¸ºï¼šAUTO
+        * @~chinese Ä¬ÈÏÎÆÀí¸ñÊ½Îª£ºAUTO
         */
         DEFAULT = AUTO,
         
@@ -194,7 +194,7 @@ public:
     /**@~english
      * Extension to set the Min / Mag filter
      * @~chinese 
-     * ç”¨äºè®¾ç½® Min / Mag è¿‡æ»¤å™¨çš„æ‰©å±•ç»“æ„ä½“ã€‚
+     * ÓÃÓÚÉèÖÃ Min / Mag ¹ıÂËÆ÷µÄÀ©Õ¹½á¹¹Ìå¡£
      */
     typedef struct _TexParams {
         GLuint    minFilter;
@@ -205,7 +205,7 @@ public:
     
 public:
     /** @~english sets the default pixel format for `Image` contains alpha channel.
-     * @~chinese ä¸ºåŒ…å« alpha é€šé“çš„ `Image` å¯¹è±¡è®¾ç½®é»˜è®¤çš„åƒç´ æ ¼å¼ã€‚
+     * @~chinese Îª°üº¬ alpha Í¨µÀµÄ `Image` ¶ÔÏóÉèÖÃÄ¬ÈÏµÄÏñËØ¸ñÊ½¡£
      * 
      * @param format @~english
      * If the `Image` contains alpha channel, then the options are:
@@ -223,33 +223,33 @@ public:
      * This parameter is not valid for PVR / PVR.CCZ images.
      * 
      * @~chinese
-     * å¦‚æœ `Image` å¯¹è±¡åŒ…å« alpha é€šé“ï¼Œé‚£ä¹ˆå¯ä»¥:
-     * - ç”Ÿæˆ32ä½çš„çº¹ç†: `Texture2D::PixelFormat:RGBA8888` (é»˜è®¤å€¼)
-     * - ç”Ÿæˆ24ä½çº¹ç†: `Texture2D::PixelFormat::RGB888`
-     * - ç”Ÿæˆ16ä½çº¹ç†: `Texture2D::PixelFormat::RGBA4444`
-     * - ç”Ÿæˆ16ä½çº¹ç†: `Texture2D::PixelFormat::RGB5A1`
-     * - ç”Ÿæˆ16ä½çº¹ç†: `Texture2D::PixelFormat::RGB565`
-     * - ç”Ÿæˆ8ä½çº¹ç†: `Texture2D::PixelFormat:A8` (åªæœ‰å½“ä½ ä½¿ç”¨å•è‰²æ—¶æ‰èƒ½ä½¿ç”¨æ­¤æ ¼å¼)
+     * Èç¹û `Image` ¶ÔÏó°üº¬ alpha Í¨µÀ£¬ÄÇÃ´¿ÉÒÔ:
+     * - Éú³É32Î»µÄÎÆÀí: `Texture2D::PixelFormat:RGBA8888` (Ä¬ÈÏÖµ)
+     * - Éú³É24Î»ÎÆÀí: `Texture2D::PixelFormat::RGB888`
+     * - Éú³É16Î»ÎÆÀí: `Texture2D::PixelFormat::RGBA4444`
+     * - Éú³É16Î»ÎÆÀí: `Texture2D::PixelFormat::RGB5A1`
+     * - Éú³É16Î»ÎÆÀí: `Texture2D::PixelFormat::RGB565`
+     * - Éú³É8Î»ÎÆÀí: `Texture2D::PixelFormat:A8` (Ö»ÓĞµ±ÄãÊ¹ÓÃµ¥É«Ê±²ÅÄÜÊ¹ÓÃ´Ë¸ñÊ½)
      * 
-     * å®ƒæ˜¯å¦‚ä½•å·¥ä½œçš„?
-     * - å¦‚æœæ˜¯ä¸€ä¸ª RGBA (åŒ…å« alpha é€šé“) å›¾åƒï¼Œåˆ™ä½¿ç”¨é»˜è®¤çš„åƒç´ æ ¼å¼(å®ƒå¯ä»¥æ˜¯ä¸€ä¸ª8ä½,16ä½æˆ–32ä½çš„çº¹ç†)
-     * - å¦‚æœæ˜¯ä¸€ä¸ª RGB (æ²¡æœ‰ alpha é€šé“) å›¾åƒï¼Œé‚£ä¹ˆï¼šå½“é»˜è®¤çš„åƒç´ æ ¼å¼ä¸º RGBA8888 æ—¶ï¼ŒRGBA8888 (32ä½) å°†è¢«ä½¿ç”¨ã€‚å¦åˆ™ï¼ŒRGB565(16ä½çº¹ç†)å°†è¢«ä½¿ç”¨ã€‚
+     * ËüÊÇÈçºÎ¹¤×÷µÄ?
+     * - Èç¹ûÊÇÒ»¸ö RGBA (°üº¬ alpha Í¨µÀ) Í¼Ïñ£¬ÔòÊ¹ÓÃÄ¬ÈÏµÄÏñËØ¸ñÊ½(Ëü¿ÉÒÔÊÇÒ»¸ö8Î»,16Î»»ò32Î»µÄÎÆÀí)
+     * - Èç¹ûÊÇÒ»¸ö RGB (Ã»ÓĞ alpha Í¨µÀ) Í¼Ïñ£¬ÄÇÃ´£ºµ±Ä¬ÈÏµÄÏñËØ¸ñÊ½Îª RGBA8888 Ê±£¬RGBA8888 (32Î») ½«±»Ê¹ÓÃ¡£·ñÔò£¬RGB565(16Î»ÎÆÀí)½«±»Ê¹ÓÃ¡£
      * 
-     * è¿™ä¸ªå‚æ•°å¯¹ PVR/PVR.CCZ å›¾åƒæ˜¯æ— æ•ˆçš„ã€‚
+     * Õâ¸ö²ÎÊı¶Ô PVR/PVR.CCZ Í¼ÏñÊÇÎŞĞ§µÄ¡£
      * 
      * @since v0.8
      */
     static void setDefaultAlphaPixelFormat(Texture2D::PixelFormat format);
 
     /** @~english Returns the default alpha pixel format.
-     * @~chinese è¿”å›é»˜è®¤çš„ alpha é€šé“åƒç´ æ ¼å¼ã€‚
+     * @~chinese ·µ»ØÄ¬ÈÏµÄ alpha Í¨µÀÏñËØ¸ñÊ½¡£
      * @since v0.8
      */
     static Texture2D::PixelFormat getDefaultAlphaPixelFormat();
     CC_DEPRECATED_ATTRIBUTE static Texture2D::PixelFormat defaultAlphaPixelFormat() { return Texture2D::getDefaultAlphaPixelFormat(); };
 
     /** @~english Treats (or not) PVR files as if they have alpha premultiplied.
-     * @~chinese è®¾ç½®å¤„ç† PVR æ–‡ä»¶æ—¶æ˜¯å¦è¿›è¡Œ alpha é¢„ä¹˜ã€‚
+     * @~chinese ÉèÖÃ´¦Àí PVR ÎÄ¼şÊ±ÊÇ·ñ½øĞĞ alpha Ô¤³Ë¡£
      * 
      * @param haveAlphaPremultiplied @~english
      * Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
@@ -260,12 +260,12 @@ public:
      * deprecated, please use Image::setPVRImagesHavePremultipliedAlpha() instead.
      * 
      * @~chinese 
-     * å› ä¸ºåœ¨è¿è¡Œæ—¶æ— æ³•çŸ¥é“ PVR å›¾åƒæ˜¯å¦éœ€è¦è¿›è¡Œ alpha é¢„ä¹˜,
-     * æ‰€ä»¥éœ€è¦åœ¨åŠ è½½æ—¶ï¼Œå†³å®šæ˜¯å¦è¿›è¡Œ alpha é¢„ä¹˜ã€‚
+     * ÒòÎªÔÚÔËĞĞÊ±ÎŞ·¨ÖªµÀ PVR Í¼ÏñÊÇ·ñĞèÒª½øĞĞ alpha Ô¤³Ë,
+     * ËùÒÔĞèÒªÔÚ¼ÓÔØÊ±£¬¾ö¶¨ÊÇ·ñ½øĞĞ alpha Ô¤³Ë¡£
      * 
-     * åœ¨é»˜è®¤æƒ…å†µä¸‹æ˜¯ç¦ç”¨çš„ã€‚
+     * ÔÚÄ¬ÈÏÇé¿öÏÂÊÇ½ûÓÃµÄ¡£
      * 
-     * å¼ƒç”¨ï¼Œè¯·ä½¿ç”¨ `Image::setPVRImagesHavePremultipliedAlpha()` ä»£æ›¿ã€‚
+     * ÆúÓÃ£¬ÇëÊ¹ÓÃ `Image::setPVRImagesHavePremultipliedAlpha()` ´úÌæ¡£
      * 
      * @since v0.99.5
      */
@@ -284,95 +284,95 @@ public:
     /**@~english
      * Get texutre name, dimensions and coordinates message by a string.
      * @~chinese 
-     * ä»¥å­—ç¬¦ä¸²å½¢å¼è·å–çº¹ç†åç§°ï¼Œå¤§å°å’Œåæ ‡ä¿¡æ¯ã€‚
+     * ÒÔ×Ö·û´®ĞÎÊ½»ñÈ¡ÎÆÀíÃû³Æ£¬´óĞ¡ºÍ×ø±êĞÅÏ¢¡£
      * @return @~english The string include texture name, dimensions and coordinates message.
-     * @~chinese åŒ…å«çº¹ç†åç§°ï¼Œå¤§å°å’Œåæ ‡ä¿¡æ¯çš„å­—ç¬¦ä¸²ã€‚
+     * @~chinese °üº¬ÎÆÀíÃû³Æ£¬´óĞ¡ºÍ×ø±êĞÅÏ¢µÄ×Ö·û´®¡£
      * @js NA
      * @lua NA
      */
     virtual std::string getDescription() const;
 
 	/** @~english Release only the gl texture.
-     * @~chinese åªé‡Šæ”¾ gl çº¹ç†ã€‚
+     * @~chinese Ö»ÊÍ·Å gl ÎÆÀí¡£
      * @js NA
      * @lua NA
      */
 	void releaseGLTexture();
 
     /** @~english Initializes a Texture2D object with data.
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„æ•°æ®åˆå§‹åŒ– Texture2D å¯¹è±¡ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÊı¾İ³õÊ¼»¯ Texture2D ¶ÔÏó¡£
      * @param data @~english Specifies a pointer to the image data in memory.
-     * @~chinese å›¾åƒæ•°æ®çš„æŒ‡é’ˆã€‚
+     * @~chinese Í¼ÏñÊı¾İµÄÖ¸Õë¡£
      * @param dataLen @~english The image data length.
-     * @~chinese å›¾åƒæ•°æ®çš„é•¿åº¦ã€‚
+     * @~chinese Í¼ÏñÊı¾İµÄ³¤¶È¡£
      * @param pixelFormat @~english The image pixelFormat.
-     * @~chinese å›¾åƒçš„åƒç´ æ ¼å¼ã€‚
+     * @~chinese Í¼ÏñµÄÏñËØ¸ñÊ½¡£
      * @param pixelsWide @~english The image width.
-     * @~chinese å›¾åƒçš„å®½åº¦ã€‚
+     * @~chinese Í¼ÏñµÄ¿í¶È¡£
      * @param pixelsHigh @~english The image height.
-     * @~chinese å›¾åƒçš„é«˜åº¦ã€‚
+     * @~chinese Í¼ÏñµÄ¸ß¶È¡£
      * @param contentSize @~english The image content size.
-     * @~chinese å›¾åƒå†…å®¹çš„å¤§å°ã€‚
+     * @~chinese Í¼ÏñÄÚÈİµÄ´óĞ¡¡£
      * @return @~english If the initialization is success, return true; else return false.
-     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
      * @js NA
      * @lua NA
      */
     bool initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& contentSize);
 
     /** @~english Initializes with mipmaps. 
-     * @~chinese ä½¿ç”¨ mipmaps å›¾åƒåˆå§‹åŒ–ã€‚
+     * @~chinese Ê¹ÓÃ mipmaps Í¼Ïñ³õÊ¼»¯¡£
      * @param mipmaps @~english Specifies a pointer to the mipmaps image data in memory.
-     * @~chinese mipmaps å›¾åƒæ•°æ®çš„æŒ‡é’ˆã€‚
+     * @~chinese mipmaps Í¼ÏñÊı¾İµÄÖ¸Õë¡£
      * @param mipmapsNum @~english The mipmaps number.
-     * @~chinese mipmaps å›¾åƒæ•°æ®çš„é•¿åº¦ã€‚
+     * @~chinese mipmaps Í¼ÏñÊı¾İµÄ³¤¶È¡£
      * @param pixelFormat @~english The image pixelFormat.
-     * @~chinese mipmaps å›¾åƒçš„åƒç´ æ ¼å¼ã€‚
+     * @~chinese mipmaps Í¼ÏñµÄÏñËØ¸ñÊ½¡£
      * @param pixelsWide @~english The image width.
-     * @~chinese å›¾åƒçš„å®½åº¦ã€‚
+     * @~chinese Í¼ÏñµÄ¿í¶È¡£
      * @param pixelsHigh @~english The image height.
-     * @~chinese å›¾åƒçš„é«˜åº¦ã€‚
+     * @~chinese Í¼ÏñµÄ¸ß¶È¡£
      * @return @~english If the initialization is success, return true; else return false.
-     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
      */
     bool initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh);
 
     /** @~english Update with texture data.
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„æ•°æ®æ›´æ–°çº¹ç†ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÊı¾İ¸üĞÂÎÆÀí¡£
      * @param data @~english Specifies a pointer to the image data in memory.
-     * @~chinese å›¾åƒæ•°æ®çš„æŒ‡é’ˆã€‚
+     * @~chinese Í¼ÏñÊı¾İµÄÖ¸Õë¡£
      * @param offsetX @~english Specifies a texel offset in the x direction within the texture array.
-     * @~chinese çº¹ç†æ•°æ®ä¸­çš„ x è½´çš„åç§»é‡ã€‚
+     * @~chinese ÎÆÀíÊı¾İÖĞµÄ x ÖáµÄÆ«ÒÆÁ¿¡£
      * @param offsetY @~english Specifies a texel offset in the y direction within the texture array.
-     * @~chinese çº¹ç†æ•°æ®ä¸­çš„ y è½´çš„åç§»é‡ã€‚
+     * @~chinese ÎÆÀíÊı¾İÖĞµÄ y ÖáµÄÆ«ÒÆÁ¿¡£
      * @param width @~english Specifies the width of the texture subimage.
-     * @~chinese æŒ‡å®šçº¹ç†ä¸­æ‰€ä½¿ç”¨å›¾è±¡çš„å®½åº¦ã€‚
+     * @~chinese Ö¸¶¨ÎÆÀíÖĞËùÊ¹ÓÃÍ¼ÏóµÄ¿í¶È¡£
      * @param height @~english Specifies the height of the texture subimage.
-     * @~chinese æŒ‡å®šçº¹ç†ä¸­æ‰€ä½¿ç”¨å›¾è±¡çš„é«˜åº¦ã€‚
+     * @~chinese Ö¸¶¨ÎÆÀíÖĞËùÊ¹ÓÃÍ¼ÏóµÄ¸ß¶È¡£
      * @return @~english If the update is success, return true; else return false.
-     * @~chinese å¦‚æœæ›´æ–°æˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹û¸üĞÂ³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
      */
     bool updateWithData(const void *data,int offsetX,int offsetY,int width,int height);
     /**@~english
      * Drawing extensions to make it easy to draw basic quads using a Texture2D object.
      * These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
      * @~chinese 
-     * ç»˜åˆ¶ç›¸å…³çš„æ‰©å±•æ–¹æ³•ï¼Œè®©ä½¿ç”¨ Texture2D ç»˜åˆ¶åŸºç¡€å›¾å½¢å˜å¾—æ›´ç®€å•ã€‚
-     * è¿™äº›åŠŸèƒ½éœ€è¦å¼€å¯ GL_TEXTURE_2Dï¼ŒGL_VERTEX_ARRAY å’Œ GL_TEXTURE_COORD_ARRAY è¿™äº› GL çŠ¶æ€ã€‚
+     * »æÖÆÏà¹ØµÄÀ©Õ¹·½·¨£¬ÈÃÊ¹ÓÃ Texture2D »æÖÆ»ù´¡Í¼ĞÎ±äµÃ¸ü¼òµ¥¡£
+     * ÕâĞ©¹¦ÄÜĞèÒª¿ªÆô GL_TEXTURE_2D£¬GL_VERTEX_ARRAY ºÍ GL_TEXTURE_COORD_ARRAY ÕâĞ© GL ×´Ì¬¡£
      */
     /** @~english Draws a texture at a given point.
-     * @~chinese åœ¨ç»™å®šçš„åæ ‡ç»˜åˆ¶çº¹ç†ã€‚
+     * @~chinese ÔÚ¸ø¶¨µÄ×ø±ê»æÖÆÎÆÀí¡£
      */
     void drawAtPoint(const Vec2& point);
     /** @~english Draws a texture inside a rect.
-     * @~chinese åœ¨ä¸€ä¸ªçŸ©å½¢åŒºåŸŸå†…ç»˜åˆ¶çº¹ç†ã€‚
+     * @~chinese ÔÚÒ»¸ö¾ØĞÎÇøÓòÄÚ»æÖÆÎÆÀí¡£
      */
     void drawInRect(const Rect& rect);
 
     /**@~english
      * Extensions to make it easy to create a Texture2D object from an image file.
      * @~chinese 
-     * ç®€åŒ–ä»å›¾åƒæ–‡ä»¶åˆ›å»º Texture2D å¯¹è±¡çš„æ‰©å±•æ–¹æ³•ã€‚
+     * ¼ò»¯´ÓÍ¼ÏñÎÄ¼ş´´½¨ Texture2D ¶ÔÏóµÄÀ©Õ¹·½·¨¡£
     */
     /** @~english
 	 * Initializes a texture from a `Image` object.
@@ -380,14 +380,14 @@ public:
      * We will use the format you specified with setDefaultAlphaPixelFormat to convert the image for texture.
      * NOTE: It will not convert the pvr image file.
      * @~chinese 
-     * ä½¿ç”¨ `Image` å¯¹è±¡åˆå§‹åŒ–çº¹ç†ã€‚
+     * Ê¹ÓÃ `Image` ¶ÔÏó³õÊ¼»¯ÎÆÀí¡£
      * 
-     * è¿™ä¸ªæ–¹æ³•å°†ä½¿ç”¨ `setDefaultAlphaPixelFormat` å‡½æ•°è®¾ç½®çš„åƒç´ æ ¼å¼æ¥è½¬æ¢å›¾åƒæ•°æ®ã€‚
-     * æ³¨æ„ï¼šå®ƒä¸ä¼šè½¬æ¢ pvr å›¾åƒæ–‡ä»¶ã€‚
+     * Õâ¸ö·½·¨½«Ê¹ÓÃ `setDefaultAlphaPixelFormat` º¯ÊıÉèÖÃµÄÏñËØ¸ñÊ½À´×ª»»Í¼ÏñÊı¾İ¡£
+     * ×¢Òâ£ºËü²»»á×ª»» pvr Í¼ÏñÎÄ¼ş¡£
      * @param image @~english An `Image` object.
-     * @~chinese ä¸€ä¸ª `Image` å¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö `Image` ¶ÔÏó¡£
      * @return @~english If the initialization is success, return true; else return false.
-     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
 	 */
     bool initWithImage(Image * image);
     
@@ -397,55 +397,55 @@ public:
      * We will use the format you passed to the function to convert the image format to the texture format.
      * If you pass PixelFormat::Automatic, we will auto detect the image render type and use that type for texture to render.
      * @~chinese 
-     * ä½¿ç”¨ `Image` å¯¹è±¡åˆå§‹åŒ–çº¹ç†ã€‚
+     * Ê¹ÓÃ `Image` ¶ÔÏó³õÊ¼»¯ÎÆÀí¡£
      * 
-     * è¿™ä¸ªæ–¹æ³•å°†ä½¿ç”¨å‚æ•°æŒ‡å®šçš„åƒç´ æ ¼å¼æ¥è½¬æ¢å›¾åƒæ•°æ®ã€‚
-     * å¦‚æœ format å‚æ•°å€¼ä¸º `PixelFormat:AUTO`ï¼Œå°†è‡ªåŠ¨æ£€æµ‹å›¾åƒçš„æ¸²æŸ“ç±»å‹å¹¶ä½¿ç”¨è¯¥ç±»å‹æ¸²æŸ“çº¹ç†ã€‚
+     * Õâ¸ö·½·¨½«Ê¹ÓÃ²ÎÊıÖ¸¶¨µÄÏñËØ¸ñÊ½À´×ª»»Í¼ÏñÊı¾İ¡£
+     * Èç¹û format ²ÎÊıÖµÎª `PixelFormat:AUTO`£¬½«×Ô¶¯¼ì²âÍ¼ÏñµÄäÖÈ¾ÀàĞÍ²¢Ê¹ÓÃ¸ÃÀàĞÍäÖÈ¾ÎÆÀí¡£
      * @param image @~english An `Image` object.
-     * @~chinese ä¸€ä¸ª `Image` å¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö `Image` ¶ÔÏó¡£
      * @param format @~english Texture pixel formats.
-     * @~chinese çº¹ç†åƒç´ æ ¼å¼ã€‚
+     * @~chinese ÎÆÀíÏñËØ¸ñÊ½¡£
      * @return @~english If the initialization is success, return true; else return false.
-     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
      */
     bool initWithImage(Image * image, PixelFormat format);
 
     /** @~english Initializes a texture from a string with dimensions, alignment, font name and font size. 
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„å­—ç¬¦ä¸²ï¼Œå­—ä½“åç§°ï¼Œå­—ä½“å¤§å°ï¼Œçº¹ç†å¤§å°å’Œæ–‡æœ¬å¯¹é½æ–¹å¼åˆå§‹åŒ–ä¸€ä¸ªçº¹ç†ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄ×Ö·û´®£¬×ÖÌåÃû³Æ£¬×ÖÌå´óĞ¡£¬ÎÆÀí´óĞ¡ºÍÎÄ±¾¶ÔÆë·½Ê½³õÊ¼»¯Ò»¸öÎÆÀí¡£
      * 
      * @param text @~english A null terminated string.
-     * @~chinese ä»¥ç©ºå­—ç¬¦ç»“å°¾çš„å­—ç¬¦ä¸²ã€‚
+     * @~chinese ÒÔ¿Õ×Ö·û½áÎ²µÄ×Ö·û´®¡£
      * @param fontName @~english The font name.
-     * @~chinese å­—ä½“åç§°ã€‚
+     * @~chinese ×ÖÌåÃû³Æ¡£
      * @param fontSize @~english The font size.
-     * @~chinese å­—ä½“å¤§å°ã€‚
+     * @~chinese ×ÖÌå´óĞ¡¡£
      * @param dimensions @~english The font dimension.
-     * @~chinese çº¹ç†å¤§å°
+     * @~chinese ÎÆÀí´óĞ¡
      * @param hAlignment @~english The font horizontal text alignment type.
-     * @~chinese æ–‡æœ¬æ°´å¹³å¯¹é½æ–¹å¼ã€‚
+     * @~chinese ÎÄ±¾Ë®Æ½¶ÔÆë·½Ê½¡£
      * @param vAlignment @~english The font vertical text alignment type.
-     * @~chinese æ–‡æœ¬å‚ç›´å¯¹é½æ–¹å¼ã€‚
+     * @~chinese ÎÄ±¾´¹Ö±¶ÔÆë·½Ê½¡£
      * @return @~english If the initialization is success, return true; else return false.
-     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
      */
     bool initWithString(const char *text,  const std::string &fontName, float fontSize, const Size& dimensions = Size(0, 0), TextHAlignment hAlignment = TextHAlignment::CENTER, TextVAlignment vAlignment = TextVAlignment::TOP);
 
     /** @~english Initializes a texture from a string using a text definition.
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„æ–‡æœ¬ä¸æŒ‡å®šçš„å­—ä½“å±æ€§åˆå§‹åŒ–ä¸€ä¸ªçº¹ç†ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÎÄ±¾ÓëÖ¸¶¨µÄ×ÖÌåÊôĞÔ³õÊ¼»¯Ò»¸öÎÆÀí¡£
      * @param text @~english A null terminated string.
-     * @~chinese ä»¥ç©ºå­—ç¬¦ç»“å°¾çš„å­—ç¬¦ä¸²ã€‚
+     * @~chinese ÒÔ¿Õ×Ö·û½áÎ²µÄ×Ö·û´®¡£
      * @param textDefinition @~english A FontDefinition object contains font attributes.
-     * @~chinese åŒ…å«å­—ä½“å±æ€§çš„ `FontDefinition` å¯¹è±¡ã€‚
+     * @~chinese °üº¬×ÖÌåÊôĞÔµÄ `FontDefinition` ¶ÔÏó¡£
      * @return @~english If the initialization is success, return true; else return false.
-     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
      */
     bool initWithString(const char *text, const FontDefinition& textDefinition);
 
     /** @~english Sets the min filter, mag filter, wrap s and wrap t texture parameters.
      * If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
      *
-     * @~chinese è®¾ç½® min è¿‡æ»¤å™¨ï¼Œmag è¿‡æ»¤å™¨ï¼Œwrap s å’Œ wrap t è¿™äº›çº¹ç†å‚æ•°ã€‚
-     * å¦‚æœçº¹ç†å¤§å°ä¸º NPOT(é 2 çš„å¹‚æ¬¡æ–¹)ï¼Œé‚£ä¹ˆåªèƒ½åœ¨ GL_TEXTURE_WRAP_{S,T} ä¸­ä½¿ç”¨ GL_CLAMP_TO_EDGEã€‚
+     * @~chinese ÉèÖÃ min ¹ıÂËÆ÷£¬mag ¹ıÂËÆ÷£¬wrap s ºÍ wrap t ÕâĞ©ÎÆÀí²ÎÊı¡£
+     * Èç¹ûÎÆÀí´óĞ¡Îª NPOT(·Ç 2 µÄÃİ´Î·½)£¬ÄÇÃ´Ö»ÄÜÔÚ GL_TEXTURE_WRAP_{S,T} ÖĞÊ¹ÓÃ GL_CLAMP_TO_EDGE¡£
      * 
      * @warning @~english Calling this method could allocate additional texture memory.
      * @code 
@@ -454,11 +454,11 @@ public:
      * In lua: local setTexParameters(local arg1, local arg2, local arg3, local arg4)
      * @endcode
      *
-     * @~chinese è°ƒç”¨è¯¥æ–¹æ³•ä¼šåˆ†é…é¢å¤–çš„çº¹ç†å†…å­˜ã€‚
+     * @~chinese µ÷ÓÃ¸Ã·½·¨»á·ÖÅä¶îÍâµÄÎÆÀíÄÚ´æ¡£
      * @code 
-     * å½“æ­¤æ–¹æ³•ç»‘å®šåˆ° js æˆ–è€… lua ä¸­ï¼Œå‚æ•°éœ€è¦å˜ä¸ºï¼š
-     * js ä¸­: var setTexParameters(var arg1, var arg2, var arg3, var arg4)
-     * lua ä¸­: local setTexParameters(local arg1, local arg2, local arg3, local arg4)
+     * µ±´Ë·½·¨°ó¶¨µ½ js »òÕß lua ÖĞ£¬²ÎÊıĞèÒª±äÎª£º
+     * js ÖĞ: var setTexParameters(var arg1, var arg2, var arg3, var arg4)
+     * lua ÖĞ: local setTexParameters(local arg1, local arg2, local arg3, local arg4)
      * @endcode
      * @since v0.8
      */
@@ -474,12 +474,12 @@ public:
      * - GL_TEXTURE_MIN_FILTER = GL_LINEAR
      * - GL_TEXTURE_MAG_FILTER = GL_LINEAR
      *
-     * @~chinese è®¾ç½®æŠ—é”¯é½¿çº¹ç†å‚æ•°:
+     * @~chinese ÉèÖÃ¿¹¾â³İÎÆÀí²ÎÊı:
      * - GL_TEXTURE_MIN_FILTER = GL_LINEAR
      * - GL_TEXTURE_MAG_FILTER = GL_LINEAR
      * 
      * @warning @~english Calling this method could allocate additional texture memory.
-     * @~chinese è°ƒç”¨è¯¥æ–¹æ³•ä¼šåˆ†é…é¢å¤–çš„çº¹ç†å†…å­˜ã€‚
+     * @~chinese µ÷ÓÃ¸Ã·½·¨»á·ÖÅä¶îÍâµÄÎÆÀíÄÚ´æ¡£
      * 
      * @since v0.8
      */
@@ -489,12 +489,12 @@ public:
      * - GL_TEXTURE_MIN_FILTER = GL_NEAREST
      * - GL_TEXTURE_MAG_FILTER = GL_NEAREST
      *
-     * @~chinese è®¾ç½®é”¯é½¿çº¹ç†å‚æ•°:
+     * @~chinese ÉèÖÃ¾â³İÎÆÀí²ÎÊı:
      * - GL_TEXTURE_MIN_FILTER = GL_NEAREST
      * - GL_TEXTURE_MAG_FILTER = GL_NEAREST
      * 
      * @warning @~english Calling this method could allocate additional texture memory.
-     * @~chinese è°ƒç”¨è¯¥æ–¹æ³•ä¼šåˆ†é…é¢å¤–çš„çº¹ç†å†…å­˜ã€‚
+     * @~chinese µ÷ÓÃ¸Ã·½·¨»á·ÖÅä¶îÍâµÄÎÆÀíÄÚ´æ¡£
      * 
      * @since v0.8
      */
@@ -503,105 +503,105 @@ public:
 
     /** @~english Generates mipmap images for the texture.
      * It only works if the texture size is POT (power of 2).
-     * @~chinese ä¸ºçº¹ç†ç”Ÿæˆ mipmaps å›¾åƒã€‚
-     * åªæœ‰å½“çº¹ç†å¤§å°ä¸º POTï¼ˆ2çš„å¹‚æ¬¡æ–¹ï¼‰ æ˜¯èµ·æ•ˆã€‚
+     * @~chinese ÎªÎÆÀíÉú³É mipmaps Í¼Ïñ¡£
+     * Ö»ÓĞµ±ÎÆÀí´óĞ¡Îª POT£¨2µÄÃİ´Î·½£© ÊÇÆğĞ§¡£
      * @since v0.99.0
      */
     void generateMipmap();
 
     /** @~english Returns the pixel format by string.
-     * @~chinese è¿”å›åƒç´ æ ¼å¼çš„å­—ç¬¦ä¸²ã€‚
+     * @~chinese ·µ»ØÏñËØ¸ñÊ½µÄ×Ö·û´®¡£
      * @since v2.0
      */
     const char* getStringForFormat() const;
     CC_DEPRECATED_ATTRIBUTE const char* stringForFormat() const { return getStringForFormat(); };
 
     /** @~english Returns the bits-per-pixel of the in-memory OpenGL texture
-     * @~chinese è¿”å›å†…å­˜ä¸­ OpenGL çº¹ç†æ¯ä¸ªåƒç´ æ‰€ä½¿ç”¨çš„ä½æ•°ã€‚
+     * @~chinese ·µ»ØÄÚ´æÖĞ OpenGL ÎÆÀíÃ¿¸öÏñËØËùÊ¹ÓÃµÄÎ»Êı¡£
     * @since v1.0
     */
     unsigned int getBitsPerPixelForFormat() const;
     CC_DEPRECATED_ATTRIBUTE unsigned int bitsPerPixelForFormat() const { return getBitsPerPixelForFormat(); };
 
     /** @~english Helper functions that returns bits per pixels for a given format.
-     * @~chinese è¿™ä¸ªå·¥å…·å‡½æ•°è·å–æŒ‡å®šçš„åƒç´ æ ¼å¼ä¸‹æ¯ä¸ªåƒç´ æ‰€ä½¿ç”¨çš„ä½æ•°ã€‚
+     * @~chinese Õâ¸ö¹¤¾ßº¯Êı»ñÈ¡Ö¸¶¨µÄÏñËØ¸ñÊ½ÏÂÃ¿¸öÏñËØËùÊ¹ÓÃµÄÎ»Êı¡£
      * @since v2.0
      */
     unsigned int getBitsPerPixelForFormat(Texture2D::PixelFormat format) const;
     CC_DEPRECATED_ATTRIBUTE unsigned int bitsPerPixelForFormat(Texture2D::PixelFormat format) const { return getBitsPerPixelForFormat(format); };
 
-    /** @~english Get content size in pixels.  @~chinese è·å–çº¹ç†çš„å¤§å°ï¼Œä»¥åƒç´ ä¸ºå•ä½ã€‚*/
+    /** @~english Get content size in pixels.  @~chinese »ñÈ¡ÎÆÀíµÄ´óĞ¡£¬ÒÔÏñËØÎªµ¥Î»¡£*/
     const Size& getContentSizeInPixels();
 
     /** @~english Whether or not the texture has their Alpha premultiplied.
-     *  @~chinese è·å–çº¹ç†æ˜¯å¦æœ‰ alpha é¢„ä¹˜ã€‚
+     *  @~chinese »ñÈ¡ÎÆÀíÊÇ·ñÓĞ alpha Ô¤³Ë¡£
      */
     bool hasPremultipliedAlpha() const;
     
     /** @~english Whether or not the texture has mip maps.
-     * @~chinese è·å–çº¹ç†æ˜¯å¦æœ‰ mipmaps.
+     * @~chinese »ñÈ¡ÎÆÀíÊÇ·ñÓĞ mipmaps.
      */
     bool hasMipmaps() const;
 
     /** @~english Gets the pixel format of the texture.
-     *  @~chinese è·å–çº¹ç†çš„åƒç´ æ ¼å¼ã€‚
+     *  @~chinese »ñÈ¡ÎÆÀíµÄÏñËØ¸ñÊ½¡£
      */
     Texture2D::PixelFormat getPixelFormat() const;
     
     /** @~english Gets the width of the texture in pixels. 
-     * @~chinese è·å–çº¹ç†çš„å®½åº¦(ä»¥åƒç´ ä¸ºå•ä½)ã€‚
+     * @~chinese »ñÈ¡ÎÆÀíµÄ¿í¶È(ÒÔÏñËØÎªµ¥Î»)¡£
      */
     int getPixelsWide() const;
     
     /** @~english Gets the height of the texture in pixels.
-     *  @~chinese è·å–çº¹ç†çš„é«˜åº¦(ä»¥åƒç´ ä¸ºå•ä½)ã€‚
+     *  @~chinese »ñÈ¡ÎÆÀíµÄ¸ß¶È(ÒÔÏñËØÎªµ¥Î»)¡£
      */
     int getPixelsHigh() const;
     
     /** @~english Gets the texture name.
-     *  @~chinese è·å–çº¹ç†çš„åå­—ã€‚
+     *  @~chinese »ñÈ¡ÎÆÀíµÄÃû×Ö¡£
      */
     GLuint getName() const;
     
     /** @~english Gets max S.
-     *  @~chinese è·å– S çš„æœ€å¤§å€¼ã€‚
+     *  @~chinese »ñÈ¡ S µÄ×î´óÖµ¡£
      */
     GLfloat getMaxS() const;
     /** @~english Sets max S. 
-     * @~chinese è®¾ç½® S çš„æœ€å¤§å€¼ã€‚
+     * @~chinese ÉèÖÃ S µÄ×î´óÖµ¡£
      */
     void setMaxS(GLfloat maxS);
     
     /** @~english Gets max T. 
-     * @~chinese è·å– T çš„æœ€å¤§å€¼ã€‚
+     * @~chinese »ñÈ¡ T µÄ×î´óÖµ¡£
      */
     GLfloat getMaxT() const;
     /** @~english Sets max T. 
-     * @~chinese è®¾ç½® T çš„æœ€å¤§å€¼ã€‚
+     * @~chinese ÉèÖÃ T µÄ×î´óÖµ¡£
      */
     void setMaxT(GLfloat maxT);
     
     /** @~english Get the texture content size.
-     * @~chinese è·å–çº¹ç†å†…å®¹çš„å¤§å°ã€‚
+     * @~chinese »ñÈ¡ÎÆÀíÄÚÈİµÄ´óĞ¡¡£
      */
     Size getContentSize() const;
     
     /** @~english Set a shader program to the texture.
      * It's used by drawAtPoint and drawInRect
-     * @~chinese è®¾ç½®ä¸€ä¸ªçº¹ç†æ‰€ä½¿ç”¨çš„ GLProgramã€‚
-     * åœ¨ `drawAtPoint` å’Œ `drawInRect` ä¸­ä½¿ç”¨ã€‚
+     * @~chinese ÉèÖÃÒ»¸öÎÆÀíËùÊ¹ÓÃµÄ GLProgram¡£
+     * ÔÚ `drawAtPoint` ºÍ `drawInRect` ÖĞÊ¹ÓÃ¡£
      */
     void setGLProgram(GLProgram* program);
 
     /** @~english Get a shader program from the texture for `drawAtPoint` & `drawInRect`.
-     * @~chinese è·å–`drawAtPoint` å’Œ `drawInRect` ä½¿ç”¨çš„GLProgramã€‚
+     * @~chinese »ñÈ¡`drawAtPoint` ºÍ `drawInRect` Ê¹ÓÃµÄGLProgram¡£
      */
     GLProgram* getGLProgram() const;
 
 
 public:
     /** @~english Get pixel info map, the key-value pairs is PixelFormat and PixelFormatInfo.
-     * @~chinese è·å–åƒç´ ä¿¡æ¯çš„æ˜ å°„ï¼Œæ˜¯ `PixelFormat` ä¸ `PixelFormatInfo` ç»„æˆçš„é”®å€¼å¯¹ã€‚
+     * @~chinese »ñÈ¡ÏñËØĞÅÏ¢µÄÓ³Éä£¬ÊÇ `PixelFormat` Óë `PixelFormatInfo` ×é³ÉµÄ¼üÖµ¶Ô¡£
      */
     static const PixelFormatInfoMap& getPixelFormatInfoMap();
     

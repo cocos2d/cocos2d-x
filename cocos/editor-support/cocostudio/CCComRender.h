@@ -69,6 +69,8 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~ComRender(void);
     
 public:
+    const static std::string COMPONENT_NAME;
+
     /**
      * @brief @~english Event callback that is invoked every time when Node enters the 'stage'.
      * If the Node enters the 'stage' with a transition, this event is called when the transition starts.
@@ -162,7 +164,6 @@ private:
      */
     bool readJson(const std::string &fileName, rapidjson::Document &doc);
 
-private:
     cocos2d::Node *_render;
 };
 

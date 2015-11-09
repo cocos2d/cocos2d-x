@@ -31,19 +31,29 @@ THE SOFTWARE.
 
 NS_TIMELINE_BEGIN
 
-struct AnimationInfo
+typedef struct AnimationInfo
 {
-    AnimationInfo():startIndex(0),endIndex(0){}
-    AnimationInfo(const std::string& otherName, int otherStartIndex, int otherEndIndex)
-    :name(otherName),
-    startIndex(otherStartIndex),
-    endIndex(otherEndIndex)
+    AnimationInfo()
+        :startIndex(0)
+        ,endIndex(0)
     {
     }
+
+    AnimationInfo(const std::string& otherName, int otherStartIndex, int otherEndIndex)
+    :name(otherName)
+    ,startIndex(otherStartIndex)
+    ,endIndex(otherEndIndex)
+    {
+    }
+
     std::string name;
     int startIndex;
     int endIndex;
-};
+
+    //need set call back before clip added to ActionTimeline
+    // or see @ActionTimeline::setAnimationEndCallBack
+    std::function<void()> clipEndCallBack;
+} AnimationClip;
 
 class CC_STUDIO_DLL ActionTimelineData : public cocos2d::Ref
 {
@@ -274,12 +284,22 @@ public:
     * @~chinese 是否存在。
     */
     virtual bool IsAnimationInfoExists(const std::string& animationName);
+
     /** @~english Get animationInfo.
     *   @~chinese 获取动画信息。
     * @param animationInfo @~english Animation info name.
     * @~chinese 动画信息的名称。
     */
-    virtual AnimationInfo getAnimationInfo(const std::string& animationName);
+    virtual const AnimationInfo& getAnimationInfo(const std::string& animationName);
+
+    /** @~english Set animation end callback function.
+    *   @~chinese 设置动画播放结束回调函数。
+    * @param animationName @~english Animation name.
+    * @~chinese 动画名称。
+    * @param func @~english Callback function.
+    * @~chinese 回调函数。
+    */
+    virtual void setAnimationEndCallFunc(const std::string animationName, std::function<void()> func);
 
     /** @~english Set ActionTimeline's frame event callback function.
     *   @~chinese 设置动画时间轴的帧事件回调函数。
@@ -303,6 +323,19 @@ public:
     */
     void clearLastFrameCallFunc();
 
+    /** add a callback function after played frameIndex
+     * @param frameIndex the frame index call back after
+     * @param funcKey for identity the callback function
+     * @param func the callback function
+     */
+    virtual void addFrameEndCallFunc(int frameIndex, const std::string& funcKey, std::function<void()> func);
+    // remove callback function after frameIndex which identified with funcKey
+    virtual void removeFrameEndCallFunc(int frameIndex, const std::string& funcKey);
+    // clear callback functions after frameIndex
+    virtual void removeFrameEndCallFuncs(int frameIndex);
+    // clear all the callback functions after frameIndexs in this actiontimeline
+    virtual void clearFrameEndCallFuncs();
+
     /** Inherit from Action. */
 
     /** Returns a clone of ActionTimeline */
@@ -319,6 +352,9 @@ public:
 protected:
     virtual void gotoFrame(int frameIndex);
     virtual void stepToFrame(int frameIndex);
+
+    // emit call back after frameIndex played
+    virtual void emitFrameEndCallFuncs(int frameIndex);
 
     /** emit frame event, call it when enter a frame*/
     virtual void emitFrameEvent(Frame* frame);
@@ -338,6 +374,7 @@ protected:
 
     std::function<void(Frame*)> _frameEventListener;
     std::function<void()> _lastFrameListener;
+    std::map<int, std::map<std::string, std::function<void()> > > _frameEndCallFuncs;
     std::map<std::string, AnimationInfo> _animationInfos;
 };
 

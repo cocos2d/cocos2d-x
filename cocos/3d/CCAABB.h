@@ -1,4 +1,4 @@
-ï»¿/****************************************************************************
+/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -38,8 +38,8 @@ NS_CC_BEGIN
 /**
  * @class AABB
  * @brief  @~english Axis Aligned Bounding Box (AABB), usually used to detect the collision at early step
- * @~chinese è½´å¯¹é½åŒ…å›´ç›’ï¼Œè½´å¯¹é½åŒ…å›´ç›’æ˜¯ä¸€ç§ç‰¹æ®Šçš„åŒ…å›´ç›’ï¼Œ
- * å®ƒçš„è¾¹ä¸ä¸–ç•Œåæ ‡ç³»ä¸­çš„è½´å¹³è¡Œï¼Œé€šå¸¸ç”¨å…¶åœ¨ç¢°æ’æ£€æµ‹ä¹‹é—´åšå‰æœŸåˆ¤æ–­.
+ * @~chinese Öá¶ÔÆë°üÎ§ºĞ£¬Öá¶ÔÆë°üÎ§ºĞÊÇÒ»ÖÖÌØÊâµÄ°üÎ§ºĞ£¬
+ * ËüµÄ±ßÓëÊÀ½ç×ø±êÏµÖĞµÄÖáÆ½ĞĞ£¬Í¨³£ÓÃÆäÔÚÅö×²¼ì²âÖ®¼ä×öÇ°ÆÚÅĞ¶Ï.
  */
 class CC_DLL AABB
 {
@@ -52,34 +52,34 @@ public:
     AABB();
     
     /**
-     * @~english Constructor. construct the AABB object from min & max vector. @~chinese æ„é€ å‡½æ•°ï¼Œé€šè¿‡è¾“å…¥æœ€å¤§å’Œæœ€å°å‘é‡æ¥æ„é€ AABB
+     * @~english Constructor. construct the AABB object from min & max vector. @~chinese ¹¹Ôìº¯Êı£¬Í¨¹ıÊäÈë×î´óºÍ×îĞ¡ÏòÁ¿À´¹¹ÔìAABB
      * @lua new
      * @param min @~english The min vector
-     * @~chinese æœ€å°å‘é‡
+     * @~chinese ×îĞ¡ÏòÁ¿
      * @param max The max vector
-     * @~chinese æœ€å¤§å‘é‡
+     * @~chinese ×î´óÏòÁ¿
      */
     AABB(const Vec3& min, const Vec3& max);
     
     /**
      * @~english Constructor.
-     * @~chinese æ‹·è´æ„é€ å‡½æ•°
+     * @~chinese ¿½±´¹¹Ôìº¯Êı
      */
     AABB(const AABB& box);
     
     /**
      * @~english Gets the center point of the bounding box.
-     * @~chinese è·å¾—åŒ…å›´ç›’çš„ä¸­ç‚¹
+     * @~chinese »ñµÃ°üÎ§ºĞµÄÖĞµã
      * @return @~english the centre point of the bounding box.
-     * @~chinese åŒ…å›´ç›’çš„ä¸­ç‚¹
+     * @~chinese °üÎ§ºĞµÄÖĞµã
      */
     Vec3 getCenter();
 
     /**
      * @~english Gets the corners of the bounding box.
-     * @~chinese è·å–åŒ…å›´ç›’å„ä¸ªé¡¶ç‚¹
+     * @~chinese »ñÈ¡°üÎ§ºĞ¸÷¸ö¶¥µã
      * @param dst @~english A pointer to corners array.
-     * @~chinese å®šç‚¹æ•°ç»„çš„æŒ‡é’ˆ
+     * @~chinese ¶¨µãÊı×éµÄÖ¸Õë
      * @note @~english Near face, specified counter-clockwise looking towards the origin from the positive z-axis.
      * verts[0] : left top front
      * verts[1] : left bottom front
@@ -91,85 +91,85 @@ public:
      * verts[5] : right bottom back
      * verts[6] : left bottom back
      * verts[7] : left top back
-     * @~chinese æ•°ç»„å†…å„ä¸ªä½ç½®æ ‡ç¤ºçš„é¡¶ç‚¹å¦‚ä¸‹æ‰€ç¤ºï¼ˆå‰ï¼ŒåæŒ‡æœç€Yè½´è´Ÿæ–¹å‘çœ‹è€Œè¨€ï¼‰ï¼š
-     * verts[0] : å·¦ä¸Šå‰
-     * verts[1] : åä¸‹å‰
-     * verts[2] : å³ä¸‹å‰
-     * verts[3] : å³ä¸Šå‰
+     * @~chinese Êı×éÄÚ¸÷¸öÎ»ÖÃ±êÊ¾µÄ¶¥µãÈçÏÂËùÊ¾£¨Ç°£¬ºóÖ¸³¯×ÅYÖá¸º·½Ïò¿´¶øÑÔ£©£º
+     * verts[0] : ×óÉÏÇ°
+     * verts[1] : ×øÏÂÇ°
+     * verts[2] : ÓÒÏÂÇ°
+     * verts[3] : ÓÒÉÏÇ°
      *
-     * verts[4] : å³ä¸Šå
-     * verts[5] : å³ä¸‹å
-     * verts[6] : å·¦ä¸‹å
-     * verts[7] : å·¦ä¸Šå
+     * verts[4] : ÓÒÉÏºó
+     * verts[5] : ÓÒÏÂºó
+     * verts[6] : ×óÏÂºó
+     * verts[7] : ×óÉÏºó
      */
     void getCorners(Vec3 *dst) const;
 
     /**
      * @~english Tests whether this bounding box intersects with the specified bounding object.
-     * @~chinese æµ‹è¯•ä¸æŒ‡å®šçš„AABBæ˜¯å¦ç›¸äº¤
+     * @~chinese ²âÊÔÓëÖ¸¶¨µÄAABBÊÇ·ñÏà½»
      * @param aabb @~english The specified bounding box.
-     * @~chinese æŒ‡å®šçš„AABB
+     * @~chinese Ö¸¶¨µÄAABB
      * @return @~english Return true when two AABBs intersect, otherwise return false.
-     * @~chinese å½“ä¸¤AABBç›¸äº¤æ—¶è¿”å›trueï¼Œåä¹‹åˆ™false
+     * @~chinese µ±Á½AABBÏà½»Ê±·µ»Øtrue£¬·´Ö®Ôòfalse
      */
     bool intersects(const AABB& aabb) const;
 
     /**
      * @~english Check if the point is contained in the bounding box.
-     * @~chinese æ£€æµ‹æŒ‡å®šç‚¹æ˜¯å¦åœ¨åŒ…å›´ç›’å†…
-     * @param point @~english The specified point @~chinese æŒ‡å®šçš„ç‚¹
+     * @~chinese ¼ì²âÖ¸¶¨µãÊÇ·ñÔÚ°üÎ§ºĞÄÚ
+     * @param point @~english The specified point @~chinese Ö¸¶¨µÄµã
      * @return @~english Return true when the point is contained in the bounding box, otherwise return false.
-     * @~chinese å½“æŒ‡å®šåœ¨åŒ…å›´ç›’å†…æ—¶è¿”å›trueï¼Œåä¹‹è¿”å›false
+     * @~chinese µ±Ö¸¶¨ÔÚ°üÎ§ºĞÄÚÊ±·µ»Øtrue£¬·´Ö®·µ»Øfalse
      */
     bool containPoint(const Vec3& point) const;
 
     /**
      * @~english Sets this bounding box to the smallest bounding box that contains both this bounding object and the specified bounding box.
-     * @~chinese åˆå¹¶æŒ‡å®šåŒ…å›´ç›’ï¼Œä½¿æœ¬åŒ…å›´ç›’å˜ä¸ºæœ€å°èƒ½å®¹çº³ä¸¤è€…çš„åŒ…å›´ç›’
+     * @~chinese ºÏ²¢Ö¸¶¨°üÎ§ºĞ£¬Ê¹±¾°üÎ§ºĞ±äÎª×îĞ¡ÄÜÈİÄÉÁ½ÕßµÄ°üÎ§ºĞ
      * @param box @~english The specified box. 
-     * @~chinese æŒ‡å®šçš„åŒ…å›´ç›’
+     * @~chinese Ö¸¶¨µÄ°üÎ§ºĞ
      */
     void merge(const AABB& box);
 
     /**
      * @~english Sets this bounding box to the specified values.
-     * @~chinese é€šè¿‡min max å‘é‡ æ¥è®¾ç½®åŒ…å›´ç›’
+     * @~chinese Í¨¹ımin max ÏòÁ¿ À´ÉèÖÃ°üÎ§ºĞ
      * @param min @~english the min vector
-     * @~chinese minå‘é‡
+     * @~chinese minÏòÁ¿
      * @param max @~english the max vector
-     * @~chinese maxå‘é‡
+     * @~chinese maxÏòÁ¿
      */
     void set(const Vec3& min, const Vec3& max);
     
     /**
      * @~english Reset min and max value.If you invoke this method, isEmpty() shall return true.
-     * @~chinese é‡è®¾åŒ…å›´ç›’
+     * @~chinese ÖØÉè°üÎ§ºĞ
      */
     void reset();
     
     /**
      * @~english Check the AABB object is empty(reset).
-     * @~chinese æ£€æŸ¥åŒ…å›´ç›’æ˜¯å¦ä¸ºç©º
+     * @~chinese ¼ì²é°üÎ§ºĞÊÇ·ñÎª¿Õ
      * @return @~english Return true when the AABB object is empty, otherwise return false.
-     * @~chinese å½“åŒ…å›´ç›’å¯¹è±¡ä¸ºç©ºæ—¶è¿”å›trueï¼Œåä¹‹åˆ™è¿”å›false
+     * @~chinese µ±°üÎ§ºĞ¶ÔÏóÎª¿ÕÊ±·µ»Øtrue£¬·´Ö®Ôò·µ»Øfalse
      */
     bool isEmpty() const;
 
     /**
      * @~english Update the _min and _max from the given point.
-     * @~chinese é€šè¿‡ä¸€ä¸ªé¡¶ç‚¹æ•°ç»„æ¥æ›´æ–°åŒ…å›´ç›’
+     * @~chinese Í¨¹ıÒ»¸ö¶¥µãÊı×éÀ´¸üĞÂ°üÎ§ºĞ
      * @param point @~english The points array.
-     * @~chinese é¡¶ç‚¹æ•°ç»„
+     * @~chinese ¶¥µãÊı×é
      * @param num @~english The pints array's size.
-     * @~chinese æ•°ç»„çš„å¤§å°
+     * @~chinese Êı×éµÄ´óĞ¡
      */
     void updateMinMax(const Vec3* point, ssize_t num);
     
     /**
      * @~english Transforms the bounding box by the given transformation matrix.
-     * @~chinese é€šè¿‡æŒ‡å®šçš„å˜æ¢çŸ©é˜µæ¥å˜æ¢åŒ…å›´ç›’
+     * @~chinese Í¨¹ıÖ¸¶¨µÄ±ä»»¾ØÕóÀ´±ä»»°üÎ§ºĞ
      * @param mat @~english the specified transform-matrix.
-     * @~chinese æŒ‡å®šçš„å˜æ¢çŸ©é˜µ
+     * @~chinese Ö¸¶¨µÄ±ä»»¾ØÕó
      */
     void transform(const Mat4& mat);
 

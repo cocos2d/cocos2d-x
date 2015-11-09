@@ -1,4 +1,4 @@
-ï»¿/****************************************************************************
+/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -44,28 +44,28 @@ NS_CC_BEGIN
 /**
  * @enum EvaluateType
  * @brief @~english The evalute type for the curve evaluation(interpolation).
- * @~chinese æ›²çº¿æ±‚è§£(æ’å€¼)ç±»å‹
+ * @~chinese ÇúÏßÇó½â(²åÖµ)ÀàĞÍ
  */
 enum class EvaluateType
 {
     /**
      * linear interpolation
-     * @~chinese ç®€å•çº¿æ€§æ’å€¼
+     * @~chinese ¼òµ¥ÏßĞÔ²åÖµ
      **/
     INT_LINEAR, 
     /**
      * Nearest neighbor interpolation
-     * @~chinese æœ€è¿‘ç‚¹æ’å€¼
+     * @~chinese ×î½üµã²åÖµ
      */
     INT_NEAR,
     /**
      * Quaternion spherical linear interpolation
-     * @~chinese çƒé¢çº¿æ€§æ’å€¼(slerp)
+     * @~chinese ÇòÃæÏßĞÔ²åÖµ(slerp)
      **/
     INT_QUAT_SLERP,
     /**
      * User defined interpolation.
-     * @~chinese ç”¨æˆ·è‡ªå®šä¹‰æ’å€¼æ–¹æ³•
+     * @~chinese ÓÃ»§×Ô¶¨Òå²åÖµ·½·¨
      */
     INT_USER_FUNCTION,
 };
@@ -73,7 +73,7 @@ enum class EvaluateType
 /**
  * @class AnimationCurve
  * @brief @~english Curve of bone's position, rotation or scale
- * @~chinese éª¨éª¼æ›²çº¿ï¼Œç”¨ä»¥è¡¨ç¤ºéª¨éª¼åŠ¨ç”»ä¸­å¹³ç§»ã€æ—‹è½¬æˆ–è€…æ˜¯ç¼©æ”¾çš„æ›²çº¿
+ * @~chinese ¹Ç÷ÀÇúÏß£¬ÓÃÒÔ±íÊ¾¹Ç÷À¶¯»­ÖĞÆ½ÒÆ¡¢Ğı×ª»òÕßÊÇËõ·ÅµÄÇúÏß
  * @lua NA
  */
 template <int componentSize>
@@ -83,49 +83,49 @@ public:
     
     /**
      * @~english Create animation curve.
-     * @~chinese åˆ›å»ºåŠ¨ç”»çš„æ›²çº¿
+     * @~chinese ´´½¨¶¯»­µÄÇúÏß
      * @param @~english Keytime the key time value.
-     * @~chinese æ¯ä¸ªå…³é”®å¸§å¯¹åº”çš„æ—¶é—´ç‚¹æ•°ç»„
+     * @~chinese Ã¿¸ö¹Ø¼üÖ¡¶ÔÓ¦µÄÊ±¼äµãÊı×é
      * @param value @~english The value.
-     * @~chinese æ¯ä¸ªå…³é”®å¸§æ—¶æ›²çº¿çš„å€¼çš„æ•°ç»„
+     * @~chinese Ã¿¸ö¹Ø¼üÖ¡Ê±ÇúÏßµÄÖµµÄÊı×é
      * @param count @~english The count of key frames array.
-     * @~chinese å…³é”®å¸§æ•°ç»„å¤§å°
+     * @~chinese ¹Ø¼üÖ¡Êı×é´óĞ¡
      **/
     static AnimationCurve* create(float* keytime, float* value, int count);
     
     /**
      * @~english Evalute value of time
-     * @~chinese æ±‚è§£ï¼ˆæ’å€¼ï¼‰ç»™å®šæ—¶é—´æ—¶çš„æ›²çº¿çš„å€¼
+     * @~chinese Çó½â£¨²åÖµ£©¸ø¶¨Ê±¼äÊ±µÄÇúÏßµÄÖµ
      * @param time @~english Time to be estimated
-     * @~chinese ç»™å®šçš„æ—¶é—´ç‚¹
+     * @~chinese ¸ø¶¨µÄÊ±¼äµã
      * @param dst @~english Estimated value of that time
-     * @~chinese è¯¥ç‚¹æ—¶é—´æ±‚è§£å‡ºçš„ä¼°ç®—å€¼çš„æŒ‡é’ˆ
+     * @~chinese ¸ÃµãÊ±¼äÇó½â³öµÄ¹ÀËãÖµµÄÖ¸Õë
      * @param type @~english EvaluateType
-     * @~chinese æ±‚è§£æ—¶çš„æ–¹æ³•ç±»å‹
+     * @~chinese Çó½âÊ±µÄ·½·¨ÀàĞÍ
      */
     void evaluate(float time, float* dst, EvaluateType type) const;
     
     /**
      * @~english Set evaluate function, allow the user use own function.
-     * @~chinese è®¾ç½®æ±‚è§£ï¼ˆæ’å€¼ï¼‰å‡½æ•°ï¼Œå…è®¸ç”¨æˆ·ä½¿ç”¨è‡ªå·±çš„æ’å€¼å‡½æ•°
+     * @~chinese ÉèÖÃÇó½â£¨²åÖµ£©º¯Êı£¬ÔÊĞíÓÃ»§Ê¹ÓÃ×Ô¼ºµÄ²åÖµº¯Êı
      * @param fun @~english The callback function
-     * @~chinese æ’å€¼çš„ç”¨æˆ·å›è°ƒå‡½æ•°
+     * @~chinese ²åÖµµÄÓÃ»§»Øµ÷º¯Êı
      */
     void setEvaluateFun(std::function<void(float time, float* dst)> fun);
     
     /**
      * @~english Get start time
-     * @~chinese è·å–èµ·å§‹æ—¶é—´
+     * @~chinese »ñÈ¡ÆğÊ¼Ê±¼ä
      * @return @~english The start time
-     * @~chinese èµ·å§‹æ—¶é—´
+     * @~chinese ÆğÊ¼Ê±¼ä
      */
     float getStartTime() const;
     
     /**
      * @~english Get the end time.
-     * @~chinese è·å–ç»“æŸæ—¶é—´
+     * @~chinese »ñÈ¡½áÊøÊ±¼ä
      * @return @~english The end time.
-     * @~chinese ç»“æŸæ—¶é—´
+     * @~chinese ½áÊøÊ±¼ä
      */
     float getEndTime() const;
     
@@ -143,11 +143,11 @@ CC_CONSTRUCTOR_ACCESS:
     
     /**
      * @~english Determine index by time.
-     * @~chinese è·å–ç»™å®šæ—¶é—´ç‚¹çš„å…³é”®å¸§ç´¢å¼•
+     * @~chinese »ñÈ¡¸ø¶¨Ê±¼äµãµÄ¹Ø¼üÖ¡Ë÷Òı
      * @param time @~english The specified time
-     * @~chinese ç»™å®šçš„æŸä¸€æ—¶é—´ç‚¹
+     * @~chinese ¸ø¶¨µÄÄ³Ò»Ê±¼äµã
      * @return @~english The index.
-     * @~chinese å…³é”®å¸§ç´¢å¼•
+     * @~chinese ¹Ø¼üÖ¡Ë÷Òı
      */
     int determineIndex(float time) const;
     

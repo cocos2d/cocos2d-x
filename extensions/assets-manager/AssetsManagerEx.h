@@ -62,16 +62,16 @@ NS_CC_EXT_BEGIN
  * - Possibility to retry failed assets
  * Please refer to this detailed document for its usage: 
  * http://cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
- * @~chinese è¯¥ç±»ç”¨äºèµ„æºçƒ­æ›´æ–°æ”¯æŒï¼Œæ¯”å¦‚æ¸¸æˆè¿‡ç¨‹ä¸­åŠ¨æ€ç…§ç‰‡æˆ–è„šæœ¬ã€‚å’ŒAssetsManagerç±»ç›¸æ¯”ï¼Œå®ƒæ˜¯ä¸€ä¸ªå‡çº§ç‰ˆæœ¬ï¼Œæ”¯æŒæ›´å¼ºå¤§çš„çƒ­æ›´æ–°åŠŸèƒ½ã€‚
- * AssetsManagerExåŸºäºmanifesté…ç½®æ–‡ä»¶æ¥æ¯”è¾ƒæœ¬åœ°å’Œè¿œç¨‹èµ„æºçš„ç‰ˆæœ¬ï¼Œç”Ÿæˆéœ€è¦æ›´æ–°çš„èµ„æºåˆ—è¡¨ï¼Œä¸‹è½½å®ƒä»¬å¹¶å®Œæˆæ›´æ–°è¿‡ç¨‹ã€‚
- * ä¸‹é¢æ˜¯å®ƒä¸»è¦çš„ç‰¹æ€§ï¼š
- * - å¤šçº¿ç¨‹å¹¶è¡Œä¸‹è½½æ”¯æŒ
- * - ä¸¤å±‚è¿›åº¦ç»Ÿè®¡ä¿¡æ¯ï¼šæ–‡ä»¶çº§ä»¥åŠå­—èŠ‚çº§
- * - Zipå‹ç¼©æ–‡ä»¶æ”¯æŒ
- * - æ–­ç‚¹ç»­ä¼ 
- * - è¯¦ç»†çš„é”™è¯¯æŠ¥å‘Š
- * - æ–‡ä»¶ä¸‹è½½å¤±è´¥é‡è¯•æ”¯æŒ
- * è¯¦ç»†çš„ä½¿ç”¨æ–¹å¼ï¼Œè¯·å‚è€ƒä¸‹é¢çš„æ–‡æ¡£ï¼š 
+ * @~chinese ¸ÃÀàÓÃÓÚ×ÊÔ´ÈÈ¸üĞÂÖ§³Ö£¬±ÈÈçÓÎÏ·¹ı³ÌÖĞ¶¯Ì¬ÕÕÆ¬»ò½Å±¾¡£ºÍAssetsManagerÀàÏà±È£¬ËüÊÇÒ»¸öÉı¼¶°æ±¾£¬Ö§³Ö¸üÇ¿´óµÄÈÈ¸üĞÂ¹¦ÄÜ¡£
+ * AssetsManagerEx»ùÓÚmanifestÅäÖÃÎÄ¼şÀ´±È½Ï±¾µØºÍÔ¶³Ì×ÊÔ´µÄ°æ±¾£¬Éú³ÉĞèÒª¸üĞÂµÄ×ÊÔ´ÁĞ±í£¬ÏÂÔØËüÃÇ²¢Íê³É¸üĞÂ¹ı³Ì¡£
+ * ÏÂÃæÊÇËüÖ÷ÒªµÄÌØĞÔ£º
+ * - ¶àÏß³Ì²¢ĞĞÏÂÔØÖ§³Ö
+ * - Á½²ã½ø¶ÈÍ³¼ÆĞÅÏ¢£ºÎÄ¼ş¼¶ÒÔ¼°×Ö½Ú¼¶
+ * - ZipÑ¹ËõÎÄ¼şÖ§³Ö
+ * - ¶ÏµãĞø´«
+ * - ÏêÏ¸µÄ´íÎó±¨¸æ
+ * - ÎÄ¼şÏÂÔØÊ§°ÜÖØÊÔÖ§³Ö
+ * ÏêÏ¸µÄÊ¹ÓÃ·½Ê½£¬Çë²Î¿¼ÏÂÃæµÄÎÄµµ£º 
  * http://cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/zh
  */
 class CC_EX_DLL AssetsManagerEx : public Ref
@@ -79,116 +79,115 @@ class CC_EX_DLL AssetsManagerEx : public Ref
 public:
     
     /** @~english Update states
-     * @~chinese çƒ­æ›´æ–°çŠ¶æ€åˆ—è¡¨
+     * @~chinese ÈÈ¸üĞÂ×´Ì¬ÁĞ±í
      */
     enum class State
     {
         /** @~english Unchecked whether there is a new version
-         * @~chinese å°šæœªæ£€æŸ¥æ˜¯å¦å­˜åœ¨æ–°ç‰ˆæœ¬
+         * @~chinese ÉĞÎ´¼ì²éÊÇ·ñ´æÔÚĞÂ°æ±¾
          */
         UNCHECKED,
         /** @~english Before downloading the version manifest file
-         * @~chinese åœ¨ä¸‹è½½ç‰ˆæœ¬manifestæ–‡ä»¶ä¹‹å‰
+         * @~chinese ÔÚÏÂÔØ°æ±¾manifestÎÄ¼şÖ®Ç°
          */
         PREDOWNLOAD_VERSION,
         /** @~english Downloading the version manifest file
-         * @~chinese æ­£åœ¨ä¸‹è½½ç‰ˆæœ¬manifestæ–‡ä»¶
+         * @~chinese ÕıÔÚÏÂÔØ°æ±¾manifestÎÄ¼ş
          */
         DOWNLOADING_VERSION,
         /** @~english After successfully downloaded and parsed the version manifest
-         * @~chinese æˆåŠŸä¸‹è½½å¹¶è§£æç‰ˆæœ¬manifestä¹‹å
+         * @~chinese ³É¹¦ÏÂÔØ²¢½âÎö°æ±¾manifestÖ®ºó
          */
         VERSION_LOADED,
         /** @~english Before downloading the resources manifest file
-         * @~chinese åœ¨ä¸‹è½½èµ„æºmanifestæ–‡ä»¶ä¹‹å‰
+         * @~chinese ÔÚÏÂÔØ×ÊÔ´manifestÎÄ¼şÖ®Ç°
          */
         PREDOWNLOAD_MANIFEST,
         /** @~english Downloading the resources manifest file
-         * @~chinese æ­£åœ¨ä¸‹è½½èµ„æºmanifestæ–‡ä»¶
+         * @~chinese ÕıÔÚÏÂÔØ×ÊÔ´manifestÎÄ¼ş
          */
         DOWNLOADING_MANIFEST,
         /** @~english After successfully downloaded and parsed the resources manifest
-         * @~chinese æˆåŠŸä¸‹è½½å¹¶è§£æèµ„æºmanifestä¹‹å
+         * @~chinese ³É¹¦ÏÂÔØ²¢½âÎö×ÊÔ´manifestÖ®ºó
          */
         MANIFEST_LOADED,
         /** @~english New version detected, needed to be updated
-         * @~chinese æ£€æŸ¥åˆ°æ–°ç‰ˆæœ¬ï¼Œéœ€è¦æ›´æ–°
+         * @~chinese ¼ì²éµ½ĞÂ°æ±¾£¬ĞèÒª¸üĞÂ
          */
         NEED_UPDATE,
         /** @~english Updating new version
-         * @~chinese æ›´æ–°ä¸­
+         * @~chinese ¸üĞÂÖĞ
          */
         UPDATING,
         /** @~english Updated to the latest version
-         * @~chinese å·²æ›´æ–°åˆ°æœ€æ–°ç‰ˆæœ¬
+         * @~chinese ÒÑ¸üĞÂµ½×îĞÂ°æ±¾
          */
         UP_TO_DATE,
         /** @~english Failed to update new version
-         * @~chinese æ›´æ–°å¤±è´¥
+         * @~chinese ¸üĞÂÊ§°Ü
          */
         FAIL_TO_UPDATE
     };
     
     const static std::string VERSION_ID;
     const static std::string MANIFEST_ID;
-    const static std::string BATCH_UPDATE_ID;
     
     /** @brief @~english Create function for creating a new AssetsManagerEx, use local manifest path and storage path as parameters.
-     * @~chinese AssetsManagerExçš„æ„é€ å‡½æ•°ï¼Œä½¿ç”¨æœ¬åœ°manifestæ–‡ä»¶åœ°å€å’Œèµ„æºå­˜å‚¨è·¯å¾„ä½œä¸ºå‚æ•°ã€‚
+     * @~chinese AssetsManagerExµÄ¹¹Ôìº¯Êı£¬Ê¹ÓÃ±¾µØmanifestÎÄ¼şµØÖ·ºÍ×ÊÔ´´æ´¢Â·¾¶×÷Îª²ÎÊı¡£
      @param manifestUrl   @~english The url for the local manifest file
-     * @~chinese æœ¬åœ°èµ„æºmanifestæ–‡ä»¶åœ°å€
+     * @~chinese ±¾µØ×ÊÔ´manifestÎÄ¼şµØÖ·
      @param storagePath   @~english The storage path for downloaded assetes
-     * @~chinese èµ„æºçš„å­˜å‚¨è·¯å¾„
+     * @~chinese ×ÊÔ´µÄ´æ´¢Â·¾¶
      @warning @~english   The cached manifest in your storage path have higher priority and will be searched first,
                 only if it doesn't exist, AssetsManagerEx will use the given manifestUrl.
-     * @~chinese èµ„æºå­˜å‚¨è·¯å¾„ä¸­ç¼“å­˜çš„manifestæ–‡ä»¶æ¯”åŒ…å†…çš„åŸå§‹manifestæ–‡ä»¶æœ‰æ›´é«˜çš„ä¼˜å…ˆçº§ï¼Œé¦–å…ˆä¼šæ£€ç´¢æ˜¯å¦æœ‰ç¼“å­˜çš„manifestã€‚
-     * åªæœ‰å½“å®ƒä¸å­˜åœ¨æ—¶ï¼ŒAssetsManagerExæ‰å°†ä½¿ç”¨æŒ‡å®šçš„manifestUrlã€‚
+     * @~chinese ×ÊÔ´´æ´¢Â·¾¶ÖĞ»º´æµÄmanifestÎÄ¼ş±È°üÄÚµÄÔ­Ê¼manifestÎÄ¼şÓĞ¸ü¸ßµÄÓÅÏÈ¼¶£¬Ê×ÏÈ»á¼ìË÷ÊÇ·ñÓĞ»º´æµÄmanifest¡£
+     * Ö»ÓĞµ±Ëü²»´æÔÚÊ±£¬AssetsManagerEx²Å½«Ê¹ÓÃÖ¸¶¨µÄmanifestUrl¡£
      */
     static AssetsManagerEx* create(const std::string &manifestUrl, const std::string &storagePath);
     
     /** @brief @~english  Check out if there is a new version of manifest.
      *          You may use this method before updating, then let user determine whether
      *          he wants to update resources.
-     * @~chinese æ£€æŸ¥æ˜¯å¦æœ‰æ–°ç‰ˆæœ¬ã€‚
-     * ä½ å¯ä»¥ç”¨è¿™ç§æ–¹æ³•åœ¨æ›´æ–°ä¹‹å‰è®©ç”¨æˆ·å†³å®šæ˜¯å¦è¦æ›´æ–°èµ„æºã€‚
+     * @~chinese ¼ì²éÊÇ·ñÓĞĞÂ°æ±¾¡£
+     * Äã¿ÉÒÔÓÃÕâÖÖ·½·¨ÔÚ¸üĞÂÖ®Ç°ÈÃÓÃ»§¾ö¶¨ÊÇ·ñÒª¸üĞÂ×ÊÔ´¡£
      */
     void checkUpdate();
     
     /** @brief @~english Update with the current local manifest.
-     * @~chinese å°è¯•æ›´æ–°èµ„æº
+     * @~chinese ³¢ÊÔ¸üĞÂ×ÊÔ´
      */
     void update();
     
     /** @brief @~english Reupdate all failed assets under the current AssetsManagerEx context, failed assets are noted in the previous update process.
-     * @~chinese é‡æ–°ä¸‹è½½æ‰€æœ‰å¤±è´¥çš„èµ„æºï¼Œè¿™äº›å¤±è´¥çš„èµ„æºï¼Œæ˜¯å‰ä¸€æ¬¡æ›´æ–°è¿‡ç¨‹ä¸­è®°å½•ä¸‹æ¥çš„
+     * @~chinese ÖØĞÂÏÂÔØËùÓĞÊ§°ÜµÄ×ÊÔ´£¬ÕâĞ©Ê§°ÜµÄ×ÊÔ´£¬ÊÇÇ°Ò»´Î¸üĞÂ¹ı³ÌÖĞ¼ÇÂ¼ÏÂÀ´µÄ
      */
     void downloadFailedAssets();
     
     /** @brief @~english Gets the current update state.
-     * @~chinese è·å–å½“å‰æ›´æ–°çš„çŠ¶æ€ã€‚
+     * @~chinese »ñÈ¡µ±Ç°¸üĞÂµÄ×´Ì¬¡£
      * @return @~english The current update state.
-     * @~chinese æ›´æ–°çŠ¶æ€
+     * @~chinese ¸üĞÂ×´Ì¬
      */
     State getState() const;
     
     /** @brief @~english Gets storage path.
-     * @~chinese è·å–å­˜å‚¨è·¯å¾„ã€‚
+     * @~chinese »ñÈ¡´æ´¢Â·¾¶¡£
      * @return @~english The storage path.
-     * @~chinese å­˜å‚¨è·¯å¾„
+     * @~chinese ´æ´¢Â·¾¶
      */
     const std::string& getStoragePath() const;
     
     /** @brief @~english Function for retrieve the local manifest object.
-     * @~chinese è·å–æœ¬åœ°èµ„æºæ¸…å•å¯¹è±¡ã€‚
+     * @~chinese »ñÈ¡±¾µØ×ÊÔ´Çåµ¥¶ÔÏó¡£
      * @return @~english The local manifest.
-     * @~chinese æœ¬åœ°çš„èµ„æºæ¸…å•
+     * @~chinese ±¾µØµÄ×ÊÔ´Çåµ¥
      */
     const Manifest* getLocalManifest() const;
     
     /** @brief @~english Function for retrieve the remote manifest object
-     * @~chinese è·å–è¿œç¨‹èµ„æºæ¸…å•å¯¹è±¡
+     * @~chinese »ñÈ¡Ô¶³Ì×ÊÔ´Çåµ¥¶ÔÏó
      * @return @~english The remote manifest.
-     * @~chinese è¿œç¨‹çš„èµ„æºæ¸…å•
+     * @~chinese Ô¶³ÌµÄ×ÊÔ´Çåµ¥
      */
     const Manifest* getRemoteManifest() const;
     
@@ -226,47 +225,50 @@ protected:
     void decompressDownloadedZip();
     
     /** @brief @~english Update a list of assets under the current AssetsManagerEx context
-     * @~chinese æ›´æ–°ä¸€ä¸ªä¸‹è½½åˆ—è¡¨ä¸­çš„èµ„æº
+     * @~chinese ¸üĞÂÒ»¸öÏÂÔØÁĞ±íÖĞµÄ×ÊÔ´
      */
-    void updateAssets(const network::DownloadUnits& assets);
+    void updateAssets(const DownloadUnits& assets);
     
     /** @brief @~english Retrieve all failed assets during the last update
-     * @~chinese è·å–ä¸Šæ¬¡æ›´æ–°å¤±è´¥æ—¶çš„å¤±è´¥èµ„æºåˆ—è¡¨
+     * @~chinese »ñÈ¡ÉÏ´Î¸üĞÂÊ§°ÜÊ±µÄÊ§°Ü×ÊÔ´ÁĞ±í
      */
-    const network::DownloadUnits& getFailedAssets() const;
+    const DownloadUnits& getFailedAssets() const;
     
     /** @brief @~english Function for destorying the downloaded version file and manifest file
-     * @~chinese æ¸…é™¤æœ¬åœ°å·²ä¸‹è½½ç‰ˆæœ¬
+     * @~chinese Çå³ı±¾µØÒÑÏÂÔØ°æ±¾
      */
     void destroyDownloadedVersion();
     
     /** @brief @~english  Call back function for error handling,
      * the error will then be reported to user's listener registed in EventListenerAssetsManagerEx
-     * @~chinese èµ„æºä¸‹è½½å¤±è´¥æ—¶çš„å›è°ƒå‡½æ•°,
-     * è¿™ä¸ªé”™è¯¯å°†è¢«æŠ¥å‘Šç»™ç”¨æˆ·åœ¨EventListenerAssetsManagerExä¸­æ³¨å†Œçš„ç›‘å¬å™¨
+     * @~chinese ×ÊÔ´ÏÂÔØÊ§°ÜÊ±µÄ»Øµ÷º¯Êı,
+     * Õâ¸ö´íÎó½«±»±¨¸æ¸øÓÃ»§ÔÚEventListenerAssetsManagerExÖĞ×¢²áµÄ¼àÌıÆ÷
      * @param error @~english The error object contains ErrorCode, message, asset url, asset key
-     * @~chinese é”™è¯¯çš„å¯¹è±¡åŒ…å«é”™è¯¯ä»£ç ã€æ¶ˆæ¯ã€èµ„æºURLåœ°å€ï¼Œèµ„æºçš„ç´¢å¼•é”®å€¼
+     * @~chinese ´íÎóµÄ¶ÔÏó°üº¬´íÎó´úÂë¡¢ÏûÏ¢¡¢×ÊÔ´URLµØÖ·£¬×ÊÔ´µÄË÷Òı¼üÖµ
      * @warning @~english AssetsManagerEx internal use only
-     * @~chinese ä»…é™AssetsManagerExå†…éƒ¨ä½¿ç”¨
+     * @~chinese ½öÏŞAssetsManagerExÄÚ²¿Ê¹ÓÃ
      * @js NA
      * @lua NA
      */
-    virtual void onError(const network::Downloader::Error &error);
+    virtual void onError(const network::DownloadTask& task,
+                         int errorCode,
+                         int errorCodeInternal,
+                         const std::string& errorStr);
     
     /** @brief @~english  Call back function for recording downloading percent of the current asset,
      the progression will then be reported to user's listener registed in addUpdateProgressEventListener
-     * @~chinese è®°å½•èµ„æºä¸‹è½½çš„ç™¾åˆ†æ¯”çš„å›è°ƒå‡½æ•°ï¼Œ
-     * æŠ¥å‘Šçš„è¿›å±•å°†è¢«æŠ¥å‘Šç»™ç”¨æˆ·åœ¨EventListenerAssetsManagerExä¸­æ³¨å†Œçš„ç›‘å¬å™¨
+     * @~chinese ¼ÇÂ¼×ÊÔ´ÏÂÔØµÄ°Ù·Ö±ÈµÄ»Øµ÷º¯Êı£¬
+     * ±¨¸æµÄ½øÕ¹½«±»±¨¸æ¸øÓÃ»§ÔÚEventListenerAssetsManagerExÖĞ×¢²áµÄ¼àÌıÆ÷
      @param total       @~english Total size to download for this asset
-     * @~chinese è¯¥èµ„æºçš„æ€»å¤§å°
+     * @~chinese ¸Ã×ÊÔ´µÄ×Ü´óĞ¡
      @param downloaded  @~english Total size already downloaded for this asset
-     * @~chinese è¯¥èµ„æºå·²ç»ä¸‹è½½çš„éƒ¨åˆ†å¤§å°
+     * @~chinese ¸Ã×ÊÔ´ÒÑ¾­ÏÂÔØµÄ²¿·Ö´óĞ¡
      @param url         @~english The url of this asset
-     * @~chinese è¯¥èµ„æºçš„URLåœ°å€
+     * @~chinese ¸Ã×ÊÔ´µÄURLµØÖ·
      @param customId    @~english The key of this asset
-     * @~chinese è¯¥èµ„æºçš„ç´¢å¼•é”®å€¼
+     * @~chinese ¸Ã×ÊÔ´µÄË÷Òı¼üÖµ
      @warning @~english AssetsManagerEx internal use only
-     * @~chinese ä»…é™AssetsManagerExå†…éƒ¨ä½¿ç”¨
+     * @~chinese ½öÏŞAssetsManagerExÄÚ²¿Ê¹ÓÃ
      * @js NA
      * @lua NA
      */
@@ -274,20 +276,21 @@ protected:
     
     /** @brief @~english  Call back function for success of the current asset
      the success event will then be send to user's listener registed in addUpdateEventListener
-     * @~chinese èµ„æºä¸‹è½½æˆåŠŸçš„å›è°ƒå‡½æ•°
-     * èµ„æºä¸‹è½½æˆåŠŸçš„äº‹ä»¶å°†è¢«å‘é€åˆ°åœ¨EventListenerAssetsManagerExä¸­æ³¨å†Œçš„ç›‘å¬å™¨
+     * @~chinese ×ÊÔ´ÏÂÔØ³É¹¦µÄ»Øµ÷º¯Êı
+     * ×ÊÔ´ÏÂÔØ³É¹¦µÄÊÂ¼ş½«±»·¢ËÍµ½ÔÚEventListenerAssetsManagerExÖĞ×¢²áµÄ¼àÌıÆ÷
      @param srcUrl      @~english The url of this asset
-     * @~chinese è¯¥èµ„æºçš„url
+     * @~chinese ¸Ã×ÊÔ´µÄurl
      @param customId    @~english The key of this asset
-     * @~chinese è¯¥èµ„æºçš„ç´¢å¼•é”®å€¼
+     * @~chinese ¸Ã×ÊÔ´µÄË÷Òı¼üÖµ
      @warning @~english AssetsManagerEx internal use only
-     * @~chinese ä»…é™AssetsManagerExå†…éƒ¨ä½¿ç”¨
+     * @~chinese ½öÏŞAssetsManagerExÄÚ²¿Ê¹ÓÃ
      * @js NA
      * @lua NA
      */
     virtual void onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
     
 private:
+    void batchDownload();
     
     //! The event of the current AssetsManagerEx in event dispatcher
     std::string _eventName;
@@ -334,10 +337,10 @@ private:
     bool _waitToUpdate;
     
     //! All assets unit to download
-    network::DownloadUnits _downloadUnits;
+    DownloadUnits _downloadUnits;
     
     //! All failed units
-    network::DownloadUnits _failedUnits;
+    DownloadUnits _failedUnits;
     
     //! All files to be decompressed
     std::vector<std::string> _compressedFiles;

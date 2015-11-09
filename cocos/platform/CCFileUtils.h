@@ -41,28 +41,28 @@ NS_CC_BEGIN
  * @{
  */
 
-/** @~english Helper class to handle file operations.  @~chinese å¤„ç†æ–‡ä»¶æ“ä½œçš„é€šç”¨å·¥å…·ç±»ã€‚*/
+/** @~english Helper class to handle file operations.  @~chinese ´¦ÀíÎÄ¼ş²Ù×÷µÄÍ¨ÓÃ¹¤¾ßÀà¡£*/
 class CC_DLL FileUtils
 {
 public:
     /**@~english
      *  Gets the instance of FileUtils.
      * @~chinese 
-     * è·å–FileUtilsçš„å®ä¾‹ã€‚
+     * »ñÈ¡FileUtilsµÄÊµÀı¡£
      */
     static FileUtils* getInstance();
 
     /**@~english
      *  Destroys the instance of FileUtils.
      * @~chinese 
-     * é”€æ¯FileUtilsçš„å®ä¾‹ã€‚
+     * Ïú»ÙFileUtilsµÄÊµÀı¡£
      */
     static void destroyInstance();
     
     /**@~english
      * You can inherit from platform dependent implementation of FileUtils, such as FileUtilsAndroid,
      * and use this function to set delegate, then FileUtils will invoke delegate's implementation.
-     * Fox example, your resources are encrypted, so you need to decrypt it after reading data from
+     * For example, your resources are encrypted, so you need to decrypt it after reading data from
      * resources, then you can implement all getXXX functions, and engine will invoke your own getXX
      * functions when reading data of resources.
      *
@@ -70,17 +70,17 @@ public:
      * to this function.
      *
      * @~chinese 
-     * ä½ å¯ä»¥ä»å„ä¸ªå¹³å°çš„æ–‡ä»¶å·¥å…·ç±»å®ç°ä¸­ç»§æ‰¿,ä¾‹å¦‚ FileUtilsAndroid, ç„¶å
-     * ä½¿ç”¨è¿™ä¸ªå‡½æ•°æ¥è®¾ç½®ä»£ç†,ç„¶åFileUtilså°†è°ƒç”¨ä»£ç†çš„å®ç°ã€‚
-     * ä¾‹å¦‚,ä½ çš„èµ„æºæ˜¯åŠ å¯†çš„,å› æ­¤æ‚¨éœ€è¦è¯»å–æ•°æ®åå¯¹èµ„æºè¿›è¡Œè§£å¯†,
-     * ç„¶åæ‚¨å¯ä»¥å®ç°æ‰€æœ‰getXXXåŠŸèƒ½,å½“è¯»å–èµ„æºæ•°æ®æ—¶ï¼Œå¼•æ“å°†è°ƒç”¨ä½ è‡ªå·±çš„getXXåŠŸèƒ½ã€‚
+     * Äã¿ÉÒÔ´Ó¸÷¸öÆ½Ì¨µÄÎÄ¼ş¹¤¾ßÀàÊµÏÖÖĞ¼Ì³Ğ,ÀıÈç FileUtilsAndroid, È»ºó
+     * Ê¹ÓÃÕâ¸öº¯ÊıÀ´ÉèÖÃ´úÀí,È»ºóFileUtils½«µ÷ÓÃ´úÀíµÄÊµÏÖ¡£
+     * ÀıÈç,ÄãµÄ×ÊÔ´ÊÇ¼ÓÃÜµÄ,Òò´ËÄúĞèÒª¶ÁÈ¡Êı¾İºó¶Ô×ÊÔ´½øĞĞ½âÃÜ,
+     * È»ºóÄú¿ÉÒÔÊµÏÖËùÓĞgetXXX¹¦ÄÜ,µ±¶ÁÈ¡×ÊÔ´Êı¾İÊ±£¬ÒıÇæ½«µ÷ÓÃÄã×Ô¼ºµÄgetXX¹¦ÄÜ¡£
      * 
      * 
-     * åœ¨è®¾ç½®ä»£ç†åï¼Œå¦‚æœä½ ä¸æƒ³è¦ç³»ç»Ÿé»˜è®¤å®ç°çš„ä»£ç†,ä½ å°±å¯ä»¥é€šè¿‡è¿™ä¸ªå‡½æ•°è®¾ç½®å€¼ä¸ºnullptr
+     * ÔÚÉèÖÃ´úÀíºó£¬Èç¹ûÄã²»ÏëÒªÏµÍ³Ä¬ÈÏÊµÏÖµÄ´úÀí,Äã¾Í¿ÉÒÔÍ¨¹ıÕâ¸öº¯ÊıÉèÖÃÖµÎªnullptr
      * 
      * 
      * @warning @~english It will delete previous delegate
-     * @~chinese å®ƒå°†åˆ é™¤ä»¥å‰çš„delegate
+     * @~chinese Ëü½«É¾³ıÒÔÇ°µÄdelegate
      * @lua NA
      */
     static void setDelegate(FileUtils *delegate);
@@ -94,7 +94,7 @@ public:
     /**@~english
      *  The destructor of FileUtils.
      * @~chinese 
-     * FileUtilsçš„ææ„å‡½æ•°ã€‚
+     * FileUtilsµÄÎö¹¹º¯Êı¡£
      * @js NA
      * @lua NA
      */
@@ -103,58 +103,58 @@ public:
     /**@~english
      *  Purges full path caches.
      * @~chinese 
-     * æ¸…é™¤è·¯å¾„ç¼“å­˜ã€‚
+     * Çå³ıÂ·¾¶»º´æ¡£
      */
     virtual void purgeCachedEntries();
     
     /**@~english
      * Gets string from a file.
      * @~chinese 
-     * å°†ä¸€ä¸ªæ–‡ä»¶å†…å®¹è¯»å–ä¸ºå­—ç¬¦ä¸²ã€‚
+     * ½«Ò»¸öÎÄ¼şÄÚÈİ¶ÁÈ¡Îª×Ö·û´®¡£
      */
     virtual std::string getStringFromFile(const std::string& filename);
     
     /**@~english
      * Creates binary data from a file.
      * @~chinese 
-     * å°†ä¸€ä¸ªæ–‡ä»¶å†…å®¹è¯»å–ä¸ºäºŒè¿›åˆ¶æ•°æ®ã€‚
+     * ½«Ò»¸öÎÄ¼şÄÚÈİ¶ÁÈ¡Îª¶ş½øÖÆÊı¾İ¡£
      *  @return @~english A data object.
-     * @~chinese ä¸€ä¸ªæ•°æ®å¯¹è±¡ã€‚
+     * @~chinese Ò»¸öÊı¾İ¶ÔÏó¡£
      */
     virtual Data getDataFromFile(const std::string& filename);
     
     /**@~english
      *  Gets resource file data
      *  @~chinese 
-     *  è·å–èµ„æºæ–‡ä»¶æ•°æ®
+     *  »ñÈ¡×ÊÔ´ÎÄ¼şÊı¾İ
      *  @param filename @~english The resource file name which contains the path.
-     *             @~chinese åŒ…å«è·¯å¾„çš„èµ„æºæ–‡ä»¶åç§°ã€‚
-     *  @param mode @~english The read mode of the file. property like fopen function mode @~chinese æ–‡ä»¶çš„è¯»å–æ¨¡å¼,å±æ€§ä¸fopenæ¨¡å¼ç›¸åŒã€‚
+     *             @~chinese °üº¬Â·¾¶µÄ×ÊÔ´ÎÄ¼şÃû³Æ¡£
+     *  @param mode @~english The read mode of the file. property like fopen function mode @~chinese ÎÄ¼şµÄ¶ÁÈ¡Ä£Ê½,ÊôĞÔÓëfopenÄ£Ê½ÏàÍ¬¡£
      *  @param size @~english If the file read succeeds, it will be the data size, otherwise 0. 
-     *               @~chinese å¦‚æœæ–‡ä»¶è¯»å–æˆåŠŸ,å®ƒå°±æ˜¯æ•°æ®å¤§å°,å¦åˆ™ä¸º0ã€‚
+     *               @~chinese Èç¹ûÎÄ¼ş¶ÁÈ¡³É¹¦,Ëü¾ÍÊÇÊı¾İ´óĞ¡,·ñÔòÎª0¡£
      * 
      *  @return @~english Upon success, a pointer to the data is returned, otherwise NULL.
-     * @~chinese åœ¨æˆåŠŸæ—¶,è¿”å›ä¸€ä¸ªæŒ‡å‘æ•°æ®çš„æŒ‡é’ˆ,å¦åˆ™ä¸ºç©ºã€‚
+     * @~chinese ÔÚ³É¹¦Ê±,·µ»ØÒ»¸öÖ¸ÏòÊı¾İµÄÖ¸Õë,·ñÔòÎª¿Õ¡£
      *  @warning @~english Recall: you are responsible for calling free() on any Non-NULL pointer returned.
-     * @~chinese è®°å¾—: å¦‚æœè¿”å›çš„æŒ‡é’ˆæ˜¯éç©ºçš„ï¼Œä½ éœ€è¦è´Ÿè´£è°ƒç”¨freeå‡½æ•°é‡Šæ”¾å®ƒ
+     * @~chinese ¼ÇµÃ: Èç¹û·µ»ØµÄÖ¸ÕëÊÇ·Ç¿ÕµÄ£¬ÄãĞèÒª¸ºÔğµ÷ÓÃfreeº¯ÊıÊÍ·ÅËü
      */
     CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t *size);
 
     /**@~english
      *  Gets resource file data from a zip file.
      * @~chinese 
-     *  ä»ä¸€ä¸ªzipæ–‡ä»¶è·å–èµ„æºæ–‡ä»¶æ•°æ®ã€‚
+     *  ´ÓÒ»¸özipÎÄ¼ş»ñÈ¡×ÊÔ´ÎÄ¼şÊı¾İ¡£
      *  @param zipFilePath @~english The resource zip file path.
-     *                  @~chinese zipæ–‡ä»¶çš„è·¯å¾„ã€‚
+     *                  @~chinese zipÎÄ¼şµÄÂ·¾¶¡£
      *  @param filename @~english The resource file path and name relative to the zip file.
-     *                  @~chinese èµ„æºåœ¨zipæ–‡ä»¶ä¸­çš„ç›¸å¯¹è·¯å¾„ã€‚
+     *                  @~chinese ×ÊÔ´ÔÚzipÎÄ¼şÖĞµÄÏà¶ÔÂ·¾¶¡£
      *  @param size @~english If the file read operation succeeds, it will be the data size, otherwise 0.
-     *              @~chinese å¦‚æœæ–‡ä»¶è¯»å–æˆåŠŸ,å®ƒå°±æ˜¯æ•°æ®å¤§å°,å¦åˆ™ä¸º0ã€‚
+     *              @~chinese Èç¹ûÎÄ¼ş¶ÁÈ¡³É¹¦,Ëü¾ÍÊÇÊı¾İ´óĞ¡,·ñÔòÎª0¡£
      * 
      *  @return @~english Upon success, a pointer to the data is returned, otherwise nullptr.
-     * @~chinese åœ¨æˆåŠŸæ—¶,è¿”å›ä¸€ä¸ªæŒ‡å‘æ•°æ®çš„æŒ‡é’ˆ,å¦åˆ™nullptrã€‚
+     * @~chinese ÔÚ³É¹¦Ê±,·µ»ØÒ»¸öÖ¸ÏòÊı¾İµÄÖ¸Õë,·ñÔònullptr¡£
      *  @warning @~english Recall: you are responsible for calling free() on any Non-nullptr pointer returned.
-     * @~chinese è®°å¾—:å¦‚æœè¿”å›çš„æŒ‡é’ˆæ˜¯éç©ºçš„ï¼Œä½ éœ€è¦è´Ÿè´£è°ƒç”¨freeå‡½æ•°é‡Šæ”¾å®ƒ
+     * @~chinese ¼ÇµÃ:Èç¹û·µ»ØµÄÖ¸ÕëÊÇ·Ç¿ÕµÄ£¬ÄãĞèÒª¸ºÔğµ÷ÓÃfreeº¯ÊıÊÍ·ÅËü
      */
     virtual unsigned char* getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, ssize_t *size);
 
@@ -202,50 +202,50 @@ public:
      This method was added to simplify multiplatform support. Whether you are using cocos2d-js or any cross-compilation toolchain like StellaSDK or Apportable,
      you might need to load different resources for a given file in the different platforms.
 
-     * @~chinese å¯¹äºä¸€ä¸ªç»™å®šçš„æ–‡ä»¶åè¿”å›å®Œæ•´çš„æ–‡ä»¶è·¯å¾„ã€‚
+     * @~chinese ¶ÔÓÚÒ»¸ö¸ø¶¨µÄÎÄ¼şÃû·µ»ØÍêÕûµÄÎÄ¼şÂ·¾¶¡£
      * 
-     * é¦–å…ˆå®ƒå°†å°è¯•ä»æ–‡ä»¶å­—å…¸å¾—åˆ°ä¸€ä¸ªæ–°æ–‡ä»¶åï¼Œ
-     * å¦‚æœåœ¨å­—å…¸ä¸­ä¸èƒ½æ‰¾åˆ°æ–°æ–‡ä»¶å,å®ƒå°†ä½¿ç”¨åŸæ¥çš„æ–‡ä»¶åã€‚
-     * ç„¶åå®ƒå°†å°è¯•å¯¹è¿™ä¸ªè¦è·å–çš„å®Œæ•´è·¯å¾„æ–‡ä»¶å, ä½¿ç”¨æ–‡ä»¶å·¥å…·ç±»çš„æœç´¢è§„åˆ™æ¥æŸ¥æ‰¾:åˆ†è¾¨ç‡,å’Œæœç´¢è·¯å¾„ã€‚
-     * æ–‡ä»¶æœç´¢æ˜¯åŸºäºæ•°ç»„å…ƒç´ çš„æœç´¢è·¯å¾„å’Œåˆ†è¾¨ç‡ç›®å½•çš„é¡ºåºæ¥å†³å®šçš„ã€‚
+     * Ê×ÏÈËü½«³¢ÊÔ´ÓÎÄ¼ş×ÖµäµÃµ½Ò»¸öĞÂÎÄ¼şÃû£¬
+     * Èç¹ûÔÚ×ÖµäÖĞ²»ÄÜÕÒµ½ĞÂÎÄ¼şÃû,Ëü½«Ê¹ÓÃÔ­À´µÄÎÄ¼şÃû¡£
+     * È»ºóËü½«³¢ÊÔ¶ÔÕâ¸öÒª»ñÈ¡µÄÍêÕûÂ·¾¶ÎÄ¼şÃû, Ê¹ÓÃÎÄ¼ş¹¤¾ßÀàµÄËÑË÷¹æÔòÀ´²éÕÒ:·Ö±æÂÊ,ºÍËÑË÷Â·¾¶¡£
+     * ÎÄ¼şËÑË÷ÊÇ»ùÓÚÊı×éÔªËØµÄËÑË÷Â·¾¶ºÍ·Ö±æÂÊÄ¿Â¼µÄË³ĞòÀ´¾ö¶¨µÄ¡£
      * 
-     * ä¾‹å¦‚:
+     * ÀıÈç:
      * 
-     * æˆ‘ä»¬å°†ä¸¤ä¸ªå…ƒç´ ("/mnt/sdcard/", "internal_dir/") é€šè¿‡ setSearchPaths å‡½æ•°æ”¾å…¥æœç´¢è·¯å¾„é›†åˆä¸­
-     * å¹¶è®¾ç½®ä¸‰ä¸ªå…ƒç´ ("resources-ipadhd/", "resources-ipad/", "resources-iphonehd")
-     * é€šè¿‡ setSearchResolutionsOrder è®¾ç½®åˆ°åˆ†è¾¨ç‡é›†åˆä¸­ã€‚è¿™ä¸ª â€œinternal_dirâ€ ç›®å½•çš„è·¯å¾„ æ˜¯ç›¸å¯¹äºæ ¹ç›®å½•çš„è·¯å¾„æ˜¯ "Resources/"
+     * ÎÒÃÇ½«Á½¸öÔªËØ("/mnt/sdcard/", "internal_dir/") Í¨¹ı setSearchPaths º¯Êı·ÅÈëËÑË÷Â·¾¶¼¯ºÏÖĞ
+     * ²¢ÉèÖÃÈı¸öÔªËØ("resources-ipadhd/", "resources-ipad/", "resources-iphonehd")
+     * Í¨¹ı setSearchResolutionsOrder ÉèÖÃµ½·Ö±æÂÊ¼¯ºÏÖĞ¡£Õâ¸ö ¡°internal_dir¡± Ä¿Â¼µÄÂ·¾¶ ÊÇÏà¶ÔÓÚ¸ùÄ¿Â¼µÄÂ·¾¶ÊÇ "Resources/"
      * 
-     * å¦‚æœæˆ‘ä»¬æœ‰ä¸€ä¸ªæ–‡ä»¶åä¸º'sprite.png',fileLookupå­—å…¸ä¸­çš„æ˜ å°„åŒ…å« `key: sprite.png -> value: sprite.pvr.gz`.
-     * é¦–å…ˆ,å®ƒçš„æ–‡ä»¶åå°†ä»'sprite.png'å˜æˆ'sprite.pvr.gz'ã€‚ç„¶åé€šè¿‡ä»¥ä¸‹å‡ ä¸ªæ­¥éª¤æ¥æœç´¢'sprite.pvr.gz'æ–‡ä»¶:
-     * 
-     * 
-            /mnt/sdcard/resources-ipadhd/sprite.pvr.gz      (å¦‚æœæ‰¾ä¸åˆ°ï¼Œåˆ™æŸ¥æ‰¾ä¸‹ä¸€ä¸ª)
-            /mnt/sdcard/resources-ipad/sprite.pvr.gz        (å¦‚æœæ‰¾ä¸åˆ°ï¼Œåˆ™æŸ¥æ‰¾ä¸‹ä¸€ä¸ª)
-            /mnt/sdcard/resources-iphonehd/sprite.pvr.gz    (å¦‚æœæ‰¾ä¸åˆ°ï¼Œåˆ™æŸ¥æ‰¾ä¸‹ä¸€ä¸ª)
-            /mnt/sdcard/sprite.pvr.gz                       (å¦‚æœæ‰¾ä¸åˆ°ï¼Œåˆ™æŸ¥æ‰¾ä¸‹ä¸€ä¸ª)
-            internal_dir/resources-ipadhd/sprite.pvr.gz     (å¦‚æœæ‰¾ä¸åˆ°ï¼Œåˆ™æŸ¥æ‰¾ä¸‹ä¸€ä¸ª)
-            internal_dir/resources-ipad/sprite.pvr.gz       (å¦‚æœæ‰¾ä¸åˆ°ï¼Œåˆ™æŸ¥æ‰¾ä¸‹ä¸€ä¸ª)
-            internal_dir/resources-iphonehd/sprite.pvr.gz   (å¦‚æœæ‰¾ä¸åˆ°ï¼Œåˆ™æŸ¥æ‰¾ä¸‹ä¸€ä¸ª)
-            internal_dir/sprite.pvr.gz                      (å¦‚æœæ‰¾ä¸åˆ°ï¼Œåˆ™è¿”å› "sprite.png")
-     * 
-     * å¦‚æœè¿™ä¸ªæ–‡ä»¶ååŒ…å«ç›¸å¯¹è·¯å¾„,åƒ "gamescene/uilayer/sprite.png",
-     * å¹¶åœ¨fileLookupå­—å…¸çš„æ˜ å°„å…³ç³»æ˜¯`key: gamescene/uilayer/sprite.png -> value: gamescene/uilayer/sprite.pvr.gz`.
-     * è¿™ä¸ªæ–‡ä»¶æœç´¢é¡ºåºå°†ä¼šæ˜¯:
+     * Èç¹ûÎÒÃÇÓĞÒ»¸öÎÄ¼şÃûÎª'sprite.png',fileLookup×ÖµäÖĞµÄÓ³Éä°üº¬ `key: sprite.png -> value: sprite.pvr.gz`.
+     * Ê×ÏÈ,ËüµÄÎÄ¼şÃû½«´Ó'sprite.png'±ä³É'sprite.pvr.gz'¡£È»ºóÍ¨¹ıÒÔÏÂ¼¸¸ö²½ÖèÀ´ËÑË÷'sprite.pvr.gz'ÎÄ¼ş:
      * 
      * 
-            /mnt/sdcard/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz      (å¦‚æœæ‰¾ä¸åˆ°ï¼Œåˆ™æŸ¥æ‰¾ä¸‹ä¸€ä¸ª)
-            /mnt/sdcard/gamescene/uilayer/resources-ipad/sprite.pvr.gz        (å¦‚æœæ‰¾ä¸åˆ°ï¼Œåˆ™æŸ¥æ‰¾ä¸‹ä¸€ä¸ª)
-            /mnt/sdcard/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz    (å¦‚æœæ‰¾ä¸åˆ°ï¼Œåˆ™æŸ¥æ‰¾ä¸‹ä¸€ä¸ª)
-            /mnt/sdcard/gamescene/uilayer/sprite.pvr.gz                       (å¦‚æœæ‰¾ä¸åˆ°ï¼Œåˆ™æŸ¥æ‰¾ä¸‹ä¸€ä¸ª)
-            internal_dir/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz     (å¦‚æœæ‰¾ä¸åˆ°ï¼Œåˆ™æŸ¥æ‰¾ä¸‹ä¸€ä¸ª)
-            internal_dir/gamescene/uilayer/resources-ipad/sprite.pvr.gz       (å¦‚æœæ‰¾ä¸åˆ°ï¼Œåˆ™æŸ¥æ‰¾ä¸‹ä¸€ä¸ª)
-            internal_dir/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz   (å¦‚æœæ‰¾ä¸åˆ°ï¼Œåˆ™æŸ¥æ‰¾ä¸‹ä¸€ä¸ª)
-            internal_dir/gamescene/uilayer/sprite.pvr.gz                      (å¦‚æœæ‰¾ä¸åˆ°ï¼Œåˆ™è¿”å› "gamescene/uilayer/sprite.png")
+            /mnt/sdcard/resources-ipadhd/sprite.pvr.gz      (Èç¹ûÕÒ²»µ½£¬Ôò²éÕÒÏÂÒ»¸ö)
+            /mnt/sdcard/resources-ipad/sprite.pvr.gz        (Èç¹ûÕÒ²»µ½£¬Ôò²éÕÒÏÂÒ»¸ö)
+            /mnt/sdcard/resources-iphonehd/sprite.pvr.gz    (Èç¹ûÕÒ²»µ½£¬Ôò²éÕÒÏÂÒ»¸ö)
+            /mnt/sdcard/sprite.pvr.gz                       (Èç¹ûÕÒ²»µ½£¬Ôò²éÕÒÏÂÒ»¸ö)
+            internal_dir/resources-ipadhd/sprite.pvr.gz     (Èç¹ûÕÒ²»µ½£¬Ôò²éÕÒÏÂÒ»¸ö)
+            internal_dir/resources-ipad/sprite.pvr.gz       (Èç¹ûÕÒ²»µ½£¬Ôò²éÕÒÏÂÒ»¸ö)
+            internal_dir/resources-iphonehd/sprite.pvr.gz   (Èç¹ûÕÒ²»µ½£¬Ôò²éÕÒÏÂÒ»¸ö)
+            internal_dir/sprite.pvr.gz                      (Èç¹ûÕÒ²»µ½£¬Ôò·µ»Ø "sprite.png")
      * 
-     * å¦‚æœè¿™ä¸ªæ–°çš„æ–‡ä»¶ååœ¨æ–‡ä»¶ç³»ç»Ÿä¸­æ— æ³•æ‰¾åˆ°,å®ƒå°†ç›´æ¥è¿”å›ä¼ è¿›å‚æ•°çš„æ–‡ä»¶åã€‚
+     * Èç¹ûÕâ¸öÎÄ¼şÃû°üº¬Ïà¶ÔÂ·¾¶,Ïñ "gamescene/uilayer/sprite.png",
+     * ²¢ÔÚfileLookup×ÖµäµÄÓ³Éä¹ØÏµÊÇ`key: gamescene/uilayer/sprite.png -> value: gamescene/uilayer/sprite.pvr.gz`.
+     * Õâ¸öÎÄ¼şËÑË÷Ë³Ğò½«»áÊÇ:
      * 
-     * è¿™ç§æ–¹æ³•çš„å¢åŠ ï¼Œç®€åŒ–äº†å¤šå¹³å°æ”¯æŒã€‚æ— è®ºä½ æ˜¯ä½¿ç”¨Cocos2d-JSæˆ–ä»»ä½•äº¤å‰ç¼–è¯‘å·¥å…·é“¾StellaSDKæˆ–Apportableç­‰
-     * åªè¦ä¸€ä¸ªç»™å®šçš„æ–‡ä»¶ä½ éƒ½èƒ½å¤Ÿåœ¨å¯¹åº”ä¸åŒçš„å¹³å°ä¸ŠåŠ è½½ç›¸åº”çš„èµ„æºã€‚
+     * 
+            /mnt/sdcard/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz      (Èç¹ûÕÒ²»µ½£¬Ôò²éÕÒÏÂÒ»¸ö)
+            /mnt/sdcard/gamescene/uilayer/resources-ipad/sprite.pvr.gz        (Èç¹ûÕÒ²»µ½£¬Ôò²éÕÒÏÂÒ»¸ö)
+            /mnt/sdcard/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz    (Èç¹ûÕÒ²»µ½£¬Ôò²éÕÒÏÂÒ»¸ö)
+            /mnt/sdcard/gamescene/uilayer/sprite.pvr.gz                       (Èç¹ûÕÒ²»µ½£¬Ôò²éÕÒÏÂÒ»¸ö)
+            internal_dir/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz     (Èç¹ûÕÒ²»µ½£¬Ôò²éÕÒÏÂÒ»¸ö)
+            internal_dir/gamescene/uilayer/resources-ipad/sprite.pvr.gz       (Èç¹ûÕÒ²»µ½£¬Ôò²éÕÒÏÂÒ»¸ö)
+            internal_dir/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz   (Èç¹ûÕÒ²»µ½£¬Ôò²éÕÒÏÂÒ»¸ö)
+            internal_dir/gamescene/uilayer/sprite.pvr.gz                      (Èç¹ûÕÒ²»µ½£¬Ôò·µ»Ø "gamescene/uilayer/sprite.png")
+     * 
+     * Èç¹ûÕâ¸öĞÂµÄÎÄ¼şÃûÔÚÎÄ¼şÏµÍ³ÖĞÎŞ·¨ÕÒµ½,Ëü½«Ö±½Ó·µ»Ø´«½ø²ÎÊıµÄÎÄ¼şÃû¡£
+     * 
+     * ÕâÖÖ·½·¨µÄÔö¼Ó£¬¼ò»¯ÁË¶àÆ½Ì¨Ö§³Ö¡£ÎŞÂÛÄãÊÇÊ¹ÓÃCocos2d-JS»òÈÎºÎ½»²æ±àÒë¹¤¾ßÁ´StellaSDK»òApportableµÈ
+     * Ö»ÒªÒ»¸ö¸ø¶¨µÄÎÄ¼şÄã¶¼ÄÜ¹»ÔÚ¶ÔÓ¦²»Í¬µÄÆ½Ì¨ÉÏ¼ÓÔØÏàÓ¦µÄ×ÊÔ´¡£
      * 
      @since v2.1
      */
@@ -255,11 +255,11 @@ public:
      * Loads the filenameLookup dictionary from the contents of a filename.
      * 
      * @~chinese 
-     * é€šè¿‡ä¸€ä¸ªæ–‡ä»¶ä¸­çš„å†…å®¹åŠ è½½filenameLookupå­—å…¸ã€‚
+     * Í¨¹ıÒ»¸öÎÄ¼şÖĞµÄÄÚÈİ¼ÓÔØfilenameLookup×Öµä¡£
      * 
      * @note @~english The plist file name should follow the format below:
      * 
-     * @~chinese plistæ–‡ä»¶åç§°åº”éµå¾ªä»¥ä¸‹æ ¼å¼:
+     * @~chinese plistÎÄ¼şÃû³ÆÓ¦×ñÑ­ÒÔÏÂ¸ñÊ½:
      * 
      * @code
      * <?xml version="1.0" encoding="UTF-8"?>
@@ -285,7 +285,7 @@ public:
      * @endcode
      * @param filename @~english The plist file name.
      *
-     * @~chinese plistæ–‡ä»¶åç§°ã€‚
+     * @~chinese plistÎÄ¼şÃû³Æ¡£
      * 
      @since v2.1
      * @js loadFilenameLookup
@@ -297,10 +297,10 @@ public:
      *  Sets the filenameLookup dictionary.
      *
      * @~chinese 
-     * è®¾ç½®filenameLookupå­—å…¸ã€‚
+     * ÉèÖÃfilenameLookup×Öµä¡£
      * 
      *  @param filenameLookupDict @~english The dictionary for replacing filename.
-     * @~chinese ç”¨äºæ›¿æ¢æ–‡ä»¶åçš„å­—å…¸ã€‚
+     * @~chinese ÓÃÓÚÌæ»»ÎÄ¼şÃûµÄ×Öµä¡£
      *  @since v2.1
      */
     virtual void setFilenameLookupDictionary(const ValueMap& filenameLookupDict);
@@ -308,18 +308,18 @@ public:
     /**@~english
      *  Gets full path from a file name and the path of the relative file.
      * @~chinese 
-     * ä»ä¸€ä¸ªæ–‡ä»¶åå’Œç›¸å¯¹çš„è·¯å¾„æ–‡ä»¶å¾—åˆ°å®Œæ•´è·¯å¾„ã€‚
+     * ´ÓÒ»¸öÎÄ¼şÃûºÍÏà¶ÔµÄÂ·¾¶ÎÄ¼şµÃµ½ÍêÕûÂ·¾¶¡£
      *  @param filename @~english The file name.
-     * @~chinese æ–‡ä»¶çš„åå­—ã€‚
+     * @~chinese ÎÄ¼şµÄÃû×Ö¡£
      *  @param relativeFile @~english The path of the relative file.
-     * @~chinese ç›¸å¯¹çš„è·¯å¾„æ–‡ä»¶ã€‚
+     * @~chinese Ïà¶ÔµÄÂ·¾¶ÎÄ¼ş¡£
      *  @return @~english The full path.
      *          e.g. filename: hello.png, pszRelativeFile: /User/path1/path2/hello.plist
      *               Return: /User/path1/path2/hello.pvr (If there a a key(hello.png)-value(hello.pvr) in FilenameLookup dictionary. )
      *
-     * @~chinese è¿™ä¸ªç»™å®šæ–‡ä»¶åçš„å®Œæ•´æ–‡ä»¶è·¯å¾„ã€‚
-        ä¾‹å¦‚. filename: hello.png, pszRelativeFile: /User/path1/path2/hello.plist
-     *  Return: /User/path1/path2/hello.pvr (å¦‚æœåœ¨FilenameLookupå­—å…¸ä¸­æœ‰è¿™ä¸ªé”®å€¼å¯¹(hello.png)-value(hello.pvr))
+     * @~chinese Õâ¸ö¸ø¶¨ÎÄ¼şÃûµÄÍêÕûÎÄ¼şÂ·¾¶¡£
+        ÀıÈç. filename: hello.png, pszRelativeFile: /User/path1/path2/hello.plist
+     *  Return: /User/path1/path2/hello.pvr (Èç¹ûÔÚFilenameLookup×ÖµäÖĞÓĞÕâ¸ö¼üÖµ¶Ô(hello.png)-value(hello.pvr))
      * 
      */
     virtual std::string fullPathFromRelativeFile(const std::string &filename, const std::string &relativeFile);
@@ -328,10 +328,10 @@ public:
      *  Sets the array that contains the search order of the resources.
      *
      * @~chinese 
-     * è®¾ç½®åŒ…å«èµ„æºæœç´¢é¡ºåºçš„æ•°ç»„
+     * ÉèÖÃ°üº¬×ÊÔ´ËÑË÷Ë³ĞòµÄÊı×é
      * 
      *  @param searchResolutionsOrder @~english The source array that contains the search order of the resources.
-     * @~chinese è¿™ä¸ªæ•°ç»„åŒ…å«äº†èµ„æºæœç´¢é¡ºåº
+     * @~chinese Õâ¸öÊı×é°üº¬ÁË×ÊÔ´ËÑË÷Ë³Ğò
      *  @see getSearchResolutionsOrder(), fullPathForFilename(const char*).
      *  @since v2.1@~english
      *  In js:var setSearchResolutionsOrder(var jsval)
@@ -345,7 +345,7 @@ public:
       * Append search order of the resources.
       *
       * @~chinese 
-      * æ·»åŠ çš„èµ„æºæœç´¢é¡ºåºã€‚
+      * Ìí¼ÓµÄ×ÊÔ´ËÑË÷Ë³Ğò¡£
       * 
       * @see setSearchResolutionsOrder(), fullPathForFilename().
       * @since v2.1
@@ -356,7 +356,7 @@ public:
      *  Gets the array that contains the search order of the resources.
      *
      * @~chinese 
-     * è·å–åŒ…å«èµ„æºçš„æœç´¢é¡ºåºçš„æ•°ç»„
+     * »ñÈ¡°üº¬×ÊÔ´µÄËÑË÷Ë³ĞòµÄÊı×é
      * 
      *  @see setSearchResolutionsOrder(const std::vector<std::string>&), fullPathForFilename(const char*).
      *  @since v2.1
@@ -371,10 +371,10 @@ public:
      *  If you want to use "themes" or search resources in the "cache", you can do it easily by adding new entries in this array.
      *
      * @~chinese 
-     * è®¾ç½®æœç´¢è·¯å¾„çš„æ•°ç»„ã€‚
+     * ÉèÖÃËÑË÷Â·¾¶µÄÊı×é¡£
      * 
-     * æ‚¨å¯ä»¥ä½¿ç”¨è¿™ä¸ªæ•°ç»„ä¿®æ”¹èµ„æºçš„æœç´¢è·¯å¾„ã€‚
-     * å¦‚æœä½ æƒ³ä½¿ç”¨ç¼“å­˜ä¸­ä¸»é¢˜æˆ–è€…æ˜¯èµ„æº,ä½ å¾ˆå®¹æ˜“å¯ä»¥åšåˆ°ï¼Œåªè¦åœ¨æ•°ç»„ä¸­æ·»åŠ æ–°çš„æ¡ç›®å°±å¯ä»¥äº†ã€‚
+     * Äú¿ÉÒÔÊ¹ÓÃÕâ¸öÊı×éĞŞ¸Ä×ÊÔ´µÄËÑË÷Â·¾¶¡£
+     * Èç¹ûÄãÏëÊ¹ÓÃ»º´æÖĞÖ÷Ìâ»òÕßÊÇ×ÊÔ´,ÄãºÜÈİÒ×¿ÉÒÔ×öµ½£¬Ö»ÒªÔÚÊı×éÖĞÌí¼ÓĞÂµÄÌõÄ¿¾Í¿ÉÒÔÁË¡£
      * 
      *  @note @~english This method could access relative path and absolute path.
      *        If the relative path was passed to the vector, FileUtils will add the default resource directory before the relative path.
@@ -383,15 +383,15 @@ public:
      *            If "/mnt/sdcard/" and "resources-large" were set to the search paths vector,
      *            "resources-large" will be converted to "assets/resources-large" since it was a relative path.
      *
-     * @~chinese è¿™ä¸ªæ–¹æ³•æ—¢å¯ä»¥è®¿é—®ç»å¯¹è·¯å¾„åˆå¯ä»¥è®¿é—®ç›¸å¯¹è·¯å¾„ã€‚
-     * å¦‚æœç»™é›†åˆä¼ é€’çš„æ˜¯ä¸€ä¸ªç›¸å¯¹è·¯å¾„ï¼Œæ–‡ä»¶å·¥å…·ç±»ä¼šåœ¨è¿™ä¸ªç›¸å¯¹è·¯å¾„çš„å‰é¢åŠ ä¸Šé»˜è®¤çš„èµ„æºç›®å½•
-     * ä¾‹å¦‚:
-     * åœ¨Androidä¸Šï¼Œé»˜è®¤çš„èµ„æºæ ¹è·¯å¾„æ˜¯ "assets/".
-     * å¦‚æœæŠŠ"/mnt/sdcard/" å’Œ"resources-large" ä¼ é€’åˆ° æŸ¥æ‰¾è·¯å¾„çš„é›†åˆä¸­,å› ä¸ºå®ƒæ˜¯ä¸€ä¸ªç›¸å¯¹è·¯å¾„ï¼Œ
-     * æ‰€ä»¥"resources-large" ä¼šè¢«è½¬æ¢æˆ "assets/resources-large" 
+     * @~chinese Õâ¸ö·½·¨¼È¿ÉÒÔ·ÃÎÊ¾ø¶ÔÂ·¾¶ÓÖ¿ÉÒÔ·ÃÎÊÏà¶ÔÂ·¾¶¡£
+     * Èç¹û¸ø¼¯ºÏ´«µİµÄÊÇÒ»¸öÏà¶ÔÂ·¾¶£¬ÎÄ¼ş¹¤¾ßÀà»áÔÚÕâ¸öÏà¶ÔÂ·¾¶µÄÇ°Ãæ¼ÓÉÏÄ¬ÈÏµÄ×ÊÔ´Ä¿Â¼
+     * ÀıÈç:
+     * ÔÚAndroidÉÏ£¬Ä¬ÈÏµÄ×ÊÔ´¸ùÂ·¾¶ÊÇ "assets/".
+     * Èç¹û°Ñ"/mnt/sdcard/" ºÍ"resources-large" ´«µİµ½ ²éÕÒÂ·¾¶µÄ¼¯ºÏÖĞ,ÒòÎªËüÊÇÒ»¸öÏà¶ÔÂ·¾¶£¬
+     * ËùÒÔ"resources-large" »á±»×ª»»³É "assets/resources-large" 
      * 
      *  @param searchPaths @~english The array contains search paths.
-     * @~chinese è¯¥æ•°ç»„åŒ…å«æœç´¢è·¯å¾„ã€‚
+     * @~chinese ¸ÃÊı×é°üº¬ËÑË÷Â·¾¶¡£
      *  @see fullPathForFilename(const char*)
      *  @since v2.1@~english
      *  In js:var setSearchPaths(var jsval);
@@ -404,7 +404,7 @@ public:
     /**@~english
      * Set default resource root path.
      * @~chinese 
-     * è®¾ç½®é»˜è®¤èµ„æºæ ¹è·¯å¾„ã€‚
+     * ÉèÖÃÄ¬ÈÏ×ÊÔ´¸ùÂ·¾¶¡£
      */
     void setDefaultResourceRootPath(const std::string& path);
 
@@ -412,7 +412,7 @@ public:
       * Add search path.
       *
      * @~chinese 
-     * æ·»åŠ æœç´¢è·¯å¾„ã€‚
+     * Ìí¼ÓËÑË÷Â·¾¶¡£
      * 
       * @since v2.1
       */
@@ -422,10 +422,10 @@ public:
      *  Gets the array of search paths.
      *  
      * @~chinese 
-     * è·å–æ•°ç»„çš„æœç´¢è·¯å¾„ã€‚
+     * »ñÈ¡Êı×éµÄËÑË÷Â·¾¶¡£
      * 
      *  @return @~english The array of search paths.
-     * @~chinese æ•°ç»„çš„æœç´¢è·¯å¾„ã€‚
+     * @~chinese Êı×éµÄËÑË÷Â·¾¶¡£
      *  @see fullPathForFilename(const char*).
      *  @lua NA
      */
@@ -434,61 +434,61 @@ public:
     /**@~english
      *  Gets the writable path.
      * @~chinese 
-     *  è·å–å¯å†™çš„è·¯å¾„
+     *  »ñÈ¡¿ÉĞ´µÄÂ·¾¶
      *  @return  @~english The path that can be write/read a file in
-     * @~chinese å¯ä»¥å†™/è¯»æ–‡ä»¶çš„è·¯å¾„
+     * @~chinese ¿ÉÒÔĞ´/¶ÁÎÄ¼şµÄÂ·¾¶
      */
     virtual std::string getWritablePath() const = 0;
     
     /**@~english
      *  Sets writable path.
      * @~chinese 
-     * è®¾ç½®å¯å†™çš„è·¯å¾„ã€‚
+     * ÉèÖÃ¿ÉĞ´µÄÂ·¾¶¡£
      */
     virtual void setWritablePath(const std::string& writablePath);
 
     /**@~english
      *  Sets whether to pop-up a message box when failed to load an image.
      * @~chinese 
-     * è®¾ç½®å½“å›¾ç‰‡åŠ è½½å¤±è´¥çš„æ—¶å€™æ˜¯å¦å¼¹å‡ºä¸€ä¸ªæ¶ˆæ¯æ¡†
+     * ÉèÖÃµ±Í¼Æ¬¼ÓÔØÊ§°ÜµÄÊ±ºòÊÇ·ñµ¯³öÒ»¸öÏûÏ¢¿ò
      */
     virtual void setPopupNotify(bool notify);
     
     /** @~english Checks whether to pop up a message box when failed to load an image. 
-     * @~chinese æ£€æŸ¥å½“å›¾ç‰‡åŠ è½½å¤±è´¥çš„æ—¶å€™æ˜¯å¦å¼¹å‡ºä¸€ä¸ªæ¶ˆæ¯æ¡†
+     * @~chinese ¼ì²éµ±Í¼Æ¬¼ÓÔØÊ§°ÜµÄÊ±ºòÊÇ·ñµ¯³öÒ»¸öÏûÏ¢¿ò
      *  @return @~english True if pop up a message box when failed to load an image, false if not.
-     * @~chinese å¦‚æœå›¾ç‰‡åŠ è½½å¤±è´¥çš„æ—¶å€™ä¼šå¼¹å‡ºä¸€ä¸ªæ¶ˆæ¯æ¡†åˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false.
+     * @~chinese Èç¹ûÍ¼Æ¬¼ÓÔØÊ§°ÜµÄÊ±ºò»áµ¯³öÒ»¸öÏûÏ¢¿òÔò·µ»Øtrue£¬·ñÔò·µ»Øfalse.
      */
     virtual bool isPopupNotify() const;
 
     /**@~english
      *  Converts the contents of a file to a ValueMap.
      * @~chinese 
-     * å°†ä¸€ä¸ªæ–‡ä»¶çš„å†…å®¹è½¬æ¢ä¸ºValueMapã€‚
+     * ½«Ò»¸öÎÄ¼şµÄÄÚÈİ×ª»»ÎªValueMap¡£
      *  @param filename @~english The filename of the file to gets content.
-     * @~chinese è¦è·å–å†…å®¹çš„å¯¹åº”æ–‡ä»¶çš„æ–‡ä»¶åã€‚
+     * @~chinese Òª»ñÈ¡ÄÚÈİµÄ¶ÔÓ¦ÎÄ¼şµÄÎÄ¼şÃû¡£
      *  @return @~english ValueMap of the file contents.
-     * @~chinese æ–‡ä»¶çš„å†…å®¹ã€‚
+     * @~chinese ÎÄ¼şµÄÄÚÈİ¡£
      *  @note @~english This method is used internally.
-     * @~chinese è¯¥æ–¹æ³•åœ¨å†…éƒ¨ä½¿ç”¨ã€‚
+     * @~chinese ¸Ã·½·¨ÔÚÄÚ²¿Ê¹ÓÃ¡£
      */
     virtual ValueMap getValueMapFromFile(const std::string& filename);
 
   /**   @~english Converts the contents of a file to a ValueMap.
-    *   @~chinese æŠŠæ–‡ä»¶çš„æ•°æ®è½¬æ¢æˆValueMap
+    *   @~chinese °ÑÎÄ¼şµÄÊı¾İ×ª»»³ÉValueMap
     *   @note @~english This method is used internally.
-    *   @~chinese è¯¥æ–¹æ³•åœ¨å†…éƒ¨ä½¿ç”¨ã€‚
+    *   @~chinese ¸Ã·½·¨ÔÚÄÚ²¿Ê¹ÓÃ¡£
     */
     virtual ValueMap getValueMapFromData(const char* filedata, int filesize);
 
     /** @~english Write a ValueMap to a plist file.
-    *   @~chinese å°†ValueMap,å†™å…¥åˆ°æ–‡ä»¶ä¸­
+    *   @~chinese ½«ValueMap,Ğ´Èëµ½ÎÄ¼şÖĞ
     * @param dict @~english the data which want to write into file
-    *             @~chinese éœ€è¦å†™å…¥æ–‡ä»¶çš„æ•°æ®ã€‚
+    *             @~chinese ĞèÒªĞ´ÈëÎÄ¼şµÄÊı¾İ¡£
     * @param fullPath @~english file fullpath
-    *             @~chinese æ–‡ä»¶å®Œæ•´è·¯å¾„
+    *             @~chinese ÎÄ¼şÍêÕûÂ·¾¶
     * @note @~english This method is used internally.
-    *   @~chinese è¯¥æ–¹æ³•åœ¨å†…éƒ¨ä½¿ç”¨ã€‚
+    *   @~chinese ¸Ã·½·¨ÔÚÄÚ²¿Ê¹ÓÃ¡£
     */
     virtual bool writeToFile(ValueMap& dict, const std::string& fullPath);
 
@@ -534,20 +534,20 @@ public:
     * Need convert all parameters fopen and other 3rd-party libs
     *
      * @~chinese 
-     * Windows fopenä¸èƒ½æ”¯æŒutf - 8æ–‡ä»¶å
-     * éœ€è¦ä½¿ç”¨ç¬¬ä¸‰æ–¹åº“å°†fopençš„æ‰€æœ‰å‚æ•°è¿›è¡Œè½¬æ¢
+     * Windows fopen²»ÄÜÖ§³Öutf - 8ÎÄ¼şÃû
+     * ĞèÒªÊ¹ÓÃµÚÈı·½¿â½«fopenµÄËùÓĞ²ÎÊı½øĞĞ×ª»»
      * 
     * @param filenameUtf8 @~english std::string name file for convertation from utf-8
-     * @~chinese éœ€è¦è½¬æ¢æˆçš„utf-8æ–‡ä»¶çš„æ–‡ä»¶å
+     * @~chinese ĞèÒª×ª»»³ÉµÄutf-8ÎÄ¼şµÄÎÄ¼şÃû
     * @return @~english std::string ansi filename in current locale
-     * @~chinese å½“å‰è¯­è¨€ä¸‹æ ‡å‡†ansiçš„æ–‡ä»¶å
+     * @~chinese µ±Ç°ÓïÑÔÏÂ±ê×¼ansiµÄÎÄ¼şÃû
     */
     virtual std::string getSuitableFOpen(const std::string& filenameUtf8) const;
     
     /**@~english Converts the contents of a file to a ValueVector.
-    * @~chinese å°†æ–‡ä»¶è½¬æ¢æˆValueVector
+    * @~chinese ½«ÎÄ¼ş×ª»»³ÉValueVector
     * @note @~english This method is used internally.
-    *   @~chinese è¯¥æ–¹æ³•åœ¨å†…éƒ¨ä½¿ç”¨ã€‚
+    *   @~chinese ¸Ã·½·¨ÔÚÄÚ²¿Ê¹ÓÃ¡£
     */
     virtual ValueVector getValueVectorFromFile(const std::string& filename);
     
@@ -555,14 +555,14 @@ public:
      *  Checks whether a file exists.
      *
      * @~chinese 
-     * æ£€æŸ¥ä¸€ä¸ªæ–‡ä»¶æ˜¯å¦å­˜åœ¨ã€‚
+     * ¼ì²éÒ»¸öÎÄ¼şÊÇ·ñ´æÔÚ¡£
      * 
      *  @note @~english If a relative path was passed in, it will be inserted a default root path at the beginning.
-     * @~chinese å¦‚æœä¼ é€’è¿›æ¥çš„å‚æ•°æ˜¯ä¸€ä¸ªç›¸å¯¹è·¯å¾„ï¼Œå°†ä¼šåœ¨å…¶å¼€å¤´åŠ ä¸Šä¸€ä¸ªé»˜è®¤çš„æ ¹è·¯å¾„
+     * @~chinese Èç¹û´«µİ½øÀ´µÄ²ÎÊıÊÇÒ»¸öÏà¶ÔÂ·¾¶£¬½«»áÔÚÆä¿ªÍ·¼ÓÉÏÒ»¸öÄ¬ÈÏµÄ¸ùÂ·¾¶
      *  @param filename @~english The path of the file, it could be a relative or absolute path.
-     * @~chinese æ–‡ä»¶çš„è·¯å¾„ã€‚å¯ä»¥æ˜¯ç»å¯¹è·¯å¾„ï¼Œä¹Ÿå¯ä»¥æ˜¯ç›¸å¯¹è·¯å¾„
+     * @~chinese ÎÄ¼şµÄÂ·¾¶¡£¿ÉÒÔÊÇ¾ø¶ÔÂ·¾¶£¬Ò²¿ÉÒÔÊÇÏà¶ÔÂ·¾¶
      *  @return @~english True if the file exists, false if not.
-     * @~chinese å¦‚æœæ–‡ä»¶å­˜åœ¨è¿”å›trueï¼Œå¦åˆ™è¿”å›false
+     * @~chinese Èç¹ûÎÄ¼ş´æÔÚ·µ»Øtrue£¬·ñÔò·µ»Øfalse
      */
     virtual bool isFileExist(const std::string& filename) const;
 
@@ -578,18 +578,18 @@ public:
      *  Checks whether the path is an absolute path.
      *
      * @~chinese 
-     * æ£€æŸ¥è·¯å¾„æ˜¯ä¸æ˜¯ç»å¯¹è·¯å¾„ã€‚
+     * ¼ì²éÂ·¾¶ÊÇ²»ÊÇ¾ø¶ÔÂ·¾¶¡£
      * 
      *  @note @~english On Android, if the parameter passed in is relative to "assets/", this method will treat it as an absolute path.
      *        Also on Blackberry, path starts with "app/native/Resources/" is treated as an absolute path.
      *
-     * @~chinese åœ¨Androidå¹³å°ä¸Šï¼Œå¦‚æœä¼ é€’è¿›æ¥çš„å‚æ•°æ˜¯ç›¸å¯¹äº"assets/"ï¼Œè¿™ä¸ªæ–¹æ³•å°±ä¼šæŠŠå®ƒå½“æˆç»å¯¹è·¯å¾„
-     * åœ¨blackBarryå¹³å°ä¸Šï¼Œä»¥"app/native/Resources/"å¼€å¤´çš„è·¯å¾„è¢«çœ‹æˆç»å¯¹è·¯å¾„
+     * @~chinese ÔÚAndroidÆ½Ì¨ÉÏ£¬Èç¹û´«µİ½øÀ´µÄ²ÎÊıÊÇÏà¶ÔÓÚ"assets/"£¬Õâ¸ö·½·¨¾Í»á°ÑËüµ±³É¾ø¶ÔÂ·¾¶
+     * ÔÚblackBarryÆ½Ì¨ÉÏ£¬ÒÔ"app/native/Resources/"¿ªÍ·µÄÂ·¾¶±»¿´³É¾ø¶ÔÂ·¾¶
      * 
      *  @param path @~english The path that needs to be checked.
-     * @~chinese éœ€è¦æ£€æŸ¥çš„è·¯å¾„
+     * @~chinese ĞèÒª¼ì²éµÄÂ·¾¶
      *  @return @~english True if it's an absolute path, false if not.
-     * @~chinese å¦‚æœæ˜¯ç»å¯¹è·¯å¾„è¿”å›trueï¼Œå¦åˆ™è¿”å›false
+     * @~chinese Èç¹ûÊÇ¾ø¶ÔÂ·¾¶·µ»Øtrue£¬·ñÔò·µ»Øfalse
      */
     virtual bool isAbsolutePath(const std::string& path) const;
     
@@ -597,12 +597,12 @@ public:
      *  Checks whether the path is a directory.
      *
      * @~chinese 
-     * æ£€æŸ¥ä¸€ä¸ªè·¯å¾„æ˜¯å¦æ˜¯ç›®å½•ã€‚
+     * ¼ì²éÒ»¸öÂ·¾¶ÊÇ·ñÊÇÄ¿Â¼¡£
      * 
      *  @param dirPath @~english The path of the directory, it could be a relative or an absolute path.
-     * @~chinese ç›®å½•çš„è·¯å¾„ã€‚å¯ä»¥æ˜¯ç»å¯¹è·¯å¾„ï¼Œä¹Ÿå¯ä»¥æ˜¯ç›¸å¯¹è·¯å¾„
+     * @~chinese Ä¿Â¼µÄÂ·¾¶¡£¿ÉÒÔÊÇ¾ø¶ÔÂ·¾¶£¬Ò²¿ÉÒÔÊÇÏà¶ÔÂ·¾¶
      *  @return @~english True if the directory exists, false if not.
-     * @~chinese å¦‚æœç›®å½•å­˜åœ¨è¿”å›trueï¼Œå¦åˆ™è¿”å›false
+     * @~chinese Èç¹ûÄ¿Â¼´æÔÚ·µ»Øtrue£¬·ñÔò·µ»Øfalse
      */
     virtual bool isDirectoryExist(const std::string& dirPath) const;
     
@@ -610,12 +610,12 @@ public:
      *  Creates a directory.
      *
      * @~chinese 
-     * åˆ›å»ºä¸€ä¸ªç›®å½•ã€‚
+     * ´´½¨Ò»¸öÄ¿Â¼¡£
      * 
      *  @param dirPath @~english The path of the directory, it must be an absolute path.
-     * @~chinese ç›®å½•çš„è·¯å¾„,å®ƒå¿…é¡»æ˜¯ä¸€ä¸ªç»å¯¹è·¯å¾„ã€‚
+     * @~chinese Ä¿Â¼µÄÂ·¾¶,Ëü±ØĞëÊÇÒ»¸ö¾ø¶ÔÂ·¾¶¡£
      *  @return @~english True if the directory have been created successfully, false if not.
-     * @~chinese å¦‚æœæˆåŠŸåˆ›å»ºäº†ç›®å½•è¿”å›true,å¦‚æœåˆ›å»ºå¤±è´¥è¿”å›false
+     * @~chinese Èç¹û³É¹¦´´½¨ÁËÄ¿Â¼·µ»Øtrue,Èç¹û´´½¨Ê§°Ü·µ»Øfalse
      */
     virtual bool createDirectory(const std::string& dirPath);
     
@@ -623,12 +623,12 @@ public:
      *  Removes a directory.
      *
      * @~chinese 
-     * åˆ é™¤ä¸€ä¸ªç›®å½•ã€‚
+     * É¾³ıÒ»¸öÄ¿Â¼¡£
      * 
      *  @param dirPath  @~english The path of the directory, it must be an absolute path.
-     * @~chinese ç›®å½•çš„è·¯å¾„,å®ƒå¿…é¡»æ˜¯ä¸€ä¸ªç»å¯¹è·¯å¾„ã€‚
+     * @~chinese Ä¿Â¼µÄÂ·¾¶,Ëü±ØĞëÊÇÒ»¸ö¾ø¶ÔÂ·¾¶¡£
      *  @return @~english True if the directory have been removed successfully, false if not.
-     * @~chinese å¦‚æœæˆåŠŸåˆ é™¤äº†ç›®å½•è¿”å›true,å¦‚æœåˆ é™¤å¤±è´¥è¿”å›false
+     * @~chinese Èç¹û³É¹¦É¾³ıÁËÄ¿Â¼·µ»Øtrue,Èç¹ûÉ¾³ıÊ§°Ü·µ»Øfalse
      */
     virtual bool removeDirectory(const std::string& dirPath);
     
@@ -636,12 +636,12 @@ public:
      *  Removes a file.
      *
      * @~chinese 
-     * åˆ é™¤ä¸€ä¸ªæ–‡ä»¶ã€‚
+     * É¾³ıÒ»¸öÎÄ¼ş¡£
      * 
      *  @param filepath @~english The path of the file, it must be an absolute path.
-     * @~chinese æ–‡ä»¶çš„è·¯å¾„,å®ƒå¿…é¡»æ˜¯ä¸€ä¸ªç»å¯¹è·¯å¾„ã€‚
+     * @~chinese ÎÄ¼şµÄÂ·¾¶,Ëü±ØĞëÊÇÒ»¸ö¾ø¶ÔÂ·¾¶¡£
      *  @return @~english True if the file have been removed successfully, false if not.
-     * @~chinese å¦‚æœæˆåŠŸåˆ é™¤äº†æ–‡ä»¶è¿”å›true,å¦‚æœåˆ é™¤å¤±è´¥è¿”å›false
+     * @~chinese Èç¹û³É¹¦É¾³ıÁËÎÄ¼ş·µ»Øtrue,Èç¹ûÉ¾³ıÊ§°Ü·µ»Øfalse
      */
     virtual bool removeFile(const std::string &filepath);
     
@@ -649,16 +649,16 @@ public:
      *  Renames a file under the given directory.
      *
      * @~chinese 
-     * é‡å‘½åä¸€ä¸ªç»™å®šç›®å½•ä¸‹çš„æ–‡ä»¶ã€‚
+     * ÖØÃüÃûÒ»¸ö¸ø¶¨Ä¿Â¼ÏÂµÄÎÄ¼ş¡£
      * 
      *  @param path     @~english The parent directory path of the file, it must be an absolute path.
-     * @~chinese æ–‡ä»¶çš„çˆ¶ç›®å½•çš„è·¯å¾„,å®ƒå¿…é¡»æ˜¯ä¸€ä¸ªç»å¯¹è·¯å¾„ã€‚
+     * @~chinese ÎÄ¼şµÄ¸¸Ä¿Â¼µÄÂ·¾¶,Ëü±ØĞëÊÇÒ»¸ö¾ø¶ÔÂ·¾¶¡£
      *  @param oldname  @~english The current name of the file.
-     * @~chinese å½“å‰æ–‡ä»¶çš„åç§°ã€‚
+     * @~chinese µ±Ç°ÎÄ¼şµÄÃû³Æ¡£
      *  @param name     @~english The new name of the file.
-     * @~chinese æ–°æ–‡ä»¶çš„åç§°ã€‚
+     * @~chinese ĞÂÎÄ¼şµÄÃû³Æ¡£
      *  @return @~english True if the file have been renamed successfully, false if not.
-     * @~chinese å¦‚æœæˆåŠŸé‡å‘½åäº†æ–‡ä»¶è¿”å›true,å¦‚æœé‡å‘½åå¤±è´¥è¿”å›false
+     * @~chinese Èç¹û³É¹¦ÖØÃüÃûÁËÎÄ¼ş·µ»Øtrue,Èç¹ûÖØÃüÃûÊ§°Ü·µ»Øfalse
      */
     virtual bool renameFile(const std::string &path, const std::string &oldname, const std::string &name);
 
@@ -675,25 +675,25 @@ public:
      *  Retrieve the file size.
      *
      * @~chinese 
-     * è·å–æ–‡ä»¶å¤§å°ã€‚
+     * »ñÈ¡ÎÄ¼ş´óĞ¡¡£
      * 
      *  @note @~english If a relative path was passed in, it will be inserted a default root path at the beginning.
-     * @~chinese å¦‚æœä¼ é€’è¿›æ¥çš„å‚æ•°æ˜¯ä¸€ä¸ªç›¸å¯¹è·¯å¾„ï¼Œå°†ä¼šåœ¨å…¶å¼€å¤´åŠ ä¸Šä¸€ä¸ªé»˜è®¤çš„æ ¹è·¯å¾„
+     * @~chinese Èç¹û´«µİ½øÀ´µÄ²ÎÊıÊÇÒ»¸öÏà¶ÔÂ·¾¶£¬½«»áÔÚÆä¿ªÍ·¼ÓÉÏÒ»¸öÄ¬ÈÏµÄ¸ùÂ·¾¶
      *  @param filepath @~english The path of the file, it could be a relative or absolute path.
-     * @~chinese æ–‡ä»¶çš„è·¯å¾„,å®ƒå¯èƒ½æ˜¯ä¸€ä¸ªç›¸å¯¹æˆ–ç»å¯¹è·¯å¾„ã€‚
+     * @~chinese ÎÄ¼şµÄÂ·¾¶,Ëü¿ÉÄÜÊÇÒ»¸öÏà¶Ô»ò¾ø¶ÔÂ·¾¶¡£
      *  @return @~english The file size.
-     * @~chinese æ–‡ä»¶å¤§å°ã€‚
+     * @~chinese ÎÄ¼ş´óĞ¡¡£
      */
     virtual long getFileSize(const std::string &filepath);
 
-    /** @~english Returns the full path cache.  @~chinese è¿”å›å®Œæ•´è·¯å¾„ç¼“å­˜ã€‚*/
+    /** @~english Returns the full path cache.  @~chinese ·µ»ØÍêÕûÂ·¾¶»º´æ¡£*/
     const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
 
 protected:
     /**@~english
      *  The default constructor.
      * @~chinese 
-     * é»˜è®¤æ„é€ å‡½æ•°ã€‚
+     * Ä¬ÈÏ¹¹Ôìº¯Êı¡£
      */
     FileUtils();
     
@@ -701,15 +701,15 @@ protected:
      *  Initializes the instance of FileUtils. It will set _searchPathArray and _searchResolutionsOrderArray to default values.
      *
      * @~chinese 
-     * FileUtilsçš„åˆå§‹åŒ–å®ä¾‹ã€‚å®ƒå°†ä¼šè®¾ç½®_searchPathArrayå’Œ_searchResolutionsOrderArrayä¸ºé»˜è®¤å€¼ã€‚
+     * FileUtilsµÄ³õÊ¼»¯ÊµÀı¡£Ëü½«»áÉèÖÃ_searchPathArrayºÍ_searchResolutionsOrderArrayÎªÄ¬ÈÏÖµ¡£
      * 
      *  @note @~english When you are porting Cocos2d-x to a new platform, you may need to take care of this method.
      *        You could assign a default value to _defaultResRootPath in the subclass of FileUtils(e.g. FileUtilsAndroid). Then invoke the FileUtils::init().
-     * @~chinese å½“ä½ å°†Cocos2d-xç§»æ¤åˆ°ä¸€ä¸ªæ–°çš„å¹³å°,æ‚¨å¯èƒ½éœ€è¦å…³æ³¨è¿™ä¸ªæ–¹æ³•ã€‚
-     * ä½ å¯ä»¥æŒ‡å®šä¸€ä¸ªé»˜è®¤å€¼çš„å­ç±»_defaultResRootPath FileUtils(å¦‚ã€‚FileUtilsAndroid)ã€‚ç„¶åè°ƒç”¨FileUtils::init()ã€‚
+     * @~chinese µ±Äã½«Cocos2d-xÒÆÖ²µ½Ò»¸öĞÂµÄÆ½Ì¨,Äú¿ÉÄÜĞèÒª¹Ø×¢Õâ¸ö·½·¨¡£
+     * Äã¿ÉÒÔÖ¸¶¨Ò»¸öÄ¬ÈÏÖµµÄ×ÓÀà_defaultResRootPath FileUtils(Èç¡£FileUtilsAndroid)¡£È»ºóµ÷ÓÃFileUtils::init()¡£
      *  @return @~english true if successed, otherwise it returns false.
      *
-     * @~chinese å¦‚æœæˆåŠŸè¿”å›true,å¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹û³É¹¦·µ»Øtrue,·ñÔò·µ»Øfalse¡£
      * 
      */
     virtual bool init();
@@ -718,36 +718,36 @@ protected:
      *  Gets the new filename from the filename lookup dictionary.
      *  It is possible to have a override names.
      * @~chinese 
-     * ä»æ–‡ä»¶åæŸ¥æ‰¾è¯å…¸ä¸­è·å–æ–°çš„æ–‡ä»¶å
-     * å®ƒå¯èƒ½æœ‰ä¸€ä¸ªé‡å®šä¹‰çš„åå­—
+     * ´ÓÎÄ¼şÃû²éÕÒ´ÊµäÖĞ»ñÈ¡ĞÂµÄÎÄ¼şÃû
+     * Ëü¿ÉÄÜÓĞÒ»¸öÖØ¶¨ÒåµÄÃû×Ö
      *  @param filename @~english The original filename.
-     * @~chinese åŸæ¥çš„æ–‡ä»¶åã€‚
+     * @~chinese Ô­À´µÄÎÄ¼şÃû¡£
      *  @return @~english The new filename after searching in the filename lookup dictionary.
      *          If the original filename wasn't in the dictionary, it will return the original filename.
-     * @~chinese ä»æ–‡ä»¶åæŸ¥æ‰¾è¯å…¸ä¸­è¿”å›çš„æ–°çš„æ–‡ä»¶å
-     * å¦‚æœåŸå§‹æ–‡ä»¶åä¸åœ¨æŸ¥æ‰¾è¯å…¸ä¸­ï¼Œåˆ™è¿”å›åŸå§‹çš„æ–‡ä»¶å
+     * @~chinese ´ÓÎÄ¼şÃû²éÕÒ´ÊµäÖĞ·µ»ØµÄĞÂµÄÎÄ¼şÃû
+     * Èç¹ûÔ­Ê¼ÎÄ¼şÃû²»ÔÚ²éÕÒ´ÊµäÖĞ£¬Ôò·µ»ØÔ­Ê¼µÄÎÄ¼şÃû
      */
     virtual std::string getNewFilename(const std::string &filename) const;
     
     /**@~english
      *  Checks whether a file exists without considering search paths and resolution orders.
      * @~chinese 
-     * åœ¨ä¸è€ƒè™‘æŸ¥æ‰¾è·¯å¾„å’Œè§£æé¡ºåºçš„æƒ…å†µä¸‹ï¼Œæ£€æŸ¥æ–‡ä»¶æ˜¯å¦å­˜åœ¨
+     * ÔÚ²»¿¼ÂÇ²éÕÒÂ·¾¶ºÍ½âÎöË³ĞòµÄÇé¿öÏÂ£¬¼ì²éÎÄ¼şÊÇ·ñ´æÔÚ
      *  @param filename @~english The file (with absolute path) to look up for
-     * @~chinese éœ€è¦æŸ¥æ‰¾çš„æ–‡ä»¶åï¼ˆéœ€è¦ç»å¯¹è·¯å¾„ï¼‰
+     * @~chinese ĞèÒª²éÕÒµÄÎÄ¼şÃû£¨ĞèÒª¾ø¶ÔÂ·¾¶£©
      *  @return @~english Returns true if the file found at the given absolute path, otherwise returns false
-     * @~chinese ä¼ å…¥çš„æ–‡ä»¶ï¼ˆç»å¯¹è·¯å¾„ï¼‰å¦‚æœåœ¨å­—å…¸ä¸­å­˜åœ¨,è¿”å›true,å¦åˆ™è¿”å›false
+     * @~chinese ´«ÈëµÄÎÄ¼ş£¨¾ø¶ÔÂ·¾¶£©Èç¹ûÔÚ×ÖµäÖĞ´æÔÚ,·µ»Øtrue,·ñÔò·µ»Øfalse
      */
     virtual bool isFileExistInternal(const std::string& filename) const = 0;
     
     /**@~english
      *  Checks whether a directory exists without considering search paths and resolution orders.
      * @~chinese 
-     * åœ¨ä¸è€ƒè™‘æŸ¥æ‰¾è·¯å¾„å’Œè§£æé¡ºåºçš„æƒ…å†µä¸‹ï¼Œæ£€æŸ¥ç›®å½•æ˜¯å¦å­˜åœ¨
+     * ÔÚ²»¿¼ÂÇ²éÕÒÂ·¾¶ºÍ½âÎöË³ĞòµÄÇé¿öÏÂ£¬¼ì²éÄ¿Â¼ÊÇ·ñ´æÔÚ
      *  @param dirPath @~english The directory (with absolute path) to look up for
-     * @~chinese éœ€è¦æŸ¥æ‰¾çš„ç›®å½•(ç»å¯¹è·¯å¾„)
+     * @~chinese ĞèÒª²éÕÒµÄÄ¿Â¼(¾ø¶ÔÂ·¾¶)
      *  @return @~english Returns true if the directory found at the given absolute path, otherwise returns false
-     * @~chinese ä¼ å…¥çš„ç›®å½•ï¼ˆç»å¯¹è·¯å¾„ï¼‰å¦‚æœåœ¨å­—å…¸ä¸­å­˜åœ¨,è¿”å›true,å¦åˆ™è¿”å›false
+     * @~chinese ´«ÈëµÄÄ¿Â¼£¨¾ø¶ÔÂ·¾¶£©Èç¹ûÔÚ×ÖµäÖĞ´æÔÚ,·µ»Øtrue,·ñÔò·µ»Øfalse
      */
     virtual bool isDirectoryExistInternal(const std::string& dirPath) const;
     
@@ -755,16 +755,16 @@ protected:
      *  Gets full path for filename, resolution directory and search path.
      *
      * @~chinese 
-     * ä»¥æ–‡ä»¶åã€åˆ†è¾¨ç‡ç›®å½•å’ŒæŸ¥æ‰¾è·¯å¾„ä¸ºå‚æ•°è·å–å®Œæ•´è·¯å¾„
+     * ÒÔÎÄ¼şÃû¡¢·Ö±æÂÊÄ¿Â¼ºÍ²éÕÒÂ·¾¶Îª²ÎÊı»ñÈ¡ÍêÕûÂ·¾¶
      * 
      *  @param filename @~english The file name.
-     * @~chinese æ–‡ä»¶çš„åå­—ã€‚
+     * @~chinese ÎÄ¼şµÄÃû×Ö¡£
      *  @param resolutionDirectory @~english The resolution directory.
-     * @~chinese åˆ†è¾¨ç‡ç›®å½•ã€‚
+     * @~chinese ·Ö±æÂÊÄ¿Â¼¡£
      *  @param searchPath @~english The search path.
-     * @~chinese æœç´¢è·¯å¾„ã€‚
+     * @~chinese ËÑË÷Â·¾¶¡£
      *  @return @~english The full path of the file. It will return an empty string if the full path of the file doesn't exist.
-     * @~chinese è¿”å›æ–‡ä»¶çš„å®Œæ•´è·¯å¾„ã€‚å¦‚æœæ–‡ä»¶çš„å®Œæ•´è·¯å¾„ä¸å­˜åœ¨ï¼Œåˆ™è¿”å›ä¸€ä¸ªç©ºçš„stringå¯¹è±¡
+     * @~chinese ·µ»ØÎÄ¼şµÄÍêÕûÂ·¾¶¡£Èç¹ûÎÄ¼şµÄÍêÕûÂ·¾¶²»´æÔÚ£¬Ôò·µ»ØÒ»¸ö¿ÕµÄstring¶ÔÏó
      */
     virtual std::string getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath) const;
     
@@ -772,19 +772,19 @@ protected:
      *  Gets full path for the directory and the filename.
      *
      * @~chinese 
-     * ä»¥ç›®å½•å’Œæ–‡ä»¶åä¸ºå‚æ•°è·å–å®Œæ•´è·¯å¾„
+     * ÒÔÄ¿Â¼ºÍÎÄ¼şÃûÎª²ÎÊı»ñÈ¡ÍêÕûÂ·¾¶
      * 
      *  @note @~english Only iOS and Mac need to override this method since they are using
      *        `[[NSBundle mainBundle] pathForResource: ofType: inDirectory:]` to make a full path.
      *        Other platforms will use the default implementation of this method.
-     * @~chinese åªæœ‰åœ¨IOSå’ŒMacå¹³å°ä¸Šéœ€è¦é‡è½½è¿™ä¸ªæ–¹æ³•ï¼Œå› ä¸ºè¿™ä¸¤ä¸ªå¹³å°ä¸Šä»–ä»¬ä½¿ç”¨`[[NSBundle mainBundle] pathForResource: ofType: inDirectory:]` 
-     * æ¥è·å¾—å®Œæ•´è·¯å¾„ã€‚åœ¨å…¶ä»–çš„å¹³å°ä¸Šåˆ™æ˜¯ä½¿ç”¨è¿™ä¸ªæ–¹æ³•çš„é»˜è®¤å®ç°
+     * @~chinese Ö»ÓĞÔÚIOSºÍMacÆ½Ì¨ÉÏĞèÒªÖØÔØÕâ¸ö·½·¨£¬ÒòÎªÕâÁ½¸öÆ½Ì¨ÉÏËûÃÇÊ¹ÓÃ`[[NSBundle mainBundle] pathForResource: ofType: inDirectory:]` 
+     * À´»ñµÃÍêÕûÂ·¾¶¡£ÔÚÆäËûµÄÆ½Ì¨ÉÏÔòÊÇÊ¹ÓÃÕâ¸ö·½·¨µÄÄ¬ÈÏÊµÏÖ
      *  @param directory @~english The directory contains the file we are looking for.
-     * @~chinese åŒ…å«æˆ‘ä»¬å°†è¦æŸ¥æ‰¾æ–‡ä»¶çš„ç›®å½•
+     * @~chinese °üº¬ÎÒÃÇ½«Òª²éÕÒÎÄ¼şµÄÄ¿Â¼
      *  @param filename  @~english The name of the file.
-     * @~chinese æ–‡ä»¶å
+     * @~chinese ÎÄ¼şÃû
      *  @return @~english The full path of the file, if the file can't be found, it will return an empty string.
-     * @~chinese è¿”å›æ–‡ä»¶çš„å®Œæ•´è·¯å¾„ï¼Œå¦‚æœæŸ¥æ‰¾ä¸åˆ°æ­¤æ–‡ä»¶ï¼Œåˆ™æ”¾å›ä¸€ä¸ªç©ºçš„stringå¯¹è±¡
+     * @~chinese ·µ»ØÎÄ¼şµÄÍêÕûÂ·¾¶£¬Èç¹û²éÕÒ²»µ½´ËÎÄ¼ş£¬Ôò·Å»ØÒ»¸ö¿ÕµÄstring¶ÔÏó
      */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const;
     
@@ -793,8 +793,8 @@ protected:
      *
      *  std::string fullPathForFilename(const char*);
      *
-     * @~chinese åŸºäºé”®å€¼æŸ¥æ‰¾æ–‡ä»¶åçš„Dictionaryå˜é‡
-     * å®ƒæ˜¯åœ¨å†…éƒ¨è¢«ä»¥ä¸‹æ–¹æ³•ä½¿ç”¨åˆ°ï¼š
+     * @~chinese »ùÓÚ¼üÖµ²éÕÒÎÄ¼şÃûµÄDictionary±äÁ¿
+     * ËüÊÇÔÚÄÚ²¿±»ÒÔÏÂ·½·¨Ê¹ÓÃµ½£º
      * 
      * std::string fullPathForFilename(const char*);
      * 
@@ -806,8 +806,8 @@ protected:
      *  The vector contains resolution folders.
      *  The lower index of the element in this vector, the higher priority for this resolution directory.
      * @~chinese 
-     * åŒ…å«åˆ†è¾¨ç‡æ–‡ä»¶å¤¹çš„é›†åˆ
-     * åœ¨é›†åˆä¸­çš„ç´¢å¼•å€¼è¶Šå°ï¼Œåœ¨åˆ†è¾¨ç‡ç›®å½•ä¸­çš„ä¼˜å…ˆçº§å°±è¶Šé«˜
+     * °üº¬·Ö±æÂÊÎÄ¼ş¼ĞµÄ¼¯ºÏ
+     * ÔÚ¼¯ºÏÖĞµÄË÷ÒıÖµÔ½Ğ¡£¬ÔÚ·Ö±æÂÊÄ¿Â¼ÖĞµÄÓÅÏÈ¼¶¾ÍÔ½¸ß
      */
     std::vector<std::string> _searchResolutionsOrderArray;
     
@@ -815,8 +815,8 @@ protected:
      * The vector contains search paths.
      * The lower index of the element in this vector, the higher priority for this search path.
      * @~chinese 
-     * åŒ…å«äº†æœç´¢è·¯å¾„çš„é›†åˆã€‚
-     * åœ¨é›†åˆä¸­çš„ç´¢å¼•å€¼è¶Šå°ï¼Œåœ¨æŸ¥æ‰¾è·¯å¾„çš„ä¼˜å…ˆçº§å°±è¶Šé«˜
+     * °üº¬ÁËËÑË÷Â·¾¶µÄ¼¯ºÏ¡£
+     * ÔÚ¼¯ºÏÖĞµÄË÷ÒıÖµÔ½Ğ¡£¬ÔÚ²éÕÒÂ·¾¶µÄÓÅÏÈ¼¶¾ÍÔ½¸ß
      */
     std::vector<std::string> _searchPathArray;
     
@@ -827,11 +827,11 @@ protected:
      *  On Android, the default root path of resources will be assigned with "assets/" in FileUtilsAndroid::init().
      *  Similarly on Blackberry, we assign "app/native/Resources/" to this variable in FileUtilsBlackberry::init().
      * @~chinese 
-     * èµ„æºçš„é»˜è®¤çš„æ ¹è·¯å¾„
-     * å¦‚æœè¦æ”¹å˜è¿™ä¸ªèµ„æºçš„é»˜è®¤çš„æ ¹è·¯å¾„ï¼Œæˆ‘ä»¬å¯ä»¥åœ¨FileUtilså­ç±»çš„initæ–¹æ³•ä¸­å®Œæˆ
-     * ä¾‹å¦‚:
-     * åœ¨Androidå¹³å°ä¸Šï¼Œèµ„æºçš„é»˜è®¤æ ¹è·¯å¾„ä¼šåœ¨FileUtilsAndroid::init()ä¸­è¢«èµ‹å€¼ä¸º"assets/" 
-     * åœ¨Blackberryå¹³å°ä¸Šï¼Œæˆ‘ä»¬åœ¨FileUtilsBlackberry::init()ä¸­æŠŠ"app/native/Resources/"èµ‹ç»™è¿™ä¸ªå˜é‡ã€‚
+     * ×ÊÔ´µÄÄ¬ÈÏµÄ¸ùÂ·¾¶
+     * Èç¹ûÒª¸Ä±äÕâ¸ö×ÊÔ´µÄÄ¬ÈÏµÄ¸ùÂ·¾¶£¬ÎÒÃÇ¿ÉÒÔÔÚFileUtils×ÓÀàµÄinit·½·¨ÖĞÍê³É
+     * ÀıÈç:
+     * ÔÚAndroidÆ½Ì¨ÉÏ£¬×ÊÔ´µÄÄ¬ÈÏ¸ùÂ·¾¶»áÔÚFileUtilsAndroid::init()ÖĞ±»¸³ÖµÎª"assets/" 
+     * ÔÚBlackberryÆ½Ì¨ÉÏ£¬ÎÒÃÇÔÚFileUtilsBlackberry::init()ÖĞ°Ñ"app/native/Resources/"¸³¸øÕâ¸ö±äÁ¿¡£
      */
     std::string _defaultResRootPath;
     
@@ -839,22 +839,22 @@ protected:
      *  The full path cache. When a file is found, it will be added into this cache. 
      *  This variable is used for improving the performance of file search.
      * @~chinese 
-     * å®Œæ•´è·¯å¾„çš„ç¼“å­˜ã€‚åœ¨æ–‡ä»¶è¢«æŸ¥æ‰¾åˆ°ä¹‹åï¼Œä¼šæŠŠæ–‡ä»¶çš„å®Œæ•´è·¯å¾„æ·»åŠ åˆ°è¿™ä¸ªç¼“å­˜ä¸­ã€‚
-     * è¿™ä¸ªå˜é‡æ˜¯ç”¨æ¥æé«˜æ–‡ä»¶æŸ¥æ‰¾æ€§èƒ½çš„ã€‚
+     * ÍêÕûÂ·¾¶µÄ»º´æ¡£ÔÚÎÄ¼ş±»²éÕÒµ½Ö®ºó£¬»á°ÑÎÄ¼şµÄÍêÕûÂ·¾¶Ìí¼Óµ½Õâ¸ö»º´æÖĞ¡£
+     * Õâ¸ö±äÁ¿ÊÇÓÃÀ´Ìá¸ßÎÄ¼ş²éÕÒĞÔÄÜµÄ¡£
      */
     mutable std::unordered_map<std::string, std::string> _fullPathCache;
     
     /**@~english
      * Writable path.
      * @~chinese 
-     * å¯å†™çš„è·¯å¾„ã€‚
+     * ¿ÉĞ´µÄÂ·¾¶¡£
      */
     std::string _writablePath;
 
     /**@~english
      *  The singleton pointer of FileUtils.
      * @~chinese 
-     * singleton æ–‡ä»¶å·¥å…·ç±»çš„å•ä¾‹çš„æŒ‡é’ˆã€‚
+     * singleton ÎÄ¼ş¹¤¾ßÀàµÄµ¥ÀıµÄÖ¸Õë¡£
      */
     static FileUtils* s_sharedFileUtils;
 

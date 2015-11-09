@@ -56,7 +56,7 @@ class Node;
  * Uniform Value, which is used to store to value send to openGL pipe line by glUniformXXX.
  *
  * @~chinese 
- * Uniformçš„å€¼, å­˜å‚¨çš„æ•°æ®é€šè¿‡glUniformXXXå‡½æ•°å‘é€åˆ°openGLæ¸²æŸ“ç®¡çº¿ã€‚
+ * UniformµÄÖµ, ´æ´¢µÄÊı¾İÍ¨¹ıglUniformXXXº¯Êı·¢ËÍµ½openGLäÖÈ¾¹ÜÏß¡£
  * 
  * @lua NA
  */
@@ -66,76 +66,76 @@ class CC_DLL UniformValue
     friend class GLProgramState;
 public:
     /**@~english
-     Construtor. The Uniform and Glprogram will be nullptr.
+     Constructor. The Uniform and Glprogram will be nullptr.
      * @~chinese 
-     * æ„é€ å‡½æ•°ï¼Œå¯¹è±¡ä¸­çš„Uniformå’ŒGLPrograméƒ½å°†æ˜¯nullã€‚
+     * ¹¹Ôìº¯Êı£¬¶ÔÏóÖĞµÄUniformºÍGLProgram¶¼½«ÊÇnull¡£
      */
     UniformValue();
     /**@~english
-     Construtor with uniform and glprogram.
+     Constructor with uniform and glprogram.
      * @~chinese 
-     * æ„é€ å‡½æ•°ã€‚
+     * ¹¹Ôìº¯Êı¡£
      @param uniform @~english Uniform to apply the value.
-     * @~chinese ç”¨äºè®¾ç½®æ•°æ®çš„Uniformã€‚
+     * @~chinese ÓÃÓÚÉèÖÃÊı¾İµÄUniform¡£
      @param glprogram @~english Specify the owner GLProgram of this uniform and uniform value.
-     * @~chinese Uniformå’ŒUniform Valueå±äºå“ªä¸ªGLProgramã€‚
+     * @~chinese UniformºÍUniform ValueÊôÓÚÄÄ¸öGLProgram¡£
      */
     UniformValue(Uniform *uniform, GLProgram* glprogram);
 
-    /**@~english Destructor. @~chinese ææ„å‡½æ•°ã€‚*/
+    /**@~english Destructor. @~chinese Îö¹¹º¯Êı¡£*/
     ~UniformValue();
     /**
-    @~english Set Uniform value. @~chinese è®¾ç½®Uniformæ•°æ®ã€‚
-    @param value @~english The float value @~chinese floatæ•°æ®ã€‚
+    @~english Set Uniform value. @~chinese ÉèÖÃUniformÊı¾İ¡£
+    @param value @~english The float value @~chinese floatÊı¾İ¡£
     */
     void setFloat(float value);
     /**
-    @~english Set Uniform value. @~chinese è®¾ç½®Uniformæ•°æ®ã€‚
-    @param value @~english The int value @~chinese intæ•°æ®ã€‚
+    @~english Set Uniform value. @~chinese ÉèÖÃUniformÊı¾İ¡£
+    @param value @~english The int value @~chinese intÊı¾İ¡£
     */
     void setInt(int value);
     /**
-    @~english Set Uniform value. @~chinese è®¾ç½®Uniformæ•°æ®ã€‚
-    @param size @~english The number of float. @~chinese floatæ•°æ®çš„ä¸ªæ•°ã€‚
-    @param pointer @~english The float value pointer @~chinese floatæ•°æ®æŒ‡é’ˆã€‚
+    @~english Set Uniform value. @~chinese ÉèÖÃUniformÊı¾İ¡£
+    @param size @~english The number of float. @~chinese floatÊı¾İµÄ¸öÊı¡£
+    @param pointer @~english The float value pointer @~chinese floatÊı¾İÖ¸Õë¡£
     */
     void setFloatv(ssize_t size, const float* pointer);
     /**
-    @~english Set Uniform value. @~chinese è®¾ç½®Uniformæ•°æ®ã€‚
-    @param value @~english The Vec2 value @~chinese Vec2æ•°æ®ã€‚
+    @~english Set Uniform value. @~chinese ÉèÖÃUniformÊı¾İ¡£
+    @param value @~english The Vec2 value @~chinese Vec2Êı¾İ¡£
     */
     void setVec2(const Vec2& value);
     /**
-    @~english Set Uniform value. @~chinese è®¾ç½®Uniformæ•°æ®ã€‚
-    @param size @~english The number of Vec2. @~chinese Vec2æ•°æ®çš„ä¸ªæ•°ã€‚
-    @param pointer @~english The Vec2 value pointer @~chinese Vec2æ•°æ®æŒ‡é’ˆã€‚
+    @~english Set Uniform value. @~chinese ÉèÖÃUniformÊı¾İ¡£
+    @param size @~english The number of Vec2. @~chinese Vec2Êı¾İµÄ¸öÊı¡£
+    @param pointer @~english The Vec2 value pointer @~chinese Vec2Êı¾İÖ¸Õë¡£
     */
     void setVec2v(ssize_t size, const Vec2* pointer);
     /**
-    @~english Set Uniform value. @~chinese è®¾ç½®Uniformæ•°æ®ã€‚
-    @param value @~english The Vec2 value @~chinese Vec2æ•°æ®ã€‚
+    @~english Set Uniform value. @~chinese ÉèÖÃUniformÊı¾İ¡£
+    @param value @~english The Vec2 value @~chinese Vec2Êı¾İ¡£
     */
     void setVec3(const Vec3& value);
     /**
-    @~english Set Uniform value. @~chinese è®¾ç½®Uniformæ•°æ®ã€‚
-    @param size @~english The number of Vec3. @~chinese Vec3æ•°æ®çš„ä¸ªæ•°ã€‚
-    @param pointer @~english The Vec3 value pointer @~chinese Vec3æ•°æ®æŒ‡é’ˆã€‚
+    @~english Set Uniform value. @~chinese ÉèÖÃUniformÊı¾İ¡£
+    @param size @~english The number of Vec3. @~chinese Vec3Êı¾İµÄ¸öÊı¡£
+    @param pointer @~english The Vec3 value pointer @~chinese Vec3Êı¾İÖ¸Õë¡£
     */
     void setVec3v(ssize_t size, const Vec3* pointer);
     /**
-    @~english Set Uniform value. @~chinese è®¾ç½®Uniformæ•°æ®ã€‚
-    @param value @~english The Vec2 value @~chinese Vec2æ•°æ®ã€‚
+    @~english Set Uniform value. @~chinese ÉèÖÃUniformÊı¾İ¡£
+    @param value @~english The Vec2 value @~chinese Vec2Êı¾İ¡£
     */
     void setVec4(const Vec4& value);
     /**
-    @~english Set Uniform value. @~chinese è®¾ç½®Uniformæ•°æ®ã€‚
-    @param size @~english The number of Vec4. @~chinese Vec4æ•°æ®çš„ä¸ªæ•°ã€‚
-    @param pointer @~english The Vec4 value pointer @~chinese Vec4æ•°æ®æŒ‡é’ˆã€‚
+    @~english Set Uniform value. @~chinese ÉèÖÃUniformÊı¾İ¡£
+    @param size @~english The number of Vec4. @~chinese Vec4Êı¾İµÄ¸öÊı¡£
+    @param pointer @~english The Vec4 value pointer @~chinese Vec4Êı¾İÖ¸Õë¡£
     */
     void setVec4v(ssize_t size, const Vec4* pointer);
     /**
-    @~english Set Uniform value. @~chinese è®¾ç½®Uniformæ•°æ®ã€‚
-    @param value @~english The Mat4 value @~chinese Mat4æ•°æ®ã€‚
+    @~english Set Uniform value. @~chinese ÉèÖÃUniformÊı¾İ¡£
+    @param value @~english The Mat4 value @~chinese Mat4Êı¾İ¡£
     */
     void setMat4(const Mat4& value);
     /**
@@ -145,25 +145,25 @@ public:
     /**@~english
      Set call back to uniform value, which could be used for array and struct.
      * @~chinese 
-     * ç»™UniformValueè®¾ç½®å›è°ƒå‡½æ•°ã€‚
+     * ¸øUniformValueÉèÖÃ»Øµ÷º¯Êı¡£
      @param callback @~english Callback function to send data to OpenGL pipeline.
-     * @~chinese å›è°ƒå‡½æ•°ã€‚
+     * @~chinese »Øµ÷º¯Êı¡£
      */
     void setCallback(const std::function<void(GLProgram*, Uniform*)> &callback);
     /**@~english
      Set texture to uniform value.
      * @~chinese 
-     * è®¾ç½®çº¹ç†å€¼ç»™UniformValueã€‚
+     * ÉèÖÃÎÆÀíÖµ¸øUniformValue¡£
      @param textureId @~english The texture handle.
-     * @~chinese çº¹ç†å¥æŸ„ã€‚
+     * @~chinese ÎÆÀí¾ä±ú¡£
      @param textureUnit @~english The binding texture unit to be used in shader.
-     * @~chinese çº¹ç†è¦è¢«ç»‘å®šåˆ°å“ªä¸ªé‡‡æ ·å™¨ä¸Šã€‚
+     * @~chinese ÎÆÀíÒª±»°ó¶¨µ½ÄÄ¸ö²ÉÑùÆ÷ÉÏ¡£
     */
     void setTexture(GLuint textureId, GLuint textureUnit);
     
     /**
     @~english Apply the uniform value to openGL pipeline. 
-    @~chinese å°†uniformæ•°å€¼åº”ç”¨åˆ°openGLæ¸²æŸ“ç®¡çº¿ã€‚
+    @~chinese ½«uniformÊıÖµÓ¦ÓÃµ½openGLäÖÈ¾¹ÜÏß¡£
     */
     void apply();
 
@@ -234,7 +234,7 @@ protected:
  * Vertex Attribute Value, which is an abstraction of VertexAttribute and data pointer.
  *
  * @~chinese 
- * é¡¶ç‚¹å±æ€§å€¼,ç”¨äºæŠ½è±¡çš„VertexAttributeå’Œæ•°æ®ã€‚
+ * ¶¥µãÊôĞÔÖµ,ÓÃÓÚ³éÏóµÄVertexAttributeºÍÊı¾İ¡£
  * 
  * @lua NA
  */
@@ -248,48 +248,48 @@ public:
     /**@~english
      Constructor.
      * @~chinese 
-     * æ„é€ å‡½æ•°ã€‚
+     * ¹¹Ôìº¯Êı¡£
      @param vertexAttrib @~english VertexAttrib from shader.
-     * @~chinese ä»shaderä¼ è¿‡æ¥çš„VertexAttribã€‚
+     * @~chinese ´Óshader´«¹ıÀ´µÄVertexAttrib¡£
     */
     VertexAttribValue(VertexAttrib *vertexAttrib);
     /**@~english
      Constructor.
      * @~chinese 
-     * æ„é€ å‡½æ•°ã€‚
+     * ¹¹Ôìº¯Êı¡£
      */
     VertexAttribValue();
     /**@~english
      Destructor.
      * @~chinese 
-     * ææ„å‡½æ•°ã€‚
+     * Îö¹¹º¯Êı¡£
      */
     ~VertexAttribValue();
     
     /**@~english
      Set the data pointer, which is similar as glVertexAttribPointer.
      * @~chinese 
-     * è®¾ç½®æ•°æ®æŒ‡é’ˆ,å‚æ•°ç±»ä¼¼glVertexAttribPointerï¼Œå¹¶è¢«å…¶ä½¿ç”¨ã€‚
+     * ÉèÖÃÊı¾İÖ¸Õë,²ÎÊıÀàËÆglVertexAttribPointer£¬²¢±»ÆäÊ¹ÓÃ¡£
      @param size @~english The number of type in the vertex attribute.
-     * @~chinese é¡¶ç‚¹å±æ€§æ•°æ®çš„æ•°é‡ã€‚
+     * @~chinese ¶¥µãÊôĞÔÊı¾İµÄÊıÁ¿¡£
      @param type @~english The type of data in vertex attribute.
-     * @~chinese é¡¶ç‚¹å±æ€§æ•°æ®çš„ç±»å‹ã€‚
+     * @~chinese ¶¥µãÊôĞÔÊı¾İµÄÀàĞÍ¡£
      @param normalized @~english If true, 0-255 data will be mapped to 0.0-1.0.
-     * @~chinese å¦‚æœè¿™æ˜¯çœŸçš„,0 - 255æ•°æ®å°†è¢«æ˜ å°„åˆ°0.0ï¼1.0ã€‚
+     * @~chinese Èç¹ûÕâÊÇÕæµÄ,0 - 255Êı¾İ½«±»Ó³Éäµ½0.0£­1.0¡£
      @param stride @~english The number of bytes if an interleaved vertex array is used. 0 means array is not interleaved.
-     * @~chinese å¦‚æœæ˜¯ä¸€ä¸ªå±æ€§äº¤å‰çš„é¡¶ç‚¹æ•°ç»„ï¼Œå…¶è¡¨ç¤ºç›¸é‚»ä¸¤ä¸ªé¡¶ç‚¹çš„åç§»å€¼ã€‚0è¡¨ç¤ºéäº¤å‰é¡¶ç‚¹æ•°ç»„ã€‚
+     * @~chinese Èç¹ûÊÇÒ»¸öÊôĞÔ½»²æµÄ¶¥µãÊı×é£¬Æä±íÊ¾ÏàÁÚÁ½¸ö¶¥µãµÄÆ«ÒÆÖµ¡£0±íÊ¾·Ç½»²æ¶¥µãÊı×é¡£
      @param pointer @~english The pointer to the vertex data.
-     * @~chinese é¡¶ç‚¹æ•°æ®çš„æŒ‡é’ˆã€‚
+     * @~chinese ¶¥µãÊı¾İµÄÖ¸Õë¡£
      */
 	void setPointer(GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer);
     /**
     @~english Set a user call back for set VertexAttrib array. 
-    @~chinese è®¾ç½®ä¸€ç»„ç”¨æˆ·å›è°ƒå‡½æ•°ç”¨äºè®¾ç½®é¡¶ç‚¹å±æ€§ã€‚
+    @~chinese ÉèÖÃÒ»×éÓÃ»§»Øµ÷º¯ÊıÓÃÓÚÉèÖÃ¶¥µãÊôĞÔ¡£
     */
     void setCallback(const std::function<void(VertexAttrib*)> &callback);
     /**
     @~english Apply the vertex attribute to the openGL pipeline. 
-    @~chinese å°†é¡¶ç‚¹å±æ€§åº”ç”¨äºopenGLæ¸²æŸ“ç®¡çº¿ã€‚
+    @~chinese ½«¶¥µãÊôĞÔÓ¦ÓÃÓÚopenGLäÖÈ¾¹ÜÏß¡£
     */
     void apply();
 
@@ -326,8 +326,8 @@ protected:
  A GLProgram can be used by thousands of Nodes, but if different uniform values 
  are going to be used, then each node will need its own GLProgramState
  * @~chinese 
- * GLProgramStateæŒæœ‰è¿™äº›çŠ¶æ€ï¼ŒåŒ…å«GLProgramçš„Uniformå’Œé¡¶ç‚¹å±æ€§ã€‚
- GLProgramå¯ä»¥è¢«å¾ˆå¤šä¸ªNodeä½¿ç”¨ï¼Œä½†æ˜¯å¦‚æœNodeä½¿ç”¨çš„Unifromæ•°å€¼ä¸åŒçš„è¯ï¼Œé‚£ä¹ˆNodeå°±éœ€è¦æŒæœ‰è‡ªå·±çš„GLProgramStateã€‚
+ * GLProgramState³ÖÓĞÕâĞ©×´Ì¬£¬°üº¬GLProgramµÄUniformºÍ¶¥µãÊôĞÔ¡£
+ GLProgram¿ÉÒÔ±»ºÜ¶à¸öNodeÊ¹ÓÃ£¬µ«ÊÇÈç¹ûNodeÊ¹ÓÃµÄUnifromÊıÖµ²»Í¬µÄ»°£¬ÄÇÃ´Node¾ÍĞèÒª³ÖÓĞ×Ô¼ºµÄGLProgramState¡£
  */
 class CC_DLL GLProgramState : public Ref
 {
@@ -336,109 +336,109 @@ public:
 
     /** 
     @~english returns a new instance of GLProgramState for a given GLProgram  
-    @~chinese ä»GLProgramä¸­åˆ›å»ºä¸€ä¸ªGLProgramStateçš„æ–°å®ä¾‹ã€‚
+    @~chinese ´ÓGLProgramÖĞ´´½¨Ò»¸öGLProgramStateµÄĞÂÊµÀı¡£
     */
     static GLProgramState* create(GLProgram* glprogram);
     /** 
     @~english gets-or-creates an instance of GLProgramState for a given GLProgram  
-    @~chinese ä»Cacheä¸­ï¼ŒæŒ‰ç…§GLProgramå€¼ï¼Œæ–°åˆ›å»ºæˆ–è€…è·å–cacheçš„GLProgramStateçš„å®ä¾‹ã€‚
+    @~chinese ´ÓCacheÖĞ£¬°´ÕÕGLProgramÖµ£¬ĞÂ´´½¨»òÕß»ñÈ¡cacheµÄGLProgramStateµÄÊµÀı¡£
     */
     static GLProgramState* getOrCreateWithGLProgram(GLProgram* glprogram);
 
     /** 
     @~english gets-or-creates an instance of GLProgramState for a given GLProgramName  
-    @~chinese ä»Cacheä¸­ï¼ŒæŒ‰ç…§GLProgramçš„åå­—ï¼Œæ–°åˆ›å»ºæˆ–è€…è·å–cacheçš„GLProgramStateçš„å®ä¾‹ã€‚
+    @~chinese ´ÓCacheÖĞ£¬°´ÕÕGLProgramµÄÃû×Ö£¬ĞÂ´´½¨»òÕß»ñÈ¡cacheµÄGLProgramStateµÄÊµÀı¡£
     */
     static GLProgramState* getOrCreateWithGLProgramName(const std::string &glProgramName );
 
     /** 
     @~english gets-or-creates an instance of GLProgramState for given shaders  
-    @~chinese ä»Cacheä¸­ï¼ŒæŒ‰ç…§VertexShaderå’ŒFragmentShaderçš„æºä»£ç ï¼Œæ–°åˆ›å»ºæˆ–è€…è·å–cacheçš„GLProgramStateçš„å®ä¾‹ã€‚
+    @~chinese ´ÓCacheÖĞ£¬°´ÕÕVertexShaderºÍFragmentShaderµÄÔ´´úÂë£¬ĞÂ´´½¨»òÕß»ñÈ¡cacheµÄGLProgramStateµÄÊµÀı¡£
     */
     static GLProgramState* getOrCreateWithShaders(const std::string& vertexShader, const std::string& fragShader, const std::string& compileTimeDefines);
 
     /** 
     @~english Returns a new copy of the GLProgramState. The GLProgram is reused  
-    @~chinese è¿”å›ä¸€ä¸ªæ–°çš„GLProgramStateçš„å‰¯æœ¬ã€‚
+    @~chinese ·µ»ØÒ»¸öĞÂµÄGLProgramStateµÄ¸±±¾¡£
     */
     GLProgramState* clone() const;
 
     /**@~english
      Apply GLProgram, attributes and uniforms.
      * @~chinese 
-     * åº”ç”¨GLProgram,é¡¶ç‚¹å±æ€§å’ŒUniformå‚æ•°åˆ°æ¸²æŸ“ç®¡çº¿ã€‚
+     * Ó¦ÓÃGLProgram,¶¥µãÊôĞÔºÍUniform²ÎÊıµ½äÖÈ¾¹ÜÏß¡£
      @param modelView @~english The applied modelView matrix to shader.
-     * @~chinese è¦è®¾ç½®çš„ModelViewçŸ©é˜µã€‚
+     * @~chinese ÒªÉèÖÃµÄModelView¾ØÕó¡£
      */
     void apply(const Mat4& modelView);
     /**@~english
      Apply GLProgram, and built in uniforms.
      * @~chinese 
-     * åº”ç”¨GLProgramå’Œå†…ç½®çš„Uniformå‚æ•°ã€‚
+     * Ó¦ÓÃGLProgramºÍÄÚÖÃµÄUniform²ÎÊı¡£
      @param modelView @~english The applied modelView matrix to shader.
-     * @~chinese è¦è®¾ç½®çš„ModelViewçŸ©é˜µã€‚
+     * @~chinese ÒªÉèÖÃµÄModelView¾ØÕó¡£
      */
     void applyGLProgram(const Mat4& modelView);
     /**@~english
      Apply attributes.
      * @~chinese 
-     * åº”ç”¨é¡¶ç‚¹å±æ€§ã€‚
+     * Ó¦ÓÃ¶¥µãÊôĞÔ¡£
      @param applyAttribFlags @~english Call GL::enableVertexAttribs(_vertexAttribsFlags) or not.
-     * @~chinese æ˜¯å¦è°ƒç”¨GL::enableVertexAttribså‡½æ•°ã€‚
+     * @~chinese ÊÇ·ñµ÷ÓÃGL::enableVertexAttribsº¯Êı¡£
      */
     void applyAttributes(bool applyAttribFlags = true);
     /**@~english
      Apply user defined uniforms.
      * @~chinese 
-     * åº”ç”¨è‡ªå®šä¹‰Uniformæ•°å€¼ã€‚
+     * Ó¦ÓÃ×Ô¶¨ÒåUniformÊıÖµ¡£
      */
     void applyUniforms();
 
     /**
     @~english Set the binded GLProgram.
-    @~chinese è®¾ç½®ç»‘å®šçš„GLProgramã€‚
+    @~chinese ÉèÖÃ°ó¶¨µÄGLProgram¡£
     */
     void setGLProgram(GLProgram* glprogram);
     /**
     @~english Get the binded GLProgram.
-    @~chinese å¾—åˆ°ç»‘å®šçš„GLProgramã€‚
+    @~chinese µÃµ½°ó¶¨µÄGLProgram¡£
     */
     GLProgram* getGLProgram() const { return _glprogram; }
     
     /** 
     @~english Get the flag of vertex attribs used by OR operation. 
-    @~chinese æŒ‰ç…§GLProgramStateé¡¶ç‚¹å±æ€§ï¼Œå¾—åˆ°GL::enableVertexAttribsçš„flagå‚æ•°ã€‚
+    @~chinese °´ÕÕGLProgramState¶¥µãÊôĞÔ£¬µÃµ½GL::enableVertexAttribsµÄflag²ÎÊı¡£
     */
     uint32_t getVertexAttribsFlags() const;
     /**
     @~english Get the number of vertex attributes. 
-    @~chinese å¾—åˆ°é¡¶ç‚¹å±æ€§çš„æ•°é‡ã€‚
+    @~chinese µÃµ½¶¥µãÊôĞÔµÄÊıÁ¿¡£
     */
     ssize_t getVertexAttribCount() const;
     /**@~english
      Set the vertex attribute value by calling callback.
      * @~chinese 
-     * é€šè¿‡å›è°ƒå‡½æ•°è®¾ç½®é¡¶ç‚¹å±æ€§å€¼ã€‚
-     @param name @~english The name of Vertex attrib. @~chinese é¡¶ç‚¹å±æ€§çš„åå­—
-     @param callback @~english The callback for setting vertex attrib. @~chinese è®¾ç½®å±æ€§çš„å›è°ƒå‡½æ•°ã€‚
+     * Í¨¹ı»Øµ÷º¯ÊıÉèÖÃ¶¥µãÊôĞÔÖµ¡£
+     @param name @~english The name of Vertex attrib. @~chinese ¶¥µãÊôĞÔµÄÃû×Ö
+     @param callback @~english The callback for setting vertex attrib. @~chinese ÉèÖÃÊôĞÔµÄ»Øµ÷º¯Êı¡£
      */
     void setVertexAttribCallback(const std::string &name, const std::function<void(VertexAttrib*)> &callback);
     /**@~english
      Set the vertex attribute value.
      * @~chinese 
-     * è®¾ç½®é¡¶ç‚¹å±æ€§å€¼ã€‚
-     @param name @~english The vertex attrib name. @~chinese é¡¶ç‚¹å±æ€§çš„åå­—ã€‚
-     @param size @~english The count of data in the vertex attrib, range from 0-4. @~chinese é¡¶ç‚¹å±æ€§çš„å€¼ä¸ªæ•°ï¼Œä»0-4ã€‚
-     @param type @~english The type of data in the vertex attrib @~chinese é¡¶ç‚¹æ•°æ®çš„ç±»å‹ã€‚
-     @param normalized @~english Normalize the data or not 0-255 will be mapped to 0-1.0  @~chinese æ•°æ®çš„å½’ä¸€åŒ–æ ‡è®°ï¼Œ0-255è¢«æ˜ å°„åˆ°0-1.0
-     @param stride @~english The stride of the interleaved array.  @~chinese äº¤å‰é¡¶ç‚¹å±æ€§çš„é¡¶ç‚¹æ•°ç»„ä¸­çš„æ­¥è¿›ã€‚
-     @param pointer @~english The data pointer  @~chinese æ•°æ®æŒ‡é’ˆã€‚
+     * ÉèÖÃ¶¥µãÊôĞÔÖµ¡£
+     @param name @~english The vertex attrib name. @~chinese ¶¥µãÊôĞÔµÄÃû×Ö¡£
+     @param size @~english The count of data in the vertex attrib, range from 0-4. @~chinese ¶¥µãÊôĞÔµÄÖµ¸öÊı£¬´Ó0-4¡£
+     @param type @~english The type of data in the vertex attrib @~chinese ¶¥µãÊı¾İµÄÀàĞÍ¡£
+     @param normalized @~english Normalize the data or not 0-255 will be mapped to 0-1.0  @~chinese Êı¾İµÄ¹éÒ»»¯±ê¼Ç£¬0-255±»Ó³Éäµ½0-1.0
+     @param stride @~english The stride of the interleaved array.  @~chinese ½»²æ¶¥µãÊôĞÔµÄ¶¥µãÊı×éÖĞµÄ²½½ø¡£
+     @param pointer @~english The data pointer  @~chinese Êı¾İÖ¸Õë¡£
      */
     void setVertexAttribPointer(const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer);
     
     /**
     @~english Get the number of user defined uniform count. 
-    @~chinese ç”¨æˆ·è‡ªå®šä¹‰çš„Uniformçš„ä¸ªæ•°ã€‚
+    @~chinese ÓÃ»§×Ô¶¨ÒåµÄUniformµÄ¸öÊı¡£
     */
     ssize_t getUniformCount() const { return _uniforms.size(); }
     
@@ -447,194 +447,194 @@ public:
      */
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformName @~english The name of uniform. @~chinese Uniformçš„åå­—ã€‚
-    @param value @~english The int value @~chinese intæ•°å€¼
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformName @~english The name of uniform. @~chinese UniformµÄÃû×Ö¡£
+    @param value @~english The int value @~chinese intÊıÖµ
     */
     void setUniformInt(const std::string &uniformName, int value);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformName @~english The name of uniform. @~chinese Uniformçš„åå­—ã€‚
-    @param value @~english The float value @~chinese Uniformçš„floatæ•°å€¼ã€‚
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformName @~english The name of uniform. @~chinese UniformµÄÃû×Ö¡£
+    @param value @~english The float value @~chinese UniformµÄfloatÊıÖµ¡£
     */
     void setUniformFloat(const std::string &uniformName, float value);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformName @~english The name of uniform. @~chinese Uniformçš„åå­—ã€‚
-    @param size @~english The count of value @~chinese floatæ•°å€¼çš„ä¸ªæ•°
-    @param pointer @~english The pointer of float value @~chinese Uniformçš„floatæ•°å€¼æŒ‡é’ˆ
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformName @~english The name of uniform. @~chinese UniformµÄÃû×Ö¡£
+    @param size @~english The count of value @~chinese floatÊıÖµµÄ¸öÊı
+    @param pointer @~english The pointer of float value @~chinese UniformµÄfloatÊıÖµÖ¸Õë
     */
     void setUniformFloatv(const std::string &uniformName, ssize_t size, const float* pointer);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformName @~english The name of uniform. @~chinese Uniformçš„åå­—ã€‚
-    @param value @~english The Vec2 value @~chinese Uniformçš„Vec2æ•°å€¼ã€‚
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformName @~english The name of uniform. @~chinese UniformµÄÃû×Ö¡£
+    @param value @~english The Vec2 value @~chinese UniformµÄVec2ÊıÖµ¡£
     */
     void setUniformVec2(const std::string &uniformName, const Vec2& value);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformName @~english The name of uniform. @~chinese Uniformçš„åå­—ã€‚
-    @param size @~english The count of value @~chinese Vec2æ•°å€¼çš„ä¸ªæ•°
-    @param pointer @~english The pointer of Vec2 value @~chinese Uniformçš„Vec2æ•°å€¼æŒ‡é’ˆ
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformName @~english The name of uniform. @~chinese UniformµÄÃû×Ö¡£
+    @param size @~english The count of value @~chinese Vec2ÊıÖµµÄ¸öÊı
+    @param pointer @~english The pointer of Vec2 value @~chinese UniformµÄVec2ÊıÖµÖ¸Õë
     */
     void setUniformVec2v(const std::string &uniformName, ssize_t size, const Vec2* pointer);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformName @~english The name of uniform. @~chinese Uniformçš„åå­—ã€‚
-    @param value @~english The Vec3 value @~chinese Uniformçš„Vec3æ•°å€¼ã€‚
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformName @~english The name of uniform. @~chinese UniformµÄÃû×Ö¡£
+    @param value @~english The Vec3 value @~chinese UniformµÄVec3ÊıÖµ¡£
     */
     void setUniformVec3(const std::string &uniformName, const Vec3& value);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformName @~english The name of uniform. @~chinese Uniformçš„åå­—ã€‚
-    @param size @~english The count of value @~chinese Vec3æ•°å€¼çš„ä¸ªæ•°
-    @param pointer @~english The pointer of Vec3 value @~chinese Uniformçš„Vec3æ•°å€¼æŒ‡é’ˆ
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformName @~english The name of uniform. @~chinese UniformµÄÃû×Ö¡£
+    @param size @~english The count of value @~chinese Vec3ÊıÖµµÄ¸öÊı
+    @param pointer @~english The pointer of Vec3 value @~chinese UniformµÄVec3ÊıÖµÖ¸Õë
     */
     void setUniformVec3v(const std::string &uniformName, ssize_t size, const Vec3* pointer);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformName @~english The name of uniform. @~chinese Uniformçš„åå­—ã€‚
-    @param value @~english The Vec4 value @~chinese Uniformçš„Vec4æ•°å€¼ã€‚
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformName @~english The name of uniform. @~chinese UniformµÄÃû×Ö¡£
+    @param value @~english The Vec4 value @~chinese UniformµÄVec4ÊıÖµ¡£
     */
     void setUniformVec4(const std::string &uniformName, const Vec4& value);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformName @~english The name of uniform. @~chinese Uniformçš„åå­—ã€‚
-    @param size @~english The count of value @~chinese Vec4æ•°å€¼çš„ä¸ªæ•°
-    @param pointer @~english The pointer of Vec4 value @~chinese Uniformçš„Vec4æ•°å€¼æŒ‡é’ˆ
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformName @~english The name of uniform. @~chinese UniformµÄÃû×Ö¡£
+    @param size @~english The count of value @~chinese Vec4ÊıÖµµÄ¸öÊı
+    @param pointer @~english The pointer of Vec4 value @~chinese UniformµÄVec4ÊıÖµÖ¸Õë
     */
     void setUniformVec4v(const std::string &uniformName, ssize_t size, const Vec4* pointer);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformName @~english The name of uniform. @~chinese Uniformçš„åå­—ã€‚
-    @param value @~english The Mat4 value @~chinese Uniformçš„Mat4æ•°å€¼
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformName @~english The name of uniform. @~chinese UniformµÄÃû×Ö¡£
+    @param value @~english The Mat4 value @~chinese UniformµÄMat4ÊıÖµ
     */
     void setUniformMat4(const std::string &uniformName, const Mat4& value);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformName @~english The name of uniform. @~chinese Uniformçš„åå­—ã€‚
-    @param callback @~english callback function for uniform @~chinese Uniformçš„å›è°ƒå‡½æ•°ã€‚
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformName @~english The name of uniform. @~chinese UniformµÄÃû×Ö¡£
+    @param callback @~english callback function for uniform @~chinese UniformµÄ»Øµ÷º¯Êı¡£
     */
     void setUniformCallback(const std::string &uniformName, const std::function<void(GLProgram*, Uniform*)> &callback);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformName @~english The name of uniform. @~chinese Uniformçš„åå­—ã€‚
-    @param texture @~english The texture valueï¼Œthe openGL handle will be used @~chinese Uniformçš„çº¹ç†å€¼ã€‚
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformName @~english The name of uniform. @~chinese UniformµÄÃû×Ö¡£
+    @param texture @~english The texture value£¬the openGL handle will be used @~chinese UniformµÄÎÆÀíÖµ¡£
     */
     void setUniformTexture(const std::string &uniformName, Texture2D *texture);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformName @~english The name of uniform. @~chinese Uniformçš„åå­—ã€‚
-    @param textureId @~english The texture value @~chinese Uniformçš„çº¹ç†å€¼ã€‚
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformName @~english The name of uniform. @~chinese UniformµÄÃû×Ö¡£
+    @param textureId @~english The texture value @~chinese UniformµÄÎÆÀíÖµ¡£
     */
     void setUniformTexture(const std::string &uniformName, GLuint textureId);
     /**@}*/
     
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformLocation @~english The location of uniform. @~chinese Uniformçš„ä½ç½®ã€‚
-    @param value @~english The int value @~chinese intæ•°å€¼
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformLocation @~english The location of uniform. @~chinese UniformµÄÎ»ÖÃ¡£
+    @param value @~english The int value @~chinese intÊıÖµ
     */
     void setUniformInt(GLint uniformLocation, int value);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformLocation @~english The location of uniform. @~chinese Uniformçš„ä½ç½®ã€‚
-    @param value @~english The float value @~chinese Uniformçš„floatæ•°å€¼ã€‚
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformLocation @~english The location of uniform. @~chinese UniformµÄÎ»ÖÃ¡£
+    @param value @~english The float value @~chinese UniformµÄfloatÊıÖµ¡£
     */
     void setUniformFloat(GLint uniformLocation, float value);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformLocation @~english The location of uniform. @~chinese Uniformçš„ä½ç½®ã€‚
-    @param size @~english The count of value @~chinese floatæ•°å€¼çš„ä¸ªæ•°
-    @param pointer @~english The pointer of float value @~chinese Uniformçš„floatæ•°å€¼æŒ‡é’ˆ
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformLocation @~english The location of uniform. @~chinese UniformµÄÎ»ÖÃ¡£
+    @param size @~english The count of value @~chinese floatÊıÖµµÄ¸öÊı
+    @param pointer @~english The pointer of float value @~chinese UniformµÄfloatÊıÖµÖ¸Õë
     */
     void setUniformFloatv(GLint uniformLocation, ssize_t size, const float* pointer);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformLocation @~english The location of uniform. @~chinese Uniformçš„ä½ç½®ã€‚
-    @param value @~english The Vec2 value @~chinese Uniformçš„Vec2æ•°å€¼ã€‚
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformLocation @~english The location of uniform. @~chinese UniformµÄÎ»ÖÃ¡£
+    @param value @~english The Vec2 value @~chinese UniformµÄVec2ÊıÖµ¡£
     */
     void setUniformVec2(GLint uniformLocation, const Vec2& value);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformLocation @~english The location of uniform. @~chinese Uniformçš„ä½ç½®ã€‚
-    @param size @~english The count of value @~chinese Vec2æ•°å€¼çš„ä¸ªæ•°
-    @param pointer @~english The pointer of Vec2 value @~chinese Uniformçš„Vec2æ•°å€¼æŒ‡é’ˆ
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformLocation @~english The location of uniform. @~chinese UniformµÄÎ»ÖÃ¡£
+    @param size @~english The count of value @~chinese Vec2ÊıÖµµÄ¸öÊı
+    @param pointer @~english The pointer of Vec2 value @~chinese UniformµÄVec2ÊıÖµÖ¸Õë
     */
     void setUniformVec2v(GLint uniformLocation, ssize_t size, const Vec2* pointer);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformLocation @~english The location of uniform. @~chinese Uniformçš„ä½ç½®ã€‚
-    @param value @~english The Vec3 value @~chinese Uniformçš„Vec3æ•°å€¼ã€‚
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformLocation @~english The location of uniform. @~chinese UniformµÄÎ»ÖÃ¡£
+    @param value @~english The Vec3 value @~chinese UniformµÄVec3ÊıÖµ¡£
     */
     void setUniformVec3(GLint uniformLocation, const Vec3& value);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformLocation @~english The location of uniform. @~chinese Uniformçš„ä½ç½®ã€‚
-    @param size @~english The count of value @~chinese Vec3æ•°å€¼çš„ä¸ªæ•°
-    @param pointer @~english The pointer of Vec3 value @~chinese Uniformçš„Vec3æ•°å€¼æŒ‡é’ˆ
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformLocation @~english The location of uniform. @~chinese UniformµÄÎ»ÖÃ¡£
+    @param size @~english The count of value @~chinese Vec3ÊıÖµµÄ¸öÊı
+    @param pointer @~english The pointer of Vec3 value @~chinese UniformµÄVec3ÊıÖµÖ¸Õë
     */
     void setUniformVec3v(GLint uniformLocation, ssize_t size, const Vec3* pointer);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformLocation @~english The location of uniform. @~chinese Uniformçš„ä½ç½®ã€‚
-    @param value @~english The Vec4 value @~chinese Uniformçš„Vec4æ•°å€¼ã€‚
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformLocation @~english The location of uniform. @~chinese UniformµÄÎ»ÖÃ¡£
+    @param value @~english The Vec4 value @~chinese UniformµÄVec4ÊıÖµ¡£
     */
     void setUniformVec4(GLint uniformLocation, const Vec4& value);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformLocation @~english The location of uniform. @~chinese Uniformçš„ä½ç½®ã€‚
-    @param size @~english The count of value @~chinese Vec4æ•°å€¼çš„ä¸ªæ•°
-    @param pointer @~english The pointer of Vec4 value @~chinese Uniformçš„Vec4æ•°å€¼æŒ‡é’ˆ
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformLocation @~english The location of uniform. @~chinese UniformµÄÎ»ÖÃ¡£
+    @param size @~english The count of value @~chinese Vec4ÊıÖµµÄ¸öÊı
+    @param pointer @~english The pointer of Vec4 value @~chinese UniformµÄVec4ÊıÖµÖ¸Õë
     */
     void setUniformVec4v(GLint uniformLocation, ssize_t size, const Vec4* pointer);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformLocation @~english The location of uniform. @~chinese Uniformçš„ä½ç½®ã€‚
-    @param value @~english The Mat4 value @~chinese Uniformçš„Mat4æ•°å€¼
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformLocation @~english The location of uniform. @~chinese UniformµÄÎ»ÖÃ¡£
+    @param value @~english The Mat4 value @~chinese UniformµÄMat4ÊıÖµ
     */
     void setUniformMat4(GLint uniformLocation, const Mat4& value);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformLocation @~english The location of uniform. @~chinese Uniformçš„ä½ç½®ã€‚
-    @param callback @~english callback function for uniform @~chinese Uniformçš„å›è°ƒå‡½æ•°ã€‚
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformLocation @~english The location of uniform. @~chinese UniformµÄÎ»ÖÃ¡£
+    @param callback @~english callback function for uniform @~chinese UniformµÄ»Øµ÷º¯Êı¡£
     */
     void setUniformCallback(GLint uniformLocation, const std::function<void(GLProgram*, Uniform*)> &callback);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformLocation @~english The location of uniform. @~chinese Uniformçš„ä½ç½®ã€‚
-    @param texture @~english The texture valueï¼Œthe openGL handle will be used @~chinese Uniformçš„çº¹ç†å€¼ã€‚
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformLocation @~english The location of uniform. @~chinese UniformµÄÎ»ÖÃ¡£
+    @param texture @~english The texture value£¬the openGL handle will be used @~chinese UniformµÄÎÆÀíÖµ¡£
     */
     void setUniformTexture(GLint uniformLocation, Texture2D *texture);
     /**
     @~english set the value for uniform.
-    @~chinese è®¾ç½®Uniformæ•°å€¼.
-    @param uniformLocation @~english The location of uniform. @~chinese Uniformçš„ä½ç½®ã€‚
-    @param textureId @~english The texture value @~chinese Uniformçš„çº¹ç†å€¼ã€‚
+    @~chinese ÉèÖÃUniformÊıÖµ.
+    @param uniformLocation @~english The location of uniform. @~chinese UniformµÄÎ»ÖÃ¡£
+    @param textureId @~english The texture value @~chinese UniformµÄÎÆÀíÖµ¡£
     */
     void setUniformTexture(GLint uniformLocation, GLuint textureId);
     /**@}*/
@@ -697,7 +697,7 @@ public:
      * auto bindings found in the GLProgramState::AutoBinding enumeration.
      *
      * When an instance of a class that extends AutoBindingResolver is created, it is automatically
-     * registered as a custom auto binding handler. Likewise, it is automatically deregistered
+     * registered as a custom auto binding handler. Likewise, it is automatically unregistered
      * on destruction.
      *
      * @js NA
@@ -716,7 +716,7 @@ public:
          * Called when an unrecognized uniform variable is encountered
          * during material loading.
          *
-         * Implemenations of this method should do a string comparison on the passed
+         * Implementations of this method should do a string comparison on the passed
          * in name parameter and decide whether or not they should handle the
          * parameter. If the parameter is not handled, false should be returned so
          * that other auto binding resolvers get a chance to handle the parameter.
@@ -727,7 +727,7 @@ public:
          * @param uniformName Name of the uniform
          * @param autoBinding Name of the auto binding to be resolved.
          *
-         * @return True if the auto binding is handled and the associated parmeter is
+         * @return True if the auto binding is handled and the associated parameter is
          *      bound, false otherwise.
          */
         virtual bool resolveAutoBinding(GLProgramState* glProgramState, Node* node, const std::string& uniformName, const std::string& autoBinding) = 0;

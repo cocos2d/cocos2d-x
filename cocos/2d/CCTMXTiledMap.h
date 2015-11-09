@@ -47,16 +47,16 @@ class TMXMapInfo;
 /** Possible orientations of the TMX map.*/
 enum
 {
-    /** @~english  Orthogonal orientation. @~chinese æ­£äº¤æœå‘*/
+    /** @~english  Orthogonal orientation. @~chinese Õı½»³¯Ïò*/
     TMXOrientationOrtho,
 
-    /** @~english  Hexagonal orientation. @~chinese  å…­è¾¹å½¢çš„æœå‘*/
+    /** @~english  Hexagonal orientation. @~chinese  Áù±ßĞÎµÄ³¯Ïò*/
     TMXOrientationHex,
 
-    /** @~english Isometric orientation. @~chinese ç­‰è·æœå‘ */
+    /** @~english Isometric orientation. @~chinese µÈ¾à³¯Ïò */
     TMXOrientationIso,
     
-    /** @~english Isometric staggered orientation. @~chinese ç­‰è·äº¤é”™æœå‘ */
+    /** @~english Isometric staggered orientation. @~chinese µÈ¾à½»´í³¯Ïò */
     TMXOrientationStaggered,
 };
 
@@ -109,48 +109,48 @@ enum
  * objectGroup->getProperty(name_of_the_property);
  * object->getProperty(name_of_the_property);
 
- * @~chinese TMXTiledMapçŸ¥é“å¦‚ä½•è§£æå’Œæ¸²æŸ“TMXåœ°å›¾ã€‚
+ * @~chinese TMXTiledMapÖªµÀÈçºÎ½âÎöºÍäÖÈ¾TMXµØÍ¼¡£
  * 
- * http://www.mapeditor.orgå®˜ç½‘å°†å…¶åŠ å…¥æ”¯æŒTMX tiledåœ°å›¾æ ¼å¼
- * å…¶æ”¯æŒç­‰è·æ–œè§†(isometric),å…­è¾¹å½¢(hexagonal),ç›´è§’é¸Ÿç°(orthogonal)tiles
- * ä¹Ÿæ”¯æŒå¯¹è±¡ç»„,å¤šå¯¹è±¡ä»¥åŠå¤šå±æ€§
+ * http://www.mapeditor.org¹ÙÍø½«Æä¼ÓÈëÖ§³ÖTMX tiledµØÍ¼¸ñÊ½
+ * ÆäÖ§³ÖµÈ¾àĞ±ÊÓ(isometric),Áù±ßĞÎ(hexagonal),Ö±½ÇÄñî«(orthogonal)tiles
+ * Ò²Ö§³Ö¶ÔÏó×é,¶à¶ÔÏóÒÔ¼°¶àÊôĞÔ
  * 
- * ç‰¹ç‚¹:
- * - æ¯ä¸ªTMXTiledMapéƒ½è¢«å½“ä½œä¸€ä¸ªç²¾çµ
- * - è¿™äº›ç²¾çµéœ€è¦æ—¶è¢«åˆ›å»ºè€Œä¸”ä»…å½“è°ƒç”¨layer->tileAt(position)æ—¶æ‰ä¼šè¢«åˆ›å»º
- * - æ¯ä¸ªtileç»§æ‰¿äº†ç²¾çµçš„ç‰¹ç‚¹ï¼Œå¯ä»¥æ—‹è½¬/ç§»åŠ¨/ç¼©æ”¾/ç€è‰²/é€æ˜åŒ–
- * - Tileså¯ä»¥åœ¨è¿è¡Œæ—¶æ·»åŠ æˆ–åˆ é™¤
- * - Tilesçš„z-orderäº¦å¯åœ¨è¿è¡Œæ—¶ä¿®æ”¹
- * - æ¯ä¸ªtileçš„é”šç‚¹æ˜¯(0,0)
- * - TMXTileMapçš„é”šç‚¹æ˜¯(0,0)
- * - TMX layerså¯ä»¥å½“ä½œå­èŠ‚ç‚¹æ·»åŠ 
- * - TXM layersé»˜è®¤ä¼šè®¾ç½®ä¸€ä¸ªåˆ«å
- * - Tilesetå›¾ç‰‡å¯ä»¥åœ¨ä½¿ç”¨TextureCacheæ—¶åŠ å…¥
- * - æ¯ä¸ªtileéƒ½æœ‰ä¸€ä¸ªå”¯ä¸€çš„tag
- * - æ¯ä¸ªtileéƒ½æœ‰ä¸€ä¸ªå”¯ä¸€çš„zå€¼.å·¦ä¸Š(top-left): z=1, å³ä¸‹(bottom-right): z=max z
- * - æ¯ä¸ªå¯¹è±¡ç»„(object group)å¯ä»¥ç”¨ä½œå¯å˜æ•°ç»„(MutaleArray)
- * - å¯¹è±¡ç±»åŒ…å«çš„å±æ€§éƒ½å­˜å‚¨åœ¨ä¸€ä¸ªå­—å…¸(dictionary)ä¸­
- * - å±æ€§å¯ä»¥èµ‹å€¼ç»™åœ°å›¾(Map),å±‚(Layer),å¯¹è±¡å±æ€§(Object Group)ä»¥åŠå¯¹è±¡(Object)
+ * ÌØµã:
+ * - Ã¿¸öTMXTiledMap¶¼±»µ±×÷Ò»¸ö¾«Áé
+ * - ÕâĞ©¾«ÁéĞèÒªÊ±±»´´½¨¶øÇÒ½öµ±µ÷ÓÃlayer->tileAt(position)Ê±²Å»á±»´´½¨
+ * - Ã¿¸ötile¼Ì³ĞÁË¾«ÁéµÄÌØµã£¬¿ÉÒÔĞı×ª/ÒÆ¶¯/Ëõ·Å/×ÅÉ«/Í¸Ã÷»¯
+ * - Tiles¿ÉÒÔÔÚÔËĞĞÊ±Ìí¼Ó»òÉ¾³ı
+ * - TilesµÄz-orderÒà¿ÉÔÚÔËĞĞÊ±ĞŞ¸Ä
+ * - Ã¿¸ötileµÄÃªµãÊÇ(0,0)
+ * - TMXTileMapµÄÃªµãÊÇ(0,0)
+ * - TMX layers¿ÉÒÔµ±×÷×Ó½ÚµãÌí¼Ó
+ * - TXM layersÄ¬ÈÏ»áÉèÖÃÒ»¸ö±ğÃû
+ * - TilesetÍ¼Æ¬¿ÉÒÔÔÚÊ¹ÓÃTextureCacheÊ±¼ÓÈë
+ * - Ã¿¸ötile¶¼ÓĞÒ»¸öÎ¨Ò»µÄtag
+ * - Ã¿¸ötile¶¼ÓĞÒ»¸öÎ¨Ò»µÄzÖµ.×óÉÏ(top-left): z=1, ÓÒÏÂ(bottom-right): z=max z
+ * - Ã¿¸ö¶ÔÏó×é(object group)¿ÉÒÔÓÃ×÷¿É±äÊı×é(MutaleArray)
+ * - ¶ÔÏóÀà°üº¬µÄÊôĞÔ¶¼´æ´¢ÔÚÒ»¸ö×Öµä(dictionary)ÖĞ
+ * - ÊôĞÔ¿ÉÒÔ¸³Öµ¸øµØÍ¼(Map),²ã(Layer),¶ÔÏóÊôĞÔ(Object Group)ÒÔ¼°¶ÔÏó(Object)
  * 
- * é™åˆ¶:
- * - æ¯ä¸ªlayeråªæ”¯æŒä¸€ä¸ªtileset
- * - ä¸æ”¯æŒåµŒå…¥å¼å›¾ç‰‡(Embedded images)
- * - åªæ”¯æŒXMLæ ¼å¼(ä¸æ”¯æŒJSONæ ¼å¼)ã€‚
+ * ÏŞÖÆ:
+ * - Ã¿¸ölayerÖ»Ö§³ÖÒ»¸ötileset
+ * - ²»Ö§³ÖÇ¶ÈëÊ½Í¼Æ¬(Embedded images)
+ * - Ö»Ö§³ÖXML¸ñÊ½(²»Ö§³ÖJSON¸ñÊ½)¡£
  * 
- * æŠ€æœ¯æè¿°:
- * æ¯ä¸ªlayerè¢«åˆ›å»ºæˆTMXLayer(ç»§æ‰¿è‡ªSpriteBatchNode)ã€‚
- * å¦‚æœlayeræ˜¯å¯è§†çš„,é‚£ä¹ˆå¦‚æœä½ æœ‰5ä¸ªlayer,åˆ™5ä¸ªTMXLayerè¢«åˆ›å»º.
- * å¦‚æœä¸å¯è§†,åˆ™layeræ ¹æœ¬ä¸ä¼šè¢«åˆ›å»ºã€‚
- * åœ¨è¿è¡Œæ—¶,å¯é€šè¿‡å¦‚ä¸‹è·å–layers(TMXLayer objects):
+ * ¼¼ÊõÃèÊö:
+ * Ã¿¸ölayer±»´´½¨³ÉTMXLayer(¼Ì³Ğ×ÔSpriteBatchNode)¡£
+ * Èç¹ûlayerÊÇ¿ÉÊÓµÄ,ÄÇÃ´Èç¹ûÄãÓĞ5¸ölayer,Ôò5¸öTMXLayer±»´´½¨.
+ * Èç¹û²»¿ÉÊÓ,Ôòlayer¸ù±¾²»»á±»´´½¨¡£
+ * ÔÚÔËĞĞÊ±,¿ÉÍ¨¹ıÈçÏÂ»ñÈ¡layers(TMXLayer objects):
  * - map->getChildByTag(tag_number);  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
  * - map->getLayer(name_of_the_layer);
  * 
- * æ¯ä¸ªå¯¹è±¡ç»„è¢«åˆ›å»ºæˆä¸€ä¸ªç»§æ‰¿è‡ªMutableArrayçš„TMXObjectGroup
- * è¿è¡Œæ—¶,å¯é€šè¿‡å¦‚ä¸‹è·å–è¯¥å¯¹è±¡ç»„:
- * - map->getObjectGroup(name_of_the_object_group);//name_of_the_object_group å¯¹è±¡ç»„å
- * æ¯ä¸ªobjectéƒ½æ˜¯ä¸€ä¸ªTMXObject
- * æ¯ä¸ªå±æ€§éƒ½é€šè¿‡key-valueå¯¹å­˜å‚¨åœ¨ä¸€ä¸ªMutableDictionaryé‡Œ
- * è¿è¡Œæ—¶,å¯é€šè¿‡å¦‚ä¸‹è·å–å±æ€§:
+ * Ã¿¸ö¶ÔÏó×é±»´´½¨³ÉÒ»¸ö¼Ì³Ğ×ÔMutableArrayµÄTMXObjectGroup
+ * ÔËĞĞÊ±,¿ÉÍ¨¹ıÈçÏÂ»ñÈ¡¸Ã¶ÔÏó×é:
+ * - map->getObjectGroup(name_of_the_object_group);//name_of_the_object_group ¶ÔÏó×éÃû
+ * Ã¿¸öobject¶¼ÊÇÒ»¸öTMXObject
+ * Ã¿¸öÊôĞÔ¶¼Í¨¹ıkey-value¶Ô´æ´¢ÔÚÒ»¸öMutableDictionaryÀï
+ * ÔËĞĞÊ±,¿ÉÍ¨¹ıÈçÏÂ»ñÈ¡ÊôĞÔ:
  * 
  * map->getProperty(name_of_the_property);
  * layer->getProperty(name_of_the_property);
@@ -164,37 +164,37 @@ class CC_DLL TMXTiledMap : public Node
 public:
     /** @~english Creates a TMX Tiled Map with a TMX file.
      *
-     * @~chinese é€šè¿‡æŒ‡å®šTMXæ–‡ä»¶åˆ›å»ºä¸€ä¸ªTMX Tiledåœ°å›¾ã€‚
+     * @~chinese Í¨¹ıÖ¸¶¨TMXÎÄ¼ş´´½¨Ò»¸öTMX TiledµØÍ¼¡£
      * 
      * @param tmxFile @~english A TMX file.
-     * @~chinese TMXæ–‡ä»¶ã€‚
+     * @~chinese TMXÎÄ¼ş¡£
      * @return @~english An autorelease object.
-     * @~chinese ä¸€ä¸ªautoreleaseå¯¹è±¡ã€‚
+     * @~chinese Ò»¸öautorelease¶ÔÏó¡£
      */
     static TMXTiledMap* create(const std::string& tmxFile);
 
     /** @~english Initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources. 
      *
-     * @~chineseé€šè¿‡ä¸€ä¸ªæŒ‡å®šçš„TMXæ ¼å¼çš„XMLå’ŒTMXèµ„æºè·¯å¾„åˆ›å»ºä¸€ä¸ªTMX Tiledåœ°å›¾ã€‚
+     * @~chineseÍ¨¹ıÒ»¸öÖ¸¶¨µÄTMX¸ñÊ½µÄXMLºÍTMX×ÊÔ´Â·¾¶´´½¨Ò»¸öTMX TiledµØÍ¼¡£
      * 
      * @param tmxString @~english A TMX formatted XML string.
-     * @~chinese TMXæ ¼å¼çš„XMLå­—ç¬¦ä¸²ã€‚
+     * @~chinese TMX¸ñÊ½µÄXML×Ö·û´®¡£
      * @param resourcePath @~english The path to TMX resources.
-     * @~chinese TMXçš„èµ„æºè·¯å¾„ã€‚
+     * @~chinese TMXµÄ×ÊÔ´Â·¾¶¡£
      * @return @~english An autorelease object.
-     * @~chinese ä¸€ä¸ªautoreleaseå¯¹è±¡ã€‚
+     * @~chinese Ò»¸öautorelease¶ÔÏó¡£
      * @js NA
      */
     static TMXTiledMap* createWithXML(const std::string& tmxString, const std::string& resourcePath);
 
     /** @~english Return the TMXLayer for the specific layer. 
      *
-     * @~chinese é€šè¿‡layerNameè·å–å¯¹åº”çš„TMXLayerã€‚
+     * @~chinese Í¨¹ılayerName»ñÈ¡¶ÔÓ¦µÄTMXLayer¡£
      * 
      * @param layerName @~english A specific layer.
-     * @~chinese ä¸€ä¸ªæŒ‡å®šçš„å±‚åç§°ã€‚
+     * @~chinese Ò»¸öÖ¸¶¨µÄ²ãÃû³Æ¡£
      * @return @~english The TMXLayer for the specific layer.
-     * @~chinese æŒ‡å®šå±‚åç§°çš„TMXLayerå±‚ã€‚
+     * @~chinese Ö¸¶¨²ãÃû³ÆµÄTMXLayer²ã¡£
      */
     TMXLayer* getLayer(const std::string& layerName) const;
 
@@ -206,12 +206,12 @@ public:
 
     /** @~english Return the TMXObjectGroup for the specific group. 
      *
-     * @~chinese é€šè¿‡groupNameè·å–å¯¹åº”çš„TMXObjectGroupã€‚
+     * @~chinese Í¨¹ıgroupName»ñÈ¡¶ÔÓ¦µÄTMXObjectGroup¡£
      * 
      * @param groupName @~english The group Name.
-     * @~chinese ç»„åç§°ã€‚
+     * @~chinese ×éÃû³Æ¡£
      * @return @~english A Type of TMXObjectGroup.
-     * @~chinese TMXObjectGroupã€‚
+     * @~chinese TMXObjectGroup¡£
      */
     TMXObjectGroup* getObjectGroup(const std::string& groupName) const;
 
@@ -223,12 +223,12 @@ public:
 
     /** @~english Return the value for the specific property name. 
      *
-     * @~chinese  é€šè¿‡propertyNameè·å–å¯¹åº”çš„Propertyã€‚
+     * @~chinese  Í¨¹ıpropertyName»ñÈ¡¶ÔÓ¦µÄProperty¡£
      * 
      * @param propertyName @~english The specific property name.
-     * @~chinese æŒ‡å®šçš„å±æ€§åã€‚
+     * @~chinese Ö¸¶¨µÄÊôĞÔÃû¡£
      * @return @~english Return the value for the specific property name.
-     * @~chinese è¿”å›æŒ‡å®šå±æ€§åçš„å€¼ã€‚
+     * @~chinese ·µ»ØÖ¸¶¨ÊôĞÔÃûµÄÖµ¡£
      */
     Value getProperty(const std::string& propertyName) const;
 
@@ -240,12 +240,12 @@ public:
 
     /** @~english Return properties dictionary for tile GID. 
      *
-     * @~chinese é€šè¿‡GIDè·å–å¯¹åº”çš„å±æ€§å­—å…¸(properties dictionary)ã€‚
+     * @~chinese Í¨¹ıGID»ñÈ¡¶ÔÓ¦µÄÊôĞÔ×Öµä(properties dictionary)¡£
      * 
      * @param GID @~english The tile GID.
-     * @~chinese ç“¦ç‰‡GIDã€‚
+     * @~chinese ÍßÆ¬GID¡£
      * @return @~english Return properties dictionary for tile GID.
-     * @~chinese è¿”å›å±æ€§å­—å…¸ã€‚
+     * @~chinese ·µ»ØÊôĞÔ×Öµä¡£
      */
     Value getPropertiesForGID(int GID) const;
 
@@ -254,88 +254,88 @@ public:
     /** @~english Assings properties to argument value, returns true if it did found properties 
      * for that GID and did assinged a value, else it returns false.
      *
-     * @~chinese é€šè¿‡æŒ‡å®šGIDæŸ¥æ‰¾å…¶å¯¹åº”çš„å±æ€§å˜é‡,å¹¶èµ‹äºˆå±æ€§å€¼value,
-     * å¦‚æˆåŠŸæŸ¥æ‰¾åˆ°å¹¶èµ‹å€¼æˆåŠŸ,åˆ™è¿”å›true,åä¹‹åˆ™ä¸ºfalseã€‚
+     * @~chinese Í¨¹ıÖ¸¶¨GID²éÕÒÆä¶ÔÓ¦µÄÊôĞÔ±äÁ¿,²¢¸³ÓèÊôĞÔÖµvalue,
+     * Èç³É¹¦²éÕÒµ½²¢¸³Öµ³É¹¦,Ôò·µ»Øtrue,·´Ö®ÔòÎªfalse¡£
      * 
      * @param GID @~english The tile GID.
-     * @~chinese ç“¦ç‰‡GIDã€‚
+     * @~chinese ÍßÆ¬GID¡£
      * @param value @~english Argument value.
-     * @~chinese å‚æ•°å€¼ã€‚
+     * @~chinese ²ÎÊıÖµ¡£
      * @return @~english Return true if it did found properties for that GID and did assinged a value, else it returns false.
-     * @~chinese å¦‚æˆåŠŸæŸ¥æ‰¾åˆ°å¹¶èµ‹å€¼æˆåŠŸ,åˆ™è¿”å›true,åä¹‹åˆ™ä¸ºfalseeã€‚
+     * @~chinese Èç³É¹¦²éÕÒµ½²¢¸³Öµ³É¹¦,Ôò·µ»Øtrue,·´Ö®ÔòÎªfalsee¡£
      */
     bool getPropertiesForGID(int GID, Value** value);
 
     /** @~english The map's size property measured in tiles. 
      *
-     * @~chinese è·å–ä»¥tilesä½œä¸ºå•ä½çš„åœ°å›¾å°ºå¯¸
+     * @~chinese »ñÈ¡ÒÔtiles×÷Îªµ¥Î»µÄµØÍ¼³ß´ç
      * 
      * @return @~english The map's size property measured in tiles.
-     * @~chinese ä»¥tilesæ•°é‡ä¸ºåŸºå‡†çš„åœ°å›¾å°ºå¯¸ã€‚
+     * @~chinese ÒÔtilesÊıÁ¿Îª»ù×¼µÄµØÍ¼³ß´ç¡£
      */
     inline const Size& getMapSize() const { return _mapSize; };
     
     /** @~english Set the map's size property measured in tiles. 
      *
-     * @~chinese è®¾ç½®ä»¥tilesæ•°é‡ä¸ºåŸºå‡†çš„åœ°å›¾å°ºå¯¸ã€‚
+     * @~chinese ÉèÖÃÒÔtilesÊıÁ¿Îª»ù×¼µÄµØÍ¼³ß´ç¡£
      * 
      * @param mapSize @~english The map's size property measured in tiles.
-     * @~chinese ä»¥tilesæ•°é‡ä¸ºåŸºå‡†çš„åœ°å›¾å°ºå¯¸ã€‚
+     * @~chinese ÒÔtilesÊıÁ¿Îª»ù×¼µÄµØÍ¼³ß´ç¡£
      */
     inline void setMapSize(const Size& mapSize) { _mapSize = mapSize; };
 
     /** @~english The tiles's size property measured in pixels. 
      *
-     * @~chinese è·å–ä»¥åƒç´ ç‚¹ä¸ºåŸºå‡†çš„tileå°ºå¯¸å±æ€§ã€‚
+     * @~chinese »ñÈ¡ÒÔÏñËØµãÎª»ù×¼µÄtile³ß´çÊôĞÔ¡£
      * 
      * @return @~english The tiles's size property measured in pixels.
-     * @~chinese ä»¥åƒç´ ç‚¹ä¸ºåŸºå‡†çš„tileå°ºå¯¸å±æ€§ã€‚
+     * @~chinese ÒÔÏñËØµãÎª»ù×¼µÄtile³ß´çÊôĞÔ¡£
      */
     inline const Size& getTileSize() const { return _tileSize; };
     
     /** @~english Set the tiles's size property measured in pixels. 
      *
-     * @~chinese è®¾ç½®ä»¥åƒç´ ç‚¹ä¸ºåŸºå‡†çš„tileå°ºå¯¸å±æ€§ã€‚
+     * @~chinese ÉèÖÃÒÔÏñËØµãÎª»ù×¼µÄtile³ß´çÊôĞÔ¡£
      * 
      * @param tileSize @~english The tiles's size property measured in pixels.
-     * @~chinese ä»¥åƒç´ ç‚¹ä¸ºåŸºå‡†çš„tileå°ºå¯¸å±æ€§ã€‚
+     * @~chinese ÒÔÏñËØµãÎª»ù×¼µÄtile³ß´çÊôĞÔ¡£
      */
     inline void setTileSize(const Size& tileSize) { _tileSize = tileSize; };
 
     /** @~english Map orientation. 
      *
-     * @~chinese è·å–åœ°å›¾æ–¹å‘(orientation)
+     * @~chinese »ñÈ¡µØÍ¼·½Ïò(orientation)
      * 
      * @return @~english Map orientation.
-     * @~chinese åœ°å›¾æ–¹å‘(orientation)
+     * @~chinese µØÍ¼·½Ïò(orientation)
      */
     inline int getMapOrientation() const { return _mapOrientation; };
     
     /** @~english Set map orientation. 
      *
-     * @~chinese è®¾ç½®åœ°å›¾æ–¹å‘(orientation)
+     * @~chinese ÉèÖÃµØÍ¼·½Ïò(orientation)
      * 
      * @param mapOrientation @~english The map orientation.
-     * @~chinese åœ°å›¾æ–¹å‘(orientation)
+     * @~chinese µØÍ¼·½Ïò(orientation)
      */
     inline void setMapOrientation(int mapOrientation) { _mapOrientation = mapOrientation; };
 
     /** @~english Get the Object groups. 
      *
-     * @~chinese è·å–å¯¹è±¡ç»„ã€‚
+     * @~chinese »ñÈ¡¶ÔÏó×é¡£
      * 
      * @return @~english The object groups.
-     * @~chinese å¯¹è±¡ç»„ã€‚
+     * @~chinese ¶ÔÏó×é¡£
      */
     inline const Vector<TMXObjectGroup*>& getObjectGroups() const { return _objectGroups; };
     inline Vector<TMXObjectGroup*>& getObjectGroups() { return _objectGroups; };
     
     /** @~english Set the object groups. 
      *
-     * @~chinese è®¾ç½®å¯¹è±¡ç»„ã€‚
+     * @~chinese ÉèÖÃ¶ÔÏó×é¡£
      * 
      * @param groups @~english The object groups.
-     * @~chinese å¯¹è±¡ç»„ã€‚
+     * @~chinese ¶ÔÏó×é¡£
      */
     inline void setObjectGroups(const Vector<TMXObjectGroup*>& groups) {
         _objectGroups = groups;
@@ -343,26 +343,26 @@ public:
     
     /** @~english Properties. 
      *
-     * @~chinese è·å–å±æ€§ã€‚
+     * @~chinese »ñÈ¡ÊôĞÔ¡£
      * 
      * @return @~english Properties.
-     * @~chinese ValueMapå±æ€§ã€‚
+     * @~chinese ValueMapÊôĞÔ¡£
      */
     inline ValueMap& getProperties() { return _properties; };
     
     /** @~english Set the properties.
      *
-     * @~chinese è®¾ç½®å±æ€§ã€‚
+     * @~chinese ÉèÖÃÊôĞÔ¡£
      * 
      * @param properties @~english A  Type of ValueMap to set the properties.
-     * @~chinese ValueMapå±æ€§ã€‚
+     * @~chinese ValueMapÊôĞÔ¡£
      */
     inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
     
     /** @~english Get the description.
-     * @~chinese è·å–æè¿°ã€‚
+     * @~chinese »ñÈ¡ÃèÊö¡£
      * @js NA
      */
     virtual std::string getDescription() const override;
@@ -378,10 +378,10 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~TMXTiledMap();
     
-    /** @~english initializes a TMX Tiled Map with a TMX file  @~chinese é€šè¿‡æŒ‡å®šçš„TMXæ–‡ä»¶åˆå§‹åŒ–TMXTiledMap*/
+    /** @~english initializes a TMX Tiled Map with a TMX file  @~chinese Í¨¹ıÖ¸¶¨µÄTMXÎÄ¼ş³õÊ¼»¯TMXTiledMap*/
     bool initWithTMXFile(const std::string& tmxFile);
     
-    /** @~english initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources  @~chinese é€šè¿‡æŒ‡å®šçš„TMXæ ¼å¼XMLå­—ç¬¦ä¸²æ¥åˆå§‹åŒ–TMXTiledMap */
+    /** @~english initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources  @~chinese Í¨¹ıÖ¸¶¨µÄTMX¸ñÊ½XML×Ö·û´®À´³õÊ¼»¯TMXTiledMap */
     bool initWithXML(const std::string& tmxString, const std::string& resourcePath);
 
 protected:
@@ -389,15 +389,15 @@ protected:
     TMXTilesetInfo * tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     void buildWithMapInfo(TMXMapInfo* mapInfo);
 
-    /** @~english the map's size property measured in tiles  @~chinese ä»¥ç“¦ç‰‡ä¸ºå•ä½çš„åœ°å›¾å¤§å°*/
+    /** @~english the map's size property measured in tiles  @~chinese ÒÔÍßÆ¬Îªµ¥Î»µÄµØÍ¼´óĞ¡*/
     Size _mapSize;
-    /** @~english the tiles's size property measured in pixels  @~chinese ä»¥åƒç´ ä¸ºå•ä½çš„ç“¦ç‰‡å¤§å°*/
+    /** @~english the tiles's size property measured in pixels  @~chinese ÒÔÏñËØÎªµ¥Î»µÄÍßÆ¬´óĞ¡*/
     Size _tileSize;
-    /** @~english map orientation  @~chinese åœ°å›¾å®šä½*/
+    /** @~english map orientation  @~chinese µØÍ¼¶¨Î»*/
     int _mapOrientation;
-    /** @~english object groups  @~chinese å¯¹è±¡ç»„*/
+    /** @~english object groups  @~chinese ¶ÔÏó×é*/
     Vector<TMXObjectGroup*> _objectGroups;
-    /** @~english properties  @~chinese å±æ€§*/
+    /** @~english properties  @~chinese ÊôĞÔ*/
     ValueMap _properties;
     
     //! tile properties

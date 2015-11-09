@@ -39,7 +39,7 @@ namespace network {
 
 /** 
  * @brief @~english A HttpResponse class is wrapped to the related responsed data came back from the HttpClient.
- * @~chinese HttpResponseæ˜¯å¯¹HttpClientè¿”å›çš„å“åº”æ•°æ®çš„å°è£…ã€‚
+ * @~chinese HttpResponseÊÇ¶ÔHttpClient·µ»ØµÄÏìÓ¦Êı¾İµÄ·â×°¡£
  * @see samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp.
  * @since v2.0.2.
  * @lua NA
@@ -50,9 +50,9 @@ public:
     /** @~english
      * Constructor, it's used by HttpClient internal, users don't need to create HttpResponse manually.
      * @~chinese 
-     * æ„é€ å‡½æ•°,HttpResponseåœ¨HttpClientå†…éƒ¨åˆ›å»º,ç”¨æˆ·ä¸éœ€è¦æ‰‹åŠ¨åˆ›å»ºHttpResponseã€‚
+     * ¹¹Ôìº¯Êı,HttpResponseÔÚHttpClientÄÚ²¿´´½¨,ÓÃ»§²»ĞèÒªÊÖ¶¯´´½¨HttpResponse¡£
      * @param request @~english the corresponding HttpRequest which leads to this response.
-     * @~chinese å¯¹åº”çš„HttpRequestå¯¹è±¡
+     * @~chinese ¶ÔÓ¦µÄHttpRequest¶ÔÏó
      */
     HttpResponse(HttpRequest* request)
     {
@@ -70,10 +70,10 @@ public:
     
     /** @~english
      * Destructor, it will be called in HttpClient internal.
-     * Users don't need to desturct HttpResponse object manully.
+     * Users don't need to destruct HttpResponse object manually.
      * @~chinese 
-     * ææ„å‡½æ•°æ—¶, å®ƒä¹Ÿåœ¨HttpClientå†…éƒ¨è°ƒç”¨ã€‚
-     * ç”¨æˆ·ä¸éœ€æ‰‹åŠ¨çš„è§¦å‘è¿™ä¸ªææ„å‡½æ•°ã€‚
+     * Îö¹¹º¯ÊıÊ±, ËüÒ²ÔÚHttpClientÄÚ²¿µ÷ÓÃ¡£
+     * ÓÃ»§²»ĞèÊÖ¶¯µÄ´¥·¢Õâ¸öÎö¹¹º¯Êı¡£
      */
     virtual ~HttpResponse()
     {
@@ -87,10 +87,10 @@ public:
      * Override autorelease method to prevent developers from calling it.
      * If this method is called , it would trigger CCASSERT.
      * @~chinese 
-     * é‡å†™autoreleaseæ–¹æ³•ï¼Œä»¥é˜²å¼€å‘è€…è°ƒç”¨å®ƒã€‚
-     * å½“è¿™ä¸ªæ–¹æ³•è¢«è°ƒç”¨æ—¶,å®ƒå°†è§¦å‘CCASSERTã€‚
+     * ÖØĞ´autorelease·½·¨£¬ÒÔ·À¿ª·¢Õßµ÷ÓÃËü¡£
+     * µ±Õâ¸ö·½·¨±»µ÷ÓÃÊ±,Ëü½«´¥·¢CCASSERT¡£
      * @return @~english always return nullptr.
-     * @~chinese å§‹ç»ˆè¿”å›nullptrã€‚
+     * @~chinese Ê¼ÖÕ·µ»Ønullptr¡£
      */
     cocos2d::Ref* autorelease(void)
     {
@@ -105,10 +105,10 @@ public:
      * Get the corresponding HttpRequest object which leads to this response.
      * There's no paired setter for it, because it's already setted in class constructor.
      * @~chinese 
-     * è·å¾—å¯¹åº”è¿™ä¸ªå“åº”çš„HttpRequestå¯¹è±¡ã€‚
-     * è¿™é‡Œæ²¡æœ‰å¯¹åº”çš„setterå‡½æ•°ï¼Œå› ä¸º_pHttpRequestæ˜¯åœ¨æ„é€ å‡½æ•°ä¸­èµ‹å€¼çš„ã€‚
+     * »ñµÃ¶ÔÓ¦Õâ¸öÏìÓ¦µÄHttpRequest¶ÔÏó¡£
+     * ÕâÀïÃ»ÓĞ¶ÔÓ¦µÄsetterº¯Êı£¬ÒòÎª_pHttpRequestÊÇÔÚ¹¹Ôìº¯ÊıÖĞ¸³ÖµµÄ¡£
      * @return @~english the corresponding HttpRequest object which leads to this response.
-     * @~chinese å¯¹åº”è¿™ä¸ªå“åº”çš„HttpRequestå¯¹è±¡ã€‚
+     * @~chinese ¶ÔÓ¦Õâ¸öÏìÓ¦µÄHttpRequest¶ÔÏó¡£
      */
     inline HttpRequest* getHttpRequest()
     {
@@ -120,11 +120,11 @@ public:
      * Althrough users can judge if (http response code == 200), we want an easier way.
      * If this getter returns false, you can call getResponseCode and getErrorBuffer to find more details.
      * @~chinese 
-     * åˆ¤æ–­HttpReqeustæ˜¯å¦è¿”å›æˆåŠŸã€‚
-     * è™½ç„¶ç”¨æˆ·å¯ä»¥é€šè¿‡(response code == 200)æ˜¯å¦æˆç«‹æ¥åˆ¤æ–­,ä½†æˆ‘ä»¬ä¹Ÿéœ€è¦ä¸€ç§æ›´ç®€å•çš„æ–¹æ³•ã€‚
-     * å¦‚æœè¿”å›å¤±è´¥,å¯ä»¥é€šè¿‡è°ƒç”¨getResponseCodeå’ŒgetErrorBufferè·å–æ›´å¤šçš„ç»†èŠ‚ã€‚
+     * ÅĞ¶ÏHttpReqeustÊÇ·ñ·µ»Ø³É¹¦¡£
+     * ËäÈ»ÓÃ»§¿ÉÒÔÍ¨¹ı(response code == 200)ÊÇ·ñ³ÉÁ¢À´ÅĞ¶Ï,µ«ÎÒÃÇÒ²ĞèÒªÒ»ÖÖ¸ü¼òµ¥µÄ·½·¨¡£
+     * Èç¹û·µ»ØÊ§°Ü,¿ÉÒÔÍ¨¹ıµ÷ÓÃgetResponseCodeºÍgetErrorBuffer»ñÈ¡¸ü¶àµÄÏ¸½Ú¡£
      * @return @~english bool the flag that represent whether the http request return sucesssfully or not.
-     * @~chinese åˆ¤æ–­HttpReqeustæ˜¯å¦è¿”å›æˆåŠŸçš„æ ‡è®°ã€‚
+     * @~chinese ÅĞ¶ÏHttpReqeustÊÇ·ñ·µ»Ø³É¹¦µÄ±ê¼Ç¡£
      */
     inline bool isSucceed()
     {
@@ -134,9 +134,9 @@ public:
     /** @~english
      * Get the http response data.
      * @~chinese 
-     * è·å–httpå“åº”æ•°æ®ã€‚
+     * »ñÈ¡httpÏìÓ¦Êı¾İ¡£
      * @return @~english the pointer that point to the _responseData.
-     * @~chinese æŒ‡å‘_responseDataçš„æŒ‡é’ˆã€‚
+     * @~chinese Ö¸Ïò_responseDataµÄÖ¸Õë¡£
      */
     inline std::vector<char>* getResponseData()
     {
@@ -146,9 +146,9 @@ public:
     /**@~english
      * Get the response headers.
      * @~chinese 
-     * å“åº”å¤´ã€‚
+     * ÏìÓ¦Í·¡£
      * @return @~english the pointer that point to the _responseHeader.
-     * @~chinese æŒ‡å‘_responseHeaderçš„æŒ‡é’ˆã€‚
+     * @~chinese Ö¸Ïò_responseHeaderµÄÖ¸Õë¡£
      */
     inline std::vector<char>* getResponseHeader()
     {
@@ -156,13 +156,13 @@ public:
     }
 
     /** @~english
-     * Get the http response code to judge whether response is sucessful or not.
+     * Get the http response code to judge whether response is successful or not.
      * If _responseCode is not 200, you should check the meaning for _responseCode by the net.
      * @~chinese 
-     * è·å–å“åº”ç ç”¨æ¥åˆ¤æ–­å“åº”æˆåŠŸä¸å¦ã€‚
-     * å½“_responseCodeä¸ä¸º200æ—¶ï¼Œä½ åº”å½“é€šè¿‡ç½‘ç»œæŸ¥æ‰¾ä¸€ä¸‹å¯¹åº”å“åº”ç çš„æ„ä¹‰ã€‚
+     * »ñÈ¡ÏìÓ¦ÂëÓÃÀ´ÅĞ¶ÏÏìÓ¦³É¹¦Óë·ñ¡£
+     * µ±_responseCode²»Îª200Ê±£¬ÄãÓ¦µ±Í¨¹ıÍøÂç²éÕÒÒ»ÏÂ¶ÔÓ¦ÏìÓ¦ÂëµÄÒâÒå¡£
      * @return @~english the value of _responseCode
-     * @~chinese _responseCodeçš„ä»·å€¼
+     * @~chinese _responseCodeµÄ¼ÛÖµ
      */
     inline long getResponseCode()
     {
@@ -172,9 +172,9 @@ public:
     /** @~english
      * Get the error buffer which will tell you more about the reason why http request failed.
      * @~chinese 
-     * è·å–é”™è¯¯ç¼“å­˜ï¼Œå®ƒå°†æ›´è¯¦ç»†åœ°æè¿°HttpRequestå¤±è´¥çš„åŸå› ã€‚
+     * »ñÈ¡´íÎó»º´æ£¬Ëü½«¸üÏêÏ¸µØÃèÊöHttpRequestÊ§°ÜµÄÔ­Òò¡£
      * @return @~english the pointer that point to _errorBuffer.
-     * @~chinese æŒ‡å‘_errorBufferçš„æŒ‡é’ˆã€‚
+     * @~chinese Ö¸Ïò_errorBufferµÄÖ¸Õë¡£
      */
     inline const char* getErrorBuffer()
     {
@@ -189,10 +189,10 @@ public:
      * Set whether the http request is returned successfully or not,
      * This setter is mainly used in HttpClient, users mustn't set it directly
      * @~chinese 
-     * è®¾ç½®http requestæ˜¯å¦æˆåŠŸçš„æ ‡è®°,
-     * è¿™ä¸ªsetteråœ¨HttpClientä¸­è®¾ç½®,ç”¨æˆ·ä¸èƒ½ç›´æ¥è°ƒç”¨ã€‚
+     * ÉèÖÃhttp requestÊÇ·ñ³É¹¦µÄ±ê¼Ç,
+     * Õâ¸ösetterÔÚHttpClientÖĞÉèÖÃ,ÓÃ»§²»ÄÜÖ±½Óµ÷ÓÃ¡£
      * @param value @~english the flag represent whether the http request is successful or not.
-     * @~chinese æ˜¯å¦æˆåŠŸçš„æ ‡è®°ã€‚
+     * @~chinese ÊÇ·ñ³É¹¦µÄ±ê¼Ç¡£
      */
     inline void setSucceed(bool value)
     {
@@ -203,9 +203,9 @@ public:
     /** @~english
      * Set the http response data buffer, it is used by HttpClient.
      * @~chinese 
-     * è®¾ç½®httpå“åº”çš„æ•°æ®ç¼“å­˜,å®ƒç”±HttpClientè°ƒç”¨ã€‚
+     * ÉèÖÃhttpÏìÓ¦µÄÊı¾İ»º´æ,ËüÓÉHttpClientµ÷ÓÃ¡£
      * @param data @~english the pointer point to the response data buffer.
-     * @~chinese æŒ‡å‘responseæ•°æ®ç¼“å­˜åŒºçš„æŒ‡é’ˆã€‚
+     * @~chinese Ö¸ÏòresponseÊı¾İ»º´æÇøµÄÖ¸Õë¡£
      */
     inline void setResponseData(std::vector<char>* data)
     {
@@ -215,9 +215,9 @@ public:
     /** @~english
      * Set the http response headers buffer, it is used by HttpClient.
      * @~chinese 
-     * è®¾ç½®httpçš„å“åº”å¤´ç¼“å­˜,å®ƒç”±HttpClientè°ƒç”¨ã€‚
+     * ÉèÖÃhttpµÄÏìÓ¦Í·»º´æ,ËüÓÉHttpClientµ÷ÓÃ¡£
      * @param data @~english the pointer point to the response headers buffer.
-     * @~chinese æŒ‡å‘response headersç¼“å­˜åŒºçš„æŒ‡é’ˆã€‚
+     * @~chinese Ö¸Ïòresponse headers»º´æÇøµÄÖ¸Õë¡£
      */
     inline void setResponseHeader(std::vector<char>* data)
     {
@@ -228,9 +228,9 @@ public:
     /** @~english
      * Set the http response code.
      * @~chinese 
-     * è®¾ç½®httpå“åº”ç ã€‚
+     * ÉèÖÃhttpÏìÓ¦Âë¡£
      * @param value @~english the http response code that represent whether the request is successful or not.
-     * @~chinese httpå“åº”ä»£ç ,è¡¨ç¤ºè¯·æ±‚æˆåŠŸä¸å¦ã€‚
+     * @~chinese httpÏìÓ¦´úÂë,±íÊ¾ÇëÇó³É¹¦Óë·ñ¡£
      */
     inline void setResponseCode(long value)
     {
@@ -241,9 +241,9 @@ public:
     /** @~english
      * Set the error buffer which will tell you more the reason why http request failed.
      * @~chinese 
-     * è®¾ç½®httpå“åº”çš„é”™è¯¯ç¼“å­˜ï¼Œå®ƒå°†ä¼šå‘Šè¯‰ä½ æ›´å¤šå…³äºhttpè¯·æ±‚å¤±è´¥çš„åŸå› ã€‚
+     * ÉèÖÃhttpÏìÓ¦µÄ´íÎó»º´æ£¬Ëü½«»á¸æËßÄã¸ü¶à¹ØÓÚhttpÇëÇóÊ§°ÜµÄÔ­Òò¡£
      * @param value @~english a string pointer that point to the reason.
-     * @~chinese æŒ‡å‘é”™è¯¯ç¼“å­˜çš„æŒ‡é’ˆã€‚
+     * @~chinese Ö¸Ïò´íÎó»º´æµÄÖ¸Õë¡£
      */
     inline void setErrorBuffer(const char* value)
     {
@@ -254,11 +254,11 @@ public:
     /**@~english
      * Set the response data by the string pointer and the defined size.
      * @~chinese 
-     * æ ¹æ®æŒ‡å®šå¤§å°å’Œå­—ç¬¦ä¸²æŒ‡é’ˆè®¾ç½®å“åº”æ•°æ®ã€‚
+     * ¸ù¾İÖ¸¶¨´óĞ¡ºÍ×Ö·û´®Ö¸ÕëÉèÖÃÏìÓ¦Êı¾İ¡£
      * @param value @~english a string pointer that point to response data buffer.
-     * @~chinese æŒ‡å‘å“åº”æ•°æ®ç¼“å­˜çš„æŒ‡é’ˆã€‚
+     * @~chinese Ö¸ÏòÏìÓ¦Êı¾İ»º´æµÄÖ¸Õë¡£
      * @param n @~english the defined size that the response data buffer would be copied.
-     * @~chinese ä»valueæ‹·è´çš„å“åº”æ•°æ®çš„å¤§å°ã€‚
+     * @~chinese ´Óvalue¿½±´µÄÏìÓ¦Êı¾İµÄ´óĞ¡¡£
      */
     inline void setResponseDataString(const char* value, size_t n)
     {
@@ -269,9 +269,9 @@ public:
     /**@~english
      * Get the string pointer that point to the response data.
      * @~chinese 
-     * è·å–å“åº”æ•°æ®çš„å­—ç¬¦ä¸²æŒ‡é’ˆã€‚
+     * »ñÈ¡ÏìÓ¦Êı¾İµÄ×Ö·û´®Ö¸Õë¡£
      * @return @~english the string pointer that point to the response data.
-     * @~chinese æŒ‡å‘å“åº”æ•°æ®çš„å­—ç¬¦ä¸²æŒ‡é’ˆã€‚
+     * @~chinese Ö¸ÏòÏìÓ¦Êı¾İµÄ×Ö·û´®Ö¸Õë¡£
      */
     inline const char* getResponseDataString()
     {
@@ -283,7 +283,7 @@ protected:
     
     // properties
     HttpRequest*        _pHttpRequest;  /// the corresponding HttpRequest pointer who leads to this response 
-    bool                _succeed;       /// to indecate if the http reqeust is successful simply
+    bool                _succeed;       /// to indecate if the http request is successful simply
     std::vector<char>   _responseData;  /// the returned raw data. You can also dump it as a string
     std::vector<char>   _responseHeader;  /// the returned raw header data. You can also dump it as a string
     long                _responseCode;    /// the status code returned from libcurl, e.g. 200, 404

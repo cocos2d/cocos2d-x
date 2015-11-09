@@ -1,4 +1,4 @@
-ï»¿/**************************************************************************
+/**************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -45,7 +45,7 @@ NS_CC_BEGIN
 
 /**
     @brief @~english Create a physical shape(box, sphere, cylinder, capsule, convexhull, mesh and heightfield)
-    @~chinese åˆ›å»ºä¸€ä¸ªç‰©ç†å½¢çŠ¶ï¼ˆç›’ï¼Œçƒé¢ï¼ŒæŸ±é¢ï¼Œèƒ¶å›Šå‰‚ï¼Œå‡¸å½¢è½®å»“ï¼Œç½‘å’Œheightfield ï¼‰
+    @~chinese ´´½¨Ò»¸öÎïÀíĞÎ×´£¨ºĞ£¬ÇòÃæ£¬ÖùÃæ£¬½ºÄÒ¼Á£¬Í¹ĞÎÂÖÀª£¬ÍøºÍheightfield £©
 */
 class CC_DLL Physics3DShape : public Ref
 {
@@ -64,61 +64,61 @@ public:
     };
 
     /** @~english get shape type
-        @~chinese å¾—åˆ°çš„å½¢çŠ¶ç±»å‹
+        @~chinese µÃµ½µÄĞÎ×´ÀàĞÍ
     */
     virtual ShapeType getShapeType() const;
 
     /** @~english create box shape
-        @~chinese åˆ›å»ºç®±ä½“å½¢çŠ¶
-        @param extent @~english  The extent of sphere. @~chinese çƒä½“çš„ç¨‹åº¦ã€‚
+        @~chinese ´´½¨ÏäÌåĞÎ×´
+        @param extent @~english  The extent of sphere. @~chinese ÇòÌåµÄ³Ì¶È¡£
     */
     static Physics3DShape* createBox(const cocos2d::Vec3& extent);
 
     /** @~english create sphere shape
-        @~chinese åˆ›å»ºçƒä½“å½¢çŠ¶
-        @param radius @~english  The radius of sphere. @~chinese çƒåŠå¾„ã€‚
+        @~chinese ´´½¨ÇòÌåĞÎ×´
+        @param radius @~english  The radius of sphere. @~chinese Çò°ë¾¶¡£
     */
     static Physics3DShape* createSphere(float radius);
 
     /** @~english create cylinder shape
-        @~chinese åˆ›å»ºåœ†æŸ±ä½“
-        @param radius @~english  The radius of cylinder. @~chinese åœ†æŸ±ä½“çš„åŠå¾„ã€‚
-        @param height @~english  The height. @~chinese é«˜åº¦ã€‚
+        @~chinese ´´½¨Ô²ÖùÌå
+        @param radius @~english  The radius of cylinder. @~chinese Ô²ÖùÌåµÄ°ë¾¶¡£
+        @param height @~english  The height. @~chinese ¸ß¶È¡£
     */
     static Physics3DShape* createCylinder(float radius, float height);
 
     /** @~english create capsule shape
-        @~chinese åˆ›å»ºèƒ¶å›Šçš„å½¢çŠ¶
-        @param radius @~english  The radius of casule. @~chinese å¯¹èƒ¶å›Šçš„åŠå¾„ã€‚
-        @param height @~english  The height (cylinder part). @~chinese é«˜åº¦ï¼ˆç­’ï¼‰ã€‚
+        @~chinese ´´½¨½ºÄÒµÄĞÎ×´
+        @param radius @~english  The radius of casule. @~chinese ¶Ô½ºÄÒµÄ°ë¾¶¡£
+        @param height @~english  The height (cylinder part). @~chinese ¸ß¶È£¨Í²£©¡£
     */
     static Physics3DShape* createCapsule(float radius, float height);
 
     /** @~english create convex hull
-        @~chinese åˆ›å»ºå‡¸å£³
-        @param points @~english  The vertices of convex hull @~chinese å‡¸å£³çš„é¡¶ç‚¹
-        @param numPoints @~english  The number of vertices. @~chinese é¡¶ç‚¹ä¸ªæ•°ã€‚
+        @~chinese ´´½¨Í¹¿Ç
+        @param points @~english  The vertices of convex hull @~chinese Í¹¿ÇµÄ¶¥µã
+        @param numPoints @~english  The number of vertices. @~chinese ¶¥µã¸öÊı¡£
     */
     static Physics3DShape* createConvexHull(const cocos2d::Vec3* points, int numPoints);
 
     /** @~english create mesh
-        @~chinese åˆ›å»ºç½‘æ ¼
-        @param triangles @~english  The pointer of triangle list @~chinese ä¸‰è§’å½¢åˆ—è¡¨çš„æŒ‡é’ˆ
-        @param numTriangles @~english  The number of triangles. @~chinese ä¸‰è§’å½¢æ•°ã€‚
+        @~chinese ´´½¨Íø¸ñ
+        @param triangles @~english  The pointer of triangle list @~chinese Èı½ÇĞÎÁĞ±íµÄÖ¸Õë
+        @param numTriangles @~english  The number of triangles. @~chinese Èı½ÇĞÎÊı¡£
 
     */
     static Physics3DShape* createMesh(const cocos2d::Vec3* triangles, int numTriangles);
 
     /** @~english create heightfield
-        @~chinese åˆ›å»ºåœ°å½¢
-        @param heightStickWidth @~english  The Width of heightfield @~chinese å¯¹åœ°å½¢çš„å®½åº¦
-        @param heightStickLength @~english  The Length of heightfield. @~chinese å¯¹åœ°å½¢çš„é•¿åº¦ã€‚
-        @param heightfieldData @~english  The Data of heightfield. @~chinese å¯¹åœ°å½¢æ•°æ®ã€‚
-        @param heightScale @~english  heightScaleã€‚. @~chinese heightScaleã€‚
-        @param minHeight @~english  The minHeight of heightfield. @~chinese å¯¹åœ°å½¢çš„minheightã€‚
-        @param maxHeight @~english  The maxHeight of heightfield. @~chinese å¯¹åœ°å½¢çš„æœ€å¤§é«˜åº¦ã€‚
+        @~chinese ´´½¨µØĞÎ
+        @param heightStickWidth @~english  The Width of heightfield @~chinese ¶ÔµØĞÎµÄ¿í¶È
+        @param heightStickLength @~english  The Length of heightfield. @~chinese ¶ÔµØĞÎµÄ³¤¶È¡£
+        @param heightfieldData @~english  The Data of heightfield. @~chinese ¶ÔµØĞÎÊı¾İ¡£
+        @param heightScale @~english  heightScale¡£. @~chinese heightScale¡£
+        @param minHeight @~english  The minHeight of heightfield. @~chinese ¶ÔµØĞÎµÄminheight¡£
+        @param maxHeight @~english  The maxHeight of heightfield. @~chinese ¶ÔµØĞÎµÄ×î´ó¸ß¶È¡£
         @param useFloatDatam @~english  useFloatDatam @~chinese useFloatDatam
-        @param flipQuadEdges @~english  if flip QuadEdges @~chinese å¦‚æœquadedgesç¿»è½¬
+        @param flipQuadEdges @~english  if flip QuadEdges @~chinese Èç¹ûquadedges·­×ª
         @param useDiamondSubdivision @~english  useDiamondSubdivision @~chinese useDiamondSubdivision
 
     */
@@ -128,8 +128,8 @@ public:
             , bool useFloatDatam, bool flipQuadEdges, bool useDiamondSubdivision = false);
 
     /** @~english create Compound Shape
-        @~chinese åˆ›å»ºå¤åˆå½¢çŠ¶
-        @param shapes @~english  The list of child shape @~chinese å„¿ç«¥å½¢çŠ¶åˆ—è¡¨
+        @~chinese ´´½¨¸´ºÏĞÎ×´
+        @param shapes @~english  The list of child shape @~chinese ¶ùÍ¯ĞÎ×´ÁĞ±í
     */
     static Physics3DShape* createCompoundShape(const std::vector<std::pair<Physics3DShape*, Mat4>>& shapes);
 

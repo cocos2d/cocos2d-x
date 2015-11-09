@@ -58,6 +58,8 @@ public:
     virtual ~ComAttribute(void);
     
 public:
+    const static std::string COMPONENT_NAME;
+
     /**
      * @brief @~english Allocates and initializes a ComAttribute.
      * @~chinese 分配并且初始化自定义组件。

@@ -43,7 +43,7 @@ NS_CC_BEGIN
  * @~english
  * A pool for managing autorlease objects.
  * @~chinese 
- * è‡ªåŠ¨é‡Šæ”¾å¯¹è±¡ç®¡ç†æ± ã€‚
+ * ×Ô¶¯ÊÍ·Å¶ÔÏó¹ÜÀí³Ø¡£
  * @js NA
  */
 class CC_DLL AutoreleasePool
@@ -52,7 +52,7 @@ public:
 
     /**
      * @warning @~english Don't create an autorelease pool in heap, create it in stack.
-     * @~chinese ä¸è¦åœ¨å †ä¸Šåˆ›å»ºautoreleaseæ± ï¼Œè€Œè¦åœ¨æ ˆä¸Šåˆ›å»ºå®ƒã€‚
+     * @~chinese ²»ÒªÔÚ¶ÑÉÏ´´½¨autorelease³Ø£¬¶øÒªÔÚÕ»ÉÏ´´½¨Ëü¡£
      * @js NA
      * @lua NA
      */
@@ -62,14 +62,14 @@ public:
     /** @~english
      * Create an autorelease pool with specific name. This name is useful for debugging.
      * @~chinese 
-     * ç”¨æŒ‡å®šçš„åå­—åˆ›å»ºä¸€ä¸ªautoreleaseæ± ã€‚è¿™ä¸ªåå­—å¯¹äºè°ƒè¯•éå¸¸æœ‰ç”¨ã€‚
+     * ÓÃÖ¸¶¨µÄÃû×Ö´´½¨Ò»¸öautorelease³Ø¡£Õâ¸öÃû×Ö¶ÔÓÚµ÷ÊÔ·Ç³£ÓĞÓÃ¡£
      * @warning @~english Don't create an autorelease pool in heap, create it in stack.
-     * @~chinese ä¸è¦åœ¨å †ä¸Šåˆ›å»ºautoreleaseæ± ï¼Œè€Œè¦åœ¨æ ˆä¸Šåˆ›å»ºå®ƒã€‚
+     * @~chinese ²»ÒªÔÚ¶ÑÉÏ´´½¨autorelease³Ø£¬¶øÒªÔÚÕ»ÉÏ´´½¨Ëü¡£
      * @js NA
      * @lua NA
      *
      * @param name @~english The name of created autorelease pool.
-     * @~chinese åˆ›å»ºçš„autoreleaseæ± åå­—ã€‚
+     * @~chinese ´´½¨µÄautorelease³ØÃû×Ö¡£
      */
     AutoreleasePool(const std::string &name);
     
@@ -89,13 +89,13 @@ public:
      * the same times as it was added.
      *
      * @~chinese 
-     * å°†ç»™å®šå¯¹è±¡æ·»åŠ åˆ°è¿™ä¸ªautoreleaseæ± ã€‚
+     * ½«¸ø¶¨¶ÔÏóÌí¼Óµ½Õâ¸öautorelease³Ø¡£
      * 
-     * åŒä¸€ä¸ªå¯¹è±¡å¯ä»¥æ·»åŠ å‡ æ¬¡autoreleaseæ± ã€‚å½“
-     * æ± é”€æ¯çš„æ—¶å€™,å¯¹è±¡çš„`Ref::release()`æ–¹æ³•åº”è¯¥è¢«è°ƒç”¨ç›¸åŒçš„æ¬¡æ•°ã€‚
+     * Í¬Ò»¸ö¶ÔÏó¿ÉÒÔÌí¼Ó¼¸´Îautorelease³Ø¡£µ±
+     * ³ØÏú»ÙµÄÊ±ºò,¶ÔÏóµÄ`Ref::release()`·½·¨Ó¦¸Ã±»µ÷ÓÃÏàÍ¬µÄ´ÎÊı¡£
      *
      * @param object    @~english The object to be added into the autorelease pool.
-     * @~chinese æ·»åŠ åˆ°autoreleaseæ± çš„å¯¹è±¡ã€‚
+     * @~chinese Ìí¼Óµ½autorelease³ØµÄ¶ÔÏó¡£
      * @js NA
      * @lua NA
      */
@@ -108,9 +108,9 @@ public:
      * It will invoke each element's `release()` function.
      *
      * @~chinese 
-     * æ¸…ç©ºautoreleaseæ± ã€‚
+     * Çå¿Õautorelease³Ø¡£
      * 
-     * å®ƒå°†è°ƒç”¨æ¯ä¸ªå…ƒç´ çš„`release()`çš„å‡½æ•°ã€‚
+     * Ëü½«µ÷ÓÃÃ¿¸öÔªËØµÄ`release()`µÄº¯Êı¡£
      * 
      * @js NA
      * @lua NA
@@ -123,11 +123,11 @@ public:
      * Whether the autorelease pool is doing `clear` operation.
      *
      * @~chinese 
-     * è·å–ç®¡ç†æ± å½“å‰æ˜¯å¦æ­£åœ¨åšæ¸…ç©ºæ“ä½œã€‚
+     * »ñÈ¡¹ÜÀí³Øµ±Ç°ÊÇ·ñÕıÔÚ×öÇå¿Õ²Ù×÷¡£
      * 
      * @return @~english True if autorelase pool is clearning, false if not.
      *
-     * @~chinese å¦‚æœautorelaseæ± æ¸…ç©ºäº†è¿”å›çœŸï¼Œå¦‚æœä¸æ˜¯è¿”å›å‡ã€‚
+     * @~chinese Èç¹ûautorelase³ØÇå¿ÕÁË·µ»ØÕæ£¬Èç¹û²»ÊÇ·µ»Ø¼Ù¡£
      * 
      * @js NA
      * @lua NA
@@ -140,12 +140,12 @@ public:
      * Checks whether the autorelease pool contains the specified object.
      *
      * @~chinese 
-     * æ£€æŸ¥autoreleaseæ± ä¸­æ˜¯å¦åŒ…å«æŒ‡å®šçš„å¯¹è±¡ã€‚
+     * ¼ì²éautorelease³ØÖĞÊÇ·ñ°üº¬Ö¸¶¨µÄ¶ÔÏó¡£
      * 
      * @param object @~english The object to be checked.
-     * @~chinese è¢«æ£€æŸ¥çš„å¯¹è±¡ã€‚
+     * @~chinese ±»¼ì²éµÄ¶ÔÏó¡£
      * @return @~english True if the autorelease pool contains the object, false if not
-     * @~chinese autoreleaseæ± åŒ…å«è¯¥å¯¹è±¡è¿”å›çœŸï¼Œå¦‚æœä¸åŒ…å«è¿”å›å‡ã€‚
+     * @~chinese autorelease³Ø°üº¬¸Ã¶ÔÏó·µ»ØÕæ£¬Èç¹û²»°üº¬·µ»Ø¼Ù¡£
      * @js NA
      * @lua NA
      */
@@ -159,10 +159,10 @@ public:
      * Object pointer address     object id     reference count
      *
      * @~chinese 
-     * è¾“å‡ºæ”¾åœ¨autoreleaseæ± çš„å¯¹è±¡ã€‚ç”¨äºè°ƒè¯•ã€‚
+     * Êä³ö·ÅÔÚautorelease³ØµÄ¶ÔÏó¡£ÓÃÓÚµ÷ÊÔ¡£
      * 
-     * è¾“å‡ºæ ¼å¼ï¼š
-     * å¯¹è±¡ æŒ‡é’ˆåœ°å€ å¯¹è±¡id å¼•ç”¨è®¡æ•°
+     * Êä³ö¸ñÊ½£º
+     * ¶ÔÏó Ö¸ÕëµØÖ· ¶ÔÏóid ÒıÓÃ¼ÆÊı
      * 
      * @js NA
      * @lua NA
@@ -213,17 +213,17 @@ public:
 
     /**@~english
      * Get current auto release pool, there is at least one auto release pool that created by engine.
-     * You can create your own auto release pool at demand, which will be put into auto releae pool stack.
+     * You can create your own auto release pool at demand, which will be put into auto release pool stack.
      * @~chinese 
-     * å¾—åˆ°å½“å‰è‡ªåŠ¨é‡Šæ”¾æ± ï¼Œè‡³å°‘æœ‰ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾æ± ï¼Œæ˜¯ç”±å¼•æ“åˆ›å»ºçš„ã€‚
-     * æ‚¨å¯ä»¥æŒ‰éœ€åˆ›å»ºä½ è‡ªå·±çš„è‡ªåŠ¨é‡Šæ”¾æ± ï¼Œå®ƒå°†æŠ•å…¥è‡ªåŠ¨é‡Šæ”¾æ± å †æ ˆã€‚
+     * µÃµ½µ±Ç°×Ô¶¯ÊÍ·Å³Ø£¬ÖÁÉÙÓĞÒ»¸ö×Ô¶¯ÊÍ·Å³Ø£¬ÊÇÓÉÒıÇæ´´½¨µÄ¡£
+     * Äú¿ÉÒÔ°´Ğè´´½¨Äã×Ô¼ºµÄ×Ô¶¯ÊÍ·Å³Ø£¬Ëü½«Í¶Èë×Ô¶¯ÊÍ·Å³Ø¶ÑÕ»¡£
      */
     AutoreleasePool *getCurrentPool() const;
 
     /** @~english Checks whether the autorelease pool stack contains the specified object.
-     * @~chinese æ£€æŸ¥è‡ªåŠ¨é‡Šæ”¾æ± å †æ ˆæ˜¯å¦åŒ…å«æŒ‡å®šå¯¹è±¡ã€‚
+     * @~chinese ¼ì²é×Ô¶¯ÊÍ·Å³Ø¶ÑÕ»ÊÇ·ñ°üº¬Ö¸¶¨¶ÔÏó¡£
      * @return @~english True if the autorelease pool stack contains the object, false if not
-     * @~chinese autoreleaseæ± å †æ ˆåŒ…å«è¯¥å¯¹è±¡è¿”å›çœŸï¼Œå¦‚æœä¸åŒ…å«è¿”å›å‡ã€‚
+     * @~chinese autorelease³Ø¶ÑÕ»°üº¬¸Ã¶ÔÏó·µ»ØÕæ£¬Èç¹û²»°üº¬·µ»Ø¼Ù¡£
      */
     bool isObjectInPools(Ref* obj) const;
 

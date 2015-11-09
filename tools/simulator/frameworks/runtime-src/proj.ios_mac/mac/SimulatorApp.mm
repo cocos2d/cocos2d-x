@@ -118,6 +118,7 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     }
     else
     {
+        _project.setProjectDir([path cStringUsingEncoding:NSUTF8StringEncoding]);
         _entryPath = [path cStringUsingEncoding:NSUTF8StringEncoding];
     }
     
@@ -214,13 +215,6 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
                 solutionDir[i] = '/';
             }
         }
-        int nPos = -1;
-        if (solutionDir[solutionDir.length() - 1] == '/')
-            nPos = solutionDir.rfind('/', solutionDir.length() - 2);
-        else
-            nPos = solutionDir.rfind('/');
-        if (nPos > 0)
-            solutionDir = solutionDir.substr(0, nPos + 1);
         FileUtils::getInstance()->setDefaultResourceRootPath(solutionDir);
         FileUtils::getInstance()->addSearchPath(solutionDir);
         FileUtils::getInstance()->addSearchPath(tmpConfig.getProjectDir());

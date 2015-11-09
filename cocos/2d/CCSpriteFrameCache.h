@@ -34,7 +34,7 @@ THE SOFTWARE.
  * To create sprite frames and texture atlas, use this tool:
  * http://zwoptex.zwopple.com/
  * @~chinese 
- * ä½¿ç”¨è¿™ä¸ªå·¥å…·åˆ¶ä½œ SpriteFrame å’Œçº¹ç†é›†:
+ * Ê¹ÓÃÕâ¸ö¹¤¾ßÖÆ×÷ SpriteFrame ºÍÎÆÀí¼¯:
  * http://zwoptex.zwopple.com/
  */
 #include <set>
@@ -48,6 +48,7 @@ NS_CC_BEGIN
 
 class Sprite;
 class Texture2D;
+class PolygonInfo;
 
 /**
  * @addtogroup _2d
@@ -56,8 +57,37 @@ class Texture2D;
 
 /** @class SpriteFrameCache
  * @brief @~english Singleton that handles the loading of the sprite frames.
- It saves in a cache the sprite frames.
- * @~chinese ç”¨äºåŠ è½½ SpriteFrame çš„å•ä¾‹ï¼Œç¼“å­˜æ‰€æœ‰çš„ SpriteFrameã€‚
+
+ The SpriteFrameCache loads SpriteFrames from a .plist file.
+ A SpriteFrame contains information about how to use a sprite
+ located in a sprite sheet.
+ 
+ The .plist file contains the following elements:
+
+ - `frames`:
+   Dictionary of sprites. Key is the sprite's name, value a dict containing the sprite frame data.
+   A sprite frame consists of the following values:
+    - `spriteOffset`:     difference vector between the original sprite's center and the center of the trimmed sprite
+    - `spriteSize`:       size of the trimmed sprite
+    - `spriteSourceSize`: size of the original sprite
+    - `textureRect`:      the position of the sprite in the sprite sheet
+    - `textureRotated`:   true if the sprite is rotated clockwise
+   Optional values when using polygon outlines
+    - `triangles`:        3 indices per triangle, pointing to vertices and verticesUV coordinates
+    - `vertices`:         vertices in sprite coordinates, each vertex consists of a pair of x and y coordinates
+    - `verticesUV`:       vertices in the sprite sheet, each vertex consists of a pair of x and y coordinates
+ 
+ - `metadata`:
+   Dictionary containing additional information about the sprite sheet:
+     - `format`:          plist file format, currently 3
+     - `size`:            size of the texture (optional)
+     - `textureFileName`: name of the texture's image file
+ 
+ Use one of the following tools to create the .plist file and sprite sheet:
+ - [TexturePacker](https://www.codeandweb.com/texturepacker/cocos2d)
+ - [Zwoptex](https://zwopple.com/zwoptex/)
+ 
+ * @~chinese ÓÃÓÚ¼ÓÔØ SpriteFrame µÄµ¥Àı£¬»º´æËùÓĞµÄ SpriteFrame¡£
  @since v0.9
  @js cc.spriteFrameCache
  */
@@ -66,32 +96,32 @@ class CC_DLL SpriteFrameCache : public Ref
 public:
     /** @~english Returns the shared instance of the Sprite Frame cache.
      *
-     * @~chinese è¿”å› SpriteFrameCache çš„å®ä¾‹ã€‚
+     * @~chinese ·µ»Ø SpriteFrameCache µÄÊµÀı¡£
      * 
      * @return @~english The instance of the Sprite Frame Cache.
-     * @~chinese SpriteFrameCache çš„å®ä¾‹ã€‚
+     * @~chinese SpriteFrameCache µÄÊµÀı¡£
      * @js NA
      */
     static SpriteFrameCache* getInstance();
 
-    /** @deprecated Use getInstance() instead 
-     @js NA 
+    /** @deprecated Use getInstance() instead
+     @js NA
 	*/
     CC_DEPRECATED_ATTRIBUTE static SpriteFrameCache* sharedSpriteFrameCache() { return SpriteFrameCache::getInstance(); }
 
     /** @~english Destroys the cache. It releases all the Sprite Frames and the retained instance.
-     * @~chinese é”€æ¯ SpriteFrameCache çš„å®ä¾‹ã€‚ä¼šé‡Šæ”¾æ‰€æœ‰çš„ SpriteFrame å’Œ retain çš„å®ä¾‹ã€‚
+     * @~chinese Ïú»Ù SpriteFrameCache µÄÊµÀı¡£»áÊÍ·ÅËùÓĞµÄ SpriteFrame ºÍ retain µÄÊµÀı¡£
 	 * @js NA
      */
     static void destroyInstance();
 
-    /** @deprecated Use destroyInstance() instead 
+    /** @deprecated Use destroyInstance() instead
      * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedSpriteFrameCache() { return SpriteFrameCache::destroyInstance(); }
 
     /** @~english Destructor.
-     * @~chinese ææ„å‡½æ•°ã€‚
+     * @~chinese Îö¹¹º¯Êı¡£
      * @js NA
      * @lua NA
      */
@@ -99,10 +129,10 @@ public:
     
     /** @~english Initialize method.
      *
-     * @~chinese åˆå§‹åŒ–æ–¹æ³•ã€‚
+     * @~chinese ³õÊ¼»¯·½·¨¡£
      * 
      * @return @~english if success return true.
-     * @~chinese å¦‚æœæˆåŠŸè¿”å›trueã€‚
+     * @~chinese Èç¹û³É¹¦·µ»Øtrue¡£
      */
     bool init();
 
@@ -110,36 +140,36 @@ public:
      * A texture will be loaded automatically.
      * When texture file is not specified in plist file, the texture name will composed by replacing the .plist suffix with .png.
      * If you want to use another texture, you should use the `addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName)` method.
-     * @~chinese ä» plist æ–‡ä»¶æ·»åŠ å¤šä¸ª SpriteFrameã€‚
-     * ä¼šè‡ªåŠ¨åŠ è½½ç›¸åº”çš„çº¹ç†ã€‚
-     * å½“ plist æ–‡ä»¶ä¸­æœªæŒ‡å®šä½¿ç”¨çš„ texture æ–‡ä»¶æ—¶ï¼Œplist æ–‡ä»¶çš„æ‰©å±•åæ›¿æ¢ä¸º .png å³ä¸ºçº¹ç†æ–‡ä»¶çš„åç§°ã€‚
-     * å¦‚æœéœ€è¦ä½¿ç”¨æŒ‡å®šçš„çº¹ç†æ–‡ä»¶ï¼Œè¯·ä½¿ç”¨ `addSpriteFramesWithFile(const std::string& plist,const std::string& textureFileName)` æ–¹æ³•ã€‚
+     * @~chinese ´Ó plist ÎÄ¼şÌí¼Ó¶à¸ö SpriteFrame¡£
+     * »á×Ô¶¯¼ÓÔØÏàÓ¦µÄÎÆÀí¡£
+     * µ± plist ÎÄ¼şÖĞÎ´Ö¸¶¨Ê¹ÓÃµÄ texture ÎÄ¼şÊ±£¬plist ÎÄ¼şµÄÀ©Õ¹ÃûÌæ»»Îª .png ¼´ÎªÎÆÀíÎÄ¼şµÄÃû³Æ¡£
+     * Èç¹ûĞèÒªÊ¹ÓÃÖ¸¶¨µÄÎÆÀíÎÄ¼ş£¬ÇëÊ¹ÓÃ `addSpriteFramesWithFile(const std::string& plist,const std::string& textureFileName)` ·½·¨¡£
      * @param plist @~english Plist file name.
-     * @~chinese plist æ–‡ä»¶è·¯å¾„ã€‚
+     * @~chinese plist ÎÄ¼şÂ·¾¶¡£
      * @js addSpriteFrames
      * @lua addSpriteFrames
      */
     void addSpriteFramesWithFile(const std::string& plist);
 
     /** @~english Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„ plist æ–‡ä»¶ä¸çº¹ç†æ–‡ä»¶åŠ è½½ SpriteFrameã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄ plist ÎÄ¼şÓëÎÆÀíÎÄ¼ş¼ÓÔØ SpriteFrame¡£
      @since v0.99.5
 
      * @param plist @~english Plist file name.
-     * @~chinese plistæ–‡ä»¶è·¯å¾„ã€‚
+     * @~chinese plistÎÄ¼şÂ·¾¶¡£
      * @param textureFileName @~english Texture file name.
-     * @~chinese çº¹ç†æ–‡ä»¶è·¯å¾„ã€‚
+     * @~chinese ÎÆÀíÎÄ¼şÂ·¾¶¡£
      * @js addSpriteFrames
      * @lua addSpriteFrames
      */
     void addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName);
 
     /** @~english Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames. 
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„ plist æ–‡ä»¶å’Œçº¹ç†åŠ è½½ SpriteFrameã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄ plist ÎÄ¼şºÍÎÆÀí¼ÓÔØ SpriteFrame¡£
      * @param plist @~english Plist file name.
-     * @~chinese plistæ–‡ä»¶è·¯å¾„ã€‚
+     * @~chinese plistÎÄ¼şÂ·¾¶¡£
      * @param texture @~english Texture pointer.
-     * @~chinese æŒ‡å®šçš„çº¹ç†ã€‚
+     * @~chinese Ö¸¶¨µÄÎÆÀí¡£
      *
      * @js addSpriteFrames
      * @lua addSpriteFrames
@@ -147,12 +177,12 @@ public:
     void addSpriteFramesWithFile(const std::string&plist, Texture2D *texture);
 
     /** @~english Adds multiple Sprite Frames from a plist file content. The texture will be associated with the created sprite frames. 
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„ plist æ–‡ä»¶å†…å®¹ä¸çº¹ç†åŠ è½½ SpriteFrameã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄ plist ÎÄ¼şÄÚÈİÓëÎÆÀí¼ÓÔØ SpriteFrame¡£
      *
      * @param plist_content @~english Plist file content string.
-     * @~chinese plist æ–‡ä»¶å†…å®¹çš„å­—ç¬¦ä¸²ã€‚
+     * @~chinese plist ÎÄ¼şÄÚÈİµÄ×Ö·û´®¡£
      * @param texture @~english Texture pointer.
-     * @~chinese æŒ‡å®šçš„çº¹ç†ã€‚
+     * @~chinese Ö¸¶¨µÄÎÆÀí¡£
      *
      * @js NA
      * @lua addSpriteFrames
@@ -162,23 +192,23 @@ public:
     /** @~english Adds an sprite frame with a given name.
      If the name already exists, then the contents of the old name will be replaced with the new one.
      *
-     * @~chinese æ·»åŠ ä¸€ä¸ª SpriteFrame å¹¶æŒ‡å®šå…¶åç§°ã€‚
-     * å¦‚æœåç§°å·²ç»å­˜åœ¨ï¼Œé‚£ä¹ˆå°†å…¶å¯¹åº”çš„ SpriteFrame æ›´æ¢ä¸º frame å‚æ•°çš„å€¼ã€‚
+     * @~chinese Ìí¼ÓÒ»¸ö SpriteFrame ²¢Ö¸¶¨ÆäÃû³Æ¡£
+     * Èç¹ûÃû³ÆÒÑ¾­´æÔÚ£¬ÄÇÃ´½«Æä¶ÔÓ¦µÄ SpriteFrame ¸ü»»Îª frame ²ÎÊıµÄÖµ¡£
      * 
      * @param frame @~english A certain sprite frame.
-     * @~chinese æŒ‡å®šçš„ SpriteFrameã€‚
+     * @~chinese Ö¸¶¨µÄ SpriteFrame¡£
      * @param frameName @~english The name of the sprite frame.
-     * @~chinese æŒ‡å®šçš„ SpriteFrame åç§°ã€‚
+     * @~chinese Ö¸¶¨µÄ SpriteFrame Ãû³Æ¡£
      */
     void addSpriteFrame(SpriteFrame *frame, const std::string& frameName);
 
     /** @~english Check if multiple Sprite Frames from a plist file have been loaded.
-     * @~chinese æ£€æŸ¥ä¸€ä¸ª plist æ–‡ä»¶æ˜¯å¦å·²ç»è¢«åŠ è½½ã€‚
+     * @~chinese ¼ì²éÒ»¸ö plist ÎÄ¼şÊÇ·ñÒÑ¾­±»¼ÓÔØ¡£
      *
      * @param plist @~english Plist file name.
-     * @~chinese plist æ–‡ä»¶è·¯å¾„ã€‚
+     * @~chinese plist ÎÄ¼şÂ·¾¶¡£
      * @return @~english True if the file is loaded.
-     * @~chinese å¦‚æœæ–‡ä»¶å·²è¢«åŠ è½½ï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
+     * @~chinese Èç¹ûÎÄ¼şÒÑ±»¼ÓÔØ£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
      * @js NA
      * @lua NA
      */
@@ -189,42 +219,42 @@ public:
      * In the short term: it will free some resources preventing your app from being killed.
      * In the medium term: it will allocate more resources.
      * In the long term: it will be the same.
-     * @~chinese æ¸…ç†å·²åŠ è½½çš„ SpriteFrameã€‚
-     * å¯ä»¥è°ƒç”¨è¿™ä¸ªæ–¹æ³•æ¥é‡Šæ”¾ SpriteFrame å ç”¨çš„å†…å­˜ã€‚
-     * åœ¨çŸ­æœŸå†…:å¯ä»¥é‡Šæ”¾å†…å­˜ä»¥é˜²æ­¢åº”ç”¨ç¨‹åºè¢«ä¸­æ­¢ã€‚
-     * åœ¨ä¸­æœŸå†…:ä¼šåˆ†é…æ›´å¤šçš„èµ„æºã€‚
-     * ä»é•¿è¿œæ¥çœ‹:æ²¡æœ‰ä»€ä¹ˆåŒºåˆ«ã€‚
+     * @~chinese ÇåÀíÒÑ¼ÓÔØµÄ SpriteFrame¡£
+     * ¿ÉÒÔµ÷ÓÃÕâ¸ö·½·¨À´ÊÍ·Å SpriteFrame Õ¼ÓÃµÄÄÚ´æ¡£
+     * ÔÚ¶ÌÆÚÄÚ:¿ÉÒÔÊÍ·ÅÄÚ´æÒÔ·ÀÖ¹Ó¦ÓÃ³ÌĞò±»ÖĞÖ¹¡£
+     * ÔÚÖĞÆÚÄÚ:»á·ÖÅä¸ü¶àµÄ×ÊÔ´¡£
+     * ´Ó³¤Ô¶À´¿´:Ã»ÓĞÊ²Ã´Çø±ğ¡£
      */
     void removeSpriteFrames();
 
     /** @~english Removes unused sprite frames.
      * Sprite Frames that have a retain count of 1 will be deleted.
      * It is convenient to call this method after when starting a new Scene.
-     * @~chinese é‡Šæ”¾æœªä½¿ç”¨çš„ SpriteFrameã€‚
-     * å¼•ç”¨è®¡æ•°ä¸º 1 çš„ SpriteFrame å°†è¢«åˆ é™¤ã€‚
-     * åœ¨è¿›å…¥ä¸€ä¸ªæ–°çš„åœºæ™¯æ—¶ï¼Œå¯ä»¥é€šè¿‡è°ƒç”¨è¯¥æ–¹æ³•æ–¹ä¾¿çš„é‡Šæ”¾ä¸å†ä½¿ç”¨çš„ SpriteFrameã€‚
+     * @~chinese ÊÍ·ÅÎ´Ê¹ÓÃµÄ SpriteFrame¡£
+     * ÒıÓÃ¼ÆÊıÎª 1 µÄ SpriteFrame ½«±»É¾³ı¡£
+     * ÔÚ½øÈëÒ»¸öĞÂµÄ³¡¾°Ê±£¬¿ÉÒÔÍ¨¹ıµ÷ÓÃ¸Ã·½·¨·½±ãµÄÊÍ·Å²»ÔÙÊ¹ÓÃµÄ SpriteFrame¡£
 	 * @js NA
      */
     void removeUnusedSpriteFrames();
 
     /** @~english Deletes an sprite frame from the sprite frame cache. 
      *
-     * @~chinese æ ¹æ®æŒ‡å®šçš„åç§°ä»ç¼“å­˜ä¸­åˆ é™¤ä¸€ä¸ª SpriteFrameã€‚
+     * @~chinese ¸ù¾İÖ¸¶¨µÄÃû³Æ´Ó»º´æÖĞÉ¾³ıÒ»¸ö SpriteFrame¡£
      * 
      * @param name @~english The name of the sprite frame that needs to removed.
-     * @~chinese éœ€è¦åˆ é™¤çš„ SpriteFrame åç§°ã€‚
+     * @~chinese ĞèÒªÉ¾³ıµÄ SpriteFrame Ãû³Æ¡£
      */
     void removeSpriteFrameByName(const std::string& name);
 
     /** @~english Removes multiple Sprite Frames from a plist file.
      * Sprite Frames stored in this file will be removed.
      * It is convenient to call this method when a specific texture needs to be removed.
-     * @~chinese å°†æŒ‡å®šçš„ plist æ–‡ä»¶ä¸­çš„ SpriteFrame ä»ç¼“å­˜ä¸­åˆ é™¤ã€‚
-     * è°ƒç”¨è¿™ä¸ªæ–¹æ³•å¯ä»¥æ–¹ä¾¿çš„ä»ç¼“å­˜ä¸­åˆ é™¤æŒ‡å®šçš„ plist ä¸­çš„ SpriteFrameã€‚
+     * @~chinese ½«Ö¸¶¨µÄ plist ÎÄ¼şÖĞµÄ SpriteFrame ´Ó»º´æÖĞÉ¾³ı¡£
+     * µ÷ÓÃÕâ¸ö·½·¨¿ÉÒÔ·½±ãµÄ´Ó»º´æÖĞÉ¾³ıÖ¸¶¨µÄ plist ÖĞµÄ SpriteFrame¡£
      * @since v0.99.5
      *
      * @param plist @~english The name of the plist that needs to removed.
-     * @~chinese éœ€è¦åˆ é™¤ SpriteFrame æ‰€ä½¿ç”¨çš„ plist æ–‡ä»¶è·¯å¾„ã€‚
+     * @~chinese ĞèÒªÉ¾³ı SpriteFrame ËùÊ¹ÓÃµÄ plist ÎÄ¼şÂ·¾¶¡£
      */
     void removeSpriteFramesFromFile(const std::string& plist);
 
@@ -232,37 +262,37 @@ public:
      * Sprite Frames stored in this file will be removed.
      * It is convenient to call this method when a specific texture needs to be removed.
      *
-     * @~chinese å°†æŒ‡å®šçš„ plist æ–‡ä»¶å†…å®¹ä¸­çš„ SpriteFrame ä»ç¼“å­˜ä¸­åˆ é™¤ã€‚
-     * è°ƒç”¨è¿™ä¸ªæ–¹æ³•å¯ä»¥æ–¹ä¾¿çš„ä»ç¼“å­˜ä¸­åˆ é™¤æŒ‡å®šçš„ plist ä¸­çš„ SpriteFrameã€‚
+     * @~chinese ½«Ö¸¶¨µÄ plist ÎÄ¼şÄÚÈİÖĞµÄ SpriteFrame ´Ó»º´æÖĞÉ¾³ı¡£
+     * µ÷ÓÃÕâ¸ö·½·¨¿ÉÒÔ·½±ãµÄ´Ó»º´æÖĞÉ¾³ıÖ¸¶¨µÄ plist ÖĞµÄ SpriteFrame¡£
      * 
      * @param plist_content @~english The string of the plist content used to find the corresponding SpriteFrame.
-     * @~chinese éœ€è¦åˆ é™¤çš„ SpriteFrame æ‰€ä½¿ç”¨çš„ plist æ–‡ä»¶å†…å®¹ã€‚
+     * @~chinese ĞèÒªÉ¾³ıµÄ SpriteFrame ËùÊ¹ÓÃµÄ plist ÎÄ¼şÄÚÈİ¡£
      * @js NA
      */
     void removeSpriteFramesFromFileContent(const std::string& plist_content);
 
     /** @~english Removes all Sprite Frames associated with the specified textures.
      * It is convenient to call this method when a specific texture needs to be removed.
-     * @~chinese å°†ä½¿ç”¨æŒ‡å®šçº¹ç†çš„ SpriteFrame ä»ç¼“å­˜ä¸­åˆ é™¤ã€‚
-     * è°ƒç”¨è¿™ä¸ªæ–¹æ³•å¯ä»¥æ–¹ä¾¿çš„ä»ç¼“å­˜ä¸­åˆ é™¤ä½¿ç”¨æŒ‡å®šçº¹ç†çš„ SpriteFrameã€‚
+     * @~chinese ½«Ê¹ÓÃÖ¸¶¨ÎÆÀíµÄ SpriteFrame ´Ó»º´æÖĞÉ¾³ı¡£
+     * µ÷ÓÃÕâ¸ö·½·¨¿ÉÒÔ·½±ãµÄ´Ó»º´æÖĞÉ¾³ıÊ¹ÓÃÖ¸¶¨ÎÆÀíµÄ SpriteFrame¡£
      * @since v0.995.
      *
      * @param texture @~english The texture used to find the corresponding SpriteFrame.
-     * @~chinese éœ€è¦åˆ é™¤çš„ SpriteFrame æ‰€ä½¿ç”¨çš„çº¹ç†ã€‚
+     * @~chinese ĞèÒªÉ¾³ıµÄ SpriteFrame ËùÊ¹ÓÃµÄÎÆÀí¡£
      */
     void removeSpriteFramesFromTexture(Texture2D* texture);
 
     /** @~english Returns an Sprite Frame that was previously added.
      If the name is not found it will return nil.
      You should retain the returned copy if you are going to use it.
-     * @~chinese è·å–æŒ‡å®šåç§°çš„ SpriteFrameã€‚
-     * å¦‚æœæ²¡æœ‰æ‰¾åˆ°è¿™ä¸ªåå­—å®ƒå°†è¿”å› nullptrã€‚
-     * åœ¨ä½¿ç”¨è¿”å›å€¼çš„è¿‡ç¨‹ä¸­ï¼Œåº”è¯¥å¯¹å…¶è¿›è¡Œ retainã€‚
+     * @~chinese »ñÈ¡Ö¸¶¨Ãû³ÆµÄ SpriteFrame¡£
+     * Èç¹ûÃ»ÓĞÕÒµ½Õâ¸öÃû×ÖËü½«·µ»Ø nullptr¡£
+     * ÔÚÊ¹ÓÃ·µ»ØÖµµÄ¹ı³ÌÖĞ£¬Ó¦¸Ã¶ÔÆä½øĞĞ retain¡£
      *
      * @param name @~english A certain sprite frame name.
-     * @~chinese æŒ‡å®šçš„ SpriteFrame åç§°ã€‚
+     * @~chinese Ö¸¶¨µÄ SpriteFrame Ãû³Æ¡£
      * @return @~english The sprite frame.
-     * @~chinese SpriteFrame å®ä¾‹ã€‚
+     * @~chinese SpriteFrame ÊµÀı¡£
      * @js getSpriteFrame
      * @lua getSpriteFrame
      */
@@ -276,16 +306,26 @@ protected:
     SpriteFrameCache(){}
 
     /*@~english Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„ ValueMap ä¸çº¹ç†æ·»åŠ å¤šä¸ª SpriteFrameã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄ ValueMap ÓëÎÆÀíÌí¼Ó¶à¸ö SpriteFrame¡£
      */
     void addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture);
 
     /** @~english Removes multiple Sprite Frames from Dictionary.
-     * @~chinese å°†æŒ‡å®šçš„ ValueMap ä¸­çš„ SpriteFrame ä»ç¼“å­˜ä¸­åˆ é™¤ã€‚
+     * @~chinese ½«Ö¸¶¨µÄ ValueMap ÖĞµÄ SpriteFrame ´Ó»º´æÖĞÉ¾³ı¡£
     * @since v0.99.5
     */
     void removeSpriteFramesFromDictionary(ValueMap& dictionary);
 
+    /** Parses list of space-separated integers */
+    void parseIntegerList(const std::string &string, std::vector<int> &res);
+    
+    /** Configures PolygonInfo class with the passed sizes + triangles */
+    void initializePolygonInfo(const Size &textureSize,
+                               const Size &spriteSize,
+                               const std::vector<int> &vertices,
+                               const std::vector<int> &verticesUV,
+                               const std::vector<int> &triangleIndices,
+                               PolygonInfo &polygonInfo);
 
     Map<std::string, SpriteFrame*> _spriteFrames;
     ValueMap _spriteFramesAliases;

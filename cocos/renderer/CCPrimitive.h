@@ -42,7 +42,7 @@ class IndexBuffer;
  Primitive can support sending points, lines and triangles to glpipeline, which is an abstraction
  of primitive data.
  * @~chinese 
- * Primitiveå¯ä»¥æ”¯æŒç‚¹,çº¿å’Œä¸‰è§’å½¢çš„æ¸²æŸ“, æ˜¯æ¸²æŸ“åŸºç¡€å›¾å…ƒçš„æŠ½è±¡ã€‚
+ * Primitive¿ÉÒÔÖ§³Öµã,ÏßºÍÈı½ÇĞÎµÄäÖÈ¾, ÊÇäÖÈ¾»ù´¡Í¼ÔªµÄ³éÏó¡£
  */
 class CC_DLL Primitive : public Ref
 {
@@ -50,33 +50,33 @@ public:
     /**@~english
      Create an instance of primitive.
      * @~chinese 
-     * åˆ›å»ºä¸€ä¸ªPrimitiveå®ä¾‹ã€‚
+     * ´´½¨Ò»¸öPrimitiveÊµÀı¡£
      @param verts @~english VertexData used in the primitive.
-     * @~chinese å›¾å…ƒä½¿ç”¨çš„VertexDataã€‚
+     * @~chinese Í¼ÔªÊ¹ÓÃµÄVertexData¡£
      @param indices @~english Optional index data, null will means that no indices needed.
-     * @~chinese ç´¢å¼•ç¼“å†²ï¼Œå¦‚æœæ˜¯nullï¼Œè¡¨ç¤ºæ²¡æœ‰ç´¢å¼•ã€‚
+     * @~chinese Ë÷Òı»º³å£¬Èç¹ûÊÇnull£¬±íÊ¾Ã»ÓĞË÷Òı¡£
      @param type @~english The type (Points, Lines, Triangles) used.
-     * @~chinese openGLä¸­æšä¸¾çš„å›¾å…ƒç±»å‹(ç‚¹ã€çº¿ã€ä¸‰è§’å½¢)ã€‚
+     * @~chinese openGLÖĞÃ¶¾ÙµÄÍ¼ÔªÀàĞÍ(µã¡¢Ïß¡¢Èı½ÇĞÎ)¡£
      */
     static Primitive* create(VertexData* verts, IndexBuffer* indices, int type);
-    /**@~english Get the vertexData. @~chinese å¾—åˆ°VertexDataã€‚*/
+    /**@~english Get the vertexData. @~chinese µÃµ½VertexData¡£*/
     const VertexData* getVertexData() const;
-    /**@~english Get the optional index data, will return null if index data is not used. @~chinese å¯é€‰çš„ç´¢å¼•æ•°æ®,å¦‚æœä¸ä½¿ç”¨ç´¢å¼•æ•°æ®å°†è¿”å›nullã€‚*/
+    /**@~english Get the optional index data, will return null if index data is not used. @~chinese ¿ÉÑ¡µÄË÷ÒıÊı¾İ,Èç¹û²»Ê¹ÓÃË÷ÒıÊı¾İ½«·µ»Ønull¡£*/
     const IndexBuffer* getIndexData() const;
-    /**@~english Get the primitive type. @~chinese å›¾å…ƒçš„ç±»å‹ã€‚*/
+    /**@~english Get the primitive type. @~chinese Í¼ÔªµÄÀàĞÍ¡£*/
     int getType() const { return _type; }
     
-    /**@~english called by rendering framework, will send the data to GLPipeline. @~chinese è¢«æ¸²æŸ“æ¡†æ¶,å°†å‘GLPipelineå‘é€æ•°æ®ã€‚*/
+    /**@~english called by rendering framework, will send the data to GLPipeline. @~chinese ±»äÖÈ¾¿ò¼Ü,½«ÏòGLPipeline·¢ËÍÊı¾İ¡£*/
     void draw();
     
-    /**@~english Get the start index of primtive. @~chinese ç»˜åˆ¶çš„èµ·å§‹ç´¢å¼•ä½ç½®ã€‚*/
+    /**@~english Get the start index of primtive. @~chinese »æÖÆµÄÆğÊ¼Ë÷ÒıÎ»ÖÃ¡£*/
     int getStart() const { return _start; }
-    /**@~english Get the number of vertices or indices used for drawing. @~chinese ç”¨äºç»˜åˆ¶çš„é¡¶ç‚¹æˆ–è€…ç´¢å¼•ï¼ˆå¦‚æœæœ‰ï¼‰çš„æ•°ç›®ã€‚*/
+    /**@~english Get the number of vertices or indices used for drawing. @~chinese ÓÃÓÚ»æÖÆµÄ¶¥µã»òÕßË÷Òı£¨Èç¹ûÓĞ£©µÄÊıÄ¿¡£*/
     int getCount() const { return _count; }
-    /**@~english Setter for the start index. @~chinese è®¾ç½®å¼€å§‹ç´¢å¼•çš„ä½ç½®ã€‚*/
-    void setStart(int start) { _start = start; }
-    /**@~english Setter for the count.  @~chinese è®¾ç½®ç»˜åˆ¶çš„é¡¶ç‚¹æˆ–ç´¢å¼•çš„ä¸ªæ•°ã€‚*/
-    void setCount(int count) { _count = count; }
+    /**@~english Setter for the start index. @~chinese ÉèÖÃ¿ªÊ¼Ë÷ÒıµÄÎ»ÖÃ¡£*/
+    void setStart(int start);
+    /**@~english Setter for the count.  @~chinese ÉèÖÃ»æÖÆµÄ¶¥µã»òË÷ÒıµÄ¸öÊı¡£*/
+    void setCount(int count);
     
 protected:
     Primitive();

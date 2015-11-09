@@ -42,8 +42,8 @@ NS_CC_BEGIN
 /**
  *@brief @~english A inner node type mainly used for UI module.
  * It is useful for composing complex node type and it's children are protected.
- * @~chinese ä¸»è¦ç”¨äºUIæ¨¡å—çš„å†…éƒ¨èŠ‚ç‚¹ç±»å‹ã€‚
- * ç”¨äºç»„åˆå‡ºå¤æ‚çš„èŠ‚ç‚¹ç±»å‹ã€‚æ‰€æœ‰çš„å­èŠ‚ç‚¹éƒ½ä¸º protectedã€‚
+ * @~chinese Ö÷ÒªÓÃÓÚUIÄ£¿éµÄÄÚ²¿½ÚµãÀàĞÍ¡£
+ * ÓÃÓÚ×éºÏ³ö¸´ÔÓµÄ½ÚµãÀàĞÍ¡£ËùÓĞµÄ×Ó½Úµã¶¼Îª protected¡£
  */
 class  CC_DLL ProtectedNode : public Node
 {
@@ -51,9 +51,9 @@ public:
     /**@~english
      * Creates a ProtectedNode with no argument.
      * @~chinese 
-     * ä¸ä½¿ç”¨å‚æ•°åˆ›å»ºä¸€ä¸ªProtectedNodeã€‚
+     * ²»Ê¹ÓÃ²ÎÊı´´½¨Ò»¸öProtectedNode¡£
      *@return @~english A instance of ProtectedNode.
-     * @~chinese ProtectedNodeçš„å®ä¾‹ã€‚
+     * @~chinese ProtectedNodeµÄÊµÀı¡£
      */
     static ProtectedNode * create(void);
     
@@ -66,12 +66,12 @@ public:
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @~chinese 
-     * æ·»åŠ ä¸€ä¸ª Z å€¼ä¸º 0 çš„å­èŠ‚ç‚¹ã€‚
+     * Ìí¼ÓÒ»¸ö Z ÖµÎª 0 µÄ×Ó½Úµã¡£
      * 
-     * å¦‚æœå½“å‰èŠ‚ç‚¹æ­£åœ¨è¿è¡Œï¼Œé‚£ä¹ˆ 'onEnter' å’Œ 'onEnterTransitionDidFinish' ä¼šè¢«ç«‹å³è°ƒç”¨ã€‚
+     * Èç¹ûµ±Ç°½ÚµãÕıÔÚÔËĞĞ£¬ÄÇÃ´ 'onEnter' ºÍ 'onEnterTransitionDidFinish' »á±»Á¢¼´µ÷ÓÃ¡£
      * 
      * @param child @~english A child node
-     * @~chinese ä¸€ä¸ªå­èŠ‚ç‚¹
+     * @~chinese Ò»¸ö×Ó½Úµã
      */
     virtual void addProtectedChild(Node * child);
     /**@~english
@@ -80,14 +80,14 @@ public:
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @~chinese 
-     * æ·»åŠ ä¸€ä¸ª z å€¼ä¸º localZOrder çš„å­èŠ‚ç‚¹ã€‚
+     * Ìí¼ÓÒ»¸ö z ÖµÎª localZOrder µÄ×Ó½Úµã¡£
      * 
-     * å¦‚æœå½“å‰èŠ‚ç‚¹æ­£åœ¨è¿è¡Œï¼Œé‚£ä¹ˆ 'onEnter' å’Œ 'onEnterTransitionDidFinish' ä¼šè¢«ç«‹å³è°ƒç”¨ã€‚
+     * Èç¹ûµ±Ç°½ÚµãÕıÔÚÔËĞĞ£¬ÄÇÃ´ 'onEnter' ºÍ 'onEnterTransitionDidFinish' »á±»Á¢¼´µ÷ÓÃ¡£
      * 
      * @param child     @~english A child node
-     * @~chinese ä¸€ä¸ªå­èŠ‚ç‚¹
+     * @~chinese Ò»¸ö×Ó½Úµã
      * @param localZOrder    @~english Z order for drawing priority. Please refer to `setLocalZOrder(int)`
-     * @~chinese ç”¨äºæ§åˆ¶ç»˜åˆ¶é¡ºåºçš„ z å€¼ã€‚è¯·å‚é˜…`setLocalZOrder(int)`
+     * @~chinese ÓÃÓÚ¿ØÖÆ»æÖÆË³ĞòµÄ z Öµ¡£Çë²ÎÔÄ`setLocalZOrder(int)`
      */
     virtual void addProtectedChild(Node * child, int localZOrder);
     /**@~english
@@ -96,30 +96,30 @@ public:
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @~chinese 
-     * æŒ‡å®š z å€¼å’Œ tag æ·»åŠ å­èŠ‚ç‚¹
+     * Ö¸¶¨ z ÖµºÍ tag Ìí¼Ó×Ó½Úµã
      * 
-     * å¦‚æœå½“å‰èŠ‚ç‚¹æ­£åœ¨è¿è¡Œï¼Œé‚£ä¹ˆ 'onEnter' å’Œ 'onEnterTransitionDidFinish' ä¼šè¢«ç«‹å³è°ƒç”¨ã€‚
+     * Èç¹ûµ±Ç°½ÚµãÕıÔÚÔËĞĞ£¬ÄÇÃ´ 'onEnter' ºÍ 'onEnterTransitionDidFinish' »á±»Á¢¼´µ÷ÓÃ¡£
      * 
      * @param child     @~english A child node
-     * @~chinese ä¸€ä¸ªå­èŠ‚ç‚¹
+     * @~chinese Ò»¸ö×Ó½Úµã
      * @param localZOrder    @~english Z order for drawing priority. Please refer to `setLocalZOrder(int)`
-     * @~chinese ç”¨äºæ§åˆ¶ç»˜åˆ¶é¡ºåºçš„ z å€¼ã€‚è¯·å‚é˜…`setLocalZOrder(int)`
+     * @~chinese ÓÃÓÚ¿ØÖÆ»æÖÆË³ĞòµÄ z Öµ¡£Çë²ÎÔÄ`setLocalZOrder(int)`
      * @param tag       @~english An integer to identify the node easily. Please refer to `setTag(int)`
-     * @~chinese ä¸€ä¸ªç”¨äºæ ‡è¯†èŠ‚ç‚¹çš„æ•´æ•°ã€‚è¯·å‚é˜…`setTag(int)`
+     * @~chinese Ò»¸öÓÃÓÚ±êÊ¶½ÚµãµÄÕûÊı¡£Çë²ÎÔÄ`setTag(int)`
      */
     virtual void addProtectedChild(Node* child, int localZOrder, int tag);
     /**@~english
      * Gets a child from the container with its tag.
      *
      * @~chinese 
-     * é€šè¿‡ tag å€¼è·å–ä¸€ä¸ªå­èŠ‚ç‚¹ã€‚
+     * Í¨¹ı tag Öµ»ñÈ¡Ò»¸ö×Ó½Úµã¡£
      * 
      * @param tag   @~english An identifier to find the child node.
      *
-     * @~chinese ä¸€ä¸ªç”¨äºæ ‡è¯†èŠ‚ç‚¹çš„æ•´æ•°ã€‚
+     * @~chinese Ò»¸öÓÃÓÚ±êÊ¶½ÚµãµÄÕûÊı¡£
      * 
      * @return @~english a Node object whose tag equals to the input parameter.
-     * @~chinese tag å€¼ä¸è¾“å…¥å‚æ•°ç›¸åŒçš„å­èŠ‚ç‚¹å®ä¾‹ã€‚
+     * @~chinese tag ÖµÓëÊäÈë²ÎÊıÏàÍ¬µÄ×Ó½ÚµãÊµÀı¡£
      */
     virtual Node * getProtectedChildByTag(int tag);
     
@@ -129,12 +129,12 @@ public:
      * Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
      *
      * @~chinese 
-     * åˆ é™¤ä¸€ä¸ªå­èŠ‚ç‚¹ã€‚å¯ä»¥é€šè¿‡è®¾ç½® cleanup çš„å‚æ•°å€¼æ¸…ç†æ‰€æœ‰æ­£åœ¨è¿è¡Œçš„ actionã€‚
+     * É¾³ıÒ»¸ö×Ó½Úµã¡£¿ÉÒÔÍ¨¹ıÉèÖÃ cleanup µÄ²ÎÊıÖµÇåÀíËùÓĞÕıÔÚÔËĞĞµÄ action¡£
      * 
      * @param child     @~english The child node which will be removed.
-     * @~chinese å°†è¢«åˆ é™¤çš„å­èŠ‚ç‚¹ã€‚
+     * @~chinese ½«±»É¾³ıµÄ×Ó½Úµã¡£
      * @param cleanup   @~english true if all running actions and callbacks on the child node will be cleanup, false otherwise.
-     * @~chinese å¦‚æœä¸º trueï¼Œå°†æ¸…ç†å­èŠ‚ç‚¹ç›¸å…³çš„ action å’Œå›è°ƒã€‚
+     * @~chinese Èç¹ûÎª true£¬½«ÇåÀí×Ó½ÚµãÏà¹ØµÄ action ºÍ»Øµ÷¡£
      */
     virtual void removeProtectedChild(Node* child, bool cleanup = true);
     
@@ -142,12 +142,12 @@ public:
      * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter.
      *
      * @~chinese 
-     * é€šè¿‡ tag å€¼æ¥åˆ é™¤å­èŠ‚ç‚¹ã€‚å¯ä»¥é€šè¿‡è®¾ç½® cleanup çš„å‚æ•°å€¼æ¸…ç†æ‰€æœ‰æ­£åœ¨è¿è¡Œçš„ actionã€‚
+     * Í¨¹ı tag ÖµÀ´É¾³ı×Ó½Úµã¡£¿ÉÒÔÍ¨¹ıÉèÖÃ cleanup µÄ²ÎÊıÖµÇåÀíËùÓĞÕıÔÚÔËĞĞµÄ action¡£
      * 
      * @param tag       @~english An interger number that identifies a child node.
-     * @~chinese ç”¨äºæ ‡è¯†å­èŠ‚ç‚¹çš„ tag å€¼ã€‚
+     * @~chinese ÓÃÓÚ±êÊ¶×Ó½ÚµãµÄ tag Öµ¡£
      * @param cleanup   @~english true if all running actions and callbacks on the child node will be cleanup, false otherwise.
-     * @~chinese å¦‚æœä¸º trueï¼Œå°†æ¸…ç†å­èŠ‚ç‚¹ç›¸å…³çš„ action å’Œå›è°ƒã€‚
+     * @~chinese Èç¹ûÎª true£¬½«ÇåÀí×Ó½ÚµãÏà¹ØµÄ action ºÍ»Øµ÷¡£
      */
     virtual void removeProtectedChildByTag(int tag, bool cleanup = true);
     
@@ -155,7 +155,7 @@ public:
      * Removes all children from the container with a cleanup.
      *
      * @~chinese 
-     * ç§»é™¤æ‰€æœ‰å­èŠ‚ç‚¹ã€‚
+     * ÒÆ³ıËùÓĞ×Ó½Úµã¡£
      * 
      * @see `removeAllChildrenWithCleanup(bool)`.
      */
@@ -164,10 +164,10 @@ public:
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      *
      * @~chinese 
-     * ç§»é™¤æ‰€æœ‰å­èŠ‚ç‚¹ï¼Œå½“ cleanup ä¸º true æ—¶æ¸…ç†æ‰€æœ‰èŠ‚ç‚¹ç›¸å…³çš„æ“ä½œï¼Œå¦åˆ™ä¸æ¸…ç†ã€‚
+     * ÒÆ³ıËùÓĞ×Ó½Úµã£¬µ± cleanup Îª true Ê±ÇåÀíËùÓĞ½ÚµãÏà¹ØµÄ²Ù×÷£¬·ñÔò²»ÇåÀí¡£
      * 
      * @param cleanup   @~english true if all running actions on all children nodes should be cleanup, false oterwise.
-     * @~chinese å¦‚æœä¸º trueï¼Œå°†æ¸…ç†å­èŠ‚ç‚¹ç›¸å…³çš„ action å’Œå›è°ƒã€‚
+     * @~chinese Èç¹ûÎª true£¬½«ÇåÀí×Ó½ÚµãÏà¹ØµÄ action ºÍ»Øµ÷¡£
      * @js removeAllChildren
      * @lua removeAllChildren
      */
@@ -177,12 +177,12 @@ public:
      * Reorders a child according to a new z value.
      *
      * @~chinese 
-     * ä¸ºä¸€ä¸ªå­èŠ‚ç‚¹è®¾ç½®æ–°çš„ z å€¼å¹¶é‡æ–°æ’åºã€‚
+     * ÎªÒ»¸ö×Ó½ÚµãÉèÖÃĞÂµÄ z Öµ²¢ÖØĞÂÅÅĞò¡£
      * 
      * @param child     @~english An already added child node. It MUST be already added.
-     * @~chinese ä¸€ä¸ªå·²ç»å­˜åœ¨çš„å­èŠ‚ç‚¹ã€‚
+     * @~chinese Ò»¸öÒÑ¾­´æÔÚµÄ×Ó½Úµã¡£
      * @param localZOrder @~english Z order for drawing priority. Please refer to `setLocalZOrder(int)`
-     * @~chinese ç”¨äºæ§åˆ¶ç»˜åˆ¶é¡ºåºçš„ z å€¼ã€‚è¯·å‚é˜… `setLocalZOrder(int)`
+     * @~chinese ÓÃÓÚ¿ØÖÆ»æÖÆË³ĞòµÄ z Öµ¡£Çë²ÎÔÄ `setLocalZOrder(int)`
      */
     virtual void reorderProtectedChild(Node * child, int localZOrder);
     
@@ -190,9 +190,9 @@ public:
      * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
      * This approach can improves the performance massively.
      * @~chinese 
-     * åœ¨ç»˜åˆ¶ä¹‹å‰å¯¹æ‰€æœ‰å­èŠ‚ç‚¹è¿›è¡Œä¸€æ¬¡æ’åºã€‚ç›¸å¯¹äºæ¯æ·»åŠ ä¸€ä¸ªèŠ‚ç‚¹å°±æ’åºä¸€æ¬¡ï¼Œå¯ä»¥å¤§å¤§æé«˜æ€§èƒ½ã€‚
+     * ÔÚ»æÖÆÖ®Ç°¶ÔËùÓĞ×Ó½Úµã½øĞĞÒ»´ÎÅÅĞò¡£Ïà¶ÔÓÚÃ¿Ìí¼ÓÒ»¸ö½Úµã¾ÍÅÅĞòÒ»´Î£¬¿ÉÒÔ´ó´óÌá¸ßĞÔÄÜ¡£
      * @note @~english Don't call this manually unless a child added needs to be removed in the same frame
-     * @~chinese ä¸è¦æ‰‹åŠ¨è°ƒç”¨æ­¤å‡½æ•°ï¼Œé™¤éä¸€ä¸ªå­èŠ‚ç‚¹éœ€è¦åœ¨å½“å‰å¸§åˆ é™¤ã€‚
+     * @~chinese ²»ÒªÊÖ¶¯µ÷ÓÃ´Ëº¯Êı£¬³ı·ÇÒ»¸ö×Ó½ÚµãĞèÒªÔÚµ±Ç°Ö¡É¾³ı¡£
      */
     virtual void sortAllProtectedChildren();
     

@@ -41,11 +41,9 @@ namespace CocosAppWinRT
     private:
         void OnPageLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs^ args);
-        void OnSwapChainPanelSizeChanged(Platform::Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e);
 #if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP) || _MSC_VER >= 1900
         void OnBackButtonPressed(Platform::Object^ sender, Windows::Phone::UI::Input::BackPressedEventArgs^ args);
 #endif
-        void GetSwapChainPanelSize(GLsizei* width, GLsizei* height);
         void CreateRenderSurface();
         void DestroyRenderSurface();
         void RecoverFromLostDevice();
@@ -53,14 +51,10 @@ namespace CocosAppWinRT
         void StartRenderLoop();
         void StopRenderLoop();
 
+        void CreateInput();
+
         OpenGLES* mOpenGLES;
         std::shared_ptr<Cocos2dRenderer> mRenderer;
-
-        Windows::Foundation::Size mSwapChainPanelSize;
-        Concurrency::critical_section mSwapChainPanelSizeCriticalSection;
-
-        Windows::Foundation::Size mCustomRenderSurfaceSize;
-        bool mUseCustomRenderSurfaceSize;
 
         EGLSurface mRenderSurface;     // This surface is associated with a swapChainPanel on the page
         Concurrency::critical_section mRenderSurfaceCriticalSection;
@@ -70,12 +64,16 @@ namespace CocosAppWinRT
         Windows::Foundation::IAsyncAction^ mInputLoopWorker;
         Windows::UI::Core::CoreIndependentInputSource^ mCoreInput;
 
-        // Independent input handling functions.
+        // Independent touch and pen handling functions.
         void OnPointerPressed(Platform::Object^ sender, Windows::UI::Core::PointerEventArgs^ e);
         void OnPointerMoved(Platform::Object^ sender, Windows::UI::Core::PointerEventArgs^ e);
         void OnPointerReleased(Platform::Object^ sender, Windows::UI::Core::PointerEventArgs^ e);
+        void OnPointerWheelChanged(Platform::Object^ sender, Windows::UI::Core::PointerEventArgs^ e);
+
+        // Independent keyboard handling functions.
 		void OnKeyPressed(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args);
 		void OnKeyReleased(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args);
+
 		void OnCharacterReceived(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::CharacterReceivedEventArgs^ args);
 
         void OnOrientationChanged(Windows::Graphics::Display::DisplayInformation^ sender, Platform::Object^ args);
@@ -83,6 +81,7 @@ namespace CocosAppWinRT
         float mDpi;
         bool mDeviceLost;
         bool mVisible;
+        bool mCursorVisible;
         Windows::Graphics::Display::DisplayOrientations mOrientation;
 
         std::mutex mSleepMutex;

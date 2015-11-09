@@ -48,11 +48,11 @@ class EventCustom;
  * adds a sprite as it's display child with the results, so you can simply add
  * the render texture to your scene and treat it like any other Node.
  * There are also functions for saving the render texture to disk in PNG or JPG format.
- * @~chinese RenderTextureæ˜¯ä¸€ä¸ªé€šç”¨çš„æ¸²æŸ“èŠ‚ç‚¹ã€‚è¦åœ¨å…¶ä¸­è¿›è¡Œæ¸²æŸ“ï¼Œåªéœ€ç®€å•çš„æ„é€ ä¸€ä¸ª RenderTexture å¯¹è±¡ï¼Œ
- * ç„¶åè°ƒç”¨ begin æ–¹æ³•ï¼Œå†è°ƒç”¨éœ€è¦æ¸²æŸ“çš„åœºæ™¯æˆ–å¯¹è±¡ï¼Œæœ€ç»ˆè°ƒç”¨ end æ–¹æ³•å³å¯ã€‚
- * ä¸ºäº†æ–¹ä¾¿èµ·è§ï¼ŒRenderTexture æ·»åŠ äº†ä¸€ä¸ª Sprite ä½œä¸ºæ˜¾ç¤ºç»“æœçš„èŠ‚ç‚¹ï¼Œä½ å¯ä»¥å°†è¿™ä¸ª Sprite åšä¸ºä¸€ä¸ª Node æ·»åŠ 
- * åˆ°ä»»ä½•åœºæ™¯ä¸­è¿›è¡Œæ¸²æŸ“ä¸æ˜¾ç¤ºã€‚
- * æ­¤å¤–ï¼Œè¿˜å¯ä»¥é€šè¿‡æ¥å£å°†æ¸²æŸ“çš„ç»“æœä¿å­˜ä¸º PNG æˆ– JPG æ ¼å¼æ–‡ä»¶ã€‚
+ * @~chinese RenderTextureÊÇÒ»¸öÍ¨ÓÃµÄäÖÈ¾½Úµã¡£ÒªÔÚÆäÖĞ½øĞĞäÖÈ¾£¬Ö»Ğè¼òµ¥µÄ¹¹ÔìÒ»¸ö RenderTexture ¶ÔÏó£¬
+ * È»ºóµ÷ÓÃ begin ·½·¨£¬ÔÙµ÷ÓÃĞèÒªäÖÈ¾µÄ³¡¾°»ò¶ÔÏó£¬×îÖÕµ÷ÓÃ end ·½·¨¼´¿É¡£
+ * ÎªÁË·½±ãÆğ¼û£¬RenderTexture Ìí¼ÓÁËÒ»¸ö Sprite ×÷ÎªÏÔÊ¾½á¹ûµÄ½Úµã£¬Äã¿ÉÒÔ½«Õâ¸ö Sprite ×öÎªÒ»¸ö Node Ìí¼Ó
+ * µ½ÈÎºÎ³¡¾°ÖĞ½øĞĞäÖÈ¾ÓëÏÔÊ¾¡£
+ * ´ËÍâ£¬»¹¿ÉÒÔÍ¨¹ı½Ó¿Ú½«äÖÈ¾µÄ½á¹û±£´æÎª PNG »ò JPG ¸ñÊ½ÎÄ¼ş¡£
  * @since v0.8.1
  */
 class CC_DLL RenderTexture : public Node 
@@ -60,155 +60,155 @@ class CC_DLL RenderTexture : public Node
 public:
     /** @~english Initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format. 
      *
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„å®½åº¦ï¼Œé«˜åº¦ï¼Œåƒç´ æ ¼å¼å’Œæ·±åº¦æ¨¡æ¿æ ¼å¼åˆå§‹åŒ–ä¸€ä¸ªRenderTextureå¯¹è±¡ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄ¿í¶È£¬¸ß¶È£¬ÏñËØ¸ñÊ½ºÍÉî¶ÈÄ£°å¸ñÊ½³õÊ¼»¯Ò»¸öRenderTexture¶ÔÏó¡£
      * 
      * @param w @~english The RenderTexture object width.
-     * @~chinese RenderTextureå¯¹è±¡çš„å®½åº¦ã€‚
+     * @~chinese RenderTexture¶ÔÏóµÄ¿í¶È¡£
      * @param h @~english The RenderTexture object height.
-     * @~chinese RenderTextureå¯¹è±¡çš„é«˜åº¦ã€‚
+     * @~chinese RenderTexture¶ÔÏóµÄ¸ß¶È¡£
      * @param format @~english In Points and a pixel format( only RGB and RGBA formats are valid ).
-     * @~chinese åƒç´ æ ¼å¼(åªæœ‰RGBå’ŒRGBAæ ¼å¼å¯ç”¨)ã€‚
+     * @~chinese ÏñËØ¸ñÊ½(Ö»ÓĞRGBºÍRGBA¸ñÊ½¿ÉÓÃ)¡£
      * @param depthStencilFormat @~english The depthStencil format.
-     * @~chinese æ·±åº¦æ¨¡æ¿æ ¼å¼ã€‚
+     * @~chinese Éî¶ÈÄ£°å¸ñÊ½¡£
      */
     static RenderTexture * create(int w ,int h, Texture2D::PixelFormat format, GLuint depthStencilFormat);
 
     /** @~english Creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid. 
      *
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„å®½åº¦ï¼Œé«˜åº¦ï¼Œåƒç´ æ ¼å¼åˆå§‹åŒ–ä¸€ä¸ªRenderTextureå¯¹è±¡ã€‚ï¼ˆåªæœ‰RGBå’ŒRGBAæ ¼å¼å¯ç”¨ã€‚ï¼‰
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄ¿í¶È£¬¸ß¶È£¬ÏñËØ¸ñÊ½³õÊ¼»¯Ò»¸öRenderTexture¶ÔÏó¡££¨Ö»ÓĞRGBºÍRGBA¸ñÊ½¿ÉÓÃ¡££©
      * 
      * @param w @~english The RenderTexture object width.
-     * @~chinese RenderTextureå¯¹è±¡çš„å®½åº¦ã€‚
+     * @~chinese RenderTexture¶ÔÏóµÄ¿í¶È¡£
      * @param h @~english The RenderTexture object height.
-     * @~chinese RenderTextureå¯¹è±¡çš„é«˜åº¦ã€‚
+     * @~chinese RenderTexture¶ÔÏóµÄ¸ß¶È¡£
      * @param format @~english In Points and a pixel format( only RGB and RGBA formats are valid ).
-     * @~chinese åƒç´ æ ¼å¼(åªæœ‰RGBå’ŒRGBAæ ¼å¼å¯ç”¨)ã€‚
+     * @~chinese ÏñËØ¸ñÊ½(Ö»ÓĞRGBºÍRGBA¸ñÊ½¿ÉÓÃ)¡£
      */
     static RenderTexture * create(int w, int h, Texture2D::PixelFormat format);
 
     /** @~english Creates a RenderTexture object with width and height in Points, pixel format is RGBA8888. 
      *
-     * @~chinese æŒ‡å®šå®½åº¦ï¼Œé«˜åº¦åˆå§‹åŒ–ä¸€ä¸ªRenderTextureå¯¹è±¡ã€‚ï¼ˆåƒç´ æ ¼å¼æ˜¯RGBA8888ã€‚ï¼‰
+     * @~chinese Ö¸¶¨¿í¶È£¬¸ß¶È³õÊ¼»¯Ò»¸öRenderTexture¶ÔÏó¡££¨ÏñËØ¸ñÊ½ÊÇRGBA8888¡££©
      * 
      * @param w @~english The RenderTexture object width.
-     * @~chinese RenderTextureå¯¹è±¡çš„å®½åº¦ã€‚
+     * @~chinese RenderTexture¶ÔÏóµÄ¿í¶È¡£
      * @param h @~english The RenderTexture object height.
-     * @~chinese RenderTextureå¯¹è±¡çš„é«˜åº¦ã€‚
+     * @~chinese RenderTexture¶ÔÏóµÄ¸ß¶È¡£
      */
     static RenderTexture * create(int w, int h);
 
-    /** @~english Starts grabbing.  @~chinese å¼€å§‹æ¸²æŸ“ã€‚*/
+    /** @~english Starts grabbing.  @~chinese ¿ªÊ¼äÖÈ¾¡£*/
     virtual void begin();
 
     /** @~english Starts rendering to the texture while clearing the texture first.
      * This is more efficient than calling -clear first and then -begin.
      *
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„é¢œè‰²æ¸…ç†çº¹ç†å¹¶å¼€å§‹æ¸²æŸ“ã€‚
-     * è¿™ä¸ªå‡½æ•°å®ç°æ¯”å…ˆè°ƒç”¨ clear å†è°ƒç”¨ begin æ›´é«˜æ•ˆã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÑÕÉ«ÇåÀíÎÆÀí²¢¿ªÊ¼äÖÈ¾¡£
+     * Õâ¸öº¯ÊıÊµÏÖ±ÈÏÈµ÷ÓÃ clear ÔÙµ÷ÓÃ begin ¸ü¸ßĞ§¡£
      * 
      * @param r @~english Red.
-     * @~chinese çº¢è‰²åˆ†é‡å€¼ã€‚
+     * @~chinese ºìÉ«·ÖÁ¿Öµ¡£
      * @param g @~english Green.
-     * @~chinese ç»¿è‰²åˆ†é‡å€¼ã€‚
+     * @~chinese ÂÌÉ«·ÖÁ¿Öµ¡£
      * @param b @~english Blue.
-     * @~chinese è“è‰²åˆ†é‡å€¼ã€‚
+     * @~chinese À¶É«·ÖÁ¿Öµ¡£
      * @param a @~english Alpha.
-     * @~chinese é€æ˜åº¦ã€‚
+     * @~chinese Í¸Ã÷¶È¡£
      */
     virtual void beginWithClear(float r, float g, float b, float a);
 
     /** @~english Starts rendering to the texture while clearing the texture first.
      * This is more efficient than calling -clear first and then -begin.
      *
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„é¢œè‰²ä¸æ·±åº¦æ¸…ç†çº¹ç†ï¼Œå¹¶å¼€å§‹æ¸²æŸ“ã€‚
-     * è¿™ä¸ªå‡½æ•°å®ç°æ¯”å…ˆè°ƒç”¨ clear å†è°ƒç”¨ begin æ›´é«˜æ•ˆã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÑÕÉ«ÓëÉî¶ÈÇåÀíÎÆÀí£¬²¢¿ªÊ¼äÖÈ¾¡£
+     * Õâ¸öº¯ÊıÊµÏÖ±ÈÏÈµ÷ÓÃ clear ÔÙµ÷ÓÃ begin ¸ü¸ßĞ§¡£
      * 
      * @param r @~english Red.
-     * @~chinese çº¢è‰²åˆ†é‡å€¼ã€‚
+     * @~chinese ºìÉ«·ÖÁ¿Öµ¡£
      * @param g @~english Green.
-     * @~chinese ç»¿è‰²åˆ†é‡å€¼ã€‚
+     * @~chinese ÂÌÉ«·ÖÁ¿Öµ¡£
      * @param b @~english Blue.
-     * @~chinese è“è‰²åˆ†é‡å€¼ã€‚
+     * @~chinese À¶É«·ÖÁ¿Öµ¡£
      * @param a @~english Alpha.
-     * @~chinese é€æ˜åº¦ã€‚
+     * @~chinese Í¸Ã÷¶È¡£
      * @param depthValue @~english The depth Value.
-     * @~chinese æ·±åº¦å€¼ã€‚
+     * @~chinese Éî¶ÈÖµ¡£
      */
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue);
 
     /** @~english Starts rendering to the texture while clearing the texture first.
      * This is more efficient then calling -clear first and then -begin. 
      *
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„é¢œè‰²ï¼Œæ·±åº¦ä»¥åŠæ¨¡æ¿æ¸…ç†çº¹ç†ï¼Œå¹¶å¼€å§‹æ¸²æŸ“ã€‚
-     * è¿™ä¸ªå‡½æ•°å®ç°æ¯”å…ˆè°ƒç”¨ clear å†è°ƒç”¨ begin æ›´é«˜æ•ˆã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÑÕÉ«£¬Éî¶ÈÒÔ¼°Ä£°åÇåÀíÎÆÀí£¬²¢¿ªÊ¼äÖÈ¾¡£
+     * Õâ¸öº¯ÊıÊµÏÖ±ÈÏÈµ÷ÓÃ clear ÔÙµ÷ÓÃ begin ¸ü¸ßĞ§¡£
      * 
      * @param r @~english Red.
-     * @~chinese çº¢è‰²åˆ†é‡å€¼ã€‚
+     * @~chinese ºìÉ«·ÖÁ¿Öµ¡£
      * @param g @~english Green.
-     * @~chinese ç»¿è‰²åˆ†é‡å€¼ã€‚
+     * @~chinese ÂÌÉ«·ÖÁ¿Öµ¡£
      * @param b @~english Blue.
-     * @~chinese è“è‰²åˆ†é‡å€¼ã€‚
+     * @~chinese À¶É«·ÖÁ¿Öµ¡£
      * @param a @~english Alpha.
-     * @~chinese é€æ˜åº¦ã€‚
+     * @~chinese Í¸Ã÷¶È¡£
      * @param depthValue @~english The depth Value.
-     * @~chinese æ·±åº¦å€¼ã€‚
+     * @~chinese Éî¶ÈÖµ¡£
      * @param stencilValue @~english A specified stencil value.
-     * @~chinese æŒ‡å®šçš„æ¨¡æ¿ã€‚
+     * @~chinese Ö¸¶¨µÄÄ£°å¡£
      */
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
 
     /** @~english End is key word of lua, use other name to export to lua.
-     * @~chinese å› ä¸º end æ˜¯ lua ä¸­çš„å…³é”®å­—ï¼Œæ­¤æ¥å£æ˜¯ä¸º lua binding å¢åŠ çš„ã€‚
+     * @~chinese ÒòÎª end ÊÇ lua ÖĞµÄ¹Ø¼ü×Ö£¬´Ë½Ó¿ÚÊÇÎª lua binding Ôö¼ÓµÄ¡£
      * @js NA
      */
     inline void endToLua(){ end();};
 
-    /** @~english Ends grabbing.  @~chinese ç»“æŸæ¸²æŸ“ã€‚*/
+    /** @~english Ends grabbing.  @~chinese ½áÊøäÖÈ¾¡£*/
     virtual void end();
 
     /** @~english Clears the texture with a color. 
      *
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„é¢œè‰²æ¸…é™¤çº¹ç†ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÑÕÉ«Çå³ıÎÆÀí¡£
      * 
      * @param r @~english Red.
-     * @~chinese çº¢è‰²åˆ†é‡å€¼ã€‚
+     * @~chinese ºìÉ«·ÖÁ¿Öµ¡£
      * @param g @~english Green.
-     * @~chinese ç»¿è‰²åˆ†é‡å€¼ã€‚
+     * @~chinese ÂÌÉ«·ÖÁ¿Öµ¡£
      * @param b @~english Blue.
-     * @~chinese è“è‰²åˆ†é‡å€¼ã€‚
+     * @~chinese À¶É«·ÖÁ¿Öµ¡£
      * @param a @~english Alpha.
-     * @~chinese é€æ˜åº¦ã€‚
+     * @~chinese Í¸Ã÷¶È¡£
      */
     void clear(float r, float g, float b, float a);
 
     /** @~english Clears the texture with a specified depth value. 
      *
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„æ·±åº¦æ¸…é™¤æ·±åº¦ç¼“å­˜ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÉî¶ÈÇå³ıÉî¶È»º´æ¡£
      * 
      * @param depthValue @~english A specified depth value.
-     * @~chinese ä¸€ä¸ªæŒ‡å®šçš„æ·±åº¦å€¼ã€‚
+     * @~chinese Ò»¸öÖ¸¶¨µÄÉî¶ÈÖµ¡£
      */
     virtual void clearDepth(float depthValue);
 
     /** @~english Clears the texture with a specified stencil value.
      *
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„å€¼æ¸…é™¤æ¨¡æ¿ç¼“å­˜ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÖµÇå³ıÄ£°å»º´æ¡£
      * 
      * @param stencilValue @~english A specified stencil value.
-     * @~chinese æŒ‡å®šçš„æ¨¡æ¿ã€‚
+     * @~chinese Ö¸¶¨µÄÄ£°å¡£
      */
     virtual void clearStencil(int stencilValue);
     
     /* @~english Creates a new Image from with the texture's data.
      * Caller is responsible for releasing it by calling delete.
      *
-     * @~chinese ä»çº¹ç†æ•°æ®ç”Ÿæˆä¸€ä¸ª Image å®ä¾‹ã€‚
-     * ä½¿ç”¨è¿™ä¸ªå‡½æ•°éœ€è¦è´Ÿè´£é”€æ¯è¯¥ Image å®ä¾‹ã€‚
+     * @~chinese ´ÓÎÆÀíÊı¾İÉú³ÉÒ»¸ö Image ÊµÀı¡£
+     * Ê¹ÓÃÕâ¸öº¯ÊıĞèÒª¸ºÔğÏú»Ù¸Ã Image ÊµÀı¡£
      * 
      * @param flipImage @~english Whether or not to flip image.
-     * @~chinese æ˜¯å¦ç¿»è½¬å›¾åƒã€‚
+     * @~chinese ÊÇ·ñ·­×ªÍ¼Ïñ¡£
      * @return @~english An image.
-     * @~chinese ä¸€ä¸ª Image å®ä¾‹ã€‚
+     * @~chinese Ò»¸ö Image ÊµÀı¡£
      * @js NA
      */
     Image* newImage(bool flipImage = true);
@@ -218,17 +218,17 @@ public:
     /** @~english Saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
      * Returns true if the operation is successful.
      *
-     * @~chinese å°†çº¹ç†ä¿å­˜ä¸ºJPEGæ ¼å¼æ–‡ä»¶ã€‚è¯¥æ–‡ä»¶å°†è¢«ä¿å­˜åœ¨â€œæ–‡æ¡£â€æ–‡ä»¶å¤¹ã€‚
-     * å¦‚æœæ“ä½œæˆåŠŸè¿”å›trueã€‚
+     * @~chinese ½«ÎÆÀí±£´æÎªJPEG¸ñÊ½ÎÄ¼ş¡£¸ÃÎÄ¼ş½«±»±£´æÔÚ¡°ÎÄµµ¡±ÎÄ¼ş¼Ğ¡£
+     * Èç¹û²Ù×÷³É¹¦·µ»Øtrue¡£
      * 
      * @param filename @~english The file name.
-     * @~chinese æ–‡ä»¶çš„åå­—ã€‚
+     * @~chinese ÎÄ¼şµÄÃû×Ö¡£
      * @param isRGBA @~english The file is RGBA or not.
-     * @~chinese è¯¥æ–‡ä»¶æ˜¯å¦ä¸ºRGBAæ ¼å¼ã€‚
+     * @~chinese ¸ÃÎÄ¼şÊÇ·ñÎªRGBA¸ñÊ½¡£
      * @param callback @~english When the file is save finished,it will callback this function.
-     * @~chinese å½“æ–‡ä»¶ä¿å­˜æˆåŠŸåéœ€è¦è°ƒç”¨çš„å›è°ƒå‡½æ•°ã€‚
+     * @~chinese µ±ÎÄ¼ş±£´æ³É¹¦ºóĞèÒªµ÷ÓÃµÄ»Øµ÷º¯Êı¡£
      * @return @~english Returns true if the operation is successful.
-     * @~chinese å¦‚æœæ“ä½œæˆåŠŸè¿”å›trueã€‚
+     * @~chinese Èç¹û²Ù×÷³É¹¦·µ»Øtrue¡£
      */
     bool saveToFile(const std::string& filename, bool isRGBA = true, std::function<void (RenderTexture*, const std::string&)> callback = nullptr);
 
@@ -238,154 +238,154 @@ public:
      * So if this function is called in a event handler, the actual save file will be called in the next frame. If we switch to a different scene, the game will crash.
      * To solve this, add Director::getInstance()->getRenderer()->render(); after this function.
      *
-     * @~chinese ä¿å­˜çº¹ç†åˆ°ä¸€ä¸ªæ–‡ä»¶ä¸­ã€‚å¯èƒ½æ˜¯JPGæˆ–PNGæ ¼å¼ã€‚è¯¥æ–‡ä»¶å°†è¢«ä¿å­˜åœ¨â€œæ–‡æ¡£â€æ–‡ä»¶å¤¹ã€‚
-     * å¦‚æœæ“ä½œæˆåŠŸè¿”å›trueã€‚
-     * æ³¨:å› ä¸ºv3.xï¼ŒsaveToFileå°†ç”Ÿæˆä¸€ä¸ªè‡ªå®šä¹‰å‘½ä»¤ï¼Œè¯¥å‘½ä»¤å°†åœ¨ render->render() ä¸­è¢«è°ƒç”¨ã€‚
-     * å› æ­¤ï¼Œå¦‚æœåœ¨ä¸€ä¸ªäº‹ä»¶å¤„ç†ç¨‹åºä¸­ï¼Œè°ƒç”¨è¿™ä¸ªå‡½æ•°ä¿å­˜çš„æ–‡ä»¶åœ¨ä¸‹ä¸€å¸§è¢«ä½¿ç”¨ã€‚è¿™æ—¶æˆ‘ä»¬åˆ‡æ¢åˆ°ä¸€ä¸ªä¸åŒçš„åœºæ™¯ï¼Œæ¸¸æˆä¼šå´©æºƒã€‚
-     * ä¸ºäº†è§£å†³è¿™ä¸ªé—®é¢˜ï¼Œåœ¨è¿™ä¸ªå‡½æ•°æ‰§è¡Œå®Œä¹‹åè°ƒç”¨ä¸€æ¬¡ Director::getInstance()->getRenderer()->render()ã€‚
+     * @~chinese ±£´æÎÆÀíµ½Ò»¸öÎÄ¼şÖĞ¡£¿ÉÄÜÊÇJPG»òPNG¸ñÊ½¡£¸ÃÎÄ¼ş½«±»±£´æÔÚ¡°ÎÄµµ¡±ÎÄ¼ş¼Ğ¡£
+     * Èç¹û²Ù×÷³É¹¦·µ»Øtrue¡£
+     * ×¢:ÒòÎªv3.x£¬saveToFile½«Éú³ÉÒ»¸ö×Ô¶¨ÒåÃüÁî£¬¸ÃÃüÁî½«ÔÚ render->render() ÖĞ±»µ÷ÓÃ¡£
+     * Òò´Ë£¬Èç¹ûÔÚÒ»¸öÊÂ¼ş´¦Àí³ÌĞòÖĞ£¬µ÷ÓÃÕâ¸öº¯Êı±£´æµÄÎÄ¼şÔÚÏÂÒ»Ö¡±»Ê¹ÓÃ¡£ÕâÊ±ÎÒÃÇÇĞ»»µ½Ò»¸ö²»Í¬µÄ³¡¾°£¬ÓÎÏ·»á±ÀÀ£¡£
+     * ÎªÁË½â¾öÕâ¸öÎÊÌâ£¬ÔÚÕâ¸öº¯ÊıÖ´ĞĞÍêÖ®ºóµ÷ÓÃÒ»´Î Director::getInstance()->getRenderer()->render()¡£
      * 
      * @param filename @~english The file name.
-     * @~chinese æ–‡ä»¶çš„åå­—ã€‚
+     * @~chinese ÎÄ¼şµÄÃû×Ö¡£
      * @param format @~english The image format.
-     * @~chinese å›¾åƒæ ¼å¼ã€‚
+     * @~chinese Í¼Ïñ¸ñÊ½¡£
      * @param isRGBA @~english The file is RGBA or not.
-     * @~chinese æ˜¯å¦ä¸º RGBA æ ¼å¼ã€‚
+     * @~chinese ÊÇ·ñÎª RGBA ¸ñÊ½¡£
      * @param callback @~english When the file is save finished,it will callback this function.
-     * @~chinese å½“æ–‡ä»¶ä¿å­˜å®Œæˆåçš„å›è°ƒå‡½æ•°ã€‚
+     * @~chinese µ±ÎÄ¼ş±£´æÍê³ÉºóµÄ»Øµ÷º¯Êı¡£
      * @return @~english Returns true if the operation is successful.
-     * @~chinese å¦‚æœæ“ä½œæˆåŠŸè¿”å›trueã€‚
+     * @~chinese Èç¹û²Ù×÷³É¹¦·µ»Øtrue¡£
      */
     bool saveToFile(const std::string& filename, Image::Format format, bool isRGBA = true, std::function<void (RenderTexture*, const std::string&)> callback = nullptr);
     
     /** @~english Listen "come to background" message, and save render texture.
      * It only has effect on Android.
      * 
-     * @~chinese ç›‘å¬é€€åˆ°åå°çš„æ¶ˆæ¯ï¼Œå¹¶ä¿å­˜æ¸²æŸ“çº¹ç†ã€‚
-     * å®ƒåªåœ¨Androidä¸Šæœ‰æ•ˆæœã€‚
+     * @~chinese ¼àÌıÍËµ½ºóÌ¨µÄÏûÏ¢£¬²¢±£´æäÖÈ¾ÎÆÀí¡£
+     * ËüÖ»ÔÚAndroidÉÏÓĞĞ§¹û¡£
      * 
      * @param event @~english Event Custom.
-     * @~chinese è‡ªå®šä¹‰äº‹ä»¶ã€‚
+     * @~chinese ×Ô¶¨ÒåÊÂ¼ş¡£
      */
     void listenToBackground(EventCustom *event);
     
     /** @~english Listen "come to foreground" message and restore the frame buffer object.
      * It only has effect on Android.
      *
-     * @~chinese ç›‘å¬å›åˆ°å‰å°çš„æ¶ˆæ¯ï¼Œå¹¶æ¢å¤å¸§ç¼“å†²åŒºå¯¹è±¡ã€‚
-     * å®ƒåªåœ¨Androidä¸Šæœ‰æ•ˆæœã€‚
+     * @~chinese ¼àÌı»Øµ½Ç°Ì¨µÄÏûÏ¢£¬²¢»Ö¸´Ö¡»º³åÇø¶ÔÏó¡£
+     * ËüÖ»ÔÚAndroidÉÏÓĞĞ§¹û¡£
      * 
      * @param event @~english Event Custom.
-     * @~chinese è‡ªå®šä¹‰äº‹ä»¶ã€‚
+     * @~chinese ×Ô¶¨ÒåÊÂ¼ş¡£
      */
     void listenToForeground(EventCustom *event);
     
     /** @~english Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw" is true. 
      *
-     * @~chinese æœ‰æ•ˆçš„æ ‡å¿—:GL_COLOR_BUFFER_BIT GL_DEPTH_BUFFER_BIT GL_STENCIL_BUFFER_BITã€‚ä»–ä»¬å¯ä»¥ä½¿ç”¨â€œæˆ–â€æ“ä½œæ¥ç»„åˆæ ‡è®°ã€‚å½“â€œautoDrawâ€ä¸º true æ—¶èµ·æ•ˆã€‚
+     * @~chinese ÓĞĞ§µÄ±êÖ¾:GL_COLOR_BUFFER_BIT GL_DEPTH_BUFFER_BIT GL_STENCIL_BUFFER_BIT¡£ËûÃÇ¿ÉÒÔÊ¹ÓÃ¡°»ò¡±²Ù×÷À´×éºÏ±ê¼Ç¡£µ±¡°autoDraw¡±Îª true Ê±ÆğĞ§¡£
      * 
      * @return @~english Clear flags.
-     * @~chinese æ¸…é™¤æ‰€ä½¿ç”¨çš„ GL æ ‡å¿—ã€‚
+     * @~chinese Çå³ıËùÊ¹ÓÃµÄ GL ±êÖ¾¡£
      */
     inline unsigned int getClearFlags() const { return _clearFlags; };
     
     /** @~english Set flags.
      *
-     * @~chinese è®¾ç½®æ ‡å¿—ã€‚
+     * @~chinese ÉèÖÃ±êÖ¾¡£
      * 
      * @param clearFlags @~english Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT.
-     * @~chinese æœ‰æ•ˆçš„æ ‡å¿—:GL_COLOR_BUFFER_BIT GL_DEPTH_BUFFER_BIT GL_STENCIL_BUFFER_BITã€‚
+     * @~chinese ÓĞĞ§µÄ±êÖ¾:GL_COLOR_BUFFER_BIT GL_DEPTH_BUFFER_BIT GL_STENCIL_BUFFER_BIT¡£
      */
     inline void setClearFlags(unsigned int clearFlags) { _clearFlags = clearFlags; };
     
     /** @~english Clear color value. Valid only when "autoDraw" is true. 
      *
-     * @~chinese æ¸…é™¤æ‰€ä½¿ç”¨çš„é¢œè‰²å€¼ã€‚åªæœ‰å½“â€œautoDrawâ€ä¸º true æ—¶èµ·æ•ˆã€‚
+     * @~chinese Çå³ıËùÊ¹ÓÃµÄÑÕÉ«Öµ¡£Ö»ÓĞµ±¡°autoDraw¡±Îª true Ê±ÆğĞ§¡£
      * 
      * @return @~english Color value.
-     * @~chinese é¢œè‰²å€¼ã€‚
+     * @~chinese ÑÕÉ«Öµ¡£
      */
     inline const Color4F& getClearColor() const { return _clearColor; };
     
     /** @~english Set color value. 
      *
-     * @~chinese è®¾ç½®æ¸…é™¤æ‰€ä½¿ç”¨çš„é¢œè‰²å€¼ã€‚
+     * @~chinese ÉèÖÃÇå³ıËùÊ¹ÓÃµÄÑÕÉ«Öµ¡£
      * 
      * @param clearColor @~english Color value.
-     * @~chinese é¢œè‰²å€¼ã€‚
+     * @~chinese ÑÕÉ«Öµ¡£
      */
     inline void setClearColor(const Color4F &clearColor) { _clearColor = clearColor; };
     
     /** @~english Value for clearDepth. Valid only when "autoDraw" is true. 
      *
-     * @~chinese æ¸…é™¤æ‰€ä½¿ç”¨çš„æ·±åº¦å€¼ã€‚åªæœ‰å½“â€œautoDrawâ€ä¸º true æ—¶èµ·æ•ˆã€‚
+     * @~chinese Çå³ıËùÊ¹ÓÃµÄÉî¶ÈÖµ¡£Ö»ÓĞµ±¡°autoDraw¡±Îª true Ê±ÆğĞ§¡£
      * 
      * @return @~english Value for clearDepth.
-     * @~chinese ä½¿ç”¨çš„æ·±åº¦å€¼ã€‚
+     * @~chinese Ê¹ÓÃµÄÉî¶ÈÖµ¡£
      */
     inline float getClearDepth() const { return _clearDepth; };
     
     /** @~english Set Value for clearDepth.
      *
-     * @~chinese è®¾ç½®æ¸…é™¤æ‰€ä½¿ç”¨çš„æ·±åº¦å€¼ã€‚
+     * @~chinese ÉèÖÃÇå³ıËùÊ¹ÓÃµÄÉî¶ÈÖµ¡£
      * 
      * @param clearDepth @~english Value for clearDepth.
-     * @~chinese ä½¿ç”¨çš„æ·±åº¦å€¼ã€‚
+     * @~chinese Ê¹ÓÃµÄÉî¶ÈÖµ¡£
      */
     inline void setClearDepth(float clearDepth) { _clearDepth = clearDepth; };
     
     /** @~english Value for clear Stencil. Valid only when "autoDraw" is true.
      *
-     * @~chinese è·å–æ¸…é™¤æ‰€ä½¿ç”¨çš„æ¨¡æ¿ã€‚åªæœ‰å½“â€œautoDrawâ€ä¸º true æ—¶èµ·æ•ˆã€‚
+     * @~chinese »ñÈ¡Çå³ıËùÊ¹ÓÃµÄÄ£°å¡£Ö»ÓĞµ±¡°autoDraw¡±Îª true Ê±ÆğĞ§¡£
      * 
      * @return @~english Value for clear Stencil.
-     * @~chinese ä½¿ç”¨çš„æ¨¡æ¿
+     * @~chinese Ê¹ÓÃµÄÄ£°å
      */
     inline int getClearStencil() const { return _clearStencil; };
     
     /** @~english Set Value for clear Stencil.
      *
-     * @~chinese è®¾ç½®æ¸…é™¤æ‰€ä½¿ç”¨çš„æ¨¡æ¿ã€‚
+     * @~chinese ÉèÖÃÇå³ıËùÊ¹ÓÃµÄÄ£°å¡£
      * 
      * @param clearStencil @~english Value for clear Stencil.
-     * @~chinese ä½¿ç”¨çš„æ¨¡æ¿
+     * @~chinese Ê¹ÓÃµÄÄ£°å
      */
     inline void setClearStencil(int clearStencil) { _clearStencil = clearStencil; };
     
     /** @~english When enabled, it will render its children into the texture automatically. Disabled by default for compatiblity reasons.
      * Will be enabled in the future.
      *
-     * @~chinese å½“å¯ç”¨æ—¶ï¼Œå®ƒå°†è‡ªåŠ¨æ¸²æŸ“å­èŠ‚ç‚¹ã€‚å‡ºäºå…¼å®¹æ€§çš„è€ƒè™‘ï¼Œé»˜è®¤å€¼ä¸ºå…³é—­ã€‚
-     * åœ¨æœªæ¥å°†ä¼šå¯ç”¨ã€‚
+     * @~chinese µ±ÆôÓÃÊ±£¬Ëü½«×Ô¶¯äÖÈ¾×Ó½Úµã¡£³öÓÚ¼æÈİĞÔµÄ¿¼ÂÇ£¬Ä¬ÈÏÖµÎª¹Ø±Õ¡£
+     * ÔÚÎ´À´½«»áÆôÓÃ¡£
      * 
      * @return @~english Return the autoDraw value.
-     * @~chinese è¿”å›æ˜¯å¦è‡ªåŠ¨æ¸²æŸ“ã€‚
+     * @~chinese ·µ»ØÊÇ·ñ×Ô¶¯äÖÈ¾¡£
      */
     inline bool isAutoDraw() const { return _autoDraw; };
     
     /** @~english Set a valve to control whether or not render its children into the texture automatically. 
      *
-     * @~chinese è®¾ç½®æ˜¯å¦è‡ªåŠ¨æ¸²æŸ“å­èŠ‚ç‚¹ã€‚
+     * @~chinese ÉèÖÃÊÇ·ñ×Ô¶¯äÖÈ¾×Ó½Úµã¡£
      * 
      * @param isAutoDraw @~english Whether or not render its children into the texture automatically.
-     * @~chinese æ˜¯å¦è‡ªåŠ¨æ¸²æŸ“å­èŠ‚ç‚¹ã€‚
+     * @~chinese ÊÇ·ñ×Ô¶¯äÖÈ¾×Ó½Úµã¡£
      */
     inline void setAutoDraw(bool isAutoDraw) { _autoDraw = isAutoDraw; };
 
     /** @~english Gets the Sprite being used. 
      *
-     * @~chinese æ­£åœ¨ä½¿ç”¨çš„ Spriteã€‚
+     * @~chinese ÕıÔÚÊ¹ÓÃµÄ Sprite¡£
      * 
      * @return @~english A Sprite.
-     * @~chinese Sprite å®ä¾‹ã€‚
+     * @~chinese Sprite ÊµÀı¡£
      */
     inline Sprite* getSprite() const { return _sprite; };
     
     /** @~english Sets the Sprite being used. 
      *
-     * @~chinese è®¾ç½®ä½¿ç”¨çš„ Spriteã€‚
+     * @~chinese ÉèÖÃÊ¹ÓÃµÄ Sprite¡£
      * 
      * @param sprite @~english A Sprite.
-     * @~chinese Sprite å®ä¾‹ã€‚
+     * @~chinese Sprite ÊµÀı¡£
      */
     inline void setSprite(Sprite* sprite) {
         CC_SAFE_RETAIN(sprite);
@@ -399,21 +399,21 @@ public:
 
     /** @~english Flag: Use stack matrix computed from scene hierarchy or generate new modelView and projection matrix.
      *
-     * @~chinese æ ‡å¿—ï¼šä½¿ç”¨ä»åœºæ™¯ä¸­è®¡ç®—çš„å †æ ˆçŸ©é˜µæˆ–ç”Ÿæˆæ–°çš„è§†ç‚¹çŸ©é˜µå’ŒæŠ•å½±çŸ©é˜µã€‚
+     * @~chinese ±êÖ¾£ºÊ¹ÓÃ´Ó³¡¾°ÖĞ¼ÆËãµÄ¶ÑÕ»¾ØÕó»òÉú³ÉĞÂµÄÊÓµã¾ØÕóºÍÍ¶Ó°¾ØÕó¡£
      * 
      * @param keepMatrix @~english Wether or not use stack matrix computed from scene hierarchy or generate new modelView and projection matrix.
-     * @~chinese æ˜¯å¦ä½¿ç”¨ä»åœºæ™¯ä¸­è®¡ç®—çš„å †æ ˆçŸ©é˜µæˆ–ç”Ÿæˆæ–°çš„è§†ç‚¹çŸ©é˜µå’ŒæŠ•å½±çŸ©é˜µã€‚
+     * @~chinese ÊÇ·ñÊ¹ÓÃ´Ó³¡¾°ÖĞ¼ÆËãµÄ¶ÑÕ»¾ØÕó»òÉú³ÉĞÂµÄÊÓµã¾ØÕóºÍÍ¶Ó°¾ØÕó¡£
      * @js NA
      */
     void setKeepMatrix(bool keepMatrix);
     /**@~english Used for grab part of screen to a texture. 
-     * @~chinese ç”¨äºæˆªå–å±å¹•çº¹ç†çš„ä¸€éƒ¨åˆ†ã€‚
+     * @~chinese ÓÃÓÚ½ØÈ¡ÆÁÄ»ÎÆÀíµÄÒ»²¿·Ö¡£
      * @param rtBegin @~english The position of renderTexture on the fullRect.
-     * @~chinese éœ€è¦æˆªå–çš„èµ·ç‚¹ä½ç½®ã€‚
+     * @~chinese ĞèÒª½ØÈ¡µÄÆğµãÎ»ÖÃ¡£
      * @param fullRect @~english The total size of screen.
-     * @~chinese éœ€è¦æˆªå–çš„çŸ©å½¢åŒºåŸŸå¤§å°ã€‚
+     * @~chinese ĞèÒª½ØÈ¡µÄ¾ØĞÎÇøÓò´óĞ¡¡£
      * @param fullViewport @~english The total viewportSize.
-     * @~chinese è§†çª—å¤§å°ã€‚
+     * @~chinese ÊÓ´°´óĞ¡¡£
      */
     void setVirtualViewport(const Vec2& rtBegin, const Rect& fullRect, const Rect& fullViewport);
 
@@ -421,9 +421,9 @@ public:
     /** @~english FIXME: should be procted.
      * but due to a bug in PowerVR + Android,
      * the constructor is public again.
-     * @~chinese åº”è¯¥ä¸º protectedã€‚
-     * ä½†ç”±äºåœ¨ PowerVR + å®‰å“ç¯å¢ƒçš„ bugï¼Œ
-     * æ‰€ä»¥æ„é€ å‡½æ•°è¿˜æ˜¯ publicã€‚
+     * @~chinese Ó¦¸ÃÎª protected¡£
+     * µ«ÓÉÓÚÔÚ PowerVR + °²×¿»·¾³µÄ bug£¬
+     * ËùÒÔ¹¹Ôìº¯Êı»¹ÊÇ public¡£
      * @js ctor
      */
     RenderTexture();
@@ -435,32 +435,32 @@ public:
     virtual ~RenderTexture();
     /** @~english Initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid.
      *
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„å®½åº¦ï¼Œé«˜åº¦å’Œåƒç´ æ ¼å¼åˆå§‹åŒ–ä¸€ä¸ªRenderTextureå¯¹è±¡ï¼Œï¼ˆåªæœ‰RGBå’ŒRGBAæ ¼å¼å¯ç”¨ã€‚ï¼‰
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄ¿í¶È£¬¸ß¶ÈºÍÏñËØ¸ñÊ½³õÊ¼»¯Ò»¸öRenderTexture¶ÔÏó£¬£¨Ö»ÓĞRGBºÍRGBA¸ñÊ½¿ÉÓÃ¡££©
      * 
      * @param w @~english The RenderTexture object width.
-     * @~chinese RenderTextureå¯¹è±¡çš„å®½åº¦ã€‚
+     * @~chinese RenderTexture¶ÔÏóµÄ¿í¶È¡£
      * @param h @~english The RenderTexture object height.
-     * @~chinese RenderTextureå¯¹è±¡çš„é«˜åº¦ã€‚
+     * @~chinese RenderTexture¶ÔÏóµÄ¸ß¶È¡£
      * @param format @~english In Points and a pixel format( only RGB and RGBA formats are valid ).
-     * @~chinese åƒç´ æ ¼å¼(åªæœ‰RGBå’ŒRGBAæ ¼å¼å¯ç”¨)ã€‚
+     * @~chinese ÏñËØ¸ñÊ½(Ö»ÓĞRGBºÍRGBA¸ñÊ½¿ÉÓÃ)¡£
      * @return @~english If successed,it will return true.
-     * @~chinese å¦‚æœæˆåŠŸ,å®ƒå°†è¿”å›trueã€‚
+     * @~chinese Èç¹û³É¹¦,Ëü½«·µ»Øtrue¡£
      */
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format);
     /** @~english Initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format. 
      *
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„å®½åº¦ï¼Œé«˜åº¦ï¼Œåƒç´ æ ¼å¼å’Œæ·±åº¦æ¨¡æ¿æ ¼å¼åˆå§‹åŒ–ä¸€ä¸ªRenderTextureå¯¹è±¡ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄ¿í¶È£¬¸ß¶È£¬ÏñËØ¸ñÊ½ºÍÉî¶ÈÄ£°å¸ñÊ½³õÊ¼»¯Ò»¸öRenderTexture¶ÔÏó¡£
      * 
      * @param w @~english The RenderTexture object width.
-     * @~chinese RenderTextureå¯¹è±¡çš„å®½åº¦ã€‚
+     * @~chinese RenderTexture¶ÔÏóµÄ¿í¶È¡£
      * @param h @~english The RenderTexture object height.
-     * @~chinese RenderTextureå¯¹è±¡çš„é«˜åº¦ã€‚
+     * @~chinese RenderTexture¶ÔÏóµÄ¸ß¶È¡£
      * @param format @~english In Points and a pixel format( only RGB and RGBA formats are valid ).
-     * @~chinese åƒç´ æ ¼å¼(åªæœ‰RGBå’ŒRGBAæ ¼å¼å¯ç”¨)ã€‚
+     * @~chinese ÏñËØ¸ñÊ½(Ö»ÓĞRGBºÍRGBA¸ñÊ½¿ÉÓÃ)¡£
      * @param depthStencilFormat @~english The depthStencil format.
-     * @~chinese æ·±åº¦æ¨¡æ¿æ ¼å¼ã€‚
+     * @~chinese Éî¶ÈÄ£°å¸ñÊ½¡£
      * @return @~english If successed,it will return true.
-     * @~chinese å¦‚æœæˆåŠŸ,å®ƒå°†è¿”å›trueã€‚
+     * @~chinese Èç¹û³É¹¦,Ëü½«·µ»Øtrue¡£
      */
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, GLuint depthStencilFormat);
 

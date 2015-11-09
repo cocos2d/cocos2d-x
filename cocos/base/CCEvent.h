@@ -42,13 +42,13 @@ class Node;
 
 /** @class Event
  * @brief @~english Base class of all kinds of events.
- * @~chinese å„ç§å„æ ·çš„äº‹ä»¶çš„åŸºç±»ã€‚
+ * @~chinese ¸÷ÖÖ¸÷ÑùµÄÊÂ¼şµÄ»ùÀà¡£
  */
 class CC_DLL Event : public Ref
 {
 public:
 
-    /** @~english Type Event type. @~chinese äº‹ä»¶ç±»å‹ã€‚*/
+    /** @~english Type Event type. @~chinese ÊÂ¼şÀàĞÍ¡£*/
     enum class Type
     {
         TOUCH,
@@ -62,56 +62,56 @@ public:
     
 CC_CONSTRUCTOR_ACCESS:
 
-    /** @~english Constructor  @~chinese æ„é€ å‡½æ•°*/
+    /** @~english Constructor  @~chinese ¹¹Ôìº¯Êı*/
     Event(Type type);
 public:
 
     /** @~english Destructor.
-     * @~chinese ææ„å‡½æ•°ã€‚
+     * @~chinese Îö¹¹º¯Êı¡£
      */
     virtual ~Event();
 
 
     /** @~english Gets the event type.
      *
-     * @~chinese è·å–äº‹ä»¶ç±»å‹ã€‚
+     * @~chinese »ñÈ¡ÊÂ¼şÀàĞÍ¡£
      * 
      * @return @~english The event type.
-     * @~chinese äº‹ä»¶ç±»å‹ã€‚
+     * @~chinese ÊÂ¼şÀàĞÍ¡£
      */
 	inline Type getType() const { return _type; };
     
 
     /** @~english Stops propagation for current event.
-     * @~chinese åœæ­¢ä¼ æ’­å½“å‰äº‹ä»¶ã€‚
+     * @~chinese Í£Ö¹´«²¥µ±Ç°ÊÂ¼ş¡£
      */
     inline void stopPropagation() { _isStopped = true; };
     
 
     /** @~english Checks whether the event has been stopped.
      *
-     * @~chinese æ£€æŸ¥äº‹ä»¶æ˜¯å¦å·²ç»åœæ­¢ã€‚
+     * @~chinese ¼ì²éÊÂ¼şÊÇ·ñÒÑ¾­Í£Ö¹¡£
      * 
      * @return @~english True if the event has been stopped.
-     * @~chinese å¦‚æœäº‹ä»¶å·²ç»åœæ­¢åˆ™è¿”å›çœŸã€‚
+     * @~chinese Èç¹ûÊÂ¼şÒÑ¾­Í£Ö¹Ôò·µ»ØÕæ¡£
      */
     inline bool isStopped() const { return _isStopped; };
     
 
     /** @~english Gets current target of the event.
-     * @~chinese å¾—åˆ°çš„å½“å‰ç›®æ ‡çš„äº‹ä»¶ã€‚
+     * @~chinese µÃµ½µÄµ±Ç°Ä¿±êµÄÊÂ¼ş¡£
      * @return @~english The target with which the event associates.
-     * @~chinese ä¸äº‹ä»¶å…³è”çš„ç›®æ ‡ã€‚
+     * @~chinese ÓëÊÂ¼ş¹ØÁªµÄÄ¿±ê¡£
      * @note @~english It onlys be available when the event listener is associated with node.
      *        It returns 0 when the listener is associated with fixed priority.
-     * @~chinese åªæœ‰å½“äº‹ä»¶ä¾¦å¬å™¨ä¸èŠ‚ç‚¹ç›¸å…³è”æ—¶æ‰æœ‰æ•ˆã€‚
-     * å¦‚æœä¾¦å¬å™¨ä¸å›ºå®šä¼˜å…ˆçº§ç›¸å…³è”åˆ™è¿”å›0ã€‚
+     * @~chinese Ö»ÓĞµ±ÊÂ¼şÕìÌıÆ÷Óë½ÚµãÏà¹ØÁªÊ±²ÅÓĞĞ§¡£
+     * Èç¹ûÕìÌıÆ÷Óë¹Ì¶¨ÓÅÏÈ¼¶Ïà¹ØÁªÔò·µ»Ø0¡£
      */
     inline Node* getCurrentTarget() { return _currentTarget; };
     
 protected:
 
-    /** @~english Sets current target  @~chinese è®¾ç½®å½“å‰ç›®æ ‡*/
+    /** @~english Sets current target  @~chinese ÉèÖÃµ±Ç°Ä¿±ê*/
     inline void setCurrentTarget(Node* target) { _currentTarget = target; };
     
 	Type _type;     ///< Event type

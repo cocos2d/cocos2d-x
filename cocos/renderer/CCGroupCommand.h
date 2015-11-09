@@ -62,9 +62,9 @@ protected:
  GroupCommand is used to group several command together, and more, it can be nestd.
  So it is used to generate the hierarchy for the rendcommands. Evey group command will be assigned by a group ID.
  * @~chinese 
- GroupCommandç”¨äºå°†å¤šä¸ªæ¸²æŸ“å‘½ä»¤æ‰“åŒ…æˆä¸€ä¸ªå‘½ä»¤ï¼Œè€Œä¸”å¯ä»¥åµŒå¥—ã€‚
- æ‰€ä»¥GroupCommandä¸»è¦ç”¨æ¥æ„å»ºæ¸²æŸ“å‘½ä»¤çš„å±‚çº§ç»“æ„ã€‚
- æ¯ä¸€ä¸ªGroupCommandä¼šåˆ†é…åˆ°ä¸€ä¸ªç»„IDã€‚
+ GroupCommandÓÃÓÚ½«¶à¸öäÖÈ¾ÃüÁî´ò°ü³ÉÒ»¸öÃüÁî£¬¶øÇÒ¿ÉÒÔÇ¶Ì×¡£
+ ËùÒÔGroupCommandÖ÷ÒªÓÃÀ´¹¹½¨äÖÈ¾ÃüÁîµÄ²ã¼¶½á¹¹¡£
+ Ã¿Ò»¸öGroupCommand»á·ÖÅäµ½Ò»¸ö×éID¡£
  */
 class CC_DLL GroupCommand : public RenderCommand
 {
@@ -72,26 +72,26 @@ public:
     /**@~english
      Constructor.
      * @~chinese 
-     * æ„é€ å‡½æ•°ã€‚
+     * ¹¹Ôìº¯Êı¡£
      */
     GroupCommand();
     /**@~english
      Destructor.
      * @~chinese 
-     * ææ„å‡½æ•°ã€‚
+     * Îö¹¹º¯Êı¡£
      */
     ~GroupCommand();
     
     /**
     @~english Init function for group command.
-    @~chinese åˆå§‹åŒ–GroupCommandã€‚
-    @param globalOrder @~english The globalZOrder of render command. @~chinese å‘½ä»¤çš„globalZOrderã€‚
+    @~chinese ³õÊ¼»¯GroupCommand¡£
+    @param globalOrder @~english The globalZOrder of render command. @~chinese ÃüÁîµÄglobalZOrder¡£
     */
     void init(float globalOrder);
     
     /**
     @~english called by renderer, get the group ID. 
-    @~chinese è¢«æ¸²æŸ“å™¨è°ƒç”¨,å¾—åˆ°ç»„IDã€‚
+    @~chinese ±»äÖÈ¾Æ÷µ÷ÓÃ,µÃµ½×éID¡£
     */
     inline int getRenderQueueID() const {return _renderQueueID;}
     

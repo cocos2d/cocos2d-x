@@ -135,7 +135,7 @@
         
 --------------------------------
 -- brief Get all the pages in the PageView.<br>
--- return A vector of Layout pionters.
+-- return A vector of Layout pointers.
 -- @function [parent=#PageView] getPages 
 -- @param self
 -- @return array_table#array_table ret (return value: array_table)

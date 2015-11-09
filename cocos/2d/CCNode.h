@@ -35,6 +35,8 @@
 #include "base/CCScriptSupport.h"
 #include "math/CCAffineTransform.h"
 #include "math/CCMath.h"
+#include "2d/CCComponentContainer.h"
+#include "2d/CCComponent.h"
 
 NS_CC_BEGIN
 
@@ -53,11 +55,8 @@ class Director;
 class GLProgram;
 class GLProgramState;
 class Material;
-#if CC_USE_PHYSICS
-class PhysicsBody;
-class PhysicsWorld;
-#endif
 class Camera;
+class PhysicsBody;
 
 /**
  * @addtogroup _2d
@@ -101,25 +100,25 @@ class EventListener;
  Limitations:
  - A Node is a "void" object. If you want to draw something on the screen, you should use a Sprite instead. Or subclass Node and override `draw`.
 
- @~chinese èŠ‚ç‚¹æ˜¯åœºæ™¯å›¾çš„åŸºæœ¬å…ƒç´ ã€‚åœºæ™¯å›¾çš„åŸºæœ¬å…ƒç´ å¿…é¡»æ˜¯èŠ‚ç‚¹å¯¹è±¡æˆ–è€…æ˜¯èŠ‚ç‚¹å¯¹è±¡çš„å­ç±»ã€‚
- ä¸€äº›å¸¸ç”¨çš„èŠ‚ç‚¹å¯¹è±¡ï¼šScene, Layer, Sprite, Menu, Label.
- ä¸€ä¸ªèŠ‚ç‚¹çš„ä¸»è¦ç‰¹ç‚¹:
- - ä»–ä»¬å¯ä»¥åŒ…å«å…¶ä»–çš„èŠ‚ç‚¹å¯¹è±¡(`addChild`, `getChildByTag`, `removeChild`, etc)
- - ä»–ä»¬å¯ä»¥å®‰æ’å®šæœŸçš„å›è°ƒ(`schedule`, `unschedule`, etc)
- - ä»–ä»¬å¯ä»¥æ‰§è¡Œä¸€äº›åŠ¨ä½œ(`runAction`, `stopAction`, etc)
- å­ç±»èŠ‚ç‚¹é€šå¸¸æ„å‘³ç€(å•ä¸€çš„/æ‰€æœ‰çš„):
- - é‡å†™åˆå§‹åŒ–èµ„æºå¹¶ä¸”å¯ä»¥å®‰æ’å›è°ƒ
- - åˆ›å»ºå›è°ƒæ¥æ“ä½œè¿›è¡Œçš„æ—¶é—´
- - é‡å†™â€œdrawâ€æ¥æ¸²æŸ“èŠ‚ç‚¹
- èŠ‚ç‚¹çš„å±æ€§:
- - ä½ç½®ï¼ˆé»˜è®¤å€¼ï¼šx=0,y=0ï¼‰
- - ç¼©æ”¾ï¼ˆé»˜è®¤å€¼ï¼šx=1,y=1ï¼‰
- - æ—‹è½¬ï¼ˆä»¥è§’åº¦ä¸ºå•ä½ï¼ŒæŒ‰é¡ºæ—¶é’ˆæ–¹å‘ï¼‰ï¼ˆé»˜è®¤å€¼ï¼š0ï¼‰
- - é”šç‚¹ï¼ˆé»˜è®¤å€¼ï¼šx=0,y=0ï¼‰
- - å†…å®¹å¤§å°ï¼ˆé»˜è®¤å€¼ï¼šwidth=0,heigh=0ï¼‰
- - å¯è§æ€§ï¼ˆé»˜è®¤å€¼ï¼štrueï¼‰
- å±€é™æ€§ï¼šLimitations:
- - ä¸€ä¸ªèŠ‚ç‚¹ç±»æ˜¯ä¸€ä¸ªâ€œvoidâ€å¯¹è±¡ã€‚å¦‚æœä½ æƒ³è¦åœ¨åœºæ™¯ä¸­ç”»ä¸€äº›ä¸œè¥¿ï¼Œä½ åº”è¯¥ä½¿ç”¨ç²¾çµç±»æ¥ä»£æ›¿ã€‚æˆ–è€…æ˜¯èŠ‚ç‚¹çš„å­ç±»å¹¶ä¸”é‡å†™â€œdrawâ€.
+ @~chinese ½ÚµãÊÇ³¡¾°Í¼µÄ»ù±¾ÔªËØ¡£³¡¾°Í¼µÄ»ù±¾ÔªËØ±ØĞëÊÇ½Úµã¶ÔÏó»òÕßÊÇ½Úµã¶ÔÏóµÄ×ÓÀà¡£
+ Ò»Ğ©³£ÓÃµÄ½Úµã¶ÔÏó£ºScene, Layer, Sprite, Menu, Label.
+ Ò»¸ö½ÚµãµÄÖ÷ÒªÌØµã:
+ - ËûÃÇ¿ÉÒÔ°üº¬ÆäËûµÄ½Úµã¶ÔÏó(`addChild`, `getChildByTag`, `removeChild`, etc)
+ - ËûÃÇ¿ÉÒÔ°²ÅÅ¶¨ÆÚµÄ»Øµ÷(`schedule`, `unschedule`, etc)
+ - ËûÃÇ¿ÉÒÔÖ´ĞĞÒ»Ğ©¶¯×÷(`runAction`, `stopAction`, etc)
+ ×ÓÀà½ÚµãÍ¨³£ÒâÎ¶×Å(µ¥Ò»µÄ/ËùÓĞµÄ):
+ - ÖØĞ´³õÊ¼»¯×ÊÔ´²¢ÇÒ¿ÉÒÔ°²ÅÅ»Øµ÷
+ - ´´½¨»Øµ÷À´²Ù×÷½øĞĞµÄÊ±¼ä
+ - ÖØĞ´¡°draw¡±À´äÖÈ¾½Úµã
+ ½ÚµãµÄÊôĞÔ:
+ - Î»ÖÃ£¨Ä¬ÈÏÖµ£ºx=0,y=0£©
+ - Ëõ·Å£¨Ä¬ÈÏÖµ£ºx=1,y=1£©
+ - Ğı×ª£¨ÒÔ½Ç¶ÈÎªµ¥Î»£¬°´Ë³Ê±Õë·½Ïò£©£¨Ä¬ÈÏÖµ£º0£©
+ - Ãªµã£¨Ä¬ÈÏÖµ£ºx=0,y=0£©
+ - ÄÚÈİ´óĞ¡£¨Ä¬ÈÏÖµ£ºwidth=0,heigh=0£©
+ - ¿É¼ûĞÔ£¨Ä¬ÈÏÖµ£ºtrue£©
+ ¾ÖÏŞĞÔ£ºLimitations:
+ - Ò»¸ö½ÚµãÀàÊÇÒ»¸ö¡°void¡±¶ÔÏó¡£Èç¹ûÄãÏëÒªÔÚ³¡¾°ÖĞ»­Ò»Ğ©¶«Î÷£¬ÄãÓ¦¸ÃÊ¹ÓÃ¾«ÁéÀàÀ´´úÌæ¡£»òÕßÊÇ½ÚµãµÄ×ÓÀà²¢ÇÒÖØĞ´¡°draw¡±.
 
  */
 
@@ -137,13 +136,13 @@ public:
     /**
      @{
      @name Properties
-     @brief @~english @~chinese å±æ€§
+     @brief @~english @~chinese ÊôĞÔ
      */
 
     /** 
      @property INVALID_TAG
      @~english Default tag used for all the nodes 
-     @~chinese ç”¨äºæ‰€æœ‰çš„èŠ‚ç‚¹çš„é»˜è®¤Tag
+     @~chinese ÓÃÓÚËùÓĞµÄ½ÚµãµÄÄ¬ÈÏTag
      */
     static const int INVALID_TAG = -1;
 
@@ -153,21 +152,21 @@ public:
      @{
      @name Constructor, Destructor and Initializers
      @brief @~english 
-     @~chinese æ„é€ å‡½æ•°ï¼Œææ„å‡½æ•°å’Œåˆå§‹åŒ–å‡½æ•°
+     @~chinese ¹¹Ôìº¯Êı£¬Îö¹¹º¯ÊıºÍ³õÊ¼»¯º¯Êı
      */
 
     /**
      * @~english Allocates and initializes a node.
-     * @~chinese åˆ†é…å¹¶ä¸”åˆå§‹åŒ–ä¸€ä¸ªèŠ‚ç‚¹.
+     * @~chinese ·ÖÅä²¢ÇÒ³õÊ¼»¯Ò»¸ö½Úµã.
      * @return @~english A initialized node which is marked as "autorelease".
-     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„èŠ‚ç‚¹ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
+     * @~chinese Ò»¸ö³õÊ¼»¯µÄ½Úµã£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
      */
     static Node * create();
 
     /**
      * @~english Gets the description string. It makes debugging easier.
-     * @~chinese å¾—åˆ°æè¿°æ€§çš„å­—ç¬¦ä¸²ã€‚è¿™å°†ä¼šä½¿å¾—è°ƒè¯•æ›´åŠ ç®€å•ã€‚
-     * @return @~english A string @~chinese ä¸€ä¸ªå­—ç¬¦ä¸²
+     * @~chinese µÃµ½ÃèÊöĞÔµÄ×Ö·û´®¡£Õâ½«»áÊ¹µÃµ÷ÊÔ¸ü¼Ó¼òµ¥¡£
+     * @return @~english A string @~chinese Ò»¸ö×Ö·û´®
      * @js NA
      * @lua NA
      */
@@ -181,7 +180,7 @@ public:
      @{
      @name Setters & Getters for Graphic Peroperties
      @brief @~english 
-     @~chinese å›¾å½¢å±æ€§å€¼çš„è·å–å‡½æ•°å’Œè®¾ç½®å‡½æ•°
+     @~chinese Í¼ĞÎÊôĞÔÖµµÄ»ñÈ¡º¯ÊıºÍÉèÖÃº¯Êı
      */
 
     /**
@@ -194,19 +193,19 @@ public:
      And Nodes that have LocalZOder values < 0 are the "left" subtree
      While Nodes with LocalZOder >=0 are the "right" subtree.
      
-     @~chinese LocalZOrderæ˜¯â€œkeyâ€(å…³é”®)æ¥åˆ†è¾¨èŠ‚ç‚¹å’Œå®ƒå…„å¼ŸèŠ‚ç‚¹çš„ç›¸å…³æ€§ã€‚
-     çˆ¶èŠ‚ç‚¹å°†ä¼šé€šè¿‡LocalZOrderçš„å€¼æ¥åˆ†è¾¨æ‰€æœ‰çš„å­èŠ‚ç‚¹ã€‚
-     å¦‚æœä¸¤ä¸ªèŠ‚ç‚¹æœ‰åŒæ ·çš„LocalZOrder,é‚£ä¹ˆå…ˆåŠ å…¥å­èŠ‚ç‚¹æ•°ç»„çš„èŠ‚ç‚¹å°†ä¼šæ˜¾ç¤ºåœ¨ååŠ å…¥çš„èŠ‚ç‚¹çš„å‰é¢ã€‚
+     @~chinese LocalZOrderÊÇ¡°key¡±(¹Ø¼ü)À´·Ö±æ½ÚµãºÍËüĞÖµÜ½ÚµãµÄÏà¹ØĞÔ¡£
+     ¸¸½Úµã½«»áÍ¨¹ıLocalZOrderµÄÖµÀ´·Ö±æËùÓĞµÄ×Ó½Úµã¡£
+     Èç¹ûÁ½¸ö½ÚµãÓĞÍ¬ÑùµÄLocalZOrder,ÄÇÃ´ÏÈ¼ÓÈë×Ó½ÚµãÊı×éµÄ½Úµã½«»áÏÔÊ¾ÔÚºó¼ÓÈëµÄ½ÚµãµÄÇ°Ãæ¡£
      
-     åŒæ ·çš„ï¼Œåœºæ™¯å›¾ä½¿ç”¨â€œIn-Orderï¼ˆæŒ‰é¡ºåºï¼‰â€éå†æ•°ç®—æ³•æ¥éå† ( http://en.wikipedia.org/wiki/Tree_traversal#In-order )
-     å¹¶ä¸”æ‹¥æœ‰å°äº0çš„LocalZOrderçš„å€¼çš„èŠ‚ç‚¹æ˜¯â€œleftâ€å­æ ‘ï¼ˆå·¦å­æ ‘ï¼‰
-     æ‰€ä»¥æ‹¥æœ‰å¤§äº0çš„LocalZOrderçš„å€¼å¾—èŠ‚ç‚¹æ˜¯â€œrightâ€å­æ ‘ï¼ˆå³å­æ ‘ï¼‰
+     Í¬ÑùµÄ£¬³¡¾°Í¼Ê¹ÓÃ¡°In-Order£¨°´Ë³Ğò£©¡±±éÀúÊıËã·¨À´±éÀú ( http://en.wikipedia.org/wiki/Tree_traversal#In-order )
+     ²¢ÇÒÓµÓĞĞ¡ÓÚ0µÄLocalZOrderµÄÖµµÄ½ÚµãÊÇ¡°left¡±×ÓÊ÷£¨×ó×ÓÊ÷£©
+     ËùÒÔÓµÓĞ´óÓÚ0µÄLocalZOrderµÄÖµµÃ½ÚµãÊÇ¡°right¡±×ÓÊ÷£¨ÓÒ×ÓÊ÷£©
      
      @see `setGlobalZOrder`
      @see `setVertexZ`
      *
      * @param localZOrder @~english The local Z order value.
-     * @~chinese ç›¸é‚»èŠ‚ç‚¹ä¸­çš„é¡ºåºå€¼
+     * @~chinese ÏàÁÚ½ÚµãÖĞµÄË³ĞòÖµ
      */
     virtual void setLocalZOrder(int localZOrder);
 
@@ -214,18 +213,18 @@ public:
     
     /* 
      @~english Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
-     @~chinese `setLocalZOrder`ä½¿ç”¨çš„è¾…åŠ©å‡½æ•°ã€‚ä¸è¦ä½¿ç”¨å®ƒé™¤éä½ çŸ¥é“ä½ åœ¨å¹²ä»€ä¹ˆã€‚
+     @~chinese `setLocalZOrder`Ê¹ÓÃµÄ¸¨Öúº¯Êı¡£²»ÒªÊ¹ÓÃËü³ı·ÇÄãÖªµÀÄãÔÚ¸ÉÊ²Ã´¡£
      @js NA
      */
     CC_DEPRECATED_ATTRIBUTE virtual void _setLocalZOrder(int z);
 
     /**
      * @~english Gets the local Z order of this node.
-     * @~chinese å¾—åˆ°è¿™ä¸ªèŠ‚ç‚¹çš„å±€éƒ¨Zé¡ºåº
+     * @~chinese µÃµ½Õâ¸ö½ÚµãµÄ¾Ö²¿ZË³Ğò
      *
      * @see `setLocalZOrder(int)`
      *
-     * @return @~english The local (relative to its siblings) Z order. @~chinese å±€éƒ¨Zè½´é¡ºåº(ç›¸å¯¹äºå…„å¼ŸèŠ‚ç‚¹)ã€‚
+     * @return @~english The local (relative to its siblings) Z order. @~chinese ¾Ö²¿ZÖáË³Ğò(Ïà¶ÔÓÚĞÖµÜ½Úµã)¡£
      */
     virtual int getLocalZOrder() const { return _localZOrder; }
     CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
@@ -242,36 +241,36 @@ public:
      
      Global Z Order is useful when you need to render nodes in an order different than the Scene Graph order.
      
-     Limitations: Global Z Order can't be used used by Nodes that have SpriteBatchNode as one of their acenstors.
+     Limitations: Global Z Order can't be used by Nodes that have SpriteBatchNode as one of their ancestors.
      And if ClippingNode is one of the ancestors, then "global Z order" will be relative to the ClippingNode.
-     @~chinese å®šä¹‰æ¸²æŸ“èŠ‚ç‚¹çš„é¡ºåº
-     æ‹¥æœ‰å…¨å±€Zé¡ºåºè¶Šå°çš„èŠ‚ç‚¹ï¼Œæœ€å…ˆæ¸²æŸ“
+     @~chinese ¶¨ÒåäÖÈ¾½ÚµãµÄË³Ğò
+     ÓµÓĞÈ«¾ÖZË³ĞòÔ½Ğ¡µÄ½Úµã£¬×îÏÈäÖÈ¾
      
-     å‡è®¾ä¸¤ä¸ªæˆ–è€…æ›´å¤šçš„èŠ‚ç‚¹æ‹¥æœ‰ç›¸åŒçš„å…¨å±€Zé¡ºåºï¼Œé‚£ä¹ˆæ¸²æŸ“é¡ºåºæ— æ³•ä¿è¯ã€‚
-     å”¯ä¸€çš„ä¾‹å¤–æ˜¯å¦‚æœèŠ‚ç‚¹çš„å…¨å±€Zé¡ºåºä¸ºé›¶ï¼Œé‚£ä¹ˆåœºæ™¯å›¾é¡ºåºæ˜¯å¯ä»¥ä½¿ç”¨çš„ã€‚ 
+     ¼ÙÉèÁ½¸ö»òÕß¸ü¶àµÄ½ÚµãÓµÓĞÏàÍ¬µÄÈ«¾ÖZË³Ğò£¬ÄÇÃ´äÖÈ¾Ë³ĞòÎŞ·¨±£Ö¤¡£
+     Î¨Ò»µÄÀıÍâÊÇÈç¹û½ÚµãµÄÈ«¾ÖZË³ĞòÎªÁã£¬ÄÇÃ´³¡¾°Í¼Ë³ĞòÊÇ¿ÉÒÔÊ¹ÓÃµÄ¡£ 
      
-     é»˜è®¤çš„ï¼Œæ‰€æœ‰çš„èŠ‚ç‚¹å…¨å±€Zé¡ºåºéƒ½æ˜¯é›¶ã€‚è¿™å°±æ˜¯è¯´ï¼Œé»˜è®¤ä½¿ç”¨åœºæ™¯å›¾é¡ºåºæ¥æ¸²æŸ“èŠ‚ç‚¹ã€‚
+     Ä¬ÈÏµÄ£¬ËùÓĞµÄ½ÚµãÈ«¾ÖZË³Ğò¶¼ÊÇÁã¡£Õâ¾ÍÊÇËµ£¬Ä¬ÈÏÊ¹ÓÃ³¡¾°Í¼Ë³ĞòÀ´äÖÈ¾½Úµã¡£
      
-     å…¨å±€Zé¡ºåºæ˜¯éå¸¸æœ‰ç”¨çš„å½“ä½ éœ€è¦æ¸²æŸ“èŠ‚ç‚¹æŒ‰ç…§ä¸åŒçš„é¡ºåºè€Œä¸æ˜¯åœºæ™¯å›¾é¡ºåºã€‚
+     È«¾ÖZË³ĞòÊÇ·Ç³£ÓĞÓÃµÄµ±ÄãĞèÒªäÖÈ¾½Úµã°´ÕÕ²»Í¬µÄË³Ğò¶ø²»ÊÇ³¡¾°Í¼Ë³Ğò¡£
      
-     å±€é™æ€§: å…¨å±€Zé¡ºåºä¸èƒ½å¤Ÿè¢«æ‹¥æœ‰ç»§æ‰¿â€œSpriteBatchNodeâ€çš„èŠ‚ç‚¹ä½¿ç”¨ã€‚
-     å¹¶ä¸”å¦‚æœâ€œClippingNodeâ€æ˜¯å…¶ä¸­ä¹‹ä¸€çš„ä¸Šä»£ï¼Œé‚£ä¹ˆâ€œglobal Z orderâ€ å°†ä¼šå’Œâ€œClippingNodeâ€æœ‰å…³ã€‚
+     ¾ÖÏŞĞÔ: È«¾ÖZË³Ğò²»ÄÜ¹»±»ÓµÓĞ¼Ì³Ğ¡°SpriteBatchNode¡±µÄ½ÚµãÊ¹ÓÃ¡£
+     ²¢ÇÒÈç¹û¡°ClippingNode¡±ÊÇÆäÖĞÖ®Ò»µÄÉÏ´ú£¬ÄÇÃ´¡°global Z order¡± ½«»áºÍ¡°ClippingNode¡±ÓĞ¹Ø¡£
 
      @see `setLocalZOrder()`
      @see `setVertexZ()`
 
      @since v3.0
      *
-     * @param globalZOrder @~english The global Z order value. @~chinese å…¨å±€Zè½´é¡ºåº
+     * @param globalZOrder @~english The global Z order value. @~chinese È«¾ÖZÖáË³Ğò
      */
     virtual void setGlobalZOrder(float globalZOrder);
     /**
      * @~english Returns the Node's Global Z Order.
-     * @~chinese è¿”å›èŠ‚ç‚¹çš„å…¨å±€Zé¡ºåºã€‚
+     * @~chinese ·µ»Ø½ÚµãµÄÈ«¾ÖZË³Ğò¡£
      *
      * @see `setGlobalZOrder(int)`
      *
-     * @return @~english The node's global Z order @~chinese èŠ‚ç‚¹çš„å…¨å±€Zè½´é¡ºåº
+     * @return @~english The node's global Z order @~chinese ½ÚµãµÄÈ«¾ÖZÖáË³Ğò
      */
     virtual float getGlobalZOrder() const { return _globalZOrder; }
 
@@ -279,22 +278,22 @@ public:
      * @~english Sets the scale (x) of the node.
      *
      * It is a scaling factor that multiplies the width of the node and its children.
-     * @~chinese è®¾ç½®èŠ‚ç‚¹çš„ç¼©æ”¾ï¼ˆxï¼‰ã€‚
+     * @~chinese ÉèÖÃ½ÚµãµÄËõ·Å£¨x£©¡£
      * 
-     * å®ƒæ˜¯ä¸€ä¸ªç¼©æ”¾å› å­ï¼Œå°†ä¼šä¹˜ä»¥èŠ‚ç‚¹çš„å®½ä»¥åŠå®ƒçš„å­èŠ‚ç‚¹ã€‚
+     * ËüÊÇÒ»¸öËõ·ÅÒò×Ó£¬½«»á³ËÒÔ½ÚµãµÄ¿íÒÔ¼°ËüµÄ×Ó½Úµã¡£
      *
-     * @param scaleX   @~english The scale factor on X axis. @~chinese Xè½´çš„ç¼©æ”¾å› å­. 
+     * @param scaleX   @~english The scale factor on X axis. @~chinese XÖáµÄËõ·ÅÒò×Ó. 
      *
-     * @warning @~english The physics body doesn't support this. @~chinese ç‰©ç†èŠ‚ç‚¹ä¸æ”¯æŒè¿™ä¸ªAPI 
+     * @warning @~english The physics body doesn't support this. @~chinese ÎïÀí½Úµã²»Ö§³ÖÕâ¸öAPI 
      */
     virtual void setScaleX(float scaleX);
     /**
      * @~english Returns the scale factor on X axis of this node
-     * @~chinese è¿”å›è¯¥èŠ‚ç‚¹çš„Xè½´çš„ç¼©æ”¾å› å­ã€‚
+     * @~chinese ·µ»Ø¸Ã½ÚµãµÄXÖáµÄËõ·ÅÒò×Ó¡£
      *
      * @see setScaleX(float)
      *
-     * @return @~english The scale factor on X axis. @~chinese Xè½´çš„ç¼©æ”¾å› å­ã€‚
+     * @return @~english The scale factor on X axis. @~chinese XÖáµÄËõ·ÅÒò×Ó¡£
      */
     virtual float getScaleX() const;
 
@@ -303,22 +302,22 @@ public:
      * @~english Sets the scale (y) of the node.
      *
      * It is a scaling factor that multiplies the height of the node and its children.
-     * @~chinese è®¾ç½®èŠ‚ç‚¹çš„ç¼©æ”¾ï¼ˆyï¼‰ã€‚
+     * @~chinese ÉèÖÃ½ÚµãµÄËõ·Å£¨y£©¡£
      *
-     * å®ƒæ˜¯ä¸€ä¸ªç¼©æ”¾å› å­ï¼Œå°†ä¼šä¹˜ä»¥èŠ‚ç‚¹çš„å®½ä»¥åŠå®ƒçš„å­èŠ‚ç‚¹ã€‚
+     * ËüÊÇÒ»¸öËõ·ÅÒò×Ó£¬½«»á³ËÒÔ½ÚµãµÄ¿íÒÔ¼°ËüµÄ×Ó½Úµã¡£
      *
-     * @param scaleY   @~english The scale factor on Y axis. @~chinese Yè½´çš„ç¼©æ”¾å› å­
+     * @param scaleY   @~english The scale factor on Y axis. @~chinese YÖáµÄËõ·ÅÒò×Ó
      *
-     * @warning @~english The physics body doesn't support this. @~chinese ç‰©ç†èŠ‚ç‚¹ä¸æ”¯æŒè¿™ä¸ªAPI
+     * @warning @~english The physics body doesn't support this. @~chinese ÎïÀí½Úµã²»Ö§³ÖÕâ¸öAPI
      */
     virtual void setScaleY(float scaleY);
     /**
      * @~english Returns the scale factor on Y axis of this node
-     * @~chinese è¿”å›è¯¥èŠ‚ç‚¹çš„Yè½´çš„ç¼©æ”¾å› å­ã€‚
+     * @~chinese ·µ»Ø¸Ã½ÚµãµÄYÖáµÄËõ·ÅÒò×Ó¡£
      *
      * @see `setScaleY(float)`
      *
-     * @return @~english The scale factor on Y axis. @~chinese Yè½´çš„ç¼©æ”¾å› å­
+     * @return @~english The scale factor on Y axis. @~chinese YÖáµÄËõ·ÅÒò×Ó
      */
     virtual float getScaleY() const;
 
@@ -326,22 +325,22 @@ public:
      * @~english Changes the scale factor on Z axis of this node
      *
      * The Default value is 1.0 if you haven't changed it before.
-     * @~chinese æ”¹å˜è¯¥èŠ‚ç‚¹çš„Zè½´çš„ç¼©æ”¾å› å­ã€‚
+     * @~chinese ¸Ä±ä¸Ã½ÚµãµÄZÖáµÄËõ·ÅÒò×Ó¡£
      *
-     * å¦‚æœä½ ä¹‹å‰æ²¡æœ‰æ”¹å˜è¿‡å®ƒï¼Œé‚£ä¹ˆå®ƒçš„é»˜è®¤å€¼æ˜¯1.0ã€‚
+     * Èç¹ûÄãÖ®Ç°Ã»ÓĞ¸Ä±ä¹ıËü£¬ÄÇÃ´ËüµÄÄ¬ÈÏÖµÊÇ1.0¡£
      *
-     * @param scaleZ   @~english The scale factor on Z axis. @~chinese Zè½´çš„ç¼©æ”¾å› å­ 
+     * @param scaleZ   @~english The scale factor on Z axis. @~chinese ZÖáµÄËõ·ÅÒò×Ó 
      *
-     * @warning @~english The physics body doesn't support this.@~chinese ç‰©ç†èŠ‚ç‚¹ä¸æ”¯æŒè¿™ä¸ªAPI 
+     * @warning @~english The physics body doesn't support this.@~chinese ÎïÀí½Úµã²»Ö§³ÖÕâ¸öAPI 
      */
     virtual void setScaleZ(float scaleZ);
     /**
      * @~english Returns the scale factor on Z axis of this node
-     * @~chinese è¿”å›è¯¥èŠ‚ç‚¹çš„Zè½´çš„ç¼©æ”¾å› å­ã€‚
+     * @~chinese ·µ»Ø¸Ã½ÚµãµÄZÖáµÄËõ·ÅÒò×Ó¡£
      *
      * @see `setScaleZ(float)`
      *
-     * @return @~english The scale factor on Z axis. @~chinese Zè½´çš„ç¼©æ”¾å› å­ã€‚ 
+     * @return @~english The scale factor on Z axis. @~chinese ZÖáµÄËõ·ÅÒò×Ó¡£ 
      */
     virtual float getScaleZ() const;
 
@@ -350,23 +349,23 @@ public:
      * @~english Sets the scale (x,y,z) of the node.
      *
      * It is a scaling factor that multiplies the width, height and depth of the node and its children.
-     * @~chinese è®¾ç½®èŠ‚ç‚¹çš„ç¼©æ”¾ï¼ˆx,y,zï¼‰.
+     * @~chinese ÉèÖÃ½ÚµãµÄËõ·Å£¨x,y,z£©.
      *
-     * ç¼©æ”¾å› å­å°†ä¼šä¹˜ä»¥è¯¥èŠ‚ç‚¹å’Œå®ƒå­èŠ‚ç‚¹çš„å®½ï¼Œé«˜å’Œæ·±åº¦ã€‚
+     * Ëõ·ÅÒò×Ó½«»á³ËÒÔ¸Ã½ÚµãºÍËü×Ó½ÚµãµÄ¿í£¬¸ßºÍÉî¶È¡£
      *
-     * @param scale     @~english The scale factor for X, Y and Z axis. @~chinese X,Y,Zè½´çš„ç¼©æ”¾å› å­ 
+     * @param scale     @~english The scale factor for X, Y and Z axis. @~chinese X,Y,ZÖáµÄËõ·ÅÒò×Ó 
      *
-     * @warning @~english The physics body doesn't support this. @~chinese ç‰©ç†èŠ‚ç‚¹ä¸æ”¯æŒè¿™ä¸ªAPI 
+     * @warning @~english The physics body doesn't support this. @~chinese ÎïÀí½Úµã²»Ö§³ÖÕâ¸öAPI 
      */
     virtual void setScale(float scale);
     /**
      * @~english Gets the scale factor of the node,  when X and Y have the same scale factor.
-     * @~chinese å¾—åˆ°è¯¥èŠ‚ç‚¹çš„ç¼©æ”¾å› å­ï¼Œå½“Xè½´å’ŒYè½´æœ‰ç›¸åŒçš„ç¼©æ”¾å› å­æ—¶ã€‚
+     * @~chinese µÃµ½¸Ã½ÚµãµÄËõ·ÅÒò×Ó£¬µ±XÖáºÍYÖáÓĞÏàÍ¬µÄËõ·ÅÒò×ÓÊ±¡£
      *
-     * @warning @~english Assert when `_scaleX != _scaleY` @~chinese åˆ¤æ–­ å½“ `_scaleX != _scaleY` 
+     * @warning @~english Assert when `_scaleX != _scaleY` @~chinese ÅĞ¶Ï µ± `_scaleX != _scaleY` 
      * @see setScale(float)
      *
-     * @return @~english The scale factor of the node. @~chinese è¯¥èŠ‚ç‚¹çš„ç¼©æ”¾å› å­ 
+     * @return @~english The scale factor of the node. @~chinese ¸Ã½ÚµãµÄËõ·ÅÒò×Ó 
      */
     virtual float getScale() const;
 
@@ -374,14 +373,14 @@ public:
      * @~english Sets the scale (x,y) of the node.
      *
      * It is a scaling factor that multiplies the width and height of the node and its children.
-     * @~chinese è®¾ç½®èŠ‚ç‚¹çš„ç¼©æ”¾ï¼ˆx,yï¼‰.
+     * @~chinese ÉèÖÃ½ÚµãµÄËõ·Å£¨x,y£©.
      *
-     * ç¼©æ”¾å› å­ä¹˜ä»¥è¯¥èŠ‚ç‚¹å’Œå®ƒå­èŠ‚ç‚¹çš„å®½ä¸é«˜ã€‚
+     * Ëõ·ÅÒò×Ó³ËÒÔ¸Ã½ÚµãºÍËü×Ó½ÚµãµÄ¿íÓë¸ß¡£
      *
-     * @param scaleX     @~english The scale factor on X axis. @~chinese Xè½´çš„ç¼©æ”¾å› å­ã€‚ 
-     * @param scaleY     @~english The scale factor on Y axis. @~chinese Yè½´çš„ç¼©æ”¾å› å­ã€‚ 
+     * @param scaleX     @~english The scale factor on X axis. @~chinese XÖáµÄËõ·ÅÒò×Ó¡£ 
+     * @param scaleY     @~english The scale factor on Y axis. @~chinese YÖáµÄËõ·ÅÒò×Ó¡£ 
      *
-     * @warning @~english The physics body doesn't support this. @~chinese ç‰©ç†èŠ‚ç‚¹ä¸æ”¯æŒè¿™ä¸ªAPI 
+     * @warning @~english The physics body doesn't support this. @~chinese ÎïÀí½Úµã²»Ö§³ÖÕâ¸öAPI 
      */
     virtual void setScale(float scaleX, float scaleY);
 
@@ -390,22 +389,22 @@ public:
      *
      * Usually we use `Vec2(x,y)` to compose Vec2 object.
      * This code snippet sets the node in the center of screen.
-     * @~chinese è®¾ç½®èŠ‚ç‚¹çš„ä½ç½®åœ¨çˆ¶èŠ‚ç‚¹çš„åæ ‡ç³»ç³»ç»Ÿä¸­ã€‚
+     * @~chinese ÉèÖÃ½ÚµãµÄÎ»ÖÃÔÚ¸¸½ÚµãµÄ×ø±êÏµÏµÍ³ÖĞ¡£
      *
-     * é€šå¸¸æˆ‘ä»¬ä½¿ç”¨`Vec2(x,y)` æ¥ç»„æˆ Vec2 å¯¹è±¡ã€‚
-     * è¿™ä¸€æ®µä»£ç è®¾ç½®èŠ‚ç‚¹åœ¨å±å¹•ä¸­é—´ã€‚
+     * Í¨³£ÎÒÃÇÊ¹ÓÃ`Vec2(x,y)` À´×é³É Vec2 ¶ÔÏó¡£
+     * ÕâÒ»¶Î´úÂëÉèÖÃ½ÚµãÔÚÆÁÄ»ÖĞ¼ä¡£
      *
      @code
      Size size = Director::getInstance()->getWinSize();
      node->setPosition(size.width/2, size.height/2);
      @endcode
      *
-     * @param position  @~english The position (x,y) of the node in OpenGL coordinates. @~chinese è¿™ä¸ªèŠ‚ç‚¹çš„ä½ç½®ï¼ˆx,yï¼‰åœ¨OpenGLåæ ‡ç³»ä¸­ã€‚ 
+     * @param position  @~english The position (x,y) of the node in OpenGL coordinates. @~chinese Õâ¸ö½ÚµãµÄÎ»ÖÃ£¨x,y£©ÔÚOpenGL×ø±êÏµÖĞ¡£ 
      */
     virtual void setPosition(const Vec2 &position);
 
-    /** @~chinese è®¾ç½®å½’ä¸€åŒ–ä½ç½®åæ ‡(x, y)ï¼Œä½¿ç”¨ä»0åˆ°1çš„å½’ä¸€åŒ–å€¼
-    æœ€ç»ˆåƒç´ ä½ç½®æŒ‰ç…§å¦‚ä¸‹çš„é€»è¾‘è¿›è¡Œè½¬æ¢ï¼š
+    /** @~chinese ÉèÖÃ¹éÒ»»¯Î»ÖÃ×ø±ê(x, y)£¬Ê¹ÓÃ´Ó0µ½1µÄ¹éÒ»»¯Öµ
+    ×îÖÕÏñËØÎ»ÖÃ°´ÕÕÈçÏÂµÄÂß¼­½øĞĞ×ª»»£º
     @~english Sets the position (x,y) using values between 0 and 1.
      The positions in pixels is calculated like the following:
 
@@ -417,27 +416,27 @@ public:
      }
      @endcode
      *
-     * @param position @~english The normalized position (x,y) of the node, using value between 0 and 1. @~chinese å½’ä¸€åŒ–çš„ä½ç½®åæ ‡ 
+     * @param position @~english The normalized position (x,y) of the node, using value between 0 and 1. @~chinese ¹éÒ»»¯µÄÎ»ÖÃ×ø±ê 
      */
     virtual void setNormalizedPosition(const Vec2 &position);
 
     /**
      * @~english Gets the position (x,y) of the node in its parent's coordinate system.
-     * @~chinese å¾—åˆ°åœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­èŠ‚ç‚¹çš„ä½ç½®ï¼ˆx,yï¼‰ã€‚
+     * @~chinese µÃµ½ÔÚ¸¸½Úµã×ø±êÏµÖĞ½ÚµãµÄÎ»ÖÃ£¨x,y£©¡£
      *
      * @see setPosition(const Vec2&)
      *
      * @code
      * In js and lua return value is table which contains x,y.
      * @endcode
-     * @return @~english The position (x,y) of the node in OpenGL coordinates. @~chinese èŠ‚ç‚¹åœ¨OpenGLåæ ‡ç³»ä¸­çš„ä½ç½®ï¼ˆx,y)ã€‚ 
+     * @return @~english The position (x,y) of the node in OpenGL coordinates. @~chinese ½ÚµãÔÚOpenGL×ø±êÏµÖĞµÄÎ»ÖÃ£¨x,y)¡£ 
      */
     virtual const Vec2& getPosition() const;
 
     /** @~english Returns the normalized position.
-     * @~chinese å¾—åˆ°åœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­èŠ‚ç‚¹å½’ä¸€åŒ–çš„ä½ç½®ï¼ˆx,yï¼‰ã€‚
+     * @~chinese µÃµ½ÔÚ¸¸½Úµã×ø±êÏµÖĞ½Úµã¹éÒ»»¯µÄÎ»ÖÃ£¨x,y£©¡£
      * 
-     * @return @~english The normalized position. @~chinese å½’ä¸€åŒ–ä½ç½® 
+     * @return @~english The normalized position. @~chinese ¹éÒ»»¯Î»ÖÃ 
      */
     virtual const Vec2& getNormalizedPosition() const;
 
@@ -447,11 +446,11 @@ public:
      * Passing two numbers (x,y) is much efficient than passing Vec2 object.
      * This method is bound to Lua and JavaScript.
      * Passing a number is 10 times faster than passing a object from Lua to c++.
-     * @~chinese è®¾ç½®èŠ‚ç‚¹åœ¨å®ƒçˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ï¼ˆx,yï¼‰ã€‚
+     * @~chinese ÉèÖÃ½ÚµãÔÚËü¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ£¨x,y£©¡£
      *
-     * ä¼ é€’ä¸¤ä¸ªæ•°å­—ï¼ˆx,yï¼‰æ¯”ä¼ é€’Vec2å¯¹è±¡æ›´æœ‰æ•ˆç‡ã€‚
-     * è¿™ä¸ªæ–¹æ³•åœ¨Luaå’ŒJavaScriptç»‘å®šç¯å¢ƒä¸‹ï¼Œ
-     * ä»è„šæœ¬åˆ°C++ä¼ é€’ä¸€ä¸ªæ•°å­—æ¯”ä¼ é€’ä¸€ä¸ªå¯¹è±¡å¿«10å€ã€‚
+     * ´«µİÁ½¸öÊı×Ö£¨x,y£©±È´«µİVec2¶ÔÏó¸üÓĞĞ§ÂÊ¡£
+     * Õâ¸ö·½·¨ÔÚLuaºÍJavaScript°ó¶¨»·¾³ÏÂ£¬
+     * ´Ó½Å±¾µ½C++´«µİÒ»¸öÊı×Ö±È´«µİÒ»¸ö¶ÔÏó¿ì10±¶¡£
      *
      @code
      // sample code in Lua
@@ -459,58 +458,58 @@ public:
      node:setPosition(x, y)            -- pass x, y coordinate to C++.
      @endcode
      *
-     * @param x     @~english X coordinate for position. @~chinese Xè½´ä½ç½® 
-     * @param y     @~english Y coordinate for position. @~chinese Yè½´ä½ç½® 
+     * @param x     @~english X coordinate for position. @~chinese XÖáÎ»ÖÃ 
+     * @param y     @~english Y coordinate for position. @~chinese YÖáÎ»ÖÃ 
      */
     virtual void setPosition(float x, float y);
     /**
      * @~english Gets position in a more efficient way, returns two number instead of a Vec2 object.
-     * @~chinese ç”¨ä¸€ä¸ªæ›´æœ‰æ•ˆç‡çš„æ–¹æ³•è·å–ä½ç½®ï¼Œé€šè¿‡æŒ‡é’ˆå‚æ•°ä¼ é€’ä¸¤ä¸ªæ•°å­—è€Œä¸æ˜¯Vec2å¯¹è±¡ã€‚
+     * @~chinese ÓÃÒ»¸ö¸üÓĞĞ§ÂÊµÄ·½·¨»ñÈ¡Î»ÖÃ£¬Í¨¹ıÖ¸Õë²ÎÊı´«µİÁ½¸öÊı×Ö¶ø²»ÊÇVec2¶ÔÏó¡£
      *
      * @see `setPosition(float, float)`
      *
-     * @param x @~english To receive x coordinate for position. @~chinese ç”¨æ¥è·å–Xè½´ä½ç½®çš„å‚æ•° 
-     * @param y @~english To receive y coordinate for position. @~chinese ç”¨æ¥è·å–Yè½´ä½ç½®çš„å‚æ•° 
+     * @param x @~english To receive x coordinate for position. @~chinese ÓÃÀ´»ñÈ¡XÖáÎ»ÖÃµÄ²ÎÊı 
+     * @param y @~english To receive y coordinate for position. @~chinese ÓÃÀ´»ñÈ¡YÖáÎ»ÖÃµÄ²ÎÊı 
      */
     virtual void getPosition(float* x, float* y) const;
     /** @~english Sets the x coordinate of the node in its parent's coordinate system.
-     * @~chinese è®¾ç½®èŠ‚ç‚¹åœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸‹çš„Xè½´ä½ç½®
+     * @~chinese ÉèÖÃ½ÚµãÔÚ¸¸½Úµã×ø±êÏµÏÂµÄXÖáÎ»ÖÃ
      *
-     * @param x @~english The x coordinate of the node. @~chinese Xè½´åæ ‡ 
+     * @param x @~english The x coordinate of the node. @~chinese XÖá×ø±ê 
      */
     virtual void  setPositionX(float x);
     /** @~english Gets the x coordinate of the node in its parent's coordinate system.
-     * @~chinese è·å–èŠ‚ç‚¹åœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸‹çš„Xè½´ä½ç½®
+     * @~chinese »ñÈ¡½ÚµãÔÚ¸¸½Úµã×ø±êÏµÏÂµÄXÖáÎ»ÖÃ
      *
-     * @return @~english The x coordinate of the node. @~chinese Xè½´åæ ‡ 
+     * @return @~english The x coordinate of the node. @~chinese XÖá×ø±ê 
      */
     virtual float getPositionX(void) const;
     /** @~english Sets the y coordinate of the node in its parent's coordinate system.
-     * @~chinese è®¾ç½®èŠ‚ç‚¹åœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸‹çš„Yè½´ä½ç½®
+     * @~chinese ÉèÖÃ½ÚµãÔÚ¸¸½Úµã×ø±êÏµÏÂµÄYÖáÎ»ÖÃ
      *
-     * @param y @~english The y coordinate of the node. @~chinese Yè½´åæ ‡ 
+     * @param y @~english The y coordinate of the node. @~chinese YÖá×ø±ê 
      */
     virtual void  setPositionY(float y);
     /** @~english Gets the y coordinate of the node in its parent's coordinate system.
-     * @~chinese è·å–èŠ‚ç‚¹åœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸‹çš„Yè½´ä½ç½®
+     * @~chinese »ñÈ¡½ÚµãÔÚ¸¸½Úµã×ø±êÏµÏÂµÄYÖáÎ»ÖÃ
      *
-     * @return @~english The y coordinate of the node. @~chinese Yè½´åæ ‡ 
+     * @return @~english The y coordinate of the node. @~chinese YÖá×ø±ê 
      */
     virtual float getPositionY(void) const;
 
     /**
      * @~english Sets the position (X, Y, and Z) in its parent's coordinate system.
-     * @~chinese è®¾ç½®èŠ‚ç‚¹åœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ï¼ˆx,y,zï¼‰ã€‚
+     * @~chinese ÉèÖÃ½ÚµãÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ£¨x,y,z£©¡£
      * 
-     * @param position @~english The position (X, Y, and Z) in its parent's coordinate system. @~chinese èŠ‚ç‚¹åœ¨çˆ¶èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„ä½ç½®ï¼ˆx,y,zï¼‰ 
+     * @param position @~english The position (X, Y, and Z) in its parent's coordinate system. @~chinese ½ÚµãÔÚ¸¸½Úµã×ø±êÏµÖĞµÄÎ»ÖÃ£¨x,y,z£© 
      * @js NA
      */
     virtual void setPosition3D(const Vec3& position);
     /**
      * @~english Returns the position (X,Y,Z) in its parent's coordinate system.
-     * @~chinese è·å–èŠ‚ç‚¹åœ¨çˆ¶åæ ‡ç³»çš„ä½ç½®ï¼ˆX,Y,Zï¼‰ã€‚
+     * @~chinese »ñÈ¡½ÚµãÔÚ¸¸×ø±êÏµµÄÎ»ÖÃ£¨X,Y,Z£©¡£
      *
-     * @return @~english The position (X, Y, and Z) in its parent's coordinate system. @~chinese èŠ‚ç‚¹åœ¨çˆ¶åæ ‡ç³»çš„ä½ç½®ï¼ˆX,Y,Zï¼‰ 
+     * @return @~english The position (X, Y, and Z) in its parent's coordinate system. @~chinese ½ÚµãÔÚ¸¸×ø±êÏµµÄÎ»ÖÃ£¨X,Y,Z£© 
      * @js NA
      */
     virtual Vec3 getPosition3D() const;
@@ -522,16 +521,16 @@ public:
      * In order to use this property correctly.
      *
      * `setPositionZ()` also sets the `setGlobalZValue()` with the positionZ as value.
-     * @~chinese è®¾ç½®ä½ç½®çš„â€œzâ€è½´åæ ‡ç³»ï¼Œæ˜¯OpneGL Zä½ç½®ã€‚
+     * @~chinese ÉèÖÃÎ»ÖÃµÄ¡°z¡±Öá×ø±êÏµ£¬ÊÇOpneGL ZÎ»ÖÃ¡£
      *
-     * OpenGLæ·±åº¦ç¼“å­˜å’Œæ·±åº¦æµ‹è¯•é»˜è®¤å€¼æ˜¯å…³é—­çš„ï¼Œä½ éœ€è¦æ‰“å¼€å®ƒä»¬
-     * æ¥æ­£ç¡®çš„ä½¿ç”¨è¿™ä¸ªå±æ€§ã€‚
+     * OpenGLÉî¶È»º´æºÍÉî¶È²âÊÔÄ¬ÈÏÖµÊÇ¹Ø±ÕµÄ£¬ÄãĞèÒª´ò¿ªËüÃÇ
+     * À´ÕıÈ·µÄÊ¹ÓÃÕâ¸öÊôĞÔ¡£
      *
-     * `setPositionZ()` åŒæ ·è®¾ç½® `setGlobalZValue()` ç”¨â€œpositionZâ€ ä½œä¸ºå€¼ã€‚
+     * `setPositionZ()` Í¬ÑùÉèÖÃ `setGlobalZValue()` ÓÃ¡°positionZ¡± ×÷ÎªÖµ¡£
      *
      * @see `setGlobalZValue()`
      *
-     * @param positionZ  @~english OpenGL Z vertex of this node. @~chinese è¯¥èŠ‚ç‚¹çš„OpenGL Zä½ç½® 
+     * @param positionZ  @~english OpenGL Z vertex of this node. @~chinese ¸Ã½ÚµãµÄOpenGL ZÎ»ÖÃ 
      * @js setVertexZ
      */
     virtual void setPositionZ(float positionZ);
@@ -539,11 +538,11 @@ public:
 
     /**
      * @~english Gets position Z coordinate of this node.
-     * @~chinese å¾—åˆ°è¯¥èŠ‚ç‚¹çš„Zè½´åæ ‡ç³»çš„ä½ç½®ã€‚
+     * @~chinese µÃµ½¸Ã½ÚµãµÄZÖá×ø±êÏµµÄÎ»ÖÃ¡£
      *
      * @see setPositionZ(float)
      *
-     * @return @~english The position Z coordinate of this node. @~chinese è¯¥èŠ‚ç‚¹çš„Zè½´åæ ‡ç³»ã€‚ 
+     * @return @~english The position Z coordinate of this node. @~chinese ¸Ã½ÚµãµÄZÖá×ø±êÏµ¡£ 
      * @js getVertexZ
      */
     virtual float getPositionZ() const;
@@ -558,27 +557,27 @@ public:
      * This angle describes the shear distortion in the X direction.
      * Thus, it is the angle between the Y coordinate and the left edge of the shape
      * The default skewX angle is 0. Positive values distort the node in a CW direction.
-     * @~chinese æ”¹å˜è¯¥èŠ‚ç‚¹Xè½´çš„å€¾æ–œè§’ï¼Œå•ä½æ˜¯åº¦ã€‚
+     * @~chinese ¸Ä±ä¸Ã½ÚµãXÖáµÄÇãĞ±½Ç£¬µ¥Î»ÊÇ¶È¡£
      *
-     * `setRotationalSkew()`å’Œ `setSkew()` çš„ä¸åŒæ—¶æ˜¯å‰ä¸€ä¸ªæ¨¡æ‹ŸFlashçš„å€¾æ–œåŠŸèƒ½ã€‚
-     * ç„¶è€Œåä¸€ä¸ªä½¿ç”¨çœŸæ­£çš„å€¾æ–œåŠŸèƒ½ã€‚
+     * `setRotationalSkew()`ºÍ `setSkew()` µÄ²»Í¬Ê±ÊÇÇ°Ò»¸öÄ£ÄâFlashµÄÇãĞ±¹¦ÄÜ¡£
+     * È»¶øºóÒ»¸öÊ¹ÓÃÕæÕıµÄÇãĞ±¹¦ÄÜ¡£
      *
-     * è¿™ä¸ªè§’åº¦æè¿°äº†åœ¨Xè½´æ–¹å‘çš„åˆ‡å½¢å˜ï¼ˆshear distortionï¼‰ã€‚
-     * å› æ­¤ï¼Œè¿™ä¸ªè§’åº¦åœ¨Yè½´å’Œå›¾å½¢å·¦è¾¹ä¹‹é—´ã€‚
-     * é»˜è®¤å€¼skewXè§’åº¦æ˜¯0ï¼Œè´Ÿå€¼ä½¿è¯¥èŠ‚ç‚¹æŒ‰é¡ºæ—¶é’ˆå˜å½¢ã€‚
+     * Õâ¸ö½Ç¶ÈÃèÊöÁËÔÚXÖá·½ÏòµÄÇĞĞÎ±ä£¨shear distortion£©¡£
+     * Òò´Ë£¬Õâ¸ö½Ç¶ÈÔÚYÖáºÍÍ¼ĞÎ×ó±ßÖ®¼ä¡£
+     * Ä¬ÈÏÖµskewX½Ç¶ÈÊÇ0£¬¸ºÖµÊ¹¸Ã½Úµã°´Ë³Ê±Õë±äĞÎ¡£
      *
-     * @param skewX @~english The X skew angle of the node in degrees. @~chinese è¯¥èŠ‚ç‚¹çš„Xè½´çš„å€¾æ–œè§’ã€‚ 
+     * @param skewX @~english The X skew angle of the node in degrees. @~chinese ¸Ã½ÚµãµÄXÖáµÄÇãĞ±½Ç¡£ 
      *
-     * @warning @~english The physics body doesn't support this. @~chinese ç‰©ç†èŠ‚ç‚¹ä¸æ”¯æŒè¿™ä¸ªAPI 
+     * @warning @~english The physics body doesn't support this. @~chinese ÎïÀí½Úµã²»Ö§³ÖÕâ¸öAPI 
      */
     virtual void setSkewX(float skewX);
     /**
      * @~english Returns the X skew angle of the node in degrees.
-     * @~chinese è¿”å›è¯¥èŠ‚ç‚¹çš„Xè½´å€¾æ–œè§’ï¼Œå•ä½æ˜¯åº¦ã€‚
+     * @~chinese ·µ»Ø¸Ã½ÚµãµÄXÖáÇãĞ±½Ç£¬µ¥Î»ÊÇ¶È¡£
      *
      * @see `setSkewX(float)`
      *
-     * @return @~english The X skew angle of the node in degrees. @~chinese è¯¥èŠ‚ç‚¹çš„Xè½´å€¾æ–œè§’ã€‚ 
+     * @return @~english The X skew angle of the node in degrees. @~chinese ¸Ã½ÚµãµÄXÖáÇãĞ±½Ç¡£ 
      */
     virtual float getSkewX() const;
 
@@ -592,27 +591,27 @@ public:
      * This angle describes the shear distortion in the Y direction.
      * Thus, it is the angle between the X coordinate and the bottom edge of the shape.
      * The default skewY angle is 0. Positive values distort the node in a CCW direction.
-     * @~chinese æ”¹å˜è¯¥èŠ‚ç‚¹Yè½´çš„å€¾æ–œè§’ï¼Œå•ä½æ˜¯åº¦ã€‚
+     * @~chinese ¸Ä±ä¸Ã½ÚµãYÖáµÄÇãĞ±½Ç£¬µ¥Î»ÊÇ¶È¡£
      *
-     * `setRotationalSkew()`å’Œ `setSkew()` çš„ä¸åŒæ—¶æ˜¯å‰ä¸€ä¸ªæ¨¡æ‹ŸFlashçš„å€¾æ–œåŠŸèƒ½ã€‚
-     * ç„¶è€Œåä¸€ä¸ªä½¿ç”¨çœŸæ­£çš„å€¾æ–œåŠŸèƒ½ã€‚
+     * `setRotationalSkew()`ºÍ `setSkew()` µÄ²»Í¬Ê±ÊÇÇ°Ò»¸öÄ£ÄâFlashµÄÇãĞ±¹¦ÄÜ¡£
+     * È»¶øºóÒ»¸öÊ¹ÓÃÕæÕıµÄÇãĞ±¹¦ÄÜ¡£
      *
-     * è¿™ä¸ªè§’åº¦æè¿°äº†åœ¨Yè½´æ–¹å‘çš„åˆ‡å½¢å˜ï¼ˆshear distortionï¼‰ã€‚
-     *  å› æ­¤ï¼Œè¿™ä¸ªè§’åº¦åœ¨Xè½´å’Œå›¾å½¢åº•è¾¹ä¹‹é—´ã€‚
-     * é»˜è®¤å€¼skewYè§’åº¦æ˜¯0ï¼Œè´Ÿå€¼ä½¿è¯¥èŠ‚ç‚¹æŒ‰é¡ºæ—¶é’ˆå˜å½¢ã€‚
+     * Õâ¸ö½Ç¶ÈÃèÊöÁËÔÚYÖá·½ÏòµÄÇĞĞÎ±ä£¨shear distortion£©¡£
+     *  Òò´Ë£¬Õâ¸ö½Ç¶ÈÔÚXÖáºÍÍ¼ĞÎµ×±ßÖ®¼ä¡£
+     * Ä¬ÈÏÖµskewY½Ç¶ÈÊÇ0£¬¸ºÖµÊ¹¸Ã½Úµã°´Ë³Ê±Õë±äĞÎ¡£
      *
-     * @param skewY    @~english The Y skew angle of the node in degrees. @~chinese è¯¥èŠ‚ç‚¹çš„Yè½´çš„å€¾æ–œè§’ã€‚ 
+     * @param skewY    @~english The Y skew angle of the node in degrees. @~chinese ¸Ã½ÚµãµÄYÖáµÄÇãĞ±½Ç¡£ 
      *
-     * @warning @~english The physics body doesn't support this. @~chinese ç‰©ç†èŠ‚ç‚¹ä¸æ”¯æŒè¿™ä¸ªAPI 
+     * @warning @~english The physics body doesn't support this. @~chinese ÎïÀí½Úµã²»Ö§³ÖÕâ¸öAPI 
      */
     virtual void setSkewY(float skewY);
     /**
      * @~english Returns the Y skew angle of the node in degrees.
-     * @~chinese è¿”å›è¯¥èŠ‚ç‚¹çš„Yè½´å€¾æ–œè§’ï¼Œå•ä½æ˜¯åº¦ã€‚
+     * @~chinese ·µ»Ø¸Ã½ÚµãµÄYÖáÇãĞ±½Ç£¬µ¥Î»ÊÇ¶È¡£
      *
      * @see `setSkewY(float)`
      *
-     * @return @~english The Y skew angle of the node in degrees. @~chinese è¯¥èŠ‚ç‚¹çš„Yè½´å€¾æ–œè§’ã€‚ 
+     * @return @~english The Y skew angle of the node in degrees. @~chinese ¸Ã½ÚµãµÄYÖáÇãĞ±½Ç¡£ 
      */
     virtual float getSkewY() const;
 
@@ -625,35 +624,35 @@ public:
      * The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
      * But you can use values higher than (1,1) and lower than (0,0) too.
      * The default anchorPoint is (0.5,0.5), so it starts in the center of the node.
-     * @~chinese è®¾ç½®é”šç‚¹ï¼Œç”¨ç™¾åˆ†æ¯”è¡¨ç¤ºã€‚
+     * @~chinese ÉèÖÃÃªµã£¬ÓÃ°Ù·Ö±È±íÊ¾¡£
      *
-     * ä¸€ä¸ªé”šç‚¹æ˜¯æ‰€æœ‰çš„è½¬æ¢å’Œå®šä½æ“ä½œå‘ç”Ÿçš„ç‚¹ã€‚
-     * å®ƒå°±åƒåœ¨èŠ‚ç‚¹ä¸Šè¿æ¥å…¶çˆ¶ç±»çš„å¤§å¤´é’ˆã€‚
-     * é”šç‚¹æ˜¯æ ‡å‡†åŒ–çš„ï¼Œå°±åƒç™¾åˆ†æ¯”ä¸€æ ·ã€‚(0,0)è¡¨ç¤ºå·¦ä¸‹è§’ï¼Œ(1,1)è¡¨ç¤ºå³ä¸Šè§’ã€‚
-     * ä½†æ˜¯ä½ å¯ä»¥ä½¿ç”¨æ¯”ï¼ˆ1,1,ï¼‰æ›´é«˜çš„å€¼æˆ–è€…æ¯”ï¼ˆ0,0ï¼‰æ›´ä½çš„å€¼ã€‚
-     * é»˜è®¤çš„é”šç‚¹æ˜¯ï¼ˆ0.5,0.5ï¼‰ï¼Œå› æ­¤å®ƒå¼€å§‹äºèŠ‚ç‚¹çš„ä¸­å¿ƒä½ç½®ã€‚
-     * @note @~english If node has a physics body, the anchor must be in the middle, you cann't change this to other value. @~chinese å¦‚æœèŠ‚ç‚¹æœ‰ç‰©ç†ä½“ï¼Œé”šç‚¹å¿…é¡»åœ¨ä¸­å¿ƒï¼Œä½ ä¸èƒ½å¤Ÿè¿™ä¸ªå€¼ã€‚ 
+     * Ò»¸öÃªµãÊÇËùÓĞµÄ×ª»»ºÍ¶¨Î»²Ù×÷·¢ÉúµÄµã¡£
+     * Ëü¾ÍÏñÔÚ½ÚµãÉÏÁ¬½ÓÆä¸¸ÀàµÄ´óÍ·Õë¡£
+     * ÃªµãÊÇ±ê×¼»¯µÄ£¬¾ÍÏñ°Ù·Ö±ÈÒ»Ñù¡£(0,0)±íÊ¾×óÏÂ½Ç£¬(1,1)±íÊ¾ÓÒÉÏ½Ç¡£
+     * µ«ÊÇÄã¿ÉÒÔÊ¹ÓÃ±È£¨1,1,£©¸ü¸ßµÄÖµ»òÕß±È£¨0,0£©¸üµÍµÄÖµ¡£
+     * Ä¬ÈÏµÄÃªµãÊÇ£¨0.5,0.5£©£¬Òò´ËËü¿ªÊ¼ÓÚ½ÚµãµÄÖĞĞÄÎ»ÖÃ¡£
+     * @note @~english If node has a physics body, the anchor must be in the middle, you cann't change this to other value. @~chinese Èç¹û½ÚµãÓĞÎïÀíÌå£¬Ãªµã±ØĞëÔÚÖĞĞÄ£¬Äã²»ÄÜ¹»Õâ¸öÖµ¡£ 
      *
-     * @param anchorPoint   @~english The anchor point of node. @~chinese èŠ‚ç‚¹çš„é”šç‚¹ã€‚ 
+     * @param anchorPoint   @~english The anchor point of node. @~chinese ½ÚµãµÄÃªµã¡£ 
      */
     virtual void setAnchorPoint(const Vec2& anchorPoint);
     /**
      * @~english Returns the anchor point in percent.
-     * @~chinese è¿”å›ç”¨ç™¾åˆ†æ¯”è¡¨ç¤ºçš„é”šç‚¹ã€‚
+     * @~chinese ·µ»ØÓÃ°Ù·Ö±È±íÊ¾µÄÃªµã¡£
      *
      * @see `setAnchorPoint(const Vec2&)`
      *
-     * @return @~english The anchor point of node. @~chinese èŠ‚ç‚¹çš„é”šç‚¹ 
+     * @return @~english The anchor point of node. @~chinese ½ÚµãµÄÃªµã 
      */
     virtual const Vec2& getAnchorPoint() const;
     /**
      * @~english Returns the anchorPoint in absolute pixels.
-     * @~chinese è¿”å›é”šç‚¹çš„ç»å¯¹åƒç´ ä½ç½®
+     * @~chinese ·µ»ØÃªµãµÄ¾ø¶ÔÏñËØÎ»ÖÃ
      *
-     * @warning @~english You can only read it. If you wish to modify it, use anchorPoint instead. @~chinese ä½ åªèƒ½å¤Ÿè¯»å–å®ƒï¼Œå¦‚æœä½ æƒ³ä¿®æ”¹å®ƒï¼Œä½¿ç”¨setAnchoPointã€‚ 
+     * @warning @~english You can only read it. If you wish to modify it, use anchorPoint instead. @~chinese ÄãÖ»ÄÜ¹»¶ÁÈ¡Ëü£¬Èç¹ûÄãÏëĞŞ¸ÄËü£¬Ê¹ÓÃsetAnchoPoint¡£ 
      * @see `getAnchorPoint()`
      *
-     * @return @~english The anchor point in absolute pixels. @~chinese ç»å¯¹åƒç´ çš„é”šç‚¹ã€‚ 
+     * @return @~english The anchor point in absolute pixels. @~chinese ¾ø¶ÔÏñËØµÄÃªµã¡£ 
      */
     virtual const Vec2& getAnchorPointInPoints() const;
 
@@ -663,21 +662,21 @@ public:
      *
      * The contentSize remains the same no matter the node is scaled or rotated.
      * All nodes has a size. Layer and Scene has the same size of the screen.
-     * @~chinese è®¾ç½®ä¸è½¬æ¢èŠ‚ç‚¹çš„å¤§å°ã€‚
+     * @~chinese ÉèÖÃ²»×ª»»½ÚµãµÄ´óĞ¡¡£
      *
-     * contentSizeä¾ç„¶æ˜¯ç›¸åŒçš„ï¼Œæ— è®ºèŠ‚ç‚¹æ˜¯ç¼©æ”¾æˆ–è€…æ—‹è½¬ã€‚
-     * æ‰€æœ‰çš„èŠ‚ç‚¹éƒ½æœ‰å¤§å°ã€‚å›¾å±‚å’Œåœºæ™¯æœ‰ç›¸åŒçš„å±å¹•å¤§å°ã€‚
+     * contentSizeÒÀÈ»ÊÇÏàÍ¬µÄ£¬ÎŞÂÛ½ÚµãÊÇËõ·Å»òÕßĞı×ª¡£
+     * ËùÓĞµÄ½Úµã¶¼ÓĞ´óĞ¡¡£Í¼²ãºÍ³¡¾°ÓĞÏàÍ¬µÄÆÁÄ»´óĞ¡¡£
      *
-     * @param contentSize   @~english The untransformed size of the node. @~chinese æœªè½¬æ¢èŠ‚ç‚¹çš„å¤§å° 
+     * @param contentSize   @~english The untransformed size of the node. @~chinese Î´×ª»»½ÚµãµÄ´óĞ¡ 
      */
     virtual void setContentSize(const Size& contentSize);
     /**
      * @~english Returns the untransformed size of the node.
-     * @~chinese è¿”å›èŠ‚ç‚¹æœªå˜å½¢çŠ¶æ€ä¸‹çš„å¤§å°ã€‚
+     * @~chinese ·µ»Ø½ÚµãÎ´±äĞÎ×´Ì¬ÏÂµÄ´óĞ¡¡£
      *
      * @see `setContentSize(const Size&)`
      *
-     * @return @~english The untransformed size of the node. @~chinese èŠ‚ç‚¹æœªå˜å½¢çŠ¶æ€ä¸‹çš„å¤§å° 
+     * @return @~english The untransformed size of the node. @~chinese ½ÚµãÎ´±äĞÎ×´Ì¬ÏÂµÄ´óĞ¡ 
      */
     virtual const Size& getContentSize() const;
 
@@ -686,20 +685,20 @@ public:
      * @~english Sets whether the node is visible.
      *
      * The default value is true, a node is default to visible.
-     * @~chinese è®¾ç½®èŠ‚ç‚¹æ˜¯å¦å¯è§ã€‚
+     * @~chinese ÉèÖÃ½ÚµãÊÇ·ñ¿É¼û¡£
      *
-     * é»˜è®¤å€¼æ˜¯true,ä¸€ä¸ªèŠ‚ç‚¹é»˜è®¤æ˜¯å¯è§çš„ã€‚
+     * Ä¬ÈÏÖµÊÇtrue,Ò»¸ö½ÚµãÄ¬ÈÏÊÇ¿É¼ûµÄ¡£
      *
-     * @param visible   @~english true if the node is visible, false if the node is hidden. @~chinese true å¦‚æœèŠ‚ç‚¹æ˜¯å¯è§çš„ï¼Œfalse å¦‚æœèŠ‚ç‚¹æ˜¯éšè—çš„ã€‚ 
+     * @param visible   @~english true if the node is visible, false if the node is hidden. @~chinese true Èç¹û½ÚµãÊÇ¿É¼ûµÄ£¬false Èç¹û½ÚµãÊÇÒş²ØµÄ¡£ 
      */
     virtual void setVisible(bool visible);
     /**
      * @~english Determines if the node is visible.
-     * @~chinese åˆ¤æ–­èŠ‚ç‚¹æ˜¯å¦å¯è§ã€‚
+     * @~chinese ÅĞ¶Ï½ÚµãÊÇ·ñ¿É¼û¡£
      *
      * @see `setVisible(bool)`
      *
-     * @return @~english true if the node is visible, false if the node is hidden. @~chinese true å¦‚æœèŠ‚ç‚¹æ˜¯å¯è§çš„, false å¦‚æœèŠ‚ç‚¹æ˜¯éšè—çš„ã€‚ 
+     * @return @~english true if the node is visible, false if the node is hidden. @~chinese true Èç¹û½ÚµãÊÇ¿É¼ûµÄ, false Èç¹û½ÚµãÊÇÒş²ØµÄ¡£ 
      */
     virtual bool isVisible() const;
 
@@ -709,61 +708,61 @@ public:
      *
      * 0 is the default rotation angle.
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
-     * @~chinese è®¾ç½®èŠ‚ç‚¹çš„æ—‹è½¬ï¼ˆangleï¼‰è§’åº¦ã€‚
+     * @~chinese ÉèÖÃ½ÚµãµÄĞı×ª£¨angle£©½Ç¶È¡£
      *
-     * 0 æ˜¯é»˜è®¤çš„æ—‹è½¬è§’åº¦ã€‚
-     * è´Ÿæ•°é¡ºæ—¶é’ˆæ—‹è½¬èŠ‚ç‚¹ï¼Œæ­£æ•°é€†æ—¶é’ˆæ—‹è½¬èŠ‚ç‚¹ã€‚
+     * 0 ÊÇÄ¬ÈÏµÄĞı×ª½Ç¶È¡£
+     * ¸ºÊıË³Ê±ÕëĞı×ª½Úµã£¬ÕıÊıÄæÊ±ÕëĞı×ª½Úµã¡£
      *
-     * @param rotation     @~english The rotation of the node in degrees. @~chinese èŠ‚ç‚¹çš„æ—‹è½¬è§’åº¦ã€‚ 
+     * @param rotation     @~english The rotation of the node in degrees. @~chinese ½ÚµãµÄĞı×ª½Ç¶È¡£ 
      */
     virtual void setRotation(float rotation);
     /**
      * @~english Returns the rotation of the node in degrees.
-     * @~chinese è¿”å›èŠ‚ç‚¹çš„æ—‹è½¬è§’åº¦ã€‚
+     * @~chinese ·µ»Ø½ÚµãµÄĞı×ª½Ç¶È¡£
      *
      * @see `setRotation(float)`
      *
-     * @return @~english The rotation of the node in degrees. @~chinese èŠ‚ç‚¹çš„æ—‹è½¬è§’åº¦ã€‚ 
+     * @return @~english The rotation of the node in degrees. @~chinese ½ÚµãµÄĞı×ª½Ç¶È¡£ 
      */
     virtual float getRotation() const;
 
     /**
      * @~english Sets the rotation (X,Y,Z) in degrees.
      * Useful for 3d rotations.
-     * @~chinese è®¾ç½®ï¼ˆX,Y,Zï¼‰æ—‹è½¬è§’åº¦ã€‚
-     * å¯¹3dæ—‹è½¬éå¸¸æœ‰ç”¨ã€‚
+     * @~chinese ÉèÖÃ£¨X,Y,Z£©Ğı×ª½Ç¶È¡£
+     * ¶Ô3dĞı×ª·Ç³£ÓĞÓÃ¡£
      *
-     * @warning @~english The physics body doesn't support this. @~chinese ç‰©ç†èŠ‚ç‚¹ä¸æ”¯æŒè¿™ä¸ªAPI 
+     * @warning @~english The physics body doesn't support this. @~chinese ÎïÀí½Úµã²»Ö§³ÖÕâ¸öAPI 
      *
-     * @param rotation @~english The rotation of the node in 3d. @~chinese 3Dç©ºé—´ä¸­çš„æ—‹è½¬è§’åº¦ 
+     * @param rotation @~english The rotation of the node in 3d. @~chinese 3D¿Õ¼äÖĞµÄĞı×ª½Ç¶È 
      * @js NA
      */
     virtual void setRotation3D(const Vec3& rotation);
     /**
      * @~english Returns the rotation (X,Y,Z) in degrees.
-     * @~chinese è·å–ï¼ˆX,Y,Zï¼‰çš„æ—‹è½¬è§’åº¦ã€‚
+     * @~chinese »ñÈ¡£¨X,Y,Z£©µÄĞı×ª½Ç¶È¡£
      * 
-     * @return @~english The rotation of the node in 3d. @~chinese 3Dç©ºé—´ä¸­çš„æ—‹è½¬è§’åº¦ 
+     * @return @~english The rotation of the node in 3d. @~chinese 3D¿Õ¼äÖĞµÄĞı×ª½Ç¶È 
      * @js NA
      */
     virtual Vec3 getRotation3D() const;
     
     /**
      * @~english Set rotation by quaternion. You should make sure the quaternion is normalized.
-     * @~chinese é€šè¿‡å››å…ƒæ•°æ¥è®¾ç½®3Dç©ºé—´ä¸­çš„æ—‹è½¬è§’åº¦ã€‚ä½ è¦ä¿è¯å››å…ƒæ•°æ˜¯ç»è¿‡å½’ä¸€åŒ–çš„ã€‚
+     * @~chinese Í¨¹ıËÄÔªÊıÀ´ÉèÖÃ3D¿Õ¼äÖĞµÄĞı×ª½Ç¶È¡£ÄãÒª±£Ö¤ËÄÔªÊıÊÇ¾­¹ı¹éÒ»»¯µÄ¡£
      *
      * @param quat @~english The rotation in quaternion, note that the quat must be normalized. 
-     * @~chinese å››å…ƒæ•°å¯¹è±¡ï¼Œæ³¨æ„å››å…ƒæ•°å¿…é¡»æ˜¯ç»è¿‡å½’ä¸€åŒ–çš„
+     * @~chinese ËÄÔªÊı¶ÔÏó£¬×¢ÒâËÄÔªÊı±ØĞëÊÇ¾­¹ı¹éÒ»»¯µÄ
      * @js NA
      */
     virtual void setRotationQuat(const Quaternion& quat);
     
     /**
      * @~english Return the rotation by quaternion, Note that when _rotationZ_X == _rotationZ_Y, the returned quaternion equals to RotationZ_X * RotationY * RotationX,
-     * @~chinese è·å–å››å…ƒæ•°è¡¨è¾¾çš„3Dç©ºé—´æ—‹è½¬è§’åº¦ï¼Œå½“`_rotationZ_X == _rotationZ_Y`çš„æ—¶å€™ï¼Œå››å…ƒæ•°å€¼ç­‰äº`RotationZ_X * RotationY * RotationX`ï¼Œå¦åˆ™å€¼ç­‰äº`RotationY * RotationX`ã€‚
+     * @~chinese »ñÈ¡ËÄÔªÊı±í´ïµÄ3D¿Õ¼äĞı×ª½Ç¶È£¬µ±`_rotationZ_X == _rotationZ_Y`µÄÊ±ºò£¬ËÄÔªÊıÖµµÈÓÚ`RotationZ_X * RotationY * RotationX`£¬·ñÔòÖµµÈÓÚ`RotationY * RotationX`¡£
      * it equals to RotationY * RotationX otherwise.
      *
-     * @return @~english The rotation in quaternion. @~chinese å››å…ƒæ•°å¯¹è±¡ 
+     * @return @~english The rotation in quaternion. @~chinese ËÄÔªÊı¶ÔÏó 
      * @js NA
      */
     virtual Quaternion getRotationQuat() const;
@@ -776,17 +775,17 @@ public:
      *
      * 0 is the default rotation angle.
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
-     * @~chinese è®¾ç½®èŠ‚ç‚¹Xè½´çš„æ—‹è½¬è§’åº¦ï¼Œè¡¨ç°ä¸ºæ°´å¹³æ—‹è½¬å€¾æ–œã€‚
+     * @~chinese ÉèÖÃ½ÚµãXÖáµÄĞı×ª½Ç¶È£¬±íÏÖÎªË®Æ½Ğı×ªÇãĞ±¡£
      *
-     * `setRotationalSkew()` å’Œ `setSkew()`çš„ä¸åŒæ˜¯å‰ä¸€ä¸ªæ˜¯æ¨¡æ‹ŸFlashçš„å€¾æ–œåŠŸèƒ½
-     * ç„¶è€Œåä¸€ä¸ªä½¿ç”¨çœŸæ­£çš„å€¾æ–œåŠŸèƒ½ã€‚
+     * `setRotationalSkew()` ºÍ `setSkew()`µÄ²»Í¬ÊÇÇ°Ò»¸öÊÇÄ£ÄâFlashµÄÇãĞ±¹¦ÄÜ
+     * È»¶øºóÒ»¸öÊ¹ÓÃÕæÕıµÄÇãĞ±¹¦ÄÜ¡£
      *
-     * 0 æ˜¯é»˜è®¤çš„æ—‹è½¬è§’åº¦ã€‚
-     * è´Ÿæ•°èŠ‚ç‚¹é¡ºæ—¶é’ˆæ—‹è½¬ï¼Œæ­£æ•°èŠ‚ç‚¹é€†æ—¶é’ˆæ—‹è½¬ã€‚
+     * 0 ÊÇÄ¬ÈÏµÄĞı×ª½Ç¶È¡£
+     * ¸ºÊı½ÚµãË³Ê±ÕëĞı×ª£¬ÕıÊı½ÚµãÄæÊ±ÕëĞı×ª¡£
      *
-     * @param rotationX    @~english The X rotation in degrees which performs a horizontal rotational skew. @~chinese Xè½´çš„æ—‹è½¬è§’åº¦è¡¨ç°ä¸ºæ°´å¹³æ—‹è½¬å€¾æ–œã€‚ 
+     * @param rotationX    @~english The X rotation in degrees which performs a horizontal rotational skew. @~chinese XÖáµÄĞı×ª½Ç¶È±íÏÖÎªË®Æ½Ğı×ªÇãĞ±¡£ 
      *
-     * @warning @~english The physics body doesn't support this. @~chinese ç‰©ç†èŠ‚ç‚¹ä¸æ”¯æŒè¿™ä¸ªAPI 
+     * @warning @~english The physics body doesn't support this. @~chinese ÎïÀí½Úµã²»Ö§³ÖÕâ¸öAPI 
      * @js setRotationX
      */
     virtual void setRotationSkewX(float rotationX);
@@ -794,11 +793,11 @@ public:
 
     /**
      * @~english Gets the X rotation (angle) of the node in degrees which performs a horizontal rotation skew.
-     * @~chinese å¾—åˆ°Xè½´èŠ‚ç‚¹çš„æ—‹è½¬è§’åº¦ï¼Œè¡¨ç°ä¸ºæ°´å¹³æ—‹è½¬å€¾æ–œï¼ˆhorizontal rotation skewï¼‰.
+     * @~chinese µÃµ½XÖá½ÚµãµÄĞı×ª½Ç¶È£¬±íÏÖÎªË®Æ½Ğı×ªÇãĞ±£¨horizontal rotation skew£©.
      *
      * @see `setRotationSkewX(float)`
      *
-     * @return @~english The X rotation in degrees. @~chinese Xè½´çš„æ—‹è½¬è§’åº¦ã€‚ 
+     * @return @~english The X rotation in degrees. @~chinese XÖáµÄĞı×ª½Ç¶È¡£ 
      * @js getRotationX 
      */
     virtual float getRotationSkewX() const;
@@ -812,17 +811,17 @@ public:
      *
      * 0 is the default rotation angle.
      * Positive values rotate node clockwise, and negative values for anti-clockwise.
-     * @~chinese è®¾ç½®Yè½´èŠ‚ç‚¹çš„æ—‹è½¬è§’åº¦ï¼Œè¡¨ç°ä¸ºå‚ç›´æ—‹è½¬å€¾æ–œã€‚
+     * @~chinese ÉèÖÃYÖá½ÚµãµÄĞı×ª½Ç¶È£¬±íÏÖÎª´¹Ö±Ğı×ªÇãĞ±¡£
      *
-     * `setRotationalSkew()` å’Œ`setSkew()` çš„ä¸åŒæ˜¯å‰ä¸€ä¸ªä½¿ç”¨Flashå€¾æ–œåŠŸèƒ½
-     * åä¸€ä¸ªä½¿ç”¨äº†çœŸæ­£çš„å€¾æ–œåŠŸèƒ½ã€‚
+     * `setRotationalSkew()` ºÍ`setSkew()` µÄ²»Í¬ÊÇÇ°Ò»¸öÊ¹ÓÃFlashÇãĞ±¹¦ÄÜ
+     * ºóÒ»¸öÊ¹ÓÃÁËÕæÕıµÄÇãĞ±¹¦ÄÜ¡£
      *
-     * 0 é»˜è®¤çš„æ—‹è½¬è§’åº¦ã€‚
-     * è´Ÿæ•°è¡¨ç¤ºé¡ºæ—¶é’ˆæ—‹è½¬ï¼Œæ­£æ•°è¡¨ç¤ºé€†æ—¶é’ˆæ—‹è½¬ã€‚
+     * 0 Ä¬ÈÏµÄĞı×ª½Ç¶È¡£
+     * ¸ºÊı±íÊ¾Ë³Ê±ÕëĞı×ª£¬ÕıÊı±íÊ¾ÄæÊ±ÕëĞı×ª¡£
      *
-     * @param rotationY    @~english The Y rotation in degrees. @~chinese Yè½´çš„æ—‹è½¬è§’åº¦ã€‚ 
+     * @param rotationY    @~english The Y rotation in degrees. @~chinese YÖáµÄĞı×ª½Ç¶È¡£ 
      *
-     * @warning @~english The physics body doesn't support this. @~chinese ç‰©ç†èŠ‚ç‚¹ä¸æ”¯æŒè¿™ä¸ªAPI 
+     * @warning @~english The physics body doesn't support this. @~chinese ÎïÀí½Úµã²»Ö§³ÖÕâ¸öAPI 
      * @js setRotationY
      */
     virtual void setRotationSkewY(float rotationY);
@@ -830,11 +829,11 @@ public:
 
     /**
      * @~english Gets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
-     * @~chinese å¾—åˆ°èŠ‚ç‚¹Yè½´çš„æ—‹è½¬è§’åº¦ï¼Œè¡¨ç°ä¸ºå‚ç›´æ—‹è½¬å€¾æ–œï¼ˆvertical rotational skew.ï¼‰
+     * @~chinese µÃµ½½ÚµãYÖáµÄĞı×ª½Ç¶È£¬±íÏÖÎª´¹Ö±Ğı×ªÇãĞ±£¨vertical rotational skew.£©
      *
      * @see `setRotationSkewY(float)`
      *
-     * @return @~english The Y rotation in degrees. @~chinese Yè½´æ—‹è½¬è§’åº¦ã€‚ 
+     * @return @~english The Y rotation in degrees. @~chinese YÖáĞı×ª½Ç¶È¡£ 
      * @js getRotationY
      */
     virtual float getRotationSkewY() const;
@@ -845,23 +844,23 @@ public:
      *
      * A node which called addChild subsequently will take a larger arrival order,
      * If two children have the same Z order, the child with larger arrival order will be drawn later.
-     * @~chinese è®¾ç½®åˆ°è¾¾é¡ºåºï¼Œå½“è¿™ä¸ªèŠ‚ç‚¹å’Œå…¶ä»–å­èŠ‚ç‚¹æœ‰ç›¸åŒçš„ZOrderæ—¶ã€‚
+     * @~chinese ÉèÖÃµ½´ïË³Ğò£¬µ±Õâ¸ö½ÚµãºÍÆäËû×Ó½ÚµãÓĞÏàÍ¬µÄZOrderÊ±¡£
      *
-     * ä¸€ä¸ªè°ƒç”¨äº†ä¹‹åè°ƒç”¨äº†addChildå‡½æ•°çš„èŠ‚ç‚¹å°†ä¼šæœ‰æ›´å¤§çš„åˆ°è¾¾é¡ºåºå€¼ï¼Œ
-     * å¦‚æœä¸¤ä¸ªå­å¯¹è±¡æœ‰ç›¸åŒçš„Zè½´é¡ºåºï¼Œè¿™ä¸ªæœ‰æ›´å¤§åˆ°è¾¾é¡ºåºçš„å­ç±»å°†ä¼šåç”»ã€‚
+     * Ò»¸öµ÷ÓÃÁËÖ®ºóµ÷ÓÃÁËaddChildº¯ÊıµÄ½Úµã½«»áÓĞ¸ü´óµÄµ½´ïË³ĞòÖµ£¬
+     * Èç¹ûÁ½¸ö×Ó¶ÔÏóÓĞÏàÍ¬µÄZÖáË³Ğò£¬Õâ¸öÓĞ¸ü´óµ½´ïË³ĞòµÄ×ÓÀà½«»áºó»­¡£
      *
-     * @warning @~english This method is used internally for localZOrder sorting, don't change this manually @~chinese è¿™ä¸ªæ–¹æ³•åœ¨å†…éƒ¨è¢«ç”¨äºlocalZOrderæ’åºï¼Œä¸èƒ½æ‰‹åŠ¨çš„æ”¹å˜ã€‚
+     * @warning @~english This method is used internally for localZOrder sorting, don't change this manually @~chinese Õâ¸ö·½·¨ÔÚÄÚ²¿±»ÓÃÓÚlocalZOrderÅÅĞò£¬²»ÄÜÊÖ¶¯µÄ¸Ä±ä¡£
      *
-     * @param orderOfArrival   @~english The arrival order. @~chinese åˆ°è¾¾é¡ºåºã€‚ 
+     * @param orderOfArrival   @~english The arrival order. @~chinese µ½´ïË³Ğò¡£ 
      */
     void setOrderOfArrival(int orderOfArrival);
     /**
      * @~english Returns the arrival order, indicates which children is added previously.
-     * @~chinese è¿”å›åˆ°è¾¾é¡ºåºï¼ŒæŒ‡å‡ºå“ªä¸€ä¸ªå­ç±»å…ˆè¢«æ·»åŠ ã€‚
+     * @~chinese ·µ»Øµ½´ïË³Ğò£¬Ö¸³öÄÄÒ»¸ö×ÓÀàÏÈ±»Ìí¼Ó¡£
      *
      * @see `setOrderOfArrival(unsigned int)`
      *
-     * @return @~english The arrival order. @~chinese åˆ°è¾¾é¡ºåºã€‚ 
+     * @return @~english The arrival order. @~chinese µ½´ïË³Ğò¡£ 
      */
     int getOrderOfArrival() const;
 
@@ -880,23 +879,23 @@ public:
      *
      * This is an internal method, only used by Layer and Scene. Don't call it outside framework.
      * The default value is false, while in Layer and Scene are true.
-     * @~chinese è®¾ç½®æŠ¹ç‚¹ä¸ºï¼ˆ0,0ï¼‰å½“ä½ æ‘†æ”¾è¿™ä¸ªèŠ‚ç‚¹çš„æ—¶å€™ã€‚
+     * @~chinese ÉèÖÃÄ¨µãÎª£¨0,0£©µ±Äã°Ú·ÅÕâ¸ö½ÚµãµÄÊ±ºò¡£
      *
-     * è¿™æ˜¯ä¸€ä¸ªå†…éƒ¨æ–¹æ³•ï¼Œä»…ä»…è¢«Layerå’ŒSceneä½¿ç”¨ã€‚ä¸è¦åœ¨æ¡†æ¶å¤–è°ƒç”¨ã€‚
-     * é»˜è®¤å€¼æ˜¯false,ä½†æ˜¯åœ¨Layerå’ŒSceneä¸­æ˜¯true.
+     * ÕâÊÇÒ»¸öÄÚ²¿·½·¨£¬½ö½ö±»LayerºÍSceneÊ¹ÓÃ¡£²»ÒªÔÚ¿ò¼ÜÍâµ÷ÓÃ¡£
+     * Ä¬ÈÏÖµÊÇfalse,µ«ÊÇÔÚLayerºÍSceneÖĞÊÇtrue.
      *
-     * @param ignore    @~english true if anchor point will be (0,0) when you position this node. @~chinese true å¦‚æœé”šç‚¹æ˜¯ï¼ˆ0,0ï¼‰å½“ä½ æ‘†æ”¾è¿™ä¸ªèŠ‚ç‚¹çš„æ—¶å€™ã€‚ 
+     * @param ignore    @~english true if anchor point will be (0,0) when you position this node. @~chinese true Èç¹ûÃªµãÊÇ£¨0,0£©µ±Äã°Ú·ÅÕâ¸ö½ÚµãµÄÊ±ºò¡£ 
      * @todo @~english This method should be renamed as setIgnoreAnchorPointForPosition(bool) or something with "set".
-     * @~chinese è¿™ä¸ªæ–¹æ³•åº”è¯¥è¢«å‘½åä¸ºsetIgnoreAnchorPointForPosition(bool) æˆ–è€…å…¶ä»–çš„æœ‰â€œsetâ€çš„åç§°ã€‚
+     * @~chinese Õâ¸ö·½·¨Ó¦¸Ã±»ÃüÃûÎªsetIgnoreAnchorPointForPosition(bool) »òÕßÆäËûµÄÓĞ¡°set¡±µÄÃû³Æ¡£
      */
     virtual void ignoreAnchorPointForPosition(bool ignore);
     /**
      * @~english Gets whether the anchor point will be (0,0) when you position this node.
-     * @~chinese å¾—åˆ°èŠ‚ç‚¹çš„é”šç‚¹æ˜¯å¦ä¸ºï¼ˆ0,0ï¼‰ï¼Œå½“ä½ æ‘†æ”¾è¿™ä¸ªèŠ‚ç‚¹æ—¶ã€‚
+     * @~chinese µÃµ½½ÚµãµÄÃªµãÊÇ·ñÎª£¨0,0£©£¬µ±Äã°Ú·ÅÕâ¸ö½ÚµãÊ±¡£
      *
      * @see `ignoreAnchorPointForPosition(bool)`
      *
-     * @return @~english true if the anchor point will be (0,0) when you position this node. @~chinese å¦‚æœé”šç‚¹æ˜¯ (0,0) å½“ä½ æ‘†æ”¾è¿™ä¸ªèŠ‚ç‚¹æ—¶è¿”å›trueã€‚ 
+     * @return @~english true if the anchor point will be (0,0) when you position this node. @~chinese Èç¹ûÃªµãÊÇ (0,0) µ±Äã°Ú·ÅÕâ¸ö½ÚµãÊ±·µ»Øtrue¡£ 
      */
     virtual bool isIgnoreAnchorPointForPosition() const;
 
@@ -905,99 +904,110 @@ public:
 
     /// @{
     /// @name Children and Parent
-    /// @brief @~english @~chinese çˆ¶å­èŠ‚ç‚¹å…³ç³»
+    /// @brief @~english @~chinese ¸¸×Ó½Úµã¹ØÏµ
 
     /**
      * @~english Adds a child to the container with z-order as 0.
      *
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
-     * @~chinese æ·»åŠ ä¸€ä¸ªå­èŠ‚ç‚¹åˆ°å®¹å™¨å†…ï¼Œz-orderæ˜¯0.
+     * @~chinese Ìí¼ÓÒ»¸ö×Ó½Úµãµ½ÈİÆ÷ÄÚ£¬z-orderÊÇ0.
      *
-     * å¦‚æœå­èŠ‚ç‚¹è¢«æ·»åŠ åˆ°äº†ä¸€ä¸ªâ€œrunningï¼ˆæ´»åŠ¨ç€çš„ï¼‰â€èŠ‚ç‚¹ï¼Œé‚£ä¹ˆ'onEnter'å– 'onEnterTransitionDidFinish' å°†ä¼šç«‹å³è°ƒç”¨ã€‚
+     * Èç¹û×Ó½Úµã±»Ìí¼Óµ½ÁËÒ»¸ö¡°running£¨»î¶¯×ÅµÄ£©¡±½Úµã£¬ÄÇÃ´'onEnter'ºÈ 'onEnterTransitionDidFinish' ½«»áÁ¢¼´µ÷ÓÃ¡£
      *
-     * @param child     @~english A child node. @~chinese ä¸€ä¸ªå­èŠ‚ç‚¹ã€‚ 
+     * @param child     @~english A child node. @~chinese Ò»¸ö×Ó½Úµã¡£ 
      */
     virtual void addChild(Node * child);
     /**
      * @~english Adds a child to the container with a local z-order.
      *
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
-     * @~chinese æ·»åŠ ä¸€ä¸ªå­èŠ‚ç‚¹åˆ°å®¹å™¨ä¸­ï¼Œå‚æ•°æœ‰ä¸€ä¸ªå±€éƒ¨Zè½´é¡ºåºã€‚
+     * @~chinese Ìí¼ÓÒ»¸ö×Ó½Úµãµ½ÈİÆ÷ÖĞ£¬²ÎÊıÓĞÒ»¸ö¾Ö²¿ZÖáË³Ğò¡£
      *
-     * å¦‚æœå­èŠ‚ç‚¹è¢«æ·»åŠ åˆ°äº†ä¸€ä¸ªâ€œrunningï¼ˆæ´»åŠ¨ç€çš„ï¼‰â€èŠ‚ç‚¹ï¼Œé‚£ä¹ˆ'onEnter'å– 'onEnterTransitionDidFinish' å°†ä¼šç«‹å³è°ƒç”¨ã€‚
+     * Èç¹û×Ó½Úµã±»Ìí¼Óµ½ÁËÒ»¸ö¡°running£¨»î¶¯×ÅµÄ£©¡±½Úµã£¬ÄÇÃ´'onEnter'ºÈ 'onEnterTransitionDidFinish' ½«»áÁ¢¼´µ÷ÓÃ¡£
      *
-     * @param child         @~english A child node. @~chinese ä¸€ä¸ªå­èŠ‚ç‚¹ã€‚ 
-     * @param localZOrder   @~english Z order for drawing priority. Please refer to `setLocalZOrder(int)`. @~chinese Zè½´é¡ºåºä¸ºäº†ç»˜ç”»çš„ä¼˜å…ˆæƒã€‚ è¯·å‚è€ƒ `setLocalZOrder(int)` 
+     * @param child         @~english A child node. @~chinese Ò»¸ö×Ó½Úµã¡£ 
+     * @param localZOrder   @~english Z order for drawing priority. Please refer to `setLocalZOrder(int)`. @~chinese ZÖáË³ĞòÎªÁË»æ»­µÄÓÅÏÈÈ¨¡£ Çë²Î¿¼ `setLocalZOrder(int)` 
      */
     virtual void addChild(Node * child, int localZOrder);
     /**
      * @~english Adds a child to the container with z order and tag.
      *
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
-     * @~chinese æ·»åŠ ä¸€ä¸ªå­èŠ‚ç‚¹åˆ°å®¹å™¨ä¸­ï¼Œæœ‰Zè½´é¡ºåºå’Œä¸€ä¸ªæ ‡è®°ã€‚
+     * @~chinese Ìí¼ÓÒ»¸ö×Ó½Úµãµ½ÈİÆ÷ÖĞ£¬ÓĞZÖáË³ĞòºÍÒ»¸ö±ê¼Ç¡£
      *
-     * å¦‚æœå­èŠ‚ç‚¹è¢«æ·»åŠ åˆ°äº†ä¸€ä¸ªâ€œrunningï¼ˆæ´»åŠ¨ç€çš„ï¼‰â€èŠ‚ç‚¹ï¼Œé‚£ä¹ˆ'onEnter'å– 'onEnterTransitionDidFinish' å°†ä¼šç«‹å³è°ƒç”¨ã€‚
+     * Èç¹û×Ó½Úµã±»Ìí¼Óµ½ÁËÒ»¸ö¡°running£¨»î¶¯×ÅµÄ£©¡±½Úµã£¬ÄÇÃ´'onEnter'ºÈ 'onEnterTransitionDidFinish' ½«»áÁ¢¼´µ÷ÓÃ¡£
      *
-     * @param child         @~english A child node. @~chinese ä¸€ä¸ªå­èŠ‚ç‚¹ 
-     * @param localZOrder   @~english Z order for drawing priority. Please refer to `setLocalZOrder(int)`. @~chinese Zè½´é¡ºåºä¸ºäº†ç»˜ç”»çš„ä¼˜å…ˆæƒã€‚ è¯·å‚è€ƒ `setLocalZOrder(int)` 
-     * @param tag           @~english An integer to identify the node easily. Please refer to `setTag(int)`. @~chinese ä¸€ä¸ªç”¨æ¥æ›´å®¹æ˜“åˆ†è¾¨èŠ‚ç‚¹çš„æ•´æ•°ã€‚è¯·å‚è€ƒ `setTag(int)` 
+     * @param child         @~english A child node. @~chinese Ò»¸ö×Ó½Úµã 
+     * @param localZOrder   @~english Z order for drawing priority. Please refer to `setLocalZOrder(int)`. @~chinese ZÖáË³ĞòÎªÁË»æ»­µÄÓÅÏÈÈ¨¡£ Çë²Î¿¼ `setLocalZOrder(int)` 
+     * @param tag           @~english An integer to identify the node easily. Please refer to `setTag(int)`. @~chinese Ò»¸öÓÃÀ´¸üÈİÒ×·Ö±æ½ÚµãµÄÕûÊı¡£Çë²Î¿¼ `setTag(int)` 
      * 
      * @~english Please use `addChild(Node* child, int localZOrder, const std::string &name)` instead.
-     * @~chinese è¯·ä½¿ç”¨`addChild(Node* child, int localZOrder, const std::string &name)`
+     * @~chinese ÇëÊ¹ÓÃ`addChild(Node* child, int localZOrder, const std::string &name)`
      */
      virtual void addChild(Node* child, int localZOrder, int tag);
     /**
      * @~english Adds a child to the container with z order and tag
      *
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
-     * @~chinese æ·»åŠ ä¸€ä¸ªå­èŠ‚ç‚¹åˆ°å®¹å™¨ä¸­ï¼Œå‚æ•°æœ‰ä¸€ä¸ªå±€éƒ¨Zè½´é¡ºåºã€‚
+     * @~chinese Ìí¼ÓÒ»¸ö×Ó½Úµãµ½ÈİÆ÷ÖĞ£¬²ÎÊıÓĞÒ»¸ö¾Ö²¿ZÖáË³Ğò¡£
      *
-     * å¦‚æœå­èŠ‚ç‚¹è¢«æ·»åŠ åˆ°äº†ä¸€ä¸ªâ€œrunningï¼ˆæ´»åŠ¨ç€çš„ï¼‰â€èŠ‚ç‚¹ï¼Œé‚£ä¹ˆ'onEnter'å– 'onEnterTransitionDidFinish' å°†ä¼šç«‹å³è°ƒç”¨ã€‚
+     * Èç¹û×Ó½Úµã±»Ìí¼Óµ½ÁËÒ»¸ö¡°running£¨»î¶¯×ÅµÄ£©¡±½Úµã£¬ÄÇÃ´'onEnter'ºÈ 'onEnterTransitionDidFinish' ½«»áÁ¢¼´µ÷ÓÃ¡£
      *
-     * @param child     @~english A child node. @~chinese ä¸€ä¸ªå­èŠ‚ç‚¹ã€‚ 
-     * @param localZOrder    @~english Z order for drawing priority. Please refer to `setLocalZOrder(int)`. @~chinese Zè½´é¡ºåºä¸ºäº†ç»˜ç”»çš„ä¼˜å…ˆæƒã€‚ è¯·å‚è€ƒ `setLocalZOrder(int)` 
-     * @param name      @~english A string to identify the node easily. Please refer to `setName(int)`. @~chinese ä¸€ä¸ªç”¨æ¥æ ‡è®°èŠ‚ç‚¹çš„åå­—ï¼Œè¯·å‚è€ƒ`setName(int)` 
+     * @param child     @~english A child node. @~chinese Ò»¸ö×Ó½Úµã¡£ 
+     * @param localZOrder    @~english Z order for drawing priority. Please refer to `setLocalZOrder(int)`. @~chinese ZÖáË³ĞòÎªÁË»æ»­µÄÓÅÏÈÈ¨¡£ Çë²Î¿¼ `setLocalZOrder(int)` 
+     * @param name      @~english A string to identify the node easily. Please refer to `setName(int)`. @~chinese Ò»¸öÓÃÀ´±ê¼Ç½ÚµãµÄÃû×Ö£¬Çë²Î¿¼`setName(int)` 
      *
      */
     virtual void addChild(Node* child, int localZOrder, const std::string &name);
     /**
      * @~english Gets a child from the container with its tag.
-     * @~chinese ä»å®¹å™¨ä¸­é€šè¿‡æ ‡è®°å¾—åˆ°å¯¹åº”çš„å­èŠ‚ç‚¹ã€‚
+     * @~chinese ´ÓÈİÆ÷ÖĞÍ¨¹ı±ê¼ÇµÃµ½¶ÔÓ¦µÄ×Ó½Úµã¡£
      *
-     * @param tag   @~english An identifier to find the child node. @~chinese ä¸€ä¸ªæ ‡è¯†ç¬¦ç”¨äºæ‰¾åˆ°å­èŠ‚ç‚¹ã€‚ 
+     * @param tag   @~english An identifier to find the child node. @~chinese Ò»¸ö±êÊ¶·ûÓÃÓÚÕÒµ½×Ó½Úµã¡£ 
      *
-     * @return @~english A node object whose tag equals to the input parameter. @~chinese ä¸€ä¸ªæ ‡è®°ä¸è¾“å…¥çš„å‚æ•°ç›¸åŒçš„èŠ‚ç‚¹å¯¹è±¡ã€‚ 
+     * @return @~english A node object whose tag equals to the input parameter. @~chinese Ò»¸ö±ê¼ÇÓëÊäÈëµÄ²ÎÊıÏàÍ¬µÄ½Úµã¶ÔÏó¡£ 
      *
      * Please use `getChildByName()` instead.
      */
      virtual Node * getChildByTag(int tag) const;
+    
+     /**
+     * Gets a child from the container with its tag that can be cast to Type T.
+     *
+     * @param tag   An identifier to find the child node.
+     *
+     * @return a Node with the given tag that can be cast to Type T.
+    */
+    template <typename T>
+    inline T getChildByTag(int tag) const { return static_cast<T>(getChildByTag(tag)); }
+    
     /**
      * @~english Gets a child from the container with its name.
-     * @~chinese ä»å®¹å™¨ä¸­é€šè¿‡åå­—å¾—åˆ°å¯¹åº”çš„å­èŠ‚ç‚¹ã€‚
+     * @~chinese ´ÓÈİÆ÷ÖĞÍ¨¹ıÃû×ÖµÃµ½¶ÔÓ¦µÄ×Ó½Úµã¡£
      *
-     * @param name   @~english An identifier to find the child node. @~chinese ä¸€ä¸ªåå­—ç”¨äºæ‰¾åˆ°å­èŠ‚ç‚¹ã€‚ 
+     * @param name   @~english An identifier to find the child node. @~chinese Ò»¸öÃû×ÖÓÃÓÚÕÒµ½×Ó½Úµã¡£ 
      *
-     * @return @~english A node object whose name equals to the input parameter. @~chinese ä¸€ä¸ªåå­—ä¸è¾“å…¥çš„å‚æ•°ç›¸åŒçš„èŠ‚ç‚¹å¯¹è±¡ã€‚ 
+     * @return @~english A node object whose name equals to the input parameter. @~chinese Ò»¸öÃû×ÖÓëÊäÈëµÄ²ÎÊıÏàÍ¬µÄ½Úµã¶ÔÏó¡£ 
      *
      * @since v3.2
      */
     virtual Node* getChildByName(const std::string& name) const;
     /**
      * @~english Gets a child from the container with its name that can be cast to Type T.
-     * @~chinese é€šè¿‡åå­—è·å¾—ä¸€ä¸ªå­èŠ‚ç‚¹å¯¹è±¡ï¼Œå¹¶ä¸”è¿™ä¸ªèŠ‚ç‚¹å¯¹è±¡å¯ä»¥è¢«è½¬æ¢ä¸ºç±»å‹Tã€‚
+     * @~chinese Í¨¹ıÃû×Ö»ñµÃÒ»¸ö×Ó½Úµã¶ÔÏó£¬²¢ÇÒÕâ¸ö½Úµã¶ÔÏó¿ÉÒÔ±»×ª»»ÎªÀàĞÍT¡£
      *
-     * @param name   @~english An identifier to find the child node. @~chinese ä¸€ä¸ªåå­—ç”¨äºæ‰¾åˆ°å­èŠ‚ç‚¹ã€‚ 
+     * @param name   @~english An identifier to find the child node. @~chinese Ò»¸öÃû×ÖÓÃÓÚÕÒµ½×Ó½Úµã¡£ 
      *
-     * @return @~english A node with the given name that can be cast to Type T. @~chinese ä¸€ä¸ªåå­—ä¸è¾“å…¥çš„å‚æ•°ç›¸åŒå¹¶ä¸”å¯ä»¥è¢«è½¬æ¢ä¸ºç±»å‹Tçš„èŠ‚ç‚¹å¯¹è±¡ã€‚ 
+     * @return @~english A node with the given name that can be cast to Type T. @~chinese Ò»¸öÃû×ÖÓëÊäÈëµÄ²ÎÊıÏàÍ¬²¢ÇÒ¿ÉÒÔ±»×ª»»ÎªÀàĞÍTµÄ½Úµã¶ÔÏó¡£ 
     */
     template <typename T>
     inline T getChildByName(const std::string& name) const { return static_cast<T>(getChildByName(name)); }
     /** 
      * @~english Search the children of the receiving node to perform processing for nodes which share a name.
-     * @~chinese åœ¨å­èŠ‚ç‚¹ä¸­å¯»æ‰¾åŒ¹é…åå­—æˆ–æ­£åˆ™è¡¨è¾¾å¼çš„èŠ‚ç‚¹å¹¶å¯¹è¿™äº›èŠ‚ç‚¹æ‰§è¡Œå›è°ƒå‡½æ•°ã€‚
+     * @~chinese ÔÚ×Ó½ÚµãÖĞÑ°ÕÒÆ¥ÅäÃû×Ö»òÕıÔò±í´ïÊ½µÄ½Úµã²¢¶ÔÕâĞ©½ÚµãÖ´ĞĞ»Øµ÷º¯Êı¡£
      *
      * @param name @~english The name to search for, supports c++11 regular expression.
-     * @~chinese ç”¨äºæœç´¢çš„æœç´¢å­—ç¬¦ä¸²ï¼Œæ”¯æŒC++11æ­£åˆ™è¡¨è¾¾å¼
+     * @~chinese ÓÃÓÚËÑË÷µÄËÑË÷×Ö·û´®£¬Ö§³ÖC++11ÕıÔò±í´ïÊ½
      *
      * @~english Search syntax options:
      * - `//`: Can only be placed at the begin of the search string. This indicates that it will search recursively.
@@ -1013,61 +1023,61 @@ public:
      * parent is named `Abby`.
      * @endcode
      * 
-     * @~chinese æœç´¢è¯­æ³•è¯´æ˜:
-     * - `//`: å½“æœç´¢å­—ç¬¦ä¸²ä»¥ä¸¤ä¸ªæ–œæ å¼€å¤´çš„æ—¶å€™ï¼Œæœç´¢ä¼šé€’å½’è¿›è¡Œï¼Œæœç´¢å½“å‰èŠ‚ç‚¹çš„æ•´ä¸ªå­èŠ‚ç‚¹æ ‘ã€‚
-     * - `..`: å½“æœç´¢å­—ç¬¦ä¸²ä»¥ä¸¤ä¸ªç‚¹ç»“æŸçš„æ—¶å€™ï¼Œæœç´¢ä¼šæŸ¥è¯¢å½“å‰èŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹
-     * - `/` : å½“æœç´¢å­—ç¬¦ä¸²å†…éƒ¨ï¼ˆä¸åœ¨å¼€å¤´ï¼‰åŒ…å«å•ä¸ªæ–œæ ï¼Œå®ƒå°†æœç´¢æŒ‡å‘å…¶å­èŠ‚ç‚¹
+     * @~chinese ËÑË÷Óï·¨ËµÃ÷:
+     * - `//`: µ±ËÑË÷×Ö·û´®ÒÔÁ½¸öĞ±¸Ü¿ªÍ·µÄÊ±ºò£¬ËÑË÷»áµİ¹é½øĞĞ£¬ËÑË÷µ±Ç°½ÚµãµÄÕû¸ö×Ó½ÚµãÊ÷¡£
+     * - `..`: µ±ËÑË÷×Ö·û´®ÒÔÁ½¸öµã½áÊøµÄÊ±ºò£¬ËÑË÷»á²éÑ¯µ±Ç°½ÚµãµÄ¸¸½Úµã
+     * - `/` : µ±ËÑË÷×Ö·û´®ÄÚ²¿£¨²»ÔÚ¿ªÍ·£©°üº¬µ¥¸öĞ±¸Ü£¬Ëü½«ËÑË÷Ö¸ÏòÆä×Ó½Úµã
      * @code
-     * enumerateChildren("//MyName", ...): æŸ¥è¯¢æ•´ä¸ªå­èŠ‚ç‚¹æ ‘å¹¶åŒ¹é…æ‰€æœ‰åå­—ä¸º`MyName`çš„èŠ‚ç‚¹ã€‚
-     * enumerateChildren("[[:alnum:]]+", ...): è¿™ä¸ªæ­£åˆ™è¡¨è¾¾å¼å°†åŒ¹é…æ‰€æœ‰æœ‰åå­—çš„ç›´æ¥å­èŠ‚ç‚¹ã€‚
-     * enumerateChildren("A[[:digit:]]", ...): è¿™ä¸ªæ­£åˆ™è¡¨è¾¾å¼å°†åŒ¹é…æ‰€æœ‰åå­—ä¸º`A0`, `A1`, ..., `A9`çš„å­èŠ‚ç‚¹ã€‚
-     * enumerateChildren("Abby/Normal", ...): åŒ¹é…åä¸ºAbbyçš„ç›´æ¥å­èŠ‚ç‚¹çš„åä¸ºNormalçš„å­èŠ‚ç‚¹ã€‚
-     * enumerateChildren("//Abby/Normal", ...): æŸ¥è¯¢æ•´ä¸ªå­èŠ‚ç‚¹æ ‘å¹¶åŒ¹é…æ‰€æœ‰åå­—ä¸ºNormalå¹¶ä¸”çˆ¶èŠ‚ç‚¹åå­—ä¸ºAbbyçš„èŠ‚ç‚¹ã€‚
+     * enumerateChildren("//MyName", ...): ²éÑ¯Õû¸ö×Ó½ÚµãÊ÷²¢Æ¥ÅäËùÓĞÃû×ÖÎª`MyName`µÄ½Úµã¡£
+     * enumerateChildren("[[:alnum:]]+", ...): Õâ¸öÕıÔò±í´ïÊ½½«Æ¥ÅäËùÓĞÓĞÃû×ÖµÄÖ±½Ó×Ó½Úµã¡£
+     * enumerateChildren("A[[:digit:]]", ...): Õâ¸öÕıÔò±í´ïÊ½½«Æ¥ÅäËùÓĞÃû×ÖÎª`A0`, `A1`, ..., `A9`µÄ×Ó½Úµã¡£
+     * enumerateChildren("Abby/Normal", ...): Æ¥ÅäÃûÎªAbbyµÄÖ±½Ó×Ó½ÚµãµÄÃûÎªNormalµÄ×Ó½Úµã¡£
+     * enumerateChildren("//Abby/Normal", ...): ²éÑ¯Õû¸ö×Ó½ÚµãÊ÷²¢Æ¥ÅäËùÓĞÃû×ÖÎªNormal²¢ÇÒ¸¸½ÚµãÃû×ÖÎªAbbyµÄ½Úµã¡£
      * @endcode
      *
      * @warning @~english Only support alphabet or number for name, and not support unicode.
-     * @~chinese nameå‚æ•°åªæ”¯æŒå­—æ¯æˆ–æ•°å­—ï¼Œä¸æ”¯æŒunicodeå­—ç¬¦
+     * @~chinese name²ÎÊıÖ»Ö§³Ö×ÖÄ¸»òÊı×Ö£¬²»Ö§³Öunicode×Ö·û
      *
      * @param callback @~english A callback function to execute on nodes that match the `name` parameter. The function takes the following arguments:
      *  `node` 
      *      A node that matches the name
      *  And returns a boolean result. Your callback can return `true` to terminate the enumeration.
-     * @~chinese å›è°ƒå‡½æ•°ï¼Œæ‰€æœ‰åŒ¹é…åˆ°çš„èŠ‚ç‚¹éƒ½ä¼šè¢«è¿™ä¸ªå›è°ƒå‡½æ•°æ‰§è¡Œï¼Œè¿™ä¸ªå›è°ƒå‡½æ•°çš„å‚æ•°æ˜¯`node`ï¼šåŒ¹é…åˆ°çš„èŠ‚ç‚¹ã€‚å¹¶ä¸”è¿”å›ä¸€ä¸ªå¸ƒå°”å€¼ã€‚
-     * å¼€å‘è€…å¯ä»¥åœ¨è‡ªå·±å®šä¹‰çš„å›è°ƒå‡½æ•°ä¸­è¿”å›`true`æ¥ç»ˆç»“enumerateChildrençš„æœç´¢è¿‡ç¨‹
+     * @~chinese »Øµ÷º¯Êı£¬ËùÓĞÆ¥Åäµ½µÄ½Úµã¶¼»á±»Õâ¸ö»Øµ÷º¯ÊıÖ´ĞĞ£¬Õâ¸ö»Øµ÷º¯ÊıµÄ²ÎÊıÊÇ`node`£ºÆ¥Åäµ½µÄ½Úµã¡£²¢ÇÒ·µ»ØÒ»¸ö²¼¶ûÖµ¡£
+     * ¿ª·¢Õß¿ÉÒÔÔÚ×Ô¼º¶¨ÒåµÄ»Øµ÷º¯ÊıÖĞ·µ»Ø`true`À´ÖÕ½áenumerateChildrenµÄËÑË÷¹ı³Ì
      * @since v3.2
      */
     virtual void enumerateChildren(const std::string &name, std::function<bool(Node* node)> callback) const;
     /**
      * @~english Returns the array of the node's children.
-     * @~chinese è¿”å›æ‰€æœ‰å­èŠ‚ç‚¹çš„æ•°ç»„ã€‚
+     * @~chinese ·µ»ØËùÓĞ×Ó½ÚµãµÄÊı×é¡£
      *
-     * @return @~english the array the node's children. @~chinese å­èŠ‚ç‚¹æ•°ç»„ã€‚ 
+     * @return @~english the array the node's children. @~chinese ×Ó½ÚµãÊı×é¡£ 
      */
     virtual Vector<Node*>& getChildren() { return _children; }
     virtual const Vector<Node*>& getChildren() const { return _children; }
     
     /** 
      * @~english Returns the amount of children.
-     * @~chinese è¿”å›å­èŠ‚ç‚¹çš„æ€»æ•°
+     * @~chinese ·µ»Ø×Ó½ÚµãµÄ×ÜÊı
      *
-     * @return @~english The amount of children. @~chinese å­èŠ‚ç‚¹çš„æ€»æ•° 
+     * @return @~english The amount of children. @~chinese ×Ó½ÚµãµÄ×ÜÊı 
      */
     virtual ssize_t getChildrenCount() const;
 
     /**
      * @~english Sets the parent node.
-     * @~chinese è®¾ç½®èŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹
+     * @~chinese ÉèÖÃ½ÚµãµÄ¸¸½Úµã
      *
-     * @param parent    @~english A pointer to the parent node. @~chinese æŒ‡å‘çˆ¶èŠ‚ç‚¹çš„æŒ‡é’ˆã€‚ 
+     * @param parent    @~english A pointer to the parent node. @~chinese Ö¸Ïò¸¸½ÚµãµÄÖ¸Õë¡£ 
      */
     virtual void setParent(Node* parent);
     /**
      * @~english Returns a pointer to the parent node.
-     * @~chinese è¿”å›æŒ‡å‘çˆ¶èŠ‚ç‚¹çš„æŒ‡é’ˆã€‚
+     * @~chinese ·µ»ØÖ¸Ïò¸¸½ÚµãµÄÖ¸Õë¡£
      *
      * @see `setParent(Node*)`
      *
-     * @returns @~english A pointer to the parent node. @~chinese æŒ‡å‘çˆ¶èŠ‚ç‚¹çš„æŒ‡é’ˆã€‚ 
+     * @returns @~english A pointer to the parent node. @~chinese Ö¸Ïò¸¸½ÚµãµÄÖ¸Õë¡£ 
      */
     virtual Node* getParent() { return _parent; }
     virtual const Node* getParent() const { return _parent; }
@@ -1078,18 +1088,18 @@ public:
     /**
      * @~english Removes this node itself from its parent node with a cleanup.
      * If the node orphan, then nothing happens.
-     * @~chinese ä»çˆ¶èŠ‚ç‚¹ä¸­åˆ é™¤ä¸€ä¸ªèŠ‚ç‚¹ï¼Œæœ‰ä¸€ä¸ªcleanupå‚æ•°ã€‚
-     * å¦‚æœè¿™ä¸ªèŠ‚ç‚¹æ˜¯ä¸€ä¸ªå­¤èŠ‚ç‚¹ï¼Œé‚£ä¹ˆä»€ä¹ˆéƒ½ä¸ä¼šå‘ç”Ÿã€‚
+     * @~chinese ´Ó¸¸½ÚµãÖĞÉ¾³ıÒ»¸ö½Úµã£¬ÓĞÒ»¸öcleanup²ÎÊı¡£
+     * Èç¹ûÕâ¸ö½ÚµãÊÇÒ»¸ö¹Â½Úµã£¬ÄÇÃ´Ê²Ã´¶¼²»»á·¢Éú¡£
      * @see `removeFromParentAndCleanup(bool)`
      */
     virtual void removeFromParent();
     /**
      * @~english Removes this node itself from its parent node.
      * If the node orphan, then nothing happens.
-     * @~chinese ä»çˆ¶èŠ‚ç‚¹ä¸­åˆ é™¤ä¸€ä¸ªèŠ‚ç‚¹
-     * å¦‚æœè¿™ä¸ªèŠ‚ç‚¹æ˜¯ä¸€ä¸ªå­¤èŠ‚ç‚¹ï¼Œé‚£ä¹ˆä»€ä¹ˆéƒ½ä¸ä¼šå‘ç”Ÿã€‚
+     * @~chinese ´Ó¸¸½ÚµãÖĞÉ¾³ıÒ»¸ö½Úµã
+     * Èç¹ûÕâ¸ö½ÚµãÊÇÒ»¸ö¹Â½Úµã£¬ÄÇÃ´Ê²Ã´¶¼²»»á·¢Éú¡£
      * @param cleanup   @~english true if all actions and callbacks on this node should be removed, false otherwise.
-     * @~chinese true åœ¨è¿™ä¸ªèŠ‚ç‚¹ä¸Šæ‰€æœ‰çš„åŠ¨ä½œå’Œå›è°ƒéƒ½ä¼šè¢«åˆ é™¤, false å°±ä¸ä¼šåˆ é™¤ã€‚
+     * @~chinese true ÔÚÕâ¸ö½ÚµãÉÏËùÓĞµÄ¶¯×÷ºÍ»Øµ÷¶¼»á±»É¾³ı, false ¾Í²»»áÉ¾³ı¡£
      * @js removeFromParent
      * @lua removeFromParent
      */
@@ -1097,47 +1107,47 @@ public:
 
     /**
      * @~english Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
-     * @~chinese ä»å®¹å™¨ä¸­åˆ é™¤ä¸€ä¸ªå­©å­ï¼Œå–å†³äºcleanupå‚æ•°ï¼ŒåŒæ—¶å¯èƒ½ä¼šæ¸…é™¤æ‰€æœ‰çš„æ´»åŠ¨çš„åŠ¨ä½œã€‚
+     * @~chinese ´ÓÈİÆ÷ÖĞÉ¾³ıÒ»¸öº¢×Ó£¬È¡¾öÓÚcleanup²ÎÊı£¬Í¬Ê±¿ÉÄÜ»áÇå³ıËùÓĞµÄ»î¶¯µÄ¶¯×÷¡£
      *
-     * @param child     @~english The child node which will be removed. @~chinese å¸Œæœ›è¢«åˆ é™¤çš„å­èŠ‚ç‚¹ã€‚ 
+     * @param child     @~english The child node which will be removed. @~chinese Ï£Íû±»É¾³ıµÄ×Ó½Úµã¡£ 
      * @param cleanup   @~english True if all running actions and callbacks on the child node will be cleanup, false otherwise.
-     * @~chinese true åœ¨è¿™ä¸ªèŠ‚ç‚¹ä¸Šæ‰€æœ‰çš„åŠ¨ä½œå’Œå›è°ƒéƒ½ä¼šè¢«åˆ é™¤, false å°±ä¸ä¼šåˆ é™¤ã€‚
+     * @~chinese true ÔÚÕâ¸ö½ÚµãÉÏËùÓĞµÄ¶¯×÷ºÍ»Øµ÷¶¼»á±»É¾³ı, false ¾Í²»»áÉ¾³ı¡£
      */
     virtual void removeChild(Node* child, bool cleanup = true);
 
     /**
      * @~english Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter.
-     * @~chinese ä»ä¸€ä¸ªå®¹å™¨ä¸­åˆ é™¤ä¸€ä¸ªå­©å­é€šè¿‡æ ‡è®°å€¼ã€‚å–å†³äºcleanupå‚æ•°åŒæ—¶ä¼šæ¸…é™¤æ‰€æœ‰çš„æ´»åŠ¨çš„åŠ¨ä½œã€‚
+     * @~chinese ´ÓÒ»¸öÈİÆ÷ÖĞÉ¾³ıÒ»¸öº¢×ÓÍ¨¹ı±ê¼ÇÖµ¡£È¡¾öÓÚcleanup²ÎÊıÍ¬Ê±»áÇå³ıËùÓĞµÄ»î¶¯µÄ¶¯×÷¡£
      *
-     * @param tag       @~english An interger number that identifies a child node. @~chinese ä¸€ä¸ªç”¨äºè¯†åˆ«å­èŠ‚ç‚¹çš„æ•´æ•°ã€‚ 
+     * @param tag       @~english An interger number that identifies a child node. @~chinese Ò»¸öÓÃÓÚÊ¶±ğ×Ó½ÚµãµÄÕûÊı¡£ 
      * @param cleanup   @~english True if all running actions and callbacks on the child node will be cleanup, false otherwise.
-     * @~chinese true åœ¨è¿™ä¸ªèŠ‚ç‚¹ä¸Šæ‰€æœ‰çš„åŠ¨ä½œå’Œå›è°ƒéƒ½ä¼šè¢«åˆ é™¤ï¼Œ false å°±ä¸ä¼šåˆ é™¤ã€‚
+     * @~chinese true ÔÚÕâ¸ö½ÚµãÉÏËùÓĞµÄ¶¯×÷ºÍ»Øµ÷¶¼»á±»É¾³ı£¬ false ¾Í²»»áÉ¾³ı¡£
      *
      * Please use `removeChildByName` instead.
      */
      virtual void removeChildByTag(int tag, bool cleanup = true);
     /**
      * @~english Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter.
-     * @~chinese é€šè¿‡åå­—åˆ é™¤ä¸€ä¸ªèŠ‚ç‚¹ï¼Œé»˜è®¤ä¼šåˆ é™¤æ‰€æœ‰åŠ¨ä½œã€‚
+     * @~chinese Í¨¹ıÃû×ÖÉ¾³ıÒ»¸ö½Úµã£¬Ä¬ÈÏ»áÉ¾³ıËùÓĞ¶¯×÷¡£
      *
-     * @param name      @~english A string that identifies a child node. @~chinese ç”¨äºæ ‡ç¤ºèŠ‚ç‚¹çš„åå­—
+     * @param name      @~english A string that identifies a child node. @~chinese ÓÃÓÚ±êÊ¾½ÚµãµÄÃû×Ö
      * @param cleanup   @~english True if all running actions and callbacks on the child node will be cleanup, false otherwise. 
-     * @~chinese true åœ¨è¿™ä¸ªèŠ‚ç‚¹ä¸Šæ‰€æœ‰çš„åŠ¨ä½œå’Œå›è°ƒéƒ½ä¼šè¢«åˆ é™¤ï¼Œ false å°±ä¸ä¼šåˆ é™¤ã€‚
+     * @~chinese true ÔÚÕâ¸ö½ÚµãÉÏËùÓĞµÄ¶¯×÷ºÍ»Øµ÷¶¼»á±»É¾³ı£¬ false ¾Í²»»áÉ¾³ı¡£
      */
     virtual void removeChildByName(const std::string &name, bool cleanup = true);
     /**
      * @~english Removes all children from the container with a cleanup.
-     * @~chinese ä»å®¹å™¨ä¸­åˆ é™¤æ‰€æœ‰çš„å­©å­ï¼Œå¹¶æ¸…é™¤æ‰€æœ‰åŠ¨ä½œå’Œå›è°ƒã€‚
+     * @~chinese ´ÓÈİÆ÷ÖĞÉ¾³ıËùÓĞµÄº¢×Ó£¬²¢Çå³ıËùÓĞ¶¯×÷ºÍ»Øµ÷¡£
      *
      * @see `removeAllChildrenWithCleanup(bool)`
      */
     virtual void removeAllChildren();
     /**
      * @~english Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
-     * @~chinese ä»å®¹å™¨ä¸­åˆ é™¤æ‰€æœ‰çš„å­©å­, å–å†³äºcleanupå‚æ•°ï¼ŒåŒæ—¶å¯èƒ½ä¼šæ¸…é™¤æ‰€æœ‰çš„æ´»åŠ¨çš„åŠ¨ä½œã€‚
+     * @~chinese ´ÓÈİÆ÷ÖĞÉ¾³ıËùÓĞµÄº¢×Ó, È¡¾öÓÚcleanup²ÎÊı£¬Í¬Ê±¿ÉÄÜ»áÇå³ıËùÓĞµÄ»î¶¯µÄ¶¯×÷¡£
      *
      * @param cleanup   @~english True if all running actions on all children nodes should be cleanup, false oterwise.
-     * @~chinese true åœ¨è¿™ä¸ªèŠ‚ç‚¹ä¸Šæ‰€æœ‰çš„åŠ¨ä½œå’Œå›è°ƒéƒ½ä¼šè¢«åˆ é™¤, false å°±ä¸ä¼šåˆ é™¤ã€‚
+     * @~chinese true ÔÚÕâ¸ö½ÚµãÉÏËùÓĞµÄ¶¯×÷ºÍ»Øµ÷¶¼»á±»É¾³ı, false ¾Í²»»áÉ¾³ı¡£
      * @js removeAllChildren
      * @lua removeAllChildren
      */
@@ -1145,21 +1155,21 @@ public:
 
     /**
      * @~english Reorders a child according to a new z value.
-     * @~chinese å¯¹ä¸€ä¸ªå­©å­è®¾å®šä¸€ä¸ªæ–°çš„zè½´å€¼å¹¶é‡æ–°æ’åºã€‚
+     * @~chinese ¶ÔÒ»¸öº¢×ÓÉè¶¨Ò»¸öĞÂµÄzÖáÖµ²¢ÖØĞÂÅÅĞò¡£
      *
-     * @param child     @~english An already added child node. It MUST be already added. @~chinese ä¸€ä¸ªå·²ç»è¢«æ·»åŠ çš„å­èŠ‚ç‚¹ï¼Œå®ƒå¿…é¡»æ˜¯å·²ç»æ·»åŠ çš„ã€‚ 
+     * @param child     @~english An already added child node. It MUST be already added. @~chinese Ò»¸öÒÑ¾­±»Ìí¼ÓµÄ×Ó½Úµã£¬Ëü±ØĞëÊÇÒÑ¾­Ìí¼ÓµÄ¡£ 
      * @param localZOrder @~english Z order for drawing priority. Please refer to setLocalZOrder(int).
-     * @~chinese Zè½´é¡ºåºä¸ºäº†ç»˜ç”»ä¼˜å…ˆçº§ï¼Œè¯·å‚è€ƒsetLocalZOrder(int)ã€‚
+     * @~chinese ZÖáË³ĞòÎªÁË»æ»­ÓÅÏÈ¼¶£¬Çë²Î¿¼setLocalZOrder(int)¡£
      */
     virtual void reorderChild(Node * child, int localZOrder);
 
     /**
      * @~english Sorts the children array once before drawing, instead of every time when a child is added or reordered.
-     * This appraoch can improves the performance massively.
-     * @~chinese åœ¨ç»˜ç”»ä¹‹å‰ï¼Œæ’åˆ—æ‰€æœ‰çš„å­©å­æ•°ç»„ä¸€æ¬¡ï¼Œè€Œä¸æ˜¯æ¯æ¬¡æ·»åŠ æˆ–è€…åˆ é™¤å­èŠ‚ç‚¹æ—¶éƒ½æ’åºã€‚
-     * è¿™ä¸ªæ–¹æ³•å¯ä»¥å¤§å¹…åº¦åœ°æé«˜æ€§èƒ½ã€‚
+     * This approach can improves the performance massively.
+     * @~chinese ÔÚ»æ»­Ö®Ç°£¬ÅÅÁĞËùÓĞµÄº¢×ÓÊı×éÒ»´Î£¬¶ø²»ÊÇÃ¿´ÎÌí¼Ó»òÕßÉ¾³ı×Ó½ÚµãÊ±¶¼ÅÅĞò¡£
+     * Õâ¸ö·½·¨¿ÉÒÔ´ó·ù¶ÈµØÌá¸ßĞÔÄÜ¡£
      * @note @~english Don't call this manually unless a child added needs to be removed in the same frame.
-     * @~chinese ä¸è¦æ‰‹åŠ¨è°ƒç”¨è¿™ä¸ªæ–¹æ³•ï¼Œé™¤éä¸€ä¸ªæ·»åŠ è¿‡çš„å­èŠ‚ç‚¹å°†è¦è¢«åˆ é™¤åœ¨è¿™ä¸ªç»“æ„å†…ã€‚
+     * @~chinese ²»ÒªÊÖ¶¯µ÷ÓÃÕâ¸ö·½·¨£¬³ı·ÇÒ»¸öÌí¼Ó¹ıµÄ×Ó½Úµã½«Òª±»É¾³ıÔÚÕâ¸ö½á¹¹ÄÚ¡£
      */
     virtual void sortAllChildren();
 
@@ -1167,13 +1177,13 @@ public:
     
     /// @{
     /// @name Tag & User data
-    /// @brief @~english @~chinese æ ‡ç­¾å’Œç”¨æˆ·æ•°æ®
+    /// @brief @~english @~chinese ±êÇ©ºÍÓÃ»§Êı¾İ
 
     /**
      * @~english Returns a tag that is used to identify the node easily.
-     * @~chinese è¿”å›ä¸€ä¸ªç”¨æ¥æ›´ç®€å•åˆ†è¾¨èŠ‚ç‚¹çš„æ ‡è®°ã€‚
+     * @~chinese ·µ»ØÒ»¸öÓÃÀ´¸ü¼òµ¥·Ö±æ½ÚµãµÄ±ê¼Ç¡£
      *
-     * @return @~english An integer that identifies the node. @~chinese ä¸€ä¸ªåˆ†è¾¨èŠ‚ç‚¹çš„æ•´æ•°ã€‚ 
+     * @return @~english An integer that identifies the node. @~chinese Ò»¸ö·Ö±æ½ÚµãµÄÕûÊı¡£ 
      *
      * Please use `getTag()` instead.
      */
@@ -1182,26 +1192,26 @@ public:
      * @~english Changes the tag that is used to identify the node easily.
      *
      * Please refer to getTag for the sample code.
-     * @~chinese æ”¹å˜è¿™ä¸ªç”¨æ¥åˆ†è¾¨èŠ‚ç‚¹çš„æ ‡è®°ã€‚
+     * @~chinese ¸Ä±äÕâ¸öÓÃÀ´·Ö±æ½ÚµãµÄ±ê¼Ç¡£
      *
-     * è¯·å‚è€ƒ getTag çš„ç›¸åŒä»£ç ã€‚
+     * Çë²Î¿¼ getTag µÄÏàÍ¬´úÂë¡£
      *
-     * @param tag   @~english A integer that identifies the node. @~chinese ä¸€ä¸ªç”¨æ¥è¯†åˆ«èŠ‚ç‚¹çš„æ•´æ•°ã€‚ 
+     * @param tag   @~english A integer that identifies the node. @~chinese Ò»¸öÓÃÀ´Ê¶±ğ½ÚµãµÄÕûÊı¡£ 
      *
      * Please use `setName()` instead.
      */
      virtual void setTag(int tag);
     
     /** @~english Returns a string that is used to identify the node.
-     * @~chinese è¿”å›ç”¨äºè¯†åˆ«èŠ‚ç‚¹çš„åå­—ã€‚
-     * @return @~english A string that identifies the node. @~chinese ç”¨äºè¯†åˆ«èŠ‚ç‚¹çš„åå­—ã€‚ 
+     * @~chinese ·µ»ØÓÃÓÚÊ¶±ğ½ÚµãµÄÃû×Ö¡£
+     * @return @~english A string that identifies the node. @~chinese ÓÃÓÚÊ¶±ğ½ÚµãµÄÃû×Ö¡£ 
      * 
      * @since v3.2
      */
-    virtual std::string getName() const;
+    virtual const std::string& getName() const;
     /** @~english Changes the name that is used to identify the node easily.
-     * @~chinese è®¾ç½®ç”¨äºè¯†åˆ«èŠ‚ç‚¹çš„åå­—ã€‚
-     * @param name @~english A string that identifies the node. @~chinese ç”¨äºè¯†åˆ«èŠ‚ç‚¹çš„åå­— 
+     * @~chinese ÉèÖÃÓÃÓÚÊ¶±ğ½ÚµãµÄÃû×Ö¡£
+     * @param name @~english A string that identifies the node. @~chinese ÓÃÓÚÊ¶±ğ½ÚµãµÄÃû×Ö 
      *
      * @since v3.2
      */
@@ -1212,11 +1222,11 @@ public:
      * @~english Returns a custom user data pointer.
      *
      * You can set everything in UserData pointer, a data block, a structure or an object.
-     * @~chinese è¿”å›ä¸€ä¸ªç”¨æˆ·è‡ªå®šä¹‰æ•°æ®çš„æŒ‡é’ˆã€‚
+     * @~chinese ·µ»ØÒ»¸öÓÃ»§×Ô¶¨ÒåÊı¾İµÄÖ¸Õë¡£
      *
-     * ä½ å¯ä»¥éšæ„è®¾ç½®UserData æŒ‡é’ˆä¸º, ä¸€ä¸ªæ•°æ®å—, ç»“æ„ä½“æˆ–è€…ä¸€ä¸ªå¯¹è±¡ã€‚
+     * Äã¿ÉÒÔËæÒâÉèÖÃUserData Ö¸ÕëÎª, Ò»¸öÊı¾İ¿é, ½á¹¹Ìå»òÕßÒ»¸ö¶ÔÏó¡£
      *
-     * @return @~english A custom user data pointer. @~chinese ç”¨æˆ·è‡ªå®šä¹‰æ•°æ®çš„æŒ‡é’ˆã€‚ 
+     * @return @~english A custom user data pointer. @~chinese ÓÃ»§×Ô¶¨ÒåÊı¾İµÄÖ¸Õë¡£ 
      * @lua NA
      */
     virtual void* getUserData() { return _userData; }
@@ -1229,15 +1239,15 @@ public:
      * @~english Sets a custom user data pointer.
      *
      * You can set everything in UserData pointer, a data block, a structure or an object, etc.
-     * @~chinese è®¾ç½®ä¸€ä¸ªç”¨æˆ·è‡ªå®šä¹‰æ•°æ®çš„æŒ‡é’ˆã€‚
+     * @~chinese ÉèÖÃÒ»¸öÓÃ»§×Ô¶¨ÒåÊı¾İµÄÖ¸Õë¡£
      *
-     * ä½ å¯ä»¥éšæ„è®¾ç½®UserData æŒ‡é’ˆä¸º, ä¸€ä¸ªæ•°æ®å—, ç»“æ„ä½“æˆ–è€…ä¸€ä¸ªå¯¹è±¡ï¼Œç­‰ç­‰ã€‚
+     * Äã¿ÉÒÔËæÒâÉèÖÃUserData Ö¸ÕëÎª, Ò»¸öÊı¾İ¿é, ½á¹¹Ìå»òÕßÒ»¸ö¶ÔÏó£¬µÈµÈ¡£
      * @warning @~english Don't forget to release the memory manually,
      *          especially before you change this data pointer, and before this node is autoreleased.
-     * @~chinese ä¸è¦å¿˜è®°è¦æ‰‹åŠ¨é‡Šæ”¾å†…å­˜ï¼Œ
-     *          ç‰¹åˆ«æ˜¯åœ¨ä½ æ”¹å˜è¿™ä¸ªæ•°æ®æŒ‡é’ˆä¹‹å‰ï¼Œå’Œè¿™ä¸ªèŠ‚ç‚¹è¢«è‡ªåŠ¨é‡Šæ”¾ä¹‹å‰ã€‚
+     * @~chinese ²»ÒªÍü¼ÇÒªÊÖ¶¯ÊÍ·ÅÄÚ´æ£¬
+     *          ÌØ±ğÊÇÔÚÄã¸Ä±äÕâ¸öÊı¾İÖ¸ÕëÖ®Ç°£¬ºÍÕâ¸ö½Úµã±»×Ô¶¯ÊÍ·ÅÖ®Ç°¡£
      *
-     * @param userData  @~english A custom user data pointer. @~chinese ä¸€ä¸ªç”¨æˆ·è‡ªå®šä¹‰æ•°æ®æŒ‡é’ˆã€‚ 
+     * @param userData  @~english A custom user data pointer. @~chinese Ò»¸öÓÃ»§×Ô¶¨ÒåÊı¾İÖ¸Õë¡£ 
      * @lua NA
      */
     virtual void setUserData(void *userData);
@@ -1246,11 +1256,11 @@ public:
      * @~english Returns a user assigned Object.
      *
      * Similar to userData, but instead of holding a void* it holds an object.
-     * @~chinese è¿”å›ä¸€ä¸ªç”¨æˆ·è®¾å®šçš„å¯¹è±¡
+     * @~chinese ·µ»ØÒ»¸öÓÃ»§Éè¶¨µÄ¶ÔÏó
      *
-     * å’ŒuserDataç±»ä¼¼, ä½†å®ƒåªèƒ½æŒ‡å‘ä¸€ä¸ªRefç±»å‹çš„å¯¹è±¡
+     * ºÍuserDataÀàËÆ, µ«ËüÖ»ÄÜÖ¸ÏòÒ»¸öRefÀàĞÍµÄ¶ÔÏó
      *
-     * @return @~english A user assigned Object. @~chinese ä¸€ä¸ªç”¨æˆ·åˆ†é…çš„å¯¹è±¡ã€‚ 
+     * @return @~english A user assigned Object. @~chinese Ò»¸öÓÃ»§·ÖÅäµÄ¶ÔÏó¡£ 
      * @lua NA
      */
     virtual Ref* getUserObject() { return _userObject; }
@@ -1266,14 +1276,14 @@ public:
      * The UserObject will be retained once in this method,
      * and the previous UserObject (if existed) will be released.
      * The UserObject will be released in Node's destructor.
-     * @~chinese è¿”å›ä¸€ä¸ªç”¨æˆ·åˆ†é…çš„å¯¹è±¡
+     * @~chinese ·µ»ØÒ»¸öÓÃ»§·ÖÅäµÄ¶ÔÏó
      *
-     * å’ŒuserDataç±»ä¼¼, ä½†å®ƒæ‹¥æœ‰çš„æ˜¯ä¸€ä¸ªå¯¹è±¡è€Œä¸æ˜¯void*
-     * UserObjectå°†ä¼šåœ¨è¿™ä¸ªæ–¹æ³•ä¸­ç•™å­˜ä¸€æ¬¡
-     * ç„¶åä¹‹å‰çš„UserObject ï¼ˆå¦‚æœå­˜åœ¨çš„è¯ï¼‰å°†ä¼šè¢«é‡Šæ”¾ã€‚
-     * UserObject å°†ä¼šåœ¨èŠ‚ç‚¹çš„ææ„å‡½æ•°ä¸­é‡Šæ”¾ã€‚
+     * ºÍuserDataÀàËÆ, µ«ËüÓµÓĞµÄÊÇÒ»¸ö¶ÔÏó¶ø²»ÊÇvoid*
+     * UserObject½«»áÔÚÕâ¸ö·½·¨ÖĞÁô´æÒ»´Î
+     * È»ºóÖ®Ç°µÄUserObject £¨Èç¹û´æÔÚµÄ»°£©½«»á±»ÊÍ·Å¡£
+     * UserObject ½«»áÔÚ½ÚµãµÄÎö¹¹º¯ÊıÖĞÊÍ·Å¡£
      *
-     * @param userObject    @~english A user assigned Object. @~chinese ä¸€ä¸ªç”¨æˆ·åˆ†é…çš„å¯¹è±¡ 
+     * @param userObject    @~english A user assigned Object. @~chinese Ò»¸öÓÃ»§·ÖÅäµÄ¶ÔÏó 
      */
     virtual void setUserObject(Ref *userObject);
 
@@ -1282,12 +1292,12 @@ public:
 
     /// @{
     /// @name GLProgram
-    /// @brief @~english @~chinese OpenGLç€è‰²å™¨ç¨‹åº
+    /// @brief @~english @~chinese OpenGL×ÅÉ«Æ÷³ÌĞò
     /**
      * @~english Return the GLProgram (shader) currently used for this node.
-     * @~chinese è¿”å›å½“å‰ç”¨äºè¿™ä¸ªèŠ‚ç‚¹çš„ç€è‰²å™¨ç¨‹åº (shader) 
+     * @~chinese ·µ»Øµ±Ç°ÓÃÓÚÕâ¸ö½ÚµãµÄ×ÅÉ«Æ÷³ÌĞò (shader) 
      *
-     * @return @~english The GLProgram (shader) currently used for this node. @~chinese å½“å‰ç”¨äºè¿™ä¸ªèŠ‚ç‚¹çš„GLProgram (shader) 
+     * @return @~english The GLProgram (shader) currently used for this node. @~chinese µ±Ç°ÓÃÓÚÕâ¸ö½ÚµãµÄGLProgram (shader) 
      */
     GLProgram* getGLProgram() const;
     CC_DEPRECATED_ATTRIBUTE GLProgram* getShaderProgram() const { return getGLProgram(); }
@@ -1296,32 +1306,32 @@ public:
      *
      * Since v2.0, each rendering node must set its shader program.
      * It should be set in initialize phase.
-     * @~chinese ä¸ºè¿™ä¸ªèŠ‚ç‚¹è®¾ç½®ç€è‰²å™¨ç¨‹åº
+     * @~chinese ÎªÕâ¸ö½ÚµãÉèÖÃ×ÅÉ«Æ÷³ÌĞò
      *
-     * è‡ªä» v2.0, æ¯ä¸€ä¸ªæ¸²æŸ“çš„èŠ‚ç‚¹å¿…é¡»è®¾ç½®å®ƒè‡ªå·±çš„ç€è‰²å™¨ç¨‹åºã€‚
-     * å®ƒåº”è¯¥åœ¨åˆå§‹åŒ–é˜¶æ®µè¢«è®¾ç½®ã€‚
+     * ×Ô´Ó v2.0, Ã¿Ò»¸öäÖÈ¾µÄ½Úµã±ØĞëÉèÖÃËü×Ô¼ºµÄ×ÅÉ«Æ÷³ÌĞò¡£
+     * ËüÓ¦¸ÃÔÚ³õÊ¼»¯½×¶Î±»ÉèÖÃ¡£
      @code
      node->setGLrProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
      @endcode
      *
-     * @param glprogram @~english The shader program. @~chinese ç€è‰²å™¨ç¨‹åº 
+     * @param glprogram @~english The shader program. @~chinese ×ÅÉ«Æ÷³ÌĞò 
      */
     virtual void setGLProgram(GLProgram *glprogram);
     CC_DEPRECATED_ATTRIBUTE void setShaderProgram(GLProgram *glprogram) { setGLProgram(glprogram); }
     
     /**
      * @~english Return the GLProgramState currently used for this node.
-     * @~chinese è¿”å›èŠ‚ç‚¹å½“å‰ä½¿ç”¨çš„OpenGLç€è‰²å™¨ç¨‹åºçŠ¶æ€
+     * @~chinese ·µ»Ø½Úµãµ±Ç°Ê¹ÓÃµÄOpenGL×ÅÉ«Æ÷³ÌĞò×´Ì¬
      *
      * @return @~english The GLProgramState currently used for this node.
-     * @~chinese èŠ‚ç‚¹å½“å‰ä½¿ç”¨çš„OpenGLç€è‰²å™¨ç¨‹åºçŠ¶æ€
+     * @~chinese ½Úµãµ±Ç°Ê¹ÓÃµÄOpenGL×ÅÉ«Æ÷³ÌĞò×´Ì¬
      */
     GLProgramState *getGLProgramState() const;
     /**
      * @~english Set the GLProgramState for this node.
-     * @~chinese è®¾ç½®èŠ‚ç‚¹å½“å‰ä½¿ç”¨çš„OpenGLç€è‰²å™¨ç¨‹åºçŠ¶æ€
+     * @~chinese ÉèÖÃ½Úµãµ±Ç°Ê¹ÓÃµÄOpenGL×ÅÉ«Æ÷³ÌĞò×´Ì¬
      *
-     * @param glProgramState @~english The GLProgramState for this node. @~chinese OpenGLç€è‰²å™¨ç¨‹åºçŠ¶æ€ 
+     * @param glProgramState @~english The GLProgramState for this node. @~chinese OpenGL×ÅÉ«Æ÷³ÌĞò×´Ì¬ 
      */
     virtual void setGLProgramState(GLProgramState *glProgramState);
     
@@ -1332,21 +1342,21 @@ public:
      * @~english Returns whether or not the node is "running".
      *
      * If the node is running it will accept event callbacks like onEnter(), onExit(), update().
-     * @~chinese è¿”å›èŠ‚ç‚¹æ˜¯å¦æ˜¯â€œrunning(æ´»åŠ¨çš„)â€ã€‚
+     * @~chinese ·µ»Ø½ÚµãÊÇ·ñÊÇ¡°running(»î¶¯µÄ)¡±¡£
      *
-     * å¦‚æœèŠ‚ç‚¹æ˜¯æ´»åŠ¨çš„ï¼Œå®ƒå°†ä¼šå…è®¸äº‹ä»¶å›è°ƒå°±åƒonEnter(), onExit(), update()
+     * Èç¹û½ÚµãÊÇ»î¶¯µÄ£¬Ëü½«»áÔÊĞíÊÂ¼ş»Øµ÷¾ÍÏñonEnter(), onExit(), update()
      *
-     * @return @~english Whether or not the node is running. @~chinese èŠ‚ç‚¹æ˜¯å¦æ˜¯â€œrunning(æ´»åŠ¨çš„)â€ã€‚ 
+     * @return @~english Whether or not the node is running. @~chinese ½ÚµãÊÇ·ñÊÇ¡°running(»î¶¯µÄ)¡±¡£ 
      */
     virtual bool isRunning() const;
 
     /**
      * @~english Schedules for lua script.
-     * @~chinese Lua scriptçš„æ—¶é—´è¡¨
+     * @~chinese Lua scriptµÄÊ±¼ä±í
      * @js NA
      *
-     * @param handler @~english The key to search lua function. @~chinese ç”¨æ¥å¯»æ‰¾Luaå‡½æ•°çš„key 
-     * @param priority @~english A given priority value. @~chinese ä¸€ä¸ªç»™å®šçš„ä¼˜å…ˆçº§ 
+     * @param handler @~english The key to search lua function. @~chinese ÓÃÀ´Ñ°ÕÒLuaº¯ÊıµÄkey 
+     * @param priority @~english A given priority value. @~chinese Ò»¸ö¸ø¶¨µÄÓÅÏÈ¼¶ 
      */
     void scheduleUpdateWithPriorityLua(int handler, int priority);
 
@@ -1355,24 +1365,24 @@ public:
 
     /// @{
     /// @name Event Callbacks
-    /// @brief @~english @~chinese äº‹ä»¶å›è°ƒå‡½æ•°
+    /// @brief @~english @~chinese ÊÂ¼ş»Øµ÷º¯Êı
 
     /**
      * @~english Event callback that is invoked every time when Node enters the 'stage'.
      * If the Node enters the 'stage' with a transition, this event is called when the transition starts.
      * During onEnter you can't access a "sister/brother" node.
      * If you override onEnter, you shall call its parent's one, e.g., Node::onEnter().
-     * @~chinese æ¯æ¬¡å½“Nodeè¿›å…¥â€œstageâ€æ—¶æ‰è°ƒç”¨äº‹ä»¶å›è°ƒã€‚
-     * å¦‚æœNodeè¿›å…¥â€œstageâ€çŠ¶æ€æ—¶ä¼´éšç€ä¸€ä¸ªè½¬æ¢ï¼ˆtransitionï¼‰,é‚£ä¹ˆäº‹ä»¶å°†ä¼šåœ¨è¿™ä¸ªè½¬æ¢å¼€å§‹çš„æ—¶å€™è¢«è°ƒç”¨ã€‚
-     * åœ¨onEnterè¿‡ç¨‹ä¸­ï¼Œä½ ä¸èƒ½å¤Ÿæ¥å…¥â€œsister/brotherâ€å…„å¦¹èŠ‚ç‚¹ã€‚
-     * å¦‚æœä½ é‡å†™äº†onEnteræ–¹æ³•ï¼Œä½ åº”è¯¥è°ƒç”¨å®ƒçš„çˆ¶ç±»ï¼Œe.g., Node::onEnter().
+     * @~chinese Ã¿´Îµ±Node½øÈë¡°stage¡±Ê±²Åµ÷ÓÃÊÂ¼ş»Øµ÷¡£
+     * Èç¹ûNode½øÈë¡°stage¡±×´Ì¬Ê±°éËæ×ÅÒ»¸ö×ª»»£¨transition£©,ÄÇÃ´ÊÂ¼ş½«»áÔÚÕâ¸ö×ª»»¿ªÊ¼µÄÊ±ºò±»µ÷ÓÃ¡£
+     * ÔÚonEnter¹ı³ÌÖĞ£¬Äã²»ÄÜ¹»½ÓÈë¡°sister/brother¡±ĞÖÃÃ½Úµã¡£
+     * Èç¹ûÄãÖØĞ´ÁËonEnter·½·¨£¬ÄãÓ¦¸Ãµ÷ÓÃËüµÄ¸¸Àà£¬e.g., Node::onEnter().
      * @lua NA
      */
     virtual void onEnter();
 
-    /** @~chinese æ¯æ¬¡å½“Nodeè¿›å…¥â€œstageâ€æ—¶æ‰è°ƒç”¨äº‹ä»¶å›è°ƒã€‚
-     * å¦‚æœNodeè¿›å…¥â€œstageâ€çŠ¶æ€æ—¶ä¼´éšç€ä¸€ä¸ªè½¬æ¢ï¼ˆtransitionï¼‰,é‚£ä¹ˆäº‹ä»¶å°†ä¼šåœ¨è¿™ä¸ªè½¬æ¢ç»“æŸçš„æ—¶å€™è¢«è°ƒç”¨ã€‚
-     * å¦‚æœä½ é‡å†™äº†onEnterTransitionDidFinishæ–¹æ³• ä½ åº”è¯¥è°ƒç”¨å®ƒçš„çˆ¶ç±», e.g. Node::onEnterTransitionDidFinish()
+    /** @~chinese Ã¿´Îµ±Node½øÈë¡°stage¡±Ê±²Åµ÷ÓÃÊÂ¼ş»Øµ÷¡£
+     * Èç¹ûNode½øÈë¡°stage¡±×´Ì¬Ê±°éËæ×ÅÒ»¸ö×ª»»£¨transition£©,ÄÇÃ´ÊÂ¼ş½«»áÔÚÕâ¸ö×ª»»½áÊøµÄÊ±ºò±»µ÷ÓÃ¡£
+     * Èç¹ûÄãÖØĞ´ÁËonEnterTransitionDidFinish·½·¨ ÄãÓ¦¸Ãµ÷ÓÃËüµÄ¸¸Àà, e.g. Node::onEnterTransitionDidFinish()
      * @~english Event callback that is invoked when the Node enters in the 'stage'.
      * If the Node enters the 'stage' with a transition, this event is called when the transition finishes.
      * If you override onEnterTransitionDidFinish, you shall call its parent's one, e.g. Node::onEnterTransitionDidFinish()
@@ -1385,10 +1395,10 @@ public:
      * If the Node leaves the 'stage' with a transition, this event is called when the transition finishes.
      * During onExit you can't access a sibling node.
      * If you override onExit, you shall call its parent's one, e.g., Node::onExit().
-     * @~chinese æ¯æ¬¡å½“Nodeç¦»å¼€â€œstageâ€æ—¶æ‰è°ƒç”¨äº‹ä»¶å›è°ƒã€‚
-     * å¦‚æœNodeç¦»å¼€â€œstageâ€çŠ¶æ€æ—¶ä¼´éšç€ä¸€ä¸ªè½¬æ¢ï¼ˆtransitionï¼‰, é‚£ä¹ˆäº‹ä»¶å°†ä¼šåœ¨è¿™ä¸ªè½¬æ¢ç»“æŸçš„æ—¶å€™è¢«è°ƒç”¨ã€‚
-     * åœ¨onEnterè¿‡ç¨‹ä¸­ä¸­ä½ ä¸èƒ½å¤Ÿæ¥å…¥ä¸€ä¸ªå…„å¦¹èŠ‚ç‚¹ã€‚
-     * å¦‚æœä½ é‡å†™onExit, ä½ åº”è¯¥è°ƒç”¨å®ƒçš„çˆ¶ç±», e.g., Node::onExit().
+     * @~chinese Ã¿´Îµ±NodeÀë¿ª¡°stage¡±Ê±²Åµ÷ÓÃÊÂ¼ş»Øµ÷¡£
+     * Èç¹ûNodeÀë¿ª¡°stage¡±×´Ì¬Ê±°éËæ×ÅÒ»¸ö×ª»»£¨transition£©, ÄÇÃ´ÊÂ¼ş½«»áÔÚÕâ¸ö×ª»»½áÊøµÄÊ±ºò±»µ÷ÓÃ¡£
+     * ÔÚonEnter¹ı³ÌÖĞÖĞÄã²»ÄÜ¹»½ÓÈëÒ»¸öĞÖÃÃ½Úµã¡£
+     * Èç¹ûÄãÖØĞ´onExit, ÄãÓ¦¸Ãµ÷ÓÃËüµÄ¸¸Àà, e.g., Node::onExit().
      * @lua NA
      */
     virtual void onExit();
@@ -1396,8 +1406,8 @@ public:
     /**
      * @~english Event callback that is called every time the Node leaves the 'stage'.
      * If the Node leaves the 'stage' with a transition, this callback is called when the transition starts.
-     * @~chinese æ¯æ¬¡å½“Nodeç¦»å¼€â€œstageâ€æ—¶æ‰è°ƒç”¨äº‹ä»¶å›è°ƒã€‚
-     * å¦‚æœNodeç¦»å¼€â€œstageâ€çŠ¶æ€æ—¶ä¼´éšç€ä¸€ä¸ªè½¬æ¢ï¼ˆtransitionï¼‰, é‚£ä¹ˆäº‹ä»¶å°†ä¼šåœ¨è¿™ä¸ªè½¬æ¢å¼€å§‹çš„æ—¶å€™è¢«è°ƒç”¨ã€‚
+     * @~chinese Ã¿´Îµ±NodeÀë¿ª¡°stage¡±Ê±²Åµ÷ÓÃÊÂ¼ş»Øµ÷¡£
+     * Èç¹ûNodeÀë¿ª¡°stage¡±×´Ì¬Ê±°éËæ×ÅÒ»¸ö×ª»»£¨transition£©, ÄÇÃ´ÊÂ¼ş½«»áÔÚÕâ¸ö×ª»»¿ªÊ¼µÄÊ±ºò±»µ÷ÓÃ¡£
      * @lua NA
      */
     virtual void onExitTransitionDidStart();
@@ -1407,7 +1417,7 @@ public:
 
     /**
      * @~english Stops and removes all running actions and schedulers
-     * @~chinese åœæ­¢å¹¶ç§»é™¤æ‰€æœ‰çš„æ´»åŠ¨ç€çš„åŠ¨ä½œå’Œè°ƒåº¦å™¨ã€‚
+     * @~chinese Í£Ö¹²¢ÒÆ³ıËùÓĞµÄ»î¶¯×ÅµÄ¶¯×÷ºÍµ÷¶ÈÆ÷¡£
      */
     virtual void cleanup();
 
@@ -1420,14 +1430,14 @@ public:
      * - `glEnable(GL_TEXTURE_2D);`
      * AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
      * But if you enable any other GL state, you should disable it after drawing your node.
-     * @~chinese é‡å†™è¿™ä¸ªæ–¹æ³•æ¥ç»˜åˆ¶ä½ è‡ªå·±çš„èŠ‚ç‚¹ã€‚
-     * ä»¥ä¸‹çš„GLçŠ¶æ€æ˜¯é»˜è®¤å¼€å¯çš„ï¼š
+     * @~chinese ÖØĞ´Õâ¸ö·½·¨À´»æÖÆÄã×Ô¼ºµÄ½Úµã¡£
+     * ÒÔÏÂµÄGL×´Ì¬ÊÇÄ¬ÈÏ¿ªÆôµÄ£º
      * - `glEnableClientState(GL_VERTEX_ARRAY);`
      * - `glEnableClientState(GL_COLOR_ARRAY);`
      * - `glEnableClientState(GL_TEXTURE_COORD_ARRAY);`
      * - `glEnable(GL_TEXTURE_2D);`
-     * å¹¶ä¸”åœ¨ç»˜åˆ¶å®Œä½ çš„èŠ‚ç‚¹ä¹‹åä¸èƒ½å¤Ÿå…³é—­ä»–ä»¬ã€‚
-     * ä½†æ˜¯å¦‚æœä½ å¼€å¯äº†å…¶ä»–çš„GLçŠ¶æ€ï¼Œé‚£ä¹ˆåœ¨ç»˜åˆ¶å®Œä½ çš„èŠ‚ç‚¹ä¹‹åä½ è¦å…³é—­ä»–ä»¬ã€‚
+     * ²¢ÇÒÔÚ»æÖÆÍêÄãµÄ½ÚµãÖ®ºó²»ÄÜ¹»¹Ø±ÕËûÃÇ¡£
+     * µ«ÊÇÈç¹ûÄã¿ªÆôÁËÆäËûµÄGL×´Ì¬£¬ÄÇÃ´ÔÚ»æÖÆÍêÄãµÄ½ÚµãÖ®ºóÄãÒª¹Ø±ÕËûÃÇ¡£
      * 
      * @param renderer A given renderer.
      * @param transform A transform matrix.
@@ -1438,11 +1448,11 @@ public:
 
     /**
      * @~english Visits this node's children and send their render command recursively.
-     * @~chinese éå†æ‰€æœ‰å­èŠ‚ç‚¹ï¼Œå¹¶ä¸”å¾ªç¯é€’å½’å¾—å‘é€å®ƒä»¬çš„æ¸²æŸ“æŒ‡ä»¤ã€‚
+     * @~chinese ±éÀúËùÓĞ×Ó½Úµã£¬²¢ÇÒÑ­»·µİ¹éµÃ·¢ËÍËüÃÇµÄäÖÈ¾Ö¸Áî¡£
      *
-     * @param renderer @~english A given renderer. @~chinese æŒ‡å®šä¸€ä¸ªæ¸²æŸ“å™¨ 
-     * @param parentTransform @~english A transform matrix. @~chinese çˆ¶èŠ‚ç‚¹æ”¾å°„å˜æ¢çŸ©é˜µ 
-     * @param parentFlags @~english Renderer flag. @~chinese æ¸²æŸ“å™¨æ ‡ç­¾ 
+     * @param renderer @~english A given renderer. @~chinese Ö¸¶¨Ò»¸öäÖÈ¾Æ÷ 
+     * @param parentTransform @~english A transform matrix. @~chinese ¸¸½Úµã·ÅÉä±ä»»¾ØÕó 
+     * @param parentFlags @~english Renderer flag. @~chinese äÖÈ¾Æ÷±êÇ© 
      */
     virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
     virtual void visit() final;
@@ -1451,19 +1461,19 @@ public:
     /** 
      @~english Returns the Scene that contains the Node.
      It returns `nullptr` if the node doesn't belong to any Scene.
-     This function recursively calls parent->getScene() until parent is a Scene object. The results are not cached. It is that the user caches the results in case this functions is being used inside a loop.@~chinese è¿”å›åŒ…å«è¯¥èŠ‚ç‚¹çš„åœºæ™¯ã€‚
-     å¦‚æœè¿™ä¸ªèŠ‚ç‚¹ä¸å±äºä»»ä½•çš„åœºæ™¯ï¼Œå®ƒå°†è¿”å›`nullptr`ã€‚
-     è¿™ä¸ªå‡½æ•°å¾ªç¯é€’å½’åœ°è°ƒç”¨parent->getScene() ç›´åˆ°çˆ¶ç±»æ˜¯ä¸€ä¸ªSceneå¯¹è±¡ã€‚ç»“æœä¸ä¼šè¢«ç¼“å­˜ã€‚åªæœ‰å½“è¿™ä¸ªå‡½æ•°è¢«ç”¨åœ¨ä¸€ä¸ªå¾ªç¯ä¸­æ—¶ï¼Œç”¨æˆ·æ‰ä¼šç¼“å­˜è¿™ä¸ªç»“æœã€‚
+     This function recursively calls parent->getScene() until parent is a Scene object. The results are not cached. It is that the user caches the results in case this functions is being used inside a loop.@~chinese ·µ»Ø°üº¬¸Ã½ÚµãµÄ³¡¾°¡£
+     Èç¹ûÕâ¸ö½Úµã²»ÊôÓÚÈÎºÎµÄ³¡¾°£¬Ëü½«·µ»Ø`nullptr`¡£
+     Õâ¸öº¯ÊıÑ­»·µİ¹éµØµ÷ÓÃparent->getScene() Ö±µ½¸¸ÀàÊÇÒ»¸öScene¶ÔÏó¡£½á¹û²»»á±»»º´æ¡£Ö»ÓĞµ±Õâ¸öº¯Êı±»ÓÃÔÚÒ»¸öÑ­»·ÖĞÊ±£¬ÓÃ»§²Å»á»º´æÕâ¸ö½á¹û¡£
      *
-     * @return @~english The Scene that contains the node. @~chinese åŒ…å«è¯¥èŠ‚ç‚¹çš„åœºæ™¯ 
+     * @return @~english The Scene that contains the node. @~chinese °üº¬¸Ã½ÚµãµÄ³¡¾° 
      */
     virtual Scene* getScene() const;
 
     /**
      * @~english Returns an AABB (axis-aligned bounding-box) in its parent's coordinate system.
-     * @~chinese è¿”å›çˆ¶åæ ‡ç³»ä¸­çš„ä¸€ä¸ªAABB(è½´å‘åŒ…å›´å¤–æ¡†)ã€‚
+     * @~chinese ·µ»Ø¸¸×ø±êÏµÖĞµÄÒ»¸öAABB(ÖáÏò°üÎ§Íâ¿ò)¡£
      *
-     * @return @~english An AABB (axis-aligned bounding-box) in its parent's coordinate system @~chinese è½´å‘åŒ…å›´å¤–æ¡† 
+     * @return @~english An AABB (axis-aligned bounding-box) in its parent's coordinate system @~chinese ÖáÏò°üÎ§Íâ¿ò 
      */
     virtual Rect getBoundingBox() const;
 
@@ -1471,37 +1481,37 @@ public:
     CC_DEPRECATED_ATTRIBUTE inline virtual Rect boundingBox() const { return getBoundingBox(); }
 
     /** @~english Set event dispatcher for node.
-     * @~chinese è®¾ç½®èŠ‚ç‚¹çš„äº‹ä»¶åˆ†å‘å™¨
+     * @~chinese ÉèÖÃ½ÚµãµÄÊÂ¼ş·Ö·¢Æ÷
      *
-     * @param dispatcher @~english The event dispatcher. @~chinese äº‹ä»¶åˆ†å‘å™¨ 
+     * @param dispatcher @~english The event dispatcher. @~chinese ÊÂ¼ş·Ö·¢Æ÷ 
      */
     virtual void setEventDispatcher(EventDispatcher* dispatcher);
     /** @~english Get the event dispatcher.
-     * @~chinese è·å–èŠ‚ç‚¹çš„äº‹ä»¶åˆ†å‘å™¨
+     * @~chinese »ñÈ¡½ÚµãµÄÊÂ¼ş·Ö·¢Æ÷
      *
-     * @return @~english The event dispatcher. @~chinese äº‹ä»¶åˆ†å‘å™¨ 
+     * @return @~english The event dispatcher. @~chinese ÊÂ¼ş·Ö·¢Æ÷ 
      */
     virtual EventDispatcher* getEventDispatcher() const { return _eventDispatcher; };
 
     /// @{
     /// @name Actions
-    /// @brief @~english @~chinese åŠ¨ä½œ
+    /// @brief @~english @~chinese ¶¯×÷
 
     /**
      * @~english Sets the ActionManager object that is used by all actions.
-     * @~chinese è®¾ç½®è¢«æ‰€æœ‰åŠ¨ä½œä½¿ç”¨çš„ActionManagerå¯¹è±¡ã€‚
+     * @~chinese ÉèÖÃ±»ËùÓĞ¶¯×÷Ê¹ÓÃµÄActionManager¶ÔÏó¡£
      *
      * @warning @~english If you set a new ActionManager, then previously created actions will be removed.
-     * @~chinese å¦‚æœä½ è®¾ç½®äº†ä¸€ä¸ªæ–°çš„ActionManager, é‚£ä¹ˆä¹‹å‰åˆ›å»ºçš„åŠ¨ä½œå°†ä¼šè¢«åˆ é™¤ã€‚
+     * @~chinese Èç¹ûÄãÉèÖÃÁËÒ»¸öĞÂµÄActionManager, ÄÇÃ´Ö®Ç°´´½¨µÄ¶¯×÷½«»á±»É¾³ı¡£
      *
-     * @param actionManager     @~english A ActionManager object that is used by all actions. @~chinese ActionManagerè¢«æ‰€æœ‰åŠ¨ä½œä½¿ç”¨ã€‚ 
+     * @param actionManager     @~english A ActionManager object that is used by all actions. @~chinese ActionManager±»ËùÓĞ¶¯×÷Ê¹ÓÃ¡£ 
      */
     virtual void setActionManager(ActionManager* actionManager);
     /**
      * @~english Gets the ActionManager object that is used by all actions.
-     * @~chinese å¾—åˆ°è¢«æ‰€æœ‰åŠ¨ä½œä½¿ç”¨çš„ActionManagerå¯¹è±¡ã€‚
+     * @~chinese µÃµ½±»ËùÓĞ¶¯×÷Ê¹ÓÃµÄActionManager¶ÔÏó¡£
      * @see setActionManager(ActionManager*)
-     * @return @~english An ActionManager object. @~chinese ActionManagerå¯¹è±¡ã€‚ 
+     * @return @~english An ActionManager object. @~chinese ActionManager¶ÔÏó¡£ 
      */
     virtual ActionManager* getActionManager() { return _actionManager; }
     virtual const ActionManager* getActionManager() const { return _actionManager; }
@@ -1510,42 +1520,42 @@ public:
      * @~english Executes an action, and returns the action that is executed.
      *
      * This node becomes the action's target. Refer to Action::getTarget().
-     * @~chinese æ‰§è¡Œä¸€ä¸ªåŠ¨ä½œï¼Œå¹¶ä¸”è¿”å›æ‰§è¡Œçš„è¯¥åŠ¨ä½œã€‚
+     * @~chinese Ö´ĞĞÒ»¸ö¶¯×÷£¬²¢ÇÒ·µ»ØÖ´ĞĞµÄ¸Ã¶¯×÷¡£
      *
-     * è¿™ä¸ªèŠ‚ç‚¹å°†ä¼šå˜æˆåŠ¨ä½œçš„ç›®æ ‡ï¼Œå‚è€ƒAction::getTarget()
-     * @warning @~english Actions don't retain their target. @~chinese åŠ¨ä½œä¸å­˜å‚¨å®ƒçš„ç›®æ ‡ã€‚ 
+     * Õâ¸ö½Úµã½«»á±ä³É¶¯×÷µÄÄ¿±ê£¬²Î¿¼Action::getTarget()
+     * @warning @~english Actions don't retain their target. @~chinese ¶¯×÷²»´æ´¢ËüµÄÄ¿±ê¡£ 
      *
-     * @param action @~english An Action pointer. @~chinese åŠ¨ä½œå¯¹è±¡ 
+     * @param action @~english An Action pointer. @~chinese ¶¯×÷¶ÔÏó 
      */
     virtual Action* runAction(Action* action);
 
     /**
      * @~english Stops and removes all actions from the running action list .
-     * @~chinese åœæ­¢å¹¶ä¸”ä»æ´»åŠ¨åŠ¨ä½œåˆ—è¡¨ä¸­åˆ é™¤æ‰€æœ‰çš„åŠ¨ä½œã€‚
+     * @~chinese Í£Ö¹²¢ÇÒ´Ó»î¶¯¶¯×÷ÁĞ±íÖĞÉ¾³ıËùÓĞµÄ¶¯×÷¡£
      */
     void stopAllActions();
 
     /**
      * @~english Stops and removes an action from the running action list.
-     * @~chinese åœæ­¢å¹¶ä¸”ä»æ´»åŠ¨åŠ¨ä½œåˆ—è¡¨ä¸­åˆ é™¤ä¸€ä¸ªåŠ¨ä½œã€‚
+     * @~chinese Í£Ö¹²¢ÇÒ´Ó»î¶¯¶¯×÷ÁĞ±íÖĞÉ¾³ıÒ»¸ö¶¯×÷¡£
      *
-     * @param action    @~english The action object to be removed. @~chinese éœ€è¦è¢«åˆ é™¤çš„åŠ¨ä½œ 
+     * @param action    @~english The action object to be removed. @~chinese ĞèÒª±»É¾³ıµÄ¶¯×÷ 
      */
     void stopAction(Action* action);
 
     /**
      * @~english Removes an action from the running action list by its tag.
-     * @~chinese é€šè¿‡åŠ¨ä½œçš„æ ‡è®°ä»æ´»åŠ¨åŠ¨ä½œåˆ—è¡¨ä¸­åˆ é™¤ä¸€ä¸ªåŠ¨ä½œã€‚
+     * @~chinese Í¨¹ı¶¯×÷µÄ±ê¼Ç´Ó»î¶¯¶¯×÷ÁĞ±íÖĞÉ¾³ıÒ»¸ö¶¯×÷¡£
      *
-     * @param tag   @~english A tag that indicates the action to be removed. @~chinese åŠ¨ä½œçš„æ ‡è®° 
+     * @param tag   @~english A tag that indicates the action to be removed. @~chinese ¶¯×÷µÄ±ê¼Ç 
      */
     void stopActionByTag(int tag);
     
     /**
      * @~english Removes all actions from the running action list by its tag.
-     * @~chinese é€šè¿‡åŠ¨ä½œçš„æ ‡è®°ä»æ´»åŠ¨åŠ¨ä½œåˆ—è¡¨ä¸­åˆ é™¤åŠ¨ä½œã€‚
+     * @~chinese Í¨¹ı¶¯×÷µÄ±ê¼Ç´Ó»î¶¯¶¯×÷ÁĞ±íÖĞÉ¾³ı¶¯×÷¡£
      *
-     * @param tag   @~english A tag that indicates the action to be removed. @~chinese åŠ¨ä½œçš„æ ‡è®° 
+     * @param tag   @~english A tag that indicates the action to be removed. @~chinese ¶¯×÷µÄ±ê¼Ç 
      */
     void stopAllActionsByTag(int tag);
 
@@ -1558,11 +1568,11 @@ public:
 
     /**
      * @~english Gets an action from the running action list by its tag.
-     * @~chinese é€šè¿‡åŠ¨ä½œçš„æ ‡è®°ä»æ´»åŠ¨åŠ¨ä½œåˆ—è¡¨ä¸­å¾—åˆ°ä¸€ä¸ªåŠ¨ä½œã€‚
+     * @~chinese Í¨¹ı¶¯×÷µÄ±ê¼Ç´Ó»î¶¯¶¯×÷ÁĞ±íÖĞµÃµ½Ò»¸ö¶¯×÷¡£
      *
      * @see `setTag(int)`, `getTag()`.
      *
-     * @return @~english The action object with the given tag. @~chinese åŠ¨ä½œçš„æ ‡è®° 
+     * @return @~english The action object with the given tag. @~chinese ¶¯×÷µÄ±ê¼Ç 
      */
     Action* getActionByTag(int tag);
 
@@ -1572,15 +1582,15 @@ public:
      * Composable actions are counted as 1 action. Example:
      *    If you are running 1 Sequence of 7 actions, it will return 1.
      *    If you are running 7 Sequences of 2 actions, it will return 7.
-     * @~chinese è¿”å›æ´»åŠ¨ç€çš„åŠ¨ä½œåŠ ä¸Šæ­£åœ¨è°ƒåº¦è¿è¡Œçš„åŠ¨ä½œçš„æ€»æ•° (åœ¨actionsToAddçŠ¶æ€çš„åŠ¨ä½œå’ŒåŠ¨ä½œæ•°ç»„ä¸­çš„).
+     * @~chinese ·µ»Ø»î¶¯×ÅµÄ¶¯×÷¼ÓÉÏÕıÔÚµ÷¶ÈÔËĞĞµÄ¶¯×÷µÄ×ÜÊı (ÔÚactionsToAdd×´Ì¬µÄ¶¯×÷ºÍ¶¯×÷Êı×éÖĞµÄ).
      *
-     * ç»„æˆçš„åŠ¨ä½œè¢«è®°ä¸ºä¸€ä¸ªåŠ¨ä½œã€‚ä¾‹å¦‚ï¼š
-     *    å¦‚æœä½ æ­£åœ¨è¿è¡Œ7ä¸ªæ´»åŠ¨ä¸­çš„1Sequence, å®ƒå°†è¿”å› 1.
-     *    å¦‚æœä½ æ­£åœ¨è¿è¡Œ2ä¸ªåŠ¨ä½œä¸­çš„7ä¸ªSequencesm,å®ƒå°†è¿”å› 7.
+     * ×é³ÉµÄ¶¯×÷±»¼ÇÎªÒ»¸ö¶¯×÷¡£ÀıÈç£º
+     *    Èç¹ûÄãÕıÔÚÔËĞĞ7¸ö»î¶¯ÖĞµÄ1Sequence, Ëü½«·µ»Ø 1.
+     *    Èç¹ûÄãÕıÔÚÔËĞĞ2¸ö¶¯×÷ÖĞµÄ7¸öSequencesm,Ëü½«·µ»Ø 7.
      * @todo Rename to getNumberOfRunningActions()
      *
      * @return @~english The number of actions that are running plus the ones that are schedule to run.
-     * @~chinese è¿”å›æ´»åŠ¨ç€çš„åŠ¨ä½œåŠ ä¸Šæ­£åœ¨è°ƒåº¦è¿è¡Œçš„åŠ¨ä½œçš„æ€»æ•°
+     * @~chinese ·µ»Ø»î¶¯×ÅµÄ¶¯×÷¼ÓÉÏÕıÔÚµ÷¶ÈÔËĞĞµÄ¶¯×÷µÄ×ÜÊı
      */
     ssize_t getNumberOfRunningActions() const;
 
@@ -1592,42 +1602,42 @@ public:
 
     /// @{
     /// @name Scheduler and Timer
-    /// @brief @~english @~chinese è°ƒåº¦å™¨å’Œè®¡æ—¶å™¨
+    /// @brief @~english @~chinese µ÷¶ÈÆ÷ºÍ¼ÆÊ±Æ÷
 
     /**
      * @~english Sets a Scheduler object that is used to schedule all "updates" and timers.
-     * @~chinese è®¾ç½®ä¸€ä¸ªè°ƒåº¦å™¨å¯¹è±¡æ¥ç”¨äºè°ƒåº¦æ‰€æœ‰çš„â€œupdateâ€å’Œå®šæ—¶å™¨ã€‚
+     * @~chinese ÉèÖÃÒ»¸öµ÷¶ÈÆ÷¶ÔÏóÀ´ÓÃÓÚµ÷¶ÈËùÓĞµÄ¡°update¡±ºÍ¶¨Ê±Æ÷¡£
      *
      * @warning @~english If you set a new Scheduler, then previously created timers/update are going to be removed.
-     * @~chinese å¦‚æœä½ è®¾ç½®äº†ä¸€ä¸ªæ–°çš„è°ƒåº¦å™¨ï¼Œé‚£ä¹ˆä¹‹å‰åˆ›å»ºçš„timers/updateå°†ä¼šè¢«åˆ é™¤ã€‚ 
-     * @param scheduler     @~english A Shdeduler object that is used to schedule all "update" and timers. @~chinese ä¸€ä¸ªæ¥ç”¨äºè°ƒåº¦æ‰€æœ‰çš„â€œupdateâ€å’Œå®šæ—¶å™¨çš„è°ƒåº¦å™¨å¯¹è±¡ã€‚ 
+     * @~chinese Èç¹ûÄãÉèÖÃÁËÒ»¸öĞÂµÄµ÷¶ÈÆ÷£¬ÄÇÃ´Ö®Ç°´´½¨µÄtimers/update½«»á±»É¾³ı¡£ 
+     * @param scheduler     @~english A Shdeduler object that is used to schedule all "update" and timers. @~chinese Ò»¸öÀ´ÓÃÓÚµ÷¶ÈËùÓĞµÄ¡°update¡±ºÍ¶¨Ê±Æ÷µÄµ÷¶ÈÆ÷¶ÔÏó¡£ 
      */
     virtual void setScheduler(Scheduler* scheduler);
     /**
-     * @~english Gets a Sheduler object. @~chinese å¾—åˆ°è°ƒåº¦å™¨å¯¹è±¡ã€‚ 
+     * @~english Gets a Sheduler object. @~chinese µÃµ½µ÷¶ÈÆ÷¶ÔÏó¡£ 
      *
      * @see setScheduler(Scheduler*)
-     * @return @~english A Scheduler object. @~chinese è°ƒåº¦å™¨å¯¹è±¡ã€‚ 
+     * @return @~english A Scheduler object. @~chinese µ÷¶ÈÆ÷¶ÔÏó¡£ 
      */
     virtual Scheduler* getScheduler() { return _scheduler; }
     virtual const Scheduler* getScheduler() const { return _scheduler; }
 
 
     /**
-     * @~english Checks whether a selector is scheduled. @~chinese æ£€æŸ¥ä¸€ä¸ªé€‰æ‹©å™¨æ˜¯å¦åœ¨è°ƒåº¦ä¸­ã€‚ 
+     * @~english Checks whether a selector is scheduled. @~chinese ¼ì²éÒ»¸öÑ¡ÔñÆ÷ÊÇ·ñÔÚµ÷¶ÈÖĞ¡£ 
      *
-     * @param selector      @~english A function selector @~chinese å‡½æ•°é€‰æ‹©å™¨ 
-     * @return @~english Whether the funcion selector is scheduled. @~chinese å‡½æ•°é€‰æ‹©å™¨æ˜¯å¦åœ¨è°ƒåº¦ä¸­ 
+     * @param selector      @~english A function selector @~chinese º¯ÊıÑ¡ÔñÆ÷ 
+     * @return @~english Whether the funcion selector is scheduled. @~chinese º¯ÊıÑ¡ÔñÆ÷ÊÇ·ñÔÚµ÷¶ÈÖĞ 
      * @js NA
      * @lua NA
      */
     bool isScheduled(SEL_SCHEDULE selector);
 
     /**
-     * @~english Checks whether a lambda function is scheduled. @~chinese æ£€æŸ¥ä¸€ä¸ªlambdaå‡½æ•°æ˜¯å¦åœ¨è°ƒåº¦ä¸­ã€‚ 
+     * @~english Checks whether a lambda function is scheduled. @~chinese ¼ì²éÒ»¸ölambdaº¯ÊıÊÇ·ñÔÚµ÷¶ÈÖĞ¡£ 
      *
-     * @param key      @~english key of the callback @~chinese lambdaå›è°ƒå‡½æ•°çš„key 
-     * @return @~english Whether the lambda function selector is scheduled. @~chinese è¿”å›lambdaå‡½æ•°æ˜¯å¦åœ¨è°ƒåº¦ä¸­ 
+     * @param key      @~english key of the callback @~chinese lambda»Øµ÷º¯ÊıµÄkey 
+     * @return @~english Whether the lambda function selector is scheduled. @~chinese ·µ»Ølambdaº¯ÊıÊÇ·ñÔÚµ÷¶ÈÖĞ 
      * @js NA
      * @lua NA
      */
@@ -1639,11 +1649,11 @@ public:
      * It will use the order number 0. This method will be called every frame.
      * Scheduled methods with a lower order value will be called before the ones that have a higher order value.
      * Only one "update" method could be scheduled per node.
-     * @~chinese è°ƒåº¦"update"æ–¹æ³•ã€‚
+     * @~chinese µ÷¶È"update"·½·¨¡£
      *
-     * å®ƒçš„ä¼˜å…ˆçº§å°†ä¼šæ˜¯0ï¼Œè¿™ä¸ªæ–¹æ³•å°†ä¼šåœ¨æ¯ä¸€å¸§éƒ½è¢«è°ƒç”¨ã€‚
-     * æ‹¥æœ‰è¾ƒå°ä¼˜å…ˆæ•°å€¼çš„è°ƒåº¦æ–¹æ³•å°†ä¼šåœ¨æœ‰æ‹¥ç”¨è¾ƒå¤§ä¼˜å…ˆæ•°å€¼çš„æ–¹æ³•ä¹‹å‰è¢«è°ƒç”¨ã€‚
-     * æ¯ä¸€ä¸ªèŠ‚ç‚¹åªæœ‰ä¸€"update"èƒ½å¤Ÿè¢«è°ƒåº¦(ä½ ä¸èƒ½å¤Ÿæœ‰2ä¸ªâ€œupdateâ€é€‰æ‹©å™¨)ã€‚
+     * ËüµÄÓÅÏÈ¼¶½«»áÊÇ0£¬Õâ¸ö·½·¨½«»áÔÚÃ¿Ò»Ö¡¶¼±»µ÷ÓÃ¡£
+     * ÓµÓĞ½ÏĞ¡ÓÅÏÈÊıÖµµÄµ÷¶È·½·¨½«»áÔÚÓĞÓµÓÃ½Ï´óÓÅÏÈÊıÖµµÄ·½·¨Ö®Ç°±»µ÷ÓÃ¡£
+     * Ã¿Ò»¸ö½ÚµãÖ»ÓĞÒ»"update"ÄÜ¹»±»µ÷¶È(Äã²»ÄÜ¹»ÓĞ2¸ö¡°update¡±Ñ¡ÔñÆ÷)¡£
      * @lua NA
      */
     void scheduleUpdate(void);
@@ -1654,19 +1664,19 @@ public:
      * This selector will be called every frame.
      * Scheduled methods with a lower priority will be called before the ones that have a higher value.
      * Only one "update" selector could be scheduled per node (You can't have 2 'update' selectors).
-     * @~chinese ä½¿ç”¨ä¸€ä¸ªè‡ªå®šä¹‰ä¼˜å…ˆçº§è°ƒåº¦"update"æ–¹æ³•ã€‚
+     * @~chinese Ê¹ÓÃÒ»¸ö×Ô¶¨ÒåÓÅÏÈ¼¶µ÷¶È"update"·½·¨¡£
      *
-     * è¿™ä¸ªé€‰æ‹©å™¨å°†ä¼šåœ¨æ¯ä¸€å¸§è¢«è°ƒç”¨ã€‚
-     * æ‹¥æœ‰è¾ƒå°ä¼˜å…ˆæ•°å€¼çš„è°ƒåº¦æ–¹æ³•å°†ä¼šåœ¨æœ‰æ‹¥ç”¨è¾ƒå¤§ä¼˜å…ˆæ•°å€¼çš„æ–¹æ³•ä¹‹å‰è¢«è°ƒç”¨ã€‚
-     * æ¯ä¸€ä¸ªèŠ‚ç‚¹åªæœ‰ä¸€"update"èƒ½å¤Ÿè¢«è°ƒåº¦(ä½ ä¸èƒ½å¤Ÿæœ‰2ä¸ªâ€œupdateâ€é€‰æ‹©å™¨)ã€‚
+     * Õâ¸öÑ¡ÔñÆ÷½«»áÔÚÃ¿Ò»Ö¡±»µ÷ÓÃ¡£
+     * ÓµÓĞ½ÏĞ¡ÓÅÏÈÊıÖµµÄµ÷¶È·½·¨½«»áÔÚÓĞÓµÓÃ½Ï´óÓÅÏÈÊıÖµµÄ·½·¨Ö®Ç°±»µ÷ÓÃ¡£
+     * Ã¿Ò»¸ö½ÚµãÖ»ÓĞÒ»"update"ÄÜ¹»±»µ÷¶È(Äã²»ÄÜ¹»ÓĞ2¸ö¡°update¡±Ñ¡ÔñÆ÷)¡£
      * @lua NA
      *
-     * @param priority @~english A given priority value. @~chinese ä¼˜å…ˆçº§æ•°å€¼ï¼ˆæ•°å€¼è¶Šå°ä¼˜å…ˆçº§è¶Šé«˜ï¼‰ 
+     * @param priority @~english A given priority value. @~chinese ÓÅÏÈ¼¶ÊıÖµ£¨ÊıÖµÔ½Ğ¡ÓÅÏÈ¼¶Ô½¸ß£© 
      */
     void scheduleUpdateWithPriority(int priority);
 
     /*
-     * @~english Unschedules the "update" method. @~chinese å–æ¶ˆè°ƒåº¦"update"æ–¹æ³•ã€‚ 
+     * @~english Unschedules the "update" method. @~chinese È¡Ïûµ÷¶È"update"·½·¨¡£ 
      * @see scheduleUpdate();
      */
     void unscheduleUpdate(void);
@@ -1675,127 +1685,127 @@ public:
      * @~english Schedules a custom selector.
      *
      * If the selector is already scheduled, then the interval parameter will be updated without scheduling it again.
-     * @~chinese è°ƒåº¦ä¸€ä¸ªè‡ªå®šä¹‰çš„é€‰æ‹©å™¨ã€‚
+     * @~chinese µ÷¶ÈÒ»¸ö×Ô¶¨ÒåµÄÑ¡ÔñÆ÷¡£
      *
-     * å¦‚æœè¿™ä¸ªé€‰æ‹©å™¨å·²ç»è¢«è°ƒåº¦äº†ï¼Œé‚£ä¹ˆå†…éƒ¨çš„å‚æ•°å°†ä¼šè¢«æ›´æ–°è€Œä¸ä¼šå†æ¬¡è°ƒåº¦ã€‚
+     * Èç¹ûÕâ¸öÑ¡ÔñÆ÷ÒÑ¾­±»µ÷¶ÈÁË£¬ÄÇÃ´ÄÚ²¿µÄ²ÎÊı½«»á±»¸üĞÂ¶ø²»»áÔÙ´Îµ÷¶È¡£
      @code
      // firstly, implement a schedule function
      void MyNode::TickMe(float dt);
-     // wrap this function into a selector via schedule_selector marco.
+     // wrap this function into a selector via schedule_selector macro.
      this->schedule(CC_SCHEDULE_SELECTOR(MyNode::TickMe), 0, 0, 0);
      @endcode
      *
-     * @param selector  @~english The SEL_SCHEDULE selector to be scheduled. @~chinese å°†è¢«è°ƒåº¦çš„ SEL_SCHEDULE é€‰æ‹©å™¨ã€‚ 
+     * @param selector  @~english The SEL_SCHEDULE selector to be scheduled. @~chinese ½«±»µ÷¶ÈµÄ SEL_SCHEDULE Ñ¡ÔñÆ÷¡£ 
      * @param interval  @~english Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
-     * @~chinese ä»¥ç§’ä¸ºæ—¶é—´é—´éš”ã€‚0ä»£è¡¨æ—¶é—´é—´éš”ä¸ºæ¯å¸§ã€‚å¦‚æœinterval = 0ï¼Œé‚£å°±æ¨èä½¿ç”¨scheduleUpdate()æ¥ä»£æ›¿ã€‚
+     * @~chinese ÒÔÃëÎªÊ±¼ä¼ä¸ô¡£0´ú±íÊ±¼ä¼ä¸ôÎªÃ¿Ö¡¡£Èç¹ûinterval = 0£¬ÄÇ¾ÍÍÆ¼öÊ¹ÓÃscheduleUpdate()À´´úÌæ¡£
      * @param repeat    @~english The selector will be excuted (repeat + 1) times, you can use CC_REPEAT_FOREVER for tick infinitely.
-     * @~chinese è¿™ä¸ªé€‰æ‹©å™¨å°†ä¼šè¢«æ‰§è¡Œçš„æ¬¡æ•°ï¼ˆrepeat+1ï¼‰,ä½ å¯ä»¥ä½¿ç”¨kRepeatForeveræ¥æ— é™é‡å¤ã€‚
+     * @~chinese Õâ¸öÑ¡ÔñÆ÷½«»á±»Ö´ĞĞµÄ´ÎÊı£¨repeat+1£©,Äã¿ÉÒÔÊ¹ÓÃkRepeatForeverÀ´ÎŞÏŞÖØ¸´¡£
      * @param delay     @~english The amount of time that the first tick will wait before execution.
-     * @~chinese ç¬¬ä¸€æ¬¡è°ƒåº¦å¼€å§‹æ‰§è¡Œå‰çš„ç­‰å¾…æ€»æ—¶é—´ã€‚
+     * @~chinese µÚÒ»´Îµ÷¶È¿ªÊ¼Ö´ĞĞÇ°µÄµÈ´ı×ÜÊ±¼ä¡£
      * @lua NA
      */
     void schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay);
 
     /**
      * @~english Schedules a custom selector with an interval time in seconds.
-     * @~chinese æŒ‡å®šä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„æ—¶é—´é—´éš”å¹¶è°ƒåº¦ä¸€ä¸ªè‡ªå®šä¹‰çš„é€‰æ‹©å™¨ã€‚
+     * @~chinese Ö¸¶¨Ò»¸öÒÔÃëÎªµ¥Î»µÄÊ±¼ä¼ä¸ô²¢µ÷¶ÈÒ»¸ö×Ô¶¨ÒåµÄÑ¡ÔñÆ÷¡£
      * @see `schedule(SEL_SCHEDULE, float, unsigned int, float)`
      *
-     * @param selector      @~english The SEL_SCHEDULE selector to be scheduled. @~chinese å°†ä¼šè¢«è°ƒåº¦çš„SEL_SCHEDULEé€‰æ‹©å™¨ã€‚ 
+     * @param selector      @~english The SEL_SCHEDULE selector to be scheduled. @~chinese ½«»á±»µ÷¶ÈµÄSEL_SCHEDULEÑ¡ÔñÆ÷¡£ 
      * @param interval      @~english Callback interval time in seconds. 0 means tick every frame,
-     * @~chinese ä»¥ç§’ä¸ºå•ä½çš„æ—¶é—´é—´éš”ï¼Œ0ä»£è¡¨ä»¥æ¯å¸§éƒ½æ‰§è¡Œã€‚
+     * @~chinese ÒÔÃëÎªµ¥Î»µÄÊ±¼ä¼ä¸ô£¬0´ú±íÒÔÃ¿Ö¡¶¼Ö´ĞĞ¡£
      * @lua NA
      */
     void schedule(SEL_SCHEDULE selector, float interval);
 
     /**
      * @~english Schedules a selector that runs only once, with a delay of 0 or larger
-     * @~chinese è°ƒåº¦ä¸€ä¸ªåªè¿è¡Œä¸€æ¬¡çš„é€‰æ‹©å™¨ï¼Œä¼´éšç€ä¸€ä¸ª0æˆ–è€…æ›´å¤§çš„å»¶æ—¶ã€‚
+     * @~chinese µ÷¶ÈÒ»¸öÖ»ÔËĞĞÒ»´ÎµÄÑ¡ÔñÆ÷£¬°éËæ×ÅÒ»¸ö0»òÕß¸ü´óµÄÑÓÊ±¡£
      * @see `schedule(SEL_SCHEDULE, float, unsigned int, float)`
      *
-     * @param selector      @~english The SEL_SCHEDULE selector to be scheduled. @~chinese å°†ä¼šè¢«è°ƒåº¦çš„SEL_SCHEDULEé€‰æ‹©å™¨ã€‚ 
+     * @param selector      @~english The SEL_SCHEDULE selector to be scheduled. @~chinese ½«»á±»µ÷¶ÈµÄSEL_SCHEDULEÑ¡ÔñÆ÷¡£ 
      * @param delay         @~english The amount of time that the first tick will wait before execution.
-     * @~chinese ç¬¬ä¸€æ¬¡è°ƒåº¦å¼€å§‹æ‰§è¡Œå‰çš„ç­‰å¾…æ—¶é—´ã€‚
+     * @~chinese µÚÒ»´Îµ÷¶È¿ªÊ¼Ö´ĞĞÇ°µÄµÈ´ıÊ±¼ä¡£
      * @lua NA
      */
     void scheduleOnce(SEL_SCHEDULE selector, float delay);
 
     /**
      * @~english Schedules a lambda function that runs only once, with a delay of 0 or larger
-     * @~chinese è°ƒåº¦ä¸€ä¸ªåªè¿è¡Œä¸€æ¬¡çš„lambdaå›è°ƒå‡½æ•°ï¼Œä¼´éšç€ä¸€ä¸ª0æˆ–è€…æ›´å¤§çš„å»¶æ—¶å’Œä¸€ä¸ªkeyæ¥æ ‡è®°è¿™ä¸ªå›è°ƒã€‚
+     * @~chinese µ÷¶ÈÒ»¸öÖ»ÔËĞĞÒ»´ÎµÄlambda»Øµ÷º¯Êı£¬°éËæ×ÅÒ»¸ö0»òÕß¸ü´óµÄÑÓÊ±ºÍÒ»¸ökeyÀ´±ê¼ÇÕâ¸ö»Øµ÷¡£
      *
-     * @param callback      @~english The lambda function to be scheduled. @~chinese lambdaå›è°ƒå‡½æ•° 
-     * @param delay         @~english The amount of time that the first tick will wait before execution. @~chinese ç¬¬ä¸€æ¬¡è°ƒåº¦å¼€å§‹æ‰§è¡Œå‰çš„ç­‰å¾…æ—¶é—´ã€‚ 
-     * @param key           @~english The key of the lambda function. To be used if you want to unschedule it. @~chinese ç”¨æ¥æ ‡è®°lambdaå‡½æ•°çš„keyï¼Œå¯ä»¥ç”¨æ¥å–æ¶ˆè°ƒåº¦ 
+     * @param callback      @~english The lambda function to be scheduled. @~chinese lambda»Øµ÷º¯Êı 
+     * @param delay         @~english The amount of time that the first tick will wait before execution. @~chinese µÚÒ»´Îµ÷¶È¿ªÊ¼Ö´ĞĞÇ°µÄµÈ´ıÊ±¼ä¡£ 
+     * @param key           @~english The key of the lambda function. To be used if you want to unschedule it. @~chinese ÓÃÀ´±ê¼Çlambdaº¯ÊıµÄkey£¬¿ÉÒÔÓÃÀ´È¡Ïûµ÷¶È 
      * @lua NA
      */
     void scheduleOnce(const std::function<void(float)>& callback, float delay, const std::string &key);
 
     /**
      * @~english Schedules a custom selector, the scheduled selector will be ticked every frame.
-     * @~chinese è°ƒåº¦ä¸€ä¸ªè‡ªå®šä¹‰çš„é€‰æ‹©å™¨ï¼Œè¿™ä¸ªé€‰æ‹©å™¨å°†ä¼šæ¯å¸§è¢«è°ƒç”¨ã€‚
+     * @~chinese µ÷¶ÈÒ»¸ö×Ô¶¨ÒåµÄÑ¡ÔñÆ÷£¬Õâ¸öÑ¡ÔñÆ÷½«»áÃ¿Ö¡±»µ÷ÓÃ¡£
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
-     * @param selector      @~english A function wrapped as a selector @~chinese å°†ä¼šè¢«è°ƒåº¦çš„SEL_SCHEDULEé€‰æ‹©å™¨ 
+     * @param selector      @~english A function wrapped as a selector @~chinese ½«»á±»µ÷¶ÈµÄSEL_SCHEDULEÑ¡ÔñÆ÷ 
      * @lua NA
      */
     void schedule(SEL_SCHEDULE selector);
 
     /**
      * @~english Schedules a lambda function. The scheduled lambda function will be called every frame.
-     * @~chinese è°ƒåº¦ä¸€ä¸ªè‡ªå®šä¹‰çš„lambdaå›è°ƒå‡½æ•°ï¼Œè¿™ä¸ªå›è°ƒå‡½æ•°å°†ä¼šæ¯å¸§è¢«è°ƒç”¨ã€‚
+     * @~chinese µ÷¶ÈÒ»¸ö×Ô¶¨ÒåµÄlambda»Øµ÷º¯Êı£¬Õâ¸ö»Øµ÷º¯Êı½«»áÃ¿Ö¡±»µ÷ÓÃ¡£
      *
-     * @param callback      @~english The lambda function to be scheduled. @~chinese lambdaå›è°ƒå‡½æ•° 
-     * @param key           @~english The key of the lambda function. To be used if you want to unschedule it. @~chinese ç”¨æ¥æ ‡è®°lambdaå‡½æ•°çš„keyï¼Œå¯ä»¥ç”¨æ¥å–æ¶ˆè°ƒåº¦ 
+     * @param callback      @~english The lambda function to be scheduled. @~chinese lambda»Øµ÷º¯Êı 
+     * @param key           @~english The key of the lambda function. To be used if you want to unschedule it. @~chinese ÓÃÀ´±ê¼Çlambdaº¯ÊıµÄkey£¬¿ÉÒÔÓÃÀ´È¡Ïûµ÷¶È 
      * @lua NA
      */
     void schedule(const std::function<void(float)>& callback, const std::string &key);
 
     /**
      * @~english Schedules a lambda function. The scheduled lambda function will be called every "interval" seconds
-     * @~chinese è°ƒåº¦ä¸€ä¸ªlambdaå›è°ƒå‡½æ•°ï¼Œå¹¶æŒ‡å®šè°ƒåº¦çš„æ—¶é—´é—´éš”ï¼ˆä»¥ç§’ä¸ºå•ä½ï¼‰ã€‚
+     * @~chinese µ÷¶ÈÒ»¸ölambda»Øµ÷º¯Êı£¬²¢Ö¸¶¨µ÷¶ÈµÄÊ±¼ä¼ä¸ô£¨ÒÔÃëÎªµ¥Î»£©¡£
      *
-     * @param callback      @~english The lambda function to be scheduled @~chinese lambdaå›è°ƒå‡½æ•° 
-     * @param interval      @~english Callback interval time in seconds. 0 means every frame @~chinese ä»¥ç§’ä¸ºå•ä½çš„æ—¶é—´é—´éš”ï¼Œ0ä»£è¡¨ä»¥æ¯å¸§éƒ½æ‰§è¡Œã€‚ 
-     * @param key           @~english The key of the lambda function. To be used if you want to unschedule it @~chinese ç”¨æ¥æ ‡è®°lambdaå‡½æ•°çš„keyï¼Œå¯ä»¥ç”¨æ¥å–æ¶ˆè°ƒåº¦ 
+     * @param callback      @~english The lambda function to be scheduled @~chinese lambda»Øµ÷º¯Êı 
+     * @param interval      @~english Callback interval time in seconds. 0 means every frame @~chinese ÒÔÃëÎªµ¥Î»µÄÊ±¼ä¼ä¸ô£¬0´ú±íÒÔÃ¿Ö¡¶¼Ö´ĞĞ¡£ 
+     * @param key           @~english The key of the lambda function. To be used if you want to unschedule it @~chinese ÓÃÀ´±ê¼Çlambdaº¯ÊıµÄkey£¬¿ÉÒÔÓÃÀ´È¡Ïûµ÷¶È 
      * @lua NA
      */
     void schedule(const std::function<void(float)>& callback, float interval, const std::string &key);
 
     /**
-     * @~english Schedules a lambda function. @~chinese è°ƒåº¦ä¸€ä¸ªlambdaå›è°ƒå‡½æ•° 
+     * @~english Schedules a lambda function. @~chinese µ÷¶ÈÒ»¸ölambda»Øµ÷º¯Êı 
      *
-     * @param callback  @~english The lambda function to be schedule. @~chinese lambdaå›è°ƒå‡½æ•° 
-     * @param interval  @~english Tick interval in seconds. 0 means tick every frame. @~chinese ä»¥ç§’ä¸ºå•ä½çš„æ—¶é—´é—´éš”ï¼Œ0ä»£è¡¨ä»¥æ¯å¸§éƒ½æ‰§è¡Œã€‚ 
+     * @param callback  @~english The lambda function to be schedule. @~chinese lambda»Øµ÷º¯Êı 
+     * @param interval  @~english Tick interval in seconds. 0 means tick every frame. @~chinese ÒÔÃëÎªµ¥Î»µÄÊ±¼ä¼ä¸ô£¬0´ú±íÒÔÃ¿Ö¡¶¼Ö´ĞĞ¡£ 
      * @param repeat    @~english The selector will be executed (repeat + 1) times, you can use CC_REPEAT_FOREVER for tick infinitely.
-     * @~chinese è¿™ä¸ªé€‰æ‹©å™¨å°†ä¼šè¢«æ‰§è¡Œçš„æ¬¡æ•°ï¼ˆrepeat+1ï¼‰,ä½ å¯ä»¥ä½¿ç”¨kRepeatForeveræ¥æ— é™é‡å¤ã€‚
+     * @~chinese Õâ¸öÑ¡ÔñÆ÷½«»á±»Ö´ĞĞµÄ´ÎÊı£¨repeat+1£©,Äã¿ÉÒÔÊ¹ÓÃkRepeatForeverÀ´ÎŞÏŞÖØ¸´¡£
      * @param delay     @~english The amount of time that the first tick will wait before execution.
-     * @~chinese ç¬¬ä¸€æ¬¡è°ƒåº¦å¼€å§‹æ‰§è¡Œå‰çš„ç­‰å¾…æ—¶é—´ã€‚
-     * @param key       @~english The key of the lambda function. To be used if you want to unschedule it. @~chinese ç”¨æ¥æ ‡è®°lambdaå‡½æ•°çš„keyï¼Œå¯ä»¥ç”¨æ¥å–æ¶ˆè°ƒåº¦ 
+     * @~chinese µÚÒ»´Îµ÷¶È¿ªÊ¼Ö´ĞĞÇ°µÄµÈ´ıÊ±¼ä¡£
+     * @param key       @~english The key of the lambda function. To be used if you want to unschedule it. @~chinese ÓÃÀ´±ê¼Çlambdaº¯ÊıµÄkey£¬¿ÉÒÔÓÃÀ´È¡Ïûµ÷¶È 
      * @lua NA
      */
     void schedule(const std::function<void(float)>& callback, float interval, unsigned int repeat, float delay, const std::string &key);
 
     /**
-     * @~english Unschedules a custom selector. @~chinese å–æ¶ˆè°ƒåº¦ä¸€ä¸ªè‡ªå®šä¹‰çš„é€‰æ‹©å™¨ã€‚ 
+     * @~english Unschedules a custom selector. @~chinese È¡Ïûµ÷¶ÈÒ»¸ö×Ô¶¨ÒåµÄÑ¡ÔñÆ÷¡£ 
      * @see `schedule(SEL_SCHEDULE, float, unsigned int, float)`
      *
-     * @param selector      @~english A function wrapped as a selector. @~chinese SEL_SCHEDULEé€‰æ‹©å™¨ 
+     * @param selector      @~english A function wrapped as a selector. @~chinese SEL_SCHEDULEÑ¡ÔñÆ÷ 
      * @lua NA
      */
     void unschedule(SEL_SCHEDULE selector);
 
     /**
-     * @~english Unschedules a lambda function. @~chinese å–æ¶ˆè°ƒåº¦ä¸€ä¸ªlambdaå›è°ƒå‡½æ•° 
+     * @~english Unschedules a lambda function. @~chinese È¡Ïûµ÷¶ÈÒ»¸ölambda»Øµ÷º¯Êı 
      *
-     * @param key      @~english The key of the lambda function to be unscheduled. @~chinese lambdaå›è°ƒå‡½æ•°å¯¹åº”çš„key 
+     * @param key      @~english The key of the lambda function to be unscheduled. @~chinese lambda»Øµ÷º¯Êı¶ÔÓ¦µÄkey 
      * @lua NA
      */
     void unschedule(const std::string &key);
 
     /**
      * @~english Unschedule all scheduled selectors and lambda functions: custom selectors, and the 'update' selector and lambda functions.
-     * @~chinese å–æ¶ˆè°ƒåº¦æ‰€æœ‰é€‰æ‹©å™¨å’Œå›è°ƒå‡½æ•°ï¼Œä»¥åŠupdateè°ƒåº¦ã€‚ä¸ä¼šå½±å“åŠ¨ä½œã€‚
+     * @~chinese È¡Ïûµ÷¶ÈËùÓĞÑ¡ÔñÆ÷ºÍ»Øµ÷º¯Êı£¬ÒÔ¼°updateµ÷¶È¡£²»»áÓ°Ïì¶¯×÷¡£
      * Actions are not affected by this method.
      * @lua NA
      */
@@ -1806,36 +1816,36 @@ public:
     /**
      * @~english Resumes all scheduled selectors, actions and event listeners.
      * This method is called internally by onEnter.
-     * @~chinese æ¢å¤æ‰€æœ‰çš„è°ƒåº¦è¿‡çš„é€‰æ‹©å™¨ï¼ŒåŠ¨ä½œå’Œäº‹ä»¶ç›‘å¬å™¨ã€‚
-     * è¿™ä¸ªæ–¹æ³•è¢«onEnteræ–¹æ³•åœ¨å†…éƒ¨è°ƒç”¨ã€‚
+     * @~chinese »Ö¸´ËùÓĞµÄµ÷¶È¹ıµÄÑ¡ÔñÆ÷£¬¶¯×÷ºÍÊÂ¼ş¼àÌıÆ÷¡£
+     * Õâ¸ö·½·¨±»onEnter·½·¨ÔÚÄÚ²¿µ÷ÓÃ¡£
      */
     virtual void resume(void);
     /**
      * @~english Pauses all scheduled selectors, actions and event listeners.
      * This method is called internally by onExit.
-     * @~chinese æš‚åœæ‰€æœ‰çš„è°ƒåº¦è¿‡çš„é€‰æ‹©å™¨ï¼ŒåŠ¨ä½œå’Œäº‹ä»¶ç›‘å¬å™¨ã€‚
-     * è¿™ä¸ªæ–¹æ³•è¢«onExitæ–¹æ³•åœ¨å†…éƒ¨è°ƒç”¨ã€‚
+     * @~chinese ÔİÍ£ËùÓĞµÄµ÷¶È¹ıµÄÑ¡ÔñÆ÷£¬¶¯×÷ºÍÊÂ¼ş¼àÌıÆ÷¡£
+     * Õâ¸ö·½·¨±»onExit·½·¨ÔÚÄÚ²¿µ÷ÓÃ¡£
      */
     virtual void pause(void);
 
     /**
      * @~english Resumes all scheduled selectors, actions and event listeners.
      * This method is called internally by onEnter.
-     * @~chinese æ¢å¤æ‰€æœ‰çš„è°ƒåº¦è¿‡çš„é€‰æ‹©å™¨ï¼ŒåŠ¨ä½œå’Œäº‹ä»¶ç›‘å¬å™¨ã€‚
-     * è¿™ä¸ªæ–¹æ³•è¢«onEnteræ–¹æ³•åœ¨å†…éƒ¨è°ƒç”¨ã€‚
+     * @~chinese »Ö¸´ËùÓĞµÄµ÷¶È¹ıµÄÑ¡ÔñÆ÷£¬¶¯×÷ºÍÊÂ¼ş¼àÌıÆ÷¡£
+     * Õâ¸ö·½·¨±»onEnter·½·¨ÔÚÄÚ²¿µ÷ÓÃ¡£
      */
     CC_DEPRECATED_ATTRIBUTE void resumeSchedulerAndActions();
     /**
      * @~english Pauses all scheduled selectors, actions and event listeners.
      * This method is called internally by onExit.
-     * @~chinese æš‚åœæ‰€æœ‰çš„è°ƒåº¦è¿‡çš„é€‰æ‹©å™¨ï¼ŒåŠ¨ä½œå’Œäº‹ä»¶ç›‘å¬å™¨ã€‚
-     * è¿™ä¸ªæ–¹æ³•è¢«onExitæ–¹æ³•åœ¨å†…éƒ¨è°ƒç”¨ã€‚
+     * @~chinese ÔİÍ£ËùÓĞµÄµ÷¶È¹ıµÄÑ¡ÔñÆ÷£¬¶¯×÷ºÍÊÂ¼ş¼àÌıÆ÷¡£
+     * Õâ¸ö·½·¨±»onExit·½·¨ÔÚÄÚ²¿µ÷ÓÃ¡£
      */
     CC_DEPRECATED_ATTRIBUTE void pauseSchedulerAndActions();
 
     /**
      * @~english Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live".
-     * @~chinese å¦‚æœ"scheduleUpdate"è¢«è°ƒç”¨å¹¶ä¸”è¿™ä¸ªèŠ‚ç‚¹æ˜¯æ´»è·ƒçš„è¯ï¼Œupdateæ–¹æ³•å°†ä¼šè¢«æ¯å¸§è‡ªåŠ¨è°ƒç”¨ã€‚
+     * @~chinese Èç¹û"scheduleUpdate"±»µ÷ÓÃ²¢ÇÒÕâ¸ö½ÚµãÊÇ»îÔ¾µÄ»°£¬update·½·¨½«»á±»Ã¿Ö¡×Ô¶¯µ÷ÓÃ¡£
      * @param delta In seconds.
      */
     virtual void update(float delta);
@@ -1844,7 +1854,7 @@ public:
 
     /// @{
     /// @name Transformations
-    /// @brief @~english @~chinese ä»¿å°„å˜æ¢å‡½æ•°
+    /// @brief @~english @~chinese ·ÂÉä±ä»»º¯Êı
 
     /**
      * @~english Calls children's updateTransform() method recursively.
@@ -1852,19 +1862,19 @@ public:
      * This method is moved from Sprite, so it's no longer specific to Sprite.
      * As the result, you apply SpriteBatchNode's optimization on your customed Node.
      * e.g., `batchNode->addChild(myCustomNode)`, while you can only addChild(sprite) before.
-     * @~chinese é€’å½’çš„è°ƒç”¨å­©å­çš„updateTransform()æ–¹æ³•ã€‚
+     * @~chinese µİ¹éµÄµ÷ÓÃº¢×ÓµÄupdateTransform()·½·¨¡£
      *
-     * è¿™ä¸ªæ–¹æ³•æ˜¯ä»Spriteç±»ä¸­è¿ç§»çš„ï¼Œå› æ­¤å®ƒä¸å†åªé€‚ç”¨äºSprite.
-     * å› æ­¤ï¼Œä½ å¯ä»¥åœ¨è‡ªå®šä¹‰èŠ‚ç‚¹ä¸­ä¸ºSpriteBatchNodeè¿›è¡Œä¼˜åŒ–ã€‚
-     * e.g., `batchNode->addChild(myCustomNode)`, ä»¥å‰ä½ åªå¯ä»¥addChild(sprite)
+     * Õâ¸ö·½·¨ÊÇ´ÓSpriteÀàÖĞÇ¨ÒÆµÄ£¬Òò´ËËü²»ÔÙÖ»ÊÊÓÃÓÚSprite.
+     * Òò´Ë£¬Äã¿ÉÒÔÔÚ×Ô¶¨Òå½ÚµãÖĞÎªSpriteBatchNode½øĞĞÓÅ»¯¡£
+     * e.g., `batchNode->addChild(myCustomNode)`, ÒÔÇ°ÄãÖ»¿ÉÒÔaddChild(sprite)
      */
     virtual void updateTransform();
 
     /**
      * @~english Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
-     * @~chinese è¿”å›è¿™ä¸ªå°†èŠ‚ç‚¹ï¼ˆå±€éƒ¨ï¼‰çš„ç©ºé—´åæ ‡ç³»è½¬æ¢æˆçˆ¶èŠ‚ç‚¹çš„ç©ºé—´åæ ‡ç³»çš„çŸ©é˜µã€‚
-     * è¿™ä¸ªçŸ©é˜µä»¥åƒç´ ä¸ºå•ä½ã€‚
+     * @~chinese ·µ»ØÕâ¸ö½«½Úµã£¨¾Ö²¿£©µÄ¿Õ¼ä×ø±êÏµ×ª»»³É¸¸½ÚµãµÄ¿Õ¼ä×ø±êÏµµÄ¾ØÕó¡£
+     * Õâ¸ö¾ØÕóÒÔÏñËØÎªµ¥Î»¡£
      *
      * @return The transformation matrix.
      */
@@ -1874,7 +1884,7 @@ public:
     /**
      * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
-     * Note: If acenstor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldTransform
+     * Note: If ancestor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldTransform
      *
      * @param ancestor The parent's node pointer.
      * @since v3.7
@@ -1883,22 +1893,22 @@ public:
     virtual Mat4 getNodeToParentTransform(Node* ancestor) const;
 
     /**
-     * Returns the affline transform matrix that transform the node's (local) space coordinates into the parent's space coordinates.
+     * Returns the affine transform matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
      *
-     * Note: If acenstor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldAffineTransform
+     * Note: If ancestor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldAffineTransform
      *
      * @param ancestor The parent's node pointer.
      * @since v3.7
-     * @return The affline transformation matrix.
+     * @return The affine transformation matrix.
      */
     virtual AffineTransform getNodeToParentAffineTransform(Node* ancestor) const;
 
     /** 
      * @~english Sets the transformation matrix manually.
-     * @~chinese æ‰‹åŠ¨è®¾ç½®å˜æ¢çŸ©é˜µã€‚
+     * @~chinese ÊÖ¶¯ÉèÖÃ±ä»»¾ØÕó¡£
      *
-     * @param transform @~english A given transformation matrix. @~chinese ä»¿å°„å˜åŒ–çŸ©é˜µ 
+     * @param transform @~english A given transformation matrix. @~chinese ·ÂÉä±ä»¯¾ØÕó 
      */
     virtual void setNodeToParentTransform(const Mat4& transform);
 
@@ -1908,10 +1918,10 @@ public:
     /**
      * @~english Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
      * The matrix is in Pixels.
-     * @~chinese è¿”å›å°†çˆ¶èŠ‚ç‚¹çš„ç©ºé—´åæ ‡ç³»è½¬æ¢æˆèŠ‚ç‚¹ï¼ˆå±€éƒ¨ï¼‰çš„ç©ºé—´åæ ‡ç³»è½¬çš„çŸ©é˜µã€‚
-     * è¿™ä¸ªçŸ©é˜µä»¥åƒç´ ä¸ºå•ä½ã€‚
+     * @~chinese ·µ»Ø½«¸¸½ÚµãµÄ¿Õ¼ä×ø±êÏµ×ª»»³É½Úµã£¨¾Ö²¿£©µÄ¿Õ¼ä×ø±êÏµ×ªµÄ¾ØÕó¡£
+     * Õâ¸ö¾ØÕóÒÔÏñËØÎªµ¥Î»¡£
      *
-     * @return @~english The transformation matrix. @~chinese ä»¿å°„å˜åŒ–çŸ©é˜µ 
+     * @return @~english The transformation matrix. @~chinese ·ÂÉä±ä»¯¾ØÕó 
      */
     virtual const Mat4& getParentToNodeTransform() const;
     virtual AffineTransform getParentToNodeAffineTransform() const;
@@ -1921,9 +1931,9 @@ public:
 
     /**
      * @~english Returns the world affine transform matrix. The matrix is in Pixels.
-     * @~chinese è¿”å›èŠ‚ç‚¹åˆ°ä¸–ç•Œåæ ‡ä»¿å°„å˜æ¢çŸ©é˜µã€‚çŸ©é˜µå•ä½æ˜¯åƒç´ ã€‚
+     * @~chinese ·µ»Ø½Úµãµ½ÊÀ½ç×ø±ê·ÂÉä±ä»»¾ØÕó¡£¾ØÕóµ¥Î»ÊÇÏñËØ¡£
      *
-     * @return @~english transformation matrix, in pixels. @~chinese èŠ‚ç‚¹åˆ°ä¸–ç•Œåæ ‡ä»¿å°„å˜æ¢çŸ©é˜µ 
+     * @return @~english transformation matrix, in pixels. @~chinese ½Úµãµ½ÊÀ½ç×ø±ê·ÂÉä±ä»»¾ØÕó 
      */
     virtual Mat4 getNodeToWorldTransform() const;
     virtual AffineTransform getNodeToWorldAffineTransform() const;
@@ -1933,13 +1943,12 @@ public:
 
     /**
      * @~english Returns the inverse world affine transform matrix. The matrix is in Pixels.
-     * @~chinese è¿”å›é€†èŠ‚ç‚¹åˆ°ä¸–ç•Œä»¿å°„å˜æ¢çŸ©é˜µã€‚çŸ©é˜µå•ä½æ˜¯åƒç´ ã€‚
+     * @~chinese ·µ»ØÄæ½Úµãµ½ÊÀ½ç·ÂÉä±ä»»¾ØÕó¡£¾ØÕóµ¥Î»ÊÇÏñËØ¡£
      *
-     * @return @~english The transformation matrix. @~chinese ä»¿å°„å˜æ¢çŸ©é˜µ 
+     * @return @~english The transformation matrix. @~chinese ·ÂÉä±ä»»¾ØÕó 
      */
     virtual Mat4 getWorldToNodeTransform() const;
     virtual AffineTransform getWorldToNodeAffineTransform() const;
-
 
     /** @deprecated Use getWorldToNodeTransform() instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeAffineTransform(); }
@@ -1949,63 +1958,63 @@ public:
 
     /// @{
     /// @name Coordinate Converters
-    /// @brief @~english @~chinese åæ ‡è½¬æ¢
+    /// @brief @~english @~chinese ×ø±ê×ª»»
 
     /**
      * @~english Converts a Vec2 to node (local) space coordinates. The result is in Points.
-     * @~chinese å°†Vec2 è½¬æ¢æˆèŠ‚ç‚¹ (å±€éƒ¨) ç©ºé—´åæ ‡ç³»ã€‚ç»“æœä»¥Pointsä¸ºå•ä½ã€‚
+     * @~chinese ½«Vec2 ×ª»»³É½Úµã (¾Ö²¿) ¿Õ¼ä×ø±êÏµ¡£½á¹ûÒÔPointsÎªµ¥Î»¡£
      *
-     * @param worldPoint @~english A given coordinate. @~chinese ä¸€ä¸ªä¸–ç•Œåæ ‡ 
-     * @return @~english A point in node (local) space coordinates. @~chinese ç»™å®šåæ ‡åœ¨èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„åæ ‡ 
+     * @param worldPoint @~english A given coordinate. @~chinese Ò»¸öÊÀ½ç×ø±ê 
+     * @return @~english A point in node (local) space coordinates. @~chinese ¸ø¶¨×ø±êÔÚ½Úµã×ø±êÏµÖĞµÄ×ø±ê 
      */
     Vec2 convertToNodeSpace(const Vec2& worldPoint) const;
 
     /**
      * @~english Converts a Vec2 to world space coordinates. The result is in Points.
-     * @~chinese å°†Vec2è½¬æ¢æˆä¸–ç•Œç©ºé—´åæ ‡ç³»ã€‚ç»“æœä»¥Pointsä¸ºå•ä½ã€‚
+     * @~chinese ½«Vec2×ª»»³ÉÊÀ½ç¿Õ¼ä×ø±êÏµ¡£½á¹ûÒÔPointsÎªµ¥Î»¡£
      *
-     * @param nodePoint @~english A given coordinate. @~chinese ä¸€ä¸ªæœ¬åœ°åæ ‡ 
-     * @return @~english A point in world space coordinates. @~chinese ç»™å®šåæ ‡åœ¨ä¸–ç•Œåæ ‡ç³»ä¸­çš„åæ ‡ 
+     * @param nodePoint @~english A given coordinate. @~chinese Ò»¸ö±¾µØ×ø±ê 
+     * @return @~english A point in world space coordinates. @~chinese ¸ø¶¨×ø±êÔÚÊÀ½ç×ø±êÏµÖĞµÄ×ø±ê 
      */
     Vec2 convertToWorldSpace(const Vec2& nodePoint) const;
 
     /**
      * @~english Converts a Vec2 to node (local) space coordinates. The result is in Points.
      * treating the returned/received node point as anchor relative.
-     * @~chinese å°†Vec2è½¬æ¢æˆèŠ‚ç‚¹(å±€éƒ¨)ç©ºé—´åæ ‡ç³». ç»“æœä»¥Pointsä¸ºå•ä½ã€‚
-     * åæ ‡æŒ‰å½“ä½œç›¸å¯¹äºé”šç‚¹æ¥å¤„ç†ã€‚
+     * @~chinese ½«Vec2×ª»»³É½Úµã(¾Ö²¿)¿Õ¼ä×ø±êÏµ. ½á¹ûÒÔPointsÎªµ¥Î»¡£
+     * ×ø±ê°´µ±×÷Ïà¶ÔÓÚÃªµãÀ´´¦Àí¡£
      *
-     * @param worldPoint @~english A given coordinate. @~chinese ä¸€ä¸ªä¸–ç•Œåæ ‡ 
-     * @return @~english A point in node (local) space coordinates, anchor relative. @~chinese ç»™å®šåæ ‡åœ¨èŠ‚ç‚¹åæ ‡ç³»ä¸­çš„åæ ‡ï¼Œä¸é”šç‚¹ç›¸å…³ 
+     * @param worldPoint @~english A given coordinate. @~chinese Ò»¸öÊÀ½ç×ø±ê 
+     * @return @~english A point in node (local) space coordinates, anchor relative. @~chinese ¸ø¶¨×ø±êÔÚ½Úµã×ø±êÏµÖĞµÄ×ø±ê£¬ÓëÃªµãÏà¹Ø 
      */
     Vec2 convertToNodeSpaceAR(const Vec2& worldPoint) const;
 
     /**
      * @~english Converts a local Vec2 to world space coordinates.The result is in Points.
      * treating the returned/received node point as anchor relative.
-     * @~chinese å°†Vec2è½¬æ¢æˆä¸–ç•Œç©ºé—´åæ ‡ç³»ã€‚ç»“æœä»¥Pointsä¸ºå•ä½ã€‚
-     * åæ ‡æŒ‰ç›¸å¯¹äºé”šç‚¹æ¥å¤„ç†ã€‚
+     * @~chinese ½«Vec2×ª»»³ÉÊÀ½ç¿Õ¼ä×ø±êÏµ¡£½á¹ûÒÔPointsÎªµ¥Î»¡£
+     * ×ø±ê°´Ïà¶ÔÓÚÃªµãÀ´´¦Àí¡£
      *
-     * @param nodePoint @~english A given coordinate. @~chinese ä¸€ä¸ªæœ¬åœ°åæ ‡ 
-     * @return @~english A point in world space coordinates, anchor relative. @~chinese ç»™å®šåæ ‡åœ¨ä¸–ç•Œåæ ‡ç³»ä¸­çš„åæ ‡ï¼Œä¸é”šç‚¹ç›¸å…³ 
+     * @param nodePoint @~english A given coordinate. @~chinese Ò»¸ö±¾µØ×ø±ê 
+     * @return @~english A point in world space coordinates, anchor relative. @~chinese ¸ø¶¨×ø±êÔÚÊÀ½ç×ø±êÏµÖĞµÄ×ø±ê£¬ÓëÃªµãÏà¹Ø 
      */
     Vec2 convertToWorldSpaceAR(const Vec2& nodePoint) const;
 
     /**
      * @~english Convenience methods which take a Touch instead of Vec2.
-     * @~chinese å°†è§¦æ‘¸ç‚¹è½¬æ¢æˆæœ¬åœ°åæ ‡ç³»ä¸­ä½ç½®
+     * @~chinese ½«´¥Ãşµã×ª»»³É±¾µØ×ø±êÏµÖĞÎ»ÖÃ
      *
-     * @param touch @~english A given touch. @~chinese è§¦æ‘¸ç‚¹å¯¹è±¡ 
-     * @return @~english A point in node space coordinates. @~chinese æœ¬åœ°åæ ‡ç³»ä¸­ä½ç½® 
+     * @param touch @~english A given touch. @~chinese ´¥Ãşµã¶ÔÏó 
+     * @return @~english A point in node space coordinates. @~chinese ±¾µØ×ø±êÏµÖĞÎ»ÖÃ 
      */
     Vec2 convertTouchToNodeSpace(Touch * touch) const;
 
     /**
      * @~english Converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
-     * @~chinese å°†è§¦ç‚¹ (ä¸–ç•Œåæ ‡ç³») è½¬æ¢æˆæœ¬åœ°åæ ‡ç³»ã€‚åæ ‡æŒ‰ç›¸å¯¹äºé”šç‚¹æ¥å¤„ç†ã€‚
+     * @~chinese ½«´¥µã (ÊÀ½ç×ø±êÏµ) ×ª»»³É±¾µØ×ø±êÏµ¡£×ø±ê°´Ïà¶ÔÓÚÃªµãÀ´´¦Àí¡£
      *
-     * @param touch @~english A given touch. @~chinese è§¦æ‘¸ç‚¹å¯¹è±¡ 
-     * @return @~english A point in world space coordinates, anchor relative. @~chinese æœ¬åœ°åæ ‡ç³»ä¸­ä½ç½®ï¼Œä¸é”šç‚¹ç›¸å…³ 
+     * @param touch @~english A given touch. @~chinese ´¥Ãşµã¶ÔÏó 
+     * @return @~english A point in world space coordinates, anchor relative. @~chinese ±¾µØ×ø±êÏµÖĞÎ»ÖÃ£¬ÓëÃªµãÏà¹Ø 
      */
     Vec2 convertTouchToNodeSpaceAR(Touch * touch) const;
 
@@ -2013,14 +2022,14 @@ public:
      * @~english Sets an additional transform matrix to the node.
      *
      * In order to remove it, call it again with the argument `nullptr`.
-     * @~chinese ä¸ºèŠ‚ç‚¹è®¾ç½®ä¸€ä¸ªé™„åŠ è½¬æ¢çŸ©é˜µã€‚
+     * @~chinese Îª½ÚµãÉèÖÃÒ»¸ö¸½¼Ó×ª»»¾ØÕó¡£
      *
-     * é€šè¿‡ä¼ å…¥å‚æ•°"nullptr"åˆ é™¤å®ƒ.
+     * Í¨¹ı´«Èë²ÎÊı"nullptr"É¾³ıËü.
      *
      * @note @~english The additional transform will be concatenated at the end of getNodeToParentTransform.
      *        It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).
-     * @~chinese è¿™ä¸ªé™„åŠ è½¬æ¢å°†ä¼šè¿æ¥åœ¨getNodeToParentTransformä¹‹åã€‚
-     *        å®ƒå¯ä»¥è¢«ç”¨äºåœ¨ä¸¤ä¸ªèŠ‚ç‚¹ä¹‹é—´æ¨¡æ‹Ÿ`parent-child`çš„å…³ç³»(e.g. å…¶ä¸­ä¸€ä¸ªåœ¨BatchNodeä¸­, å¦ä¸€ä¸ªå´ä¸åœ¨).
+     * @~chinese Õâ¸ö¸½¼Ó×ª»»½«»áÁ¬½ÓÔÚgetNodeToParentTransformÖ®ºó¡£
+     *        Ëü¿ÉÒÔ±»ÓÃÓÚÔÚÁ½¸ö½ÚµãÖ®¼äÄ£Äâ`parent-child`µÄ¹ØÏµ(e.g. ÆäÖĞÒ»¸öÔÚBatchNodeÖĞ, ÁíÒ»¸öÈ´²»ÔÚ).
      *
      * @param additionalTransform An additional transform matrix.
      */
@@ -2031,40 +2040,40 @@ public:
 
     /// @{
     /// @name component functions
-    /// @brief @~english @~chinese ç»„ä»¶ç³»ç»Ÿ
+    /// @brief @~english @~chinese ×é¼şÏµÍ³
     /**
-     * @~english Gets a component by its name. @~chinese é€šè¿‡åå­—å¾—åˆ°ç»„ä»¶ 
+     * @~english Gets a component by its name. @~chinese Í¨¹ıÃû×ÖµÃµ½×é¼ş 
      *
-     * @param name @~english A given name of component. @~chinese ç»„ä»¶çš„åå­— 
-     * @return @~english The Component by name. @~chinese åå­—å¯¹åº”çš„ç»„ä»¶ 
+     * @param name @~english A given name of component. @~chinese ×é¼şµÄÃû×Ö 
+     * @return @~english The Component by name. @~chinese Ãû×Ö¶ÔÓ¦µÄ×é¼ş 
      */
     Component* getComponent(const std::string& name);
 
     /**
-     * @~english Adds a component. @~chinese æ·»åŠ ä¸€ä¸ªç»„ä»¶ 
+     * @~english Adds a component. @~chinese Ìí¼ÓÒ»¸ö×é¼ş 
      *
-     * @param component @~english A given component. @~chinese ä¸€ä¸ªç»„ä»¶ 
-     * @return @~english True if added success. @~chinese å¦‚æœæ·»åŠ æˆåŠŸè¿”å›trueï¼Œå¦åˆ™è¿”å›false 
+     * @param component @~english A given component. @~chinese Ò»¸ö×é¼ş 
+     * @return @~english True if added success. @~chinese Èç¹ûÌí¼Ó³É¹¦·µ»Øtrue£¬·ñÔò·µ»Øfalse 
      */
     virtual bool addComponent(Component *component);
 
     /**
-     * @~english Removes a component by its name. @~chinese é€šè¿‡åå­—åˆ é™¤ä¸€ä¸ªç»„ä»¶ 
+     * @~english Removes a component by its name. @~chinese Í¨¹ıÃû×ÖÉ¾³ıÒ»¸ö×é¼ş 
      *
-     * @param name @~english A given name of component. @~chinese ç»„ä»¶çš„åå­— 
-     * @return @~english True if removed success. @~chinese å¦‚æœåˆ é™¤æˆåŠŸè¿”å›trueï¼Œå¦åˆ™è¿”å›false 
+     * @param name @~english A given name of component. @~chinese ×é¼şµÄÃû×Ö 
+     * @return @~english True if removed success. @~chinese Èç¹ûÉ¾³ı³É¹¦·µ»Øtrue£¬·ñÔò·µ»Øfalse 
      */
     virtual bool removeComponent(const std::string& name);
 
     /** 
-     * @~english Removes a component by its pointer. @~chinese é€šè¿‡æŒ‡é’ˆåˆ é™¤ä¸€ä¸ªç»„ä»¶ 
+     * @~english Removes a component by its pointer. @~chinese Í¨¹ıÖ¸ÕëÉ¾³ıÒ»¸ö×é¼ş 
      *
-     * @param component @~english A given component. @~chinese ç»„ä»¶æŒ‡é’ˆ 
-     * @return @~english True if removed success. @~chinese å¦‚æœåˆ é™¤æˆåŠŸè¿”å›trueï¼Œå¦åˆ™è¿”å›false 
+     * @param component @~english A given component. @~chinese ×é¼şÖ¸Õë 
+     * @return @~english True if removed success. @~chinese Èç¹ûÉ¾³ı³É¹¦·µ»Øtrue£¬·ñÔò·µ»Øfalse 
      */
     virtual bool removeComponent(Component *component);
     /**
-     * @~english Removes all components @~chinese åˆ é™¤æ‰€æœ‰ç»„ä»¶ 
+     * @~english Removes all components @~chinese É¾³ıËùÓĞ×é¼ş 
      */
     virtual void removeAllComponents();
     /// @} end of component functions
@@ -2072,34 +2081,34 @@ public:
 
 #if CC_USE_PHYSICS
     /**
-     * @~english Set the PhysicsBody that let the sprite effect with physics. @~chinese è®¾ç½®PhysicsBodyæ¥è®©ç²¾çµspriteæœ‰ç‰©ç†ä¸–ç•Œæœºèƒ½ã€‚ 
+     * @~english Set the PhysicsBody that let the sprite effect with physics. @~chinese ÉèÖÃPhysicsBodyÀ´ÈÃ¾«ÁéspriteÓĞÎïÀíÊÀ½ç»úÄÜ¡£ 
      * @note @~english This method will set anchor point to Vec2::ANCHOR_MIDDLE if body not null, and you cann't change anchor point if node has a physics body.
-     * @~chinese å¦‚æœbodyéç©ºï¼Œè¿™ä¸ªæ–¹æ³•å°†ä¼šè®¾ç½®é”šç‚¹ä¸ºVec2::ANCHOR_MIDDLE, å¹¶ä¸”å½“æœ‰ç‰©ç†bodyå­˜åœ¨çš„æƒ…å†µä¸‹ä½ ä¸å¯ä»¥æ”¹å˜è¿™ä¸ªé”šç‚¹ã€‚
+     * @~chinese Èç¹ûbody·Ç¿Õ£¬Õâ¸ö·½·¨½«»áÉèÖÃÃªµãÎªVec2::ANCHOR_MIDDLE, ²¢ÇÒµ±ÓĞÎïÀíbody´æÔÚµÄÇé¿öÏÂÄã²»¿ÉÒÔ¸Ä±äÕâ¸öÃªµã¡£
      *
-     * @param body @~english A given physics body. @~chinese é™„åŠ ç»™èŠ‚ç‚¹çš„ç‰©ç†body 
+     * @param body @~english A given physics body. @~chinese ¸½¼Ó¸ø½ÚµãµÄÎïÀíbody 
      */
     void setPhysicsBody(PhysicsBody* body);
 
     /**
-     * @~english Get the PhysicsBody the sprite have. @~chinese å¾—åˆ°ç²¾çµæ‹¥æœ‰çš„ç‰©ç†body 
+     * @~english Get the PhysicsBody the sprite have. @~chinese µÃµ½¾«ÁéÓµÓĞµÄÎïÀíbody 
      *
-     * @return @~english The PhysicsBody the sprite have. @~chinese ç²¾çµçš„ç‰©ç†body 
+     * @return @~english The PhysicsBody the sprite have. @~chinese ¾«ÁéµÄÎïÀíbody 
      */
     PhysicsBody* getPhysicsBody() const { return _physicsBody; }
     
     /**
      * @~english Remove this node from physics world. it will remove all the physics bodies in it's children too.
-     * @~chinese ä»ç‰©ç†ä¸–ç•Œä¸­åˆ é™¤è¿™ä¸ªèŠ‚ç‚¹çš„ç‰©ç†bodyï¼Œå¹¶ä¸”ä¼šåˆ é™¤å®ƒå­èŠ‚ç‚¹ä¸­çš„æ‰€æœ‰ç‰©ç†body
+     * @~chinese ´ÓÎïÀíÊÀ½çÖĞÉ¾³ıÕâ¸ö½ÚµãµÄÎïÀíbody£¬²¢ÇÒ»áÉ¾³ıËü×Ó½ÚµãÖĞµÄËùÓĞÎïÀíbody
      */
     void removeFromPhysicsWorld();
     
     /** 
-     * @~english Update the transform matrix from physics. @~chinese ä»ç‰©ç†ä¸–ç•Œä¸­åŒæ­¥å˜æ¢çŸ©é˜µ 
+     * @~english Update the transform matrix from physics. @~chinese ´ÓÎïÀíÊÀ½çÖĞÍ¬²½±ä»»¾ØÕó 
      */
     void updateTransformFromPhysics(const Mat4& parentTransform, uint32_t parentFlags);
 
     /** 
-     * @~english Update physics body transform matrix. @~chinese å°†èŠ‚ç‚¹çš„å˜åŒ–çŸ©é˜µåŒæ­¥åˆ°ç‰©ç†bodyä¸Š 
+     * @~english Update physics body transform matrix. @~chinese ½«½ÚµãµÄ±ä»¯¾ØÕóÍ¬²½µ½ÎïÀíbodyÉÏ 
      */
     virtual void updatePhysicsBodyTransform(const Mat4& parentTransform, uint32_t parentFlags, float parentScaleX, float parentScaleY);
 #endif
@@ -2260,22 +2269,6 @@ protected:
 #endif
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components
-
-#if CC_USE_PHYSICS
-    PhysicsBody* _physicsBody;        ///< the physicsBody the node have
-    float _physicsScaleStartX;         ///< the scale x value when setPhysicsBody
-    float _physicsScaleStartY;         ///< the scale y value when setPhysicsBody
-    float _physicsRotation;
-    bool _physicsTransformDirty;
-    bool _updateTransformFromPhysics;
-
-    PhysicsWorld* _physicsWorld; /** The PhysicsWorld associated with the node.*/
-    int _physicsBodyAssociatedWith;  /** The count of PhysicsBody associated with the node and children.*/
-    float _physicsRotationOffset;  /** Record the rotation value when invoke Node::setPhysicsBody.*/
-
-    float _offsetX;
-    float _offsetY;
-#endif
     
     // opacity controls
     GLubyte		_displayedOpacity;
@@ -2295,12 +2288,21 @@ protected:
     std::function<void()> _onEnterTransitionDidFinishCallback;
     std::function<void()> _onExitTransitionDidStartCallback;
 
+//Physics:remaining backwardly compatible  
+#if CC_USE_PHYSICS
+    PhysicsBody* _physicsBody;
+public:
+    void setPhysicsBody(Component* physicsBody) 
+    { 
+        addComponent(physicsBody);
+    }
+    PhysicsBody* getPhysicsBody() const { return _physicsBody; }
+
+    friend class PhysicsBody;
+#endif
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
-    
-#if CC_USE_PHYSICS
-    friend class Scene;
-#endif //CC_USTPS
 };
 
 
@@ -2310,14 +2312,14 @@ private:
  * The content rectangle defined by origin(0,0) and content size.
  * This function convert GL screen point to near and far planes as points Pn and Pf,
  * then calculate the intersect point P which the line PnPf intersect with content rectangle.
- * If P in content rectangle means this node be hitted.
+ * If P in content rectangle means this node be hit.
  *
  * @param pt        The point in GL screen space.
  * @param camera    Which camera used to unproject pt to near/far planes.
  * @param w2l       World to local transform matrix, used to convert Pn and Pf to rectangle space.
- * @param rect      The test recangle in local space.
+ * @param rect      The test rectangle in local space.
  * @parma p         Point to a Vec3 for store the intersect point, if don't need them set to nullptr.
- * @return true if the point is in content rectangle, flase otherwise.
+ * @return true if the point is in content rectangle, false otherwise.
  */
 bool CC_DLL isScreenPointInRect(const Vec2 &pt, const Camera* camera, const Mat4& w2l, const Rect& rect, Vec3 *p);
 

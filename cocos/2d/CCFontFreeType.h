@@ -53,7 +53,7 @@ class CC_DLL FontFreeType : public Font
 public:
     static const int DistanceMapSpread;
 
-    static FontFreeType* create(const std::string &fontName, int fontSize, GlyphCollection glyphs, 
+    static FontFreeType* create(const std::string &fontName, float fontSize, GlyphCollection glyphs,
         const char *customGlyphs,bool distanceFieldEnabled = false,int outline = 0);
 
     static void shutdownFreeType();
@@ -83,7 +83,7 @@ private:
     FontFreeType(bool distanceFieldEnabled = false, int outline = 0);
     virtual ~FontFreeType();
 
-    bool createFontObject(const std::string &fontName, int fontSize);
+    bool createFontObject(const std::string &fontName, float fontSize);
 
     bool initFreeType();
     FT_Library getFTLibrary();

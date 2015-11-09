@@ -1,4 +1,4 @@
-ï»¿/****************************************************************************
+/****************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -41,7 +41,7 @@ class TextureCube;
 
 /** @class Skybox
     @brief @~english Sky box technology usually used to simulate infinity sky, mountains and other phenomena.
-    @~chinese å¤©ç©ºç›’æŠ€æœ¯é€šå¸¸ç”¨äºæ¨¡æ‹Ÿæ— é™çš„å¤©ç©ºï¼Œå±±è„‰å’Œå…¶ä»–ç°è±¡ã€‚
+    @~chinese Ìì¿ÕºĞ¼¼ÊõÍ¨³£ÓÃÓÚÄ£ÄâÎŞÏŞµÄÌì¿Õ£¬É½ÂöºÍÆäËûÏÖÏó¡£
 */
 class CC_DLL Skybox : public Node
 {
@@ -49,53 +49,53 @@ public:
     CREATE_FUNC(Skybox);
 
     /** @~english create skybox from 6 textures.
-        @~chinese ä½¿ç”¨6ä¸ªçº¹ç†åˆ›å»ºå¤©ç©ºç›’ã€‚
-        @param positive_x @~english  texture for the right side of the texture cube face. @~chinese ç«‹æ–¹ä½“çš„å³ä¾§çº¹ç†ã€‚
-        @param negative_x @~english  texture for the left side of the texture cube face. @~chinese ç«‹æ–¹ä½“çš„å·¦ä¾§çº¹ç†ã€‚
-        @param positive_y @~english  texture for the top side of the texture cube face @~chinese ç«‹æ–¹ä½“çš„ä¸Šä¾§çº¹ç†ã€‚
-        @param negative_y @~english  texture for the bottom side of the texture cube face @~chinese ç«‹æ–¹ä½“çš„ä¸‹ä¾§çº¹ç†ã€‚
-        @param positive_z @~english  texture for the forward side of the texture cube face. @~chinese ç«‹æ–¹ä½“çš„å‰ä¾§çº¹ç†ã€‚
-        @param negative_z @~english  texture for the rear side of the texture cube face. @~chinese ç«‹æ–¹ä½“çš„åä¾§çº¹ç†ã€‚
-        @return @~english  A new skybox inited with given parameters. @~chinese è¿”å›ä¸€ä¸ªæ–°çš„Skyboxã€‚
+        @~chinese Ê¹ÓÃ6¸öÎÆÀí´´½¨Ìì¿ÕºĞ¡£
+        @param positive_x @~english  texture for the right side of the texture cube face. @~chinese Á¢·½ÌåµÄÓÒ²àÎÆÀí¡£
+        @param negative_x @~english  texture for the left side of the texture cube face. @~chinese Á¢·½ÌåµÄ×ó²àÎÆÀí¡£
+        @param positive_y @~english  texture for the top side of the texture cube face @~chinese Á¢·½ÌåµÄÉÏ²àÎÆÀí¡£
+        @param negative_y @~english  texture for the bottom side of the texture cube face @~chinese Á¢·½ÌåµÄÏÂ²àÎÆÀí¡£
+        @param positive_z @~english  texture for the forward side of the texture cube face. @~chinese Á¢·½ÌåµÄÇ°²àÎÆÀí¡£
+        @param negative_z @~english  texture for the rear side of the texture cube face. @~chinese Á¢·½ÌåµÄºó²àÎÆÀí¡£
+        @return @~english  A new skybox inited with given parameters. @~chinese ·µ»ØÒ»¸öĞÂµÄSkybox¡£
     */
     static Skybox* create(const std::string& positive_x, const std::string& negative_x,
                           const std::string& positive_y, const std::string& negative_y,
                           const std::string& positive_z, const std::string& negative_z);
 
     /** @~english texture getter and setter
-        @~chinese çº¹ç†çš„getterå’Œsetter
-        @param textureCube @~english  cube texture @~chinese çº¹ç†è´´å›¾
+        @~chinese ÎÆÀíµÄgetterºÍsetter
+        @param textureCube @~english  cube texture @~chinese ÎÆÀíÌùÍ¼
     */
     void setTexture(TextureCube* textureCube);
 
     /** @~english draw Skybox object
-        @~chinese ç»˜åˆ¶å¤©ç©ºä½“å¯¹è±¡
+        @~chinese »æÖÆÌì¿ÕÌå¶ÔÏó
     */
     virtual void draw(Renderer* renderer, const Mat4& transform, uint32_t flags) override;
 
     /** @~english reload sky box after GLESContext reconstructed.
-        @~chinese glescontexté‡è£…åé‡å»ºå¤©ç©ºç›’ã€‚
+        @~chinese glescontextÖØ×°ºóÖØ½¨Ìì¿ÕºĞ¡£
     */
     void reload();
 
 CC_CONSTRUCTOR_ACCESS:
     /** @~english Constructor.
-        @~chinese æ„é€ å‡½æ•°ã€‚
+        @~chinese ¹¹Ôìº¯Êı¡£
     */
     Skybox();
 
     /** @~english Destructor.
-        @~chinese ææ„å‡½æ•°ã€‚
+        @~chinese Îö¹¹º¯Êı¡£
     */
     virtual ~Skybox();
 
     /** @~english init Skybox.
-        @~chinese åˆå§‹åŒ–Skyboxã€‚
+        @~chinese ³õÊ¼»¯Skybox¡£
     */
     virtual bool init() override;
     
     /** @~english initialize with texture path
-        @~chinese çº¹ç†è·¯å¾„åˆå§‹åŒ–
+        @~chinese ÎÆÀíÂ·¾¶³õÊ¼»¯
     */
     bool init(const std::string& positive_x, const std::string& negative_x,
               const std::string& positive_y, const std::string& negative_y,

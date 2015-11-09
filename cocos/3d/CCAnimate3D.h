@@ -1,4 +1,4 @@
-ï»¿/****************************************************************************
+/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -46,25 +46,25 @@ class EventCustom;
 /**
  * @enum Animate3DQuality
  * @brief @~english This enum control the animation's quality.
- * @~chinese è¯¥æšä¸¾ç”¨äºæ§åˆ¶åŠ¨ç”»çš„è´¨é‡
+ * @~chinese ¸ÃÃ¶¾ÙÓÃÓÚ¿ØÖÆ¶¯»­µÄÖÊÁ¿
  */
 enum class Animate3DQuality
 {
     /**
      * @~english It'll be ignore the curve-evaluating(the animation looks like stop), just acculate transition time.
-     * @~chinese å¿½ç•¥åŠ¨ç”»æ’­æ”¾æ—¶çš„æ›²çº¿æ±‚è§£ï¼ˆæ’å€¼ï¼‰ï¼ŒåŠ¨ç”»ä¼šæœ‰å¡é¡¿ï¼Œä»…èƒ½åŠ é€ŸåŠ¨ç”»è¿‡æ¸¡æ—¶é—´
+     * @~chinese ºöÂÔ¶¯»­²¥·ÅÊ±µÄÇúÏßÇó½â£¨²åÖµ£©£¬¶¯»­»áÓĞ¿¨¶Ù£¬½öÄÜ¼ÓËÙ¶¯»­¹ı¶ÉÊ±¼ä
      **/
     QUALITY_NONE = 0, 
 
     /**
     * @~english Low animation quality, it'll be more efficient.
-    * @~chinese ä½åŠ¨ç”»è´¨é‡ï¼Œè¾ƒé«˜åŠ¨ç”»è´¨é‡è€Œè¨€ï¼Œæ•ˆç‡æ›´é«˜
+    * @~chinese µÍ¶¯»­ÖÊÁ¿£¬½Ï¸ß¶¯»­ÖÊÁ¿¶øÑÔ£¬Ğ§ÂÊ¸ü¸ß
     **/
     QUALITY_LOW, 
 
     /**
     * @~english High animation quality, which also means more cpu time occupy.
-    * @~chinese é«˜åŠ¨ç”»è´¨é‡ï¼Œæ•ˆæœæœ€å¥½ï¼ŒåŒæ—¶ä¹Ÿæ„å‘³ç€æ›´å¤šçš„CPUæ—¶é—´å ç”¨
+    * @~chinese ¸ß¶¯»­ÖÊÁ¿£¬Ğ§¹û×îºÃ£¬Í¬Ê±Ò²ÒâÎ¶×Å¸ü¶àµÄCPUÊ±¼äÕ¼ÓÃ
     **/
     QUALITY_HIGH,              
 };
@@ -74,7 +74,7 @@ enum class Animate3DQuality
 /**
  * @class Animate3D
  * @brief @~english Animate3D, Animates a Sprite3D given with an Animation3D
- * @~chinese Animate3D é€šè¿‡æŒ‡å®šçš„Animation3Dåˆ›å»ºçš„åŠ¨ä½œï¼Œç”¨ä»¥ç»™Sprite3Dæ’­æ”¾åŠ¨ç”»
+ * @~chinese Animate3D Í¨¹ıÖ¸¶¨µÄAnimation3D´´½¨µÄ¶¯×÷£¬ÓÃÒÔ¸øSprite3D²¥·Å¶¯»­
  */
 class CC_DLL Animate3D: public ActionInterval
 {
@@ -82,41 +82,41 @@ public:
     
     /**
      * @~english Create Animate3D using Animation.
-     * @~chinese ä½¿ç”¨Animation3Dæ¥åˆ›å»ºAnimate3Då¯¹è±¡
+     * @~chinese Ê¹ÓÃAnimation3DÀ´´´½¨Animate3D¶ÔÏó
      * @param animation @~english The specified Animation3D object.
-     * @~chinese æŒ‡å®šçš„Animation3Då¯¹è±¡
+     * @~chinese Ö¸¶¨µÄAnimation3D¶ÔÏó
      * @return @~english The Animate3D object.
-     * @~chinese è¢«åˆ›å»ºçš„Animate3Då¯¹è±¡
+     * @~chinese ±»´´½¨µÄAnimate3D¶ÔÏó
      */
     static Animate3D* create(Animation3D* animation);
     
     /**
      * @~english create Animate3D
-     * @~chinese é€šè¿‡Animation3Då¯¹è±¡ï¼Œå¼€å§‹æ—¶é—´ï¼Œä»¥åŠæŒç»­æ—¶é—´æ¥æ„é€ Animate3D
+     * @~chinese Í¨¹ıAnimation3D¶ÔÏó£¬¿ªÊ¼Ê±¼ä£¬ÒÔ¼°³ÖĞøÊ±¼äÀ´¹¹ÔìAnimate3D
      * @param animation @~english Animation used to generate animate3D
-     * @~chinese æŒ‡å®šçš„Animation3Då¯¹è±¡
+     * @~chinese Ö¸¶¨µÄAnimation3D¶ÔÏó
      * @param fromTime @~english FormTime. 
-     * @~chinese å¼€å§‹æ—¶é—´
+     * @~chinese ¿ªÊ¼Ê±¼ä
      * @param duration @~english Duration Time the Animate3D lasts.
-     * @~chinese åŠ¨ç”»æ’­æ”¾çš„æŒç»­æ—¶é—´
+     * @~chinese ¶¯»­²¥·ÅµÄ³ÖĞøÊ±¼ä
      * @return @~english The Animate3D object.
-     * @~chinese è¢«åˆ›å»ºçš„Animate3Då¯¹è±¡
+     * @~chinese ±»´´½¨µÄAnimate3D¶ÔÏó
      */
     static Animate3D* create(Animation3D* animation, float fromTime, float duration);
     
     /**
      * @~english Create Animate3D by frame section, [startFrame, endFrame)
-     * @~chinese é€šè¿‡Animation3Dï¼Œèµ·å§‹å¸§ï¼Œç»“æŸå¸§ï¼Œä»¥åŠå¸§ç‡æ¥åˆ›å»ºAnimate3Då¯¹è±¡
+     * @~chinese Í¨¹ıAnimation3D£¬ÆğÊ¼Ö¡£¬½áÊøÖ¡£¬ÒÔ¼°Ö¡ÂÊÀ´´´½¨Animate3D¶ÔÏó
      * @param animation @~english Animation used to generate animate3D
-     * @~chinese Animation3Då¯¹è±¡
+     * @~chinese Animation3D¶ÔÏó
      * @param startFrame @~english The start frame.
-     * @~chinese èµ·å§‹å¸§
+     * @~chinese ÆğÊ¼Ö¡
      * @param endFrame @~english The end frame
-     * @~chinese ç»“æŸå¸§
+     * @~chinese ½áÊøÖ¡
      * @param frameRate @~english The frameRate, default is 30 per second
-     * @~chinese å¸§ç‡ï¼Œé»˜è®¤æ˜¯ä¸‰åå¸§æ¯ç§’
+     * @~chinese Ö¡ÂÊ£¬Ä¬ÈÏÊÇÈıÊ®Ö¡Ã¿Ãë
      * @return @~english Animate3D created using animate
-     * @~chinese è¢«åˆ›å»ºçš„Animate3Då¯¹è±¡
+     * @~chinese ±»´´½¨µÄAnimate3D¶ÔÏó
      */
     static Animate3D* createWithFrames(Animation3D* animation, int startFrame, int endFrame, float frameRate = 30.f);
     
@@ -133,23 +133,23 @@ public:
     
     /**
      * @~english Get speed, negative speed means playing reverse 
-     * @~chinese è·å–æ’­æ”¾é€Ÿåº¦ï¼Œè´Ÿæ•°çš„é€Ÿåº¦æ„å‘³ç€åŠ¨ç”»æ­£åœ¨å€’æ”¾
+     * @~chinese »ñÈ¡²¥·ÅËÙ¶È£¬¸ºÊıµÄËÙ¶ÈÒâÎ¶×Å¶¯»­ÕıÔÚµ¹·Å
      * @return @~english The speed
-     * @~chinese é€Ÿåº¦
+     * @~chinese ËÙ¶È
      */
     float getSpeed() const;
 
     /**
     * @~english Set speed, negative speed means playing reverse
-    * @~chinese è®¾ç½®æ’­æ”¾é€Ÿåº¦ï¼Œè´Ÿæ•°çš„é€Ÿåº¦æ„å‘³ç€åŠ¨ç”»å°†ä¼šå€’æ”¾
+    * @~chinese ÉèÖÃ²¥·ÅËÙ¶È£¬¸ºÊıµÄËÙ¶ÈÒâÎ¶×Å¶¯»­½«»áµ¹·Å
     * @param speed @~english the speed
-    * @~chinese é€Ÿåº¦
+    * @~chinese ËÙ¶È
     */
     void setSpeed(float speed);
     
     /**
      * Get the blend weight
-     * @~chinese è·å–åŠ¨ç”»æ··åˆæƒé‡
+     * @~chinese »ñÈ¡¶¯»­»ìºÏÈ¨ÖØ
      * @return the blend weight
      * @~chinese 
      */
@@ -159,42 +159,42 @@ public:
      * @~english Set the blend weight. It is internally used currently. For example, Sprite3D is playing an Animate3D,
      * and then another Animate3D is going to be played. This function will be used to make the transition from on 
      * Animate3D to another smoothly. 
-     * @~chinese è®¾ç½®åŠ¨ç”»æ··åˆæƒé‡ï¼Œè¯¥å‡½æ•°ç›®å‰ä»…åœ¨å†…éƒ¨ä½¿ç”¨ï¼Œä¸¾ä¾‹æ¥è¯´ï¼Œå½“ä¸€ä¸ªSprite3Då¯¹è±¡å¤„åœ¨æ’­æ”¾ä¸€ä¸ªåŠ¨ç”»åŒæ—¶å¦ä¸€ä¸ªåŠ¨ç”»å³å°†è¦è¢«æ’­æ”¾çš„æƒ…å½¢ä¸‹ï¼Œ
-     * è¯¥å‡½æ•°å°†è¢«ç”¨æ¥è°ƒæ•´ä»ä¸€ä¸ªåŠ¨ç”»åˆ°å¦ä¸€ä¸ªåŠ¨ç”»ä¹‹é—´çš„è¿‡æ¸¡.
+     * @~chinese ÉèÖÃ¶¯»­»ìºÏÈ¨ÖØ£¬¸Ãº¯ÊıÄ¿Ç°½öÔÚÄÚ²¿Ê¹ÓÃ£¬¾ÙÀıÀ´Ëµ£¬µ±Ò»¸öSprite3D¶ÔÏó´¦ÔÚ²¥·ÅÒ»¸ö¶¯»­Í¬Ê±ÁíÒ»¸ö¶¯»­¼´½«Òª±»²¥·ÅµÄÇéĞÎÏÂ£¬
+     * ¸Ãº¯Êı½«±»ÓÃÀ´µ÷Õû´ÓÒ»¸ö¶¯»­µ½ÁíÒ»¸ö¶¯»­Ö®¼äµÄ¹ı¶É.
      * @param weight @~english The blend weight, the blend weight must be positive
-     * @~chinese æƒé‡ï¼Œæƒå€¼å¿…é¡»ä¸ºæ­£
+     * @~chinese È¨ÖØ£¬È¨Öµ±ØĞëÎªÕı
      */
     void setWeight(float weight);
     
     /**
      * @~english Set origin interval.
-     * @~chinese è®¾ç½®åˆå§‹æ’­æ”¾é—´éš”
+     * @~chinese ÉèÖÃ³õÊ¼²¥·Å¼ä¸ô
      * @param interval @~english The new interval
-     * @~chinese æ–°çš„æ’­æ”¾é—´éš”
+     * @~chinese ĞÂµÄ²¥·Å¼ä¸ô
      */
     void setOriginInterval(float interval);
 
     /**
     * @~english Get origin interval
-    * @~chinese è·å–åˆå§‹æ’­æ”¾é—´éš”
+    * @~chinese »ñÈ¡³õÊ¼²¥·Å¼ä¸ô
     * @return @~english Get the origin interval.
-    * @~chinese æ’­æ”¾é—´éš”
+    * @~chinese ²¥·Å¼ä¸ô
     */
     float getOriginInterval() const {return _originInterval; }
     
     /**
      * @~english Get animate transition time between 3d animations
-     * @~chinese è·å–åŠ¨ç”»ä¹‹é—´çš„è¿‡æ¸¡æ—¶é—´
+     * @~chinese »ñÈ¡¶¯»­Ö®¼äµÄ¹ı¶ÉÊ±¼ä
      * @return @~english The tarnsition time.
-     * @~chinese è¿‡æ¸¡æ—¶é—´
+     * @~chinese ¹ı¶ÉÊ±¼ä
      */
     static float getTransitionTime() { return _transTime; }
     
     /**
      * @~english Set animate transition time between 3d animations
-     * @~chinese è®¾ç½®åŠ¨ç”»ä¹‹é—´çš„è¿‡æ¸¡æ—¶é—´
+     * @~chinese ÉèÖÃ¶¯»­Ö®¼äµÄ¹ı¶ÉÊ±¼ä
      * @param transTime @~english The transition time
-     * @~chinese æ–°è¿‡æ¸¡æ—¶é—´
+     * @~chinese ĞÂ¹ı¶ÉÊ±¼ä
      */
     static void setTransitionTime(float transTime) { if (transTime >= 0.f) _transTime = transTime; }
     
@@ -204,17 +204,17 @@ public:
     
     /**
      * @~english Set the animate quality, see also Animate3DQuality
-     * @~chinese è®¾ç½®åŠ¨ç”»è´¨é‡ï¼Œå…³äºåŠ¨ç”»è´¨é‡çš„è¯¦æƒ…è¯·è§Animate3DQualityæšä¸¾
+     * @~chinese ÉèÖÃ¶¯»­ÖÊÁ¿£¬¹ØÓÚ¶¯»­ÖÊÁ¿µÄÏêÇéÇë¼ûAnimate3DQualityÃ¶¾Ù
      * @param quality @~english The animate quality
-     * @~chinese åŠ¨ç”»è´¨é‡çš„æšä¸¾
+     * @~chinese ¶¯»­ÖÊÁ¿µÄÃ¶¾Ù
      * */
     void setQuality(Animate3DQuality quality);
     
     /**
      * @~english Get animate quality, see also Animate3DQuality
-     * @~chinese è·å–å½“å‰åŠ¨ç”»çš„åŠ¨ç”»è´¨é‡ï¼Œå…‰å®‡åŠ¨ç”»è´¨é‡çš„è¯¦æƒ…è¯·è§Animate3DQualityæšä¸¾
+     * @~chinese »ñÈ¡µ±Ç°¶¯»­µÄ¶¯»­ÖÊÁ¿£¬¹âÓî¶¯»­ÖÊÁ¿µÄÏêÇéÇë¼ûAnimate3DQualityÃ¶¾Ù
      * @return @~english The animate quality
-     * @~chinese åŠ¨ç”»è´¨é‡çš„æšä¸¾
+     * @~chinese ¶¯»­ÖÊÁ¿µÄÃ¶¾Ù
      **/
     Animate3DQuality getQuality() const;
 
@@ -238,47 +238,47 @@ CC_CONSTRUCTOR_ACCESS:
     
     /**
     * @~english Remove this action from map
-    * @~chinese ä»mapä¸­åˆ é™¤å½“å‰action
+    * @~chinese ´ÓmapÖĞÉ¾³ıµ±Ç°action
     */
     void removeFromMap();
     
     /** 
      * @~english Init method, init from the specified animation.
-     * @~chinese é€šè¿‡æŒ‡å®šçš„Animation3Då¯¹è±¡åˆå§‹åŒ–
+     * @~chinese Í¨¹ıÖ¸¶¨µÄAnimation3D¶ÔÏó³õÊ¼»¯
      * @param animation @~english The specified animation.
-     * @~chinese æŒ‡å®šçš„Animation3Då¯¹è±¡
+     * @~chinese Ö¸¶¨µÄAnimation3D¶ÔÏó
      * @return @~english Return true if success, otherwise return false.
-     * @~chinese å½“åˆå§‹åŒ–æˆåŠŸæ—¶è¿”å›true,åä¹‹è¿”å›false
+     * @~chinese µ±³õÊ¼»¯³É¹¦Ê±·µ»Øtrue,·´Ö®·µ»Øfalse
      */
     bool init(Animation3D* animation);
 
     /** 
      * @~english Init method, init from the start time and duration.
-     * @~chinese åˆå§‹åŒ–å‡½æ•°ï¼Œé€šè¿‡å¼€å§‹æ—¶é—´ä»¥åŠæŒç»­æ—¶é—´åˆå§‹åŒ–
+     * @~chinese ³õÊ¼»¯º¯Êı£¬Í¨¹ı¿ªÊ¼Ê±¼äÒÔ¼°³ÖĞøÊ±¼ä³õÊ¼»¯
      * @param animation @~english The specified animation.
-     * @~chinese æŒ‡å®šçš„Animation3Då¯¹è±¡
+     * @~chinese Ö¸¶¨µÄAnimation3D¶ÔÏó
      * @param fromTime @~english The start time.
-     * @~chinese å¼€å§‹æ—¶é—´
+     * @~chinese ¿ªÊ¼Ê±¼ä
      * @param duration @~english The animate's duration
-     * @~chinese åŠ¨ç”»æŒç»­æ—¶é—´
+     * @~chinese ¶¯»­³ÖĞøÊ±¼ä
      * @return @~english Return true if success, otherwise return false.
-     * @~chinese å½“åˆå§‹åŒ–æˆåŠŸæ—¶è¿”å›true,åä¹‹è¿”å›false
+     * @~chinese µ±³õÊ¼»¯³É¹¦Ê±·µ»Øtrue,·´Ö®·µ»Øfalse
      */
     bool init(Animation3D* animation, float fromTime, float duration);
 
     /**
     * @~english Init with frames
-    * @~chinese é€šè¿‡èµ·å§‹å¸§ï¼Œç»“æŸå¸§ï¼Œå¸§ç‡æ¥åˆ›å»ºåŠ¨ç”»
+    * @~chinese Í¨¹ıÆğÊ¼Ö¡£¬½áÊøÖ¡£¬Ö¡ÂÊÀ´´´½¨¶¯»­
     * @param animation @~english The specified animation
-    * @~chinese æŒ‡å®šçš„Animation3Då¯¹è±¡
+    * @~chinese Ö¸¶¨µÄAnimation3D¶ÔÏó
     * @param startFrame @~english The start frame
-    * @~chinese èµ·å§‹å¸§
+    * @~chinese ÆğÊ¼Ö¡
     * @param endFrame @~english The end frame
-    * @~chinese ç»“æŸå¸§
+    * @~chinese ½áÊøÖ¡
     * @param frameRate @~english The frame rate
-    * @~chinese å¸§ç‡
+    * @~chinese Ö¡ÂÊ
     * @return @~english Return true if success, otherwise return false.
-    * @~chinese å½“åˆå§‹åŒ–æˆåŠŸæ—¶è¿”å›true,åä¹‹è¿”å›false
+    * @~chinese µ±³õÊ¼»¯³É¹¦Ê±·µ»Øtrue,·´Ö®·µ»Øfalse
     */
     bool initWithFrames(Animation3D* animation, int startFrame, int endFrame, float frameRate);
     
@@ -299,7 +299,7 @@ protected:
     float      _last; //last time 0 - 1, used to generate sub Animate3D
     bool       _playReverse; // is playing reverse
     static float      _transTime; //transition time from one animate3d to another
-    float      _accTransTime; // acculate transition time
+    float      _accTransTime; // accumulate transition time
     float      _lastTime;     // last t (0 - 1)
     float      _originInterval;// save origin interval time
     float      _frameRate;

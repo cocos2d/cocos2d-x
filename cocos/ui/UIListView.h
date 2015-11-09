@@ -41,7 +41,7 @@ namespace ui{
  * @~english
  * ListView click item event type.
  * @~chinese 
- * ListViewç‚¹å‡»äº‹ä»¶ç±»å‹ã€‚
+ * ListViewµã»÷ÊÂ¼şÀàĞÍ¡£
  */
 typedef enum
 {
@@ -53,9 +53,9 @@ typedef enum
  * @~english
  * A callback which would be called when a ListView item is clicked.
  * @~chinese 
- * ListViewè¢«ç‚¹å‡»çš„æ—¶å€™ï¼Œè°ƒç”¨çš„å›è°ƒå‡½æ•°
+ * ListView±»µã»÷µÄÊ±ºò£¬µ÷ÓÃµÄ»Øµ÷º¯Êı
  * @deprecated @~english Use `ccListViewCallback` instead.
- * @~chinese è¯·ä½¿ç”¨ccListViewCallbackä»£æ›¿ã€‚
+ * @~chinese ÇëÊ¹ÓÃccListViewCallback´úÌæ¡£
  */
 typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
 #define listvieweventselector(_SELECTOR) (SEL_ListViewEvent)(&_SELECTOR)
@@ -63,12 +63,12 @@ typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
 /**
  * @brief @~english ListView is a view group that displays a list of scrollable items.
  * The list items are inserted to the list by using `addChild` or  `insertDefaultItem`.
- * @~chinese ListViewæ§ä»¶æ˜¯ä¸€ä¸ªæ˜¾ç¤ºæ»šåŠ¨é¡¹ç›®åˆ—è¡¨çš„è§†å›¾ç»„ã€‚
- * åˆ—è¡¨é¡¹æ˜¯é€šè¿‡ä½¿ç”¨`addChild`æˆ–`insertDefaultItem`æ’å…¥åˆ°åˆ—è¡¨ä¸­çš„ã€‚
+ * @~chinese ListView¿Ø¼şÊÇÒ»¸öÏÔÊ¾¹ö¶¯ÏîÄ¿ÁĞ±íµÄÊÓÍ¼×é¡£
+ * ÁĞ±íÏîÊÇÍ¨¹ıÊ¹ÓÃ`addChild`»ò`insertDefaultItem`²åÈëµ½ÁĞ±íÖĞµÄ¡£
  * @warning @~english The list item in ListView doesn't support cell reuse at the moment, if you have a large amount of data need to be displayed, use  `TableView` instead.
  * ListView is a subclass of  `ScrollView`, so it shares many features of ScrollView.
- * @~chinese åœ¨ListViewæ§ä»¶åˆ—è¡¨é¡¹ä¸æ”¯æŒå¤ç”¨èŠ‚ç‚¹ï¼Œå¦‚æœä½ æœ‰å¤§é‡çš„æ•°æ®éœ€è¦æ˜¾ç¤ºï¼Œè¯·ä½¿ç”¨`TableView`ä»£æ›¿ã€‚
- * ListViewæ§ä»¶æ˜¯ScrollViewçš„å­ç±»ï¼Œæ‰€ä»¥å®ƒç»§æ‰¿äº†ScrollViewçš„ç‰¹ç‚¹ã€‚
+ * @~chinese ÔÚListView¿Ø¼şÁĞ±íÏî²»Ö§³Ö¸´ÓÃ½Úµã£¬Èç¹ûÄãÓĞ´óÁ¿µÄÊı¾İĞèÒªÏÔÊ¾£¬ÇëÊ¹ÓÃ`TableView`´úÌæ¡£
+ * ListView¿Ø¼şÊÇScrollViewµÄ×ÓÀà£¬ËùÒÔËü¼Ì³ĞÁËScrollViewµÄÌØµã¡£
  */
 class CC_GUI_DLL ListView : public ScrollView
 {
@@ -80,7 +80,7 @@ public:
      * @~english
      * Gravity for docking elements in ListView.
      * @~chinese 
-     * ListViewçš„åœé å…ƒç´ å¼•åŠ›çš„æ–¹å‘
+     * ListViewµÄÍ£¿¿ÔªËØÒıÁ¦µÄ·½Ïò
      */
     enum class Gravity
     {
@@ -96,7 +96,7 @@ public:
      * @~english
      * ListView element item click event.
      * @~chinese 
-     * ListViewæ§ä»¶å…ƒç´ çš„ç‚¹å‡»äº‹ä»¶ç±»å‹
+     * ListView¿Ø¼şÔªËØµÄµã»÷ÊÂ¼şÀàĞÍ
      */
     enum class EventType
     {
@@ -105,10 +105,25 @@ public:
     };
     
     /**
-     * @~english
+     * ListView supports magnetic scroll.
+     * With CENTER type, ListView tries to align its items in center of current view.
+     * With BOTH_END type, ListView tries to align its items in left or right end if it is horizontal, top or bottom in vertical. The aligning side (left or right, top or bottom) is determined by user's scroll direction.
+     */
+    enum class MagneticType
+    {
+        NONE,
+        CENTER,
+        BOTH_END,
+        LEFT,
+        RIGHT,
+        TOP,
+        BOTTOM,
+    };
+    
+    /**
      * ListView item click callback.
      * @~chinese 
-     * ListViewæ§ä»¶å…ƒç´ çš„ç‚¹å‡»å›è°ƒã€‚
+     * ListView¿Ø¼şÔªËØµÄµã»÷»Øµ÷¡£
      */
     typedef std::function<void(Ref*, EventType)> ccListViewCallback;
     
@@ -116,7 +131,7 @@ public:
      * @~english
      * Default constructor
      * @~chinese 
-     * é»˜è®¤æ„é€ å‡½æ•°
+     * Ä¬ÈÏ¹¹Ôìº¯Êı
      * @js ctor
      * @lua new
      */
@@ -126,7 +141,7 @@ public:
      * @~english
      * Default destructor
      * @~chinese 
-     * é»˜è®¤çš„ææ„å‡½æ•°
+     * Ä¬ÈÏµÄÎö¹¹º¯Êı
      * @js NA
      * @lua NA
      */
@@ -136,9 +151,9 @@ public:
      * @~english
      * Create an empty ListView.
      * @~chinese 
-     * åˆ›å»ºä¸€ä¸ªç©ºListView
+     * ´´½¨Ò»¸ö¿ÕListView
      * @return @~english A ListView instance.
-     * @~chinese ä¸€ä¸ªListViewå®ä¾‹ã€‚
+     * @~chinese Ò»¸öListViewÊµÀı¡£
      */
     static ListView* create();
     
@@ -148,11 +163,11 @@ public:
      * When calling `pushBackDefaultItem`, the model will be used as a blueprint and new model copy will be inserted into ListView.
      *
      * @~chinese 
-     * è®¾å®šä¸€ä¸ªListViewçš„æ¨¡å‹ã€‚
-     * å½“è°ƒç”¨`pushBackDefaultItem`ï¼Œè¯¥æ¨¡å‹å°†ä½œä¸ºä¸€ä¸ªè“å›¾ï¼Œæ–°å‰¯æœ¬å°†è¢«æ’å…¥åˆ°ListViewæ§ä»¶ã€‚
+     * Éè¶¨Ò»¸öListViewµÄÄ£ĞÍ¡£
+     * µ±µ÷ÓÃ`pushBackDefaultItem`£¬¸ÃÄ£ĞÍ½«×÷ÎªÒ»¸öÀ¶Í¼£¬ĞÂ¸±±¾½«±»²åÈëµ½ListView¿Ø¼ş¡£
      *
      * @param model  @~english Model in `Widget*`.
-     * @~chinese Widgetçš„æ¨¡å‹
+     * @~chinese WidgetµÄÄ£ĞÍ
      */
     void setItemModel(Widget* model);
     
@@ -160,7 +175,7 @@ public:
      * @~english
      * Insert a default item(create by a cloned model) at the end of the listview.
      * @~chinese 
-     * æ’å…¥ä¸€ä¸ªé»˜è®¤é¡¹ï¼ˆé€šè¿‡å…‹éš†æ¨¡å¼åˆ›å»ºï¼‰åˆ°ListViewçš„å°¾éƒ¨ã€‚
+     * ²åÈëÒ»¸öÄ¬ÈÏÏî£¨Í¨¹ı¿ËÂ¡Ä£Ê½´´½¨£©µ½ListViewµÄÎ²²¿¡£
      */
     void pushBackDefaultItem();
     
@@ -168,9 +183,9 @@ public:
      * @~english
      * Insert a default item(create by cloning model) into listview at a give index.
      * @~chinese 
-     * æ’å…¥ä¸€ä¸ªé»˜è®¤é¡¹ï¼ˆé€šè¿‡å…‹éš†æ¨¡å¼åˆ›å»ºï¼‰åˆ°ListViewçš„æŒ‡å®šä½ç½®ã€‚
+     * ²åÈëÒ»¸öÄ¬ÈÏÏî£¨Í¨¹ı¿ËÂ¡Ä£Ê½´´½¨£©µ½ListViewµÄÖ¸¶¨Î»ÖÃ¡£
      * @param index  @~english A index in ssize_t.
-     * @~chinese æŒ‡å®šçš„ä½ç½®ç´¢å¼•
+     * @~chinese Ö¸¶¨µÄÎ»ÖÃË÷Òı
      */
     void insertDefaultItem(ssize_t index);
     
@@ -178,22 +193,22 @@ public:
      * @~english
      * Insert a custom item into the end of ListView.
      * @~chinese 
-     * æ’å…¥ä¸€ä¸ªè‡ªå®šä¹‰é¡¹åˆ°ListViewçš„å°¾éƒ¨ã€‚
+     * ²åÈëÒ»¸ö×Ô¶¨ÒåÏîµ½ListViewµÄÎ²²¿¡£
      * @param item @~english A item in `Widget*`.
-     * @~chinese ä¸€ä¸ª`Widget*`é¡¹ç›®
+     * @~chinese Ò»¸ö`Widget*`ÏîÄ¿
      */
     void pushBackCustomItem(Widget* item);
     
     
     /**
      * @brief @~english Insert a custom widget into ListView at a given index.
-     * @~chinese æ’å…¥è‡ªå®šä¹‰çª—å£å°æ§ä»¶åˆ°ListViewä¸­æŒ‡å®šç´¢å¼•å¤„ã€‚
+     * @~chinese ²åÈë×Ô¶¨Òå´°¿ÚĞ¡¿Ø¼şµ½ListViewÖĞÖ¸¶¨Ë÷Òı´¦¡£
      * 
      * @param item @~english A widget pointer to be inserted.
-     * @~chinese è¦æ’å…¥çš„ä¸€ä¸ªå°æ§ä»¶æŒ‡é’ˆã€‚
+     * @~chinese Òª²åÈëµÄÒ»¸öĞ¡¿Ø¼şÖ¸Õë¡£
      *
      * @param index @~english A given index in ssize_t.
-     * @~chinese æŒ‡å®šç´¢å¼•
+     * @~chinese Ö¸¶¨Ë÷Òı
      */
     void insertCustomItem(Widget* item, ssize_t index);
     
@@ -201,7 +216,7 @@ public:
      * @~english
      *  Removes the last item of ListView.
      * @~chinese 
-     * åˆ é™¤ListViewæœ€åä¸€ä¸ªé¡¹ç›®
+     * É¾³ıListView×îºóÒ»¸öÏîÄ¿
      */
     void removeLastItem();
     
@@ -210,17 +225,17 @@ public:
      * Remove a item at given index.
      *
      * @~chinese 
-     * åœ¨ç»™å®šç´¢å¼•å¤„åˆ é™¤ä¸€ä¸ªé¡¹ç›®
+     * ÔÚ¸ø¶¨Ë÷Òı´¦É¾³ıÒ»¸öÏîÄ¿
      * 
      * @param index @~english A given index in ssize_t.
-     * @~chinese ç»™å®šç´¢å¼•
+     * @~chinese ¸ø¶¨Ë÷Òı
      */
     void removeItem(ssize_t index);
     
     
     /**
      * @brief @~english Remove all items in current ListView.
-     * @~chinese åˆ é™¤å½“å‰ListViewä¸­çš„æ‰€æœ‰é¡¹ç›®ã€‚
+     * @~chinese É¾³ıµ±Ç°ListViewÖĞµÄËùÓĞÏîÄ¿¡£
      */
     void removeAllItems();
     
@@ -229,13 +244,13 @@ public:
      * Return a item at a given index.
      *
      * @~chinese 
-     * è¿”å›ä¸€ä¸ªç»™å®šçš„ç´¢å¼•å¤„çš„é¡¹ç›®ã€‚
+     * ·µ»ØÒ»¸ö¸ø¶¨µÄË÷Òı´¦µÄÏîÄ¿¡£
      * 
      * @param index @~english A given index in ssize_t.
-     * @~chinese ç»™å®šçš„ç´¢å¼•
+     * @~chinese ¸ø¶¨µÄË÷Òı
      *
      * @return @~english A widget instance.
-     * @~chinese ä¸€ä¸ªå°æ§ä»¶å®ä¾‹ã€‚
+     * @~chinese Ò»¸öĞ¡¿Ø¼şÊµÀı¡£
      */
     Widget* getItem(ssize_t index)const;
     
@@ -243,10 +258,10 @@ public:
      * @~english
      * Return all items in a ListView.
      * @~chinese 
-     * è¿”å›ListViewä¸­çš„æ‰€æœ‰é¡¹ç›®ã€‚
+     * ·µ»ØListViewÖĞµÄËùÓĞÏîÄ¿¡£
      *
      * @returns @~english A vector of widget pointers.
-     * @~chinese ä¸€ä¸ªæ§ä»¶æŒ‡é’ˆæ•°ç»„ã€‚
+     * @~chinese Ò»¸ö¿Ø¼şÖ¸ÕëÊı×é¡£
      */
     Vector<Widget*>& getItems();
     
@@ -255,12 +270,12 @@ public:
      * Return the index of specified widget.
      *
      * @~chinese 
-     * è¿”å›æŒ‡å®šçª—å£å°æ§ä»¶çš„ç´¢å¼•ã€‚
+     * ·µ»ØÖ¸¶¨´°¿ÚĞ¡¿Ø¼şµÄË÷Òı¡£
      * 
      * @param item  @~english A widget pointer.
-     * @~chinese ä¸€ä¸ªæ§ä»¶æŒ‡é’ˆã€‚
+     * @~chinese Ò»¸ö¿Ø¼şÖ¸Õë¡£
      * @return @~english The index of a given widget in ListView.
-     * @~chinese ç»™å®šæ§ä»¶åœ¨ListViewçš„ç´¢å¼•ã€‚
+     * @~chinese ¸ø¶¨¿Ø¼şÔÚListViewµÄË÷Òı¡£
      */
     ssize_t getIndex(Widget* item) const;
     
@@ -268,20 +283,40 @@ public:
      * @~english
      * Set the gravity of ListView.
      * @~chinese 
-     * è®¾ç½®çš„ListViewå¼•åŠ›ã€‚
+     * ÉèÖÃµÄListViewÒıÁ¦¡£
      * @see `ListViewGravity`
      */
     void setGravity(Gravity gravity);
     
     /**
-     * @~english
+     * Set magnetic type of ListView.
+     * @see `MagneticType`
+     */
+    void setMagneticType(MagneticType magneticType);
+    
+    /**
+     * Get magnetic type of ListView.
+     */
+    MagneticType getMagneticType() const;
+    
+    /**
+     * Set magnetic allowed out of boundary.
+     */
+    void setMagneticAllowedOutOfBoundary(bool magneticAllowedOutOfBoundary);
+    
+    /**
+     * Query whether the magnetic out of boundary is allowed.
+     */
+    bool getMagneticAllowedOutOfBoundary() const;
+    
+    /**
      * Set the margin between each item in ListView.
      *
      * @~chinese 
-     * è®¾ç½®ListViewä¸­æ¯ä¸€é¡¹ä¹‹é—´çš„è¾¹è·ã€‚
+     * ÉèÖÃListViewÖĞÃ¿Ò»ÏîÖ®¼äµÄ±ß¾à¡£
      * 
      * @param margin @~english margin
-     * @~chinese è¾¹è·
+     * @~chinese ±ß¾à
      */
     void setItemsMargin(float margin);
     
@@ -289,16 +324,16 @@ public:
     /**
      * @brief @~english Query margin between each item in ListView.
      *
-     * @~chinese æŸ¥è¯¢ListViewæ¯ä¸ªé¡¹ä¹‹é—´çš„è¾¹è·ã€‚
+     * @~chinese ²éÑ¯ListViewÃ¿¸öÏîÖ®¼äµÄ±ß¾à¡£
      *
      * @return @~english A margin in float.
-     * @~chinese ä¸€ä¸ªè¾¹è·æµ®ç‚¹æ•°
+     * @~chinese Ò»¸ö±ß¾à¸¡µãÊı
      */
     float getItemsMargin()const;
     
     //override methods
-    virtual void forceDoLayout()override;
     virtual void doLayout() override;
+    virtual void requestDoLayout() override;
     virtual void addChild(Node* child)override;
     virtual void addChild(Node * child, int localZOrder)override;
     virtual void addChild(Node* child, int zOrder, int tag) override;
@@ -306,14 +341,93 @@ public:
     virtual void removeAllChildren() override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void removeChild(Node* child, bool cleaup = true) override;
-    
-        
+
+	/**
+	 * @brief Query the closest item to a specific position in inner container.
+	 *
+	 * @param targetPosition Specifies the target position in inner container's coordinates.
+	 * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+	 * @return A item instance if list view is not empty. Otherwise, returns null.
+	 */
+	Widget* getClosestItemToPosition(const Vec2& targetPosition, const Vec2& itemAnchorPoint) const;
+	
+	/**
+	 * @brief Query the closest item to a specific position in current view.
+     * For instance, to find the item in the center of view, call 'getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE)'.
+	 *
+	 * @param positionRatioInView Specifies the target position with ratio in list view's content size.
+	 * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+	 * @return A item instance if list view is not empty. Otherwise, returns null.
+	 */
+	Widget* getClosestItemToPositionInCurrentView(const Vec2& positionRatioInView, const Vec2& itemAnchorPoint) const;
+	
     /**
-     * @brief @~english Query current selected widget's index.
-     * @~chinese æŸ¥è¯¢å½“å‰é€‰ä¸­æ§ä»¶çš„ç´¢å¼•ã€‚
+     * @brief Query the center item
+     * @return A item instance.
+     */
+    Widget* getCenterItemInCurrentView() const;
+    
+    /**
+     * @brief Query the leftmost item in horizontal list
+     * @return A item instance.
+     */
+    Widget* getLeftmostItemInCurrentView() const;
+    
+    /**
+     * @brief Query the rightmost item in horizontal list
+     * @return A item instance.
+     */
+    Widget* getRightmostItemInCurrentView() const;
+    
+    /**
+     * @brief Query the topmost item in horizontal list
+     * @return A item instance.
+     */
+    Widget* getTopmostItemInCurrentView() const;
+    
+    /**
+     * @brief Query the bottommost item in horizontal list
+     * @return A item instance.
+     */
+    Widget* getBottommostItemInCurrentView() const;
+
+    /**
+     * Override functions
+     */
+    virtual void jumpToBottom() override;
+    virtual void jumpToTop() override;
+    virtual void jumpToLeft() override;
+    virtual void jumpToRight() override;
+    virtual void jumpToTopLeft() override;
+    virtual void jumpToTopRight() override;
+    virtual void jumpToBottomLeft() override;
+    virtual void jumpToBottomRight() override;
+    virtual void jumpToPercentVertical(float percent) override;
+    virtual void jumpToPercentHorizontal(float percent) override;
+    virtual void jumpToPercentBothDirection(const Vec2& percent) override;
+
+    /**
+     * @brief Jump to specific item
+     * @param itemIndex Specifies the item's index
+     * @param positionRatioInView Specifies the position with ratio in list view's content size.
+     * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+     */
+    void jumpToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint);
+    
+	/**
+	 * @brief Scroll to specific item
+	 * @param positionRatioInView Specifies the position with ratio in list view's content size.
+	 * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+	 * @param timeInSec Scroll time
+	 */
+    void scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint);
+	void scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec);
+	
+    /**
+     * @brief Query current selected widget's idnex.
      *
      * @return @~english A index of a selected item.
-     * @~chinese é€‰ä¸­çš„æ§ä»¶çš„ç´¢å¼•ã€‚
+     * @~chinese Ñ¡ÖĞµÄ¿Ø¼şµÄË÷Òı¡£
      */
     ssize_t getCurSelectedIndex() const;
     
@@ -321,13 +435,13 @@ public:
      * @~english
      * Add a event click callback to ListView, then one item of Listview is clicked, the callback will be called.
      * @~chinese 
-     * æ·»åŠ ListViewç‚¹å‡»äº‹ä»¶çš„å›è°ƒï¼ŒListViewä¸­çš„ä¸€ä¸ªé¡¹ç›®è¢«ç‚¹å‡»å°†ä¼šè°ƒç”¨å›è°ƒå‡½æ•°ã€‚
+     * Ìí¼ÓListViewµã»÷ÊÂ¼şµÄ»Øµ÷£¬ListViewÖĞµÄÒ»¸öÏîÄ¿±»µã»÷½«»áµ÷ÓÃ»Øµ÷º¯Êı¡£
      * @deprecated @~english Use  `addEventListener` instead.
-     * @~chinese ä½¿ç”¨addEventListenerä»£æ›¿ã€‚
+     * @~chinese Ê¹ÓÃaddEventListener´úÌæ¡£
      * @param target @~english A pointer of `Ref*` type.
-     * @~chinese ä¸€ä¸ª`Ref*`æŒ‡é’ˆ
+     * @~chinese Ò»¸ö`Ref*`Ö¸Õë
      * @param selector @~english A member function pointer with type of `SEL_ListViewEvent`.
-     * @~chinese `SEL_ListViewEvent`ç±»å‹çš„æˆå‘˜å‡½æ•°æŒ‡é’ˆã€‚
+     * @~chinese `SEL_ListViewEvent`ÀàĞÍµÄ³ÉÔ±º¯ÊıÖ¸Õë¡£
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerListView(Ref* target, SEL_ListViewEvent selector);
 
@@ -335,9 +449,9 @@ public:
      * @~english
      * Add a event click callback to ListView, then one item of Listview is clicked, the callback will be called.
      * @~chinese 
-     * æ·»åŠ ListViewç‚¹å‡»äº‹ä»¶çš„å›è°ƒï¼ŒListViewä¸­çš„ä¸€ä¸ªé¡¹ç›®è¢«ç‚¹å‡»å°†ä¼šè°ƒç”¨å›è°ƒå‡½æ•°ã€‚
+     * Ìí¼ÓListViewµã»÷ÊÂ¼şµÄ»Øµ÷£¬ListViewÖĞµÄÒ»¸öÏîÄ¿±»µã»÷½«»áµ÷ÓÃ»Øµ÷º¯Êı¡£
      * @param callback @~english A callback function with type of `ccListViewCallback`.
-     * @~chinese ä¸€ä¸ªccListViewCallbackç±»å‹çš„å›è°ƒå‡½æ•°ã€‚
+     * @~chinese Ò»¸öccListViewCallbackÀàĞÍµÄ»Øµ÷º¯Êı¡£
      */
     void addEventListener(const ccListViewCallback& callback);
     using ScrollView::addEventListener;
@@ -348,11 +462,11 @@ public:
      *  Direction Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll.
      *
      * @~chinese 
-     * æ”¹å˜ListViewçš„æ»šåŠ¨æ–¹å‘ã€‚
-     * Direction Direction::VERTICALæ„å‘³ç€å‚ç›´æ»šåŠ¨,Direction::HORIZONTALæ„å‘³ç€æ°´å¹³æ»šåŠ¨ã€‚
+     * ¸Ä±äListViewµÄ¹ö¶¯·½Ïò¡£
+     * Direction Direction::VERTICALÒâÎ¶×Å´¹Ö±¹ö¶¯,Direction::HORIZONTALÒâÎ¶×ÅË®Æ½¹ö¶¯¡£
      *
      * @param dir @~english Set the list view's scroll direction.
-     * @~chinese è®¾ç½®ListViewçš„æ»šåŠ¨æ–¹å‘ã€‚
+     * @~chinese ÉèÖÃListViewµÄ¹ö¶¯·½Ïò¡£
      */
     virtual void setDirection(Direction dir) override;
     
@@ -361,22 +475,23 @@ public:
     /**
      * @brief @~english Refresh view and layout of ListView manually.
      * This method will mark ListView content as dirty and the content view will be refreshed in the next frame.
-     * @~chinese æ‰‹åŠ¨åˆ·æ–°viewå’ŒListViewçš„å¸ƒå±€ã€‚
-     * è¯¥æ–¹æ³•å°†åˆ—è¡¨è§†å›¾å†…å®¹æ ‡è®°ä¸ºdirtyï¼Œå†…å®¹è§†å›¾å°†åœ¨ä¸‹ä¸€å¸§åˆ·æ–°ã€‚
+     * @~chinese ÊÖ¶¯Ë¢ĞÂviewºÍListViewµÄ²¼¾Ö¡£
+     * ¸Ã·½·¨½«ÁĞ±íÊÓÍ¼ÄÚÈİ±ê¼ÇÎªdirty£¬ÄÚÈİÊÓÍ¼½«ÔÚÏÂÒ»Ö¡Ë¢ĞÂ¡£
      */
-    void requestRefreshView();
+    CC_DEPRECATED_ATTRIBUTE void requestRefreshView();
 
     
     /**
      * @brief @~english Refresh content view of ListView.
-     * @~chinese æ›´æ–°ListViewçš„è§†å›¾ã€‚
+     * @~chinese ¸üĞÂListViewµÄÊÓÍ¼¡£
      */
-    void refreshView();
+    CC_DEPRECATED_ATTRIBUTE void refreshView();
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     
 protected:
+    virtual void handleReleaseLogic(Touch *touch) override;
     
     void updateInnerContainerSize();
     void remedyLayoutParameter(Widget* item);
@@ -389,6 +504,13 @@ protected:
     virtual void copyClonedWidgetChildren(Widget* model) override;
     void selectedItemEvent(TouchEventType event);
     virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,Touch* touch) override;
+    
+    virtual Vec2 getHowMuchOutOfBoundary(const Vec2& addition = Vec2::ZERO) override;
+    
+    virtual void startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity) override;
+    
+    void startMagneticScroll();
+    
 protected:
     Widget* _model;
     
@@ -396,10 +518,14 @@ protected:
     
     Gravity _gravity;
     
+    MagneticType _magneticType;
+    bool _magneticAllowedOutOfBoundary;
+    
     float _itemsMargin;
     
     ssize_t _curSelectedIndex;
-    bool _refreshViewDirty;
+
+    bool _innerContainerDoLayoutDirty;
     
     Ref*       _listViewEventListener;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))

@@ -48,74 +48,74 @@ class PointArray;
 /** @class DrawNode
  * @brief @~english Node that draws dots, segments and polygons.
  * Faster than the "drawing primitives" since they draws everything in one single batch.
- * @~chinese ç»˜åˆ¶ç‚¹ã€çº¿æ®µå’Œå¤šè¾¹å½¢çš„èŠ‚ç‚¹ã€‚
- * ç”±äºå®ƒä½¿ç”¨äº†"æ‰¹å¤„ç†"ï¼ˆBatch drawï¼‰ï¼Œå› æ­¤å®ƒç»˜åˆ¶ç‚¹ã€çº¿æ®µã€å¤šè¾¹å½¢éƒ½è¦æ¯”â€œdrawing primitivesâ€å¿«ã€‚
+ * @~chinese »æÖÆµã¡¢Ïß¶ÎºÍ¶à±ßĞÎµÄ½Úµã¡£
+ * ÓÉÓÚËüÊ¹ÓÃÁË"Åú´¦Àí"£¨Batch draw£©£¬Òò´ËËü»æÖÆµã¡¢Ïß¶Î¡¢¶à±ßĞÎ¶¼Òª±È¡°drawing primitives¡±¿ì¡£
  * @since v2.1
  */
 class CC_DLL DrawNode : public Node
 {
 public:
     /** @~english creates and initialize a DrawNode node.
-     * @~chinese åˆ›å»ºå¹¶åˆå§‹åŒ–DrawNodeèŠ‚ç‚¹.
+     * @~chinese ´´½¨²¢³õÊ¼»¯DrawNode½Úµã.
      * @return @~english Return an autorelease object.
-     * @~chinese è¿”å›ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾å¯¹è±¡.
+     * @~chinese ·µ»ØÒ»¸ö×Ô¶¯ÊÍ·Å¶ÔÏó.
      */
     static DrawNode* create();
     
     /** @~english Draw a point.
      *
-     * @~chinese ç”»ä¸€ä¸ªç‚¹ã€‚
+     * @~chinese »­Ò»¸öµã¡£
      * 
      * @param point @~english A Vec2 point.
-     * @~chinese ä¸€ä¸ªVec2ç±»å‹çš„ç‚¹
+     * @~chinese Ò»¸öVec2ÀàĞÍµÄµã
      * @param pointSize @~english The point size.
-     * @~chinese ç‚¹çš„å¤§å°
+     * @~chinese µãµÄ´óĞ¡
      * @param color @~english The point color.
-     * @~chinese ç‚¹çš„é¢œè‰²
+     * @~chinese µãµÄÑÕÉ«
      * @js NA
      */
     void drawPoint(const Vec2& point, const float pointSize, const Color4F &color);
     
     /** @~english Draw a group point.
      *
-     * @~chinese ç”»ä¸€ç»„ç‚¹ã€‚
+     * @~chinese »­Ò»×éµã¡£
      * 
      * @param position @~english A Vec2 pointer.
-     * @~chinese ä¸€ä¸ªVec2æŒ‡é’ˆã€‚
+     * @~chinese Ò»¸öVec2Ö¸Õë¡£
      * @param numberOfPoints @~english The number of points.
-     * @~chinese ç‚¹çš„æ•°é‡ã€‚
+     * @~chinese µãµÄÊıÁ¿¡£
      * @param color @~english The point color.
-     * @~chinese ç‚¹çš„é¢œè‰²ã€‚
+     * @~chinese µãµÄÑÕÉ«¡£
      * @js NA
      */
     void drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color);
     
     /** @~english Draw a group point.
      *
-     * @~chinese ç”»ä¸€ç»„ç‚¹ã€‚
+     * @~chinese »­Ò»×éµã¡£
      * 
      * @param position @~english A Vec2 pointer.
-     * @~chinese ä¸€ä¸ªVec2æŒ‡é’ˆã€‚
+     * @~chinese Ò»¸öVec2Ö¸Õë¡£
      * @param numberOfPoints @~english The number of points.
-     * @~chinese ç‚¹çš„æ•°é‡ã€‚
+     * @~chinese µãµÄÊıÁ¿¡£
      * @param pointSize @~english The point size.
-     * @~chinese ç‚¹çš„å¤§å°ã€‚
+     * @~chinese µãµÄ´óĞ¡¡£
      * @param color @~english The point color.
-     * @~chinese ç‚¹çš„é¢œè‰²ã€‚
+     * @~chinese µãµÄÑÕÉ«¡£
      * @js NA
      */
     void drawPoints(const Vec2 *position, unsigned int numberOfPoints, const float pointSize, const Color4F &color);
     
     /** @~english Draw an line from origin to destination with color. 
      * 
-     * @~chinese ä½¿ç”¨æŒ‡å®šé¢œè‰²ç”»ä¸€æ¡ä»èµ·å§‹ç‚¹åˆ°ç›®çš„åœ°ç‚¹çš„çº¿ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨ÑÕÉ«»­Ò»Ìõ´ÓÆğÊ¼µãµ½Ä¿µÄµØµãµÄÏß¡£
      * 
      * @param origin @~english The line origin.
-     * @~chinese èµ·å§‹ç‚¹çš„åæ ‡
+     * @~chinese ÆğÊ¼µãµÄ×ø±ê
      * @param destination @~english The line destination.
-     * @~chinese ç›®çš„åœ°ç‚¹çš„åæ ‡
+     * @~chinese Ä¿µÄµØµãµÄ×ø±ê
      * @param color @~english The line color.
-     * @~chinese çº¿çš„é¢œè‰²ã€‚
+     * @~chinese ÏßµÄÑÕÉ«¡£
      * @js NA
      */
     void drawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
@@ -123,315 +123,315 @@ public:
     /** @~english Draws a rectangle given the origin and destination point measured in points.
      * The origin and the destination can not have the same x and y coordinate.
      *
-     * @~chinese ç»™å®šä¸€ä¸ªèµ·å§‹ç‚¹åæ ‡å’Œç›®çš„åœ°ç‚¹åæ ‡ç”»ä¸€ä¸ªçŸ©å½¢ï¼Œåæ ‡çš„å•ä½æ˜¯â€œPointâ€
-     * èµ·å§‹ç‚¹åæ ‡å’Œç›®çš„åœ°ç‚¹åæ ‡ä¸èƒ½ç›¸åŒã€‚
+     * @~chinese ¸ø¶¨Ò»¸öÆğÊ¼µã×ø±êºÍÄ¿µÄµØµã×ø±ê»­Ò»¸ö¾ØĞÎ£¬×ø±êµÄµ¥Î»ÊÇ¡°Point¡±
+     * ÆğÊ¼µã×ø±êºÍÄ¿µÄµØµã×ø±ê²»ÄÜÏàÍ¬¡£
      * 
      * @param origin @~english The rectangle origin.
-     * @~chinese çŸ©å½¢çš„åŸç‚¹åæ ‡ã€‚
+     * @~chinese ¾ØĞÎµÄÔ­µã×ø±ê¡£
      * @param destination @~english The rectangle destination.
-     * @~chinese çŸ©å½¢çš„ç›®çš„åœ°ç‚¹åæ ‡ã€‚
+     * @~chinese ¾ØĞÎµÄÄ¿µÄµØµã×ø±ê¡£
      * @param color @~english The rectangle color.
-     * @~chinese çŸ©å½¢çš„é¢œè‰²ã€‚
+     * @~chinese ¾ØĞÎµÄÑÕÉ«¡£
      */
     void drawRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
     
     /** @~english Draws a polygon given a pointer to point coordinates and the number of vertices measured in points.
      * The polygon can be closed or open.
      *
-     * @~chinese ç»™å®šä¸€ä¸ªæŒ‡å‘ä¸€ç»„ç‚¹åæ ‡çš„æŒ‡é’ˆå’Œåæ ‡ç‚¹æ•°é‡æ¥ç»˜åˆ¶å¤šè¾¹å½¢
-     * å¤šè¾¹å½¢å¯ä»¥é—­åˆï¼Œä¹Ÿå¯ä»¥ä¸é—­åˆã€‚
+     * @~chinese ¸ø¶¨Ò»¸öÖ¸ÏòÒ»×éµã×ø±êµÄÖ¸ÕëºÍ×ø±êµãÊıÁ¿À´»æÖÆ¶à±ßĞÎ
+     * ¶à±ßĞÎ¿ÉÒÔ±ÕºÏ£¬Ò²¿ÉÒÔ²»±ÕºÏ¡£
      * 
      * @param poli @~english A pointer to point coordinates.
-     * @~chinese ä¸€ä¸ªæŒ‡å‘ä¸€ç»„ç‚¹åæ ‡çš„æŒ‡é’ˆ
+     * @~chinese Ò»¸öÖ¸ÏòÒ»×éµã×ø±êµÄÖ¸Õë
      * @param numberOfPoints @~english The number of vertices measured in points.
-     * @~chinese é¡¶ç‚¹çš„æ•°é‡.
+     * @~chinese ¶¥µãµÄÊıÁ¿.
      * @param closePolygon @~english The polygon can be closed or open.
-     * @~chinese å¤šè¾¹å½¢æ˜¯å¦é—­åˆ
+     * @~chinese ¶à±ßĞÎÊÇ·ñ±ÕºÏ
      * @param color @~english The polygon color.
-     * @~chinese å¤šè¾¹å½¢çš„é¢œè‰²ã€‚
+     * @~chinese ¶à±ßĞÎµÄÑÕÉ«¡£
      */
     void drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon, const Color4F &color);
     
     /** @~english Draws a circle given the center, radius, number of segments and a border color.
      *
-     * @~chinese ç»™å®šåœ†çš„ä¸­å¿ƒ,åŠå¾„ï¼Œçº¿æ®µæ•°é‡å’Œçº¿æ®µé¢œè‰²æ¥ç»˜åˆ¶ä¸€ä¸ªåœ†ã€‚å¦‚æœè¦ç»˜åˆ¶å¸¦å¡«å……è‰²çš„åœ†ï¼Œè¯·ä½¿ç”¨ drawSolidCircleå‡½æ•°ã€‚
+     * @~chinese ¸ø¶¨Ô²µÄÖĞĞÄ,°ë¾¶£¬Ïß¶ÎÊıÁ¿ºÍÏß¶ÎÑÕÉ«À´»æÖÆÒ»¸öÔ²¡£Èç¹ûÒª»æÖÆ´øÌî³äÉ«µÄÔ²£¬ÇëÊ¹ÓÃ drawSolidCircleº¯Êı¡£
      * 
      * @param center @~english The circle center point.
-     * @~chinese åœ†ä¸­å¿ƒç‚¹ã€‚
+     * @~chinese Ô²ÖĞĞÄµã¡£
      * @param radius @~english The circle rotate of radius.
-     * @~chinese åœ†çš„åŠå¾„
+     * @~chinese Ô²µÄ°ë¾¶
      * @param angle  @~english The circle angle.
-     * @~chinese åœ†çš„è§’åº¦
+     * @~chinese Ô²µÄ½Ç¶È
      * @param segments @~english The number of segments.
-     * @~chinese çº¿æ®µçš„æ•°é‡ã€‚
+     * @~chinese Ïß¶ÎµÄÊıÁ¿¡£
      * @param drawLineToCenter @~english Whether or not draw the line from the origin to center.
-     * @~chinese æ˜¯å¦ä»åŸç‚¹å¾€ä¸­å¿ƒç‚¹ç”»ä¸€æ¡çº¿ã€‚
+     * @~chinese ÊÇ·ñ´ÓÔ­µãÍùÖĞĞÄµã»­Ò»ÌõÏß¡£
      * @param scaleX @~english The scale value in x.
-     * @~chinese xçš„ç¼©æ”¾å€¼ã€‚
+     * @~chinese xµÄËõ·ÅÖµ¡£
      * @param scaleY @~english The scale value in y.
-     * @~chinese yçš„ç¼©æ”¾å€¼ã€‚
+     * @~chinese yµÄËõ·ÅÖµ¡£
      * @param color @~english Set the circle color.
-     * @~chinese åœ†çš„é¢œè‰²ã€‚
+     * @~chinese Ô²µÄÑÕÉ«¡£
      */
     void drawCircle( const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY, const Color4F &color);
     
     /** @~english Draws a circle given the center, radius and number of segments.
      *
-     * @~chinese ç»™å®šåœ†çš„ä¸­å¿ƒ,åŠå¾„å’Œçº¿æ®µæ•°é‡æ¥ç»˜åˆ¶ä¸€ä¸ªåœ†ã€‚
+     * @~chinese ¸ø¶¨Ô²µÄÖĞĞÄ,°ë¾¶ºÍÏß¶ÎÊıÁ¿À´»æÖÆÒ»¸öÔ²¡£
      * 
      * @param center @~english The circle center point.
-     * @~chinese åœ†ä¸­å¿ƒç‚¹ã€‚
+     * @~chinese Ô²ÖĞĞÄµã¡£
      * @param radius @~english The circle rotate of radius.
-     * @~chinese åœ†çš„åŠå¾„
+     * @~chinese Ô²µÄ°ë¾¶
      * @param angle  @~english The circle angle.
-     * @~chinese åœ†çš„è§’åº¦
+     * @~chinese Ô²µÄ½Ç¶È
      * @param segments @~english The number of segments.
-     * @~chinese çº¿æ®µçš„æ•°é‡ã€‚
+     * @~chinese Ïß¶ÎµÄÊıÁ¿¡£
      * @param drawLineToCenter @~english Whether or not draw the line from the origin to center.
-     * @~chinese æ˜¯å¦ä»åŸç‚¹å¾€ä¸­å¿ƒç‚¹ç”»ä¸€æ¡çº¿
+     * @~chinese ÊÇ·ñ´ÓÔ­µãÍùÖĞĞÄµã»­Ò»ÌõÏß
      * @param color @~english Set the circle color.
-     * @~chinese åœ†çš„é¢œè‰²
+     * @~chinese Ô²µÄÑÕÉ«
      */
     void drawCircle(const Vec2 &center, float radius, float angle, unsigned int segments, bool drawLineToCenter, const Color4F &color);
     
     /** @~english Draws a quad bezier path.
      *
-     * @~chinese ç”»äº†ä¸€ä¸ªå››æ¬¡è´å¡å°”æ›²çº¿è·¯å¾„ã€‚
+     * @~chinese »­ÁËÒ»¸öËÄ´Î±´Èû¶ûÇúÏßÂ·¾¶¡£
      * 
      * @param origin @~english The origin of the bezier path.
-     * @~chinese è´å¡å°”æ›²çº¿è·¯å¾„çš„åŸç‚¹ã€‚
+     * @~chinese ±´Èû¶ûÇúÏßÂ·¾¶µÄÔ­µã¡£
      * @param control @~english The control of the bezier path.
-     * @~chinese è´å¡å°”æ›²çº¿çš„æ§åˆ¶ç‚¹ã€‚
+     * @~chinese ±´Èû¶ûÇúÏßµÄ¿ØÖÆµã¡£
      * @param destination @~english The destination of the bezier path.
-     * @~chinese è´å¡å°”æ›²çº¿çš„ç»ˆç‚¹
+     * @~chinese ±´Èû¶ûÇúÏßµÄÖÕµã
      * @param segments @~english The The number of segments.
-     * @~chinese çº¿æ®µçš„æ•°é‡ã€‚
+     * @~chinese Ïß¶ÎµÄÊıÁ¿¡£
      * @param color @~english Set the quad bezier color.
-     * @~chinese è®¾ç½®å››æ¬¡è´å¡å°”æ›²çº¿çš„é¢œè‰²ã€‚
+     * @~chinese ÉèÖÃËÄ´Î±´Èû¶ûÇúÏßµÄÑÕÉ«¡£
      */
     void drawQuadBezier(const Vec2 &origin, const Vec2 &control, const Vec2 &destination, unsigned int segments, const Color4F &color);
 
     /** @~english Draw a cubic bezier curve with color and number of segments
      *
-     * @~chinese ä½¿ç”¨ç»™å®šæ•°é‡çš„çº¿æ®µå’Œé¢œè‰²ç»˜åˆ¶ä¸€ä¸ªä¸‰æ¬¡è´å¡å°”æ›²çº¿ã€‚
+     * @~chinese Ê¹ÓÃ¸ø¶¨ÊıÁ¿µÄÏß¶ÎºÍÑÕÉ«»æÖÆÒ»¸öÈı´Î±´Èû¶ûÇúÏß¡£
      * 
      * @param origin @~english The origin of the bezier path.
-     * @~chinese è´å¡å°”æ›²çº¿è·¯å¾„çš„åŸç‚¹ã€‚
+     * @~chinese ±´Èû¶ûÇúÏßÂ·¾¶µÄÔ­µã¡£
      * @param control1 @~english The first control of the bezier path.
-     * @~chinese è´å¡å°”æ›²çº¿è·¯å¾„çš„ç¬¬ä¸€ä¸ªæ§åˆ¶ç‚¹ã€‚
+     * @~chinese ±´Èû¶ûÇúÏßÂ·¾¶µÄµÚÒ»¸ö¿ØÖÆµã¡£
      * @param control2 @~english The second control of the bezier path.
-     * @~chinese è´å¡å°”æ›²çº¿è·¯å¾„çš„ç¬¬äºŒä¸ªæ§åˆ¶ç‚¹ã€‚
+     * @~chinese ±´Èû¶ûÇúÏßÂ·¾¶µÄµÚ¶ş¸ö¿ØÖÆµã¡£
      * @param destination @~english The destination of the bezier path.
-     * @~chinese è´å¡å°”æ›²çº¿è·¯å¾„çš„ç›®çš„åœ°ç‚¹ã€‚
+     * @~chinese ±´Èû¶ûÇúÏßÂ·¾¶µÄÄ¿µÄµØµã¡£
      * @param segments @~english The The number of segments.
-     * @~chinese çº¿æ®µçš„æ•°é‡ã€‚
+     * @~chinese Ïß¶ÎµÄÊıÁ¿¡£
      * @param color @~english Set the cubic bezier color.
-     * @~chinese è®¾ç½®ä¸‰æ¬¡è´å¡å°”æ›²çº¿çš„é¢œè‰²ã€‚
+     * @~chinese ÉèÖÃÈı´Î±´Èû¶ûÇúÏßµÄÑÕÉ«¡£
      */
     void drawCubicBezier(const Vec2 &origin, const Vec2 &control1, const Vec2 &control2, const Vec2 &destination, unsigned int segments, const Color4F &color);
     
     /** @~english Draws a Cardinal Spline path.
      *
-     * @~chinese ç»˜åˆ¶ä¸€ä¸ªåŸºæ•°æ ·æ¡è·¯å¾„ã€‚
+     * @~chinese »æÖÆÒ»¸ö»ùÊıÑùÌõÂ·¾¶¡£
      * 
      * @param config @~english A array point.
-     * @~chinese ä¸€ä¸ªç‚¹æ•°ç»„ã€‚
+     * @~chinese Ò»¸öµãÊı×é¡£
      * @param tension @~english The tension of the spline.
-     * @~chinese æ ·æ¡çš„å¼ åŠ›ã€‚
+     * @~chinese ÑùÌõµÄÕÅÁ¦¡£
      * @param segments @~english The The number of segments.
-     * @~chinese çº¿æ®µçš„æ•°é‡ã€‚
+     * @~chinese Ïß¶ÎµÄÊıÁ¿¡£
      * @param color @~english Set the Spline color.
-     * @~chinese è®¾ç½®æ ·æ¡çš„é¢œè‰²ã€‚
+     * @~chinese ÉèÖÃÑùÌõµÄÑÕÉ«¡£
      */
     void drawCardinalSpline(PointArray *config, float tension,  unsigned int segments, const Color4F &color);
     
     /** @~english Draws a Catmull Rom path.
      *
-     * @~chinese ç»˜åˆ¶ä¸€ä¸ªå¡ç‰¹è«å°”ç½—(Catmull Rom)è·¯å¾„ã€‚
+     * @~chinese »æÖÆÒ»¸ö¿¨ÌØÄª¶ûÂŞ(Catmull Rom)Â·¾¶¡£
      * 
      * @param points @~english A point array  of control point.
-     * @~chinese ä¸€ä¸ªæ§åˆ¶ç‚¹æ•°ç»„ã€‚
+     * @~chinese Ò»¸ö¿ØÖÆµãÊı×é¡£
      * @param segments @~english The The number of segments.
-     * @~chinese çº¿æ®µçš„æ•°é‡ã€‚
+     * @~chinese Ïß¶ÎµÄÊıÁ¿¡£
      * @param color @~english The Catmull Rom color.
-     * @~chinese å¡ç‰¹è«å°”ç½—çš„é¢œè‰²ã€‚
+     * @~chinese ¿¨ÌØÄª¶ûÂŞµÄÑÕÉ«¡£
      */
     void drawCatmullRom(PointArray *points, unsigned int segments, const Color4F &color);
     
     /** @~english draw a dot at a position, with a given radius and color. 
      *
-     * @~chinese åœ¨ç»™å®šåæ ‡ç‚¹ã€åŠå¾„å’Œé¢œè‰²å€¼ç”»ä¸€ä¸ªç‚¹ã€‚
+     * @~chinese ÔÚ¸ø¶¨×ø±êµã¡¢°ë¾¶ºÍÑÕÉ«Öµ»­Ò»¸öµã¡£
      * 
      * @param pos @~english The dot center.
-     * @~chinese ç‚¹ä¸­å¿ƒã€‚
+     * @~chinese µãÖĞĞÄ¡£
      * @param radius @~english The dot radius.
-     * @~chinese ç‚¹åŠå¾„ã€‚
+     * @~chinese µã°ë¾¶¡£
      * @param color @~english The dot color.
-     * @~chinese ç‚¹çš„é¢œè‰²ã€‚
+     * @~chinese µãµÄÑÕÉ«¡£
      */
     void drawDot(const Vec2 &pos, float radius, const Color4F &color);
     
     /** @~english Draws a rectangle with 4 points.
      *
-     * @~chinese ç”»ä¸€ä¸ªåŒ…å«4ä¸ªé¡¶ç‚¹çš„çŸ©å½¢
+     * @~chinese »­Ò»¸ö°üº¬4¸ö¶¥µãµÄ¾ØĞÎ
      * 
      * @param p1 @~english The rectangle vertex point.
-     * @~chinese çŸ©å½¢çš„é¡¶ç‚¹ã€‚
+     * @~chinese ¾ØĞÎµÄ¶¥µã¡£
      * @param p2 @~english The rectangle vertex point.
-     * @~chinese çŸ©å½¢çš„é¡¶ç‚¹ã€‚
+     * @~chinese ¾ØĞÎµÄ¶¥µã¡£
      * @param p3 @~english The rectangle vertex point.
-     * @~chinese çŸ©å½¢çš„é¡¶ç‚¹ã€‚
+     * @~chinese ¾ØĞÎµÄ¶¥µã¡£
      * @param p4 @~english The rectangle vertex point.
-     * @~chinese çŸ©å½¢çš„é¡¶ç‚¹ã€‚
+     * @~chinese ¾ØĞÎµÄ¶¥µã¡£
      * @param color @~english The rectangle color.
-     * @~chinese çŸ©å½¢çš„é¢œè‰²ã€‚
+     * @~chinese ¾ØĞÎµÄÑÕÉ«¡£
      */
     void drawRect(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Vec2& p4, const Color4F &color);
     
     /** @~english Draws a solid rectangle given the origin and destination point measured in points.
      * The origin and the destination can not have the same x and y coordinate.
      *
-     * @~chinese ä½¿ç”¨ç»™å®šçš„åŸç‚¹å’Œç›®çš„åœ°ç‚¹ç»˜åˆ¶ä¸€ä¸ªå®å¿ƒçŸ©å½¢ã€‚
-     * åŸç‚¹å’Œç›®çš„åœ°ç‚¹ä¸èƒ½æœ‰ç›¸åŒçš„xå’Œyåæ ‡ã€‚
+     * @~chinese Ê¹ÓÃ¸ø¶¨µÄÔ­µãºÍÄ¿µÄµØµã»æÖÆÒ»¸öÊµĞÄ¾ØĞÎ¡£
+     * Ô­µãºÍÄ¿µÄµØµã²»ÄÜÓĞÏàÍ¬µÄxºÍy×ø±ê¡£
      * 
      * @param origin @~english The rectangle origin.
-     * @~chinese çŸ©å½¢çš„åŸç‚¹ã€‚
+     * @~chinese ¾ØĞÎµÄÔ­µã¡£
      * @param destination @~english The rectangle destination.
-     * @~chinese çŸ©å½¢çš„ç›®çš„åœ°ã€‚
+     * @~chinese ¾ØĞÎµÄÄ¿µÄµØ¡£
      * @param color @~english The rectangle color.
-     * @~chinese çŸ©å½¢çš„é¢œè‰²ã€‚
+     * @~chinese ¾ØĞÎµÄÑÕÉ«¡£
      * @js NA
      */
     void drawSolidRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
     
     /** @~english Draws a solid polygon given with a pointer to coordinates, the number of vertices measured in points, and a color.
      *
-     * @~chinese ç»™å®šä¸€ç»„åæ ‡ç‚¹ç”»ä¸€ä¸ªå®å¿ƒå¤šè¾¹å½¢,é¡¶ç‚¹æ•°æ®åŒ…å«ä¸ªæ•°å’Œé¢œè‰².
+     * @~chinese ¸ø¶¨Ò»×é×ø±êµã»­Ò»¸öÊµĞÄ¶à±ßĞÎ,¶¥µãÊı¾İ°üº¬¸öÊıºÍÑÕÉ«.
      * 
      * @param poli @~english A pointer to Vec2 coordinates.
-     * @~chinese ä¸€ä¸ªæŒ‡å‘Vec2æ•°ç»„çš„æŒ‡é’ˆã€‚
+     * @~chinese Ò»¸öÖ¸ÏòVec2Êı×éµÄÖ¸Õë¡£
      * @param numberOfPoints @~english The number of vertices measured in points.
-     * @~chinese é¡¶ç‚¹çš„æ•°é‡,å•ä½æ˜¯â€œPointâ€
+     * @~chinese ¶¥µãµÄÊıÁ¿,µ¥Î»ÊÇ¡°Point¡±
      * @param color @~english The solid polygon color.
-     * @~chinese å®å¿ƒå¤šè¾¹å½¢çš„é¢œè‰²ã€‚
+     * @~chinese ÊµĞÄ¶à±ßĞÎµÄÑÕÉ«¡£
      * @js NA
      */
     void drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, const Color4F &color);
     
     /** @~english Draws a solid circle given the center, radius and number of segments.
-     * @~chinese ç»™å®šåœ†çš„ä¸­å¿ƒ,åŠå¾„å’Œçº¿æ®µçš„æ•°é‡ç»˜åˆ¶ä¸€ä¸ªå®å¿ƒåœ†ã€‚
+     * @~chinese ¸ø¶¨Ô²µÄÖĞĞÄ,°ë¾¶ºÍÏß¶ÎµÄÊıÁ¿»æÖÆÒ»¸öÊµĞÄÔ²¡£
      * @param center @~english The circle center point.
-     * @~chinese åœ†ä¸­å¿ƒç‚¹ã€‚
+     * @~chinese Ô²ÖĞĞÄµã¡£
      * @param radius @~english The circle rotate of radius.
-     * @~chinese åœ†çš„åŠå¾„ã€‚
+     * @~chinese Ô²µÄ°ë¾¶¡£
      * @param angle  @~english The circle angle.
-     * @~chinese åœ†çš„è§’åº¦ã€‚
+     * @~chinese Ô²µÄ½Ç¶È¡£
      * @param segments @~english The number of segments.
-     * @~chinese çº¿æ®µçš„æ•°é‡ã€‚
+     * @~chinese Ïß¶ÎµÄÊıÁ¿¡£
      * @param scaleX @~english The scale value in x.
-     * @~chinese xçš„ç¼©æ”¾å€¼
+     * @~chinese xµÄËõ·ÅÖµ
      * @param scaleY @~english The scale value in y.
-     * @~chinese yçš„ç¼©æ”¾å€¼
+     * @~chinese yµÄËõ·ÅÖµ
      * @param color @~english The solid circle color.
-     * @~chinese å®å¿ƒåœ†çš„é¢œè‰²ã€‚
+     * @~chinese ÊµĞÄÔ²µÄÑÕÉ«¡£
      * @js NA
      */
     void drawSolidCircle(const Vec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY, const Color4F &color);
     
     /** @~english Draws a solid circle given the center, radius and number of segments.
-     * @~chinese ç»™å®šåœ†çš„ä¸­å¿ƒ,åŠå¾„å’Œçº¿æ®µçš„æ•°é‡ç»˜åˆ¶ä¸€ä¸ªå®å¿ƒåœ†ã€‚
+     * @~chinese ¸ø¶¨Ô²µÄÖĞĞÄ,°ë¾¶ºÍÏß¶ÎµÄÊıÁ¿»æÖÆÒ»¸öÊµĞÄÔ²¡£
      * @param center @~english The circle center point.
-     * @~chinese åœ†ä¸­å¿ƒç‚¹ã€‚
+     * @~chinese Ô²ÖĞĞÄµã¡£
      * @param radius @~english The circle rotate of radius.
-     * @~chinese åœ†çš„åŠå¾„ã€‚
+     * @~chinese Ô²µÄ°ë¾¶¡£
      * @param angle  @~english The circle angle.
-     * @~chinese åœ†çš„è§’åº¦ã€‚
+     * @~chinese Ô²µÄ½Ç¶È¡£
      * @param segments @~english The number of segments.
-     * @~chinese çº¿æ®µçš„æ•°é‡ã€‚
+     * @~chinese Ïß¶ÎµÄÊıÁ¿¡£
      * @param color @~english The solid circle color.
-     * @~chinese å®å¿ƒåœ†çš„é¢œè‰²ã€‚
+     * @~chinese ÊµĞÄÔ²µÄÑÕÉ«¡£
      * @js NA
      */
     void drawSolidCircle(const Vec2& center, float radius, float angle, unsigned int segments, const Color4F& color);
     
     /** @~english draw a segment with a radius and color. 
      *
-     * @~chinese ä½¿ç”¨æŒ‡å®šåŠå¾„å’Œé¢œè‰²ç»˜åˆ¶ä¸€æ¡çº¿æ®µã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨°ë¾¶ºÍÑÕÉ«»æÖÆÒ»ÌõÏß¶Î¡£
      * 
      * @param from @~english The segment origin.
-     * @~chinese çº¿æ®µçš„åŸç‚¹ã€‚
+     * @~chinese Ïß¶ÎµÄÔ­µã¡£
      * @param to @~english The segment destination.
-     * @~chinese çº¿æ®µçš„ç›®çš„åœ°ç‚¹ã€‚
+     * @~chinese Ïß¶ÎµÄÄ¿µÄµØµã¡£
      * @param radius @~english The segment radius.
-     * @~chinese çº¿æ®µåŠå¾„ã€‚
+     * @~chinese Ïß¶Î°ë¾¶¡£
      * @param color @~english The segment color.
-     * @~chinese çº¿æ®µçš„é¢œè‰²ã€‚
+     * @~chinese Ïß¶ÎµÄÑÕÉ«¡£
      */
     void drawSegment(const Vec2 &from, const Vec2 &to, float radius, const Color4F &color);
     
     /** @~english draw a polygon with a fill color and line color
-    * @~chinese ä½¿ç”¨ç»™å®šçš„å¡«å……é¢œè‰²å’Œçº¿æ¡é¢œè‰²ç»˜åˆ¶ä¸€ä¸ªå¤šè¾¹å½¢ã€‚
+    * @~chinese Ê¹ÓÃ¸ø¶¨µÄÌî³äÑÕÉ«ºÍÏßÌõÑÕÉ«»æÖÆÒ»¸ö¶à±ßĞÎ¡£
     *
     * @param verts @~english A pointer to point coordinates.
-    * @~chinese ä¸€ä¸ªæŒ‡å‘é¡¶ç‚¹æ•°ç»„çš„æŒ‡é’ˆã€‚
+    * @~chinese Ò»¸öÖ¸Ïò¶¥µãÊı×éµÄÖ¸Õë¡£
     * @param count @~english The number of verts measured in points.
-     * @~chinese é¡¶ç‚¹çš„æ•°é‡
+     * @~chinese ¶¥µãµÄÊıÁ¿
     * @param fillColor @~english The color will fill in polygon.
-     * @~chinese å¤šè¾¹å½¢çš„å¡«å……é¢œè‰²ã€‚
+     * @~chinese ¶à±ßĞÎµÄÌî³äÑÕÉ«¡£
     * @param borderWidth @~english The border of line width.
-     * @~chinese å¤šè¾¹å½¢çš„çº¿å®½ã€‚
+     * @~chinese ¶à±ßĞÎµÄÏß¿í¡£
     * @param borderColor @~english The border of line color.
-     * @~chinese å¤šè¾¹å½¢çš„çº¿å®½çš„é¢œè‰²ã€‚
+     * @~chinese ¶à±ßĞÎµÄÏß¿íµÄÑÕÉ«¡£
     * @js NA
     */
     void drawPolygon(const Vec2 *verts, int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor);
 	
     /** @~english draw a triangle with color, the color will fill in the triangle.
      *
-     * @~chinese ä½¿ç”¨ç»™å®šé¢œè‰²ç»˜åˆ¶ä¸€ä¸ªä¸‰è§’å½¢,è¯¥é¢œè‰²ä¼šå¡«å……çŸ©å½¢ã€‚
+     * @~chinese Ê¹ÓÃ¸ø¶¨ÑÕÉ«»æÖÆÒ»¸öÈı½ÇĞÎ,¸ÃÑÕÉ«»áÌî³ä¾ØĞÎ¡£
      * 
      * @param p1 @~english The triangle vertex point.
-     * @~chinese ä¸‰è§’å½¢çš„é¡¶ç‚¹ã€‚
+     * @~chinese Èı½ÇĞÎµÄ¶¥µã¡£
      * @param p2 @~english The triangle vertex point.
-     * @~chinese ä¸‰è§’å½¢çš„é¡¶ç‚¹ã€‚
+     * @~chinese Èı½ÇĞÎµÄ¶¥µã¡£
      * @param p3 @~english The triangle vertex point.
-     * @~chinese ä¸‰è§’å½¢çš„é¡¶ç‚¹ã€‚
+     * @~chinese Èı½ÇĞÎµÄ¶¥µã¡£
      * @param color @~english The triangle color.
-     * @~chinese ä¸‰è§’å½¢çš„é¢œè‰²ã€‚
+     * @~chinese Èı½ÇĞÎµÄÑÕÉ«¡£
      * @js NA
      */
     void drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Color4F &color);
 
     /** @~english draw a quadratic bezier curve with color and number of segments, use drawQuadBezier instead.
      *
-     * @~chinese ç»™å®šçº¿æ®µé¢œè‰²å’Œçº¿æ®µæ•°é‡ç”»ä¸€æ¡äºŒæ¬¡è´å¡å°”æ›²çº¿. è¯¥å‡½æ•°å·²ä¸æ¨èä½¿ç”¨ï¼Œä½¿ç”¨drawQuadBezierä»£æ›¿ã€‚
+     * @~chinese ¸ø¶¨Ïß¶ÎÑÕÉ«ºÍÏß¶ÎÊıÁ¿»­Ò»Ìõ¶ş´Î±´Èû¶ûÇúÏß. ¸Ãº¯ÊıÒÑ²»ÍÆ¼öÊ¹ÓÃ£¬Ê¹ÓÃdrawQuadBezier´úÌæ¡£
      * 
      * @param from @~english The origin of the bezier path.
-     * @~chinese è´å¡å°”æ›²çº¿è·¯å¾„çš„åŸç‚¹ã€‚
+     * @~chinese ±´Èû¶ûÇúÏßÂ·¾¶µÄÔ­µã¡£
      * @param control @~english The control of the bezier path.
-     * @~chinese è´å¡å°”æ›²çº¿è·¯å¾„çš„æ§åˆ¶ç‚¹ã€‚
+     * @~chinese ±´Èû¶ûÇúÏßÂ·¾¶µÄ¿ØÖÆµã¡£
      * @param to @~english The destination of the bezier path.
-     * @~chinese è´å¡å°”æ›²çº¿çš„è·¯å¾„ç›®çš„åœ°åæ ‡ç‚¹ã€‚
+     * @~chinese ±´Èû¶ûÇúÏßµÄÂ·¾¶Ä¿µÄµØ×ø±êµã¡£
      * @param segments @~english The The number of segments.
-     * @~chinese çº¿æ®µçš„æ•°é‡ã€‚
+     * @~chinese Ïß¶ÎµÄÊıÁ¿¡£
      * @param color @~english The quadratic bezier color.
-     * @~chinese äºŒæ¬¡è´å¡å°”æ›²çº¿çš„é¢œè‰²ã€‚
+     * @~chinese ¶ş´Î±´Èû¶ûÇúÏßµÄÑÕÉ«¡£
      * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE void drawQuadraticBezier(const Vec2& from, const Vec2& control, const Vec2& to, unsigned int segments, const Color4F &color);
     
-    /** @~english Clear the geometry in the node's buffer.  @~chinese æ¸…é™¤èŠ‚ç‚¹çš„ç¼“å†²åŒºä¸­çš„å‡ ä½•æ•°æ®ã€‚*/
+    /** @~english Clear the geometry in the node's buffer.  @~chinese Çå³ı½ÚµãµÄ»º³åÇøÖĞµÄ¼¸ºÎÊı¾İ¡£*/
 
     void clear();
 
     /** @~english Get the color mixed mode.
-     * @~chinese è·å–é¢œè‰²æ··åˆæ¨¡å¼ã€‚
+     * @~chinese »ñÈ¡ÑÕÉ«»ìºÏÄ£Ê½¡£
     * @lua NA
     */
     const BlendFunc& getBlendFunc() const;
 
     /** @~english Set the color mixed mode.
-     * @~chinese è®¾ç½®é¢œè‰²æ··åˆæ¨¡å¼ã€‚
+     * @~chinese ÉèÖÃÑÕÉ«»ìºÏÄ£Ê½¡£
     * @lua NA
     */
     void setBlendFunc(const BlendFunc &blendFunc);

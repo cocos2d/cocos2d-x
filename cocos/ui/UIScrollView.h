@@ -1,4 +1,4 @@
-ï»¿/****************************************************************************
+/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -44,7 +44,7 @@ class ScrollViewBar;
 /**
  * @enum ScrollviewEventType
  * @brief @~english Scrollview scroll event type.
- * @~chinese æ»šåŠ¨è§†å›¾çš„æ»šåŠ¨äº‹ä»¶ç±»å‹
+ * @~chinese ¹ö¶¯ÊÓÍ¼µÄ¹ö¶¯ÊÂ¼şÀàĞÍ
  * @deprecated use @see `ScrollView::EventType` instead.
  */
 typedef enum
@@ -62,7 +62,7 @@ typedef enum
 
 /**
  * @~english A callback which would be called when a ScrollView is scrolling.
- * @~chinese å½“æ»šåŠ¨è§†å›¾æ»šåŠ¨æ—¶ä¼šè§¦å‘çš„å›è°ƒå‡½æ•°
+ * @~chinese µ±¹ö¶¯ÊÓÍ¼¹ö¶¯Ê±»á´¥·¢µÄ»Øµ÷º¯Êı
  *@deprecated Use @see `ccScrollViewCallback` instead.
  */
 typedef void (Ref::*SEL_ScrollViewEvent)(Ref*, ScrollviewEventType);
@@ -71,8 +71,8 @@ typedef void (Ref::*SEL_ScrollViewEvent)(Ref*, ScrollviewEventType);
 /**
  * @class ScrollView
  * @brief @~english Layout container for a view hierarchy that can be scrolled by the user, allowing it to be larger than the physical display.
- * It holds a inner `Layout` container for storing child items hironzontally or vertically.
- * @~chinese ä¸€ä¸ªèƒ½å¤Ÿè¢«ç”¨æˆ·è§¦æ‘¸æ»šåŠ¨çš„ä¸€ä¸ªå±‚æ¬¡å‹å¸ƒå±€å®¹å™¨è§†å›¾ï¼Œå…è®¸å…¶å°ºå¯¸å¤§äºå±å¹•æ˜¾ç¤ºçš„ç‰©ç†å°ºå¯¸ï¼Œå…¶å†…éƒ¨ç»´æŠ¤æœ‰ä¸€ä¸ªå¸ƒå±€ç”¨äºæ°´å¹³çš„æˆ–å‚ç›´çš„å­˜æ”¾å­èŠ‚ç‚¹
+ * It holds a inner `Layout` container for storing child items horizontally or vertically.
+ * @~chinese Ò»¸öÄÜ¹»±»ÓÃ»§´¥Ãş¹ö¶¯µÄÒ»¸ö²ã´ÎĞÍ²¼¾ÖÈİÆ÷ÊÓÍ¼£¬ÔÊĞíÆä³ß´ç´óÓÚÆÁÄ»ÏÔÊ¾µÄÎïÀí³ß´ç£¬ÆäÄÚ²¿Î¬»¤ÓĞÒ»¸ö²¼¾ÖÓÃÓÚË®Æ½µÄ»ò´¹Ö±µÄ´æ·Å×Ó½Úµã
  */
 class CC_GUI_DLL ScrollView : public Layout
 {
@@ -83,28 +83,28 @@ public:
     /**
      * @enum Direction
      * @brief @~english ScrollView scroll direction type.
-     * @~chinese æ»šåŠ¨è§†å›¾çš„æ»šåŠ¨æ–¹å‘
+     * @~chinese ¹ö¶¯ÊÓÍ¼µÄ¹ö¶¯·½Ïò
      */
     enum class Direction
     {
         /**
          * @~english User can not scroll the view.
-         * @~chinese ç¦æ­¢æ»šåŠ¨
+         * @~chinese ½ûÖ¹¹ö¶¯
          **/
         NONE,
         /**
         * @~english User can scroll the view vertically.
-        * @~chinese ç«–ç›´æ»šåŠ¨
+        * @~chinese ÊúÖ±¹ö¶¯
         **/
         VERTICAL,
         /**
         * @~english User can scroll the view horizontally.
-        * @~chinese æ°´å¹³æ»šåŠ¨
+        * @~chinese Ë®Æ½¹ö¶¯
         **/
         HORIZONTAL,
         /**
         * @~english User can scroll the view both horizontally and vertically.
-        * @~chinese æ°´å¹³ä¸ç«–ç›´æ»šåŠ¨
+        * @~chinese Ë®Æ½ÓëÊúÖ±¹ö¶¯
         **/
         BOTH
     };
@@ -112,7 +112,7 @@ public:
     /**
      * @enum EventType
      * @brief @~english Scrollview scroll event type.
-     * @~chinese æ»šåŠ¨è§†å›¾çš„æ»šåŠ¨äº‹ä»¶
+     * @~chinese ¹ö¶¯ÊÓÍ¼µÄ¹ö¶¯ÊÂ¼ş
      */
     enum class EventType
     {
@@ -130,13 +130,13 @@ public:
 
     /**
      * @~english A callback which would be called when a ScrollView is scrolling.
-     * @~chinese åœ¨æ»šåŠ¨è§†å›¾æ»šåŠ¨æ—¶è¢«è§¦å‘çš„å›è°ƒå‡½æ•°
+     * @~chinese ÔÚ¹ö¶¯ÊÓÍ¼¹ö¶¯Ê±±»´¥·¢µÄ»Øµ÷º¯Êı
      */
     typedef std::function<void(Ref*, EventType)> ccScrollViewCallback;
 
     /**
      * @~english Default constructor
-     * @~chinese é»˜è®¤æ„é€ å‡½æ•°
+     * @~chinese Ä¬ÈÏ¹¹Ôìº¯Êı
      * @js ctor
      * @lua new
      */
@@ -144,7 +144,7 @@ public:
 
     /**
      * @~english Default destructor
-     * @~chinese é»˜è®¤ææ„å‡½æ•°
+     * @~chinese Ä¬ÈÏÎö¹¹º¯Êı
      * @js NA
      * @lua NA
      */
@@ -152,28 +152,28 @@ public:
 
     /**
      * @~english Create an empty ScrollView.
-     * @~chinese åˆ›å»ºä¸€ä¸ªç©ºçš„æ»šåŠ¨è§†å›¾
+     * @~chinese ´´½¨Ò»¸ö¿ÕµÄ¹ö¶¯ÊÓÍ¼
      * @return @~english A ScrollView instance.
-     * @~chinese è¢«åˆ›å»ºçš„æ»šåŠ¨è§†å›¾çš„å¯¹è±¡
+     * @~chinese ±»´´½¨µÄ¹ö¶¯ÊÓÍ¼µÄ¶ÔÏó
      */
     static ScrollView* create();
 
     /**
      * @~english Changes scroll direction of scrollview.
-     * @~chinese æ”¹å˜æ»šåŠ¨è§†å›¾çš„æ–¹å‘
+     * @~chinese ¸Ä±ä¹ö¶¯ÊÓÍ¼µÄ·½Ïò
      * @see `Direction`
      * @param dir @~english Scroll direction enum.
-     * @~chinese æ»šåŠ¨æ–¹å‘çš„æšä¸¾
+     * @~chinese ¹ö¶¯·½ÏòµÄÃ¶¾Ù
      */
     virtual void setDirection(Direction dir);
 
     /**
      * @~english Query scroll direction of scrollview.
-     * @~chinese è·å–æ»šåŠ¨è§†å›¾çš„æ»šåŠ¨æ–¹å‘
+     * @~chinese »ñÈ¡¹ö¶¯ÊÓÍ¼µÄ¹ö¶¯·½Ïò
      * @see `Direction`      @~english Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll
-     * @~chinese Direction::VERTICALæ„å‘³ç€ç«–ç›´æ»šåŠ¨ï¼ŒDirection::HORIZONTALæ„å‘³ç€æ°´å¹³æ»šåŠ¨
+     * @~chinese Direction::VERTICALÒâÎ¶×ÅÊúÖ±¹ö¶¯£¬Direction::HORIZONTALÒâÎ¶×ÅË®Æ½¹ö¶¯
      * @return @~english Scrollview scroll direction.
-     * @~chinese æ»šåŠ¨è§†å›¾å¯æ»šåŠ¨æ–¹å‘
+     * @~chinese ¹ö¶¯ÊÓÍ¼¿É¹ö¶¯·½Ïò
      */
     Direction getDirection()const;
 
@@ -181,206 +181,206 @@ public:
      * @~english Get inner container of scrollview.
      *
      * Inner container is a child of scrollview.
-     * @~chinese è·å–æ»šåŠ¨è§†å›¾çš„å†…éƒ¨å¸ƒå±€å®¹å™¨ï¼Œè¯¥å¸ƒå±€å®¹å™¨ä¸ºæ»šåŠ¨è§†å›¾çš„å­èŠ‚ç‚¹ 
+     * @~chinese »ñÈ¡¹ö¶¯ÊÓÍ¼µÄÄÚ²¿²¼¾ÖÈİÆ÷£¬¸Ã²¼¾ÖÈİÆ÷Îª¹ö¶¯ÊÓÍ¼µÄ×Ó½Úµã 
      * @return @~english Inner container pointer.
      */
     Layout* getInnerContainer()const;
 
     /**
      * @~english Scroll inner container to bottom boundary of scrollview.
-     * @~chinese å°†å†…éƒ¨çš„å¸ƒå±€å®¹å™¨æ»šåŠ¨åˆ°æ»šåŠ¨è§†å›¾çš„åº•éƒ¨è¾¹ç•Œ
+     * @~chinese ½«ÄÚ²¿µÄ²¼¾ÖÈİÆ÷¹ö¶¯µ½¹ö¶¯ÊÓÍ¼µÄµ×²¿±ß½ç
      * @param second @~english Time in seconds.
-     * @~chinese è¯¥åŠ¨ä½œæ‰€éœ€æ—¶é—´ï¼Œä»¥ç§’è®¡
+     * @~chinese ¸Ã¶¯×÷ËùĞèÊ±¼ä£¬ÒÔÃë¼Æ
      * @param attenuated @~english Whether scroll speed attenuate or not.
-     * @~chinese è¯¥åŠ¨ä½œè¿›è¡Œæ—¶ï¼Œæ»šåŠ¨é€Ÿåº¦æ˜¯å¦ä¼šè¡°å‡
+     * @~chinese ¸Ã¶¯×÷½øĞĞÊ±£¬¹ö¶¯ËÙ¶ÈÊÇ·ñ»áË¥¼õ
      */
-    void scrollToBottom(float second, bool attenuated);
+    void scrollToBottom(float timeInSec, bool attenuated);
 
     /**
      * @~english Scroll inner container to top boundary of scrollview.
-     * @~chinese å°†å†…éƒ¨å¸ƒå±€å®¹å™¨æ»šåŠ¨åˆ°æ»šåŠ¨è§†å›¾çš„é¡¶éƒ¨è¾¹ç•Œ
+     * @~chinese ½«ÄÚ²¿²¼¾ÖÈİÆ÷¹ö¶¯µ½¹ö¶¯ÊÓÍ¼µÄ¶¥²¿±ß½ç
      * @param second @~english Time in seconds.
-     * @~chinese è¯¥åŠ¨ä½œæ‰€éœ€çš„æ—¶é—´ï¼Œä»¥ç§’è®¡
+     * @~chinese ¸Ã¶¯×÷ËùĞèµÄÊ±¼ä£¬ÒÔÃë¼Æ
      * @param attenuated @~english Whether scroll speed attenuate or not.
-     * @~chinese è¯¥åŠ¨ä½œè¿›è¡Œæ—¶ï¼Œæ»šåŠ¨é€Ÿåº¦æ˜¯å¦ä¼šè¡°å‡
+     * @~chinese ¸Ã¶¯×÷½øĞĞÊ±£¬¹ö¶¯ËÙ¶ÈÊÇ·ñ»áË¥¼õ
      */
-    void scrollToTop(float second, bool attenuated);
+    void scrollToTop(float timeInSec, bool attenuated);
 
     /**
      * @~english Scroll inner container to left boundary of scrollview.
-     * @~chinese å°†å†…éƒ¨å®¹å™¨æ»šåŠ¨åˆ°æ»šåŠ¨è§†å›¾çš„å·¦ç«¯è¾¹ç•Œ
+     * @~chinese ½«ÄÚ²¿ÈİÆ÷¹ö¶¯µ½¹ö¶¯ÊÓÍ¼µÄ×ó¶Ë±ß½ç
      * @param second @~english Time in seconds.
-     * @~chinese åŠ¨ä½œæ‰§è¡Œæ‰€éœ€æ—¶é—´ï¼Œä»¥ç§’è®¡
+     * @~chinese ¶¯×÷Ö´ĞĞËùĞèÊ±¼ä£¬ÒÔÃë¼Æ
      * @param attenuated @~english Whether scroll speed attenuate or not.
-     * @~chinese æ»šåŠ¨é€Ÿåº¦æ˜¯å¦å‘ç”Ÿè¡°å‡
+     * @~chinese ¹ö¶¯ËÙ¶ÈÊÇ·ñ·¢ÉúË¥¼õ
      */
-    void scrollToLeft(float second, bool attenuated);
+    void scrollToLeft(float timeInSec, bool attenuated);
 
     /**
      * @~english Scroll inner container to right boundary of scrollview.
-     * @~chinese å°†å†…éƒ¨å¸ƒå±€å®¹å™¨æ»šåŠ¨åˆ°æ»šåŠ¨è§†å›¾çš„å³ç«¯è¾¹ç•Œ
+     * @~chinese ½«ÄÚ²¿²¼¾ÖÈİÆ÷¹ö¶¯µ½¹ö¶¯ÊÓÍ¼µÄÓÒ¶Ë±ß½ç
      * @param time @~english Time in seconds.
-     * @~chinese åŠ¨ä½œæ‰§è¡Œæ‰€éœ€æ—¶é—´ï¼Œä»¥ç§’è®¡
+     * @~chinese ¶¯×÷Ö´ĞĞËùĞèÊ±¼ä£¬ÒÔÃë¼Æ
      * @param attenuated @~english Whether scroll speed attenuate or not.
-     * @~chinese æ»šåŠ¨é€Ÿåº¦æ˜¯å¦å‘ç”Ÿè¡°å‡
+     * @~chinese ¹ö¶¯ËÙ¶ÈÊÇ·ñ·¢ÉúË¥¼õ
      */
-    void scrollToRight(float time, bool attenuated);
+    void scrollToRight(float timeInSec, bool attenuated);
 
     /**
      * @~english Scroll inner container to top and left boundary of scrollview.
-     * @~chinese æ»šåŠ¨å†…éƒ¨å¸ƒå±€å®¹å™¨åˆ°æ»šåŠ¨è§†å›¾çš„å·¦ä¸Šè§’
+     * @~chinese ¹ö¶¯ÄÚ²¿²¼¾ÖÈİÆ÷µ½¹ö¶¯ÊÓÍ¼µÄ×óÉÏ½Ç
      * @param second @~english Time in seconds.
-     * @~chinese åŠ¨ä½œæ‰§è¡Œæ‰€éœ€æ—¶é—´ï¼Œä»¥ç§’è®¡
+     * @~chinese ¶¯×÷Ö´ĞĞËùĞèÊ±¼ä£¬ÒÔÃë¼Æ
      * @param attenuated @~english Whether scroll speed attenuate or not.
-     * @~chinese æ»šåŠ¨é€Ÿåº¦æ˜¯å¦å‘ç”Ÿè¡°å‡
+     * @~chinese ¹ö¶¯ËÙ¶ÈÊÇ·ñ·¢ÉúË¥¼õ
      */
-    void scrollToTopLeft(float second, bool attenuated);
+    void scrollToTopLeft(float timeInSec, bool attenuated);
 
     /**
      * @~english Scroll inner container to top and right boundary of scrollview.
-     * @~chinese æ»šåŠ¨å†…éƒ¨å¸ƒå±€å®¹å™¨åˆ°æ»šåŠ¨ä½¿å¾’çš„å³ä¸Šè§’
+     * @~chinese ¹ö¶¯ÄÚ²¿²¼¾ÖÈİÆ÷µ½¹ö¶¯Ê¹Í½µÄÓÒÉÏ½Ç
      * @param time @~english Time in seconds.
-     * @~chinese åŠ¨ä½œæ‰€éœ€æ—¶é—´ï¼Œä»¥ç§’è®¡
+     * @~chinese ¶¯×÷ËùĞèÊ±¼ä£¬ÒÔÃë¼Æ
      * @param attenuated Whether scroll speed attenuate or not.
-     * @~chinese æ»šåŠ¨é€Ÿåº¦æ˜¯å¦å‘ç”Ÿè¡°å‡
+     * @~chinese ¹ö¶¯ËÙ¶ÈÊÇ·ñ·¢ÉúË¥¼õ
      */
-    void scrollToTopRight(float time, bool attenuated);
+    void scrollToTopRight(float timeInSec, bool attenuated);
 
     /**
      * @~english Scroll inner container to bottom and left boundary of scrollview.
-     * @~chinese æ»šåŠ¨å†…éƒ¨å¸ƒå±€å®¹å™¨åˆ°è§†å›¾çš„å·¦ä¸‹è§’
+     * @~chinese ¹ö¶¯ÄÚ²¿²¼¾ÖÈİÆ÷µ½ÊÓÍ¼µÄ×óÏÂ½Ç
      * @param second @~english Time in seconds.
-     * @~chinese åŠ¨ä½œæ‰§è¡Œæ‰€éœ€æ—¶é—´ï¼Œä»¥ç§’è®¡
+     * @~chinese ¶¯×÷Ö´ĞĞËùĞèÊ±¼ä£¬ÒÔÃë¼Æ
      * @param attenuated @~english Whether scroll speed attenuate or not.
-     * @~chinese æ»šåŠ¨é€Ÿåº¦æ˜¯å¦å‘ç”Ÿè¡°å‡
+     * @~chinese ¹ö¶¯ËÙ¶ÈÊÇ·ñ·¢ÉúË¥¼õ
      */
-    void scrollToBottomLeft(float second, bool attenuated);
+    void scrollToBottomLeft(float timeInSec, bool attenuated);
 
     /**
      * @~english Scroll inner container to bottom and right boundary of scrollview.
-     * @~chinese æ»šåŠ¨å†…éƒ¨å¸ƒå±€å®¹å™¨åˆ°è§†å›¾çš„å³ä¸‹è§’
+     * @~chinese ¹ö¶¯ÄÚ²¿²¼¾ÖÈİÆ÷µ½ÊÓÍ¼µÄÓÒÏÂ½Ç
      * @param time @~english Time in seconds
-     * @~chinese åŠ¨ä½œæ‰§è¡Œæ‰€éœ€æ—¶é—´
+     * @~chinese ¶¯×÷Ö´ĞĞËùĞèÊ±¼ä
      * @param attenuated @~english Whether scroll speed attenuate or not.
-     * @~chinese æ»šåŠ¨é€Ÿåº¦æ˜¯å¦å‘ç”Ÿè¡°å‡
+     * @~chinese ¹ö¶¯ËÙ¶ÈÊÇ·ñ·¢ÉúË¥¼õ
      */
-    void scrollToBottomRight(float time, bool attenuated);
+    void scrollToBottomRight(float timeInSec, bool attenuated);
 
     /**
      * @~english Scroll inner container to vertical percent position of scrollview.
-     * @~chinese æŒ‰ç™¾åˆ†æ¯”ç«–ç›´æ»šåŠ¨å†…éƒ¨å¸ƒå±€å®¹å™¨
+     * @~chinese °´°Ù·Ö±ÈÊúÖ±¹ö¶¯ÄÚ²¿²¼¾ÖÈİÆ÷
      * @param percent @~english A value between 0 and 100.
-     * @~chinese ç™¾åˆ†æ¯”ï¼Œä»0è‡³100
+     * @~chinese °Ù·Ö±È£¬´Ó0ÖÁ100
      * @param second @~english Time in seconds.
-     * @~chinese åŠ¨ä½œæ‰§è¡Œæ—¶é—´
+     * @~chinese ¶¯×÷Ö´ĞĞÊ±¼ä
      * @param attenuated @~english Whether scroll speed attenuate or not.
-     * @~chinese æ»šåŠ¨é€Ÿåº¦æ˜¯å¦å‘ç”Ÿè¡°å‡
+     * @~chinese ¹ö¶¯ËÙ¶ÈÊÇ·ñ·¢ÉúË¥¼õ
      */
-    void scrollToPercentVertical(float percent, float second, bool attenuated);
+    void scrollToPercentVertical(float percent, float timeInSec, bool attenuated);
 
     /**
      * @~english Scroll inner container to horizontal percent position of scrollview.
-     * @~chinese æŒ‰ç™¾åˆ†æ¯”æ°´å¹³æ»šåŠ¨å†…éƒ¨å¸ƒå±€å®¹å™¨
+     * @~chinese °´°Ù·Ö±ÈË®Æ½¹ö¶¯ÄÚ²¿²¼¾ÖÈİÆ÷
      * @param percent @~english A value between 0 and 100.
-     * @~chinese ç™¾åˆ†æ¯”ï¼Œä»0è‡³100
+     * @~chinese °Ù·Ö±È£¬´Ó0ÖÁ100
      * @param second @~english Time in seconds.
-     * @~chinese åŠ¨ä½œæ‰§è¡Œæ—¶é—´
+     * @~chinese ¶¯×÷Ö´ĞĞÊ±¼ä
      * @param attenuated @~english Whether scroll speed attenuate or not.
-     * @~chinese æ»šåŠ¨é€Ÿåº¦æ˜¯å¦å‘ç”Ÿè¡°å‡
+     * @~chinese ¹ö¶¯ËÙ¶ÈÊÇ·ñ·¢ÉúË¥¼õ
      */
-    void scrollToPercentHorizontal(float percent, float second, bool attenuated);
+    void scrollToPercentHorizontal(float percent, float timeInSec, bool attenuated);
 
     /**
      * @~english Scroll inner container to both direction percent position of scrollview.
-     * @~chinese åœ¨ç«–ç›´æ–¹å‘å’Œæ°´å¹³æ–¹å‘åˆ†åˆ«æŒ‰ä¸€å®šçš„ç™¾åˆ†æ¯”æ»šåŠ¨å†…éƒ¨å¸ƒå±€å®¹å™¨
+     * @~chinese ÔÚÊúÖ±·½ÏòºÍË®Æ½·½Ïò·Ö±ğ°´Ò»¶¨µÄ°Ù·Ö±È¹ö¶¯ÄÚ²¿²¼¾ÖÈİÆ÷
      * @param percent @~english A value between 0 and 100.
-     * @~chinese ç™¾åˆ†æ¯”ï¼Œxåˆ†é‡ä»£è¡¨æ°´å¹³ç™¾åˆ†æ¯”ï¼Œyåˆ†ä¸¤ä»£è¡¨ç«–ç›´ç™¾åˆ†æ¯”
+     * @~chinese °Ù·Ö±È£¬x·ÖÁ¿´ú±íË®Æ½°Ù·Ö±È£¬y·ÖÁ½´ú±íÊúÖ±°Ù·Ö±È
      * @param second @~english Time in seconds.
-     * @~chinese åŠ¨ä½œæ‰€éœ€æ—¶é—´
+     * @~chinese ¶¯×÷ËùĞèÊ±¼ä
      * @param attenuated @~english Whether scroll speed attenuate or not.
-     * @~chinese æ»šåŠ¨é€Ÿåº¦æ˜¯å¦å‘ç”Ÿè¡°å‡
+     * @~chinese ¹ö¶¯ËÙ¶ÈÊÇ·ñ·¢ÉúË¥¼õ
      */
-    void scrollToPercentBothDirection(const Vec2& percent, float second, bool attenuated);
+    void scrollToPercentBothDirection(const Vec2& percent, float timeInSec, bool attenuated);
 
     /**
      * @~english Move inner container to bottom boundary of scrollview.
-     * @~chinese å°†å†…éƒ¨å¸ƒå±€å®¹å™¨ç§»è‡³è§†å›¾åº•ç«¯
+     * @~chinese ½«ÄÚ²¿²¼¾ÖÈİÆ÷ÒÆÖÁÊÓÍ¼µ×¶Ë
      */
-    void jumpToBottom();
+    virtual void jumpToBottom();
 
     /**
      * @~english Move inner container to top boundary of scrollview.
-     * @~chinese å°†å†…éƒ¨å¸ƒå±€å®¹å™¨ç§»è‡³è§†å›¾é¡¶ç«¯
+     * @~chinese ½«ÄÚ²¿²¼¾ÖÈİÆ÷ÒÆÖÁÊÓÍ¼¶¥¶Ë
      */
-    void jumpToTop();
+    virtual void jumpToTop();
 
     /**
      * @~english Move inner container to left boundary of scrollview.
-     * @~chinese å°†å†…éƒ¨å¸ƒå±€å®¹å™¨ç§»è‡³è§†å›¾å·¦ç«¯
+     * @~chinese ½«ÄÚ²¿²¼¾ÖÈİÆ÷ÒÆÖÁÊÓÍ¼×ó¶Ë
      */
-    void jumpToLeft();
+    virtual void jumpToLeft();
 
     /**
      * @~english Move inner container to right boundary of scrollview.
-     * @~chinese å°†å†…éƒ¨å¸ƒå±€å®¹å™¨ç§»è‡³è§†å›¾å³ç«¯
+     * @~chinese ½«ÄÚ²¿²¼¾ÖÈİÆ÷ÒÆÖÁÊÓÍ¼ÓÒ¶Ë
      */
-    void jumpToRight();
+    virtual void jumpToRight();
 
     /**
      * @~english Move inner container to top and left boundary of scrollview.
-     * @~chinese å°†å†…éƒ¨å¸ƒå±€å®¹å™¨ç§»è‡³è§†å›¾çš„å·¦ä¸Šè§’
+     * @~chinese ½«ÄÚ²¿²¼¾ÖÈİÆ÷ÒÆÖÁÊÓÍ¼µÄ×óÉÏ½Ç
      */
-    void jumpToTopLeft();
+    virtual void jumpToTopLeft();
 
     /**
      * @~english Move inner container to top and right boundary of scrollview.
-     * @~chinese å°†å†…éƒ¨å¸ƒå±€å®¹å™¨ç§»è‡³è§†å›¾çš„å³ä¸Šè§’
+     * @~chinese ½«ÄÚ²¿²¼¾ÖÈİÆ÷ÒÆÖÁÊÓÍ¼µÄÓÒÉÏ½Ç
      */
-    void jumpToTopRight();
+    virtual void jumpToTopRight();
 
     /**
      * @~english Move inner container to bottom and left boundary of scrollview.
-     * @~chinese å°†å†…éƒ¨å¸ƒå±€å®¹å™¨ç§»è‡³è§†å›¾çš„å·¦ä¸‹è§’
+     * @~chinese ½«ÄÚ²¿²¼¾ÖÈİÆ÷ÒÆÖÁÊÓÍ¼µÄ×óÏÂ½Ç
      */
-    void jumpToBottomLeft();
+    virtual void jumpToBottomLeft();
 
     /**
      * @~english Move inner container to bottom and right boundary of scrollview.
-     * @~chinese å°†å†…éƒ¨å¸ƒå±€å®¹å™¨ç§»è‡³è§†å›¾çš„å³ä¸‹è§’
+     * @~chinese ½«ÄÚ²¿²¼¾ÖÈİÆ÷ÒÆÖÁÊÓÍ¼µÄÓÒÏÂ½Ç
      */
-    void jumpToBottomRight();
+    virtual void jumpToBottomRight();
 
     /**
      * @~english Move inner container to vertical percent position of scrollview.
-     * @~chinese æŒ‰ä¸€å®šçš„ç™¾åˆ†æ¯”ç«–ç›´æ»šåŠ¨è§†å›¾å†…çš„å¸ƒå±€å®¹å™¨
+     * @~chinese °´Ò»¶¨µÄ°Ù·Ö±ÈÊúÖ±¹ö¶¯ÊÓÍ¼ÄÚµÄ²¼¾ÖÈİÆ÷
      * @param percent @~english A value between 0 and 100.
-     * @~chinese ç™¾åˆ†æ¯”ï¼Œä»0è‡³100
+     * @~chinese °Ù·Ö±È£¬´Ó0ÖÁ100
      */
-    void jumpToPercentVertical(float percent);
+    virtual void jumpToPercentVertical(float percent);
 
     /**
      * @~english Move inner container to horizontal percent position of scrollview.
-     * @~chinese æŒ‰ä¸€å®šçš„ç™¾åˆ†æ¯”ç«–ç›´æ»šåŠ¨è§†å›¾å†…çš„å¸ƒå±€å®¹å™¨
+     * @~chinese °´Ò»¶¨µÄ°Ù·Ö±ÈÊúÖ±¹ö¶¯ÊÓÍ¼ÄÚµÄ²¼¾ÖÈİÆ÷
      * @param percent   @~english A value between 0 and 100.
-     * @~chinese ç™¾åˆ†æ¯”ï¼Œä»0è‡³100
+     * @~chinese °Ù·Ö±È£¬´Ó0ÖÁ100
      */
-    void jumpToPercentHorizontal(float percent);
+    virtual void jumpToPercentHorizontal(float percent);
 
     /**
      * @~english Move inner container to both direction percent position of scrollview.
-     * @~chinese ç«–ç›´æ–¹å‘å’Œæ°´å¹³æ–¹å‘åˆ†åˆ«æŒ‰ä¸€å®šçš„ç™¾åˆ†æ¯”æ»šåŠ¨å®¹å™¨
+     * @~chinese ÊúÖ±·½ÏòºÍË®Æ½·½Ïò·Ö±ğ°´Ò»¶¨µÄ°Ù·Ö±È¹ö¶¯ÈİÆ÷
      * @param percent  @~english  A value between 0 and 100.
-     * @~chinese xåˆ†é‡ä¸ºæ°´å¹³æ–¹å‘çš„ç™¾åˆ†æ¯”ï¼Œyåˆ†é‡ä¸ºç«–ç›´æ–¹å‘çš„ç™¾åˆ†æ¯”
+     * @~chinese x·ÖÁ¿ÎªË®Æ½·½ÏòµÄ°Ù·Ö±È£¬y·ÖÁ¿ÎªÊúÖ±·½ÏòµÄ°Ù·Ö±È
      */
-    void jumpToPercentBothDirection(const Vec2& percent);
+    virtual void jumpToPercentBothDirection(const Vec2& percent);
 
     /**
      * @~english Change inner container size of scrollview.
      *
      * Inner container size must be larger than or equal scrollview's size.
-     * @~chinese æ›´æ”¹å†…éƒ¨å¸ƒå±€å®¹å™¨çš„å°ºå¯¸å¤§å°ï¼Œå†…éƒ¨å®¹å™¨çš„å°ºå¯¸å¿…é¡»å¤§äºæˆ–ç­‰äºæ»šåŠ¨è§†å›¾çš„å°ºå¯¸
+     * @~chinese ¸ü¸ÄÄÚ²¿²¼¾ÖÈİÆ÷µÄ³ß´ç´óĞ¡£¬ÄÚ²¿ÈİÆ÷µÄ³ß´ç±ØĞë´óÓÚ»òµÈÓÚ¹ö¶¯ÊÓÍ¼µÄ³ß´ç
      * @param size @~english Inner container size.
-     * @~chinese å†…éƒ¨å®¹å™¨çš„å°ºå¯¸
+     * @~chinese ÄÚ²¿ÈİÆ÷µÄ³ß´ç
      */
     void setInnerContainerSize(const Size &size);
 
@@ -388,9 +388,9 @@ public:
      * @~english Get inner container size of scrollview.
      *
      * Inner container size must be larger than or equal scrollview's size.
-     * @~chinese è·å–å†…éƒ¨å®¹å™¨çš„å°ºå¯¸ï¼Œå†…éƒ¨å®¹å™¨çš„å°ºå¯¸å¿…é¡»å¤§äºæˆ–ç­‰äºæ»šåŠ¨è§†å›¾çš„å°ºå¯¸
+     * @~chinese »ñÈ¡ÄÚ²¿ÈİÆ÷µÄ³ß´ç£¬ÄÚ²¿ÈİÆ÷µÄ³ß´ç±ØĞë´óÓÚ»òµÈÓÚ¹ö¶¯ÊÓÍ¼µÄ³ß´ç
      * @return @~english The inner container size.
-     * @~chinese å†…éƒ¨å®¹å™¨çš„å°ºå¯¸
+     * @~chinese ÄÚ²¿ÈİÆ÷µÄ³ß´ç
      */
     const Size& getInnerContainerSize() const;
     
@@ -410,20 +410,20 @@ public:
 
     /**
      * @~english Add callback function which will be called  when scrollview event triggered.
-     * @~chinese æ·»åŠ ä¸€ä¸ªå›è°ƒå‡½æ•°ï¼Œè¯¥å›è°ƒå‡½æ•°å°†ä¼šåœ¨è§†å›¾å‘ç”Ÿæ»šåŠ¨æ—¶è§¦å‘
+     * @~chinese Ìí¼ÓÒ»¸ö»Øµ÷º¯Êı£¬¸Ã»Øµ÷º¯Êı½«»áÔÚÊÓÍ¼·¢Éú¹ö¶¯Ê±´¥·¢
      * @deprecated Use @see `addEventListener` instead.
      * @param target @~english A pointer of `Ref*` type.
-     * @~english Ref* æŒ‡é’ˆ
+     * @~english Ref* Ö¸Õë
      * @param selector @~english A member function pointer with type of `SEL_ScrollViewEvent`.
-     * @~chinese `SEL_ScrollViewEvent`ç±»å‹çš„æˆå‘˜å‡½æ•°æŒ‡é’ˆ
+     * @~chinese `SEL_ScrollViewEvent`ÀàĞÍµÄ³ÉÔ±º¯ÊıÖ¸Õë
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerScrollView(Ref* target, SEL_ScrollViewEvent selector);
 
     /**
      * @~english Add callback function which will be called  when scrollview event triggered.
-     * @~chinese æ·»åŠ ä¸€ä¸ªå›è°ƒå‡½æ•°ï¼Œè¯¥å›è°ƒå‡½æ•°å°†åœ¨æ»šåŠ¨äº‹ä»¶è§¦å‘æ—¶è¢«è°ƒç”¨
+     * @~chinese Ìí¼ÓÒ»¸ö»Øµ÷º¯Êı£¬¸Ã»Øµ÷º¯Êı½«ÔÚ¹ö¶¯ÊÂ¼ş´¥·¢Ê±±»µ÷ÓÃ
      * @param callback @~english A callback function with type of `ccScrollViewCallback`.
-     * @~chinese `ccScrollViewCallback` ç±»å‹çš„å›è°ƒå‡½æ•°
+     * @~chinese `ccScrollViewCallback` ÀàĞÍµÄ»Øµ÷º¯Êı
      */
     virtual void addEventListener(const ccScrollViewCallback& callback);
 
@@ -447,36 +447,35 @@ public:
     virtual void onTouchCancelled(Touch *touch, Event *unusedEvent) override;
     virtual void update(float dt) override;
 
-
     /**
      * @brief @~english Toggle bounce enabled when scroll to the edge.
-     * @~chinese è®¾ç½®å½“æ»šåŠ¨åˆ°è¾¹ç•Œæ—¶ï¼Œæ˜¯å¦å†…éƒ¨å®¹å™¨å‘ç”Ÿå¼¹å›(bounce)æ•ˆæœ
+     * @~chinese ÉèÖÃµ±¹ö¶¯µ½±ß½çÊ±£¬ÊÇ·ñÄÚ²¿ÈİÆ÷·¢Éúµ¯»Ø(bounce)Ğ§¹û
      * @param enabled @~english True if enable bounce, false otherwise.
-     * @~chinese æ˜¯å¦å‘ç”Ÿå¼¹å›(bounce)æ•ˆæœ
+     * @~chinese ÊÇ·ñ·¢Éúµ¯»Ø(bounce)Ğ§¹û
      */
     void setBounceEnabled(bool enabled);
 
     /**
      * @brief @~english Query bounce state.
-     * @~chinese è·å–å¼¹å›(bounce)çŠ¶æ€
+     * @~chinese »ñÈ¡µ¯»Ø(bounce)×´Ì¬
      * @return @~english True if bounce is enabled, false otherwise.
-     * @~chinese å¼€å¯å¼¹å›æ—¶è¿”å›trueï¼Œåä¹‹è¿”å›false
+     * @~chinese ¿ªÆôµ¯»ØÊ±·µ»Øtrue£¬·´Ö®·µ»Øfalse
      */
     bool isBounceEnabled() const;
 
     /**
      * @brief @~english Toggle whether enable scroll inertia while scrolling.
-     * @~chinese è®¾ç½®æ˜¯å¦å¼€å¯æ»šåŠ¨æƒ¯æ€§
+     * @~chinese ÉèÖÃÊÇ·ñ¿ªÆô¹ö¶¯¹ßĞÔ
      * @param enabled @~english True if enable inertia, false otherwise.
-     * @~chinese è®¾ä¸ºtrueå°†å¼€å¯æ»šåŠ¨æƒ¯æ€§ï¼Œåä¹‹ä¸å¼€å¯
+     * @~chinese ÉèÎªtrue½«¿ªÆô¹ö¶¯¹ßĞÔ£¬·´Ö®²»¿ªÆô
      */
     void setInertiaScrollEnabled(bool enabled);
 
     /**
      * @brief @~english Query inertia scroll state.
-     * @~chinese è·å–æ»šåŠ¨è§†å›¾æ˜¯å¦å¼€å¯æ»šåŠ¨æƒ¯æ€§
+     * @~chinese »ñÈ¡¹ö¶¯ÊÓÍ¼ÊÇ·ñ¿ªÆô¹ö¶¯¹ßĞÔ
      * @return @~english True if inertia is enabled, false otherwise.
-     * @~chinese æ»šåŠ¨æƒ¯æ€§å¼€å¯æ—¶è¿”å›trueï¼Œåä¹‹è¿”å›false
+     * @~chinese ¹ö¶¯¹ßĞÔ¿ªÆôÊ±·µ»Øtrue£¬·´Ö®·µ»Øfalse
      */
     bool isInertiaScrollEnabled() const;
     
@@ -601,25 +600,25 @@ public:
     
     /**
      * @~english Set layout type for scrollview.
-     * è®¾ç½®æ»šåŠ¨è§†å›¾çš„å¸ƒå±€ç±»å‹
+     * ÉèÖÃ¹ö¶¯ÊÓÍ¼µÄ²¼¾ÖÀàĞÍ
      * @see `Layout::Type`
      * @param type  @~english Layout type enum.
-     * @~chinese å¸ƒå±€ç±»å‹çš„æšä¸¾
+     * @~chinese ²¼¾ÖÀàĞÍµÄÃ¶¾Ù
      */
     virtual void setLayoutType(Type type) override;
 
     /**
      * @~english Get the layout type for scrollview.
-     * @~chinese è·å–æ»šåŠ¨è§†å›¾çš„å½“å‰å¸ƒå±€ç±»å‹
+     * @~chinese »ñÈ¡¹ö¶¯ÊÓÍ¼µÄµ±Ç°²¼¾ÖÀàĞÍ
      * @see `Layout::Type`
      * @return @~english LayoutType
-     * @~chinese å¸ƒå±€ç±»å‹
+     * @~chinese ²¼¾ÖÀàĞÍ
      */
     virtual Type getLayoutType() const override;
 
     /**
      * @~english Return the "class name" of widget.
-     * @~chinese è¿”å›ç±»å‹å
+     * @~chinese ·µ»ØÀàĞÍÃû
      */
     virtual std::string getDescription() const override;
 
@@ -631,13 +630,13 @@ public:
     /**
      *  @~english When a widget is in a layout, you could call this method to get the next focused widget within a specified direction.
      *  If the widget is not in a layout, it will return itself
-     * @~chinese å½“ä¸€ä¸ªæ§ä»¶æ˜¯å¸ƒå±€æ—¶ï¼Œä½ å¯ä»¥è°ƒç”¨æ­¤æ–¹æ³•è·å–æŒ‡å®šæ–¹å‘ä¸Šä¸‹ä¸€ä¸ªæœ‰ç„¦ç‚¹çš„æ§ä»¶ï¼Œå¦‚æœå½“å‰æ§ä»¶ä¸æ˜¯å¸ƒå±€ï¼Œå°†è¿”å›è‡ªèº«
+     * @~chinese µ±Ò»¸ö¿Ø¼şÊÇ²¼¾ÖÊ±£¬Äã¿ÉÒÔµ÷ÓÃ´Ë·½·¨»ñÈ¡Ö¸¶¨·½ÏòÉÏÏÂÒ»¸öÓĞ½¹µãµÄ¿Ø¼ş£¬Èç¹ûµ±Ç°¿Ø¼ş²»ÊÇ²¼¾Ö£¬½«·µ»Ø×ÔÉí
      * @param direction @~english The direction to look for the next focused widget in a layout
-     * @~chinese æŒ‡å®šæ–¹å‘
+     * @~chinese Ö¸¶¨·½Ïò
      * @param current  @~english The current focused widget
-     * @~chinese å½“å‰ç„¦ç‚¹çš„æ§ä»¶
+     * @~chinese µ±Ç°½¹µãµÄ¿Ø¼ş
      * @return @~english The next focused widget in a layout
-     * @~chinese ä¸‹ä¸€ä¸ªæœ‰ç„¦ç‚¹çš„æ§ä»¶
+     * @~chinese ÏÂÒ»¸öÓĞ½¹µãµÄ¿Ø¼ş
      */
     virtual Widget* findNextFocusedWidget(FocusDirection direction, Widget* current) override;
 
@@ -665,30 +664,33 @@ protected:
     virtual void initScrollBar();
     virtual void removeScrollBar();
     
-    bool isOutOfBoundary(MoveDirection dir) const;
-    bool isOutOfBoundaryTopOrBottom() const;
-    bool isOutOfBoundaryLeftOrRight() const;
+    Vec2 flattenVectorByDirection(const Vec2& vector);
+    
+    virtual Vec2 getHowMuchOutOfBoundary(const Vec2& addition = Vec2::ZERO);
+    bool isOutOfBoundary(MoveDirection dir);
+    bool isOutOfBoundary();
     
     void moveChildren(float offsetX, float offsetY);
     void moveChildrenToPosition(const Vec2& position);
+	
+	bool calculateCurrAndPrevTouchPoints(Touch* touch, Vec3* currPt, Vec3* prevPt);
+	void gatherTouchMove(const Vec2& delta);
+    Vec2 calculateTouchMoveVelocity() const;
     
-    void startInertiaScroll();
-    void processInertiaScrolling(float dt);
-    
-    void startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated);
-    void startAutoScrollChildrenWithDestination(const Vec2& des, float second, bool attenuated);
+    virtual void startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity);
+    void startAutoScroll(const Vec2& deltaMove, float timeInSec, bool attenuated);
+    void startAutoScrollToDestination(const Vec2& des, float timeInSec, bool attenuated);
+    bool isNecessaryAutoScrollBrake();
     void processAutoScrolling(float deltaTime);
 
+    void startInertiaScroll(const Vec2& touchMoveVelocity);
+    
     bool startBounceBackIfNeeded();
 
     void jumpToDestination(const Vec2& des);
 
     virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
 
-    void startRecordSlidAction();
-    virtual void endRecordSlidAction();
-
-    //ScrollViewProtocol
     virtual void handlePressLogic(Touch *touch);
     virtual void handleMoveLogic(Touch *touch);
     virtual void handleReleaseLogic(Touch *touch);
@@ -698,8 +700,6 @@ protected:
     void processScrollEvent(MoveDirection dir, bool bounce);
     void processScrollingEvent();
     void dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType);
-    
-    Vec2 getHowMuchOutOfBoundary(const Vec2& addition) const;
     
     void updateScrollBar(const Vec2& outOfBoundary);
 
@@ -716,25 +716,28 @@ protected:
     bool _bePressed;
 
     float _childFocusCancelOffsetInInch;
-
-    bool _inertiaScrollEnabled;
-    bool _inertiaScrolling;
-    Vec2 _inertiaInitiVelocity;
-    std::list<Vec2> _inertiaTouchDisplacements;
-    std::list<float> _inertiaTouchTimeDeltas;
-    long long _inertiaPrevTouchTimestamp;
-    float _inertiaScrollExpectedTime;
-    float _inertiaScrollElapsedTime;
-
+    
+    // Touch move speed
+    std::list<Vec2> _touchMoveDisplacements;
+    std::list<float> _touchMoveTimeDeltas;
+    long long _touchMovePreviousTimestamp;
+    
     bool _autoScrolling;
     bool _autoScrollAttenuate;
     Vec2 _autoScrollStartPosition;
     Vec2 _autoScrollTargetDelta;
-    float _autoScrollDuration;
+    float _autoScrollTotalTime;
     float _autoScrollAccumulatedTime;
+    bool _autoScrollCurrentlyOutOfBoundary;
+    bool _autoScrollBraking;
+    Vec2 _autoScrollBrakingStartPosition;
     
+    bool _inertiaScrollEnabled;
+
     bool _bounceEnabled;
-    bool _bouncingBack;
+    
+    Vec2 _outOfBoundaryAmount;
+    bool _outOfBoundaryAmountDirty;
     
     bool _scrollBarEnabled;
     ScrollViewBar* _verticalScrollBar;

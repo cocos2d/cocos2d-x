@@ -48,7 +48,7 @@ NS_CC_BEGIN
  * The LuaEngine integrated into the cocos2d-x to process the interactive operation between lua and c++.
  *
  * @~chinese 
- * LuaEngineé›†æˆåˆ°cocos2d-xä¸­ï¼Œç”¨äºå¤„ç†Luaå’Œc++ä¹‹é—´çš„äº¤äº’æ“ä½œã€‚
+ * LuaEngine¼¯³Éµ½cocos2d-xÖĞ£¬ÓÃÓÚ´¦ÀíLuaºÍc++Ö®¼äµÄ½»»¥²Ù×÷¡£
  * 
  * @lua NA
  * @js NA
@@ -61,10 +61,10 @@ public:
      * Get instance of LuaEngine.
      *
      * @~chinese 
-     * è·å–LuaEngineçš„å®ä¾‹ã€‚
+     * »ñÈ¡LuaEngineµÄÊµÀı¡£
      * 
      * @return @~english the instance of LuaEngine.
-     * @~chinese LuaEngineçš„å®ä¾‹ã€‚
+     * @~chinese LuaEngineµÄÊµÀı¡£
      */
 
     static LuaEngine* getInstance(void);
@@ -72,10 +72,10 @@ public:
      * Get defaultEngine of LuaEngine, it was deprecated.
      *
      * @~chinese 
-     * è·å–LuaEngineçš„é»˜è®¤å®ä¾‹,å·²å¼ƒç”¨ã€‚
+     * »ñÈ¡LuaEngineµÄÄ¬ÈÏÊµÀı,ÒÑÆúÓÃ¡£
      * 
      * @return @~english the instance of LuaEngine.
-     * @~chinese LuaEngineçš„å®ä¾‹ã€‚
+     * @~chinese LuaEngineµÄÊµÀı¡£
      */
 
     CC_DEPRECATED_ATTRIBUTE static LuaEngine* defaultEngine(void) { return LuaEngine::getInstance(); }
@@ -83,7 +83,7 @@ public:
     /** @~english
      * Destructor of LuaEngine.
      * @~chinese 
-     * LuaEngineçš„ææ„å‡½æ•°ã€‚
+     * LuaEngineµÄÎö¹¹º¯Êı¡£
      */
 
     virtual ~LuaEngine(void);
@@ -92,10 +92,10 @@ public:
      * Get ccScriptType of LuaEngine used, it is always kScriptTypeLua.
      *
      * @~chinese 
-     * è·å–LuaEngineä½¿ç”¨çš„ccScriptTypeå€¼,å®ƒæ€»æ˜¯kScriptTypeLuaã€‚
+     * »ñÈ¡LuaEngineÊ¹ÓÃµÄccScriptTypeÖµ,Ëü×ÜÊÇkScriptTypeLua¡£
      * 
      * @return @~english kScriptTypeLua.
-     * @~chinese kScriptTypeLuaã€‚
+     * @~chinese kScriptTypeLua¡£
      */
 
     virtual ccScriptType getScriptType() override {
@@ -107,11 +107,11 @@ public:
      * All the interactive operation are all base on the LuaStack.
      *
      * @~chinese 
-     * è·å–LuaEngineçš„LuaStackã€‚
-     * æ‰€æœ‰c++å’ŒLuaçš„äº¤äº’æ“ä½œéƒ½æ˜¯åŸºäºLuaStackã€‚
+     * »ñÈ¡LuaEngineµÄLuaStack¡£
+     * ËùÓĞc++ºÍLuaµÄ½»»¥²Ù×÷¶¼ÊÇ»ùÓÚLuaStack¡£
      * 
      * @return @~english LuaStack object.
-     * @~chinese LuaStackå¯¹è±¡ã€‚
+     * @~chinese LuaStack¶ÔÏó¡£
      */
 
     LuaStack *getLuaStack(void) {
@@ -122,10 +122,10 @@ public:
      * Add a path to find Lua files in.
      *
      * @~chinese 
-     * æ·»åŠ ä¸€æ¡æŸ¥æ‰¾Luaæ–‡ä»¶çš„æœç´¢è·¯å¾„ã€‚
+     * Ìí¼ÓÒ»Ìõ²éÕÒLuaÎÄ¼şµÄËÑË÷Â·¾¶¡£
      * 
      * @param path @~english to be added to the Lua path.
-     * @~chinese æ–°å¢çš„Luaæ–‡ä»¶æœç´¢è·¯å¾„ã€‚
+     * @~chinese ĞÂÔöµÄLuaÎÄ¼şËÑË÷Â·¾¶¡£
      */
 
     virtual void addSearchPath(const char* path);
@@ -134,26 +134,26 @@ public:
      * Add Lua loader.
      *
      * @~chinese 
-     * æ·»åŠ LuaåŠ è½½å™¨ã€‚
+     * Ìí¼ÓLua¼ÓÔØÆ÷¡£
      * 
      * @param func @~english a function pointer point to the loader function.
-     * @~chinese æŒ‡å‘åŠ è½½å™¨çš„å‡½æ•°æŒ‡é’ˆã€‚
+     * @~chinese Ö¸Ïò¼ÓÔØÆ÷µÄº¯ÊıÖ¸Õë¡£
      */
 
     virtual void addLuaLoader(lua_CFunction func);
     
     /**@~english
      * Reload script code corresponding to moduleFileName.
-     * If value of package["loaded"][moduleFileName] is existed, it would set the vaule nil.Then,it calls executeString function.
+     * If value of package["loaded"][moduleFileName] is existed, it would set the value nil.Then,it calls executeString function.
      *
      * @~chinese 
-     * é‡æ–°åŠ è½½å¯¹åº”moduleFileNameæŒ‡å‘çš„è„šæœ¬æ–‡ä»¶ã€‚
-     * å¦‚æœpackage["loaded"][moduleFileName]å€¼ä¸ä¸ºnil,å®ƒå°†å…ˆè®¾ç½®å€¼ä¸ºnil,ç„¶å,è°ƒç”¨executeStringå‡½æ•°ã€‚
+     * ÖØĞÂ¼ÓÔØ¶ÔÓ¦moduleFileNameÖ¸ÏòµÄ½Å±¾ÎÄ¼ş¡£
+     * Èç¹ûpackage["loaded"][moduleFileName]Öµ²»Îªnil,Ëü½«ÏÈÉèÖÃÖµÎªnil,È»ºó,µ÷ÓÃexecuteStringº¯Êı¡£
      * 
      * @param moduleFileName @~english String object holding the filename of the script file that is to be executed.
-     * @~chinese è„šæœ¬æ–‡ä»¶çš„æ–‡ä»¶åã€‚
+     * @~chinese ½Å±¾ÎÄ¼şµÄÎÄ¼şÃû¡£
      * @return @~english 0 if the string is executed correctly or other if the string is executed wrongly.
-     * @~chinese å¦‚æœæ‰§è¡Œæ­£ç¡®,è¿”å›0ï¼Œå¦åˆ™è¿”å›å…¶å®ƒå€¼ã€‚
+     * @~chinese Èç¹ûÖ´ĞĞÕıÈ·,·µ»Ø0£¬·ñÔò·µ»ØÆäËüÖµ¡£
      */
 
     virtual int reload(const char* moduleFileName);
@@ -161,19 +161,19 @@ public:
     /**@~english
      * Remove the related reference about the Ref object stored in the Lua table by set the value of corresponding key nil:
      * The related Lua tables are toluafix_refid_ptr_mapping,toluafix_refid_type_mapping,tolua_value_root and object_Metatable["tolua_ubox"] or tolua_ubox.
-     * Meanwhile set the corresponding userdata nullptr and remove the all the lua function refrence corresponding to this object.
+     * Meanwhile set the corresponding userdata nullptr and remove the all the lua function reference corresponding to this object.
      * 
      * In current mechanism, this function is called in the destructor of Ref object, developer don't call this functions.
      *
      * @~chinese 
-     * é€šè¿‡æ“ä½œç›¸å…³Lua table,ç§»é™¤Refå¯¹è±¡åœ¨Lua tableä¸­çš„å¼•ç”¨ã€‚
-     * ç›¸å…³çš„Lua tableåŒ…æ‹¬toluafix_refid_ptr_mappingã€toluafix_refid_type_mapping tolua_value_rootå’Œobject_Metatable["tolua_ubox"]æˆ–tolua_uboxã€‚
-     * åŒæ—¶ï¼Œè®¾ç½®ç›¸åº”çš„userdataä¸ºnullpträ»¥åŠç§»é™¤å»è¯¥å¯¹è±¡ç›¸å…³çš„Luaå‡½æ•°çš„å¼•ç”¨ã€‚
+     * Í¨¹ı²Ù×÷Ïà¹ØLua table,ÒÆ³ıRef¶ÔÏóÔÚLua tableÖĞµÄÒıÓÃ¡£
+     * Ïà¹ØµÄLua table°üÀ¨toluafix_refid_ptr_mapping¡¢toluafix_refid_type_mapping tolua_value_rootºÍobject_Metatable["tolua_ubox"]»òtolua_ubox¡£
+     * Í¬Ê±£¬ÉèÖÃÏàÓ¦µÄuserdataÎªnullptrÒÔ¼°ÒÆ³ıÈ¥¸Ã¶ÔÏóÏà¹ØµÄLuaº¯ÊıµÄÒıÓÃ¡£
      * 
-     * ç›®å‰çš„æœºåˆ¶ä¸‹ï¼Œå¼€å‘è€…ä¸è°ƒç”¨è¿™ä¸ªå‡½æ•°ï¼Œè¿™ä¸ªå‡½æ•°å°†ä¼šåœ¨LuaEngierçš„ææ„å‡½æ•°ä¸­è‡ªåŠ¨è¢«è°ƒç”¨ã€‚
+     * Ä¿Ç°µÄ»úÖÆÏÂ£¬¿ª·¢Õß²»µ÷ÓÃÕâ¸öº¯Êı£¬Õâ¸öº¯Êı½«»áÔÚLuaEngierµÄÎö¹¹º¯ÊıÖĞ×Ô¶¯±»µ÷ÓÃ¡£
      * 
      * @param object @~english the key object to remove script object.
-     * @~chinese ç”¨äºç§»é™¤è„šæœ¬å¯¹è±¡çš„é”®å€¼ã€‚
+     * @~chinese ÓÃÓÚÒÆ³ı½Å±¾¶ÔÏóµÄ¼üÖµ¡£
      */
 
     virtual void removeScriptObjectByObject(Ref* object) override;
@@ -182,22 +182,22 @@ public:
      * Remove Lua function reference by nHandler by setting toluafix_refid_function_mapping[nHandle] nil.
      *
      * @~chinese 
-     * é€šè¿‡è®¾ç½®toluafix_refid_function_mapping[nHandle]=nil,ç§»é™¤Luaå‡½æ•°å¼•ç”¨,ã€‚
+     * Í¨¹ıÉèÖÃtoluafix_refid_function_mapping[nHandle]=nil,ÒÆ³ıLuaº¯ÊıÒıÓÃ,¡£
      * 
      * @param nHandler @~english the function refrence index to find the correspoinding Lua function pointer.
-     * @~chinese Luaå‡½æ•°çš„å¼•ç”¨idã€‚
+     * @~chinese Luaº¯ÊıµÄÒıÓÃid¡£
      */
 
     virtual void removeScriptHandler(int nHandler) override;
     
     /**@~english
-     * Reallocate Lua function reference index to the Lua function pointer to add refrence.
+     * Reallocate Lua function reference index to the Lua function pointer to add reference.
      *
      * @~chinese 
-     * é‡æ–°åˆ†é…Luaå‡½æ•°çš„å¼•ç”¨idã€‚
+     * ÖØĞÂ·ÖÅäLuaº¯ÊıµÄÒıÓÃid¡£
      * 
      * @param nHandler @~english the function refrence index to find the correspoinding Lua function pointer.
-     * @~chinese Luaå‡½æ•°çš„å¼•ç”¨idã€‚
+     * @~chinese Luaº¯ÊıµÄÒıÓÃid¡£
      */
 
     virtual int reallocateScriptHandler(int nHandler) override;
@@ -206,12 +206,12 @@ public:
      * Execute script code contained in the given string.
      *
      * @~chinese 
-     * æ‰§è¡Œç»™å®šå­—ç¬¦ä¸²ä¸­åŒ…å«çš„è„šæœ¬ä»£ç ã€‚
+     * Ö´ĞĞ¸ø¶¨×Ö·û´®ÖĞ°üº¬µÄ½Å±¾´úÂë¡£
      * 
      * @param codes @~english holding the valid script code that should be executed.
-     * @~chinese éœ€è¢«æ‰§è¡Œçš„è„šæœ¬ä»£ç å­—ç¬¦ä¸²ã€‚
+     * @~chinese Ğè±»Ö´ĞĞµÄ½Å±¾´úÂë×Ö·û´®¡£
      * @return @~english 0 if the string is executed correctly,other if the string is executed wrongly.
-     * @~chinese æ‰§è¡ŒæˆåŠŸè¿”å›0ï¼Œå¦åˆ™è¿”å›å…¶å®ƒå€¼ã€‚
+     * @~chinese Ö´ĞĞ³É¹¦·µ»Ø0£¬·ñÔò·µ»ØÆäËüÖµ¡£
      */
 
     virtual int executeString(const char* codes) override;
@@ -220,12 +220,12 @@ public:
      * Execute a script file.
      *
      * @~chinese 
-     * æ‰§è¡Œä¸€ä¸ªè„šæœ¬æ–‡ä»¶ã€‚
+     * Ö´ĞĞÒ»¸ö½Å±¾ÎÄ¼ş¡£
      * 
      * @param filename @~english String object holding the filename of the script file that is to be executed.
-     * @~chinese è„šæœ¬æ–‡ä»¶çš„æ–‡ä»¶åã€‚
+     * @~chinese ½Å±¾ÎÄ¼şµÄÎÄ¼şÃû¡£
      * @return @~english  0 if it happen error or it hasn't return value, otherwise return 1.
-     * @~chinese å¦‚æœç¢°åˆ°é”™è¯¯æˆ–è€…æ‰§è¡Œç»“æœæ²¡æœ‰è¿”å›å€¼è¿”å›0ï¼Œå¦åˆ™è¿”å›1ã€‚
+     * @~chinese Èç¹ûÅöµ½´íÎó»òÕßÖ´ĞĞ½á¹ûÃ»ÓĞ·µ»ØÖµ·µ»Ø0£¬·ñÔò·µ»Ø1¡£
      */
 
     virtual int executeScriptFile(const char* filename) override;
@@ -235,13 +235,13 @@ public:
      * The function should not take any parameters and should return an integer.
      *
      * @~chinese 
-     * æ‰§è¡Œå…¨å±€çš„è„šæœ¬å‡½æ•°ã€‚
-     * è¯¥å…¨å±€å‡½æ•°ä¸åº”è¯¥æœ‰ä»»ä½•å‚æ•°,åŒæ—¶è¿”å›ä¸€ä¸ªæ•´æ•°ã€‚
+     * Ö´ĞĞÈ«¾ÖµÄ½Å±¾º¯Êı¡£
+     * ¸ÃÈ«¾Öº¯Êı²»Ó¦¸ÃÓĞÈÎºÎ²ÎÊı,Í¬Ê±·µ»ØÒ»¸öÕûÊı¡£
      * 
      * @param functionName @~english String object holding the name of the function, in the global script environment, that is to be executed.
-     * @~chinese å…¨å±€è„šæœ¬å‡½æ•°çš„å­—ç¬¦ä¸²åç§°ã€‚
+     * @~chinese È«¾Ö½Å±¾º¯ÊıµÄ×Ö·û´®Ãû³Æ¡£
      * @return @~english The integer value returned from the script function.
-     * @~chinese ä»è„šæœ¬å‡½æ•°è¿”å›çš„æ•´æ•°å€¼ã€‚
+     * @~chinese ´Ó½Å±¾º¯Êı·µ»ØµÄÕûÊıÖµ¡£
      */
 
     virtual int executeGlobalFunction(const char* functionName) override;
@@ -259,10 +259,10 @@ public:
      * Handle the assert message.
      *
      * @~chinese 
-     * å¤„ç†æ–­è¨€ä¿¡æ¯ã€‚
+     * ´¦Àí¶ÏÑÔĞÅÏ¢¡£
      * 
      * @return @~english return true if current _callFromLua of LuaStack is not equal to 0 otherwise return false.
-     * @~chinese è¿”å›true,å¦‚æœå½“å‰LuaStackçš„_callFromLuaä¸ç­‰äº0,å¦åˆ™è¿”å›falseã€‚
+     * @~chinese ·µ»Øtrue,Èç¹ûµ±Ç°LuaStackµÄ_callFromLua²»µÈÓÚ0,·ñÔò·µ»Øfalse¡£
      */
 
     virtual bool handleAssert(const char *msg) override;
@@ -271,14 +271,14 @@ public:
      * Parse the config information data.
      * 
      * @~chinese 
-     * è§£æé…ç½®ä¿¡æ¯ã€‚
+     * ½âÎöÅäÖÃĞÅÏ¢¡£
      * 
      * @param type @~english in current mechanism,it always ConfigType::COCOSTUDIO.
-     * @~chinese åœ¨å½“å‰çš„æœºåˆ¶ä¸‹,å®ƒæ€»æ˜¯ConfigType::COCOSTUDIOã€‚
+     * @~chinese ÔÚµ±Ç°µÄ»úÖÆÏÂ,Ëü×ÜÊÇConfigType::COCOSTUDIO¡£
      * @param str  @~english the information data.
-     * @~chinese æ•°æ®çš„ä¿¡æ¯ã€‚
+     * @~chinese Êı¾İµÄĞÅÏ¢¡£
      * @return @~english if __onParseConfig function exist in the Lua, it return the value that _stack->executeFunction returns otherwise return false.
-     * @~chinese å¦‚æœ__onParseConfig Luaå‡½æ•°å­˜åœ¨æ—¶,å®ƒçš„è¿”å›å€¼å’Œæ‰§è¡Œ_stack->executeFunctionè¿”å›å€¼ä¸€æ ·ï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹û__onParseConfig Luaº¯Êı´æÔÚÊ±,ËüµÄ·µ»ØÖµºÍÖ´ĞĞ_stack->executeFunction·µ»ØÖµÒ»Ñù£¬·ñÔò·µ»Øfalse¡£
      */
 
     virtual bool parseConfig(ConfigType type, const std::string& str) override;
@@ -287,12 +287,12 @@ public:
      * When some events triggered in the c++ also needs to pass on to lua to handle, we could call this function to send events.
      *
      * @~chinese 
-     * å½“c++ä¸­è§¦å‘çš„ä¸€äº›äº‹ä»¶éœ€è¦ä¼ é€’åˆ°Luaå±‚å¤„ç†æ—¶,è°ƒç”¨è¿™ä¸ªå‡½æ•°æ¥å‘é€äº‹ä»¶ã€‚
+     * µ±c++ÖĞ´¥·¢µÄÒ»Ğ©ÊÂ¼şĞèÒª´«µİµ½Lua²ã´¦ÀíÊ±,µ÷ÓÃÕâ¸öº¯ÊıÀ´·¢ËÍÊÂ¼ş¡£
      * 
      * @param message @~english the ScriptEvent object that has ScriptEventType and the pointer to information data.
-     * @~chinese ScriptEventå¯¹è±¡ï¼ŒåŒ…å«æœ‰ScriptEventTypeå’Œä¿¡æ¯æ•°æ®çš„æŒ‡é’ˆã€‚
+     * @~chinese ScriptEvent¶ÔÏó£¬°üº¬ÓĞScriptEventTypeºÍĞÅÏ¢Êı¾İµÄÖ¸Õë¡£
      * @return @~english default return 0 otherwise return values the same as handleNodeEvent, handleMenuClickedEvent or handleCallFuncActionEvent,etc.
-     * @~chinese é»˜è®¤è¿”å›0,å¦åˆ™è¿”å›å€¼å’ŒhandleNodeEvent,handleMenuClickedEventæˆ–handleCallFuncActionEventç­‰ç­‰ä¸€æ ·ã€‚
+     * @~chinese Ä¬ÈÏ·µ»Ø0,·ñÔò·µ»ØÖµºÍhandleNodeEvent,handleMenuClickedEvent»òhandleCallFuncActionEventµÈµÈÒ»Ñù¡£
      */
 
     virtual int sendEvent(ScriptEvent* message) override;
@@ -301,14 +301,14 @@ public:
      * Pass on the events related with ScrollView,TableCell,AssertManager, Armature, Accelerometer, Keyboard, Touch, Touches ,Mouse and Custom event to lua to handle.
      *
      * @~chinese 
-     * æŠŠä¸ScrollView,TableCell,AssertManager,Armature,Accelerometer,Keyboard,Touch,Touches, Mouseä»¥åŠè‡ªå®šä¹‰äº‹ä»¶ç›¸å…³çš„äº‹ä»¶ä¼ é€’ç»™Luaå¤„ç†ã€‚
+     * °ÑÓëScrollView,TableCell,AssertManager,Armature,Accelerometer,Keyboard,Touch,Touches, MouseÒÔ¼°×Ô¶¨ÒåÊÂ¼şÏà¹ØµÄÊÂ¼ş´«µİ¸øLua´¦Àí¡£
      * 
      * @param type @~english Different ScriptHandlerMgr::HandlerType means different processing for the data.
-     * @~chinese ä¸åŒçš„ScriptHandlerMgr::HandlerTypeæ„å‘³ç€ä¸åŒçš„æ•°æ®å¤„ç†æµç¨‹ã€‚
+     * @~chinese ²»Í¬µÄScriptHandlerMgr::HandlerTypeÒâÎ¶×Å²»Í¬µÄÊı¾İ´¦ÀíÁ÷³Ì¡£
      * @param data @~english The pointer point to the information which should be pass on to lua, it would be parsed in the function to convert to the specific data according to the ScriptHandlerMgr::HandlerType,then pass to lua as function parameters.
-     * @~chinese æ•°æ®ä¿¡æ¯æŒ‡é’ˆï¼Œæ ¹æ®ä¸åŒçš„ScriptHandlerMgr::HandlerTypeï¼Œå®ƒåœ¨å‡½æ•°å†…éƒ¨è¢«è§£ææˆä¸åŒçš„æ•°æ®ï¼Œç„¶åä½œä¸ºå‡½æ•°å‚æ•°å‹å…¥åˆ°Luaå †æ ˆã€‚
+     * @~chinese Êı¾İĞÅÏ¢Ö¸Õë£¬¸ù¾İ²»Í¬µÄScriptHandlerMgr::HandlerType£¬ËüÔÚº¯ÊıÄÚ²¿±»½âÎö³É²»Í¬µÄÊı¾İ£¬È»ºó×÷Îªº¯Êı²ÎÊıÑ¹Èëµ½Lua¶ÑÕ»¡£
      * @return @~english default return 0 otherwise return values according different ScriptHandlerMgr::HandlerType.
-     * @~chinese é»˜è®¤è¿”å›0,å¦åˆ™æ ¹æ®ä¸åŒçš„ScriptHandlerMgr::HandlerTypeï¼Œè¿”å›å€¼ä¹Ÿä¸åŒã€‚
+     * @~chinese Ä¬ÈÏ·µ»Ø0,·ñÔò¸ù¾İ²»Í¬µÄScriptHandlerMgr::HandlerType£¬·µ»ØÖµÒ²²»Í¬¡£
      */
 
     virtual int handleEvent(ScriptHandlerMgr::HandlerType type,void* data);
@@ -316,18 +316,18 @@ public:
      * Pass on the events related with TableCell and TableView to lua to handle.
      *
      * @~chinese 
-     * æŠŠä¸TableCell,TableViewç›¸å…³çš„äº‹ä»¶ä¼ é€’ç»™Luaå¤„ç†ã€‚
+     * °ÑÓëTableCell,TableViewÏà¹ØµÄÊÂ¼ş´«µİ¸øLua´¦Àí¡£
      * 
      * @param type @~english Different ScriptHandlerMgr::HandlerType means different processing for the data.
-     * @~chinese ä¸åŒçš„ScriptHandlerMgr::HandlerTypeæ„å‘³ç€ä¸åŒçš„æ•°æ®å¤„ç†æµç¨‹ã€‚
+     * @~chinese ²»Í¬µÄScriptHandlerMgr::HandlerTypeÒâÎ¶×Å²»Í¬µÄÊı¾İ´¦ÀíÁ÷³Ì¡£
      * @param data @~english The pointer point to the information which should be pass on to lua, it would be parsed in the function to convert to the specific data according to the ScriptHandlerMgr::HandlerType,then pass to lua as function parameters.
-     * @~chinese æ•°æ®ä¿¡æ¯æŒ‡é’ˆï¼Œæ ¹æ®ä¸åŒçš„ScriptHandlerMgr::HandlerTypeï¼Œå®ƒåœ¨å‡½æ•°å†…éƒ¨è¢«è§£ææˆä¸åŒçš„æ•°æ®ï¼Œç„¶åä½œä¸ºå‡½æ•°å‚æ•°å‹å…¥åˆ°Luaå †æ ˆã€‚
+     * @~chinese Êı¾İĞÅÏ¢Ö¸Õë£¬¸ù¾İ²»Í¬µÄScriptHandlerMgr::HandlerType£¬ËüÔÚº¯ÊıÄÚ²¿±»½âÎö³É²»Í¬µÄÊı¾İ£¬È»ºó×÷Îªº¯Êı²ÎÊıÑ¹Èëµ½Lua¶ÑÕ»¡£
      * @param numResults @~english The number of the return values.
-     * @~chinese è¿”å›å€¼çš„æ•°é‡ã€‚
+     * @~chinese ·µ»ØÖµµÄÊıÁ¿¡£
      * @param func @~english The callback would be called when numResults is > 0.
-     * @~chinese å½“numResults > 0æ—¶å°†ä¼šè°ƒç”¨çš„å›è°ƒæ–¹æ³•ã€‚
+     * @~chinese µ±numResults > 0Ê±½«»áµ÷ÓÃµÄ»Øµ÷·½·¨¡£
      * @return @~english default return 0 otherwise return values according different ScriptHandlerMgr::HandlerType.
-     * @~chinese é»˜è®¤è¿”å›0,å¦åˆ™æ ¹æ®ä¸åŒçš„ScriptHandlerMgr::HandlerTypeï¼Œè¿”å›å€¼ä¹Ÿä¸åŒã€‚
+     * @~chinese Ä¬ÈÏ·µ»Ø0,·ñÔò¸ù¾İ²»Í¬µÄScriptHandlerMgr::HandlerType£¬·µ»ØÖµÒ²²»Í¬¡£
      */
 
     virtual int handleEvent(ScriptHandlerMgr::HandlerType type, void* data, int numResults, const std::function<void(lua_State*,int)>& func);

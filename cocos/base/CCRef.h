@@ -43,14 +43,14 @@ class Ref;
 /** @~english
   * Interface that defines how to clone an Ref.
  * @~chinese 
- * å®šä¹‰å¦‚ä½• clone ä¸€ä¸ª Ref å¯¹è±¡çš„è™šåŸºç±»ã€‚
+ * ¶¨ÒåÈçºÎ clone Ò»¸ö Ref ¶ÔÏóµÄĞé»ùÀà¡£
   * @lua NA
   * @js NA
   */
 class CC_DLL Clonable
 {
 public:
-    /** @~english Returns a copy of the Ref.  @~chinese è¿”å›ä¸€ä¸ª Ref å¯¹è±¡çš„å‰¯æœ¬ã€‚*/
+    /** @~english Returns a copy of the Ref.  @~chinese ·µ»ØÒ»¸ö Ref ¶ÔÏóµÄ¸±±¾¡£*/
     virtual Clonable* clone() const = 0;
     
     /**
@@ -60,7 +60,7 @@ public:
     virtual ~Clonable() {};
 
     /** @~english Returns a copy of the Ref.
-     * @~chinese è¿”å›ä¸€ä¸ª Ref å¯¹è±¡çš„å‰¯æœ¬ã€‚
+     * @~chinese ·µ»ØÒ»¸ö Ref ¶ÔÏóµÄ¸±±¾¡£
      * @deprecated Use clone() instead.
      */
     CC_DEPRECATED_ATTRIBUTE Ref* copy() const
@@ -72,11 +72,11 @@ public:
 };
 
 /**@~english
- * Ref is used for reference count manangement. If a class inherits from Ref,
+ * Ref is used for reference count management. If a class inherits from Ref,
  * then it is easy to be shared in different places.
  * @~chinese 
- * Ref æ˜¯ç”¨äºå¼•ç”¨è®¡æ•°ç®¡ç†çš„åŸºç±»ã€‚
- * å¦‚æœä¸€ä¸ªç±»ç»§æ‰¿è‡ª Refï¼Œé‚£ä¹ˆåœ¨ä¸åŒçš„åœ°æ–¹å…±äº«å…¶å®ä¾‹åŒ–å¯¹è±¡å°†å˜çš„å¾ˆç®€å•ã€‚
+ * Ref ÊÇÓÃÓÚÒıÓÃ¼ÆÊı¹ÜÀíµÄ»ùÀà¡£
+ * Èç¹ûÒ»¸öÀà¼Ì³Ğ×Ô Ref£¬ÄÇÃ´ÔÚ²»Í¬µÄµØ·½¹²ÏíÆäÊµÀı»¯¶ÔÏó½«±äµÄºÜ¼òµ¥¡£
  * @js NA
  */
 class CC_DLL Ref
@@ -88,8 +88,8 @@ public:
      * This increases the Ref's reference count.
      *
      * @~chinese 
-     * ä¿ç•™ Ref å¯¹è±¡çš„æ‰€æœ‰æƒã€‚
-     * ä¼šå°† Ref å¯¹è±¡çš„å¼•ç”¨è®¡æ•° +1ã€‚
+     * ±£Áô Ref ¶ÔÏóµÄËùÓĞÈ¨¡£
+     * »á½« Ref ¶ÔÏóµÄÒıÓÃ¼ÆÊı +1¡£
      * 
      * @see release, autorelease
      * @js NA
@@ -101,14 +101,14 @@ public:
      *
      * This decrements the Ref's reference count.
      *
-     * If the reference count reaches 0 after the descrement, this Ref is
+     * If the reference count reaches 0 after the decrement, this Ref is
      * destructed.
      *
      * @~chinese 
-     * é‡Šæ”¾ Ref å¯¹è±¡çš„æ‰€æœ‰æƒã€‚
-     * ä¼šå°† Ref å¯¹è±¡çš„å¼•ç”¨è®¡æ•° -1ã€‚
+     * ÊÍ·Å Ref ¶ÔÏóµÄËùÓĞÈ¨¡£
+     * »á½« Ref ¶ÔÏóµÄÒıÓÃ¼ÆÊı -1¡£
      * 
-     * å¦‚æœå¼•ç”¨è®¡æ•° -1 ä¹‹åå˜ä¸ºäº† 0ï¼Œé‚£ä¹ˆè¿™ä¸ª Ref å¯¹è±¡å°†è¢«ææ„ã€‚
+     * Èç¹ûÒıÓÃ¼ÆÊı -1 Ö®ºó±äÎªÁË 0£¬ÄÇÃ´Õâ¸ö Ref ¶ÔÏó½«±»Îö¹¹¡£
      * 
      * @see retain, autorelease
      * @js NA
@@ -118,22 +118,22 @@ public:
     /**@~english
      * Releases the ownership sometime soon automatically.
      *
-     * This descrements the Ref's reference count at the end of current
+     * This decrements the Ref's reference count at the end of current
      * autorelease pool block.
      *
-     * If the reference count reaches 0 after the descrement, this Ref is
+     * If the reference count reaches 0 after the decrement, this Ref is
      * destructed.
      *
      * @~chinese 
-     * åœ¨ä¸‹ä¸€å¸§è‡ªåŠ¨é‡Šæ”¾ Ref å¯¹è±¡çš„æ‰€æœ‰æƒã€‚
+     * ÔÚÏÂÒ»Ö¡×Ô¶¯ÊÍ·Å Ref ¶ÔÏóµÄËùÓĞÈ¨¡£
      * 
-     * å°† Ref å¯¹è±¡æ·»åŠ åˆ°è‡ªåŠ¨é‡Šæ”¾æ± ä¸­ï¼Œå¼•ç”¨è®¡æ•°ä¼šåœ¨è‡ªåŠ¨é‡Šæ”¾æ± é‡Šæ”¾æ—¶ -1ã€‚
+     * ½« Ref ¶ÔÏóÌí¼Óµ½×Ô¶¯ÊÍ·Å³ØÖĞ£¬ÒıÓÃ¼ÆÊı»áÔÚ×Ô¶¯ÊÍ·Å³ØÊÍ·ÅÊ± -1¡£
      * 
-     * å¦‚æœå¼•ç”¨è®¡æ•° -1 ä¹‹åå˜ä¸ºäº† 0ï¼Œé‚£ä¹ˆè¿™ä¸ª Ref å¯¹è±¡å°†è¢«ææ„ã€‚
+     * Èç¹ûÒıÓÃ¼ÆÊı -1 Ö®ºó±äÎªÁË 0£¬ÄÇÃ´Õâ¸ö Ref ¶ÔÏó½«±»Îö¹¹¡£
      * 
      * @returns @~english The Ref itself.
      *
-     * @~chinese Ref å¯¹è±¡æœ¬èº«ã€‚
+     * @~chinese Ref ¶ÔÏó±¾Éí¡£
      * 
      * @see AutoreleasePool, retain, release
      * @js NA
@@ -145,10 +145,10 @@ public:
      * Returns the Ref's current reference count.
      *
      * @~chinese 
-     * è·å–å½“å‰çš„å¼•ç”¨è®¡æ•°ã€‚
+     * »ñÈ¡µ±Ç°µÄÒıÓÃ¼ÆÊı¡£
      * 
      * @returns @~english The Ref's reference count.
-     * @~chinese Ref å¯¹è±¡çš„å¼•ç”¨è®¡æ•°ã€‚
+     * @~chinese Ref ¶ÔÏóµÄÒıÓÃ¼ÆÊı¡£
      * @js NA
      */
     unsigned int getReferenceCount() const;
@@ -159,9 +159,9 @@ protected:
      *
      * The Ref's reference count is 1 after construction.
      * @~chinese 
-     * æ„é€ å‡½æ•°
+     * ¹¹Ôìº¯Êı
      * 
-     * æ„é€ å®Œæˆåå¼•ç”¨è®¡æ•°ä¸º 1ã€‚
+     * ¹¹ÔìÍê³ÉºóÒıÓÃ¼ÆÊıÎª 1¡£
      * @js NA
      */
     Ref();
@@ -171,7 +171,7 @@ public:
      * Destructor
      *
      * @~chinese 
-     * ææ„å‡½æ•°
+     * Îö¹¹º¯Êı
      * 
      * @js NA
      * @lua NA

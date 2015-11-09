@@ -33,7 +33,10 @@
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT && _MSC_VER < 1900)
+
+namespace cocos2d { namespace network {
+    class Downloader;
+}}
 
 NS_CC_EXT_BEGIN
 
@@ -49,33 +52,33 @@ class AssetsManagerDelegateProtocol;
  *  This class is used to auto update resources, such as pictures or scripts.
  *  The updated package should be a zip file. And in the server there should be a file which contains version code.
  * @~chinese 
- * è¯¥ç±»ç”¨äºŽè‡ªåŠ¨æ›´æ–°èµ„æºï¼Œå¦‚å›¾ç‰‡æˆ–è„šæœ¬èµ„æºã€‚
- * æ›´æ–°åŒ…æ˜¯ä¸€ä¸ªzipåŒ…ã€‚æœåŠ¡å™¨ä¸Šåº”è¯¥æœ‰ä¸€ä¸ªæ–‡ä»¶ï¼Œå…¶ä¸­åŒ…å«ç‰ˆæœ¬ä»£ç ã€‚
+ * ¸ÃÀàÓÃÓÚ×Ô¶¯¸üÐÂ×ÊÔ´£¬ÈçÍ¼Æ¬»ò½Å±¾×ÊÔ´¡£
+ * ¸üÐÂ°üÊÇÒ»¸özip°ü¡£·þÎñÆ÷ÉÏÓ¦¸ÃÓÐÒ»¸öÎÄ¼þ£¬ÆäÖÐ°üº¬°æ±¾´úÂë¡£
  */
 class CC_EX_DLL AssetsManager : public Node
 {
 public:
     /** @~english Error code that can be notified to listener
-     * @~chinese ä¼šè¢«ä¼ é€’çµ¦äº‹ä»¶ç›‘å¬å™¨çš„é”™è¯¯ä»£ç åˆ—è¡¨
+     * @~chinese »á±»´«µÝ½oÊÂ¼þ¼àÌýÆ÷µÄ´íÎó´úÂëÁÐ±í
      */
     enum class ErrorCode
     {
         /** @~english Error caused by creating a file to store downloaded data
-         * @~chinese åˆ›å»ºæ–‡ä»¶å¤±è´¥çš„é”™è¯¯
+         * @~chinese ´´½¨ÎÄ¼þÊ§°ÜµÄ´íÎó
          */
         CREATE_FILE,
         /** @~english Errors caused by network, there are the following possibilities:
          - network unavaivable
          - timeout
          - ...
-         * @~chinese ç½‘ç»œé”™è¯¯ï¼Œå¯èƒ½çš„åŽŸå› æœ‰ï¼š
-         * â€” ç½‘ç»œä¸å¯ç”¨
-         * â€” è¶…æ—¶
-         * â€” ...
+         * @~chinese ÍøÂç´íÎó£¬¿ÉÄÜµÄÔ­ÒòÓÐ£º
+         * ¡ª ÍøÂç²»¿ÉÓÃ
+         * ¡ª ³¬Ê±
+         * ¡ª ...
          */
         NETWORK,
         /** @~english There is not a new version
-         * @~chinese æ²¡æœ‰æ–°ç‰ˆæœ¬
+         * @~chinese Ã»ÓÐÐÂ°æ±¾
          */
         NO_NEW_VERSION,
         /** @~english Error caused in uncompressing stage
@@ -84,28 +87,28 @@ public:
          - can not read file information
          - can not create a directory
          - ...
-         * @~chinese åŽ‹ç¼©é˜¶æ®µå¼•èµ·çš„é”™è¯¯
-         * â€” ä¸èƒ½æ‰“å¼€åŽ‹ç¼©æ–‡ä»¶
-         * - ä¸èƒ½è¯»å–æ–‡ä»¶çš„å…¨å±€ä¿¡æ¯
-         * â€” ä¸èƒ½è¯»å–æ–‡ä»¶ä¿¡æ¯
-         * â€” ä¸èƒ½åˆ›å»ºä¸€ä¸ªç›®å½•
-         * â€” ...
+         * @~chinese Ñ¹Ëõ½×¶ÎÒýÆðµÄ´íÎó
+         * ¡ª ²»ÄÜ´ò¿ªÑ¹ËõÎÄ¼þ
+         * - ²»ÄÜ¶ÁÈ¡ÎÄ¼þµÄÈ«¾ÖÐÅÏ¢
+         * ¡ª ²»ÄÜ¶ÁÈ¡ÎÄ¼þÐÅÏ¢
+         * ¡ª ²»ÄÜ´´½¨Ò»¸öÄ¿Â¼
+         * ¡ª ...
          */
         UNCOMPRESS,
     };
     
     /* @brief @~english Creates a AssetsManager with new package url, version code url and storage path.
      *
-     * @~chinese ä½¿ç”¨æ–°åŒ…çš„URLåœ°å€ï¼Œç‰ˆæœ¬æ–‡ä»¶URLåœ°å€å’Œå­˜å‚¨è·¯å¾„åˆ›å»ºä¸€ä¸ªæ–°çš„AssetsManagerå¯¹è±¡ã€‚
+     * @~chinese Ê¹ÓÃÐÂ°üµÄURLµØÖ·£¬°æ±¾ÎÄ¼þURLµØÖ·ºÍ´æ´¢Â·¾¶´´½¨Ò»¸öÐÂµÄAssetsManager¶ÔÏó¡£
      * 
      * @param packageUrl @~english URL of new package, the package should be a zip file.
-     * @~chinese æ–°åŒ…çš„URLï¼Œæ–°åŒ…åº”è¯¥æ˜¯ä¸€ä¸ªzipæ–‡ä»¶ã€‚
+     * @~chinese ÐÂ°üµÄURL£¬ÐÂ°üÓ¦¸ÃÊÇÒ»¸özipÎÄ¼þ¡£
      * @param versionFileUrl @~english URL of version file. It should contain version code of new package.
-     * @~chinese ç‰ˆæœ¬æ–‡ä»¶çš„URLï¼Œå®ƒåº”è¯¥åŒ…å«æ–°ç‰ˆæœ¬çš„ç‰ˆæœ¬å·ã€‚
+     * @~chinese °æ±¾ÎÄ¼þµÄURL£¬ËüÓ¦¸Ã°üº¬ÐÂ°æ±¾µÄ°æ±¾ºÅ¡£
      * @param storagePath @~english The path to store downloaded resources.
-     * @~chinese ç”¨æ¥å­˜å‚¨ä¸‹è½½èµ„æºçš„è·¯å¾„ã€‚
+     * @~chinese ÓÃÀ´´æ´¢ÏÂÔØ×ÊÔ´µÄÂ·¾¶¡£
      * @return @~english The AssetsManager object when created successfully, otherwise return nullptr.
-     * @~chinese å½“åˆ›å»ºæˆåŠŸè¿”å›žAssetsManagerå¯¹è±¡ï¼Œå¦åˆ™è¿”å›žnullptrã€‚
+     * @~chinese µ±´´½¨³É¹¦·µ»ØAssetsManager¶ÔÏó£¬·ñÔò·µ»Ønullptr¡£
      * @js NA
      * @lua new
      */
@@ -122,22 +125,22 @@ public:
 
     /* @brief @~english Creates a AssetsManager with new package url, version code url and storage path.
      *
-     * @~chinese ä½¿ç”¨æ–°åŒ…çš„URLåœ°å€ï¼Œç‰ˆæœ¬æ–‡ä»¶URLåœ°å€ï¼Œå­˜å‚¨è·¯å¾„ä»¥åŠå›žè°ƒå‡½æ•°åˆ›å»ºä¸€ä¸ªæ–°çš„AssetsManagerå¯¹è±¡ã€‚
+     * @~chinese Ê¹ÓÃÐÂ°üµÄURLµØÖ·£¬°æ±¾ÎÄ¼þURLµØÖ·£¬´æ´¢Â·¾¶ÒÔ¼°»Øµ÷º¯Êý´´½¨Ò»¸öÐÂµÄAssetsManager¶ÔÏó¡£
      * 
      * @param packageUrl @~english URL of new package, the package should be a zip file.
-     * @~chinese æ–°åŒ…çš„URLï¼Œæ–°åŒ…åº”è¯¥æ˜¯ä¸€ä¸ªzipæ–‡ä»¶ã€‚
+     * @~chinese ÐÂ°üµÄURL£¬ÐÂ°üÓ¦¸ÃÊÇÒ»¸özipÎÄ¼þ¡£
      * @param versionFileUrl @~english URL of version file. It should contain version code of new package.
-     * @~chinese ç‰ˆæœ¬æ–‡ä»¶çš„URLï¼Œå®ƒåº”è¯¥åŒ…å«æ–°ç‰ˆæœ¬çš„ç‰ˆæœ¬å·ã€‚
+     * @~chinese °æ±¾ÎÄ¼þµÄURL£¬ËüÓ¦¸Ã°üº¬ÐÂ°æ±¾µÄ°æ±¾ºÅ¡£
      * @param storagePath @~english The path to store downloaded resources.
-     * @~chinese ç”¨æ¥å­˜å‚¨ä¸‹è½½èµ„æºçš„è·¯å¾„ã€‚
+     * @~chinese ÓÃÀ´´æ´¢ÏÂÔØ×ÊÔ´µÄÂ·¾¶¡£
      * @param errorCallback @~english The callback to invoke when error happens.
-     * @~chinese é”™è¯¯å‘ç”Ÿæ—¶çš„å›žè°ƒå‡½æ•°ã€‚
+     * @~chinese ´íÎó·¢ÉúÊ±µÄ»Øµ÷º¯Êý¡£
      * @param progressCallback @~english The callback to invoke when progression changes.
-     * @~chinese ä¸‹è½½è¿‡ç¨‹ä¸­è¿›åº¦æ”¹å˜æ—¶çš„å›žè°ƒå‡½æ•°ã€‚
+     * @~chinese ÏÂÔØ¹ý³ÌÖÐ½ø¶È¸Ä±äÊ±µÄ»Øµ÷º¯Êý¡£
      * @param successCallback @~english The callback to invoke when succeed to update.
-     * @~chinese æˆåŠŸæ›´æ–°æ—¶çš„å›žè°ƒå‡½æ•°ã€‚
+     * @~chinese ³É¹¦¸üÐÂÊ±µÄ»Øµ÷º¯Êý¡£
      * @return @~english The AssetsManager object when created successfully, otherwise return nullptr.
-     * @~chinese å½“åˆ›å»ºæˆåŠŸè¿”å›žAssetsManagerå¯¹è±¡ï¼Œå¦åˆ™è¿”å›žnullptrã€‚
+     * @~chinese µ±´´½¨³É¹¦·µ»ØAssetsManager¶ÔÏó£¬·ñÔò·µ»Ønullptr¡£
      * @js NA
      * @lua new
      */
@@ -146,129 +149,125 @@ public:
     /* @brief @~english Check out if there is a new version resource.
      *        You may use this method before updating, then let user determine whether
      *        he wants to update resources.
-     * @~chinese æ£€æŸ¥æ˜¯å¦æœ‰æ–°ç‰ˆæœ¬çš„èµ„æºã€‚
-     * ä½ å¯ä»¥ç”¨è¿™ç§æ–¹æ³•åœ¨æ›´æ–°ä¹‹å‰è®©ç”¨æˆ·å†³å®šæ˜¯å¦è¿›è¡Œæ›´æ–°ã€‚
+     * @~chinese ¼ì²éÊÇ·ñÓÐÐÂ°æ±¾µÄ×ÊÔ´¡£
+     * Äã¿ÉÒÔÓÃÕâÖÖ·½·¨ÔÚ¸üÐÂÖ®Ç°ÈÃÓÃ»§¾ö¶¨ÊÇ·ñ½øÐÐ¸üÐÂ¡£
      * @return @~english Return true if there is a new version, otherwise return false.
-     * @~chinese å¦‚æžœæœ‰æ–°ç‰ˆæœ¬åˆ™è¿”å›žtrueï¼Œå¦åˆ™è¿”å›žfalseã€‚
+     * @~chinese Èç¹ûÓÐÐÂ°æ±¾Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     virtual bool checkUpdate();
     
     using Node::update;
     /* @brief @~english Download new package if there is a new version, and uncompress downloaded zip file to the predefined storage path.
      *        Of course it will set search path that stores downloaded files.
-     * @~chinese å¦‚æžœæœ‰æ–°ç‰ˆæœ¬å°±ä¸‹è½½æ–°çš„åŒ…ï¼Œå¹¶è§£åŽ‹ç¼©ä¸‹è½½çš„zipæ–‡ä»¶åˆ°é¢„è®¾çš„å­˜å‚¨è·¯å¾„ã€‚
-     * å½“ç„¶ï¼Œå®ƒä¼šå°†å­˜å‚¨è·¯å¾„æ·»åŠ åˆ°æœç´¢è·¯å¾„ä¸­ã€‚
+     * @~chinese Èç¹ûÓÐÐÂ°æ±¾¾ÍÏÂÔØÐÂµÄ°ü£¬²¢½âÑ¹ËõÏÂÔØµÄzipÎÄ¼þµ½Ô¤ÉèµÄ´æ´¢Â·¾¶¡£
+     * µ±È»£¬Ëü»á½«´æ´¢Â·¾¶Ìí¼Óµ½ËÑË÷Â·¾¶ÖÐ¡£
      */
     virtual void update();
     
     /* @brief @~english Gets url of package.
-     * @~chinese èŽ·å–èµ„æºåŒ…çš„URLåœ°å€ã€‚
+     * @~chinese »ñÈ¡×ÊÔ´°üµÄURLµØÖ·¡£
      * @return @~english The package url.
-     * @~chinese èµ„æºåŒ…çš„URLåœ°å€ã€‚
+     * @~chinese ×ÊÔ´°üµÄURLµØÖ·¡£
      */
     const char* getPackageUrl() const;
     
     /* @brief @~english Sets package url.
-     * @~chinese è®¾ç½®èµ„æºåŒ…çš„URLåœ°å€ã€‚
+     * @~chinese ÉèÖÃ×ÊÔ´°üµÄURLµØÖ·¡£
      * @param packageUrl @~english The package url.
-     * @~chinese èµ„æºåŒ…çš„URLåœ°å€ã€‚
+     * @~chinese ×ÊÔ´°üµÄURLµØÖ·¡£
      */
     void setPackageUrl(const char* packageUrl);
     
     /* @brief @~english Gets version file url.
-     * @~chinese èŽ·å–ç‰ˆæœ¬æ–‡ä»¶çš„URLåœ°å€ã€‚
+     * @~chinese »ñÈ¡°æ±¾ÎÄ¼þµÄURLµØÖ·¡£
      * @return @~english The version file url.
-     * @~chinese ç‰ˆæœ¬æ–‡ä»¶çš„URLåœ°å€ã€‚
+     * @~chinese °æ±¾ÎÄ¼þµÄURLµØÖ·¡£
      */
     const char* getVersionFileUrl() const;
     
     /* @brief @~english Sets version file url.
-     * @~chinese è®¾ç½®ç‰ˆæœ¬æ–‡ä»¶çš„URLåœ°å€ã€‚
+     * @~chinese ÉèÖÃ°æ±¾ÎÄ¼þµÄURLµØÖ·¡£
      * @param versionFileUrl @~english The version file url.
-     * @~chinese ç‰ˆæœ¬æ–‡ä»¶çš„URLåœ°å€ã€‚
+     * @~chinese °æ±¾ÎÄ¼þµÄURLµØÖ·¡£
      */
     void setVersionFileUrl(const char* versionFileUrl);
     
     /* @brief @~english Gets the current version code.
-     * @~chinese èŽ·å–å½“å‰ç‰ˆæœ¬å·ã€‚
+     * @~chinese »ñÈ¡µ±Ç°°æ±¾ºÅ¡£
      * @return @~english The current version code.
-     * @~chinese å½“å‰ç‰ˆæœ¬å·ã€‚
+     * @~chinese µ±Ç°°æ±¾ºÅ¡£
      */
     std::string getVersion();
     
     /* @brief @~english Deletes recorded version code.
-     * @~chinese åˆ é™¤æœ¬åœ°ç‰ˆæœ¬å·ã€‚
+     * @~chinese É¾³ý±¾µØ°æ±¾ºÅ¡£
      */
     void deleteVersion();
     
     /* @brief @~english Gets storage path.
-     * @~chinese èŽ·å–å­˜å‚¨è·¯å¾„ã€‚
+     * @~chinese »ñÈ¡´æ´¢Â·¾¶¡£
      * @return @~english The storage path.
-     * @~chinese å­˜å‚¨è·¯å¾„ã€‚
+     * @~chinese ´æ´¢Â·¾¶¡£
      */
     const char* getStoragePath() const;
     
     /* @brief @~english Sets storage path.
      *
-     * @~chinese è®¾ç½®å­˜å‚¨è·¯å¾„ã€‚
+     * @~chinese ÉèÖÃ´æ´¢Â·¾¶¡£
      * 
      * @param storagePath @~english The path to store downloaded resources.
-     * @~chinese å­˜å‚¨ä¸‹è½½èµ„æºçš„è·¯å¾„ã€‚
+     * @~chinese ´æ´¢ÏÂÔØ×ÊÔ´µÄÂ·¾¶¡£
      * @warm @~english The path should be a valid path.
-     * @~chinese è¿™ä¸ªè·¯å¾„å¿…é¡»æ˜¯ä¸€ä¸ªæœ‰æ•ˆçš„æœ¬åœ°è·¯å¾„ã€‚
+     * @~chinese Õâ¸öÂ·¾¶±ØÐëÊÇÒ»¸öÓÐÐ§µÄ±¾µØÂ·¾¶¡£
      */
     void setStoragePath(const char* storagePath);
     
     /** @brief @~english Sets delegate, the delegate will receive messages
-     * @~chinese è®¾ç½®æŽ¥æ”¶æ¶ˆæ¯çš„ä»£ç†
+     * @~chinese ÉèÖÃ½ÓÊÕÏûÏ¢µÄ´úÀí
      * @param delegate @~english The delegate which extends `AssetsManagerDelegateProtocol`.
-     * @~chinese ç»§æ‰¿è‡ª`AssetsManagerDelegateProtocol`çš„ä»£ç†å¯¹è±¡ã€‚
+     * @~chinese ¼Ì³Ð×Ô`AssetsManagerDelegateProtocol`µÄ´úÀí¶ÔÏó¡£
      * @js NA
      * @lua NA
      */
     void setDelegate(AssetsManagerDelegateProtocol *delegate);
     
     /** @brief @~english Gets delegate, the delegate will receive messages
-     * @~chinese èŽ·å–æŽ¥æ”¶æ¶ˆæ¯çš„ä»£ç†
+     * @~chinese »ñÈ¡½ÓÊÕÏûÏ¢µÄ´úÀí
      * @return @~english The delegate which extends `AssetsManagerDelegateProtocol`.
-     * @~chinese ç»§æ‰¿è‡ª`AssetsManagerDelegateProtocol`çš„ä»£ç†å¯¹è±¡ã€‚
+     * @~chinese ¼Ì³Ð×Ô`AssetsManagerDelegateProtocol`µÄ´úÀí¶ÔÏó¡£
      * @js NA
      * @lua NA
      */
     AssetsManagerDelegateProtocol* getDelegate() const { return _delegate ;}
     
     /** @brief @~english Sets connection time out in seconds
-     * @~chinese è®¾ç½®è¿žæŽ¥è¶…æ—¶æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½
+     * @~chinese ÉèÖÃÁ¬½Ó³¬Ê±Ê±¼ä£¬ÒÔÃëÎªµ¥Î»
      * @param timeout @~english The time out value.
-     * @~chinese è¿žæŽ¥è¶…æ—¶æ—¶é—´ã€‚
+     * @~chinese Á¬½Ó³¬Ê±Ê±¼ä¡£
      */
     void setConnectionTimeout(unsigned int timeout);
     
     /** @brief @~english Gets connection time out in secondes
-     * @~chinese èŽ·å–è¿žæŽ¥è¶…æ—¶æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½
+     * @~chinese »ñÈ¡Á¬½Ó³¬Ê±Ê±¼ä£¬ÒÔÃëÎªµ¥Î»
      * @return @~english The time out value.
-     * @~chinese è¿žæŽ¥è¶…æ—¶æ—¶é—´ã€‚
+     * @~chinese Á¬½Ó³¬Ê±Ê±¼ä¡£
      */
     unsigned int getConnectionTimeout();
-    
-    friend int assetsManagerProgressFunc(void *, double, double, double, double);
 
 protected:
-    bool downLoad();
     void checkStoragePath();
     bool uncompress();
-    bool createDirectory(const char *path);
     void setSearchPath();
     void downloadAndUncompress();
 
 private:
     /** @brief @~english Initializes storage path.
-     * @~chinese åˆå§‹åŒ–å­˜å‚¨è·¯å¾„ã€‚
+     * @~chinese ³õÊ¼»¯´æ´¢Â·¾¶¡£
      */
     void createStoragePath();
     
     /** @brief @~english Destroys storage path.
-     * @~chinese åˆ é™¤å­˜å‚¨è·¯å¾„ã€‚
+     * @~chinese É¾³ý´æ´¢Â·¾¶¡£
      */
     void destroyStoragePath();
     
@@ -284,7 +283,7 @@ private:
     
     std::string _downloadedVersion;
     
-    void *_curl;
+    cocos2d::network::Downloader* _downloader;
 
     unsigned int _connectionTimeout;
     
@@ -301,7 +300,7 @@ private:
  * @~english
  *  This class is the delegate for receving events during update process of AssetsManager.
  * @~chinese 
- * è¯¥ç±»æ˜¯ç”¨äºŽåœ¨AssetsManageræ›´æ–°è¿‡ç¨‹ä¸­æŽ¥æ”¶äº‹ä»¶çš„ä»£ç†
+ * ¸ÃÀàÊÇÓÃÓÚÔÚAssetsManager¸üÐÂ¹ý³ÌÖÐ½ÓÊÕÊÂ¼þµÄ´úÀí
  * @see AssetsManager
  */
 class AssetsManagerDelegateProtocol
@@ -310,28 +309,28 @@ public:
     virtual ~AssetsManagerDelegateProtocol(){};
 public:
     /* @brief @~english Call back function for error
-     * @~chinese å‘ç”Ÿé”™è¯¯æ—¶çš„å›žè°ƒå‡½æ•°
+     * @~chinese ·¢Éú´íÎóÊ±µÄ»Øµ÷º¯Êý
        @param errorCode @~english Type of error
-     * @~chinese é”™è¯¯ä»£ç 
+     * @~chinese ´íÎó´úÂë
      * @js NA
      * @lua NA
      */
     virtual void onError(AssetsManager::ErrorCode errorCode) {};
     /** @brief @~english Call back function for recording downloading percent
-     * @~chinese è®°å½•ä¸‹è½½ç™¾åˆ†æ¯”çš„å›žè°ƒå‡½æ•°
+     * @~chinese ¼ÇÂ¼ÏÂÔØ°Ù·Ö±ÈµÄ»Øµ÷º¯Êý
      * @param percent @~english How much percent downloaded
-     * @~chinese ä¸‹è½½äº†å¤šå°‘ç™¾åˆ†æ¯”
+     * @~chinese ÏÂÔØÁË¶àÉÙ°Ù·Ö±È
      * @warning @~english This call back function just for recording downloading percent.
               AssetsManager will do some other thing after downloading, if you want to manipulate the downloaded files,
               you should write code in onSuccess() after downloading. 
-     * @~chinese è¿™ä¸ªå›žè°ƒå‡½æ•°åªæ˜¯ä¸ºäº†è®°å½•ä¸‹è½½ç™¾åˆ†æ¯”ã€‚
-     * AssetsManagerä¸‹è½½åŽä¼šåšä¸€äº›å…¶ä»–çš„äº‹æƒ…ï¼Œä½ å¯ä»¥åœ¨onSuccesså›žè°ƒä¸­ä¸­å¯¹ä¸‹è½½å¥½çš„æ–‡ä»¶ä½œç›¸åº”çš„å¤„ç†ã€‚
+     * @~chinese Õâ¸ö»Øµ÷º¯ÊýÖ»ÊÇÎªÁË¼ÇÂ¼ÏÂÔØ°Ù·Ö±È¡£
+     * AssetsManagerÏÂÔØºó»á×öÒ»Ð©ÆäËûµÄÊÂÇé£¬Äã¿ÉÒÔÔÚonSuccess»Øµ÷ÖÐÖÐ¶ÔÏÂÔØºÃµÄÎÄ¼þ×÷ÏàÓ¦µÄ´¦Àí¡£
      * @js NA
      * @lua NA
      */
     virtual void onProgress(int percent) {};
     /** @brief @~english Call back function for success
-     * @~chinese æ›´æ–°æˆåŠŸçš„å›žè°ƒå‡½æ•°
+     * @~chinese ¸üÐÂ³É¹¦µÄ»Øµ÷º¯Êý
      * @js NA
      * @lua NA
      */
@@ -349,5 +348,4 @@ CC_DEPRECATED_ATTRIBUTE typedef AssetsManagerDelegateProtocol CCAssetsManagerDel
 
 NS_CC_EXT_END;
 
-#endif /* #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT && _MSC_VER < 1900) */
 #endif /* defined(__AssetsManager__) */

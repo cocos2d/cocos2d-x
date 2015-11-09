@@ -43,6 +43,7 @@ NS_CC_BEGIN
  * @~chinese 裁剪矩形节点。
 @details @~english A node that clipped with specified rectangle.
  * @~chinese 一个使用指定矩形裁剪的节点。
+ The region of ClippingRectangleNode doesn't support any transform except scale.
 @js NA
 */
 class CC_DLL ClippingRectangleNode : public Node

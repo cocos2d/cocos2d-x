@@ -37,7 +37,7 @@ NS_CC_BEGIN
 
 /**
  * @brief @~english Input Method Edit Message Dispatcher.
- * @~chinese è¾“å…¥æ³•ç¼–è¾‘æ¶ˆæ¯è°ƒåº¦å™¨ã€‚
+ * @~chinese ÊäÈë·¨±à¼­ÏûÏ¢µ÷¶ÈÆ÷¡£
  */
 class CC_DLL IMEDispatcher
 {
@@ -50,7 +50,7 @@ public:
 
     /**
      * @brief @~english Returns the shared IMEDispatcher object for the system.
-     * @~chinese è¿”å›ç³»ç»Ÿå…±äº«çš„IMEDispatcherå¯¹è±¡ã€‚
+     * @~chinese ·µ»ØÏµÍ³¹²ÏíµÄIMEDispatcher¶ÔÏó¡£
      * @js NA
      * @lua NA
      */
@@ -58,21 +58,21 @@ public:
 
     /**
      * @brief @~english Dispatches the input text from IME.
-     * @~chinese åˆ†æ´¾è¾“å…¥æ–‡æœ¬ã€‚
+     * @~chinese ·ÖÅÉÊäÈëÎÄ±¾¡£
      * @lua NA
      */
     void dispatchInsertText(const char * text, size_t len);
 
     /**
      * @brief @~english Dispatches the delete-backward operation.
-     * @~chinese åˆ†æ´¾åˆ é™¤å›é€€æ“ä½œã€‚
+     * @~chinese ·ÖÅÉÉ¾³ı»ØÍË²Ù×÷¡£
      * @lua NA
      */
     void dispatchDeleteBackward();
 
     /**
      * @brief @~english Get the content text from IMEDelegate, retrieved previously from IME.
-     * @~chinese ä»IMEDelegateè·å¾—æ–‡æœ¬çš„å†…å®¹ã€‚
+     * @~chinese ´ÓIMEDelegate»ñµÃÎÄ±¾µÄÄÚÈİ¡£
      * @lua NA
      */
     const std::string& getContentText();
@@ -106,38 +106,38 @@ protected:
 
     /**
      * @brief @~english Add delegate to receive IME messages.
-     * @~chinese æ·»åŠ ä»£ç†å»æ¥æ”¶IMEæ¶ˆæ¯ã€‚
+     * @~chinese Ìí¼Ó´úÀíÈ¥½ÓÊÕIMEÏûÏ¢¡£
      * @param delegate @~english A instance implements IMEDelegate delegate.
-     * @~chinese ä¸€ä¸ªIMEä»£ç†å®ä¾‹ã€‚
+     * @~chinese Ò»¸öIME´úÀíÊµÀı¡£
      */
     void addDelegate(IMEDelegate * delegate);
 
     /**
      * @brief @~english Attach the Delegate to the IME.
-     * @~chinese æŒ‚è½½IMEçš„ä»£ç†ã€‚
+     * @~chinese ¹ÒÔØIMEµÄ´úÀí¡£
      * @param delegate @~english A instance implements IMEDelegate delegate.
-     * @~chinese ä¸€ä¸ªIMEDelegateä»£ç†å®ä¾‹ã€‚
+     * @~chinese Ò»¸öIMEDelegate´úÀíÊµÀı¡£
      * @return @~english If the old delegate can detach from the IME, and the new delegate can attach to the IME, return true, otherwise false.
-     * @~chinese å¦‚æœæ—§çš„ä»£ç†å¯ä»¥ä»IMEåˆ†ç¦»å¹¶ä¸”æ–°ä»£ç†å¯ä»¥è¿æ¥åˆ°è¾“å…¥æ³•,åˆ™è¿”å›true,å¦åˆ™ä¸ºfalseã€‚
+     * @~chinese Èç¹û¾ÉµÄ´úÀí¿ÉÒÔ´ÓIME·ÖÀë²¢ÇÒĞÂ´úÀí¿ÉÒÔÁ¬½Óµ½ÊäÈë·¨,Ôò·µ»Øtrue,·ñÔòÎªfalse¡£
      */
     bool attachDelegateWithIME(IMEDelegate * delegate);
 
     /**
      * @~english Detach the delegate to the IME
-     * @~chinese åˆ†ç¦»IMEçš„ä»£ç†
+     * @~chinese ·ÖÀëIMEµÄ´úÀí
      * @see `attachDelegateWithIME(IMEDelegate*)`
      * @param delegate  @~english A instance implements IMEDelegate delegate.
-     * @~chinese ä¸€ä¸ªIMEDelegateä»£ç†å®ä¾‹ã€‚
+     * @~chinese Ò»¸öIMEDelegate´úÀíÊµÀı¡£
      * @return @~english Whether the IME is detached or not.
-     * @~chinese è¾“å…¥æ³•æ˜¯å¦åˆ†ç¦»ã€‚
+     * @~chinese ÊäÈë·¨ÊÇ·ñ·ÖÀë¡£
      */
     bool detachDelegateWithIME(IMEDelegate * delegate);
 
     /**
      * @brief @~english Remove the delegate from the delegates which receive IME messages.
-     * @~chinese ä»æ­£åœ¨æ¥å—æ¶ˆæ¯çš„ä»£ç†åˆ—è¡¨åˆ é™¤ä»£ç†ã€‚
+     * @~chinese ´ÓÕıÔÚ½ÓÊÜÏûÏ¢µÄ´úÀíÁĞ±íÉ¾³ı´úÀí¡£
      * @param delegate @~english A instance implements the IMEDelegate delegate.
-     * @~chinese ä¸€ä¸ªIMEDelegateä»£ç†å®ä¾‹ã€‚
+     * @~chinese Ò»¸öIMEDelegate´úÀíÊµÀı¡£
      */
     void removeDelegate(IMEDelegate * delegate);
 

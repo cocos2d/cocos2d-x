@@ -47,7 +47,7 @@ NS_CC_BEGIN
 typedef struct _ttfConfig
 {
     std::string fontFilePath;
-    int fontSize;
+    float fontSize;
 
     GlyphCollection glyphs;
     const char *customGlyphs;
@@ -55,7 +55,7 @@ typedef struct _ttfConfig
     bool distanceFieldEnabled;
     int outlineSize;
 
-    _ttfConfig(const char* filePath = "",int size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
+    _ttfConfig(const char* filePath = "",float size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
         const char *customGlyphCollection = nullptr,bool useDistanceField = false,int outline = 0)
         :fontFilePath(filePath)
         ,fontSize(size)
@@ -90,19 +90,19 @@ class EventListenerCustom;
  * - http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
  * - http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
  * - http://www.angelcode.com/products/bmfont/ (Free, Windows only)
- * @~chinese Label(æ–‡æœ¬)æ˜¯Nodeçš„å­ç±»,å®ƒçŸ¥é“å¦‚ä½•æ¸²æŸ“æ–‡æœ¬ã€‚
+ * @~chinese Label(ÎÄ±¾)ÊÇNodeµÄ×ÓÀà,ËüÖªµÀÈçºÎäÖÈ¾ÎÄ±¾¡£
  * 
- * æ–‡æœ¬å¯ä»¥é€šè¿‡ä»¥ä¸‹æ–¹æ³•æ¥åˆ›å»º:
- * - ä¸€ä¸ªTTFå­—ä½“æ–‡ä»¶ã€‚
- * - ä¸€ä¸ªä½å›¾å­—ä½“æ–‡ä»¶ã€‚
- * - ä¸€ä¸ªå­—ç¬¦æ˜ å°„æ–‡ä»¶ã€‚
- * -  å†…ç½®çš„ç³»ç»Ÿå­—ä½“ã€‚
+ * ÎÄ±¾¿ÉÒÔÍ¨¹ıÒÔÏÂ·½·¨À´´´½¨:
+ * - Ò»¸öTTF×ÖÌåÎÄ¼ş¡£
+ * - Ò»¸öÎ»Í¼×ÖÌåÎÄ¼ş¡£
+ * - Ò»¸ö×Ö·ûÓ³ÉäÎÄ¼ş¡£
+ * -  ÄÚÖÃµÄÏµÍ³×ÖÌå¡£
  * 
- * æ”¯æŒä½å›¾å­—ä½“çš„ç¼–è¾‘å™¨:
- * - http://glyphdesigner.71squared.com/ (å•†ä¸šçš„, Mac OS X)
- * - http://www.n4te.com/hiero/hiero.jnlp (å…è´¹çš„, Java)
- * - http://slick.cokeandcode.com/demos/hiero.jnlp (å…è´¹çš„, Java)
- * - http://www.angelcode.com/products/bmfont/ (å…è´¹çš„, Windows only)
+ * Ö§³ÖÎ»Í¼×ÖÌåµÄ±à¼­Æ÷:
+ * - http://glyphdesigner.71squared.com/ (ÉÌÒµµÄ, Mac OS X)
+ * - http://www.n4te.com/hiero/hiero.jnlp (Ãâ·ÑµÄ, Java)
+ * - http://slick.cokeandcode.com/demos/hiero.jnlp (Ãâ·ÑµÄ, Java)
+ * - http://www.angelcode.com/products/bmfont/ (Ãâ·ÑµÄ, Windows only)
  * @js NA
  */
 class CC_DLL Label : public Node, public LabelProtocol, public BlendProtocol
@@ -115,10 +115,10 @@ public:
      * Allocates and initializes a Label, with default settings.
      *
      * @~chinese 
-     * ä½¿ç”¨é»˜è®¤è®¾ç½®åˆ†é…å’Œåˆå§‹åŒ–ä¸€ä¸ªæ–‡æœ¬ã€‚
+     * Ê¹ÓÃÄ¬ÈÏÉèÖÃ·ÖÅäºÍ³õÊ¼»¯Ò»¸öÎÄ±¾¡£
      * 
      * @return @~english An automatically released Label object.
-     * @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„æ–‡æœ¬å¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅµÄÎÄ±¾¶ÔÏó¡£
      */
     static Label* create();
 
@@ -126,28 +126,28 @@ public:
      * Allocates and initializes a Label, base on platform-dependent API.
      *
      * @~chinese 
-     * åŸºäºå¹³å°ç›¸å…³çš„APIåˆ›å»ºå’Œåˆå§‹åŒ–ä¸€ä¸ªæ–‡æœ¬
+     * »ùÓÚÆ½Ì¨Ïà¹ØµÄAPI´´½¨ºÍ³õÊ¼»¯Ò»¸öÎÄ±¾
      * 
      * @param text @~english The initial text.
-     * @~chinese æœ€å§‹æ–‡æœ¬å†…å®¹ã€‚
+     * @~chinese ×îÊ¼ÎÄ±¾ÄÚÈİ¡£
      * @param font @~english A font file or a font family name.
-     * @~chinese ä¸€ä¸ªå­—ä½“æ–‡ä»¶æˆ–å­—ä½“åç§°ã€‚
+     * @~chinese Ò»¸ö×ÖÌåÎÄ¼ş»ò×ÖÌåÃû³Æ¡£
      * @param fontSize @~english The font size. This value must be > 0.
-     * @~chinese å­—ä½“å¤§å°ã€‚è¿™ä¸ªå€¼å¿…é¡»å¤§äº0ã€‚
+     * @~chinese ×ÖÌå´óĞ¡¡£Õâ¸öÖµ±ØĞë´óÓÚ0¡£
      * @param dimensions @~english dimensions of the label node
-     * @~chinese æ–‡æœ¬çš„å†…å®¹å¤§å°ã€‚
+     * @~chinese ÎÄ±¾µÄÄÚÈİ´óĞ¡¡£
      * @param hAlignment @~english The text horizontal alignment.
-     * @~chinese æ°´å¹³å¯¹é½æ–¹å¼ã€‚
+     * @~chinese Ë®Æ½¶ÔÆë·½Ê½¡£
      * @param vAlignment @~english The text vertical alignment.
      *
-     * @~chinese å‚ç›´å¯¹é½æ–¹å¼ã€‚
+     * @~chinese ´¹Ö±¶ÔÆë·½Ê½¡£
      * 
      * @warning @~english It will generate texture by the platform-dependent code.
      *
-     * @~chinese å®ƒå°†é€šè¿‡å¹³å°ç›¸å…³çš„ä»£ç æ¥ç”Ÿæˆçº¹ç†ã€‚
+     * @~chinese Ëü½«Í¨¹ıÆ½Ì¨Ïà¹ØµÄ´úÂëÀ´Éú³ÉÎÆÀí¡£
      * 
      * @return @~english An automatically released Label object.
-     * @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„æ–‡æœ¬å¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅµÄÎÄ±¾¶ÔÏó¡£
      */
     static Label* createWithSystemFont(const std::string& text, const std::string& font, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
@@ -157,24 +157,24 @@ public:
      * Allocates and initializes a Label, based on FreeType2.
      *
      * @~chinese 
-     * ä½¿ç”¨FreeType2åº“åˆ›å»ºå’Œåˆå§‹åŒ–ä¸€ä¸ªæ–‡æœ¬ã€‚
+     * Ê¹ÓÃFreeType2¿â´´½¨ºÍ³õÊ¼»¯Ò»¸öÎÄ±¾¡£
      * 
      * @param text @~english The initial text.
-     * @~chinese æœ€åˆæ–‡æœ¬å†…å®¹ã€‚
+     * @~chinese ×î³õÎÄ±¾ÄÚÈİ¡£
      * @param fontFilePath @~english A font file.
-     * @~chinese ä¸€ä¸ªTTFå­—ä½“æ–‡ä»¶ã€‚
+     * @~chinese Ò»¸öTTF×ÖÌåÎÄ¼ş¡£
      * @param fontSize @~english The font size. This value must be > 0.
-     * @~chinese å­—ä½“å¤§å°ã€‚è¿™ä¸ªå€¼å¿…é¡»å¤§äº0ã€‚
+     * @~chinese ×ÖÌå´óĞ¡¡£Õâ¸öÖµ±ØĞë´óÓÚ0¡£
      * @param dimensions @~english dimensions of the label node
-     * @~chinese æ–‡æœ¬çš„å†…å®¹å¤§å°
+     * @~chinese ÎÄ±¾µÄÄÚÈİ´óĞ¡
      * @param hAlignment @~english The text horizontal alignment.
-     * @~chinese æ°´å¹³å¯¹é½æ–¹å¼ã€‚
+     * @~chinese Ë®Æ½¶ÔÆë·½Ê½¡£
      * @param vAlignment @~english The text vertical alignment.
      *
-     * @~chinese å‚ç›´å¯¹é½æ–¹å¼ã€‚
+     * @~chinese ´¹Ö±¶ÔÆë·½Ê½¡£
      * 
      * @return @~english An automatically released Label object.
-     * @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„æ–‡æœ¬å¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅµÄÎÄ±¾¶ÔÏó¡£
      */
     static Label * createWithTTF(const std::string& text, const std::string& fontFilePath, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
@@ -184,20 +184,20 @@ public:
      * Allocates and initializes a Label, base on FreeType2.
      *
      * @~chinese 
-     * ä½¿ç”¨FreeType2åº“åˆ›å»ºå’Œåˆå§‹åŒ–ä¸€ä¸ªæ–‡æœ¬
+     * Ê¹ÓÃFreeType2¿â´´½¨ºÍ³õÊ¼»¯Ò»¸öÎÄ±¾
      * 
      * @param ttfConfig @~english A pointer to a TTFConfig object.
-     * @~chinese ä¸€ä¸ªTTFConfigå¯¹è±¡å®ä¾‹ã€‚
+     * @~chinese Ò»¸öTTFConfig¶ÔÏóÊµÀı¡£
      * @param text @~english The initial text.
-     * @~chinese æœ€åˆæ–‡æœ¬å†…å®¹ã€‚
+     * @~chinese ×î³õÎÄ±¾ÄÚÈİ¡£
      * @param hAlignment @~english The text horizontal alignment.
-     * @~chinese æ°´å¹³å¯¹é½æ–¹å¼
+     * @~chinese Ë®Æ½¶ÔÆë·½Ê½
      * @param maxLineWidth @~english The max line width.
      *
-     * @~chinese æœ€å¤§çº¿å®½
+     * @~chinese ×î´óÏß¿í
      * 
      * @return @~english An automatically released Label object.
-     * @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„æ–‡æœ¬å¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅµÄÎÄ±¾¶ÔÏó¡£
      * @see TTFConfig setTTFConfig setMaxLineWidth
      */
     static Label* createWithTTF(const TTFConfig& ttfConfig, const std::string& text, 
@@ -207,22 +207,22 @@ public:
      * Allocates and initializes a Label, with a bitmap font file.
      *
      * @~chinese 
-     * ä½¿ç”¨ä½å›¾å­—ä½“æ–‡ä»¶åˆ›å»ºå’Œåˆå§‹åŒ–ä¸€ä¸ªæ–‡æœ¬ã€‚
+     * Ê¹ÓÃÎ»Í¼×ÖÌåÎÄ¼ş´´½¨ºÍ³õÊ¼»¯Ò»¸öÎÄ±¾¡£
      * 
      * @param bmfontPath @~english A bitmap font file, it's a FNT format.
-     * @~chinese ä¸€ä¸ªä½å›¾å­—ä½“æ–‡ä»¶,å®ƒæ˜¯FNTæ ¼å¼ã€‚
+     * @~chinese Ò»¸öÎ»Í¼×ÖÌåÎÄ¼ş,ËüÊÇFNT¸ñÊ½¡£
      * @param text @~english The initial text.
-     * @~chinese åˆå§‹æ–‡æœ¬å†…å®¹ã€‚
+     * @~chinese ³õÊ¼ÎÄ±¾ÄÚÈİ¡£
      * @param hAlignment @~english Text horizontal alignment.
-     * @~chinese æ°´å¹³å¯¹é½æ–¹å¼ã€‚
+     * @~chinese Ë®Æ½¶ÔÆë·½Ê½¡£
      * @param maxLineWidth @~english The max line width.
-     * @~chinese æœ€å¤§çº¿å®½
+     * @~chinese ×î´óÏß¿í
      * @param imageOffset The first character offset in BMfont
      *@~english
-     * @~chinese ç¬¬ä¸€ä¸ªå­—ç¬¦çš„åœ¨ä½å›¾æ–‡ä»¶ä¸­çš„åç§»
+     * @~chinese µÚÒ»¸ö×Ö·ûµÄÔÚÎ»Í¼ÎÄ¼şÖĞµÄÆ«ÒÆ
      * 
      * @return @~english An automatically released Label object.
-     * @~chinese ä¸€ä¸ªæ ‡ç­¾è‡ªåŠ¨é‡Šæ”¾å¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö±êÇ©×Ô¶¯ÊÍ·Å¶ÔÏó¡£
      * @see setBMFontFilePath setMaxLineWidth
      */
     static Label* createWithBMFont(const std::string& bmfontPath, const std::string& text,
@@ -233,20 +233,20 @@ public:
      * Allocates and initializes a Label, with char map configuration.
      *
      * @~chinese 
-     * ä½¿ç”¨å­—ç¬¦æ˜ å°„æ–‡ä»¶æ¥åˆ›å»ºå’Œåˆå§‹åŒ–ä¸€ä¸ªæ–‡æœ¬
+     * Ê¹ÓÃ×Ö·ûÓ³ÉäÎÄ¼şÀ´´´½¨ºÍ³õÊ¼»¯Ò»¸öÎÄ±¾
      * 
      * @param charMapFile @~english A char map file, it's a PNG format.
-     * @~chinese ä¸€ä¸ªå­—ç¬¦æ˜ å°„æ–‡ä»¶,å®ƒæ˜¯ä¸€ä¸ªPNGæ ¼å¼çš„æ–‡ä»¶ã€‚
+     * @~chinese Ò»¸ö×Ö·ûÓ³ÉäÎÄ¼ş,ËüÊÇÒ»¸öPNG¸ñÊ½µÄÎÄ¼ş¡£
      * @param itemWidth @~english The width in points of each element.
-     * @~chinese æ¯ä¸ªå…ƒç´ çš„å®½åº¦,å•ä½æ˜¯â€œç‚¹â€ã€‚
+     * @~chinese Ã¿¸öÔªËØµÄ¿í¶È,µ¥Î»ÊÇ¡°µã¡±¡£
      * @param itemHeight @~english The height in points of each element.
-     * @~chinese æ¯ä¸ªå…ƒç´ çš„é«˜åº¦,å•ä½â€œç‚¹â€ã€‚
+     * @~chinese Ã¿¸öÔªËØµÄ¸ß¶È,µ¥Î»¡°µã¡±¡£
      * @param startCharMap @~english The starting char of the char map.
      *
-     * @~chinese å­—ç¬¦æ˜ å°„æ–‡ä»¶çš„èµ·å§‹å­—ç¬¦
+     * @~chinese ×Ö·ûÓ³ÉäÎÄ¼şµÄÆğÊ¼×Ö·û
      * 
      * @return @~english An automatically released Label object.
-     * @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„æ–‡æœ¬å¯¹è±¡ã€‚
+     * @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅµÄÎÄ±¾¶ÔÏó¡£
      */
     static Label * createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
 
@@ -254,20 +254,20 @@ public:
      * Allocates and initializes a Label, with char map configuration.
      *
      * @~chinese 
-     * ä½¿ç”¨å­—ç¬¦æ˜ å°„æ–‡ä»¶åˆ›å»ºå’Œåˆå§‹åŒ–ä¸€ä¸ªæ–‡æœ¬
+     * Ê¹ÓÃ×Ö·ûÓ³ÉäÎÄ¼ş´´½¨ºÍ³õÊ¼»¯Ò»¸öÎÄ±¾
      * 
      * @param texture @~english A pointer to an existing Texture2D object.
-     * @~chinese ä¸€ä¸ªå·²æœ‰çš„çº¹ç†å¯¹è±¡æŒ‡é’ˆã€‚
+     * @~chinese Ò»¸öÒÑÓĞµÄÎÆÀí¶ÔÏóÖ¸Õë¡£
      * @param itemWidth @~english The width in points of each element.
-     * @~chinese æ¯ä¸ªå…ƒç´ çš„å®½åº¦,å•ä½æ˜¯â€œç‚¹â€ã€‚
+     * @~chinese Ã¿¸öÔªËØµÄ¿í¶È,µ¥Î»ÊÇ¡°µã¡±¡£
      * @param itemHeight @~english The height in points of each element.
-     * @~chinese æ¯ä¸ªå…ƒç´ çš„é«˜åº¦ï¼Œå•ä½æ˜¯â€œç‚¹â€ã€‚
+     * @~chinese Ã¿¸öÔªËØµÄ¸ß¶È£¬µ¥Î»ÊÇ¡°µã¡±¡£
      * @param startCharMap @~english The starting char of the char map.
      *
-     * @~chinese å­—ç¬¦æ˜ å°„æ–‡ä»¶çš„èµ·å§‹å­—ç¬¦
+     * @~chinese ×Ö·ûÓ³ÉäÎÄ¼şµÄÆğÊ¼×Ö·û
      * 
      * @return @~english An automatically released Label object.
-     * @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„æ–‡æœ¬å¯¹è±¡
+     * @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅµÄÎÄ±¾¶ÔÏó
      */
     static Label * createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
 
@@ -275,14 +275,14 @@ public:
      * Allocates and initializes a Label, with char map configuration.
      *
      * @~chinese 
-     * ä½¿ç”¨å­—ç¬¦æ˜ å°„æ–‡ä»¶æ¥åˆ›å»ºå’Œåˆå§‹åŒ–ä¸€ä¸ªæ–‡æœ¬
+     * Ê¹ÓÃ×Ö·ûÓ³ÉäÎÄ¼şÀ´´´½¨ºÍ³õÊ¼»¯Ò»¸öÎÄ±¾
      * 
      * @param plistFile @~english A configuration file of char map.
      *
-     * @~chinese ä¸€ä¸ªå­—ç¬¦æ˜ å°„çš„é…ç½®æ–‡ä»¶ã€‚
+     * @~chinese Ò»¸ö×Ö·ûÓ³ÉäµÄÅäÖÃÎÄ¼ş¡£
      * 
      * @return @~english An automatically released Label object.
-     * @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„æ–‡æœ¬å¯¹è±¡
+     * @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅµÄÎÄ±¾¶ÔÏó
      */
     static Label * createWithCharMap(const std::string& plistFile);
 
@@ -295,7 +295,7 @@ public:
     /**@~english
      * Sets a new TTF configuration to Label.
      * @~chinese
-     * è®¾ç½®ä¸€ä¸ªæ–°çš„TTFConfig
+     * ÉèÖÃÒ»¸öĞÂµÄTTFConfig
      * @see `TTFConfig`
      */
     virtual bool setTTFConfig(const TTFConfig& ttfConfig);
@@ -303,22 +303,22 @@ public:
     /**@~english
      * Returns the TTF configuration object used by the Label.
      * @~chinese 
-     * è¿”å›æ–‡æœ¬å¯¹è±¡çš„TTFé…ç½®å¯¹è±¡
+     * ·µ»ØÎÄ±¾¶ÔÏóµÄTTFÅäÖÃ¶ÔÏó
      * @see `TTFConfig`
      */
     virtual const TTFConfig& getTTFConfig() const { return _fontConfig;}
 
-    /** @~english Sets a new bitmap font to Label  @~chinese ç»™æ–‡æœ¬è®¾ç½®ä¸€ä¸ªæ–°çš„ä½å›¾å­—ä½“*/
+    /** @~english Sets a new bitmap font to Label  @~chinese ¸øÎÄ±¾ÉèÖÃÒ»¸öĞÂµÄÎ»Í¼×ÖÌå*/
     virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& imageOffset = Vec2::ZERO);
 
-    /** @~english Returns the bitmap font used by the Label. @~chinese è¿”å›å½“å‰æ–‡æœ¬ä½¿ç”¨çš„ä½å›¾å­—ä½“.*/
+    /** @~english Returns the bitmap font used by the Label. @~chinese ·µ»Øµ±Ç°ÎÄ±¾Ê¹ÓÃµÄÎ»Í¼×ÖÌå.*/
     const std::string& getBMFontFilePath() const { return _bmFontPath;}
 
     /**@~english
      * Sets a new char map configuration to Label.
      *
      * @~chinese 
-     * ç»™æ–‡æœ¬è®¾ç½®ä¸€ä¸ªæ–°çš„å­—ç¬¦æ˜ å°„æ–‡ä»¶ã€‚
+     * ¸øÎÄ±¾ÉèÖÃÒ»¸öĞÂµÄ×Ö·ûÓ³ÉäÎÄ¼ş¡£
      * 
      * @see `createWithCharMap(const std::string&,int,int,int)`
      */
@@ -328,7 +328,7 @@ public:
      * Sets a new char map configuration to Label.
      *
      * @~chinese 
-     * ç»™æ–‡æœ¬è®¾ç½®ä¸€ä¸ªæ–°çš„å­—ç¬¦æ˜ å°„æ–‡ä»¶
+     * ¸øÎÄ±¾ÉèÖÃÒ»¸öĞÂµÄ×Ö·ûÓ³ÉäÎÄ¼ş
      * 
      * @see `createWithCharMap(Texture2D*,int,int,int)`
      */
@@ -338,7 +338,7 @@ public:
      * Sets a new char map configuration to Label.
      *
      * @~chinese 
-     * ç»™æ–‡æœ¬è®¾ç½®ä¸€ä¸ªæ–°çš„å­—ç¬¦æ˜ å°„æ–‡ä»¶
+     * ¸øÎÄ±¾ÉèÖÃÒ»¸öĞÂµÄ×Ö·ûÓ³ÉäÎÄ¼ş
      * 
      * @see `createWithCharMap(const std::string&)`
      */
@@ -348,50 +348,50 @@ public:
      * Sets a new system font to Label.
      *
      * @~chinese 
-     * ç»™æ–‡æœ¬è®¾ç½®ä¸€ä¸ªæ–°çš„ç³»ç»Ÿå­—ä½“
+     * ¸øÎÄ±¾ÉèÖÃÒ»¸öĞÂµÄÏµÍ³×ÖÌå
      * 
      * @param font @~english A font file or a font family name.
-     * @~chinese ä¸€ä¸ªå­—ä½“æ–‡ä»¶æˆ–å­—ä½“åç§°
+     * @~chinese Ò»¸ö×ÖÌåÎÄ¼ş»ò×ÖÌåÃû³Æ
      */
     virtual void setSystemFontName(const std::string& font);
 
-    /** @~english Returns the system font used by the Label. @~chinese è¿”å›æ–‡æœ¬ä½¿ç”¨çš„ç³»ç»Ÿå­—ä½“ã€‚*/
+    /** @~english Returns the system font used by the Label. @~chinese ·µ»ØÎÄ±¾Ê¹ÓÃµÄÏµÍ³×ÖÌå¡£*/
     virtual const std::string& getSystemFontName() const { return _systemFont;}
 
-    /* @~english Sets the system font size of Label. @~chinese è®¾ç½®æ–‡æœ¬ä½¿ç”¨çš„ç³»ç»Ÿå­—ä½“å¤§å°ã€‚*/
+    /* @~english Sets the system font size of Label. @~chinese ÉèÖÃÎÄ±¾Ê¹ÓÃµÄÏµÍ³×ÖÌå´óĞ¡¡£*/
     virtual void setSystemFontSize(float fontSize);
 
-    /** @~english Returns the bitmap font path used by the Label. @~chinese è¿”å›æ–‡æœ¬ä½¿ç”¨çš„ä½å›¾å­—ä½“è·¯å¾„ã€‚*/
+    /** @~english Returns the bitmap font path used by the Label. @~chinese ·µ»ØÎÄ±¾Ê¹ÓÃµÄÎ»Í¼×ÖÌåÂ·¾¶¡£*/
     virtual float getSystemFontSize() const { return _systemFontSize;}
 
     /**
      * @warning @~english This method is not recommended for game developers.
-     * @~chinese è¿™ä¸ªæ–¹æ³•ä¸æ¨èæ¸¸æˆå¼€å‘è€…è°ƒç”¨,å®ƒæ˜¯ç»™ç¼–è¾‘å™¨ç”¨çš„ã€‚
+     * @~chinese Õâ¸ö·½·¨²»ÍÆ¼öÓÎÏ·¿ª·¢Õßµ÷ÓÃ,ËüÊÇ¸ø±à¼­Æ÷ÓÃµÄ¡£
      */
     virtual void requestSystemFontRefresh() { _systemFontDirty = true;}
 
     //  end of font methods
     /// @}
 
-    /** @~english Sets the text that this Label is to display. @~chinese è®¾ç½®æ–‡æœ¬æ˜¾ç¤ºçš„å­—ç¬¦ä¸²ã€‚*/
+    /** @~english Sets the text that this Label is to display. @~chinese ÉèÖÃÎÄ±¾ÏÔÊ¾µÄ×Ö·û´®¡£*/
     virtual void setString(const std::string& text) override;
 
-    /** @~english Return the text the Label is displaying. @~chinese è¿”å›æ–‡æœ¬æ˜¾ç¤ºçš„å­—ç¬¦ä¸²ã€‚*/
+    /** @~english Return the text the Label is displaying. @~chinese ·µ»ØÎÄ±¾ÏÔÊ¾µÄ×Ö·û´®¡£*/
     virtual const std::string& getString() const override {  return _utf8Text; }
 
     /**
      * @~english Get the string's display line number.
-     * @~chinese è·å–æ–‡æœ¬æ˜¾ç¤ºçš„è¡Œæ•°ã€‚
+     * @~chinese »ñÈ¡ÎÄ±¾ÏÔÊ¾µÄĞĞÊı¡£
      *
-     * @return @~english Label line number. @~chinese æ–‡æœ¬è¡Œæ•°ã€‚
+     * @return @~english Label line number. @~chinese ÎÄ±¾ĞĞÊı¡£
      */
     int getStringNumLines();
 
     /**
      * @~english Get the string length.
-     * @~chinese è·å–å­—ç¬¦ä¸²çš„é•¿åº¦
+     * @~chinese »ñÈ¡×Ö·û´®µÄ³¤¶È
      *
-     * @return @~english Label string length. @~chinese æ–‡æœ¬çš„å­—ç¬¦ä¸²é•¿åº¦
+     * @return @~english Label string length. @~chinese ÎÄ±¾µÄ×Ö·û´®³¤¶È
      */
     int getStringLength();
 
@@ -401,23 +401,23 @@ public:
      * The text color is different from the color of Node.
      *
      * @~chinese 
-     * è®¾ç½®æ–‡æœ¬çš„å­—ç¬¦ä¸²çš„é¢œè‰²ã€‚
+     * ÉèÖÃÎÄ±¾µÄ×Ö·û´®µÄÑÕÉ«¡£
      * 
-     * æ–‡æœ¬çš„é¢œè‰²ä¸åŒäºèŠ‚ç‚¹çš„é¢œè‰²ã€‚
+     * ÎÄ±¾µÄÑÕÉ«²»Í¬ÓÚ½ÚµãµÄÑÕÉ«¡£
      * 
      * @warning @~english Limiting usage when the Label created with true type font or system font.
-     * @~chinese åªæœ‰ä½¿ç”¨TTFå­—ä½“æˆ–è€…ç³»ç»Ÿå­—ä½“åˆ›å»ºçš„æ–‡æœ¬å¯¹è±¡æ‰å¯ä»¥è°ƒç”¨è¿™ä¸ªæ–¹æ³•ã€‚
+     * @~chinese Ö»ÓĞÊ¹ÓÃTTF×ÖÌå»òÕßÏµÍ³×ÖÌå´´½¨µÄÎÄ±¾¶ÔÏó²Å¿ÉÒÔµ÷ÓÃÕâ¸ö·½·¨¡£
      */
     virtual void setTextColor(const Color4B &color);
 
-    /** @~english Returns the text color of the Label. @~chinese è¿”å›æ–‡æœ¬çš„å­—ç¬¦ä¸²çš„é¢œè‰²ã€‚*/
+    /** @~english Returns the text color of the Label. @~chinese ·µ»ØÎÄ±¾µÄ×Ö·û´®µÄÑÕÉ«¡£*/
     const Color4B& getTextColor() const { return _textColor;}
 
     /**@~english
      * Enable shadow effect to Label.
      *
      * @~chinese 
-     * æ¿€æ´»æ–‡æœ¬çš„é˜´å½±æ•ˆæœ
+     * ¼¤»îÎÄ±¾µÄÒõÓ°Ğ§¹û
      * 
      */
     virtual void enableShadow(const Color4B& shadowColor = Color4B::BLACK,const Size &offset = Size(2,-2), int blurRadius = 0);
@@ -425,27 +425,27 @@ public:
     /**@~english
      * Enable outline effect to Label.
      * @~chinese 
-     * æ¿€æ´»æ–‡æœ¬çš„æè¾¹æ•ˆæœã€‚
+     * ¼¤»îÎÄ±¾µÄÃè±ßĞ§¹û¡£
      * @warning @~english Limiting use to only when the Label created with true type font or system font.
-     * @~chinese åªæœ‰ä½¿ç”¨TTFå­—ä½“æˆ–è€…ç³»ç»Ÿå­—ä½“åˆ›å»ºçš„æ–‡æœ¬å¯¹è±¡æ‰å¯ä»¥è°ƒç”¨è¿™ä¸ªæ–¹æ³•ã€‚
+     * @~chinese Ö»ÓĞÊ¹ÓÃTTF×ÖÌå»òÕßÏµÍ³×ÖÌå´´½¨µÄÎÄ±¾¶ÔÏó²Å¿ÉÒÔµ÷ÓÃÕâ¸ö·½·¨¡£
      */
     virtual void enableOutline(const Color4B& outlineColor,int outlineSize = -1);
 
     /**@~english
     * Enable glow effect to Label.
      * @~chinese 
-     * æ¿€æ´»æ–‡æœ¬çš„å‘å…‰æ•ˆæœ
+     * ¼¤»îÎÄ±¾µÄ·¢¹âĞ§¹û
     * @warning @~english Limiting use to only when the Label created with true type font.
-     * @~chinese åªæœ‰ä½¿ç”¨TTFå­—ä½“åˆ›å»ºçš„æ–‡æœ¬å¯¹è±¡æ‰å¯ä»¥è°ƒç”¨è¿™ä¸ªæ–¹æ³•ã€‚
+     * @~chinese Ö»ÓĞÊ¹ÓÃTTF×ÖÌå´´½¨µÄÎÄ±¾¶ÔÏó²Å¿ÉÒÔµ÷ÓÃÕâ¸ö·½·¨¡£
     */
     virtual void enableGlow(const Color4B& glowColor);
 
     /**@~english
      * Disable all effect to Label.
      * @~chinese 
-     * ç¦ç”¨æ‰€æœ‰æ–‡æœ¬ç‰¹æ•ˆã€‚
+     * ½ûÓÃËùÓĞÎÄ±¾ÌØĞ§¡£
      * @warning @~english Please use disableEffect(LabelEffect::ALL) instead of this API.
-     * @~chinese è¯·ä½¿ç”¨disableEffect(LabelEffect:ALL)è€Œä¸æ˜¯è¿™ä¸ªAPIã€‚
+     * @~chinese ÇëÊ¹ÓÃdisableEffect(LabelEffect:ALL)¶ø²»ÊÇÕâ¸öAPI¡£
      */
     virtual void disableEffect();
 
@@ -453,41 +453,41 @@ public:
      * Disable effect to Label.
      *
      * @~chinese 
-     * ç¦ç”¨æ–‡æœ¬ç‰¹æ•ˆã€‚
+     * ½ûÓÃÎÄ±¾ÌØĞ§¡£
      * 
      * @see `LabelEffect`
      */
     virtual void disableEffect(LabelEffect effect);
 
-    /** @~english Sets the Label's text horizontal alignment. @~chinese è®¾ç½®æ–‡æœ¬çš„æ°´å¹³å¯¹é½ã€‚*/
+    /** @~english Sets the Label's text horizontal alignment. @~chinese ÉèÖÃÎÄ±¾µÄË®Æ½¶ÔÆë¡£*/
     void setAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment);}
 
-    /** @~english Returns the Label's text horizontal alignment. @~chinese è·å–æ–‡æœ¬çš„å¯¹é½æ–¹å¼ã€‚*/
+    /** @~english Returns the Label's text horizontal alignment. @~chinese »ñÈ¡ÎÄ±¾µÄ¶ÔÆë·½Ê½¡£*/
     TextHAlignment getTextAlignment() const { return _hAlignment;}
 
-    /** @~english Sets the Label's text alignment. @~chinese è®¾ç½®æ–‡æœ¬çš„æ°´å¹³å’Œå‚ç›´å¯¹é½æ–¹å¼ã€‚*/
+    /** @~english Sets the Label's text alignment. @~chinese ÉèÖÃÎÄ±¾µÄË®Æ½ºÍ´¹Ö±¶ÔÆë·½Ê½¡£*/
     void setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment);
 
-    /** @~english Sets the Label's text horizontal alignment. @~chinese è®¾ç½®æ–‡æœ¬çš„æ°´å¹³å¯¹é½ã€‚*/
+    /** @~english Sets the Label's text horizontal alignment. @~chinese ÉèÖÃÎÄ±¾µÄË®Æ½¶ÔÆë¡£*/
     void setHorizontalAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment); }
 
-    /** @~english Returns the Label's text horizontal alignment. @~chinese è¿”å›æ–‡æœ¬çš„æ°´å¹³å¯¹é½ã€‚*/
+    /** @~english Returns the Label's text horizontal alignment. @~chinese ·µ»ØÎÄ±¾µÄË®Æ½¶ÔÆë¡£*/
     TextHAlignment getHorizontalAlignment() const { return _hAlignment; }
 
-    /** @~english Sets the Label's text vertical alignment. @~chinese è®¾ç½®æ–‡æœ¬å‚ç›´å¯¹é½ã€‚*/
+    /** @~english Sets the Label's text vertical alignment. @~chinese ÉèÖÃÎÄ±¾´¹Ö±¶ÔÆë¡£*/
     void setVerticalAlignment(TextVAlignment vAlignment) { setAlignment(_hAlignment,vAlignment); }
 
-    /** @~english Returns the Label's text vertical alignment. @~chinese è¿”å›æ–‡æœ¬å‚ç›´å¯¹é½ã€‚*/
+    /** @~english Returns the Label's text vertical alignment. @~chinese ·µ»ØÎÄ±¾´¹Ö±¶ÔÆë¡£*/
     TextVAlignment getVerticalAlignment() const { return _vAlignment; }
 
     /**@~english
      * Specify what happens when a line is too long for Label.
      *
      * @~chinese 
-     * æŒ‡å®šå½“æ–‡æœ¬å¤ªé•¿æ—¶ï¼Œæ˜¯å¦éœ€è¦æ¢è¡Œã€‚
+     * Ö¸¶¨µ±ÎÄ±¾Ì«³¤Ê±£¬ÊÇ·ñĞèÒª»»ĞĞ¡£
      * 
      * @param breakWithoutSpace @~english Lines are automatically broken between words if this value is false.
-     * @~chinese å¦‚æœå‚æ•°ä¼ falseï¼Œé‚£ä¹ˆå½“æ–‡æœ¬è¿‡é•¿æ—¶ä¼šè‡ªåŠ¨æ¢è¡Œã€‚
+     * @~chinese Èç¹û²ÎÊı´«false£¬ÄÇÃ´µ±ÎÄ±¾¹ı³¤Ê±»á×Ô¶¯»»ĞĞ¡£
      */
     void setLineBreakWithoutSpace(bool breakWithoutSpace);
 
@@ -495,14 +495,14 @@ public:
      * Makes the Label at most this line untransformed width.
      * The Label's max line width be used for force line breaks if the value not equal zero.
      * @~chinese 
-     * è®¾ç½®æ–‡æœ¬çš„æœ€å¤§è¡Œå®½ã€‚
-     * å¦‚æœæ–‡æœ¬çš„è¡Œå®½ä¸ç­‰äºé›¶çš„è¯ï¼Œé‚£ä¹ˆå®ƒå¯ä»¥ç”¨æ¥å¼ºåˆ¶æ¢è¡Œ
+     * ÉèÖÃÎÄ±¾µÄ×î´óĞĞ¿í¡£
+     * Èç¹ûÎÄ±¾µÄĞĞ¿í²»µÈÓÚÁãµÄ»°£¬ÄÇÃ´Ëü¿ÉÒÔÓÃÀ´Ç¿ÖÆ»»ĞĞ
      */
     void setMaxLineWidth(float maxLineWidth);
     /**
      *@~english Return the maximize line width.
-     *@~chinese è·å–æ–‡æœ¬çš„æœ€å¤§è¡Œå®½
-     * @return @~english The maximize line width. @~chinese æ–‡æœ¬çš„æœ€å¤§è¡Œå®½
+     *@~chinese »ñÈ¡ÎÄ±¾µÄ×î´óĞĞ¿í
+     * @return @~english The maximize line width. @~chinese ÎÄ±¾µÄ×î´óĞĞ¿í
      */
     float getMaxLineWidth() { return _maxLineWidth; }
 
@@ -511,16 +511,16 @@ public:
      *
      * The Label's width be used for text align if the value not equal zero.
      * @~chinese 
-     * è®¾ç½®æ–‡æœ¬çš„è¡Œå®½
+     * ÉèÖÃÎÄ±¾µÄĞĞ¿í
      * 
-     * å¦‚æœè¡Œå®½ä¸ä¸º0ï¼Œåˆ™å®ƒå¯ä»¥ç”¨æ¥å¯¹é½æ–‡æœ¬ã€‚
+     * Èç¹ûĞĞ¿í²»Îª0£¬ÔòËü¿ÉÒÔÓÃÀ´¶ÔÆëÎÄ±¾¡£
      */
     void setWidth(float width) { setDimensions(width,_labelHeight);}
     /**
      * @~english Get the label width.
-     * @~chinese è¿”å›æ–‡æœ¬çš„è¡Œå®½
+     * @~chinese ·µ»ØÎÄ±¾µÄĞĞ¿í
      *
-     * @return @~english The line width. @~chinese è¡Œå®½
+     * @return @~english The line width. @~chinese ĞĞ¿í
      */
     float getWidth() const { return _labelWidth; }
 
@@ -530,62 +530,62 @@ public:
      * The Label's height be used for text align if the value not equal zero.
      * The text will display of incomplete when the size of Label not enough to support display all text.
      * @~chinese 
-     * è®¾ç½®æ–‡æœ¬çš„è¡Œé«˜
+     * ÉèÖÃÎÄ±¾µÄĞĞ¸ß
      * 
-     * å¦‚æœè¡Œé«˜ä¸ä¸º0ï¼Œåˆ™å®ƒå¯ä»¥ç”¨æ¥å¯¹é½æ–‡æœ¬
-     * å¦‚æœæ–‡æœ¬å†…å®¹å¤§äºæ–‡æœ¬çš„å¤§å°ï¼Œé‚£ä¹ˆå¯èƒ½ä¼šæ˜¾ç¤ºä¸å®Œæ•´
+     * Èç¹ûĞĞ¸ß²»Îª0£¬ÔòËü¿ÉÒÔÓÃÀ´¶ÔÆëÎÄ±¾
+     * Èç¹ûÎÄ±¾ÄÚÈİ´óÓÚÎÄ±¾µÄ´óĞ¡£¬ÄÇÃ´¿ÉÄÜ»áÏÔÊ¾²»ÍêÕû
      */
     void setHeight(float height){ setDimensions(_labelWidth, height); }
     /**
      *@~english Get the label height.
-     *@~chinese è¿”å›æ–‡æœ¬çš„è¡Œé«˜
+     *@~chinese ·µ»ØÎÄ±¾µÄĞĞ¸ß
      *
-     * @return @~english The line height. @~chinese è¡Œé«˜
+     * @return @~english The line height. @~chinese ĞĞ¸ß
      */
     float getHeight() const { return _labelHeight; }
 
     /** @~english Sets the untransformed size of the Label in a more efficient way.
-     * @~chinese æ›´é«˜æ•ˆåœ°è®¾ç½®æ–‡æœ¬å¤§å°çš„æ–¹æ³•ã€‚è¿™ä¸ªå¤§å°æ˜¯æœªè¿›è¡Œåæ ‡å˜æ¢çš„å¤§å°ã€‚
+     * @~chinese ¸ü¸ßĞ§µØÉèÖÃÎÄ±¾´óĞ¡µÄ·½·¨¡£Õâ¸ö´óĞ¡ÊÇÎ´½øĞĞ×ø±ê±ä»»µÄ´óĞ¡¡£
      */
     void setDimensions(float width, float height);
     /**
      * @~english Get the dimension of label.
-     * @~chinese è·å–æ–‡æœ¬çš„å¤§å°
+     * @~chinese »ñÈ¡ÎÄ±¾µÄ´óĞ¡
      *
-     * @return @~english the dimension in Size. @~chinese æ–‡æœ¬å¤§å°
+     * @return @~english the dimension in Size. @~chinese ÎÄ±¾´óĞ¡
      */
     const Size& getDimensions() const{ return _labelDimensions;}
 
-    /** @~english Update content immediately. @~chinese ç«‹å³æ›´æ–°æ–‡æœ¬å†…å®¹ã€‚*/
+    /** @~english Update content immediately. @~chinese Á¢¼´¸üĞÂÎÄ±¾ÄÚÈİ¡£*/
     virtual void updateContent();
 
     /**@~english
      * Provides a way to treats each character like a Sprite.
      * @~chinese 
-     * æä¾›äº†ä¸€ç§æ–¹æ³•,å¯ä»¥æŠŠæ¯ä¸ªå­—ç¬¦å½“ä½œç²¾çµæ¥çœ‹å¾…ã€‚
+     * Ìá¹©ÁËÒ»ÖÖ·½·¨,¿ÉÒÔ°ÑÃ¿¸ö×Ö·ûµ±×÷¾«ÁéÀ´¿´´ı¡£
      * @warning @~english No support system font.
-     * @~chinese ä¸æ”¯æŒç³»ç»Ÿå­—ä½“ã€‚
+     * @~chinese ²»Ö§³ÖÏµÍ³×ÖÌå¡£
      */
     virtual Sprite * getLetter(int lettetIndex);
 
     /** @~english Makes the Label to clip upper and lower margin for reduce height of Label.
-     *@~chinese è®¾ç½®æ˜¯å¦è£å‰ªæ–‡æœ¬ä¸Šä¸‹è¾¹è·ï¼Œä¸»è¦ç”¨æ¥å‡å°‘æ–‡æœ¬çš„è°ƒè¯•ã€‚
+     *@~chinese ÉèÖÃÊÇ·ñ²Ã¼ôÎÄ±¾ÉÏÏÂ±ß¾à£¬Ö÷ÒªÓÃÀ´¼õÉÙÎÄ±¾µÄµ÷ÊÔ¡£
      */
     void setClipMarginEnabled(bool clipEnabled) { _clipEnabled = clipEnabled; }
 
     /**
      *@~english Determines whether clipping upper and lower margin of label.
-     *@~chinese åˆ¤æ–­æ–‡æœ¬æ˜¯å¦è£å‰ªä¸Šä¸‹è¾¹è·
+     *@~chinese ÅĞ¶ÏÎÄ±¾ÊÇ·ñ²Ã¼ôÉÏÏÂ±ß¾à
      *
      * @return @~english Retuen true if enable clipping margin, otherwise return false.
-     * @~chinese å¦‚æœæ¿€æ´»è£å‰ªæ–‡æœ¬ä¸Šä¸‹è¾¹æ¡†ï¼Œåˆ™è¿”å›çœŸï¼Œå¦åˆ™è¿”å›å‡ã€‚
+     * @~chinese Èç¹û¼¤»î²Ã¼ôÎÄ±¾ÉÏÏÂ±ß¿ò£¬Ôò·µ»ØÕæ£¬·ñÔò·µ»Ø¼Ù¡£
      */
     bool isClipMarginEnabled() const { return _clipEnabled; }
 
     /** @~english Sets the line height of the Label.
-     * @~chinese è®¾ç½®æ–‡æœ¬çš„è¡Œé«˜ã€‚
+     * @~chinese ÉèÖÃÎÄ±¾µÄĞĞ¸ß¡£
      * @warning @~english Not support system font.
-     * @~chinese ä¸æ”¯æŒç³»ç»Ÿå­—ä½“ã€‚
+     * @~chinese ²»Ö§³ÖÏµÍ³×ÖÌå¡£
      * @since v3.2.0
      */
     void setLineHeight(float height);
@@ -593,9 +593,9 @@ public:
     /**@~english
      * Returns the line height of this Label.
      * @~chinese 
-     * è¿”å›è¿™ä¸ªæ–‡æœ¬çš„è¡Œé«˜ã€‚
+     * ·µ»ØÕâ¸öÎÄ±¾µÄĞĞ¸ß¡£
      * @warning @~english Not support system font.
-     * @~chinese ä¸æ”¯æŒç³»ç»Ÿå­—ä½“
+     * @~chinese ²»Ö§³ÖÏµÍ³×ÖÌå
      * @since v3.2.0
      */
     float getLineHeight() const;
@@ -604,10 +604,10 @@ public:
      * Sets the additional kerning of the Label.
      *
      * @~chinese 
-     * è®¾ç½®æ–‡æœ¬çš„å­—ç¬¦é—´è·ã€‚
+     * ÉèÖÃÎÄ±¾µÄ×Ö·û¼ä¾à¡£
      * 
      * @warning @~english Not support system font.
-     * @~chinese ä¸æ”¯æŒç³»ç»Ÿå­—ä½“ã€‚
+     * @~chinese ²»Ö§³ÖÏµÍ³×ÖÌå¡£
      * @since v3.2.0
      */
     void setAdditionalKerning(float space);
@@ -616,19 +616,19 @@ public:
      * Returns the additional kerning of the Label.
      *
      * @~chinese 
-     * è¿”å›æ–‡æœ¬çš„å­—ç¬¦é—´è·
+     * ·µ»ØÎÄ±¾µÄ×Ö·û¼ä¾à
      * 
      * @warning @~english Not support system font.
-     * @~chinese ä¸æ”¯æŒç³»ç»Ÿå­—ä½“ã€‚
+     * @~chinese ²»Ö§³ÖÏµÍ³×ÖÌå¡£
      * @since v3.2.0
      */
     float getAdditionalKerning() const;
 
     /**
      * @~english Get the font atlas
-     * @~chinese è¿”å›ä¸€ä¸ªFontAtlaså¯¹è±¡æŒ‡é’ˆ
+     * @~chinese ·µ»ØÒ»¸öFontAtlas¶ÔÏóÖ¸Õë
      *
-     * @return @~english A FontAtlas pointer @~chinese FontAtlasæŒ‡é’ˆ
+     * @return @~english A FontAtlas pointer @~chinese FontAtlasÖ¸Õë
      */
     FontAtlas* getFontAtlas() { return _fontAtlas; }
 
@@ -665,7 +665,7 @@ CC_CONSTRUCTOR_ACCESS:
     /**@~english
      * Constructor of Label.
      * @~chinese 
-     * æ„é€ å‡½æ•°çš„æ ‡ç­¾ã€‚
+     * ¹¹Ôìº¯ÊıµÄ±êÇ©¡£
      * @js NA
      */
     Label(TextHAlignment hAlignment = TextHAlignment::LEFT,
@@ -674,7 +674,7 @@ CC_CONSTRUCTOR_ACCESS:
     /**@~english
      * Destructor of Label.
      * @~chinese 
-     * ææ„å‡½æ•°çš„æ ‡ç­¾ã€‚
+     * Îö¹¹º¯ÊıµÄ±êÇ©¡£
      * @js NA
      * @lua NA
      */
@@ -757,6 +757,7 @@ protected:
 
     //layout relevant properties.
     float _lineHeight;
+    float _lineSpacing;
     float _additionalKerning;
     int* _horizontalKernings;
     bool _lineBreakWithoutSpaces;

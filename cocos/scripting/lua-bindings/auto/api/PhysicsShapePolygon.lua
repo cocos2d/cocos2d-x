@@ -6,7 +6,7 @@
 
 --------------------------------
 -- Get this polygon's points array count.<br>
--- return An interger number.
+-- return An integer number.
 -- @function [parent=#PhysicsShapePolygon] getPointsCount 
 -- @param self
 -- @return int#int ret (return value: int)

@@ -88,7 +88,7 @@ public:
     @remarks
         If a new force-emitter name has been set, the removeAsListener must be called, to remove the DoPlacementParticleEventHandler
         from the old technique (to which the force-emitter belongs. Only then the new force-emitter is used. 
-        The reason why it is not called automatically in the setForceEmitterName() funtion is to offer some flexibility on 
+        The reason why it is not called automatically in the setForceEmitterName() function is to offer some flexibility on 
         the moment the removeAsListener() is called.
     */
     void removeAsListener(void);
