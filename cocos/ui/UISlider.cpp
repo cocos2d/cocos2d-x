@@ -383,14 +383,38 @@ void Slider::setPercent(int percent)
     
 bool Slider::hitTest(const cocos2d::Vec2 &pt)
 {
-    Vec2 nsp = this->_slidBallNormalRenderer->convertToNodeSpace(pt);
-    Size ballSize = this->_slidBallNormalRenderer->getContentSize();
-    Rect ballRect = Rect(0,0, ballSize.width, ballSize.height);
-    if (ballRect.containsPoint(nsp))
+    bool ret = false;
+    
+    if (_snapToTouchEnabled)
     {
-        return true;
+        ret = Widget::hitTest(pt);
     }
-    return false;
+    else
+    {
+        Vec2 nsp = this->_slidBallNormalRenderer->convertToNodeSpace(pt);
+        Size ballSize = this->_slidBallNormalRenderer->getContentSize();
+        Rect ballRect = Rect(0,0, ballSize.width, ballSize.height);
+        if (ballRect.containsPoint(nsp))
+        {
+            ret = true;
+        }
+        else
+        {
+            ret = false;
+        }
+    }
+    
+    return ret;
+}
+
+bool Slider::getSnapToTouchEnabled()
+{
+    return _snapToTouchEnabled;
+}
+
+void Slider::setSnapToTouchEnabled(bool bEnabled)
+{
+    _snapToTouchEnabled = bEnabled;
 }
 
 bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)

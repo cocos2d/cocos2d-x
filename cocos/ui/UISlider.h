@@ -222,6 +222,9 @@ public:
     
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
+
+    bool getSnapToTouchEnabled();
+    void setSnapToTouchEnabled(bool bEnabled);
     
     //override the widget's hitTest function to perfom its own
     virtual bool hitTest(const Vec2 &pt) override;
@@ -275,6 +278,7 @@ protected:
     
     bool _scale9Enabled;
     bool _prevIgnoreSize;
+    bool _snapToTouchEnabled;    
     
     float _zoomScale;
     float _sliderBallNormalTextureScaleX;
