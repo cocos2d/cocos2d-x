@@ -329,6 +329,16 @@ THE SOFTWARE.
 #define CC_ENABLE_SCRIPT_BINDING 1
 #endif
 
+/** @def CC_NATIVE_CONTROL_SCRIPT
+ * Indicate whether use native object to control script object life cycle
+ * False by default.
+ */
+#ifdef CC_ENABLE_SCRIPT_BINDING
+    #ifndef CC_NATIVE_CONTROL_SCRIPT
+    #define CC_NATIVE_CONTROL_SCRIPT 0
+    #endif
+#endif
+
 /** @def CC_CONSTRUCTOR_ACCESS
  * Indicate the init functions access modifier. If value equals to protected, then these functions are protected.
  * If value equals to public, these functions are public,

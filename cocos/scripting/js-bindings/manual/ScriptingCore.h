@@ -39,14 +39,6 @@
 #include <assert.h>
 #include <memory>
 
-/** @def CC_NATIVE_CONTROL_SCRIPT
- * Indicate whether use native object to control script object life cycle
- * False by default.
- */
-#ifndef CC_NATIVE_CONTROL_SCRIPT
-#define CC_NATIVE_CONTROL_SCRIPT 0
-#endif
-
 #define ENGINE_VERSION "Cocos2d-JS v3.9 Beta0"
 
 void js_log(const char *format, ...);

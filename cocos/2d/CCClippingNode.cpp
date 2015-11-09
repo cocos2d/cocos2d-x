@@ -84,7 +84,7 @@ ClippingNode::~ClippingNode()
     if (_stencil)
     {
 #if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
-        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, stencil);
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _stencil);
 #endif
         _stencil->stopAllActions();
         _stencil->release();
