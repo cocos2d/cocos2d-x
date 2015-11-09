@@ -1300,7 +1300,7 @@ void TransitionCrossFade::onEnter()
     Color4B  color(0,0,0,0);
     Size size = Director::getInstance()->getWinSize();
     Size screenSize = Director::getInstance()->getOpenGLView()->getFrameSize();
-    Size textureSize = Size(std::roundf(screenSize.width/CC_CONTENT_SCALE_FACTOR()), std::roundf(screenSize.height/CC_CONTENT_SCALE_FACTOR()));
+    Size textureSize = Size((int)(screenSize.width/CC_CONTENT_SCALE_FACTOR()+0.5f), (int)(screenSize.height/CC_CONTENT_SCALE_FACTOR()+0.5f));
     LayerColor* layer = LayerColor::create(color);
 
     // create the first render texture for inScene
