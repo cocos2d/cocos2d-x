@@ -206,6 +206,7 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     
     // set project directory as search root path
     string solutionDir = tmpConfig.getProjectDir();
+    string spath = solutionDir;
     if (!solutionDir.empty())
     {
         for (int i = 0; i < solutionDir.size(); ++i)
@@ -215,6 +216,24 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
                 solutionDir[i] = '/';
             }
         }
+
+        spath = solutionDir;
+        if (spath[spath.length() - 1] == '/') {
+            spath = spath.substr(0, spath.length() - 1);
+        }
+        string strExtention = FileUtils::getInstance()->getFileExtension(spath);
+        int pos = -1;
+        if(strExtention.compare(".csd") == 0)
+        {
+            pos = spath.rfind('/');
+            if(pos > 0)
+                spath = spath.substr(0, pos);
+        }
+        pos = spath.rfind('/');
+        if(pos > 0)
+            spath = spath.substr(0, pos+1);
+        FileUtils::getInstance()->addSearchPath(spath);
+
         FileUtils::getInstance()->setDefaultResourceRootPath(solutionDir);
         FileUtils::getInstance()->addSearchPath(solutionDir);
         FileUtils::getInstance()->addSearchPath(tmpConfig.getProjectDir());
@@ -226,7 +245,9 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
 
     // parse config.json
     auto parser = ConfigParser::getInstance();
-    auto configPath = solutionDir.append(CONFIG_FILE);
+    auto configPath = spath.append(CONFIG_FILE);
+    if(!FileUtils::getInstance()->isFileExist(configPath))
+        configPath = solutionDir.append(CONFIG_FILE);
     parser->readConfig(configPath);
     
     // set information
