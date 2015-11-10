@@ -348,6 +348,7 @@ void PageView::setIndicatorEnabled(bool enabled)
     else
     {
         _indicator = PageViewIndicator::create();
+        _indicator->setDirection(getDirection());
         addProtectedChild(_indicator, 10000);
         setIndicatorSelectedIndexColor(Color3B(100, 100, 255));
         refreshIndicatorPosition();
