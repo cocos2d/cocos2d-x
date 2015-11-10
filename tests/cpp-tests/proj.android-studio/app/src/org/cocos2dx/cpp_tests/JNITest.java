@@ -51,6 +51,10 @@ public class JNITest {
 		Log.v(TAG, message.toString());
 	}
 
+	public static void voidMethod4(final String str) {
+		// Used to test garbage collection
+	}
+
 	public static boolean booleanMethod(int n) {
 		boolean ret = n > 0;
 		StringBuilder message = new StringBuilder();

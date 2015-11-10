@@ -51,4 +51,12 @@ JNITest::JNITest()
     const char* cstr = "XYZ";
     std::string s3 = JniHelper::callStaticStringMethod(classPath, "stringMethod", cstr, true);
     CC_ASSERT(s3 == "ZYX");
+
+    // should not crash
+    for (int i = 0; i < 10000; i++) {
+        JniHelper::callStaticVoidMethod(classPath, "voidMethod4", "ABCDEF");
+    }
+
+    // should not compile
+    // JniHelper::callStaticVoidMethod(classPath, "voidMethod4", std::vector<int>());
 }

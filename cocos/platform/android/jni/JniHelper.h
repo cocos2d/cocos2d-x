@@ -27,6 +27,8 @@ THE SOFTWARE.
 
 #include <jni.h>
 #include <string>
+#include <vector>
+#include <unordered_map>
 #include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
@@ -65,10 +67,11 @@ public:
                                      const std::string& methodName, 
                                      Ts... xs) {
         cocos2d::JniMethodInfo t;
-        std::string signature = "(" + getJNISignature(xs...) + ")V";
+        std::string signature = "(" + std::string(getJNISignature(xs...)) + ")V";
         if (cocos2d::JniHelper::getStaticMethodInfo(t, className.c_str(), methodName.c_str(), signature.c_str())) {
             t.env->CallStaticVoidMethod(t.classID, t.methodID, convert(t, xs)...);
             t.env->DeleteLocalRef(t.classID);
+            deleteLocalRefs(t.env);
         }
     }
 
@@ -78,10 +81,11 @@ public:
                                         Ts... xs) {
         jboolean jret = JNI_FALSE;
         cocos2d::JniMethodInfo t;
-        std::string signature = "(" + getJNISignature(xs...) + ")Z";
+        std::string signature = "(" + std::string(getJNISignature(xs...)) + ")Z";
         if (cocos2d::JniHelper::getStaticMethodInfo(t, className.c_str(), methodName.c_str(), signature.c_str())) {
             jret = t.env->CallStaticBooleanMethod(t.classID, t.methodID, convert(t, xs)...);
             t.env->DeleteLocalRef(t.classID);
+            deleteLocalRefs(t.env);
         }
         return (jret == JNI_TRUE);
     }
@@ -92,10 +96,11 @@ public:
                                     Ts... xs) {
         jint ret = 0;
         cocos2d::JniMethodInfo t;
-        std::string signature = "(" + getJNISignature(xs...) + ")I";
+        std::string signature = "(" + std::string(getJNISignature(xs...)) + ")I";
         if (cocos2d::JniHelper::getStaticMethodInfo(t, className.c_str(), methodName.c_str(), signature.c_str())) {
             ret = t.env->CallStaticIntMethod(t.classID, t.methodID, convert(t, xs)...);
             t.env->DeleteLocalRef(t.classID);
+            deleteLocalRefs(t.env);
         }
         return ret;
     }
@@ -106,10 +111,11 @@ public:
                                       Ts... xs) {
         jfloat ret = 0.0;
         cocos2d::JniMethodInfo t;
-        std::string signature = "(" + getJNISignature(xs...) + ")F";
+        std::string signature = "(" + std::string(getJNISignature(xs...)) + ")F";
         if (cocos2d::JniHelper::getStaticMethodInfo(t, className.c_str(), methodName.c_str(), signature.c_str())) {
             ret = t.env->CallStaticFloatMethod(t.classID, t.methodID, convert(t, xs)...);
             t.env->DeleteLocalRef(t.classID);
+            deleteLocalRefs(t.env);
         }
         return ret;
     }
@@ -120,10 +126,11 @@ public:
                                        Ts... xs) {
         jdouble ret = 0.0;
         cocos2d::JniMethodInfo t;
-        std::string signature = "(" + getJNISignature(xs...) + ")D";
+        std::string signature = "(" + std::string(getJNISignature(xs...)) + ")D";
         if (cocos2d::JniHelper::getStaticMethodInfo(t, className.c_str(), methodName.c_str(), signature.c_str())) {
             ret = t.env->CallStaticDoubleMethod(t.classID, t.methodID, convert(t, xs)...);
             t.env->DeleteLocalRef(t.classID);
+            deleteLocalRefs(t.env);
         }
         return ret;
     }
@@ -135,12 +142,13 @@ public:
         std::string ret;
 
         cocos2d::JniMethodInfo t;
-        std::string signature = "(" + getJNISignature(xs...) + ")Ljava/lang/String;";
+        std::string signature = "(" + std::string(getJNISignature(xs...)) + ")Ljava/lang/String;";
         if (cocos2d::JniHelper::getStaticMethodInfo(t, className.c_str(), methodName.c_str(), signature.c_str())) {
             jstring jret = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, convert(t, xs)...);
             ret = cocos2d::JniHelper::jstring2string(jret);
             t.env->DeleteLocalRef(t.classID);
             t.env->DeleteLocalRef(jret);
+            deleteLocalRefs(t.env);
         }
         return ret;
     }
@@ -155,20 +163,69 @@ private:
 
     static JavaVM* _psJavaVM;
 
-    static std::string getJNISignature();
-
-    template <typename T, typename... Ts>
-    static std::string getJNISignature(T x, Ts... xs) {
-        return getJNISignature(x) + getJNISignature(xs...);
-    }
-
     static jstring convert(cocos2d::JniMethodInfo& t, const char* x);
 
-    static jstring convert(cocos2d::JniMethodInfo& t, std::string x);
+    static jstring convert(cocos2d::JniMethodInfo& t, const std::string& x);
+
+    static std::unordered_map<JNIEnv*, std::vector<jobject>> localRefs;
+
+    static void deleteLocalRefs(JNIEnv* env);
 
     template <typename T>
     static T convert(cocos2d::JniMethodInfo&, T x) {
         return x;
+    }
+
+    static constexpr const char* getJNISignature() {
+        return "";
+    }
+
+    static constexpr const char* getJNISignature(bool) {
+        return "Z";
+    }
+
+    static constexpr const char* getJNISignature(char) {
+        return "C";
+    }
+
+    static constexpr const char* getJNISignature(short) {
+        return "S";
+    }
+
+    static constexpr const char* getJNISignature(int) {
+        return "I";
+    }
+
+    static constexpr const char* getJNISignature(long) {
+        return "J";
+    }
+
+    static constexpr const char* getJNISignature(float) {
+        return "F";
+    }
+
+    static constexpr const char* getJNISignature(double) {
+        return "D";
+    }
+
+    static constexpr const char* getJNISignature(const char*) {
+        return "Ljava/lang/String;";
+    }
+
+    static constexpr const char* getJNISignature(const std::string&) {
+        return "Ljava/lang/String;";
+    }
+
+    template <typename T>
+    static constexpr const char* getJNISignature(T x) {
+        // This template should never be instantiated
+        static_assert(sizeof(x) == 0, "Unsupported argument type");
+        return "";
+    }
+
+    template <typename T, typename... Ts>
+    static constexpr const char* getJNISignature(T x, Ts... xs) {
+        return (std::string(getJNISignature(x)) + std::string(getJNISignature(xs...))).c_str();
     }
 };
 
