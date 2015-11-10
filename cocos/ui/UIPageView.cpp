@@ -96,17 +96,17 @@ void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool forceCreate
     insertCustomItem(widget, pageIdx);
 }
 
-void PageView::addPage(Layout* page)
+void PageView::addPage(Widget* page)
 {
     pushBackCustomItem(page);
 }
 
-void PageView::insertPage(Layout* page, int idx)
+void PageView::insertPage(Widget* page, int idx)
 {
     insertCustomItem(page, idx);
 }
 
-void PageView::removePage(Layout* page)
+void PageView::removePage(Widget* page)
 {
     removeItem(getIndex(page));
 }

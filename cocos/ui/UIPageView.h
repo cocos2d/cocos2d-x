@@ -122,7 +122,7 @@ public:
      * @param pageIdx   A given index.
      * @param forceCreate   If `forceCreate` is true and `widget` isn't exists, pageview would create a default page and add it.
      *
-     * Since v3.9, this is deprecated. Use `ListView::insertCustomItem(Widget* item, ssize_t index)` instead.
+     * Since v3.9, this is deprecated. Use `insertPage(Widget* page, int idx)` instead.
      */
     CC_DEPRECATED_ATTRIBUTE void addWidgetToPage(Widget* widget, ssize_t pageIdx, bool forceCreate);
     
@@ -130,54 +130,42 @@ public:
      * Insert a page into the end of PageView.
      *
      * @param page Page to be inserted.
-     *
-     * Since v3.9, this is deprecated. Use `ListView::pushBackCustomItem(Widget* item)` instead.
      */
-    CC_DEPRECATED_ATTRIBUTE void addPage(Layout* page);
-    
+    void addPage(Widget* page);
+
     /**
      * Insert a page into PageView at a given index.
      *
      * @param page  Page to be inserted.
      * @param idx   A given index.
-     *
-     * Since v3.9, this is deprecated. Use `ListView::insertCustomItem(Widget* item, ssize_t index)` instead.
      */
-    CC_DEPRECATED_ATTRIBUTE void insertPage(Layout* page, int idx);
-    
+    void insertPage(Widget* page, int idx);
+
     /**
      * Remove a page of PageView.
      *
      * @param page  Page to be removed.
-     *
-     * Since v3.9, this is deprecated. Use `ListView::removeItem(getIndex(item))` instead.
      */
-    CC_DEPRECATED_ATTRIBUTE void removePage(Layout* page);
+    void removePage(Widget* page);
 
     /**
      * Remove a page at a given index of PageView.
      *
      * @param index  A given index.
-     *
-     * Since v3.9, this is deprecated. Use `ListView::removeItem(ssize_t index)` instead.
      */
-    CC_DEPRECATED_ATTRIBUTE void removePageAtIndex(ssize_t index);
+    void removePageAtIndex(ssize_t index);
 
     /**
      * @brief Remove all pages of the PageView.
-     *
-     * Since v3.9, this is deprecated. Use `ListView::removeAllItems()` instead.
      */
-    CC_DEPRECATED_ATTRIBUTE void removeAllPages();
+    void removeAllPages();
     
     /**
      * Scroll to a page with a given index.
      *
      * @param idx   A given index in the PageView. Index start from 0 to pageCount -1.
-     *
-     * Since v3.9, this is deprecated. Use `ListView::scrollToItem(ssize_t itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE)` instead.
      */
-    CC_DEPRECATED_ATTRIBUTE void scrollToPage(ssize_t idx);
+    void scrollToPage(ssize_t idx);
 
     /**
      * Scroll to a page with a given index.
@@ -244,7 +232,6 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerPageView(Ref *target, SEL_PageViewEvent selector);
 
-    
     /**
      * @brief Add a page turn callback to PageView, then when one page is turning, the callback will be called.
      *
