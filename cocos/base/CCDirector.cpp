@@ -818,14 +818,15 @@ void Director::replaceScene(Scene *scene)
         _nextScene = nullptr;
     }
 
-    ssize_t index = _scenesStack.size();
+    ssize_t index = _scenesStack.size() - 1;
 
     _sendCleanupToScene = true;
 #if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
-    ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, scene);
-    ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _scenesStack.at(index-1));
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    sEngine->retainScriptObject(this, scene);
+    sEngine->releaseScriptObject(this, _scenesStack.at(index));
 #endif
-    _scenesStack.replace(index - 1, scene);
+    _scenesStack.replace(index, scene);
 
     _nextScene = scene;
 }

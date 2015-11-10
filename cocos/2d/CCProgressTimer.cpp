@@ -109,10 +109,11 @@ void ProgressTimer::setSprite(Sprite *sprite)
     if (_sprite != sprite)
     {
 #if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
         if (_sprite)
-            ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _sprite);
+            sEngine->releaseScriptObject(this, _sprite);
         if (sprite)
-            ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, sprite);
+            sEngine->retainScriptObject(this, sprite);
 #endif
         CC_SAFE_RETAIN(sprite);
         CC_SAFE_RELEASE(_sprite);

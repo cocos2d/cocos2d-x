@@ -452,7 +452,9 @@ void EventDispatcher::addEventListener(EventListener* listener)
     }
     
 #if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
-    ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, listener);
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+        sEngine->retainScriptObject(this, listener);
 #endif
     listener->retain();
 }
@@ -1607,7 +1609,11 @@ void EventDispatcher::releaseListener(EventListener* listener)
 {
 #if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
     if (listener)
-        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, listener);
+    {
+        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (sEngine)
+            sEngine->releaseScriptObject(this, listener);
+    }
 #endif
     CC_SAFE_RELEASE(listener);
 }

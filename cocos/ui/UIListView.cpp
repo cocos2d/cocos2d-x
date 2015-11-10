@@ -90,10 +90,11 @@ void ListView::setItemModel(Widget *model)
         return;
     }
 #if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
     if (_model)
-        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _model);
+        sEngine->releaseScriptObject(this, _model);
     if (model)
-        ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, model);
+        sEngine->retainScriptObject(this, model);
 #endif
     CC_SAFE_RELEASE_NULL(_model);
     _model = model;

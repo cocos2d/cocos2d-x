@@ -62,10 +62,11 @@ NodeGrid::NodeGrid()
 void NodeGrid::setTarget(Node* target)
 {
 #if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
     if (_gridTarget)
-        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _gridTarget);
+        sEngine->releaseScriptObject(this, _gridTarget);
     if (target)
-        ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, target);
+        sEngine->retainScriptObject(this, target);
 #endif
     CC_SAFE_RELEASE(_gridTarget);
     CC_SAFE_RETAIN(target);

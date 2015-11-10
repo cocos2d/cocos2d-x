@@ -714,10 +714,11 @@ void Node::setOrderOfArrival(int orderOfArrival)
 void Node::setUserObject(Ref* userObject)
 {
 #if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
     if (userObject)
-        ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, userObject);
+        sEngine->retainScriptObject(this, userObject);
     if (_userObject)
-        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _userObject);
+        sEngine->releaseScriptObject(this, _userObject);
 #endif
     CC_SAFE_RETAIN(userObject);
     CC_SAFE_RELEASE(_userObject);

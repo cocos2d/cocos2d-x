@@ -233,16 +233,17 @@ void removeJSObject(JSContext* cx, void* nativeObj)
     }
 }
 
-int arrayIndexOfElement(JSContext* cx, JS::HandleObject array, JS::HandleValue elem) {
+int arrayIndexOfElement(JSContext* cx, JS::HandleObject array, JS::HandleObject elem) {
     bool equal = false;
     uint32_t len = 0;
+    JS::RootedValue elemVal(cx, OBJECT_TO_JSVAL(elem));
     JS_GetArrayLength(cx, array, &len);
     for (uint32_t i=0; i < len; i++)
     {
         JS::RootedValue value(cx);
         if (JS_GetElement(cx, array, i, &value))
         {
-            if (JS_StrictlyEqual(cx, value, elem, &equal) && equal)
+            if (JS_StrictlyEqual(cx, value, elemVal, &equal) && equal)
             {
                 return i;
             }
@@ -909,18 +910,22 @@ void ScriptingCore::retainScriptObject(cocos2d::Ref* owner, cocos2d::Ref* target
     JS::RootedValue refsVal(cx);
     JS::RootedObject refs(cx);
     JS_GetProperty(cx, jsOwner, "__nativeRefs", &refsVal);
-    if (refsVal.isNullOrUndefined())
+    if (JS_IsArrayObject(cx, refsVal))
+    {
+        refs.set(refsVal.toObjectOrNull());
+    }
+    else
     {
         refs.set(JS_NewArrayObject(cx, 0));
         refsVal.set(OBJECT_TO_JSVAL(refs));
         JS_SetProperty(cx, jsOwner, "__nativeRefs", refsVal);
     }
     
-    if (arrayIndexOfElement(cx, refs, valTarget) == -1)
+    if (arrayIndexOfElement(cx, refs, jsTarget) == -1)
     {
         uint32_t length = 0;
         JS_GetArrayLength(cx, refs, &length);
-        JS_SetElement(cx, refs, length, valTarget);
+        JS_SetElement(cx, refs, length, jsTarget);
     }
 #endif
 }
@@ -948,12 +953,16 @@ void ScriptingCore::releaseScriptObject(cocos2d::Ref* owner, cocos2d::Ref* targe
     JS::RootedValue refsVal(cx);
     JS::RootedObject refs(cx);
     JS_GetProperty(cx, jsOwner, "__nativeRefs", &refsVal);
-    if (refsVal.isNullOrUndefined())
+    if (JS_IsArrayObject(cx, refsVal))
+    {
+        refs.set(refsVal.toObjectOrNull());
+    }
+    else
     {
         return;
     }
     
-    int index = arrayIndexOfElement(cx, refs, valTarget);
+    int index = arrayIndexOfElement(cx, refs, jsTarget);
     if (index != -1)
     {
         JS_DeleteElement(cx, refs, index);
