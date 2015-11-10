@@ -121,8 +121,8 @@ public:
      * @param widget    Widget to be added to pageview.
      * @param pageIdx   A given index.
      * @param forceCreate   If `forceCreate` is true and `widget` isn't exists, pageview would create a default page and add it.
-	 *
-	 * Since v3.9, this is deprecated. Use `ListView::insertCustomItem(Widget* item, ssize_t index)` instead.
+     *
+     * Since v3.9, this is deprecated. Use `ListView::insertCustomItem(Widget* item, ssize_t index)` instead.
      */
     CC_DEPRECATED_ATTRIBUTE void addWidgetToPage(Widget* widget, ssize_t pageIdx, bool forceCreate);
     
@@ -130,8 +130,8 @@ public:
      * Insert a page into the end of PageView.
      *
      * @param page Page to be inserted.
-	 *
-	 * Since v3.9, this is deprecated. Use `ListView::pushBackCustomItem(Widget* item)` instead.
+     *
+     * Since v3.9, this is deprecated. Use `ListView::pushBackCustomItem(Widget* item)` instead.
      */
     CC_DEPRECATED_ATTRIBUTE void addPage(Layout* page);
     
@@ -140,8 +140,8 @@ public:
      *
      * @param page  Page to be inserted.
      * @param idx   A given index.
-	 *
-	 * Since v3.9, this is deprecated. Use `ListView::insertCustomItem(Widget* item, ssize_t index)` instead.
+     *
+     * Since v3.9, this is deprecated. Use `ListView::insertCustomItem(Widget* item, ssize_t index)` instead.
      */
     CC_DEPRECATED_ATTRIBUTE void insertPage(Layout* page, int idx);
     
@@ -149,35 +149,35 @@ public:
      * Remove a page of PageView.
      *
      * @param page  Page to be removed.
-	 *
-	 * Since v3.9, this is deprecated. Use `ListView::removeItem(getIndex(item))` instead.
-	 */
-	CC_DEPRECATED_ATTRIBUTE void removePage(Layout* page);
+     *
+     * Since v3.9, this is deprecated. Use `ListView::removeItem(getIndex(item))` instead.
+     */
+    CC_DEPRECATED_ATTRIBUTE void removePage(Layout* page);
 
     /**
      * Remove a page at a given index of PageView.
      *
      * @param index  A given index.
-	 *
-	 * Since v3.9, this is deprecated. Use `ListView::removeItem(ssize_t index)` instead.
-	 */
-	CC_DEPRECATED_ATTRIBUTE void removePageAtIndex(ssize_t index);
+     *
+     * Since v3.9, this is deprecated. Use `ListView::removeItem(ssize_t index)` instead.
+     */
+    CC_DEPRECATED_ATTRIBUTE void removePageAtIndex(ssize_t index);
 
     /**
      * @brief Remove all pages of the PageView.
-	 *
-	 * Since v3.9, this is deprecated. Use `ListView::removeAllItems()` instead.
-	 */
-	CC_DEPRECATED_ATTRIBUTE void removeAllPages();
+     *
+     * Since v3.9, this is deprecated. Use `ListView::removeAllItems()` instead.
+     */
+    CC_DEPRECATED_ATTRIBUTE void removeAllPages();
     
     /**
      * Scroll to a page with a given index.
      *
      * @param idx   A given index in the PageView. Index start from 0 to pageCount -1.
-	 *
-	 * Since v3.9, this is deprecated. Use `ListView::scrollToItem(ssize_t itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE)` instead.
-	 */
-	CC_DEPRECATED_ATTRIBUTE void scrollToPage(ssize_t idx);
+     *
+     * Since v3.9, this is deprecated. Use `ListView::scrollToItem(ssize_t itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE)` instead.
+     */
+    CC_DEPRECATED_ATTRIBUTE void scrollToPage(ssize_t idx);
 
     /**
      * Scroll to a page with a given index.
@@ -205,9 +205,9 @@ public:
      * This is the different between scrollToPage.
      *
      * @param index A given index in PageView. Index start from 0 to pageCount -1.
-	 *
-	 * Since v3.9, this is deprecated. Use `setCurrentPageIndex()` instead.
-	 */
+     *
+     * Since v3.9, this is deprecated. Use `setCurrentPageIndex()` instead.
+     */
     CC_DEPRECATED_ATTRIBUTE void setCurPageIndex(ssize_t index);
 
     /**
@@ -221,20 +221,20 @@ public:
     /**
      * @brief Get all the pages in the PageView.
      * @return A vector of Layout pointers.
-	 *
-	 * Since v3.9, this is obsolete. Use `Vector<Widget*>& ListView::getItems()` instead.
-	 */
-	CC_DEPRECATED_ATTRIBUTE Vector<Layout*>& getPages();
+     *
+     * Since v3.9, this is obsolete. Use `Vector<Widget*>& ListView::getItems()` instead.
+     */
+    CC_DEPRECATED_ATTRIBUTE Vector<Layout*>& getPages();
 
     /**
      * @brief Get a page at a given index
      *
      * @param index A given index.
      * @return A layout pointer in PageView container.
-	 *
-	 * Since v3.9, this is obsolete. Use `Widget* ListView::getItem(index)` instead.
-	 */
-	CC_DEPRECATED_ATTRIBUTE Layout* getPage(ssize_t index);
+     *
+     * Since v3.9, this is obsolete. Use `Widget* ListView::getItem(index)` instead.
+     */
+    CC_DEPRECATED_ATTRIBUTE Layout* getPage(ssize_t index);
     
     /**
      * Add a page turn callback to PageView, then when one page is turning, the callback will be called.

@@ -68,7 +68,7 @@ bool PageView::init()
     {
         setDirection(Direction::HORIZONTAL);
         setMagneticType(MagneticType::CENTER);
-		setScrollBarEnabled(false);
+        setScrollBarEnabled(false);
         return true;
     }
     return false;
@@ -95,32 +95,32 @@ void PageView::setDirection(PageView::Direction direction)
 
 void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool forceCreate)
 {
-	insertCustomItem(widget, pageIdx);
+    insertCustomItem(widget, pageIdx);
 }
 
 void PageView::addPage(Layout* page)
 {
-	pushBackCustomItem(page);
+    pushBackCustomItem(page);
 }
 
 void PageView::insertPage(Layout* page, int idx)
 {
-	insertCustomItem(page, idx);
+    insertCustomItem(page, idx);
 }
 
 void PageView::removePage(Layout* page)
 {
-	removeItem(getIndex(page));
+    removeItem(getIndex(page));
 }
 
 void PageView::removePageAtIndex(ssize_t index)
 {
-	removeItem(index);
+    removeItem(index);
 }
     
 void PageView::removeAllPages()
 {
-	removeAllItems();
+    removeAllItems();
 }
 
 void PageView::setCurPageIndex( ssize_t index )
@@ -279,22 +279,22 @@ void PageView::addEventListener(const ccPageViewCallback& callback)
 
 ssize_t PageView::getCurPageIndex() const
 {
-	Widget* widget = ListView::getCenterItemInCurrentView();
-	return getIndex(widget);
+    Widget* widget = ListView::getCenterItemInCurrentView();
+    return getIndex(widget);
 }
 
 Vector<Layout*>& PageView::getPages()
 {
-	CCASSERT(false, "This method is obsolete!");
+    CCASSERT(false, "This method is obsolete!");
 
     // Temporary code to keep backward compatibility.
     static Vector<Layout*> pages;
-	pages.clear();
-	for(Widget* widget : getItems())
-	{
-		pages.pushBack(dynamic_cast<Layout*>(widget));
-	}
-	return pages;
+    pages.clear();
+    for(Widget* widget : getItems())
+    {
+        pages.pushBack(dynamic_cast<Layout*>(widget));
+    }
+    return pages;
 }
 
 Layout* PageView::getPage(ssize_t index)
@@ -306,11 +306,11 @@ Layout* PageView::getPage(ssize_t index)
 
     // Temporary code to keep backward compatibility.
     static Vector<Layout*> pages;
-	pages.clear();
-	for(Widget* widget : getItems())
-	{
-		pages.pushBack(dynamic_cast<Layout*>(widget));
-	}
+    pages.clear();
+    for(Widget* widget : getItems())
+    {
+        pages.pushBack(dynamic_cast<Layout*>(widget));
+    }
     return pages.at(index);
 }
 
