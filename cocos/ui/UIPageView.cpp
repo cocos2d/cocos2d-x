@@ -35,8 +35,6 @@ PageView::PageView():
 _indicator(nullptr),
 _indicatorPositionAsAnchorPoint(Vec2(0.5f, 0.1f)),
 _currentPageIndex(-1),
-_customScrollThreshold(0.0),
-_usingCustomScrollThreshold(false),
 _childFocusCancelOffset(5.0f),
 _pageViewEventListener(nullptr),
 _pageViewEventSelector(nullptr),
@@ -145,24 +143,22 @@ void PageView::scrollToItem(ssize_t itemIndex)
 
 void PageView::setCustomScrollThreshold(float threshold)
 {
-    CCASSERT(threshold > 0, "Invalid threshold!");
-    _customScrollThreshold = threshold;
-    this->setUsingCustomScrollThreshold(true);
+    CCLOG("PageView::setCustomScrollThreshold() has no effect!");
 }
 
 float PageView::getCustomScrollThreshold()const
 {
-    return _customScrollThreshold;
+    return 0;
 }
     
 void PageView::setUsingCustomScrollThreshold(bool flag)
 {
-    _usingCustomScrollThreshold = flag;
+    CCLOG("PageView::setUsingCustomScrollThreshold() has no effect!");
 }
     
 bool PageView::isUsingCustomScrollThreshold()const
 {
-    return _usingCustomScrollThreshold;
+    return false;
 }
 
 void PageView::moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack)
@@ -334,8 +330,6 @@ void PageView::copySpecialProperties(Widget *widget)
         _ccEventCallback = pageView->_ccEventCallback;
         _pageViewEventListener = pageView->_pageViewEventListener;
         _pageViewEventSelector = pageView->_pageViewEventSelector;
-        _usingCustomScrollThreshold = pageView->_usingCustomScrollThreshold;
-        _customScrollThreshold = pageView->_customScrollThreshold;
     }
 }
 

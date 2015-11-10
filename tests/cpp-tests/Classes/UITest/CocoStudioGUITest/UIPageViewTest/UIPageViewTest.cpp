@@ -8,7 +8,6 @@ UIPageViewTests::UIPageViewTests()
 {
     ADD_TEST_CASE(UIPageViewTest);
     ADD_TEST_CASE(UIPageViewButtonTest);
-    ADD_TEST_CASE(UIPageViewCustomScrollThreshold);
     ADD_TEST_CASE(UIPageViewTouchPropagationTest);
     ADD_TEST_CASE(UIPageViewDynamicAddAndRemoveTest);
     ADD_TEST_CASE(UIPageViewJumpToPageTest);
@@ -219,102 +218,6 @@ void UIPageViewButtonTest::pageViewEvent(Ref *pSender, PageView::EventType type)
     }
 }
 
-
-// UIPageViewCustomScrollThreshold
-UIPageViewCustomScrollThreshold::UIPageViewCustomScrollThreshold()
-: _displayValueLabel(nullptr)
-{
-    
-}
-
-UIPageViewCustomScrollThreshold::~UIPageViewCustomScrollThreshold()
-{
-}
-
-bool UIPageViewCustomScrollThreshold::init()
-{
-    if (UIScene::init())
-    {
-        Size widgetSize = _widget->getContentSize();
-        
-        // Add a label in which the dragpanel events will be displayed
-        _displayValueLabel = Text::create("Scroll Threshold", "fonts/Marker Felt.ttf", 32);
-        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
-        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
-                                             widgetSize.height / 2.0f +
-                                             _displayValueLabel->getContentSize().height * 1.5));
-        _uiLayer->addChild(_displayValueLabel);
-        
-        // Add the black background
-        Text* alert = Text::create("PageView", "fonts/Marker Felt.ttf", 30);
-        alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
-        _uiLayer->addChild(alert);
-        
-        Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
-        
-        Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
-        
-        // Create the page view
-        PageView* pageView = PageView::create();
-        pageView->setContentSize(Size(240.0f, 100.0f));
-        Size backgroundSize = background->getContentSize();
-		pageView->setPosition(Vec2(widgetSize - pageView->getContentSize()) / 2.0f + Vec2(0, 20));
-
-        int pageCount = 4;
-        for (int i = 0; i < pageCount; ++i)
-        {
-            Layout* layout = Layout::create();
-            layout->setContentSize(Size(240.0f, 130.0f));
-            
-            ImageView* imageView = ImageView::create("cocosui/scrollviewbg.png");
-            imageView->setScale9Enabled(true);
-            imageView->setContentSize(Size(240, 130));
-            imageView->setPosition(layout->getContentSize() / 2.0f);
-            layout->addChild(imageView);
-            
-            Text* label = Text::create(StringUtils::format("page %d",(i+1)), "fonts/Marker Felt.ttf", 30);
-            label->setColor(Color3B(192, 192, 192));
-            label->setPosition(layout->getContentSize() / 2.0f);
-            layout->addChild(label);
-            
-            pageView->insertCustomItem(layout, i);
-        }
-        
-        _uiLayer->addChild(pageView);
-        pageView->setName("pageView");
-        
-        Slider* slider = Slider::create();
-        slider->loadBarTexture("cocosui/sliderTrack.png");
-        slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
-        slider->loadProgressBarTexture("cocosui/sliderProgress.png");
-        slider->setPosition(Vec2(widgetSize.width / 2.0f , widgetSize.height / 2.0f - 40));
-        slider->addEventListener(CC_CALLBACK_2(UIPageViewCustomScrollThreshold::sliderEvent, this));
-        slider->setPercent(50);
-        _uiLayer->addChild(slider);
-
-        
-        return true;
-    }
-    return false;
-}
-
-
-void UIPageViewCustomScrollThreshold::sliderEvent(Ref *pSender, Slider::EventType type)
-{
-    if (type == Slider::EventType::ON_PERCENTAGE_CHANGED)
-    {
-        Slider* slider = dynamic_cast<Slider*>(pSender);
-        int percent = slider->getPercent();
-        PageView* pageView = (PageView*)_uiLayer->getChildByName("pageView");
-        if (percent == 0) {
-            percent = 1;
-        }
-        pageView->setCustomScrollThreshold(percent * 0.01 * pageView->getContentSize().width);
-        
-        _displayValueLabel->setString(StringUtils::format("Scroll Threshold: %f", pageView->getCustomScrollThreshold()));
-    }
-}
 
 // UIPageViewTouchPropagationTest
 UIPageViewTouchPropagationTest::UIPageViewTouchPropagationTest()
