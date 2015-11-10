@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "cocostudio/CCActionFrameEasing.h"
 #include "ui/UIWidget.h"
 #include "ui/UIHelper.h"
+#include "ui/UILayout.h"
 #include "cocostudio/CocoLoader.h"
 #include "base/ccUtils.h"
 
@@ -73,7 +74,14 @@ ActionNode::~ActionNode()
 
 void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
 {
+    Widget * rw = dynamic_cast<Widget *>(root);
+    if (nullptr == rw)
+        return;
+
     setActionTag(DICTOOL->getIntValue_json(dic, "ActionTag"));
+    Widget* node = Helper::seekActionWidgetByActionTag(rw, getActionTag());
+    bool positionOffset = node && (nullptr == (dynamic_cast<Layout *>(node)));
+
     int actionFrameCount = DICTOOL->getArrayCount_json(dic, "actionframelist");
     for (int i=0; i<actionFrameCount; i++)
     {
@@ -97,6 +105,12 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
         {
             float positionX = DICTOOL->getFloatValue_json(actionFrameDic, "positionx");
             float positionY = DICTOOL->getFloatValue_json(actionFrameDic, "positiony");
+            if (positionOffset && (nullptr != node->getParent()))
+            {
+                Vec2 AnchorPointIn = node->getParent()->getAnchorPointInPoints();
+                positionX += AnchorPointIn.x;
+                positionY += AnchorPointIn.y;
+            }
             ActionMoveFrame* actionFrame = new (std::nothrow) ActionMoveFrame();
             actionFrame->setFrameIndex(frameInex);
             actionFrame->setEasingType(frameTweenType);
