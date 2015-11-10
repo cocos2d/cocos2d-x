@@ -297,3 +297,29 @@ cc.Class.extend = function (prop) {
 
     return Class;
 };
+
+jsb.registerNativeRef = function (owner, target) {
+    if (typeof owner === "object" && typeof target === "object") {
+        var refs = owner.__nativeRefs;
+        if (!refs) {
+            refs = owner.__nativeRefs = [];
+        }
+        var index = refs.indexOf(target);
+        if (index === -1) {
+            refs.push(target);
+        }
+    }
+};
+
+jsb.unregisterNativeRef = function (owner, target) {
+    if (typeof owner === "object" && typeof target === "object") {
+        var refs = owner.__nativeRefs;
+        if (!refs) {
+            return;
+        }
+        var index = refs.indexOf(target);
+        if (index !== -1) {
+            refs.splice(index, 1);
+        }
+    }
+};
