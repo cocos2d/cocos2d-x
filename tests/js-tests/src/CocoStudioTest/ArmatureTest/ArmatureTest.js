@@ -1234,11 +1234,13 @@ var TestChangeAnimationInternal = ArmatureTestLayer.extend({
         return "Touch to change animation internal";
     },
     onTouchesEnded: function (touch, event) {
-        if (cc.director.getAnimationInterval() == 1 / 30) {
+        if (cc.director.getAnimationInterval() >= 1 / 40) {
             cc.director.setAnimationInterval(1 / 60);
+            cc.log("Change to 60 fps");
         }
         else {
             cc.director.setAnimationInterval(1 / 30);
+            cc.log("Change to 30 fps");
         }
         return false;
     },

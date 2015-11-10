@@ -39,7 +39,7 @@
 #include <assert.h>
 #include <memory>
 
-#define ENGINE_VERSION "Cocos2d-JS v3.9 Beta"
+#define ENGINE_VERSION "Cocos2d-JS v3.9"
 
 void js_log(const char *format, ...);
 
@@ -99,19 +99,19 @@ public:
      * Gets the script type, for ScriptingCore, it will return `cocos2d::kScriptTypeJavascript`
      * @return `cocos2d::kScriptTypeJavascript`
      */
-    virtual cocos2d::ccScriptType getScriptType() { return cocos2d::kScriptTypeJavascript; };
+    virtual cocos2d::ccScriptType getScriptType() override { return cocos2d::kScriptTypeJavascript; };
     
     /**
      * @brief @~english Removes the C++ object's linked JavaScript proxy object from JavaScript context
      * @param obj @~english Object to be removed
      */
-    virtual void removeScriptObjectByObject(cocos2d::Ref* obj);
+    virtual void removeScriptObjectByObject(cocos2d::Ref* obj) override;
     
     /**
      * @brief @~english Useless in ScriptingCore, please use evalString
      * @see evalString
      */
-    virtual int executeString(const char* codes) { return 0; }
+    virtual int executeString(const char* codes) override { return 0; }
     
     /**
      * @brief @~english Pause scheduled tasks and actions for an object proxy.
@@ -133,14 +133,14 @@ public:
      @brief Useless in ScriptingCore, please use runScript
      @param filename String object holding the filename of the script file that is to be executed
      */
-    virtual  int executeScriptFile(const char* filename) { return 0; }
+    virtual  int executeScriptFile(const char* filename) override { return 0; }
 
     /**
      @brief @~english Useless in ScriptingCore, please use executeFunctionWithOwner
      @param functionName String object holding the name of the function, in the global script environment, that is to be executed.
      @return The integer value returned from the script function.
      */
-    virtual int executeGlobalFunction(const char* functionName) { return 0; }
+    virtual int executeGlobalFunction(const char* functionName) override { return 0; }
 
     virtual int sendEvent(cocos2d::ScriptEvent* message) override;
     
@@ -149,10 +149,10 @@ public:
      * @brief @~english Useless in ScriptingCore
      * @return @~english false
      */
-    virtual bool handleAssert(const char *msg) { return false; }
+    virtual bool handleAssert(const char *msg) override { return false; }
 
-    virtual void setCalledFromScript(bool callFromScript) { _callFromScript = callFromScript; };
-    virtual bool isCalledFromScript() { return _callFromScript; };
+    virtual void setCalledFromScript(bool callFromScript) override { _callFromScript = callFromScript; };
+    virtual bool isCalledFromScript() override { return _callFromScript; };
     
     /**
      * @brief @~english Execute a js function with a JavaScript object as parameter.
@@ -455,7 +455,7 @@ public:
     void debugProcessInput(const std::string& str);
     /**@~english
      * Enable the debug environment, mozilla Firefox's remote debugger or Code IDE can connect to it.
-     * @param port @~english The port to connect with the debug enviroment, default value is 5086
+     * @param port @~english The port to connect with the debug environment, default value is 5086
      */
     void enableDebugger(unsigned int port = 5086);
     /**@~english

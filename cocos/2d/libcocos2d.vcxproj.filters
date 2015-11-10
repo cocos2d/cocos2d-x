@@ -824,7 +824,7 @@
       <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="..\3d\CCMotionStreak3D.cpp">
-        <Filter>3d</Filter>
+      <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extensions\assets-manager\AssetsManager.cpp">
       <Filter>extension\AssetsManager</Filter>
@@ -1934,6 +1934,7 @@
     <ClCompile Include="..\network\CCDownloader-curl.cpp">
       <Filter>network</Filter>
     </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -2547,7 +2548,7 @@
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\3d\CCMotionStreak3D.h">
-        <Filter>3d</Filter>
+      <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\3d\cocos3d.h">
       <Filter>3d</Filter>
@@ -3774,6 +3775,7 @@
     <ClInclude Include="..\network\CCDownloader-curl.h">
       <Filter>network\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">

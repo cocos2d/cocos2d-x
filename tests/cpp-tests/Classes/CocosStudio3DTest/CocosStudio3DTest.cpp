@@ -43,6 +43,7 @@ CocosStudio3DTests::CocosStudio3DTests()
     ADD_TEST_CASE(CSUserCameraTest);
     ADD_TEST_CASE(CSParticle3DTest);
     ADD_TEST_CASE(CSSceneSkyBoxTest);
+    ADD_TEST_CASE(CSSceneLight3DTest);
 }
 
 //------------------------------------------------------------------
@@ -192,4 +193,20 @@ void CSSceneSkyBoxTest::onTouchesMoved(const std::vector<Touch*>& touches, cocos
         _camera->setPosition3D(Vec3(50.0f * sinf(_angle), 0.0f, 50.0f * cosf(_angle)));
         _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
     }
+}
+
+//------------------------------------------------------------------
+//
+// CSSceneLight3DTest
+//
+//------------------------------------------------------------------
+CSSceneLight3DTest::CSSceneLight3DTest()
+{
+    auto node = CSLoader::createNode("Light3D.csb");
+    addChild(node);
+}
+
+std::string CSSceneLight3DTest::title() const
+{
+    return "Light3DReader Test";
 }

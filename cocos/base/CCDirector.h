@@ -97,7 +97,9 @@ class CC_DLL Director : public Ref
 {
 public:
     /** Director will trigger an event when projection type is changed. */
-    static const char *EVENT_PROJECTION_CHANGED;
+    static const char* EVENT_PROJECTION_CHANGED;
+    /** Director will trigger an event before Schedule::update() is invoked. */
+    static const char* EVENT_BEFORE_UPDATE;
     /** Director will trigger an event after Schedule::update() is invoked. */
     static const char* EVENT_AFTER_UPDATE;
     /** Director will trigger an event after Scene::render() is invoked. */
@@ -538,7 +540,7 @@ protected:
      @since v3.0
      */
     EventDispatcher* _eventDispatcher;
-    EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventAfterUpdate;
+    EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventBeforeUpdate, *_eventAfterUpdate;
         
     /* delta time since last tick to main loop */
 	float _deltaTime;

@@ -348,7 +348,7 @@ int LuaJavaBridge::callJavaStaticMethod(lua_State *L)
 	return 1 + call.pushReturnValue(L);
 }
 
-// increase lua function refernece counter, return counter
+// increase lua function reference counter, return counter
 int LuaJavaBridge::retainLuaFunctionById(int functionId)
 {
     lua_State *L = s_luaState;

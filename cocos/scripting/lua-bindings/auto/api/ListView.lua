@@ -182,7 +182,7 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
 
 --------------------------------
--- Insert a  a default item(create by a cloned model) at the end of the listview.
+-- Insert a default item(create by a cloned model) at the end of the listview.
 -- @function [parent=#ListView] pushBackDefaultItem 
 -- @param self
 -- @return ListView#ListView self (return value: ccui.ListView)

@@ -80,13 +80,13 @@ class LuaCallFunc:public cocos2d::CallFuncN
 {
 public:
     /**
-     * Default construtor.
+     * Default constructor.
      */
     LuaCallFunc():_functionLua(nullptr)
     {}
     
     /**
-     *  Destrutor.
+     *  Destructor.
      */
     virtual ~LuaCallFunc()
     {}
@@ -113,8 +113,8 @@ protected:
 
 /**
  * In order to reduce the coupling of lua script engine and native c++ engine.
- * In the current mechanism, for the class derived frome the Ref, we constuct a mapping relationship among c++ Ref object ,HandlerType and the refrence index corresponding to the pointer of Lua function.Then, using the ScriptHandlerMgr to manager uniformly.
- * By this mechanism,when native c++ Ref object wants to call the Lua function, we didn't insert the processing code in the native c++ class.
+ * In the current mechanism, for the class derived from the Ref, we construct a mapping relationship among c++ Ref object, HandlerType and the reference index corresponding to the pointer of Lua function. Then, using the ScriptHandlerMgr to manager uniformly.
+ * By this mechanism, when native c++ Ref object wants to call the Lua function, we didn't insert the processing code in the native c++ class.
  */
 class ScriptHandlerMgr
 {
@@ -259,10 +259,10 @@ public:
     static void destroyInstance(void);
     
     /**
-     * Construct or update the mapping relationship among c++ Ref object ,HandlerType and the refrence index corresponding to the pointer of Lua function.
+     * Construct or update the mapping relationship among c++ Ref object ,HandlerType and the reference index corresponding to the pointer of Lua function.
      *
      * @param object a Ref object.
-     * @param handler a refrence index corresponding to the pointer of Lua function.
+     * @param handler a reference index corresponding to the pointer of Lua function.
      * @param handlerType ScriptHandlerMgr::HandlerType.
      * @lua registerScriptHandler
      * @js NA
@@ -270,8 +270,8 @@ public:
     void addObjectHandler(void* object,int handler,ScriptHandlerMgr::HandlerType handlerType);
     
     /**
-     * By the handlerType and object, find the correct refrence index corresponding to the pointer of Lua function.
-     * If found, remove the refrence of Lua function corresponding to this index in the 'toluafix_refid_function_mapping' table.
+     * By the handlerType and object, find the correct reference index corresponding to the pointer of Lua function.
+     * If found, remove the reference of Lua function corresponding to this index in the 'toluafix_refid_function_mapping' table.
      * 
      * @param object a Ref object.
      * @param handlerType ScriptHandlerMgr::HandlerType.
@@ -281,7 +281,7 @@ public:
     void removeObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType);
     
     /**
-     * By the handlerType and object, find the correct refrence index corresponding to the pointer of Lua function.
+     * By the handlerType and object, find the correct reference index corresponding to the pointer of Lua function.
      *
      * @param object a Ref object.
      * @param handlerType ScriptHandlerMgr::HandlerType.
@@ -292,8 +292,8 @@ public:
     int  getObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType);
     
     /**
-     * Remove the all relationship among the object, HandlerType and the refrence index corresponding to the pointer of Lua function.
-     * Meanwhile, remove the refrence of Lua function corresponding to the indexs the object has in the 'toluafix_refid_function_mapping' table.
+     * Remove the all relationship among the object, HandlerType and the reference index corresponding to the pointer of Lua function.
+     * Meanwhile, remove the reference of Lua function corresponding to the indexs the object has in the 'toluafix_refid_function_mapping' table.
      *
      * @param object the Ref object.
      * @js NA
@@ -301,13 +301,13 @@ public:
     void removeObjectAllHandlers(void* object);
     
     /**
-     * Add customizable relationship among c++ Ref object, HandlerType and the refrence index corresponding to the pointer of Lua function.
+     * Add customizable relationship among c++ Ref object, HandlerType and the reference index corresponding to the pointer of Lua function.
      * In the customizable relationship, we don't pass the HandlerType, it will obtain the HandlerType by auto-increasing.
      * The HandlerTypes used to customizable relationship are between EVENT_CUSTOM_BEGAN(10000) and EVENT_CUSTOM_ENDED(11000).
      * If the HandlerType increased more than 12,it would trigger assert.
      *
      * @param object the Ref object.
-     * @param handler a refrence index corresponding to the pointer of Lua function.
+     * @param handler a reference index corresponding to the pointer of Lua function.
      * @return ScriptHandlerMgr::HandlerType the value of current ScriptHandlerMgr::HandlerType after adding.
      * @lua NA
      * @js NA

@@ -184,7 +184,7 @@ namespace ui {
             /**
              * Capitalize all characters automatically.
              */
-            INTIAL_CAPS_ALL_CHARACTERS,
+            INITIAL_CAPS_ALL_CHARACTERS,
         };
             
         /**
@@ -455,7 +455,7 @@ namespace ui {
          */
         virtual void keyboardDidHide(IMEKeyboardNotificationInfo& info) override;
             
-        /* callback funtions
+        /* callback functions
          * @js NA
          * @lua NA
          */

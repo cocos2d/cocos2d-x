@@ -75,11 +75,11 @@ public:
     virtual float getTrailLength(void) const { return _trailLength; }
 
     /** @copydoc BillboardChain::setMaxChainElements */
-    void setMaxChainElements(size_t maxElements);
+    void setMaxChainElements(size_t maxElements) override;
     /** @copydoc BillboardChain::setNumberOfChains */
     virtual void setNumberOfChains(size_t numChains) override;
     /** @copydoc BillboardChain::clearChain */
-    void clearChain(size_t chainIndex);
+    void clearChain(size_t chainIndex) override;
 
     /** Set the starting ribbon colour for a given segment. 
     @param chainIndex The index of the chain

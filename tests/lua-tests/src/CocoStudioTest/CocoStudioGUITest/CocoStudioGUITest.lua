@@ -1788,8 +1788,8 @@ add_new_testcase(function()
 
             local pageView = ccui.PageView:create()
             pageView:setTouchEnabled(true)
-            pageView:setContentSize(cc.size(240, 130))
             pageView:setDirection(ccui.PageViewDirection.VERTICAL)
+            pageView:setContentSize(cc.size(240, 130))
             local backgroundSize = background:getContentSize()
             pageView:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
                                          (backgroundSize.width - pageView:getContentSize().width) / 2,
