@@ -103,7 +103,7 @@ CocoStudio/ActionTimeline/CCActionTimeline.cpp \
 CocoStudio/ActionTimeline/CCActionTimelineCache.cpp \
 CocoStudio/ActionTimeline/CCFrame.cpp \
 CocoStudio/ActionTimeline/CCNodeReader.cpp \
-CocoStudio/ActionTimeline/CCTimeline.cpp \
+CocoStudio/ActionTimeline/CCTimeLine.cpp \
 CocoStudio/Reader/SceneReader.cpp \
 CocoStudio/Reader/GUIReader.cpp \
 CocoStudio/Reader/WidgetReader/WidgetReader.cpp \
