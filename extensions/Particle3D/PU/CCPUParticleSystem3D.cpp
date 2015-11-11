@@ -448,6 +448,11 @@ void PUParticleSystem3D::forceUpdate( float delta )
 
     prepared();
 
+    Vec3 currentPos = getDerivedPosition();
+    _latestPositionDiff = currentPos - _latestPosition;
+    _latestPosition = currentPos;
+    _latestOrientation = getDerivedOrientation();
+
     if (!_emitters.empty()){
         emitParticles(delta);
         preUpdator(delta);
@@ -455,10 +460,6 @@ void PUParticleSystem3D::forceUpdate( float delta )
         postUpdator(delta);
     }
 
-    Vec3 currentPos = getDerivedPosition();
-    _latestPositionDiff = currentPos - _latestPosition;
-    _latestPosition = currentPos;
-    _latestOrientation = getDerivedOrientation();
     _timeElapsedSinceStart += delta;
 }
 
