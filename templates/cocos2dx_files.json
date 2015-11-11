@@ -962,6 +962,7 @@
         "cocos/platform/android/java/src/org/cocos2dx/lib/GameControllerAdapter.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/GameControllerDelegate.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/GameControllerUtils.java", 
+        "cocos/platform/android/java/src/org/cocos2dx/lib/ResizeLayout.java", 
         "cocos/platform/android/javaactivity-android.cpp", 
         "cocos/platform/android/jni/CocosPlayClient.cpp", 
         "cocos/platform/android/jni/CocosPlayClient.h", 
