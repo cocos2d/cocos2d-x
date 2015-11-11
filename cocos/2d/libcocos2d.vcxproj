@@ -1182,7 +1182,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\navmesh\CCNavMeshUtils.h" />
     <ClInclude Include="..\network\CCDownloader-curl.h" />
     <ClInclude Include="..\network\CCDownloader.h" />
-    <ClInclude Include="..\network\CCDownloaderImpl.h" />
     <ClInclude Include="..\network\CCIDownloaderImpl.h" />
     <ClInclude Include="..\network\HttpClient.h" />
     <ClInclude Include="..\network\HttpRequest.h" />
