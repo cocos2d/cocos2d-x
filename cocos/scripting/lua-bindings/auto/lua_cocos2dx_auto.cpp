@@ -87288,56 +87288,6 @@ int lua_register_cocos2dx_Device(lua_State* tolua_S)
     return 1;
 }
 
-int lua_cocos2dx_Application_openURL(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Application* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Application",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Application*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Application_openURL'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        std::string arg0;
-
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Application:openURL");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Application_openURL'", nullptr);
-            return 0;
-        }
-        bool ret = cobj->openURL(arg0);
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Application:openURL",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Application_openURL'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_Application_getTargetPlatform(lua_State* tolua_S)
 {
     int argc = 0;
@@ -87479,6 +87429,103 @@ int lua_cocos2dx_Application_getCurrentLanguageCode(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Application_openURL(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Application* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Application",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Application*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Application_openURL'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Application:openURL");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Application_openURL'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->openURL(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Application:openURL",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Application_openURL'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Application_getVersion(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Application* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Application",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Application*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Application_getVersion'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Application_getVersion'", nullptr);
+            return 0;
+        }
+        std::string ret = cobj->getVersion();
+        tolua_pushcppstring(tolua_S,ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Application:getVersion",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Application_getVersion'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Application_setAnimationInterval(lua_State* tolua_S)
 {
     int argc = 0;
@@ -87575,10 +87622,11 @@ int lua_register_cocos2dx_Application(lua_State* tolua_S)
     tolua_cclass(tolua_S,"Application","cc.Application","",nullptr);
 
     tolua_beginmodule(tolua_S,"Application");
-        tolua_function(tolua_S,"openURL",lua_cocos2dx_Application_openURL);
         tolua_function(tolua_S,"getTargetPlatform",lua_cocos2dx_Application_getTargetPlatform);
         tolua_function(tolua_S,"getCurrentLanguage",lua_cocos2dx_Application_getCurrentLanguage);
         tolua_function(tolua_S,"getCurrentLanguageCode",lua_cocos2dx_Application_getCurrentLanguageCode);
+        tolua_function(tolua_S,"openURL",lua_cocos2dx_Application_openURL);
+        tolua_function(tolua_S,"getVersion",lua_cocos2dx_Application_getVersion);
         tolua_function(tolua_S,"setAnimationInterval",lua_cocos2dx_Application_setAnimationInterval);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_Application_getInstance);
     tolua_endmodule(tolua_S);
