@@ -4,15 +4,6 @@
 -- @parent_module cc
 
 --------------------------------
--- brief Open url in default browser<br>
--- param String with url to open.<br>
--- return true if the resource located by the URL was successfully opened; otherwise false.
--- @function [parent=#Application] openURL 
--- @param self
--- @param #string url
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
 -- brief Get target platform
 -- @function [parent=#Application] getTargetPlatform 
 -- @param self
@@ -31,6 +22,21 @@
 -- @function [parent=#Application] getCurrentLanguageCode 
 -- @param self
 -- @return char#char ret (return value: char)
+        
+--------------------------------
+-- brief Open url in default browser<br>
+-- param String with url to open.<br>
+-- return true if the resource located by the URL was successfully opened; otherwise false.
+-- @function [parent=#Application] openURL 
+-- @param self
+-- @param #string url
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- brief Get application version.
+-- @function [parent=#Application] getVersion 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- brief    Callback by Director to limit FPS.<br>
