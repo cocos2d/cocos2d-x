@@ -314,11 +314,14 @@ public:
     void setLineWidth(int lineWidth);
 
 #ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    void csSetLineSmooth(bool enable);
+    // Set enable or disable multisampling effect on CocosStudio guide lines.
+    void setLineSmooth(bool enable);
 
-    bool csIsLineSmooth();
+    // Get multisampling effect on CocosStudio guide lines mode.
+    bool isLineSmooth();
 
-    float csGetLineWidth();
+    // Get CocosStudio guide lines width.
+    float getLineWidth();
 #endif
 
 CC_CONSTRUCTOR_ACCESS:

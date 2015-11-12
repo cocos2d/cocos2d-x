@@ -424,7 +424,6 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCountGLLine);
 
 #ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    //如果开启线抗锯齿, 如参考线绘制, 绘制完成开启多重采样
     if (this->_lineSmoothEnable == true)
         glEnable(GL_MULTISAMPLE);
 #endif
