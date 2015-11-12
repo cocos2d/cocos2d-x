@@ -6,6 +6,7 @@ var ccbjs = "";
 // so the respath will modify to res,
 if (!cc.sys.isNative)
 {
+    cc.game._loadConfig();
     if (cc.game.config[cc.game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
         ccbjs = "../../js-tests/resjs/";
     }
@@ -323,7 +324,6 @@ var g_touches = [
 var g_s9s_blocks = [
     s_s9s_blocks9_plist,
     s_s9s_blocks9,
-    s_blocks9,
     s_s9s_ui,
     s_s9s_ui_plist
 ];

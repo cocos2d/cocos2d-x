@@ -22,8 +22,19 @@
 
 // Prepare JSB environment
 
-var cc = cc || {};
 var window = window || this;
+var cc = cc || {};
+/**
+ * @namespace jsb
+ * @name jsb
+ */
+var jsb = jsb || {};
+
+/**
+ * The element contains the game canvas
+ * @type {HTMLDivElement}
+ */
+cc.container = null;
 
 /**
  * Iterate over an object or an array, executing a function for each matched element.

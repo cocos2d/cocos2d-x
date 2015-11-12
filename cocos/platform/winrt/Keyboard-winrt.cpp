@@ -26,10 +26,14 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "Keyboard-winrt.h"
+#include "base/CCEventKeyboard.h"
+#include "CCGLViewImpl-winrt.h"
+#include "base/CCIMEDispatcher.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 
 using namespace cocos2d;
 using namespace Platform;
-using namespace Concurrency;
 using namespace Windows::System;
 using namespace Windows::System::Threading;
 using namespace Windows::UI::Core;

@@ -147,6 +147,7 @@ public:
     
     /**
      * Call before a web view begins loading.
+     * Note: Any OpenGL related operations are forbidden in this callback.
      *
      * @param callback The web view that is about to load new content.
      * @return YES if the web view should begin loading content; otherwise, NO .

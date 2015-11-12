@@ -80,12 +80,12 @@ public:
     const char* getNodeTypeName(Node* pNode);
     
     /**
-     * Set relationship between the Lua callback function refrence index handle and the node.
+     * Set relationship between the Lua callback function reference index handle and the node.
      * According to the different controlEvents values,we would choose different ScriptHandlerMgr::HandlerTyp.
-     * When node receive the events information should be passed on to Lua, it would find the Lua callback funtion by the Lua callback function refrence index.
+     * When node receive the events information should be passed on to Lua, it would find the Lua callback function by the Lua callback function reference index.
      * 
      * @param node the node object should pass on the events information to Lua,when the events are triggered.
-     * @param handle the Lua callback function refrence index.
+     * @param handle the Lua callback function reference index.
      * @param controlEvents the combination value of Control::EventType, default 0.
      * @js NA
      */

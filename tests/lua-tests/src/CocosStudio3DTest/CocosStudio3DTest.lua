@@ -10,7 +10,7 @@ function CSNode3DTest.create()
     Helper.initWithLayer(layer)
     Helper.titleLabel:setString("Node3DReader Test")
 
-    local node = cc.CSLoader:createNode("ccs-res/CocosStudio3DTest/Node3D.csb");
+    local node = cc.CSLoader:createNode("ccs-res/scene3DTest/Node3D.csb");
 
     local size = cc.Director:getInstance():getWinSize()
     local label = cc.LabelTTF:create("Function demo, no content to show", "Arial", 24)
@@ -35,7 +35,7 @@ function CSSprite3DTest.create()
     Helper.initWithLayer(layer)
     Helper.titleLabel:setString("Sprite3DReader Test")
 
-    local node = cc.CSLoader:createNode("ccs-res/CocosStudio3DTest/Sprite3D.csb")
+    local node = cc.CSLoader:createNode("ccs-res/scene3DTest/Sprite3D.csb")
 
     local sprite3D = node:getChildByTag(8)
     local size = cc.Director:getInstance():getWinSize()
@@ -61,9 +61,9 @@ function CSUserCameraTest.create()
     Helper.initWithLayer(layer)
     Helper.titleLabel:setString("UserCameraReader Test")
 
-    local node = cc.CSLoader:createNode("ccs-res/CocosStudio3DTest/UserCamera.csb")
+    local node = cc.CSLoader:createNode("ccs-res/scene3DTest/UserCamera.csb")
 
-    local sprite3D = cc.Sprite3D:create("ccs-res/CocosStudio3DTest/dragon/dragon.c3b")
+    local sprite3D = cc.Sprite3D:create("ccs-res/scene3DTest/dragon/dragon.c3b")
     sprite3D:setPosition3D(cc.vec3(100, 95, 80))
     sprite3D:setCameraMask(cc.CameraFlag.USER1)
 
@@ -85,7 +85,7 @@ function CSParticle3DTest.create()
     Helper.initWithLayer(layer)
     Helper.titleLabel:setString("Particle3DReader Test")
 
-    local node = cc.CSLoader:createNode("ccs-res/CocosStudio3DTest/Particle3D.csb")
+    local node = cc.CSLoader:createNode("ccs-res/scene3DTest/Particle3D.csb")
 
     layer:addChild(node)
 
@@ -93,7 +93,7 @@ function CSParticle3DTest.create()
 end
 
 function CocosStudio3DTest()
-    cc.FileUtils:getInstance():addSearchPath("ccs-res/CocosStudio3DTest")
+    cc.FileUtils:getInstance():addSearchPath("ccs-res/scene3DTest")
     local scene = cc.Scene:create()
 
     Helper.createFunctionTable = 

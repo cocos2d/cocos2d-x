@@ -80,7 +80,7 @@ void Mesh::resetLightUniformValues()
     _spotLightUniformColorValues.assign(maxSpotLight, Vec3::ZERO);
     _spotLightUniformPositionValues.assign(maxSpotLight, Vec3::ZERO);
     _spotLightUniformDirValues.assign(maxSpotLight, Vec3::ZERO);
-    _spotLightUniformInnerAngleCosValues.assign(maxSpotLight, 0.0f);
+    _spotLightUniformInnerAngleCosValues.assign(maxSpotLight, 1.0f);
     _spotLightUniformOuterAngleCosValues.assign(maxSpotLight, 0.0f);
     _spotLightUniformRangeInverseValues.assign(maxSpotLight, 0.0f);
 }

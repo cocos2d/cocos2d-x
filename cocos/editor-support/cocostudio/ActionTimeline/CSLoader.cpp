@@ -575,7 +575,7 @@ void CSLoader::initNode(Node* node, const rapidjson::Value& json)
     GLubyte red         = (GLubyte)DICTOOL->getIntValue_json(json, RED, 255);
     GLubyte green       = (GLubyte)DICTOOL->getIntValue_json(json, GREEN, 255);
     GLubyte blue        = (GLubyte)DICTOOL->getIntValue_json(json, BLUE, 255);
-    int zorder            = DICTOOL->getIntValue_json(json, ZORDER);
+    int zorder          = DICTOOL->getIntValue_json(json, ZORDER);
     int tag             = DICTOOL->getIntValue_json(json, TAG);
     int actionTag       = DICTOOL->getIntValue_json(json, ACTION_TAG);
     bool visible        = DICTOOL->getBooleanValue_json(json, VISIBLE);
@@ -949,7 +949,14 @@ Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName, const ccNod
     CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
     
     Data buf = FileUtils::getInstance()->getDataFromFile(fullPath);
-    
+
+    if (buf.isNull())
+    {
+        CCLOG("CSLoader::nodeWithFlatBuffersFile - failed read file: %s", fileName.c_str());
+        CC_ASSERT(false);
+        return nullptr;
+    }
+
     auto csparsebinary = GetCSParseBinary(buf.getBytes());
     
     
@@ -972,7 +979,7 @@ Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName, const ccNod
     
     // decode plist
     auto textures = csparsebinary->textures();
-    int textureSize = csparsebinary->textures()->size();
+    int textureSize = textures->size();
     CCLOG("textureSize = %d", textureSize);
     for (int i = 0; i < textureSize; ++i)
     {
@@ -991,6 +998,9 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
 
 Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, const ccNodeLoadCallback &callback)
 {
+    if (nodetree == nullptr)
+        return nullptr;
+
     {
         Node* node = nullptr;
         

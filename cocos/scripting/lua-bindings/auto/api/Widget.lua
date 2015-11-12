@@ -276,7 +276,7 @@
         
 --------------------------------
 -- Sets whether the widget should be flipped vertically or not.<br>
--- param flippedY true if the widget should be flipped vertically, flase otherwise.
+-- param flippedY true if the widget should be flipped vertically, false otherwise.
 -- @function [parent=#Widget] setFlippedY 
 -- @param self
 -- @param #bool flippedY
@@ -389,7 +389,7 @@
 -- param pt        The point in `Vec2`.<br>
 -- param camera    The camera look at widget, used to convert GL screen point to near/far plane.<br>
 -- param p         Point to a Vec3 for store the intersect point, if don't need them set to nullptr.<br>
--- return true if the point is in widget's content space, flase otherwise.
+-- return true if the point is in widget's content space, false otherwise.
 -- @function [parent=#Widget] hitTest 
 -- @param self
 -- @param #vec2_table pt
@@ -487,7 +487,7 @@
 -- It not only flips the texture of the widget, but also the texture of the widget's children.<br>
 -- Also, flipping relies on widget's anchor point.<br>
 -- Internally, it just use setScaleY(-1) to flip the widget.<br>
--- return true if the widget is flipped vertically, flase otherwise.
+-- return true if the widget is flipped vertically, false otherwise.
 -- @function [parent=#Widget] isFlippedY 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -495,7 +495,7 @@
 --------------------------------
 -- Checks a point if in parent's area.<br>
 -- param pt A point in `Vec2`.<br>
--- return true if the point is in parent's area, flase otherwise.
+-- return true if the point is in parent's area, false otherwise.
 -- @function [parent=#Widget] isClippingParentContainsPoint 
 -- @param self
 -- @param #vec2_table pt

@@ -293,19 +293,21 @@ local ParticleBatchHybrid_parent2 = nil
 local function switchRender(dt)
 	update(dt)
 
-	local cond = (emitter:getBatchNode() ~= nil)
-	emitter:removeFromParent(false)
-	local str = "Particle: Using new parent: "
-	local newParent = nil
-	if cond == true then
-		newParent = ParticleBatchHybrid_parent2
-		str = str .. "Node"
-	else
-		newParent = ParticleBatchHybrid_parent1
-		str = str .. "ParticleBatchNode"
+    if nil ~= emitter then
+    	local cond = (emitter:getBatchNode() ~= nil)
+    	emitter:removeFromParent(false)
+    	local str = "Particle: Using new parent: "
+    	local newParent = nil
+    	if cond == true then
+    		newParent = ParticleBatchHybrid_parent2
+    		str = str .. "Node"
+    	else
+    		newParent = ParticleBatchHybrid_parent1
+    		str = str .. "ParticleBatchNode"
+    	end
+    	newParent:addChild(emitter)
+	    cclog(str)
 	end
-	newParent:addChild(emitter)
-	cclog(str)
 end
 
 local function ParticleBatchHybrid_onEnterOrExit(tag)
@@ -314,7 +316,10 @@ local function ParticleBatchHybrid_onEnterOrExit(tag)
 		ParticleBatchHybrid_entry = scheduler:scheduleScriptFunc(switchRender, 2.0, false)
 	elseif tag == "exit" then
 		scheduler:unscheduleScriptEntry(ParticleBatchHybrid_entry)
-		emitter:release()
+		if nil ~= emitter then
+		    emitter:release()
+		    emitter = nil
+		end
 	end
 end
 

@@ -514,18 +514,19 @@ var S9FrameNameSpriteSheetRotatedInsetsScaled = S9SpriteTestDemo.extend({
 
 var S9SpriteActionTest = S9SpriteTestDemo.extend({
 
-    _title:"Scale9Sprite from sprite sheet",
-    _subtitle:"Test Action for ccui.scale9Sprite : Rotate + Scale + Translate",
+    _title:"Test Action for Scale9Sprite : Rotate + Scale + Translate",
 
     ctor:function() {
         this._super();
 
-        var blocks = new cc.Scale9Sprite('blocks9.png');
+        var blocks_with_insets = new cc.Scale9Sprite('blocks9.png');
 
-        blocks.x = winSize.width / 2;
-        blocks.y = winSize.height / 2;
+        blocks_with_insets.x = winSize.width / 2;
+        blocks_with_insets.y = winSize.height / 2;
+        blocks_with_insets.width = 96 * 4;
+        blocks_with_insets.height = 96 * 2;
 
-        this.addChild(blocks);
+        this.addChild(blocks_with_insets);
 
         var delay = cc.delayTime(0.25);
 
@@ -538,9 +539,34 @@ var S9SpriteActionTest = S9SpriteTestDemo.extend({
         var moveBy = cc.moveBy(1, cc.p(80, 80));
         var moveByBack = moveBy.reverse();
 
-        blocks.runAction(cc.sequence(rotateBy, delay, rotateByBack));
-        blocks.runAction(cc.sequence(ScaleTo, delay.clone(), ScaleToBack));
-        blocks.runAction(cc.sequence(moveBy,moveByBack));
+        blocks_with_insets.runAction(cc.sequence(rotateBy, delay, rotateByBack));
+        blocks_with_insets.runAction(cc.sequence(ScaleTo, delay.clone(), ScaleToBack));
+        blocks_with_insets.runAction(cc.sequence(moveBy,moveByBack));
+    }
+});
+
+var S9SpriteColorOpacityTest = S9SpriteTestDemo.extend({
+    _title:"Test color/opacity cascade for Scale9Sprite (red with 128 opacity)",
+
+    ctor:function() {
+        this._super();
+
+        this.setCascadeColorEnabled(true);
+        this.setCascadeOpacityEnabled(true);
+        this.setOpacity(128);
+        this.setColor(cc.color(255, 0, 0));
+
+        var blocks = new cc.Scale9Sprite('blocks9.png');
+        blocks.x = winSize.width / 2 - 100;
+        blocks.y = winSize.height / 2;
+        this.addChild(blocks);
+
+        var batchNode = new cc.SpriteBatchNode("Images/blocks9.png");
+        var blocks2 = new cc.Scale9Sprite();
+        blocks2.updateWithBatchNode(batchNode, cc.rect(0, 0, 96, 96), false, cc.rect(0, 0, 96, 96));
+        blocks2.x = winSize.width / 2 + 100;
+        blocks2.y = winSize.height / 2;
+        this.addChild(blocks2);
     }
 });
 
@@ -571,7 +597,8 @@ var arrayOfS9SpriteTest = [
     S9FrameNameSpriteSheetRotatedInsets,
     S9FrameNameSpriteSheetRotatedInsetsScaled,
     S9_TexturePacker,
-    S9SpriteActionTest
+    S9SpriteActionTest,
+    S9SpriteColorOpacityTest
 ];
 
 var nextS9SpriteTest = function () {
