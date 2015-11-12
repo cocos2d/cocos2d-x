@@ -121,6 +121,9 @@ const Texture2D::PixelFormatInfoMap Texture2D::_pixelFormatInfoTables(TexturePix
 // Default is: RGBA8888 (32-bit textures)
 static Texture2D::PixelFormat g_defaultAlphaPixelFormat = Texture2D::PixelFormat::DEFAULT;
 
+// the default antialiased mode (minification/magnification to create textures with)
+bool Texture2D::_antiAliasDefault = true;
+
 //////////////////////////////////////////////////////////////////////////
 //convertor function
 
@@ -434,7 +437,7 @@ Texture2D::Texture2D()
 , _hasPremultipliedAlpha(false)
 , _hasMipmaps(false)
 , _shaderProgram(nullptr)
-, _antialiasEnabled(true)
+, _antialiasEnabled(_antiAliasDefault)
 , _ninePatchInfo(nullptr)
 {
 }
@@ -1441,6 +1444,19 @@ void Texture2D::removeSpriteFrameCapInset(SpriteFrame* spriteFrame)
             capInsetMap.erase(spriteFrame);
         }
     }
+}
+
+//
+// Texture options for images minification and magnification settings (AntiAliased)
+//
+void Texture2D::setDefaultAliasTexParameters(bool antiAlias)
+{
+    _antiAliasDefault = antiAlias;
+    }
+
+bool Texture2D::getDefaultAliasTexParameters()
+{
+    return _antiAliasDefault;
 }
 
 NS_CC_END

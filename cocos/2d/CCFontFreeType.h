@@ -62,18 +62,22 @@ public:
 
     float getOutlineSize() const { return _outlineSize; }
 
-    void renderCharAt(unsigned char *dest,int posX, int posY, unsigned char* bitmap,long bitmapWidth,long bitmapHeight); 
+    void renderCharAt(unsigned char *dest,int posX, int posY, unsigned char* bitmap,long bitmapWidth,long bitmapHeight, long bitmapPitch);
 
     FT_Encoding getEncoding() const { return _encoding; }
 
     int* getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
     
-    unsigned char* getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance);
+    unsigned char* getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, long &outPitch, Rect &outRect,int &xAdvance);
     
     int getFontAscender() const;
 
     virtual FontAtlas* createFontAtlas() override;
     virtual int getFontMaxHeight() const override { return _lineHeight; }
+    
+    static void setDefaultFontDPI(int dpi);
+    static int getDefaultFontFPI();
+    
 private:
     static const char* _glyphASCII;
     static const char* _glyphNEHE;
@@ -106,6 +110,8 @@ private:
 
     GlyphCollection _usedGlyphs;
     std::string _customGlyphs;
+    
+    static int _defaultFontDPI;
 };
 
 /// @endcond

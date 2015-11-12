@@ -79,6 +79,15 @@
             "files": [
                "proj.ios_mac/ios/Info.plist"
             ]
+         },
+         "project_replace_relative_path": {
+            "src_relative_path":"../cocos2d",
+            "src_relative_prefix":"../",
+            "files": [
+               "proj.win32/PROJECT_NAME.vcxproj",
+               "proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
+               "proj.android/build_native.py"
+            ]
          }
       },
       "change_orientation": {
