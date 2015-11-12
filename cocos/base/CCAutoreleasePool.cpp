@@ -67,9 +67,12 @@ void AutoreleasePool::clear()
 #endif
     std::vector<Ref*> releasings;
     releasings.swap(_managedObjectArray);
-    for (const auto &obj : releasings)
+    for (auto &obj : releasings)
     {
+        auto refCount = obj->getReferenceCount();
         obj->release();
+        if(refCount == 1)
+            obj = nullptr;
     }
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     _isClearing = false;
