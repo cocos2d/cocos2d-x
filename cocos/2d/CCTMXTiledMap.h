@@ -296,8 +296,9 @@ protected:
 #ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     std::string _tmxFile;
     int _tmxLayerNum;
-    static const int TMXLayerTag = 32768;
 #endif
+
+    static const int TMXLayerTag = 32768;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TMXTiledMap);

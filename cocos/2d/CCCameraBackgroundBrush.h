@@ -242,7 +242,7 @@ public:
     virtual void drawBackground(Camera* camera) override;
 
 #ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    bool isActived();
+    bool isActived() const;
     void setActived(bool actived);
     virtual void setTextureValid(bool valid);
     virtual bool isValid()override;

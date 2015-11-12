@@ -191,8 +191,6 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
     for (const auto &layerInfo : layers) {
         if (layerInfo->_visible) {
             TMXLayer *child = parseLayer(layerInfo, mapInfo);
-            //为编辑器修改，节省一次循环
-            //addChild(child, idx, idx);
             if (child == nullptr) {
                 idx++;
                 continue;

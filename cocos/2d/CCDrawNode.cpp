@@ -406,7 +406,6 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
     }
 #ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    //如果开启线抗锯齿,如参考线绘制, 则先关闭多重采样
     if (this->_lineSmoothEnable == false)
     {
         glDisable(GL_MULTISAMPLE);

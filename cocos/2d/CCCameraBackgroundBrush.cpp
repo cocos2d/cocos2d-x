@@ -437,7 +437,7 @@ void CameraBackgroundSkyBoxBrush::setTexture(TextureCube*  texture)
 }
 
 #ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-bool CameraBackgroundSkyBoxBrush::isActived()
+bool CameraBackgroundSkyBoxBrush::isActived() const
 {
     return _actived;
 }
