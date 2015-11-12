@@ -151,9 +151,13 @@ public:
 
     /** Gets current running Scene. Director can only run one Scene at a time. */
     inline Scene* getRunningScene() { return _runningScene; }
-  
+
     /** Gets previous running Scene. Director can only run one Scene at a time. */
     inline Scene* getPreviousScene() { unsigned int c = _scenesStack.size(); return (Scene*) _scenesStack.at(c - 2); }
+    inline Scene* getRootScene() { return (Scene*) _scenesStack.at(0); }
+
+    /** */
+    inline int getScenesStackCount() { return _scenesStack.size(); }
 
     /** Gets the FPS value. */
     inline float getAnimationInterval() { return _animationInterval; }
@@ -303,19 +307,26 @@ public:
      * Internally it will call `popToSceneStackLevel(1)`.
      */
     void popToRootScene();
+    void popToRootScene(Scene* transition);
 
     /** Pops out all scenes from the stack until it reaches `level`.
      If level is 0, it will end the director.
      If level is 1, it will pop all scenes until it reaches to root scene.
      If level is <= than the current stack level, it won't do anything.
      */
- 	void popToSceneStackLevel(int level);
+    void popToSceneStackLevel(int level);
 
     /** Replaces the running scene with a new one. The running scene is terminated.
      * ONLY call it if there is a running scene.
      * @js NA
      */
     void replaceScene(Scene *scene);
+
+    /**
+     *
+     *
+     */
+    inline void clearScenesStack() { _scenesStack.clear(); };
 
     /** Ends the execution, releases the running scene.
      * @lua endToLua
@@ -364,7 +375,7 @@ public:
      */
     void purgeCachedData();
 
-	/** Sets the default values based on the Configuration info. */
+    /** Sets the default values based on the Configuration info. */
     void setDefaultValues();
 
     // OpenGL Helper

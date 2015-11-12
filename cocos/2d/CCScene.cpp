@@ -182,8 +182,10 @@ void Scene::render(Renderer* renderer)
     Camera* defaultCamera = nullptr;
     const auto& transform = getNodeToParentTransform();
 
-    for (const auto& camera : getCameras())
+    for (int i = getCameras().size() - 1; i >= 0; i--)
     {
+        auto camera = getCameras().at(i);
+
         if (!camera->isVisible())
             continue;
         

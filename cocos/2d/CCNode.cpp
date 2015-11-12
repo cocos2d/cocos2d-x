@@ -2173,10 +2173,12 @@ Node* Node::_create()
 {
   if(this->state->create)
   {
-    return nullptr;
+    return this;
   }
   else
   {
+    this->state->create = true;
+
     this->onCreate();
 
     if(this->cull->parent)
@@ -2192,8 +2194,6 @@ Node* Node::_create()
       this->scheduleUpdate();
     }
   }
-
-  this->state->create = true;
 
   return this;
 }
@@ -2298,8 +2298,16 @@ void Node::onTouchEnded(Touch* touch, Event* e)
   }
 }
 
-void Node::onTouchsMoved(Touch* touch, Event* e)
+void Node::onTouchMoved(Touch* touch, Event* e)
 {
+  if(!this->touch->swallowed)
+  {
+    if(this->containsTouchLocation(touch))
+    {
+      return this->onTouchCancelled(touch, e);
+    }
+  }
+
   if(this->containsTouchLocation(touch))
   {
     if(!this->touch->hovered)
@@ -2423,13 +2431,15 @@ void Node::onEnterShow()
 
   if(this->touch->binded && !this->touch->unbinded)
   {
+    this->touch->touched = false;
+
     auto listener = EventListenerTouchOneByOne::create();
 
     listener->onTouchBegan = CC_CALLBACK_2(Node::onTouchBegan, this);
     listener->onTouchEnded = CC_CALLBACK_2(Node::onTouchEnded, this);
-    listener->onTouchMoved = CC_CALLBACK_2(Node::onTouchsMoved, this);
+    listener->onTouchMoved = CC_CALLBACK_2(Node::onTouchMoved, this);
     listener->onTouchCancelled = CC_CALLBACK_2(Node::onTouchCancelled, this);
-    listener->setSwallowTouches(true);
+    listener->setSwallowTouches(this->touch->swallowed);
 
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
   }
@@ -2458,12 +2468,13 @@ void Node::onExitHide()
   }
 }
 
-void Node::bind(bool bind)
+void Node::bind(bool bind, bool swallowed)
 {
   if(bind)
   {
     this->touch->unbinded = false;
     this->touch->binded = true;
+    this->touch->swallowed = swallowed;
 
     if(this->state->active)
     {

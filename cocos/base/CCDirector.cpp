@@ -874,7 +874,44 @@ void Director::popScene(Scene* transition)
 
 void Director::popToRootScene(void)
 {
-    popToSceneStackLevel(1);
+  popToSceneStackLevel(1);
+}
+
+void Director::popToRootScene(Scene* transition)
+{
+  CCASSERT(_runningScene != nullptr, "A running Scene is needed");
+  ssize_t c = _scenesStack.size();
+
+  // current level or lower -> nothing
+  if (1 >= c)
+    return;
+  
+  auto fisrtOnStackScene = _scenesStack.back();
+  if (fisrtOnStackScene == _runningScene)
+  {
+    _scenesStack.popBack();
+    --c;
+  }
+  
+  // pop stack until reaching desired level
+  while (c > 1)
+  {
+    auto current = _scenesStack.back();
+    
+    if (current->isRunning())
+    {
+      current->onExit();
+    }
+    
+    current->cleanup();
+    _scenesStack.popBack();
+    --c;
+  }
+  
+  _nextScene = transition;
+  
+  // cleanup running scene
+  _sendCleanupToScene = true;
 }
 
 void Director::popToSceneStackLevel(int level)

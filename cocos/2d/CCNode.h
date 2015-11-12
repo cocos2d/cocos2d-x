@@ -1944,7 +1944,7 @@ public:
 
     bool onTouchBegan(Touch* touch, Event* e);
     void onTouchEnded(Touch* touch, Event* e);
-    void onTouchsMoved(Touch* touch, Event* e);
+    void onTouchMoved(Touch* touch, Event* e);
     void onTouchCancelled(Touch* touch, Event* e);
 
     virtual void onTouchStart(Touch* touch, Event* e);
@@ -1964,7 +1964,7 @@ public:
     virtual void onEnterShow();
     virtual void onExitHide();
 
-    void bind(bool bind);
+    void bind(bool bind, bool swallowed = true);
 
     int detectSwipe(Touch* touch, Event* e);
 

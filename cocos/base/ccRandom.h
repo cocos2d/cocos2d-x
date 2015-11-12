@@ -92,7 +92,11 @@ inline int random() {
 };
 
 inline bool probably(int probability) {
-    return random(0, 100) < probability;
+  return random(0, 100) < probability;
+}
+
+inline bool probably(double probability) {
+  return random(0.0, 100.0) < probability;
 }
 
 /**
