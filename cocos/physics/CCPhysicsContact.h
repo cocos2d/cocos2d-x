@@ -63,8 +63,8 @@ typedef struct CC_DLL PhysicsContactData
  * @brief @~english Contact infomation. 
  * It will created automatically when two shape contact with each other. And it will destroyed automatically when two shape separated.
  *
- * @~chinese Åö×²ĞÅÏ¢¡£
- * µ±¸ÕÌåµÄĞÎ×´¼ä·¢ÉúÅö×²Ê±»á×Ô¶¯´´½¨PhysicsContact¶ÔÏó£¬²¢ÔÚÅö×²·ÖÀëÊ±×Ô¶¯Ïú»Ù¡£
+ * @~chinese ç¢°æ’ä¿¡æ¯ã€‚
+ * å½“åˆšä½“çš„å½¢çŠ¶é—´å‘ç”Ÿç¢°æ’æ—¶ä¼šè‡ªåŠ¨åˆ›å»ºPhysicsContactå¯¹è±¡ï¼Œå¹¶åœ¨ç¢°æ’åˆ†ç¦»æ—¶è‡ªåŠ¨é”€æ¯ã€‚
  */
 class CC_DLL PhysicsContact : public EventCustom
 {
@@ -79,21 +79,21 @@ public:
         SEPARATE
     };
     
-    /** @~english Get contact shape A. @~chinese »ñÈ¡Åö×²µÄĞÎ×´A¡£*/
+    /** @~english Get contact shape A. @~chinese è·å–ç¢°æ’çš„å½¢çŠ¶Aã€‚*/
     inline PhysicsShape* getShapeA() const { return _shapeA; }
     
-    /** @~english Get contact shape B. @~chinese »ñÈ¡Åö×²µÄĞÎ×´B¡£*/
+    /** @~english Get contact shape B. @~chinese è·å–ç¢°æ’çš„å½¢çŠ¶Bã€‚*/
     inline PhysicsShape* getShapeB() const { return _shapeB; }
     
-    /** @~english Get contact data. @~chinese »ñÈ¡Åö×²Êı¾İ¡£*/
+    /** @~english Get contact data. @~chinese è·å–ç¢°æ’æ•°æ®ã€‚*/
     inline const PhysicsContactData* getContactData() const { return _contactData; }
     
-    /** @~english Get previous contact data. @~chinese »ñÈ¡Åö×²Ê±Á½¸öĞÎ×´½Ó´¥Ç°µÄÅö×²Êı¾İ¡£*/
+    /** @~english Get previous contact data. @~chinese è·å–ç¢°æ’æ—¶ä¸¤ä¸ªå½¢çŠ¶æ¥è§¦å‰çš„ç¢°æ’æ•°æ®ã€‚*/
     inline const PhysicsContactData* getPreContactData() const { return _preContactData; }
     
     /** 
      * @~english Get the user data.  
-     * @~chinese »ñÈ¡ÓÃ»§Êı¾İ¡£
+     * @~chinese è·å–ç”¨æˆ·æ•°æ®ã€‚
      * @lua NA
      */
     inline void* getData() const { return _data; }
@@ -102,13 +102,13 @@ public:
      * @~english Set data to contact. 
      * You must manage the memory yourself, Generally you can set data at contact begin, and destroy it at contact separate.
      *
-     * @~chinese ÉèÖÃÓÃ»§Êı¾İ¡£
-     * ÄãĞèÒª×Ô¼º¸ºÔğÕâ²¿·ÖÊı¾İµÄÊÍ·Å£¬Í¨³£Äã¿ÉÒÔÔÚÁ½¸öĞÎ×´µÚÒ»´Î½Ó´¥µÄÊ±ºòÉèÖÃÓÃ»§Êı¾İ£¬È»ºóÔÚĞÎ×´·ÖÀëµÄÊ±ºòÊÍ·ÅÊı¾İ¡£
+     * @~chinese è®¾ç½®ç”¨æˆ·æ•°æ®ã€‚
+     * ä½ éœ€è¦è‡ªå·±è´Ÿè´£è¿™éƒ¨åˆ†æ•°æ®çš„é‡Šæ”¾ï¼Œé€šå¸¸ä½ å¯ä»¥åœ¨ä¸¤ä¸ªå½¢çŠ¶ç¬¬ä¸€æ¬¡æ¥è§¦çš„æ—¶å€™è®¾ç½®ç”¨æˆ·æ•°æ®ï¼Œç„¶ååœ¨å½¢çŠ¶åˆ†ç¦»çš„æ—¶å€™é‡Šæ”¾æ•°æ®ã€‚
      * @lua NA
      */
     inline void setData(void* data) { _data = data; }
 
-    /** @~english Get the event code. @~chinese »ñÈ¡Åö×²ÊÂ¼ş´úÂë¡£ */
+    /** @~english Get the event code. @~chinese è·å–ç¢°æ’äº‹ä»¶ä»£ç ã€‚ */
     EventCode getEventCode() const { return _eventCode; };
 
 private:
@@ -149,43 +149,43 @@ private:
 
 /** @class PhysicsContactPreSolve
  * @brief @~english Presolve value generated when onContactPreSolve called.
- * @~chinese onContactPreSolve»Øµ÷±»µ÷ÓÃµÄÊ±ºòÉú³ÉPhysicsContactPreSolve¶ÔÏó¡£
+ * @~chinese onContactPreSolveå›è°ƒè¢«è°ƒç”¨çš„æ—¶å€™ç”ŸæˆPhysicsContactPreSolveå¯¹è±¡ã€‚
  */
 class CC_DLL PhysicsContactPreSolve
 {
 public:
     /** @~english Get restitution between two bodies.
-     * @~chinese »ñÈ¡Á½¸ö¸ÕÌå¼äµÄµ¯Á¦¡£
+     * @~chinese è·å–ä¸¤ä¸ªåˆšä½“é—´çš„å¼¹åŠ›ã€‚
      */
     float getRestitution() const;
     
     /** @~english Get friction between two bodies. 
-     * @~chinese »ñÈ¡Á½¸ö¸ÕÌå¼äµÄÄ¦²ÁÁ¦¡£
+     * @~chinese è·å–ä¸¤ä¸ªåˆšä½“é—´çš„æ‘©æ“¦åŠ›ã€‚
      */
     float getFriction() const;
     
     /** @~english Get surface velocity between two bodies.
-     * @~chinese »ñÈ¡Á½¸ö¸ÕÌå¼äµÄ±íÃæËÙ¶ÈÖµ¡£
+     * @~chinese è·å–ä¸¤ä¸ªåˆšä½“é—´çš„è¡¨é¢é€Ÿåº¦å€¼ã€‚
      */
     Vec2 getSurfaceVelocity() const;
     
     /** @~english Set the restitution. 
-     * @~chinese ÉèÖÃµ¯Á¦¡£
+     * @~chinese è®¾ç½®å¼¹åŠ›ã€‚
      */
     void setRestitution(float restitution);
     
     /** @~english Set the friction. 
-     * @~chinese ÉèÖÃÄ¦²ÁÁ¦¡£
+     * @~chinese è®¾ç½®æ‘©æ“¦åŠ›ã€‚
      */
     void setFriction(float friction);
     
     /** @~english Set the surface velocity. 
-     * @~chinese ÉèÖÃ±íÃæËÙ¶È¡£
+     * @~chinese è®¾ç½®è¡¨é¢é€Ÿåº¦ã€‚
      */
     void setSurfaceVelocity(const Vec2& velocity);
     
     /** @~english Ignore the rest of the contact presolve and postsolve callbacks.
-     * @~chinese ºöÂÔÕâÒ»´ÎµÄ½Ó´¥¡£
+     * @~chinese å¿½ç•¥è¿™ä¸€æ¬¡çš„æ¥è§¦ã€‚
      */
     void ignore();
     
@@ -201,23 +201,23 @@ private:
 
 /** @class PhysicsContactPostSolve
  * @brief @~english Postsolve value generated when onContactPostSolve called.
- * @~chinese onContactPreSolve»Øµ÷±»µ÷ÓÃµÄÊ±ºòÉú³ÉPhysicsContactPostSolve¶ÔÏó¡£
+ * @~chinese onContactPreSolveå›è°ƒè¢«è°ƒç”¨çš„æ—¶å€™ç”ŸæˆPhysicsContactPostSolveå¯¹è±¡ã€‚
  */
 class CC_DLL PhysicsContactPostSolve
 {
 public:
     /** @~english Get restitution between two bodies.
-     * @~chinese »ñÈ¡Á½¸ö¸ÕÌå½¨µÄµ¯Á¦¡£
+     * @~chinese è·å–ä¸¤ä¸ªåˆšä½“å»ºçš„å¼¹åŠ›ã€‚
      */
     float getRestitution() const;
     
     /** @~english Get friction between two bodies.
-     * @~chinese »ñÈ¡Á½¸ö¸ÕÌå¼äµÄÄ¦²ÁÁ¦¡£
+     * @~chinese è·å–ä¸¤ä¸ªåˆšä½“é—´çš„æ‘©æ“¦åŠ›ã€‚
      */
     float getFriction() const;
     
     /** @~english Get surface velocity between two bodies.
-     * @~chinese »ñÈ¡Á½¸ö¸ÕÌå¼äµÄ±íÃæËÙ¶È¡£
+     * @~chinese è·å–ä¸¤ä¸ªåˆšä½“é—´çš„è¡¨é¢é€Ÿåº¦ã€‚
      */
     Vec2 getSurfaceVelocity() const;
     
@@ -233,12 +233,12 @@ private:
 
 /** @class EventListenerPhysicsContact
  * @brief @~english Contact listener. It will recive all the contact callbacks. 
- * @~chinese Åö×²ÊÂ¼ş¼àÌıÆ÷£¬¿ÉÒÔ½ÓÊÕµ½ËùÓĞÅö×²ÊÂ¼ş¡£
+ * @~chinese ç¢°æ’äº‹ä»¶ç›‘å¬å™¨ï¼Œå¯ä»¥æ¥æ”¶åˆ°æ‰€æœ‰ç¢°æ’äº‹ä»¶ã€‚
  */
 class CC_DLL EventListenerPhysicsContact : public EventListenerCustom
 {
 public:
-    /** @~english Create the listener. @~chinese ´´½¨¼àÌıÆ÷¡£*/
+    /** @~english Create the listener. @~chinese åˆ›å»ºç›‘å¬å™¨ã€‚*/
     static EventListenerPhysicsContact* create();
     
     virtual bool checkAvailable() override;
@@ -249,14 +249,14 @@ protected:
     /**
      * @~english It will be call when two body have contact.
      * if return false, it will not invoke callbacks.
-     * @~chinese Á½¸ö¸ÕÌåÅö×²Ê±»áµ÷ÓÃÕâ¸öº¯Êı¡£Èç¹ûº¯Êı·µ»ØfalseµÄ»°£¬Åö×²»Øµ÷½«²»»á±»µ÷ÓÃ¡£
+     * @~chinese ä¸¤ä¸ªåˆšä½“ç¢°æ’æ—¶ä¼šè°ƒç”¨è¿™ä¸ªå‡½æ•°ã€‚å¦‚æœå‡½æ•°è¿”å›falseçš„è¯ï¼Œç¢°æ’å›è°ƒå°†ä¸ä¼šè¢«è°ƒç”¨ã€‚
      */
     virtual bool hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB);
     
 public:
     /**
      * @~english It will called at two shapes start to contact, and only call it once.
-     * @~chinese Õâ¸ö»Øµ÷ÔÚÅö×²µÄÁ½¸öĞÎ×´µÚÒ»´Î½Ó´¥Ê±±»µ÷ÓÃ£¬²¢ÇÒÖ»»á±»µ÷ÓÃÒ»´Î¡£
+     * @~chinese è¿™ä¸ªå›è°ƒåœ¨ç¢°æ’çš„ä¸¤ä¸ªå½¢çŠ¶ç¬¬ä¸€æ¬¡æ¥è§¦æ—¶è¢«è°ƒç”¨ï¼Œå¹¶ä¸”åªä¼šè¢«è°ƒç”¨ä¸€æ¬¡ã€‚
      */
     std::function<bool(PhysicsContact& contact)> onContactBegin;
         
@@ -265,9 +265,9 @@ public:
      * Return false from the callback to make world ignore the collision this step or true to process it normally. 
      * Additionally, you may override collision values, restitution, or surface velocity values.
      *
-     * @~chinese Åö×²¹ı³ÌÖĞÁ½¸öĞÎ×´µÄÃ¿Ò»´ÎÏà»¥½Ó´¥Ê±µÄ»Øµ÷¡£
-     * ·µ»ØfalseµÄ»°£¬ÎïÀíÊÀ½ç½«ºöÂÔÕâÒ»´ÎµÄ½Ó´¥¡£¸ºÔğÕı³£´¦ÀíÁ½¸öĞÎ×´µÄÕâÒ»´Î½Ó´¥¡£
-     * Äã¿ÉÒÔÔÚÕâ¸ö»Øµ÷ÖĞ×Ô¶¨ÒåÅö×²ÊôĞÔ£¬ÀıÈçµ¯Á¦¡¢±íÃæËÙ¶ÈµÈ¡£
+     * @~chinese ç¢°æ’è¿‡ç¨‹ä¸­ä¸¤ä¸ªå½¢çŠ¶çš„æ¯ä¸€æ¬¡ç›¸äº’æ¥è§¦æ—¶çš„å›è°ƒã€‚
+     * è¿”å›falseçš„è¯ï¼Œç‰©ç†ä¸–ç•Œå°†å¿½ç•¥è¿™ä¸€æ¬¡çš„æ¥è§¦ã€‚è´Ÿè´£æ­£å¸¸å¤„ç†ä¸¤ä¸ªå½¢çŠ¶çš„è¿™ä¸€æ¬¡æ¥è§¦ã€‚
+     * ä½ å¯ä»¥åœ¨è¿™ä¸ªå›è°ƒä¸­è‡ªå®šä¹‰ç¢°æ’å±æ€§ï¼Œä¾‹å¦‚å¼¹åŠ›ã€è¡¨é¢é€Ÿåº¦ç­‰ã€‚
      */
     std::function<bool(PhysicsContact& contact, PhysicsContactPreSolve& solve)> onContactPreSolve;
     
@@ -275,8 +275,8 @@ public:
      * @~english Two shapes are touching and their collision response has been processed. 
      * You can retrieve the collision impulse or kinetic energy at this time if you want to use it to calculate sound volumes or damage amounts. 
      *
-     * @~chinese Á½ÖÖĞÎ×´Ïà»¥½Ó´¥²¢ÇÒËüÃÇµÄÅö×²ÏìÓ¦ÒÑ±»´¦Àí¡£
-     * Èç¹ûÄãÏëÊ¹ÓÃËüÀ´¼ÆËãÒôÁ¿»òÕßÉËº¦Öµ£¬ÕâÊ±Äã¿ÉÒÔ¼ìË÷Åö×²³åÁ¦»ò¶¯ÄÜ¡£
+     * @~chinese ä¸¤ç§å½¢çŠ¶ç›¸äº’æ¥è§¦å¹¶ä¸”å®ƒä»¬çš„ç¢°æ’å“åº”å·²è¢«å¤„ç†ã€‚
+     * å¦‚æœä½ æƒ³ä½¿ç”¨å®ƒæ¥è®¡ç®—éŸ³é‡æˆ–è€…ä¼¤å®³å€¼ï¼Œè¿™æ—¶ä½ å¯ä»¥æ£€ç´¢ç¢°æ’å†²åŠ›æˆ–åŠ¨èƒ½ã€‚
      */
     std::function<void(PhysicsContact& contact, const PhysicsContactPostSolve& solve)> onContactPostSolve;
     
@@ -284,8 +284,8 @@ public:
      * @~english It will called at two shapes separated, and only call it once.
      * onContactBegin and onContactSeparate will called in pairs.
      *
-     * @~chinese Õâ¸ö»Øµ÷ÔÚÁ½¸öÅö×²µÄĞÎ×´·ÖÀëÊ±±»µ÷ÓÃ£¬²¢ÇÒÖ»»á±»µ÷ÓÃÒ»´Î¡£
-     * onContactBeginºÍonContactSeparateÊÇ³É¶Ô±»µ÷ÓÃµÄ¡£
+     * @~chinese è¿™ä¸ªå›è°ƒåœ¨ä¸¤ä¸ªç¢°æ’çš„å½¢çŠ¶åˆ†ç¦»æ—¶è¢«è°ƒç”¨ï¼Œå¹¶ä¸”åªä¼šè¢«è°ƒç”¨ä¸€æ¬¡ã€‚
+     * onContactBeginå’ŒonContactSeparateæ˜¯æˆå¯¹è¢«è°ƒç”¨çš„ã€‚
      */
     std::function<void(PhysicsContact& contact)> onContactSeparate;
     
@@ -302,12 +302,12 @@ protected:
 
 /** @class EventListenerPhysicsContactWithBodies
  * @brief @~english This event listener only be called when bodyA and bodyB have contacts. 
- * @~chinese Åö×²ÊÂ¼ş¼àÌıÆ÷£¬Ö»¿ÉÒÔ½ÓÊÕµ½¸ÕÌåbodyAºÍ¸ÕÌåbodyBÖ®¼äµÄÅö×²ÊÂ¼ş¡£
+ * @~chinese ç¢°æ’äº‹ä»¶ç›‘å¬å™¨ï¼Œåªå¯ä»¥æ¥æ”¶åˆ°åˆšä½“bodyAå’Œåˆšä½“bodyBä¹‹é—´çš„ç¢°æ’äº‹ä»¶ã€‚
  */
 class CC_DLL EventListenerPhysicsContactWithBodies : public EventListenerPhysicsContact
 {
 public:
-    /** @~english Create the listener. @~chinese ´´½¨Åö×²¼àÌıÆ÷¡£*/
+    /** @~english Create the listener. @~chinese åˆ›å»ºç¢°æ’ç›‘å¬å™¨ã€‚*/
     static EventListenerPhysicsContactWithBodies* create(PhysicsBody* bodyA, PhysicsBody* bodyB);
     
     virtual bool hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB) override;
@@ -325,12 +325,12 @@ protected:
 
 /** @class EventListenerPhysicsContactWithShapes
  * @brief @~english This event listener only be called when shapeA and shapeB have contacts. 
- * @~chinese Åö×²ÊÂ¼ş¼àÌıÆ÷£¬Ö»¿ÉÒÔ½ÓÊÕµ½ĞÎ×´shapeAºÍĞÎ×´shapeBÖ®¼äµÄÅö×²ÊÂ¼ş¡£
+ * @~chinese ç¢°æ’äº‹ä»¶ç›‘å¬å™¨ï¼Œåªå¯ä»¥æ¥æ”¶åˆ°å½¢çŠ¶shapeAå’Œå½¢çŠ¶shapeBä¹‹é—´çš„ç¢°æ’äº‹ä»¶ã€‚
  */
 class CC_DLL EventListenerPhysicsContactWithShapes : public EventListenerPhysicsContact
 {
 public:
-    /** @~english Create the listener. @~chinese ´´½¨Åö×²¼àÌıÆ÷¡£*/
+    /** @~english Create the listener. @~chinese åˆ›å»ºç¢°æ’ç›‘å¬å™¨ã€‚*/
     static EventListenerPhysicsContactWithShapes* create(PhysicsShape* shapeA, PhysicsShape* shapeB);
     
     virtual bool hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB) override;
@@ -347,12 +347,12 @@ protected:
 
 /** @class EventListenerPhysicsContactWithGroup
  * @brief @~english This event listener only be called when shapeA or shapeB is in the group your specified.
- * @~chinese Åö×²ÊÂ¼ş¼àÌıÆ÷£¬Ö»¿ÉÒÔ¼àÌı¸ø¶¨·Ö×éµÄĞÎ×´Ö®¼äµÄÅö×²ÊÂ¼ş¡£
+ * @~chinese ç¢°æ’äº‹ä»¶ç›‘å¬å™¨ï¼Œåªå¯ä»¥ç›‘å¬ç»™å®šåˆ†ç»„çš„å½¢çŠ¶ä¹‹é—´çš„ç¢°æ’äº‹ä»¶ã€‚
  */
 class CC_DLL EventListenerPhysicsContactWithGroup : public EventListenerPhysicsContact
 {
 public:
-    /** @~english Create the listener. @~chinese ´´½¨Åö×²¼àÌıÆ÷¡£ */
+    /** @~english Create the listener. @~chinese åˆ›å»ºç¢°æ’ç›‘å¬å™¨ã€‚ */
     static EventListenerPhysicsContactWithGroup* create(int group);
     
     virtual bool hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB) override;

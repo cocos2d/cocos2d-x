@@ -40,7 +40,7 @@ using namespace std;
  */
 
 NS_CC_BEGIN
-/** @~english LuaBridge Error enum, with inline docs.  @~chinese LuaBridgeµÄ´íÎóÃ¶¾Ù*/
+/** @~english LuaBridge Error enum, with inline docs.  @~chinese LuaBridgeçš„é”™è¯¯æšä¸¾*/
 typedef enum {
     kLuaBridgeErrorOk                   = 0,  /** &lt; value 0 */
     kLuaBridgeErrorInvalidParameters    = -1, /** &lt; value -1 */
@@ -59,8 +59,8 @@ typedef enum {
  * It makes Lua and ObjC can call each other conveniently.
  *
  * @~chinese 
- * ¹¹½¨ObjCºÍLuaÖ®¼äµÄÇÅÁº¡£
- * ËüÊ¹LuaºÍObjC¼ä¿ÉÒÔ·½±ãµØ»¥Ïàµ÷ÓÃ¡£
+ * æ„å»ºObjCå’ŒLuaä¹‹é—´çš„æ¡¥æ¢ã€‚
+ * å®ƒä½¿Luaå’ŒObjCé—´å¯ä»¥æ–¹ä¾¿åœ°äº’ç›¸è°ƒç”¨ã€‚
  * 
  * @lua NA
  * @js NA
@@ -72,10 +72,10 @@ public:
      * Get the LuaStack of LuaEngine.
      *
      * @~chinese 
-     * »ñÈ¡LuaEngineµÄLuaStack¶ÔÏó¡£
+     * è·å–LuaEngineçš„LuaStackå¯¹è±¡ã€‚
      * 
      * @return @~english the LuaStack object.
-     * @~chinese LuaStack¶ÔÏó¡£
+     * @~chinese LuaStackå¯¹è±¡ã€‚
      */
     static LuaStack *getStack(void);
     /**@~english
@@ -83,14 +83,14 @@ public:
      * If it don't find the function pointer corresponding to functionId, it will reset stack top index to the index before searching.
      *
      * @~chinese 
-     * Í¨¹ı²éÕÒ¡°lua_bridge_function_id¡± table½«functionId¶ÔÓ¦µÄº¯ÊıÖ¸ÕëÑ¹Èëµ½LuaÕ»¶¥¡£
-     * Èç¹ûÃ»ÓĞÕÒµ½functionId¶ÔÓ¦µÄº¯ÊıÖ¸Õë,Ëü½«ÖØÖÃLuaÕ»¶¥Ë÷ÒıÎª²éÕÒÇ°µÄLuaÕ»±úË÷Òı¡£
+     * é€šè¿‡æŸ¥æ‰¾â€œlua_bridge_function_idâ€ tableå°†functionIdå¯¹åº”çš„å‡½æ•°æŒ‡é’ˆå‹å…¥åˆ°Luaæ ˆé¡¶ã€‚
+     * å¦‚æœæ²¡æœ‰æ‰¾åˆ°functionIdå¯¹åº”çš„å‡½æ•°æŒ‡é’ˆ,å®ƒå°†é‡ç½®Luaæ ˆé¡¶ç´¢å¼•ä¸ºæŸ¥æ‰¾å‰çš„Luaæ ˆæŸ„ç´¢å¼•ã€‚
      *
      * @param functionId @~english the value used to search the `lua_bridge_function_id` table.
-     * @~chinese ÓÃÓÚ²éÕÒ¡°lua_bridge_function_id¡±±íµÄº¯ÊıÒıÓÃid¡£
+     * @~chinese ç”¨äºæŸ¥æ‰¾â€œlua_bridge_function_idâ€è¡¨çš„å‡½æ•°å¼•ç”¨idã€‚
 
      * @return @~english Return 0 if the `lua_bridge_function_id` table or the function pointer corresponding to functionId don't exist, otherwise return -1.
-     * @~chinese Èç¹û¸ø¶¨µÄ`lua_bridge_function_id` table²»´æÔÚ»òÕß¶ÔÓ¦functionIdµÄº¯ÊıÖ¸Õë²»´æÔÚ£¬·µ»Ø0£¬·ñÔò£¬·µ»Ø-1¡£
+     * @~chinese å¦‚æœç»™å®šçš„`lua_bridge_function_id` tableä¸å­˜åœ¨æˆ–è€…å¯¹åº”functionIdçš„å‡½æ•°æŒ‡é’ˆä¸å­˜åœ¨ï¼Œè¿”å›0ï¼Œå¦åˆ™ï¼Œè¿”å›-1ã€‚
      */
     static int pushLuaFunctionById(int functionId);
     
@@ -100,14 +100,14 @@ public:
      * The top index of Lua stack the same as before calling this function.
      *
      * @~chinese 
-     * Èç¹ûÔÚ¶ÔÓ¦µÄ'lua_bridge_function_id_retain'±íÖĞ¿ÉÒÔÕÒµ½functionIdµÄÒıÓÃ¼ÆÊıÖµ£¬ÄÇÃ´¶ÔÓ¦µÄÒıÓÃ¼ÆÊıÖµ¼Ó1¡£
-     * Èç¹û`lua_bridge_function_id_retain`²»´æÔÚ»òÕßlua_bridge_function_id_retain[functionId]¶ÔÓ¦µÄÖµµÄÀàĞÍ²»ÊÇLUA_TNUMBER£¬Ëü½«·µ»Ø0£¬·ñÔò·µ»Ø¸üĞÂºóµÄÒıÓÃ¼ÆÊı¡£
-     * LuaÕ»¶¥Ë÷Òıµ÷ÓÃÇ°ºóÒ»ÖÂ¡£
+     * å¦‚æœåœ¨å¯¹åº”çš„'lua_bridge_function_id_retain'è¡¨ä¸­å¯ä»¥æ‰¾åˆ°functionIdçš„å¼•ç”¨è®¡æ•°å€¼ï¼Œé‚£ä¹ˆå¯¹åº”çš„å¼•ç”¨è®¡æ•°å€¼åŠ 1ã€‚
+     * å¦‚æœ`lua_bridge_function_id_retain`ä¸å­˜åœ¨æˆ–è€…lua_bridge_function_id_retain[functionId]å¯¹åº”çš„å€¼çš„ç±»å‹ä¸æ˜¯LUA_TNUMBERï¼Œå®ƒå°†è¿”å›0ï¼Œå¦åˆ™è¿”å›æ›´æ–°åçš„å¼•ç”¨è®¡æ•°ã€‚
+     * Luaæ ˆé¡¶ç´¢å¼•è°ƒç”¨å‰åä¸€è‡´ã€‚
      * 
      * @param functionId @~english the value used to search the `lua_bridge_function_id_retain` table.
-     * @~chinese ÓÃÓÚ²éÕÒ¡°lua_bridge_function_id_retain¡± tableµÄº¯ÊıÒıÓÃid¡£
+     * @~chinese ç”¨äºæŸ¥æ‰¾â€œlua_bridge_function_id_retainâ€ tableçš„å‡½æ•°å¼•ç”¨idã€‚
      * @return @~english the retain count or 0.
-     * @~chinese ÒıÓÃ¼ÆÊı»ò0¡£
+     * @~chinese å¼•ç”¨è®¡æ•°æˆ–0ã€‚
      */
     static int retainLuaFunctionById(int functionId);
     
@@ -119,14 +119,14 @@ public:
      *
      * @~chinese 
      * 
-     * Èç¹ûÔÚ¶ÔÓ¦µÄ'lua_bridge_function_id_retain'±íÖĞ¿ÉÒÔÕÒµ½functionIdµÄÒıÓÃ¼ÆÊıÖµ£¬ÄÇÃ´¶ÔÓ¦µÄÒıÓÃ¼ÆÊıÖµ¼õ1¡£
-     * Èç¹û`lua_bridge_function_id`»òÕß`lua_bridge_function_id_retain`²»´æÔÚ»òÕßlua_bridge_function_id_retain[functionId]¶ÔÓ¦µÄÖµµÄÀàĞÍ²»ÊÇLUA_TNUMBER£¬Ëü½«·µ»Ø0¡£
-     * Í¬Ê±£¬Èç¹ûÒıÓÃ¼ÆÊı¸üĞÂÎª0,Ëü½«É¾³ıÕâ¸öfunctionId¶ÔÓ¦ÔÚ¡°lua_bridge_function_id_retain¡± tableºÍ¡°lua_bridge_function_id_retain¡± tableÖĞµÄÖµ£¬·µ»Ø0£¬·ñÔò·µ»ØÒıÓÃ¼ÆÊı¡£
+     * å¦‚æœåœ¨å¯¹åº”çš„'lua_bridge_function_id_retain'è¡¨ä¸­å¯ä»¥æ‰¾åˆ°functionIdçš„å¼•ç”¨è®¡æ•°å€¼ï¼Œé‚£ä¹ˆå¯¹åº”çš„å¼•ç”¨è®¡æ•°å€¼å‡1ã€‚
+     * å¦‚æœ`lua_bridge_function_id`æˆ–è€…`lua_bridge_function_id_retain`ä¸å­˜åœ¨æˆ–è€…lua_bridge_function_id_retain[functionId]å¯¹åº”çš„å€¼çš„ç±»å‹ä¸æ˜¯LUA_TNUMBERï¼Œå®ƒå°†è¿”å›0ã€‚
+     * åŒæ—¶ï¼Œå¦‚æœå¼•ç”¨è®¡æ•°æ›´æ–°ä¸º0,å®ƒå°†åˆ é™¤è¿™ä¸ªfunctionIdå¯¹åº”åœ¨â€œlua_bridge_function_id_retainâ€ tableå’Œâ€œlua_bridge_function_id_retainâ€ tableä¸­çš„å€¼ï¼Œè¿”å›0ï¼Œå¦åˆ™è¿”å›å¼•ç”¨è®¡æ•°ã€‚
      * 
      * @param functionId @~english the value used to search the `lua_bridge_function_id` table and `lua_bridge_function_id` table.
-     * @~chinese ÓÃÓÚ²éÕÒ¡°lua_bridge_function_id¡± tableºÍ¡°lua_bridge_function_id¡± tableÖĞµÄº¯ÊıÒıÓÃid¡£
+     * @~chinese ç”¨äºæŸ¥æ‰¾â€œlua_bridge_function_idâ€ tableå’Œâ€œlua_bridge_function_idâ€ tableä¸­çš„å‡½æ•°å¼•ç”¨idã€‚
      * @return @~english the retain count or 0.
-     * @~chinese ÒıÓÃ¼ÆÊıÖµ»ò0¡£
+     * @~chinese å¼•ç”¨è®¡æ•°å€¼æˆ–0ã€‚
      */
     static int releaseLuaFunctionById(int functionId);
     

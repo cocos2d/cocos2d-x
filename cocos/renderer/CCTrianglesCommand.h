@@ -42,138 +42,138 @@ NS_CC_BEGIN
  Every TrianglesCommand will have generate material ID by give textureID, glProgramState, Blend function
  if the material id is the same, these TrianglesCommands could be batched to save draw call.
  * @~chinese 
- * ¸ÃÃüÁîÓÃÓÚ»æÖÆÒ»¸ö»ò¶à¸öÈı½ÇĞÎ,ÓëQuadCommandÏàËÆ¡£
- * Ã¿¸öTrianglesCommand½«Ê¹ÓÃtextureID,glProgramState,»ìºÏ¹¦ÄÜµÈÉú³É²ÄÖÊID,
- * Èç¹û²ÄÖÊIDÊÇÏàÍ¬µÄ,ÕâĞ©TrianglesCommands¿ÉÒÔ½øĞĞÅú´¦Àí»æÖÆ¡£
+ * è¯¥å‘½ä»¤ç”¨äºç»˜åˆ¶ä¸€ä¸ªæˆ–å¤šä¸ªä¸‰è§’å½¢,ä¸QuadCommandç›¸ä¼¼ã€‚
+ * æ¯ä¸ªTrianglesCommandå°†ä½¿ç”¨textureID,glProgramState,æ··åˆåŠŸèƒ½ç­‰ç”Ÿæˆæè´¨ID,
+ * å¦‚æœæè´¨IDæ˜¯ç›¸åŒçš„,è¿™äº›TrianglesCommandså¯ä»¥è¿›è¡Œæ‰¹å¤„ç†ç»˜åˆ¶ã€‚
 */
 class CC_DLL TrianglesCommand : public RenderCommand
 {
 public:
-    /**@~english The structure of Triangles.  @~chinese Èı½ÇĞÎµÄ½á¹¹¡£*/
+    /**@~english The structure of Triangles.  @~chinese ä¸‰è§’å½¢çš„ç»“æ„ã€‚*/
     struct Triangles
     {
-        /**@~english Vertex data pointer. @~chinese ¶¥µãÊı¾İÖ¸Õë¡£*/
+        /**@~english Vertex data pointer. @~chinese é¡¶ç‚¹æ•°æ®æŒ‡é’ˆã€‚*/
         V3F_C4B_T2F* verts;
-        /**@~english Index data pointer. @~chinese Ë÷ÒıÊı¾İÖ¸Õë¡£*/
+        /**@~english Index data pointer. @~chinese ç´¢å¼•æ•°æ®æŒ‡é’ˆã€‚*/
         unsigned short* indices;
-        /**@~english The number of vertices. @~chinese ¶¥µãµÄÊıÁ¿¡£*/
+        /**@~english The number of vertices. @~chinese é¡¶ç‚¹çš„æ•°é‡ã€‚*/
         ssize_t vertCount;
-        /**@~english The number of indices. @~chinese Ë÷ÒıµÄÊıÁ¿¡£*/
+        /**@~english The number of indices. @~chinese ç´¢å¼•çš„æ•°é‡ã€‚*/
         ssize_t indexCount;
     };
-    /**@~english Construtor. @~chinese ¹¹Ôìº¯Êı¡£*/
+    /**@~english Construtor. @~chinese æ„é€ å‡½æ•°ã€‚*/
     TrianglesCommand();
-    /**@~english Destructor. @~chinese Îö¹¹º¯Êı¡£*/
+    /**@~english Destructor. @~chinese ææ„å‡½æ•°ã€‚*/
     ~TrianglesCommand();
     
     /** @~english Initializes the command.
-     * @~chinese ³õÊ¼»¯ÃüÁî¡£
+     * @~chinese åˆå§‹åŒ–å‘½ä»¤ã€‚
      @param globalOrder @~english GlobalZOrder of the command.
-     * @~chinese äÖÈ¾ÃüÁîµÄGlobalZOrder¡£
+     * @~chinese æ¸²æŸ“å‘½ä»¤çš„GlobalZOrderã€‚
      @param textureID @~english The openGL handle of the used texture.
-     * @~chinese ÎÆÀíµÄopenGL¾ä±ú¡£
+     * @~chinese çº¹ç†çš„openGLå¥æŸ„ã€‚
      @param glProgramState @~english The specified glProgram and its uniform.
-     * @~chinese Ö¸¶¨µÄglProgramºÍÆäuniform²ÎÊı¡£
+     * @~chinese æŒ‡å®šçš„glProgramå’Œå…¶uniformå‚æ•°ã€‚
      @param blendType @~english Blend function for the command.
-     * @~chinese äÖÈ¾ÃüÁîµÄ»ìºÏº¯Êı¡£
+     * @~chinese æ¸²æŸ“å‘½ä»¤çš„æ··åˆå‡½æ•°ã€‚
      @param triangles @~english Rendered triangles for the command.
-     * @~chinese äÖÈ¾µÄÈı½ÇĞÎ¡£
+     * @~chinese æ¸²æŸ“çš„ä¸‰è§’å½¢ã€‚
      @param mv @~english ModelView matrix for the command.
-     * @~chinese ModelView¾ØÕó¡£
+     * @~chinese ModelViewçŸ©é˜µã€‚
      @param flags @~english to indicate that the command is using 3D rendering or not.
-     * @~chinese ¸ÃÃüÁîÊÇ·ñÊ¹ÓÃ3däÖÈ¾¡£
+     * @~chinese è¯¥å‘½ä»¤æ˜¯å¦ä½¿ç”¨3dæ¸²æŸ“ã€‚
      */
     void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags);
     /**
     @~english Deprecated function, the params is similar as the upper init function, with flags equals 0. 
-    @~chinese Deprecatedº¯Êı,²ÎÊıÎªÓëinitº¯ÊıÀàËÆ,µ«ÊÇÆäflagsµÈÓÚ0¡£
+    @~chinese Deprecatedå‡½æ•°,å‚æ•°ä¸ºä¸initå‡½æ•°ç±»ä¼¼,ä½†æ˜¯å…¶flagsç­‰äº0ã€‚
     @param globalOrder @~english GlobalZOrder of the command.
-     * @~chinese äÖÈ¾ÃüÁîµÄGlobalZOrder¡£
+     * @~chinese æ¸²æŸ“å‘½ä»¤çš„GlobalZOrderã€‚
      @param textureID @~english The openGL handle of the used texture.
-     * @~chinese ÎÆÀíµÄopenGL¾ä±ú¡£
+     * @~chinese çº¹ç†çš„openGLå¥æŸ„ã€‚
      @param glProgramState @~english The specified glProgram and its uniform.
-     * @~chinese Ö¸¶¨µÄglProgramºÍÆäuniform²ÎÊı¡£
+     * @~chinese æŒ‡å®šçš„glProgramå’Œå…¶uniformå‚æ•°ã€‚
      @param blendType @~english Blend function for the command.
-     * @~chinese äÖÈ¾ÃüÁîµÄ»ìºÏº¯Êı¡£
+     * @~chinese æ¸²æŸ“å‘½ä»¤çš„æ··åˆå‡½æ•°ã€‚
      @param triangles @~english Rendered triangles for the command.
-     * @~chinese äÖÈ¾µÄÈı½ÇĞÎ¡£
+     * @~chinese æ¸²æŸ“çš„ä¸‰è§’å½¢ã€‚
      @param mv @~english ModelView matrix for the command.
-     * @~chinese ModelView¾ØÕó¡£
+     * @~chinese ModelViewçŸ©é˜µã€‚
     */
     CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv);
     /**
     @~english Apply the texture, shaders, programs, blend functions to GPU pipeline. 
-    @~chinese Ó¦ÓÃÎÆÀí¡¢×ÅÉ«Æ÷³ÌĞò,»ìºÏµ½openGLäÖÈ¾¹ÜÏßÖĞ¡£
+    @~chinese åº”ç”¨çº¹ç†ã€ç€è‰²å™¨ç¨‹åº,æ··åˆåˆ°openGLæ¸²æŸ“ç®¡çº¿ä¸­ã€‚
     */
     void useMaterial() const;
     /**
     @~english Get the material id of command. 
-    @~chinese µÃµ½µÄ²ÄÖÊID¡£
+    @~chinese å¾—åˆ°çš„æè´¨IDã€‚
     @return @~english Material ID.
-    @~chinese ²ÄÖÊID¡£
+    @~chinese æè´¨IDã€‚
     */
     inline uint32_t getMaterialID() const { return _materialID; }
     /**
     @~english Get the openGL texture handle. 
-    @~chinese µÃµ½ÎÆÀíµÄopenGL¾ä±ú¡£
+    @~chinese å¾—åˆ°çº¹ç†çš„openGLå¥æŸ„ã€‚
     @return @~english openGL texture handle.
-    @~chinese ÎÆÀíµÄopenGL¾ä±ú¡£
+    @~chinese çº¹ç†çš„openGLå¥æŸ„ã€‚
     */
     inline GLuint getTextureID() const { return _textureID; }
     /**
     @~english Get a const reference of triangles. 
-    @~chinese µÃµ½äÖÈ¾Èı½ÇĞÎµÄÊı¾İ¡£
+    @~chinese å¾—åˆ°æ¸²æŸ“ä¸‰è§’å½¢çš„æ•°æ®ã€‚
     @return @~english The triangles to be rendered.
-    @~chinese ´ıäÖÈ¾Èı½ÇĞÎ¡£
+    @~chinese å¾…æ¸²æŸ“ä¸‰è§’å½¢ã€‚
     */
     inline const Triangles& getTriangles() const { return _triangles; }
     /**
     @~english Get the vertex count in the triangles. 
-    @~chinese Èı½ÇĞÎµÄ¶¥µãÊı¡£
+    @~chinese ä¸‰è§’å½¢çš„é¡¶ç‚¹æ•°ã€‚
     @return @~english the vertex count.
-    @~chinese Èı½ÇĞÎµÄ¶¥µãÊıÄ¿¡£
+    @~chinese ä¸‰è§’å½¢çš„é¡¶ç‚¹æ•°ç›®ã€‚
     */
     inline ssize_t getVertexCount() const { return _triangles.vertCount; }
     /**
     @~english Get the index count of the triangles. 
-    @~chinese µÃµ½Èı½ÇĞÎµÄË÷ÒıÊıÄ¿¡£
+    @~chinese å¾—åˆ°ä¸‰è§’å½¢çš„ç´¢å¼•æ•°ç›®ã€‚
     @return @~english The index count.
-    @~chinese Èı½ÇĞÎµÄË÷ÒıÊıÄ¿¡£
+    @~chinese ä¸‰è§’å½¢çš„ç´¢å¼•æ•°ç›®ã€‚
     */
     inline ssize_t getIndexCount() const { return _triangles.indexCount; }
     /**
     @~english Get the vertex data pointer. 
-    @~chinese µÃµ½¶¥µãÊı¾İµÄÖ¸Õë¡£
+    @~chinese å¾—åˆ°é¡¶ç‚¹æ•°æ®çš„æŒ‡é’ˆã€‚
     @return @~english The pointer of the vertex data.
-    @~chinese ¶¥µãÊı¾İµÄÖ¸Õë¡£
+    @~chinese é¡¶ç‚¹æ•°æ®çš„æŒ‡é’ˆã€‚
     */
     inline const V3F_C4B_T2F* getVertices() const { return _triangles.verts; }
     /**
     @~english Get the index data pointer. 
-    @~chinese µÃµ½Ë÷ÒıÊı¾İµÄÖ¸Õë¡£
+    @~chinese å¾—åˆ°ç´¢å¼•æ•°æ®çš„æŒ‡é’ˆã€‚
     @return @~english The pointer of index data.
-    @~chinese Ë÷ÒıÊı¾İµÄÖ¸Õë¡£
+    @~chinese ç´¢å¼•æ•°æ®çš„æŒ‡é’ˆã€‚
     */
     inline const unsigned short* getIndices() const { return _triangles.indices; }
     /**
     @~english Get the GLProgram and uniform. 
-    @~chinese µÃµ½äÖÈ¾µÄGLProgramºÍunifrom²ÎÊı
+    @~chinese å¾—åˆ°æ¸²æŸ“çš„GLProgramå’Œunifromå‚æ•°
     @return @~english GLProgram and its uniform.
-    @~chinese GLProgramºÍuniform²ÎÊı¡£
+    @~chinese GLProgramå’Œuniformå‚æ•°ã€‚
     */
     inline GLProgramState* getGLProgramState() const { return _glProgramState; }
     /**
     @~english Get the blend function. 
-    @~chinese µÃµ½»ìºÏº¯Êı¡£
+    @~chinese å¾—åˆ°æ··åˆå‡½æ•°ã€‚
     @return @~english The blend function.
-    @~chinese »ìºÏº¯Êı¡£
+    @~chinese æ··åˆå‡½æ•°ã€‚
     */
     inline BlendFunc getBlendType() const { return _blendType; }
     /**
     @~english Get the model view matrix. 
-    @~chinese µÃµ½ModelView¾ØÕó¡£
+    @~chinese å¾—åˆ°ModelViewçŸ©é˜µã€‚
     @return @~english The ModelView matrix.
-    @~chinese ModelView¾ØÕó¡£
+    @~chinese ModelViewçŸ©é˜µã€‚
     */
     inline const Mat4& getModelView() const { return _mv; }
     

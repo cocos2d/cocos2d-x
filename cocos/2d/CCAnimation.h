@@ -51,7 +51,7 @@ class SpriteFrame;
  * - sprite frame name.
  * - # of delay units.
  * - offset
- * @~chinese Ö¡¶¯»­ÖĞµÄÒ»Ö¡£¬Ëü°üº¬ÁËÒ»Ğ©ĞÅÏ¢£º¾«ÁéÖ¡Ãû£¬Ê±¼ä£¬Æ«ÒÆ¡£
+ * @~chinese å¸§åŠ¨ç”»ä¸­çš„ä¸€å¸§ï¼Œå®ƒåŒ…å«äº†ä¸€äº›ä¿¡æ¯ï¼šç²¾çµå¸§åï¼Œæ—¶é—´ï¼Œåç§»ã€‚
  
  @since v2.0
  */
@@ -60,7 +60,7 @@ class CC_DLL AnimationFrame : public Ref, public Clonable
 public:
     /** @struct DisplayedEventInfo
      * @~english When the animation display,Dispatches the event of UserData.
-     * @~chinese µ±ÏÔÊ¾Ö¡¶¯»­Ê±£¬·Ö·¢UserDataÊÂ¼ş¡£
+     * @~chinese å½“æ˜¾ç¤ºå¸§åŠ¨ç”»æ—¶ï¼Œåˆ†å‘UserDataäº‹ä»¶ã€‚
      */
     struct DisplayedEventInfo
     {
@@ -72,31 +72,31 @@ public:
      * Creates the animation frame with a spriteframe, number of delay units and a notification user info.
      *
      * @~chinese 
-     * Ê¹ÓÃ¾«ÁéÖ¡,Ê±¼äºÍÓÃ»§ĞÅÏ¢Í¨ÖªµÄÊıÁ¿´´½¨¶¯»­Ö¡¡£
+     * ä½¿ç”¨ç²¾çµå¸§,æ—¶é—´å’Œç”¨æˆ·ä¿¡æ¯é€šçŸ¥çš„æ•°é‡åˆ›å»ºåŠ¨ç”»å¸§ã€‚
      * 
      * @param spriteFrame @~english The animation frame with a spriteframe.
-     * @~chinese ¾«ÁéÖ¡¡£
+     * @~chinese ç²¾çµå¸§ã€‚
      * @param delayUnits @~english Number of delay units.
-     * @~chinese Ê±¼ä¡£
+     * @~chinese æ—¶é—´ã€‚
      * @param userInfo @~english A notification user info.
-     * @~chinese ÓÃ»§ĞÅÏ¢Í¨Öª¡£
+     * @~chinese ç”¨æˆ·ä¿¡æ¯é€šçŸ¥ã€‚
      * @since 3.0
      */
     static AnimationFrame* create(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo);
     /** @~english Return a SpriteFrameName to be used.
      *
-     * @~chinese ·µ»ØÒ»¸öÊ¹ÓÃµÄ¾«ÁéÖ¡¡£
+     * @~chinese è¿”å›ä¸€ä¸ªä½¿ç”¨çš„ç²¾çµå¸§ã€‚
      * 
      * @return @~english a SpriteFrameName to be used.
-     * @~chinese Ê¹ÓÃÖĞµÄ¾«ÁéÖ¡¡£
+     * @~chinese ä½¿ç”¨ä¸­çš„ç²¾çµå¸§ã€‚
      */
     SpriteFrame* getSpriteFrame() const { return _spriteFrame; };
     /** @~english Set the SpriteFrame.
      *
-     * @~chinese ÉèÖÃ¾«ÁéÖ¡¡£
+     * @~chinese è®¾ç½®ç²¾çµå¸§ã€‚
      * 
      * @param frame @~english A SpriteFrame will be used.
-     * @~chinese ´ıÊ¹ÓÃµÄ¾«ÁéÖ¡¡£
+     * @~chinese å¾…ä½¿ç”¨çš„ç²¾çµå¸§ã€‚
      */
     void setSpriteFrame(SpriteFrame* frame)
     {
@@ -107,19 +107,19 @@ public:
 
     /** @~english Gets the units of time the frame takes.
      *
-     * @~chinese »ñÈ¡Ö¡»¨·ÑµÄÊ±¼ä¡£
+     * @~chinese è·å–å¸§èŠ±è´¹çš„æ—¶é—´ã€‚
      * 
      * @return @~english The units of time the frame takes.
-     * @~chinese Ö¡»¨·ÑµÄÊ±¼ä¡£
+     * @~chinese å¸§èŠ±è´¹çš„æ—¶é—´ã€‚
      */
     float getDelayUnits() const { return _delayUnits; };
     
     /** @~english Sets the units of time the frame takes.
      *
-     * @~chinese ÉèÖÃÖ¡»¨·ÑµÄÊ±¼ä¡£
+     * @~chinese è®¾ç½®å¸§èŠ±è´¹çš„æ—¶é—´ã€‚
      * 
      * @param delayUnits @~english The units of time the frame takes.
-     * @~chinese ¡£
+     * @~chinese ã€‚
      */
     void setDelayUnits(float delayUnits) { _delayUnits = delayUnits; };
     
@@ -127,20 +127,20 @@ public:
      * A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. 
      * If UserInfo is nil, then no notification will be broadcast.
      *
-     * @~chinese »ñÈ¡ÓÃ»§ĞÅÏ¢
-     * µ±Ö¡Ê¹ÓÃÕâ¸ö×Öµä×÷ÎªUserInfoÏÔÊ¾Ê±£¬AnimationFrameDisplayedNotificationÍ¨Öª½«»á±»¹ã²¥¡£
-     * Èç¹ûUserInfoÊÇ¿Õ,ÄÇÃ´²»»áÓĞ¹ã²¥Í¨Öª¡£
+     * @~chinese è·å–ç”¨æˆ·ä¿¡æ¯
+     * å½“å¸§ä½¿ç”¨è¿™ä¸ªå­—å…¸ä½œä¸ºUserInfoæ˜¾ç¤ºæ—¶ï¼ŒAnimationFrameDisplayedNotificationé€šçŸ¥å°†ä¼šè¢«å¹¿æ’­ã€‚
+     * å¦‚æœUserInfoæ˜¯ç©º,é‚£ä¹ˆä¸ä¼šæœ‰å¹¿æ’­é€šçŸ¥ã€‚
      * 
      * @return @~english A dictionary as UserInfo
-     * @~chinese Ò»¸ö×÷ÎªUserInfoµÄ×Öµä
+     * @~chinese ä¸€ä¸ªä½œä¸ºUserInfoçš„å­—å…¸
      */
     const ValueMap& getUserInfo() const { return _userInfo; };
     ValueMap& getUserInfo() { return _userInfo; };
     
     /** @~english Sets user infomation.
-     * @~chinese ÉèÖÃÓÃ»§ĞÅÏ¢¡£
+     * @~chinese è®¾ç½®ç”¨æˆ·ä¿¡æ¯ã€‚
      * @param userInfo @~english A dictionary as UserInfo.
-     * @~chinese Ò»¸ö×÷ÎªUserInfoµÄ×Öµä
+     * @~chinese ä¸€ä¸ªä½œä¸ºUserInfoçš„å­—å…¸
      */
     void setUserInfo(const ValueMap& userInfo)
     {
@@ -162,20 +162,20 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~AnimationFrame();
     
     /** @~english initializes the animation frame with a spriteframe, number of delay units and a notification user info
-     * @~chinese Ê¹ÓÃ¾«ÁéÖ¡,Ê±¼äºÍÓÃ»§ĞÅÏ¢Í¨ÖªµÄÊıÁ¿³õÊ¼»¯¶¯»­Ö¡¡£
+     * @~chinese ä½¿ç”¨ç²¾çµå¸§,æ—¶é—´å’Œç”¨æˆ·ä¿¡æ¯é€šçŸ¥çš„æ•°é‡åˆå§‹åŒ–åŠ¨ç”»å¸§ã€‚
      */
     bool initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo);
 
 protected:
     
-    /** @~english SpriteFrameName to be used  @~chinese ´ıÊ¹ÓÃµÄSpriteFrameName*/
+    /** @~english SpriteFrameName to be used  @~chinese å¾…ä½¿ç”¨çš„SpriteFrameName*/
     SpriteFrame* _spriteFrame;
 
-    /**  @~english how many units of time the frame takes  @~chinese Ö¡»¨·ÑµÄÊ±¼ä*/
+    /**  @~english how many units of time the frame takes  @~chinese å¸§èŠ±è´¹çš„æ—¶é—´*/
     float _delayUnits;
 
-    /**  @~english A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast.  ¡¢
-     * @~chinese µ±Ö¡Ê¹ÓÃÕâ¸ö×Öµä×÷ÎªUserInfoÏÔÊ¾Ê±£¬AnimationFrameDisplayedNotificationÍ¨Öª½«»á±»¹ã²¥¡£Èç¹ûUserInfoÊÇ¿Õ,ÄÇÃ´²»»áÓĞ¹ã²¥Í¨Öª¡£*/
+    /**  @~english A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast.  ã€
+     * @~chinese å½“å¸§ä½¿ç”¨è¿™ä¸ªå­—å…¸ä½œä¸ºUserInfoæ˜¾ç¤ºæ—¶ï¼ŒAnimationFrameDisplayedNotificationé€šçŸ¥å°†ä¼šè¢«å¹¿æ’­ã€‚å¦‚æœUserInfoæ˜¯ç©º,é‚£ä¹ˆä¸ä¼šæœ‰å¹¿æ’­é€šçŸ¥ã€‚*/
     ValueMap _userInfo;
     
 private:
@@ -187,9 +187,9 @@ private:
  * @~english A Animation object is used to perform animations on the Sprite objects.
  * The Animation object contains AnimationFrame objects, and a possible delay between the frames.
  * You can animate a Animation object by using the Animate action. Example:
- * @~chinese Ò»¸ö¸ø¾«Áé¶ÔÏóÖ´ĞĞµÄÖ¡¶¯»­¶ÔÏó¡£
- * Ö¡¶¯»­¶ÔÏó°üº¬¶¯»­Ö¡¶ÔÏó£¬ºÍÖ¡¼äÊ±³¤¡£
- * ÄãÄã¿ÉÒÔÊ¹ÓÃÒ»¸öAnimateÔË¶¯À´°üº¬Ò»¸öAnimation¶ÔÏó¡£
+ * @~chinese ä¸€ä¸ªç»™ç²¾çµå¯¹è±¡æ‰§è¡Œçš„å¸§åŠ¨ç”»å¯¹è±¡ã€‚
+ * å¸§åŠ¨ç”»å¯¹è±¡åŒ…å«åŠ¨ç”»å¸§å¯¹è±¡ï¼Œå’Œå¸§é—´æ—¶é•¿ã€‚
+ * ä½ ä½ å¯ä»¥ä½¿ç”¨ä¸€ä¸ªAnimateè¿åŠ¨æ¥åŒ…å«ä¸€ä¸ªAnimationå¯¹è±¡ã€‚
  * @code
  * sprite->runAction(Animate::create(animation));
  * @endcode
@@ -198,54 +198,54 @@ class CC_DLL Animation : public Ref, public Clonable
 {
 public:
     /** @~english Creates an animation.
-     * @~chinese ´´½¨Ò»¸ö¶¯»­¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªåŠ¨ç”»ã€‚
      * @since v0.99.5
      */
     static Animation* create(void);
 
     /* @~english Creates an animation with an array of SpriteFrame and a delay between frames in seconds.
      * The frames will be added with one "delay unit".
-     * @~chinese Ê¹ÓÃÒ»×éSpriteFrameºÍÖ¡¼äÊ±³¤´´½¨Ò»¸ö¶¯»­¡£
-     * Ã¿¸öÊ±¼äÖ®¼ä½«»áÌí¼ÓÒ»¸öÖ¡¡£
+     * @~chinese ä½¿ç”¨ä¸€ç»„SpriteFrameå’Œå¸§é—´æ—¶é•¿åˆ›å»ºä¸€ä¸ªåŠ¨ç”»ã€‚
+     * æ¯ä¸ªæ—¶é—´ä¹‹é—´å°†ä¼šæ·»åŠ ä¸€ä¸ªå¸§ã€‚
      * @since v0.99.5
      * @param arrayOfSpriteFrameNames @~english An array of SpriteFrame.
-     * @~chinese Ò»×éSpriteFrame¡£
+     * @~chinese ä¸€ç»„SpriteFrameã€‚
      * @param delay @~english A delay between frames in seconds.
-     * @~chinese Ö¡Ö®¼äµÄÑÓ³ÙÃë¡£
+     * @~chinese å¸§ä¹‹é—´çš„å»¶è¿Ÿç§’ã€‚
      * @param loops @~english The times the animation is going to loop.
-     * @~chinese Ñ­»·´ÎÊı¡£
+     * @~chinese å¾ªç¯æ¬¡æ•°ã€‚
      */
     static Animation* createWithSpriteFrames(const Vector<SpriteFrame*>& arrayOfSpriteFrameNames, float delay = 0.0f, unsigned int loops = 1);
 
     /* @~english Creates an animation with an array of AnimationFrame, the delay per units in seconds and and how many times it should be executed.
-     * @~chinese Ê¹ÓÃÒ»×éAnimationFrame,Ö¡¼äÑÓ³ÙÃëÊıºÍÖ´ĞĞ´ÎÊıÀ´´´½¨Ò»¸ö¶¯»­¡£
+     * @~chinese ä½¿ç”¨ä¸€ç»„AnimationFrame,å¸§é—´å»¶è¿Ÿç§’æ•°å’Œæ‰§è¡Œæ¬¡æ•°æ¥åˆ›å»ºä¸€ä¸ªåŠ¨ç”»ã€‚
      * @since v2.0
      * @param arrayOfAnimationFrameNames @~english An animation with an array of AnimationFrame.
-     * @~chinese Ò»×éAnimationFrame¡£
+     * @~chinese ä¸€ç»„AnimationFrameã€‚
      * @param delayPerUnit @~english The delay per units in seconds and and how many times it should be executed.
-     * @~chinese Ö¡¼äÑÓ³ÙÃëÊıºÍÖ´ĞĞ´ÎÊıÀ´´´½¨Ò»¸ö¶¯»­¡£
+     * @~chinese å¸§é—´å»¶è¿Ÿç§’æ•°å’Œæ‰§è¡Œæ¬¡æ•°æ¥åˆ›å»ºä¸€ä¸ªåŠ¨ç”»ã€‚
      * @param loops @~english The times the animation is going to loop.
-     * @~chinese Ñ­»·´ÎÊı¡£
+     * @~chinese å¾ªç¯æ¬¡æ•°ã€‚
      */
     static Animation* create(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops = 1);
 
     /** @~english Adds a SpriteFrame to a Animation.
      *
-     * @~chinese Ìí¼ÓÒ»¸öSpriteFrameµ½¶¯»­ÖĞ¡£
+     * @~chinese æ·»åŠ ä¸€ä¸ªSpriteFrameåˆ°åŠ¨ç”»ä¸­ã€‚
      * 
      * @param frame @~english The frame will be added with one "delay unit".
-     * @~chinese Ê±¼ä¼ä¸ô£¬½«»áÌí¼ÓÒ»Ö¡¡£
+     * @~chinese æ—¶é—´é—´éš”ï¼Œå°†ä¼šæ·»åŠ ä¸€å¸§ã€‚
      */
     void addSpriteFrame(SpriteFrame *frame);
 
     /** @~english Adds a frame with an image filename. Internally it will create a SpriteFrame and it will add it.
      * The frame will be added with one "delay unit".
      * Added to facilitate the migration from v0.8 to v0.9.
-     * @~chinese Ê¹ÓÃÍ¼Æ¬ÃûÌí¼ÓÒ»¸öÖ¡¡£ÄÚ²¿½«»á´´½¨Ò»¸öSpriteFrame²¢Ìí¼ÓËü¡£
-     * Ê±¼ä¼ä¸ô£¬½«»áÌí¼ÓÒ»Ö¡¡£
+     * @~chinese ä½¿ç”¨å›¾ç‰‡åæ·»åŠ ä¸€ä¸ªå¸§ã€‚å†…éƒ¨å°†ä¼šåˆ›å»ºä¸€ä¸ªSpriteFrameå¹¶æ·»åŠ å®ƒã€‚
+     * æ—¶é—´é—´éš”ï¼Œå°†ä¼šæ·»åŠ ä¸€å¸§ã€‚
      * Added to facilitate the migration from v0.8 to v0.9.
      * @param filename @~english The path of SpriteFrame.
-     * @~chinese SpriteFrameµÄÂ·¾¶¡£
+     * @~chinese SpriteFrameçš„è·¯å¾„ã€‚
      */
     void addSpriteFrameWithFile(const std::string& filename);
     /**
@@ -257,68 +257,68 @@ public:
     /** @~english Adds a frame with a texture and a rect. Internally it will create a SpriteFrame and it will add it.
      * The frame will be added with one "delay unit".
      * Added to facilitate the migration from v0.8 to v0.9.
-     * @~chinese Ê¹ÓÃÎÆÀíºÍ¶ÔÓ¦¾ØĞÎÌí¼ÓÒ»¸öÖ¡¡£ÄÚ²¿½«»á´´½¨Ò»¸öSpriteFrame²¢Ìí¼ÓËü¡£
-     * Ê±¼ä¼ä¸ô£¬½«»áÌí¼ÓÒ»Ö¡¡£¡£
+     * @~chinese ä½¿ç”¨çº¹ç†å’Œå¯¹åº”çŸ©å½¢æ·»åŠ ä¸€ä¸ªå¸§ã€‚å†…éƒ¨å°†ä¼šåˆ›å»ºä¸€ä¸ªSpriteFrameå¹¶æ·»åŠ å®ƒã€‚
+     * æ—¶é—´é—´éš”ï¼Œå°†ä¼šæ·»åŠ ä¸€å¸§ã€‚ã€‚
      * 
      * @param pobTexture @~english A frame with a texture.
-     * @~chinese Ö¡ÎÆÀí¡£
+     * @~chinese å¸§çº¹ç†ã€‚
      * @param rect @~english The Texture of rect.
-     * @~chinese ÎÆÀí¶ÔÓ¦¾ØĞÎ
+     * @~chinese çº¹ç†å¯¹åº”çŸ©å½¢
      */
     void addSpriteFrameWithTexture(Texture2D* pobTexture, const Rect& rect);
 
     /** @~english Gets the total Delay units of the Animation. 
      *
-     * @~chinese »ñÈ¡¶¯»­×ÜÊ±¼ä¡£
+     * @~chinese è·å–åŠ¨ç”»æ€»æ—¶é—´ã€‚
      * 
      * @return @~english The total Delay units of the Animation.
-     * @~chinese ¶¯»­×ÜÊ±¼ä¡£
+     * @~chinese åŠ¨ç”»æ€»æ—¶é—´ã€‚
      */
     float getTotalDelayUnits() const { return _totalDelayUnits; };
     
     /** @~english Sets the delay in seconds of the "delay unit".
      *
-     * @~chinese ×ÜÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æ€»æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * 
      * @param delayPerUnit @~english The delay in seconds of the "delay unit".
-     * @~chinese ×ÜÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æ€»æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      */
     void setDelayPerUnit(float delayPerUnit) { _delayPerUnit = delayPerUnit; };
     
     /** @~english Gets the delay in seconds of the "delay unit".
      * 
-     * @~chinese ÉèÖÃÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese è®¾ç½®æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * 
      * @return @~english The delay in seconds of the "delay unit".
-     * @~chinese  Ê±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese  æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      */
     float getDelayPerUnit() const { return _delayPerUnit; };
 
     
     /** @~english Gets the duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit.
      *
-     * @~chinese »ñÈ¡Õû¸ö¶¯»­µÄ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£ÕâÊÇtotalDelayUnits * delayPerUnitµÄ½á¹û¡£
+     * @~chinese è·å–æ•´ä¸ªåŠ¨ç”»çš„æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚è¿™æ˜¯totalDelayUnits * delayPerUnitçš„ç»“æœã€‚
      * 
      * @return @~english Result of totalDelayUnits * delayPerUnit.
-     * @~chinese totalDelayUnits * delayPerUnitµÄ½á¹û¡£
+     * @~chinese totalDelayUnits * delayPerUnitçš„ç»“æœã€‚
      */
     float getDuration() const;
     
     /** @~english Gets the array of AnimationFrames.
      * 
-     * @~chinese »ñÈ¡AnimationFramesÊı×é¡£
+     * @~chinese è·å–AnimationFramesæ•°ç»„ã€‚
      * 
      * @return @~english The array of AnimationFrames.
-     * @~chinese AnimationFramesÊı×é¡£
+     * @~chinese AnimationFramesæ•°ç»„ã€‚
      */
     const Vector<AnimationFrame*>& getFrames() const { return _frames; };
     
     /** @~english Sets the array of AnimationFrames. 
      *
-     * @~chinese ÉèÖÃAnimationFramesÊı×é¡£
+     * @~chinese è®¾ç½®AnimationFramesæ•°ç»„ã€‚
      * 
      * @param frames @~english The array of AnimationFrames.
-     * @~chinese AnimationFramesÊı×é¡£
+     * @~chinese AnimationFramesæ•°ç»„ã€‚
      */
     void setFrames(const Vector<AnimationFrame*>& frames)
     {
@@ -327,37 +327,37 @@ public:
     
     /** @~english Checks whether to restore the original frame when animation finishes. 
      *
-     * @~chinese ¼ì²éÊÇ·ñÔÚ¶¯»­½áÊøÊ±»Ö¸´ÖÁ³õÊ¼Ö¡¡£
+     * @~chinese æ£€æŸ¥æ˜¯å¦åœ¨åŠ¨ç”»ç»“æŸæ—¶æ¢å¤è‡³åˆå§‹å¸§ã€‚
      * 
      * @return @~english Restore the original frame when animation finishes.
-     * @~chinese ÊÇ·ñÔÚ¶¯»­½áÊøÊ±»Ö¸´ÖÁ³õÊ¼Ö¡¡£
+     * @~chinese æ˜¯å¦åœ¨åŠ¨ç”»ç»“æŸæ—¶æ¢å¤è‡³åˆå§‹å¸§ã€‚
      */
     bool getRestoreOriginalFrame() const { return _restoreOriginalFrame; };
     
     /** @~english Sets whether to restore the original frame when animation finishes. 
      *
-     * @~chinese ÉèÖÃÊÇ·ñÔÚ¶¯»­½áÊøÊ±»Ö¸´ÖÁ³õÊ¼Ö¡¡£
+     * @~chinese è®¾ç½®æ˜¯å¦åœ¨åŠ¨ç”»ç»“æŸæ—¶æ¢å¤è‡³åˆå§‹å¸§ã€‚
      * 
      * @param restoreOriginalFrame @~english Whether to restore the original frame when animation finishes.
-     * @~chinese ÊÇ·ñÔÚ¶¯»­½áÊøÊ±»Ö¸´ÖÁ³õÊ¼Ö¡¡£
+     * @~chinese æ˜¯å¦åœ¨åŠ¨ç”»ç»“æŸæ—¶æ¢å¤è‡³åˆå§‹å¸§ã€‚
      */
     void setRestoreOriginalFrame(bool restoreOriginalFrame) { _restoreOriginalFrame = restoreOriginalFrame; };
     
     /** @~english Gets the times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... 
      *
-     * @~chinese »ñÈ¡¶¯»­Ñ­»·´ÎÊı¡£0±íÊ¾¶¯»­²»Ö´ĞĞ¡£1±íÊ¾¶¯»­Ö´ĞĞÒ»´Î,¡­¡­
+     * @~chinese è·å–åŠ¨ç”»å¾ªç¯æ¬¡æ•°ã€‚0è¡¨ç¤ºåŠ¨ç”»ä¸æ‰§è¡Œã€‚1è¡¨ç¤ºåŠ¨ç”»æ‰§è¡Œä¸€æ¬¡,â€¦â€¦
      * 
      * @return @~english The times the animation is going to loop.
-     * @~chinese ¶¯»­Ñ­»·´ÎÊı¡£
+     * @~chinese åŠ¨ç”»å¾ªç¯æ¬¡æ•°ã€‚
      */
     unsigned int getLoops() const { return _loops; };
     
     /** @~english Sets the times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... 
      *
-     * @~chinese ÉèÖÃ¶¯»­Ñ­»·´ÎÊı¡£0±íÊ¾¶¯»­²»Ö´ĞĞ¡£1±íÊ¾¶¯»­Ö´ĞĞÒ»´Î,¡­¡­
+     * @~chinese è®¾ç½®åŠ¨ç”»å¾ªç¯æ¬¡æ•°ã€‚0è¡¨ç¤ºåŠ¨ç”»ä¸æ‰§è¡Œã€‚1è¡¨ç¤ºåŠ¨ç”»æ‰§è¡Œä¸€æ¬¡,â€¦â€¦
      * 
      * @param loops @~english The times the animation is going to loop.
-     * @~chinese ¶¯»­Ñ­»·´ÎÊı¡£
+     * @~chinese åŠ¨ç”»å¾ªç¯æ¬¡æ•°ã€‚
      */
     void setLoops(unsigned int loops) { _loops = loops; };
     
@@ -368,39 +368,39 @@ CC_CONSTRUCTOR_ACCESS:
     Animation();
     virtual ~Animation(void);
     
-    /** @~english Initializes a Animation.  @~chinese ³õÊ¼»¯Ò»¸ö¶¯»­¡£*/
+    /** @~english Initializes a Animation.  @~chinese åˆå§‹åŒ–ä¸€ä¸ªåŠ¨ç”»ã€‚*/
     bool init();
     
     /** @~english Initializes a Animation with frames and a delay between frames.
-     * @~chinese Ê¹ÓÃ¶¯»­Ö¡ÓëÖ¡Ö®¼äµÄÑÓ³Ù³õÊ¼»¯¶¯»­¡£
+     * @~chinese ä½¿ç”¨åŠ¨ç”»å¸§ä¸å¸§ä¹‹é—´çš„å»¶è¿Ÿåˆå§‹åŒ–åŠ¨ç”»ã€‚
      * @since v0.99.5
      */
     bool initWithSpriteFrames(const Vector<SpriteFrame*>& arrayOfSpriteFrameNames, float delay = 0.0f, unsigned int loops = 1);
     
     /** @~english Initializes a Animation with AnimationFrame.
-     * @~chinese Ê¹ÓÃAnimationFrame³õÊ¼»¯¶¯»­¡£
+     * @~chinese ä½¿ç”¨AnimationFrameåˆå§‹åŒ–åŠ¨ç”»ã€‚
      * @since v2.0
      */
     bool initWithAnimationFrames(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
 
 protected:
-    /** @~english total Delay units of the Animation.  @~chinese ¶¯»­µÄ×ÜÊ±¼ä¡£*/
+    /** @~english total Delay units of the Animation.  @~chinese åŠ¨ç”»çš„æ€»æ—¶é—´ã€‚*/
     float _totalDelayUnits;
 
-    /** @~english Delay in seconds of the "delay unit".  @~chinese ¡°Ê±¼ä£¬ÒÔÃëÎªµ¥Î»¡±¡£*/
+    /** @~english Delay in seconds of the "delay unit".  @~chinese â€œæ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½â€ã€‚*/
     float _delayPerUnit;
 
-    /** @~english duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit.  @~chinese Õû¸ö¶¯»­µÄÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£ÕâÊÇtotalDelayUnits * delayPerUnitµÄ½á¹û¡£*/
+    /** @~english duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit.  @~chinese æ•´ä¸ªåŠ¨ç”»çš„æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚è¿™æ˜¯totalDelayUnits * delayPerUnitçš„ç»“æœã€‚*/
     float _duration;
 
-    /** @~english array of AnimationFrames.  @~chinese AnimationFramesÊı×é¡£*/
+    /** @~english array of AnimationFrames.  @~chinese AnimationFramesæ•°ç»„ã€‚*/
     Vector<AnimationFrame*> _frames;
 
-    /** @~english whether or not it shall restore the original frame when the animation finishes.  @~chinese ÊÇ·ñÔÚ¶¯»­½áÊøÊ±»Ö¸´ÖÁ³õÊ¼Ö¡¡£*/
+    /** @~english whether or not it shall restore the original frame when the animation finishes.  @~chinese æ˜¯å¦åœ¨åŠ¨ç”»ç»“æŸæ—¶æ¢å¤è‡³åˆå§‹å¸§ã€‚*/
     bool _restoreOriginalFrame;
 
     /** @~english how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ...
-     * @~chinese ¶¯»­Ñ­»·´ÎÊı¡£0±íÊ¾¶¯»­²»Ö´ĞĞ¡£1±íÊ¾¶¯»­Ö´ĞĞÒ»´Î,¡­¡­ 
+     * @~chinese åŠ¨ç”»å¾ªç¯æ¬¡æ•°ã€‚0è¡¨ç¤ºåŠ¨ç”»ä¸æ‰§è¡Œã€‚1è¡¨ç¤ºåŠ¨ç”»æ‰§è¡Œä¸€æ¬¡,â€¦â€¦ 
      */
     unsigned int _loops;
     

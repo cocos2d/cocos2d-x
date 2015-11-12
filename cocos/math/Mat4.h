@@ -69,24 +69,24 @@ NS_CC_MATH_BEGIN
  * methods for post-multiplying by a matrix representing a scale, rotation, or translation).
  *
  * @~chinese 
- * ¸ÃÀà¶¨ÒåÁËÒ»¸ö4¡Á4¸¡µã¾ØÕó,¿ÉÒÔÓÃÓÚ±íÊ¾Ò»¸ö3d×ª»»¡£
+ * è¯¥ç±»å®šä¹‰äº†ä¸€ä¸ª4Ã—4æµ®ç‚¹çŸ©é˜µ,å¯ä»¥ç”¨äºè¡¨ç¤ºä¸€ä¸ª3dè½¬æ¢ã€‚
  * 
- * ¾ØÕóÊÇ°´ÕÕÁĞÓÅÏÈµÄ·½Ê½½øĞĞ×éÖ¯µÄ,ËùÒÔ£¬Ò»¸öÖ»°üº¬Æ½ÒÆ(x,y,z)µÄ¾ØÕóÊÇÕâÑùµÄ:
+ * çŸ©é˜µæ˜¯æŒ‰ç…§åˆ—ä¼˜å…ˆçš„æ–¹å¼è¿›è¡Œç»„ç»‡çš„,æ‰€ä»¥ï¼Œä¸€ä¸ªåªåŒ…å«å¹³ç§»(x,y,z)çš„çŸ©é˜µæ˜¯è¿™æ ·çš„:
  * 
  * 1 0 0 x
  * 0 1 0 y
  * 0 0 1 z
  * 0 0 0 1
  * 
- * Õâ¸ö¾ØÕóÖ±½Ó¼æÈİopenGL£¬ÒòÎªÆäÄÚ´æ×éÖ¯·½Ê½ºÍopenGLµÄ¾ØÕó×éÖ¯·½Ê½ÏàÍ¬¡£
- * ¾ØÕóÊ¹ÓÃÁĞÓÅÏÈµÄ×éÖ¯·½Ê½,ÆğË÷Òı»áÓÅÏÈ°´ÕÕÁĞË³Ğò¡£
- * ÒòÎª¾ØÕó³Ë·¨ÖĞ£¬¾ØÕóË³Ğò²»¿É½»»»,ËùÒÔÆä½á¹ûĞèÒª°´ÕÕÕıÈ·µÄË³ĞòÀ´¼ÆËã
- * ¼ÙÉèÎÒÃÇÓĞÒ»¸öÆ½ÒÆTºÍÒ»¸öĞı×ª¾ØÕóR£¬Èç¹ûĞèÒªÊ×ÏÈĞı×ªÎïÌå£¬È»ºóÔÙÆ½ÒÆ£¬ÄÇÃ´¸´ºÏ¾ØÕóÓ¦¸ÃÊÇT*R
+ * è¿™ä¸ªçŸ©é˜µç›´æ¥å…¼å®¹openGLï¼Œå› ä¸ºå…¶å†…å­˜ç»„ç»‡æ–¹å¼å’ŒopenGLçš„çŸ©é˜µç»„ç»‡æ–¹å¼ç›¸åŒã€‚
+ * çŸ©é˜µä½¿ç”¨åˆ—ä¼˜å…ˆçš„ç»„ç»‡æ–¹å¼,èµ·ç´¢å¼•ä¼šä¼˜å…ˆæŒ‰ç…§åˆ—é¡ºåºã€‚
+ * å› ä¸ºçŸ©é˜µä¹˜æ³•ä¸­ï¼ŒçŸ©é˜µé¡ºåºä¸å¯äº¤æ¢,æ‰€ä»¥å…¶ç»“æœéœ€è¦æŒ‰ç…§æ­£ç¡®çš„é¡ºåºæ¥è®¡ç®—
+ * å‡è®¾æˆ‘ä»¬æœ‰ä¸€ä¸ªå¹³ç§»Tå’Œä¸€ä¸ªæ—‹è½¬çŸ©é˜µRï¼Œå¦‚æœéœ€è¦é¦–å…ˆæ—‹è½¬ç‰©ä½“ï¼Œç„¶åå†å¹³ç§»ï¼Œé‚£ä¹ˆå¤åˆçŸ©é˜µåº”è¯¥æ˜¯T*R
  * 
- * Í¬Ñù,Ê×ÏÈ°Ñ¶ÔÏóÆ½ÒÆ,È»ºóĞı×ª,ÄãĞèÒª×öR*TµÄÔËËã¡£
- * ËùÒÔÒ»°ãÀ´Ëµ,¾ØÕó³Ë·¨µÄË³ĞòºÍÄã¶ÔÎïÌå½øĞĞ±ä»»µÄË³ĞòÕıºÃÏà·´(ÕâÒ²ÊÊÓÃÓÚ
- * Ëõ·Å¡¢Ğı×ªºÍÏÂÃæµÄÆ½ÒÆº¯Êı,ÕâĞ©·½·¨ÊÇ±ãÀûº¯Êı
- * ÆäÍ¨¹ıÓÒ³Ë¾ØÕóÀ´ÊµÏÖÒ»¸öËõ·Å,Ğı×ª,»òÆ½ÒÆ)¡£
+ * åŒæ ·,é¦–å…ˆæŠŠå¯¹è±¡å¹³ç§»,ç„¶åæ—‹è½¬,ä½ éœ€è¦åšR*Tçš„è¿ç®—ã€‚
+ * æ‰€ä»¥ä¸€èˆ¬æ¥è¯´,çŸ©é˜µä¹˜æ³•çš„é¡ºåºå’Œä½ å¯¹ç‰©ä½“è¿›è¡Œå˜æ¢çš„é¡ºåºæ­£å¥½ç›¸å(è¿™ä¹Ÿé€‚ç”¨äº
+ * ç¼©æ”¾ã€æ—‹è½¬å’Œä¸‹é¢çš„å¹³ç§»å‡½æ•°,è¿™äº›æ–¹æ³•æ˜¯ä¾¿åˆ©å‡½æ•°
+ * å…¶é€šè¿‡å³ä¹˜çŸ©é˜µæ¥å®ç°ä¸€ä¸ªç¼©æ”¾,æ—‹è½¬,æˆ–å¹³ç§»)ã€‚
  * 
  */
 class CC_DLL Mat4
@@ -107,7 +107,7 @@ public:
     /**@~english
      * Stores the columns of this 4x4 matrix.
      * @~chinese 
-     * ÉÌµêµÄ4 x4¾ØÕóµÄÁĞ¡£
+     * å•†åº—çš„4 x4çŸ©é˜µçš„åˆ—ã€‚
      * */
 #ifdef __SSE__
     union {
@@ -127,8 +127,8 @@ public:
      *     0  0  1  0
      *     0  0  0  1
      * @~chinese 
-     * Ä¬ÈÏ¹¹Ôìº¯Êı¡£
-     * ¹¹ÔìÒ»¸öµ¥Î»¾ØÕó:
+     * é»˜è®¤æ„é€ å‡½æ•°ã€‚
+     * æ„é€ ä¸€ä¸ªå•ä½çŸ©é˜µ:
      * 
      * 1 0 0 0
      * 1 0 0 0
@@ -141,40 +141,40 @@ public:
      * Constructs a matrix initialized to the specified value.
      *
      * @~chinese 
-     * ¹¹ÔìÒ»¸ö¾ØÕó³õÊ¼»¯ÎªÖ¸¶¨µÄÖµ¡£
+     * æ„é€ ä¸€ä¸ªçŸ©é˜µåˆå§‹åŒ–ä¸ºæŒ‡å®šçš„å€¼ã€‚
      * 
      * @param m11 @~english The first element of the first row.
-     * @~chinese µÚÒ»ĞĞµÄµÚÒ»¸öÔªËØ¡£
+     * @~chinese ç¬¬ä¸€è¡Œçš„ç¬¬ä¸€ä¸ªå…ƒç´ ã€‚
      * @param m12 @~english The second element of the first row.
-     * @~chinese µÚÒ»ĞĞµÄµÚ¶ş¸öÔªËØ¡£
+     * @~chinese ç¬¬ä¸€è¡Œçš„ç¬¬äºŒä¸ªå…ƒç´ ã€‚
      * @param m13 @~english The third element of the first row.
-     * @~chinese µÚÒ»ĞĞµÄµÚÈı¸öÔªËØ¡£
+     * @~chinese ç¬¬ä¸€è¡Œçš„ç¬¬ä¸‰ä¸ªå…ƒç´ ã€‚
      * @param m14 @~english The fourth element of the first row.
-     * @~chinese µÚÒ»ĞĞµÄµÚËÄ¸öÔªËØ¡£
+     * @~chinese ç¬¬ä¸€è¡Œçš„ç¬¬å››ä¸ªå…ƒç´ ã€‚
      * @param m21 @~english The first element of the second row.
-     * @~chinese µÚ¶şĞĞµÄµÚÒ»¸öÔªËØ¡£
+     * @~chinese ç¬¬äºŒè¡Œçš„ç¬¬ä¸€ä¸ªå…ƒç´ ã€‚
      * @param m22 @~english The second element of the second row.
-     * @~chinese µÚ¶şĞĞµÄµÚ¶ş¸öÔªËØ¡£
+     * @~chinese ç¬¬äºŒè¡Œçš„ç¬¬äºŒä¸ªå…ƒç´ ã€‚
      * @param m23 @~english The third element of the second row.
-     * @~chinese µÚ¶şĞĞµÄµÚÈı¸öÔªËØ¡£
+     * @~chinese ç¬¬äºŒè¡Œçš„ç¬¬ä¸‰ä¸ªå…ƒç´ ã€‚
      * @param m24 @~english The fourth element of the second row.
-     * @~chinese µÚ¶şĞĞµÄµÚËÄ¸öÔªËØ¡£
+     * @~chinese ç¬¬äºŒè¡Œçš„ç¬¬å››ä¸ªå…ƒç´ ã€‚
      * @param m31 @~english The first element of the third row.
-     * @~chinese µÚÈıĞĞµÄµÚÒ»¸öÔªËØ¡£
+     * @~chinese ç¬¬ä¸‰è¡Œçš„ç¬¬ä¸€ä¸ªå…ƒç´ ã€‚
      * @param m32 @~english The second element of the third row.
-     * @~chinese µÚÈıĞĞµÄµÚ¶ş¸öÔªËØ¡£
+     * @~chinese ç¬¬ä¸‰è¡Œçš„ç¬¬äºŒä¸ªå…ƒç´ ã€‚
      * @param m33 @~english The third element of the third row.
-     * @~chinese µÚÈıĞĞµÄµÚÈı¸öÔªËØ¡£
+     * @~chinese ç¬¬ä¸‰è¡Œçš„ç¬¬ä¸‰ä¸ªå…ƒç´ ã€‚
      * @param m34 @~english The fourth element of the third row.
-     * @~chinese µÚÈıĞĞµÄµÚËÄ¸öÔªËØ¡£
+     * @~chinese ç¬¬ä¸‰è¡Œçš„ç¬¬å››ä¸ªå…ƒç´ ã€‚
      * @param m41 @~english The first element of the fourth row.
-     * @~chinese µÚËÄĞĞµÄµÚÒ»¸öÔªËØ¡£
+     * @~chinese ç¬¬å››è¡Œçš„ç¬¬ä¸€ä¸ªå…ƒç´ ã€‚
      * @param m42 @~english The second element of the fourth row.
-     * @~chinese µÚËÄĞĞµÄµÚ¶ş¸öÔªËØ¡£
+     * @~chinese ç¬¬å››è¡Œçš„ç¬¬äºŒä¸ªå…ƒç´ ã€‚
      * @param m43 @~english The third element of the fourth row.
-     * @~chinese µÚËÄĞĞµÄµÚÈı¸öÔªËØ¡£
+     * @~chinese ç¬¬å››è¡Œçš„ç¬¬ä¸‰ä¸ªå…ƒç´ ã€‚
      * @param m44 @~english The fourth element of the fourth row.
-     * @~chinese µÚËÄĞĞµÄµÚËÄ¸öÔªËØ¡£
+     * @~chinese ç¬¬å››è¡Œçš„ç¬¬å››ä¸ªå…ƒç´ ã€‚
      */
     Mat4(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
            float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44);
@@ -190,9 +190,9 @@ public:
      *     3   7   11  15
      *
      * @~chinese 
-     * ´´½¨Ò»¸ö¾ØÕó£¬²ÎÊıÊı×é±»ÊÓÎªÁĞÓÅÏÈµÄ×éÖ¯·½Ê½¡£
+     * åˆ›å»ºä¸€ä¸ªçŸ©é˜µï¼Œå‚æ•°æ•°ç»„è¢«è§†ä¸ºåˆ—ä¼˜å…ˆçš„ç»„ç»‡æ–¹å¼ã€‚
      * 
-     * ´«ÈëµÄÊı×é±»ÊÓÎª°´ÕÕÁĞÓÅÏÈ·½Ê½×éÖ¯,ËùÒÔÊı×éµÄÄÚ´æ²¼¾ÖÈçÏÂ:
+     * ä¼ å…¥çš„æ•°ç»„è¢«è§†ä¸ºæŒ‰ç…§åˆ—ä¼˜å…ˆæ–¹å¼ç»„ç»‡,æ‰€ä»¥æ•°ç»„çš„å†…å­˜å¸ƒå±€å¦‚ä¸‹:
      * 
      *    0   4   8   12
      *    1   5   9   13
@@ -200,7 +200,7 @@ public:
      *    3   7   11  15
      * 
      * @param mat @~english An array containing 16 elements in column-major order.
-     * @~chinese Ò»¸öÊı×é,ÆäÖĞ°üº¬16¸öÔªËØ£¬ÒÔÁĞÓÅÏÈ·½Ê½×éÖ¯¡£
+     * @~chinese ä¸€ä¸ªæ•°ç»„,å…¶ä¸­åŒ…å«16ä¸ªå…ƒç´ ï¼Œä»¥åˆ—ä¼˜å…ˆæ–¹å¼ç»„ç»‡ã€‚
      */
     Mat4(const float* mat);
 
@@ -208,17 +208,17 @@ public:
      * Constructs a new matrix by copying the values from the specified matrix.
      *
      * @~chinese 
-     * ¿½±´¹¹Ôìº¯Êı¡£
+     * æ‹·è´æ„é€ å‡½æ•°ã€‚
      * 
      * @param copy @~english The matrix to copy.
-     * @~chinese Òª¸´ÖÆµÄ¾ØÕó¡£
+     * @~chinese è¦å¤åˆ¶çš„çŸ©é˜µã€‚
      */
     Mat4(const Mat4& copy);
 
     /**@~english
      * Destructor.
      * @~chinese 
-     * Îö¹¹º¯Êı¡£
+     * ææ„å‡½æ•°ã€‚
      */
     ~Mat4();
 
@@ -226,16 +226,16 @@ public:
      * Creates a view matrix based on the specified input parameters.
      *
      * @~chinese 
-     * ¸ù¾İÖ¸¶¨µÄÊäÈë²ÎÊı´´½¨Ò»¸öÊÓÍ¼¾ØÕó¡£
+     * æ ¹æ®æŒ‡å®šçš„è¾“å…¥å‚æ•°åˆ›å»ºä¸€ä¸ªè§†å›¾çŸ©é˜µã€‚
      * 
      * @param eyePosition @~english The eye position.
-     * @~chinese ÊÓµãµÄÎ»ÖÃ¡£
+     * @~chinese è§†ç‚¹çš„ä½ç½®ã€‚
      * @param targetPosition @~english The target's center position.
-     * @~chinese Ä¿±êµÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese ç›®æ ‡çš„ä¸­å¿ƒä½ç½®ã€‚
      * @param up @~english The up vector.
-     * @~chinese upµÄÏòÁ¿¡£
+     * @~chinese upçš„å‘é‡ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ·µ»ØµÄ½á¹û¾ØÕó¡£
+     * @~chinese è¿”å›çš„ç»“æœçŸ©é˜µã€‚
      */
     static void createLookAt(const Vec3& eyePosition, const Vec3& targetPosition, const Vec3& up, Mat4* dst);
 
@@ -243,28 +243,28 @@ public:
      * Creates a view matrix based on the specified input parameters.
      *
      * @~chinese 
-     * ´´½¨Ò»¸öÊÓÍ¼¾ØÕó¸ù¾İÖ¸¶¨µÄÊäÈë²ÎÊı¡£
+     * åˆ›å»ºä¸€ä¸ªè§†å›¾çŸ©é˜µæ ¹æ®æŒ‡å®šçš„è¾“å…¥å‚æ•°ã€‚
      * 
      * @param eyePositionX @~english The eye x-coordinate position.
-     * @~chinese ÊÓµãµÄx×ø±ê¡£
+     * @~chinese è§†ç‚¹çš„xåæ ‡ã€‚
      * @param eyePositionY @~english The eye y-coordinate position.
-     * @~chinese ÊÓµãµÄy×ø±ê¡£
+     * @~chinese è§†ç‚¹çš„yåæ ‡ã€‚
      * @param eyePositionZ @~english The eye z-coordinate position.
-     * @~chinese ÊÓµãµÄz×ø±ê¡£
+     * @~chinese è§†ç‚¹çš„zåæ ‡ã€‚
      * @param targetCenterX @~english The target's center x-coordinate position.
-     * @~chinese Ä¿±êÖĞĞÄµÄx×ø±ê¡£
+     * @~chinese ç›®æ ‡ä¸­å¿ƒçš„xåæ ‡ã€‚
      * @param targetCenterY @~english The target's center y-coordinate position.
-     * @~chinese Ä¿±êÖĞĞÄµÄy×ø±ê¡£
+     * @~chinese ç›®æ ‡ä¸­å¿ƒçš„yåæ ‡ã€‚
      * @param targetCenterZ @~english The target's center z-coordinate position.
-     * @~chinese Ä¿±êµÄÖĞĞÄz×ø±ê¡£
+     * @~chinese ç›®æ ‡çš„ä¸­å¿ƒzåæ ‡ã€‚
      * @param upX @~english The up vector x-coordinate value.
-     * @~chinese upÏòÁ¿x×ø±êµÄÖµ¡£
+     * @~chinese upå‘é‡xåæ ‡çš„å€¼ã€‚
      * @param upY @~english The up vector y-coordinate value.
-     * @~chinese upÏòÁ¿y×ø±êµÄÖµ¡£
+     * @~chinese upå‘é‡yåæ ‡çš„å€¼ã€‚
      * @param upZ @~english The up vector z-coordinate value.
-     * @~chinese upÏòÁ¿z×ø±êµÄÖµ¡£
+     * @~chinese upå‘é‡zåæ ‡çš„å€¼ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ·µ»ØµÄ½á¹û¾ØÕó¡£
+     * @~chinese è¿”å›çš„ç»“æœçŸ©é˜µã€‚
      */
     static void createLookAt(float eyePositionX, float eyePositionY, float eyePositionZ,
                              float targetCenterX, float targetCenterY, float targetCenterZ,
@@ -277,21 +277,21 @@ public:
      * After the projection transformation, visible content has x- and y-coordinates ranging from -1 to 1,
      * and a z-coordinate ranging from 0 to 1. 
      * @~chinese 
-     * »ùÓÚFovÀ´¹¹½¨Ò»¸öÍ¸ÊÓÍ¶Ó°¾ØÕó¡£
+     * åŸºäºFovæ¥æ„å»ºä¸€ä¸ªé€è§†æŠ•å½±çŸ©é˜µã€‚
      * 
-     * Í¶Ó°¿Õ¼äÖ¸µÄÊÇ¿Õ¼ä´ÓÊÓµã¿Õ¼äÓ¦ÓÃÍ¶Ó°±ä»»ºóµÄ¿Õ¼ä¡£
-     * Í¶Ó°±ä»»ºó,¿É¼ûÄÚÈİµÄxºÍyµÄ×ø±êÖµÎ»ÓÚ£­1µ½1Ö®Ç°£¬ZÎ»ÓÚ0µ½1Ö®¼ä,
+     * æŠ•å½±ç©ºé—´æŒ‡çš„æ˜¯ç©ºé—´ä»è§†ç‚¹ç©ºé—´åº”ç”¨æŠ•å½±å˜æ¢åçš„ç©ºé—´ã€‚
+     * æŠ•å½±å˜æ¢å,å¯è§å†…å®¹çš„xå’Œyçš„åæ ‡å€¼ä½äºï¼1åˆ°1ä¹‹å‰ï¼ŒZä½äº0åˆ°1ä¹‹é—´,
      * 
      * @param fieldOfView @~english The field of view in the y direction (in degrees).
-     * @~chinese ÔÚyÖá·½ÏòµÄFOV¡£
+     * @~chinese åœ¨yè½´æ–¹å‘çš„FOVã€‚
      * @param aspectRatio @~english The aspect ratio, defined as view space width divided by height.
-     * @~chinese ¿í¸ß±È,¶¨ÒåÎªÊÓÍ¼¿Õ¼ä¿í¶È³ıÒÔ¸ß¶È¡£
+     * @~chinese å®½é«˜æ¯”,å®šä¹‰ä¸ºè§†å›¾ç©ºé—´å®½åº¦é™¤ä»¥é«˜åº¦ã€‚
      * @param zNearPlane @~english The distance to the near view plane.
-     * @~chinese µ½½ü²Ã¼õÃæµÄ¾àÀë¡£
+     * @~chinese åˆ°è¿‘è£å‡é¢çš„è·ç¦»ã€‚
      * @param zFarPlane @~english The distance to the far view plane.
-     * @~chinese µ½Ô¶²Ã¼õÃæµÄ¾àÀë¡£
+     * @~chinese åˆ°è¿œè£å‡é¢çš„è·ç¦»ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢Í¶Ó°¾ØÕó¡£
+     * @~chinese å­˜å‚¨æŠ•å½±çŸ©é˜µã€‚
      */
     static void createPerspective(float fieldOfView, float aspectRatio, float zNearPlane, float zFarPlane, Mat4* dst);
 
@@ -299,18 +299,18 @@ public:
      * Creates an orthographic projection matrix.
      *
      * @~chinese 
-     * ´´½¨Ò»¸öÕı½»Í¶Ó°¾ØÕó¡£
+     * åˆ›å»ºä¸€ä¸ªæ­£äº¤æŠ•å½±çŸ©é˜µã€‚
      * 
      * @param width @~english The width of the view.
-     * @~chinese ÊÓÍ¼µÄ¿í¶È¡£
+     * @~chinese è§†å›¾çš„å®½åº¦ã€‚
      * @param height @~english The height of the view.
-     * @~chinese ÊÓÍ¼µÄ¸ß¶È¡£
+     * @~chinese è§†å›¾çš„é«˜åº¦ã€‚
      * @param zNearPlane @~english The minimum z-value of the view volume.
-     * @~chinese µ½½ü²Ã¼õÃæµÄ¾àÀë¡£
+     * @~chinese åˆ°è¿‘è£å‡é¢çš„è·ç¦»ã€‚
      * @param zFarPlane @~english The maximum z-value of the view volume.
-     * @~chinese µ½Ô¶²Ã¼õÃæµÄ¾àÀë¡£
+     * @~chinese åˆ°è¿œè£å‡é¢çš„è·ç¦»ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢Í¶Ó°¾ØÕó¡£
+     * @~chinese å­˜å‚¨æŠ•å½±çŸ©é˜µã€‚
      */
     static void createOrthographic(float width, float height, float zNearPlane, float zFarPlane, Mat4* dst);
 
@@ -318,22 +318,22 @@ public:
      * Creates an orthographic projection matrix.
      * 
      * @~chinese 
-     * ´´½¨Ò»¸öÕı½»Í¶Ó°¾ØÕó¡£
+     * åˆ›å»ºä¸€ä¸ªæ­£äº¤æŠ•å½±çŸ©é˜µã€‚
      * 
      * @param left @~english The minimum x-value of the view volume.
-     * @~chinese ÊÓµã×ø±êÏµÏÂ×îĞ¡¿É¼ûµÄXÖµ¡£
+     * @~chinese è§†ç‚¹åæ ‡ç³»ä¸‹æœ€å°å¯è§çš„Xå€¼ã€‚
      * @param right @~english The maximum x-value of the view volume.
-     * @~chinese ÊÓµã×ø±êÏµÏÂ×î´ó¿É¼ûµÄXÖµ¡£
+     * @~chinese è§†ç‚¹åæ ‡ç³»ä¸‹æœ€å¤§å¯è§çš„Xå€¼ã€‚
      * @param bottom @~english The minimum y-value of the view volume.
-     * @~chinese ÊÓµã×ø±êÏµÏÂ×îĞ¡¿É¼ûµÄYÖµ¡£
+     * @~chinese è§†ç‚¹åæ ‡ç³»ä¸‹æœ€å°å¯è§çš„Yå€¼ã€‚
      * @param top @~english The maximum y-value of the view volume.
-     * @~chinese ÊÓµã×ø±êÏµÏÂ×î´ó¿É¼ûµÄYÖµ¡£
+     * @~chinese è§†ç‚¹åæ ‡ç³»ä¸‹æœ€å¤§å¯è§çš„Yå€¼ã€‚
      * @param zNearPlane @~english The minimum z-value of the view volume.
-     * @~chinese µ½½ü²Ã¼õÃæµÄ¾àÀë¡£
+     * @~chinese åˆ°è¿‘è£å‡é¢çš„è·ç¦»ã€‚
      * @param zFarPlane @~english The maximum z-value of the view volume.
-     * @~chinese µ½Ô¶²Ã¼õÃæµÄ¾àÀë¡£
+     * @~chinese åˆ°è¿œè£å‡é¢çš„è·ç¦»ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢Í¶Ó°¾ØÕó¡£
+     * @~chinese å­˜å‚¨æŠ•å½±çŸ©é˜µã€‚
      */
     static void createOrthographicOffCenter(float left, float right, float bottom, float top,
                                             float zNearPlane, float zFarPlane, Mat4* dst);
@@ -348,19 +348,19 @@ public:
      * for an alternative approach).
      *
      * @~chinese 
-     * ´´½¨Ò»¸öÇòĞÎBillborad£¬¸Ãbilboard»áÈÆ×ÅÄ³Ò»¸öµãĞı×ª¡£
+     * åˆ›å»ºä¸€ä¸ªçƒå½¢Billboradï¼Œè¯¥bilboardä¼šç»•ç€æŸä¸€ä¸ªç‚¹æ—‹è½¬ã€‚
      * 
-     * ¸Ã·½·¨»áÀûÓÃÎïÌåÎ»ÖÃºÍÉãÏñ»úÎ»ÖÃÀ´¼ÆËãBillboradµÄ³¯Ïò£¬Èç¹ûÎïÌåºÍÉãÏñ»úÌ«½ü£¬¾ØÕó¿ÉÄÜ²»×¼È·£¬
-     * ÎªÁË±ÜÃâÕâ¸öÎÊÌâ£¬µ±Á½ÕßÌ«½üÊ±£¬»áÀûÓÃµ¥Î»¾ØÕó×÷ÎªĞı×ªÒ²¼ÆËã³¯Ïò¡£
+     * è¯¥æ–¹æ³•ä¼šåˆ©ç”¨ç‰©ä½“ä½ç½®å’Œæ‘„åƒæœºä½ç½®æ¥è®¡ç®—Billboradçš„æœå‘ï¼Œå¦‚æœç‰©ä½“å’Œæ‘„åƒæœºå¤ªè¿‘ï¼ŒçŸ©é˜µå¯èƒ½ä¸å‡†ç¡®ï¼Œ
+     * ä¸ºäº†é¿å…è¿™ä¸ªé—®é¢˜ï¼Œå½“ä¸¤è€…å¤ªè¿‘æ—¶ï¼Œä¼šåˆ©ç”¨å•ä½çŸ©é˜µä½œä¸ºæ—‹è½¬ä¹Ÿè®¡ç®—æœå‘ã€‚
      * 
      * @param objectPosition @~english The position of the object the billboard will rotate around.
-     * @~chinese billboardĞı×ªµÄÖĞĞÄ¡£
+     * @~chinese billboardæ—‹è½¬çš„ä¸­å¿ƒã€‚
      * @param cameraPosition @~english The position of the camera.
-     * @~chinese ÉãÏñ»úµÄÎ»ÖÃ¡£
+     * @~chinese æ‘„åƒæœºçš„ä½ç½®ã€‚
      * @param cameraUpVector @~english The up vector of the camera.
-     * @~chinese Ïà»úµÄupÏòÁ¿¡£
+     * @~chinese ç›¸æœºçš„upå‘é‡ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢½á¹û¾ØÕó¡£
+     * @~chinese å­˜å‚¨ç»“æœçŸ©é˜µã€‚
      */
     static void createBillboard(const Vec3& objectPosition, const Vec3& cameraPosition,
                                 const Vec3& cameraUpVector, Mat4* dst);
@@ -376,21 +376,21 @@ public:
      * for an alternative approach).
      *
      * @~chinese 
-     * ´´½¨Ò»¸öÇòĞÎBillborad£¬¸Ãbilboard»áÈÆ×ÅÄ³Ò»¸öµãĞı×ª¡£
+     * åˆ›å»ºä¸€ä¸ªçƒå½¢Billboradï¼Œè¯¥bilboardä¼šç»•ç€æŸä¸€ä¸ªç‚¹æ—‹è½¬ã€‚
      * 
-     * ¸Ã·½·¨»áÀûÓÃÎïÌåÎ»ÖÃºÍÉãÏñ»úÎ»ÖÃÀ´¼ÆËãBillboradµÄ³¯Ïò£¬Èç¹ûÎïÌåºÍÉãÏñ»úÌ«½ü£¬¾ØÕó¿ÉÄÜ²»×¼È·£¬
-     * ÎªÁË±ÜÃâÕâ¸öÎÊÌâ£¬µ±Á½ÕßÌ«½üÊ±£¬»áÀûÓÃÉãÏñ»úµÄforwardÀ´¼ÆËã³¯Ïò
+     * è¯¥æ–¹æ³•ä¼šåˆ©ç”¨ç‰©ä½“ä½ç½®å’Œæ‘„åƒæœºä½ç½®æ¥è®¡ç®—Billboradçš„æœå‘ï¼Œå¦‚æœç‰©ä½“å’Œæ‘„åƒæœºå¤ªè¿‘ï¼ŒçŸ©é˜µå¯èƒ½ä¸å‡†ç¡®ï¼Œ
+     * ä¸ºäº†é¿å…è¿™ä¸ªé—®é¢˜ï¼Œå½“ä¸¤è€…å¤ªè¿‘æ—¶ï¼Œä¼šåˆ©ç”¨æ‘„åƒæœºçš„forwardæ¥è®¡ç®—æœå‘
      * 
      * @param objectPosition @~english The position of the object the billboard will rotate around.
-     * @~chinese billboardĞı×ªµÄÖĞĞÄ¡£
+     * @~chinese billboardæ—‹è½¬çš„ä¸­å¿ƒã€‚
      * @param cameraPosition @~english The position of the camera.
-     * @~chinese ÉãÏñ»úµÄÎ»ÖÃ¡£
+     * @~chinese æ‘„åƒæœºçš„ä½ç½®ã€‚
      * @param cameraUpVector @~english The up vector of the camera.
-     * @~chinese Ïà»úµÄupÏòÁ¿¡£
+     * @~chinese ç›¸æœºçš„upå‘é‡ã€‚
      * @param cameraForwardVector @~english The forward vector of the camera, used if the positions are too close.
-     * @~chinese Ïà»úµÄforwardÏòÁ¿,¡£
+     * @~chinese ç›¸æœºçš„forwardå‘é‡,ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢½á¹û¾ØÕó¡£
+     * @~chinese å­˜å‚¨ç»“æœçŸ©é˜µã€‚
      */
     static void createBillboard(const Vec3& objectPosition, const Vec3& cameraPosition,
                                 const Vec3& cameraUpVector, const Vec3& cameraForwardVector,
@@ -405,12 +405,12 @@ public:
      * Creates a scale matrix.
      *
      * @~chinese 
-     * Í¨¹ıËõ·Å´´½¨Ò»¸ö¾ØÕó¡£
+     * é€šè¿‡ç¼©æ”¾åˆ›å»ºä¸€ä¸ªçŸ©é˜µã€‚
      * 
      * @param scale @~english The amount to scale.
-     * @~chinese Ëõ·ÅÖµ¡£
+     * @~chinese ç¼©æ”¾å€¼ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢½á¹û¾ØÕó¡£
+     * @~chinese å­˜å‚¨ç»“æœçŸ©é˜µã€‚
      */
     static void createScale(const Vec3& scale, Mat4* dst);
 
@@ -418,16 +418,16 @@ public:
      * Creates a scale matrix.
      *
      * @~chinese 
-     * »ùÓÚËõ·Å´´½¨Ò»¸ö¾ØÕó¡£
+     * åŸºäºç¼©æ”¾åˆ›å»ºä¸€ä¸ªçŸ©é˜µã€‚
      * 
      * @param xScale @~english The amount to scale along the x-axis.
-     * @~chinese ÑØ×ÅxÖáµÄËõ·Å¡£
+     * @~chinese æ²¿ç€xè½´çš„ç¼©æ”¾ã€‚
      * @param yScale @~english The amount to scale along the y-axis.
-     * @~chinese ÑØ×ÅyÖáµÄËõ·Å¡£
+     * @~chinese æ²¿ç€yè½´çš„ç¼©æ”¾ã€‚
      * @param zScale @~english The amount to scale along the z-axis.
-     * @~chinese ÑØ×ÅzÖáµÄËõ·Å¡£
+     * @~chinese æ²¿ç€zè½´çš„ç¼©æ”¾ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢½á¹û¾ØÕó¡£
+     * @~chinese å­˜å‚¨ç»“æœçŸ©é˜µã€‚
      */
     static void createScale(float xScale, float yScale, float zScale, Mat4* dst);
 
@@ -435,12 +435,12 @@ public:
      * Creates a rotation matrix from the specified quaternion.
      *
      * @~chinese 
-     * »ùÓÚËÄÔªÊıĞı×ªÀ´´´½¨Ò»¸ö¾ØÕó¡£
+     * åŸºäºå››å…ƒæ•°æ—‹è½¬æ¥åˆ›å»ºä¸€ä¸ªçŸ©é˜µã€‚
      * 
      * @param quat @~english A quaternion describing a 3D orientation.
-     * @~chinese Ò»¸öÓÃÓÚÃèÊö3DĞı×ªµÄËÄÔªÊı¡£
+     * @~chinese ä¸€ä¸ªç”¨äºæè¿°3Dæ—‹è½¬çš„å››å…ƒæ•°ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢½á¹û¾ØÕó¡£
+     * @~chinese å­˜å‚¨ç»“æœçŸ©é˜µã€‚
      */
     static void createRotation(const Quaternion& quat, Mat4* dst);
 
@@ -448,14 +448,14 @@ public:
      * Creates a rotation matrix from the specified axis and angle.
      *
      * @~chinese 
-     * Í¨¹ıÈÆÖáĞı×ªÀ´´´½¨Ò»¸ö±ä»»¾ØÕó¡£
+     * é€šè¿‡ç»•è½´æ—‹è½¬æ¥åˆ›å»ºä¸€ä¸ªå˜æ¢çŸ©é˜µã€‚
      * 
      * @param axis @~english A vector describing the axis to rotate about.
-     * @~chinese Ğı×ªµÄÖá¡£
+     * @~chinese æ—‹è½¬çš„è½´ã€‚
      * @param angle @~english The angle (in radians).
-     * @~chinese Ğı×ªµÄ½Ç¶È(»¡¶È)¡£
+     * @~chinese æ—‹è½¬çš„è§’åº¦(å¼§åº¦)ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢½á¹û¾ØÕó¡£
+     * @~chinese å­˜å‚¨ç»“æœçŸ©é˜µã€‚
      */
     static void createRotation(const Vec3& axis, float angle, Mat4* dst);
 
@@ -463,12 +463,12 @@ public:
      * Creates a matrix describing a rotation around the x-axis.
      *
      * @~chinese 
-     * ÈÆXÖáĞı×ªÀ´´´½¨Ò»¸ö±ä»»¾ØÕó¡£
+     * ç»•Xè½´æ—‹è½¬æ¥åˆ›å»ºä¸€ä¸ªå˜æ¢çŸ©é˜µã€‚
      * 
      * @param angle @~english The angle of rotation (in radians).
-     * @~chinese ÈÆXÖáĞı×ªµÄ½Ç¶È(»¡¶È)¡£
+     * @~chinese ç»•Xè½´æ—‹è½¬çš„è§’åº¦(å¼§åº¦)ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢½á¹û¾ØÕó¡£
+     * @~chinese å­˜å‚¨ç»“æœçŸ©é˜µã€‚
      */
     static void createRotationX(float angle, Mat4* dst);
 
@@ -476,12 +476,12 @@ public:
      * Creates a matrix describing a rotation around the y-axis.
      *
      * @~chinese 
-     * ÈÆYÖáĞı×ªÀ´´´½¨Ò»¸ö±ä»»¾ØÕó¡£
+     * ç»•Yè½´æ—‹è½¬æ¥åˆ›å»ºä¸€ä¸ªå˜æ¢çŸ©é˜µã€‚
      * 
      * @param angle @~english The angle of rotation (in radians).
-     * @~chinese ÈÆYÖáĞı×ªµÄ½Ç¶È(»¡¶È)¡£
+     * @~chinese ç»•Yè½´æ—‹è½¬çš„è§’åº¦(å¼§åº¦)ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢½á¹û¾ØÕó¡£
+     * @~chinese å­˜å‚¨ç»“æœçŸ©é˜µã€‚
      */
     static void createRotationY(float angle, Mat4* dst);
 
@@ -489,12 +489,12 @@ public:
      * Creates a matrix describing a rotation around the z-axis.
      *
      * @~chinese 
-     * ÈÆZÖáĞı×ªÀ´´´½¨Ò»¸ö±ä»»¾ØÕó¡£
+     * ç»•Zè½´æ—‹è½¬æ¥åˆ›å»ºä¸€ä¸ªå˜æ¢çŸ©é˜µã€‚
      * 
      * @param angle @~english The angle of rotation (in radians).
-     * @~chinese ÈÆZÖáĞı×ªµÄ½Ç¶È(»¡¶È)¡£
+     * @~chinese ç»•Zè½´æ—‹è½¬çš„è§’åº¦(å¼§åº¦)ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢½á¹û¾ØÕó¡£
+     * @~chinese å­˜å‚¨ç»“æœçŸ©é˜µã€‚
      */
     static void createRotationZ(float angle, Mat4* dst);
 
@@ -502,12 +502,12 @@ public:
      * Creates a translation matrix.
      *
      * @~chinese 
-     * »ùÓÚÆ½ÒÆ´´½¨Ò»¸ö±ä»»¾ØÕó¡£
+     * åŸºäºå¹³ç§»åˆ›å»ºä¸€ä¸ªå˜æ¢çŸ©é˜µã€‚
      * 
      * @param translation @~english The translation.
-     * @~chinese Æ½ÒÆ¡£
+     * @~chinese å¹³ç§»ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢½á¹û¾ØÕó¡£
+     * @~chinese å­˜å‚¨ç»“æœçŸ©é˜µã€‚
      */
     static void createTranslation(const Vec3& translation, Mat4* dst);
 
@@ -515,16 +515,16 @@ public:
      * Creates a translation matrix.
      *
      * @~chinese 
-     * »ùÓÚÆ½ÒÆ´´½¨Ò»¸ö±ä»»¾ØÕó¡£
+     * åŸºäºå¹³ç§»åˆ›å»ºä¸€ä¸ªå˜æ¢çŸ©é˜µã€‚
      * 
      * @param xTranslation @~english The translation on the x-axis.
-     * @~chinese ÔÚxÖáÉÏµÄÆ½ÒÆ¡£
+     * @~chinese åœ¨xè½´ä¸Šçš„å¹³ç§»ã€‚
      * @param yTranslation @~english The translation on the y-axis.
-     * @~chinese ÔÚyÖáÉÏµÄÆ½ÒÆ¡£
+     * @~chinese åœ¨yè½´ä¸Šçš„å¹³ç§»ã€‚
      * @param zTranslation @~english The translation on the z-axis.
-     * @~chinese ÔÚzÖáÉÏµÄÆ½ÒÆ¡£
+     * @~chinese åœ¨zè½´ä¸Šçš„å¹³ç§»ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢½á¹û¾ØÕó¡£
+     * @~chinese å­˜å‚¨ç»“æœçŸ©é˜µã€‚
      */
     static void createTranslation(float xTranslation, float yTranslation, float zTranslation, Mat4* dst);
 
@@ -532,10 +532,10 @@ public:
      * Adds a scalar value to each component of this matrix.
      *
      * @~chinese 
-     * ¶Ô¾ØÕóµÄÃ¿Ò»¸öÔªËØ¼ÓÉÏscalar£¬È»ºó±£´æµ½thisÖĞ
+     * å¯¹çŸ©é˜µçš„æ¯ä¸€ä¸ªå…ƒç´ åŠ ä¸Šscalarï¼Œç„¶åä¿å­˜åˆ°thisä¸­
      * 
      * @param scalar @~english The scalar to add.
-     * @~chinese Òª¼ÓÉÏµÄscalarÖµ¡£
+     * @~chinese è¦åŠ ä¸Šçš„scalarå€¼ã€‚
      */
     void add(float scalar);
 
@@ -543,12 +543,12 @@ public:
      * Adds a scalar value to each component of this matrix and stores the result in dst.
      *
      * @~chinese 
-     * ¶Ô¾ØÕóµÄÃ¿Ò»¸öÔªËØ¼ÓÉÏscalar£¬È»ºó±£´æµ½dstÖĞ¡£
+     * å¯¹çŸ©é˜µçš„æ¯ä¸€ä¸ªå…ƒç´ åŠ ä¸Šscalarï¼Œç„¶åä¿å­˜åˆ°dstä¸­ã€‚
      * 
      * @param scalar @~english The scalar value to add.
-     * @~chinese Òª¼ÓÉÏµÄscalarÖµ¡£
+     * @~chinese è¦åŠ ä¸Šçš„scalarå€¼ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ÓÃÓÚ´¢´æ¼ÆËã½á¹û¡£
+     * @~chinese ç”¨äºå‚¨å­˜è®¡ç®—ç»“æœã€‚
      */
     void add(float scalar, Mat4* dst);
 
@@ -556,10 +556,10 @@ public:
      * Adds the specified matrix to this matrix.
      *
      * @~chinese 
-     * ÓëÒ»¸ö¸ø¶¨µÄ¾ØÕóÏà¼Ó£¬²¢½«½á¹û´æÈëthisÖĞ¡£
+     * ä¸ä¸€ä¸ªç»™å®šçš„çŸ©é˜µç›¸åŠ ï¼Œå¹¶å°†ç»“æœå­˜å…¥thisä¸­ã€‚
      * 
      * @param mat @~english The matrix to add.
-     * @~chinese Òª¼ÓµÄ¾ØÕó¡£
+     * @~chinese è¦åŠ çš„çŸ©é˜µã€‚
      */
     void add(const Mat4& mat);
 
@@ -567,14 +567,14 @@ public:
      * Adds the specified matrices and stores the result in dst.
      *
      * @~chinese 
-     * ¼ÆËãÁ½¸ö¾ØÕóµÄºÍ¡£
+     * è®¡ç®—ä¸¤ä¸ªçŸ©é˜µçš„å’Œã€‚
      * 
      * @param m1 @~english The first matrix.
-     * @~chinese µÚÒ»¸ö¾ØÕó¡£
+     * @~chinese ç¬¬ä¸€ä¸ªçŸ©é˜µã€‚
      * @param m2 @~english The second matrix.
-     * @~chinese µÚ¶ş¸ö¾ØÕó¡£
+     * @~chinese ç¬¬äºŒä¸ªçŸ©é˜µã€‚
      * @param dst @~english The destination matrix to add to.
-     * @~chinese ´æ´¢¼ÆËã½á¹û¡£
+     * @~chinese å­˜å‚¨è®¡ç®—ç»“æœã€‚
      */
     static void add(const Mat4& m1, const Mat4& m2, Mat4* dst);
 
@@ -582,14 +582,14 @@ public:
      * Decomposes the scale, rotation and translation components of this matrix.
      *
      * @~chinese 
-     * ½«¾ØÕó·Ö½âÎªÆ½ÒÆ£¬Ğı×ªºÍËõ·Å·ÖÁ¿¡£
+     * å°†çŸ©é˜µåˆ†è§£ä¸ºå¹³ç§»ï¼Œæ—‹è½¬å’Œç¼©æ”¾åˆ†é‡ã€‚
      * 
      * @param scale @~english The scale.
-     * @~chinese Ëõ·Å·ÖÁ¿¡£
+     * @~chinese ç¼©æ”¾åˆ†é‡ã€‚
      * @param rotation @~english The rotation.
-     * @~chinese Ğı×ª·ÖÁ¿¡£
+     * @~chinese æ—‹è½¬åˆ†é‡ã€‚
      * @param translation @~english The translation.
-     * @~chinese Æ½ÒÆ·ÖÁ¿¡£
+     * @~chinese å¹³ç§»åˆ†é‡ã€‚
      */
     bool decompose(Vec3* scale, Quaternion* rotation, Vec3* translation) const;
 
@@ -597,10 +597,10 @@ public:
      * Computes the determinant of this matrix.
      *
      * @~chinese 
-     * ¼ÆËã¾ØÕóµÄĞĞÁĞÊ½µÄÖÈ¡£
+     * è®¡ç®—çŸ©é˜µçš„è¡Œåˆ—å¼çš„ç§©ã€‚
      * 
      * @return @~english The determinant.
-     * @~chinese ¾ØÕóµÄĞĞÁĞÊ½µÄÖÈ¡£
+     * @~chinese çŸ©é˜µçš„è¡Œåˆ—å¼çš„ç§©ã€‚
      */
     float determinant() const;
 
@@ -613,13 +613,13 @@ public:
      * original scale vector is extracted and returned.
      *
      * @~chinese 
-     * µÃµ½Õâ¸ö¾ØÕóµÄËõ·Å·ÖÁ¿¡£
+     * å¾—åˆ°è¿™ä¸ªçŸ©é˜µçš„ç¼©æ”¾åˆ†é‡ã€‚
      * 
-     * Èç¹ûÕâ¸ö¾ØÕóÓĞ¸ºËõ·Å²¿·Ö£¬ÄÇÃ´²»¿ÉÄÜ×¼È·µÃµ½Ô­Ê¼µÄËõ·Å·ÖÁ¿£¬
-     * ·µ»ØµÄ¼¸¸ö·ÖÁ¿µÄ½á¹û
+     * å¦‚æœè¿™ä¸ªçŸ©é˜µæœ‰è´Ÿç¼©æ”¾éƒ¨åˆ†ï¼Œé‚£ä¹ˆä¸å¯èƒ½å‡†ç¡®å¾—åˆ°åŸå§‹çš„ç¼©æ”¾åˆ†é‡ï¼Œ
+     * è¿”å›çš„å‡ ä¸ªåˆ†é‡çš„ç»“æœ
      * 
      * @param scale @~english A vector to receive the scale.
-     * @~chinese ÓÃÓÚ±£´æËõ·Å·ÖÁ¿¡£
+     * @~chinese ç”¨äºä¿å­˜ç¼©æ”¾åˆ†é‡ã€‚
      */
     void getScale(Vec3* scale) const;
 
@@ -627,14 +627,14 @@ public:
      * Gets the rotational component of this matrix in the specified quaternion.
      *
      * @~chinese 
-     * µÃµ½¾ØÕóµÄĞı×ª·ÖÁ¿¡£
+     * å¾—åˆ°çŸ©é˜µçš„æ—‹è½¬åˆ†é‡ã€‚
      * 
      * @param rotation @~english A quaternion to receive the rotation.
      * 
-     * @~chinese ½ÓÊÕĞı×ªËÄÔªÊı¡£
+     * @~chinese æ¥æ”¶æ—‹è½¬å››å…ƒæ•°ã€‚
      * 
      * @return @~english true if the rotation is successfully extracted, false otherwise.
-     * @~chinese Èç¹û³É¹¦ÌáÈ¡Ğı×ª£¬·µ»ØÕæ,·ñÔò·µ»Ø¼Ù¡£
+     * @~chinese å¦‚æœæˆåŠŸæå–æ—‹è½¬ï¼Œè¿”å›çœŸ,å¦åˆ™è¿”å›å‡ã€‚
      */
     bool getRotation(Quaternion* rotation) const;
 
@@ -642,10 +642,10 @@ public:
      * Gets the translational component of this matrix in the specified vector.
      *
      * @~chinese 
-     * µÃµ½Õâ¸ö¾ØÕóµÄÆ½ÒÆ·ÖÁ¿¡£
+     * å¾—åˆ°è¿™ä¸ªçŸ©é˜µçš„å¹³ç§»åˆ†é‡ã€‚
      * 
      * @param translation @~english A vector to receive the translation.
-     * @~chinese ÓÃÓÚ´æ´¢Æ½ÒÆ·ÖÁ¿
+     * @~chinese ç”¨äºå­˜å‚¨å¹³ç§»åˆ†é‡
      */
     void getTranslation(Vec3* translation) const;
 
@@ -653,10 +653,10 @@ public:
      * Gets the up vector of this matrix.
      *
      * @~chinese 
-     * µÃµ½ÏòÉÏµÄÏòÁ¿£¬Ïàµ±ÓÚ±ä»»Vec3(0,1,0)¡£
+     * å¾—åˆ°å‘ä¸Šçš„å‘é‡ï¼Œç›¸å½“äºå˜æ¢Vec3(0,1,0)ã€‚
      * 
      * @param dst @~english The destination vector.
-     * @~chinese ÓÃÓÚ´æ´¢Ä¿±êÏòÁ¿¡£
+     * @~chinese ç”¨äºå­˜å‚¨ç›®æ ‡å‘é‡ã€‚
      */
     void getUpVector(Vec3* dst) const;
 
@@ -664,10 +664,10 @@ public:
      * Gets the down vector of this matrix.
      *
      * @~chinese 
-     * µÃµ½ÏòÏÂµÄÏòÁ¿£¬Ïàµ±ÓÚ±ä»»Vec3(0,-1,0)¡£
+     * å¾—åˆ°å‘ä¸‹çš„å‘é‡ï¼Œç›¸å½“äºå˜æ¢Vec3(0,-1,0)ã€‚
      * 
      * @param dst @~english The destination vector.
-     * @~chinese ÓÃÓÚ´æ´¢Ä¿±êÏòÁ¿¡£
+     * @~chinese ç”¨äºå­˜å‚¨ç›®æ ‡å‘é‡ã€‚
      */
     void getDownVector(Vec3* dst) const;
 
@@ -675,10 +675,10 @@ public:
      * Gets the left vector of this matrix.
      *
      * @~chinese 
-     * µÃµ½Ïò×óµÄÏòÁ¿£¬Ïàµ±ÓÚ±ä»»Vec3(£­1,0,0)¡£
+     * å¾—åˆ°å‘å·¦çš„å‘é‡ï¼Œç›¸å½“äºå˜æ¢Vec3(ï¼1,0,0)ã€‚
      * 
      * @param dst @~english The destination vector.
-     * @~chinese ÓÃÓÚ´æ´¢Ä¿±êÏòÁ¿¡£
+     * @~chinese ç”¨äºå­˜å‚¨ç›®æ ‡å‘é‡ã€‚
      */
     void getLeftVector(Vec3* dst) const;
 
@@ -686,10 +686,10 @@ public:
      * Gets the right vector of this matrix.
      *
      * @~chinese 
-     * µÃµ½ÏòÓÒµÄÏòÁ¿£¬Ïàµ±ÓÚ±ä»»Vec3(1,0,0)¡£
+     * å¾—åˆ°å‘å³çš„å‘é‡ï¼Œç›¸å½“äºå˜æ¢Vec3(1,0,0)ã€‚
      * 
      * @param dst @~english The destination vector.
-     * @~chinese ÓÃÓÚ´æ´¢Ä¿±êÏòÁ¿¡£
+     * @~chinese ç”¨äºå­˜å‚¨ç›®æ ‡å‘é‡ã€‚
      */
     void getRightVector(Vec3* dst) const;
 
@@ -697,10 +697,10 @@ public:
      * Gets the forward vector of this matrix.
      *
      * @~chinese 
-     * µÃµ½ÏòÇ°µÄÏòÁ¿,Ïàµ±ÓÚ±ä»»Vec3(0,0,£­1)¡£
+     * å¾—åˆ°å‘å‰çš„å‘é‡,ç›¸å½“äºå˜æ¢Vec3(0,0,ï¼1)ã€‚
      * 
      * @param dst @~english The destination vector.
-     * @~chinese ÓÃÓÚ´æ´¢Ä¿±êÏòÁ¿¡£
+     * @~chinese ç”¨äºå­˜å‚¨ç›®æ ‡å‘é‡ã€‚
      */
     void getForwardVector(Vec3* dst) const;
 
@@ -708,10 +708,10 @@ public:
      * Gets the backward vector of this matrix.
      *
      * @~chinese 
-     * µÃµ½ÏòºóµÄÏòÁ¿,Ïàµ±ÓÚ±ä»»Vec3(0,0,1)¡£
+     * å¾—åˆ°å‘åçš„å‘é‡,ç›¸å½“äºå˜æ¢Vec3(0,0,1)ã€‚
      * 
      * @param dst @~english The destination vector.
-     * @~chinese ÓÃÓÚ´æ´¢Ä¿±êÏòÁ¿¡£
+     * @~chinese ç”¨äºå­˜å‚¨ç›®æ ‡å‘é‡ã€‚
      */
     void getBackVector(Vec3* dst) const;
 
@@ -719,17 +719,17 @@ public:
      * Inverts this matrix.
      *
      * @~chinese 
-     * ¶Ô¾ØÕóÇóÄæ£¬²¢±£´æÔÚthisÖĞ¡£
+     * å¯¹çŸ©é˜µæ±‚é€†ï¼Œå¹¶ä¿å­˜åœ¨thisä¸­ã€‚
      * 
      * @return @~english true if the the matrix can be inverted, false otherwise.
-     * @~chinese Èç¹û¾ØÕó¿ÉÒÔÇóÄæ£¬·µ»ØÕæ,·ñÔò·µ»Ø¼Ù¡£
+     * @~chinese å¦‚æœçŸ©é˜µå¯ä»¥æ±‚é€†ï¼Œè¿”å›çœŸ,å¦åˆ™è¿”å›å‡ã€‚
      */
     bool inverse();
 
     /**@~english
      * Get the inversed matrix.
      * @~chinese 
-     * µÃµ½Äæ¾ØÕóm(m*this = this *m = IDENTITY)¡£
+     * å¾—åˆ°é€†çŸ©é˜µm(m*this = this *m = IDENTITY)ã€‚
      */
     Mat4 getInversed() const;
 
@@ -737,10 +737,10 @@ public:
      * Determines if this matrix is equal to the identity matrix.
      *
      * @~chinese 
-     * È·¶¨Õâ¸ö¾ØÕóÊÇ·ñµÈÓÚµ¥Î»¾ØÕó¡£
+     * ç¡®å®šè¿™ä¸ªçŸ©é˜µæ˜¯å¦ç­‰äºå•ä½çŸ©é˜µã€‚
      * 
      * @return @~english true if the matrix is an identity matrix, false otherwise.
-     * @~chinese Èç¹û¾ØÕóÊÇÒ»¸öµ¥Î»¾ØÕó,Ôò·µ»ØÕæ£¬·ñÔò·µ»Ø¼Ù¡£
+     * @~chinese å¦‚æœçŸ©é˜µæ˜¯ä¸€ä¸ªå•ä½çŸ©é˜µ,åˆ™è¿”å›çœŸï¼Œå¦åˆ™è¿”å›å‡ã€‚
      */
     bool isIdentity() const;
 
@@ -748,10 +748,10 @@ public:
      * Multiplies the components of this matrix by the specified scalar.
      *
      * @~chinese 
-     * ¶Ô¾ØÕóµÄÃ¿Ò»¸öÔªËØ³ËÒÔscalar£¬²¢±£´æÔÚthisÖĞ¡£
+     * å¯¹çŸ©é˜µçš„æ¯ä¸€ä¸ªå…ƒç´ ä¹˜ä»¥scalarï¼Œå¹¶ä¿å­˜åœ¨thisä¸­ã€‚
      * 
      * @param scalar @~english The scalar value.
-     * @~chinese ±êÁ¿Öµ¡£
+     * @~chinese æ ‡é‡å€¼ã€‚
      */
     void multiply(float scalar);
 
@@ -759,12 +759,12 @@ public:
      * Multiplies the components of this matrix by a scalar and stores the result in dst.
      *
      * @~chinese 
-     * ¶Ô¾ØÕóµÄÃ¿Ò»¸öÔªËØ³ËÒÔscalar£¬±£´æÔÚdstÖĞ.
+     * å¯¹çŸ©é˜µçš„æ¯ä¸€ä¸ªå…ƒç´ ä¹˜ä»¥scalarï¼Œä¿å­˜åœ¨dstä¸­.
      * 
      * @param scalar @~english The scalar value.
-     * @~chinese ±êÁ¿Öµ¡£
+     * @~chinese æ ‡é‡å€¼ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ±£´æ¼ÆËãµÄ½á¹û¡£
+     * @~chinese ä¿å­˜è®¡ç®—çš„ç»“æœã€‚
      */
     void multiply(float scalar, Mat4* dst) const;
 
@@ -772,14 +772,14 @@ public:
      * Multiplies the components of the specified matrix by a scalar and stores the result in dst.
      *
      * @~chinese 
-     * ¶Ô¾ØÕómatµÄÃ¿Ò»¸öÔªËØ³ËÒÔscalar£¬±£´æÔÚdstÖĞ.
+     * å¯¹çŸ©é˜µmatçš„æ¯ä¸€ä¸ªå…ƒç´ ä¹˜ä»¥scalarï¼Œä¿å­˜åœ¨dstä¸­.
      * 
      * @param mat @~english The matrix.
-     * @~chinese ¾ØÕó¡£
+     * @~chinese çŸ©é˜µã€‚
      * @param scalar @~english The scalar value.
-     * @~chinese ±êÁ¿Öµ¡£
+     * @~chinese æ ‡é‡å€¼ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ±£´æ¼ÆËãµÄ½á¹û¡£
+     * @~chinese ä¿å­˜è®¡ç®—çš„ç»“æœã€‚
      */
     static void multiply(const Mat4& mat, float scalar, Mat4* dst);
 
@@ -787,10 +787,10 @@ public:
      * Multiplies this matrix by the specified one.
      *
      * @~chinese 
-     * ÓÒ³Ë¾ØÕó²¢ÇÒ±£´æÔÚthisÖĞ¡£
+     * å³ä¹˜çŸ©é˜µå¹¶ä¸”ä¿å­˜åœ¨thisä¸­ã€‚
      * 
      * @param mat @~english The matrix to multiply.
-     * @~chinese ÒªÓÒ³ËµÄ¾ØÕó¡£
+     * @~chinese è¦å³ä¹˜çš„çŸ©é˜µã€‚
      */
     void multiply(const Mat4& mat);
 
@@ -798,28 +798,28 @@ public:
      * Multiplies m1 by m2 and stores the result in dst.
      *
      * @~chinese 
-     * ¼ÆËã¾ØÕóm1*m2¡£
+     * è®¡ç®—çŸ©é˜µm1*m2ã€‚
      * 
      * @param m1 @~english The first matrix to multiply.
-     * @~chinese µÚÒ»¸ö¾ØÕóm1¡£
+     * @~chinese ç¬¬ä¸€ä¸ªçŸ©é˜µm1ã€‚
      * @param m2 @~english The second matrix to multiply.
-     * @~chinese µÚ¶ş¸ö¾ØÕóm2¡£
+     * @~chinese ç¬¬äºŒä¸ªçŸ©é˜µm2ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ±£´æ¼ÆËãµÄ½á¹û¡£
+     * @~chinese ä¿å­˜è®¡ç®—çš„ç»“æœã€‚
      */
     static void multiply(const Mat4& m1, const Mat4& m2, Mat4* dst);
 
     /**@~english
      * Negates this matrix.
      * @~chinese 
-     * ½«¾ØÕóÇó·´(¶ÔÃ¿Ò»¸öÔªËØ³ËÒÔ£­1)£¬²¢±£´æÔÚthisÖĞ¡£
+     * å°†çŸ©é˜µæ±‚å(å¯¹æ¯ä¸€ä¸ªå…ƒç´ ä¹˜ä»¥ï¼1)ï¼Œå¹¶ä¿å­˜åœ¨thisä¸­ã€‚
      */
     void negate();
 
     /**@~english
      Get the Negated matrix.
      * @~chinese 
-     * µÃµ½·´¾ØÕó(¶ÔÃ¿Ò»¸öÔªËØ³ËÒÔ£­1)¡£
+     * å¾—åˆ°åçŸ©é˜µ(å¯¹æ¯ä¸€ä¸ªå…ƒç´ ä¹˜ä»¥ï¼1)ã€‚
      */
     Mat4 getNegated() const;
 
@@ -828,10 +828,10 @@ public:
      * specified quaternion rotation.
      *
      * @~chinese 
-     * °´ÕÕĞı×ª¼ÆËã³ö¾ØÕó£¬²¢ÇÒ½«¸Ã¾ØÕóÓÒ³Ëthis£¬½á¹û´æ´¢µ½thisÖĞ¡£
+     * æŒ‰ç…§æ—‹è½¬è®¡ç®—å‡ºçŸ©é˜µï¼Œå¹¶ä¸”å°†è¯¥çŸ©é˜µå³ä¹˜thisï¼Œç»“æœå­˜å‚¨åˆ°thisä¸­ã€‚
      * 
      * @param q @~english The quaternion to rotate by.
-     * @~chinese Ğı×ªµÄËÄÔªÊı¡£
+     * @~chinese æ—‹è½¬çš„å››å…ƒæ•°ã€‚
      */
     void rotate(const Quaternion& q);
 
@@ -840,12 +840,12 @@ public:
      * specified quaternion rotation and stores the result in dst.
      *
      * @~chinese 
-     * °´ÕÕĞı×ª¼ÆËã³ö¾ØÕó£¬²¢ÇÒ½«¸Ã¾ØÕóÓÒ³Ëthis£¬½á¹û´æ´¢µ½dstÖĞ¡£
+     * æŒ‰ç…§æ—‹è½¬è®¡ç®—å‡ºçŸ©é˜µï¼Œå¹¶ä¸”å°†è¯¥çŸ©é˜µå³ä¹˜thisï¼Œç»“æœå­˜å‚¨åˆ°dstä¸­ã€‚
      * 
      * @param q @~english The quaternion to rotate by.
-     * @~chinese Ğı×ªµÄËÄÔªÊı¡£
+     * @~chinese æ—‹è½¬çš„å››å…ƒæ•°ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢¼ÆËãµÄ½á¹û¡£
+     * @~chinese å­˜å‚¨è®¡ç®—çš„ç»“æœã€‚
      */
     void rotate(const Quaternion& q, Mat4* dst) const;
 
@@ -854,12 +854,12 @@ public:
      * specified rotation about the specified axis.
      *
      * @~chinese 
-     * °´ÕÕĞı×ª¼ÆËã³ö¾ØÕó£¬²¢ÇÒ½«¸Ã¾ØÕóÓÒ³Ëthis£¬½á¹û´æ´¢µ½thisÖĞ¡£
+     * æŒ‰ç…§æ—‹è½¬è®¡ç®—å‡ºçŸ©é˜µï¼Œå¹¶ä¸”å°†è¯¥çŸ©é˜µå³ä¹˜thisï¼Œç»“æœå­˜å‚¨åˆ°thisä¸­ã€‚
      * 
      * @param axis @~english The axis to rotate about.
-     * @~chinese Ğı×ªµÄÖá¡£
+     * @~chinese æ—‹è½¬çš„è½´ã€‚
      * @param angle @~english The angle (in radians).
-     * @~chinese Ğı×ªµÄ½Ç¶È(»¡¶È)¡£
+     * @~chinese æ—‹è½¬çš„è§’åº¦(å¼§åº¦)ã€‚
      */
     void rotate(const Vec3& axis, float angle);
 
@@ -868,14 +868,14 @@ public:
      * rotation about the specified axis and stores the result in dst.
      *
      * @~chinese 
-     * °´ÕÕĞı×ª¼ÆËã³ö¾ØÕó£¬²¢ÇÒ½«¸Ã¾ØÕóÓÒ³Ëthis£¬½á¹û´æ´¢µ½dstÖĞ¡£
+     * æŒ‰ç…§æ—‹è½¬è®¡ç®—å‡ºçŸ©é˜µï¼Œå¹¶ä¸”å°†è¯¥çŸ©é˜µå³ä¹˜thisï¼Œç»“æœå­˜å‚¨åˆ°dstä¸­ã€‚
      * 
      * @param axis @~english The axis to rotate about.
-     * @~chinese Ğı×ªµÄÖá¡£
+     * @~chinese æ—‹è½¬çš„è½´ã€‚
      * @param angle @~english The angle (in radians).
-     * @~chinese Ğı×ªµÄ½Ç¶È(»¡¶È)¡£
+     * @~chinese æ—‹è½¬çš„è§’åº¦(å¼§åº¦)ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢¼ÆËãµÄ½á¹û¡£
+     * @~chinese å­˜å‚¨è®¡ç®—çš„ç»“æœã€‚
      */
     void rotate(const Vec3& axis, float angle, Mat4* dst) const;
 
@@ -884,10 +884,10 @@ public:
      * specified rotation around the x-axis.
      *
      * @~chinese 
-     * °´ÕÕĞı×ª¼ÆËã³ö¾ØÕó£¬²¢ÇÒ½«¸Ã¾ØÕóÓÒ³Ëthis£¬½á¹û´æ´¢µ½thisÖĞ¡£
+     * æŒ‰ç…§æ—‹è½¬è®¡ç®—å‡ºçŸ©é˜µï¼Œå¹¶ä¸”å°†è¯¥çŸ©é˜µå³ä¹˜thisï¼Œç»“æœå­˜å‚¨åˆ°thisä¸­ã€‚
      * 
      * @param angle @~english The angle (in radians).
-     * @~chinese ÈÆXÖáĞı×ªµÄ½Ç¶È(»¡¶È)¡£
+     * @~chinese ç»•Xè½´æ—‹è½¬çš„è§’åº¦(å¼§åº¦)ã€‚
      */
     void rotateX(float angle);
 
@@ -896,12 +896,12 @@ public:
      * specified rotation around the x-axis and stores the result in dst.
      *
      * @~chinese 
-     * °´ÕÕĞı×ª¼ÆËã³ö¾ØÕó£¬²¢ÇÒ½«¸Ã¾ØÕóÓÒ³Ëthis£¬½á¹û´æ´¢µ½dstÖĞ¡£
+     * æŒ‰ç…§æ—‹è½¬è®¡ç®—å‡ºçŸ©é˜µï¼Œå¹¶ä¸”å°†è¯¥çŸ©é˜µå³ä¹˜thisï¼Œç»“æœå­˜å‚¨åˆ°dstä¸­ã€‚
      * 
      * @param angle @~english The angle (in radians).
-     * @~chinese ÈÆXÖáĞı×ªµÄ½Ç¶È(»¡¶È)¡£
+     * @~chinese ç»•Xè½´æ—‹è½¬çš„è§’åº¦(å¼§åº¦)ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢¼ÆËãµÄ½á¹û¡£
+     * @~chinese å­˜å‚¨è®¡ç®—çš„ç»“æœã€‚
      */
     void rotateX(float angle, Mat4* dst) const;
 
@@ -910,10 +910,10 @@ public:
      * specified rotation around the y-axis.
      *
      * @~chinese 
-     * °´ÕÕĞı×ª¼ÆËã³ö¾ØÕó£¬²¢ÇÒ½«¸Ã¾ØÕóÓÒ³Ëthis£¬½á¹û´æ´¢µ½thisÖĞ¡£
+     * æŒ‰ç…§æ—‹è½¬è®¡ç®—å‡ºçŸ©é˜µï¼Œå¹¶ä¸”å°†è¯¥çŸ©é˜µå³ä¹˜thisï¼Œç»“æœå­˜å‚¨åˆ°thisä¸­ã€‚
      * 
      * @param angle @~english The angle (in radians).
-     * @~chinese ÈÆYÖáĞı×ªµÄ½Ç¶È(»¡¶È)¡£
+     * @~chinese ç»•Yè½´æ—‹è½¬çš„è§’åº¦(å¼§åº¦)ã€‚
      */
     void rotateY(float angle);
 
@@ -922,12 +922,12 @@ public:
      * specified rotation around the y-axis and stores the result in dst.
      *
      * @~chinese 
-     * °´ÕÕĞı×ª¼ÆËã³ö¾ØÕó£¬²¢ÇÒ½«¸Ã¾ØÕóÓÒ³Ëthis£¬½á¹û´æ´¢µ½dstÖĞ¡£
+     * æŒ‰ç…§æ—‹è½¬è®¡ç®—å‡ºçŸ©é˜µï¼Œå¹¶ä¸”å°†è¯¥çŸ©é˜µå³ä¹˜thisï¼Œç»“æœå­˜å‚¨åˆ°dstä¸­ã€‚
      * 
      * @param angle @~english The angle (in radians).
-     * @~chinese ÈÆYÖáĞı×ªµÄ½Ç¶È(»¡¶È)¡£
+     * @~chinese ç»•Yè½´æ—‹è½¬çš„è§’åº¦(å¼§åº¦)ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢¼ÆËãµÄ½á¹û¡£
+     * @~chinese å­˜å‚¨è®¡ç®—çš„ç»“æœã€‚
      */
     void rotateY(float angle, Mat4* dst) const;
 
@@ -936,10 +936,10 @@ public:
      * specified rotation around the z-axis.
      *
      * @~chinese 
-     * °´ÕÕĞı×ª¼ÆËã³ö¾ØÕó£¬²¢ÇÒ½«¸Ã¾ØÕóÓÒ³Ëthis£¬½á¹û´æ´¢µ½thisÖĞ¡£
+     * æŒ‰ç…§æ—‹è½¬è®¡ç®—å‡ºçŸ©é˜µï¼Œå¹¶ä¸”å°†è¯¥çŸ©é˜µå³ä¹˜thisï¼Œç»“æœå­˜å‚¨åˆ°thisä¸­ã€‚
      * 
      * @param angle @~english The angle (in radians).
-     * @~chinese ÈÆZÖáĞı×ªµÄ½Ç¶È(»¡¶È)¡£
+     * @~chinese ç»•Zè½´æ—‹è½¬çš„è§’åº¦(å¼§åº¦)ã€‚
      */
     void rotateZ(float angle);
 
@@ -948,12 +948,12 @@ public:
      * specified rotation around the z-axis and stores the result in dst.
      *
      * @~chinese 
-     * °´ÕÕĞı×ª¼ÆËã³ö¾ØÕó£¬²¢ÇÒ½«¸Ã¾ØÕóÓÒ³Ëthis£¬½á¹û´æ´¢µ½dstÖĞ¡£
+     * æŒ‰ç…§æ—‹è½¬è®¡ç®—å‡ºçŸ©é˜µï¼Œå¹¶ä¸”å°†è¯¥çŸ©é˜µå³ä¹˜thisï¼Œç»“æœå­˜å‚¨åˆ°dstä¸­ã€‚
      * 
      * @param angle @~english The angle (in radians).
-     * @~chinese ÈÆZÖáĞı×ªµÄ½Ç¶È(»¡¶È)¡£
+     * @~chinese ç»•Zè½´æ—‹è½¬çš„è§’åº¦(å¼§åº¦)ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢¼ÆËãµÄ½á¹û¡£
+     * @~chinese å­˜å‚¨è®¡ç®—çš„ç»“æœã€‚
      */
     void rotateZ(float angle, Mat4* dst) const;
 
@@ -962,10 +962,10 @@ public:
      * specified scale transformation.
      *
      * @~chinese 
-     * °´ÕÕscale¼ÆËã³ö¾ØÕó£¬²¢ÇÒ½«¸Ã¾ØÕóÓÒ³Ëthis£¬½á¹û´æ´¢µ½thisÖĞ¡£
+     * æŒ‰ç…§scaleè®¡ç®—å‡ºçŸ©é˜µï¼Œå¹¶ä¸”å°†è¯¥çŸ©é˜µå³ä¹˜thisï¼Œç»“æœå­˜å‚¨åˆ°thisä¸­ã€‚
      * 
      * @param value @~english The amount to scale along all axes.
-     * @~chinese µÈ±ÈËõ·ÅÖµ¡£
+     * @~chinese ç­‰æ¯”ç¼©æ”¾å€¼ã€‚
      */
     void scale(float value);
 
@@ -974,12 +974,12 @@ public:
      * specified scale transformation and stores the result in dst.
      *
      * @~chinese 
-     * °´ÕÕscale¼ÆËã³ö¾ØÕó£¬²¢ÇÒ½«¸Ã¾ØÕóÓÒ³Ëthis£¬½á¹û´æ´¢µ½dstÖĞ¡£
+     * æŒ‰ç…§scaleè®¡ç®—å‡ºçŸ©é˜µï¼Œå¹¶ä¸”å°†è¯¥çŸ©é˜µå³ä¹˜thisï¼Œç»“æœå­˜å‚¨åˆ°dstä¸­ã€‚
      * 
      * @param value @~english The amount to scale along all axes.
-     * @~chinese µÈ±ÈËõ·ÅÖµ¡£
+     * @~chinese ç­‰æ¯”ç¼©æ”¾å€¼ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢¼ÆËãµÄ½á¹û¡£
+     * @~chinese å­˜å‚¨è®¡ç®—çš„ç»“æœã€‚
      */
     void scale(float value, Mat4* dst) const;
 
@@ -988,14 +988,14 @@ public:
      * specified scale transformation.
      *
      * @~chinese 
-     * °´ÕÕscale¼ÆËã³ö¾ØÕó£¬²¢ÇÒ½«¸Ã¾ØÕóÓÒ³Ëthis£¬½á¹û´æ´¢µ½thisÖĞ¡£
+     * æŒ‰ç…§scaleè®¡ç®—å‡ºçŸ©é˜µï¼Œå¹¶ä¸”å°†è¯¥çŸ©é˜µå³ä¹˜thisï¼Œç»“æœå­˜å‚¨åˆ°thisä¸­ã€‚
      * 
      * @param xScale @~english The amount to scale along the x-axis.
-     * @~chinese ÑØ×ÅxÖáµÄËõ·Å¡£
+     * @~chinese æ²¿ç€xè½´çš„ç¼©æ”¾ã€‚
      * @param yScale @~english The amount to scale along the y-axis.
-     * @~chinese ÑØ×ÅyÖáµÄËõ·Å¡£
+     * @~chinese æ²¿ç€yè½´çš„ç¼©æ”¾ã€‚
      * @param zScale @~english The amount to scale along the z-axis.
-     * @~chinese ÑØ×ÅzÖáµÄËõ·Å¡£
+     * @~chinese æ²¿ç€zè½´çš„ç¼©æ”¾ã€‚
      */
     void scale(float xScale, float yScale, float zScale);
 
@@ -1004,16 +1004,16 @@ public:
      * specified scale transformation and stores the result in dst.
      *
      * @~chinese 
-     * °´ÕÕscale¼ÆËã³ö¾ØÕó£¬²¢ÇÒ½«¸Ã¾ØÕóÓÒ³Ëthis£¬½á¹û´æ´¢µ½dstÖĞ¡£
+     * æŒ‰ç…§scaleè®¡ç®—å‡ºçŸ©é˜µï¼Œå¹¶ä¸”å°†è¯¥çŸ©é˜µå³ä¹˜thisï¼Œç»“æœå­˜å‚¨åˆ°dstä¸­ã€‚
      * 
      * @param xScale @~english The amount to scale along the x-axis.
-     * @~chinese ÑØ×ÅxÖáµÄËõ·Å¡£
+     * @~chinese æ²¿ç€xè½´çš„ç¼©æ”¾ã€‚
      * @param yScale @~english The amount to scale along the y-axis.
-     * @~chinese ÑØ×ÅyÖáµÄËõ·Å¡£
+     * @~chinese æ²¿ç€yè½´çš„ç¼©æ”¾ã€‚
      * @param zScale @~english The amount to scale along the z-axis.
-     * @~chinese ÑØ×ÅzÖáµÄËõ·Å¡£
+     * @~chinese æ²¿ç€zè½´çš„ç¼©æ”¾ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢¼ÆËãµÄ½á¹û¡£
+     * @~chinese å­˜å‚¨è®¡ç®—çš„ç»“æœã€‚
      */
     void scale(float xScale, float yScale, float zScale, Mat4* dst) const;
 
@@ -1022,10 +1022,10 @@ public:
      * specified scale transformation.
      *
      * @~chinese 
-    * °´ÕÕscale¼ÆËã³ö¾ØÕó£¬²¢ÇÒ½«¸Ã¾ØÕóÓÒ³Ëthis£¬½á¹û´æ´¢µ½thisÖĞ¡£
+    * æŒ‰ç…§scaleè®¡ç®—å‡ºçŸ©é˜µï¼Œå¹¶ä¸”å°†è¯¥çŸ©é˜µå³ä¹˜thisï¼Œç»“æœå­˜å‚¨åˆ°thisä¸­ã€‚
      * 
      * @param s @~english The scale values along the x, y and z axes.
-     * @~chinese Ëõ·ÅÖµ¡£
+     * @~chinese ç¼©æ”¾å€¼ã€‚
      */
     void scale(const Vec3& s);
 
@@ -1034,12 +1034,12 @@ public:
      * specified scale transformation and stores the result in dst.
      *
      * @~chinese 
-     * °´ÕÕscale¼ÆËã³ö¾ØÕó£¬²¢ÇÒ½«¸Ã¾ØÕóÓÒ³Ëthis£¬½á¹û´æ´¢µ½dstÖĞ¡£
+     * æŒ‰ç…§scaleè®¡ç®—å‡ºçŸ©é˜µï¼Œå¹¶ä¸”å°†è¯¥çŸ©é˜µå³ä¹˜thisï¼Œç»“æœå­˜å‚¨åˆ°dstä¸­ã€‚
      * 
      * @param s @~english The scale values along the x, y and z axes.
-     * @~chinese Ëõ·ÅÖµ¡£
+     * @~chinese ç¼©æ”¾å€¼ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ´æ´¢¼ÆËãµÄ½á¹û¡£
+     * @~chinese å­˜å‚¨è®¡ç®—çš„ç»“æœã€‚
      */
     void scale(const Vec3& s, Mat4* dst) const;
 
@@ -1047,40 +1047,40 @@ public:
      * Sets the values of this matrix.
      *
      * @~chinese 
-     * ÉèÖÃ¾ØÕóµÄÖµ¡£
+     * è®¾ç½®çŸ©é˜µçš„å€¼ã€‚
      * 
      * @param m11 @~english The first element of the first row.
-     * @~chinese µÚÒ»ĞĞµÄµÚÒ»¸öÔªËØ¡£
+     * @~chinese ç¬¬ä¸€è¡Œçš„ç¬¬ä¸€ä¸ªå…ƒç´ ã€‚
      * @param m12 @~english The second element of the first row.
-     * @~chinese µÚÒ»ĞĞµÄµÚ¶ş¸öÔªËØ¡£
+     * @~chinese ç¬¬ä¸€è¡Œçš„ç¬¬äºŒä¸ªå…ƒç´ ã€‚
      * @param m13 @~english The third element of the first row.
-     * @~chinese µÚÒ»ĞĞµÄµÚÈı¸öÔªËØ¡£
+     * @~chinese ç¬¬ä¸€è¡Œçš„ç¬¬ä¸‰ä¸ªå…ƒç´ ã€‚
      * @param m14 @~english The fourth element of the first row.
-     * @~chinese µÚÒ»ĞĞµÚËÄÔªËØ¡£
+     * @~chinese ç¬¬ä¸€è¡Œç¬¬å››å…ƒç´ ã€‚
      * @param m21 @~english The first element of the second row.
-     * @~chinese µÚ¶şĞĞµÄµÚÒ»¸öÔªËØ¡£
+     * @~chinese ç¬¬äºŒè¡Œçš„ç¬¬ä¸€ä¸ªå…ƒç´ ã€‚
      * @param m22 @~english The second element of the second row.
-     * @~chinese µÚ¶şĞĞµÄµÚ¶ş¸öÔªËØ¡£
+     * @~chinese ç¬¬äºŒè¡Œçš„ç¬¬äºŒä¸ªå…ƒç´ ã€‚
      * @param m23 @~english The third element of the second row.
-     * @~chinese µÚ¶şĞĞµÄµÚÈı¸öÔªËØ¡£
+     * @~chinese ç¬¬äºŒè¡Œçš„ç¬¬ä¸‰ä¸ªå…ƒç´ ã€‚
      * @param m24 @~english The fourth element of the second row.
-     * @~chinese µÚ¶şĞĞµÄµÚËÄ¸öÔªËØ¡£
+     * @~chinese ç¬¬äºŒè¡Œçš„ç¬¬å››ä¸ªå…ƒç´ ã€‚
      * @param m31 @~english The first element of the third row.
-     * @~chinese µÚÈıĞĞµÄµÚÒ»¸öÔªËØ¡£
+     * @~chinese ç¬¬ä¸‰è¡Œçš„ç¬¬ä¸€ä¸ªå…ƒç´ ã€‚
      * @param m32 @~english The second element of the third row.
-     * @~chinese µÚÈıĞĞµÄµÚ¶ş¸öÔªËØ¡£
+     * @~chinese ç¬¬ä¸‰è¡Œçš„ç¬¬äºŒä¸ªå…ƒç´ ã€‚
      * @param m33 @~english The third element of the third row.
-     * @~chinese µÚÈıĞĞµÄµÚÈı¸öÔªËØ¡£
+     * @~chinese ç¬¬ä¸‰è¡Œçš„ç¬¬ä¸‰ä¸ªå…ƒç´ ã€‚
      * @param m34 @~english The fourth element of the third row.
-     * @~chinese µÚÈıĞĞµÄµÚËÄ¸öÔªËØ¡£
+     * @~chinese ç¬¬ä¸‰è¡Œçš„ç¬¬å››ä¸ªå…ƒç´ ã€‚
      * @param m41 @~english The first element of the fourth row.
-     * @~chinese µÚËÄĞĞµÄµÚÒ»¸öÔªËØ¡£
+     * @~chinese ç¬¬å››è¡Œçš„ç¬¬ä¸€ä¸ªå…ƒç´ ã€‚
      * @param m42 @~english The second element of the fourth row.
-     * @~chinese µÚËÄĞĞµÄµÚ¶ş¸öÔªËØ¡£
+     * @~chinese ç¬¬å››è¡Œçš„ç¬¬äºŒä¸ªå…ƒç´ ã€‚
      * @param m43 @~english The third element of the fourth row.
-     * @~chinese µÚËÄĞĞµÄµÚÈı¸öÔªËØ¡£
+     * @~chinese ç¬¬å››è¡Œçš„ç¬¬ä¸‰ä¸ªå…ƒç´ ã€‚
      * @param m44 @~english The fourth element of the fourth row.
-     * @~chinese µÚËÄĞĞµÄµÚËÄ¸öÔªËØ¡£
+     * @~chinese ç¬¬å››è¡Œçš„ç¬¬å››ä¸ªå…ƒç´ ã€‚
      */
     void set(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
              float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44);
@@ -1089,10 +1089,10 @@ public:
      * Sets the values of this matrix to those in the specified column-major array.
      *
      * @~chinese 
-     * Õâ¸ö¾ØÕóµÄÖµÉèÖÃÎªÒ»¸öÁĞÓÅÏÈÊı×éµÄÊı¾İ¡£
+     * è¿™ä¸ªçŸ©é˜µçš„å€¼è®¾ç½®ä¸ºä¸€ä¸ªåˆ—ä¼˜å…ˆæ•°ç»„çš„æ•°æ®ã€‚
      * 
      * @param mat @~english An array containing 16 elements in column-major format.
-     * @~chinese ÁĞÓÅÏÈµÄÊı×é¡£
+     * @~chinese åˆ—ä¼˜å…ˆçš„æ•°ç»„ã€‚
      */
     void set(const float* mat);
 
@@ -1100,24 +1100,24 @@ public:
      * Sets the values of this matrix to those of the specified matrix.
      *
      * @~chinese 
-     * Õâ¸ö¾ØÕóµÄÖµÉèÖÃÎªÖ¸¶¨µÄ¾ØÕó¡£
+     * è¿™ä¸ªçŸ©é˜µçš„å€¼è®¾ç½®ä¸ºæŒ‡å®šçš„çŸ©é˜µã€‚
      * 
      * @param mat @~english The source matrix.
-     * @~chinese Ô´¾ØÕó¡£
+     * @~chinese æºçŸ©é˜µã€‚
      */
     void set(const Mat4& mat);
 
     /**@~english
      * Sets this matrix to the identity matrix.
      * @~chinese 
-     * ½«¾ØÕóÉèÖÃÎªµ¥Î»¾ØÕó¡£
+     * å°†çŸ©é˜µè®¾ç½®ä¸ºå•ä½çŸ©é˜µã€‚
      */
     void setIdentity();
 
     /**@~english
      * Sets all elements of the current matrix to zero.
      * @~chinese 
-     * ½«¾ØÕóµÄËùÓĞÔªËØÉèÖÃÎªÁã¡£
+     * å°†çŸ©é˜µçš„æ‰€æœ‰å…ƒç´ è®¾ç½®ä¸ºé›¶ã€‚
      */
     void setZero();
 
@@ -1125,10 +1125,10 @@ public:
      * Subtracts the specified matrix from the current matrix.
      *
      * @~chinese 
-     * ´Óµ±Ç°¾ØÕó¼õÈ¥Ò»¸ö¾ØÕó
+     * ä»å½“å‰çŸ©é˜µå‡å»ä¸€ä¸ªçŸ©é˜µ
      * 
      * @param mat @~english The matrix to subtract.
-     * @~chinese Òª¼õÈ¥µÄ¾ØÕó¡£
+     * @~chinese è¦å‡å»çš„çŸ©é˜µã€‚
      */
     void subtract(const Mat4& mat);
 
@@ -1136,14 +1136,14 @@ public:
      * Subtracts the specified matrix from the current matrix.
      *
      * @~chinese 
-     * Á½¸ö¾ØÕóÏà¼õ
+     * ä¸¤ä¸ªçŸ©é˜µç›¸å‡
      * 
      * @param m1 @~english The first matrix.
-     * @~chinese µÚÒ»¸ö¾ØÕó¡£
+     * @~chinese ç¬¬ä¸€ä¸ªçŸ©é˜µã€‚
      * @param m2 @~english The second matrix.
-     * @~chinese µÚ¶ş¸ö¾ØÕó¡£
+     * @~chinese ç¬¬äºŒä¸ªçŸ©é˜µã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese Ïà¼õµÄ½á¹û¡£
+     * @~chinese ç›¸å‡çš„ç»“æœã€‚
      */
     static void subtract(const Mat4& m1, const Mat4& m2, Mat4* dst);
 
@@ -1153,11 +1153,11 @@ public:
      * The result of the transformation is stored directly into point.
      *
      * @~chinese 
-     * ±ä»»Ò»¸öµã£¬½á¹û´æ´¢µ½Òª±ä»»µÄµãÖĞ
+     * å˜æ¢ä¸€ä¸ªç‚¹ï¼Œç»“æœå­˜å‚¨åˆ°è¦å˜æ¢çš„ç‚¹ä¸­
      * 
      * 
      * @param point @~english The point to transform and also a vector to hold the result in.
-     * @~chinese Òª±ä»»µÄµã¡£
+     * @~chinese è¦å˜æ¢çš„ç‚¹ã€‚
      */
     inline void transformPoint(Vec3* point) const { GP_ASSERT(point); transformVector(point->x, point->y, point->z, 1.0f, point); }
 
@@ -1166,12 +1166,12 @@ public:
      * the result in dst.
      *
      * @~chinese 
-     * ±ä»»Ò»¸öµã£¬½á¹û´æ´¢µ½dstÖĞ
+     * å˜æ¢ä¸€ä¸ªç‚¹ï¼Œç»“æœå­˜å‚¨åˆ°dstä¸­
      * 
      * @param point @~english The point to transform.
-     * @~chinese Òª±ä»»µÄµã¡£
+     * @~chinese è¦å˜æ¢çš„ç‚¹ã€‚
      * @param dst @~english A vector to store the transformed point in.
-     * @~chinese ±ä»»ºóµÄ½á¹û¡£
+     * @~chinese å˜æ¢åçš„ç»“æœã€‚
      */
     inline void transformPoint(const Vec3& point, Vec3* dst) const { GP_ASSERT(dst); transformVector(point.x, point.y, point.z, 1.0f, dst); }
 
@@ -1182,10 +1182,10 @@ public:
      * The result of the transformation is stored directly into vector.
      *
      * @~chinese 
-     * ±ä»»Ò»¸öÏòÁ¿£¬µÚËÄ¸ö²ÎÊıw±»µ±×÷ÊÇ0£¬½á¹ûÖ±½Ó´æ´¢µ½Òª±ä»»µÄÏòÁ¿ÖĞ
+     * å˜æ¢ä¸€ä¸ªå‘é‡ï¼Œç¬¬å››ä¸ªå‚æ•°wè¢«å½“ä½œæ˜¯0ï¼Œç»“æœç›´æ¥å­˜å‚¨åˆ°è¦å˜æ¢çš„å‘é‡ä¸­
      * 
      * @param vector @~english The vector to transform and also a vector to hold the result in.
-     * @~chinese Òª±ä»»µÄÏòÁ¿¡£
+     * @~chinese è¦å˜æ¢çš„å‘é‡ã€‚
      */
     void transformVector(Vec3* vector) const;
 
@@ -1195,12 +1195,12 @@ public:
      * result in dst.
      *
      * @~chinese 
-     * ±ä»»Ò»¸öÏòÁ¿£¬µÚËÄ¸ö²ÎÊıw±»µ±×÷ÊÇ0£¬±ä»»µÄ½á¹û´æ´¢ÔÚdstÖĞ
+     * å˜æ¢ä¸€ä¸ªå‘é‡ï¼Œç¬¬å››ä¸ªå‚æ•°wè¢«å½“ä½œæ˜¯0ï¼Œå˜æ¢çš„ç»“æœå­˜å‚¨åœ¨dstä¸­
      * 
      * @param vector @~english The vector to transform.
-     * @~chinese Òª±ä»»µÄÏòÁ¿¡£
+     * @~chinese è¦å˜æ¢çš„å‘é‡ã€‚
      * @param dst @~english A vector to store the transformed vector in.
-     * @~chinese ±ä»»ºóµÄ½á¹û¡£
+     * @~chinese å˜æ¢åçš„ç»“æœã€‚
      */
     void transformVector(const Vec3& vector, Vec3* dst) const;
 
@@ -1208,18 +1208,18 @@ public:
      * Transforms the specified vector by this matrix.
      *
      * @~chinese 
-     * ±ä»»Ò»¸öÏòÁ¿
+     * å˜æ¢ä¸€ä¸ªå‘é‡
      * 
      * @param x @~english The vector x-coordinate to transform by.
-     * @~chinese Òª±ä»»ÏòÁ¿µÄx×ø±ê¡£
+     * @~chinese è¦å˜æ¢å‘é‡çš„xåæ ‡ã€‚
      * @param y @~english The vector y-coordinate to transform by.
-     * @~chinese Òª±ä»»ÏòÁ¿µÄy×ø±ê¡£
+     * @~chinese è¦å˜æ¢å‘é‡çš„yåæ ‡ã€‚
      * @param z @~english The vector z-coordinate to transform by.
-     * @~chinese Òª±ä»»ÏòÁ¿µÄz×ø±ê¡£
+     * @~chinese è¦å˜æ¢å‘é‡çš„zåæ ‡ã€‚
      * @param w @~english The vector w-coordinate to transform by.
-     * @~chinese Òª±ä»»ÏòÁ¿µÄw×ø±ê¡£
+     * @~chinese è¦å˜æ¢å‘é‡çš„wåæ ‡ã€‚
      * @param dst @~english A vector to store the transformed point in.
-     * @~chinese ±ä»»ºóµÄ½á¹û¡£
+     * @~chinese å˜æ¢åçš„ç»“æœã€‚
      */
     void transformVector(float x, float y, float z, float w, Vec3* dst) const;
 
@@ -1229,11 +1229,11 @@ public:
      * The result of the transformation is stored directly into vector.
      *
      * @~chinese 
-     * ±ä»»Ò»¸öÏòÁ¿£¬±ä»»½á¹ûÖ±½Ó±£´æÔÚ²ÎÊıvectorÖĞ
+     * å˜æ¢ä¸€ä¸ªå‘é‡ï¼Œå˜æ¢ç»“æœç›´æ¥ä¿å­˜åœ¨å‚æ•°vectorä¸­
      * 
      * 
      * @param vector @~english The vector to transform.
-     * @~chinese Òª±ä»»µÄÏòÁ¿¡£
+     * @~chinese è¦å˜æ¢çš„å‘é‡ã€‚
      */
     void transformVector(Vec4* vector) const;
 
@@ -1241,12 +1241,12 @@ public:
      * Transforms the specified vector by this matrix.
      *
      * @~chinese 
-     * ±ä»»Ò»¸öÏòÁ¿¡£
+     * å˜æ¢ä¸€ä¸ªå‘é‡ã€‚
      * 
      * @param vector @~english The vector to transform.
-     * @~chinese Òª±ä»»µÄÏòÁ¿¡£
+     * @~chinese è¦å˜æ¢çš„å‘é‡ã€‚
      * @param dst @~english A vector to store the transformed point in.
-     * @~chinese ±ä»»ºóµÄ½á¹û¡£
+     * @~chinese å˜æ¢åçš„ç»“æœã€‚
      */
     void transformVector(const Vec4& vector, Vec4* dst) const;
 
@@ -1255,14 +1255,14 @@ public:
      * specified translation.
      *
      * @~chinese 
-     * °´ÕÕÆ½ÒÆ¹¹½¨¾ØÕó£¬²¢ÇÒ½«thisÓëÆäÓÒ³Ë£¬½á¹û´æ´¢µ½thisÖĞ¡£
+     * æŒ‰ç…§å¹³ç§»æ„å»ºçŸ©é˜µï¼Œå¹¶ä¸”å°†thisä¸å…¶å³ä¹˜ï¼Œç»“æœå­˜å‚¨åˆ°thisä¸­ã€‚
      * 
      * @param x @~english The amount to translate along the x-axis.
-     * @~chinese ½«ÑØ×ÅxÖáµÄÆ½ÒÆ¡£
+     * @~chinese å°†æ²¿ç€xè½´çš„å¹³ç§»ã€‚
      * @param y @~english The amount to translate along the y-axis.
-     * @~chinese ½«ÑØ×ÅyÖáµÄÆ½ÒÆ¡£
+     * @~chinese å°†æ²¿ç€yè½´çš„å¹³ç§»ã€‚
      * @param z @~english The amount to translate along the z-axis.
-     * @~chinese ½«ÑØ×ÅzÖáµÄÆ½ÒÆ¡£
+     * @~chinese å°†æ²¿ç€zè½´çš„å¹³ç§»ã€‚
      */
     void translate(float x, float y, float z);
 
@@ -1271,16 +1271,16 @@ public:
      * specified translation and stores the result in dst.
      *
      * @~chinese 
-     * °´ÕÕÆ½ÒÆ¹¹½¨¾ØÕó£¬²¢ÇÒ½«ÆäÓëthisµÄÓÒ³Ë½á¹û´æ´¢µ½dstÖĞ¡£
+     * æŒ‰ç…§å¹³ç§»æ„å»ºçŸ©é˜µï¼Œå¹¶ä¸”å°†å…¶ä¸thisçš„å³ä¹˜ç»“æœå­˜å‚¨åˆ°dstä¸­ã€‚
      * 
      * @param x @~english The amount to translate along the x-axis.
-     * @~chinese ½«ÑØ×ÅxÖáµÄÆ½ÒÆ¡£
+     * @~chinese å°†æ²¿ç€xè½´çš„å¹³ç§»ã€‚
      * @param y @~english The amount to translate along the y-axis.
-     * @~chinese ½«ÑØ×ÅyÖáµÄÆ½ÒÆ¡£
+     * @~chinese å°†æ²¿ç€yè½´çš„å¹³ç§»ã€‚
      * @param z @~english The amount to translate along the z-axis.
-     * @~chinese ½«ÑØ×ÅzÖáµÄÆ½ÒÆ¡£
+     * @~chinese å°†æ²¿ç€zè½´çš„å¹³ç§»ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ·µ»ØµÄ½á¹û¡£
+     * @~chinese è¿”å›çš„ç»“æœã€‚
      */
     void translate(float x, float y, float z, Mat4* dst) const;
 
@@ -1289,10 +1289,10 @@ public:
      * specified translation.
      *
      * @~chinese 
-     * °´ÕÕÆ½ÒÆ¹¹½¨¾ØÕó£¬²¢ÇÒ½«thisÓëÆäÓÒ³Ë£¬½á¹û´æ´¢µ½thisÖĞ¡£
+     * æŒ‰ç…§å¹³ç§»æ„å»ºçŸ©é˜µï¼Œå¹¶ä¸”å°†thisä¸å…¶å³ä¹˜ï¼Œç»“æœå­˜å‚¨åˆ°thisä¸­ã€‚
      * 
      * @param t @~english The translation values along the x, y and z axes.
-     * @~chinese ÑØx,yºÍzÖáµÄÆ½ÒÆ¡£
+     * @~chinese æ²¿x,yå’Œzè½´çš„å¹³ç§»ã€‚
      */
     void translate(const Vec3& t);
 
@@ -1301,26 +1301,26 @@ public:
      * specified translation and stores the result in dst.
      *
      * @~chinese 
-     * °´ÕÕÆ½ÒÆ¹¹½¨¾ØÕó£¬²¢ÇÒ½«ÆäÓëthisµÄÓÒ³Ë½á¹û´æ´¢µ½dstÖĞ¡£
+     * æŒ‰ç…§å¹³ç§»æ„å»ºçŸ©é˜µï¼Œå¹¶ä¸”å°†å…¶ä¸thisçš„å³ä¹˜ç»“æœå­˜å‚¨åˆ°dstä¸­ã€‚
      * 
      * @param t @~english The translation values along the x, y and z axes.
-     * @~chinese ÑØx,yºÍzÖáµÄÆ½ÒÆ¡£
+     * @~chinese æ²¿x,yå’Œzè½´çš„å¹³ç§»ã€‚
      * @param dst @~english A matrix to store the result in.
-     * @~chinese ·µ»ØµÄ½á¹û¡£
+     * @~chinese è¿”å›çš„ç»“æœã€‚
      */
     void translate(const Vec3& t, Mat4* dst) const;
 
     /**@~english
      * Transposes this matrix.
      * @~chinese 
-     * ×ªÖÃ×Ô¼º(ĞĞÁĞ»¥»»)¡£
+     * è½¬ç½®è‡ªå·±(è¡Œåˆ—äº’æ¢)ã€‚
      */
     void transpose();
 
     /**@~english
      * Get the Transposed matrix.
      * @~chinese 
-     * µÃµ½×ªÖÃ¾ØÕó(ĞĞÁĞ»¥»»)¡£
+     * å¾—åˆ°è½¬ç½®çŸ©é˜µ(è¡Œåˆ—äº’æ¢)ã€‚
      */
     Mat4 getTransposed() const;
 
@@ -1330,14 +1330,14 @@ public:
      * Note: this does not modify this matrix.
      * 
      * @~chinese 
-     * ·µ»Øthis¾ØÕó¼ÓÉÏmat¾ØÕóµÄ½á¹û¡£
+     * è¿”å›thisçŸ©é˜µåŠ ä¸ŠmatçŸ©é˜µçš„ç»“æœã€‚
      * 
-     * ×¢Òâ:Õâ²¢²»ĞŞ¸ÄÕâ¸ö¾ØÕó¡£
+     * æ³¨æ„:è¿™å¹¶ä¸ä¿®æ”¹è¿™ä¸ªçŸ©é˜µã€‚
      * 
      * @param mat @~english The matrix to add.
-     * @~chinese Òª¼ÓµÄ¾ØÕó¡£
+     * @~chinese è¦åŠ çš„çŸ©é˜µã€‚
      * @return @~english The matrix sum.
-     * @~chinese Á½¸ö¾ØÕóÖ®ºÍ¡£
+     * @~chinese ä¸¤ä¸ªçŸ©é˜µä¹‹å’Œã€‚
      */
     inline const Mat4 operator+(const Mat4& mat) const;
     
@@ -1345,12 +1345,12 @@ public:
      * Adds the given matrix to this matrix.
      * 
      * @~chinese 
-     * this¾ØÕó¼ÓÉÏ¸ø¶¨µÄ¾ØÕó¡£
+     * thisçŸ©é˜µåŠ ä¸Šç»™å®šçš„çŸ©é˜µã€‚
      * 
      * @param mat @~english The matrix to add.
-     * @~chinese Òª¼ÓµÄ¾ØÕó¡£
+     * @~chinese è¦åŠ çš„çŸ©é˜µã€‚
      * @return @~english This matrix, after the addition occurs.
-     * @~chinese this¾ØÕó¼ÓÉÏÖ®ºó£¬·µ»Ø½á¹û¡£
+     * @~chinese thisçŸ©é˜µåŠ ä¸Šä¹‹åï¼Œè¿”å›ç»“æœã€‚
      */
     inline Mat4& operator+=(const Mat4& mat);
 
@@ -1360,14 +1360,14 @@ public:
      * Note: this does not modify this matrix.
      * 
      * @~chinese 
-     * ·µ»Øthis¾ØÕó¼õÈ¥mat¾ØÕóµÄ½á¹û¡£
+     * è¿”å›thisçŸ©é˜µå‡å»matçŸ©é˜µçš„ç»“æœã€‚
      * 
-     * ×¢Òâ:Õâ²¢²»ĞŞ¸ÄÕâ¸ö¾ØÕó¡£
+     * æ³¨æ„:è¿™å¹¶ä¸ä¿®æ”¹è¿™ä¸ªçŸ©é˜µã€‚
      * 
      * @param mat @~english The matrix to subtract.
-     * @~chinese Òª¼õÈ¥µÄ¾ØÕó¡£
+     * @~chinese è¦å‡å»çš„çŸ©é˜µã€‚
      * @return @~english The matrix difference.
-     * @~chinese Ïà¼õµÄ½á¹û¡£
+     * @~chinese ç›¸å‡çš„ç»“æœã€‚
      */
     inline const Mat4 operator-(const Mat4& mat) const;
 
@@ -1375,12 +1375,12 @@ public:
      * Subtracts the given matrix from this matrix.
      * 
      * @~chinese 
-     * this¾ØÕó¼õÈ¥¸ø¶¨µÄ¾ØÕó¡£
+     * thisçŸ©é˜µå‡å»ç»™å®šçš„çŸ©é˜µã€‚
      * 
      * @param mat @~english The matrix to subtract.
-     * @~chinese Òª¼õÈ¥µÄ¾ØÕó¡£
+     * @~chinese è¦å‡å»çš„çŸ©é˜µã€‚
      * @return @~english This matrix, after the subtraction occurs.
-     * @~chinese this¾ØÕó¼õÍêºó£¬·µ»Ø¼õÍêºóµÄ¾ØÕó
+     * @~chinese thisçŸ©é˜µå‡å®Œåï¼Œè¿”å›å‡å®Œåçš„çŸ©é˜µ
      */
     inline Mat4& operator-=(const Mat4& mat);
 
@@ -1390,12 +1390,12 @@ public:
      * Note: this does not modify this matrix.
      * 
      * @~chinese 
-     * ¶Ô¾ØÕóµÄÇó·´£¬Ïàµ±ÓÚ³ËÒÔ£­1¡£
+     * å¯¹çŸ©é˜µçš„æ±‚åï¼Œç›¸å½“äºä¹˜ä»¥ï¼1ã€‚
      * 
-     * ×¢Òâ:Õâ²¢²»ĞŞ¸ÄÕâ¸ö¾ØÕó¡£
+     * æ³¨æ„:è¿™å¹¶ä¸ä¿®æ”¹è¿™ä¸ªçŸ©é˜µã€‚
      * 
      * @return @~english The negation of this matrix.
-     * @~chinese Õâ¸ö¾ØÕóµÄ·´¾ØÕó¡£
+     * @~chinese è¿™ä¸ªçŸ©é˜µçš„åçŸ©é˜µã€‚
      */
     inline const Mat4 operator-() const;
 
@@ -1405,14 +1405,14 @@ public:
      * Note: this does not modify this matrix.
      * 
      * @~chinese 
-     * ·µ»Øthis¾ØÕó×ó³Ë¸ø¶¨µÄ¾ØÕóµÄ³Ë»ı¡£
+     * è¿”å›thisçŸ©é˜µå·¦ä¹˜ç»™å®šçš„çŸ©é˜µçš„ä¹˜ç§¯ã€‚
      * 
-     * ×¢Òâ:Õâ²¢²»ĞŞ¸ÄÕâ¸ö¾ØÕó¡£
+     * æ³¨æ„:è¿™å¹¶ä¸ä¿®æ”¹è¿™ä¸ªçŸ©é˜µã€‚
      * 
      * @param mat @~english The matrix to multiply by.
-     * @~chinese Òª±»×ó³ËµÄ¾ØÕó¡£
+     * @~chinese è¦è¢«å·¦ä¹˜çš„çŸ©é˜µã€‚
      * @return @~english The matrix product.
-     * @~chinese ³Ë»ı½á¹û¡£
+     * @~chinese ä¹˜ç§¯ç»“æœã€‚
      */
     inline const Mat4 operator*(const Mat4& mat) const;
 
@@ -1420,18 +1420,18 @@ public:
      * Right-multiplies this matrix by the given matrix.
      * 
      * @~chinese 
-     * ÓÃ¸ø¶¨¾ØÕóÓÒ³Ë×Ô¼º
+     * ç”¨ç»™å®šçŸ©é˜µå³ä¹˜è‡ªå·±
      * 
      * @param mat @~english The matrix to multiply by.
-     * @~chinese ÓÒ³ËµÄ¾ØÕó¡£
+     * @~chinese å³ä¹˜çš„çŸ©é˜µã€‚
      * @return @~english This matrix, after the multiplication occurs.
-     * @~chinese ÓÒ³Ë×Ô¼ºÖ®ºó£¬·µ»Ø½á¹û
+     * @~chinese å³ä¹˜è‡ªå·±ä¹‹åï¼Œè¿”å›ç»“æœ
      */
     inline Mat4& operator*=(const Mat4& mat);
 
-    /** @~english equals to a matrix full of zeros.  @~chinese È«Áã¾ØÕó¡£*/
+    /** @~english equals to a matrix full of zeros.  @~chinese å…¨é›¶çŸ©é˜µã€‚*/
     static const Mat4 ZERO;
-    /** @~english equals to the identity matrix.  @~chinese µ¥Î»¾ØÕó¡£*/
+    /** @~english equals to the identity matrix.  @~chinese å•ä½çŸ©é˜µã€‚*/
     static const Mat4 IDENTITY;
 
 private:
@@ -1447,16 +1447,16 @@ private:
  * Note: this treats the given vector as a vector and not as a point.
  * 
  * @~chinese 
- * ÓÃ¸ø¶¨µÄ¾ØÕóÈ¥±ä»»Ò»¸öÏòÁ¿¡£
+ * ç”¨ç»™å®šçš„çŸ©é˜µå»å˜æ¢ä¸€ä¸ªå‘é‡ã€‚
  * 
- * ×¢:Õâ¶Ô¸ø¶¨µÄÏòÁ¿×÷ÎªÒ»¸öÏòÁ¿,¶ø²»ÊÇÒ»¸öµã¡£
+ * æ³¨:è¿™å¯¹ç»™å®šçš„å‘é‡ä½œä¸ºä¸€ä¸ªå‘é‡,è€Œä¸æ˜¯ä¸€ä¸ªç‚¹ã€‚
  * 
  * @param v @~english The vector to transform.
- * @~chinese Òª±ä»»µÄÏòÁ¿¡£
+ * @~chinese è¦å˜æ¢çš„å‘é‡ã€‚
  * @param m @~english The matrix to transform by.
- * @~chinese ±ä»»¾ØÕó¡£
+ * @~chinese å˜æ¢çŸ©é˜µã€‚
  * @return @~english This vector, after the transformation occurs.
- * @~chinese ·µ»Ø±ä»»ºóµÄÏòÁ¿¡£
+ * @~chinese è¿”å›å˜æ¢åçš„å‘é‡ã€‚
  */
 inline Vec3& operator*=(Vec3& v, const Mat4& m);
 
@@ -1466,16 +1466,16 @@ inline Vec3& operator*=(Vec3& v, const Mat4& m);
  * Note: this treats the given vector as a vector and not as a point.
  * 
  * @~chinese 
- * ÓÃ¸ø¶¨µÄ¾ØÕóÈ¥±ä»»Ò»¸öÏòÁ¿¡£
+ * ç”¨ç»™å®šçš„çŸ©é˜µå»å˜æ¢ä¸€ä¸ªå‘é‡ã€‚
  * 
- * ×¢:Õâ¶Ô¸ø¶¨µÄÏòÁ¿×÷ÎªÒ»¸öÏòÁ¿,¶ø²»ÊÇÒ»¸öµã¡£
+ * æ³¨:è¿™å¯¹ç»™å®šçš„å‘é‡ä½œä¸ºä¸€ä¸ªå‘é‡,è€Œä¸æ˜¯ä¸€ä¸ªç‚¹ã€‚
  * 
  * @param m @~english The matrix to transform by.
- * @~chinese ±ä»»¾ØÕó¡£
+ * @~chinese å˜æ¢çŸ©é˜µã€‚
  * @param v @~english The vector to transform.
- * @~chinese Òª±ä»»µÄÏòÁ¿¡£
+ * @~chinese è¦å˜æ¢çš„å‘é‡ã€‚
  * @return @~english The resulting transformed vector.
- * @~chinese ·µ»Ø±ä»»ºóµÄÏòÁ¿¡£
+ * @~chinese è¿”å›å˜æ¢åçš„å‘é‡ã€‚
  */
 inline const Vec3 operator*(const Mat4& m, const Vec3& v);
 
@@ -1485,16 +1485,16 @@ inline const Vec3 operator*(const Mat4& m, const Vec3& v);
  * Note: this treats the given vector as a vector and not as a point.
  * 
  * @~chinese 
- * ÓÃ¸ø¶¨µÄ¾ØÕóÈ¥±ä»»Ò»¸öÏòÁ¿¡£
+ * ç”¨ç»™å®šçš„çŸ©é˜µå»å˜æ¢ä¸€ä¸ªå‘é‡ã€‚
  * 
- * ×¢:Õâ¶Ô¸ø¶¨µÄÏòÁ¿×÷ÎªÒ»¸öÏòÁ¿,¶ø²»ÊÇÒ»¸öµã¡£
+ * æ³¨:è¿™å¯¹ç»™å®šçš„å‘é‡ä½œä¸ºä¸€ä¸ªå‘é‡,è€Œä¸æ˜¯ä¸€ä¸ªç‚¹ã€‚
  * 
  * @param v @~english The vector to transform.
- * @~chinese Òª±ä»»µÄÏòÁ¿¡£
+ * @~chinese è¦å˜æ¢çš„å‘é‡ã€‚
  * @param m @~english The matrix to transform by.
- * @~chinese ±ä»»¾ØÕó¡£
+ * @~chinese å˜æ¢çŸ©é˜µã€‚
  * @return @~english This vector, after the transformation occurs.
- * @~chinese ·µ»Ø±ä»»ºóµÄÏòÁ¿¡£
+ * @~chinese è¿”å›å˜æ¢åçš„å‘é‡ã€‚
  */
 inline Vec4& operator*=(Vec4& v, const Mat4& m);
 
@@ -1504,16 +1504,16 @@ inline Vec4& operator*=(Vec4& v, const Mat4& m);
  * Note: this treats the given vector as a vector and not as a point.
  * 
  * @~chinese 
- * ÓÃ¸ø¶¨µÄ¾ØÕóÈ¥±ä»»Ò»¸öÏòÁ¿¡£
+ * ç”¨ç»™å®šçš„çŸ©é˜µå»å˜æ¢ä¸€ä¸ªå‘é‡ã€‚
  * 
- * ×¢:Õâ¶Ô¸ø¶¨µÄÏòÁ¿×÷ÎªÒ»¸öÏòÁ¿,¶ø²»ÊÇÒ»¸öµã¡£
+ * æ³¨:è¿™å¯¹ç»™å®šçš„å‘é‡ä½œä¸ºä¸€ä¸ªå‘é‡,è€Œä¸æ˜¯ä¸€ä¸ªç‚¹ã€‚
  * 
  * @param m @~english The matrix to transform by.
- * @~chinese ±ä»»¾ØÕó¡£
+ * @~chinese å˜æ¢çŸ©é˜µã€‚
  * @param v @~english The vector to transform.
- * @~chinese Òª±ä»»µÄÏòÁ¿¡£
+ * @~chinese è¦å˜æ¢çš„å‘é‡ã€‚
  * @return @~english The resulting transformed vector.
- * @~chinese ·µ»Ø±ä»»ºóµÄÏòÁ¿¡£
+ * @~chinese è¿”å›å˜æ¢åçš„å‘é‡ã€‚
  */
 inline const Vec4 operator*(const Mat4& m, const Vec4& v);
 

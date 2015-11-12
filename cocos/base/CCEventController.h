@@ -42,12 +42,12 @@ class EventListenerController;
 
 /** @class EventController
  * @brief @~english Controller event.
- * @~chinese ÊÂ¼ş¿ØÖÆÆ÷¡£
+ * @~chinese äº‹ä»¶æ§åˆ¶å™¨ã€‚
  */
 class EventController : public Event
 {
 public:
-    /** @~english ControllerEventType Controller event type. @~chinese ÊÂ¼ş¿ØÖÆÆ÷ÀàĞÍ¡£*/
+    /** @~english ControllerEventType Controller event type. @~chinese äº‹ä»¶æ§åˆ¶å™¨ç±»å‹ã€‚*/
     enum class ControllerEventType
     {
         CONNECTION,
@@ -57,67 +57,67 @@ public:
     
     /** @~english Create a EventController with controller event type, contrlloer and key code.
      *
-     * @~chinese ¸ù¾İÊÂ¼şÀàĞÍ,¿ØÖÆÆ÷¶ÔÏóºÍÊÂ¼şÂë£¬´´½¨Ò»¸öÊÂ¼ş¿ØÖÆÆ÷
+     * @~chinese æ ¹æ®äº‹ä»¶ç±»å‹,æ§åˆ¶å™¨å¯¹è±¡å’Œäº‹ä»¶ç ï¼Œåˆ›å»ºä¸€ä¸ªäº‹ä»¶æ§åˆ¶å™¨
      * 
      * @param type @~english A given controller event type.
-     * @~chinese Ò»¸ö¸ø¶¨¿ØÖÆÆ÷ÊÂ¼şÀàĞÍ¡£
+     * @~chinese ä¸€ä¸ªç»™å®šæ§åˆ¶å™¨äº‹ä»¶ç±»å‹ã€‚
      * @param controller @~english A given controller pointer.
-     * @~chinese Ò»¸ö¸ø¶¨¿ØÖÆÆ÷Ö¸Õë¡£
+     * @~chinese ä¸€ä¸ªç»™å®šæ§åˆ¶å™¨æŒ‡é’ˆã€‚
      * @param keyCode @~english A given key code.
-     * @~chinese Ò»¸ö¸ø¶¨µÄÊÂ¼şÂë¡£
+     * @~chinese ä¸€ä¸ªç»™å®šçš„äº‹ä»¶ç ã€‚
      * @return @~english An autoreleased EventController object.
-     * @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅµÄÊÂ¼ş¿ØÖÆÆ÷¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„äº‹ä»¶æ§åˆ¶å™¨å¯¹è±¡ã€‚
      */
 	EventController(ControllerEventType type, Controller* controller, int keyCode);
     /** @~english Create a EventController with controller event type, contrlloer and whether or not is connected.
      *
-     * @~chinese ¸ù¾İÊÂ¼şÀàĞÍ¡¢¿ØÖÆÆ÷¶ÔÏóºÍÊÇ·ñÒÑÁ¬½Ó£¬´´½¨Ò»¸öÊÂ¼ş¿ØÖÆÆ÷
+     * @~chinese æ ¹æ®äº‹ä»¶ç±»å‹ã€æ§åˆ¶å™¨å¯¹è±¡å’Œæ˜¯å¦å·²è¿æ¥ï¼Œåˆ›å»ºä¸€ä¸ªäº‹ä»¶æ§åˆ¶å™¨
      * 
      * @param type @~english A given controller event type.
-     * @~chinese Ò»¸ö¸ø¶¨¿ØÖÆÆ÷ÊÂ¼şÀàĞÍ¡£
+     * @~chinese ä¸€ä¸ªç»™å®šæ§åˆ¶å™¨äº‹ä»¶ç±»å‹ã€‚
      * @param controller @~english A given controller pointer.
-     * @~chinese Ò»¸ö¸ø¶¨¿ØÖÆÆ÷Ö¸Õë¡£
+     * @~chinese ä¸€ä¸ªç»™å®šæ§åˆ¶å™¨æŒ‡é’ˆã€‚
      * @param isConnected @~english True if it is connected.
-     * @~chinese ÊÇ·ñÒÑÁ¬½Ó¡£
+     * @~chinese æ˜¯å¦å·²è¿æ¥ã€‚
      * @return @~english An autoreleased EventController object.
-     * @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅµÄÊÂ¼ş¿ØÖÆÆ÷¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„äº‹ä»¶æ§åˆ¶å™¨å¯¹è±¡ã€‚
      */
     EventController(ControllerEventType type, Controller* controller, bool isConnected);
 
     /** @~english Gets the event type of the controller.
      *
-     * @~chinese »ñÈ¡¿ØÖÆÆ÷µÄÊÂ¼şÀàĞÍ¡£
+     * @~chinese è·å–æ§åˆ¶å™¨çš„äº‹ä»¶ç±»å‹ã€‚
      * 
      * @return @~english The event type of the controller.
-     * @~chinese ·µ»Ø¿ØÖÆÆ÷µÄÊÂ¼şÀàĞÍ¡£
+     * @~chinese è¿”å›æ§åˆ¶å™¨çš„äº‹ä»¶ç±»å‹ã€‚
      */
     ControllerEventType getControllerEventType() const { return _controllerEventType; }
     Controller* getController() const { return _controller; }
 
     /** @~english Gets the key code of the controller.
      *
-     * @~chinese »ñÈ¡¿ØÖÆÆ÷µÄÊÂ¼şÂë¡£
+     * @~chinese è·å–æ§åˆ¶å™¨çš„äº‹ä»¶ç ã€‚
      * 
      * @return @~english The key code of the controller.
-     * @~chinese ·µ»Ø¿ØÖÆÆ÷µÄÊÂ¼şÂë¡£
+     * @~chinese è¿”å›æ§åˆ¶å™¨çš„äº‹ä»¶ç ã€‚
      */
     int getKeyCode() const{ return _keyCode; }
     void setKeyCode(int keyCode) { _keyCode = keyCode;}
 
     /** @~english Sets the connect status.
      *
-     * @~chinese ÉèÖÃÁ¬½Ó×´Ì¬¡£
+     * @~chinese è®¾ç½®è¿æ¥çŠ¶æ€ã€‚
      * 
      * @param True @~english if it's connected.
-     * @~chinese Èç¹ûÒÑÁ¬½ÓÖµÉèÖÃÎªtrue¡£
+     * @~chinese å¦‚æœå·²è¿æ¥å€¼è®¾ç½®ä¸ºtrueã€‚
      */
     void setConnectStatus(bool isConnected) {_isConnected = isConnected;}
     /** @~english Gets the connect status.
      *
-     * @~chinese »ñÈ¡Á¬½Ó×´Ì¬¡£
+     * @~chinese è·å–è¿æ¥çŠ¶æ€ã€‚
      * 
      * @return @~english True if it's connected.
-     * @~chinese Èç¹ûÒÑÁ¬½ÓÖµÉèÖÃÎªtrue¡£
+     * @~chinese å¦‚æœå·²è¿æ¥å€¼è®¾ç½®ä¸ºtrueã€‚
      */
     bool isConnected() const { return _isConnected; }
     

@@ -40,9 +40,9 @@ class GLProgramState;
  Every QCommand will have generate material ID by give textureID, glProgramState, Blend function. 
  However, primitive command could not be batched.
  * @~chinese 
- * ÀàËÆÓÚQuadCommand£¬Õâ¸öÃüÁî¿ÉÒÔäÖÈ¾¸÷ÖÖÍ¼Ôª¡£
- * Ã¿¸öCommand½«Ê¹ÓÃtextureID, glProgramState¡¢»ìºÏº¯ÊıÀ´Éú³É²ÄÖÊID¡£
- * ¸ÃÃüÁî²»ÄÜbatchäÖÈ¾¡£
+ * ç±»ä¼¼äºQuadCommandï¼Œè¿™ä¸ªå‘½ä»¤å¯ä»¥æ¸²æŸ“å„ç§å›¾å…ƒã€‚
+ * æ¯ä¸ªCommandå°†ä½¿ç”¨textureID, glProgramStateã€æ··åˆå‡½æ•°æ¥ç”Ÿæˆæè´¨IDã€‚
+ * è¯¥å‘½ä»¤ä¸èƒ½batchæ¸²æŸ“ã€‚
  */
 class CC_DLL PrimitiveCommand : public RenderCommand
 {
@@ -50,48 +50,48 @@ public:
     /**@~english
      Constructor.
      * @~chinese 
-     * ¹¹Ôìº¯Êı¡£
+     * æ„é€ å‡½æ•°ã€‚
      */
     PrimitiveCommand();
     /**@~english
      Destructor.
      * @~chinese 
-     * Îö¹¹º¯Êı¡£
+     * ææ„å‡½æ•°ã€‚
      */
     ~PrimitiveCommand();
     
     
     /** @~english Initializes the command.
-     * @~chinese ³õÊ¼»¯äÖÈ¾ÃüÁî¡£
+     * @~chinese åˆå§‹åŒ–æ¸²æŸ“å‘½ä»¤ã€‚
      @param globalOrder @~english GlobalZOrder of the command.
-     * @~chinese ÃüÁîµÄGlobalZOrder¡£
+     * @~chinese å‘½ä»¤çš„GlobalZOrderã€‚
      @param textureID @~english The openGL handle of the used texture.
-     * @~chinese ÃüÁîÊ¹ÓÃµÄÎÆÀí¡£
+     * @~chinese å‘½ä»¤ä½¿ç”¨çš„çº¹ç†ã€‚
      @param glProgramState @~english The specified glProgram and its uniform.
-     * @~chinese ÃüÁîÊ¹ÓÃµÄGLProgramState£¬°üº¬GLProgramºÍ¶ÔÓ¦µÄuniform¡£
+     * @~chinese å‘½ä»¤ä½¿ç”¨çš„GLProgramStateï¼ŒåŒ…å«GLProgramå’Œå¯¹åº”çš„uniformã€‚
      @param blendType @~english Blend function for the command.
-     * @~chinese ÃüÁîµÄ»ìºÏº¯Êı¡£
+     * @~chinese å‘½ä»¤çš„æ··åˆå‡½æ•°ã€‚
      @param primitive @~english Rendered primitive for the command.
-     * @~chinese ÃüÁîµÄ»æÖÆÍ¼Ôª¡£
+     * @~chinese å‘½ä»¤çš„ç»˜åˆ¶å›¾å…ƒã€‚
      @param mv @~english ModelView matrix for the command.
-     * @~chinese ÃüÁîµÄModelView¾ØÕó¡£
+     * @~chinese å‘½ä»¤çš„ModelViewçŸ©é˜µã€‚
      @param flags @~english to indicate that the command is using 3D rendering or not.
-     * @~chinese ±íÃ÷¸ÃÃüÁîÊÇ·ñÊ¹ÓÃ3 däÖÈ¾¡£
+     * @~chinese è¡¨æ˜è¯¥å‘½ä»¤æ˜¯å¦ä½¿ç”¨3 dæ¸²æŸ“ã€‚
      */
     void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, Primitive* primitive, const Mat4& mv, uint32_t flags);
     CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, Primitive* primitive,const Mat4& mv);
     
-    /**@~english Get the generated material ID. @~chinese Éú³ÉµÄ²ÄÖÊID¡£*/
+    /**@~english Get the generated material ID. @~chinese ç”Ÿæˆçš„æè´¨IDã€‚*/
     inline uint32_t getMaterialID() const { return _materialID; }
-    /**@~english Get the texture ID used for drawing. @~chinese »æÖÆÊ¹ÓÃµÄÎÆÀí¡£*/
+    /**@~english Get the texture ID used for drawing. @~chinese ç»˜åˆ¶ä½¿ç”¨çš„çº¹ç†ã€‚*/
     inline GLuint getTextureID() const { return _textureID; }
-    /**@~english Get the glprogramstate used for drawing. @~chinese äÖÈ¾Ê¹ÓÃµÄGLProgramState¡£*/
+    /**@~english Get the glprogramstate used for drawing. @~chinese æ¸²æŸ“ä½¿ç”¨çš„GLProgramStateã€‚*/
     inline GLProgramState* getGLProgramState() const { return _glProgramState; }
-    /**@~english Get the blend funcion for drawing. @~chinese µÃµ½µÄ»æÖÆÊ±Ê¹ÓÃµÄ»ìºÏº¯Êı¡£*/
+    /**@~english Get the blend funcion for drawing. @~chinese å¾—åˆ°çš„ç»˜åˆ¶æ—¶ä½¿ç”¨çš„æ··åˆå‡½æ•°ã€‚*/
     inline BlendFunc getBlendType() const { return _blendType; }
-    /**@~english Get the modelview matrix when draw the primtive. @~chinese »æÖÆprimtiveÊ±ºòµÄModelView¾ØÕó¡£*/
+    /**@~english Get the modelview matrix when draw the primtive. @~chinese ç»˜åˆ¶primtiveæ—¶å€™çš„ModelViewçŸ©é˜µã€‚*/
     inline const Mat4& getModelView() const { return _mv; }
-    /**@~english Execute and draw the commmand, called by renderer. @~chinese Ö´ĞĞºÍ»æÖÆ¸ÃÃüÁî,±»äÖÈ¾Æ÷µ÷ÓÃ¡£*/
+    /**@~english Execute and draw the commmand, called by renderer. @~chinese æ‰§è¡Œå’Œç»˜åˆ¶è¯¥å‘½ä»¤,è¢«æ¸²æŸ“å™¨è°ƒç”¨ã€‚*/
     void execute() const;
 protected:
     

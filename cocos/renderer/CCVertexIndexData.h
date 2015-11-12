@@ -51,17 +51,17 @@ glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalize
  offset of vertex will be 0, offset of color would be 0 + sizeof(float) * 3 = 12, 
  offset of texture coord would be 12 + sizeof(char) * 4 = 16.
  * @~chinese 
- * VertexStreamAttributeÓÃÓÚÖ¸¶¨äÖÈ¾Êı¾İµÄ¶¥µãÊôĞÔ£¬ºÍº¯Êı
- * glVertexAttribPointer(GLuint indx, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* ptr)ÖĞµÄ
- * ²ÎÊı¶ÔÓ¦¡£
+ * VertexStreamAttributeç”¨äºæŒ‡å®šæ¸²æŸ“æ•°æ®çš„é¡¶ç‚¹å±æ€§ï¼Œå’Œå‡½æ•°
+ * glVertexAttribPointer(GLuint indx, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* ptr)ä¸­çš„
+ * å‚æ•°å¯¹åº”ã€‚
  * 
- * _semantic ->index£¬
- * _size ->size£¬
- * _type ->type£¬
- * _normalize ->normalized£¬
- * _offsetÓÃÓÚ¼ÆËã½»²æÊôĞÔÊı×éµÄÆ«ÒÆÖµ,ÒÔV3F_C4B_T2FÊı×éÎªÀı,
- * ¶¥µãÊôĞÔµÄÆ«ÒÆÊÇ0,ÑÕÉ«ÊôĞÔµÄÆ«ÒÆÊÇ0 + sizeof(float)*3 = 12
- * ÎÆÀí×ø±êÊôĞÔµÄÆ«ÒÆÊÇ 12 + sizeof(char)*4=16
+ * _semantic ->indexï¼Œ
+ * _size ->sizeï¼Œ
+ * _type ->typeï¼Œ
+ * _normalize ->normalizedï¼Œ
+ * _offsetç”¨äºè®¡ç®—äº¤å‰å±æ€§æ•°ç»„çš„åç§»å€¼,ä»¥V3F_C4B_T2Fæ•°ç»„ä¸ºä¾‹,
+ * é¡¶ç‚¹å±æ€§çš„åç§»æ˜¯0,é¢œè‰²å±æ€§çš„åç§»æ˜¯0 + sizeof(float)*3 = 12
+ * çº¹ç†åæ ‡å±æ€§çš„åç§»æ˜¯ 12 + sizeof(char)*4=16
  @js NA
 */
 struct CC_DLL VertexStreamAttribute
@@ -69,7 +69,7 @@ struct CC_DLL VertexStreamAttribute
     /**@~english
      Constructor.
      * @~chinese 
-     * ¹¹Ôìº¯Êı¡£
+     * æ„é€ å‡½æ•°ã€‚
      */
     VertexStreamAttribute()
     : _normalize(false),_offset(0),_semantic(0),_type(0),_size(0)
@@ -78,15 +78,15 @@ struct CC_DLL VertexStreamAttribute
     /**@~english
      Constructor
      * @~chinese 
-     * ¹¹Ôìº¯Êı¡£
+     * æ„é€ å‡½æ•°ã€‚
      * @param offset @~english The offset of the attribute.
-     * @~chinese ÊôĞÔµÄÆ«ÒÆ
+     * @~chinese å±æ€§çš„åç§»
      @param semantic @~english The semantic (Position, Texcoord, Color etc) of attribute.
-     * @~chinese ÃèÊöÊôĞÔµÄÓïÒå,ÈçÎ»ÖÃ¡¢ÑÕÉ«µÈ¡£
+     * @~chinese æè¿°å±æ€§çš„è¯­ä¹‰,å¦‚ä½ç½®ã€é¢œè‰²ç­‰ã€‚
      @param type @~english The type of attribute, could be GL_FLOAT, GL_UNSIGNED_BYTE etc.
-     * @~chinese ÃèÊöÊôĞÔµÄÀàĞÍ,¿ÉÄÜÊÇGL_FLOAT,GL_UNSIGNED_BYTEµÈµÈ¡£
+     * @~chinese æè¿°å±æ€§çš„ç±»å‹,å¯èƒ½æ˜¯GL_FLOAT,GL_UNSIGNED_BYTEç­‰ç­‰ã€‚
      @param size @~english Describe how many elements of type in the attribute.
-     * @~chinese ÊôĞÔ°üº¬¶àÉÙ¸ötypeÀàĞÍµÄÔªËØ¡£
+     * @~chinese å±æ€§åŒ…å«å¤šå°‘ä¸ªtypeç±»å‹çš„å…ƒç´ ã€‚
      */
     VertexStreamAttribute(int offset, int semantic, int type, int size)
     : _normalize(false),_offset(offset),_semantic(semantic),_type(type),_size(size)
@@ -95,17 +95,17 @@ struct CC_DLL VertexStreamAttribute
     /**@~english
      Constructor
      * @~chinese 
-     * ¹¹Ôìº¯Êı¡£
+     * æ„é€ å‡½æ•°ã€‚
      @param offset @~english The offset of the attribute.
-     * @~chinese ÊôĞÔµÄÆ«ÒÆ
+     * @~chinese å±æ€§çš„åç§»
      @param semantic @~english The semantic (Position, Texcoord, Color etc) of attribute.
-     * @~chinese ÃèÊöÊôĞÔµÄÓïÒå,ÈçÎ»ÖÃ¡¢ÑÕÉ«µÈ¡£
+     * @~chinese æè¿°å±æ€§çš„è¯­ä¹‰,å¦‚ä½ç½®ã€é¢œè‰²ç­‰ã€‚
      @param type @~english The type of attribute, could be GL_FLOAT, GL_UNSIGNED_BYTE etc.
-     * @~chinese ÃèÊöÊôĞÔµÄÀàĞÍ,¿ÉÄÜÊÇGL_FLOAT,GL_UNSIGNED_BYTEµÈµÈ¡£
+     * @~chinese æè¿°å±æ€§çš„ç±»å‹,å¯èƒ½æ˜¯GL_FLOAT,GL_UNSIGNED_BYTEç­‰ç­‰ã€‚
      @param size @~english Describe how many elements of type in the attribute.
-     * @~chinese ÊôĞÔ°üº¬¶àÉÙ¸ötypeÀàĞÍµÄÔªËØ¡£
+     * @~chinese å±æ€§åŒ…å«å¤šå°‘é°ypeç±»å‹çš„å…ƒç´ ã€‚
      @param normalize @~english If true, the data will be normalized by deviding 255.
-     * @~chinese Èç¹ûÊÇÕæ,Êı¾İ½«³ıÒÔ255À´¹éÒ»»¯¡£
+     * @~chinese å¦‚æœæ˜¯çœŸ,æ•°æ®å°†é™¤ä»¥255æ¥å½’ä¸€åŒ–ã€‚
      */
     VertexStreamAttribute(int offset, int semantic, int type, int size, bool normalize)
     : _normalize(normalize),_offset(offset),_semantic(semantic),_type(type),_size(size)
@@ -114,31 +114,31 @@ struct CC_DLL VertexStreamAttribute
     /**@~english
      Whether the attribute should be normalized or not.
      * @~chinese 
-     * ÊÇ·ñÓ¦¸Ã¹æ·¶»¯ÊôĞÔ¡£
+     * æ˜¯å¦åº”è¯¥è§„èŒƒåŒ–å±æ€§ã€‚
      */
     bool _normalize;
     /**@~english
      The offset of the attribute in the buffer.
      * @~chinese 
-     * ÊôĞÔµÄÆ«ÒÆ¡£
+     * å±æ€§çš„åç§»ã€‚
      */
     int _offset;
     /**@~english
      Describe that the attribute usage, could be Position, Color etc.
      * @~chinese 
-     * ÃèÊöÊôĞÔµÄÓïÒå,ÈçÎ»ÖÃ¡¢ÑÕÉ«µÈ¡£
+     * æè¿°å±æ€§çš„è¯­ä¹‰,å¦‚ä½ç½®ã€é¢œè‰²ç­‰ã€‚
      */
     int _semantic;
     /**@~english
      Describe the type of attribute, could be GL_FLOAT, GL_UNSIGNED_BYTE etc.
      * @~chinese 
-     * ÃèÊöÊôĞÔµÄÀàĞÍ,¿ÉÄÜÊÇGL_FLOAT,GL_UNSIGNED_BYTEµÈµÈ¡£
+     * æè¿°å±æ€§çš„ç±»å‹,å¯èƒ½æ˜¯GL_FLOAT,GL_UNSIGNED_BYTEç­‰ç­‰ã€‚
      */
     int _type;
     /**@~english
      Describe how many elements of type in the attribute.
      * @~chinese 
-     * ÃèÊöÊôĞÔ°üº¬¶àÉÙ¸ötypeÀàĞÍµÄÔªËØ¡£
+     * æè¿°å±æ€§åŒ…å«å¤šå°‘ä¸ªtypeç±»å‹çš„å…ƒç´ ã€‚
      */
     int _size;
 };
@@ -151,9 +151,9 @@ VertexData is a class used for specify input streams for GPU rendering pipeline,
 a VertexData will be composed by several streams, every stream will contain a VertexStreamAttribute
 and the binding VertexBuffer. Streams will be identified by semantic.
  * @~chinese 
- * VertexDataÀàÓÃÓÚÖ¸¶¨ÊäÈëÁ÷µ½GPUäÖÈ¾¹ÜÏß,
- * VertexData½«ÓÉ¼¸¸öÁ÷×é³É,Ã¿Ò»¸öÊäÈëÁ÷°üº¬µÄÊôĞÔÔÚVertexStreamAttributeÖĞ£¬Êı¾İÔÚ°ó¶¨µÄVertexBuffer¡£
- * ¶à¸öÁ÷Ö®¼äÓÃÓïÒå±êÊ¾¡£
+ * VertexDataç±»ç”¨äºæŒ‡å®šè¾“å…¥æµåˆ°GPUæ¸²æŸ“ç®¡çº¿,
+ * VertexDataå°†ç”±å‡ ä¸ªæµç»„æˆ,æ¯ä¸€ä¸ªè¾“å…¥æµåŒ…å«çš„å±æ€§åœ¨VertexStreamAttributeä¸­ï¼Œæ•°æ®åœ¨ç»‘å®šçš„VertexBufferã€‚
+ * å¤šä¸ªæµä¹‹é—´ç”¨è¯­ä¹‰æ ‡ç¤ºã€‚
 @js NA
 */
 
@@ -163,77 +163,77 @@ public:
     /**@~english
     Create function, used to create a instance of VertexData.
      * @~chinese 
-     * ´´½¨º¯Êı,´´½¨Ò»¸öVertexDataÊµÀı¡£
+     * åˆ›å»ºå‡½æ•°,åˆ›å»ºä¸€ä¸ªVertexDataå®ä¾‹ã€‚
     */
     static VertexData* create();
     
     /**@~english
     Get the number of streams in the VertexData.
      * @~chinese 
-     * µÃµ½VertexDataÁ÷µÄÊıÁ¿¡£
+     * å¾—åˆ°VertexDataæµçš„æ•°é‡ã€‚
     */
     size_t getVertexStreamCount() const;
     /**@~english
     Set a stream to VertexData,given that stream is identified by semantic, so if the semantic is not
     specified before, it will add a stream, or it will override the old one.
      * @~chinese 
-     * ÉèÖÃÒ»¸öĞÂµÄÁ÷£¬Èç¹û°üº¬µÄÓïÒåÖ®Ç°²»´æÔÚ£¬¾Í»áĞÂ½¨Ò»¸öÊäÈëÁ÷£¬·ñÔò»á¸²¸ÇÖ®Ç°µÄÁ÷
+     * è®¾ç½®ä¸€ä¸ªæ–°çš„æµï¼Œå¦‚æœåŒ…å«çš„è¯­ä¹‰ä¹‹å‰ä¸å­˜åœ¨ï¼Œå°±ä¼šæ–°å»ºä¸€ä¸ªè¾“å…¥æµï¼Œå¦åˆ™ä¼šè¦†ç›–ä¹‹å‰çš„æµ
     @param buffer @~english The binding buffer of the stream.
-     * @~chinese Á÷°ó¶¨µÄVertexBuffer
+     * @~chinese æµç»‘å®šçš„VertexBuffer
     @param stream @~english The binding vertex attribute, its member semantic will be used as the identifier.
-     * @~chinese Á÷µÄÊôĞÔ¡£
+     * @~chinese æµçš„å±æ€§ã€‚
     */
     bool setStream(VertexBuffer* buffer, const VertexStreamAttribute& stream);
     /**@~english
     Remove the given streams.
      * @~chinese 
-     * É¾³ı¸ø¶¨µÄÊäÈëÁ÷¡£
+     * åˆ é™¤ç»™å®šçš„è¾“å…¥æµã€‚
     @param semantic @~english The semantic of the stream.
-     * @~chinese ÒªÉ¾³ıµÄÁ÷µÄÓïÒå¡£
+     * @~chinese è¦åˆ é™¤çš„æµçš„è¯­ä¹‰ã€‚
     */
     void removeStream(int semantic);
     /**@~english
     Get the attribute of stream, const version.
      * @~chinese 
-     * µÃµ½Á÷µÄÊôĞÔ,const°æ±¾¡£
+     * å¾—åˆ°æµçš„å±æ€§,constç‰ˆæœ¬ã€‚
     @param semantic @~english The semantic of the stream.
-     * @~chinese ÒªµÃµ½µÄÁ÷µÄÓïÒå¡£
+     * @~chinese è¦å¾—åˆ°çš„æµçš„è¯­ä¹‰ã€‚
     */
     const VertexStreamAttribute* getStreamAttribute(int semantic) const;
     /**@~english
     Get the attribute of stream.
      * @~chinese 
-     * µÃµ½Á÷µÄÊôĞÔ
+     * å¾—åˆ°æµçš„å±æ€§
     @param semantic @~english The semantic of the stream.
-     * @~chinese ÒªµÃµ½µÄÁ÷µÄÓïÒå¡£
+     * @~chinese è¦å¾—åˆ°çš„æµçš„è¯­ä¹‰ã€‚
     */
     VertexStreamAttribute* getStreamAttribute(int semantic);
     /**@~english
     Get the binded buffer of the stream.
      * @~chinese 
-     * µÃµ½Á÷°ó¶¨µÄVertexBuffer¡£
+     * å¾—åˆ°æµç»‘å®šçš„VertexBufferã€‚
     @param semantic @~english The semantic of the stream.
-     * @~chinese ÒªµÃµ½µÄÁ÷µÄÓïÒå¡£
+     * @~chinese è¦å¾—åˆ°çš„æµçš„è¯­ä¹‰ã€‚
     */
     VertexBuffer* getStreamBuffer(int semantic) const;
     
     /**@~english
     Called for rendering, it will bind the state of vertex data to current rendering pipeline.
      * @~chinese 
-     * ÔÚ»æÖÆÊ±µ÷ÓÃ,Ëü»á½«¶¥µãÊı¾İµÄ°ó¶¨µ½µ±Ç°äÖÈ¾¹ÜµÀ¡£
+     * åœ¨ç»˜åˆ¶æ—¶è°ƒç”¨,å®ƒä¼šå°†é¡¶ç‚¹æ•°æ®çš„ç»‘å®šåˆ°å½“å‰æ¸²æŸ“ç®¡é“ã€‚
     */
     void use();
 protected:
     /**@~english
     Constructor.
      * @~chinese 
-     * ¹¹Ôìº¯Êı¡£
+     * æ„é€ å‡½æ•°ã€‚
     */
     VertexData();
     /**@~english
     Destructor.
      * @~chinese 
-     * Îö¹¹º¯Êı¡£
+     * ææ„å‡½æ•°ã€‚
     */
     virtual ~VertexData();
 protected:

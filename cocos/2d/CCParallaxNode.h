@@ -42,18 +42,18 @@ struct _ccArray;
  * @brief @~english ParallaxNode: A node that simulates a parallax scroller.
  * The children will be moved faster / slower than the parent according the the parallax ratio.
  *
- * @~chinese ParallaxNode:Ò»¸öÄ£ÄâÊÓ²îÒÆ¶¯Ğ§¹ûµÄ½Úµã¡£
- * º¢×Ó½ÚµãÒÆ¶¯µÄ¿ìÂıÒÀ¾İÊÓ²î±ÈÀı¶ø¶¨¡£
+ * @~chinese ParallaxNode:ä¸€ä¸ªæ¨¡æ‹Ÿè§†å·®ç§»åŠ¨æ•ˆæœçš„èŠ‚ç‚¹ã€‚
+ * å­©å­èŠ‚ç‚¹ç§»åŠ¨çš„å¿«æ…¢ä¾æ®è§†å·®æ¯”ä¾‹è€Œå®šã€‚
  */
 class CC_DLL ParallaxNode : public Node
 {
 public:
     /** @~english Create a Parallax node. 
      *
-     * @~chinese ´´½¨Ò»¸öÊÓ²î½Úµã¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªè§†å·®èŠ‚ç‚¹ã€‚
      * 
      * @return @~english A initialized ParallaxNode object which is marked as "autorelease".
-     * @~chinese Ò»¸ö³õÊ¼»¯µÄParallaxNode¶ÔÏó£¬¸Ã¶ÔÏó»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å).
+     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„ParallaxNodeå¯¹è±¡ï¼Œè¯¥å¯¹è±¡ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾).
      */
     static ParallaxNode * create();
 
@@ -61,16 +61,16 @@ public:
 
     /** @~english Adds a child to the container with a local z-order, parallax ratio and position offset.
      *
-     * @~chinese Ìí¼ÓÒ»¸ö×Ó½Úµãµ½ÊÓ²î½ÚµãÖĞ¡£
+     * @~chinese æ·»åŠ ä¸€ä¸ªå­èŠ‚ç‚¹åˆ°è§†å·®èŠ‚ç‚¹ä¸­ã€‚
      * 
      * @param child @~english A child node.
-     * @~chinese Ò»¸ö×Ó½Úµã¡£
+     * @~chinese ä¸€ä¸ªå­èŠ‚ç‚¹ã€‚
      * @param z @~english Z order for drawing priority.
-     * @~chinese ZÖáË³Ğò¡£
+     * @~chinese Zè½´é¡ºåºã€‚
      * @param parallaxRatio @~english A given parallax ratio.
-     * @~chinese Ò»¸ö¸ø¶¨µÄÊÓ²î±ÈÂÊ¡£
+     * @~chinese ä¸€ä¸ªç»™å®šçš„è§†å·®æ¯”ç‡ã€‚
      * @param positionOffset @~english A given position offset.
-     * @~chinese Ò»¸ö¸ø¶¨µÄÎ»ÖÃÆ«ÒÆÁ¿¡£
+     * @~chinese ä¸€ä¸ªç»™å®šçš„ä½ç½®åç§»é‡ã€‚
      */
     void addChild(Node * child, int z, const Vec2& parallaxRatio, const Vec2& positionOffset);
 

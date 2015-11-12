@@ -37,60 +37,60 @@ NS_CC_BEGIN
 
 /** 
 @brief @~english Waves3D action.
- * @~chinese Waves3D¶¯×÷¡£
+ * @~chinese Waves3DåŠ¨ä½œã€‚
  * @details @~english This action is used for making 3D waves effect on the target node.
         You can control the effect by these parameters:
         duration, grid size, waves count, amplitude.
- * @~chinese ¸Ã¶¯×÷ÓÃÓÚÔÚÄ¿±ê½ÚµãÉÏÖÆÔì3D²¨ÀËĞ§¹û¡£
- * Äã¿ÉÒÔ¿ØÖÆÕâĞ©²ÎÊıÀ´Ó°ÏìĞ§¹û:
- * ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡¡¢²¨ÀËµÄÊıÁ¿¡¢Õñ·ù¡£
+ * @~chinese è¯¥åŠ¨ä½œç”¨äºåœ¨ç›®æ ‡èŠ‚ç‚¹ä¸Šåˆ¶é€ 3Dæ³¢æµªæ•ˆæœã€‚
+ * ä½ å¯ä»¥æ§åˆ¶è¿™äº›å‚æ•°æ¥å½±å“æ•ˆæœ:
+ * æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°ã€æ³¢æµªçš„æ•°é‡ã€æŒ¯å¹…ã€‚
 */
 class CC_DLL Waves3D : public Grid3DAction
 {
 public:
     /**
     @brief @~english Create an action with duration, grid size, waves and amplitude.
-     * @~chinese Ê¹ÓÃ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡¡¢²¨ÀËµÄÊıÁ¿ºÍÕñ·ùÀ´´´½¨Ò»¸öWave3D¶¯×÷¡£
+     * @~chinese ä½¿ç”¨æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°ã€æ³¢æµªçš„æ•°é‡å’ŒæŒ¯å¹…æ¥åˆ›å»ºä¸€ä¸ªWave3DåŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the Waves3D action. It's a value in seconds.
-     * @~chinese Ö¸¶¨µÄ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒ‡å®šçš„æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese ç½‘æ ¼çš„å¤§å°ã€‚
     @param waves @~english Specify the waves count of the Waves3D action.
-     * @~chinese ²¨ÀËµÄÊıÁ¿¡£
+     * @~chinese æ³¢æµªçš„æ•°é‡ã€‚
     @param amplitude @~english Specify the amplitude of the Waves3D action.
-     * @~chinese Õñ·ù¡£
+     * @~chinese æŒ¯å¹…ã€‚
     @return @~english If the creation sucess, return a pointer of Waves3D action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦£¬·µ»ØÒ»¸öÖ¸ÕëWaves3D¶¯×÷£¬·ñÔò£¬·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸï¼Œè¿”å›ä¸€ä¸ªæŒ‡é’ˆWaves3DåŠ¨ä½œï¼Œå¦åˆ™ï¼Œè¿”å›ç©ºæŒ‡é’ˆã€‚
     */
     static Waves3D* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
     /**
     @brief @~english Get the amplitude of the effect.
-     * @~chinese »ñÈ¡Wave3DÌØĞ§µÄÕñ·ù¡£
+     * @~chinese è·å–Wave3Dç‰¹æ•ˆçš„æŒ¯å¹…ã€‚
     @return @~english Return the amplitude of the effect.
-     * @~chinese ·µ»ØÕñ·ù¡£
+     * @~chinese è¿”å›æŒ¯å¹…ã€‚
     */
     inline float getAmplitude() const { return _amplitude; }
     /**
     @brief @~english Set the amplitude to the effect.
-     * @~chinese ÉèÖÃWave3DÌØĞ§µÄÕñ·ù¡£
+     * @~chinese è®¾ç½®Wave3Dç‰¹æ•ˆçš„æŒ¯å¹…ã€‚
     @param amplitude @~english The value of amplitude will be set.
-     * @~chinese Õñ·ùµÄÖµ¡£
+     * @~chinese æŒ¯å¹…çš„å€¼ã€‚
     */
     inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /**
     @brief @~english Get the amplitude rate of the effect.
-     * @~chinese »ñµÃÕñ·ùË¥¼õÂÊ¡£
+     * @~chinese è·å¾—æŒ¯å¹…è¡°å‡ç‡ã€‚
     @return @~english Return the amplitude rate of the effect.
-     * @~chinese ·µ»ØÕñ·ùË¥¼õÂÊ¡£
+     * @~chinese è¿”å›æŒ¯å¹…è¡°å‡ç‡ã€‚
     */
     inline float getAmplitudeRate() const { return _amplitudeRate; }
     /**
     @brief @~english Set the ampliture rate of the effect.
-     * @~chinese ÉèÖÃÕñ·ùË¥¼õÂÊ¡£
+     * @~chinese è®¾ç½®æŒ¯å¹…è¡°å‡ç‡ã€‚
     @param amplitudeRate @~english The value of amplitude rate will be set.
-     * @~chinese Õñ·ùË¥¼õÂÊ¡£
+     * @~chinese æŒ¯å¹…è¡°å‡ç‡ã€‚
     */
     inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
@@ -104,17 +104,17 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
     @brief @~english Initializes an action with duration, grid size, waves and amplitude.
-     * @~chinese Ê¹ÓÃ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡¡¢²¨ÀËµÄÊıÁ¿ºÍÕñ·ùÀ´³õÊ¼»¯Ò»¸öWave3D¶¯×÷¡£
+     * @~chinese ä½¿ç”¨æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°ã€æ³¢æµªçš„æ•°é‡å’ŒæŒ¯å¹…æ¥åˆå§‹åŒ–ä¸€ä¸ªWave3DåŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the Waves3D action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese ç½‘æ ¼çš„å¤§å°ã€‚
     @param waves @~english Specify the waves count of the Waves3D action.
-     * @~chinese ²¨ÀËµÄÊıÁ¿¡£
+     * @~chinese æ³¢æµªçš„æ•°é‡ã€‚
     @param amplitude @~english Specify the amplitude of the Waves3D action.
-     * @~chinese Õñ·ù¡£
+     * @~chinese æŒ¯å¹…ã€‚
     @return @~english If the initialization success, return true; otherwise, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
     */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
@@ -129,20 +129,20 @@ private:
 
 /**
 @brief @~english FlipX3D action.
- * @~chinese FlipX3DĞĞ¶¯¡£
+ * @~chinese FlipX3Dè¡ŒåŠ¨ã€‚
 @details @~english This action is used for flipping the target node on the x axis.
- * @~chinese ¸Ã¶¯×÷ÓÃÓÚ½«Ä¿±ê½ÚµãÑØxÖá½øĞĞ·­×ª¡£
+ * @~chinese è¯¥åŠ¨ä½œç”¨äºå°†ç›®æ ‡èŠ‚ç‚¹æ²¿xè½´è¿›è¡Œç¿»è½¬ã€‚
 */
 class CC_DLL FlipX3D : public Grid3DAction
 {
 public:
     /**
     @brief @~english Create the action with duration.
-     * @~chinese ÓÃ³ÖĞøÊ±¼ä´´½¨FlipX3D¶¯×÷¡£
+     * @~chinese ç”¨æŒç»­æ—¶é—´åˆ›å»ºFlipX3DåŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the FilpX3D action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
     @return @~english If the creation sucess, return a pointer of FilpX3D action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦£¬·µ»ØÒ»¸öÖ¸ÕëFilpX3D¶¯×÷£¬·ñÔò£¬·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸï¼Œè¿”å›ä¸€ä¸ªæŒ‡é’ˆFilpX3DåŠ¨ä½œï¼Œå¦åˆ™ï¼Œè¿”å›ç©ºæŒ‡é’ˆã€‚
     */
     static FlipX3D* create(float duration);
 
@@ -156,23 +156,23 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
     @brief @~english Initializes an action with duration.
-     * @~chinese ÓÃ³ÖĞøÊ±¼ä³õÊ¼»¯FlipX3D¶¯×÷¡£
+     * @~chinese ç”¨æŒç»­æ—¶é—´åˆå§‹åŒ–FlipX3DåŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the FlipX3D action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
     @return @~english If the initialization success, return true; otherwise, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
     */
     bool initWithDuration(float duration);
 
     /** 
     @brief @~english Initializes an action with duration and grid size.
-     * @~chinese ÓÃ³ÖĞøÊ±¼äºÍÍø¸ñ´óĞ¡³õÊ¼»¯Flip3D¶¯×÷¡£
+     * @~chinese ç”¨æŒç»­æ—¶é—´å’Œç½‘æ ¼å¤§å°åˆå§‹åŒ–Flip3DåŠ¨ä½œã€‚
     @param gridSize @~english Specify the grid size of the FlipX3D action.
-     * @~chinese Íø¸ñµÄ´óĞ¡.
+     * @~chinese ç½‘æ ¼çš„å¤§å°.
     @param duration @~english Specify the duration of the FlipX3D action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
     @return @~english If the initialization success, return true; otherwise, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
     */
     virtual bool initWithSize(const Size& gridSize, float duration);
 
@@ -182,20 +182,20 @@ private:
 
 /**
 @brief @~english FlipY3D action.
- * @~chinese FlipY3DĞĞ¶¯¡£
+ * @~chinese FlipY3Dè¡ŒåŠ¨ã€‚
 @details @~english This action is used for flipping the target node on the y axis.
- * @~chinese ¸Ã¶¯×÷ÓÃÓÚ½«Ä¿±ê½ÚµãÑØyÖá½øĞĞ·­×ª¡£
+ * @~chinese è¯¥åŠ¨ä½œç”¨äºå°†ç›®æ ‡èŠ‚ç‚¹æ²¿yè½´è¿›è¡Œç¿»è½¬ã€‚
 */
 class CC_DLL FlipY3D : public FlipX3D
 {
 public:
     /**
     @brief @~english Create the action with duration.
-     * @~chinese ÓÃ³ÖĞøÊ±¼ä´´½¨FlipY3D¶¯×÷¡£
+     * @~chinese ç”¨æŒç»­æ—¶é—´åˆ›å»ºFlipY3DåŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the FlipY3D action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
     @return @~english If the creation sucess, return a pointer of FlipY3D action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦£¬·µ»ØÒ»¸öÖ¸ÕëFlipY3D¶¯×÷£¬·ñÔò£¬·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸï¼Œè¿”å›ä¸€ä¸ªæŒ‡é’ˆFlipY3DåŠ¨ä½œï¼Œå¦åˆ™ï¼Œè¿”å›ç©ºæŒ‡é’ˆã€‚
     */
     static FlipY3D* create(float duration);
 
@@ -212,72 +212,72 @@ private:
 
 /**
 @brief @~english Lens3D action.
- * @~chinese Lens3D¶¯×÷¡£
+ * @~chinese Lens3DåŠ¨ä½œã€‚
  * @details @~english This action is used for take effect on the target node as lens.
         You can create the action by these parameters:
         duration, grid size, center position of lens, radius of lens.
         Also you can change the lens effect value & whether effect is concave by the setter methods.
- * @~chinese ¸Ã¶¯×÷ÓÃÓÚÔÚÄ¿±ê½ÚµãÉÏ²úÉú3D¾µÍ·ÌØĞ§¡£
- * Äã¿ÉÒÔÓÃÕâĞ©²ÎÊı¶¨ÖÆ¶¯×÷:
- * ³ÖĞøÊ±¼ä¡¢Íø¸ñ³ß´ç¡¢¾µÍ·µÄÖĞĞÄÎ»ÖÃ¡¢¾µÍ·µÄ°ë¾¶¡£
- * Ò²¿ÉÒÔÉèÖÃÍ¸¾µÖµºÍÑ¡Ôñ¾µÍ·Ğ§¹ûÊÇ·ñÊÇ°¼ÃæµÄ¡£
+ * @~chinese è¯¥åŠ¨ä½œç”¨äºåœ¨ç›®æ ‡èŠ‚ç‚¹ä¸Šäº§ç”Ÿ3Dé•œå¤´ç‰¹æ•ˆã€‚
+ * ä½ å¯ä»¥ç”¨è¿™äº›å‚æ•°å®šåˆ¶åŠ¨ä½œ:
+ * æŒç»­æ—¶é—´ã€ç½‘æ ¼å°ºå¯¸ã€é•œå¤´çš„ä¸­å¿ƒä½ç½®ã€é•œå¤´çš„åŠå¾„ã€‚
+ * ä¹Ÿå¯ä»¥è®¾ç½®é€é•œå€¼å’Œé€‰æ‹©é•œå¤´æ•ˆæœæ˜¯å¦æ˜¯å‡¹é¢çš„ã€‚
 */
 class CC_DLL Lens3D : public Grid3DAction
 {
 public:
     /**
     @brief @~english Create the action with center position, radius, a grid size and duration.
-     * @~chinese ÓÃ¾µÍ·ÖĞĞÄÎ»ÖÃ£¬°ë¾¶£¬Íø¸ñµÄ´óĞ¡ºÍ³ÖĞøÊ±¼ä´´½¨Ò»¸öLens3D¶¯×÷¡£
+     * @~chinese ç”¨é•œå¤´ä¸­å¿ƒä½ç½®ï¼ŒåŠå¾„ï¼Œç½‘æ ¼çš„å¤§å°å’ŒæŒç»­æ—¶é—´åˆ›å»ºä¸€ä¸ªLens3DåŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the Lens3D action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese ç½‘æ ¼çš„å¤§å°ã€‚
     @param position @~english Specify the center position of the lens.
-     * @~chinese ¾µÍ·µÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese é•œå¤´çš„ä¸­å¿ƒä½ç½®ã€‚
     @param radius @~english Specify the radius of the lens.
-     * @~chinese ¾µÍ·µÄ°ë¾¶¡£
+     * @~chinese é•œå¤´çš„åŠå¾„ã€‚
     @return @~english If the creation sucess, return a pointer of Lens3D action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦£¬·µ»ØÒ»¸öÖ¸ÕëLens3D¶¯×÷£¬·ñÔò£¬·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸï¼Œè¿”å›ä¸€ä¸ªæŒ‡é’ˆLens3DåŠ¨ä½œï¼Œå¦åˆ™ï¼Œè¿”å›ç©ºæŒ‡é’ˆã€‚
     */
     static Lens3D* create(float duration, const Size& gridSize, const Vec2& position, float radius);
 
     /**
     @brief @~english Get the value of lens effect. Default value is 0.7.
-     * @~chinese »ñÈ¡Í¸¾µÖµ£¬Ä¬ÈÏÖµÊÇ0.7¡£
+     * @~chinese è·å–é€é•œå€¼ï¼Œé»˜è®¤å€¼æ˜¯0.7ã€‚
     @return @~english The value of lens effect.
-     * @~chinese Í¸¾µÖµ¡£
+     * @~chinese é€é•œå€¼ã€‚
     */
     inline float getLensEffect() const { return _lensEffect; }
 
     /**
     @brief @~english Set the value of lens effect.
-     * @~chinese ÉèÖÃÍ¸¾µÖµ¡£
+     * @~chinese è®¾ç½®é€é•œå€¼ã€‚
     @param lensEffect @~english The value of lens effect will be set.
-     * @~chinese Í¸¾µÖµ¡£
+     * @~chinese é€é•œå€¼ã€‚
     */
     inline void setLensEffect(float lensEffect) { _lensEffect = lensEffect; }
 
     /**
     @brief @~english Set whether lens is concave.
-     * @~chinese ÉèÖÃ¾µÍ·ÊÇ·ñÎª°¼Ãæ¡£
+     * @~chinese è®¾ç½®é•œå¤´æ˜¯å¦ä¸ºå‡¹é¢ã€‚
     @param concave @~english Whether lens is concave.
-     * @~chinese ¾µÍ·ÊÇ·ñÎª°¼Ãæ¡£
+     * @~chinese é•œå¤´æ˜¯å¦ä¸ºå‡¹é¢ã€‚
     */
     inline void setConcave(bool concave) { _concave = concave; }
 
     /**
     @brief @~english Get the center position of lens effect.
-     * @~chinese »ñÈ¡¾µÍ·µÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese è·å–é•œå¤´çš„ä¸­å¿ƒä½ç½®ã€‚
     @return @~english The center position of lens effect.
-     * @~chinese ¾µÍ·µÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese é•œå¤´çš„ä¸­å¿ƒä½ç½®ã€‚
     */
     inline const Vec2& getPosition() const { return _position; }
 
     /**
     @brief @~english Set the center position of lens effect.
-     * @~chinese ÉèÖÃ¾µÍ·µÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese è®¾ç½®é•œå¤´çš„ä¸­å¿ƒä½ç½®ã€‚
     @param position @~english The center position will be set.
-     * @~chinese ¾µÍ·µÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese é•œå¤´çš„ä¸­å¿ƒä½ç½®ã€‚
     */
     void setPosition(const Vec2& position);
 
@@ -291,27 +291,27 @@ CC_CONSTRUCTOR_ACCESS:
 
     /**
     @brief @~english Initializes the action with center position, radius, grid size and duration.
-     * @~chinese ÓÃ¾µÍ·ÖĞĞÄÎ»ÖÃ£¬°ë¾¶£¬Íø¸ñµÄ´óĞ¡ºÍ³ÖĞøÊ±¼ä³õÊ¼»¯Ò»¸öLens3D¶¯×÷¡£
+     * @~chinese ç”¨é•œå¤´ä¸­å¿ƒä½ç½®ï¼ŒåŠå¾„ï¼Œç½‘æ ¼çš„å¤§å°å’ŒæŒç»­æ—¶é—´åˆå§‹åŒ–ä¸€ä¸ªLens3DåŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the Lens3D action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese ç½‘æ ¼çš„å¤§å°ã€‚
     @param position @~english Specify the center position of the lens.
-     * @~chinese ¾µÍ·µÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese é•œå¤´çš„ä¸­å¿ƒä½ç½®ã€‚
     @param radius @~english Specify the radius of the lens.
-     * @~chinese ¾µÍ·µÄ°ë¾¶¡£
+     * @~chinese é•œå¤´çš„åŠå¾„ã€‚
     @return @~english If the initialization success, return true; otherwise, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
     */
     bool initWithDuration(float duration, const Size& gridSize, const Vec2& position, float radius);
 
 protected:
-    /* @~english lens center position  @~chinese ¾µÍ·µÄÖĞĞÄÎ»ÖÃ */
+    /* @~english lens center position  @~chinese é•œå¤´çš„ä¸­å¿ƒä½ç½® */
     Vec2 _position;
     float _radius;
-    /** @~english lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect  @~chinese Í¸¾µÖµ£¬Ä¬ÈÏÎª0.7 - 0ÒâÎ¶×ÅÃ»ÓĞĞ§¹û£¬1ÊÇºÜÇ¿µÄĞ§¹û*/
+    /** @~english lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect  @~chinese é€é•œå€¼ï¼Œé»˜è®¤ä¸º0.7 - 0æ„å‘³ç€æ²¡æœ‰æ•ˆæœï¼Œ1æ˜¯å¾ˆå¼ºçš„æ•ˆæœ*/
     float _lensEffect;
-    /** @~english lens is concave. (true = concave, false = convex) default is convex  @~chinese ¾µÍ·ÊÇ°¼ÃæµÄ¡£(true=°¼,false=Í¹)Ä¬ÈÏÊÇÍ¹ÃæµÄ */
+    /** @~english lens is concave. (true = concave, false = convex) default is convex  @~chinese é•œå¤´æ˜¯å‡¹é¢çš„ã€‚(true=å‡¹,false=å‡¸)é»˜è®¤æ˜¯å‡¸é¢çš„ */
     bool _concave;
 
     bool _dirty;
@@ -322,80 +322,80 @@ private:
 
 /**
 @brief @~english Ripple3D action.
- * @~chinese 3D²¨ÎÆ£¨Ripple3D£©¶¯×÷¡£
+ * @~chinese 3Dæ³¢çº¹ï¼ˆRipple3Dï¼‰åŠ¨ä½œã€‚
  * @details @~english This action is used for take effect on the target node as ripple.
         You can create the action by these parameters:
         duration, grid size, center position of ripple,
         radius of ripple, waves count, amplitude.
- * @~chinese ¸Ã¶¯×÷ÓÃÓÚÔÚÄ¿±ê½ÚµãÉÏ²úÉú²¨ÎÆÌØĞ§¡£
- * Äã¿ÉÒÔÓÃÕâĞ©²ÎÊı¶¨ÖÆĞ§¹û:
- * ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡¡¢²¨ÎÆµÄÖĞĞÄÎ»ÖÃ¡¢²¨ÎÆµÄ°ë¾¶¡¢²¨ÎÆµÄÊıÁ¿¡¢Õñ·ù¡£
+ * @~chinese è¯¥åŠ¨ä½œç”¨äºåœ¨ç›®æ ‡èŠ‚ç‚¹ä¸Šäº§ç”Ÿæ³¢çº¹ç‰¹æ•ˆã€‚
+ * ä½ å¯ä»¥ç”¨è¿™äº›å‚æ•°å®šåˆ¶æ•ˆæœ:
+ * æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°ã€æ³¢çº¹çš„ä¸­å¿ƒä½ç½®ã€æ³¢çº¹çš„åŠå¾„ã€æ³¢çº¹çš„æ•°é‡ã€æŒ¯å¹…ã€‚
 */
 class CC_DLL Ripple3D : public Grid3DAction
 {
 public:
     /**
     @brief @~english Create the action with center position, radius, number of waves, amplitude, a grid size and duration.
-     * @~chinese ÓÃÖĞĞÄÎ»ÖÃ£¬°ë¾¶£¬²¨ÎÆµÄÊıÁ¿£¬Õñ·ù£¬Íø¸ñµÄ´óĞ¡ºÍ³ÖĞøÊ±¼äÀ´´´½¨Ò»¸öRipple3D¶¯×÷¡£
+     * @~chinese ç”¨ä¸­å¿ƒä½ç½®ï¼ŒåŠå¾„ï¼Œæ³¢çº¹çš„æ•°é‡ï¼ŒæŒ¯å¹…ï¼Œç½‘æ ¼çš„å¤§å°å’ŒæŒç»­æ—¶é—´æ¥åˆ›å»ºä¸€ä¸ªRipple3DåŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the Ripple3D action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese ç½‘æ ¼çš„å¤§å°ã€‚
     @param position @~english Specify the center position of the ripple effect.
-     * @~chinese ²¨ÎÆµÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese æ³¢çº¹çš„ä¸­å¿ƒä½ç½®ã€‚
     @param radius @~english Specify the radius of the ripple effect.
-     * @~chinese ²¨ÎÆµÄ°ë¾¶.
+     * @~chinese æ³¢çº¹çš„åŠå¾„.
     @param waves @~english Specify the waves count of the ripple effect.
-     * @~chinese ²¨ÎÆµÄÊıÁ¿¡£
+     * @~chinese æ³¢çº¹çš„æ•°é‡ã€‚
     @param amplitude @~english Specify the amplitude of the ripple effect.
-     * @~chinese ²¨ÎÆµÄÕñ·ù¡£
+     * @~chinese æ³¢çº¹çš„æŒ¯å¹…ã€‚
     @return @~english If the creation sucess, return a pointer of Ripple3D action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦£¬·µ»ØÒ»¸öRipple3DĞĞ¶¯£¬·ñÔò£¬·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸï¼Œè¿”å›ä¸€ä¸ªRipple3Dè¡ŒåŠ¨ï¼Œå¦åˆ™ï¼Œè¿”å›ç©ºæŒ‡é’ˆã€‚
     */
     static Ripple3D* create(float duration, const Size& gridSize, const Vec2& position, float radius, unsigned int waves, float amplitude);
 
     /**
     @brief @~english Get the center position of ripple effect.
-     * @~chinese »ñÈ¡²¨ÎÆµÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese è·å–æ³¢çº¹çš„ä¸­å¿ƒä½ç½®ã€‚
     @return @~english The center position of ripple effect.
-     * @~chinese ²¨ÎÆÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese æ³¢çº¹ä¸­å¿ƒä½ç½®ã€‚
     */
     inline const Vec2& getPosition() const { return _position; }
     /**
     @brief @~english Set the center position of ripple effect.
-     * @~chinese ÉèÖÃ²¨ÎÆµÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese è®¾ç½®æ³¢çº¹çš„ä¸­å¿ƒä½ç½®ã€‚
     @param position @~english The center position of ripple effect will be set.
-     * @~chinese ²¨ÎÆµÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese æ³¢çº¹çš„ä¸­å¿ƒä½ç½®ã€‚
     */
     void setPosition(const Vec2& position);
 
     /**
     @brief @~english Get the amplitude of ripple effect.
-     * @~chinese »ñÈ¡µÄ²¨ÎÆµÄÕñ·ù¡£
+     * @~chinese è·å–çš„æ³¢çº¹çš„æŒ¯å¹…ã€‚
     @return @~english The amplitude of ripple effect.
-     * @~chinese ²¨ÎÆµÄÕñ·ù¡£
+     * @~chinese æ³¢çº¹çš„æŒ¯å¹…ã€‚
     */
     inline float getAmplitude() const { return _amplitude; }
     /**
     @brief @~english Set the amplitude of ripple effect.
-     * @~chinese ÉèÖÃ²¨ÎÆµÄÕñ·ù¡£
+     * @~chinese è®¾ç½®æ³¢çº¹çš„æŒ¯å¹…ã€‚
     @param fAmplitude @~english The amplitude of ripple effect.
-     * @~chinese ²¨ÎÆµÄÕñ·ù¡£
+     * @~chinese æ³¢çº¹çš„æŒ¯å¹…ã€‚
     */
     inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
 
     /**
     @brief @~english Get the amplitude rate of ripple effect.
-     * @~chinese »ñÈ¡²¨ÎÆµÄÕñ·ùË¥¼õÂÊ¡£
+     * @~chinese è·å–æ³¢çº¹çš„æŒ¯å¹…è¡°å‡ç‡ã€‚
     @return @~english The amplitude rate of ripple effect.
-     * @~chinese Õñ·ùË¥¼õÂÊ¡£
+     * @~chinese æŒ¯å¹…è¡°å‡ç‡ã€‚
     */
     inline float getAmplitudeRate() const { return _amplitudeRate; }
     /**
     @brief @~english Set the amplitude rate of ripple effect.
-     * @~chinese ÉèÖÃ²¨ÎÆµÄÕñ·ùË¥¼õÂÊ¡£
+     * @~chinese è®¾ç½®æ³¢çº¹çš„æŒ¯å¹…è¡°å‡ç‡ã€‚
     @param fAmplitudeRate @~english The amplitude rate of ripple effect.
-     * @~chinese Õñ·ùË¥¼õÂÊ¡£
+     * @~chinese æŒ¯å¹…è¡°å‡ç‡ã€‚
     */
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
@@ -409,34 +409,34 @@ CC_CONSTRUCTOR_ACCESS:
 
     /**
     @brief @~english Initializes the action with center position, radius, number of waves, amplitude, a grid size and duration.
-     * @~chinese ÓÃÖĞĞÄÎ»ÖÃ£¬°ë¾¶£¬²¨ÎÆµÄÊıÁ¿£¬Õñ·ù£¬Íø¸ñµÄ´óĞ¡ºÍ³ÖĞøÊ±¼äÀ´³õÊ¼»¯Ò»¸öRipple3D¶¯×÷¡£
+     * @~chinese ç”¨ä¸­å¿ƒä½ç½®ï¼ŒåŠå¾„ï¼Œæ³¢çº¹çš„æ•°é‡ï¼ŒæŒ¯å¹…ï¼Œç½‘æ ¼çš„å¤§å°å’ŒæŒç»­æ—¶é—´æ¥åˆå§‹åŒ–ä¸€ä¸ªRipple3DåŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the Ripple3D action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese ç½‘æ ¼çš„å¤§å°ã€‚
     @param position @~english Specify the center position of the ripple effect.
-     * @~chinese ²¨ÎÆµÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese æ³¢çº¹çš„ä¸­å¿ƒä½ç½®ã€‚
     @param radius @~english Specify the radius of the ripple effect.
-     * @~chinese ²¨ÎÆµÄ°ë¾¶.
+     * @~chinese æ³¢çº¹çš„åŠå¾„.
     @param waves @~english Specify the waves count of the ripple effect.
-     * @~chinese ²¨ÎÆµÄÊıÁ¿¡£
+     * @~chinese æ³¢çº¹çš„æ•°é‡ã€‚
     @param amplitude @~english Specify the amplitude of the ripple effect.
-     * @~chinese ²¨ÎÆµÄÕñ·ù¡£
+     * @~chinese æ³¢çº¹çš„æŒ¯å¹…ã€‚
     @return @~english If the initialization success, return true; otherwise, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool initWithDuration(float duration, const Size& gridSize, const Vec2& position, float radius, unsigned int waves, float amplitude);
 
 protected:
-    /* @~english The center position of the ripple effect  @~chinese ²¨ÎÆµÄÖĞĞÄÎ»ÖÃ */
+    /* @~english The center position of the ripple effect  @~chinese æ³¢çº¹çš„ä¸­å¿ƒä½ç½® */
     Vec2 _position;
-    /* @~english The radius of the ripple effect  @~chinese ²¨ÎÆµÄ°ë¾¶ */
+    /* @~english The radius of the ripple effect  @~chinese æ³¢çº¹çš„åŠå¾„ */
     float _radius;
-    /* @~english The wave count of the ripple effect  @~chinese ²¨ÎÆµÄÊıÁ¿ */
+    /* @~english The wave count of the ripple effect  @~chinese æ³¢çº¹çš„æ•°é‡ */
     unsigned int _waves;
-    /* @~english The amplitude of the ripple effect  @~chinese ²¨ÎÆµÄÕñ·ù */
+    /* @~english The amplitude of the ripple effect  @~chinese æ³¢çº¹çš„æŒ¯å¹… */
     float _amplitude;
-    /* @~english The amplitude rate of the ripple effect  @~chinese ²¨ÎÆµÄÕñ·ùË¥¼õÂÊ */
+    /* @~english The amplitude rate of the ripple effect  @~chinese æ³¢çº¹çš„æŒ¯å¹…è¡°å‡ç‡ */
     float _amplitudeRate;
 
 private:
@@ -445,30 +445,30 @@ private:
 
 /**
 @brief @~english Shaky3D action.
- * @~chinese 3DÒ¡»Î£¨Shaky3D£©¶¯×÷¡£
+ * @~chinese 3Dæ‘‡æ™ƒï¼ˆShaky3Dï¼‰åŠ¨ä½œã€‚
  * @details @~english This action is used for take effect on the target node as shaky.
         You can create the action by these parameters:
         duration, grid size, range, whether shake on the z axis.
- * @~chinese ¸Ã¶¯×÷ÓÃÓÚÔÚÄ¿±ê½ÚµãÉÏÖÆÔìÒ¡»ÎµÄÊÓ¾õÌØĞ§¡£
- * Äã¿ÉÒÔ¸Ä±äÕâĞ©²ÎÊıÀ´¶¨ÖÆĞ§¹û:
- * ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡¡¢·¶Î§¡¢ÊÇ·ñÔÚzÖáÒ¡»Î¡£
+ * @~chinese è¯¥åŠ¨ä½œç”¨äºåœ¨ç›®æ ‡èŠ‚ç‚¹ä¸Šåˆ¶é€ æ‘‡æ™ƒçš„è§†è§‰ç‰¹æ•ˆã€‚
+ * ä½ å¯ä»¥æ”¹å˜è¿™äº›å‚æ•°æ¥å®šåˆ¶æ•ˆæœ:
+ * æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°ã€èŒƒå›´ã€æ˜¯å¦åœ¨zè½´æ‘‡æ™ƒã€‚
 */
 class CC_DLL Shaky3D : public Grid3DAction
 {
 public:
     /** 
     @brief @~english Create the action with duration, grid size, range and whether shake on Z axis.
-     * @~chinese ÓÃ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡¡¢·¶Î§¡¢ÊÇ·ñÔÚzÖáÒ¡»ÎµÈ²ÎÊıÀ´´´½¨Ò»¸öShaky3D¶¯×÷¡£
+     * @~chinese ç”¨æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°ã€èŒƒå›´ã€æ˜¯å¦åœ¨zè½´æ‘‡æ™ƒç­‰å‚æ•°æ¥åˆ›å»ºä¸€ä¸ªShaky3DåŠ¨ä½œã€‚
     @param initWithDuration @~english Specify the duration of the Shaky3D action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese ç½‘æ ¼çš„å¤§å°ã€‚
     @param range @~english Specify the range of the shaky effect.
-     * @~chinese »Î¶¯ÌØĞ§µÄ·¶Î§¡£
+     * @~chinese æ™ƒåŠ¨ç‰¹æ•ˆçš„èŒƒå›´ã€‚
     @param shakeZ @~english Specify whether shake on the z axis.
-     * @~chinese Ö¸¶¨ÊÇ·ñÔÚzÖá»Î¶¯¡£
+     * @~chinese æŒ‡å®šæ˜¯å¦åœ¨zè½´æ™ƒåŠ¨ã€‚
     @return @~english If the creation sucess, return a pointer of Shaky3D action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦£¬·µ»ØÒ»¸öShaky3D¶¯×÷£¬·ñÔò£¬·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸï¼Œè¿”å›ä¸€ä¸ªShaky3DåŠ¨ä½œï¼Œå¦åˆ™ï¼Œè¿”å›ç©ºæŒ‡é’ˆã€‚
     */
     static Shaky3D* create(float initWithDuration, const Size& gridSize, int range, bool shakeZ);
 
@@ -482,17 +482,17 @@ CC_CONSTRUCTOR_ACCESS:
     
     /** 
     @brief @~english Initializes the action with duration, grid size, range and whether shake on Z axis.
-     * @~chinese ÓÃ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡¡¢·¶Î§¡¢ÊÇ·ñÔÚzÖáÒ¡»ÎµÈ²ÎÊıÀ´³õÊ¼»¯Ò»¸öShaky3D¶¯×÷¡£
+     * @~chinese ç”¨æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°ã€èŒƒå›´ã€æ˜¯å¦åœ¨zè½´æ‘‡æ™ƒç­‰å‚æ•°æ¥åˆå§‹åŒ–ä¸€ä¸ªShaky3DåŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the Shaky3D action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese ç½‘æ ¼çš„å¤§å°ã€‚
     @param range @~english Specify the range of the shaky effect.
-     * @~chinese »Î¶¯ÌØĞ§µÄ·¶Î§¡£
+     * @~chinese æ™ƒåŠ¨ç‰¹æ•ˆçš„èŒƒå›´ã€‚
     @param shakeZ @~english Specify whether shake on the z axis.
-     * @~chinese Ö¸¶¨ÊÇ·ñÔÚzÖá»Î¶¯¡£
+     * @~chinese æŒ‡å®šæ˜¯å¦åœ¨zè½´æ™ƒåŠ¨ã€‚
     @return @~english If the creation sucess, return a pointer of Shaky3D action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦£¬·µ»ØÒ»¸öShaky3D¶¯×÷£¬·ñÔò£¬·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸï¼Œè¿”å›ä¸€ä¸ªShaky3DåŠ¨ä½œï¼Œå¦åˆ™ï¼Œè¿”å›ç©ºæŒ‡é’ˆã€‚
     */
     bool initWithDuration(float duration, const Size& gridSize, int range, bool shakeZ);
 
@@ -506,60 +506,60 @@ private:
 
 /**
 @brief @~english Liquid action.
- * @~chinese ÒºÌå£¨Liquid£©¶¯×÷¡£
+ * @~chinese æ¶²ä½“ï¼ˆLiquidï¼‰åŠ¨ä½œã€‚
  * @details @~english This action is used for take effect on the target node as liquid.
         You can create the action by these parameters:
         duration, grid size, waves count, amplitude of the liquid effect.
- * @~chinese ¸Ã¶¯×÷ÓÃÓÚÔÚÄ¿±ê½ÚµãÉÏÖÆÔìÒºÌåĞ§¹û¡£
- * Äã¿ÉÒÔÓÃÕâĞ©²ÎÊı¶¨ÖÆÌØĞ§:
- * ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡¡¢²¨µÄÊıÁ¿¡¢ÒºÌåÌØĞ§µÄÕñ·ù¡£
+ * @~chinese è¯¥åŠ¨ä½œç”¨äºåœ¨ç›®æ ‡èŠ‚ç‚¹ä¸Šåˆ¶é€ æ¶²ä½“æ•ˆæœã€‚
+ * ä½ å¯ä»¥ç”¨è¿™äº›å‚æ•°å®šåˆ¶ç‰¹æ•ˆ:
+ * æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°ã€æ³¢çš„æ•°é‡ã€æ¶²ä½“ç‰¹æ•ˆçš„æŒ¯å¹…ã€‚
 */
 class CC_DLL Liquid : public Grid3DAction
 {
 public:
     /**
     @brief @~english Create the action with duration, grid size, waves count and amplitude.
-     * @~chinese ÓÃ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡¡¢²¨µÄÊıÁ¿ºÍÕñ·ùÀ´´´½¨Ò»¸öLiquid¶¯×÷¡£
+     * @~chinese ç”¨æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°ã€æ³¢çš„æ•°é‡å’ŒæŒ¯å¹…æ¥åˆ›å»ºä¸€ä¸ªLiquidåŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the Liquid action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese ç½‘æ ¼çš„å¤§å°ã€‚
     @param waves @~english Specify the waves count of the Liquid action.
-     * @~chinese ²¨µÄÊıÁ¿¡£
+     * @~chinese æ³¢çš„æ•°é‡ã€‚
     @param amplitude @~english Specify the amplitude of the Liquid action.
-     * @~chinese Liquid¶¯×÷µÄÕñ·ù¡£
+     * @~chinese LiquidåŠ¨ä½œçš„æŒ¯å¹…ã€‚
     @return @~english If the creation sucess, return a pointer of Liquid action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦£¬·µ»ØÒ»¸öLiquid¶¯×÷£¬·ñÔò£¬·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸï¼Œè¿”å›ä¸€ä¸ªLiquidåŠ¨ä½œï¼Œå¦åˆ™ï¼Œè¿”å›ç©ºæŒ‡é’ˆã€‚
     */
     static Liquid* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
     /**
     @brief @~english Get the amplitude of the effect.
-     * @~chinese »ñÈ¡Õñ·ù¡£
+     * @~chinese è·å–æŒ¯å¹…ã€‚
     @return @~english Return the amplitude of the effect.
-     * @~chinese Õñ·ù¡£
+     * @~chinese æŒ¯å¹…ã€‚
     */
     inline float getAmplitude() const { return _amplitude; }
     /**
     @brief @~english Set the amplitude to the effect.
-     * @~chinese ÉèÖÃÕñ·ù¡£
+     * @~chinese è®¾ç½®æŒ¯å¹…ã€‚
     @param amplitude @~english The value of amplitude will be set.
-     * @~chinese Õñ·ù¡£
+     * @~chinese æŒ¯å¹…ã€‚
     */
     inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /**
     @brief @~english Get the amplitude rate of the effect.
-     * @~chinese »ñµÃÕñ·ùË¥¼õÂÊ¡£
+     * @~chinese è·å¾—æŒ¯å¹…è¡°å‡ç‡ã€‚
     @return @~english Return the amplitude rate of the effect.
-     * @~chinese Õñ·ùË¥¼õÂÊ¡£
+     * @~chinese æŒ¯å¹…è¡°å‡ç‡ã€‚
     */
     inline float getAmplitudeRate() const { return _amplitudeRate; }
     /**
     @brief @~english Set the ampliture rate of the effect.
-     * @~chinese ÉèÖÃÕñ·ùË¥¼õÂÊ¡£
+     * @~chinese è®¾ç½®æŒ¯å¹…è¡°å‡ç‡ã€‚
     @param amplitudeRate @~english The value of amplitude rate will be set.
-     * @~chinese Õñ·ùË¥¼õÂÊ¡£
+     * @~chinese æŒ¯å¹…è¡°å‡ç‡ã€‚
     */
     inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
@@ -573,17 +573,17 @@ CC_CONSTRUCTOR_ACCESS:
     
     /**
     @brief @~english Initializes the action with duration, grid size, waves count and amplitude.
-     * @~chinese ÓÃ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡¡¢²¨µÄÊıÁ¿ºÍÕñ·ùÀ´´´½¨Ò»¸öLiquid¶¯×÷¡£
+     * @~chinese ç”¨æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°ã€æ³¢çš„æ•°é‡å’ŒæŒ¯å¹…æ¥åˆ›å»ºä¸€ä¸ªLiquidåŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the Liquid action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese ç½‘æ ¼çš„å¤§å°ã€‚
     @param waves @~english Specify the waves count of the Liquid action.
-     * @~chinese ²¨µÄÊıÁ¿¡£
+     * @~chinese æ³¢çš„æ•°é‡ã€‚
     @param amplitude @~english Specify the amplitude of the Liquid action.
-     * @~chinese Liquid¶¯×÷µÄÕñ·ù¡£
+     * @~chinese LiquidåŠ¨ä½œçš„æŒ¯å¹…ã€‚
     @return @~english If the initialization sucess, return true; otherwise, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
     */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
@@ -598,65 +598,65 @@ private:
 
 /**
 @brief @~english Waves action.
- * @~chinese ²¨ÀËÌØĞ§¶¯×÷¡£
+ * @~chinese æ³¢æµªç‰¹æ•ˆåŠ¨ä½œã€‚
  * @details @~english This action is used for take effect on the target node as waves.
         You can control the effect by these parameters:
         duration, grid size, waves count, amplitude,
         whether waves on horizontal and whether waves on vertical.
- * @~chinese ¸Ã¶¯×÷ÓÃÓÚÔÚÄ¿±ê½ÚµãÉÏÖÆÔì²¨ÀËÌØĞ§¡£
- * Äã¿ÉÒÔ¿ØÖÆÕâĞ©²ÎÊıÀ´¶¨ÖÆÌØĞ§:
- * ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡¡¢²¨ÀËµÄÊıÁ¿¡¢Õñ·ù¡¢²¨ÀËÊÇ·ñÔÚË®Æ½·½ÏòÉÏºÍ´¹Ö±·½ÏòÉÏ¡£
+ * @~chinese è¯¥åŠ¨ä½œç”¨äºåœ¨ç›®æ ‡èŠ‚ç‚¹ä¸Šåˆ¶é€ æ³¢æµªç‰¹æ•ˆã€‚
+ * ä½ å¯ä»¥æ§åˆ¶è¿™äº›å‚æ•°æ¥å®šåˆ¶ç‰¹æ•ˆ:
+ * æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°ã€æ³¢æµªçš„æ•°é‡ã€æŒ¯å¹…ã€æ³¢æµªæ˜¯å¦åœ¨æ°´å¹³æ–¹å‘ä¸Šå’Œå‚ç›´æ–¹å‘ä¸Šã€‚
  */
 class CC_DLL Waves : public Grid3DAction
 {
 public:
     /**
     @brief @~english Create the action with duration, grid size, waves count, amplitude, whether waves on horizontal and on vertical.
-     * @~chinese ÓÃ³ÖĞøÊ±¼ä£¬Íø¸ñ´óĞ¡£¬²¨ÀËµÄÊıÁ¿£¬Õñ·ù£¬²¨ÀËÊÇ·ñÔÚË®Æ½·½ÏòÉÏºÍ´¹Ö±·½ÏòÉÏÀ´´´½¨Ò»¸öWaves¶¯×÷¡£
+     * @~chinese ç”¨æŒç»­æ—¶é—´ï¼Œç½‘æ ¼å¤§å°ï¼Œæ³¢æµªçš„æ•°é‡ï¼ŒæŒ¯å¹…ï¼Œæ³¢æµªæ˜¯å¦åœ¨æ°´å¹³æ–¹å‘ä¸Šå’Œå‚ç›´æ–¹å‘ä¸Šæ¥åˆ›å»ºä¸€ä¸ªWavesåŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the Waves action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese ç½‘æ ¼çš„å¤§å°ã€‚
     @param waves @~english Specify the waves count of the Waves action.
-     * @~chinese ²¨ÀËµÄÊıÁ¿¡£
+     * @~chinese æ³¢æµªçš„æ•°é‡ã€‚
     @param amplitude @~english Specify the amplitude of the Waves action.
-     * @~chinese ²¨ÀËµÄÕñ·ù¡£
+     * @~chinese æ³¢æµªçš„æŒ¯å¹…ã€‚
     @param horizontal @~english Specify whether waves on horizontal.
-     * @~chinese Ö¸¶¨Ë®Æ½·½ÏòÊÇ·ñÓĞ²¨ÀË¡£
+     * @~chinese æŒ‡å®šæ°´å¹³æ–¹å‘æ˜¯å¦æœ‰æ³¢æµªã€‚
     @param vertical @~english Specify whether waves on vertical.
-     * @~chinese Ö¸¶¨´¹Ö±·½ÏòÊÇ·ñÓĞ²¨ÀË¡£
+     * @~chinese æŒ‡å®šå‚ç›´æ–¹å‘æ˜¯å¦æœ‰æ³¢æµªã€‚
     @return @~english If the creation sucess, return a pointer of Waves action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öWaves¶¯×÷£¬·ñÔò£¬·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªWavesåŠ¨ä½œï¼Œå¦åˆ™ï¼Œè¿”å›ç©ºæŒ‡é’ˆã€‚
     */
     static Waves* create(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
 
     /**
     @brief @~english Get the amplitude of the effect.
-     * @~chinese »ñÈ¡Õñ·ù¡£
+     * @~chinese è·å–æŒ¯å¹…ã€‚
     @return @~english Return the amplitude of the effect.
-     * @~chinese Õñ·ù¡£
+     * @~chinese æŒ¯å¹…ã€‚
     */
     inline float getAmplitude() const { return _amplitude; }
     /**
     @brief @~english Set the amplitude to the effect.
-     * @~chinese ÉèÖÃÕñ·ù¡£
+     * @~chinese è®¾ç½®æŒ¯å¹…ã€‚
     @param amplitude @~english The value of amplitude will be set.
-     * @~chinese Õñ·ù¡£
+     * @~chinese æŒ¯å¹…ã€‚
     */
     inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /**
     @brief @~english Get the amplitude rate of the effect.
-     * @~chinese »ñÈ¡Õñ·ùË¥¼õÂÊ¡£
+     * @~chinese è·å–æŒ¯å¹…è¡°å‡ç‡ã€‚
     @return @~english Return the amplitude rate of the effect.
-     * @~chinese ·µ»ØÕñ·ùË¥¼õÂÊ¡£
+     * @~chinese è¿”å›æŒ¯å¹…è¡°å‡ç‡ã€‚
     */
     inline float getAmplitudeRate() const { return _amplitudeRate; }
     /**
     @brief @~english Set the ampliture rate of the effect.
-     * @~chinese ÉèÖÃÕñ·ùË¥¼õÂÊ¡£
+     * @~chinese è®¾ç½®æŒ¯å¹…è¡°å‡ç‡ã€‚
     @param amplitudeRate @~english The value of amplitude rate will be set.
-     * @~chinese Õñ·ùË¥¼õÂÊ¡£
+     * @~chinese æŒ¯å¹…è¡°å‡ç‡ã€‚
     */
     inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
@@ -670,21 +670,21 @@ CC_CONSTRUCTOR_ACCESS:
     
     /**
     @brief @~english Initializes the action with duration, grid size, waves count, amplitude, whether waves on horizontal and on vertical.
-     * @~chinese ÓÃ³ÖĞøÊ±¼ä£¬Íø¸ñ´óĞ¡£¬²¨ÀËµÄÊıÁ¿£¬Õñ·ù£¬²¨ÀËÊÇ·ñÔÚË®Æ½·½ÏòÉÏºÍ´¹Ö±·½ÏòÉÏÀ´´´½¨Ò»¸öWaves¶¯×÷¡£
+     * @~chinese ç”¨æŒç»­æ—¶é—´ï¼Œç½‘æ ¼å¤§å°ï¼Œæ³¢æµªçš„æ•°é‡ï¼ŒæŒ¯å¹…ï¼Œæ³¢æµªæ˜¯å¦åœ¨æ°´å¹³æ–¹å‘ä¸Šå’Œå‚ç›´æ–¹å‘ä¸Šæ¥åˆ›å»ºä¸€ä¸ªWavesåŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the Waves action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese ç½‘æ ¼çš„å¤§å°ã€‚
     @param waves @~english Specify the waves count of the Waves action.
-     * @~chinese ²¨ÀËµÄÊıÁ¿¡£
+     * @~chinese æ³¢æµªçš„æ•°é‡ã€‚
     @param amplitude @~english Specify the amplitude of the Waves action.
-     * @~chinese ²¨ÀËµÄÕñ·ù¡£
+     * @~chinese æ³¢æµªçš„æŒ¯å¹…ã€‚
     @param horizontal @~english Specify whether waves on horizontal.
-     * @~chinese Ö¸¶¨Ë®Æ½·½ÏòÊÇ·ñÓĞ²¨ÀË¡£
+     * @~chinese æŒ‡å®šæ°´å¹³æ–¹å‘æ˜¯å¦æœ‰æ³¢æµªã€‚
     @param vertical @~english Specify whether waves on vertical.
-     * @~chinese Ö¸¶¨´¹Ö±·½ÏòÊÇ·ñÓĞ²¨ÀË¡£
+     * @~chinese æŒ‡å®šå‚ç›´æ–¹å‘æ˜¯å¦æœ‰æ³¢æµªã€‚
     @return @~english If the initialization sucess, return true; otherwise, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
     */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
 
@@ -701,77 +701,77 @@ private:
 
 /**
 @brief @~english Twirl action.
- * @~chinese äöÎĞ£¨Twirl£©¶¯×÷¡£
+ * @~chinese æ¼©æ¶¡ï¼ˆTwirlï¼‰åŠ¨ä½œã€‚
 @details @~english This action is used for take effect on the target node as twirl.
         You can control the effect by these parameters:
         duration, grid size, center position, twirls count, amplitude.
- * @~chinese ¸Ã¶¯×÷ÓÃÓÚÔÚÄ¿±ê½ÚµãÉÏ²úÉúäöÎĞĞ§¹û¡£
- * Äã¿ÉÒÔ¿ØÖÆÕâĞ©²ÎÊıÀ´¶¨ÖÆÌØĞ§:
- * ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡¡¢ÖĞĞÄÎ»ÖÃ¡¢äöÎĞ¼ÆÊı¡¢·ù¶È¡£
+ * @~chinese è¯¥åŠ¨ä½œç”¨äºåœ¨ç›®æ ‡èŠ‚ç‚¹ä¸Šäº§ç”Ÿæ¼©æ¶¡æ•ˆæœã€‚
+ * ä½ å¯ä»¥æ§åˆ¶è¿™äº›å‚æ•°æ¥å®šåˆ¶ç‰¹æ•ˆ:
+ * æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°ã€ä¸­å¿ƒä½ç½®ã€æ¼©æ¶¡è®¡æ•°ã€å¹…åº¦ã€‚
 */
 class CC_DLL Twirl : public Grid3DAction
 {
 public:
     /**
     @brief @~english Create the action with duration, grid size, center position, number of twirls and amplitude.
-     * @~chinese ÓÃ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡¡¢ÖĞĞÄÎ»ÖÃ¡¢äöÎĞ¼ÆÊı¡¢·ù¶ÈÀ´´´½¨Ò»¸öTwirl¶¯×÷
+     * @~chinese ç”¨æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°ã€ä¸­å¿ƒä½ç½®ã€æ¼©æ¶¡è®¡æ•°ã€å¹…åº¦æ¥åˆ›å»ºä¸€ä¸ªTwirlåŠ¨ä½œ
     @param duration @~english Specify the duration of the Twirl action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä¡£
+     * @~chinese æŒç»­æ—¶é—´ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese ç½‘æ ¼çš„å¤§å°ã€‚
     @param position @~english Specify the center position of the twirl action.
-     * @~chinese äöÎĞµÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese æ¼©æ¶¡çš„ä¸­å¿ƒä½ç½®ã€‚
     @param twirls @~english Specify the twirls count of the Twirl action.
-     * @~chinese äöÎĞµÄÊıÁ¿¡£
+     * @~chinese æ¼©æ¶¡çš„æ•°é‡ã€‚
     @param amplitude @~english Specify the amplitude of the Twirl action.
-     * @~chinese äöÎĞ¶¯×÷µÄ·ù¶È¡£
+     * @~chinese æ¼©æ¶¡åŠ¨ä½œçš„å¹…åº¦ã€‚
     @return @~english If the creation sucess, return a pointer of Twirl action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦£¬·µ»ØÒ»¸öTwirl¶¯×÷£¬·ñÔò£¬·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸï¼Œè¿”å›ä¸€ä¸ªTwirlåŠ¨ä½œï¼Œå¦åˆ™ï¼Œè¿”å›ç©ºæŒ‡é’ˆã€‚
     */
     static Twirl* create(float duration, const Size& gridSize, Vec2 position, unsigned int twirls, float amplitude);
 
     /**
     @brief @~english Get the center position of twirl action.
-     * @~chinese »ñÈ¡äöÎĞµÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese è·å–æ¼©æ¶¡çš„ä¸­å¿ƒä½ç½®ã€‚
     @return @~english The center position of twirl action.
-     * @~chinese äöÎĞµÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese æ¼©æ¶¡çš„ä¸­å¿ƒä½ç½®ã€‚
     */
     inline const Vec2& getPosition() const { return _position; }
     /**
     @brief @~english Set the center position of twirl action.
-     * @~chinese ÉèÖÃäöÎĞµÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese è®¾ç½®æ¼©æ¶¡çš„ä¸­å¿ƒä½ç½®ã€‚
     @param position @~english The center position of twirl action will be set.
-     * @~chinese äöÎĞµÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese æ¼©æ¶¡çš„ä¸­å¿ƒä½ç½®ã€‚
     */
     void setPosition(const Vec2& position);
 
     /**
     @brief @~english Get the amplitude of the effect.
-     * @~chinese »ñÈ¡äöÎĞÌØĞ§µÄ·ù¶È¡£
+     * @~chinese è·å–æ¼©æ¶¡ç‰¹æ•ˆçš„å¹…åº¦ã€‚
     @return @~english Return the amplitude of the effect.
-     * @~chinese äöÎĞÌØĞ§µÄ·ù¶È¡£
+     * @~chinese æ¼©æ¶¡ç‰¹æ•ˆçš„å¹…åº¦ã€‚
     */
     inline float getAmplitude() const { return _amplitude; }
     /**
     @brief @~english Set the amplitude to the effect.
-     * @~chinese ÉèÖÃäöÎĞÌØĞ§µÄ·ù¶È¡£
+     * @~chinese è®¾ç½®æ¼©æ¶¡ç‰¹æ•ˆçš„å¹…åº¦ã€‚
     @param amplitude @~english The value of amplitude will be set.
-     * @~chinese äöÎĞÌØĞ§µÄ·ù¶È¡£
+     * @~chinese æ¼©æ¶¡ç‰¹æ•ˆçš„å¹…åº¦ã€‚
     */
     inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /**
     @brief @~english Get the amplitude rate of the effect.
-     * @~chinese »ñµÃäöÎĞÌØĞ§µÄ·ù¶È±ÈÂÊ¡£
+     * @~chinese è·å¾—æ¼©æ¶¡ç‰¹æ•ˆçš„å¹…åº¦æ¯”ç‡ã€‚
     @return @~english Return the amplitude rate of the effect.
-     * @~chinese äöÎĞÌØĞ§µÄ·ù¶È±ÈÂÊ¡£
+     * @~chinese æ¼©æ¶¡ç‰¹æ•ˆçš„å¹…åº¦æ¯”ç‡ã€‚
     */
     inline float getAmplitudeRate() const { return _amplitudeRate; }
     /**
     @brief @~english Set the ampliture rate of the effect.
-     * @~chinese ÉèÖÃäöÎĞÌØĞ§µÄ·ù¶È±ÈÂÊ¡£
+     * @~chinese è®¾ç½®æ¼©æ¶¡ç‰¹æ•ˆçš„å¹…åº¦æ¯”ç‡ã€‚
     @param amplitudeRate @~english The value of amplitude rate will be set.
-     * @~chinese äöÎĞÌØĞ§µÄ·ù¶È±ÈÂÊ¡£
+     * @~chinese æ¼©æ¶¡ç‰¹æ•ˆçš„å¹…åº¦æ¯”ç‡ã€‚
     */
     inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
@@ -786,30 +786,30 @@ CC_CONSTRUCTOR_ACCESS:
 
     /**
     @brief @~english Initializes the action with duration, grid size, center position, number of twirls and amplitude.
-     * @~chinese ÓÃ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡¡¢ÖĞĞÄÎ»ÖÃ¡¢äöÎĞ¼ÆÊı¡¢·ù¶ÈÀ´´´½¨Ò»¸öTwirl¶¯×÷
+     * @~chinese ç”¨æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°ã€ä¸­å¿ƒä½ç½®ã€æ¼©æ¶¡è®¡æ•°ã€å¹…åº¦æ¥åˆ›å»ºä¸€ä¸ªTwirlåŠ¨ä½œ
     @param duration @~english Specify the duration of the Twirl action. It's a value in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä¡£
+     * @~chinese æŒç»­æ—¶é—´ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese ç½‘æ ¼çš„å¤§å°ã€‚
     @param position @~english Specify the center position of the twirl action.
-     * @~chinese äöÎĞµÄÖĞĞÄÎ»ÖÃ¡£
+     * @~chinese æ¼©æ¶¡çš„ä¸­å¿ƒä½ç½®ã€‚
     @param twirls @~english Specify the twirls count of the Twirl action.
-     * @~chinese äöÎĞµÄĞı×ªÊıÁ¿¡£
+     * @~chinese æ¼©æ¶¡çš„æ—‹è½¬æ•°é‡ã€‚
     @param amplitude @~english Specify the amplitude of the Twirl action.
-     * @~chinese äöÎĞ¶¯×÷µÄ·ù¶È¡£
+     * @~chinese æ¼©æ¶¡åŠ¨ä½œçš„å¹…åº¦ã€‚
     @return @~english If the initialization sucess, return true; otherwise, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
     */
     bool initWithDuration(float duration, const Size& gridSize, Vec2 position, unsigned int twirls, float amplitude);
 
 protected:
-    /* @~english The twirl center position @~chinese äöÎĞµÄÖĞĞÄÎ»ÖÃ */
+    /* @~english The twirl center position @~chinese æ¼©æ¶¡çš„ä¸­å¿ƒä½ç½® */
     Vec2 _position;
-    /* @~english The twirls count  @~chinese äöÎĞµÄÊıÁ¿ */
+    /* @~english The twirls count  @~chinese æ¼©æ¶¡çš„æ•°é‡ */
     unsigned int _twirls;
-    /* @~english The twirls amplitude  @~chinese äöÎĞÌØĞ§µÄ·ù¶È */
+    /* @~english The twirls amplitude  @~chinese æ¼©æ¶¡ç‰¹æ•ˆçš„å¹…åº¦ */
     float _amplitude;
-    /* @~english The twirls amplitude rate @~chinese äöÎĞÌØĞ§µÄ·ù¶È±ÈÂÊ */
+    /* @~english The twirls amplitude rate @~chinese æ¼©æ¶¡ç‰¹æ•ˆçš„å¹…åº¦æ¯”ç‡ */
     float _amplitudeRate;
 
 private:

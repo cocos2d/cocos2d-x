@@ -46,8 +46,8 @@ namespace ui {
      *@brief @~english Editbox delgate class.
      * It's useful when you want to do some customization duing Editbox input event
      *
-     * @~chinese ±à¼­¿ò´úÀíÀà¡£
-     * µ±ÄãÏë¶¨ÖÆ±à¼­¿òÊäÈëÊÂ¼şÊ±£¬Õâ¸öÀà·Ç³£ÓĞÓÃ¡£
+     * @~chinese ç¼–è¾‘æ¡†ä»£ç†ç±»ã€‚
+     * å½“ä½ æƒ³å®šåˆ¶ç¼–è¾‘æ¡†è¾“å…¥äº‹ä»¶æ—¶ï¼Œè¿™ä¸ªç±»éå¸¸æœ‰ç”¨ã€‚
      * 
      * @js NA
      * @lua NA
@@ -60,9 +60,9 @@ namespace ui {
         /**@~english
          * This method is called when an edit box gains focus after keyboard is shown.
          * @~chinese 
-         * Õâ¸ö·½·¨ÔÚ±à¼­¿ò¶ÔÏó¿ªÊ¼»ñµÃ½¹µãÊ±±»µ÷ÓÃ
+         * è¿™ä¸ªæ–¹æ³•åœ¨ç¼–è¾‘æ¡†å¯¹è±¡å¼€å§‹è·å¾—ç„¦ç‚¹æ—¶è¢«è°ƒç”¨
          * @param editBox @~english The edit box object that generated the event.
-         * @~chinese Ò»¸ö±à¼­¿ò¶ÔÏóÖ¸Õë
+         * @~chinese ä¸€ä¸ªç¼–è¾‘æ¡†å¯¹è±¡æŒ‡é’ˆ
          */
         virtual void editBoxEditingDidBegin(EditBox* editBox) {};
             
@@ -70,29 +70,29 @@ namespace ui {
         /**@~english
          * This method is called when an edit box loses focus after keyboard is hidden.
          * @~chinese 
-         * µ±±à¼­¿ò¶ÔÏó±à¼­Ê±Ê§È¥½¹µãºóµ÷ÓÃµÄº¯Êı¡£
+         * å½“ç¼–è¾‘æ¡†å¯¹è±¡ç¼–è¾‘æ—¶å¤±å»ç„¦ç‚¹åè°ƒç”¨çš„å‡½æ•°ã€‚
          * @param editBox @~english The edit box object that generated the event.
-         * @~chinese Ò»¸ö±à¼­¿ò¶ÔÏóÖ¸Õë
+         * @~chinese ä¸€ä¸ªç¼–è¾‘æ¡†å¯¹è±¡æŒ‡é’ˆ
          */
         virtual void editBoxEditingDidEnd(EditBox* editBox) {};
             
         /**@~english
          * This method is called when the edit box text was changed.
          * @~chinese 
-         * Õâ¸ö·½·¨ÔÚ±à¼­¿ò¶ÔÏóÖĞµÄÎÄ±¾ÄÚÈİ¿ªÊ¼±ä»¯µÄÊ±ºò±»µ÷ÓÃ¡£
+         * è¿™ä¸ªæ–¹æ³•åœ¨ç¼–è¾‘æ¡†å¯¹è±¡ä¸­çš„æ–‡æœ¬å†…å®¹å¼€å§‹å˜åŒ–çš„æ—¶å€™è¢«è°ƒç”¨ã€‚
          * @param editBox @~english The edit box object that generated the event.
-         * @~chinese Ò»¸ö±à¼­¿ò¶ÔÏóÖ¸Õë
+         * @~chinese ä¸€ä¸ªç¼–è¾‘æ¡†å¯¹è±¡æŒ‡é’ˆ
          * @param text @~english The new text.
-         * @~chinese ĞÂÎÄ±¾ÄÚÈİ¡£
+         * @~chinese æ–°æ–‡æœ¬å†…å®¹ã€‚
          */
         virtual void editBoxTextChanged(EditBox* editBox, const std::string& text) {};
             
         /**@~english
          * This method is called when the return button was pressed or the outside area of keyboard was touched.
          * @~chinese 
-         * Õâ¸ö·½·¨ÔÚ±à¼­¿ò¶ÔÏóµÄReturn°´Å¥±»°´ÏÂ£¬»òÕß±à¼­¿ò¼üÅÌÒÔÍâµÄÇøÓò±»µã»÷Ê±Ëùµ÷ÓÃ¡£
+         * è¿™ä¸ªæ–¹æ³•åœ¨ç¼–è¾‘æ¡†å¯¹è±¡çš„ReturnæŒ‰é’®è¢«æŒ‰ä¸‹ï¼Œæˆ–è€…ç¼–è¾‘æ¡†é”®ç›˜ä»¥å¤–çš„åŒºåŸŸè¢«ç‚¹å‡»æ—¶æ‰€è°ƒç”¨ã€‚
          * @param editBox @~english The edit box object that generated the event.
-         * @~chinese Ò»¸ö±à¼­¿ò¶ÔÏóÖ¸Õë
+         * @~chinese ä¸€ä¸ªç¼–è¾‘æ¡†å¯¹è±¡æŒ‡é’ˆ
          */
         virtual void editBoxReturn(EditBox* editBox) = 0;
             
@@ -103,9 +103,9 @@ namespace ui {
      *
      * You can use this widget to gather small amounts of text from the user.
      *
-     * @~chinese Ò»¸öÓÃÀ´ÊäÈëÎÄ±¾µÄÀà
+     * @~chinese ä¸€ä¸ªç”¨æ¥è¾“å…¥æ–‡æœ¬çš„ç±»
      * 
-     * Äã¿ÉÒÔÊ¹ÓÃÕâ¸öÀàÀ´»ñÈ¡ÓÃ»§µÄÉÙÁ¿ÎÄ±¾ÊäÈë
+     * ä½ å¯ä»¥ä½¿ç”¨è¿™ä¸ªç±»æ¥è·å–ç”¨æˆ·çš„å°‘é‡æ–‡æœ¬è¾“å…¥
      * 
      */
         
@@ -118,7 +118,7 @@ namespace ui {
         /**@~english
          * The popup keyboard return type.
          * @~chinese 
-         * ¼üÅÌµÄ·µ»Ø¼üÀàĞÍ
+         * é”®ç›˜çš„è¿”å›é”®ç±»å‹
          */
         enum class KeyboardReturnType
         {
@@ -132,42 +132,42 @@ namespace ui {
         /**
          * @brief @~english The EditBox::InputMode defines the type of text that the user is allowed
          * to enter.
-         * @~chinese EditBox::InputMode¶¨ÒåÁË¿ÉÒÔÊäÈëµÄÎÄ±¾ÀàĞÍ
+         * @~chinese EditBox::InputModeå®šä¹‰äº†å¯ä»¥è¾“å…¥çš„æ–‡æœ¬ç±»å‹
          */
         enum class InputMode
         {
             /**@~english
              * The user is allowed to enter any text, including line breaks.
              * @~chinese 
-             * ÓÃ»§¿ÉÒÔÊäÈëÈÎºÎÎÄ±¾,°üÀ¨»»ĞĞ·û¡£
+             * ç”¨æˆ·å¯ä»¥è¾“å…¥ä»»ä½•æ–‡æœ¬,åŒ…æ‹¬æ¢è¡Œç¬¦ã€‚
              */
             ANY,
                 
             /**@~english
              * The user is allowed to enter an e-mail address.
              * @~chinese 
-             * ÔÊĞíÓÃ»§ÊäÈëÒ»¸öµç×ÓÓÊ¼şµØÖ·¡£
+             * å…è®¸ç”¨æˆ·è¾“å…¥ä¸€ä¸ªç”µå­é‚®ä»¶åœ°å€ã€‚
              */
             EMAIL_ADDRESS,
                 
             /**@~english
              * The user is allowed to enter an integer value.
              * @~chinese 
-             * ÔÊĞíÓÃ»§ÊäÈëÒ»¸öÕûÊıÖµ¡£
+             * å…è®¸ç”¨æˆ·è¾“å…¥ä¸€ä¸ªæ•´æ•°å€¼ã€‚
              */
             NUMERIC,
                 
             /**@~english
              * The user is allowed to enter a phone number.
              * @~chinese 
-             * ÔÊĞíÓÃ»§ÊäÈëÒ»¸öµç»°ºÅÂë¡£
+             * å…è®¸ç”¨æˆ·è¾“å…¥ä¸€ä¸ªç”µè¯å·ç ã€‚
              */
             PHONE_NUMBER,
                 
             /**@~english
              * The user is allowed to enter a URL.
              * @~chinese 
-             * ÔÊĞíÓÃ»§ÊäÈëÒ»¸öURL¡£
+             * å…è®¸ç”¨æˆ·è¾“å…¥ä¸€ä¸ªURLã€‚
              */
             URL,
                 
@@ -175,22 +175,22 @@ namespace ui {
              * The user is allowed to enter a real number value.
              * This extends kEditBoxInputModeNumeric by allowing a decimal point.
              * @~chinese 
-             * ÔÊĞíÓÃ»§ÊäÈëÒ»¸öÊµÊı
-             * Í¨¹ıÔÊĞíÒ»¸öĞ¡ÊıµãÀ©Õ¹ÁËkEditBoxInputModeNumericÄ£Ê½
+             * å…è®¸ç”¨æˆ·è¾“å…¥ä¸€ä¸ªå®æ•°
+             * é€šè¿‡å…è®¸ä¸€ä¸ªå°æ•°ç‚¹æ‰©å±•äº†kEditBoxInputModeNumericæ¨¡å¼
              */
             DECIMAL,
                 
             /**@~english
              * The user is allowed to enter any text, except for line breaks.
              * @~chinese 
-             *³ıÁË»»ĞĞ·ûÒÔÍâ£¬ÓÃ»§¿ÉÒÔÊäÈëÈÎºÎÎÄ±¾,
+             *é™¤äº†æ¢è¡Œç¬¦ä»¥å¤–ï¼Œç”¨æˆ·å¯ä»¥è¾“å…¥ä»»ä½•æ–‡æœ¬,
              */
             SINGLE_LINE,
         };
             
         /**
          * @brief @~english The EditBox::InputFlag defines how the input text is displayed/formatted.
-         * @~chinese EditBox::InputFlag¶¨ÒåÈçºÎÏÔÊ¾ºÍ¸ñÊ½»¯ÊäÈëÎÄ±¾¡£
+         * @~chinese EditBox::InputFlagå®šä¹‰å¦‚ä½•æ˜¾ç¤ºå’Œæ ¼å¼åŒ–è¾“å…¥æ–‡æœ¬ã€‚
          */
         enum class InputFlag
         {
@@ -198,8 +198,8 @@ namespace ui {
              * Indicates that the text entered is confidential data that should be
              * obscured whenever possible. This implies EDIT_BOX_INPUT_FLAG_SENSITIVE.
              * @~chinese 
-             * ±íÃ÷ÊäÈëµÄÎÄ±¾ÊÇ±£ÃÜµÄÊı¾İ£¬ÈÎºÎÊ±ºò¶¼Ó¦¸ÃÒş²ØÆğÀ´
-             * ËüÒşº¬ÁËEDIT_BOX_INPUT_FLAG_SENSITIVE
+             * è¡¨æ˜è¾“å…¥çš„æ–‡æœ¬æ˜¯ä¿å¯†çš„æ•°æ®ï¼Œä»»ä½•æ—¶å€™éƒ½åº”è¯¥éšè—èµ·æ¥
+             * å®ƒéšå«äº†EDIT_BOX_INPUT_FLAG_SENSITIVE
              */
             PASSWORD,
                 
@@ -209,9 +209,9 @@ namespace ui {
              * in predictive, auto-completing, or other accelerated input schemes.
              * A credit card number is an example of sensitive data.
              * @~chinese 
-             * ±íÃ÷ÊäÈëµÄÎÄ±¾ÊÇÃô¸ĞÊı¾İ£¬
-             * Ëü½ûÖ¹´æ´¢µ½×Öµä»ò±íÀïÃæ£¬Ò²²»ÄÜÓÃÀ´×Ô¶¯²¹È«ºÍÌáÊ¾ÓÃ»§ÊäÈë¡£
-             * Ò»¸öĞÅÓÃ¿¨ºÅÂë¾ÍÊÇÒ»¸öÃô¸ĞÊı¾İµÄÀı×Ó¡£
+             * è¡¨æ˜è¾“å…¥çš„æ–‡æœ¬æ˜¯æ•æ„Ÿæ•°æ®ï¼Œ
+             * å®ƒç¦æ­¢å­˜å‚¨åˆ°å­—å…¸æˆ–è¡¨é‡Œé¢ï¼Œä¹Ÿä¸èƒ½ç”¨æ¥è‡ªåŠ¨è¡¥å…¨å’Œæç¤ºç”¨æˆ·è¾“å…¥ã€‚
+             * ä¸€ä¸ªä¿¡ç”¨å¡å·ç å°±æ˜¯ä¸€ä¸ªæ•æ„Ÿæ•°æ®çš„ä¾‹å­ã€‚
              */
             SENSITIVE,
                 
@@ -219,7 +219,7 @@ namespace ui {
              * This flag is a hint to the implementation that during text editing,
              * the initial letter of each word should be capitalized.
              * @~chinese 
-             * Õâ¸ö±êÖ¾µÄ×÷ÓÃÊÇÉèÖÃÒ»¸öÌáÊ¾,ÔÚÎÄ±¾±à¼­µÄÊ±ºò£¬ÊÇ·ñ°ÑÃ¿Ò»¸öµ¥´ÊµÄÊ××ÖÄ¸´óĞ´¡£
+             * è¿™ä¸ªæ ‡å¿—çš„ä½œç”¨æ˜¯è®¾ç½®ä¸€ä¸ªæç¤º,åœ¨æ–‡æœ¬ç¼–è¾‘çš„æ—¶å€™ï¼Œæ˜¯å¦æŠŠæ¯ä¸€ä¸ªå•è¯çš„é¦–å­—æ¯å¤§å†™ã€‚
              */
             INITIAL_CAPS_WORD,
                 
@@ -227,14 +227,14 @@ namespace ui {
              * This flag is a hint to the implementation that during text editing,
              * the initial letter of each sentence should be capitalized.
              * @~chinese 
-             * Õâ¸ö±êÖ¾µÄ×÷ÓÃÊÇÉèÖÃÒ»¸öÌáÊ¾,ÔÚÎÄ±¾±à¼­£¬ÊÇ·ñÃ¿¸ö¾ä×ÓµÄÊ××ÖÄ¸´óĞ´¡£
+             * è¿™ä¸ªæ ‡å¿—çš„ä½œç”¨æ˜¯è®¾ç½®ä¸€ä¸ªæç¤º,åœ¨æ–‡æœ¬ç¼–è¾‘ï¼Œæ˜¯å¦æ¯ä¸ªå¥å­çš„é¦–å­—æ¯å¤§å†™ã€‚
              */
             INITIAL_CAPS_SENTENCE,
                 
             /**@~english
              * Capitalize all characters automatically.
              * @~chinese 
-             * ×Ô¶¯°ÑÊäÈëµÄËùÓĞ×Ö·û´óĞ´¡£
+             * è‡ªåŠ¨æŠŠè¾“å…¥çš„æ‰€æœ‰å­—ç¬¦å¤§å†™ã€‚
              */
             INITIAL_CAPS_ALL_CHARACTERS,
         };
@@ -242,9 +242,9 @@ namespace ui {
         /**@~english
          * create a edit box with size.
          * @~chinese 
-         * ´´½¨Ò»¸ö¹Ì¶¨´óĞ¡µÄ±à¼­¿ò
+         * åˆ›å»ºä¸€ä¸ªå›ºå®šå¤§å°çš„ç¼–è¾‘æ¡†
          * @return @~english An autorelease pointer of EditBox, you don't need to release it only if you retain it again.
-         * @~chinese Ò»¸ö±à¼­¿ò¶ÔÏóÖ¸Õë, Ö»ÓĞµ±Äã¶Ô·µ»Ø¶ÔÏóµ÷ÓÃretainµÄÊ±ºò²ÅĞèÒªµ÷ÓÃrelease
+         * @~chinese ä¸€ä¸ªç¼–è¾‘æ¡†å¯¹è±¡æŒ‡é’ˆ, åªæœ‰å½“ä½ å¯¹è¿”å›å¯¹è±¡è°ƒç”¨retainçš„æ—¶å€™æ‰éœ€è¦è°ƒç”¨release
          */
         static EditBox* create(const Size& size,
                                Scale9Sprite* normalSprite,
@@ -255,9 +255,9 @@ namespace ui {
         /**@~english
          * create a edit box with size.
          * @~chinese 
-         * ´´½¨Ò»¸ö¹Ì¶¨´óĞ¡µÄ±à¼­¿ò¡£
+         * åˆ›å»ºä¸€ä¸ªå›ºå®šå¤§å°çš„ç¼–è¾‘æ¡†ã€‚
          * @return @~english An autorelease pointer of EditBox, you don't need to release it only if you retain it again.
-         * @~chinese Ò»¸ö±à¼­¿ò¶ÔÏóÖ¸Õë£¬Ö»ÓĞµ±Äã¶Ô·µ»Ø¶ÔÏóµ÷ÓÃretainµÄÊ±ºò²ÅĞèÒªµ÷ÓÃrelease
+         * @~chinese ä¸€ä¸ªç¼–è¾‘æ¡†å¯¹è±¡æŒ‡é’ˆï¼Œåªæœ‰å½“ä½ å¯¹è¿”å›å¯¹è±¡è°ƒç”¨retainçš„æ—¶å€™æ‰éœ€è¦è°ƒç”¨release
          */
         static EditBox* create(const Size& size,
                                const std::string& normal9SpriteBg,
@@ -266,7 +266,7 @@ namespace ui {
         /**@~english
          * Constructor.
          * @~chinese 
-         * ¹¹Ôìº¯Êı¡£
+         * æ„é€ å‡½æ•°ã€‚
          * @js ctor
          * @lua new
          */
@@ -275,7 +275,7 @@ namespace ui {
         /**@~english
          * Destructor.
          * @~chinese 
-         * Îö¹¹º¯Êı¡£
+         * ææ„å‡½æ•°ã€‚
          * @js NA
          * @lua NA
          */
@@ -284,15 +284,15 @@ namespace ui {
         /**@~english
          * Init edit box with specified size. This method should be invoked right after constructor.
          * @~chinese 
-         * Ê¹ÓÃÖ¸¶¨´óĞ¡³õÊ¼»¯±à¼­¿ò¡£Õâ¸ö·½·¨Ó¦¸ÃÔÚ¹¹Ôìº¯ÊıÖ®ºóµ÷ÓÃ¡£
+         * ä½¿ç”¨æŒ‡å®šå¤§å°åˆå§‹åŒ–ç¼–è¾‘æ¡†ã€‚è¿™ä¸ªæ–¹æ³•åº”è¯¥åœ¨æ„é€ å‡½æ•°ä¹‹åè°ƒç”¨ã€‚
          * @param size @~english The size of edit box.
-         * @~chinese ±à¼­¿òµÄ´óĞ¡¡£
+         * @~chinese ç¼–è¾‘æ¡†çš„å¤§å°ã€‚
          * @param normal9SpriteBg  @~english background image of edit box.
-         * @~chinese ±à¼­¿òµÄ±³¾°Í¼Æ¬Ãû×Ö¡£
+         * @~chinese ç¼–è¾‘æ¡†çš„èƒŒæ™¯å›¾ç‰‡åå­—ã€‚
          * @param texType @~english the resource type, the default value is TextureResType::LOCAL
-         * @~chinese ×ÊÔ´ÀàĞÍ,Ä¬ÈÏÖµÊÇTextureResType::LOCAL
+         * @~chinese èµ„æºç±»å‹,é»˜è®¤å€¼æ˜¯TextureResType::LOCAL
          * @return @~english Whether initialization is successfully or not.
-         * @~chinese ÊÇ·ñ³õÊ¼»¯³É¹¦¡£
+         * @~chinese æ˜¯å¦åˆå§‹åŒ–æˆåŠŸã€‚
          */
         bool initWithSizeAndBackgroundSprite(const Size& size,
                                              const std::string& normal9SpriteBg,
@@ -302,20 +302,20 @@ namespace ui {
         /**@~english
          * Init edit box with specified size. This method should be invoked right after constructor.
          * @~chinese 
-         * Ê¹ÓÃÖ¸¶¨´óĞ¡³õÊ¼»¯±à¼­¿ò£¬Õâ¸ö·½·¨Ó¦¸ÃÔÚ¹¹Ôìº¯ÊıÖ®ºó±»µ÷ÓÃ¡£
+         * ä½¿ç”¨æŒ‡å®šå¤§å°åˆå§‹åŒ–ç¼–è¾‘æ¡†ï¼Œè¿™ä¸ªæ–¹æ³•åº”è¯¥åœ¨æ„é€ å‡½æ•°ä¹‹åè¢«è°ƒç”¨ã€‚
          * @param size @~english The size of edit box.
-         * @~chinese ±à¼­¿òµÄ´óĞ¡¡£
+         * @~chinese ç¼–è¾‘æ¡†çš„å¤§å°ã€‚
          * @param normal9SpriteBg  @~english background image of edit box.
-         * @~chinese ±à¼­¿òµÄ±³¾°Í¼Æ¬Ãû×Ö¡£
+         * @~chinese ç¼–è¾‘æ¡†çš„èƒŒæ™¯å›¾ç‰‡åå­—ã€‚
          * @return @~english Whether initialization is successfully or not.
-         * @~chinese ÊÇ·ñ³õÊ¼»¯³É¹¦¡£
+         * @~chinese æ˜¯å¦åˆå§‹åŒ–æˆåŠŸã€‚
          */
         bool initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* normal9SpriteBg);
 
         /**@~english
          * Sets the delegate for edit box.
          * @~chinese 
-         * ÉèÖÃ±à¼­¿ò¿Ø¼şµÄ´úÀíÀà
+         * è®¾ç½®ç¼–è¾‘æ¡†æ§ä»¶çš„ä»£ç†ç±»
          * @lua NA
          */
         void setDelegate(EditBoxDelegate* delegate);
@@ -332,9 +332,9 @@ namespace ui {
          *
          * This handler will be removed automatically after onExit() called.
          * @~chinese 
-         * ×¢²áÒ»¸ö½Å±¾º¯Êı,µ±±à¼­¿ò·¢³öÊÂ¼şÊ±£¬Õâ¸ö½Å±¾º¯Êı»á±»µ÷ÓÃ
+         * æ³¨å†Œä¸€ä¸ªè„šæœ¬å‡½æ•°,å½“ç¼–è¾‘æ¡†å‘å‡ºäº‹ä»¶æ—¶ï¼Œè¿™ä¸ªè„šæœ¬å‡½æ•°ä¼šè¢«è°ƒç”¨
          * 
-         * Õâ¸ö»Øµ÷º¯Êı½«»áÔÚonExitº¯Êıµ÷ÓÃºó±»É¾³ı¡£
+         * è¿™ä¸ªå›è°ƒå‡½æ•°å°†ä¼šåœ¨onExitå‡½æ•°è°ƒç”¨åè¢«åˆ é™¤ï¿½
          * @~english
          * @code
          * -- lua sample
@@ -359,13 +359,13 @@ namespace ui {
          * -- lua sample
          * local function editboxEventHandler(eventType)
          *     if eventType == "began" then
-         *         -- µ±±à¼­¿ò»ñµÃ½¹µã²¢ÇÒ¼üÅÌµ¯³öµÄÊ±ºò±»µ÷ÓÃ
+         *         -- å½“ç¼–è¾‘æ¡†è·å¾—ç„¦ç‚¹å¹¶ä¸”é”®ç›˜å¼¹å‡ºçš„æ—¶å€™è¢«è°ƒç”¨
          *     elseif eventType == "ended" then
-         *         -- µ±±à¼­¿òÊ§È¥½¹µã²¢ÇÒ¼üÅÌÏûÊ§µÄÊ±ºò±»µ÷ÓÃ
+         *         -- å½“ç¼–è¾‘æ¡†å¤±å»ç„¦ç‚¹å¹¶ä¸”é”®ç›˜æ¶ˆå¤±çš„æ—¶å€™è¢«è°ƒç”¨
          *     elseif eventType == "changed" then
-         *         -- µ±±à¼­¿òµÄÎÄ±¾±»ĞŞ¸ÄµÄÊ±ºò±»µ÷ÓÃ
+         *         -- å½“ç¼–è¾‘æ¡†çš„æ–‡æœ¬è¢«ä¿®æ”¹çš„æ—¶å€™è¢«è°ƒç”¨
          *     elseif eventType == "return" then
-         *         -- µ±ÓÃ»§µã»÷±à¼­¿òµÄ¼üÅÌÒÔÍâµÄÇøÓò£¬»òÕß¼üÅÌµÄReturn°´Å¥±»µã»÷Ê±Ëùµ÷ÓÃ
+         *         -- å½“ç”¨æˆ·ç‚¹å‡»ç¼–è¾‘æ¡†çš„é”®ç›˜ä»¥å¤–çš„åŒºåŸŸï¼Œæˆ–è€…é”®ç›˜çš„ReturnæŒ‰é’®è¢«ç‚¹å‡»æ—¶æ‰€è°ƒç”¨
          *     end
          * end
          *
@@ -374,7 +374,7 @@ namespace ui {
          * @endcode
          *
          * @param handler @~english A number that indicates a lua function.
-         * @~chinese Ò»¸öÕûÊı£¬ÓÃÀ´±íÊ¾Ò»¸öluaº¯Êı¾ä±ú
+         * @~chinese ä¸€ä¸ªæ•´æ•°ï¼Œç”¨æ¥è¡¨ç¤ºä¸€ä¸ªluaå‡½æ•°å¥æŸ„
          * @js NA
          * @lua NA
          */
@@ -383,7 +383,7 @@ namespace ui {
         /**@~english
          * Unregisters a script function that will be called for EditBox events.
          * @~chinese 
-         * ×¢ÏúÒÑ×¢²áµÄ±à¼­¿òÊÂ¼ş¼àÌı½Å±¾º¯Êı
+         * æ³¨é”€å·²æ³¨å†Œçš„ç¼–è¾‘æ¡†äº‹ä»¶ç›‘å¬è„šæœ¬å‡½æ•°
          * @js NA
          * @lua NA
          */
@@ -391,7 +391,7 @@ namespace ui {
         /**@~english
          * get a script Handler
          * @~chinese 
-         * »ñÈ¡Ò»¸ö½Å±¾º¯Êı¾ä±ú
+         * è·å–ä¸€ä¸ªè„šæœ¬å‡½æ•°å¥æŸ„
          * @js NA
          * @lua NA
          */
@@ -402,101 +402,101 @@ namespace ui {
         /**@~english
          * Set the text entered in the edit box.
          * @~chinese 
-         * ÉèÖÃ±à¼­¿òÖĞÊäÈëµÄÎÄ±¾¡£
+         * è®¾ç½®ç¼–è¾‘æ¡†ä¸­è¾“å…¥çš„æ–‡æœ¬ã€‚
          * @param pText @~english The given text.
-         * @~chinese ¸ø¶¨µÄÎÄ±¾×Ö·û´®¡£
+         * @~chinese ç»™å®šçš„æ–‡æœ¬å­—ç¬¦ä¸²ã€‚
          */
         void setText(const char* pText);
             
         /**@~english
          * Get the text entered in the edit box.
          * @~chinese 
-         * »ñÈ¡±à¼­¿òÖĞÊäÈëµÄÎÄ±¾¡£
+         * è·å–ç¼–è¾‘æ¡†ä¸­è¾“å…¥çš„æ–‡æœ¬ã€‚
          * @return @~english The text entered in the edit box.
-         * @~chinese ±à¼­¿òÖĞÊäÈëµÄÎÄ±¾¡£
+         * @~chinese ç¼–è¾‘æ¡†ä¸­è¾“å…¥çš„æ–‡æœ¬ã€‚
          */
         const char* getText(void);
             
         /**@~english
          * Set the font for EditBox. Only system font is allowed.
          * @~chinese 
-         * ÉèÖÃ±à¼­¿òµÄ×ÖÌå¡£½öÖ§³ÖÏµÍ³×ÖÌå
+         * è®¾ç½®ç¼–è¾‘æ¡†çš„å­—ä½“ã€‚ä»…æ”¯æŒç³»ç»Ÿå­—ä½“
          * @param pFontName @~english The font name.
-         * @~chinese ×ÖÌåÃû³Æ¡£
+         * @~chinese å­—ä½“åç§°ã€‚
          * @param fontSize @~english The font size.
-         * @~chinese ×ÖÌå´óĞ¡¡£
+         * @~chinese å­—ä½“å¤§å°ã€‚
          */
         void setFont(const char* pFontName, int fontSize);
             
         /**@~english
          * Set the font name. Only system font is allowed.
          * @~chinese 
-         * ÉèÖÃ×ÖÌåµÄÃû×Ö¡£½öÖ§³ÖÏµÍ³×ÖÌå
+         * è®¾ç½®å­—ä½“çš„åå­—ã€‚ä»…æ”¯æŒç³»ç»Ÿå­—ä½“
          * @param pFontName @~english The font name.
-         * @~chinese ×ÖÌåÃû³Æ¡£
+         * @~chinese å­—ä½“åç§°ã€‚
          */
         void setFontName(const char* pFontName);
             
         /**@~english
          * Set the font size.
          * @~chinese 
-         * ÉèÖÃ×ÖÌå´óĞ¡¡£
+         * è®¾ç½®å­—ä½“å¤§å°ã€‚
          * @param fontSize @~english The font size.
-         * @~chinese ×ÖÌå´óĞ¡¡£
+         * @~chinese å­—ä½“å¤§å°ã€‚
          */
         void setFontSize(int fontSize);
             
         /**@~english
          * Set the font color of the widget's text.
          * @~chinese 
-         * ÉèÖÃ±à¼­¿òµÄÎÄ±¾×ÖÌåÑÕÉ«¡£
+         * è®¾ç½®ç¼–è¾‘æ¡†çš„æ–‡æœ¬å­—ä½“é¢œè‰²ã€‚
          */
         void setFontColor(const Color3B& color);
             
         /**@~english
          * Set the placeholder's font. Only system font is allowed.
          * @~chinese 
-         * ÉèÖÃÕ¼Î»·ûµÄ×ÖÌå¡£½öÖ§³ÖÏµÍ³×ÖÌå
+         * è®¾ç½®å ä½ç¬¦çš„å­—ä½“ã€‚ä»…æ”¯æŒç³»ç»Ÿå­—ä½“
          * @param pFontName @~english The font name.
-         * @~chinese ×ÖÌåÃû³Æ¡£
+         * @~chinese å­—ä½“åç§°ã€‚
          * @param fontSize @~english The font size.
-         * @~chinese ×ÖÌå´óĞ¡¡£
+         * @~chinese å­—ä½“å¤§å°ã€‚
          */
         void setPlaceholderFont(const char* pFontName, int fontSize);
             
         /**@~english
          * Set the placeholder's font name. Only system font is allowed.
          * @~chinese 
-         * ÉèÖÃÕ¼Î»·ûµÄ×ÖÌåÃû³Æ¡£½öÖ§³ÖÏµÍ³×ÖÌå
+         * è®¾ç½®å ä½ç¬¦çš„å­—ä½“åç§°ã€‚ä»…æ”¯æŒç³»ç»Ÿå­—ä½“
          * @param pFontName @~english The font name.
-         * @~chinese ×ÖÌåÃû³Æ¡£
+         * @~chinese å­—ä½“åç§°ã€‚
          */
         void setPlaceholderFontName(const char* pFontName);
             
         /**@~english
          * Set the placeholder's font size.
          * @~chinese 
-         * ÉèÖÃÕ¼Î»·ûµÄ×ÖÌå´óĞ¡¡£
+         * è®¾ç½®å ä½ç¬¦çš„å­—ä½“å¤§å°ã€‚
          * @param fontSize @~english The font size.
-         * @~chinese ×ÖÌå´óĞ¡¡£
+         * @~chinese å­—ä½“å¤§å°ã€‚
          */
         void setPlaceholderFontSize(int fontSize);
             
         /**@~english
          * Set the font color of the placeholder text when the edit box is empty.
          * @~chinese 
-         * µ±±à¼­¿òÎª¿ÕµÄÊ±ºò£¬ÉèÖÃÕ¼Î»·ûÎÄ±¾×ÖÌåÑÕÉ«£¬
+         * å½“ç¼–è¾‘æ¡†ä¸ºç©ºçš„æ—¶å€™ï¼Œè®¾ç½®å ä½ç¬¦æ–‡æœ¬å­—ä½“é¢œè‰²ï¼Œ
          * @param color @~english The font color in Color3B
-         * @~chinese ×ÖÌåµÄÑÕÉ«£¬ÀàĞÍÊÇColor3B
+         * @~chinese å­—ä½“çš„é¢œè‰²ï¼Œç±»å‹æ˜¯Color3B
          */
         void setPlaceholderFontColor(const Color3B& color);
 
         /**@~english
          * Set the font color of the placeholder text when the edit box is empty.
          * @~chinese 
-         * µ±±à¼­¿òÎª¿ÕµÄÊ±ºò£¬ÉèÖÃÕ¼Î»·ûÎÄ±¾×ÖÌåÑÕÉ«
+         * å½“ç¼–è¾‘æ¡†ä¸ºç©ºçš„æ—¶å€™ï¼Œè®¾ç½®å ä½ç¬¦æ–‡æœ¬å­—ä½“é¢œè‰²
          * @param color @~english The font color in Color4B
-         * @~chinese ×ÖÌåµÄÑÕÉ«£¬ÀàĞÍÊÇColor4B
+         * @~chinese å­—ä½“çš„é¢œè‰²ï¼Œç±»å‹æ˜¯Color4B
          */
         void setPlaceholderFontColor(const Color4B& color);
             
@@ -504,9 +504,9 @@ namespace ui {
          * Set a text in the edit box that acts as a placeholder when an
          * edit box is empty.
          * @~chinese 
-         * µ±±à¼­¿òÎª¿ÕµÄÊ±ºò£¬ÉèÖÃ±à¼­¿òÖĞµÄÕ¼Î»·ûÎÄ±¾
+         * å½“ç¼–è¾‘æ¡†ä¸ºç©ºçš„æ—¶å€™ï¼Œè®¾ç½®ç¼–è¾‘æ¡†ä¸­çš„å ä½ç¬¦æ–‡æœ¬
          * @param pText @~english The given text.
-         * @~chinese ¸ø¶¨µÄÎÄ±¾¡£
+         * @~chinese ç»™å®šçš„æ–‡æœ¬ã€‚
          */
         void setPlaceHolder(const char* pText);
             
@@ -514,16 +514,16 @@ namespace ui {
          * Get a text in the edit box that acts as a placeholder when an
          * edit box is empty.
          * @~chinese 
-         * µ±±à¼­¿òÎª¿ÕµÄÊ±ºò£¬»ñÈ¡±à¼­¿òÖĞµÄÕ¼Î»·ûÎÄ±¾
+         * å½“ç¼–è¾‘æ¡†ä¸ºç©ºçš„æ—¶å€™ï¼Œè·å–ç¼–è¾‘æ¡†ä¸­çš„å ä½ç¬¦æ–‡æœ¬
          */
         const char* getPlaceHolder(void);
             
         /**@~english
          * Set the input mode of the edit box.
          * @~chinese 
-         * ÉèÖÃ±à¼­¿òµÄÊäÈëÄ£Ê½¡£
+         * è®¾ç½®ç¼–è¾‘æ¡†çš„è¾“å…¥æ¨¡å¼ã€‚
          * @param inputMode @~english One of the EditBox::InputMode constants.
-         * @~chinese EditBox::InputMode³£Á¿Ö®Ò»
+         * @~chinese EditBox::InputModeå¸¸é‡ä¹‹ä¸€
          */
         void setInputMode(InputMode inputMode);
             
@@ -533,12 +533,12 @@ namespace ui {
          * Available on Android, iOS and Windows Phone.
          *
          * @~chinese 
-         * ÉèÖÃ±à¼­¿òÔÊĞíÊäÈëµÄ×î´ó³¤¶È¡£
-         * ÉèÖÃÕâ¸öÖµÄ¬ÈÏÔÊĞí¶àĞĞÊäÈë
-         * ¿ÉÒÔÔÚAndroid,iOSºÍWindows PhoneÆ½Ì¨Ê¹ÓÃ
+         * è®¾ç½®ç¼–è¾‘æ¡†å…è®¸è¾“å…¥çš„æœ€å¤§é•¿åº¦ã€‚
+         * è®¾ç½®è¿™ä¸ªå€¼é»˜è®¤å…è®¸å¤šè¡Œè¾“å…¥
+         * å¯ä»¥åœ¨Android,iOSå’ŒWindows Phoneå¹³å°ä½¿ç”¨
          * 
          * @param maxLength @~english The maximum length.
-         * @~chinese ×î´ó³¤¶È¡£
+         * @~chinese æœ€å¤§é•¿åº¦ã€‚
          */
         void setMaxLength(int maxLength);
             
@@ -546,28 +546,28 @@ namespace ui {
          * Gets the maximum input length of the edit box.
          *
          * @~chinese 
-         * »ñÈ¡±à¼­¿òµÄ×î´óÊäÈë³¤¶È¡£
+         * è·å–ç¼–è¾‘æ¡†çš„æœ€å¤§è¾“å…¥é•¿åº¦ã€‚
          * 
          * @return @~english Maximum input length.
-         * @~chinese ×î´ó³¤¶È
+         * @~chinese æœ€å¤§é•¿åº¦
          */
         int getMaxLength();
             
         /**@~english
          * Set the input flags that are to be applied to the edit box.
          * @~chinese 
-         * ÉèÖÃ±à¼­¿òµÄÊäÈë±êÊ¶£¬Õâ¸ö±êÊ¶ÊÇEditBox::InputFlagÀàĞÍ
+         * è®¾ç½®ç¼–è¾‘æ¡†çš„è¾“å…¥æ ‡è¯†ï¼Œè¿™ä¸ªæ ‡è¯†æ˜¯EditBox::InputFlagç±»å‹
          * @param inputFlag @~english One of the EditBox::InputFlag constants.
-         * @~chinese EditBox::InputFlag³£Á¿Ö®Ò»
+         * @~chinese EditBox::InputFlagå¸¸é‡ä¹‹ä¸€
          */
         void setInputFlag(InputFlag inputFlag);
             
         /**@~english
          * Set the return type that are to be applied to the edit box.
          * @~chinese 
-         * ÉèÖÃ±à¼­¿òµÄ¼üÅÌµÄReturnÀàĞÍ£¬Õâ¸öÀàĞÍµÄÈ¡ÖµÎªEditBox::KeyboardReturnType³£Á¿Ö®Ò»
+         * è®¾ç½®ç¼–è¾‘æ¡†çš„é”®ç›˜çš„Returnç±»å‹ï¼Œè¿™ä¸ªç±»å‹çš„å–å€¼ä¸ºEditBox::KeyboardReturnTypeå¸¸é‡ä¹‹ä¸€
          * @param returnType @~english One of the EditBox::KeyboardReturnType constants.
-         * @~chinese EditBox::KeyboardReturnType³£Á¿Ö®Ò»
+         * @~chinese EditBox::KeyboardReturnTypeå¸¸é‡ä¹‹ä¸€
          */
         void setReturnType(EditBox::KeyboardReturnType returnType);
             
@@ -579,7 +579,7 @@ namespace ui {
         /**@~english
          * Returns the "class name" of widget.
          * @~chinese 
-         * ·µ»ØÀàÃûÃèÊö×Ö·û´®
+         * è¿”å›ç±»åæè¿°å­—ç¬¦ä¸²
          */
         virtual std::string getDescription() const override;
 

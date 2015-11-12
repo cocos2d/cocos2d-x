@@ -44,56 +44,56 @@ NS_CC_BEGIN
 @~english Base class of the `RenderCommand` hierarchy.
 *
  The `Renderer` knows how to render `RenderCommands` objects.
- * @~chinese ¡°RenderCommand¡±Àà²ã´Î½á¹¹µÄ»ùÀà¡£
+ * @~chinese â€œRenderCommandâ€ç±»å±‚æ¬¡ç»“æ„çš„åŸºç±»ã€‚
  * 
- * äÖÈ¾Æ÷µÄÖªµÀÈçºÎ³ÊÏÖ¡°RenderCommands¡±¶ÔÏó¡£
+ * æ¸²æŸ“å™¨çš„çŸ¥é“å¦‚ä½•å‘ˆç°â€œRenderCommandsâ€å¯¹è±¡ã€‚
  */
 class CC_DLL RenderCommand
 {
 public:
     /**
     @~english Enum the type of render command.  
-    @~chinese Ã¶¾Ù£ºäÖÈ¾ÃüÁîµÄÀàĞÍ¡£
+    @~chinese æšä¸¾ï¼šæ¸²æŸ“å‘½ä»¤çš„ç±»å‹ã€‚
     */
     enum class Type
     {
         /** 
         @~english Reserved type. 
-        @~chinese ±£Áô,Î´ÖªÀàĞÍ¡£
+        @~chinese ä¿ç•™,æœªçŸ¥ç±»å‹ã€‚
         */
         UNKNOWN_COMMAND,
         /** 
         @~english Quad command, used for draw quad. 
-        @~chinese Quad Command,ÓÃÓÚ»­ËÄ±ßĞÎ¡£
+        @~chinese Quad Command,ç”¨äºç”»å››è¾¹å½¢ã€‚
         */
         QUAD_COMMAND,
         /**
         @~english Custom command, used for calling callback for rendering. 
-        @~chinese ×Ô¶¨ÒåÃüÁî,ÓÃÓÚµ÷ÓÃ»Øµ÷º¯Êı½øĞĞäÖÈ¾¡£
+        @~chinese è‡ªå®šä¹‰å‘½ä»¤,ç”¨äºè°ƒç”¨å›è°ƒå‡½æ•°è¿›è¡Œæ¸²æŸ“ã€‚
         */
         CUSTOM_COMMAND,
         /**
         @~english Batch command, used for draw batches in texture atlas. 
-        @~chinese Åú´¦ÀíÃüÁî,ÓÃÓÚÅúÁ¿äÖÈ¾TextureAtlas¡£
+        @~chinese æ‰¹å¤„ç†å‘½ä»¤,ç”¨äºæ‰¹é‡æ¸²æŸ“TextureAtlasã€‚
         */
         BATCH_COMMAND,
         /**
         @~english Group command, which can group command in a tree hierarchy. 
-        @~chinese Group command, ¿ÉÒÔ½«äÖÈ¾ÃüÁî×éÖ¯³ÉÊ÷ĞÎ½á¹¹¡£
+        @~chinese Group command, å¯ä»¥å°†æ¸²æŸ“å‘½ä»¤ç»„ç»‡æˆæ ‘å½¢ç»“æ„ã€‚
         */
         GROUP_COMMAND,
         /**
         @~english Mesh command, used to draw 3D meshes. @
-        ~chinese Íø¸ñÃüÁî,ÓÃÀ´»æÖÆ3dÍø¸ñ¡£
+        ~chinese ç½‘æ ¼å‘½ä»¤,ç”¨æ¥ç»˜åˆ¶3dç½‘æ ¼ã€‚
         */
         MESH_COMMAND,
         /**
         @~english Primitive command, used to draw primitives such as lines, points and triangles. 
-        @~chinese Primitive command,ÓÃÓÚ»æÖÆ¸÷ÖÖÍ¼Ôª,ÈçÏß,µãºÍÈı½ÇĞÎ¡£*/
+        @~chinese Primitive command,ç”¨äºç»˜åˆ¶å„ç§å›¾å…ƒ,å¦‚çº¿,ç‚¹å’Œä¸‰è§’å½¢ã€‚*/
         PRIMITIVE_COMMAND,
         /**
         @~english Triangles command, used to draw triangles. 
-        @~chinese Triangles command,ÓÃÀ´»æÖÆÈı½ÇĞÎ¡£
+        @~chinese Triangles command,ç”¨æ¥ç»˜åˆ¶ä¸‰è§’å½¢ã€‚
         */
         TRIANGLES_COMMAND
     };
@@ -101,90 +101,90 @@ public:
     /**@~english
      Init function, will be called by all the render commands.
      * @~chinese 
-     * ³õÊ¼»¯º¯Êı£¬Ã¿Ò»¸öäÖÈ¾ÃüÁî¶¼»áµ÷ÓÃ¡£
+     * åˆå§‹åŒ–å‡½æ•°ï¼Œæ¯ä¸€ä¸ªæ¸²æŸ“å‘½ä»¤éƒ½ä¼šè°ƒç”¨ã€‚
      @param globalZOrder @~english The global order of command, used for rendercommand sorting.
-     * @~chinese äÖÈ¾ÃüÁîµÄglobal Z,ÓÃÓÚrendercommandÅÅĞò¡£
+     * @~chinese æ¸²æŸ“å‘½ä»¤çš„global Z,ç”¨äºrendercommandæ’åºã€‚
      @param modelViewTransform @~english Modelview matrix when submitting the render command.
-     * @~chinese äÖÈ¾ÃüÁîµÄModelView¾ØÕó¡£
+     * @~chinese æ¸²æŸ“å‘½ä»¤çš„ModelViewçŸ©é˜µã€‚
      @param flags @~english Flag used to indicate whether the command should be draw at 3D mode or not.
-     * @~chinese ÓÃÓÚ±êÊ¾äÖÈ¾ÃüÁîÊÇ·ñÊÇ²ÉÓÃ3DäÖÈ¾Ä£Ê½¡£
+     * @~chinese ç”¨äºæ ‡ç¤ºæ¸²æŸ“å‘½ä»¤æ˜¯å¦æ˜¯é‡‡ç”¨3Dæ¸²æŸ“æ¨¡å¼ã€‚
      */
     void init(float globalZOrder, const Mat4& modelViewTransform, uint32_t flags);
     
     /** 
     @~english Get global Z order.  
-    @~chinese »ñµÃGlobal Z¡£
+    @~chinese è·å¾—Global Zã€‚
     @return 
     @~english the global Z of render command.
-    @~chinese äÖÈ¾ÃüÁîµÄglobal Z¡£
+    @~chinese æ¸²æŸ“å‘½ä»¤çš„global Zã€‚
     */
     inline float getGlobalOrder() const { return _globalOrder; }
 
     /** 
     @~english Returns the Command type.  
-    @~chinese ·µ»ØÃüÁîµÄÀàĞÍ¡£
+    @~chinese è¿”å›å‘½ä»¤çš„ç±»å‹ã€‚
     @return
     @~english The type of render command.
-    @~chinese äÖÈ¾ÃüÁîÀàĞÍ¡£
+    @~chinese æ¸²æŸ“å‘½ä»¤ç±»å‹ã€‚
     */
     inline Type getType() const { return _type; }
     
     /** 
     @~english Retruns whether is transparent.  
-    @~chinese ÊÇ·ñÊÇÍ¸Ã÷µÄÎïÌå¡£
+    @~chinese æ˜¯å¦æ˜¯é€æ˜çš„ç‰©ä½“ã€‚
     @return
     @~english The transparent status.
-    @~chinese Í¸Ã÷×´Ì¬¡£
+    @~chinese é€æ˜çŠ¶æ€ã€‚
     */
     inline bool isTransparent() const { return _isTransparent; }
     
     /** 
     @~english Set transparent flag.  
-    @~chinese ÉèÖÃÍ¸Ã÷µÄ±êÊ¾¡£
+    @~chinese è®¾ç½®é€æ˜çš„æ ‡ç¤ºã€‚
     @param isTransparent
     @~english The transparent status.
-    @~chinese Í¸Ã÷×´Ì¬¡£
+    @~chinese é€æ˜çŠ¶æ€ã€‚
     */
     inline void setTransparent(bool isTransparent) { _isTransparent = isTransparent; }
     /**@~english
      Get skip batching status, if a rendering is skip batching, it will be forced to be rendering separately.
      * @~chinese 
-     * È¡µÃSkip Batching×´Ì¬,¸Ã×´Ì¬ÏÂµÄÃüÁî»áµ¥¶À½øĞĞÒ»´ÎäÖÈ¾¡£
+     * å–å¾—Skip BatchingçŠ¶æ€,è¯¥çŠ¶æ€ä¸‹çš„å‘½ä»¤ä¼šå•ç‹¬è¿›è¡Œä¸€æ¬¡æ¸²æŸ“ã€‚
      @return 
      @~english the Skip Batching status.
-     @~chinese Skip BatchingµÄ×´Ì¬¡£
+     @~chinese Skip Batchingçš„çŠ¶æ€ã€‚
      */
     inline bool isSkipBatching() const { return _skipBatching; }
     /**
     @~english Set skip batching. 
-    @~chinese ÉèÖÃSkip Batching ×´Ì¬¡£
+    @~chinese è®¾ç½®Skip Batching çŠ¶æ€ã€‚
     @param value
     @~english the skip batching status.
-    @~chinese skip batching µÄ×´Ì¬¡£
+    @~chinese skip batching çš„çŠ¶æ€ã€‚
     */
     inline void setSkipBatching(bool value) { _skipBatching = value; }
     /**
     @~english Whether the command should be rendered at 3D mode. 
-    @~chinese ÃüÁîÊÇ·ñÊÇ3däÖÈ¾Ä£Ê½¡£
+    @~chinese å‘½ä»¤æ˜¯å¦æ˜¯3dæ¸²æŸ“æ¨¡å¼ã€‚
     @return
     @~english the 3D mode status.
-    @~chinese 3DäÖÈ¾Ä£Ê½¡£
+    @~chinese 3Dæ¸²æŸ“æ¨¡å¼ã€‚
     */
     inline bool is3D() const { return _is3D; }
     /**
     @~english Set the command rendered in 3D mode or not. 
-    @~chinese ÉèÖÃ3däÖÈ¾Ä£Ê½¡£
+    @~chinese è®¾ç½®3dæ¸²æŸ“æ¨¡å¼ã€‚
     @param value
     @~english the 3D model status.
-    @~chinese 3DäÖÈ¾Ä£Ê½µÄ×´Ì¬¡£
+    @~chinese 3Dæ¸²æŸ“æ¨¡å¼çš„çŠ¶æ€ã€‚
     */
     inline void set3D(bool value) { _is3D = value; }
     /**
     @~english Get the depth by current model view matrix. 
-    @~chinese µÃµ½ÔÚÄ¿Ç°µÄÄ£ĞÍÊÓÍ¼¾ØÕóÏÂµÄÉî¶È¡£
+    @~chinese å¾—åˆ°åœ¨ç›®å‰çš„æ¨¡å‹è§†å›¾çŸ©é˜µä¸‹çš„æ·±åº¦ã€‚
     @return
     @~english the depth value.
-    @~chinese Éî¶ÈÖµ¡£
+    @~chinese æ·±åº¦å€¼ã€‚
     */
     inline float getDepth() const { return _depth; }
     

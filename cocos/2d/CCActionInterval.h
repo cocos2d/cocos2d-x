@@ -60,17 +60,17 @@ class EventCustom;
  * 
  * Example:
  * 
- * @~chinese Ê±¼ä¼ä¸ô¶¯×÷£¨ActionInterval£©ÊÇÒ»¸öÔÚÒ»¶ÎÊ±¼äÄÚÖ´ĞĞµÄ¶¯×÷¡£
- * ËüÓĞÒ»¸ö¿ªÊ¼Ê±¼äºÍÍê³ÉÊ±¼ä¡£Íê³ÉÊ±¼äµÈÓÚÆğÊ¼Ê±¼ä¼ÓÉÏ³ÖĞøÊ±¼ä
+ * @~chinese æ—¶é—´é—´éš”åŠ¨ä½œï¼ˆActionIntervalï¼‰æ˜¯ä¸€ä¸ªåœ¨ä¸€æ®µæ—¶é—´å†…æ‰§è¡Œçš„åŠ¨ä½œã€‚
+ * å®ƒæœ‰ä¸€ä¸ªå¼€å§‹æ—¶é—´å’Œå®Œæˆæ—¶é—´ã€‚å®Œæˆæ—¶é—´ç­‰äºèµ·å§‹æ—¶é—´åŠ ä¸ŠæŒç»­æ—¶é—´
  * 
- * ÕâĞ©ActionInterval¶¯×÷ÓĞÒ»Ğ©ÓĞÈ¤µÄÌØĞÔ,Èç:
- * - ËûÃÇ¿ÉÒÔÕı³£ÔËĞĞ(Ä¬ÈÏ)
- * - ËûÃÇ¿ÉÒÔÍ¨¹ıÄæ×ª·½·¨Äæ×ªÔËĞĞĞ§¹û
- * - ËûÃÇÔÚÔËĞĞÊ±¿ÉÒÔÍ¨¹ı¼ÓËÙ¶È£¨Accelerate£©£¬¼ÓËÙ¼õËÙ£¨AccelDeccel£©ºÍËÙ¶È£¨Speed£©µÈ¶¯×÷À´ĞŞ¸ÄËüµÄÔËĞĞÊ±¼äÖá¡£
+ * è¿™äº›ActionIntervalåŠ¨ä½œæœ‰ä¸€äº›æœ‰è¶£çš„ç‰¹æ€§,å¦‚:
+ * - ä»–ä»¬å¯ä»¥æ­£å¸¸è¿è¡Œ(é»˜è®¤)
+ * - ä»–ä»¬å¯ä»¥é€šè¿‡é€†è½¬æ–¹æ³•é€†è½¬è¿è¡Œæ•ˆæœ
+ * - ä»–ä»¬åœ¨è¿è¡Œæ—¶å¯ä»¥é€šè¿‡åŠ é€Ÿåº¦ï¼ˆAccelerateï¼‰ï¼ŒåŠ é€Ÿå‡é€Ÿï¼ˆAccelDeccelï¼‰å’Œé€Ÿåº¦ï¼ˆSpeedï¼‰ç­‰åŠ¨ä½œæ¥ä¿®æ”¹å®ƒçš„è¿è¡Œæ—¶é—´è½´ã€‚
  * 
- * ÀıÈç£¬ÄãÏëÒªÄ£ÄâÆ¹ÅÒÇòĞ§¹û£¬¿ÉÒÔÖ´ĞĞÒ»¸ö¶¯×÷ÔÙ·´ÏòÖ´ĞĞÒ»´ÎÍ¬ÑùµÄ¶¯×÷
+ * ä¾‹å¦‚ï¼Œä½ æƒ³è¦æ¨¡æ‹Ÿä¹’ä¹“çƒæ•ˆæœï¼Œå¯ä»¥æ‰§è¡Œä¸€ä¸ªåŠ¨ä½œå†åå‘æ‰§è¡Œä¸€æ¬¡åŒæ ·çš„åŠ¨ä½œ
  * 
- * Àı×Ó:
+ * ä¾‹å­:
  * 
  * @code
  * Action *pingPongAction = Sequence::actions(action, action->reverse(), nullptr);
@@ -81,28 +81,28 @@ class CC_DLL ActionInterval : public FiniteTimeAction
 public:
     /** @~english How many seconds had elapsed since the actions started to run.
      *
-     * @~chinese »ñÈ¡´Ó¶¯×÷¿ªÊ¼ÔËĞĞÒÑ¾­¹ıÈ¥ÁË¶à³¤Ê±¼ä¡£
+     * @~chinese è·å–ä»åŠ¨ä½œå¼€å§‹è¿è¡Œå·²ç»è¿‡å»äº†å¤šé•¿æ—¶é—´ã€‚
      * 
      * @return @~english The seconds had elapsed since the ations started to run.
-     * @~chinese ´Ó¶¯×÷¿ªÊ¼ÔËĞĞÒÑ¾­¹ıÈ¥ÁË¶à³¤Ê±¼ä¡£
+     * @~chinese ä»åŠ¨ä½œå¼€å§‹è¿è¡Œå·²ç»è¿‡å»äº†å¤šé•¿æ—¶é—´ã€‚
      */
     inline float getElapsed(void) { return _elapsed; }
 
     /** @~english Sets the amplitude rate, extension in GridAction
      *
-     * @~chinese ÉèÖÃÕñ·ùË¥¼õÂÊ£¬ÓÃÓÚGridActionµÄÀ©Õ¹
+     * @~chinese è®¾ç½®æŒ¯å¹…è¡°å‡ç‡ï¼Œç”¨äºGridActionçš„æ‰©å±•
      * 
      * @param amp   @~english The ampliture rate.
-     * @~chinese Õñ·ùË¥¼õÂÊ¡£
+     * @~chinese æŒ¯å¹…è¡°å‡ç‡ã€‚
      */
     void setAmplitudeRate(float amp);
     
     /** @~english Gets the ampliture rate, extension in GridAction
      *
-     * @~chinese »ñÈ¡Õñ·ùË¥¼õÂÊ£¬ÓÃÓÚGridActionµÄÀ©Õ¹
+     * @~chinese è·å–æŒ¯å¹…è¡°å‡ç‡ï¼Œç”¨äºGridActionçš„æ‰©å±•
      * 
      * @return @~english  The ampliture rate.
-     * @~chinese Õñ·ùË¥¼õÂÊ¡£
+     * @~chinese æŒ¯å¹…è¡°å‡ç‡ã€‚
      */
     float getAmplitudeRate(void);
 
@@ -126,10 +126,10 @@ public:
 
 CC_CONSTRUCTOR_ACCESS:
     /** @~english initializes the action with the duration.
-     * @~chinese Ê¹ÓÃ³ÖĞøÊ±¼ä³õÊ¼»¯¶¯×÷ 
-     * @param d @~english The duration @~chinese ³ÖĞøÊ±¼ä
+     * @~chinese ä½¿ç”¨æŒç»­æ—¶é—´åˆå§‹åŒ–åŠ¨ä½œ 
+     * @param d @~english The duration @~chinese æŒç»­æ—¶é—´
      * @return @~english Return true if initialized successfully, otherwise return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
      */
     bool initWithDuration(float d);
 
@@ -143,21 +143,21 @@ protected:
 
 /** @class Sequence
  * @brief @~english Runs actions sequentially, one after another.
- * @~chinese Ë³Ğò¶¯×÷£¨Sequnce£©¿ÉÒÔË³ĞòµÃÒ»¸ö½Ó×ÅÒ»¸öÔËĞĞÄÚ²¿¶¯×÷ĞòÁĞ¡£
+ * @~chinese é¡ºåºåŠ¨ä½œï¼ˆSequnceï¼‰å¯ä»¥é¡ºåºå¾—ä¸€ä¸ªæ¥ç€ä¸€ä¸ªè¿è¡Œå†…éƒ¨åŠ¨ä½œåºåˆ—ã€‚
  */
 class CC_DLL Sequence : public ActionInterval
 {
 public:
     /// @{ Constructor functions
-    /// @brief @~english @~chinese ¹¹Ôìº¯Êı
+    /// @brief @~english @~chinese æ„é€ å‡½æ•°
 
     /**
      * @~english Helper constructor to create an array of sequenceable actions.
      *
-     * @~chinese ÓÃÓÚ´´½¨Ò»¸ö¿ÉÒÔ°´ĞòÁĞÖ´ĞĞ¶¯×÷µÄSequence¶¯×÷¶ÔÏóµÄÒ»ÏµÁĞ¸¨Öú¹¹Ôìº¯Êı
+     * @~chinese ç”¨äºåˆ›å»ºä¸€ä¸ªå¯ä»¥æŒ‰åºåˆ—æ‰§è¡ŒåŠ¨ä½œçš„SequenceåŠ¨ä½œå¯¹è±¡çš„ä¸€ç³»åˆ—è¾…åŠ©æ„é€ å‡½æ•°
      * 
      * @return @~english An autoreleased Sequence object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄSequence¶¯×÷¶ÔÏó£¬Èç¹û´´½¨Ê§°ÜÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„SequenceåŠ¨ä½œå¯¹è±¡ï¼Œå¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      */
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported
@@ -180,7 +180,7 @@ public:
 #endif
 
     /** @~english Helper constructor to create an array of sequenceable actions given an array.
-     * @~chinese Ê¹ÓÃÖ¸¶¨¶¯×÷Êı×éÀ´´´½¨¿ÉÒÔ°´ĞòÁĞÖ´ĞĞµÄSequence¶¯×÷¶ÔÏó¡£
+     * @~chinese ä½¿ç”¨æŒ‡å®šåŠ¨ä½œæ•°ç»„æ¥åˆ›å»ºå¯ä»¥æŒ‰åºåˆ—æ‰§è¡Œçš„SequenceåŠ¨ä½œå¯¹è±¡ã€‚
      * @code
      * When this function bound to the js or lua,the input params changed
      * in js  :var   create(var   object1,var   object2, ...)
@@ -188,32 +188,32 @@ public:
      * @endcode
      *
      * @param arrayOfActions @~english An array of sequenceable actions.
-     * @~chinese ¶¯×÷Êı×é¡£
+     * @~chinese åŠ¨ä½œæ•°ç»„ã€‚
      * @return @~english An autoreleased Sequence object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅSequence¶ÔÏó£¬Èç¹û´´½¨Ê§°ÜÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾Sequenceå¯¹è±¡ï¼Œå¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      */
     static Sequence* create(const Vector<FiniteTimeAction*>& arrayOfActions);
     /** @~english Helper constructor to create an array of sequence-able actions.
      *
-     * @~chinese ÓÃ¶¯×÷ÁĞ±í´´½¨¿ÉÒÔ°´ĞòÁĞÖ´ĞĞµÄSequence¶¯×÷¶ÔÏó¡£
+     * @~chinese ç”¨åŠ¨ä½œåˆ—è¡¨åˆ›å»ºå¯ä»¥æŒ‰åºåˆ—æ‰§è¡Œçš„SequenceåŠ¨ä½œå¯¹è±¡ã€‚
      * 
      * @param action1 @~english The first sequenceable action.
-     * @~chinese ¶¯×÷ĞòÁĞÖĞµÄµÚÒ»¸ö¶¯×÷¡£
+     * @~chinese åŠ¨ä½œåºåˆ—ä¸­çš„ç¬¬ä¸€ä¸ªåŠ¨ä½œã€‚
      * @param args @~english The variable list variable.
-     * @~chinese ¶¯×÷ÁĞ±í±äÁ¿¡£
+     * @~chinese åŠ¨ä½œåˆ—è¡¨å˜é‡ã€‚
      * @return @~english An autoreleased Sequence object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄSequence¶ÔÏó£¬Èç¹û´´½¨Ê§°ÜÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„Sequenceå¯¹è±¡ï¼Œå¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      * @js NA
      */
     static Sequence* createWithVariableList(FiniteTimeAction *action1, va_list args);
     /** @~english Creates the action with two actions.
-     * @~chinese ÓÃÁ½¸ö¶¯×÷´´½¨Sequence¶¯×÷¡£
+     * @~chinese ç”¨ä¸¤ä¸ªåŠ¨ä½œåˆ›å»ºSequenceåŠ¨ä½œã€‚
      * @param actionOne @~english The first sequenceable action.
-     * @~chinese µÚÒ»¸ö¶¯×÷¡£
+     * @~chinese ç¬¬ä¸€ä¸ªåŠ¨ä½œã€‚
      * @param actionTwo @~english The second sequenceable action.
-     * @~chinese µÚ¶ş¸ö¶¯×÷¡£
+     * @~chinese ç¬¬äºŒä¸ªåŠ¨ä½œã€‚
      * @return @~english An autoreleased Sequence object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅSequence¶¯×÷¶ÔÏó£¬Èç¹û´´½¨Ê§°ÜÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾SequenceåŠ¨ä½œå¯¹è±¡ï¼Œå¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      * @js NA
      */
     static Sequence* createWithTwoActions(FiniteTimeAction *actionOne, FiniteTimeAction *actionTwo);
@@ -233,7 +233,7 @@ CC_CONSTRUCTOR_ACCESS:
     Sequence() {}
     virtual ~Sequence(void);
 
-    /** @~english initializes the action  @~chinese ÓÃÁ½¸ö¶¯×÷³õÊ¼»¯¶¯×÷ */
+    /** @~english initializes the action  @~chinese ç”¨ä¸¤ä¸ªåŠ¨ä½œåˆå§‹åŒ–åŠ¨ä½œ */
     bool initWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo);
 
 protected:
@@ -248,31 +248,31 @@ private:
 /** @class Repeat
  * @brief @~english Repeats an action a number of times.
  * To repeat an action forever use the RepeatForever action.
- * @~chinese ÖØ¸´¶¯×÷£¨Repeat£©¿ÉÒÔ°´Ò»¶¨´ÎÊıÖØ¸´Ò»¸ö¶¯×÷¡£
- * Ê¹ÓÃRepeatForever¶¯×÷À´ÓÀÔ¶ÖØ¸´Ò»¸ö¶¯×÷¡£
+ * @~chinese é‡å¤åŠ¨ä½œï¼ˆRepeatï¼‰å¯ä»¥æŒ‰ä¸€å®šæ¬¡æ•°é‡å¤ä¸€ä¸ªåŠ¨ä½œã€‚
+ * ä½¿ç”¨RepeatForeveråŠ¨ä½œæ¥æ°¸è¿œé‡å¤ä¸€ä¸ªåŠ¨ä½œã€‚
  */
 class CC_DLL Repeat : public ActionInterval
 {
 public:
     /** @~english Creates a Repeat action. Parameter `times` is an unsigned integer between 1 and pow(2,30).
      *
-     * @~chinese ´´½¨Ò»¸öÖØ¸´¶¯×÷£¬`times`²ÎÊıÊÇÒ»¸öÈ¡ÖµÔÚ1ºÍ`pow(2, 30)`Ö®¼äµÄÕûÊı¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªé‡å¤åŠ¨ä½œï¼Œ`times`å‚æ•°æ˜¯ä¸€ä¸ªå–å€¼åœ¨1å’Œ`pow(2, 30)`ä¹‹é—´çš„æ•´æ•°ã€‚
      * 
      * @param action @~english The action needs to repeat.
-     * @~chinese ĞèÒªÖØ¸´µÄÄ¿±ê¶¯×÷¡£
+     * @~chinese éœ€è¦é‡å¤çš„ç›®æ ‡åŠ¨ä½œã€‚
      * @param times @~english The repeat times.
-     * @~chinese ÖØ¸´´ÎÊı¡£
+     * @~chinese é‡å¤æ¬¡æ•°ã€‚
      * @return @~english An autoreleased Repeat object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄRepeat¶ÔÏó£¬Èç¹û´´½¨Ê§°ÜÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„Repeatå¯¹è±¡ï¼Œå¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      */
     static Repeat* create(FiniteTimeAction *action, unsigned int times);
 
     /** @~english Sets the inner action.
      *
-     * @~chinese ÉèÖÃÄÚ²¿¶¯×÷¡£
+     * @~chinese è®¾ç½®å†…éƒ¨åŠ¨ä½œã€‚
      * 
      * @param action @~english The inner action.
-     * @~chinese ÄÚ²¿¶¯×÷¡£
+     * @~chinese å†…éƒ¨åŠ¨ä½œã€‚
      */
     inline void setInnerAction(FiniteTimeAction *action)
     {
@@ -286,10 +286,10 @@ public:
 
     /** @~english Gets the inner action.
      *
-     * @~chinese »ñÈ¡ÄÚ²¿¶¯×÷¡£
+     * @~chinese è·å–å†…éƒ¨åŠ¨ä½œã€‚
      * 
      * @return @~english The inner action.
-     * @~chinese ÄÚ²¿¶¯×÷¡£
+     * @~chinese å†…éƒ¨åŠ¨ä½œã€‚
      */
     inline FiniteTimeAction* getInnerAction()
     {
@@ -311,13 +311,13 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Repeat();
 
     /** @~english initializes a Repeat action. Times is an unsigned integer between 1 and pow(2,30)  
-     * @~chinese ³õÊ¼»¯Repeat¶¯×÷¡£`times`²ÎÊıÊÇÒ»¸öÈ¡ÖµÔÚ1ºÍ`pow(2, 30)`Ö®¼äµÄÕûÊı¡£
+     * @~chinese åˆå§‹åŒ–RepeatåŠ¨ä½œã€‚`times`å‚æ•°æ˜¯ä¸€ä¸ªå–å€¼åœ¨1å’Œ`pow(2, 30)`ä¹‹é—´çš„æ•´æ•°ã€‚
      * @param pAction @~english The action needs to repeat.
-     * @~chinese ĞèÒªÖØ¸´µÄÄ¿±ê¶¯×÷¡£
+     * @~chinese éœ€è¦é‡å¤çš„ç›®æ ‡åŠ¨ä½œã€‚
      * @param times @~english The repeat times.
-     * @~chinese ÖØ¸´´ÎÊı¡£
+     * @~chinese é‡å¤æ¬¡æ•°ã€‚
      * @return @~english Return true if initialized successfully, otherwise return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
      */
     bool initWithAction(FiniteTimeAction *pAction, unsigned int times);
 
@@ -326,7 +326,7 @@ protected:
     unsigned int _total;
     float _nextDt;
     bool _actionInstant;
-    /** @~english Inner action  @~chinese ÄÚ²¿¶¯×÷ */
+    /** @~english Inner action  @~chinese å†…éƒ¨åŠ¨ä½œ */
     FiniteTimeAction *_innerAction;
 
 private:
@@ -336,31 +336,31 @@ private:
 /** @class RepeatForever
  * @brief @~english Repeats an action forever.
  * To repeat the an action for a limited number of times use the Repeat action.
- * @~chinese ÓÀÔ¶µØÖØ¸´Ò»¸ö¶¯×÷¡£
- * ÓĞÏŞ´ÎÊıÄÚÖØ¸´Ò»¸ö¶¯×÷ÇëÊ¹ÓÃRepeat¶¯×÷¡£
+ * @~chinese æ°¸è¿œåœ°é‡å¤ä¸€ä¸ªåŠ¨ä½œã€‚
+ * æœ‰é™æ¬¡æ•°å†…é‡å¤ä¸€ä¸ªåŠ¨ä½œè¯·ä½¿ç”¨RepeatåŠ¨ä½œã€‚
  * @warning @~english This action can't be Sequenceable because it is not an finite time action.
- * @~chinese Õâ¸ö¶¯×÷²»ÄÜÓÃÀ´×é³ÉĞòÁĞ¶¯×÷£¬ÒòÎªËü²»ÊÇÒ»¸öÓĞÏŞÊ±¼ä¶¯×÷¡£
+ * @~chinese è¿™ä¸ªåŠ¨ä½œä¸èƒ½ç”¨æ¥ç»„æˆåºåˆ—åŠ¨ä½œï¼Œå› ä¸ºå®ƒä¸æ˜¯ä¸€ä¸ªæœ‰é™æ—¶é—´åŠ¨ä½œã€‚
  */
 class CC_DLL RepeatForever : public ActionInterval
 {
 public:
     /** @~english Creates the action with an inner action.
      *
-     * @~chinese ÓÃÄÚ²¿¶¯×÷´´½¨Ò»¸öRepeatForever¶¯×÷¡£
+     * @~chinese ç”¨å†…éƒ¨åŠ¨ä½œåˆ›å»ºä¸€ä¸ªRepeatForeveråŠ¨ä½œã€‚
      * 
      * @param action @~english The action need to repeat forever.
-     * @~chinese ÄÚ²¿¶¯×÷£¬Õâ¸ö¶¯×÷»áÓÀÔ¶ÖØ¸´¡£
+     * @~chinese å†…éƒ¨åŠ¨ä½œï¼Œè¿™ä¸ªåŠ¨ä½œä¼šæ°¸è¿œé‡å¤ã€‚
      * @return @~english An autoreleased RepeatForever object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄRepeatForever¶¯×÷£¬Èç¹û´´½¨Ê§°ÜÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„RepeatForeveråŠ¨ä½œï¼Œå¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      */
     static RepeatForever* create(ActionInterval *action);
 
     /** @~english Sets the inner action.
      *
-     * @~chinese ÉèÖÃÄÚ²¿¶¯×÷¡£
+     * @~chinese è®¾ç½®å†…éƒ¨åŠ¨ä½œã€‚
      * 
      * @param action @~english The inner action.
-     * @~chinese ÄÚ²¿¶¯×÷¡£
+     * @~chinese å†…éƒ¨åŠ¨ä½œã€‚
      */
     inline void setInnerAction(ActionInterval *action)
     {
@@ -374,10 +374,10 @@ public:
 
     /** @~english Gets the inner action.
      *
-     * @~chinese »ñÈ¡ÄÚ²¿¶¯×÷¡£
+     * @~chinese è·å–å†…éƒ¨åŠ¨ä½œã€‚
      * 
      * @return @~english The inner action.
-     * @~chinese ÄÚ²¿¶¯×÷¡£
+     * @~chinese å†…éƒ¨åŠ¨ä½œã€‚
      */
     inline ActionInterval* getInnerAction()
     {
@@ -399,11 +399,11 @@ CC_CONSTRUCTOR_ACCESS:
     {}
     virtual ~RepeatForever();
 
-    /** @~english initializes the action  @~chinese ÓÃÄÚ²¿¶¯×÷³õÊ¼»¯¶¯×÷ */
+    /** @~english initializes the action  @~chinese ç”¨å†…éƒ¨åŠ¨ä½œåˆå§‹åŒ–åŠ¨ä½œ */
     bool initWithAction(ActionInterval *action);
 
 protected:
-    /** @~english Inner action  @~chinese ÄÚ²¿¶¯×÷ */
+    /** @~english Inner action  @~chinese å†…éƒ¨åŠ¨ä½œ */
     ActionInterval *_innerAction;
 
 private:
@@ -412,25 +412,25 @@ private:
 
 /** @class Spawn
  * @brief @~english Spawn a group of actions
- * @~chinese Í¬²½¶¯×÷£¨Spawn£©ÓÃÓÚÍ¬²½Ö´ĞĞÒ»×é¶¯×÷
+ * @~chinese åŒæ­¥åŠ¨ä½œï¼ˆSpawnï¼‰ç”¨äºåŒæ­¥æ‰§è¡Œä¸€ç»„åŠ¨ä½œ
  */
 class CC_DLL Spawn : public ActionInterval
 {
 public:
     /// @{ Constructor functions
-    /// @brief @~english @~chinese ¹¹Ôìº¯Êı
+    /// @brief @~english @~chinese æ„é€ å‡½æ•°
 
     /** @~english Helper constructor to create an array of spawned actions.
      * When this funtion bound to the js or lua, the input params changed.
-     * @~chinese ´´½¨°üº¬Ò»×éÍ¬²½¶¯×÷µÄSpawn¶¯×÷µÄ¸¨Öú¹¹Ôìº¯Êı¡£
-     * µ±Õâ¸öº¯Êı°ó¶¨µ½jsºÍluaÖĞ£¬²ÎÊı»á·¢Éú±ä»¯
+     * @~chinese åˆ›å»ºåŒ…å«ä¸€ç»„åŒæ­¥åŠ¨ä½œçš„SpawnåŠ¨ä½œçš„è¾…åŠ©æ„é€ å‡½æ•°ã€‚
+     * å½“è¿™ä¸ªå‡½æ•°ç»‘å®šåˆ°jså’Œluaä¸­ï¼Œå‚æ•°ä¼šå‘ç”Ÿå˜åŒ–
      *
      * @code
      * in lua :local create(local object1,local object2, ...)
      * @endcode
      *
      * @return @~english An autoreleased Spawn object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅSpawn¶ÔÏó£¬Èç¹û´´½¨Ê§°ÜÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾Spawnå¯¹è±¡ï¼Œå¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      */
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported.
@@ -454,39 +454,39 @@ public:
 
     /** @~english Helper constructor to create an array of spawned actions. 
      *
-     * @~chinese ÓÃÒ»¸ö¶¯×÷ÁĞ±í´´½¨Spawn¶¯×÷¡£
+     * @~chinese ç”¨ä¸€ä¸ªåŠ¨ä½œåˆ—è¡¨åˆ›å»ºSpawnåŠ¨ä½œã€‚
      * 
      * @param action1   @~english The first inner action.
-     * @~chinese µÚÒ»¸öÍ¬²½µÄÄÚ²¿¶¯×÷¡£
+     * @~chinese ç¬¬ä¸€ä¸ªåŒæ­¥çš„å†…éƒ¨åŠ¨ä½œã€‚
      * @param args  @~english The va_list variable.
-     * @~chinese ¶¯×÷ÁĞ±í±äÁ¿.
+     * @~chinese åŠ¨ä½œåˆ—è¡¨å˜é‡.
      * @return @~english  An autoreleased Spawn object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄSpawn¶ÔÏó£¬Èç¹û´´½¨Ê§°ÜÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„Spawnå¯¹è±¡ï¼Œå¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      * @js NA
      */
     static Spawn* createWithVariableList(FiniteTimeAction *action1, va_list args);
 
     /** @~english Helper constructor to create an array of spawned actions given an array.
      *
-     * @~chinese ÓÃÒ»¸ö¸ø¶¨Êı×é´´½¨Ò»¸öSpawn¶¯×÷¡£
+     * @~chinese ç”¨ä¸€ä¸ªç»™å®šæ•°ç»„åˆ›å»ºä¸€ä¸ªSpawnåŠ¨ä½œã€‚
      * 
      * @param arrayOfActions    @~english An array of spawned actions.
-     * @~chinese Ò»¸öÍ¬²½¶¯×÷Êı×é¡£
+     * @~chinese ä¸€ä¸ªåŒæ­¥åŠ¨ä½œæ•°ç»„ã€‚
      * @return @~english  An autoreleased Spawn object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄSpawn¶ÔÏó£¬Èç¹û´´½¨Ê§°ÜÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„Spawnå¯¹è±¡ï¼Œå¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      */
     static Spawn* create(const Vector<FiniteTimeAction*>& arrayOfActions);
 
     /** @~english Creates the Spawn action with two spawned actions.
      *
-     * @~chinese ÓÃÁ½¸öÍ¬²½¶¯×÷´´½¨Spawn¶¯×÷¡£
+     * @~chinese ç”¨ä¸¤ä¸ªåŒæ­¥åŠ¨ä½œåˆ›å»ºSpawnåŠ¨ä½œã€‚
      * 
      * @param action1   @~english The first spawned action.
-     * @~chinese µÚÒ»¸öÍ¬²½¶¯×÷¡£
+     * @~chinese ç¬¬ä¸€ä¸ªåŒæ­¥åŠ¨ä½œã€‚
      * @param action2   @~english THe second spawned action.
-     * @~chinese µÚ¶ş¸öÍ¬²½¶¯×÷¡£
+     * @~chinese ç¬¬äºŒä¸ªåŒæ­¥åŠ¨ä½œã€‚
      * @return @~english An autoreleased Spawn object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄSpawn¶ÔÏó£¬Èç¹û´´½¨Ê§°ÜÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„Spawnå¯¹è±¡ï¼Œå¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      * @js NA
      */
     static Spawn* createWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2);
@@ -506,13 +506,13 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Spawn();
 
     /** @~english initializes the Spawn action with the 2 actions to spawn  
-     * @~chinese ÓÃÁ½¸öÍ¬²½¶¯×÷³õÊ¼»¯Spawn¶¯×÷
+     * @~chinese ç”¨ä¸¤ä¸ªåŒæ­¥åŠ¨ä½œåˆå§‹åŒ–SpawnåŠ¨ä½œ
      * @param action1   @~english The first spawned action.
-     * @~chinese µÚÒ»¸öÍ¬²½¶¯×÷¡£
+     * @~chinese ç¬¬ä¸€ä¸ªåŒæ­¥åŠ¨ä½œã€‚
      * @param action2   @~english THe second spawned action.
-     * @~chinese µÚ¶ş¸öÍ¬²½¶¯×÷¡£
+     * @~chinese ç¬¬äºŒä¸ªåŒæ­¥åŠ¨ä½œã€‚
      * @return @~english Return true if initialized successfully, otherwise return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
      */
     bool initWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2);
 
@@ -527,8 +527,8 @@ private:
 /** @class RotateTo
  * @brief @~english Rotates a Node object to a certain angle by modifying it's rotation attribute.
  * The direction will be decided by the shortest angle.
- * @~chinese RotateTo¶¯×÷ÓÃÀ´Ğı×ªÒ»¸ö½Úµã¶ÔÏóµ½Ò»¶¨½Ç¶È£¬Í¨¹ıÖğÖ¡ĞŞ¸ÄËüµÄ`rotation`ÊôĞÔ¡£
- * Ğı×ª·½Ïò½«ÓÉ×î¶ÌµÄ½Ç¶È¾ö¶¨¡£
+ * @~chinese RotateToåŠ¨ä½œç”¨æ¥æ—‹è½¬ä¸€ä¸ªèŠ‚ç‚¹å¯¹è±¡åˆ°ä¸€å®šè§’åº¦ï¼Œé€šè¿‡é€å¸§ä¿®æ”¹å®ƒçš„`rotation`å±æ€§ã€‚
+ * æ—‹è½¬æ–¹å‘å°†ç”±æœ€çŸ­çš„è§’åº¦å†³å®šã€‚
  */ 
 class CC_DLL RotateTo : public ActionInterval
 {
@@ -537,16 +537,16 @@ public:
      * Creates the action with duration and separate rotation angles.
      *
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äÓëX,YÖá¶ÀÁ¢µÄĞı×ª½Ç¶ÈÀ´´´½¨RotateTo¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´ä¸X,Yè½´ç‹¬ç«‹çš„æ—‹è½¬è§’åº¦æ¥åˆ›å»ºRotateToåŠ¨ä½œã€‚
      * 
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä,ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´,ä»¥ç§’ä¸ºå•ä½ã€‚
      * @param dstAngleX @~english Destination angle x in degrees.
-     * @~chinese XÖáµÄÄ¿±ê½Ç¶È£¬ÒÔ½Ç¶ÈÖµ¼Æ¡£
+     * @~chinese Xè½´çš„ç›®æ ‡è§’åº¦ï¼Œä»¥è§’åº¦å€¼è®¡ã€‚
      * @param dstAngleY @~english Destination angle y in degrees.
-     * @~chinese YÖáµÄÄ¿±ê½Ç¶È£¬ÒÔ½Ç¶ÈÖµ¼Æ
+     * @~chinese Yè½´çš„ç›®æ ‡è§’åº¦ï¼Œä»¥è§’åº¦å€¼è®¡
      * @return @~english An autoreleased RotateTo object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄRotateTo¶ÔÏó£¬Èç¹û´´½¨Ê§°ÜÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„RotateToå¯¹è±¡ï¼Œå¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      */
     static RotateTo* create(float duration, float dstAngleX, float dstAngleY);
 
@@ -554,27 +554,27 @@ public:
      * Creates the action with duration and destination angle.
      *
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍÄ¿±ê½Ç¶È´´½¨RotateTo¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’Œç›®æ ‡è§’åº¦åˆ›å»ºRotateToåŠ¨ä½œã€‚
      * 
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param dstAngle @~english Destination angle in degrees.
-     * @~chinese Ä¿±ê½Ç¶È£¬ÒÔ½Ç¶ÈÖµ¼Æ¡£
+     * @~chinese ç›®æ ‡è§’åº¦ï¼Œä»¥è§’åº¦å€¼è®¡ã€‚
      * @return @~english An autoreleased RotateTo object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄRotateTo¶ÔÏó£¬Èç¹û´´½¨Ê§°ÜÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„RotateToå¯¹è±¡ï¼Œå¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      */
     static RotateTo* create(float duration, float dstAngle);
 
     /** @~english
      * Creates the action with 3D rotation angles.
      * @~chinese 
-     * ´´½¨Ò»¸öĞı×ªµ½ÈıÎ¬Ğı×ª½Ç¶ÈµÄRotateTo¶¯×÷¡£
+     * åˆ›å»ºä¸€ä¸ªæ—‹è½¬åˆ°ä¸‰ç»´æ—‹è½¬è§’åº¦çš„RotateToåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param dstAngle3D @~english A Vec3 angle.
-     * @~chinese ÈıÎ¬Ğı×ª½Ç¶È¡£
+     * @~chinese ä¸‰ç»´æ—‹è½¬è§’åº¦ã€‚
      * @return @~english An autoreleased RotateTo object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄRotateTo¶ÔÏó£¬Èç¹û´´½¨Ê§°ÜÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„RotateToå¯¹è±¡ï¼Œå¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      */
     static RotateTo* create(float duration, const Vec3& dstAngle3D);
 
@@ -593,40 +593,40 @@ CC_CONSTRUCTOR_ACCESS:
     /** @~english
      * initializes the action
      * @~chinese 
-     * ³õÊ¼»¯¶¯×÷
+     * åˆå§‹åŒ–åŠ¨ä½œ
      * @param duration @~english Duration in seconds
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½
      * @param dstAngleX @~english Destination angle x in degrees.
-     * @~chinese XÖáµÄÄ¿±ê½Ç¶È£¬ÒÔ½Ç¶ÈÖµ¼Æ¡£
+     * @~chinese Xè½´çš„ç›®æ ‡è§’åº¦ï¼Œä»¥è§’åº¦å€¼è®¡ã€‚
      * @param dstAngleY @~english Destination angle y in degrees.
-     * @~chinese YÖáµÄÄ¿±ê½Ç¶È£¬ÒÔ½Ç¶ÈÖµ¼Æ¡£
+     * @~chinese Yè½´çš„ç›®æ ‡è§’åº¦ï¼Œä»¥è§’åº¦å€¼è®¡ã€‚
      * @return @~english Return true if initialized successfully, otherwise return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
      */
     bool initWithDuration(float duration, float dstAngleX, float dstAngleY);
     /**@~english
      * initializes the action
      * @~chinese 
-     * ³õÊ¼»¯¶¯×÷
+     * åˆå§‹åŒ–åŠ¨ä½œ
      * @param duration @~english Duration in seconds
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½
      * @param dstAngle3D @~english A Vec3 angle.
-     * @~chinese ÈıÎ¬Ğı×ª½Ç¶È¡£
+     * @~chinese ä¸‰ç»´æ—‹è½¬è§’åº¦ã€‚
      * @return @~english Return true if initialized successfully, otherwise return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
      */
     bool initWithDuration(float duration, const Vec3& dstAngle3D);
 
     /** @~english
      * Calculates the start and diff angles
      * @~chinese 
-     * ¼ÆËã¿ªÊ¼ºÍĞı×ª½Ç¶È²îÖµ¡£
+     * è®¡ç®—å¼€å§‹å’Œæ—‹è½¬è§’åº¦å·®å€¼ã€‚
      * @param startAngle @~english Start angle in degrees
-     * @~chinese ÆğÊ¼½Ç¶È£¬ÒÔ½Ç¶ÈÖµ¼Æ£¬ÓÃÓÚ±£´æ¼ÆËã½á¹û
+     * @~chinese èµ·å§‹è§’åº¦ï¼Œä»¥è§’åº¦å€¼è®¡ï¼Œç”¨äºä¿å­˜è®¡ç®—ç»“æœ
      * @param diffAngle @~english Angle difference between start angle and destination angle in degrees
-     * @~chinese ÆğÊ¼½Ç¶ÈºÍÄ¿±ê½Ç¶ÈÖ®¼äµÄ²îÖµ£¬ÒÔ½Ç¶ÈÖµ¼Æ£¬ÓÃÓÚ±£´æ¼ÆËã½á¹û
+     * @~chinese èµ·å§‹è§’åº¦å’Œç›®æ ‡è§’åº¦ä¹‹é—´çš„å·®å€¼ï¼Œä»¥è§’åº¦å€¼è®¡ï¼Œç”¨äºä¿å­˜è®¡ç®—ç»“æœ
      * @param dstAngle @~english Destination angle in degrees
-     * @~chinese Ä¿±ê½Ç¶È£¬ÒÔ½Ç¶ÈÖµ¼Æ
+     * @~chinese ç›®æ ‡è§’åº¦ï¼Œä»¥è§’åº¦å€¼è®¡
      */
     void calculateAngles(float &startAngle, float &diffAngle, float dstAngle);
     
@@ -642,7 +642,7 @@ private:
 
 /** @class RotateBy
  * @brief @~english Rotates a Node object clockwise a number of degrees by modifying it's rotation attribute.
- * @~chinese RotateBy¶¯×÷¿ÉÒÔË³Ê±ÕëĞı×ªÒ»¸ö½Úµã¶ÔÏó£¬Í¨¹ıĞŞ¸ÄËüµÄĞı×ªÊôĞÔ¡£
+ * @~chinese RotateByåŠ¨ä½œå¯ä»¥é¡ºæ—¶é’ˆæ—‹è½¬ä¸€ä¸ªèŠ‚ç‚¹å¯¹è±¡ï¼Œé€šè¿‡ä¿®æ”¹å®ƒçš„æ—‹è½¬å±æ€§ã€‚
 */
 class CC_DLL RotateBy : public ActionInterval
 {
@@ -651,44 +651,44 @@ public:
      * Creates the action with duration and delta angle to rotate.
      *
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍĞı×ª½Ç¶È´´½¨RotateBy¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’Œæ—‹è½¬è§’åº¦åˆ›å»ºRotateByåŠ¨ä½œã€‚
      * 
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param deltaAngle @~english Delta angle in degrees.
-     * @~chinese Ğı×ª½Ç¶È¡£
+     * @~chinese æ—‹è½¬è§’åº¦ã€‚
      * @return @~english An autoreleased RotateBy object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄRotateBy¶ÔÏó£¬Èç¹û´´½¨Ê§°ÜÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„RotateByå¯¹è±¡ï¼Œå¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      */
     static RotateBy* create(float duration, float deltaAngle);
     /**@~english
      * Creates the action with separate rotation angles.
      *
      * @~chinese 
-     * ÓÃX£¬YÖá¶ÀÁ¢µÄĞı×ª½Ç¶È´´½¨RotateBy¶¯×÷¡£
+     * ç”¨Xï¼ŒYè½´ç‹¬ç«‹çš„æ—‹è½¬è§’åº¦åˆ›å»ºRotateByåŠ¨ä½œã€‚
      * 
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param deltaAngleZ_X @~english Delta angle x in degrees.
-     * @~chinese XÖáĞı×ª½Ç¶È£¬ÒÔ½Ç¶ÈÖµ¼Æ¡£
+     * @~chinese Xè½´æ—‹è½¬è§’åº¦ï¼Œä»¥è§’åº¦å€¼è®¡ã€‚
      * @param deltaAngleZ_Y @~english Delta angle y n degreesCW.
-     * @~chinese YÖáĞı×ª½Ç¶È£¬ÒÔ½Ç¶ÈÖµ¼Æ¡£
+     * @~chinese Yè½´æ—‹è½¬è§’åº¦ï¼Œä»¥è§’åº¦å€¼è®¡ã€‚
      * @return @~english An autoreleased RotateBy object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄRotateBy¶ÔÏó£¬Èç¹û´´½¨Ê§°ÜÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„RotateByå¯¹è±¡ï¼Œå¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      * @warning @~english The physics body contained in Node doesn't support rotate with different x and y angle.
-     * @~chinese °üº¬µÄÎïÀíÉíÌåµÄ½Úµã²»Ö§³ÖÓÃxºÍyÖá·ÖÀëµÄĞı×ª½Ç¶È¡£
+     * @~chinese åŒ…å«çš„ç‰©ç†èº«ä½“çš„èŠ‚ç‚¹ä¸æ”¯æŒç”¨xå’Œyè½´åˆ†ç¦»çš„æ—‹è½¬è§’åº¦ã€‚
      */
     static RotateBy* create(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
     /** @~english Creates the action with 3D rotation angles.
      *
-     * @~chinese ÓÃ³ÖĞøÊ±¼äºÍÈıÎ¬Ğı×ª½Ç¶È´´½¨RotateBy¶¯×÷¡£
+     * @~chinese ç”¨æŒç»­æ—¶é—´å’Œä¸‰ç»´æ—‹è½¬è§’åº¦åˆ›å»ºRotateByåŠ¨ä½œã€‚
      * 
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param deltaAngle3D @~english A Vec3 angle.
-     * @~chinese ÈıÎ¬Ğı×ª½Ç¶È¡£
+     * @~chinese ä¸‰ç»´æ—‹è½¬è§’åº¦ã€‚
      * @return @~english An autoreleased RotateBy object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄRotateBy¶ÔÏó£¬Èç¹û´´½¨Ê§°ÜÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„RotateByå¯¹è±¡ï¼Œå¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      */
     static RotateBy* create(float duration, const Vec3& deltaAngle3D);
 
@@ -704,35 +704,35 @@ CC_CONSTRUCTOR_ACCESS:
     RotateBy();
     virtual ~RotateBy() {}
 
-    /** @~english initializes the action  @~chinese ÓÃ³ÖĞøÊ±¼äºÍĞı×ª½Ç¶È³õÊ¼»¯¶¯×÷ 
+    /** @~english initializes the action  @~chinese ç”¨æŒç»­æ—¶é—´å’Œæ—‹è½¬è§’åº¦åˆå§‹åŒ–åŠ¨ä½œ 
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param deltaAngle @~english Delta angle in degrees.
-     * @~chinese Ğı×ª½Ç¶È¡£
+     * @~chinese æ—‹è½¬è§’åº¦ã€‚
      * @return @~english Return true if initialized successfully, otherwise return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
      */
     bool initWithDuration(float duration, float deltaAngle);
     /** 
      * @warning @~english The physics body contained in Node doesn't support rotate with different x and y angle.
-     * @~chinese °üº¬µÄÎïÀíÉíÌåµÄ½Úµã²»Ö§³ÖÓÃxºÍyÖá·ÖÀëµÄĞı×ª½Ç¶È¡£
+     * @~chinese åŒ…å«çš„ç‰©ç†èº«ä½“çš„èŠ‚ç‚¹ä¸æ”¯æŒç”¨xå’Œyè½´åˆ†ç¦»çš„æ—‹è½¬è§’åº¦ã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param deltaAngleZ_X @~english Delta angle x in degrees.
-     * @~chinese XÖáĞı×ª½Ç¶È£¬ÒÔ½Ç¶ÈÖµ¼Æ¡£
+     * @~chinese Xè½´æ—‹è½¬è§’åº¦ï¼Œä»¥è§’åº¦å€¼è®¡ã€‚
      * @param deltaAngleZ_Y @~english Delta angle y n degreesCW.
-     * @~chinese YÖáĞı×ª½Ç¶È£¬ÒÔ½Ç¶ÈÖµ¼Æ¡£
+     * @~chinese Yè½´æ—‹è½¬è§’åº¦ï¼Œä»¥è§’åº¦å€¼è®¡ã€‚
      * @return @~english Return true if initialized successfully, otherwise return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
      */
     bool initWithDuration(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
     /**
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param deltaAngle3D @~english A Vec3 angle.
-     * @~chinese ÈıÎ¬Ğı×ª½Ç¶È¡£
+     * @~chinese ä¸‰ç»´æ—‹è½¬è§’åº¦ã€‚
      * @return @~english Return true if initialized successfully, otherwise return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
      */
     bool initWithDuration(float duration, const Vec3& deltaAngle3D);
     
@@ -750,9 +750,9 @@ private:
  x and y are relative to the position of the object.
  Several MoveBy actions can be concurrently called, and the resulting
  movement will be the sum of individual movements.
- * @~chinese MoveBy¶¯×÷Í¨¹ıĞŞ¸ÄÒ»¸öÄ¿±ê½ÚµãµÄÎ»ÖÃÊôĞÔ½«ËüÒÆ¶¯x£¬yÏñËØ¡£
- * XÖáºÍYÖáÎ»ÒÆÊÇÏà¶ÔÓÚ½ÚµãÎ»ÖÃµÄ£¬
- * ¼¸¸öMoveBy²Ù×÷¿ÉÒÔ²¢ĞĞ£¬ÓÉ´Ë²úÉúµÄÎ»ÒÆ½«ÊÇËùÓĞ¸öÌåÎ»ÒÆµÄ×ÜºÍ¡£
+ * @~chinese MoveByåŠ¨ä½œé€šè¿‡ä¿®æ”¹ä¸€ä¸ªç›®æ ‡èŠ‚ç‚¹çš„ä½ç½®å±æ€§å°†å®ƒç§»åŠ¨xï¼Œyåƒç´ ã€‚
+ * Xè½´å’ŒYè½´ä½ç§»æ˜¯ç›¸å¯¹äºèŠ‚ç‚¹ä½ç½®çš„ï¼Œ
+ * å‡ ä¸ªMoveByæ“ä½œå¯ä»¥å¹¶è¡Œï¼Œç”±æ­¤äº§ç”Ÿçš„ä½ç§»å°†æ˜¯æ‰€æœ‰ä¸ªä½“ä½ç§»çš„æ€»å’Œã€‚
  @since v2.1beta2-custom
  */
 class CC_DLL MoveBy : public ActionInterval
@@ -762,28 +762,28 @@ public:
      * Creates the action with duration and delta position.
      *
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍÎ»ÒÆ´´½¨MoveBy¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’Œä½ç§»åˆ›å»ºMoveByåŠ¨ä½œã€‚
      * 
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param deltaPosition @~english The delta distance in 2d, it's a Vec2 type.
-     * @~chinese Î»ÒÆ£¬Vec2ÀàĞÍ¡£
+     * @~chinese ä½ç§»ï¼ŒVec2ç±»å‹ã€‚
      * @return @~english An autoreleased MoveBy object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄMoveBy¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„MoveByå¯¹è±¡ã€‚
      */
     static MoveBy* create(float duration, const Vec2& deltaPosition);
     /**@~english
      * Creates the action with duration and 3d delta position.
      *
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍÈıÎ¬Î»ÒÆ´´½¨MoveBy¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’Œä¸‰ç»´ä½ç§»åˆ›å»ºMoveByåŠ¨ä½œã€‚
      * 
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param deltaPosition @~english The delta distance in 3d, it's a Vec3 type.
-     * @~chinese ÈıÎ¬Î»ÒÆ£¬Vec3ÀàĞÍ¡£
+     * @~chinese ä¸‰ç»´ä½ç§»ï¼ŒVec3ç±»å‹ã€‚
      * @return @~english An autoreleased MoveBy object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄMoveBy¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„MoveByå¯¹è±¡ã€‚
      */
     static MoveBy* create(float duration, const Vec3& deltaPosition);
 
@@ -816,8 +816,8 @@ private:
  * @brief @~english Moves a Node object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
  Several MoveTo actions can be concurrently called, and the resulting
  movement will be the sum of individual movements.
- * @~chinese MoveTo¶¯×÷Í¨¹ıĞŞ¸ÄÒ»¸öÄ¿±ê½ÚµãµÄÎ»ÖÃÊôĞÔ½«ËüÒÆ¶¯µ½ÌØ¶¨Î»ÖÃ¡£
- * ¼¸¸öMoveTo²Ù×÷¿ÉÒÔ²¢ĞĞ£¬ÓÉ´Ë²úÉúµÄÔË¶¯½«ÊÇËùÓĞ¸öÌåÔË¶¯µÄ×ÜºÍ¡£
+ * @~chinese MoveToåŠ¨ä½œé€šè¿‡ä¿®æ”¹ä¸€ä¸ªç›®æ ‡èŠ‚ç‚¹çš„ä½ç½®å±æ€§å°†å®ƒç§»åŠ¨åˆ°ç‰¹å®šä½ç½®ã€‚
+ * å‡ ä¸ªMoveToæ“ä½œå¯ä»¥å¹¶è¡Œï¼Œç”±æ­¤äº§ç”Ÿçš„è¿åŠ¨å°†æ˜¯æ‰€æœ‰ä¸ªä½“è¿åŠ¨çš„æ€»å’Œã€‚
  @since v2.1beta2-custom
  */
 class CC_DLL MoveTo : public MoveBy
@@ -826,25 +826,25 @@ public:
     /** @~english
      * Creates the action with duration and 2d position.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍ¶şÎ¬ÊÀ½çÄ¿±êÎ»ÖÃ´´½¨MoveTo¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’ŒäºŒç»´ä¸–ç•Œç›®æ ‡ä½ç½®åˆ›å»ºMoveToåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param position @~english The destination position in 2d.
-     * @~chinese ¶şÎ¬ÊÀ½çµÄÄ¿±êÎ»ÖÃ¡£
+     * @~chinese äºŒç»´ä¸–ç•Œçš„ç›®æ ‡ä½ç½®ã€‚
      * @return @~english An autoreleased MoveTo object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄMoveTo¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„MoveToå¯¹è±¡ã€‚
      */
     static MoveTo* create(float duration, const Vec2& position);
     /**@~english
      * Creates the action with duration and 3d position.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍÈıÎ¬ÊÀ½çÄ¿±êÎ»ÖÃ´´½¨MoveTo¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’Œä¸‰ç»´ä¸–ç•Œç›®æ ‡ä½ç½®åˆ›å»ºMoveToåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param position @~english The destination position in 3d.
-     * @~chinese ÈıÎ¬ÊÀ½çÄ¿±êÎ»ÖÃ¡£
+     * @~chinese ä¸‰ç»´ä¸–ç•Œç›®æ ‡ä½ç½®ã€‚
      * @return @~english An autoreleased MoveTo object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅMoveTo¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾MoveToå¯¹è±¡ã€‚
      */
     static MoveTo* create(float duration, const Vec3& position);
 
@@ -871,7 +871,7 @@ private:
 
 /** @class SkewTo
  * @brief @~english Skews a Node object to given angles by modifying it's skewX and skewY attributes
- * @~chinese SkewTo¶¯×÷Í¨¹ıĞŞ¸ÄskewXºÍskewYÊôĞÔÇãĞ±Ò»¸ö½Úµã¶ÔÏóµ½ÌØ¶¨µÄÇãĞ±½Ç¶È
+ * @~chinese SkewToåŠ¨ä½œé€šè¿‡ä¿®æ”¹skewXå’ŒskewYå±æ€§å€¾æ–œä¸€ä¸ªèŠ‚ç‚¹å¯¹è±¡åˆ°ç‰¹å®šçš„å€¾æ–œè§’åº¦
 @since v1.0
 */
 class CC_DLL SkewTo : public ActionInterval
@@ -880,15 +880,15 @@ public:
     /** @~english
      * Creates the SkewTo action with the duration, x and y axis target skew parameters.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼ä£¬XºÍYÖáÄ¿±êÇãĞ±½ÇÀ´´´½¨SkewTo¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´ï¼ŒXå’ŒYè½´ç›®æ ‡å€¾æ–œè§’æ¥åˆ›å»ºSkewToåŠ¨ä½œã€‚
      * @param t @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param sx @~english Skew x angle.
-     * @~chinese XÖáÄ¿±êÇãĞ±½Ç¶È¡£
+     * @~chinese Xè½´ç›®æ ‡å€¾æ–œè§’åº¦ã€‚
      * @param sy @~english Skew y angle.
-     * @~chinese YÖáÄ¿±êÇãĞ±½Ç¶È¡£
+     * @~chinese Yè½´ç›®æ ‡å€¾æ–œè§’åº¦ã€‚
      * @return @~english An autoreleased SkewTo object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄSkewTo¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„SkewToå¯¹è±¡ã€‚
      */
     static SkewTo* create(float t, float sx, float sy);
 
@@ -921,7 +921,7 @@ private:
 
 /** @class SkewBy
 * @brief @~english Skews a Node object by skewX and skewY degrees.
- * @~chinese SkewBy¶¯×÷¿ÉÒÔÒÔÒ»¶¨½Ç¶ÈÇãĞ±Ò»¸ö½Úµã¡£
+ * @~chinese SkewByåŠ¨ä½œå¯ä»¥ä»¥ä¸€å®šè§’åº¦å€¾æ–œä¸€ä¸ªèŠ‚ç‚¹ã€‚
 @since v1.0
 */
 class CC_DLL SkewBy : public SkewTo
@@ -930,15 +930,15 @@ public:
     /** @~english
      * Creates the SkewBy action with the duration, x and y axis delta skew parameters.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼ä£¬XºÍYÖáÇãĞ±½Ç´´½¨¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´ï¼ŒXå’ŒYè½´å€¾æ–œè§’åˆ›å»ºåŠ¨ä½œã€‚
      * @param t @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param deltaSkewX @~english Skew x delta angle.
-     * @~chinese XÖáÇãĞ±½Ç¡£
+     * @~chinese Xè½´å€¾æ–œè§’ã€‚
      * @param deltaSkewY @~english Skew y delta angle.
-     * @~chinese YÖáÇãĞ±½Ç¡£
+     * @~chinese Yè½´å€¾æ–œè§’ã€‚
      * @return @~english An autoreleased SkewBy object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄSkewBy¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„SkewByå¯¹è±¡ã€‚
      */
     static SkewBy* create(float t, float deltaSkewX, float deltaSkewY);
 
@@ -960,7 +960,7 @@ private:
 
 /** @class JumpBy
  * @brief @~english Moves a Node object simulating a parabolic jump movement by modifying it's position attribute.
- * @~chinese JumpBy¶¯×÷¿ÉÒÔÄ£ÄâÅ×ÎïÏßÌøÔË¶¯ÒÆ¶¯Ò»¸ö½Úµã¶ÔÏó¡£
+ * @~chinese JumpByåŠ¨ä½œå¯ä»¥æ¨¡æ‹ŸæŠ›ç‰©çº¿è·³è¿åŠ¨ç§»åŠ¨ä¸€ä¸ªèŠ‚ç‚¹å¯¹è±¡ã€‚
 */
 class CC_DLL JumpBy : public ActionInterval
 {
@@ -968,17 +968,17 @@ public:
     /** @~english
      * Creates the JumpBy action with duration, jumping distance, jumping height and number of jumps.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼ä£¬ÌøÔ¾¾àÀë£¬ÌøÔ¾¸ß¶ÈºÍ´ÎÊı´´½¨JumpBy¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´ï¼Œè·³è·ƒè·ç¦»ï¼Œè·³è·ƒé«˜åº¦å’Œæ¬¡æ•°åˆ›å»ºJumpByåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param position @~english The jumping distance.
-     * @~chinese ÌøÔ¾µÄ¾àÀë¡£
+     * @~chinese è·³è·ƒçš„è·ç¦»ã€‚
      * @param height @~english The jumping height.
-     * @~chinese ÌøÔ¾µÄ¸ß¶È¡£
+     * @~chinese è·³è·ƒçš„é«˜åº¦ã€‚
      * @param jumps @~english The jumping times.
-     * @~chinese ÌøÔ¾´ÎÊı¡£
+     * @~chinese è·³è·ƒæ¬¡æ•°ã€‚
      * @return @~english An autoreleased JumpBy object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄJumpBy¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„JumpByå¯¹è±¡ã€‚
      */
     static JumpBy* create(float duration, const Vec2& position, float height, int jumps);
 
@@ -1009,7 +1009,7 @@ private:
 
 /** @class JumpTo
  * @brief @~english Moves a Node object to a parabolic position simulating a jump movement by modifying it's position attribute.
- * @~chinese JumpTo¶¯×÷¿ÉÒÔÄ£ÄâÅ×ÎïÏßÌøÔË¶¯ÒÆ¶¯Ò»¸ö½Úµã¶ÔÏóµ½ÌØ¶¨µÄÎ»ÖÃ¡£
+ * @~chinese JumpToåŠ¨ä½œå¯ä»¥æ¨¡æ‹ŸæŠ›ç‰©çº¿è·³è¿åŠ¨ç§»åŠ¨ä¸€ä¸ªèŠ‚ç‚¹å¯¹è±¡åˆ°ç‰¹å®šçš„ä½ç½®ã€‚
 */ 
 class CC_DLL JumpTo : public JumpBy
 {
@@ -1017,17 +1017,17 @@ public:
     /** @~english
      * Creates the JumpTo action with duration, destination position, jumping height and number of jumps.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼ä£¬Ä¿µÄµØÎ»ÖÃ£¬ÌøÔ¾¸ß¶ÈºÍ´ÎÊı´´½¨JumpTo¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´ï¼Œç›®çš„åœ°ä½ç½®ï¼Œè·³è·ƒé«˜åº¦å’Œæ¬¡æ•°åˆ›å»ºJumpToåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param position @~english The jumping destination position.
-     * @~chinese ÌøÔ¾µÄÄ¿µÄµØµÄÎ»ÖÃ¡£
+     * @~chinese è·³è·ƒçš„ç›®çš„åœ°çš„ä½ç½®ã€‚
      * @param height @~english The jumping height.
-     * @~chinese ÌøÔ¾µÄ¸ß¶È¡£
+     * @~chinese è·³è·ƒçš„é«˜åº¦ã€‚
      * @param jumps @~english The jumping times.
-     * @~chinese ÌøÔ¾µÄ´ÎÊı¡£
+     * @~chinese è·³è·ƒçš„æ¬¡æ•°ã€‚
      * @return @~english An autoreleased JumpTo object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄJumpTo¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„JumpToå¯¹è±¡ã€‚
      */
     static JumpTo* create(float duration, const Vec2& position, float height, int jumps);
 
@@ -1052,7 +1052,7 @@ private:
 };
 
 /** @struct ccBezierConfig @~english Bezier configuration structure
- * @~chinese BezierÇúÏßÅäÖÃ½á¹¹Ìå
+ * @~chinese Bezieræ›²çº¿é…ç½®ç»“æ„ä½“
  */
 typedef struct _ccBezierConfig {
     //! end position of the bezier
@@ -1065,19 +1065,19 @@ typedef struct _ccBezierConfig {
 
 /** @class BezierBy
  * @brief @~english An action that moves the target with a cubic Bezier curve by a certain distance.
- * @~chinese BezierBy¶¯×÷¿ÉÒÔ½«Ò»¸ö½ÚµãÑØÈı´Î±´Èû¶ûÇúÏßÒÆ¶¯Ò»¶¨¾àÀë¡£
+ * @~chinese BezierByåŠ¨ä½œå¯ä»¥å°†ä¸€ä¸ªèŠ‚ç‚¹æ²¿ä¸‰æ¬¡è´å¡å°”æ›²çº¿ç§»åŠ¨ä¸€å®šè·ç¦»ã€‚
  */
 class CC_DLL BezierBy : public ActionInterval
 {
 public:
     /** @~english Creates the action with a duration and a bezier configuration.
-     * @~chinese ÓÃ³ÖĞøÊ±¼äºÍ±´Èû¶ûÇúÏßÅäÖÃ´´½¨BezierBy¶¯×÷¡£
+     * @~chinese ç”¨æŒç»­æ—¶é—´å’Œè´å¡å°”æ›²çº¿é…ç½®åˆ›å»ºBezierByåŠ¨ä½œã€‚
      * @param t @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param c @~english Bezier config.
-     * @~chinese ±´Èû¶ûÇúÏßÅäÖÃ¡£
+     * @~chinese è´å¡å°”æ›²çº¿é…ç½®ã€‚
      * @return @~english An autoreleased BezierBy object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄBezierBy¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„BezierByå¯¹è±¡ã€‚
      * @code
      * When this function bound to js or lua,the input params are changed.
      * in js: var create(var t,var table)
@@ -1101,13 +1101,13 @@ CC_CONSTRUCTOR_ACCESS:
     /** @~english
      * initializes the action with a duration and a bezier configuration
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍ±´Èû¶ûÇúÏßÅäÖÃ³õÊ¼»¯BezierBy¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’Œè´å¡å°”æ›²çº¿é…ç½®åˆå§‹åŒ–BezierByåŠ¨ä½œã€‚
      * @param t @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param c @~english Bezier config.
-     * @~chinese ±´Èû¶ûÇúÏßÅäÖÃ¡£
+     * @~chinese è´å¡å°”æ›²çº¿é…ç½®ã€‚
      * @return @~english Return true if successfully initialized, otherwise return false
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool initWithDuration(float t, const ccBezierConfig& c);
 
@@ -1122,20 +1122,20 @@ private:
 
 /** @class BezierTo
  * @brief @~english An action that moves the target with a cubic Bezier curve to a destination point.
- * @~chinese BezierTo¶¯×÷¿ÉÒÔ½«Ò»¸ö½ÚµãÑØÈı´Î±´Èû¶ûÇúÏßÒÆ¶¯µ½ÌØ¶¨Î»ÖÃ¡£
+ * @~chinese BezierToåŠ¨ä½œå¯ä»¥å°†ä¸€ä¸ªèŠ‚ç‚¹æ²¿ä¸‰æ¬¡è´å¡å°”æ›²çº¿ç§»åŠ¨åˆ°ç‰¹å®šä½ç½®ã€‚
  @since v0.8.2
  */
 class CC_DLL BezierTo : public BezierBy
 {
 public:
     /** @~english Creates the action with a duration and a bezier configuration.
-     * @~chinese ÓÃ³ÖĞøÊ±¼äºÍ±´Èû¶ûÇúÏßÅäÖÃ´´½¨BezierTo¶¯×÷¡£
+     * @~chinese ç”¨æŒç»­æ—¶é—´å’Œè´å¡å°”æ›²çº¿é…ç½®åˆ›å»ºBezierToåŠ¨ä½œã€‚
      * @param t @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param c @~english Bezier config.
-     * @~chinese ±´Èû¶ûÇúÏßÅäÖÃ¡£
+     * @~chinese è´å¡å°”æ›²çº¿é…ç½®ã€‚
      * @return @~english An autoreleased BezierTo object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄBezierTo¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„BezierToå¯¹è±¡ã€‚
      * @code
      * when this function bound to js or lua,the input params are changed
      * in js: var create(var t,var table)
@@ -1158,13 +1158,13 @@ CC_CONSTRUCTOR_ACCESS:
     /** @~english
      * initializes the action with a duration and a bezier configuration
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍ±´Èû¶ûÇúÏßÅäÖÃ³õÊ¼»¯BezierTo¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’Œè´å¡å°”æ›²çº¿é…ç½®åˆå§‹åŒ–BezierToåŠ¨ä½œã€‚
      * @param t @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param c @~english Bezier config.
-     * @~chinese ±´Èû¶ûÇúÏßÅäÖÃ¡£
+     * @~chinese è´å¡å°”æ›²çº¿é…ç½®ã€‚
      * @return @~english Return true if successfully initialized, otherwise return false
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool initWithDuration(float t, const ccBezierConfig &c);
 
@@ -1177,11 +1177,11 @@ private:
 
 /** @class ScaleTo
  @brief @~english Scales a Node object to a zoom factor by modifying it's scale attribute.
- * @~chinese ScaleTo¶¯×÷Í¨¹ıĞŞ¸ÄscaleÊôĞÔÈÃÒ»¸ö½Úµã¶ÔÏóµÄËõ·Åµ½ÌØ¶¨´óĞ¡¡£
+ * @~chinese ScaleToåŠ¨ä½œé€šè¿‡ä¿®æ”¹scaleå±æ€§è®©ä¸€ä¸ªèŠ‚ç‚¹å¯¹è±¡çš„ç¼©æ”¾åˆ°ç‰¹å®šå¤§å°ã€‚
  @warning @~english This action doesn't support "reverse".
- * @~chinese Õâ¸ö¶¯×÷²»Ö§³Ö¡°Äæ×ª¡±£¨reverse£©¡£
+ * @~chinese è¿™ä¸ªåŠ¨ä½œä¸æ”¯æŒâ€œé€†è½¬â€ï¼ˆreverseï¼‰ã€‚
  @warning @~english The physics body contained in Node doesn't support this action.
- * @~chinese °üº¬µÄÎïÀíÉíÌåµÄ½Úµã²»Ö§³ÖÕâÒ»¶¯×÷¡£
+ * @~chinese åŒ…å«çš„ç‰©ç†èº«ä½“çš„èŠ‚ç‚¹ä¸æ”¯æŒè¿™ä¸€åŠ¨ä½œã€‚
  */
 class CC_DLL ScaleTo : public ActionInterval
 {
@@ -1189,45 +1189,45 @@ public:
     /** @~english
      * Creates the action with the same scale factor for X and Y.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍXºÍYÖáÏàÍ¬µÄËõ·Å±ÈÀı´´½¨ScaleTo¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’ŒXå’ŒYè½´ç›¸åŒçš„ç¼©æ”¾æ¯”ä¾‹åˆ›å»ºScaleToåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param s @~english Scale factor of x and y.
-     * @~chinese XºÍYÖáµÄËõ·Å±ÈÀı¡£
+     * @~chinese Xå’ŒYè½´çš„ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @return @~english An autoreleased ScaleTo object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄScaleTo¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„ScaleToå¯¹è±¡ã€‚
      */
     static ScaleTo* create(float duration, float s);
 
     /** @~english
      * Creates the action with and X factor and a Y factor.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍXºÍYÖá·Ö±ğµÄËõ·Å±ÈÀı´´½¨ScaleTo¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’ŒXå’ŒYè½´åˆ†åˆ«çš„ç¼©æ”¾æ¯”ä¾‹åˆ›å»ºScaleToåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param sx @~english Scale factor of x.
-     * @~chinese XÖáËõ·Å±ÈÀı¡£
+     * @~chinese Xè½´ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @param sy @~english Scale factor of y.
-     * @~chinese YÖáµÄËõ·Å±ÈÀı¡£
+     * @~chinese Yè½´çš„ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @return @~english An autoreleased ScaleTo object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄScaleTo¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„ScaleToå¯¹è±¡ã€‚
      */
     static ScaleTo* create(float duration, float sx, float sy);
 
     /** @~english
      * Creates the action with X Y Z factor.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍX£¬Y£¬ZÖá·Ö±ğµÄËõ·Å±ÈÀı´´½¨ScaleTo¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’ŒXï¼ŒYï¼ŒZè½´åˆ†åˆ«çš„ç¼©æ”¾æ¯”ä¾‹åˆ›å»ºScaleToåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä,ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´,ä»¥ç§’ä¸ºå•ä½ã€‚
      * @param sx @~english Scale factor of x.
-     * @~chinese XÖáËõ·Å±ÈÀı¡£
+     * @~chinese Xè½´ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @param sy @~english Scale factor of y.
-     * @~chinese YÖáËõ·Å±ÈÀı¡£
+     * @~chinese Yè½´ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @param sz @~english Scale factor of z.
-     * @~chinese ZÖáËõ·Å±ÈÀı¡£
+     * @~chinese Zè½´ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @return @~english An autoreleased ScaleTo object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄScaleTo¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„ScaleToå¯¹è±¡ã€‚
      */
     static ScaleTo* create(float duration, float sx, float sy, float sz);
 
@@ -1246,43 +1246,43 @@ CC_CONSTRUCTOR_ACCESS:
     /** @~english
      * Initialize the action with the same scale factor for X and Y.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍXºÍYÖáÏàÍ¬µÄËõ·Å±ÈÀı³õÊ¼»¯ScaleTo¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’ŒXå’ŒYè½´ç›¸åŒçš„ç¼©æ”¾æ¯”ä¾‹åˆå§‹åŒ–ScaleToåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param s @~english Scale factor of x and y.
-     * @~chinese XºÍYÖáµÄËõ·Å±ÈÀı¡£
+     * @~chinese Xå’ŒYè½´çš„ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @return @~english Return true if successfully initialized, otherwise return false
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool initWithDuration(float duration, float s);
     /** @~english
      * Initialize the action with and X factor and a Y factor.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍXºÍYÖá·Ö±ğµÄËõ·Å±ÈÀı³õÊ¼»¯ScaleTo¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’ŒXå’ŒYè½´åˆ†åˆ«çš„ç¼©æ”¾æ¯”ä¾‹åˆå§‹åŒ–ScaleToåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param sx @~english Scale factor of x.
-     * @~chinese XÖáËõ·Å±ÈÀı¡£
+     * @~chinese Xè½´ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @param sy @~english Scale factor of y.
-     * @~chinese YÖáµÄËõ·Å±ÈÀı¡£
+     * @~chinese Yè½´çš„ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @return @~english Return true if successfully initialized, otherwise return false
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool initWithDuration(float duration, float sx, float sy);
     /** @~english
      * Initializes the action with X Y Z factor 
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍX£¬Y£¬ZÖá·Ö±ğµÄËõ·Å±ÈÀı³õÊ¼»¯ScaleTo¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’ŒXï¼ŒYï¼ŒZè½´åˆ†åˆ«çš„ç¼©æ”¾æ¯”ä¾‹åˆå§‹åŒ–ScaleToåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä,ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´,ä»¥ç§’ä¸ºå•ä½ã€‚
      * @param sx @~english Scale factor of x.
-     * @~chinese XÖáËõ·Å±ÈÀı¡£
+     * @~chinese Xè½´ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @param sy @~english Scale factor of y.
-     * @~chinese YÖáËõ·Å±ÈÀı¡£
+     * @~chinese Yè½´ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @param sz @~english Scale factor of z.
-     * @~chinese ZÖáËõ·Å±ÈÀı¡£
+     * @~chinese Zè½´ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @return @~english Return true if successfully initialized, otherwise return false
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool initWithDuration(float duration, float sx, float sy, float sz);
 
@@ -1306,9 +1306,9 @@ private:
 
 /** @class ScaleBy
  * @brief @~english Scales a Node object a zoom factor by modifying it's scale attribute.
- * @~chinese ScaleTo¶¯×÷Í¨¹ıĞŞ¸ÄscaleÊôĞÔÈÃÒ»¸ö½Úµã¶ÔÏóµÄËõ·Åµ½ÌØ¶¨±ÈÀı£¬Ïà¶ÔÓÚµ±Ç°´óĞ¡¡£
+ * @~chinese ScaleToåŠ¨ä½œé€šè¿‡ä¿®æ”¹scaleå±æ€§è®©ä¸€ä¸ªèŠ‚ç‚¹å¯¹è±¡çš„ç¼©æ”¾åˆ°ç‰¹å®šæ¯”ä¾‹ï¼Œç›¸å¯¹äºå½“å‰å¤§å°ã€‚
  @warning @~english The physics body contained in Node doesn't support this action.
- * @~chinese °üº¬µÄÎïÀíÉíÌåµÄ½Úµã²»Ö§³ÖÕâÒ»¶¯×÷¡£
+ * @~chinese åŒ…å«çš„ç‰©ç†èº«ä½“çš„èŠ‚ç‚¹ä¸æ”¯æŒè¿™ä¸€åŠ¨ä½œã€‚
 */
 class CC_DLL ScaleBy : public ScaleTo
 {
@@ -1316,45 +1316,45 @@ public:
     /** @~english
      * Creates the action with the same scale factor for X and Y.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍXºÍYÖáÏàÍ¬µÄËõ·Å±ÈÀı´´½¨ScaleBy¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’ŒXå’ŒYè½´ç›¸åŒçš„ç¼©æ”¾æ¯”ä¾‹åˆ›å»ºScaleByåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param s @~english Scale factor of x and y.
-     * @~chinese XºÍYÖáµÄËõ·Å±ÈÀı¡£
+     * @~chinese Xå’ŒYè½´çš„ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @return @~english An autoreleased ScaleBy object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄScaleBy¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„ScaleByå¯¹è±¡ã€‚
      */
     static ScaleBy* create(float duration, float s);
 
     /** @~english
      * Creates the action with and X factor and a Y factor.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍXºÍYÖá·Ö±ğµÄËõ·Å±ÈÀı´´½¨ScaleBy¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’ŒXå’ŒYè½´åˆ†åˆ«çš„ç¼©æ”¾æ¯”ä¾‹åˆ›å»ºScaleByåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param sx @~english Scale factor of x.
-     * @~chinese XÖáËõ·Å±ÈÀı¡£
+     * @~chinese Xè½´ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @param sy @~english Scale factor of y.
-     * @~chinese YÖáµÄËõ·Å±ÈÀı¡£
+     * @~chinese Yè½´çš„ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @return @~english An autoreleased ScaleBy object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄScaleBy¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„ScaleByå¯¹è±¡ã€‚
      */
     static ScaleBy* create(float duration, float sx, float sy);
 
     /** @~english
      * Creates the action with X Y Z factor.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍX£¬Y£¬ZÖá·Ö±ğµÄËõ·Å±ÈÀı´´½¨ScaleBy¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’ŒXï¼ŒYï¼ŒZè½´åˆ†åˆ«çš„ç¼©æ”¾æ¯”ä¾‹åˆ›å»ºScaleByåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä,ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´,ä»¥ç§’ä¸ºå•ä½ã€‚
      * @param sx @~english Scale factor of x.
-     * @~chinese XÖáËõ·Å±ÈÀı¡£
+     * @~chinese Xè½´ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @param sy @~english Scale factor of y.
-     * @~chinese YÖáËõ·Å±ÈÀı¡£
+     * @~chinese Yè½´ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @param sz @~english Scale factor of z.
-     * @~chinese ZÖáËõ·Å±ÈÀı¡£
+     * @~chinese Zè½´ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @return @~english An autoreleased ScaleBy object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄScaleBy¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„ScaleByå¯¹è±¡ã€‚
      */
     static ScaleBy* create(float duration, float sx, float sy, float sz);
 
@@ -1375,7 +1375,7 @@ private:
 
 /** @class Blink
  * @brief @~english Blinks a Node object by modifying it's visible attribute.
- * @~chinese Blink¿ÉÒÔÍ¨¹ıĞŞ¸Ä½ÚµãµÄvisibleÊôĞÔÈÃ½Úµã¶ÔÏóÓĞ²»¶ÏÉÁÏÖµÄĞ§¹û¡£
+ * @~chinese Blinkå¯ä»¥é€šè¿‡ä¿®æ”¹èŠ‚ç‚¹çš„visibleå±æ€§è®©èŠ‚ç‚¹å¯¹è±¡æœ‰ä¸æ–­é—ªç°çš„æ•ˆæœã€‚
 */
 class CC_DLL Blink : public ActionInterval
 {
@@ -1383,13 +1383,13 @@ public:
     /** @~english
      * Creates the action with duration and number of blinks.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍÉÁÏÖ´ÎÊı´´½¨Blink¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’Œé—ªç°æ¬¡æ•°åˆ›å»ºBlinkåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä,ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´,ä»¥ç§’ä¸ºå•ä½ã€‚
      * @param blinks @~english Blink times.
-     * @~chinese ÉÁÏÖ´ÎÊı¡£
+     * @~chinese é—ªç°æ¬¡æ•°ã€‚
      * @return @~english An autoreleased Blink object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄBlink¶¯×÷¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„BlinkåŠ¨ä½œã€‚
      */
     static Blink* create(float duration, int blinks);
 
@@ -1409,13 +1409,13 @@ CC_CONSTRUCTOR_ACCESS:
     /** @~english
      * initializes the action with duration and number of blinks.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍÉÁÏÖ´ÎÊı³õÊ¼»¯Blink¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’Œé—ªç°æ¬¡æ•°åˆå§‹åŒ–BlinkåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä,ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´,ä»¥ç§’ä¸ºå•ä½ã€‚
      * @param blinks @~english Blink times.
-     * @~chinese ÉÁÏÖ´ÎÊı¡£
+     * @~chinese é—ªç°æ¬¡æ•°ã€‚
      * @return @~english Return true if successfully initialized, otherwise return false
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool initWithDuration(float duration, int blinks);
     
@@ -1430,9 +1430,9 @@ private:
 
 /** @class FadeTo
  * @brief @~english Fades an object that implements the RGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
- * @~chinese FadeTo£¨½¥±ä£©¿ÉÒÔ½«Ò»¸öÊµÏÖÁËRGBAProtocolĞ­ÒéµÄ¶ÔÏó´Óµ±Ç°Í¸Ã÷¶È½¥±äµ½Ö¸¶¨Í¸Ã÷¶È¡£
+ * @~chinese FadeToï¼ˆæ¸å˜ï¼‰å¯ä»¥å°†ä¸€ä¸ªå®ç°äº†RGBAProtocolåè®®çš„å¯¹è±¡ä»å½“å‰é€æ˜åº¦æ¸å˜åˆ°æŒ‡å®šé€æ˜åº¦ã€‚
  @warning @~english This action doesn't support "reverse"
- * @~chinese Õâ¸ö¶¯×÷²»Ö§³Ö¡°Äæ×ª¡±£¨reverse£©
+ * @~chinese è¿™ä¸ªåŠ¨ä½œä¸æ”¯æŒâ€œé€†è½¬â€ï¼ˆreverseï¼‰
  */
 class CC_DLL FadeTo : public ActionInterval
 {
@@ -1440,13 +1440,13 @@ public:
     /** @~english
      * Creates an action with duration and opacity.
      * @~chinese 
-     * Ê¹ÓÃ³ÖĞøÊ±¼äºÍÄ¿±êÍ¸Ã÷¶È´´½¨FadeTo¶¯×÷¡£
+     * ä½¿ç”¨æŒç»­æ—¶é—´å’Œç›®æ ‡é€æ˜åº¦åˆ›å»ºFadeToåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param opacity @~english A certain opacity, the range is from 0 to 255.
-     * @~chinese Ä¿±êÍ¸Ã÷¶È£¬·¶Î§´Ó0µ½255¡£
+     * @~chinese ç›®æ ‡é€æ˜åº¦ï¼ŒèŒƒå›´ä»0åˆ°255ã€‚
      * @return @~english An autoreleased FadeTo object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄFadeTo¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„FadeToå¯¹è±¡ã€‚
      */
     static FadeTo* create(float duration, GLubyte opacity);
 
@@ -1465,13 +1465,13 @@ CC_CONSTRUCTOR_ACCESS:
     /** @~english
      * initializes the action with duration and opacity 
      * @~chinese 
-     * Ê¹ÓÃ³ÖĞøÊ±¼äºÍÄ¿±êÍ¸Ã÷¶È³õÊ¼»¯FadeTo¶¯×÷¡£
+     * ä½¿ç”¨æŒç»­æ—¶é—´å’Œç›®æ ‡é€æ˜åº¦åˆå§‹åŒ–FadeToåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param opacity @~english A certain opacity, the range is from 0 to 255.
-     * @~chinese Ä¿±êÍ¸Ã÷¶È£¬·¶Î§´Ó0µ½255¡£
+     * @~chinese ç›®æ ‡é€æ˜åº¦ï¼ŒèŒƒå›´ä»0åˆ°255ã€‚
      * @return @~english Return true if successfully initialized, otherwise return false
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool initWithDuration(float duration, GLubyte opacity);
 
@@ -1487,8 +1487,8 @@ private:
 /** @class FadeIn
  * @brief @~english Fades In an object that implements the RGBAProtocol protocol. It modifies the opacity from 0 to 255.
  The "reverse" of this action is FadeOut
- * @~chinese FadeIn£¨µ­Èë£©¶¯×÷¿ÉÒÔÈÃÒ»¸öÊµÏÖRGBAProtocolĞ­ÒéµÄ¶ÔÏóµ­Èë£¬ËüÊ¹½ÚµãµÄµ±Ç°Í¸Ã÷¶È½¥±äµ½255¡£
- * ÕâÒ»¶¯×÷µÄ¡°·´Ïò¡±ÊÇFadeOut£¨µ­³ö£©¶¯×÷
+ * @~chinese FadeInï¼ˆæ·¡å…¥ï¼‰åŠ¨ä½œå¯ä»¥è®©ä¸€ä¸ªå®ç°RGBAProtocolåè®®çš„å¯¹è±¡æ·¡å…¥ï¼Œå®ƒä½¿èŠ‚ç‚¹çš„å½“å‰é€æ˜åº¦æ¸å˜åˆ°255ã€‚
+ * è¿™ä¸€åŠ¨ä½œçš„â€œåå‘â€æ˜¯FadeOutï¼ˆæ·¡å‡ºï¼‰åŠ¨ä½œ
  */
 class CC_DLL FadeIn : public FadeTo
 {
@@ -1496,11 +1496,11 @@ public:
     /** @~english
      * Creates the action with duration.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼ä´´½¨FadeIn¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´åˆ›å»ºFadeInåŠ¨ä½œã€‚
      * @param d @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @return @~english An autoreleased FadeIn object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅFadeIn¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾FadeInå¯¹è±¡ã€‚
      */
     static FadeIn* create(float d);
 
@@ -1513,8 +1513,8 @@ public:
 
     /**
      * @~english Set the reverse action.
-     * @~chinese ÉèÖÃÄæ×ª¶¯×÷¡£
-     * @param ac @~english The reverse action @~chinese Äæ×ª¶¯×÷
+     * @~chinese è®¾ç½®é€†è½¬åŠ¨ä½œã€‚
+     * @param ac @~english The reverse action @~chinese é€†è½¬åŠ¨ä½œ
      * @js NA
      */
     void setReverseAction(FadeTo* ac);
@@ -1531,8 +1531,8 @@ private:
 /** @class FadeOut
  * @brief @~english Fades Out an object that implements the RGBAProtocol protocol. It modifies the opacity from 255 to 0.
  The "reverse" of this action is FadeIn
- * @~chinese FadeOut£¨µ­³ö£©¶¯×÷¿ÉÒÔÈÃÒ»¸öÊµÏÖRGBAProtocolĞ­ÒéµÄ¶ÔÏóµ­³ö£¬ËüÊ¹½ÚµãµÄµ±Ç°Í¸Ã÷¶È½¥±äµ½0¡£
- * ÕâÒ»¶¯×÷µÄ¡°·´Ïò¡±ÊÇFadeIn£¨µ­Èë£©¶¯×÷
+ * @~chinese FadeOutï¼ˆæ·¡å‡ºï¼‰åŠ¨ä½œå¯ä»¥è®©ä¸€ä¸ªå®ç°RGBAProtocolåè®®çš„å¯¹è±¡æ·¡å‡ºï¼Œå®ƒä½¿èŠ‚ç‚¹çš„å½“å‰é€æ˜åº¦æ¸å˜åˆ°0ã€‚
+ * è¿™ä¸€åŠ¨ä½œçš„â€œåå‘â€æ˜¯FadeInï¼ˆæ·¡å…¥ï¼‰åŠ¨ä½œ
 */
 class CC_DLL FadeOut : public FadeTo
 {
@@ -1540,11 +1540,11 @@ public:
     /** @~english
      * Creates the action with duration.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼ä´´½¨FadeOut¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´åˆ›å»ºFadeOutåŠ¨ä½œã€‚
      * @param d @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @return @~english An autoreleased FadeOut object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅFadeOut¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾FadeOutå¯¹è±¡ã€‚
      */
     static FadeOut* create(float d);
 
@@ -1557,8 +1557,8 @@ public:
 
     /**
      * @~english Set the reverse action.
-     * @~chinese ÉèÖÃÄæ×ª¶¯×÷¡£
-     * @param ac @~english The reverse action @~chinese Äæ×ª¶¯×÷
+     * @~chinese è®¾ç½®é€†è½¬åŠ¨ä½œã€‚
+     * @param ac @~english The reverse action @~chinese é€†è½¬åŠ¨ä½œ
      * @js NA
      */
     void setReverseAction(FadeTo* ac);
@@ -1573,9 +1573,9 @@ private:
 
 /** @class TintTo
  * @brief @~english Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
- * @~chinese TintTo¶¯×÷¿ÉÒÔÈÃÒ»¸öÊµÏÖNodeRGBĞ­ÒéµÄ¶ÔÏó±äÉ«µ½ÌØ¶¨ÑÕÉ«¡£
+ * @~chinese TintToåŠ¨ä½œå¯ä»¥è®©ä¸€ä¸ªå®ç°NodeRGBåè®®çš„å¯¹è±¡å˜è‰²åˆ°ç‰¹å®šé¢œè‰²ã€‚
  @warning @~english This action doesn't support "reverse"
- * @~chinese Õâ¸ö¶¯×÷²»Ö§³Ö¡°Äæ×ª¡±£¨reverse£©
+ * @~chinese è¿™ä¸ªåŠ¨ä½œä¸æ”¯æŒâ€œé€†è½¬â€ï¼ˆreverseï¼‰
  @since v0.7.2
 */
 class CC_DLL TintTo : public ActionInterval
@@ -1584,29 +1584,29 @@ public:
     /** @~english
      * Creates an action with duration and color.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍÄ¿±êÑÕÉ«´´½¨TintTo¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’Œç›®æ ‡é¢œè‰²åˆ›å»ºTintToåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param red @~english Red Color, from 0 to 255.
-     * @~chinese ÑÕÉ«µÄºìÉ«Í¨µÀÖµ£¬´Ó0µ½255¡£
+     * @~chinese é¢œè‰²çš„çº¢è‰²é€šé“å€¼ï¼Œä»0åˆ°255ã€‚
      * @param green @~english Green Color, from 0 to 255.
-     * @~chinese ÑÕÉ«µÄÂÌÉ«Í¨µÀÖµ£¬´Ó0µ½255¡£
+     * @~chinese é¢œè‰²çš„ç»¿è‰²é€šé“å€¼ï¼Œä»0åˆ°255ã€‚
      * @param blue @~english Blue Color, from 0 to 255.
-     * @~chinese ÑÕÉ«µÄÀ¶É«Í¨µÀÖµ£¬´Ó0µ½255¡£
+     * @~chinese é¢œè‰²çš„è“è‰²é€šé“å€¼ï¼Œä»0åˆ°255ã€‚
      * @return @~english An autoreleased TintTo object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄTintTo¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„TintToå¯¹è±¡ã€‚
      */
     static TintTo* create(float duration, GLubyte red, GLubyte green, GLubyte blue);
     /**@~english
      * Creates an action with duration and color.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍÄ¿±êÑÕÉ«´´½¨TintTo¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’Œç›®æ ‡é¢œè‰²åˆ›å»ºTintToåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param color @~english It's a Color3B type color.
-     * @~chinese Ò»¸öColor3BÀàĞÍÑÕÉ«¡£
+     * @~chinese ä¸€ä¸ªColor3Bç±»å‹é¢œè‰²ã€‚
      * @return @~english An autoreleased TintTo object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄTintTo¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„TintToå¯¹è±¡ã€‚
      */
     static TintTo* create(float duration, const Color3B& color);
 
@@ -1634,7 +1634,7 @@ private:
 
 /** @class TintBy
  @brief @~english Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
- * @~chinese TintBy¶¯×÷¿ÉÒÔÈÃÒ»¸öÊµÏÖNodeRGBĞ­ÒéµÄ¶ÔÏó°´Ò»¶¨²îÖµ¸Ä±äÆäÑÕÉ«¡£
+ * @~chinese TintByåŠ¨ä½œå¯ä»¥è®©ä¸€ä¸ªå®ç°NodeRGBåè®®çš„å¯¹è±¡æŒ‰ä¸€å®šå·®å€¼æ”¹å˜å…¶é¢œè‰²ã€‚
  @since v0.7.2
  */
 class CC_DLL TintBy : public ActionInterval
@@ -1643,17 +1643,17 @@ public:
     /** @~english
      * Creates an action with duration and color.
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍÄ¿±êÑÕÉ«´´½¨TintBy¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’Œç›®æ ‡é¢œè‰²åˆ›å»ºTintByåŠ¨ä½œã€‚
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param deltaRed @~english Delta red color.
-     * @~chinese ÑÕÉ«²îÖµµÄºìÉ«Í¨µÀÖµ£¬´Ó0µ½255¡£
+     * @~chinese é¢œè‰²å·®å€¼çš„çº¢è‰²é€šé“å€¼ï¼Œä»0åˆ°255ã€‚
      * @param deltaGreen @~english Delta green color.
-     * @~chinese ÑÕÉ«²îÖµµÄÂÌÉ«Í¨µÀÖµ£¬´Ó0µ½255¡£
+     * @~chinese é¢œè‰²å·®å€¼çš„ç»¿è‰²é€šé“å€¼ï¼Œä»0åˆ°255ã€‚
      * @param deltaBlue @~english Delta blue color.
-     * @~chinese ÑÕÉ«²îÖµµÄÀ¶É«Í¨µÀÖµ£¬´Ó0µ½255¡£
+     * @~chinese é¢œè‰²å·®å€¼çš„è“è‰²é€šé“å€¼ï¼Œä»0åˆ°255ã€‚
      * @return @~english An autoreleased TintBy object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄTintBy¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„TintByå¯¹è±¡ã€‚
      */
     static TintBy* create(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 
@@ -1686,7 +1686,7 @@ private:
 
 /** @class DelayTime
  * @brief @~english Delays the action a certain amount of seconds.
- * @~chinese DelayTimeÊÇÑÓ³Ù¶¯×÷£¬¿ÉÒÔÈÃSequenceÖĞµÄ¶¯×÷Ö´ĞĞÑÓ³ÙÒ»¶ÎÊ±¼ä¡£
+ * @~chinese DelayTimeæ˜¯å»¶è¿ŸåŠ¨ä½œï¼Œå¯ä»¥è®©Sequenceä¸­çš„åŠ¨ä½œæ‰§è¡Œå»¶è¿Ÿä¸€æ®µæ—¶é—´ã€‚
 */
 class CC_DLL DelayTime : public ActionInterval
 {
@@ -1694,11 +1694,11 @@ public:
     /** @~english
      * Creates the action with delayed duration.
      * @~chinese 
-     * ÓÃÑÓ³ÙÊ±¼ä´´½¨DelayTime¶¯×÷¡£
+     * ç”¨å»¶è¿Ÿæ—¶é—´åˆ›å»ºDelayTimeåŠ¨ä½œã€‚
      * @param d @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @return @~english An autoreleased DelayTime object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄDelayTime¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„DelayTimeå¯¹è±¡ã€‚
      */
     static DelayTime* create(float d);
 
@@ -1720,26 +1720,26 @@ private:
 /** @class ReverseTime
  * @brief @~english Executes an action in reverse order, from time=duration to time=0
  
- * @~chinese ReverseTime¶¯×÷»áÓÃÄæ×ªµÄÊ±¼äÖáÖ´ĞĞÒ»¸öÄ¿±ê¶¯×÷£¬Äæ×ªºóµÄÊ±¼äÖá´Ótime=durationµ½time=0
+ * @~chinese ReverseTimeåŠ¨ä½œä¼šç”¨é€†è½¬çš„æ—¶é—´è½´æ‰§è¡Œä¸€ä¸ªç›®æ ‡åŠ¨ä½œï¼Œé€†è½¬åçš„æ—¶é—´è½´ä»time=durationåˆ°time=0
  * 
  @warning @~english Use this action carefully. This action is not
  sequenceable. Use it as the default "reversed" method
  of your own actions, but using it outside the "reversed"
  scope is not recommended.
- * @~chinese ÒªĞ¡ĞÄÊ¹ÓÃÕâ¸ö²Ù×÷¡£ÕâÖÖ¶¯×÷²»¿ÉÒÔ±»°üº¬ÔÚSequence¶¯×÷ÖĞ¡£
- * ¿ÉÒÔ°ÑËü×÷ÎªÄ¬ÈÏµÄ¡°Äæ×ª¡±µÄ·½·¨£¬µ«ÔÚ¡°Äæ×ª¡±·¶Î§ÍâÊ¹ÓÃÊÇ²»ÍÆ¼öµÄ¡£
+ * @~chinese è¦å°å¿ƒä½¿ç”¨è¿™ä¸ªæ“ä½œã€‚è¿™ç§åŠ¨ä½œä¸å¯ä»¥è¢«åŒ…å«åœ¨SequenceåŠ¨ä½œä¸­ã€‚
+ * å¯ä»¥æŠŠå®ƒä½œä¸ºé»˜è®¤çš„â€œé€†è½¬â€çš„æ–¹æ³•ï¼Œä½†åœ¨â€œé€†è½¬â€èŒƒå›´å¤–ä½¿ç”¨æ˜¯ä¸æ¨èçš„ã€‚
  */
 class CC_DLL ReverseTime : public ActionInterval
 {
 public:
     /** @~english Creates the action with the inner action.
      *
-     * @~chinese Ê¹ÓÃÄÚ²¿¶¯×÷´´½¨ReverseTime¶¯×÷¡£
+     * @~chinese ä½¿ç”¨å†…éƒ¨åŠ¨ä½œåˆ›å»ºReverseTimeåŠ¨ä½œã€‚
      * 
      * @param action @~english a certain action.
-     * @~chinese ÄÚ²¿¶¯×÷¡£
+     * @~chinese å†…éƒ¨åŠ¨ä½œã€‚
      * @return @~english An autoreleased ReverseTime object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄReverseTime¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„ReverseTimeå¯¹è±¡ã€‚
      */
     static ReverseTime* create(FiniteTimeAction *action);
 
@@ -1768,36 +1768,36 @@ private:
 class Texture2D;
 /** @class Animate
  * @brief @~english Animates a sprite given the Animation.
- * @~chinese Animate¶¯×÷¿ÉÒÔÊ¹ÓÃAnimation£¨¶¯»­£©¶ÔÏó²¥·ÅÒ»¸ö¾«Áé¶¯»­¡£
+ * @~chinese AnimateåŠ¨ä½œå¯ä»¥ä½¿ç”¨Animationï¼ˆåŠ¨ç”»ï¼‰å¯¹è±¡æ’­æ”¾ä¸€ä¸ªç²¾çµåŠ¨ç”»ã€‚
  */
 class CC_DLL Animate : public ActionInterval
 {
 public:
     /** @~english Creates the action with an Animation and will restore the original frame when the animation is over.
      *
-     * @~chinese Ê¹ÓÃAnimation£¨¶¯»­£©¶ÔÏó´´½¨Ò»¸öAnimate¶ÔÏó£¬Ä¿±ê¾«ÁéµÄ³õÊ¼Ö¡½«ÔÚ¶¯»­½áÊøºó±»»Ö¸´¡£
+     * @~chinese ä½¿ç”¨Animationï¼ˆåŠ¨ç”»ï¼‰å¯¹è±¡åˆ›å»ºä¸€ä¸ªAnimateå¯¹è±¡ï¼Œç›®æ ‡ç²¾çµçš„åˆå§‹å¸§å°†åœ¨åŠ¨ç”»ç»“æŸåè¢«æ¢å¤ã€‚
      * 
      * @param animation @~english A certain animation.
-     * @~chinese Animation£¨¶¯»­£©¶ÔÏó¡£
+     * @~chinese Animationï¼ˆåŠ¨ç”»ï¼‰å¯¹è±¡ã€‚
      * @return @~english An autoreleased Animate object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅAnimate¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾Animateå¯¹è±¡ã€‚
      */
     static Animate* create(Animation *animation);
 
     /** @~english Sets the Animation object to be animated 
      * 
-     * @~chinese ÉèÖÃ¶¯»­¶ÔÏó
+     * @~chinese è®¾ç½®åŠ¨ç”»å¯¹è±¡
      * 
      * @param animation @~english certain animation.
-     * @~chinese Animation£¨¶¯»­£©¶ÔÏó¡£
+     * @~chinese Animationï¼ˆåŠ¨ç”»ï¼‰å¯¹è±¡ã€‚
      */
     void setAnimation( Animation* animation );
     /** @~english returns the Animation object that is being animated 
      *
-     * @~chinese »ñÈ¡¶¯»­¶ÔÏó
+     * @~chinese è·å–åŠ¨ç”»å¯¹è±¡
      * 
      * @return @~english Gets the animation object that is being animated.
-     * @~chinese ¶¯»­¶ÔÏó
+     * @~chinese åŠ¨ç”»å¯¹è±¡
      */
     Animation* getAnimation() { return _animation; }
     const Animation* getAnimation() const { return _animation; }
@@ -1839,38 +1839,38 @@ private:
 /** @class TargetedAction
  * @brief @~english Overrides the target of an action so that it always runs on the target
  * specified at action creation rather than the one specified by runAction.
- * @~chinese TargetedAction¿ÉÒÔÈÃÄÚ²¿¶¯×÷Ç¿ÖÆÔÚÄ¿±ê½ÚµãÉÏÖ´ĞĞ£¬¶ø²»ÊÇµ÷ÓÃ`runAction`º¯ÊıÊ±Ö¸¶¨µÄ½Úµã¡£
+ * @~chinese TargetedActionå¯ä»¥è®©å†…éƒ¨åŠ¨ä½œå¼ºåˆ¶åœ¨ç›®æ ‡èŠ‚ç‚¹ä¸Šæ‰§è¡Œï¼Œè€Œä¸æ˜¯è°ƒç”¨`runAction`å‡½æ•°æ—¶æŒ‡å®šçš„èŠ‚ç‚¹ã€‚
  */
 class CC_DLL TargetedAction : public ActionInterval
 {
 public:
     /** @~english Create an action with the specified action and forced target.
      * 
-     * @~chinese Ê¹ÓÃ¹Ì¶¨Ä¿±êºÍÄÚ²¿¶¯×÷´´½¨TargetedAction¶¯×÷¡£
+     * @~chinese ä½¿ç”¨å›ºå®šç›®æ ‡å’Œå†…éƒ¨åŠ¨ä½œåˆ›å»ºTargetedActionåŠ¨ä½œã€‚
      * 
      * @param target @~english The target.
-     * @~chinese ¸Ã¶¯×÷µÄ¹Ì¶¨Ä¿±ê½Úµã.
+     * @~chinese è¯¥åŠ¨ä½œçš„å›ºå®šç›®æ ‡èŠ‚ç‚¹.
      * @param action @~english The action.
-     * @~chinese ÄÚ²¿¶¯×÷¡£
+     * @~chinese å†…éƒ¨åŠ¨ä½œã€‚
      * @return @~english An autoreleased TargetedAction object.
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄTargetedAction¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„TargetedActionå¯¹è±¡ã€‚
      */
     static TargetedAction* create(Node* target, FiniteTimeAction* action);
 
     /** @~english Sets the target that the action will be forced to run with.
      *
-     * @~chinese ÉèÖÃ¹Ì¶¨Ä¿±ê½Úµã£¬ÄÚ²¿¶¯×÷½«Ç¿ÖÆÔÚÕâ¸öÄ¿±ê½ÚµãÉÏÖ´ĞĞ¡£
+     * @~chinese è®¾ç½®å›ºå®šç›®æ ‡èŠ‚ç‚¹ï¼Œå†…éƒ¨åŠ¨ä½œå°†å¼ºåˆ¶åœ¨è¿™ä¸ªç›®æ ‡èŠ‚ç‚¹ä¸Šæ‰§è¡Œã€‚
      * 
      * @param forcedTarget @~english The target that the action will be forced to run with.
-     * @~chinese ¹Ì¶¨Ä¿±ê½Úµã¡£
+     * @~chinese å›ºå®šç›®æ ‡èŠ‚ç‚¹ã€‚
      */
     void setForcedTarget(Node* forcedTarget);
     /** @~english returns the target that the action is forced to run with. 
      *
-     * @~chinese »ñÈ¡¹Ì¶¨Ä¿±ê½Úµã£¬ÄÚ²¿¶¯×÷½«Ç¿ÖÆÔÚÕâ¸öÄ¿±ê½ÚµãÉÏÖ´ĞĞ¡£
+     * @~chinese è·å–å›ºå®šç›®æ ‡èŠ‚ç‚¹ï¼Œå†…éƒ¨åŠ¨ä½œå°†å¼ºåˆ¶åœ¨è¿™ä¸ªç›®æ ‡èŠ‚ç‚¹ä¸Šæ‰§è¡Œã€‚
      * 
      * @return @~english The target that the action is forced to run with.
-     * @~chinese ¹Ì¶¨Ä¿±ê½Úµã¡£
+     * @~chinese å›ºå®šç›®æ ‡èŠ‚ç‚¹ã€‚
      */
     Node* getForcedTarget() { return _forcedTarget; }
     const Node* getForcedTarget() const { return _forcedTarget; }
@@ -1905,7 +1905,7 @@ private:
 /**
  * @class ActionFloat
  * @brief @~english Action used to animate any value in range [from,to] over specified time interval
- * @~chinese ActionFloat¿ÉÒÔ½«ÈÎºÎÖµÔÚÒ»¶¨Ê±¼ä¼ä¸ôÄÚ´ÓÖ¸¶¨µÄÆğÊ¼Öµ¸Ä±äÎªÖ¸¶¨µÄ×îÖÕÖµ
+ * @~chinese ActionFloatå¯ä»¥å°†ä»»ä½•å€¼åœ¨ä¸€å®šæ—¶é—´é—´éš”å†…ä»æŒ‡å®šçš„èµ·å§‹å€¼æ”¹å˜ä¸ºæŒ‡å®šçš„æœ€ç»ˆå€¼
  */
 class CC_DLL ActionFloat : public ActionInterval
 {
@@ -1913,24 +1913,24 @@ public:
     /**@~english
      *  Callback function used to report back result
      * @~chinese 
-     * ÓÃÓÚ±¨¸æ½á¹ûµÄ»Øµ÷º¯Êı
+     * ç”¨äºæŠ¥å‘Šç»“æœçš„å›è°ƒå‡½æ•°
      */
     typedef std::function<void(float value)> ActionFloatCallback;
 
     /**@~english
      * Creates FloatAction with specified duration, from value, to value and callback to report back results
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼ä¡¢ÆğÊ¼Öµ¡¢×îÖÕÖµºÍ»Øµ÷º¯ÊıÀ´´´½¨ActionFloat¶¯×÷
+     * ç”¨æŒç»­æ—¶é—´ã€èµ·å§‹å€¼ã€æœ€ç»ˆå€¼å’Œå›è°ƒå‡½æ•°æ¥åˆ›å»ºActionFloatåŠ¨ä½œ
      * @param duration @~english Duration time, in seconds.
-     * @~chinese ³ÖĞøÊ±¼ä£¬ÒÔÃëÎªµ¥Î»¡£
+     * @~chinese æŒç»­æ—¶é—´ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
      * @param from @~english value to start from
-     * @~chinese ÆğÊ¼Öµ
+     * @~chinese èµ·å§‹å€¼
      * @param to @~english value to be at the end of the action
-     * @~chinese ×îÖÕÖµ
+     * @~chinese æœ€ç»ˆå€¼
      * @param callback @~english Callback to report back result
-     * @~chinese ±¨¸æ½á¹ûµÄ»Øµ÷º¯Êı
+     * @~chinese æŠ¥å‘Šç»“æœçš„å›è°ƒå‡½æ•°
      * @return @~english An autoreleased ActionFloat object
-     * @~chinese Ò»¸ö×ÔÊÍ·ÅµÄActionFloat¶ÔÏó
+     * @~chinese ä¸€ä¸ªè‡ªé‡Šæ”¾çš„ActionFloatå¯¹è±¡
      */
     static ActionFloat* create(float duration, float from, float to, ActionFloatCallback callback);
 

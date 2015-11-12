@@ -50,9 +50,9 @@ namespace network {
  *
  * Once the request completed, a callback will be issued in main thread when it provided during make request.
  *
- * @~chinese ÓÃÓÚ´¦ÀíÒì²½httpÇëÇóµÄµ¥Àı¡£
+ * @~chinese ç”¨äºå¤„ç†å¼‚æ­¥httpè¯·æ±‚çš„å•ä¾‹ã€‚
  *
- * Ò»µ©Íê³ÉÒ»¸öÇëÇó,½«ÉèÖÃÒ»¸öÖ÷Ïß³ÌÖĞµ÷ÓÃµÄ»Øµ÷º¯ÊıÓÃÀ´½øĞĞÇëÇó·µ»Ø´¦Àí¡£
+ * ä¸€æ—¦å®Œæˆä¸€ä¸ªè¯·æ±‚,å°†è®¾ç½®ä¸€ä¸ªä¸»çº¿ç¨‹ä¸­è°ƒç”¨çš„å›è°ƒå‡½æ•°ç”¨æ¥è¿›è¡Œè¯·æ±‚è¿”å›å¤„ç†ã€‚
  * 
  * @lua NA
  */
@@ -62,7 +62,7 @@ public:
 	/**@~english
 	* The buffer size of _responseMessage
     * @~chinese 
-    * _responseMessageµÄ»º´æ´óĞ¡
+    * _responseMessageçš„ç¼“å­˜å¤§å°
 	*/
 	static const int RESPONSE_BUFFER_SIZE = 256;
 
@@ -70,17 +70,17 @@ public:
      * Get instance of HttpClient.
      *
      * @~chinese 
-     * HttpClientµÄÊµÀı¡£
+     * HttpClientçš„å®ä¾‹ã€‚
      * 
      * @return @~english the instance of HttpClient.
-     * @~chinese HttpClientÊµÀı¡£
+     * @~chinese HttpClientå®ä¾‹ã€‚
      */
     static HttpClient *getInstance();
     
     /** @~english
      * Destroy the instance of HttpClient. 
      * @~chinese 
-     * Ïú»ÙHttpClientÊµÀı¡£
+     * é”€æ¯HttpClientå®ä¾‹ã€‚
      */
     static void destroyInstance();
 
@@ -88,10 +88,10 @@ public:
      * Enable cookie support.
      *
      * @~chinese 
-     * ÆôÓÃcookieÖ§³Ö¡£
+     * å¯ç”¨cookieæ”¯æŒã€‚
      * 
      * @param cookieFile @~english the filepath of cookie file.
-     * @~chinese cookieÎÄ¼şµÄÎÄ¼şÃû¡£
+     * @~chinese cookieæ–‡ä»¶çš„æ–‡ä»¶åã€‚
      */
     void enableCookies(const char* cookieFile);
     
@@ -99,10 +99,10 @@ public:
      * Get the cookie filename
      * 
      * @~chinese 
-     * »ñÈ¡CookieÎÄ¼şÃû
+     * è·å–Cookieæ–‡ä»¶å
      * 
      * @return @~english the cookie filename
-     * @~chinese CookieÎÄ¼şÃû
+     * @~chinese Cookieæ–‡ä»¶å
      */
     const std::string& getCookieFilename();
     
@@ -110,10 +110,10 @@ public:
      * Set root certificate path for SSL verification.
      *
      * @~chinese 
-     * ÉèÖÃSSLÖ¤ÊéÂ·¾¶¡£
+     * è®¾ç½®SSLè¯ä¹¦è·¯å¾„ã€‚
      * 
      * @param caFile @~english a full path of root certificate.if it is empty, SSL verification is disabled.
-     * @~chinese SSLÖ¤ÊéµÄÈ«Â·¾¶£¬Èç¹ûÕâ¸öÖµÎª¿Õ, SSLÑéÖ¤½«²»ÆğĞ§¡£
+     * @~chinese SSLè¯ä¹¦çš„å…¨è·¯å¾„ï¼Œå¦‚æœè¿™ä¸ªå€¼ä¸ºç©º, SSLéªŒè¯å°†ä¸èµ·æ•ˆã€‚
      */
     void setSSLVerification(const std::string& caFile);
     
@@ -121,10 +121,10 @@ public:
      * Get ths SSL CA filename
      * 
      * @~chinese 
-     * »ñ¹ÖSSLÖ¤ÊéµÄÎÄ¼şÃû
+     * è·æ€ªSSLè¯ä¹¦çš„æ–‡ä»¶å
      * 
      * @return @~english the SSL CA filename
-     * @~chinese SSLÖ¤ÊéÎÄ¼şÃû
+     * @~chinese SSLè¯ä¹¦æ–‡ä»¶å
      */
     const std::string& getSSLVerification();
         
@@ -132,10 +132,10 @@ public:
      * Add a request to task queue
      *
      * @~chinese 
-     * Ìí¼ÓÒ»¸örequestµ½ÈÎÎñ¶ÓÁĞÖĞ
+     * æ·»åŠ ä¸€ä¸ªrequeståˆ°ä»»åŠ¡é˜Ÿåˆ—ä¸­
      * 
      * @param request @~english a HttpRequest object, which includes url, response callback etc.
-     * @~chinese Ò»¸öHttpRequest¶ÔÏó,°üÀ¨url,ÏìÓ¦»Øµ÷µÈ¡£
+     * @~chinese ä¸€ä¸ªHttpRequestå¯¹è±¡,åŒ…æ‹¬url,å“åº”å›è°ƒç­‰ã€‚
      */
     void send(HttpRequest* request);
 
@@ -143,10 +143,10 @@ public:
      * Immediate send a request
      *
      * @~chinese 
-     * Á¢¼´·¢ËÍÒ»¸örequest
+     * ç«‹å³å‘é€ä¸€ä¸ªrequest
      * 
      * @param request @~english a HttpRequest object, which includes url, response callback etc.
-     * @~chinese HttpRequest¶ÔÏó,°üÀ¨url,ÏìÓ¦»Øµ÷µÈ¡£
+     * @~chinese HttpRequestå¯¹è±¡,åŒ…æ‹¬url,å“åº”å›è°ƒç­‰ã€‚
      */
     void sendImmediate(HttpRequest* request);
     
@@ -154,10 +154,10 @@ public:
      * Set the timeout value for connecting in seconds.
      *
      * @~chinese 
-     * ÒÔÃëÎªµ¥Î»ÉèÖÃÁ¬½Ó³¬Ê±Ê±¼ä¡£
+     * ä»¥ç§’ä¸ºå•ä½è®¾ç½®è¿æ¥è¶…æ—¶æ—¶é—´ã€‚
      * 
      * @param value @~english the timeout value for connecting in seconds.
-     * @~chinese ÒÔÃëÎªµ¥Î»µÄÁ¬½Ó³¬Ê±Ê±¼ä¡£
+     * @~chinese ä»¥ç§’ä¸ºå•ä½çš„è¿æ¥è¶…æ—¶æ—¶é—´ã€‚
      */
     void setTimeoutForConnect(int value);
     
@@ -165,10 +165,10 @@ public:
      * Get the timeout value for connecting in seconds.
      *
      * @~chinese 
-     * »ñÈ¡ÒÔÃëÎªµ¥È¬µÄÁ¬½Ó³¬Ê±Ê±¼ä¡£
+     * è·å–ä»¥ç§’ä¸ºå•ç—Šçš„è¿æ¥è¶…æ—¶æ—¶é—´ã€‚
      * 
      * @return @~english the timeout value for connecting in seconds.
-     * @~chinese ÒÔÃëÎªµ¥Î»µÄÁ¬½Ó³¬Ê±Ê±¼ä¡£
+     * @~chinese ä»¥ç§’ä¸ºå•ä½çš„è¿æ¥è¶…æ—¶æ—¶é—´ã€‚
      */
     int getTimeoutForConnect();
     
@@ -176,10 +176,10 @@ public:
      * Set the timeout value for reading in seconds.
      *
      * @~chinese 
-     * ÉèÖÃÒÔÃëÎªµ¥Î»µÄread³¬Ê±Ê±¼ä¡£
+     * è®¾ç½®ä»¥ç§’ä¸ºå•ä½çš„readè¶…æ—¶æ—¶é—´ã€‚
      * 
      * @param value @~english the timeout value for reading in seconds.
-     * @~chinese ÒÔÃëÎªµ¥Î»µÄread³¬Ê±Ê±¼ä¡£
+     * @~chinese ä»¥ç§’ä¸ºå•ä½çš„readè¶…æ—¶æ—¶é—´ã€‚
      */
     void setTimeoutForRead(int value);
 
@@ -187,10 +187,10 @@ public:
      * Get the timeout value for reading in seconds.
      *
      * @~chinese 
-     * »ñµÃÒÔÃëÎªµ¥Î»µÄread³¬Ê±Ê±¼ä¡£
+     * è·å¾—ä»¥ç§’ä¸ºå•ä½çš„readè¶…æ—¶æ—¶é—´ã€‚
      * 
      * @return @~english the timeout value for reading in seconds.
-     * @~chinese ÒÔÃëÎªµ¥Î»µÄread³¬Ê±Ê±¼ä¡£
+     * @~chinese ä»¥ç§’ä¸ºå•ä½çš„readè¶…æ—¶æ—¶é—´ã€‚
      */
     int getTimeoutForRead();
     
@@ -198,10 +198,10 @@ public:
      *Get the Cookie object
      *
      *@~chinese
-     *»ñÈ¡Cookie¶ÔÏó
+     *è·å–Cookieå¯¹è±¡
      *
      * @return @~english the Cookie object
-     * @~chinese Cookie¶ÔÏó
+     * @~chinese Cookieå¯¹è±¡
      */
     HttpCookie* getCookie() const {return _cookie; }
     
@@ -209,7 +209,7 @@ public:
      *Get the _cookieFileMutex that represents the std::mutex of the cookie files
      *
      *@~chinese
-     *»ñÈ¡cookieÎÄ¼ş»¥³âÁ¿_cookieFileMutex
+     *è·å–cookieæ–‡ä»¶äº’æ–¥é‡_cookieFileMutex
      *
      * @return @~english the std::mutex 
      * @~chinese std::mutex
@@ -220,7 +220,7 @@ public:
      *Get the _sslCaFileMutex that represents the std::mutex of the SSL files
      *
      *@~chinese
-     *»ñÈ¡SSLÎÄ¼ş»¥³âÁ¿_cookieFileMutex
+     *è·å–SSLæ–‡ä»¶äº’æ–¥é‡_cookieFileMutex
      *
      * @return @~english the std::mutex 
      * @~chinese std::mutex
@@ -234,9 +234,9 @@ private:
     /**@~english
      * Init pthread mutex, semaphore, and create new thread for http requests
      * @~chinese 
-     * ³õÊ¼»¯pthread»¥³âĞÅºÅÁ¿,ÎªhttpÇëÇó´´½¨ĞÂÏß³Ì
+     * åˆå§‹åŒ–pthreadäº’æ–¥ä¿¡å·é‡,ä¸ºhttpè¯·æ±‚åˆ›å»ºæ–°çº¿ç¨‹
      * @return @~english bool
-     * @~chinese boolÖµ
+     * @~chinese boolå€¼
      */
     bool lazyInitThreadSemphore();
     void networkThread();

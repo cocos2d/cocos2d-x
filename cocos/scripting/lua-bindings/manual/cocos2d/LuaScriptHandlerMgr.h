@@ -74,7 +74,7 @@ private:
  * The LuaCallFunc is wrapped to call the callback function in the Lua conveniently and don't insert useless code to processing the Lua in the CallFuncN.
  *
  * @~chinese 
- * LuaCallFuncÊÇÎªÁËÔÚLuaÖĞÄÜ·½±ãµØµ÷ÓÃ»Øµ÷º¯Êı¶ø½øĞĞµÄ·â×°¡£Í¨¹ı·â×°£¬²»ĞèÒªÔÚCallFuncN²åÈëÒ»Ğ©ÌØÊâ´úÂëÀ´´¦ÀíLua¡£
+ * LuaCallFuncæ˜¯ä¸ºäº†åœ¨Luaä¸­èƒ½æ–¹ä¾¿åœ°è°ƒç”¨å›è°ƒå‡½æ•°è€Œè¿›è¡Œçš„å°è£…ã€‚é€šè¿‡å°è£…ï¼Œä¸éœ€è¦åœ¨CallFuncNæ’å…¥ä¸€äº›ç‰¹æ®Šä»£ç æ¥å¤„ç†Luaã€‚
  * 
  * @lua NA
  * @js NA
@@ -85,7 +85,7 @@ public:
     /**@~english
      * Default constructor.
      * @~chinese 
-     * Ä¬ÈÏ¹¹Ôìº¯Êı¡£
+     * é»˜è®¤æ„é€ å‡½æ•°ã€‚
      */
     LuaCallFunc():_functionLua(nullptr)
     {}
@@ -93,7 +93,7 @@ public:
     /**@~english
      * Destructor.
      * @~chinese 
-     * Îö¹¹º¯Êı¡£
+     * ææ„å‡½æ•°ã€‚
      */
     virtual ~LuaCallFunc()
     {}
@@ -102,10 +102,10 @@ public:
      * Create a LuaCallFunc object by a function pointer for callback.
      *
      * @~chinese 
-     * Í¨¹ıÒ»¸öÖ¸Ïò»Øµ÷º¯ÊıµÄº¯ÊıÖ¸Õë´´½¨Ò»¸öLuaCallFunc¶ÔÏó¡£
+     * é€šè¿‡ä¸€ä¸ªæŒ‡å‘å›è°ƒå‡½æ•°çš„å‡½æ•°æŒ‡é’ˆåˆ›å»ºä¸€ä¸ªLuaCallFuncå¯¹è±¡ã€‚
      * 
      * @param func @~english a function pointer for callback.
-     * @~chinese »Øµ÷º¯ÊıµÄº¯ÊıÖ¸Õë¡£
+     * @~chinese å›è°ƒå‡½æ•°çš„å‡½æ•°æŒ‡é’ˆã€‚
      */
     static LuaCallFunc* create(const std::function<void(void* self,Node*)>& func);
     
@@ -113,10 +113,10 @@ public:
      * Init a LuaCallFunc object by a function pointer for callback.
      *
      * @~chinese 
-     * Ê¹ÓÃÒ»¸ö»Øµ÷º¯ÊıµÄº¯ÊıÖ¸ÕëÀ´³õÊ¼»¯LuaCallFunc¶ÔÏó¡£
+     * ä½¿ç”¨ä¸€ä¸ªå›è°ƒå‡½æ•°çš„å‡½æ•°æŒ‡é’ˆæ¥åˆå§‹åŒ–LuaCallFuncå¯¹è±¡ã€‚
      * 
      * @param func @~english a function pointer for callback.
-     * @~chinese »Øµ÷º¯ÊıµÄº¯ÊıÖ¸Õë¡£
+     * @~chinese å›è°ƒå‡½æ•°çš„å‡½æ•°æŒ‡é’ˆã€‚
      */
     bool initWithFunction(const std::function<void(void* self,Node*)>& func);
     virtual LuaCallFunc* clone() const override;
@@ -131,9 +131,9 @@ protected:
  * In the current mechanism, for the class derived frome the Ref, we constuct a mapping relationship among c++ Ref object ,HandlerType and the reference id corresponding to the pointer of Lua function.Then, using the ScriptHandlerMgr to manager uniformly.
  * By this mechanism,when native c++ Ref object wants to call the Lua function, we didn't insert the processing code in the native c++ class.
  * @~chinese 
- * ÎªÁË¼õÉÙlua½Å±¾ÒıÇæºÍc++ÒıÇæµÄñîºÏ¡£
- * ÔÚµ±Ç°µÄ»úÖÆ,¶ÔÓÚRefÅÉÉúÀà,ÎÒÃÇ»á¹¹½¨Ò»¸öRef¶ÔÏó£¬HandlerTypeÒÔ¼°Ö¸ÏòLuaº¯ÊıÖ¸ÕëµÄÒıÓÃidµÄÓ³Éä¹ØÏµ±í¡£È»ºó,Ê¹ÓÃScriptHandlerMgr½øĞĞÍ³Ò»¹ÜÀí¡£
- * Í¨¹ıÕâÖÖ»úÖÆ,µ±c++ Ref¶ÔÏóÏëµ÷ÓÃLuaº¯ÊıÊ±,ÎÒÃÇÎŞĞèÔÚÔ­Éúc++ÀàÖĞ²åÈë´¦Àí½Å±¾µÄ´úÂë¡£
+ * ä¸ºäº†å‡å°‘luaè„šæœ¬å¼•æ“å’Œc++å¼•æ“çš„è€¦åˆã€‚
+ * åœ¨å½“å‰çš„æœºåˆ¶,å¯¹äºRefæ´¾ç”Ÿç±»,æˆ‘ä»¬ä¼šæ„å»ºä¸€ä¸ªRefå¯¹è±¡ï¼ŒHandlerTypeä»¥åŠæŒ‡å‘Luaå‡½æ•°æŒ‡é’ˆçš„å¼•ç”¨idçš„æ˜ å°„å…³ç³»è¡¨ã€‚ç„¶å,ä½¿ç”¨ScriptHandlerMgrè¿›è¡Œç»Ÿä¸€ç®¡ç†ã€‚
+ * é€šè¿‡è¿™ç§æœºåˆ¶,å½“c++ Refå¯¹è±¡æƒ³è°ƒç”¨Luaå‡½æ•°æ—¶,æˆ‘ä»¬æ— éœ€åœ¨åŸç”Ÿc++ç±»ä¸­æ’å…¥å¤„ç†è„šæœ¬çš„ä»£ç ã€‚
  */
 class ScriptHandlerMgr
 {
@@ -144,8 +144,8 @@ public:
      * This enum class represent the processing event type for c++ calling the Lua function.
      *
      * @~chinese 
-     * HandlerTypeÃ¶¾Ù¡£
-     * Õâ¸öÃ¶¾ÙÀà±íÊ¾c++»Øµ÷´¦ÀíLuaº¯ÊıµÄÊÂ¼şÀàĞÍ¡£
+     * HandlerTypeæšä¸¾ã€‚
+     * è¿™ä¸ªæšä¸¾ç±»è¡¨ç¤ºc++å›è°ƒå¤„ç†Luaå‡½æ•°çš„äº‹ä»¶ç±»å‹ã€‚
      * 
      * @js NA
      */
@@ -253,7 +253,7 @@ public:
      * Default constructor.
      *
      * @~chinese 
-     * Ä¬ÈÏ¹¹Ôìº¯Êı¡£
+     * é»˜è®¤æ„é€ å‡½æ•°ã€‚
      * 
      * @lua NA
      * @js NA
@@ -264,7 +264,7 @@ public:
      * Destructor.
      *
      * @~chinese 
-     * Îö¹¹º¯Êı¡£
+     * ææ„å‡½æ•°ã€‚
      * 
      * @lua NA
      * @js NA
@@ -275,10 +275,10 @@ public:
      * Get the instance of the ScriptHandlerMgr.
      *
      * @~chinese 
-     * »ñÈ¡ScriptHandlerMgrµÄÊµÀı¶ÔÏó¡£
+     * è·å–ScriptHandlerMgrçš„å®ä¾‹å¯¹è±¡ã€‚
      * 
      * @return @~english the instance of the ScriptHandlerMgr.
-     * @~chinese ScriptHandlerMgrµÄÊµÀı¶ÔÏó¡£
+     * @~chinese ScriptHandlerMgrçš„å®ä¾‹å¯¹è±¡ã€‚
      * @js NA
      */
     static ScriptHandlerMgr* getInstance(void);
@@ -287,7 +287,7 @@ public:
      * Destroy the instance of the ScriptHandlerMgr.
      *
      * @~chinese 
-     * Ïû»ÙScriptHandlerMgrµÄÊµÀı¶ÔÏó¡£
+     * æ¶ˆæ¯ScriptHandlerMgrçš„å®îŸéŸµèŸ†ï¿½
      * 
      * @lua NA
      * @js NA
@@ -298,14 +298,14 @@ public:
      * Construct or update the mapping relationship among c++ Ref object ,HandlerType and the reference id corresponding to the pointer of Lua function.
      *
      * @~chinese 
-     * ¹¹½¨»ò¸üĞÂc++ Ref¶ÔÏó,HandlerTypeÒÔ¼°¶ÔÓ¦Luaº¯ÊıµÄÖ¸ÕëÒıÓÃidµÄÓ³Éä¹ØÏµ¡£
+     * æ„å»ºæˆ–æ›´æ–°c++ Refå¯¹è±¡,HandlerTypeä»¥åŠå¯¹åº”Luaå‡½æ•°çš„æŒ‡é’ˆå¼•ç”¨idçš„æ˜ å°„å…³ç³»ã€‚
      * 
      * @param object @~english a Ref object.
-     * @~chinese Ref¶ÔÏó¡£
+     * @~chinese Refå¯¹è±¡ã€‚
      * @param handler @~english a reference id corresponding to the pointer of Lua function.
-     * @~chinese ¶ÔÓ¦Luaº¯ÊıÖ¸ÕëµÄÒıÓÃid¡£
+     * @~chinese å¯¹åº”Luaå‡½æ•°æŒ‡é’ˆçš„å¼•ç”¨idã€‚
      * @param handlerType @~english ScriptHandlerMgr::HandlerType.
-     * @~chinese ScriptHandlerMgr::HandlerType¡£
+     * @~chinese ScriptHandlerMgr::HandlerTypeã€‚
      * @lua registerScriptHandler
      * @js NA
      */
@@ -316,13 +316,13 @@ public:
      * If found, remove the reference of Lua function corresponding to this id in the 'toluafix_refid_function_mapping' table.
      * 
      * @~chinese 
-     * Í¨¹ıhandlerTypeºÍRef¶ÔÏó£¬²éÕÒ¶ÔÓÚLuaº¯ÊıÖ¸ÕëµÄÒıÓÃid¡£
-     * Èç¹ûÕÒµ½,ÔòÒÆ³ıLuaº¯Êıtoluafix_refid_function_mapping tableÖĞ¶ÔÓ¦idµÄLuaº¯ÊıµÄÒıÓÃ¡£
+     * é€šè¿‡handlerTypeå’ŒRefå¯¹è±¡ï¼ŒæŸ¥æ‰¾å¯¹äºLuaå‡½æ•°æŒ‡é’ˆçš„å¼•ç”¨idã€‚
+     * å¦‚æœæ‰¾åˆ°,åˆ™ç§»é™¤Luaå‡½æ•°toluafix_refid_function_mapping tableä¸­å¯¹åº”idçš„Luaå‡½æ•°çš„å¼•ç”¨ã€‚
      * 
      * @param object @~english a Ref object.
-     * @~chinese Ò»¸öRef¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªRefå¯¹è±¡ã€‚
      * @param handlerType @~english ScriptHandlerMgr::HandlerType.
-     * @~chinese ScriptHandlerMgr::HandlerType¡£
+     * @~chinese ScriptHandlerMgr::HandlerTypeã€‚
      * @lua unregisterScriptHandler
      * @js NA
      */
@@ -332,14 +332,14 @@ public:
      * By the handlerType and object, find the correct reference id corresponding to the pointer of Lua function.
      *
      * @~chinese 
-     * ¸ù¾İhandlerTypeºÍRef¶ÔÏó,ÕÒµ½¶ÔÓ¦Luaº¯ÊıÖ¸ÕëµÄÒıÓÃid¡£
+     * æ ¹æ®handlerTypeå’ŒRefå¯¹è±¡,æ‰¾åˆ°å¯¹åº”Luaå‡½æ•°æŒ‡é’ˆçš„å¼•ç”¨idã€‚
      * 
      * @param object @~english a Ref object.
-     * @~chinese Ò»¸öRef¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªRefå¯¹è±¡ã€‚
      * @param handlerType @~english ScriptHandlerMgr::HandlerType.
-     * @~chinese ScriptHandlerMgr::HandlerType¡£
+     * @~chinese ScriptHandlerMgr::HandlerTypeã€‚
      * @return @~english reference id corresponding to the pointer of Lua function,otherwise 0.
-     * @~chinese Luaº¯ÊıÖ¸ÕëµÄÒıÓÃid»òÕß0¡£
+     * @~chinese Luaå‡½æ•°æŒ‡é’ˆçš„å¼•ç”¨idæˆ–è€…0ã€‚
      * @lua NA
      * @js NA
      */
@@ -350,11 +350,11 @@ public:
      * Meanwhile, remove the reference of Lua function corresponding to the id the object has in the 'toluafix_refid_function_mapping' table.
      *
      * @~chinese 
-     * ÒÆ³ıËùÓĞºÍobject£¬HandlerTypeÒÔ¼°ÒıÓÃidÏà¹ØµÄÓ³Éä¹ØÏµ¡£
-     * Í¬Ê±,¸ù¾İÒıÓÃid, ÒÆ³ı`toluafix_refid_function_mapping`ÖĞLuaº¯ÊıÖ¸ÕëµÄÒıÓÃ¡£
+     * ç§»é™¤æ‰€æœ‰å’Œobjectï¼ŒHandlerTypeä»¥åŠå¼•ç”¨idç›¸å…³çš„æ˜ å°„å…³ç³»ã€‚
+     * åŒæ—¶,æ ¹æ®å¼•ç”¨id, ç§»é™¤`toluafix_refid_function_mapping`ä¸­Luaå‡½æ•°æŒ‡é’ˆçš„å¼•ç”¨ã€‚
      * 
      * @param object @~english the Ref object.
-     * @~chinese Ò»¸öRef¶ÔÏó
+     * @~chinese ä¸€ä¸ªRefå¯¹è±¡
      * @js NA
      */
     void removeObjectAllHandlers(void* object);
@@ -366,17 +366,17 @@ public:
      * If the HandlerType increased more than EVENT_CUSTOM_ENDED(110000),it would trigger assert.
      *
      * @~chinese
-     * Ìí¼Ó×Ô¶¨ÒåµÄc++ Ref¶ÔÏó,HandlerTypeºÍ¶ÔÓ¦Luaº¯ÊıÖ¸ÕëµÄÒıÓÃidµÄÓ³Éä¹ØÏµ¡£
-     * ÔÚÕâÖÖ×Ô¶¨ÒåÓ³Éä¹ØÏµÖĞ,ÎÒÃÇ²»Ğè´«µİHandlerType²ÎÊı, Õâ¸öº¯ÊıÄÚ²¿»áÍ¨¹ı×ÔÔö¼ÓµÄ·½·¨¶ùÈ¡HandlerType¡£
-     * ÓÃÓÚ×Ô¶¨ÒåÓ³Éä¹ØÏµµÄHandlerTypesµÄÈ¡Öµ·¶Î§ÔÚEVENT_CUSTOM_BEGAN(10000)ºÍEVENT_CUSTOM_ENDED(11000)Ö®¼ä¡£
-     * Èç¹ûHandlerTypeÔö¼Ó³¬¹ıEVENT_CUSTOM_ENDED(110000),Ëü½«´¥·¢¶ÏÑÔ¡£
+     * æ·»åŠ è‡ªå®šä¹‰çš„c++ Refå¯¹è±¡,HandlerTypeå’Œå¯¹åº”Luaå‡½æ•°æŒ‡é’ˆçš„å¼•ç”¨idçš„æ˜ å°„å…³ç³»ã€‚
+     * åœ¨è¿™ç§è‡ªå®šä¹‰æ˜ å°„å…³ç³»ä¸­,æˆ‘ä»¬ä¸éœ€ä¼ é€’HandlerTypeå‚æ•°, è¿™ä¸ªå‡½æ•°å†…éƒ¨ä¼šé€šè¿‡è‡ªå¢åŠ çš„æ–¹æ³•å„¿å–HandlerTypeã€‚
+     * ç”¨äºè‡ªå®šä¹‰æ˜ å°„å…³ç³»çš„HandlerTypesçš„å–å€¼èŒƒå›´åœ¨EVENT_CUSTOM_BEGAN(10000)å’ŒEVENT_CUSTOM_ENDED(11000)ä¹‹é—´ã€‚
+     * å¦‚æœHandlerTypeå¢åŠ è¶…è¿‡EVENT_CUSTOM_ENDED(110000),å®ƒå°†è§¦å‘æ–­è¨€ã€‚
      * 
      * @param object @~english the Ref object.
-     * @~chinese Ref¶ÔÏó¡£
+     * @~chinese Refå¯¹è±¡ã€‚
      * @param handler @~english a reference index corresponding to the pointer of Lua function.
-     * @~chinese Luaº¯ÊıÖ¸ÕëµÄÒıÓÃid¡£
+     * @~chinese Luaå‡½æ•°æŒ‡é’ˆçš„å¼•ç”¨idã€‚
      * @return @~english ScriptHandlerMgr::HandlerType the ScriptHandlerMgr::HandlerType value after adding.
-     * @~chinese Ìí¼Ó×Ô¶¨ÒåÓ³Éä¹ØÏµºóµÄScriptHandlerMgr::HandlerTypeÖµ¡£
+     * @~chinese æ·»åŠ è‡ªå®šä¹‰æ˜ å°„å…³ç³»åçš„ScriptHandlerMgr::HandlerTypeå€¼ã€‚
      * @lua NA
      * @js NA
      */

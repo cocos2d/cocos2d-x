@@ -77,7 +77,7 @@ typedef PhysicsQueryRectCallbackFunc PhysicsQueryPointCallbackFunc;
 /**
  * @class PhysicsWorld CCPhysicsWorld.h
  * @brief @~english An PhysicsWorld object simulates collisions and other physical properties. You do not create PhysicsWorld objects directly; instead, you can get it from an Scene object.
- * @~chinese Ò»¸öPhysicsWorld¶ÔÏó,ÓÃÓÚÄ£ÄâÎïÀíÅö×²ºÍÆäËûÎïÀíĞĞÎª¡£Äã²»ĞèÒªÖ±½Ó´´½¨PhysicsWorld¶ÔÏó;Ïà·´,Äã¿ÉÒÔ´ÓÒ»¸ö³¡¾°¶ÔÏó»ñÈ¡Ëü¡£
+ * @~chinese ä¸€ä¸ªPhysicsWorldå¯¹è±¡,ç”¨äºæ¨¡æ‹Ÿç‰©ç†ç¢°æ’å’Œå…¶ä»–ç‰©ç†è¡Œä¸ºã€‚ä½ ä¸éœ€è¦ç›´æ¥åˆ›å»ºPhysicsWorldå¯¹è±¡;ç›¸å,ä½ å¯ä»¥ä»ä¸€ä¸ªåœºæ™¯å¯¹è±¡è·å–å®ƒã€‚
  */
 class CC_DLL PhysicsWorld
 {
@@ -94,13 +94,13 @@ public:
      *
      * This joint will be added to this physics world at next frame.
      * @~chinese 
-     * Ìí¼ÓÒ»¸ö¹Ø½Úµ½ÎïÀíÊÀ½çÖĞ¡£
+     * æ·»åŠ ä¸€ä¸ªå…³èŠ‚åˆ°ç‰©ç†ä¸–ç•Œä¸­ã€‚
      * 
-     * Õâ¸ö¹Ø½Ú½«ÔÚÏÂÒ»¸öÖ¡±»Ìí¼Óµ½ÎïÀíÊÀ½çÖĞ¡£
+     * è¿™ä¸ªå…³èŠ‚å°†åœ¨ä¸‹ä¸€ä¸ªå¸§è¢«æ·»åŠ åˆ°ç‰©ç†ä¸–ç•Œä¸­ã€‚
      * @attention @~english If this joint is already added to another physics world, it will be removed from that world first and then add to this world.
-     * @~chinese Èç¹ûÕâ¸ö¹Ø½ÚÒÑ¾­Ìí¼Óµ½ÁíÒ»¸öÎïÀíÊÀ½ç,Ëü½«Ê×ÏÈ´ÓÄÇ¸öÎïÀíÊÀ½çÉ¾³ı,È»ºóÔÙÌí¼Óµ½Õâ¸öÎïÀíÊÀ½ç¡£
+     * @~chinese å¦‚æœè¿™ä¸ªå…³èŠ‚å·²ç»æ·»åŠ åˆ°å¦ä¸€ä¸ªç‰©ç†ä¸–ç•Œ,å®ƒå°†é¦–å…ˆä»é‚£ä¸ªç‰©ç†ä¸–ç•Œåˆ é™¤,ç„¶åå†æ·»åŠ åˆ°è¿™ä¸ªç‰©ç†ä¸–ç•Œã€‚
      * @param   joint   @~english A pointer to an existing PhysicsJoint object.
-     * @~chinese Ò»¸öÖ¸ÏòÒÑÓĞPhysicsJoint¶ÔÏóµÄÖ¸Õë
+     * @~chinese ä¸€ä¸ªæŒ‡å‘å·²æœ‰PhysicsJointå¯¹è±¡çš„æŒ‡é’ˆ
      */
     virtual void addJoint(PhysicsJoint* joint);
 
@@ -110,14 +110,14 @@ public:
      * If this world is not locked, the joint is removed immediately, otherwise at next frame.
      * If this joint is connected with a body, it will be removed from the body also.
      * @~chinese 
-     * °Ñ¹Ø½Ú´ÓÎïÀíÊÀ½çÖĞÉ¾³ı¡£
+     * æŠŠå…³èŠ‚ä»ç‰©ç†ä¸–ç•Œä¸­åˆ é™¤ã€‚
      * 
-     * Èç¹ûÎïÀíÊÀ½çÃ»ÓĞ±»Ëø×¡,ÄÇÃ´´Ë¹Ø½Ú»á±»Á¢¼´É¾³ı,·ñÔòµÈµ½ÏÂÒ»Ö¡ÔÙÉ¾³ı¡£
-     * Èç¹ûÕâ¸ö¹Ø½ÚÓëÒ»¸öÎïÀí¸ÕÌå°óÔÚÁËÒ»Æğ,ÄÇÃ´ËüÒ²½«´Ó¸ÕÌåÖĞÉ¾³ı.
+     * å¦‚æœç‰©ç†ä¸–ç•Œæ²¡æœ‰è¢«é”ä½,é‚£ä¹ˆæ­¤å…³èŠ‚ä¼šè¢«ç«‹å³åˆ é™¤,å¦åˆ™ç­‰åˆ°ä¸‹ä¸€å¸§å†åˆ é™¤ã€‚
+     * å¦‚æœè¿™ä¸ªå…³èŠ‚ä¸ä¸€ä¸ªç‰©ç†åˆšä½“ç»‘åœ¨äº†ä¸€èµ·,é‚£ä¹ˆå®ƒä¹Ÿå°†ä»åˆšä½“ä¸­åˆ é™¤.
      * @param   joint   @~english A pointer to an existing PhysicsJoint object.
-     * @~chinese Ò»¸öÒÑÓĞµÄPhysicsJoint¶ÔÏóµÄÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªå·²æœ‰çš„PhysicsJointå¯¹è±¡çš„æŒ‡é’ˆã€‚
      * @param   destroy   @~english true this joint will be destroyed after remove from this world, false otherwise.
-     * @~chinese TrueÒâÎ¶×Å¹Ø½Ú´ÓÎïÀíÊÀ½çÒÆ³ıÒÔºó»á±»Ïú»Ù£¬FalseÔò±íÊ¾´ÓÎïÀíÊÀ½çÒÆ³ıºó²¢²»»áÏú»Ù¡£
+     * @~chinese Trueæ„å‘³ç€å…³èŠ‚ä»ç‰©ç†ä¸–ç•Œç§»é™¤ä»¥åä¼šè¢«é”€æ¯ï¼ŒFalseåˆ™è¡¨ç¤ºä»ç‰©ç†ä¸–ç•Œç§»é™¤åå¹¶ä¸ä¼šé”€æ¯ã€‚
      */
     virtual void removeJoint(PhysicsJoint* joint, bool destroy = true);
 
@@ -125,12 +125,12 @@ public:
      * Remove all joints from this physics world.
      *
      * @~chinese 
-     * ´ÓÎïÀíÊÀ½çÉ¾³ıËùÓĞ¹Ø½Ú¡£
+     * ä»ç‰©ç†ä¸–ç•Œåˆ é™¤æ‰€æœ‰å…³èŠ‚ã€‚
      * 
      * @attention @~english This function is invoked in the destructor of this physics world, you do not use this api in common.
-     * @~chinese Õâ¸öº¯Êı»áÔÚÎïÀíÊÀ½çÎö¹¹µÄÊ±ºò±»µ÷ÓÃ,Ò»°ãÇé¿öÏÂÄã²»ÒªÖ±½ÓÊ¹ÓÃÕâ¸öAPI¡£
+     * @~chinese è¿™ä¸ªå‡½æ•°ä¼šåœ¨ç‰©ç†ä¸–ç•Œææ„çš„æ—¶å€™è¢«è°ƒç”¨,ä¸€èˆ¬æƒ…å†µä¸‹ä½ ä¸è¦ç›´æ¥ä½¿ç”¨è¿™ä¸ªAPIã€‚
      * @param   destroy   @~english true all joints will be destroyed after remove from this world, false otherwise.
-     * @~chinese ´«Ture£¬ÒâÎ¶×Åµ±¹Ø½Ú´ÓÎïÀíÊÀ½çÉ¾³ıºó£¬ËüÃÇ¶¼»á±»Ïú»Ù,FalseÔò±íÊ¾²»»á±»Ïú»Ù¡£
+     * @~chinese ä¼ Tureï¼Œæ„å‘³ç€å½“å…³èŠ‚ä»ç‰©ç†ä¸–ç•Œåˆ é™¤åï¼Œå®ƒä»¬éƒ½ä¼šè¢«é”€æ¯,Falseåˆ™è¡¨ç¤ºä¸ä¼šè¢«é”€æ¯ã€‚
      */
     virtual void removeAllJoints(bool destroy = true);
     
@@ -139,13 +139,13 @@ public:
      *
      * If this world is not locked, the body is removed immediately, otherwise at next frame.
      * @~chinese 
-     * ´ÓÎïÀíÊÀ½çÒÆ³ıÒ»¸ö¸ÕÌå¡£
+     * ä»ç‰©ç†ä¸–ç•Œç§»é™¤ä¸€ä¸ªåˆšä½“ã€‚
      * 
-     * Èç¹ûÎïÀíÊÀ½çÃ»ÓĞËø×¡,Ôò¸ÕÌå±»Á¢¼´É¾³ı,·ñÔòµÈµ½ÏÂÒ»Ö¡ÔÙÉ¾³ı¡£
+     * å¦‚æœç‰©ç†ä¸–ç•Œæ²¡æœ‰é”ä½,åˆ™åˆšä½“è¢«ç«‹å³åˆ é™¤,å¦åˆ™ç­‰åˆ°ä¸‹ä¸€å¸§å†åˆ é™¤ã€‚
      * @attention @~english If this body has joints, those joints will be removed also.
-     * @~chinese Èç¹ûÕâ¸ö¸ÕÌå°üº¬¹Ø½Ú,ÄÇÃ´ÕâĞ©¹Ø½ÚÒ²½«±»É¾³ı¡£
+     * @~chinese å¦‚æœè¿™ä¸ªåˆšä½“åŒ…å«å…³èŠ‚,é‚£ä¹ˆè¿™äº›å…³èŠ‚ä¹Ÿå°†è¢«åˆ é™¤ã€‚
      * @param   body   @~english A pointer to an existing PhysicsBody object.
-     * @~chinese Ò»¸öÒÑÓĞµÄPhysicsBody¶ÔÏóµÄÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªå·²æœ‰çš„PhysicsBodyå¯¹è±¡çš„æŒ‡é’ˆã€‚
      */
     virtual void removeBody(PhysicsBody* body);
     
@@ -154,13 +154,13 @@ public:
      *
      * If this world is not locked, the object is removed immediately, otherwise at next frame.
      * @~chinese 
-     * Ê¹ÓÃÒ»¸ötagÀ´ÒÆ³ıÒ»¸ö¸ÕÌå¡£
+     * ä½¿ç”¨ä¸€ä¸ªtagæ¥ç§»é™¤ä¸€ä¸ªåˆšä½“ã€‚
      * 
-     * Èç¹ûÎïÀíÊÀ½çÃ»ÓĞ¼ÓËø,Ôò¸ÕÌå¶ÔÏó±»Á¢¼´É¾³ı,·ñÔòµÈÓÚÏÂÒ»Ö¡ÔÙÉ¾³ı¡£
+     * å¦‚æœç‰©ç†ä¸–ç•Œæ²¡æœ‰åŠ é”,åˆ™åˆšä½“å¯¹è±¡è¢«ç«‹å³åˆ é™¤,å¦åˆ™ç­‰äºä¸‹ä¸€å¸§å†åˆ é™¤ã€‚
      * @attention @~english If this body has joints, those joints will be removed also.
-     * @~chinese Èç¹ûÕâ¸ö¸ÕÌå°üº¬¹Ø½Ú,ÄÇÃ´ÕâĞ©¹Ø½ÚÒ²½«±»É¾³ı¡£
+     * @~chinese å¦‚æœè¿™ä¸ªåˆšä½“åŒ…å«å…³èŠ‚,é‚£ä¹ˆè¿™äº›å…³èŠ‚ä¹Ÿå°†è¢«åˆ é™¤ã€‚
      * @param   tag   @~english An interger number that identifies a PhysicsBody object.
-     * @~chinese Ò»¸öÕûÊı£¬ÓÃÀ´±êÊ¶Ò»¸ö PhysicsBody¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªæ•´æ•°ï¼Œç”¨æ¥æ ‡è¯†ä¸€ä¸ª PhysicsBodyå¯¹è±¡ã€‚
      */
     virtual void removeBody(int tag);
 
@@ -169,9 +169,9 @@ public:
      *
      * If this world is not locked, those body are removed immediately, otherwise at next frame.
      * @~chinese 
-     * É¾³ıÎïÀíÊÀ½çÖĞµÄËùÓĞµÄ¸ÕÌå¡£
+     * åˆ é™¤ç‰©ç†ä¸–ç•Œä¸­çš„æ‰€æœ‰çš„åˆšä½“ã€‚
      * 
-     * Èç¹ûÎïÀíÊÀ½çÃ»ÓĞ¼ÓËø,ÄÇÃ´ÕâĞ©¸ÕÌå»á±»Á¢¼´É¾³ı,·ñÔòµÈµ½ÏÂÒ»Ö¡ÔÙÉ¾³ı¡£
+     * å¦‚æœç‰©ç†ä¸–ç•Œæ²¡æœ‰åŠ é”,é‚£ä¹ˆè¿™äº›åˆšä½“ä¼šè¢«ç«‹å³åˆ é™¤,å¦åˆ™ç­‰åˆ°ä¸‹ä¸€å¸§å†åˆ é™¤ã€‚
      */
     virtual void removeAllBodies();
     
@@ -180,17 +180,17 @@ public:
      *
      * Query this physics world along the line segment from start to end.
      * @~chinese 
-     * ËÑË÷ÓëÉäÏßÏà½»µÄÎïÀíĞÎ×´¡£
+     * æœç´¢ä¸å°„çº¿ç›¸äº¤çš„ç‰©ç†å½¢çŠ¶ã€‚
      * 
-     * ÑØ×ÅÉäÏßµÄÊ¼µãºÍÖÕµã£¬²éÑ¯µ±Ç°ÎïÀíÊÀ½çÖĞÓë¸ÃÉäÏßÏà½»µÄÎïÀíĞÎ×´¡£
+     * æ²¿ç€å°„çº¿çš„å§‹ç‚¹å’Œç»ˆç‚¹ï¼ŒæŸ¥è¯¢å½“å‰ç‰©ç†ä¸–ç•Œä¸­ä¸è¯¥å°„çº¿ç›¸äº¤çš„ç‰©ç†å½¢çŠ¶ã€‚
      * @param   func   @~english Func is called for each shape found.
-     * @~chinese Ã¿µ±ÕÒµ½Ò»¸öÂú×ãÌõ¼şµÄĞÎ×´µÄÊ±ºò£¬¸Ãº¯Êı¾Í»á±»µ÷ÓÃ¡£
+     * @~chinese æ¯å½“æ‰¾åˆ°ä¸€ä¸ªæ»¡è¶³æ¡ä»¶çš„å½¢çŠ¶çš„æ—¶å€™ï¼Œè¯¥å‡½æ•°å°±ä¼šè¢«è°ƒç”¨ã€‚
      * @param   start   @~english A Vec2 object contains the begin position of the ray.
-     * @~chinese Vec2¶ÔÏó,ËüÊÇÉäÏßµÄÊ¼µãÎ»ÖÃ
+     * @~chinese Vec2å¯¹è±¡,å®ƒæ˜¯å°„çº¿çš„å§‹ç‚¹ä½ç½®
      * @param   end   @~english A Vec2 object contains the end position of the ray.
-     * @~chinese Vec2¶ÔÏó,ËüÊÇÉäÏßµÄÖÕµãÎ»ÖÃ
+     * @~chinese Vec2å¯¹è±¡,å®ƒæ˜¯å°„çº¿çš„ç»ˆç‚¹ä½ç½®
      * @param   data   @~english User defined data, it is passed to func.
-     * @~chinese ÓÃ»§¶¨ÒåµÄÊı¾İ,ÓÃÀ´´«¸ø»Øµ÷º¯Êı¡£
+     * @~chinese ç”¨æˆ·å®šä¹‰çš„æ•°æ®,ç”¨æ¥ä¼ ç»™å›è°ƒå‡½æ•°ã€‚
      */
     void rayCast(PhysicsRayCastCallbackFunc func, const Vec2& start, const Vec2& end, void* data);
     
@@ -199,15 +199,15 @@ public:
      *
      * Query this physics world to find all shapes overlap rect.
      * @~chinese 
-     * ²éÑ¯°üº¬ÔÚ¾ØĞÎÄÚµÄÎïÀíĞÎ×´¡£
+     * æŸ¥è¯¢åŒ…å«åœ¨çŸ©å½¢å†…çš„ç‰©ç†å½¢çŠ¶ã€‚
      * 
-     * ²éÑ¯ÎïÀíÊÀ½çÖĞËùÓĞÓë¸Ã¾ØĞÎÓĞ½»¼¯µÄÎïÀíĞÎ×´¡£
+     * æŸ¥è¯¢ç‰©ç†ä¸–ç•Œä¸­æ‰€æœ‰ä¸è¯¥çŸ©å½¢æœ‰äº¤é›†çš„ç‰©ç†å½¢çŠ¶ã€‚
      * @param   func   @~english Func is called for each shape whose bounding box overlaps rect.
-     * @~chinese Ã¿µ±ÕÒµ½Ò»¸öÂú×ãÌõ¼şµÄĞÎ×´µÄÊ±ºò£¬¸Ãº¯Êı¾Í»á±»µ÷ÓÃ
+     * @~chinese æ¯å½“æ‰¾åˆ°ä¸€ä¸ªæ»¡è¶³æ¡ä»¶çš„å½¢çŠ¶çš„æ—¶å€™ï¼Œè¯¥å‡½æ•°å°±ä¼šè¢«è°ƒç”¨
      * @param   rect   @~english A Rect object contains a rectangle's x, y, width and height.
-     * @~chinese Ò»¸ö¾ØÕó¶ÔÏó£¬ËüÊÇÒ»¸öÓÉÆğÊ¼µãºÍ¿í¸ß×é³ÉµÄ½á¹¹Ìå¡£
+     * @~chinese ä¸€ä¸ªçŸ©é˜µå¯¹è±¡ï¼Œå®ƒæ˜¯ä¸€ä¸ªç”±èµ·å§‹ç‚¹å’Œå®½é«˜ç»„æˆçš„ç»“æ„ä½“ã€‚
      * @param   data   @~english User defined data, it is passed to func.
-     * @~chinese ÓÃ»§¶¨ÒåµÄÊı¾İ,ÓÃÀ´´«¸ø»Øµ÷º¯Êı¡£
+     * @~chinese ç”¨æˆ·å®šä¹‰çš„æ•°æ®,ç”¨æ¥ä¼ ç»™å›è°ƒå‡½æ•°ã€‚
      */
     void queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect, void* data);
     
@@ -215,16 +215,16 @@ public:
      * Searches for physics shapes that contains the point.
      *
      * @~chinese 
-     * ²éÑ¯°üº¬Ö¸¶¨µã×ø±êµÄËùÓĞµÄÎïÀíĞÎ×´¡£
+     * æŸ¥è¯¢åŒ…å«æŒ‡å®šç‚¹åæ ‡çš„æ‰€æœ‰çš„ç‰©ç†å½¢çŠ¶ã€‚
      * 
      * @attention @~english The point must lie inside a shape.
-     * @~chinese Õâ¸öµã±ØĞëÔÚÒ»¸öĞÎ×´ÄÚ¡£
+     * @~chinese è¿™ä¸ªç‚¹å¿…é¡»åœ¨ä¸€ä¸ªå½¢çŠ¶å†…ã€‚
      * @param   func   @~english Func is called for each shape contains the point.
-     * @~chinese Ã¿µ±ÕÒµ½Ò»¸öÂú×ãÌõ¼şµÄµãµÄÊ±ºò£¬¸Ãº¯Êı¾Í»á±»µ÷ÓÃ
+     * @~chinese æ¯å½“æ‰¾åˆ°ä¸€ä¸ªæ»¡è¶³æ¡ä»¶çš„ç‚¹çš„æ—¶å€™ï¼Œè¯¥å‡½æ•°å°±ä¼šè¢«è°ƒç”¨
      * @param   point   @~english A Vec2 object contains the position of the point.
-     * @~chinese Ò»¸öVec2¶ÔÏó
+     * @~chinese ä¸€ä¸ªVec2å¯¹è±¡
      * @param   data   @~english User defined data, it is passed to func.
-     * @~chinese ÓÃ»§¶¨ÒåµÄÊı¾İ,ÓÃÀ´´«¸ø»Øµ÷º¯Êı¡£
+     * @~chinese ç”¨æˆ·å®šä¹‰çš„æ•°æ®,ç”¨æ¥ä¼ ç»™å›è°ƒå‡½æ•°ã€‚
      */
     void queryPoint(PhysicsQueryPointCallbackFunc func, const Vec2& point, void* data);
     
@@ -233,15 +233,15 @@ public:
      *
      * All shapes contains the point will be pushed in a Vector<PhysicsShape*> object.
      * @~chinese 
-     * ²éÑ¯Ö¸¶¨µã×ø±êÉÏµÄËùÓĞµÄÎïÀíĞÎ×´¡£
+     * æŸ¥è¯¢æŒ‡å®šç‚¹åæ ‡ä¸Šçš„æ‰€æœ‰çš„ç‰©ç†å½¢çŠ¶ã€‚
      * 
-     * ËùÓĞ°üº¬´ËµãµÄÎïÀíĞÎ×´»á±»Ìí¼Óµ½Ò»¸öVector<PhysicsShape*>¶ÔÏóÖĞÈ¥¡£
+     * æ‰€æœ‰åŒ…å«æ­¤ç‚¹çš„ç‰©ç†å½¢çŠ¶ä¼šè¢«æ·»åŠ åˆ°ä¸€ä¸ªVector<PhysicsShape*>å¯¹è±¡ä¸­å»ã€‚
      * @attention @~english The point must lie inside a shape.
-     * @~chinese Õâ¸öµã±ØĞëÔÚÒ»¸öÎïÀíĞÎ×´ÄÚ¡£
+     * @~chinese è¿™ä¸ªç‚¹å¿…é¡»åœ¨ä¸€ä¸ªç‰©ç†å½¢çŠ¶å†…ã€‚
      * @param   point   @~english A Vec2 object contains the position of the point.
-     * @~chinese Ò»¸öVec2¶ÔÏó
+     * @~chinese ä¸€ä¸ªVec2å¯¹è±¡
      * @return @~english A Vector<PhysicsShape*> object contains all found PhysicsShape pointer.
-     * @~chinese Ò»¸öVector<PhysicsShape *>¶ÔÏó,Ëü°üº¬ËùÓĞÕÒµ½µÄPhysicsShapeÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªVector<PhysicsShape *>å¯¹è±¡,å®ƒåŒ…å«æ‰€æœ‰æ‰¾åˆ°çš„PhysicsShapeæŒ‡é’ˆã€‚
      */
     Vector<PhysicsShape*> getShapes(const Vec2& point) const;
     
@@ -250,13 +250,13 @@ public:
      *
      * Query this physics world at point and return the closest shape.
      * @~chinese 
-     * »ñÈ¡°üº¬Ö¸¶¨×ø±êµãµÄ×î½üµÄÎïÀíĞÎ×´¡£
+     * è·å–åŒ…å«æŒ‡å®šåæ ‡ç‚¹çš„æœ€è¿‘çš„ç‰©ç†å½¢çŠ¶ã€‚
      * 
-     * ²éÑ¯ÎïÀíÊÀ½çÖĞ°üº¬Ö¸¶¨µã×ø±êµÄ×î½üµÄÎïÀíĞÎ×´¡£
+     * æŸ¥è¯¢ç‰©ç†ä¸–ç•Œä¸­åŒ…å«æŒ‡å®šç‚¹åæ ‡çš„æœ€è¿‘çš„ç‰©ç†å½¢çŠ¶ã€‚
      * @param   point   @~english A Vec2 object contains the position of the point.
-     * @~chinese Ò»¸öVec2¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªVec2å¯¹è±¡ã€‚
      * @return @~english A PhysicsShape object pointer or nullptr if no shapes were found
-     * @~chinese Ò»¸öPhysicsShape¶ÔÏóÖ¸Õë; »òÕß£¬Èç¹ûÃ»ÓĞÕÒµ½·ûºÏÌõ¼şµÄÎïÀíĞÎ×´£¬Ôò·µ»Ønullptr¡£
+     * @~chinese ä¸€ä¸ªPhysicsShapeå¯¹è±¡æŒ‡é’ˆ; æˆ–è€…ï¼Œå¦‚æœæ²¡æœ‰æ‰¾åˆ°ç¬¦åˆæ¡ä»¶çš„ç‰©ç†å½¢çŠ¶ï¼Œåˆ™è¿”å›nullptrã€‚
      */
     PhysicsShape* getShape(const Vec2& point) const;
 
@@ -264,10 +264,10 @@ public:
      * Get all the bodys that in this physics world.
      *
      * @~chinese 
-     * »ñÈ¡ÎïÀíÊÀ½çÖĞËùÓĞµÄ¸ÕÌå¡£
+     * è·å–ç‰©ç†ä¸–ç•Œä¸­æ‰€æœ‰çš„åˆšä½“ã€‚
      * 
      * @return @~english A Vector<PhysicsBody*>& object contains all bodies in this physics world.
-     * @~chinese Ò»¸ö<PhysicsBody *>ÏòÁ¿¶ÔÏó,Ëü°üº¬ÎïÀíÊÀ½çÖĞËùÓĞµÄ¸ÕÌå¡£
+     * @~chinese ä¸€ä¸ª<PhysicsBody *>å‘é‡å¯¹è±¡,å®ƒåŒ…å«ç‰©ç†ä¸–ç•Œä¸­æ‰€æœ‰çš„åˆšä½“ã€‚
      */
     const Vector<PhysicsBody*>& getAllBodies() const;
 
@@ -275,12 +275,12 @@ public:
      * Get a body by tag.
      *
      * @~chinese 
-     * Í¨¹ıÒ»¸ötagÀ´»ñÈ¡Ò»¸ö¸ÕÌå¡£
+     * é€šè¿‡ä¸€ä¸ªtagæ¥è·å–ä¸€ä¸ªåˆšä½“ã€‚
      * 
      * @param   tag   @~english An interger number that identifies a PhysicsBody object.
-     * @~chinese Ò»¸öÕûÊı±êÊ¶¡£
+     * @~chinese ä¸€ä¸ªæ•´æ•°æ ‡è¯†ã€‚
      * @return @~english A PhysicsBody object pointer or nullptr if no shapes were found.
-     * @~chinese Ò»¸öPhysicsBody¶ÔÏóÖ¸Õë»ònullptr
+     * @~chinese ä¸€ä¸ªPhysicsBodyå¯¹è±¡æŒ‡é’ˆæˆ–nullptr
      */
     PhysicsBody* getBody(int tag) const;
     
@@ -288,12 +288,12 @@ public:
      * Get a scene contain this physics world.
      *
      * @~chinese 
-     * »ñÈ¡°üº¬ÎïÀíÊÀ½çµÄ³¡¾°¶ÔÏó¡£
+     * è·å–åŒ…å«ç‰©ç†ä¸–ç•Œçš„åœºæ™¯å¯¹è±¡ã€‚
      * 
      * @attention @~english This value is initialized in constructor
-     * @~chinese Õâ¸öÖµÊÇÔÚ¹¹Ôìº¯ÊıÖĞ³õÊ¼»¯µÄ
+     * @~chinese è¿™ä¸ªå€¼æ˜¯åœ¨æ„é€ å‡½æ•°ä¸­åˆå§‹åŒ–çš„
      * @return @~english A Scene object reference.
-     * @~chinese Ò»¸ö³¡¾°¶ÔÏóÒıÓÃ¡£
+     * @~chinese ä¸€ä¸ªåœºæ™¯å¯¹è±¡å¼•ç”¨ã€‚
      */
     inline Scene& getScene() const { return *_scene; }
     
@@ -301,10 +301,10 @@ public:
      * Get the gravity value of this physics world.
      *
      * @~chinese 
-     * »ñÈ¡ÎïÀíÊÀ½çµÄÖØÁ¦Öµ¡£
+     * è·å–ç‰©ç†ä¸–ç•Œçš„é‡åŠ›å€¼ã€‚
      * 
      * @return @~english A Vect object.
-     * @~chinese Ò»¸öVect¶ÔÏó¡£ @see Vec2
+     * @~chinese ä¸€ä¸ªVectå¯¹è±¡ã€‚ @see Vec2
      */
     inline Vec2 getGravity() const { return _gravity; }
     
@@ -312,10 +312,10 @@ public:
      * set the gravity value of this physics world.
      *
      * @~chinese 
-     * ÉèÖÃÎïÀíÊÀ½çµÄÖØÁ¦Öµ¡£
+     * è®¾ç½®ç‰©ç†ä¸–ç•Œçš„é‡åŠ›å€¼ã€‚
      * 
      * @param gravity @~english A gravity value of this physics world.
-     * @~chinese ÎïÀíÊÀ½çµÄÖØÁ¦Öµ¡£
+     * @~chinese ç‰©ç†ä¸–ç•Œçš„é‡åŠ›å€¼ã€‚
      */
     void setGravity(const Vec2& gravity);
     
@@ -323,12 +323,12 @@ public:
      * Set the speed of this physics world.
      *
      * @~chinese 
-     * ÉèÖÃÎïÀíÊÀ½çµÄ·ÂÕæÖ´ĞĞËÙ¶È¡£
+     * è®¾ç½®ç‰©ç†ä¸–ç•Œçš„ä»¿çœŸæ‰§è¡Œé€Ÿåº¦ã€‚
      * 
      * @attention @~english if you setAutoStep(false), this won't work.
-     * @~chinese Èç¹ûsetAutoStep(false),ÄÇÃ´Õâ¸öº¯Êı½«²»Æğ×÷ÓÃ¡£
+     * @~chinese å¦‚æœsetAutoStep(false),é‚£ä¹ˆè¿™ä¸ªå‡½æ•°å°†ä¸èµ·ä½œç”¨ã€‚
      * @param speed  @~english A float number. Speed is the rate at which the simulation executes. default value is 1.0.
-     * @~chinese Ò»¸ö¸¡µãÊı¡£ËÙ¶ÈÖ¸µÄÊÇÎïÀí·ÂÕæµÄÖ´ĞĞËÙ¶È¡£Ä¬ÈÏÖ·ÊÇ1.0
+     * @~chinese ä¸€ä¸ªæµ®ç‚¹æ•°ã€‚é€Ÿåº¦æŒ‡çš„æ˜¯ç‰©ç†ä»¿çœŸçš„æ‰§è¡Œé€Ÿåº¦ã€‚é»˜è®¤å€æ˜¯1.0
      */
     inline void setSpeed(float speed) { if(speed >= 0.0f) { _speed = speed; } }
     
@@ -336,10 +336,10 @@ public:
      * Get the speed of this physics world.
      *
      * @~chinese 
-     * µÃµ½ÎïÀíÊÀ½ç·ÂÕæÖ´ĞĞËÙ¶È
+     * å¾—åˆ°ç‰©ç†ä¸–ç•Œä»¿çœŸæ‰§è¡Œé€Ÿåº¦
      * 
      * @return @~english A float number.
-     * @~chinese Ò»¸ö¸¡µãÊı
+     * @~chinese ä¸€ä¸ªæµ®ç‚¹æ•°
      */
     inline float getSpeed() { return _speed; }
     
@@ -349,14 +349,14 @@ public:
      * Update rate is the value of EngineUpdateTimes/PhysicsWorldUpdateTimes.
      * Set it higher can improve performance, set it lower can improve accuracy of physics world simulation.
      * @~chinese 
-     * ÉèÖÃÎïÀíÊÀ½çµÄ¸üĞÂËÙÂÊ
+     * è®¾ç½®ç‰©ç†ä¸–ç•Œçš„æ›´æ–°é€Ÿç‡
      * 
-     * ¸üĞÂËÙÂÊµÈÓÚEngineUpdateTimes/PhysicsWorldUpdateTimes
-     * ÉèÖÃµÄÖµÔ½¸ß£¬Ô½¿ÉÒÔÌá¸ßĞÔÄÜ,°ÑËü½µµÍ£¬Ôò¿ÉÒÔÌá¸ßÎïÀíÊÀ½çµÄ·ÂÕæ¾«¶È¡£
+     * æ›´æ–°é€Ÿç‡ç­‰äºEngineUpdateTimes/PhysicsWorldUpdateTimes
+     * è®¾ç½®çš„å€¼è¶Šé«˜ï¼Œè¶Šå¯ä»¥æé«˜æ€§èƒ½,æŠŠå®ƒé™ä½ï¼Œåˆ™å¯ä»¥æé«˜ç‰©ç†ä¸–ç•Œçš„ä»¿çœŸç²¾åº¦ã€‚
      * @attention @~english if you setAutoStep(false), this won't work.
-     * @~chinese Èç¹ûÄãÉèÖÃsetAutoStep(false),ÄÇÃ´¸Ãº¯Êı²»Æğ×÷ÓÃ¡£
+     * @~chinese å¦‚æœä½ è®¾ç½®setAutoStep(false),é‚£ä¹ˆè¯¥å‡½æ•°ä¸èµ·ä½œç”¨ã€‚
      * @param rate @~english An interger number, default value is 1.0.
-     * @~chinese intergerÊıÁ¿,Ä¬ÈÏÖµÊÇ1.0
+     * @~chinese intergeræ•°é‡,é»˜è®¤å€¼æ˜¯1.0
      */
     inline void setUpdateRate(int rate) { if(rate > 0) { _updateRate = rate; } }
 
@@ -365,10 +365,10 @@ public:
      * Get the update rate of this physics world.
      *
      * @~chinese 
-     * »ñÈ¡ÎïÀíÊÀ½çµÄ¸üĞÂËÙÂÊ¡£
+     * è·å–ç‰©ç†ä¸–ç•Œçš„æ›´æ–°é€Ÿç‡ã€‚
      * 
      * @return @~english An interger number.
-     * @~chinese Ò»¸öintergerµÄÊı×Ö¡£
+     * @~chinese ä¸€ä¸ªintergerçš„æ•°å­—ã€‚
      */
     inline int getUpdateRate() { return _updateRate; }
 
@@ -377,11 +377,11 @@ public:
      * 
      * One physics update will be divided into several substeps to increase its accuracy.
      * @~chinese 
-     * ÉèÖÃ¸üĞÂÎïÀíÊÀ½çµÄ×Ó²½ÖèµÄÊıÁ¿¡£
+     * è®¾ç½®æ›´æ–°ç‰©ç†ä¸–ç•Œçš„å­æ­¥éª¤çš„æ•°é‡ã€‚
      * 
-     * Ò»¸öÎïÀí¸üĞÂ½«±»·ÖÎª¼¸¸ö×Ó²½Öè,¿ÉÒÔÌá¸ßÎïÀí·ÂÕæµÄ×¼È·ĞÔ¡£
+     * ä¸€ä¸ªç‰©ç†æ›´æ–°å°†è¢«åˆ†ä¸ºå‡ ä¸ªå­æ­¥éª¤,å¯ä»¥æé«˜ç‰©ç†ä»¿çœŸçš„å‡†ç¡®æ€§ã€‚
      * @param steps @~english An interger number, default value is 1.
-     * @~chinese Ò»¸öintergerµÄÊı×Ö,Ä¬ÈÏÖµÊÇ1¡£
+     * @~chinese ä¸€ä¸ªintergerçš„æ•°å­—,é»˜è®¤å€¼æ˜¯1ã€‚
      */
     void setSubsteps(int steps);
 
@@ -389,10 +389,10 @@ public:
      * Get the number of substeps of this physics world.
      *
      * @~chinese 
-     * »ñÈ¡ÎïÀíÊÀ½çµÄ×Ó²½ÖèµÄÊıÁ¿¡£
+     * è·å–ç‰©ç†ä¸–ç•Œçš„å­æ­¥éª¤çš„æ•°é‡ã€‚
      * 
      * @return @~english An interger number.
-     * @~chinese Ò»¸öintergerµÄÊı×Ö¡£
+     * @~chinese ä¸€ä¸ªintergerçš„æ•°å­—ã€‚
      */
     inline int getSubsteps() const { return _substeps; }
 
@@ -401,11 +401,11 @@ public:
      *
      * This physics world will draw shapes and joints by DrawNode acoording to mask.
      * @~chinese 
-     * ÉèÖÃÎïÀíÊÀ½çµÄµ÷ÊÔ»æÖÆÑÚÂë
+     * è®¾ç½®ç‰©ç†ä¸–ç•Œçš„è°ƒè¯•ç»˜åˆ¶æ©ç 
      * 
-     * ÎïÀíÊÀ½ç»á¸ù¾İÉèÖÃºÃµÄµ÷ÊÔ»æÖÆÑÚÂë£¬µ÷ÓÃDrawNodeÀ´»æÖÆÎïÀíĞÎ×´ºÍÎïÀí¹Ø½Ú¡£
+     * ç‰©ç†ä¸–ç•Œä¼šæ ¹æ®è®¾ç½®å¥½çš„è°ƒè¯•ç»˜åˆ¶æ©ç ï¼Œè°ƒç”¨DrawNodeæ¥ç»˜åˆ¶ç‰©ç†å½¢çŠ¶å’Œç‰©ç†å…³èŠ‚ã€‚
      * @param mask @~english Mask has four value:DEBUGDRAW_NONE, DEBUGDRAW_SHAPE, DEBUGDRAW_JOINT, DEBUGDRAW_CONTACT and DEBUGDRAW_ALL, default is DEBUGDRAW_NONE
-     * @~chinese ÑÚÂëÓĞÒÔÏÂ4¸öÈ¡Öµ: DEBUGDRAW_NONE DEBUGDRAW_SHAPE, DEBUGDRAW_JOINT, DEBUGDRAW_CONTACT and DEBUGDRAW_ALL, default is DEBUGDRAW_NONE
+     * @~chinese æ©ç æœ‰ä»¥ä¸‹4ä¸ªå–å€¼: DEBUGDRAW_NONE DEBUGDRAW_SHAPE, DEBUGDRAW_JOINT, DEBUGDRAW_CONTACT and DEBUGDRAW_ALL, default is DEBUGDRAW_NONE
      */
     void setDebugDrawMask(int mask);
 
@@ -413,10 +413,10 @@ public:
      * Get the bebug draw mask.
      *
      * @~chinese 
-     * ²éÑ¯µ÷ÊÔ»æÖÆÑÚÂë¡£
+     * æŸ¥è¯¢è°ƒè¯•ç»˜åˆ¶æ©ç ã€‚
      * 
      * @return @~english An interger number.
-     * @~chinese Ò»¸öintergerµÄÊı×Ö¡£
+     * @~chinese ä¸€ä¸ªintergerçš„æ•°å­—ã€‚
      */
     inline int getDebugDrawMask() { return _debugDrawMask; }
     
@@ -425,13 +425,13 @@ public:
      *
      * If you want control it by yourself( fixed-timestep for example ), you can set this to false and call step by yourself.
      * @~chinese 
-     * ¿ØÖÆÎïÀíµü´úµÄ·½·¨
+     * æ§åˆ¶ç‰©ç†è¿­ä»£çš„æ–¹æ³•
      * 
-     * Èç¹ûÄãÏëÒª×Ô¼º¿ØÖÆÎïÀíµü´ú·½·¨,ÀıÈçÊ¹ÓÃ¹Ì¶¨Ê±¼ä²½³¤(fixed-timestep)µÄµü´ú·½·¨,Äã¿ÉÒÔ´«False.
+     * å¦‚æœä½ æƒ³è¦è‡ªå·±æ§åˆ¶ç‰©ç†è¿­ä»£æ–¹æ³•,ä¾‹å¦‚ä½¿ç”¨å›ºå®šæ—¶é—´æ­¥é•¿(fixed-timestep)çš„è¿­ä»£æ–¹æ³•,ä½ å¯ä»¥ä¼ False.
      * @attention @~english If you set auto step to false, setSpeed setSubsteps and setUpdateRate won't work, you need to control the time step by yourself.
-     * @~chinese Èç¹ûÄãÉèÖÃFalseµÄ»°£¬ÄÇÃ´`setSpeed`ºÍ`setSubsteps`,ÒÔ¼°`setUpdateRate`º¯Êı¶¼²»ÄÜÕı³£¹¤×÷ÁË£¬ËùÒÔÕâĞ©ĞĞÎªÄã¶¼±ØĞë×Ô¼ºÀ´¿ØÖÆ¡£
+     * @~chinese å¦‚æœä½ è®¾ç½®Falseçš„è¯ï¼Œé‚£ä¹ˆ`setSpeed`å’Œ`setSubsteps`,ä»¥åŠ`setUpdateRate`å‡½æ•°éƒ½ä¸èƒ½æ­£å¸¸å·¥ä½œäº†ï¼Œæ‰€ä»¥è¿™äº›è¡Œä¸ºä½ éƒ½å¿…é¡»è‡ªå·±æ¥æ§åˆ¶ã€‚
      * @param autoStep @~english A bool object, defaut value is true.
-     * @~chinese Ò»¸öbool¶ÔÏó,Ä¬ÈÏÖµÎªTrue.
+     * @~chinese ä¸€ä¸ªboolå¯¹è±¡,é»˜è®¤å€¼ä¸ºTrue.
      */
     void setAutoStep(bool autoStep){ _autoStep = autoStep; }
 
@@ -440,10 +440,10 @@ public:
      * Get the auto step of this physics world.
      *
      * @~chinese 
-     * »ñÈ¡ÎïÀíÊÀ½çÊÇ·ñÊ¹ÓÃ×Ô¶¯µü´ú·½·¨¡£
+     * è·å–ç‰©ç†ä¸–ç•Œæ˜¯å¦ä½¿ç”¨è‡ªåŠ¨è¿­ä»£æ–¹æ³•ã€‚
      * 
      * @return @~english A bool object.
-     * @~chinese Ò»¸öbool¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªboolå¯¹è±¡ã€‚
      */
     bool isAutoStep() { return _autoStep; }
 
@@ -452,13 +452,13 @@ public:
      *
      * The times passing for simulate the physics.
      * @~chinese 
-     * ÎïÀíÊÀ½çµÄµü´ú²½³¤¡£
+     * ç‰©ç†ä¸–ç•Œçš„è¿­ä»£æ­¥é•¿ã€‚
      * 
-     * ´«µİÒ»´ÎÄ£ÄâÎïÀíËùĞèÒªµÄÊ±¼ä¡£
+     * ä¼ é€’ä¸€æ¬¡æ¨¡æ‹Ÿç‰©ç†æ‰€éœ€è¦çš„æ—¶é—´ã€‚
      * @attention @~english You need to setAutoStep(false) first before it can work.
-     * @~chinese ÈÃÕâ¸öº¯ÊıÉúĞ§Ç°£¬ÄãĞèÒªµ÷ÓÃsetAutoStep(false)¡£
+     * @~chinese è®©è¿™ä¸ªå‡½æ•°ç”Ÿæ•ˆå‰ï¼Œä½ éœ€è¦è°ƒç”¨setAutoStep(false)ã€‚
      * @param   delta   @~english A float number.
-     * @~chinese Ò»¸ö¸¡µãÊı
+     * @~chinese ä¸€ä¸ªæµ®ç‚¹æ•°
      */
     void step(float delta);
     
@@ -532,8 +532,8 @@ protected:
 
 /** @~english A physics helper class. Draw physics shape, joint in debug mode. 
  *  You do not create PhysicsDebugDraw objects directly; Instead, you can activate it by PhysicsWorld::setDebugDrawMask.
- * @~chinese Ò»¸öÎïÀíµÄ¸¨ÖúÀà¡£Ëü¿ÉÒÔÔÚµ÷ÊÔ×´Ì¬ÏÂ»æÖÆĞÎ×´ºÍ¹Ø½Ú¡£
- * Äã²»ĞèÒªÖ±½Ó´´½¨Ò»¸ö PhysicsDebugDraw¶ÔÏó£» Äã¿ÉÒÔÍ¨¹ıµ÷ÓÃ `PhysicsWorld::setDebugDrawMask`·½·¨À´´´½¨¸Ã¶ÔÏó¡£
+ * @~chinese ä¸€ä¸ªç‰©ç†çš„è¾…åŠ©ç±»ã€‚å®ƒå¯ä»¥åœ¨è°ƒè¯•çŠ¶æ€ä¸‹ç»˜åˆ¶å½¢çŠ¶å’Œå…³èŠ‚ã€‚
+ * ä½ ä¸éœ€è¦ç›´æ¥åˆ›å»ºä¸€ä¸ª PhysicsDebugDrawå¯¹è±¡ï¼› ä½ å¯ä»¥é€šè¿‡è°ƒç”¨ `PhysicsWorld::setDebugDrawMask`æ–¹æ³•æ¥åˆ›å»ºè¯¥å¯¹è±¡ã€‚
  */
 class CC_DLL PhysicsDebugDraw
 {

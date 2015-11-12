@@ -58,21 +58,21 @@ class Touch;
 All features from Node are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
- * @~chinese Í¼²ãÊÇNodeÀàµÄÒ»¸ö×ÓÀà½Úµã£¬ËüÊµÏÖÁËTouchEventsDelegateĞ­Òé¡£
+ * @~chinese å›¾å±‚æ˜¯Nodeç±»çš„ä¸€ä¸ªå­ç±»èŠ‚ç‚¹ï¼Œå®ƒå®ç°äº†TouchEventsDelegateåè®®ã€‚
  * 
- * ËüËùÓĞ´ÓNode½Úµã¼Ì³Ğ¹ıÀ´µÄ¹¦ÄÜ¶¼ÊÇÓĞĞ§µÄ,²¢ÇÒÌí¼ÓÁËÒÔÏÂĞÂ¹¦ÄÜ:
- * - Ëü¿ÉÒÔ½ÓÊÕiPhone´¥Ãş
- * - Ëü¿ÉÒÔµÃµ½¼ÓËÙ¶È¼ÆÊäÈëÊÂ¼ş
+ * å®ƒæ‰€æœ‰ä»NodeèŠ‚ç‚¹ç»§æ‰¿è¿‡æ¥çš„åŠŸèƒ½éƒ½æ˜¯æœ‰æ•ˆçš„,å¹¶ä¸”æ·»åŠ äº†ä»¥ä¸‹æ–°åŠŸèƒ½:
+ * - å®ƒå¯ä»¥æ¥æ”¶iPhoneè§¦æ‘¸
+ * - å®ƒå¯ä»¥å¾—åˆ°åŠ é€Ÿåº¦è®¡è¾“å…¥äº‹ä»¶
 */
 class CC_DLL Layer : public Node
 {
 public:    
     /** @~english Creates a fullscreen black layer.
      *
-     * @~chinese ´´½¨Ò»¸öÈ«ÆÁºÚÉ«µÄÍ¼²ã¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªå…¨å±é»‘è‰²çš„å›¾å±‚ã€‚
      * 
      * @return @~english An autoreleased Layer object.
-     * @~chinese Ò»¸öautoreleasedÍ¼²ã¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªautoreleasedå›¾å±‚å¯¹è±¡ã€‚
      */
     static Layer *create();
 
@@ -90,92 +90,92 @@ public:
 
     /** @~english Callback function for touch began.
      *
-     * @~chinese ´¥Ãş¿ªÊ¼Ê±µÄ»Øµ÷º¯Êı
+     * @~chinese è§¦æ‘¸å¼€å§‹æ—¶çš„å›è°ƒå‡½æ•°
      * 
      * @param touch @~english Touch infomation.
-     * @~chinese ´¥ÃşĞÅÏ¢¡£
+     * @~chinese è§¦æ‘¸ä¿¡æ¯ã€‚
      * @param unused_event @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @return @~english if return false, onTouchMoved, onTouchEnded, onTouchCancelled will never called.
-     * @~chinese Èç¹û·µ»Øfalse,ÄÇÃ´onTouchMoved¡¢onTouchEnded onTouchCancelledÓÀÔ¶²»»á±»µ÷ÓÃ
+     * @~chinese å¦‚æœè¿”å›false,é‚£ä¹ˆonTouchMovedã€onTouchEnded onTouchCancelledæ°¸è¿œä¸ä¼šè¢«è°ƒç”¨
      * @js NA
      */
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
     /** @~english Callback function for touch moved.
      *
-     * @~chinese ´¥ÃşÒÆ¶¯Ê±µÄ»Øµ÷º¯Êı
+     * @~chinese è§¦æ‘¸ç§»åŠ¨æ—¶çš„å›è°ƒå‡½æ•°
      * 
      * @param touch @~english Touch infomation.
-     * @~chinese ´¥ÃşĞÅÏ¢¡£
+     * @~chinese è§¦æ‘¸ä¿¡æ¯ã€‚
      * @param unused_event @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onTouchMoved(Touch *touch, Event *unused_event);
     /** @~english Callback function for touch ended.
      *
-     * @~chinese ´¥Ãş½áÊøÊ±µÄ»Øµ÷º¯Êı
+     * @~chinese è§¦æ‘¸ç»“æŸæ—¶çš„å›è°ƒå‡½æ•°
      * 
      * @param touch @~english Touch infomation.
-     * @~chinese ´¥ÃşĞÅÏ¢¡£
+     * @~chinese è§¦æ‘¸ä¿¡æ¯ã€‚
      * @param unused_event @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onTouchEnded(Touch *touch, Event *unused_event);
     /** @~english Callback function for touch cancelled.
      *
-     * @~chinese ´¥ÃşÈ¡ÏûÊ±µÄ»Øµ÷º¯Êı
+     * @~chinese è§¦æ‘¸å–æ¶ˆæ—¶çš„å›è°ƒå‡½æ•°
      * 
      * @param touch @~english Touch infomation.
-     * @~chinese ´¥ÃşĞÅÏ¢¡£
+     * @~chinese è§¦æ‘¸ä¿¡æ¯ã€‚
      * @param unused_event @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onTouchCancelled(Touch *touch, Event *unused_event);
 
     /** @~english Callback function for multiple touches began.
      *
-     * @~chinese ¶àµã´¥Ãş¿ªÊ¼Ê±µÄ»Øµ÷º¯Êı
+     * @~chinese å¤šç‚¹è§¦æ‘¸å¼€å§‹æ—¶çš„å›è°ƒå‡½æ•°
      * 
      * @param touches @~english Touches information.
-     * @~chinese ¶àµã´¥ÃşĞÅÏ¢¡£
+     * @~chinese å¤šç‚¹è§¦æ‘¸ä¿¡æ¯ã€‚
      * @param unused_event @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
     /** @~english Callback function for multiple touches moved.
      *
-     * @~chinese ¶àµã´¥ÃşÒÆ¶¯Ê±µÄ»Øµ÷º¯Êı
+     * @~chinese å¤šç‚¹è§¦æ‘¸ç§»åŠ¨æ—¶çš„å›è°ƒå‡½æ•°
      * 
      * @param touches @~english Touches information.
-     * @~chinese ¶àµã´¥ÃşĞÅÏ¢¡£
+     * @~chinese å¤šç‚¹è§¦æ‘¸ä¿¡æ¯ã€‚
      * @param unused_event @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event);
     /** @~english Callback function for multiple touches ended.
      *
-     * @~chinese ¶àµã´¥Ãş½áÊøÊ±µÄ»Øµ÷º¯Êı
+     * @~chinese å¤šç‚¹è§¦æ‘¸ç»“æŸæ—¶çš„å›è°ƒå‡½æ•°
      * 
      * @param touches @~english Touches information.
-     * @~chinese ¶àµã´¥ÃşĞÅÏ¢¡£
+     * @~chinese å¤šç‚¹è§¦æ‘¸ä¿¡æ¯ã€‚
      * @param unused_event @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event);
     /** @~english Callback function for multiple touches cancelled.
      *
-     * @~chinese ¶àµã´¥ÃşÈ¡ÏûÊ±µÄ»Øµ÷º¯Êı
+     * @~chinese å¤šç‚¹è§¦æ‘¸å–æ¶ˆæ—¶çš„å›è°ƒå‡½æ•°
      * 
      * @param touches @~english Touches information.
-     * @~chinese ¶àµã´¥ÃşĞÅÏ¢¡£
+     * @~chinese å¤šç‚¹è§¦æ‘¸ä¿¡æ¯ã€‚
      * @param unused_event @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onTouchesCancelled(const std::vector<Touch*>&touches, Event *unused_event);
@@ -186,11 +186,11 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final {};
 
     /** @~english Callback funtion for acceleration.
-     * @~chinese ¼ÓËÙ¼ÆÊÂ¼ş»Øµ÷º¯Êı¡£
+     * @~chinese åŠ é€Ÿè®¡äº‹ä»¶å›è°ƒå‡½æ•°ã€‚
      * @param acc @~english Acceleration information.
-     * @~chinese ¼ÓËÙ¼ÆĞÅÏ¢¡£
+     * @~chinese åŠ é€Ÿè®¡ä¿¡æ¯ã€‚
      * @param unused_event @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onAcceleration(Acceleration* acc, Event* unused_event);
@@ -200,9 +200,9 @@ public:
     /** @~english whether or not it will receive Touch events.
      * You can enable / disable touch events with this property.
      * Only the touches of this node will be affected. This "method" is not propagated to it's children.
-     * @~chinese ÊÇ·ñ½ÓÊÕ´¥ÃşÊÂ¼ş¡£
-     * Äú¿ÉÒÔµ÷ÓÃ¸Ã·½·¨À´ÆôÓÃ»òÕß½ûÓÃ´¥ÃşÊÂ¼ş¡£
-     * Ö»ÓĞµ÷ÓÃ¸Ã·½·¨µÄ½ÚµãµÄ½Ó´¥½«ÊÜµ½Ó°Ïì¡£Õâ¸ö¡°·½·¨¡±²»»á´«²¥µ½ËüµÄº¢×Ó¡£
+     * @~chinese æ˜¯å¦æ¥æ”¶è§¦æ‘¸äº‹ä»¶ã€‚
+     * æ‚¨å¯ä»¥è°ƒç”¨è¯¥æ–¹æ³•æ¥å¯ç”¨æˆ–è€…ç¦ç”¨è§¦æ‘¸äº‹ä»¶ã€‚
+     * åªæœ‰è°ƒç”¨è¯¥æ–¹æ³•çš„èŠ‚ç‚¹çš„æ¥è§¦å°†å—åˆ°å½±å“ã€‚è¿™ä¸ªâ€œæ–¹æ³•â€ä¸ä¼šä¼ æ’­åˆ°å®ƒçš„å­©å­ã€‚
      * @since v0.8.1
      * @js NA
     */
@@ -215,7 +215,7 @@ public:
     /** @~english
      * swallowsTouches of the touch events. Default is true
      * @~chinese 
-     * ÉèÖÃÍÌÊÉ´¥ÃşÊÂ¼ş¡£Ä¬ÈÏÖµÊÇTrue.
+     * è®¾ç½®åå™¬è§¦æ‘¸äº‹ä»¶ã€‚é»˜è®¤å€¼æ˜¯True.
      * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE virtual void setSwallowsTouches(bool swallowsTouches);
@@ -223,8 +223,8 @@ public:
 
     /** @~english whether or not it will receive Accelerometer events
      * You can enable / disable accelerometer events with this property.
-     * @~chinese ÊÇ·ñ½ÓÊÕ¼ÓËÙ¶È¼ÆµÄÊÂ¼ş
-     * Äú¿ÉÒÔµ÷ÓÃ¸Ã·½·¨À´ÆôÓÃ»ò½ûÓÃ¼ÓËÙ¼ÆÊÂ¼ş
+     * @~chinese æ˜¯å¦æ¥æ”¶åŠ é€Ÿåº¦è®¡çš„äº‹ä»¶
+     * æ‚¨å¯ä»¥è°ƒç”¨è¯¥æ–¹æ³•æ¥å¯ç”¨æˆ–ç¦ç”¨åŠ é€Ÿè®¡äº‹ä»¶
      * @since v0.8.1
      * @js NA
      */
@@ -235,9 +235,9 @@ public:
     /** @~english whether or not it will receive keyboard or keypad events
      * You can enable / disable accelerometer events with this property.
      * it's new in cocos2d-x
-     * @~chinese ÊÇ·ñ»áÊÕµ½¼üÅÌ»òĞéÄâ¼üÅÌÊÂ¼ş
-     * Äúµ÷ÓÃ¸Ã·½·¨ÆôÓÃ»òÕß½ûÓÃ¼üÅÌÊÂ¼ş
-     * ÕâÊÇcocos2d-xµÄÒ»¸öĞÂ·½·¨
+     * @~chinese æ˜¯å¦ä¼šæ”¶åˆ°é”®ç›˜æˆ–è™šæ‹Ÿé”®ç›˜äº‹ä»¶
+     * æ‚¨è°ƒç”¨è¯¥æ–¹æ³•å¯ç”¨æˆ–è€…ç¦ç”¨é”®ç›˜äº‹ä»¶
+     * è¿™æ˜¯cocos2d-xçš„ä¸€ä¸ªæ–°æ–¹æ³•
      * @js NA
      */
 
@@ -247,7 +247,7 @@ public:
     /** @~english
      * Please use onKeyPressed instead.
      * @~chinese 
-     * ÇëÊ¹ÓÃonKeyPressedº¯Êı´úÌæ¡£
+     * è¯·ä½¿ç”¨onKeyPressedå‡½æ•°ä»£æ›¿ã€‚
      * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE virtual void keyPressed(int keyCode) final {};
@@ -255,26 +255,26 @@ public:
     /** @~english
      * Please use onKeyReleased instead.
      * @~chinese 
-     * ÇëÊ¹ÓÃonKeyReleasedº¯Êı´úÌæ¡£
+     * è¯·ä½¿ç”¨onKeyReleasedå‡½æ•°ä»£æ›¿ã€‚
      * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE virtual void keyReleased(int keyCode) final {};
 
     /** @~english Callback function for key pressed.
-     * @~chinese °´¼ü°´ÏÂÈ¥Ê±µÄ»Øµ÷º¯Êı
+     * @~chinese æŒ‰é”®æŒ‰ä¸‹å»æ—¶çš„å›è°ƒå‡½æ•°
      * @param keyCode @~english KeyCode information.
-     * @~chinese ¼üÂëĞÅÏ¢¡£
+     * @~chinese é”®ç ä¿¡æ¯ã€‚
      * @param event @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
     /** @~english Callback function for key released.
-     * @~chinese °´¼üÊÍ·ÅÊ±µÄ»Øµ÷º¯Êı
+     * @~chinese æŒ‰é”®é‡Šæ”¾æ—¶çš„å›è°ƒå‡½æ•°
     * @param keyCode @~english KeyCode information.
-     * @~chinese ¼üÂëĞÅÏ¢¡£
+     * @~chinese é”®ç ä¿¡æ¯ã€‚
     * @param event @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
     * @js NA
     */
     virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
@@ -328,11 +328,11 @@ private:
  * All features from Layer are valid, plus the following new features that propagate into children that conform to the RGBAProtocol:
  * - opacity
  * - RGB colors
- * @~chinese LayerRGBAÀàÊÇLayerµÄ×ÓÀà£¬ËüÊµÏÖÁËRGBAProtocolĞ­Òé²¢ÇÒÊ¹ÓÃ´¿É«×÷Îª±³¾°¡£
+ * @~chinese LayerRGBAç±»æ˜¯Layerçš„å­ç±»ï¼Œå®ƒå®ç°äº†RGBAProtocolåè®®å¹¶ä¸”ä½¿ç”¨çº¯è‰²ä½œä¸ºèƒŒæ™¯ã€‚
  * 
- * ËüËùÓĞ´ÓLayer¼Ì³Ğ¹ıÀ´µÄ¹¦ÄÜ¶¼ÊÇÓĞĞ§µÄ,²¢ÇÒËü»¹ÊµÏÖÁËÒ»Ğ©ĞÂÌØĞÔ£¬ÕâĞ©ÌØĞÔ¿ÉÒÔ¶ÔËùÓĞ·ûºÏ RGBAProtocolµÄº¢×Ó½áµãÉúĞ§¡£
- * - ²»Í¸Ã÷
- * - RGBÑÕÉ«
+ * å®ƒæ‰€æœ‰ä»Layerç»§æ‰¿è¿‡æ¥çš„åŠŸèƒ½éƒ½æ˜¯æœ‰æ•ˆçš„,å¹¶ä¸”å®ƒè¿˜å®ç°äº†ä¸€äº›æ–°ç‰¹æ€§ï¼Œè¿™äº›ç‰¹æ€§å¯ä»¥å¯¹æ‰€æœ‰ç¬¦åˆ RGBAProtocolçš„å­©å­ç»“ç‚¹ç”Ÿæ•ˆã€‚
+ * - ä¸é€æ˜
+ * - RGBé¢œè‰²
  * @since 2.1
  * @js NA
  */
@@ -379,72 +379,72 @@ private:
  * All features from Layer are valid, plus the following new features:
  * - opacity
  * - RGB colors
- * @~chinese LayerColorÊÇLayerÀàµÄ×ÓÀà£¬²¢ÇÒËüÊµÏÖÁË RGBAProtocolĞ­Òé
+ * @~chinese LayerColoræ˜¯Layerç±»çš„å­ç±»ï¼Œå¹¶ä¸”å®ƒå®ç°äº† RGBAProtocolåè®®
  *
- * ËüËùÓĞ´ÓLayer¼Ì³Ğ¹ıÀ´µÄ¹¦ÄÜ¶¼ÊÇÓĞĞ§µÄ,²¢ÇÒËü»¹ÊµÏÖÁËÒ»Ğ©ĞÂÌØĞÔ£¬ÕâĞ©ÌØĞÔ¿ÉÒÔ¶ÔËùÓĞ·ûºÏ RGBAProtocolµÄº¢×Ó½áµãÉúĞ§¡£
- * - ²»Í¸Ã÷
- * - RGBÑÕÉ«
+ * å®ƒæ‰€æœ‰ä»Layerç»§æ‰¿è¿‡æ¥çš„åŠŸèƒ½éƒ½æ˜¯æœ‰æ•ˆçš„,å¹¶ä¸”å®ƒè¿˜å®ç°äº†ä¸€äº›æ–°ç‰¹æ€§ï¼Œè¿™äº›ç‰¹æ€§å¯ä»¥å¯¹æ‰€æœ‰ç¬¦åˆ RGBAProtocolçš„å­©å­ç»“ç‚¹ç”Ÿæ•ˆã€‚
+ * - ä¸é€æ˜
+ * - RGBé¢œè‰²
  */
 class CC_DLL LayerColor : public Layer, public BlendProtocol
 {
 public:
     /** @~english Creates a fullscreen black layer.
      *
-     * @~chinese ´´½¨Ò»¸öÈ«ÆÁµÄºÚÉ«Í¼²ã
+     * @~chinese åˆ›å»ºä¸€ä¸ªå…¨å±çš„é»‘è‰²å›¾å±‚
      *
      * @return @~english An autoreleased LayerColor object.
-     * @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅµÄLayerColor¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„LayerColorå¯¹è±¡ã€‚
      */
     static LayerColor* create();
     /** @~english Creates a Layer with color, width and height in Points.
      *
-     * @~chinese Í¨¹ıÑÕÉ«,¿í¶ÈºÍ¸ß¶ÈÀ´´´½¨Ò»¸öÍ¼²ã
+     * @~chinese é€šè¿‡é¢œè‰²,å®½åº¦å’Œé«˜åº¦æ¥åˆ›å»ºä¸€ä¸ªå›¾å±‚
      * 
      * @param color @~english The color of layer.
-     * @~chinese Í¼²ãµÄÑÕÉ«¡£
+     * @~chinese å›¾å±‚çš„é¢œè‰²ã€‚
      * @param width @~english The width of layer.
-     * @~chinese Í¼²ãµÄ¿í¶È¡£
+     * @~chinese å›¾å±‚çš„å®½åº¦ã€‚
      * @param height @~english The height of layer.
-     * @~chinese Í¼²ãµÄ¸ß¶È¡£
+     * @~chinese å›¾å±‚çš„é«˜åº¦ã€‚
      * @return @~english An autoreleased LayerColor object.
-     * @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅLayerColor¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾LayerColorå¯¹è±¡ã€‚
      */
     static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
     /** @~english Creates a Layer with color. Width and height are the window size.
      *
-     * @~chinese Ê¹ÓÃÑÕÉ«´´½¨Ò»¸öÍ¼²ã¡£¿í¶ÈºÍ¸ß¶ÈµÈÓÚ´°¿Ú´óĞ¡¡£
+     * @~chinese ä½¿ç”¨é¢œè‰²åˆ›å»ºä¸€ä¸ªå›¾å±‚ã€‚å®½åº¦å’Œé«˜åº¦ç­‰äºçª—å£å¤§å°ã€‚
      * 
      * @param color @~english The color of layer.
-     * @~chinese Í¼²ãµÄÑÕÉ«¡£
+     * @~chinese å›¾å±‚çš„é¢œè‰²ã€‚
      * @return @~english An autoreleased LayerColor object.
-     * @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅµÄLayerColor¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„LayerColorå¯¹è±¡ã€‚
      */
     static LayerColor * create(const Color4B& color);
 
     /** @~english Change width in Points.
      * 
-     * @~chinese ĞŞ¸ÄÍ¼²ãµÄ¿í¶È
+     * @~chinese ä¿®æ”¹å›¾å±‚çš„å®½åº¦
      * 
      * @param w @~english The width of layer.
-     * @~chinese Í¼²ãµÄ¿í¶È
+     * @~chinese å›¾å±‚çš„å®½åº¦
      */
     void changeWidth(GLfloat w);
     /** @~english Change height in Points.
      *
-     * @~chinese ĞŞ¸ÄÍ¼²ãµÄ¸ß¶È
+     * @~chinese ä¿®æ”¹å›¾å±‚çš„é«˜åº¦
      * 
      * @param h @~english The height of layer.
-     * @~chinese Í¼²ãµÄ¸ß¶È¡£
+     * @~chinese å›¾å±‚çš„é«˜åº¦ã€‚
      */
     void changeHeight(GLfloat h);
     /** @~english Change width and height in Points.
      * 
-     * @~chinese ĞŞ¸ÄÍ¼²ãµÄ¿í¶ÈºÍ¸ß¶È
+     * @~chinese ä¿®æ”¹å›¾å±‚çš„å®½åº¦å’Œé«˜åº¦
      * 
      * @param w @~english The width of layer.
-     * @~chinese Í¼²ãµÄ¿í¶È¡£
+     * @~chinese å›¾å±‚çš„å®½åº¦ã€‚
      * @param h @~english The Height of layer.
-     * @~chinese Í¼²ãµÄ¸ß¶È¡£
+     * @~chinese å›¾å±‚çš„é«˜åº¦ã€‚
     @since v0.8
     */
     void changeWidthAndHeight(GLfloat w ,GLfloat h);
@@ -456,7 +456,7 @@ public:
 
     virtual void setContentSize(const Size & var) override;
     /** @~english BlendFunction. Conforms to BlendProtocol protocol
-     * @~chinese »ìºÏº¯Êı,·ûºÏBlendProtocolĞ­Òé
+     * @~chinese æ··åˆå‡½æ•°,ç¬¦åˆBlendProtocolåè®®
      * @lua NA
      */
     virtual const BlendFunc& getBlendFunc() const override;
@@ -509,19 +509,19 @@ private:
  * be drawn, however.
 
  * If ' compressedInterpolation' is enabled (default mode) you will see both the start and end colors of the gradient.
- * @~chinese LayerGradientÀàÊÇLayerColorµÄ×ÓÀà,ÓÃÀ´»æÖÆ½¥±ä±³¾°¡£
+ * @~chinese LayerGradientç±»æ˜¯LayerColorçš„å­ç±»,ç”¨æ¥ç»˜åˆ¶æ¸å˜èƒŒæ™¯ã€‚
  * 
- * ËüËùÓĞ´ÓLayerColor¼Ì³ĞÀ´µÄ¹¦ÄÜÊÇÓĞĞ§µÄ,ÔÙ¼ÓÉÏÒÔÏÂĞÂµÄÌØĞÔ:
- * - ·½Ïò
- * - ×îÖÕÑÕÉ«
- * - ²åÖµÄ£Ê½
+ * å®ƒæ‰€æœ‰ä»LayerColorç»§æ‰¿æ¥çš„åŠŸèƒ½æ˜¯æœ‰æ•ˆçš„,å†åŠ ä¸Šä»¥ä¸‹æ–°çš„ç‰¹æ€§:
+ * - æ–¹å‘
+ * - æœ€ç»ˆé¢œè‰²
+ * - æ’å€¼æ¨¡å¼
  * 
- * ÑÕÉ«ÊÇÓÃ¸ø¶¨µÄÏòÁ¿(´ÓÔ­µã,×îºóÖÕµã)£¬Ê¹ÓÃendColorºÍstartColor½øĞĞ²åÖµµÃµ½µÄ
- * Èç¹ûÃ»ÓĞÌá¹©ÏòÁ¿,ËüÄ¬ÈÏÎª(0,1) ¡ª¡ª ±íÊ¾´ÓÉÏµ½ÏÂ½¥±ä¡£
+ * é¢œè‰²æ˜¯ç”¨ç»™å®šçš„å‘é‡(ä»åŸç‚¹,æœ€åç»ˆç‚¹)ï¼Œä½¿ç”¨endColorå’ŒstartColorè¿›è¡Œæ’å€¼å¾—åˆ°çš„
+ * å¦‚æœæ²¡æœ‰æä¾›å‘é‡,å®ƒé»˜è®¤ä¸º(0,1) â€”â€” è¡¨ç¤ºä»ä¸Šåˆ°ä¸‹æ¸å˜ã€‚
  * 
- * Èç¹û¡°compressedInterpolation¡±ÊÇ½ûÓÃµÄ,Äã²»»á¿´µ½µÄ¿ªÊ¼»ò½áÊøµÄÑÕÉ«Ìİ¶È
+ * å¦‚æœâ€œcompressedInterpolationâ€æ˜¯ç¦ç”¨çš„,ä½ ä¸ä¼šçœ‹åˆ°çš„å¼€å§‹æˆ–ç»“æŸçš„é¢œè‰²æ¢¯åº¦
  *
- * Èç¹ûÆôÓÃÁË¡°compressedInterpolation¡±(Ä¬ÈÏÄ£Ê½),Äú½«¿´µ½µÄ¿ªÊ¼ºÍ½áÊøµÄÑÕÉ«Ìİ¶È¡£
+ * å¦‚æœå¯ç”¨äº†â€œcompressedInterpolationâ€(é»˜è®¤æ¨¡å¼),æ‚¨å°†çœ‹åˆ°çš„å¼€å§‹å’Œç»“æŸçš„é¢œè‰²æ¢¯åº¦ã€‚
  * 
  * @since v0.99.5
  */
@@ -530,144 +530,144 @@ class CC_DLL LayerGradient : public LayerColor
 public:
     /** @~english Creates a fullscreen black layer.
      *
-     * @~chinese ´´½¨Ò»¸öÈ«ÆÁµÄºÚÉ«Í¼²ã¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªå…¨å±çš„é»‘è‰²å›¾å±‚ã€‚
      * 
      * @return @~english An autoreleased LayerGradient object.
-     * @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅµÄLayerGradient¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„LayerGradientå¯¹è±¡ã€‚
      */
     static LayerGradient* create();
 
     /** @~english Creates a full-screen Layer with a gradient between start and end.
      *
-     * @~chinese ´´½¨Ò»¸öÈ«ÆÁµÄºÍÔÚ¿ªÊ¼ºÍ½áÊøÑÕÉ«Ö®¼äµÄÌİ¶ÈÍ¼²ã¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªå…¨å±çš„å’Œåœ¨å¼€å§‹å’Œç»“æŸé¢œè‰²ä¹‹é—´çš„æ¢¯åº¦å›¾å±‚ã€‚
      * 
      * @param start @~english The start color.
-     * @~chinese ÆğµãÑÕÉ«¡£
+     * @~chinese èµ·ç‚¹é¢œè‰²ã€‚
      * @param end @~english The end color.
-     * @~chinese ÖÕµãÑÕÉ«¡£
+     * @~chinese ç»ˆç‚¹é¢œè‰²ã€‚
      * @return @~english An autoreleased LayerGradient object.
-     * @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅLayerGradient¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾LayerGradientå¯¹è±¡ã€‚
      */
     static LayerGradient* create(const Color4B& start, const Color4B& end);
 
     /** @~english Creates a full-screen Layer with a gradient between start and end in the direction of v.
      *
-     * @~chinese ÔÚ·½ÏòVÉÏ£¬Ê¹ÓÃ¿ªÊ¼ÑÕÉ«ºÍ½áÊøÑÕÉ«²åÖµ£¬´´½¨Ò»¸öÈ«ÆÁµÄ´øÑÕÉ«Ìİ¶ÈµÄÍ¼²ã¡£
+     * @~chinese åœ¨æ–¹å‘Vä¸Šï¼Œä½¿ç”¨å¼€å§‹é¢œè‰²å’Œç»“æŸé¢œè‰²æ’å€¼ï¼Œåˆ›å»ºä¸€ä¸ªå…¨å±çš„å¸¦é¢œè‰²æ¢¯åº¦çš„å›¾å±‚ã€‚
      * 
      * @param start @~english The start color.
-     * @~chinese ¿ªÊ¼ÑÕÉ«¡£
+     * @~chinese å¼€å§‹é¢œè‰²ã€‚
      * @param end @~english The end color.
-     * @~chinese ½áÊøÑÕÉ«¡£
+     * @~chinese ç»“æŸé¢œè‰²ã€‚
      * @param v @~english The direction of gradient color.
-     * @~chinese ÑÕÉ«Ìİ¶ÈµÄ·½Ïò¡£
+     * @~chinese é¢œè‰²æ¢¯åº¦çš„æ–¹å‘ã€‚
      * @return @~english An autoreleased LayerGradient object.
-     * @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅLayerGradient¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾LayerGradientå¯¹è±¡ã€‚
      */
     static LayerGradient* create(const Color4B& start, const Color4B& end, const Vec2& v);
     
     /** @~english Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors.
      * Default: true.
      *
-     * @~chinese ÎªÁËÔÚ¹æ·¶ºÍ·Ç¹æ·¶µÄÏòÁ¿¿Õ¼äÄÚÏÔÊ¾ËùÓĞµÄÑÕÉ«Ìİ¶È,ÊÇ·ñĞèÒªÑ¹Ëõ²åÖµ¡£
-     * Ä¬ÈÏÖµ: True
+     * @~chinese ä¸ºäº†åœ¨è§„èŒƒå’Œéè§„èŒƒçš„å‘é‡ç©ºé—´å†…æ˜¾ç¤ºæ‰€æœ‰çš„é¢œè‰²æ¢¯åº¦,æ˜¯å¦éœ€è¦å‹ç¼©æ’å€¼ã€‚
+     * é»˜è®¤å€¼: True
      * 
      * @param compressedInterpolation @~english The interpolation will be compressed if true.
-     * @~chinese Èç¹û²åÖµ±»Ñ¹ËõÔòÎªtrue.
+     * @~chinese å¦‚æœæ’å€¼è¢«å‹ç¼©åˆ™ä¸ºtrue.
      */
     void setCompressedInterpolation(bool compressedInterpolation);
     /** @~english Get the compressedInterpolation
      *
-     * @~chinese ²éÑ¯ÊÇ·ñ²åÖµ»áÑ¹Ëõ
+     * @~chinese æŸ¥è¯¢æ˜¯å¦æ’å€¼ä¼šå‹ç¼©
      * 
      * @return @~english The interpolation will be compressed if true.
-     * @~chinese Èç¹û²åÖµ»áÑ¹ËõÔò·µ»ØÕæ£¬·ñÔò·µ»Ø¼Ù
+     * @~chinese å¦‚æœæ’å€¼ä¼šå‹ç¼©åˆ™è¿”å›çœŸï¼Œå¦åˆ™è¿”å›å‡
      */
     bool isCompressedInterpolation() const;
 
     /** @~english Sets the start color of the gradient.
      * 
-     * @~chinese ÉèÖÃ¿ªÊ¼½¥±äÑÕÉ«¡£
+     * @~chinese è®¾ç½®å¼€å§‹æ¸å˜é¢œè‰²ã€‚
      * 
      * @param startColor @~english The start color.
-     * @~chinese ¿ªÊ¼ÑÕÉ«¡£
+     * @~chinese å¼€å§‹é¢œè‰²ã€‚
      */
     void setStartColor( const Color3B& startColor );
     /** @~english Returns the start color of the gradient.
      *
-     * @~chinese ·µ»Ø¿ªÊ¼ÑÕÉ«Ìİ¶È¡£
+     * @~chinese è¿”å›å¼€å§‹é¢œè‰²æ¢¯åº¦ã€‚
      * 
      * @return @~english The start color.
-     * @~chinese ¿ªÊ¼ÑÕÉ«¡£
+     * @~chinese å¼€å§‹é¢œè‰²ã€‚
      */
     const Color3B& getStartColor() const;
 
     /** @~english Sets the end color of the gradient.
      *
-     * @~chinese ÉèÖÃ½áÊø½¥±äÑÕÉ«¡£
+     * @~chinese è®¾ç½®ç»“æŸæ¸å˜é¢œè‰²ã€‚
      * 
      * @param endColor @~english The end color.
-     * @~chinese ½áÊøÑÕÉ«¡£
+     * @~chinese ç»“æŸé¢œè‰²ã€‚
      */
     void setEndColor( const Color3B& endColor );
     /** @~english Returns the end color of the gradient.
      *
-     * @~chinese ·µ»Ø½áÊøµÄÑÕÉ«Ìİ¶È¡£
+     * @~chinese è¿”å›ç»“æŸçš„é¢œè‰²æ¢¯åº¦ã€‚
      * 
      * @return @~english The end color.
-     * @~chinese ½áÊøÑÕÉ«¡£
+     * @~chinese ç»“æŸé¢œè‰²ã€‚
      */
     const Color3B& getEndColor() const;
 
     /** @~english Returns the start opacity of the gradient.
      *
-     * @~chinese ·µ»Ø¿ªÊ¼µÄ²»Í¸Ã÷µÄÌİ¶È¡£
+     * @~chinese è¿”å›å¼€å§‹çš„ä¸é€æ˜çš„æ¢¯åº¦ã€‚
      * 
      * @param startOpacity @~english The start opacity, from 0 to 255.
-     * @~chinese ¿ªÊ¼²»Í¸Ã÷¶È,´Ó0µ½255¡£
+     * @~chinese å¼€å§‹ä¸é€æ˜åº¦,ä»0åˆ°255ã€‚
      */
     void setStartOpacity( GLubyte startOpacity );
     /** @~english Returns the start opacity of the gradient.
      *
-     * @~chinese ·µ»Ø¿ªÊ¼µÄ²»Í¸Ã÷µÄÌİ¶È¡£
+     * @~chinese è¿”å›å¼€å§‹çš„ä¸é€æ˜çš„æ¢¯åº¦ã€‚
      * 
      * @return @~english The start opacity.
-     * @~chinese ¿ªÊ¼µÄ²»Í¸Ã÷¶È¡£
+     * @~chinese å¼€å§‹çš„ä¸é€æ˜åº¦ã€‚
      */
     GLubyte getStartOpacity() const;
 
     /** @~english Returns the end opacity of the gradient.
      *
-     * @~chinese ·µ»Ø½áÊø²»Í¸Ã÷µÄ½¥±ä¡£
+     * @~chinese è¿”å›ç»“æŸä¸é€æ˜çš„æ¸å˜ã€‚
      * 
      * @param endOpacity @~english The end opacity, from 0 to 255.
-     * @~chinese ²»Í¸Ã÷,´Ó0µ½255¡£
+     * @~chinese ä¸é€æ˜,ä»0åˆ°255ã€‚
      */
     void setEndOpacity( GLubyte endOpacity );
     /** @~english Returns the end opacity of the gradient.
      *
-     * @~chinese ·µ»Ø½áÊø²»Í¸Ã÷µÄ½¥±ä¡£
+     * @~chinese è¿”å›ç»“æŸä¸é€æ˜çš„æ¸å˜ã€‚
      * 
      * @return @~english The end opacity.
-     * @~chinese ²»Í¸Ã÷¡£
+     * @~chinese ä¸é€æ˜ã€‚
      */
     GLubyte getEndOpacity() const;
 
     /** @~english Sets the directional vector that will be used for the gradient.
     The default value is vertical direction (0,-1). 
      *
-     * @~chinese ÉèÖÃÌİ¶È·½ÏòÏòÁ¿¡£
-     * Ä¬ÈÏÖµÊÇ´¹Ö±·½Ïò(0,1)¡£
+     * @~chinese è®¾ç½®æ¢¯åº¦æ–¹å‘å‘é‡ã€‚
+     * é»˜è®¤å€¼æ˜¯å‚ç›´æ–¹å‘(0,1)ã€‚
      * 
      * @param alongVector @~english The direction of gradient.
-     * @~chinese Ìİ¶ÈµÄ·½Ïò¡£
+     * @~chinese æ¢¯åº¦çš„æ–¹å‘ã€‚
      */
     void setVector(const Vec2& alongVector);
     /** @~english Returns the directional vector used for the gradient.
      *
-     * @~chinese ·µ»ØÌİ¶È·½ÏòÏòÁ¿¡£
+     * @~chinese è¿”å›æ¢¯åº¦æ–¹å‘å‘é‡ã€‚
      * 
      * @return @~english The direction of gradient.
-     * @~chinese Ìİ¶ÈµÄ·½Ïò¡£
+     * @~chinese æ¢¯åº¦çš„æ–¹å‘ã€‚
      */
     const Vec2& getVector() const;
 
@@ -679,14 +679,14 @@ CC_CONSTRUCTOR_ACCESS:
     
     virtual bool init() override;
     /** @~english Initializes the Layer with a gradient between start and end.
-     * @~chinese Ê¹ÓÃ¿ªÊ¼ºÍ½áÊøÑÕÉ«À´³õÊ¼»¯Í¼²ã¡£
+     * @~chinese ä½¿ç”¨å¼€å§‹å¾’å´¾î‰¤ä¸ˆî½é—¯è·è“Ÿîˆ‚ç–¾æªï¿½
      * @js init
      * @lua init
      */
     bool initWithColor(const Color4B& start, const Color4B& end);
     
     /** @~english Initializes the Layer with a gradient between start and end in the direction of v.
-     * @~chinese Ê¹ÓÃ¿ªÊ¼ºÍ½áÊøÑÕÉ«£¬ÒÔ¼°Ìİ¶È·½ÏòÀ´³õÊ¼»¯Í¼²ã
+     * @~chinese ä½¿ç”¨å¼€å§‹å’Œç»“æŸé¢œè‰²ï¼Œä»¥åŠæ¢¯åº¦æ–¹å‘æ¥åˆå§‹åŒ–å›¾å±‚
      * @js init
      * @lua init
      */
@@ -709,37 +709,37 @@ protected:
  * Features:
  * - It supports one or more children
  * - Only one children will be active a time
- * @~chinese MultipleLayerÊÇÒ»ÖÖÍ¼²ã£¬ËüÖ§³Ö¶àÂ·¸´ÓÃº¢×Ó½Úµã
- * ÌØµã:
- * - ËüÖ§³ÖÒ»¸ö»ò¶à¸öº¢×Ó½Úµã
- * - Í¬Ê±Ö»ÓĞÒ»¸öº¢×Ó½Úµã»á±»¼¤»î
+ * @~chinese MultipleLayeræ˜¯ä¸€ç§å›¾å±‚ï¼Œå®ƒæ”¯æŒå¤šè·¯å¤ç”¨å­©å­èŠ‚ç‚¹
+ * ç‰¹ç‚¹:
+ * - å®ƒæ”¯æŒä¸€ä¸ªæˆ–å¤šä¸ªå­©å­èŠ‚ç‚¹
+ * - åŒæ—¶åªæœ‰ä¸€ä¸ªå­©å­èŠ‚ç‚¹ä¼šè¢«æ¿€æ´»
  */
 class CC_DLL LayerMultiplex : public Layer
 {
 public:
     /** @~english Creates and initializes a LayerMultiplex object.
-     * @~chinese ´´½¨²¢³õÊ¼»¯Ò»¸öLayerMultiplex¶ÔÏó¡£
+     * @~chinese åˆ›å»ºå¹¶åˆå§‹åŒ–ä¸€ä¸ªLayerMultiplexå¯¹è±¡ã€‚
      * @lua NA
      * 
      * @return @~english An autoreleased LayerMultiplex object.
-     * @~chinese Ò»¸öautoreleased LayerMultiplex¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªautoreleased LayerMultiplexå¯¹è±¡ã€‚
      */
     static LayerMultiplex* create();
 
     /** @~english Creates a LayerMultiplex with an array of layers.
-     * @~chinese Ê¹ÓÃÊı×é´´½¨Ò»¸öLayerMultiplex²ã¡£
+     * @~chinese ä½¿ç”¨æ•°ç»„åˆ›å»ºä¸€ä¸ªLayerMultiplexå±‚ã€‚
      @since v2.1
      * @js NA
      *
      * @param arrayOfLayers @~english An array of layers.
-     * @~chinese Ò»¸öÊı×éµÄ²ã¡£
+     * @~chinese ä¸€ä¸ªæ•°ç»„çš„å±‚ã€‚
      * @return @~english An autoreleased LayerMultiplex object.
-     * @~chinese Ò»¸öautoreleased LayerMultiplex¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªautoreleased LayerMultiplexå¯¹è±¡ã€‚
      */
     static LayerMultiplex* createWithArray(const Vector<Layer*>& arrayOfLayers);
 
     /** @~english Creates a LayerMultiplex with one or more layers using a variable argument list.
-     * @~chinese ´´½¨Ò»¸ö±ä³¤²ÎÊıÁĞ±íÀ´´´½¨LayerMultiplex
+     * @~chinese åˆ›å»ºä¸€ä¸ªå˜é•¿å‚æ•°åˆ—è¡¨æ¥åˆ›å»ºLayerMultiplex
      */
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported
@@ -763,12 +763,12 @@ public:
 
     /** @~english Creates a LayerMultiplex with one layer.
      * @~chinese Creates a LayerMultiplex with one layer.
-     * Ê¹ÓÃÒ»¸öÍ¼²ãÀ´´´½¨ MultiplexLayer
+     * ä½¿ç”¨ä¸€ä¸ªå›¾å±‚æ¥åˆ›å»º MultiplexLayer
      *
      * @param layer @~english A certain layer.
-     * @~chinese Ä³Ò»Í¼²ã¡£
+     * @~chinese æŸä¸€å›¾å±‚ã€‚
      * @return @~english An autoreleased LayerMultiplex object.
-     * @~chinese Ò»¸ö×Ô¶¯ÊÍ·ÅµÄLayerMultiplex¶ÔÏó¡£
+     * @~chinese ä¸€ä¸ªè‡ªåŠ¨é‡Šæ”¾çš„LayerMultiplexå¯¹è±¡ã€‚
      * @js NA
      * @lua NA
      */
@@ -777,31 +777,31 @@ public:
 
     /** @~english Add a certain layer to LayerMultiplex.
      *
-     * @~chinese Ìí¼ÓÍ¼²ãµ½LayerMultiplex¡£
+     * @~chinese æ·»åŠ å›¾å±‚åˆ°LayerMultiplexã€‚
      * 
      * @param layer @~english A layer need to be added to the LayerMultiplex.
-     * @~chinese ±»Ìí¼Óµ½LayerMultiplexµÄÍ¼²ã
+     * @~chinese è¢«æ·»åŠ åˆ°LayerMultiplexçš„å›¾å±‚
      */
     void addLayer(Layer* layer);
 
     /** @~english Switches to a certain layer indexed by n.
      The current (old) layer will be removed from it's parent with 'cleanup=true'.
      *
-     * @~chinese ÇĞ»»µ½Ä³Ò»¸öË÷ÒıÎªnµÄÍ¼²ã¡£
-     * µ±Ç°(¾ÉµÄ)Í¼²ã½«´ÓËüµÄ¸¸Ç×ÖĞÒÆ³ı£¬µ± (cleanup = true)Ê±¡£
+     * @~chinese åˆ‡æ¢åˆ°æŸä¸€ä¸ªç´¢å¼•ä¸ºnçš„å›¾å±‚ã€‚
+     * å½“å‰(æ—§çš„)å›¾å±‚å°†ä»å®ƒçš„çˆ¶äº²ä¸­ç§»é™¤ï¼Œå½“ (cleanup = true)æ—¶ã€‚
      * 
      * @param n @~english The layer indexed by n will display.
-     * @~chinese Í¼²ãn½«»áÏÔÊ¾¡£
+     * @~chinese å›¾å±‚nå°†ä¼šæ˜¾ç¤ºã€‚
      */
     void switchTo(int n);
     /** @~english release the current layer and switches to another layer indexed by n.
      * The current (old) layer will be removed from it's parent with 'cleanup=true'.
      *
-     * @~chinese ÊÍ·Åµ±Ç°Í¼²ãÍ¬Ê±ÇĞ»»µ½ÁíÒ»¸öË÷ÒıÎªnµÄÍ¼²ã¡£
-     * µ±Ç°(¾ÉµÄ)Í¼²ã½«´ÓËüµÄ¸¸Ç×ÖĞÒÆ³ı£¬µ± (cleanup = true)Ê±¡£
+     * @~chinese é‡Šæ”¾å½“å‰å›¾å±‚åŒæ—¶åˆ‡æ¢åˆ°å¦ä¸€ä¸ªç´¢å¼•ä¸ºnçš„å›¾å±‚ã€‚
+     * å½“å‰(æ—§çš„)å›¾å±‚å°†ä»å®ƒçš„çˆ¶äº²ä¸­ç§»é™¤ï¼Œå½“ (cleanup = true)æ—¶ã€‚
      * 
      * @param n @~english The layer indexed by n will display.
-     * @~chinese ½«ÏÔÊ¾²ã±»n¡£
+     * @~chinese å°†æ˜¾ç¤ºå±‚è¢«nã€‚
      */
     void switchToAndReleaseMe(int n);
 
@@ -820,14 +820,14 @@ CC_CONSTRUCTOR_ACCESS:
     
     virtual bool init() override;
     /** @~english initializes a MultiplexLayer with one or more layers using a variable argument list.
-     * @~chinese Ê¹ÓÃÒ»¸öÍ¼²ã»òÕßÒ»¸ö±ä³¤²ÎÊıÁĞ±íÀ´³õÊ¼»¯ MultiplexLayer
+     * @~chinese ä½¿ç”¨ä¸€ä¸ªå›¾å±‚æˆ–è€…ä¸€ä¸ªå˜é•¿å‚æ•°åˆ—è¡¨æ¥åˆå§‹åŒ– MultiplexLayer
      * @js NA
      * @lua NA
      */
     bool initWithLayers(Layer* layer, va_list params);
     
     /** @~english initializes a MultiplexLayer with an array of layers
-     * @~chinese Ê¹ÓÃÒ»¸öÍ¼²ãÊı×éÀ´³õÊ¼»¯ LayerMultiplex
+     * @~chinese ä½¿ç”¨ä¸€ä¸ªå›¾å±‚æ•°ç»„æ¥åˆå§‹åŒ– LayerMultiplex
      * @since v2.1
      */
     bool initWithArray(const Vector<Layer*>& arrayOfLayers);

@@ -52,37 +52,37 @@ class MeshCommand;
  Since the commands that have `z == 0` are "pushed back" in
  the correct order, the only `RenderCommand` objects that need to be sorted,
  are the ones that have `z < 0` and `z > 0`.
- @~chinese ÓÃÓÚ¶ÔäÖÈ¾ÃüÁî½øĞĞÅÅĞòµÄÀà
- ÓÉÓÚz=0µÄäÖÈ¾ÃüÁî»áÍ¨¹ıÕıÈ·µÄË³Ğò²åÈëµ½Ä©Î²£¬Ö»ÓĞz²»µÈÓÚ0µÄäÖÈ¾ÃüÁîĞèÒªÅÅĞò
+ @~chinese ç”¨äºå¯¹æ¸²æŸ“å‘½ä»¤è¿›è¡Œæ’åºçš„ç±»
+ ç”±äºz=0çš„æ¸²æŸ“å‘½ä»¤ä¼šé€šè¿‡æ­£ç¡®çš„é¡ºåºæ’å…¥åˆ°æœ«å°¾ï¼Œåªæœ‰zä¸ç­‰äº0çš„æ¸²æŸ“å‘½ä»¤éœ€è¦æ’åº
 */
 class RenderQueue {
 public:
     /**@~english
     RenderCommand will be divided into Queue Groups.
     @~chinese 
-    RenderCommand½«·ÖÎª¶ÓÁĞ×é¡£
+    RenderCommandå°†åˆ†ä¸ºé˜Ÿåˆ—ç»„ã€‚
     */
     enum QUEUE_GROUP
     {
         /**
         @~english Objects with globalZ smaller than 0. 
-        @~chinese globalZĞ¡ÓÚ0µÄ¶ÔÏó¡£*/
+        @~chinese globalZå°äº0çš„å¯¹è±¡ã€‚*/
         GLOBALZ_NEG = 0,
         /**
         @~english Opaque 3D objects with 0 globalZ. 
-        @~chinese globalZµÈÓÚ0µÄ²»Í¸Ã÷3d¶ÔÏó¡£*/
+        @~chinese globalZç­‰äº0çš„ä¸é€æ˜3då¯¹è±¡ã€‚*/
         OPAQUE_3D = 1,
         /**
         @~english Transparent 3D objects with 0 globalZ. 
-        @~chinese globalZµÈÓÚ0µÄÍ¸Ã÷3d¶ÔÏó¡£*/
+        @~chinese globalZç­‰äº0çš„é€æ˜3då¯¹è±¡ã€‚*/
         TRANSPARENT_3D = 2,
         /**
         @~english 2D objects with 0 globalZ. 
-        @~chinese globalZµÈÓÚ0µÄ2d¶ÔÏó¡£*/
+        @~chinese globalZç­‰äº0çš„2då¯¹è±¡ã€‚*/
         GLOBALZ_ZERO = 3,
         /**
         @~english Objects with globalZ bigger than 0. 
-        @~chinese globalZ´óÓÚ0µÄ¶ÔÏó¡£*/
+        @~chinese globalZå¤§äº0çš„å¯¹è±¡ã€‚*/
         GLOBALZ_POS = 4,
         QUEUE_COUNT = 5,
     };
@@ -90,98 +90,98 @@ public:
 public:
     /**
     @~english Constructor. 
-    @~chinese ¹¹Ôìº¯Êı¡£
+    @~chinese æ„é€ å‡½æ•°ã€‚
     */
     RenderQueue();
     /**
     @~english Push a renderCommand into current renderqueue. 
-    @~chinese ½«äÖÈ¾ÃüÁî²åÈëµ½µ±Ç°äÖÈ¾¶ÓÁĞÄ©Î²¡£
+    @~chinese å°†æ¸²æŸ“å‘½ä»¤æ’å…¥åˆ°å½“å‰æ¸²æŸ“é˜Ÿåˆ—æœ«å°¾ã€‚
     @param command @~english The command to be pushed in to renderqueue
-    @~chinese ´ı²åÈëäÖÈ¾¶ÓÁĞµÄÃüÁî¡£
+    @~chinese å¾…æ’å…¥æ¸²æŸ“é˜Ÿåˆ—çš„å‘½ä»¤ã€‚
     */
     void push_back(RenderCommand* command);
     /**
     @~english Return the number of render commands. 
-    @~chinese µÃµ½äÖÈ¾ÃüÁîµÄÊıÁ¿¡£
-    @return @~english The number of render commands @~chinese äÖÈ¾ÃüÁî¸öÊı
+    @~chinese å¾—åˆ°æ¸²æŸ“å‘½ä»¤çš„æ•°é‡ã€‚
+    @return @~english The number of render commands @~chinese æ¸²æŸ“å‘½ä»¤ä¸ªæ•°
     */
     ssize_t size() const;
     /**
     @~english Sort the render commands. 
-    @~chinese ÅÅĞòäÖÈ¾ÃüÁî¡£
+    @~chinese æ’åºæ¸²æŸ“å‘½ä»¤ã€‚
     */
     void sort();
     /**
     @~english Treat sorted commands as an array, access them one by one. 
-    @~chinese ½«ÅÅĞòºóµÄäÖÈ¾ÃüÁîµ±×÷Ò»¸öÊı×é£¬Öğ¸ö·ÃÎÊ
+    @~chinese å°†æ’åºåçš„æ¸²æŸ“å‘½ä»¤å½“ä½œä¸€ä¸ªæ•°ç»„ï¼Œé€ä¸ªè®¿é—®
     @param index @~english array index for commands
-    @~chinese Ë÷ÒıÖµ
+    @~chinese ç´¢å¼•å€¼
     @return @~english the RenderCommand in the given index
-    @~chinese ¸ø¶¨Î»ÖÃµÄäÖÈ¾ÃüÁî
+    @~chinese ç»™å®šä½ç½®çš„æ¸²æŸ“å‘½ä»¤
 
     */
     RenderCommand* operator[](ssize_t index) const;
     /**
     @~english Clear all rendered commands. 
-    @~chinese Çå³ıËùÓĞäÖÈ¾ÃüÁî¡£
+    @~chinese æ¸…é™¤æ‰€æœ‰æ¸²æŸ“å‘½ä»¤ã€‚
     */
     void clear();
     /**
     @~english Realloc command queues and reserve with given size. 
     Note: this clears any existing commands. 
-    @~chinese °´ÕÕÖ¸¶¨´óĞ¡ÖØĞÂ·ÖÅääÖÈ¾¶ÓÁĞ¡£×¢Òâ:Õâ¸öÇå³ıÈÎºÎÏÖÓĞµÄÃüÁî¡£
+    @~chinese æŒ‰ç…§æŒ‡å®šå¤§å°é‡æ–°åˆ†é…æ¸²æŸ“é˜Ÿåˆ—ã€‚æ³¨æ„:è¿™ä¸ªæ¸…é™¤ä»»ä½•ç°æœ‰çš„å‘½ä»¤ã€‚
     @param reserveSize @~english max size for command queue
-    @~chinese ÃüÁî¶ÓÁĞµÄ×î´óÈİÁ¿¡£
+    @~chinese å‘½ä»¤é˜Ÿåˆ—çš„æœ€å¤§å®¹é‡ã€‚
     */
     void realloc(size_t reserveSize);
     /**
     @~english Get a sub group of the render queue. 
-    @~chinese µÃµ½äÖÈ¾×Ó¶ÓÁĞ
+    @~chinese å¾—åˆ°æ¸²æŸ“å­é˜Ÿåˆ—
     @param group @~english group ID for the sub queque
-    @~chinese ×ÓäÖÈ¾¶ÓÁĞµÄ×éID
+    @~chinese å­æ¸²æŸ“é˜Ÿåˆ—çš„ç»„ID
     @return @~english render command array
-    @~chinese Ò»×éäÖÈ¾ÃüÁî
+    @~chinese ä¸€ç»„æ¸²æŸ“å‘½ä»¤
     */
     inline std::vector<RenderCommand*>& getSubQueue(QUEUE_GROUP group) { return _commands[group]; }
     /**
     @~english Get the number of render commands contained in a subqueue. 
-    @~chinese µÃµ½äÖÈ¾×Ó¶ÓÁĞÖĞµÄäÖÈ¾ÃüÁîÊıÁ¿¡£
+    @~chinese å¾—åˆ°æ¸²æŸ“å­é˜Ÿåˆ—ä¸­çš„æ¸²æŸ“å‘½ä»¤æ•°é‡ã€‚
     @param group @~english group ID for the sub queque
-    @~chinese ×ÓäÖÈ¾¶ÓÁĞµÄ×éID
+    @~chinese å­æ¸²æŸ“é˜Ÿåˆ—çš„ç»„ID
     @return @~english the number of command in sub queque
-    @~chinese ×ÓäÖÈ¾¶ÓÁĞµÄäÖÈ¾ÃüÁîÊıÁ¿¡£
+    @~chinese å­æ¸²æŸ“é˜Ÿåˆ—çš„æ¸²æŸ“å‘½ä»¤æ•°é‡ã€‚
     */
     inline ssize_t getSubQueueSize(QUEUE_GROUP group) const { return _commands[group].size();}
 
     /**
     @~english Save the current DepthState, CullState, DepthWriteState render state. 
-    @~chinese ±£´æµ±Ç°DepthState¡¢CullState DepthWriteState×´Ì¬¡£
+    @~chinese ä¿å­˜å½“å‰DepthStateã€CullState DepthWriteStateçŠ¶æ€ã€‚
     */
     void saveRenderState();
     /**
     @~english Restore the saved DepthState, CullState, DepthWriteState render state. 
-    @~chinese »Ö¸´±£´æµÄDepthState¡¢CullState DepthWriteState×´Ì¬¡£*/
+    @~chinese æ¢å¤ä¿å­˜çš„DepthStateã€CullState DepthWriteStateçŠ¶æ€ã€‚*/
     void restoreRenderState();
     
 protected:
     /**
     @~english The commands in the render queue. 
-    @~chinese äÖÈ¾¶ÓÁĞÖĞµÄÃüÁî¡£*/
+    @~chinese æ¸²æŸ“é˜Ÿåˆ—ä¸­çš„å‘½ä»¤ã€‚*/
     std::vector<RenderCommand*> _commands[QUEUE_COUNT];
     
     /**
     @~english Cull state. 
-    @~chinese Cull×´Ì¬¡£
+    @~chinese CullçŠ¶æ€ã€‚
     */
     bool _isCullEnabled;
     /**
     @~english Depth test enable state. 
-    @~chinese Éî¶È²âÊÔ×´Ì¬¡£
+    @~chinese æ·±åº¦æµ‹è¯•çŠ¶æ€ã€‚
     */
     bool _isDepthEnabled;
     /**
     @~english Depth buffer write state. 
-    @~chinese Éî¶È»º³åĞ´×´Ì¬¡£
+    @~chinese æ·±åº¦ç¼“å†²å†™çŠ¶æ€ã€‚
     */
     GLboolean _isDepthWrite;
 };
@@ -200,40 +200,40 @@ class GroupCommandManager;
 @brief @~english Class responsible for the rendering in.
 
 Whenever possible prefer to use `QuadCommand` objects since the renderer will automatically batch them.
-@~chinese ¸ºÔğäÖÈ¾µÄÀà¡£ 
-ÓÉÓÚ¿ÉÒÔ½øĞĞbatchäÖÈ¾£¬¸ÃÀà¸üÉÃ³¤´¦ÀíQuadCommand¡£
+@~chinese è´Ÿè´£æ¸²æŸ“çš„ç±»ã€‚ 
+ç”±äºå¯ä»¥è¿›è¡Œbatchæ¸²æŸ“ï¼Œè¯¥ç±»æ›´æ“…é•¿å¤„ç†QuadCommandã€‚
 */
 class CC_DLL Renderer
 {
 public:
     /**
     @~english The max number of vertices in a vertex buffer object. 
-    @~chinese ¶¥µã»º³åÇøµÄ×î´ó¶¥µã¸öÊı¡£
+    @~chinese é¡¶ç‚¹ç¼“å†²åŒºçš„æœ€å¤§é¡¶ç‚¹ä¸ªæ•°ã€‚
     */
     static const int VBO_SIZE = 65536;
     /**
     @~english The max numer of indices in a index buffer. 
-    @~chinese Ë÷Òı»º³åÇøµÄ×î´óË÷Òı¸öÊı¡£
+    @~chinese ç´¢å¼•ç¼“å†²åŒºçš„æœ€å¤§ç´¢å¼•ä¸ªæ•°ã€‚
     */
     static const int INDEX_VBO_SIZE = VBO_SIZE * 6 / 4;
     /**
     @~english The rendercommands which can be batched will be saved into a list, this is the reversed size of this list. 
-    @~chinese ¿ÉÒÔbatchµÄäÖÈ¾ÃüÁî±»·Åµ½Ò»¸ö¶ÓÁĞÖĞ£¬ÕâÊÇÕâ¸ö¶ÓÁĞµÄ´óĞ¡¡£
+    @~chinese å¯ä»¥batchçš„æ¸²æŸ“å‘½ä»¤è¢«æ”¾åˆ°ä¸€ä¸ªé˜Ÿåˆ—ä¸­ï¼Œè¿™æ˜¯è¿™ä¸ªé˜Ÿåˆ—çš„å¤§å°ã€‚
     */
     static const int BATCH_QUADCOMMAND_RESEVER_SIZE = 64;
     /**
     @~english Reserved for material id, which means that the command could not be batched. 
-    @~chinese ²»ÄÜbatchµÄ²ÄÖÊID¡£
+    @~chinese ä¸èƒ½batchçš„æè´¨IDã€‚
     */
     static const int MATERIAL_ID_DO_NOT_BATCH = 0;
     /**
     @~english Constructor. 
-    @~chinese ¹¹Ôìº¯Êı¡£
+    @~chinese æ„é€ å‡½æ•°ã€‚
     */
     Renderer();
     /**
     @~english Destructor. 
-    @~chinese Îö¹¹º¯Êı¡£
+    @~chinese ææ„å‡½æ•°ã€‚
     */
     ~Renderer();
 
@@ -242,100 +242,100 @@ public:
 
     /** 
     @~english Adds a `RenderComamnd` into the renderer  
-    @~chinese ÏòrendererÖĞÌí¼ÓÒ»¸öRenderComamnd¡£
+    @~chinese å‘rendererä¸­æ·»åŠ ä¸€ä¸ªRenderComamndã€‚
     @param command @~english render command to be insert
-    @~chinese ´ı²åÈëµÄäÖÈ¾ÃüÁî¡£
+    @~chinese å¾…æ’å…¥çš„æ¸²æŸ“å‘½ä»¤ã€‚
     */
     void addCommand(RenderCommand* command);
 
     /** 
     @~english Adds a `RenderComamnd` into the renderer specifying a particular render queue ID  
-    @~chinese ÏòÖ¸¶¨IDµÄäÖÈ¾¶ÓÁĞÖĞ²åÈëRenderComamnd¡£
+    @~chinese å‘æŒ‡å®šIDçš„æ¸²æŸ“é˜Ÿåˆ—ä¸­æ’å…¥RenderComamndã€‚
     @param command @~english render command to be insert
-    @~chinese ´ı²åÈëµÄäÖÈ¾ÃüÁî¡£
+    @~chinese å¾…æ’å…¥çš„æ¸²æŸ“å‘½ä»¤ã€‚
     @param renderQueue @~english the queue id the command queue
-    @~chinese ÃüÁî¶ÓÁĞµÄid¡£
+    @~chinese å‘½ä»¤é˜Ÿåˆ—çš„idã€‚
     */
     void addCommand(RenderCommand* command, int renderQueue);
 
     /** 
     @~english Pushes a group into the render queue  
-    @~chinese äÖÈ¾¶ÓÁĞÈëÕ»¡£
+    @~chinese æ¸²æŸ“é˜Ÿåˆ—å…¥æ ˆã€‚
     @param renderQueueID @~english the queue id the command queue
-    @~chinese ÃüÁî¶ÓÁĞµÄid¡£
+    @~chinese å‘½ä»¤é˜Ÿåˆ—çš„idã€‚
     */
     void pushGroup(int renderQueueID);
 
     /** 
     @~english Pops a group from the render queue  
-    @~chinese äÖÈ¾¶ÓÁĞ³öÕ»¡£
+    @~chinese æ¸²æŸ“é˜Ÿåˆ—å‡ºæ ˆã€‚
     */
     void popGroup();
 
     /** 
     @~english Creates a render queue and returns its Id  
-    @~chinese ´´½¨Ò»¸öäÖÈ¾¶ÓÁĞ,²¢·µ»ØËüµÄId
+    @~chinese åˆ›å»ºä¸€ä¸ªæ¸²æŸ“é˜Ÿåˆ—,å¹¶è¿”å›å®ƒçš„Id
     @return @~english the id of newly created render queue.
-    @~chinese ĞÂ´´½¨µÄäÖÈ¾¶ÓÁĞid¡£
+    @~chinese æ–°åˆ›å»ºçš„æ¸²æŸ“é˜Ÿåˆ—idã€‚
     */
     int createRenderQueue();
 
     /** 
     @~english Renders into the GLView all the queued `RenderCommand` objects  
-    @~chinese Ö´ĞĞËùÓĞ±£´æµÄäÖÈ¾ÃüÁî£¬½«ÆääÖÈ¾µ½GLViewÉÏ¡£
+    @~chinese æ‰§è¡Œæ‰€æœ‰ä¿å­˜çš„æ¸²æŸ“å‘½ä»¤ï¼Œå°†å…¶æ¸²æŸ“åˆ°GLViewä¸Šã€‚
     */
     void render();
 
     /** 
     @~english Cleans all `RenderCommand`s in the queue  
-    @~chinese ÇåÀí¶ÓÁĞÖĞËùÓĞµÄRenderCommand¡£
+    @~chinese æ¸…ç†é˜Ÿåˆ—ä¸­æ‰€æœ‰çš„RenderCommandã€‚
     */
     void clean();
 
     /** 
     @~english Clear GL buffer and screen  
-    @~chinese ÇåÎúµÄGL»º³åºÍÆÁÄ»¡£
+    @~chinese æ¸…æ™°çš„GLç¼“å†²å’Œå±å¹•ã€‚
     */
     void clear();
 
     /** 
     @~english set color for clear screen  
-    @~chinese ÉèÖÃÆÁÄ»Çå¿ÕµÄÑÕÉ«¡£
+    @~chinese è®¾ç½®å±å¹•æ¸…ç©ºçš„é¢œè‰²ã€‚
     @param clearColor @~english the clear color.
-    @~chinese Çå¿ÕµÄÑÕÉ«¡£
+    @~chinese æ¸…ç©ºçš„é¢œè‰²ã€‚
     */
     void setClearColor(const Color4F& clearColor);
     /* 
     @~english returns the number of drawn batches in the last frame  
-    @~chinese ·µ»ØÍ³¼ÆÊı¾İ£ºäÖÈ¾µÄbatch´ÎÊı¡£
+    @~chinese è¿”å›ç»Ÿè®¡æ•°æ®ï¼šæ¸²æŸ“çš„batchæ¬¡æ•°ã€‚
     @return @~english the number of draw batch.
-    @~chinese batch»æÖÆµÄ´ÎÊı¡£
+    @~chinese batchç»˜åˆ¶çš„æ¬¡æ•°ã€‚
     */
     ssize_t getDrawnBatches() const { return _drawnBatches; }
     /* 
     @~english RenderCommands (except) QuadCommand should update this value  
-    @~chinese ³ıÁËQuadCommand£¬ÆäËûäÖÈ¾ÃüÁîÓ¦¸Ã¸üĞÂäÖÈ¾batchÕâ¸öÍ³¼ÆÊı¾İÖµ
+    @~chinese é™¤äº†QuadCommandï¼Œå…¶ä»–æ¸²æŸ“å‘½ä»¤åº”è¯¥æ›´æ–°æ¸²æŸ“batchè¿™ä¸ªç»Ÿè®¡æ•°æ®å€¼
     @param number @~english the added number of draw batch
-    @~chinese Ôö¼ÓµÄbatch»æÖÆµÄÊıÄ¿¡£
+    @~chinese å¢åŠ çš„batchç»˜åˆ¶çš„æ•°ç›®ã€‚
     */
     void addDrawnBatches(ssize_t number) { _drawnBatches += number; };
     /* 
     @~english returns the number of drawn triangles in the last frame  
-    @~chinese ·µ»ØÍ³¼ÆÊı¾İ£º»æÖÆµÄÈı½ÇĞÎÊıÁ¿¡£
+    @~chinese è¿”å›ç»Ÿè®¡æ•°æ®ï¼šç»˜åˆ¶çš„ä¸‰è§’å½¢æ•°é‡ã€‚
     @return @~english the number of drawn triangles
-    @~chinese »æÖÆµÄÈı½ÇĞÎÊıÄ¿¡£
+    @~chinese ç»˜åˆ¶çš„ä¸‰è§’å½¢æ•°ç›®ã€‚
     */
     ssize_t getDrawnVertices() const { return _drawnVertices; }
     /* 
     @~english RenderCommands (except) QuadCommand should update this value  
-    @~chinese ³ıÁËQuadCommand£¬ÆäËûäÖÈ¾ÃüÁîÓ¦¸Ã¸üĞÂäÖÈ¾µÄ¶¥µã¸öÊıÕâ¸öÍ³¼ÆÊı¾İÖµ¡£
+    @~chinese é™¤äº†QuadCommandï¼Œå…¶ä»–æ¸²æŸ“å‘½ä»¤åº”è¯¥æ›´æ–°æ¸²æŸ“çš„é¡¶ç‚¹ä¸ªæ•°è¿™ä¸ªç»Ÿè®¡æ•°æ®å€¼ã€‚
     @param number @~english the added number of draw vertices
-    @~chinese Ôö¼ÓµÄ»æÖÆ¶¥µãµÄÊıÄ¿¡£
+    @~chinese å¢åŠ çš„ç»˜åˆ¶é¡¶ç‚¹çš„æ•°ç›®ã€‚
     */
     void addDrawnVertices(ssize_t number) { _drawnVertices += number; };
     /* 
     @~english clear draw stats  
-    @~chinese Çå¿ÕäÖÈ¾Í³¼Æ×´Ì¬¡£
+    @~chinese æ¸…ç©ºæ¸²æŸ“ç»Ÿè®¡çŠ¶æ€ã€‚
     */
     void clearDrawStats() { _drawnBatches = _drawnVertices = 0; }
 
@@ -344,12 +344,12 @@ public:
      * For 3D object depth test is enabled by default and can not be changed
      * For 2D object depth test is disabled by default
      * @~chinese 
-     * ÆôÓÃºÍ²»ÆôÓÃÉî¶È²âÊÔ
-     * 3d¶ÔÏóÄ¬ÈÏ»áÆôÓÃÉî¶È²âÊÔ,²»ÄÜ¸Ä±ä
-     * 2d¶ÔÏóÄ¬ÈÏ²»ÆôÓÃÉî¶È²âÊÔ¡£
+     * å¯ç”¨å’Œä¸å¯ç”¨æ·±åº¦æµ‹è¯•
+     * 3då¯¹è±¡é»˜è®¤ä¼šå¯ç”¨æ·±åº¦æµ‹è¯•,ä¸èƒ½æ”¹å˜
+     * 2då¯¹è±¡é»˜è®¤ä¸å¯ç”¨æ·±åº¦æµ‹è¯•ã€‚
 
      @param enable @~english depth test enabled or not.
-     @~chinese ÊÇ·ñÆôÓÃÉî¶È²âÊÔ¡£
+     @~chinese æ˜¯å¦å¯ç”¨æ·±åº¦æµ‹è¯•ã€‚
      */
     void setDepthTest(bool enable);
     
@@ -358,9 +358,9 @@ public:
 
     /** 
     @~english returns whether or not a rectangle is visible or not.
-    @~chinese ÅĞ¶ÏÒ»¸ö³¤·½ĞÎÊÇ·ñ¿É¼û¡£
-    @param transform @~english matrix for the rect. @~chinese ¸ø¶¨ÎïÌåµÄ±ä»»¾ØÕó¡£
-    @param size @~english the size of rect. @~chinese ³¤·½ĞÎµÄ´óĞ¡¡£
+    @~chinese åˆ¤æ–­ä¸€ä¸ªé•¿æ–¹å½¢æ˜¯å¦å¯è§ã€‚
+    @param transform @~english matrix for the rect. @~chinese ç»™å®šç‰©ä½“çš„å˜æ¢çŸ©é˜µã€‚
+    @param size @~english the size of rect. @~chinese é•¿æ–¹å½¢çš„å¤§å°ã€‚
     */
     bool checkVisibility(const Mat4& transform, const Size& size);
 

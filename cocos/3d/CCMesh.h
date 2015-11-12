@@ -54,7 +54,7 @@ class Pass;
 /** 
  * @class Mesh
  * @brief @~english Mesh: contains ref to index buffer, GLProgramState, texture, skin, blend function, aabb and so on
- * @~chinese Mesh£ºÓÃÓÚ´æ´¢Íø¸ñÖĞµÄË÷Òı»º´æ£¬GläÖÈ¾×´Ì¬£¬ÎÆÀí£¬ÃÉÆ¤£¬Æ¬¶Î»ìºÏ·½³ÌÒÔ¼°AABBµÈÊı¾İ.
+ * @~chinese Meshï¼šç”¨äºå­˜å‚¨ç½‘æ ¼ä¸­çš„ç´¢å¼•ç¼“å­˜ï¼ŒGlæ¸²æŸ“çŠ¶æ€ï¼Œçº¹ç†ï¼Œè’™çš®ï¼Œç‰‡æ®µæ··åˆæ–¹ç¨‹ä»¥åŠAABBç­‰æ•°æ®.
  */
 class CC_DLL Mesh : public Ref
 {
@@ -62,22 +62,22 @@ class CC_DLL Mesh : public Ref
 public:
     /**
      * @~english The indices array
-     * @~chinese ¶¥µãË÷ÒıÊı×é
+     * @~chinese é¡¶ç‚¹ç´¢å¼•æ•°ç»„
      */
     typedef std::vector<unsigned short> IndexArray;
     /**
      * @~english Create mesh from positions, normals, and so on, single SubMesh
-     * @~chinese Í¨¹ıÎ»ÖÃ£¬·¨Ïß¼°ÆäËû²ÎÊıÀ´´´½¨Ò»¸öµ¥¶ÀµÄ×ÓÍø¸ñ
+     * @~chinese é€šè¿‡ä½ç½®ï¼Œæ³•çº¿åŠå…¶ä»–å‚æ•°æ¥åˆ›å»ºä¸€ä¸ªå•ç‹¬çš„å­ç½‘æ ¼
      * @param positions @~english The positions list.
-     * @~chinese Î»ÖÃÊı×é
+     * @~chinese ä½ç½®æ•°ç»„
      * @param normals @~english The normals list.
-     * @~chinese ·¨ÏßÊı×é
+     * @~chinese æ³•çº¿æ•°ç»„
      * @param texs @~english The texture UV corodinates list.
-     * @~chinese ÎÆÀíµÄUV×ø±êÊı×é
+     * @~chinese çº¹ç†çš„UVåæ ‡æ•°ç»„
      * @param indices @~english The indices list
-     * @~chinese ¶¥µãË÷ÒıÊı×é
+     * @~chinese é¡¶ç‚¹ç´¢å¼•æ•°ç»„
      * @return @~english The Mesh object.
-     * @~chinese ±»´´½¨µÄMesh¶ÔÏó
+     * @~chinese è¢«åˆ›å»ºçš„Meshå¯¹è±¡
      */
     static Mesh* create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const IndexArray& indices);
     /**create mesh with vertex attributes*/
@@ -85,232 +85,232 @@ public:
     
     /**
      * @~english Create mesh from vertices, indices and attribs
-     * @~chinese Í¨¹ı¶¥µãÊı×é£¬Ë÷ÒıÊı×éÒÔ¼°¶¥µãÊôĞÔÀ´´´½¨Íø¸ñ
+     * @~chinese é€šè¿‡é¡¶ç‚¹æ•°ç»„ï¼Œç´¢å¼•æ•°ç»„ä»¥åŠé¡¶ç‚¹å±æ€§æ¥åˆ›å»ºç½‘æ ¼
      * @param vertices @~english the vertices list.
-     * @~chinese ¶¥µãÊı×é
+     * @~chinese é¡¶ç‚¹æ•°ç»„
      * @param perVertexSizeInFloat @~english Each vertex element's size.
-     * @~chinese Ã¿¸ö¶¥µãÔªËØµÄ´óĞ¡
+     * @~chinese æ¯ä¸ªé¡¶ç‚¹å…ƒç´ çš„å¤§å°
      * @param indices @~english The indices list.
-     * @~chinese Ë÷ÒıÊı×é
+     * @~chinese ç´¢å¼•æ•°ç»„
      * @param attribs @~english The mesh vertices attributes list.
-     * @~chinese ¶¥µãÊôĞÔÊı×é
+     * @~chinese é¡¶ç‚¹å±æ€§æ•°ç»„
      * @return @~english The Mesh object.
-     * @~chinese ±»´´½¨µÄÍø¸ñ
+     * @~chinese è¢«åˆ›å»ºçš„ç½‘æ ¼
      * @lua NA
      */
     static Mesh* create(const std::vector<float>& vertices, int perVertexSizeInFloat, const IndexArray& indices, const std::vector<MeshVertexAttrib>& attribs);
     
     /** 
      *@~english  Create mesh from name, mesh index data and skin
-     * @~chinese Í¨¹ıÃû³Æ£¬MeshIndexData¶ÔÏóÒÔ¼°ÃÉÆ¤À´´´½¨Mesh¶ÔÏó
+     * @~chinese é€šè¿‡åç§°ï¼ŒMeshIndexDataå¯¹è±¡ä»¥åŠè’™çš®æ¥åˆ›å»ºMeshå¯¹è±¡
      * @param name @~english The name.
-     * @~chinese Ãû³Æ
+     * @~chinese åç§°
      * @param indexData @~english The indexData list.
-     * @~chinese Ë÷ÒıÊı¾İÁĞ±í
+     * @~chinese ç´¢å¼•æ•°æ®åˆ—è¡¨
      * @param skin @~english The MeshSkin object.
-     * @~chinese Íø¸ñÃÉÆ¤ĞÅÏ¢
+     * @~chinese ç½‘æ ¼è’™çš®ä¿¡æ¯
      * @return @~english The Mesh object.
-     * @~chinese ±»´´½¨µÄÍø¸ñ
+     * @~chinese è¢«åˆ›å»ºçš„ç½‘æ ¼
      * @lua NA
      */
     static Mesh* create(const std::string& name, MeshIndexData* indexData, MeshSkin* skin = nullptr);
     
     /**
      * @~english Get the vertex buffer.
-     * @~chinese »ñÈ¡¶¥µã»º³å
+     * @~chinese è·å–é¡¶ç‚¹ç¼“å†²
      * @return @~english The VBO ID.
-     * @~chinese ¶¥µã»º³åµÄ¾ä±úID
+     * @~chinese é¡¶ç‚¹ç¼“å†²çš„å¥æŸ„ID
      * @lua NA
      */
     GLuint getVertexBuffer() const;
     /**
      * @~english Check if the mesh have specified vertex attribute or not
-     * @~chinese ¼ì²éÍø¸ñÊÇ·ñÓµÓĞÖ¸¶¨µÄ¶¥µãÊôĞÔ
+     * @~chinese æ£€æŸ¥ç½‘æ ¼æ˜¯å¦æ‹¥æœ‰æŒ‡å®šçš„é¡¶ç‚¹å±æ€§
      * @param attrib @~english The attribute type ID.
-     * @~chinese ¶¥µãÊôĞÔID
+     * @~chinese é¡¶ç‚¹å±æ€§ID
      * @return @~english Return true if the mesh have specified attribute, otherwise return false.
-     * @~chinese µ±¸ÃÍø¸ñ°üº¬Ö¸¶¨¶¥µãÊôĞÔÊ±·µ»Øtrue£¬·´Ö®·µ»Øfalse
+     * @~chinese å½“è¯¥ç½‘æ ¼åŒ…å«æŒ‡å®šé¡¶ç‚¹å±æ€§æ—¶è¿”å›trueï¼Œåä¹‹è¿”å›false
      * @lua NA
      */
     bool hasVertexAttrib(int attrib) const;
     /**
      * @~english Get the mesh vertex attribute count.
-     * @~chinese ·µ»Ø¸ÃÍø¸ñ°üº¬µÄ¶¥µãÊôĞÔµÄÊıÁ¿
+     * @~chinese è¿”å›è¯¥ç½‘æ ¼åŒ…å«çš„é¡¶ç‚¹å±æ€§çš„æ•°é‡
      * @return @~english The vertex attribute count.
-     * @~chinese ¶¥µãÊôĞÔµÄÊıÁ¿
+     * @~chinese é¡¶ç‚¹å±æ€§çš„æ•°é‡
      */
     ssize_t getMeshVertexAttribCount() const;
     /**
      * @~english Get MeshVertexAttribute by index
-     * @~chinese Í¨¹ıËùË÷Òı»ñÈ¡Íø¸ñµÄ¶¥µãÊôĞÔ
+     * @~chinese é€šè¿‡æ‰€ç´¢å¼•è·å–ç½‘æ ¼çš„é¡¶ç‚¹å±æ€§
      * @param idx @~english The index.
-     * @~chinese ¶¥µãÊôĞÔË÷Òı
+     * @~chinese é¡¶ç‚¹å±æ€§ç´¢å¼•
      * @return @~english The MeshVertexAttribute object.
-     * @~chinese MeshVertexAttribute ¶ÔÏó
+     * @~chinese MeshVertexAttribute å¯¹è±¡
      **/
     const MeshVertexAttrib& getMeshVertexAttribute(int idx);
     /**
      * @~english Get per vertex size in bytes.
-     * @~chinese »ñÈ¡Ã¿Ò»¸ö¶¥µãµÄÊı¾İ´óĞ¡£¬ÒÔ×Ö½Ú¼Æ
+     * @~chinese è·å–æ¯ä¸€ä¸ªé¡¶ç‚¹çš„æ•°æ®å¤§å°ï¼Œä»¥å­—èŠ‚è®¡
      * @return @~english The per vertex size in bytes.
-     * @~chinese Ã¿¸ö¶¥µãµÄÊı¾İ´óĞ¡
+     * @~chinese æ¯ä¸ªé¡¶ç‚¹çš„æ•°æ®å¤§å°
      */
     int getVertexSizeInBytes() const;
 
     /** 
      * @~english Texture setter.
-     * @~chinese ÉèÖÃÍø¸ñÎÆÀí
+     * @~chinese è®¾ç½®ç½‘æ ¼çº¹ç†
      * @param texPath @~english The texture file path.
-     * @~chinese ÎÆÀíÎÄ¼şµÄÂ·¾¶
+     * @~chinese çº¹ç†æ–‡ä»¶çš„è·¯å¾„
      */
     void setTexture(const std::string& texPath);
 
     /**
      * @~english Texture setter.
-     * @~chinese ÉèÖÃÍø¸ñÎÆÀí
+     * @~chinese è®¾ç½®ç½‘æ ¼çº¹ç†
      * @param tex @~english The Texture2D object.
-     * @~chinese Texture2D ¶ÔÏó
+     * @~chinese Texture2D å¯¹è±¡
      */
     void setTexture(Texture2D* tex);
 
     /**
      * @~english Texture getter.
-     * @~chinese »ñÈ¡ÎÆÀí
+     * @~chinese è·å–çº¹ç†
      * @return @~english The Texture2D object.
-     * @~chinese Texture2D ¶ÔÏó
+     * @~chinese Texture2D å¯¹è±¡
      */
     Texture2D* getTexture() const;
     
     /**
      * @~english Visible setter
-     * @~chinese ÉèÖÃ¿É¼ûĞÔ
+     * @~chinese è®¾ç½®å¯è§æ€§
      * @param visible @~english The visiblity
-     * @~chinese ¿É¼ûĞÔ
+     * @~chinese å¯è§æ€§
      */
     void setVisible(bool visible);
 
     /**
      * Visible getter.
-     * @~chinese »ñÈ¡¿É¼ûĞÔ
+     * @~chinese è·å–å¯è§æ€§
      * @return the visiblity of the mesh.
-     * @~chinese ¿É¼ûĞÔ
+     * @~chinese å¯è§æ€§
      */
     bool isVisible() const;
     
     /**
      * @~english The skin getter.
-     * @~chinese »ñÈ¡ÃÉÆ¤ĞÅÏ¢
+     * @~chinese è·å–è’™çš®ä¿¡æ¯
      * @return @~english The MeshSkin Object.
-     * @~chinese MeshSkin ¶ÔÏó
+     * @~chinese MeshSkin å¯¹è±¡
      * @lua NA
      */
     MeshSkin* getSkin() const { return _skin; }
     
     /**
      * @~english Mesh index data getter.
-     * @~chinese »ñÈ¡Íø¸ñË÷ÒıÊı¾İ
+     * @~chinese è·å–ç½‘æ ¼ç´¢å¼•æ•°æ®
      * @return @~english The MeshIndexData object.
-     * @~chinese MeshIndexData ¶ÔÏó
+     * @~chinese MeshIndexData å¯¹è±¡
      * @lua NA
      */
     MeshIndexData* getMeshIndexData() const { return _meshIndexData; }
     
     /**
      * @~english Get GLProgramState.
-     * @~chinese »ñµÃGL shader×´Ì¬
+     * @~chinese è·å¾—GL shaderçŠ¶æ€
      * @return @~english The GLProgramState object.
-     * @~chinese GLProgramState ¶ÔÏó
+     * @~chinese GLProgramState å¯¹è±¡
      * @lua NA
      */
     GLProgramState* getGLProgramState() const;
     
     /**
      * @~english Get the mesh's name.
-     * @~chinese »ñÈ¡Íø¸ñÃû³Æ
+     * @~chinese è·å–ç½‘æ ¼åç§°
      * @return @~english The mesh's name.
-     * @~chinese Íø¸ñÃû³Æ
+     * @~chinese ç½‘æ ¼åç§°
      */
     const std::string& getName() const { return _name; }
     
     /**
      * @~english Set the blending function.
-     * @~chinese ÉèÖÃÆ¬¶Î»ìºÏº¯Êı
+     * @~chinese è®¾ç½®ç‰‡æ®µæ··åˆå‡½æ•°
      * @param blendFunc @~english The specified blending function.
-     * @~chinese ¸ø¶¨µÄ»ìºÏº¯Êı
+     * @~chinese ç»™å®šçš„æ··åˆå‡½æ•°
      */
     void setBlendFunc(const BlendFunc &blendFunc);
 
     /**
      * @~english Get the mesh's blending function.
-     * @~chinese »ñÈ¡Æ¬¶Î»ìºÏº¯Êı
+     * @~chinese è·å–ç‰‡æ®µæ··åˆå‡½æ•°
      * @return The blending function.
-     * @~chinese »ìºÏº¯Êı
+     * @~chinese æ··åˆå‡½æ•°
      */
     const BlendFunc &getBlendFunc() const;
     
     /** 
      * @~english Get primitive type.
-     * @~chinese »ñÈ¡»ù±¾¼¸ºÎÌåÀàĞÍ£¬ËùÎ½»ù±¾¼¸ºÎÌåÀàĞÍ£¬¼´Íø¸ñÒÔºÎÖÖ·½Ê½°´ÕÕÆäË÷Òı×éÖ¯»æÖÆ
+     * @~chinese è·å–åŸºæœ¬å‡ ä½•ä½“ç±»å‹ï¼Œæ‰€è°“åŸºæœ¬å‡ ä½•ä½“ç±»å‹ï¼Œå³ç½‘æ ¼ä»¥ä½•ç§æ–¹å¼æŒ‰ç…§å…¶ç´¢å¼•ç»„ç»‡ç»˜åˆ¶
      * @return @~english The primitive type.
-     * @~chinese »ù±¾¼¸ºÎÌåÀàĞÍ
+     * @~chinese åŸºæœ¬å‡ ä½•ä½“ç±»å‹
      * @lua NA
      */
     GLenum getPrimitiveType() const;
     /**
      * @~english Get index count
-     * @~chinese »ñÈ¡Ë÷ÒıÊıÁ¿
+     * @~chinese è·å–ç´¢å¼•æ•°é‡
      * @return @~english The index count of the mesh.
-     * @~chineseÍø¸ñµÄË÷ÒıÊıÁ¿
+     * @~chineseç½‘æ ¼çš„ç´¢å¼•æ•°é‡
      * @lua NA
      */
     ssize_t getIndexCount() const;
     /**
      * @~english Get the mesh's index data format.
-     * @~chinese »ñÈ¡Íø¸ñµÄË÷ÒıÊı¾İÀàĞÍ
+     * @~chinese è·å–ç½‘æ ¼çš„ç´¢å¼•æ•°æ®ç±»å‹
      * @return @~english The index data format, should be GL_UNSIGNED_SHORT.
-     * @~chinese Íø¸ñµÄË÷ÒıÊı¾İÀàĞÍ£¬Í¨³£Îª GL_UNSIGNED_SHORTÀàĞÍ
+     * @~chinese ç½‘æ ¼çš„ç´¢å¼•æ•°æ®ç±»å‹ï¼Œé€šå¸¸ä¸º GL_UNSIGNED_SHORTç±»å‹
      * @lua NA
      */
     GLenum getIndexFormat() const;
     /**
      * @~english Get the mesh's index buffer object(IBO) handle.
-     * @~chinese »ñÈ¡Íø¸ñµÄ¶¥µã»º³å¶ÔÏó(IBO)µÄGL¾ä±ú
+     * @~chinese è·å–ç½‘æ ¼çš„é¡¶ç‚¹ç¼“å†²å¯¹è±¡(IBO)çš„GLå¥æŸ„
      * @return @~english The IBO handle.
-     * @~chinese ¶¥µã»º³å¶ÔÏó(IBO)µÄGL¾ä±ú
+     * @~chinese é¡¶ç‚¹ç¼“å†²å¯¹è±¡(IBO)çš„GLå¥æŸ„
      * @lua NA
      */
     GLuint getIndexBuffer() const;
     
     /**
      * @~english Get the mesh's AABB in local space.
-     * @~chinese »ñÈ¡Íø¸ñµÄ¾Ö²¿×ø±êÏµÏÂµÄAABB
+     * @~chinese è·å–ç½‘æ ¼çš„å±€éƒ¨åæ ‡ç³»ä¸‹çš„AABB
      * @return @~english The AABB object.
-     * @~chinese AABB¶ÔÏó
+     * @~chinese AABBå¯¹è±¡
      */
     const AABB& getAABB() const { return _aabb; }
 
     /**  
      * @~english Sets a new GLProgramState for the Mesh
-     * @~chinese ÎªÍø¸ñÉèÖÃĞÂµÄGLProgrameState¶ÔÏó
+     * @~chinese ä¸ºç½‘æ ¼è®¾ç½®æ–°çš„GLProgrameStateå¯¹è±¡
      * @param glProgramState @~english The new GLProgramState object.
-     * @~chinese ĞÂGLProgrameState¶ÔÏó
+     * @~chinese æ–°GLProgrameStateå¯¹è±¡
      * @note @~english A new Material will be created for it
-     * @~chinese ĞÂµÄ²ÄÖÊ½«»á±»´´½¨
+     * @~chinese æ–°çš„æè´¨å°†ä¼šè¢«åˆ›å»º
      */
     void setGLProgramState(GLProgramState* glProgramState);
 
     /**
      * @~english Sets a new Material to the Mesh 
-     * @~chinese ¸øÍø¸ñÉèÖÃĞÂ²ÄÖÊ
+     * @~chinese ç»™ç½‘æ ¼è®¾ç½®æ–°æè´¨
      * @param material @~english The new Material object.
-     * @~chinese ĞÂ²ÄÖÊ
+     * @~chinese æ–°æè´¨
      */
     void setMaterial(Material* material);
 
     /**
      * @~english Get the Material which being used by the Mesh 
-     * @~chinese »ñÈ¡µ±Ç°MeshËùÊ¹ÓÃµÄ²ÄÖÊ
-     * @return @~english The material object. @~chinese ²ÄÖÊ¶ÔÏó
+     * @~chinese è·å–å½“å‰Meshæ‰€ä½¿ç”¨çš„æè´¨
+     * @return @~english The material object. @~chinese æè´¨å¯¹è±¡
      */
     Material* getMaterial() const;
 
@@ -318,40 +318,40 @@ public:
 
     /** 
      * @~english Get the MeshCommand.
-     * @~chinese »ñÈ¡MeshCommand
+     * @~chinese è·å–MeshCommand
      * @return @~english The MeshCommand object
-     * @~chinese MeshCommand ¶ÔÏó
+     * @~chinese MeshCommand å¯¹è±¡
      */
     MeshCommand& getMeshCommand() { return _meshCommand; }
 
     /**
      * @~english Set a specified skin to mesh.
-     * @~chinese ¸øÍø¸ñÉèÖÃÖ¸¶¨µÄÃÉÆ¤ĞÅÏ¢
+     * @~chinese ç»™ç½‘æ ¼è®¾ç½®æŒ‡å®šçš„è’™çš®ä¿¡æ¯
      * @param skin @~english The specified skin object.
-     * @~chinese Ö¸¶¨µÄMeshSkin¶ÔÏó
+     * @~chinese æŒ‡å®šçš„MeshSkinå¯¹è±¡
      */
     void setSkin(MeshSkin* skin);
     /**
      * @~english Set the mesh index data.
-     * @~chinese ÉèÖÃÍø¸ñµÄË÷ÒıÊı¾İ
+     * @~chinese è®¾ç½®ç½‘æ ¼çš„ç´¢å¼•æ•°æ®
      * @param indexdata @~english The specified MeshIndexData.
-     * @~chinese Ö¸¶¨µÄMeshIndexData¶ÔÏó
+     * @~chinese æŒ‡å®šçš„MeshIndexDataå¯¹è±¡
      */
     void setMeshIndexData(MeshIndexData* indexdata);
 
     /**
      * @~english Set the mesh's name.
-     * @~chinese ÉèÖÃÍø¸ñµÄÃû³Æ
+     * @~chinese è®¾ç½®ç½‘æ ¼çš„åç§°
      * @param name @~english The mesh's new name.
-     * @~chinese Íø¸ñµÄĞÂÃû³Æ
+     * @~chinese ç½‘æ ¼çš„æ–°åç§°
      */
     void setName(const std::string& name) { _name = name; }
  
     /** 
      * @~english Calculate the AABB of the mesh.
-     * @~chinese ¼ÆËãÍø¸ñµÄAABB
+     * @~chinese è®¡ç®—ç½‘æ ¼çš„AABB
      * @note @~english The AABB is in the local space, not the world space
-     * @~chinese ¸ÃAABBÊÇÔÚÍø¸ñµÄ¾Ö²¿×ø±êÏµÏÂ£¬¶ø·ÇÊÀ½ç×ø±êÏµÏÂ
+     * @~chinese è¯¥AABBæ˜¯åœ¨ç½‘æ ¼çš„å±€éƒ¨åæ ‡ç³»ä¸‹ï¼Œè€Œéä¸–ç•Œåæ ‡ç³»ä¸‹
      */
     void calculateAABB();
     

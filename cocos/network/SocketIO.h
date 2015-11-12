@@ -80,7 +80,7 @@ class SIOClient;
  * Singleton and wrapper class to provide static creation method as well as registry of all sockets.
  *
  * @~chinese 
- * Ò»¸ö¼òµ¥·â×°Ì×½Ó×Ö×¢²áµÄ¾²Ì¬´´½¨·½·¨µÄµ¥ÀıÀà¡£
+ * ä¸€ä¸ªç®€å•å°è£…å¥—æ¥å­—æ³¨å†Œçš„é™æ€åˆ›å»ºæ–¹æ³•çš„å•ä¾‹ç±»ã€‚
  * 
  * @lua NA
  */
@@ -89,29 +89,29 @@ class CC_DLL SocketIO
 public:
     /**
      * @~english Get instance of SocketIO.
-     * @~chinese »ñÈ¡SocketIOµÄÊµÀı£¨µ¥Àı£©¡£
+     * @~chinese è·å–SocketIOçš„å®ä¾‹ï¼ˆå•ä¾‹ï¼‰ã€‚
      * 
      * @return @~english the instance of SocketIO.
-     * @~chinese SocketIOµÄÊµÀı¡£
+     * @~chinese SocketIOçš„å®ä¾‹ã€‚
      */
     static SocketIO* getInstance();
 
     /**
      * @~english Destroy the instance of SocketIO.
-     * @~chinese Ïú»ÙSocketIOµÄÊµÀı£¨µ¥Àı£©¡£
+     * @~chinese é”€æ¯SocketIOçš„å®ä¾‹ï¼ˆå•ä¾‹ï¼‰ã€‚
      */
     static void destroyInstance();
 
     /**
      * @~english The delegate class to process socket.io events.
-     * @~chinese ´¦ÀíÌ×½Ó×ÖÊÂ¼şµÄ´úÀíÀà¡£
+     * @~chinese å¤„ç†å¥—æ¥å­—äº‹ä»¶çš„ä»£ç†ç±»ã€‚
      * 
      * @lua NA
      */
     class SIODelegate
     {
     public:
-        /** @~english Destructor of SIODelegate.  @~chinese Îö¹¹º¯Êı¡£*/
+        /** @~english Destructor of SIODelegate.  @~chinese ææ„å‡½æ•°ã€‚*/
         virtual ~SIODelegate() {}
 
         /**@~english
@@ -120,12 +120,12 @@ public:
          * This function would be called when the related SIOClient object receive messages that mean it have connected to endpoint successfully.
          *
          * @~chinese 
-         * Õâ¸öº¯ÊıÊÇÎªÁËÏòÇ°¼æÈİĞÔ¶ø±£ÁôµÄ£¬connectÔÚsocket.ioĞÂ°æ±¾ÖĞ»áÒÔ"connect"ÊÂ¼ş´¥·¢
+         * è¿™ä¸ªå‡½æ•°æ˜¯ä¸ºäº†å‘å‰å…¼å®¹æ€§è€Œä¿ç•™çš„ï¼Œconnectåœ¨socket.ioæ–°ç‰ˆæœ¬ä¸­ä¼šä»¥"connect"äº‹ä»¶è§¦å‘
          * 
-         * Õâ¸öº¯Êı½«ÔÚÏà¹ØµÄSIOClient¶ÔÏóÁ¬½Ó³É¹¦Ê±±»µ÷ÓÃ¡£
+         * è¿™ä¸ªå‡½æ•°å°†åœ¨ç›¸å…³çš„SIOClientå¯¹è±¡è¿æ¥æˆåŠŸæ—¶è¢«è°ƒç”¨ã€‚
          * 
          * @param client @~english the connected SIOClient object.
-         * @~chinese Á¬½ÓµÄSIOClient¶ÔÏó¡£
+         * @~chinese è¿æ¥çš„SIOClientå¯¹è±¡ã€‚
          */
         virtual void onConnect(SIOClient* client) { CC_UNUSED_PARAM(client); CCLOG("SIODelegate onConnect fired"); };
 
@@ -136,14 +136,14 @@ public:
          * This function would be called when the related SIOClient object receive message or json message.
          *
          * @~chinese 
-         * Õâ¸öº¯ÊıÊÇÎªÁËÏòÇ°¼æÈİĞÔ¶ø±£ÁôµÄ£¬messageÔÚsocket.ioĞÂ°æ±¾ÖĞ»áÒÔ"message"ÊÂ¼ş´¥·¢
+         * è¿™ä¸ªå‡½æ•°æ˜¯ä¸ºäº†å‘å‰å…¼å®¹æ€§è€Œä¿ç•™çš„ï¼Œmessageåœ¨socket.ioæ–°ç‰ˆæœ¬ä¸­ä¼šä»¥"message"äº‹ä»¶è§¦å‘
          * 
-         * Õâ¸öº¯Êı½«ÔÚÏà¹ØµÄSIOClient¶ÔÏó½ÓÊÕµ½ÏûÏ¢Ê±±»µ÷ÓÃ¡£
+         * è¿™ä¸ªå‡½æ•°å°†åœ¨ç›¸å…³çš„SIOClientå¯¹è±¡æ¥æ”¶åˆ°æ¶ˆæ¯æ—¶è¢«è°ƒç”¨ã€‚
          * 
          * @param client @~english the connected SIOClient object.
-         * @~chinese Á¬½ÓµÄSIOClient¶ÔÏó¡£
+         * @~chinese è¿æ¥çš„SIOClientå¯¹è±¡ã€‚
          * @param data @~english the message,it could be json message
-         * @~chinese ½ÓÊÕµ½µÄÏûÏ¢,Ëü¿ÉÒÔÊÇjson¸ñÊ½µÄ¡£
+         * @~chinese æ¥æ”¶åˆ°çš„æ¶ˆæ¯,å®ƒå¯ä»¥æ˜¯jsonæ ¼å¼çš„ã€‚
          */
         virtual void onMessage(SIOClient* client, const std::string& data) { CC_UNUSED_PARAM(client); CCLOG("SIODelegate onMessage fired with data: %s", data.c_str()); };
 
@@ -153,12 +153,12 @@ public:
          * This function would be called when the related SIOClient object disconnect or receive disconnect signal.
          *
          * @~chinese 
-         * Õâ¸öº¯ÊıÊÇÎªÁËÏòÇ°¼æÈİĞÔ¶ø±£ÁôµÄ£¬closeÔÚsocket.ioĞÂ°æ±¾ÖĞ»áÒÔ"close"ÊÂ¼ş´¥·¢
+         * è¿™ä¸ªå‡½æ•°æ˜¯ä¸ºäº†å‘å‰å…¼å®¹æ€§è€Œä¿ç•™çš„ï¼Œcloseåœ¨socket.ioæ–°ç‰ˆæœ¬ä¸­ä¼šä»¥"close"äº‹ä»¶è§¦å‘
          * 
-         * Õâ¸öº¯Êı½«ÔÚÏà¹ØµÄSIOClient¶ÔÏó¶Ï¿ªÁ¬½ÓÊ±±»µ÷ÓÃ¡£
+         * è¿™ä¸ªå‡½æ•°å°†åœ¨ç›¸å…³çš„SIOClientå¯¹è±¡æ–­å¼€è¿æ¥æ—¶è¢«è°ƒç”¨ã€‚
          * 
          * @param client @~english the connected SIOClient object.
-         * @~chinese Á¬½ÓµÄSIOClient¶ÔÏó¡£
+         * @~chinese è¿æ¥çš„SIOClientå¯¹è±¡ã€‚
          */
         virtual void onClose(SIOClient* client) = 0;
 
@@ -168,14 +168,14 @@ public:
          * This function would be called when the related SIOClient object receive error signal or didn't connect the endpoint but do some network operation, eg.,send and emit,etc.
          *
          * @~chinese 
-         * ´¿Ğé»Øµ÷º¯Êı,Õâ¸öº¯ÊıÓ¦¸Ã±»×ÓÀà¸²¸Ç¡£
+         * çº¯è™šå›è°ƒå‡½æ•°,è¿™ä¸ªå‡½æ•°åº”è¯¥è¢«å­ç±»è¦†ç›–ã€‚
          * 
-         * Õâ¸öº¯Êı½«ÔÚÏà¹ØµÄSIOClient¶ÔÏó½ÓÊÕµ½´íÎóĞÅºÅ»òÕßÔÚ¶Ï¿ªÁ¬½Ó×´Ì¬ÏÂÖ´ĞĞÒ»Ğ©ÍøÂç²Ù×÷Ê±£¨ÀıÈç£ºsend£¬emitµÈ£©±»µ÷ÓÃ¡£
+         * è¿™ä¸ªå‡½æ•°å°†åœ¨ç›¸å…³çš„SIOClientå¯¹è±¡æ¥æ”¶åˆ°é”™è¯¯ä¿¡å·æˆ–è€…åœ¨æ–­å¼€è¿æ¥çŠ¶æ€ä¸‹æ‰§è¡Œä¸€äº›ç½‘ç»œæ“ä½œæ—¶ï¼ˆä¾‹å¦‚ï¼šsendï¼Œemitç­‰ï¼‰è¢«è°ƒç”¨ã€‚
          * 
          * @param client @~english the connected SIOClient object.
-         * @~chinese Á¬½ÓµÄSIOClient¶ÔÏó¡£
+         * @~chinese è¿æ¥çš„SIOClientå¯¹è±¡ã€‚
          * @param data @~english the error message
-         * @~chinese ´íÎóÏûÏ¢¡£
+         * @~chinese é”™è¯¯æ¶ˆæ¯ã€‚
          */
         virtual void onError(SIOClient* client, const std::string& data) = 0;
 
@@ -183,43 +183,43 @@ public:
          * Fire event to script when the related SIOClient object receive the fire event signal.
          *
          * @~chinese 
-         *  µ±Ïà¹ØµÄSIOClient¶ÔÏó½ÓÊÕµ½·¢ËÍÊÂ¼şĞÅºÅÊ±×ª·¢ÊÂ¼şµ½½Å±¾²ã¡£
+         *  å½“ç›¸å…³çš„SIOClientå¯¹è±¡æ¥æ”¶åˆ°å‘é€äº‹ä»¶ä¿¡å·æ—¶è½¬å‘äº‹ä»¶åˆ°è„šæœ¬å±‚ã€‚
          * 
          * @param client @~english the connected SIOClient object.
-         * @~chinese Á¬½ÓµÄSIOClient¶ÔÏó¡£
+         * @~chinese è¿æ¥çš„SIOClientå¯¹è±¡ã€‚
          * @param eventName @~english the event's name.
-         * @~chinese ÊÂ¼şµÄÃû³Æ¡£
+         * @~chinese äº‹ä»¶çš„åç§°ã€‚
          * @param data @~english the event's data information.
-         * @~chinese ÊÂ¼şµÄÊı¾İĞÅÏ¢¡£
+         * @~chinese äº‹ä»¶çš„æ•°æ®ä¿¡æ¯ã€‚
          */
         virtual void fireEventToScript(SIOClient* client, const std::string& eventName, const std::string& data) { CC_UNUSED_PARAM(client); CCLOG("SIODelegate event '%s' fired with data: %s", eventName.c_str(), data.c_str()); };
     };
 
     /**
      * @~english Static client creation method, similar to socketio.connect(uri) in JS.
-     * @~chinese ¾²Ì¬º¯Êı£¬´´½¨Ì×½Ó×Ö¿Í»§¶Ë¡£ÔÚJSÖĞµ÷ÓÃĞÎÊ½Îªsocketio.connect(uri)
+     * @~chinese é™æ€å‡½æ•°ï¼Œåˆ›å»ºå¥—æ¥å­—å®¢æˆ·ç«¯ã€‚åœ¨JSä¸­è°ƒç”¨å½¢å¼ä¸ºsocketio.connect(uri)
      * 
      * @param uri @~english the URI of the socket.io server.
-     * @~chinese Ì×½Ó×ÖµÄ·şÎñ¶ËURI¡£
+     * @~chinese å¥—æ¥å­—çš„æœåŠ¡ç«¯URIã€‚
      * @param delegate @~english the delegate which want to receive events from the socket.io client.
-     * @~chinese ½ÓÊÕ´¦Àí¿Í»§¶ËÊÂ¼şµÄ´úÀí¡£
+     * @~chinese æ¥æ”¶å¤„ç†å®¢æˆ·ç«¯äº‹ä»¶çš„ä»£ç†ã€‚
      *
      * @return SIOClient* @~english an initialized SIOClient if connected successfully, otherwise nullptr.
-     * @~chinese Èç¹ûÁ¬½Ó³É¹¦·µ»ØÒ»¸ö³õÊ¼»¯µÄSIOClient¶ÔÏó£¬·ñÔò·µ»Ønullptr¡£
+     * @~chinese å¦‚æœè¿æ¥æˆåŠŸè¿”å›ä¸€ä¸ªåˆå§‹åŒ–çš„SIOClientå¯¹è±¡ï¼Œå¦åˆ™è¿”å›nullptrã€‚
      */
     static SIOClient* connect(const std::string& uri, SocketIO::SIODelegate& delegate);
 
     /**
      * @~english Static client creation method, similar to socketio.connect(uri) in JS.
-     * @~chinese ¾²Ì¬º¯Êı£¬´´½¨Ì×½Ó×Ö¿Í»§¶Ë¡£ÔÚJSÖĞµ÷ÓÃĞÎÊ½Îªsocketio.connect(uri)
+     * @~chinese é™æ€å‡½æ•°ï¼Œåˆ›å»ºå¥—æ¥å­—å®¢æˆ·ç«¯ã€‚åœ¨JSä¸­è°ƒç”¨å½¢å¼ä¸ºsocketio.connect(uri)
      * 
      * @param delegate @~english the delegate which want to receive events from the socket.io client.
-     * @~chinese ½ÓÊÕ´¦Àí¿Í»§¶ËÊÂ¼şµÄ´úÀí¡£
+     * @~chinese æ¥æ”¶å¤„ç†å®¢æˆ·ç«¯äº‹ä»¶çš„ä»£ç†ã€‚
      * @param uri @~english the URI of the socket.io server.
-     * @~chinese Ì×½Ó×ÖµÄ·şÎñ¶ËURI¡£
+     * @~chinese å¥—æ¥å­—çš„æœåŠ¡ç«¯URIã€‚
      *
      * @return SIOClient* @~english an initialized SIOClient if connected successfully, otherwise nullptr.
-     * @~chinese Èç¹ûÁ¬½Ó³É¹¦·µ»ØÒ»¸ö³õÊ¼»¯µÄSIOClient¶ÔÏó£¬·ñÔò·µ»Ønullptr¡£
+     * @~chinese å¦‚æœè¿æ¥æˆåŠŸè¿”å›ä¸€ä¸ªåˆå§‹åŒ–çš„SIOClientå¯¹è±¡ï¼Œå¦åˆ™è¿”å›nullptrã€‚
      */
     CC_DEPRECATED_ATTRIBUTE  static SIOClient* connect(SocketIO::SIODelegate& delegate, const std::string& uri);
 
@@ -248,7 +248,7 @@ typedef std::unordered_map<std::string, SIOEvent> EventRegistry;
 
 /**
  * @~english A single connection to a socket.io endpoint.
- * @~chinese Ò»¸öÌ×½Ó×ÖÁ¬½Ó¡£
+ * @~chinese ä¸€ä¸ªå¥—æ¥å­—è¿æ¥ã€‚
  * 
  * @lua NA
  */
@@ -276,56 +276,56 @@ private:
 public:
     /**
      * @~english Construtor of SIOClient class.
-     * @~chinese SIOClient¹¹Ôìº¯Êı¡£
+     * @~chinese SIOClientæ„é€ å‡½æ•°ã€‚
      * 
      * @param host @~english the string that represent the host address.
-     * @~chinese Ö÷»úµØÖ·µÄ×Ö·û´®±íÊ¾¡£
+     * @~chinese ä¸»æœºåœ°å€çš„å­—ç¬¦ä¸²è¡¨ç¤ºã€‚
      * @param port @~english the int value represent the port number.
-     * @~chinese ¶Ë¿ÚºÅ¡£
+     * @~chinese ç«¯å£å·ã€‚
      * @param path @~english the string that represent endpoint.
-     * @~chinese ÖÕ¶ËÂ·¾¶¡£
+     * @~chinese ç»ˆç«¯è·¯å¾„ã€‚
      * @param impl @~english the SIOClientImpl object.
-     * @~chinese SIOClientImpl¶ÔÏó¡£
+     * @~chinese SIOClientImplå¯¹è±¡ã€‚
      * @param delegate @~english the SIODelegate object.
-     * @~chinese SIODelegate¶ÔÏó¡£
+     * @~chinese SIODelegateå¯¹è±¡ã€‚
      */
     SIOClient(const std::string& host, int port, const std::string& path, SIOClientImpl* impl, SocketIO::SIODelegate& delegate);
 
     /**
      * @~english Destructior of SIOClient class.
-     * @~chinese Îö¹¹º¯Êı¡£
+     * @~chinese ææ„å‡½æ•°ã€‚
      */
     virtual ~SIOClient();
 
     /**
      * @~english Get the delegate for the client
-     * @~chinese µÃµ½¿Í»§¶ËµÄ´úÀí¡£
+     * @~chinese å¾—åˆ°å®¢æˆ·ç«¯çš„ä»£ç†ã€‚
      * 
      * @return @~english the delegate object for the client.
-     * @~chinese ¿Í»§¶ËµÄÎ¯ÍĞ¶ÔÏó¡£
+     * @~chinese å®¢æˆ·ç«¯çš„å§”æ‰˜å¯¹è±¡ã€‚
      */
     SocketIO::SIODelegate* getDelegate() { return _delegate; };
 
     /**
      * @~english Disconnect from the endpoint, onClose will be called for the delegate when complete
-     * @~chinese ¶Ï¿ªºÍÔ¶³ÌÖÕ¶ËµÄÁ¬½Ó£¬¶Ï¿ªÍê³ÉÊ±´úÀíµÄonClose½«±»µ÷ÓÃ¡£
+     * @~chinese æ–­å¼€å’Œè¿œç¨‹ç»ˆç«¯çš„è¿æ¥ï¼Œæ–­å¼€å®Œæˆæ—¶ä»£ç†çš„onCloseå°†è¢«è°ƒç”¨ã€‚
      */
     void disconnect();
 
     /**
      * @~english Send a message to the socket.io server.
-     * @~chinese ·¢ËÍÒ»ÌõÏûÏ¢µ½Ì×½Ó×Ö·şÎñ¶Ë¡£
+     * @~chinese å‘é€ä¸€æ¡æ¶ˆæ¯åˆ°å¥—æ¥å­—æœåŠ¡ç«¯ã€‚
      * 
      * @param s @~english message.
-     * @~chinese ÏûÏ¢¡£
+     * @~chinese æ¶ˆæ¯ã€‚
      */
     void send(const std::string& s);
     /**
      * @~english Emit the eventname and the args to the endpoint that _path point to.
-     * @~chinese ¸ø_pathÖ¸ÏòµÄÖÕ¶Ë·¢ËÍ¸ø¶¨µÄÊÂ¼ş¼°²ÎÊı¡£
+     * @~chinese ç»™_pathæŒ‡å‘çš„ç»ˆç«¯å‘é€ç»™å®šçš„äº‹ä»¶åŠå‚æ•°ã€‚
      * 
-     * @param eventname @~english the name of event. @~chinese ÊÂ¼şÃû³Æ¡£
-     * @param args @~english the argument of event. @~chinese ÊÂ¼ş²ÎÊı¡£
+     * @param eventname @~english the name of event. @~chinese äº‹ä»¶åç§°ã€‚
+     * @param args @~english the argument of event. @~chinese äº‹ä»¶å‚æ•°ã€‚
      */
     void emit(const std::string& eventname, const std::string& args);
 
@@ -334,31 +334,31 @@ public:
      * Event argument should be passed using CC_CALLBACK2(&Base::function, this).
      *
      * @~chinese 
-     * ×¢²áÒ»¸öÌ×½Ó×ÖÊÂ¼ş»Øµ÷¡£
-     * »Øµ÷º¯ÊıÓ¦¸ÃÍ¨¹ıCC_CALLBACK2Ê¹ÓÃ¡£
+     * æ³¨å†Œä¸€ä¸ªå¥—æ¥å­—äº‹ä»¶å›è°ƒã€‚
+     * å›è°ƒå‡½æ•°åº”è¯¥é€šè¿‡CC_CALLBACK2ä½¿ç”¨ã€‚
      *
-     * @param eventName @~english the name of event. @~chinese ÊÂ¼şµÄÃû³Æ¡£
-     * @param e @~english the callback function. @~chinese »Øµ÷º¯Êı¡£
+     * @param eventName @~english the name of event. @~chinese äº‹ä»¶çš„åç§°ã€‚
+     * @param e @~english the callback function. @~chinese å›è°ƒå‡½æ•°ã€‚
      */
     void on(const std::string& eventName, SIOEvent e);
     
     /**
      * @~english Set tag of SIOClient.
      * The tag is used to distinguish the various SIOClient objects.
-     * @~chinese ¸øSIOClientÉèÖÃ±êÇ©£¬ÓÃÓÚ·½±ãÇø·Ö¸÷¸öSIOClient¶ÔÏó¡£
+     * @~chinese ç»™SIOClientè®¾ç½®æ ‡ç­¾ï¼Œç”¨äºæ–¹ä¾¿åŒºåˆ†å„ä¸ªSIOClientå¯¹è±¡ã€‚
      * 
      * @param tag @~english string object.
-     * @~chinese ±êÇ©£¨×Ö·û´®£©¡£
+     * @~chinese æ ‡ç­¾ï¼ˆå­—ç¬¦ä¸²ï¼‰ã€‚
      */
     void setTag(const char* tag);
     
 
     /**
      * @~english Get tag of SIOClient.
-     * @~chinese »ñÈ¡SIOClientµÄ±êÇ©¡£
+     * @~chinese è·å–SIOClientçš„æ ‡ç­¾ã€‚
      * 
      * @return const char *  @~english the pointer point to the _tag.
-     * @~chinese ±êÇ©µÄÖ¸Õë¡£
+     * @~chinese æ ‡ç­¾çš„æŒ‡é’ˆã€‚
      */
     inline const char* getTag()
     {

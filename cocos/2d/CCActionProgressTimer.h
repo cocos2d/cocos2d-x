@@ -37,11 +37,11 @@ NS_CC_BEGIN
 
 /**
 @brief @~english Progress to percentage.
- * @~chinese °Ù·Ö±È½ø¶ÈÌõ¡£
+ * @~chinese ç™¾åˆ†æ¯”è¿›åº¦æ¡ã€‚
 @details @~english This action show the target node from current percentage to the specified percentage.
         You should specify the destination percentage when creating the action.
- * @~chinese ÕâÒ»¶¯×÷ÏÔÊ¾ÁËÄ¿±ê½Úµã´Óµ±Ç°°Ù·Ö±Èµ½Ö¸¶¨µÄ°Ù·Ö±È¡£
- * ÄãÓ¦¸ÃÔÚ´´½¨¶¯×÷µÄÊ±ºòÖ¸¶¨Ä¿±ê°Ù·Ö±È¡£
+ * @~chinese è¿™ä¸€åŠ¨ä½œæ˜¾ç¤ºäº†ç›®æ ‡èŠ‚ç‚¹ä»å½“å‰ç™¾åˆ†æ¯”åˆ°æŒ‡å®šçš„ç™¾åˆ†æ¯”ã€‚
+ * ä½ åº”è¯¥åœ¨åˆ›å»ºåŠ¨ä½œçš„æ—¶å€™æŒ‡å®šç›®æ ‡ç™¾åˆ†æ¯”ã€‚
 @since v0.99.1
 */
 class CC_DLL ProgressTo : public ActionInterval
@@ -49,13 +49,13 @@ class CC_DLL ProgressTo : public ActionInterval
 public:
     /** 
      * @brief @~english Create and initializes with a duration and a destination percentage.
-     * @~chinese Ê¹ÓÃ³ÖĞøÊ±¼äºÍÄ¿±ê°Ù·Ö±ÈÀ´´´½¨ºÍ³õÊ¼»¯¡£
+     * @~chinese ä½¿ç”¨æŒç»­æ—¶é—´å’Œç›®æ ‡ç™¾åˆ†æ¯”æ¥åˆ›å»ºå’Œåˆå§‹åŒ–ã€‚
      * @param duration @~english Specify the duration of the ProgressTo action. It's a value in seconds.
-     * @~chinese Ö¸¶¨ProgressTo¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+     * @~chinese æŒ‡å®šProgressToåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
      * @param percent @~english Specify the destination percentage.
-     * @~chinese Ö¸¶¨Ä¿±ê°Ù·Ö±È¡£
+     * @~chinese æŒ‡å®šç›®æ ‡ç™¾åˆ†æ¯”ã€‚
      * @return @~english If the creation sucess, return a pointer of ProgressTo action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öProgressTo¶¯×÷µÄÖ¸Õë;·ñÔò,·µ»Ø¿Õ¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªProgressToåŠ¨ä½œçš„æŒ‡é’ˆ;å¦åˆ™,è¿”å›ç©ºã€‚
      */
     static ProgressTo* create(float duration, float percent);
 
@@ -73,13 +73,13 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
      * @brief @~english Initializes with a duration and destination percentage. 
-     * @~chinese Ê¹ÓÃ³ÖĞøÊ±¼äºÍÄ¿±ê°Ù·Ö±ÈÀ´³õÊ¼»¯¡£
+     * @~chinese ä½¿ç”¨æŒç»­æ—¶é—´å’Œç›®æ ‡ç™¾åˆ†æ¯”æ¥åˆå§‹åŒ–ã€‚
      * @param duration @~english Specify the duration of the ProgressTo action. It's a value in seconds.
-     * @~chinese Ö¸¶¨ProgressTo¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+     * @~chinese æŒ‡å®šProgressToåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
      * @param percent @~english Specify the destination percentage.
-     * @~chinese Ö¸¶¨Ä¿±ê°Ù·Ö±È¡£
+     * @~chinese æŒ‡å®šç›®æ ‡ç™¾åˆ†æ¯”ã€‚
      * @return @~english If the creation sucess, return true; otherwise, return false.
-     * @~chinese Èç¹û´´½¨³É¹¦,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
      */
     bool initWithDuration(float duration, float percent);
 
@@ -93,7 +93,7 @@ private:
 
 /**
 @brief @~english Progress from a percentage to another percentage.
- * @~chinese ´ÓÒ»¸ö°Ù·Ö±Èµ½ÁíÒ»¸ö°Ù·Ö±ÈµÄ½ø¶È¡£
+ * @~chinese ä»ä¸€ä¸ªç™¾åˆ†æ¯”åˆ°å¦ä¸€ä¸ªç™¾åˆ†æ¯”çš„è¿›åº¦ã€‚
 @since v0.99.1
 */
 class CC_DLL ProgressFromTo : public ActionInterval
@@ -101,15 +101,15 @@ class CC_DLL ProgressFromTo : public ActionInterval
 public:
     /** 
      * @brief @~english Create and initializes the action with a duration, a "from" percentage and a "to" percentage.
-     * @~chinese Ê¹ÓÃ³ÖĞøÊ±¼ä£¬¡°¿ªÊ¼°Ù·Ö±È¡±ºÍ¡°½áÊø°Ù·Ö±È¡±À´´´½¨ºÍ³õÊ¼»¯¡£
+     * @~chinese ä½¿ç”¨æŒç»­æ—¶é—´ï¼Œâ€œå¼€å§‹ç™¾åˆ†æ¯”â€å’Œâ€œç»“æŸç™¾åˆ†æ¯”â€æ¥åˆ›å»ºå’Œåˆå§‹åŒ–ã€‚
      * @param duration @~english Specify the duration of the ProgressFromTo action. It's a value in seconds.
-     * @~chinese Ö¸¶¨ProgressFromTo¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+     * @~chinese æŒ‡å®šProgressFromToåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
      * @param fromPercentage @~english Specify the source percentage.
-     * @~chinese Ö¸¶¨¿ªÊ¼°Ù·Ö±È¡£
+     * @~chinese æŒ‡å®šå¼€å§‹ç™¾åˆ†æ¯”ã€‚
      * @param toPercentage @~english Specify the destination percentage.
-     * @~chinese Ö¸¶¨½áÊø°Ù·Ö±È¡£
+     * @~chinese æŒ‡å®šç»“æŸç™¾åˆ†æ¯”ã€‚
      * @return @~english If the creation sucess, return a pointer of ProgressFromTo action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦£¬·µ»ØÒ»¸öProgressFromTo¶¯×÷µÄÖ¸Õë£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸï¼Œè¿”å›ä¸€ä¸ªProgressFromToåŠ¨ä½œçš„æŒ‡é’ˆï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     static ProgressFromTo* create(float duration, float fromPercentage, float toPercentage);
 
@@ -127,15 +127,15 @@ CC_CONSTRUCTOR_ACCESS:
 
     /**
      * @brief @~english Initializes the action with a duration, a "from" percentage and a "to" percentage.
-     * @~chinese Ê¹ÓÃ³ÖĞøÊ±¼ä£¬¡°¿ªÊ¼°Ù·Ö±È¡±ºÍ¡°½áÊø°Ù·Ö±È¡±À´³õÊ¼»¯¡£
+     * @~chinese ä½¿ç”¨æŒç»­æ—¶é—´ï¼Œâ€œå¼€å§‹ç™¾åˆ†æ¯”â€å’Œâ€œç»“æŸç™¾åˆ†æ¯”â€æ¥åˆå§‹åŒ–ã€‚
      * @param duration @~english Specify the duration of the ProgressFromTo action. It's a value in seconds.
-     * @~chinese Ö¸¶¨ProgressFromTo¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+     * @~chinese æŒ‡å®šProgressFromToåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
      * @param fromPercentage @~english Specify the source percentage.
-     * @~chinese Ö¸¶¨¿ªÊ¼°Ù·Ö±È¡£
+     * @~chinese æŒ‡å®šå¼€å§‹ç™¾åˆ†æ¯”ã€‚
      * @param toPercentage @~english Specify the destination percentage.
-     * @~chinese Ö¸¶¨½áÊø°Ù·Ö±È¡£
+     * @~chinese æŒ‡å®šç»“æŸç™¾åˆ†æ¯”ã€‚
      * @return @~english If the creation sucess, return true; otherwise, return false.
-     * @~chinese Èç¹û´´½¨³É¹¦,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
      */
     bool initWithDuration(float duration, float fromPercentage, float toPercentage);
 

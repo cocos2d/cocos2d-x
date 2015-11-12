@@ -41,7 +41,7 @@ class Texture2D;
 
 /** @class Sprite3DMaterial
  *  @brief @~english Sprite3DMaterial: Material for Sprite3D.
-	@~chinese 3D¾«ÁéÊ¹ÓÃµÄ²ÄÖÊ
+	@~chinese 3Dç²¾çµä½¿ç”¨çš„æè´¨
     @js NA
     @lua NA
  */
@@ -49,71 +49,71 @@ class CC_DLL Sprite3DMaterial : public Material
 {
 public:
     /** @~english Material type, there are mainly two types of materials. Built in materials and Custom material
-        @~chinese ²ÄÖÊÀàĞÍ¡£Ö÷Òª°üº¬2ÖÖ²ÄÖÊ£ºÄÚÖÃ²ÄÖÊºÍÓÃ×Ô¶¨Òå²ÄÖÊ
+        @~chinese æè´¨ç±»å‹ã€‚ä¸»è¦åŒ…å«2ç§æè´¨ï¼šå†…ç½®æè´¨å’Œç”¨è‡ªå®šä¹‰æè´¨
     */
     enum class MaterialType
     {
         /** @~english Built in material
-            @~chinese ÄÚÖÃ²ÄÖÊ
+            @~chinese å†…ç½®æè´¨
         */
-        UNLIT, /**@~english unlit material.  @~chinese ÎŞ¹âÕÕ²ÄÖÊ */
-        UNLIT_NOTEX, /**@~english unlit material without texture.  @~chinese ÎŞ¹âÕÕÎŞÎÆÀí²ÄÖÊ */
-        VERTEX_LIT, /**@~english vertex lit.  @~chinese ¶¨µã¹âÕÕ */
-        DIFFUSE, /**@~english diffuse (pixel lighting).  @~chinese É¢Éä¹â£¨ÏñËØ¹âÕÕ£© */
-        DIFFUSE_NOTEX, /**@~english diffuse (without texture).  @~chinese É¢Éä¹â£¨ÎŞÎÆÀí£© */
-        BUMPED_DIFFUSE, /**@~english bumped diffuse.  @~chinese °¼Í¹Âş·´Éä */
+        UNLIT, /**@~english unlit material.  @~chinese æ— å…‰ç…§æè´¨ */
+        UNLIT_NOTEX, /**@~english unlit material without texture.  @~chinese æ— å…‰ç…§æ— çº¹ç†æè´¨ */
+        VERTEX_LIT, /**@~english vertex lit.  @~chinese å®šç‚¹å…‰ç…§ */
+        DIFFUSE, /**@~english diffuse (pixel lighting).  @~chinese æ•£å°„å…‰ï¼ˆåƒç´ å…‰ç…§ï¼‰ */
+        DIFFUSE_NOTEX, /**@~english diffuse (without texture).  @~chinese æ•£å°„å…‰ï¼ˆæ— çº¹ç†ï¼‰ */
+        BUMPED_DIFFUSE, /**@~english bumped diffuse.  @~chinese å‡¹å‡¸æ¼«åå°„ */
         
         /** @~english Custom material
-            @~chinese ×Ô¶¨Òå²ÄÖÊ
+            @~chinese è‡ªå®šä¹‰æè´¨
         */
-        CUSTOM, /**@~english Create from material file.  @~chinese ´Ó²ÄÖÊÎÄ¼ş´´½¨ */
+        CUSTOM, /**@~english Create from material file.  @~chinese ä»æè´¨æ–‡ä»¶åˆ›å»º */
     };
 
     /** @~english Get material type
-        @~chinese »ñÈ¡²ÄÖÊÀàĞÍ
-        @return @~english Material type @~chinese ²ÄÖÊÀàĞÍ
+        @~chinese è·å–æè´¨ç±»å‹
+        @return @~english Material type @~chinese æè´¨ç±»å‹
     */
     MaterialType getMaterialType() const { return _type; }
 
     /** @~english Create built in material from material type
-        @~chinese ¸ù¾İÖ¸¶¨²ÄÖÊÀàĞÍ´´½¨ÄÚÖÃ²ÄÖÊ
-        @param type @~english  Material type @~chinese ²ÄÖÊÀàĞÍ
-        @param skinned @~english  Has skin? @~chinese ÊÇ·ñÓĞÆ¤·ô
-        @return @~english Created material @~chinese ´´½¨µÄ²ÄÖÊ
+        @~chinese æ ¹æ®æŒ‡å®šæè´¨ç±»å‹åˆ›å»ºå†…ç½®æè´¨
+        @param type @~english  Material type @~chinese æè´¨ç±»å‹
+        @param skinned @~english  Has skin? @~chinese æ˜¯å¦æœ‰çš®è‚¤
+        @return @~english Created material @~chinese åˆ›å»ºçš„æè´¨
     */
     static Sprite3DMaterial* createBuiltInMaterial(MaterialType type, bool skinned);
 
     /** @~english Create material with file name, it creates material from cache if it is previously loaded
-        @~chinese Í¨¹ı¸ø¶¨ÎÄ¼ş´´½¨²ÄÖÊ£¬Èç¹û²ÄÖÊÒÑ¾­±»¼ÓÔØ¹ıÔò·µ»Ø»º´æÖĞµÄ²ÄÖÊ
-        @param path @~english  Path of material file @~chinese ²ÄÖÊÎÄ¼şÂ·¾¶
-        @return @~english Created material @~chinese ´´½¨µÄ²ÄÖÊ
+        @~chinese é€šè¿‡ç»™å®šæ–‡ä»¶åˆ›å»ºæè´¨ï¼Œå¦‚æœæè´¨å·²ç»è¢«åŠ è½½è¿‡åˆ™è¿”å›ç¼“å­˜ä¸­çš„æè´¨
+        @param path @~english  Path of material file @~chinese æè´¨æ–‡ä»¶è·¯å¾„
+        @return @~english Created material @~chinese åˆ›å»ºçš„æè´¨
     */
     static Sprite3DMaterial* createWithFilename(const std::string& path);
 
     /** @~english Create material with GLProgramState
-        @~chinese Ê¹ÓÃGLProgramState´´½¨²ÄÖÊ
-        @param programState @~english  GLProgramState instance @~chinese GLProgramStateÊµÀı
-        @return @~english Created material @~chinese ´´½¨µÄ²ÄÖÊ
+        @~chinese ä½¿ç”¨GLProgramStateåˆ›å»ºæè´¨
+        @param programState @~english  GLProgramState instance @~chinese GLProgramStateå®ä¾‹
+        @return @~english Created material @~chinese åˆ›å»ºçš„æè´¨
     */
     static Sprite3DMaterial* createWithGLStateProgram(GLProgramState* programState);
 
     /** @~english Create all build in materials
-        @~chinese ´´½¨È«²¿ÄÚÖÃ²ÄÖÊ
+        @~chinese åˆ›å»ºå…¨éƒ¨å†…ç½®æè´¨
     */
     static void createBuiltInMaterial();
 
     /** @~english Release all built in materials
-        @~chinese ÊÍ·ÅÈ«²¿ÄÚÖÃ²ÄÖÊ
+        @~chinese é‡Šæ”¾å…¨éƒ¨å†…ç½®æè´¨
     */
     static void releaseBuiltInMaterial();
 
     /** @~english Release all cached materials
-        @~chinese ÊÍ·ÅÈ«²¿»º´æµÄ²ÄÖÊ
+        @~chinese é‡Šæ”¾å…¨éƒ¨ç¼“å­˜çš„æè´¨
     */
     static void releaseCachedMaterial();
 
     /** @~english Clone material
-        @~chinese ¿ËÂ¡²ÄÖÊ
+        @~chinese å…‹éš†æè´¨
     */
     virtual Material* clone() const override;
     
@@ -136,7 +136,7 @@ protected:
 
 /** @class Sprite3DMaterialCache
     @brief @~english the sprite3D material is only texture for now
-	@~chinese µ±Ç°µÄ²ÄÖÊ½ö½öÊ¹ÓÃÁËÎÆÀí
+	@~chinese å½“å‰çš„æè´¨ä»…ä»…ä½¿ç”¨äº†çº¹ç†
     @js NA
     @lua NA
 */
@@ -144,38 +144,38 @@ class Sprite3DMaterialCache
 {
 public:
     /** @~english get & destroy cache
-        @~chinese µÃµ½´Ë¶ÔÏóµÄÊµÀı
-        @return @~english the instance of this object @~chinese ´Ë¶ÔÏóµÄÊµÀı
+        @~chinese å¾—åˆ°æ­¤å¯¹è±¡çš„å®ä¾‹
+        @return @~english the instance of this object @~chinese æ­¤å¯¹è±¡çš„å®ä¾‹
     */
     static Sprite3DMaterialCache* getInstance();
 
     /** @~english destroy the instance
-        @~chinese Ïú»ÙÊµÀı
+        @~chinese é”€æ¯å®ä¾‹
     */
     static void destroyInstance();
 
     /** @~english add to cache
-        @~chinese Ìí¼Óµ½»º´æÖĞ
-        @param key @~english  the key of material @~chinese ²ÄÖÊµÄ¼ü
-        @param tex @~english  the Texture2D to add @~chinese Ìí¼ÓµÄTexture2D
-        @return @~english Whether or not the operation is successful @~chinese ÊÇ·ñ³É¹¦
+        @~chinese æ·»åŠ åˆ°ç¼“å­˜ä¸­
+        @param key @~english  the key of material @~chinese æè´¨çš„é”®
+        @param tex @~english  the Texture2D to add @~chinese æ·»åŠ çš„Texture2D
+        @return @~english Whether or not the operation is successful @~chinese æ˜¯å¦æˆåŠŸ
     */
     bool addSprite3DMaterial(const std::string& key, Texture2D* tex);
 
     /** @~english get material from cache
-        @~chinese ´Ó»º´æÖĞ»ñµÃ²ÄÖÊ
-        @param key @~english  the key of material @~chinese ²ÄÖÊµÄ¼ü
-        @return @~english the Texture2D of the given material @~chinese ¸ø¶¨²ÄÖÊµÄTexture2D
+        @~chinese ä»ç¼“å­˜ä¸­è·å¾—æè´¨
+        @param key @~english  the key of material @~chinese æè´¨çš„é”®
+        @return @~english the Texture2D of the given material @~chinese ç»™å®šæè´¨çš„Texture2D
     */
     Texture2D* getSprite3DMaterial(const std::string& key);
 
     /** @~english remove all spritematerial
-        @~chinese É¾³ıËùÓĞspritematerial
+        @~chinese åˆ é™¤æ‰€æœ‰spritematerial
     */
     void removeAllSprite3DMaterial();
 
     /** @~english remove unused spritematerial
-        @~chinese É¾³ıÎ´Ê¹ÓÃµÄspritematerial
+        @~chinese åˆ é™¤æœªä½¿ç”¨çš„spritematerial
     */
     void removeUnusedSprite3DMaterial();
     

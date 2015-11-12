@@ -44,28 +44,28 @@ NS_CC_BEGIN
 /**
  * @enum EvaluateType
  * @brief @~english The evalute type for the curve evaluation(interpolation).
- * @~chinese ÇúÏßÇó½â(²åÖµ)ÀàĞÍ
+ * @~chinese æ›²çº¿æ±‚è§£(æ’å€¼)ç±»å‹
  */
 enum class EvaluateType
 {
     /**
      * linear interpolation
-     * @~chinese ¼òµ¥ÏßĞÔ²åÖµ
+     * @~chinese ç®€å•çº¿æ€§æ’å€¼
      **/
     INT_LINEAR, 
     /**
      * Nearest neighbor interpolation
-     * @~chinese ×î½üµã²åÖµ
+     * @~chinese æœ€è¿‘ç‚¹æ’å€¼
      */
     INT_NEAR,
     /**
      * Quaternion spherical linear interpolation
-     * @~chinese ÇòÃæÏßĞÔ²åÖµ(slerp)
+     * @~chinese çƒé¢çº¿æ€§æ’å€¼(slerp)
      **/
     INT_QUAT_SLERP,
     /**
      * User defined interpolation.
-     * @~chinese ÓÃ»§×Ô¶¨Òå²åÖµ·½·¨
+     * @~chinese ç”¨æˆ·è‡ªå®šä¹‰æ’å€¼æ–¹æ³•
      */
     INT_USER_FUNCTION,
 };
@@ -73,7 +73,7 @@ enum class EvaluateType
 /**
  * @class AnimationCurve
  * @brief @~english Curve of bone's position, rotation or scale
- * @~chinese ¹Ç÷ÀÇúÏß£¬ÓÃÒÔ±íÊ¾¹Ç÷À¶¯»­ÖĞÆ½ÒÆ¡¢Ğı×ª»òÕßÊÇËõ·ÅµÄÇúÏß
+ * @~chinese éª¨éª¼æ›²çº¿ï¼Œç”¨ä»¥è¡¨ç¤ºéª¨éª¼åŠ¨ç”»ä¸­å¹³ç§»ã€æ—‹è½¬æˆ–è€…æ˜¯ç¼©æ”¾çš„æ›²çº¿
  * @lua NA
  */
 template <int componentSize>
@@ -83,49 +83,49 @@ public:
     
     /**
      * @~english Create animation curve.
-     * @~chinese ´´½¨¶¯»­µÄÇúÏß
+     * @~chinese åˆ›å»ºåŠ¨ç”»çš„æ›²çº¿
      * @param @~english Keytime the key time value.
-     * @~chinese Ã¿¸ö¹Ø¼üÖ¡¶ÔÓ¦µÄÊ±¼äµãÊı×é
+     * @~chinese æ¯ä¸ªå…³é”®å¸§å¯¹åº”çš„æ—¶é—´ç‚¹æ•°ç»„
      * @param value @~english The value.
-     * @~chinese Ã¿¸ö¹Ø¼üÖ¡Ê±ÇúÏßµÄÖµµÄÊı×é
+     * @~chinese æ¯ä¸ªå…³é”®å¸§æ—¶æ›²çº¿çš„å€¼çš„æ•°ç»„
      * @param count @~english The count of key frames array.
-     * @~chinese ¹Ø¼üÖ¡Êı×é´óĞ¡
+     * @~chinese å…³é”®å¸§æ•°ç»„å¤§å°
      **/
     static AnimationCurve* create(float* keytime, float* value, int count);
     
     /**
      * @~english Evalute value of time
-     * @~chinese Çó½â£¨²åÖµ£©¸ø¶¨Ê±¼äÊ±µÄÇúÏßµÄÖµ
+     * @~chinese æ±‚è§£ï¼ˆæ’å€¼ï¼‰ç»™å®šæ—¶é—´æ—¶çš„æ›²çº¿çš„å€¼
      * @param time @~english Time to be estimated
-     * @~chinese ¸ø¶¨µÄÊ±¼äµã
+     * @~chinese ç»™å®šçš„æ—¶é—´ç‚¹
      * @param dst @~english Estimated value of that time
-     * @~chinese ¸ÃµãÊ±¼äÇó½â³öµÄ¹ÀËãÖµµÄÖ¸Õë
+     * @~chinese è¯¥ç‚¹æ—¶é—´æ±‚è§£å‡ºçš„ä¼°ç®—å€¼çš„æŒ‡é’ˆ
      * @param type @~english EvaluateType
-     * @~chinese Çó½âÊ±µÄ·½·¨ÀàĞÍ
+     * @~chinese æ±‚è§£æ—¶çš„æ–¹æ³•ç±»å‹
      */
     void evaluate(float time, float* dst, EvaluateType type) const;
     
     /**
      * @~english Set evaluate function, allow the user use own function.
-     * @~chinese ÉèÖÃÇó½â£¨²åÖµ£©º¯Êı£¬ÔÊĞíÓÃ»§Ê¹ÓÃ×Ô¼ºµÄ²åÖµº¯Êı
+     * @~chinese è®¾ç½®æ±‚è§£ï¼ˆæ’å€¼ï¼‰å‡½æ•°ï¼Œå…è®¸ç”¨æˆ·ä½¿ç”¨è‡ªå·±çš„æ’å€¼å‡½æ•°
      * @param fun @~english The callback function
-     * @~chinese ²åÖµµÄÓÃ»§»Øµ÷º¯Êı
+     * @~chinese æ’å€¼çš„ç”¨æˆ·å›è°ƒå‡½æ•°
      */
     void setEvaluateFun(std::function<void(float time, float* dst)> fun);
     
     /**
      * @~english Get start time
-     * @~chinese »ñÈ¡ÆğÊ¼Ê±¼ä
+     * @~chinese è·å–èµ·å§‹æ—¶é—´
      * @return @~english The start time
-     * @~chinese ÆğÊ¼Ê±¼ä
+     * @~chinese èµ·å§‹æ—¶é—´
      */
     float getStartTime() const;
     
     /**
      * @~english Get the end time.
-     * @~chinese »ñÈ¡½áÊøÊ±¼ä
+     * @~chinese è·å–ç»“æŸæ—¶é—´
      * @return @~english The end time.
-     * @~chinese ½áÊøÊ±¼ä
+     * @~chinese ç»“æŸæ—¶é—´
      */
     float getEndTime() const;
     
@@ -143,11 +143,11 @@ CC_CONSTRUCTOR_ACCESS:
     
     /**
      * @~english Determine index by time.
-     * @~chinese »ñÈ¡¸ø¶¨Ê±¼äµãµÄ¹Ø¼üÖ¡Ë÷Òı
+     * @~chinese è·å–ç»™å®šæ—¶é—´ç‚¹çš„å…³é”®å¸§ç´¢å¼•
      * @param time @~english The specified time
-     * @~chinese ¸ø¶¨µÄÄ³Ò»Ê±¼äµã
+     * @~chinese ç»™å®šçš„æŸä¸€æ—¶é—´ç‚¹
      * @return @~english The index.
-     * @~chinese ¹Ø¼üÖ¡Ë÷Òı
+     * @~chinese å…³é”®å¸§ç´¢å¼•
      */
     int determineIndex(float time) const;
     

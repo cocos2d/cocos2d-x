@@ -37,19 +37,19 @@ NS_CC_BEGIN
 
 /**
 @brief @~english The delegate class for ActionTween.
- * @~chinese ActionTweenÎ¯ÍĞÀà¡£
+ * @~chinese ActionTweenå§”æ‰˜ç±»ã€‚
 @details @~english If you want to use ActionTween on a node.
         You should implement the node follow these steps:
         1. The node should be inherit from ActionTweenDelegate.
         2. Override the virtual method updateTweenAction in the node.
 
         Then once you running ActionTween on the node, the method updateTweenAction will be invoked.
- * @~chinese Èç¹ûÄãÏëÔÚÄ³¸ö½ÚµãÉÏÊ¹ÓÃActionTween,
- * ÄãÓ¦¸Ã×ñÑ­ÒÔÏÂ²½ÖèÊµÏÖ½Úµã:
- * 1¡£½ÚµãÓ¦¸Ã¼Ì³Ğ×ÔActionTweenDelegate¡£
- * 2¡£ÔÚ½ÚµãÖĞÖØĞ´Ğé·½·¨updateTweenAction¡£
+ * @~chinese å¦‚æœä½ æƒ³åœ¨æŸä¸ªèŠ‚ç‚¹ä¸Šä½¿ç”¨ActionTween,
+ * ä½ åº”è¯¥éµå¾ªä»¥ä¸‹æ­¥éª¤å®ç°èŠ‚ç‚¹:
+ * 1ã€‚èŠ‚ç‚¹åº”è¯¥ç»§æ‰¿è‡ªActionTweenDelegateã€‚
+ * 2ã€‚åœ¨èŠ‚ç‚¹ä¸­é‡å†™è™šæ–¹æ³•updateTweenActionã€‚
  * 
- * Ò»µ©ÄãÔÚ½ÚµãÉÏÔËĞĞActionTween,updateTweenAction·½·¨½«»á±»µ÷ÓÃ¡£
+ * ä¸€æ—¦ä½ åœ¨èŠ‚ç‚¹ä¸Šè¿è¡ŒActionTween,updateTweenActionæ–¹æ³•å°†ä¼šè¢«è°ƒç”¨ã€‚
 */
 class CC_DLL ActionTweenDelegate
 {
@@ -62,11 +62,11 @@ public:
 
     /**
     @brief @~english The callback function when ActionTween is running.
-     * @~chinese ActionTweenÔËĞĞÊ±µÄ»Øµ÷º¯Êı¡£
+     * @~chinese ActionTweenè¿è¡Œæ—¶çš„å›è°ƒå‡½æ•°ã€‚
     @param value @~english The new value of the specified key.
-     * @~chinese Ö¸¶¨¼üµÄĞÂÖµ¡£
+     * @~chinese æŒ‡å®šé”®çš„æ–°å€¼ã€‚
     @param key @~english The key of property which should be updated.
-     * @~chinese Ó¦¸Ã±»¸üĞÂµÄ¼üÊôĞÔ¡£
+     * @~chinese åº”è¯¥è¢«æ›´æ–°çš„é”®å±æ€§ã€‚
     */
     virtual void updateTweenAction(float value, const std::string& key) = 0;
 };
@@ -78,8 +78,8 @@ public:
 
  * @~chinese ActionTween
  * 
- * ActionTweenÊÇÒ»¸öÈÃÄã¿ÉÒÔ¸üĞÂ¶ÔÏóµÄÈÎÒâÊôĞÔµÄ¶¯×÷¡£
- * ÀıÈç,Èç¹ûÄúÏëÒªÔÚ2ÃëÄÚĞŞ¸ÄµÄ¡°¿í¶È¡±ÊôĞÔÖµ£¬´Ó200µ½300£¬¿ÉÒÔÕâÃ´×ö:
+ * ActionTweenæ˜¯ä¸€ä¸ªè®©ä½ å¯ä»¥æ›´æ–°å¯¹è±¡çš„ä»»æ„å±æ€§çš„åŠ¨ä½œã€‚
+ * ä¾‹å¦‚,å¦‚æœæ‚¨æƒ³è¦åœ¨2ç§’å†…ä¿®æ”¹çš„â€œå®½åº¦â€å±æ€§å€¼ï¼Œä»200åˆ°300ï¼Œå¯ä»¥è¿™ä¹ˆåš:
  * 
  @code
      auto modifyWidth = ActionTween::create(2, "width", 200, 300);
@@ -87,7 +87,7 @@ public:
  @endcode
 
  @~english Another example: ScaleTo action could be rewritten using PropertyAction:
- @~chinese ÁíÒ»¸öÀı×Ó£ºÊ¹ÓÃPropertyAction¿ÉÒÔÖØĞ´ScaleToÔË¶¯
+ @~chinese å¦ä¸€ä¸ªä¾‹å­ï¼šä½¿ç”¨PropertyActionå¯ä»¥é‡å†™ScaleToè¿åŠ¨
 
  @code
      // scaleA and scaleB are equivalents
@@ -102,17 +102,17 @@ class CC_DLL ActionTween : public ActionInterval
 public:
     /** 
      * @brief @~english Create and initializes the action with the property name (key), and the from and to parameters.
-     * @~chinese Ê¹ÓÃÊôĞÔÃû³Æ(¼üÖµ)ºÍÆğÊ¼ÆğÊ¼²ÎÊıÀ´´´½¨ºÍ³õÊ¼»¯ÔË¶¯¡£
+     * @~chinese ä½¿ç”¨å±æ€§åç§°(é”®å€¼)å’Œèµ·å§‹èµ·å§‹å‚æ•°æ¥åˆ›å»ºå’Œåˆå§‹åŒ–è¿åŠ¨ã€‚
      * @param duration @~english The duration of the ActionTween. It's a value in seconds.
-     * @~chinese ActionTweenµÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+     * @~chinese ActionTweençš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
      * @param key @~english The key of property which should be updated.
-     * @~chinese Ó¦¸Ã±»¸üĞÂÊôĞÔ¼ü¡£
+     * @~chinese åº”è¯¥è¢«æ›´æ–°å±æ€§é”®ã€‚
      * @param from @~english The value of the specified property when the action begin.
-     * @~chinese ÔË¶¯¿ªÊ¼Ê±Ö¸¶¨ÊôĞÔµÄÖµ¡£
+     * @~chinese è¿åŠ¨å¼€å§‹æ—¶æŒ‡å®šå±æ€§çš„å€¼ã€‚
      * @param to @~english The value of the specified property when the action end.
-     * @~chinese ÔË¶¯½áÊøÊ±Ö¸¶¨ÊôĞÔµÄÖµ¡£
+     * @~chinese è¿åŠ¨ç»“æŸæ—¶æŒ‡å®šå±æ€§çš„å€¼ã€‚
      * @return @~english If the creation success, return a pointer of ActionTween; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öÖ¸ÏòActionTweenµÄÖ¸Õë;·ñÔò,·µ»Ø¿Õ¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªæŒ‡å‘ActionTweençš„æŒ‡é’ˆ;å¦åˆ™,è¿”å›ç©ºã€‚
      */
     static ActionTween* create(float duration, const std::string& key, float from, float to);
 
@@ -125,17 +125,17 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     /** 
      * @brief @~english Initializes the action with the property name (key), and the from and to parameters.
-     * @~chinese Ê¹ÓÃÊôĞÔÃû³Æ(¼üÖµ)ºÍÆğÊ¼ÆğÊ¼²ÎÊıÀ´³õÊ¼»¯ÔË¶¯¡£
+     * @~chinese ä½¿ç”¨å±æ€§åç§°(é”®å€¼)å’Œèµ·å§‹èµ·å§‹å‚æ•°æ¥åˆå§‹åŒ–è¿åŠ¨ã€‚
      * @param duration @~english The duration of the ActionTween. It's a value in seconds.
-     * @~chinese ActionTweenµÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+     * @~chinese ActionTweençš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
      * @param key @~english The key of property which should be updated.
-     * @~chinese Ó¦¸Ã±»¸üĞÂÊôĞÔ¼ü¡£
+     * @~chinese åº”è¯¥è¢«æ›´æ–°å±æ€§é”®ã€‚
      * @param from @~english The value of the specified property when the action begin.
-     * @~chinese ÔË¶¯¿ªÊ¼Ê±Ö¸¶¨ÊôĞÔµÄÖµ¡£
+     * @~chinese è¿åŠ¨å¼€å§‹æ—¶æŒ‡å®šå±æ€§çš„å€¼ã€‚
      * @param to @~english The value of the specified property when the action end.
-     * @~chinese ÔË¶¯½áÊøÊ±Ö¸¶¨ÊôĞÔµÄÖµ¡£
+     * @~chinese è¿åŠ¨ç»“æŸæ—¶æŒ‡å®šå±æ€§çš„å€¼ã€‚
      * @return @~english If the initialization success, return true; otherwise, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸ,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
      */
     bool initWithDuration(float duration, const std::string& key, float from, float to);
 

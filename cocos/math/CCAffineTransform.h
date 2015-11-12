@@ -52,12 +52,12 @@ NS_CC_BEGIN
  0   1    0
  0   0    1
  * @~chinese 
- * ·ÂÉä±ä»»
+ * ä»¿å°„å˜æ¢
  a   b    0
  c   d    0
  tx  ty   1
  * 
- * µ¥Î»±ä»»
+ * å•ä½å˜æ¢
  1   0    0
  0   1    0
  0   0    1
@@ -65,35 +65,35 @@ NS_CC_BEGIN
 struct CC_DLL AffineTransform {
     float a, b, c, d;
     float tx, ty;
-    /**@~english indentity AffineTransform. @~chinese µ¥Î»±ä»»¡£*/
+    /**@~english indentity AffineTransform. @~chinese å•ä½å˜æ¢ã€‚*/
     static const AffineTransform IDENTITY;
 };
 
-/**@~english Make affine transform from a, b, c, d, tx, ty.. @~chinese ´Óa,b,c,d,tx,ty¹¹½¨·ÂÉä±ä»»¡£*/
+/**@~english Make affine transform from a, b, c, d, tx, ty.. @~chinese ä»a,b,c,d,tx,tyæ„å»ºä»¿å°„å˜æ¢ã€‚*/
 CC_DLL AffineTransform __CCAffineTransformMake(float a, float b, float c, float d, float tx, float ty);
 #define AffineTransformMake __CCAffineTransformMake
 
-/**@~english Multiply point (x,y,1) by a  affine tranform. @~chinese ÓÃ·ÂÉä¾ØÕó±ä»»µã(x,y,1)¡£*/
+/**@~english Multiply point (x,y,1) by a  affine tranform. @~chinese ç”¨ä»¿å°„çŸ©é˜µå˜æ¢ç‚¹(x,y,1)ã€‚*/
 CC_DLL Vec2 __CCPointApplyAffineTransform(const Vec2& point, const AffineTransform& t);
 #define PointApplyAffineTransform __CCPointApplyAffineTransform
 
-/**@~english Multiply size (width,height,0) by a  affine tranform. @~chinese ÓÃ·ÂÉä¾ØÕó±ä»»(width,height,0)¡£*/
+/**@~english Multiply size (width,height,0) by a  affine tranform. @~chinese ç”¨ä»¿å°„çŸ©é˜µå˜æ¢(width,height,0)ã€‚*/
 CC_DLL Size __CCSizeApplyAffineTransform(const Size& size, const AffineTransform& t);
 #define SizeApplyAffineTransform __CCSizeApplyAffineTransform
-/**@~english Make identity affine transform. @~chinese ¹¹½¨Ò»¸öµ¥Î»·ÂÉä±ä»»¾ØÕó¡£*/
+/**@~english Make identity affine transform. @~chinese æ„å»ºä¸€ä¸ªå•ä½ä»¿å°„å˜æ¢çŸ©é˜µã€‚*/
 CC_DLL AffineTransform AffineTransformMakeIdentity();
-/**@~english Transform Rect, which will transform the four vertice of the point. @~chinese ±ä»»¾ØĞÎ,Õâ½«Öğ¸ö±ä»»¾ØĞÎµÄËÄ¸ö¶¥µã¡£*/
+/**@~english Transform Rect, which will transform the four vertice of the point. @~chinese å˜æ¢çŸ©å½¢,è¿™å°†é€ä¸ªå˜æ¢çŸ©å½¢çš„å››ä¸ªé¡¶ç‚¹ã€‚*/
 CC_DLL Rect RectApplyAffineTransform(const Rect& rect, const AffineTransform& anAffineTransform);
 /**@~english
  Transform Rect by Mat4.
  * @~chinese 
- * Ê¹ÓÃMat4±ä»»Rect.
+ * ä½¿ç”¨Mat4å˜æ¢Rect.
  */
 CC_DLL Rect RectApplyTransform(const Rect& rect, const Mat4& transform);
 /**@~english
  Transform Rect by Mat4.
  * @~chinese 
- * Ê¹ÓÃMat4±ä»»Vec2.
+ * ä½¿ç”¨Mat4å˜æ¢Vec2.
  */
 CC_DLL Vec2 PointApplyTransform(const Vec2& point, const Mat4& transform);
 /**@~english
@@ -102,7 +102,7 @@ CC_DLL Vec2 PointApplyTransform(const Vec2& point, const Mat4& transform);
  0  1  0   * affine transform
  tx ty 1
  * @~chinese 
- * ½øĞĞÆ½ÒÆ,ÆäĞ§¹ûµÈ¼ÛÓÚ
+ * è¿›è¡Œå¹³ç§»,å…¶æ•ˆæœç­‰ä»·äº
  1  0  1
  0  1  0   * affinetransform
  tx ty 1
@@ -114,7 +114,7 @@ CC_DLL AffineTransform AffineTransformTranslate(const AffineTransform& t, float 
  -sin(angle)  cos(angle)   0  * AffineTransform
  0            0            1
  * @~chinese 
- * ½øĞĞĞı×ª,µÈ¼ÛÓÚ
+ * è¿›è¡Œæ—‹è½¬,ç­‰ä»·äº
  cos(angle)   sin(angle)   0
  -sin(angle)  cos(angle)   0  * AffineTransform
  0            0            1
@@ -126,21 +126,21 @@ CC_DLL AffineTransform AffineTransformRotate(const AffineTransform& aTransform, 
  0    sy  0  * affineTransform
  0    0   1
  * @~chinese 
- * ½øĞĞËõ·Å,µÈ¼ÛÓÚ
+ * è¿›è¡Œç¼©æ”¾,ç­‰ä»·äº
  sx   0   0
  0    sy  0  * affineTransform
  0    0   1
  */
 CC_DLL AffineTransform AffineTransformScale(const AffineTransform& t, float sx, float sy);
-/**@~english Concat two affine transform, t1*t2.  @~chinese Á¬³ËÁ½¸ö·ÂÉä±ä»»t1*t2 */
+/**@~english Concat two affine transform, t1*t2.  @~chinese è¿ä¹˜ä¸¤ä¸ªä»¿å°„å˜æ¢t1*t2 */
 CC_DLL AffineTransform AffineTransformConcat(const AffineTransform& t1, const AffineTransform& t2);
-/**@~english Compare affine transform. @~chinese ÅĞ¶Ï·ÂÉä±ä»»ÊÇ·ñÏàµÈ¡£*/
+/**@~english Compare affine transform. @~chinese åˆ¤æ–­ä»¿å°„å˜æ¢æ˜¯å¦ç›¸ç­‰ã€‚*/
 CC_DLL bool AffineTransformEqualToTransform(const AffineTransform& t1, const AffineTransform& t2);
-/**@~english Get the inverse of affine transform. @~chinese µÃµ½·ÂÉä±ä»»µÄÄæ¡£*/
+/**@~english Get the inverse of affine transform. @~chinese å¾—åˆ°ä»¿å°„å˜æ¢çš„é€†ã€‚*/
 CC_DLL AffineTransform AffineTransformInvert(const AffineTransform& t);
-/**@~english Concat Mat4, return t1*t2  @~chinese Á¬³Ë¾ØÕót1*t2¡£*/
+/**@~english Concat Mat4, return t1*t2  @~chinese è¿ä¹˜çŸ©é˜µt1*t2ã€‚*/
 CC_DLL Mat4 TransformConcat(const Mat4& t1, const Mat4& t2);
-/**@~english identity affineTransform. @~chinese µ¥Î»·ÂÉä±ä»»¾ØÕó¡£*/
+/**@~english identity affineTransform. @~chinese å•ä½ä»¿å°„å˜æ¢çŸ©é˜µã€‚*/
 extern CC_DLL const AffineTransform AffineTransformIdentity;
 
 NS_CC_END

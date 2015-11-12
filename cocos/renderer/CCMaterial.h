@@ -61,7 +61,7 @@ class Properties;
  * @brief
  * @~english
  * Material defines the apperance of the objects. It contains shaders, uniform values, and OpenGL states. Material can be create from files.
- * @~chinese ²ÄÖÊ¶¨ÒåÁËÎïÌåµÄÍâ¹Û£¬Ëü°üº¬Ê¹ÓÃµÄshader£¬uniformµÄÖµÒÔ¼°OpenGL×´Ì¬¡£²ÄÖÊ¿ÉÒÔ´ÓÎÄ¼ş´´½¨¡£
+ * @~chinese æè´¨å®šä¹‰äº†ç‰©ä½“çš„å¤–è§‚ï¼Œå®ƒåŒ…å«ä½¿ç”¨çš„shaderï¼Œuniformçš„å€¼ä»¥åŠOpenGLçŠ¶æ€ã€‚æè´¨å¯ä»¥ä»æ–‡ä»¶åˆ›å»ºã€‚
  */
 class CC_DLL Material : public RenderState
 {
@@ -77,91 +77,91 @@ public:
      * @~english Creates a Material using the data from the Properties object defined at the specified URL,
      * where the URL is of the format "<file-path>.<extension>#<namespace-id>/<namespace-id>/.../<namespace-id>"
      * (and "#<namespace-id>/<namespace-id>/.../<namespace-id>" is optional).
-     * @~chinese ´Ó¶¨ÒåºÜ¶àÊôĞÔµÄ²ÄÖÊÎÄ¼ş´´½¨Ò»¸ö²ÄÖÊ£¬²ÄÖÊÎÄ¼şµÄ¸ñÊ½ÊÇÕâÑùµÄ£¬"<file-path>.<extension>#<namespace-id>/<namespace-id>/.../<namespace-id>"
+     * @~chinese ä»å®šä¹‰å¾ˆå¤šå±æ€§çš„æè´¨æ–‡ä»¶åˆ›å»ºä¸€ä¸ªæè´¨ï¼Œæè´¨æ–‡ä»¶çš„æ ¼å¼æ˜¯è¿™æ ·çš„ï¼Œ"<file-path>.<extension>#<namespace-id>/<namespace-id>/.../<namespace-id>"
      * (and "#<namespace-id>/<namespace-id>/.../<namespace-id>" is optional).
-     * @param path @~english The URL pointing to the Properties object defining the material. @~chinese ²ÄÖÊÎÄ¼şµÄÂ·¾¶¡£
+     * @param path @~english The URL pointing to the Properties object defining the material. @~chinese æè´¨æ–‡ä»¶çš„è·¯å¾„ã€‚
      *
-     * @return @~english A new Material or NULL if there was an error. @~chinese ĞÂ´´½¨µÄ²ÄÖÊ£¬Èç¹ûÊ§°Ü·µ»Ø¿ÕÖ¸Õë¡£
+     * @return @~english A new Material or NULL if there was an error. @~chinese æ–°åˆ›å»ºçš„æè´¨ï¼Œå¦‚æœå¤±è´¥è¿”å›ç©ºæŒ‡é’ˆã€‚
      */
     static Material* createWithFilename(const std::string& path);
 
     /** @~english Creates a Material with a GLProgramState.
      It will only contain one Technique and one Pass.
      Added in order to support legacy code.
-     * @~chinese ÓÃGLProgramState´´½¨ĞÂµÄ²ÄÖÊ¡£ĞÂ´´½¨µÄ²ÄÖÊÖ»°üº¬Ò»¸öTechniqueºÍÒ»¸öPass£¬Õâ¸öÖ÷ÒªÊÇÎªÁË¸úÖ®Ç°µÄ°æ±¾¼æÈİ¡£
-     * @param programState @~english programState used to create material. @~chinese ÓÃÀ´´´½¨²ÄÖÊµÄprogramState¡£
+     * @~chinese ç”¨GLProgramStateåˆ›å»ºæ–°çš„æè´¨ã€‚æ–°åˆ›å»ºçš„æè´¨åªåŒ…å«ä¸€ä¸ªTechniqueå’Œä¸€ä¸ªPassï¼Œè¿™ä¸ªä¸»è¦æ˜¯ä¸ºäº†è·Ÿä¹‹å‰çš„ç‰ˆæœ¬å…¼å®¹ã€‚
+     * @param programState @~english programState used to create material. @~chinese ç”¨æ¥åˆ›å»ºæè´¨çš„programStateã€‚
      */
     static Material* createWithGLStateProgram(GLProgramState* programState);
 
     /**
      * @~english Creates a material from the specified properties object.
-     * @~chinese ÓÃProperties¶ÔÏóÀ´´´½¨²ÄÖÊ¡£
+     * @~chinese ç”¨Propertieså¯¹è±¡æ¥åˆ›å»ºæè´¨ã€‚
      * @param materialProperties @~english The properties object defining the
-     *      material (must have namespace equal to 'material'). @~chinese ÊôĞÔ¶ÔÏó£¬¶¨ÒåÁË²ÄÖÊ£¨Ãû×Ö¿Õ¼äÖĞ±ØĞëÓĞ¡®material¡¯£©¡£
-     * @return @~english A new Material. @~chinese ĞÂ´´½¨µÄ²ÄÖÊ¡£
+     *      material (must have namespace equal to 'material'). @~chinese å±æ€§å¯¹è±¡ï¼Œå®šä¹‰äº†æè´¨ï¼ˆåå­—ç©ºé—´ä¸­å¿…é¡»æœ‰â€˜materialâ€™ï¼‰ã€‚
+     * @return @~english A new Material. @~chinese æ–°åˆ›å»ºçš„æè´¨ã€‚
      */
     static Material* createWithProperties(Properties* materialProperties);
 
     /**
      * @~english Gets the material name
-     * @~chinese »ñÈ¡²ÄÖÊÃû³Æ¡£
-     * @return @~english Material name. @~chinese ²ÄÖÊÃû³Æ¡£
+     * @~chinese è·å–æè´¨åç§°ã€‚
+     * @return @~english Material name. @~chinese æè´¨åç§°ã€‚
      */
     std::string getName() const;
     /**
      * @~english Sets the material name
-     * @~chinese ÉèÖÃ²ÄÖÊÃû³Æ¡£
-     * @param name @~english Material name. @~chinese ²ÄÖÊÃû³Æ¡£
+     * @~chinese è®¾ç½®æè´¨åç§°ã€‚
+     * @param name @~english Material name. @~chinese æè´¨åç§°ã€‚
      */
     void setName(const std::string& name);
 
     /** @~english Gets a Technique by its name.
-     * @~chinese Í¨¹ıÃû³Æ»ñÈ¡Ò»¸öTechnique¡£
-     * @param name @~english Technique name. @~chinese TechniqueÃû³Æ¡£
-     * @return @~english `nullptr` if the Technique can't be found. @~chinese ÕÒµ½µÄTechnique£¬·ñÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese é€šè¿‡åç§°è·å–ä¸€ä¸ªTechniqueã€‚
+     * @param name @~english Technique name. @~chinese Techniqueåç§°ã€‚
+     * @return @~english `nullptr` if the Technique can't be found. @~chinese æ‰¾åˆ°çš„Techniqueï¼Œå¦åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      */
     Technique* getTechniqueByName(const std::string& name);
 
     /** @~english Gets a Technique by index.
-     * @~chinese Í¨¹ıË÷Òı»ñÈ¡Ò»¸öTechnique¡£
-     * @param index @~english technique index. @~chinese TechniqueË÷Òı¡£
-     * @return @~english `nullptr` if the index is invalid. @~chinese ÕÒµ½µÄTechnique£¬Ë÷ÒıÎŞĞ§Ê±·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese é€šè¿‡ç´¢å¼•è·å–ä¸€ä¸ªTechniqueã€‚
+     * @param index @~english technique index. @~chinese Techniqueç´¢å¼•ã€‚
+     * @return @~english `nullptr` if the index is invalid. @~chinese æ‰¾åˆ°çš„Techniqueï¼Œç´¢å¼•æ— æ•ˆæ—¶è¿”å›ç©ºæŒ‡é’ˆã€‚
      */
     Technique* getTechniqueByIndex(ssize_t index);
 
     /** @~english Gets the Technique used by the Material.
-     * @~chinese »ñÈ¡MaterialÔÚÊ¹ÓÃµÄTechnique¡£
-     * @return @~english Technique used by material. @~chinese Ê¹ÓÃµÄTechnique¡£
+     * @~chinese è·å–Materialåœ¨ä½¿ç”¨çš„Techniqueã€‚
+     * @return @~english Technique used by material. @~chinese ä½¿ç”¨çš„Techniqueã€‚
      */
     Technique* getTechnique() const;
 
     /** @~english Gets the list of Techniques.
-     * @~chinese »ñÈ¡TechniqueÁĞ±í¡£
-     * @return @~english Technique list. @~chinese TechniqueÁĞ±í¡£
+     * @~chinese è·å–Techniqueåˆ—è¡¨ã€‚
+     * @return @~english Technique list. @~chinese Techniqueåˆ—è¡¨ã€‚
      */
     const Vector<Technique*>& getTechniques() const;
 
     /** @~english Gets the number of Techniques in the Material.
-     * @~chinese »ñÈ¡TechniqueµÄÊıÄ¿¡£
-     * @return @~english Technique number. @~chinese TechniqueÊıÄ¿¡£
+     * @~chinese è·å–Techniqueçš„æ•°ç›®ã€‚
+     * @return @~english Technique number. @~chinese Techniqueæ•°ç›®ã€‚
      */
     ssize_t getTechniqueCount() const;
 
     /** @~english Adds a Technique into the Material.
-     * @~chinese Ìí¼ÓÒ»¸öTechnique¡£
-     * @param technique @~english Technique being added. @~chinese ±»Ìí¼ÓµÄTechnique¡£
+     * @~chinese æ·»åŠ ä¸€ä¸ªTechniqueã€‚
+     * @param technique @~english Technique being added. @~chinese è¢«æ·»åŠ çš„Techniqueã€‚
      */
     void addTechnique(Technique* technique);
 
     /** @~english Sets the current technique.
-     * @~chinese ÉèÖÃµ±Ç°Ê¹ÓÃµÄTechnique¡£
-     * @param techniqueName @~english Technique name being current technique. @~chinese ÉèÖÃÎªµ±Ç°TechniqueµÄÃû³Æ¡£
+     * @~chinese è®¾ç½®å½“å‰ä½¿ç”¨çš„Techniqueã€‚
+     * @param techniqueName @~english Technique name being current technique. @~chinese è®¾ç½®ä¸ºå½“å‰Techniqueçš„åç§°ã€‚
      */
     void setTechnique(const std::string& techniqueName);
 
     /** @~english Clone (deep-copy) of the material.
-     * @~chinese ¿½±´²ÄÖÊ£¨Éî¶È¿½±´£©¡£
-     * @return @~english Copy of material. @~chinese ²ÄÖÊµÄ¿½±´¡£
+     * @~chinese æ‹·è´æè´¨ï¼ˆæ·±åº¦æ‹·è´ï¼‰ã€‚
+     * @return @~english Copy of material. @~chinese æè´¨çš„æ‹·è´ã€‚
      */
     virtual Material* clone() const;
 

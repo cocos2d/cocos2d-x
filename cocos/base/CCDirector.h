@@ -68,7 +68,7 @@ namespace experimental
 
 /**
  * @brief @~english Matrix stack type.
- * @~chinese ¾ØÕóÕ»ÀàĞÍ¡£
+ * @~chinese çŸ©é˜µæ ˆç±»å‹ã€‚
  */
 enum class MATRIX_STACK_TYPE
 {
@@ -93,34 +93,34 @@ enum class MATRIX_STACK_TYPE
  
  Since the Director is a singleton, the standard way to use it is by calling:
  * Director::getInstance()->methodName();
- * @~chinese µ¼ÑİÀà£¬¸ºÔğ´´½¨ºÍ´¦ÀíÖ÷´°¿Ú£¬ÒÔ¼°¹ÜÀí³¡¾°Ö´ĞĞ¡£
+ * @~chinese å¯¼æ¼”ç±»ï¼Œè´Ÿè´£åˆ›å»ºå’Œå¤„ç†ä¸»çª—å£ï¼Œä»¥åŠç®¡ç†åœºæ™¯æ‰§è¡Œã€‚
  * 
- * µ¼Ñİ»¹¸ºÔğ:
- * -³õÊ¼»¯OpenGLÉÏÏÂÎÄ
- * -ÉèÖÃOpenGL»º³åÇøÉî¶È(Ä¬ÈÏÊÇ0)
- * -ÉèÖÃÍ¶Ó°(Ä¬ÈÏÊÇ3d)
+ * å¯¼æ¼”è¿˜è´Ÿè´£:
+ * -åˆå§‹åŒ–OpenGLä¸Šä¸‹æ–‡
+ * -è®¾ç½®OpenGLç¼“å†²åŒºæ·±åº¦(é»˜è®¤æ˜¯0)
+ * -è®¾ç½®æŠ•å½±(é»˜è®¤æ˜¯3d)
  * 
  * Since the Director is a singleton, the standard way to use it is by calling:
- * µ¼ÑİÀàÊÇÒ»¸öµ¥Àı£¬±ê×¼µÄµ÷ÓÃ·½·¨ÈçÏÂ£º
+ * å¯¼æ¼”ç±»æ˜¯ä¸€ä¸ªå•ä¾‹ï¼Œæ ‡å‡†çš„è°ƒç”¨æ–¹æ³•å¦‚ä¸‹ï¼š
  * Director::getInstance()- > methodName();
  */
 class CC_DLL Director : public Ref
 {
 public:
-    /** @~english Director will trigger an event when projection type is changed.  @~chinese µ±Í¶Ó°ÀàĞÍ±ä»¯Ê±µ¼Ñİ½«´¥·¢Ò»¸öÊÂ¼ş¡£*/
+    /** @~english Director will trigger an event when projection type is changed.  @~chinese å½“æŠ•å½±ç±»å‹å˜åŒ–æ—¶å¯¼æ¼”å°†è§¦å‘ä¸€ä¸ªäº‹ä»¶ã€‚*/
     static const char* EVENT_PROJECTION_CHANGED;
     /** Director will trigger an event before Schedule::update() is invoked. */
     static const char* EVENT_BEFORE_UPDATE;
-    /** @~english Director will trigger an event after Schedule::update() is invoked.  @~chinese ÔÚµ÷ÓÃSchedule::update()ºóµ¼Ñİ»á´¥·¢Ò»¸öÊÂ¼ş¡£*/
+    /** @~english Director will trigger an event after Schedule::update() is invoked.  @~chinese åœ¨è°ƒç”¨Schedule::update()åå¯¼æ¼”ä¼šè§¦å‘ä¸€ä¸ªäº‹ä»¶ã€‚*/
     static const char* EVENT_AFTER_UPDATE;
-    /** @~english Director will trigger an event after Scene::render() is invoked.  @~chinese ÔÚµ÷ÓÃScene::render()ºóµ¼Ñİ½«´¥·¢Ò»¸öÊÂ¼ş¡£*/
+    /** @~english Director will trigger an event after Scene::render() is invoked.  @~chinese åœ¨è°ƒç”¨Scene::render()åå¯¼æ¼”å°†è§¦å‘ä¸€ä¸ªäº‹ä»¶ã€‚*/
     static const char* EVENT_AFTER_VISIT;
-    /** @~english Director will trigger an event after a scene is drawn, the data is sent to GPU.  @~chinese µ±Ò»¸ö³¡¾°»æÖÆ,Êı¾İ±»·¢ËÍµ½GPUºóµ¼Ñİ½«´¥·¢Ò»¸öÊÂ¼ş¡£*/
+    /** @~english Director will trigger an event after a scene is drawn, the data is sent to GPU.  @~chinese å½“ä¸€ä¸ªåœºæ™¯ç»˜åˆ¶,æ•°æ®è¢«å‘é€åˆ°GPUåå¯¼æ¼”å°†è§¦å‘ä¸€ä¸ªäº‹ä»¶ã€‚*/
     static const char* EVENT_AFTER_DRAW;
 
     /**
      * @brief @~english Possible OpenGL projections used by director
-     * @~chinese µ¼ÑİÊ¹ÓÃµÄ¿ÉÄÜµÄOpenGLÍ¶Ó°ÀàĞÍ
+     * @~chinese å¯¼æ¼”ä½¿ç”¨çš„å¯èƒ½çš„OpenGLæŠ•å½±ç±»å‹
      */
     enum class Projection
     {
@@ -140,7 +140,7 @@ public:
     /** @~english
      * Returns a shared instance of the director. 
      * @~chinese 
-     * ·µ»ØÒ»¸öµ¼ÑİµÄµ¥Àı¡£
+     * è¿”å›ä¸€ä¸ªå¯¼æ¼”çš„å•ä¾‹ã€‚
      * @js _getInstance
      */
     static Director* getInstance();
@@ -165,33 +165,33 @@ public:
 
     // attribute
 
-    /** @~english Gets current running Scene. Director can only run one Scene at a time.  @~chinese µÃµ½µ±Ç°ÔËĞĞ³¡¾°¡£µ¼ÑİÒ»´ÎÖ»ÄÜÔËĞĞÒ»¸ö³¡¾°¡£*/
+    /** @~english Gets current running Scene. Director can only run one Scene at a time.  @~chinese å¾—åˆ°å½“å‰è¿è¡Œåœºæ™¯ã€‚å¯¼æ¼”ä¸€æ¬¡åªèƒ½è¿è¡Œä¸€ä¸ªåœºæ™¯ã€‚*/
     inline Scene* getRunningScene() { return _runningScene; }
 
-    /** @~english Gets the FPS value.  @~chinese µÃµ½ÁËFPSµÄÖµ¡£*/
+    /** @~english Gets the FPS value.  @~chinese å¾—åˆ°äº†FPSçš„å€¼ã€‚*/
     inline float getAnimationInterval() { return _animationInterval; }
-    /** @~english Sets the FPS value. FPS = 1 @~chinese ÉèÖÃFPSµÄÖµ¡£FPS = 1 */
+    /** @~english Sets the FPS value. FPS = 1 @~chinese è®¾ç½®FPSçš„å€¼ã€‚FPS = 1 */
     virtual void setAnimationInterval(float interval) = 0;
 
-    /** @~english Whether or not to display the FPS on the bottom-left corner.  @~chinese ×óÏÂ½ÇÊÇ·ñÓĞÏÔÊ¾FPS¡£*/
+    /** @~english Whether or not to display the FPS on the bottom-left corner.  @~chinese å·¦ä¸‹è§’æ˜¯å¦æœ‰æ˜¾ç¤ºFPSã€‚*/
     inline bool isDisplayStats() { return _displayStats; }
-    /** @~english Display the FPS on the bottom-left corner.  @~chinese ÉèÖÃÊÇ·ñÔÚ×óÏÂ½ÇÏÔÊ¾FPS¡£*/
+    /** @~english Display the FPS on the bottom-left corner.  @~chinese è®¾ç½®æ˜¯å¦åœ¨å·¦ä¸‹è§’æ˜¾ç¤ºFPSã€‚*/
     inline void setDisplayStats(bool displayStats) { _displayStats = displayStats; }
     
-    /** @~english Get seconds per frame.  @~chinese »ñÈ¡Ã¿Ö¡¼ä¸ô¼¸Ãë¡£*/
+    /** @~english Get seconds per frame.  @~chinese è·å–æ¯å¸§é—´éš”å‡ ç§’ã€‚*/
     inline float getSecondsPerFrame() { return _secondsPerFrame; }
 
     /** @~english
      * Get the GLView.
      * @~chinese 
-     * »ñÈ¡GLView¡£
+     * è·å–GLViewã€‚
      * @lua NA
      */
     inline GLView* getOpenGLView() { return _openGLView; }
     /** @~english
      * Sets the GLView. 
      * @~chinese 
-     * ÉèÖÃGLView¡£
+     * è®¾ç½®GLViewã€‚
      * @lua NA
      */
     void setOpenGLView(GLView *openGLView);
@@ -199,48 +199,48 @@ public:
     /*@~english
      * Gets singleton of TextureCache.
      * @~chinese 
-     * »ñÈ¡TextureCacheµ¥Àı¡£
+     * è·å–TextureCacheå•ä¾‹ã€‚
      * @js NA
      */
     TextureCache* getTextureCache() const;
 
-    /** @~english Whether or not `_nextDeltaTimeZero` is set to 0.  @~chinese ¡°_nextDeltaTimeZero¡±ÊÇ·ñÉèÖÃÎª0¡£*/
+    /** @~english Whether or not `_nextDeltaTimeZero` is set to 0.  @~chinese â€œ_nextDeltaTimeZeroâ€æ˜¯å¦è®¾ç½®ä¸º0ã€‚*/
     inline bool isNextDeltaTimeZero() { return _nextDeltaTimeZero; }
     /** @~english
      * Sets the delta time between current frame and next frame is 0.
      * This value will be used in Schedule, and will affect all functions that are using frame delta time, such as Actions.
      * This value will take effect only one time.
      * @~chinese 
-     * ÉèÖÃµ±Ç°Ö¡ºÍÏÂÒ»¸öÖ¡Ö®¼äÊ±¼äÎª0¡£
-     * Õâ¸öÖµÓÃÓÚSchedule,½«»áÓ°ÏìËùÓĞÊ¹ÓÃÖ¡¼ä¸ôÊ±¼äµÄº¯Êı,±ÈÈçActions¡£
-     * Õâ¸öÖµÖ»ÉúĞ§Ò»´Î¡£
+     * è®¾ç½®å½“å‰å¸§å’Œä¸‹ä¸€ä¸ªå¸§ä¹‹é—´æ—¶é—´ä¸º0ã€‚
+     * è¿™ä¸ªå€¼ç”¨äºSchedule,å°†ä¼šå½±å“æ‰€æœ‰ä½¿ç”¨å¸§é—´éš”æ—¶é—´çš„å‡½æ•°,æ¯”å¦‚Actionsã€‚
+     * è¿™ä¸ªå€¼åªç”Ÿæ•ˆä¸€æ¬¡ã€‚
      */
     void setNextDeltaTimeZero(bool nextDeltaTimeZero);
 
-    /** @~english Whether or not the Director is paused.  @~chinese µ¼ÑİÊÇ·ñÔİÍ£¡£*/
+    /** @~english Whether or not the Director is paused.  @~chinese å¯¼æ¼”æ˜¯å¦æš‚åœã€‚*/
     inline bool isPaused() { return _paused; }
 
-    /** @~english How many frames were called since the director started  @~chinese »ñÈ¡µ¼Ñİ¿ªÊ¼ÒÔÀ´ÓÎÏ·ÔËĞĞµÄ×ÜÖ¡Êı¡£*/
+    /** @~english How many frames were called since the director started  @~chinese è·å–å¯¼æ¼”å¼€å§‹ä»¥æ¥æ¸¸æˆè¿è¡Œçš„æ€»å¸§æ•°ã€‚*/
     inline unsigned int getTotalFrames() { return _totalFrames; }
     
     /** @~english Gets an OpenGL projection.
-     * @~chinese »ñÈ¡OpenGLÍ¶Ó°¡£
+     * @~chinese è·å–OpenGLæŠ•å½±ã€‚
      * @since v0.8.2
      * @lua NA
      */
     inline Projection getProjection() { return _projection; }
-    /** @~english Sets OpenGL projection.  @~chinese ÉèÖÃOpenGLÍ¶Ó°¡£*/
+    /** @~english Sets OpenGL projection.  @~chinese è®¾ç½®OpenGLæŠ•å½±ã€‚*/
     void setProjection(Projection projection);
     
-    /** @~english Sets the glViewport. @~chinese ÉèÖÃglViewport¡£*/
+    /** @~english Sets the glViewport. @~chinese è®¾ç½®glViewportã€‚*/
     void setViewport();    
     
     /** @~english Whether or not the replaced scene will receive the cleanup message.
      * If the new scene is pushed, then the old scene won't receive the "cleanup" message.
      * If the new scene replaces the old one, the it will receive the "cleanup" message.
-     * @~chinese ¸ü»»³¡¾°Ê±ÊÇ·ñ½ÓÊÕÇåÀíÏûÏ¢¡£
-     * Èç¹ûĞÂ³¡¾°ÊÇ²ÉÓÃpush·½Ê½½øÈëµÄ£¬ÄÇÃ´¾ÉµÄ³¡¾°½«²»»á½ÓÊÕµ½"cleanup"ÏûÏ¢¡£
-     * Èç¹ûĞÂ³¡¾°È¡´ú¾ÉµÄ³¡¾°,Ëü½«»á½ÓÊÕµ½"cleanup"ÏûÏ¢¡£
+     * @~chinese æ›´æ¢åœºæ™¯æ—¶æ˜¯å¦æ¥æ”¶æ¸…ç†æ¶ˆæ¯ã€‚
+     * å¦‚æœæ–°åœºæ™¯æ˜¯é‡‡ç”¨pushæ–¹å¼è¿›å…¥çš„ï¼Œé‚£ä¹ˆæ—§çš„åœºæ™¯å°†ä¸ä¼šæ¥æ”¶åˆ°"cleanup"æ¶ˆæ¯ã€‚
+     * å¦‚æœæ–°åœºæ™¯å–ä»£æ—§çš„åœºæ™¯,å®ƒå°†ä¼šæ¥æ”¶åˆ°"cleanup"æ¶ˆæ¯ã€‚
      * @since v0.99.0
      */
     inline bool isSendCleanupToScene() { return _sendCleanupToScene; }
@@ -248,46 +248,46 @@ public:
     /** @~english This object will be visited after the main scene is visited.
      * This object MUST implement the "visit" function.
      * Useful to hook a notification object, like Notifications (http://github.com/manucorporat/CCNotifications)
-     * @~chinese Õâ¸ö¶ÔÏó½«»áÔÚÖ÷³¡¾°äÖÈ¾ÍêºóäÖÈ¾¡£
-     * Õâ¸ö¶ÔÏó±ØĞëÊµÏÖ¡°visit¡±¹¦ÄÜ¡£
-     * ¶ÔÓÚhookÒ»¸öÍ¨Öª½ÚµãºÜÓĞÓÃ,±ÈÈç Notifications (http://github.com/manucorporat/CCNotifications)
+     * @~chinese è¿™ä¸ªå¯¹è±¡å°†ä¼šåœ¨ä¸»åœºæ™¯æ¸²æŸ“å®Œåæ¸²æŸ“ã€‚
+     * è¿™ä¸ªå¯¹è±¡å¿…é¡»å®ç°â€œvisitâ€åŠŸèƒ½ã€‚
+     * å¯¹äºhookä¸€ä¸ªé€šçŸ¥èŠ‚ç‚¹å¾ˆæœ‰ç”¨,æ¯”å¦‚ Notifications (http://github.com/manucorporat/CCNotifications)
      * @since v0.99.5
      */
     Node* getNotificationNode() const { return _notificationNode; }
     /** @~english
      * Sets the notification node.
      * @~chinese 
-     * ÉèÖÃÍ¨Öª½Úµã¡£
+     * è®¾ç½®é€šçŸ¥èŠ‚ç‚¹ã€‚
      * @see Director::getNotificationNode()
      */
     void setNotificationNode(Node *node);
     
     // window size
 
-    /** @~english Returns the size of the OpenGL view in points.  @~chinese ·µ»ØOpenGLÊÓÍ¼µÄ´óĞ¡£¬ÒÔµãÎªµ¥Î»¡£*/
+    /** @~english Returns the size of the OpenGL view in points.  @~chinese è¿”å›OpenGLè§†å›¾çš„å¤§å°ï¼Œä»¥ç‚¹ä¸ºå•ä½ã€‚*/
     const Size& getWinSize() const;
 
-    /** @~english Returns the size of the OpenGL view in pixels.  @~chinese ·µ»ØOpenGLÊÓÍ¼ÖĞ´óĞ¡¡£ÒÔÏñËØÎªµ¥Î»¡£*/
+    /** @~english Returns the size of the OpenGL view in pixels.  @~chinese è¿”å›OpenGLè§†å›¾ä¸­å¤§å°ã€‚ä»¥åƒç´ ä¸ºå•ä½ã€‚*/
     Size getWinSizeInPixels() const;
     
     /** @~english
      * Returns visible size of the OpenGL view in points.
      * The value is equal to `Director::getWinSize()` if don't invoke `GLView::setDesignResolutionSize()`.
      * @~chinese 
-     * ·µ»Ø¿É¼ûOpenGLÊÓÍ¼´óĞ¡£¬ÒÔµãÎªµ¥Î»¡£
-     * Èç¹û²»µ÷ÓÃGLView:setDesignResolutionSize"µÄ»°£¬ÆäÖµµÈÓÚ¡°Director::getWinSize()¡±¡£
+     * è¿”å›å¯è§OpenGLè§†å›¾å¤§å°ï¼Œä»¥ç‚¹ä¸ºå•ä½ã€‚
+     * å¦‚æœä¸è°ƒç”¨GLView:setDesignResolutionSize"çš„è¯ï¼Œå…¶å€¼ç­‰äºâ€œDirector::getWinSize()â€ã€‚
      */
     Size getVisibleSize() const;
     
-    /** @~english Returns visible origin coordinate of the OpenGL view in points.  @~chinese ·µ»Ø¿É¼ûOpenGLÊÓÍ¼ÆğÊ¼µã£¬ÒÔµãÎªµ¥Î»¡£*/
+    /** @~english Returns visible origin coordinate of the OpenGL view in points.  @~chinese è¿”å›å¯è§OpenGLè§†å›¾èµ·å§‹ç‚¹ï¼Œä»¥ç‚¹ä¸ºå•ä½ã€‚*/
     Vec2 getVisibleOrigin() const;
 
     /** @~english
      * Converts a screen coordinate to an OpenGL coordinate.
      * Useful to convert (multi) touch coordinates to the current layout (portrait or landscape).
      * @~chinese 
-     * ½«ÆÁÄ»×ø±ê×ª»»ÎªÒ»¸öOpenGL×ø±ê¡£
-     * ¶ÔÓÚ½«(¶àµã)´¥Ãş×ø±ê×ª»»Îªµ±Ç°²¼¾Ö(ºáÏò»ò×İÏò)ºÜÓĞÓÃ¡£
+     * å°†å±å¹•åæ ‡è½¬æ¢ä¸ºä¸€ä¸ªOpenGLåæ ‡ã€‚
+     * å¯¹äºå°†(å¤šç‚¹)è§¦æ‘¸åæ ‡è½¬æ¢ä¸ºå½“å‰å¸ƒå±€(æ¨ªå‘æˆ–çºµå‘)å¾ˆæœ‰ç”¨ã€‚
      */
     Vec2 convertToGL(const Vec2& point);
 
@@ -295,8 +295,8 @@ public:
      * Converts an OpenGL coordinate to a screen coordinate.
      * Useful to convert node points to window points for calls such as glScissor.
      * @~chinese 
-     * ×ª»»Ò»¸öOpenGL×ø±êµ½ÆÁÄ»×ø±ê¡£
-     * ¶ÔÓÚ±ÈÈçglScissorµ÷ÓÃ½«nodeµã×ª»»µ½´°¿ÚµãºÜÓĞÓÃ¡£
+     * è½¬æ¢ä¸€ä¸ªOpenGLåæ ‡åˆ°å±å¹•åæ ‡ã€‚
+     * å¯¹äºæ¯”å¦‚glScissorè°ƒç”¨å°†nodeç‚¹è½¬æ¢åˆ°çª—å£ç‚¹å¾ˆæœ‰ç”¨ã€‚
      */
     Vec2 convertToUI(const Vec2& point);
 
@@ -304,8 +304,8 @@ public:
      * Gets the distance between  camera and near clipping frame.
      * It is correct for default camera that near clipping frame is the same as screen.
      * @~chinese 
-     * »ñÈ¡cameraµ½near clipping frameµÄ¾àÀë¡£
-     * Ä¬ÈÏµÄcamera£¬near clipping frameÊÇºÍscreenÒ»ÑùµÄ¡£
+     * è·å–cameraåˆ°near clipping frameçš„è·ç¦»ã€‚
+     * é»˜è®¤çš„cameraï¼Œnear clipping frameæ˜¯å’Œscreenä¸€æ ·çš„ã€‚
      */
     float getZEye() const;
 
@@ -318,11 +318,11 @@ public:
      *
      * It will call pushScene: and then it will call startAnimation
      * @~chinese 
-     * Í¨¹ı¸ø¶¨µÄ³¡¾°½øÈëµ¼ÑİµÄÖ÷Ñ­»·¡£
-     * Ö»ÄÜÔÚÔËĞĞÄãµÄµÚÒ»¸ö³¡¾°µ÷ÓÃËü¡£
-     * ËüÈç¹ûÒÑ¾­ÓĞÒ»¸öÕıÔÚÔËĞĞµÄ³¡¾°²»Òªµ÷ÓÃËü¡£
+     * é€šè¿‡ç»™å®šçš„åœºæ™¯è¿›å…¥å¯¼æ¼”çš„ä¸»å¾ªç¯ã€‚
+     * åªèƒ½åœ¨è¿è¡Œä½ çš„ç¬¬ä¸€ä¸ªåœºæ™¯è°ƒç”¨å®ƒã€‚
+     * å®ƒå¦‚æœå·²ç»æœ‰ä¸€ä¸ªæ­£åœ¨è¿è¡Œçš„åœºæ™¯ä¸è¦è°ƒç”¨å®ƒã€‚
      * 
-     * Ëü½«µ÷ÓÃpushScene:È»ºó½«µ÷ÓÃstartAnimation
+     * å®ƒå°†è°ƒç”¨pushScene:ç„¶åå°†è°ƒç”¨startAnimation
      * @js NA
      */
     void runWithScene(Scene *scene);
@@ -333,10 +333,10 @@ public:
      * Try to avoid big stacks of pushed scenes to reduce memory allocation. 
      * ONLY call it if there is a running scene.
      * @~chinese 
-     * ÔİÍ£µ±Ç°ÔËĞĞµÄ³¡¾°,Ñ¹Èëµ½ÔİÍ£µÄ³¡¾°Õ»ÖĞ¡£
-     * ĞÂ³¡¾°½«±»Ö´ĞĞ¡£
-     * ¾¡Á¿±ÜÃâÑ¹Èë´ó³¡¾°,ÒÔ¼õÉÙÄÚ´æ·ÖÅä¡£
-     * Ö»ÄÜÔÚÓĞÔËĞĞ³¡¾°Ê±µ÷ÓÃËü¡£
+     * æš‚åœå½“å‰è¿è¡Œçš„åœºæ™¯,å‹å…¥åˆ°æš‚åœçš„åœºæ™¯æ ˆä¸­ã€‚
+     * æ–°åœºæ™¯å°†è¢«æ‰§è¡Œã€‚
+     * å°½é‡é¿å…å‹å…¥å¤§åœºæ™¯,ä»¥å‡å°‘å†…å­˜åˆ†é…ã€‚
+     * åªèƒ½åœ¨æœ‰è¿è¡Œåœºæ™¯æ—¶è°ƒç”¨å®ƒã€‚
      */
     void pushScene(Scene *scene);
 
@@ -346,10 +346,10 @@ public:
      * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
      * ONLY call it if there is a running scene.
      * @~chinese 
-     * ´Ó¶ÑÕ»ÖĞµ¯³öÁËÒ»¸ö³¡¾°¡£
-     * ÕâÒ»³¡¾°½«»áÈ¡´úµ±Ç°ÔËĞĞµÄ³¡¾°¡£
-     * ÔËĞĞ³¡¾°½«±»É¾³ı¡£Èç¹û³¡¾°Õ»Ã»ÓĞ¸ü¶àµÄ³¡¾°µÄ»°Ö´ĞĞ½«±»ÖÕÖ¹¡£
-     * Ö»ÄÜÔÚÓĞÔËĞĞ³¡¾°Ê±µ÷ÓÃËü¡£
+     * ä»å †æ ˆä¸­å¼¹å‡ºäº†ä¸€ä¸ªåœºæ™¯ã€‚
+     * è¿™ä¸€åœºæ™¯å°†ä¼šå–ä»£å½“å‰è¿è¡Œçš„åœºæ™¯ã€‚
+     * è¿è¡Œåœºæ™¯å°†è¢«åˆ é™¤ã€‚å¦‚æœåœºæ™¯æ ˆæ²¡æœ‰æ›´å¤šçš„åœºæ™¯çš„è¯æ‰§è¡Œå°†è¢«ç»ˆæ­¢ã€‚
+     * åªèƒ½åœ¨æœ‰è¿è¡Œåœºæ™¯æ—¶è°ƒç”¨å®ƒã€‚
      */
     void popScene();
 
@@ -358,9 +358,9 @@ public:
      * This scene will replace the running one.
      * Internally it will call `popToSceneStackLevel(1)`.
      * @~chinese 
-     * ´Ó¶ÑÕ»ÖĞµ¯³öËùÓĞ³¡¾°£¬µ½¸ù³¡¾°¡£
-     * ÕâÒ»³¡¾°½«»áÈ¡´úµ±Ç°ÔËĞĞµÄ³¡¾°¡£
-     * ÄÚ²¿»áµ÷ÓÃ¡°popToSceneStackLevel(1)¡±¡£
+     * ä»å †æ ˆä¸­å¼¹å‡ºæ‰€æœ‰åœºæ™¯ï¼Œåˆ°æ ¹åœºæ™¯ã€‚
+     * è¿™ä¸€åœºæ™¯å°†ä¼šå–ä»£å½“å‰è¿è¡Œçš„åœºæ™¯ã€‚
+     * å†…éƒ¨ä¼šè°ƒç”¨â€œpopToSceneStackLevel(1)â€ã€‚
      */
     void popToRootScene();
 
@@ -368,23 +368,23 @@ public:
      If level is 0, it will end the director.
      If level is 1, it will pop all scenes until it reaches to root scene.
      If level is <= than the current stack level, it won't do anything.
-     * @~chinese ´Ó¶ÑÕ»ÖĞµ¯³öËùÓĞ³¡¾°,Ö±µ½µ½´ïµÚ¡°level¡±¸ö¡£
-     * Èç¹û¼¶±ğÎª0,Ëü½«½áÊøµ¼ÑİµÄÖ´ĞĞ¡£
-     * Èç¹û¼¶±ğÊÇ1,ÄÇÃ´Ëü½«µ¯³öËùÓĞ³¡¾°,Ö±µ½µ½´ï¸ùµÄ³¡¾°¡£
-     * Èç¹û¼¶±ğĞ¡ÓÚµÈÓÚ±Èµ±Ç°¶ÑÕ»¼¶±ğ,Ëü²»»á×öÈÎºÎÊÂÇé¡£
+     * @~chinese ä»å †æ ˆä¸­å¼¹å‡ºæ‰€æœ‰åœºæ™¯,ç›´åˆ°åˆ°è¾¾ç¬¬â€œlevelâ€ä¸ªã€‚
+     * å¦‚æœçº§åˆ«ä¸º0,å®ƒå°†ç»“æŸå¯¼æ¼”çš„æ‰§è¡Œã€‚
+     * å¦‚æœçº§åˆ«æ˜¯1,é‚£ä¹ˆå®ƒå°†å¼¹å‡ºæ‰€æœ‰åœºæ™¯,ç›´åˆ°åˆ°è¾¾æ ¹çš„åœºæ™¯ã€‚
+     * å¦‚æœçº§åˆ«å°äºç­‰äºæ¯”å½“å‰å †æ ˆçº§åˆ«,å®ƒä¸ä¼šåšä»»ä½•äº‹æƒ…ã€‚
      */
  	void popToSceneStackLevel(int level);
 
     /** @~english Replaces the running scene with a new one. The running scene is terminated.
      * ONLY call it if there is a running scene.
-     * @~chinese ÓÃĞÂµÄ³¡¾°Ìæ»»ÔËĞĞ³¡¾°¡£ÖÕÖ¹ÕıÔÚÔËĞĞµÄ³¡¾°¡£
-     * Ö»ÄÜÔÚÓĞÔËĞĞ³¡¾°Ê±µ÷ÓÃËü¡£
+     * @~chinese ç”¨æ–°çš„åœºæ™¯æ›¿æ¢è¿è¡Œåœºæ™¯ã€‚ç»ˆæ­¢æ­£åœ¨è¿è¡Œçš„åœºæ™¯ã€‚
+     * åªèƒ½åœ¨æœ‰è¿è¡Œåœºæ™¯æ—¶è°ƒç”¨å®ƒã€‚
      * @js NA
      */
     void replaceScene(Scene *scene);
 
     /** @~english Ends the execution, releases the running scene.
-     * @~chinese Ö´ĞĞ½áÊø,ÊÍ·ÅÔËĞĞ³¡¾°¡£
+     * @~chinese æ‰§è¡Œç»“æŸ,é‡Šæ”¾è¿è¡Œåœºæ™¯ã€‚
      * @lua endToLua
      */
     void end();
@@ -392,49 +392,49 @@ public:
     /** @~english Pauses the running scene.
      * The running scene will be drawed, but all scheduled timers will be paused.
      * While paused, the draw rate will be 4 FPS to reduce CPU consumption.
-     * @~chinese ÔİÍ£ÕıÔÚÔËĞĞµÄ³¡¾°¡£
-     * ÔËĞĞ³¡¾°½«»æÖÆ£¬µ«ËùÓĞscheduled timers½«ÔİÍ£¡£
-     * Ò»µ©ÔİÍ£,FPS½«»á½µµ½½«4ÒÔ¼õÉÙCPUÏûºÄ¡£
+     * @~chinese æš‚åœæ­£åœ¨è¿è¡Œçš„åœºæ™¯ã€‚
+     * è¿è¡Œåœºæ™¯å°†ç»˜åˆ¶ï¼Œä½†æ‰€æœ‰scheduled timerså°†æš‚åœã€‚
+     * ä¸€æ—¦æš‚åœ,FPSå°†ä¼šé™åˆ°å°†4ä»¥å‡å°‘CPUæ¶ˆè€—ã€‚
      */
     void pause();
 
     /** @~english Resumes the paused scene.
      * The scheduled timers will be activated again.
      * The "delta time" will be 0 (as if the game wasn't paused).
-     * @~chinese »Ö¸´ÔİÍ£³¡¾°¡£
-     * scheduled timers½«ÔÙ´Î±»¼¤»î¡£
-     * ¡°delta time¡±½«»áÎª0(¾ÍÏñÊÇÓÎÏ·Ã»ÓĞÔİÍ£Ò»Ñù)¡£
+     * @~chinese æ¢å¤æš‚åœåœºæ™¯ã€‚
+     * scheduled timerså°†å†æ¬¡è¢«æ¿€æ´»ã€‚
+     * â€œdelta timeâ€å°†ä¼šä¸º0(å°±åƒæ˜¯æ¸¸æˆæ²¡æœ‰æš‚åœä¸€æ ·)ã€‚
      */
     void resume();
     
     /*@~english
      * Restart the director. 
      * @~chinese 
-     * ÖØĞÂÆô¶¯µ¼Ñİ¡£
+     * é‡æ–°å¯åŠ¨å¯¼æ¼”ã€‚
      * @js NA
      */
     void restart();
 
     /** @~english Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
      * If you don't want to pause your animation call [pause] instead.
-     * @~chinese Í£Ö¹¶¯»­¡£²»½øĞĞ»æÖÆ¡£Ö÷Ñ­»·²»»áÔÙ±»´¥·¢¡£
-     * Èç¹ûÄã²»ÏëÔİÍ£¶¯»­£¬Çëµ÷ÓÃ[pause]¡£
+     * @~chinese åœæ­¢åŠ¨ç”»ã€‚ä¸è¿›è¡Œç»˜åˆ¶ã€‚ä¸»å¾ªç¯ä¸ä¼šå†è¢«è§¦å‘ã€‚
+     * å¦‚æœä½ ä¸æƒ³æš‚åœåŠ¨ç”»ï¼Œè¯·è°ƒç”¨[pause]ã€‚
      */
     virtual void stopAnimation() = 0;
 
     /** @~english The main loop is triggered again.
      * Call this function only if [stopAnimation] was called earlier.
-     * @~chinese Ö÷Ñ­»·´¥·¢Ò»´Î¡£
-     * Ö»ÓĞÖ®Ç°µ÷ÓÃ¹ıstopAnimation£¬²ÅÄÜµ÷ÓÃÕâ¸öº¯Êı¡£
+     * @~chinese ä¸»å¾ªç¯è§¦å‘ä¸€æ¬¡ã€‚
+     * åªæœ‰ä¹‹å‰è°ƒç”¨è¿‡stopAnimationï¼Œæ‰èƒ½è°ƒç”¨è¿™ä¸ªå‡½æ•°ã€‚
      * @warning @~english Don't call this function to start the main loop. To run the main loop call runWithScene.
-     * @~chinese ²»µ÷ÓÃÕâ¸öº¯ÊıÀ´¿ªÊ¼Ö÷Ñ­»·¡£Çëµ÷ÓÃrunWithSceneÀ´¿ªÊ¼Ö÷Ñ­»·¡£
+     * @~chinese ä¸è°ƒç”¨è¿™ä¸ªå‡½æ•°æ¥å¼€å§‹ä¸»å¾ªç¯ã€‚è¯·è°ƒç”¨runWithSceneæ¥å¼€å§‹ä¸»å¾ªç¯ã€‚
      */
     virtual void startAnimation() = 0;
 
     /** @~english Draw the scene.
      * This method is called every frame. Don't call it manually.
-     * @~chinese »æÖÆ³¡¾°¡£
-     * Ã¿Ò»Ö¡¶¼»áµ÷ÓÃ´Ë·½·¨¡£²»ÒªÊÖ¶¯µ÷ÓÃËü¡£
+     * @~chinese ç»˜åˆ¶åœºæ™¯ã€‚
+     * æ¯ä¸€å¸§éƒ½ä¼šè°ƒç”¨æ­¤æ–¹æ³•ã€‚ä¸è¦æ‰‹åŠ¨è°ƒç”¨å®ƒã€‚
      */
     void drawScene();
 
@@ -442,37 +442,37 @@ public:
 
     /** @~english Removes all cocos2d cached data.
      * It will purge the TextureCache, SpriteFrameCache, LabelBMFont cache
-     * @~chinese É¾³ıËùÓĞcocos2d»º´æµÄÊı¾İ¡£
-     * Ëü½«Çå³ıTextureCache£¬SpriteFrameCache£¬LabelBMFont»º´æ
+     * @~chinese åˆ é™¤æ‰€æœ‰cocos2dç¼“å­˜çš„æ•°æ®ã€‚
+     * å®ƒå°†æ¸…é™¤TextureCacheï¼ŒSpriteFrameCacheï¼ŒLabelBMFontç¼“å­˜
      * @since v0.99.3
      */
     void purgeCachedData();
 
-	/** @~english Sets the default values based on the Configuration info.  @~chinese ¸ù¾İConfigurationĞÅÏ¢ÉèÖÃÄ¬ÈÏÖµ¡£*/
+	/** @~english Sets the default values based on the Configuration info.  @~chinese æ ¹æ®Configurationä¿¡æ¯è®¾ç½®é»˜è®¤å€¼ã€‚*/
     void setDefaultValues();
 
     // OpenGL Helper
 
     /** @~english Sets the OpenGL default values.
      * It will enable alpha blending, disable depth test.
-     * @~chinese ÉèÖÃOpenGLÄ¬ÈÏÖµ¡£
-     * Ëü½«ÆôÓÃalpha blending£¬½ûÓÃÉî¶È²âÊÔ¡£
+     * @~chinese è®¾ç½®OpenGLé»˜è®¤å€¼ã€‚
+     * å®ƒå°†å¯ç”¨alpha blendingï¼Œç¦ç”¨æ·±åº¦æµ‹è¯•ã€‚
      * @js NA
      */
     void setGLDefaultValues();
 
-    /** @~english Enables/disable alpha blending @~chinese ÆôÓÃ/½ûÓÃalpha blending */
+    /** @~english Enables/disable alpha blending @~chinese å¯ç”¨/ç¦ç”¨alpha blending */
     void setAlphaBlending(bool on);
     
     /** @~english Sets clear values for the color buffers,
      * value range of each element is [0.0, 1.0].
-     * @~chinese ÉèÖÃÉ«»º³åÇøµÄÇå³ıÖµ,
-     * Ã¿¸öÔªËØµÄÖµ·¶Î§ÊÇ[0.0,1.0]¡£
+     * @~chinese è®¾ç½®è‰²ç¼“å†²åŒºçš„æ¸…é™¤å€¼,
+     * æ¯ä¸ªå…ƒç´ çš„å€¼èŒƒå›´æ˜¯[0.0,1.0]ã€‚
      * @js NA
      */
     void setClearColor(const Color4F& clearColor);
 
-    /** @~english Enable/disable depth test @~chinese ÆôÓÃ/½ûÓÃÉî¶È²âÊÔ  */
+    /** @~english Enable/disable depth test @~chinese å¯ç”¨/ç¦ç”¨æ·±åº¦æµ‹è¯•  */
     void setDepthTest(bool on);
 
     virtual void mainLoop() = 0;
@@ -480,78 +480,78 @@ public:
     /** @~english The size in pixels of the surface. It could be different than the screen size.
      * High-res devices might have a higher surface size than the screen size.
      * Only available when compiled using SDK >= 4.0.
-     * @~chinese surfaceµÄ´óĞ¡(ÒÔÏñËØÎªµ¥Î»)¡£Ëü¿ÉÄÜ»áÆÁÄ»´óĞ¡²»Í¬¡£
-     * ¸ß·Ö±æÂÊµÄÉè±¸±ÈÆğÆÁÄ»³ß´ç´óĞ¡£¬Ëü¿ÉÄÜÓĞÒ»¸ö¸ü¸ßµÄsurface¡£
-     * Ö»ÓĞµ±Ê¹ÓÃ´óÓÚ4.0µÄSDK±àÒë²ÅÓĞĞ§¡£
+     * @~chinese surfaceçš„å¤§å°(ä»¥åƒç´ ä¸ºå•ä½)ã€‚å®ƒå¯èƒ½ä¼šå±å¹•å¤§å°ä¸åŒã€‚
+     * é«˜åˆ†è¾¨ç‡çš„è®¾å¤‡æ¯”èµ·å±å¹•å°ºå¯¸å¤§å°ï¼Œå®ƒå¯èƒ½æœ‰ä¸€ä¸ªæ›´é«˜çš„surfaceã€‚
+     * åªæœ‰å½“ä½¿ç”¨å¤§äº4.0çš„SDKç¼–è¯‘æ‰æœ‰æ•ˆã€‚
      * @since v0.99.4
      */
     void setContentScaleFactor(float scaleFactor);
     /**@~english
      * Gets content scale factor.
      * @~chinese 
-     * »ñÈ¡ÄÚÈİËõ·Å±ÈÀı¡£
+     * è·å–å†…å®¹ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @see Director::setContentScaleFactor()
      */
     float getContentScaleFactor() const { return _contentScaleFactor; }
 
     /** @~english Gets the Scheduler associated with this director.
-     * @~chinese »ñÈ¡ºÍµ¼ÑİÏà¹ØÁªµÄµ÷¶ÈÆ÷¡£
+     * @~chinese è·å–å’Œå¯¼æ¼”ç›¸å…³è”çš„è°ƒåº¦å™¨ã€‚
      * @since v2.0
      */
     Scheduler* getScheduler() const { return _scheduler; }
     
     /** @~english Sets the Scheduler associated with this director.
-     * @~chinese ÉèÖÃºÍµ¼ÑİÏà¹ØÁªµÄµ÷¶ÈÆ÷¡£
+     * @~chinese è®¾ç½®å’Œå¯¼æ¼”ç›¸å…³è”çš„è°ƒåº¦å™¨ã€‚
      * @since v2.0
      */
     void setScheduler(Scheduler* scheduler);
 
     /** @~english Gets the ActionManager associated with this director.
-     * @~chinese »ñÈ¡ºÍµ¼ÑİÏà¹ØÁªµÄ¶¯×÷¹ÜÀíÆ÷¡£
+     * @~chinese è·å–å’Œå¯¼æ¼”ç›¸å…³è”çš„åŠ¨ä½œç®¡ç†å™¨ã€‚
      * @since v2.0
      */
     ActionManager* getActionManager() const { return _actionManager; }
     
     /** @~english Sets the ActionManager associated with this director.
-     * @~chinese ÉèÖÃºÍµ¼ÑİÏà¹ØÁªµÄ¶¯×÷¹ÜÀíÆ÷¡£
+     * @~chinese è®¾ç½®å’Œå¯¼æ¼”ç›¸å…³è”çš„åŠ¨ä½œç®¡ç†å™¨ã€‚
      * @since v2.0
      */
     void setActionManager(ActionManager* actionManager);
     
     /** @~english Gets the EventDispatcher associated with this director.
-     * @~chinese »ñÈ¡ºÍµ¼ÑİÏà¹ØÁªµÄÊÂ¼ş·Ö·¢Æ÷¡£
+     * @~chinese è·å–å’Œå¯¼æ¼”ç›¸å…³è”çš„äº‹ä»¶åˆ†å‘å™¨ã€‚
      * @since v3.0
      * @js NA
      */
     EventDispatcher* getEventDispatcher() const { return _eventDispatcher; }
     
     /** @~english Sets the EventDispatcher associated with this director.
-     * @~chinese ÉèÖÃºÍµ¼ÑİÏà¹ØÁªµÄÊÂ¼ş·Ö·¢Æ÷¡£
+     * @~chinese è®¾ç½®å’Œå¯¼æ¼”ç›¸å…³è”çš„äº‹ä»¶åˆ†å‘å™¨ã€‚
      * @since v3.0
      * @js NA
      */
     void setEventDispatcher(EventDispatcher* dispatcher);
 
     /** @~english Returns the Renderer associated with this director.
-     * @~chinese »ñÈ¡ºÍµ¼ÑİÏà¹ØÁªµÄäÖÈ¾Æ÷¡£
+     * @~chinese è·å–å’Œå¯¼æ¼”ç›¸å…³è”çš„æ¸²æŸ“å™¨ã€‚
      * @since v3.0
      */
     Renderer* getRenderer() const { return _renderer; }
 
     /** @~english Returns the Console associated with this director.
-     * @~chinese »ñÈ¡ºÍµ¼ÑİÏà¹ØÁªµÄ¿ØÖÆÌ¨¡£
+     * @~chinese è·å–å’Œå¯¼æ¼”ç›¸å…³è”çš„æ§åˆ¶å°ã€‚
      * @since v3.0
      * @js NA
      */
     Console* getConsole() const { return _console; }
 
-    /* @~english Gets delta time since last tick to main loop.  @~chinese »ñÈ¡mainloop¾àÉÏÒ»¸ötickµÄÊ±¼ä¼ä¸ô¡£*/
+    /* @~english Gets delta time since last tick to main loop.  @~chinese è·å–mainloopè·ä¸Šä¸€ä¸ªtickçš„æ—¶é—´é—´éš”ã€‚*/
     float getDeltaTime() const;
     
     /**@~english
      *  Gets Frame Rate.
      * @~chinese 
-     * »ñÈ¡Ö¡ËÙÂÊ¡£
+     * è·å–å¸§é€Ÿç‡ã€‚
      * @js NA
      */
     float getFrameRate() const { return _frameRate; }
@@ -559,17 +559,17 @@ public:
     /** @~english
      * Clones a specified type matrix and put it to the top of specified type of matrix stack.
      * @~chinese 
-     * ¿ËÂ¡Ò»¸öÖ¸¶¨ÀàĞÍµÄ¾ØÕó,°ÑËü·Åµ½Ö¸¶¨ÀàĞÍµÄ¾ØÕó¶ÑÕ»µÄ¶¥²¿¡£
+     * å…‹éš†ä¸€ä¸ªæŒ‡å®šç±»å‹çš„çŸ©é˜µ,æŠŠå®ƒæ”¾åˆ°æŒ‡å®šç±»å‹çš„çŸ©é˜µå †æ ˆçš„é¡¶éƒ¨ã€‚
      * @js NA
      */
     void pushMatrix(MATRIX_STACK_TYPE type);
     /** @~english Pops the top matrix of the specified type of matrix stack.
-     * @~chinese µ¯³öÖ¸¶¨ÀàĞÍµÄ¾ØÕó¶ÑÕ»µÄ¶¥²¿¾ØÕó¡£
+     * @~chinese å¼¹å‡ºæŒ‡å®šç±»å‹çš„çŸ©é˜µå †æ ˆçš„é¡¶éƒ¨çŸ©é˜µã€‚
      * @js NA
      */
     void popMatrix(MATRIX_STACK_TYPE type);
     /** @~english Adds an identity matrix to the top of specified type of matrxi stack.
-     * @~chinese ¸øÖ¸¶¨ÀàĞÍµÄ¾ØÕó¶ÑÕ»µÄ¶¥²¿Ìí¼ÓÒ»¸öµ¥Î»¾ØÕó¡£
+     * @~chinese ç»™æŒ‡å®šç±»å‹çš„çŸ©é˜µå †æ ˆçš„é¡¶éƒ¨æ·»åŠ ä¸€ä¸ªå•ä½çŸ©é˜µã€‚
      * @js NA
      */
     void loadIdentityMatrix(MATRIX_STACK_TYPE type);
@@ -577,12 +577,12 @@ public:
      * Adds a matrix to the top of specified type of matrix stack.
      * 
      * @~chinese 
-     * ¸øÖ¸¶¨ÀàĞÍµÄ¾ØÕó¶ÑÕ»µÄ¶¥²¿Ìí¼ÓÒ»¸ö¾ØÕó¡£
+     * ç»™æŒ‡å®šç±»å‹çš„çŸ©é˜µå †æ ˆçš„é¡¶éƒ¨æ·»åŠ ä¸€ä¸ªçŸ©é˜µã€‚
      * 
      * @param type @~english Matrix type.
-     * @~chinese ¾ØÕóÀàĞÍ¡£
+     * @~chinese çŸ©é˜µç±»å‹ã€‚
      * @param mat @~english The matrix that to be added.
-     * @~chinese ÒªÌí¼ÓµÄ¾ØÕó¡£
+     * @~chinese è¦æ·»åŠ çš„çŸ©é˜µã€‚
      * @js NA
      */
     void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
@@ -590,26 +590,26 @@ public:
      * Multiplies a matrix to the top of specified type of matrix stack.
      *
      * @~chinese 
-     * ¶ÔÖ¸¶¨ÀàĞÍµÄ¾ØÕó¶ÑÕ»µÄ¶¥²¿¾ØÕó½øĞĞ³Ë·¨ÔËËã¡£
+     * å¯¹æŒ‡å®šç±»å‹çš„çŸ©é˜µå †æ ˆçš„é¡¶éƒ¨çŸ©é˜µè¿›è¡Œä¹˜æ³•è¿ç®—ã€‚
      * 
      * @param type @~english Matrix type.
-     * @~chinese ¾ØÕóÀàĞÍ¡£
+     * @~chinese çŸ©é˜µç±»å‹ã€‚
      * @param mat @~english The matrix that to be multipied.
-     * @~chinese Òª½øĞĞ³Ë·¨ÔËËãµÄ¾ØÕó¡£
+     * @~chinese è¦è¿›è¡Œä¹˜æ³•è¿ç®—çš„çŸ©é˜µã€‚
      * @js NA
      */
     void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
     /**@~english
      * Gets the top matrix of specified type of matrix stack.
      * @~chinese 
-     * »ñÈ¡Ö¸¶¨ÀàĞÍµÄ¾ØÕó¶ÑÕ»¶¥²¿µÄ¾ØÕó¡£
+     * è·å–æŒ‡å®šç±»å‹çš„çŸ©é˜µå †æ ˆé¡¶éƒ¨çš„çŸ©é˜µã€‚
      * @js NA
      */
     const Mat4& getMatrix(MATRIX_STACK_TYPE type);
     /**@~english
      * Clears all types of matrix stack, and add indentity matrix to these matrix stacks.
      * @~chinese 
-     * Çå³ıËùÓĞÀàĞÍµÄ¾ØÕó¶ÑÕ»,²¢Ìí¼Óµ¥Î»¾ØÕóµ½ÕâĞ©¾ØÕóÕ»¡£
+     * æ¸…é™¤æ‰€æœ‰ç±»å‹çš„çŸ©é˜µå †æ ˆ,å¹¶æ·»åŠ å•ä½çŸ©é˜µåˆ°è¿™äº›çŸ©é˜µæ ˆã€‚
      * @js NA
      */
     void resetMatrixStack();
@@ -636,7 +636,7 @@ protected:
     void calculateMPF();
     void getFPSImageData(unsigned char** datapointer, ssize_t* length);
     
-    /** @~english calculates delta time since last time it was called  @~chinese ¼ÆËãÈı½ÇÖŞ×ÔÉÏ´Î±»³ÆÎª*/    
+    /** @~english calculates delta time since last time it was called  @~chinese è®¡ç®—ä¸‰è§’æ´²è‡ªä¸Šæ¬¡è¢«ç§°ä¸º*/    
     void calculateDeltaTime();
 
     //textureCache creation or release
@@ -650,29 +650,29 @@ protected:
     std::stack<Mat4> _textureMatrixStack;
 
     /** @~english Scheduler associated with this director
-     * @~chinese µ÷¶ÈÆ÷Óë´ËÏà¹Ø
+     * @~chinese è°ƒåº¦å™¨ä¸æ­¤ç›¸å…³
      @since v2.0
      */
     Scheduler *_scheduler;
     
     /** @~english ActionManager associated with this director
-     * @~chinese ActionManagerÓë´ËÏà¹Ø
+     * @~chinese ActionManagerä¸æ­¤ç›¸å…³
      @since v2.0
      */
     ActionManager *_actionManager;
     
     /** @~english EventDispatcher associated with this director
-     * @~chinese EventDispatcherÓë´ËÏà¹Ø
+     * @~chinese EventDispatcherä¸æ­¤ç›¸å…³
      @since v3.0
      */
     EventDispatcher* _eventDispatcher;
     EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventBeforeUpdate, *_eventAfterUpdate;
         
-    /* @~english delta time since last tick to main loop  @~chinese Èı½ÇÖŞ×ÔÈ¥Äêòç³æÖ÷Ñ­»·*/
+    /* @~english delta time since last tick to main loop  @~chinese ä¸‰è§’æ´²è‡ªå»å¹´èœ±è™«ä¸»å¾ªç¯*/
 	float _deltaTime;
     
     /* @~english The _openGLView, where everything is rendered, GLView is a abstract class,cocos2d-x provide GLViewImpl
-     * @~chinese _openGLView,Ò»ÇĞ³ÊÏÖ,GLViewÊÇÒ»¸ö³éÏóÀà,cocos2d-xÌá¹©GLViewImpl
+     * @~chinese _openGLView,ä¸€åˆ‡å‘ˆç°,GLViewæ˜¯ä¸€ä¸ªæŠ½è±¡ç±»,cocos2d-xæä¾›GLViewImpl
      which inherit from it as default renderer context,you can have your own by inherit from it*/
     GLView *_openGLView;
 
@@ -682,7 +682,7 @@ protected:
     float _animationInterval;
     float _oldAnimationInterval;
 
-    /* @~english landscape mode ?  @~chinese ¾°¹ÛÄ£Ê½?*/
+    /* @~english landscape mode ?  @~chinese æ™¯è§‚æ¨¡å¼?*/
     bool _landscape;
     
     bool _displayStats;
@@ -693,52 +693,52 @@ protected:
     LabelAtlas *_drawnBatchesLabel;
     LabelAtlas *_drawnVerticesLabel;
     
-    /** @~english Whether or not the Director is paused  @~chinese µ¼ÑİÊÇ·ñÔİÍ£*/
+    /** @~english Whether or not the Director is paused  @~chinese å¯¼æ¼”æ˜¯å¦æš‚åœ*/
     bool _paused;
 
-    /* @~english How many frames were called since the director started  @~chinese µ¼Ñİ¿ªÊ¼ÒÔÀ´ÓĞ¶àÉÙÖ¡±»³ÆÎª*/
+    /* @~english How many frames were called since the director started  @~chinese å¯¼æ¼”å¼€å§‹ä»¥æ¥æœ‰å¤šå°‘å¸§è¢«ç§°ä¸º*/
     unsigned int _totalFrames;
     float _secondsPerFrame;
     
-    /* @~english The running scene  @~chinese ÔËĞĞ³¡¾°*/
+    /* @~english The running scene  @~chinese è¿è¡Œåœºæ™¯*/
     Scene *_runningScene;
     
     /* @~english will be the next 'runningScene' in the next frame
-     * @~chinese ½«³ÉÎªÏÂÒ»¸ö¡°runningScene¡±ÏÂÒ»¸ö¿ò¼Ü
+     * @~chinese å°†æˆä¸ºä¸‹ä¸€ä¸ªâ€œrunningSceneâ€ä¸‹ä¸€ä¸ªæ¡†æ¶
      nextScene is a weak reference. */
     Scene *_nextScene;
     
-    /* @~english If true, then "old" scene will receive the cleanup message  @~chinese Èç¹ûÕâÊÇÕæµÄ,ÄÇÃ´¡°¾É¡±µÄ³¡¾°½«µÃµ½ÇåÀíµÄÏûÏ¢*/
+    /* @~english If true, then "old" scene will receive the cleanup message  @~chinese å¦‚æœè¿™æ˜¯çœŸçš„,é‚£ä¹ˆâ€œæ—§â€çš„åœºæ™¯å°†å¾—åˆ°æ¸…ç†çš„æ¶ˆæ¯*/
     bool _sendCleanupToScene;
 
-    /* @~english scheduled scenes  @~chinese Ô¤¶¨µÄ³¡¾°*/
+    /* @~english scheduled scenes  @~chinese é¢„å®šçš„åœºæ™¯*/
     Vector<Scene*> _scenesStack;
     
-    /* @~english last time the main loop was updated  @~chinese ×îºóÒ»´Î¸üĞÂÖ÷Ñ­»·*/
+    /* @~english last time the main loop was updated  @~chinese æœ€åä¸€æ¬¡æ›´æ–°ä¸»å¾ªç¯*/
     struct timeval *_lastUpdate;
 
-    /* @~english whether or not the next delta time will be zero  @~chinese ÊÇ·ñÏÂÒ»¸öÔöÁ¿Ê±¼ä½«ÊÇÁã*/
+    /* @~english whether or not the next delta time will be zero  @~chinese æ˜¯å¦ä¸‹ä¸€ä¸ªå¢é‡æ—¶é—´å°†æ˜¯é›¶*/
     bool _nextDeltaTimeZero;
     
-    /* @~english projection used  @~chinese Í¶Ó°Ê¹ÓÃ*/
+    /* @~english projection used  @~chinese æŠ•å½±ä½¿ç”¨*/
     Projection _projection;
 
-    /* @~english window size in points  @~chinese ´°¿Ú´óĞ¡µÄµã*/
+    /* @~english window size in points  @~chinese çª—å£å¤§å°çš„ç‚¹*/
     Size _winSizeInPoints;
     
-    /* @~english content scale factor  @~chinese ÄÚÈİ±ÈÀıÒò×Ó*/
+    /* @~english content scale factor  @~chinese å†…å®¹æ¯”ä¾‹å› å­*/
     float _contentScaleFactor;
 
-    /* @~english This object will be visited after the scene. Useful to hook a notification node  @~chinese ÏÖ³¡ºó½«äÖÈ¾Õâ¸ö¶ÔÏó¡£ÓĞÓÃµÄ¹³Í¨Öª½Úµã*/
+    /* @~english This object will be visited after the scene. Useful to hook a notification node  @~chinese ç°åœºåå°†æ¸²æŸ“è¿™ä¸ªå¯¹è±¡ã€‚æœ‰ç”¨çš„é’©é€šçŸ¥èŠ‚ç‚¹*/
     Node *_notificationNode;
 
-    /* @~english Renderer for the Director  @~chinese äÖÈ¾Æ÷µÄµ¼Ñİ*/
+    /* @~english Renderer for the Director  @~chinese æ¸²æŸ“å™¨çš„å¯¼æ¼”*/
     Renderer *_renderer;
     
     /* Default FrameBufferObject*/
     experimental::FrameBuffer* _defaultFBO;
 
-    /* @~english Console for the director  @~chinese ¿ØÖÆÌ¨µÄµ¼Ñİ*/
+    /* @~english Console for the director  @~chinese æ§åˆ¶å°çš„å¯¼æ¼”*/
     Console *_console;
 
     bool _isStatusLabelUpdated;
@@ -760,11 +760,11 @@ protected:
   - Scheduled timers & drawing are synchronizes with the refresh rate of the display
   - Only supports animation intervals of 1/60 1/30 & 1/15
  
- * @~chinese DisplayLinkDirectorÊÇÒ»¸öµ¼Ñİ,Í¬²½ÓëÏÔÊ¾Æ÷µÄË¢ĞÂÂÊ¼ÆÊ±Æ÷¡£
+ * @~chinese DisplayLinkDirectoræ˜¯ä¸€ä¸ªå¯¼æ¼”,åŒæ­¥ä¸æ˜¾ç¤ºå™¨çš„åˆ·æ–°ç‡è®¡æ—¶å™¨ã€‚
  * 
- * ÌØĞÔºÍÏŞÖÆ:
- * ¡ª½«¼ÆÊ±Æ÷&Í¼Ö½ÓëÏÔÊ¾Æ÷µÄË¢ĞÂÆµÂÊÍ¬²½
- * ¡ªÖ»Ö§³Ö¶¯»­¼ä¸ôÎª1
+ * ç‰¹æ€§å’Œé™åˆ¶:
+ * â€”å°†è®¡æ—¶å™¨&å›¾çº¸ä¸æ˜¾ç¤ºå™¨çš„åˆ·æ–°é¢‘ç‡åŒæ­¥
+ * â€”åªæ”¯æŒåŠ¨ç”»é—´éš”ä¸º1
  * 
  @since v0.8.2
  */

@@ -38,7 +38,7 @@ NS_CC_BEGIN
  * @~english Oritened Bounding Box(OBB)
  * @class OBB
  * @brief @~english The OBB is similar to the AABB but the bounding box has the same direction as Sprite3D. so it's collistion detection more precise than AABB
- * @~chinese  OBB°üÎ§ºĞÓëAABB°üÎ§ºĞÀàËÆ£¬µ«ÊÇÆä¾Ö²¿×ø±êÏµµÄÈı¸öÖá²¢²»ÓëÊÀ½ç×ø±êÏµµÄÈı¸öÖáÆ½ĞĞ£¬¼´£¬¿¼ÂÇÁËÎïÌåµÄĞı×ªÇé¿ö£¬Òò´ËËüÄÜÌá¹©±ÈAABB¸üÎª×¼È·µÄÅö×²¼ì²â
+ * @~chinese  OBBåŒ…å›´ç›’ä¸AABBåŒ…å›´ç›’ç±»ä¼¼ï¼Œä½†æ˜¯å…¶å±€éƒ¨åæ ‡ç³»çš„ä¸‰ä¸ªè½´å¹¶ä¸ä¸ä¸–ç•Œåæ ‡ç³»çš„ä¸‰ä¸ªè½´å¹³è¡Œï¼Œå³ï¼Œè€ƒè™‘äº†ç‰©ä½“çš„æ—‹è½¬æƒ…å†µï¼Œå› æ­¤å®ƒèƒ½æä¾›æ¯”AABBæ›´ä¸ºå‡†ç¡®çš„ç¢°æ’æ£€æµ‹
  * @js NA
  */
 class CC_DLL OBB
@@ -48,61 +48,61 @@ public:
 
     /*
      * @~english Construct obb from axis aligned bounding box(AABB).
-     * @~chinese Í¨¹ıAABB ´´½¨OBB
+     * @~chinese é€šè¿‡AABB åˆ›å»ºOBB
      * @param aabb @~english The AABB object.
-     * @~chinese AABB ¶ÔÏó
+     * @~chinese AABB å¯¹è±¡
      * @lua NA
      */
     OBB(const AABB& aabb);
     
     /*
      * @~english Construct obb from points.
-     * @~chinese Í¨¹ı¸ø¶¨µÄ¶¥µãÊı×é´´½¨OBB
+     * @~chinese é€šè¿‡ç»™å®šçš„é¡¶ç‚¹æ•°ç»„åˆ›å»ºOBB
      * @param verts @~english Vertices array.
-     * @~chinese ¸ø¶¨µÄ¶¥µãÊı×é
+     * @~chinese ç»™å®šçš„é¡¶ç‚¹æ•°ç»„
      * @param num @~english The size of the verticies array. 
-     * @~chinese ¶¥µãÊı×éµÄ´óĞ¡
+     * @~chinese é¡¶ç‚¹æ•°ç»„çš„å¤§å°
      * @lua NA
      */
     OBB(const Vec3* verts, int num);
     
     /**
      * @~english Check if the point is contained in the bounding box.
-     * @~chinese ¼ì²âÒ»¸öµãÊÇ·ñÔÚ°üÎ§ºĞÄÚ
+     * @~chinese æ£€æµ‹ä¸€ä¸ªç‚¹æ˜¯å¦åœ¨åŒ…å›´ç›’å†…
      * @param point @~english The specified point.
-     * @~chinese ¸ø¶¨µÄµã
+     * @~chinese ç»™å®šçš„ç‚¹
      * @return @~english Return true when the point is contained in the bounding box, otherwise return false.
-     * @~chinese µ±¸ÃµãÔÚ°üÎ§ºĞÄÚÊ±£¬·µ»ØTrue£¬·´Ö®·µ»Øfalse.
+     * @~chinese å½“è¯¥ç‚¹åœ¨åŒ…å›´ç›’å†…æ—¶ï¼Œè¿”å›Trueï¼Œåä¹‹è¿”å›false.
      */
     bool containPoint(const Vec3& point) const;
 
     /*
      * @~english Specify obb values
-     * @~chinese Ö¸¶¨OBB¶ÔÏóµÄÊôĞÔ
+     * @~chinese æŒ‡å®šOBBå¯¹è±¡çš„å±æ€§
      * @param center @~english The obb's center.
-     * @~chinese OBBÖĞµã
+     * @~chinese OBBä¸­ç‚¹
      * @param _xAxis @~english The obb's X axis in wrold space.
-     * @~chinese OBBÔÚÊÀ½ç×ø±êÏµÏÂµÄXÖá
+     * @~chinese OBBåœ¨ä¸–ç•Œåæ ‡ç³»ä¸‹çš„Xè½´
      * @param _yAxis @~english The obb's Y axis in wrold space.
-     * @~chinese OBBÔÚÊÀ½ç×ø±êÏµÏÂµÄYÖá
+     * @~chinese OBBåœ¨ä¸–ç•Œåæ ‡ç³»ä¸‹çš„Yè½´
      * @param _zAxis @~english The obb's Z axis in wrold space.
-     * @~chinese OBBÔÚÊÀ½ç×ø±êÏµÏÂµÄZÖá
+     * @~chinese OBBåœ¨ä¸–ç•Œåæ ‡ç³»ä¸‹çš„Zè½´
      * @param _extents @~english The obb's size.
-     * @~chinese OBBµÄ³ß´ç(¸÷±ß±ß³¤)
+     * @~chinese OBBçš„å°ºå¯¸(å„è¾¹è¾¹é•¿)
      */
     void set(const Vec3& center, const Vec3& _xAxis, const Vec3& _yAxis, const Vec3& _zAxis, const Vec3& _extents);
     
     /*
      * Clear obb
-     * @~chinese Çå³ıOBBÊı¾İ
+     * @~chinese æ¸…é™¤OBBæ•°æ®
      */ 
     void reset();
 
     /** 
      * @~english Get Obb's corners.
-     * @~chinese »ñÈ¡OBBµÄ¸÷¶¥µã
+     * @~chinese è·å–OBBçš„å„é¡¶ç‚¹
      * @param verts @~english The Corners vertices array.
-     * @~chinese ¶¥µãÊı×é
+     * @~chinese é¡¶ç‚¹æ•°ç»„
      * @note @~english Face to the obb's -z direction
      * verts[0] : left top front
      * verts[1] : left bottom front
@@ -114,34 +114,34 @@ public:
      * verts[5] : right bottom back
      * verts[6] : left bottom back
      * verts[7] : left top back
-     * @~chinese ¼ÙÉèÔÚXOYÆ½Ãæ³¯-z·½ÏòÍûÈ¥£¬OBB¸÷¶¥µãµÄË÷ÒıÎª
-     * verts[0] : ×óÉÏÇ°
-     * verts[1] : ×óÏÂÇ°
-     * verts[2] : ÓÒÏÂÇ°
-     * verts[3] : ÓÒÉÏÇ°
+     * @~chinese å‡è®¾åœ¨XOYå¹³é¢æœ-zæ–¹å‘æœ›å»ï¼ŒOBBå„é¡¶ç‚¹çš„ç´¢å¼•ä¸º
+     * verts[0] : å·¦ä¸Šå‰
+     * verts[1] : å·¦ä¸‹å‰
+     * verts[2] : å³ä¸‹å‰
+     * verts[3] : å³ä¸Šå‰
      *
-     * verts[4] : ÓÒÉÏºó
-     * verts[5] : ÓÒÏÂºó
-     * verts[6] : ×óÏÂºó
-     * verts[7] : ×óÉÏºó
+     * verts[4] : å³ä¸Šå
+     * verts[5] : å³ä¸‹å
+     * verts[6] : å·¦ä¸‹å
+     * verts[7] : å·¦ä¸Šå
      */
     void getCorners(Vec3* verts) const;
     
     /**
     * @~english Tests whether this bounding box intersects the specified bounding object.
-    * @~chinese ¼ì²âÖ¸¶¨µÄ°üÎ§ºĞÊÇ·ñÓëÆäÏà½»
+    * @~chinese æ£€æµ‹æŒ‡å®šçš„åŒ…å›´ç›’æ˜¯å¦ä¸å…¶ç›¸äº¤
     * @param box @~english The specified bounding box.
-    * @~chinese Ö¸¶¨µÄ°üÎ§ºĞ
+    * @~chinese æŒ‡å®šçš„åŒ…å›´ç›’
     * @return @~english Return true when two OOBBS intersect, otherwise return false.
-    * @~chinese µ±Ïà½»Ê±·µ»Øtrue£¬·´Ö®·µ»Øfalse
+    * @~chinese å½“ç›¸äº¤æ—¶è¿”å›trueï¼Œåä¹‹è¿”å›false
     */
     bool intersects(const OBB& box) const;
     
 	/**
      * @~english Transforms the obb by the given transformation matrix.
-     * @~chinese Í¨¹ı¸ø¶¨µÄ¾ØÕó±ä»»OBB¶ÔÏó
+     * @~chinese é€šè¿‡ç»™å®šçš„çŸ©é˜µå˜æ¢OBBå¯¹è±¡
      * @param mat @~english The transform matrix.
-     * @~chinese Ö¸¶¨µÄ±ä»»¾ØÕó
+     * @~chinese æŒ‡å®šçš„å˜æ¢çŸ©é˜µ
      */
     void transform(const Mat4& mat);
     

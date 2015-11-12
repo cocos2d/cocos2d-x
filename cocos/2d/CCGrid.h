@@ -43,34 +43,34 @@ class Node;
  */
 
 /** @~english Base class for Other grid.
- * @~chinese ÆäËûÍø¸ñÀàµÄ»ùÀà¡£
+ * @~chinese å…¶ä»–ç½‘æ ¼ç±»çš„åŸºç±»ã€‚
 */
 class CC_DLL GridBase : public Ref
 {
 public:
     /**
-     * @~english create one Grid  @~chinese ´´½¨Ò»¸öÍø¸ñ
+     * @~english create one Grid  @~chinese åˆ›å»ºä¸€ä¸ªç½‘æ ¼
      *
-     * @param gridSize @~english The grid size @~chinese Íø¸ñµÄ´óĞ¡
-     * @param texture @~english The texture pointer. @~chinese Ò»¸öÎÆÀíÖ¸Õë
-     * @param flipped @~english Whether texture flipped or not. @~chinese ÊÇ·ñÎÆÀíĞèÒª·­×ª
+     * @param gridSize @~english The grid size @~chinese ç½‘æ ¼çš„å¤§å°
+     * @param texture @~english The texture pointer. @~chinese ä¸€ä¸ªçº¹ç†æŒ‡é’ˆ
+     * @param flipped @~english Whether texture flipped or not. @~chinese æ˜¯å¦çº¹ç†éœ€è¦ç¿»è½¬
      *
-     * @return @~english A GridBase instance. @~chinese Ò»¸öGridBaseÊµÀı
+     * @return @~english A GridBase instance. @~chinese ä¸€ä¸ªGridBaseå®ä¾‹
      */
     static GridBase* create(const Size& gridSize, Texture2D *texture, bool flipped);
 
     /**
-     * @~english create one Grid  @~chinese ´´½¨Ò»¸öÍø¸ñ
+     * @~english create one Grid  @~chinese åˆ›å»ºä¸€ä¸ªç½‘æ ¼
      *
-     * @param gridSize @~english The gride size. @~chinese ÍøÂçµÄ´óĞ¡
+     * @param gridSize @~english The gride size. @~chinese ç½‘ç»œçš„å¤§å°
      *
-     * @return @~english A GridBase instance. @~chinese Ò»¸öGridBaseÊµÀı
+     * @return @~english A GridBase instance. @~chinese ä¸€ä¸ªGridBaseå®ä¾‹
      */
     static GridBase* create(const Size& gridSize);
     /**@~english
      * Destructor.
      * @~chinese 
-     * Îö¹¹º¯Êı¡£
+     * ææ„å‡½æ•°ã€‚
      * @js NA
      * @lua NA
      */
@@ -79,14 +79,14 @@ public:
     /**@~english
      *Init the Grid base.
      * @~chinese 
-     * ³õÊ¼»¯Íø¸ñ»ùÀà¡£
+     * åˆå§‹åŒ–ç½‘æ ¼åŸºç±»ã€‚
      @param gridSize @~english the size of the grid.
-     * @~chinese Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese ç½‘æ ¼çš„å¤§å°ã€‚
      @param texture @~english The texture used for grab.
-     * @~chinese ´ı×¥È¡µÄÎÆÀí¡£
+     * @~chinese å¾…æŠ“å–çš„çº¹ç†ã€‚
      @param flipped @~english whether or not the grab texture should be flip by Y or not.
-     * @~chinese ÊÇ·ñÓ¦¸ÃÔÚYÖá·½Ïò·­×ª´ı×¥È¡µÄÎÆÀí¡£
-     * @return @~english True if initailize success, false otherwise. @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬Ôò·µ»ØÕæ£¬·ñÔò·µ»Ø¼Ù¡£
+     * @~chinese æ˜¯å¦åº”è¯¥åœ¨Yè½´æ–¹å‘ç¿»è½¬å¾…æŠ“å–çš„çº¹ç†ã€‚
+     * @return @~english True if initailize success, false otherwise. @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œåˆ™è¿”å›çœŸï¼Œå¦åˆ™è¿”å›å‡ã€‚
      */
     bool initWithSize(const Size& gridSize);
     bool initWithSize(const Size& gridSize, const Rect& rect);
@@ -100,72 +100,72 @@ public:
     /** @~english
      * Get the active state of grid.
      * @~chinese 
-     * »ñÈ¡Íø¸ñµÄ»î¶¯×´Ì¬¡£
+     * è·å–ç½‘æ ¼çš„æ´»åŠ¨çŠ¶æ€ã€‚
      */
     inline bool isActive(void) const { return _active; }
     /**
      * @~english Set the active state of grid.
-     * @~chinese ÉèÖÃÍø¸ñµÄ»î¶¯×´Ì¬
+     * @~chinese è®¾ç½®ç½‘æ ¼çš„æ´»åŠ¨çŠ¶æ€
      *
-     * @param active @~english true if the grid is active, false otherwise @~chinese Èç¹ûÍø¸ñ´¦ÓÚ»î¶¯×´Ì¬£¬Ôò·µ»ØÕæ£¬·ñÔò·µ»Ø¼Ù¡£
+     * @param active @~english true if the grid is active, false otherwise @~chinese å¦‚æœç½‘æ ¼å¤„äºæ´»åŠ¨çŠ¶æ€ï¼Œåˆ™è¿”å›çœŸï¼Œå¦åˆ™è¿”å›å‡ã€‚
      */
     void setActive(bool active);
 
-    /** @~english Get number of times that the grid will be reused.  @~chinese »ñÈ¡Íø¸ñ½«±»ÖØÓÃµÄ´ÎÊı¡£*/
+    /** @~english Get number of times that the grid will be reused.  @~chinese è·å–ç½‘æ ¼å°†è¢«é‡ç”¨çš„æ¬¡æ•°ã€‚*/
     inline int getReuseGrid(void) const { return _reuseGrid; }
-    /** @~english Set number of times that the grid will be reused.  @~chinese ÉèÖÃÍø¸ñ½«±»ÖØÓÃµÄ´ÎÊı¡£*/
+    /** @~english Set number of times that the grid will be reused.  @~chinese è®¾ç½®ç½‘æ ¼å°†è¢«é‡ç”¨çš„æ¬¡æ•°ã€‚*/
     inline void setReuseGrid(int reuseGrid) { _reuseGrid = reuseGrid; }
 
-    /** @~english Get the size of the grid.  @~chinese »ñÈ¡Íø¸ñµÄ´óĞ¡¡£*/
+    /** @~english Get the size of the grid.  @~chinese è·å–ç½‘æ ¼çš„å¤§å°ã€‚*/
     inline const Size& getGridSize(void) const { return _gridSize; }
-    /**@~english Set the size of the grid. @~chinese ÉèÖÃÍø¸ñµÄ´óĞ¡*/
+    /**@~english Set the size of the grid. @~chinese è®¾ç½®ç½‘æ ¼çš„å¤§å°*/
     inline void setGridSize(const Size& gridSize) { _gridSize = gridSize; }
 
-    /** @~english Pixels between the grids.  @~chinese »ñÈ¡Íø¸ñÖ®¼äµÄÏñËØ¡£*/
+    /** @~english Pixels between the grids.  @~chinese è·å–ç½‘æ ¼ä¹‹é—´çš„åƒç´ ã€‚*/
     inline const Vec2& getStep(void) const { return _step; }
-    /**@~english Get the pixels between the grids. @~chinese ÉèÖÃÍø¸ñÖ®¼äµÄÏñËØ¡£*/
+    /**@~english Get the pixels between the grids. @~chinese è®¾ç½®ç½‘æ ¼ä¹‹é—´çš„åƒç´ ã€‚*/
     inline void setStep(const Vec2& step) { _step = step; }
 
-    /** @~english is texture flipped.  @~chinese ÎÆÀíÊÇ·ñ·­×ª¡£*/
+    /** @~english is texture flipped.  @~chinese çº¹ç†æ˜¯å¦ç¿»è½¬ã€‚*/
     inline bool isTextureFlipped(void) const { return _isTextureFlipped; }
-    /**@~english Set the texture flipped or not. @~chinese ÉèÖÃÎÆÀíÊÇ·ñ·­×ª¡£*/
+    /**@~english Set the texture flipped or not. @~chinese è®¾ç½®çº¹ç†æ˜¯å¦ç¿»è½¬ã€‚*/
     void setTextureFlipped(bool flipped);
     
     /**@~english
      * Init and reset the Grid status before draw.
      * @~chinese 
-     * ÔÚ»æÖÆÇ°£¬ÓÃÀ´³õÊ¼»¯ºÍÖØÖÃäÖÈ¾Íø¸ñµÄ×´Ì¬¡£
+     * åœ¨ç»˜åˆ¶å‰ï¼Œç”¨æ¥åˆå§‹åŒ–å’Œé‡ç½®æ¸²æŸ“ç½‘æ ¼çš„çŠ¶æ€ã€‚
      */
     void beforeDraw(void);
     /**
      * @~english  Init and reset the Grid status before draw.
-     * @~chinese ÔÚ»æÖÆºó£¬ÓÃÀ´³õÊ¼»¯ºÍÖØÖÃäÖÈ¾Íø¸ñµÄ×´Ì¬
+     * @~chinese åœ¨ç»˜åˆ¶åï¼Œç”¨æ¥åˆå§‹åŒ–å’Œé‡ç½®æ¸²æŸ“ç½‘æ ¼çš„çŠ¶æ€
      *
-     * @param target @~english A Node pointer. @~chinese Ò»¸öNode½ÚµãÖ¸Õë
+     * @param target @~english A Node pointer. @~chinese ä¸€ä¸ªNodeèŠ‚ç‚¹æŒ‡é’ˆ
      */
     void afterDraw(Node *target);
 
     /**@~english
      * Interface for custom action when before blit.
      * @~chinese 
-     * ÔÚBlitÇ°£¬ÓÃÀ´¶¨ÖÆ¶¯×÷
+     * åœ¨Blitå‰ï¼Œç”¨æ¥å®šåˆ¶åŠ¨ä½œ
      * @js NA
      */
     virtual void beforeBlit() {}
     /**
      * @~english Interface for custom action when after blit.
-     * @~chinese ÔÚBlitºó£¬ÓÃÀ´¶¨ÖÆ¶¯×÷
+     * @~chinese åœ¨Blitåï¼Œç”¨æ¥å®šåˆ¶åŠ¨ä½œ
      */
     virtual void afterBlit() {}
 
-    /**@~english Used to blit the texture with grid to screen. @~chinese ÓÃÓÚ¿½±´Íø¸ñÎÆÀíÌùÍ¼µ½ÆÁÄ»¡£*/
+    /**@~english Used to blit the texture with grid to screen. @~chinese ç”¨äºæ‹·è´ç½‘æ ¼çº¹ç†è´´å›¾åˆ°å±å¹•ã€‚*/
     virtual void blit(void);
-    /**@~english Reuse the grid vertices. @~chinese ÖØÓÃÍø¸ñ¶¥µã¡£*/
+    /**@~english Reuse the grid vertices. @~chinese é‡ç”¨ç½‘æ ¼é¡¶ç‚¹ã€‚*/
     virtual void reuse(void);
-    /**@~english Calculate the vertices used for the blit. @~chinese ¼ÆËãÓÃÓÚblitµÄ¶¥µã¡£*/
+    /**@~english Calculate the vertices used for the blit. @~chinese è®¡ç®—ç”¨äºblitçš„é¡¶ç‚¹ã€‚*/
     virtual void calculateVertexPoints(void);
     
-    /**@~english Change projection to 2D for grabbing. @~chinese ¸Ä±äÍ¶Ó°Îª×¥×¡2 d¡£*/
+    /**@~english Change projection to 2D for grabbing. @~chinese æ”¹å˜æŠ•å½±ä¸ºæŠ“ä½2 dã€‚*/
     void set2DProjection(void);
     
     /**
@@ -195,19 +195,19 @@ protected:
 /**@~english
  * Grid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
  * @~chinese 
- * Grid3DÊÇÒ»¸ö3DÍø¸ñÊµÏÖ¡£Ã¿¸ö¶¥µã¶¼ÓĞÈı¸öÎ¬¶È:x,y,z
+ * Grid3Dæ˜¯ä¸€ä¸ª3Dç½‘æ ¼å®ç°ã€‚æ¯ä¸ªé¡¶ç‚¹éƒ½æœ‰ä¸‰ä¸ªç»´åº¦:x,y,z
  */
 class CC_DLL Grid3D : public GridBase
 {
 public:
     /**
-     * @~english create one Grid  @~chinese ´´½¨Ò»¸öÍø¸ñ
+     * @~english create one Grid  @~chinese åˆ›å»ºä¸€ä¸ªç½‘æ ¼
      *
-     * @param gridSize @~english The grid size @~chinese Íø¸ñµÄ´óĞ¡
-     * @param texture @~english The texture pointer. @~chinese Ò»¸öÎÆÀíÖ¸Õë
-     * @param flipped @~english Whether texture flipped or not. @~chinese ÊÇ·ñÎÆÀíĞèÒª·­×ª
+     * @param gridSize @~english The grid size @~chinese ç½‘æ ¼çš„å¤§å°
+     * @param texture @~english The texture pointer. @~chinese ä¸€ä¸ªçº¹ç†æŒ‡é’ˆ
+     * @param flipped @~english Whether texture flipped or not. @~chinese æ˜¯å¦çº¹ç†éœ€è¦ç¿»è½¬
      *
-     * @return @~english A Grid3D instance. @~chinese Ò»¸öGrid3DÊµÀı
+     * @return @~english A Grid3D instance. @~chinese ä¸€ä¸ªGrid3Då®ä¾‹
      */
     static Grid3D* create(const Size& gridSize);
     static Grid3D* create(const Size& gridSize, const Rect& rect);
@@ -217,21 +217,21 @@ public:
     /**@~english
      * Constructor.
      * @~chinese 
-     * ¹¹Ôìº¯Êı¡£
+     * æ„é€ å‡½æ•°ã€‚
      * @js ctor
      */
     Grid3D();
     /**@~english
      * Destructor.
      * @~chinese 
-     * Îö¹¹º¯Êı¡£
+     * ææ„å‡½æ•°ã€‚
      * @js NA
      * @lua NA
      */
     ~Grid3D(void);
 
     /** @~english Returns the vertex at a given position.
-     * @~chinese ·µ»ØÒ»¸ö¸ø¶¨µÄÎ»ÖÃµÄ¶¥µã¡£
+     * @~chinese è¿”å›ä¸€ä¸ªç»™å®šçš„ä½ç½®çš„é¡¶ç‚¹ã€‚
      * @js NA
      * @lua NA
      */
@@ -241,7 +241,7 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE Vec3 vertex(const Vec2& pos) const { return getVertex(pos); }
     /** @~english Returns the original (non-transformed) vertex at a given position.
-     * @~chinese ·µ»ØÒ»¸ö¸ø¶¨µÄÎ»ÖÃµÄÔ­Ê¼µÄ(Ã»ÓĞ¾­¹ı×ø±ê±ä»»µÄ)¶¥µã¡£
+     * @~chinese è¿”å›ä¸€ä¸ªç»™å®šçš„ä½ç½®çš„åŸå§‹çš„(æ²¡æœ‰ç»è¿‡åæ ‡å˜æ¢çš„)é¡¶ç‚¹ã€‚
      * @js NA
      * @lua NA
      */
@@ -252,14 +252,14 @@ public:
     CC_DEPRECATED_ATTRIBUTE Vec3 originalVertex(const Vec2& pos) const { return getOriginalVertex(pos); }
 
     /** @~english Sets a new vertex at a given position.
-     * @~chinese ÔÚÒ»¸ö¸ø¶¨µÄÎ»ÖÃÉÏÉèÖÃÒ»¸öĞÂµÄ¶¥µã¡£
+     * @~chinese åœ¨ä¸€ä¸ªç»™å®šçš„ä½ç½®ä¸Šè®¾ç½®ä¸€ä¸ªæ–°çš„é¡¶ç‚¹ã€‚
      * @lua NA
      */
     void setVertex(const Vec2& pos, const Vec3& vertex);
     /**@~english
      * Implementations for interfaces in base calss.
      * @~chinese 
-     * ÊµÏÖGrid»ùÀàµÄÒ»Ğ©½Ó¿Ú
+     * å®ç°GridåŸºç±»çš„ä¸€äº›æ¥å£
      */
     virtual void beforeBlit() override;
     virtual void afterBlit() override;
@@ -270,15 +270,15 @@ public:
     /**@~english
      * Set the depth test state when blit.
      * @~chinese 
-     * ÉèÖÃblitµÄÉî¶È²âÊÔ×´Ì¬¡£
+     * è®¾ç½®blitçš„æ·±åº¦æµ‹è¯•çŠ¶æ€ã€‚
      @js NA
      */
     void setNeedDepthTestForBlit( bool neededDepthTest) { _needDepthTestForBlit = neededDepthTest; }
     /**
      * @~english Get the depth test state when blit.
-     * @~chinese »ñÈ¡blitµÄÉî¶È²âÊÔ×´Ì¬
+     * @~chinese è·å–blitçš„æ·±åº¦æµ‹è¯•çŠ¶æ€
      *
-     * @return @~english Return true if depth test is enabled, false otherwise. @~chinese Èç¹ûÉî¶È²âÊÔÊÇ¿ªÆôµÄ£¬Ôò·µ»ØÕæ£¬·ñÔò·µ»Ø¼Ù¡£
+     * @return @~english Return true if depth test is enabled, false otherwise. @~chinese å¦‚æœæ·±åº¦æµ‹è¯•æ˜¯å¼€å¯çš„ï¼Œåˆ™è¿”å›çœŸï¼Œå¦åˆ™è¿”å›å‡ã€‚
      */
     bool getNeedDepthTestForBlit() const { return _needDepthTestForBlit; }
 protected:
@@ -295,78 +295,69 @@ protected:
  * TiledGrid3D is a 3D grid implementation. It differs from Grid3D in that
  * the tiles can be separated from the grid.
  * @~chinese 
- * TiledGrid3DÊÇÒ»¸ö3DÍø¸ñÊµÏÖ¡£Ëü²»Í¬ÓÚGrid3D,
- * Ã¿Ò»¸öÍßÆ¬(tile)¿ÉÒÔ¶ÀÁ¢ÓÚÍø¸ñ¡£
+ * TiledGrid3Dæ˜¯ä¸€ä¸ª3Dç½‘æ ¼å®ç°ã€‚å®ƒä¸åŒäºGrid3D,
+ * æ¯ä¸€ä¸ªç“¦ç‰‡(tile)å¯ä»¥ç‹¬ç«‹äºç½‘æ ¼ã€‚
 */
 class CC_DLL TiledGrid3D : public GridBase
 {
 public:
     /**
-     * @~english Create one Grid.  @~chinese ´´½¨Ò»¸öÍø¸ñ
+     * @~english Create one Grid.  @~chinese åˆ›å»ºä¸€ä¸ªç½‘æ ¼
      *
-     * @param gridSize @~english The grid size. @~chinese Íø¸ñµÄ´óĞ¡
-     * @param texture @~english A texture2D pointer. @~chinese Ò»¸öÎÆÀíÖ¸Õë
-     * @param flipped @~english Whether the texture is flipped or not. @~chinese ÊÇ·ñÎÆÀíÓ¦¸Ã·­×ª¡£
+     * @param gridSize @~english The grid size. @~chinese ç½‘æ ¼çš„å¤§å°
+     * @param texture @~english A texture2D pointer. @~chinese ä¸€ä¸ªçº¹ç†æŒ‡é’ˆ
+     * @param flipped @~english Whether the texture is flipped or not. @~chinese æ˜¯å¦çº¹ç†åº”è¯¥ç¿»è½¬ã€‚
      *
-     * @return @~english A TiledGrid3D instance. @~chinese Ò»¸ö TiledGrid3D ÊµÀı¡£
+     * @return @~english A TiledGrid3D instance. @~chinese ä¸€ä¸ª TiledGrid3D å®ä¾‹ã€‚
      */
     static TiledGrid3D* create(const Size& gridSize);
     static TiledGrid3D* create(const Size& gridSize, const Rect& rect);
     static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
     static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect);
-=======
-    /** Create one Grid. */
-    static TiledGrid3D* create(const Size& gridSize);
-    /** Create one Grid. */
-    static TiledGrid3D* create(const Size& gridSize, const Rect& rect);
-    /** Create one Grid. */
-    static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** Create one Grid. */
-    static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect);
 
     /**@~english
      * Constructor.
      * @~chinese 
-     * ¹¹Ôìº¯Êı¡£
+     * æ„é€ å‡½æ•°ã€‚
      * @js ctor
      */
     TiledGrid3D();
     /**@~english
      * Destructor.
      * @~chinese 
-     * Îö¹¹º¯Êı¡£
+     * ææ„å‡½æ•°ã€‚
      * @js NA
      * @lua NA
      */
     ~TiledGrid3D();
 
     /** @~english Returns the tile at the given position.
-     * @~chinese ·µ»Ø¸ø¶¨Î»ÖÃµÄÍßÆ¬¡£
+     * @~chinese è¿”å›ç»™å®šä½ç½®çš„ç“¦ç‰‡ã€‚
      * @js NA
      * @lua NA
      */
     Quad3 getTile(const Vec2& pos) const;
     /** @~english returns the tile at the given position 
-     * @~chinese ·µ»Ø¸ø¶¨Î»ÖÃµÄÍßÆ¬.
+     * @~chinese è¿”å›ç»™å®šä½ç½®çš„ç“¦ç‰‡.
      * @deprecated Use getTile instead.
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Vec2& pos) const { return getTile(pos); }
     /** @~english Returns the original tile (untransformed) at the given position.
-     * @~chinese ·µ»Ø¸ø¶¨Î»ÖÃµÄÃ»ÓĞ¾­¹ı×ø±ê±ä»»µÄÍßÆ¬¡£
+     * @~chinese è¿”å›ç»™å®šä½ç½®çš„æ²¡æœ‰ç»è¿‡åæ ‡å˜æ¢çš„ç“¦ç‰‡ã€‚
      * @js NA
      * @lua NA
      */
     Quad3 getOriginalTile(const Vec2& pos) const;
     /** @~english returns the original tile (untransformed) at the given position 
-     * @~chinese ·µ»Ø¸ø¶¨Î»ÖÃµÄÃ»ÓĞ¾­¹ı×ø±ê±ä»»µÄÍßÆ¬¡£
+     * @~chinese è¿”å›ç»™å®šä½ç½®çš„æ²¡æœ‰ç»è¿‡åæ ‡å˜æ¢çš„ç“¦ç‰‡ã€‚
      * @deprecated use getOriginalTile instead.
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Vec2& pos) const { return getOriginalTile(pos); }
 
     /** @~english Sets a new tile.
-     * @~chinese ÉèÖÃÒ»¸öĞÂµÄÍßÆ¬¡£
+     * @~chinese è®¾ç½®ä¸€ä¸ªæ–°çš„ç“¦ç‰‡ã€‚
      * @lua NA
      */
     void setTile(const Vec2& pos, const Quad3& coords);
@@ -374,7 +365,7 @@ public:
     /**@~english
      * Implementations for interfaces in base calss.
      * @~chinese 
-     * ÊµÏÖGrid»ùÀàµÄÒ»Ğ©½Ó¿Ú¡£
+     * å®ç°GridåŸºç±»çš„ä¸€äº›æ¥å£ã€‚
      */
     virtual void blit() override;
     virtual void reuse() override;

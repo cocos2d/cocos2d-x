@@ -61,7 +61,7 @@ public:
 
 /**
  * @brief @~english ScriptingCore is the main class which manages interaction with JavaScript environment
- * @~chinese ScriptingCoreÊÇ¹ÜÀíÓëJavaScript»·¾³½»»¥µÄºËĞÄÀà
+ * @~chinese ScriptingCoreæ˜¯ç®¡ç†ä¸JavaScriptç¯å¢ƒäº¤äº’çš„æ ¸å¿ƒç±»
  * @details @~english It creates the JavaScript context and its global object.
  * It also manages object bindings between C++ scope and JavaScript scope, 
  * for most cocos2d classes, if you create an object in JavaScript scope, it will also create a C++ object,
@@ -75,19 +75,19 @@ public:
  * - Cleanup or reset the JavaScript context
  * - Invoke garbage collection of JavaScript context
  * - etc...
- * @~chinese Ëü´´½¨JavaScriptÉÏÏÂÎÄºÍÈ«¾Ö¶ÔÏó¡£
- * Ëü»¹¹ÜÀíC++»·¾³ºÍJavaScript»·¾³¶ÔÏóÖ®¼äµÄ°ó¶¨£¬
- * ¶ÔÓÚ´ó¶àÊıcocos2dÀà£¬Èç¹ûÔÚJavaScript»·¾³ÄÚ´´½¨Ò»¸ö¶ÔÏó£¬Ëü»¹½«Í¬Ê±´´½¨Ò»¸öc++¶ÔÏó,
- * ScriptingCore½«Îª²»Í¬»·¾³ÏÂ¶ÔÏó¹ÜÀíÒ»¸ö´úÀí²¢Í¬²½²»Í¬»·¾³ÏÂµÄÉúÃüÖÜÆÚ¡£
- * Ëü¿ÉÒÔ:
- * - ÒÔ²»Í¬µÄ·½Ê½Óë²»Í¬µÄ²ÎÊıÖ´ĞĞJavaScriptº¯Êı
- * - Ö´ĞĞJavaScriptÃüÁî»ò×Ö·û´®
- * - Ö´ĞĞÒ»¸öJavaScriptÎÄ¼ş
- * - ÇåÀíÒ»¸öJavaScriptÎÄ¼ş»º´æ
- * - ÇåÀíËùÓĞµÄJavaScriptÎÄ¼ş»º´æ
- * - ÇåÀí»òÖØÖÃJavaScriptÉÏÏÂÎÄ
- * - µ÷ÓÃJavaScriptÉÏÏÂÎÄµÄÀ¬»øÊÕ¼¯
- * - µÈµÈ...
+ * @~chinese å®ƒåˆ›å»ºJavaScriptä¸Šä¸‹æ–‡å’Œå…¨å±€å¯¹è±¡ã€‚
+ * å®ƒè¿˜ç®¡ç†C++ç¯å¢ƒå’ŒJavaScriptç¯å¢ƒå¯¹è±¡ä¹‹é—´çš„ç»‘å®šï¼Œ
+ * å¯¹äºå¤§å¤šæ•°cocos2dç±»ï¼Œå¦‚æœåœ¨JavaScriptç¯å¢ƒå†…åˆ›å»ºä¸€ä¸ªå¯¹è±¡ï¼Œå®ƒè¿˜å°†åŒæ—¶åˆ›å»ºä¸€ä¸ªc++å¯¹è±¡,
+ * ScriptingCoreå°†ä¸ºä¸åŒç¯å¢ƒä¸‹å¯¹è±¡ç®¡ç†ä¸€ä¸ªä»£ç†å¹¶åŒæ­¥ä¸åŒç¯å¢ƒä¸‹çš„ç”Ÿå‘½å‘¨æœŸã€‚
+ * å®ƒå¯ä»¥:
+ * - ä»¥ä¸åŒçš„æ–¹å¼ä¸ä¸åŒçš„å‚æ•°æ‰§è¡ŒJavaScriptå‡½æ•°
+ * - æ‰§è¡ŒJavaScriptå‘½ä»¤æˆ–å­—ç¬¦ä¸²
+ * - æ‰§è¡Œä¸€ä¸ªJavaScriptæ–‡ä»¶
+ * - æ¸…ç†ä¸€ä¸ªJavaScriptæ–‡ä»¶ç¼“å­˜
+ * - æ¸…ç†æ‰€æœ‰çš„JavaScriptæ–‡ä»¶ç¼“å­˜
+ * - æ¸…ç†æˆ–é‡ç½®JavaScriptä¸Šä¸‹æ–‡
+ * - è°ƒç”¨JavaScriptä¸Šä¸‹æ–‡çš„åƒåœ¾æ”¶é›†
+ * - ç­‰ç­‰...
  */
 class ScriptingCore : public cocos2d::ScriptEngineProtocol
 {
@@ -106,67 +106,67 @@ public:
     /**@~english
      * ScriptingCore is a singleton class, you can retrieve its instance with this function.
      * @~chinese 
-     * ScriptingCoreÊÇÒ»¸öµ¥ÀıÀà£¬Äã¿ÉÒÔÓÃÕâ¸öº¯Êı»ñÈ¡ËüµÄÊµÀı¡£
+     * ScriptingCoreæ˜¯ä¸€ä¸ªå•ä¾‹ç±»ï¼Œä½ å¯ä»¥ç”¨è¿™ä¸ªå‡½æ•°è·å–å®ƒçš„å®ä¾‹ã€‚
      * @return @~english The ScriptingCore instance.
-     * @~chinese ScriptingCoreÊµÀı¡£
+     * @~chinese ScriptingCoreå®ä¾‹ã€‚
      */
     static ScriptingCore *getInstance();
     
     /**@~english
      * Gets the script type, for ScriptingCore, it will return `cocos2d::kScriptTypeJavascript`
      * @~chinese 
-     * »ñÈ¡½Å±¾ÀàĞÍ£¬Ëü½«·µ»Ø`cocos2d::kScriptTypeJavascript`
+     * è·å–è„šæœ¬ç±»å‹ï¼Œå®ƒå°†è¿”å›`cocos2d::kScriptTypeJavascript`
      * @return `cocos2d::kScriptTypeJavascript`
      */
     virtual cocos2d::ccScriptType getScriptType() override { return cocos2d::kScriptTypeJavascript; };
 
     /**
      * @brief @~english Removes the C++ object's linked JavaScript proxy object from JavaScript context
-     * @~chinese ´ÓJavaScriptÉÏÏÂÎÄÖĞÉ¾³ıÖ¸¶¨C++¶ÔÏóµÄJavaScript´úÀí¶ÔÏó
+     * @~chinese ä»JavaScriptä¸Šä¸‹æ–‡ä¸­åˆ é™¤æŒ‡å®šC++å¯¹è±¡çš„JavaScriptä»£ç†å¯¹è±¡
      * @param obj @~english Object to be removed
-     * @~chinese ĞèÒª±»É¾³ıµÄ¶ÔÏó
+     * @~chinese éœ€è¦è¢«åˆ é™¤çš„å¯¹è±¡
      */
     virtual void removeScriptObjectByObject(cocos2d::Ref* obj) override;
     
     /**
      * @brief @~english Useless in ScriptingCore, please use evalString
-     * @~chinese ÔÚScriptingCoreÖĞÎŞÓÃ£¬ÇëÊ¹ÓÃevalString
+     * @~chinese åœ¨ScriptingCoreä¸­æ— ç”¨ï¼Œè¯·ä½¿ç”¨evalString
      * @see evalString
      */
     virtual int executeString(const char* codes) override { return 0; }
     
     /**
      * @brief @~english Pause scheduled tasks and actions for an object proxy.
-     * @~chinese ÔİÍ£´úÀí¶ÔÏóËùÖ¸ÏòµÄ½ÚµãµÄËùÓĞÈÎÎñºÍ¶¯×÷¡£
+     * @~chinese æš‚åœä»£ç†å¯¹è±¡æ‰€æŒ‡å‘çš„èŠ‚ç‚¹çš„æ‰€æœ‰ä»»åŠ¡å’ŒåŠ¨ä½œã€‚
      * @param p @~english The object proxy
-     * @~chinese ´úÀí¶ÔÏó
+     * @~chinese ä»£ç†å¯¹è±¡
      */
     void pauseSchedulesAndActions(js_proxy_t* p);
     /**
      * @brief @~english Resume scheduled tasks and actions for an object proxy.
-     * @~chinese »Ö¸´´úÀí¶ÔÏóËùÖ¸ÏòµÄ½ÚµãµÄËùÓĞÈÎÎñºÍ¶¯×÷¡£
+     * @~chinese æ¢å¤ä»£ç†å¯¹è±¡æ‰€æŒ‡å‘çš„èŠ‚ç‚¹çš„æ‰€æœ‰ä»»åŠ¡å’ŒåŠ¨ä½œã€‚
      * @param p @~english The object proxy
-     * @~chinese ´úÀí¶ÔÏó
+     * @~chinese ä»£ç†å¯¹è±¡
      */
     void resumeSchedulesAndActions(js_proxy_t* p);
     /**
      * @brief @~english Cleanup scheduled tasks and actions for an object proxy.
-     * @~chinese Çå³ı´úÀí¶ÔÏóËùÖ¸ÏòµÄ½ÚµãµÄËùÓĞÈÎÎñºÍ¶¯×÷¡£
+     * @~chinese æ¸…é™¤ä»£ç†å¯¹è±¡æ‰€æŒ‡å‘çš„èŠ‚ç‚¹çš„æ‰€æœ‰ä»»åŠ¡å’ŒåŠ¨ä½œã€‚
      * @param p @~english The object proxy
-     * @~chinese ´úÀí¶ÔÏó
+     * @~chinese ä»£ç†å¯¹è±¡
      */
     void cleanupSchedulesAndActions(js_proxy_t* p);
 
     /**
      * @brief @~english Useless in ScriptingCore, please use runScript
-     * @~chinese ÔÚScriptingCoreÖĞÎŞÓÃ,ÇëÊ¹ÓÃrunScript
+     * @~chinese åœ¨ScriptingCoreä¸­æ— ç”¨,è¯·ä½¿ç”¨runScript
      * @see runScript
      */
     virtual  int executeScriptFile(const char* filename) override { return 0; }
 
     /**
      * @brief @~english Useless in ScriptingCore, please use executeFunctionWithOwner
-     * @~chinese ÔÚScriptingCoreÖĞÎŞÓÃ,ÇëÊ¹ÓÃexecuteFunctionWithOwner
+     * @~chinese åœ¨ScriptingCoreä¸­æ— ç”¨,è¯·ä½¿ç”¨executeFunctionWithOwner
      * @see executeFunctionWithOwner
      */
     virtual int executeGlobalFunction(const char* functionName) override { return 0; }
@@ -175,7 +175,7 @@ public:
     virtual bool parseConfig(ConfigType type, const std::string& str) override;
     /**
      * @brief @~english Useless in ScriptingCore
-     * @~chinese ÔÚScriptingCoreÖĞÎŞÓÃ
+     * @~chinese åœ¨ScriptingCoreä¸­æ— ç”¨
      * @return @~english false
      * @~chinese false
      */
@@ -188,179 +188,179 @@ public:
      * @brief @~english Execute a js function with a JavaScript object as parameter.
      * By passing a native object, ScriptingCore will found its JavaScript object with the proxy. 
      * Then the function will be invoked with the native object's js proxy as caller.
-     * @~chinese ÒÔÒ»¸öJavaScript¶ÔÏó×÷Îª²ÎÊıÖ´ĞĞÒ»¸öjsº¯Êı¡£
-     * Í¨¹ı´«µİÒ»¸öC++Ô­Éú¶ÔÏó£¬ScriptingCore½«»áÕÒµ½ËüµÄJavaScript´úÀí¶ÔÏó¡£
-     * È»ºó½«Ê¹ÓÃ´úÀí¶ÔÏó×÷Îªjsµ÷ÓÃÕßµ÷ÓÃÖ¸¶¨µÄJSº¯Êı¡£
+     * @~chinese ä»¥ä¸€ä¸ªJavaScriptå¯¹è±¡ä½œä¸ºå‚æ•°æ‰§è¡Œä¸€ä¸ªjså‡½æ•°ã€‚
+     * é€šè¿‡ä¼ é€’ä¸€ä¸ªC++åŸç”Ÿå¯¹è±¡ï¼ŒScriptingCoreå°†ä¼šæ‰¾åˆ°å®ƒçš„JavaScriptä»£ç†å¯¹è±¡ã€‚
+     * ç„¶åå°†ä½¿ç”¨ä»£ç†å¯¹è±¡ä½œä¸ºjsè°ƒç”¨è€…è°ƒç”¨æŒ‡å®šçš„JSå‡½æ•°ã€‚
      * @param nativeObj @~english The caller object's C++ proxy.
-     *                  @~chinese µ÷ÓÃÕß¶ÔÏóµÄc++´úÀí¶ÔÏó¡£
+     *                  @~chinese è°ƒç”¨è€…å¯¹è±¡çš„c++ä»£ç†å¯¹è±¡ã€‚
      * @param name      @~english The function name.
-     *                  @~chinese º¯ÊıµÄÃû×Ö¡£
+     *                  @~chinese å‡½æ•°çš„åå­—ã€‚
      * @param obj       @~english The JavaScript object as parameter.
-     *                  @~chinese ×÷Îª²ÎÊıµÄJavaScript¶ÔÏó¡£
+     *                  @~chinese ä½œä¸ºå‚æ•°çš„JavaScriptå¯¹è±¡ã€‚
      * @return @~english Return the js function's boolean result if successfully invoked, otherwise return false.
-     * @~chinese Èç¹ûµ÷ÓÃ³É¹¦·µ»Øjsº¯ÊıµÄ²¼¶û½á¹û£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœè°ƒç”¨æˆåŠŸè¿”å›jså‡½æ•°çš„å¸ƒå°”ç»“æœï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool executeFunctionWithObjectData(void* nativeObj, const char *name, JSObject *obj);
 
     /**
      * @brief @~english Execute a js function with a JavaScript caller, function name, arguments count and arguments.
-     * @~chinese ÓÃÒ»¸öJavaScriptµ÷ÓÃÕß£¬º¯ÊıÃû£¬²ÎÊıÊıÁ¿ºÍ²ÎÊıÖ´ĞĞÒ»¸öjsº¯Êı¡£
+     * @~chinese ç”¨ä¸€ä¸ªJavaScriptè°ƒç”¨è€…ï¼Œå‡½æ•°åï¼Œå‚æ•°æ•°é‡å’Œå‚æ•°æ‰§è¡Œä¸€ä¸ªjså‡½æ•°ã€‚
      * @param owner     @~english The caller object.
-     *                  @~chinese µ÷ÓÃÕß¶ÔÏó¡£
+     *                  @~chinese è°ƒç”¨è€…å¯¹è±¡ã€‚
      * @param name      @~english The function name.
-     *                  @~chinese º¯ÊıµÄÃû×Ö¡£
+     *                  @~chinese å‡½æ•°çš„åå­—ã€‚
      * @param argc      @~english The arguments count.
-     *                  @~chinese ²ÎÊıÊıÁ¿¡£
+     *                  @~chinese å‚æ•°æ•°é‡ã€‚
      * @param vp        @~english The arguments.
-     *                  @~chinese ²ÎÊı¡£
+     *                  @~chinese å‚æ•°ã€‚
      * @return @~english Return true if successfully invoked, otherwise return false.
-     * @~chinese µ÷ÓÃ³É¹¦Ê±·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese è°ƒç”¨æˆåŠŸæ—¶è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc, jsval *vp);
 
     /**
      * @brief @~english Execute a js function with a JavaScript caller, function name, arguments count, arguments and a return value.
-     * @~chinese ÓÃÒ»¸öJavaScriptµ÷ÓÃÕß£¬º¯ÊıÃû£¬²ÎÊıÊıÁ¿£¬²ÎÊıºÍ·µ»ØÖµÖ´ĞĞÒ»¸öjsº¯Êı¡£
+     * @~chinese ç”¨ä¸€ä¸ªJavaScriptè°ƒç”¨è€…ï¼Œå‡½æ•°åï¼Œå‚æ•°æ•°é‡ï¼Œå‚æ•°å’Œè¿”å›å€¼æ‰§è¡Œä¸€ä¸ªjså‡½æ•°ã€‚
      * @param owner     @~english The caller object.
-     *                  @~chinese µ÷ÓÃÕß¶ÔÏó¡£
+     *                  @~chinese è°ƒç”¨è€…å¯¹è±¡ã€‚
      * @param name      @~english The function name.
-     *                  @~chinese º¯ÊıµÄÃû×Ö¡£
+     *                  @~chinese å‡½æ•°çš„åå­—ã€‚
      * @param argc      @~english The arguments count.
-     *                  @~chinese ²ÎÊıÊıÁ¿¡£
+     *                  @~chinese å‚æ•°æ•°é‡ã€‚
      * @param vp        @~english The arguments.
-     *                  @~chinese ²ÎÊı¡£
+     *                  @~chinese å‚æ•°ã€‚
      * @param retVal    @~english The js object to save the return value.
-     *                  @~chinese ÓÃÀ´±£´æ·µ»ØÖµµÄjs¶ÔÏó¡£
+     *                  @~chinese ç”¨æ¥ä¿å­˜è¿”å›å€¼çš„jså¯¹è±¡ã€‚
      * @return @~english Return true if successfully invoked, otherwise return false.
-     * @~chinese µ÷ÓÃ³É¹¦Ê±·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese è°ƒç”¨æˆåŠŸæ—¶è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc, jsval *vp, JS::MutableHandleValue retVal);
 
     /**
      * @brief @~english Execute a js function with a JavaScript caller, function name, arguments array.
      * This is more reliable in js memory management
-     * @~chinese ÓÃÒ»¸öJavaScriptµ÷ÓÃÕß£¬º¯ÊıÃûºÍ²ÎÊıÊı×éÖ´ĞĞÒ»¸öjsº¯Êı¡£
-     * Õâ¶ÔÓÚjsÄÚ´æ¹ÜÀíÀ´Ëµ¸ü¼Ó¿É¿¿
+     * @~chinese ç”¨ä¸€ä¸ªJavaScriptè°ƒç”¨è€…ï¼Œå‡½æ•°åå’Œå‚æ•°æ•°ç»„æ‰§è¡Œä¸€ä¸ªjså‡½æ•°ã€‚
+     * è¿™å¯¹äºjså†…å­˜ç®¡ç†æ¥è¯´æ›´åŠ å¯é 
      * @param owner     @~english The caller object.
-     *                  @~chinese µ÷ÓÃ¶ÔÏó¡£
+     *                  @~chinese è°ƒç”¨å¯¹è±¡ã€‚
      * @param name      @~english The function name.
-     *                  @~chinese º¯ÊıµÄÃû×Ö¡£
+     *                  @~chinese å‡½æ•°çš„åå­—ã€‚
      * @param args      @~english The arguments array.
-     *                  @~chinese ²ÎÊıÊı×é¡£
+     *                  @~chinese å‚æ•°æ•°ç»„ã€‚
      * @return @~english Return true if successfully invoked, otherwise return false.
-     * @~chinese µ÷ÓÃ³É¹¦Ê±·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese è°ƒç”¨æˆåŠŸæ—¶è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool executeFunctionWithOwner(jsval owner, const char *name, const JS::HandleValueArray& args);
 
     /**
      * @brief @~english Execute a js function with a JavaScript caller, function name, arguments array and a return value.
      * This is more reliable in js memory management
-     * @~chinese ÓÃÒ»¸öJavaScriptµ÷ÓÃÕß£¬º¯ÊıÃû£¬²ÎÊıÊı×éºÍÒ»¸ö·µ»ØÖµÖ´ĞĞÒ»¸öjsº¯Êı¡£
-     * Õâ¶ÔÓÚjsÄÚ´æ¹ÜÀíÀ´Ëµ¸ü¼Ó¿É¿¿
+     * @~chinese ç”¨ä¸€ä¸ªJavaScriptè°ƒç”¨è€…ï¼Œå‡½æ•°åï¼Œå‚æ•°æ•°ç»„å’Œä¸€ä¸ªè¿”å›å€¼æ‰§è¡Œä¸€ä¸ªjså‡½æ•°ã€‚
+     * è¿™å¯¹äºjså†…å­˜ç®¡ç†æ¥è¯´æ›´åŠ å¯é 
      * @param owner     @~english The caller object.
-     *                  @~chinese µ÷ÓÃ¶ÔÏó¡£
+     *                  @~chinese è°ƒç”¨å¯¹è±¡ã€‚
      * @param name      @~english The function name.
-     *                  @~chinese º¯ÊıµÄÃû×Ö¡£
+     *                  @~chinese å‡½æ•°çš„åå­—ã€‚
      * @param args      @~english The arguments array.
-     *                  @~chinese ²ÎÊıÊı×é¡£
+     *                  @~chinese å‚æ•°æ•°ç»„ã€‚
      * @param retVal    @~english The js object to save the return value.
-     *                  @~chinese ÓÃÀ´±£´æ·µ»ØÖµµÄjs¶ÔÏó¡£
+     *                  @~chinese ç”¨æ¥ä¿å­˜è¿”å›å€¼çš„jså¯¹è±¡ã€‚
      * @return @~english Return true if successfully invoked, otherwise return false.
-     * @~chinese µ÷ÓÃ³É¹¦Ê±·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese è°ƒç”¨æˆåŠŸæ—¶è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool executeFunctionWithOwner(jsval owner, const char *name, const JS::HandleValueArray& args, JS::MutableHandleValue retVal);
 
     /**
      * @brief @~english Execute a js function with a js this object and the js function object.
-     * @~chinese ÓÃjs this¶ÔÏóºÍÒ»¸öjsº¯Êı¶ÔÏóÖ´ĞĞÕâ¸öjsº¯Êı¡£
+     * @~chinese ç”¨js thiså¯¹è±¡å’Œä¸€ä¸ªjså‡½æ•°å¯¹è±¡æ‰§è¡Œè¿™ä¸ªjså‡½æ•°ã€‚
      * @param thisObj   @~english The js this object.
-     *                  @~chinese js this¶ÔÏó¡£
+     *                  @~chinese js thiså¯¹è±¡ã€‚
      * @param callback  @~english The js function object.
-     *                  @~chinese jsº¯Êı¶ÔÏó¡£
+     *                  @~chinese jså‡½æ•°å¯¹è±¡ã€‚
      * @return @~english Return true if successfully invoked, otherwise return false.
-     * @~chinese µ÷ÓÃ³É¹¦Ê±·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese è°ƒç”¨æˆåŠŸæ—¶è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     void executeJSFunctionWithThisObj(JS::HandleValue thisObj, JS::HandleValue callback);
     /**
      * @brief @~english Execute a js function with a js this object, the js function object, arguments and a return value.
-     * @~chinese ÓÃjs this¶ÔÏóºÍÒ»¸öjsº¯Êı¶ÔÏóÖ´ĞĞÕâ¸öjsº¯Êı¡£
+     * @~chinese ç”¨js thiså¯¹è±¡å’Œä¸€ä¸ªjså‡½æ•°å¯¹è±¡æ‰§è¡Œè¿™ä¸ªjså‡½æ•°ã€‚
      * @param thisObj   @~english The js this object.
-     *                  @~chinese js this¶ÔÏó¡£
+     *                  @~chinese js thiså¯¹è±¡ã€‚
      * @param callback  @~english The js function object.
-     *                  @~chinese jsº¯Êı¶ÔÏó¡£
+     *                  @~chinese jså‡½æ•°å¯¹è±¡ã€‚
      * @param vp        @~english The arguments array.
-     *                  @~chinese ²ÎÊıÊı×é¡£
+     *                  @~chinese å‚æ•°æ•°ç»„ã€‚
      * @param retVal    @~english The js object to save the return value.
-     *                  @~chinese ÓÃÀ´±£´æ·µ»ØÖµµÄjs¶ÔÏó¡£
+     *                  @~chinese ç”¨æ¥ä¿å­˜è¿”å›å€¼çš„jså¯¹è±¡ã€‚
      * @return @~english Return true if successfully invoked, otherwise return false.
-     * @~chinese µ÷ÓÃ³É¹¦Ê±·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese è°ƒç”¨æˆåŠŸæ—¶è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     void executeJSFunctionWithThisObj(JS::HandleValue thisObj, JS::HandleValue callback, const JS::HandleValueArray& vp, JS::MutableHandleValue retVal);
 
     /**@~english
      * Evaluate the specified js code string
      * @~chinese 
-     * Ö´ĞĞÖ¸¶¨µÄJS´úÂë×Ö·û´®
+     * æ‰§è¡ŒæŒ‡å®šçš„JSä»£ç å­—ç¬¦ä¸²
      * @param string    @~english The string with the javascript code to be evaluated
-     * @~chinese javascript´úÂëµÄ×Ö·û´®
+     * @~chinese javascriptä»£ç çš„å­—ç¬¦ä¸²
      * @param outVal    @~english The jsval that will hold the return value of the evaluation.
-     * @~chinese ½«ÓÃÀ´±£´æ·µ»ØÖµµÄjsval¡£
+     * @~chinese å°†ç”¨æ¥ä¿å­˜è¿”å›å€¼çš„jsvalã€‚
      * @param filename  @~english The filename
-     * @~chinese ÎÄ¼şÃû
+     * @~chinese æ–‡ä»¶å
      * @param cx        @~english The js context
-     * @~chinese jsÉÏÏÂÎÄ¶ÔÏó
+     * @~chinese jsä¸Šä¸‹æ–‡å¯¹è±¡
      * @param global    @~english The js global object
-     * @~chinese jsµÄÈ«¾Ö¶ÔÏó
+     * @~chinese jsçš„å…¨å±€å¯¹è±¡
      * @return @~english Return true if successfully invoked, otherwise return false.
-     * @~chinese µ÷ÓÃ³É¹¦Ê±·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese è°ƒç”¨æˆåŠŸæ—¶è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool evalString(const char *string, jsval *outVal, const char *filename = NULL, JSContext* cx = NULL, JSObject* global = NULL);
     
     /**
      @brief @~english Get script object for the given path
-     * @~chinese Îª¸ø¶¨µÄjs½Å±¾Â·¾¶»ñÈ¡½Å±¾¶ÔÏó
+     * @~chinese ä¸ºç»™å®šçš„jsè„šæœ¬è·¯å¾„è·å–è„šæœ¬å¯¹è±¡
      @param path @~english The script file path
-     * @~chinese ½Å±¾ÎÄ¼şÂ·¾¶
+     * @~chinese è„šæœ¬æ–‡ä»¶è·¯å¾„
      @return @~english Script object
-     * @~chinese ½Å±¾¶ÔÏó
+     * @~chinese è„šæœ¬å¯¹è±¡
      */
     JSScript* getScript(const char *path);
 
     /**@~english
      * Compile the specified js file
      * @~chinese 
-     * ±àÒëÖ¸¶¨Â·¾¶ÏÂµÄjsÎÄ¼ş
+     * ç¼–è¯‘æŒ‡å®šè·¯å¾„ä¸‹çš„jsæ–‡ä»¶
      * @param path    @~english The path of the script to to compiled
-     * @~chinese ½Å±¾ÎÄ¼şµÄÂ·¾¶
+     * @~chinese è„šæœ¬æ–‡ä»¶çš„è·¯å¾„
      * @param global    @~english The js global object
-     * @~chinese jsµÄÈ«¾Ö¶ÔÏó
+     * @~chinese jsçš„å…¨å±€å¯¹è±¡
      * @param cx        @~english The js context
-     * @~chinese jsÉÏÏÂÎÄ
+     * @~chinese jsä¸Šä¸‹æ–‡
      */
     void compileScript(const char *path, JSObject* global = NULL, JSContext* cx = NULL);
 
     /**@~english
      * Run the specified js file
      * @~chinese 
-     * Ö´ĞĞÖ¸¶¨µÄjsÎÄ¼ş
+     * æ‰§è¡ŒæŒ‡å®šçš„jsæ–‡ä»¶
      * @param path @~english The path of the script to be executed
-     * @~chinese ½Å±¾ÎÄ¼şµÄÂ·¾¶
+     * @~chinese è„šæœ¬æ–‡ä»¶çš„è·¯å¾„
      * @return @~english Return true if succeed, otherwise return false.
-     * @~chinese ³É¹¦Ê±·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese æˆåŠŸæ—¶è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool runScript(const char *path);
     /**@~english
      * Run the specified js file
      * @~chinese 
-     * Ö´ĞĞÖ¸¶¨µÄjsÎÄ¼ş
+     * æ‰§è¡ŒæŒ‡å®šçš„jsæ–‡ä»¶
      * @param path @~english The path of the script to be executed
-     * @~chinese ½Å±¾ÎÄ¼şµÄÂ·¾¶
+     * @~chinese è„šæœ¬æ–‡ä»¶çš„è·¯å¾„
      * @param global @~english The global object to execute the script
-     * @~chinese Ö´ĞĞ½Å±¾µÄÈ«¾Ö¶ÔÏó
+     * @~chinese æ‰§è¡Œè„šæœ¬çš„å…¨å±€å¯¹è±¡
      * @param global @~english The context to execute the script
-     * @~chinese Ö´ĞĞ½Å±¾µÄjsÔËĞĞ»·¾³
+     * @~chinese æ‰§è¡Œè„šæœ¬çš„jsè¿è¡Œç¯å¢ƒ
      * @return @~english Return true if succeed, otherwise return false.
-     * @~chinese ³É¹¦Ê±·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese æˆåŠŸæ—¶è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool runScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
 
@@ -388,45 +388,45 @@ public:
     /**@~english
      * Clean script object for the specified js file
      * @~chinese 
-     * Çå³ıjsÎÄ¼ş¶ÔÓ¦µÄ½Å±¾»º´æ¶ÔÏó
+     * æ¸…é™¤jsæ–‡ä»¶å¯¹åº”çš„è„šæœ¬ç¼“å­˜å¯¹è±¡
      * @param path @~english The path of the js file to be cleaned
-     * @~chinese ½Å±¾ÎÄ¼şµÄÂ·¾¶
+     * @~chinese è„šæœ¬æ–‡ä»¶çš„è·¯å¾„
      */
     void cleanScript(const char *path);
     
     /**@~english
      * Gets the cached script objects for all executed js file
      * @~chinese 
-     * »ñÈ¡ËùÓĞÒÑÖ´ĞĞµÄjsÎÄ¼şµÄ»º´æ½Å±¾¶ÔÏó
+     * è·å–æ‰€æœ‰å·²æ‰§è¡Œçš„jsæ–‡ä»¶çš„ç¼“å­˜è„šæœ¬å¯¹è±¡
      * @return @~english The cached script object map
-     * @~chinese »º´æ½Å±¾¶ÔÏó±í
+     * @~chinese ç¼“å­˜è„šæœ¬å¯¹è±¡è¡¨
      */
     std::unordered_map<std::string, JSScript*> &getFileScript();
     /**@~english
      * Clean all script objects
      * @~chinese 
-     * Çå³ıËùÓĞ½Å±¾¶ÔÏó»º´æ
+     * æ¸…é™¤æ‰€æœ‰è„šæœ¬å¯¹è±¡ç¼“å­˜
      */
     void cleanAllScript();
     
     /**@~english
      * Initialize everything, including the js context, js global object etc.
      * @~chinese 
-     * ³õÊ¼»¯ËùÓĞµÄ¶«Î÷£¬°üÀ¨jsÉÏÏÂÎÄ£¬jsÈ«¾Ö¶ÔÏóµÈ¡£
+     * åˆå§‹åŒ–æ‰€æœ‰çš„ä¸œè¥¿ï¼ŒåŒ…æ‹¬jsä¸Šä¸‹æ–‡ï¼Œjså…¨å±€å¯¹è±¡ç­‰ã€‚
      */
     void start();
 
     /**@~english
      * Cleanup everything, including script cache, js context, global object etc.
      * @~chinese 
-     * Çå³ıËùÓĞ½Å±¾¶ÔÏó»º´æ£¬jsÉÏÏÂÎÄ£¬È«¾Ö¶ÔÏó£¬µÈµÈ¡£
+     * æ¸…é™¤æ‰€æœ‰è„šæœ¬å¯¹è±¡ç¼“å­˜ï¼Œjsä¸Šä¸‹æ–‡ï¼Œå…¨å±€å¯¹è±¡ï¼Œç­‰ç­‰ã€‚
      */
     void cleanup();
 
     /**@~english
      * Cleanup everything then initialize everything
      * @~chinese 
-     * ÇåÀíÈ»ºóÖØĞÂ³õÊ¼»¯ËùÓĞµÄÒ»ÇĞ
+     * æ¸…ç†ç„¶åé‡æ–°åˆå§‹åŒ–æ‰€æœ‰çš„ä¸€åˆ‡
      */
     void reset();
 
@@ -434,82 +434,82 @@ public:
      * Add the register_sth callback to the list of functions that need to be called after the creation of the context.
      * It's normally used to register script bindings in the js context for bound classes
      * @~chinese 
-     * Ìí¼Óregister_sth»Øµ÷º¯Êıµ½ÁĞ±íÖĞ£¬ÁĞ±íÖĞµÄËùÓĞ»Øµ÷¶¼»áÔÚjsÉÏÏÂÎÄ´´½¨ºó±»µ÷ÓÃ¡£
-     * ËüÍ¨³£ÓÃÓÚ½«ÒÑ°ó¶¨µÄÀà×¢²áµ½jsÉÏÏÂÎÄÖĞ¡£
+     * æ·»åŠ register_sthå›è°ƒå‡½æ•°åˆ°åˆ—è¡¨ä¸­ï¼Œåˆ—è¡¨ä¸­çš„æ‰€æœ‰å›è°ƒéƒ½ä¼šåœ¨jsä¸Šä¸‹æ–‡åˆ›å»ºåè¢«è°ƒç”¨ã€‚
+     * å®ƒé€šå¸¸ç”¨äºå°†å·²ç»‘å®šçš„ç±»æ³¨å†Œåˆ°jsä¸Šä¸‹æ–‡ä¸­ã€‚
      * @param callback @~english The callback to register something to the js context
-     * @~chinese ÓÃÓÚ×¢²á°ó¶¨µÄ»Øµ÷º¯Êı
+     * @~chinese ç”¨äºæ³¨å†Œç»‘å®šçš„å›è°ƒå‡½æ•°
      */
     void addRegisterCallback(sc_register_sth callback);
 
     /**@~english
      * Create a new context. If one is already there, it will destroy the old context and create a new one.
      * @~chinese 
-     * ´´½¨Ò»¸öĞÂµÄjsÉÏÏÂÎÄ¡£Èç¹ûÒ»¸ö¾ÉµÄÉÏÏÂÎÄÒÑ¾­´æÔÚ£¬Ëü½«´İ»Ù¾ÉµÄÉÏÏÂÎÄ²¢´´½¨Ò»¸öĞÂµÄ¡£
+     * åˆ›å»ºä¸€ä¸ªæ–°çš„jsä¸Šä¸‹æ–‡ã€‚å¦‚æœä¸€ä¸ªæ—§çš„ä¸Šä¸‹æ–‡å·²ç»å­˜åœ¨ï¼Œå®ƒå°†æ‘§æ¯æ—§çš„ä¸Šä¸‹æ–‡å¹¶åˆ›å»ºä¸€ä¸ªæ–°çš„ã€‚
      */
     void createGlobalContext();
 
     /**@~english
      * Removes all rooted object in the given js context, rooted object won't be garbage collected.
      * @~chinese 
-     * ÔÚ¸ø¶¨µÄjs»·¾³ÖĞÉ¾³ıËùÓĞµÄ¸ù¶ÔÏó£¬¸ù¶ÔÏó²»»á±»À¬»ø»ØÊÕ»úÖÆ»ØÊÕ¡£
+     * åœ¨ç»™å®šçš„jsç¯å¢ƒä¸­åˆ é™¤æ‰€æœ‰çš„æ ¹å¯¹è±¡ï¼Œæ ¹å¯¹è±¡ä¸ä¼šè¢«åƒåœ¾å›æ”¶æœºåˆ¶å›æ”¶ã€‚
      * @param cx @~english The js context
-     * @~chinese jsÉÏÏÂÎÄ
+     * @~chinese jsä¸Šä¸‹æ–‡
      */
     static void removeAllRoots(JSContext *cx);
 
     /**@~english
      * Simulate a touch event and dispatch it to a js object.
      * @~chinese 
-     * Ä£ÄâÒ»¸ö´¥ÃşÊÂ¼ş£¬²¢½«Æä·ÖÅÉµ½Ò»¸öjavascript¶ÔÏó¡£
+     * æ¨¡æ‹Ÿä¸€ä¸ªè§¦æ‘¸äº‹ä»¶ï¼Œå¹¶å°†å…¶åˆ†æ´¾åˆ°ä¸€ä¸ªjavascriptå¯¹è±¡ã€‚
      * @param eventType @~english The touch event type
-     * @~chinese ´¥ÃşÊÂ¼şÀàĞÍ
+     * @~chinese è§¦æ‘¸äº‹ä»¶ç±»å‹
      * @param pTouch @~english The touch object
-     * @~chinese ´¥µã¶ÔÏó
+     * @~chinese è§¦ç‚¹å¯¹è±¡
      * @param obj @~english The js object
-     * @~chinese js¶ÔÏó
+     * @~chinese jså¯¹è±¡
      * @param retval @~english The return value of the touch event callback
-     * @~chinese ´¥ÃşÊÂ¼ş»Øµ÷µÄ·µ»ØÖµ
+     * @~chinese è§¦æ‘¸äº‹ä»¶å›è°ƒçš„è¿”å›å€¼
      * @return @~english Return 1 if succeed, otherwise return 0.
-     * @~chinese Èç¹û³É¹¦,·µ»Ø1,·ñÔò·µ»Ø0¡£
+     * @~chinese å¦‚æœæˆåŠŸ,è¿”å›1,å¦åˆ™è¿”å›0ã€‚
      */
     int executeCustomTouchEvent(cocos2d::EventTouch::EventCode eventType,
                                 cocos2d::Touch *pTouch, JSObject *obj, JS::MutableHandleValue retval);
     /**@~english
      * Simulate a touch event and dispatch it to a js object.
      * @~chinese 
-     * Ä£ÄâÒ»¸ö´¥ÃşÊÂ¼ş£¬²¢½«Æä·ÖÅÉµ½Ò»¸öjavascript¶ÔÏó¡£
+     * æ¨¡æ‹Ÿä¸€ä¸ªè§¦æ‘¸äº‹ä»¶ï¼Œå¹¶å°†å…¶åˆ†æ´¾åˆ°ä¸€ä¸ªjavascriptå¯¹è±¡ã€‚
      * @param eventType @~english The touch event type
-     * @~chinese ´¥ÃşÊÂ¼şÀàĞÍ
+     * @~chinese è§¦æ‘¸äº‹ä»¶ç±»å‹
      * @param pTouch @~english The touch object
-     * @~chinese ´¥µã¶ÔÏó
+     * @~chinese è§¦ç‚¹å¯¹è±¡
      * @param obj @~english The js object
-     * @~chinese js¶ÔÏó
+     * @~chinese jså¯¹è±¡
      * @return @~english Return 1 if succeed, otherwise return 0.
-     * @~chinese Èç¹û³É¹¦,·µ»Ø1,·ñÔò·µ»Ø0¡£
+     * @~chinese å¦‚æœæˆåŠŸ,è¿”å›1,å¦åˆ™è¿”å›0ã€‚
      */
     int executeCustomTouchEvent(cocos2d::EventTouch::EventCode eventType,
                                 cocos2d::Touch *pTouch, JSObject *obj);
     /**@~english
      * Simulate a multi touch event and dispatch it to a js object.
      * @~chinese 
-     * Ä£ÄâÒ»¸ö¶àµã´¥ÃşÊÂ¼ş£¬²¢½«Æä·ÖÅÉµ½Ò»¸öjavascript¶ÔÏó¡£
+     * æ¨¡æ‹Ÿä¸€ä¸ªå¤šç‚¹è§¦æ‘¸äº‹ä»¶ï¼Œå¹¶å°†å…¶åˆ†æ´¾åˆ°ä¸€ä¸ªjavascriptå¯¹è±¡ã€‚
      * @param eventType @~english The touch event type
-     * @~chinese ´¥ÃşÊÂ¼şÀàĞÍ
+     * @~chinese è§¦æ‘¸äº‹ä»¶ç±»å‹
      * @param touches @~english Touchs list for multitouch
-     * @~chinese ¶àµã´¥µã¶ÔÏó
+     * @~chinese å¤šç‚¹è§¦ç‚¹å¯¹è±¡
      * @param obj @~english The js object
-     * @~chinese js¶ÔÏó
+     * @~chinese jså¯¹è±¡
      * @return @~english Return 1 if succeed, otherwise return 0.
-     * @~chinese Èç¹û³É¹¦,·µ»Ø1,·ñÔò·µ»Ø0¡£
+     * @~chinese å¦‚æœæˆåŠŸ,è¿”å›1,å¦åˆ™è¿”å›0ã€‚
      */
     int executeCustomTouchesEvent(cocos2d::EventTouch::EventCode eventType,
                                   const std::vector<cocos2d::Touch*>& touches, JSObject *obj);
     /**@~english
      * Gets the current global context.
      * @~chinese 
-     * »ñÈ¡µ±Ç°È«¾ÖjsÉÏÏÂÎÄ¡£
+     * è·å–å½“å‰å…¨å±€jsä¸Šä¸‹æ–‡ã€‚
      * @return @~english the global context
-     * @~chinese È«¾ÖjsÉÏÏÂÎÄ
+     * @~chinese å…¨å±€jsä¸Šä¸‹æ–‡
      */
     JSContext* getGlobalContext() {
         return _cx;
@@ -518,43 +518,43 @@ public:
     /**@~english
      * Report an error in the js context
      * @~chinese 
-     * ÔÚjsÉÏÏÂÎÄ±¨¸æÒ»¸ö´íÎó
+     * åœ¨jsä¸Šä¸‹æ–‡æŠ¥å‘Šä¸€ä¸ªé”™è¯¯
      * @param cx @~english The js context
-     * @~chinese jsÉÏÏÂÎÄ
+     * @~chinese jsä¸Šä¸‹æ–‡
      * @param message @~english The error message
-     * @~chinese ´íÎóÏûÏ¢
+     * @~chinese é”™è¯¯æ¶ˆæ¯
      * @param report @~english The js error report object
-     * @~chinese js´íÎó±¨¸æ¶ÔÏó
+     * @~chinese jsé”™è¯¯æŠ¥å‘Šå¯¹è±¡
      */
     static void reportError(JSContext *cx, const char *message, JSErrorReport *report);
 
     /**@~english
      * Log something to the js context using CCLog.
      * @~chinese 
-     * ÔÚjsÉÏÏÂÎÄ´òÓ¡Ò»¸ölogĞÅÏ¢
+     * åœ¨jsä¸Šä¸‹æ–‡æ‰“å°ä¸€ä¸ªlogä¿¡æ¯
      * @param cx @~english The js context
-     * @~chinese jsÉÏÏÂÎÄ
+     * @~chinese jsä¸Šä¸‹æ–‡
      * @param argc @~english The arguments count
-     * @~chinese ²ÎÊıÊıÁ¿
+     * @~chinese å‚æ•°æ•°é‡
      * @param vp @~english The arguments
-     * @~chinese ²ÎÊı
+     * @~chinese å‚æ•°
      * @return @~english Return true if succeed, otherwise return false.
-     * @~chinese ³É¹¦Ê±·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese æˆåŠŸæ—¶è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     static bool log(JSContext *cx, uint32_t argc, jsval *vp);
 
     /**@~english
      * Sets a js value to the targeted js obejct's reserved slot, which is not exposed to script environment.
      * @~chinese 
-     * ÉèÖÃÒ»¸öjsÖµµ½Ä¿±êjs¶ÔÏóµÄÔ¤Áô´æ´¢²Û£¬ÕâĞ©Öµ½«²»»á±»±©Â¶ÓÚ½Å±¾»·¾³¡£
+     * è®¾ç½®ä¸€ä¸ªjså€¼åˆ°ç›®æ ‡jså¯¹è±¡çš„é¢„ç•™å­˜å‚¨æ§½ï¼Œè¿™äº›å€¼å°†ä¸ä¼šè¢«æš´éœ²äºè„šæœ¬ç¯å¢ƒã€‚
      * @param i @~english The slot index
-     * @~chinese ´æ´¢²ÛÎ»ÖÃË÷Òı
+     * @~chinese å­˜å‚¨æ§½ä½ç½®ç´¢å¼•
      * @param obj @~english The targeted object
-     * @~chinese Ä¿±ê¶ÔÏó
+     * @~chinese ç›®æ ‡å¯¹è±¡
      * @param value @~english The js value to set to the slot
-     * @~chinese ĞèÒª±»´æ´¢µÄjsÖµ
+     * @~chinese éœ€è¦è¢«å­˜å‚¨çš„jså€¼
      * @return @~english Return true if succeed, otherwise return false.
-     * @~chinese ³É¹¦Ê±·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese æˆåŠŸæ—¶è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool setReservedSpot(uint32_t i, JSObject *obj, jsval value);
 
@@ -562,86 +562,86 @@ public:
      * Runs a script from script environment, it should be invoked from script environment
      * Bound to `__jsc__.executeScript` and `window.executeScript`
      * @~chinese 
-     * ´Ó½Å±¾»·¾³ÖĞÔËĞĞÒ»¸ö½Å±¾£¬ËüÓ¦¸Ã´Ó½Å±¾ÖĞ±»µ÷ÓÃ
-     * ±»°ó¶¨µ½`__jsc__.executeScript`ºÍ`window.executeScript`
+     * ä»è„šæœ¬ç¯å¢ƒä¸­è¿è¡Œä¸€ä¸ªè„šæœ¬ï¼Œå®ƒåº”è¯¥ä»è„šæœ¬ä¸­è¢«è°ƒç”¨
+     * è¢«ç»‘å®šåˆ°`__jsc__.executeScript`å’Œ`window.executeScript`
      * @param cx @~english The js context
-     * @~chinese jsÉÏÏÂÎÄ
+     * @~chinese jsä¸Šä¸‹æ–‡
      * @param argc @~english The arguments count
-     * @~chinese ²ÎÊıÊıÁ¿
+     * @~chinese å‚æ•°æ•°é‡
      * @param vp @~english The arguments
-     * @~chinese ²ÎÊı
+     * @~chinese å‚æ•°
      * @return @~english Return true if succeed, otherwise return false.
-     * @~chinese ³É¹¦Ê±·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese æˆåŠŸæ—¶è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     static bool executeScript(JSContext *cx, uint32_t argc, jsval *vp);
     /**@~english
      * Forces a cycle of garbage collection, it should be invoked from script environment
      * Bound to `__jsc__.garbageCollect` and `window.garbageCollect`
      * @~chinese 
-     * Ç¿ÖÆÖ´ĞĞÒ»´ÎÀ¬»ø»ØÊÕ£¬ËüÓ¦¸Ã´Ó½Å±¾ÖĞ±»µ÷ÓÃ
-     * °ó¶¨µ½`__jsc__.garbageCollect`ºÍ`window.garbageCollect`
+     * å¼ºåˆ¶æ‰§è¡Œä¸€æ¬¡åƒåœ¾å›æ”¶ï¼Œå®ƒåº”è¯¥ä»è„šæœ¬ä¸­è¢«è°ƒç”¨
+     * ç»‘å®šåˆ°`__jsc__.garbageCollect`å’Œ`window.garbageCollect`
      * @param cx @~english The js context
-     * @~chinese jsÉÏÏÂÎÄ
+     * @~chinese jsä¸Šä¸‹æ–‡
      * @param argc @~english The arguments count
-     * @~chinese ²ÎÊıÊıÁ¿
+     * @~chinese å‚æ•°æ•°é‡
      * @param vp @~english The arguments
-     * @~chinese ²ÎÊı
+     * @~chinese å‚æ•°
      */
     static bool forceGC(JSContext *cx, uint32_t argc, jsval *vp);
     /**@~english
      * Dump all named rooted objects, it should be invoked from script environment
      * Bound to `__jsc__.dumpRoot`
      * @~chinese 
-     * ´òÓ¡ËùÓĞÓĞÃû¸ù¶ÔÏó£¬ËüÓ¦¸Ã´Ó½Å±¾ÖĞ±»µ÷ÓÃ
-     * °ó¶¨µ½`__jsc__.dumpRoot`
+     * æ‰“å°æ‰€æœ‰æœ‰åæ ¹å¯¹è±¡ï¼Œå®ƒåº”è¯¥ä»è„šæœ¬ä¸­è¢«è°ƒç”¨
+     * ç»‘å®šåˆ°`__jsc__.dumpRoot`
      * @param cx @~english The js context
-     * @~chinese jsÉÏÏÂÎÄ
+     * @~chinese jsä¸Šä¸‹æ–‡
      * @param argc @~english The arguments count
-     * @~chinese ²ÎÊıÊıÁ¿
+     * @~chinese å‚æ•°æ•°é‡
      * @param vp @~english The arguments
-     * @~chinese ²ÎÊı
+     * @~chinese å‚æ•°
      */
     static bool dumpRoot(JSContext *cx, uint32_t argc, jsval *vp);
     /**@~english
      * Adds a js object to root so that it won't be touched by the garbage collection, it should be invoked from script environment
      * Bound to `__jsc__.addGCRootObject`
      * @~chinese 
-     * Ìí¼ÓÒ»¸öjs¶ÔÏóµ½¸ùÄÚ´æÖĞ£¬ÕâÑùËü¾Í²»»á±»À¬»ø»ØÊÕ»úÖÆËùÓ°Ïì¡£ËüÓ¦¸Ã´Ó½Å±¾ÖĞ±»µ÷ÓÃ
-     * °ó¶¨µ½`__jsc__.addGCRootObject`
+     * æ·»åŠ ä¸€ä¸ªjså¯¹è±¡åˆ°æ ¹å†…å­˜ä¸­ï¼Œè¿™æ ·å®ƒå°±ä¸ä¼šè¢«åƒåœ¾å›æ”¶æœºåˆ¶æ‰€å½±å“ã€‚å®ƒåº”è¯¥ä»è„šæœ¬ä¸­è¢«è°ƒç”¨
+     * ç»‘å®šåˆ°`__jsc__.addGCRootObject`
      * @param cx @~english The js context
-     * @~chinese jsÉÏÏÂÎÄ
+     * @~chinese jsä¸Šä¸‹æ–‡
      * @param argc @~english The arguments count
-     * @~chinese ²ÎÊıÊıÁ¿
+     * @~chinese å‚æ•°æ•°é‡
      * @param vp @~english The arguments
-     * @~chinese ²ÎÊı
+     * @~chinese å‚æ•°
      */
     static bool addRootJS(JSContext *cx, uint32_t argc, jsval *vp);
     /**@~english
      * Removes a js object from root, it should be invoked from script environment
      * Bound to `__jsc__.removeGCRootObject`
      * @~chinese 
-     * ´Ó¸ùÄÚ´æÖĞÉ¾³ıÒ»¸öjs£¬ËüÓ¦¸Ã´Ó½Å±¾ÖĞ±»µ÷ÓÃ
-     * °ó¶¨µ½`__jsc__.removeGCRootObject`
+     * ä»æ ¹å†…å­˜ä¸­åˆ é™¤ä¸€ä¸ªjsï¼Œå®ƒåº”è¯¥ä»è„šæœ¬ä¸­è¢«è°ƒç”¨
+     * ç»‘å®šåˆ°`__jsc__.removeGCRootObject`
      * @param cx @~english The js context
-     * @~chinese jsÉÏÏÂÎÄ
+     * @~chinese jsä¸Šä¸‹æ–‡
      * @param argc @~english The arguments count
-     * @~chinese ²ÎÊıÊıÁ¿
+     * @~chinese å‚æ•°æ•°é‡
      * @param vp @~english The arguments
-     * @~chinese ²ÎÊı
+     * @~chinese å‚æ•°
      */
     static bool removeRootJS(JSContext *cx, uint32_t argc, jsval *vp);
     /**@~english
      * Check whether a js object's C++ proxy is still valid, it should be invoked from script environment
      * Bound to `window.__isObjectValid`
      * @~chinese 
-     * ¼ì²éÒ»¸öjs¶ÔÏóµÄc++´úÀíÊÇ·ñÈÔÈ»ÓĞĞ§£¬ËüÓ¦¸Ã´Ó½Å±¾ÖĞ±»µ÷ÓÃ
-     * °ó¶¨µ½`window.__isObjectValid`
+     * æ£€æŸ¥ä¸€ä¸ªjså¯¹è±¡çš„c++ä»£ç†æ˜¯å¦ä»ç„¶æœ‰æ•ˆï¼Œå®ƒåº”è¯¥ä»è„šæœ¬ä¸­è¢«è°ƒç”¨
+     * ç»‘å®šåˆ°`window.__isObjectValid`
      * @param cx @~english The js context
-     * @~chinese jsÉÏÏÂÎÄ
+     * @~chinese jsä¸Šä¸‹æ–‡
      * @param argc @~english The arguments count
-     * @~chinese ²ÎÊıÊıÁ¿
+     * @~chinese å‚æ•°æ•°é‡
      * @param vp @~english The arguments
-     * @~chinese ²ÎÊı
+     * @~chinese å‚æ•°
      */
     static bool isObjectValid(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -649,49 +649,49 @@ public:
      * Log a string to the debug environment.
      * Enable the debug environment so that it can be invoked.
      * @~chinese 
-     * ´òÓ¡Ò»¸ö×Ö·û´®µ½µ÷ÊÔ»·¾³¡£
-     * ÆôÓÃµ÷ÊÔ»·¾³£¬ÒÔ±ãËü¿ÉÒÔ±»µ÷ÓÃ¡£
+     * æ‰“å°ä¸€ä¸ªå­—ç¬¦ä¸²åˆ°è°ƒè¯•ç¯å¢ƒã€‚
+     * å¯ç”¨è°ƒè¯•ç¯å¢ƒï¼Œä»¥ä¾¿å®ƒå¯ä»¥è¢«è°ƒç”¨ã€‚
      * @param str @~english The message to log
-     * @~chinese ÏûÏ¢ÈÕÖ¾
+     * @~chinese æ¶ˆæ¯æ—¥å¿—
      */
     void debugProcessInput(const std::string& str);
     /**@~english
      * Enable the debug environment, mozilla Firefox's remote debugger or Code IDE can connect to it.
      * @~chinese 
-     * ÆôÓÃµ÷ÊÔ»·¾³£¬mozilla FirefoxµÄÔ¶³Ìµ÷ÊÔÆ÷»òCode IDE¿ÉÒÔÁ¬½ÓËü¡£
+     * å¯ç”¨è°ƒè¯•ç¯å¢ƒï¼Œmozilla Firefoxçš„è¿œç¨‹è°ƒè¯•å™¨æˆ–Code IDEå¯ä»¥è¿æ¥å®ƒã€‚
      * @param port @~english The port to connect with the debug enviroment, default value is 5086
-     * @~chinese µ÷ÊÔ»·¾³Á¬½Ó¶Ë¿Ú£¬Ä¬ÈÏÖµÊÇ5086
+     * @~chinese è°ƒè¯•ç¯å¢ƒè¿æ¥ç«¯å£ï¼Œé»˜è®¤å€¼æ˜¯5086
      */
     void enableDebugger(unsigned int port = 5086);
     /**@~english
      * Gets the debug environment's global object
      * @~chinese 
-     * »ñÈ¡µ÷ÊÔ»·¾³µÄÈ«¾Ö¶ÔÏó
+     * è·å–è°ƒè¯•ç¯å¢ƒçš„å…¨å±€å¯¹è±¡
      * @return @~english The debug environment's global object
-     * @~chinese µ÷ÊÔ»·¾³µÄÈ«¾Ö¶ÔÏó
+     * @~chinese è°ƒè¯•ç¯å¢ƒçš„å…¨å±€å¯¹è±¡
      */
     JSObject* getDebugGlobal() { return _debugGlobal.ref().get(); }
     /**@~english
      * Gets the global object
      * @~chinese 
-     * »ñÈ¡È«¾Ö¶ÔÏó
+     * è·å–å…¨å±€å¯¹è±¡
      * @return @~english The global object
-     * @~chinese È«¾Ö¶ÔÏó
+     * @~chinese å…¨å±€å¯¹è±¡
      */
     JSObject* getGlobalObject() { return _global.ref().get(); }
 
     /**@~english
      * Checks whether a C++ function is overrided in js prototype chain
      * @~chinese 
-     * ¼ì²éÒ»¸öc++º¯ÊıÊÇ·ñÔÚjs¼Ì³ĞÁ´ÖĞ±»¸²¸Ç
+     * æ£€æŸ¥ä¸€ä¸ªc++å‡½æ•°æ˜¯å¦åœ¨jsç»§æ‰¿é“¾ä¸­è¢«è¦†ç›–
      * @param obj @~english The js object
-     * @~chinese js¶ÔÏó
+     * @~chinese jså¯¹è±¡
      * @param name @~english The function name
-     * @~chinese º¯ÊıÃû
+     * @~chinese å‡½æ•°å
      * @param native @~english The native function
-     * @~chinese Ô­ÉúC++º¯Êı
+     * @~chinese åŸç”ŸC++å‡½æ•°
      * @return @~english The global object
-     * @~chinese È«¾Ö¶ÔÏó
+     * @~chinese å…¨å±€å¯¹è±¡
      */
     bool isFunctionOverridedInJS(JS::HandleObject obj, const std::string& name, JSNative native);
     

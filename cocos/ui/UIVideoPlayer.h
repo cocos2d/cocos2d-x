@@ -41,11 +41,11 @@ namespace experimental{
         /**
          * @class VideoPlayer
          * @brief @~english Displays a video file.
-         * @~chinese Ò»¸ö²¥·ÅÊÓÆµÎÄ¼şµÄ¿Ø¼ş¡£
+         * @~chinese ä¸€ä¸ªæ’­æ”¾è§†é¢‘æ–‡ä»¶çš„æ§ä»¶ã€‚
          * 
          * @note @~english VideoPlayer displays a video file base on system widget.
          * It's mean VideoPlayer displays a video file above all graphical elements of cocos2d-x.
-         * @~chinese VideoPlayer»ùÓÚÏµÍ³¿Ø¼şÊµÏÖµÄÊÓÆµ²¥·Å£¬ÕâÒâÎ¶×ÅÊÓÆµ»á±»ÏÔÊ¾ÔÚcocos2d-xµÄËùÓĞÍ¼ĞÎÔªËØÖ®ÉÏ¡£
+         * @~chinese VideoPlayeråŸºäºç³»ç»Ÿæ§ä»¶å®ç°çš„è§†é¢‘æ’­æ”¾ï¼Œè¿™æ„å‘³ç€è§†é¢‘ä¼šè¢«æ˜¾ç¤ºåœ¨cocos2d-xçš„æ‰€æœ‰å›¾å½¢å…ƒç´ ä¹‹ä¸Šã€‚
          * @js NA
          */
         class VideoPlayer : public cocos2d::ui::Widget
@@ -53,7 +53,7 @@ namespace experimental{
         public:
             /**
              * @~english Videoplayer play event type.
-             * @~chinese VideoplayerÊÓÆµ²¥·ÅÊÂ¼ş¡£
+             * @~chinese Videoplayerè§†é¢‘æ’­æ”¾äº‹ä»¶ã€‚
              */
             enum class EventType
             {
@@ -65,37 +65,37 @@ namespace experimental{
 
             /**
              * @~english A callback which will be called after specific VideoPlayer event happens.
-             * @~chinese VideoPlayer²¥·ÅÏà¹ØÊÂ¼ş·¢ÉúÊ±µÄ»Øµ÷¡£
+             * @~chinese VideoPlayeræ’­æ”¾ç›¸å…³äº‹ä»¶å‘ç”Ÿæ—¶çš„å›è°ƒã€‚
              */
             typedef std::function<void(Ref*,VideoPlayer::EventType)> ccVideoPlayerCallback;
 
             /**@~english
              * Static create method for instancing a VideoPlayer.
              * @~chinese 
-             * Ò»¸öÊµÀı»¯VideoPlayerµÄ¾²Ì¬´´½¨º¯Êı¡£
+             * ä¸€ä¸ªå®ä¾‹åŒ–VideoPlayerçš„é™æ€åˆ›å»ºå‡½æ•°ã€‚
              */
             CREATE_FUNC(VideoPlayer);
 
             /**@~english
              * Sets a file path as a video source for VideoPlayer.
              * @~chinese 
-             * ÉèÖÃÒ»¸öÊÓÆµÎÄ¼şÂ·¾¶×÷ÎªVideoPlayerµÄÊÓÆµÔ´¡£
+             * è®¾ç½®ä¸€ä¸ªè§†é¢‘æ–‡ä»¶è·¯å¾„ä½œä¸ºVideoPlayerçš„è§†é¢‘æºã€‚
              */
             virtual void setFileName(const std::string& videoPath);
             
             /**
              * @brief @~english Get the filie path of video source.
-             * @~chinese »ñÈ¡ÊÓÆµÔ´µÄÎÄ¼şÂ·¾¶¡£
+             * @~chinese è·å–è§†é¢‘æºçš„æ–‡ä»¶è·¯å¾„ã€‚
              * 
              * @return @~english The video file path.
-             * @~chinese ÊÓÆµÊÓÆµÎÄ¼şµÄÂ·¾¶¡£
+             * @~chinese è§†é¢‘è§†é¢‘æ–‡ä»¶çš„è·¯å¾„ã€‚
              */
             virtual const std::string& getFileName() const { return _videoURL;}
 
             /**@~english
              * Sets a URL as a video source for VideoPlayer.
              * @~chinese 
-             * ÉèÖÃÒ»¸öURLµØÖ·×÷ÎªVideoPlayerµÄÊÓÆµÔ´¡£
+             * è®¾ç½®ä¸€ä¸ªURLåœ°å€ä½œä¸ºVideoPlayerçš„è§†é¢‘æºã€‚
              */
             virtual void setURL(const std::string& _videoURL);
 
@@ -103,103 +103,103 @@ namespace experimental{
             /**
              * @brief @~english Get the URL of video source.
              *
-             * @~chinese »ñÈ¡ÊÓÆµÔ´µÄURL¡£
+             * @~chinese è·å–è§†é¢‘æºçš„URLã€‚
              * 
              * @return @~english A URL address.
-             * @~chinese Ò»¸öURLµØÖ·¡£
+             * @~chinese ä¸€ä¸ªURLåœ°å€ã€‚
              */
             virtual const std::string& getURL() const { return _videoURL;}
 
             /**
              * @~english Starts playback.
-             * @~chinese ¿ªÊ¼²¥·Å¡£
+             * @~chinese å¼€å§‹æ’­æ”¾ã€‚
              */
             virtual void play();
 
             /**
              * @~english Pauses playback.
-             * @~chinese ÔİÍ£²¥·Å¡£
+             * @~chinese æš‚åœæ’­æ”¾ã€‚
              */
             virtual void pause()override;
 
             /**
              * @~english Resumes playback.
-             * @~chinese »Ö¸´²¥·Å¡£
+             * @~chinese æ¢å¤æ’­æ”¾ã€‚
              */
             virtual void resume()override;
 
             /**
              * @~english Stops playback.
-             * @~chinese Í£Ö¹²¥·Å¡£
+             * @~chinese åœæ­¢æ’­æ”¾ã€‚
              */
             virtual void stop();
 
             /**
              * @~english Seeks to specified time position.
-             * @~chinese Ìø×ªµ½Ö¸¶¨µÄÊ±¼äÎ»ÖÃ¡£
+             * @~chinese è·³è½¬åˆ°æŒ‡å®šçš„æ—¶é—´ä½ç½®ã€‚
              * 
              * @param sec @~english The offset in seconds from the start to seek to.
-             * @~chinese Ïà¶ÔÆğÊ¼Î»ÖÃµÄÆ«ÒÆÁ¿£¬ÒÔÃëÎªµ¥Î»¡£
+             * @~chinese ç›¸å¯¹èµ·å§‹ä½ç½®çš„åç§»é‡ï¼Œä»¥ç§’ä¸ºå•ä½ã€‚
              */
             virtual void seekTo(float sec);
 
             /**
              * @~english Checks whether the VideoPlayer is playing.
-             * @~chinese ¼ì²éVideoPlayerµ±Ç°ÊÇ·ñÕıÔÚ²¥·Å¡£
+             * @~chinese æ£€æŸ¥VideoPlayerå½“å‰æ˜¯å¦æ­£åœ¨æ’­æ”¾ã€‚
              * 
              * @return @~english True if currently playing, false otherwise.
-             * @~chinese VideoPlayerÈç¹ûÕıÔÚ²¥·Å·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+             * @~chinese VideoPlayerå¦‚æœæ­£åœ¨æ’­æ”¾è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
              */
             virtual bool isPlaying() const;
 
             /**
              * @~english Causes the video player to keep aspect ratio or no when displaying the video.
-             * @~chinese ÉèÖÃÊÓÆµ²¥·ÅÊ±ÊÇ·ñ±£³Ö³¤¿í±È¡£
+             * @~chinese è®¾ç½®è§†é¢‘æ’­æ”¾æ—¶æ˜¯å¦ä¿æŒé•¿å®½æ¯”ã€‚
              * 
              * @param enable @~english Specify true to keep aspect ratio or false to scale the video until 
              * both dimensions fit the visible bounds of the view exactly.
-             * @~chinese ÉèÖÃÎªtrueÊ±±£³Ö³¤¿í±È£¬·ñÔòÊÓÆµ»á±»À­ÉìÒÔÌîÂúÕû¸ö²¥·Å¿Ø¼ş¡£
+             * @~chinese è®¾ç½®ä¸ºtrueæ—¶ä¿æŒé•¿å®½æ¯”ï¼Œå¦åˆ™è§†é¢‘ä¼šè¢«æ‹‰ä¼¸ä»¥å¡«æ»¡æ•´ä¸ªæ’­æ”¾æ§ä»¶ã€‚
              */
             virtual void setKeepAspectRatioEnabled(bool enable);
 
             /**@~english
              * Indicates whether the video player keep aspect ratio when displaying the video.
-             * @~chinese »ñÈ¡ÊÓÆµ²¥·ÅÊÇ·ñ±£³Ö³¤¿í±È
+             * @~chinese è·å–è§†é¢‘æ’­æ”¾æ˜¯å¦ä¿æŒé•¿å®½æ¯”
              */
             virtual bool isKeepAspectRatioEnabled()const { return _keepAspectRatioEnabled;}
 
             /**
              * @~english Causes the video player to enter or exit full-screen mode.
-             * @~chinese ÉèÖÃÊÓÆµ²¥·ÅÊÇ·ñÈ«ÆÁÄ£Ê½¡£
+             * @~chinese è®¾ç½®è§†é¢‘æ’­æ”¾æ˜¯å¦å…¨å±æ¨¡å¼ã€‚
              * 
              * @param fullscreen @~english Specify true to enter full-screen mode or false to exit full-screen mode.
-             * @~chinese Ö¸¶¨trueÊ±½øÈëÈ«ÆÁ²¥·ÅÄ£Ê½¡£
+             * @~chinese æŒ‡å®štrueæ—¶è¿›å…¥å…¨å±æ’­æ”¾æ¨¡å¼ã€‚
              */
             virtual void setFullScreenEnabled(bool fullscreen);
 
             /**
              * @~english Indicates whether the video player is in full-screen mode.
-             * @~chinese »ñÈ¡ÊÓÆµ²¥·ÅÆ÷ÊÇ·ñ½øÈëÈ«ÆÁÄ£Ê½¡£
+             * @~chinese è·å–è§†é¢‘æ’­æ”¾å™¨æ˜¯å¦è¿›å…¥å…¨å±æ¨¡å¼ã€‚
              * 
              * @return @~english True if the video player is in full-screen mode, false otherwise.
-             * @~chinese Èç¹ûÊÓÆµ²¥·ÅÆ÷ÔÚÈ«ÆÁ²¥·ÅÄ£Ê½ÏÂ·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+             * @~chinese å¦‚æœè§†é¢‘æ’­æ”¾å™¨åœ¨å…¨å±æ’­æ”¾æ¨¡å¼ä¸‹è¿”å›true,å¦åˆ™è¿”å›falseã€‚
              */
             virtual bool isFullScreenEnabled()const;
 
             /**
              * @~english Register a callback to be invoked when the video state is updated.
-             * @~chinese ×¢²áÊÓÆµ²¥·Å×´Ì¬¸Ä±äÊ±µÄ»Øµ÷¡£
+             * @~chinese æ³¨å†Œè§†é¢‘æ’­æ”¾çŠ¶æ€æ”¹å˜æ—¶çš„å›è°ƒã€‚
              * 
              * @param callback @~english a callback.
-             * @~chinese »Øµ÷¡£
+             * @~chinese å›è°ƒã€‚
              */
             virtual void addEventListener(const VideoPlayer::ccVideoPlayerCallback& callback);
             
             /**
              * @~english A function which will be called when video the video state is updated.
-             * @~chinese ÊÓÆµ×´Ì¬¸Ä±äÊ±±»µ÷ÓÃµÄÒ»¸ö³ÉÔ±º¯Êı¡£
+             * @~chinese è§†é¢‘çŠ¶æ€æ”¹å˜æ—¶è¢«è°ƒç”¨çš„ä¸€ä¸ªæˆå‘˜å‡½æ•°ã€‚
              * 
-             * @param event @~english event code. @~chinese ÊÂ¼ş´úÂë¡£
+             * @param event @~english event code. @~chinese äº‹ä»¶ä»£ç ã€‚
              * @see VideoPlayer::EventType.
              */
             virtual void onPlayEvent(int event);

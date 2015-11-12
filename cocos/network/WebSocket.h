@@ -55,20 +55,20 @@ class WsMessage;
 /**
  * @ WebSocket 
  * @brief @~english WebSocket is wrapper of the libwebsockets-protocol, let the developer could call the websocket easily.
- * @~chinese WebSocketÊÇlibwebsockets-protocolµÄ¸ß²ã·â×°£¬¿ÉÒÔÈÃ¿ª·¢ÕßÄÜ·½±ãµÄµ÷ÓÃwebsocketµÄ¹¦ÄÜ¡£
+ * @~chinese WebSocketæ˜¯libwebsockets-protocolçš„é«˜å±‚å°è£…ï¼Œå¯ä»¥è®©å¼€å‘è€…èƒ½æ–¹ä¾¿çš„è°ƒç”¨websocketçš„åŠŸèƒ½ã€‚
  */
 class CC_DLL WebSocket
 {
 public:
     /**
      * @~english Construtor of WebSocket.
-     * @~chinese ¹¹Ôìº¯Êı
+     * @~chinese æ„é€ å‡½æ•°
      * @js ctor
      */
     WebSocket();
     /**
      * @~english Destructor of WebSocket.
-     * @~chinese Îö¹¹º¯Êı
+     * @~chinese ææ„å‡½æ•°
      * @js NA
      * @lua NA
      */
@@ -76,7 +76,7 @@ public:
 
     /**
      * @~english Data structure for message
-     * @~chinese messageµÄÊı¾İ½á¹¹
+     * @~chinese messageçš„æ•°æ®ç»“æ„
      */
     struct Data
     {
@@ -88,7 +88,7 @@ public:
 
     /**
      * @~english ErrorCode enum used to represent the error in the Websocket.
-     * @~chinese WebsocketµÄ´íÎóÂëÃ¶¾Ù
+     * @~chinese Websocketçš„é”™è¯¯ç æšä¸¾
      */
     enum class ErrorCode
     {
@@ -99,7 +99,7 @@ public:
 
     /**
      *@~english State enum used to represent the Websocket state.
-     *@~chinese WebsocketµÄ×´Ì¬Ã¶¾Ù
+     *@~chinese Websocketçš„çŠ¶æ€æšä¸¾
      */
     enum class State
     {
@@ -112,7 +112,7 @@ public:
     /**
      * @~english The delegate class is used to process websocket events.
      * The most member function are pure virtual functions,they should be implemented the in subclass.
-     * @~chinese ÓÃÓÚ´¦ÀíwebsocketÊÂ¼şµÄ´úÀíÀà¡£¶àÊı³ÉÔ±º¯ÊıÎª´¿Ğéº¯Êı£¬ËüÃÇĞèÒªÔÚ×ÓÀàÖĞÊµÏÖ¡£
+     * @~chinese ç”¨äºå¤„ç†websocketäº‹ä»¶çš„ä»£ç†ç±»ã€‚å¤šæ•°æˆå‘˜å‡½æ•°ä¸ºçº¯è™šå‡½æ•°ï¼Œå®ƒä»¬éœ€è¦åœ¨å­ç±»ä¸­å®ç°ã€‚
      * @lua NA
      */
     class Delegate
@@ -123,21 +123,21 @@ public:
         /**
          * @~english This function to be called after the client connection complete a handshake with the remote server.
          *This means that the WebSocket connection is ready to send and receive data.
-         * @~chinese Õâ¸öº¯ÊıÔÚ¿Í»§¶ËÍê³ÉºÍÔ¶³Ì·şÎñÆ÷ÎÕÊÖºó±»µ÷ÓÃ£¬ÕâÒâÎ¶×ÅWebSocketÒÑ¾­×¼±¸ºÃ·¢ËÍºÍ½ÓÊÕÊı¾İÁË¡£
-         * @param ws @~english The WebSocket object connected. @~chinese Á¬½ÓÉÏµÄWebSocket¡£
+         * @~chinese è¿™ä¸ªå‡½æ•°åœ¨å®¢æˆ·ç«¯å®Œæˆå’Œè¿œç¨‹æœåŠ¡å™¨æ¡æ‰‹åè¢«è°ƒç”¨ï¼Œè¿™æ„å‘³ç€WebSocketå·²ç»å‡†å¤‡å¥½å‘é€å’Œæ¥æ”¶æ•°æ®äº†ã€‚
+         * @param ws @~english The WebSocket object connected. @~chinese è¿æ¥ä¸Šçš„WebSocketã€‚
          */
         virtual void onOpen(WebSocket* ws) = 0;
         /**
          * @~english This function to be called when data has appeared from the server for the client connection.
-         * @~chinese µ±ÓĞÊı¾İ´Ó·şÎñ¶Ë´«»ØÊ±½«µ÷ÓÃÕâ¸öº¯Êı
-         * @param ws @~english The WebSocket object connected. @~chinese Á¬½ÓÉÏµÄWebSocket¡£
-         * @param data @~english Data object for message. @~chinese ĞÅÏ¢Êı¾İ¡£
+         * @~chinese å½“æœ‰æ•°æ®ä»æœåŠ¡ç«¯ä¼ å›æ—¶å°†è°ƒç”¨è¿™ä¸ªå‡½æ•°
+         * @param ws @~english The WebSocket object connected. @~chinese è¿æ¥ä¸Šçš„WebSocketã€‚
+         * @param data @~english Data object for message. @~chinese ä¿¡æ¯æ•°æ®ã€‚
          */
         virtual void onMessage(WebSocket* ws, const Data& data) = 0;
         /**
          * @~english When the WebSocket object connected wants to close or the protocol won't get used at all and current _readyState is State::CLOSING,this function is to be called.
-         * @~chinese µ±ÒÑÁ¬½ÓÉÏµÄWebSocket¶ÔÏóÏë¹Ø±Õ»òÕß²»Ê¹ÓÃĞ­Òé²¢ÇÒµ±Ç°µÄ_readyStateÊÇState::CLOSINGÊ±£¬Õâ¸öº¯Êı½«»á´¥·¢¡£
-         * @param ws @~english The WebSocket object connected. @~chinese Á¬½ÓÉÏµÄWebSocket¡£
+         * @~chinese å½“å·²è¿æ¥ä¸Šçš„WebSocketå¯¹è±¡æƒ³å…³é—­æˆ–è€…ä¸ä½¿ç”¨åè®®å¹¶ä¸”å½“å‰çš„_readyStateæ˜¯State::CLOSINGæ—¶ï¼Œè¿™ä¸ªå‡½æ•°å°†ä¼šè§¦å‘ã€‚
+         * @param ws @~english The WebSocket object connected. @~chinese è¿æ¥ä¸Šçš„WebSocketã€‚
          */
         virtual void onClose(WebSocket* ws) = 0;
         /**
@@ -146,13 +146,13 @@ public:
          * 2. the request client connection has been unable to complete a handshake with the remote server.
          * 3. the protocol won't get used at all after this callback and current _readyState is State::CONNECTING.
          * 4. when a socket descriptor needs to be removed from an external polling array. in is again the struct libwebsocket_pollargs containing the fd member to be removed. If you are using the internal polling loop, you can just ignore it and current _readyState is State::CONNECTING.
-         * @~chinese Õâ¸öº¯ÊıÔÚÒÔÏÂ¼¸ÖÖÇé¿öÏÂ»á±»´¥·¢:
-         * 1. Á¬½ÓÊ§°Ü
-         * 2. ¿Í»§¶ËºÍ·şÎñ¶ËÎÕÊÖÊ§°Ü
-         * 3. ¸ù±¾²»Ê¹ÓÃĞ­Òé²¢ÇÒµ±Ç°µÄ_readyStateÎªState::CONNECTING
-         * 4. µ±Ò»¸ösocketÃèÊö·ûĞèÒª´ÓÍâ²¿ÂÖÑ¯Êı¾İÊı¶ÓÁĞÖĞÒÆ³ıÊ±£¬°üº¬fd³ÉÔ±µÄlibwebsocket_pollargs½á¹¹Ò²Òª±»ÒÆ³ı¡£Èç¹ûÄãÊÇÊ¹ÓÃÄÚ²¿ÂÖÑ¯Ñ­»·Ê±£¬Äã¿ÉºöÂÔËü²¢ÇÒµ±Ç°µÄ_readyStateÎªState::CONNECTING.
-         * @param ws @~english The WebSocket object connected. @~chinese Á¬½ÓÉÏµÄWebSocket¡£
-         * @param error @~english WebSocket::ErrorCode enum,would be ErrorCode::TIME_OUT or ErrorCode::CONNECTION_FAILURE. @~chinese WebSocketµÄ´íÎóÂëÃ¶¾Ù£¬¿ÉÒÔÎªErrorCode::TIME_OUT»òErrorCode::CONNECTION_FAILURE¡£
+         * @~chinese è¿™ä¸ªå‡½æ•°åœ¨ä»¥ä¸‹å‡ ç§æƒ…å†µä¸‹ä¼šè¢«è§¦å‘:
+         * 1. è¿æ¥å¤±è´¥
+         * 2. å®¢æˆ·ç«¯å’ŒæœåŠ¡ç«¯æ¡æ‰‹å¤±è´¥
+         * 3. æ ¹æœ¬ä¸ä½¿ç”¨åè®®å¹¶ä¸”å½“å‰çš„_readyStateä¸ºState::CONNECTING
+         * 4. å½“ä¸€ä¸ªsocketæè¿°ç¬¦éœ€è¦ä»å¤–éƒ¨è½®è¯¢æ•°æ®æ•°é˜Ÿåˆ—ä¸­ç§»é™¤æ—¶ï¼ŒåŒ…å«fdæˆå‘˜çš„libwebsocket_pollargsç»“æ„ä¹Ÿè¦è¢«ç§»é™¤ã€‚å¦‚æœä½ æ˜¯ä½¿ç”¨å†…éƒ¨è½®è¯¢å¾ªç¯æ—¶ï¼Œä½ å¯å¿½ç•¥å®ƒå¹¶ä¸”å½“å‰çš„_readyStateä¸ºState::CONNECTING.
+         * @param ws @~english The WebSocket object connected. @~chinese è¿æ¥ä¸Šçš„WebSocketã€‚
+         * @param error @~english WebSocket::ErrorCode enum,would be ErrorCode::TIME_OUT or ErrorCode::CONNECTION_FAILURE. @~chinese WebSocketçš„é”™è¯¯ç æšä¸¾ï¼Œå¯ä»¥ä¸ºErrorCode::TIME_OUTæˆ–ErrorCode::CONNECTION_FAILUREã€‚
          */
         virtual void onError(WebSocket* ws, const ErrorCode& error) = 0;
     };
@@ -161,11 +161,11 @@ public:
     /**
      *  @~english The initialized method for websocket.
      *            It needs to be invoked right after websocket instance is allocated.
-     *  @~chinese WebSocketµÄ³õÊ¼»¯·½·¨£¬ËüÔÚWebSocketÊµÀı±»·ÖÅäºó±»´¥·¢¡£
-     *  @param  delegate @~english The delegate which want to receive event from websocket. @~chinese ½ÓÊÕÀ´×Ôwebsocket
-     *  @param  url      @~english The URL of websocket server. @~chinese websocket·şÎñ¶ËURLµØÖ·
-     *  @param  protocols @~english The protocol of the socket. @~chinese websocketµÄÁ¬½ÓĞ­Òé¡£
-     *  @return @~english true: Success, false: Failure. @~chinese true:³É¹¦£¬false:Ê§°Ü
+     *  @~chinese WebSocketçš„åˆå§‹åŒ–æ–¹æ³•ï¼Œå®ƒåœ¨WebSocketå®ä¾‹è¢«åˆ†é…åè¢«è§¦å‘ã€‚
+     *  @param  delegate @~english The delegate which want to receive event from websocket. @~chinese æ¥æ”¶æ¥è‡ªwebsocket
+     *  @param  url      @~english The URL of websocket server. @~chinese websocketæœåŠ¡ç«¯URLåœ°å€
+     *  @param  protocols @~english The protocol of the socket. @~chinese websocketçš„è¿æ¥åè®®ã€‚
+     *  @return @~english true: Success, false: Failure. @~chinese true:æˆåŠŸï¼Œfalse:å¤±è´¥
      *  @lua NA
      */
     bool init(const Delegate& delegate,
@@ -173,30 +173,30 @@ public:
               const std::vector<std::string>* protocols = nullptr);
 
     /**
-     *  @~english Sends string data to websocket server. @~chinese Ïòwebsocket·şÎñ¶Ë·¢ËÍ×Ö·û´®Êı¾İ
+     *  @~english Sends string data to websocket server. @~chinese å‘websocketæœåŠ¡ç«¯å‘é€å­—ç¬¦ä¸²æ•°æ®
      *  
-     *  @param message @~english string data. @~chinese ×Ö·û´®Êı¾İ
+     *  @param message @~english string data. @~chinese å­—ç¬¦ä¸²æ•°æ®
      *  @lua sendstring
      */
     void send(const std::string& message);
 
     /**
-     *  @~english Sends binary data to websocket server. @~chinese Ïòwebsocket·şÎñ¶Ë·¢ËÍ¶ş½øÖÆÊı¾İ
+     *  @~english Sends binary data to websocket server. @~chinese å‘websocketæœåŠ¡ç«¯å‘é€äºŒè¿›åˆ¶æ•°æ®
      *  
-     *  @param binaryMsg @~english binary string data. @~chinese ¶ş½øÖÆ×Ö·û´®Êı¾İ
-     *  @param len @~english the size of binary string data. @~chinese ¶ş½øÖÆ×Ö·û´®Êı¾İµÄ³¤¶È
+     *  @param binaryMsg @~english binary string data. @~chinese äºŒè¿›åˆ¶å­—ç¬¦ä¸²æ•°æ®
+     *  @param len @~english the size of binary string data. @~chinese äºŒè¿›åˆ¶å­—ç¬¦ä¸²æ•°æ®çš„é•¿åº¦
      *  @lua sendstring
      */
     void send(const unsigned char* binaryMsg, unsigned int len);
 
     /**
-     *  @~english Closes the connection to server. @~chinese ¹Ø±Õµ½·şÎñ¶ËµÄÁ¬½Ó¡£
+     *  @~english Closes the connection to server. @~chinese å…³é—­åˆ°æœåŠ¡ç«¯çš„è¿æ¥ã€‚
      */
     void close();
 
     /**
-     *  @~english Gets current state of connection. @~chinese »ñÈ¡µ±Ç°Á¬½ÓµÄ×´Ì¬¡£
-     *  @return @~english State the state value coule be State::CONNECTING, State::OPEN, State::CLOSING or State::CLOSED. @~chinese ·µ»ØStateÀàĞÍµÄÖµ£¬¿ÉÒÔÎªState::CONNECTING, State::OPEN, State::CLOSING »òÕß State::CLOSED
+     *  @~english Gets current state of connection. @~chinese è·å–å½“å‰è¿æ¥çš„çŠ¶æ€ã€‚
+     *  @return @~english State the state value coule be State::CONNECTING, State::OPEN, State::CLOSING or State::CLOSED. @~chinese è¿”å›Stateç±»å‹çš„å€¼ï¼Œå¯ä»¥ä¸ºState::CONNECTING, State::OPEN, State::CLOSING æˆ–è€… State::CLOSED
      */
     State getReadyState();
 

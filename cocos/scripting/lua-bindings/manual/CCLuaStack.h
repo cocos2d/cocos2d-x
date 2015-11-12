@@ -46,8 +46,8 @@ NS_CC_BEGIN
  * In the current mechanism, there is only one lua_State in one LuaStack object.
  *
  * @~chinese 
- * LuaStackÓÃÓÚ¹ÜÀílua_State²Ù×÷,ÀıÈç: ½«Êı¾İÑ¹Èëµ½lua_State£¬Ö´ĞĞlua_StateÉÏµÄº¯ÊıµÈµÈ¡£
- * ÔÚµ±Ç°µÄ»úÖÆ,ÔÚÒ»¸öLuaStack¶ÔÏóÖĞÖ»ÓĞÒ»¸ölua_State
+ * LuaStackç”¨äºç®¡ç†lua_Stateæ“ä½œ,ä¾‹å¦‚: å°†æ•°æ®å‹å…¥åˆ°lua_Stateï¼Œæ‰§è¡Œlua_Stateä¸Šçš„å‡½æ•°ç­‰ç­‰ã€‚
+ * åœ¨å½“å‰çš„æœºåˆ¶,åœ¨ä¸€ä¸ªLuaStackå¯¹è±¡ä¸­åªæœ‰ä¸€ä¸ªlua_State
  * 
  * @lua NA
  * @js NA
@@ -59,19 +59,19 @@ public:
     /**@~english
      * Create a LuaStack object, it will new a lua_State.
      * @~chinese 
-     * ´´½¨Ò»¸öLuaStack¶ÔÏó,Ëü½«ĞÂ½¨Ò»¸ölua_State¡£
+     * åˆ›å»ºä¸€ä¸ªLuaStackå¯¹è±¡,å®ƒå°†æ–°å»ºä¸€ä¸ªlua_Stateã€‚
      */
 
     static LuaStack *create(void);
     /**@~english
      * Create a LuaStack object with the existed lua_State.
      * @~chinese 
-     * ¸ù¾İ´æÔÚµÄlua_State´´½¨Ò»¸öLuaStack¶ÔÏó¡£
+     * æ ¹æ®å­˜åœ¨çš„lua_Stateåˆ›å»ºä¸€ä¸ªLuaStackå¯¹è±¡ã€‚
      */
 
     static LuaStack *attach(lua_State *L);
     
-    /** @~english Destructor.  @~chinese Îö¹¹º¯Êı¡£*/
+    /** @~english Destructor.  @~chinese ææ„å‡½æ•°ã€‚*/
 
     virtual ~LuaStack();
     
@@ -79,10 +79,10 @@ public:
      * Method used to get a pointer to the lua_State that the script module is attached to.
      *
      * @~chinese 
-     * »ñÈ¡½Å±¾Ä£¿éÒÀÀµµÄlua_StateÖ¸Õë¡£
+     * è·å–è„šæœ¬æ¨¡å—ä¾èµ–çš„lua_StateæŒ‡é’ˆã€‚
      * 
      * @return @~english A pointer to the lua_State that the script module is attached to.
-     * @~chinese lua_StateÖ¸Õë¡£
+     * @~chinese lua_StateæŒ‡é’ˆã€‚
      */
 
     lua_State* getLuaState(void) {
@@ -93,10 +93,10 @@ public:
      * Add a path to find lua files in.
      *
      * @~chinese 
-     * Ìí¼ÓÒ»ÌõËÑË÷LuaÎÄ¼şµÄÂ·¾¶¡£
+     * æ·»åŠ ä¸€æ¡æœç´¢Luaæ–‡ä»¶çš„è·¯å¾„ã€‚
      * 
      * @param path @~english to be added to the Lua search path.
-     * @~chinese ĞÂÔöµÄËÑË÷Â·¾¶¡£
+     * @~chinese æ–°å¢çš„æœç´¢è·¯å¾„ã€‚
      */
 
     virtual void addSearchPath(const char* path);
@@ -105,10 +105,10 @@ public:
      * Add lua loader.
      * 
      * @~chinese 
-     * Ìí¼ÓLua¼ÓÔØº¯Êı¡£
+     * æ·»åŠ LuaåŠ è½½å‡½æ•°ã€‚
      * 
      * @param func @~english a function pointer point to the loader function.
-     * @~chinese ¼ÓÔØº¯ÊıµÄº¯ÊıÖ¸Õë¡£
+     * @~chinese åŠ è½½å‡½æ•°çš„å‡½æ•°æŒ‡é’ˆã€‚
      */
 
     virtual void addLuaLoader(lua_CFunction func);
@@ -118,13 +118,13 @@ public:
      * If value of package["loaded"][moduleFileName] is existed, it would set the value nil.Then,it calls executeString function.
      *
      * @~chinese 
-     * ÖØĞÂ¼ÓÔØ¶ÔÓ¦Ä£¿éÃûµÄ½Å±¾´úÂë¡£
-     * Èç¹ûpackage["loaded"][moduleFileName]µÄÖµ´æÔÚ,Ëü½«±»ÉèÖÃÖµÎªnil£¬È»ºó£¬ÔÙµ÷ÓÃexecuteStringº¯Êı¡£
+     * é‡æ–°åŠ è½½å¯¹åº”æ¨¡å—åçš„è„šæœ¬ä»£ç ã€‚
+     * å¦‚æœpackage["loaded"][moduleFileName]çš„å€¼å­˜åœ¨,å®ƒå°†è¢«è®¾ç½®å€¼ä¸ºnilï¼Œç„¶åï¼Œå†è°ƒç”¨executeStringå‡½æ•°ã€‚
      * 
      * @param moduleFileName @~english String object holding the filename of the script file that is to be reloaded.
-     * @~chinese ĞèÖØĞÂ¼ÓÔØµÄ½Å±¾ÎÄ¼şÃû¡£
+     * @~chinese éœ€é‡æ–°åŠ è½½çš„è„šæœ¬æ–‡ä»¶åã€‚
      * @return @~english 0 if the string is excuted correctly or other if the string is excuted wrongly.
-     * @~chinese Èç¹ûÖ´ĞĞÕıÈ··µ»Ø0£¬·ñÔò·µ»ØÆäËüÖµ¡£
+     * @~chinese å¦‚æœæ‰§è¡Œæ­£ç¡®è¿”å›0ï¼Œå¦åˆ™è¿”å›å…¶å®ƒå€¼ã€‚
      */
 
     virtual int reload(const char* moduleFileName);
@@ -137,14 +137,14 @@ public:
      * In current mechanism, this function is called in the destructor of Ref object, developer don't call this functions.
      *
      * @~chinese 
-     * Í¨¹ı²Ù×÷Lua table,ÒÆ³ıRef¶ÔÏóÔÚLua tableÖĞµÄÒıÓÃ¡£
-     * Ïà¹ØµÄLua table°üÀ¨toluafix_refid_ptr_mapping¡¢toluafix_refid_type_mapping tolua_value_rootºÍobject_Metatable["tolua_ubox"]»òtolua_ubox¡£
-     * Í¬Ê±£¬ÉèÖÃÏàÓ¦µÄuserdataÎªnullptrÒÔ¼°ÒÆ³ıÈ¥¸Ã¶ÔÏóÏà¹ØµÄLuaº¯ÊıµÄÒıÓÃ
+     * é€šè¿‡æ“ä½œLua table,ç§»é™¤Refå¯¹è±¡åœ¨Lua tableä¸­çš„å¼•ç”¨ã€‚
+     * ç›¸å…³çš„Lua tableåŒ…æ‹¬toluafix_refid_ptr_mappingã€toluafix_refid_type_mapping tolua_value_rootå’Œobject_Metatable["tolua_ubox"]æˆ–tolua_uboxã€‚
+     * åŒæ—¶ï¼Œè®¾ç½®ç›¸åº”çš„userdataä¸ºnullpträ»¥åŠç§»é™¤å»è¯¥å¯¹è±¡ç›¸å…³çš„Luaå‡½æ•°çš„å¼•ç”¨
      * 
-     * Ä¿Ç°µÄ»úÖÆÏÂ£¬¿ª·¢Õß²»ĞèÒªÖ±½Óµ÷ÓÃÕâ¸öº¯Êı£¬Õâ¸öº¯Êı½«»áÔÚLuaEngierµÄÎö¹¹º¯ÊıÖĞ×Ô¶¯±»µ÷ÓÃ¡£
+     * ç›®å‰çš„æœºåˆ¶ä¸‹ï¼Œå¼€å‘è€…ä¸éœ€è¦ç›´æ¥è°ƒç”¨è¿™ä¸ªå‡½æ•°ï¼Œè¿™ä¸ªå‡½æ•°å°†ä¼šåœ¨LuaEngierçš„ææ„å‡½æ•°ä¸­è‡ªåŠ¨è¢«è°ƒç”¨ã€‚
      * 
      * @param object @~english the key object to remove script object.
-     * @~chinese ÓÃÓÚÒÆ³ı½Å±¾¶ÔÏóÒıÓÃµÄ¼üÖµ
+     * @~chinese ç”¨äºç§»é™¤è„šæœ¬å¯¹è±¡å¼•ç”¨çš„é”®å€¼
      */
 
     virtual void removeScriptObjectByObject(Ref* object);
@@ -153,10 +153,10 @@ public:
      * Remove Lua function reference by nHandler by setting toluafix_refid_function_mapping[nHandle] nil.
      *
      * @~chinese 
-     * Í¨¹ıÉèÖÃtoluafix_refid_function_mapping[nHandle]=nil,ÒÆ³ıLuaº¯ÊıÒıÓÃ
+     * é€šè¿‡è®¾ç½®toluafix_refid_function_mapping[nHandle]=nil,ç§»é™¤Luaå‡½æ•°å¼•ç”¨
      * 
      * @param nHandler @~english the function reference id to find the correspoinding Lua function pointer.
-     * @~chinese Luaº¯ÊıµÄÒıÓÃid¡£
+     * @~chinese Luaå‡½æ•°çš„å¼•ç”¨idã€‚
      */
 
     virtual void removeScriptHandler(int nHandler);
@@ -165,10 +165,10 @@ public:
      * Reallocate Lua function reference id to the Lua function pointer to add reference.
      *
      * @~chinese 
-     * ÖØĞÂ·ÖÅäLuaº¯ÊıµÄÒıÓÃid¡£
+     * é‡æ–°åˆ†é…Luaå‡½æ•°çš„å¼•ç”¨idã€‚
      * 
      * @param nHandler @~english the reference id to find the correspoinding Lua function pointer.
-     * @~chinese Luaº¯ÊıµÄÒıÓÃid¡£
+     * @~chinese Luaå‡½æ•°çš„å¼•ç”¨idã€‚
      */
 
     virtual int reallocateScriptHandler(int nHandler);
@@ -177,12 +177,12 @@ public:
      * Execute script code contained in the given string.
      *
      * @~chinese 
-     * Ö´ĞĞ¸ø¶¨×Ö·û´®ÖĞ°üº¬µÄ½Å±¾´úÂë¡£
+     * æ‰§è¡Œç»™å®šå­—ç¬¦ä¸²ä¸­åŒ…å«çš„è„šæœ¬ä»£ç ã€‚
      * 
      * @param codes @~english holding the valid script code that should be executed.
-     * @~chinese Ğè±»Ö´ĞĞµÄ½Å±¾´úÂë×Ö·û´®¡£
+     * @~chinese éœ€è¢«æ‰§è¡Œçš„è„šæœ¬ä»£ç å­—ç¬¦ä¸²ã€‚
      * @return @~english 0 if the string is excuted correctly,other if the string is excuted wrongly.
-     * @~chinese Ö´ĞĞ³É¹¦·µ»Ø0£¬·ñÔò·µ»ØÆäËüÖµ¡£
+     * @~chinese æ‰§è¡ŒæˆåŠŸè¿”å›0ï¼Œå¦åˆ™è¿”å›å…¶å®ƒå€¼ã€‚
      */
 
     virtual int executeString(const char* codes);
@@ -191,12 +191,12 @@ public:
      * Execute a script file.
      *
      * @~chinese 
-     * Ö´ĞĞÒ»¸ö½Å±¾ÎÄ¼ş¡£
+     * æ‰§è¡Œä¸€ä¸ªè„šæœ¬æ–‡ä»¶ã€‚
      * 
      * @param filename @~english String object holding the filename of the script file that is to be executed.
-     * @~chinese ½Å±¾ÎÄ¼şµÄÎÄ¼şÃû¡£
+     * @~chinese è„šæœ¬æ–‡ä»¶çš„æ–‡ä»¶åã€‚
      * @return @~english the return values by calling executeFunction.
-     * @~chinese Èç¹ûÅöµ½´íÎó»òÕßÖ´ĞĞ½á¹ûÃ»ÓĞ·µ»ØÖµÊ±·µ»Ø0£¬·ñÔò·µ»Ø1¡£
+     * @~chinese å¦‚æœç¢°åˆ°é”™è¯¯æˆ–è€…æ‰§è¡Œç»“æœæ²¡æœ‰è¿”å›å€¼æ—¶è¿”å›0ï¼Œå¦åˆ™è¿”å›1ã€‚
      */
 
     virtual int executeScriptFile(const char* filename);
@@ -206,13 +206,13 @@ public:
      * The function should not take any parameters and should return an integer.
      *
      * @~chinese 
-     * Ö´ĞĞÈ«¾ÖµÄ½Å±¾º¯Êı¡£
-     * ¸ÃÈ«¾Öº¯Êı²»Ó¦¸ÃÓĞÈÎºÎ²ÎÊı,Í¬Ê±·µ»ØÒ»¸öÕûÊı¡£
+     * æ‰§è¡Œå…¨å±€çš„è„šæœ¬å‡½æ•°ã€‚
+     * è¯¥å…¨å±€å‡½æ•°ä¸åº”è¯¥æœ‰ä»»ä½•å‚æ•°,åŒæ—¶è¿”å›ä¸€ä¸ªæ•´æ•°ã€‚
      * 
      * @param functionName @~english String object holding the name of the function, in the global script environment, that is to be executed.
-     * @~chinese È«¾Ö½Å±¾º¯ÊıµÄ×Ö·û´®Ãû³Æ
+     * @~chinese å…¨å±€è„šæœ¬å‡½æ•°çš„å­—ç¬¦ä¸²åç§°
      * @return @~english The integer value returned from the script function.
-     * @~chinese ´Ó½Å±¾º¯Êı·µ»ØµÄÕûÊıÖµ¡£
+     * @~chinese ä»è„šæœ¬å‡½æ•°è¿”å›çš„æ•´æ•°å€¼ã€‚
      */
 
     virtual int executeGlobalFunction(const char* functionName);
@@ -220,7 +220,7 @@ public:
     /**@~english
      * Set the stack top index 0.
      * @~chinese 
-     * ÉèÖÃLuaÕ»¶¥Ë÷ÒıÎª0¡£
+     * è®¾ç½®Luaæ ˆé¡¶ç´¢å¼•ä¸º0ã€‚
      */
 
     virtual void clean(void);
@@ -229,10 +229,10 @@ public:
      * Pushes a integer number into the stack.
      * 
      * @~chinese 
-     * ½«Ò»¸öÕûÊıÖµÑ¹ÈëLuaÕ»¡£
+     * å°†ä¸€ä¸ªæ•´æ•°å€¼å‹å…¥Luaæ ˆã€‚
      * 
      * @param intValue @~english a integer number.
-     * @~chinese ÕûÊıÖµ¡£
+     * @~chinese æ•´æ•°å€¼ã€‚
      */
 
     virtual void pushInt(int intValue);
@@ -241,10 +241,10 @@ public:
      * Pushes a float number into the stack.
      *
      * @~chinese 
-     * ½«Ò»¸ö¸¡µãÖµÑ¹ÈëLuaÕ»¡£
+     * å°†ä¸€ä¸ªæµ®ç‚¹å€¼å‹å…¥Luaæ ˆã€‚
      * 
      * @param floatValue @~english a float number.
-     * @~chinese ¸¡µãÖµ¡£
+     * @~chinese æµ®ç‚¹å€¼ã€‚
      */
 
     virtual void pushFloat(float floatValue);
@@ -253,10 +253,10 @@ public:
      * Pushes a long number into the stack.
      * 
      * @~chinese 
-     * ½«Ò»¸ö³¤ÕûĞÍÊıÑ¹ÈëLuaÕ»¡£
+     * å°†ä¸€ä¸ªé•¿æ•´å‹æ•°å‹å…¥Luaæ ˆã€‚
      * 
      * @param longValue @~english a long number.
-     * @~chinese ³¤ÕûĞÍÖµ¡£
+     * @~chinese é•¿æ•´å‹å€¼ã€‚
      */
 
     virtual void pushLong(long longValue);
@@ -265,10 +265,10 @@ public:
      * Pushes a bool value into the stack.
      * 
      * @~chinese 
-     * ½«Ò»¸ö²¼¶ûÖµÑ¹ÈëLuaÕ»¡£
+     * å°†ä¸€ä¸ªå¸ƒå°”å€¼å‹å…¥Luaæ ˆã€‚
      * 
      * @param boolValue @~english a bool value.
-     * @~chinese ²¼¶ûÖµ
+     * @~chinese å¸ƒå°”å€¼
      */
 
     virtual void pushBoolean(bool boolValue);
@@ -277,10 +277,10 @@ public:
      * Pushes the zero-terminated string pointed into the stack.
      *
      * @~chinese 
-     * ½«Ò»¸öÒÔ'\0'½áÊøµÄ×Ö·û´®Ö¸ÕëÑ¹ÈëLuaÕ»¡£
+     * å°†ä¸€ä¸ªä»¥'\0'ç»“æŸçš„å­—ç¬¦ä¸²æŒ‡é’ˆå‹å…¥Luaæ ˆã€‚
      * 
      * @param stringValue @~english a pointer point to a zero-terminated string.
-     * @~chinese ×Ö·û´®Ö¸Õë¡£
+     * @~chinese å­—ç¬¦ä¸²æŒ‡é’ˆã€‚
      */
 
     virtual void pushString(const char* stringValue);
@@ -289,12 +289,12 @@ public:
      * Pushes the string pointed to stringValue with size length into the stack.
      *
      * @~chinese 
-     * ½«Ö¸ÏòstringValueµÄ×Ö·û´®°´Ö¸¶¨lengthÑ¹ÈëLuaÕ»¡£
+     * å°†æŒ‡å‘stringValueçš„å­—ç¬¦ä¸²æŒ‰æŒ‡å®šlengthå‹å…¥Luaæ ˆã€‚
      * 
      * @param stringValue @~english a pointer point to the string stringValue.
-     * @~chinese ×Ö·û´®Ö¸Õë¡£
+     * @~chinese å­—ç¬¦ä¸²æŒ‡é’ˆã€‚
      * @param length @~english the size.
-     * @~chinese ĞèÒªÑ¹ÈëµÄ³¤¶È¡£
+     * @~chinese éœ€è¦å‹å…¥çš„é•¿åº¦ã€‚
      */
 
     virtual void pushString(const char* stringValue, int length);
@@ -302,7 +302,7 @@ public:
     /**@~english
      * Pushes a nil value into the stack.
      * @~chinese 
-     * Ñ¹ÈëÒ»¸önilµ½LuaÕ»¡£
+     * å‹å…¥ä¸€ä¸ªnilåˆ°Luaæ ˆã€‚
      */
 
     virtual void pushNil(void);
@@ -311,7 +311,7 @@ public:
      * Pushes a Ref object into the stack,please refer to toluafix_pushusertype_ccobject for detail information
      *
      * @~chinese 
-     * ½«Ò»¸öRef¶ÔÏóÑ¹Èëµ½LuaÕ»£¬ÏêÏ¸ĞÅÏ¢Çë²éÔÄtoluafix_pushusertype_ccobject
+     * å°†ä¸€ä¸ªRefå¯¹è±¡å‹å…¥åˆ°Luaæ ˆï¼Œè¯¦ç»†ä¿¡æ¯è¯·æŸ¥é˜…toluafix_pushusertype_ccobject
      * 
      * @see toluafix_pushusertype_ccobject.
      */
@@ -330,8 +330,8 @@ public:
      * LuaValueTypeObject                pushObject
      * 
      * @~chinese 
-     * ¸ù¾İ²»Í¬ÀàĞÍµÄLuaValue,Ëü½«»áÔÚº¯ÊıÄÚ²¿µ÷ÓÃÆäËüÏà¹ØµÄpushº¯Êı
-     *    ÀàĞÍ                       º¯Êı
+     * æ ¹æ®ä¸åŒç±»å‹çš„LuaValue,å®ƒå°†ä¼šåœ¨å‡½æ•°å†…éƒ¨è°ƒç”¨å…¶å®ƒç›¸å…³çš„pushå‡½æ•°
+     *    ç±»å‹                       å‡½æ•°
      * LuaValueTypeInt             pushInt
      * LuaValueTypeFloat           pushFloat
      * LuaValueTypeBoolean         pushBoolean
@@ -341,7 +341,7 @@ public:
      * LuaValueTypeObject          pushObject
      * 
      * @param value @~english a LuaValue object.
-     * @~chinese LuaValue¶ÔÏó¡£
+     * @~chinese LuaValueå¯¹è±¡ã€‚
      */
 
     virtual void pushLuaValue(const LuaValue& value);
@@ -351,11 +351,11 @@ public:
      * The key of table is string.
      * The value of table is got by calling pushLuaValue,@see pushLuaValue.
      * @~chinese 
-     * ½«Ò»¸öLua tableÑ¹ÈëLuaÕ»¡£
-     * Õâ¸öLua tableµÄkeyÖµÎª×Ö·û´®£¬valueÖµÒÀÀµLuaValueµÄÀàĞÍÍ¨¹ıµ÷ÓÃpushLuaValue»ñµÃ£¬@see pushLuaValue¡£
+     * å°†ä¸€ä¸ªLua tableå‹å…¥Luaæ ˆã€‚
+     * è¿™ä¸ªLua tableçš„keyå€¼ä¸ºå­—ç¬¦ä¸²ï¼Œvalueå€¼ä¾èµ–LuaValueçš„ç±»å‹é€šè¿‡è°ƒç”¨pushLuaValueè·å¾—ï¼Œ@see pushLuaValueã€‚
      * 
      * @param dict @~english a LuaValueDict object.
-     * @~chinese LuaValueDict¶ÔÏó¡£
+     * @~chinese LuaValueDictå¯¹è±¡ã€‚
      */
 
     virtual void pushLuaValueDict(const LuaValueDict& dict);
@@ -365,9 +365,9 @@ public:
      * The index of array table is begin at 1.
      * The value of array table is got by calling pushLuaValue,@see pushLuaValue.
      * @~chinese 
-     * ½«Ò»¸öLuaÊı×étableÑ¹ÈëLuaÕ»¡£
-     * Êı×étableµÄË÷Òı´Ó1¿ªÊ¼¡£
-     * Õâ¸öLuaÊı×étableÖĞµÄÖµÍ¨¹ıµ÷ÓÃpushLuaValue»ñµÃ£¬@see pushLuaValue¡£
+     * å°†ä¸€ä¸ªLuaæ•°ç»„tableå‹å…¥Luaæ ˆã€‚
+     * æ•°ç»„tableçš„ç´¢å¼•ä»1å¼€å§‹ã€‚
+     * è¿™ä¸ªLuaæ•°ç»„tableä¸­çš„å€¼é€šè¿‡è°ƒç”¨pushLuaValueè·å¾—ï¼Œ@see pushLuaValueã€‚
      *
      * @param array @~english a LuaValueArray object.
      * @~chinese LuaValueArray
@@ -380,11 +380,11 @@ public:
      * If the Lua function pointer corresponding to the nHanlder isn't found, it would push nil on the top index of stack, then it would output the error log in the debug model.
      *
      * @~chinese 
-     * Í¨¹ı¸ø¶¨µÄnHandler²éÕÒtoluafix_refid_function_mapping table»ñÈ¡¶ÔÓ¦µÄLuaº¯ÊıÖ¸Õë£¬²¢½«ËüÑ¹ÈëLuaÕ»¡£
-     * Èç¹ûÎŞ·¨ÕÒµ½nHanlder¶ÔÓ¦µÄLuaº¯ÊıÖ¸Õë, Ëü»á°ÑÑ¹ÈëÒ»¸önilÖµµ½Õ»¶¥£¬²¢ÇÒÔÚÔÚµ÷ÊÔÄ£Ê½£¬Ëü»¹»áÊä³ö´íÎóÈÕÖ¾¡£
+     * é€šè¿‡ç»™å®šçš„nHandleræŸ¥æ‰¾toluafix_refid_function_mapping tableè·å–å¯¹åº”çš„Luaå‡½æ•°æŒ‡é’ˆï¼Œå¹¶å°†å®ƒå‹å…¥Luaæ ˆã€‚
+     * å¦‚æœæ— æ³•æ‰¾åˆ°nHanlderå¯¹åº”çš„Luaå‡½æ•°æŒ‡é’ˆ, å®ƒä¼šæŠŠå‹å…¥ä¸€ä¸ªnilå€¼åˆ°æ ˆé¡¶ï¼Œå¹¶ä¸”åœ¨åœ¨è°ƒè¯•æ¨¡å¼ï¼Œå®ƒè¿˜ä¼šè¾“å‡ºé”™è¯¯æ—¥å¿—ã€‚
      * 
      * @return @~english true if get the no-null function pointer otherwise false.
-     * @~chinese ·ñÔòÕæµÄÈç¹ûÃ»ÓĞnullµÄº¯ÊıÖ¸Õë´íÎó¡£
+     * @~chinese å¦åˆ™çœŸçš„å¦‚æœæ²¡æœ‰nullçš„å‡½æ•°æŒ‡é’ˆé”™è¯¯ã€‚
      */
 
     virtual bool pushFunctionByHandler(int nHandler);
@@ -393,12 +393,12 @@ public:
      * Find and execute the Lua function on the -(numArgs + 1) index on the stack,the function has numArgs variables.
      *
      * @~chinese 
-     * Í¨¹ınumArgsÖµ£¬»ñÈ¡LuaÕ»ÉÏ-(numArgs + 1)Ë÷Òı´¦µÄLuaº¯Êı²¢Ö´ĞĞ
+     * é€šè¿‡numArgså€¼ï¼Œè·å–Luaæ ˆä¸Š-(numArgs + 1)ç´¢å¼•å¤„çš„Luaå‡½æ•°å¹¶æ‰§è¡Œ
      * 
      * @param numArgs @~english the number of variables.
-     * @~chinese ±äÁ¿µÄÊıÁ¿¡£
-     * @return @~english 0 if it happen the error or it hasn't return value, otherwise it return the value by calling the Lua function£¬integer type or boolean type.
-     * @~chinese Èç¹û·¢Éú´íÎó»òÃ»ÓĞ·µ»ØÖµ·µ»Ø0,·ñÔò·µ»Ø±»µ÷ÓÃLuaº¯ÊıµÄÒ»¸ö·µ»ØÖµ£¬¿ÉÒÔÊÇÕûĞÍÖµ»òÊÇ²¼¶ûÖµ¡£
+     * @~chinese å˜é‡çš„æ•°é‡ã€‚
+     * @return @~english 0 if it happen the error or it hasn't return value, otherwise it return the value by calling the Lua functionï¼Œinteger type or boolean type.
+     * @~chinese å¦‚æœå‘ç”Ÿé”™è¯¯æˆ–æ²¡æœ‰è¿”å›å€¼è¿”å›0,å¦åˆ™è¿”å›è¢«è°ƒç”¨Luaå‡½æ•°çš„ä¸€ä¸ªè¿”å›å€¼ï¼Œå¯ä»¥æ˜¯æ•´å‹å€¼æˆ–æ˜¯å¸ƒå°”å€¼ã€‚
      */
 
     virtual int executeFunction(int numArgs);
@@ -407,14 +407,14 @@ public:
      * Find and execute the Lua function corresponding to the nHandler,the function has numArgs variables.
      *
      * @~chinese 
-     * ²éÕÒ²¢Ö´ĞĞnHandler¶ÔÓ¦µÄLuaº¯Êı£¬Õâ¸öº¯ÊıÓĞnumArgs¸ö²ÎÊı¡£
+     * æŸ¥æ‰¾å¹¶æ‰§è¡ŒnHandlerå¯¹åº”çš„Luaå‡½æ•°ï¼Œè¿™ä¸ªå‡½æ•°æœ‰numArgsä¸ªå‚æ•°ã€‚
      * 
      * @param nHandler @~english the reference id to the Lua function.
-     * @~chinese Luaº¯ÊıµÄÒıÓÃid¡£
+     * @~chinese Luaå‡½æ•°çš„å¼•ç”¨idã€‚
      * @param numArgs @~english the number of variables.
-     * @~chinese ±äÁ¿µÄÊıÁ¿¡£
+     * @~chinese å˜é‡çš„æ•°é‡ã€‚
      * @return @~english the return value is the same as executeFunction,please @see executeFunction.
-     * @~chinese ·µ»ØÖµÓëexecuteFunctionÒ»Ñù£¬@see executeFunction
+     * @~chinese è¿”å›å€¼ä¸executeFunctionä¸€æ ·ï¼Œ@see executeFunction
      */
 
     virtual int executeFunctionByHandler(int nHandler, int numArgs);
@@ -425,20 +425,20 @@ public:
      * All the return values are stored in the resultArray.
      *
      * @~chinese 
-     * ²éÕÒ²¢Ö´ĞĞhandler¶ÔÓ¦µÄLuaº¯Êı£¬Õâ¸öº¯ÊıÓĞnumArgs¸ö²ÎÊı¡£
-     * µ÷ÓÃÕâ¸öº¯Êı½«»á·µ»ØnumResults¸ö·µ»ØÖµ(¿ÉÄÜ´óÓÚ1)¡£
-     * ËùÓĞµÄ·µ»ØÖµ½«´æÔÚresultArrayÖĞ¡£
+     * æŸ¥æ‰¾å¹¶æ‰§è¡Œhandlerå¯¹åº”çš„Luaå‡½æ•°ï¼Œè¿™ä¸ªå‡½æ•°æœ‰numArgsä¸ªå‚æ•°ã€‚
+     * è°ƒç”¨è¿™ä¸ªå‡½æ•°å°†ä¼šè¿”å›numResultsä¸ªè¿”å›å€¼(å¯èƒ½å¤§äº1)ã€‚
+     * æ‰€æœ‰çš„è¿”å›å€¼å°†å­˜åœ¨resultArrayä¸­ã€‚
      * 
      * @param handler @~english the reference id corresponding to the Lua function.
-     * @~chinese ¶ÔÓ¦Luaº¯ÊıµÄÒıÓÃid
+     * @~chinese å¯¹åº”Luaå‡½æ•°çš„å¼•ç”¨id
      * @param numArgs @~english the number of function parameters.
-     * @~chinese º¯Êı²ÎÊıµÄÊıÁ¿¡£
+     * @~chinese å‡½æ•°å‚æ•°çš„æ•°é‡ã€‚
      * @param numResults @~english the number of return values.
-     * @~chinese ·µ»ØÖµµÄÊıÁ¿¡£
+     * @~chinese è¿”å›å€¼çš„æ•°é‡ã€‚
      * @param resultArray @~english a array used to store the return value.
-     * @~chinese Ò»¸öÓÃÓÚ´æ´¢·µ»ØÖµµÄÊı×é¡£
+     * @~chinese ä¸€ä¸ªç”¨äºå­˜å‚¨è¿”å›å€¼çš„æ•°ç»„ã€‚
      * @return @~english 0 if it happen error or it hasn't return value, otherwise return 1.
-     * @~chinese Èç¹ûËü·¢Éú´íÎó»òÃ»ÓĞ·µ»ØÖµ·µ»Ø0,·ñÔò·µ»Ø1¡£
+     * @~chinese å¦‚æœå®ƒå‘ç”Ÿé”™è¯¯æˆ–æ²¡æœ‰è¿”å›å€¼è¿”å›0,å¦åˆ™è¿”å›1ã€‚
      */
 
     virtual int executeFunctionReturnArray(int handler,int numArgs,int numResults,__Array& resultArray);
@@ -449,20 +449,20 @@ public:
      * All the return values are used in the callback func.
      *
      * @~chinese 
-     * ²éÕÒ²¢Ö´ĞĞhandler¶ÔÓ¦µÄLuaº¯Êı£¬Õâ¸öº¯ÊıÓĞnumArgs¸ö²ÎÊı¡£
-     * µ÷ÓÃÕâ¸öº¯Êı½«»á·µ»ØnumResults¸ö·µ»ØÖµ(¿ÉÄÜ´óÓÚ1)¡£
-     * ËùÓĞµÄ·µ»ØÖµ½«±»ÓÃÔÚ»Øµ÷º¯ÊıfuncÖĞ¡£
+     * æŸ¥æ‰¾å¹¶æ‰§è¡Œhandlerå¯¹åº”çš„Luaå‡½æ•°ï¼Œè¿™ä¸ªå‡½æ•°æœ‰numArgsä¸ªå‚æ•°ã€‚
+     * è°ƒç”¨è¿™ä¸ªå‡½æ•°å°†ä¼šè¿”å›numResultsä¸ªè¿”å›å€¼(å¯èƒ½å¤§äº1)ã€‚
+     * æ‰€æœ‰çš„è¿”å›å€¼å°†è¢«ç”¨åœ¨å›è°ƒå‡½æ•°funcä¸­ã€‚
      * 
      * @param handler @~english the reference id corresponding to the lua function.
-     * @~chinese ¶ÔÓ¦Luaº¯ÊıµÄÒıÓÃid¡£
+     * @~chinese å¯¹åº”Luaå‡½æ•°çš„å¼•ç”¨idã€‚
      * @param numArgs @~english the number of function parameters.
-     * @~chinese º¯Êı²ÎÊıµÄÊıÁ¿¡£
+     * @~chinese å‡½æ•°å‚æ•°çš„æ•°é‡ã€‚
      * @param numResults @~english the number of return values.
-     * @~chinese ·µ»ØÖµµÄÊıÁ¿¡£
+     * @~chinese è¿”å›å€¼çš„æ•°é‡ã€‚
      * @param func @~english callback function which is called if the numResults > 0.
-     * @~chinese µ±numResults > 0Ê±½«±»µ÷ÓÃµÄ»Øµ÷º¯Êı¡£
+     * @~chinese å½“numResults > 0æ—¶å°†è¢«è°ƒç”¨çš„å›è°ƒå‡½æ•°ã€‚
      * @return @~english 0 if it happen error or it hasn't return value, otherwise return 1.
-     * @~chinese Èç¹ûËü·¢Éú´íÎó»òÃ»ÓĞ·µ»ØÖµ·µ»Ø0,·ñÔò·µ»Ø1¡£
+     * @~chinese å¦‚æœå®ƒå‘ç”Ÿé”™è¯¯æˆ–æ²¡æœ‰è¿”å›å€¼è¿”å›0,å¦åˆ™è¿”å›1ã€‚
      */
 
     virtual int executeFunction(int handler, int numArgs, int numResults, const std::function<void(lua_State*,int)>& func);
@@ -471,12 +471,12 @@ public:
      * Handle the assert message.
      *
      * @~chinese 
-     * ´¦ÀíassertĞÅÏ¢¡£
+     * å¤„ç†assertä¿¡æ¯ã€‚
      * 
      * @param msg @~english the assert message string.
-     * @~chinese assertĞÅÏ¢×Ö·û´®¡£
+     * @~chinese assertä¿¡æ¯å­—ç¬¦ä¸²ã€‚
      * @return @~english return true if current _callFromLua is not equal to 0 otherwise return false.
-     * @~chinese Èç¹ûµ±Ç°_callFromLua²»Îª0·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœå½“å‰_callFromLuaä¸ä¸º0è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
 
     virtual bool handleAssert(const char *msg);
@@ -485,16 +485,16 @@ public:
      * Set the key and sign for xxtea encryption algorithm.
      *
      * @~chinese 
-     * ÉèÖÃµÄxxtea¼ÓÃÜËã·¨µÄkeyºÍsign¡£
+     * è®¾ç½®çš„xxteaåŠ å¯†ç®—æ³•çš„keyå’Œsignã€‚
      * 
      * @param key @~english a string pointer point to key
-     * @~chinese key×Ö·û´®Ö¸Õë
+     * @~chinese keyå­—ç¬¦ä¸²æŒ‡é’ˆ
      * @param keyLen @~english the length of key
-     * @~chinese keyµÄ³¤¶È
+     * @~chinese keyçš„é•¿åº¦
      * @param sign @~english a string pointer point to sign
-     * @~chinese sign×Ö·û´®Ö¸Õë
+     * @~chinese signå­—ç¬¦ä¸²æŒ‡é’ˆ
      * @param signLen @~english the length of sign
-     * @~chinese signµÄ³¤¶È
+     * @~chinese signçš„é•¿åº¦
      */
 
     virtual void setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign, int signLen);
@@ -502,7 +502,7 @@ public:
     /**@~english
      * Cleanup the key and sign for xxtea encryption algorithm.
      * @~chinese 
-     * Çå³ıxxtea¼ÓÃÜËã·¨µÄkeyºÍsign¡£
+     * æ¸…é™¤xxteaåŠ å¯†ç®—æ³•çš„keyå’Œsignã€‚
      */
 
     virtual void cleanupXXTEAKeyAndSign();
@@ -512,19 +512,19 @@ public:
      * if current stack enable the xxtea encryption algorithm and the the beginner of the chunk has the sign, the chunk should be decrypt first.
      *
      * @~chinese 
-     * ¼ÓÔØÒ»¸öLua³ÌĞò¿é¡£¸Ãº¯ÊıÊ¹ÓÃlua_loadÍ¨¹ıÒ»¸öÖ¸Ïò³ÌĞò¿éµÄÖ¸Õë¼ÓÔØÒ»¿é´óĞ¡ÎªchunkSizeµÄLua³ÌĞò¿é¡£
-     * Èç¹ûµ±Ç°Ö§³ÖxxteaËã·¨£¬²¢ÇÒchunkµÄÍ·²¿ÓĞsingÇ©Ãû£¬ÄÇÃ´¼ÓÔØµÄ³ÌĞò¿é»¹ĞèÒª½øĞĞ½âÃÜ²Ù×÷¡£
+     * åŠ è½½ä¸€ä¸ªLuaç¨‹åºå—ã€‚è¯¥å‡½æ•°ä½¿ç”¨lua_loadé€šè¿‡ä¸€ä¸ªæŒ‡å‘ç¨‹åºå—çš„æŒ‡é’ˆåŠ è½½ä¸€å—å¤§å°ä¸ºchunkSizeçš„Luaç¨‹åºå—ã€‚
+     * å¦‚æœå½“å‰æ”¯æŒxxteaç®—æ³•ï¼Œå¹¶ä¸”chunkçš„å¤´éƒ¨æœ‰singç­¾åï¼Œé‚£ä¹ˆåŠ è½½çš„ç¨‹åºå—è¿˜éœ€è¦è¿›è¡Œè§£å¯†æ“ä½œã€‚
      * 
      * @param L @~english the current lua_State.
-     * @~chinese µ±Ç°lua_State¡£
+     * @~chinese å½“å‰lua_Stateã€‚
      * @param chunk @~english the chunk pointer.
-     * @~chinese ³ÌĞò¿éÖ¸Õë¡£
+     * @~chinese ç¨‹åºå—æŒ‡é’ˆã€‚
      * @param chunkSize @~english the size of buffer.
-     * @~chinese ³ÌĞò¿é´óĞ¡¡£
+     * @~chinese ç¨‹åºå—å¤§å°ã€‚
      * @param chunkName @~english the name of chunk pointer.
-     * @~chinese ³ÌĞò¿éµÄÃû³Æ¡£
+     * @~chinese ç¨‹åºå—çš„åç§°ã€‚
      * @return @~english 0, LUA_ERRSYNTAX or LUA_ERRMEM:.
-     * @~chinese 0,LUA_ERRSYNTAX»òLUA_ERRMEM:¡£
+     * @~chinese 0,LUA_ERRSYNTAXæˆ–LUA_ERRMEM:ã€‚
      */
 
     int luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName);
@@ -533,12 +533,12 @@ public:
      * Load the Lua chunks from the zip file
      * 
      * @~chinese 
-     * ´ÓzipÎÄ¼ş¼ÓÔØLua³ÌĞò¿é
+     * ä»zipæ–‡ä»¶åŠ è½½Luaç¨‹åºå—
      * 
      * @param zipFilePath @~english file path to zip file.
-     * @~chinese zipÎÄ¼şµÄÎÄ¼şÂ·¾¶¡£
+     * @~chinese zipæ–‡ä»¶çš„æ–‡ä»¶è·¯å¾„ã€‚
      * @return @~english 1 if load sucessfully otherwise 0.
-     * @~chinese ¼ÓÔØ³É¹¦·µ»Ø1£¬·ñÔò·µ»Ø0¡£
+     * @~chinese åŠ è½½æˆåŠŸè¿”å›1ï¼Œå¦åˆ™è¿”å›0ã€‚
      */
 
     int loadChunksFromZIP(const char *zipFilePath);
@@ -547,12 +547,12 @@ public:
      * Load the Lua chunks from current lua_State.
      *
      * @~chinese 
-     * ´Óµ±Ç°µÄlua_StateÖĞ¼ÓÔØLua³ÌĞò¿é¡£
+     * ä»å½“å‰çš„lua_Stateä¸­åŠ è½½Luaç¨‹åºå—ã€‚
      * 
      * @param L @~english the current lua_State.
-     * @~chinese µ±Ç°µÄlua_State¡£
+     * @~chinese å½“å‰çš„lua_Stateã€‚
      * @return @~english 1 if load sucessfully otherwise 0.
-     * @~chinese ¼ÓÔØ³É¹¦·µ»Ø1£¬·ñÔò·µ»Ø0¡£
+     * @~chinese åŠ è½½æˆåŠŸè¿”å›1ï¼Œå¦åˆ™è¿”å›0ã€‚
      */
 
     int luaLoadChunksFromZIP(lua_State *L);

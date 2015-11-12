@@ -43,7 +43,7 @@ extern "C" {
 /**@~english
  * The GLNode is wrapped to call the callback function about draw in the Lua.
  * @~chinese 
- * ·â×°GLNodeÊÇÎªÁË¸üÓÑºÃµØ»Øµ÷Lua²ãµÄdrawº¯Êı¡£
+ * å°è£…GLNodeæ˜¯ä¸ºäº†æ›´å‹å¥½åœ°å›è°ƒLuaå±‚çš„drawå‡½æ•°ã€‚
  */
 class GLNode:public cocos2d::Node
 {
@@ -52,7 +52,7 @@ public:
      * Destructor of GLNode.
      *
      * @~chinese
-     * GLNodeµÄÎö¹¹º¯Êı¡£
+     * GLNodeçš„ææ„å‡½æ•°ã€‚
      * 
      * @lua NA
      * @js NA

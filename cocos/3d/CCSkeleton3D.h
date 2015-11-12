@@ -40,7 +40,7 @@ NS_CC_BEGIN
 /**
  * @class Bone3D
  * @brief @~english Defines a basic hierachial structure of transformation spaces.
- * @~chinese Bone3D(3D¹Ç÷À)Àà¶¨ÒåÁË¹Ç÷À»ù±¾µÄ±ä»»µÄ²ã´Î½á¹¹£º¼´Ò»¸ö¹Ç÷À°üº¬Èô¸É×Ó¹Ç÷À£¬ËûÃÇµÄ±ä»»°´ÕÕ²ã´Î½á¹¹¼ÆËã£¬¸ÃÀà±¸ÓÃÓÚ¹Ç÷À¶¯»­ÖĞ
+ * @~chinese Bone3D(3Déª¨éª¼)ç±»å®šä¹‰äº†éª¨éª¼åŸºæœ¬çš„å˜æ¢çš„å±‚æ¬¡ç»“æ„ï¼šå³ä¸€ä¸ªéª¨éª¼åŒ…å«è‹¥å¹²å­éª¨éª¼ï¼Œä»–ä»¬çš„å˜æ¢æŒ‰ç…§å±‚æ¬¡ç»“æ„è®¡ç®—ï¼Œè¯¥ç±»å¤‡ç”¨äºéª¨éª¼åŠ¨ç”»ä¸­
  * @lua NA
  */
 class CC_DLL Bone3D : public Ref
@@ -51,147 +51,147 @@ public:
     
     /**
      * @~english Returns the inverse bind pose matrix for this joint.
-     * @~chinese »ñÈ¡µ±Ç°¹Ç÷À°ó¶¨×Ô´øµÄÄæ±ä»»¾ØÕó
+     * @~chinese è·å–å½“å‰éª¨éª¼ç»‘å®šè‡ªå¸¦çš„é€†å˜æ¢çŸ©é˜µ
      * @return @~english Inverse bind pose matrix.
-     * @~chinese °ó¶¨×ËÌ¬µÄÄæ¾ØÕó
+     * @~chinese ç»‘å®šå§¿æ€çš„é€†çŸ©é˜µ
      */
     const Mat4& getInverseBindPose();
     
     /**
      * @~english Update own world matrix and children's
-     * @~chinese ¸üĞÂ¸Ã¹Ç÷ÀÒÔ¼°¸Ã¹Ç÷ÀµÄËùÓĞ×Ó¹Ç÷Àµ½ÊÀ½ç×ø±ê±ä»»¾ØÕó
+     * @~chinese æ›´æ–°è¯¥éª¨éª¼ä»¥åŠè¯¥éª¨éª¼çš„æ‰€æœ‰å­éª¨éª¼åˆ°ä¸–ç•Œåæ ‡å˜æ¢çŸ©é˜µ
      */
     void updateWorldMat();
     
     /**
      * @~english Get world matrix.
-     * @~chinese »ñµÃµ½ÊÀ½ç×ø±êÏµµÄ±ä»»¾ØÕó
+     * @~chinese è·å¾—åˆ°ä¸–ç•Œåæ ‡ç³»çš„å˜æ¢çŸ©é˜µ
      * @return @~english The world matrix.
-     * @~chinese ÊÀ½ç×ø±êÏµ±ä»»¾ØÕó
+     * @~chinese ä¸–ç•Œåæ ‡ç³»å˜æ¢çŸ©é˜µ
      **/
     const Mat4& getWorldMat();
     
     /**
      * @~english Get bone name.
-     * @~chinese »ñÈ¡¹Ç÷ÀÃû³Æ
+     * @~chinese è·å–éª¨éª¼åç§°
      * @return @~english  The bone's name string.
-     * @~chinese °üº¬¹Ç÷ÀÃû³ÆµÄ×Ö·û´®
+     * @~chinese åŒ…å«éª¨éª¼åç§°çš„å­—ç¬¦ä¸²
      */
     const std::string& getName() const { return _name; }
     
     /**
      * @~english Set animation value
-     * @~chinese ÉèÖÃ¹Ç÷ÀµÄ¶¯»­²ÎÊı
+     * @~chinese è®¾ç½®éª¨éª¼çš„åŠ¨ç”»å‚æ•°
      * @param trans @~english Translate vector
-     * @~chinese  Æ½ÒÆÏòÁ¿
+     * @~chinese  å¹³ç§»å‘é‡
      * @param rot   @~english Rotation quaternion
-     * @~chinese Ğı×ªËÄÔªÊı
+     * @~chinese æ—‹è½¬å››å…ƒæ•°
      * @param scale @~english Scale vector
-     * @~chinese Ëõ·ÅÏòÁ¿
+     * @~chinese ç¼©æ”¾å‘é‡
      * @param tag @~english unique tag, only blend animation between different tags
-     * @~chinese tag(±êÇ©)£¬ÔÚ¼ÆËã»ìºÏ¶¯»­Ê±Ö»¶ÔÓĞ²»Í¬±êÇ©µÄ¹Ç÷ÀÓĞĞ§
+     * @~chinese tag(æ ‡ç­¾)ï¼Œåœ¨è®¡ç®—æ··åˆåŠ¨ç”»æ—¶åªå¯¹æœ‰ä¸åŒæ ‡ç­¾çš„éª¨éª¼æœ‰æ•ˆ
      * @param weight @~english blend weight
      */
     void setAnimationValue(float* trans, float* rot, float* scale, void* tag = nullptr, float weight = 1.0f);
     
     /**
      * @~english Clear bone blend states.
-     * @~chinese Çå³ıµ±Ç°¹Ç÷ÀµÄ»ìºÏ×´Ì¬.
+     * @~chinese æ¸…é™¤å½“å‰éª¨éª¼çš„æ··åˆçŠ¶æ€.
      * */
     void clearBoneBlendState();
     /**
      * @~english Creates Bone3D object from the specified ID string.
-     * @~chinese Í¨¹ı¸ø¶¨µÄ×Ö·û´®IDÀ´´´½¨Bone3D¶ÔÏó.
+     * @~chinese é€šè¿‡ç»™å®šçš„å­—ç¬¦ä¸²IDæ¥åˆ›å»ºBone3Då¯¹è±¡.
      * @param id @~english The specified ID.
-     * @~chinese ¸ø¶¨µÄID.
+     * @~chinese ç»™å®šçš„ID.
      * @return @~english The Bone3D object.
-     * @~chinese ±»´´½¨µÄBone3D¶ÔÏó
+     * @~chinese è¢«åˆ›å»ºçš„Bone3Då¯¹è±¡
      */
     static Bone3D* create(const std::string& id);
     
     /**
      * @~english Sets the inverse bind pose matrix.
-     * @~chinese ÉèÖÃ¹Ç÷ÀµÄ°ó¶¨×ËÌ¬µÄÄæ±ä»»¾ØÕó.
+     * @~chinese è®¾ç½®éª¨éª¼çš„ç»‘å®šå§¿æ€çš„é€†å˜æ¢çŸ©é˜µ.
      * @param m @~english Mat4 representing the inverse bind pose for this Bone.
-     * @~chinese °ó¶¨×ËÌ¬µÄÄæ±ä»»¾ØÕó.
+     * @~chinese ç»‘å®šå§¿æ€çš„é€†å˜æ¢çŸ©é˜µ.
      */
     void setInverseBindPose(const Mat4& m);
     
     /**
      * @~english Sets the bone's original pose.
-     * @~chinese ÉèÖÃ¹Ç÷ÀµÄ³õÊ¼×ËÌ¬
+     * @~chinese è®¾ç½®éª¨éª¼çš„åˆå§‹å§¿æ€
      * @param m @~english Mat4 representing the original pose for this Bone.
-     * @~chinese ¹Ç÷ÀµÄ³õÊ¼×ËÌ¬±ä»»¾ØÕó
+     * @~chinese éª¨éª¼çš„åˆå§‹å§¿æ€å˜æ¢çŸ©é˜µ
      */
     void setOriPose(const Mat4& m);
     
     /**
      * @~english Reset pose to origin
-     * @~chinese ½«¹Ç÷Àµ±Ç°µÄ°ó¶¨×ËÌ¬ÖØÉèÎª³õÊ¼×ËÌ¬.
+     * @~chinese å°†éª¨éª¼å½“å‰çš„ç»‘å®šå§¿æ€é‡è®¾ä¸ºåˆå§‹å§¿æ€.
      */
     void resetPose();
     
     /**
      * @~english Updates the joint matrix.
-     * @~chinese ¸üĞÂ¹Ç÷ÀµÄJoint¾ØÕó£¬Joint¾ØÕóÓÃÓÚ½«µ±Ç°¹Ø½Ú±ä»»µ½Æä¸¸½Úµã
+     * @~chinese æ›´æ–°éª¨éª¼çš„JointçŸ©é˜µï¼ŒJointçŸ©é˜µç”¨äºå°†å½“å‰å…³èŠ‚å˜æ¢åˆ°å…¶çˆ¶èŠ‚ç‚¹
      * @param matrixPalette @~english The matrix palette to update.
-     * @~chinese ±»ÉèÖÃµÄ¹Ç÷À±ä»»¾ØÕóÊı×é
+     * @~chinese è¢«è®¾ç½®çš„éª¨éª¼å˜æ¢çŸ©é˜µæ•°ç»„
      */
     void updateJointMatrix(Vec4* matrixPalette);
     
     /**
      * @~english Get the parent Bone.
-     * @~chinese »ñÈ¡¸Ã¹Ç÷ÀµÄ¸¸¹Ç÷À
+     * @~chinese è·å–è¯¥éª¨éª¼çš„çˆ¶éª¨éª¼
      * @return @~english The parent Bone3D object.
-     * @~chinese ¸¸¹Ç÷À
+     * @~chinese çˆ¶éª¨éª¼
      * @note @~english bone tree, we do not inherit from Node, Node has too many properties that we do not need. A clean Node is needed.
-     * @~chinese ÒòÎªNodeÀà¹ıÓÚÅòÕÍ£¬Bone3DÀà²¢·Ç¼Ì³Ğ×ÔNode
+     * @~chinese å› ä¸ºNodeç±»è¿‡äºè†¨èƒ€ï¼ŒBone3Dç±»å¹¶éç»§æ‰¿è‡ªNode
      */
     Bone3D* getParentBone();
 
     /**
      * @~english Get child bone count.
-     * @~chinese »ñÈ¡¸Ã¹Ç÷ÀµÄ×Ó¹Ç÷ÀÊı
+     * @~chinese è·å–è¯¥éª¨éª¼çš„å­éª¨éª¼æ•°
      * @return @~english The child bone count.
-     * @~chinese ×Ó¹Ç÷ÀÊı
+     * @~chinese å­éª¨éª¼æ•°
      */
     ssize_t getChildBoneCount() const;
 
     /**
      * @~english Get the specified child bone by index
-     * @~chinese Í¨¹ı¸ø¶¨µÄË÷Òı»ñÈ¡»ñÈ¡×Ó¹Ç÷À
+     * @~chinese é€šè¿‡ç»™å®šçš„ç´¢å¼•è·å–è·å–å­éª¨éª¼
      * @param index @~english The child bone index.
-     * @~chinese ×Ó¹Ç÷ÀË÷Òı
+     * @~chinese å­éª¨éª¼ç´¢å¼•
      * @return @~english The Bone3D object.
-     * @~chinese Bone3D¶ÔÏó
+     * @~chinese Bone3Då¯¹è±¡
      */
     Bone3D* getChildBoneByIndex(int index) const;
 
     /**
      * @~english Add the specified bone as skeleton's child.
-     * @~chinese Ìí¼Ó¸ø¶¨µÄ¹Ç÷À×÷Îªµ±Ç°¹Ç÷ÀµÄ×Ó¹Ç÷À
+     * @~chinese æ·»åŠ ç»™å®šçš„éª¨éª¼ä½œä¸ºå½“å‰éª¨éª¼çš„å­éª¨éª¼
      * @param bone @~english The specified bone.
-     * @~chinese Ö¸¶¨µÄBone3DµÄ¶ÔÏó
+     * @~chinese æŒ‡å®šçš„Bone3Dçš„å¯¹è±¡
      */
     void addChildBone(Bone3D* bone);
     /**
      * @~english Remove child bone by index.
-     * @~chinese Í¨¹ı¸ø¶¨µÄË÷ÒıÉ¾³ı×Ó¹Ç÷À
+     * @~chinese é€šè¿‡ç»™å®šçš„ç´¢å¼•åˆ é™¤å­éª¨éª¼
      * @param index @~english The specified index
-     * @~chinese ¸ø¶¨µÄ¹Ç÷ÀË÷Òı
+     * @~chinese ç»™å®šçš„éª¨éª¼ç´¢å¼•
      */
     void removeChildBoneByIndex(int index);
     /**
      * @~english Remove the specified child bone.
-     * @~chinese É¾³ıÖ¸¶¨µÄ×Ó¹Ç÷À
+     * @~chinese åˆ é™¤æŒ‡å®šçš„å­éª¨éª¼
      * @param bone @~english The specified child bone.
-     * @~chinese Ö¸¶¨µÄ×Ó¹Ç÷À
+     * @~chinese æŒ‡å®šçš„å­éª¨éª¼
      */
     void removeChildBone(Bone3D* bone);
 
     /**
      * @~english Remove all child bone.
-     * @~chinese É¾³ıËùÓĞ×Ó¹Ç÷À
+     * @~chinese åˆ é™¤æ‰€æœ‰å­éª¨éª¼
      */
     void removeAllChildBone();
     
@@ -258,7 +258,7 @@ protected:
 
 /**
  * @~english Skeleton, a set contain all bones.
- * @~chinese ¹Ç¼ÜÀà£¬°üº¬ÁËËùÓĞ¹Ç÷ÀµÄ¼¯ºÏ
+ * @~chinese éª¨æ¶ç±»ï¼ŒåŒ…å«äº†æ‰€æœ‰éª¨éª¼çš„é›†åˆ
  * @class Skeleton3D
  */
 class CC_DLL Skeleton3D: public Ref
@@ -266,9 +266,9 @@ class CC_DLL Skeleton3D: public Ref
 public:
     /**
      * @~english Create Skeleton3D object by skeleton data array.
-     * @~chinese Í¨¹ı¹Ç¼ÜÊı¾İÊı×é´´½¨Ò»¸öSkeleton3D¶ÔÏó
+     * @~chinese é€šè¿‡éª¨æ¶æ•°æ®æ•°ç»„åˆ›å»ºä¸€ä¸ªSkeleton3Då¯¹è±¡
      * @param skeletondata @~english The skeleton data array.
-     * @~chinese ¹Ç¼ÜÊı¾İÊı×é
+     * @~chinese éª¨æ¶æ•°æ®æ•°ç»„
      * @return The created Skeleton3D object.
      * @lua NA
      */
@@ -276,63 +276,63 @@ public:
     
     /**
      * @~english Get total bone count.
-     * @~chinese »ñÈ¡¹Ç¼ÜÄÚËùÓĞ¹Ç÷ÀµÄ×ÜÊı
+     * @~chinese è·å–éª¨æ¶å†…æ‰€æœ‰éª¨éª¼çš„æ€»æ•°
      * @return @~english The bone count.
-     * @~chinese ¹Ç÷À×ÜÊı
+     * @~chinese éª¨éª¼æ€»æ•°
      */
     ssize_t getBoneCount() const;
     
     /**
      * @~english Get bone by the specified index.
-     * @~chinese Í¨¹ıÖ¸¶¨µÄË÷Òı»ñÈ¡¹Ç÷À
+     * @~chinese é€šè¿‡æŒ‡å®šçš„ç´¢å¼•è·å–éª¨éª¼
      * @param index @~english The specified index.
-     * @~chinese Ö¸¶¨µÄË÷Òı
+     * @~chinese æŒ‡å®šçš„ç´¢å¼•
      * @return @~english The Bone3D object.
-     * @~chinese Bone3D ¶ÔÏó
+     * @~chinese Bone3D å¯¹è±¡
      */
     Bone3D* getBoneByIndex(unsigned int index) const;
 
     /**
     * @~english Get bone by the specified id(name).
-    * @~chinese Í¨¹ıÖ¸¶¨µÄid(Ãû³Æ)£¬»ñÈ¡¹Ç÷À
+    * @~chinese é€šè¿‡æŒ‡å®šçš„id(åç§°)ï¼Œè·å–éª¨éª¼
     * @param id @~english The specified id(name).
-    * @~chinese Ö¸¶¨µÄid£¨Ãû³Æ£©
+    * @~chinese æŒ‡å®šçš„idï¼ˆåç§°ï¼‰
     * @return @~english The Bone3D object.
-    * @~chinese Bone3D ¶ÔÏó
+    * @~chinese Bone3D å¯¹è±¡
     */
     Bone3D* getBoneByName(const std::string& id) const;
     
     /**
     * @~english Get root bones count.
-    * @~chinese »ñÈ¡¹Ç¼ÜÄÚ×÷Îª¸ù½ÚµãµÄ¹Ç÷ÀÊıÁ¿
+    * @~chinese è·å–éª¨æ¶å†…ä½œä¸ºæ ¹èŠ‚ç‚¹çš„éª¨éª¼æ•°é‡
     * @return @~english The root bones count.
-    * @~chinese ¸ù½Úµã¹Ç÷ÀÊıÁ¿
+    * @~chinese æ ¹èŠ‚ç‚¹éª¨éª¼æ•°é‡
     */
     ssize_t getRootCount() const;
 
     /**
     * @~english Get the specified root bone by index.
-    * @~chinese Í¨¹ıÖ¸¶¨µÄË÷Òı£¬»ñÈ¡¸ù½Úµã¹Ç÷À
+    * @~chinese é€šè¿‡æŒ‡å®šçš„ç´¢å¼•ï¼Œè·å–æ ¹èŠ‚ç‚¹éª¨éª¼
     * @param index The index.
-    * @~chinese Ë÷Òı
+    * @~chinese ç´¢å¼•
     * @return The specified root bone.
-    * @~chinese ¸ù½Úµã¹Ç÷À
+    * @~chinese æ ¹èŠ‚ç‚¹éª¨éª¼
     */
     Bone3D* getRootBone(int index) const;
     
     /**
      * @~english Get bone index.
-     * @~chinese Í¨¹ıÖ¸¶¨µÄBone3D¶ÔÏó£¬»ñÈ¡ÆäÔÚ¹Ç¼ÜÄÚµÄË÷Òı
+     * @~chinese é€šè¿‡æŒ‡å®šçš„Bone3Då¯¹è±¡ï¼Œè·å–å…¶åœ¨éª¨æ¶å†…çš„ç´¢å¼•
      * @param bone @~english The specified Bone3D object.
-     * @~chinese Ö¸¶¨µÄBone3D¶ÔÏó
+     * @~chinese æŒ‡å®šçš„Bone3Då¯¹è±¡
      * @return @~english The bone index.
-     * @~chinese Ë÷Òı
+     * @~chinese ç´¢å¼•
      */
     int getBoneIndex(Bone3D* bone) const;
     
     /**
      * @~english Refresh all bones world matrix.
-     * @~chinese ÖØĞÂ¸üĞÂËùÓĞ¹Ç÷ÀµÄÊÀ½ç×ø±ê±ä»»¾ØÕó
+     * @~chinese é‡æ–°æ›´æ–°æ‰€æœ‰éª¨éª¼çš„ä¸–ç•Œåæ ‡å˜æ¢çŸ©é˜µ
      */
     void updateBoneMatrix();
     
@@ -344,23 +344,23 @@ CC_CONSTRUCTOR_ACCESS:
     
     /**
      * @~english Remove all bones
-     * @~chinese É¾³ıËùÓĞ¹Ç¼ÜÏÂµÄËùÓĞ¹Ç÷À.
+     * @~chinese åˆ é™¤æ‰€æœ‰éª¨æ¶ä¸‹çš„æ‰€æœ‰éª¨éª¼.
      */
     void removeAllBones();
     
     /**
      * @~english Add the specified bone into the skeleton.
-     * @~chinese Ïò¹Ç¼ÜÄÚÌí¼ÓÖ¸¶¨µÄ.
+     * @~chinese å‘éª¨æ¶å†…æ·»åŠ æŒ‡å®šçš„.
      */
     void addBone(Bone3D* bone);
     
     /** 
      * @~english Create a Bone3D object from the specified NodeData object, then add it into the skeleton.
-     * @~chinese Í¨¹ı¸ø¶¨µÄNodeData ¶ÔÏó´´½¨Bone3D¶ÔÏó£¬È»ºó½«Æä¼ÓÈëµ½¹Ç¼ÜÄÚ.
+     * @~chinese é€šè¿‡ç»™å®šçš„NodeData å¯¹è±¡åˆ›å»ºBone3Då¯¹è±¡ï¼Œç„¶åå°†å…¶åŠ å…¥åˆ°éª¨æ¶å†….
      * @param nodedata @~english The NodeData object.
-     * @~chinese  Ö¸¶¨µÄNodeData¶ÔÏó.
+     * @~chinese  æŒ‡å®šçš„NodeDataå¯¹è±¡.
      * @return @~english The Bone3D object.
-     * @~chinese  ±»´´½¨µÄBone3D¶ÔÏó.
+     * @~chinese  è¢«åˆ›å»ºçš„Bone3Då¯¹è±¡.
      */
     Bone3D* createBone3D(const NodeData& nodedata);
     

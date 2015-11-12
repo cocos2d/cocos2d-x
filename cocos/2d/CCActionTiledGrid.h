@@ -37,30 +37,30 @@ NS_CC_BEGIN
 
 /**
 @brief @~english ShakyTiles3D action.
- * @~chinese ShakyTiles3D¶¯×÷¡£
+ * @~chinese ShakyTiles3DåŠ¨ä½œã€‚
 @details @~english This action is make the target node shake with many tiles.
         You can create the action by these parameters:
         duration, grid size, range, whether shake on the z axis.
- * @~chinese ÕâÊÇÒ»¸öÈÃÄ¿±ê½ÚµãÒÔ¶à¸öÍßÆ¬µÄĞÎÊ½»Î¶¯µÄ¶¯×÷¡£
- * Äú¿ÉÒÔÓÃÕâĞ©²ÎÊı´´½¨¶¯×÷:
- * ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡¡¢·¶Î§¡¢ÊÇ·ñÔÚzÖáÉÏ¶¯Ò¡¡£
+ * @~chinese è¿™æ˜¯ä¸€ä¸ªè®©ç›®æ ‡èŠ‚ç‚¹ä»¥å¤šä¸ªç“¦ç‰‡çš„å½¢å¼æ™ƒåŠ¨çš„åŠ¨ä½œã€‚
+ * æ‚¨å¯ä»¥ç”¨è¿™äº›å‚æ•°åˆ›å»ºåŠ¨ä½œ:
+ * æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°ã€èŒƒå›´ã€æ˜¯å¦åœ¨zè½´ä¸ŠåŠ¨æ‘‡ã€‚
  */
 class CC_DLL ShakyTiles3D : public TiledGrid3DAction
 {
 public:
     /** 
     @brief @~english Create the action with a range, shake Z vertices, a grid and duration.
-    * @~chinese ¸ù¾İ¶¶¶¯·¶Î§¡¢Z¶¥µãÊÇ·ñ¶¶¶¯¡¢Íø¸ñ´óĞ¡ºÍ³ÖĞøÊ±¼ä´´½¨ShakyTiles3D¶¯×÷¡£
+    * @~chinese æ ¹æ®æŠ–åŠ¨èŒƒå›´ã€Zé¡¶ç‚¹æ˜¯å¦æŠ–åŠ¨ã€ç½‘æ ¼å¤§å°å’ŒæŒç»­æ—¶é—´åˆ›å»ºShakyTiles3DåŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the ShakyTiles3D action. It's a value in seconds.
-    * @~chinese Ö¸¶¨ShakyTiles3D¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+    * @~chinese æŒ‡å®šShakyTiles3DåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
     @param gridSize @~english Specify the size of the grid.
-    * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
+    * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
     @param range @~english Specify the range of the shaky effect.
-    * @~chinese Ö¸¶¨Ò¡¶¯Ğ§¹ûµÄ·¶Î§¡£
+    * @~chinese æŒ‡å®šæ‘‡åŠ¨æ•ˆæœçš„èŒƒå›´ã€‚
     @param shakeZ @~english Specify whether shake on the z axis.
-    * @~chinese Ö¸¶¨ÊÇ·ñÔÚzÖáÉÏ¶¯Ò¡¡£
+    * @~chinese æŒ‡å®šæ˜¯å¦åœ¨zè½´ä¸ŠåŠ¨æ‘‡ã€‚
     @return @~english If the creation success, return a pointer of ShakyTiles3D action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öÖ¸ÏòShakyTiles3D¶¯×÷µÄÖ¸Õë;·ñÔò,·µ»Ø¿Õ¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªæŒ‡å‘ShakyTiles3DåŠ¨ä½œçš„æŒ‡é’ˆ;å¦åˆ™,è¿”å›ç©ºã€‚
     */
     static ShakyTiles3D* create(float duration, const Size& gridSize, int range, bool shakeZ);
 
@@ -74,18 +74,18 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
     @brief @~english Initializes the action with a range, shake Z vertices, grid size and duration.
-     * @~chinese ¸ù¾İ¶¶¶¯·¶Î§¡¢Z¶¥µãÊÇ·ñ¶¶¶¯¡¢Íø¸ñ´óĞ¡ºÍ³ÖĞøÊ±¼ä³õÊ¼»¯ShakyTiles3D¶¯×÷¡£
+     * @~chinese æ ¹æ®æŠ–åŠ¨èŒƒå›´ã€Zé¡¶ç‚¹æ˜¯å¦æŠ–åŠ¨ã€ç½‘æ ¼å¤§å°å’ŒæŒç»­æ—¶é—´åˆå§‹åŒ–ShakyTiles3DåŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the ShakyTiles3D action. It's a value in seconds.
-     * @~chinese Ö¸¶¨ShakyTiles3D¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+     * @~chinese æŒ‡å®šShakyTiles3DåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
     @param range @~english Specify the range of the shaky effect.
-     * @~chinese  Ö¸¶¨Ò¡¶¯Ğ§¹ûµÄ·¶Î§¡£
+     * @~chinese  æŒ‡å®šæ‘‡åŠ¨æ•ˆæœçš„èŒƒå›´ã€‚
     @param shakeZ @~english Specify whether shake on the z axis.
-     * @~chinese Ö¸¶¨ÊÇ·ñÔÚzÖáÉÏ¶¯Ò¡¡£
+     * @~chinese æŒ‡å®šæ˜¯å¦åœ¨zè½´ä¸ŠåŠ¨æ‘‡ã€‚
 
     @return @~english If the Initialization success, return true; otherwise, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸ,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
     */
     bool initWithDuration(float duration, const Size& gridSize, int range, bool shakeZ);
 
@@ -99,30 +99,30 @@ private:
 
 /**
 @brief @~english ShatteredTiles3D action.
- * @~chinese ShatteredTiles3D ¶¯×÷¡£
+ * @~chinese ShatteredTiles3D åŠ¨ä½œã€‚
 @details @~english This action make the target node shattered with many tiles.
         You can create the action by these parameters:
         duration, grid size, range, whether shatter on the z axis.
-        * @~chinese ÕâÊÇÒ»¸öÈÃÄ¿±ê½ÚµãÒÔ¶à¸öÍßÆ¬µÄĞÎÊ½Ò¡¶¯µÄ¶¯×÷
-        * Äú¿ÉÒÔÓÃÕâĞ©²ÎÊı´´½¨¶¯×÷:
-        * ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡¡¢·¶Î§¡¢ÊÇ·ñÔÚzÖáÉÏ¶¯Ò¡¡£
+        * @~chinese è¿™æ˜¯ä¸€ä¸ªè®©ç›®æ ‡èŠ‚ç‚¹ä»¥å¤šä¸ªç“¦ç‰‡çš„å½¢å¼æ‘‡åŠ¨çš„åŠ¨ä½œ
+        * æ‚¨å¯ä»¥ç”¨è¿™äº›å‚æ•°åˆ›å»ºåŠ¨ä½œ:
+        * æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°ã€èŒƒå›´ã€æ˜¯å¦åœ¨zè½´ä¸ŠåŠ¨æ‘‡ã€‚
 */
 class CC_DLL ShatteredTiles3D : public TiledGrid3DAction
 {
 public:
     /** 
      * @brief @~english Create the action with a range, whether of not to shatter Z vertices, grid size and duration.
-     * @~chinese ¸ù¾İ¶¶¶¯·¶Î§¡¢Z¶¥µãÊÇ·ñ¶¶¶¯¡¢Íø¸ñ´óĞ¡ºÍ³ÖĞøÊ±¼ä´´½¨¶¯×÷¡£
+     * @~chinese æ ¹æ®æŠ–åŠ¨èŒƒå›´ã€Zé¡¶ç‚¹æ˜¯å¦æŠ–åŠ¨ã€ç½‘æ ¼å¤§å°å’ŒæŒç»­æ—¶é—´åˆ›å»ºåŠ¨ä½œã€‚
      * @param duration @~english Specify the duration of the ShatteredTiles3D action. It's a value in seconds.
-     * @~chinese Ö¸¶¨ShakyTiles3D¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+     * @~chinese æŒ‡å®šShakyTiles3DåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
      * @param gridSize @~english Specify the size of the grid.
-     * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
      * @param range @~english Specify the range of the shatter effect.
-     * @~chinese Ö¸¶¨·¶Î§µÄ·ÛËéĞ§¹û¡£
+     * @~chinese æŒ‡å®šèŒƒå›´çš„ç²‰ç¢æ•ˆæœã€‚
      * @param shatterZ @~english Specify whether shatter on the z axis.
-     * @~chinese Ö¸¶¨Ò¡¶¯Ğ§¹ûµÄ·¶Î§¡£
+     * @~chinese æŒ‡å®šæ‘‡åŠ¨æ•ˆæœçš„èŒƒå›´ã€‚
      * @return @~english If the creation success, return a pointer of ShatteredTiles3D action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öÖ¸ÏòShatteredTiles3DµÄÖ¸Õë¡£·ñÔò,·µ»Ø¿Õ¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªæŒ‡å‘ShatteredTiles3Dçš„æŒ‡é’ˆã€‚å¦åˆ™,è¿”å›ç©ºã€‚
      */
     static ShatteredTiles3D* create(float duration, const Size& gridSize, int range, bool shatterZ);
 
@@ -136,17 +136,17 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
     @brief @~english Initializes the action with a range, shatter Z vertices, grid size and duration.
-    * @~chinese ¸ù¾İ¶¶¶¯·¶Î§¡¢Z¶¥µãÊÇ·ñ¶¶¶¯¡¢Íø¸ñ´óĞ¡ºÍ³ÖĞøÊ±¼ä³õÊ¼»¯¶¯×÷¡£
+    * @~chinese æ ¹æ®æŠ–åŠ¨èŒƒå›´ã€Zé¡¶ç‚¹æ˜¯å¦æŠ–åŠ¨ã€ç½‘æ ¼å¤§å°å’ŒæŒç»­æ—¶é—´åˆå§‹åŒ–åŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the ShatteredTiles3D action. It's a value in seconds.
-    * @~chinese Ö¸¶¨ShakyTiles3D¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+    * @~chinese æŒ‡å®šShakyTiles3DåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
     @param range @~english Specify the range of the shatter effect.
-    * @~chinese Ö¸¶¨·¶Î§µÄ·ÛËéĞ§¹û¡£
+    * @~chinese æŒ‡å®šèŒƒå›´çš„ç²‰ç¢æ•ˆæœã€‚
     @param shatterZ @~english Specify whether shake on the z axis.
-    * @~chinese Ö¸¶¨Ò¡¶¯Ğ§¹ûµÄ·¶Î§¡£
+    * @~chinese æŒ‡å®šæ‘‡åŠ¨æ•ˆæœçš„èŒƒå›´ã€‚
     @return @~english If the Initialization success, return true; otherwise, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸ,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
     */
     bool initWithDuration(float duration, const Size& gridSize, int range, bool shatterZ);
 
@@ -162,28 +162,28 @@ private:
 struct Tile;
 /**
 @brief @~english ShuffleTiles action.
- * @~chinese ShuffleTiles ¶¯×÷¡£
+ * @~chinese ShuffleTiles åŠ¨ä½œã€‚
 @details @~english This action make the target node shuffle with many tiles in random order.
         You can create the action by these parameters:
         duration, grid size, the random seed.
- * @~chinese ÕâÊÇÒ»¸öÈÃÄ¿±ê½ÚµãÒÔ¶à¸öÍßÆ¬µÄĞÎÊ½Ëæ»úÏ´ÅÆµÄ¶¯×÷
- * Äú¿ÉÒÔÓÃÕâĞ©²ÎÊı´´½¨¶¯×÷:
- * ³ÖĞøÊ±¼ä¡¢Íø¸ñ´óĞ¡,Ëæ»úÖÖ×Ó¡£
+ * @~chinese è¿™æ˜¯ä¸€ä¸ªè®©ç›®æ ‡èŠ‚ç‚¹ä»¥å¤šä¸ªç“¦ç‰‡çš„å½¢å¼éšæœºæ´—ç‰Œçš„åŠ¨ä½œ
+ * æ‚¨å¯ä»¥ç”¨è¿™äº›å‚æ•°åˆ›å»ºåŠ¨ä½œ:
+ * æŒç»­æ—¶é—´ã€ç½‘æ ¼å¤§å°,éšæœºç§å­ã€‚
 */
 class CC_DLL ShuffleTiles : public TiledGrid3DAction
 {
 public:
     /** 
     * @brief @~english Create the action with grid size, random seed and duration.
-     * @~chinese Ê¹ÓÃÍø¸ñ´óĞ¡µÄ,Ëæ»úÖÖ×ÓºÍ³ÖĞøÊ±¼ä´´½¨¶¯×÷¡£
+     * @~chinese ä½¿ç”¨ç½‘æ ¼å¤§å°çš„,éšæœºç§å­å’ŒæŒç»­æ—¶é—´åˆ›å»ºåŠ¨ä½œã€‚
     * @param duration @~english Specify the duration of the ShuffleTiles action. It's a value in seconds.
-    * @~chinese Ö¸¶¨ShuffleTile¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+    * @~chinese æŒ‡å®šShuffleTileåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
     * @param gridSize @~english Specify the size of the grid.
-     * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
     * @param seed @~english Specify the random seed.
-     * @~chinese Ö¸¶¨Ëæ»úÖÖ×Ó¡£
+     * @~chinese æŒ‡å®šéšæœºç§å­ã€‚
     * @return @~english If the creation success, return a pointer of ShuffleTiles action; otherwise, return nil.
-    * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öÖ¸ÏòShuffleTileµÄÖ¸Õë¡£·ñÔò,·µ»Ø¿Õ¡£
+    * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªæŒ‡å‘ShuffleTileçš„æŒ‡é’ˆã€‚å¦åˆ™,è¿”å›ç©ºã€‚
     */
     static ShuffleTiles* create(float duration, const Size& gridSize, unsigned int seed);
 
@@ -202,15 +202,15 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
     * @brief @~english Initializes the action with grid size, random seed and duration.
-    * @~chinese Ê¹ÓÃÍø¸ñ´óĞ¡µÄ,Ëæ»úÖÖ×ÓºÍ³ÖĞøÊ±¼ä³õÊ¼»¯¶¯×÷¡£
+    * @~chinese ä½¿ç”¨ç½‘æ ¼å¤§å°çš„,éšæœºç§å­å’ŒæŒç»­æ—¶é—´åˆå§‹åŒ–åŠ¨ä½œã€‚
     * @param duration @~english Specify the duration of the ShuffleTiles action. It's a value in seconds.
-    * @~chinese Ö¸¶¨ShuffleTile¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+    * @~chinese æŒ‡å®šShuffleTileåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
     * @param gridSize @~english Specify the size of the grid.
-     * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
     * @param seed @~english Specify the random seed.
-     * @~chinese Ö¸¶¨Ëæ»úÖÖ×Ó¡£
+     * @~chinese æŒ‡å®šéšæœºç§å­ã€‚
     * @return @~english If the Initialization success, return true; otherwise, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸ,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
     */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int seed);
 
@@ -226,60 +226,60 @@ private:
 
 /**
 @brief @~english FadeOutTRTiles action.
- * @~chinese FadeOutTRTilesĞĞ¶¯¡£
+ * @~chinese FadeOutTRTilesè¡ŒåŠ¨ã€‚
 @details @~english Fades out the target node with many tiles from Bottom-Left to Top-Right.
-* @~chinese ÕâÊÇÒ»¸öÈÃÄ¿±ê½ÚµãÒÔ¶à¸öÍßÆ¬µÄĞÎÊ½´Ó×óÏÂµ½ÓÒÉÏµ­³öµÄ¶¯×÷¡£
+* @~chinese è¿™æ˜¯ä¸€ä¸ªè®©ç›®æ ‡èŠ‚ç‚¹ä»¥å¤šä¸ªç“¦ç‰‡çš„å½¢å¼ä»å·¦ä¸‹åˆ°å³ä¸Šæ·¡å‡ºçš„åŠ¨ä½œã€‚
  */
 class CC_DLL FadeOutTRTiles : public TiledGrid3DAction
 {
 public:
     /** 
     * @brief @~english Create the action with the grid size and the duration.
-     * @~chinese Ê¹ÓÃÍø¸ñ´óĞ¡ºÍ³ÖĞøÊ±¼ä´´½¨¶¯×÷¡£
+     * @~chinese ä½¿ç”¨ç½‘æ ¼å¤§å°å’ŒæŒç»­æ—¶é—´åˆ›å»ºåŠ¨ä½œã€‚
     * @param duration @~english Specify the duration of the FadeOutTRTiles action. It's a value in seconds.
-    * @~chinese Ö¸¶¨FadeOutTRTile¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+    * @~chinese æŒ‡å®šFadeOutTRTileåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
     * @param gridSize @~english Specify the size of the grid.
-     * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
     * @return @~english If the creation success, return a pointer of FadeOutTRTiles action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öÖ¸ÏòFadeOutTRTiles¶¯×÷µÄÖ¸Õë;·ñÔò,·µ»Ø¿Õ¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªæŒ‡å‘FadeOutTRTilesåŠ¨ä½œçš„æŒ‡é’ˆ;å¦åˆ™,è¿”å›ç©ºã€‚
     */
     static FadeOutTRTiles* create(float duration, const Size& gridSize);
 
     /**
     @brief @~english Calculate the percentage a tile should be shown.
-     * @~chinese ¼ÆËãÒ»¸ötileÓ¦¸ÃÏÔÊ¾µÄ°Ù·Ö±È¡£
+     * @~chinese è®¡ç®—ä¸€ä¸ªtileåº”è¯¥æ˜¾ç¤ºçš„ç™¾åˆ†æ¯”ã€‚
     @param pos @~english The position index of the tile.
-     * @~chinese tileµÄÎ»ÖÃË÷Òı¡£
+     * @~chinese tileçš„ä½ç½®ç´¢å¼•ã€‚
     @param time @~english The current percentage of the action.
-     * @~chinese µ±Ç°¶¯×÷µÄ°Ù·Ö±È¡£
+     * @~chinese å½“å‰åŠ¨ä½œçš„ç™¾åˆ†æ¯”ã€‚
     @return @~english Return the percentage the tile should be shown.
-     * @~chinese ·µ»ØtileÓ¦¸ÃÏÔÊ¾µÄ°Ù·Ö±È¡£
+     * @~chinese è¿”å›tileåº”è¯¥æ˜¾ç¤ºçš„ç™¾åˆ†æ¯”ã€‚
     */
     virtual float testFunc(const Size& pos, float time);
 
     /**
     @brief @~english Show the tile at specified position.
-     * @~chinese ÏÔÊ¾Ö¸¶¨Î»ÖÃµÄtile¡£
+     * @~chinese æ˜¾ç¤ºæŒ‡å®šä½ç½®çš„tileã€‚
     @param pos @~english The position index of the tile should be shown.
-     * @~chinese Ó¦¸ÃÏÔÊ¾µÄtileµÄÎ»ÖÃË÷Òı¡£
+     * @~chinese åº”è¯¥æ˜¾ç¤ºçš„tileçš„ä½ç½®ç´¢å¼•ã€‚
     */
     void turnOnTile(const Vec2& pos);
 
     /**
     @brief @~english Hide the tile at specified position.
-     * @~chinese Òş²ØÖ¸¶¨Î»ÖÃµÄtile¡£
+     * @~chinese éšè—æŒ‡å®šä½ç½®çš„tileã€‚
     @param pos @~english The position index of the tile should be hide.
-    * @~chinese Ó¦¸ÃÒş²ØµÄtileµÄÎ»ÖÃË÷Òı
+    * @~chinese åº”è¯¥éšè—çš„tileçš„ä½ç½®ç´¢å¼•
     */
     void turnOffTile(const Vec2& pos);
 
     /**
     @brief @~english Show part of the tile.
-     * @~chinese Õ¹Ê¾tileµÄÒ»²¿·Ö¡£
+     * @~chinese å±•ç¤ºtileçš„ä¸€éƒ¨åˆ†ã€‚
     @param pos @~english The position index of the tile should be shown.
-    * @~chinese Ó¦¸ÃÏÔÊ¾µÄtileµÄÎ»ÖÃË÷Òı¡£
+    * @~chinese åº”è¯¥æ˜¾ç¤ºçš„tileçš„ä½ç½®ç´¢å¼•ã€‚
     @param distance @~english The percentage that the tile should be shown.
-    * @~chinese Ó¦¸ÃÏÔÊ¾µÄtileµÄ°Ù·Ö±È¡£
+    * @~chinese åº”è¯¥æ˜¾ç¤ºçš„tileçš„ç™¾åˆ†æ¯”ã€‚
     */
     virtual void transformTile(const Vec2& pos, float distance);
 
@@ -297,22 +297,22 @@ private:
 
 /**
 @brief @~english FadeOutBLTiles action.
- * @~chinese FadeOutBLTiles¶¯×÷¡£
+ * @~chinese FadeOutBLTilesåŠ¨ä½œã€‚
 @details @~english Fades out the target node with many tiles from Top-Right to Bottom-Left.
-* @~chinese ÕâÊÇÒ»¸öÈÃÄ¿±ê½ÚµãÒÔ¶à¸öÍßÆ¬µÄĞÎÊ½´ÓÓÒÉÏµ½×óÏÂµ­³öµÄ¶¯×÷¡£
+* @~chinese è¿™æ˜¯ä¸€ä¸ªè®©ç›®æ ‡èŠ‚ç‚¹ä»¥å¤šä¸ªç“¦ç‰‡çš„å½¢å¼ä»å³ä¸Šåˆ°å·¦ä¸‹æ·¡å‡ºçš„åŠ¨ä½œã€‚
  */
 class CC_DLL FadeOutBLTiles : public FadeOutTRTiles
 {
 public:
     /** 
     * @brief @~english Create the action with the grid size and the duration.
-    * @~chinese Ê¹ÓÃÍø¸ñ´óĞ¡ºÍ³ÖĞøÊ±¼ä´´½¨¶¯×÷¡£
+    * @~chinese ä½¿ç”¨ç½‘æ ¼å¤§å°å’ŒæŒç»­æ—¶é—´åˆ›å»ºåŠ¨ä½œã€‚
     * @param duration @~english Specify the duration of the FadeOutBLTiles action. It's a value in seconds.
-    * @~chinese Ö¸¶¨FadeOutBLTiles¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+    * @~chinese æŒ‡å®šFadeOutBLTilesåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
     * @param gridSize @~english Specify the size of the grid.
-     * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
     * @return @~english If the creation success, return a pointer of FadeOutBLTiles action; otherwise, return nil.
-    * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öÖ¸ÏòFadeOutBLTiles¶¯×÷µÄÖ¸Õë;·ñÔò,·µ»Ø¿Õ¡£
+    * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªæŒ‡å‘FadeOutBLTilesåŠ¨ä½œçš„æŒ‡é’ˆ;å¦åˆ™,è¿”å›ç©ºã€‚
     */
     static FadeOutBLTiles* create(float duration, const Size& gridSize);
 
@@ -330,22 +330,22 @@ private:
 
 /**
 @brief @~english FadeOutUpTiles action.
- * @~chinese FadeOutUpTiles¶¯×÷¡£
+ * @~chinese FadeOutUpTilesåŠ¨ä½œã€‚
 @details @~english Fades out the target node with many tiles from bottom to top.
-* @~chinese ÕâÊÇÒ»¸öÈÃÄ¿±ê½ÚµãÒÔ¶à¸öÍßÆ¬µÄĞÎÊ½´ÓÏÂµ½ÉÏµ­³öµÄ¶¯×÷
+* @~chinese è¿™æ˜¯ä¸€ä¸ªè®©ç›®æ ‡èŠ‚ç‚¹ä»¥å¤šä¸ªç“¦ç‰‡çš„å½¢å¼ä»ä¸‹åˆ°ä¸Šæ·¡å‡ºçš„åŠ¨ä½œ
  */
 class CC_DLL FadeOutUpTiles : public FadeOutTRTiles
 {
 public:
     /** 
     * @brief @~english Create the action with the grid size and the duration.
-    * @~chinese  Ê¹ÓÃÍø¸ñ´óĞ¡ºÍ³ÖĞøÊ±¼ä´´½¨¶¯×÷¡£
+    * @~chinese  ä½¿ç”¨ç½‘æ ¼å¤§å°å’ŒæŒç»­æ—¶é—´åˆ›å»ºåŠ¨ä½œã€‚
     * @param duration @~english Specify the duration of the FadeOutUpTiles action. It's a value in seconds.
-    * @~chinese Ö¸¶¨FadeOutUpTiles¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+    * @~chinese æŒ‡å®šFadeOutUpTilesåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
     * @param gridSize @~english Specify the size of the grid.
-    * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡
+    * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°
     * @return @~english If the creation success, return a pointer of FadeOutUpTiles action; otherwise, return nil.
-    * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öÖ¸ÏòFadeOutUpTiles¶¯×÷µÄÖ¸Õë;·ñÔò,·µ»Ø¿Õ¡£
+    * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªæŒ‡å‘FadeOutUpTilesåŠ¨ä½œçš„æŒ‡é’ˆ;å¦åˆ™,è¿”å›ç©ºã€‚
     */
     static FadeOutUpTiles* create(float duration, const Size& gridSize);
 
@@ -365,22 +365,22 @@ private:
 
 /**
 @brief @~english FadeOutDownTiles action.
- * @~chinese FadeOutDownTiles¶¯×÷¡£
+ * @~chinese FadeOutDownTilesåŠ¨ä½œã€‚
 @details @~english Fades out the target node with many tiles from top to bottom.
-* @~chinese ÕâÊÇÒ»¸öÈÃÄ¿±ê½ÚµãÒÔ¶à¸öÍßÆ¬µÄĞÎÊ½´ÓÉÏµ½ÏÂµ­³öµÄ¶¯×÷
+* @~chinese è¿™æ˜¯ä¸€ä¸ªè®©ç›®æ ‡èŠ‚ç‚¹ä»¥å¤šä¸ªç“¦ç‰‡çš„å½¢å¼ä»ä¸Šåˆ°ä¸‹æ·¡å‡ºçš„åŠ¨ä½œ
  */
 class CC_DLL FadeOutDownTiles : public FadeOutUpTiles
 {
 public:
     /** 
     * @brief @~english Create the action with the grid size and the duration.
-    * @~chinese Ê¹ÓÃÍø¸ñ´óĞ¡ºÍ³ÖĞøÊ±¼ä´´½¨¶¯×÷
+    * @~chinese ä½¿ç”¨ç½‘æ ¼å¤§å°å’ŒæŒç»­æ—¶é—´åˆ›å»ºåŠ¨ä½œ
     * @param duration @~english Specify the duration of the FadeOutDownTiles action. It's a value in seconds.
-    * @~chinese Ö¸¶¨FadeOutDownTiles¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+    * @~chinese æŒ‡å®šFadeOutDownTilesåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
     * @param gridSize @~english Specify the size of the grid.
-     * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
     * @return @~english If the creation success, return a pointer of FadeOutDownTiles action; otherwise, return nil.
-    * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öÖ¸ÏòFadeOutDownTiles¶¯×÷µÄÖ¸Õë;·ñÔò,·µ»Ø¿Õ¡£
+    * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªæŒ‡å‘FadeOutDownTilesåŠ¨ä½œçš„æŒ‡é’ˆ;å¦åˆ™,è¿”å›ç©ºã€‚
     */
     static FadeOutDownTiles* create(float duration, const Size& gridSize);
 
@@ -398,61 +398,61 @@ private:
 
 /**
 @brief @~english TurnOffTiles action.
- * @~chinese TurnOffTiles¶¯×÷¡£
+ * @~chinese TurnOffTilesåŠ¨ä½œã€‚
 @details @~english Turn off the target node with many tiles in random order.
-* @~chinese ÕâÊÇÒ»¸öÈÃÄ¿±ê½ÚµãÒÔ¶à¸öÍßÆ¬µÄĞÎÊ½Ëæ»ú¹Ø±ÕµÄ¶¯×÷
+* @~chinese è¿™æ˜¯ä¸€ä¸ªè®©ç›®æ ‡èŠ‚ç‚¹ä»¥å¤šä¸ªç“¦ç‰‡çš„å½¢å¼éšæœºå…³é—­çš„åŠ¨ä½œ
  */
 class CC_DLL TurnOffTiles : public TiledGrid3DAction
 {
 public:
     /** 
     * @brief @~english Create the action with the grid size and the duration.
-    * @~chinese Ê¹ÓÃÍø¸ñ´óĞ¡ºÍ³ÖĞøÊ±¼ä´´½¨¶¯×÷¡£
+    * @~chinese ä½¿ç”¨ç½‘æ ¼å¤§å°å’ŒæŒç»­æ—¶é—´åˆ›å»ºåŠ¨ä½œã€‚
     * @param duration @~english Specify the duration of the TurnOffTiles action. It's a value in seconds.
-    * @~chinese Ö¸¶¨TurnOffTiles¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+    * @~chinese æŒ‡å®šTurnOffTilesåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
     * @param gridSize @~english Specify the size of the grid.
-     * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
     * @return @~english If the creation success, return a pointer of TurnOffTiles action; otherwise, return nil.
-    * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öÖ¸ÏòTurnOffTiles¶¯×÷µÄÖ¸Õë;·ñÔò,·µ»Ø¿Õ¡£
+    * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªæŒ‡å‘TurnOffTilesåŠ¨ä½œçš„æŒ‡é’ˆ;å¦åˆ™,è¿”å›ç©ºã€‚
     */
     static TurnOffTiles* create(float duration, const Size& gridSize);
     /** 
     * @brief @~english Create the action with the grid size, the duration and random seed.
-    * @~chinese Ê¹ÓÃÍø¸ñ´óĞ¡£¬³ÖĞøÊ±¼äºÍËæ»úÖÖ×Ó´´½¨¶¯×÷¡£
+    * @~chinese ä½¿ç”¨ç½‘æ ¼å¤§å°ï¼ŒæŒç»­æ—¶é—´å’Œéšæœºç§å­åˆ›å»ºåŠ¨ä½œã€‚
     * @param duration @~english Specify the duration of the TurnOffTiles action. It's a value in seconds.
-    * @~chinese Ö¸¶¨TurnOffTiles¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+    * @~chinese æŒ‡å®šTurnOffTilesåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
     * @param gridSize @~english Specify the size of the grid.
-     * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
     * @param seed @~english Specify the random seed.
-     * @~chinese Ö¸¶¨Ëæ»úÖÖ×Ó¡£
+     * @~chinese æŒ‡å®šéšæœºç§å­ã€‚
     * @return @~english If the creation success, return a pointer of TurnOffTiles action; otherwise, return nil.
-    * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öÖ¸ÏòTurnOffTiles¶¯×÷µÄÖ¸Õë;·ñÔò,·µ»Ø¿Õ¡£
+    * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªæŒ‡å‘TurnOffTilesåŠ¨ä½œçš„æŒ‡é’ˆ;å¦åˆ™,è¿”å›ç©ºã€‚
     */
     static TurnOffTiles* create(float duration, const Size& gridSize, unsigned int seed);
 
     /**
     @brief @~english Shuffle the array specified.
-     * @~chinese Ö¸¶¨µÄËæ»úÊı×é¡£
+     * @~chinese æŒ‡å®šçš„éšæœºæ•°ç»„ã€‚
     @param array @~english The array will be shuffled.
-     * @~chinese Òª±»Ëæ»ú´òÂÒµÄÊı×é¡£
+     * @~chinese è¦è¢«éšæœºæ‰“ä¹±çš„æ•°ç»„ã€‚
     @param len @~english The size of the array.
-     * @~chinese Êı×éµÄ´óĞ¡¡£
+     * @~chinese æ•°ç»„çš„å¤§å°ã€‚
     */
     void shuffle(unsigned int *array, unsigned int len);
 
     /**
     @brief @~english Show the tile at specified position.
-     * @~chinese ÏÔÊ¾Ö¸¶¨Î»ÖÃµÄtile¡£
+     * @~chinese æ˜¾ç¤ºæŒ‡å®šä½ç½®çš„tileã€‚
     @param pos @~english The position index of the tile should be shown.
-     * @~chinese Ó¦¸ÃÏÔÊ¾µÄtileµÄÎ»ÖÃË÷Òı¡£
+     * @~chinese åº”è¯¥æ˜¾ç¤ºçš„tileçš„ä½ç½®ç´¢å¼•ã€‚
     */
     void turnOnTile(const Vec2& pos);
 
     /**
     @brief @~english Hide the tile at specified position.
-     * @~chinese Òş²ØÖ¸¶¨Î»ÖÃµÄtile¡£
+     * @~chinese éšè—æŒ‡å®šä½ç½®çš„tileã€‚
     @param pos @~english The position index of the tile should be hide.
-     * @~chinese Ó¦¸ÃÒş²ØµÄtileµÄÎ»ÖÃË÷Òı¡£
+     * @~chinese åº”è¯¥éšè—çš„tileçš„ä½ç½®ç´¢å¼•ã€‚
     */
     void turnOffTile(const Vec2& pos);
 
@@ -467,15 +467,15 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
     * @brief @~english Initializes the action with grid size, random seed and duration.
-    * @~chinese Ê¹ÓÃÍø¸ñ´óĞ¡£¬³ÖĞøÊ±¼ä£¬Ëæ»úÖÖ×Ó³õÊ¼»¯¶¯×÷¡£
+    * @~chinese ä½¿ç”¨ç½‘æ ¼å¤§å°ï¼ŒæŒç»­æ—¶é—´ï¼Œéšæœºç§å­åˆå§‹åŒ–åŠ¨ä½œã€‚
     * @param duration @~english Specify the duration of the TurnOffTiles action. It's a value in seconds.
-    * @~chinese Ö¸¶¨TurnOffTiles¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+    * @~chinese æŒ‡å®šTurnOffTilesåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
     * @param gridSize @~english Specify the size of the grid.
-     * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
     * @param seed @~english Specify the random seed.
-     * @~chinese Ö¸¶¨Ëæ»úÖÖ×Ó¡£
+     * @~chinese æŒ‡å®šéšæœºç§å­ã€‚
     * @return @~english If the Initialization success, return true; otherwise, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸ,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
     */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int seed);
 
@@ -490,56 +490,56 @@ private:
 
 /**
 @brief @~english WavesTiles3D action.
- * @~chinese WavesTiles3D¶¯×÷¡£
+ * @~chinese WavesTiles3DåŠ¨ä½œã€‚
 @details @~english This action wave the target node with many tiles.
-* @~chinese ÕâÊÇÒ»¸öÈÃÄ¿±ê½ÚµãÒÔ¶à¸öÍßÆ¬µÄĞÎÊ½²¨¶¯µÄ¶¯×÷
+* @~chinese è¿™æ˜¯ä¸€ä¸ªè®©ç›®æ ‡èŠ‚ç‚¹ä»¥å¤šä¸ªç“¦ç‰‡çš„å½¢å¼æ³¢åŠ¨çš„åŠ¨ä½œ
 */
 class CC_DLL WavesTiles3D : public TiledGrid3DAction
 {
 public:
     /** 
      * @brief @~english Create the action with a number of waves, the waves amplitude, the grid size and the duration.
-     * @~chinese Ê¹ÓÃ²¨Êı,²¨Õñ·ù,Íø¸ñ´óĞ¡ºÍ³ÖĞøÊ±¼äÀ´´´½¨¶¯×÷¡£
+     * @~chinese ä½¿ç”¨æ³¢æ•°,æ³¢æŒ¯å¹…,ç½‘æ ¼å¤§å°å’ŒæŒç»­æ—¶é—´æ¥åˆ›å»ºåŠ¨ä½œã€‚
      * @param duration @~english Specify the duration of the WavesTiles3D action. It's a value in seconds.
-     * @~chinese  Ö¸¶¨WavesTiles3D¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+     * @~chinese  æŒ‡å®šWavesTiles3DåŠ¨é¯æŸä¸­î‰å¥”æ´¹ï¼µé¦ä¸”æ¡“é²†æ‚¦èƒ›î€”ãƒåé—¹æ€ ï¿½
      * @param gridSize @~english Specify the size of the grid.
-     * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
      * @param waves @~english Specify the waves count of the WavesTiles3D action.
-     * @~chinese Ö¸¶¨WavesTiles3D¶¯×÷µÄ²¨Êı¡£
+     * @~chinese æŒ‡å®šWavesTiles3DåŠ¨ä½œçš„æ³¢æ•°ã€‚
      * @param amplitude @~english Specify the amplitude of the WavesTiles3D action.
-     * @~chinese Ö¸¶¨WavesTiles3D¶¯×÷µÄÕñ·ù¡£
+     * @~chinese æŒ‡å®šWavesTiles3DåŠ¨ä½œçš„æŒ¯å¹…ã€‚
      * @return @~english If the creation success, return a pointer of WavesTiles3D action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öÖ¸ÏòWavesTiles3D¶¯×÷µÄÖ¸Õë;·ñÔò,·µ»Ø¿Õ¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªæŒ‡å‘WavesTiles3DåŠ¨ä½œçš„æŒ‡é’ˆ;å¦åˆ™,è¿”å›ç©ºã€‚
      */
     static WavesTiles3D* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
     /**
     @brief @~english Get the amplitude of the effect.
-     * @~chinese »ñÈ¡Õñ·ù¡£
+     * @~chinese è·å–æŒ¯å¹…ã€‚
     @return @~english Return the amplitude of the effect.
-     * @~chinese Õñ·ù¡£
+     * @~chinese æŒ¯å¹…ã€‚
     */
     inline float getAmplitude() const { return _amplitude; }
     /**
     @brief @~english Set the amplitude to the effect.
-     * @~chinese ÉèÖÃÕñ·ù¡£
+     * @~chinese è®¾ç½®æŒ¯å¹…ã€‚
     @param amplitude @~english The value of amplitude will be set.
-    * @~chinese ½«±»ÉèÖÃµÄ·ùÖµ¡£
+    * @~chinese å°†è¢«è®¾ç½®çš„å¹…å€¼ã€‚
     */
     inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /**
     @brief @~english Get the amplitude rate of the effect.
-     * @~chinese »ñµÃÕñ·ùÂÊ¡£
+     * @~chinese è·å¾—æŒ¯å¹…ç‡ã€‚
     @return @~english Return the amplitude rate of the effect.
-     * @~chinese ·µ»ØÕñ·ùÂÊ¡£
+     * @~chinese è¿”å›æŒ¯å¹…ç‡ã€‚
     */
     inline float getAmplitudeRate() const { return _amplitudeRate; }
     /**
     @brief @~english Set the ampliture rate of the effect.
-     * @~chinese ÉèÖÃamplitureÂÊ¡£
+     * @~chinese è®¾ç½®amplitureç‡ã€‚
     @param amplitudeRate @~english The value of amplitude rate will be set.
-    * @~chinese ½«±»ÉèÖÃµÄÕñ·ùÂÊ¡£
+    * @~chinese å°†è¢«è®¾ç½®çš„æŒ¯å¹…ç‡ã€‚
     */
     inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
@@ -553,17 +553,17 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
     @brief @~english Initializes an action with duration, grid size, waves count and amplitude.
-    * @~chinese Ê¹ÓÃ²¨Êı,²¨Õñ·ù,Íø¸ñ´óĞ¡ºÍ³ÖĞøÊ±¼ä³õÊ¼»¯¶¯×÷¡£
+    * @~chinese ä½¿ç”¨æ³¢æ•°,æ³¢æŒ¯å¹…,ç½‘æ ¼å¤§å°å’ŒæŒç»­æ—¶é—´åˆå§‹åŒ–åŠ¨ä½œã€‚
     @param duration @~english Specify the duration of the WavesTiles3D action. It's a value in seconds.
-    * @~chinese Ö¸¶¨WavesTiles3D¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+    * @~chinese æŒ‡å®šWavesTiles3DåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
     @param gridSize @~english Specify the size of the grid.
-     * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
     @param waves @~english Specify the waves count of the WavesTiles3D action.
-    * @~chinese Ö¸¶¨WavesTiles3D¶¯×÷µÄ²¨Êı¡£
+    * @~chinese æŒ‡å®šWavesTiles3DåŠ¨ä½œçš„æ³¢æ•°ã€‚
     @param amplitude @~english Specify the amplitude of the WavesTiles3D action.
-    * @~chinese Ö¸¶¨WavesTiles3D¶¯×÷µÄÕñ·ù¡£
+    * @~chinese æŒ‡å®šWavesTiles3DåŠ¨ä½œçš„æŒ¯å¹…ã€‚
     @return @~english If the initialization success, return true; otherwise, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸ,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
     */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
@@ -578,56 +578,56 @@ private:
 
 /**
 @brief @~english JumpTiles3D action.
- * @~chinese JumpTiles3D¶¯×÷¡£
+ * @~chinese JumpTiles3DåŠ¨ä½œã€‚
 @details @~english Move the tiles of a target node across the Z axis.
-* @~chinese ÕâÊÇÒ»¸öÈÃÄ¿±ê½ÚµãÒÔ¶à¸öÍßÆ¬µÄĞÎÊ½ÑØzÖáÒÆ¶¯µÄ¶¯×÷
+* @~chinese è¿™æ˜¯ä¸€ä¸ªè®©ç›®æ ‡èŠ‚ç‚¹ä»¥å¤šä¸ªç“¦ç‰‡çš„å½¢å¼æ²¿zè½´ç§»åŠ¨çš„åŠ¨ä½œ
 */
 class CC_DLL JumpTiles3D : public TiledGrid3DAction
 {
 public:
     /** 
      * @brief @~english Create the action with the number of jumps, the sin amplitude, the grid size and the duration.
-     * @~chinese Ê¹ÓÃÌøÔ¾Êı£¬ÕıÏÒÕñ·ù,Íø¸ñ´óĞ¡ºÍ³ÖĞøÊ±¼ä´´½¨¶¯×÷¡£
+     * @~chinese ä½¿ç”¨è·³è·ƒæ•°ï¼Œæ­£å¼¦æŒ¯å¹…,ç½‘æ ¼å¤§å°å’ŒæŒç»­æ—¶é—´åˆ›å»ºåŠ¨ä½œã€‚
      * @param duration @~english Specify the duration of the JumpTiles3D action. It's a value in seconds.
-     * @~chinese Ö¸¶¨JumpTiles3D¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£¡£
+     * @~chinese æŒ‡å®šJumpTiles3DåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚ã€‚
      * @param gridSize @~english Specify the size of the grid.
-     * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
      * @param numberOfJumps @~english Specify the jump tiles count.
-     * @~chinese Ö¸¶¨ÌøÔ¾´ÎÊı¡£
+     * @~chinese æŒ‡å®šè·³è·ƒæ¬¡æ•°ã€‚
      * @param amplitude @~english Specify the amplitude of the JumpTiles3D action.
-     * @~chinese Ö¸¶¨JumpTiles3D¶¯×÷µÄÕñ·ù¡£
+     * @~chinese æŒ‡å®šJumpTiles3DåŠ¨ä½œçš„æŒ¯å¹…ã€‚
      * @return @~english If the creation success, return a pointer of JumpTiles3D action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öÖ¸ÏòJumpTiles3D¶¯×÷µÄÖ¸Õë;·ñÔò,·µ»Ø¿Õ¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªæŒ‡å‘JumpTiles3DåŠ¨ä½œçš„æŒ‡é’ˆ;å¦åˆ™,è¿”å›ç©ºã€‚
      */
     static JumpTiles3D* create(float duration, const Size& gridSize, unsigned int numberOfJumps, float amplitude);
 
     /**
     @brief @~english Get the amplitude of the effect.
-     * @~chinese »ñÈ¡Õñ·ù¡£
+     * @~chinese è·å–æŒ¯å¹…ã€‚
     @return @~english Return the amplitude of the effect.
-     * @~chinese Õñ·ù¡£
+     * @~chinese æŒ¯å¹…ã€‚
     */
     inline float getAmplitude() const { return _amplitude; }
     /**
     @brief @~english Set the amplitude to the effect.
-     * @~chinese ÉèÖÃÕñ·ù¡£
+     * @~chinese è®¾ç½®æŒ¯å¹…ã€‚
     @param amplitude @~english The value of amplitude will be set.
-    * @~chinese ½«±»ÉèÖÃµÄ·ù¡£
+    * @~chinese å°†è¢«è®¾ç½®çš„å¹…ã€‚
     */
     inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /**
     @brief @~english Get the amplitude rate of the effect.
-     * @~chinese »ñµÃÕñ·ùÂÊ¡£
+     * @~chinese è·å¾—æŒ¯å¹…ç‡ã€‚
     @return @~english Return the amplitude rate of the effect.
-     * @~chinese Õñ·ùÂÊ¡£
+     * @~chinese æŒ¯å¹…ç‡ã€‚
     */
     inline float getAmplitudeRate() const { return _amplitudeRate; }
     /**
     @brief @~english Set the amplitude rate of the effect.
-     * @~chinese ÉèÖÃÊÇÖ¸Õñ·ùÂÊ¡£
+     * @~chinese è®¾ç½®æ˜¯æŒ‡æŒ¯å¹…ç‡ã€‚
     @param amplitudeRate @~english The value of amplitude rate will be set.
-    * @~chinese  ½«±»ÉèÖÃµÄÕñ·ùÂÊ¡£
+    * @~chinese  å°†è¢«è®¾ç½®çš„æŒ¯å¹…ç‡ã€‚
     */
     inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
@@ -641,17 +641,17 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
      * @brief @~english Initializes the action with the number of jumps, the sin amplitude, the grid size and the duration.
-     * @~chinese Ê¹ÓÃÌøÔ¾Êı,²¨Õñ·ù,Íø¸ñ´óĞ¡ºÍ³ÖĞøÊ±¼ä³õÊ¼»¯¶¯×÷¡£¡£
+     * @~chinese ä½¿ç”¨è·³è·ƒæ•°,æ³¢æŒ¯å¹…,ç½‘æ ¼å¤§å°å’ŒæŒç»­æ—¶é—´åˆå§‹åŒ–åŠ¨ä½œã€‚ã€‚
      * @param duration @~english Specify the duration of the JumpTiles3D action. It's a value in seconds.
-     * @~chinese Ö¸¶¨JumpTiles3D¶¯×÷µÄ³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+     * @~chinese æŒ‡å®šJumpTiles3DåŠ¨ä½œçš„æŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
      * @param gridSize @~english Specify the size of the grid.
-     * @~chinese Ö¸¶¨Íø¸ñµÄ´óĞ¡¡£
+     * @~chinese æŒ‡å®šç½‘æ ¼çš„å¤§å°ã€‚
      * @param numberOfJumps @~english Specify the jump tiles count.
-     * @~chinese Ö¸¶¨ÌøÔ¾´ÎÊı¡£
+     * @~chinese æŒ‡å®šè·³è·ƒæ¬¡æ•°ã€‚
      * @param amplitude @~english Specify the amplitude of the JumpTiles3D action.
-     * @~chinese Ö¸¶¨JumpTiles3D¶¯×÷µÄÕñ·ù¡£
+     * @~chinese æŒ‡å®šJumpTiles3DåŠ¨ä½œçš„æŒ¯å¹…ã€‚
      * @return @~english If the initialization success, return true; otherwise, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸ,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
      */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int numberOfJumps, float amplitude);
 
@@ -666,24 +666,24 @@ private:
 
 /**
 @brief @~english SplitRows action.
- * @~chinese SplitRows¶¯×÷¡£
+ * @~chinese SplitRowsåŠ¨ä½œã€‚
 @details @~english Split the target node in many rows.
         Then move out some rows from left, move out the other rows from right.
- * @~chinese ½«Ä¿±ê½Úµã·Ö¸îÎª¶àĞĞ¡£
- * È»ºó´Ó×ó±ßÒÆ³öÈ¥Ò»Ğ©ĞĞ,´ÓÓÒ±ßÒÆ³öÈ¥ÁíÒ»Ğ©ĞĞ¡£
+ * @~chinese å°†ç›®æ ‡èŠ‚ç‚¹åˆ†å‰²ä¸ºå¤šè¡Œã€‚
+ * ç„¶åä»å·¦è¾¹ç§»å‡ºå»ä¸€äº›è¡Œ,ä»å³è¾¹ç§»å‡ºå»å¦ä¸€äº›è¡Œã€‚
 */
 class CC_DLL SplitRows : public TiledGrid3DAction
 {
 public :
     /** 
      * @brief @~english Create the action with the number of rows and the duration.
-     * @~chinese Ê¹ÓÃÖ¸¶¨ĞĞÊıºÍ³ÖĞøÊ±¼ä´´½¨¶¯×÷¡£
+     * @~chinese ä½¿ç”¨æŒ‡å®šè¡Œæ•°å’ŒæŒç»­æ—¶é—´åˆ›å»ºåŠ¨ä½œã€‚
      * @param duration @~english Specify the duration of the SplitRows action. It's a value in seconds.
-     * @~chinese ÎªSplitRows¶¯×÷Ö¸¶¨³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+     * @~chinese ä¸ºSplitRowsåŠ¨ä½œæŒ‡å®šæŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
      * @param rows @~english Specify the rows count should be splited.
-     * @~chinese Ö¸¶¨Ó¦¸Ã·Ö¸îµÄĞĞÊı¡£
+     * @~chinese æŒ‡å®šåº”è¯¥åˆ†å‰²çš„è¡Œæ•°ã€‚
      * @return @~english If the creation success, return a pointer of SplitRows action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öÖ¸ÏòSplitRows¶¯×÷Ö¸Õë;·ñÔò,·µ»Ø¿Õ¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªæŒ‡å‘SplitRowsåŠ¨ä½œæŒ‡é’ˆ;å¦åˆ™,è¿”å›ç©ºã€‚
      */
     static SplitRows* create(float duration, unsigned int rows);
 
@@ -698,13 +698,13 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
      * @brief @~english Initializes the action with the number rows and the duration.
-     * @~chinese Ê¹ÓÃÖ¸¶¨ĞĞÊıºÍ³ÖĞøÊ±¼ä³õÊ¼»¯¶¯×÷¡£
+     * @~chinese ä½¿ç”¨æŒ‡å®šè¡Œæ•°å’ŒæŒç»­æ—¶é—´åˆå§‹åŒ–åŠ¨ä½œã€‚
      * @param duration @~english Specify the duration of the SplitRows action. It's a value in seconds.
-     * @~chinese ÎªSplitRows¶¯×÷Ö¸¶¨³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+     * @~chinese ä¸ºSplitRowsåŠ¨ä½œæŒ‡å®šæŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
      * @param rows @~english Specify the rows count should be splited.
-     * @~chinese Ö¸¶¨Ó¦¸Ã·Ö¸îµÄĞĞÊı¡£
+     * @~chinese æŒ‡å®šåº”è¯¥åˆ†å‰²çš„è¡Œæ•°ã€‚
      * @return @~english If the creation success, return true; otherwise, return false.
-     * @~chinese Èç¹û´´½¨³É¹¦,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
      */
     bool initWithDuration(float duration, unsigned int rows);
 
@@ -718,11 +718,11 @@ private:
 
 /**
 @brief @~english SplitCols action.
- * @~chinese SplitCols¶¯×÷¡£
+ * @~chinese SplitColsåŠ¨ä½œã€‚
 @details @~english Split the target node in many columns.
         Then move out some columns from top, move out the other columns from bottom.
- * @~chinese ½«Ä¿±ê½Úµã·Ö¸îÎª¶àÁĞ¡£
- * È»ºó´ÓÉÏ±ßÒÆ³öÈ¥Ò»Ğ©ÁĞ,´ÓÏÂ±ßÒÆ³öÈ¥ÁíÒ»Ğ©ÁĞ¡£
+ * @~chinese å°†ç›®æ ‡èŠ‚ç‚¹åˆ†å‰²ä¸ºå¤šåˆ—ã€‚
+ * ç„¶åä»ä¸Šè¾¹ç§»å‡ºå»ä¸€äº›åˆ—,ä»ä¸‹è¾¹ç§»å‡ºå»å¦ä¸€äº›åˆ—ã€‚
 */
 class CC_DLL SplitCols : public TiledGrid3DAction
 {
@@ -730,13 +730,13 @@ public:
     
     /** 
      * @brief @~english Create the action with the number of columns and the duration.
-     * @~chinese Ê¹ÓÃÖ¸¶¨ÁĞÊıºÍ³ÖĞøÊ±¼ä´´½¨¶¯×÷¡£
+     * @~chinese ä½¿ç”¨æŒ‡å®šåˆ—æ•°å’ŒæŒç»­æ—¶é—´åˆ›å»ºåŠ¨ä½œã€‚
      * @param duration @~english Specify the duration of the SplitCols action. It's a value in seconds.
-     * @~chinese Ö¸ÎªSplitCols¶¯×÷Ö¸¶¨³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+     * @~chinese æŒ‡ä¸ºSplitColsåŠ¨ä½œæŒ‡å®šæŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
      * @param cols @~english Specify the columns count should be splited.
-     * @~chinese Ö¸¶¨Ó¦¸Ã·Ö¸îµÄÁĞÊı¡£
+     * @~chinese æŒ‡å®šåº”è¯¥åˆ†å‰²çš„åˆ—æ•°ã€‚
      * @return @~english If the creation success, return a pointer of SplitCols action; otherwise, return nil.
-     * @~chinese Èç¹û´´½¨³É¹¦,·µ»ØÒ»¸öÖ¸ÏòSplitCols¶¯×÷µÄÖ¸Õë;·ñÔò,·µ»ØÁã¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›ä¸€ä¸ªæŒ‡å‘SplitColsåŠ¨ä½œçš„æŒ‡é’ˆ;å¦åˆ™,è¿”å›é›¶ã€‚
      */
     static SplitCols* create(float duration, unsigned int cols);
 
@@ -744,7 +744,7 @@ public:
 	virtual SplitCols* clone() const override;
     /**
      * @param time @~english in seconds
-     * @~chinese ÒÔÃëÎªµ¥Î»
+     * @~chinese ä»¥ç§’ä¸ºå•ä½
      */
     virtual void update(float time) override;
     virtual void startWithTarget(Node *target) override;
@@ -755,13 +755,13 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
      * @brief @~english Initializes the action with the number columns and the duration.
-     * @~chinese Ê¹ÓÃÖ¸¶¨ÁĞÊıºÍ³ÖĞøÊ±¼ä³õÊ¼»¯¶¯×÷¡£
+     * @~chinese ä½¿ç”¨æŒ‡å®šåˆ—æ•°å’ŒæŒç»­æ—¶é—´åˆå§‹åŒ–åŠ¨ä½œã€‚
      * @param duration @~english Specify the duration of the SplitCols action. It's a value in seconds.
-     * @~chinese ÎªSplitCols¶¯×÷Ö¸¶¨³ÖĞøÊ±¼ä¡£ÕâÊÇÒ»¸öÒÔÃëÎªµ¥Î»µÄÖµ¡£
+     * @~chinese ä¸ºSplitColsåŠ¨ä½œæŒ‡å®šæŒç»­æ—¶é—´ã€‚è¿™æ˜¯ä¸€ä¸ªä»¥ç§’ä¸ºå•ä½çš„å€¼ã€‚
      * @param cols @~english Specify the columns count should be splited.
-     * @~chinese Ö¸¶¨Ó¦¸Ã·Ö¸îµÄÁĞÊı¡£
+     * @~chinese æŒ‡å®šåº”è¯¥åˆ†å‰²çš„åˆ—æ•°ã€‚
      * @return @~english If the creation success, return true; otherwise, return false.
-     * @~chinese Èç¹û´´½¨³É¹¦,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœåˆ›å»ºæˆåŠŸ,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
      */
     bool initWithDuration(float duration, unsigned int cols);
 

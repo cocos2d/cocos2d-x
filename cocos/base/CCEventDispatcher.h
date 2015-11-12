@@ -57,10 +57,10 @@ The EventListener list is managed in such a way that
 event listeners can be added and removed even
 from within an EventListener, while events are being
 dispatched.
- * @~chinese Õâ¸öÀà¹ÜÀíÊÂ¼ş¼àÌıÆ÷µÄ¶©ÔÄºÍÊÂ¼şµÄ·Ö·¢
+ * @~chinese è¿™ä¸ªç±»ç®¡ç†äº‹ä»¶ç›‘å¬å™¨çš„è®¢é˜…å’Œäº‹ä»¶çš„åˆ†å‘
  * 
  * 
- * ÊÂ¼ş¼àÌıÆ÷ÁĞ±íÒÔÕâÑùµÄ·½Ê½À´½øĞĞ¹ÜÀí£ºµ±ÊÂ¼şÕıÔÚ·Ö·¢µÄ¹ı³ÌÖĞ£¬ÊÂ¼ş¼àÌıÆ÷¿ÉÒÔ±»Ìí¼Ó»òÕßÒÆ³ı£¬°üÀ¨ÊÂ¼ş¼àÌıÆ÷ÄÚ²¿µÄ¼àÌıÆ÷
+ * äº‹ä»¶ç›‘å¬å™¨åˆ—è¡¨ä»¥è¿™æ ·çš„æ–¹å¼æ¥è¿›è¡Œç®¡ç†ï¼šå½“äº‹ä»¶æ­£åœ¨åˆ†å‘çš„è¿‡ç¨‹ä¸­ï¼Œäº‹ä»¶ç›‘å¬å™¨å¯ä»¥è¢«æ·»åŠ æˆ–è€…ç§»é™¤ï¼ŒåŒ…æ‹¬äº‹ä»¶ç›‘å¬å™¨å†…éƒ¨çš„ç›‘å¬å™¨
 @js NA
 */
 class CC_DLL EventDispatcher : public Ref
@@ -69,41 +69,41 @@ public:
     // Adds event listener.
     
     /** @~english Adds a event listener for a specified event with the priority of scene graph.
-     * @~chinese ¸øÒ»¸öÖ¸¶¨µÄÊÂ¼şÌí¼ÓÒ»¸öÊÂ¼ş¼àÌıÆ÷£¬¸Ã¼àÌıÆ÷´øÓĞ»ùÓÚ³¡¾°Í¼µÄÓÅÏÈ¼¶ ¡£
+     * @~chinese ç»™ä¸€ä¸ªæŒ‡å®šçš„äº‹ä»¶æ·»åŠ ä¸€ä¸ªäº‹ä»¶ç›‘å¬å™¨ï¼Œè¯¥ç›‘å¬å™¨å¸¦æœ‰åŸºäºåœºæ™¯å›¾çš„ä¼˜å…ˆçº§ ã€‚
      *  @param listener @~english The listener of a specified event.
-     * @~chinese Ö¸¶¨ÊÂ¼şµÄ¼àÌıÆ÷¡£
+     * @~chinese æŒ‡å®šäº‹ä»¶çš„ç›‘å¬å™¨ã€‚
      *  @param node @~english The priority of the listener is based on the draw order of this node.
-     * @~chinese ¼àÌıÆ÷µÄÓÅÏÈ¼¶»ùÓÚ´Ë½ÚµãµÄ»æÖÆË³Ğò.
+     * @~chinese ç›‘å¬å™¨çš„ä¼˜å…ˆçº§åŸºäºæ­¤èŠ‚ç‚¹çš„ç»˜åˆ¶é¡ºåº.
      *  @note  @~english The priority of scene graph will be fixed value 0. So the order of listener item
      *          in the vector will be ' <0, scene graph (0 priority), >0'.
-     * @~chinese ³¡¾°Í¼µÄÓÅÏÈ¼¶»á±»ÉèÖÃÎª¹Ì¶¨Öµ0£¬Òò´ËÔÚÈİÆ÷(vector)ÖĞµÄÕìÌıÆ÷µÄ´ÎĞò½«»áÊÇ£º' <0, scene graph (0 priority), >0' .
+     * @~chinese åœºæ™¯å›¾çš„ä¼˜å…ˆçº§ä¼šè¢«è®¾ç½®ä¸ºå›ºå®šå€¼0ï¼Œå› æ­¤åœ¨å®¹å™¨(vector)ä¸­çš„ä¾¦å¬å™¨çš„æ¬¡åºå°†ä¼šæ˜¯ï¼š' <0, scene graph (0 priority), >0' .
      * 
      */
     void addEventListenerWithSceneGraphPriority(EventListener* listener, Node* node);
 
     /** @~english Adds a event listener for a specified event with the fixed priority.
-     * @~chinese ÎªÖ¸¶¨µÄÊÂ¼şÌí¼ÓÒ»¸ö¹Ì¶¨ÓÅÏÈ¼¶ÊÂ¼ş¼àÌıÆ÷¡£
+     * @~chinese ä¸ºæŒ‡å®šçš„äº‹ä»¶æ·»åŠ ä¸€ä¸ªå›ºå®šä¼˜å…ˆçº§äº‹ä»¶ç›‘å¬å™¨ã€‚
      *  @param listener @~english The listener of a specified event.
-     * @~chinese Ö¸¶¨ÊÂ¼şµÄ¼àÌıÆ÷¡£
+     * @~chinese æŒ‡å®šäº‹ä»¶çš„ç›‘å¬å™¨ã€‚
      *  @param fixedPriority @~english The fixed priority of the listener.
-     * @~chinese ¼àÌıÆ÷µÄ¹Ì¶¨ÓÅÏÈ¼¶¡£
+     * @~chinese ç›‘å¬å™¨çš„å›ºå®šä¼˜å…ˆçº§ã€‚
      *  @note @~english A lower priority will be called before the ones that have a higher value.
      *        0 priority is forbidden for fixed priority since it's used for scene graph based priority.
-     * @~chinese ÖµÔ½Ğ¡µÄ½«»á±ÈÖµ´óµÄÏÈµ÷ÓÃ¡£
-     * 0ÓÃÀ´×÷Îª³¡¾°Í¼µÄ»ù´¡ÓÅÏÈ¼¶£¬ËùÒÔÓÅÏÈ¼¶²»ÄÜÉèÖÃÎª0
+     * @~chinese å€¼è¶Šå°çš„å°†ä¼šæ¯”å€¼å¤§çš„å…ˆè°ƒç”¨ã€‚
+     * 0ç”¨æ¥ä½œä¸ºåœºæ™¯å›¾çš„åŸºç¡€ä¼˜å…ˆçº§ï¼Œæ‰€ä»¥ä¼˜å…ˆçº§ä¸èƒ½è®¾ç½®ä¸º0
      */
     void addEventListenerWithFixedPriority(EventListener* listener, int fixedPriority);
 
     /** @~english Adds a Custom event listener.
      It will use a fixed priority of 1.
-     * @~chinese Ìí¼ÓÒ»¸ö×Ô¶¨ÒåÊÂ¼ş¼àÌıÆ÷¡£
-     * ¸Ã¼àÌıÆ÷»áÊ¹ÓÃÖµÎª1µÄÒ»¸ö¹Ì¶¨ÓÅÏÈ¼¶.
+     * @~chinese æ·»åŠ ä¸€ä¸ªè‡ªå®šä¹‰äº‹ä»¶ç›‘å¬å™¨ã€‚
+     * è¯¥ç›‘å¬å™¨ä¼šä½¿ç”¨å€¼ä¸º1çš„ä¸€ä¸ªå›ºå®šä¼˜å…ˆçº§.
      * @param eventName @~english A given name of the event.
-     * @~chinese ÈÎÒâµÄÊÂ¼şÃû³Æ¡£
+     * @~chinese ä»»æ„çš„äº‹ä»¶åç§°ã€‚
      * @param callback @~english A given callback method that associated the event name.
-     * @~chinese ¸úÊÂ¼şÃû³Æ¹ØÁªµÄ»Øµ÷º¯Êı¡£
+     * @~chinese è·Ÿäº‹ä»¶åç§°å…³è”çš„å›è°ƒå‡½æ•°ã€‚
      * @return @~english the generated event. In order to remove the event later from the dispather 
-     * @~chinese ·µ»Ø²úÉúµÄÊÂ¼ş£¬ÒÔ±ãºóÃæ´ÓÅÉ·¢Æ÷ÖĞÒÆ³ıÕâ¸öÊÂ¼ş
+     * @~chinese è¿”å›äº§ç”Ÿçš„äº‹ä»¶ï¼Œä»¥ä¾¿åé¢ä»æ´¾å‘å™¨ä¸­ç§»é™¤è¿™ä¸ªäº‹ä»¶
      */
     EventListenerCustom* addCustomEventListener(const std::string &eventName, const std::function<void(EventCustom*)>& callback);
 
@@ -113,44 +113,44 @@ public:
     
     /** @~english Remove a listener.
      *
-     * @~chinese É¾³ıÒ»¸ö¼àÌıÆ÷¡£
+     * @~chinese åˆ é™¤ä¸€ä¸ªç›‘å¬å™¨ã€‚
      * 
      *  @param listener @~english The specified event listener which needs to be removed.
-     * @~chinese ĞèÒª±»ÒÆ³ıµÄÊÂ¼ş¼àÌıÆ÷¡£
+     * @~chinese éœ€è¦è¢«ç§»é™¤çš„äº‹ä»¶ç›‘å¬å™¨ã€‚
      */
     void removeEventListener(EventListener* listener);
 
     /** @~english Removes all listeners with the same event listener type.
      *
-     * @~chinese ÒÆ³ıËùÓĞÊ¹ÓÃÏàÍ¬ÊÂ¼ş¼àÌıÆ÷ÀàĞÍµÄ¼àÌıÆ÷
+     * @~chinese ç§»é™¤æ‰€æœ‰ä½¿ç”¨ç›¸åŒäº‹ä»¶ç›‘å¬å™¨ç±»å‹çš„ç›‘å¬å™¨
      * 
      * @param listenerType @~english A given event listener type which needs to be removed.
-     * @~chinese ¸ø¶¨ĞèÒªÉ¾³ıµÄÊÂ¼ş¼àÌıÆ÷ÀàĞÍ¡£
+     * @~chinese ç»™å®šéœ€è¦åˆ é™¤çš„äº‹ä»¶ç›‘å¬å™¨ç±»å‹ã€‚
      */
     void removeEventListenersForType(EventListener::Type listenerType);
 
     /** @~english Removes all listeners which are associated with the specified target.
      *
-     * @~chinese ÒÆ³ıËùÓĞÓëÖ¸¶¨½ÚµãÏà¹ØÁªµÄ¼àÌıÆ÷
+     * @~chinese ç§»é™¤æ‰€æœ‰ä¸æŒ‡å®šèŠ‚ç‚¹ç›¸å…³è”çš„ç›‘å¬å™¨
      * 
      * @param target @~english A given target node.
-     * @~chinese Ò»¸ö¸ø¶¨µÄÄ¿±ê½Úµã¡£
+     * @~chinese ä¸€ä¸ªç»™å®šçš„ç›®æ ‡èŠ‚ç‚¹ã€‚
      * @param recursive @~english True if remove recursively, the default value is false.
-     * @~chinese ÊÇ·ñµİ¹éÉ¾³ı×Ó½ÚµãµÄ¼àÌıÆ÷¡£Ä¬ÈÏÖµÊÇfalse¡£
+     * @~chinese æ˜¯å¦é€’å½’åˆ é™¤å­èŠ‚ç‚¹çš„ç›‘å¬å™¨ã€‚é»˜è®¤å€¼æ˜¯falseã€‚
      */
     void removeEventListenersForTarget(Node* target, bool recursive = false);
     
     /** @~english Removes all custom listeners with the same event name.
      *
-     * @~chinese É¾³ıËùÓĞµÄÃû³ÆÏàÍ¬µÄ×Ô¶¨ÒåÊÂ¼ş¼àÌıÆ÷¡£
+     * @~chinese åˆ é™¤æ‰€æœ‰çš„åç§°ç›¸åŒçš„è‡ªå®šä¹‰äº‹ä»¶ç›‘å¬å™¨ã€‚
      * 
      * @param customEventName @~english A given event listener name which needs to be removed.
-     * @~chinese ¸ø¶¨Ò»¸öĞèÒªÉ¾³ıµÄÊÂ¼ş¼àÌıÆ÷Ãû³Æ,¡£
+     * @~chinese ç»™å®šä¸€ä¸ªéœ€è¦åˆ é™¤çš„äº‹ä»¶ç›‘å¬å™¨åç§°,ã€‚
      */
     void removeCustomEventListeners(const std::string& customEventName);
 
     /** @~english Removes all event listeners.
-     * @~chinese É¾³ıËùÓĞµÄÊÂ¼ş¼àÌıÆ÷¡£
+     * @~chinese åˆ é™¤æ‰€æœ‰çš„äº‹ä»¶ç›‘å¬å™¨ã€‚
      */
     void removeAllEventListeners();
 
@@ -160,23 +160,23 @@ public:
     
     /** @~english Pauses all listeners which are associated the specified target.
      *
-     * @~chinese ÔİÍ£ËùÓĞÓëÖ¸¶¨½ÚµãÏà¹ØÁªµÄ¼àÌıÆ÷
+     * @~chinese æš‚åœæ‰€æœ‰ä¸æŒ‡å®šèŠ‚ç‚¹ç›¸å…³è”çš„ç›‘å¬å™¨
      * 
      * @param target @~english A given target node.
-     * @~chinese Ò»¸ö¸ø¶¨µÄÄ¿±ê½Úµã¡£
+     * @~chinese ä¸€ä¸ªç»™å®šçš„ç›®æ ‡èŠ‚ç‚¹ã€‚
      * @param recursive @~english True if pause recursively, the default value is false.
-     * @~chinese ÊÇ·ñµİ¹éÔİÍ£×Ó½ÚµãµÄ¼àÌıÆ÷,Ä¬ÈÏÖµÊÇfalse¡£
+     * @~chinese æ˜¯å¦é€’å½’æš‚åœå­èŠ‚ç‚¹çš„ç›‘å¬å™¨,é»˜è®¤å€¼æ˜¯falseã€‚
      */
     void pauseEventListenersForTarget(Node* target, bool recursive = false);
     
     /** @~english Resumes all listeners which are associated the specified target.
      *
-     * @~chinese »Ø¸´ËùÓĞÓëÖ¸¶¨½ÚµãÏà¹ØÁªµÄ¼àÌıÆ÷
+     * @~chinese å›å¤æ‰€æœ‰ä¸æŒ‡å®šèŠ‚ç‚¹ç›¸å…³è”çš„ç›‘å¬å™¨
      * 
      * @param target @~english A given target node.
-     * @~chinese Ò»¸ö¸ø¶¨µÄÄ¿±ê½Úµã¡£
+     * @~chinese ä¸€ä¸ªç»™å®šçš„ç›®æ ‡èŠ‚ç‚¹ã€‚
      * @param recursive @~english True if resume recursively, the default value is false.
-     * @~chinese ÊÇ·ñµİ¹é»Ö¸´×Ó½ÚµãµÄ¼àÌıÆ÷,Ä¬ÈÏÖµÊÇfalse¡£
+     * @~chinese æ˜¯å¦é€’å½’æ¢å¤å­èŠ‚ç‚¹çš„ç›‘å¬å™¨,é»˜è®¤å€¼æ˜¯falseã€‚
      */
     void resumeEventListenersForTarget(Node* target, bool recursive = false);
     
@@ -184,30 +184,30 @@ public:
     
     /** @~english Sets listener's priority with fixed value.
      * 
-     * @~chinese ÉèÖÃ¼àÌıÆ÷µÄÓÅÏÈ¼¶Îª¹Ì¶¨Öµ¡£
+     * @~chinese è®¾ç½®ç›‘å¬å™¨çš„ä¼˜å…ˆçº§ä¸ºå›ºå®šå€¼ã€‚
      * 
      * @param listener @~english A given listener.
-     * @~chinese Ò»¸ö¸ø¶¨µÄ¼àÌıÆ÷¡£
+     * @~chinese ä¸€ä¸ªç»™å®šçš„ç›‘å¬å™¨ã€‚
      * @param fixedPriority @~english The fixed priority value.
-     * @~chinese ¹Ì¶¨ÓÅÏÈ¼¶¡£
+     * @~chinese å›ºå®šä¼˜å…ˆçº§ã€‚
      */
     void setPriority(EventListener* listener, int fixedPriority);
 
     /** @~english Whether to enable dispatching events.
      *
-     * @~chinese ÊÇ·ñÆôÓÃÅÉ·¢Æ÷¡£
+     * @~chinese æ˜¯å¦å¯ç”¨æ´¾å‘å™¨ã€‚
      * 
      * @param isEnabled  @~english True if enable dispatching events.
-     * @~chinese Èç¹ûÎªtrue£¬Ôò¿ªÆôÅÉ·¢Æ÷¡£
+     * @~chinese å¦‚æœä¸ºtrueï¼Œåˆ™å¼€å¯æ´¾å‘å™¨ã€‚
      */
     void setEnabled(bool isEnabled);
 
     /** @~english Checks whether dispatching events is enabled.
      *
-     * @~chinese ¼ì²éÊÇ·ñÆôÓÃÁËÅÉ·¢Æ÷¡£
+     * @~chinese æ£€æŸ¥æ˜¯å¦å¯ç”¨äº†æ´¾å‘å™¨ã€‚
      * 
      * @return @~english True if dispatching events is enabled.
-     * @~chinese Èç¹ûÎªtrue£¬Ôò¿ªÆôÅÉ·¢Æ÷¡£
+     * @~chinese å¦‚æœä¸ºtrueï¼Œåˆ™å¼€å¯æ´¾å‘å™¨ã€‚
      */
     bool isEnabled() const;
 
@@ -217,34 +217,34 @@ public:
      *  Also removes all EventListeners marked for deletion from the
      *  event dispatcher list.
      *
-     * @~chinese ÊÂ¼ş·Ö·¢¡£
-     * »¹ÒÆ³ıÔÚÊÂ¼ş·Ö·¢ÁĞ±íÖĞËùÓĞ±ê¼ÇÎªÉ¾³ıµÄÊÂ¼ş¼àÌıÆ÷
+     * @~chinese äº‹ä»¶åˆ†å‘ã€‚
+     * è¿˜ç§»é™¤åœ¨äº‹ä»¶åˆ†å‘åˆ—è¡¨ä¸­æ‰€æœ‰æ ‡è®°ä¸ºåˆ é™¤çš„äº‹ä»¶ç›‘å¬å™¨
      * 
      * 
      * @param event @~english The event needs to be dispatched.
-     * @~chinese ĞèÒª·Ö·¢µÄÊÂ¼ş¡£
+     * @~chinese éœ€è¦åˆ†å‘çš„äº‹ä»¶ã€‚
      */
     void dispatchEvent(Event* event);
 
     /** @~english Dispatches a Custom Event with a event name an optional user data.
      *
-     * @~chinese ·Ö·¢Ò»¸öÖ¸¶¨ÊÂ¼şÃû³ÆºÍ¿ÉÑ¡ÓÃ»§Êı¾İµÄ×Ô¶¨ÒåÊÂ¼ş¡£
+     * @~chinese åˆ†å‘ä¸€ä¸ªæŒ‡å®šäº‹ä»¶åç§°å’Œå¯é€‰ç”¨æˆ·æ•°æ®çš„è‡ªå®šä¹‰äº‹ä»¶ã€‚
      * 
      * @param eventName @~english The name of the event which needs to be dispatched.
-     * @~chinese ĞèÒªÅÉ·¢µÄÊÂ¼şÃû³Æ,¡£
+     * @~chinese éœ€è¦æ´¾å‘çš„äº‹ä»¶åç§°,ã€‚
      * @param optionalUserData @~english The optional user data, it's a void*, the default value is nullptr.
-     * @~chinese ¿ÉÑ¡µÄÓÃ»§Êı¾İ,ÀàĞÍÊÇvoid * ,¿ÉÒÔ×ÔĞĞ×ª»»¡£Ä¬ÈÏÖµÊÇnullptr
+     * @~chinese å¯é€‰çš„ç”¨æˆ·æ•°æ®,ç±»å‹æ˜¯void * ,å¯ä»¥è‡ªè¡Œè½¬æ¢ã€‚é»˜è®¤å€¼æ˜¯nullptr
      */
     void dispatchCustomEvent(const std::string &eventName, void *optionalUserData = nullptr);
 
     /////////////////////////////////////////////
     
     /** @~english Constructor of EventDispatcher.
-     * @~chinese EventDispatcherµÄ¹¹Ôìº¯Êı¡£
+     * @~chinese EventDispatcherçš„æ„é€ å‡½æ•°ã€‚
      */
     EventDispatcher();
     /** @~english Destructor of EventDispatcher.
-     * @~chinese EventDispatcherµÄÎö¹¹º¯Êı¡£
+     * @~chinese EventDispatcherçš„ææ„å‡½æ•°ã€‚
      */
     ~EventDispatcher();
 
@@ -254,8 +254,8 @@ public:
      * To help track down event listener issues in debug builds.
      * Verifies that the node has no event listeners associated with it when destroyed.
      * @~chinese 
-     * Õâ¸öº¯Êı°ïÖúÔÚµ÷ÊÔ°æ±¾ÖĞ¸ú×Ùµ÷ÊÔÊÂ¼ş¼àÌıÆ÷µÄÏà¹ØÎÊÌâ¡£
-     * ÑéÖ¤¸ø¶¨½ÚµãÔÚÏú»ÙÊ±Ã»ÓĞÊÂ¼ş¼àÌıÆ÷ÓëÆäÏà¹ØÁª.
+     * è¿™ä¸ªå‡½æ•°å¸®åŠ©åœ¨è°ƒè¯•ç‰ˆæœ¬ä¸­è·Ÿè¸ªè°ƒè¯•äº‹ä»¶ç›‘å¬å™¨çš„ç›¸å…³é—®é¢˜ã€‚
+     * éªŒè¯ç»™å®šèŠ‚ç‚¹åœ¨é”€æ¯æ—¶æ²¡æœ‰äº‹ä»¶ç›‘å¬å™¨ä¸å…¶ç›¸å…³è”.
      */
     void debugCheckNodeHasNoEventListenersOnDestruction(Node* node);
     
@@ -264,13 +264,13 @@ public:
 protected:
     friend class Node;
     
-    /** @~english Sets the dirty flag for a node.  @~chinese ÉèÖÃ½ÚµãµÄÔà±ê¼Ç¡£*/
+    /** @~english Sets the dirty flag for a node.  @~chinese è®¾ç½®èŠ‚ç‚¹çš„è„æ ‡è®°ã€‚*/
     void setDirtyForNode(Node* node);
     
     /**@~english
      *  The vector to store event listeners with scene graph based priority and fixed priority.
      * @~chinese 
-     * ¸ÃÈİÆ÷ÓÃÀ´´æ´¢´øÓĞ»ùÓÚ³¡¾°Í¼ÓÅÏÈ¼¶ºÍ¹Ì¶¨ÓÅÏÈ¼¶µÄÊÂ¼ş¼àÌıÆ÷
+     * è¯¥å®¹å™¨ç”¨æ¥å­˜å‚¨å¸¦æœ‰åŸºäºåœºæ™¯å›¾ä¼˜å…ˆçº§å’Œå›ºå®šä¼˜å…ˆçº§çš„äº‹ä»¶ç›‘å¬å™¨
      */
     class EventListenerVector
     {
@@ -296,58 +296,58 @@ protected:
     };
     
     /** @~english Adds an event listener with item
-     * @~chinese ÎªÄ³Ò»ÏîÌí¼ÓÒ»¸öÊÂ¼ş¼àÌıÆ÷
+     * @~chinese ä¸ºæŸä¸€é¡¹æ·»åŠ ä¸€ä¸ªäº‹ä»¶ç›‘å¬å™¨
      *  @note @~english if it is dispatching event, the added operation will be delayed to the end of current dispatch
-     * @~chinese Èç¹ûÊÇÕıÔÚ·Ö·¢ÖĞµÄÊÂ¼ş£¬Ìí¼Ó²Ù×÷»á±»ÑÓ³Ùµ½µ±Ç°·Ö·¢²Ù×÷µÄ½áÊø
+     * @~chinese å¦‚æœæ˜¯æ­£åœ¨åˆ†å‘ä¸­çš„äº‹ä»¶ï¼Œæ·»åŠ æ“ä½œä¼šè¢«å»¶è¿Ÿåˆ°å½“å‰åˆ†å‘æ“ä½œçš„ç»“æŸ
      *  @see forceAddEventListener
      */
     void addEventListener(EventListener* listener);
     
     /** @~english Force adding an event listener
-     * @~chinese Ç¿ÖÆÌí¼ÓÒ»¸öÊÂ¼ş¼àÌıÆ÷
+     * @~chinese å¼ºåˆ¶æ·»åŠ ä¸€ä¸ªäº‹ä»¶ç›‘å¬å™¨
      *  @note @~english force add an event listener which will ignore whether it's in dispatching.
-     * @~chinese Ç¿ÖÆÌí¼ÓÒ»¸öÊÂ¼ş¼àÌıÆ÷£¬¸ÃÊÂ¼şÎŞÂÛÊÇ·ñÔÚµ÷¶È¹ı³ÌÖĞ¶¼»áºöÂÔ
+     * @~chinese å¼ºåˆ¶æ·»åŠ ä¸€ä¸ªäº‹ä»¶ç›‘å¬å™¨ï¼Œè¯¥äº‹ä»¶æ— è®ºæ˜¯å¦åœ¨è°ƒåº¦è¿‡ç¨‹ä¸­éƒ½ä¼šå¿½ç•¥
      *  @see addEventListener
      */
     void forceAddEventListener(EventListener* listener);
     
-    /** @~english Gets event the listener list for the event listener type.  @~chinese »ñÈ¡Ö¸¶¨¼àÌıÆ÷ÀàĞÍµÄÊÂ¼ş¼àÌıÆ÷ÁĞ±í¡£*/
+    /** @~english Gets event the listener list for the event listener type.  @~chinese è·å–æŒ‡å®šç›‘å¬å™¨ç±»å‹çš„äº‹ä»¶ç›‘å¬å™¨åˆ—è¡¨ã€‚*/
     EventListenerVector* getListeners(const EventListener::ListenerID& listenerID);
     
-    /** @~english Update dirty flag  @~chinese ¸üĞÂ'Ôà±ê¼Ç'*/
+    /** @~english Update dirty flag  @~chinese æ›´æ–°'è„æ ‡è®°'*/
     void updateDirtyFlagForSceneGraph();
     
-    /** @~english Removes all listeners with the same event listener ID  @~chinese ÒÆ³ıËùÓĞÊ¹ÓÃÏàÍ¬ÊÂ¼ş¼àÌıÆ÷IDµÄ¼àÌıÆ÷*/
+    /** @~english Removes all listeners with the same event listener ID  @~chinese ç§»é™¤æ‰€æœ‰ä½¿ç”¨ç›¸åŒäº‹ä»¶ç›‘å¬å™¨IDçš„ç›‘å¬å™¨*/
     void removeEventListenersForListenerID(const EventListener::ListenerID& listenerID);
     
-    /** @~english Sort event listener  @~chinese ÊÂ¼ş¼àÌıÆ÷ÅÅĞò*/
+    /** @~english Sort event listener  @~chinese äº‹ä»¶ç›‘å¬å™¨æ’åº*/
     void sortEventListeners(const EventListener::ListenerID& listenerID);
     
-    /** @~english Sorts the listeners of specified type by scene graph priority  @~chinese Í¨¹ı³¡¾°Í¼µÄÓÅÏÈ¼¶ÅÅĞòÖ¸¶¨ÀàĞÍµÄ¼àÌıÆ÷*/
+    /** @~english Sorts the listeners of specified type by scene graph priority  @~chinese é€šè¿‡åœºæ™¯å›¾çš„ä¼˜å…ˆçº§æ’åºæŒ‡å®šç±»å‹çš„ç›‘å¬å™¨*/
     void sortEventListenersOfSceneGraphPriority(const EventListener::ListenerID& listenerID, Node* rootNode);
     
-    /** @~english Sorts the listeners of specified type by fixed priority  @~chinese Í¨¹ı¹Ì¶¨ÓÅÏÈ¼¶ÅÅĞòÖ¸¶¨ÀàĞÍµÄ¼àÌıÆ÷*/
+    /** @~english Sorts the listeners of specified type by fixed priority  @~chinese é€šè¿‡å›ºå®šä¼˜å…ˆçº§æ’åºæŒ‡å®šç±»å‹çš„ç›‘å¬å™¨*/
     void sortEventListenersOfFixedPriority(const EventListener::ListenerID& listenerID);
     
     /** @~english Updates all listeners
      *  1) Removes all listener items that have been marked as 'removed' when dispatching event.
      *  2) Adds all listener items that have been marked as 'added' when dispatching event.
-     * @~chinese ¸üĞÂËùÓĞ¼àÌıÆ÷
-     * 1)ÔÚÊÂ¼ş·Ö·¢¹ı³ÌÖĞÒÆ³ıËùÓĞÒÑ¾­±ê¼ÇÎª'ÒÆ³ı'µÄ¼àÌıÆ÷Ïî.
-     * 2)ÔÚÊÂ¼ş·Ö·¢¹ı³ÌÖĞÌí¼ÓËùÓĞÒÑ¾­±ê¼ÇÎª'Ìí¼Ó'µÄ¼àÌıÆ÷Ïî.
+     * @~chinese æ›´æ–°æ‰€æœ‰ç›‘å¬å™¨
+     * 1)åœ¨äº‹ä»¶åˆ†å‘è¿‡ç¨‹ä¸­ç§»é™¤æ‰€æœ‰å·²ç»æ ‡è®°ä¸º'ç§»é™¤'çš„ç›‘å¬å™¨é¡¹.
+     * 2)åœ¨äº‹ä»¶åˆ†å‘è¿‡ç¨‹ä¸­æ·»åŠ æ‰€æœ‰å·²ç»æ ‡è®°ä¸º'æ·»åŠ 'çš„ç›‘å¬å™¨é¡¹.
      */
     void updateListeners(Event* event);
 
-    /** @~english Touch event needs to be processed different with other events since it needs support ALL_AT_ONCE and ONE_BY_NONE mode.  @~chinese ´¥ÃşÊÂ¼şµÄ´¦ÀíÓëÆäËüÊÂ¼ş²»Í¬£¬ÒòÎª´¥ÃşÊÂ¼şĞèÒªÖ§³ÖALL_AT_ONCEºÍONE_BY_NONEÄ£Ê½*/
+    /** @~english Touch event needs to be processed different with other events since it needs support ALL_AT_ONCE and ONE_BY_NONE mode.  @~chinese è§¦æ‘¸äº‹ä»¶çš„å¤„ç†ä¸å…¶å®ƒäº‹ä»¶ä¸åŒï¼Œå› ä¸ºè§¦æ‘¸äº‹ä»¶éœ€è¦æ”¯æŒALL_AT_ONCEå’ŒONE_BY_NONEæ¨¡å¼*/
     void dispatchTouchEvent(EventTouch* event);
     
-    /** @~english Associates node with event listener  @~chinese ¹ØÁª½ÚµãºÍÊÂ¼ş¼àÌıÆ÷*/
+    /** @~english Associates node with event listener  @~chinese å…³è”èŠ‚ç‚¹å’Œäº‹ä»¶ç›‘å¬å™¨*/
     void associateNodeAndEventListener(Node* node, EventListener* listener);
     
-    /** @~english Dissociates node with event listener  @~chinese ·ÖÀë½ÚµãºÍÊÂ¼ş¼àÌıÆ÷*/
+    /** @~english Dissociates node with event listener  @~chinese åˆ†ç¦»èŠ‚ç‚¹å’Œäº‹ä»¶ç›‘å¬å™¨*/
     void dissociateNodeAndEventListener(Node* node, EventListener* listener);
     
-    /** @~english Dispatches event to listeners with a specified listener type  @~chinese ·Ö·¢ÊÂ¼ş¸ø´øÓĞÖ¸¶¨¼àÌıÆ÷ÀàĞÍµÄ¼àÌıÆ÷*/
+    /** @~english Dispatches event to listeners with a specified listener type  @~chinese åˆ†å‘äº‹ä»¶ç»™å¸¦æœ‰æŒ‡å®šç›‘å¬å™¨ç±»å‹çš„ç›‘å¬å™¨*/
     void dispatchEventToListeners(EventListenerVector* listeners, const std::function<bool(EventListener*)>& onEvent);
     
     /** Special version dispatchEventToListeners for touch/mouse event.
@@ -360,7 +360,7 @@ protected:
      */
     void dispatchTouchEventToListeners(EventListenerVector* listeners, const std::function<bool(EventListener*)>& onEvent);
     
-    /** @~english Priority dirty flag @~chinese ´øÓÅÏÈ¼¶µÄ'Ôà±ê¼Ç'(dirty flag)*/
+    /** @~english Priority dirty flag @~chinese å¸¦ä¼˜å…ˆçº§çš„'è„æ ‡è®°'(dirty flag)*/
     enum class DirtyFlag
     {
         NONE = 0,
@@ -369,43 +369,43 @@ protected:
         ALL = FIXED_PRIORITY | SCENE_GRAPH_PRIORITY
     };
     
-    /** @~english Sets the dirty flag for a specified listener ID  @~chinese ÎªÒ»¸öÖ¸¶¨µÄ¼àÌıÆ÷IDÉèÖÃÒ»¸ö'Ôà±êÖ¾'(dirty flag) */
+    /** @~english Sets the dirty flag for a specified listener ID  @~chinese ä¸ºä¸€ä¸ªæŒ‡å®šçš„ç›‘å¬å™¨IDè®¾ç½®ä¸€ä¸ª'è„æ ‡å¿—'(dirty flag) */
     void setDirty(const EventListener::ListenerID& listenerID, DirtyFlag flag);
     
-    /** @~english Walks though scene graph to get the draw order for each node, it's called before sorting event listener with scene graph priority  @~chinese ±éÀú³¡¾°Í¼»ñÈ¡Ã¿Ò»¸ö½ÚµãµÄ»æÖÆË³Ğò£¬¸Ãº¯ÊıÔÚÒÔ³¡¾°Í¼ÓÅÏÈ¼¶ÅÅĞòµÄÊÂ¼ş¼àÌıÆ÷Ö®Ç°±»µ÷ÓÃ*/
+    /** @~english Walks though scene graph to get the draw order for each node, it's called before sorting event listener with scene graph priority  @~chinese éå†åœºæ™¯å›¾è·å–æ¯ä¸€ä¸ªèŠ‚ç‚¹çš„ç»˜åˆ¶é¡ºåºï¼Œè¯¥å‡½æ•°åœ¨ä»¥åœºæ™¯å›¾ä¼˜å…ˆçº§æ’åºçš„äº‹ä»¶ç›‘å¬å™¨ä¹‹å‰è¢«è°ƒç”¨*/
     void visitTarget(Node* node, bool isRootNode);
 
     /** Remove all listeners in _toRemoveListeners list and cleanup */
     void cleanToRemovedListeners();
 
-    /** @~english Listeners map  @~chinese ¼àÌıÆ÷Ó³Éä±í*/
+    /** @~english Listeners map  @~chinese ç›‘å¬å™¨æ˜ å°„è¡¨*/
     std::unordered_map<EventListener::ListenerID, EventListenerVector*> _listenerMap;
     
-    /** @~english The map of dirty flag  @~chinese Ôà±êÖ¾'(dirty flag)Ó³Éä±í*/
+    /** @~english The map of dirty flag  @~chinese è„æ ‡å¿—'(dirty flag)æ˜ å°„è¡¨*/
     std::unordered_map<EventListener::ListenerID, DirtyFlag> _priorityDirtyFlagMap;
     
-    /** @~english The map of node and event listeners  @~chinese ½ÚµãºÍÊÂ¼ş¼àÌıÆ÷µÄÓ³Éä±í*/
+    /** @~english The map of node and event listeners  @~chinese èŠ‚ç‚¹å’Œäº‹ä»¶ç›‘å¬å™¨çš„æ˜ å°„è¡¨*/
     std::unordered_map<Node*, std::vector<EventListener*>*> _nodeListenersMap;
     
-    /** @~english The map of node and its event priority  @~chinese ½ÚµãºÍËüµÄÊÂ¼şÓÅÏÈ¼¶Ó³Éä±í*/
+    /** @~english The map of node and its event priority  @~chinese èŠ‚ç‚¹å’Œå®ƒçš„äº‹ä»¶ä¼˜å…ˆçº§æ˜ å°„è¡¨*/
     std::unordered_map<Node*, int> _nodePriorityMap;
     
-    /** @~english key: Global Z Order, value: Sorted Nodes  @~chinese key: È«¾ÖZÖá´ÎĞò, value: ÅÅºÃĞòµÄ½Úµã*/
+    /** @~english key: Global Z Order, value: Sorted Nodes  @~chinese key: å…¨å±€Zè½´æ¬¡åº, value: æ’å¥½åºçš„èŠ‚ç‚¹*/
     std::unordered_map<float, std::vector<Node*>> _globalZOrderNodeMap;
     
-    /** @~english The listeners to be added after dispatching event  @~chinese ÔÚÊÂ¼ş·Ö·¢ºóĞèÒª±»Ìí¼ÓµÄ¼àÌıÆ÷*/
+    /** @~english The listeners to be added after dispatching event  @~chinese åœ¨äº‹ä»¶åˆ†å‘åéœ€è¦è¢«æ·»åŠ çš„ç›‘å¬å™¨*/
     std::vector<EventListener*> _toAddedListeners;
 
     /** The listeners to be removed after dispatching event */
     std::vector<EventListener*> _toRemovedListeners;
 
-    /** @~english The nodes were associated with scene graph based priority listeners  @~chinese ÕâĞ©½ÚµãÓë»ùÓÚ³¡¾°Í¼ÓÅÏÈ¼¶µÄ¼àÌıÆ÷Ïà¹ØÁª*/
+    /** @~english The nodes were associated with scene graph based priority listeners  @~chinese è¿™äº›èŠ‚ç‚¹ä¸åŸºäºåœºæ™¯å›¾ä¼˜å…ˆçº§çš„ç›‘å¬å™¨ç›¸å…³è”*/
     std::set<Node*> _dirtyNodes;
     
-    /** @~english Whether the dispatcher is dispatching event  @~chinese µ÷¶È³ÌĞòÊÇ·ñÕıÔÚ½øĞĞÊÂ¼ş·Ö·¢*/
+    /** @~english Whether the dispatcher is dispatching event  @~chinese è°ƒåº¦ç¨‹åºæ˜¯å¦æ­£åœ¨è¿›è¡Œäº‹ä»¶åˆ†å‘*/
     int _inDispatch;
     
-    /** @~english Whether to enable dispatching event  @~chinese ÊÇ·ñÒªÊ¹·Ö·¢ÊÂ¼ş¿ÉÓÃ*/
+    /** @~english Whether to enable dispatching event  @~chinese æ˜¯å¦è¦ä½¿åˆ†å‘äº‹ä»¶å¯ç”¨*/
     bool _isEnabled;
     
     int _nodePriorityIndex;

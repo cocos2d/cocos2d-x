@@ -49,7 +49,7 @@ class PhysicsWorld;
 /**
 @class PhysicsJoint
  * @brief @~english An PhysicsJoint object connects two physics bodies together.
- * @~chinese Ò»¸öPhysicsJoint(ÎïÀí¹Ø½Ú)¶ÔÏóÓÃÓÚ½«Á½¸ö¸ÕÌåÁ¬½ÓÔÚÒ»Æğ¡£
+ * @~chinese ä¸€ä¸ªPhysicsJoint(ç‰©ç†å…³èŠ‚)å¯¹è±¡ç”¨äºå°†ä¸¤ä¸ªåˆšä½“è¿æ¥åœ¨ä¸€èµ·ã€‚
  */
 class CC_DLL PhysicsJoint
 {
@@ -60,27 +60,27 @@ protected:
 public:
     /**
     @~english Get the first physics body a connected to this joint. 
-    @~chinese µÃµ½Á¬½Óµ½Õâ¸ö¹Ø½ÚµÄµÚÒ»¸öÎïÀí¸ÕÌå¡£
+    @~chinese å¾—åˆ°è¿æ¥åˆ°è¿™ä¸ªå…³èŠ‚çš„ç¬¬ä¸€ä¸ªç‰©ç†åˆšä½“ã€‚
     */
     inline PhysicsBody* getBodyA() const { return _bodyA; }
     
     /**
     @~english Get the second physics body b connected to this joint. 
-    @~chinese µÃµ½Á¬½Óµ½Õâ¸ö¹Ø½ÚµÄµÚ¶ş¸öÎïÀí¸ÕÌå¡£
+    @~chinese å¾—åˆ°è¿æ¥åˆ°è¿™ä¸ªå…³èŠ‚çš„ç¬¬äºŒä¸ªç‰©ç†åˆšä½“ã€‚
     */
     inline PhysicsBody* getBodyB() const { return _bodyB; }
 
-    /**@~english Get the physics world. @~chinese »ñÈ¡ÎïÀíÊÀ½ç¡£*/
+    /**@~english Get the physics world. @~chinese è·å–ç‰©ç†ä¸–ç•Œã€‚*/
     inline PhysicsWorld* getWorld() const { return _world; }
     
     /**@~english
      * Get this joint's tag.
      *
      * @~chinese 
-     * µÃµ½¹Ø½ÚµÄtag¡£
+     * å¾—åˆ°å…³èŠ‚çš„tagã€‚
      * 
      * @return @~english An interger number.
-     * @~chinese tagÖµ¡£
+     * @~chinese tagå€¼ã€‚
      */
     inline int getTag() const { return _tag; }
     
@@ -88,32 +88,32 @@ public:
      * Set this joint's tag.
      *
      * @~chinese 
-     * ÉèÖÃtag¡£
+     * è®¾ç½®tagã€‚
      * 
      * @param tag @~english An interger number that identifies a PhysicsJoint.
-     * @~chinese tagµÄÖµ¡£
+     * @~chinese tagçš„å€¼ã€‚
      */
     inline void setTag(int tag) { _tag = tag; }
     
-    /** @~english Determines if the joint is enable.  @~chinese ¹Ø½ÚÊÇ·ñ´¦ÓÚ¿ªÆô×´Ì¬¡£*/
+    /** @~english Determines if the joint is enable.  @~chinese å…³èŠ‚æ˜¯å¦å¤„äºå¼€å¯çŠ¶æ€ã€‚*/
     inline bool isEnabled() const { return _enable; }
 
-    /** @~english Enable or disable the joint. @~chinese ÆôÓÃ»òÕß½ûÓÃ¹Ø½Ú¡£*/
+    /** @~english Enable or disable the joint. @~chinese å¯ç”¨æˆ–è€…ç¦ç”¨å…³èŠ‚ã€‚*/
     void setEnable(bool enable);
     
-    /** @~english Determines if the collsion is enable.  @~chinese Åö×²ÌåÊÇ·ñÆôÓÃ¡£*/
+    /** @~english Determines if the collsion is enable.  @~chinese ç¢°æ’ä½“æ˜¯å¦å¯ç”¨ã€‚*/
     inline bool isCollisionEnabled() const { return _collisionEnable; }
     
-    /** @~english Enable or disable collision. @~chinese ÆôÓÃ»òÕß½ûÓÃÅö×²Ìå¡£*/
+    /** @~english Enable or disable collision. @~chinese å¯ç”¨æˆ–è€…ç¦ç”¨ç¢°æ’ä½“ã€‚*/
     void setCollisionEnable(bool enable);
     
-    /** @~english Remove the joint from the world.  @~chinese É¾³ı¹Ø½Ú¡£*/
+    /** @~english Remove the joint from the world.  @~chinese åˆ é™¤å…³èŠ‚ã€‚*/
     void removeFormWorld();
 
-    /** @~english Set the max force between two bodies.  @~chinese ÉèÖÃÁ½¸öÎïÀí¸ÕÌåÖ®¼äµÄ×î´óÁ¦Á¿¡£*/
+    /** @~english Set the max force between two bodies.  @~chinese è®¾ç½®ä¸¤ä¸ªç‰©ç†åˆšä½“ä¹‹é—´çš„æœ€å¤§åŠ›é‡ã€‚*/
     void setMaxForce(float force);
     
-    /** @~english Get the max force setting.  @~chinese µÃµ½ÎïÀí¸ÕÌåÖ®¼äµÄ×î´óÁ¦Á¿¡£*/
+    /** @~english Get the max force setting.  @~chinese å¾—åˆ°ç‰©ç†åˆšä½“ä¹‹é—´çš„æœ€å¤§åŠ›é‡ã€‚*/
     float getMaxForce() const { return _maxForce; }
 
 protected:
@@ -121,7 +121,7 @@ protected:
 
     bool initJoint();
     
-    /** @~english Create constraints for this type joint  @~chinese ÎªÕâÀàÁªºÏ´´½¨Ô¼Êø*/
+    /** @~english Create constraints for this type joint  @~chinese ä¸ºè¿™ç±»è”åˆåˆ›å»ºçº¦æŸ*/
     virtual bool createConstraints() { return false; }
 
     std::vector<cpConstraint*> _cpConstraints;
@@ -146,23 +146,23 @@ protected:
 @class PhysicsJointFixed
 * @brief 
 @~english A fixed joint fuses the two bodies together at a reference point. Fixed joints are useful for creating complex shapes that can be broken apart later.
- @~chinese ¹Ì¶¨¹Ø½Ú°ÑÁ½¸öÎïÀí¸ÕÌåÁ¬½Óµ½Ò»Æğ¡£Ëü¿ÉÒÔÓÃÓÚ´´½¨¸´ÔÓµÄĞÎ×´£¬ÕâĞ©ĞÎ×´ÔÚºóÃæ¿ÉÒÔ±»ÆÆ»·³É¶ÀÁ¢µÄ¸ÕÌå¡£
+ @~chinese å›ºå®šå…³èŠ‚æŠŠä¸¤ä¸ªç‰©ç†åˆšä½“è¿æ¥åˆ°ä¸€èµ·ã€‚å®ƒå¯ä»¥ç”¨äºåˆ›å»ºå¤æ‚çš„å½¢çŠ¶ï¼Œè¿™äº›å½¢çŠ¶åœ¨åé¢å¯ä»¥è¢«ç ´ç¯æˆç‹¬ç«‹çš„åˆšä½“ã€‚
 */
 class CC_DLL PhysicsJointFixed : public PhysicsJoint
 {
 public:
     /** @~english Create a fixed joint.
      
-     * @~chinese ´´½¨Ò»¸ö¹Ì¶¨¹Ø½Ú¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªå›ºå®šå…³èŠ‚ã€‚
      * 
      @param a @~english A is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“ã€‚
      @param b @~english B is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“ã€‚
      @param anchr @~english It's the pivot position.
-     * @~chinese Á¬½ÓµãµÄÎ»ÖÃ¡£
+     * @~chinese è¿æ¥ç‚¹çš„ä½ç½®ã€‚
      @return @~english A object pointer.
-     * @~chinese ¹Ì¶¨ÎïÌå¹Ø½Ú¡£
+     * @~chinese å›ºå®šç‰©ä½“å…³èŠ‚ã€‚
      */
     static PhysicsJointFixed* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr);
 
@@ -178,69 +178,69 @@ protected:
 /**
 @class PhysicsJointLimit
 * @brief @~english A limit joint imposes a maximum distance between the two bodies, as if they were connected by a rope.
- * @~chinese PhysicsJointLimitÏŞÖÆÁËÁ½¸öÎïÌåÖ®¼äµÄ×î´ó¾àÀë£¬¾ÍºÃÏñËûÃÇ±»Ò»¸ùÉş×ÓÁ¬½ÓÆğÀ´Ò»Ñù¡£
+ * @~chinese PhysicsJointLimité™åˆ¶äº†ä¸¤ä¸ªç‰©ä½“ä¹‹é—´çš„æœ€å¤§è·ç¦»ï¼Œå°±å¥½åƒä»–ä»¬è¢«ä¸€æ ¹ç»³å­è¿æ¥èµ·æ¥ä¸€æ ·ã€‚
 */
 class CC_DLL PhysicsJointLimit : public PhysicsJoint
 {
 public:
     /** @~english Create a limit joint.
      
-     * @~chinese ´´½¨Ò»¸öPhysicsJointLimit¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªPhysicsJointLimitã€‚
      * 
      @param a @~english A is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“ã€‚
      @param b @~english B is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“ã€‚
      @param anchr1 @~english Anchr1 is the anchor point on body a.
-     * @~chinese Á¬½ÓµÚÒ»¸ö¸ÕÌåµÄµã¡£
+     * @~chinese è¿æ¥ç¬¬ä¸€ä¸ªåˆšä½“çš„ç‚¹ã€‚
      @param anchr2 @~english Anchr2 is the anchor point on body b.
-     * @~chinese Á¬½ÓµÚ¶ş¸ö¸ÕÌåµÄµã¡£
+     * @~chinese è¿æ¥ç¬¬äºŒä¸ªåˆšä½“çš„ç‚¹ã€‚
      @return @~english A object pointer.
-     * @~chinese ·µ»ØPhysicsJointLimit¡£
+     * @~chinese è¿”å›PhysicsJointLimitã€‚
      */
     static PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2);
     
     /** @~english Create a limit joint.
      
-     * @~chinese ´´½¨Ò»¸öPhysicsJointLimit¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªPhysicsJointLimitã€‚
      * 
      @param a @~english A is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“ã€‚
      @param b @~english B is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“ã€‚
      @param anchr1 @~english Anchr1 is the anchor point on body a.
-     * @~chinese Á¬½ÓµÚÒ»¸ö¸ÕÌåµÄµã¡£
+     * @~chinese è¿æ¥ç¬¬ä¸€ä¸ªåˆšä½“çš„ç‚¹ã€‚
      @param anchr2 @~english Anchr2 is the anchor point on body b.
-     * @~chinese Á¬½ÓµÚ¶ş¸ö¸ÕÌåµÄµã¡£
+     * @~chinese è¿æ¥ç¬¬äºŒä¸ªåˆšä½“çš„ç‚¹ã€‚
      @param min @~english Define the allowed min distance of the anchor points.
-     * @~chinese Á½¸öÁ¬½ÓµãµÄ×îĞ¡¾àÀë¡£
+     * @~chinese ä¸¤ä¸ªè¿æ¥ç‚¹çš„æœ€å°è·ç¦»ã€‚
      @param max @~english Define the allowed max distance of the anchor points.
-     * @~chinese Á½¸öÁ¬½ÓµãµÄ×î´ó¾àÀë¡£
+     * @~chinese ä¸¤ä¸ªè¿æ¥ç‚¹çš„æœ€å¤§è·ç¦»ã€‚
      @return @~english A object pointer.
-     * @~chinese ·µ»ØPhysicsJointLimit¡£
+     * @~chinese è¿”å›PhysicsJointLimitã€‚
      */
     static PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2, float min, float max);
 
-    /** @~english Get the anchor point on body a. @~chinese µÃµ½Á¬½ÓµÚÒ»¸ö¸ÕÌåµÄµã¡£*/
+    /** @~english Get the anchor point on body a. @~chinese å¾—åˆ°è¿æ¥ç¬¬ä¸€ä¸ªåˆšä½“çš„ç‚¹ã€‚*/
     Vec2 getAnchr1() const;
     
-    /** @~english Set the anchor point on body a. @~chinese ÉèÖÃÁ¬½ÓµÚÒ»¸ö¸ÕÌåµÄµã¡£*/
+    /** @~english Set the anchor point on body a. @~chinese è®¾ç½®è¿æ¥ç¬¬ä¸€ä¸ªåˆšä½“çš„ç‚¹ã€‚*/
     void setAnchr1(const Vec2& anchr1);
     
-    /** @~english Get the anchor point on body b. @~chinese µÃµ½Á¬½ÓµÚ¶ş¸ö¸ÕÌåµÄµã¡£*/
+    /** @~english Get the anchor point on body b. @~chinese å¾—åˆ°è¿æ¥ç¬¬äºŒä¸ªåˆšä½“çš„ç‚¹ã€‚*/
     Vec2 getAnchr2() const;
     
-    /** @~english Set the anchor point on body b. @~chinese ÉèÖÃÁ¬½ÓµÚ¶ş¸ö¸ÕÌåµÄµã¡£*/
+    /** @~english Set the anchor point on body b. @~chinese è®¾ç½®è¿æ¥ç¬¬äºŒä¸ªåˆšä½“çš„ç‚¹ã€‚*/
     void setAnchr2(const Vec2& anchr2);
     
-    /** @~english Get the allowed min distance of the anchor points. @~chinese µÃµ½Á½¸öÁ¬½ÓµãµÄ×îĞ¡¾àÀë¡£*/
+    /** @~english Get the allowed min distance of the anchor points. @~chinese å¾—åˆ°ä¸¤ä¸ªè¿æ¥ç‚¹çš„æœ€å°è·ç¦»ã€‚*/
     float getMin() const;
-    /** @~english Set the min distance of the anchor points. @~chinese ÉèÖÃÁ½¸öÁ¬½ÓµãµÄ×îĞ¡¾àÀë¡£*/
+    /** @~english Set the min distance of the anchor points. @~chinese è®¾ç½®ä¸¤ä¸ªè¿æ¥ç‚¹çš„æœ€å°è·ç¦»ã€‚*/
     void setMin(float min);
   
-    /** @~english Get the allowed max distance of the anchor points. @~chinese µÃµ½Á½¸öÁ¬½ÓµãµÄ×î´ó¾àÀë¡£*/
+    /** @~english Get the allowed max distance of the anchor points. @~chinese å¾—åˆ°ä¸¤ä¸ªè¿æ¥ç‚¹çš„æœ€å¤§è·ç¦»ã€‚*/
     float getMax() const;
-    /** @~english Set the max distance of the anchor points. @~chinese ÉèÖÃÁ½¸öÁ¬½ÓµãµÄ×î´ó¾àÀë¡£*/
+    /** @~english Set the max distance of the anchor points. @~chinese è®¾ç½®ä¸¤ä¸ªè¿æ¥ç‚¹çš„æœ€å¤§è·ç¦»ã€‚*/
     void setMax(float max);
 
     virtual bool createConstraints() override;
@@ -259,40 +259,40 @@ protected:
 @class PhysicsJointPin
 * @brief 
 @~english A pin joint allows the two bodies to independently rotate around the anchor point as if pinned together.
- * @~chinese PhysicsJointPinÔÊĞíÁ½¸öÎïÌå¶ÀÁ¢Ğı×ª£¬¾ÍºÃÏñËûÃÇ±»¶¤ÔÚÒ»ÆğÒ»Ñù¡£
+ * @~chinese PhysicsJointPinå…è®¸ä¸¤ä¸ªç‰©ä½“ç‹¬ç«‹æ—‹è½¬ï¼Œå°±å¥½åƒä»–ä»¬è¢«é’‰åœ¨ä¸€èµ·ä¸€æ ·ã€‚
 */
 class CC_DLL PhysicsJointPin : public PhysicsJoint
 {
 public:
     /** @~english Create a pin joint.
      
-     * @~chinese ´´½¨Ò»¸öPhysicsJointPin¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªPhysicsJointPinã€‚
      * 
      @param a @~english A is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“ã€‚
      @param b @~english B is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“ã€‚
      @param pivot @~english It's the pivot position.
-     * @~chinese Á¬½ÓµãµÄÎ»ÖÃ¡£
+     * @~chinese è¿æ¥ç‚¹çš„ä½ç½®ã€‚
      @return @~english A object pointer.
-     * @~chinese ·µ»ØPhysicsJointPin¡£
+     * @~chinese è¿”å›PhysicsJointPinã€‚
      */
     static PhysicsJointPin* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& pivot);
 
     /** @~english Create a pin joint.
      
-     * @~chinese ´´½¨Ò»¸öPhysicsJointPin¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªPhysicsJointPinã€‚
      * 
      @param a @~english A is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“ã€‚
      @param b @~english B is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“ã€‚
      @param anchr1 @~english Anchr1 is the anchor point on body a.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌåµÄµã¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“çš„ç‚¹ã€‚
      @param anchr2 @~english Anchr2 is the anchor point on body b.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌåµÄµã¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“çš„ç‚¹ã€‚
      @return @~english A object pointer.
-     * @~chinese ·µ»ØPhysicsJointPin¡£
+     * @~chinese è¿”å›PhysicsJointPinã€‚
      */
     static PhysicsJointPin* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2);
 
@@ -311,31 +311,31 @@ protected:
 @class PhysicsJointDistance
 @brief
 @~english Set the fixed distance with two bodies  
-@~chinese ¸Ã¹Ø½ÚÓÃÓÚÔÚÁ½¸ö¸ÕÌåÖ®¼äÉèÖÃÒ»¸ö¹Ì¶¨¾àÀë¡£
+@~chinese è¯¥å…³èŠ‚ç”¨äºåœ¨ä¸¤ä¸ªåˆšä½“ä¹‹é—´è®¾ç½®ä¸€ä¸ªå›ºå®šè·ç¦»ã€‚
 */
 class CC_DLL PhysicsJointDistance : public PhysicsJoint
 {
 public:
     /** @~english Create a fixed distance joint.
      
-     * @~chinese ´´½¨Ò»¸öPhysicsJointDistance¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªPhysicsJointDistanceã€‚
      * 
      @param a @~english A is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“ã€‚
      @param b @~english B is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“ã€‚
      @param anchr1 @~english Anchr1 is the anchor point on body a.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌåµÄµã¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“çš„ç‚¹ã€‚
      @param anchr2 @~english Anchr2 is the anchor point on body b.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌåµÄµã¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“çš„ç‚¹ã€‚
      @return @~english A object pointer.
-     * @~chinese ·µ»Ø´´½¨Ò»¸öPhysicsJointDistance¡£
+     * @~chinese è¿”å›åˆ›å»ºä¸€ä¸ªPhysicsJointDistanceã€‚
      */
     static PhysicsJointDistance* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2);
 
-    /** @~english Get the distance of the anchor points. @~chinese µÃµ½Á¬½ÓµãÖ®¼äµÄ¾àÀë¡£*/
+    /** @~english Get the distance of the anchor points. @~chinese å¾—åˆ°è¿æ¥ç‚¹ä¹‹é—´çš„è·ç¦»ã€‚*/
     float getDistance() const;
-    /** @~english Set the distance of the anchor points. @~chinese ÉèÖÃÁ¬½ÓµãÖ®¼äµÄ¾àÀë¡£*/
+    /** @~english Set the distance of the anchor points. @~chinese è®¾ç½®è¿æ¥ç‚¹ä¹‹é—´çš„è·ç¦»ã€‚*/
     void setDistance(float distance);
     virtual bool createConstraints() override;
 
@@ -351,60 +351,60 @@ protected:
 @class PhysicsJointSpring
 @brief
 @~english Connecting two physics bodies together with a spring.  
-@~chinese PhysicsJointSpringÓÃÓÚÁ¬½ÓÁ½¸ö¸ÕÌå£¬ÆäĞ§¹ûÏàµ±ÓÚÒ»¸öµ¯»É¡£
+@~chinese PhysicsJointSpringç”¨äºè¿æ¥ä¸¤ä¸ªåˆšä½“ï¼Œå…¶æ•ˆæœç›¸å½“äºä¸€ä¸ªå¼¹ç°§ã€‚
 */
 class CC_DLL PhysicsJointSpring : public PhysicsJoint
 {
 public:
     /** @~english Create a spring joint.
      
-     * @~chinese ´´½¨Ò»¸öPhysicsJointSpring¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªPhysicsJointSpringã€‚
      * 
      @param a @~english A is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“ã€‚
      @param b @~english B is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“ã€‚
      @param anchr1 @~english Anchr1 is the anchor point on body a.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌåµÄµã¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“çš„ç‚¹ã€‚
      @param anchr2 @~english Anchr2 is the anchor point on body b.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌåµÄµã¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“çš„ç‚¹ã€‚
      @param stiffness @~english It's the spring constant.
-     * @~chinese ¹Ø½ÚµÄµ¯Á¦ÏµÊı¡£
+     * @~chinese å…³èŠ‚çš„å¼¹åŠ›ç³»æ•°ã€‚
      @param damping @~english It's how soft to make the damping of the spring.
-     * @~chinese ¹Ø½ÚµÄ×èÄá¡£
+     * @~chinese å…³èŠ‚çš„é˜»å°¼ã€‚
      @return @~english A object pointer.
-     * @~chinese ·µ»ØPhysicsJointSpring¡£
+     * @~chinese è¿”å›PhysicsJointSpringã€‚
      */
     static PhysicsJointSpring* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2, float stiffness, float damping);
 
-    /** @~english Get the anchor point on body a. @~chinese µÃµ½Á¬½ÓµÄµÚÒ»¸ö¸ÕÌåµÄµã¡£*/
+    /** @~english Get the anchor point on body a. @~chinese å¾—åˆ°è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“çš„ç‚¹ã€‚*/
     Vec2 getAnchr1() const;
 
-    /** @~english Set the anchor point on body a. @~chinese ÉèÖÃÁ¬½ÓµÄµÚÒ»¸ö¸ÕÌåµÄµã¡£*/
+    /** @~english Set the anchor point on body a. @~chinese è®¾ç½®è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“çš„ç‚¹ã€‚*/
     void setAnchr1(const Vec2& anchr1);
 
-    /** @~english Get the anchor point on body b. @~chinese µÃµ½Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌåµÄµã¡£*/
+    /** @~english Get the anchor point on body b. @~chinese å¾—åˆ°è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“çš„ç‚¹ã€‚*/
     Vec2 getAnchr2() const;
 
-    /** @~english Set the anchor point on body b. @~chinese ÉèÖÃÁ¬½ÓµÄµÚ¶ş¸ö¸ÕÌåµÄµã¡£*/
+    /** @~english Set the anchor point on body b. @~chinese è®¾ç½®è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“çš„ç‚¹ã€‚*/
     void setAnchr2(const Vec2& anchr2);
     
-    /** @~english Get the distance of the anchor points. @~chinese µÃµ½Á¬½ÓµãÖ®¼äµÄ¾àÀë¡£*/
+    /** @~english Get the distance of the anchor points. @~chinese å¾—åˆ°è¿æ¥ç‚¹ä¹‹é—´çš„è·ç¦»ã€‚*/
     float getRestLength() const;
     
-    /** @~english Set the distance of the anchor points. @~chinese ÉèÖÃÁ¬½ÓµãÖ®¼äµÄ¾àÀë¡£*/
+    /** @~english Set the distance of the anchor points. @~chinese è®¾ç½®è¿æ¥ç‚¹ä¹‹é—´çš„è·ç¦»ã€‚*/
     void setRestLength(float restLength);
     
-    /** @~english Get the spring constant. @~chinese µÃµ½µ¯Á¦³£Êı¡£*/
+    /** @~english Get the spring constant. @~chinese å¾—åˆ°å¼¹åŠ›å¸¸æ•°ã€‚*/
     float getStiffness() const;
     
-    /** @~english Set the spring constant. @~chinese ÉèÖÃµ¯Á¦³£Êı¡£*/
+    /** @~english Set the spring constant. @~chinese è®¾ç½®å¼¹åŠ›å¸¸æ•°ã€‚*/
     void setStiffness(float stiffness);
     
-    /** @~english Get the spring soft constant. @~chinese µÃµ½×èÄáÏµÊı¡£*/
+    /** @~english Get the spring soft constant. @~chinese å¾—åˆ°é˜»å°¼ç³»æ•°ã€‚*/
     float getDamping() const;
     
-    /** @~english Set the spring soft constant. @~chinese ÉèÖÃ×èÄáÏµÊı¡£*/
+    /** @~english Set the spring soft constant. @~chinese è®¾ç½®é˜»å°¼ç³»æ•°ã€‚*/
     void setDamping(float damping);
     
     virtual bool createConstraints() override;
@@ -423,46 +423,46 @@ protected:
 @class PhysicsJointGroove
 @brief
 @~english Attach body a to a line, and attach body b to a dot.  
-@~chinese °ÑµÚÒ»¸öÎïÌåAÁ¬½Óµ½Ò»ÌõÏßÉÏ£¬°ÑµÚ¶ş¸öÎïÌåÁ¬½Óµ½Ò»¸öµãÉÏ¡£
+@~chinese æŠŠç¬¬ä¸€ä¸ªç‰©ä½“Aè¿æ¥åˆ°ä¸€æ¡çº¿ä¸Šï¼ŒæŠŠç¬¬äºŒä¸ªç‰©ä½“è¿æ¥åˆ°ä¸€ä¸ªç‚¹ä¸Šã€‚
 */
 class CC_DLL PhysicsJointGroove : public PhysicsJoint
 {
 public:
     /** @~english Create a groove joint.
      
-     * @~chinese ´´½¨Ò»¸öPhysicsJointGroove¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªPhysicsJointGrooveã€‚
      * 
      @param a @~english A is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“ã€‚
      @param b @~english B is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“ã€‚
      @param grooveA @~english The line begin position.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌåµÄÏßµÄµÚÒ»¸ö¶Ëµã¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“çš„çº¿çš„ç¬¬ä¸€ä¸ªç«¯ç‚¹ã€‚
      @param grooveB @~english The line end position.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌåµÄÏßµÄµÚ¶ş¸ö¶Ëµã¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“çš„çº¿çš„ç¬¬äºŒä¸ªç«¯ç‚¹ã€‚
      @param anchr2 @~english Anchr2 is the anchor point on body b.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌåµÄµã¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“çš„ç‚¹ã€‚
      @return @~english A object pointer.
-     * @~chinese µÃµ½PhysicsJointGroove¡£
+     * @~chinese å¾—åˆ°PhysicsJointGrooveã€‚
      */
     static PhysicsJointGroove* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& grooveA, const Vec2& grooveB, const Vec2& anchr2);
 
-    /** @~english Get the line begin position @~chinese µÃµ½µÚÒ»¸öÎïÌåÁ¬½ÓÏßµÄµÚÒ»¸ö¶Ëµã¡£*/
+    /** @~english Get the line begin position @~chinese å¾—åˆ°ç¬¬ä¸€ä¸ªç‰©ä½“è¿æ¥çº¿çš„ç¬¬ä¸€ä¸ªç«¯ç‚¹ã€‚*/
     Vec2 getGrooveA() const;
 
-    /** @~english Set the line begin position @~chinese ÉèÖÃµÚÒ»¸öÎïÌåÁ¬½ÓÏßµÄµÚÒ»¸ö¶Ëµã¡£*/
+    /** @~english Set the line begin position @~chinese è®¾ç½®ç¬¬ä¸€ä¸ªç‰©ä½“è¿æ¥çº¿çš„ç¬¬ä¸€ä¸ªç«¯ç‚¹ã€‚*/
     void setGrooveA(const Vec2& grooveA);
     
-    /** @~english Get the line end position @~chinese µÃµ½µÚÒ»¸öÎïÌåÁ¬½ÓÏßµÄµÚ¶ş¸ö¶Ëµã¡£*/
+    /** @~english Get the line end position @~chinese å¾—åˆ°ç¬¬ä¸€ä¸ªç‰©ä½“è¿æ¥çº¿çš„ç¬¬äºŒä¸ªç«¯ç‚¹ã€‚*/
     Vec2 getGrooveB() const;
     
-    /** @~english Set the line end position @~chinese ÉèÖÃµÃµ½µÚÒ»¸öÎïÌåÁ¬½ÓÏßµÄµÚ¶ş¸ö¶Ëµã¡£*/
+    /** @~english Set the line end position @~chinese è®¾ç½®å¾—åˆ°ç¬¬ä¸€ä¸ªç‰©ä½“è¿æ¥çº¿çš„ç¬¬äºŒä¸ªç«¯ç‚¹ã€‚*/
     void setGrooveB(const Vec2& grooveB);
     
-    /** @~english Get the anchor point on body b. @~chinese µÃµ½Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌåµÄµã¡£*/
+    /** @~english Get the anchor point on body b. @~chinese å¾—åˆ°è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“çš„ç‚¹ã€‚*/
     Vec2 getAnchr2() const;
     
-    /** @~english Set the anchor point on body b. @~chinese ÉèÖÃÁ¬½ÓµÄµÚ¶ş¸ö¸ÕÌåµÄµã¡£*/
+    /** @~english Set the anchor point on body b. @~chinese è®¾ç½®è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“çš„ç‚¹ã€‚*/
     void setAnchr2(const Vec2& anchr2);
     
     virtual bool createConstraints() override;
@@ -480,44 +480,44 @@ protected:
 @class PhysicsJointRotarySpring
 @brief
 @~english Likes a spring joint, but works with rotary.  
-@~chinese ÓëPhysicsJointSpringÀàËÆ£¬µ«ÊÇ¸ÕÌå¿ÉÒÔ×ÔÓÉĞı×ª¡£
+@~chinese ä¸PhysicsJointSpringç±»ä¼¼ï¼Œä½†æ˜¯åˆšä½“å¯ä»¥è‡ªç”±æ—‹è½¬ã€‚
 */
 class CC_DLL PhysicsJointRotarySpring : public PhysicsJoint
 {
 public:
     /** @~english Create a damped rotary spring joint.
      
-     * @~chinese ´´½¨Ò»¸öPhysicsJointRotarySpring¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªPhysicsJointRotarySpringã€‚
      * 
      @param a @~english A is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“ã€‚
      @param b @~english B is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“ã€‚
      @param stiffness @~english It's the spring constant.
-     * @~chinese ¹Ø½ÚµÄµ¯Á¦ÏµÊı¡£
+     * @~chinese å…³èŠ‚çš„å¼¹åŠ›ç³»æ•°ã€‚
      @param damping @~english It's how soft to make the damping of the spring.
-     * @~chinese ¹Ø½ÚµÄ×èÄá¡£
+     * @~chinese å…³èŠ‚çš„é˜»å°¼ã€‚
      @return @~english A object pointer.
-     * @~chinese ÅÉ·¢ÁËÃé×¼¡£
+     * @~chinese æ´¾å‘äº†ç„å‡†ã€‚
      */
     static PhysicsJointRotarySpring* construct(PhysicsBody* a, PhysicsBody* b, float stiffness, float damping);
 
-    /** @~english Get the relative angle in radians from the body a to b. @~chinese µÃµ½Á½¸ö¸ÕÌåÎïÌåÖ®¼äµÄÏà¶Ô»¡¶È½Ç¡£*/
+    /** @~english Get the relative angle in radians from the body a to b. @~chinese å¾—åˆ°ä¸¤ä¸ªåˆšä½“ç‰©ä½“ä¹‹é—´çš„ç›¸å¯¹å¼§åº¦è§’ã€‚*/
     float getRestAngle() const;
 
-    /** @~english Set the relative angle in radians from the body a to b. @~chinese ÉèÖÃÁ½¸ö¸ÕÌåÎïÌåÖ®¼äµÄÏà¶Ô»¡¶È½Ç¡£*/
+    /** @~english Set the relative angle in radians from the body a to b. @~chinese è®¾ç½®ä¸¤ä¸ªåˆšä½“ç‰©ä½“ä¹‹é—´çš„ç›¸å¯¹å¼§åº¦è§’ã€‚*/
     void setRestAngle(float restAngle);
 
-    /** @~english Get the spring constant. @~chinese µÃµ½µ¯Á¦ÏµÊı¡£*/
+    /** @~english Get the spring constant. @~chinese å¾—åˆ°å¼¹åŠ›ç³»æ•°ã€‚*/
     float getStiffness() const;
     
-    /** @~english Set the spring constant. @~chinese ÉèÖÃµ¯Á¦ÏµÊı¡£*/
+    /** @~english Set the spring constant. @~chinese è®¾ç½®å¼¹åŠ›ç³»æ•°ã€‚*/
     void setStiffness(float stiffness);
     
-    /** @~english Get the spring soft constant. @~chinese µÃµ½×èÄáÏµÊı¡£*/
+    /** @~english Get the spring soft constant. @~chinese å¾—åˆ°é˜»å°¼ç³»æ•°ã€‚*/
     float getDamping() const;
 
-    /** @~english Set the spring soft constant. @~chinese ÉèÖÃ×èÄáÏµÊı¡£*/
+    /** @~english Set the spring soft constant. @~chinese è®¾ç½®é˜»å°¼ç³»æ•°ã€‚*/
     void setDamping(float damping);
     
     virtual bool createConstraints() override;
@@ -532,51 +532,51 @@ protected:
 
 /** 
 @~english Likes a limit joint, but works with rotary.  
-@~chinese ÓëPhysicsJointLimitÀàËÆ£¬µ«ÊÇ¸ÕÌå¿ÉÒÔ×ÔÓÉĞı×ª¡£
+@~chinese ä¸PhysicsJointLimitç±»ä¼¼ï¼Œä½†æ˜¯åˆšä½“å¯ä»¥è‡ªç”±æ—‹è½¬ã€‚
 */
 class CC_DLL PhysicsJointRotaryLimit : public PhysicsJoint
 {
 public:
     /** @~english Create a limit rotary joint.
      
-     * @~chinese ´´½¨Ò»¸öPhysicsJointRotaryLimit¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªPhysicsJointRotaryLimitã€‚
      * 
      @param a @~english A is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“ã€‚
      @param b @~english B is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“ã€‚
      @param min @~english It's min rotation limit in radians.
-     * @~chinese Á½¸öÎïÌåÖ®¼äµÄ×îĞ¡Ğı×ª½Ç¶È¡£
+     * @~chinese ä¸¤ä¸ªç‰©ä½“ä¹‹é—´çš„æœ€å°æ—‹è½¬è§’åº¦ã€‚
      @param max @~english It's max rotation limit in radians.
-     * @~chinese Á½¸öÎïÌåÖ®¼äµÄ×î´óĞı×ª½Ç¶È¡£
+     * @~chinese ä¸¤ä¸ªç‰©ä½“ä¹‹é—´çš„æœ€å¤§æ—‹è½¬è§’åº¦ã€‚
      @return @~english A object pointer.
-     * @~chinese ·µ»ØPhysicsJointRotaryLimit¡£
+     * @~chinese è¿”å›PhysicsJointRotaryLimitã€‚
      */
     static PhysicsJointRotaryLimit* construct(PhysicsBody* a, PhysicsBody* b, float min, float max);
 
     /** @~english Create a limit rotary joint.
      
-     * @~chinese ´´½¨Ò»¸öPhysicsJointRotaryLimit¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªPhysicsJointRotaryLimitã€‚
      * 
      @param a @~english A is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“ã€‚
      @param b @~english B is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“ã€‚
      @return @~english A object pointer.
-     * @~chinese ·µ»ØPhysicsJointRotaryLimit¡£
+     * @~chinese è¿”å›PhysicsJointRotaryLimitã€‚
      */
     static PhysicsJointRotaryLimit* construct(PhysicsBody* a, PhysicsBody* b);
 
-    /** @~english Get the min rotation limit. @~chinese µÃµ½×îĞ¡Ğı×ª½Ç¶È¡£*/
+    /** @~english Get the min rotation limit. @~chinese å¾—åˆ°æœ€å°æ—‹è½¬è§’åº¦ã€‚*/
     float getMin() const;
     
-    /** @~english Set the min rotation limit. @~chinese ÉèÖÃ×îĞ¡Ğı×ª½Ç¶È¡£*/
+    /** @~english Set the min rotation limit. @~chinese è®¾ç½®æœ€å°æ—‹è½¬è§’åº¦ã€‚*/
     void setMin(float min);
     
-    /** @~english Get the max rotation limit. @~chinese µÃµ½×î´óĞı×ª½Ç¶È¡£*/
+    /** @~english Get the max rotation limit. @~chinese å¾—åˆ°æœ€å¤§æ—‹è½¬è§’åº¦ã€‚*/
     float getMax() const;
     
-    /** @~english Set the max rotation limit. @~chinese ÉèÖÃ×î´óĞı×ª½Ç¶È¡£*/
+    /** @~english Set the max rotation limit. @~chinese è®¾ç½®æœ€å¤§æ—‹è½¬è§’åº¦ã€‚*/
     void setMax(float max);
     
     virtual bool createConstraints() override;
@@ -591,44 +591,44 @@ protected:
 
 /** 
 @~english Works like a socket wrench.  
-@~chinese PhysicsJointRatchet¾ÍÏñÒ»¸öÁ¬½ÓÆ÷Ò»ÑùÓ¿À´Á¬½ÓÁ½¸öÉíÌå¡£
+@~chinese PhysicsJointRatchetå°±åƒä¸€ä¸ªè¿æ¥å™¨ä¸€æ ·æ¶Œæ¥è¿æ¥ä¸¤ä¸ªèº«ä½“ã€‚
 */
 class CC_DLL PhysicsJointRatchet : public PhysicsJoint
 {
 public:
     /** @~english Create a ratchet joint.
      
-     * @~chinese ´´½¨Ò»¸öPhysicsJointRatchet¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªPhysicsJointRatchetã€‚
      * 
      @param a @~english A is the body to connect.
-     * @~chinese Òª±»Á¬½ÓµÄÉíÌåA¡£
+     * @~chinese è¦è¢«è¿æ¥çš„èº«ä½“Aã€‚
      @param b @~english B is the body to connect.
-     * @~chinese Òª±»Á¬½ÓµÄÉíÌåB¡£
+     * @~chinese è¦è¢«è¿æ¥çš„èº«ä½“Bã€‚
      @param phase @~english Phase is the initial offset to use when deciding where the ratchet angles are.
-     * @~chinese ½×¶ÎµÄ³õÊ¼Æ«ÒÆÁ¿Ê¹ÓÃµ±¾ö¶¨¼¬ÂÖ½Ç¶ÈÔÚÄÄÀï¡£
+     * @~chinese é˜¶æ®µçš„åˆå§‹åç§»é‡ä½¿ç”¨å½“å†³å®šæ£˜è½®è§’åº¦åœ¨å“ªé‡Œã€‚
      @param ratchet @~english Ratchet is the distance between "clicks".
-     * @~chinese ¼¬ÂÖÊÇ¡°µã»÷¡±Ö®¼äµÄ¾àÀë¡£
+     * @~chinese æ£˜è½®æ˜¯â€œç‚¹å‡»â€ä¹‹é—´çš„è·ç¦»ã€‚
      @return @~english A object pointer.
-     * @~chinese ´´½¨³É¹¦·µ»ØPhysicsJointRatchet¶ÔÏó£¬·ñÔò·µ»Ø¿ÕÖ¸Õë¡£
+     * @~chinese åˆ›å»ºæˆåŠŸè¿”å›PhysicsJointRatchetå¯¹è±¡ï¼Œå¦åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚
      */
     static PhysicsJointRatchet* construct(PhysicsBody* a, PhysicsBody* b, float phase, float ratchet);
 
-    /** @~english Get the ratchet angle. @~chinese ¼¬ÂÖ½Ç¡£*/
+    /** @~english Get the ratchet angle. @~chinese æ£˜è½®è§’ã€‚*/
     float getAngle() const;
     
-    /** @~english Set the ratchet angle. @~chinese ÉèÖÃ¼¬ÂÖ½Ç¡£*/
+    /** @~english Set the ratchet angle. @~chinese è®¾ç½®æ£˜è½®è§’ã€‚*/
     void setAngle(float angle);
     
-    /** @~english Get the initial offset. @~chinese »ñµÃµÄ³õÊ¼Æ«ÒÆÁ¿¡£*/
+    /** @~english Get the initial offset. @~chinese è·å¾—çš„åˆå§‹åç§»é‡ã€‚*/
     float getPhase() const;
     
-    /** @~english Set the initial offset. @~chinese ÉèÖÃ³õÊ¼Æ«ÒÆÁ¿¡£*/
+    /** @~english Set the initial offset. @~chinese è®¾ç½®åˆå§‹åç§»é‡ã€‚*/
     void setPhase(float phase);
     
-    /** @~english Get the distance between "clicks". @~chinese ¡°µã»÷¡±Ö®¼äµÄ¾àÀë¡£*/
+    /** @~english Get the distance between "clicks". @~chinese â€œç‚¹å‡»â€ä¹‹é—´çš„è·ç¦»ã€‚*/
     float getRatchet() const;
 
-    /** @~english Set the distance between "clicks". @~chinese ¡°µã»÷¡±Ö®¼äµÄ¾àÀë¡£*/
+    /** @~english Set the distance between "clicks". @~chinese â€œç‚¹å‡»â€ä¹‹é—´çš„è·ç¦»ã€‚*/
     void setRatchet(float ratchet);
     virtual bool createConstraints() override;
 
@@ -642,38 +642,38 @@ protected:
 
 /** 
 @~english Keeps the angular velocity ratio of a pair of bodies constant.  
-@~chinese ÈÃÁ½¸ö¸ÕÌåÖ®¼äµÄĞı×ª½ÇËÙ¶È±£³ÖÒ»¸ö³£Êı¡£
+@~chinese è®©ä¸¤ä¸ªåˆšä½“ä¹‹é—´çš„æ—‹è½¬è§’é€Ÿåº¦ä¿æŒä¸€ä¸ªå¸¸æ•°ã€‚
 */
 class CC_DLL PhysicsJointGear : public PhysicsJoint
 {
 public:
     /** @~english Create a gear joint.
      
-     * @~chinese ´´½¨Ò»¸öPhysicsJointGear¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªPhysicsJointGearã€‚
      * 
      @param a @~english A is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“ã€‚
      @param b @~english B is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“ã€‚
      @param phase @~english Phase is the initial angular offset of the two bodies.
-     * @~chinese Á½¸öÎïÌåµÄ³õÊ¼½Ç¶È²î¡£
+     * @~chinese ä¸¤ä¸ªç‰©ä½“çš„åˆå§‹è§’åº¦å·®ã€‚
      @param ratio @~english Ratio is always measured in absolute terms.
-     * @~chinese Á½¸öÎïÌåµÄĞı×ª½ÇËÙ¶È±È¡£
+     * @~chinese ä¸¤ä¸ªç‰©ä½“çš„æ—‹è½¬è§’é€Ÿåº¦æ¯”ã€‚
      @return @~english A object pointer.
-     * @~chinese ·µ»ØµÄPhysicsJointGear¡£
+     * @~chinese è¿”å›çš„PhysicsJointGearã€‚
      */
     static PhysicsJointGear* construct(PhysicsBody* a, PhysicsBody* b, float phase, float ratio);
 
-    /** @~english Get the angular offset of the two bodies. @~chinese µÃµ½Á½¸öÎïÌåµÄ³õÊ¼½Ç¶È²î¡£*/
+    /** @~english Get the angular offset of the two bodies. @~chinese å¾—åˆ°ä¸¤ä¸ªç‰©ä½“çš„åˆå§‹è§’åº¦å·®ã€‚*/
     float getPhase() const;
     
-    /** @~english Set the angular offset of the two bodies. @~chinese ÉèÖÃÁ½¸öÎïÌåµÄ³õÊ¼½Ç¶È²î¡£*/
+    /** @~english Set the angular offset of the two bodies. @~chinese è®¾ç½®ä¸¤ä¸ªç‰©ä½“çš„åˆå§‹è§’åº¦å·®ã€‚*/
     void setPhase(float phase);
     
-    /** @~english Get the ratio. @~chinese µÃµ½Ğı×ª½ÇËÙ¶È±ÈÂÊ¡£*/
+    /** @~english Get the ratio. @~chinese å¾—åˆ°æ—‹è½¬è§’é€Ÿåº¦æ¯”ç‡ã€‚*/
     float getRatio() const;
     
-    /** @~english Set the ratio. @~chinese ÉèÖÃĞı×ª½ÇËÙ¶È±ÈÂÊ¡£*/
+    /** @~english Set the ratio. @~chinese è®¾ç½®æ—‹è½¬è§’é€Ÿåº¦æ¯”ç‡ã€‚*/
     void setRatio(float ratchet);
 
     virtual bool createConstraints() override;
@@ -688,30 +688,30 @@ protected:
 
 /** 
 @~english Keeps the relative angular velocity of a pair of bodies constant.  
-@~chinese PhysicsJointMotorÓÃÓÚ±£Ö¤Á½¸öÎïÌåµÄÏà¶Ô½ÇËÙ¶ÈÊÇÒ»¸ö³£Êı¡£
+@~chinese PhysicsJointMotorç”¨äºä¿è¯ä¸¤ä¸ªç‰©ä½“çš„ç›¸å¯¹è§’é€Ÿåº¦æ˜¯ä¸€ä¸ªå¸¸æ•°ã€‚
 */
 class CC_DLL PhysicsJointMotor : public PhysicsJoint
 {
 public:
     /** @~english Create a motor joint.
      
-     * @~chinese ´´½¨Ò»¸öPhysicsJointMotor¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªPhysicsJointMotorã€‚
      * 
      @param a @~english A is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚÒ»¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬ä¸€ä¸ªåˆšä½“ã€‚
      @param b @~english B is the body to connect.
-     * @~chinese Á¬½ÓµÄµÚ¶ş¸ö¸ÕÌå¡£
+     * @~chinese è¿æ¥çš„ç¬¬äºŒä¸ªåˆšä½“ã€‚
      @param rate @~english Rate is the desired relative angular velocity.
-     * @~chinese Á½¸öÎïÌåµÄÏà¶Ô½ÇËÙ¶È
+     * @~chinese ä¸¤ä¸ªç‰©ä½“çš„ç›¸å¯¹è§’é€Ÿåº¦
      @return @~english A object pointer.
-     * @~chinese ·µ»ØPhysicsJointMotor¡£
+     * @~chinese è¿”å›PhysicsJointMotorã€‚
      */
     static PhysicsJointMotor* construct(PhysicsBody* a, PhysicsBody* b, float rate);
 
-    /** @~english Get the relative angular velocity. @~chinese µÃµ½Ïà¶Ô½ÇËÙ¶È¡£*/
+    /** @~english Get the relative angular velocity. @~chinese å¾—åˆ°ç›¸å¯¹è§’é€Ÿåº¦ã€‚*/
     float getRate() const;
     
-    /** @~english Set the relative angular velocity. @~chinese ÉèÖÃÏà¶Ô½ÇËÙ¶È¡£*/
+    /** @~english Set the relative angular velocity. @~chinese è®¾ç½®ç›¸å¯¹è§’é€Ÿåº¦ã€‚*/
     void setRate(float rate);
     virtual bool createConstraints() override;
 

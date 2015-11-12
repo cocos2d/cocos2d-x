@@ -56,20 +56,20 @@ cocos2d::log(__VA_ARGS__);                                                  \
  * If the value of the given index is nil, return value also is true.
  *
  * @~chinese 
- * Èç¹û¸ø¶¨ºÏ·¨µÄLuaÕ»Ë÷ÒıÉÏµÄuserdataµÄÀàĞÍÃû×ÖºÍtypeÒ»Ñù·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * Èç¹ûdef != 0,lo¿ÉÄÜ´óÓÚÖ¸ÊıLuaÕ»¶¥Ë÷Òı,²¢ÇÒ·µ»ØÖµÎªtrue¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏµÄÖµÊÇnil,·µ»ØÖµÒ²Îªtrue¡£
+ * å¦‚æœç»™å®šåˆæ³•çš„Luaæ ˆç´¢å¼•ä¸Šçš„userdataçš„ç±»å‹åå­—å’Œtypeä¸€æ ·è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœdef != 0,loå¯èƒ½å¤§äºæŒ‡æ•°Luaæ ˆé¡¶ç´¢å¼•,å¹¶ä¸”è¿”å›å€¼ä¸ºtrueã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šçš„å€¼æ˜¯nil,è¿”å›å€¼ä¹Ÿä¸ºtrueã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param type @~english the typename used to judge.
- * @~chinese ÓÃÓÚÅĞ¶ÏµÄÀàĞÍÃû×Ö¡£
+ * @~chinese ç”¨äºåˆ¤æ–­çš„ç±»å‹åå­—ã€‚
  * @param def @~english whether has default value,0 means have not default value,otherwise have default values.
- * @~chinese ÊÇ·ñÓĞÄ¬ÈÏÖµ, 0±íÊ¾Ã»ÓĞÄ¬ÈÏÖµ£¬·ñÔòÓĞÄ¬ÈÏÖµ¡£
+ * @~chinese æ˜¯å¦æœ‰é»˜è®¤å€¼, 0è¡¨ç¤ºæ²¡æœ‰é»˜è®¤å€¼ï¼Œå¦åˆ™æœ‰é»˜è®¤å€¼ã€‚
  * @return @~english Return true if the typename of userdata at the given accepteable index of stack is equal to type, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨ºÏ·¨µÄLuaÕ»Ë÷ÒıÉÏuserdataµÄÀàĞÍÃû×ÖµÈÓÚtype,»òÕßlo´óÓÚÕ»¶¥Ë÷Òıµ«ÓĞÄ¬ÈÏÖµ£¬»òÕßÕ»ÉÏµÄÖµÎªnil, ¶¼»á·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šåˆæ³•çš„Luaæ ˆç´¢å¼•ä¸Šuserdataçš„ç±»å‹åå­—ç­‰äºtype,æˆ–è€…loå¤§äºæ ˆé¡¶ç´¢å¼•ä½†æœ‰é»˜è®¤å€¼ï¼Œæˆ–è€…æ ˆä¸Šçš„å€¼ä¸ºnil, éƒ½ä¼šè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def);
 // to native
@@ -80,9 +80,9 @@ extern bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def);
  * The following function are all used to convert the Lua values at the given acceptable index to the corresponding c++ values.
  * If the Lua values can be converted the return value is true, otherwise return false.
  * If it happens error during the conversion process, it outputs the error msg in the console to provide information about the name of calling function, the typename of value at the given acceptable index, and so on.
- * @~chinese ÒÔÏÂµÄº¯Êı¶¼ÊÇÓÃÀ´½«Ö¸¶¨LuaË÷ÒıÉÏµÄLuaÖµ×ª³É¶ÔÓ¦µÄc++Öµ¡£
- * Èç¹ûLuaÖµ¿ÉÒÔ±»×ª»»£¬·µ»Øtrue,·ñÔò·µ»Øfalse.
- * Èç¹ûÔÚ×ª»»¹ı³ÌÖĞ·¢ÉúÁË´íÎó£¬½«»áÔÚ¿ØÖÆÌ¨Êä³ö´íÎóĞÅÏ¢£¬´íÎóĞÅÏ¢Àï°üº¬ÁËµ÷ÓÃº¯Êı£¬Ö¸¶¨LuaË÷ÒıLuaÖµµÄÀàĞÍÃû×ÖµÈĞÅÏ¢¡£
+ * @~chinese ä»¥ä¸‹çš„å‡½æ•°éƒ½æ˜¯ç”¨æ¥å°†æŒ‡å®šLuaç´¢å¼•ä¸Šçš„Luaå€¼è½¬æˆå¯¹åº”çš„c++å€¼ã€‚
+ * å¦‚æœLuaå€¼å¯ä»¥è¢«è½¬æ¢ï¼Œè¿”å›true,å¦åˆ™è¿”å›false.
+ * å¦‚æœåœ¨è½¬æ¢è¿‡ç¨‹ä¸­å‘ç”Ÿäº†é”™è¯¯ï¼Œå°†ä¼šåœ¨æ§åˆ¶å°è¾“å‡ºé”™è¯¯ä¿¡æ¯ï¼Œé”™è¯¯ä¿¡æ¯é‡ŒåŒ…å«äº†è°ƒç”¨å‡½æ•°ï¼ŒæŒ‡å®šLuaç´¢å¼•Luaå€¼çš„ç±»å‹åå­—ç­‰ä¿¡æ¯ã€‚
  @{
  **/
 
@@ -92,19 +92,19 @@ extern bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def);
  * If the value at the given acceptable index of Lua stack is a number or a string convertible to a number it returns true, otherwise returns false .
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öunsigned londÖµ¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªunsigned londå€¼ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı
+ * @~chinese Luaæ ˆç´¢å¼•
  * @param outValue @~english the pointer to store the value converted from the Lua value.
- * @~chinese Ö¸Ïòunsigned longµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘unsigned longçš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö,µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—,è°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_ulong(lua_State* L,int lo, unsigned long* outValue, const char* funcName="");
 
@@ -113,19 +113,19 @@ extern bool luaval_to_ulong(lua_State* L,int lo, unsigned long* outValue, const 
  * If the value at the given acceptable index of Lua stack is a number or a string convertible to a number it returns true, otherwise returns false .
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öunsigned shortÖµ¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªunsigned shortå€¼ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to store the unsigned short value converted from the Lua value.
- * @~chinese Ö¸Ïòunsigned shorµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘unsigned shorçš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö,µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—,è°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_ushort(lua_State* L, int lo, unsigned short* outValue, const char* funcName = "");
 
@@ -134,19 +134,19 @@ extern bool luaval_to_ushort(lua_State* L, int lo, unsigned short* outValue, con
  * If the value at the given acceptable index of Lua stack is a number or a string convertible to a number it returns true, otherwise returns false .
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öintÖµ¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªintå€¼ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of Lua stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to store the int value converted from the Lua value.
- * @~chinese Ö¸ÏòintµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘intçš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö,µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—,è°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_int32(lua_State* L,int lo,int* outValue, const char* funcName = "");
 
@@ -155,19 +155,19 @@ extern bool luaval_to_int32(lua_State* L,int lo,int* outValue, const char* funcN
  * If the value at the given acceptable index of Lua stack is a number or a string convertible to a number it returns true, otherwise returns false .
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öunsigned intÖµ¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªunsigned intå€¼ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of Lua stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to store the unsigned int value converted from the Lua value.
- * @~chinese Ö¸Ïòunsigned intµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘unsigned intçš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö,µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—,è°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_uint32(lua_State* L, int lo, unsigned int* outValue, const char* funcName = "");
 
@@ -176,19 +176,19 @@ extern bool luaval_to_uint32(lua_State* L, int lo, unsigned int* outValue, const
  * If the value at the given acceptable index of Lua stack is a number or a string convertible to a number it returns true, otherwise returns false .
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öuint16_tÖµ¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªuint16_tå€¼ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of Lua stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to store the uint16_t value converted from the Lua value.
- * @~chinese Ö¸Ïòuint16_tµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘uint16_tçš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö,µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—,è°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_uint16(lua_State* L,int lo,uint16_t* outValue, const char* funcName = "");
 
@@ -199,21 +199,21 @@ extern bool luaval_to_uint16(lua_State* L,int lo,uint16_t* outValue, const char*
  * If the lo is non-valid index, the value of coversion also is false.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öbooleanÖµ¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÖµÀàĞÍÎªboolean·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * ÈÎºÎ²»µÈÓÚfalse»ònilµÄLuaÖµ,»ñÈ¡µÄÖµ½«true£¬·ñÔòÎªfalse¡£
- * Èç¹ûloÊÇÎŞĞ§µÄË÷Òı,»ñÈ¡µÄÖµÒ²Îªfalse¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªbooleanå€¼ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•å€¼ç±»å‹ä¸ºbooleanè¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * ä»»ä½•ä¸ç­‰äºfalseæˆ–nilçš„Luaå€¼,è·å–çš„å€¼å°†trueï¼Œå¦åˆ™ä¸ºfalseã€‚
+ * å¦‚æœloæ˜¯æ— æ•ˆçš„ç´¢å¼•,è·å–çš„å€¼ä¹Ÿä¸ºfalseã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of Lua stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to store the boolean value converted from the Lua value.
- * @~chinese Ö¸ÏòbooleanµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘booleançš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö,µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—,è°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the type at the given acceptable index of stack is a boolean, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÖµµÄÀàĞÍÊÇboolean·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šå€¼çš„ç±»å‹æ˜¯booleanè¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_boolean(lua_State* L,int lo,bool* outValue, const char* funcName = "");
 
@@ -222,19 +222,19 @@ extern bool luaval_to_boolean(lua_State* L,int lo,bool* outValue, const char* fu
  * If the value at the given acceptable index of Lua stack is a number or a string convertible to a number it returns true, otherwise returns false.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸ödoubleÖµ¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªdoubleå€¼ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of Lua stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to store the double value converted from the Lua value.
- * @~chinese Ö¸ÏòdoubleµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘doubleçš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö,µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—,è°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_number(lua_State* L,int lo,double* outValue, const char* funcName = "");
 
@@ -243,19 +243,19 @@ extern bool luaval_to_number(lua_State* L,int lo,double* outValue, const char* f
  * If the value at the given acceptable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸ölong longÖµ¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªlong longå€¼ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to store the long long value converted from the Lua value.
- * @~chinese Ö¸Ïòlong longµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘long longçš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö,µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—,è°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_long_long(lua_State* L,int lo,long long* outValue, const char* funcName = "");
 
@@ -264,19 +264,19 @@ extern bool luaval_to_long_long(lua_State* L,int lo,long long* outValue, const c
  * If the value at the given acceptable index of stack is a string or a number convertible to a string it returns true, otherwise returns false.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸östd::stringÖµ¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎª×Ö·û´®µÄÊı×Ö£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªstd::stringå€¼ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºå­—ç¬¦ä¸²çš„æ•°å­—ï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to store std::string value converted from the Lua value.
- * @~chinese Ö¸Ïòstd::stringµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘std::stringçš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö,µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—,è°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is is a string or a number convertible to a string, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎª×Ö·û´®µÄÊı×Ö£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºå­—ç¬¦ä¸²çš„æ•°å­—ï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, const char* funcName = "");
 
@@ -285,19 +285,19 @@ extern bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, co
  * If the value at the given acceptable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸ölongÖµ¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªlongå€¼ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to store the long value converted from the Lua value.
- * @~chinese Ö¸ÏòlongµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘longçš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö,µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—,è°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_long(lua_State* L,int lo, long* outValue, const char* funcName = "");
 
@@ -306,19 +306,19 @@ extern bool luaval_to_long(lua_State* L,int lo, long* outValue, const char* func
  * If the value at the given acceptable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸össize_tÖµ¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªssize_tå€¼ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to store the ssize_t value converted from the Lua value.
- * @~chinese Ö¸Ïòssize_tµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘ssize_tçš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö,µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—,è°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸öÊı×Ö»òÒ»¸ö¿ÉÒÔ×ªÎªÊı×ÖµÄ×Ö·û´®,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªæ•°å­—æˆ–ä¸€ä¸ªå¯ä»¥è½¬ä¸ºæ•°å­—çš„å­—ç¬¦ä¸²,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue, const char* funcName = "");
 
@@ -328,20 +328,20 @@ extern bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue, const char* 
  * If the table has the `width` and `height` key and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öSize¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÖĞÓĞ"width"ºÍ"height"¼ü²¢ÇÒ¶ÔÓ¦µÄÖµ²»Îªnil£¬ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øSize¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò£¬¶ÔÓ¦µÄ³ÉÔ±±äÁ¿ÉèÖÃÎª0¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªSizeå¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableä¸­æœ‰"width"å’Œ"height"é”®å¹¶ä¸”å¯¹åº”çš„å€¼ä¸ä¸ºnilï¼Œé‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™Sizeå¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™ï¼Œå¯¹åº”çš„æˆå‘˜å˜é‡è®¾ç½®ä¸º0ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a Size object which stores the values from the Lua table.
- * @~chinese Ö¸ÏòSize¶ÔÏóµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘Sizeå¯¹è±¡çš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö,µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—,è°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_size(lua_State* L,int lo,Size* outValue, const char* funcName = "");
 
@@ -351,20 +351,20 @@ extern bool luaval_to_size(lua_State* L,int lo,Size* outValue, const char* funcN
  * If the table has the `x`,`y`,`width` and `height` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öRect¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÓĞ"x"£¬"y"£¬"width"ºÍ"height"¼ü²¢ÇÒ¶ÔÓ¦µÄÖµ²»Îªnil£¬ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øRect¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò,¶ÔÓ¦µÄ³ÉÔ±±äÖµÉèÖÃÎª0¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªRectå¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableæœ‰"x"ï¼Œ"y"ï¼Œ"width"å’Œ"height"é”®å¹¶ä¸”å¯¹åº”çš„å€¼ä¸ä¸ºnilï¼Œé‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™Rectå¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™,å¯¹åº”çš„æˆå‘˜å˜å€¼è®¾ç½®ä¸º0ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a Rect object which stores the values from the Lua table.
- * @~chinese Ö¸ÏòRect¶ÔÏóµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘Rectå¯¹è±¡çš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö,µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—,è°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_rect(lua_State* L,int lo,Rect* outValue, const char* funcName = "");
 
@@ -374,20 +374,20 @@ extern bool luaval_to_rect(lua_State* L,int lo,Rect* outValue, const char* funcN
  * If the table has the `r`,`g` and `b` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öColor3B¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÓĞ"r"£¬"g"ºÍ"b"¼ü²¢ÇÒ¶ÔÓ¦µÄÖµ²»Îªnil£¬ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øColor3B¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò,¶ÔÓ¦µÄ³ÉÔ±±äÖµÉèÖÃÎª0¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªColor3Bå¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableæœ‰"r"ï¼Œ"g"å’Œ"b"é”®å¹¶ä¸”å¯¹åº”çš„å€¼ä¸ä¸ºnilï¼Œé‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™Color3Bå¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™,å¯¹åº”çš„æˆå‘˜å˜å€¼è®¾ç½®ä¸º0ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a Color3B object which stores the values from the Lua table.
- * @~chinese Ö¸ÏòColor3B¶ÔÏóµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘Color3Bå¯¹è±¡çš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese  µ÷ÓÃº¯ÊıÃû×Ö,µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese  è°ƒç”¨å‡½æ•°åå­—,è°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue, const char* funcName = "");
 
@@ -397,20 +397,20 @@ extern bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue, const char*
  * If the table has the `r`,`g`, `b` and 'a' keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öColor4B¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÓĞ"r"£¬"g"£¬"b"ºÍ"a"¼ü²¢ÇÒ¶ÔÓ¦µÄÖµ²»Îªnil£¬ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øColor4B¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò,¶ÔÓ¦µÄ³ÉÔ±±äÖµÉèÖÃÎª0¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªColor4Bå¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtableï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableæœ‰"r"ï¼Œ"g"ï¼Œ"b"å’Œ"a"é”®å¹¶ä¸”å¯¹åº”çš„å€¼ä¸ä¸ºnilï¼Œé‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™Color4Bå¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™,å¯¹åº”çš„æˆå‘˜å˜å€¼è®¾ç½®ä¸º0ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a Color4B object which stores the values from the Lua table.
- * @~chinese Ö¸ÏòColor4B¶ÔÏóµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘Color4Bå¯¹è±¡çš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtableï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_color4b(lua_State* L,int lo,Color4B* outValue, const char* funcName = "");
 
@@ -420,20 +420,20 @@ extern bool luaval_to_color4b(lua_State* L,int lo,Color4B* outValue, const char*
  * If the table has the `r`,`g`, `b` and 'a' keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öColor4F¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÓĞ"r"£¬"g"£¬"b"ºÍ"a"¼ü²¢ÇÒ¶ÔÓ¦µÄÖµ²»Îªnil£¬ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øColor4F¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò,¶ÔÓ¦µÄ³ÉÔ±±äÖµÉèÖÃÎª0¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªColor4Få¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtableï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableæœ‰"r"ï¼Œ"g"ï¼Œ"b"å’Œ"a"é”®å¹¶ä¸”å¯¹åº”çš„å€¼ä¸ä¸ºnilï¼Œé‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™Color4Få¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™,å¯¹åº”çš„æˆå‘˜å˜å€¼è®¾ç½®ä¸º0ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a Color4F object which stores the values from the Lua table.
- * @~chinese Ö¸ÏòColor4F¶ÔÏóµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘Color4Få¯¹è±¡çš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtableï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_color4f(lua_State* L,int lo,Color4F* outValue, const char* funcName = "");
 #if CC_USE_PHYSICS
@@ -444,20 +444,20 @@ extern bool luaval_to_color4f(lua_State* L,int lo,Color4F* outValue, const char*
  * If the table has the `density`,`restitution` and 'friction' keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öPhysicsMaterial¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÓĞ¡°density¡±,¡°restitution¡±ºÍ¡°friction¡±¼ü²¢ÇÒ¶ÔÓ¦µÄÖµ²»Îªnil,ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øPhysicsMaterial¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò,¶ÔÓ¦µÄ³ÉÔ±±äÖµÉèÖÃÎª0¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªPhysicsMaterialå¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtableï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableæœ‰â€œdensityâ€,â€œrestitutionâ€å’Œâ€œfrictionâ€é”®å¹¶ä¸”å¯¹åº”çš„å€¼ä¸ä¸ºnil,é‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™PhysicsMaterialå¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™,å¯¹åº”çš„æˆå‘˜å˜å€¼è®¾ç½®ä¸º0ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a cocos2d::PhysicsMaterial object which stores the values from the Lua table.
- * @~chinese Ö¸Ïòcocos2d::PhysicsMaterial¶ÔÏóµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘cocos2d::PhysicsMaterialå¯¹è±¡çš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtableï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_physics_material(lua_State* L,int lo, cocos2d::PhysicsMaterial* outValue, const char* funcName = "");
 #endif //#if CC_USE_PHYSICS
@@ -468,20 +468,20 @@ extern bool luaval_to_physics_material(lua_State* L,int lo, cocos2d::PhysicsMate
  * If the table has the `a`, `b`, `c`, `d` , `tx` and `ty` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öAffineTransform¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÓĞ¡°a¡±¡¢¡°b¡±¡¢¡°c¡±,¡°d¡±,¡°tx¡±ºÍ¡°ty¡±¼ü²¢ÇÒ¶ÔÓ¦µÄÖµ²»Îªnil,ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øAffineTransform¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò,¶ÔÓ¦µÄ³ÉÔ±±äÖµÉèÖÃÎª0¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªAffineTransformå¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtableï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableæœ‰â€œaâ€ã€â€œbâ€ã€â€œcâ€,â€œdâ€,â€œtxâ€å’Œâ€œtyâ€é”®å¹¶ä¸”å¯¹åº”çš„å€¼ä¸ä¸ºnil,é‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™AffineTransformå¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™,å¯¹åº”çš„æˆå‘˜å˜å€¼è®¾ç½®ä¸º0ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a AffineTransform object which stores the values from the Lua table.
- * @~chinese Ö¸ÏòAffineTransform¶ÔÏóµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘AffineTransformå¯¹è±¡çš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtableï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_affinetransform(lua_State* L,int lo, AffineTransform* outValue, const char* funcName = "");
 
@@ -491,20 +491,20 @@ extern bool luaval_to_affinetransform(lua_State* L,int lo, AffineTransform* outV
  * If the table has the `fontName`, `fontSize`, `fontAlignmentH`, `fontAlignmentV` , `fontFillColor` ,`fontDimensions`, `shadowEnabled` and `strokeEnabled` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  * If the values about `shadowEnabled` and `strokeEnabled` are true, there would be more keys such as `shadowOffset`, `shadowBlur` ,`shadowOpacity`, `strokeColor`, and `strokeSize`.
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öFontDefinition¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÖĞÓĞ¡°fontName¡±,¡°fontSize¡±,¡®fontAlignmentH¡¯,¡®fontAlignmentV¡¯,¡®fontFillColor¡¯,¡®fontDimensions¡¯,¡®shadowEnabled¡¯ºÍ¡®strokeEnabled¼ü²¢ÇÒ¶ÔÓ¦µÄÖµ²»Îªnil,ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øFontDefinition¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò,¶ÔÓ¦µÄ³ÉÔ±±äÖµÉèÖÃÎª0¡£
- * Èç¹ûtableÖĞ¡°shadowEnabled¡±ºÍ¡°strokeEnabled¡±¶ÔÓ¦µÄÖµÎªtrue,½«»á²éÕÒ¸ü¶àµÄ¼ü¼°¶ÔÓ¦µÄÖµ£¬Èç¡®shadowOffset¡¯,¡®shadowBlur¡¯,¡®shadowOpacity¡¯,¡®strokeColor¡¯,¡®strokeSize¡¯¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªFontDefinitionå¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtableï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableä¸­æœ‰â€œfontNameâ€,â€œfontSizeâ€,â€˜fontAlignmentHâ€™,â€˜fontAlignmentVâ€™,â€˜fontFillColorâ€™,â€˜fontDimensionsâ€™,â€˜shadowEnabledâ€™å’Œâ€˜strokeEnabledé”®å¹¶ä¸”å¯¹åº”çš„å€¼ä¸ä¸ºnil,é‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™FontDefinitionå¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™,å¯¹åº”çš„æˆå‘˜å˜å€¼è®¾ç½®ä¸º0ã€‚
+ * å¦‚æœtableä¸­â€œshadowEnabledâ€å’Œâ€œstrokeEnabledâ€å¯¹åº”çš„å€¼ä¸ºtrue,å°†ä¼šæŸ¥æ‰¾æ›´å¤šçš„é”®åŠå¯¹åº”çš„å€¼ï¼Œå¦‚â€˜shadowOffsetâ€™,â€˜shadowBlurâ€™,â€˜shadowOpacityâ€™,â€˜strokeColorâ€™,â€˜strokeSizeâ€™ã€‚
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a FontDefinition object which stores the values from the Lua table.
- * @~chinese Ö¸ÏòFontDefinition¶ÔÏóµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘FontDefinitionå¯¹è±¡çš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtableï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue , const char* funcName = "");
 
@@ -514,20 +514,20 @@ extern bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outVa
  * The table is array-table which begin the index starts at 1.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öMat¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
- * tableÊÇÓ¦¸ÃÊÇÒ»¸öarray-table£¬²¢ÇÒË÷ÒıÊÇ´Ó1¿ªÊ¼¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªMatå¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtableï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+ * tableæ˜¯åº”è¯¥æ˜¯ä¸€ä¸ªarray-tableï¼Œå¹¶ä¸”ç´¢å¼•æ˜¯ä»1å¼€å§‹ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a Mat object which stores the values from the Lua table.
- * @~chinese Ö¸ÏòMat¶ÔÏóµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘Matå¯¹è±¡çš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtableï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_mat4(lua_State* L, int lo, cocos2d::Mat4* outValue , const char* funcName = "");
 
@@ -535,8 +535,8 @@ extern bool luaval_to_mat4(lua_State* L, int lo, cocos2d::Mat4* outValue , const
  * Get a __Array object value frome the given acceptable index of stack.
  * Because __Array is deprecated, so this function would be not called anymore.
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸ö__Array¶ÔÏó¡£
- * ÒòÎª__Array½«±»ÆúÓÃ£¬ËùÒÔÕâ¸öº¯ÊıÒ²½«±»ÆúÓÃ¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ª__Arrayå¯¹è±¡ã€‚
+ * å› ä¸º__Arrayå°†è¢«å¼ƒç”¨ï¼Œæ‰€ä»¥è¿™ä¸ªå‡½æ•°ä¹Ÿå°†è¢«å¼ƒç”¨ã€‚
  */
 extern bool luaval_to_array(lua_State* L,int lo, __Array** outValue, const char* funcName = "");
 
@@ -544,8 +544,8 @@ extern bool luaval_to_array(lua_State* L,int lo, __Array** outValue, const char*
  * Get a __Dictionary object value from the given acceptable index of stack.
  * Because __Dictionary is deprecated, so this function would be not called anymore.
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸ö__Dictionary¶ÔÏó¡£
- * ÒòÎª__Dictionary½«±»ÆúÓÃ£¬ËùÒÔÕâ¸öº¯ÊıÒ²½«±»ÆúÓÃ¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ª__Dictionaryå¯¹è±¡ã€‚
+ * å› ä¸º__Dictionaryå°†è¢«å¼ƒç”¨ï¼Œæ‰€ä»¥è¿™ä¸ªå‡½æ•°ä¹Ÿå°†è¢«å¼ƒç”¨ã€‚
  */
 extern bool luaval_to_dictionary(lua_State* L,int lo, __Dictionary** outValue, const char* funcName = "");
 
@@ -554,21 +554,21 @@ extern bool luaval_to_dictionary(lua_State* L,int lo, __Dictionary** outValue, c
  * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸ö´¢´æVec2¶ÔÏóµÄÊı×é¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªå‚¨å­˜Vec2å¯¹è±¡çš„æ•°ç»„ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtableï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param points @~english the pointer to a array of Vec2 object which stores the values from the Lua table.
- * @~chinese Ö¸Ïò´¢´æVec2¶ÔÏóÊı×éµÄÖ¸Õë,ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘å‚¨å­˜Vec2å¯¹è±¡æ•°ç»„çš„æŒ‡é’ˆ,ç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param numPoints @~english a int pointer to store the size of a Vec2 object array.
- * @~chinese Ö¸ÏòÊı×é´óĞ¡µÄintÖ¸Õë¡£
+ * @~chinese æŒ‡å‘æ•°ç»„å¤§å°çš„intæŒ‡é’ˆã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtableï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_array_of_vec2(lua_State* L,int lo,cocos2d::Vec2 **points, int *numPoints, const char* funcName = "");
 
@@ -576,8 +576,8 @@ extern bool luaval_to_array_of_vec2(lua_State* L,int lo,cocos2d::Vec2 **points, 
  * Get a __Array object value by the argc numbers of Lua values in the stack.
  * Because __Array is deprecated, so this function would be not called anymore.
  * @~chinese 
- * ´ÓLuaÕ»ÖĞ»ñÈ¡argc¸ö¶ÔÏóÀ´¹¹½¨Ò»¸ö__Array¶ÔÏó
- * ÒòÎª__Array½«±»ÆúÓÃ£¬ËùÒÔÕâ¸öº¯ÊıÒ²½«±»ÆúÓÃ¡£
+ * ä»Luaæ ˆä¸­è·å–argcä¸ªå¯¹è±¡æ¥æ„å»ºä¸€ä¸ª__Arrayå¯¹è±¡
+ * å› ä¸º__Arrayå°†è¢«å¼ƒç”¨ï¼Œæ‰€ä»¥è¿™ä¸ªå‡½æ•°ä¹Ÿå°†è¢«å¼ƒç”¨ã€‚
  */
 extern bool luavals_variadic_to_array(lua_State* L,int argc, __Array** ret);
 
@@ -585,16 +585,16 @@ extern bool luavals_variadic_to_array(lua_State* L,int argc, __Array** ret);
  * Get a cocos2d::ValueVector object value by the argc numbers of Lua values in the stack.
  *
  * @~chinese 
- * ´ÓLuaÕ»ÖĞ»ñÈ¡arc¸öLua valuesÀ´¹¹½¨Ò»¸öcocos2d::ValueVector¶ÔÏó¡£
+ * ä»Luaæ ˆä¸­è·å–arcä¸ªLua valuesæ¥æ„å»ºä¸€ä¸ªcocos2d::ValueVectorå¯¹è±¡ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param argc @~english the numbers of Lua values in the stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param ret @~english the pointer to a ValueVector object which stores the values from the Lua table.
- * @~chinese Ö¸Ïò´¢´æLuaÖµµÄValueVector¶ÔÏóÖ¸Õë,ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘å‚¨å­˜Luaå€¼çš„ValueVectorå¯¹è±¡æŒ‡é’ˆ,ç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @return @~english Return false if argc equal to 0 or L equal to nullptr, otherwise return true.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtableï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
  */
 extern bool luavals_variadic_to_ccvaluevector(lua_State* L, int argc, cocos2d::ValueVector* ret);
 
@@ -604,20 +604,20 @@ extern bool luavals_variadic_to_ccvaluevector(lua_State* L, int argc, cocos2d::V
  * If the table has the `x`,and 'y' keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öVec2¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÖĞÓĞ"x"ºÍ"y"¼ü²¢ÇÒ¶ÔÓ¦µÄÖµ²»Îªnil£¬ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øVec2¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò£¬¶ÔÓ¦µÄ³ÉÔ±±äÁ¿ÉèÖÃÎª0¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªVec2å¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableä¸­æœ‰"x"å’Œ"y"é”®å¹¶ä¸”å¯¹åº”çš„å€¼ä¸ä¸ºnilï¼Œé‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™Vec2å¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™ï¼Œå¯¹åº”çš„æˆå‘˜å˜é‡è®¾ç½®ä¸º0ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a Vec2 object which stores the values from the Lua table.
- * @~chinese Ö¸ÏòVec2¶ÔÏóµÄÖ¸Õë,ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘Vec2å¯¹è±¡çš„æŒ‡é’ˆ,ç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_vec2(lua_State* L,int lo,cocos2d::Vec2* outValue, const char* funcName = "");
 
@@ -627,20 +627,20 @@ extern bool luaval_to_vec2(lua_State* L,int lo,cocos2d::Vec2* outValue, const ch
  * If the table has the `x`, 'y' and `z` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öVec3¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÖĞÓĞ"x","y"ºÍ"z"¼ü²¢ÇÒ¶ÔÓ¦µÄÖµ²»Îªnil£¬ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øVec3¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò£¬¶ÔÓ¦µÄ³ÉÔ±±äÁ¿ÉèÖÃÎª0¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªVec3å¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableä¸­æœ‰"x","y"å’Œ"z"é”®å¹¶ä¸”å¯¹åº”çš„å€¼ä¸ä¸ºnilï¼Œé‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™Vec3å¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™ï¼Œå¯¹åº”çš„æˆå‘˜å˜é‡è®¾ç½®ä¸º0ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese Ä¿Ç°lua_State¡£
+ * @~chinese ç›®å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a Vec3 object which stores the values from the Lua table.
- * @~chinese Ö¸ÏòVec3¶ÔÏóµÄÖ¸Õë,ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘Vec3å¯¹è±¡çš„æŒ‡é’ˆ,ç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_vec3(lua_State* L,int lo,cocos2d::Vec3* outValue, const char* funcName = "");
 
@@ -650,20 +650,20 @@ extern bool luaval_to_vec3(lua_State* L,int lo,cocos2d::Vec3* outValue, const ch
  * If the table has the `x`, 'y', `z` and `w` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öVec4¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÖĞÓĞ"x"£¬"y"£¬"z"ºÍ"w"¼ü²¢ÇÒ¶ÔÓ¦µÄÖµ²»Îªnil£¬ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øVec4¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò£¬¶ÔÓ¦µÄ³ÉÔ±±äÁ¿ÉèÖÃÎª0¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªVec4å¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableä¸­æœ‰"x"ï¼Œ"y"ï¼Œ"z"å’Œ"w"é”®å¹¶ä¸”å¯¹åº”çš„å€¼ä¸ä¸ºnilï¼Œé‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™Vec4å¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™ï¼Œå¯¹åº”çš„æˆå‘˜å˜é‡è®¾ç½®ä¸º0ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a Vec4 object which stores the values from the Lua table.
- * @~chinese Ö¸ÏòVec4¶ÔÏóµÄÖ¸Õë,ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘Vec4å¯¹è±¡çš„æŒ‡é’ˆ,ç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_vec4(lua_State* L,int lo,cocos2d::Vec4* outValue, const char* funcName = "");
 
@@ -673,20 +673,20 @@ extern bool luaval_to_vec4(lua_State* L,int lo,cocos2d::Vec4* outValue, const ch
  * If the table has the `src` and 'dst' keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öBlendFunc¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÖĞÓĞ"src"ºÍ"dst"¼ü²¢ÇÒ¶ÔÓ¦µÄÖµ²»Îªnil£¬ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øBlendFunc¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò£¬¶ÔÓ¦µÄ³ÉÔ±±äÁ¿ÉèÖÃÎª0¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªBlendFuncå¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableä¸­æœ‰"src"å’Œ"dst"é”®å¹¶ä¸”å¯¹åº”çš„å€¼ä¸ä¸ºnilï¼Œé‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™BlendFuncå¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™ï¼Œå¯¹åº”çš„æˆå‘˜å˜é‡è®¾ç½®ä¸º0ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a BlendFunc object which stores the values from the Lua table.
- * @~chinese Ö¸ÏòBlendFunc¶ÔÏóµÄÖ¸Õë,ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘BlendFuncå¯¹è±¡çš„æŒ‡é’ˆ,ç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::BlendFunc* outValue, const char* funcName = "");
 
@@ -696,20 +696,20 @@ extern bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::BlendFunc* outVal
  * If the table has the `fontFilePath`, `fontSize`, `glyphs`, `customGlyphs`, `distanceFieldEnabled` and 'outlineSize' keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be given the default value.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öBlendFunc¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÖĞÓĞ¡°fontFilePath¡±,¡°fontSize¡±¡¢¡°glyphs¡±,¡®customGlyphs¡¯,¡®distanceFieldEnabled¡¯ºÍ¡®outlineSize¼ü²¢ÇÒ¶ÔÓ¦µÄÖµ²»ÊÇnil,ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øTTFConfig¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò,ÓĞ¼ÛÖµµÄ³ÉÔ±µÄ¼ÛÖµ½«±»¸³ÓèÄ¬ÈÏÖµ¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªBlendFuncå¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableä¸­æœ‰â€œfontFilePathâ€,â€œfontSizeâ€ã€â€œglyphsâ€,â€˜customGlyphsâ€™,â€˜distanceFieldEnabledâ€™å’Œâ€˜outlineSizeé”®å¹¶ä¸”å¯¹åº”çš„å€¼ä¸æ˜¯nil,é‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™TTFConfigå¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™,æœ‰ä»·å€¼çš„æˆå‘˜çš„ä»·å€¼å°†è¢«èµ‹äºˆé»˜è®¤å€¼ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a TTFConfig object which stores the values from the Lua table.
- * @~chinese Ö¸ÏòTTFConfig¶ÔÏóµÄÖ¸Õë,ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘TTFConfigå¯¹è±¡çš„æŒ‡é’ˆ,ç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_ttfconfig(lua_State* L, int lo, cocos2d::TTFConfig* outValue, const char* funcName = "");
 
@@ -719,20 +719,20 @@ extern bool luaval_to_ttfconfig(lua_State* L, int lo, cocos2d::TTFConfig* outVal
  * If the table has the `location`, `size`, `type` and `name` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be given the default value.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öUniform¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÖĞÓĞ¡°location¡±,¡°size¡±,¡°type¡±ºÍ¡°name¡±¼ü£¬²¢ÇÒ¶ÔÓ¦µÄÖµ²»ÊÇnil,ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øUniform¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò,¶ÔÓ¦µÄ³ÉÔ±±äÁ¿±»½«±»¸³ÓèÄ¬ÈÏÖµ¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªUniformå¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableä¸­æœ‰â€œlocationâ€,â€œsizeâ€,â€œtypeâ€å’Œâ€œnameâ€é”®ï¼Œå¹¶ä¸”å¯¹åº”çš„å€¼ä¸æ˜¯nil,é‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™Uniformå¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™,å¯¹åº”çš„æˆå‘˜å˜é‡è¢«å°†è¢«èµ‹äºˆé»˜è®¤å€¼ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a Uniform object which stores the values from the Lua table.
- * @~chinese Ö¸ÏòUniform¶ÔÏóµÄÖ¸Õë,ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘Uniformå¯¹è±¡çš„æŒ‡é’ˆ,ç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_uniform(lua_State* L, int lo, cocos2d::Uniform* outValue, const char* funcName = "");
 
@@ -742,20 +742,20 @@ extern bool luaval_to_uniform(lua_State* L, int lo, cocos2d::Uniform* outValue, 
  * If the table has the `index`, `size`, `type` and `name` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be given the default value.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öVertexAttrib¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÖĞÓĞ¡°index¡±,¡°size¡±,¡°type¡±ºÍ¡°name¡±¼ü£¬²¢ÇÒ¶ÔÓ¦µÄÖµ²»ÊÇnil,ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øVertexAttrib¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò,¶ÔÓ¦µÄ³ÉÔ±±äÁ¿±»½«±»¸³ÓèÄ¬ÈÏÖµ¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªVertexAttribå¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableä¸­æœ‰â€œindexâ€,â€œsizeâ€,â€œtypeâ€å’Œâ€œnameâ€é”®ï¼Œå¹¶ä¸”å¯¹åº”çš„å€¼ä¸æ˜¯nil,é‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™VertexAttribå¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™,å¯¹åº”çš„æˆå‘˜å˜é‡è¢«å°†è¢«èµ‹äºˆé»˜è®¤å€¼ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a VertexAttrib object which stores the values from the Lua table.
- * @~chinese Ö¸ÏòVertexAttrib¶ÔÏóµÄÖ¸Õë,ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘VertexAttribå¯¹è±¡çš„æŒ‡é’ˆ,ç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_vertexattrib(lua_State* L, int lo, cocos2d::VertexAttrib* outValue, const char* funcName = "");
 
@@ -764,7 +764,7 @@ extern bool luaval_to_vertexattrib(lua_State* L, int lo, cocos2d::VertexAttrib* 
  * Get a Vec2 object value from the given acceptable index of stack.
  * At current, the Point is typedef of Vec2.@see luaval_to_vec2
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öVec2¶ÔÏó¡£@see luaval_to_vec2¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªVec2å¯¹è±¡ã€‚@see luaval_to_vec2ã€‚
  */
 static inline bool luaval_to_point(lua_State* L,int lo,cocos2d::Vec2* outValue, const char* funcName = "")
 {
@@ -784,16 +784,16 @@ CC_DEPRECATED_ATTRIBUTE static inline bool luaval_to_array_of_Point(lua_State* L
  * Get a cocos2d::Vector of type T objects by the argc numbers of Lua values in the stack.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»ÉÏ»ñÈ¡Ò»¸ö°üº¬argc¸ötype T¶ÔÏóµÄcocos2d::Vector¡£
+ * ä»ç»™å®šLuaæ ˆä¸Šè·å–ä¸€ä¸ªåŒ…å«argcä¸ªtype Tå¯¹è±¡çš„cocos2d::Vectorã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param argc @~english the numbers of Lua values in the stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param ret @~english a cocos2d::Vector of type T objects.
- * @~chinese Ö¸Ïòcocos2d::Vector¶ÔÏóµÄÖ¸Õë,ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘cocos2d::Vectorå¯¹è±¡çš„æŒ‡é’ˆ,ç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @return @~english Return false if argc equal to 0 , L equal to nullptr or the Lua userdata at the index isn't `cc.Ref` type, otherwise return true.
- * @~chinese µ±argcµÈÓÚ0£¬LÎªnullptr»òÕßLuaÕ»Ë÷ÒıÉÏµÄuserdata²»ÊÇ"cc.Ref"ÀàĞÍ£¬·µ»ØÖµÎªfalse,·ñÔò·µ»Øtrue¡£
+ * @~chinese å½“argcç­‰äº0ï¼ŒLä¸ºnullptræˆ–è€…Luaæ ˆç´¢å¼•ä¸Šçš„userdataä¸æ˜¯"cc.Ref"ç±»å‹ï¼Œè¿”å›å€¼ä¸ºfalse,å¦åˆ™è¿”å›trueã€‚
  */
 template <class T>
 bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* ret)
@@ -827,18 +827,18 @@ bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* r
  * Get a cocos2d::Vector of type T objects from a Lua table in the stack.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸ötype TµÄcocos2d::Vector¶ÔÏó¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªtype Tçš„cocos2d::Vectorå¯¹è±¡ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param ret @~english a cocos2d::Vector of type T objects.
- * @~chinese Ö¸Ïòcocos2d::Vector¶ÔÏóµÄÖ¸Õë,ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘cocos2d::Vectorå¯¹è±¡çš„æŒ‡é’ˆ,ç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese µ±LuaÕ»Ë÷ÒıÉÏµÄÖµÊÇtableÊ±·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å½“Luaæ ˆç´¢å¼•ä¸Šçš„å€¼æ˜¯tableæ—¶è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 template <class T>
 bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret, const char* funcName = "")
@@ -882,18 +882,18 @@ bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret, const ch
  * Get a pointer points to a std::vector<std::string> from a Lua array table in the stack.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸östd::vector<std::string>
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªstd::vector<std::string>
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param ret @~english a pointer points to a std::vector<std::string>.
- * @~chinese Ö¸Ïòstd::vector<std::string>µÄÖ¸Õë¡£
+ * @~chinese æŒ‡å‘std::vector<std::string>çš„æŒ‡é’ˆã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese µ±LuaÕ»Ë÷ÒıÉÏµÄÖµÊÇtableÊ±·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å½“Luaæ ˆç´¢å¼•ä¸Šçš„å€¼æ˜¯tableæ—¶è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
 
@@ -901,18 +901,18 @@ bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>*
  * Get a pointer points to a std::vector<int> from a Lua array table in the stack.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸östd::vector<int>
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªstd::vector<int>
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param ret @~english a pointer points to a std::vector<int>.
- * @~chinese Ö¸Ïòstd::vector<int>µÄÖ¸Õë¡£
+ * @~chinese æŒ‡å‘std::vector<int>çš„æŒ‡é’ˆã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese µ±LuaÕ»Ë÷ÒıÉÏµÄÖµÊÇtableÊ±·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å½“Luaæ ˆç´¢å¼•ä¸Šçš„å€¼æ˜¯tableæ—¶è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret, const char* funcName = "");
 
@@ -921,18 +921,18 @@ bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret, const
  * Get a pointer points to a cocos2d::Map whose key/value pair is string value and T object from a Lua hash-map table in the stack.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öcocos2d::Map<std::string, T>
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªcocos2d::Map<std::string, T>
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param ret @~english a pointer points to a cocos2d::Map whose key/value pair is string value and T object.
- * @~chinese Ö¸Ïòcocos2d::Map<std::string, T>µÄÖ¸Õë¡£
+ * @~chinese æŒ‡å‘cocos2d::Map<std::string, T>çš„æŒ‡é’ˆã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese µ±LuaÕ»Ë÷ÒıÉÏµÄÖµÊÇtableÊ±·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å½“Luaæ ˆç´¢å¼•ä¸Šçš„å€¼æ˜¯tableæ—¶è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 template <class T>
 bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, T>* ret, const char* funcName = "")
@@ -985,19 +985,19 @@ bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, 
  * The type of Lua value at the index could be a Lua table, LUA_TSTRING, LUA_TBOOLEAN or LUA_TNUMBER.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öcocos2d::Value¶ÔÏó
- * ¸ø¶¨LuaÕ»Ë÷ÒıÉÏµÄÀàĞÍ¿ÉÄÜÊÇtable,LUA_TSTRING,LUA_TBOOLEAN»òÕßLUA_TNUMBER¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªcocos2d::Valueå¯¹è±¡
+ * ç»™å®šLuaæ ˆç´¢å¼•ä¸Šçš„ç±»å‹å¯èƒ½æ˜¯table,LUA_TSTRING,LUA_TBOOLEANæˆ–è€…LUA_TNUMBERã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param ret @~english a pointer points to a cocos2d::Value object.
- * @~chinese Ö¸ÏòÒ»¸öcocos2d::Value¶ÔÏóµÄÖ¸Õë¡£
+ * @~chinese æŒ‡å‘ä¸€ä¸ªcocos2d::Valueå¯¹è±¡çš„æŒ‡é’ˆã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the L and ret is not nullptr,otherwise return false.
- * @~chinese Èç¹ûLºÍret²»ÊÇnullptr·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœLå’Œretä¸æ˜¯nullptrè¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_ccvalue(lua_State* L, int lo, cocos2d::Value* ret, const char* funcName = "");
 
@@ -1006,19 +1006,19 @@ extern bool luaval_to_ccvalue(lua_State* L, int lo, cocos2d::Value* ret, const c
  * The type of Lua value at the index should be a Lua table.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öcocos2d::ValueMap¶ÔÏó¡£
- * ¸ø¶¨LuaÕ»Ë÷ÒıÉÏµÄÓ¦¸ÃÊÇÒ»¸ötable¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªcocos2d::ValueMapå¯¹è±¡ã€‚
+ * ç»™å®šLuaæ ˆç´¢å¼•ä¸Šçš„åº”è¯¥æ˜¯ä¸€ä¸ªtableã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param ret @~english a pointer points to a cocos2d::ValueMap object.
- * @~chinese Ö¸Ïòcocos2d:ValueMap¶ÔÏóµÄÖ¸Õë¡£
+ * @~chinese æŒ‡å‘cocos2d:ValueMapå¯¹è±¡çš„æŒ‡é’ˆã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the type of Lua value at the index is a Lua table, otherwise return false.
- * @~chinese µ±LuaÕ»Ë÷ÒıÉÏµÄÖµÊÇtableÊ±·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å½“Luaæ ˆç´¢å¼•ä¸Šçš„å€¼æ˜¯tableæ—¶è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret, const char* funcName = "");
 
@@ -1027,19 +1027,19 @@ extern bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret, c
  * The type of Lua value at the index should be a Lua table.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öcocos2d::ValueMapIntKey¶ÔÏó
- * ¸ø¶¨LuaÕ»Ë÷ÒıÉÏµÄÓ¦¸ÃÊÇÒ»¸ötable
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªcocos2d::ValueMapIntKeyå¯¹è±¡
+ * ç»™å®šLuaæ ˆç´¢å¼•ä¸Šçš„åº”è¯¥æ˜¯ä¸€ä¸ªtable
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param ret @~english a pointer points to a cocos2d::ValueMapIntKey object.
- * @~chinese Ö¸Ïòcocos2d::ValueMapIntKey¶ÔÏóµÄÖ¸Õë¡£
+ * @~chinese æŒ‡å‘cocos2d::ValueMapIntKeyå¯¹è±¡çš„æŒ‡é’ˆã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the type of Lua value at the index is a Lua table, otherwise return false.
- * @~chinese µ±LuaÕ»Ë÷ÒıÉÏµÄÖµÊÇtableÊ±·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å½“Luaæ ˆç´¢å¼•ä¸Šçš„å€¼æ˜¯tableæ—¶è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_ccvaluemapintkey(lua_State* L, int lo, cocos2d::ValueMapIntKey* ret, const char* funcName = "");
 
@@ -1048,19 +1048,19 @@ extern bool luaval_to_ccvaluemapintkey(lua_State* L, int lo, cocos2d::ValueMapIn
  * The type of Lua value at the index should be a Lua array table.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öcocos2d::ValueVector¶ÔÏó
- * ¸ø¶¨LuaÕ»Ë÷ÒıÉÏµÄÓ¦¸ÃÊÇÒ»¸ötable
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªcocos2d::ValueVectorå¯¹è±¡
+ * ç»™å®šLuaæ ˆç´¢å¼•ä¸Šçš„åº”è¯¥æ˜¯ä¸€ä¸ªtable
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param ret @~english a pointer points to a cocos2d::ValueVector object.
- * @~chinese Ö¸Ïòcocos2d::ValueVector¶ÔÏóµÄÖ¸Õë¡£
+ * @~chinese æŒ‡å‘cocos2d::ValueVectorå¯¹è±¡çš„æŒ‡é’ˆã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the type of Lua value at the index is a Lua table, otherwise return false.
- * @~chinese µ±LuaÕ»Ë÷ÒıÉÏµÄÖµÊÇtableÊ±·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å½“Luaæ ˆç´¢å¼•ä¸Šçš„å€¼æ˜¯tableæ—¶è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret, const char* funcName = "");
 
@@ -1069,18 +1069,18 @@ extern bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* 
  * Get a Type T object from the given acceptable index of stack.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öType T¶ÔÏó¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªType Tå¯¹è±¡ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param type @~english a string pointer points to the type name.
- * @~chinese ÀàĞÍÃû¡£
+ * @~chinese ç±»å‹åã€‚
  * @param ret @~english the pointer points to a Type T object.
- * @~chinese Ö¸Ïòtype TÀàĞÍµÄÖ¸Õë¡£
+ * @~chinese æŒ‡å‘type Tç±»å‹çš„æŒ‡é’ˆã€‚
  * @return @~english Return true if the type of Lua value at the index is a Lua userdata, otherwise return false.
- * @~chinese µ±LuaÕ»Ë÷ÒıÉÏµÄÖµÊÇÒ»¸öLua userdata·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+ * @~chinese å½“Luaæ ˆç´¢å¼•ä¸Šçš„å€¼æ˜¯ä¸€ä¸ªLua userdataè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
  */
 template <class T>
 bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret, const char* funcName = "")
@@ -1104,19 +1104,19 @@ bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret, const cha
  * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `size`, `type`, `vertexAttrib`, `vertexAttrib` and `attribSizeBytes` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue.
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öcocos2d::MeshVertexAttrib¶ÔÏó¡£
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÖĞ¡°size¡±¡¢¡°type¡±¡¢¡°vertexAttrib¡±,¡°vertexAttrib¡±ºÍ¡°attribSizeBytes¡±¼ü,²¢ÇÒ¶ÔÓ¦µÄÖµ²»ÊÇnil,ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øVertexAttrib¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò,¶ÔÓ¦µÄ³ÉÔ±±äÁ¿±»½«±»¸³ÓèÄ¬ÈÏÖµ¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªcocos2d::MeshVertexAttribå¯¹è±¡ã€‚
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableä¸­â€œsizeâ€ã€â€œtypeâ€ã€â€œvertexAttribâ€,â€œvertexAttribâ€å’Œâ€œattribSizeBytesâ€é”®,å¹¶ä¸”å¯¹åº”çš„å€¼ä¸æ˜¯nil,é‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™VertexAttribå¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™,å¯¹åº”çš„æˆå‘˜å˜é‡è¢«å°†è¢«èµ‹äºˆé»˜è®¤å€¼ã€‚
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param ret @~english the pointer to a cocos2d::MeshVertexAttrib object which stores the values from the Lua table.
- * @~chinese Ö¸Ïòcocos2d:MeshVertexAttrib¶ÔÏóµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLuaÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘cocos2d:MeshVertexAttribå¯¹è±¡çš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_mesh_vertex_attrib(lua_State* L, int lo, cocos2d::MeshVertexAttrib* ret, const char* funcName = "");
 
@@ -1124,18 +1124,18 @@ extern bool luaval_to_mesh_vertex_attrib(lua_State* L, int lo, cocos2d::MeshVert
  * Get a pointer points to a std::vector<float> from a Lua array table in the stack.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸östd::vector<float>¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªstd::vector<float>ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param ret @~english a pointer points to a std::vector<float>.
- * @~chinese Ö¸Ïòstd::vector<float>µÄÖ¸Õë¡£
+ * @~chinese æŒ‡å‘std::vector<float>çš„æŒ‡é’ˆã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_std_vector_float(lua_State* L, int lo, std::vector<float>* ret, const char* funcName = "");
 
@@ -1143,18 +1143,18 @@ extern bool luaval_to_std_vector_float(lua_State* L, int lo, std::vector<float>*
  * Get a pointer points to a std::vector<unsigned shortt> from a Lua array table in the stack.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸östd::vector<unsigned short>¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªstd::vector<unsigned short>ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param ret @~english a pointer points to a std::vector<unsigned short>.
- * @~chinese Ö¸Ïòstd::vector<unsigned short>µÄÖ¸Õë¡£
+ * @~chinese æŒ‡å‘std::vector<unsigned short>çš„æŒ‡é’ˆã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_std_vector_ushort(lua_State* L, int lo, std::vector<unsigned short>* ret, const char* funcName = "");
 
@@ -1163,19 +1163,19 @@ extern bool luaval_to_std_vector_ushort(lua_State* L, int lo, std::vector<unsign
  * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `x`, `y`, `z` and `w` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue.Otherwise, the value of members of outValue would be 0.
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öcocos2d::Quaternion¶ÔÏó
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÖĞ¡°x¡±,¡°y¡±¡¢¡°z¡±ºÍ¡°w¡±¼ü´æ£¬²¢ÇÒÏàÓ¦µÄÖµ²»ÎªÁã,ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øcocos2d::Quaternion¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò,¶ÔÓ¦µÄ³ÉÔ±±äÁ¿±»½«±»¸³ÓèÄ¬ÈÏÖµ¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªcocos2d::Quaternionå¯¹è±¡
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableä¸­â€œxâ€,â€œyâ€ã€â€œzâ€å’Œâ€œwâ€é”®å­˜ï¼Œå¹¶ä¸”ç›¸åº”çš„å€¼ä¸ä¸ºé›¶,é‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™cocos2d::Quaternionå¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™,å¯¹åº”çš„æˆå‘˜å˜é‡è¢«å°†è¢«èµ‹äºˆé»˜è®¤å€¼ã€‚
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a cocos2d::Quaternion object which stores the values from the Lua table.
- * @~chinese Ö¸Ïòcocos2d::Quaternion¶ÔÏóµÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLua»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘cocos2d::Quaternionå¯¹è±¡çš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Luaè·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_quaternion(lua_State* L,int lo,cocos2d::Quaternion* outValue, const char* funcName = "");
 
@@ -1184,19 +1184,19 @@ extern bool luaval_to_quaternion(lua_State* L,int lo,cocos2d::Quaternion* outVal
  * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `minFilter`, `magFilter`, `wrapS` and `wrapT` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue.Otherwise, the value of members of outValue would be 0.
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öcocos2d::Texture2D::TexParams¶ÔÏó
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÖĞ¡®minFilter¡¯,¡®magFilter¡¯,¡°wrapS¡±ºÍ¡°wrapT¡±¼ü£¬²¢ÇÒ¶ÔÓ¦µÄÖµ²»ÊÇnil,ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øcocos2d::Texture2D::TexParams¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò,¶ÔÓ¦µÄ³ÉÔ±±äÁ¿±»½«±»¸³ÓèÄ¬ÈÏÖµ¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªcocos2d::Texture2D::TexParamså¯¹è±¡
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableä¸­â€˜minFilterâ€™,â€˜magFilterâ€™,â€œwrapSâ€å’Œâ€œwrapTâ€é”®ï¼Œå¹¶ä¸”å¯¹åº”çš„å€¼ä¸æ˜¯nil,é‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™cocos2d::Texture2D::TexParamså¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™,å¯¹åº”çš„æˆå‘˜å˜é‡è¢«å°†è¢«èµ‹äºˆé»˜è®¤å€¼ã€‚
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a cocos2d::Quaternion object which stores the values from the Lua table.
- * @~chinese Ö¸Ïòcocos2d::Texture2D::TexParamsµÄ¶ÔÏóÖ¸Õë£¬ÓÃÓÚ´æ´¢´ÓLua»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘cocos2d::Texture2D::TexParamsçš„å¯¹è±¡æŒ‡é’ˆï¼Œç”¨äºå­˜å‚¨ä»Luaè·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_texparams(lua_State* L,int lo,cocos2d::Texture2D::TexParams* outValue, const char* funcName = "");
 
@@ -1205,19 +1205,19 @@ extern bool luaval_to_texparams(lua_State* L,int lo,cocos2d::Texture2D::TexParam
  * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `vertices`, `colors`, and `texCoords` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue.
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öcocos2d::V3F_C4B_T2F¶ÔÏó
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÖĞÓĞ¡°vertices¡±,¡°colors¡±,ºÍ¡°texCoords¡±¼ü²¢ÇÒ¶ÔÓ¦µÄÖµ²»ÊÇnil,ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øcocos2d::V3F_C4B_T2F¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò,¶ÔÓ¦µÄ³ÉÔ±±äÁ¿±»½«±»¸³ÓèÄ¬ÈÏÖµ¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªcocos2d::V3F_C4B_T2Få¯¹è±¡
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableä¸­æœ‰â€œverticesâ€,â€œcolorsâ€,å’Œâ€œtexCoordsâ€é”®å¹¶ä¸”å¯¹åº”çš„å€¼ä¸æ˜¯nil,é‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™cocos2d::V3F_C4B_T2Få¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™,å¯¹åº”çš„æˆå‘˜å˜é‡è¢«å°†è¢«èµ‹äºˆé»˜è®¤å€¼ã€‚
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a cocos2d::V3F_C4B_T2F object which stores the values from the Lua table.
- * @~chinese Ö¸Ïòcocos2d:V3F_C4B_T2F¶ÔÏóµÄÖ¸Õë£¬ÓÃÓÚ´¢´æÔÚLua tableÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘cocos2d:V3F_C4B_T2Få¯¹è±¡çš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜åœ¨Lua tableä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_v3f_c4b_t2f(lua_State* L,int lo,cocos2d::V3F_C4B_T2F* outValue, const char* funcName = "");
 
@@ -1227,19 +1227,19 @@ extern bool luaval_to_v3f_c4b_t2f(lua_State* L,int lo,cocos2d::V3F_C4B_T2F* outV
  * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `u`, and `v` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue.Otherwise, the value of members of outValue would be 0.
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸öcocos2d::Tex2F¶ÔÏó
- * Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
- * Èç¹ûtableÖĞÓĞ¡®u¡¯ºÍ¡®v¡¯¼ü²¢ÇÒ¶ÔÓ¦µÄÖµ²»ÊÇnil,ÄÇÃ´ÕâĞ©Öµ»á¸³Öµ¸øcocos2d::Tex2FF¶ÔÏó¶ÔÓ¦µÄ³ÉÔ±±äÁ¿¡£·ñÔò,¶ÔÓ¦µÄ³ÉÔ±±äÁ¿±»½«Ä¬ÈÏ¸³Îª0¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªcocos2d::Tex2Få¯¹è±¡
+ * å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
+ * å¦‚æœtableä¸­æœ‰â€˜uâ€™å’Œâ€˜vâ€™é”®å¹¶ä¸”å¯¹åº”çš„å€¼ä¸æ˜¯nil,é‚£ä¹ˆè¿™äº›å€¼ä¼šèµ‹å€¼ç»™cocos2d::Tex2FFå¯¹è±¡å¯¹åº”çš„æˆå‘˜å˜é‡ã€‚å¦åˆ™,å¯¹åº”çš„æˆå‘˜å˜é‡è¢«å°†é»˜è®¤èµ‹ä¸º0ã€‚
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param outValue @~english the pointer to a cocos2d::Tex2F object which stores the values from the Lua table.
- * @~chinese Ö¸Ïòcocos2d:Tex2F¶ÔÏóµÄÖ¸Õë£¬ÓÃÓÚ´æ´¢´ÓLua tableÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘cocos2d:Tex2Få¯¹è±¡çš„æŒ‡é’ˆï¼Œç”¨äºå­˜å‚¨ä»Lua tableä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_tex2f(lua_State* L, int lo, cocos2d::Tex2F* outValue, const char* funcName = "");
 
@@ -1247,18 +1247,18 @@ extern bool luaval_to_tex2f(lua_State* L, int lo, cocos2d::Tex2F* outValue, cons
  * Get a pointer points to a std::vector<cocos2d::V3F_C4B_T2F> from a Lua array table in the stack.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸östd::vector<cocos2d::V3F_C4B_T2F>
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªstd::vector<cocos2d::V3F_C4B_T2F>
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param ret @~english a pointer points to a std::vector<cocos2d::V3F_C4B_T2F>.
- * @~chinese Ö¸Ïòstd::vector<cocos2d::V3F_C4B_T2F>µÄÖ¸Õë£¬ÓÃÓÚ´¢´æ´ÓLua tableÖĞ»ñÈ¡µÄÖµ¡£
+ * @~chinese æŒ‡å‘std::vector<cocos2d::V3F_C4B_T2F>çš„æŒ‡é’ˆï¼Œç”¨äºå‚¨å­˜ä»Lua tableä¸­è·å–çš„å€¼ã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_std_vector_v3f_c4b_t2f(lua_State* L, int lo, std::vector<cocos2d::V3F_C4B_T2F>* ret, const char* funcName = "");
 
@@ -1266,18 +1266,18 @@ extern bool luaval_to_std_vector_v3f_c4b_t2f(lua_State* L, int lo, std::vector<c
  * Get a pointer points to a std::vector<cocos2d::Vec2> from a Lua array table in the stack.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸östd::vector<cocos2d::cocos2d::Vec2>¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªstd::vector<cocos2d::cocos2d::Vec2>ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param ret @~english a pointer points to a std::vector<cocos2d::Vec2>.
- * @~chinese Ö¸Ïòstd::vector<cocos2d::Vec2>µÄÖ¸Õë¡£
+ * @~chinese æŒ‡å‘std::vector<cocos2d::Vec2>çš„æŒ‡é’ˆã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_std_vector_vec2(lua_State* L, int lo, std::vector<cocos2d::Vec2>* ret, const char* funcName = "");
 
@@ -1285,18 +1285,18 @@ extern bool luaval_to_std_vector_vec2(lua_State* L, int lo, std::vector<cocos2d:
  * Get a pointer points to a std::vector<cocos2d::Vec3> from a Lua array table in the stack.
  *
  * @~chinese 
- * ´Ó¸ø¶¨LuaÕ»Ë÷ÒıÉÏ»ñÈ¡Ò»¸östd::vector<cocos2d::Vec3>¡£
+ * ä»ç»™å®šLuaæ ˆç´¢å¼•ä¸Šè·å–ä¸€ä¸ªstd::vector<cocos2d::Vec3>ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given acceptable index of stack.
- * @~chinese LuaÕ»Ë÷Òı¡£
+ * @~chinese Luaæ ˆç´¢å¼•ã€‚
  * @param ret @~english a pointer points to a std::vector<cocos2d::Vec3>.
- * @~chinese Ö¸Ïòstd::vector<cocos2d::Vec3>µÄÖ¸Õë¡£
+ * @~chinese æŒ‡å‘std::vector<cocos2d::Vec3>çš„æŒ‡é’ˆã€‚
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
- * @~chinese µ÷ÓÃº¯ÊıÃû×Ö£¬µ÷ÊÔÄ£Ê½ÏÂ´íÎóĞÅÏ¢µÄÊä³ö»áÓÃµ½Õâ¸öº¯ÊıÃû×Ö¡£
+ * @~chinese è°ƒç”¨å‡½æ•°åå­—ï¼Œè°ƒè¯•æ¨¡å¼ä¸‹é”™è¯¯ä¿¡æ¯çš„è¾“å‡ºä¼šç”¨åˆ°è¿™ä¸ªå‡½æ•°åå­—ã€‚
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- * @~chinese Èç¹û¸ø¶¨LuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable,·µ»Øtrue,·ñÔò·µ»Øfalse¡£
+ * @~chinese å¦‚æœç»™å®šLuaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtable,è¿”å›true,å¦åˆ™è¿”å›falseã€‚
  */
 extern bool luaval_to_std_vector_vec3(lua_State* L, int lo, std::vector<cocos2d::Vec3>* ret, const char* funcName = "");
 
@@ -1309,7 +1309,7 @@ extern bool luaval_to_std_map_string_string(lua_State* L, int lo, std::map<std::
 /**
  * @name native_to_luaval
  * @~english The following function are all used to convert native c++ values to the the corresponding Lua values,then push it into the Lua stack.
- * @~chinese ÒÔÏÂº¯Êı¶¼ÊÇÓÃÓÚ½«native c++µÄÖµ×ª»»³É¶ÔÓ¦LuaÖĞÊ¹ÓÃµÄÖµ£¬²¢ÇÒ×ª»»ºóµÄÖµ½«±»Ñ¹Èëµ½LuaÕ»ÖĞ
+ * @~chinese ä»¥ä¸‹å‡½æ•°éƒ½æ˜¯ç”¨äºå°†native c++çš„å€¼è½¬æ¢æˆå¯¹åº”Luaä¸­ä½¿ç”¨çš„å€¼ï¼Œå¹¶ä¸”è½¬æ¢åçš„å€¼å°†è¢«å‹å…¥åˆ°Luaæ ˆä¸­
  * @{
  **/
 
@@ -1318,13 +1318,13 @@ extern bool luaval_to_std_map_string_string(lua_State* L, int lo, std::map<std::
  * The format of table as follows: {x=numberValue1, y=numberValue2}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::Vec2¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{ x = numberValue1,y = numberValue2 }
+ * å°†ä¸€ä¸ªcocos2d::Vec2å¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{ x = numberValue1,y = numberValue2 }
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param vec2  @~english a cocos2d::Vec2 object.
- * @~chinese cocos2d::Vec2¶ÔÏó¡£
+ * @~chinese cocos2d::Vec2å¯¹è±¡ã€‚
  */
 extern void vec2_to_luaval(lua_State* L,const cocos2d::Vec2& vec2);
 
@@ -1333,13 +1333,13 @@ extern void vec2_to_luaval(lua_State* L,const cocos2d::Vec2& vec2);
  * The format of table as follows: {x=numberValue1, y=numberValue2, z=numberValue3}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::Vec2¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{ x = numberValue1,y = numberValue2,z = numberValue3 }
+ * å°†ä¸€ä¸ªcocos2d::Vec2å¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{ x = numberValue1,y = numberValue2,z = numberValue3 }
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param vec3  @~english a cocos2d::Vec3 object.
- * @~chinese cocos2d::Vec3¶ÔÏó¡£
+ * @~chinese cocos2d::Vec3å¯¹è±¡ã€‚
  */
 extern void vec3_to_luaval(lua_State* L,const cocos2d::Vec3& vec3);
 
@@ -1348,13 +1348,13 @@ extern void vec3_to_luaval(lua_State* L,const cocos2d::Vec3& vec3);
  * The format of table as follows: {x=numberValue1, y=numberValue2, z=numberValue3, w=numberValue4}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::Vec4¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{ x = numberValue1,y = numberValue2,z = numberValue3,w = numberValue4 }
+ * å°†ä¸€ä¸ªcocos2d::Vec4å¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{ x = numberValue1,y = numberValue2,z = numberValue3,w = numberValue4 }
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param vec4  @~english a cocos2d::Vec4 object.
- * @~chinese cocos2d::Vec4¶ÔÏó¡£
+ * @~chinese cocos2d::Vec4å¯¹è±¡ã€‚
  */
 extern void vec4_to_luaval(lua_State* L,const cocos2d::Vec4& vec4);
 
@@ -1364,16 +1364,16 @@ extern void vec4_to_luaval(lua_State* L,const cocos2d::Vec4& vec4);
  * The format of table as follows: {vec2_table1,vec2_table2,...,vec2_tableCount}.
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::Vec2µÄÊı×é×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ´óĞ¡Îªcount¡£
- * ±íµÄ¸ñÊ½ÈçÏÂ:{ vec2_table1 vec2_table2,¡­,vec2_tableCount }¡£
+ * å°†ä¸€ä¸ªcocos2d::Vec2çš„æ•°ç»„è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„å¤§å°ä¸ºcountã€‚
+ * è¡¨çš„æ ¼å¼å¦‚ä¸‹:{ vec2_table1 vec2_table2,â€¦,vec2_tableCount }ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param points @~english a pointer points to a cocos2d::Vec2 array.
- * @~chinese Ö¸Ïòcocos2d:Vec2µÄÊı×éÖ¸Õë¡£
+ * @~chinese æŒ‡å‘cocos2d:Vec2çš„æ•°ç»„æŒ‡é’ˆã€‚
  * @param count @~english the number of cocos2d::Vec2 object should be converted to a Lua table.
- * @~chinese ĞèÒª±»×ª»»µ½Lua tableÖĞµÄcocos2d::Vec2ÊıÁ¿¡£
+ * @~chinese éœ€è¦è¢«è½¬æ¢åˆ°Lua tableä¸­çš„cocos2d::Vec2æ•°é‡ã€‚
  */
 extern void vec2_array_to_luaval(lua_State* L,const cocos2d::Vec2* points, int count);
 
@@ -1382,13 +1382,13 @@ extern void vec2_array_to_luaval(lua_State* L,const cocos2d::Vec2* points, int c
  * The format of table as follows: {width=numberValue1, height=numberValue2}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::Size¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{ width= numberValue1, height = numberValue2}
+ * å°†ä¸€ä¸ªcocos2d::Sizeå¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{ width= numberValue1, height = numberValue2}
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param sz  @~english a cocos2d::Size object.
- * @~chinese cocos2d::Size¶ÔÏó
+ * @~chinese cocos2d::Sizeå¯¹è±¡
  */
 extern void size_to_luaval(lua_State* L,const Size& sz);
 
@@ -1397,13 +1397,13 @@ extern void size_to_luaval(lua_State* L,const Size& sz);
  * The format of table as follows: {x=numberValue1, y=numberValue2, width=numberValue3, height=numberValue4}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::Rec¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{x=numberValue1,y=numberValue2, width=numberValue3, height=numberValue4}
+ * å°†ä¸€ä¸ªcocos2d::Recå¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{x=numberValue1,y=numberValue2, width=numberValue3, height=numberValue4}
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param rt  @~english a cocos2d::Rect object.
- * @~chinese cocos2d::Rect¶ÔÏó¡£
+ * @~chinese cocos2d::Rectå¯¹è±¡ã€‚
  */
 extern void rect_to_luaval(lua_State* L,const Rect& rt);
 
@@ -1412,13 +1412,13 @@ extern void rect_to_luaval(lua_State* L,const Rect& rt);
  * The format of table as follows: {r=numberValue1, g=numberValue2, b=numberValue3}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::Color3B¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{ r = numberValue1,g = numberValue2,b = numberValue3 }
+ * å°†ä¸€ä¸ªcocos2d::Color3Bå¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{ r = numberValue1,g = numberValue2,b = numberValue3 }
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param cc  @~english a cocos2d::Color3B object.
- * @~chinese cocos2d::Color3B¶ÔÏó¡£
+ * @~chinese cocos2d::Color3Bå¯¹è±¡ã€‚
  */
 extern void color3b_to_luaval(lua_State* L,const Color3B& cc);
 
@@ -1427,13 +1427,13 @@ extern void color3b_to_luaval(lua_State* L,const Color3B& cc);
  * The format of table as follows: {r=numberValue1, g=numberValue2, b=numberValue3, a=numberValue4}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::Color4B¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{r=numberValue1,g=numberValue2,b=numberValue3, a=numberValue4}
+ * å°†ä¸€ä¸ªcocos2d::Color4Bå¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{r=numberValue1,g=numberValue2,b=numberValue3, a=numberValue4}
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param cc @~english a cocos2d::Color4B object.
- * @~chinese cocos2d::Color4B¶ÔÏó¡£
+ * @~chinese cocos2d::Color4Bå¯¹è±¡ã€‚
  */
 extern void color4b_to_luaval(lua_State* L,const Color4B& cc);
 
@@ -1442,13 +1442,13 @@ extern void color4b_to_luaval(lua_State* L,const Color4B& cc);
  * The format of table as follows: {r=numberValue1, g=numberValue2, b=numberValue3, a=numberValue4}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::Color4F¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{ r=numberValue1,g=numberValue2,b=numberValue3,a=numberValue4 }
+ * å°†ä¸€ä¸ªcocos2d::Color4Få¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{ r=numberValue1,g=numberValue2,b=numberValue3,a=numberValue4 }
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param cc @~english a cocos2d::Color4F object.
- * @~chinese cocos2d::Color4F¶ÔÏó¡£
+ * @~chinese cocos2d::Color4Få¯¹è±¡ã€‚
  */
 extern void color4f_to_luaval(lua_State* L,const Color4F& cc);
 #if CC_USE_PHYSICS
@@ -1458,13 +1458,13 @@ extern void color4f_to_luaval(lua_State* L,const Color4F& cc);
  * The format of table as follows: {density=numberValue1, restitution=numberValue2, friction=numberValue3}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::PhysicsMaterial¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{density=numberValue1, restitution=numberValue2, friction=numberValue3 }
+ * å°†ä¸€ä¸ªcocos2d::PhysicsMaterialå¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{density=numberValue1, restitution=numberValue2, friction=numberValue3 }
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param pm @~english a cocos2d::PhysicsMaterial object.
- * @~chinese cocos2d::PhysicsMaterial¶ÔÏó¡£
+ * @~chinese cocos2d::PhysicsMaterialå¯¹è±¡ã€‚
  */
 extern void physics_material_to_luaval(lua_State* L,const PhysicsMaterial& pm);
 
@@ -1473,13 +1473,13 @@ extern void physics_material_to_luaval(lua_State* L,const PhysicsMaterial& pm);
  * The format of table as follows: {shape=userdata, start=vec2_table1, ended=vec2_table2, contact=vec2_table3, normal=vec2_table4, fraction=numberValue}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::PhysicsRayCastInfo¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{shape=userdata,start=vec2_table1, ended=vec2_table2, contact=vec2_table3, normal=vec2_table4, fraction=numberValue}
+ * å°†ä¸€ä¸ªcocos2d::PhysicsRayCastInfoå¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{shape=userdata,start=vec2_table1, ended=vec2_table2, contact=vec2_table3, normal=vec2_table4, fraction=numberValue}
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param info @~english a cocos2d::PhysicsRayCastInfo object.
- * @~chinese cocos2d::PhysicsRayCastInfo¶ÔÏó¡£
+ * @~chinese cocos2d::PhysicsRayCastInfoå¯¹è±¡ã€‚
  */
 extern void physics_raycastinfo_to_luaval(lua_State* L, const PhysicsRayCastInfo& info);
 
@@ -1488,13 +1488,13 @@ extern void physics_raycastinfo_to_luaval(lua_State* L, const PhysicsRayCastInfo
  * The format of table as follows: {points=vec2_array_table, normal=vec2_table, POINT_MAX=numberValue}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::PhysicsContactData¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * ±íµÄ¸ñÊ½ÈçÏÂ:{points=vec2_array_table, normal=vec2_table, POINT_MAX=numberValue}
+ * å°†ä¸€ä¸ªcocos2d::PhysicsContactDataå¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * è¡¨çš„æ ¼å¼å¦‚ä¸‹:{points=vec2_array_table, normal=vec2_table, POINT_MAX=numberValue}
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param data @~english a cocos2d::PhysicsContactData object.
- * @~chinese cocos2d::PhysicsContactData¶ÔÏó¡£
+ * @~chinese cocos2d::PhysicsContactDataå¯¹è±¡ã€‚
  */
 extern void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData* data);
 #endif //#if CC_USE_PHYSICS
@@ -1504,13 +1504,13 @@ extern void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData
  * The format of table as follows: {a=numberValue1, b=numberValue2, c=numberValue3, d=numberValue4,tx=numberValue5, ty=numberValue6}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::AffineTransform¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{a=numberValue1, b=numberValue2, c=numberValue3, d=numberValue4,tx=numberValue5, ty=numberValue6}
+ * å°†ä¸€ä¸ªcocos2d::AffineTransformå¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{a=numberValue1, b=numberValue2, c=numberValue3, d=numberValue4,tx=numberValue5, ty=numberValue6}
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param inValue @~english a cocos2d::AffineTransform object.
- * @~chinese cocos2d::AffineTransform¶ÔÏó¡£
+ * @~chinese cocos2d::AffineTransformå¯¹è±¡ã€‚
  */
 extern void affinetransform_to_luaval(lua_State* L,const AffineTransform& inValue);
 
@@ -1519,13 +1519,13 @@ extern void affinetransform_to_luaval(lua_State* L,const AffineTransform& inValu
  * The format of table as follows: {fontName=stringValue1, fontSize=numberValue1, fontAlignmentH=numberValue2, fontAlignmentV=numberValue3,fontFillColor=color3b_table1, fontDimensions=size_table1, shadowEnabled=booleanValue1, shadowOffset=size_table2, shadowBlur=numberValue4, shadowOpacity=numberValue5, shadowEnabled=booleanValue2, strokeColor=color3b_table2, strokeSize=size_table3}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::FontDefinition¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{{fontName=stringValue1, fontSize=numberValue1, fontAlignmentH=numberValue2, fontAlignmentV=numberValue3,fontFillColor=color3b_table1, fontDimensions=size_table1, shadowEnabled=booleanValue1, shadowOffset=size_table2, shadowBlur=numberValue4, shadowOpacity=numberValue5, shadowEnabled=booleanValue2, strokeColor=color3b_table2, strokeSize=size_table3}
+ * å°†ä¸€ä¸ªcocos2d::FontDefinitionå¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{{fontName=stringValue1, fontSize=numberValue1, fontAlignmentH=numberValue2, fontAlignmentV=numberValue3,fontFillColor=color3b_table1, fontDimensions=size_table1, shadowEnabled=booleanValue1, shadowOffset=size_table2, shadowBlur=numberValue4, shadowOpacity=numberValue5, shadowEnabled=booleanValue2, strokeColor=color3b_table2, strokeSize=size_table3}
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param inValue @~english a cocos2d::FontDefinition object.
- * @~chinese cocos2d::FontDefinition¶ÔÏó¡£
+ * @~chinese cocos2d::FontDefinitionå¯¹è±¡ã€‚
  */
 extern void fontdefinition_to_luaval(lua_State* L,const FontDefinition& inValue);
 
@@ -1538,13 +1538,13 @@ extern void dictionary_to_luaval(lua_State* L, __Dictionary* dict);
  * The format of table as follows: {numberValue1, numberValue2, ..., numberValue16}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::Mat4¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * ±íµÄ¸ñÊ½ÈçÏÂ:{ numberValue1,numberValue2,¡­,numberValue16 }
+ * å°†ä¸€ä¸ªcocos2d::Mat4å¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * è¡¨çš„æ ¼å¼å¦‚ä¸‹:{ numberValue1,numberValue2,â€¦,numberValue16 }
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param mat @~english a cocos2d::Mat4 object.
- * @~chinese cocos2d::Mat4¶ÔÏó¡£
+ * @~chinese cocos2d::Mat4å¯¹è±¡ã€‚
  */
 extern void mat4_to_luaval(lua_State* L, const cocos2d::Mat4& mat);
 
@@ -1553,13 +1553,13 @@ extern void mat4_to_luaval(lua_State* L, const cocos2d::Mat4& mat);
  * The format of table as follows: {src=numberValue1, dst=numberValue2}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::BlendFunc¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{ src=numberValue1,dst=numberValue2 }
+ * å°†ä¸€ä¸ªcocos2d::BlendFuncå¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{ src=numberValue1,dst=numberValue2 }
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param func @~english a cocos2d::BlendFunc object.
- * @~chinese cocos2d::BlendFunc¶ÔÏó¡£
+ * @~chinese cocos2d::BlendFuncå¯¹è±¡ã€‚
  */
 extern void blendfunc_to_luaval(lua_State* L, const cocos2d::BlendFunc& func);
 
@@ -1568,13 +1568,13 @@ extern void blendfunc_to_luaval(lua_State* L, const cocos2d::BlendFunc& func);
  * The format of table as follows: {fontFilePath=stringValue1, fontSize=numberValue1, glyphs=numberValue2, customGlyphs=stringValue2,distanceFieldEnabled=booleanValue1, outlineSize=numberValue3}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::TTFConfig¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{fontFilePath=stringValue1, fontSize=numberValue1, glyphs=numberValue2, customGlyphs=stringValue2,distanceFieldEnabled=booleanValue1, outlineSize=numberValue3}
+ * å°†ä¸€ä¸ªcocos2d::TTFConfigå¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{fontFilePath=stringValue1, fontSize=numberValue1, glyphs=numberValue2, customGlyphs=stringValue2,distanceFieldEnabled=booleanValue1, outlineSize=numberValue3}
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param config @~english a cocos2d::TTFConfig object.
- * @~chinese cocos2d::TTFConfig¶ÔÏó¡£
+ * @~chinese cocos2d::TTFConfigå¯¹è±¡ã€‚
  */
 extern void ttfconfig_to_luaval(lua_State* L, const cocos2d::TTFConfig& config);
 
@@ -1583,13 +1583,13 @@ extern void ttfconfig_to_luaval(lua_State* L, const cocos2d::TTFConfig& config);
  * The format of table as follows: {location=numberValue1, size=numberValue2, type=numberValue3, name=stringValue1}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::Uniform¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{location=numberValue1, size=numberValue2, type=numberValue3, name=stringValue1}
+ * å°†ä¸€ä¸ªcocos2d::Uniformå¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{location=numberValue1, size=numberValue2, type=numberValue3, name=stringValue1}
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param uniform @~english a cocos2d::Uniform object.
- * @~chinese cocos2d::Uniform¶ÔÏó¡£
+ * @~chinese cocos2d::Uniformå¯¹è±¡ã€‚
  */
 extern void uniform_to_luaval(lua_State* L, const cocos2d::Uniform& uniform);
 
@@ -1598,13 +1598,13 @@ extern void uniform_to_luaval(lua_State* L, const cocos2d::Uniform& uniform);
  * The format of table as follows: {index=numberValue1, size=numberValue2, type=numberValue3, name=stringValue1}
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::VertexAttrib¶ÔÏó×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{index=numberValue1, size=numberValue2, type=numberValue3, name=stringValue1}
+ * å°†ä¸€ä¸ªcocos2d::VertexAttribå¯¹è±¡è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{index=numberValue1, size=numberValue2, type=numberValue3, name=stringValue1}
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param verAttrib @~english a cocos2d::VertexAttrib object.
- * @~chinese cocos2d::VertexAttrib¶ÔÏó¡£
+ * @~chinese cocos2d::VertexAttribå¯¹è±¡ã€‚
  */
 extern void vertexattrib_to_luaval(lua_State* L, const cocos2d::VertexAttrib& verAttrib);
 
@@ -1626,14 +1626,14 @@ CC_DEPRECATED_ATTRIBUTE static inline void points_to_luaval(lua_State* L,const c
  * The object in the cocos2d::Vector which would be pushed into the table should be Ref type.
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::Vector<T>×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ: {userdata1, userdata2,... UserdataVectorSize},
- * cocos2d:VectorÖĞµÄType T¶ÔÏóĞèÒªÊÇRefÀàĞÍ¡£
+ * å°†ä¸€ä¸ªcocos2d::Vector<T>è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹: {userdata1, userdata2,... UserdataVectorSize},
+ * cocos2d:Vectorä¸­çš„Type Tå¯¹è±¡éœ€è¦æ˜¯Refç±»å‹ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param inValue @~english a cocos2d::Vector object.
- * @~chinese cocos2d::Vector<T>¶ÔÏó¡£
+ * @~chinese cocos2d::Vector<T>å¯¹è±¡ã€‚
  */
 template <class T>
 void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
@@ -1673,14 +1673,14 @@ void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
  * The object in the cocos2d::Map which would be pushed into the table should be Ref type.
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::Map<std::string, T>×ª»»³ÉLua table,È»ºó½«ÆäÑ¹ÈëLuaÕ»ÖĞ¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{name1=userdata1, name2=userdata2, ..., nameMapSize=userdataMapSize}
- * cocos2d::MapÖĞµÄType T¶ÔÏóĞèÒªÎªRefÀàĞÍ¡£
+ * å°†ä¸€ä¸ªcocos2d::Map<std::string, T>è½¬æ¢æˆLua table,ç„¶åå°†å…¶å‹å…¥Luaæ ˆä¸­ã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{name1=userdata1, name2=userdata2, ..., nameMapSize=userdataMapSize}
+ * cocos2d::Mapä¸­çš„Type Tå¯¹è±¡éœ€è¦ä¸ºRefç±»å‹ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param v @~english a cocos2d::Map object.
- * @~chinese cocos2d::Map<std::string, T>¶ÔÏó¡£
+ * @~chinese cocos2d::Map<std::string, T>å¯¹è±¡ã€‚
  */
 template <class T>
 void ccmap_string_key_to_luaval(lua_State* L, const cocos2d::Map<std::string, T>& v)
@@ -1722,20 +1722,20 @@ void ccmap_string_key_to_luaval(lua_State* L, const cocos2d::Map<std::string, T>
  * Value::Type::INT_KEY_MAP -> push a hash table into the Lua stack.
  *
  * @~chinese 
- * ½«Ò»¸öcocos2d::Value¶ÔÏó×ª»»³É¶ÔÓ¦µÄLuaÖµÑ¹ÈëLuaÕ»ÖĞ¡£
- * cocos2d::ValueµÄÀàĞÍ²»Í¬£¬Ñ¹ÈëLuaÕ»µÄLuaÖµÒ²²»Ò»Í¬¡£
- * Value::Type::BOOLEAN -> °ÑÒ»¸öboolÖµÑ¹ÈëLuaÕ»¡£
- * Value::Type::FLOAT -> °ÑÒ»¸ölua_NumberÖµÑ¹ÈëLuaÕ»¡£
- * Value::Type::INTEGER -> °ÑÒ»¸öintegerÖµÑ¹ÈëLuaÕ»¡£
- * Value::Type::STRING -> °ÑÒ»¸ö×Ö·û´®Ñ¹ÈëLuaÕ»¡£
- * Value::Type::VECTOR -> °ÑÒ»¸öÊı×étableÑ¹ÈëLuaÕ»¡£
- * Value::Type::MAP -> °ÑÒ»¸öhash-tableÑ¹ÈëLuaÕ»¡£
- * Value::Type::INT_KEY_MAP -> °ÑÒ»¸öhash-tableÑ¹ÈëLuaÕ»¡£
+ * å°†ä¸€ä¸ªcocos2d::Valueå¯¹è±¡è½¬æ¢æˆå¯¹åº”çš„Luaå€¼å‹å…¥Luaæ ˆä¸­ã€‚
+ * cocos2d::Valueçš„ç±»å‹ä¸åŒï¼Œå‹å…¥Luaæ ˆçš„Luaå€¼ä¹Ÿä¸ä¸€åŒã€‚
+ * Value::Type::BOOLEAN -> æŠŠä¸€ä¸ªboolå€¼å‹å…¥Luaæ ˆã€‚
+ * Value::Type::FLOAT -> æŠŠä¸€ä¸ªlua_Numberå€¼å‹å…¥Luaæ ˆã€‚
+ * Value::Type::INTEGER -> æŠŠä¸€ä¸ªintegerå€¼å‹å…¥Luaæ ˆã€‚
+ * Value::Type::STRING -> æŠŠä¸€ä¸ªå­—ç¬¦ä¸²å‹å…¥Luaæ ˆã€‚
+ * Value::Type::VECTOR -> æŠŠä¸€ä¸ªæ•°ç»„tableå‹å…¥Luaæ ˆã€‚
+ * Value::Type::MAP -> æŠŠä¸€ä¸ªhash-tableå‹å…¥Luaæ ˆã€‚
+ * Value::Type::INT_KEY_MAP -> æŠŠä¸€ä¸ªhash-tableå‹å…¥Luaæ ˆã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param inValue @~english a cocos2d::Value object.
- * @~chinese ccocos2d::Value¶ÔÏó¡£
+ * @~chinese ccocos2d::Valueå¯¹è±¡ã€‚
  */
 void ccvalue_to_luaval(lua_State* L,const cocos2d::Value& inValue);
 
@@ -1744,43 +1744,43 @@ void ccvalue_to_luaval(lua_State* L,const cocos2d::Value& inValue);
  * The type of value of the key/value pair would be Value::Type::BOOLEAN,Value::Type::FLOAT,Value::Type::DOUBLE,Value::Type::INTEGER,Value::Type::STRING,Value::Type::VECTOR,Value::Type::MAP,Value::Type::INT_KEY_MAP.
  *
  * @~chinese 
- * ½«Ò»¸ö´Ócocos2d::ValueMap×ª»»¶øÀ´µÄhash-tableÑ¹ÈëLuaÕ»¡£
- * key/value¶ÔÖĞÖµµÄÀàĞÍ¿ÉÒÔÊÇValue::Type::BOOLEAN,Value::Type::FLOAT£¬Value::Type::DOUBLE£¬ Value::Type::INTEGER£¬Value::Type::STRING£¬Value::Type::VECTOR, Value::Type::MAP£¬Value::Type::INT_KEY_MAP¡£
+ * å°†ä¸€ä¸ªä»cocos2d::ValueMapè½¬æ¢è€Œæ¥çš„hash-tableå‹å…¥Luaæ ˆã€‚
+ * key/valueå¯¹ä¸­å€¼çš„ç±»å‹å¯ä»¥æ˜¯Value::Type::BOOLEAN,Value::Type::FLOATï¼ŒValue::Type::DOUBLEï¼Œ Value::Type::INTEGERï¼ŒValue::Type::STRINGï¼ŒValue::Type::VECTOR, Value::Type::MAPï¼ŒValue::Type::INT_KEY_MAPã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param inValue @~english a cocos2d::ValueMap object.
- * @~chinese cocos2d::ValueMap¶ÔÏó¡£
+ * @~chinese cocos2d::ValueMapå¯¹è±¡ã€‚
  */
 void ccvaluemap_to_luaval(lua_State* L,const cocos2d::ValueMap& inValue);
 
 /**@~english
  * Push a Lua hash table converted from a cocos2d::ValueMapIntKey object into the Lua stack.
- * The type of value of the key/value pair would be Value::Type::BOOLEAN,Value::Type::FLOAT£¬Value::Type::DOUBLE£¬ Value::Type::INTEGER£¬Value::Type::STRING£¬Value::Type::VECTOR, Value::Type::MAP£¬Value::Type::INT_KEY_MAP.
+ * The type of value of the key/value pair would be Value::Type::BOOLEAN,Value::Type::FLOATï¼ŒValue::Type::DOUBLEï¼Œ Value::Type::INTEGERï¼ŒValue::Type::STRINGï¼ŒValue::Type::VECTOR, Value::Type::MAPï¼ŒValue::Type::INT_KEY_MAP.
  *
  * @~chinese 
- * ½«Ò»¸ö´Ócocos2d::ValueMapIntKey×ª»»¶øÀ´µÄhash-tableÑ¹ÈëLuaÕ»¡£
- * ¼ü/Öµ¶ÔÖĞÖµµÄÀàĞÍ¿ÉÒÔÊÇValue::Type::BOOLEAN,Value::Type::FLOAT£¬Value::Type::DOUBLE£¬ Value::Type::INTEGER£¬Value::Type::STRING£¬Value::Type::VECTOR, Value::Type::MAP£¬Value::Type::INT_KEY_MAP¡£
+ * å°†ä¸€ä¸ªä»cocos2d::ValueMapIntKeyè½¬æ¢è€Œæ¥çš„hash-tableå‹å…¥Luaæ ˆã€‚
+ * é”®/å€¼å¯¹ä¸­å€¼çš„ç±»å‹å¯ä»¥æ˜¯Value::Type::BOOLEAN,Value::Type::FLOATï¼ŒValue::Type::DOUBLEï¼Œ Value::Type::INTEGERï¼ŒValue::Type::STRINGï¼ŒValue::Type::VECTOR, Value::Type::MAPï¼ŒValue::Type::INT_KEY_MAPã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param inValue @~english a cocos2d::ValueMapIntKey object.
- * @~chinese cocos2d::ValueMapIntKey¶ÔÏó¡£
+ * @~chinese cocos2d::ValueMapIntKeyå¯¹è±¡ã€‚
  */
 void ccvaluemapintkey_to_luaval(lua_State* L, const cocos2d::ValueMapIntKey& inValue);
 
 /**@~english
  * Push a Lua array table converted from a cocos2d::ValueVector object into the Lua stack.
- * The type of value of the Vector would be Value::Type::BOOLEAN,Value::Type::FLOAT£¬Value::Type::DOUBLE£¬ Value::Type::INTEGER£¬Value::Type::STRING£¬Value::Type::VECTOR, Value::Type::MAP£¬Value::Type::INT_KEY_MAP.
+ * The type of value of the Vector would be Value::Type::BOOLEAN,Value::Type::FLOATï¼ŒValue::Type::DOUBLEï¼Œ Value::Type::INTEGERï¼ŒValue::Type::STRINGï¼ŒValue::Type::VECTOR, Value::Type::MAPï¼ŒValue::Type::INT_KEY_MAP.
  *
  * @~chinese 
- * ½«Ò»¸ö´Ócocos2d::ValueVector×ª»»¶øÀ´µÄarray tableÑ¹ÈëLuaÕ»¡£
- * Êı×éÖĞµÄÖµÀàĞÍ¿ÉÒÔÊÇValue::Type::BOOLEAN,Value::Type::FLOAT£¬Value::Type::DOUBLE£¬ Value::Type::INTEGER£¬Value::Type::STRING£¬Value::Type::VECTOR, Value::Type::MAP£¬Value::Type::INT_KEY_MAP¡£
+ * å°†ä¸€ä¸ªä»cocos2d::ValueVectorè½¬æ¢è€Œæ¥çš„array tableå‹å…¥Luaæ ˆã€‚
+ * æ•°ç»„ä¸­çš„å€¼ç±»å‹å¯ä»¥æ˜¯Value::Type::BOOLEAN,Value::Type::FLOATï¼ŒValue::Type::DOUBLEï¼Œ Value::Type::INTEGERï¼ŒValue::Type::STRINGï¼ŒValue::Type::VECTOR, Value::Type::MAPï¼ŒValue::Type::INT_KEY_MAPã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param inValue @~english a cocos2d::ValueVector object.
- * @~chinese cocos2d::ValueVector¶ÔÏó¡£
+ * @~chinese cocos2d::ValueVectorå¯¹è±¡ã€‚
  */
 void ccvaluevector_to_luaval(lua_State* L, const cocos2d::ValueVector& inValue);
 
@@ -1791,15 +1791,15 @@ void ccvaluevector_to_luaval(lua_State* L, const cocos2d::ValueVector& inValue);
  * Because all override functions wouldn't be bound,so we must use `typeid` to get the real typename.
  *
  * @~chinese 
- * »ñÈ¡ret¶ÔÏóµÄÕæÊµtypename¡£
- * ÒòÎªËùÓĞoverrideº¯Êı¶¼²»»á±»°ó¶¨,ËùÒÔÎÒÃÇ±ØĞëÊ¹ÓÃ¡°typeid¡±À´»ñÈ¡ÕæÊµµÄµÄtypename¡£
+ * è·å–retå¯¹è±¡çš„çœŸå®typenameã€‚
+ * å› ä¸ºæ‰€æœ‰overrideå‡½æ•°éƒ½ä¸ä¼šè¢«ç»‘å®š,æ‰€ä»¥æˆ‘ä»¬å¿…é¡»ä½¿ç”¨â€œtypeidâ€æ¥è·å–çœŸå®çš„çš„typenameã€‚
  * 
  * @param ret @~english the pointer points to a type T object.
- * @~chinese Ö¸Ïòtype T¶ÔÏóµÄÖ¸Õë¡£
+ * @~chinese æŒ‡å‘type Tå¯¹è±¡çš„æŒ‡é’ˆã€‚
  * @param type @~english the string pointer points to specified typename.
- * @~chinese ÌØ¶¨typenameµÄ×Ö·û´®Ö¸Õë¡£
+ * @~chinese ç‰¹å®štypenameçš„å­—ç¬¦ä¸²æŒ‡é’ˆã€‚
  * @return @~english return the pointer points to the real typename, or nullptr.
- * @~chinese ·µ»ØÖ¸ÏòÕæÊµtypenameµÄ×Ö·û´®Ö¸Õë»òÕßnullptr¡£
+ * @~chinese è¿”å›æŒ‡å‘çœŸå®typenameçš„å­—ç¬¦ä¸²æŒ‡é’ˆæˆ–è€…nullptrã€‚
  */
 template <class T>
 const char* getLuaTypeName(T* ret,const char* type)
@@ -1825,15 +1825,15 @@ const char* getLuaTypeName(T* ret,const char* type)
  * Push the native object by userdata format into the Lua stack.@see toluafix_pushusertype_ccobject and tolua_pushusertype. if the native object is nullptr, push a nil value to the Lua stack
  *
  * @~chinese
- * ½«Ò»¸önative¶ÔÏóÒÔLua userdataµÄĞÎÊ½Ñ¹Èëµ½LuaÕ»ÖĞ¡£@see toluafix_pushusertype_ccobject and tolua_pushusertype¡£Èç¹ûnative¶ÔÏóÎªnullptr,Ôò½«Ò»¸önilÖµÑ¹ÈëLuaÕ»ÖĞ¡£
+ * å°†ä¸€ä¸ªnativeå¯¹è±¡ä»¥Lua userdataçš„å½¢å¼å‹å…¥åˆ°Luaæ ˆä¸­ã€‚@see toluafix_pushusertype_ccobject and tolua_pushusertypeã€‚å¦‚æœnativeå¯¹è±¡ä¸ºnullptr,åˆ™å°†ä¸€ä¸ªnilå€¼å‹å…¥Luaæ ˆä¸­ã€‚
  * 
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param type @~english the string pointer points to the typename.
- * @~chinese typename×Ö·û´®¡£
+ * @~chinese typenameå­—ç¬¦ä¸²ã€‚
  * @param ret @~english the native object pointer.
- * @~chinese native¶ÔÏóÖ¸Õë¡£
+ * @~chinese nativeå¯¹è±¡æŒ‡é’ˆã€‚
  */
 template <class T>
 void object_to_luaval(lua_State* L,const char* type, T* ret)
@@ -1864,13 +1864,13 @@ void object_to_luaval(lua_State* L,const char* type, T* ret)
  * The format of table as follows: {size=numberValue1, type=numberValue2, vertexAttrib=numberValue3, attribSizeBytes=numberValue4}
  *
  * @~chinese 
- * ½«´Ócocos2d::MeshVertexAttrib×ª»»³ÉµÄLua tableÑ¹Èëµ½LuaÕ»¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{size=numberValue1, type=numberValue2, vertexAttrib=numberValue3, attribSizeBytes=numberValue4}¡£
+ * å°†ä»cocos2d::MeshVertexAttribè½¬æ¢æˆçš„Lua tableå‹å…¥åˆ°Luaæ ˆã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{size=numberValue1, type=numberValue2, vertexAttrib=numberValue3, attribSizeBytes=numberValue4}ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param inValue @~english a cocos2d::MeshVertexAttrib object.
- * @~chinese cocos2d::MeshVertexAttrib¶ÔÏó¡£
+ * @~chinese cocos2d::MeshVertexAttribå¯¹è±¡ã€‚
  */
 void mesh_vertex_attrib_to_luaval(lua_State* L, const cocos2d::MeshVertexAttrib& inValue);
 
@@ -1879,13 +1879,13 @@ void mesh_vertex_attrib_to_luaval(lua_State* L, const cocos2d::MeshVertexAttrib&
  * The format of table as follows: {stringValue1, stringValue2, ..., stringVectorSize}
  *
  * @~chinese 
- * ½«´Óstd::vector<std::string>×ª»»³ÉµÄLua array tableÑ¹Èëµ½LuaÕ»¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{stringValue1, stringValue2, ..., stringVectorSize}
+ * å°†ä»std::vector<std::string>è½¬æ¢æˆçš„Lua array tableå‹å…¥åˆ°Luaæ ˆã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{stringValue1, stringValue2, ..., stringVectorSize}
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param inValue @~english a std::vector<std::string> value.
- * @~chinese std::vector< std::string>Öµ¡£
+ * @~chinese std::vector< std::string>å€¼ã€‚
  */
 void ccvector_std_string_to_luaval(lua_State* L, const std::vector<std::string>& inValue);
 
@@ -1894,13 +1894,13 @@ void ccvector_std_string_to_luaval(lua_State* L, const std::vector<std::string>&
  * The format of table as follows: {numberValue1, numberValue2, ..., numberVectorSize}
  *
  * @~chinese 
- * ½«´Óstd::vector<int>×ª»»³ÉµÄLua array tableÑ¹Èëµ½LuaÕ»¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{numberValue1,numberValue2,¡­,numberVectorSize}
+ * å°†ä»std::vector<int>è½¬æ¢æˆçš„Lua array tableå‹å…¥åˆ°Luaæ ˆã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{numberValue1,numberValue2,â€¦,numberVectorSize}
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param inValue @~english a std::vector<int> vaule.
- * @~chinese std::vector<int>Öµ¡£
+ * @~chinese std::vector<int>å€¼ã€‚
  */
 void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue);
 
@@ -1909,13 +1909,13 @@ void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue);
  * The format of table as follows: {numberValue1, numberValue2, ..., numberVectorSize}
  *
  * @~chinese 
- * ½«´Óstd::vector<float>×ª»»³ÉµÄLua array tableÑ¹Èëµ½LuaÕ»¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{numberValue1, numberValue2, ..., numberVectorSize}
+ * å°†ä»std::vector<float>è½¬æ¢æˆçš„Lua array tableå‹å…¥åˆ°Luaæ ˆã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{numberValue1, numberValue2, ..., numberVectorSize}
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param inValue @~english a std::vector<float> vaule.
- * @~chinese std::vector<float>Öµ¡£
+ * @~chinese std::vector<float>å€¼ã€‚
  */
 void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
 
@@ -1924,13 +1924,13 @@ void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
  * The format of table as follows: {numberValue1, numberValue2, ..., numberVectorSize}
  *
  * @~chinese 
- * ½«´Óstd::vector<unsigned short>×ª»»³ÉµÄLua array tableÑ¹Èëµ½LuaÕ»¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{numberValue1, numberValue2, ..., numberVectorSize}
+ * å°†ä»std::vector<unsigned short>è½¬æ¢æˆçš„Lua array tableå‹å…¥åˆ°Luaæ ˆã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{numberValue1, numberValue2, ..., numberVectorSize}
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param inValue @~english a std::vector<unsigned short> vaule.
- * @~chinese std::vector<unsigned short>Öµ¡£
+ * @~chinese std::vector<unsigned short>å€¼ã€‚
  */
 void ccvector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& inValue);
 
@@ -1939,13 +1939,13 @@ void ccvector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& 
  * The format of table as follows: {x=numberValue1, y=numberValue2, z=numberValue3, w=numberValue4}
  *
  * @~chinese 
- * ½«´Ócocos2d::Quaternion×ª»»³ÉµÄLua tableÑ¹Èëµ½LuaÕ»¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{x=numberValue1, y=numberValue2, z=numberValue3, w=numberValue4}
+ * å°†ä»cocos2d::Quaternionè½¬æ¢æˆçš„Lua tableå‹å…¥åˆ°Luaæ ˆã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{x=numberValue1, y=numberValue2, z=numberValue3, w=numberValue4}
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param inValue @~english a cocos2d::Quaternion object.
- * @~chinese cocos2d::Quaternion¶ÔÏó¡£
+ * @~chinese cocos2d::Quaternionå¯¹è±¡ã€‚
  */
 void quaternion_to_luaval(lua_State* L,const cocos2d::Quaternion& inValue);
 
@@ -1954,13 +1954,13 @@ void quaternion_to_luaval(lua_State* L,const cocos2d::Quaternion& inValue);
  * The format of table as follows: {minFilter=numberValue1, magFilter=numberValue2, wrapS=numberValue3, wrapT=numberValue4}
  *
  * @~chinese 
- * ½«´Ócocos2d::Texture2D::TexParams×ª»»³ÉµÄLua tableÑ¹Èëµ½LuaÕ»¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{minFilter=numberValue1, magFilter=numberValue2, wrapS=numberValue3, wrapT=numberValue4}
+ * å°†ä»cocos2d::Texture2D::TexParamsè½¬æ¢æˆçš„Lua tableå‹å…¥åˆ°Luaæ ˆã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{minFilter=numberValue1, magFilter=numberValue2, wrapS=numberValue3, wrapT=numberValue4}
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param inValue @~english a cocos2d::Texture2D::TexParams object.
- * @~chinese cocos2d::Texture2D::TexParams¶ÔÏó¡£
+ * @~chinese cocos2d::Texture2D::TexParamså¯¹è±¡ã€‚
  */
 void texParams_to_luaval(lua_State* L, const cocos2d::Texture2D::TexParams& inValue);
 
@@ -1969,13 +1969,13 @@ void texParams_to_luaval(lua_State* L, const cocos2d::Texture2D::TexParams& inVa
  * The format of table as follows: {vec3Value1, vec3Value2, ..., vec3ValueSize}.
  *
  * @~chinese 
- * ½«´Óstd::vector<cocos2d::Vec3>×ª»»³ÉµÄLua array tableÑ¹Èëµ½LuaÕ»¡£
- * tableµÄ¸ñÊ½ÈçÏÂ:{vec3Value1, vec3Value2, ..., vec3ValueSize}¡£
+ * å°†ä»std::vector<cocos2d::Vec3>è½¬æ¢æˆçš„Lua array tableå‹å…¥åˆ°Luaæ ˆã€‚
+ * tableçš„æ ¼å¼å¦‚ä¸‹:{vec3Value1, vec3Value2, ..., vec3ValueSize}ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param inValue @~english a std::vector<cocos2d::Vec3> vaule.
- * @~chinese std::vector<cocos2d::Vec3>Öµ¡£
+ * @~chinese std::vector<cocos2d::Vec3>å€¼ã€‚
  */
 void std_vector_vec3_to_luaval(lua_State* L, const std::vector<cocos2d::Vec3>& inValue);
 

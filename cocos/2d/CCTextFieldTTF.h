@@ -41,7 +41,7 @@ class TextFieldTTF;
 /**@~english
  * A input protocol for TextField.
  * @~chinese 
- * ÎÄ±¾ÊäÈë¿òµÄĞ­Òé¡£
+ * æ–‡æœ¬è¾“å…¥æ¡†çš„åè®®ã€‚
  */
 class CC_DLL TextFieldDelegate
 {
@@ -49,19 +49,19 @@ public:
     /**@~english
      * Destructor for TextFieldDelegate.
      * @~chinese 
-     * Îö¹¹º¯Êı
+     * ææ„å‡½æ•°
      * @js NA
      */
     virtual ~TextFieldDelegate() {}
 
     /**
      * @brief @~english The callback method of IME attached on the TextField.
-     * @~chinese ÎÄ±¾±à¼­¿ò¹ÒÔØÊäÈë·¨Ê±µÄ»Øµ÷º¯Êı¡£
+     * @~chinese æ–‡æœ¬ç¼–è¾‘æ¡†æŒ‚è½½è¾“å…¥æ³•æ—¶çš„å›è°ƒå‡½æ•°ã€‚
      *
      * @param sender @~english The TextField object.
-     * @~chinese ÎÄ±¾±à¼­¿òÊµÀı¡£
+     * @~chinese æ–‡æœ¬ç¼–è¾‘æ¡†å®ä¾‹ã€‚
      * @return @~english If the sender doesn't want to attach to the IME, return true.
-     * @~chinese Èç¹û²»Ï£Íû±à¼­¿ò¹ÒÔØÊäÈë·¨£¬·µ»Øtrue¡£
+     * @~chinese å¦‚æœä¸å¸Œæœ›ç¼–è¾‘æ¡†æŒ‚è½½è¾“å…¥æ³•ï¼Œè¿”å›trueã€‚
      */
     virtual bool onTextFieldAttachWithIME(TextFieldTTF * sender)
     {
@@ -71,12 +71,12 @@ public:
 
     /**
      * @brief @~english The callback method of IME detached on the TextField.
-     * @~chinese ÎÄ±¾±à¼­¿òÈ¡Ïû¹ÒÔØÊäÈë·¨Ê±µÄ»Øµ÷º¯Êı¡£
+     * @~chinese æ–‡æœ¬ç¼–è¾‘æ¡†å–æ¶ˆæŒ‚è½½è¾“å…¥æ³•æ—¶çš„å›è°ƒå‡½æ•°ã€‚
      *
      * @param sender @~english The TextField object.
-     * @~chinese ÎÄ±¾±à¼­¿òÊµÀı¡£
+     * @~chinese æ–‡æœ¬ç¼–è¾‘æ¡†å®ä¾‹ã€‚
      * @return @~english If the sender doesn't want to attach to the IME, return true.
-     * @~chinese Èç¹û²»Ï£Íû±à¼­¿òÈ¡Ïû¹ÒÔØÊäÈë·¨£¬·µ»Øtrue¡£
+     * @~chinese å¦‚æœä¸å¸Œæœ›ç¼–è¾‘æ¡†å–æ¶ˆæŒ‚è½½è¾“å…¥æ³•ï¼Œè¿”å›trueã€‚
      */
     virtual bool onTextFieldDetachWithIME(TextFieldTTF * sender)
     {
@@ -86,16 +86,16 @@ public:
 
     /**
      * @brief @~english The callback method of text inserted on the TextField.
-     * @~chinese ÎÄ±¾±à¼­¿ò²åÈëÎÄ±¾Ê±µÄ»Øµ÷º¯Êı¡£
+     * @~chinese æ–‡æœ¬ç¼–è¾‘æ¡†æ’å…¥æ–‡æœ¬æ—¶çš„å›è°ƒå‡½æ•°ã€‚
      *
      * @param sender @~english The TextField object.
-     * @~chinese ÎÄ±¾±à¼­¿òÊµÀı¡£
+     * @~chinese æ–‡æœ¬ç¼–è¾‘æ¡†å®ä¾‹ã€‚
      * @param text @~english The text will be inserted.
-     * @~chinese ½«Òª²åÈëµÄ×Ö·û´®¡£
+     * @~chinese å°†è¦æ’å…¥çš„å­—ç¬¦ä¸²ã€‚
      * @param nLen @~english The length of the inserted text.
-     * @~chinese ½«Òª²åÈëµÄ×Ö·û´®³¤¶È¡£
+     * @~chinese å°†è¦æ’å…¥çš„å­—ç¬¦ä¸²é•¿åº¦ã€‚
      * @return @~english If the sender doesn't want to insert text, return true.
-     * @~chinese Èç¹û²»Ï£Íû±à¼­¿ò²åÈëÎÄ±¾£¬·µ»Øtrue¡£
+     * @~chinese å¦‚æœä¸å¸Œæœ›ç¼–è¾‘æ¡†æ’å…¥æ–‡æœ¬ï¼Œè¿”å›trueã€‚
      */
     virtual bool onTextFieldInsertText(TextFieldTTF * sender, const char * text, size_t nLen)
     {
@@ -107,16 +107,16 @@ public:
 
     /**
      * @brief @~english The callback method of text will be delete on the TextField.
-     * @~chinese ÎÄ±¾±à¼­¿òÉ¾³ıÎÄ±¾Ê±µÄ»Øµ÷º¯Êı¡£
+     * @~chinese æ–‡æœ¬ç¼–è¾‘æ¡†åˆ é™¤æ–‡æœ¬æ—¶çš„å›è°ƒå‡½æ•°ã€‚
      *
      * @param sender @~english The TextField object.
-     * @~chinese ÎÄ±¾±à¼­¿òÊµÀı¡£
+     * @~chinese æ–‡æœ¬ç¼–è¾‘æ¡†å®ä¾‹ã€‚
      * @param delText @~english The text will be deleted.
-     * @~chinese ½«ÒªÉ¾³ıµÄ×Ö·û´®¡£
+     * @~chinese å°†è¦åˆ é™¤çš„å­—ç¬¦ä¸²ã€‚
      * @param nLen @~english The length of the deleted text.
-     * @~chinese ½«ÒªÉ¾³ıµÄ×Ö·û´®³¤¶È¡£
+     * @~chinese å°†è¦åˆ é™¤çš„å­—ç¬¦ä¸²é•¿åº¦ã€‚
      * @return @~english If the sender doesn't want to delete text, return true.
-     * @~chinese Èç¹û²»Ï£Íû±à¼­¿òÉ¾³ıÎÄ±¾£¬·µ»Øtrue¡£
+     * @~chinese å¦‚æœä¸å¸Œæœ›ç¼–è¾‘æ¡†åˆ é™¤æ–‡æœ¬ï¼Œè¿”å›trueã€‚
      */
     virtual bool onTextFieldDeleteBackward(TextFieldTTF * sender, const char * delText, size_t nLen)
     {
@@ -128,18 +128,18 @@ public:
 
     /**
      * @brief @~english The callback method of the TextField will be drawn.
-     * @~chinese ÎÄ±¾±à¼­¿òÒª±»»æÖÆÊ±µÄ»Øµ÷º¯Êı¡£
+     * @~chinese æ–‡æœ¬ç¼–è¾‘æ¡†è¦è¢«ç»˜åˆ¶æ—¶çš„å›è°ƒå‡½æ•°ã€‚
      *
      * @param sender @~english The TextField object.
-     * @~chinese ÎÄ±¾±à¼­¿òÊµÀı¡£
+     * @~chinese æ–‡æœ¬ç¼–è¾‘æ¡†å®ä¾‹ã€‚
      * @param renderer @~english The renderer will render the TextField.
-     * @~chinese »æÖÆÎÄ±¾±à¼­¿òµÄäÖÈ¾Æ÷¡£
+     * @~chinese ç»˜åˆ¶æ–‡æœ¬ç¼–è¾‘æ¡†çš„æ¸²æŸ“å™¨ã€‚
      * @param transform @~english The transform matrix used for renderer.
-     * @~chinese äÖÈ¾Æ÷ËùÊ¹ÓÃµÄ×ªÖÃ¾ØÕó¡£
+     * @~chinese æ¸²æŸ“å™¨æ‰€ä½¿ç”¨çš„è½¬ç½®çŸ©é˜µã€‚
      * @param flags @~english The flags for the renderer.
-     * @~chinese äÖÈ¾Æ÷ËùÊ¹ÓÃµÄ±ê¼ÇÎ»¡£
+     * @~chinese æ¸²æŸ“å™¨æ‰€ä½¿ç”¨çš„æ ‡è®°ä½ã€‚
      * @return @~english If you don't want to render the TextField, return true.
-     * @~chinese Èç¹û²»Ï£Íû»æÖÆÎÄ±¾±à¼­¿ò£¬·µ»Øtrue¡£
+     * @~chinese å¦‚æœä¸å¸Œæœ›ç»˜åˆ¶æ–‡æœ¬ç¼–è¾‘æ¡†ï¼Œè¿”å›trueã€‚
      */
     virtual bool onVisit(TextFieldTTF * sender,Renderer *renderer, const Mat4 &transform, uint32_t flags)
     {
@@ -150,7 +150,7 @@ public:
 
 /**
  *@brief @~english A simple text input field with TTF font.
- * @~chinese Ò»¸öÊ¹ÓÃ TTF ×ÖÌåÊµÏÖµÄ¼òµ¥µÄÎÄ±¾ÊäÈë¿ò¡£
+ * @~chinese ä¸€ä¸ªä½¿ç”¨ TTF å­—ä½“å®ç°çš„ç®€å•çš„æ–‡æœ¬è¾“å…¥æ¡†ã€‚
  */
 class CC_DLL TextFieldTTF : public Label, public IMEDelegate
 {
@@ -158,7 +158,7 @@ public:
     /**@~english
      * Default constructor.
      * @~chinese 
-     * Ä¬ÈÏ¹¹Ôìº¯Êı¡£
+     * é»˜è®¤æ„é€ å‡½æ•°ã€‚
      * @js ctor
      */
     TextFieldTTF();
@@ -166,87 +166,87 @@ public:
     /**@~english
      * Default destructor.
      * @~chinese 
-     * Ä¬ÈÏµÄÎö¹¹º¯Êı¡£
+     * é»˜è®¤çš„ææ„å‡½æ•°ã€‚
      * @js NA
      * @lua NA
      */
     virtual ~TextFieldTTF();
 
     /** @~english Creates a TextFieldTTF from placeholder, a fontname, alignment, dimension and font size.
-     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÕ¼Î»·û£¬´óĞ¡£¬¶ÔÆë·½Ê½£¬×ÖÌåÃû³ÆºÍ×ÖÌå´óĞ¡´´½¨Ò»¸ö TextFieldTTF¡£
+     * @~chinese ä½¿ç”¨æŒ‡å®šçš„å ä½ç¬¦ï¼Œå¤§å°ï¼Œå¯¹é½æ–¹å¼ï¼Œå­—ä½“åç§°å’Œå­—ä½“å¤§å°åˆ›å»ºä¸€ä¸ª TextFieldTTFã€‚
      * @param placeholder @~english The place holder string.
-     * @~chinese Õ¼Î»·û×Ö·û´®¡£
+     * @~chinese å ä½ç¬¦å­—ç¬¦ä¸²ã€‚
      * @param dimensions @~english The size of the TextField.
-     * @~chinese ÎÄ±¾±à¼­¿òµÄ´óĞ¡¡£
+     * @~chinese æ–‡æœ¬ç¼–è¾‘æ¡†çš„å¤§å°ã€‚
      * @param alignment @~english The alignment of the TextField.
-     * @~chinese ÎÄ±¾±à¼­¿òµÄ¶ÔÆë·½Ê½¡£
+     * @~chinese æ–‡æœ¬ç¼–è¾‘æ¡†çš„å¯¹é½æ–¹å¼ã€‚
      * @param fontName @~english The font name of the TextField.
-     * @~chinese Ê¹ÓÃµÄ×ÖÌåÃû³Æ¡£
+     * @~chinese ä½¿ç”¨çš„å­—ä½“åç§°ã€‚
      * @param fontSize @~english The font size of the TextField.
-     * @~chinese Ê¹ÓÃµÄ×ÖÌå´óĞ¡¡£
+     * @~chinese ä½¿ç”¨çš„å­—ä½“å¤§å°ã€‚
      * @return @~english A TextFieldTTF object.
-     * @~chinese Ò»¸ö TextFieldTTF ÊµÀı¡£
+     * @~chinese ä¸€ä¸ª TextFieldTTF å®ä¾‹ã€‚
      * @js NA
      */
     static TextFieldTTF * textFieldWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize);
     
     /** @~english Creates a TextFieldTTF from placeholder, a fontname and font size.
-     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÕ¼Î»·û£¬×ÖÌåÃû³ÆºÍ×ÖÌå´óĞ¡´´½¨Ò»¸ö TextFieldTTF¡£
+     * @~chinese ä½¿ç”¨æŒ‡å®šçš„å ä½ç¬¦ï¼Œå­—ä½“åç§°å’Œå­—ä½“å¤§å°åˆ›å»ºä¸€ä¸ª TextFieldTTFã€‚
      * @param placeholder @~english The place holder string.
-     * @~chinese Õ¼Î»·û×Ö·û´®¡£
+     * @~chinese å ä½ç¬¦å­—ç¬¦ä¸²ã€‚
      * @param fontName @~english The font name of the TextField.
-     * @~chinese Ê¹ÓÃµÄ×ÖÌåÃû³Æ¡£
+     * @~chinese ä½¿ç”¨çš„å­—ä½“åç§°ã€‚
      * @param fontSize @~english The font size of the TextField.
-     * @~chinese Ê¹ÓÃµÄ×ÖÌå´óĞ¡¡£
+     * @~chinese ä½¿ç”¨çš„å­—ä½“å¤§å°ã€‚
      * @return @~english A TextFieldTTF object.
-     * @~chinese Ò»¸ö TextFieldTTF ÊµÀı¡£
+     * @~chinese ä¸€ä¸ª TextFieldTTF å®ä¾‹ã€‚
      * @js NA
      */
     static TextFieldTTF * textFieldWithPlaceHolder(const std::string& placeholder, const std::string& fontName, float fontSize);
     
     /** @~english Initializes the TextFieldTTF with a font name, alignment, dimension and font size.
-     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÕ¼Î»·û£¬´óĞ¡£¬¶ÔÆë·½Ê½£¬×ÖÌåÃû³ÆºÍ×ÖÌå´óĞ¡³õÊ¼»¯Ò»¸ö TextFieldTTF¡£
+     * @~chinese ä½¿ç”¨æŒ‡å®šçš„å ä½ç¬¦ï¼Œå¤§å°ï¼Œå¯¹é½æ–¹å¼ï¼Œå­—ä½“åç§°å’Œå­—ä½“å¤§å°åˆå§‹åŒ–ä¸€ä¸ª TextFieldTTFã€‚
      * @param placeholder @~english The place holder string.
-     * @~chinese Õ¼Î»·û×Ö·û´®¡£
+     * @~chinese å ä½ç¬¦å­—ç¬¦ä¸²ã€‚
      * @param dimensions @~english The size of the TextField.
-     * @~chinese ÎÄ±¾±à¼­¿òµÄ´óĞ¡¡£
+     * @~chinese æ–‡æœ¬ç¼–è¾‘æ¡†çš„å¤§å°ã€‚
      * @param alignment @~english The alignment of the TextField.
-     * @~chinese ÎÄ±¾±à¼­¿òµÄ¶ÔÆë·½Ê½¡£
+     * @~chinese æ–‡æœ¬ç¼–è¾‘æ¡†çš„å¯¹é½æ–¹å¼ã€‚
      * @param fontName @~english The font name of the TextField.
-     * @~chinese Ê¹ÓÃµÄ×ÖÌåÃû³Æ¡£
+     * @~chinese ä½¿ç”¨çš„å­—ä½“åç§°ã€‚
      * @param fontSize @~english The font size of the TextField.
-     * @~chinese Ê¹ÓÃµÄ×ÖÌå´óĞ¡¡£
+     * @~chinese ä½¿ç”¨çš„å­—ä½“å¤§å°ã€‚
      * @return @~english If the initialization success, return true; else, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› false
      */
     bool initWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize);
     
     /** @~english Creates a TextFieldTTF from placeholder, a fontname and font size.
-     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÕ¼Î»·û£¬×ÖÌåÃû³ÆºÍ×ÖÌå´óĞ¡³õÊ¼»¯Ò»¸ö TextFieldTTF¡£
+     * @~chinese ä½¿ç”¨æŒ‡å®šçš„å ä½ç¬¦ï¼Œå­—ä½“åç§°å’Œå­—ä½“å¤§å°åˆå§‹åŒ–ä¸€ä¸ª TextFieldTTFã€‚
      * @param placeholder @~english The place holder string.
-     * @~chinese Õ¼Î»·û×Ö·û´®¡£
+     * @~chinese å ä½ç¬¦å­—ç¬¦ä¸²ã€‚
      * @param fontName @~english The font name of the TextField.
-     * @~chinese Ê¹ÓÃµÄ×ÖÌåÃû³Æ¡£
+     * @~chinese ä½¿ç”¨çš„å­—ä½“åç§°ã€‚
      * @param fontSize @~english The font size of the TextField.
-     * @~chinese Ê¹ÓÃµÄ×ÖÌå´óĞ¡¡£
+     * @~chinese ä½¿ç”¨çš„å­—ä½“å¤§å°ã€‚
      * @return @~english If the initialization success, return true; else, return false.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› false
      */
     bool initWithPlaceHolder(const std::string& placeholder, const std::string& fontName, float fontSize);
 
     /**
      *@brief @~english Open keyboard and receive input text.
-     * @~chinese ´ò¿ª¼üÅÌºÍ½ÓÊÕÊäÈëÎÄ±¾¡£
+     * @~chinese æ‰“å¼€é”®ç›˜å’Œæ¥æ”¶è¾“å…¥æ–‡æœ¬ã€‚
      * @return @~english If the action success, return true; else return false.
-     * @~chinese Èç¹û³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœæˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     virtual bool attachWithIME() override;
 
     /**
      *@brief    @~english End text input and close keyboard.
-     * @~chinese ÎÄ±¾ÊäÈë½áÊø²¢¹Ø±Õ¼üÅÌ¡£
+     * @~chinese æ–‡æœ¬è¾“å…¥ç»“æŸå¹¶å…³é—­é”®ç›˜ã€‚
      * @return @~english If the action success, return true; else return false.
-     * @~chinese Èç¹û³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœæˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     virtual bool detachWithIME() override;
 
@@ -265,62 +265,62 @@ public:
     /**@~english
      * Query the currently inputed character count.
      * @~chinese 
-     * »ñÈ¡µ±Ç°ÊäÈëµÄ×Ö·ûÊı¡£
+     * è·å–å½“å‰è¾“å…¥çš„å­—ç¬¦æ•°ã€‚
      *@return @~english The total input character count.
-     * @~chinese ×ÜÊäÈë×Ö·ûÊı¡£
+     * @~chinese æ€»è¾“å…¥å­—ç¬¦æ•°ã€‚
      */
     inline int getCharCount() const { return _charCount; };
     
     /**@~english
      * Query the color of place holder.
      * @~chinese 
-     * »ñÈ¡Õ¼Î»·ûµÄÑÕÉ«¡£
+     * è·å–å ä½ç¬¦çš„é¢œè‰²ã€‚
      *@return @~english The place holder color.
-     * @~chinese Õ¼Î»·ûµÄÑÕÉ«¡£
+     * @~chinese å ä½ç¬¦çš„é¢œè‰²ã€‚
      */
     virtual const Color4B& getColorSpaceHolder();
 
     /**
      *@brief @~english Change input placeholder color.
-     * @~chinese ÉèÖÃÕ¼Î»·ûµÄÑÕÉ«¡£
+     * @~chinese è®¾ç½®å ä½ç¬¦çš„é¢œè‰²ã€‚
      *@param color @~english A color value in `Color3B`.
-     * @~chinese Color3B µÄÑÕÉ«Öµ¡£
+     * @~chinese Color3B çš„é¢œè‰²å€¼ã€‚
      */
     virtual void setColorSpaceHolder(const Color3B& color);
 
     /**@~english
      * Change the placeholder color.
      * @~chinese 
-     * ÉèÖÃÕ¼Î»·ûµÄÑÕÉ«¡£
+     * è®¾ç½®å ä½ç¬¦çš„é¢œè‰²ã€‚
      *@param color @~english The placeholder color in Color4B.
-     * @~chinese Color4B µÄÑÕÉ«Öµ¡£
+     * @~chinese Color4B çš„é¢œè‰²å€¼ã€‚
      */
     virtual void setColorSpaceHolder(const Color4B& color);
 
     /**@~english
      * Change the color of input text.
      * @~chinese 
-     * ÉèÖÃÊäÈëÎÄ±¾µÄÑÕÉ«¡£
+     * è®¾ç½®è¾“å…¥æ–‡æœ¬çš„é¢œè‰²ã€‚
      *@param textColor @~english The text color in Color4B.
-     * @~chinese Color4B µÄÑÕÉ«Öµ¡£
+     * @~chinese Color4B çš„é¢œè‰²å€¼ã€‚
      */
     virtual void setTextColor(const Color4B& textColor) override;
 
     /**@~english
      * Change input text of TextField.
      * @~chinese 
-     * ÉèÖÃÎÄ±¾¿òÖĞµÄÎÄ±¾¡£
+     * è®¾ç½®æ–‡æœ¬æ¡†ä¸­çš„æ–‡æœ¬ã€‚
      *@param text @~english The input text of TextField.
-     * @~chinese ÎÄ±¾×Ö·û´®¡£
+     * @~chinese æ–‡æœ¬å­—ç¬¦ä¸²ã€‚
      */
     virtual void setString(const std::string& text) override;
 
     /**@~english
      * Query the input text of TextField.
      * @~chinese 
-     * »ñÈ¡ÎÄ±¾¿òÖĞµÄÎÄ±¾¡£
+     * è·å–æ–‡æœ¬æ¡†ä¸­çš„æ–‡æœ¬ã€‚
      *@return @~english Get the input text of TextField.
-     * @~chinese ÎÄ±¾¿òÖĞµÄÎÄ±¾¡£
+     * @~chinese æ–‡æœ¬æ¡†ä¸­çš„æ–‡æœ¬ã€‚
      */
     virtual const std::string& getString() const override;
 
@@ -328,19 +328,19 @@ public:
      * Change placeholder text.
      * place holder text displayed when there is no text in the text field.
      * @~chinese 
-     * ÉèÖÃÕ¼Î»·û×Ö·û´®¡£
-     * ÎÄ±¾¿òÖĞÃ»ÓĞÊäÈëÄÚÈİÊ±£¬ÏÔÊ¾Õ¼Î»·û×Ö·û´®¡£
+     * è®¾ç½®å ä½ç¬¦å­—ç¬¦ä¸²ã€‚
+     * æ–‡æœ¬æ¡†ä¸­æ²¡æœ‰è¾“å…¥å†…å®¹æ—¶ï¼Œæ˜¾ç¤ºå ä½ç¬¦å­—ç¬¦ä¸²ã€‚
      *@param text  @~english The place holder string.
-     * @~chinese Õ¼Î»·û×Ö·û´®¡£
+     * @~chinese å ä½ç¬¦å­—ç¬¦ä¸²ã€‚
      */
     virtual void setPlaceHolder(const std::string& text);
 
     /**@~english
      * Query the placeholder string.
      * @~chinese 
-     * »ñÈ¡Õ¼Î»·û×Ö·û´®¡£
+     * è·å–å ä½ç¬¦å­—ç¬¦ä¸²ã€‚
      *@return @~english The placeholder string.
-     * @~chinese Õ¼Î»·û×Ö·û´®¡£
+     * @~chinese å ä½ç¬¦å­—ç¬¦ä¸²ã€‚
      */
     virtual const std::string& getPlaceHolder() const;
 
@@ -348,10 +348,10 @@ public:
      * Set enable secure text entry representation.
      * If you want to display password in TextField, this option is very helpful.
      * @~chinese 
-     * ÆôÓÃ/¹Ø±Õ °²È«µÄÎÄ±¾ÊäÈë¡£
-     * Èç¹ûÄãÏëÒªÔÚÎÄ±¾¿òÖĞÏÔÊ¾ÃÜÂë£¬¿ÉÒÔ¿ªÆô´Ë¹¦ÄÜ¡£
+     * å¯ç”¨/å…³é—­ å®‰å…¨çš„æ–‡æœ¬è¾“å…¥ã€‚
+     * å¦‚æœä½ æƒ³è¦åœ¨æ–‡æœ¬æ¡†ä¸­æ˜¾ç¤ºå¯†ç ï¼Œå¯ä»¥å¼€å¯æ­¤åŠŸèƒ½ã€‚
      *@param value @~english Whether or not to display text with secure text entry.
-     * @~chinese ÊÇ·ñÏÔÊ¾ÊäÈëµÄÎÄ±¾¡£
+     * @~chinese æ˜¯å¦æ˜¾ç¤ºè¾“å…¥çš„æ–‡æœ¬ã€‚
      * @js NA
      */
     virtual void setSecureTextEntry(bool value);
@@ -359,9 +359,9 @@ public:
     /**@~english
      * Query whether the currently display mode is secure text entry or not.
      * @~chinese 
-     * »ñÈ¡µ±Ç°ÊÇ·ñ¿ªÆôÁË°²È«µÄÎÄ±¾ÊäÈë¹¦ÄÜ¡£
+     * è·å–å½“å‰æ˜¯å¦å¼€å¯äº†å®‰å…¨çš„æ–‡æœ¬è¾“å…¥åŠŸèƒ½ã€‚
      *@return @~english Whether current text is displayed as secure text entry.
-     * @~chinese Èç¹û¿ªÆôÁË°²È«µÄÎÄ±¾ÊäÈë¹¦ÄÜ£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœå¼€å¯äº†å®‰å…¨çš„æ–‡æœ¬è¾“å…¥åŠŸèƒ½ï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      * @js NA
      */
     virtual bool isSecureTextEntry();

@@ -41,7 +41,7 @@ namespace ui{
  * @~english
  * ListView click item event type.
  * @~chinese 
- * ListViewµã»÷ÊÂ¼şÀàĞÍ¡£
+ * ListViewç‚¹å‡»äº‹ä»¶ç±»å‹ã€‚
  */
 typedef enum
 {
@@ -53,9 +53,9 @@ typedef enum
  * @~english
  * A callback which would be called when a ListView item is clicked.
  * @~chinese 
- * ListView±»µã»÷µÄÊ±ºò£¬µ÷ÓÃµÄ»Øµ÷º¯Êı
+ * ListViewè¢«ç‚¹å‡»çš„æ—¶å€™ï¼Œè°ƒç”¨çš„å›è°ƒå‡½æ•°
  * @deprecated @~english Use `ccListViewCallback` instead.
- * @~chinese ÇëÊ¹ÓÃccListViewCallback´úÌæ¡£
+ * @~chinese è¯·ä½¿ç”¨ccListViewCallbackä»£æ›¿ã€‚
  */
 typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
 #define listvieweventselector(_SELECTOR) (SEL_ListViewEvent)(&_SELECTOR)
@@ -63,12 +63,12 @@ typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
 /**
  * @brief @~english ListView is a view group that displays a list of scrollable items.
  * The list items are inserted to the list by using `addChild` or  `insertDefaultItem`.
- * @~chinese ListView¿Ø¼şÊÇÒ»¸öÏÔÊ¾¹ö¶¯ÏîÄ¿ÁĞ±íµÄÊÓÍ¼×é¡£
- * ÁĞ±íÏîÊÇÍ¨¹ıÊ¹ÓÃ`addChild`»ò`insertDefaultItem`²åÈëµ½ÁĞ±íÖĞµÄ¡£
+ * @~chinese ListViewæ§ä»¶æ˜¯ä¸€ä¸ªæ˜¾ç¤ºæ»šåŠ¨é¡¹ç›®åˆ—è¡¨çš„è§†å›¾ç»„ã€‚
+ * åˆ—è¡¨é¡¹æ˜¯é€šè¿‡ä½¿ç”¨`addChild`æˆ–`insertDefaultItem`æ’å…¥åˆ°åˆ—è¡¨ä¸­çš„ã€‚
  * @warning @~english The list item in ListView doesn't support cell reuse at the moment, if you have a large amount of data need to be displayed, use  `TableView` instead.
  * ListView is a subclass of  `ScrollView`, so it shares many features of ScrollView.
- * @~chinese ÔÚListView¿Ø¼şÁĞ±íÏî²»Ö§³Ö¸´ÓÃ½Úµã£¬Èç¹ûÄãÓĞ´óÁ¿µÄÊı¾İĞèÒªÏÔÊ¾£¬ÇëÊ¹ÓÃ`TableView`´úÌæ¡£
- * ListView¿Ø¼şÊÇScrollViewµÄ×ÓÀà£¬ËùÒÔËü¼Ì³ĞÁËScrollViewµÄÌØµã¡£
+ * @~chinese åœ¨ListViewæ§ä»¶åˆ—è¡¨é¡¹ä¸æ”¯æŒå¤ç”¨èŠ‚ç‚¹ï¼Œå¦‚æœä½ æœ‰å¤§é‡çš„æ•°æ®éœ€è¦æ˜¾ç¤ºï¼Œè¯·ä½¿ç”¨`TableView`ä»£æ›¿ã€‚
+ * ListViewæ§ä»¶æ˜¯ScrollViewçš„å­ç±»ï¼Œæ‰€ä»¥å®ƒç»§æ‰¿äº†ScrollViewçš„ç‰¹ç‚¹ã€‚
  */
 class CC_GUI_DLL ListView : public ScrollView
 {
@@ -80,7 +80,7 @@ public:
      * @~english
      * Gravity for docking elements in ListView.
      * @~chinese 
-     * ListViewµÄÍ£¿¿ÔªËØÒıÁ¦µÄ·½Ïò
+     * ListViewçš„åœé å…ƒç´ å¼•åŠ›çš„æ–¹å‘
      */
     enum class Gravity
     {
@@ -96,7 +96,7 @@ public:
      * @~english
      * ListView element item click event.
      * @~chinese 
-     * ListView¿Ø¼şÔªËØµÄµã»÷ÊÂ¼şÀàĞÍ
+     * ListViewæ§ä»¶å…ƒç´ çš„ç‚¹å‡»äº‹ä»¶ç±»å‹
      */
     enum class EventType
     {
@@ -123,7 +123,7 @@ public:
     /**
      * ListView item click callback.
      * @~chinese 
-     * ListView¿Ø¼şÔªËØµÄµã»÷»Øµ÷¡£
+     * ListViewæ§ä»¶å…ƒç´ çš„ç‚¹å‡»å›è°ƒã€‚
      */
     typedef std::function<void(Ref*, EventType)> ccListViewCallback;
     
@@ -131,7 +131,7 @@ public:
      * @~english
      * Default constructor
      * @~chinese 
-     * Ä¬ÈÏ¹¹Ôìº¯Êı
+     * é»˜è®¤æ„é€ å‡½æ•°
      * @js ctor
      * @lua new
      */
@@ -141,7 +141,7 @@ public:
      * @~english
      * Default destructor
      * @~chinese 
-     * Ä¬ÈÏµÄÎö¹¹º¯Êı
+     * é»˜è®¤çš„ææ„å‡½æ•°
      * @js NA
      * @lua NA
      */
@@ -151,9 +151,9 @@ public:
      * @~english
      * Create an empty ListView.
      * @~chinese 
-     * ´´½¨Ò»¸ö¿ÕListView
+     * åˆ›å»ºä¸€ä¸ªç©ºListView
      * @return @~english A ListView instance.
-     * @~chinese Ò»¸öListViewÊµÀı¡£
+     * @~chinese ä¸€ä¸ªListViewå®ä¾‹ã€‚
      */
     static ListView* create();
     
@@ -163,11 +163,11 @@ public:
      * When calling `pushBackDefaultItem`, the model will be used as a blueprint and new model copy will be inserted into ListView.
      *
      * @~chinese 
-     * Éè¶¨Ò»¸öListViewµÄÄ£ĞÍ¡£
-     * µ±µ÷ÓÃ`pushBackDefaultItem`£¬¸ÃÄ£ĞÍ½«×÷ÎªÒ»¸öÀ¶Í¼£¬ĞÂ¸±±¾½«±»²åÈëµ½ListView¿Ø¼ş¡£
+     * è®¾å®šä¸€ä¸ªListViewçš„æ¨¡å‹ã€‚
+     * å½“è°ƒç”¨`pushBackDefaultItem`ï¼Œè¯¥æ¨¡å‹å°†ä½œä¸ºä¸€ä¸ªè“å›¾ï¼Œæ–°å‰¯æœ¬å°†è¢«æ’å…¥åˆ°ListViewæ§ä»¶ã€‚
      *
      * @param model  @~english Model in `Widget*`.
-     * @~chinese WidgetµÄÄ£ĞÍ
+     * @~chinese Widgetçš„æ¨¡å‹
      */
     void setItemModel(Widget* model);
     
@@ -175,7 +175,7 @@ public:
      * @~english
      * Insert a default item(create by a cloned model) at the end of the listview.
      * @~chinese 
-     * ²åÈëÒ»¸öÄ¬ÈÏÏî£¨Í¨¹ı¿ËÂ¡Ä£Ê½´´½¨£©µ½ListViewµÄÎ²²¿¡£
+     * æ’å…¥ä¸€ä¸ªé»˜è®¤é¡¹ï¼ˆé€šè¿‡å…‹éš†æ¨¡å¼åˆ›å»ºï¼‰åˆ°ListViewçš„å°¾éƒ¨ã€‚
      */
     void pushBackDefaultItem();
     
@@ -183,9 +183,9 @@ public:
      * @~english
      * Insert a default item(create by cloning model) into listview at a give index.
      * @~chinese 
-     * ²åÈëÒ»¸öÄ¬ÈÏÏî£¨Í¨¹ı¿ËÂ¡Ä£Ê½´´½¨£©µ½ListViewµÄÖ¸¶¨Î»ÖÃ¡£
+     * æ’å…¥ä¸€ä¸ªé»˜è®¤é¡¹ï¼ˆé€šè¿‡å…‹éš†æ¨¡å¼åˆ›å»ºï¼‰åˆ°ListViewçš„æŒ‡å®šä½ç½®ã€‚
      * @param index  @~english A index in ssize_t.
-     * @~chinese Ö¸¶¨µÄÎ»ÖÃË÷Òı
+     * @~chinese æŒ‡å®šçš„ä½ç½®ç´¢å¼•
      */
     void insertDefaultItem(ssize_t index);
     
@@ -193,22 +193,22 @@ public:
      * @~english
      * Insert a custom item into the end of ListView.
      * @~chinese 
-     * ²åÈëÒ»¸ö×Ô¶¨ÒåÏîµ½ListViewµÄÎ²²¿¡£
+     * æ’å…¥ä¸€ä¸ªè‡ªå®šä¹‰é¡¹åˆ°ListViewçš„å°¾éƒ¨ã€‚
      * @param item @~english A item in `Widget*`.
-     * @~chinese Ò»¸ö`Widget*`ÏîÄ¿
+     * @~chinese ä¸€ä¸ª`Widget*`é¡¹ç›®
      */
     void pushBackCustomItem(Widget* item);
     
     
     /**
      * @brief @~english Insert a custom widget into ListView at a given index.
-     * @~chinese ²åÈë×Ô¶¨Òå´°¿ÚĞ¡¿Ø¼şµ½ListViewÖĞÖ¸¶¨Ë÷Òı´¦¡£
+     * @~chinese æ’å…¥è‡ªå®šä¹‰çª—å£å°æ§ä»¶åˆ°ListViewä¸­æŒ‡å®šç´¢å¼•å¤„ã€‚
      * 
      * @param item @~english A widget pointer to be inserted.
-     * @~chinese Òª²åÈëµÄÒ»¸öĞ¡¿Ø¼şÖ¸Õë¡£
+     * @~chinese è¦æ’å…¥çš„ä¸€ä¸ªå°æ§ä»¶æŒ‡é’ˆã€‚
      *
      * @param index @~english A given index in ssize_t.
-     * @~chinese Ö¸¶¨Ë÷Òı
+     * @~chinese æŒ‡å®šç´¢å¼•
      */
     void insertCustomItem(Widget* item, ssize_t index);
     
@@ -216,7 +216,7 @@ public:
      * @~english
      *  Removes the last item of ListView.
      * @~chinese 
-     * É¾³ıListView×îºóÒ»¸öÏîÄ¿
+     * åˆ é™¤ListViewæœ€åä¸€ä¸ªé¡¹ç›®
      */
     void removeLastItem();
     
@@ -225,17 +225,17 @@ public:
      * Remove a item at given index.
      *
      * @~chinese 
-     * ÔÚ¸ø¶¨Ë÷Òı´¦É¾³ıÒ»¸öÏîÄ¿
+     * åœ¨ç»™å®šç´¢å¼•å¤„åˆ é™¤ä¸€ä¸ªé¡¹ç›®
      * 
      * @param index @~english A given index in ssize_t.
-     * @~chinese ¸ø¶¨Ë÷Òı
+     * @~chinese ç»™å®šç´¢å¼•
      */
     void removeItem(ssize_t index);
     
     
     /**
      * @brief @~english Remove all items in current ListView.
-     * @~chinese É¾³ıµ±Ç°ListViewÖĞµÄËùÓĞÏîÄ¿¡£
+     * @~chinese åˆ é™¤å½“å‰ListViewä¸­çš„æ‰€æœ‰é¡¹ç›®ã€‚
      */
     void removeAllItems();
     
@@ -244,13 +244,13 @@ public:
      * Return a item at a given index.
      *
      * @~chinese 
-     * ·µ»ØÒ»¸ö¸ø¶¨µÄË÷Òı´¦µÄÏîÄ¿¡£
+     * è¿”å›ä¸€ä¸ªç»™å®šçš„ç´¢å¼•å¤„çš„é¡¹ç›®ã€‚
      * 
      * @param index @~english A given index in ssize_t.
-     * @~chinese ¸ø¶¨µÄË÷Òı
+     * @~chinese ç»™å®šçš„ç´¢å¼•
      *
      * @return @~english A widget instance.
-     * @~chinese Ò»¸öĞ¡¿Ø¼şÊµÀı¡£
+     * @~chinese ä¸€ä¸ªå°æ§ä»¶å®ä¾‹ã€‚
      */
     Widget* getItem(ssize_t index)const;
     
@@ -258,10 +258,10 @@ public:
      * @~english
      * Return all items in a ListView.
      * @~chinese 
-     * ·µ»ØListViewÖĞµÄËùÓĞÏîÄ¿¡£
+     * è¿”å›ListViewä¸­çš„æ‰€æœ‰é¡¹ç›®ã€‚
      *
      * @returns @~english A vector of widget pointers.
-     * @~chinese Ò»¸ö¿Ø¼şÖ¸ÕëÊı×é¡£
+     * @~chinese ä¸€ä¸ªæ§ä»¶æŒ‡é’ˆæ•°ç»„ã€‚
      */
     Vector<Widget*>& getItems();
     
@@ -270,12 +270,12 @@ public:
      * Return the index of specified widget.
      *
      * @~chinese 
-     * ·µ»ØÖ¸¶¨´°¿ÚĞ¡¿Ø¼şµÄË÷Òı¡£
+     * è¿”å›æŒ‡å®šçª—å£å°æ§ä»¶çš„ç´¢å¼•ã€‚
      * 
      * @param item  @~english A widget pointer.
-     * @~chinese Ò»¸ö¿Ø¼şÖ¸Õë¡£
+     * @~chinese ä¸€ä¸ªæ§ä»¶æŒ‡é’ˆã€‚
      * @return @~english The index of a given widget in ListView.
-     * @~chinese ¸ø¶¨¿Ø¼şÔÚListViewµÄË÷Òı¡£
+     * @~chinese ç»™å®šæ§ä»¶åœ¨ListViewçš„ç´¢å¼•ã€‚
      */
     ssize_t getIndex(Widget* item) const;
     
@@ -283,7 +283,7 @@ public:
      * @~english
      * Set the gravity of ListView.
      * @~chinese 
-     * ÉèÖÃµÄListViewÒıÁ¦¡£
+     * è®¾ç½®çš„ListViewå¼•åŠ›ã€‚
      * @see `ListViewGravity`
      */
     void setGravity(Gravity gravity);
@@ -313,10 +313,10 @@ public:
      * Set the margin between each item in ListView.
      *
      * @~chinese 
-     * ÉèÖÃListViewÖĞÃ¿Ò»ÏîÖ®¼äµÄ±ß¾à¡£
+     * è®¾ç½®ListViewä¸­æ¯ä¸€é¡¹ä¹‹é—´çš„è¾¹è·ã€‚
      * 
      * @param margin @~english margin
-     * @~chinese ±ß¾à
+     * @~chinese è¾¹è·
      */
     void setItemsMargin(float margin);
     
@@ -324,10 +324,10 @@ public:
     /**
      * @brief @~english Query margin between each item in ListView.
      *
-     * @~chinese ²éÑ¯ListViewÃ¿¸öÏîÖ®¼äµÄ±ß¾à¡£
+     * @~chinese æŸ¥è¯¢ListViewæ¯ä¸ªé¡¹ä¹‹é—´çš„è¾¹è·ã€‚
      *
      * @return @~english A margin in float.
-     * @~chinese Ò»¸ö±ß¾à¸¡µãÊı
+     * @~chinese ä¸€ä¸ªè¾¹è·æµ®ç‚¹æ•°
      */
     float getItemsMargin()const;
     
@@ -427,7 +427,7 @@ public:
      * @brief Query current selected widget's idnex.
      *
      * @return @~english A index of a selected item.
-     * @~chinese Ñ¡ÖĞµÄ¿Ø¼şµÄË÷Òı¡£
+     * @~chinese é€‰ä¸­çš„æ§ä»¶çš„ç´¢å¼•ã€‚
      */
     ssize_t getCurSelectedIndex() const;
     
@@ -435,13 +435,13 @@ public:
      * @~english
      * Add a event click callback to ListView, then one item of Listview is clicked, the callback will be called.
      * @~chinese 
-     * Ìí¼ÓListViewµã»÷ÊÂ¼şµÄ»Øµ÷£¬ListViewÖĞµÄÒ»¸öÏîÄ¿±»µã»÷½«»áµ÷ÓÃ»Øµ÷º¯Êı¡£
+     * æ·»åŠ ListViewç‚¹å‡»äº‹ä»¶çš„å›è°ƒï¼ŒListViewä¸­çš„ä¸€ä¸ªé¡¹ç›®è¢«ç‚¹å‡»å°†ä¼šè°ƒç”¨å›è°ƒå‡½æ•°ã€‚
      * @deprecated @~english Use  `addEventListener` instead.
-     * @~chinese Ê¹ÓÃaddEventListener´úÌæ¡£
+     * @~chinese ä½¿ç”¨addEventListenerä»£æ›¿ã€‚
      * @param target @~english A pointer of `Ref*` type.
-     * @~chinese Ò»¸ö`Ref*`Ö¸Õë
+     * @~chinese ä¸€ä¸ª`Ref*`æŒ‡é’ˆ
      * @param selector @~english A member function pointer with type of `SEL_ListViewEvent`.
-     * @~chinese `SEL_ListViewEvent`ÀàĞÍµÄ³ÉÔ±º¯ÊıÖ¸Õë¡£
+     * @~chinese `SEL_ListViewEvent`ç±»å‹çš„æˆå‘˜å‡½æ•°æŒ‡é’ˆã€‚
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerListView(Ref* target, SEL_ListViewEvent selector);
 
@@ -449,9 +449,9 @@ public:
      * @~english
      * Add a event click callback to ListView, then one item of Listview is clicked, the callback will be called.
      * @~chinese 
-     * Ìí¼ÓListViewµã»÷ÊÂ¼şµÄ»Øµ÷£¬ListViewÖĞµÄÒ»¸öÏîÄ¿±»µã»÷½«»áµ÷ÓÃ»Øµ÷º¯Êı¡£
+     * æ·»åŠ ListViewç‚¹å‡»äº‹ä»¶çš„å›è°ƒï¼ŒListViewä¸­çš„ä¸€ä¸ªé¡¹ç›®è¢«ç‚¹å‡»å°†ä¼šè°ƒç”¨å›è°ƒå‡½æ•°ã€‚
      * @param callback @~english A callback function with type of `ccListViewCallback`.
-     * @~chinese Ò»¸öccListViewCallbackÀàĞÍµÄ»Øµ÷º¯Êı¡£
+     * @~chinese ä¸€ä¸ªccListViewCallbackç±»å‹çš„å›è°ƒå‡½æ•°ã€‚
      */
     void addEventListener(const ccListViewCallback& callback);
     using ScrollView::addEventListener;
@@ -462,11 +462,11 @@ public:
      *  Direction Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll.
      *
      * @~chinese 
-     * ¸Ä±äListViewµÄ¹ö¶¯·½Ïò¡£
-     * Direction Direction::VERTICALÒâÎ¶×Å´¹Ö±¹ö¶¯,Direction::HORIZONTALÒâÎ¶×ÅË®Æ½¹ö¶¯¡£
+     * æ”¹å˜ListViewçš„æ»šåŠ¨æ–¹å‘ã€‚
+     * Direction Direction::VERTICALæ„å‘³ç€å‚ç›´æ»šåŠ¨,Direction::HORIZONTALæ„å‘³ç€æ°´å¹³æ»šåŠ¨ã€‚
      *
      * @param dir @~english Set the list view's scroll direction.
-     * @~chinese ÉèÖÃListViewµÄ¹ö¶¯·½Ïò¡£
+     * @~chinese è®¾ç½®ListViewçš„æ»šåŠ¨æ–¹å‘ã€‚
      */
     virtual void setDirection(Direction dir) override;
     
@@ -475,15 +475,15 @@ public:
     /**
      * @brief @~english Refresh view and layout of ListView manually.
      * This method will mark ListView content as dirty and the content view will be refreshed in the next frame.
-     * @~chinese ÊÖ¶¯Ë¢ĞÂviewºÍListViewµÄ²¼¾Ö¡£
-     * ¸Ã·½·¨½«ÁĞ±íÊÓÍ¼ÄÚÈİ±ê¼ÇÎªdirty£¬ÄÚÈİÊÓÍ¼½«ÔÚÏÂÒ»Ö¡Ë¢ĞÂ¡£
+     * @~chinese æ‰‹åŠ¨åˆ·æ–°viewå’ŒListViewçš„å¸ƒå±€ã€‚
+     * è¯¥æ–¹æ³•å°†åˆ—è¡¨è§†å›¾å†…å®¹æ ‡è®°ä¸ºdirtyï¼Œå†…å®¹è§†å›¾å°†åœ¨ä¸‹ä¸€å¸§åˆ·æ–°ã€‚
      */
     CC_DEPRECATED_ATTRIBUTE void requestRefreshView();
 
     
     /**
      * @brief @~english Refresh content view of ListView.
-     * @~chinese ¸üĞÂListViewµÄÊÓÍ¼¡£
+     * @~chinese æ›´æ–°ListViewçš„è§†å›¾ã€‚
      */
     CC_DEPRECATED_ATTRIBUTE void refreshView();
 

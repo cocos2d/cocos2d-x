@@ -54,7 +54,7 @@ class Pass;
  * @brief
  * @~english
  * Defines the rendering state of the graphics device.
- * @~chinese ¶¨ÒåÏÔ¿¨µÄäÖÈ¾×´Ì¬¡£
+ * @~chinese å®šä¹‰æ˜¾å¡çš„æ¸²æŸ“çŠ¶æ€ã€‚
  */
 
 class CC_DLL RenderState : public Ref
@@ -66,51 +66,51 @@ class CC_DLL RenderState : public Ref
 public:
     /**
      * @~english Static initializer that is called during game startup.
-     * @~chinese ¾²Ì¬³õÊ¼»¯º¯Êı£¬ÓÎÏ·¿ªÊ¼ÔËĞĞÊ±µ÷ÓÃ¡£
+     * @~chinese é™æ€åˆå§‹åŒ–å‡½æ•°ï¼Œæ¸¸æˆå¼€å§‹è¿è¡Œæ—¶è°ƒç”¨ã€‚
      */
     static void initialize();
 
     /**
      * @~english Static finalizer that is called during game shutdown.
-     * @~chinese ¾²Ì¬Ïú»Ùº¯Êı£¬µ±ÓÎÏ·½áÊøµÄÊ±ºòµ÷ÓÃ
+     * @~chinese é™æ€é”€æ¯å‡½æ•°ï¼Œå½“æ¸¸æˆç»“æŸçš„æ—¶å€™è°ƒç”¨
      */
     static void finalize();
 
     /**
      * @~english Get name
-     * @~chinese »ñÈ¡Ãû³Æ
-     * @return @~english Name. @~chinese Ãû³Æ¡£
+     * @~chinese è·å–åç§°
+     * @return @~english Name. @~chinese åç§°ã€‚
      */
     std::string getName() const;
 
     /** 
      * @~english Texture that will use in the CC_Texture0 uniform.
      Added to be backwards compatible. Use Samplers from .material instead.
-     * @~chinese Õâ¸öº¯ÊıÊÇÎªÁË¸úÖ®Ç°µÄ´úÂë¼æÈİ£¬ÕâÕÅÌùÍ¼Í¨¹ıCC_Texture0´«µİµ½shaderÖĞ¡£ ÍÆ¼öÓÃ.materialÎÄ¼şÖĞµÄSamplerÀ´´úÌæ¡£
-     * @param texture @~english Texture to be binding. @~chinese ½«Òª°ó¶¨µÄÌùÍ¼¡£
+     * @~chinese è¿™ä¸ªå‡½æ•°æ˜¯ä¸ºäº†è·Ÿä¹‹å‰çš„ä»£ç å…¼å®¹ï¼Œè¿™å¼ è´´å›¾é€šè¿‡CC_Texture0ä¼ é€’åˆ°shaderä¸­ã€‚ æ¨èç”¨.materialæ–‡ä»¶ä¸­çš„Sampleræ¥ä»£æ›¿ã€‚
+     * @param texture @~english Texture to be binding. @~chinese å°†è¦ç»‘å®šçš„è´´å›¾ã€‚
      */
     void setTexture(Texture2D* texture);
 
     /** 
      * @~english Returns the texture that is going to be used for CC_Texture0.
      Added to be backwards compatible.
-     * @~chinese ÎªÁË¸úÖ®Ç°µÄ¾É´úÂë¼æÈİ£¬Õâ¸öº¯Êı·µ»Ø½«Òª´«µİµÄshader CC_Texture0µÄÌùÍ¼¡£
-     * @return @~english texture that is going to be used for CC_Texture0. @~chinese ±»CC_Texture0Ê¹ÓÃµÄÌùÍ¼¡£
+     * @~chinese ä¸ºäº†è·Ÿä¹‹å‰çš„æ—§ä»£ç å…¼å®¹ï¼Œè¿™ä¸ªå‡½æ•°è¿”å›å°†è¦ä¼ é€’çš„shader CC_Texture0çš„è´´å›¾ã€‚
+     * @return @~english texture that is going to be used for CC_Texture0. @~chinese è¢«CC_Texture0ä½¿ç”¨çš„è´´å›¾ã€‚
      */
     Texture2D* getTexture() const;
 
     /**
      * @~english Binds the render state for this RenderState and any of its parents, top-down,
      * for the given pass.
-     * @~chinese °ó¶¨äÖÈ¾×´Ì¬£¬´Ó¸¸½Úµãµ½¸ù½ÚµãÓ¦ÓÃäÖÈ¾×´Ì¬¡£
-     * @param pass @~english Not used. @~chinese Ã»ÓĞÓÃµ½¡£
+     * @~chinese ç»‘å®šæ¸²æŸ“çŠ¶æ€ï¼Œä»çˆ¶èŠ‚ç‚¹åˆ°æ ¹èŠ‚ç‚¹åº”ç”¨æ¸²æŸ“çŠ¶æ€ã€‚
+     * @param pass @~english Not used. @~chinese æ²¡æœ‰ç”¨åˆ°ã€‚
      */
     void bind(Pass* pass);
 
     /**
      * @~english Returns the topmost RenderState in the hierarchy below the given RenderState.
-     * @~chinese »ñÈ¡¸ø¶¨²ÎÊıÏÂÃæµÄRenderState¡£
-     * @return @~english The top most render state below the given RenderState. @~chinese ¸ø¶¨RenderStateÏÂÃæµÄRenderState¡£
+     * @~chinese è·å–ç»™å®šå‚æ•°ä¸‹é¢çš„RenderStateã€‚
+     * @return @~english The top most render state below the given RenderState. @~chinese ç»™å®šRenderStateä¸‹é¢çš„RenderStateã€‚
      */
     RenderState* getTopmost(RenderState* below);
     
@@ -142,7 +142,7 @@ public:
      *
      * The initial depth compare function is DEPTH_LESS.
      *
-     * @~chinese ¶¨ÒåÉî¶È±È½Ïº¯Êı£¬ Éî¶È±È½Ïº¯Êı¶¨ÒåÁË½«Òª»æÖÆµÄÏñËØµÄÉî¶ÈÓëÔÚÉî¶È»º³åÖĞµÄÏñËØÉî¶È±È½ÏÓëÌæ»»µÄ¹æÔò¡£Èç¹û±È½Ïº¯ÊıÍ¨¹ıÁË£¬ÄÇÃ´ĞÂµÄÏñËØ½«±»»æÖÆ¡£Éî¶È±È½Ïº¯ÊıµÄ³õÊ¼ÖµÎªDEPTH_LESS¡£
+     * @~chinese å®šä¹‰æ·±åº¦æ¯”è¾ƒå‡½æ•°ï¼Œ æ·±åº¦æ¯”è¾ƒå‡½æ•°å®šä¹‰äº†å°†è¦ç»˜åˆ¶çš„åƒç´ çš„æ·±åº¦ä¸åœ¨æ·±åº¦ç¼“å†²ä¸­çš„åƒç´ æ·±åº¦æ¯”è¾ƒä¸æ›¿æ¢çš„è§„åˆ™ã€‚å¦‚æœæ¯”è¾ƒå‡½æ•°é€šè¿‡äº†ï¼Œé‚£ä¹ˆæ–°çš„åƒç´ å°†è¢«ç»˜åˆ¶ã€‚æ·±åº¦æ¯”è¾ƒå‡½æ•°çš„åˆå§‹å€¼ä¸ºDEPTH_LESSã€‚
      */
     enum DepthFunction
     {
@@ -159,7 +159,7 @@ public:
     /**
      * @~english Defines culling criteria for front-facing, back-facing and both-side
      * facets.
-     * @~chinese ¶¨ÒåÃæµÄ²Ã¼ô·½Ê½£¬Ç°Ãæ¡¢±³ÃæºÍË«Ãæ²Ã¼ô¡£
+     * @~chinese å®šä¹‰é¢çš„è£å‰ªæ–¹å¼ï¼Œå‰é¢ã€èƒŒé¢å’ŒåŒé¢è£å‰ªã€‚
      */
     enum CullFaceSide
     {
@@ -172,7 +172,7 @@ public:
      * @~english Defines the winding of vertices in faces that are considered front facing.
      *
      * The initial front face mode is set to FRONT_FACE_CCW.
-     * @~chinese ¶¨ÒåÇ°ÃæµÄ·½Ïò£¬³õÊ¼Çé¿öÏÂÄæÊ±ÕëÎªÇ°Ãæ£¬FRONT_FACE_CCW¡£
+     * @~chinese å®šä¹‰å‰é¢çš„æ–¹å‘ï¼Œåˆå§‹æƒ…å†µä¸‹é€†æ—¶é’ˆä¸ºå‰é¢ï¼ŒFRONT_FACE_CCWã€‚
      */
     enum FrontFace
     {
@@ -186,7 +186,7 @@ public:
      * Stencil compare functions determine if a new pixel will be drawn.
      *
      * The initial stencil compare function is STENCIL_ALWAYS.
-     * @~chinese ¶¨ÒåÄ£°å±È½Ïº¯Êı£¬Ä£°å±È½Ïº¯Êı½«¾ö¶¨Ò»¸öÏñËØÊÇ·ñ±»»æÖÆ¡£³õÊ¼Ä£°å±È½Ïº¯ÊıÎªSTENCIL_ALWAYS¡£
+     * @~chinese å®šä¹‰æ¨¡æ¿æ¯”è¾ƒå‡½æ•°ï¼Œæ¨¡æ¿æ¯”è¾ƒå‡½æ•°å°†å†³å®šä¸€ä¸ªåƒç´ æ˜¯å¦è¢«ç»˜åˆ¶ã€‚åˆå§‹æ¨¡æ¿æ¯”è¾ƒå‡½æ•°ä¸ºSTENCIL_ALWAYSã€‚
      */
     enum StencilFunction
     {
@@ -207,7 +207,7 @@ public:
      * stencil test fails, passes, or passes but fails the depth test.
      *
      * The initial stencil operation is STENCIL_OP_KEEP.
-     * @~chinese ¶¨Òå¶ÔÄ£°å»º³å½øĞĞµÄ²Ù×÷¡£ Ä£°å²Ù×÷¾ö¶¨ÔÚÏñËØµÄÄ£°å²âÊÔÊ§°Ü¡¢Í¨¹ı»òÕßÍ¨¹ıÄ£°å²âÊÔ¶øÃ»ÓĞÍ¨¹ıÉî¶È²âÊÔµÄÊ±ºò½«Òª½øĞĞµÄ²Ù×÷¡£³õÊ¼Ä£°å²Ù×÷ÎªSTENCIL_OP_KEEP¡£
+     * @~chinese å®šä¹‰å¯¹æ¨¡æ¿ç¼“å†²è¿›è¡Œçš„æ“ä½œã€‚ æ¨¡æ¿æ“ä½œå†³å®šåœ¨åƒç´ çš„æ¨¡æ¿æµ‹è¯•å¤±è´¥ã€é€šè¿‡æˆ–è€…é€šè¿‡æ¨¡æ¿æµ‹è¯•è€Œæ²¡æœ‰é€šè¿‡æ·±åº¦æµ‹è¯•çš„æ—¶å€™å°†è¦è¿›è¡Œçš„æ“ä½œã€‚åˆå§‹æ¨¡æ¿æ“ä½œä¸ºSTENCIL_OP_KEEPã€‚
      */
     enum StencilOperation
     {
@@ -226,7 +226,7 @@ public:
      * @brief
      * @~english Defines a block of fixed-function render states that can be applied to a
      * RenderState object.
-     * @~chinese Ò»ÏµÁĞäÖÈ¾×´Ì¬µÄ×éºÏ£¬¿ÉÒÔÓ¦ÓÃµ½RenderStateÎïÌåÉÏ¡£
+     * @~chinese ä¸€ç³»åˆ—æ¸²æŸ“çŠ¶æ€çš„ç»„åˆï¼Œå¯ä»¥åº”ç”¨åˆ°RenderStateç‰©ä½“ä¸Šã€‚
      */
     class CC_DLL StateBlock : public Ref
     {
@@ -238,19 +238,19 @@ public:
     public:
         /**
          * @~english Creates a new StateBlock with default render state settings.
-         * @~chinese ÓÃÈ±Ê¡µÄäÖÈ¾×´Ì¬ÉèÖÃ´´½¨ĞÂµÄStateBlock
-         * @return @~english Created StateBlock. @~chinese ĞÂ´´½¨µÄStateBlock¡£
+         * @~chinese ç”¨ç¼ºçœçš„æ¸²æŸ“çŠ¶æ€è®¾ç½®åˆ›å»ºæ–°çš„StateBlock
+         * @return @~english Created StateBlock. @~chinese æ–°åˆ›å»ºçš„StateBlockã€‚
          */
         static StateBlock* create();
 
         /** @~english The recommended way to create StateBlocks is by calling `create`.
          * Don't use `new` or `delete` on them.
-         * @~chinese ¹¹Ôìº¯Êı£¬ÍÆ¼öÊ¹ÓÃcreate·½·¨À´´´½¨¡£
+         * @~chinese æ„é€ å‡½æ•°ï¼Œèéªè¤‚èƒreateæ–¹æ³•æ¥åˆ›å»ºã€‚
          */
         StateBlock();
         
         /** @~english Destructor.
-         * @~chinese Îö¹¹º¯Êı¡£
+         * @~chinese ææ„å‡½æ•°ã€‚
          */
         ~StateBlock();
 
@@ -259,7 +259,7 @@ public:
          *
          * This method handles both setting and restoring of render states to ensure that
          * only the state explicitly defined by this StateBlock is applied to the renderer.
-         * @~chinese °ó¶¨äÖÈ¾×´Ì¬£¬Õâ¸öº¯Êı³ıÁËÓ¦ÓÃRenderBlockÖĞÉèÖÃµÄäÖÈ¾×´Ì¬Íâ£¬Ò²»á»Ö¸´ÄÇĞ©Ã»ÓĞÔÚStateBlockÖĞÉèÖÃµÄ×´Ì¬µ½È±Ê¡µÄäÖÈ¾×´Ì¬¡£
+         * @~chinese ç»‘å®šæ¸²æŸ“çŠ¶æ€ï¼Œè¿™ä¸ªå‡½æ•°é™¤äº†åº”ç”¨RenderBlockä¸­è®¾ç½®çš„æ¸²æŸ“çŠ¶æ€å¤–ï¼Œä¹Ÿä¼šæ¢å¤é‚£äº›æ²¡æœ‰åœ¨StateBlockä¸­è®¾ç½®çš„çŠ¶æ€åˆ°ç¼ºçœçš„æ¸²æŸ“çŠ¶æ€ã€‚
          */
         void bind();
 
@@ -267,16 +267,16 @@ public:
          * @~english Explicitly sets the source and destination used in the blend function for this render state.
          *
          * Note that the blend function is only applied when blending is enabled.
-         * @~chinese ÉèÖÃ»ìºÏº¯Êı£¬×¢Òâ»ìºÏº¯ÊıÖ»ÓĞÔÚblendÎªtrueÊ±²ÅÆğ×÷ÓÃ¡£
+         * @~chinese è®¾ç½®æ··åˆå‡½æ•°ï¼Œæ³¨æ„æ··åˆå‡½æ•°åªæœ‰åœ¨blendä¸ºtrueæ—¶æ‰èµ·ä½œç”¨ã€‚
          * @param blendFunc @~english Specifies how the blending factors are computed.
-         * @~chinese »ìºÏº¯ÊıµÄÔ´ºÍÄ¿±êµÄ¶¨Òå¡£
+         * @~chinese æ··åˆå‡½æ•°çš„æºå’Œç›®æ ‡çš„å®šä¹‰ã€‚
          */
         void setBlendFunc(const BlendFunc& blendFunc);
 
         /**
          * @~english Toggles blending.
-         * @~chinese ÉèÖÃÊÇ·ñÆôÓÃ»ìºÏ
-         * @param enabled @~english true to enable, false to disable. @~chinese ÆôÓÃ»ìºÏÎªtrue·ñÔòÎªfalse¡£
+         * @~chinese è®¾ç½®æ˜¯å¦å¯ç”¨æ··åˆ
+         * @param enabled @~english true to enable, false to disable. @~chinese å¯ç”¨æ··åˆä¸ºtrueå¦åˆ™ä¸ºfalseã€‚
          */
         void setBlend(bool enabled);
 
@@ -284,8 +284,8 @@ public:
          * @~english Explicitly sets the source used in the blend function for this render state.
          *
          * Note that the blend function is only applied when blending is enabled.
-         * @~chinese ÉèÖÃÔ´µÄ»ìºÏ·½Ê½¡£×¢ÒâÖ»ÓĞµ±blendÎªtrueÊ±¸Ãº¯Êı²ÅÓĞ×÷ÓÃ¡£
-         * @param blend @~english Specifies how the source blending factors are computed. @~chinese ¶¨ÒåÔ´µÄ»ìºÏ·½Ê½¡£
+         * @~chinese è®¾ç½®æºçš„æ··åˆæ–¹å¼ã€‚æ³¨æ„åªæœ‰å½“blendä¸ºtrueæ—¶è¯¥å‡½æ•°æ‰æœ‰ä½œç”¨ã€‚
+         * @param blend @~english Specifies how the source blending factors are computed. @~chinese å®šä¹‰æºçš„æ··åˆæ–¹å¼ã€‚
          */
         void setBlendSrc(Blend blend);
 
@@ -293,15 +293,15 @@ public:
          * @~english Explicitly sets the destination used in the blend function for this render state.
          *
          * Note that the blend function is only applied when blending is enabled.
-         * @~chinese ÉèÖÃÄ¿±êµÄ»ìºÏ·½Ê½¡£×¢ÒâÖ»ÓĞµ±blendÎªtrueÊ±²ÅÓĞ×÷ÓÃ¡£
-         * @param blend @~english Specifies how the destination blending factors are computed. @~chinese ¶¨ÒåÄ¿±êµÄ»ìºÏ·½Ê½¡£
+         * @~chinese è®¾ç½®ç›®æ ‡çš„æ··åˆæ–¹å¼ã€‚æ³¨æ„åªæœ‰å½“blendä¸ºtrueæ—¶æ‰æœ‰ä½œç”¨ã€‚
+         * @param blend @~english Specifies how the destination blending factors are computed. @~chinese å®šä¹‰ç›®æ ‡çš„æ··åˆæ–¹å¼ã€‚
          */
         void setBlendDst(Blend blend);
 
         /**
          * @~english Explicitly enables or disables backface culling.
-         * @~chinese ÉèÖÃÊÇ·ñÔÊĞí²Ã¼ô
-         * @param enabled @~english true to enable, false to disable. @~chinese ÔÊĞí²Ã¼ôÎªtrue£¬·ñÔòÎªfalse¡£
+         * @~chinese è®¾ç½®æ˜¯å¦å…è®¸è£å‰ª
+         * @param enabled @~english true to enable, false to disable. @~chinese å…è®¸è£å‰ªä¸ºtrueï¼Œå¦åˆ™ä¸ºfalseã€‚
          */
         void setCullFace(bool enabled);
 
@@ -309,8 +309,8 @@ public:
          * @~english Sets the side of the facets to cull.
          *
          * When not explicitly set, the default is to cull back-facing facets.
-         * @~chinese ÉèÖÃ²Ã¼ôµÄÃæ¡£È±Ê¡ÖµÎª²Ã¼ô±³Ãæ¡£
-         * @param side @~english The side to cull. @~chinese ´ı¼ô²ÃµÄÃæ¡£
+         * @~chinese è®¾ç½®è£å‰ªçš„é¢ã€‚ç¼ºçœå€¼ä¸ºè£å‰ªèƒŒé¢ã€‚
+         * @param side @~english The side to cull. @~chinese å¾…å‰ªè£çš„é¢ã€‚
          */
         void setCullFaceSide(CullFaceSide side);
 
@@ -318,8 +318,8 @@ public:
          * @~english Sets the winding for front facing polygons.
          *
          * By default, counter-clockwise wound polygons are considered front facing.
-         * @~chinese ÉèÖÃ¶¨ÒåÎªÇ°ÃæµÄ³¯Ïò£¬Ä¬ÈÏÖµÎªÄæÊ±Õë·½Ïò¡£
-         * @param winding @~english The winding for front facing polygons. @~chinese ¶¨ÒåÎªÇ°ÃæµÄ³¯Ïò¡£
+         * @~chinese è®¾ç½®å®šä¹‰ä¸ºå‰é¢çš„æœå‘ï¼Œé»˜è®¤å€¼ä¸ºé€†æ—¶é’ˆæ–¹å‘ã€‚
+         * @param winding @~english The winding for front facing polygons. @~chinese å®šä¹‰ä¸ºå‰é¢çš„æœå‘ã€‚
          */
         void setFrontFace(FrontFace winding);
 
@@ -327,15 +327,15 @@ public:
          * @~english Toggles depth testing.
          *
          * By default, depth testing is disabled.
-         * @~chinese ÉèÖÃÉî¶È²âÊÔÊÇ·ñ¿ªÆô¡£
-         * @param enabled @~english true to enable, false to disable. @~chinese Îªtrue¿ªÆôÉî¶È²âÊÔ£¬false¹Ø±ÕÉî¶È²âÊÔ¡£
+         * @~chinese è®¾ç½®æ·±åº¦æµ‹è¯•æ˜¯å¦å¼€å¯ã€‚
+         * @param enabled @~english true to enable, false to disable. @~chinese ä¸ºtrueå¼€å¯æ·±åº¦æµ‹è¯•ï¼Œfalseå…³é—­æ·±åº¦æµ‹è¯•ã€‚
          */
         void setDepthTest(bool enabled);
 
         /**
          * @~english Toggles depth writing.
-         * @~chinese ÉèÖÃÊÇ·ñ¿ªÆôÉî¶ÈĞ´¡£
-         * @param enabled @~english true to enable, false to disable. @~chinese true¿ªÆôÉî¶ÈĞ´£¬false¹Ø±ÕÉî¶ÈĞ´¡£
+         * @~chinese è®¾ç½®æ˜¯å¦å¼€å¯æ·±åº¦å†™ã€‚
+         * @param enabled @~english true to enable, false to disable. @~chinese trueå¼€å¯æ·±åº¦å†™ï¼Œfalseå…³é—­æ·±åº¦å†™ã€‚
          */
         void setDepthWrite(bool enabled);
 
@@ -344,8 +344,8 @@ public:
          *
          * When not explicitly set and when depth testing is enabled, the default
          * depth function is DEPTH_LESS.
-         * @~chinese ÉèÖÃÉî¶È±È½Ïº¯Êı£¬µ±ÇÒ½öµ±Éî¶È²âÊÔ¿ªÆôÊ±ÓĞĞ§¡£È±Ê¡Éî¶È±È½Ïº¯ÊıÎªDEPTH_LESS¡£
-         * @param func @~english The depth function. @~chinese Éî¶È±È½Ïº¯Êı¡£
+         * @~chinese è®¾ç½®æ·±åº¦æ¯”è¾ƒå‡½æ•°ï¼Œå½“ä¸”ä»…å½“æ·±åº¦æµ‹è¯•å¼€å¯æ—¶æœ‰æ•ˆã€‚ç¼ºçœæ·±åº¦æ¯”è¾ƒå‡½æ•°ä¸ºDEPTH_LESSã€‚
+         * @param func @~english The depth function. @~chinese æ·±åº¦æ¯”è¾ƒå‡½æ•°ã€‚
          */
         void setDepthFunction(DepthFunction func);
 
@@ -353,8 +353,8 @@ public:
         //  * @~english Toggles stencil testing.
         //  *
         //  * By default, stencil testing is disabled.
-        //  * @~chinese ÉèÖÃÄ£°å²âÊÔÊÇ·ñ¿ªÆô¡£Ä¬ÈÏÄ£°å²âÊÔ¹Ø±Õ¡£
-        //  * @param enabled @~english true to enable, false to disable. @~chinese true¿ªÆô£¬false¹Ø±Õ¡£
+        //  * @~chinese è®¾ç½®æ¨¡æ¿æµ‹è¯•æ˜¯å¦å¼€å¯ã€‚é»˜è®¤æ¨¡æ¿æµ‹è¯•å…³é—­ã€‚
+        //  * @param enabled @~english true to enable, false to disable. @~chinese trueå¼€å¯ï¼Œfalseå…³é—­ã€‚
         //  */
         // void setStencilTest(bool enabled);
 
@@ -362,8 +362,8 @@ public:
         //  * @~english Sets the stencil writing mask.
         //  *
         //  * By default, the stencil writing mask is all 1's.
-        //  * @~chinese ÉèÖÃÄ£°åĞ´µÄÑÚÂë£¬È±Ê¡Ä£°åÑÚÂëĞ´µÄÑÚÂëÎª¶¼ÊÇ1.
-        //  * @param mask @~english Bit mask controlling writing to individual stencil planes. @~chinese ÑÚÂëÓÃÀ´¿ØÖÆĞ´µ½Ä£°åÃæÉÏ¡£
+        //  * @~chinese è®¾ç½®æ¨¡æ¿å†™çš„æ©ç ï¼Œç¼ºçœæ¨¡æ¿æ©ç å†™çš„æ©ç ä¸ºéƒ½æ˜¯1.
+        //  * @param mask @~english Bit mask controlling writing to individual stencil planes. @~chinese æ©ç ç”¨æ¥æ§åˆ¶å†™åˆ°æ¨¡æ¿é¢ä¸Šã€‚
         //  */
         // void setStencilWrite(unsigned int mask);
 
@@ -371,10 +371,10 @@ public:
         //  * @~english Sets the stencil function.
         //  *
         //  * By default, the function is set to STENCIL_ALWAYS, the reference value is 0, and the mask is all 1's.
-        //  * @~chinese ÉèÖÃÄ£°å±È½Ïº¯Êı¡£Ä¬ÈÏµÄÄ£°åº¯ÊıÎªSTENCIL_ALWAYS£¬²Î¿¼ÖµÎª0£¬ÑÚÂëÎªÈ«ÊÇ1¡£
-        //  * @param func @~english The stencil function. @~chinese Ä£°åº¯Êı¡£
-        //  * @param ref @~english The stencil reference value. @~chinese Ä£°å²Î¿¼Öµ¡£
-        //  * @param mask @~english The stencil mask. @~chinese Ä£°åÑÚÂë¡£
+        //  * @~chinese è®¾ç½®æ¨¡æ¿æ¯”è¾ƒå‡½æ•°ã€‚é»˜è®¤çš„æ¨¡æ¿å‡½æ•°ä¸ºSTENCIL_ALWAYSï¼Œå‚è€ƒå€¼ä¸º0ï¼Œæ©ç ä¸ºå…¨æ˜¯1ã€‚
+        //  * @param func @~english The stencil function. @~chinese æ¨¡æ¿å‡½æ•°ã€‚
+        //  * @param ref @~english The stencil reference value. @~chinese æ¨¡æ¿å‚è€ƒå€¼ã€‚
+        //  * @param mask @~english The stencil mask. @~chinese æ¨¡æ¿æ©ç ã€‚
         //  */
         // void setStencilFunction(StencilFunction func, int ref, unsigned int mask);
 
@@ -382,10 +382,10 @@ public:
         //  * @~english Sets the stencil operation.
         //  *
         //  * By default, stencil fail, stencil pass/depth fail, and stencil and depth pass are set to STENCIL_OP_KEEP.
-        //  * @~chinese ÉèÖÃÄ£°å²Ù×÷¡£Ä¬ÈÏÇé¿öÏÂÄ£°å²âÊÔÊ§°Ü¡¢Ä£°å²âÊÔÊ§°ÜÉî¶È²âÊÔÍ¨¹ı¡¢Ä£°å²âÊÔÉî¶È²âÊÔ¶¼Í¨¹ı£¬Ä£°å²Ù×÷¶¼ÉèÖÃÎªSTENCIL_OP_KEEP¡£
-        //  * @param sfail @~english The stencil operation if the stencil test fails.@~chinese Ä£°å²âÊÔÊ§°ÜÊ±ºòµÄÄ£°å²Ù×÷¡£
-        //  * @param dpfail @~english The stencil operation if the stencil test passes, but the depth test fails. @~chinese Ä£°å²âÊÔÍ¨¹ı£¬Éî¶È²âÊÔÊ§°ÜÊ±ºòµÄÄ£°å²Ù×÷¡£
-        //  * @param dppass @~english The stencil operation if both the stencil test and depth test pass. @~chinese Ä£°å²âÊÔºÍÉî¶È²âÊÔ¶¼Ê§°ÜÊ±ºòµÄÄ£°å²Ù×÷¡£
+        //  * @~chinese è®¾ç½®æ¨¡æ¿æ“ä½œã€‚é»˜è®¤æƒ…å†µä¸‹æ¨¡æ¿æµ‹è¯•å¤±è´¥ã€æ¨¡æ¿æµ‹è¯•å¤±è´¥æ·±åº¦æµ‹è¯•é€šè¿‡ã€æ¨¡æ¿æµ‹è¯•æ·±åº¦æµ‹è¯•éƒ½é€šè¿‡ï¼Œæ¨¡æ¿æ“ä½œéƒ½è®¾ç½®ä¸ºSTENCIL_OP_KEEPã€‚
+        //  * @param sfail @~english The stencil operation if the stencil test fails.@~chinese æ¨¡æ¿æµ‹è¯•å¤±è´¥æ—¶å€™çš„æ¨¡æ¿æ“ä½œã€‚
+        //  * @param dpfail @~english The stencil operation if the stencil test passes, but the depth test fails. @~chinese æ¨¡æ¿æµ‹è¯•é€šè¿‡ï¼Œæ·±åº¦æµ‹è¯•å¤±è´¥æ—¶å€™çš„æ¨¡æ¿æ“ä½œã€‚
+        //  * @param dppass @~english The stencil operation if both the stencil test and depth test pass. @~chinese æ¨¡æ¿æµ‹è¯•å’Œæ·±åº¦æµ‹è¯•éƒ½å¤±è´¥æ—¶å€™çš„æ¨¡æ¿æ“ä½œã€‚
         //  */
         // void setStencilOperation(StencilOperation sfail, StencilOperation dpfail, StencilOperation dppass);
 
@@ -395,22 +395,22 @@ public:
          * This method attempts to interpret the passed in strings as render state
          * name and value. This is normally used when loading render states from
          * material files.
-         * @~chinese Í¨¹ı¸ø¶¨Ãû×ÖºÍÖµ×Ö·û´®ÉèÖÃäÖÈ¾×´Ì¬¡£¸Ãº¯ÊıÔÚ´Ó²ÄÖÊÎÄ¼şÖĞ¼ÓÔØäÖÈ¾×´Ì¬Ê±Ê¹ÓÃ¡£
-         * @param name @~english Name of the render state to set. @~chinese ´ıÉèÖÃäÖÈ¾×´Ì¬µÄÃû×Ö¡£
-         * @param value @~english Value of the specified render state. @~chinese ´ıÉèÖÃäÖÈ¾×´Ì¬µÄÖµ¡£
+         * @~chinese é€šè¿‡ç»™å®šåå­—å’Œå€¼å­—ç¬¦ä¸²è®¾ç½®æ¸²æŸ“çŠ¶æ€ã€‚è¯¥å‡½æ•°åœ¨ä»æè´¨æ–‡ä»¶ä¸­åŠ è½½æ¸²æŸ“çŠ¶æ€æ—¶ä½¿ç”¨ã€‚
+         * @param name @~english Name of the render state to set. @~chinese å¾…è®¾ç½®æ¸²æŸ“çŠ¶æ€çš„åå­—ã€‚
+         * @param value @~english Value of the specified render state. @~chinese å¾…è®¾ç½®æ¸²æŸ“çŠ¶æ€çš„å€¼ã€‚
          */
         void setState(const std::string& name, const std::string& value);
 
         /**
          * @~english Get hash code of this render state.
-         * @~chinese »ñÈ¡¸ÃäÖÈ¾×´Ì¬µÄ¹şÏ£Âë¡£
-         * @return @~english Hash code of this render state. @~chinese ¸ÄäÖÈ¾×´Ì¬µÄ¹şÏ£Âë¡£
+         * @~chinese è·å–è¯¥æ¸²æŸ“çŠ¶æ€çš„å“ˆå¸Œç ã€‚
+         * @return @~english Hash code of this render state. @~chinese æ”¹æ¸²æŸ“çŠ¶æ€çš„å“ˆå¸Œç ã€‚
          */
         uint32_t getHash() const;
         /**
          * @~english Is this render state dirty?
-         * @~chinese äÖÈ¾×´Ì¬ÊÇ·ñ±»ĞŞ¸Ä¹ı£¿
-         * @return @~english true dirty, false not dirty. @~chinese true±íÊ¾ĞŞ¸Ä¹ı£¬falseÃ»ÓĞĞŞ¸Ä¹ı¡£
+         * @~chinese æ¸²æŸ“çŠ¶æ€æ˜¯å¦è¢«ä¿®æ”¹è¿‡ï¼Ÿ
+         * @return @~english true dirty, false not dirty. @~chinese trueè¡¨ç¤ºä¿®æ”¹è¿‡ï¼Œfalseæ²¡æœ‰ä¿®æ”¹è¿‡ã€‚
          */
         bool isDirty() const;
 
@@ -441,10 +441,10 @@ public:
          * at the end of your custom draw call.
          * This function restores the default render state its defaults values.
          * Since this function might call GL calls, it must be called in a GL context is present.
-         * @~chinese ÈÃÄ¬ÈÏµÄStateBlock×´Ì¬Ê§Ğ§¡£Í¨³£Çé¿öÏÂ£¬Èç¹ûÄãÖ±½Óµ÷ÓÃÁËopenGLµÄº¯ÊıÀ´ĞŞ¸ÄäÖÈ¾×´Ì¬£¬ÄÇÃ´stateBlockÖĞ±£´æ
-         * µÄ×´Ì¬»áÓëopenGLµÄ×´Ì¬²»Ò»ÖÂ¡£Õâ¸öº¯ÊıÓÃÓÚ°ÑopenGLÖØÖÃÎªÄ¬ÈÏ×´Ì¬,±ØĞëÔÚopenGL context´æÔÚÊ±µ÷ÓÃ¡£
+         * @~chinese è®©é»˜è®¤çš„StateBlockçŠ¶æ€å¤±æ•ˆã€‚é€šå¸¸æƒ…å†µä¸‹ï¼Œå¦‚æœä½ ç›´æ¥è°ƒç”¨äº†openGLçš„å‡½æ•°æ¥ä¿®æ”¹æ¸²æŸ“çŠ¶æ€ï¼Œé‚£ä¹ˆstateBlockä¸­ä¿å­˜
+         * çš„çŠ¶æ€ä¼šä¸openGLçš„çŠ¶æ€ä¸ä¸€è‡´ã€‚è¿™ä¸ªå‡½æ•°ç”¨äºæŠŠopenGLé‡ç½®ä¸ºé»˜è®¤çŠ¶æ€,å¿…é¡»åœ¨openGL contextå­˜åœ¨æ—¶è°ƒç”¨ã€‚
          * @param stateBits @~english Bitwise-OR of the states that needs to be invalidated
-         * @~chinese ĞèÒªÖØÖÃµÄ×´Ì¬Î»£¬¿ÉÒÔÍ¨¹ı°´Î»»ò²Ù×÷À´Ö¸¶¨¶à¸ö×´Ì¬¡£
+         * @~chinese éœ€è¦é‡ç½®çš„çŠ¶æ€ä½ï¼Œå¯ä»¥é€šè¿‡æŒ‰ä½æˆ–æ“ä½œæ¥æŒ‡å®šå¤šä¸ªçŠ¶æ€ã€‚
          */
         static void invalidate(long stateBits);
 
@@ -460,17 +460,17 @@ public:
          
          - call `restore()` if you want to restore to the default state after using `StateBlock`.
          - call `invalidate()` if you want to restore to the default state after calling manual GL calls.
-         * @~chinese ½«È«¾ÖµÄäÖÈ¾×´Ì¬ÉèÖÃÎªÄ¬ÈÏ×´Ì¬£¬ Õâ¸öº¯ÊıÓëinvalidate()µÄÇø±ğÔÚÓÚ£¬restore()º¯Êı»á»ùÓÚµ±Ç°µÄStateBlock¼ÇÂ¼µÄ×´Ì¬
-         * À´»Ö¸´¡£ËùÒÔ
-         * -µ±ÄãÊ¹ÓÃstateBlockÊ±£¬¿ÉÒÔÍ¨¹ırestore()À´½«stateblockÖØÖÃÎªÄ¬ÈÏ×´Ì¬¡£
-         * -µ±ÄãÖ±½Óµ÷ÓÃopenGLº¯ÊıÉèÖÃÁË×´Ì¬Ê±£¬ĞèÒªµ÷ÓÃinvalidate()¡£
-         * @param stateOverrideBits @~english Bitwise-OR of the states that needs to be override. @~chinese ´ı¸²¸ÇÎ»µÄÏàÓë¡£
+         * @~chinese å°†å…¨å±€çš„æ¸²æŸ“çŠ¶æ€è®¾ç½®ä¸ºé»˜è®¤çŠ¶æ€ï¼Œ è¿™ä¸ªå‡½æ•°ä¸invalidate()çš„åŒºåˆ«åœ¨äºï¼Œrestore()å‡½æ•°ä¼šåŸºäºå½“å‰çš„StateBlockè®°å½•çš„çŠ¶æ€
+         * æ¥æ¢å¤ã€‚æ‰€ä»¥
+         * -å½“ä½ ä½¿ç”¨stateBlockæ—¶ï¼Œå¯ä»¥é€šè¿‡restore()æ¥å°†stateblocké‡ç½®ä¸ºé»˜è®¤çŠ¶æ€ã€‚
+         * -å½“ä½ ç›´æ¥è°ƒç”¨openGLå‡½æ•°è®¾ç½®äº†çŠ¶æ€æ—¶ï¼Œéœ€è¦è°ƒç”¨invalidate()ã€‚
+         * @param stateOverrideBits @~english Bitwise-OR of the states that needs to be override. @~chinese å¾…è¦†ç›–ä½çš„ç›¸ä¸ã€‚
          */
         static void restore(long stateOverrideBits);
 
         /***
          * @~english Default render state.
-         * @~chinese Ä¬ÈÏäÖÈ¾×´Ì¬¡£
+         * @~chinese é»˜è®¤æ¸²æŸ“çŠ¶æ€ã€‚
          */
         static StateBlock* _defaultState;
 
