@@ -760,7 +760,11 @@ public:
     * @lua NA
     */
     virtual const BlendFunc &getBlendFunc() const override;
-    
+
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    ResouceData csGetRenderFile();
+#endif
+
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor

@@ -104,7 +104,11 @@ static inline Tex2F __t(const Vec2 &v)
 
 // implementation of DrawNode
 
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+static const int DEFAULT_LINE_WIDTH = 1;
+#else
 static const int DEFAULT_LINE_WIDTH = 2;
+#endif
 
 DrawNode::DrawNode()
 : _vao(0)
@@ -126,6 +130,9 @@ DrawNode::DrawNode()
 , _dirtyGLPoint(false)
 , _dirtyGLLine(false)
 , _lineWidth(DEFAULT_LINE_WIDTH)
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+, _lineSmoothEnable(false)
+#endif
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 }
@@ -398,6 +405,14 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
         // texcood
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
     }
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    //如果开启线抗锯齿,如参考线绘制, 则先关闭多重采样
+    if (this->_lineSmoothEnable == false)
+    {
+        glDisable(GL_MULTISAMPLE);
+        glDisable(GL_LINE_SMOOTH);
+    }
+#endif
     glLineWidth(_lineWidth);
     glDrawArrays(GL_LINES, 0, _bufferCountGLLine);
     
@@ -407,8 +422,14 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
     }
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCountGLLine);
+
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    //如果开启线抗锯齿, 如参考线绘制, 绘制完成开启多重采样
+    if (this->_lineSmoothEnable == true)
+        glEnable(GL_MULTISAMPLE);
+#endif
+
     CHECK_GL_ERROR_DEBUG();
 }
 
@@ -945,5 +966,22 @@ void DrawNode::setLineWidth(int lineWidth)
 {
     _lineWidth = lineWidth;
 }
+
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+void DrawNode::csSetLineSmooth(bool enable)
+{
+    this->_lineSmoothEnable = enable;
+}
+
+bool DrawNode::csIsLineSmooth()
+{
+    return this->_lineSmoothEnable;
+}
+
+float DrawNode::csGetLineWidth()
+{
+    return this->_lineWidth;
+}
+#endif
 
 NS_CC_END

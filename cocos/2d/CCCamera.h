@@ -58,6 +58,12 @@ enum class CameraFlag
     USER6 = 1 << 6,
     USER7 = 1 << 7,
     USER8 = 1 << 8,
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    SkyBox = 1 << 10,
+    DEFAULTCAMERA = DEFAULT | SkyBox,
+    PIXEL = 1 << 13,
+    FRONT = 1 << 14,
+#endif
 };
 /**
  * Defines a camera .
@@ -271,7 +277,11 @@ public:
     CameraBackgroundBrush* getBackgroundBrush() const { return _clearBrush; }
     
     virtual void visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
-    
+
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    bool isBrushValid();
+#endif
+
 CC_CONSTRUCTOR_ACCESS:
     Camera();
     ~Camera();

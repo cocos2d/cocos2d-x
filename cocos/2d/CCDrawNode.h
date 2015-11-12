@@ -312,7 +312,15 @@ public:
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
     void setLineWidth(int lineWidth);
-    
+
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    void csSetLineSmooth(bool enable);
+
+    bool csIsLineSmooth();
+
+    float csGetLineWidth();
+#endif
+
 CC_CONSTRUCTOR_ACCESS:
     DrawNode();
     virtual ~DrawNode();
@@ -354,6 +362,10 @@ protected:
     bool        _dirtyGLLine;
     
     int         _lineWidth;
+
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    bool _lineSmoothEnable;
+#endif
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);

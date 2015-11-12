@@ -139,6 +139,10 @@ public:
     std::string     _sourceImage;
     //! size in pixels of the image
     Size            _imageSize;
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    std::string     _sourceImage;
+    std::string     _originSourceImage;
+#endif
 public:
     /**
      * @js ctor
@@ -279,6 +283,9 @@ public:
     inline void setCurrentString(const std::string& currentString){ _currentString = currentString; }
     inline const std::string& getTMXFileName() const { return _TMXFileName; }
     inline void setTMXFileName(const std::string& fileName){ _TMXFileName = fileName; }
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    inline const std::string& getExternalTilesetFileName(){ return _externalTilesetFilename; }
+#endif
 
 protected:
     void internalInit(const std::string& tmxFileName, const std::string& resourcePath);
@@ -318,6 +325,9 @@ protected:
     ValueMapIntKey _tileProperties;
     int _currentFirstGID;
     bool _recordFirstGID;
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    std::string _externalTilesetFilename;
+#endif
 };
 
 // end of tilemap_parallax_nodes group

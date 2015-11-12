@@ -103,8 +103,12 @@ public:
      * draw the background
      */
     virtual void drawBackground(Camera* camera) {}
-    
-CC_CONSTRUCTOR_ACCESS:
+
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    virtual bool isValid() { return true; }
+#endif
+
+CC_CONSTRUCTOR_ACCESS :
     CameraBackgroundBrush();
     virtual ~CameraBackgroundBrush();
 
@@ -236,8 +240,15 @@ public:
      * Draw background
      */
     virtual void drawBackground(Camera* camera) override;
-    
-CC_CONSTRUCTOR_ACCESS:
+
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    bool isActived();
+    void setActived(bool actived);
+    virtual void setTextureValid(bool valid);
+    virtual bool isValid()override;
+#endif
+
+CC_CONSTRUCTOR_ACCESS :
     CameraBackgroundSkyBoxBrush();
     virtual ~CameraBackgroundSkyBoxBrush();
     
@@ -257,6 +268,12 @@ protected:
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _backToForegroundListener;
+#endif
+
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+private:
+    bool _actived;
+    bool _textureValid;
 #endif
 };
 

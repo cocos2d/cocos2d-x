@@ -38,6 +38,10 @@
 #include "2d/CCComponentContainer.h"
 #include "2d/CCComponent.h"
 
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+#include "CocosStudioExtension.h"
+#endif
+
 NS_CC_BEGIN
 
 class GridBase;

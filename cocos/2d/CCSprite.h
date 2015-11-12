@@ -461,7 +461,12 @@ public:
     virtual bool isOpacityModifyRGB() const override;
     /// @}
 
-CC_CONSTRUCTOR_ACCESS:
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    ResouceData csGetRenderFile();
+    void setOffsetPosFromCenter(Vec2 offsetFromCenter);
+#endif
+
+CC_CONSTRUCTOR_ACCESS :
 	/**
      * @js ctor
      */
@@ -634,6 +639,12 @@ protected:
     bool _flippedY;                         /// Whether the sprite is flipped vertically or not
 
     bool _insideBounds;                     /// whether or not the sprite was inside bounds the previous frame
+
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    std::string _fileName;
+    int _fileType;
+#endif
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
 };

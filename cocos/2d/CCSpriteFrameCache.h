@@ -236,6 +236,10 @@ public:
     /** @deprecated use getSpriteFrameByName() instead */
     CC_DEPRECATED_ATTRIBUTE SpriteFrame* spriteFrameByName(const std::string&name) { return getSpriteFrameByName(name); }
 
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    bool reloadTexture(const std::string& plist);
+#endif
+
 protected:
     // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
     SpriteFrameCache(){}
@@ -259,6 +263,10 @@ protected:
                                const std::vector<int> &verticesUV,
                                const std::vector<int> &triangleIndices,
                                PolygonInfo &polygonInfo);
+
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    void reloadSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture);
+#endif
 
     Map<std::string, SpriteFrame*> _spriteFrames;
     ValueMap _spriteFramesAliases;

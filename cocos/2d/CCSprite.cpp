@@ -164,7 +164,15 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect)
 
 bool Sprite::initWithFile(const std::string& filename)
 {
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    if (filename.empty())
+        return false;
+
+    _fileName = filename;
+    _fileType = 0;
+#else
     CCASSERT(filename.size()>0, "Invalid filename for sprite");
+#endif
 
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (texture)
@@ -184,6 +192,11 @@ bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
 {
     CCASSERT(filename.size()>0, "Invalid filename");
 
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    _fileName = filename;
+    _fileType = 0;
+#endif
+
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (texture)
     {
@@ -199,6 +212,11 @@ bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
 bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
 {
     CCASSERT(spriteFrameName.size() > 0, "Invalid spriteFrameName");
+
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    _fileName = spriteFrameName;
+    _fileType = 1;
+#endif
 
     SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
     return initWithSpriteFrame(frame);
@@ -1144,5 +1162,20 @@ void Sprite::setPolygonInfo(const PolygonInfo& info)
 {
     _polyInfo = info;
 }
+
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+void Sprite::setOffsetPosFromCenter(Vec2 offsetFromCenter)
+{
+    _unflippedOffsetPositionFromCenter = offsetFromCenter;
+}
+
+ResouceData Sprite::csGetRenderFile()
+{
+    ResouceData rData;
+    rData.type = (int)_fileType;
+    rData.file = _fileName;
+    return rData;
+}
+#endif
 
 NS_CC_END

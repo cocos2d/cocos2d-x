@@ -251,7 +251,12 @@ public:
      * @js NA
      */
     virtual std::string getDescription() const override;
-    
+
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    ResouceData csGetRenderFile();
+    int  getLayerNum();
+#endif
+
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
@@ -287,6 +292,12 @@ protected:
     
     //! tile properties
     ValueMapIntKey _tileProperties;
+
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    std::string _tmxFile;
+    int _tmxLayerNum;
+    static const int TMXLayerTag = 32768;
+#endif
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TMXTiledMap);
