@@ -39,7 +39,11 @@ Configuration* Configuration::s_sharedConfiguration = nullptr;
 const char* Configuration::CONFIG_FILE_LOADED = "config_file_loaded";
 
 Configuration::Configuration()
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+: _maxTextureSize(GL_MAX_TEXTURE_SIZE)
+#else
 : _maxTextureSize(0) 
+#endif
 , _maxModelviewStackDepth(0)
 , _supportsPVRTC(false)
 , _supportsETC1(false)
@@ -50,7 +54,11 @@ Configuration::Configuration()
 , _supportsDiscardFramebuffer(false)
 , _supportsShareableVAO(false)
 , _maxSamplesAllowed(0)
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+, _maxTextureUnits(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS)
+#else
 , _maxTextureUnits(0)
+#endif
 , _glExtensions(nullptr)
 , _maxDirLightInShader(1)
 , _maxPointLightInShader(1)
