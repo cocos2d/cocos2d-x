@@ -197,7 +197,7 @@
         
 --------------------------------
 --  Adjust the background image. YES by default. If the property is set to NO, the<br>
--- background will use the prefered size of the background image. 
+-- background will use the preferred size of the background image. 
 -- @function [parent=#ControlButton] doesAdjustBackgroundImage 
 -- @param self
 -- @return bool#bool ret (return value: bool)

@@ -374,7 +374,10 @@ protected:
     
     /** @~english Walks though scene graph to get the draw order for each node, it's called before sorting event listener with scene graph priority  @~chinese 遍历场景图获取每一个节点的绘制顺序，该函数在以场景图优先级排序的事件监听器之前被调用*/
     void visitTarget(Node* node, bool isRootNode);
-    
+
+    /** Remove all listeners in _toRemoveListeners list and cleanup */
+    void cleanToRemovedListeners();
+
     /** @~english Listeners map  @~chinese 监听器映射表*/
     std::unordered_map<EventListener::ListenerID, EventListenerVector*> _listenerMap;
     
@@ -392,7 +395,10 @@ protected:
     
     /** @~english The listeners to be added after dispatching event  @~chinese 在事件分发后需要被添加的监听器*/
     std::vector<EventListener*> _toAddedListeners;
-    
+
+    /** The listeners to be removed after dispatching event */
+    std::vector<EventListener*> _toRemovedListeners;
+
     /** @~english The nodes were associated with scene graph based priority listeners  @~chinese 这些节点与基于场景图优先级的监听器相关联*/
     std::set<Node*> _dirtyNodes;
     

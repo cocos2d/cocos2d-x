@@ -47,13 +47,13 @@ class CameraBackgroundBrush;
  * You can change the camera order to get different result when depth test is not enabled.
  * For each camera, transparent 3d sprite is rendered after opaque 3d sprite and other 2d objects.
  * @~chinese 
- * æ³¨æ„:
- * åœºæ™¯åˆ›å»ºä¸€ä¸ªé»˜è®¤çš„ç›¸æœºã€‚èŠ‚ç‚¹çš„é»˜è®¤ç›¸æœºæ©ç æ˜¯1,å› æ­¤å®ƒå¯ä»¥è¢«é»˜è®¤çš„ç›¸æœºçœ‹åˆ°ã€‚
- * åœ¨æ¸²æŸ“åœºæ™¯æœŸé—´ï¼Œé™¤äº†é»˜è®¤ç›¸æœºä»¥å¤–ï¼Œå…¶ä½™ç›¸æœºä¼šé€šè¿‡æŒ‰æ·»åŠ é¡ºåºå¯¹æ‰€çœ‹åˆ°çš„ç‰©ä½“è¿›è¡Œç»˜åˆ¶ï¼Œé»˜è®¤çš„ç›¸æœºæ˜¯æœ€åä¸€ä¸ªè¿›è¡Œç»˜åˆ¶çš„ã€‚
- * è¿™å¯¹ä½¿ç”¨ä¸€ä¸ªå•ç‹¬çš„ç›¸æœºæ¥æ¸²æŸ“3då¯¹è±¡æ¥è¯´æ˜¯ä¸€ä¸ªä¸é”™çš„ä¸»æ„ã€‚
- * é™¤äº†DEFAULTä»¥å¤–ï¼Œå¯ä»¥ä½¿ç”¨CameraFlag::USER1æˆ–è€…å…¶ä»–å€¼æ¥è®¾ç½®3dç›¸æœºæ ‡è¯†ï¼ŒæŠŠé»˜è®¤çš„ç›¸æœºç•™ç»™UI,æ˜¯å› ä¸ºå®ƒæœ€åæ¸²æŸ“ã€‚
- * å½“ä¸å¯ç”¨æ·±åº¦æµ‹è¯•æ—¶ä½ å¯ä»¥æ”¹å˜ç›¸æœºä»¥å¾—åˆ°ä¸åŒçš„ç»“æœã€‚
- * å¯¹äºæ¯ä¸€ä¸ªç›¸æœº,ä¼šå…ˆæ¸²æŸ“å®Œä¸é€æ˜çš„3dç²¾çµå’Œ2då¯¹è±¡åæ‰ä¼šæ¸²æŸ“é€æ˜çš„3dç²¾çµã€‚
+ * ×¢Òâ:
+ * ³¡¾°´´½¨Ò»¸öÄ¬ÈÏµÄÏà»ú¡£½ÚµãµÄÄ¬ÈÏÏà»úÑÚÂëÊÇ1,Òò´ËËü¿ÉÒÔ±»Ä¬ÈÏµÄÏà»ú¿´µ½¡£
+ * ÔÚäÖÈ¾³¡¾°ÆÚ¼ä£¬³ıÁËÄ¬ÈÏÏà»úÒÔÍâ£¬ÆäÓàÏà»ú»áÍ¨¹ı°´Ìí¼ÓË³Ğò¶ÔËù¿´µ½µÄÎïÌå½øĞĞ»æÖÆ£¬Ä¬ÈÏµÄÏà»úÊÇ×îºóÒ»¸ö½øĞĞ»æÖÆµÄ¡£
+ * Õâ¶ÔÊ¹ÓÃÒ»¸öµ¥¶ÀµÄÏà»úÀ´äÖÈ¾3d¶ÔÏóÀ´ËµÊÇÒ»¸ö²»´íµÄÖ÷Òâ¡£
+ * ³ıÁËDEFAULTÒÔÍâ£¬¿ÉÒÔÊ¹ÓÃCameraFlag::USER1»òÕßÆäËûÖµÀ´ÉèÖÃ3dÏà»ú±êÊ¶£¬°ÑÄ¬ÈÏµÄÏà»úÁô¸øUI,ÊÇÒòÎªËü×îºóäÖÈ¾¡£
+ * µ±²»ÆôÓÃÉî¶È²âÊÔÊ±Äã¿ÉÒÔ¸Ä±äÏà»úÒÔµÃµ½²»Í¬µÄ½á¹û¡£
+ * ¶ÔÓÚÃ¿Ò»¸öÏà»ú,»áÏÈäÖÈ¾Íê²»Í¸Ã÷µÄ3d¾«ÁéºÍ2d¶ÔÏóºó²Å»áäÖÈ¾Í¸Ã÷µÄ3d¾«Áé¡£
  */
 enum class CameraFlag
 {
@@ -71,7 +71,7 @@ enum class CameraFlag
 /**@~english
 * Defines a camera .
  * @~chinese 
- * å®šä¹‰äº†ä¸€ä¸ªç›¸æœºã€‚
+ * ¶¨ÒåÁËÒ»¸öÏà»ú¡£
 */
 class CC_DLL Camera :public Node
 {
@@ -82,7 +82,7 @@ public:
     /**@~english
     * The type of camera.
      * @~chinese 
-     * ç›¸æœºçš„ç±»å‹ã€‚
+     * Ïà»úµÄÀàĞÍ¡£
     */
     enum class Type
     {
@@ -94,51 +94,51 @@ public:
     * Creates a perspective camera.
     *
      * @~chinese 
-     * åˆ›å»ºä¸€ä¸ªé€è§†ç›¸æœºã€‚
+     * ´´½¨Ò»¸öÍ¸ÊÓÏà»ú¡£
      * 
     * @param fieldOfView @~english The field of view for the perspective camera (normally in the range of 40-60 degrees).
-     * @~chinese é€è§†ç›¸æœºçš„å¯è§†è§’åº¦ (ä¸€èˆ¬æ˜¯åœ¨40-60åº¦ä¹‹é—´).
+     * @~chinese Í¸ÊÓÏà»úµÄ¿ÉÊÓ½Ç¶È (Ò»°ãÊÇÔÚ40-60¶ÈÖ®¼ä).
     * @param aspectRatio @~english The aspect ratio of the camera (normally the width of the viewport divided by the height of the viewport).
-     * @~chinese ç›¸æœºçš„é•¿å®½æ¯”(é€šå¸¸ä¼šä½¿ç”¨è§†çª—çš„å®½åº¦é™¤ä»¥è§†çª—çš„é«˜åº¦)ã€‚
+     * @~chinese Ïà»úµÄ³¤¿í±È(Í¨³£»áÊ¹ÓÃÊÓ´°µÄ¿í¶È³ıÒÔÊÓ´°µÄ¸ß¶È)¡£
     * @param nearPlane @~english The near plane distance.
-     * @~chinese è¿‘å¹³é¢çš„è·ç¦»ã€‚
+     * @~chinese ½üÆ½ÃæµÄ¾àÀë¡£
     * @param farPlane @~english The far plane distance.
-     * @~chinese è¿œå¹³é¢çš„è·ç¦»ã€‚
+     * @~chinese Ô¶Æ½ÃæµÄ¾àÀë¡£
     */
     static Camera* createPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane);
     /**@~english
     * Creates an orthographic camera.
     *
      * @~chinese 
-     * åˆ›å»ºä¸€ä¸ªæ­£äº¤ç›¸æœºã€‚
+     * ´´½¨Ò»¸öÕı½»Ïà»ú¡£
      * 
     * @param zoomX @~english The zoom factor along the X-axis of the orthographic projection (the width of the ortho projection).
-    * @~chinese æ²¿xè½´çš„æ­£äº¤æŠ•å½±çš„ç¼©æ”¾å› å­(æ­£äº¤æŠ•å½±çš„å®½åº¦)ã€‚
+    * @~chinese ÑØxÖáµÄÕı½»Í¶Ó°µÄËõ·ÅÒò×Ó(Õı½»Í¶Ó°µÄ¿í¶È)¡£
     * @param zoomY @~english The zoom factor along the Y-axis of the orthographic projection (the height of the ortho projection).
-    * @~chinese æ²¿yè½´çš„æ­£äº¤æŠ•å½±çš„ç¼©æ”¾å› å­(æ­£äº¤æŠ•å½±çš„é«˜åº¦)ã€‚
+    * @~chinese ÑØyÖáµÄÕı½»Í¶Ó°µÄËõ·ÅÒò×Ó(Õı½»Í¶Ó°µÄ¸ß¶È)¡£
     * @param nearPlane @~english The near plane distance.
-     * @~chinese è¿‘å¹³é¢çš„è·ç¦»ã€‚
+     * @~chinese ½üÆ½ÃæµÄ¾àÀë¡£
     * @param farPlane @~english The far plane distance.
-     * @~chinese è¿œå¹³é¢çš„è·ç¦»ã€‚
+     * @~chinese Ô¶Æ½ÃæµÄ¾àÀë¡£
     */
     static Camera* createOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
 
     /** @~english create default camera, the camera type depends on Director::getProjection, the depth of the default camera is 0
-     * @~chinese åˆ›å»ºé»˜è®¤çš„ç›¸æœº,ç›¸æœºçš„ç±»å‹å–å†³äºDirector::getProjection,é»˜è®¤çš„ç›¸æœºæ·±åº¦æ˜¯0*/
+     * @~chinese ´´½¨Ä¬ÈÏµÄÏà»ú,Ïà»úµÄÀàĞÍÈ¡¾öÓÚDirector::getProjection,Ä¬ÈÏµÄÏà»úÉî¶ÈÊÇ0*/
     static Camera* create();
     
     /**@~english
     * Gets the type of camera.
     *
      * @~chinese 
-     * å¾—åˆ°ç›¸æœºçš„ç±»å‹ã€‚
+     * µÃµ½Ïà»úµÄÀàĞÍ¡£
      * 
     * @return @~english The camera type.
-     * @~chinese ç›¸æœºçš„ç±»å‹ã€‚
+     * @~chinese Ïà»úµÄÀàĞÍ¡£
     */
     Camera::Type getType() const { return _type; }
 
-    /**@~english get & set Camera flag @~chinese è·å–å’Œè®¾ç½®ç›¸æœºæ ‡è¯†*/
+    /**@~english get & set Camera flag @~chinese »ñÈ¡ºÍÉèÖÃÏà»ú±êÊ¶*/
     CameraFlag getCameraFlag() const { return (CameraFlag)_cameraFlag; }
     void setCameraFlag(CameraFlag flag) { _cameraFlag = (unsigned short)flag; }
 
@@ -146,12 +146,12 @@ public:
     * Make Camera looks at target
     *
      * @~chinese 
-     * ä½¿ç›¸æœºçœ‹ç€ç›®æ ‡
+     * Ê¹Ïà»ú¿´×ÅÄ¿±ê
      * 
     * @param target @~english The target camera is point at
-     * @~chinese ç›®æ ‡çš„ä½ç½®
+     * @~chinese Ä¿±êµÄÎ»ÖÃ
     * @param up @~english The up vector, usually it's Y axis
-     * @~chinese ç›¸æœºå‘ä¸Šçš„å‘é‡,é€šå¸¸è¿™æ˜¯Yè½´
+     * @~chinese Ïà»úÏòÉÏµÄÏòÁ¿,Í¨³£ÕâÊÇYÖá
     */
     virtual void lookAt(const Vec3& target, const Vec3& up = Vec3::UNIT_Y);
 
@@ -159,34 +159,34 @@ public:
     * Gets the camera's projection matrix.
     *
      * @~chinese 
-     * è·å–ç›¸æœºçš„æŠ•å½±çŸ©é˜µã€‚
+     * »ñÈ¡Ïà»úµÄÍ¶Ó°¾ØÕó¡£
      * 
     * @return @~english The camera projection matrix.
-     * @~chinese ç›¸æœºæŠ•å½±çŸ©é˜µã€‚
+     * @~chinese Ïà»úÍ¶Ó°¾ØÕó¡£
     */
     const Mat4& getProjectionMatrix() const;
     /**@~english
     * Gets the camera's view matrix.
     *
      * @~chinese 
-     * è·å–ç›¸æœºçš„è§†å›¾çŸ©é˜µã€‚
+     * »ñÈ¡Ïà»úµÄÊÓÍ¼¾ØÕó¡£
      * 
     * @return @~english The camera view matrix.
-     * @~chinese ç›¸æœºè§†å›¾çŸ©é˜µã€‚
+     * @~chinese Ïà»úÊÓÍ¼¾ØÕó¡£
     */
     const Mat4& getViewMatrix() const;
 
-    /**@~english get view projection matrix @~chinese å¾—åˆ°è§†å›¾æŠ•å½±çŸ©é˜µ*/
+    /**@~english get view projection matrix @~chinese µÃµ½ÊÓÍ¼Í¶Ó°¾ØÕó*/
     const Mat4& getViewProjectionMatrix() const;
     
     /** @~english convert the specified point of viewport from world-space coordinates into the screen-space coordinates.
      * Origin point at left top corner in screen-space.
-     * @~chinese æŠŠæŒ‡å®šåæ ‡ç‚¹ä»ä¸–ç•Œåæ ‡è½¬æ¢ä¸ºå±å¹•åæ ‡ã€‚
-     * åŸç‚¹åœ¨GLå±å¹•åæ ‡ç³»çš„å·¦ä¸‹è§’ã€‚
+     * @~chinese °ÑÖ¸¶¨×ø±êµã´ÓÊÀ½ç×ø±ê×ª»»ÎªÆÁÄ»×ø±ê¡£
+     * Ô­µãÔÚGLÆÁÄ»×ø±êÏµµÄ×óÏÂ½Ç¡£
      * @param src @~english The world-space position.
-     * @~chinese ä¸–ç•Œçš„ä½ç½®ã€‚
+     * @~chinese ÊÀ½çµÄÎ»ÖÃ¡£
      * @return @~english The screen-space position.
-     * @~chinese å±å¹•çš„ä½ç½®ã€‚
+     * @~chinese ÆÁÄ»µÄÎ»ÖÃ¡£
      */
     Vec2 project(const Vec3& src) const;
     
@@ -194,23 +194,23 @@ public:
      * Convert the specified point of viewport from screen-space coordinate into the world-space coordinate.
      * Origin point at left top corner in screen-space.
      * @~chinese 
-     * æŠŠæŒ‡å®šåæ ‡ç‚¹ä»å±å¹•åæ ‡è½¬æ¢ä¸ºä¸–ç•Œåæ ‡ã€‚
-     * åŸç‚¹åœ¨GLå±å¹•åæ ‡ç³»çš„å·¦ä¸‹è§’ã€‚
+     * °ÑÖ¸¶¨×ø±êµã´ÓÆÁÄ»×ø±ê×ª»»ÎªÊÀ½ç×ø±ê¡£
+     * Ô­µãÔÚGLÆÁÄ»×ø±êÏµµÄ×óÏÂ½Ç¡£
      * @param src @~english The screen-space position.
-     * @~chinese å±å¹•çš„ä½ç½®ã€‚
+     * @~chinese ÆÁÄ»µÄÎ»ÖÃ¡£
      * @return @~english The world-space position.
-     * @~chinese ä¸–ç•Œçš„ä½ç½®ã€‚
+     * @~chinese ÊÀ½çµÄÎ»ÖÃ¡£
      */
     Vec3 unproject(const Vec3& src) const;
     
     /** @~english convert the specified point in 3D world-space coordinates into the GL-screen-space coordinates.
      * Origin point at left bottom corner in GL-screen-space.
-     * @~chinese æŠŠæŒ‡å®šåæ ‡ç‚¹ä»3Dä¸–ç•Œåæ ‡è½¬æ¢ä¸ºå±å¹•åæ ‡ã€‚
-     * åŸç‚¹åœ¨GLå±å¹•åæ ‡ç³»çš„å·¦ä¸‹è§’ã€‚
+     * @~chinese °ÑÖ¸¶¨×ø±êµã´Ó3DÊÀ½ç×ø±ê×ª»»ÎªÆÁÄ»×ø±ê¡£
+     * Ô­µãÔÚGLÆÁÄ»×ø±êÏµµÄ×óÏÂ½Ç¡£
      * @param src @~english The 3D world-space position.
-     * @~chinese 3Dä¸–ç•Œçš„ä½ç½®ã€‚
+     * @~chinese 3DÊÀ½çµÄÎ»ÖÃ¡£
      * @return @~english The GL-screen-space position.
-     * @~chinese GLå±å¹•ç©ºé—´çš„ä½ç½®ã€‚
+     * @~chinese GLÆÁÄ»¿Õ¼äµÄÎ»ÖÃ¡£
      */
     Vec2 projectGL(const Vec3& src) const;
     
@@ -218,12 +218,12 @@ public:
      * Convert the specified point of GL-screen-space coordinate into the 3D world-space coordinate.
      * Origin point at left bottom corner in GL-screen-space.
      * @~chinese 
-     * æŠŠæŒ‡å®šåæ ‡ç‚¹ä»å±å¹•åæ ‡è½¬æ¢ä¸º3Dä¸–ç•Œåæ ‡ã€‚
-     * åŸç‚¹åœ¨GLå±å¹•åæ ‡ç³»çš„å·¦ä¸‹è§’ã€‚
+     * °ÑÖ¸¶¨×ø±êµã´ÓÆÁÄ»×ø±ê×ª»»Îª3DÊÀ½ç×ø±ê¡£
+     * Ô­µãÔÚGLÆÁÄ»×ø±êÏµµÄ×óÏÂ½Ç¡£
      * @param src @~english The GL-screen-space position.
-     * @~chinese GLå±å¹•ç©ºé—´çš„ä½ç½®ã€‚
+     * @~chinese GLÆÁÄ»¿Õ¼äµÄÎ»ÖÃ¡£
      * @return @~english The 3D world-space position.
-     * @~chinese 3Dä¸–ç•Œçš„ä½ç½®ã€‚
+     * @~chinese 3DÊÀ½çµÄÎ»ÖÃ¡£
      */
     Vec3 unprojectGL(const Vec3& src) const;
 
@@ -231,15 +231,15 @@ public:
      * Convert the specified point of viewport from screen-space coordinate into the world-space coordinate.
      * Origin point at left bottom corner in GL-screen-space.
      * @~chinese 
-     * æŠŠæŒ‡å®šåæ ‡ç‚¹ä»å±å¹•åæ ‡è½¬æ¢ä¸ºä¸–ç•Œåæ ‡ã€‚
-     * åŸç‚¹åœ¨GLå±å¹•åæ ‡ç³»çš„å·¦ä¸‹è§’ã€‚
+     * °ÑÖ¸¶¨×ø±êµã´ÓÆÁÄ»×ø±ê×ª»»ÎªÊÀ½ç×ø±ê¡£
+     * Ô­µãÔÚGLÆÁÄ»×ø±êÏµµÄ×óÏÂ½Ç¡£
      *
      * @param size @~english The viewport size to use.
-     * @~chinese ä½¿ç”¨çš„è§†çª—å¤§å°ã€‚
+     * @~chinese Ê¹ÓÃµÄÊÓ´°´óĞ¡¡£
      * @param src @~english The screen-space position.
-     * @~chinese å±å¹•çš„ä½ç½®ã€‚
+     * @~chinese ÆÁÄ»µÄÎ»ÖÃ¡£
      * @param dst @~english The world-space position.
-     * @~chinese ä¸–ç•Œçš„ä½ç½®ã€‚
+     * @~chinese ÊÀ½çµÄÎ»ÖÃ¡£
      */
     void unproject(const Size& size, const Vec3* src, Vec3* dst) const;
 
@@ -247,42 +247,42 @@ public:
      * Convert the specified point of GL-screen-space coordinate into the 3D world-space coordinate.
      * Origin point at left bottom corner in GL-screen-space.
      * @~chinese 
-     * æŠŠæŒ‡å®šåæ ‡ç‚¹ä»å±å¹•åæ ‡è½¬æ¢ä¸º3Dä¸–ç•Œåæ ‡ã€‚
-     * åŸç‚¹åœ¨GLå±å¹•åæ ‡ç³»çš„å·¦ä¸‹è§’ã€‚
+     * °ÑÖ¸¶¨×ø±êµã´ÓÆÁÄ»×ø±ê×ª»»Îª3DÊÀ½ç×ø±ê¡£
+     * Ô­µãÔÚGLÆÁÄ»×ø±êÏµµÄ×óÏÂ½Ç¡£
      * @param size @~english The window size to use.
-     * @~chinese ä½¿ç”¨çš„çª—å£å¤§å°ã€‚
+     * @~chinese Ê¹ÓÃµÄ´°¿Ú´óĞ¡¡£
      * @param src  @~english The GL-screen-space position.
-     * @~chinese GLå±å¹•ç©ºé—´çš„ä½ç½®ã€‚
+     * @~chinese GLÆÁÄ»¿Õ¼äµÄÎ»ÖÃ¡£
      * @param dst  @~english The 3D world-space position.
-     * @~chinese 3Dä¸–ç•Œçš„ä½ç½®ã€‚
+     * @~chinese 3DÊÀ½çµÄÎ»ÖÃ¡£
      */
     void unprojectGL(const Size& size, const Vec3* src, Vec3* dst) const;
 
     /**
      * Is this aabb visible in frustum
      * @~chinese 
-     * aabbåœ¨è§†æ¤ä½“å†…æ˜¯å¦å¯è§
+     * aabbÔÚÊÓ×µÌåÄÚÊÇ·ñ¿É¼û
      */
     bool isVisibleInFrustum(const AABB* aabb) const;
     
     /**@~english
      * Get object depth towards camera
      * @~chinese 
-     * è·å–æœå‘ç›¸æœºçš„ç‰©ä½“æ·±åº¦
+     * »ñÈ¡³¯ÏòÏà»úµÄÎïÌåÉî¶È
      */
     float getDepthInView(const Mat4& transform) const;
     
     /**@~english
      * set depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
      * @~chinese
-     * è®¾ç½®æ·±åº¦ï¼Œç›¸æ¯”æ·±åº¦å°çš„ï¼Œæ·±åº¦è¾ƒå¤§çš„ç›¸æœºä¼šç»˜åˆ¶åœ¨é¡¶ç«¯ï¼Œæ ‡è¯†æ˜¯CameraFlag::DEFAULTçš„ç›¸æœºæ·±åº¦æ˜¯0ï¼Œç”¨æˆ·å®šä¹‰çš„ç›¸æœºæ·±åº¦é»˜è®¤ä¸º-1
+     * ÉèÖÃÉî¶È£¬Ïà±ÈÉî¶ÈĞ¡µÄ£¬Éî¶È½Ï´óµÄÏà»ú»á»æÖÆÔÚ¶¥¶Ë£¬±êÊ¶ÊÇCameraFlag::DEFAULTµÄÏà»úÉî¶ÈÊÇ0£¬ÓÃ»§¶¨ÒåµÄÏà»úÉî¶ÈÄ¬ÈÏÎª-1
      */
     void setDepth(int8_t depth);
     
     /**@~english
      * get depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
      * @~chinese 
-     * è·å–æ·±åº¦ï¼Œç›¸æ¯”æ·±åº¦å°çš„ï¼Œæ·±åº¦è¾ƒå¤§çš„ç›¸æœºä¼šç»˜åˆ¶åœ¨é¡¶ç«¯ï¼Œæ ‡è¯†æ˜¯CameraFlag::DEFAULTçš„ç›¸æœºæ·±åº¦æ˜¯0ï¼Œç”¨æˆ·å®šä¹‰çš„ç›¸æœºæ·±åº¦é»˜è®¤ä¸º-1
+     * »ñÈ¡Éî¶È£¬Ïà±ÈÉî¶ÈĞ¡µÄ£¬Éî¶È½Ï´óµÄÏà»ú»á»æÖÆÔÚ¶¥¶Ë£¬±êÊ¶ÊÇCameraFlag::DEFAULTµÄÏà»úÉî¶ÈÊÇ0£¬ÓÃ»§¶¨ÒåµÄÏà»úÉî¶ÈÄ¬ÈÏÎª-1
      */
     int8_t getDepth() const { return _depth; }
     
@@ -294,14 +294,14 @@ public:
     /**@~english
      * Get the frustum's far plane.
      * @~chinese 
-     * è·å–è§†æ¤ä½“è¿œå¹³é¢ã€‚
+     * »ñÈ¡ÊÓ×µÌåÔ¶Æ½Ãæ¡£
      */
     float getFarPlane() const { return _farPlane; }
 
     /**@~english
      * Get the frustum's near plane.
      * @~chinese 
-     * è·å–è§†æ¤ä½“è¿‘å¹³é¢ã€‚
+     * »ñÈ¡ÊÓ×µÌå½üÆ½Ãæ¡£
      */
     float getNearPlane() const { return _nearPlane; }
     
@@ -312,14 +312,14 @@ public:
     /**@~english
      * Get the visiting camera , the visiting camera shall be set on Scene::render
      * @~chinese 
-     * è·å–ç»˜åˆ¶çš„ç›¸æœº,ç»˜åˆ¶çš„ç›¸æœºä¼šåœ¨Scene::renderä¸­è®¾ç½®ã€‚
+     * »ñÈ¡»æÖÆµÄÏà»ú,»æÖÆµÄÏà»ú»áÔÚScene::renderÖĞÉèÖÃ¡£
      */
     static const Camera* getVisitingCamera() { return _visitingCamera; }
 
     /**@~english
      * Get the default camera of the current running scene.
      * @~chinese 
-     * è·å–åˆ°å½“å‰è¿è¡Œåœºæ™¯çš„é»˜è®¤ç›¸æœºã€‚
+     * »ñÈ¡µ½µ±Ç°ÔËĞĞ³¡¾°µÄÄ¬ÈÏÏà»ú¡£
      */
     static Camera* getDefaultCamera();
     /**
@@ -331,7 +331,7 @@ public:
      */
     void apply();
     /**
-     Set FBO, which will attacha several render target for the rendered result.
+     Set FBO, which will attach several render target for the rendered result.
     */
     void setFrameBufferObject(experimental::FrameBuffer* fbo);
     /**
@@ -365,15 +365,15 @@ CC_CONSTRUCTOR_ACCESS:
     /**@~english
      * Set the scene,this method should not be invoke manually
      * @~chinese 
-     * è®¾ç½®åœºæ™¯,è¿™ä¸ªæ–¹æ³•ä¸åº”è¯¥æ‰‹åŠ¨è°ƒç”¨
+     * ÉèÖÃ³¡¾°,Õâ¸ö·½·¨²»Ó¦¸ÃÊÖ¶¯µ÷ÓÃ
      */
     void setScene(Scene* scene);
     
     /**@~english set additional matrix for the projection matrix, it multiplys mat to projection matrix when called, used by WP8
-     * @~chinese å¯¹æŠ•å½±çŸ©é˜µè®¾ç½®é¢å¤–çš„çŸ©é˜µ,åœ¨WP8å¹³å°ä½¿ç”¨æ—¶ï¼Œè°ƒç”¨çš„æ—¶å€™å®ƒä¼šä¹˜ä»¥æŠ•å½±çŸ©é˜µ*/
+     * @~chinese ¶ÔÍ¶Ó°¾ØÕóÉèÖÃ¶îÍâµÄ¾ØÕó,ÔÚWP8Æ½Ì¨Ê¹ÓÃÊ±£¬µ÷ÓÃµÄÊ±ºòËü»á³ËÒÔÍ¶Ó°¾ØÕó*/
     void setAdditionalProjection(const Mat4& mat);
     
-    /** @~english init camera  @~chinese åˆå§‹åŒ–ç›¸æœº*/
+    /** @~english init camera  @~chinese ³õÊ¼»¯Ïà»ú*/
     bool initDefault();
     bool initPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane);
     bool initOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
@@ -398,7 +398,7 @@ protected:
     unsigned short _cameraFlag; // camera flag
     mutable Frustum _frustum;   // camera frustum
     mutable bool _frustumDirty;
-    int8_t  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller detph
+    int8_t  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller depth
     static Camera* _visitingCamera;
     
     CameraBackgroundBrush* _clearBrush; //brush used to clear the back ground

@@ -287,7 +287,7 @@ public:
      * Destroy the instance of the ScriptHandlerMgr.
      *
      * @~chinese 
-     * 消毁ScriptHandlerMgr的实例对象。
+     * 消毁ScriptHandlerMgr的实韵蟆�
      * 
      * @lua NA
      * @js NA

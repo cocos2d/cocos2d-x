@@ -1009,14 +1009,6 @@ int
 },
 
 /**
- * @method genGLProgramState
- */
-genGLProgramState : function (
-)
-{
-},
-
-/**
  * @method getMesh
  * @return {cc.Mesh}
  */
@@ -1208,6 +1200,14 @@ blendfunc
  */
 setForce2DQueue : function (
 bool 
+)
+{
+},
+
+/**
+ * @method genMaterial
+ */
+genMaterial : function (
 )
 {
 },

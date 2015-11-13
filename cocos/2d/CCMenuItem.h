@@ -773,6 +773,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     MenuItemToggle()
     : _selectedIndex(0)
+    , _selectedItem(nullptr)
     {}
 
     virtual ~MenuItemToggle();
@@ -785,7 +786,11 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     unsigned int _selectedIndex;
-    
+    MenuItem* _selectedItem;
+
+    /** Array that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
+     @since v0.7.2
+     */
     Vector<MenuItem*> _subItems;
 
 private:

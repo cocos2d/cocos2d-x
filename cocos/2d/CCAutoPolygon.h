@@ -196,13 +196,14 @@ public:
      * @~chinese 一个存储所有点的vector，点的顺序是按顺时针方向存储。
      * @code
      * auto ap = AutoPolygon("grossini.png");
-     * std::vector<Vec2> points = ap.trace();//default to size of the image and threshold 0.0
+     * auto rect = Rect(100, 100, 200, 200);
+     * std::vector<Vec2> points = ap.trace(rect);//default threshold is 0.0
      * @endcode
      */
      std::vector<Vec2> trace(const cocos2d::Rect& rect, const float& threshold = 0.0);
     
     /**@~english
-     * reduce the ammount of points so its faster for GPU to process and draw
+     * reduce the amount of points so its faster for GPU to process and draw
      * based on Ramer-Douglas-Puecker algorithm
      * @~chinese 
      * 减少点数量，以加快GPU处理和绘制的速度

@@ -144,7 +144,7 @@ public:
     
     /**@~english
      * Reload script code corresponding to moduleFileName.
-     * If value of package["loaded"][moduleFileName] is existed, it would set the vaule nil.Then,it calls executeString function.
+     * If value of package["loaded"][moduleFileName] is existed, it would set the value nil.Then,it calls executeString function.
      *
      * @~chinese 
      * 重新加载对应moduleFileName指向的脚本文件。
@@ -161,7 +161,7 @@ public:
     /**@~english
      * Remove the related reference about the Ref object stored in the Lua table by set the value of corresponding key nil:
      * The related Lua tables are toluafix_refid_ptr_mapping,toluafix_refid_type_mapping,tolua_value_root and object_Metatable["tolua_ubox"] or tolua_ubox.
-     * Meanwhile set the corresponding userdata nullptr and remove the all the lua function refrence corresponding to this object.
+     * Meanwhile set the corresponding userdata nullptr and remove the all the lua function reference corresponding to this object.
      * 
      * In current mechanism, this function is called in the destructor of Ref object, developer don't call this functions.
      *
@@ -191,7 +191,7 @@ public:
     virtual void removeScriptHandler(int nHandler) override;
     
     /**@~english
-     * Reallocate Lua function reference index to the Lua function pointer to add refrence.
+     * Reallocate Lua function reference index to the Lua function pointer to add reference.
      *
      * @~chinese 
      * 重新分配Lua函数的引用id。

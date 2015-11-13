@@ -72,7 +72,7 @@ public:
 };
 
 /**@~english
- * Ref is used for reference count manangement. If a class inherits from Ref,
+ * Ref is used for reference count management. If a class inherits from Ref,
  * then it is easy to be shared in different places.
  * @~chinese 
  * Ref 是用于引用计数管理的基类。
@@ -101,7 +101,7 @@ public:
      *
      * This decrements the Ref's reference count.
      *
-     * If the reference count reaches 0 after the descrement, this Ref is
+     * If the reference count reaches 0 after the decrement, this Ref is
      * destructed.
      *
      * @~chinese 
@@ -118,10 +118,10 @@ public:
     /**@~english
      * Releases the ownership sometime soon automatically.
      *
-     * This descrements the Ref's reference count at the end of current
+     * This decrements the Ref's reference count at the end of current
      * autorelease pool block.
      *
-     * If the reference count reaches 0 after the descrement, this Ref is
+     * If the reference count reaches 0 after the decrement, this Ref is
      * destructed.
      *
      * @~chinese 

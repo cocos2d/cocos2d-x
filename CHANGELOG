@@ -1,3 +1,129 @@
+cocos2d-x-3.9 beta0 October.20 2015
+
+[NEW]           Label: Added line spacing/leading feature to Label.
+[NEW]           ListView: Added APIs to scroll to specific item in list.
+[NEW]           ListView: Added APIs to get an item in specific position like center, leftmost, rightmost, topmost and bottommost.
+[NEW]           ListView: Added a feature for magnetic scrolling.
+[NEW]           Animate: Added ActionTimeline::setAnimationEndCallBack and ActionTimeline::addFrameEndCallFunc.
+[NEW]           Animate: Added CSLoader::createNodeWithVisibleSize, CSLoader::createNodeWithVisibleSize and moved "ui::Helper::DoLayout" into them.
+[NEW]           Studio: Added Light3D support for Cocos Studio.
+[NEW]           Platform: Added the missing CURL support to the Windows 10 UWP version.
+[NEW]           Platform: Added UIEditBox support on linux platform.
+
+[REFINE]        3D: Added non-null checks in PUScriptCompiler::visit before dereferencing.
+[REFINE]        3D: Refined SkyboxBrush by making the shader parameter take effect at once.
+[REFINE]        Label: Changed label font size type to float to support high precision when font size is small.
+[REFINE]        ListView: Fixed an issue that list view's Magnetic::CENTER is not working well when non-bounceable.
+[REFINE]        ListView: Added feature of jumping to a specific item in list view.
+[REFINE]        Sprite: Added "a unsupport image format!" log when creating a sprite in CCImage.cpp.
+[REFINE]        ScrollView: Merge logics of Scroll View for scroll by inertia and auto scroll into one.
+[REFINE]        Animate: Moved initialization of image to an appropriate location, because it always called twice in SpriteFrameCache::addSpriteFramesWithFile().
+[REFINE]        Simulator: Changed the size of startFlag to 13.
+[REFINE]        Simulator: Show Node and Skeleton in the middle of the simulator.
+[REFINE]        Simulator: Removed screen direction check in simulator to avoid render error.
+[REFINE]        Pysics: Refined components to improve physics performance.
+[REFINE]        UI: Refined ComponentContainer to improve performance.
+[REFINE]        UI: EventListenerMouse will dispatch EventMouse events.
+[REFINE]        OpenGL: Added check for glfwCreateWindow.
+[REFINE]        Platform: Fixed a crash on xiaomi2 if Cocos2d-x is built as a dynamic library.
+[REFINE]        Platform: Updated libcococs2d name to v3.9 on WinRT platforms.
+[REFINE]        Platform: Added some support for mouse on WinRT. Include: Show/Hide mouse cursor; Mouse event implemented similar Desktop version; Left button send mouse event and touch; Support other mouse button and scroll wheel.
+[REFINE]        Platform: Correct the convertion between unicode and utf8 on WinRT.
+[REFINE]        Platform: Improved EditBox implement on Win32 platform.
+[REFINE]        JS: Add jsb.fileUtils.writeDataToFile().
+[REFINE]        JS: Set js templates Mac target platform from null to 10.7.
+[REFINE]        JS: Removed the static define of variable in headfile of ScriptingCore.
+[REFINE]        Lua: Added AssetsManagerEx constants UPDATE_FAILED and ERROR_DECOMPRESS in Lua.
+[REFINE]        Lua / JS: Refined lua/js binding tool.
+[REFINE]        I/O: Refined AssetsManagerEx unzipping by using async.
+[REFINE]        Web: Improved logic of jsb_boot.js to sync with the web engine behavior.
+[REFINE]        Web: Sync with CCBoot for web.
+[REFINE]        Build: Fixed various compiler warnings on Xcode 7.
+[REFINE]        Build: Fixed Wformat-security warning on Xcode.
+[REFINE]        Build: Fixed a compile error in __LayerRGBA.
+[REFINE]        Tool: Added tools for generating documents automatically.
+[REFINE]        Doc: Clean up the code of setRect() function.
+[REFINE]        Doc: Fixed a minor typo and renamed INTIAL_CAPS_ALL_CHARACTERS to INITIAL_CAPS_ALL_CHARACTERS in UIEditBox.
+
+[FIX]           3D: Fixed a bug that obb did not rotate with Sprite3d.
+[FIX]           3D: Corrected spot light init value.
+[FIX]           3D: Added the missing CCMotionStreak3D files.
+[FIX]           3D: Fixed a bug in CCPhysics3DComponent.cpp that oldBool is set with a wrong value.
+[FIX]           3D: Fixed shader light parameter bug that caused for that all the mesh share light parameter.
+[FIX]           Sprite: Fixed a bug that CC_SPRITE_DEBUG_DRAW did nothing in Cocos2d-x. 
+[FIX]           Button: Fixed an issue that when image size of variable button status texture are different, Helper::restrictCapInsetRect result may stop the pressed & disabled status picture from loading.
+[FIX]           Font: Fixed a crash bug in destructor of FontFreeType.
+[FIX]           Label: Removed scale factor for label shadow.
+[FIX]           Label: Added missing override keyword.
+[FIX]           LoadingBar: Fixed a crash bug in LoadingBar.
+[FIX]           ScrollView: Removed ScrollView::_innerContainer pointer copy.
+[FIX]           Particle: Fixed a bug of nomalize_point which caused particle rendering error.
+[FIX]           Tilemap: Fixed a TMXLayer bug: When using float values (for example the actual position of the character) to get the current tile, the wrong tile is sometimes/usually returned.
+[FIX]           Animate: Fixed a crash bug when csb file is broken.
+[FIX]           Animate: Fixed a bug that a same frame index is inserted after animation speed is scaled. 
+[FIX]           Animate: Fixed bug in v1.6 that bone animation crashed when performing getBoneAtPoint(0,0).
+[FIX]           Animate: Fixed crash when recall a cached timeline after scene exited.
+[FIX]           Animate: Fixed debug-config crash if a FrameBuffer has no RenderTargetDepthStencil.
+[FIX]           UI: Fixed an image bug caused by the _hasPremultipliedAlpha field.
+[FIX]           UI: Added missing getChildByTag<>() API.
+[FIX]           UI: Fixed a bug in Widget::isClippingParentContainsPoint: _hittedByCamera may be null.
+[FIX]           UI: Fixed a bug that cocos2d::Map may cause Dangling Pointers when inserting Ref Object which already exist in the Map.
+[FIX]           UI: Fixed a bug in Scheduler which may case Force Close.
+[FIX]           OpenGL: Fixed a bug of ui::WebView callback operate in OpenGL.
+[FIX]           Performance: Fixed a bug that NotificationNode was not entered and exited.
+[FIX]           Renderer: Fixed a bug that Material::clone failed to set the parent correctly.
+[FIX]           Simulator: Fixed a bug that when scene was set to a very large size(eg. 2048x1536), the simulator window was out of screen.
+[FIX]           Simulator: Fixed a compilation issue about simulator on Android x86.
+[FIX]           Skeleton: Removed redundant interface in CCSkeletonNode.
+[FIX]           Studio: Fixed a bug about Cocos Studio GUItest that MoveBy vertical direction under lua test project cannot scroll back to page 1 from page 2.
+[FIX]           Studio: Hide menu "cocostudio 2.1" for JSON exported from Cocos Studio 2.x is not supported in CocoStudio 1.6.
+[FIX]           Studio: Fixed bug that when create project from template, the app name of android-studio project is not changed.
+[FIX]           Platform: Fixed a bug that Android activity destroyed after reopening the app.
+[FIX]           Platform: Fixed a crash bug of AudioPlayer in Win32.
+[FIX]           Platform: Fixed an error about Chinese input in textfield with specific IME on Android.
+[FIX]           Platform: Fixed missing image asset in Win10 UWP manifest.
+[FIX]           Platform: Fixed Windows 10 UWP app manifest by correcting image asset paths.
+[FIX]           Platform: Fixed a bug that FileUtils::GetFileSize can't treat multi-char path.
+[FIX]           Platform: Fixed a bug of loading pluginx lib when compile Android with --compile-script flag.
+[FIX]           Platform: Fixed a crash bug caused by integer overflow in Device::getTextureDataForText on iOS.
+[FIX]           Platform: Fixed the broken v3 Win10 UWP build by removing CCComponentPhysics2d files from the libcocos2d project.
+[FIX]           Platform: Fixed travis-scripts/before-install.sh.
+[FIX]           Platform: Fixed a bug in FileUtilsWin32::removeDirectory when the file begins with ".".
+[FIX]           Platform: Corrected the keyboard codes for Desktop and WinRT.
+[FIX]           JS: Fixed a freeze bug of playing animation in JS projects.
+[FIX]           JS: Fixed build_native for JS default template.
+[FIX]           JS: Fixed wrong number of param in Place and RotateTo.
+[FIX]           Lua: Fixed a bug of luabinding enumerateChildren.
+[FIX]           Web: Fixed wrong callback setting for webview:setOnDidFailLoading in Lua.
+[FIX]           Web: Fixed life control for XMLHttpRequest.
+[FIX]           Web: Fixed WebView lua-bind method name.
+[FIX]           Build: Fixed msbuild by removing incorrect AppxBundle properties from project.
+[FIX]           Build: Fixed the Enable_Bitcode compile error on Xcode 7.
+[FIX]           Build: Fixed compile error for new project created by template.
+[FIX]           Changed some delete operations to be deletions of arrays where applicable.
+[FIX]           Changed some "free" operations to "delete" where memory was allocated with "new"."
+[FIX]           Revert "remove CCClippingRectangleNode transform error support.".
+
+[TEST]          3D: Fixed a bug that lua Scene3DTest "back" button did not work.
+[TEST]          Button: Added a testcase of Button opacity settings.
+[TEST]          PageView: Fixed a bug that UIPageViewVerticalTest in cpp-test failed to scroll back to page 1.
+[TEST]          Particle: Fixed a bug that particle test under lua has different display effects in different platforms.
+[TEST]          Scale9Sprite: Added a test case of opacity/color cascade for Scale9Sprite.
+[TEST]          Scale9Sprite: Added testcase for s9sprite action.
+[TEST]          ScrollView: Added testcase for multiple items in ScrollView.
+[TEST]          SliderBar: Fixed bug of slider bar that it doesn't refresh percentage value under project cpp-test.
+[TEST]          SliderBar: Fixed a crash bug  in "Scheduler->Scheduler ttimeScale Test" when drag slider to left then click the middle of slider bar.
+[TEST]          Animate: Added custom spine skeletonAnimation testcase.
+[TEST]          UI: Added DrawLabel Mode testcase.
+[TEST]          UI: Fixed a bug that Node:Text Input test in cpp-tests touch detection is wrong.
+[TEST]          UI: Improved UItestcase modification to make it user friendly.
+[TEST]          Physics: Fixed a bug that quickly click mouse in "41:Node:Physics -> 6:joints" in cpp-test may cause program crash.
+[TEST]          Studio: Fixed a crash bug of Cocos Studio 3d test under lua test project.
+[TEST]          Platform: Solved the crash of performance-tests on Windows.
+[TEST]          Debug: Fixed a bug that RefPtr test wasn't executed even in debug build.
+[TEST]          JS: Fixed crash bug when click "remove ui" in "native test-JSBExtendTest" under project js-test.
+[TEST]          JS: Updated testcase in js-test to show notificationNode to runAction.
+
 cocos2d-x-3.8 final September.6 2015
 cocos2d-x-3.8 rc0   August.26 2015
 cocos2d-x-3.8 beta0 August.14 2015

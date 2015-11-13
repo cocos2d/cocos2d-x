@@ -39,7 +39,7 @@
 #include <assert.h>
 #include <memory>
 
-#define ENGINE_VERSION "Cocos2d-JS v3.8"
+#define ENGINE_VERSION "Cocos2d-JS v3.9"
 
 void js_log(const char *format, ...);
 
@@ -96,8 +96,6 @@ private:
     JSContext *_cx;
     mozilla::Maybe<JS::PersistentRootedObject> _global;
     mozilla::Maybe<JS::PersistentRootedObject> _debugGlobal;
-    //JS::Heap<JSObject*> _global;
-    //JS::Heap<JSObject*> _debugGlobal;
     SimpleRunLoop* _runLoop;
 
     bool _callFromScript;
@@ -112,21 +110,15 @@ public:
      * @return @~english The ScriptingCore instance.
      * @~chinese ScriptingCore实例。
      */
-    static ScriptingCore *getInstance() {
-        static ScriptingCore* pInstance = NULL;
-        if (pInstance == NULL) {
-            pInstance = new ScriptingCore();
-        }
-        return pInstance;
-    };
-
+    static ScriptingCore *getInstance();
+    
     /**@~english
      * Gets the script type, for ScriptingCore, it will return `cocos2d::kScriptTypeJavascript`
      * @~chinese 
      * 获取脚本类型，它将返回`cocos2d::kScriptTypeJavascript`
      * @return `cocos2d::kScriptTypeJavascript`
      */
-    virtual cocos2d::ccScriptType getScriptType() { return cocos2d::kScriptTypeJavascript; };
+    virtual cocos2d::ccScriptType getScriptType() override { return cocos2d::kScriptTypeJavascript; };
 
     /**
      * @brief @~english Removes the C++ object's linked JavaScript proxy object from JavaScript context
@@ -134,15 +126,15 @@ public:
      * @param obj @~english Object to be removed
      * @~chinese 需要被删除的对象
      */
-    virtual void removeScriptObjectByObject(cocos2d::Ref* obj);
-
+    virtual void removeScriptObjectByObject(cocos2d::Ref* obj) override;
+    
     /**
      * @brief @~english Useless in ScriptingCore, please use evalString
      * @~chinese 在ScriptingCore中无用，请使用evalString
      * @see evalString
      */
-    virtual int executeString(const char* codes) { return 0; }
-
+    virtual int executeString(const char* codes) override { return 0; }
+    
     /**
      * @brief @~english Pause scheduled tasks and actions for an object proxy.
      * @~chinese 暂停代理对象所指向的节点的所有任务和动作。
@@ -170,13 +162,14 @@ public:
      * @~chinese 在ScriptingCore中无用,请使用runScript
      * @see runScript
      */
-    virtual  int executeScriptFile(const char* filename) { return 0; }
+    virtual  int executeScriptFile(const char* filename) override { return 0; }
+
     /**
      * @brief @~english Useless in ScriptingCore, please use executeFunctionWithOwner
      * @~chinese 在ScriptingCore中无用,请使用executeFunctionWithOwner
      * @see executeFunctionWithOwner
      */
-    virtual int executeGlobalFunction(const char* functionName) { return 0; }
+    virtual int executeGlobalFunction(const char* functionName) override { return 0; }
 
     virtual int sendEvent(cocos2d::ScriptEvent* message) override;
     virtual bool parseConfig(ConfigType type, const std::string& str) override;
@@ -186,7 +179,7 @@ public:
      * @return @~english false
      * @~chinese false
      */
-    virtual bool handleAssert(const char *msg) { return false; }
+    virtual bool handleAssert(const char *msg) override { return false; }
 
     virtual void setCalledFromScript(bool callFromScript) override { _callFromScript = callFromScript; };
     virtual bool isCalledFromScript() override { return _callFromScript; };
@@ -371,6 +364,27 @@ public:
      */
     bool runScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
 
+    /**@~english
+     * Require the specified js file
+     * The difference between run and require is that require returns the export object of the script
+     * @param path @~english The path of the script to be executed
+     * @param jsvalRet @~english On success, return the value from the last executed expression statement processed in the script
+     * @return @~english Return true if succeed, otherwise return false.
+     * @see https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/JSAPI_reference/JS_ExecuteScript
+     */
+    bool requireScript(const char *path, JS::MutableHandleValue jsvalRet);
+    /**@~english
+     * Require the specified js file
+     * The difference between run and require is that require returns the export object of the script
+     * @param path @~english The path of the script to be executed
+     * @param global @~english The global object to execute the script
+     * @param global @~english The context to execute the script
+     * @param jsvalRet @~english On success, return the value from the last executed expression statement processed in the script
+     * @return @~english Return true if succeed, otherwise return false.
+     * @see https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/JSAPI_reference/JS_ExecuteScript
+     */
+    bool requireScript(const char *path, JS::HandleObject global, JSContext* cx, JS::MutableHandleValue jsvalRet);
+    
     /**@~english
      * Clean script object for the specified js file
      * @~chinese 
@@ -687,6 +701,7 @@ private:
 
 public:
     int handleNodeEvent(void* data);
+    int handleActionEvent(void* data);
     int handleComponentEvent(void* data);
     
     bool handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);

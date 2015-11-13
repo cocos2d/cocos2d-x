@@ -41,7 +41,7 @@ class VertexBuffer;
 @brief
 @~english
 VertexStreamAttribute is used to specify the vertex attribute for drawing, which is correspondent to
-glVertexAttribPointer(GLuint indx, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* ptr).
+glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* ptr).
 
  _semantic  ->  index
  _size      ->  size
@@ -103,7 +103,7 @@ struct CC_DLL VertexStreamAttribute
      @param type @~english The type of attribute, could be GL_FLOAT, GL_UNSIGNED_BYTE etc.
      * @~chinese 描述属性的类型,可能是GL_FLOAT,GL_UNSIGNED_BYTE等等。
      @param size @~english Describe how many elements of type in the attribute.
-     * @~chinese 属性包含多少个type类型的元素。
+     * @~chinese 属性包含多少鰐ype类型的元素。
      @param normalize @~english If true, the data will be normalized by deviding 255.
      * @~chinese 如果是真,数据将除以255来归一化。
      */

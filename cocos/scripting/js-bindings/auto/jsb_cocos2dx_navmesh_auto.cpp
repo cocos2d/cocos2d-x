@@ -55,7 +55,7 @@ bool js_cocos2dx_navmesh_NavMeshAgent_setMaxSpeed(JSContext *cx, uint32_t argc, 
     cocos2d::NavMeshAgent* cobj = (cocos2d::NavMeshAgent *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_navmesh_NavMeshAgent_setMaxSpeed : Invalid Native Object");
     if (argc == 1) {
-        double arg0;
+        double arg0 = 0;
         ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_navmesh_NavMeshAgent_setMaxSpeed : Error processing arguments");
         cobj->setMaxSpeed(arg0);
@@ -197,7 +197,7 @@ bool js_cocos2dx_navmesh_NavMeshAgent_setSeparationWeight(JSContext *cx, uint32_
     cocos2d::NavMeshAgent* cobj = (cocos2d::NavMeshAgent *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_navmesh_NavMeshAgent_setSeparationWeight : Invalid Native Object");
     if (argc == 1) {
-        double arg0;
+        double arg0 = 0;
         ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_navmesh_NavMeshAgent_setSeparationWeight : Error processing arguments");
         cobj->setSeparationWeight(arg0);
@@ -395,7 +395,7 @@ bool js_cocos2dx_navmesh_NavMeshAgent_setMaxAcceleration(JSContext *cx, uint32_t
     cocos2d::NavMeshAgent* cobj = (cocos2d::NavMeshAgent *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_navmesh_NavMeshAgent_setMaxAcceleration : Invalid Native Object");
     if (argc == 1) {
-        double arg0;
+        double arg0 = 0;
         ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_navmesh_NavMeshAgent_setMaxAcceleration : Error processing arguments");
         cobj->setMaxAcceleration(arg0);
@@ -453,7 +453,7 @@ bool js_cocos2dx_navmesh_NavMeshAgent_setHeight(JSContext *cx, uint32_t argc, js
     cocos2d::NavMeshAgent* cobj = (cocos2d::NavMeshAgent *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_navmesh_NavMeshAgent_setHeight : Invalid Native Object");
     if (argc == 1) {
-        double arg0;
+        double arg0 = 0;
         ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_navmesh_NavMeshAgent_setHeight : Error processing arguments");
         cobj->setHeight(arg0);
@@ -509,7 +509,7 @@ bool js_cocos2dx_navmesh_NavMeshAgent_setRadius(JSContext *cx, uint32_t argc, js
     cocos2d::NavMeshAgent* cobj = (cocos2d::NavMeshAgent *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_navmesh_NavMeshAgent_setRadius : Invalid Native Object");
     if (argc == 1) {
-        double arg0;
+        double arg0 = 0;
         ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_navmesh_NavMeshAgent_setRadius : Error processing arguments");
         cobj->setRadius(arg0);
@@ -595,7 +595,6 @@ bool js_cocos2dx_navmesh_NavMeshAgent_constructor(JSContext *cx, uint32_t argc, 
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
     JS::RootedObject proto(cx, typeClass->proto.get());
     JS::RootedObject parent(cx, typeClass->parentProto.get());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
@@ -726,8 +725,8 @@ bool js_cocos2dx_navmesh_NavMeshObstacle_initWith(JSContext *cx, uint32_t argc, 
     cocos2d::NavMeshObstacle* cobj = (cocos2d::NavMeshObstacle *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_navmesh_NavMeshObstacle_initWith : Invalid Native Object");
     if (argc == 2) {
-        double arg0;
-        double arg1;
+        double arg0 = 0;
+        double arg1 = 0;
         ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
         ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_navmesh_NavMeshObstacle_initWith : Error processing arguments");
@@ -834,8 +833,8 @@ bool js_cocos2dx_navmesh_NavMeshObstacle_create(JSContext *cx, uint32_t argc, js
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     if (argc == 2) {
-        double arg0;
-        double arg1;
+        double arg0 = 0;
+        double arg1 = 0;
         ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
         ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_navmesh_NavMeshObstacle_create : Error processing arguments");
@@ -886,7 +885,6 @@ bool js_cocos2dx_navmesh_NavMeshObstacle_constructor(JSContext *cx, uint32_t arg
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
     JS::RootedObject proto(cx, typeClass->proto.get());
     JS::RootedObject parent(cx, typeClass->parentProto.get());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
@@ -979,7 +977,7 @@ bool js_cocos2dx_navmesh_NavMesh_removeNavMeshObstacle(JSContext *cx, uint32_t a
     cocos2d::NavMesh* cobj = (cocos2d::NavMesh *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_navmesh_NavMesh_removeNavMeshObstacle : Invalid Native Object");
     if (argc == 1) {
-        cocos2d::NavMeshObstacle* arg0;
+        cocos2d::NavMeshObstacle* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -1007,7 +1005,7 @@ bool js_cocos2dx_navmesh_NavMesh_removeNavMeshAgent(JSContext *cx, uint32_t argc
     cocos2d::NavMesh* cobj = (cocos2d::NavMesh *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_navmesh_NavMesh_removeNavMeshAgent : Invalid Native Object");
     if (argc == 1) {
-        cocos2d::NavMeshAgent* arg0;
+        cocos2d::NavMeshAgent* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -1035,7 +1033,7 @@ bool js_cocos2dx_navmesh_NavMesh_update(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::NavMesh* cobj = (cocos2d::NavMesh *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_navmesh_NavMesh_update : Invalid Native Object");
     if (argc == 1) {
-        double arg0;
+        double arg0 = 0;
         ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_navmesh_NavMesh_update : Error processing arguments");
         cobj->update(arg0);
@@ -1073,7 +1071,7 @@ bool js_cocos2dx_navmesh_NavMesh_addNavMeshAgent(JSContext *cx, uint32_t argc, j
     cocos2d::NavMesh* cobj = (cocos2d::NavMesh *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_navmesh_NavMesh_addNavMeshAgent : Invalid Native Object");
     if (argc == 1) {
-        cocos2d::NavMeshAgent* arg0;
+        cocos2d::NavMeshAgent* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -1101,7 +1099,7 @@ bool js_cocos2dx_navmesh_NavMesh_addNavMeshObstacle(JSContext *cx, uint32_t argc
     cocos2d::NavMesh* cobj = (cocos2d::NavMesh *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_navmesh_NavMesh_addNavMeshObstacle : Invalid Native Object");
     if (argc == 1) {
-        cocos2d::NavMeshObstacle* arg0;
+        cocos2d::NavMeshObstacle* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -1149,7 +1147,7 @@ bool js_cocos2dx_navmesh_NavMesh_debugDraw(JSContext *cx, uint32_t argc, jsval *
     cocos2d::NavMesh* cobj = (cocos2d::NavMesh *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_navmesh_NavMesh_debugDraw : Invalid Native Object");
     if (argc == 1) {
-        cocos2d::Renderer* arg0;
+        cocos2d::Renderer* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -1211,7 +1209,6 @@ bool js_cocos2dx_navmesh_NavMesh_constructor(JSContext *cx, uint32_t argc, jsval
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
     JS::RootedObject proto(cx, typeClass->proto.get());
     JS::RootedObject parent(cx, typeClass->parentProto.get());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));

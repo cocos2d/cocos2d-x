@@ -37,6 +37,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\cocosbuilder\js_bindings_ccbreader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\cocostudio\jsb_cocos2dx_studio_conversions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\cocostudio\jsb_cocos2dx_studio_manual.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\component\CCComponentJS.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\extension\jsb_cocos2dx_extension_manual.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\jsb_event_dispatcher_manual.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\jsb_helper.h" />
@@ -83,6 +84,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\cocosbuilder\js_bindings_ccbreader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\cocostudio\jsb_cocos2dx_studio_conversions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\cocostudio\jsb_cocos2dx_studio_manual.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\component\CCComponentJS.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\extension\jsb_cocos2dx_extension_manual.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\jsb_event_dispatcher_manual.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\jsb_opengl_functions.cpp" />

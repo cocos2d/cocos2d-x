@@ -191,7 +191,7 @@ public:
 protected:
     /**Constructor.*/
     RenderCommand();
-    /**Desctructor.*/
+    /**Destructor.*/
     virtual ~RenderCommand();
     //used for debug but it is not implemented.
     void printID();

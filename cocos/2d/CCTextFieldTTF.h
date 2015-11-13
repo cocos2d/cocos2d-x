@@ -47,7 +47,7 @@ class CC_DLL TextFieldDelegate
 {
 public:
     /**@~english
-     * Desctructor for TextFieldDelegate.
+     * Destructor for TextFieldDelegate.
      * @~chinese 
      * 析构函数
      * @js NA
@@ -263,7 +263,7 @@ public:
     inline void setDelegate(TextFieldDelegate* delegate) { _delegate = delegate; };
 
     /**@~english
-     * Query the currently inputed charater count.
+     * Query the currently inputed character count.
      * @~chinese 
      * 获取当前输入的字符数。
      *@return @~english The total input character count.
@@ -345,7 +345,7 @@ public:
     virtual const std::string& getPlaceHolder() const;
 
     /**@~english
-     * Set enable secure text entry represention.
+     * Set enable secure text entry representation.
      * If you want to display password in TextField, this option is very helpful.
      * @~chinese 
      * 启用/关闭 安全的文本输入。

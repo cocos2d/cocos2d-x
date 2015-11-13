@@ -314,15 +314,6 @@ public:
     static TiledGrid3D* create(const Size& gridSize, const Rect& rect);
     static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
     static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect);
-=======
-    /** Create one Grid. */
-    static TiledGrid3D* create(const Size& gridSize);
-    /** Create one Grid. */
-    static TiledGrid3D* create(const Size& gridSize, const Rect& rect);
-    /** Create one Grid. */
-    static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** Create one Grid. */
-    static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect);
 
     /**@~english
      * Constructor.

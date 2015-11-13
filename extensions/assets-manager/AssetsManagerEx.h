@@ -131,7 +131,6 @@ public:
     
     const static std::string VERSION_ID;
     const static std::string MANIFEST_ID;
-    const static std::string BATCH_UPDATE_ID;
     
     /** @brief @~english Create function for creating a new AssetsManagerEx, use local manifest path and storage path as parameters.
      * @~chinese AssetsManagerEx的构造函数，使用本地manifest文件地址和资源存储路径作为参数。
@@ -228,12 +227,12 @@ protected:
     /** @brief @~english Update a list of assets under the current AssetsManagerEx context
      * @~chinese 更新一个下载列表中的资源
      */
-    void updateAssets(const network::DownloadUnits& assets);
+    void updateAssets(const DownloadUnits& assets);
     
     /** @brief @~english Retrieve all failed assets during the last update
      * @~chinese 获取上次更新失败时的失败资源列表
      */
-    const network::DownloadUnits& getFailedAssets() const;
+    const DownloadUnits& getFailedAssets() const;
     
     /** @brief @~english Function for destorying the downloaded version file and manifest file
      * @~chinese 清除本地已下载版本
@@ -251,7 +250,10 @@ protected:
      * @js NA
      * @lua NA
      */
-    virtual void onError(const network::Downloader::Error &error);
+    virtual void onError(const network::DownloadTask& task,
+                         int errorCode,
+                         int errorCodeInternal,
+                         const std::string& errorStr);
     
     /** @brief @~english  Call back function for recording downloading percent of the current asset,
      the progression will then be reported to user's listener registed in addUpdateProgressEventListener
@@ -288,6 +290,7 @@ protected:
     virtual void onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
     
 private:
+    void batchDownload();
     
     //! The event of the current AssetsManagerEx in event dispatcher
     std::string _eventName;
@@ -334,10 +337,10 @@ private:
     bool _waitToUpdate;
     
     //! All assets unit to download
-    network::DownloadUnits _downloadUnits;
+    DownloadUnits _downloadUnits;
     
     //! All failed units
-    network::DownloadUnits _failedUnits;
+    DownloadUnits _failedUnits;
     
     //! All files to be decompressed
     std::vector<std::string> _compressedFiles;

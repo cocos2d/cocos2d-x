@@ -1,4 +1,4 @@
-ï»¿/****************************************************************************
+/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -41,7 +41,7 @@ struct RelativeData
 
 /**
  *	@brief	@~english  format and manage armature configuration and armature animation
- * @~chinese æ ¼å¼åŒ–ä¸ç®¡ç†éª¨éª¼é…ç½®å’Œéª¨éª¼åŠ¨ç”»
+ * @~chinese ¸ñÊ½»¯Óë¹ÜÀí¹Ç÷ÀÅäÖÃºÍ¹Ç÷À¶¯»­
  */
 class CC_STUDIO_DLL ArmatureDataManager : public cocos2d::Ref
 {
@@ -54,15 +54,15 @@ public:
     
     /**
     * @~english Get singleton.
-    * @~chinese è·å–å•ä¾‹ã€‚
+    * @~chinese »ñÈ¡µ¥Àı¡£
     * @return @~english Singleton of `ArmatureDataManager`.
-    * @~chinese éª¨éª¼æ•°æ®ç®¡ç†å™¨çš„å•ä¾‹ã€‚
+    * @~chinese ¹Ç÷ÀÊı¾İ¹ÜÀíÆ÷µÄµ¥Àı¡£
     */
     static ArmatureDataManager *getInstance();
 
     /**
     * @~english Destory singleton.
-    * @~chinese é”€æ¯å•ä¾‹ã€‚
+    * @~chinese Ïú»Ùµ¥Àı¡£
     */
     static void destroyInstance();
     
@@ -81,199 +81,199 @@ public:
 
     /**
      * @~english  Init ArmatureDataManager.
-     * @~chinese åˆå§‹åŒ–éª¨éª¼æ•°æ®ç®¡ç†å™¨ã€‚
+     * @~chinese ³õÊ¼»¯¹Ç÷ÀÊı¾İ¹ÜÀíÆ÷¡£
      * @return @~english Is initialize succeed.
-     * @~chinese æ˜¯å¦åˆå§‹åŒ–æˆåŠŸã€‚
+     * @~chinese ÊÇ·ñ³õÊ¼»¯³É¹¦¡£
      */
     virtual bool init();
 
     /**
     * @~english Add armature data.
-    * @~chinese å¢åŠ éª¨éª¼æ•°æ®ã€‚
+    * @~chinese Ôö¼Ó¹Ç÷ÀÊı¾İ¡£
     * @param id @~english The id of the armature data.
-    * @~chinese éª¨éª¼æ•°æ®æ ‡è¯†ã€‚
+    * @~chinese ¹Ç÷ÀÊı¾İ±êÊ¶¡£
     * @param armatureData @~english ArmatureData *.
-    * @~chinese éª¨éª¼æ•°æ®ã€‚
+    * @~chinese ¹Ç÷ÀÊı¾İ¡£
     * @param configFilePath @~english Path of config file.
-    * @~chinese é…ç½®æ–‡ä»¶è·¯å¾„ã€‚
+    * @~chinese ÅäÖÃÎÄ¼şÂ·¾¶¡£
     */
     void addArmatureData(const std::string& id, ArmatureData *armatureData, const std::string& configFilePath = "");
 
     /**
      * @~english get armature data.
-     * @~chinese è·å–éª¨éª¼æ•°æ®ã€‚
+     * @~chinese »ñÈ¡¹Ç÷ÀÊı¾İ¡£
      * @param id @~english The id of the armature data you want to get.
-     * @~chinese è¦è·å–éª¨éª¼æ•°æ®çš„æ ‡è¯†ã€‚
+     * @~chinese Òª»ñÈ¡¹Ç÷ÀÊı¾İµÄ±êÊ¶¡£
      * @return @~english ArmatureData.
-     * @~chinese éª¨éª¼æ•°æ®ã€‚
+     * @~chinese ¹Ç÷ÀÊı¾İ¡£
      */
     ArmatureData *getArmatureData(const std::string& id);
 
     /**
      * @~english Remove armature data.
-     * @~chinese ç§»é™¤éª¨éª¼æ•°æ®
+     * @~chinese ÒÆ³ı¹Ç÷ÀÊı¾İ
      * @param	id @~english the id of the armature data you want to get
-     * @~chinese è¦ç§»é™¤éª¨éª¼æ•°æ®çš„æ ‡è¯†
+     * @~chinese ÒªÒÆ³ı¹Ç÷ÀÊı¾İµÄ±êÊ¶
      */
     void removeArmatureData(const std::string& id);
 
     /**
      * @brief	@~english Add animation data.
-     * @~chinese å¢åŠ åŠ¨ç”»æ•°æ®ã€‚
+     * @~chinese Ôö¼Ó¶¯»­Êı¾İ¡£
      * @param id @~english The id of the animation data.
-     * @~chinese åŠ¨ç”»æ•°æ®çš„æ ‡è¯†ã€‚
+     * @~chinese ¶¯»­Êı¾İµÄ±êÊ¶¡£
      * @param animationData @~english The animation data.
-     * @~chinese åŠ¨ç”»æ•°æ®ã€‚
+     * @~chinese ¶¯»­Êı¾İ¡£
      * @param configFilePath @~english Path of config file.
-     * @~chinese é…ç½®æ–‡ä»¶è·¯å¾„ã€‚
+     * @~chinese ÅäÖÃÎÄ¼şÂ·¾¶¡£
      */
     void addAnimationData(const std::string& id, AnimationData *animationData, const std::string& configFilePath = "");
 
     /**
      * @brief @~english Get animation data from _animationDatas(Dictionary).
-     * @~chinese ä»_animationDatas(Dictionary)ä¸­è·å–åŠ¨ç”»æ•°æ®ã€‚
+     * @~chinese ´Ó_animationDatas(Dictionary)ÖĞ»ñÈ¡¶¯»­Êı¾İ¡£
      * @param id @~english The id of the animation data you want to get.
-     * @~chinese è¦è·å–åŠ¨ç”»æ•°æ®çš„æ ‡è¯†ã€‚
+     * @~chinese Òª»ñÈ¡¶¯»­Êı¾İµÄ±êÊ¶¡£
      * @return @~english AnimationData.
-     * @~chinese åŠ¨ç”»æ•°æ®ã€‚
+     * @~chinese ¶¯»­Êı¾İ¡£
      */
     AnimationData *getAnimationData(const std::string& id);
 
     /**
      * @~english Remove animation data.
-     * @~chinese ç§»é™¤åŠ¨ç”»æ•°æ®ã€‚
+     * @~chinese ÒÆ³ı¶¯»­Êı¾İ¡£
      * @param id @~english The id of the animation data.
-     * @~chinese è¦ç§»é™¤åŠ¨ç”»æ•°æ®çš„æ ‡è¯†ã€‚
+     * @~chinese ÒªÒÆ³ı¶¯»­Êı¾İµÄ±êÊ¶¡£
      */
     void removeAnimationData(const std::string& id);
 
     /**
      * @~english Add texture data.
-     * @~chinese å¢åŠ æè´¨æ•°æ®ã€‚
+     * @~chinese Ôö¼Ó²ÄÖÊÊı¾İ¡£
      * @param id @~english The id of the texture data.
-     * @~chinese æè´¨æ•°æ®çš„æ ‡è¯†ã€‚
+     * @~chinese ²ÄÖÊÊı¾İµÄ±êÊ¶¡£
      * @param textureData @~english Texture data.
-     * @~chinese æè´¨æ•°æ®ã€‚
+     * @~chinese ²ÄÖÊÊı¾İ¡£
      * @param configFilePath @~english Path of config file.
-     * @~chinese é…ç½®æ–‡ä»¶è·¯å¾„ã€‚
+     * @~chinese ÅäÖÃÎÄ¼şÂ·¾¶¡£
      */
     void addTextureData(const std::string& id, TextureData *textureData, const std::string& configFilePath = "");
 
     /**
      * @~english Get texture data.
-     * @~chinese è·å–æè´¨æ•°æ®ã€‚
+     * @~chinese »ñÈ¡²ÄÖÊÊı¾İ¡£
      * @param id @~english The id of the texture data you want to get.
-     * @~chinese è¦è·å–æè´¨æ•°æ®çš„æ ‡è¯†ã€‚
+     * @~chinese Òª»ñÈ¡²ÄÖÊÊı¾İµÄ±êÊ¶¡£
      * @return @~english Texture data.
-     * @~chinese æè´¨æ•°æ®ã€‚
+     * @~chinese ²ÄÖÊÊı¾İ¡£
      */
     TextureData *getTextureData(const std::string& id);
 
     /**
      * @~english Remove texture data.
-     * @~chinese ç§»é™¤æè´¨æ•°æ®ã€‚
+     * @~chinese ÒÆ³ı²ÄÖÊÊı¾İ¡£
      * @param id @~english The id of the texture data you want to get.
-     * @~chinese è¦ç§»é™¤æè´¨æ•°æ®çš„æ ‡è¯†ã€‚
+     * @~chinese ÒªÒÆ³ı²ÄÖÊÊı¾İµÄ±êÊ¶¡£
      */
     void removeTextureData(const std::string& id);
 
     /**
      * @~english Add ArmatureFileInfo, it is managed by `ArmatureDataManager`.
-     * @~chinese æ·»åŠ éª¨éª¼æ–‡ä»¶ä¿¡æ¯ï¼Œç”±éª¨éª¼æ•°æ®ç®¡ç†å™¨ç®¡ç†ã€‚
+     * @~chinese Ìí¼Ó¹Ç÷ÀÎÄ¼şĞÅÏ¢£¬ÓÉ¹Ç÷ÀÊı¾İ¹ÜÀíÆ÷¹ÜÀí¡£
      * @param configFilePath @~english Path of config file.
-     * @~chinese é…ç½®æ–‡ä»¶è·¯å¾„ã€‚
+     * @~chinese ÅäÖÃÎÄ¼şÂ·¾¶¡£
      */
     void addArmatureFileInfo(const std::string& configFilePath);
 
     /**
      *	@~english Add ArmatureFileInfo, it is managed by `ArmatureDataManager`.
      *	It will load data in a new thread
-     * @~chinese æ·»åŠ éª¨éª¼æ–‡ä»¶ä¿¡æ¯ï¼Œç”±éª¨éª¼æ•°æ®ç®¡ç†å™¨ç®¡ç†ï¼Œå°†åœ¨æ–°çº¿ç¨‹ä¸­åŠ è½½æ•°æ®ã€‚
+     * @~chinese Ìí¼Ó¹Ç÷ÀÎÄ¼şĞÅÏ¢£¬ÓÉ¹Ç÷ÀÊı¾İ¹ÜÀíÆ÷¹ÜÀí£¬½«ÔÚĞÂÏß³ÌÖĞ¼ÓÔØÊı¾İ¡£
      * @param configFilePath @~english Path of config file.
-     * @~chinese é…ç½®æ–‡ä»¶è·¯å¾„ã€‚
+     * @~chinese ÅäÖÃÎÄ¼şÂ·¾¶¡£
      * @param target @~english The target of the callback.
-     * @~chinese å›è°ƒæ–¹æ³•ç›®æ ‡å¯¹è±¡ã€‚
+     * @~chinese »Øµ÷·½·¨Ä¿±ê¶ÔÏó¡£
      * @param selector @~english The selector to be checked.
-     * @~chinese å›è°ƒæ–¹æ³•é€‰æ‹©å™¨ã€‚
+     * @~chinese »Øµ÷·½·¨Ñ¡ÔñÆ÷¡£
      */
     void addArmatureFileInfoAsync(const std::string& configFilePath, cocos2d::Ref *target, cocos2d::SEL_SCHEDULE selector);
 
     /**
      * @~english Add ArmatureFileInfo, it is managed by `ArmatureDataManager`.
-     * @~chinese æ·»åŠ éª¨éª¼æ–‡ä»¶ä¿¡æ¯ï¼Œç”±éª¨éª¼æ•°æ®ç®¡ç†å™¨ç®¡ç†ã€‚
+     * @~chinese Ìí¼Ó¹Ç÷ÀÎÄ¼şĞÅÏ¢£¬ÓÉ¹Ç÷ÀÊı¾İ¹ÜÀíÆ÷¹ÜÀí¡£
      * @param imagePath @~english Path of image.
-     * @~chinese å›¾ç‰‡è·¯å¾„ã€‚
+     * @~chinese Í¼Æ¬Â·¾¶¡£
      * @param plistPath @~english Path of plist.
-     * @~chinese plistè·¯å¾„ã€‚
+     * @~chinese plistÂ·¾¶¡£
      * @param configFilePath @~english Path of config file.
-     * @~chinese é…ç½®æ–‡ä»¶è·¯å¾„ã€‚
+     * @~chinese ÅäÖÃÎÄ¼şÂ·¾¶¡£
      */
     void addArmatureFileInfo(const std::string& imagePath, const std::string& plistPath, const std::string& configFilePath);
 
     /**
     * @~english Add ArmatureFileInfo, it is managed by `ArmatureDataManager`.
     *			It will load data in a new thread
-    * @~chinese æ·»åŠ éª¨éª¼æ–‡ä»¶ä¿¡æ¯ï¼Œç”±éª¨éª¼æ•°æ®ç®¡ç†å™¨ç®¡ç†ï¼Œå°†åœ¨æ–°çº¿ç¨‹ä¸­åŠ è½½æ•°æ®ã€‚
+    * @~chinese Ìí¼Ó¹Ç÷ÀÎÄ¼şĞÅÏ¢£¬ÓÉ¹Ç÷ÀÊı¾İ¹ÜÀíÆ÷¹ÜÀí£¬½«ÔÚĞÂÏß³ÌÖĞ¼ÓÔØÊı¾İ¡£
     * @param imagePath @~english Path of image.
-    * @~chinese å›¾ç‰‡è·¯å¾„ã€‚
+    * @~chinese Í¼Æ¬Â·¾¶¡£
     * @param plistPath @~english Path of plist.
-    * @~chinese plistè·¯å¾„ã€‚
+    * @~chinese plistÂ·¾¶¡£
     * @param configFilePath @~english Path of config file.
-    * @~chinese é…ç½®æ–‡ä»¶è·¯å¾„ã€‚
+    * @~chinese ÅäÖÃÎÄ¼şÂ·¾¶¡£
     * @param target @~english The target of the callback.
-    * @~chinese å›è°ƒæ–¹æ³•ç›®æ ‡å¯¹è±¡ã€‚
+    * @~chinese »Øµ÷·½·¨Ä¿±ê¶ÔÏó¡£
     * @param selector @~english The selector to be checked.
-    * @~chinese å›è°ƒæ–¹æ³•é€‰æ‹©å™¨ã€‚
+    * @~chinese »Øµ÷·½·¨Ñ¡ÔñÆ÷¡£
     */
     void addArmatureFileInfoAsync(const std::string& imagePath, const std::string& plistPath, const std::string& configFilePath, cocos2d::Ref *target, cocos2d::SEL_SCHEDULE selector);
 
     /**
      * @~english Add sprite frame to `CCSpriteFrameCache`, it will save display name and it's relative image name.
-     * @~chinese ä¸º`CCSpriteFrameCache`æ·»åŠ ç²¾çµå¸§ï¼Œå°†ä¼šä¿å­˜æ˜¾ç¤ºåç§°åŠç›¸å…³å›¾ç‰‡åç§°ã€‚
+     * @~chinese Îª`CCSpriteFrameCache`Ìí¼Ó¾«ÁéÖ¡£¬½«»á±£´æÏÔÊ¾Ãû³Æ¼°Ïà¹ØÍ¼Æ¬Ãû³Æ¡£
      * @param plistPath @~english Path of plist.
-     * @~chinese plistè·¯å¾„ã€‚
+     * @~chinese plistÂ·¾¶¡£
      * @param imagePath @~english Path of image.
-     * @~chinese å›¾ç‰‡è·¯å¾„ã€‚
+     * @~chinese Í¼Æ¬Â·¾¶¡£
      * @param configFilePath @~english Path of config file.
-     * @~chinese é…ç½®æ–‡ä»¶è·¯å¾„ã€‚
+     * @~chinese ÅäÖÃÎÄ¼şÂ·¾¶¡£
      */
     void addSpriteFrameFromFile(const std::string& plistPath, const std::string& imagePath, const std::string& configFilePath = "");
 
     /**
     * @~english Remove ArmatureFileInfo.
-    * @~chinese ç§»é™¤éª¨éª¼æ–‡ä»¶ä¿¡æ¯ã€‚
+    * @~chinese ÒÆ³ı¹Ç÷ÀÎÄ¼şĞÅÏ¢¡£
     * @param configFilePath @~english Path of config file.
-    * @~chinese é…ç½®æ–‡ä»¶è·¯å¾„ã€‚
+    * @~chinese ÅäÖÃÎÄ¼şÂ·¾¶¡£
     */
     virtual void removeArmatureFileInfo(const std::string& configFilePath);
 
     /**
      *	@~english Judge whether or not need auto load sprite file.
-     * @~chinese åˆ¤æ–­æ˜¯å¦éœ€è¦è‡ªåŠ¨åŠ è½½ç²¾çµæ–‡ä»¶ã€‚
+     * @~chinese ÅĞ¶ÏÊÇ·ñĞèÒª×Ô¶¯¼ÓÔØ¾«ÁéÎÄ¼ş¡£
      */
     bool isAutoLoadSpriteFile();
 
     /**
     * @~english  Get data of Armature.
-    * @~chinese è·å–éª¨éª¼æ•°æ®ã€‚
+    * @~chinese »ñÈ¡¹Ç÷ÀÊı¾İ¡£
     * @return @~english Map of Armature data.
-    * @~chinese éª¨éª¼æ•°æ®mapã€‚
+    * @~chinese ¹Ç÷ÀÊı¾İmap¡£
     */
     const cocos2d::Map<std::string, ArmatureData*>&     getArmatureDatas() const;
 
     /**
     * @~english  Get data of Animation.
-    * @~chinese è·å–åŠ¨ç”»æ•°æ®ã€‚
+    * @~chinese »ñÈ¡¶¯»­Êı¾İ¡£
     * @return @~english Map of Animation data.
-    * @~chinese åŠ¨ç”»æ•°æ®mapã€‚
+    * @~chinese ¶¯»­Êı¾İmap¡£
     */
     const cocos2d::Map<std::string, AnimationData*>&    getAnimationDatas() const;
 
     /**
     * @~english  Get data of Texture.
-    * @~chinese è·å–æè´¨æ•°æ®ã€‚
+    * @~chinese »ñÈ¡²ÄÖÊÊı¾İ¡£
     * @return @~english Map of Texture data.
-    * @~chinese æè´¨æ•°æ®mapã€‚
+    * @~chinese ²ÄÖÊÊı¾İmap¡£
     */
     const cocos2d::Map<std::string, TextureData*>&      getTextureDatas() const;
 

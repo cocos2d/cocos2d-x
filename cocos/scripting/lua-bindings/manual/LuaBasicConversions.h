@@ -53,7 +53,7 @@ cocos2d::log(__VA_ARGS__);                                                  \
 /**@~english
  * If the typename of userdata at the given acceptable index of stack is equal to type it return true,otherwise return false .
  * If def != 0, lo could greater than the top index of stack, return value is true.
- * If the value of the given index is nil, retrun value also is true.
+ * If the value of the given index is nil, return value also is true.
  *
  * @~chinese 
  * 如果给定合法的Lua栈索引上的userdata的类型名字和type一样返回true,否则返回false。
@@ -79,7 +79,7 @@ extern bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def);
  * @brief @~english
  * The following function are all used to convert the Lua values at the given acceptable index to the corresponding c++ values.
  * If the Lua values can be converted the return value is true, otherwise return false.
- * If it happens error during the conversion process, it outputs the error msg in the console to provide infromation about the name of calling function, the typename of value at the given acceptable index, and so on.
+ * If it happens error during the conversion process, it outputs the error msg in the console to provide information about the name of calling function, the typename of value at the given acceptable index, and so on.
  * @~chinese 以下的函数都是用来将指定Lua索引上的Lua值转成对应的c++值。
  * 如果Lua值可以被转换，返回true,否则返回false.
  * 如果在转换过程中发生了错误，将会在控制台输出错误信息，错误信息里包含了调用函数，指定Lua索引Lua值的类型名字等信息。

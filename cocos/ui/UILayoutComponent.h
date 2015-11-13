@@ -126,7 +126,7 @@ namespace ui {
          * Percent content size is used to adapt node's content size based on parent's content size.
          * If set to true then node's content size will be changed based on the value setted by @see setPercentContentSize
          * @~chinese 
-         * 根据父节点的内容大小按百分比调整节点的内容大小。
+         * 根据父节点的内荽笮“窗俜直鹊髡诘愕哪谌荽笮　�
          * 如果设置为true，则基于父节点来改变自身的大小，@see setPercentContentSize
          *
          * @param isUsed @~english True to enable percent content size, false otherwise.

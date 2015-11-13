@@ -512,6 +512,64 @@ var S9FrameNameSpriteSheetRotatedInsetsScaled = S9SpriteTestDemo.extend({
     }
 });
 
+var S9SpriteActionTest = S9SpriteTestDemo.extend({
+
+    _title:"Test Action for Scale9Sprite : Rotate + Scale + Translate",
+
+    ctor:function() {
+        this._super();
+
+        var blocks_with_insets = new cc.Scale9Sprite('blocks9.png');
+
+        blocks_with_insets.x = winSize.width / 2;
+        blocks_with_insets.y = winSize.height / 2;
+        blocks_with_insets.width = 96 * 4;
+        blocks_with_insets.height = 96 * 2;
+
+        this.addChild(blocks_with_insets);
+
+        var delay = cc.delayTime(0.25);
+
+        var rotateBy = cc.rotateBy(2, 360);
+        var rotateByBack = rotateBy.reverse();
+
+        var ScaleTo = cc.scaleTo(2, -0.44, 0.47);
+        var ScaleToBack = cc.scaleTo(2, 1.0, 1.0);
+
+        var moveBy = cc.moveBy(1, cc.p(80, 80));
+        var moveByBack = moveBy.reverse();
+
+        blocks_with_insets.runAction(cc.sequence(rotateBy, delay, rotateByBack));
+        blocks_with_insets.runAction(cc.sequence(ScaleTo, delay.clone(), ScaleToBack));
+        blocks_with_insets.runAction(cc.sequence(moveBy,moveByBack));
+    }
+});
+
+var S9SpriteColorOpacityTest = S9SpriteTestDemo.extend({
+    _title:"Test color/opacity cascade for Scale9Sprite (red with 128 opacity)",
+
+    ctor:function() {
+        this._super();
+
+        this.setCascadeColorEnabled(true);
+        this.setCascadeOpacityEnabled(true);
+        this.setOpacity(128);
+        this.setColor(cc.color(255, 0, 0));
+
+        var blocks = new cc.Scale9Sprite('blocks9.png');
+        blocks.x = winSize.width / 2 - 100;
+        blocks.y = winSize.height / 2;
+        this.addChild(blocks);
+
+        var batchNode = new cc.SpriteBatchNode("Images/blocks9.png");
+        var blocks2 = new cc.Scale9Sprite();
+        blocks2.updateWithBatchNode(batchNode, cc.rect(0, 0, 96, 96), false, cc.rect(0, 0, 96, 96));
+        blocks2.x = winSize.width / 2 + 100;
+        blocks2.y = winSize.height / 2;
+        this.addChild(blocks2);
+    }
+});
+
 var S9SpriteTestScene = TestScene.extend({
     runThisTest:function (num) {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;
@@ -538,7 +596,9 @@ var arrayOfS9SpriteTest = [
     S9FrameNameSpriteSheetInsetsScaled,
     S9FrameNameSpriteSheetRotatedInsets,
     S9FrameNameSpriteSheetRotatedInsetsScaled,
-    S9_TexturePacker
+    S9_TexturePacker,
+    S9SpriteActionTest,
+    S9SpriteColorOpacityTest
 ];
 
 var nextS9SpriteTest = function () {

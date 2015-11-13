@@ -274,7 +274,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     // IMPORTANT:
     // - preconditions
     //    -> context_ MUST be the OpenGL context
-    //    -> renderbuffer_ must be the the RENDER BUFFER
+    //    -> renderbuffer_ must be the RENDER BUFFER
 
 #ifdef __IPHONE_4_0
     
@@ -378,7 +378,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     for(UIView* view in subviews)
     {
         if([view isKindOfClass:NSClassFromString(@"CCCustomUITextField")] ||
-           [view isKindOfClass:NSClassFromString(@"UICustomUITextField")])
+           [view isKindOfClass:NSClassFromString(@"UISingleLineTextField")] ||
+           [view isKindOfClass:NSClassFromString(@"UIMultilineTextField")])
         {
             if ([view isFirstResponder])
             {

@@ -1,4 +1,4 @@
-ï»¿/****************************************************************************
+/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -43,7 +43,7 @@ namespace ui {
 /**
  * @class Text
  * @brief @~english For creating a system font or a TTF font Text.
- * @~chinses ç”¨äºæ˜¾ç¤ºç³»ç»Ÿå­—ä½“æˆ–ttfå­—ä½“çš„æ–‡æœ¬æ§ä»¶
+ * @~chinses ÓÃÓÚÏÔÊ¾ÏµÍ³×ÖÌå»òttf×ÖÌåµÄÎÄ±¾¿Ø¼ş
  */
 class CC_GUI_DLL Text : public Widget
 {
@@ -53,7 +53,7 @@ class CC_GUI_DLL Text : public Widget
 public:
     /** 
      * @~english Type Text type.
-     * @~chinses å­—ä½“ç±»å‹
+     * @~chinses ×ÖÌåÀàĞÍ
      */
     enum class Type
     {
@@ -62,7 +62,7 @@ public:
     };
     /**
      * @~english Default constructor.
-     * @~chinese é»˜è®¤æ„é€ å‡½æ•°
+     * @~chinese Ä¬ÈÏ¹¹Ôìº¯Êı
      * @js ctor
      * @lua new
      */
@@ -70,7 +70,7 @@ public:
 
     /**
      * @~english Default destructor.
-     * @~chinese é»˜è®¤ææ„å‡½æ•°
+     * @~chinese Ä¬ÈÏÎö¹¹º¯Êı
      * @js NA
      * @lua NA
      */
@@ -78,9 +78,9 @@ public:
 
     /**
      * @~english Create a Text object.
-     * @~chinese åˆ›å»ºä¸€ä¸ªæ–‡æœ¬å¯¹è±¡
+     * @~chinese ´´½¨Ò»¸öÎÄ±¾¶ÔÏó
      * @return An autoreleased Text object.
-     * @~chinese è¢«åˆ›å»ºçš„æ–‡æœ¬å¯¹è±¡
+     * @~chinese ±»´´½¨µÄÎÄ±¾¶ÔÏó
      */
     static Text* create();
 
@@ -94,8 +94,8 @@ public:
      *       //create a TTF font UIText.
      *       Text *text = Text::create("Hello", "xxx\xxx.ttf", 20);
      *  @endcode
-     * @~chinese é€šè¿‡æŒ‡å®šæ–‡æœ¬å†…å®¹ï¼Œå­—ä½“åç§°ï¼Œå­—ä½“å¤§å°æ¥åˆ›å»ºä¸€ä¸ªæ–‡æœ¬å¯¹è±¡ï¼Œå­—ä½“åç§°å¿…é¡»æ˜¯ç³»ç»Ÿæ‰€å¸¦çš„å­—ä½“åç§°ï¼Œæˆ–ä¸€ä¸ªæŒ‡å®šçš„ttfæ–‡ä»¶è·¯å¾„
-     * ç”¨ä¾‹ï¼š
+     * @~chinese Í¨¹ıÖ¸¶¨ÎÄ±¾ÄÚÈİ£¬×ÖÌåÃû³Æ£¬×ÖÌå´óĞ¡À´´´½¨Ò»¸öÎÄ±¾¶ÔÏó£¬×ÖÌåÃû³Æ±ØĞëÊÇÏµÍ³Ëù´øµÄ×ÖÌåÃû³Æ£¬»òÒ»¸öÖ¸¶¨µÄttfÎÄ¼şÂ·¾¶
+     * ÓÃÀı£º
      *  @code
      *       //create a system font UIText.
      *       Text *text = Text::create("Hello", "Arial", 20);
@@ -103,13 +103,13 @@ public:
      *       Text *text = Text::create("Hello", "xxx\xxx.ttf", 20);
      *  @endcode
      * @param textContent @~english Text content string.
-     * @~chinese æ–‡æœ¬å†…å®¹çš„å­—ç¬¦ä¸²
+     * @~chinese ÎÄ±¾ÄÚÈİµÄ×Ö·û´®
      * @param fontName @~english A given font name.
-     * @~chinese æŒ‡å®šå­—ä½“å
+     * @~chinese Ö¸¶¨×ÖÌåÃû
      * @param fontSize @~english A given font size.
-     * @~chinese å­—ä½“å¤§å°
+     * @~chinese ×ÖÌå´óĞ¡
      * @return @~english An autoreleased Text object.
-     * @~chinese æ–‡æœ¬å¯¹è±¡
+     * @~chinese ÎÄ±¾¶ÔÏó
      */
     static Text* create(const std::string& textContent,
                         const std::string& fontName,
@@ -117,9 +117,9 @@ public:
 
     /**
      * @~english Changes the string value of label.
-     * @~chinese è®¾ç½®æ–‡æœ¬å¯¹è±¡æ‰€æ˜¾ç¤ºçš„æ–‡æœ¬
+     * @~chinese ÉèÖÃÎÄ±¾¶ÔÏóËùÏÔÊ¾µÄÎÄ±¾
      * @param text  @~english The string value.
-     * @~chinese æŒ‡å®šå­—ç¬¦ä¸²
+     * @~chinese Ö¸¶¨×Ö·û´®
      */
     CC_DEPRECATED_ATTRIBUTE void setText(const std::string& text)
     {
@@ -127,17 +127,17 @@ public:
     }
     /**
     * @~english Changes the string value of label.
-    * @~chinese è®¾ç½®æ–‡æœ¬å¯¹è±¡æ‰€æ˜¾ç¤ºçš„æ–‡æœ¬
+    * @~chinese ÉèÖÃÎÄ±¾¶ÔÏóËùÏÔÊ¾µÄÎÄ±¾
     * @param text  @~english String value.
-    * @~chinese æŒ‡å®šå­—ç¬¦ä¸²
+    * @~chinese Ö¸¶¨×Ö·û´®
     */
     void setString(const std::string& text);
 
     /**
      * @~english Gets the string value of label.
-     * @~chinese è·å–æ–‡æœ¬å¯¹è±¡ä¸­çš„æ–‡æœ¬å­—ç¬¦ä¸²
+     * @~chinese »ñÈ¡ÎÄ±¾¶ÔÏóÖĞµÄÎÄ±¾×Ö·û´®
      * @return @~english String value.
-     * @~chinese å­—ç¬¦ä¸²
+     * @~chinese ×Ö·û´®
      */
     CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue()
     {
@@ -146,37 +146,37 @@ public:
 
     /**
     * @~english Gets the string value of label.
-    * @~chinese è·å–æ–‡æœ¬å¯¹è±¡ä¸­çš„æ–‡æœ¬å­—ç¬¦ä¸²
+    * @~chinese »ñÈ¡ÎÄ±¾¶ÔÏóÖĞµÄÎÄ±¾×Ö·û´®
     * @return @~english String value.
-    * @~chinese å­—ç¬¦ä¸²
+    * @~chinese ×Ö·û´®
     */
     const std::string& getString()const;
 
     /**
      * @~english Gets the string length of the label.
-     * @~chinese è·å–æ–‡æœ¬æ ‡ç­¾çš„å­—ç¬¦ä¸²é•¿åº¦
+     * @~chinese »ñÈ¡ÎÄ±¾±êÇ©µÄ×Ö·û´®³¤¶È
      * @return  @~english String length.
-     * @~chinese å­—ç¬¦ä¸²é•¿åº¦
+     * @~chinese ×Ö·û´®³¤¶È
      * @note @~english This length will be larger than the raw string length,
      * if you want to get the raw string length,
      * you should call this->getString().size() instead.
-     * @~chinese è¯¥é•¿åº¦å°†ä¼šæ¯”åŸå§‹å­—ç¬¦ä¸²é•¿åº¦è¦å¤§ï¼Œå¦‚æœä½ æƒ³è·å¾—åŸå§‹å­—ç¬¦ä¸²é•¿åº¦ï¼Œè¯·è°ƒç”¨this->getString().size()
+     * @~chinese ¸Ã³¤¶È½«»á±ÈÔ­Ê¼×Ö·û´®³¤¶ÈÒª´ó£¬Èç¹ûÄãÏë»ñµÃÔ­Ê¼×Ö·û´®³¤¶È£¬Çëµ÷ÓÃthis->getString().size()
      */
     ssize_t getStringLength()const;
 
     /**
      * @~english Sets the font size of label.
-     * @~chinese è®¾ç½®æ–‡æœ¬å¯¹è±¡çš„å­—ä½“å¤§å°
+     * @~chinese ÉèÖÃÎÄ±¾¶ÔÏóµÄ×ÖÌå´óĞ¡
      * @param size @~english The font size.
-     * @~chinese å­—ä½“å¤§å°
+     * @~chinese ×ÖÌå´óĞ¡
      */
     void setFontSize(float size);
 
     /**
      * @~english Gets the font size of label.
-     * @~chinese è·å–æ–‡æœ¬å¯¹è±¡çš„å­—ä½“å¤§å°
+     * @~chinese »ñÈ¡ÎÄ±¾¶ÔÏóµÄ×ÖÌå´óĞ¡
      * @return @~english The font size.
-     * @~chinese å­—ä½“å¤§å°
+     * @~chinese ×ÖÌå´óĞ¡
      */
     float getFontSize()const;
 
@@ -193,8 +193,8 @@ public:
      *         //it will change the font to TTF font no matter the previous font type is TTF or system font
      *         text->setFontName("xxxx/xxx.ttf");
      * @endcode
-     * @~chinese è®¾ç½®æ–‡æœ¬å¯¹è±¡çš„å­—ä½“ï¼Œå¦‚æœä½ éœ€è¦ä½¿ç”¨ç³»ç»Ÿå­—ä½“ï¼Œåªéœ€å°†å­—ä½“åä½œä¸ºå‚æ•°ä¼ é€’å³å¯ï¼Œå¦‚æœä½ ä½¿ç”¨TTFæ–‡ä»¶ï¼Œä½ éœ€è¦ä¼ é€’TTFæ–‡ä»¶çš„è·¯å¾„
-     * ç”¨ä¾‹ï¼š
+     * @~chinese ÉèÖÃÎÄ±¾¶ÔÏóµÄ×ÖÌå£¬Èç¹ûÄãĞèÒªÊ¹ÓÃÏµÍ³×ÖÌå£¬Ö»Ğè½«×ÖÌåÃû×÷Îª²ÎÊı´«µİ¼´¿É£¬Èç¹ûÄãÊ¹ÓÃTTFÎÄ¼ş£¬ÄãĞèÒª´«µİTTFÎÄ¼şµÄÂ·¾¶
+     * ÓÃÀı£º
      * Usage:
      * @code
      *          //create a system font UIText
@@ -205,40 +205,40 @@ public:
      *         text->setFontName("xxxx/xxx.ttf");
      * @endcode
      * @param name @~english The font name.
-     * @~chinese å­—ä½“åç§°
+     * @~chinese ×ÖÌåÃû³Æ
      */
     void setFontName(const std::string& name);
 
     /** 
      * @~english Gets the font name.
-     * @~chinese è·å–å­—ä½“åç§°
+     * @~chinese »ñÈ¡×ÖÌåÃû³Æ
      * @return @~english Font name.
-     * @~chinese å­—ä½“åç§°
+     * @~chinese ×ÖÌåÃû³Æ
      */
     const std::string& getFontName()const;
 
     /**
      * @~english Gets the font type.
-     * @~chinese è·å–å­—ä½“ç±»å‹
+     * @~chinese »ñÈ¡×ÖÌåÀàĞÍ
      * @return @~english The font type.
-     * @~chinese å­—ä½“ç±»å‹
+     * @~chinese ×ÖÌåÀàĞÍ
      */
     Type getType() const;
 
     /**
      * @~english Sets the touch scale enabled of label.
-     * @~chinese è®¾ç½®æ–‡æœ¬å¯¹è±¡æ˜¯å¦æ”¯æŒè§¦æ‘¸æ”¾å¤§
+     * @~chinese ÉèÖÃÎÄ±¾¶ÔÏóÊÇ·ñÖ§³Ö´¥Ãş·Å´ó
      * @param enabled @~english Touch scale enabled of label.
-     * @~chinese æ˜¯å¦æ”¯æŒè§¦æ‘¸æ”¾å¤§
+     * @~chinese ÊÇ·ñÖ§³Ö´¥Ãş·Å´ó
      */
     void setTouchScaleChangeEnabled(bool enabled);
 
     /**
      * @~english Gets the touch scale enabled of label.
-     * @~chinese è·å–å½“å‰æ–‡æœ¬å¯¹è±¡æ˜¯å¦æ”¯æŒè§¦æ‘¸æ”¾å¤§
+     * @~chinese »ñÈ¡µ±Ç°ÎÄ±¾¶ÔÏóÊÇ·ñÖ§³Ö´¥Ãş·Å´ó
      *
      * @return  @~english Touch scale enabled of label.
-     * @~chinese æ˜¯å¦æ”¯æŒè§¦æ‘¸æ”¾å¤§
+     * @~chinese ÊÇ·ñÖ§³Ö´¥Ãş·Å´ó
      */
     bool isTouchScaleChangeEnabled()const;
 
@@ -250,9 +250,9 @@ public:
 
     /** 
      * @~english Gets the render size in auto mode.
-     * @~chinses è·å–åœ¨è‡ªåŠ¨æ¨¡å¼ä¸‹çš„æ¸²æŸ“å°ºå¯¸
+     * @~chinses »ñÈ¡ÔÚ×Ô¶¯Ä£Ê½ÏÂµÄäÖÈ¾³ß´ç
      * @return @~english The size of render size in auto mode.
-     * @~chinses è‡ªåŠ¨æ¨¡å¼çš„æ¸²æŸ“å°ºå¯¸
+     * @~chinses ×Ô¶¯Ä£Ê½µÄäÖÈ¾³ß´ç
      */
     virtual Size getAutoRenderSize();
 
@@ -264,81 +264,81 @@ public:
     /**
      * @~english Sets the rendering size of the text, you should call this method
      * along with calling `ignoreContentAdaptWithSize(false)`, otherwise the text area
-     * size is caculated by the real size of the text content.
-     * @~chinese è®¾ç½®æ–‡æœ¬çš„å®é™…æ¸²æŸ“å°ºå¯¸ï¼ˆæ–‡æœ¬åŸŸï¼‰ï¼Œä½ å¿…é¡»åŒæ—¶è°ƒç”¨`ignoreContentAdaptWithSize(false)`ï¼Œå¦åˆ™æ¸²æŸ“å°ºå¯¸ï¼ˆæ–‡æœ¬åŸŸï¼‰å°†ä¼š
-     * æŒ‰ç…§æ–‡æœ¬å†…å®¹çš„å®é™…å¤§å°è®¡ç®—
+     * size is calculated by the real size of the text content.
+     * @~chinese ÉèÖÃÎÄ±¾µÄÊµ¼ÊäÖÈ¾³ß´ç£¨ÎÄ±¾Óò£©£¬Äã±ØĞëÍ¬Ê±µ÷ÓÃ`ignoreContentAdaptWithSize(false)`£¬·ñÔòäÖÈ¾³ß´ç£¨ÎÄ±¾Óò£©½«»á
+     * °´ÕÕÎÄ±¾ÄÚÈİµÄÊµ¼Ê´óĞ¡¼ÆËã
      * @param size @~english The text rendering area size.
-     * @~chinese æ–‡æœ¬æ¸²æŸ“å°ºå¯¸ï¼ˆæ–‡æœ¬åŸŸï¼‰
+     * @~chinese ÎÄ±¾äÖÈ¾³ß´ç£¨ÎÄ±¾Óò£©
      */
     void setTextAreaSize(const Size &size);
 
     /** 
      * @~chinese Return the text rendering area size.
-     * @~chinese è¿”å›æ–‡æœ¬å¯¹è±¡çš„å®é™…æ¸²æŸ“å°ºå¯¸ï¼ˆæ–‡æœ¬åŸŸï¼‰
+     * @~chinese ·µ»ØÎÄ±¾¶ÔÏóµÄÊµ¼ÊäÖÈ¾³ß´ç£¨ÎÄ±¾Óò£©
      * @return @~chinese The text rendering area size.
-     * @~chinese æ–‡æœ¬åŸŸå¤§å°
+     * @~chinese ÎÄ±¾Óò´óĞ¡
      */
     const Size& getTextAreaSize()const;
 
     /** 
      * @~chinese Sets text horizontal alignment.
-     * @~chinese è®¾ç½®æ–‡æœ¬æ°´å¹³æ–¹å‘å¯¹é½ç±»å‹
+     * @~chinese ÉèÖÃÎÄ±¾Ë®Æ½·½Ïò¶ÔÆëÀàĞÍ
      * @param alignment @~chinese Horizontal text alignment type
-     * @~chinese æ°´å¹³æ–¹å‘å¯¹é½ç±»å‹
+     * @~chinese Ë®Æ½·½Ïò¶ÔÆëÀàĞÍ
      */
     void setTextHorizontalAlignment(TextHAlignment alignment);
 
     /** 
      * @~chinese Gets text horizontal alignment.
-     * @~chinese è·å–æ–‡æœ¬å¯¹è±¡æ°´å¹³æ–¹å‘å¯¹é½ç±»å‹
+     * @~chinese »ñÈ¡ÎÄ±¾¶ÔÏóË®Æ½·½Ïò¶ÔÆëÀàĞÍ
      * @return Horizontal @~chinese text alignment type
-     * @~chinese æ°´å¹³æ–¹å‘å¯¹é½ç±»å‹
+     * @~chinese Ë®Æ½·½Ïò¶ÔÆëÀàĞÍ
      */
     TextHAlignment getTextHorizontalAlignment()const;
 
     /** 
      * @~chinese Sets text vertical alignment.
-     * @~chinese è®¾ç½®æ–‡æœ¬å¯¹è±¡ç«–ç›´æ–¹å‘å¯¹é½ç±»å‹
+     * @~chinese ÉèÖÃÎÄ±¾¶ÔÏóÊúÖ±·½Ïò¶ÔÆëÀàĞÍ
      * @param alignment @~chinese The vertical text alignment type
-     * @~chinese ç«–ç›´æ–¹å‘å¯¹é½ç±»å‹
+     * @~chinese ÊúÖ±·½Ïò¶ÔÆëÀàĞÍ
      */
     void setTextVerticalAlignment(TextVAlignment alignment);
 
     /** 
      * @~chinese Gets text vertical alignment.
-     * @~chinese è·å–æ–‡æœ¬ç«–ç›´æ–¹å‘å¯¹é½ç±»å‹
+     * @~chinese »ñÈ¡ÎÄ±¾ÊúÖ±·½Ïò¶ÔÆëÀàĞÍ
      * @return @~chinese The vertical text alignment type
-     * @~chinese æ–‡æœ¬ç«–ç›´æ–¹å‘å¯¹å…¶ç±»å‹
+     * @~chinese ÎÄ±¾ÊúÖ±·½Ïò¶ÔÆäÀàĞÍ
      */
     TextVAlignment getTextVerticalAlignment()const;
 
     /** 
      * @~chinese Sets text color.
-     * @~chinese è®¾ç½®æ–‡æœ¬é¢œè‰²
+     * @~chinese ÉèÖÃÎÄ±¾ÑÕÉ«
      * @param color @~chinese Text color.
-     * @~chinese æ–‡æœ¬é¢œè‰²
+     * @~chinese ÎÄ±¾ÑÕÉ«
      */
     void setTextColor(const Color4B color);
 
     /** 
      * @~chinese Gets text color.
-     * @~chinese è·å–æ–‡æœ¬é¢œè‰²
+     * @~chinese »ñÈ¡ÎÄ±¾ÑÕÉ«
      * @return @~chinese Text color.
-     * @~chinese æ–‡æœ¬é¢œè‰²
+     * @~chinese ÎÄ±¾ÑÕÉ«
      */
     const Color4B& getTextColor() const;
 
     /**
      * @~chinese Enable shadow for the label.
-     * @~chinese å¼€å¯æ–‡æœ¬é˜´å½±
+     * @~chinese ¿ªÆôÎÄ±¾ÒõÓ°
      * @todo support blur for shadow effect
      *
      * @param shadowColor @~chinese The color of shadow effect.
-     * @~chinese é˜´å½±é¢œè‰²
+     * @~chinese ÒõÓ°ÑÕÉ«
      * @param offset @~chinese The offset of shadow effect.
-     * @~chinese é˜´å½±åç§»é‡
+     * @~chinese ÒõÓ°Æ«ÒÆÁ¿
      * @param blurRadius @~chinese The blur radius of shadow effect.
-     * @~chinese é˜´å½±æ¨¡ç³ŠåŠå¾„
+     * @~chinese ÒõÓ°Ä£ºı°ë¾¶
      */
     void enableShadow(const Color4B& shadowColor = Color4B::BLACK,
                       const Size &offset = Size(2,-2),
@@ -347,34 +347,34 @@ public:
     /**
      * @~chinese Enable outline for the label.
      * It only works on IOS and Android when you use System fonts.
-     * @~chinese è®¾ç½®æ–‡æœ¬è½®å»“ï¼Œåªåœ¨å®‰å“æˆ–è€…IOSå¹³å°ä¸‹ä½¿ç”¨ç³»ç»Ÿå­—ä½“æ—¶æœ‰æ•ˆ
+     * @~chinese ÉèÖÃÎÄ±¾ÂÖÀª£¬Ö»ÔÚ°²×¿»òÕßIOSÆ½Ì¨ÏÂÊ¹ÓÃÏµÍ³×ÖÌåÊ±ÓĞĞ§
      * @param outlineColor @~chinese The color of outline.
-     * @~chinese è½®å»“é¢œè‰²
+     * @~chinese ÂÖÀªÑÕÉ«
      * @param outlineSize @~chinese The size of outline.
-     * @~chinese è½®å»“å°ºå¯¸
+     * @~chinese ÂÖÀª³ß´ç
      */
     void enableOutline(const Color4B& outlineColor,int outlineSize = 1);
 
     /**
      * @~chinese Enable the glow effect of the text,Only support for TTF.
-     * @~chinese è®¾ç½®æ–‡æœ¬çš„è¾‰å…‰æ•ˆæœï¼Œä»…æ”¯æŒTTFå­—ä½“
+     * @~chinese ÉèÖÃÎÄ±¾µÄ»Ô¹âĞ§¹û£¬½öÖ§³ÖTTF×ÖÌå
      * 
      * @param glowColor @~chinese The color of glow.
-     * @~chinese è¾‰å…‰é¢œè‰²
+     * @~chinese »Ô¹âÑÕÉ«
      */
     void enableGlow(const Color4B& glowColor);
 
     /** 
      * @~chinese Disable all text effects, including shadow, outline and glow.
-     * @~chinese ç¦ç”¨æ‰€æœ‰æ–‡æœ¬ç‰¹æ•ˆï¼ŒåŒ…æ‹¬é˜´å½±ï¼Œè½®å»“ä»¥åŠè¾‰å…‰
+     * @~chinese ½ûÓÃËùÓĞÎÄ±¾ÌØĞ§£¬°üÀ¨ÒõÓ°£¬ÂÖÀªÒÔ¼°»Ô¹â
      */
     void disableEffect();
 
     /**
      * @~chinese Disable specific text effect.
-     * @~chinese ç¦ç”¨æŒ‡å®šçš„æ–‡æœ¬ç‰¹æ•ˆ
+     * @~chinese ½ûÓÃÖ¸¶¨µÄÎÄ±¾ÌØĞ§
      * @param effect @~chinese The specified text effect.
-     * @~chinese æŒ‡å®šçš„æ–‡æœ¬ç‰¹æ•ˆ
+     * @~chinese Ö¸¶¨µÄÎÄ±¾ÌØĞ§
      * @see `LabelEffect`
      */
     void disableEffect(LabelEffect effect);

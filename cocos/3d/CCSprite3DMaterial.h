@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -28,6 +28,7 @@
 #include <string>
 #include <unordered_map>
 #include "base/ccTypes.h"
+#include "renderer/CCMaterial.h"
 
 NS_CC_BEGIN
 
@@ -37,6 +38,101 @@ NS_CC_BEGIN
 */
 
 class Texture2D;
+
+/** @class Sprite3DMaterial
+ *  @brief @~english Sprite3DMaterial: Material for Sprite3D.
+	@~chinese 3D精灵使用的材质
+    @js NA
+    @lua NA
+ */
+class CC_DLL Sprite3DMaterial : public Material
+{
+public:
+    /** @~english Material type, there are mainly two types of materials. Built in materials and Custom material
+        @~chinese 材质类型。主要包含2种材质：内置材质和用自定义材质
+    */
+    enum class MaterialType
+    {
+        /** @~english Built in material
+            @~chinese 内置材质
+        */
+        UNLIT, /**@~english unlit material.  @~chinese 无光照材质 */
+        UNLIT_NOTEX, /**@~english unlit material without texture.  @~chinese 无光照无纹理材质 */
+        VERTEX_LIT, /**@~english vertex lit.  @~chinese 定点光照 */
+        DIFFUSE, /**@~english diffuse (pixel lighting).  @~chinese 散射光（像素光照） */
+        DIFFUSE_NOTEX, /**@~english diffuse (without texture).  @~chinese 散射光（无纹理） */
+        BUMPED_DIFFUSE, /**@~english bumped diffuse.  @~chinese 凹凸漫反射 */
+        
+        /** @~english Custom material
+            @~chinese 自定义材质
+        */
+        CUSTOM, /**@~english Create from material file.  @~chinese 从材质文件创建 */
+    };
+
+    /** @~english Get material type
+        @~chinese 获取材质类型
+        @return @~english Material type @~chinese 材质类型
+    */
+    MaterialType getMaterialType() const { return _type; }
+
+    /** @~english Create built in material from material type
+        @~chinese 根据指定材质类型创建内置材质
+        @param type @~english  Material type @~chinese 材质类型
+        @param skinned @~english  Has skin? @~chinese 是否有皮肤
+        @return @~english Created material @~chinese 创建的材质
+    */
+    static Sprite3DMaterial* createBuiltInMaterial(MaterialType type, bool skinned);
+
+    /** @~english Create material with file name, it creates material from cache if it is previously loaded
+        @~chinese 通过给定文件创建材质，如果材质已经被加载过则返回缓存中的材质
+        @param path @~english  Path of material file @~chinese 材质文件路径
+        @return @~english Created material @~chinese 创建的材质
+    */
+    static Sprite3DMaterial* createWithFilename(const std::string& path);
+
+    /** @~english Create material with GLProgramState
+        @~chinese 使用GLProgramState创建材质
+        @param programState @~english  GLProgramState instance @~chinese GLProgramState实例
+        @return @~english Created material @~chinese 创建的材质
+    */
+    static Sprite3DMaterial* createWithGLStateProgram(GLProgramState* programState);
+
+    /** @~english Create all build in materials
+        @~chinese 创建全部内置材质
+    */
+    static void createBuiltInMaterial();
+
+    /** @~english Release all built in materials
+        @~chinese 释放全部内置材质
+    */
+    static void releaseBuiltInMaterial();
+
+    /** @~english Release all cached materials
+        @~chinese 释放全部缓存的材质
+    */
+    static void releaseCachedMaterial();
+
+    /** @~english Clone material
+        @~chinese 克隆材质
+    */
+    virtual Material* clone() const override;
+    
+protected:
+    
+    MaterialType _type;
+    static std::unordered_map<std::string, Sprite3DMaterial*> _materials; //cached material
+    static Sprite3DMaterial* _unLitMaterial;
+    static Sprite3DMaterial* _unLitNoTexMaterial;
+    static Sprite3DMaterial* _vertexLitMaterial;
+    static Sprite3DMaterial* _diffuseMaterial;
+    static Sprite3DMaterial* _diffuseNoTexMaterial;
+    static Sprite3DMaterial* _bumpedDiffuseMaterial;
+    
+    static Sprite3DMaterial* _unLitMaterialSkin;
+    static Sprite3DMaterial* _vertexLitMaterialSkin;
+    static Sprite3DMaterial* _diffuseMaterialSkin;
+    static Sprite3DMaterial* _bumpedDiffuseMaterialSkin;
+};
 
 /** @class Sprite3DMaterialCache
     @brief @~english the sprite3D material is only texture for now
@@ -82,16 +178,16 @@ public:
         @~chinese 删除未使用的spritematerial
     */
     void removeUnusedSprite3DMaterial();
-
+    
 CC_CONSTRUCTOR_ACCESS:
-
+    
     Sprite3DMaterialCache();
     ~Sprite3DMaterialCache();
-
+    
 protected:
     static Sprite3DMaterialCache* _cacheInstance;//instance
     std::unordered_map<std::string, Texture2D*> _materials; //cached material
-
+    
 };
 
 // end of 3d group

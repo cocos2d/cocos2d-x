@@ -580,7 +580,7 @@ public:
      * @~chinese 
      * 请求刷新控件的布局
      */
-    void requestDoLayout();
+    virtual void requestDoLayout();
     
     /**
      * @lua NA

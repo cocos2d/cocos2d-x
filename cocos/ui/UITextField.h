@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -609,7 +609,7 @@ public:
     * @return @~english A delimitation zone. @~chinese 一个限定区域。
     */
     virtual Size getAutoRenderSize();
-    //overide functions.
+    //override functions.
     virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     virtual void onEnter() override;

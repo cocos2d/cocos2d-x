@@ -35,6 +35,8 @@
 #include "base/CCScriptSupport.h"
 #include "math/CCAffineTransform.h"
 #include "math/CCMath.h"
+#include "2d/CCComponentContainer.h"
+#include "2d/CCComponent.h"
 
 NS_CC_BEGIN
 
@@ -53,11 +55,8 @@ class Director;
 class GLProgram;
 class GLProgramState;
 class Material;
-#if CC_USE_PHYSICS
-class PhysicsBody;
-class PhysicsWorld;
-#endif
 class Camera;
+class PhysicsBody;
 
 /**
  * @addtogroup _2d
@@ -242,7 +241,7 @@ public:
      
      Global Z Order is useful when you need to render nodes in an order different than the Scene Graph order.
      
-     Limitations: Global Z Order can't be used used by Nodes that have SpriteBatchNode as one of their acenstors.
+     Limitations: Global Z Order can't be used by Nodes that have SpriteBatchNode as one of their ancestors.
      And if ClippingNode is one of the ancestors, then "global Z order" will be relative to the ClippingNode.
      @~chinese 定义渲染节点的顺序
      拥有全局Z顺序越小的节点，最先渲染
@@ -350,7 +349,7 @@ public:
      * @~english Sets the scale (x,y,z) of the node.
      *
      * It is a scaling factor that multiplies the width, height and depth of the node and its children.
-     * @~chinese 设置节点的缩放（x,y,z）.
+     * @~chinese 设置节点的醴牛▁,y,z）.
      *
      * 缩放因子将会乘以该节点和它子节点的宽，高和深度。
      *
@@ -753,7 +752,7 @@ public:
      * @~chinese 通过四元数来设置3D空间中的旋转角度。你要保证四元数是经过归一化的。
      *
      * @param quat @~english The rotation in quaternion, note that the quat must be normalized. 
-     * @~chinese 四元数对象，注意四元数必须是经过归一化的
+     * @~chinese 四元数对象，注意四元数必须蔷橐换�
      * @js NA
      */
     virtual void setRotationQuat(const Quaternion& quat);
@@ -971,6 +970,17 @@ public:
      * Please use `getChildByName()` instead.
      */
      virtual Node * getChildByTag(int tag) const;
+    
+     /**
+     * Gets a child from the container with its tag that can be cast to Type T.
+     *
+     * @param tag   An identifier to find the child node.
+     *
+     * @return a Node with the given tag that can be cast to Type T.
+    */
+    template <typename T>
+    inline T getChildByTag(int tag) const { return static_cast<T>(getChildByTag(tag)); }
+    
     /**
      * @~english Gets a child from the container with its name.
      * @~chinese 从容器中通过名字得到对应的子节点。
@@ -1155,7 +1165,7 @@ public:
 
     /**
      * @~english Sorts the children array once before drawing, instead of every time when a child is added or reordered.
-     * This appraoch can improves the performance massively.
+     * This approach can improves the performance massively.
      * @~chinese 在绘画之前，排列所有的孩子数组一次，而不是每次添加或者删除子节点时都排序。
      * 这个方法可以大幅度地提高性能。
      * @note @~english Don't call this manually unless a child added needs to be removed in the same frame.
@@ -1198,7 +1208,7 @@ public:
      * 
      * @since v3.2
      */
-    virtual std::string getName() const;
+    virtual const std::string& getName() const;
     /** @~english Changes the name that is used to identify the node easily.
      * @~chinese 设置用于识别节点的名字。
      * @param name @~english A string that identifies the node. @~chinese 用于识别节点的名字 
@@ -1452,7 +1462,7 @@ public:
      @~english Returns the Scene that contains the Node.
      It returns `nullptr` if the node doesn't belong to any Scene.
      This function recursively calls parent->getScene() until parent is a Scene object. The results are not cached. It is that the user caches the results in case this functions is being used inside a loop.@~chinese 返回包含该节点的场景。
-     如果这个节点不属于任何的场景，它将返回`nullptr`。
+     如果这个节悴皇粲谌魏蔚某【埃祷豟nullptr`。
      这个函数循环递归地调用parent->getScene() 直到父类是一个Scene对象。结果不会被缓存。只有当这个函数被用在一个循环中时，用户才会缓存这个结果。
      *
      * @return @~english The Scene that contains the node. @~chinese 包含该节点的场景 
@@ -1681,7 +1691,7 @@ public:
      @code
      // firstly, implement a schedule function
      void MyNode::TickMe(float dt);
-     // wrap this function into a selector via schedule_selector marco.
+     // wrap this function into a selector via schedule_selector macro.
      this->schedule(CC_SCHEDULE_SELECTOR(MyNode::TickMe), 0, 0, 0);
      @endcode
      *
@@ -1874,7 +1884,7 @@ public:
     /**
      * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
-     * Note: If acenstor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldTransform
+     * Note: If ancestor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldTransform
      *
      * @param ancestor The parent's node pointer.
      * @since v3.7
@@ -1883,14 +1893,14 @@ public:
     virtual Mat4 getNodeToParentTransform(Node* ancestor) const;
 
     /**
-     * Returns the affline transform matrix that transform the node's (local) space coordinates into the parent's space coordinates.
+     * Returns the affine transform matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
      *
-     * Note: If acenstor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldAffineTransform
+     * Note: If ancestor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldAffineTransform
      *
      * @param ancestor The parent's node pointer.
      * @since v3.7
-     * @return The affline transformation matrix.
+     * @return The affine transformation matrix.
      */
     virtual AffineTransform getNodeToParentAffineTransform(Node* ancestor) const;
 
@@ -1939,7 +1949,6 @@ public:
      */
     virtual Mat4 getWorldToNodeTransform() const;
     virtual AffineTransform getWorldToNodeAffineTransform() const;
-
 
     /** @deprecated Use getWorldToNodeTransform() instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeAffineTransform(); }
@@ -2089,7 +2098,7 @@ public:
     
     /**
      * @~english Remove this node from physics world. it will remove all the physics bodies in it's children too.
-     * @~chinese 从物理世界中删除这个节点的物理body，并且会删除它子节点中的所有物理body
+     * @~chinese 从物理世界中删除这个节点的锢韇ody，并且会删除它子节点中的所有物理body
      */
     void removeFromPhysicsWorld();
     
@@ -2260,22 +2269,6 @@ protected:
 #endif
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components
-
-#if CC_USE_PHYSICS
-    PhysicsBody* _physicsBody;        ///< the physicsBody the node have
-    float _physicsScaleStartX;         ///< the scale x value when setPhysicsBody
-    float _physicsScaleStartY;         ///< the scale y value when setPhysicsBody
-    float _physicsRotation;
-    bool _physicsTransformDirty;
-    bool _updateTransformFromPhysics;
-
-    PhysicsWorld* _physicsWorld; /** The PhysicsWorld associated with the node.*/
-    int _physicsBodyAssociatedWith;  /** The count of PhysicsBody associated with the node and children.*/
-    float _physicsRotationOffset;  /** Record the rotation value when invoke Node::setPhysicsBody.*/
-
-    float _offsetX;
-    float _offsetY;
-#endif
     
     // opacity controls
     GLubyte		_displayedOpacity;
@@ -2295,12 +2288,21 @@ protected:
     std::function<void()> _onEnterTransitionDidFinishCallback;
     std::function<void()> _onExitTransitionDidStartCallback;
 
+//Physics:remaining backwardly compatible  
+#if CC_USE_PHYSICS
+    PhysicsBody* _physicsBody;
+public:
+    void setPhysicsBody(Component* physicsBody) 
+    { 
+        addComponent(physicsBody);
+    }
+    PhysicsBody* getPhysicsBody() const { return _physicsBody; }
+
+    friend class PhysicsBody;
+#endif
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
-    
-#if CC_USE_PHYSICS
-    friend class Scene;
-#endif //CC_USTPS
 };
 
 
@@ -2310,14 +2312,14 @@ private:
  * The content rectangle defined by origin(0,0) and content size.
  * This function convert GL screen point to near and far planes as points Pn and Pf,
  * then calculate the intersect point P which the line PnPf intersect with content rectangle.
- * If P in content rectangle means this node be hitted.
+ * If P in content rectangle means this node be hit.
  *
  * @param pt        The point in GL screen space.
  * @param camera    Which camera used to unproject pt to near/far planes.
  * @param w2l       World to local transform matrix, used to convert Pn and Pf to rectangle space.
- * @param rect      The test recangle in local space.
+ * @param rect      The test rectangle in local space.
  * @parma p         Point to a Vec3 for store the intersect point, if don't need them set to nullptr.
- * @return true if the point is in content rectangle, flase otherwise.
+ * @return true if the point is in content rectangle, false otherwise.
  */
 bool CC_DLL isScreenPointInRect(const Vec2 &pt, const Camera* camera, const Mat4& w2l, const Rect& rect, Vec3 *p);
 

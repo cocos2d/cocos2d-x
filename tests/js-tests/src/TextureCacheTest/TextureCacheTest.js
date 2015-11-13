@@ -79,7 +79,7 @@ var TextureLoadImgTest = TextureCacheTestBase.extend({
         });
         this.addChild(this._labelSecond, 1);
 
-        var url = "http://cn.cocos2d-x.org/image/logo.png";
+        var url = "http://www.cocos2d-x.org/images/logo.png";
         cc.textureCache.addImageAsync(url, this.texFirstLoaded, this);
         cc.textureCache.addImageAsync(url, this.texSecondLoaded, this);
     },
@@ -264,7 +264,7 @@ var TextureCacheTest = TextureCacheTestBase.extend({
 var RemoteTextureTest = TextureCacheTestBase.extend({
     _title:"Remote Texture Test",
     _subtitle:"",
-    _remoteTex: "http://cn.cocos2d-x.org/image/logo.png",
+    _remoteTex: "http://www.cocos2d-x.org/images/logo.png",
     onEnter:function () {
         this._super();
         if('opengl' in cc.sys.capabilities && !cc.sys.isNative){
@@ -277,7 +277,7 @@ var RemoteTextureTest = TextureCacheTestBase.extend({
     },
 
     startDownload: function() {
-        var imageUrlArray = ["http://www.cocos2d-x.org/s/upload/v35.jpg", "http://www.cocos2d-x.org/s/upload/testin.jpg", "http://www.cocos2d-x.org/s/upload/geometry_dash.jpg", "http://cn.cocos2d-x.org/image/logo.png"];
+        var imageUrlArray = ["http://www.cocos2d-x.org/s/upload/v35.jpg", "http://www.cocos2d-x.org/s/upload/testin.jpg", "http://www.cocos2d-x.org/s/upload/geometry_dash.jpg", "http://www.cocos2d-x.org/images/logo.png"];
 
         for (var i = 0; i < imageUrlArray.length; i++) {
             cc.textureCache.addImageAsync(imageUrlArray[i], this.texLoaded, this);

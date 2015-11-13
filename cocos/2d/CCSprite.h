@@ -96,7 +96,7 @@ struct transformValues_;
  * - 只能设置 SpriteBatchNode 节点的别名，无法为每个 Sprite 设置不同的别名。
  * - 只能设置 SpriteBatchNode 节点的混合函数，无法为每个 Sprite 设置不同的混合函数。
  * - 不支持 ParallaxNode，但是可以使用代理 Sprite 来模拟。
- * - 每个 Sprite 的子节点只能是 Sprite 或者其子类的对象。
+ * - 每个 Sprite 的子节点只能是 Sprite 或者其子类的对蟆�
  * 
  * 默认锚点(0.5,0.5)。
  */
@@ -794,8 +794,6 @@ CC_CONSTRUCTOR_ACCESS:
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
-
-    void debugDraw(bool on);
     
     /**
      * returns a copy of the polygon information associated with this sprite
@@ -840,14 +838,15 @@ protected:
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
     SpriteFrame*     _spriteFrame;
     TrianglesCommand _trianglesCommand;     ///
-
-
+#if CC_SPRITE_DEBUG_DRAW
+    DrawNode *_debugDrawNode;
+#endif //CC_SPRITE_DEBUG_DRAW
     //
     // Shared data
     //
 
     // texture
-    Rect _rect;                             /// Retangle of Texture2D
+    Rect _rect;                             /// Rectangle of Texture2D
     bool   _rectRotated;                    /// Whether the texture is rotated
 
     // Offset Position (used by Zwoptex)

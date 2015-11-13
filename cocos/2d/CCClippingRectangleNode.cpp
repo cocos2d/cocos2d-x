@@ -42,11 +42,21 @@ void ClippingRectangleNode::onBeforeVisitScissor()
     if (_clippingEnabled) {
         glEnable(GL_SCISSOR_TEST);
 
+        float scaleX = _scaleX;
+        float scaleY = _scaleY;
+        Node *parent = this->getParent();
+        while (parent) {
+            scaleX *= parent->getScaleX();
+            scaleY *= parent->getScaleY();
+            parent = parent->getParent();
+        }
+        
+        const Point pos = convertToWorldSpace(Point(_clippingRegion.origin.x, _clippingRegion.origin.y));
         GLView* glView = Director::getInstance()->getOpenGLView();
-        glView->setScissorInPoints(_clippingRegion.origin.x,
-                                   _clippingRegion.origin.y,
-                                   _clippingRegion.size.width,
-                                   _clippingRegion.size.height);
+        glView->setScissorInPoints(pos.x,
+                                   pos.y,
+                                   _clippingRegion.size.width * scaleX,
+                                   _clippingRegion.size.height * scaleY);
     }
 }
 

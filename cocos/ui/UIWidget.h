@@ -312,9 +312,9 @@ public:
     bool isHighlighted() const;
 
     /**@~english
-     * Sets whether the widget is hilighted
+     * Sets whether the widget is highlighted
      *
-     * The default value is false, a widget is default to not hilighted
+     * The default value is false, a widget is default to not highlighted
      *
      * @~chinese 
      * 设置是否高亮显示
@@ -324,7 +324,7 @@ public:
      * @param hilight   @~english true if the widget is hilighted, false if the widget is not hilighted.
      * @~chinese 如果设置true则启用高亮。
      */
-    void setHighlighted(bool hilight);
+    void setHighlighted(bool highlight);
 
     /**@~english
      * Gets the left boundary position of this widget in parent's coordination system.
@@ -866,7 +866,7 @@ public:
     virtual void ignoreContentAdaptWithSize(bool ignore);
 
     /**@~english
-     * Query whether the widget ignores user deinfed content size or not
+     * Query whether the widget ignores user defined content size or not
      * @~chinese 
      * 查询是否忽略用户定义的控件尺寸。
      * 
@@ -1189,7 +1189,7 @@ CC_CONSTRUCTOR_ACCESS:
 
     /*
      * @brief @~english Sends the touch event to widget's parent, if a widget wants to handle touch event under another widget, 
-     *        it must overide this function.
+     *        it must override this function.
      * @~chinese 将触摸事件发送给控件的节点，如果一个控件想处理触摸事件则必须重载这个函数，
      * @param  event  @~english the touch event type, it could be BEGAN/MOVED/CANCELED/ENDED
      * @~chinese 触摸事件类型，可能的值是：BEGAN/MOVED/CANCELED/ENDED

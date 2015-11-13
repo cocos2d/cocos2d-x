@@ -26,6 +26,8 @@
 #include "Sprite3DTest.h"
 #include "DrawNode3D.h"
 #include "2d/CCCameraBackgroundBrush.h"
+#include "3d/CCSprite3DMaterial.h"
+#include "3d/CCMotionStreak3D.h"
 
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
 
@@ -63,6 +65,8 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DTestMeshLight);
     ADD_TEST_CASE(Animate3DCallbackTest);
     ADD_TEST_CASE(CameraBackgroundClearTest);
+    ADD_TEST_CASE(Sprite3DVertexColorTest);
+    ADD_TEST_CASE(MotionStreak3DTest);
 };
 
 //------------------------------------------------------------------
@@ -74,6 +78,11 @@ Sprite3DTests::Sprite3DTests()
 std::string Sprite3DTestDemo::title() const
 {
     return "No title";
+}
+
+Sprite3DTestDemo::~Sprite3DTestDemo()
+{
+    Sprite3DMaterial::releaseCachedMaterial();
 }
 
 //------------------------------------------------------------------
@@ -233,42 +242,12 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
 
     //create cylinder
     auto cylinder = Sprite3D::create("Sprite3DTest/cylinder.c3b");
-
-    //create and set our custom shader
-    auto shader =GLProgram::createWithFilenames("Sprite3DTest/cylinder.vert","Sprite3DTest/cylinder.frag");
-    _state = GLProgramState::create(shader);
-    cylinder->setGLProgramState(_state);
-
-    _state->setUniformFloat("offset",_cylinder_texture_offset);
-    _state->setUniformFloat("duration",_shining_duraion);
-    //pass mesh's attribute to shader
-    long offset = 0;
-    auto attributeCount = cylinder->getMesh()->getMeshVertexAttribCount();
-    for (auto i = 0; i < attributeCount; i++) {
-        auto meshattribute = cylinder->getMesh()->getMeshVertexAttribute(i);
-        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
-            meshattribute.size,
-            meshattribute.type,
-            GL_FALSE,
-            cylinder->getMesh()->getVertexSizeInBytes(),
-            (GLvoid*)offset);
-        offset += meshattribute.attribSizeBytes;
-    }
-
-    //create the second texture for cylinder
-    auto shining_texture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/caustics.png");
-    Texture2D::TexParams tRepeatParams;//set texture parameters
-    tRepeatParams.magFilter = GL_NEAREST;
-    tRepeatParams.minFilter = GL_NEAREST;
-    tRepeatParams.wrapS = GL_REPEAT;
-    tRepeatParams.wrapT = GL_REPEAT;
-    shining_texture->setTexParameters(tRepeatParams); 
-    //pass the texture sampler to our custom shader
-    _state->setUniformTexture("caustics",shining_texture);
-
+    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/UVAnimation.material");
+    _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+    cylinder->setMaterial(mat);
 
     this->addChild(cylinder);
-    this->setCameraMask(2); 
+    this->setCameraMask(2);
     this->addChild(camera);
 
     //adjust cylinder's position & rotation
@@ -280,24 +259,12 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
-                                                            [this](EventCustom*)
+                                                            [=](EventCustom*)
                                                             {
-                                                                auto glProgram = _state->getGLProgram();
-                                                                glProgram->reset();
-                                                                glProgram->initWithFilenames("Sprite3DTest/cylinder.vert", "Sprite3DTest/cylinder.frag");
-                                                                glProgram->link();
-                                                                glProgram->updateUniforms();
-                                                                auto shining_texture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/caustics.png");
-                                                                Texture2D::TexParams tRepeatParams;//set texture parameters
-                                                                tRepeatParams.magFilter = GL_NEAREST;
-                                                                tRepeatParams.minFilter = GL_NEAREST;
-                                                                tRepeatParams.wrapS = GL_REPEAT;
-                                                                tRepeatParams.wrapT = GL_REPEAT;
-                                                                shining_texture->setTexParameters(tRepeatParams); 
-                                                                //pass the texture sampler to our custom shader
-                                                                _state->setUniformTexture("caustics",shining_texture);
-                                                                _state->setUniformFloat("offset",_cylinder_texture_offset);
-                                                                _state->setUniformFloat("duration",_shining_duraion);
+                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/UVAnimation.material");
+                                                                
+                                                                cylinder->setMaterial(mat);
+                                                                _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
                                                             }
                                                             );
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
@@ -370,35 +337,11 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     _plane = Sprite3D::create("Sprite3DTest/plane.c3t");
     _plane->setRotation3D(Vec3(90,0,0));
 
-    // use custom shader
-    auto shader =GLProgram::createWithFilenames("Sprite3DTest/simple_shadow.vert","Sprite3DTest/simple_shadow.frag");
-    _state = GLProgramState::create(shader);
-    _plane->setGLProgramState(_state);
-
-    //pass mesh's attribute to shader
-    long offset = 0; 
-    auto attributeCount = _plane->getMesh()->getMeshVertexAttribCount();
-    for (auto i = 0; i < attributeCount; i++) {
-        auto meshattribute = _plane->getMesh()->getMeshVertexAttribute(i);
-        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
-            meshattribute.size, 
-            meshattribute.type,
-            GL_FALSE,
-            _plane->getMesh()->getVertexSizeInBytes(),
-            (GLvoid*)offset);
-        offset += meshattribute.attribSizeBytes;
-    } 
+    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/FakeShadow.material");
+    _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+    _plane->setMaterial(mat);
     _state->setUniformMat4("u_model_matrix",_plane->getNodeToWorldTransform());
 
-    //create shadow texture
-    auto shadowTexture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/shadowCircle.png");
-    Texture2D::TexParams tRepeatParams;//set texture parameters
-    tRepeatParams.magFilter = GL_LINEAR;
-    tRepeatParams.minFilter = GL_LINEAR;
-    tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
-    tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
-    shadowTexture->setTexParameters(tRepeatParams); 
-    _state->setUniformTexture("u_shadowTexture",shadowTexture);
     layer->addChild(_plane); 
 
     //create the orc
@@ -407,7 +350,7 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     _orc->setRotation3D(Vec3(0,180,0));
     _orc->setPosition3D(Vec3(0,0,10));
     _targetPos = _orc->getPosition3D();
-    _plane->getGLProgramState()->setUniformVec3("u_target_pos",_orc->getPosition3D());
+    _state->setUniformVec3("u_target_pos", _orc->getPosition3D());
     layer->addChild(_orc);
     layer->addChild(_camera);
     layer->setCameraMask(2);
@@ -418,23 +361,11 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
                                                             [this](EventCustom*)
                                                             {
-                                                                auto glProgram = _state->getGLProgram();
-                                                                glProgram->reset();
-                                                                glProgram->initWithFilenames("Sprite3DTest/simple_shadow.vert","Sprite3DTest/simple_shadow.frag");
-                                                                glProgram->link();
-                                                                glProgram->updateUniforms();
-                                                                
+                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/FakeShadow.material");
+                                                                _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+                                                                _plane->setMaterial(mat);
                                                                 _state->setUniformMat4("u_model_matrix",_plane->getNodeToWorldTransform());
-                                                                
-                                                                //create shadow texture
-                                                                auto shadowTexture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/shadowCircle.png");
-                                                                Texture2D::TexParams tRepeatParams;//set texture parameters
-                                                                tRepeatParams.magFilter = GL_LINEAR;
-                                                                tRepeatParams.minFilter = GL_LINEAR;
-                                                                tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
-                                                                tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
-                                                                shadowTexture->setTexParameters(tRepeatParams); 
-                                                                _state->setUniformTexture("u_shadowTexture",shadowTexture);
+                                                                _state->setUniformVec3("u_target_pos", _orc->getPosition3D());
                                                             }
                                                             );
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
@@ -522,7 +453,7 @@ void Sprite3DFakeShadowTest::move3D(float elapsedTime)
     offset.x=offset.x;
     offset.z=offset.z;
     //pass the newest orc position
-    _plane->getGLProgramState()->setUniformVec3("u_target_pos",_orc->getPosition3D());
+    _state->setUniformVec3("u_target_pos",_orc->getPosition3D());
 }
 
 void Sprite3DFakeShadowTest::updateState(float elapsedTime)
@@ -618,40 +549,24 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
     _camera->setCameraFlag(CameraFlag::USER1);
     // create a teapot
     auto teapot = Sprite3D::create("Sprite3DTest/teapot.c3b"); 
-    //create and set our custom shader 
-    auto shader =GLProgram::createWithFilenames("Sprite3DTest/toon.vert","Sprite3DTest/toon.frag");
-    _state = GLProgramState::create(shader);
-    teapot->setGLProgramState(_state);
+    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/BasicToon.material");
+    _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+    teapot->setMaterial(mat);
+
     teapot->setPosition3D(Vec3(0,-5,-20));
     teapot->setRotation3D(Vec3(-90,180,0)); 
     auto rotate_action = RotateBy::create(1.5,Vec3(0,30,0));
     teapot->runAction(RepeatForever::create(rotate_action)); 
-    //pass mesh's attribute to shader
-    long offset = 0;
-    auto attributeCount = teapot->getMesh()->getMeshVertexAttribCount();
-    for (auto i = 0; i < attributeCount; i++) {
-        auto meshattribute = teapot->getMesh()->getMeshVertexAttribute(i);
-        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
-            meshattribute.size,
-            meshattribute.type,
-            GL_FALSE,
-            teapot->getMesh()->getVertexSizeInBytes(),
-            (GLvoid*)offset);
-        offset += meshattribute.attribSizeBytes;
-    }
     addChild(teapot);
     addChild(_camera);
     setCameraMask(2);
-    
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
-                                                            [this](EventCustom*)
+                                                            [=](EventCustom*)
                                                             {
-                                                                auto glProgram = _state->getGLProgram();
-                                                                glProgram->reset();
-                                                                glProgram->initWithFilenames("Sprite3DTest/toon.vert","Sprite3DTest/toon.frag");
-                                                                glProgram->link();
-                                                                glProgram->updateUniforms();
+                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/BasicToon.material");
+                                                                _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+                                                                teapot->setMaterial(mat);
                                                             }
                                                             );
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
@@ -820,299 +735,6 @@ std::string Sprite3DHitTest::subtitle() const
     return "Tap Sprite3D and Drag";
 }
 
-static int tuple_sort( const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple1, const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple2 )
-{
-    return std::get<0>(tuple1) < std::get<0>(tuple2);
-}
-
-EffectSprite3D* EffectSprite3D::createFromObjFileAndTexture(const std::string &objFilePath, const std::string &textureFilePath)
-{
-    auto sprite = new (std::nothrow) EffectSprite3D();
-    if (sprite && sprite->initWithFile(objFilePath))
-    {
-        sprite->autorelease();
-        if(textureFilePath.size() > 0)
-            sprite->setTexture(textureFilePath);
-        return sprite;
-    }
-    CC_SAFE_DELETE(sprite);
-    return nullptr;
-}
-
-EffectSprite3D* EffectSprite3D::create(const std::string &path)
-{
-    if (path.length() < 4)
-        CCASSERT(false, "improper name specified when creating Sprite3D");
-    
-    auto sprite = new (std::nothrow) EffectSprite3D();
-    if (sprite && sprite->initWithFile(path))
-    {
-        sprite->autorelease();
-        return sprite;
-    }
-    CC_SAFE_DELETE(sprite);
-    return nullptr;
-}
-
-EffectSprite3D::EffectSprite3D()
-: _defaultEffect(nullptr)
-{
-    
-}
-
-EffectSprite3D::~EffectSprite3D()
-{
-    for(auto effect : _effects)
-    {
-        CC_SAFE_RELEASE_NULL(std::get<1>(effect));
-    }
-    CC_SAFE_RELEASE(_defaultEffect);
-}
-
-void EffectSprite3D::setEffect3D(Effect3D *effect)
-{
-    if(_defaultEffect == effect) return;
-    CC_SAFE_RETAIN(effect);
-    CC_SAFE_RELEASE(_defaultEffect);
-    _defaultEffect = effect;
-}
-
-void EffectSprite3D::addEffect(Effect3DOutline* effect, ssize_t order)
-{
-    if(nullptr == effect) return;
-    effect->retain();
-    effect->setTarget(this);
-    
-    _effects.push_back(std::make_tuple(order,effect,CustomCommand()));
-
-    std::sort(std::begin(_effects), std::end(_effects), tuple_sort);
-}
-
-const std::string Effect3DOutline::_vertShaderFile = "Shaders3D/OutLine.vert";
-const std::string Effect3DOutline::_fragShaderFile = "Shaders3D/OutLine.frag";
-const std::string Effect3DOutline::_keyInGLProgramCache = "Effect3DLibrary_Outline";
-
-const std::string Effect3DOutline::_vertSkinnedShaderFile = "Shaders3D/SkinnedOutline.vert";
-const std::string Effect3DOutline::_fragSkinnedShaderFile = "Shaders3D/OutLine.frag";
-const std::string Effect3DOutline::_keySkinnedInGLProgramCache = "Effect3DLibrary_Outline";
-GLProgram* Effect3DOutline::getOrCreateProgram(bool isSkinned /* = false */ )
-{
-    if(isSkinned)
-    {
-        auto program = GLProgramCache::getInstance()->getGLProgram(_keySkinnedInGLProgramCache);
-        if(program == nullptr)
-        {
-            program = GLProgram::createWithFilenames(_vertSkinnedShaderFile, _fragSkinnedShaderFile);
-            GLProgramCache::getInstance()->addGLProgram(program, _keySkinnedInGLProgramCache);
-        }
-        return program;
-    }
-    else
-    {
-        auto program = GLProgramCache::getInstance()->getGLProgram(_keyInGLProgramCache);
-        if(program == nullptr)
-        {
-            program = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
-            GLProgramCache::getInstance()->addGLProgram(program, _keyInGLProgramCache);
-        }
-        return program;
-    }
-
-}
-
-Effect3DOutline* Effect3DOutline::create()
-{
-    Effect3DOutline* effect = new (std::nothrow) Effect3DOutline();
-    if(effect && effect->init())
-    {
-        effect->autorelease();
-        return effect;
-    }
-    else
-    {
-        CC_SAFE_DELETE(effect);
-        return nullptr;
-    }
-}
-
-bool Effect3DOutline::init()
-{
-    
-    return true;
-}
-
-Effect3DOutline::Effect3DOutline()
-: _outlineColor(1, 1, 1)
-, _outlineWidth(1.0f)
-, _sprite(nullptr)
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
-                                                          [this](EventCustom*)
-                                                          {
-                                                              auto glProgram = _glProgramState->getGLProgram();
-                                                              glProgram->reset();
-                                                              if(!_sprite->getMesh()->getSkin())
-                                                              glProgram->initWithFilenames(_vertShaderFile, _fragShaderFile);
-                                                              else
-                                                              glProgram->initWithFilenames(_vertSkinnedShaderFile, _fragSkinnedShaderFile);
-                                                              glProgram->link();
-                                                              glProgram->updateUniforms();
-                                                          }
-                                                          );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
-#endif
-}
-
-Effect3DOutline::~Effect3DOutline()
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
-#endif
-}
-
-void Effect3DOutline::setOutlineColor(const Vec3& color)
-{
-    if(_outlineColor != color)
-    {
-        _outlineColor = color;
-        if(_glProgramState)
-            _glProgramState->setUniformVec3("OutLineColor", _outlineColor);
-    }
-}
-
-void Effect3DOutline::setOutlineWidth(float width)
-{
-    if(_outlineWidth != width)
-    {
-        _outlineWidth = width;
-        if(_glProgramState)
-            _glProgramState->setUniformFloat("OutlineWidth", _outlineWidth);
-    }
-}
-
-void Effect3DOutline::setTarget(EffectSprite3D *sprite)
-{
-    CCASSERT(nullptr != sprite && nullptr != sprite->getMesh(),"Error: Setting a null pointer or a null mesh EffectSprite3D to Effect3D");
-    
-    if(sprite != _sprite)
-    {
-        GLProgram* glprogram;
-        if(!sprite->getMesh()->getSkin())
-            glprogram = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
-        else
-            glprogram = GLProgram::createWithFilenames(_vertSkinnedShaderFile, _fragSkinnedShaderFile);
-
-        _glProgramState = GLProgramState::create(glprogram);
-
-        _glProgramState->retain();
-        _glProgramState->setUniformVec3("OutLineColor", _outlineColor);
-        _glProgramState->setUniformFloat("OutlineWidth", _outlineWidth);
-    
-        
-        _sprite = sprite;
-        
-        auto mesh = sprite->getMesh();
-        long offset = 0;
-        for (auto i = 0; i < mesh->getMeshVertexAttribCount(); i++)
-        {
-            auto meshvertexattrib = mesh->getMeshVertexAttribute(i);
-            
-            _glProgramState->setVertexAttribPointer(s_attributeNames[meshvertexattrib.vertexAttrib],
-                                                    meshvertexattrib.size,
-                                                    meshvertexattrib.type,
-                                                    GL_FALSE,
-                                                    mesh->getVertexSizeInBytes(),
-                                                    (void*)offset);
-            offset += meshvertexattrib.attribSizeBytes;
-        }
-        
-        Color4F color(_sprite->getDisplayedColor());
-        color.a = _sprite->getDisplayedOpacity() / 255.0f;
-        _glProgramState->setUniformVec4("u_color", Vec4(color.r, color.g, color.b, color.a));
-    }
-    
-}
-
-void Effect3DOutline::draw(const Mat4 &transform)
-{
-    //draw
-    Color4F color(_sprite->getDisplayedColor());
-    color.a = _sprite->getDisplayedOpacity() / 255.0f;
-    _glProgramState->setUniformVec4("u_color", Vec4(color.r, color.g, color.b, color.a));
-    if(_sprite && _sprite->getMesh())
-    {
-        GLenum cullFace = GL_FRONT;
-        if ((_sprite->getScaleX() * _sprite->getScaleY() * _sprite->getScaleZ()) < 0.0f)
-            cullFace = GL_BACK;
-        glEnable(GL_CULL_FACE);
-        glCullFace(cullFace);
-        glEnable(GL_DEPTH_TEST);
-        auto mesh = _sprite->getMesh();
-        glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());
-        
-        auto skin = _sprite->getMesh()->getSkin();
-        if(_sprite && skin)
-        {
-            _glProgramState->setUniformVec4v("u_matrixPalette", skin->getMatrixPaletteSize(), skin->getMatrixPalette());
-        }
-        
-        if(_sprite)
-            _glProgramState->apply(transform);
- 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndexBuffer());
-        glDrawElements(mesh->getPrimitiveType(), (GLsizei)mesh->getIndexCount(), mesh->getIndexFormat(), 0);
-        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, mesh->getIndexCount());
-        
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        glDisable(GL_DEPTH_TEST);
-        glCullFace(GL_BACK);
-        glDisable(GL_CULL_FACE);
-
-        // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
-        // But if users must call GL directly, they should update the state manually,
-        RenderState::StateBlock::_defaultState->setDepthTest(false);
-        RenderState::StateBlock::_defaultState->setCullFaceSide(RenderState::CULL_FACE_SIDE_BACK);
-        RenderState::StateBlock::_defaultState->setCullFace(false);
-    }
-}
-
-void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
-{
-    for(auto &effect : _effects)
-    {
-        if(std::get<0>(effect) >=0)
-            break;
-        CustomCommand &cc = std::get<2>(effect);
-        cc.func = CC_CALLBACK_0(Effect3D::draw,std::get<1>(effect),transform);
-        renderer->addCommand(&cc);
-        
-    }
-    
-    if(!_defaultEffect)
-    {
-        Sprite3D::draw(renderer, transform, flags);
-    }
-    else
-    {
-        _command.init(_globalZOrder, transform, flags);
-        _command.func = CC_CALLBACK_0(Effect3D::draw, _defaultEffect, transform);
-        renderer->addCommand(&_command);
-    }
-    
-    for(auto &effect : _effects)
-    {
-        if(std::get<0>(effect) <=0)
-            continue;
-        CustomCommand &cc = std::get<2>(effect);
-        cc.func = CC_CALLBACK_0(Effect3D::draw,std::get<1>(effect),transform);
-        renderer->addCommand(&cc);
-        
-    }
-}
-
 Sprite3DEffectTest::Sprite3DEffectTest()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -1121,6 +743,27 @@ Sprite3DEffectTest::Sprite3DEffectTest()
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DEffectTest::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                            [this](EventCustom*)
+                                                            {
+                                                                auto material = Sprite3DMaterial::createWithFilename("Sprite3DTest/outline.material");
+                                                                material->setTechnique("outline_noneskinned");
+                                                                for(auto& sprite : _sprites)
+                                                                {
+                                                                    sprite->setMaterial(material->clone());
+                                                                }
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+#endif
+}
+
+Sprite3DEffectTest::~Sprite3DEffectTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 std::string Sprite3DEffectTest::title() const
@@ -1135,16 +778,10 @@ std::string Sprite3DEffectTest::subtitle() const
 void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
 {
     //option 2: load obj and assign the texture
-    auto sprite = EffectSprite3D::createFromObjFileAndTexture("Sprite3DTest/boss1.obj", "Sprite3DTest/boss.png");
-    Effect3DOutline* effect = Effect3DOutline::create();
-    sprite->addEffect(effect, -1);
-    effect->setOutlineColor(Vec3(1,0,0));
-    effect->setOutlineWidth(0.01f);
-    
-    Effect3DOutline* effect2 = Effect3DOutline::create();
-    sprite->addEffect(effect2, -2);
-    effect2->setOutlineWidth(0.02f);
-    effect2->setOutlineColor(Vec3(1,1,0));
+    auto sprite = Sprite3D::create("Sprite3DTest/boss1.obj");
+    auto material = Sprite3DMaterial::createWithFilename("Sprite3DTest/outline.material");
+    material->setTechnique("outline_noneskinned");
+    sprite->setMaterial(material);
     sprite->setScale(6.f);
     
     //add to scene
@@ -1169,6 +806,7 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     auto seq = Sequence::create( action, action_back, nullptr );
     
     sprite->runAction( RepeatForever::create(seq) );
+    _sprites.push_back(sprite);
 }
 
 void Sprite3DEffectTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
@@ -1282,7 +920,7 @@ std::string Sprite3DWithSkinTest::subtitle() const
 void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
 {
     std::string fileName = "Sprite3DTest/orc.c3b";
-    auto sprite = EffectSprite3D::create(fileName);
+    auto sprite = Sprite3D::create(fileName);
     sprite->setScale(3);
     sprite->setRotation3D(Vec3(0,180,0));
     sprite->setPosition( Vec2( p.x, p.y) );
@@ -1360,6 +998,27 @@ Sprite3DWithSkinOutlineTest::Sprite3DWithSkinOutlineTest()
     
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                            [this](EventCustom*)
+                                                            {
+                                                                auto material = Sprite3DMaterial::createWithFilename("Sprite3DTest/outline.material");
+                                                                material->setTechnique("outline_skinned");
+                                                                for(auto& sprite : _sprites)
+                                                                {
+                                                                    sprite->setMaterial(material->clone());
+                                                                }
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+#endif
+}
+Sprite3DWithSkinOutlineTest::~Sprite3DWithSkinOutlineTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 std::string Sprite3DWithSkinOutlineTest::title() const
 {
@@ -1374,19 +1033,11 @@ void Sprite3DWithSkinOutlineTest::addNewSpriteWithCoords(Vec2 p)
 {
     
     std::string fileName = "Sprite3DTest/orc.c3b";
-    auto sprite = EffectSprite3D::create(fileName);
+    auto sprite = Sprite3D::create(fileName);
     
-    Effect3DOutline* effect = Effect3DOutline::create();
-    effect->setOutlineColor(Vec3(1,0,0));
-    effect->setOutlineWidth(0.01f);
-    sprite->addEffect(effect, -1);
-
-    
-    Effect3DOutline* effect2 = Effect3DOutline::create();
-    effect2->setOutlineWidth(0.02f);
-    effect2->setOutlineColor(Vec3(1,1,0));
-    sprite->addEffect(effect2, -2);
-
+    auto material = Sprite3DMaterial::createWithFilename("Sprite3DTest/outline.material");
+    material->setTechnique("outline_skinned");
+    sprite->setMaterial(material);
     
     sprite->setScale(3);
     sprite->setRotation3D(Vec3(0,180,0));
@@ -1845,16 +1496,9 @@ void Sprite3DWithOBBPerformanceTest::update(float dt)
         _drawDebug->clear();
         
         Mat4 mat = _sprite->getNodeToWorldTransform();
-        mat.getRightVector(&_obbt._xAxis);
-        _obbt._xAxis.normalize();
         
-        mat.getUpVector(&_obbt._yAxis);
-        _obbt._yAxis.normalize();
-        
-        mat.getForwardVector(&_obbt._zAxis);
-        _obbt._zAxis.normalize();
-        
-        _obbt._center = _sprite->getPosition3D();
+        _obbt = _obbtOri;
+        _obbt.transform(mat);
         
         Vec3 corners[8] = {};
         _obbt.getCorners(corners);
@@ -1883,6 +1527,10 @@ void Sprite3DWithOBBPerformanceTest::addNewSpriteWithCoords(Vec2 p)
 {
     std::string fileName = "Sprite3DTest/tortoise.c3b";
     auto sprite = Sprite3D::create(fileName);
+    AABB aabb = sprite->getAABB();
+    _obbt = OBB(aabb);
+    _obbtOri = _obbt;
+    
     sprite->setScale(0.1f);
     auto s = Director::getInstance()->getWinSize();
     sprite->setPosition(Vec2(s.width * 4.f / 5.f, s.height / 2.f));
@@ -1901,8 +1549,7 @@ void Sprite3DWithOBBPerformanceTest::addNewSpriteWithCoords(Vec2 p)
     seq->setTag(100);
     sprite->runAction(seq);
     
-    AABB aabb = _sprite->getAABB();
-    _obbt = OBB(aabb);
+    
     
     _drawDebug = DrawNode3D::create();
     addChild(_drawDebug);
@@ -2435,10 +2082,6 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
     _teapot = Sprite3D::create("Sprite3DTest/teapot.c3b");
     _teapot->retain();
 
-    //create and set our custom shader
-    auto shader = GLProgram::createWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag");
-    auto state = GLProgramState::create(shader);
-
     // create the second texture for cylinder
     _textureCube = TextureCube::create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
         "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
@@ -2454,31 +2097,18 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
     tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
     _textureCube->setTexParameters(tRepeatParams);
 
+    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/CubeMap.material");
+    auto state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+    _teapot->setMaterial(mat);
     // pass the texture sampler to our custom shader
     state->setUniformTexture("u_cubeTex", _textureCube);
 
-    _teapot->setGLProgramState(state);
     _teapot->setPosition3D(Vec3(0, -5, 0));
     _teapot->setRotation3D(Vec3(-90, 180, 0));
 
     auto rotate_action = RotateBy::create(1.5, Vec3(0, 30, 0));
     _teapot->runAction(RepeatForever::create(rotate_action));
 
-    //pass mesh's attribute to shader
-    long offset = 0;
-    auto attributeCount = _teapot->getMesh()->getMeshVertexAttribCount();
-    for (auto i = 0; i < attributeCount; i++)
-    {
-        auto meshattribute = _teapot->getMesh()->getMeshVertexAttribute(i);
-        state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
-            meshattribute.size,
-            meshattribute.type,
-            GL_FALSE,
-            _teapot->getMesh()->getVertexSizeInBytes(),
-            (GLvoid*)offset);
-
-        offset += meshattribute.attribSizeBytes;
-    }
     addChild(_teapot);
 
     {
@@ -2492,31 +2122,32 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
 
     addChild(_camera);
     setCameraMask(2);
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
-                                [this](EventCustom*)
-    {
-        auto state = _teapot->getGLProgramState();
-        auto glProgram = state->getGLProgram();
-        glProgram->reset();
-        glProgram->initWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag");
-        glProgram->link();
-        glProgram->updateUniforms();
-
-        _textureCube->reloadTexture();
-
-        Texture2D::TexParams tRepeatParams;
-        tRepeatParams.magFilter = GL_NEAREST;
-        tRepeatParams.minFilter = GL_NEAREST;
-        tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
-        tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
-        _textureCube->setTexParameters(tRepeatParams);
-        state->setUniformTexture("u_cubeTex", _textureCube);
-
-        _skyBox->reload();
-        _skyBox->setTexture(_textureCube);
-    });
+                                                            [this](EventCustom*)
+                                                            {
+                                                                CC_SAFE_RELEASE(_textureCube);
+                                                                _textureCube = TextureCube::create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
+                                                                                                   "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
+                                                                                                   "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg");
+                                                                
+                                                                _textureCube->retain();
+                                                                //set texture parameters
+                                                                Texture2D::TexParams tRepeatParams;
+                                                                tRepeatParams.magFilter = GL_LINEAR;
+                                                                tRepeatParams.minFilter = GL_LINEAR;
+                                                                tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
+                                                                tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
+                                                                _textureCube->setTexParameters(tRepeatParams);
+                                                                
+                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/CubeMap.material");
+                                                                auto state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+                                                                _teapot->setMaterial(mat);
+                                                                _skyBox->setTexture(_textureCube);
+                                                                // pass the texture sampler to our custom shader
+                                                                state->setUniformTexture("u_cubeTex", _textureCube);
+                                                            }
+                                                            );
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
 #endif
 }
@@ -2670,6 +2301,7 @@ Animate3DCallbackTest::Animate3DCallbackTest()
                 node->setPosition3D(Vec3(mat.m[12] + 100, mat.m[13], mat.m[14]));
                 ((PUParticleSystem3D*)node)->startParticleSystem();
             }
+                
             
             cocos2d::log("frame %d", info->frame);
         });
@@ -2719,6 +2351,56 @@ std::string Sprite3DTestMeshLight::title() const
 }
 
 std::string Sprite3DTestMeshLight::subtitle() const
+{
+    return "";
+}
+
+Sprite3DVertexColorTest::Sprite3DVertexColorTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto sprite = Sprite3D::create("Sprite3DTest/box_VertexCol.c3t");
+    sprite->setPosition(Vec2(0, 0));
+    sprite->setScale(1.0f);
+    sprite->setCameraMask(2);
+    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/VertexColor.material");
+    sprite->setMaterial(mat);
+    sprite->runAction(RepeatForever::create(RotateBy::create(1.0f, Vec3(10.0f, 50.0f, 10.0f))));
+
+    this->addChild(sprite);
+
+    //setup camera
+    auto camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setPosition3D(Vec3(0.0f, 0.0f, 10.f));
+    camera->lookAt(Vec3(0.f, 0.f, 0.f));
+    addChild(camera);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                            [=](EventCustom*)
+                                                            {
+                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/VertexColor.material");
+                                                                sprite->setMaterial(mat);
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+#endif
+}
+
+Sprite3DVertexColorTest::~Sprite3DVertexColorTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
+}
+
+std::string Sprite3DVertexColorTest::title() const
+{
+    return "Testing Vertex Color";
+}
+
+std::string Sprite3DVertexColorTest::subtitle() const
 {
     return "";
 }
@@ -2781,7 +2463,52 @@ std::string CameraBackgroundClearTest::title() const
 {
     return "Camera Background Clear Brush";
 }
+
 std::string CameraBackgroundClearTest::subtitle() const
 {
     return "";
+}
+
+MotionStreak3DTest::MotionStreak3DTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+    
+    auto camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setPosition3D(Vec3(0.f, 50.f, 200.f));
+    camera->lookAt(Vec3(0.f, 0.f, 0.f));
+    addChild(camera);
+    
+    auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+    sprite->setPosition(20.f, 0.f);
+    addChild(sprite);
+    
+    auto streak = MotionStreak3D::create(1.0f, 1.0f, 5.f, Color3B(255, 255, 0), "Images/Icon.png");
+    addChild(streak);
+    
+    setCameraMask(2);
+    
+    _sprite = sprite;
+    _streak = streak;
+    scheduleUpdate();
+}
+std::string MotionStreak3DTest::title() const
+{
+    return "MotionStreak3D Test";
+}
+std::string MotionStreak3DTest::subtitle() const
+{
+    return "";
+}
+
+void MotionStreak3DTest::update(float delta)
+{
+    static float t = 0;
+    t += delta;
+    float angle = t * M_PI;
+    float r = 20.f;
+    
+    _sprite->setPosition3D(Vec3(r * cosf(angle), 0, r * sinf(angle)));
+    _streak->setPosition3D(_sprite->getPosition3D());
+    _streak->setSweepAxis(Vec3(cosf(angle), 0, sinf(angle)));
 }

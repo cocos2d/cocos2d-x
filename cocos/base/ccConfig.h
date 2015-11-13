@@ -36,7 +36,7 @@ THE SOFTWARE.
  * @~english
  * cocos2d (cc) configuration file.
  * @~chinese 
- * cocos2d(cc)é…ç½®æ–‡ä»¶ã€‚
+ * cocos2d(cc)ÅäÖÃÎÄ¼ş¡£
 */
 
 
@@ -46,10 +46,10 @@ THE SOFTWARE.
  * If disabled, only the last run action will take effect.
  * Enabled by default. Disable to be compatible with v2.0 and older versions.
  * @~chinese 
- * å¦‚æœå¯ç”¨, æ”¹å˜ä½ç½®å±æ€§çš„åŠ¨ä½œ(å¦‚ MoveBy, JumpBy, BezierBy..)å°†ä¼šæ”¾åˆ°æ ˆé‡Œé¢.
- * å¦‚æœåœ¨ä¸€ä¸ªå¯¹è±¡(`node`)ä¸ŠåŒæ—¶è¿è¡Œäº†2ä¸ªæˆ–æ›´å¤šæ”¹å˜ä½ç½®å±æ€§çš„åŠ¨ä½œ, è¿™ä¸ªå¯¹è±¡(`node`)çš„æœ€ç»ˆä½ç½®ä¼šæ˜¯æ‰€æœ‰æ”¹å˜ä½ç½®å±æ€§åŠ¨ä½œçš„çŸ¢é‡å’Œ.
- * å¦‚æœç¦ç”¨, åªæœ‰æœ€åä¸€ä¸ªæ”¹å˜ä½ç½®å±æ€§çš„åŠ¨ä½œä¼šç”Ÿæ•ˆ.
- * é»˜è®¤å¯ç”¨. ç¦ç”¨æ˜¯ä¸ºäº†å’Œv2.0æˆ–æ›´æ—§çš„ç‰ˆæœ¬å…¼å®¹.
+ * Èç¹ûÆôÓÃ, ¸Ä±äÎ»ÖÃÊôĞÔµÄ¶¯×÷(Èç MoveBy, JumpBy, BezierBy..)½«»á·Åµ½Õ»ÀïÃæ.
+ * Èç¹ûÔÚÒ»¸ö¶ÔÏó(`node`)ÉÏÍ¬Ê±ÔËĞĞÁË2¸ö»ò¸ü¶à¸Ä±äÎ»ÖÃÊôĞÔµÄ¶¯×÷, Õâ¸ö¶ÔÏó(`node`)µÄ×îÖÕÎ»ÖÃ»áÊÇËùÓĞ¸Ä±äÎ»ÖÃÊôĞÔ¶¯×÷µÄÊ¸Á¿ºÍ.
+ * Èç¹û½ûÓÃ, Ö»ÓĞ×îºóÒ»¸ö¸Ä±äÎ»ÖÃÊôĞÔµÄ¶¯×÷»áÉúĞ§.
+ * Ä¬ÈÏÆôÓÃ. ½ûÓÃÊÇÎªÁËºÍv2.0»ò¸ü¾ÉµÄ°æ±¾¼æÈİ.
  * @since v2.1
  */
 #ifndef CC_ENABLE_STACKABLE_ACTIONS
@@ -59,7 +59,7 @@ THE SOFTWARE.
 
 /** @def CC_ENABLE_GL_STATE_CACHE
  * @~english If enabled, cocos2d will maintain an OpenGL state cache internally to avoid unnecessary switches.
- * In order to use them, you have to use the following functions, instead of the the GL ones:
+ * In order to use them, you have to use the following functions, instead of the GL ones:
  *  - ccGLUseProgram() instead of glUseProgram().
  *  - GL::deleteProgram() instead of glDeleteProgram().
  *  - GL::blendFunc() instead of glBlendFunc().
@@ -72,18 +72,18 @@ THE SOFTWARE.
  * Default value: Enabled by default
 
  * @~chinese 
- * å¦‚æœå¯ç”¨,cocos2då°†ç»´æŠ¤ä¸€ä¸ªOpenGLå†…éƒ¨ç¼“å­˜,ä»¥é¿å…ä¸å¿…è¦çš„åˆ‡æ¢ã€‚
- * ä¸ºäº†ä½¿ç”¨å®ƒä»¬,ä½ å¿…é¡»ä½¿ç”¨ä»¥ä¸‹å‡½æ•°,è€Œä¸æ˜¯GLçš„å‡½æ•°:
- * - ä½¿ç”¨ccGLUseProgram()è€Œä¸æ˜¯glUseProgram()ã€‚
- * - ä½¿ç”¨GL::deleteProgram()è€Œä¸æ˜¯glDeleteProgram()ã€‚
- * - GL::blendFunc()è€Œä¸æ˜¯glBlendFunc()ã€‚
+ * Èç¹ûÆôÓÃ,cocos2d½«Î¬»¤Ò»¸öOpenGLÄÚ²¿»º´æ,ÒÔ±ÜÃâ²»±ØÒªµÄÇĞ»»¡£
+ * ÎªÁËÊ¹ÓÃËüÃÇ,Äã±ØĞëÊ¹ÓÃÒÔÏÂº¯Êı,¶ø²»ÊÇGLµÄº¯Êı:
+ * - Ê¹ÓÃccGLUseProgram()¶ø²»ÊÇglUseProgram()¡£
+ * - Ê¹ÓÃGL::deleteProgram()¶ø²»ÊÇglDeleteProgram()¡£
+ * - GL::blendFunc()¶ø²»ÊÇglBlendFunc()¡£
  * 
- * å¦‚æœç¦ç”¨æ­¤åŠŸèƒ½,é‚£ä¹ˆccGLUseProgram(),GL:deleteProgram(),GL:blendFunc()å°†è°ƒç”¨GLçš„å‡½æ•°,è€Œä¸ä½¿ç”¨ç¼“å­˜ã€‚
+ * Èç¹û½ûÓÃ´Ë¹¦ÄÜ,ÄÇÃ´ccGLUseProgram(),GL:deleteProgram(),GL:blendFunc()½«µ÷ÓÃGLµÄº¯Êı,¶ø²»Ê¹ÓÃ»º´æ¡£
  * 
- * å»ºè®®å¯ç”¨ä»¥å°½å¯èƒ½æé«˜é€Ÿåº¦ã€‚
- * å¦‚æœä½ æ­£åœ¨ä»GL ES 1.1è¿ç§»æ‚¨çš„ä»£ç ,å…ˆç¦ç”¨å®ƒã€‚ä¸€æ—¦æ‰€æœ‰ä»£ç åƒé¢„æœŸçš„é‚£æ ·å·¥ä½œ,å†æŠŠå®ƒæ‰“å¼€ã€‚
+ * ½¨ÒéÆôÓÃÒÔ¾¡¿ÉÄÜÌá¸ßËÙ¶È¡£
+ * Èç¹ûÄãÕıÔÚ´ÓGL ES 1.1Ç¨ÒÆÄúµÄ´úÂë,ÏÈ½ûÓÃËü¡£Ò»µ©ËùÓĞ´úÂëÏñÔ¤ÆÚµÄÄÇÑù¹¤×÷,ÔÙ°ÑËü´ò¿ª¡£
  * 
- * é»˜è®¤å€¼:é»˜è®¤å¯ç”¨
+ * Ä¬ÈÏÖµ:Ä¬ÈÏÆôÓÃ
  * 
  * @since v2.0.0
  */
@@ -111,22 +111,22 @@ THE SOFTWARE.
  * To enabled set it to 1. Disabled by default.
 
  * @~chinese 
- * å¦‚æœå¯ç”¨,çº¹ç†åæ ‡è®¡ç®—é€šè¿‡ä½¿ç”¨è¿™ä¸ªå…¬å¼:
+ * Èç¹ûÆôÓÃ,ÎÆÀí×ø±ê¼ÆËãÍ¨¹ıÊ¹ÓÃÕâ¸ö¹«Ê½:
  * - texCoord.left = (rect.origin.x*2+1) / (texture.wide*2);
  * - texCoord.right = texCoord.left + (rect.size.width*2-2)/(texture.wide*2);
  *
- * åº•éƒ¨å’Œé¡¶éƒ¨çš„è®¡ç®—æ–¹å¼ä¹Ÿç±»ä¼¼ã€‚
+ * µ×²¿ºÍ¶¥²¿µÄ¼ÆËã·½Ê½Ò²ÀàËÆ¡£
  * 
- * è¿™ä¸ªå…¬å¼ä½¿ç”¨äº†å…¶çº¹ç†çš„99%çš„é˜²æ­¢å¤±çœŸ.
- * æ­£ç¡®é˜²æ­¢å¤±çœŸçš„æ–¹æ³•æ˜¯ä½¿ç”¨spritesheet-artifact-fixer.pyæˆ–ä¸€ä¸ªç›¸ä¼¼çš„å·¥å…·.
+ * Õâ¸ö¹«Ê½Ê¹ÓÃÁËÆäÎÆÀíµÄ99%µÄ·ÀÖ¹Ê§Õæ.
+ * ÕıÈ··ÀÖ¹Ê§ÕæµÄ·½·¨ÊÇÊ¹ÓÃspritesheet-artifact-fixer.py»òÒ»¸öÏàËÆµÄ¹¤¾ß.
  *
- * å½±å“èŠ‚ç‚¹:
+ * Ó°Ïì½Úµã:
  * - Sprite / SpriteBatchNode and subclasses: LabelBMFont, TMXTiledMap.
  * - LabelAtlas.
  * - QuadParticleSystem.
  * - TileMap.
  * 
- * ä½¿å°†å…¶è®¾ç½®ä¸º1ä¸ºå¼€å¯ã€‚é»˜è®¤æƒ…å†µä¸‹ç¦ç”¨ã€‚
+ * Ê¹½«ÆäÉèÖÃÎª1Îª¿ªÆô¡£Ä¬ÈÏÇé¿öÏÂ½ûÓÃ¡£
  * 
  * @since v0.99.5
  */
@@ -142,11 +142,11 @@ THE SOFTWARE.
 
  * Default value: 0.1f
  * @~chinese 
- * FPSæ›´æ–°ç§’é—´éš”ã€‚
- * 0.5ç§’,æ„å‘³ç€FPSæ•°é‡å°†æ¯0.5ç§’æ›´æ–°ä¸€æ¬¡ã€‚
- * æ›´å¤§çš„å€¼æ„å‘³ç€ä¸€ä¸ªæ›´å¯é çš„FPSã€‚
+ * FPS¸üĞÂÃë¼ä¸ô¡£
+ * 0.5Ãë,ÒâÎ¶×ÅFPSÊıÁ¿½«Ã¿0.5Ãë¸üĞÂÒ»´Î¡£
+ * ¸ü´óµÄÖµÒâÎ¶×ÅÒ»¸ö¸ü¿É¿¿µÄFPS¡£
  * 
- * é»˜è®¤å€¼:0.1 f
+ * Ä¬ÈÏÖµ:0.1 f
  */
 #ifndef CC_DIRECTOR_STATS_INTERVAL
 #define CC_DIRECTOR_STATS_INTERVAL (0.1f)
@@ -158,9 +158,9 @@ THE SOFTWARE.
 
  * Default: 0,0 (bottom-left corner).
  * @~chinese CC_DIRECTOR_FPS_POSITION
- * FPSçš„ä½ç½®ã€‚
+ * FPSµÄÎ»ÖÃ¡£
  * 
- * é»˜è®¤å€¼:0,0(å·¦ä¸‹éƒ¨çš„è§’è½)ã€‚
+ * Ä¬ÈÏÖµ:0,0(×óÏÂ²¿µÄ½ÇÂä)¡£
  */
 #ifndef CC_DIRECTOR_FPS_POSITION
 #define CC_DIRECTOR_FPS_POSITION Vec2(0,0)
@@ -175,15 +175,15 @@ THE SOFTWARE.
 
  * To enable set it to 1. Disabled by default.
  * @~chinese
- * å¦‚æœå¯ç”¨, åªæœ‰æ­¤åŠŸèƒ½è¢«FastDirectorä½¿ç”¨æ—¶, ä¸»å¾ªç¯æ‰ä¼šç­‰å¾… 0.04 ç§’å»åˆ†å‘æ‰€æœ‰çš„æ´»åŠ¨(Event), å³ä½¿æ­¤æ—¶æ²¡æœ‰
- * ä»»ä½•æ´»åŠ¨éœ€è¦åˆ†å‘ã€‚
- * å¦‚æœä½ çš„æ¸¸æˆä½¿ç”¨å¾ˆå¤šçš„äº‹ä»¶(å¦‚:è§¦æ‘¸äº‹ä»¶)ï¼Œè¿™å¯èƒ½æ˜¯ä¸€ä¸ªå¥½ä¸»æ„æ¥å¯ç”¨è¿™ä¸ªç‰¹æ€§ã€‚
- * å¦åˆ™,å®ƒæ˜¯å®‰å…¨çš„æŠŠå®ƒç¦ç”¨ã€‚
+ * Èç¹ûÆôÓÃ, Ö»ÓĞ´Ë¹¦ÄÜ±»FastDirectorÊ¹ÓÃÊ±, Ö÷Ñ­»·²Å»áµÈ´ı 0.04 ÃëÈ¥·Ö·¢ËùÓĞµÄ»î¶¯(Event), ¼´Ê¹´ËÊ±Ã»ÓĞ
+ * ÈÎºÎ»î¶¯ĞèÒª·Ö·¢¡£
+ * Èç¹ûÄãµÄÓÎÏ·Ê¹ÓÃºÜ¶àµÄÊÂ¼ş(Èç:´¥ÃşÊÂ¼ş)£¬Õâ¿ÉÄÜÊÇÒ»¸öºÃÖ÷ÒâÀ´ÆôÓÃÕâ¸öÌØĞÔ¡£
+ * ·ñÔò,ËüÊÇ°²È«µÄ°ÑËü½ûÓÃ¡£
  * 
- * ä½¿å°†å…¶è®¾ç½®ä¸º1ä»¥å¯ç”¨ã€‚é»˜è®¤æƒ…å†µä¸‹ç¦ç”¨ã€‚
+ * Ê¹½«ÆäÉèÖÃÎª1ÒÔÆôÓÃ¡£Ä¬ÈÏÇé¿öÏÂ½ûÓÃ¡£
  * 
  * @warning @~english This feature is experimental.
- * @~chinese è¿™ä¸ªç‰¹æ€§ç›®å‰æ˜¯è¯•éªŒæ€§çš„ã€‚
+ * @~chinese Õâ¸öÌØĞÔÄ¿Ç°ÊÇÊÔÑéĞÔµÄ¡£
  * @warning This feature is experimental.
  */
 #ifndef CC_DIRECTOR_DISPATCH_FAST_EVENTS
@@ -198,11 +198,11 @@ THE SOFTWARE.
  * To enable set it to a 1, to disable it set to 0. Enabled by default.
  * Only valid for cocos2d-mac. Not supported on cocos2d-ios.
  * @~chinese 
- * å¦‚æœå¯ç”¨,cocos2d-macä¼šå·¥ä½œåœ¨Display Linkçº¿ç¨‹ä¸Šã€‚å¦‚æœç¦ç”¨cocos2d-macå°†è¿è¡Œåœ¨å®ƒè‡ªå·±çš„çº¿ç¨‹ã€‚
- * å¦‚æœå¯ç”¨ï¼Œå›¾ç‰‡å°†ä¼šåœ¨æ­£ç¡®çš„æ—¶é—´ç»˜åˆ¶ï¼Œä½†æ˜¯äº‹ä»¶å¯èƒ½ä¸ä¼šå“åº”çš„å¾ˆåŠæ—¶ã€‚
- * å¦‚æœç¦ç”¨,ä¸€äº›å¸§å¯èƒ½è¢«å¿½ç•¥,ä½†æ˜¯äº‹ä»¶ä¸€æ—¦åˆ°è¾¾å°†ä¼šè¢«é©¬ä¸Šåˆ†å‘ã€‚
- * ä½¿å°†å…¶è®¾ç½®ä¸º1å¯ç”¨,è®¾ç½®ä¸º0ç¦ç”¨ã€‚é»˜è®¤å¯ç”¨ã€‚
- * åªæœ‰cocos2d-macæœ‰æ•ˆã€‚ä¸æ”¯æŒcocos2d-iosã€‚
+ * Èç¹ûÆôÓÃ,cocos2d-mac»á¹¤×÷ÔÚDisplay LinkÏß³ÌÉÏ¡£Èç¹û½ûÓÃcocos2d-mac½«ÔËĞĞÔÚËü×Ô¼ºµÄÏß³Ì¡£
+ * Èç¹ûÆôÓÃ£¬Í¼Æ¬½«»áÔÚÕıÈ·µÄÊ±¼ä»æÖÆ£¬µ«ÊÇÊÂ¼ş¿ÉÄÜ²»»áÏìÓ¦µÄºÜ¼°Ê±¡£
+ * Èç¹û½ûÓÃ,Ò»Ğ©Ö¡¿ÉÄÜ±»ºöÂÔ,µ«ÊÇÊÂ¼şÒ»µ©µ½´ï½«»á±»ÂíÉÏ·Ö·¢¡£
+ * Ê¹½«ÆäÉèÖÃÎª1ÆôÓÃ,ÉèÖÃÎª0½ûÓÃ¡£Ä¬ÈÏÆôÓÃ¡£
+ * Ö»ÓĞcocos2d-macÓĞĞ§¡£²»Ö§³Öcocos2d-ios¡£
  */
 #ifndef CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
 #define CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD 1
@@ -214,9 +214,9 @@ THE SOFTWARE.
  * If disabled, integer pixels will be used.
  * To enable set it to 1. Enabled by default.
  * @~chinese 
- * å¦‚æœå¯ç”¨,èŠ‚ç‚¹å¯¹è±¡(Sprite, Labelç­‰)èƒ½å¤Ÿç”¨å­åƒç´ æ¸²æŸ“ã€‚
- * å¦‚æœç¦ç”¨,å°†ä½¿ç”¨æ•´æ•°åƒç´ ã€‚
- * ä½¿å°†å…¶è®¾ç½®ä¸º1å¯ç”¨ã€‚é»˜è®¤å¯ç”¨ã€‚
+ * Èç¹ûÆôÓÃ,½Úµã¶ÔÏó(Sprite, LabelµÈ)ÄÜ¹»ÓÃ×ÓÏñËØäÖÈ¾¡£
+ * Èç¹û½ûÓÃ,½«Ê¹ÓÃÕûÊıÏñËØ¡£
+ * Ê¹½«ÆäÉèÖÃÎª1ÆôÓÃ¡£Ä¬ÈÏÆôÓÃ¡£
  */
 #ifndef CC_NODE_RENDER_SUBPIXEL
 #define CC_NODE_RENDER_SUBPIXEL 1
@@ -228,9 +228,9 @@ THE SOFTWARE.
  * If disabled, integer pixels will be used.
  * To enable set it to 1. Enabled by default.
  * @~chinese 
- * å¦‚æœå¯ç”¨,ä½¿ç”¨SpriteBatchNodeæ¸²æŸ“çš„Spriteèƒ½å¤Ÿåœ¨å­åƒç´ æ¸²æŸ“ã€‚
- * å¦‚æœç¦ç”¨,å°†ä½¿ç”¨æ•´æ•°åƒç´ ã€‚
- * ä½¿å°†å…¶è®¾ç½®ä¸º1å¯ç”¨ã€‚é»˜è®¤å¯ç”¨ã€‚
+ * Èç¹ûÆôÓÃ,Ê¹ÓÃSpriteBatchNodeäÖÈ¾µÄSpriteÄÜ¹»ÔÚ×ÓÏñËØäÖÈ¾¡£
+ * Èç¹û½ûÓÃ,½«Ê¹ÓÃÕûÊıÏñËØ¡£
+ * Ê¹½«ÆäÉèÖÃÎª1ÆôÓÃ¡£Ä¬ÈÏÆôÓÃ¡£
  */
 #ifndef CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
 #define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL    1
@@ -243,10 +243,10 @@ THE SOFTWARE.
  * So for certain cases, where you might need hundreds of VAO objects, it might be a good idea to disable it.
  * To disable it set it to 0. Enabled by default.
  * @~chinese 
- * é»˜è®¤æƒ…å†µä¸‹,TextureAtlas(è®¸å¤šcocos2dç±»ä½¿ç”¨)å°†ä½¿ç”¨VAO(é¡¶ç‚¹æ•°ç»„å¯¹è±¡)ã€‚
- * è‹¹æœå…¬å¸å»ºè®®ä½¿ç”¨,ä½†ä»–ä»¬å¯èƒ½ä¼šæ¶ˆè€—å¤§é‡çš„å†…å­˜,ç‰¹åˆ«å¦‚æœä½ ä½¿ç”¨å¾ˆå¤šçš„è¯ã€‚
- * æ‰€ä»¥åœ¨æŸäº›æƒ…å†µä¸‹,æ‚¨å¯èƒ½éœ€è¦æ•°ç™¾ä¸ªVAOå¯¹è±¡,è¿™æ—¶å€™ç¦ç”¨å®ƒå¯èƒ½æ˜¯ä¸€ä¸ªå¥½ä¸»æ„ã€‚
- * å°†å…¶è®¾ç½®ä¸º0ç¦ç”¨å®ƒã€‚é»˜è®¤å¯ç”¨ã€‚
+ * Ä¬ÈÏÇé¿öÏÂ,TextureAtlas(Ğí¶àcocos2dÀàÊ¹ÓÃ)½«Ê¹ÓÃVAO(¶¥µãÊı×é¶ÔÏó)¡£
+ * Æ»¹û¹«Ë¾½¨ÒéÊ¹ÓÃ,µ«ËûÃÇ¿ÉÄÜ»áÏûºÄ´óÁ¿µÄÄÚ´æ,ÌØ±ğÈç¹ûÄãÊ¹ÓÃºÜ¶àµÄ»°¡£
+ * ËùÒÔÔÚÄ³Ğ©Çé¿öÏÂ,Äú¿ÉÄÜĞèÒªÊı°Ù¸öVAO¶ÔÏó,ÕâÊ±ºò½ûÓÃËü¿ÉÄÜÊÇÒ»¸öºÃÖ÷Òâ¡£
+ * ½«ÆäÉèÖÃÎª0½ûÓÃËü¡£Ä¬ÈÏÆôÓÃ¡£
  */
 #ifndef CC_TEXTURE_ATLAS_USE_VAO
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -256,9 +256,9 @@ THE SOFTWARE.
         /* @~english Some Windows display adapter driver cannot support VAO.
          * Some android devices cannot support VAO very well, so we disable it by default for android platform.
          * Blackberry also doesn't support this feature.
-         * @~chinese ä¸€äº›Windowsæ˜¾ç¤ºé€‚é…å™¨é©±åŠ¨ç¨‹åºä¸æ”¯æŒVAOã€‚
-         * ä¸€äº›å®‰å“è®¾å¤‡ä¸èƒ½å¾ˆå¥½çš„æ”¯æŒVAOï¼Œæ‰€ä»¥æˆ‘ä»¬åœ¨å®‰å“å¹³å°é»˜è®¤æ˜¯ç¦ç”¨å®ƒçš„ã€‚
-         * é»‘è“æ‰‹æœºä¹Ÿä¸æ”¯æŒè¿™ä¸ªç‰¹æ€§ã€‚
+         * @~chinese Ò»Ğ©WindowsÏÔÊ¾ÊÊÅäÆ÷Çı¶¯³ÌĞò²»Ö§³ÖVAO¡£
+         * Ò»Ğ©°²×¿Éè±¸²»ÄÜºÜºÃµÄÖ§³ÖVAO£¬ËùÒÔÎÒÃÇÔÚ°²×¿Æ½Ì¨Ä¬ÈÏÊÇ½ûÓÃËüµÄ¡£
+         * ºÚİ®ÊÖ»úÒ²²»Ö§³ÖÕâ¸öÌØĞÔ¡£
          * Blackberry also doesn't support this feature.
          */
 		#define CC_TEXTURE_ATLAS_USE_VAO 0
@@ -273,10 +273,10 @@ THE SOFTWARE.
  * LA88 textures are 6% faster than A8 textures, but they will consume 2x memory.
  * This feature is enabled by default.
  * @~chinese 
- * å¦‚æœå¯ç”¨,å®ƒå°†ä¸ºLabelTTFå¯¹è±¡ä½¿ç”¨LA88(Luminance Alpha 16-bitçš„çº¹ç†)ã€‚
- * å¦‚æœå®ƒæ˜¯ç¦ç”¨çš„,å®ƒå°†ä½¿ç”¨A8(Alpha 8-bitçº¹ç†)ã€‚
- * LA88çº¹ç†æ¯”A8çº¹ç†å¿«6%,ä½†ä»–ä»¬ä¼šæ¶ˆè€—2å€çš„å†…å­˜ã€‚
- * è¿™ä¸ªåŠŸèƒ½æ˜¯é»˜è®¤å¯ç”¨ã€‚
+ * Èç¹ûÆôÓÃ,Ëü½«ÎªLabelTTF¶ÔÏóÊ¹ÓÃLA88(Luminance Alpha 16-bitµÄÎÆÀí)¡£
+ * Èç¹ûËüÊÇ½ûÓÃµÄ,Ëü½«Ê¹ÓÃA8(Alpha 8-bitÎÆÀí)¡£
+ * LA88ÎÆÀí±ÈA8ÎÆÀí¿ì6%,µ«ËûÃÇ»áÏûºÄ2±¶µÄÄÚ´æ¡£
+ * Õâ¸ö¹¦ÄÜÊÇÄ¬ÈÏÆôÓÃ¡£
  * @since v0.99.5
  */
 #ifndef CC_USE_LA88_LABELS
@@ -292,12 +292,12 @@ THE SOFTWARE.
  * 1 -- draw bounding box
  * 2 -- draw texture box
  * @~chinese 
- * å¦‚æœå¯ç”¨,æ‰€æœ‰çš„Spriteå­ç±»å°†ç”»ä¸€ä¸ªè¾¹ç•Œæ¡†ã€‚
- * ä»…ç”¨äºè°ƒè¯•ç›®çš„ã€‚å»ºè®®æŠŠå®ƒç¦ç”¨ã€‚
- * ä½¿å°†å…¶è®¾ç½®ä¸ºä¸æ˜¯0çš„å€¼å³å¯ç”¨ã€‚é»˜è®¤æƒ…å†µä¸‹ç¦ç”¨ã€‚
- * 0â€”â€”ç¦ç”¨
- * 1â€”â€”ç”»è¾¹ç•Œæ¡†
- * 2â€”â€”ç»˜åˆ¶çº¹ç†
+ * Èç¹ûÆôÓÃ,ËùÓĞµÄSprite×ÓÀà½«»­Ò»¸ö±ß½ç¿ò¡£
+ * ½öÓÃÓÚµ÷ÊÔÄ¿µÄ¡£½¨Òé°ÑËü½ûÓÃ¡£
+ * Ê¹½«ÆäÉèÖÃÎª²»ÊÇ0µÄÖµ¼´ÆôÓÃ¡£Ä¬ÈÏÇé¿öÏÂ½ûÓÃ¡£
+ * 0¡ª¡ª½ûÓÃ
+ * 1¡ª¡ª»­±ß½ç¿ò
+ * 2¡ª¡ª»æÖÆÎÆÀí
  */
 #ifndef CC_SPRITE_DEBUG_DRAW
 #define CC_SPRITE_DEBUG_DRAW 0
@@ -319,9 +319,9 @@ THE SOFTWARE.
  * Useful for debugging purposes only. It is recommended to leave it disabled.
  * To enable set it to a value different than 0. Disabled by default.
  * @~chinese 
- * å¦‚æœå¯ç”¨,æ‰€æœ‰å­ç±»çš„é›ªç¢§å‘ˆç°ä½¿ç”¨SpriteBatchNodeç”»ä¸€ä¸ªè¾¹ç•Œæ¡†ã€‚
- * ä»…ç”¨äºè°ƒè¯•ç›®çš„ã€‚å»ºè®®æŠŠå®ƒç¦ç”¨ã€‚
- * ä½¿å°†å…¶è®¾ç½®ä¸ºä¸æ˜¯0çš„å€¼å³å¯ç”¨ã€‚é»˜è®¤æƒ…å†µä¸‹ç¦ç”¨ã€‚
+ * Èç¹ûÆôÓÃ,ËùÓĞ×ÓÀàµÄÑ©±Ì³ÊÏÖÊ¹ÓÃSpriteBatchNode»­Ò»¸ö±ß½ç¿ò¡£
+ * ½öÓÃÓÚµ÷ÊÔÄ¿µÄ¡£½¨Òé°ÑËü½ûÓÃ¡£
+ * Ê¹½«ÆäÉèÖÃÎª²»ÊÇ0µÄÖµ¼´ÆôÓÃ¡£Ä¬ÈÏÇé¿öÏÂ½ûÓÃ¡£
  */
 #ifndef CC_SPRITEBATCHNODE_DEBUG_DRAW
 #define CC_SPRITEBATCHNODE_DEBUG_DRAW 0
@@ -333,9 +333,9 @@ THE SOFTWARE.
  * Useful for debugging purposes only. It is recommended to leave it disabled.
  * To enable set it to a value different than 0. Disabled by default.
  * @~chinese 
- * å¦‚æœå¯ç”¨,æ‰€æœ‰çš„å­ç±»LabelBMFontå°†ç”»ä¸€ä¸ªè¾¹ç•Œæ¡†ã€‚
- * ä»…ç”¨äºè°ƒè¯•ç›®çš„ã€‚å»ºè®®æŠŠå®ƒç¦ç”¨ã€‚
- * ä½¿å°†å…¶è®¾ç½®ä¸ºä¸æ˜¯0çš„å€¼å³å¯ç”¨ã€‚é»˜è®¤æƒ…å†µä¸‹ç¦ç”¨ã€‚
+ * Èç¹ûÆôÓÃ,ËùÓĞµÄ×ÓÀàLabelBMFont½«»­Ò»¸ö±ß½ç¿ò¡£
+ * ½öÓÃÓÚµ÷ÊÔÄ¿µÄ¡£½¨Òé°ÑËü½ûÓÃ¡£
+ * Ê¹½«ÆäÉèÖÃÎª²»ÊÇ0µÄÖµ¼´ÆôÓÃ¡£Ä¬ÈÏÇé¿öÏÂ½ûÓÃ¡£
  */
 #ifndef CC_LABELBMFONT_DEBUG_DRAW
 #define CC_LABELBMFONT_DEBUG_DRAW 0
@@ -347,9 +347,9 @@ THE SOFTWARE.
  * Useful for debugging purposes only. It is recommended to leave it disabled.
  * To enable set it to a value different than 0. Disabled by default.
  * @~chinese 
- * å¦‚æœå¯ç”¨,æ‰€æœ‰çš„å­ç±»LabeltAtlaså°†ç”»ä¸€ä¸ªè¾¹ç•Œæ¡†
- * ä»…ç”¨äºè°ƒè¯•ç›®çš„ã€‚å»ºè®®æŠŠå®ƒç¦ç”¨ã€‚
- * ä½¿å°†å…¶è®¾ç½®ä¸ºä¸æ˜¯0çš„å€¼å³å¯ç”¨ã€‚é»˜è®¤æƒ…å†µä¸‹ç¦ç”¨ã€‚
+ * Èç¹ûÆôÓÃ,ËùÓĞµÄ×ÓÀàLabeltAtlas½«»­Ò»¸ö±ß½ç¿ò
+ * ½öÓÃÓÚµ÷ÊÔÄ¿µÄ¡£½¨Òé°ÑËü½ûÓÃ¡£
+ * Ê¹½«ÆäÉèÖÃÎª²»ÊÇ0µÄÖµ¼´ÆôÓÃ¡£Ä¬ÈÏÇé¿öÏÂ½ûÓÃ¡£
  */
 #ifndef CC_LABELATLAS_DEBUG_DRAW
 #define CC_LABELATLAS_DEBUG_DRAW 0
@@ -362,9 +362,9 @@ THE SOFTWARE.
  * system has dangling pointers to destroyed nodes.
  * Note: event listener verification will always be disabled in builds where assertions are disabled regardless of this setting.
  * @~chinese 
- * å¦‚æœå¯ç”¨(å’Œæ–­è¨€ä¸€èµ·), å°†ä¼šéªŒè¯ Node å¯¹è±¡ææ„â€”â€” node ææ„æ—¶æ²¡æœ‰ä¸ EventDispather è”ç³»çš„ EventListener.
- * è¿™ä¸ªå¯ä»¥ç”¨æ¥æŸ¥å‡ºé‚£äº›é—®é¢˜â€”â€” EventDispather ç³»ç»Ÿå«æœ‰æŒ‡å‘å·²ææ„nodeçš„æ‚¬ç©ºæŒ‡é’ˆ.
- * æ³¨æ„: å½“æ–­è¨€è¢«ç¦ç”¨æ—¶, æ— è®ºæ­¤å¤„è®¾ç½®ä¸ºä½•å€¼, æ„å»ºè¿‡ç¨‹ä¸­ EventListener éªŒè¯å°†æ€»æ˜¯ç¦ç”¨çš„.
+ * Èç¹ûÆôÓÃ(ºÍ¶ÏÑÔÒ»Æğ), ½«»áÑéÖ¤ Node ¶ÔÏóÎö¹¹¡ª¡ª node Îö¹¹Ê±Ã»ÓĞÓë EventDispather ÁªÏµµÄ EventListener.
+ * Õâ¸ö¿ÉÒÔÓÃÀ´²é³öÄÇĞ©ÎÊÌâ¡ª¡ª EventDispather ÏµÍ³º¬ÓĞÖ¸ÏòÒÑÎö¹¹nodeµÄĞü¿ÕÖ¸Õë.
+ * ×¢Òâ: µ±¶ÏÑÔ±»½ûÓÃÊ±, ÎŞÂÛ´Ë´¦ÉèÖÃÎªºÎÖµ, ¹¹½¨¹ı³ÌÖĞ EventListener ÑéÖ¤½«×ÜÊÇ½ûÓÃµÄ.
  */
 #ifndef CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS
 #define CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS 0
@@ -377,29 +377,29 @@ THE SOFTWARE.
  * Useful for debugging purposes only. It is recommended to leave it disabled.
  * To enable set it to a value different than 0. Disabled by default.
  * @~chinese 
- * å¦‚æœå¯ç”¨,å°†åœ¨cocos2dæ¿€æ´»å„ç§åˆ†æå™¨ã€‚è¿™ä¸ªç»Ÿè®¡æ•°æ®å°†è¢«è¾“å‡ºåˆ°æ§åˆ¶å°
- * ä¸€æ—¦æ¯ç§’æ˜¾ç¤ºæ‰€éœ€çš„å¹³å‡æ—¶é—´(ä»¥æ¯«ç§’ä¸ºå•ä½)æ¥æ‰§è¡Œç‰¹å®šçš„ä¾‹ç¨‹(s)ã€‚
- * ä»…ç”¨äºè°ƒè¯•ç›®çš„ã€‚å»ºè®®æŠŠå®ƒç¦ç”¨ã€‚
- * è¦å¯ç”¨å¯ä»¥å°†å…¶è®¾ç½®ä¸ºä¸ä¸º0çš„å€¼ã€‚é»˜è®¤æƒ…å†µä¸‹ç¦ç”¨ã€‚
+ * Èç¹ûÆôÓÃ,½«ÔÚcocos2d¼¤»î¸÷ÖÖ·ÖÎöÆ÷¡£Õâ¸öÍ³¼ÆÊı¾İ½«±»Êä³öµ½¿ØÖÆÌ¨
+ * Ò»µ©Ã¿ÃëÏÔÊ¾ËùĞèµÄÆ½¾ùÊ±¼ä(ÒÔºÁÃëÎªµ¥Î»)À´Ö´ĞĞÌØ¶¨µÄÀı³Ì(s)¡£
+ * ½öÓÃÓÚµ÷ÊÔÄ¿µÄ¡£½¨Òé°ÑËü½ûÓÃ¡£
+ * ÒªÆôÓÃ¿ÉÒÔ½«ÆäÉèÖÃÎª²»Îª0µÄÖµ¡£Ä¬ÈÏÇé¿öÏÂ½ûÓÃ¡£
  */
 #ifndef CC_ENABLE_PROFILERS
 #define CC_ENABLE_PROFILERS 0
 #endif
 
 
-/** @~english Enable Lua engine debug log.  @~chinese æ˜¯å¦ä½¿ç”¨Luaå¼•æ“è°ƒè¯•æ—¥å¿—ã€‚*/
+/** @~english Enable Lua engine debug log.  @~chinese ÊÇ·ñÊ¹ÓÃLuaÒıÇæµ÷ÊÔÈÕÖ¾¡£*/
 #ifndef CC_LUA_ENGINE_DEBUG
 #define CC_LUA_ENGINE_DEBUG 0
 #endif
 
 
-/** @~english Use physics integration API.  @~chinese ä½¿ç”¨ç‰©ç†é›†æˆAPIã€‚*/
+/** @~english Use physics integration API.  @~chinese Ê¹ÓÃÎïÀí¼¯³ÉAPI¡£*/
 #ifndef CC_USE_PHYSICS
 #define CC_USE_PHYSICS 1
 #endif
 
 
-/** @~english Use 3d physics integration API.  @~chinese ä½¿ç”¨3dç‰©ç†é›†æˆAPIã€‚*/
+/** @~english Use 3d physics integration API.  @~chinese Ê¹ÓÃ3dÎïÀí¼¯³ÉAPI¡£*/
 #ifndef CC_USE_3D_PHYSICS
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #define CC_USE_3D_PHYSICS 1
@@ -413,19 +413,19 @@ THE SOFTWARE.
 #endif
 #endif
 
-/** @~english Use 3D navigation API. @~chinese æ˜¯å¦ä½¿ç”¨å¯¼èˆªç½‘æ ¼åŠŸèƒ½ã€‚*/
+/** @~english Use 3D navigation API. @~chinese ÊÇ·ñÊ¹ÓÃµ¼º½Íø¸ñ¹¦ÄÜ¡£*/
 #ifndef CC_USE_NAVMESH
 #define CC_USE_NAVMESH 1
 #endif
 
-/** @~english Use culling or not.  @~chinese æ˜¯å¦ä½¿ç”¨å‰”é™¤åŠŸèƒ½ã€‚*/
+/** @~english Use culling or not.  @~chinese ÊÇ·ñÊ¹ÓÃÌŞ³ı¹¦ÄÜ¡£*/
 #ifndef CC_USE_CULLING
 #define CC_USE_CULLING 1
 #endif
 
 
 /** @~english Support PNG or not. If your application don't use png format picture, you can undefine this macro to save package size.
- * @~chinese æ”¯æŒPNGä¸å¦ã€‚å¦‚æœæ‚¨çš„åº”ç”¨ç¨‹åºä¸ä½¿ç”¨pngæ ¼å¼çš„å›¾ç‰‡,ä½ å¯ä»¥å‘½ä»¤å–æ¶ˆè¿™ä¸ªå®ä¿å­˜åŒ…çš„å¤§å°ã€‚
+ * @~chinese Ö§³ÖPNGÓë·ñ¡£Èç¹ûÄúµÄÓ¦ÓÃ³ÌĞò²»Ê¹ÓÃpng¸ñÊ½µÄÍ¼Æ¬,Äã¿ÉÒÔÃüÁîÈ¡ÏûÕâ¸öºê±£´æ°üµÄ´óĞ¡¡£
 */
 #ifndef CC_USE_PNG
 #define CC_USE_PNG  1
@@ -433,7 +433,7 @@ THE SOFTWARE.
 
 
 /** @~english Support JPEG or not. If your application don't use jpeg format picture, you can undefine this macro to save package size.
- * @~chinese æ”¯æŒJPEGä¸å¦ã€‚å¦‚æœæ‚¨çš„åº”ç”¨ç¨‹åºä¸ä½¿ç”¨jpegæ ¼å¼çš„å›¾ç‰‡,ä½ å¯ä»¥å–æ¶ˆè¿™ä¸ªå®å®šä¹‰æ¥å‡å°åŒ…å¤§å°ã€‚
+ * @~chinese Ö§³ÖJPEGÓë·ñ¡£Èç¹ûÄúµÄÓ¦ÓÃ³ÌĞò²»Ê¹ÓÃjpeg¸ñÊ½µÄÍ¼Æ¬,Äã¿ÉÒÔÈ¡ÏûÕâ¸öºê¶¨ÒåÀ´¼õĞ¡°ü´óĞ¡¡£
  */
 #ifndef CC_USE_JPEG
 #define CC_USE_JPEG  1
@@ -441,7 +441,7 @@ THE SOFTWARE.
 
 
 /** @~english Support TIFF or not. If your application don't use TIFF format picture, you can undefine this macro to save package size.
- * @~chinese æ”¯æŒTIFFä¸å¦ã€‚å¦‚æœæ‚¨çš„åº”ç”¨ç¨‹åºä¸ä½¿ç”¨TIFFæ ¼å¼çš„å›¾ç‰‡,ä½ å¯ä»¥å–æ¶ˆè¿™ä¸ªå®å®šä¹‰æ¥å‡å°åŒ…å¤§å°ã€‚
+ * @~chinese Ö§³ÖTIFFÓë·ñ¡£Èç¹ûÄúµÄÓ¦ÓÃ³ÌĞò²»Ê¹ÓÃTIFF¸ñÊ½µÄÍ¼Æ¬,Äã¿ÉÒÔÈ¡ÏûÕâ¸öºê¶¨ÒåÀ´¼õĞ¡°ü´óĞ¡¡£
  */
 #ifndef CC_USE_TIFF
 #define CC_USE_TIFF  1
@@ -449,7 +449,7 @@ THE SOFTWARE.
 
 
 /** @~english Support webp or not. If your application don't use webp format picture, you can undefine this macro to save package size.
- * @~chinese æ”¯æŒwebpä¸å¦ã€‚å¦‚æœæ‚¨çš„åº”ç”¨ç¨‹åºä¸ä½¿ç”¨webpæ ¼å¼å›¾ç‰‡,ä½ å¯ä»¥å–æ¶ˆè¿™ä¸ªå®å®šä¹‰æ¥å‡å°åŒ…å¤§å°ã€‚
+ * @~chinese Ö§³ÖwebpÓë·ñ¡£Èç¹ûÄúµÄÓ¦ÓÃ³ÌĞò²»Ê¹ÓÃwebp¸ñÊ½Í¼Æ¬,Äã¿ÉÒÔÈ¡ÏûÕâ¸öºê¶¨ÒåÀ´¼õĞ¡°ü´óĞ¡¡£
  */
 #ifndef CC_USE_WEBP
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
@@ -459,7 +459,7 @@ THE SOFTWARE.
 
 
  /** @~english Support WIC (Windows Image Component) or not. Replaces PNG, TIFF and JPEG
-  * @~chinese æ˜¯å¦æ”¯æŒWIC(Windowså›¾åƒç»„ä»¶)ã€‚å–ä»£PNG,TIFFå’ŒJPEG
+  * @~chinese ÊÇ·ñÖ§³ÖWIC(WindowsÍ¼Ïñ×é¼ş)¡£È¡´úPNG,TIFFºÍJPEG
  */
 #ifndef CC_USE_WIC
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
@@ -471,7 +471,7 @@ THE SOFTWARE.
 #endif // CC_USE_WIC
 
 
-/** @~english Enable Script binding.  @~chinese å¯ç”¨è„šæœ¬ç»‘å®šã€‚*/
+/** @~english Enable Script binding.  @~chinese ÆôÓÃ½Å±¾°ó¶¨¡£*/
 #ifndef CC_ENABLE_SCRIPT_BINDING
 #define CC_ENABLE_SCRIPT_BINDING 1
 #endif
@@ -482,12 +482,16 @@ THE SOFTWARE.
  * If value equals to public, these functions are public,
  * protected by default.
  * @~chinese 
- * è¡¨æ˜initå‡½æ•°è®¿é—®ä¿®é¥°ç¬¦ã€‚å¦‚æœå€¼ç­‰äºprotected,é‚£ä¹ˆè¿™äº›æ–¹æ³•å—åˆ°ä¿æŠ¤ã€‚
- * å¦‚æœå€¼ç­‰äºå…¬ä¼—,è¿™äº›åŠŸèƒ½æ˜¯å…¬å¼€çš„,
- * é»˜è®¤æƒ…å†µä¸‹ä¿æŠ¤ã€‚
+ * ±íÃ÷initº¯Êı·ÃÎÊĞŞÊÎ·û¡£Èç¹ûÖµµÈÓÚprotected,ÄÇÃ´ÕâĞ©·½·¨ÊÜµ½±£»¤¡£
+ * Èç¹ûÖµµÈÓÚ¹«ÖÚ,ÕâĞ©¹¦ÄÜÊÇ¹«¿ªµÄ,
+ * Ä¬ÈÏÇé¿öÏÂ±£»¤¡£
  */
 #ifndef CC_CONSTRUCTOR_ACCESS
-#define CC_CONSTRUCTOR_ACCESS public
+  #ifdef CC_ENABLE_SCRIPT_BINDING
+    #define CC_CONSTRUCTOR_ACCESS public
+  #else
+    #define CC_CONSTRUCTOR_ACCESS protected
+  #endif
 #endif
 
 
@@ -495,8 +499,8 @@ THE SOFTWARE.
  * @~english Turn on creation of global allocator and pool allocators
  * as specified by CC_ALLOCATOR_GLOBAL below.
  * @~chinese 
- * æ‰“å¼€åˆ›å»ºå…¨å±€åˆ†é…å™¨å’Œæ± åˆ†é…å™¨ã€‚
- * å¦‚ä¸‹CC_ALLOCATOR_GLOBALè§„å®šã€‚
+ * ´ò¿ª´´½¨È«¾Ö·ÖÅäÆ÷ºÍ³Ø·ÖÅäÆ÷¡£
+ * ÈçÏÂCC_ALLOCATOR_GLOBAL¹æ¶¨¡£
  */
 #ifndef CC_ENABLE_ALLOCATOR
 # define CC_ENABLE_ALLOCATOR 0
@@ -507,7 +511,7 @@ THE SOFTWARE.
  * @~english Turn on debugging of allocators. This is slower, uses
  * more memory, and should not be used for production builds.
  * @~chinese 
- * æ‰“å¼€è°ƒè¯•åˆ†é…å™¨ã€‚è¿™ä¼šå¾ˆæ…¢,ä½¿ç”¨æ›´å¤šçš„å†…å­˜,ä¸è¦ç”¨äºäº§å“æ„å»ºã€‚
+ * ´ò¿ªµ÷ÊÔ·ÖÅäÆ÷¡£Õâ»áºÜÂı,Ê¹ÓÃ¸ü¶àµÄÄÚ´æ,²»ÒªÓÃÓÚ²úÆ·¹¹½¨¡£
  */
 #ifndef CC_ENABLE_ALLOCATOR_DIAGNOSTICS
 # define CC_ENABLE_ALLOCATOR_DIAGNOSTICS CC_ENABLE_ALLOCATOR
@@ -518,8 +522,8 @@ THE SOFTWARE.
  * @~english Turn on override of global new and delete
  * as specified by CC_ALLOCATOR_GLOBAL_NEW_DELETE below.
  * @~chinese 
- * å¼€å¯å…¨å±€çš„newå’Œdeleteçš„é‡å†™ã€‚
- * å¦‚ä¸‹CC_ALLOCATOR_GLOBAL_NEW_DELETEè§„å®šã€‚
+ * ¿ªÆôÈ«¾ÖµÄnewºÍdeleteµÄÖØĞ´¡£
+ * ÈçÏÂCC_ALLOCATOR_GLOBAL_NEW_DELETE¹æ¶¨¡£
  */
 #ifndef CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE
 # define CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE 0
@@ -529,7 +533,7 @@ THE SOFTWARE.
 /** @def CC_ALLOCATOR_GLOBAL
  * @~english Specify allocator to use for global allocator.
  * @~chinese 
- * æŒ‡å®šè¦ä½¿ç”¨åˆ†é…å™¨ç”¨äºå…¨å±€åˆ†é…å™¨ã€‚
+ * Ö¸¶¨ÒªÊ¹ÓÃ·ÖÅäÆ÷ÓÃÓÚÈ«¾Ö·ÖÅäÆ÷¡£
  */
 #ifndef CC_ALLOCATOR_GLOBAL
 # define CC_ALLOCATOR_GLOBAL cocos2d::allocator::AllocatorStrategyDefault
@@ -539,7 +543,7 @@ THE SOFTWARE.
 /** @def CC_ALLOCATOR_GLOBAL_NEW_DELETE
  * @~english Specify allocator to use when overriding of new and delete.
  * @~chinese 
- * å½“é‡å†™äº†newå’ŒdeleteåæŒ‡å®šè¦ä½¿ç”¨çš„åˆ†é…å™¨ã€‚
+ * µ±ÖØĞ´ÁËnewºÍdeleteºóÖ¸¶¨ÒªÊ¹ÓÃµÄ·ÖÅäÆ÷¡£
  */
 #ifndef CC_ALLOCATOR_GLOBAL_NEW_DELETE
 # define CC_ALLOCATOR_GLOBAL_NEW_DELETE cocos2d::allocator::AllocatorStrategyGlobalSmallBlock

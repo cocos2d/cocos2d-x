@@ -28,7 +28,7 @@
 #include "base/ccConfig.h"
 #if CC_USE_PHYSICS
 
-#include "base/CCRef.h"
+#include "2d/CCComponent.h"
 #include "math/CCGeometry.h"
 #include "physics/CCPhysicsShape.h"
 #include "base/CCVector.h"
@@ -38,12 +38,10 @@ struct cpBody;
 NS_CC_BEGIN
 
 class Node;
-class Sprite;
 class PhysicsWorld;
 class PhysicsJoint;
 
 typedef Vec2 Vect;
-
 
 const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
 
@@ -58,7 +56,7 @@ const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
  * A body affect by physics.
  *
  * It can attach one or more shapes.
- * If you create body with createXXX, it will automatically compute mass and moment with density your specified(which is PHYSICSBODY_MATERIAL_DEFAULT by default, and the density value is 0.1f), and it based on the formular: mass = density * area.
+ * If you create body with createXXX, it will automatically compute mass and moment with density your specified(which is PHYSICSBODY_MATERIAL_DEFAULT by default, and the density value is 0.1f), and it based on the formula: mass = density * area.
  * If you create body with createEdgeXXX, the mass and moment will be PHYSICS_INFINITY by default. And it's a static body.
  * You can change mass and moment with setMass() and setMoment(). And you can change the body to be dynamic or static by use function setDynamic().
  * @~chinese 
@@ -69,7 +67,7 @@ const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
  * 如果刚体是通过createEdgeXXX创建的，质量和力矩默认设置为PHYSICS_INFINITY，并且这是一个静态刚体。
  * 你可以通过setMass()和setMoment()来改变质量和力矩。并且，你还可以通过setDynamic()来改变刚体的静态或动态属性。 
  */
-class CC_DLL PhysicsBody : public Ref
+class CC_DLL PhysicsBody : public Component
 {
 public:
     /** @~english
@@ -146,7 +144,7 @@ public:
      * @~chinese 一个自释放的PhysicsBody对象。
      */
     static PhysicsBody* createBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
-    
+
     /**
      * @brief @~english Create a body contains a polygon shape.
      *
@@ -240,7 +238,7 @@ public:
      * @~chinese 一个自释放的PhysicsBody对象。
      */
     static PhysicsBody* createEdgeChain(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
-    
+
     /**
      * @brief @~english Add a shape to body.
      * @~chinese 添加一个形状到刚体。
@@ -393,7 +391,7 @@ public:
      @param velocity @~english The velocity is set to this body.
      * @~chinese 要设置的刚体速度。
      */
-    virtual void setVelocity(const Vect& velocity);
+    virtual void setVelocity(const Vec2& velocity);
     
     /** @~english Get the velocity of a body.  @~chinese 获取刚体的速度。*/
     virtual Vec2 getVelocity();
@@ -535,14 +533,14 @@ public:
     int getGroup() const;
     
     /** @~english get the body position.  @~chinese 获取刚体的位置。*/
-    const Vec2& getPosition();
-    
+    Vec2 getPosition() const;
+
     /** @~english get the body rotation.  @~chinese 获取刚体的旋转值。*/
     float getRotation();
-    
+
     /** @~english set body position offset, it's the position witch relative to node  @~chinese 设置刚体的偏移量，它是相对node的位置*/
     void setPositionOffset(const Vec2& position);
-    
+
     /** @~english get body position offset.  @~chinese 获取刚体位置的偏移量。*/
     const Vec2& getPositionOffset() const { return _positionOffset; }
     
@@ -583,6 +581,7 @@ public:
     
     /** @~english Get the body mass.  @~chinese 获取刚体的质量。*/
     inline float getMass() const { return _mass; }
+
     /**
      * @brief @~english Add mass to body.
      *
@@ -689,7 +688,7 @@ public:
      * 
      * 如果刚体无效,它不会有模拟世界。
      */
-    void setEnable(bool enable);
+    virtual void setEnabled(bool enable) override;
     
     /** @~english Whether the body can rotation.  @~chinese 刚体是否可以旋转。*/
     inline bool isRotationEnabled() const { return _rotationEnabled; }
@@ -716,33 +715,43 @@ public:
     Vec2 local2World(const Vec2& point);
 
     /** @~english Get the rigid body of chipmunk.  @~chinese 获取chipmunk中的刚体。*/
-    cpBody* getCPBody() { return _cpBody; }
-    
-protected:
-    
-    bool init();
-    
-    virtual void setPosition(const Vec2& position);
-    virtual void setRotation(float rotation);
-    virtual void setScale(float scaleX, float scaleY);
-    
-    void update(float delta);
-    
-    void removeJoint(PhysicsJoint* joint);
-    inline void updateDamping() { _isDamping = _linearDamping != 0.0f ||  _angularDamping != 0.0f; }
+    cpBody* getCPBody() const { return _cpBody; }
+
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual void onAdd() override;
+    virtual void onRemove() override;
     
 protected:
     PhysicsBody();
     virtual ~PhysicsBody();
+
+    virtual bool init()override;
     
+    virtual void setPosition(float positionX, float positionY);
+
+    virtual void setRotation(float rotation);
+
+    virtual void setScale(float scaleX, float scaleY);
+    
+    void update(float delta)override;
+    
+    void removeJoint(PhysicsJoint* joint);
+
+    inline void updateDamping() { _isDamping = _linearDamping != 0.0f ||  _angularDamping != 0.0f; }
+
+    void addToPhysicsWorld();
+    void removeFromPhysicsWorld();
+
+    void beforeSimulation(const Mat4& parentToWorldTransform, const Mat4& nodeToWorldTransform, float scaleX, float scaleY, float rotation);
+    void afterSimulation(const Mat4& parentToWorldTransform, float parentRotation);
 protected:
-    Node* _node;
     std::vector<PhysicsJoint*> _joints;
     Vector<PhysicsShape*> _shapes;
     PhysicsWorld* _world;
+    
     cpBody* _cpBody;
     bool _dynamic;
-    bool _enabled;
     bool _rotationEnabled;
     bool _gravityEnabled;
     bool _massDefault;
@@ -754,22 +763,32 @@ protected:
     bool _isDamping;
     float _linearDamping;
     float _angularDamping;
+
     int _tag;
     
-    bool _positionInitDirty;
-    Vec2 _recordedPosition;
-    Vec2 _latestPosition;
+    // when setMass() is invoked, it means body's mass is not calculated by shapes
+    bool _massSetByUser;
+    // when setMoment() is invoked, it means body's moment is not calculated by shapes
+    bool _momentSetByUser;
+    
     Vec2 _positionOffset;
     float _rotationOffset;
     float _recordedRotation;
     double _recordedAngle;
     
+    // offset between owner's center point and down left point
+    Vec3 _ownerCenterOffset;
+    // offset of owner's center point and anchor point in parent coordinate
+    Vec2 _offset;
+    float _recordScaleX;
+    float _recordScaleY;
+
+    float _recordPosX;
+    float _recordPosY;
+
     friend class PhysicsWorld;
     friend class PhysicsShape;
     friend class PhysicsJoint;
-    friend class Node;
-    friend class Layer;
-    friend class ProtectedNode;
 };
 
 /** @} */

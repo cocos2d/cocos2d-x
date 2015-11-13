@@ -848,13 +848,13 @@ bool UIPageViewVerticalTest::init()
         
         // Create the page view
         PageView* pageView = PageView::create();
+        pageView->setDirection(ui::PageView::Direction::VERTICAL);
         pageView->setContentSize(Size(240.0f, 130.0f));
         Size backgroundSize = background->getContentSize();
         pageView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                                    (backgroundSize.width - pageView->getContentSize().width) / 2.0f,
                                    (widgetSize.height - backgroundSize.height) / 2.0f +
                                    (backgroundSize.height - pageView->getContentSize().height) / 2.0f));
-        pageView->setDirection(ui::PageView::Direction::VERTICAL);
         
         pageView->removeAllPages();
         

@@ -105,7 +105,22 @@ public:
     };
     
     /**
-     * @~english
+     * ListView supports magnetic scroll.
+     * With CENTER type, ListView tries to align its items in center of current view.
+     * With BOTH_END type, ListView tries to align its items in left or right end if it is horizontal, top or bottom in vertical. The aligning side (left or right, top or bottom) is determined by user's scroll direction.
+     */
+    enum class MagneticType
+    {
+        NONE,
+        CENTER,
+        BOTH_END,
+        LEFT,
+        RIGHT,
+        TOP,
+        BOTTOM,
+    };
+    
+    /**
      * ListView item click callback.
      * @~chinese 
      * ListView控件元素的点击回调。
@@ -274,7 +289,27 @@ public:
     void setGravity(Gravity gravity);
     
     /**
-     * @~english
+     * Set magnetic type of ListView.
+     * @see `MagneticType`
+     */
+    void setMagneticType(MagneticType magneticType);
+    
+    /**
+     * Get magnetic type of ListView.
+     */
+    MagneticType getMagneticType() const;
+    
+    /**
+     * Set magnetic allowed out of boundary.
+     */
+    void setMagneticAllowedOutOfBoundary(bool magneticAllowedOutOfBoundary);
+    
+    /**
+     * Query whether the magnetic out of boundary is allowed.
+     */
+    bool getMagneticAllowedOutOfBoundary() const;
+    
+    /**
      * Set the margin between each item in ListView.
      *
      * @~chinese 
@@ -297,8 +332,8 @@ public:
     float getItemsMargin()const;
     
     //override methods
-    virtual void forceDoLayout()override;
     virtual void doLayout() override;
+    virtual void requestDoLayout() override;
     virtual void addChild(Node* child)override;
     virtual void addChild(Node * child, int localZOrder)override;
     virtual void addChild(Node* child, int zOrder, int tag) override;
@@ -306,11 +341,90 @@ public:
     virtual void removeAllChildren() override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void removeChild(Node* child, bool cleaup = true) override;
-    
-        
+
+	/**
+	 * @brief Query the closest item to a specific position in inner container.
+	 *
+	 * @param targetPosition Specifies the target position in inner container's coordinates.
+	 * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+	 * @return A item instance if list view is not empty. Otherwise, returns null.
+	 */
+	Widget* getClosestItemToPosition(const Vec2& targetPosition, const Vec2& itemAnchorPoint) const;
+	
+	/**
+	 * @brief Query the closest item to a specific position in current view.
+     * For instance, to find the item in the center of view, call 'getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE)'.
+	 *
+	 * @param positionRatioInView Specifies the target position with ratio in list view's content size.
+	 * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+	 * @return A item instance if list view is not empty. Otherwise, returns null.
+	 */
+	Widget* getClosestItemToPositionInCurrentView(const Vec2& positionRatioInView, const Vec2& itemAnchorPoint) const;
+	
     /**
-     * @brief @~english Query current selected widget's index.
-     * @~chinese 查询当前选中控件的索引。
+     * @brief Query the center item
+     * @return A item instance.
+     */
+    Widget* getCenterItemInCurrentView() const;
+    
+    /**
+     * @brief Query the leftmost item in horizontal list
+     * @return A item instance.
+     */
+    Widget* getLeftmostItemInCurrentView() const;
+    
+    /**
+     * @brief Query the rightmost item in horizontal list
+     * @return A item instance.
+     */
+    Widget* getRightmostItemInCurrentView() const;
+    
+    /**
+     * @brief Query the topmost item in horizontal list
+     * @return A item instance.
+     */
+    Widget* getTopmostItemInCurrentView() const;
+    
+    /**
+     * @brief Query the bottommost item in horizontal list
+     * @return A item instance.
+     */
+    Widget* getBottommostItemInCurrentView() const;
+
+    /**
+     * Override functions
+     */
+    virtual void jumpToBottom() override;
+    virtual void jumpToTop() override;
+    virtual void jumpToLeft() override;
+    virtual void jumpToRight() override;
+    virtual void jumpToTopLeft() override;
+    virtual void jumpToTopRight() override;
+    virtual void jumpToBottomLeft() override;
+    virtual void jumpToBottomRight() override;
+    virtual void jumpToPercentVertical(float percent) override;
+    virtual void jumpToPercentHorizontal(float percent) override;
+    virtual void jumpToPercentBothDirection(const Vec2& percent) override;
+
+    /**
+     * @brief Jump to specific item
+     * @param itemIndex Specifies the item's index
+     * @param positionRatioInView Specifies the position with ratio in list view's content size.
+     * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+     */
+    void jumpToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint);
+    
+	/**
+	 * @brief Scroll to specific item
+	 * @param positionRatioInView Specifies the position with ratio in list view's content size.
+	 * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+	 * @param timeInSec Scroll time
+	 */
+    void scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint);
+	void scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec);
+	
+    /**
+     * @brief Query current selected widget's idnex.
      *
      * @return @~english A index of a selected item.
      * @~chinese 选中的控件的索引。
@@ -364,19 +478,20 @@ public:
      * @~chinese 手动刷新view和ListView的布局。
      * 该方法将列表视图内容标记为dirty，内容视图将在下一帧刷新。
      */
-    void requestRefreshView();
+    CC_DEPRECATED_ATTRIBUTE void requestRefreshView();
 
     
     /**
      * @brief @~english Refresh content view of ListView.
      * @~chinese 更新ListView的视图。
      */
-    void refreshView();
+    CC_DEPRECATED_ATTRIBUTE void refreshView();
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     
 protected:
+    virtual void handleReleaseLogic(Touch *touch) override;
     
     void updateInnerContainerSize();
     void remedyLayoutParameter(Widget* item);
@@ -389,6 +504,13 @@ protected:
     virtual void copyClonedWidgetChildren(Widget* model) override;
     void selectedItemEvent(TouchEventType event);
     virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,Touch* touch) override;
+    
+    virtual Vec2 getHowMuchOutOfBoundary(const Vec2& addition = Vec2::ZERO) override;
+    
+    virtual void startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity) override;
+    
+    void startMagneticScroll();
+    
 protected:
     Widget* _model;
     
@@ -396,10 +518,14 @@ protected:
     
     Gravity _gravity;
     
+    MagneticType _magneticType;
+    bool _magneticAllowedOutOfBoundary;
+    
     float _itemsMargin;
     
     ssize_t _curSelectedIndex;
-    bool _refreshViewDirty;
+
+    bool _innerContainerDoLayoutDirty;
     
     Ref*       _listViewEventListener;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))

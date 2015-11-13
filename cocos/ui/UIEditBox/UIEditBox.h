@@ -236,7 +236,7 @@ namespace ui {
              * @~chinese 
              * 自动把输入的所有字符大写。
              */
-            INTIAL_CAPS_ALL_CHARACTERS,
+            INITIAL_CAPS_ALL_CHARACTERS,
         };
             
         /**@~english
@@ -334,7 +334,7 @@ namespace ui {
          * @~chinese 
          * 注册一个脚本函数,当编辑框发出事件时，这个脚本函数会被调用
          * 
-         * 这个回调函数将会在onExit函数调用后被删除。
+         * 这个回调函数将会在onExit函数调用后被删除�
          * @~english
          * @code
          * -- lua sample

@@ -64,7 +64,7 @@ public:
     double minDelay;
     
     /**@~english
-     * Defautl constructor
+     * Default constructor
      *
      * @~chinese 
      * 默认构造函数

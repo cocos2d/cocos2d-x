@@ -74,9 +74,9 @@ public:
     /**@~english Get the number of vertices or indices used for drawing. @~chinese 用于绘制的顶点或者索引（如果有）的数目。*/
     int getCount() const { return _count; }
     /**@~english Setter for the start index. @~chinese 设置开始索引的位置。*/
-    void setStart(int start) { _start = start; }
+    void setStart(int start);
     /**@~english Setter for the count.  @~chinese 设置绘制的顶点或索引的个数。*/
-    void setCount(int count) { _count = count; }
+    void setCount(int count);
     
 protected:
     Primitive();

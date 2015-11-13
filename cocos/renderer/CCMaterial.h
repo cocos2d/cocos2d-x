@@ -163,7 +163,7 @@ public:
      * @~chinese 拷贝材质（深度拷贝）。
      * @return @~english Copy of material. @~chinese 材质的拷贝。
      */
-    Material* clone() const;
+    virtual Material* clone() const;
 
 protected:
     Material();
@@ -181,8 +181,8 @@ protected:
     bool parseSampler(GLProgramState* glProgramState, Properties* properties);
     bool parseUniform(GLProgramState* programState, Properties* properties, const char* uniformName);
     bool parseRenderState(RenderState* renderState, Properties* properties);
-
-
+    
+    
     // material name
     std::string _name;
 

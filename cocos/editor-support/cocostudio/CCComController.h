@@ -40,7 +40,6 @@ namespace cocostudio {
 */
 class CC_STUDIO_DLL ComController : public cocos2d::Component, public InputDelegate
 {
-
     DECLARE_CLASS_COMPONENT_INFO
 public:
     /**
@@ -48,16 +47,21 @@ public:
      * @~chinese 逻辑组件构造函数。
      * @js ctor
      */
-    ComController(void);
+    ComController();
     
 public:
+    const static std::string COMPONENT_NAME;
+
+    static ComController* create();
+
     /**
      * @brief @~english ComController destructor.
      * @~chinese 逻辑组件析构函数。
      * @js NA
      * @lua NA
      */
-    virtual ~ComController(void);
+    virtual ~ComController();
+
 
     /**
      * @brief @~english Initialize a ComController.
@@ -100,6 +104,7 @@ public:
     * @lua NA
     */
     virtual void onAdd() override;
+
     /**
     * @js NA
     * @lua NA

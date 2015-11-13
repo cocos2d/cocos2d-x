@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -313,8 +313,8 @@ CC_CONSTRUCTOR_ACCESS:
     */
     virtual void visit(Renderer* renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
 
-    /**generate default GLProgramState*/
-    void genGLProgramState(bool useLight = false);
+    /**generate default material*/
+    void genMaterial(bool useLight = false);
 
     void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite);
     void createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& matrialdatas);
@@ -436,7 +436,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
 
     static Sprite3DCache*                        _cacheInstance;
-    std::unordered_map<std::string, Sprite3DData*> _spriteDatas; //cached sprite datas
+    std::unordered_map<std::string, Sprite3DData*> _spriteDatas; //cached sprite data
 };
 
 // end of 3d group

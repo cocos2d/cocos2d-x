@@ -32,16 +32,24 @@
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 #include "network/CCDownloader.h"
-
+#include "platform/CCFileUtils.h"
 
 #include "json/document.h"
 
 NS_CC_EXT_BEGIN
 
+struct DownloadUnit
+{
+    std::string srcUrl;
+    std::string storagePath;
+    std::string customId;
+};
 /**
  * @addtogroup assets_manager
  * @{
  */
+
+typedef std::unordered_map<std::string, DownloadUnit> DownloadUnits;
 
 /**
  * @~english Manifest is an abstraction of the assets list. 
@@ -231,7 +239,7 @@ protected:
      * @param units   @~english The download units reference to be modified by the generation result
      * @~chinese 下载资源列表，结果会被保存在这个参数中
      */
-    void genResumeAssetsList(network::DownloadUnits *units) const;
+    void genResumeAssetsList(DownloadUnits *units) const;
     
     /** @brief @~english Prepend all search paths to the FileUtils.
      * @~chinese 向FileUtils中优先插入这个Manifest对象相关的搜索路径。

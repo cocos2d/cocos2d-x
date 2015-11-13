@@ -501,7 +501,7 @@ public:
      * @brief @~english Create the action with a number of waves, the waves amplitude, the grid size and the duration.
      * @~chinese 使用波数,波振幅,网格大小和持续时间来创建动作。
      * @param duration @~english Specify the duration of the WavesTiles3D action. It's a value in seconds.
-     * @~chinese  指定WavesTiles3D动作的持续时间。这是一个以秒为单位的值。
+     * @~chinese  指定WavesTiles3D动鞯某中奔洹Ｕ馐且桓鲆悦胛ノ坏闹怠�
      * @param gridSize @~english Specify the size of the grid.
      * @~chinese 指定网格的大小。
      * @param waves @~english Specify the waves count of the WavesTiles3D action.

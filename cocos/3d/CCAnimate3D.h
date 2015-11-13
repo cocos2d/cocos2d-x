@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -299,7 +299,7 @@ protected:
     float      _last; //last time 0 - 1, used to generate sub Animate3D
     bool       _playReverse; // is playing reverse
     static float      _transTime; //transition time from one animate3d to another
-    float      _accTransTime; // acculate transition time
+    float      _accTransTime; // accumulate transition time
     float      _lastTime;     // last t (0 - 1)
     float      _originInterval;// save origin interval time
     float      _frameRate;

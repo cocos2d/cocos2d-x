@@ -31,53 +31,17 @@ using namespace cocos2d::ui;
 
 class JSStudioEventListenerWrapper: public JSCallbackWrapper {
 public:
-    JSStudioEventListenerWrapper();
-    virtual ~JSStudioEventListenerWrapper();
-
-    virtual void setJSCallbackThis(jsval thisObj);
-
     virtual void eventCallbackFunc(Ref*,int);
-
-private:
-    bool m_bNeedUnroot;
 };
-
-JSStudioEventListenerWrapper::JSStudioEventListenerWrapper()
-    : m_bNeedUnroot(false)
-{
-
-}
-
-JSStudioEventListenerWrapper::~JSStudioEventListenerWrapper()
-{
-    if (m_bNeedUnroot)
-    {
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS::RemoveValueRoot(cx, &_jsThisObj);
-    }
-}
-
-void JSStudioEventListenerWrapper::setJSCallbackThis(jsval jsThisObj)
-{
-    JSCallbackWrapper::setJSCallbackThis(jsThisObj);
-
-    JSObject *thisObj = jsThisObj.toObjectOrNull();
-    js_proxy *p = jsb_get_js_proxy(thisObj);
-    if (!p)
-    {
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        m_bNeedUnroot = true;
-        m_bNeedUnroot &= JS::AddValueRoot(cx, &_jsThisObj);
-    }
-}
 
 void JSStudioEventListenerWrapper::eventCallbackFunc(Ref* sender,int eventType)
 {
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-    JS::RootedObject thisObj(cx, _jsThisObj.isNullOrUndefined() ? NULL : _jsThisObj.toObjectOrNull());
+    JS::RootedObject thisObj(cx, getJSCallbackThis().toObjectOrNull());
+    JS::RootedValue callback(cx, getJSCallbackFunc());
     js_proxy_t *proxy = js_get_or_create_proxy(cx, sender);
     JS::RootedValue retval(cx);
-    if (!_jsCallback.isNullOrUndefined())
+    if (!callback.isNullOrUndefined())
     {
         jsval touchVal = INT_TO_JSVAL(eventType);
 
@@ -85,12 +49,8 @@ void JSStudioEventListenerWrapper::eventCallbackFunc(Ref* sender,int eventType)
         valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
         valArr[1] = touchVal;
 
-        //JS::AddValueRoot(cx, valArr);
-
         JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-
-        JS_CallFunctionValue(cx, thisObj, JS::RootedValue(cx, _jsCallback), JS::HandleValueArray::fromMarkedLocation(2, valArr), &retval);
-        //JS::RemoveValueRoot(cx, valArr);
+        JS_CallFunctionValue(cx, thisObj, callback, JS::HandleValueArray::fromMarkedLocation(2, valArr), &retval);
     }
 }
 

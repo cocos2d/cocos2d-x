@@ -43,10 +43,10 @@ NS_CC_BEGIN
  * Similar to std::vector, but it will manage reference count automatically internally.
  * Which means it will invoke Ref::retain() when adding an element, and invoke Ref::release() when removing an element.
  * @~chinese 
- * ç±»ä¼¼äºstd::vector,ä½†æ˜¯åœ¨å†…éƒ¨è‡ªåŠ¨ç®¡ç†å¼•ç”¨è®¡æ•°ã€‚
- * è¿™æ„å‘³ç€å®ƒè¢«æ·»åŠ çš„æ—¶å€™å°†è°ƒç”¨Ref::retain()ï¼Œè¢«åˆ é™¤çš„æ—¶å€™å°†è°ƒç”¨Ref::release()ã€‚
+ * ÀàËÆÓÚstd::vector,µ«ÊÇÔÚÄÚ²¿×Ô¶¯¹ÜÀíÒıÓÃ¼ÆÊı¡£
+ * ÕâÒâÎ¶×ÅËü±»Ìí¼ÓµÄÊ±ºò½«µ÷ÓÃRef::retain()£¬±»É¾³ıµÄÊ±ºò½«µ÷ÓÃRef::release()¡£
  * @warn @~english The element should be `Ref` or its sub-class.
- * @~chinese å…ƒç´ åº”è¯¥ä¸ºâ€œRefâ€æˆ–å…¶å­ç±»ã€‚
+ * @~chinese ÔªËØÓ¦¸ÃÎª¡°Ref¡±»òÆä×ÓÀà¡£
  * @lua NA
  */
 template<class T>
@@ -57,22 +57,22 @@ public:
     // Iterators
     // ------------------------------------------
     
-    /** @~english Iterator, can be used to loop the Vector.  @~chinese è¿­ä»£å™¨,å¯ç”¨äºå¾ªç¯éå†Vectorã€‚*/
+    /** @~english Iterator, can be used to loop the Vector.  @~chinese µü´úÆ÷,¿ÉÓÃÓÚÑ­»·±éÀúVector¡£*/
     typedef typename std::vector<T>::iterator iterator;
 
-    /** @~english Const iterator, can be used to loop the Vector.  @~chinese å¸¸é‡è¿­ä»£å™¨,å¯ç”¨äºå¾ªç¯éå†Vectorã€‚*/
+    /** @~english Const iterator, can be used to loop the Vector.  @~chinese ³£Á¿µü´úÆ÷,¿ÉÓÃÓÚÑ­»·±éÀúVector¡£*/
     typedef typename std::vector<T>::const_iterator const_iterator;
     
-    /** @~english Reversed iterator, can be used to loop the Vector in reverse sequence.  @~chinese åå‘è¿­ä»£å™¨,å¯ç”¨äºåå‘å¾ªç¯éå†Vectoré˜Ÿåˆ—ã€‚*/
+    /** @~english Reversed iterator, can be used to loop the Vector in reverse sequence.  @~chinese ·´Ïòµü´úÆ÷,¿ÉÓÃÓÚ·´ÏòÑ­»·±éÀúVector¶ÓÁĞ¡£*/
     typedef typename std::vector<T>::reverse_iterator reverse_iterator;
 
-    /** @~english Reversed iterator, can be used to loop the Vector in reverse sequence.  @~chinese åå‘è¿­ä»£å™¨,å¯ç”¨äºåå‘å¾ªç¯éå†Vectoré˜Ÿåˆ—ã€‚*/
+    /** @~english Reversed iterator, can be used to loop the Vector in reverse sequence.  @~chinese ·´Ïòµü´úÆ÷,¿ÉÓÃÓÚ·´ÏòÑ­»·±éÀúVector¶ÓÁĞ¡£*/
     typedef typename std::vector<T>::const_reverse_iterator const_reverse_iterator;
     
-    /** @~english Returns an iterator pointing the first element of the Vector.  @~chinese è¿”å›ä¸€ä¸ªè¿­ä»£å™¨æŒ‡å‘Vectorçš„ç¬¬ä¸€ä¸ªå…ƒç´ ã€‚*/
+    /** @~english Returns an iterator pointing the first element of the Vector.  @~chinese ·µ»ØÒ»¸öµü´úÆ÷Ö¸ÏòVectorµÄµÚÒ»¸öÔªËØ¡£*/
     iterator begin() { return _data.begin(); }
 
-    /** @~english Returns an iterator pointing the first element of the Vector.  @~chinese è¿”å›ä¸€ä¸ªè¿­ä»£å™¨æŒ‡å‘Vectorçš„ç¬¬ä¸€ä¸ªå…ƒç´ ã€‚*/
+    /** @~english Returns an iterator pointing the first element of the Vector.  @~chinese ·µ»ØÒ»¸öµü´úÆ÷Ö¸ÏòVectorµÄµÚÒ»¸öÔªËØ¡£*/
     const_iterator begin() const { return _data.begin(); }
     
     /**
@@ -81,9 +81,9 @@ public:
      * The past-the-end element is the theoretical element that would follow the last element in the Vector.
      * It does not point to any element, and thus shall not be dereferenced.
      * @~chinese 
-     * è¿”å›ä¸€ä¸ªè¿­ä»£å™¨å®¹å™¨ä¸­çš„çš„past-the-endå…ƒç´ ã€‚
-     * past-the-endå…ƒç´ æ˜¯æŒ‰ç…§Vectorä¸­çš„æœ€åä¸€ä¸ªå…ƒç´ ã€‚
-     * å®ƒä¸æŒ‡å‘ä»»ä½•å…ƒç´ ,å› æ­¤ä¸èƒ½åå‘å¼•ç”¨ã€‚
+     * ·µ»ØÒ»¸öµü´úÆ÷ÈİÆ÷ÖĞµÄµÄpast-the-endÔªËØ¡£
+     * past-the-endÔªËØÊÇ°´ÕÕVectorÖĞµÄ×îºóÒ»¸öÔªËØ¡£
+     * Ëü²»Ö¸ÏòÈÎºÎÔªËØ,Òò´Ë²»ÄÜ·´ÏòÒıÓÃ¡£
      */
     iterator end() { return _data.end(); }
 
@@ -93,49 +93,49 @@ public:
      * The past-the-end element is the theoretical element that would follow the last element in the Vector.
      * It does not point to any element, and thus shall not be dereferenced.
      * @~chinese 
-     * è¿”å›ä¸€ä¸ªè¿­ä»£å™¨å®¹å™¨ä¸­çš„çš„past-the-endå…ƒç´ ã€‚
-     * past-the-endå…ƒç´ æ˜¯æŒ‰ç…§Vectorä¸­çš„æœ€åä¸€ä¸ªå…ƒç´ ã€‚
-     * å®ƒä¸æŒ‡å‘ä»»ä½•å…ƒç´ ,å› æ­¤ä¸èƒ½åå‘å¼•ç”¨ã€‚
+     * ·µ»ØÒ»¸öµü´úÆ÷ÈİÆ÷ÖĞµÄµÄpast-the-endÔªËØ¡£
+     * past-the-endÔªËØÊÇ°´ÕÕVectorÖĞµÄ×îºóÒ»¸öÔªËØ¡£
+     * Ëü²»Ö¸ÏòÈÎºÎÔªËØ,Òò´Ë²»ÄÜ·´ÏòÒıÓÃ¡£
      */
     const_iterator end() const { return _data.end(); }
     
-    /** @~english Returns a const_iterator pointing the first element of the Vector.  @~chinese è¿”å›ä¸€ä¸ªconst_iteratoræŒ‡å‘Vectorçš„ç¬¬ä¸€ä¸ªå…ƒç´ ã€‚*/
+    /** @~english Returns a const_iterator pointing the first element of the Vector.  @~chinese ·µ»ØÒ»¸öconst_iteratorÖ¸ÏòVectorµÄµÚÒ»¸öÔªËØ¡£*/
     const_iterator cbegin() const { return _data.cbegin(); }
 
-    /** @~english Returns a const_iterator pointing the `past-the-end` element of the Vector.  @~chinese è¿”å›ä¸€ä¸ªconst_iteratoræŒ‡å‘Vectorçš„past-the-endå…ƒç´ ã€‚*/
+    /** @~english Returns a const_iterator pointing the `past-the-end` element of the Vector.  @~chinese ·µ»ØÒ»¸öconst_iteratorÖ¸ÏòVectorµÄpast-the-endÔªËØ¡£*/
     const_iterator cend() const { return _data.cend(); }
     
-    /** @~english Returns a reverse iterator pointing to the last element of the Vector.  @~chinese è¿”å›ä¸€ä¸ªåå‘è¿­ä»£å™¨æŒ‡å‘Vectorçš„æœ€åä¸€ä¸ªå…ƒç´ ã€‚*/
+    /** @~english Returns a reverse iterator pointing to the last element of the Vector.  @~chinese ·µ»ØÒ»¸ö·´Ïòµü´úÆ÷Ö¸ÏòVectorµÄ×îºóÒ»¸öÔªËØ¡£*/
     reverse_iterator rbegin() { return _data.rbegin(); }
 
-    /** @~english Returns a reverse iterator pointing to the last element of the Vector.  @~chinese è¿”å›ä¸€ä¸ªåå‘è¿­ä»£å™¨æŒ‡å‘Vectorçš„æœ€åä¸€ä¸ªå…ƒç´ ã€‚*/
+    /** @~english Returns a reverse iterator pointing to the last element of the Vector.  @~chinese ·µ»ØÒ»¸ö·´Ïòµü´úÆ÷Ö¸ÏòVectorµÄ×îºóÒ»¸öÔªËØ¡£*/
     const_reverse_iterator rbegin() const { return _data.rbegin(); }
     
     /**
      * @~english Returns a reverse iterator pointing to the theoretical element preceding the
      * first element of the vector (which is considered its reverse end).
-     * @~chinese è¿”å›ä¸€ä¸ªåå‘è¿­ä»£å™¨ï¼ŒæŒ‡å‘Vectorçš„ç¬¬ä¸€å…ƒç´ å‰é¢çš„theoreticalå…ƒç´ ï¼ˆè¿™è¢«è®¤ä¸ºæ˜¯å®ƒçš„åå‘æœ€åä¸€ä¸ªï¼‰ã€‚
+     * @~chinese ·µ»ØÒ»¸ö·´Ïòµü´úÆ÷£¬Ö¸ÏòVectorµÄµÚÒ»ÔªËØÇ°ÃæµÄtheoreticalÔªËØ£¨Õâ±»ÈÏÎªÊÇËüµÄ·´Ïò×îºóÒ»¸ö£©¡£
      */
     reverse_iterator rend() { return _data.rend(); }
 
     /**
      * @~english Returns a reverse iterator pointing to the theoretical element preceding the
      * first element of the vector (which is considered its reverse end).
-     * @~chinese è¿”å›ä¸€ä¸ªåå‘è¿­ä»£å™¨ï¼ŒæŒ‡å‘Vectorçš„ç¬¬ä¸€å…ƒç´ å‰é¢çš„theoreticalå…ƒç´ ï¼ˆè¿™è¢«è®¤ä¸ºæ˜¯å®ƒçš„åå‘æœ€åä¸€ä¸ªï¼‰ã€‚
+     * @~chinese ·µ»ØÒ»¸ö·´Ïòµü´úÆ÷£¬Ö¸ÏòVectorµÄµÚÒ»ÔªËØÇ°ÃæµÄtheoreticalÔªËØ£¨Õâ±»ÈÏÎªÊÇËüµÄ·´Ïò×îºóÒ»¸ö£©¡£
      */
     const_reverse_iterator rend() const { return _data.rend(); }
     
-    /** @~english Returns a const_reverse_iterator pointing to the last element in the container  @~chinese è¿”å›ä¸€ä¸ªconst_reverse_iteratoræŒ‡å‘æœ€åä¸€ä¸ªå…ƒç´ çš„å®¹å™¨ */
+    /** @~english Returns a const_reverse_iterator pointing to the last element in the container  @~chinese ·µ»ØÒ»¸öconst_reverse_iteratorÖ¸Ïò×îºóÒ»¸öÔªËØµÄÈİÆ÷ */
     const_reverse_iterator crbegin() const { return _data.crbegin(); }
 
     /**
      * @~english Returns a const_reverse_iterator pointing to the theoretical element preceding the first element in
      * the container (which is considered its reverse end). 
-     * @~chinese è¿”å›ä¸€ä¸ªconst_reverse_iteratoræŒ‡å‘å®¹å™¨ä¸­ç¬¬ä¸€ä¸ªtheoreticalå…ƒç´ ï¼ˆè¿™è¢«è®¤ä¸ºæ˜¯ä»–çš„åå‘æœ€åä¸€ä¸ªï¼‰
+     * @~chinese ·µ»ØÒ»¸öconst_reverse_iteratorÖ¸ÏòÈİÆ÷ÖĞµÚÒ»¸ötheoreticalÔªËØ£¨Õâ±»ÈÏÎªÊÇËûµÄ·´Ïò×îºóÒ»¸ö£©
      */
     const_reverse_iterator crend() const { return _data.crend(); }
     
-    /** @~english Constructor.  @~chinese æ„é€ å‡½æ•°ã€‚ */
+    /** @~english Constructor.  @~chinese ¹¹Ôìº¯Êı¡£ */
     Vector<T>()
     : _data()
     {
@@ -146,9 +146,9 @@ public:
      * @~english
      * Constructor with a capacity. 
      * @~chinese 
-     * æ„é€ å‡½æ•°ï¼Œä½¿ç”¨capacityæ„é€ ã€‚
+     * ¹¹Ôìº¯Êı£¬Ê¹ÓÃcapacity¹¹Ôì¡£
      * @param capacity @~english Capacity of the Vector.
-     * @~chinese Vectorçš„Capacityã€‚
+     * @~chinese VectorµÄCapacity¡£
      */
     explicit Vector<T>(ssize_t capacity)
     : _data()
@@ -158,14 +158,14 @@ public:
         reserve(capacity);
     }
 
-    /** @~english Destructor.  @~chinese ææ„å‡½æ•°ã€‚ */
+    /** @~english Destructor.  @~chinese Îö¹¹º¯Êı¡£ */
     ~Vector<T>()
     {
         CCLOGINFO("In the destructor of Vector.");
         clear();
     }
 
-    /** @~english Copy constructor.  @~chinese æ‹·è´æ„é€ å‡½æ•°ã€‚ */
+    /** @~english Copy constructor.  @~chinese ¿½±´¹¹Ôìº¯Êı¡£ */
     Vector<T>(const Vector<T>& other)
     {
         static_assert(std::is_convertible<T, Ref*>::value, "Invalid Type for cocos2d::Vector<T>!");
@@ -174,7 +174,7 @@ public:
         addRefForAllObjects();
     }
     
-    /** @~english Constructor with std::move semantic.  @~chinese ä½¿ç”¨std::moveæ„é€ ã€‚*/
+    /** @~english Constructor with std::move semantic.  @~chinese Ê¹ÓÃstd::move¹¹Ôì¡£*/
     Vector<T>(Vector<T>&& other)
     {
         static_assert(std::is_convertible<T, Ref*>::value, "Invalid Type for cocos2d::Vector<T>!");
@@ -182,7 +182,7 @@ public:
         _data = std::move(other._data);
     }
     
-    /** @~english Copy assignment operator.  @~chinese æ‹·è´èµ‹å€¼è¿ç®—ç¬¦ã€‚ */
+    /** @~english Copy assignment operator.  @~chinese ¿½±´¸³ÖµÔËËã·û¡£ */
     Vector<T>& operator=(const Vector<T>& other)
     {
         if (this != &other) {
@@ -194,7 +194,7 @@ public:
         return *this;
     }
     
-    /** @~english Copy assignment operator with std::move semantic.  @~chinese æ‹·è´èµ‹å€¼è¿ç®—ç¬¦ä¸std::moveè¯­ä¹‰ã€‚*/
+    /** @~english Copy assignment operator with std::move semantic.  @~chinese ¿½±´¸³ÖµÔËËã·ûÓëstd::moveÓïÒå¡£*/
     Vector<T>& operator=(Vector<T>&& other)
     {
         if (this != &other) {
@@ -220,9 +220,9 @@ public:
      * @~english
      * Requests that the vector capacity be at least enough to contain n elements.
      * @~chinese 
-     * è¦æ±‚è½½ä½“å®¹é‡è‡³å°‘è¶³ä»¥åŒ…å«nä¸ªå…ƒç´ ã€‚
+     * ÒªÇóÔØÌåÈİÁ¿ÖÁÉÙ×ãÒÔ°üº¬n¸öÔªËØ¡£
      * @param capacity @~english Minimum capacity requested of the Vector.
-     * @~chinese è¦æ±‚Vectorçš„æœ€å°å®¹é‡ã€‚
+     * @~chinese ÒªÇóVectorµÄ×îĞ¡ÈİÁ¿¡£
      */
     void reserve(ssize_t n)
     {
@@ -231,13 +231,13 @@ public:
     
     /**
      * @brief @~english Returns the size of the storage space currently allocated for the Vector, expressed in terms of elements.
-     * @~chinese è¿”å›å½“å‰åˆ†é…ç»™Vectorçš„å­˜å‚¨ç©ºé—´çš„å¤§å°ã€‚
+     * @~chinese ·µ»Øµ±Ç°·ÖÅä¸øVectorµÄ´æ´¢¿Õ¼äµÄ´óĞ¡¡£
      *  @note @~english This capacity is not necessarily equal to the Vector size.
      *        It can be equal or greater, with the extra space allowing to accommodate for growth without the need to reallocate on each insertion.
-     * @~chinese è¿™ç§capacityå¹¶ä¸ä¸€å®šç­‰äºVectorçš„å¤§å°ã€‚
-     * å®ƒå¯ä»¥ç›¸ç­‰æˆ–è€…æ›´å¤§,é¢å¤–çš„ç©ºé—´å¯ä»¥å®¹çº³å¢é•¿è€Œä¸éœ€è¦åœ¨æ¯ä¸ªæ’å…¥çš„æ—¶å€™é‡æ–°åˆ†é…ã€‚
+     * @~chinese ÕâÖÖcapacity²¢²»Ò»¶¨µÈÓÚVectorµÄ´óĞ¡¡£
+     * Ëü¿ÉÒÔÏàµÈ»òÕß¸ü´ó,¶îÍâµÄ¿Õ¼ä¿ÉÒÔÈİÄÉÔö³¤¶ø²»ĞèÒªÔÚÃ¿¸ö²åÈëµÄÊ±ºòÖØĞÂ·ÖÅä¡£
      *  @return @~english The size of the currently allocated storage capacity in the Vector, measured in terms of the number elements it can hold.
-     * @~chinese å½“å‰åˆ†é…å­˜å‚¨å®¹é‡Vectorä¸­çš„å¤§å°,å®ƒæ‰€èƒ½å®¹çº³çš„å…ƒç´ æ•°é‡ã€‚
+     * @~chinese µ±Ç°·ÖÅä´æ´¢ÈİÁ¿VectorÖĞµÄ´óĞ¡,ËüËùÄÜÈİÄÉµÄÔªËØÊıÁ¿¡£
      */
     ssize_t capacity() const
     {
@@ -246,11 +246,11 @@ public:
     
     /**
      * @brief @~english Returns the number of elements in the Vector.
-     * @~chinese è¿”å›Vectorä¸­å…ƒç´ çš„æ•°é‡ã€‚
+     * @~chinese ·µ»ØVectorÖĞÔªËØµÄÊıÁ¿¡£
      *  @note @~english This is the number of actual objects held in the Vector, which is not necessarily equal to its storage capacity.
-     * @~chinese è¿™æ˜¯å®é™…å¯¹è±¡çš„Vectorçš„æ•°é‡,å¹¶ä¸ä¸€å®šç­‰äºå®ƒçš„å­˜å‚¨å®¹é‡ã€‚
+     * @~chinese ÕâÊÇÊµ¼Ê¶ÔÏóµÄVectorµÄÊıÁ¿,²¢²»Ò»¶¨µÈÓÚËüµÄ´æ´¢ÈİÁ¿¡£
      *  @return @~english The number of elements in the Vector.
-     * @~chinese Vectorä¸­çš„å…ƒç´ çš„æ•°é‡ã€‚
+     * @~chinese VectorÖĞµÄÔªËØµÄÊıÁ¿¡£
      */
     ssize_t size() const
     {
@@ -258,22 +258,22 @@ public:
     }
     
     /** @brief @~english Returns whether the Vector is empty (i.e. whether its size is 0).
-     * @~chinese è¿”å›Vectoræ˜¯å¦ä¸ºç©º(å³æ— è®ºå…¶å¤§å°ä¸º0)ã€‚
+     * @~chinese ·µ»ØVectorÊÇ·ñÎª¿Õ(¼´ÎŞÂÛÆä´óĞ¡Îª0)¡£
      *  @note @~english This function does not modify the container in any way. To clear the content of a vector, see Vector<T>::clear.
-     * @~chinese æ­¤åŠŸèƒ½ä¸ä¼šä¿®æ”¹å®¹å™¨ä»¥ä»»ä½•æ–¹å¼ã€‚è¦æ¸…é™¤ä¸€ä¸ªè½½ä½“çš„å†…å®¹ï¼Œè¯·å‚é˜…Vector<T>::clearã€‚
+     * @~chinese ´Ë¹¦ÄÜ²»»áĞŞ¸ÄÈİÆ÷ÒÔÈÎºÎ·½Ê½¡£ÒªÇå³ıÒ»¸öÔØÌåµÄÄÚÈİ£¬Çë²ÎÔÄVector<T>::clear¡£
      */
     bool empty() const
     {
         return _data.empty();
     }
     
-    /** @~english Returns the maximum number of elements that the Vector can hold.  @~chinese è¿”å›Vectorå¯ä»¥å®¹çº³çš„æœ€å¤§å…ƒç´ æ•°é‡ã€‚ */
+    /** @~english Returns the maximum number of elements that the Vector can hold.  @~chinese ·µ»ØVector¿ÉÒÔÈİÄÉµÄ×î´óÔªËØÊıÁ¿¡£ */
     ssize_t max_size() const
     {
         return _data.max_size();
     }
     
-    /** @~english Returns index of a certain object, return UNIT_MAX if doesn't contain the object  @~chinese è¿”å›ç´¢å¼•çš„å¯¹è±¡,å¦‚æœä¸åŒ…å«å¯¹è±¡åˆ™è¿”å›UNIT_MAX */
+    /** @~english Returns index of a certain object, return UNIT_MAX if doesn't contain the object  @~chinese ·µ»ØË÷ÒıµÄ¶ÔÏó,Èç¹û²»°üº¬¶ÔÏóÔò·µ»ØUNIT_MAX */
     ssize_t getIndex(T object) const
     {
         auto iter = std::find(_data.begin(), _data.end(), object);
@@ -285,13 +285,13 @@ public:
 
     /**
      * @brief @~english Find the object in the Vector.
-     * @~chinese æŸ¥æ‰¾Vectorä¸­çš„å¯¹è±¡
+     * @~chinese ²éÕÒVectorÖĞµÄ¶ÔÏó
      *  @param object @~english The object to find.
-     * @~chinese æŸ¥æ‰¾å¯¹è±¡
+     * @~chinese ²éÕÒ¶ÔÏó
      *  @return @~english Returns an iterator which refers to the element that its value is equals to object.
      *          Returns Vector::end() if not found.
-     * @~chinese è¿”å›ä¸€ä¸ªæŒ‡å‘å…ƒç´ çš„iteratorã€‚
-     * å¦‚æœä¸å­˜åœ¨åˆ™è¿”å›Vector::end()
+     * @~chinese ·µ»ØÒ»¸öÖ¸ÏòÔªËØµÄiterator¡£
+     * Èç¹û²»´æÔÚÔò·µ»ØVector::end()
      */
     const_iterator find(T object) const
     {
@@ -299,39 +299,39 @@ public:
     }
     
     /** @brief @~english Find the object in the Vector.
-     * @~chinese æŸ¥æ‰¾Vectorä¸­çš„å¯¹è±¡ã€‚
+     * @~chinese ²éÕÒVectorÖĞµÄ¶ÔÏó¡£
      *  @param object @~english The object to find.
-     * @~chinese æŸ¥æ‰¾å¯¹è±¡ã€‚
+     * @~chinese ²éÕÒ¶ÔÏó¡£
      *  @return @~english Returns an iterator which refers to the element that its value is equals to object.
      *          Returns Vector::end() if not found.
-     * @~chinese è¿”å›ä¸€ä¸ªæŒ‡å‘å…ƒç´ çš„iteratorã€‚
-     * å¦‚æœä¸å­˜åœ¨åˆ™è¿”å›Vector::end()
+     * @~chinese ·µ»ØÒ»¸öÖ¸ÏòÔªËØµÄiterator¡£
+     * Èç¹û²»´æÔÚÔò·µ»ØVector::end()
      */
     iterator find(T object)
     {
         return std::find(_data.begin(), _data.end(), object);
     }
     
-    /** @~english Returns the element at position 'index' in the Vector.  @~chinese è¿”å›å…ƒç´ åœ¨Vectorä¸­çš„ä½ç½®ç´¢å¼•ã€‚*/
+    /** @~english Returns the element at position 'index' in the Vector.  @~chinese ·µ»ØÔªËØÔÚVectorÖĞµÄÎ»ÖÃË÷Òı¡£*/
     T at(ssize_t index) const
     {
         CCASSERT( index >= 0 && index < size(), "index out of range in getObjectAtIndex()");
         return _data[index];
     }
 
-    /** @~english Returns the first element in the Vector.  @~chinese è¿”å›Vectorä¸­çš„ç¬¬ä¸€ä¸ªå…ƒç´ ã€‚ */
+    /** @~english Returns the first element in the Vector.  @~chinese ·µ»ØVectorÖĞµÄµÚÒ»¸öÔªËØ¡£ */
     T front() const
     {
         return _data.front();
     }
     
-    /** @~english Returns the last element of the Vector.  @~chinese è¿”å›Vectorçš„æœ€åä¸€ä¸ªå…ƒç´ ã€‚*/
+    /** @~english Returns the last element of the Vector.  @~chinese ·µ»ØVectorµÄ×îºóÒ»¸öÔªËØ¡£*/
     T back() const
     {
         return _data.back();
     }
 
-    /** @~english Returns a random element of the Vector.  @~chinese è¿”å›Vectorä¸­çš„ä¸€ä¸ªéšæœºå…ƒç´ ã€‚*/
+    /** @~english Returns a random element of the Vector.  @~chinese ·µ»ØVectorÖĞµÄÒ»¸öËæ»úÔªËØ¡£*/
     T getRandomObject() const
     {
         if (!_data.empty())
@@ -346,11 +346,11 @@ public:
      * @~english
      * Checks whether an object is in the container.
      * @~chinese 
-     * æ£€æŸ¥ä¸€ä¸ªå¯¹è±¡æ˜¯å¦åœ¨å®¹å™¨ä¸­ã€‚
+     * ¼ì²éÒ»¸ö¶ÔÏóÊÇ·ñÔÚÈİÆ÷ÖĞ¡£
      * @param object @~english The object to be checked.
-     * @~chinese è¢«æ£€æŸ¥çš„å¯¹è±¡ã€‚
+     * @~chinese ±»¼ì²éµÄ¶ÔÏó¡£
      * @return @~english True if the object is in the container, false if not.
-     * @~chinese å¦‚æœå¯¹è±¡åœ¨å®¹å™¨é‡Œè¿”å›trueï¼Œå¦‚æœä¸åœ¨ï¼Œåˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹û¶ÔÏóÔÚÈİÆ÷Àï·µ»Øtrue£¬Èç¹û²»ÔÚ£¬Ôò·µ»Øfalse¡£
      */
     bool contains(T object) const
     {
@@ -361,11 +361,11 @@ public:
      * @~english
      * Checks whether two vectors are equal.
      * @~chinese 
-     * æ£€æŸ¥ä¸¤ä¸ªVectoræ˜¯å¦ç›¸ç­‰ã€‚
+     * ¼ì²éÁ½¸öVectorÊÇ·ñÏàµÈ¡£
      * @param other @~english The vector to be compared.
-     * @~chinese æ¯”è¾ƒçš„vectorå¯¹è±¡ã€‚
+     * @~chinese ±È½ÏµÄvector¶ÔÏó¡£
      * @return @~english True if two vectors are equal, false if not.
-     * @~chinese å¦‚æœä¸¤ä¸ªVectoræ˜¯ç›¸ç­‰çš„åˆ™è¿”å›true,å¦‚æœä¸æƒ³ç­‰åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹ûÁ½¸öVectorÊÇÏàµÈµÄÔò·µ»Øtrue,Èç¹û²»ÏëµÈÔò·µ»Øfalse¡£
      */
     bool equals(const Vector<T> &other)
     {
@@ -385,7 +385,7 @@ public:
 
     // Adds objects
     
-    /** @~english Adds a new element at the end of the Vector.  @~chinese æ·»åŠ ä¸€ä¸ªæ–°å…ƒç´ åˆ°Vectorå†…ã€‚*/
+    /** @~english Adds a new element at the end of the Vector.  @~chinese Ìí¼ÓÒ»¸öĞÂÔªËØµ½VectorÄÚ¡£*/
     void pushBack(T object)
     {
         CCASSERT(object != nullptr, "The object should not be nullptr");
@@ -393,7 +393,7 @@ public:
         object->retain();
     }
     
-    /** @~english Push all elements of an existing Vector to the end of current Vector.  @~chinese åœ¨ç°æœ‰Vectorçš„æœ€åï¼Œæ’å…¥æŒ‡å®šVectorçš„å…ƒç´ ã€‚*/
+    /** @~english Push all elements of an existing Vector to the end of current Vector.  @~chinese ÔÚÏÖÓĞVectorµÄ×îºó£¬²åÈëÖ¸¶¨VectorµÄÔªËØ¡£*/
     void pushBack(const Vector<T>& other)
     {
         for(const auto &obj : other) {
@@ -406,11 +406,11 @@ public:
      * @~english
      * Insert an object at certain index.
      * @~chinese 
-     * åœ¨ç‰¹å®šç´¢å¼•æ’å…¥ä¸€ä¸ªå¯¹è±¡ã€‚
+     * ÔÚÌØ¶¨Ë÷Òı²åÈëÒ»¸ö¶ÔÏó¡£
      * @param index @~english The index to be inserted at.
-     * @~chinese è¢«æ’å…¥çš„ç´¢å¼•ã€‚
+     * @~chinese ±»²åÈëµÄË÷Òı¡£
      * @param object @~english The object to be inserted.
-     * @~chinese è¢«æ’å…¥çš„å¯¹è±¡ã€‚
+     * @~chinese ±»²åÈëµÄ¶ÔÏó¡£
      */
     void insert(ssize_t index, T object)
     {
@@ -422,7 +422,7 @@ public:
     
     // Removes Objects
 
-    /** @~english Removes the last element in the Vector.  @~chinese åˆ é™¤Vectorä¸­çš„æœ€åä¸€ä¸ªå…ƒç´ ã€‚*/
+    /** @~english Removes the last element in the Vector.  @~chinese É¾³ıVectorÖĞµÄ×îºóÒ»¸öÔªËØ¡£*/
     void popBack()
     {
         CCASSERT(!_data.empty(), "no objects added");
@@ -433,13 +433,13 @@ public:
     
     /**
      * @~english Remove a certain object in Vector.
-     * @~chinese åˆ é™¤Vectorä¸­çš„ä¸€ä¸ªç‰¹å®šå¯¹è±¡ã€‚
+     * @~chinese É¾³ıVectorÖĞµÄÒ»¸öÌØ¶¨¶ÔÏó¡£
      *  @param object @~english The object to be removed.
-     * @~chinese è¦åˆ é™¤çš„å¯¹è±¡ã€‚
+     * @~chinese ÒªÉ¾³ıµÄ¶ÔÏó¡£
      *  @param removeAll @~english Whether to remove all elements with the same value.
      *                   If its value is 'false', it will just erase the first occurrence.
-     * @~chinese Vectorä¸­æ˜¯å¦åŒ…å«éœ€è¦åˆ é™¤çš„å¯¹è±¡
-     * å¦‚æœå®ƒçš„å€¼æ˜¯falseï¼Œåˆ™åªä¼šåˆ é™¤ç¬¬ä¸€ä¸ªåŒ¹é…çš„å…ƒç´ ã€‚
+     * @~chinese VectorÖĞÊÇ·ñ°üº¬ĞèÒªÉ¾³ıµÄ¶ÔÏó
+     * Èç¹ûËüµÄÖµÊÇfalse£¬ÔòÖ»»áÉ¾³ıµÚÒ»¸öÆ¥ÅäµÄÔªËØ¡£
      */
     void eraseObject(T object, bool removeAll = false)
     {
@@ -473,13 +473,13 @@ public:
 
     /**
      * @brief @~english Removes from the vector with an iterator.
-     * @~chinese ä»Vectorè¿­ä»£å™¨åˆ é™¤ã€‚
+     * @~chinese ´ÓVectorµü´úÆ÷É¾³ı¡£
      *  @param position @~english Iterator pointing to a single element to be removed from the Vector.
-     * @~chinese è¿­ä»£å™¨ï¼ŒæŒ‡å‘ä»Vectorä¸­åˆ é™¤çš„ä¸€ä¸ªå…ƒç´ ã€‚
+     * @~chinese µü´úÆ÷£¬Ö¸Ïò´ÓVectorÖĞÉ¾³ıµÄÒ»¸öÔªËØ¡£
      *  @return @~english An iterator pointing to the new location of the element that followed the last element erased by the function call.
      *          This is the container end if the operation erased the last element in the sequence.
-     * @~chinese ä¸€ä¸ªè¿­ä»£æŒ‡å‘çš„å…ƒç´ çš„æ–°çš„ä½ç½®ï¼Œæ¥ç€ç”±æ‰€è¿°å‡½æ•°è°ƒç”¨åˆ é™¤çš„æœ€åä¸€ä¸ªå…ƒç´ ã€‚
-     * å¦‚æœåœ¨å®¹å™¨ç»“å°¾æ“ä½œï¼Œåˆ™æ“¦é™¤åºåˆ—ä¸­çš„æœ€åä¸€ä¸ªå…ƒç´ ã€‚
+     * @~chinese Ò»¸öµü´úÖ¸ÏòµÄÔªËØµÄĞÂµÄÎ»ÖÃ£¬½Ó×ÅÓÉËùÊöº¯Êıµ÷ÓÃÉ¾³ıµÄ×îºóÒ»¸öÔªËØ¡£
+     * Èç¹ûÔÚÈİÆ÷½áÎ²²Ù×÷£¬Ôò²Á³ıĞòÁĞÖĞµÄ×îºóÒ»¸öÔªËØ¡£
      */
     iterator erase(iterator position)
     {
@@ -490,15 +490,15 @@ public:
     
     /**
      * @brief @~english Removes from the Vector with a range of elements (  [first, last)  ).
-     * @~chinese ä»Vectorä¸­ç§»é™¤äº†ä¸€ç³»åˆ—çš„å…ƒç´ ([ç¬¬ä¸€ä¸ªå…ƒç´ , æœ€åä¸€ä¸ªå…ƒç´ ))ã€‚
+     * @~chinese ´ÓVectorÖĞÒÆ³ıÁËÒ»ÏµÁĞµÄÔªËØ([µÚÒ»¸öÔªËØ, ×îºóÒ»¸öÔªËØ))¡£
      *  @param first @~english The beginning of the range.
-     * @~chinese å¼€å§‹çš„èŒƒå›´ã€‚
+     * @~chinese ¿ªÊ¼µÄ·¶Î§¡£
      *  @param last @~english The end of the range, the 'last' will not be removed, it's only for indicating the end of range.
-     * @~chinese ç»“æŸçš„èŒƒå›´,â€œæœ€åâ€ä¸ä¼šè¢«åˆ é™¤,å®ƒåªæ˜¯ç”¨æ¥æŒ‡ç¤ºç»“æŸçš„èŒƒå›´ã€‚
+     * @~chinese ½áÊøµÄ·¶Î§,¡°×îºó¡±²»»á±»É¾³ı,ËüÖ»ÊÇÓÃÀ´Ö¸Ê¾½áÊøµÄ·¶Î§¡£
      *  @return @~english An iterator pointing to the new location of the element that followed the last element erased by the function call.
      *          This is the container end if the operation erased the last element in the sequence.
-     * @~chinese è¿­ä»£å™¨æŒ‡å‘å…ƒç´ çš„æ–°ä½ç½®,æ¥ç€ç”±æ‰€è¿°å‡½æ•°æ“¦é™¤æœ€åä¸€ä¸ªå…ƒç´ ã€‚
-     * å¦‚æœåœ¨å®¹å™¨ç»“å°¾æ“ä½œï¼Œåˆ™æ“¦é™¤åºåˆ—ä¸­çš„æœ€åä¸€ä¸ªå…ƒç´ ã€‚
+     * @~chinese µü´úÆ÷Ö¸ÏòÔªËØµÄĞÂÎ»ÖÃ,½Ó×ÅÓÉËùÊöº¯Êı²Á³ı×îºóÒ»¸öÔªËØ¡£
+     * Èç¹ûÔÚÈİÆ÷½áÎ²²Ù×÷£¬Ôò²Á³ıĞòÁĞÖĞµÄ×îºóÒ»¸öÔªËØ¡£
      */
     iterator erase(iterator first, iterator last)
     {
@@ -512,11 +512,11 @@ public:
     
     /**
      * @brief @~english Removes from the Vector by index.
-     * @~chinese ä»Vectoråˆ é™¤ç´¢å¼•ã€‚
+     * @~chinese ´ÓVectorÉ¾³ıË÷Òı¡£
      *  @param index @~english The index of the element to be removed from the Vector.
-     * @~chinese ä»Vectorä¸­åˆ é™¤çš„å…ƒç´ ç´¢å¼•ã€‚
+     * @~chinese ´ÓVectorÖĞÉ¾³ıµÄÔªËØË÷Òı¡£
      *  @return @~english An iterator pointing to the successor of Vector[index].
-     * @~chinese ä¸€ä¸ªè¿­ä»£å™¨æŒ‡å‘Vector[index]çš„æ›¿ä»£è€…ã€‚
+     * @~chinese Ò»¸öµü´úÆ÷Ö¸ÏòVector[index]µÄÌæ´úÕß¡£
      */
     iterator erase(ssize_t index)
     {
@@ -528,9 +528,9 @@ public:
 
     /**
      * @brief @~english Removes all elements from the Vector (which are destroyed), leaving the container with a size of 0.
-     * @~chinese ä»Vectorä¸­åˆ é™¤æ‰€æœ‰å…ƒç´ ,ä½¿å®¹å™¨çš„å¤§å°å˜ä¸º0ã€‚
+     * @~chinese ´ÓVectorÖĞÉ¾³ıËùÓĞÔªËØ,Ê¹ÈİÆ÷µÄ´óĞ¡±äÎª0¡£
      *  @note @~english All the elements in the Vector will be released (reference count will be decreased).
-     * @~chinese æ‰€æœ‰Vectorä¸­çš„å…ƒç´ å°†è¢«é‡Šæ”¾ï¼ˆreferenceæ•°å°†å‡å°‘ï¼‰ã€‚
+     * @~chinese ËùÓĞVectorÖĞµÄÔªËØ½«±»ÊÍ·Å£¨referenceÊı½«¼õÉÙ£©¡£
      */
     void clear()
     {
@@ -542,7 +542,7 @@ public:
 
     // Rearranging Content
 
-    /** @~english Swap the values object1 and object2.  @~chinese äº¤æ¢Object1å’ŒObject2çš„å€¼ã€‚*/
+    /** @~english Swap the values object1 and object2.  @~chinese ½»»»Object1ºÍObject2µÄÖµ¡£*/
     void swap(T object1, T object2)
     {
         ssize_t idx1 = getIndex(object1);
@@ -553,7 +553,7 @@ public:
         std::swap( _data[idx1], _data[idx2] );
     }
     
-    /** @~english Swap two elements by indexes.  @~chinese äº¤æ¢ä¸¤ä¸ªå…ƒç´ çš„ç´¢å¼•ã€‚*/
+    /** @~english Swap two elements by indexes.  @~chinese ½»»»Á½¸öÔªËØµÄË÷Òı¡£*/
     void swap(ssize_t index1, ssize_t index2)
     {
         CCASSERT(index1 >=0 && index1 < size() && index2 >= 0 && index2 < size(), "Invalid indices");
@@ -561,7 +561,7 @@ public:
         std::swap( _data[index1], _data[index2] );
     }
 
-    /** @~english Replace value at index with given object.  @~chinese åœ¨å¯¹è±¡æ›¿ä¸­æ ¹æ®ç´¢å¼•æ›¿æ¢å€¼ã€‚*/
+    /** @~english Replace value at index with given object.  @~chinese ÔÚ¶ÔÏóÌæÖĞ¸ù¾İË÷ÒıÌæ»»Öµ¡£*/
     void replace(ssize_t index, T object)
     {
         CCASSERT(index >= 0 && index < size(), "Invalid index!");
@@ -572,13 +572,13 @@ public:
         object->retain();
     }
 
-    /** @~english Reverses the Vector.  @~chinese é¢ å€’Vectorã€‚*/
+    /** @~english Reverses the Vector.  @~chinese µßµ¹Vector¡£*/
     void reverse()
     {
         std::reverse( std::begin(_data), std::end(_data) );
     }
     
-    /** @~english Requests the container to reduce its capacity to fit its size.  @~chinese è¯·æ±‚å®¹å™¨ç¼©å‡å®¹é‡å¤§å°. */
+    /** @~english Requests the container to reduce its capacity to fit its size.  @~chinese ÇëÇóÈİÆ÷Ëõ¼õÈİÁ¿´óĞ¡. */
     void shrinkToFit()
     {
         _data.shrink_to_fit();
@@ -586,7 +586,7 @@ public:
     
 protected:
     
-    /** @~english Retains all the objects in the vector  @~chinese ä¿ç•™åœ¨è½½ä½“ä¸­çš„æ‰€æœ‰å¯¹è±¡ */
+    /** @~english Retains all the objects in the vector  @~chinese ±£ÁôÔÚÔØÌåÖĞµÄËùÓĞ¶ÔÏó */
     void addRefForAllObjects()
     {
         for(const auto &obj : _data) {

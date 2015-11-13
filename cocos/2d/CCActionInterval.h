@@ -136,6 +136,9 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     float _elapsed;
     bool _firstTick;
+
+protected:
+    bool sendUpdateEventToScript(float dt, Action *actionObject);
 };
 
 /** @class Sequence
@@ -179,7 +182,7 @@ public:
     /** @~english Helper constructor to create an array of sequenceable actions given an array.
      * @~chinese 使用指定动作数组来创建可以按序列执行的Sequence动作对象。
      * @code
-     * When this funtion bound to the js or lua,the input params changed
+     * When this function bound to the js or lua,the input params changed
      * in js  :var   create(var   object1,var   object2, ...)
      * in lua :local create(local object1,local object2, ...)
      * @endcode

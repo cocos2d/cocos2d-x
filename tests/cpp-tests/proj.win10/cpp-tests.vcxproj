@@ -125,8 +125,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>cpp-tests_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -326,11 +324,14 @@
     <ClInclude Include="..\Classes\ConfigurationTest\ConfigurationTest.h" />
     <ClInclude Include="..\Classes\ConsoleTest\ConsoleTest.h" />
     <ClInclude Include="..\Classes\controller.h" />
+    <ClInclude Include="..\Classes\CurlTest\CurlTest.h" />
     <ClInclude Include="..\Classes\CurrentLanguageTest\CurrentLanguageTest.h" />
     <ClInclude Include="..\Classes\DataVisitorTest\DataVisitorTest.h" />
+    <ClInclude Include="..\Classes\DownloaderTest\DownloaderTest.h" />
     <ClInclude Include="..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.h" />
     <ClInclude Include="..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.h" />
     <ClInclude Include="..\Classes\EffectsTest\EffectsTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsLayerLoader.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayer.h" />
@@ -400,21 +401,6 @@
     <ClInclude Include="..\Classes\ParallaxTest\ParallaxTest.h" />
     <ClInclude Include="..\Classes\Particle3DTest\Particle3DTest.h" />
     <ClInclude Include="..\Classes\ParticleTest\ParticleTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceAllocTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceCallbackTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceContainerTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceLabelTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceMathTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticleTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceRendererTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceScenarioTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceSpriteTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTextureTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTouchesTest.h" />
     <ClInclude Include="..\Classes\Physics3DTest\Physics3DTest.h" />
     <ClInclude Include="..\Classes\PhysicsTest\PhysicsTest.h" />
     <ClInclude Include="..\Classes\ReleasePoolTest\ReleasePoolTest.h" />
@@ -478,6 +464,7 @@
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest_Editor.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest_Editor.h" />
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIRichTextTest\UIRichTextTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIScene.h" />
@@ -571,11 +558,14 @@
     <ClCompile Include="..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
     <ClCompile Include="..\Classes\ConsoleTest\ConsoleTest.cpp" />
     <ClCompile Include="..\Classes\controller.cpp" />
+    <ClCompile Include="..\Classes\CurlTest\CurlTest.cpp" />
     <ClCompile Include="..\Classes\CurrentLanguageTest\CurrentLanguageTest.cpp" />
     <ClCompile Include="..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
+    <ClCompile Include="..\Classes\DownloaderTest\DownloaderTest.cpp" />
     <ClCompile Include="..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.cpp" />
     <ClCompile Include="..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.cpp" />
     <ClCompile Include="..\Classes\EffectsTest\EffectsTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayer.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.cpp" />
@@ -630,21 +620,6 @@
     <ClCompile Include="..\Classes\ParallaxTest\ParallaxTest.cpp" />
     <ClCompile Include="..\Classes\Particle3DTest\Particle3DTest.cpp" />
     <ClCompile Include="..\Classes\ParticleTest\ParticleTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceCallbackTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceContainerTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceLabelTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceMathTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticleTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceRendererTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceScenarioTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceSpriteTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTextureTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTouchesTest.cpp" />
     <ClCompile Include="..\Classes\Physics3DTest\Physics3DTest.cpp" />
     <ClCompile Include="..\Classes\PhysicsTest\PhysicsTest.cpp" />
     <ClCompile Include="..\Classes\ReleasePoolTest\ReleasePoolTest.cpp" />
@@ -692,7 +667,6 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.cpp" />
-    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIFocusTest\UIFocusTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.cpp" />
@@ -705,6 +679,7 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest_Editor.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest_Editor.cpp" />
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRichTextTest\UIRichTextTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIScene.cpp" />

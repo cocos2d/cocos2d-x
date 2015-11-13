@@ -44,45 +44,107 @@ class ParticleBatchNode;
  * @~english Structure that contains the values of each particle.
  * @~chinese 包含粒子属性的结构体。
  */
-typedef struct sParticle {
-    Vec2     pos;
-    Vec2     startPos;
 
-    Color4F    color;
-    Color4F    deltaColor;
+struct particle_point
+{
+    float x;
+    float y;
+};
 
-    float        size;
-    float        deltaSize;
+class CC_DLL ParticleData
+{
+public:
+    float* posx;
+    float* posy;
+    float* startPosX;
+    float* startPosY;
 
-    float        rotation;
-    float        deltaRotation;
-
-    float        timeToLive;
-
-    unsigned int    atlasIndex;
-
+    float* colorR;
+    float* colorG;
+    float* colorB;
+    float* colorA;
+    
+    float* deltaColorR;
+    float* deltaColorG;
+    float* deltaColorB;
+    float* deltaColorA;
+    
+    float* size;
+    float* deltaSize;
+    float* rotation;
+    float* deltaRotation;
+    float* timeToLive;
+    unsigned int* atlasIndex;
+    
     /** @struct modeA
-     * @~english Mode A: gravity mode.
-     * @~chinese 模式A:重力模式。
+     * @~english Mode A: gravity, direction, radial accel, tangential accel mode.
+     * @~chinese 模式A:重力、方向、径向加速度、切向加速度模式。
      */
-    struct {
-        Vec2        dir;
-        float        radialAccel;
-        float        tangentialAccel;
+    struct{
+        float* dirX;
+        float* dirY;
+        float* radialAccel;
+        float* tangentialAccel;
     } modeA;
-
+    
     /** @struct modeB
      * @~english Mode B: radius mode.
      * @~chinese 模式B:半径模式。
      */
-    struct {
-        float        angle;
-        float        degreesPerSecond;
-        float        radius;
-        float        deltaRadius;
+    struct{
+        float* angle;
+        float* degreesPerSecond;
+        float* radius;
+        float* deltaRadius;
     } modeB;
+    
+    unsigned int maxCount;
+    ParticleData();
+    bool init(int count);
+    void release();
+    inline unsigned int getMaxCount(){ return maxCount;}
+    
+    inline void copyParticle(int p1,int p2)
+    {
+        posx[p1] = posx[p2];
+        posy[p1] = posy[p2];
+        startPosX[p1] = startPosX[p2];
+        startPosY[p1] = startPosY[p2];
+        
+        colorR[p1] = colorR[p2];
+        colorG[p1] = colorG[p2];
+        colorB[p1] = colorB[p2];
+        colorA[p1] = colorA[p2];
+        
+        deltaColorR[p1] = deltaColorR[p2];
+        deltaColorG[p1] = deltaColorG[p2];
+        deltaColorB[p1] = deltaColorB[p2];
+        deltaColorA[p1] = deltaColorA[p2];
+        
+        size[p1] = size[p2];
+        deltaSize[p1] = deltaSize[p2];
+        
+        rotation[p1] = rotation[p2];
+        deltaRotation[p1] = deltaRotation[p2];
+        
+        timeToLive[p1] = timeToLive[p2];
+        
+        atlasIndex[p1] = atlasIndex[p2];
+        
+        modeA.dirX[p1] = modeA.dirX[p2];
+        modeA.dirY[p1] = modeA.dirY[p2];
+        modeA.radialAccel[p1] = modeA.radialAccel[p2];
+        modeA.tangentialAccel[p1] = modeA.tangentialAccel[p2];
+        
+        modeB.angle[p1] = modeB.angle[p2];
+        modeB.degreesPerSecond[p1] = modeB.degreesPerSecond[p2];
+        modeB.radius[p1] = modeB.radius[p2];
+        modeB.deltaRadius[p1] = modeB.deltaRadius[p2];
+        
+    }
+};
 
-}tParticle;
+
 
 //typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tParticle*, Vec2);
 
@@ -249,25 +311,14 @@ public:
      * @js NA
      */
     static ParticleSystem* createWithTotalParticles(int numberOfParticles);
-
-    /** @~english Add a particle to the emitter.
-     * @~chinese 往粒子发射器添加一个粒子。
-     * 
-     * @return @~english True if add success.
-     * @~chinese 如果添加成功返回true。
+    
+    /** @~english Add "count" particles to the emitter.
+     * @~chinese 往粒子发射器添加count个粒子。
      */
-    bool addParticle();
-
-    /** @~english Initializes a particle.
-     * @~chinese 初始化粒子。
-     * 
-     * @param particle @~english A given particle pointer.
-     * @~chinese 一个给定的粒子指针。
-     */
-    void initParticle(tParticle* particle);
-
-    /** @~english Stop emitting particles. Running particles will continue to run until they die.
-     * @~chinese 停止发射粒子。正在运行中的粒子将继续运行,直到结束。
+    void addParticles(int count);
+    
+    /** @~english Stop particle system.
+     * @~chinese 停止播放当前粒子系统。
      */
     void stopSystem();
 
@@ -289,13 +340,8 @@ public:
      *
      * @~chinese 更新粒子的顶点的位置数据,
      * 应该被子类覆盖。
-     * 
-     * @param particle @~english A certain particle.
-     * @~chinese 一定的粒子。
-     * @param newPosition @~english A new position.
-     * @~chinese 一个新的位置。
      */
-    virtual void updateQuadWithParticle(tParticle* particle, const Vec2& newPosition);
+    virtual void updateParticleQuads();
 
     /** @~english Update the VBO verts buffer which does not use batch node.
      * @~chinese 更新VBO顶点缓冲,不使用批处理节点
@@ -1081,11 +1127,9 @@ protected:
         /** Variance in degrees for rotatePerSecond. Only available in 'Radius' mode. */
         float rotatePerSecondVar;
     } modeB;
-
-    /// @endcond
     
-    //! Array of particles
-    tParticle *_particles;
+    //particle data
+    ParticleData _particleData;
 
     //Emitter name
     std::string _configName;
@@ -1095,9 +1139,6 @@ protected:
 
     //! How many particles can be emitted per second
     float _emitCounter;
-
-    //!  particle idx
-    int _particleIdx;
 
     // Optimization
     //CC_UPDATE_PARTICLE_IMP    updateParticleImp;

@@ -108,7 +108,9 @@ class CC_DLL Director : public Ref
 {
 public:
     /** @~english Director will trigger an event when projection type is changed.  @~chinese 当投影类型变化时导演将触发一个事件。*/
-    static const char *EVENT_PROJECTION_CHANGED;
+    static const char* EVENT_PROJECTION_CHANGED;
+    /** Director will trigger an event before Schedule::update() is invoked. */
+    static const char* EVENT_BEFORE_UPDATE;
     /** @~english Director will trigger an event after Schedule::update() is invoked.  @~chinese 在调用Schedule::update()后导演会触发一个事件。*/
     static const char* EVENT_AFTER_UPDATE;
     /** @~english Director will trigger an event after Scene::render() is invoked.  @~chinese 在调用Scene::render()后导演将触发一个事件。*/
@@ -585,7 +587,7 @@ public:
      */
     void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
     /**@~english
-     * Multipies a matrix to the top of specified type of matrix stack.
+     * Multiplies a matrix to the top of specified type of matrix stack.
      *
      * @~chinese 
      * 对指定类型的矩阵堆栈的顶部矩阵进行乘法运算。
@@ -664,7 +666,7 @@ protected:
      @since v3.0
      */
     EventDispatcher* _eventDispatcher;
-    EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventAfterUpdate;
+    EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventBeforeUpdate, *_eventAfterUpdate;
         
     /* @~english delta time since last tick to main loop  @~chinese 三角洲自去年蜱虫主循环*/
 	float _deltaTime;

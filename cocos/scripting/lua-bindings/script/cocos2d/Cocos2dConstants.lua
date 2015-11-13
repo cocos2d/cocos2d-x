@@ -508,6 +508,8 @@ cc.EventAssetsManagerEx =
         ASSET_UPDATED = 6,
         ERROR_UPDATING = 7,
         UPDATE_FINISHED = 8,
+        UPDATE_FAILED = 9,
+        ERROR_DECOMPRESS = 10
     },
 }
 

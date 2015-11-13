@@ -74,7 +74,7 @@ public:
     */
     int getVertexNumber() const;
     /**@~english
-    Update all or part of vertice data, if the range specified exceeds the vertex buffer, it will be clipped.
+    Update all or part of vertices data, if the range specified exceeds the vertex buffer, it will be clipped.
      * @~chinese 
      * 更新所有或部分顶点数据,如果指定的范围超过了顶点缓冲区,它将被截断。
     @param verts @~english The pointer of the vertex data.

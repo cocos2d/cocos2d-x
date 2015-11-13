@@ -40,8 +40,6 @@ class PhysicsShape;
 class PhysicsBody;
 class PhysicsWorld;
 
-typedef Vec2 Vect;
-
 typedef struct CC_DLL PhysicsContactData
 {
     static const int POINT_MAX = 4;
@@ -63,7 +61,7 @@ typedef struct CC_DLL PhysicsContactData
 
 /** @class PhysicsContact
  * @brief @~english Contact infomation. 
- * It will created automatically when two shape contact with each other. And it will destoried automatically when two shape separated.
+ * It will created automatically when two shape contact with each other. And it will destroyed automatically when two shape separated.
  *
  * @~chinese 碰撞信息。
  * 当刚体的形状间发生碰撞时会自动创建PhysicsContact对象，并在碰撞分离时自动销毁。
@@ -102,7 +100,7 @@ public:
     
     /**
      * @~english Set data to contact. 
-     * You must manage the memory yourself, Generally you can set data at contact begin, and distory it at contact separate.
+     * You must manage the memory yourself, Generally you can set data at contact begin, and destroy it at contact separate.
      *
      * @~chinese 设置用户数据。
      * 你需要自己负责这部分数据的释放，通常你可以在两个形状第一次接触的时候设置用户数据，然后在形状分离的时候释放数据。
@@ -184,7 +182,7 @@ public:
     /** @~english Set the surface velocity. 
      * @~chinese 设置表面速度。
      */
-    void setSurfaceVelocity(const Vect& velocity);
+    void setSurfaceVelocity(const Vec2& velocity);
     
     /** @~english Ignore the rest of the contact presolve and postsolve callbacks.
      * @~chinese 忽略这一次的接触。

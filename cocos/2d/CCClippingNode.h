@@ -38,7 +38,7 @@ NS_CC_BEGIN
  *  @{
  */
 /** @~english ClippingNode is a subclass of Node.
- * It draws its content (childs) clipped using a stencil.
+ * It draws its content (children) clipped using a stencil.
  * The stencil is an other Node that will not be drawn.
  * The clipping is done using the alpha part of the stencil (adjusted with an alphaThreshold).
  * @~chinese ClippingNode是Node的一个子类。

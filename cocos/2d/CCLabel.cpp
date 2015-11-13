@@ -122,7 +122,7 @@ public:
         Node::updateTransform();
     }
 
-    virtual void updateColor()
+    virtual void updateColor() override
     {
         if (_textureAtlas == nullptr)
         {
@@ -146,7 +146,7 @@ public:
     }
 
     //LabelLetter doesn't need to draw directly.
-    void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+    void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override
     {
     }
 };
@@ -446,6 +446,7 @@ void Label::reset()
     }
     _additionalKerning = 0.f;
     _lineHeight = 0.f;
+    _lineSpacing = 0.f;
     _maxLineWidth = 0.f;
     _labelDimensions.width = 0.f;
     _labelDimensions.height = 0.f;
@@ -871,9 +872,8 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
     _shadowEnabled = true;
     _shadowDirty = true;
 
-    auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
-    _shadowOffset.width = offset.width * contentScaleFactor;
-    _shadowOffset.height = offset.height * contentScaleFactor;
+    _shadowOffset.width = offset.width;
+    _shadowOffset.height = offset.height;
     //TODO: support blur for shadow
 
     _shadowColor3B.r = shadowColor.r;
@@ -1464,6 +1464,20 @@ float Label::getLineHeight() const
 {
     CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
     return _textSprite ? 0.0f : _lineHeight;
+}
+
+void Label::setLineSpacing(float height)
+{
+	if (_lineSpacing != height)
+	{
+		_lineSpacing = height;
+		_contentDirty = true;
+	}
+}
+
+float Label::getLineSpacing() const
+{
+	return _lineSpacing;
 }
 
 void Label::setAdditionalKerning(float space)

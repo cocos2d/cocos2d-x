@@ -70,7 +70,7 @@ public:
     
     /** @~english
      * Destructor, it will be called in HttpClient internal.
-     * Users don't need to desturct HttpResponse object manully.
+     * Users don't need to destruct HttpResponse object manually.
      * @~chinese 
      * 析构函数时, 它也在HttpClient内部调用。
      * 用户不需手动的触发这个析构函数。
@@ -156,7 +156,7 @@ public:
     }
 
     /** @~english
-     * Get the http response code to judge whether response is sucessful or not.
+     * Get the http response code to judge whether response is successful or not.
      * If _responseCode is not 200, you should check the meaning for _responseCode by the net.
      * @~chinese 
      * 获取响应码用来判断响应成功与否。
@@ -283,7 +283,7 @@ protected:
     
     // properties
     HttpRequest*        _pHttpRequest;  /// the corresponding HttpRequest pointer who leads to this response 
-    bool                _succeed;       /// to indecate if the http reqeust is successful simply
+    bool                _succeed;       /// to indecate if the http request is successful simply
     std::vector<char>   _responseData;  /// the returned raw data. You can also dump it as a string
     std::vector<char>   _responseHeader;  /// the returned raw header data. You can also dump it as a string
     long                _responseCode;    /// the status code returned from libcurl, e.g. 200, 404

@@ -213,7 +213,7 @@ public:
 
     /**@~english
      * Get current auto release pool, there is at least one auto release pool that created by engine.
-     * You can create your own auto release pool at demand, which will be put into auto releae pool stack.
+     * You can create your own auto release pool at demand, which will be put into auto release pool stack.
      * @~chinese 
      * 得到当前自动释放池，至少有一个自动释放池，是由引擎创建的。
      * 您可以按需创建你自己的自动释放池，它将投入自动释放池堆栈。

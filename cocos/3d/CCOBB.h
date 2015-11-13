@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -167,7 +167,7 @@ protected:
     void getInterval(const OBB& box, const Vec3& axis, float &min, float &max) const;
     
     /*
-     * Get the edege of x y z axis direction
+     * Get the edge of x y z axis direction
      */
     Vec3 getEdgeDirection(int index) const;
     
@@ -179,7 +179,7 @@ protected:
 public:
     Vec3 _center;   // obb center
     Vec3 _xAxis;    // x axis of obb, unit vector
-    Vec3 _yAxis;    // y axis of obb, unit vecotr
+    Vec3 _yAxis;    // y axis of obb, unit vector
     Vec3 _zAxis;    // z axis of obb, unit vector
     Vec3 _extentX;  // _xAxis * _extents.x
     Vec3 _extentY;  // _yAxis * _extents.y

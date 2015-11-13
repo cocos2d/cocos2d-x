@@ -221,6 +221,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMeshSkin.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMeshVertexIndexData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMotionStreak3D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCOBB.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCObjLoader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCPlane.h" />
@@ -410,6 +411,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReaderDefine.h" />
@@ -454,7 +456,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloaderImpl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCIDownloaderImpl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader-curl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\HttpClient.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\HttpRequest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\HttpResponse.h" />
@@ -847,6 +849,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMesh.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMeshSkin.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMeshVertexIndexData.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMotionStreak3D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCOBB.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCObjLoader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCPlane.cpp" />
@@ -1018,6 +1021,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReaderDefine.cpp" />
@@ -1059,7 +1063,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshObstacle.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloaderImpl.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader-curl.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\HttpClient.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\SocketIO.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\WebSocket.cpp" />

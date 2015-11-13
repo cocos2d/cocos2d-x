@@ -117,7 +117,7 @@ public:
         /**@~english
          * This is kept for backwards compatibility, connect is now fired as a socket.io event "connect"
          * 
-         * This function would be called when the related SIOClient object recevie messages that mean it have connected to endpoint sucessfully.
+         * This function would be called when the related SIOClient object receive messages that mean it have connected to endpoint successfully.
          *
          * @~chinese 
          * 这个函数是为了向前兼容性而保留的，connect在socket.io新版本中会以"connect"事件触发
@@ -133,7 +133,7 @@ public:
          * 
          * This is kept for backwards compatibility, message is now fired as a socket.io event "message"
          *
-         * This function would be called wwhen the related SIOClient object recevie message or json message.
+         * This function would be called when the related SIOClient object receive message or json message.
          *
          * @~chinese 
          * 这个函数是为了向前兼容性而保留的，message在socket.io新版本中会以"message"事件触发
@@ -150,7 +150,7 @@ public:
         /**@~english
          * This is kept for backwards compatibility, close is now fired as a socket.io event "close"
          *
-         * This function would be called when the related SIOClient object disconnect or recevie disconnect signal.
+         * This function would be called when the related SIOClient object disconnect or receive disconnect signal.
          *
          * @~chinese 
          * 这个函数是为了向前兼容性而保留的，close在socket.io新版本中会以"close"事件触发
@@ -165,7 +165,7 @@ public:
         /**@~english
          * Pure virtual callback function, this function should be overrided by the subclass.
          *
-         * This function would be called wwhen the related SIOClient object recevie error signal or didn't connect the endpoint but do some network operation,eg.,send and emit,etc.
+         * This function would be called when the related SIOClient object receive error signal or didn't connect the endpoint but do some network operation, eg.,send and emit,etc.
          *
          * @~chinese 
          * 纯虚回调函数,这个函数应该被子类覆盖。
@@ -350,10 +350,8 @@ public:
      * @param tag @~english string object.
      * @~chinese 标签（字符串）。
      */
-    inline void setTag(const char* tag)
-    {
-        _tag = tag;
-    };
+    void setTag(const char* tag);
+    
 
     /**
      * @~english Get tag of SIOClient.

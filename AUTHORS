@@ -56,6 +56,7 @@ Developers:
         
     frranck 
         adding norwegian language
+        Added "a unsupport image format!" log when creating a sprite in CCImage.cpp.
     
     varlucian
         fix the bug that OnEnterTransitionDidFinish was called twice when a node is added in onEnter.
@@ -161,6 +162,7 @@ Developers:
         fix an error that OpenSLEngine can't load resources from SD card
         add CCRemoveSelf action
         Fixing a bug that CCLabelTTF setString crash on android.
+        Fixed a bug in Scheduler which may case Force Close.
 
     billy1380
         make CCLens3d support concave effect.
@@ -322,6 +324,8 @@ Developers:
 
     James Chen(dumganhar)
         author of Bada port
+        Fixed wrong callback setting for webview:setOnDidFailLoading in Lua.
+        Fixed life control for XMLHttpRequest.
 
     Erawppa
         implement CCNotificationCenter
@@ -413,6 +417,11 @@ Developers:
         UI: Added RadioButton widget
         UI: Refined scroll event dispatching for ScrollView
         platform: Fixed Android app occasionally freeze issue caused by Cocos2dxRenderer.nativeOnResume() is not called when the activity is resumed
+        Fixed an issue that list view's Magnetic::CENTER is not working well when non-bounceable.
+        Added APIs to scroll to specific item in list.
+        Added APIs to get an item in specific position like center, leftmost, rightmost, topmost and bottommost.
+        Added a feature for magnetic scrolling.
+        Merge logics of Scroll View for scroll by inertia and auto scroll into one.
 
     Sam Clegg (sbc100)
         Author of Native Client port.
@@ -938,6 +947,7 @@ Developers:
         
     NatWeiss
         Fix compilation error using arch i386
+        Fixed debug-config crash if a FrameBuffer has no RenderTargetDepthStencil.
         
     favorcode
         Correct some doxygen comment
@@ -950,6 +960,7 @@ Developers:
         
     ntotani
         fix building error in lua-binding in release mode
+        Fixed WebView lua-bind method name.
         
     kezhuw
         AutoReleasePool manager improvement
@@ -1093,6 +1104,7 @@ Developers:
         
     TimothyZhang
         Fixed a potential memory leak in GLProgram::setGLProgram()
+        Add jsb.fileUtils.writeDataToFile().
         
     ahlwong
         Fix Label Kerning on Single Characters
@@ -1102,6 +1114,7 @@ Developers:
         
     liamcindy
         update ui button size changed logic
+        Added support for Cocos Studio Light3D.
         
     vovkasm
         Fix warnings for Xcode6.1
@@ -1138,9 +1151,14 @@ Developers:
     loadrunner
         Added romanian languange support
         Added sensor property for PhysicsShape
+        Added line spacing/leading feature to Label.
+        Changed label font size type to float.
+        Removed scale factor for label shadow.
+        Fixed a TMXLayer bug: When using float values (for example the actual position of the character) to get the current tile, the wrong tile is sometimes/usually returned.
         
     Almax27
         RenderQueue command buffer optimize.
+        Removed ScrollView::_innerContainer pointer copy.
         
     IgorMats
         Added MotionStreak::getStroke/setStroke
@@ -1162,6 +1180,12 @@ Developers:
         platform: Correct all usage of unicode version winapi in FileUtils for win32
         FileUtils: Added FileUtils::getFileExtension for getting file's extension name
         utils: Made utils::captureScreen saving file in another thread to improve the performance
+        Added check for glfwCreateWindow.
+        Refined AssetsManagerEx unzipping by using async.
+        Fixed a bug in FileUtilsWin32::removeDirectory when the file begins with ".".
+        Corrected the keyboard codes for Desktop and WinRT.
+        Added some support for mouse on WinRT.
+        Correct the convertion between unicode and utf8 on WinRT.
         
     qiutaoleo
         Added a feature to check case characters for filename on windows
@@ -1174,6 +1198,9 @@ Developers:
         Fixed memory leak of WebView on iOS
         Fixed crahed that if url contains illegal characters on Android
         log: Fixed crash on Windows if passing string more than 16kb to cocos2d::log
+        Fixed a crash bug when csb file is broken.
+        Fixed a crash bug in LoadingBar.
+        Fixed a crash bug in destructor of FontFreeType.
         
     tankorsmash
         Fixed the bug that ProgressTimer::setSprite() doesn't take effect
@@ -1208,6 +1235,9 @@ Developers:
     MAUSMAUSgames
         Action: Permitted setting bitwise flags to action
 
+    RUKD
+        ParticleSystem: performance improvement
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
@@ -1218,6 +1248,78 @@ Retired Core Developers:
         Author of cocos2d-xna and spent all his time on wp7.
 
     Bo Yu (boyu0)
+
+    anxi
+        Added UIEditBox support on linux platform.
+
+    avail
+        Fixed minor typo in README.
+
+    cpascal
+        Fixed a crash bug of AudioPlayer in Win32.
+
+    geron-cn
+        Removed redundant interface in CCSkeletonNode.
+        Fixed a bug that a same frame index is inserted after animation speed is scaled. 
+        Fixed crash when recall a cached timeline after scene exited.
+        Added ActionTimeline::setAnimationEndCallBack and ActionTimeline::addFrameEndCallFunc.
+        
+    igorzel
+        Fixed a crash bug caused by integer overflow in Device::getTextureDataForText on iOS.
+
+    KAIO2
+        Fixed typos and syntax errors.
+        
+    kammy
+        Moved initialization of image to an appropriate location, because it always called twice in SpriteFrameCache::addSpriteFramesWithFile()
+
+    lijinlong
+        Fixed a bug of luabinding enumerateChildren.
+
+    linguofeng
+        Added UPDATE_FAILED and ERROR_DECOMPRESS in Lua.
+        
+
+    lsybblll
+        Fixed a bug in CCPhysics3DComponent.cpp that oldBool is set with a wrong value.
+
+    mogemimi
+        Fixed various compiler warnings on Xcode 7.
+        Fixed some minor typos in lua bindings.
+        Fixed a minor typo and renamed INTIAL_CAPS_ALL_CHARACTERS to INITIAL_CAPS_ALL_CHARACTERS in UIEditBox.
+        Fixed some minor typos.
+        Fixed Wformat-security warning on Xcode.
+        Added missing override keyword.
+
+    njh0602
+        Clean up the code of setRect() function.
+        Fixed syntax error in comment.
+
+    noshbar
+        Changed the size of startFlag to 13.
+        Added checks to see if temp1 and temp2 are non-null before dereferencing them.
+        "Changed some delete operations to be deletions of arrays where applicable.
+        Changed some "free" operations to "delete" where memory was allocated with "new".
+
+    pabitrapadhy
+        Fixed spelling and grammar mistakes.
+
+    seivan
+        Fixed a bug that cocos2d::Map may cause Dangling Pointers when inserting Ref Object which already exist in the Map.
+        EventListenerMouse will dispatch EventMouse events.
+
+    songchengjiang
+        Fixed a bug of nomalize_point which caused particle rendering error.
+        Fixed a bug that lua Scene3DTest "back" button did not work.
+
+    TheCodez
+        Added missing getChildByTag<>() API.
+        Fixed a bug that RefPtr test wasn't executed even in debug build.
+
+    thuydx55
+        Fixed a bug of loading pluginx lib when compile Android with --compile-script flag.
+
+    
 
 Cocos2d-x can not grow so fast without the active community.
 Thanks to all developers who report & trace bugs, discuss the engine usage in forum & QQ groups!

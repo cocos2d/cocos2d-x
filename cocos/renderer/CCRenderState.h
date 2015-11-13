@@ -113,6 +113,8 @@ public:
      * @return @~english The top most render state below the given RenderState. @~chinese 给定RenderState下面的RenderState。
      */
     RenderState* getTopmost(RenderState* below);
+    
+    void setParent(RenderState* parent) { _parent = parent; }
 
     enum Blend
     {
@@ -138,7 +140,7 @@ public:
      * incoming pixel's depth value and the depth value already in the depth buffer.
      * If the compare function passes, the new pixel will be drawn.
      *
-     * The intial depth compare function is DEPTH_LESS.
+     * The initial depth compare function is DEPTH_LESS.
      *
      * @~chinese 定义深度比较函数， 深度比较函数定义了将要绘制的像素的深度与在深度缓冲中的像素深度比较与替换的规则。如果比较函数通过了，那么新的像素将被绘制。深度比较函数的初始值为DEPTH_LESS。
      */
@@ -243,7 +245,7 @@ public:
 
         /** @~english The recommended way to create StateBlocks is by calling `create`.
          * Don't use `new` or `delete` on them.
-         * @~chinese 构造函数，推荐使用create方法来创建。
+         * @~chinese 构造函数，萍鍪褂胏reate方法来创建。
          */
         StateBlock();
         

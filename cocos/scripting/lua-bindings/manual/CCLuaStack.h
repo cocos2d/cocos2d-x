@@ -115,7 +115,7 @@ public:
     
     /**@~english
      * Reload script code corresponding to moduleFileName.
-     * If value of package["loaded"][moduleFileName] is existed, it would set the vaule nil.Then,it calls executeString function.
+     * If value of package["loaded"][moduleFileName] is existed, it would set the value nil.Then,it calls executeString function.
      *
      * @~chinese 
      * 重新加载对应模块名的脚本代码。

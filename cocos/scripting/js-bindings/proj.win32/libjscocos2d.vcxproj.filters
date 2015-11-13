@@ -113,6 +113,9 @@
     <ClCompile Include="..\manual\cocostudio\jsb_cocos2dx_studio_manual.cpp">
       <Filter>manual\cocostudio</Filter>
     </ClCompile>
+    <ClCompile Include="..\manual\component\CCComponentJS.cpp">
+      <Filter>manual\component</Filter>
+    </ClCompile>
     <ClCompile Include="..\manual\extension\jsb_cocos2dx_extension_manual.cpp">
       <Filter>manual\extension</Filter>
     </ClCompile>
@@ -249,6 +252,9 @@
     </ClInclude>
     <ClInclude Include="..\manual\cocostudio\jsb_cocos2dx_studio_manual.h">
       <Filter>manual\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\component\CCComponentJS.h">
+      <Filter>manual\component</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\extension\jsb_cocos2dx_extension_manual.h">
       <Filter>manual\extension</Filter>

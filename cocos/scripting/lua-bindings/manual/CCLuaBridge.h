@@ -113,9 +113,9 @@ public:
     
     /**@~english
      *
-     * The retain count woulde be reduced by 1 corresponding to functionId in the `lua_bridge_function_id_retain` table if it could be found.
+     * The retain count would be reduced by 1 corresponding to functionId in the `lua_bridge_function_id_retain` table if it could be found.
      * If `lua_bridge_function_id` table or `lua_bridge_function_id_retain` aren't existed or the type of lua_bridge_function_id_retain[functionId] isn't LUA_TNUMBER , it would return 0.
-     * If the vaule of retain count is 0 after reducing, it would update the `lua_bridge_function_id_retain` table and `lua_bridge_function_id_retain` table to remove the  reference corresponding to this functionId
+     * If the value of retain count is 0 after reducing, it would update the `lua_bridge_function_id_retain` table and `lua_bridge_function_id_retain` table to remove the  reference corresponding to this functionId
      *
      * @~chinese 
      * 

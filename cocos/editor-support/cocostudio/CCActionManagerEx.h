@@ -103,7 +103,13 @@ public:
 	*
 	* @param func  @~english ui action call back @~chinese UI动作回调函数
     *
+<<<<<<< HEAD
     * @return  @~english ActionObject which named as the param name. @chinese 符合参数名称的动作对象
+=======
+    * @param actionName  action name in the UIfile.
+    *
+    * @return  ActionObject which named as the param name
+>>>>>>> e6022b2a925b6d21249df71fc76a250ce05d579d
     */
 	ActionObject* playActionByName(const char* jsonName,const char* actionName, cocos2d::CallFunc* func);
 

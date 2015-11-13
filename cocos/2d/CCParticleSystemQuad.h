@@ -147,8 +147,11 @@ public:
     void listenRendererRecreated(EventCustom* event);
     
     virtual void setTexture(Texture2D* texture) override;
-    
-    virtual void updateQuadWithParticle(tParticle* particle, const Vec2& newPosition) override;
+    /**
+     * @js NA
+     * @lua NA
+     */    
+    virtual void updateParticleQuads() override;
     
     virtual void postStep() override;
     

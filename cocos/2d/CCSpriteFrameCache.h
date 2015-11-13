@@ -48,6 +48,7 @@ NS_CC_BEGIN
 
 class Sprite;
 class Texture2D;
+class PolygonInfo;
 
 /**
  * @addtogroup _2d
@@ -56,7 +57,36 @@ class Texture2D;
 
 /** @class SpriteFrameCache
  * @brief @~english Singleton that handles the loading of the sprite frames.
- It saves in a cache the sprite frames.
+
+ The SpriteFrameCache loads SpriteFrames from a .plist file.
+ A SpriteFrame contains information about how to use a sprite
+ located in a sprite sheet.
+ 
+ The .plist file contains the following elements:
+
+ - `frames`:
+   Dictionary of sprites. Key is the sprite's name, value a dict containing the sprite frame data.
+   A sprite frame consists of the following values:
+    - `spriteOffset`:     difference vector between the original sprite's center and the center of the trimmed sprite
+    - `spriteSize`:       size of the trimmed sprite
+    - `spriteSourceSize`: size of the original sprite
+    - `textureRect`:      the position of the sprite in the sprite sheet
+    - `textureRotated`:   true if the sprite is rotated clockwise
+   Optional values when using polygon outlines
+    - `triangles`:        3 indices per triangle, pointing to vertices and verticesUV coordinates
+    - `vertices`:         vertices in sprite coordinates, each vertex consists of a pair of x and y coordinates
+    - `verticesUV`:       vertices in the sprite sheet, each vertex consists of a pair of x and y coordinates
+ 
+ - `metadata`:
+   Dictionary containing additional information about the sprite sheet:
+     - `format`:          plist file format, currently 3
+     - `size`:            size of the texture (optional)
+     - `textureFileName`: name of the texture's image file
+ 
+ Use one of the following tools to create the .plist file and sprite sheet:
+ - [TexturePacker](https://www.codeandweb.com/texturepacker/cocos2d)
+ - [Zwoptex](https://zwopple.com/zwoptex/)
+ 
  * @~chinese 用于加载 SpriteFrame 的单例，缓存所有的 SpriteFrame。
  @since v0.9
  @js cc.spriteFrameCache
@@ -74,8 +104,8 @@ public:
      */
     static SpriteFrameCache* getInstance();
 
-    /** @deprecated Use getInstance() instead 
-     @js NA 
+    /** @deprecated Use getInstance() instead
+     @js NA
 	*/
     CC_DEPRECATED_ATTRIBUTE static SpriteFrameCache* sharedSpriteFrameCache() { return SpriteFrameCache::getInstance(); }
 
@@ -85,7 +115,7 @@ public:
      */
     static void destroyInstance();
 
-    /** @deprecated Use destroyInstance() instead 
+    /** @deprecated Use destroyInstance() instead
      * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedSpriteFrameCache() { return SpriteFrameCache::destroyInstance(); }
@@ -286,6 +316,16 @@ protected:
     */
     void removeSpriteFramesFromDictionary(ValueMap& dictionary);
 
+    /** Parses list of space-separated integers */
+    void parseIntegerList(const std::string &string, std::vector<int> &res);
+    
+    /** Configures PolygonInfo class with the passed sizes + triangles */
+    void initializePolygonInfo(const Size &textureSize,
+                               const Size &spriteSize,
+                               const std::vector<int> &vertices,
+                               const std::vector<int> &verticesUV,
+                               const std::vector<int> &triangleIndices,
+                               PolygonInfo &polygonInfo);
 
     Map<std::string, SpriteFrame*> _spriteFrames;
     ValueMap _spriteFramesAliases;

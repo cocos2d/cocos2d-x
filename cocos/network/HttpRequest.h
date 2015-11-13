@@ -82,7 +82,7 @@ public:
     
     /** @~english
      *  Constructor.
-     *   Because HttpRequest object will be used between UI thead and network thread,
+     *   Because HttpRequest object will be used between UI thread and network thread,
          requestObj->autorelease() is forbidden to avoid crashes in AutoreleasePool
          new/retain/release still works, which means you need to release it manually
      * @~chinese 
@@ -267,7 +267,7 @@ public:
     /**@~english
      * Set user-customed data of HttpRequest object.
      * You can attach a customed data in each request, and get it back in response callback.
-     * But you need to new/delete the data pointer manully.
+     * But you need to new/delete the data pointer manually.
      *
      * @~chinese 
      * 设置HttpRequest对象的用户自定义数据。
@@ -355,7 +355,7 @@ public:
     }
     
     /** @~english
-     * Get the target of callback selector funtion, mainly used by HttpClient.
+     * Get the target of callback selector function, mainly used by HttpClient.
      *
      * @~chinese 
      * 获取回调函数的target对象，主要用于HttpClient。

@@ -41,7 +41,7 @@ public:
     ///@cond
     /**@~english
      * Bind callStaticMethod of LuaJavaBridge to Lua.
-     * In current mechanism,we could call LuaJavaBridge.callStaticMethod(className, methodName, args) in Lua directly.
+     * In current mechanism, we could call LuaJavaBridge.callStaticMethod(className, methodName, args) in Lua directly.
      * Meanwhile the callStaticMethod of LuaObjcBridge binding function is wrapped in the luaj.lua
      * @~chinese d
      * 绑定LuaJavaBridge的callStaticMethod到Lua中。
@@ -70,7 +70,7 @@ public:
 
     /**@~english
      * Release a reference count for the Lua functionId(-1).If the reference count is still greater than 0,save this reference in the Lua table named luaj_function_id_retain.
-     * Otherwise, remove the refrence about this functionId in the luaj_function_id table and the luaj_function_id_retain table by set the corresponding value nil. 
+     * Otherwise, remove the reference about this functionId in the luaj_function_id table and the luaj_function_id_retain table by set the corresponding value nil. 
      * 
      * @~chinese 
      * 。

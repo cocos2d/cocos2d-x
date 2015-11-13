@@ -28,7 +28,7 @@
 
 /** @def JSB_ASSERT_ON_FAIL
  Whether or not to assert when the arguments or conversions are incorrect.
- It is recommened to turn it off in Release mode.
+ It is recommended to turn it off in Release mode.
  */
 #ifndef JSB_ASSERT_ON_FAIL
 #define JSB_ASSERT_ON_FAIL 0
@@ -77,8 +77,8 @@
 
 /** @def JSB_REPRESENT_LONGLONG_AS_STR
  When JSB_REPRESENT_LONGLONG_AS_STR is defined, the long long will be represented as JS strings.
- Otherwise they will be represented as an array of two intengers.
- It is needed to to use an special representation since there are no 64-bit integers in JS.
+ Otherwise they will be represented as an array of two integers.
+ It is needed to use an special representation since there are no 64-bit integers in JS.
  Representing the long long as string could be a bit slower, but it is easier to debug from JS.
  Enabled by default.
  */

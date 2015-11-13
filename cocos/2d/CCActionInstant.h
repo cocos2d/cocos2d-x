@@ -329,7 +329,7 @@ class CC_DLL CallFunc : public ActionInstant //<NSCopying>
 public:
     /** @~english Creates the action with the callback of type `std::function<void()>`.
      * This is the preferred way to create the callback.
-     * When this funtion bound in js or lua ,the input param will be changed.
+     * When this function bound in js or lua ,the input param will be changed.
      * In lua:local create(local funcID).
      *
      * @~chinese 用一个回调函数创建CallFunc动作，回调函数的类型是`std::function<void()>`。
@@ -446,7 +446,7 @@ public:
     /** @~english Creates the action with the callback of type `std::function<void()>`.
      * This is the preferred way to create the callback.
      *
-     * @~chinese 用一个回调函数创建CallFunc动作，回调函数的类型是`std::function<void()>`。
+     * @~chinese 用一个回骱唇–allFunc动作，回调函数的类型是`std::function<void()>`。
      * 这是创建回调的首选方法。
      * 
      * @param func  @~english A callback function need to be excuted.

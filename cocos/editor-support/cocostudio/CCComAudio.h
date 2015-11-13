@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -40,23 +40,23 @@ namespace cocostudio {
 */
 class CC_STUDIO_DLL ComAudio : public cocos2d::Component
 {
-
     DECLARE_CLASS_COMPONENT_INFO
-
 public:
+    const static std::string COMPONENT_NAME;
+
     /**
      * @brief @~english ComAudio constructor.
      * @~chinese 声音组件构造函数。
      * @js ctor
      */
-    ComAudio(void);
+    ComAudio();
     /**
      * @brief @~english ComAudio destructor.
      * @~chinese 声音组件析构函数。
      * @js NA
      * @lua NA
      */
-    virtual ~ComAudio(void);
+    virtual ~ComAudio();
     
 public:
     /**

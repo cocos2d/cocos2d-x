@@ -46,7 +46,7 @@ class CC_DLL Touch : public Ref
 {
 public:
     /** @~english
-     * Dispatch mode, how the touches are dispathced.
+     * Dispatch mode, how the touches are dispatched.
      * @~chinese 
      * 消息分发模式，定义如何分发触摸事件。
      * @js NA

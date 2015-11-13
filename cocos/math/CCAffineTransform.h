@@ -99,7 +99,7 @@ CC_DLL Vec2 PointApplyTransform(const Vec2& point, const Mat4& transform);
 /**@~english
  Translation, equals
  1  0  1
- 0  1  0   * affinetransform
+ 0  1  0   * affine transform
  tx ty 1
  * @~chinese 
  * 进行平移,其效果等价于

@@ -22,8 +22,19 @@
 
 // Prepare JSB environment
 
-var cc = cc || {};
 var window = window || this;
+var cc = cc || {};
+/**
+ * @namespace jsb
+ * @name jsb
+ */
+var jsb = jsb || {};
+
+/**
+ * The element contains the game canvas
+ * @type {HTMLDivElement}
+ */
+cc.container = null;
 
 /**
  * Iterate over an object or an array, executing a function for each matched element.
@@ -260,8 +271,8 @@ cc.Class.extend = function (prop) {
 
     // The dummy class constructor
     function Class() {
-        // All construction is actually done in the init method
         if (!initializing) {
+            this.__instanceId = ClassManager.getNewInstanceId();
             if (!this.ctor) {
                 if (this.__nativeObj)
                     cc.log("No ctor function found! Please check whether `classes_need_extend` section in `ini` file like which in `tools/tojs/cocos2dx.ini`");

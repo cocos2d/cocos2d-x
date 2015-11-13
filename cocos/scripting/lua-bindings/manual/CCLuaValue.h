@@ -222,7 +222,7 @@ public:
     
     
     /**@~english
-     * Default constuctor of LuaValue.
+     * Default constructor of LuaValue.
      * Set the default value for _type and _ccobjectType,and init the _field.
      * @~chinese 
      * LuaValue的默认构造函数。
