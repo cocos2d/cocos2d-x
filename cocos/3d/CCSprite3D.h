@@ -200,6 +200,9 @@ public:
     */
     void setForce2DQueue(bool force2D);
 
+    Vector<Mesh*>& getMeshes() { return _meshes; }
+    const AABB& getAABB(bool world) const;
+
 CC_CONSTRUCTOR_ACCESS:
     
     Sprite3D();

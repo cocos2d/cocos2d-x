@@ -177,7 +177,7 @@ private:
     /*
     *terrain vertices internal data format
     **/
-    struct TerrainVertexData
+    struct CC_DLL TerrainVertexData
     {
         /*constructor*/
         TerrainVertexData(){};
@@ -192,7 +192,7 @@ private:
         cocos2d::Vec3 _normal;
     };
 
-    struct QuadTree;
+    struct CC_DLL QuadTree;
     /*
     *the terminal node of quad, use to subdivision terrain mesh and LOD
     **/
@@ -267,7 +267,7 @@ private:
     *QuadTree
     * @breif use to hierarchically frustum culling and set LOD
     **/
-    struct QuadTree
+    struct CC_DLL QuadTree
     {
         /**constructor*/
         QuadTree(int x, int y, int width, int height, Terrain * terrain);

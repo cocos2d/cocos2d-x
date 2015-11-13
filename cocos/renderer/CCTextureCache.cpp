@@ -598,6 +598,28 @@ std::string TextureCache::getCachedTextureInfo() const
     return buffer;
 }
 
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+void TextureCache::renameTextureWithKey(std::string srcName, std::string dstName)
+{
+    std::string key = srcName;
+    auto it = _textures.find(key);
+
+    if( it == _textures.end() ) {
+        key = FileUtils::getInstance()->fullPathForFilename(srcName);
+        it = _textures.find(key);
+    }
+
+    if( it != _textures.end() ) {
+        std::string fullpath = FileUtils::getInstance()->fullPathForFilename(dstName);
+        Texture2D* tex = it->second;
+        tex->setPath(key);
+        _textures.insert(std::make_pair(fullpath, tex));
+        _textures.erase(it);
+        this->setDirty(true);
+    }
+}
+#endif
+
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 
 std::list<VolatileTexture*> VolatileTextureMgr::_textures;

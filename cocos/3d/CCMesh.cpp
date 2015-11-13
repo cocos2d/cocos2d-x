@@ -80,7 +80,11 @@ void Mesh::resetLightUniformValues()
     _spotLightUniformColorValues.assign(maxSpotLight, Vec3::ZERO);
     _spotLightUniformPositionValues.assign(maxSpotLight, Vec3::ZERO);
     _spotLightUniformDirValues.assign(maxSpotLight, Vec3::ZERO);
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    _spotLightUniformInnerAngleCosValues.assign(maxSpotLight, 0.0f);
+#else
     _spotLightUniformInnerAngleCosValues.assign(maxSpotLight, 1.0f);
+#endif // CC_STUDIO_ENABLED_VIEW
     _spotLightUniformOuterAngleCosValues.assign(maxSpotLight, 0.0f);
     _spotLightUniformRangeInverseValues.assign(maxSpotLight, 0.0f);
 }
@@ -117,6 +121,7 @@ Mesh::Mesh()
 , _visibleChanged(nullptr)
 , _blendDirty(true)
 , _force2DQueue(false)
+, _texFile("")
 {
     
 }
@@ -253,6 +258,7 @@ bool Mesh::isVisible() const
 
 void Mesh::setTexture(const std::string& texPath)
 {
+    _texFile = texPath;
     auto tex = Director::getInstance()->getTextureCache()->addImage(texPath);
     setTexture(tex);
 }
@@ -284,6 +290,8 @@ void Mesh::setTexture(Texture2D* tex)
     }
 
     bindMeshCommand();
+
+    _texFile = _texture->getPath();
 }
 
 Texture2D* Mesh::getTexture() const
@@ -657,4 +665,23 @@ GLuint Mesh::getIndexBuffer() const
 {
     return _meshIndexData->getIndexBuffer()->getVBO();
 }
+
+GLuint Mesh::checkTextureName()
+{
+    if (TextureCache::getInstance()->isDirty())
+    {
+        Texture2D* cacheTex = TextureCache::getInstance()->getTextureForKey(_texFile);
+        _texture = cacheTex;
+    }
+
+    if (_texture == nullptr || !_texture->isValid())
+    {
+        _texture = nullptr;
+        Texture2D* dummyTex = getDummyTexture();
+        return dummyTex->getName();
+    }
+
+    return _texture->getName();
+}
+
 NS_CC_END

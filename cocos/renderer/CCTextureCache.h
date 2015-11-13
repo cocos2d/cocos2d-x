@@ -204,6 +204,14 @@ public:
      */
     const std::string getTextureFilePath(Texture2D* texture)const;
 
+    void setDirty(bool dirty) { _dirty = dirty; }
+    bool isDirty() const { return _dirty; }
+#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
+    // This function use Texture2D::setPath function, which set to use in
+    //  CococsStudio internal only, so this function also been set internal only
+    void renameTextureWithKey(std::string srcName, std::string dstName);
+#endif
+
 private:
     void addImageAsyncCallBack(float dt);
     void loadImage();
@@ -228,6 +236,8 @@ protected:
     int _asyncRefCount;
 
     std::unordered_map<std::string, Texture2D*> _textures;
+
+    bool _dirty;
 };
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA

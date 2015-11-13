@@ -1048,7 +1048,9 @@ bool Bundle3D::loadJson(const std::string& path)
     if (_jsonReader.ParseInsitu<0>(_jsonBuffer).HasParseError())
     {
         clear();
+#ifndef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
         CCASSERT(false, "Parse json failed");
+#endif
         return false;
     }
 

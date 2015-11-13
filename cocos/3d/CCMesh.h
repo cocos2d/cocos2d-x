@@ -194,6 +194,8 @@ public:
      */
     void setForce2DQueue(bool force2D) { _force2DQueue = force2D; }
 
+    GLuint checkTextureName();
+
 CC_CONSTRUCTOR_ACCESS:
 
     Mesh();
@@ -234,6 +236,8 @@ protected:
     std::vector<float> _spotLightUniformInnerAngleCosValues;
     std::vector<float> _spotLightUniformOuterAngleCosValues;
     std::vector<float> _spotLightUniformRangeInverseValues;
+
+    std::string _texFile;
 };
 
 // end of 3d group
