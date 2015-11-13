@@ -966,17 +966,17 @@ void DrawNode::setLineWidth(int lineWidth)
 }
 
 #ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-void DrawNode::csSetLineSmooth(bool enable)
+void DrawNode::setLineSmooth(bool enable)
 {
     this->_lineSmoothEnable = enable;
 }
 
-bool DrawNode::csIsLineSmooth()
+bool DrawNode::isLineSmooth()
 {
     return this->_lineSmoothEnable;
 }
 
-float DrawNode::csGetLineWidth()
+float DrawNode::getLineWidth()
 {
     return this->_lineWidth;
 }
