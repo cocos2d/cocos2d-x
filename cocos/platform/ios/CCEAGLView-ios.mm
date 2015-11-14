@@ -718,6 +718,15 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)onUIKeyboardNotification:(NSNotification *)notif;
 {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0)
+    {
+        if(originalRect_.size.height > originalRect_.size.width) {
+            CGFloat tempValue = originalRect_.size.height;
+            originalRect_.size.height = originalRect_.size.width;
+            originalRect_.size.width = tempValue;
+        }
+    }
+
     NSString * type = notif.name;
     
     NSDictionary* info = [notif userInfo];
