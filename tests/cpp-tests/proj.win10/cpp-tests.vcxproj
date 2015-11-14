@@ -125,8 +125,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>cpp-tests_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -326,11 +324,14 @@
     <ClInclude Include="..\Classes\ConfigurationTest\ConfigurationTest.h" />
     <ClInclude Include="..\Classes\ConsoleTest\ConsoleTest.h" />
     <ClInclude Include="..\Classes\controller.h" />
+    <ClInclude Include="..\Classes\CurlTest\CurlTest.h" />
     <ClInclude Include="..\Classes\CurrentLanguageTest\CurrentLanguageTest.h" />
     <ClInclude Include="..\Classes\DataVisitorTest\DataVisitorTest.h" />
+    <ClInclude Include="..\Classes\DownloaderTest\DownloaderTest.h" />
     <ClInclude Include="..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.h" />
     <ClInclude Include="..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.h" />
     <ClInclude Include="..\Classes\EffectsTest\EffectsTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsLayerLoader.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayer.h" />
@@ -556,11 +557,14 @@
     <ClCompile Include="..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
     <ClCompile Include="..\Classes\ConsoleTest\ConsoleTest.cpp" />
     <ClCompile Include="..\Classes\controller.cpp" />
+    <ClCompile Include="..\Classes\CurlTest\CurlTest.cpp" />
     <ClCompile Include="..\Classes\CurrentLanguageTest\CurrentLanguageTest.cpp" />
     <ClCompile Include="..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
+    <ClCompile Include="..\Classes\DownloaderTest\DownloaderTest.cpp" />
     <ClCompile Include="..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.cpp" />
     <ClCompile Include="..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.cpp" />
     <ClCompile Include="..\Classes\EffectsTest\EffectsTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayer.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.cpp" />

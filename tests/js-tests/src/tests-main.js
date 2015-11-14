@@ -62,6 +62,9 @@ var TestScene = cc.Scene.extend({
         }
     },
     onMainMenuCallback:function () {
+        if (director.isPaused()) {
+            director.resume();
+        } 
         var scene = new cc.Scene();
         var layer = new TestController();
         scene.addChild(layer);
@@ -135,7 +138,7 @@ var TestController = cc.LayerGradient.extend({
 
             // enable disable
             if ( !cc.sys.isNative) {
-                if( 'opengl' in cc.sys.capabilities ){
+                if( cc._renderType !== cc.game.RENDER_TYPE_CANVAS ){
                     menuItem.enabled = (testNames[i].platforms & PLATFORM_HTML5) | (testNames[i].platforms & PLATFORM_HTML5_WEBGL);
                 }else{
                     menuItem.setEnabled( testNames[i].platforms & PLATFORM_HTML5 );

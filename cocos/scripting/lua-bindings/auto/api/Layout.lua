@@ -281,7 +281,7 @@
         
 --------------------------------
 -- Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.<br>
--- param cleanup   true if all running actions on all children nodes should be cleanup, false oterwise.<br>
+-- param cleanup   true if all running actions on all children nodes should be cleanup, false otherwise.<br>
 -- js removeAllChildren<br>
 -- lua removeAllChildren
 -- @function [parent=#Layout] removeAllChildrenWithCleanup 

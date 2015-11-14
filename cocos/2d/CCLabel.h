@@ -47,7 +47,7 @@ NS_CC_BEGIN
 typedef struct _ttfConfig
 {
     std::string fontFilePath;
-    int fontSize;
+    float fontSize;
 
     GlyphCollection glyphs;
     const char *customGlyphs;
@@ -55,7 +55,7 @@ typedef struct _ttfConfig
     bool distanceFieldEnabled;
     int outlineSize;
 
-    _ttfConfig(const char* filePath = "",int size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
+    _ttfConfig(const char* filePath = "",float size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
         const char *customGlyphCollection = nullptr,bool useDistanceField = false,int outline = 0)
         :fontFilePath(filePath)
         ,fontSize(size)
@@ -415,6 +415,9 @@ public:
      */
     float getLineHeight() const;
 
+    void setLineSpacing(float height);
+    float getLineSpacing() const;
+
     /**
      * Sets the additional kerning of the Label.
      *
@@ -554,6 +557,7 @@ protected:
 
     //layout relevant properties.
     float _lineHeight;
+    float _lineSpacing;
     float _additionalKerning;
     int* _horizontalKernings;
     bool _lineBreakWithoutSpaces;

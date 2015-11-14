@@ -580,15 +580,19 @@ void PhysicsWorld::removeJoint(PhysicsJoint* joint, bool destroy)
         }
 
         joint->_destoryMark = destroy;
+
+        bool removedFromDelayAdd = false;
+        auto it = std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint);
+        if (it != _delayAddJoints.end())
+        {
+            _delayAddJoints.erase(it);
+            removedFromDelayAdd = true;
+        }
+
         if (cpSpaceIsLocked(_cpSpace))
         {
-            auto it = std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint);
-            if (it != _delayAddJoints.end())
-            {
-                _delayAddJoints.erase(it);
+            if (removedFromDelayAdd)
                 return;
-            }
-
             if (std::find(_delayRemoveJoints.rbegin(), _delayRemoveJoints.rend(), joint) == _delayRemoveJoints.rend())
             {
                 _delayRemoveJoints.push_back(joint);
@@ -647,11 +651,9 @@ void PhysicsWorld::addJoint(PhysicsJoint* joint)
 {
     if (joint)
     {
-        if (joint->getWorld() && joint->getWorld() != this)
-        {
-            joint->removeFormWorld();
-        }
+        CCASSERT(joint->getWorld() == nullptr, "Can not add joint already add to other world!");
 
+        joint->_world = this;
         auto it = std::find(_delayRemoveJoints.begin(), _delayRemoveJoints.end(), joint);
         if (it != _delayRemoveJoints.end())
         {

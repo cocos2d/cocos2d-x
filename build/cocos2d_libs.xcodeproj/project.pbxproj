@@ -12782,6 +12782,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -12807,6 +12808,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../extensions $(SRCROOT)/../external/poly2tri $(SRCROOT)/../external/poly2tri/common $(SRCROOT)/../external/poly2tri/sweep";
 			};
 			name = Debug;
@@ -12819,6 +12821,8 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
@@ -12840,6 +12844,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../extensions $(SRCROOT)/../external/poly2tri $(SRCROOT)/../external/poly2tri/common $(SRCROOT)/../external/poly2tri/sweep";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -12850,6 +12855,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_BITCODE = NO;
 				EXECUTABLE_EXTENSION = a;
 				EXECUTABLE_PREFIX = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -12886,6 +12892,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_BITCODE = NO;
 				EXECUTABLE_EXTENSION = a;
 				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;

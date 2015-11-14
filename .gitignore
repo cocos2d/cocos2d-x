@@ -37,6 +37,7 @@ ipch/
 SubmissionInfo
 Generated Files
 AppPackages
+BundleArtifacts
 .vs/
 
 # Ignore files build by ndk and eclipse
@@ -147,4 +148,10 @@ tests/cpp-tests/Resources/audio
 /*/*/*/prebuilt-mk/Android.mk
 /*/*/*/*/prebuilt-mk/Android.mk
 *.xcscmblueprint
+<<<<<<< HEAD
 *.filters
+=======
+templates/js-template-default/frameworks/runtime-src/proj.ios_mac/build
+templates
+testcpp
+>>>>>>> 0e9714656e55250d7b03fa3ac07e5bb5978f0734

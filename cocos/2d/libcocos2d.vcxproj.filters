@@ -1934,6 +1934,7 @@
     <ClCompile Include="..\network\CCDownloader-curl.cpp">
       <Filter>network</Filter>
     </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -3771,6 +3772,7 @@
     <ClInclude Include="..\network\CCDownloader-curl.h">
       <Filter>network\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">

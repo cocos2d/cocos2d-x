@@ -1583,6 +1583,8 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
     {
         _hasPremultipliedAlpha = true;
     }
+    else
+        _hasPremultipliedAlpha = false;
     
     // sizing
     int width = CC_SWAP_INT32_LITTLE_TO_HOST(header->width);
@@ -1845,7 +1847,7 @@ namespace
 
 bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
 {
-    
+    _hasPremultipliedAlpha = false;
     const uint32_t FOURCC_DXT1 = makeFourCC('D', 'X', 'T', '1');
     const uint32_t FOURCC_DXT3 = makeFourCC('D', 'X', 'T', '3');
     const uint32_t FOURCC_DXT5 = makeFourCC('D', 'X', 'T', '5');

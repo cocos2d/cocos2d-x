@@ -757,7 +757,7 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
         JSAutoCompartment ac(cx, global);
         evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
         if (false == evaluatedOK) {
-            cocos2d::log("(evaluatedOK == JS_FALSE)");
+            cocos2d::log("Evaluating %s failed (evaluatedOK == JS_FALSE)", path);
             JS_ReportPendingException(cx);
         }
     }
@@ -803,7 +803,7 @@ void ScriptingCore::restartVM()
 {
     cleanup();
     initRegister();
-    CCApplication::getInstance()->applicationDidFinishLaunching();
+    Application::getInstance()->applicationDidFinishLaunching();
 }
 
 ScriptingCore::~ScriptingCore()

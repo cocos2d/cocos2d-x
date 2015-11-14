@@ -769,6 +769,17 @@ public:
      * Please use `getChildByName()` instead.
      */
      virtual Node * getChildByTag(int tag) const;
+    
+     /**
+     * Gets a child from the container with its tag that can be cast to Type T.
+     *
+     * @param tag   An identifier to find the child node.
+     *
+     * @return a Node with the given tag that can be cast to Type T.
+    */
+    template <typename T>
+    inline T getChildByTag(int tag) const { return static_cast<T>(getChildByTag(tag)); }
+    
     /**
      * Gets a child from the container with its name.
      *
@@ -948,7 +959,7 @@ public:
      * 
      * @since v3.2
      */
-    virtual std::string getName() const;
+    virtual const std::string& getName() const;
     /** Changes the name that is used to identify the node easily.
      * @param name A string that identifies the node.
      *

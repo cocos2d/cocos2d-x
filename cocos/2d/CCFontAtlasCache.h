@@ -55,7 +55,7 @@ public:
     static void purgeCachedData();
     
 private:
-    static std::string generateFontName(const std::string& fontFileName, int size, bool useDistanceField);
+    static std::string generateFontName(const std::string& fontFileName, float size, bool useDistanceField);
     static std::unordered_map<std::string, FontAtlas *> _atlasMap;
 };
 

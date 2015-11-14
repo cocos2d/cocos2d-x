@@ -90,8 +90,8 @@ inline void nomalize_point(float x, float y, particle_point* out)
         return;
     
     n = 1.0f / n;
-    out->x *= n;
-    out->y *= n;
+    out->x = x * n;
+    out->y = y * n;
 }
 
 /**

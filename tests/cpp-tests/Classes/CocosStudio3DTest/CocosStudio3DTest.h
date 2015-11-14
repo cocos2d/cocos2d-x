@@ -84,5 +84,13 @@ public:
     void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
 };
 
+class CSSceneLight3DTest : public CocosStudio3DTestDemo
+{
+public:
+    CREATE_FUNC(CSSceneLight3DTest);
+    CSSceneLight3DTest();
+    virtual std::string title() const override;
+};
+
 
 #endif

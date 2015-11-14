@@ -82,6 +82,7 @@ namespace cocostudio
         flatbuffers::FlatBufferBuilder *builder)
     {
         std::string name = "";
+        bool useDefaultLight = false;
         int skyBoxMask = 1;
         bool skyBoxEnabled = false;
         bool skyBoxValid = true;
@@ -123,6 +124,10 @@ namespace cocostudio
             if (attriname == "Name")
             {
                 name = value;
+            }
+            else if (attriname == "UseDefaultLight")
+            {
+                useDefaultLight = (value == "True") ? true : false;
             }
             else if (attriname == "SkyBoxEnabled")
             {
@@ -375,7 +380,8 @@ namespace cocostudio
                                 builder->CreateString(backPlistFile),
                                 backResourceType),
             builder->CreateString(frameEvent),
-            builder->CreateString(customProperty)
+            builder->CreateString(customProperty),
+            useDefaultLight
             );
 
         return *(Offset<Table>*)(&options);
@@ -420,6 +426,14 @@ namespace cocostudio
             node->removeComponent(ComExtensionData::COMPONENT_NAME);
         }
         node->addComponent(extensionData);
+
+        bool useDefaultLight = options->useDefaultLight();
+        if (useDefaultLight)
+        {
+            AmbientLight* defaultLight = AmbientLight::create(Color3B::WHITE);
+            defaultLight->setIntensity(0.5f);
+            node->addChild(defaultLight);
+        }
     }
     
     Node* GameNode3DReader::createNodeWithFlatBuffers(const flatbuffers::Table *node3DOptions)

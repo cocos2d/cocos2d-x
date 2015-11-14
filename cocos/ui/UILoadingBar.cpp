@@ -282,11 +282,14 @@ void LoadingBar::updateProgressBar()
     }
     else
     {
-        float res = _percent / 100.0f;
-        Sprite* spriteRenderer = _barRenderer->getSprite();
-        Rect rect = spriteRenderer->getTextureRect();
-        rect.size.width = _barRendererTextureSize.width * res;
-        spriteRenderer->setTextureRect(rect, spriteRenderer->isTextureRectRotated(), rect.size);
+        Sprite* innerSprite = _barRenderer->getSprite();
+        if (nullptr != innerSprite)
+        {
+            float res = _percent / 100.0f;
+            Rect rect = innerSprite->getTextureRect();
+            rect.size.width = _barRendererTextureSize.width * res;
+            innerSprite->setTextureRect(rect, innerSprite->isTextureRectRotated(), rect.size);
+        }
     }
 }
 
