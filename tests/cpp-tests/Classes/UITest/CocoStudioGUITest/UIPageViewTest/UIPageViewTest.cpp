@@ -452,6 +452,7 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         
         // Create the page view
         PageView* pageView = PageView::create();
+        pageView->setDirection(ui::PageView::Direction::VERTICAL);
         pageView->setContentSize(Size(240.0f, 130.0f));
         pageView->setAnchorPoint(Vec2(0.5,0.5));
         Size backgroundSize = background->getContentSize();
@@ -459,7 +460,8 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         pageView->setBackGroundColor(Color3B::GREEN);
         pageView->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
         pageView->setIndicatorEnabled(true);
-        
+        pageView->setIndicatorSpaceBetweenIndexNodes(10);
+
         int pageCount = 4;
         for (int i = 0; i < pageCount; ++i)
         {
@@ -751,10 +753,7 @@ bool UIPageViewVerticalTest::init()
         pageView->setDirection(ui::PageView::Direction::VERTICAL);
         pageView->setContentSize(Size(240.0f, 130.0f));
         Size backgroundSize = background->getContentSize();
-        pageView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                   (backgroundSize.width - pageView->getContentSize().width) / 2.0f,
-                                   (widgetSize.height - backgroundSize.height) / 2.0f +
-                                   (backgroundSize.height - pageView->getContentSize().height) / 2.0f));
+        pageView->setPosition((widgetSize - pageView->getContentSize()) / 2.0f);
         pageView->removeAllItems();
         
         int pageCount = 4;

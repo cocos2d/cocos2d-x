@@ -484,8 +484,8 @@ void ListView::doLayout()
         item->setLocalZOrder(i);
         remedyLayoutParameter(item);
     }
-    _innerContainer->forceDoLayout();
     updateInnerContainerSize();
+    _innerContainer->forceDoLayout();
     _innerContainerDoLayoutDirty = false;
 }
     

@@ -71,7 +71,7 @@ void PageViewIndicator::setDirection(PageView::Direction direction)
     rearrange();
 }
 
-void PageViewIndicator::reset(ssize_t numberOfTotalPages, ssize_t currentIndex)
+void PageViewIndicator::reset(ssize_t numberOfTotalPages)
 {
     while(_indexNodes.size() < numberOfTotalPages)
     {
@@ -82,7 +82,6 @@ void PageViewIndicator::reset(ssize_t numberOfTotalPages, ssize_t currentIndex)
         decreaseNumberOfPages();
     }
     rearrange();
-    indicate(currentIndex);
     _currentIndexNode->setVisible(!_indexNodes.empty());
 }
 

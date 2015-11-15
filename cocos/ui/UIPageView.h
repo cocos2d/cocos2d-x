@@ -344,6 +344,9 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
+    //override methods
+    virtual void doLayout() override;
+
 protected:
     void pageTurningEvent();
 

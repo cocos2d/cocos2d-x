@@ -72,6 +72,22 @@ bool PageView::init()
     return false;
 }
 
+void PageView::doLayout()
+{
+    if(!_innerContainerDoLayoutDirty)
+    {
+        return;
+    }
+
+    ListView::doLayout();
+    if(_indicator != nullptr)
+    {
+        ssize_t index = getIndex(getCenterItemInCurrentView());
+        _indicator->indicate(index);
+    }
+    _innerContainerDoLayoutDirty = false;
+}
+
 void PageView::setDirection(PageView::Direction direction)
 {
     ListView::setDirection(direction);
@@ -174,10 +190,9 @@ void PageView::moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack
 void PageView::onItemListChanged()
 {
     ListView::onItemListChanged();
-    ssize_t index = getIndex(getCenterItemInCurrentView());
     if(_indicator != nullptr)
     {
-        _indicator->reset(_items.size(), index);
+        _indicator->reset(_items.size());
     }
 }
 

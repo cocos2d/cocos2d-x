@@ -49,7 +49,7 @@ public:
     virtual ~PageViewIndicator();
 
     void setDirection(PageView::Direction direction);
-    void reset(ssize_t numberOfTotalPages, ssize_t currentIndex);
+    void reset(ssize_t numberOfTotalPages);
     void indicate(ssize_t index);
     void clear();
     void setSpaceBetweenIndexNodes(float spaceBetweenIndexNodes);
