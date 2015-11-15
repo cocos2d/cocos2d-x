@@ -63,6 +63,7 @@ THE SOFTWARE.
 #include "base/ccTypes.h"
 #include "base/ccUTF8.h"
 #include "base/ccUtils.h"
+#include "base/CCGameController.h"
 
 // EventDispatcher
 #include "base/CCEventAcceleration.h"
@@ -79,6 +80,9 @@ THE SOFTWARE.
 #include "base/CCEventMouse.h"
 #include "base/CCEventTouch.h"
 #include "base/CCEventType.h"
+#include "base/CCEventController.h"
+#include "base/CCEventListenerController.h"
+
 
 // math
 #include "math/CCAffineTransform.h"

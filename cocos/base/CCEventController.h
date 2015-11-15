@@ -28,6 +28,7 @@
 
 #include "platform/CCPlatformMacros.h"
 #include "base/CCEvent.h"
+#include "base/CCController.h"
 
 /**
  * @addtogroup base
@@ -37,7 +38,6 @@
 NS_CC_BEGIN
 
 /// @cond EventController
-class Controller;
 class EventListenerController;
 
 /** @class EventController
@@ -61,7 +61,7 @@ public:
      * @param keyCode A given key code.
      * @return An autoreleased EventController object.
      */
-	EventController(ControllerEventType type, Controller* controller, int keyCode);
+	EventController(ControllerEventType type, Controller* controller, Controller::Key keyCode);
     /** Create a EventController with controller event type, contrlloer and whether or not is connected.
      *
      * @param type A given controller event type.
@@ -82,8 +82,8 @@ public:
      *
      * @return The key code of the controller.
      */
-    int getKeyCode() const{ return _keyCode; }
-    void setKeyCode(int keyCode) { _keyCode = keyCode;}
+    Controller::Key getKeyCode() const{ return _keyCode; }
+    void setKeyCode(Controller::Key keyCode) { _keyCode = keyCode;}
 
     /** Sets the connect status.
      *
@@ -99,7 +99,7 @@ public:
 protected:
     ControllerEventType _controllerEventType;
     Controller* _controller;
-    int _keyCode;
+    Controller::Key _keyCode;
     bool _isConnected;
 
     friend class EventListenerController;

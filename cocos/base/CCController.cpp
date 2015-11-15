@@ -49,7 +49,7 @@ Controller* Controller::getControllerByTag(int tag)
 
 void Controller::init()
 {
-    for (int key = Key::JOYSTICK_LEFT_X; key < Key::KEY_MAX; ++key)
+    for (int key = static_cast<int>(Key::JOYSTICK_LEFT_X); key < static_cast<int>(Key::KEY_MAX); ++key)
     {
         _allKeyStatus[key].isPressed = false;
         _allKeyStatus[key].value = 0.0f;
@@ -64,15 +64,15 @@ void Controller::init()
     _axisEvent = new (std::nothrow) EventController(EventController::ControllerEventType::AXIS_STATUS_CHANGED, this, 0);
 }
 
-const Controller::KeyStatus& Controller::getKeyStatus(int keyCode)
+const Controller::KeyStatus& Controller::getKeyStatus(Key keyCode)
 {
-    if (_allKeyStatus.find(keyCode) == _allKeyStatus.end())
+    if (_allKeyStatus.find(static_cast<int>(keyCode)) == _allKeyStatus.end())
     {
-        _allKeyStatus[keyCode].isPressed = false;
-        _allKeyStatus[keyCode].value = 0.0f;
+        _allKeyStatus[static_cast<int>(keyCode)].isPressed = false;
+        _allKeyStatus[static_cast<int>(keyCode)].value = 0.0f;
     }
 
-    return _allKeyStatus[keyCode];
+    return _allKeyStatus[static_cast<int>(keyCode)];
 }
 
 void Controller::onConnected()
@@ -89,22 +89,22 @@ void Controller::onDisconnected()
     delete this;
 }
 
-void Controller::onButtonEvent(int keyCode, bool isPressed, float value, bool isAnalog)
+void Controller::onButtonEvent(Key keyCode, bool isPressed, float value, bool isAnalog)
 {
-    _allKeyPrevStatus[keyCode] = _allKeyStatus[keyCode];
-    _allKeyStatus[keyCode].isPressed = isPressed;
-    _allKeyStatus[keyCode].value = value;
-    _allKeyStatus[keyCode].isAnalog = isAnalog;
+    _allKeyPrevStatus[static_cast<int>(keyCode)] = _allKeyStatus[static_cast<int>(keyCode)];
+    _allKeyStatus[static_cast<int>(keyCode)].isPressed = isPressed;
+    _allKeyStatus[static_cast<int>(keyCode)].value = value;
+    _allKeyStatus[static_cast<int>(keyCode)].isAnalog = isAnalog;
 
     _keyEvent->setKeyCode(keyCode);
     _eventDispatcher->dispatchEvent(_keyEvent);
 }
 
-void Controller::onAxisEvent(int axisCode, float value, bool isAnalog)
+void Controller::onAxisEvent(Key axisCode, float value, bool isAnalog)
 {
-    _allKeyPrevStatus[axisCode] = _allKeyStatus[axisCode];
-    _allKeyStatus[axisCode].value = value;
-    _allKeyStatus[axisCode].isAnalog = isAnalog;
+    _allKeyPrevStatus[static_cast<int>(axisCode)] = _allKeyStatus[static_cast<int>(axisCode)];
+    _allKeyStatus[static_cast<int>(axisCode)].value = value;
+    _allKeyStatus[static_cast<int>(axisCode)].isAnalog = isAnalog;
 
     _axisEvent->setKeyCode(axisCode);
     _eventDispatcher->dispatchEvent(_axisEvent);
