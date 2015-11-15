@@ -108,7 +108,7 @@ namespace utils
 
      * @return Returns an instance of sprite
      */
-    Sprite* CC_DLL createSpriteFromBase64(const char* base64String);
+    Sprite* createSpriteFromBase64(const char* base64String);
 
 }
 
