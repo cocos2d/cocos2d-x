@@ -210,19 +210,21 @@ void PageView::handleReleaseLogic(Touch *touch)
 
     Vec2 touchMoveVelocity = flattenVectorByDirection(calculateTouchMoveVelocity());
 
-    static const float DEFAULT_THRESHOLD = 500;
-    if(touchMoveVelocity.length() < DEFAULT_THRESHOLD)
+    static const float INERTIA_THRESHOLD = 500;
+    if(touchMoveVelocity.length() < INERTIA_THRESHOLD)
     {
         startMagneticScroll();
     }
     else
     {
+        // Handle paging by inertia force.
         Widget* currentPage = getItem(_currentPageIndex);
         Vec2 destination = calculateItemDestination(Vec2::ANCHOR_MIDDLE, currentPage, Vec2::ANCHOR_MIDDLE);
-        Vec2 deltaToCurrentpage;
-        deltaToCurrentpage = destination - getInnerContainerPosition();
+        Vec2 deltaToCurrentpage = destination - getInnerContainerPosition();
         deltaToCurrentpage = flattenVectorByDirection(deltaToCurrentpage);
 
+        // If the direction of displacement to current page and the direction of touch are same, just start magnetic scroll to the current page.
+        // Otherwise, move to the next page of touch direction.
         if(touchMoveVelocity.x * deltaToCurrentpage.x > 0 || touchMoveVelocity.y * deltaToCurrentpage.y > 0)
         {
             startMagneticScroll();
