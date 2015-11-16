@@ -266,9 +266,8 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         std::string externalTilesetFilename = attributeDict["source"].asString();
         if (externalTilesetFilename != "")
         {
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
             _externalTilesetFilename = externalTilesetFilename;
-#endif
+
             // Tileset file will be relative to the map file. So we need to convert it to an absolute path
             if (_TMXFileName.find_last_of("/") != string::npos)
             {
@@ -391,9 +390,8 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
         // build full path
         std::string imagename = attributeDict["source"].asString();
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
         tileset->_originSourceImage = imagename;
-#endif
+
         if (_TMXFileName.find_last_of("/") != string::npos)
         {
             string dir = _TMXFileName.substr(0, _TMXFileName.find_last_of("/") + 1);

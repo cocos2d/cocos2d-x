@@ -37,6 +37,7 @@ class TMXLayer;
 class TMXLayerInfo;
 class TMXTilesetInfo;
 class TMXMapInfo;
+struct CC_DLL ResouceData;
 
 /**
  * @addtogroup _2d
@@ -252,10 +253,8 @@ public:
      */
     virtual std::string getDescription() const override;
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    ResouceData csGetRenderFile();
+    ResouceData getRenderFile();
     int  getLayerNum();
-#endif
 
 CC_CONSTRUCTOR_ACCESS:
     /**
@@ -293,10 +292,8 @@ protected:
     //! tile properties
     ValueMapIntKey _tileProperties;
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     std::string _tmxFile;
     int _tmxLayerNum;
-#endif
 
     static const int TMXLayerTag = 32768;
 

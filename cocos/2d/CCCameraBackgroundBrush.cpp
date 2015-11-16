@@ -232,10 +232,8 @@ CameraBackgroundSkyBoxBrush::CameraBackgroundSkyBoxBrush()
 , _vertexBuffer(0)
 , _indexBuffer(0)
 , _texture(nullptr)
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
 , _actived(false)
 , _textureValid(false)
-#endif
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
@@ -300,10 +298,8 @@ CameraBackgroundSkyBoxBrush* CameraBackgroundSkyBoxBrush::create()
 
 void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
 {
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     if (!_actived)
         return;
-#endif
 
     Mat4 cameraModelMat = camera->getNodeToWorldTransform();
     
@@ -436,7 +432,6 @@ void CameraBackgroundSkyBoxBrush::setTexture(TextureCube*  texture)
     _glProgramState->setUniformTexture("u_Env", _texture);
 }
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
 bool CameraBackgroundSkyBoxBrush::isActived() const
 {
     return _actived;
@@ -455,6 +450,5 @@ bool CameraBackgroundSkyBoxBrush::isValid()
 {
     return _actived;
 }
-#endif
 
 NS_CC_END

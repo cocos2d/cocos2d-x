@@ -783,7 +783,6 @@ FontAtlas * FontFNT::createFontAtlas()
     return tempAtlas;
 }
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
 void FontFNT::reloadBMFontResource(const std::string& fntFilePath)
 {
     if (s_configurations == nullptr)
@@ -804,6 +803,5 @@ void FontFNT::reloadBMFontResource(const std::string& fntFilePath)
 
     }
 }
-#endif
 
 NS_CC_END

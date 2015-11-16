@@ -33,6 +33,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+struct CC_DLL ResouceData;
+
 /**
  * @addtogroup _2d
  * @{
@@ -761,9 +763,7 @@ public:
     */
     virtual const BlendFunc &getBlendFunc() const override;
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    ResouceData csGetRenderFile();
-#endif
+    ResouceData getRenderFile();
 
 CC_CONSTRUCTOR_ACCESS:
     /**

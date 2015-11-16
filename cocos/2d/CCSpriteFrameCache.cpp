@@ -150,10 +150,8 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
     Version 3 with TexturePacker 4.0 polygon mesh packing
     */
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     if (dictionary["frames"].getType() != cocos2d::Value::Type::MAP)
         return;
-#endif
 
     ValueMap& framesDict = dictionary["frames"].asValueMap();
     int format = 0;
@@ -497,10 +495,8 @@ void SpriteFrameCache::removeSpriteFramesFromFileContent(const std::string& plis
 
 void SpriteFrameCache::removeSpriteFramesFromDictionary(ValueMap& dictionary)
 {
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     if (dictionary["frames"].getType() != cocos2d::Value::Type::MAP)
         return;
-#endif
 
     ValueMap framesDict = dictionary["frames"].asValueMap();
     std::vector<std::string> keysToRemove;
@@ -552,7 +548,6 @@ SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const std::string& name)
     return frame;
 }
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
 void SpriteFrameCache::reloadSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture)
 {
     ValueMap& framesDict = dictionary["frames"].asValueMap();
@@ -725,6 +720,5 @@ bool SpriteFrameCache::reloadTexture(const std::string& plist)
     }
     return true;
 }
-#endif
 
 NS_CC_END

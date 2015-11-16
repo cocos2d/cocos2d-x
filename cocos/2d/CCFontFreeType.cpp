@@ -634,7 +634,6 @@ const char* FontFreeType::getGlyphCollection() const
     return glyphCollection;
 }
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
 void FontFreeType::releaseFont(const std::string &fontName)
 {
     auto item = s_cacheFontData.begin();
@@ -646,6 +645,5 @@ void FontFreeType::releaseFont(const std::string &fontName)
             item++;
     }
 }
-#endif
 
 NS_CC_END

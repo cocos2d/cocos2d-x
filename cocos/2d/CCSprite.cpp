@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
 #include "2d/CCCamera.h"
+#include "2d/CocosStudioExtension.h"
 
 #include "deprecated/CCString.h"
 
@@ -166,7 +167,10 @@ bool Sprite::initWithFile(const std::string& filename)
 {
 #ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     if (filename.empty())
+    {
+        CCLOG("Call Sprite::initWithFile with blank resource filename.");
         return false;
+    }
 
     _fileName = filename;
     _fileType = 0;
@@ -1163,19 +1167,17 @@ void Sprite::setPolygonInfo(const PolygonInfo& info)
     _polyInfo = info;
 }
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
 void Sprite::setOffsetPosFromCenter(Vec2 offsetFromCenter)
 {
     _unflippedOffsetPositionFromCenter = offsetFromCenter;
 }
 
-ResouceData Sprite::csGetRenderFile()
+ResouceData Sprite::getRenderFile()
 {
     ResouceData rData;
     rData.type = (int)_fileType;
     rData.file = _fileName;
     return rData;
 }
-#endif
 
 NS_CC_END

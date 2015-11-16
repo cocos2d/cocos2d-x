@@ -313,7 +313,6 @@ public:
     
     void setLineWidth(int lineWidth);
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     // Set enable or disable multisampling effect on CocosStudio guide lines.
     void setLineSmooth(bool enable);
 
@@ -322,7 +321,6 @@ public:
 
     // Get CocosStudio guide lines width.
     float getLineWidth();
-#endif
 
 CC_CONSTRUCTOR_ACCESS:
     DrawNode();
@@ -366,9 +364,7 @@ protected:
     
     int         _lineWidth;
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     bool _lineSmoothEnable;
-#endif
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);

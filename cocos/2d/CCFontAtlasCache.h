@@ -54,10 +54,8 @@ public:
      */
     static void purgeCachedData();
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     static void reloadFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset = Vec2::ZERO);
     static void unloadFontAtlasTTF(const std::string& fontFileName);
-#endif
 
 private:
     static std::string generateFontName(const std::string& fontFileName, float size, bool useDistanceField);

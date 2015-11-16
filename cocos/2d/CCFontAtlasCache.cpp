@@ -238,7 +238,6 @@ bool FontAtlasCache::releaseFontAtlas(FontAtlas *atlas)
     return false;
 }
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
 void FontAtlasCache::reloadFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset/* = Vec2::ZERO*/)
 {
     std::string atlasName = generateFontName(fontFileName, 0, false);
@@ -276,6 +275,5 @@ void FontAtlasCache::unloadFontAtlasTTF(const std::string& fontFileName)
             item++;
     }
 }
-#endif
 
 NS_CC_END

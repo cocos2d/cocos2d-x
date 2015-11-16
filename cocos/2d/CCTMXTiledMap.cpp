@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "2d/CCTMXLayer.h"
 #include "2d/CCSprite.h"
 #include "deprecated/CCString.h" // For StringUtils::format
+#include "2d/CocosStudioExtension.h"
 
 NS_CC_BEGIN
 
@@ -62,9 +63,7 @@ bool TMXTiledMap::initWithTMXFile(const std::string& tmxFile)
 {
     CCASSERT(tmxFile.size()>0, "TMXTiledMap: tmx file should not be empty");
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     _tmxFile = tmxFile;
-#endif
 
     setContentSize(Size::ZERO);
 
@@ -82,9 +81,7 @@ bool TMXTiledMap::initWithTMXFile(const std::string& tmxFile)
 
 bool TMXTiledMap::initWithXML(const std::string& tmxString, const std::string& resourcePath)
 {
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     _tmxFile = tmxString;
-#endif
 
     setContentSize(Size::ZERO);
 
@@ -99,10 +96,8 @@ bool TMXTiledMap::initWithXML(const std::string& tmxString, const std::string& r
 TMXTiledMap::TMXTiledMap()
     :_mapSize(Size::ZERO)
     ,_tileSize(Size::ZERO)        
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     ,_tmxFile("")
     , _tmxLayerNum(0)
-#endif
 {
 }
 
@@ -208,9 +203,7 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
             idx++;
         }
     }
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     _tmxLayerNum = idx;
-#endif
 }
 
 // public
@@ -286,19 +279,17 @@ std::string TMXTiledMap::getDescription() const
     return StringUtils::format("<TMXTiledMap | Tag = %d, Layers = %d", _tag, static_cast<int>(_children.size()));
 }
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
 int TMXTiledMap::getLayerNum()
 {
     return _tmxLayerNum;
 }
 
-ResouceData TMXTiledMap::csGetRenderFile()
+ResouceData TMXTiledMap::getRenderFile()
 {
     ResouceData rData;
     rData.type = 0;
     rData.file = _tmxFile;
     return rData;
 }
-#endif
 
 NS_CC_END

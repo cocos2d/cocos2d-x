@@ -109,11 +109,7 @@ public:
      * @param renderer The renderer use to render the scene.
      * @js NA
      */
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     virtual void render(Renderer* renderer);
-#else
-    void render(Renderer* renderer);
-#endif
     
     /** override function */
     virtual void removeAllChildren() override;

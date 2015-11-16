@@ -47,9 +47,7 @@ public:
     virtual int* getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
     virtual FontAtlas *createFontAtlas() override;
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     static void reloadBMFontResource(const std::string& fntFilePath);
-#endif
 
 protected:
     

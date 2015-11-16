@@ -481,11 +481,9 @@ void Camera::setBackgroundBrush(CameraBackgroundBrush* clearBrush)
     _clearBrush = clearBrush;
 }
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
 bool Camera::isBrushValid()
 {
     return _clearBrush != nullptr && _clearBrush->isValid();
 }
-#endif
 
 NS_CC_END
