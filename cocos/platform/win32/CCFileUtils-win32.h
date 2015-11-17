@@ -45,8 +45,8 @@ NS_CC_BEGIN
 class CC_DLL FileUtilsWin32 : public FileUtils
 {
     friend class FileUtils;
-    FileUtilsWin32();
 public:
+    FileUtilsWin32();
     /* override functions */
     bool init();
     virtual std::string getWritablePath() const override;
