@@ -24,6 +24,8 @@
 #ifndef COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_COCOS3D_LUA_COCOS2DX_3D_MANUAL_H__
 #define COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_COCOS3D_LUA_COCOS2DX_3D_MANUAL_H__
 
+#include "Lua-BingingsExport.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -44,7 +46,7 @@ extern "C" {
  * If you don't register the cocos3d module, the package size would become smaller .
  * The current mechanism,this function is called in the lua_module_register.h
  */
-TOLUA_API int  register_cocos3d_module(lua_State* L);
+CC_LUA_DLL TOLUA_API int  register_cocos3d_module(lua_State* L);
 
 // end group
 /// @}

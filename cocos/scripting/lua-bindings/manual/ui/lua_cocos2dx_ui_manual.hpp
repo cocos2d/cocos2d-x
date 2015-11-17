@@ -24,6 +24,8 @@
 #ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_GUI_MANUAL_H
 #define COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_GUI_MANUAL_H
 
+#include "Lua-BingingsExport.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -46,7 +48,7 @@ TOLUA_API int register_all_cocos2dx_ui_manual(lua_State* L);
  * If you don't register the ui module, the package size would become smaller .
  * The current mechanism,this registering function is called in the lua_module_register.h
  */
-TOLUA_API int register_ui_moudle(lua_State* L);
+CC_LUA_DLL TOLUA_API int register_ui_moudle(lua_State* L);
 
 // end group
 /// @}
