@@ -32,7 +32,20 @@ extern "C" {
 }
 #endif
 
+/**
+ * @addtogroup lua
+ * @{
+ */
+
+/**
+ * Call this function can import the lua bindings for the cocos3d module.
+ * After registering, we could call the related cocos3d code conveniently in the lua.eg,.cc.Sprite3D:create(modlepath).
+ * If you don't want to use the cocos3d module in the lua, you only don't call this registering function.
+ * If you don't register the cocos3d module, the package size would become smaller .
+ * The current mechanism,this function is called in the lua_module_register.h
+ */
 TOLUA_API int  register_cocos3d_module(lua_State* L);
 
-
+// end group
+/// @}
 #endif // #ifndef COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_3D_LUA_COCOS2DX_COCOSDENSHION_MANUAL_H__

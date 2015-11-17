@@ -9,18 +9,11 @@
 
 #include "Bug-1159.h"
 
-Scene* Bug1159Layer::scene()
-{
-    auto scene = Scene::create();
-    auto layer = Bug1159Layer::create();
-    scene->addChild(layer);
-
-    return scene;
-}
+USING_NS_CC;
 
 bool Bug1159Layer::init()
 {
-    if (BugsTestBaseLayer::init())
+    if (BugsTestBase::init())
     {
         auto s = Director::getInstance()->getWinSize();
 
@@ -57,10 +50,10 @@ bool Bug1159Layer::init()
 
 void Bug1159Layer::callBack(Ref* sender)
 {
-    Director::getInstance()->replaceScene(TransitionPageTurn::create(1.0f, Bug1159Layer::scene(), false));
+    Director::getInstance()->replaceScene(TransitionPageTurn::create(1.0f, Bug1159Layer::create(), false));
 }
 
 void Bug1159Layer::onExit()
 {
-    BugsTestBaseLayer::onExit();
+    BugsTestBase::onExit();
 }

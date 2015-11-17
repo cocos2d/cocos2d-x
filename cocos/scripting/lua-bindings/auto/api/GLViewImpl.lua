@@ -32,6 +32,7 @@
 -- @function [parent=#GLViewImpl] setIMEKeyboardState 
 -- @param self
 -- @param #bool bOpen
+-- @return GLViewImpl#GLViewImpl self (return value: cc.GLViewImpl)
         
 --------------------------------
 -- 

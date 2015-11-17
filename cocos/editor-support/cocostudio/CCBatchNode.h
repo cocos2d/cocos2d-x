@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -40,7 +40,7 @@ class CC_STUDIO_DLL BatchNode : public cocos2d::Node
 public:
     static BatchNode *create();
 public:
-	/**
+    /**
      * @js ctor
      */
     BatchNode();

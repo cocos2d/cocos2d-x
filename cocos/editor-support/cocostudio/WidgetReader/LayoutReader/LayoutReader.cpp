@@ -10,7 +10,7 @@
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/FlatBuffersSerialize.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
@@ -62,6 +62,11 @@ namespace cocostudio
             instanceLayoutReader = new (std::nothrow) LayoutReader();
         }
         return instanceLayoutReader;
+    }
+    
+    void LayoutReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceLayoutReader);
     }
     
     void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
@@ -185,12 +190,21 @@ namespace cocostudio
         
         /* adapt screen gui */
         float w = 0, h = 0;
-        bool adaptScrenn = DICTOOL->getBooleanValue_json(options, P_AdaptScreen);
-        if (adaptScrenn)
+        bool adaptScrennExsit = DICTOOL->checkObjectExist_json(options, P_AdaptScreen);
+        if (adaptScrennExsit)
         {
-            Size screenSize = CCDirector::getInstance()->getWinSize();
-            w = screenSize.width;
-            h = screenSize.height;
+            bool adaptScrenn = DICTOOL->getBooleanValue_json(options, P_AdaptScreen);
+            if (adaptScrenn)
+            {
+                Size screenSize = Director::getInstance()->getWinSize();
+                w = screenSize.width;
+                h = screenSize.height;
+            }
+            else
+            {
+                w = DICTOOL->getFloatValue_json(options, P_Width);
+                h = DICTOOL->getFloatValue_json(options, P_Height);
+            }
         }
         else
         {
@@ -295,7 +309,11 @@ namespace cocostudio
             panel->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
         }
         
-        panel->setLayoutType((Layout::Type)DICTOOL->getIntValue_json(options, P_LayoutType));
+        bool layoutTypeExsit = DICTOOL->checkObjectExist_json(options, P_LayoutType);
+        if (layoutTypeExsit)
+        {
+            panel->setLayoutType((Layout::Type)DICTOOL->getIntValue_json(options, P_LayoutType));
+        }
         
         int bgimgcr = DICTOOL->getIntValue_json(options, P_ColorR,255);
         int bgimgcg = DICTOOL->getIntValue_json(options, P_ColorG,255);
@@ -531,10 +549,7 @@ namespace cocostudio
                 if (resourceType == 1)
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
-                    
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                    fbs->_textures.push_back(builder->CreateString(texture));                    
                 }
             }
             
@@ -573,10 +588,10 @@ namespace cocostudio
         Layout* panel = static_cast<Layout*>(node);
         auto options = (PanelOptions*)layoutOptions;
         
-        bool clipEnabled = options->clipEnabled();
+        bool clipEnabled = options->clipEnabled() != 0;
         panel->setClippingEnabled(clipEnabled);
         
-        bool backGroundScale9Enabled = options->backGroundScale9Enabled();
+        bool backGroundScale9Enabled = options->backGroundScale9Enabled() != 0;
         panel->setBackGroundImageScale9Enabled(backGroundScale9Enabled);
         
         
@@ -601,10 +616,72 @@ namespace cocostudio
         panel->setBackGroundColorOpacity(bgColorOpacity);
         
         
+        bool fileExist = false;
+        std::string errorFilePath = "";
         auto imageFileNameDic = options->backGroundImageData();
         int imageFileNameType = imageFileNameDic->resourceType();
         std::string imageFileName = imageFileNameDic->path()->c_str();
-        panel->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
+        if (imageFileName != "")
+        {
+            switch (imageFileNameType)
+            {
+                case 0:
+                {
+                    if (FileUtils::getInstance()->isFileExist(imageFileName))
+                    {
+                        fileExist = true;
+                    }
+                    else
+                    {
+                        errorFilePath = imageFileName;
+                        fileExist = false;
+                    }
+                    break;
+                }
+                    
+                case 1:
+                {
+                    std::string plist = imageFileNameDic->plistFile()->c_str();
+                    SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(imageFileName);
+                    if (spriteFrame)
+                    {
+                        fileExist = true;
+                    }
+                    else
+                    {
+                        if (FileUtils::getInstance()->isFileExist(plist))
+                        {
+                            ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                            ValueMap metadata = value["metadata"].asValueMap();
+                            std::string textureFileName = metadata["textureFileName"].asString();
+                            if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                            {
+                                errorFilePath = textureFileName;
+                            }
+                        }
+                        else
+                        {
+                            errorFilePath = plist;
+                        }
+                        fileExist = false;
+                    }
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
+            if (fileExist)
+            {
+                panel->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
+            }
+            //else
+            //{
+            //    auto label = Label::create();
+            //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+            //    panel->addChild(label);
+            //}
+        }
         
         auto widgetOptions = options->widgetOptions();
         auto f_color = widgetOptions->color();
@@ -616,6 +693,7 @@ namespace cocostudio
         
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+        
         
         if (backGroundScale9Enabled)
         {

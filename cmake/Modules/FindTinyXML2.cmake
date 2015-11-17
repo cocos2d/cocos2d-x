@@ -13,29 +13,6 @@
 #   TINYXML2_INCLUDE_DIRS, where to find headers.
 #
 
-# Try find tinyxml for our arch in external folder
-if(USE_PREBUILT_LIBS)
-  find_path(TinyXML2_INCLUDE_DIR tinyxml2.h
-    PATH_SUFFIXES
-      include/tinyxml2
-      include
-    PATHS ${COCOS_EXTERNAL_DIR}/tinyxml2
-    NO_DEFAULT_PATH
-    )
-  find_library(TinyXML2_LIBRARY NAMES tinyxml2 libtinyxml2
-    PATH_SUFFIXES
-      prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-      prebuilt/${PLATFORM_FOLDER}
-    PATHS ${COCOS_EXTERNAL_DIR}/tinyxml2
-    NO_DEFAULT_PATH
-    )
-  # cleanup if not found (prevent from mix prebuilt include paths and system installed libraries)
-  if(NOT TinyXML2_INCLUDE_DIR OR NOT TinyXML2_LIBRARY)
-    unset(TinyXML2_INCLUDE_DIR CACHE)
-    unset(TinyXML2_LIBRARY CACHE)
-  endif()
-endif(USE_PREBUILT_LIBS)
-
 find_path(TinyXML2_INCLUDE_DIR tinyxml2.h
   HINTS ENV TinyXML2_DIR
   PATH_SUFFIXES include/tinyxml2 include

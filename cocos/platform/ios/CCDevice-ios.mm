@@ -38,13 +38,18 @@
 #import<CoreMotion/CoreMotion.h>
 #import<CoreFoundation/CoreFoundation.h>
 
+// Vibrate
+#import <AudioToolbox/AudioToolbox.h>
+
+#define SENSOR_DELAY_GAME 0.02
+
 @interface CCAccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
 {
     cocos2d::Acceleration *_acceleration;
     CMMotionManager *_motionManager;
 }
 
-+ (id) sharedAccelerometerDispather;
++ (id) sharedAccelerometerDispatcher;
 - (id) init;
 - (void) setAccelerometerEnabled: (bool) isEnabled;
 - (void) setAccelerometerInterval:(float) interval;
@@ -55,7 +60,7 @@
 
 static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
 
-+ (id) sharedAccelerometerDispather
++ (id) sharedAccelerometerDispatcher
 {
     if (s_pAccelerometerDispatcher == nil) {
         s_pAccelerometerDispatcher = [[self alloc] init];
@@ -69,6 +74,7 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
     if( (self = [super init]) ) {
         _acceleration = new cocos2d::Acceleration();
         _motionManager = [[CMMotionManager alloc] init];
+        _motionManager.accelerometerUpdateInterval = SENSOR_DELAY_GAME;
     }
     return self;
 }
@@ -171,12 +177,12 @@ int Device::getDPI()
 
 void Device::setAccelerometerEnabled(bool isEnabled)
 {
-    [[CCAccelerometerDispatcher sharedAccelerometerDispather] setAccelerometerEnabled:isEnabled];
+    [[CCAccelerometerDispatcher sharedAccelerometerDispatcher] setAccelerometerEnabled:isEnabled];
 }
 
 void Device::setAccelerometerInterval(float interval)
 {
-    [[CCAccelerometerDispatcher sharedAccelerometerDispather] setAccelerometerInterval:interval];
+    [[CCAccelerometerDispatcher sharedAccelerometerDispatcher] setAccelerometerInterval:interval];
 }
 
 typedef struct
@@ -192,10 +198,12 @@ typedef struct
     float        strokeColorR;
     float        strokeColorG;
     float        strokeColorB;
+    float        strokeColorA;
     float        strokeSize;
     float        tintColorR;
     float        tintColorG;
     float        tintColorB;
+    float        tintColorA;
     
     unsigned char*  data;
     
@@ -224,7 +232,7 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
     CGSize dim;
     if(s_isIOS7OrHigher){
         NSDictionary *attibutes = @{NSFontAttributeName:font};
-        dim = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attibutes context:nil].size;
+        dim = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) attributes:attibutes context:nil].size;
     }
     else {
         dim = [str sizeWithFont:font constrainedToSize:textRect];
@@ -355,7 +363,7 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
         }
         
         // text color
-        CGContextSetRGBFillColor(context, info->tintColorR, info->tintColorG, info->tintColorB, 1);
+        CGContextSetRGBFillColor(context, info->tintColorR, info->tintColorG, info->tintColorB, info->tintColorA);
         // move Y rendering to the top of the image
         CGContextTranslateCTM(context, 0.0f, (dim.height - shadowStrokePaddingY) );
         CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
@@ -402,12 +410,12 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
                                                       NSForegroundColorAttributeName:[UIColor colorWithRed:info->tintColorR
                                                                                                      green:info->tintColorG
                                                                                                       blue:info->tintColorB
-                                                                                                     alpha:1.0f],
+                                                                                                     alpha:info->tintColorA],
                                                       NSParagraphStyleAttributeName:paragraphStyle,
                                                       NSStrokeColorAttributeName: [UIColor colorWithRed:info->strokeColorR
                                                                                                   green:info->strokeColorG
                                                                                                    blue:info->strokeColorB
-                                                                                                  alpha:1.0f]
+                                                                                                  alpha:info->strokeColorA]
                                                       }
                  ];
                 
@@ -415,7 +423,7 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
             }
             else
             {
-                CGContextSetRGBStrokeColor(context, info->strokeColorR, info->strokeColorG, info->strokeColorB, 1);
+                CGContextSetRGBStrokeColor(context, info->strokeColorR, info->strokeColorG, info->strokeColorB, info->strokeColorA);
                 CGContextSetLineWidth(context, info->strokeSize);
                 
                 //original code that was not working in iOS 7
@@ -466,19 +474,21 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         info.strokeColorR           = textDefinition._stroke._strokeColor.r / 255.0f;
         info.strokeColorG           = textDefinition._stroke._strokeColor.g / 255.0f;
         info.strokeColorB           = textDefinition._stroke._strokeColor.b / 255.0f;
+        info.strokeColorA           = textDefinition._stroke._strokeAlpha / 255.0f;
         info.strokeSize             = textDefinition._stroke._strokeSize;
         info.tintColorR             = textDefinition._fontFillColor.r / 255.0f;
         info.tintColorG             = textDefinition._fontFillColor.g / 255.0f;
         info.tintColorB             = textDefinition._fontFillColor.b / 255.0f;
+        info.tintColorA             = textDefinition._fontAlpha / 255.0f;
         
         if (! _initWithString(text, align, textDefinition._fontName.c_str(), textDefinition._fontSize, &info))
         {
             break;
         }
-        height = (short)info.height;
-        width = (short)info.width;
-		ret.fastSet(info.data,width * height * 4);
-		hasPremultipliedAlpha = true;
+        height = info.height;
+        width = info.width;
+        ret.fastSet(info.data,width * height * 4);
+        hasPremultipliedAlpha = true;
     } while (0);
     
     return ret;
@@ -487,6 +497,19 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
 void Device::setKeepScreenOn(bool value)
 {
     [[UIApplication sharedApplication] setIdleTimerDisabled:(BOOL)value];
+}
+
+/*!
+ @brief Only works on iOS devices that support vibration (such as iPhone). Should only be used for important alerts. Use risks rejection in iTunes Store.
+ @param duration ignored for iOS
+ */
+void Device::vibrate(float duration)
+{
+    // See https://developer.apple.com/library/ios/documentation/AudioToolbox/Reference/SystemSoundServicesReference/index.html#//apple_ref/c/econst/kSystemSoundID_Vibrate
+    CC_UNUSED_PARAM(duration);
+    
+    // automatically vibrates for approximately 0.4 seconds
+    AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
 }
 
 NS_CC_END

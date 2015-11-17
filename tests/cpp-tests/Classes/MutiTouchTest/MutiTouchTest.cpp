@@ -1,5 +1,11 @@
 #include "MutiTouchTest.h"
 
+USING_NS_CC;
+
+MutiTouchTests::MutiTouchTests()
+{
+    ADD_TEST_CASE(MutiTouchTest);
+}
 
 static const Color3B* s_TouchColors[5] = {
     &Color3B::YELLOW,
@@ -33,14 +39,14 @@ public:
     }
 };
 
-bool MutiTouchTestLayer::init()
+bool MutiTouchTest::init()
 {
-    if (Layer::init())
+    if (TestCase::init())
     {
         auto listener = EventListenerTouchAllAtOnce::create();
-        listener->onTouchesBegan = CC_CALLBACK_2(MutiTouchTestLayer::onTouchesBegan, this);
-        listener->onTouchesMoved = CC_CALLBACK_2(MutiTouchTestLayer::onTouchesMoved, this);
-        listener->onTouchesEnded = CC_CALLBACK_2(MutiTouchTestLayer::onTouchesEnded, this);
+        listener->onTouchesBegan = CC_CALLBACK_2(MutiTouchTest::onTouchesBegan, this);
+        listener->onTouchesMoved = CC_CALLBACK_2(MutiTouchTest::onTouchesMoved, this);
+        listener->onTouchesEnded = CC_CALLBACK_2(MutiTouchTest::onTouchesEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         
         auto title = Label::createWithSystemFont("Please touch the screen!", "", 24);
@@ -54,7 +60,7 @@ bool MutiTouchTestLayer::init()
 
 static Map<int, TouchPoint*> s_map;
 
-void MutiTouchTestLayer::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
+void MutiTouchTest::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
     for ( auto &item: touches )
     {
@@ -67,7 +73,7 @@ void MutiTouchTestLayer::onTouchesBegan(const std::vector<Touch*>& touches, Even
     }
 }
 
-void MutiTouchTestLayer::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
+void MutiTouchTest::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
     for( auto &item: touches)
     {
@@ -84,7 +90,7 @@ void MutiTouchTestLayer::onTouchesMoved(const std::vector<Touch*>& touches, Even
     }
 }
 
-void MutiTouchTestLayer::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
+void MutiTouchTest::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
 {
     for ( auto &item: touches )
     {
@@ -95,16 +101,7 @@ void MutiTouchTestLayer::onTouchesEnded(const std::vector<Touch*>& touches, Even
     }
 }
 
-void MutiTouchTestLayer::onTouchesCancelled(const std::vector<Touch*>& touches, Event  *event)
+void MutiTouchTest::onTouchesCancelled(const std::vector<Touch*>& touches, Event  *event)
 {
     onTouchesEnded(touches, event);
-}
-
-void MutiTouchTestScene::runThisTest()
-{
-    auto layer = MutiTouchTestLayer::create();
-
-    addChild(layer, 0);
-
-    Director::getInstance()->replaceScene(this);
 }

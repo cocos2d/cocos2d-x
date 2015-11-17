@@ -17,7 +17,7 @@
 
         <activity android:name=".AppActivity"
                   android:label="@string/app_name"
-                  android:screenOrientation="landscape"
+                  android:screenOrientation="sensorLandscape"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
                   android:configChanges="orientation">
 
@@ -34,4 +34,5 @@
                       android:xlargeScreens="true"/>
                          
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 </manifest> 

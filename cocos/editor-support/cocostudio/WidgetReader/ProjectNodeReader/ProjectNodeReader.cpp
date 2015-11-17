@@ -27,7 +27,7 @@
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
@@ -62,6 +62,11 @@ namespace cocostudio
         CC_SAFE_DELETE(_instanceProjectNodeReader);
     }
     
+    void ProjectNodeReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(_instanceProjectNodeReader);
+    }
+    
     Offset<Table> ProjectNodeReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
                                                                   flatbuffers::FlatBufferBuilder *builder)
     {
@@ -69,7 +74,22 @@ namespace cocostudio
         auto nodeOptions = *(Offset<WidgetOptions>*)(&temp);
         
         std::string filename = "";
-        
+        float innerspeed = 1.0f;
+
+        const tinyxml2::XMLAttribute* objattri = objectData->FirstAttribute();
+        // inneraction speed
+        while (objattri)
+        {
+            std::string name = objattri->Name();
+            std::string value = objattri->Value();
+            if (name == "InnerActionSpeed")
+            {
+                    innerspeed = atof(objattri->Value());
+                    break;
+            }
+            objattri = objattri->Next();
+        }
+
         // FileData
         const tinyxml2::XMLElement* child = objectData->FirstChildElement();
         while (child)
@@ -101,49 +121,8 @@ namespace cocostudio
         
         auto options = CreateProjectNodeOptions(*builder,
                                                 nodeOptions,
-                                                builder->CreateString(filename));
-        
-        return *(Offset<Table>*)(&options);
-    }
-    
-    Offset<Table> ProjectNodeReader::createOptionsWithFlatBuffersForSimulator(const tinyxml2::XMLElement *objectData,
-                                                                              flatbuffers::FlatBufferBuilder *builder)
-    {
-        auto temp = NodeReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
-        auto nodeOptions = *(Offset<WidgetOptions>*)(&temp);
-        
-        std::string filename = "";
-        
-        // FileData
-        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
-        while (child)
-        {
-            std::string name = child->Name();
-            
-            if (name == "FileData")
-            {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
-                
-                while (attribute)
-                {
-                    name = attribute->Name();
-                    std::string value = attribute->Value();
-                    
-                    if (name == "Path")
-                    {
-                        filename = value;
-                    }
-                    
-                    attribute = attribute->Next();
-                }
-            }
-            
-            child = child->NextSiblingElement();
-        }
-        
-        auto options = CreateProjectNodeOptions(*builder,
-                                                nodeOptions,
-                                                builder->CreateString(filename));
+                                                builder->CreateString(filename),
+                                                innerspeed);
         
         return *(Offset<Table>*)(&options);
     }

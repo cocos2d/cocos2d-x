@@ -8,23 +8,11 @@
 
 #include "Bug-Child.h"
 
-Scene* BugChild::scene()
-{
-    // 'scene' is an autorelease object.
-    auto scene = Scene::create();
-    // 'layer' is an autorelease object.
-    auto layer = BugChild::create();
-    
-    // add layer as a child to scene
-    scene->addChild(layer);
-    
-    // return the scene
-    return scene;
-}
+USING_NS_CC;
 
 bool BugChild::init()
 {
-    if (BugsTestBaseLayer::init())
+    if (BugsTestBase::init())
     {
         auto size = Director::getInstance()->getWinSize();
         
@@ -69,4 +57,67 @@ void BugChild::switchChild(Ref *sender)
         parent1->addChild(child);
         CCLOG("Child attached to parent1");
     }
+}
+
+bool BugCameraMask::init()
+{
+    if (!BugsTestBase::init()) return false;
+    
+    auto size = Director::getInstance()->getWinSize();
+    
+    auto node = Node::create();
+    node->setPosition(size.width/4, size.height/3);
+    _sprite = Sprite::create("Images/grossini.png");
+    node->addChild(_sprite);
+    node->setCameraMask((unsigned short)CameraFlag::USER1);
+    auto move = MoveBy::create(2, Vec2(200,0));
+    
+    node->runAction(RepeatForever::create(Sequence::createWithTwoActions(move, move->reverse())));
+    addChild(node);
+    
+    auto camera = Camera::create();
+    camera->setCameraFlag(CameraFlag::USER1);
+    addChild(camera);
+    
+    
+    auto item1 = MenuItemFont::create("Switch Child", CC_CALLBACK_1(BugCameraMask::switchSpriteFlag, this));
+    
+    auto menu = Menu::create(item1, nullptr);
+    
+    menu->alignItemsVertically();
+    menu->setPosition(size.width/2, 100);
+    addChild(menu);
+    
+    _spriteMaskLabel = Label::create();
+    _spriteMaskLabel->setPosition(size.width/2, 120);
+    addChild(_spriteMaskLabel);
+    updateSpriteMaskLabel();
+    
+    auto label = Label::create();
+    label->setPosition(size.width/2, size.height * 0.9);
+    label->setString("Sprite should always run action.");
+    addChild(label);
+    
+    return true;
+}
+
+void BugCameraMask::switchSpriteFlag(Ref *sender)
+{
+    if((unsigned short) CameraFlag::USER1 == _sprite->getCameraMask())
+    {
+        _sprite->setCameraMask((unsigned short)CameraFlag::DEFAULT);
+    }
+    else
+    {
+        _sprite->setCameraMask((unsigned short)CameraFlag::USER1);
+    }
+    
+    updateSpriteMaskLabel();
+}
+
+void BugCameraMask::updateSpriteMaskLabel()
+{
+    std::stringstream stream;
+    stream<<"The camera Mask is "<<(_sprite->getCameraMask() == 1 ? "CamereFlag::Default" : "CameraFlag::User1")<<std::endl;
+    _spriteMaskLabel->setString(stream.str());
 }

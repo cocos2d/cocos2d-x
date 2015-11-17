@@ -38,7 +38,7 @@
 #endif
 #include "CCPlatformMacros.h"
 
-#define QUEUEBUFFER_NUM 3
+#define QUEUEBUFFER_NUM 5
 #define QUEUEBUFFER_TIME_STEP 0.1f
 
 NS_CC_BEGIN
@@ -60,11 +60,14 @@ public:
     AudioCache(const AudioCache&);
     ~AudioCache();
 
-    void addCallbacks(const std::function<void()> &callback);
+    void addPlayCallback(const std::function<void()>& callback);
+
+    void addLoadCallback(const std::function<void(bool)>& callback);
 
 protected:
     void readDataTask();  
-    void invokingCallbacks();
+    void invokingPlayCallbacks();
+    void invokingLoadCallbacks();
 
     std::string _fileFullPath;
     FileFormat _fileFormat;
@@ -93,8 +96,10 @@ protected:
     int _queBufferBytes;
 
     bool _alBufferReady;
+    bool _loadFail;
     std::mutex _callbackMutex; 
     std::vector< std::function<void()> > _callbacks;
+    std::vector< std::function<void(bool)> > _loadCallbacks;
 
     std::mutex _readDataTaskMutex;    
 

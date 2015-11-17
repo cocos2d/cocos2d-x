@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,23 +26,26 @@
 #ifndef _CCFontAtlasCache_h_
 #define _CCFontAtlasCache_h_
 
-#include <unordered_map>
+/// @cond DO_NOT_SHOW
 
-#include "2d/CCLabel.h"
+#include <unordered_map>
+#include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
 class FontAtlas;
+class Texture2D;
+struct _ttfConfig;
 
 class CC_DLL FontAtlasCache
 {  
 public:
-    static FontAtlas * getFontAtlasTTF(const TTFConfig & config);
-    static FontAtlas * getFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset = Vec2::ZERO);
+    static FontAtlas* getFontAtlasTTF(const _ttfConfig* config);
+    static FontAtlas* getFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset = Vec2::ZERO);
 
-    static FontAtlas * getFontAtlasCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
-    static FontAtlas * getFontAtlasCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
-    static FontAtlas * getFontAtlasCharMap(const std::string& plistFile);
+    static FontAtlas* getFontAtlasCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
+    static FontAtlas* getFontAtlasCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
+    static FontAtlas* getFontAtlasCharMap(const std::string& plistFile);
     
     static bool releaseFontAtlas(FontAtlas *atlas);
 
@@ -51,11 +54,12 @@ public:
      */
     static void purgeCachedData();
     
-private: 
-    static std::string generateFontName(const std::string& fontFileName, int size, GlyphCollection theGlyphs, bool useDistanceField);
+private:
+    static std::string generateFontName(const std::string& fontFileName, float size, bool useDistanceField);
     static std::unordered_map<std::string, FontAtlas *> _atlasMap;
 };
 
 NS_CC_END
 
+/// @endcond
 #endif

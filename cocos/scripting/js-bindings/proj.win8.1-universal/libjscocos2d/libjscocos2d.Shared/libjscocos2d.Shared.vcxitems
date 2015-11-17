@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{bea66276-51dd-4c53-92a8-f3d1fea50892}</ItemsProjectGuid>
+    <ItemsRootNamespace>libjscocos2d</ItemsRootNamespace>
+    <ItemsProjectName>libjscocos2d.Shared</ItemsProjectName>
+    <CodeSharingProject>248F659F-DAC5-46E8-AC09-60EC9FC95053</CodeSharingProject>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_auto.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_extension_auto.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_auto.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_audioengine_auto.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_builder_auto.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_extension_auto.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_navmesh_auto.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_physics3d_auto.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_spine_auto.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_studio_auto.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_ui_auto.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\3d\jsb_cocos2dx_3d_manual.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_auto_classes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_auto_classes_registration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_functions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_functions_registration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_manual.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_registration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\cocos2d_specifics.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\cocosbuilder\cocosbuilder_specifics.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\cocosbuilder\js_bindings_ccbreader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\cocostudio\jsb_cocos2dx_studio_conversions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\cocostudio\jsb_cocos2dx_studio_manual.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\component\CCComponentJS.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\extension\jsb_cocos2dx_extension_manual.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\jsb_event_dispatcher_manual.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\jsb_helper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\jsb_opengl_functions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\jsb_opengl_manual.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\jsb_opengl_registration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_bindings_config.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_bindings_core.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_bindings_opengl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_manual_conversions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\localstorage\js_bindings_system_functions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\localstorage\js_bindings_system_functions_registration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\localstorage\js_bindings_system_registration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\navmesh\jsb_cocos2dx_navmesh_conversions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\navmesh\jsb_cocos2dx_navmesh_manual.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\network\jsb_socketio.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\network\jsb_websocket.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\network\XMLHTTPRequest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\physics3d\jsb_cocos2dx_physics3d_manual.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\ScriptingCore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\spidermonkey_specifics.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\spine\jsb_cocos2dx_spine_manual.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\ui\jsb_cocos2dx_ui_manual.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_auto.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_extension_auto.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_auto.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_audioengine_auto.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_builder_auto.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_extension_auto.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_navmesh_auto.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_physics3d_auto.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_spine_auto.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_studio_auto.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_ui_auto.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\3d\jsb_cocos2dx_3d_manual.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_auto_classes.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_functions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_manual.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_registration.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\cocos2d_specifics.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\cocosbuilder\js_bindings_ccbreader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\cocostudio\jsb_cocos2dx_studio_conversions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\cocostudio\jsb_cocos2dx_studio_manual.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\component\CCComponentJS.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\extension\jsb_cocos2dx_extension_manual.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\jsb_event_dispatcher_manual.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\jsb_opengl_functions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\jsb_opengl_manual.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\jsb_opengl_registration.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_bindings_core.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_bindings_opengl.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_manual_conversions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\localstorage\js_bindings_system_functions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\localstorage\js_bindings_system_registration.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\navmesh\jsb_cocos2dx_navmesh_conversions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\navmesh\jsb_cocos2dx_navmesh_manual.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\network\jsb_socketio.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\network\jsb_websocket.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\network\XMLHTTPRequest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\physics3d\jsb_cocos2dx_physics3d_manual.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\ScriptingCore.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\spine\jsb_cocos2dx_spine_manual.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\ui\jsb_cocos2dx_ui_manual.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\auto\api\jsb_cocos2dx_3d_auto_api.js" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\auto\api\jsb_cocos2dx_auto_api.js" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\auto\api\jsb_cocos2dx_builder_auto_api.js" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\auto\api\jsb_cocos2dx_extension_auto_api.js" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\auto\api\jsb_cocos2dx_spine_auto_api.js" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\auto\api\jsb_cocos2dx_studio_auto_api.js" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\auto\api\jsb_cocos2dx_ui_auto_api.js" />
+  </ItemGroup>
+</Project>

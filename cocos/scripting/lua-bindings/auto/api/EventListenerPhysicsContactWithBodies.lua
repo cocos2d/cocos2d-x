@@ -13,7 +13,7 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+--  Create the listener. 
 -- @function [parent=#EventListenerPhysicsContactWithBodies] create 
 -- @param self
 -- @param #cc.PhysicsBody bodyA

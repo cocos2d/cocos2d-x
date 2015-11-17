@@ -3,22 +3,14 @@
 
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
-USING_NS_CC_EXT;
 
-class SchedulerTestLayer : public BaseTest
+DEFINE_TEST_SUITE(SchedulerTests);
+
+class SchedulerTestLayer : public TestCase
 {
 public:
-    virtual void onEnter() override;
-
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-
-    void backCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void restartCallback(Ref* sender);
 };
 
 class SchedulerAutoremove : public SchedulerTestLayer
@@ -60,7 +52,7 @@ public:
     virtual ~SchedulerPauseResumeAll();
     virtual void onEnter() override;
     virtual void onExit() override;
-    virtual void update(float delta);
+    virtual void update(float delta) override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -184,7 +176,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void update(float dt);
+    void update(float dt) override;
     void tick(float dt);
     void stopSelectors(float dt);
 };
@@ -198,12 +190,12 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void update(float dt);
+    void update(float dt) override;
     void schedUpdate(float dt);
     void stopUpdate(float dt);
 };
 
-class TestNode : public Node
+class TestNode : public cocos2d::Node
 {
 public:
     CREATE_FUNC(TestNode);
@@ -211,7 +203,7 @@ public:
     ~TestNode();
 
     void initWithString(const std::string& str, int priority);
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 private:
     std::string _string;
 };
@@ -239,7 +231,7 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void update(float dt);
+    void update(float dt) override;
 };
 
 class SchedulerTimeScale : public SchedulerTestLayer
@@ -247,13 +239,13 @@ class SchedulerTimeScale : public SchedulerTestLayer
 public:
     CREATE_FUNC(SchedulerTimeScale);
 
-    void onEnter();
-    void onExit();
+    void onEnter() override;
+    void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    ControlSlider* sliderCtl();
-    void sliderAction(Ref* sender, Control::EventType controlEvent);
-    ControlSlider* _sliderCtl;
+    cocos2d::extension::ControlSlider* sliderCtl();
+    void sliderAction(cocos2d::Ref* sender, cocos2d::extension::Control::EventType controlEvent);
+    cocos2d::extension::ControlSlider* _sliderCtl;
 };
 
 
@@ -265,16 +257,16 @@ public:
     virtual ~TwoSchedulers();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void onEnter();
-    ControlSlider* sliderCtl();
-    void sliderAction(Ref* sender, Control::EventType controlEvent);
-    Scheduler *sched1;
-    Scheduler *sched2;
-    ActionManager *actionManager1;
-    ActionManager *actionManager2;
+    void onEnter() override;
+    cocos2d::extension::ControlSlider* sliderCtl();
+    void sliderAction(cocos2d::Ref* sender, cocos2d::extension::Control::EventType controlEvent);
+    cocos2d::Scheduler* sched1;
+    cocos2d::Scheduler* sched2;
+    cocos2d::ActionManager* actionManager1;
+    cocos2d::ActionManager* actionManager2;
 
-    ControlSlider    *sliderCtl1;
-    ControlSlider    *sliderCtl2;
+    cocos2d::extension::ControlSlider* sliderCtl1;
+    cocos2d::extension::ControlSlider* sliderCtl2;
 };
 
 class SchedulerIssue2268 : public SchedulerTestLayer
@@ -285,11 +277,11 @@ public:
     ~SchedulerIssue2268();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void onEnter();
-    void update(float dt);
+    void onEnter() override;
+    void update(float dt) override;
 
 private:
-    Node *testNode;
+    cocos2d::Node* testNode;
 };
 
 class ScheduleCallbackTest : public SchedulerTestLayer
@@ -300,7 +292,7 @@ public:
     ~ScheduleCallbackTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void onEnter();
+    void onEnter() override;
     
     void callback(float dt);
     
@@ -314,20 +306,24 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void onEnter();
-    void onExit();
+    void onEnter() override;
+    void onExit() override;
     
-    virtual void update(float dt);
+    virtual void update(float dt) override;
     
-    bool onTouchBegan(Touch* touch, Event* event);
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
 };
 
-class SchedulerTestScene : public TestScene
+class SchedulerIssue10232 : public SchedulerTestLayer
 {
 public:
-    CREATE_FUNC(SchedulerTestScene);
+    CREATE_FUNC(SchedulerIssue10232);
 
-    virtual void runThisTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void onEnter() override;
+    void update(float dt) override;
 };
 
 #endif

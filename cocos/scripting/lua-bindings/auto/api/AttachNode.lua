@@ -14,16 +14,35 @@
         
 --------------------------------
 -- 
+-- @function [parent=#AttachNode] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #mat4_table parentTransform
+-- @param #unsigned int parentFlags
+-- @return AttachNode#AttachNode self (return value: cc.AttachNode)
+        
+--------------------------------
+-- 
 -- @function [parent=#AttachNode] getWorldToNodeTransform 
 -- @param self
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 -- 
--- @function [parent=#AttachNode] visit 
+-- @function [parent=#AttachNode] getNodeToWorldTransform 
 -- @param self
--- @param #cc.Renderer renderer
--- @param #mat4_table parentTransform
--- @param #unsigned int parentFlags
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#AttachNode] getNodeToParentTransform 
+-- @param self
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#AttachNode] AttachNode 
+-- @param self
+-- @return AttachNode#AttachNode self (return value: cc.AttachNode)
         
 return nil

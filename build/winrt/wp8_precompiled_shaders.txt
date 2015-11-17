@@ -1,7 +1,0 @@
-How to compile precompiled shaders for Windows Phone 8.0 (WP8)
-
-1. Open the VS project Cocos2dShaderCompiler\Cocos2dShaderCompiler.sln
-2. Build and run the project
-3. Click the Compile button
-4. Select the file cocos\platform\wp8\shaders\precompiledshaders.h in the file dialog box
-5. Program will precompile all of the cached cocos2d-x shaders.

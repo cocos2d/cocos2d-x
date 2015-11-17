@@ -27,122 +27,87 @@
 #include "Texture2dTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum {
     kTagLabel = 1,
     kTagSprite1 = 2,
     kTagSprite2 = 3,
 };
 
-static std::function<Layer*()> createFunctions[] =
+Texture2DTests::Texture2DTests()
 {
-    CL(TexturePVRv3Premult),
-
-    CL(TextureMipMap),
-    CL(TextureMemoryAlloc),
-    CL(TextureAlias),
-    CL(TexturePVRMipMap),
-    CL(TexturePVRMipMap2),
-    CL(TexturePVRNonSquare),
-    CL(TexturePVRNPOT4444),
-    CL(TexturePVRNPOT8888),
-    CL(TexturePVRTest),
-    CL(TexturePVR2BPP),
-    CL(TexturePVR2BPPv3),
-    CL(TexturePVR4BPP),
-    CL(TexturePVR4BPPv3),
-    CL(TexturePVRII4BPPv3),
-    CL(TexturePVRRGBA8888),
-    CL(TexturePVRRGBA8888v3),
-    CL(TexturePVRBGRA8888),
-    CL(TexturePVRBGRA8888v3),
-    CL(TexturePVRRGBA4444),
-    CL(TexturePVRRGBA4444v3),
-    CL(TexturePVRRGBA4444GZ),
-    CL(TexturePVRRGBA4444CCZ),
-    CL(TexturePVRRGBA5551),
-    CL(TexturePVRRGBA5551v3),
-    CL(TexturePVRRGB565),
-    CL(TexturePVRRGB565v3),
-    CL(TexturePVRRGB888),
-    CL(TexturePVRRGB888v3),
-    CL(TexturePVRA8),
-    CL(TexturePVRA8v3),
-    CL(TexturePVRI8),
-    CL(TexturePVRI8v3),
-    CL(TexturePVRAI88),
-    CL(TexturePVRAI88v3),
+    ADD_TEST_CASE(TextureMipMap);
+    ADD_TEST_CASE(TextureMemoryAlloc);
+    ADD_TEST_CASE(TextureAlias);
+    ADD_TEST_CASE(TexturePVRMipMap);
+    ADD_TEST_CASE(TexturePVRMipMap2);
+    ADD_TEST_CASE(TexturePVRNonSquare);
+    ADD_TEST_CASE(TexturePVRNPOT4444);
+    ADD_TEST_CASE(TexturePVRNPOT8888);
+    ADD_TEST_CASE(TexturePVRTest);
+    ADD_TEST_CASE(TexturePVR2BPP);
+    ADD_TEST_CASE(TexturePVR2BPPv3);
+    ADD_TEST_CASE(TexturePVR4BPP);
+    ADD_TEST_CASE(TexturePVR4BPPv3);
+    ADD_TEST_CASE(TexturePVRII4BPPv3);
+    ADD_TEST_CASE(TexturePVRRGBA8888);
+    ADD_TEST_CASE(TexturePVRRGBA8888v3);
+    ADD_TEST_CASE(TexturePVRBGRA8888);
+    ADD_TEST_CASE(TexturePVRBGRA8888v3);
+    ADD_TEST_CASE(TexturePVRRGBA4444);
+    ADD_TEST_CASE(TexturePVRRGBA4444v3);
+    ADD_TEST_CASE(TexturePVRRGBA4444GZ);
+    ADD_TEST_CASE(TexturePVRRGBA4444CCZ);
+    ADD_TEST_CASE(TexturePVRRGBA5551);
+    ADD_TEST_CASE(TexturePVRRGBA5551v3);
+    ADD_TEST_CASE(TexturePVRRGB565);
+    ADD_TEST_CASE(TexturePVRRGB565v3);
+    ADD_TEST_CASE(TexturePVRRGB888);
+    ADD_TEST_CASE(TexturePVRRGB888v3);
+    ADD_TEST_CASE(TexturePVRA8);
+    ADD_TEST_CASE(TexturePVRA8v3);
+    ADD_TEST_CASE(TexturePVRI8);
+    ADD_TEST_CASE(TexturePVRI8v3);
+    ADD_TEST_CASE(TexturePVRAI88);
+    ADD_TEST_CASE(TexturePVRAI88v3);
     
-    CL(TexturePVRv3Premult),
+    ADD_TEST_CASE(TexturePVRv3Premult);
     
-    CL(TexturePVRBadEncoding),
-    CL(TexturePNG),
-    CL(TextureJPEG),
-    CL(TextureTIFF),
-    CL(TextureTGA),
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    CL(TextureWEBP),
+    ADD_TEST_CASE(TexturePVRBadEncoding);
+    ADD_TEST_CASE(TexturePNG);
+    ADD_TEST_CASE(TextureJPEG);
+    ADD_TEST_CASE(TextureTIFF);
+    ADD_TEST_CASE(TextureTGA);
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+    ADD_TEST_CASE(TextureWEBP);
 #endif
-    CL(TexturePixelFormat),
-    CL(TextureBlend),
-    CL(TextureAsync),
-    CL(TextureGlClamp),
-    CL(TextureGlRepeat),
-    CL(TextureSizeTest),
-    CL(TextureCache1),
-    CL(TextureDrawAtPoint),
-    CL(TextureDrawInRect),
+    ADD_TEST_CASE(TexturePixelFormat);
+    ADD_TEST_CASE(TextureBlend);
+    ADD_TEST_CASE(TextureAsync);
+    ADD_TEST_CASE(TextureGlClamp);
+    ADD_TEST_CASE(TextureGlRepeat);
+    ADD_TEST_CASE(TextureSizeTest);
+    ADD_TEST_CASE(TextureCache1);
+    ADD_TEST_CASE(TextureDrawAtPoint);
+    ADD_TEST_CASE(TextureDrawInRect);
     
-    CL(TextureETC1),
+    ADD_TEST_CASE(TextureETC1);
     
-    CL(TextureS3TCDxt1),
-    CL(TextureS3TCDxt3),
-    CL(TextureS3TCDxt5),
-    CL(TextureS3TCWithNoMipmaps),
+    ADD_TEST_CASE(TextureS3TCDxt1);
+    ADD_TEST_CASE(TextureS3TCDxt3);
+    ADD_TEST_CASE(TextureS3TCDxt5);
+    ADD_TEST_CASE(TextureS3TCWithNoMipmaps);
     
-    CL(TextureATITCRGB),
-    CL(TextureATITCExplicit),
-    CL(TextureATITCInterpolated),
+    ADD_TEST_CASE(TextureATITCRGB);
+    ADD_TEST_CASE(TextureATITCExplicit);
+    ADD_TEST_CASE(TextureATITCInterpolated);
     
-    CL(TextureConvertRGB888),
-    CL(TextureConvertRGBA8888),
-    CL(TextureConvertI8),
-    CL(TextureConvertAI88),
+    ADD_TEST_CASE(TextureConvertRGB888);
+    ADD_TEST_CASE(TextureConvertRGBA8888);
+    ADD_TEST_CASE(TextureConvertI8);
+    ADD_TEST_CASE(TextureConvertAI88);
 };
-
-static unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
-
-static int sceneIdx=-1;
-Layer* createTextureTest(int index)
-{
-    auto layer = (createFunctions[index])();;
-    return layer;
-}
-
-Layer* nextTextureTest();
-Layer* backTextureTest();
-Layer* restartTextureTest();
-
-Layer* nextTextureTest()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % TEST_CASE_COUNT;
-
-    return createTextureTest(sceneIdx);
-}
-
-Layer* backTextureTest()
-{
-    sceneIdx--;
-    if( sceneIdx < 0 )
-        sceneIdx = TEST_CASE_COUNT -1;    
-
-    return createTextureTest(sceneIdx);
-}
-
-Layer* restartTextureTest()
-{
-    return createTextureTest(sceneIdx);
-}
 
 //------------------------------------------------------------------
 //
@@ -151,14 +116,12 @@ Layer* restartTextureTest()
 //------------------------------------------------------------------
 void TextureDemo::onEnter()
 {
-    BaseTest::onEnter();
-
-    auto textureCache = Director::getInstance()->getTextureCache();
-    log("%s\n", textureCache->getCachedTextureInfo().c_str());
+    TestCase::onEnter();
 
     auto col = LayerColor::create(Color4B(128,128,128,255));
     addChild(col, -10);
-    
+
+    auto textureCache = Director::getInstance()->getTextureCache();
     log("%s\n", textureCache->getCachedTextureInfo().c_str());
 }
 
@@ -167,37 +130,6 @@ TextureDemo::~TextureDemo()
     auto textureCache = Director::getInstance()->getTextureCache();
     textureCache->removeUnusedTextures();
     log("%s\n", textureCache->getCachedTextureInfo().c_str());
-}
-
-void TextureDemo::restartCallback(Ref* sender)
-{
-    auto s = TextureTestScene::create();
-    s->addChild(restartTextureTest());
-    Director::getInstance()->replaceScene(s);
-}
-
-void TextureDemo::nextCallback(Ref* sender)
-{
-    auto s = TextureTestScene::create();
-    s->addChild(nextTextureTest());
-    Director::getInstance()->replaceScene(s);
-}
-
-void TextureDemo::backCallback(Ref* sender)
-{
-    auto s = TextureTestScene::create();
-    s->addChild(backTextureTest());
-    Director::getInstance()->replaceScene(s);
-}
-
-std::string TextureDemo::title() const
-{
-    return "No title";
-}
-
-std::string TextureDemo::subtitle() const
-{
-    return "";
 }
 
 //------------------------------------------------------------------
@@ -1826,7 +1758,7 @@ void TextureDrawAtPoint::draw(Renderer *renderer, const Mat4 &transform, uint32_
 {
     TextureDemo::draw(renderer, transform, flags);
     
-    _renderCmd.init(_globalZOrder);
+    _renderCmd.init(_globalZOrder, transform, flags);
     _renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 
@@ -1869,7 +1801,7 @@ void TextureDrawInRect::draw(Renderer *renderer, const Mat4 &transform, uint32_t
 {
     TextureDemo::draw(renderer, transform, flags);
 
-    _renderCmd.init(_globalZOrder);
+    _renderCmd.init(_globalZOrder, transform, flags);
     _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 }
@@ -1900,18 +1832,6 @@ std::string TextureDrawInRect::title() const
 std::string TextureDrawInRect::subtitle() const
 {
     return "draws 2 textures using drawInRect";
-}
-
-//------------------------------------------------------------------
-//
-// TextureTestScene
-//
-//------------------------------------------------------------------
-void TextureTestScene::runThisTest()
-{
-    auto layer = nextTextureTest();
-    addChild(layer);
-    Director::getInstance()->replaceScene(this);
 }
 
 //------------------------------------------------------------------

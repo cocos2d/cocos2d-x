@@ -22,6 +22,7 @@
 -- @function [parent=#BoneData] addDisplayData 
 -- @param self
 -- @param #ccs.DisplayData displayData
+-- @return BoneData#BoneData self (return value: ccs.BoneData)
         
 --------------------------------
 -- 
@@ -33,5 +34,6 @@
 -- js ctor
 -- @function [parent=#BoneData] BoneData 
 -- @param self
+-- @return BoneData#BoneData self (return value: ccs.BoneData)
         
 return nil

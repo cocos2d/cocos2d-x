@@ -30,24 +30,32 @@
 #include "json/document.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
 class Animation3D;
 class Data;
 
 /**
- * Defines a bundle file that contains a collection of assets. Mesh, Material, MeshSkin, Animation
+ * @brief Defines a bundle file that contains a collection of assets. Mesh, Material, MeshSkin, Animation
  * There are two types of bundle files, c3t and c3b.
  * c3t text file
  * c3b binary file
+ * @js NA
+ * @lua NA
  */
 class CC_DLL Bundle3D
 {
 public:
-    /**you can define yourself bundle and set it, use default bundle otherwise*/
-    static void setBundleInstance(Bundle3D* bundleInstance);
+    /**
+     * create a new bundle, destroy it when finish using it
+     */
+    static Bundle3D* createBundle();
     
-    static Bundle3D* getInstance();
-    
-    static void destroyInstance();
+    static void destroyBundle(Bundle3D* bundle);
     
 	virtual void clear();
 
@@ -76,6 +84,12 @@ public:
     virtual bool loadNodes(NodeDatas& nodedatas);
     //since 3.3, to support reskin
     virtual bool loadMaterials(MaterialDatas& materialdatas);
+    
+    /**
+     * load triangle list
+     * @param path the file path to load
+     */
+    static std::vector<Vec3> getTrianglesList(const std::string& path);
     
     //load .obj file
     static bool loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeDatas& nodedatas, const std::string& fullPath, const char* mtl_basepath = nullptr);
@@ -114,13 +128,13 @@ protected:
      * load nodes of json
      */
     bool loadNodesJson(NodeDatas& nodedatas);
-    NodeData* parseNodesRecursivelyJson(const rapidjson::Value& jvalue);
+    NodeData* parseNodesRecursivelyJson(const rapidjson::Value& jvalue, bool singleSprite);
 
     /**
      * load nodes of binary
      */
     bool loadNodesBinary(NodeDatas& nodedatas);
-    NodeData* parseNodesRecursivelyBinary(bool& skeleton);
+    NodeData* parseNodesRecursivelyBinary(bool& skeleton, bool singleSprite);
 
     /**
      * get define data type
@@ -158,7 +172,6 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Bundle3D();
     
 protected:
-    static Bundle3D* _instance;
     std::string _modelPath;
     std::string _path;
     std::string _version;// the c3b or c3t version
@@ -174,6 +187,9 @@ protected:
     Reference* _references;
     bool  _isBinary;
 };
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 

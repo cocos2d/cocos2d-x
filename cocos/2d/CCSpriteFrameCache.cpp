@@ -33,13 +33,14 @@ THE SOFTWARE.
 
 
 #include "2d/CCSprite.h"
+#include "2d/CCAutoPolygon.h"
 #include "platform/CCFileUtils.h"
 #include "base/CCNS.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCTextureCache.h"
-
+#include "base/CCNinePatchImageParser.h"
 
 #include "deprecated/CCString.h"
 
@@ -79,6 +80,63 @@ SpriteFrameCache::~SpriteFrameCache()
     CC_SAFE_DELETE(_loadedFileNames);
 }
 
+void SpriteFrameCache::parseIntegerList(const std::string &string, std::vector<int> &res)
+{
+    std::string delim(" ");
+
+    size_t n = std::count(string.begin(), string.end(), ' ');
+    res.resize(n+1);
+    
+    size_t start  = 0U;
+    size_t end = string.find(delim);
+    
+    int i=0;
+    while (end != std::string::npos)
+    {
+        res[i++] = atoi(string.substr(start, end - start).c_str());
+        start = end + delim.length();
+        end = string.find(delim, start);
+    }
+    
+    res[i] = atoi(string.substr(start, end).c_str());
+}
+
+void SpriteFrameCache::initializePolygonInfo(const Size &textureSize,
+                                             const Size &spriteSize,
+                                             const std::vector<int> &vertices,
+                                             const std::vector<int> &verticesUV,
+                                             const std::vector<int> &triangleIndices,
+                                             PolygonInfo &info)
+{
+    size_t vertexCount = vertices.size();
+    size_t indexCount = triangleIndices.size();
+    
+    float scaleFactor = CC_CONTENT_SCALE_FACTOR();
+
+    V3F_C4B_T2F *vertexData = new V3F_C4B_T2F[vertexCount];
+    for (size_t i = 0; i < vertexCount/2; i++)
+    {
+        vertexData[i].colors = Color4B::WHITE;
+        vertexData[i].vertices = Vec3(vertices[i*2] / scaleFactor,
+                                      (spriteSize.height - vertices[i*2+1]) / scaleFactor,
+                                      0);
+        vertexData[i].texCoords = Tex2F(verticesUV[i*2] / textureSize.width,
+                                        verticesUV[i*2+1] / textureSize.height);
+    }
+
+    unsigned short *indexData = new unsigned short[indexCount];
+    for (size_t i = 0; i < indexCount; i++)
+    {
+        indexData[i] = static_cast<unsigned short>(triangleIndices[i]);
+    }
+
+    info.triangles.vertCount = vertexCount;
+    info.triangles.verts = vertexData;
+    info.triangles.indexCount = indexCount;
+    info.triangles.indices = indexData;
+    info.rect = Rect(0, 0, spriteSize.width, spriteSize.height);
+}
+
 void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D* texture)
 {
     /*
@@ -88,22 +146,34 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
     ZWTCoordinatesFormatOptionXML1_0 = 1, // Desktop Version 0.0 - 0.4b
     ZWTCoordinatesFormatOptionXML1_1 = 2, // Desktop Version 1.0.0 - 1.0.1
     ZWTCoordinatesFormatOptionXML1_2 = 3, // Desktop Version 1.0.2+
+
+    Version 3 with TexturePacker 4.0 polygon mesh packing
     */
 
     
     ValueMap& framesDict = dictionary["frames"].asValueMap();
     int format = 0;
 
+    Size textureSize;
+
     // get the format
     if (dictionary.find("metadata") != dictionary.end())
     {
         ValueMap& metadataDict = dictionary["metadata"].asValueMap();
         format = metadataDict["format"].asInt();
+
+        if(metadataDict.find("size") != metadataDict.end())
+        {
+            textureSize = SizeFromString(metadataDict["size"].asString());
+        }
     }
 
     // check the format
     CCASSERT(format >=0 && format <= 3, "format is not supported for SpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
 
+    auto textureFileName = Director::getInstance()->getTextureCache()->getTextureFilePath(texture);
+    Image* image = nullptr;
+    NinePatchImageParser parser;
     for (auto iter = framesDict.begin(); iter != framesDict.end(); ++iter)
     {
         ValueMap& frameDict = iter->second.asValueMap();
@@ -127,7 +197,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
             // check ow/oh
             if(!ow || !oh)
             {
-                CCLOGWARN("cocos2d: WARNING: originalWidth/Height not found on the SpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
+                CCLOGWARN("cocos2d: WARNING: originalWidth/Height not found on the SpriteFrame. AnchorPoint won't work as expected. Regenerate the .plist");
             }
             // abs ow/oh
             ow = abs(ow);
@@ -183,18 +253,43 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
 
                 _spriteFramesAliases[oneAlias] = Value(spriteFrameName);
             }
-            
+
             // create frame
             spriteFrame = SpriteFrame::createWithTexture(texture,
                                                          Rect(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
                                                          textureRotated,
                                                          spriteOffset,
                                                          spriteSourceSize);
+
+            if(frameDict.find("vertices") != frameDict.end())
+            {
+                std::vector<int> vertices;
+                parseIntegerList(frameDict["vertices"].asString(), vertices);
+                std::vector<int> verticesUV;
+                parseIntegerList(frameDict["verticesUV"].asString(), verticesUV);
+                std::vector<int> indices;
+                parseIntegerList(frameDict["triangles"].asString(), indices);
+
+                PolygonInfo info;
+                initializePolygonInfo(textureSize, spriteSourceSize, vertices, verticesUV, indices, info);
+                spriteFrame->setPolygonInfo(info);
+            }
         }
 
+        bool flag = NinePatchImageParser::isNinePatchImage(spriteFrameName);
+        if(flag)
+        {
+            if (image == nullptr) {
+                image = new Image();
+                image->initWithImageFile(textureFileName);
+            }
+            parser.setSpriteFrameInfo(image, spriteFrame->getRectInPixels(), spriteFrame->isRotated());
+            texture->addSpriteFrameCapInset(spriteFrame, parser.parseCapInset());
+        }
         // add sprite frame
         _spriteFrames.insert(spriteFrameName, spriteFrame);
     }
+    CC_SAFE_DELETE(image);
 }
 
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, Texture2D *texture)
@@ -235,10 +330,18 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const s
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
 {
     CCASSERT(plist.size()>0, "plist filename should not be nullptr");
+    
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
+    if (fullPath.size() == 0)
+    {
+        // return if plist file doesn't exist
+        CCLOG("cocos2d: SpriteFrameCache: can not find %s", plist.c_str());
+        return;
+    }
 
     if (_loadedFileNames->find(plist) == _loadedFileNames->end())
     {
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
+        
         ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
 
         string texturePath("");
@@ -284,6 +387,18 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
     }
 }
 
+bool SpriteFrameCache::isSpriteFramesWithFileLoaded(const std::string& plist) const
+{
+    bool result = false;
+
+    if (_loadedFileNames->find(plist) != _loadedFileNames->end())
+    {
+        result = true;
+    }
+
+    return result;
+}
+
 void SpriteFrameCache::addSpriteFrame(SpriteFrame* frame, const std::string& frameName)
 {
     _spriteFrames.insert(frameName, frame);
@@ -307,13 +422,14 @@ void SpriteFrameCache::removeUnusedSpriteFrames()
         if( spriteFrame->getReferenceCount() == 1 )
         {
             toRemoveFrames.push_back(iter->first);
+            spriteFrame->getTexture()->removeSpriteFrameCapInset(spriteFrame);
             CCLOG("cocos2d: SpriteFrameCache: removing unused frame: %s", iter->first.c_str());
             removed = true;
         }
     }
 
     _spriteFrames.erase(toRemoveFrames);
-    
+
     // FIXME:. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
     if( removed )
     {
@@ -428,4 +544,3 @@ SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const std::string& name)
 }
 
 NS_CC_END
-

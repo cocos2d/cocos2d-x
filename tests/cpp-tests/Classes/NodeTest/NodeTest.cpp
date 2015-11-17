@@ -27,6 +27,8 @@
 #include <regex>
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum 
 {
     kTagSprite1 = 1,
@@ -36,73 +38,40 @@ enum
 };
 
 
-Layer* nextCocosNodeAction();
-Layer* backCocosNodeAction();
-Layer* restartCocosNodeAction();
-
 //------------------------------------------------------------------
 //
 // TestCocosNodeDemo
 //
 //------------------------------------------------------------------
 
-static int sceneIdx = -1; 
-
-
-static std::function<Layer*()> createFunctions[] =
+CocosNodeTests::CocosNodeTests()
 {
-    CL(CameraTest1),
-    // TODO: Camera has been removed from CCNode, add new feature to support it
-    // CL(CameraTest2),
-    CL(CameraCenterTest),
-    CL(Test2),
-    CL(Test4),
-    CL(Test5),
-    CL(Test6),
-    CL(StressTest1),
-    CL(StressTest2),
-    CL(NodeToWorld),
-    CL(NodeToWorld3D),
-    CL(SchedulerTest1),
-    CL(SchedulerCallbackTest),
-    CL(CameraOrbitTest),
-    // TODO: Camera has been removed from CCNode, add new feature to support it
-    //CL(CameraZoomTest),
-    CL(ConvertToNode),
-    CL(NodeOpaqueTest),
-    CL(NodeNonOpaqueTest),
-    CL(NodeGlobalZValueTest),
-    CL(NodeNormalizedPositionTest1),
-    CL(NodeNormalizedPositionTest2),
-    CL(NodeNormalizedPositionBugTest),
-    CL(NodeNameTest),
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-Layer* nextCocosNodeAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    return createFunctions[sceneIdx]();
+    //ADD_TEST_CASE(CameraTest1);
+    // TODO: Camera has been removed from CCNode; add new feature to support it
+    // ADD_TEST_CASE(CameraTest2);
+    //ADD_TEST_CASE(CameraCenterTest);
+    ADD_TEST_CASE(NodeTest2);
+    ADD_TEST_CASE(NodeTest4);
+    ADD_TEST_CASE(NodeTest5);
+    ADD_TEST_CASE(NodeTest6);
+    ADD_TEST_CASE(StressTest1);
+    ADD_TEST_CASE(StressTest2);
+    ADD_TEST_CASE(NodeToWorld);
+    ADD_TEST_CASE(NodeToWorld3D);
+    ADD_TEST_CASE(SchedulerTest1);
+    ADD_TEST_CASE(SchedulerCallbackTest);
+    ADD_TEST_CASE(CameraOrbitTest);
+    // TODO: Camera has been removed from CCNode; add new feature to support it
+    //ADD_TEST_CASE(CameraZoomTest);
+    ADD_TEST_CASE(ConvertToNode);
+    ADD_TEST_CASE(NodeOpaqueTest);
+    ADD_TEST_CASE(NodeNonOpaqueTest);
+    ADD_TEST_CASE(NodeGlobalZValueTest);
+    ADD_TEST_CASE(NodeNormalizedPositionTest1);
+    ADD_TEST_CASE(NodeNormalizedPositionTest2);
+    ADD_TEST_CASE(NodeNormalizedPositionBugTest);
+    ADD_TEST_CASE(NodeNameTest);
 }
-
-Layer* backCocosNodeAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    return createFunctions[sceneIdx]();
-}
-
-Layer* restartCocosNodeAction()
-{
-    return createFunctions[sceneIdx]();
-} 
-
 
 TestCocosNodeDemo::TestCocosNodeDemo(void)
 {
@@ -117,48 +86,13 @@ std::string TestCocosNodeDemo::title() const
     return "Node Test";
 }
 
-std::string TestCocosNodeDemo::subtitle() const
-{
-    return "";
-}
-
-void TestCocosNodeDemo::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void TestCocosNodeDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) CocosNodeTestScene();//CCScene::create();
-    s->addChild(restartCocosNodeAction()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void TestCocosNodeDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) CocosNodeTestScene();//CCScene::create();
-    s->addChild( nextCocosNodeAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void TestCocosNodeDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) CocosNodeTestScene();//CCScene::create();
-    s->addChild( backCocosNodeAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
-
-
 //------------------------------------------------------------------
 //
-// Test2
+// NodeTest2
 //
 //------------------------------------------------------------------
-void Test2::onEnter()
+
+void NodeTest2::onEnter()
 {
     TestCocosNodeDemo::onEnter();
 
@@ -197,7 +131,7 @@ void Test2::onEnter()
     sp2->runAction(action2);
 }
 
-std::string Test2::subtitle() const
+std::string NodeTest2::subtitle() const
 {
     return "anchorPoint and children";
 }
@@ -205,13 +139,13 @@ std::string Test2::subtitle() const
 
 //------------------------------------------------------------------
 //
-// Test4
+// NodeTest4
 //
 //------------------------------------------------------------------
 #define SID_DELAY2        1
 #define SID_DELAY4        2
 
-Test4::Test4()
+NodeTest4::NodeTest4()
 {
     auto sp1 = Sprite::create(s_pathSister1);
     auto sp2 = Sprite::create(s_pathSister2);
@@ -222,24 +156,24 @@ Test4::Test4()
     addChild(sp1, 0, 2);
     addChild(sp2, 0, 3);
     
-    schedule(CC_CALLBACK_1(Test4::delay2, this), 2.0f, "delay2_key");
-    schedule(CC_CALLBACK_1(Test4::delay4, this), 4.0f, "delay4_key");
+    schedule(CC_CALLBACK_1(NodeTest4::delay2, this), 2.0f, "delay2_key");
+    schedule(CC_CALLBACK_1(NodeTest4::delay4, this), 4.0f, "delay4_key");
 }
 
-void Test4::delay2(float dt)
+void NodeTest4::delay2(float dt)
 {
     auto node = static_cast<Sprite*>(getChildByTag(2));
     auto action1 = RotateBy::create(1, 360);
     node->runAction(action1);
 }
 
-void Test4::delay4(float dt)
+void NodeTest4::delay4(float dt)
 {
     unschedule("delay4_key");
     removeChildByTag(3, false);
 }
 
-std::string Test4::subtitle() const
+std::string NodeTest4::subtitle() const
 {
     return "tags";
 }
@@ -247,10 +181,10 @@ std::string Test4::subtitle() const
 
 //------------------------------------------------------------------
 //
-// Test5
+// NodeTest5
 //
 //------------------------------------------------------------------
-Test5::Test5()
+NodeTest5::NodeTest5()
 {
     auto sp1 = Sprite::create(s_pathSister1);
     auto sp2 = Sprite::create(s_pathSister2);
@@ -271,10 +205,10 @@ Test5::Test5()
     sp1->runAction(forever);
     sp2->runAction(forever2);
     
-    schedule(CC_CALLBACK_1(Test5::addAndRemove, this), 2.0f, "add_and_remove_key");
+    schedule(CC_CALLBACK_1(NodeTest5::addAndRemove, this), 2.0f, "add_and_remove_key");
 }
 
-void Test5::addAndRemove(float dt)
+void NodeTest5::addAndRemove(float dt)
 {
     auto sp1 = getChildByTag(kTagSprite1);
     auto sp2 = getChildByTag(kTagSprite2);
@@ -292,17 +226,17 @@ void Test5::addAndRemove(float dt)
     sp2->release();
 }
 
-std::string Test5::subtitle() const
+std::string NodeTest5::subtitle() const
 {
     return "remove and cleanup";
 }
 
 //------------------------------------------------------------------
 //
-// Test6
+// NodeTest6
 //
 //------------------------------------------------------------------
-Test6::Test6()
+NodeTest6::NodeTest6()
 {
     auto sp1 = Sprite::create(s_pathSister1);
     auto sp11 = Sprite::create(s_pathSister1);
@@ -331,10 +265,10 @@ Test6::Test6()
     sp2->runAction(forever2);
     sp21->runAction(forever21);
     
-    schedule(CC_CALLBACK_1(Test6::addAndRemove, this), 2.0f, "add_and_remove_key");
+    schedule(CC_CALLBACK_1(NodeTest6::addAndRemove, this), 2.0f, "add_and_remove_key");
 }
 
-void Test6::addAndRemove(float dt)
+void NodeTest6::addAndRemove(float dt)
 {
     auto sp1 = getChildByTag(kTagSprite1);
     auto sp2 = getChildByTag(kTagSprite2);
@@ -353,7 +287,7 @@ void Test6::addAndRemove(float dt)
 
 }
 
-std::string Test6::subtitle() const
+std::string NodeTest6::subtitle() const
 {
     return "remove/cleanup with children";
 }
@@ -401,9 +335,8 @@ void StressTest1::shouldNotCrash(float dt)
 
 // remove
 void StressTest1::removeMe(Node* node)
-{    
-    getParent()->removeChild(node, true);
-    nextCallback(this);
+{
+    getTestSuite()->enterNextTest();
 }
 
 
@@ -414,7 +347,7 @@ std::string StressTest1::subtitle() const
 
 //------------------------------------------------------------------
 //
-// StressTest2
+// StressNodeTest2
 //
 //------------------------------------------------------------------
 StressTest2::StressTest2()
@@ -1047,7 +980,7 @@ protected:
 
 void MySprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    _customCommand.init(_globalZOrder);
+    _customCommand.init(_globalZOrder, transform, flags);
     _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
@@ -1324,7 +1257,7 @@ std::string NodeNameTest::subtitle() const
 
 void NodeNameTest::onEnter()
 {
-    TestCocosNodeDemo::BaseTest::onEnter();
+    TestCocosNodeDemo::onEnter();
     
     this->scheduleOnce(CC_CALLBACK_1(NodeNameTest::test, this), 0.05f, "test_key");
 }
@@ -1508,15 +1441,4 @@ void NodeNameTest::test(float dt)
     auto findChildren = utils::findChildren(*parent, "node");
     CCAssert(findChildren.size() == 50, "");
     
-}
-
-///
-/// main
-///
-void CocosNodeTestScene::runThisTest()
-{
-    auto layer = nextCocosNodeAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }

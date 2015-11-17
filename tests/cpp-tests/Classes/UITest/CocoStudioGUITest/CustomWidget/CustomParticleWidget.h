@@ -36,10 +36,10 @@ public:
     void stopParticle();
     
 protected:
-    virtual bool init();
-    virtual void initRenderer();
+    virtual bool init() override;
+    virtual void initRenderer()override;
     
-    virtual void removeAllChildren();
+    virtual void removeAllChildren()override;
     
 protected:
     cocos2d::ParticleSystem* _emitter;

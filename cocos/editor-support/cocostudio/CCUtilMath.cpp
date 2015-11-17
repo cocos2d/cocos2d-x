@@ -41,7 +41,7 @@ bool isSpriteContainPoint(Sprite *sprite, Vec2 point, Vec2 &outPoint)
 
 bool isSpriteContainPoint(Sprite *sprite, Vec2 point)
 {
-    Vec2 p = Vec2(0, 0);
+    Vec2 p;
     return isSpriteContainPoint(sprite, point, p);
 }
 

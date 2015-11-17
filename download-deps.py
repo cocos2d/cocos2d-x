@@ -125,9 +125,11 @@ class CocosZipInstaller(object):
         block_size_per_second = 0
         old_time = time()
 
+        status = ""
         while True:
             buffer = u.read(block_sz)
             if not buffer:
+                print("%s%s" % (" " * len(status), "\r")),
                 break
 
             file_size_dl += len(buffer)
@@ -136,16 +138,14 @@ class CocosZipInstaller(object):
             new_time = time()
             if (new_time - old_time) > 1:
                 speed = block_size_per_second / (new_time - old_time) / 1000.0
-                status = ""
                 if file_size != 0:
                     percent = file_size_dl * 100. / file_size
                     status = r"Downloaded: %6dK / Total: %dK, Percent: %3.2f%%, Speed: %6.2f KB/S " % (file_size_dl / 1000, file_size / 1000, percent, speed)
                 else:
                     status = r"Downloaded: %6dK, Speed: %6.2f KB/S " % (file_size_dl / 1000, speed)
-
-                status = status + chr(8)*(len(status)+1)
                 print(status),
                 sys.stdout.flush()
+                print("\r"),
                 block_size_per_second = 0
                 old_time = new_time
 
@@ -199,10 +199,10 @@ class CocosZipInstaller(object):
             print("==> Extraction done!")
 
     def ask_to_delete_downloaded_zip_file(self):
-        ret = self.get_input_value("==> Do you want to keep '%s'? So you don't have to download it later. (yes/no): " % self._filename)
+        ret = self.get_input_value("==> Would you like to save '%s'? So you don't have to download it later. [Yes/no]: " % self._filename)
         ret = ret.strip()
         if ret != 'yes' and ret != 'y' and ret != 'no' and ret != 'n':
-            print("==> Cache the dependency libraries by default")
+            print("==> Saving the dependency libraries by default")
             return False
         else:
             return True if ret == 'no' or ret == 'n' else False
@@ -310,12 +310,6 @@ def main():
     external_path = os.path.join(workpath, 'external')
     installer = CocosZipInstaller(workpath, os.path.join(workpath, 'external', 'config.json'), os.path.join(workpath, 'external', 'version.json'), "prebuilt_libs_version")
     installer.run(workpath, external_path, opts.remove_downloaded, opts.force_update, opts.download_only)
-
-    print("=======================================================")
-    print("==> Prepare to download lua runtime binaries")
-    runtime_path = os.path.join(workpath, 'templates', 'lua-template-runtime', 'runtime')
-    installer = CocosZipInstaller(workpath, os.path.join(runtime_path, 'config.json'), os.path.join(runtime_path, 'version.json'))
-    installer.run(workpath, runtime_path, opts.remove_downloaded, opts.force_update, opts.download_only)
 
 # -------------- main --------------
 if __name__ == '__main__':

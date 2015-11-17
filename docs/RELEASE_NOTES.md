@@ -1,55 +1,35 @@
-# cocos2d-x v3.3rc2 Release Notes #
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
-
-- [cocos2d-x v3.3rc2 Release Notes](#cocos2d-x-v33rc2-release-notes)
+- [Cocos2d-x 3.9 Release Notes](#cocos2d-x-39-release-notes)
 - [Misc Information](#misc-information)
 - [Requirements](#requirements)
   - [Runtime Requirements](#runtime-requirements)
   - [Compiler Requirements](#compiler-requirements)
   - [How to run tests](#how-to-run-tests)
+    - [Cocos Console](#cocos-console)
     - [Mac OSX & iOS](#mac-osx-&-ios)
     - [Android](#android)
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [Highlights of v3.3rc2](#highlights-of-v33rc2)
-- [Notes of v3.3rc1](#notes-of-v33rc1)
-- [Highlights of v3.3rc1](#highlights-of-v33rc1)
-- [Notes of v3.3rc0](#notes-of-v33rc0)
-- [Highlights of v3.3rc0](#highlights-of-v33rc0)
-- [Features in detail](#features-in-detail)
-  - [Light](#light)
-  - [Spine runtime](#spine-runtime)
-  - [AssetsManagerEx](#assetsmanagerex)
-  - [Application::openURL](#applicationopenurl)
-  - [ClippingRectangleNode](#clippingrectanglenode)
-  - [Facebook platform support](#facebook-platform-support)
-- [Highlights of v3.3beta0](#highlights-of-v33beta0)
-- [Features in detail](#features-in-detail-1)
-  - [BillBoard](#billboard)
-  - [Triangles command](#triangles-command)
-  - [WebView](#webview)
-  - [New audio](#new-audio)
-- [Highlights of v3.3alpha0](#highlights-of-v33alpha0)
-- [Features in detail](#features-in-detail-2)
-  - [Camera](#camera)
-  - [Reskin](#reskin)
-  - [Attachment](#attachment)
-  - [Better support for FBX](#better-support-for-fbx)
-  - [New fbx-conv](#new-fbx-conv)
-  - [AABB, OBB and Ray](#aabb-obb-and-ray)
-  - [ui::Scale9Sprite](#uiscale9sprite)
-  - [c++11 random support](#c11-random-support)
-  - [RenderTexture save function](#rendertexture-save-function)
-  - [Primitive](#primitive)
-  - [Consistent way to set GL context attributes](#consistent-way-to-set-gl-context-attributes)
-  - [Only two libraries left](#only-two-libraries-left)
+- [v3.9](#v39)
+  - [Highlights features, improvements and API updates of v3.9](#highlights-features-improvements-and-api-updates-of-v39)
+  - [The main features in detail of Cocos2d-x v3.9:](#the-main-features-in-detail-of-cocos2d-x-v39)
+    - [3D Module](#3d-module)
+    - [2D Module](#2d-module)
+    - [Others](#others)
+  - [Other changes](#other-changes)
+  - [NEW APIS](#new-apis)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# Cocos2d-x 3.9 Release Notes #
 
 # Misc Information
 
-* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.3rc2/CHANGELOG
-* v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
+* [Full Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 
 # Requirements
 
@@ -59,23 +39,50 @@
 * iOS 5.0 or newer
 * OS X 10.7 or newer
 * Windows 7 or newer
-* Windows Phone 8 or newer
+* Windows Phone 8.1
+* Windows 10 UWP
 * Linux Ubuntu 14.04 or newer
+* Mordern browsers and IE 9+ (On mobile platforms, only iOS and Android 5 activated WebGL support)
 
 ## Compiler Requirements
 
 * Xcode 5.1 or newer for iOS or Mac
 * gcc 4.9 or newer for Linux
 * ndk-r10c for Android
-* Visual Studio 2012  or newer for Windows (win32)
-* Visual Studio 2012  or newer for Windows Phone 8
+* Visual Studio 2013 or newer for Windows (win32)
+* Visual Studio 2013 update4 or newer for Windows 8.1 universal Apps
+* Visual Studio 2015 RC or newer and Windows 10.0 (build 10074 or higher) for Windows 10.0 UWP Apps
 
 ## How to run tests
+
+### Cocos Console
+
+You can use [Cocos Console](www.cocos2d-x.org/wiki/Cocos2d-console) command line tool to run the test cases on almost all supported platforms.
+
+In console application:
+```
+// Enter cpp test folder
+cd tests/cpp-tests
+// Or enter js test folder
+cd tests/js-tests
+// Or enter lua test folder
+cd tests/lua-tests
+
+// Compile or run test case
+cocos compile -p ios|mac|android|win32|win8_1|metro|web -m debug|release
+cocos run -p ios|mac|android|win32|win8_1|metro|web -m debug|release
+```
+
+For example, if you want to run cpp test in release mode on Android, you can use the following command:
+
+```
+cocos run -p android -m release
+```
 
 ### Mac OSX & iOS
 
 * Enter `cocos2d-x/build` folder, open `cocos2d_test.xcodeproj`
-* Select `iOS` or `OS X` target in scheme toolbar
+* Select `cpp-tests`, `lua-tests`, `js-tests` for `iOS` or `OS X` target in scheme toolbar
 * Click `run` button
 
 ### Android
@@ -89,7 +96,7 @@ You can run the samples...
     $ cd build
     $ ./android-build.py cpp-empty-test -p 10
     $ adb install cocos2d-x/tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
-    
+
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
 **Using Eclipse:**
@@ -98,7 +105,7 @@ Then click item on Android device to run tests. Available value of `-p` is the A
     $ ./setup.py
     $ cd build
     $ ./android-build.py cpp-empty-test -p 10
-    
+
 Then
 
 * Import cocos2d-x Android project into Eclipse, the path used to import is `cocos/2d/platform/android`
@@ -107,581 +114,319 @@ Then
 
 ### Windows
 
-* Enter `cocos2d-x/build`, and open `cocos2d-win32.vs2012.sln`
-* Select `cpp-empty-test` as running target
+* For win32 project, enter `cocos2d-x/build`, and open `cocos2d-win32.sln`
+* For win 8.1 project, enter `cocos2d-x/build`, and open `cocos2d-win8.1-universal.sln`
+* For win 10 project, enter `cocos2d-x/build`, and open `cocos2d-win10.sln`
+* Select running target
 * Click run button
-
 
 ### Linux
 
     $ cd cocos2d-x/build
     $ ./install-deps-linux.sh
     $ cd ../..
-    
+
 Then
 
     $ mkdir build
     $ cd build
     $ cmake ../cocos2d-x
     $ make -j4
-    
+
 Run
 
     $ cd bin/cpp-empty-test
     $ ./cpp-empty-test
-    
+
 ## How to start a new game
 
-Please refer to this document: [ReadMe](../README.md)
-
-# Highlights of v3.3rc2
-* Support for android arm64 architecture, all test cases run on Nexus 9
-* Cocos Studio Reader: Replace [Protobuffer](https://github.com/google/protobuf) by [FlatBuffer](https://github.com/google/flatbuffers)
-
-# Notes of v3.3rc1
-
-**android**
-
-Android NDK-r10c is needed. Here is the detailed link for this:
-http://discuss.cocos2d-x.org/t/build-android-base-on-ndk-r10c/18543.
-
-# Highlights of v3.3rc1
-
-* WP8: add Win8.1 universal app support
-* Many other bugfix.
-
-# Notes of v3.3rc0
-
-**wp8**
-
-You need to use `VS2013 with update 3` to use `Cocos2dShaderCompiler` used to compile precompiled shaders for WP8.
-
-**lua**
-
-All internal lua files are copied into `src/cocos` when creating a new lua project. And we added `cocos/init.lua` to load all these internal lua files. `cocos/init.lua` is loaded by default which means you don't have to load these lua files by yourself. So you have to remove all these codes in your lua codes:
-
-* require "Cocos2d"
-* require "Cocos2dConstants" 
-* require "bitExtend"
-* require "DrawPrimitives" 
-* require "extern"
-* require "json"
-* require "Opengl"
-* require "OpenglConstants" 
-* require "CCBReaderLoad" 
-* require "AudioEngine"
-* require “CocoStudio”
-* require “StudioConstants”
-* require “ControllerConstants” 
-* require “ExtensionConstants”
-* require “NetworkConstants”
-* require “GuiConstants”
-* require “experimentalUIConstants” 
-
-`luaj` and `luaoc` are special. They can not be loaded in `cocos/init.lua` because they will return an object to be used in codes. So you have to replace the codes like this:
-
-* require "luaj" -> require "cocos.cocos2d.luaj"
-* require "luaoc" -> require "cocos.cocos2d.luaoc"
-
-All lua files used for deprecated API are not loaded by default. If you want to use deprecated API, you should uncomment a line in `src/main.lua` like this:
+Use Cocos Console to create a new game:
 
 ```
--- uncomment this line to use deprecated API
--- CC_USE_DEPRECATED_API = true 
-require "cocos.init"
-
+cocos new -l cpp|js|lua MyNewGame
 ```
 
-`cc.EditBox` and `cc.Scale9Sprite` were deprecated, you should use `ccui.EditBox` and `ccui.Scale9Sprite` instead.
+# v3.9
 
-`ccs.NodeReader` was removed because native class `cocostudio::timeline::NodeReader` was removed.In the v3.3rc0,you could use `cc.CSLoader` instead.
+## Highlights features, improvements and API updates of v3.9
 
-`sp.Skeleton` was removed because native class `spine::Skeleton` was removed after updating spine runtime.
+We are happy to announce the release of Cocos2d-x v3.9. Following are the highlighted features, improvements and API updates in this version. 
 
-`registerSpineEventHandler` of `sp.SkeletonAnimation` has changed:
+1. 3D Module: 
+    - Added 3D MotionStreak to support streak effect. 
+    - Refined Sprite3D to support material system. 
+2. 2D Module:
+    - Added frame callback function and animation callback function. 
+    - Added script component system. 
+    - Reconstruction of 2D physics with Component. 
+    - Improved EditBox implemention on iOS and Win32 platform.
+    - Removed dependence of libcurl on AssetsManager, AssetsManagerEx and Downloader (iOS & Android).
+    - Improved particle performance. 
+3. Others: 
+    - Supported Action inheritance, update function overwriting in JSB. 
+    - Improved ScrollView performance in Web engine. 
+    - Improved Scale9Sprite performance in Web engine. 
+    - Decoupled Sprite's setTexture and updateColor in Web engine.
+    - Added support for debugging and release on real devices with Xcode7 and iOS9.
 
-* registerSpineEventHandler(fucntion)  -> registerSpineEventHandler(funtion, eventType)
+## The main features in detail of Cocos2d-x v3.9:
 
+### 3D Module
 
-# Highlights of v3.3rc0
-
-* 3d: added light support: including directional light, point light, spot light and ambient light
-* New audio: more platfroms supported(Mac OS X and Windows)
-* Spine runtime: updated to v2.0.18
-* Application: added openURL()
-* Added `AssetsManagerEx`, it is an enhancement version of `AssetsManager`
-* TileMap: supported staggered tile map
-* Added `ClippingRectangleNode`, it is more efficient for renctangle clipping
-* Node: schedule/unschedule lambda functions
-* Facebook platform support in `plugin` on iOS and Android, all features has been added, but the API needs to be polished with Facebook guys
-
-# Features in detail
-
-## Light
-
-To make 3d objects looks realistic, we add lights to this version. cocos2d-x supports four types of lights, directional light, point light, spot light and ambient light.
-
-`DirectionLight` is meant to represent an extremely distant light source (like the sun or moon). Rays cast from directional lights run parallel in a single direction from every point in the sky, and are typically used to simulate the sun light.
-
-The following code can add a directional light to the scene,
-
-```c++
-auto directionalLight = DirectionLight::create(Vec3(-1.0f, -1.0f, 0.0f), Color3B(200, 200, 200));
-addChild(directionalLight);
-```
-
-The light is enabled by default. And it can be disabled using the following code,
-
-```c++
-directionalLight->setEnabled(false);
-```
-
-You can also set a light flag to the light.
-
-```c++
-directionalLight->setLightFlag(LightFlag::LIGHT0);
-```
-
-Then the 3d sprite whose light mask AND light flag is none zero can effect by the light.
-
-`PointLight` casts illumination outward in every direction from a single, infinitely small point in 3D space. It is useful for simulating any omnidirectional light source.
-
-`SpotLight` emits a cone shaped light field from a single point in space. It can be used to simulate desk lamps, overhead cone lighting, etc. Note that `SpotLight` will take more GPU time.
-
-`AmbientLight` casts soft rays in every direction.
-
-Note that we use forward render method, the number of lights can effect the performance. You can set the max number of lights supported in the shader in a the configuration file.
-
-```c++
-<key>cocos2d.x.3d.max_dir_light_in_shader</key>
-<integer>1</integer>
-<key>cocos2d.x.3d.max_point_light_in_shader</key>
-<integer>1</integer>
-<key>cocos2d.x.3d.max_spot_light_in_shader</key>
-<integer>1</integer>
-```
-
-## Spine runtime
-
-Spine runtime is updated to latest version `v2.0.18`. This version supports `Free-Form-Deformation(FFD)`, which allows meshes to stretch, squash, blend and bounce in ways that aren't possible using rectangle images.
-
-`Spine rutnime has updated its license which only allows engine to use unmodified version even it has bugs. So you guys don't send pull requests for spine runtime, we can not merge them.`
-
-Please refer to `tests/cpp-tests/Classes/SpineTest/SpineTest.cpp` for usage.
-
-## AssetsManagerEx
-
-`AssetsMangerEx` is an enhancement version of `AssetsManager`. Compared to `AssetsManager`, there are some pros using `AssetsManagerEx`:
-
-* complex update package support with manifest file
-* multi-thread downloading support
-* continue transferring from breakpoint
-
-Please refer to [this document](http://cocos2d-x.org/wiki/Assets_manager) for detail information.
-
-## Application::openURL
-
-Because in iOS, there is an function named `openURL` in `UIApplication`, so we added this function in Application too. You can use this function to open a url.
-
-```c++
-Application::getInstance()->openURL("http://www.cocos2d-x.org/");
-```
-
-## ClippingRectangleNode
-
-`ClippingRectangleNode` is a lite version of `ClippingNode`. Compared to `ClippingNode`, there re some pros and cons:
-
-* pros
-    * it doesn't depend on stencil buffer, which means it can run on more Android devices
-    * it is more efficient
+1. 3D MotionStreak
     
-* cons
-    * it can only used to clip rectangle area
+    In this version, 3D MotionStreak is added to support streak effect. Check the testcase: [Sprite3DTest](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/Sprite3DTest/Sprite3DTest.cpp#L2472) to see how to use it.
+
+2. Sprite3D
+
+    Added Sprite3D material class. It will be easy and convenient to create internal material. 
+
+### 2D Module
+
+1. Frame callback function and animation callback function
+
+    Three interfaces are added in ActionTimelineData class, which are addFrameEndCallFunc, removeFrameEndCall and clearFrameEndCalls. It will be easy to add or remove specific frame event. 
+
+2. Script Component 
+
+    Script component is used to extend c++ Nodes. You can add a script component to a Node, then the script component will receive onEnter,onExit and update events. For example:
+
+    ```c++ 
+    // create a sprite and add a lua component auto player =
+    Sprite::create("player.png");
     
-```c++
-auto clipper = ClippingRectangleNode::create();
-clipper->setClippingRegion(0, 0, 200, 200);
-this->addChild(clipper);
+    auto luaComponent = ComponentLua::create("player.lua");
+    player->addComponent(luaComponent);
+    ```
+    
+    ```lua
+    // player.lua
+    local player = { 
+        onEnter = function(self)
+        -- do some things in onEnter 
+        end
+        
+        onExit = function(slef) 
+        -- do some things in onExit 
+        end
+        
+        update = function(self)
+        -- do some things every frame 
+        end
+    }
+    
+    -- it is needed to return player to let c++ nodes know it 
+    return player 
+    ```
+    
+    Javascript can work as the same way, just use ComponentJS instead of ComponentLua. 
+    
+    There are some differences between lua component and Javascript component:
+    
+    Should return the object in lua component, in Javascript, you only have to extend cc.ComponentJS, and ensure the result of the last statement is the class of Component.
+    
+    Lua component can only be used in lua projects, Javascript component can only be used in Javascript projects.
+    
+    More detail usage please refer to: `tests/lua-tests/src/ComponentTest` and `tests/js-tests/src/ComponentTest`
 
-auto content = Sprite::create("MyPicture.png");
-...
-clipper->addChild(content);
-```
 
-## Facebook platform support
+3. 2D Physics
 
-All features has been added, but the API needs to be polished with Facebook guys. There is a test case in `plugin` for it. Steps to run test case
+    Before v3.9, there are many physics related codes in Node, such as Node::setPhysicsBody(). Since v3.9, we move these codes into physics component.
 
-* open `plugin/pluing-x_ios.xcworkspace`
-* select `HelloPlugins` to run
-* there are `Test Facebook User` and `Test Facebook Share` items
+    After using physics component, the way to use physics is changed. Before v3.9, you can use physics like this:
+    
+    ```
+    auto node = Node::create(); 
+    node->setPhysicsBody(PhysicsBody::createEdgeBox(...));
+    ```
+    
+    Since v3.9 you should use like this:
+    
+    ```
+    auto node = Node::create();
+    node->addComponent(PhysicsBody::createEdgeBox(...));
 
-You can refer to [this document](http://www.cocos2d-x.org/wiki/Integrate_the_Facebook_SDK_for_Cocos2d-x) for detail information.
+    ```
 
-# Highlights of v3.3beta0
+4. EditBox implemention on iOS and Win32 platform
 
-* 3d: `BillBoard`
-* audio: new audio is added on iOS and Android
-* DrawNode: added as many functions as `DrawPrimitive`, and `DrawPrimitive` is deprecated
-* Renderer: added `triangle command`
-* UI: added `WebView` on iOS and Android
-* Many other small features added and many bugs fixed
+    - Specify the maximum number of characters in the dialog box. 
+    - Support password input. 
+    - Games will continue when the dialogue box pops up. 
+    - Sync the content in dialogue box. 
 
-# Features in detail
+5. Remove dependence of curl on AssetsManager, AssetsManagerEx and Downloader (iOS & Android)
 
-## BillBoard
+    From v3.9, iOS and Android version will not depend on libcurl, which make
+    the game package smaller and solve some bugs caused by libcurl. Stability has
+    been improved with the updated iOS and Android system. 
 
-`BillBoard` is a rectangle always faces to the camera. It is useful in the 3D world. People use BillBoard to create trees in some racing games. It looks real, but the cost is much lower than 3d tree.
+6. Improved particle performance. 
 
-`BillBoard` inherits from Sprite, so it also supports animate. Here is example of creating BillBoard.
+### Others
 
-```c++
-//create billboard from .png
-auto billboard = BillBoard::create("Images/Icon.png");
-addChild(billboard);
+1. Supported Action inheritance, update function overwriting in JSB
 
-//create camera that is looking at this billboard. Otherwise, it is seen by the default camera
-auto camera = Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
-camera->setCameraFlag(CameraFlag::CAMERA_USER1);
-addChild(camera); //add this camera
+    In previous version of JSB, developers cannot inherit Action class in JS script, such as Action / ActionInterval / ActionInstant, for their update function will not be called. In v3.9, developers can create subclass of Action and make extensions. More detail usage please refer to the textcase in ActionTest / ActionCustomTest.
 
-//This billboard is only seen by the camera with flag CameraFlag::CAMERA_USER1.
-billboard->setCameraMask((unsigned short)CameraFlag::CAMERA_USER1);
-```
+2. ScrollView performance on Web engine
 
-## Triangles command
+    ScrollView and ListView are the popular UI controls in Web engine. Their
+    performance is not perfect in previous versions, especially when there are multiple sub-controls. In v3.9, we have improved its rendering performance. They only act on the contents displayed on the current screen. Test
+    date shows that, comparing with v3.8, rendering efficiency of v3.9 have been improved for twice to four times in different devices and browsers. 
 
-We have enhanced auto batching feature by introduce `TrianglesCommand`, the rendering of the `Triangles` can be auto batched. Now if we have anything which can be rendered by `Triangles`, we can use `TrianglesCommand` or inherit from `TrianglesCommand` to take use of auto batching feature and gain rendering improvements. The `QuadCommand`, which is used for `Quad` rendering, is a good example of inheriting from `TrianglesCommand`.
+3. Scale9Sprite performance on Web engine
 
-The step to use Triangle Command is very simple.
+    In this version, we have changed the way to construct 9-slice sprite. The engine uses 9 rendering commands instead of the 9 nodes in previous versions. This helps to reduce memory usage and improve rendering performance. 
 
-```
-	Triangles trs{verts, indices, vertCount, indexCount};
-	command->init(globalZOrder,textureID, glProgramState,blend,trs,matrix);
-	renderer->addCommand(command);
-```
-To improve performance, `Triangles` will hold a weak reference to the vertices and indices data to be rendered, which is the same like `QuadCommand`. The userer should not release any rendered data before the `Command` is executed by `Renderer`.
+4. Decoupled Sprite's setTexture and updateColor in Web engine.
 
-## WebView
+    - Organized the rendering logic in Sprite. UpdateColor is accomplished by texture instead of the Sprite. 
+    - Fixed a bug about image with alpha channel that when the image is set to black, there is color difference between previous and current version. 
+    - Improved texture update logic to reduce texture updates when changing colors.
+    - Improved the logic about the rendering function in SpriteCanvasRenderCmd.
+    - Removed some duplicate codes about updateColor.
 
-WebView is an new widget type which allows you to display web content inside Cocos2D-X. We only provide iOS and Android implementation currently, more platform might be added in the future.
+5. Support for debugging and release on real devices with Xcode7 and iOS9
 
-The class is under `cocos2d::ui::experimental` namespace.
+    In v3.8.1, we have made it possible to debug on Xcode7. However, there was a bug with iOS9 real device debuging, and in v3.9, we have fixed the bug.
 
-As we clarified the `experimental` namespace before, the `experimental` namespace doesn't mean the widget is incomplete, but only due to the lack of full platform support. Feel free to use the WebView
-widget in your game.
 
-To display the website Google in a WebView, we could simply write:
+## Other changes
 
-```cpp
-    _webView = cocos2d::experimental::ui::WebView::create();
-    _webView->setPosition(winSize/2);
-    _webView->setContentSize(winSize * 0.5);
-    _webView->loadUrl("http://www.google.com");
-    _webView->setScalesPageToFit(true);
-```
+[NEW]           Label: Added line spacing/leading feature to Label.
 
-The `setscalesPageToFit` method will adjust the WebView content to fit the content size you set.
+[NEW]           ListView: Added APIs to scroll to specific item in list.
 
-We could also set some callback to the WebView:
+[NEW]           ListView: Added APIs to get an item in specific position like center, leftmost, rightmost, topmost and bottommost.
 
-```cpp
-    //we should check the validation of the URL and decide whether to continue or not
-    _webView->shouldStartLoading = CC_CALLBACK_2(WebViewTest::onWebViewShouldStartLoading, this);
-    //called when web page is finish loading
-    _webView->didFinishLoading = CC_CALLBACK_2(WebViewTest::onWebViewDidFinishLoading, this);
-    //called when web page is fail loading
-    _webView->didFailLoading = CC_CALLBACK_2(WebViewTest::onWebViewDidFailLoading, this);
-```
+[NEW]           ListView: Added a feature for magnetic scrolling.
 
-For full test case, please refer to [WebViewTest](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.cpp)
+[NEW]           Animate: Added ActionTimeline::setAnimationEndCallBack and ActionTimeline::addFrameEndCallFunc.
 
+[NEW]           Animate: Added CSLoader::createNodeWithVisibleSize, CSLoader::createNodeWithVisibleSize and moved "ui::Helper::DoLayout" into them.
 
-## New audio
+[NEW]           Stuio: Added support for Cocos Studio Light3D.
 
-New audio is more powerful than old one, and it is not compatible with old one. We will deprecated old one when new audio is ready on all supported platforms. Now it only supports iOS and Android. We plan to finish it on v3.4.
+[NEW]           Platform: Added the missing CURL support to the Windows 10 UWP version.
 
-What's enhanced in new audio engine:
+[NEW]           Platform: Added UIEditBox support on linux platform.
 
-* can play more than one backgournd music
-* can have a call back when an audio(music or effect) finishs
-* can get duration of an audio
-* can get/set playback position of a playing audio
-* can change loop state when playing
+[REFINE]        3D: Added non-null checks in PUScriptCompiler::visit before dereferencing.
 
-The difference compared to old audio engine
+[REFINE]        3D: Refined SkyboxBrush by making the shader parameter take effect at once.
 
-* all functions are static, which means you can more easy to invoke function, such as `Audio::play2d()`
-* there is only one method `play2d()` to play music or effect
-* should use `Audio::getState()` to determine an audio is playing, paused
-* its class name is `cocos2d::experimental::AudioEngine` in c++, and its module name is `ccexp.AudioEngine` in lua-binding
-* there is not preload function, you can play an audio immediately
+[REFINE]        Label: Changed label font size type to float to support high precision when font size is small.
 
-Full test case please refer to `tests/cpp-tests/Classes/NewAudioEngineTest/NewAudioEngineTest.cpp`.
+[REFINE]        ListView: Fixed an issue that list view's Magnetic::CENTER is not working well when non-bounceable.
 
+[REFINE]        ListView: Added feature of jumping to a specific item in list view.
 
-# Highlights of v3.3alpha0
+[REFINE]        Sprite: Added a "unsupport image format!" log when creating a sprite in CCImage.cpp.
 
-* 3d: `Camera`, `Reskin`, `Attachment`, `Better support for FBX`, `New fbx-conv`, `AABB`, `OBB` and `Ray`
-* ui: added `Scale9Sprite`
-* FileUitls: added `isDirectoryExist()`, `createDirectory()`, `removeDirectory()`, `removeFile()`, `renameFile()` and `getFileSize()`
-* Device: added `setKeepScreenOn()` on iOS and Android 
-* Added c++11 random support
-* RenderTexture: added a call back function for `saveToFile()`
-* Primitive: Support Points, Lines and Triangles for rendering
-* SpriteFrameCache: support loading from plist file content data
-* Added a consistent way to set GL context attributes for all platforms
-* Only two libraries in cocos2d-x, one for c++ codes, another one for lua-binding codes
-* Many other small features added and many bugs fixed
+[REFINE]        ScrollView: Merge logics of Scroll View for scroll by inertia and auto scroll into one.
 
-# Features in detail
+[REFINE]        Animate: Moved initialization of image to an appropriate location, because it always called twice in 
+SpriteFrameCache::addSpriteFramesWithFile().
 
-## Camera
+[REFINE]        Simulator: Changed the size of startFlag to 13.
 
-This version of camera is powerful than previous one. And you can add it as a child anywhere. If you want to let a Node to be visited by a camera, Node's camera mask should include Camera's flag:
+[REFINE]        Simulator: Show Node and Skeleton in the middle of the simulator.
 
-```c++
-// let sprite to be visited by a camera
-auto sprite = Sprite::create("myFile.png");
-sprite->setCameraMask(CameraFlag::USER1);
-auto camera = Camera::createPerspective(60, winSize.width/winSize.height, 1, 1000);
-camera->setCameraFlag(CameraFlag::USER1);
-scene->addChild(camera);
-```
+[REFINE]        Simulator: Removed screen direction check in simulator to avoid render error.
 
-If you have many Nodes that want to be visited by a camera, there is a convenient way:
+[REFINE]        Pysics: Refined components to improve physics performance.
 
-```c++
-auto layer = Layer::create();
-auto sprite1 = Sprite::create();
-auto sprite2 = Sprite::create();
-layer->addChild(sprite1);
-layer->addChild(sprite2);
-// it will set camera mask for all its children
-layer->setCameraMask(CameraFlg::USER1); 
+[REFINE]        UI: Refined ComponentContainer to improve performance.
 
-auto camera = Camera::createPerspective();
-camera->setCameraFlag(CameraFlag::USER1);
-scene->addChild(camera);
-```
+[REFINE]        UI: EventListenerMouse will dispatch EventMouse events.
 
-Full test case please  refer to `tests/cpp-tests/res/Camera3DTest/Camera3DTest.cpp`.
+[REFINE]        OpenGL: Added check for glfwCreateWindow.
 
-## Reskin
+[REFINE]        Platform: Fixed a crash on xiaomi2 if Cocos2d-x is built as a dynamic library.
 
-It is a powerful feature, all the user change the appearance of character.
+[REFINE]        Platform: Updated libcococs2d name to v3.9 on WinRT platforms.
 
-For example, there a model named girl.c3b, which has two coats, coat0 and coat1. 
-The character's coat can be changed like this,
+[REFINE]        Platform: Added some support for mouse on WinRT. Include: Show/Hide mouse cursor; Mouse event 
+implemented similar Desktop version; Left button send mouse event and touch; Support other mouse button and scroll 
+wheel.
 
-```c++
-//load the girl from file
-auto sprite3d = Sprite3D::create("girl.c3b");
-//get the mesh named coat0
-auto mesh0 = sprite3d->getMeshByName("coat0");
-//you can change texture of this mesh if you like
-mesh0->setTexture("cloth.png");
-//you can change visibility for this mesh, too
-mesh0->setVisible(true);
-//hide coat1
-auto mesh1 = sprite3d->getMeshByName("coat1");
-mesh1->setVisible(false);
-```
+[REFINE]        Platform: Correct the convertion between unicode and utf8 on WinRT.
 
-Full test case please refer to 'tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest.cpp'
+[REFINE]        Platform: Improved EditBox implement on Win32 platform.
 
-## Attachment
+[REFINE]        JS: Add jsb.fileUtils.writeDataToFile().
 
-Allows to attach a node to a bone
+[REFINE]        JS: Set js templates Mac target platform from null to 10.7.
 
-Usage,
+[REFINE]        JS: Removed the static define of variable in headfile of ScriptingCore.
 
-```c++
-auto sprite = Sprite3D::create("girl.c3b");
-auto weapon = Sprite::create("weapon.c3b");
-auto attachNode = sprite->getAttachNode("left_hand");
-attachNode->addChild(weapon);
-```
+[REFINE]        Lua: Added AssetsManagerEx constants UPDATE_FAILED and ERROR_DECOMPRESS in Lua.
 
-Full test case please refer to 'tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest.cpp'
+[REFINE]        Lua / JS: Refined lua/js binding tool.
 
-## Better support for FBX
+[REFINE]        I/O: Refined AssetsManagerEx unzipping by using async.
 
-support multiple mesh
-support multiple material
-bones bind to each mesh limited to 40. But the FBX model can contain more meshes. So the model can contain much more bones.
+[REFINE]        Web: Improved logic of jsb_boot.js to sync with the web engine behavior.
 
-## New fbx-conv
+[REFINE]        Web: Sync with CCBoot for web.
 
-It can export more complex model, which contains multiple meshes and multiple materials.
+[REFINE]        Build: Fixed various compiler warnings on Xcode 7.
 
-## AABB, OBB and Ray
+[REFINE]        Build: Fixed Wformat-security warning on Xcode.
 
-AABB means Axis Aligned Bounding Box
-OBB means Oriented Bounding Box
-Ray has a origin position and direction
+[REFINE]        Build: Fixed a compile error in __LayerRGBA.
 
-Each Sprite3D or Mesh has its own AABB.
-AABB and OBB can be picked by Ray.
+[REFINE]        Tool: Added tools for generating documents automatically.
 
-Usage,
+[REFINE]        Doc: Clean up the code of setRect() function.
 
-```c++
-//get ray from camera
-Vec3 nearP(location.x, location.y, -1.0f), farP(location.x, location.y, 1.0f); 
-auto size = Director::getInstance()->getWinSize();
-camera->unproject(size, &nearP, &nearP);
-camera->unproject(size, &farP, &farP);
-ray._origin = nearP;
-ray._direction = farP - nearP;
-ray.intersects(sprite3d->getAABB( ) );
-```
+[REFINE]        Doc: Fixed a minor typo and renamed INTIAL_CAPS_ALL_CHARACTERS to INITIAL_CAPS_ALL_CHARACTERS 
+in UIEditBox.
 
-Full test case please refer to 'tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest.cpp'
+You can also take a look at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
 
-## ui::Scale9Sprite
 
-Now we have implemented a new Scale9Sprite class under ui module. Its internal implementation is concise than the previous one plus more features.
-The main reason of reimplementing this class is that the Scale9Sprite is heavily used in ui module. Now the ui module is not dependent from extension module.
-By applying the new ui::Scale9Sprite, the code inside many widget classes are more cleaner and elegant.
+## NEW APIS
 
-We could manually toggle "slice 9" feature by one function call:
+1. JSB Module
 
-```c++
-//ui::Scale9Sprite is slice 9 enabled on default
-auto sprite = ui::Scale9Sprite::create("foo.png");
-sprite->setScale9Enabled(false);
-```
+    Added jsb.fileUtils.writeDataToFile
 
-It also supports Flipping now.
+2. Sprite3D
 
-```c++
-auto sprite = ui::Scale9Sprite::create("bar.png");
-sprite->setFlippedX(true);
-sprite->setFlippedY(false);
-```
+    Added Sprite3Dmaterial class to make it easy to create innate material. 
 
-Since the ui::Scale9Sprite is a Node rather than a Sprite, so you can't add it to a batch node. If you do want to do some actions on the internal sprite, 
-you could call `sprite->getSprite()` to access it. 
+3. ActionTimelineData 
 
-Full test case please refer to `tests/cpp-tests/Classes/UITests/CocostudioGUITest/UIScale9SpriteTest.cpp`.
+    Three interfaces are added in ActionTimelineData class, which are addFrameEndCallFunc, removeFrameEndCall and clearFrameEndCalls.
 
-## c++11 random support
+4. ActionTimeline::removeFrameEndCallFunc 
 
-Since `rand()` is not good(refer to [this document](http://c-faq.com/lib/randrange.html)), we use c++11 random library to do generate random number, and provide a function to easily using:
+5. Improvements for ListView
 
-```c++
-int randInt = cocos2d::random(1, 10);
-float randFloat = cocos2d::random(1.f, 10.f);
-```
+    - Add APIs to scroll to specific item in list.
+    - Add APIs to get an item in specific position like center, leftmost, rightmost, topmost and bottommost.
+    - Add a feature for magnetic scrolling.
 
-## RenderTexture save function
+    For more information: https://github.com/cocos2d/cocos2d-x/pull/13723
 
-`RenderTexture::saveToFile()` will not save rendertexture when the function returns, because it just send render command to renderer. The file will be saved after render command is executed. It is not convenient if you want to use the saved file to do some work. So we added a parameter in `RenderTexture::saveToFile()` to set a call back function when the file is saved.
+6. Node
 
-```c++
-renderTexture->begin();
-...
-renderTexture->end();
+    Added the missing API getChildByTag
 
-renderTexture->saveToFile("myFile.png", true, callback);
+7. Label
 
-```
+    Added setLineSpacing, getLineSpacing
 
-## Primitive
+8. CSLoader
 
-`Primitive` is added to support `Points`,`Lines`,`Triangles` rendering. Previously, if we want to draw a custom geometry(sphere, line), we can only do this by using `CustomCommand`. Now, what is need is to create a Primitive, set datas, and use the corresponding `PrimitiveCommand` to draw the Primitive. 
+    Added createNodeWithVisibleSize, createNodeWithVisibleSize
+9. ComponentContainer
 
-Here is a simple example of rendering a quad in `Sprite`.
+    Removed isEmpty
 
-1. create verexBuffer
+10. Sprite
 
-	```c++
-	auto vertexBuffer = VerexBuffer::create(sizeof(V3F_C4B_T2F), 4);
-	vertexBuffer->updateVertices(&_quad, 4, 0);
-	```
-
-2. create vertexData
-
-	```c++
-	auto vertexData = VertexData::create();
-	vertexData->addStream(vertexBuffer, VertexStreamAttribute(0, VERTEX_ATTRIB_POSITION, GL_FLOAT, 3, fasle));
-	vertexData->addStream(vertexBuffer, VertexStreamAttribute(12, VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BTYE, 4, true));
-	vertexData->addStream(vertexBuffer, VertexStreamAttribute(16, VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2, fasle));
-	```
-3. create IndexBuffer
-	
-	```c++
-	auto indexBuffer = IndexBuffer::create(IndexType::INDEX_TYPE_SHORT_16, 6);
-	short indices[6] = {0,1,2,3,2,1};
-	indexBuffer->updateIndices(indices,6, 0);
-	```
-4. create primitive
-	
-	```c++
-	auto primitve = Primitive::create(vertexData, indexBuffer, GL_TRIANGLES);
-	primitive->setStart(0);
-	primitive->setCount(6);
-	```
-5. add command to renderer
-	
-	```c++
-	_command->init(globalZorder,textureID, glprogramState, blend, primitve, modelViewMatrix);
-	renderer->addCommand(&_command);
-	```
-
-Primitive supports three typs of primitives (POINTS, LINES, TRIANGLES), vertex and index sharing, multiple streams. It has some constrains:
-
-1. The size of vertex and index Buffer is fixed, which means data must be pre allocated.
-2. Batching is not supported.
-
-## Consistent way to set GL context attributes
-
-Now you can set GL context attributes by override `Application::initGLContextAttrs()`, then set GL context attributes there.
-
-```c++
-void AppDelegate::initGLContextAttrs()
-{
-    // r:8 g:8 a:8 depth:24 stencil:8
-    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
-    GLView::setGLContextAttrs(glContextAttrs);
-}
-```
-
-Now can only support setting bits of `r`, `g`, `b`, `a`, `depth buffer` and `stencil buffer`. We will support other attributes if needed.
-
-## Only two libraries left
-
-Now there are two libraries left: one for all c++ codes and another one for lua-bindings codes. 
-
-If you are developing with c++, you only have to link to `libcocos2d`. `libcocos2d` includes all c++ codes:
-
-* cocos2d(including 2d and 3d)
-* network
-* cocosstudio
-* ui
-* cocosbuilder
-* spine
-* chipmunk
-* box2d
-* ...
-
-Not used codes will be stripped by linker.
-
-If you are developing with lua, you should link to `libcocos2d` and `libluacocos2d`. You can comment codes in `lua_module_register.h` if you don't want to some module.
-
-```c++
-int lua_module_register(lua_State* L)
-{
-    register_cocosdenshion_module(L); // comment this line to remove cocosdenshion
-    register_network_module(L);       // comment this line to remove network
-    register_cocosbuilder_module(L);  // comment this line to remove cocosbuilder
-    register_cocostudio_module(L);    // comment this line to remove cocostudio
-    register_extension_module(L);     // comment this line to remove extension
-    register_ui_moudle(L);            // comment this line to remove ui
-    register_spine_module(L);         // comment this line to remove spine
-    register_cocos3d_module(L);       // comment this line to remove 3d
-    return 1;
-}
-```
-
+    Removed debugDraw(bool on)

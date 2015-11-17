@@ -1,10 +1,14 @@
-
 #include "TextureCacheTest.h"
 
 // enable log
 #define COCOS2D_DEBUG 1
 
 USING_NS_CC;
+
+TextureCacheTests::TextureCacheTests()
+{
+    ADD_TEST_CASE(TextureCacheTest);
+}
 
 TextureCacheTest::TextureCacheTest()
 : _numberOfSprites(20)
@@ -125,14 +129,4 @@ void TextureCacheTest::addSprite()
     this->addChild(s13);
     this->addChild(s14);
     this->addChild(s15);
-}
-
-
-void TextureCacheTestScene::runThisTest()
-{
-    auto layer = new (std::nothrow) TextureCacheTest();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
-    layer->release();
 }

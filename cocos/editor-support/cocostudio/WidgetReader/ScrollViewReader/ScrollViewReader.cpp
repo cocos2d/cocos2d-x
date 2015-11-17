@@ -7,7 +7,7 @@
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/FlatBuffersSerialize.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
@@ -42,6 +42,11 @@ namespace cocostudio
             instanceScrollViewReader = new (std::nothrow) ScrollViewReader();
         }
         return instanceScrollViewReader;
+    }
+    
+    void ScrollViewReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceScrollViewReader);
     }
     
     void ScrollViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode* cocoNode)
@@ -354,10 +359,7 @@ namespace cocostudio
                 if (resourceType == 1)
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
-                    
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                    fbs->_textures.push_back(builder->CreateString(texture));                    
                 }
             }
             
@@ -400,10 +402,10 @@ namespace cocostudio
         ScrollView* scrollView = static_cast<ScrollView*>(node);
         auto options = (ScrollViewOptions*)scrollViewOptions;
         
-        bool clipEnabled = options->clipEnabled();
+        bool clipEnabled = options->clipEnabled() != 0;
         scrollView->setClippingEnabled(clipEnabled);
         
-        bool backGroundScale9Enabled = options->backGroundScale9Enabled();
+        bool backGroundScale9Enabled = options->backGroundScale9Enabled() != 0;
         scrollView->setBackGroundImageScale9Enabled(backGroundScale9Enabled);
         
         
@@ -428,10 +430,72 @@ namespace cocostudio
         scrollView->setBackGroundColorOpacity(bgColorOpacity);
         
         
+        bool fileExist = false;
+        std::string errorFilePath = "";
         auto imageFileNameDic = options->backGroundImageData();
         int imageFileNameType = imageFileNameDic->resourceType();
         std::string imageFileName = imageFileNameDic->path()->c_str();
-        scrollView->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
+        if (imageFileName != "")
+        {
+            switch (imageFileNameType)
+            {
+                case 0:
+                {
+                    if (FileUtils::getInstance()->isFileExist(imageFileName))
+                    {
+                        fileExist = true;
+                    }
+                    else
+                    {
+                        errorFilePath = imageFileName;
+                        fileExist = false;
+                    }
+                    break;
+                }
+                    
+                case 1:
+                {
+                    std::string plist = imageFileNameDic->plistFile()->c_str();
+                    SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(imageFileName);
+                    if (spriteFrame)
+                    {
+                        fileExist = true;
+                    }
+                    else
+                    {
+                        if (FileUtils::getInstance()->isFileExist(plist))
+                        {
+                            ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                            ValueMap metadata = value["metadata"].asValueMap();
+                            std::string textureFileName = metadata["textureFileName"].asString();
+                            if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                            {
+                                errorFilePath = textureFileName;
+                            }
+                        }
+                        else
+                        {
+                            errorFilePath = plist;
+                        }
+                        fileExist = false;
+                    }
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
+            if (fileExist)
+            {
+                scrollView->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
+            }
+            //else
+            //{
+            //    auto label = Label::create();
+            //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+            //    scrollView->addChild(label);
+            //}
+        }
         
         auto widgetOptions = options->widgetOptions();
         auto f_color = widgetOptions->color();
@@ -446,7 +510,7 @@ namespace cocostudio
         scrollView->setInnerContainerSize(innerSize);
         int direction = options->direction();
         scrollView->setDirection((ScrollView::Direction)direction);
-        bool bounceEnabled = options->bounceEnabled();
+        bool bounceEnabled = options->bounceEnabled() != 0;
         scrollView->setBounceEnabled(bounceEnabled);
         
         

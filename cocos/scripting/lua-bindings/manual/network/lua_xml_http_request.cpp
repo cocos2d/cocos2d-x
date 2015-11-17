@@ -34,7 +34,7 @@ using namespace cocos2d;
 using namespace std;
 
 LuaMinXmlHttpRequest::LuaMinXmlHttpRequest()
-:_isNetwork(true),
+:
 _url(""),
 _meth(""),
 _type(""),
@@ -45,6 +45,7 @@ _statusText(""),
 _responseType(ResponseType::STRING),
 _timeout(0),
 _isAsync(false),
+_isNetwork(true),
 _withCredentialsValue(true),
 _errorFlag(false),
 _isAborted(false)
@@ -58,6 +59,7 @@ LuaMinXmlHttpRequest::~LuaMinXmlHttpRequest()
 {
     _httpHeader.clear();
     _requestHeader.clear();
+    CC_SAFE_RELEASE_NULL(_httpRequest);
 }
 
 /**
@@ -116,7 +118,7 @@ void LuaMinXmlHttpRequest::_gotHeader(string header)
                 pch = strtok (NULL, " ");
                 mystream << pch;
                 
-                pch = strtok (NULL, " ");
+                pch = strtok (NULL, "\n");
                 mystream << " " << pch;
                 
                 _statusText = mystream.str();
@@ -204,8 +206,6 @@ void LuaMinXmlHttpRequest::_sendRequest()
         }
         
         long statusCode = response->getResponseCode();
-        char statusString[64] = {};
-        sprintf(statusString, "HTTP Status Code: %ld, tag = %s", statusCode, response->getHttpRequest()->getTag());
         
         if (!response->isSucceed())
         {
@@ -267,7 +267,6 @@ void LuaMinXmlHttpRequest::_sendRequest()
         release();
     });
     network::HttpClient::getInstance()->sendImmediate(_httpRequest);
-    _httpRequest->release();
     retain();
 }
 
@@ -285,7 +284,7 @@ static void lua_reg_xml_http_request(lua_State* L)
 static int lua_collect_xml_http_request (lua_State* L)
 {
     LuaMinXmlHttpRequest* self = (LuaMinXmlHttpRequest*) tolua_tousertype(L,1,0);
-    Mtolua_delete(self);
+    self->release();
     return 0;
 }
 
@@ -302,10 +301,8 @@ static int lua_cocos2dx_XMLHttpRequest_constructor(lua_State* L)
     if (argc == 0)
     {
         self = new (std::nothrow) LuaMinXmlHttpRequest();
-        self->autorelease();
-        int ID =  self? (int)self->_ID : -1;
-        int* luaID = self? &self->_luaID : NULL;
-        toluafix_pushusertype_ccobject(L, ID, luaID, (void*)self, "cc.XMLHttpRequest");
+        tolua_pushusertype(L, (void*)self, "cc.XMLHttpRequest");
+        tolua_register_gc(L, lua_gettop(L));
         return 1;
     }
     

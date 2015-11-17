@@ -40,4 +40,10 @@
 -- @param self
 -- @return string#string ret (return value: string)
         
+--------------------------------
+--  @brief Get the search paths list related to the Manifest.
+-- @function [parent=#Manifest] getSearchPaths 
+-- @param self
+-- @return array_table#array_table ret (return value: array_table)
+        
 return nil

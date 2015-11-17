@@ -1,48 +1,37 @@
 #ifndef _SHADER_TEST2_H_
 #define _SHADER_TEST2_H_
-#include "../testBasic.h"
+
 #include "extensions/cocos-ext.h"
 #include "../BaseTest.h"
 
-USING_NS_CC_EXT;
 
-class ShaderTestDemo2 : public BaseTest
+DEFINE_TEST_SUITE(Shader2Tests);
+
+class ShaderTestDemo2 : public TestCase
 {
 public:
-    ShaderTestDemo2(void);
-    virtual std::string title() const { return "Effects on Sprites";}
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    virtual std::string title() const override { return "Effects on Sprites";}
 };
-
-class ShaderTestScene2 : public TestScene
-{
-public:
-    CREATE_FUNC(ShaderTestScene2);
-    virtual void runThisTest();
-};
-
 
 //
 // Effect
 //
 class EffectSprite;
 
-class Effect : public Ref
+class Effect : public cocos2d::Ref
 {
 public:
-    GLProgramState* getGLProgramState() const { return _glprogramstate; }
+    cocos2d::GLProgramState* getGLProgramState() const { return _glprogramstate; }
     virtual void setTarget(EffectSprite *sprite){}
 
 protected:
     bool initGLProgramState(const std::string &fragmentFilename);
     Effect();
     virtual ~Effect();
-    GLProgramState *_glprogramstate;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    cocos2d::GLProgramState* _glprogramstate;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     std::string _fragSource;
-    EventListenerCustom* _backgroundListener;
+    cocos2d::EventListenerCustom* _backgroundListener;
 #endif
 };
 
@@ -51,6 +40,7 @@ class EffectSpriteTest : public ShaderTestDemo2
 public:
     CREATE_FUNC(EffectSpriteTest);
     EffectSpriteTest();
+    virtual bool init();
     virtual std::string subtitle() const {return "Different effects on Sprite";}
 
 protected:
@@ -64,16 +54,17 @@ class EffectSpriteLamp : public ShaderTestDemo2
 public:
     CREATE_FUNC(EffectSpriteLamp);
     EffectSpriteLamp();
+    virtual bool init();
     virtual std::string subtitle() const {return "Sprite Lamp effects";}
     //callback
 public:
-    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
-    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event);
-    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event);
+    virtual void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* unused_event);
+    virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* unused_event);
+    virtual void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* unused_event);
 protected:
     EffectSprite *_sprite;
     Effect* _effect;
-    Sprite* _lightSprite;
+    cocos2d::Sprite* _lightSprite;
 };
 
 #endif

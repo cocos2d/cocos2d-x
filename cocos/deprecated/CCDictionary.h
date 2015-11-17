@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2012      cocos2d-x.org
- opyright (c) 2013-2014 Chukong Technologies Inc.
+ opyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 #ifndef __CCDICTIONARY_H__
 #define __CCDICTIONARY_H__
+/// @cond DO_NOT_SHOW
 
 #include "base/uthash.h"
 #include "base/CCRef.h"
@@ -388,8 +389,8 @@ public:
     
     /**
      *  Write a dictionary to a plist file.
-     *  @param fullPath The full path of the plist file. You can get writeable path by getWritablePath()
-     *  @return true if successed, false if failed
+     *  @param fullPath The full path of the plist file. You can get writable path by getWritablePath()
+     *  @return true if succeeded, false if failed
      *  @js NA
      *  @lua NA
      */
@@ -456,4 +457,5 @@ private:
 
 NS_CC_END
 
+/// @endcond
 #endif /* __CCDICTIONARY_H__ */

@@ -1,25 +1,26 @@
 /******************************************************************************
  * Spine Runtimes Software License
- * Version 2.1
+ * Version 2.3
  * 
- * Copyright (c) 2013, Esoteric Software
+ * Copyright (c) 2013-2015, Esoteric Software
  * All rights reserved.
  * 
  * You are granted a perpetual, non-exclusive, non-sublicensable and
- * non-transferable license to install, execute and perform the Spine Runtimes
- * Software (the "Software") solely for internal use. Without the written
- * permission of Esoteric Software (typically granted by licensing Spine), you
- * may not (a) modify, translate, adapt or otherwise create derivative works,
- * improvements of the Software or develop new applications using the Software
- * or (b) remove, delete, alter or obscure any trademarks or any copyright,
- * trademark, patent or other intellectual property or proprietary rights
- * notices on or in the Software, including any copy thereof. Redistributions
- * in binary or source form must include this license and terms.
+ * non-transferable license to use, install, execute and perform the Spine
+ * Runtimes Software (the "Software") and derivative works solely for personal
+ * or internal use. Without the written permission of Esoteric Software (see
+ * Section 2 of the Spine Software License Agreement), you may not (a) modify,
+ * translate, adapt or otherwise create derivative works, improvements of the
+ * Software or develop new applications using the Software or (b) remove,
+ * delete, alter or obscure any trademarks or any copyright, trademark, patent
+ * or other intellectual property or proprietary rights notices on or in the
+ * Software, including any copy thereof. Redistributions in binary or source
+ * form must include this license and terms.
  * 
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL ESOTERIC SOFTARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
  * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
@@ -65,7 +66,7 @@ void _spSkeletonJson_setError (spSkeletonJson* self, Json* root, const char* val
 	FREE(self->error);
 	strcpy(message, value1);
 	length = (int)strlen(value1);
-	if (value2) strncat(message + length, value2, 256 - length);
+	if (value2) strncat(message + length, value2, 255 - length);
 	MALLOC_STR(self->error, message);
 	if (root) Json_dispose(root);
 }
@@ -106,16 +107,19 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 	spAnimation* animation;
 	Json* frame;
 	float duration;
+	int timelinesCount = 0;
 
 	Json* bones = Json_getItem(root, "bones");
 	Json* slots = Json_getItem(root, "slots");
 	Json* ik = Json_getItem(root, "ik");
 	Json* ffd = Json_getItem(root, "ffd");
-	Json* drawOrder = Json_getItem(root, "draworder");
+	Json* drawOrder = Json_getItem(root, "drawOrder");
 	Json* events = Json_getItem(root, "events");
+	Json* flipX = Json_getItem(root, "flipx");
+	Json* flipY = Json_getItem(root, "flipy");
 	Json *boneMap, *slotMap, *ikMap, *ffdMap;
+	if (!drawOrder) drawOrder = Json_getItem(root, "draworder");
 
-	int timelinesCount = 0;
 	for (boneMap = bones ? bones->child : 0; boneMap; boneMap = boneMap->next)
 		timelinesCount += boneMap->size;
 	for (slotMap = slots ? slots->child : 0; slotMap; slotMap = slotMap->next)
@@ -124,8 +128,10 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 	for (ffdMap = ffd ? ffd->child : 0; ffdMap; ffdMap = ffdMap->next)
 		for (slotMap = ffdMap->child; slotMap; slotMap = slotMap->next)
 			timelinesCount += slotMap->size;
-	if (events) ++timelinesCount;
 	if (drawOrder) ++timelinesCount;
+	if (events) ++timelinesCount;
+	if (flipX) ++timelinesCount;
+	if (flipY) ++timelinesCount;
 
 	animation = spAnimation_create(root->name, timelinesCount);
 	animation->timelinesCount = 0;
@@ -214,6 +220,17 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 					animation->timelines[animation->timelinesCount++] = SUPER_CAST(spTimeline, timeline);
 					duration = timeline->frames[timelineArray->size * 3 - 3];
 					if (duration > animation->duration) animation->duration = duration;
+				} else if (strcmp(timelineArray->name, "flipX") == 0 || strcmp(timelineArray->name, "flipY") == 0) {
+					int x = strcmp(timelineArray->name, "flipX") == 0;
+					const char* field = x ? "x" : "y";
+					spFlipTimeline *timeline = spFlipTimeline_create(timelineArray->size, x);
+					timeline->boneIndex = boneIndex;
+					for (frame = timelineArray->child, i = 0; frame; frame = frame->next, ++i)
+						spFlipTimeline_setFrame(timeline, i, Json_getFloat(frame, "time", 0), Json_getInt(frame, field, 0));
+					animation->timelines[animation->timelinesCount++] = SUPER_CAST(spTimeline, timeline);
+					duration = timeline->frames[timelineArray->size * 2 - 2];
+					if (duration > animation->duration) animation->duration = duration;
+
 				} else {
 					spAnimation_dispose(animation);
 					_spSkeletonJson_setError(self, 0, "Invalid timeline type for a bone: ", timelineArray->name);
@@ -418,8 +435,8 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 
 	skeleton = Json_getItem(root, "skeleton");
 	if (skeleton) {
-		skeletonData->hash = Json_getString(skeleton, "hash", 0);
-		skeletonData->version = Json_getString(skeleton, "spine", 0);
+		MALLOC_STR(skeletonData->hash, Json_getString(skeleton, "hash", 0));
+		MALLOC_STR(skeletonData->version,  Json_getString(skeleton, "spine", 0));
 		skeletonData->width = Json_getFloat(skeleton, "width", 0);
 		skeletonData->height = Json_getFloat(skeleton, "height", 0);
 	}
@@ -450,6 +467,8 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 		boneData->scaleY = Json_getFloat(boneMap, "scaleY", 1);
 		boneData->inheritScale = Json_getInt(boneMap, "inheritScale", 1);
 		boneData->inheritRotation = Json_getInt(boneMap, "inheritRotation", 1);
+		boneData->flipX = Json_getInt(boneMap, "flipX", 0);
+		boneData->flipY = Json_getInt(boneMap, "flipY", 0);
 
 		skeletonData->bones[i] = boneData;
 		skeletonData->bonesCount++;
@@ -501,7 +520,7 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 		for (slotMap = slots->child, i = 0; slotMap; slotMap = slotMap->next, ++i) {
 			spSlotData* slotData;
 			const char* color;
-			Json *attachmentItem;
+			Json *item;
 
 			const char* boneName = Json_getString(slotMap, "bone", 0);
 			spBoneData* boneData = spSkeletonData_findBone(skeletonData, boneName);
@@ -521,10 +540,18 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 				slotData->a = toColor(color, 3);
 			}
 
-			attachmentItem = Json_getItem(slotMap, "attachment");
-			if (attachmentItem) spSlotData_setAttachmentName(slotData, attachmentItem->valueString);
+			item = Json_getItem(slotMap, "attachment");
+			if (item) spSlotData_setAttachmentName(slotData, item->valueString);
 
-			slotData->additiveBlending = Json_getInt(slotMap, "additive", 0);
+			item = Json_getItem(slotMap, "blend");
+			if (item) {
+				if (strcmp(item->valueString, "additive") == 0)
+					slotData->blendMode = SP_BLEND_MODE_ADDITIVE;
+				else if (strcmp(item->valueString, "multiply") == 0)
+					slotData->blendMode = SP_BLEND_MODE_MULTIPLY;
+				else if (strcmp(item->valueString, "screen") == 0)
+					slotData->blendMode = SP_BLEND_MODE_SCREEN;
+			}
 
 			skeletonData->slots[i] = slotData;
 		}

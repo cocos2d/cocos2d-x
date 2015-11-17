@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -40,12 +40,13 @@ namespace cocostudio
         ~ProjectNodeReader();
         
         static ProjectNodeReader* getInstance();
-        static void purge();
+        /** @deprecated Use method destroyInstance() instead */
+        CC_DEPRECATED_ATTRIBUTE static void purge();
+        static void destroyInstance();
         
         flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
                                                                              flatbuffers::FlatBufferBuilder* builder);
-        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffersForSimulator(const tinyxml2::XMLElement* objectData,
-                                                                                         flatbuffers::FlatBufferBuilder* builder);
+
         void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* projectNodeOptions);
         cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* nodeOptions) { return nullptr; };
     };

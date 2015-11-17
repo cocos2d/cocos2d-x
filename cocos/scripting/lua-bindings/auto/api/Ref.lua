@@ -6,12 +6,13 @@
 --------------------------------
 -- Releases the ownership immediately.<br>
 -- This decrements the Ref's reference count.<br>
--- If the reference count reaches 0 after the descrement, this Ref is<br>
+-- If the reference count reaches 0 after the decrement, this Ref is<br>
 -- destructed.<br>
 -- see retain, autorelease<br>
 -- js NA
 -- @function [parent=#Ref] release 
 -- @param self
+-- @return Ref#Ref self (return value: cc.Ref)
         
 --------------------------------
 -- Retains the ownership.<br>
@@ -20,6 +21,7 @@
 -- js NA
 -- @function [parent=#Ref] retain 
 -- @param self
+-- @return Ref#Ref self (return value: cc.Ref)
         
 --------------------------------
 -- Returns the Ref's current reference count.<br>

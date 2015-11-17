@@ -89,7 +89,8 @@ void TextBMFont::setFntFile(const std::string& fileName)
     _labelBMFontRenderer->setBMFontFilePath(fileName);
     
     _fntFileHasInit = true;
-    setString(_stringValue);
+    updateContentSizeWithTextureSize(_labelBMFontRenderer->getContentSize());
+    _labelBMFontRendererAdaptDirty = true;
 }
 
 void TextBMFont::setString(const std::string& value)
@@ -99,11 +100,11 @@ void TextBMFont::setString(const std::string& value)
         return;
     }
     _stringValue = value;
+    _labelBMFontRenderer->setString(value);
     if (!_fntFileHasInit)
     {
         return;
     }
-    _labelBMFontRenderer->setString(value);
     updateContentSizeWithTextureSize(_labelBMFontRenderer->getContentSize());
     _labelBMFontRendererAdaptDirty = true;
 }

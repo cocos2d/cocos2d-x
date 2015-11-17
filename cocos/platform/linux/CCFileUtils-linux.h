@@ -48,11 +48,11 @@ class CC_DLL FileUtilsLinux : public FileUtils
     FileUtilsLinux();
     std::string _writablePath;
 public:
-    /* override funtions */
+    /* override functions */
     bool init();
     virtual std::string getWritablePath() const;
 private:
-    virtual bool isFileExistInternal(const std::string& strFilePath) const;
+    virtual bool isFileExistInternal(const std::string& strFilePath) const override;
 };
 
 // end of platform group

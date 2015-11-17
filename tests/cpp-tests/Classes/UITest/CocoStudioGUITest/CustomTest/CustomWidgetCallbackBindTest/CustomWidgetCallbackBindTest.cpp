@@ -1,12 +1,9 @@
-
-
 #include "CustomWidgetCallbackBindTest.h"
 
 #include "../../CustomGUIScene.h"
 #include "cocostudio/ActionTimeline/CSLoader.h"
-
+#include "cocostudio/CocoStudio.h"
 #include "base/ObjectFactory.h"
-
 #include "CustomRootNode.h"
 #include "CustomRootNodeReader.h"
 
@@ -15,38 +12,26 @@ using namespace flatbuffers;
 
 // CustomWidgetCallbackBindScene
 
-void CustomWidgetCallbackBindScene::onEnter()
+bool CustomWidgetCallbackBindScene::init()
 {
-    Scene::onEnter();
+    if (TestCase::init())
+    {
+        CSLoader* instance = CSLoader::getInstance();
+        instance->registReaderObject("CustomRootNodeReader",
+            (ObjectFactory::Instance)CustomRootNodeReader::getInstance);
+
+        auto layer = CSLoader::createNode("cocosui/CustomTest/CustomWidgetCallbackBindTest/CustomWidgetCallbackBindTest.csb");
+        addChild(layer);
+
+        return true;
+    }
     
-    auto label = Label::createWithTTF("Back", "fonts/arial.ttf", 20);
-    //#endif
-    MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(CustomWidgetCallbackBindScene::BackCallback, this));
-    
-    Menu* pMenu = Menu::create(pMenuItem, nullptr);
-    
-    pMenu->setPosition( Vec2::ZERO );
-    pMenuItem->setPosition(VisibleRect::right().x - 50, VisibleRect::bottom().y + 25);
-    
-    addChild(pMenu, 1);
+    return false;
 }
 
-void CustomWidgetCallbackBindScene::runThisTest()
+void CustomWidgetCallbackBindScene::onExit()
 {
-    CSLoader* instance = CSLoader::getInstance();
-    instance->registReaderObject("CustomRootNodeReader",
-                                 (ObjectFactory::Instance)CustomRootNodeReader::getInstance);
-    
-    auto pLayer = CSLoader::createNode("cocosui/CustomTest/CustomWidgetCallbackBindTest/CustomWidgetCallbackBindTest.csb");
-    addChild(pLayer);
-    
-    
-    Director::getInstance()->replaceScene(this);
-}
+    cocostudio::destroyCocosStudio();
 
-void CustomWidgetCallbackBindScene::BackCallback(Ref* pSender)
-{
-    CustomGUITestScene* pScene = new (std::nothrow) CustomGUITestScene();
-    pScene->runThisTest();
-    pScene->release();
+    TestCase::onExit();
 }

@@ -5,6 +5,7 @@
 
 extern "C" {
 
+/// @cond
 /*
  * Class:     Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge
  * Method:    callLuaFunctionWithString
@@ -38,5 +39,5 @@ JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge_releaseLuaFun
   (JNIEnv *env, jclass, jint);
 
 } // extern "C"
-
+/// @endcond
 #endif // COCOS2DX_SCRIPT_LUA_COCOS2DX_SUPPORT_PLATFORM_ANDROID_JNI_JAVA_ORG_COCOS2DX_LIB_COCOS2DX_LUA_JAVA_BRIDEG_H

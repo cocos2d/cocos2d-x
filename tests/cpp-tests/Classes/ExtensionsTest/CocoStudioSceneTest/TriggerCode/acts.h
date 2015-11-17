@@ -12,11 +12,11 @@ public:
      PlayMusic(void);
      virtual ~PlayMusic(void);
 
-     virtual bool init();
-     virtual void done();
-	 virtual void serialize(const rapidjson::Value &val);
-	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
-     virtual void removeAll();
+     virtual bool init() override;
+     virtual void done()override;
+	 virtual void serialize(const rapidjson::Value &val)override;
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)override;
+     virtual void removeAll()override;
 private:
 	 int  _tag;
 	 std::string _comName;
@@ -30,11 +30,11 @@ public:
 	TMoveTo(void);
 	virtual ~TMoveTo(void);
 
-	virtual bool init();
-	virtual void done();
-	virtual void serialize(const rapidjson::Value &val);
-	virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
-	virtual void removeAll();
+	virtual bool init() override;
+	virtual void done()override;
+	virtual void serialize(const rapidjson::Value &val)override;
+	virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)override;
+	virtual void removeAll()override;
 private:
 	int  _tag;
 	float _duration;
@@ -49,11 +49,11 @@ public:
      TMoveBy(void);
      virtual ~TMoveBy(void);
 
-     virtual bool init();
-     virtual void done();
-	 virtual void serialize(const rapidjson::Value &val);
-	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
-     virtual void removeAll();
+     virtual bool init() override;
+     virtual void done()override;
+	 virtual void serialize(const rapidjson::Value &val)override;
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)override;
+     virtual void removeAll()override;
 private:
 	int  _tag;
 	float _duration;
@@ -69,11 +69,11 @@ public:
      TRotateTo(void);
      virtual ~TRotateTo(void);
 
-     virtual bool init();
-     virtual void done();
-	 virtual void serialize(const rapidjson::Value &val);
-	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
-     virtual void removeAll();
+     virtual bool init() override;
+     virtual void done()override;
+	 virtual void serialize(const rapidjson::Value &val)override;
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)override;
+     virtual void removeAll()override;
 private:
 	int  _tag;
 	float _duration;
@@ -88,11 +88,11 @@ public:
      TRotateBy(void);
      virtual ~TRotateBy(void);
 
-     virtual bool init();
-     virtual void done();
-	 virtual void serialize(const rapidjson::Value &val);
-	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
-     virtual void removeAll();
+     virtual bool init() override;
+     virtual void done()override;
+	 virtual void serialize(const rapidjson::Value &val)override;
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)override;
+     virtual void removeAll()override;
 private:
 	int  _tag;
 	float _duration;
@@ -108,11 +108,11 @@ public:
      TScaleTo(void);
      virtual ~TScaleTo(void);
 
-     virtual bool init();
-     virtual void done();
-	 virtual void serialize(const rapidjson::Value &val);
-	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
-     virtual void removeAll();
+     virtual bool init() override;
+     virtual void done()override;
+	 virtual void serialize(const rapidjson::Value &val)override;
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)override;
+     virtual void removeAll()override;
 private:
 	int  _tag;
 	float _duration;
@@ -127,11 +127,11 @@ public:
      TScaleBy(void);
      virtual ~TScaleBy(void);
 
-     virtual bool init();
-     virtual void done();
-	 virtual void serialize(const rapidjson::Value &val);
-	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
-     virtual void removeAll();
+     virtual bool init() override;
+     virtual void done()override;
+	 virtual void serialize(const rapidjson::Value &val)override;
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)override;
+     virtual void removeAll()override;
 private:
 	int  _tag;
 	float _duration;
@@ -148,11 +148,11 @@ public:
      TSkewTo(void);
      virtual ~TSkewTo(void);
 
-     virtual bool init();
-     virtual void done();
-	 virtual void serialize(const rapidjson::Value &val);
-	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
-     virtual void removeAll();
+     virtual bool init() override;
+     virtual void done()override;
+	 virtual void serialize(const rapidjson::Value &val)override;
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)override;
+     virtual void removeAll()override;
 private:
 	int  _tag;
 	float _duration;
@@ -167,11 +167,11 @@ public:
      TSkewBy(void);
      virtual ~TSkewBy(void);
 
-     virtual bool init();
-     virtual void done();
-	 virtual void serialize(const rapidjson::Value &val);
-	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
-     virtual void removeAll();
+     virtual bool init() override;
+     virtual void done()override;
+	 virtual void serialize(const rapidjson::Value &val)override;
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)override;
+     virtual void removeAll()override;
 private:
 	int  _tag;
 	float _duration;
@@ -187,11 +187,11 @@ public:
      TriggerState(void);
      virtual ~TriggerState(void);
 
-     virtual bool init();
-     virtual void done();
-	 virtual void serialize(const rapidjson::Value &val);
-	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
-     virtual void removeAll();
+     virtual bool init() override;
+     virtual void done()override;
+	 virtual void serialize(const rapidjson::Value &val)override;
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)override;
+     virtual void removeAll()override;
 private:
 	int  _id;
 	int _state;
@@ -204,11 +204,11 @@ public:
 	ArmaturePlayAction(void);
 	virtual ~ArmaturePlayAction(void);
 
-	virtual bool init();
-	virtual void done();
-	virtual void serialize(const rapidjson::Value &val);
-	virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
-	virtual void removeAll();
+	virtual bool init() override;
+	virtual void done()override;
+	virtual void serialize(const rapidjson::Value &val)override;
+	virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)override;
+	virtual void removeAll()override;
 private:
 	int _tag;
 	std::string _comName;

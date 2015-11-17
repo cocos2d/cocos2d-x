@@ -48,14 +48,14 @@ void LuaLog(const char *pszMsg)
     OutputDebugStringW(widebuff);
     OutputDebugStringA("\n");
 
-	bufflen = WideCharToMultiByte(CP_ACP, 0, widebuff, -1, nullptr, 0, nullptr, nullptr);
-	char* buff = new char[bufflen + 1];
-	memset(buff, 0, sizeof(char) * (bufflen + 1));
-	WideCharToMultiByte(CP_ACP, 0, widebuff, -1, buff, bufflen, nullptr, nullptr);
-	puts(buff);
+    bufflen = WideCharToMultiByte(CP_ACP, 0, widebuff, -1, nullptr, 0, nullptr, nullptr);
+    char* buff = new char[bufflen + 1];
+    memset(buff, 0, sizeof(char) * (bufflen + 1));
+    WideCharToMultiByte(CP_ACP, 0, widebuff, -1, buff, bufflen, nullptr, nullptr);
+    puts(buff);
 
-	delete[] widebuff;
-	delete[] buff;
+    delete[] widebuff;
+    delete[] buff;
 }
 
 NS_CC_END

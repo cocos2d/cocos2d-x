@@ -29,15 +29,28 @@
 #include "base/CCEventListener.h"
 #include "base/CCEventKeyboard.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class Event;
 
+/** @class EventListenerKeyboard
+ * @brief Keyboard event listener.
+ * @js cc._EventListenerKeyboard
+ */
 class CC_DLL EventListenerKeyboard : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
     
+    /** Create a keyboard event listener.
+     * 
+     * @return An autoreleased EventListenerKeyboard object.
+     */
     static EventListenerKeyboard* create();
     
     /// Overrides
@@ -52,5 +65,8 @@ CC_CONSTRUCTOR_ACCESS:
 };
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__CCKeyboardEventListener__) */

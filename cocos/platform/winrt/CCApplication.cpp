@@ -35,6 +35,8 @@ using namespace Windows::Foundation;
 #include <algorithm>
 #include "platform/CCFileUtils.h"
 #include "CCWinRTUtils.h"
+#include "platform/CCApplication.h"
+#include "tinyxml2/tinyxml2.h"
 
 /**
 @brief    This function change the PVRFrame show/hide setting in register.
@@ -83,7 +85,7 @@ int Application::run()
 	return 0;
 }
 
-void Application::setAnimationInterval(double interval)
+void Application::setAnimationInterval(float interval)
 {
     LARGE_INTEGER nFreq;
     QueryPerformanceFrequency(&nFreq);
@@ -116,12 +118,12 @@ const char * Application::getCurrentLanguageCode()
         result = GetUserPreferredUILanguages(MUI_LANGUAGE_NAME, &numLanguages, pwszLanguagesBuffer, &cchLanguagesBuffer);
         if (result) {
 
-            code = CCUnicodeToUtf8(pwszLanguagesBuffer);
+            code = StringWideCharToUtf8(pwszLanguagesBuffer);
         }
 
         if (pwszLanguagesBuffer)
         {
-            delete pwszLanguagesBuffer;
+            delete [] pwszLanguagesBuffer;
         }
     }
 
@@ -134,9 +136,9 @@ const char * Application::getCurrentLanguageCode()
 LanguageType Application::getCurrentLanguage()
 {
     LanguageType ret = LanguageType::ENGLISH;
-
+    
     const char* code = getCurrentLanguageCode();
-
+    
     if (strncmp(code, "zh", 2) == 0)
     {
         ret = LanguageType::CHINESE;
@@ -184,14 +186,63 @@ LanguageType Application::getCurrentLanguage()
     else if (strncmp(code, "ar", 2) == 0)
     {
         ret = LanguageType::ARABIC;
-    } 
-
+    }
+    else if (strncmp(code, "nb", 2) == 0)
+    {
+        ret = LanguageType::NORWEGIAN;
+    }
+    else if (strncmp(code, "pl", 2) == 0)
+    {
+        ret = LanguageType::POLISH;
+    }
+    else if (strncmp(code, "tr", 2) == 0)
+    {
+        ret = LanguageType::TURKISH;
+    }
+    else if (strncmp(code, "uk", 2) == 0)
+    {
+        ret = LanguageType::UKRAINIAN;
+    }
+    else if (strncmp(code, "ro", 2) == 0)
+    {
+        ret = LanguageType::ROMANIAN;
+    }
+    else if (strncmp(code, "bg", 2) == 0)
+    {
+        ret = LanguageType::BULGARIAN;
+    }
     return ret;
 }
 
 Application::Platform  Application::getTargetPlatform()
 {
-    return Platform::OS_WP8;
+    if (isWindowsPhone())
+    {
+        return Platform::OS_WP8;
+    }
+    else
+    {
+        return Platform::OS_WINRT;
+    }
+}
+
+std::string  Application::getVersion()
+{
+    std::string r("");
+    std::string s = FileUtils::getInstance()->getStringFromFile("WMAppManifest.xml");
+    if (!s.empty()) {
+        tinyxml2::XMLDocument doc;
+        if (!doc.Parse(s.c_str())) {
+            tinyxml2::XMLElement *app = doc.RootElement()->FirstChildElement("App");
+            if (app) {
+                const char* version = app->Attribute("Version");
+                if (version) {
+                    r = version;
+                }
+            }
+        }
+    }
+    return r;
 }
 
 bool Application::openURL(const std::string &url)

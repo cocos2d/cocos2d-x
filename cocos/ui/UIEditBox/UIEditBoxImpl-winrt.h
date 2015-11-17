@@ -27,6 +27,9 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
+#include <agile.h>
+#include <concrt.h>
+
 #include "UIEditBoxImpl.h"
 
 NS_CC_BEGIN
@@ -93,9 +96,9 @@ namespace ui {
         
         virtual bool initWithSize(const Size& size);
         virtual void setFont(const char* pFontName, int fontSize);
-        virtual void setFontColor(const Color3B& color);
+        virtual void setFontColor(const Color4B& color);
         virtual void setPlaceholderFont(const char* pFontName, int fontSize);
-        virtual void setPlaceholderFontColor(const Color3B& color);
+        virtual void setPlaceholderFontColor(const Color4B& color);
         virtual void setInputMode(EditBox::InputMode inputMode);
         virtual void setInputFlag(EditBox::InputFlag inputFlag);
         virtual void setMaxLength(int maxLength);
@@ -110,14 +113,11 @@ namespace ui {
         virtual void setVisible(bool visible);
         virtual void setContentSize(const Size& size);
         virtual void setAnchorPoint(const Vec2& anchorPoint);
-        virtual void visit(void);
+        virtual void draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) override;
         virtual void doAnimationWhenKeyboardMove(float duration, float distance);
         virtual void openKeyboard();
         virtual void closeKeyboard();
         virtual void onEnter(void);
-    private:
-        Platform::String^ stringToPlatformString(std::string strSrc);
-        std::string PlatformStringTostring(Platform::String^ strSrc);
     private:
         
         EditBoxWinRT^ m_editBoxWinrt;
@@ -126,13 +126,13 @@ namespace ui {
         Label* m_pLabelPlaceHolder;
         EditBox::InputMode    m_eEditBoxInputMode;
         EditBox::InputFlag    m_eEditBoxInputFlag;
-        (EditBox::KeyboardReturnType  m_eKeyboardReturnType;
+        EditBox::KeyboardReturnType  m_eKeyboardReturnType;
          
          std::string m_strText;
          std::string m_strPlaceHolder;
          
-         Color3B m_colText;
-         Color3B m_colPlaceHolder;
+         Color4B m_colText;
+         Color4B m_colPlaceHolder;
          
          int   m_nMaxLength;
          Size m_EditSize;

@@ -63,11 +63,9 @@ int Application::run()
     PVRFrameEnableControlWindow(false);
 
     // Main message loop:
-    LARGE_INTEGER nFreq;
     LARGE_INTEGER nLast;
     LARGE_INTEGER nNow;
 
-    QueryPerformanceFrequency(&nFreq);
     QueryPerformanceCounter(&nLast);
 
     initGLContextAttrs();
@@ -75,7 +73,7 @@ int Application::run()
     // Initialize instance and cocos2d.
     if (!applicationDidFinishLaunching())
     {
-        return 0;
+        return 1;
     }
 
     auto director = Director::getInstance();
@@ -108,10 +106,10 @@ int Application::run()
         director = nullptr;
     }
     glview->release();
-    return true;
+    return 0;
 }
 
-void Application::setAnimationInterval(double interval)
+void Application::setAnimationInterval(float interval)
 {
     LARGE_INTEGER nFreq;
     QueryPerformanceFrequency(&nFreq);
@@ -136,7 +134,7 @@ Application* Application::sharedApplication()
 LanguageType Application::getCurrentLanguage()
 {
     LanguageType ret = LanguageType::ENGLISH;
-
+    
     LCID localeID = GetUserDefaultLCID();
     unsigned short primaryLanguageID = localeID & 0xFF;
     
@@ -181,30 +179,47 @@ LanguageType Application::getCurrentLanguage()
         case LANG_ARABIC:
             ret = LanguageType::ARABIC;
             break;
-	    case LANG_NORWEGIAN:
+        case LANG_NORWEGIAN:
             ret = LanguageType::NORWEGIAN;
             break;
- 	    case LANG_POLISH:
+        case LANG_POLISH:
             ret = LanguageType::POLISH;
             break;
+        case LANG_TURKISH:
+            ret = LanguageType::TURKISH;
+            break;
+        case LANG_UKRAINIAN:
+            ret = LanguageType::UKRAINIAN;
+            break;
+        case LANG_ROMANIAN:
+            ret = LanguageType::ROMANIAN;
+            break;
+        case LANG_BULGARIAN:
+            ret = LanguageType::BULGARIAN;
+            break;
     }
-
+    
     return ret;
 }
 
 const char * Application::getCurrentLanguageCode()
 {
-	LANGID lid = GetUserDefaultUILanguage();
-	const LCID locale_id = MAKELCID(lid, SORT_DEFAULT);
-	static char code[3] = { 0 };
-	GetLocaleInfoA(locale_id, LOCALE_SISO639LANGNAME, code, sizeof(code));
-	code[2] = '\0';
-	return code;
+    LANGID lid = GetUserDefaultUILanguage();
+    const LCID locale_id = MAKELCID(lid, SORT_DEFAULT);
+    static char code[3] = { 0 };
+    GetLocaleInfoA(locale_id, LOCALE_SISO639LANGNAME, code, sizeof(code));
+    code[2] = '\0';
+    return code;
 }
 
 Application::Platform Application::getTargetPlatform()
 {
     return Platform::OS_WINDOWS;
+}
+
+std::string Application::getVersion()
+{
+    return "";
 }
 
 bool Application::openURL(const std::string &url)

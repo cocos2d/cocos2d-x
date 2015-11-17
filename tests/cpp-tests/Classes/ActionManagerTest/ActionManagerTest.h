@@ -1,30 +1,30 @@
 #ifndef _ACTION_MANAGER_TEST_H_
 #define _ACTION_MANAGER_TEST_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
-class ActionManagerTest: public BaseTest
+DEFINE_TEST_SUITE(ActionManagerTests);
+
+class ActionManagerTest : public TestCase
 {
 protected:
-    TextureAtlas* _atlas;
+    cocos2d::TextureAtlas* _atlas;
 
     std::string    _title;
 
 public:
-    ActionManagerTest(void);
-    ~ActionManagerTest(void);
+    ActionManagerTest();
+    ~ActionManagerTest();
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
 };
 
 class CrashTest : public ActionManagerTest
 {
 public:
+    CREATE_FUNC(CrashTest);
+
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
     void removeThis();
@@ -33,6 +33,8 @@ public:
 class LogicTest : public ActionManagerTest
 {
 public:
+    CREATE_FUNC(LogicTest);
+
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
     void bugMe(Node* node);
@@ -41,6 +43,8 @@ public:
 class PauseTest : public ActionManagerTest
 {
 public:
+    CREATE_FUNC(PauseTest);
+
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
     void unpause(float dt);
@@ -49,6 +53,8 @@ public:
 class StopActionTest : public ActionManagerTest
 {
 public:
+    CREATE_FUNC(StopActionTest);
+
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
     void stopAction();
@@ -57,6 +63,8 @@ public:
 class StopAllActionsTest : public ActionManagerTest
 {
 public:
+    CREATE_FUNC(StopAllActionsTest);
+
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
     void stopAction(float time);
@@ -65,15 +73,26 @@ public:
 class ResumeTest : public ActionManagerTest
 {
 public:
+    CREATE_FUNC(ResumeTest);
+
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
     void resumeGrossini(float time);
 };
 
-class ActionManagerTestScene : public TestScene
+class StopActionsByFlagsTest : public ActionManagerTest
 {
 public:
-    virtual void runThisTest();
+    CREATE_FUNC(StopActionsByFlagsTest);
+
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    void stopAction(float time);
+protected:
+    const unsigned int kMoveFlag = 0x01;
+    const unsigned int kScaleFlag = 0x02;
+    const unsigned int kRotateFlag = 0x04;
+    const unsigned int kRepeatForeverFlag = 0x08; // You don't need this for the test, but it's for demonstration how to activate several flags on an action.
 };
 
 #endif

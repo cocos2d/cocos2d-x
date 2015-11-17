@@ -24,14 +24,12 @@
 
 #include "UIWebViewTest.h"
 
-WebViewTest::WebViewTest()
-{
-    
-}
+USING_NS_CC;
+using namespace cocos2d::ui;
 
-WebViewTest::~WebViewTest()
+WebViewTests::WebViewTests()
 {
-
+    ADD_TEST_CASE(WebViewTest);
 }
 
 bool WebViewTest::init()
@@ -71,7 +69,10 @@ bool WebViewTest::init()
         resetBtn->setPosition(Vec2(winSize/2) + Vec2(50, _webView->getContentSize().height/2 +
                                             resetBtn->getContentSize().height/2 + 10));
         resetBtn->addClickEventListener([=](Ref*){
-            _webView->loadURL(std::string("http://") + urlTextField->getString());
+            if (urlTextField->getString().size() != 0)
+            {
+                _webView->loadURL(std::string("http://") + urlTextField->getString());
+            }
         });
         this->addChild(resetBtn);
         
@@ -121,11 +122,11 @@ bool WebViewTest::init()
         
         Button *loadHTMLBtn = Button::create("cocosui/animationbuttonnormal.png",
                                             "cocosui/animationbuttonpressed.png");
-        loadHTMLBtn->setTitleText("Load HTML");
+        loadHTMLBtn->setTitleText("Load Data");
         loadHTMLBtn->setPosition(Vec2(winSize/2) - Vec2( _webView->getContentSize().width/2 +
                                                        loadHTMLBtn->getContentSize().width/2 + 10,0 ));
         loadHTMLBtn->addClickEventListener([=](Ref*){
-            _webView->loadHTMLString("<body style=\"font-size:50px;\">Hello World</body>","text/html");
+            _webView->loadHTMLString("<body style=\"font-size:50px;\">Hello World <img src=\"Icon.png\"/> </body>","Images/");
         });
         this->addChild(loadHTMLBtn);
         
@@ -140,6 +141,7 @@ bool WebViewTest::init()
         evalJsBtn->addClickEventListener([=](Ref*){
             _webView->evaluateJS("alert(\"hello\")");
         });
+        evalJsBtn->setName("evalJs");
         this->addChild(evalJsBtn);
         
         return true;
@@ -150,19 +152,19 @@ bool WebViewTest::init()
 bool WebViewTest::onWebViewShouldStartLoading(experimental::ui::WebView *sender, const std::string &url)
 {
     CCLOG("onWebViewShouldStartLoading, url is %s", url.c_str());
-    
+    //don't do any OpenGL operation here!! It's forbidden!
     return true;
 }
 
 void WebViewTest::onWebViewDidFinishLoading(experimental::ui::WebView *sender, const std::string &url)
 {
+    auto node = (ui::Button*)this->getChildByName("evalJs");
+    node->setTitleText("start loading...");
     CCLOG("onWebViewDidFinishLoading, url is %s", url.c_str());
-
 }
 
 void WebViewTest::onWebViewDidFailLoading(experimental::ui::WebView *sender, const std::string &url)
 {
     CCLOG("onWebViewDidFailLoading, url is %s", url.c_str());
-
 }
 

@@ -1,6 +1,8 @@
 #include "FontTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum {
     kTagLabel1,
     kTagLabel2,
@@ -11,8 +13,6 @@ enum {
     kTagColor2,
     kTagColor3,
 };
-
-static int fontIdx = 0;
 
 //you don't need any ifdef anymore
 static std::string fontList[] =
@@ -25,8 +25,6 @@ static std::string fontList[] =
     "fonts/Scissor Cuts.ttf",
 };
 
-static int fontCount = sizeof(fontList) / sizeof(*fontList);
-
 static int vAlignIdx = 0;
 static TextVAlignment verticalAlignment[] =
 {
@@ -34,44 +32,27 @@ static TextVAlignment verticalAlignment[] =
     TextVAlignment::CENTER,
     TextVAlignment::BOTTOM,
 };
-static int vAlignCount = sizeof(verticalAlignment) / sizeof(*verticalAlignment);
 
-static const char* nextAction(void)
+
+FontTests::FontTests()
 {
-    fontIdx++;
-    if(fontIdx >= fontCount) {
-        fontIdx = 0;
-        vAlignIdx = (vAlignIdx + 1) % vAlignCount;
+    for (auto& fontFile : fontList)
+    {
+        addTestCase("FontTests", [&](){vAlignIdx = 0; return FontTest::create(fontFile); });
     }
-    return fontList[fontIdx].c_str();
-}
-
-static const char* backAction(void)
-{
-    fontIdx--;
-    if( fontIdx < 0 ) {
-        fontIdx = fontCount - 1;
-        vAlignIdx--;
-        if(vAlignIdx < 0)
-            vAlignIdx = vAlignCount - 1;
+    
+    for (auto& fontFile : fontList)
+    {
+        addTestCase("FontTests", [&](){ vAlignIdx = 1;  return FontTest::create(fontFile); });
     }
-
-    return fontList[fontIdx].c_str();
+    
+    for (auto& fontFile : fontList)
+    {
+        addTestCase("FontTests", [&](){vAlignIdx = 2; return FontTest::create(fontFile); });
+    }
 }
 
-static const char* restartAction(void)
-{
-    return fontList[fontIdx].c_str();
-}
-
-
-FontTest::FontTest()
-: BaseTest()
-{
-    showFont(restartAction());
-}
-
-void FontTest::showFont(const char *pFont)
+void FontTest::showFont(const std::string& fontFile)
 {
     auto s = Director::getInstance()->getWinSize();
 
@@ -86,12 +67,12 @@ void FontTest::showFont(const char *pFont)
     removeChildByTag(kTagColor2, true);
     removeChildByTag(kTagColor3, true);
 
-    auto top = Label::createWithSystemFont(pFont, pFont, 24);
-    auto left = Label::createWithSystemFont("alignment left", pFont, fontSize,
+    auto top = Label::createWithSystemFont(fontFile, fontFile, 24);
+    auto left = Label::createWithSystemFont("alignment left", fontFile, fontSize,
                                           blockSize, TextHAlignment::LEFT, verticalAlignment[vAlignIdx]);
-    auto center = Label::createWithSystemFont("alignment center", pFont, fontSize,
+    auto center = Label::createWithSystemFont("alignment center", fontFile, fontSize,
                                             blockSize, TextHAlignment::CENTER, verticalAlignment[vAlignIdx]);
-    auto right = Label::createWithSystemFont("alignment right", pFont, fontSize,
+    auto right = Label::createWithSystemFont("alignment right", fontFile, fontSize,
                                            blockSize, TextHAlignment::RIGHT, verticalAlignment[vAlignIdx]);
 
     auto leftColor = LayerColor::create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height);
@@ -128,35 +109,7 @@ void FontTest::showFont(const char *pFont)
     this->addChild(top, 0, kTagLabel4);
 }
 
-void FontTest::backCallback(Ref* sender)
-{
-    showFont(backAction());
-}
-
-void FontTest::nextCallback(Ref* sender)
-{
-    showFont(nextAction());
-}
-
 std::string FontTest::title() const
 {
     return "Font test";
-}
-
-void FontTest::restartCallback(Ref* sender)
-{
-    showFont(restartAction());
-}
-
-///---------------------------------------
-// 
-// DirectorTestScene
-// 
-///---------------------------------------
-void FontTestScene::runThisTest()
-{
-    auto layer = FontTest::create();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }

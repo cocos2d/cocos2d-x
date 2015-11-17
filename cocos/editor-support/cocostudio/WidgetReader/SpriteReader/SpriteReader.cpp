@@ -28,7 +28,7 @@
 #include "cocostudio/FlatBuffersSerialize.h"
 #include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
@@ -65,6 +65,11 @@ namespace cocostudio
         CC_SAFE_DELETE(_instanceSpriteReader);
     }
     
+    void SpriteReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(_instanceSpriteReader);
+    }
+    
     Offset<Table> SpriteReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
                                                              flatbuffers::FlatBufferBuilder *builder)
     {
@@ -74,6 +79,8 @@ namespace cocostudio
         std::string path = "";
         std::string plistFile = "";
         int resourceType = 0;
+        
+        cocos2d::BlendFunc blendFunc = cocos2d::BlendFunc::ALPHA_PREMULTIPLIED;
         
         // FileData
         const tinyxml2::XMLElement* child = objectData->FirstChildElement();
@@ -113,23 +120,43 @@ namespace cocostudio
                 if (resourceType == 1)
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
+                    fbs->_textures.push_back(builder->CreateString(texture));                    
+                }
+            }
+            else if (name == "BlendFunc")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
                     
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                    if (name == "Src")
+                    {
+                        blendFunc.src = atoi(value.c_str());
+                    }
+                    else if (name == "Dst")
+                    {
+                        blendFunc.dst = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
                 }
             }
             
             child = child->NextSiblingElement();
         }
+        
+        flatbuffers::BlendFunc f_blendFunc(blendFunc.src, blendFunc.dst);
 
         auto options = CreateSpriteOptions(*builder,
                                            nodeOptions,
                                            CreateResourceData(*builder,
                                                               builder->CreateString(path),
                                                               builder->CreateString(plistFile),
-                                                              resourceType)
-                                           );
+                                                              resourceType),
+                                           &f_blendFunc);
         
         return *(Offset<Table>*)(&options);
     }
@@ -140,28 +167,60 @@ namespace cocostudio
         Sprite *sprite = static_cast<Sprite*>(node);
         auto options = (SpriteOptions*)spriteOptions;
         
+        auto nodeReader = NodeReader::getInstance();
+        nodeReader->setPropsWithFlatBuffers(node, (Table*)(options->nodeOptions()));
         
         auto fileNameData = options->fileNameData();
         
         int resourceType = fileNameData->resourceType();
+        std::string path = fileNameData->path()->c_str();
+        
+        bool fileExist = false;
+        std::string errorFilePath = "";
+        
         switch (resourceType)
         {
             case 0:
             {
-                std::string path = fileNameData->path()->c_str();
-                if (path != "")
+                if (FileUtils::getInstance()->isFileExist(path))
                 {
                     sprite->setTexture(path);
+                    fileExist = true;
+                }
+                else
+                {
+                    errorFilePath = path;
+                    fileExist = false;
                 }
                 break;
             }
                 
             case 1:
             {
-                std::string path = fileNameData->path()->c_str();
-                if (path != "")
+                std::string plist = fileNameData->plistFile()->c_str();
+                SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(path);
+                if (spriteFrame)
                 {
-                    sprite->setSpriteFrame(path);
+                    sprite->setSpriteFrame(spriteFrame);
+                    fileExist = true;
+                }
+                else
+                {
+                    if (FileUtils::getInstance()->isFileExist(plist))
+                    {
+                        ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                        ValueMap metadata = value["metadata"].asValueMap();
+                        std::string textureFileName = metadata["textureFileName"].asString();
+                        if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                        {
+                            errorFilePath = textureFileName;
+                        }
+                    }
+                    else
+                    {
+                        errorFilePath = plist;
+                    }
+                    fileExist = false;
                 }
                 break;
             }
@@ -169,11 +228,21 @@ namespace cocostudio
             default:
                 break;
         }
+        //if (!fileExist)
+        //{
+        //    auto label = Label::create();
+        //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+        //    sprite->addChild(label);
+        //}
         
-        
-        auto nodeReader = NodeReader::getInstance();
-        nodeReader->setPropsWithFlatBuffers(node, (Table*)(options->nodeOptions()));
-        
+        auto f_blendFunc = options->blendFunc();
+        if (f_blendFunc)
+        {
+            cocos2d::BlendFunc blendFunc = cocos2d::BlendFunc::ALPHA_PREMULTIPLIED;
+            blendFunc.src = f_blendFunc->src();
+            blendFunc.dst = f_blendFunc->dst();
+            sprite->setBlendFunc(blendFunc);
+        }
         
         auto nodeOptions = options->nodeOptions();
         
@@ -191,8 +260,8 @@ namespace cocostudio
             sprite->setColor(Color3B(red, green, blue));
         }
         
-        bool flipX   = nodeOptions->flipX();
-        bool flipY   = nodeOptions->flipY();
+        bool flipX   = nodeOptions->flipX() != 0;
+        bool flipY   = nodeOptions->flipY() != 0;
         
         if(flipX != false)
             sprite->setFlippedX(flipX);

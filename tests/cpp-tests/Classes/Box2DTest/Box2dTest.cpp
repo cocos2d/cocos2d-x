@@ -4,6 +4,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
 
+USING_NS_CC;
 USING_NS_CC_EXT;
 
 #define PTM_RATIO 32
@@ -12,17 +13,24 @@ enum {
     kTagParentNode = 1,
 };
 
-Box2DTestLayer::Box2DTestLayer()
-: _spriteTexture(nullptr)
-, world(nullptr)
+Box2DTests::Box2DTests()
 {
+    ADD_TEST_CASE(Box2DTest);
+}
+
+bool Box2DTest::init()
+{
+    if (!TestCase::init())
+    {
+        return false;
+    }
 #if CC_ENABLE_BOX2D_INTEGRATION
     auto dispatcher = Director::getInstance()->getEventDispatcher();
-    
+
     auto touchListener = EventListenerTouchAllAtOnce::create();
-    touchListener->onTouchesEnded = CC_CALLBACK_2(Box2DTestLayer::onTouchesEnded, this);
+    touchListener->onTouchesEnded = CC_CALLBACK_2(Box2DTest::onTouchesEnded, this);
     dispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
-    
+
     // init physics
     this->initPhysics();
     // create reset button
@@ -45,29 +53,37 @@ Box2DTestLayer::Box2DTestLayer()
 
     auto label = Label::createWithTTF("Tap screen", "fonts/Marker Felt.ttf", 32.0f);
     addChild(label, 0);
-    label->setColor(Color3B(0,0,255));
-    label->setPosition(VisibleRect::center().x, VisibleRect::top().y-50);
-    
+    label->setColor(Color3B(0, 0, 255));
+    label->setPosition(VisibleRect::center().x, VisibleRect::top().y - 50);
+
     scheduleUpdate();
 #else
     auto label = Label::createWithTTF("Should define CC_ENABLE_BOX2D_INTEGRATION=1\n to run this test case",
-                                            "fonts/arial.ttf",
-                                            18);
+        "fonts/arial.ttf",
+        18);
     auto size = Director::getInstance()->getWinSize();
-    label->setPosition(size.width/2, size.height/2);
-    
+    label->setPosition(size.width / 2, size.height / 2);
+
     addChild(label);
 #endif
+
+    return true;
 }
 
-Box2DTestLayer::~Box2DTestLayer()
+#if CC_ENABLE_BOX2D_INTEGRATION
+Box2DTest::Box2DTest()
+    : _spriteTexture(nullptr)
+    , world(nullptr)
+{
+
+}
+
+Box2DTest::~Box2DTest()
 {
     CC_SAFE_DELETE(world);
-    
-    //delete _debugDraw;
 }
 
-void Box2DTestLayer::initPhysics()
+void Box2DTest::initPhysics()
 {
     b2Vec2 gravity;
     gravity.Set(0.0f, -10.0f);
@@ -77,18 +93,6 @@ void Box2DTestLayer::initPhysics()
     world->SetAllowSleeping(true);
 
     world->SetContinuousPhysics(true);
-
-//     _debugDraw = new (std::nothrow) GLESDebugDraw( PTM_RATIO );
-//     world->SetDebugDraw(_debugDraw);
-
-    uint32 flags = 0;
-    flags += b2Draw::e_shapeBit;
-    //        flags += b2Draw::e_jointBit;
-    //        flags += b2Draw::e_aabbBit;
-    //        flags += b2Draw::e_pairBit;
-    //        flags += b2Draw::e_centerOfMassBit;
-    //_debugDraw->SetFlags(flags);
-
 
     // Define the ground body.
     b2BodyDef groundBodyDef;
@@ -119,15 +123,10 @@ void Box2DTestLayer::initPhysics()
     groundBody->CreateFixture(&groundBox,0);
 }
 
-void Box2DTestLayer::createResetButton()
+void Box2DTest::createResetButton()
 {
-    auto reset = MenuItemImage::create("Images/r1.png", "Images/r2.png", [](Ref *sender) {
-		auto s = new (std::nothrow) Box2DTestScene();
-		auto child = new (std::nothrow) Box2DTestLayer();
-		s->addChild(child);
-		child->release();
-		Director::getInstance()->replaceScene(s);
-		s->release();
+    auto reset = MenuItemImage::create("Images/r1.png", "Images/r2.png", [&](Ref *sender) {
+        getTestSuite()->restartCurrTest();
 	});
 
     auto menu = Menu::create(reset, nullptr);
@@ -137,16 +136,15 @@ void Box2DTestLayer::createResetButton()
 
 }
 
-void Box2DTestLayer::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void Box2DTest::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     //
     // IMPORTANT:
     // This is only for debug purposes
     // It is recommend to disable it
     //
-    Layer::draw(renderer, transform, flags);
+    Scene::draw(renderer, transform, flags);
 
-#if CC_ENABLE_BOX2D_INTEGRATION
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -155,15 +153,13 @@ void Box2DTestLayer::draw(Renderer *renderer, const Mat4 &transform, uint32_t fl
     _modelViewMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(Box2DTestLayer::onDraw, this);
+    _customCommand.func = CC_CALLBACK_0(Box2DTest::onDraw, this);
     renderer->addCommand(&_customCommand);
 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-#endif
 }
 
-#if CC_ENABLE_BOX2D_INTEGRATION
-void Box2DTestLayer::onDraw()
+void Box2DTest::onDraw()
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -173,9 +169,9 @@ void Box2DTestLayer::onDraw()
     world->DrawDebugData();
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMV);
 }
-#endif
 
-void Box2DTestLayer::addNewSpriteAtPosition(Vec2 p)
+
+void Box2DTest::addNewSpriteAtPosition(Vec2 p)
 {
     CCLOG("Add sprite %0.2f x %02.f",p.x,p.y);
     
@@ -213,8 +209,7 @@ void Box2DTestLayer::addNewSpriteAtPosition(Vec2 p)
 #endif
 }
 
-
-void Box2DTestLayer::update(float dt)
+void Box2DTest::update(float dt)
 {
     //It is recommended that a fixed time step is used with Box2D for stability
     //of the simulation, however, we are using a variable time step here.
@@ -229,7 +224,7 @@ void Box2DTestLayer::update(float dt)
     world->Step(dt, velocityIterations, positionIterations);
 }
 
-void Box2DTestLayer::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+void Box2DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     //Add a new body/atlas sprite at the touched location
 
@@ -244,34 +239,4 @@ void Box2DTestLayer::onTouchesEnded(const std::vector<Touch*>& touches, Event* e
     }
 }
 
-/*
-void Box2DTestLayer::accelerometer(UIAccelerometer* accelerometer, Acceleration* acceleration)
-{    
-    static float prevX=0, prevY=0;
-
-//#define kFilterFactor 0.05f
-#define kFilterFactor 1.0f    // don't use filter. the code is here just as an example
-    
-    float accelX = (float) acceleration.x * kFilterFactor + (1- kFilterFactor)*prevX;
-    float accelY = (float) acceleration.y * kFilterFactor + (1- kFilterFactor)*prevY;
-    
-    prevX = accelX;
-    prevY = accelY;
-    
-    // accelerometer values are in "Portrait" mode. Change them to Landscape left
-    // multiply the gravity by 10
-    b2Vec2 gravity( -accelY * 10, accelX * 10);
-    
-    world->SetGravity( gravity );
-}
-*/
-
-void Box2DTestScene::runThisTest()
-{
-    auto layer = new (std::nothrow) Box2DTestLayer();
-    addChild(layer);
-    layer->release();
-
-    Director::getInstance()->replaceScene(this);
-}
- 
+#endif

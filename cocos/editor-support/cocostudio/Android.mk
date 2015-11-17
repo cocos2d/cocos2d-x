@@ -61,15 +61,28 @@ WidgetReader/TextAtlasReader/TextAtlasReader.cpp \
 WidgetReader/TextBMFontReader/TextBMFontReader.cpp \
 WidgetReader/TextFieldReader/TextFieldReader.cpp \
 WidgetReader/TextReader/TextReader.cpp \
-ActionTimeline/CCNodeReader.cpp \
+WidgetReader/Node3DReader/Node3DReader.cpp \
+WidgetReader/Sprite3DReader/Sprite3DReader.cpp \
+WidgetReader/UserCameraReader/UserCameraReader.cpp \
+WidgetReader/Particle3DReader/Particle3DReader.cpp \
+WidgetReader/SkeletonReader/BoneNodeReader.cpp \
+WidgetReader/SkeletonReader/SkeletonNodeReader.cpp \
+WidgetReader/GameNode3DReader/GameNode3DReader.cpp \
+WidgetReader/Light3DReader/Light3DReader.cpp \
 ActionTimeline/CCActionTimelineCache.cpp \
 ActionTimeline/CCFrame.cpp \
 ActionTimeline/CCTimeLine.cpp \
 ActionTimeline/CCActionTimeline.cpp \
+ActionTimeline/CCActionTimelineNode.cpp \
 ActionTimeline/CSLoader.cpp \
+ActionTimeline/CCBoneNode.cpp \
+ActionTimeline/CCSkeletonNode.cpp \
+ActionTimeline/CCSkinNode.cpp \
 FlatBuffersSerialize.cpp \
-WidgetCallBackHandlerProtocol.cpp
- 
+WidgetCallBackHandlerProtocol.cpp \
+WidgetReader/ArmatureNodeReader/ArmatureNodeReader.cpp \
+CCComExtensionData.cpp \
+CocoStudio.cpp
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..

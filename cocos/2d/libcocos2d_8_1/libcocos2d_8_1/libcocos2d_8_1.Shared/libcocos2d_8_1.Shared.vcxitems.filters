@@ -3,9 +3,6 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)targetver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\3dExport.h">
-      <Filter>3d</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAABB.h">
       <Filter>3d</Filter>
     </ClInclude>
@@ -40,6 +37,9 @@
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMeshVertexIndexData.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMotionStreak3D.h">
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCOBB.h">
@@ -198,24 +198,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\tinyxml2\tinyxml2.h">
       <Filter>external\tinyxml2</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\chipmunk\CCPhysicsContactInfo_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\chipmunk\CCPhysicsHelper_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsBody.h">
       <Filter>physics</Filter>
     </ClInclude>
@@ -321,36 +303,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CCInputDelegate.h">
       <Filter>cocostudio\components</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\internal\pow10.h">
-      <Filter>cocostudio\json\rapidjson\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\internal\stack.h">
-      <Filter>cocostudio\json\rapidjson\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\internal\strfunc.h">
-      <Filter>cocostudio\json\rapidjson\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\document.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\filestream.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\prettywriter.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\rapidjson.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\reader.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\stringbuffer.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\writer.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ButtonReader\ButtonReader.h">
       <Filter>cocostudio\reader\WidgetReader\ButtonReader</Filter>
     </ClInclude>
@@ -389,6 +341,15 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TextReader\TextReader.h">
       <Filter>cocostudio\reader\WidgetReader\TextReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\Node3DReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.h">
+      <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\WidgetReader.h">
       <Filter>cocostudio\reader\WidgetReader</Filter>
@@ -745,9 +706,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCFrame.h">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCNodeReader.h">
-      <Filter>cocostudio\TimelineAction</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCTimeLine.h">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClInclude>
@@ -815,9 +773,6 @@
       <Filter>extension\AssetsManager</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.h">
-      <Filter>extension\AssetsManager</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\assets-manager\Downloader.h">
       <Filter>extension\AssetsManager</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\assets-manager\Manifest.h">
@@ -1225,6 +1180,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CSParseBinary_generated.h">
       <Filter>cocostudio\json</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CSParse3DBinary_generated.h">
+      <Filter>cocostudio\json</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\FlatBuffersSerialize.h">
       <Filter>cocostudio\json</Filter>
     </ClInclude>
@@ -1258,9 +1216,668 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ProjectNodeReader\ProjectNodeReader.h">
       <Filter>cocostudio\reader\WidgetReader\ProjectNodeReader</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCAsyncTaskPool.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\CSArmatureNode_generated.h">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.h">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.h">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCFrustum.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCPlane.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\inet_pton_winrt.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\allocator\CCAllocatorBase.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\allocator\CCAllocatorDiagnostics.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\allocator\CCAllocatorGlobal.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\allocator\CCAllocatorMacros.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\allocator\CCAllocatorMutex.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\allocator\CCAllocatorStrategyDefault.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\allocator\CCAllocatorStrategyFixedBlock.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\allocator\CCAllocatorStrategyGlobalSmallBlock.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\allocator\CCAllocatorStrategyPool.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsHelper.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\CCParticle3DAffector.h">
+      <Filter>extension\Particle3D</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\CCParticle3DEmitter.h">
+      <Filter>extension\Particle3D</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\CCParticle3DRender.h">
+      <Filter>extension\Particle3D</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\CCParticleSystem3D.h">
+      <Filter>extension\Particle3D</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUAffector.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUAffectorManager.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUAffectorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUAlignAffector.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUAlignAffectorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBaseCollider.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBaseColliderTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBaseForceAffector.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBaseForceAffectorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBeamRender.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBehaviour.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBehaviourManager.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBehaviourTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBillboardChain.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBoxCollider.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBoxColliderTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBoxEmitter.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBoxEmitterTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUCircleEmitter.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUCircleEmitterTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUCollisionAvoidanceAffector.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUCollisionAvoidanceAffectorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUColorAffector.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUColorAffectorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoAffectorEventHandler.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoAffectorEventHandlerTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoEnableComponentEventHandler.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoEnableComponentEventHandlerTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoExpireEventHandler.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoExpireEventHandlerTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoFreezeEventHandler.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoFreezeEventHandlerTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoPlacementParticleEventHandler.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoPlacementParticleEventHandlerTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoScaleEventHandler.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoScaleEventHandlerTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoStopSystemEventHandler.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoStopSystemEventHandlerTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDynamicAttribute.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDynamicAttributeTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUEmitter.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUEmitterManager.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUEmitterTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUEventHandler.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUEventHandlerManager.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUEventHandlerTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUFlockCenteringAffector.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUFlockCenteringAffectorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUForceField.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUForceFieldAffector.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUForceFieldAffectorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUGeometryRotator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUGeometryRotatorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUGravityAffector.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUGravityAffectorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUInterParticleCollider.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUInterParticleColliderTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUJetAffector.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUJetAffectorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPULineAffector.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPULineAffectorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPULinearForceAffector.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPULinearForceAffectorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPULineEmitter.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPULineEmitterTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUListener.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUMaterialManager.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUMaterialTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUMeshSurfaceEmitter.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUMeshSurfaceEmitterTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUNoise.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUObserver.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUObserverManager.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUObserverTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnClearObserver.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnClearObserverTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnCollisionObserver.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnCollisionObserverTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnCountObserver.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnCountObserverTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnEmissionObserver.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnEmissionObserverTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnEventFlagObserver.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnEventFlagObserverTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnExpireObserver.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnExpireObserverTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnPositionObserver.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnPositionObserverTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnQuotaObserver.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnQuotaObserverTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnRandomObserver.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnRandomObserverTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnTimeObserver.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnTimeObserverTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnVelocityObserver.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnVelocityObserverTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUParticleFollower.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUParticleFollowerTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUParticleSystem3D.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUParticleSystem3DTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPathFollower.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPathFollowerTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPlane.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPlaneCollider.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPlaneColliderTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPointEmitter.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPointEmitterTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPositionEmitter.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPositionEmitterTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPURandomiser.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPURandomiserTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPURender.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPURendererTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPURibbonTrail.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPURibbonTrailRender.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUScaleAffector.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUScaleAffectorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUScaleVelocityAffector.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUScaleVelocityAffectorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUScriptCompiler.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUScriptLexer.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUScriptParser.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUScriptTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSimpleSpline.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSineForceAffector.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSineForceAffectorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSlaveBehaviour.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSlaveBehaviourTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSlaveEmitter.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSlaveEmitterTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSphere.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSphereCollider.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSphereColliderTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSphereSurfaceEmitter.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSphereSurfaceEmitterTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUTechniqueTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUTextureAnimator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUTextureAnimatorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUTextureRotator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUTextureRotatorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUTranslateManager.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUUtil.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUVelocityMatchingAffector.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUVelocityMatchingAffectorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUVertexEmitter.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUVortexAffector.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUVortexAffectorTranslator.h">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSkybox.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTerrain.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\WICImageLoader-winrt.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\common\shapes.h">
+      <Filter>external\poly2tri\common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\common\utils.h">
+      <Filter>external\poly2tri\common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\advancing_front.h">
+      <Filter>external\poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\cdt.h">
+      <Filter>external\poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\sweep.h">
+      <Filter>external\poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\sweep_context.h">
+      <Filter>external\poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\poly2tri.h">
+      <Filter>external\poly2tri</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCRenderState.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTechnique.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCMaterial.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCPass.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProperties.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCVertexAttribBinding.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCFrameBuffer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioCachePlayer.h">
+      <Filter>audio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioEngine-winrt.h">
+      <Filter>audio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioSourceReader.h">
+      <Filter>audio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3D.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DComponent.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMesh.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshAgent.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshDebugDraw.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshObstacle.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshUtils.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DConstraint.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DDebugDrawer.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DObject.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DShape.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DWorld.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysicsSprite3D.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCAutoPolygon.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\clipper\clipper.hpp">
+      <Filter>external\clipper</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCBoneNode.h">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCSkeletonNode.h">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCSkinNode.h">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SkeletonReader\BoneNodeReader.h">
+      <Filter>cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SkeletonReader\CSBoneBinary_generated.h">
+      <Filter>cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SkeletonReader\SkeletonNodeReader.h">
+      <Filter>cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CCComExtensionData.h">
+      <Filter>cocostudio\components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader.h">
+      <Filter>network\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader-curl.h">
+      <Filter>network\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\GameNodeDReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCCameraBackgroundBrush.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTextureCube.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloaderImpl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\Light3DReader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp">
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAABB.cpp">
       <Filter>3d</Filter>
     </ClCompile>
@@ -1289,6 +1906,9 @@
       <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMeshVertexIndexData.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMotionStreak3D.cpp">
       <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCOBB.cpp">
@@ -1425,21 +2045,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\tinyxml2\tinyxml2.cpp">
       <Filter>external\tinyxml2</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\chipmunk\CCPhysicsContactInfo_chipmunk.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp">
-      <Filter>physics\chipmunk</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsBody.cpp">
       <Filter>physics</Filter>
@@ -1579,6 +2184,18 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TextReader\TextReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\TextReader</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\Node3DReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\WidgetReader.cpp">
       <Filter>cocostudio\reader\WidgetReader</Filter>
     </ClCompile>
@@ -1708,13 +2325,25 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIPageView.cpp">
       <Filter>ui\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIPageViewIndicator.cpp">
+      <Filter>ui\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIScrollView.cpp">
+      <Filter>ui\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIScrollViewBar.cpp">
       <Filter>ui\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIButton.cpp">
       <Filter>ui\UIWidgets</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIAbstractCheckButton.cpp">
+      <Filter>ui\UIWidgets</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UICheckBox.cpp">
+      <Filter>ui\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIRadioButton.cpp">
       <Filter>ui\UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UILoadingBar.cpp">
@@ -1859,9 +2488,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCFrame.cpp">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCNodeReader.cpp">
-      <Filter>cocostudio\TimelineAction</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCTimeLine.cpp">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClCompile>
@@ -1917,9 +2543,6 @@
       <Filter>extension\AssetsManager</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.cpp">
-      <Filter>extension\AssetsManager</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\assets-manager\Downloader.cpp">
       <Filter>extension\AssetsManager</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\assets-manager\Manifest.cpp">
@@ -2249,9 +2872,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccTypes.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCUserDefault.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccUTF8.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -2330,6 +2950,639 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ProjectNodeReader\ProjectNodeReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\ProjectNodeReader</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCAsyncTaskPool.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.cpp">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCFrustum.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCPlane.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\inet_pton_winrt.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\allocator\CCAllocatorDiagnostics.cpp">
+      <Filter>base\allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\allocator\CCAllocatorGlobal.cpp">
+      <Filter>base\allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\allocator\CCAllocatorGlobalNewDelete.cpp">
+      <Filter>base\allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\CCParticle3DAffector.cpp">
+      <Filter>extension\Particle3D</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\CCParticle3DEmitter.cpp">
+      <Filter>extension\Particle3D</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\CCParticle3DRender.cpp">
+      <Filter>extension\Particle3D</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\CCParticleSystem3D.cpp">
+      <Filter>extension\Particle3D</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUAffector.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUAffectorManager.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUAffectorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUAlignAffector.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUAlignAffectorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBaseCollider.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBaseColliderTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBaseForceAffector.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBaseForceAffectorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBeamRender.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBehaviour.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBehaviourManager.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBehaviourTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBillboardChain.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBoxCollider.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBoxColliderTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBoxEmitter.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUBoxEmitterTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUCircleEmitter.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUCircleEmitterTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUCollisionAvoidanceAffector.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUCollisionAvoidanceAffectorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUColorAffector.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUColorAffectorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoAffectorEventHandler.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoAffectorEventHandlerTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoEnableComponentEventHandler.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoEnableComponentEventHandlerTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoExpireEventHandler.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoExpireEventHandlerTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoFreezeEventHandler.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoFreezeEventHandlerTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoPlacementParticleEventHandler.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoPlacementParticleEventHandlerTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoScaleEventHandler.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoScaleEventHandlerTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoStopSystemEventHandler.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDoStopSystemEventHandlerTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDynamicAttribute.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUDynamicAttributeTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUEmitter.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUEmitterManager.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUEmitterTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUEventHandler.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUEventHandlerManager.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUEventHandlerTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUFlockCenteringAffector.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUFlockCenteringAffectorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUForceField.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUForceFieldAffector.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUForceFieldAffectorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUGeometryRotator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUGeometryRotatorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUGravityAffector.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUGravityAffectorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUInterParticleCollider.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUInterParticleColliderTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUJetAffector.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUJetAffectorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPULineAffector.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPULineAffectorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPULinearForceAffector.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPULinearForceAffectorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPULineEmitter.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPULineEmitterTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUListener.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUMaterialManager.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUMaterialTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUMeshSurfaceEmitter.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUMeshSurfaceEmitterTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUNoise.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUObserver.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUObserverManager.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUObserverTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnClearObserver.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnClearObserverTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnCollisionObserver.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnCollisionObserverTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnCountObserver.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnCountObserverTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnEmissionObserver.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnEmissionObserverTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnEventFlagObserver.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnEventFlagObserverTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnExpireObserver.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnExpireObserverTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnPositionObserver.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnPositionObserverTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnQuotaObserver.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnQuotaObserverTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnRandomObserver.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnRandomObserverTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnTimeObserver.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnTimeObserverTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnVelocityObserver.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUOnVelocityObserverTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUParticleFollower.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUParticleFollowerTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUParticleSystem3D.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUParticleSystem3DTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPathFollower.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPathFollowerTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPlane.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPlaneCollider.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPlaneColliderTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPointEmitter.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPointEmitterTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPositionEmitter.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUPositionEmitterTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPURandomiser.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPURandomiserTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPURender.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPURendererTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPURibbonTrail.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPURibbonTrailRender.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUScaleAffector.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUScaleAffectorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUScaleVelocityAffector.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUScaleVelocityAffectorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUScriptCompiler.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUScriptLexer.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUScriptParser.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUScriptTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSimpleSpline.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSineForceAffector.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSineForceAffectorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSlaveBehaviour.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSlaveBehaviourTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSlaveEmitter.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSlaveEmitterTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSphere.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSphereCollider.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSphereColliderTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSphereSurfaceEmitter.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUSphereSurfaceEmitterTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUTechniqueTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUTextureAnimator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUTextureAnimatorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUTextureRotator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUTextureRotatorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUTranslateManager.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUUtil.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUVelocityMatchingAffector.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUVelocityMatchingAffectorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUVertexEmitter.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUVortexAffector.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUVortexAffectorTranslator.cpp">
+      <Filter>extension\Particle3D\PU</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSkybox.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTerrain.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CocoStudio.cpp">
+      <Filter>cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\WICImageLoader-winrt.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\common\shapes.cc">
+      <Filter>external\poly2tri\common</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\advancing_front.cc">
+      <Filter>external\poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\cdt.cc">
+      <Filter>external\poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\sweep.cc">
+      <Filter>external\poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\sweep_context.cc">
+      <Filter>external\poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCRenderState.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTechnique.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCMaterial.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCPass.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProperties.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCVertexAttribBinding.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCFrameBuffer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioCachePlayer.cpp">
+      <Filter>audio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\AudioEngine.cpp">
+      <Filter>audio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioEngine-winrt.cpp">
+      <Filter>audio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioSourceReader.cpp">
+      <Filter>audio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3D.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DComponent.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DConstraint.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMesh.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshAgent.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshDebugDraw.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshObstacle.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshUtils.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DDebugDrawer.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DObject.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DShape.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DWorld.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysicsSprite3D.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCUserDefault-winrt.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCAutoPolygon.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\clipper\clipper.cpp">
+      <Filter>external\clipper</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCBoneNode.cpp">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCSkeletonNode.cpp">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCSkinNode.cpp">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SkeletonReader\BoneNodeReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SkeletonReader\SkeletonNodeReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CCComExtensionData.cpp">
+      <Filter>cocostudio\components</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader.cpp">
+      <Filter>network\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader-curl.cpp">
+      <Filter>network\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\GameNodeDReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCCameraBackgroundBrush.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTextureCube.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\Light3DReader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2d">
@@ -2401,9 +3654,6 @@
     <Filter Include="external\xxhash">
       <UniqueIdentifier>{9a5d5bc4-80f9-42aa-8865-c79711dfa7d6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="physics\chipmunk">
-      <UniqueIdentifier>{97dd34cb-0d69-4ecd-bbf6-976cdf236d60}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cocostudio\action">
       <UniqueIdentifier>{7345e280-b8a5-4d89-a27c-60cf351952d2}</UniqueIdentifier>
     </Filter>
@@ -2439,12 +3689,6 @@
     </Filter>
     <Filter Include="cocostudio\armature\utils">
       <UniqueIdentifier>{7dfddab5-351a-48e7-9cd4-1df5268badfd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocostudio\json\rapidjson">
-      <UniqueIdentifier>{7225fe7b-80b7-40a8-a674-435183a8c45a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocostudio\json\rapidjson\internal">
-      <UniqueIdentifier>{cc361288-af78-4806-939c-538c560996f0}</UniqueIdentifier>
     </Filter>
     <Filter Include="cocostudio\reader\WidgetReader">
       <UniqueIdentifier>{c88afb13-dccb-4ff6-be05-fd91f19d9202}</UniqueIdentifier>
@@ -2487,6 +3731,18 @@
     </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\TextReader">
       <UniqueIdentifier>{c03ed815-ce08-4801-bdd6-1869ff3c014e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Node3DReader">
+      <UniqueIdentifier>{c03ed815-ce08-4801-bdd6-1104ff3c014e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Sprite3DReader">
+      <UniqueIdentifier>{c03ed815-ce10-4301-bdd6-1104ff3c014e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\UserCameraReader">
+      <UniqueIdentifier>{c0310482-ce10-4301-bdd6-110fff3c014e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Particle3DReader">
+      <UniqueIdentifier>{c0310485-ce10-420b-bdd6-1104ff3c014e}</UniqueIdentifier>
     </Filter>
     <Filter Include="ui\BaseClasses">
       <UniqueIdentifier>{48ae1ce9-b81f-479f-b59c-b10e344699d8}</UniqueIdentifier>
@@ -2559,6 +3815,51 @@
     </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\ProjectNodeReader">
       <UniqueIdentifier>{a6638f35-5c81-4835-9897-0f9efb0be02b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\ArmatureNodeReader">
+      <UniqueIdentifier>{1151b6b3-739f-4cff-add0-6b772fa7d226}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\allocator">
+      <UniqueIdentifier>{673ca2c5-2183-424e-a2aa-728cd5231b62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Particle3DReader">
+      <UniqueIdentifier>{876146bd-d01b-43da-ab6f-405e99ff5bde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extension\Particle3D">
+      <UniqueIdentifier>{9db28ba6-311e-471b-ae34-0fc41cffc2b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extension\Particle3D\PU">
+      <UniqueIdentifier>{ed044d4b-058f-4cee-911e-49fad0a03953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\poly2tri">
+      <UniqueIdentifier>{1567b8a7-947d-4cf9-883d-5e0cd06efffc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\poly2tri\common">
+      <UniqueIdentifier>{292e8d6b-015b-40ad-a77c-8d190940da04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\poly2tri\sweep">
+      <UniqueIdentifier>{932c5f6e-07b3-4b34-97ae-2f3d42024149}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\clipper">
+      <UniqueIdentifier>{37ad3bdd-733d-46e4-b28d-b350521e6f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="audio">
+      <UniqueIdentifier>{f1c7e21a-6d78-44ba-9480-d7ba197c7b42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics3d">
+      <UniqueIdentifier>{9cd5215e-ca71-4a7c-bc6d-a86d493b0a70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="navmesh">
+      <UniqueIdentifier>{9a25af30-04d1-41a7-9e55-e34db6b712cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\SkeletonReader">
+      <UniqueIdentifier>{a40f3972-1316-4674-a6d6-c9fae0b83e88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\GameNodeDReader">
+      <UniqueIdentifier>{4cfeb8e0-8355-4a28-aff7-3e96e400bad1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Light3DReader">
+      <UniqueIdentifier>{815a6275-839e-45a6-9f35-4e84b13ba538}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2671,5 +3972,11 @@
     <None Include="$(MSBuildThisFileDirectory)..\..\..\libcocos2d_wp8.vcxproj.filters">
       <Filter>2d</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAnimationCurve.inl">
+      <Filter>3d</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CMakeLists.txt" />
   </ItemGroup>
 </Project>
