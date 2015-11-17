@@ -5575,6 +5575,16 @@ float
 },
 
 /**
+ * @method setRenderingType
+ * @param {ccui.Scale9Sprite::RenderingType} arg0
+ */
+setRenderingType : function (
+renderingtype 
+)
+{
+},
+
+/**
  * @method init
 * @param {cc.Sprite|cc.Sprite|cc.Sprite} sprite
 * @param {rect_object|rect_object|rect_object} rect
@@ -5656,6 +5666,16 @@ isScale9Enabled : function (
 )
 {
     return false;
+},
+
+/**
+ * @method getRenderingType
+ * @return {ccui.Scale9Sprite::RenderingType}
+ */
+getRenderingType : function (
+)
+{
+    return 0;
 },
 
 /**

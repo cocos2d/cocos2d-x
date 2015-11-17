@@ -129,6 +129,16 @@
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
+-- Set the slice sprite rendering type.<br>
+-- When setting to SIMPLE, only 4 vertexes is used to rendering.<br>
+-- otherwise 16 vertexes will be used to rendering.<br>
+-- see RenderingType
+-- @function [parent=#Scale9Sprite] setRenderingType 
+-- @param self
+-- @param #int type
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
+        
+--------------------------------
 -- @overload self, cc.Sprite, rect_table, rect_table         
 -- @overload self, cc.Sprite, rect_table, bool, rect_table         
 -- @overload self, cc.Sprite, rect_table, bool, vec2_table, size_table, rect_table         
@@ -190,6 +200,12 @@
 -- @function [parent=#Scale9Sprite] isScale9Enabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- Return the slice sprite rendering type.
+-- @function [parent=#Scale9Sprite] getRenderingType 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- brief Query the right sprite's cap inset.<br>
@@ -346,6 +362,14 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Scale9Sprite] setCameraMask 
+-- @param self
+-- @param #unsigned short mask
+-- @param #bool applyChildren
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
+        
+--------------------------------
+-- 
 -- @function [parent=#Scale9Sprite] getScaleY 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -355,25 +379,6 @@
 -- @function [parent=#Scale9Sprite] getScaleX 
 -- @param self
 -- @return float#float ret (return value: float)
-        
---------------------------------
--- 
--- @function [parent=#Scale9Sprite] updateDisplayedOpacity 
--- @param self
--- @param #unsigned char parentOpacity
--- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
-        
---------------------------------
--- 
--- @function [parent=#Scale9Sprite] init 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
--- @function [parent=#Scale9Sprite] cleanup 
--- @param self
--- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- @overload self, float, float         
@@ -386,11 +391,16 @@
 
 --------------------------------
 -- 
--- @function [parent=#Scale9Sprite] setCameraMask 
+-- @function [parent=#Scale9Sprite] updateDisplayedOpacity 
 -- @param self
--- @param #unsigned short mask
--- @param #bool applyChildren
+-- @param #unsigned char parentOpacity
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
+        
+--------------------------------
+-- 
+-- @function [parent=#Scale9Sprite] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 

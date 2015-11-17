@@ -35,6 +35,16 @@
 -- @return PolygonInfo#PolygonInfo self (return value: cc.PolygonInfo)
         
 --------------------------------
+-- set the data to be a pointer to a triangles<br>
+-- the member verts will not be released when this PolygonInfo destructs<br>
+-- as the verts memory are managed by other objects<br>
+-- param triangles  a pointer to the TrianglesCommand::Triangles object
+-- @function [parent=#PolygonInfo] setTriangles 
+-- @param self
+-- @param #cc.TrianglesCommand::Triangles triangles
+-- @return PolygonInfo#PolygonInfo self (return value: cc.PolygonInfo)
+        
+--------------------------------
 -- / @name Creators/ @{<br>
 -- Creates an empty Polygon info<br>
 -- memberof PolygonInfo<br>
