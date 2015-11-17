@@ -200,6 +200,11 @@ Application::Platform Application::getTargetPlatform()
     return Platform::OS_ANDROID;
 }
 
+std::string Application::getVersion()
+{
+    return getVersionJNI();
+}
+
 bool Application::openURL(const std::string &url)
 {
     return openURLJNI(url.c_str());
