@@ -34,6 +34,18 @@
 /// @cond
 @interface HttpAsynConnection : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 {
+    NSString *srcURL;
+    NSString *sslFile;
+    NSDictionary *responseHeader;
+    NSMutableData *responseData;
+    NSInteger getDataTime;
+    NSInteger responseCode;
+    NSString *statusString;
+    NSError *responseError;
+    NSError *connError;
+    NSURLConnection *conn;
+    bool finish;
+    NSRunLoop *runLoop;
 }
 
 // The original URL to download.  Due to redirects the actual content may come from another URL
