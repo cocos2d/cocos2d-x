@@ -693,16 +693,6 @@ isPropagateTouchEvents : function (
 },
 
 /**
- * @method getCurrentFocusedWidget
- * @return {ccui.Widget}
- */
-getCurrentFocusedWidget : function (
-)
-{
-    return ccui.Widget;
-},
-
-/**
  * @method hitTest
  * @param {vec2_object} arg0
  * @param {cc.Camera} arg1
@@ -926,6 +916,16 @@ enableDpadNavigation : function (
 bool 
 )
 {
+},
+
+/**
+ * @method getCurrentFocusedWidget
+ * @return {ccui.Widget}
+ */
+getCurrentFocusedWidget : function (
+)
+{
+    return ccui.Widget;
 },
 
 /**

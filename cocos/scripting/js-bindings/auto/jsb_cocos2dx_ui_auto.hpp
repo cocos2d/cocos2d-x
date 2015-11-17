@@ -102,7 +102,6 @@ bool js_cocos2dx_ui_Widget_isBright(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_dispatchFocusEvent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_setUnifySizeEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_isPropagateTouchEvents(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ui_Widget_getCurrentFocusedWidget(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_hitTest(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_isLayoutComponentEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_requestFocus(JSContext *cx, uint32_t argc, jsval *vp);
@@ -124,6 +123,7 @@ bool js_cocos2dx_ui_Widget_setBright(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_setCallbackType(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_isSwallowTouches(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_enableDpadNavigation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Widget_getCurrentFocusedWidget(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Widget_Widget(JSContext *cx, uint32_t argc, jsval *vp);
 
