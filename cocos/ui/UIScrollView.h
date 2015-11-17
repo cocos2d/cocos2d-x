@@ -569,12 +569,11 @@ protected:
     virtual Vec2 getHowMuchOutOfBoundary(const Vec2& addition = Vec2::ZERO);
     bool isOutOfBoundary(MoveDirection dir);
     bool isOutOfBoundary();
-    
-    void moveChildren(float offsetX, float offsetY);
-    void moveChildrenToPosition(const Vec2& position);
-	
-	bool calculateCurrAndPrevTouchPoints(Touch* touch, Vec3* currPt, Vec3* prevPt);
-	void gatherTouchMove(const Vec2& delta);
+
+    virtual void moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack);
+
+    bool calculateCurrAndPrevTouchPoints(Touch* touch, Vec3* currPt, Vec3* prevPt);
+    void gatherTouchMove(const Vec2& delta);
     Vec2 calculateTouchMoveVelocity() const;
     
     virtual void startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity);
@@ -589,7 +588,7 @@ protected:
 
     void jumpToDestination(const Vec2& des);
 
-    virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
+    virtual void scrollChildren(const Vec2& deltaMove);
 
     virtual void handlePressLogic(Touch *touch);
     virtual void handleMoveLogic(Touch *touch);

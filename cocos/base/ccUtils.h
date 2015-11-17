@@ -52,6 +52,8 @@ Examples:
 
 int ccNextPOT(int value);
 
+class Sprite;
+
 namespace utils
 {
     /** Capture the entire screen.
@@ -100,6 +102,14 @@ namespace utils
      * @return Returns unionof bounding box of a node and its children.
      */
     Rect CC_DLL getCascadeBoundingBox(Node *node);
+
+    /**
+     * Create a sprite instance from base64 encoded image.
+
+     * @return Returns an instance of sprite
+     */
+    Sprite* createSpriteFromBase64(const char* base64String);
+
 }
 
 NS_CC_END

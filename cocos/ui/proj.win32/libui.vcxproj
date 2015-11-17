@@ -62,6 +62,7 @@
     <ClCompile Include="..\UIListView.cpp" />
     <ClCompile Include="..\UILoadingBar.cpp" />
     <ClCompile Include="..\UIPageView.cpp" />
+    <ClCompile Include="..\UIPageViewIndicator.cpp" />
     <ClCompile Include="..\UIRelativeBox.cpp" />
     <ClCompile Include="..\UIRichText.cpp" />
     <ClCompile Include="..\UIScale9Sprite.cpp" />
