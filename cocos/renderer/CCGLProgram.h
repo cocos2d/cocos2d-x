@@ -462,6 +462,9 @@ public:
     /*Get the built in openGL handle of the program.*/
     inline const GLuint getProgram() const { return _program; }
 
+    GLuint getVertShader() const { return _vertShader; }
+    GLuint getFragShader() const { return _fragShader; }
+
     //DEPRECATED
     CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderByteArray(const GLchar* vertexByteArray, const GLchar* fragByteArray)
     { return initWithByteArrays(vertexByteArray, fragByteArray); }
@@ -501,6 +504,8 @@ protected:
     GLint             _builtInUniforms[UNIFORM_MAX];
     /**Indicate whether it has a offline shader compiler or not.*/
     bool              _hasShaderCompiler;
+
+    void clearShader();
 
     struct flag_struct {
         unsigned int usesTime:1;
