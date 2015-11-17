@@ -165,7 +165,7 @@ void ArmatureNodeReader::setPropsWithFlatBuffers(cocos2d::Node *node,
 
 cocos2d::Node*  ArmatureNodeReader::createNodeWithFlatBuffers(const flatbuffers::Table *nodeOptions)
 {
-	auto node = CCArmature::create();
+	auto node = Armature::create();
 
 	// self
 	auto options = (flatbuffers::CSArmatureNodeOption*)nodeOptions;
