@@ -114,8 +114,10 @@ public:
     GCController* _gcController;
 };
 
-void Controller::startDiscoveryController()
-{
+void Controller::startDiscoveryController() {
+    if (NSClassFromString(@"GCController") == nil) {
+        return;
+    }
     [GCController startWirelessControllerDiscoveryWithCompletionHandler: nil];
     
     [[GCControllerConnectionEventHandler getInstance] observerConnection: ^(GCController* gcController) {
@@ -146,8 +148,10 @@ void Controller::startDiscoveryController()
     }];
 }
 
-void Controller::stopDiscoveryController()
-{
+void Controller::stopDiscoveryController() {
+    if (NSClassFromString(@"GCController") == nil) {
+        return;
+    }
     [GCController stopWirelessControllerDiscovery];
 }
 
