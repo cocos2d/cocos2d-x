@@ -45,9 +45,9 @@ NS_CC_BEGIN
 class CC_DLL FileUtilsLinux : public FileUtils
 {
     friend class FileUtils;
-    FileUtilsLinux();
     std::string _writablePath;
 public:
+    FileUtilsLinux();
     /* override functions */
     bool init();
     virtual std::string getWritablePath() const;

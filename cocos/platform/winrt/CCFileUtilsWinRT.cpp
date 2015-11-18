@@ -86,7 +86,15 @@ FileUtils* FileUtils::getInstance()
 {
     if (s_sharedFileUtils == NULL)
     {
-        s_sharedFileUtils = new CCFileUtilsWinRT();
+        if (s_delegateCreator)
+        {
+            s_sharedFileUtils = s_delegateCreator();
+        }
+        else
+        {
+            s_sharedFileUtils = new CCFileUtilsWinRT();
+        }
+
         if(!s_sharedFileUtils->init())
         {
           delete s_sharedFileUtils;

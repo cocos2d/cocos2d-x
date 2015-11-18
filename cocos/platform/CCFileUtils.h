@@ -25,6 +25,7 @@ THE SOFTWARE.
 #ifndef __CC_FILEUTILS_H__
 #define __CC_FILEUTILS_H__
 
+#include <functional>
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -44,6 +45,8 @@ NS_CC_BEGIN
 /** Helper class to handle file operations. */
 class CC_DLL FileUtils
 {
+    typedef std::function<FileUtils*()> DelegateCreator;
+
 public:
     /**
      *  Gets the instance of FileUtils.
@@ -57,7 +60,7 @@ public:
 
     /**
      * You can inherit from platform dependent implementation of FileUtils, such as FileUtilsAndroid,
-     * and use this function to set delegate, then FileUtils will invoke delegate's implementation.
+     * and use this function to instantiate a delegate, then FileUtils will invoke delegate's implementation.
      * For example, your resources are encrypted, so you need to decrypt it after reading data from
      * resources, then you can implement all getXXX functions, and engine will invoke your own getXX
      * functions when reading data of resources.
@@ -65,10 +68,10 @@ public:
      * If you don't want to system default implementation after setting delegate, you can just pass nullptr
      * to this function.
      *
-     * @warning It will delete previous delegate
+     * @warning It will delete previous instance
      * @lua NA
      */
-    static void setDelegate(FileUtils *delegate);
+    static void setDelegateCreator(DelegateCreator creator);
 
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static FileUtils* sharedFileUtils() { return getInstance(); }
@@ -584,6 +587,10 @@ protected:
      */
     static FileUtils* s_sharedFileUtils;
 
+    /**
+     *  Used to create delegate
+     */
+    static DelegateCreator s_delegateCreator;
 };
 
 // end of support group
