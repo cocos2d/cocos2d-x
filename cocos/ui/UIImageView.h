@@ -34,9 +34,11 @@ THE SOFTWARE.
  */
 NS_CC_BEGIN
 
+struct CC_DLL ResouceData;
+
 namespace ui {
     class Scale9Sprite;
-/**
+    /**
  * @brief A widget to display images.
  */
 class CC_GUI_DLL ImageView : public Widget
@@ -121,7 +123,9 @@ public:
     virtual std::string getDescription() const override;
     virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
-    
+
+    ResouceData getRenderFile();
+
 CC_CONSTRUCTOR_ACCESS:
     //initializes state of widget.
     virtual bool init() override;
@@ -146,6 +150,7 @@ protected:
     TextureResType _imageTexType;
     Size _imageTextureSize;
     bool _imageRendererAdaptDirty;
+    std::string _textureFile;
 };
 
 }
