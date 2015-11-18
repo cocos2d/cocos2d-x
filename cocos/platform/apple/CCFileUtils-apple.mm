@@ -325,7 +325,15 @@ FileUtils* FileUtils::getInstance()
 {
     if (s_sharedFileUtils == nullptr)
     {
-        s_sharedFileUtils = new (std::nothrow) FileUtilsApple();
+	    if (s_delegateCreator)
+        {
+            s_sharedFileUtils = s_delegateCreator();
+        }
+        else
+        {
+            s_sharedFileUtils = new (std::nothrow) FileUtilsApple();
+		}
+
         if(!s_sharedFileUtils->init())
         {
           delete s_sharedFileUtils;

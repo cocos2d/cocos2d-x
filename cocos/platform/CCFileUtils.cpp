@@ -545,12 +545,12 @@ void FileUtils::destroyInstance()
     CC_SAFE_DELETE(s_sharedFileUtils);
 }
 
-void FileUtils::setDelegate(FileUtils *delegate)
+void FileUtils::setDelegateCreator(DelegateCreator creator)
 {
     if (s_sharedFileUtils)
         delete s_sharedFileUtils;
-
-    s_sharedFileUtils = delegate;
+    s_sharedFileUtils = nullptr; // when next getInstance called, the delegate creator will
+    s_delegateCreator = creator; // instantiate a new instance
 }
 
 FileUtils::FileUtils()
