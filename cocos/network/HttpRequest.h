@@ -242,7 +242,15 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(Ref* pTarget, SEL_CallFuncND pSelector)
     {
-        setResponseCallback(pTarget, (SEL_HttpResponse) pSelector);
+        // This function have duplicated body with setResponseCallback(Ref* , SEL_HttpResponse )
+        // You must repeat youself in that function when modified.
+        _pTarget = pTarget;
+        _pSelector = (SEL_HttpResponse)pSelector;
+
+        if (_pTarget)
+        {
+            _pTarget->retain();
+        }
     }
     
     /**
@@ -254,6 +262,8 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
     {
+        // This function have duplicated body with setResponseCallback(Ref* , SEL_CallFuncND )
+        // You must repeat youself in that function.
         _pTarget = pTarget;
         _pSelector = pSelector;
         
