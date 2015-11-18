@@ -298,6 +298,7 @@ _fontType(FontType::SYSTEM)
 
 TextField::~TextField()
 {
+    _textFieldRenderer->detachWithIME();
     _textFieldEventListener = nullptr;
     _textFieldEventSelector = nullptr;
 }
