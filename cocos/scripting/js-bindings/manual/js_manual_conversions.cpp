@@ -27,6 +27,7 @@
 #include "js_manual_conversions.h"
 #include "cocos2d_specifics.hpp"
 #include "math/TransformUtils.h"
+#include "2d/CocosStudioExtension.h"
 
 USING_NS_CC;
 
@@ -2864,4 +2865,44 @@ jsval std_map_string_string_to_jsval(JSContext* cx, const std::map<std::string, 
         }
     }
     return OBJECT_TO_JSVAL(jsRet);
+}
+
+bool jsval_to_resoucedata(JSContext *cx, JS::HandleValue v, ResouceData* ret) {
+    JS::RootedObject tmp(cx);
+    JS::RootedValue jstype(cx);
+    JS::RootedValue jsfile(cx);
+    JS::RootedValue jsplist(cx);
+
+    double t = 0;
+    std::string file, plist;
+    bool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
+        JS_GetProperty(cx, tmp, "type", &jstype) &&
+        JS_GetProperty(cx, tmp, "name", &jsfile) &&
+        JS_GetProperty(cx, tmp, "plist", &jsplist) &&
+        JS::ToNumber(cx, jstype, &t) &&
+        jsval_to_std_string(cx, jsfile, &file) &&
+        jsval_to_std_string(cx, jsplist, &plist);
+
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+
+    ret->type = (int)t;
+    ret->file = file;
+    ret->plist = plist;
+    return true;
+}
+
+jsval resoucedata_to_jsval(JSContext* cx, const ResouceData& v)
+{
+    JS::RootedObject proto(cx);
+    JS::RootedObject parent(cx);
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    if (!tmp) return JSVAL_NULL;
+    bool ok = JS_DefineProperty(cx, tmp, "type", v.type, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "file", JS::RootedValue(cx, std_string_to_jsval(cx, v.file)), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "plist", JS::RootedValue(cx, std_string_to_jsval(cx, v.plist)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    if (ok) {
+        return OBJECT_TO_JSVAL(tmp);
+    }
+    return JSVAL_NULL;
 }
