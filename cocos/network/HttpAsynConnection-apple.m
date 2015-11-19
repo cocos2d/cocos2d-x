@@ -35,18 +35,18 @@
 
 @implementation HttpAsynConnection
 
-@synthesize srcURL;
-@synthesize sslFile;
-@synthesize responseHeader;
-@synthesize responseData;
-@synthesize getDataTime;
-@synthesize responseCode;
-@synthesize statusString;
-@synthesize responseError;
-@synthesize connError;
-@synthesize conn;
-@synthesize finish;
-@synthesize runLoop;
+@synthesize srcURL = srcURL;
+@synthesize sslFile = sslFile;
+@synthesize responseHeader = responseHeader;
+@synthesize responseData = responseData;
+@synthesize getDataTime = getDataTime;
+@synthesize responseCode = responseCode;
+@synthesize statusString = statusString;
+@synthesize responseError = responseError;
+@synthesize connError = connError;
+@synthesize conn = conn;
+@synthesize finish = finish;
+@synthesize runLoop = runLoop;
 
 - (void)dealloc
 {

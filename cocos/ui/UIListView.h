@@ -172,8 +172,7 @@ public:
      * @param index A given index in ssize_t.
      */
     void removeItem(ssize_t index);
-    
-    
+
     /**
      * @brief Remove all items in current ListView.
      *
@@ -256,25 +255,25 @@ public:
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void removeChild(Node* child, bool cleaup = true) override;
 
-	/**
-	 * @brief Query the closest item to a specific position in inner container.
-	 *
-	 * @param targetPosition Specifies the target position in inner container's coordinates.
-	 * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
-	 * @return A item instance if list view is not empty. Otherwise, returns null.
-	 */
-	Widget* getClosestItemToPosition(const Vec2& targetPosition, const Vec2& itemAnchorPoint) const;
-	
-	/**
-	 * @brief Query the closest item to a specific position in current view.
+    /**
+     * @brief Query the closest item to a specific position in inner container.
+     *
+     * @param targetPosition Specifies the target position in inner container's coordinates.
+     * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+     * @return A item instance if list view is not empty. Otherwise, returns null.
+     */
+    Widget* getClosestItemToPosition(const Vec2& targetPosition, const Vec2& itemAnchorPoint) const;
+    
+    /**
+     * @brief Query the closest item to a specific position in current view.
      * For instance, to find the item in the center of view, call 'getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE)'.
-	 *
-	 * @param positionRatioInView Specifies the target position with ratio in list view's content size.
-	 * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
-	 * @return A item instance if list view is not empty. Otherwise, returns null.
-	 */
-	Widget* getClosestItemToPositionInCurrentView(const Vec2& positionRatioInView, const Vec2& itemAnchorPoint) const;
-	
+     *
+     * @param positionRatioInView Specifies the target position with ratio in list view's content size.
+     * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+     * @return A item instance if list view is not empty. Otherwise, returns null.
+     */
+    Widget* getClosestItemToPositionInCurrentView(const Vec2& positionRatioInView, const Vec2& itemAnchorPoint) const;
+    
     /**
      * @brief Query the center item
      * @return A item instance.
@@ -326,17 +325,17 @@ public:
      * @param positionRatioInView Specifies the position with ratio in list view's content size.
      * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
      */
-    void jumpToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint);
+    void jumpToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint);
     
-	/**
-	 * @brief Scroll to specific item
-	 * @param positionRatioInView Specifies the position with ratio in list view's content size.
-	 * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
-	 * @param timeInSec Scroll time
-	 */
-    void scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint);
-	void scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec);
-	
+    /**
+     * @brief Scroll to specific item
+     * @param positionRatioInView Specifies the position with ratio in list view's content size.
+     * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+     * @param timeInSec Scroll time
+     */
+    void scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint);
+    void scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec);
+    
     /**
      * @brief Query current selected widget's idnex.
      *
@@ -388,7 +387,9 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     virtual void handleReleaseLogic(Touch *touch) override;
-    
+
+    virtual void onItemListChanged();
+
     void updateInnerContainerSize();
     void remedyLayoutParameter(Widget* item);
     void remedyVerticalLayoutParameter(LinearLayoutParameter* layoutParameter, ssize_t itemIndex);
@@ -406,6 +407,7 @@ protected:
     virtual void startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity) override;
     
     void startMagneticScroll();
+    Vec2 calculateItemDestination(const Vec2& positionRatioInView, Widget* item, const Vec2& itemAnchorPoint);
     
 protected:
     Widget* _model;
