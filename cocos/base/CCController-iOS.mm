@@ -81,7 +81,7 @@ static GCControllerConnectionEventHandler* __instance = nil;
 
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-	[super dealloc];
+    [super dealloc];
 }
 
 -(void) onControllerConnected :(NSNotification *)connectedNotification {
@@ -114,7 +114,8 @@ public:
     GCController* _gcController;
 };
 
-void Controller::startDiscoveryController() {
+void Controller::startDiscoveryController()
+{
     if (NSClassFromString(@"GCController") == nil) {
         return;
     }
@@ -148,7 +149,8 @@ void Controller::startDiscoveryController() {
     }];
 }
 
-void Controller::stopDiscoveryController() {
+void Controller::stopDiscoveryController()
+{
     if (NSClassFromString(@"GCController") == nil) {
         return;
     }
