@@ -195,6 +195,12 @@ float PhysicsSprite::getPositionY() const
     return getPosFromPhysics().y;
 }
 
+Vec3 PhysicsSprite::getPosition3D() const
+{
+    Vec2 pos = getPosFromPhysics();
+    return Vec3(pos.x, pos.y, 0);
+}
+
 //
 // Chipmunk only
 //
@@ -280,19 +286,38 @@ const Vec2& PhysicsSprite::getPosFromPhysics() const
     return s_physicPosion;
 }
 
-void PhysicsSprite::setPosition(const Vec2 &pos)
+void PhysicsSprite::setPosition(float x, float y)
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
-
-    cpVect cpPos = cpv(pos.x, pos.y);
+    
+    cpVect cpPos = cpv(x, y);
     cpBodySetPos(_CPBody, cpPos);
-
+    
 #elif CC_ENABLE_BOX2D_INTEGRATION
-
+    
     float angle = _pB2Body->GetAngle();
-    _pB2Body->SetTransform(b2Vec2(pos.x / _PTMRatio, pos.y / _PTMRatio), angle);
+    _pB2Body->SetTransform(b2Vec2(x / _PTMRatio, y / _PTMRatio), angle);
 #endif
+}
 
+void PhysicsSprite::setPosition(const Vec2 &pos)
+{
+    setPosition(pos.x, pos.y);
+}
+
+void PhysicsSprite::setPositionX(float x)
+{
+    setPosition(x, getPositionY());
+}
+
+void PhysicsSprite::setPositionY(float y)
+{
+    setPosition(getPositionX(), y);
+}
+
+void PhysicsSprite::setPosition3D(const Vec3& position)
+{
+    setPosition(position.x, position.y);
 }
 
 float PhysicsSprite::getRotation() const
