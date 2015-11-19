@@ -124,6 +124,10 @@ cocos2d-x-3.9 November.09 2015
 [TEST]          JS: Fixed crash bug when click "remove ui" in "native test-JSBExtendTest" under project js-test.
 [TEST]          JS: Updated testcase in js-test to show notificationNode to runAction.
 
+cocos2d-x-3.8.1     September.17 2015
+
+    [HIGHLIGHT]     platform: Supported Xcode 7 for iOS 9 deployment
+
 cocos2d-x-3.8 final September.6 2015
 cocos2d-x-3.8 rc0   August.26 2015
 cocos2d-x-3.8 beta0 August.14 2015
