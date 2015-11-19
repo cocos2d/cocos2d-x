@@ -2171,10 +2171,10 @@ void LabelLayoutBaseTest::initSliders(const cocos2d::Size& size)
     slider2->setPercent(52);
     addChild(slider2);
     auto winSize = Director::getInstance()->getVisibleSize();
-    auto labelSize = _label->getContentSize();
 
     slider->addEventListener([=](Ref* ref, Slider::EventType event){
         float percent = slider->getPercent();
+        auto labelSize = _label->getContentSize();
         auto drawNodeSize = Size(percent / 100.0 * winSize.width, labelSize.height);
         if(drawNodeSize.width <=0){
             drawNodeSize.width = 0.1f;
@@ -2185,6 +2185,7 @@ void LabelLayoutBaseTest::initSliders(const cocos2d::Size& size)
 
     slider2->addEventListener([=](Ref* ref, Slider::EventType event){
         float percent = slider2->getPercent();
+        auto labelSize = _label->getContentSize();
         auto drawNodeSize = Size( labelSize.width, percent / 100.0 * winSize.height);
         if(drawNodeSize.height <= 0){
             drawNodeSize.height = 0.1f;
@@ -2310,6 +2311,7 @@ std::string LabelWrapByWordTest::subtitle() const
 LabelWrapByCharTest::LabelWrapByCharTest()
 {
    _label->setLineBreakWithoutSpace(true);
+    _label->setString("五六七八This \nis a very long sentence一二三四.");
     _label->setLineSpacing(5);
     _label->setAdditionalKerning(2);
     _label->setVerticalAlignment(TextVAlignment::TOP);

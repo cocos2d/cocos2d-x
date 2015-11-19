@@ -715,15 +715,7 @@ void Label::updateLabelLetters()
                 auto py = letterInfo.positionY - letterDef.height / 2 + _letterOffsetY;
                 letterSprite->setPosition(px, py);
 
-                if (_currentLabelType == LabelType::BMFONT && _bmFontSize > 0) {
-                    _reusedLetter->setScale(_bmfontScale);
-                }else{
-                    if(fabs(_bmFontSize)<FLT_EPSILON){
-                        _reusedLetter->setScale(0);
-                    }else{
-                        _reusedLetter->setScale(1.0);
-                    }
-                }
+                this->updateReusedLetterScale();
                 ++it;
             }
         }
@@ -858,9 +850,9 @@ bool Label::updateQuads()
             }
 
             if(!_enableWrap){
-                auto px = _lettersInfo[ctr].positionX + letterDef.width/2;
+                auto px = _lettersInfo[ctr].positionX + letterDef.width/2 + _linesOffsetX[_lettersInfo[ctr].lineIndex];
                 if(_labelWidth > 0.f){
-                    if (px > _contentSize.width) {
+                    if (px > _contentSize.width || px < 0) {
                         if(_overflow == Overflow::CLAMP){
                             _reusedRect.size.width = 0;
                         }else if(_overflow == Overflow::SHRINK){
@@ -882,20 +874,13 @@ bool Label::updateQuads()
             if (_reusedRect.size.height > 0.f && _reusedRect.size.width > 0.f)
             {
                 _reusedLetter->setTextureRect(_reusedRect, false, _reusedRect.size);
-                _reusedLetter->setPosition(_lettersInfo[ctr].positionX + _linesOffsetX[_lettersInfo[ctr].lineIndex], py);
+                float letterPositionX = _lettersInfo[ctr].positionX + _linesOffsetX[_lettersInfo[ctr].lineIndex];
+                _reusedLetter->setPosition(letterPositionX, py);
                 auto index = static_cast<int>(_batchNodes.at(letterDef.textureID)->getTextureAtlas()->getTotalQuads());
                 _lettersInfo[ctr].atlasIndex = index;
                 
-                if (_currentLabelType == LabelType::BMFONT && _bmFontSize > 0) {
-                    _reusedLetter->setScale(_bmfontScale);
-                }else{
-                    if(fabs(_bmFontSize)<FLT_EPSILON){
-                        _reusedLetter->setScale(0);
-                    }else{
-                        _reusedLetter->setScale(1.0);
-                    }
-                }
-                
+                this->updateReusedLetterScale();
+
                 _batchNodes.at(letterDef.textureID)->insertQuadFromSprite(_reusedLetter, index);
             }
         }     
@@ -1959,7 +1944,8 @@ bool Label::isWrapEnabled()const
 
 void Label::setOverflow(Overflow overflow)
 {
-    if(_overflow == overflow || _currentLabelType == LabelType::CHARMAP){
+    if(_overflow == overflow ||
+       (_currentLabelType == LabelType::CHARMAP && overflow == Overflow::SHRINK)){
         return;
     }
 
@@ -1979,6 +1965,25 @@ void Label::setOverflow(Overflow overflow)
 Label::Overflow Label::getOverflow()const
 {
     return _overflow;
+}
+
+void Label::updateReusedLetterScale()
+{
+    if (_currentLabelType == LabelType::BMFONT && _bmFontSize > 0)
+    {
+        _reusedLetter->setScale(_bmfontScale);
+    }
+    else
+    {
+        if(fabs(_bmFontSize)<FLT_EPSILON)
+        {
+            _reusedLetter->setScale(0);
+        }
+        else
+        {
+            _reusedLetter->setScale(1.0);
+        }
+    }
 }
 
 NS_CC_END

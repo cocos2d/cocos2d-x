@@ -413,7 +413,7 @@ public:
     bool isWrapEnabled()const;
 
     /**
-     * Change the label's Overflow type, currently only TTF and BMFont support all the valid Overflow type.
+     * Change the label's Overflow type, currently only TTF and BMFont support all the valid Overflow type. Char Map font also supports all the Overflow type except for SHRINK.
      *
      * @param overflow   see `Overflow`
      */
@@ -590,6 +590,7 @@ protected:
     bool setTTFConfigInternal(const TTFConfig& ttfConfig);
     void setBMFontSizeInternal(float fontSize);
     void restoreFontSize();
+    void updateReusedLetterScale();
 
     void reset();
 
