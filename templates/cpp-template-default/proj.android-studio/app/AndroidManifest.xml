@@ -18,7 +18,7 @@
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            android:theme="@style/Theme.Black.NoTitleBar.ActionModeOverlay" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
