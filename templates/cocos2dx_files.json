@@ -6753,6 +6753,7 @@
         "cocos/scripting/lua-bindings/auto/api/RichElement.lua", 
         "cocos/scripting/lua-bindings/auto/api/RichElementCustomNode.lua", 
         "cocos/scripting/lua-bindings/auto/api/RichElementImage.lua", 
+        "cocos/scripting/lua-bindings/auto/api/RichElementNewLine.lua", 
         "cocos/scripting/lua-bindings/auto/api/RichElementText.lua", 
         "cocos/scripting/lua-bindings/auto/api/RichText.lua", 
         "cocos/scripting/lua-bindings/auto/api/Ripple3D.lua", 
