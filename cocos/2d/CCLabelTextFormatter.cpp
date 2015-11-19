@@ -28,6 +28,7 @@
 #include "base/ccUTF8.h"
 #include "base/CCDirector.h"
 #include "2d/CCFontAtlas.h"
+#include "2d/CCFontFNT.h"
 
 NS_CC_BEGIN
 
@@ -93,6 +94,18 @@ static int getFirstWordLen(const std::u16string& utf16Text, int startIndex, int 
     return len;
 }
 
+void Label::updateBMFontScale()
+{
+    auto font = _fontAtlas->getFont();
+    if (_currentLabelType == LabelType::BMFONT) {
+        FontFNT *bmFont = (FontFNT*)font;
+        float originalFontSize = bmFont->getOriginalFontSize();
+        _bmfontScale = _bmFontSize * CC_CONTENT_SCALE_FACTOR() / originalFontSize;
+    }else{
+        _bmfontScale = 1.0f;
+    }
+}
+
 bool Label::multilineTextWrapByWord()
 {
     int textLen = getStringLength();
@@ -108,7 +121,9 @@ bool Label::multilineTextWrapByWord()
     float lowestY = 0.f;
     FontLetterDefinition letterDef;
     Vec2 letterPosition;
-    
+
+    this->updateBMFontScale();
+
     for (int index = 0; index < textLen; )
     {
         auto character = _utf16Text[index];
@@ -118,7 +133,7 @@ bool Label::multilineTextWrapByWord()
             letterRight = 0.f;
             lineIndex++;
             nextWordX = 0.f;
-            nextWordY -= _lineHeight + lineSpacing;
+            nextWordY -= _lineHeight*_bmfontScale + lineSpacing;
             recordPlaceholderInfo(index, character);
             index++;
             continue;
@@ -146,14 +161,14 @@ bool Label::multilineTextWrapByWord()
                 continue;
             }
 
-            auto letterX = (nextLetterX + letterDef.offsetX) / contentScaleFactor;
-            if (_maxLineWidth > 0.f && nextWordX > 0.f && letterX + letterDef.width > _maxLineWidth)
+            auto letterX = (nextLetterX + letterDef.offsetX * _bmfontScale) / contentScaleFactor;
+            if (_enableWrap && _maxLineWidth > 0.f && nextWordX > 0.f && letterX + letterDef.width * _bmfontScale > _maxLineWidth)
             {
                 _linesWidth.push_back(letterRight);
                 letterRight = 0.f;
                 lineIndex++;
                 nextWordX = 0.f;
-                nextWordY -= _lineHeight + lineSpacing;
+                nextWordY -= (_lineHeight*_bmfontScale + lineSpacing);
                 newLine = true;
                 break;
             }
@@ -161,19 +176,19 @@ bool Label::multilineTextWrapByWord()
             {
                 letterPosition.x = letterX;
             }
-            letterPosition.y = (nextWordY - letterDef.offsetY) / contentScaleFactor;
+            letterPosition.y = (nextWordY - letterDef.offsetY * _bmfontScale) / contentScaleFactor;
             recordLetterInfo(letterPosition, character, letterIndex, lineIndex);
 
             if (_horizontalKernings && letterIndex < textLen - 1)
                 nextLetterX += _horizontalKernings[letterIndex + 1];
-            nextLetterX += letterDef.xAdvance + _additionalKerning;
+            nextLetterX += letterDef.xAdvance * _bmfontScale + _additionalKerning;
 
-            wordRight = letterPosition.x + letterDef.width;
+            wordRight = letterPosition.x + letterDef.width * _bmfontScale;
 
             if (wordHighestY < letterPosition.y)
                 wordHighestY = letterPosition.y;
-            if (wordLowestY > letterPosition.y - letterDef.height)
-                wordLowestY = letterPosition.y - letterDef.height;
+            if (wordLowestY > letterPosition.y - letterDef.height * _bmfontScale)
+                wordLowestY = letterPosition.y - letterDef.height * _bmfontScale;
         }
         
         if (newLine)
@@ -196,7 +211,7 @@ bool Label::multilineTextWrapByWord()
     _linesWidth.push_back(letterRight);
 
     _numberOfLines = lineIndex + 1;
-    _textDesiredHeight = (_numberOfLines * _lineHeight) / contentScaleFactor;
+    _textDesiredHeight = (_numberOfLines * _lineHeight * _bmfontScale) / contentScaleFactor;
     if (_numberOfLines > 1)
         _textDesiredHeight += (_numberOfLines - 1) * _lineSpacing;
     Size contentSize(_labelWidth, _labelHeight);
@@ -232,6 +247,8 @@ bool Label::multilineTextWrapByChar()
     FontLetterDefinition letterDef;
     Vec2 letterPosition;
 
+    this->updateBMFontScale();
+
     for (int index = 0; index < textLen; index++)
     {
         auto character = _utf16Text[index];
@@ -246,7 +263,7 @@ bool Label::multilineTextWrapByChar()
             letterRight = 0.f;
             lineIndex++;
             nextLetterX = 0.f;
-            nextLetterY -= _lineHeight + lineSpacing;
+            nextLetterY -= _lineHeight * _bmfontScale + lineSpacing;
             recordPlaceholderInfo(index, character);
             continue;
         }
@@ -258,33 +275,33 @@ bool Label::multilineTextWrapByChar()
             continue;
         }
 
-        auto letterX = (nextLetterX + letterDef.offsetX) / contentScaleFactor;
-        if (_maxLineWidth > 0.f && nextLetterX > 0.f && letterX + letterDef.width > _maxLineWidth)
+        auto letterX = (nextLetterX + letterDef.offsetX * _bmfontScale) / contentScaleFactor;
+        if (_enableWrap && _maxLineWidth > 0.f && nextLetterX > 0.f && letterX + letterDef.width * _bmfontScale > _maxLineWidth)
         {
             _linesWidth.push_back(letterRight);
             letterRight = 0.f;
             lineIndex++;
             nextLetterX = 0.f;
-            nextLetterY -= _lineHeight + lineSpacing;
-            letterPosition.x = letterDef.offsetX / contentScaleFactor;
+            nextLetterY -= _lineHeight * _bmfontScale + lineSpacing;
+            letterPosition.x = letterDef.offsetX * _bmfontScale / contentScaleFactor;
         }
         else
         {
             letterPosition.x = letterX;
         }
-        letterPosition.y = (nextLetterY - letterDef.offsetY) / contentScaleFactor;
+        letterPosition.y = (nextLetterY - letterDef.offsetY * _bmfontScale) / contentScaleFactor;
         recordLetterInfo(letterPosition, character, index, lineIndex);
 
         if (_horizontalKernings && index < textLen - 1)
             nextLetterX += _horizontalKernings[index + 1];
-        nextLetterX += letterDef.xAdvance + _additionalKerning;
+        nextLetterX += letterDef.xAdvance * _bmfontScale + _additionalKerning;
 
-        letterRight = letterPosition.x + letterDef.width;
+        letterRight = letterPosition.x + letterDef.width * _bmfontScale;
 
         if (highestY < letterPosition.y)
             highestY = letterPosition.y;
-        if (lowestY > letterPosition.y - letterDef.height)
-            lowestY = letterPosition.y - letterDef.height;
+        if (lowestY > letterPosition.y - letterDef.height * _bmfontScale)
+            lowestY = letterPosition.y - letterDef.height * _bmfontScale;
         if (longestLine < letterRight)
             longestLine = letterRight;
     }
@@ -292,7 +309,7 @@ bool Label::multilineTextWrapByChar()
     _linesWidth.push_back(letterRight);
 
     _numberOfLines = lineIndex + 1;
-    _textDesiredHeight = (_numberOfLines * _lineHeight) / contentScaleFactor;
+    _textDesiredHeight = (_numberOfLines * _lineHeight * _bmfontScale) / contentScaleFactor;
     if (_numberOfLines > 1)
         _textDesiredHeight += (_numberOfLines - 1) * _lineSpacing;
     Size contentSize(_labelWidth, _labelHeight);
@@ -300,6 +317,7 @@ bool Label::multilineTextWrapByChar()
         contentSize.width = longestLine;
     if (_labelHeight <= 0.f)
         contentSize.height = _textDesiredHeight;
+
     setContentSize(contentSize);
 
     _tailoredTopY = contentSize.height;
@@ -310,6 +328,81 @@ bool Label::multilineTextWrapByChar()
         _tailoredBottomY = _textDesiredHeight + lowestY;
 
     return true;
+}
+
+bool Label::isVerticalClamp()
+{
+    if (_textDesiredHeight > _contentSize.height)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool Label::isHorizontalClamp()
+{
+    bool letterClamp = false;
+    for (int ctr = 0; ctr < _lengthOfString; ++ctr)
+    {
+        if (_lettersInfo[ctr].valid)
+        {
+            auto& letterDef = _fontAtlas->_letterDefinitions[_lettersInfo[ctr].utf16Char];
+            
+            auto px = _lettersInfo[ctr].positionX + letterDef.width/2;
+            if(_labelWidth > 0.f){
+                if (px > _contentSize.width) {
+                    letterClamp = true;
+                    break;
+                }
+            }
+        }
+    }
+    
+    return letterClamp;
+}
+
+void Label::shrinkLabelToContentSize(std::function<bool(void)> lambda)
+{
+    float fontSize = this->getRenderingFontSize();
+    
+    int i = 0;
+    auto letterDefinition = _fontAtlas->_letterDefinitions;
+    auto tempLetterDefinition = letterDefinition;
+    float originalLineHeight = this->getLineHeight();
+    bool flag = true;
+    while (lambda()) {
+        ++i;
+        float newFontSize = fontSize - i;
+        flag = false;
+        if (newFontSize <= 0) {
+            break;
+        }
+        float scale = newFontSize / fontSize;
+        std::swap(_fontAtlas->_letterDefinitions, tempLetterDefinition);
+        _fontAtlas->scaleFontLetterDefinition(scale);
+        this->setLineHeight(originalLineHeight * scale);
+        if (_maxLineWidth > 0.f && !_lineBreakWithoutSpaces)
+        {
+            multilineTextWrapByWord();
+        }
+        else
+        {
+            multilineTextWrapByChar();
+        }
+        computeAlignmentOffset();
+        tempLetterDefinition = letterDefinition;
+    }
+    this->setLineHeight(originalLineHeight);
+    std::swap(_fontAtlas->_letterDefinitions, letterDefinition);
+
+    if (!flag) {
+        if (fontSize - i >= 0) {
+            this->scaleFontSizeDown(fontSize - i);
+        }
+    }
 }
 
 void Label::recordLetterInfo(const cocos2d::Vec2& point, char16_t utf16Char, int letterIndex, int lineIndex)
