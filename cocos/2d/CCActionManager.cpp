@@ -185,11 +185,6 @@ void ActionManager::addAction(Action *action, Node *target, bool paused)
         element = (tHashElement*)calloc(sizeof(*element), 1);
         element->paused = paused;
         target->retain();
-#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
-        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-        if (sEngine)
-            sEngine->retainScriptObject(this, target);
-#endif
         element->target = target;
         HASH_ADD_PTR(_targets, target, element);
     }

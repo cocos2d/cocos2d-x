@@ -62,7 +62,6 @@ Ref::~Ref()
     {
         ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptObjectByObject(this);
     }
-    #if defined(CC_NATIVE_CONTROL_SCRIPT) && CC_NATIVE_CONTROL_SCRIPT
     else
     {
         ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
@@ -71,7 +70,6 @@ Ref::~Ref()
             pEngine->removeScriptObjectByObject(this);
         }
     }
-    #endif
 #endif
 
 

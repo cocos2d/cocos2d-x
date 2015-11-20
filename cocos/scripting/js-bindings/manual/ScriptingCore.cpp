@@ -958,7 +958,6 @@ void ScriptingCore::releaseScriptObject(cocos2d::Ref* owner, cocos2d::Ref* targe
 
 void ScriptingCore::removeScriptObjectByObject(Ref* pObj)
 {
-#if CC_NATIVE_CONTROL_SCRIPT
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     void *ptr = (void*)pObj;
@@ -969,7 +968,6 @@ void ScriptingCore::removeScriptObjectByObject(Ref* pObj)
         RemoveObjectRoot(cx, &jsproxy->obj);
         jsb_remove_proxy(nproxy, jsproxy);
     }
-#endif
 }
 
 

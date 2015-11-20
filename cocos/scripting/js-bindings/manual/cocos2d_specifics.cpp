@@ -6177,6 +6177,7 @@ void jsb_FinalizeHook_finalize(JSFreeOp *fop, JSObject *obj) {
     JS_GetProperty(cx, JS::RootedObject(cx, obj), "owner", &ownerValue);
     JS::RootedObject owner(cx, ownerValue.toObjectOrNull());
     CCLOGINFO("jsbindings: finalizing JS object via Finalizehook %p", owner.get());
+//    JS_CallFunctionName(cx, JS::RootedObject(cx, obj), "test", JS::HandleValueArray::empty(), &rval);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     jsproxy = jsb_get_js_proxy(owner);
@@ -6186,9 +6187,10 @@ void jsb_FinalizeHook_finalize(JSFreeOp *fop, JSObject *obj) {
         
         jsb_remove_proxy(nproxy, jsproxy);
         if (refObj) {
+            int count = refObj->getReferenceCount();
             refObj->release();
             ScriptingCore::retainCount--;
-            CCLOG("------RELEASED------ %d ref count: %d", ScriptingCore::retainCount, refObj->getReferenceCount());
+            CCLOG("------RELEASED------ %d ref count: %d", ScriptingCore::retainCount, count-1);
         }
     }
 }

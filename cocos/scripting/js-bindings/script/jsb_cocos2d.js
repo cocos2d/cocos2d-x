@@ -28,6 +28,11 @@
 //
 cc.ENGINE_VERSION = "Cocos2d-JS v3.9 Beta0";
 
+
+jsb.FinalizeHook.prototype.test = function () {
+    
+};
+
 cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
 cc.DIRECTOR_FPS_INTERVAL = 0.5;

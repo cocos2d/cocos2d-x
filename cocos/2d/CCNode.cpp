@@ -222,11 +222,16 @@ void Node::cleanup()
     
     // actions
     this->stopAllActions();
-    this->unscheduleAllCallbacks();
-
     // timers
-    for( const auto &child: _children)
-        child->cleanup();
+    this->unscheduleAllCallbacks();
+    // event listeners
+    Director::getInstance()->getEventDispatcher()->removeEventListenersForTarget(this);
+
+    // childrens
+    for( int i = (int)_children.size()-1; i >= 0; --i ) {
+        auto child = _children.at(i);
+        child->removeFromParent();
+    }
 }
 
 std::string Node::getDescription() const

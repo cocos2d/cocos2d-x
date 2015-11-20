@@ -61,6 +61,10 @@ var TestScene = cc.Scene.extend({
             this.addChild(menu, 1);
         }
     },
+    onEnter: function () {
+        this._super();
+        cc.sys.garbageCollect();
+    },
     onMainMenuCallback:function () {
         if (director.isPaused()) {
             director.resume();
@@ -68,8 +72,8 @@ var TestScene = cc.Scene.extend({
         var scene = new cc.Scene();
         var layer = new TestController();
         scene.addChild(layer);
-        var transition = new cc.TransitionProgressRadialCCW(0.5,scene);
-        director.runScene(transition);
+        // var transition = new cc.TransitionProgressRadialCCW(0.5,scene);
+        director.runScene(scene);
     },
 
     runThisTest:function () {

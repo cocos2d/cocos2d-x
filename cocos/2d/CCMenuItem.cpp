@@ -916,7 +916,7 @@ void MenuItemToggle::addSubItem(MenuItem *item)
     _subItems.pushBack(item);
 }
 
-MenuItemToggle::~MenuItemToggle()
+void MenuItemToggle::cleanup()
 {
     for(const auto &item : _subItems) {
 #if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
@@ -924,6 +924,7 @@ MenuItemToggle::~MenuItemToggle()
 #endif
         item->cleanup();
     }
+    MenuItem::cleanup();
 }
 
 void MenuItemToggle::setSelectedIndex(unsigned int index)
