@@ -377,13 +377,6 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Return a current focused widget in your UI scene.<br>
--- No matter what widget object you call this method on , it will return you the exact one focused widget.
--- @function [parent=#Widget] getCurrentFocusedWidget 
--- @param self
--- @return Widget#Widget ret (return value: ccui.Widget)
-        
---------------------------------
 -- Checks a point is in widget's content space.<br>
 -- This function is used for determining touch area of widget.<br>
 -- param pt        The point in `Vec2`.<br>
@@ -550,6 +543,13 @@
 -- @param self
 -- @param #bool enable
 -- @return Widget#Widget self (return value: ccui.Widget)
+        
+--------------------------------
+-- Return a current focused widget in your UI scene.<br>
+-- No matter what widget object you call this method on , it will return you the exact one focused widget.
+-- @function [parent=#Widget] getCurrentFocusedWidget 
+-- @param self
+-- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
 -- Create and return a empty Widget instance pointer.

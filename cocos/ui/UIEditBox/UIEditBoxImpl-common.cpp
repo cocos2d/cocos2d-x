@@ -350,7 +350,7 @@ void EditBoxImplCommon::editBoxEditingDidEnd(const std::string& text)
     
     if (_editBox != nullptr)
     {
-        this->onEndEditing(text);
+        this->onEndEditing(_text);
     }
 }
 
