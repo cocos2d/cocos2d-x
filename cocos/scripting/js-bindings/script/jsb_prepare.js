@@ -274,9 +274,6 @@ cc.Class.extend = function (prop) {
 
     Class = function () {
         if (!initializing) {
-            if (this.__is_ref) {
-                this.__hook = new jsb.FinalizeHook(this);
-            }
             this.__instanceId = ClassManager.getNewInstanceId();
             this.ctor && this.ctor.apply(this, arguments);
         }
