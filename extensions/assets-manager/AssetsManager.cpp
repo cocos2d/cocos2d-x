@@ -21,6 +21,17 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+// keyWithHash() is using PRIdPTR definition
+#define __STDC_FORMAT_MACROS
+#ifdef _MSC_VER
+#include "json/msinttypes/stdint.h"
+#include "json/msinttypes/inttypes.h"
+#else
+#include <stdint.h>
+#include <inttypes.h>
+#endif
+
 #include "AssetsManager.h"
 
 #include <thread>
@@ -145,7 +156,7 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
         
         // start download;
         const string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
-        _downloader->createDownloadFileTask(_packageUrl, _storagePath);
+        _downloader->createDownloadFileTask(_packageUrl, outFileName);
     };
     
     // after download package, do uncompress operation
@@ -176,7 +187,7 @@ void AssetsManager::checkStoragePath()
 static std::string keyWithHash( const char* prefix, const std::string& url )
 {
     char buf[256];
-    sprintf(buf,"%s%zd",prefix,std::hash<std::string>()(url));
+    sprintf(buf,"%s%" PRIdPTR,prefix,std::hash<std::string>()(url));
     return buf;
 }
 
