@@ -769,12 +769,7 @@ bool Label::alignText()
         computeAlignmentOffset();
 
         if(_enableWrap && _overflow == Overflow::SHRINK){
-            float fontSize = 0;
-            if (_currentLabelType == LabelType::BMFONT) {
-                fontSize = _bmFontSize;
-            }else if(_currentLabelType == LabelType::TTF){
-                fontSize = this->getTTFConfig().fontSize;
-            }
+            float fontSize = this->getRenderingFontSize();
 
             if(fontSize > 0 &&  isVerticalClamp()){
                 this->shrinkLabelToContentSize(CC_CALLBACK_0(Label::isVerticalClamp, this));
@@ -1944,9 +1939,20 @@ bool Label::isWrapEnabled()const
 
 void Label::setOverflow(Overflow overflow)
 {
-    if(_overflow == overflow ||
-       (_currentLabelType == LabelType::CHARMAP && overflow == Overflow::SHRINK)){
+    if(_overflow == overflow){
         return;
+    }
+    
+    if (_currentLabelType == LabelType::CHARMAP) {
+        if (overflow == Overflow::SHRINK) {
+            return;
+        }
+    }
+    
+    if (_currentLabelType == LabelType::STRING_TEXTURE) {
+        if (overflow == Overflow::CLAMP || overflow == Overflow::SHRINK) {
+            return;
+        }
     }
 
     if(overflow == Overflow::RESIZE_HEIGHT){

@@ -399,7 +399,7 @@ public:
     float getBMFontSize()const;
 
     /**
-     * Toggle wrap option the label.
+     * Toggle wrap option of the label.
      * Note: System font doesn't support manually toggle wrap.
      *
      * @param enable Set true to enable wrap and false to disable wrap.
@@ -413,7 +413,9 @@ public:
     bool isWrapEnabled()const;
 
     /**
-     * Change the label's Overflow type, currently only TTF and BMFont support all the valid Overflow type. Char Map font also supports all the Overflow type except for SHRINK.
+     * Change the label's Overflow type, currently only TTF and BMFont support all the valid Overflow type.
+     * Char Map font supports all the Overflow type except for SHRINK, because we can't measure it's font size.
+     * System font only support Overflow::Normal and Overflow::RESIZE_HEIGHT.
      *
      * @param overflow   see `Overflow`
      */
