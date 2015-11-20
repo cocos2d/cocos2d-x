@@ -2264,6 +2264,14 @@ void LabelLayoutBaseTest::valueChanged(cocos2d::Ref *sender, cocos2d::extension:
         _label->setBMFontSize(fontSize);
     }
     this->updateDrawNodeSize(_label->getContentSize());
+    
+    //FIXME::When calling getLetter, the label Overflow feature will be invalid.
+//    auto letterSprite = _label->getLetter(1);
+//    auto moveBy = ScaleBy::create(1.0,2.0);
+//    letterSprite->stopAllActions();
+//    letterSprite->runAction(Sequence::create(moveBy, moveBy->clone()->reverse(), nullptr ));
+//    
+//    CCLOG("label line height = %f", _label->getLineHeight());
 }
 
 void LabelLayoutBaseTest::updateDrawNodeSize(const cocos2d::Size &drawNodeSize)
@@ -2578,6 +2586,12 @@ LabelSystemFontTest::LabelSystemFontTest()
     _label->setVerticalAlignment(TextVAlignment::CENTER);
    _label->setOverflow(Label::Overflow::NORMAL);
    _label->setSystemFontName("Hiragino Sans GB");
+    
+    auto stepper = (ControlStepper*)this->getChildByName("stepper");
+    stepper->setEnabled(false);
+    
+    auto checkbox = (CheckBox*)(this->getChildByName("toggleType"));
+    checkbox->setEnabled(false);
 
     this->updateDrawNodeSize(_label->getContentSize());
 

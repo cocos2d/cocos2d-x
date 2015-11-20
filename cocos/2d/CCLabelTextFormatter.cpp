@@ -371,7 +371,7 @@ void Label::shrinkLabelToContentSize(std::function<bool(void)> lambda)
     int i = 0;
     auto letterDefinition = _fontAtlas->_letterDefinitions;
     auto tempLetterDefinition = letterDefinition;
-    float originalLineHeight = this->getLineHeight();
+    float originalLineHeight = _lineHeight;
     bool flag = true;
     while (lambda()) {
         ++i;

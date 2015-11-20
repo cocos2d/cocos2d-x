@@ -572,6 +572,7 @@ protected:
     bool isHorizontalClamp();
     bool isVerticalClamp();
     float getRenderingFontSize()const;
+    void rescaleWithOriginalFontSize();
 
     void updateLabelLetters();
     virtual bool alignText();
@@ -592,7 +593,7 @@ protected:
     bool setTTFConfigInternal(const TTFConfig& ttfConfig);
     void setBMFontSizeInternal(float fontSize);
     void restoreFontSize();
-    void updateReusedLetterScale();
+    void updateLetterSpriteScale(Sprite* sprite);
 
     void reset();
 

@@ -699,6 +699,8 @@ void Label::updateLabelLetters()
                 uvRect.origin.x = letterDef.U;
                 uvRect.origin.y = letterDef.V;
 
+                auto batchNode = _batchNodes.at(letterDef.textureID);
+                letterSprite->setTextureAtlas(batchNode->getTextureAtlas());
                 letterSprite->setTexture(_fontAtlas->getTexture(letterDef.textureID));
                 if (letterDef.width <= 0.f || letterDef.height <= 0.f)
                 {
@@ -715,7 +717,7 @@ void Label::updateLabelLetters()
                 auto py = letterInfo.positionY - letterDef.height / 2 + _letterOffsetY;
                 letterSprite->setPosition(px, py);
 
-                this->updateReusedLetterScale();
+                this->updateLetterSpriteScale(letterSprite);
                 ++it;
             }
         }
@@ -768,7 +770,7 @@ bool Label::alignText()
         }
         computeAlignmentOffset();
 
-        if(_enableWrap && _overflow == Overflow::SHRINK){
+        if(_overflow == Overflow::SHRINK){
             float fontSize = this->getRenderingFontSize();
 
             if(fontSize > 0 &&  isVerticalClamp()){
@@ -874,7 +876,7 @@ bool Label::updateQuads()
                 auto index = static_cast<int>(_batchNodes.at(letterDef.textureID)->getTextureAtlas()->getTotalQuads());
                 _lettersInfo[ctr].atlasIndex = index;
                 
-                this->updateReusedLetterScale();
+                this->updateLetterSpriteScale(_reusedLetter);
 
                 _batchNodes.at(letterDef.textureID)->insertQuadFromSprite(_reusedLetter, index);
             }
@@ -1611,7 +1613,7 @@ void Label::setLineHeight(float height)
 float Label::getLineHeight() const
 {
     CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
-    return _textSprite ? 0.0f : _lineHeight;
+    return _textSprite ? 0.0f : _lineHeight * _bmfontScale;
 }
 
 void Label::setLineSpacing(float height)
@@ -1924,10 +1926,8 @@ void Label::enableWrap(bool enable)
     }
 
     this->_enableWrap = enable;
-    auto renderingFontSize = this->getRenderingFontSize();
-    if (fabs(_originalFontSize - renderingFontSize) >= 1) {
-        this->scaleFontSizeDown(_originalFontSize);
-    }
+   
+    this->rescaleWithOriginalFontSize();
     
     _contentDirty = true;
 }
@@ -1961,11 +1961,17 @@ void Label::setOverflow(Overflow overflow)
     }
     _overflow = overflow;
     
+    this->rescaleWithOriginalFontSize();
+    
+    _contentDirty = true;
+}
+
+void Label::rescaleWithOriginalFontSize()
+{
     auto renderingFontSize = this->getRenderingFontSize();
-    if (fabs(_originalFontSize - renderingFontSize) >= 1) {
+    if (_originalFontSize - renderingFontSize >= 1) {
         this->scaleFontSizeDown(_originalFontSize);
     }
-    _contentDirty = true;
 }
 
 Label::Overflow Label::getOverflow()const
@@ -1973,21 +1979,21 @@ Label::Overflow Label::getOverflow()const
     return _overflow;
 }
 
-void Label::updateReusedLetterScale()
+void Label::updateLetterSpriteScale(Sprite* sprite)
 {
     if (_currentLabelType == LabelType::BMFONT && _bmFontSize > 0)
     {
-        _reusedLetter->setScale(_bmfontScale);
+        sprite->setScale(_bmfontScale);
     }
     else
     {
         if(fabs(_bmFontSize)<FLT_EPSILON)
         {
-            _reusedLetter->setScale(0);
+            sprite->setScale(0);
         }
         else
         {
-            _reusedLetter->setScale(1.0);
+            sprite->setScale(1.0);
         }
     }
 }
