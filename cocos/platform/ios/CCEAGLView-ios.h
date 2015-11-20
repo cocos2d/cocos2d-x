@@ -67,8 +67,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <UIKit/UIKit.h>
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/EAGLDrawable.h>
+#if (CC_TARGET_OPENGLES == CC_OPENGLES_3)
+#import <OpenGLES/ES3/gl.h>
+#import <OpenGLES/ES3/glext.h>
+#else
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
+#endif
 #import <CoreFoundation/CoreFoundation.h>
 
 #import "CCESRenderer-ios.h"

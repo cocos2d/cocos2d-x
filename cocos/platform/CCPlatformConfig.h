@@ -140,6 +140,34 @@ THE SOFTWARE.
     #define CC_TARGET_PLATFORM          CC_PLATFORM_WINRT
 #endif
 
+
+// define supported OpenGLES version
+#define CC_OPENGLES_UNKNOWN            0
+#define CC_OPENGLES_2                  2
+#define CC_OPENGLES_3                  3
+
+// version of OpenGLES to use
+#ifndef CC_USE_OPENGLES
+#define CC_USE_OPENGLES     CC_OPENGLES_2
+#endif
+
+// iphone
+#if defined(CC_TARGET_OS_IPHONE)
+    #undef  CC_TARGET_OPENGLES
+    #define CC_TARGET_OPENGLES  CC_USE_OPENGLES
+
+// android
+#elif defined(ANDROID)
+    #undef  CC_TARGET_OPENGLES
+    #define CC_TARGET_OPENGLES  CC_USE_OPENGLES
+
+// other
+#else
+    #undef  CC_TARGET_OPENGLES
+    #define CC_TARGET_OPENGLES  CC_OPENGLES_2
+#endif
+
+
 //////////////////////////////////////////////////////////////////////////
 // post configure
 //////////////////////////////////////////////////////////////////////////

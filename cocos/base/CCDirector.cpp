@@ -1364,6 +1364,11 @@ void Director::setEventDispatcher(EventDispatcher* dispatcher)
     }
 }
 
+int Director::getTargetOpenGLESVersion()
+{
+    return CC_TARGET_OPENGLES;
+}
+
 /***************************************************
 * implementation of DisplayLinkDirector
 **************************************************/

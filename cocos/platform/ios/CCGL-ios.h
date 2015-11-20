@@ -39,8 +39,14 @@ THE SOFTWARE.
 #define GL_DEPTH24_STENCIL8         GL_DEPTH24_STENCIL8_OES
 #define GL_WRITE_ONLY               GL_WRITE_ONLY_OES
 
+#if (CC_TARGET_OPENGLES == CC_OPENGLES_3)
+#import <OpenGLES/ES3/gl.h>
+#import <OpenGLES/ES3/glext.h>
+#else
 #include <OpenGLES/ES2/gl.h>
 #include <OpenGLES/ES2/glext.h>
+#include "platform/CCGL_compatible.h"
+#endif
 
 #endif // CC_PLATFORM_IOS
 
