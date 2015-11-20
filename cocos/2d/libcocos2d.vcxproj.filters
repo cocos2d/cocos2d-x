@@ -1941,6 +1941,15 @@
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
+    <ClCompile Include="..\base\etc2.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\etc2unpack.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\etcdec.cxx">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -3787,6 +3796,12 @@
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h" />
     <ClInclude Include="..\ui\UIAbstractCheckButton.h">
       <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\etc2.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\etc2types.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

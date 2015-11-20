@@ -448,6 +448,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\base\ccUtils.cpp" />
     <ClCompile Include="..\base\CCValue.cpp" />
     <ClCompile Include="..\base\etc1.cpp" />
+    <ClCompile Include="..\base\etc2.cpp" />
+    <ClCompile Include="..\base\etc2unpack.cpp" />
+    <ClCompile Include="..\base\etcdec.cxx" />
     <ClCompile Include="..\base\pvr.cpp" />
     <ClCompile Include="..\base\ObjectFactory.cpp" />
     <ClCompile Include="..\base\s3tc.cpp" />
@@ -1034,6 +1037,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\base\CCValue.h" />
     <ClInclude Include="..\base\CCVector.h" />
     <ClInclude Include="..\base\etc1.h" />
+    <ClInclude Include="..\base\etc2.h" />
+    <ClInclude Include="..\base\etc2types.h" />
     <ClInclude Include="..\base\firePngData.h" />
     <ClInclude Include="..\base\ObjectFactory.h" />
     <ClInclude Include="..\base\pvr.h" />

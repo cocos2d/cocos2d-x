@@ -34,6 +34,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.os.Build;
 
 public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     // ===========================================================
@@ -68,6 +69,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
     private boolean mSoftKeyboardShown = false;
 
+    private static native int getTargetOpenGLESVersion();
+
 
     // ===========================================================
     // Constructors
@@ -86,7 +89,14 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     }
 
     protected void initView() {
-        this.setEGLContextClientVersion(2);
+        if ((getTargetOpenGLESVersion() > 2) && (Build.VERSION.SDK_INT >= 18))
+        {
+            this.setEGLContextClientVersion(3);
+        }
+        else
+        {
+            this.setEGLContextClientVersion(2);
+        }
         this.setFocusableInTouchMode(true);
 
         Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView = this;

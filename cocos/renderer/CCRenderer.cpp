@@ -830,6 +830,11 @@ void Renderer::drawBatchedTriangles()
         //Set VBO data
         glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
+#if (CC_TARGET_OPENGLES == CC_OPENGLES_3)
+        void* buf = glMapBufferRange(GL_ARRAY_BUFFER, 0, sizeof(_verts[0]) * _filledVertex, GL_MAP_WRITE_BIT);
+        memcpy(buf, _verts, sizeof(_verts[0])* _filledVertex);
+        glUnmapBuffer(GL_ARRAY_BUFFER);
+#else
         // option 1: subdata
 //        glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
 
@@ -841,6 +846,7 @@ void Renderer::drawBatchedTriangles()
         void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
         memcpy(buf, _verts, sizeof(_verts[0])* _filledVertex);
         glUnmapBuffer(GL_ARRAY_BUFFER);
+#endif
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         
@@ -938,6 +944,11 @@ void Renderer::drawBatchedQuads()
         //Set VBO data
         glBindBuffer(GL_ARRAY_BUFFER, _quadbuffersVBO[0]);
         
+#if (CC_TARGET_OPENGLES == CC_OPENGLES_3)
+        void* buf = glMapBufferRange(GL_ARRAY_BUFFER, 0, sizeof(_quadVerts[0]) * _numberQuads, GL_MAP_WRITE_BIT);
+        memcpy(buf, _quadVerts, sizeof(_quadVerts[0])* _numberQuads * 4);
+        glUnmapBuffer(GL_ARRAY_BUFFER);
+#else
         // option 1: subdata
         //  glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
         
@@ -949,6 +960,7 @@ void Renderer::drawBatchedQuads()
         void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
         memcpy(buf, _quadVerts, sizeof(_quadVerts[0])* _numberQuads * 4);
         glUnmapBuffer(GL_ARRAY_BUFFER);
+#endif
         
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         
