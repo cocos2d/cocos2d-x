@@ -136,8 +136,8 @@ static void _checkPath()
 {
     if (s_resourcePath.empty())
     {
-        WCHAR *pUtf16ExePath = nullptr;
-        _get_wpgmptr(&pUtf16ExePath);
+        WCHAR pUtf16ExePath[MAX_PATH];
+        GetModuleFileNameW(NULL, pUtf16ExePath, MAX_PATH);
 
         // We need only directory part without exe
         WCHAR *pUtf16DirEnd = wcsrchr(pUtf16ExePath, L'\\');
@@ -145,7 +145,7 @@ static void _checkPath()
         char utf8ExeDir[CC_MAX_PATH] = { 0 };
         int nNum = WideCharToMultiByte(CP_UTF8, 0, pUtf16ExePath, pUtf16DirEnd-pUtf16ExePath+1, utf8ExeDir, sizeof(utf8ExeDir), nullptr, nullptr);
 
-        s_resourcePath = convertPathFormatToUnixStyle(utf8ExeDir);
+        s_resourcePath = convertPathFormatToUnixStyle(utf8ExeDir) + "Resources/";;
     }
 }
 
