@@ -50,5 +50,8 @@ namespace cocos2d { namespace network
             std::unordered_map<int, DownloadTaskAndroid*> _taskMap;
         };
 
+        // Load java downloader class from main thread, to void addImageAsync function
+        //  perform in sub-thread cause java downloader unusable
+        void _preloadJavaDownloaderClass();
     }}  // namespace cocos2d::network
 

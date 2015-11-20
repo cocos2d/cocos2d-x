@@ -183,7 +183,7 @@ public:
     /* Creates an animation with an array of AnimationFrame, the delay per units in seconds and and how many times it should be executed.
      * @since v2.0
      * @param arrayOfAnimationFrameNames An animation with an array of AnimationFrame.
-     * @param delayPerUnit The delay per units in seconds and and how many times it should be executed.
+     * @param delayPerUnit The delay per units in seconds and how many times it should be executed.
      * @param loops The times the animation is going to loop.
      */
     static Animation* create(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops = 1);

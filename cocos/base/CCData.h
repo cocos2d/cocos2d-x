@@ -116,7 +116,7 @@ public:
     /** 
      * Check whether the data is null.
      *
-     * @return True if the the Data is null, false if not.
+     * @return True if the Data is null, false if not.
      */
     bool isNull() const;
     

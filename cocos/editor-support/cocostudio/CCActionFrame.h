@@ -293,7 +293,7 @@ public:
     /**
     * Gets the scale action scaleY.
     *
-    * @return the the scale action scaleY.
+    * @return the scale action scaleY.
     */
     float getScaleY();
 

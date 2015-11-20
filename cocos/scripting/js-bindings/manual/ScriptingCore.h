@@ -39,7 +39,7 @@
 #include <assert.h>
 #include <memory>
 
-#define ENGINE_VERSION "Cocos2d-JS v3.9 Beta0"
+#define ENGINE_VERSION "Cocos2d-JS v3.9"
 
 void js_log(const char *format, ...);
 
@@ -455,7 +455,7 @@ public:
     void debugProcessInput(const std::string& str);
     /**@~english
      * Enable the debug environment, mozilla Firefox's remote debugger or Code IDE can connect to it.
-     * @param port @~english The port to connect with the debug enviroment, default value is 5086
+     * @param port @~english The port to connect with the debug environment, default value is 5086
      */
     void enableDebugger(unsigned int port = 5086);
     /**@~english

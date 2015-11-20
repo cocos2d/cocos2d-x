@@ -158,6 +158,13 @@ RenderState::StateBlock* RenderState::getStateBlock() const
     return _state;
 }
 
+void RenderState::setStateBlock(RenderState::StateBlock* state)
+{
+    CC_SAFE_RETAIN(state);
+    CC_SAFE_RELEASE(_state);
+    _state = state;
+}
+
 void RenderState::cloneInto(RenderState* renderState) const
 {
     CCASSERT(renderState, "must be non null");

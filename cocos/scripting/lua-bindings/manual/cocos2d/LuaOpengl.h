@@ -47,7 +47,7 @@ class GLNode:public cocos2d::Node
 {
 public:
     /**
-     * Destrutor.
+     * Destructor.
      *
      * @lua NA
      * @js NA

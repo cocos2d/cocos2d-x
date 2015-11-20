@@ -483,7 +483,7 @@ public:
     /**
      * Inverts this matrix.
      *
-     * @return true if the the matrix can be inverted, false otherwise.
+     * @return true if the matrix can be inverted, false otherwise.
      */
     bool inverse();
 

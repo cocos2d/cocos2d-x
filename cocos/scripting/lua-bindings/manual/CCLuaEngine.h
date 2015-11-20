@@ -66,7 +66,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE static LuaEngine* defaultEngine(void) { return LuaEngine::getInstance(); }
     
     /** 
-     * Destrutor of LuaEngine.
+     * Destructor of LuaEngine.
      */
     virtual ~LuaEngine(void);
     
@@ -105,7 +105,7 @@ public:
     
     /**
      * Reload script code corresponding to moduleFileName.
-     * If value of package["loaded"][moduleFileName] is existed, it would set the vaule nil.Then,it calls executeString function.
+     * If value of package["loaded"][moduleFileName] is existed, it would set the value nil.Then,it calls executeString function.
      *
      * @param moduleFileName String object holding the filename of the script file that is to be executed.
      * @return 0 if the string is executed correctly or other if the string is executed wrongly.
@@ -126,14 +126,14 @@ public:
     /**
      * Remove Lua function reference by nHandler by setting toluafix_refid_function_mapping[nHandle] nil.
      *
-     * @param nHandler the function reference index to find the correspoinding Lua function pointer.
+     * @param nHandler the function reference index to find the corresponding Lua function pointer.
      */
     virtual void removeScriptHandler(int nHandler) override;
     
     /**
      * Reallocate Lua function reference index to the Lua function pointer to add reference.
      *
-     * @param nHandler the function reference index to find the correspoinding Lua function pointer.
+     * @param nHandler the function reference index to find the corresponding Lua function pointer.
      */
     virtual int reallocateScriptHandler(int nHandler) override;
     

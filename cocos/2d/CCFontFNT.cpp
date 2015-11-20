@@ -98,7 +98,7 @@ typedef struct _KerningHashElement
     UT_hash_handle	hh;
 } tKerningHashElement;
 
-/** @brief BMFontConfiguration has parsed configuration of the the .fnt file
+/** @brief BMFontConfiguration has parsed configuration of the .fnt file
 @since v0.8
 */
 class CC_DLL BMFontConfiguration : public Ref
