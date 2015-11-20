@@ -672,8 +672,8 @@ namespace ui {
             PageView* page = static_cast<PageView*>(_owner);
             page->forceDoLayout();
 
-            Vector<Layout*> _layoutVector = page->getPages();
-            for(auto& item : _layoutVector)
+            Vector<Widget*> _widgetVector = page->getItems();
+            for(auto& item : _widgetVector)
             {
                 ui::Helper::doLayout(item);
             }
