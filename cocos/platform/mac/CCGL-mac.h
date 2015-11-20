@@ -32,6 +32,7 @@ THE SOFTWARE.
 #import <OpenGL/gl.h>
 #import <OpenGL/glu.h>
 #import <OpenGL/glext.h>
+#include "platform/CCGL_compatible.h"
 
 #define CC_GL_DEPTH24_STENCIL8      -1
 

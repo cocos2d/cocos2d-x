@@ -43,6 +43,7 @@ Configuration::Configuration()
 , _maxModelviewStackDepth(0)
 , _supportsPVRTC(false)
 , _supportsETC1(false)
+, _supportsETC2(false)
 , _supportsS3TC(false)
 , _supportsATITC(false)
 , _supportsNPOT(false)
@@ -130,6 +131,16 @@ void Configuration::gatherGPUInfo()
     
     _supportsETC1 = checkForGLExtension("GL_OES_compressed_ETC1_RGB8_texture");
     _valueDict["gl.supports_ETC1"] = Value(_supportsETC1);
+
+    GLint majorVersion = 0;
+#if (CC_TARGET_OPENGLES == CC_OPENGLES_3)
+    glGetIntegerv(GL_MAJOR_VERSION, &majorVersion);
+#endif
+    if (majorVersion >= 3)
+    {
+        _supportsETC2 = true;
+    }
+    _valueDict["gl.supports_ETC2"] = Value(_supportsETC2);
     
     _supportsS3TC = checkForGLExtension("GL_EXT_texture_compression_s3tc");
     _valueDict["gl.supports_S3TC"] = Value(_supportsS3TC);
@@ -234,6 +245,11 @@ bool Configuration::supportsETC() const
 #else
     return false;
 #endif
+}
+
+bool Configuration::supportsETC2() const
+{
+    return _supportsETC2;
 }
 
 bool Configuration::supportsS3TC() const
