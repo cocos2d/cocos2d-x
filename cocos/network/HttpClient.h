@@ -94,7 +94,7 @@ public:
     void setSSLVerification(const std::string& caFile);
     
     /**
-     * Get ths ssl CA filename
+     * Get the ssl CA filename
      * 
      * @return the ssl CA filename
      */

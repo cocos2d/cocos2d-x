@@ -352,7 +352,7 @@ SpriteFrameCache::addSpriteFramesWithFile().
 implemented similar Desktop version; Left button send mouse event and touch; Support other mouse button and scroll 
 wheel.
 
-[REFINE]        Platform: Correct the convertion between unicode and utf8 on WinRT.
+[REFINE]        Platform: Correct the conversion between unicode and utf8 on WinRT.
 
 [REFINE]        Platform: Improved EditBox implement on Win32 platform.
 
