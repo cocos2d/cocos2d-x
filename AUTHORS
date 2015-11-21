@@ -401,7 +401,7 @@ Developers:
         Adding an additional transform for CCNode.
 
     giginet
-        Fix CCRepeat#create is recieved bad argument on Lua binding.
+        Fix CCRepeat#create is received bad argument on Lua binding.
         Added a feature that CCSSceneReader can load name properties as node names.
         Added Rect::intersectsCircle().
 
@@ -444,7 +444,7 @@ Developers:
 
     csy1988525
         Fixing a bug about display result is wrong when invoking CCControlButton:: setHighlighted.
-        fixed a bug when button's parent is hided, the button still can responce to clicked event.
+        fixed a bug when button's parent is hided, the button still can response to clicked event.
 
     Asad ur Rehman (AsadR)
         Adding CCNotificationCenter::removeAllObservers(CCObject *target).
@@ -913,7 +913,7 @@ Developers:
         Fixed a potential memory leak in CCEditBoxImplIOS.mm
         Fixed incompatible pointer conversion in external/chipmunk/src/cpArray.c
         Fixed memory leak in 'Image'
-        Fixed loosing precision when using 'recv' in 'Console'
+        Fixed losing precision when using 'recv' in 'Console'
         Fixed link error with Xcode 6 when building with 32-bit architecture
         Fixed CMake for Mac OS X
         
@@ -1008,7 +1008,7 @@ Developers:
         Make `setup.py` work on zsh
         
     taug
-        Could add seach path and resolution order path in front.
+        Could add search path and resolution order path in front.
         
     CaiCQ
         Fix a but that LabelTTF may lost chinese characters on linux
@@ -1066,7 +1066,7 @@ Developers:
         Fixed the bug that Console::sendPrompt() will send extra `\0`
         
     kaishiqi
-        Fixed a but that cursor postion is wrong on desktop.
+        Fixed a but that cursor position is wrong on desktop.
         
     jagd
         Added setSubsteps() and getSubsteps() in PhysicsWorld
@@ -1185,7 +1185,7 @@ Developers:
         Fixed a bug in FileUtilsWin32::removeDirectory when the file begins with ".".
         Corrected the keyboard codes for Desktop and WinRT.
         Added some support for mouse on WinRT.
-        Correct the convertion between unicode and utf8 on WinRT.
+        Correct the conversion between unicode and utf8 on WinRT.
         
     qiutaoleo
         Added a feature to check case characters for filename on windows
