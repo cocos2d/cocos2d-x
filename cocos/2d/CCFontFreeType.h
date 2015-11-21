@@ -66,9 +66,13 @@ public:
 
     FT_Encoding getEncoding() const { return _encoding; }
 
-    int* getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
+    int* getHorizontalKerningForTextUTF32(const std::u32string& text, int &outNumLetters) const override;
     
-    unsigned char* getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance);
+    unsigned char* getGlyphBitmap(char32_t theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance);
+    CC_DEPRECATED_ATTRIBUTE inline unsigned char* getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance)
+    {
+        return getGlyphBitmap(static_cast<char32_t>(theChar), outWidth, outHeight, outRect, xAdvance);
+    }
     
     int getFontAscender() const;
 
@@ -88,8 +92,8 @@ private:
     bool initFreeType();
     FT_Library getFTLibrary();
     
-    int getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
-    unsigned char* getGlyphBitmapWithOutline(unsigned short code, FT_BBox &bbox);
+    int getHorizontalKerningForChars(char32_t firstChar, char32_t secondChar) const;
+    unsigned char* getGlyphBitmapWithOutline(char32_t code, FT_BBox &bbox);
 
     void setGlyphCollection(GlyphCollection glyphs, const char* customGlyphs = nullptr);
     const char* getGlyphCollection() const;

@@ -57,7 +57,7 @@ BMFont definition
 */
 typedef struct _BMFontDef {
     //! ID of the character
-    unsigned int charID;
+    char32_t charID;
     //! origin and size of the font
     Rect rect;
     //! The X amount the image should be offset when drawing the image (in pixels)
@@ -85,7 +85,7 @@ typedef struct _BMFontPadding {
 
 typedef struct _FontDefHashElement
 {
-    unsigned int    key;        // key. Font Unicode value
+    char32_t        key;        // key. Font Unicode value
     BMFontDef       fontDef;    // font definition
     UT_hash_handle  hh;
 } tFontDefHashElement;
@@ -93,7 +93,7 @@ typedef struct _FontDefHashElement
 // Equal function for targetSet.
 typedef struct _KerningHashElement
 {
-    int				key;        // key for the hash. 16-bit for 1st element, 16-bit for 2nd element
+    uint64_t		key;        // key for the hash. 16-bit for 1st element, 16-bit for 2nd element
     int				amount;
     UT_hash_handle	hh;
 } tKerningHashElement;
@@ -118,7 +118,7 @@ public://@public
     tKerningHashElement *_kerningDictionary;
     
     // Character Set defines the letters that actually exist in the font
-    std::set<unsigned int> *_characterSet;
+    std::set<char32_t> *_characterSet;
 public:
     /**
      * @js ctor
@@ -144,10 +144,10 @@ public:
     inline const std::string& getAtlasName(){ return _atlasName; }
     inline void setAtlasName(const std::string& atlasName) { _atlasName = atlasName; }
     
-    std::set<unsigned int>* getCharacterSet() const;
+    std::set<char32_t>* getCharacterSet() const;
 private:
-    std::set<unsigned int>* parseConfigFile(const std::string& controlFile);
-    std::set<unsigned int>* parseBinaryConfigFile(unsigned char* pData, unsigned long size, const std::string& controlFile);
+    std::set<char32_t>* parseConfigFile(const std::string& controlFile);
+    std::set<char32_t>* parseBinaryConfigFile(unsigned char* pData, unsigned long size, const std::string& controlFile);
     void parseCharacterDefinition(const char* line, BMFontDef *characterDefinition);
     void parseInfoArguments(const char* line);
     void parseCommonArguments(const char* line);
@@ -215,7 +215,7 @@ bool BMFontConfiguration::initWithFNTfile(const std::string& FNTfile)
     return true;
 }
 
-std::set<unsigned int>* BMFontConfiguration::getCharacterSet() const
+std::set<char32_t>* BMFontConfiguration::getCharacterSet() const
 {
     return _characterSet;
 }
@@ -270,14 +270,13 @@ void BMFontConfiguration::purgeFontDefDictionary()
     }
 }
 
-std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& controlFile)
+std::set<char32_t>* BMFontConfiguration::parseConfigFile(const std::string& controlFile)
 {
     Data data = FileUtils::getInstance()->getDataFromFile(controlFile);
     CCASSERT((!data.isNull()), "BMFontConfiguration::parseConfigFile | Open file error.");
 
     if (memcmp("BMF", data.getBytes(), 3) == 0) {
-        std::set<unsigned int>* ret = parseBinaryConfigFile(data.getBytes(), data.getSize(), controlFile);
-        return ret;
+        return parseBinaryConfigFile(data.getBytes(), data.getSize(), controlFile);
     }
 
     auto contents = (const char*)data.getBytes();
@@ -287,7 +286,7 @@ std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& 
         return nullptr;
     }
 
-    std::set<unsigned int> *validCharsString = new std::set<unsigned int>();
+    auto validCharsString = new std::set<char32_t>();
     
     auto contentsLen = data.getSize();
     char line[512];
@@ -357,11 +356,11 @@ std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& 
     return validCharsString;
 }
 
-std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char* pData, unsigned long size, const std::string& controlFile)
+std::set<char32_t>* BMFontConfiguration::parseBinaryConfigFile(unsigned char* pData, unsigned long size, const std::string& controlFile)
 {
     /* based on http://www.angelcode.com/products/bmfont/doc/file_format.html file format */
 
-    set<unsigned int> *validCharsString = new set<unsigned int>();
+    auto *validCharsString = new set<char32_t>();
 
     unsigned long remains = size;
 
@@ -677,7 +676,7 @@ void FontFNT::purgeCachedData()
     }
 }
 
-int * FontFNT::getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const
+int* FontFNT::getHorizontalKerningForTextUTF32(const std::u32string& text, int &outNumLetters) const
 {
     outNumLetters = static_cast<int>(text.length());
     
@@ -699,10 +698,10 @@ int * FontFNT::getHorizontalKerningForTextUTF16(const std::u16string& text, int 
     return sizes;
 }
 
-int  FontFNT::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const
+int  FontFNT::getHorizontalKerningForChars(char32_t firstChar, char32_t secondChar) const
 {
     int ret = 0;
-    unsigned int key = (firstChar << 16) | (secondChar & 0xffff);
+    uint64_t key = ((uint64_t)(firstChar) << 32) | (secondChar & 0xffffffffULL);
     
     if (_configuration->_kerningDictionary)
     {

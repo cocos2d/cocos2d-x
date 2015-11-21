@@ -135,6 +135,7 @@ CC_DLL void trimUTF16Vector(std::vector<char16_t>& str);
  *
  */
 CC_DLL bool isUnicodeSpace(char16_t ch);
+CC_DLL bool isUnicodeSpace(char32_t ch);
 
 /**
  *  @brief Whether the character is a Chinese/Japanese/Korean character.
@@ -146,6 +147,7 @@ CC_DLL bool isUnicodeSpace(char16_t ch);
  *
  */
 CC_DLL bool isCJKUnicode(char16_t ch);
+CC_DLL bool isCJKUnicode(char32_t ch);
 
 /**
  *  @brief Returns the length of the string in characters.

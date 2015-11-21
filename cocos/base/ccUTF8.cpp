@@ -73,14 +73,19 @@ static void trimUTF16VectorFromIndex(std::vector<char16_t>& str, int index)
  *
  * Return value: weather the character is a whitespace character.
  * */
-bool isUnicodeSpace(char16_t ch)
+bool isUnicodeSpace(char32_t ch)
 {
     return  (ch >= 0x0009 && ch <= 0x000D) || ch == 0x0020 || ch == 0x0085 || ch == 0x00A0 || ch == 0x1680
     || (ch >= 0x2000 && ch <= 0x200A) || ch == 0x2028 || ch == 0x2029 || ch == 0x202F
     ||  ch == 0x205F || ch == 0x3000;
 }
 
-bool isCJKUnicode(char16_t ch)
+bool isUnicodeSpace(char16_t ch)
+{
+    isUnicodeSpace(static_cast<char32_t>(ch));
+}
+
+bool isCJKUnicode(char32_t ch)
 {
     return (ch >= 0x4E00 && ch <= 0x9FBF)   // CJK Unified Ideographs
         || (ch >= 0x2E80 && ch <= 0x2FDF)   // CJK Radicals Supplement & Kangxi Radicals
@@ -90,6 +95,11 @@ bool isCJKUnicode(char16_t ch)
         || (ch >= 0xF900 && ch <= 0xFAFF)   // CJK Compatibility Ideographs
         || (ch >= 0xFE30 && ch <= 0xFE4F)   // CJK Compatibility Forms
         || (ch >= 0x31C0 && ch <= 0x4DFF);  // Other exiensions
+}
+
+bool isCJKUnicode(char16_t ch)
+{
+    isCJKUnicode(static_cast<char32_t>(ch));
 }
 
 void trimUTF16Vector(std::vector<char16_t>& str)
@@ -280,13 +290,13 @@ void cc_utf8_trim_ws(std::vector<unsigned short>* str)
 
 bool isspace_unicode(unsigned short ch)
 {
-    return StringUtils::isUnicodeSpace(ch);
+    return StringUtils::isUnicodeSpace(static_cast<char32_t>(ch));
 }
 
 
 bool iscjk_unicode(unsigned short ch)
 {
-    return StringUtils::isCJKUnicode(ch);
+    return StringUtils::isCJKUnicode(static_cast<char32_t>(ch));
 }
 
 
