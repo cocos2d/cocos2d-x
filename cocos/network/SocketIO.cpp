@@ -705,7 +705,7 @@ void SIOClientImpl::send(SocketIOPacket *packet)
         _ws->send(req.data());
     }
     else
-        CCLOGINFO("Cant send the message (%s) because disconnected", req.c_str());
+        CCLOGINFO("Can't send the message (%s) because disconnected", req.c_str());
 }
 
 void SIOClientImpl::emit(const std::string& endpoint, const std::string& eventname, const std::string& args)
