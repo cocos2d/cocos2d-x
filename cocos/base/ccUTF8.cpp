@@ -116,43 +116,94 @@ void trimUTF16Vector(std::vector<char16_t>& str)
     }
 }
 
-bool UTF8ToUTF16(const std::string& utf8, std::u16string& outUtf16)
+
+template <typename T>
+struct ConvertTrait {
+    typedef T ArgType;
+};
+template <>
+struct ConvertTrait<char> {
+    typedef UTF8 ArgType;
+};
+template <>
+struct ConvertTrait<char16_t> {
+    typedef UTF16 ArgType;
+};
+template <>
+struct ConvertTrait<char32_t> {
+    typedef UTF32 ArgType;
+};
+
+template <typename From, typename To, typename FromTrait = ConvertTrait<From>, typename ToTrait = ConvertTrait<To>>
+bool utfConvert(
+    const std::basic_string<From>& from, std::basic_string<To>& to,
+    ConversionResult(*cvtfunc)(const typename FromTrait::ArgType**, const typename FromTrait::ArgType*,
+        typename ToTrait::ArgType**, typename ToTrait::ArgType*,
+        ConversionFlags)
+    )
 {
-    if (utf8.empty())
+    static_assert(sizeof(From) == sizeof(typename FromTrait::ArgType), "Error size mismatched");
+    static_assert(sizeof(To) == sizeof(typename ToTrait::ArgType), "Error size mismatched");
+
+    if (from.empty())
     {
-        outUtf16.clear();
+        to.clear();
         return true;
     }
 
-    bool ret = false;
-    
-    const size_t utf16Bytes = (utf8.length()+1) * sizeof(char16_t);
-    char16_t* utf16 = (char16_t*)malloc(utf16Bytes);
-    memset(utf16, 0, utf16Bytes);
+    // See: http://unicode.org/faq/utf_bom.html#gen6
+    static const int most_bytes_per_character = 4;
 
-    char* utf16ptr = reinterpret_cast<char*>(utf16);
-    const UTF8* error = nullptr;
+    const size_t maxNumberOfChars = from.length(); // all UTFs at most one element represents one character.
+    const size_t numberOfOut = maxNumberOfChars * most_bytes_per_character / sizeof(To);
 
-    if (llvm::ConvertUTF8toWide(2, utf8, utf16ptr, error))
-    {
-        outUtf16 = utf16;
-        ret = true;
-    }
+    std::basic_string<To> working(numberOfOut, 0);
 
-    free(utf16);
+    auto inbeg = reinterpret_cast<const typename FromTrait::ArgType*>(&from[0]);
+    auto inend = inbeg + from.length();
 
-    return ret;
+
+    auto outbeg = reinterpret_cast<typename ToTrait::ArgType*>(&working[0]);
+    auto outend = outbeg + working.length();
+    auto r = cvtfunc(&inbeg, inend, &outbeg, outend, strictConversion);
+    if (r != conversionOK)
+        return false;
+
+    working.resize(reinterpret_cast<To*>(outbeg) - &working[0]);
+    to = std::move(working);
+
+    return true;
+};
+
+
+bool UTF8ToUTF16(const std::string& utf8, std::u16string& outUtf16)
+{
+    return utfConvert(utf8, outUtf16, ConvertUTF8toUTF16);
+}
+
+bool UTF8ToUTF32(const std::string& utf8, std::u32string& outUtf32)
+{
+    return utfConvert(utf8, outUtf32, ConvertUTF8toUTF32);
 }
 
 bool UTF16ToUTF8(const std::u16string& utf16, std::string& outUtf8)
 {
-    if (utf16.empty())
-    {
-        outUtf8.clear();
-        return true;
-    }
+    return utfConvert(utf16, outUtf8, ConvertUTF16toUTF8);
+}
+    
+bool UTF16ToUTF32(const std::u16string& utf16, std::u32string& outUtf32)
+{
+    return utfConvert(utf16, outUtf32, ConvertUTF16toUTF32);
+}
 
-    return llvm::convertUTF16ToUTF8String(utf16, outUtf8);
+bool UTF32ToUTF8(const std::u32string& utf32, std::string& outUtf8)
+{
+    return utfConvert(utf32, outUtf8, ConvertUTF32toUTF8);
+}
+
+bool UTF32ToUTF16(const std::u32string& utf32, std::u16string& outUtf16)
+{
+    return utfConvert(utf32, outUtf16, ConvertUTF32toUTF16);
 }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) 
@@ -198,14 +249,7 @@ jstring newStringUTFJNI(JNIEnv* env, std::string utf8Str, bool* ret)
 
 std::vector<char16_t> getChar16VectorFromUTF16String(const std::u16string& utf16)
 {
-    std::vector<char16_t> ret;
-    size_t len = utf16.length();
-    ret.reserve(len);
-    for (size_t i = 0; i < len; ++i)
-    {
-        ret.push_back(utf16[i]);
-    }
-    return ret;
+    return std::vector<char16_t>(utf16.begin(), utf16.end());
 }
 
 long getCharacterCountInUTF8String(const std::string& utf8)
