@@ -28,7 +28,7 @@ cocos2d-x-3.9 November.09 2015
 [REFINE]        Platform: Fixed a crash on xiaomi2 if Cocos2d-x is built as a dynamic library.
 [REFINE]        Platform: Updated libcococs2d name to v3.9 on WinRT platforms.
 [REFINE]        Platform: Added some support for mouse on WinRT. Include: Show/Hide mouse cursor; Mouse event implemented similar Desktop version; Left button send mouse event and touch; Support other mouse button and scroll wheel.
-[REFINE]        Platform: Correct the convertion between unicode and utf8 on WinRT.
+[REFINE]        Platform: Correct the conversion between unicode and utf8 on WinRT.
 [REFINE]        Platform: Improved EditBox implement on Win32 platform.
 [REFINE]        JS: Add jsb.fileUtils.writeDataToFile().
 [REFINE]        JS: Set js templates Mac target platform from null to 10.7.
@@ -391,10 +391,10 @@ cocos2d-x-3.7.1    August.12 2015
 
 cocos2d-x-3.7final July.21 2015
     [REFINE]        JS: Improve manual binding code for `retain`, `release`, `onEnter`, `onExit`, `onEnterTransitionDidFinish` and `onExitTransitionDidStart`
-    [REFINE]        web: Add compatible Uint16Array defintion
+    [REFINE]        web: Add compatible Uint16Array definition
 
     [FIX]           Scale9Sprite: Fixed Scale9Sprite gray state issue while `setCapInsets` called
-    [FIX]           studio: Fixed parser issue by checking texture existance
+    [FIX]           studio: Fixed parser issue by checking texture existence
     [FIX]           studio: Fixed Armature parser issue
     [FIX]           JS: Fixed cleanup overriding issue in JS that it will cause `too much recursion` error
     [FIX]           web: Fixed url check regular expression not supporting localhost issue
@@ -915,7 +915,7 @@ cocos2d-x-3.3alpha0  Aug.28 2014
     [FIX]           VideoPlayer: video frame size is not calculated correctly on iOS
     [FIX]           VideoPlayer: video player not showing on iOS if it's not in FullScreen mode
 
-    [FIX]           Others: can not import java library shift by engine correctly when using Eclispe on Android
+    [FIX]           Others: can not import java library shift by engine correctly when using Eclipse on Android
     [FIX]           Others: optimize FPS control algorithm on Android
 
     [FIX]           Lua-binding: replace dynamic_cast to std::is_base_of in object_to_luaval
@@ -1545,7 +1545,7 @@ cocos2d-x-3.0alpha0 @Sep.19 2013
      [FIX]          Status bar can be hidden on iOS 7
      [FIX]          Added iOS7 icons to templates and tests
 [Mac OS X]
-     [NEW]          iOS and Mac tempaltes were merged into one single Xcode project file.
+     [NEW]          iOS and Mac templates were merged into one single Xcode project file.
      [NEW]          Added Lua template
 [JavaScript bindings]
      [FIX]          CCBReader is able to set properties to owner if 'owner var' is setted
