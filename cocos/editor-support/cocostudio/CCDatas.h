@@ -441,7 +441,7 @@ public:
     cocos2d::tweenfunc::TweenType tweenEasing;
 
     /**
-    * @brief    save movment bone data
+    * @brief    save movement bone data
     * @key    const std::string& 
     * @value    MovementBoneData *
     */
