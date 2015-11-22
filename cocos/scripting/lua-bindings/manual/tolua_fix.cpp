@@ -208,7 +208,7 @@ TOLUA_API void toluafix_remove_function_by_refid(lua_State* L, int refid)
     // luaL_unref(L, LUA_REGISTRYINDEX, refid);
 }
 
-// check lua value is funciton
+// check lua value is function
 TOLUA_API int toluafix_isfunction(lua_State* L, int lo, const char* type, int def, tolua_Error* err)
 {
     if (lua_gettop(L) >= abs(lo) && lua_isfunction(L, lo))
