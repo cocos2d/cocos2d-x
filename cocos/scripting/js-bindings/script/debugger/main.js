@@ -201,7 +201,7 @@ var DebuggerServer = {
    *
    * @param function aAllowConnectionCallback
    *        The embedder-provider callback, that decides whether an incoming
-   *        remote protocol conection should be allowed or refused.
+   *        remote protocol connection should be allowed or refused.
    */
   init: function DS_init(aAllowConnectionCallback) {
     if (this.initialized) {
@@ -221,7 +221,7 @@ var DebuggerServer = {
    *
    * @param function aAllowConnectionCallback
    *        The embedder-provider callback, that decides whether an incoming
-   *        remote protocol conection should be allowed or refused.
+   *        remote protocol connection should be allowed or refused.
    */
   initTransport: function DS_initTransport(aAllowConnectionCallback) {
     if (this._transportInitialized) {

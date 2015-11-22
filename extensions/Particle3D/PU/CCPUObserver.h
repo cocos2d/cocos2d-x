@@ -159,7 +159,7 @@ public:
     bool getObserveUntilEvent(void) const;
 
     /** Sets the value of mObserveUntilEvent. This value determines whether observation must be continued
-        after an event ocurred and the event handlers are called.
+        after an event occurred and the event handlers are called.
     */
     void setObserveUntilEvent(bool observeUntilEvent);
 

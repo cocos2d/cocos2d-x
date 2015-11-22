@@ -477,7 +477,7 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
 {
 	//CCLOG("socket callback for %d reason", reason);
     CCASSERT(_wsContext == nullptr || ctx == _wsContext, "Invalid context.");
-    CCASSERT(_wsInstance == nullptr || wsi == nullptr || wsi == _wsInstance, "Invaild websocket instance.");
+    CCASSERT(_wsInstance == nullptr || wsi == nullptr || wsi == _wsInstance, "Invalid websocket instance.");
 
 	switch (reason)
     {

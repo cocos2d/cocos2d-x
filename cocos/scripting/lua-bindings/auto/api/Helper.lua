@@ -62,7 +62,7 @@
 --------------------------------
 -- Find a widget with a specific tag from root widget.<br>
 -- This search will be recursive throught all child widgets.<br>
--- param root      The be seached root widget.<br>
+-- param root      The be searched root widget.<br>
 -- param tag       The widget tag.<br>
 -- return Widget instance pointer.
 -- @function [parent=#Helper] seekWidgetByTag 

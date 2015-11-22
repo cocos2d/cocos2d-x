@@ -1062,7 +1062,7 @@ var _initSys = function () {
      * @constant
      * @type {Number}
      */
-    sys.LANGUAGE_UNKNOWN = "unkonwn";
+    sys.LANGUAGE_UNKNOWN = "unknown";
 
     /**
      * @memberof cc.sys

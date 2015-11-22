@@ -213,7 +213,7 @@ private:
 
 public:
     /**
-     * Construtor of SIOClient class.
+     * Constructor of SIOClient class.
      *
      * @param host the string that represent the host address.
      * @param port the int value represent the port number.

@@ -105,7 +105,7 @@ cc.KEY = {
     '-':109,
     'numdel':110,
     '/':111,
-    f1:112, //f1-f12 dont work on ie
+    f1:112, //f1-f12 don't work on ie
     f2:113,
     f3:114,
     f4:115,
@@ -139,7 +139,7 @@ cc.KEY = {
     closebracket:221,
     quote:222,
 
-    // gamepad controll
+    // gamepad control
     dpadLeft:1000,
     dpadRight:1001,
     dpadUp:1003,
