@@ -122,7 +122,7 @@ public:
     float getMovementFrequency(void) const;
     void setMovementFrequency(float movementFrequency);
 
-    /** Suppress (re)generation of the forcefield everytime an attribute is changed.
+    /** Suppress (re)generation of the forcefield every time an attribute is changed.
     */
     void suppressGeneration(bool suppress);
 

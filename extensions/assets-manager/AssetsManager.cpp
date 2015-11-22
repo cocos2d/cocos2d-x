@@ -253,7 +253,7 @@ void AssetsManager::downloadAndUncompress()
 void AssetsManager::update()
 {
     // all operation in checkUpdate, nothing need to do
-    // keep this function for compatiblity
+    // keep this function for compatibility
 }
 
 bool AssetsManager::uncompress()
