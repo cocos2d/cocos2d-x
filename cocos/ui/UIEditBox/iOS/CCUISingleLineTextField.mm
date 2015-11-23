@@ -56,7 +56,7 @@
     
 }
 
-- (void)setTextAlignMent:(cocos2d::TextHAlignment)hAlign :(cocos2d::TextVAlignment)vAlign
+- (void)setTextAlignment:(cocos2d::TextHAlignment)hAlign :(cocos2d::TextVAlignment)vAlign
 {
     switch (hAlign) {
         case cocos2d::TextHAlignment::LEFT :
