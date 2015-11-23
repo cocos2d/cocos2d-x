@@ -339,7 +339,9 @@ Data FileUtilsAndroid::getData(const std::string& filename, bool forString)
             {
                 data = (unsigned char*) malloc(fileSize);
             }
-            fileSize = fread(data,sizeof(unsigned char), fileSize,fp);
+            if (data) {
+                fileSize = fread(data, sizeof(unsigned char), fileSize, fp);
+            }
             fclose(fp);
 
             size = fileSize;
@@ -443,7 +445,9 @@ unsigned char* FileUtilsAndroid::getFileData(const std::string& filename, const 
             fileSize = ftell(fp);
             fseek(fp,0,SEEK_SET);
             data = (unsigned char*) malloc(fileSize);
-            fileSize = fread(data,sizeof(unsigned char), fileSize,fp);
+            if (data) {
+                fileSize = fread(data, sizeof(unsigned char), fileSize, fp);
+            }
             fclose(fp);
 
             if (size)
