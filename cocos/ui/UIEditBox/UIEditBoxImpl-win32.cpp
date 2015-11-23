@@ -513,7 +513,7 @@ LRESULT CALLBACK CWin32InputBox::DlgProc(HWND hDlg, UINT message, WPARAM wParam,
 						  _this->InitDialog();
 
 						  // Set timer for rendering
-						  TIMERPROC lpTimerFunc = [](HWND, UINT, UINT, DWORD) {
+						  TIMERPROC lpTimerFunc = [](HWND, UINT, UINT_PTR, DWORD) {
 						      auto director = cocos2d::Director::getInstance();
 						      auto glview = director->getOpenGLView();
 						      director->mainLoop();
