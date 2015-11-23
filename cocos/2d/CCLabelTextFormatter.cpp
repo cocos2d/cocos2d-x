@@ -165,7 +165,7 @@ bool Label::multilineTextWrapByWord()
             recordLetterInfo(letterPosition, character, letterIndex, lineIndex);
 
             if (_horizontalKernings && letterIndex < textLen - 1)
-                nextLetterX += _horizontalKernings[letterIndex + 1];
+                nextLetterX += _horizontalKernings[letterIndex];
             nextLetterX += letterDef.xAdvance + _additionalKerning;
 
             wordRight = letterPosition.x + letterDef.width;
@@ -276,7 +276,7 @@ bool Label::multilineTextWrapByChar()
         recordLetterInfo(letterPosition, character, index, lineIndex);
 
         if (_horizontalKernings && index < textLen - 1)
-            nextLetterX += _horizontalKernings[index + 1];
+            nextLetterX += _horizontalKernings[index];
         nextLetterX += letterDef.xAdvance + _additionalKerning;
 
         letterRight = letterPosition.x + letterDef.width;
