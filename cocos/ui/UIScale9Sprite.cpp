@@ -1198,8 +1198,18 @@ namespace ui {
         const unsigned short sliceQuadIndices[] = {4,0,5, 1,5,0};
         const unsigned short simpleQuadIndices[] = {0,1,2, 3,2,1};
         
+        auto displayedColor = _scale9Image->getDisplayedColor();
+        auto displayedOpacity = _scale9Image->getDisplayedOpacity();
+        Color4B color4( displayedColor.r, displayedColor.g, displayedColor.b, displayedOpacity );
+        
+        // special opacity for premultiplied textures
+        if (_scale9Image->isOpacityModifyRGB())
+        {
+            color4.r *= displayedOpacity/255.0f;
+            color4.g *= displayedOpacity/255.0f;
+            color4.b *= displayedOpacity/255.0f;
+        }
 
-        Color4B color4 = Color4B(_scale9Image->getDisplayedColor());
         int vertexCount = (int)(vertices.size() - 1);
 
         for (int j = 0; j <= vertexCount; ++j)
