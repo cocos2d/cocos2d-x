@@ -353,6 +353,22 @@ void EditBox::setReturnType(EditBox::KeyboardReturnType returnType)
     }
 }
 
+void EditBox::setPadding(float left, float top, float right, float bottom)
+{
+    if (_editBoxImpl != nullptr )
+    {
+        _editBoxImpl->setPadding(left, top, right, bottom);
+    }
+}
+
+void EditBox::setTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign)
+{
+    if (_editBoxImpl != nullptr)
+    {
+        _editBoxImpl->setTextAlignment(hAlign, vAlign);
+    }
+}
+    
 /* override function */
 void EditBox::setPosition(const Vec2& pos)
 {

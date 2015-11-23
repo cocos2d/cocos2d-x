@@ -199,6 +199,16 @@ void EditBoxImplIOS::nativeCloseKeyboard()
 {
     [_systemControl closeKeyboard];
 }
+
+void EditBoxImplIOS::setNativePadding(float left, float top, float right, float bottom)
+{
+    [_systemControl setInnerPadding:left :top :right :bottom];
+}
+    
+void EditBoxImplIOS::setNativeTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign)
+{
+    [_systemControl setTextAlignMent:hAlign :vAlign];
+}
     
 UIFont* EditBoxImplIOS::constructFont(const char *fontName, int fontSize)
 {

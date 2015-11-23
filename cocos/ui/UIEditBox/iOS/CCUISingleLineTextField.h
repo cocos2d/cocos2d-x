@@ -26,8 +26,17 @@
 
 #import <UIKit/UIKit.h>
 #import "UITextField+CCUITextInput.h"
+#include "base/CCDirector.h"
 
 /** TODO: Missing doc - Why is this subclass necessary?
  */
 @interface CCUISingleLineTextField : UITextField
+
+@property (nonatomic, assign) float leftPadding;
+@property (nonatomic, assign) float topPadding;
+@property (nonatomic, assign) float rightPadding;
+@property (nonatomic, assign) float bottomPadding;
+
+- (void)setInnerPadding:(float)left :(float)top :(float)right :(float)bottom;
+- (void)setTextAlignMent:(cocos2d::TextHAlignment)hAlign :(cocos2d::TextVAlignment)vAlign;
 @end

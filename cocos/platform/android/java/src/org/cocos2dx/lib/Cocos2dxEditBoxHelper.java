@@ -102,16 +102,6 @@ public class Cocos2dxEditBoxHelper {
                 editBox.setTextColor(Color.WHITE);
                 editBox.setSingleLine();
                 editBox.setOpenGLViewScaleX(scaleX);
-                Resources r = mCocos2dxActivity.getResources();
-                float density =  r.getDisplayMetrics().density;
-                int paddingBottom = (int)(height * 0.33f / density);
-                paddingBottom = convertToSP(paddingBottom  - 5 * scaleX / density);
-                paddingBottom = paddingBottom / 2;
-                int paddingTop = paddingBottom;
-                int paddingLeft = (int)(5 * scaleX / density);
-                paddingLeft = convertToSP(paddingLeft);
-
-                editBox.setPadding(paddingLeft,paddingTop, 0, paddingBottom);
 
 
                 FrameLayout.LayoutParams lParams = new FrameLayout.LayoutParams(
@@ -382,7 +372,42 @@ public class Cocos2dxEditBoxHelper {
         });
     }
 
+    public static void setInnerPadding(final int index, final float left, final float top, final float right, final float bottom){
+        mCocos2dxActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Cocos2dxEditBox editBox = mEditBoxArray.get(index);
+                if (editBox != null) {
+                    float mScaleX = editBox.getOpenGLViewScaleX();
+                    Resources r = mCocos2dxActivity.getResources();
+                    float density =  r.getDisplayMetrics().density;
+                    int paddingLeft = (int)(left * mScaleX / density);
+                    paddingLeft = convertToSP(paddingLeft);
+                    int paddingTop = (int)(top * mScaleX / density);
+                    paddingTop = convertToSP(paddingTop);
+                    int paddingRight = (int)(right * mScaleX / density);
+                    paddingRight = convertToSP(paddingRight);
+                    int paddingBottom = (int)(bottom * mScaleX / density);
+                    paddingBottom = convertToSP(paddingBottom);
 
+                    editBox.setPadding(paddingLeft,paddingTop, paddingRight, paddingBottom);
+
+                }
+            }
+        });
+    }
+
+    public static void setTextAlignment(final int index, final int hAlign, final int vAlign){
+        mCocos2dxActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Cocos2dxEditBox editBox = mEditBoxArray.get(index);
+                if (editBox != null) {
+                    editBox.setInputTextAlignment(hAlign, vAlign);
+                }
+            }
+        });
+    }
 
     public static void openKeyboard(int index) {
         final InputMethodManager imm = (InputMethodManager) mCocos2dxActivity.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);

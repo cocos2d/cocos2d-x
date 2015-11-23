@@ -26,8 +26,6 @@
 
 #import "CCUIMultilineTextField.h"
 
-#include "base/CCDirector.h"
-
 /**
  * http://stackoverflow.com/questions/1328638/placeholder-in-uitextview
  */
@@ -47,6 +45,7 @@ CGFloat const UI_PLACEHOLDER_TEXT_CHANGED_ANIMATION_DURATION = 0.25;
                                                  selector:@selector(textChanged:)
                                                      name:UITextViewTextDidChangeNotification
                                                    object:nil];
+        [self addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     }
     return self;
 }
@@ -54,6 +53,7 @@ CGFloat const UI_PLACEHOLDER_TEXT_CHANGED_ANIMATION_DURATION = 0.25;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self removeObserver:self forKeyPath:@"contentSize"];
     
     [_placeHolderLabel release];
     
@@ -83,7 +83,7 @@ CGFloat const UI_PLACEHOLDER_TEXT_CHANGED_ANIMATION_DURATION = 0.25;
 {
     if (_placeHolderLabel == nil) {
         
-        _placeHolderLabel = [[UILabel alloc] initWithFrame:CGRectMake(8,8,self.bounds.size.width - 16,0)];
+        _placeHolderLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,self.bounds.size.width,0)];
         _placeHolderLabel.lineBreakMode = NSLineBreakByWordWrapping;
         _placeHolderLabel.numberOfLines = 0;
         _placeHolderLabel.font = self.font;
@@ -101,10 +101,7 @@ CGFloat const UI_PLACEHOLDER_TEXT_CHANGED_ANIMATION_DURATION = 0.25;
 
 - (CGRect)textRectForBounds:(CGRect)bounds
 {
-    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-    
-    float padding = CC_EDIT_BOX_PADDING * glview->getScaleX() / glview->getContentScaleFactor();
-    return CGRectInset(bounds, padding, padding);
+    return bounds;
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds
@@ -130,6 +127,42 @@ CGFloat const UI_PLACEHOLDER_TEXT_CHANGED_ANIMATION_DURATION = 0.25;
     [super drawRect:rect];
 }
 
+- (void)setInnerPadding:(float)left :(float)top :(float)right :(float)bottom
+{
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    float factor = glview->getScaleX() / glview->getContentScaleFactor();
+    self.textContainerInset = UIEdgeInsetsMake(top * factor, left * factor, bottom * factor, right * factor);
+    
+    CGRect frame = _placeHolderLabel.frame;
+    frame.origin.x = left * factor;
+    frame.origin.y = top * factor;
+    frame.size.width = self.bounds.size.width - (left * factor) - (right * factor);
+    _placeHolderLabel.frame = frame;
+    
+}
+
+- (void)setTextAlignMent:(cocos2d::TextHAlignment)hAlign :(cocos2d::TextVAlignment)vAlign
+{
+    switch (hAlign) {
+        case cocos2d::TextHAlignment::LEFT :
+            [self setTextAlignment:NSTextAlignmentLeft];
+            [_placeHolderLabel setTextAlignment:NSTextAlignmentLeft];
+            break;
+        case cocos2d::TextHAlignment::CENTER :
+            [self setTextAlignment:NSTextAlignmentCenter];
+            [_placeHolderLabel setTextAlignment:NSTextAlignmentCenter];
+            break;
+        case cocos2d::TextHAlignment::RIGHT :
+            [self setTextAlignment:NSTextAlignmentRight];
+            [_placeHolderLabel setTextAlignment:NSTextAlignmentRight];
+            break;
+        default:
+            break;
+    }
+    
+    _verticalAlign = vAlign;
+}
+
 #pragma mark - NSNotification Observers
 
 - (void)textChanged:(NSNotification *)notification
@@ -145,4 +178,26 @@ CGFloat const UI_PLACEHOLDER_TEXT_CHANGED_ANIMATION_DURATION = 0.25;
     }];
 }
 
+-(void)observeValueForKeyPath:(NSString *)keyPath   ofObject:(id)object   change:(NSDictionary *)change   context:(void *)context {
+    
+    UITextView *tv = object;
+    CGFloat topCorrect;
+    
+    switch (_verticalAlign) {
+        case cocos2d::TextVAlignment::TOP :
+            topCorrect = 0;
+            break;
+        case cocos2d::TextVAlignment::CENTER :
+            topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])  / 2.0;
+            break;
+        case cocos2d::TextVAlignment::BOTTOM :
+            topCorrect = [tv bounds].size.height - [tv contentSize].height;
+            break;
+        default:
+            break;
+    }
+    
+    topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
+    [tv setContentInset:UIEdgeInsetsMake(topCorrect,0,0,0)];
+}
 @end

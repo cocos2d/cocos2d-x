@@ -118,6 +118,8 @@ namespace ui {
         virtual void openKeyboard();
         virtual void closeKeyboard();
         virtual void onEnter(void);
+        virtual void setPadding(float left, float top, float right, float bottom) override;
+    	virtual void setTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign) override;
     private:
         
         EditBoxWinRT^ m_editBoxWinrt;

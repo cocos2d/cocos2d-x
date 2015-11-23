@@ -407,7 +407,20 @@ namespace ui {
          * @param returnType One of the EditBox::KeyboardReturnType constants.
          */
         void setReturnType(EditBox::KeyboardReturnType returnType);
-            
+        
+        /**
+         * Set the inner padding in edit box.
+         * @param padding left, top, right, bottom.
+         */
+        void setPadding(float left, float top, float right, float bottom);
+        
+        /**
+         * Set the input text horizontal alignment and vertical alignment.
+         * @param hAlign the alignment for horizontally.
+         * @param vAlign the alignment for vertically.
+         */
+        void setTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign);
+        
         /* override functions */
         virtual void setPosition(const Vec2& pos) override;
         virtual void setVisible(bool visible) override;

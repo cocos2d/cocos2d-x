@@ -827,6 +827,16 @@ void EditBoxImplWin::setAnchorPoint(const Vec2& anchorPoint)
 	
 }
 
+void EditBoxImplWin::setPadding(float left, float top, float right, float bottom)
+{
+    //ToDo
+}
+
+void EditBoxImplWin::setTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign)
+{
+    //ToDo
+}
+    
 void EditBoxImplWin::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {   
 }

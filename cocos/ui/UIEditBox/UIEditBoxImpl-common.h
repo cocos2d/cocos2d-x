@@ -74,7 +74,8 @@ public:
     
     virtual void setAnchorPoint(const Vec2& anchorPoint) override {}
     virtual void setPosition(const Vec2& pos) override {}
-    
+    virtual void setPadding(float left, float top, float right, float bottom) override;
+    virtual void setTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign) override;
     /**
      * @js NA
      * @lua NA
@@ -112,6 +113,8 @@ public:
     virtual void nativeOpenKeyboard() = 0;
     virtual void nativeCloseKeyboard() = 0;
     virtual void setNativeMaxLength(int maxLength) {};
+    virtual void setNativePadding(float left, float top, float right, float bottom) = 0;
+    virtual void setNativeTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign) = 0;
 
 
 private:
@@ -133,6 +136,14 @@ private:
     
     int   _maxLength;
     Size _contentSize;
+    
+    float _leftPadding;
+    float _rightPadding;
+    float _topPadding;
+    float _bottomPadding;
+    
+    TextHAlignment _textHorizontalAlignMent;
+    TextVAlignment _textVerticalAlignMent;
 };
 
 

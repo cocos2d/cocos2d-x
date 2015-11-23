@@ -71,5 +71,7 @@ extern void setFontEditBoxJNI(int index, const char* fontName, float fontSize);
 extern void setFontColorEditBoxJNI(int index, int red, int green, int blue, int alpha);
 extern void setPlaceHolderTextEditBoxJNI(int index, const char* text);
 extern void setPlaceHolderTextColorEditBoxJNI(int index, int red, int green, int blue, int alpha);
+extern void setEditBoxPaddingJNI(int index, float left, float top, float right, float bottom);
+extern void setEditBoxTextAlignmentJNI(int index, int hAlign, int vAlign);
 
 #endif /* __Java_org_cocos2dx_lib_Cocos2dxHelper_H__ */

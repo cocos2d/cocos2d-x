@@ -72,6 +72,8 @@ public:
     virtual void nativeOpenKeyboard() override;
     virtual void nativeCloseKeyboard() override {};
     virtual void setNativeMaxLength(int maxLength) {};
+    virtual void setNativePadding(float left, float top, float right, float bottom) override;
+    virtual void setNativeTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign) override;
 
     
 private:

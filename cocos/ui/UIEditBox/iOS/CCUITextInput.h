@@ -25,8 +25,6 @@
 #ifndef cocos2d_libs_CCUITextInput_h
 #define cocos2d_libs_CCUITextInput_h
 
-static const int CC_EDIT_BOX_PADDING = 5;
-
 /**
     This protocol provides a common interface for consolidating text input method calls
  */

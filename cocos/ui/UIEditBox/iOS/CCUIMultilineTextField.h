@@ -26,6 +26,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UITextView+CCUITextInput.h"
+#include "base/CCDirector.h"
 
 #pragma mark - UIMultilineTextField implementation
 
@@ -33,5 +34,10 @@
 
 @property (nonatomic, assign) NSString *placeholder;
 @property (nonatomic, retain) UILabel *placeHolderLabel;
+
+@property (nonatomic, assign) cocos2d::TextVAlignment verticalAlign;
+
+- (void)setInnerPadding:(float)left :(float)top :(float)right :(float)bottom;
+- (void)setTextAlignMent:(cocos2d::TextHAlignment)hAlign :(cocos2d::TextVAlignment)vAlign;
 
 @end

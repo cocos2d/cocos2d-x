@@ -27,17 +27,16 @@
 #import "CCUISingleLineTextField.h"
 #import "CCUITextInput.h"
 
-#include "base/CCDirector.h"
-
-
 @implementation CCUISingleLineTextField
 
 - (CGRect)textRectForBounds:(CGRect)bounds
 {
-    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    if (!_leftPadding) {
+        _leftPadding = _topPadding = _rightPadding = _bottomPadding = 0.0;
+    }
     
-    float padding = CC_EDIT_BOX_PADDING * glview->getScaleX() / glview->getContentScaleFactor();
-    return CGRectInset(bounds, padding, padding);
+    return CGRectMake(bounds.origin.x + _leftPadding, bounds.origin.y + _topPadding,
+                      bounds.size.width - _leftPadding - _rightPadding, bounds.size.height - _topPadding - _bottomPadding);
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds
@@ -45,4 +44,47 @@
     return [self textRectForBounds:bounds];
 }
 
+- (void)setInnerPadding:(float)left :(float)top :(float)right :(float)bottom
+{
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    float factor = glview->getScaleX() / glview->getContentScaleFactor();
+    
+    _leftPadding = left * factor;
+    _topPadding = top * factor;
+    _rightPadding = right * factor;
+    _bottomPadding = bottom * factor;
+    
+}
+
+- (void)setTextAlignMent:(cocos2d::TextHAlignment)hAlign :(cocos2d::TextVAlignment)vAlign
+{
+    switch (hAlign) {
+        case cocos2d::TextHAlignment::LEFT :
+            [self setTextAlignment:NSTextAlignmentLeft];
+            break;
+        case cocos2d::TextHAlignment::CENTER :
+            [self setTextAlignment:NSTextAlignmentCenter];
+            break;
+        case cocos2d::TextHAlignment::RIGHT :
+            [self setTextAlignment:NSTextAlignmentRight];
+            break;
+        default:
+            break;
+    }
+    
+    switch (vAlign) {
+        case cocos2d::TextVAlignment::TOP :
+            self.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
+            break;
+        case cocos2d::TextVAlignment::CENTER :
+            self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+            break;
+        case cocos2d::TextVAlignment::BOTTOM :
+            self.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
+            break;
+        default:
+            break;
+    }
+    
+}
 @end
