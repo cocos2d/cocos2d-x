@@ -2405,7 +2405,7 @@ LabelResizeTest::LabelResizeTest()
     auto stepper = (ControlStepper*)this->getChildByName("stepper");
     stepper->setValue(12);
     
-    auto label = Label::createWithSystemFont("Word Line break:", "Arial", 10);
+    auto label = Label::createWithSystemFont("Char Line break:", "Arial", 10);
     label->setColor(Color3B::WHITE);
     label->setPosition(Vec2(winSize.width * 0.1f, winSize.height * 0.8f));
     this->addChild(label);
@@ -2471,7 +2471,7 @@ LabelToggleTypeTest::LabelToggleTypeTest()
     auto stepper = (ControlStepper*)this->getChildByName("stepper");
     stepper->setValue(12);
 
-    auto label = Label::createWithSystemFont("Word Line break:", "Arial", 10);
+    auto label = Label::createWithSystemFont("Char Line break:", "Arial", 10);
     label->setColor(Color3B::WHITE);
     label->setPosition(Vec2(winSize.width * 0.1f, winSize.height * 0.8f));
     this->addChild(label);
@@ -2612,7 +2612,7 @@ LabelSystemFontTest::LabelSystemFontTest()
     });
 
 
-    auto label = Label::createWithSystemFont("Word Line break:", "Arial", 10);
+    auto label = Label::createWithSystemFont("char Line break:", "Arial", 10);
     label->setColor(Color3B::WHITE);
     label->setPosition(Vec2(winSize.width * 0.1f, winSize.height * 0.8f));
     this->addChild(label);
