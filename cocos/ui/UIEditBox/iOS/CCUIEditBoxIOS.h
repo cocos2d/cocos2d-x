@@ -60,6 +60,6 @@
 - (void)closeKeyboard;
 
 - (void)setInnerPadding:(float)left :(float)top :(float)right :(float)bottom;
-- (void)setTextAlignMent:(cocos2d::TextHAlignment)hAlign :(cocos2d::TextVAlignment)vAlign;
+- (void)setTextAlignment:(cocos2d::TextHAlignment)hAlign :(cocos2d::TextVAlignment)vAlign;
 
 @end

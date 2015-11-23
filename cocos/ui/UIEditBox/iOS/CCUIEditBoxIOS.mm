@@ -313,13 +313,13 @@
     }
 }
 
-- (void)setTextAlignMent:(cocos2d::TextHAlignment)hAlign :(cocos2d::TextVAlignment)vAlign
+- (void)setTextAlignment:(cocos2d::TextHAlignment)hAlign :(cocos2d::TextVAlignment)vAlign
 {
     if ([self.textInput isKindOfClass:[UITextField class]]) {
-        [((CCUISingleLineTextField*) self.textInput) setTextAlignMent:hAlign :vAlign];
+        [((CCUISingleLineTextField*) self.textInput) setTextAlignment:hAlign :vAlign];
     }
     else if ([self.textInput isKindOfClass:[UITextView class]]) {
-        [((CCUIMultilineTextField*) self.textInput) setTextAlignMent:hAlign :vAlign];
+        [((CCUIMultilineTextField*) self.textInput) setTextAlignment:hAlign :vAlign];
     }
 }
 

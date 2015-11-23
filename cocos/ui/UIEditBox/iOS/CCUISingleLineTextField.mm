@@ -31,9 +31,6 @@
 
 - (CGRect)textRectForBounds:(CGRect)bounds
 {
-    if (!_leftPadding) {
-        _leftPadding = _topPadding = _rightPadding = _bottomPadding = 0.0;
-    }
     
     return CGRectMake(bounds.origin.x + _leftPadding, bounds.origin.y + _topPadding,
                       bounds.size.width - _leftPadding - _rightPadding, bounds.size.height - _topPadding - _bottomPadding);

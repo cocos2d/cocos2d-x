@@ -207,7 +207,7 @@ void EditBoxImplIOS::setNativePadding(float left, float top, float right, float 
     
 void EditBoxImplIOS::setNativeTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign)
 {
-    [_systemControl setTextAlignMent:hAlign :vAlign];
+    [_systemControl setTextAlignment:hAlign :vAlign];
 }
     
 UIFont* EditBoxImplIOS::constructFont(const char *fontName, int fontSize)
