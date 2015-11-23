@@ -46,12 +46,12 @@ EditBoxImplCommon::EditBoxImplCommon(EditBox* pEditText)
 , _colText(Color3B::WHITE)
 , _colPlaceHolder(Color3B::GRAY)
 , _maxLength(-1)
-, _leftPadding(0.0f)
-, _rightPadding(0.0f)
-, _topPadding(0.0f)
-, _bottomPadding(0.0f)
+, _leftPadding(5.0f)
+, _rightPadding(5.0f)
+, _topPadding(5.0f)
+, _bottomPadding(5.0f)
 , _textHorizontalAlignMent(TextHAlignment::LEFT)
-, _textVerticalAlignMent(TextVAlignment::TOP)
+, _textVerticalAlignMent(TextVAlignment::CENTER)
 {
 }
 
@@ -83,13 +83,13 @@ void EditBoxImplCommon::initInactiveLabels(const Size& size)
     const char* pDefaultFontName = this->getNativeDefaultFontName();
 
     _label = Label::create();
-    _label->setAnchorPoint(Vec2(0, 1.0f));
+    _label->setAnchorPoint(Vec2(0, 0.5f));
     _label->setColor(Color3B::WHITE);
     _label->setVisible(false);
     _editBox->addChild(_label, kLabelZOrder);
     
     _labelPlaceHolder = Label::create();
-    _labelPlaceHolder->setAnchorPoint(Vec2(0, 1.0f));
+    _labelPlaceHolder->setAnchorPoint(Vec2(0, 0.5f));
     _labelPlaceHolder->setColor(Color3B::GRAY);
     _editBox->addChild(_labelPlaceHolder, kLabelZOrder);
     

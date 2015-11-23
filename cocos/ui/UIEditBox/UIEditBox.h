@@ -415,11 +415,59 @@ namespace ui {
         void setPadding(float left, float top, float right, float bottom);
         
         /**
+         * Get the inner left padding of edit box.
+         * @return left padding.
+         */
+        float getLeftPadding();
+        
+        /**
+         * Get the inner top padding of edit box.
+         * @return top padding.
+         */
+        float getTopPadding();
+        
+        /**
+         * Get the inner right padding of edit box.
+         * @return right padding.
+         */
+        float getRightPadding();
+        
+        /**
+         * Get the inner bottom padding of edit box.
+         * @return bottom padding.
+         */
+        float getBottomPadding();
+        
+        /**
          * Set the input text horizontal alignment and vertical alignment.
          * @param hAlign the alignment for horizontally.
          * @param vAlign the alignment for vertically.
          */
         void setTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign);
+        
+        /**
+         * Set the input text only horizontal alignment.
+         * @param hAlign the alignment for horizontally.
+         */
+        void setHorizontalTextAlignment(TextHAlignment hAlign);
+        
+        /**
+         * Get the horizontal alignment of edit box.
+         * @return horizontal alignment of edit box.
+         */
+        TextHAlignment getHorizontalTextAlignment();
+        
+        /**
+         * Set the input text only vertical alignment.
+         * @param vAlign the alignment for vertically.
+         */
+        void setVerticalTextAlignment(TextVAlignment vAlign);
+        
+        /**
+         * Get the vertical alignment of edit box.
+         * @return vertical alignment of edit box.
+         */
+        TextVAlignment getVerticalTextAlignment();
         
         /* override functions */
         virtual void setPosition(const Vec2& pos) override;
@@ -500,6 +548,15 @@ namespace ui {
             
         int   _maxLength;
         float _adjustHeight;
+        
+        float _leftPadding;
+        float _rightPadding;
+        float _topPadding;
+        float _bottomPadding;
+        
+        TextHAlignment _textHorizontalAlignMent;
+        TextVAlignment _textVerticalAlignMent;
+        
 #if CC_ENABLE_SCRIPT_BINDING
         int   _scriptEditBoxHandler;
 #endif

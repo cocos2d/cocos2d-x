@@ -163,6 +163,29 @@ CGFloat const UI_PLACEHOLDER_TEXT_CHANGED_ANIMATION_DURATION = 0.25;
     _verticalAlign = vAlign;
 }
 
+- (void)updateVerticalAlignment:(UITextView*)textView
+{
+    CGFloat topCorrect;
+    
+    switch (_verticalAlign) {
+        case cocos2d::TextVAlignment::TOP :
+            topCorrect = 0;
+            break;
+        case cocos2d::TextVAlignment::CENTER :
+            topCorrect = ([textView bounds].size.height - [textView contentSize].height * [textView zoomScale])  / 2.0;
+            break;
+        case cocos2d::TextVAlignment::BOTTOM :
+            topCorrect = [textView bounds].size.height - [textView contentSize].height;
+            break;
+        default:
+            break;
+    }
+    
+    topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
+    [textView setContentInset:UIEdgeInsetsMake(topCorrect,0,0,0)];
+    
+}
+
 #pragma mark - NSNotification Observers
 
 - (void)textChanged:(NSNotification *)notification
@@ -180,24 +203,8 @@ CGFloat const UI_PLACEHOLDER_TEXT_CHANGED_ANIMATION_DURATION = 0.25;
 
 -(void)observeValueForKeyPath:(NSString *)keyPath   ofObject:(id)object   change:(NSDictionary *)change   context:(void *)context {
     
-    UITextView *tv = object;
-    CGFloat topCorrect;
+    // update vertical insets
+    [self updateVerticalAlignment:object];
     
-    switch (_verticalAlign) {
-        case cocos2d::TextVAlignment::TOP :
-            topCorrect = 0;
-            break;
-        case cocos2d::TextVAlignment::CENTER :
-            topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])  / 2.0;
-            break;
-        case cocos2d::TextVAlignment::BOTTOM :
-            topCorrect = [tv bounds].size.height - [tv contentSize].height;
-            break;
-        default:
-            break;
-    }
-    
-    topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
-    [tv setContentInset:UIEdgeInsetsMake(topCorrect,0,0,0)];
 }
 @end
