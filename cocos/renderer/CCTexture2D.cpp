@@ -730,7 +730,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
 
     int imageWidth = image->getWidth();
     int imageHeight = image->getHeight();
-
+    this->_filePath = image->getFilePath();
     Configuration *conf = Configuration::getInstance();
 
     int maxTextureSize = conf->getMaxTextureSize();

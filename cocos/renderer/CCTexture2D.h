@@ -410,12 +410,6 @@ public:
     bool isValid() const { return _valid; }
     std::string getPath()const { return _filePath; }
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    // Following function must be use carefully, it may cause resource management issue.
-    //  So it limited to use as cocostudio internal.
-    void setPath(std::string file) { _filePath = file; }
-#endif
-
 public:
     /** Get pixel info map, the key-value pairs is PixelFormat and PixelFormatInfo.*/
     static const PixelFormatInfoMap& getPixelFormatInfoMap();

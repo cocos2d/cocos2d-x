@@ -493,7 +493,8 @@ void TextureCache::removeTexture(Texture2D* texture)
 
     for( auto it=_textures.cbegin(); it!=_textures.cend(); /* nothing */ ) {
         if( it->second == texture ) {
-            texture->release();
+            texture->setValid(false);
+            texture->autorelease();
             _textures.erase(it++);
             break;
         } else
@@ -512,7 +513,8 @@ void TextureCache::removeTextureForKey(const std::string &textureKeyName)
     }
 
     if( it != _textures.end() ) {
-        (it->second)->release();
+        it->second->setValid(false);
+        (it->second)->autorelease();
         _textures.erase(it);
     }
 }
@@ -598,7 +600,6 @@ std::string TextureCache::getCachedTextureInfo() const
     return buffer;
 }
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
 void TextureCache::renameTextureWithKey(std::string srcName, std::string dstName)
 {
     std::string key = srcName;
@@ -612,13 +613,22 @@ void TextureCache::renameTextureWithKey(std::string srcName, std::string dstName
     if( it != _textures.end() ) {
         std::string fullpath = FileUtils::getInstance()->fullPathForFilename(dstName);
         Texture2D* tex = it->second;
-        tex->setPath(key);
-        _textures.insert(std::make_pair(fullpath, tex));
-        _textures.erase(it);
-        this->setDirty(true);
+
+        Image* image = new Image();
+        if (image)
+        {
+            bool ret = image->initWithImageFile(dstName);
+            if (ret)
+            {
+                tex->initWithImage(image);
+                _textures.insert(std::make_pair(fullpath, tex));
+                _textures.erase(it);
+                this->setDirty(true);
+            }
+            CC_SAFE_DELETE(image);
+        }
     }
 }
-#endif
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 
