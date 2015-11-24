@@ -775,7 +775,7 @@ public:
      * Return a current focused widget in your UI scene.
      * No matter what widget object you call this method on , it will return you the exact one focused widget.
      */
-    Widget* getCurrentFocusedWidget()const;
+    static Widget* getCurrentFocusedWidget();
 
     /*
      *  Call this method with parameter true to enable the Android Dpad focus navigation feature

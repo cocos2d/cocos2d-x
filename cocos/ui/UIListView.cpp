@@ -72,7 +72,7 @@ bool ListView::init()
 {
     if (ScrollView::init())
     {
-        setLayoutType(Type::VERTICAL);
+        setDirection(Direction::VERTICAL);
         return true;
     }
     return false;
@@ -98,6 +98,11 @@ void ListView::handleReleaseLogic(Touch *touch)
     {
         startMagneticScroll();
     }
+}
+
+void ListView::onItemListChanged()
+{
+    _outOfBoundaryAmountDirty = true;
 }
 
 void ListView::updateInnerContainerSize()
@@ -263,7 +268,7 @@ void ListView::addChild(cocos2d::Node *child, int zOrder, int tag)
     if (nullptr != widget)
     {
         _items.pushBack(widget);
-        _outOfBoundaryAmountDirty = true;
+        onItemListChanged();
     }
 }
     
@@ -285,7 +290,7 @@ void ListView::addChild(Node* child, int zOrder, const std::string &name)
     if (nullptr != widget)
     {
         _items.pushBack(widget);
-        _outOfBoundaryAmountDirty = true;
+        onItemListChanged();
     }
 }
     
@@ -307,7 +312,7 @@ void ListView::removeChild(cocos2d::Node *child, bool cleaup)
             }
         }
         _items.eraseObject(widget);
-        _outOfBoundaryAmountDirty = true;
+        onItemListChanged();
     }
    
     ScrollView::removeChild(child, cleaup);
@@ -321,9 +326,9 @@ void ListView::removeAllChildren()
 void ListView::removeAllChildrenWithCleanup(bool cleanup)
 {
     ScrollView::removeAllChildrenWithCleanup(cleanup);
-    _items.clear();
     _curSelectedIndex = -1;
-    _outOfBoundaryAmountDirty = true;
+    _items.clear();
+    onItemListChanged();
 }
 
 void ListView::insertCustomItem(Widget* item, ssize_t index)
@@ -336,8 +341,8 @@ void ListView::insertCustomItem(Widget* item, ssize_t index)
         }
     }
     _items.insert(index, item);
-    _outOfBoundaryAmountDirty = true;
-    
+    onItemListChanged();
+
     ScrollView::addChild(item);
 
     remedyLayoutParameter(item);
@@ -365,7 +370,7 @@ void ListView::removeAllItems()
     removeAllChildren();
 }
 
-Widget* ListView::getItem(ssize_t index)const
+Widget* ListView::getItem(ssize_t index) const
 {
     if (index < 0 || index >= _items.size())
     {
@@ -479,8 +484,8 @@ void ListView::doLayout()
         item->setLocalZOrder(i);
         remedyLayoutParameter(item);
     }
-    _innerContainer->forceDoLayout();
     updateInnerContainerSize();
+    _innerContainer->forceDoLayout();
     _innerContainerDoLayoutDirty = false;
 }
     
@@ -738,8 +743,9 @@ void ListView::jumpToPercentBothDirection(const Vec2& percent)
     ScrollView::jumpToPercentBothDirection(percent);
 }
 
-static Vec2 calculateItemDestination(const Size& contentSize, Widget* item, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
+Vec2 ListView::calculateItemDestination(const Vec2& positionRatioInView, Widget* item, const Vec2& itemAnchorPoint)
 {
+    const Size& contentSize = getContentSize();
     Vec2 positionInView;
     positionInView.x += contentSize.width * positionRatioInView.x;
     positionInView.y += contentSize.height * positionRatioInView.y;
@@ -748,7 +754,7 @@ static Vec2 calculateItemDestination(const Size& contentSize, Widget* item, cons
     return -(itemPosition - positionInView);
 }
 
-void ListView::jumpToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
+void ListView::jumpToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
 {
     Widget* item = getItem(itemIndex);
     if (item == nullptr)
@@ -757,27 +763,29 @@ void ListView::jumpToItem(int itemIndex, const Vec2& positionRatioInView, const 
     }
     doLayout();
 
-    Vec2 destination = calculateItemDestination(getContentSize(), item, positionRatioInView, itemAnchorPoint);
-    destination = flattenVectorByDirection(destination);
-    Vec2 delta = destination - getInnerContainerPosition();
-    Vec2 outOfBoundary = getHowMuchOutOfBoundary(delta);
-    destination += outOfBoundary;
-    moveChildrenToPosition(destination);
+    Vec2 destination = calculateItemDestination(positionRatioInView, item, itemAnchorPoint);
+    if(!_bounceEnabled)
+    {
+        Vec2 delta = destination - getInnerContainerPosition();
+        Vec2 outOfBoundary = getHowMuchOutOfBoundary(delta);
+        destination += outOfBoundary;
+    }
+    jumpToDestination(destination);
 }
 
-void ListView::scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
+void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
 {
     scrollToItem(itemIndex, positionRatioInView, itemAnchorPoint, DEFAULT_TIME_IN_SEC_FOR_SCROLL_TO_ITEM);
 }
 
-void ListView::scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec)
+void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec)
 {
     Widget* item = getItem(itemIndex);
     if (item == nullptr)
     {
         return;
     }
-    Vec2 destination = calculateItemDestination(getContentSize(), item, positionRatioInView, itemAnchorPoint);
+    Vec2 destination = calculateItemDestination(positionRatioInView, item, itemAnchorPoint);
     startAutoScrollToDestination(destination, timeInSec, true);
 }
 
@@ -847,7 +855,7 @@ Vec2 ListView::getHowMuchOutOfBoundary(const Vec2& addition)
     float topBoundary = _topBoundary;
     float bottomBoundary = _bottomBoundary;
     {
-        int lastItemIndex = _items.size() - 1;
+        ssize_t lastItemIndex = _items.size() - 1;
         Size contentSize = getContentSize();
         Vec2 firstItemAdjustment, lastItemAdjustment;
         if(_magneticType == MagneticType::CENTER)

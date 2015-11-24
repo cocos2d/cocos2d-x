@@ -127,6 +127,11 @@
 
 
 --------------------------------------------------------
+-- the ccui RichElementNewLine
+-- @field [parent=#ccui] RichElementNewLine#RichElementNewLine RichElementNewLine preloaded module
+
+
+--------------------------------------------------------
 -- the ccui RichText
 -- @field [parent=#ccui] RichText#RichText RichText preloaded module
 
