@@ -3823,8 +3823,8 @@ bool js_cocos2dx_3d_Terrain_initHeightMap(JSContext *cx, uint32_t argc, jsval *v
     cocos2d::Terrain* cobj = (cocos2d::Terrain *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Terrain_initHeightMap : Invalid Native Object");
     if (argc == 1) {
-        const char* arg0 = nullptr;
-        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Terrain_initHeightMap : Error processing arguments");
         bool ret = cobj->initHeightMap(arg0);
         jsval jsret = JSVAL_NULL;
@@ -3908,8 +3908,8 @@ bool js_cocos2dx_3d_Terrain_resetHeightMap(JSContext *cx, uint32_t argc, jsval *
     cocos2d::Terrain* cobj = (cocos2d::Terrain *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Terrain_resetHeightMap : Invalid Native Object");
     if (argc == 1) {
-        const char* arg0 = nullptr;
-        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Terrain_resetHeightMap : Error processing arguments");
         cobj->resetHeightMap(arg0);
         args.rval().setUndefined();
