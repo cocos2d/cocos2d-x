@@ -139,7 +139,12 @@ bool ComponentLua::loadAndExecuteScript()
     lua_State *l = engine->getLuaStack()->getLuaState();
     
     // load script
-    int error = luaL_loadfile(l, _scriptFileName.c_str());
+    auto fileUtils = FileUtils::getInstance();
+    std::string fullPathOfScript = fileUtils->fullPathForFilename(_scriptFileName);
+    Data data = fileUtils->getDataFromFile(fullPathOfScript);
+    int error = LUA_ERRFILE;
+    if(data.getSize() > 0)
+        error = engine->getLuaStack()->luaLoadBuffer(l, (const char*)data.getBytes(), (int)data.getSize(), fullPathOfScript.c_str());
     if (error)
     {
         CCLOG("ComponentLua::loadAndExecuteScript: %s", lua_tostring(l, -1));

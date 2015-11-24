@@ -52,7 +52,7 @@ public:
     static const char* s_name()
     {
         // return id unique for DERIVED
-        // ALWAYS VALID BUT STRING, NOT INT - BUT VALID AND CROSS-PLATFORM/CROSS-VERSION COMPATBLE
+        // ALWAYS VALID BUT STRING, NOT INT - BUT VALID AND CROSS-PLATFORM/CROSS-VERSION COMPATIBLE
         // AS FAR AS YOU KEEP THE CLASS NAME
         return typeid( DERIVED ).name();
     }

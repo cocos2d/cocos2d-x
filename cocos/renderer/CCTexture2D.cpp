@@ -756,6 +756,9 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
 
         initWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getRenderFormat(), imageWidth, imageHeight);
         
+        // set the premultiplied tag
+        _hasPremultipliedAlpha = image->hasPremultipliedAlpha();
+        
         return true;
     }
     else if (image->isCompressed())
@@ -766,6 +769,10 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
         }
 
         initWithData(tempData, tempDataLen, image->getRenderFormat(), imageWidth, imageHeight, imageSize);
+        
+        // set the premultiplied tag
+        _hasPremultipliedAlpha = image->hasPremultipliedAlpha();
+        
         return true;
     }
     else

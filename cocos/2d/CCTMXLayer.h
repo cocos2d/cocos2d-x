@@ -115,7 +115,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE Sprite* tileAt(const Vec2& tileCoordinate) { return getTileAt(tileCoordinate); };
     
     /** Returns the tile gid at a given tile coordinate. It also returns the tile flags.
-     * This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap]).
+     * This method requires the tile map has not been previously released (eg. don't call [layer releaseMap]).
      * 
      * @param tileCoordinate The tile coordinate.
      * @param flags Tile flags.

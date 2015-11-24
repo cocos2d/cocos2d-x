@@ -403,6 +403,19 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flippedY) { setFlippedY(flippedY); };
 
+    /**
+     * returns a reference of the polygon information associated with this sprite
+     *
+     * @return a copy of PolygonInfo
+     */
+    PolygonInfo& getPolygonInfo();
+
+    /**
+     * set the sprite to use this new PolygonInfo
+     *
+     * @param PolygonInfo the polygon information object
+     */
+    void setPolygonInfo(const PolygonInfo& info);
     //
     // Overrides
     //
@@ -498,7 +511,7 @@ CC_CONSTRUCTOR_ACCESS:
      *
      * After initialization, the offset will be (0,0).
      *
-     * @param   texture    A pointer to an exisiting Texture2D object.
+     * @param   texture    A pointer to an existing Texture2D object.
      *                      You can use a Texture2D object for many sprites.
      * @param   rect        Only the contents inside rect of this texture will be applied for this sprite.
      * @return  True if the sprite is initialized properly, false otherwise.
@@ -532,7 +545,7 @@ CC_CONSTRUCTOR_ACCESS:
      * A SpriteFrame will be fetched from the SpriteFrameCache by name.
      * If the SpriteFrame doesn't exist it will raise an exception.
      *
-     * @param   spriteFrameName  A key string that can fected a volid SpriteFrame from SpriteFrameCache.
+     * @param   spriteFrameName  A key string that can fected a valid SpriteFrame from SpriteFrameCache.
      * @return  True if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
@@ -564,20 +577,6 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
     
-    /**
-     * returns a copy of the polygon information associated with this sprite
-     * because this is a copy process it is slower than getting the reference, so use wisely
-     *
-     * @return a copy of PolygonInfo
-     */
-    PolygonInfo getPolygonInfo() const;
-    
-    /**
-     * set the sprite to use this new PolygonInfo
-     *
-     * @param PolygonInfo the polygon information object
-     */
-    void setPolygonInfo(const PolygonInfo& info);
 protected:
 
     void updateColor() override;

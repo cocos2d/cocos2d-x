@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x v3.8 Release Notes](#cocos2d-x-v38-release-notes)
+- [Cocos2d-x 3.9 Release Notes](#cocos2d-x-39-release-notes)
 - [Misc Information](#misc-information)
 - [Requirements](#requirements)
   - [Runtime Requirements](#runtime-requirements)
@@ -14,22 +14,18 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [v3.8](#v38)
-  - [Highlights and API changes of v3.8](#highlights-and-api-changes-of-v38)
-  - [Download](#download)
-  - [The main features in detail:](#the-main-features-in-detail)
+- [v3.9](#v39)
+  - [Highlights features, improvements and API updates of v3.9](#highlights-features-improvements-and-api-updates-of-v39)
+  - [The main features in detail of Cocos2d-x v3.9:](#the-main-features-in-detail-of-cocos2d-x-v39)
     - [3D Module](#3d-module)
-    - [UI System](#ui-system)
-    - [AudioEngine](#audioengine)
-    - [FileUtils](#fileutils)
+    - [2D Module](#2d-module)
     - [Others](#others)
   - [Other changes](#other-changes)
-  - [New APIs](#new-apis)
-- [The Next Step](#the-next-step)
+  - [NEW APIS](#new-apis)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Cocos2d-x v3.8 Release Notes #
+# Cocos2d-x 3.9 Release Notes #
 
 # Misc Information
 
@@ -150,379 +146,287 @@ Use Cocos Console to create a new game:
 cocos new -l cpp|js|lua MyNewGame
 ```
 
-# v3.8
+# v3.9
 
-## Highlights and API changes of v3.8
+## Highlights features, improvements and API updates of v3.9
 
-As promised, Cocos2d-x v3.8 have greatly improved the stability and API friendliness. On one side, we continue to improve 3D capacity by providing 3D physics collider, skybox background brush and key frame event callback in Animate3D. On another side, we have refined several core modules, including UI system, AudioEngine, FileUtils, Bindings Generator, etc.
+We are happy to announce the release of Cocos2d-x v3.9. Following are the highlighted features, improvements and API updates in this version. 
 
-Here is some highlighted improvments and API changes:
+1. 3D Module: 
+    - Added 3D MotionStreak to support streak effect. 
+    - Refined Sprite3D to support material system. 
+2. 2D Module:
+    - Added frame callback function and animation callback function. 
+    - Added script component system. 
+    - Reconstruction of 2D physics with Component. 
+    - Improved EditBox implemention on iOS and Win32 platform.
+    - Removed dependence of libcurl on AssetsManager, AssetsManagerEx and Downloader (iOS & Android).
+    - Improved particle performance. 
+3. Others: 
+    - Supported Action inheritance, update function overwriting in JSB. 
+    - Improved ScrollView performance in Web engine. 
+    - Improved Scale9Sprite performance in Web engine. 
+    - Decoupled Sprite's setTexture and updateColor in Web engine.
+    - Added support for debugging and release on real devices with Xcode7 and iOS9.
 
-1. 3D Module
-    - Added 3D physics collider
-    - Supported setting camera background brushes with color/depth/skybox 
-    - Added key frame event Callback in Animate3D
-    - Added light map support in Terrain
-2. UI System
-    - Reimplemented and enhanced EditBox on Android
-    - Added ScrollViewBar for displaying a scroll bar at the side of ScrollView (JSB/Lua ready)
-    - Added RadioButton widget (JSB/Lua ready)
-    - Added HANYI FullType font support
-3. AudioEngine
-    - AudioEngine supported audio preloading
-    - Bound new AudioEngine in JSB
-4. FileUtils
-    - Added a set of file writing APIs: writeStringToFile, writeDataToFile, writeValueMapToFile, writeValueVectorToFile
-5. Others
-    - Improved Bindings Generator tool
-    - Merged JSB test project into cocos2d test project
-    - framework: Support generate prebuilt libs of engine with debug mode
-    - console: Supported new portrait projects from templates
-
-## Download
-
-[Cocos2d-x v3.8](http://www.cocos2d-x.org/filedown/cocos2d-x-3.8.zip) including : C++, Lua & JS
-
-## The main features in detail:
+## The main features in detail of Cocos2d-x v3.9:
 
 ### 3D Module
 
-1. 3D physics collider
-
-    3D physics collider is a new type of physics object. It can be used as both trigger and collider. 
-
-    Trigger is a region defined by physics shapes and  can get callback when other physics objects enter or leave. Its usage is described in the following code:
+1. 3D MotionStreak
     
-    ```cpp
-    //create a collider using colliderDes
-    Physics3DColliderDes colliderDes;
-    colliderDes.shape = Physics3DShape::createSphere(10.0f);
-    colliderDes.isTrigger = true;
-    auto collider = Physics3DCollider::create(&colliderDes);
-    auto component = Physics3DComponent::create(collider);
-    auto node = Node::create();
-    addChild(node);
-    node->addComponent(component);
+    In this version, 3D MotionStreak is added to support streak effect. Check the testcase: [Sprite3DTest](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/Sprite3DTest/Sprite3DTest.cpp#L2472) to see how to use it.
 
-    collider->onTriggerEnter = [=](Physics3DObject *otherObject){
-      //some body entering
-    };
-    collider->onTriggerExit = [=](Physics3DObject *otherObject){
-      //some one leaving
-    }; 
+2. Sprite3D
+
+    Added Sprite3D material class. It will be easy and convenient to create internal material. 
+
+### 2D Module
+
+1. Frame callback function and animation callback function
+
+    Three interfaces are added in ActionTimelineData class, which are addFrameEndCallFunc, removeFrameEndCall and clearFrameEndCalls. It will be easy to add or remove specific frame event. 
+
+2. Script Component 
+
+    Script component is used to extend c++ Nodes. You can add a script component to a Node, then the script component will receive onEnter,onExit and update events. For example:
+
+    ```c++ 
+    // create a sprite and add a lua component auto player =
+    Sprite::create("player.png");
+    
+    auto luaComponent = ComponentLua::create("player.lua");
+    player->addComponent(luaComponent);
     ```
-
-    Collider is similar to rigid body, it can give force to the rigid body that collides with it. However, it is static and has better performance than rigid body. It is proper to represent a static scene or objects using collider and dynamic part using rigid body. You can set colliderDes.isTrigger to false when you want to make it collider.
-
-2. Camera background brushes
-
-    Different with previous versions, in v3.8, developers can choose to erase the camera’s background with 4 types of brush: none, color, depth, skybox. None brush means do nothing; Color brush erases background using given color and depth; depth brush erases background using given depth; skybox brush erases background using given skybox with 6 texture faces. The default brush is depth brush. The usage of brushes is showing below:
-
-    ```cpp
-    // Using none brush
-    _camera->setBackgroundBrush(CameraBackgroundBrush::createNoneBrush());
-    // Using depth brush, clear depth with 1.0
-    _camera->setBackgroundBrush(CameraBackgroundBrush::createDepthBrush(1.f));
-    // Using color brush, clear color is (1,0,0,1), depth is 1
-    _camera->setBackgroundBrush(CameraBackgroundBrush::createColorBrush(Color4F(1.f, 0.f, 0.f, 1.f), 1.f));
-    // SkyBox brush
-    _camera->setBackgroundBrush(CameraBackgroundBrush::createSkyboxBrush("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg","Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg","Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg"));
-    ```
-
-3. Animate3D key frame event callback
-
-    Similar to 2d AnimationFrame callback, frame event callback is supported in Animated3D now. It allows developer to set a callback to be invoked when specific frame is played. Sample code:
-
-    ```cpp
-    auto animation = Animation3D::create(“XX.c3b”);
-    auto animate = Animate3D::create(animation);
-    ValueMap valuemap0;//you can add some user data here, it can be used in the frame event callback
-    //add a callback when frame 275 is played
-    animate->setKeyFrameUserInfo(275, valuemap0);
-            
-    auto listener = EventListenerCustom::create(Animate3DDisplayedNotification, [&](EventCustom* event)
-    {
-        auto info = (Animate3D::Animate3DDisplayedEventInfo*)event->getUserData();
+    
+    ```lua
+    // player.lua
+    local player = { 
+        onEnter = function(self)
+        -- do some things in onEnter 
+        end
         
-        //frame 275 is played, you can add some code here
-        cocos2d::log(“frame %d”, info->frame);
-    });
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
-    ```
-
-4. Light map support in Terrain
-
-    Terrain with light map is supported in v3.8, which means you can add a light map texture baked from other tools to the terrain. The light map texture contains light info, so that the terrain seems to be lighted with several lights. Terrain with light map can be created like this,
-
-    ```cpp
-    //create a normal terrain as before
-    Terrain::DetailMap r(“TerrainTest/dirt.jpg”),g(“TerrainTest/Grass2.jpg”),b(“TerrainTest/road.jpg”),a(“TerrainTest/GreenSkin.jpg”);
-    Terrain::TerrainData data(“TerrainTest/heightmap16.jpg”,”TerrainTest/alphamap.png”,r,g,b,a);
-    _terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
-    _terrain->setLODDistance(3.2f,6.4f,9.6f);
-    _terrain->setMaxDetailMapAmount(4);
-    _terrain->setDrawWire(false);
-    //set light map for the terrain
-    _terrain->setLightMap(“TerrainTest/Lightmap.png”);
-    ```
-
-### UI System
-
-1. Reimplemented EditBox
-
-    The usage of EditBox is the same as before, but we have reimplemented it for Android platform. The use experience is highly improved, important improvements are: 
-
-    - Display cursor in EditBox
-    - Support copy, cut, paste and select actions in EditBox
-    - Support multi-line input, you should set InputMode to `ANY` to enable multi-line input
-    - EditBox won't be masked by the keyboard UI anymore
-
-2. ScrollViewBar
+        onExit = function(slef) 
+        -- do some things in onExit 
+        end
+        
+        update = function(self)
+        -- do some things every frame 
+        end
+    }
     
-    In the previous versions, the ScrollView doesn't have any visual notification for the current location in view. In v3.8, we have added a scroll bar attached to the ScrollView. You could tweak the the opacity, color, width and the duration for auto hiding the scroll bar. Speical thanks to @neokim.
+    -- it is needed to return player to let c++ nodes know it 
+    return player 
+    ```
+    
+    Javascript can work as the same way, just use ComponentJS instead of ComponentLua. 
+    
+    There are some differences between lua component and Javascript component:
+    
+    Should return the object in lua component, in Javascript, you only have to extend cc.ComponentJS, and ensure the result of the last statement is the class of Component.
+    
+    Lua component can only be used in lua projects, Javascript component can only be used in Javascript projects.
+    
+    More detail usage please refer to: `tests/lua-tests/src/ComponentTest` and `tests/js-tests/src/ComponentTest`
 
-    Usage:
 
-    ```cpp
-    ui::ScrollView* scrollView = ui::ScrollView::create();
-    scrollView->setScrollBarWidth(4);
-    scrollView->setScrollBarPositionFromCorner(Vec2(2, 2));
-    scrollView->setScrollBarColor(Color3B::WHITE);
-    this->addChild(scrollView);
+3. 2D Physics
+
+    Before v3.9, there are many physics related codes in Node, such as Node::setPhysicsBody(). Since v3.9, we move these codes into physics component.
+
+    After using physics component, the way to use physics is changed. Before v3.9, you can use physics like this:
+    
+    ```
+    auto node = Node::create(); 
+    node->setPhysicsBody(PhysicsBody::createEdgeBox(...));
+    ```
+    
+    Since v3.9 you should use like this:
+    
+    ```
+    auto node = Node::create();
+    node->addComponent(PhysicsBody::createEdgeBox(...));
+
     ```
 
-3. RadioButton widget
+4. EditBox implemention on iOS and Win32 platform
 
-    RadioButton is a specific type of two-states button that is similar to CheckBox.
+    - Specify the maximum number of characters in the dialog box. 
+    - Support password input. 
+    - Games will continue when the dialogue box pops up. 
+    - Sync the content in dialogue box. 
 
-    Additionally, it can be used together with RadioButtonGroup to interact with other radio buttons.
+5. Remove dependence of curl on AssetsManager, AssetsManagerEx and Downloader (iOS & Android)
 
-    There is only one RadioButton in checked state at the same time within a RadioButtonGroup. Special thanks to @neokim who have contributed the implementation of this new widget.
+    From v3.9, iOS and Android version will not depend on libcurl, which make
+    the game package smaller and solve some bugs caused by libcurl. Stability has
+    been improved with the updated iOS and Android system. 
 
-    Usage: 
-
-    ```cpp
-    //create a RadioButtonGroup
-    auto radioButtonGroup = RadioButtonGroup::create();
-    this->addChild(radioButtonGroup);
-
-    //create a RadioButton
-    RadioButton* radioButton1 = RadioButton::create("radio_button_off.png", "radio_button_on.png");
-    radioButton1->setPosition(Vec2(100,100);
-    this->addChild(radioButton1);
-
-    //create another RadioButton
-    RadioButton* radioButton2 = RadioButton::create("radio_button_off.png", "radio_button_on.png");
-    radioButton2->setPosition(Vec2(100,100);
-    this->addChild(radioButton2);
-
-    //add the RadioButtons into RadioButtonGroup
-    radioButtonGroup->addRadioButton(radioButton1);
-    radioButtonGroup->addRadioButton(radioButton2);
-    ```
-
-### AudioEngine
-
-1. Audio preloading
-
-    AudioEngine now supports preload audio files before playing it. For some large audio file, this feature can smooth the audio playing experience in user's games. Sample code: 
-
-    ```cpp
-    //Use it with callback
-    AudioEngine::preload("audio1.mp3",[](bool isSuccess){
-        //...
-    });
-    //Use it without callback
-    AudioEngine::preload("audio2.mp3");
-    ```
-
-2. JSB new AudioEngine
-
-    In JSB, the default audio engine was SimpleAudioEngine (renamed to cc.audioEngine). It was the old audio engine provided since v2, and it have some inconvenience like delay time, no event support, etc. So we decided to provide new AudioEngine in JSB, the API remains the same as C++ API, and its usage can be found in [its test case](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/js-tests/src/NativeTest/AudioEngineTest.js).
-
-### FileUtils
-
-1. New file writing APIs
-
-    In v3.8, we have provided a bunch of file writing APIs in FileUtils. Now you can use very simple APIs to write string, binary data, value map, and value vector into a file in user's file system. Each API is demonstrated in the following sample code:
-
-    ```cpp
-    std::string writablePath = FileUtils::getInstance()->getWritablePath();
-
-    // FileUtils::writeStringToFile
-    std::string writeDataStr = "the string data will be write into a file";
-    std::string fullPath = writablePath + "writeStringTest.txt";
-    FileUtils::getInstance()->writeStringToFile(writeDataStr, fullPath.c_str());
-
-    // FileUtils::writeDataToFile
-    std::string writeDataStr = "the binary data will be write into a file";
-    Data writeData;
-    writeData.copy((unsigned char *)writeDataStr.c_str(), writeDataStr.size());
-    std::string fullPath = writablePath + "writeDataTest.txt";
-    FileUtils::getInstance()->writeDataToFile(writeData, fullPath.c_str()));
-
-    // FileUtils::writeValueMapToFile
-    std::string fullPath = writablePath + "testWriteValueMap.plist";
-    FileUtils::getInstance()->writeValueMapToFile(valueMap, fullPath.c_str());
-
-    // FileUtils::writeValueVectorToFile
-    std::string fullPath = writablePath + "testWriteValueVector.plist";
-    FileUtils::getInstance()->writeValueVectorToFile(valueVector, fullPath.c_str());
-    ```
-
-    Besides, you can retrieve the extension (in lower case) of a file with `FileUtils::getFileExtension` API.
+6. Improved particle performance. 
 
 ### Others
 
-1. Bindings Generator
+1. Supported Action inheritance, update function overwriting in JSB
 
-    In v3.8, we also improved our bindings generator tool, now it's even more powerful and be able to bind almost all kind of C++ APIs to script. Here is a detailed list about improvement in bindings generator.
+    In previous version of JSB, developers cannot inherit Action class in JS script, such as Action / ActionInterval / ActionInstant, for their update function will not be called. In v3.9, developers can create subclass of Action and make extensions. More detail usage please refer to the textcase in ActionTest / ActionCustomTest.
 
-    - Supported generating auto bindings code for public member variables
-    - Avoid memory leak of non-Ref classes instance by controlling C++ object memory with JS object
-    - Made JSB classes automatically extendable if configured in classes_need_extend list
-    - Improved support for Lambda functions in JS auto bindings
+2. ScrollView performance on Web engine
 
-2. JSB test project
+    ScrollView and ListView are the popular UI controls in Web engine. Their
+    performance is not perfect in previous versions, especially when there are multiple sub-controls. In v3.9, we have improved its rendering performance. They only act on the contents displayed on the current screen. Test
+    date shows that, comparing with v3.8, rendering efficiency of v3.9 have been improved for twice to four times in different devices and browsers. 
 
-    In v3.8, JSB test project have been merged into C++ test project. That means cocos2d_js_tests.xcodeproj, cocos2d-js-win32.sln, cocos2d-js-win8.1-universal.sln have been removed. You can find jsb test targets in cocos2d_test.xcodeproj, cocos2d-win32.sln and cocos2d-win8.1-universal.sln.
+3. Scale9Sprite performance on Web engine
 
-3. Compile custom framework in debug mode
+    In this version, we have changed the way to construct 9-slice sprite. The engine uses 9 rendering commands instead of the 9 nodes in previous versions. This helps to reduce memory usage and improve rendering performance. 
 
-    From v3.7, you was able to generate customized Cocos Framework from cocos2d-x. We have improved this ability in v3.8, now  you will be able to generate framework in debug mode. Here is the some documentation about it:
+4. Decoupled Sprite's setTexture and updateColor in Web engine.
 
-    - [Framework compile documentation](http://www.cocos2d-x.org/wiki/Cocos_gen-libs).
-    - [How to customize Cocos Framework](http://www.cocos2d-x.org/docs/manual/studio/v4/chapter3/HowToCode/CustomizeFramework-v3.8/en)
-    - [How to generate Cocos Simulator](http://www.cocos2d-x.org/wiki/Cocos_gen-simulator)
+    - Organized the rendering logic in Sprite. UpdateColor is accomplished by texture instead of the Sprite. 
+    - Fixed a bug about image with alpha channel that when the image is set to black, there is color difference between previous and current version. 
+    - Improved texture update logic to reduce texture updates when changing colors.
+    - Improved the logic about the rendering function in SpriteCanvasRenderCmd.
+    - Removed some duplicate codes about updateColor.
 
-4. Portrait projects support
+5. Support for debugging and release on real devices with Xcode7 and iOS9
 
-    From v3.8, you can generate portrait oriented games with Cocos Console:
+    In v3.8.1, we have made it possible to debug on Xcode7. However, there was a bug with iOS9 real device debuging, and in v3.9, we have fixed the bug.
 
-    ```
-    cocos new -l cpp|lua|js --portrait MyPortraitGame
-    ```
-
-    More details can be found in [Cocos new command](http://www.cocos2d-x.org/wiki/Cocos_new) and [Cocos Console general documentation](http://www.cocos2d-x.org/wiki/Cocos2d-console)
 
 ## Other changes
 
-- [NEW]           UI: Enhanced ScrollView with easing out scrolling
-- [NEW]           UI: Added PageView vertical scroll support
-- [NEW]           UI: Added PageView::JumpToPage API
-- [NEW]           UI: Added a setter for line width in DrawNode
-- [NEW]           Action: Permitted setting bitwise flags to action
-- [NEW]           Animate: Added Animate's getCurrentFrameIndex function
-- [NEW]           FileUtils: Added FileUtils::getFileExtension for getting file's extension name
-- [NEW]           Device: Added vibrate support to enable vibration for a duration
-- [NEW]           UserDefault: Supported removing key pairs from UserDefault
-- [NEW]           spine: Supported Spine runtime 2.3 (Both native and web engine)
-- [NEW]           console: Moved the framework-compile tools into cocos2d-console
-- [NEW]           network: Upgrade SocketIO support to v1.x
+[NEW]           Label: Added line spacing/leading feature to Label.
 
-- [REFINE]        3D: Supported composite 2D/3D scene by moving UI and camera far away
-- [REFINE]        3D: Improved Particle3D performance
-- [REFINE]        Label: Supported adding child nodes in Label
-- [REFINE]        UI: Improved Slider's precision
-- [REFINE]        UI: Refined scroll event dispatching for ScrollView
-- [REFINE]        UI: Improved event handling in TextField
-- [REFINE]        Label: Supported auto batch with bitmap font or char map
-- [REFINE]        studio: Added BlendFrame support to Skeleton Animation
-- [REFINE]        studio: Enabled blendfunc cascade to the skin of BoneNode
-- [REFINE]        utils: Made utils::captureScreen saving file in another thread to improve the performance
-- [REFINE]        3rd party: Update Nibiru SDK to 2.6
-- [REFINE]        JS: Supported new construction for 3d classes in JS
-- [REFINE]        JS: Refine performance for Cocos Studio JSON parser for 2.x
-- [REFINE]        web: Avoid re-bake the content when the parent node's position get changed
-- [REFINE]        web: Solved repeat loading same resource issue when parsing cocos studio project
-- [REFINE]        web: Optimized resources automatic loading in JSON parser
-- [REFINE]        web: Avoid cc.loader resource loading being terminated while encounter errors
-- [REFINE]        web: Suspended the video player when the browser is minimized
+[NEW]           ListView: Added APIs to scroll to specific item in list.
 
-You can also take a look at [the full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
+[NEW]           ListView: Added APIs to get an item in specific position like center, leftmost, rightmost, topmost and bottommost.
 
-## New APIs
+[NEW]           ListView: Added a feature for magnetic scrolling.
 
-In the above changes, there are some new APIs introduced in v3.8, they are listed here:
+[NEW]           Animate: Added ActionTimeline::setAnimationEndCallBack and ActionTimeline::addFrameEndCallFunc.
 
-1. PageView vertical scroll support
+[NEW]           Animate: Added CSLoader::createNodeWithVisibleSize, CSLoader::createNodeWithVisibleSize and moved "ui::Helper::DoLayout" into them.
 
-    ```
-    PageView* pageView = PageView::create();
-    pageView->setContentSize(Size(240.0f, 130.0f));
-    pageView->setDirection(ui::PageView::Direction::VERTICAL);
-    ```
+[NEW]           Stuio: Added support for Cocos Studio Light3D.
 
-2. Setter for line width in DrawNode
+[NEW]           Platform: Added the missing CURL support to the Windows 10 UWP version.
 
-    ```
-    DrawNode* drawNode = DrawNode::create();
-    drawNode->setLineWidth(5.0f);
-    ```
+[NEW]           Platform: Added UIEditBox support on linux platform.
 
-3. Bitwise flags of action
+[REFINE]        3D: Added non-null checks in PUScriptCompiler::visit before dereferencing.
 
-    ```
-    enum Flags {
-        FRAME = 1,
-        COLOR = 2,
-        OPACITY = 4,
-        POSITION = 8,
-        SCALE = 16,
-        ROTATION = 32,
-        SKEW = 64
-    };
+[REFINE]        3D: Refined SkyboxBrush by making the shader parameter take effect at once.
 
-    auto action = RepeatForever::create(Sequence::create(FadeTo::create( 0.1f, 155), TintTo::create(0.1f, 255,0,0), nullptr));
-    // Since opacity and color will be modified in this action, it can be flagged as opacity and color action
-    action->setFlags(Flags::OPACITY|Flags::COLOR);
+[REFINE]        Label: Changed label font size type to float to support high precision when font size is small.
 
-    auto action2 = RepeatForever::create(Sequence::create(MoveBy::create(0.3f, Vec2(5, 0)), nullptr));
-    // Since position will be modified in this action, it can be flagged as position action
-    action->setFlags(Flags::POSITION);
-    ```
+[REFINE]        ListView: Fixed an issue that list view's Magnetic::CENTER is not working well when non-bounceable.
 
-4. Get current frame index in animation
+[REFINE]        ListView: Added feature of jumping to a specific item in list view.
 
-    ```
-    auto action = RepeatForever::create( Animate::create(animation);
-    sprite->runAction(action);
-    sprite->scheduleOnce([=](float){
-        int index = action->getCurrentFrameIndex();
-        // ...
-    }, 1.0f, "get-current-frame");
-    
-    ```
+[REFINE]        Sprite: Added a "unsupport image format!" log when creating a sprite in CCImage.cpp.
 
-5. File's extension name getter
+[REFINE]        ScrollView: Merge logics of Scroll View for scroll by inertia and auto scroll into one.
 
-    ```
-    std::string extension = FileUtils::getInstance()->getFileExtension("grossini.png");
-    ```
+[REFINE]        Animate: Moved initialization of image to an appropriate location, because it always called twice in 
+SpriteFrameCache::addSpriteFramesWithFile().
 
-6. Vibration support
+[REFINE]        Simulator: Changed the size of startFlag to 13.
 
-    ```
-    // Virate the device for 0.5 second
-    Device::vibrate(0.5f);
-    ```
+[REFINE]        Simulator: Show Node and Skeleton in the middle of the simulator.
 
-7. Remove key pairs from UserDefault
+[REFINE]        Simulator: Removed screen direction check in simulator to avoid render error.
 
-    ```
-    // Remove value referenced by "some key"
-    UserDefault::getInstance()->deleteValueForKey("some key");
-    ```
+[REFINE]        Pysics: Refined components to improve physics performance.
 
-# The Next Step
+[REFINE]        UI: Refined ComponentContainer to improve performance.
 
-In v3.9, we will continue to improve our framework, several important tasks are: 
+[REFINE]        UI: EventListenerMouse will dispatch EventMouse events.
 
-1. We are about to provide a script based component system.
-2. Improve ScrollView, ListView performance in both native and web engine.
-3. Improve 2D particle system performance.
-4. Improve web engine renderer logic and performance.
-5. Support Action inheritance in JSB.
-6. Remove libcurl dependency on iOS and Android.
+[REFINE]        OpenGL: Added check for glfwCreateWindow.
 
-[The v3.9 milestone tasks](https://github.com/cocos2d/cocos2d-x/milestones/v3.9) (It's still being reviewing and will be updated)
+[REFINE]        Platform: Fixed a crash on xiaomi2 if Cocos2d-x is built as a dynamic library.
+
+[REFINE]        Platform: Updated libcococs2d name to v3.9 on WinRT platforms.
+
+[REFINE]        Platform: Added some support for mouse on WinRT. Include: Show/Hide mouse cursor; Mouse event 
+implemented similar Desktop version; Left button send mouse event and touch; Support other mouse button and scroll 
+wheel.
+
+[REFINE]        Platform: Correct the convertion between unicode and utf8 on WinRT.
+
+[REFINE]        Platform: Improved EditBox implement on Win32 platform.
+
+[REFINE]        JS: Add jsb.fileUtils.writeDataToFile().
+
+[REFINE]        JS: Set js templates Mac target platform from null to 10.7.
+
+[REFINE]        JS: Removed the static define of variable in headfile of ScriptingCore.
+
+[REFINE]        Lua: Added AssetsManagerEx constants UPDATE_FAILED and ERROR_DECOMPRESS in Lua.
+
+[REFINE]        Lua / JS: Refined lua/js binding tool.
+
+[REFINE]        I/O: Refined AssetsManagerEx unzipping by using async.
+
+[REFINE]        Web: Improved logic of jsb_boot.js to sync with the web engine behavior.
+
+[REFINE]        Web: Sync with CCBoot for web.
+
+[REFINE]        Build: Fixed various compiler warnings on Xcode 7.
+
+[REFINE]        Build: Fixed Wformat-security warning on Xcode.
+
+[REFINE]        Build: Fixed a compile error in __LayerRGBA.
+
+[REFINE]        Tool: Added tools for generating documents automatically.
+
+[REFINE]        Doc: Clean up the code of setRect() function.
+
+[REFINE]        Doc: Fixed a minor typo and renamed INTIAL_CAPS_ALL_CHARACTERS to INITIAL_CAPS_ALL_CHARACTERS 
+in UIEditBox.
+
+You can also take a look at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
+
+
+## NEW APIS
+
+1. JSB Module
+
+    Added jsb.fileUtils.writeDataToFile
+
+2. Sprite3D
+
+    Added Sprite3Dmaterial class to make it easy to create innate material. 
+
+3. ActionTimelineData 
+
+    Three interfaces are added in ActionTimelineData class, which are addFrameEndCallFunc, removeFrameEndCall and clearFrameEndCalls.
+
+4. ActionTimeline::removeFrameEndCallFunc 
+
+5. Improvements for ListView
+
+    - Add APIs to scroll to specific item in list.
+    - Add APIs to get an item in specific position like center, leftmost, rightmost, topmost and bottommost.
+    - Add a feature for magnetic scrolling.
+
+    For more information: https://github.com/cocos2d/cocos2d-x/pull/13723
+
+6. Node
+
+    Added the missing API getChildByTag
+
+7. Label
+
+    Added setLineSpacing, getLineSpacing
+
+8. CSLoader
+
+    Added createNodeWithVisibleSize, createNodeWithVisibleSize
+9. ComponentContainer
+
+    Removed isEmpty
+
+10. Sprite
+
+    Removed debugDraw(bool on)

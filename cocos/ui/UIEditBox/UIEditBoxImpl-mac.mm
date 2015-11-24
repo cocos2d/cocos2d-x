@@ -41,12 +41,16 @@
 /** TODO: Missing doc - What does "CustomTextFieldFormatter" do?
  */
 @interface CustomTextFieldFormatter : NSFormatter
+{
+    int _maximumLength;
+}
 
 @property (nonatomic, assign) int maximumLength;
 
 @end
 
 @implementation CustomTextFieldFormatter
+@synthesize maximumLength = _maximumLength;
 
 - (instancetype)init
 {
@@ -88,6 +92,16 @@
 #pragma mark - UIEditBox mac implementation
 
 @interface UIEditBoxImplMac : NSObject <NSTextFieldDelegate>
+{
+    NSTextField* _textField;
+    NSSecureTextField* _secureTextField;
+    NSMutableDictionary* _placeholderAttributes;
+    NSWindow* _window;
+
+    BOOL _editState;
+    BOOL _secure;
+    void* _editBox;
+}
 
 @property (nonatomic, retain) NSTextField* textField;
 @property (nonatomic, retain) NSSecureTextField *secureTextField;
@@ -110,6 +124,13 @@
 
 
 @implementation UIEditBoxImplMac
+@synthesize textField = _textField;
+@synthesize secureTextField = _secureTextField;
+@synthesize placeholderAttributes = _placeholderAttributes;
+@synthesize window = _window;
+@synthesize editState = _editState;
+@synthesize secure = _secure;
+@synthesize editBox = _editBox;
 
 - (instancetype)initWithFrame:(NSRect)frameRect editBox:(void *)editBox
 {

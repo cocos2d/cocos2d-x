@@ -63,6 +63,11 @@ public:
      @brief Get target platform
      */
     virtual Platform getTargetPlatform() override;
+
+    /**
+     @brief Get application version
+     */
+    virtual std::string getVersion() override;
     
     /**
      @brief Open url in default browser

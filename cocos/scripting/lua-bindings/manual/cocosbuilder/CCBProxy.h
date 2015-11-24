@@ -49,7 +49,7 @@ public:
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(CCBProxy, create);
     
     /**
-     * Createa a CCBReader object.
+     * Create a CCBReader object.
      * 
      * @return a CCBReader object.
      *
@@ -71,7 +71,7 @@ public:
     
     /**
      * Get the true type name of pNode.
-     * By using the dynamic_cast function, we coulde get the true type name of pNode.
+     * By using the dynamic_cast function, we could get the true type name of pNode.
      *
      * @param pNode the Node object used to query.
      * @return a string pointer point to the true type name otherwise return "No Support".

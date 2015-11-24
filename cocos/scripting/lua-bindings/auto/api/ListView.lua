@@ -46,7 +46,7 @@
 -- param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
 -- @function [parent=#ListView] jumpToItem 
 -- @param self
--- @param #int itemIndex
+-- @param #long itemIndex
 -- @param #vec2_table positionRatioInView
 -- @param #vec2_table itemAnchorPoint
 -- @return ListView#ListView self (return value: ccui.ListView)
@@ -171,18 +171,18 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- @overload self, int, vec2_table, vec2_table, float         
--- @overload self, int, vec2_table, vec2_table         
+-- @overload self, long, vec2_table, vec2_table, float         
+-- @overload self, long, vec2_table, vec2_table         
 -- @function [parent=#ListView] scrollToItem
 -- @param self
--- @param #int itemIndex
+-- @param #long itemIndex
 -- @param #vec2_table positionRatioInView
 -- @param #vec2_table itemAnchorPoint
 -- @param #float timeInSec
 -- @return ListView#ListView self (return value: ccui.ListView)
 
 --------------------------------
--- Insert a  a default item(create by a cloned model) at the end of the listview.
+-- Insert a default item(create by a cloned model) at the end of the listview.
 -- @function [parent=#ListView] pushBackDefaultItem 
 -- @param self
 -- @return ListView#ListView self (return value: ccui.ListView)

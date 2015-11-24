@@ -1560,7 +1560,7 @@ local function PhysicsDemoBug5482()
   return layer
 end
 
-local function PhysicsDemoBug5482()
+local function PhysicsFixedUpdate()
   local layer = cc.Layer:create()
   local function onEnter()
     cc.Director:getInstance():getRunningScene():getPhysicsWorld():setDebugDrawMask(cc.PhysicsWorld.DEBUGDRAW_ALL)

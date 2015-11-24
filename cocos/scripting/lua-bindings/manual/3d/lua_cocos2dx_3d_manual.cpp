@@ -319,10 +319,10 @@ void terraindata_to_luaval(lua_State* L,const cocos2d::Terrain::TerrainData& inV
         lua_rawset(L, -3);
     }
     
-    if (nullptr != inValue._alphaMapSrc)
+    if (!inValue._alphaMapSrc.empty())
     {
         lua_pushstring(L, "_alphaMapSrc");
-        lua_pushstring(L, inValue._alphaMapSrc);
+        lua_pushstring(L, inValue._alphaMapSrc.c_str());
         lua_rawset(L, -3);
     }
     

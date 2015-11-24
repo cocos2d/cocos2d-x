@@ -52,7 +52,7 @@
 -- This search will be recursive throught all child widgets.<br>
 -- param root      The be searched root widget.<br>
 -- param name      The widget name.<br>
--- return Widget isntance pointer.
+-- return Widget instance pointer.
 -- @function [parent=#Helper] seekWidgetByName 
 -- @param self
 -- @param #ccui.Widget root

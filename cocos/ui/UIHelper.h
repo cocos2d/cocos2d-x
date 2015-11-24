@@ -62,7 +62,7 @@ public:
      *
      * @param root      The be searched root widget.
      * @param name      The widget name.
-     * @return Widget isntance pointer.
+     * @return Widget instance pointer.
      */
     static Widget* seekWidgetByName(Widget* root, const std::string& name);
     

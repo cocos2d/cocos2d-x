@@ -607,9 +607,9 @@ bool Widget::isHighlighted() const
     return _highlight;
 }
 
-void Widget::setHighlighted(bool hilight)
+void Widget::setHighlighted(bool highlight)
 {
-    _highlight = hilight;
+    _highlight = highlight;
     if (_bright)
     {
         if (_highlight)
@@ -888,6 +888,12 @@ void Widget::moveEvent()
 void Widget::releaseUpEvent()
 {
     this->retain();
+
+    if (isFocusEnabled())
+    {
+        requestFocus();
+    }
+
     if (_touchEventCallback)
     {
         _touchEventCallback(this, TouchEventType::ENDED);
@@ -1449,7 +1455,7 @@ void Widget::onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus)
     }
 }
 
-Widget* Widget::getCurrentFocusedWidget()const
+Widget* Widget::getCurrentFocusedWidget()
 {
     return _focusedWidget;
 }

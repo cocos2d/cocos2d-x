@@ -119,7 +119,7 @@
 -- param origin The origin of the bezier path.<br>
 -- param control The control of the bezier path.<br>
 -- param destination The destination of the bezier path.<br>
--- param segments The The number of segments.<br>
+-- param segments The number of segments.<br>
 -- param color Set the quad bezier color.
 -- @function [parent=#DrawNode] drawQuadBezier 
 -- @param self
@@ -204,7 +204,7 @@
 -- param control1 The first control of the bezier path.<br>
 -- param control2 The second control of the bezier path.<br>
 -- param destination The destination of the bezier path.<br>
--- param segments The The number of segments.<br>
+-- param segments The number of segments.<br>
 -- param color Set the cubic bezier color.
 -- @function [parent=#DrawNode] drawCubicBezier 
 -- @param self

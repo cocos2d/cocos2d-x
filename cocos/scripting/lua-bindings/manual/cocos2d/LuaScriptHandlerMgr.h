@@ -80,13 +80,13 @@ class LuaCallFunc:public cocos2d::CallFuncN
 {
 public:
     /**
-     * Default construtor.
+     * Default constructor.
      */
     LuaCallFunc():_functionLua(nullptr)
     {}
     
     /**
-     *  Destrutor.
+     *  Destructor.
      */
     virtual ~LuaCallFunc()
     {}
@@ -113,7 +113,7 @@ protected:
 
 /**
  * In order to reduce the coupling of lua script engine and native c++ engine.
- * In the current mechanism, for the class derived from the Ref, we constuct a mapping relationship among c++ Ref object, HandlerType and the reference index corresponding to the pointer of Lua function. Then, using the ScriptHandlerMgr to manager uniformly.
+ * In the current mechanism, for the class derived from the Ref, we construct a mapping relationship among c++ Ref object, HandlerType and the reference index corresponding to the pointer of Lua function. Then, using the ScriptHandlerMgr to manager uniformly.
  * By this mechanism, when native c++ Ref object wants to call the Lua function, we didn't insert the processing code in the native c++ class.
  */
 class ScriptHandlerMgr

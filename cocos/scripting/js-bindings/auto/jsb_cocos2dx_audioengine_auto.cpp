@@ -132,7 +132,6 @@ bool js_cocos2dx_audioengine_AudioProfile_constructor(JSContext *cx, uint32_t ar
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
     JS::RootedObject proto(cx, typeClass->proto.get());
     JS::RootedObject parent(cx, typeClass->parentProto.get());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
@@ -151,13 +150,14 @@ void js_cocos2d_experimental_AudioProfile_finalize(JSFreeOp *fop, JSObject *obj)
     js_proxy_t* jsproxy;
     jsproxy = jsb_get_js_proxy(obj);
     if (jsproxy) {
+        cocos2d::experimental::AudioProfile *nobj = static_cast<cocos2d::experimental::AudioProfile *>(jsproxy->ptr);
         nproxy = jsb_get_native_proxy(jsproxy->ptr);
 
-        cocos2d::experimental::AudioProfile *nobj = static_cast<cocos2d::experimental::AudioProfile *>(nproxy->ptr);
-        if (nobj)
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
             delete nobj;
-        
-        jsb_remove_proxy(nproxy, jsproxy);
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
     }
 }
 void js_register_cocos2dx_audioengine_AudioProfile(JSContext *cx, JS::HandleObject global) {

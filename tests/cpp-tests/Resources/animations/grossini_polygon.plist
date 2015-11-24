@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>grossini_dance_01.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{1,1}</string>
+                <key>spriteSize</key>
+                <string>{59,115}</string>
+                <key>spriteSourceSize</key>
+                <string>{85,121}</string>
+                <key>textureRect</key>
+                <string>{{1,279},{59,115}}</string>
+                <key>textureRotated</key>
+                <true/>
+                <key>triangles</key>
+                <string>0 5 6 0 5 4 0 3 1 1 3 2 0 4 3</string>
+                <key>vertices</key>
+                <string>73 48 57 117 27 117 29 77 14 62 26 7 55 2</string>
+                <key>verticesUV</key>
+                <string>70 338 1 322 1 292 41 294 56 279 111 291 116 320</string>
+            </dict>
+            <key>grossini_dance_02.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-6,1.5}</string>
+                <key>spriteSize</key>
+                <string>{73,118}</string>
+                <key>spriteSourceSize</key>
+                <string>{85,121}</string>
+                <key>textureRect</key>
+                <string>{{1,76},{73,118}}</string>
+                <key>textureRotated</key>
+                <true/>
+                <key>triangles</key>
+                <string>0 5 6 3 5 4 0 3 1 1 3 2 0 5 3</string>
+                <key>vertices</key>
+                <string>73 48 57 117 27 118 27 79 0 80 27 8 54 0</string>
+                <key>verticesUV</key>
+                <string>71 149 2 133 1 103 40 103 39 76 111 103 119 130</string>
+            </dict>
+            <key>grossini_dance_03.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-5.5,0}</string>
+                <key>spriteSize</key>
+                <string>{74,121}</string>
+                <key>spriteSourceSize</key>
+                <string>{85,121}</string>
+                <key>textureRect</key>
+                <string>{{1,1},{74,121}}</string>
+                <key>textureRotated</key>
+                <true/>
+                <key>triangles</key>
+                <string>0 5 6 3 5 4 0 3 1 1 3 2 0 5 3</string>
+                <key>vertices</key>
+                <string>74 46 57 121 26 114 26 80 0 80 27 8 54 0</string>
+                <key>verticesUV</key>
+                <string>76 75 1 58 8 27 42 27 42 1 114 28 122 55</string>
+            </dict>
+            <key>grossini_dance_04.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-1.5,1.5}</string>
+                <key>spriteSize</key>
+                <string>{82,118}</string>
+                <key>spriteSourceSize</key>
+                <string>{85,121}</string>
+                <key>textureRect</key>
+                <string>{{123,61},{82,118}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>0 5 6 3 5 4 0 3 1 1 3 2 0 5 3</string>
+                <key>vertices</key>
+                <string>82 71 57 117 27 118 27 79 0 80 27 8 54 0</string>
+                <key>verticesUV</key>
+                <string>205 132 180 178 150 179 150 140 123 141 150 69 177 61</string>
+            </dict>
+            <key>grossini_dance_05.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{1,0.5}</string>
+                <key>spriteSize</key>
+                <string>{79,114}</string>
+                <key>spriteSourceSize</key>
+                <string>{85,121}</string>
+                <key>textureRect</key>
+                <string>{{118,180},{79,114}}</string>
+                <key>textureRotated</key>
+                <true/>
+                <key>triangles</key>
+                <string>1 7 5 5 7 6 2 4 3 2 4 5 1 5 2 0 7 1 0 7 8</string>
+                <key>vertices</key>
+                <string>56 6 83 71 57 98 57 117 27 117 29 91 4 78 4 58 28 3</string>
+                <key>verticesUV</key>
+                <string>229 232 164 259 137 233 118 233 118 203 144 205 157 180 177 180 232 204</string>
+            </dict>
+            <key>grossini_dance_06.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-4,0}</string>
+                <key>spriteSize</key>
+                <string>{69,113}</string>
+                <key>spriteSourceSize</key>
+                <string>{85,121}</string>
+                <key>textureRect</key>
+                <string>{{1,398},{69,113}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>1 6 4 4 6 5 2 3 4 1 4 2 1 6 7 0 1 7</string>
+                <key>vertices</key>
+                <string>56 6 73 48 57 117 27 117 29 91 4 78 4 58 29 4</string>
+                <key>verticesUV</key>
+                <string>53 400 70 442 54 511 24 511 26 485 1 472 1 452 26 398</string>
+            </dict>
+            <key>grossini_dance_07.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-4,0}</string>
+                <key>spriteSize</key>
+                <string>{69,113}</string>
+                <key>spriteSourceSize</key>
+                <string>{85,121}</string>
+                <key>textureRect</key>
+                <string>{{71,398},{69,113}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>1 6 4 4 6 5 2 3 4 1 4 2 1 6 7 0 1 7</string>
+                <key>vertices</key>
+                <string>56 6 73 48 57 117 27 117 29 91 4 78 4 58 29 4</string>
+                <key>verticesUV</key>
+                <string>123 400 140 442 124 511 94 511 96 485 71 472 71 452 96 398</string>
+            </dict>
+            <key>grossini_dance_08.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{1.5,1}</string>
+                <key>spriteSize</key>
+                <string>{58,115}</string>
+                <key>spriteSourceSize</key>
+                <string>{85,121}</string>
+                <key>textureRect</key>
+                <string>{{117,329},{58,115}}</string>
+                <key>textureRotated</key>
+                <true/>
+                <key>triangles</key>
+                <string>0 4 5 0 3 1 1 3 2 0 4 3</string>
+                <key>vertices</key>
+                <string>73 48 57 117 28 117 15 61 26 7 55 2</string>
+                <key>verticesUV</key>
+                <string>186 387 117 371 117 342 173 329 227 340 232 369</string>
+            </dict>
+            <key>grossini_dance_09.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{1.5,1}</string>
+                <key>spriteSize</key>
+                <string>{58,115}</string>
+                <key>spriteSourceSize</key>
+                <string>{85,121}</string>
+                <key>textureRect</key>
+                <string>{{1,339},{58,115}}</string>
+                <key>textureRotated</key>
+                <true/>
+                <key>triangles</key>
+                <string>0 4 5 0 3 1 1 3 2 0 4 3</string>
+                <key>vertices</key>
+                <string>73 48 57 117 28 117 15 61 26 7 55 2</string>
+                <key>verticesUV</key>
+                <string>70 397 1 381 1 352 57 339 111 350 116 379</string>
+            </dict>
+            <key>grossini_dance_10.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{6.5,1}</string>
+                <key>spriteSize</key>
+                <string>{68,115}</string>
+                <key>spriteSourceSize</key>
+                <string>{85,121}</string>
+                <key>textureRect</key>
+                <string>{{1,210},{68,115}}</string>
+                <key>textureRotated</key>
+                <true/>
+                <key>triangles</key>
+                <string>4 5 6 3 1 2 3 1 4 0 4 1 0 4 6</string>
+                <key>vertices</key>
+                <string>83 71 57 98 57 117 28 117 15 61 26 7 55 2</string>
+                <key>verticesUV</key>
+                <string>47 278 20 252 1 252 1 223 57 210 111 221 116 250</string>
+            </dict>
+            <key>grossini_dance_11.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{5.5,1}</string>
+                <key>spriteSize</key>
+                <string>{68,115}</string>
+                <key>spriteSourceSize</key>
+                <string>{85,121}</string>
+                <key>textureRect</key>
+                <string>{{117,260},{68,115}}</string>
+                <key>textureRotated</key>
+                <true/>
+                <key>triangles</key>
+                <string>4 5 6 3 4 6 0 3 1 1 3 2 0 3 6</string>
+                <key>vertices</key>
+                <string>82 71 57 117 27 117 29 77 14 62 26 7 55 2</string>
+                <key>verticesUV</key>
+                <string>163 328 117 303 117 273 157 275 172 260 227 272 232 301</string>
+            </dict>
+            <key>grossini_dance_12.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{2,1.5}</string>
+                <key>spriteSize</key>
+                <string>{59,116}</string>
+                <key>spriteSourceSize</key>
+                <string>{85,121}</string>
+                <key>textureRect</key>
+                <string>{{1,150},{59,116}}</string>
+                <key>textureRotated</key>
+                <true/>
+                <key>triangles</key>
+                <string>2 4 3 1 4 2 0 4 1 0 4 5</string>
+                <key>vertices</key>
+                <string>60 12 74 47 57 117 28 117 15 61 18 1</string>
+                <key>verticesUV</key>
+                <string>106 195 71 209 1 192 1 163 57 150 117 153</string>
+            </dict>
+            <key>grossini_dance_13.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{1.5,-0.5}</string>
+                <key>spriteSize</key>
+                <string>{58,112}</string>
+                <key>spriteSourceSize</key>
+                <string>{85,121}</string>
+                <key>textureRect</key>
+                <string>{{141,388},{58,112}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>2 4 3 1 4 2 0 4 1 0 4 5</string>
+                <key>vertices</key>
+                <string>57 6 73 56 57 117 28 117 15 61 26 5</string>
+                <key>verticesUV</key>
+                <string>183 389 199 439 183 500 154 500 141 444 152 388</string>
+            </dict>
+            <key>grossini_dance_14.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-3,-2}</string>
+                <key>spriteSize</key>
+                <string>{59,109}</string>
+                <key>spriteSourceSize</key>
+                <string>{85,121}</string>
+                <key>textureRect</key>
+                <string>{{123,1},{59,109}}</string>
+                <key>textureRotated</key>
+                <true/>
+                <key>triangles</key>
+                <string>1 3 2 1 3 4 1 4 5 0 1 5</string>
+                <key>vertices</key>
+                <string>69 9 69 64 57 117 28 117 10 43 25 8</string>
+                <key>verticesUV</key>
+                <string>231 60 176 60 123 48 123 19 197 1 232 16</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>realTextureFileName</key>
+            <string>grossini_polygon.png</string>
+            <key>size</key>
+            <string>{233,512}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:e404829c9835637b87e7dbf3c0a47ada:199d4c48ad68cabeb4251c3c20bc351c:7bf32c3aef204fd2950cdbb64d81d43e$</string>
+            <key>textureFileName</key>
+            <string>grossini_polygon.png</string>
+        </dict>
+    </dict>
+</plist>
