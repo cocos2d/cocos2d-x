@@ -38,7 +38,7 @@ struct CC_DLL ResouceData;
 
 namespace ui {
     class Scale9Sprite;
-    /**
+/**
  * @brief A widget to display images.
  */
 class CC_GUI_DLL ImageView : public Widget

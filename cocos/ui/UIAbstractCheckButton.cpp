@@ -136,12 +136,6 @@ void AbstractCheckButton::loadTextures(const std::string& backGround,
 void AbstractCheckButton::loadTextureBackGround(const std::string& backGround,TextureResType texType)
 {
     _backGroundFileName = backGround;
-#ifndef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    if (backGround.empty())
-    {
-        return;
-    }
-#endif
 
     _backGroundTexType = texType;
     switch (_backGroundTexType)
@@ -178,12 +172,6 @@ void AbstractCheckButton::loadTextureBackGroundSelected(const std::string& backG
 {
     _backGroundSelectedFileName = backGroundSelected;
     _isBackgroundSelectedTextureLoaded = !backGroundSelected.empty();
-#ifndef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    if (backGroundSelected.empty())
-    {
-        return;
-    }
-#endif
 
     _backGroundSelectedTexType = texType;
     switch (_backGroundSelectedTexType)
@@ -215,12 +203,6 @@ void AbstractCheckButton::setupBackgroundSelectedTexture()
 void AbstractCheckButton::loadTextureFrontCross(const std::string& cross,TextureResType texType)
 {
     _frontCrossFileName = cross;
-#ifndef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    if (cross.empty())
-    {
-        return;
-    }
-#endif
 
     _frontCrossTexType = texType;
     switch (_frontCrossTexType)
@@ -253,12 +235,6 @@ void AbstractCheckButton::loadTextureBackGroundDisabled(const std::string& backG
 {
     _backGroundDisabledFileName = backGroundDisabled;
     _isBackgroundDisabledTextureLoaded = !backGroundDisabled.empty();
-#ifndef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    if (backGroundDisabled.empty())
-    {
-        return;
-    }
-#endif
 
     _backGroundDisabledTexType = texType;
     switch (_backGroundDisabledTexType)
@@ -292,12 +268,6 @@ void AbstractCheckButton::loadTextureFrontCrossDisabled(const std::string& front
 {
     _frontCrossDisabledFileName = frontCrossDisabled;
     _isFrontCrossDisabledTextureLoaded = !frontCrossDisabled.empty();
-#ifndef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    if (frontCrossDisabled.empty())
-    {
-        return;
-    }
-#endif
 
     _frontCrossDisabledTexType = texType;
     switch (_frontCrossDisabledTexType)

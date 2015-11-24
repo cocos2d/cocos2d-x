@@ -154,12 +154,6 @@ void Slider::initRenderer()
 void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
 {
     _textureFile = fileName;
-#ifndef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    if (fileName.empty())
-    {
-        return;
-    }
-#endif
     _barTexType = texType;
     switch (_barTexType)
     {
@@ -192,12 +186,6 @@ void Slider::setupBarTexture()
 void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType texType)
 {
     _progressBarTextureFile = fileName;
-#ifndef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    if (fileName.empty())
-    {
-        return;
-    }
-#endif
     _progressBarTexType = texType;
     switch (_progressBarTexType)
     {
@@ -318,12 +306,6 @@ void Slider::loadSlidBallTextures(const std::string& normal,
 void Slider::loadSlidBallTextureNormal(const std::string& normal,TextureResType texType)
 {
     _slidBallNormalTextureFile = normal;
-#ifndef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    if (normal.empty())
-    {
-        return;
-    }
-#endif
     _ballNTexType = texType;
     switch (_ballNTexType)
     {
@@ -348,12 +330,6 @@ void Slider::loadSlidBallTexturePressed(const std::string& pressed,TextureResTyp
 {
     _slidBallPressedTextureFile = pressed;
     _isSliderBallPressedTextureLoaded = !pressed.empty();
-#ifndef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    if (pressed.empty())
-    {
-        return;
-    }
-#endif
     _ballPTexType = texType;
     switch (_ballPTexType)
     {
@@ -380,12 +356,6 @@ void Slider::loadSlidBallTextureDisabled(const std::string& disabled,TextureResT
 {
     _slidBallDisabledTextureFile = disabled;
     _isSliderBallDisabledTexturedLoaded = !disabled.empty();
-#ifndef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    if (disabled.empty())
-    {
-        return;
-    }
-#endif
     _ballDTexType = texType;
     switch (_ballDTexType)
     {

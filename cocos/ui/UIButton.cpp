@@ -233,13 +233,6 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
     _normalFileName = normal;
     _normalTexType = texType;
 
-#ifndef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    if (normal.empty())
-    {
-        return;
-    }
-#endif
-
     switch (texType)
     {
         case TextureResType::LOCAL:
@@ -290,13 +283,6 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
     _clickedFileName = selected;
     _pressedTexType = texType;
 
-#ifndef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    if (selected.empty())
-    {
-        return;
-    }
-#endif
-
     switch (texType)
     {
         case TextureResType::LOCAL:
@@ -332,13 +318,6 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
 {
     _disabledFileName = disabled;
     _disabledTexType = texType;
-
-#ifndef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-    if (disabled.empty())
-    {
-        return;
-    }
-#endif
 
     switch (texType)
     {
