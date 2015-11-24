@@ -295,6 +295,8 @@ cc.Class.extend = function (prop) {
     return Class;
 };
 
+var __registeCount = 0;
+
 jsb.registerNativeRef = function (owner, target) {
     if (typeof owner === "object" && typeof target === "object") {
         var refs = owner.__nativeRefs;
@@ -304,6 +306,8 @@ jsb.registerNativeRef = function (owner, target) {
         var index = refs.indexOf(target);
         if (index === -1) {
             refs.push(target);
+            __registeCount++;
+            // cc.log("##########registered " + target + " : " + __registeCount);
         }
     }
 };
@@ -317,6 +321,8 @@ jsb.unregisterNativeRef = function (owner, target) {
         var index = refs.indexOf(target);
         if (index !== -1) {
             refs.splice(index, 1);
+            __registeCount--;
+            // cc.log("##------##unregistered " + target + " : " + __registeCount);
         }
     }
 };
