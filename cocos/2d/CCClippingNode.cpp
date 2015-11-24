@@ -32,6 +32,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"
+#include "base/CCStencilBitsManager.hpp"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 #define CC_CLIPPING_NODE_OPENGLES 0
@@ -42,10 +43,7 @@
 NS_CC_BEGIN
 
 static GLint g_sStencilBits = -1;
-// store the current stencil layer (position in the stencil buffer),
-// this will allow nesting up to n ClippingNode,
-// where n is the number of bits of the stencil buffer.
-static GLint s_layer = -1;
+
 
 #if CC_CLIPPING_NODE_OPENGLES
 static void setProgram(Node *n, GLProgram *p)
@@ -398,7 +396,9 @@ void ClippingNode::onBeforeVisit()
     // INIT
 
     // increment the current layer
+    auto s_layer = StencilBitsManager::getInstance()->getStencilLayerMask();
     s_layer++;
+    StencilBitsManager::getInstance()->setStencilLayerMask(s_layer);
 
     // mask of the current layer (ie: for layer 3: 00000100)
     GLint mask_layer = 0x1 << s_layer;
@@ -563,7 +563,9 @@ void ClippingNode::onAfterVisit()
     }
 
     // we are done using this layer, decrement
+    auto s_layer = StencilBitsManager::getInstance()->getStencilLayerMask();
     s_layer--;
+    StencilBitsManager::getInstance()->setStencilLayerMask(s_layer);
 }
 
 NS_CC_END

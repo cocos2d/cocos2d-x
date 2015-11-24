@@ -45,6 +45,7 @@ set(COCOS_BASE_SRC
   base/CCUserDefault.cpp
   base/CCValue.cpp
   base/ObjectFactory.cpp
+  base/CCStencilBitsManager.cpp
   base/TGAlib.cpp
   base/ZipUtils.cpp
   base/allocator/CCAllocatorDiagnostics.cpp

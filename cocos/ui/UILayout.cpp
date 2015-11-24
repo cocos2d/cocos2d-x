@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "2d/CCLayer.h"
 #include "2d/CCSprite.h"
 #include "base/CCEventFocus.h"
-
+#include "base/CCStencilBitsManager.hpp"
 
 NS_CC_BEGIN
 
@@ -47,7 +47,6 @@ static const int BACKGROUNDIMAGE_Z = (-1);
 static const int BCAKGROUNDCOLORRENDERER_Z = (-2);
 
 static GLint g_sStencilBits = -1;
-static GLint s_layer = -1;
     
 IMPLEMENT_CLASS_GUI_INFO(Layout)
 
@@ -329,7 +328,9 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransfor
     
 void Layout::onBeforeVisitStencil()
 {
+    auto s_layer = StencilBitsManager::getInstance()->getStencilLayerMask();
     s_layer++;
+    StencilBitsManager::getInstance()->setStencilLayerMask(s_layer);
     GLint mask_layer = 0x1 << s_layer;
     GLint mask_layer_l = mask_layer - 1;
     _mask_layer_le = mask_layer | mask_layer_l;
@@ -454,7 +455,9 @@ void Layout::onAfterVisitStencil()
         glDisable(GL_STENCIL_TEST);
 //        RenderState::StateBlock::_defaultState->setStencilTest(false);
     }
+    auto s_layer = StencilBitsManager::getInstance()->getStencilLayerMask();
     s_layer--;
+    StencilBitsManager::getInstance()->setStencilLayerMask(s_layer);
 }
     
 void Layout::onBeforeVisitScissor()
