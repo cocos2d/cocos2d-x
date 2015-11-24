@@ -276,31 +276,8 @@ static void addCallBackAndThis(JSObject *obj, jsval callback, jsval &thisObj)
     }
 }
 
-template<class T>
-JSObject* bind_menu_item(JSContext *cx, T* nativeObj, jsval callback, jsval thisObj) {    
-    js_proxy_t *p = jsb_get_native_proxy(nativeObj);
-    if (p) {
-        addCallBackAndThis(p->obj, callback, thisObj);
-        return p->obj;
-    } else {
-        js_type_class_t *classType = js_get_type_from_native<T>(nativeObj);
-        assert(classType);
-        JS::RootedObject proto(cx, classType->proto);
-        JS::RootedObject parent(cx, classType->parentProto);
-        JSObject *tmp = JS_NewObject(cx, classType->jsclass, proto, parent);
-
-        // bind nativeObj <-> JSObject
-        js_proxy_t *proxy = jsb_new_proxy(nativeObj, tmp);
-        JS::AddNamedObjectRoot(cx, &proxy->obj, typeid(*nativeObj).name());
-        addCallBackAndThis(tmp, callback, thisObj);
-
-        return tmp;
-    }
-}
-
 bool js_cocos2dx_CCMenu_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
-//    jsval *argv = JS_ARGV(cx, vp);
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc > 0) {
         Vector<MenuItem*> items;
@@ -330,7 +307,6 @@ bool js_cocos2dx_CCMenu_create(JSContext *cx, uint32_t argc, jsval *vp)
                 jsret = JSVAL_NULL;
             }
         } while (0);
-//        args.rval().set(jsret);
         args.rval().set(jsret);
         return true;
     }
@@ -351,7 +327,6 @@ bool js_cocos2dx_CCMenu_create(JSContext *cx, uint32_t argc, jsval *vp)
                 jsret = JSVAL_NULL;
             }
         } while (0);
-//        JS_SET_RVAL(cx, vp, jsret);
         args.rval().set(jsret);
         return true;
     }
@@ -361,7 +336,6 @@ bool js_cocos2dx_CCMenu_create(JSContext *cx, uint32_t argc, jsval *vp)
 
 bool js_cocos2dx_CCSequence_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
-//    jsval *argv = JS_ARGV(cx, vp);
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc > 0) {
         Vector<FiniteTimeAction*> array;
@@ -397,7 +371,6 @@ bool js_cocos2dx_CCSequence_create(JSContext *cx, uint32_t argc, jsval *vp)
                 jsret = JSVAL_NULL;
             }
         } while (0);
-//        JS_SET_RVAL(cx, vp, jsret);
         args.rval().set(jsret);
         return true;
     }
@@ -449,141 +422,6 @@ bool js_cocos2dx_CCSpawn_create(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
-bool js_cocos2dx_CCMenuItem_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    if (argc >= 1) {
-        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        cocos2d::MenuItem* ret = cocos2d::MenuItem::create();
-        JSObject *obj = bind_menu_item<cocos2d::MenuItem>(cx, ret, args.get(0), argc == 2? args.get(1) : JSVAL_VOID);
-        args.rval().set(OBJECT_TO_JSVAL(obj));
-        return true;
-    }
-    JS_ReportError(cx, "wrong number of arguments");
-    return false;
-}
-
-// "create" in JS
-// cc.MenuItemSprite.create( normalSprite, selectedSprite, [disabledSprite], [callback_fn], [this]
-bool js_cocos2dx_CCMenuItemSprite_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    if (argc >= 2 && argc <= 5) {
-        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        js_proxy_t *proxy;
-        JSObject *tmpObj;
-        
-        tmpObj = args.get(0).toObjectOrNull();
-        proxy = jsb_get_js_proxy(tmpObj);
-        cocos2d::Node* arg0 = (cocos2d::Node*)(proxy ? proxy->ptr : NULL);
-        TEST_NATIVE_OBJECT(cx, arg0);
-
-        tmpObj = args.get(1).toObjectOrNull();
-        proxy = jsb_get_js_proxy(tmpObj);
-        cocos2d::Node* arg1 = (cocos2d::Node*)(proxy ? proxy->ptr : NULL);
-        TEST_NATIVE_OBJECT(cx, arg1);
-
-        int last = 2;
-        bool thirdArgIsCallback = false;
-
-        jsval jsCallback = JSVAL_VOID;
-        jsval jsThis = JSVAL_VOID;
-
-        cocos2d::Node* arg2 = NULL;
-        if (argc >= 3) {
-            tmpObj = args.get(2).toObjectOrNull();
-            thirdArgIsCallback = JS_ObjectIsFunction(cx, tmpObj);
-            if (!thirdArgIsCallback) { 
-                proxy = jsb_get_js_proxy(tmpObj);
-                arg2 = (cocos2d::Node*)(proxy ? proxy->ptr : NULL);
-                TEST_NATIVE_OBJECT(cx, arg2);
-                last = 3;
-            }
-        }
-        cocos2d::MenuItemSprite* ret = cocos2d::MenuItemSprite::create(arg0, arg1, arg2);
-        if (argc >= 3) { 
-            if (thirdArgIsCallback) {
-                //cc.MenuItemSprite.create( normalSprite, selectedSprite, callback_fn, [this] )
-                jsCallback = args.get(last++);
-                if (argc == 4) {
-                    jsThis = args.get(last);
-                }
-            }
-            else { 
-                //cc.MenuItemSprite.create( normalSprite, selectedSprite, disabledSprite, callback_fn, [this] )
-                if (argc >= 4) {
-                    jsCallback = args.get(last++);
-                    if (argc == 5) {
-                        jsThis = args.get(last);
-                    }
-                }
-            }
-        }
-
-        JSObject *obj = bind_menu_item<cocos2d::MenuItemSprite>(cx, ret, jsCallback, jsThis);
-
-        args.rval().set(OBJECT_TO_JSVAL(obj));
-        return true;
-    }
-    JS_ReportError(cx, "Invalid number of arguments. Expecting: 2 <= args <= 5");
-    return false;
-}
-
-// "create" in JS:
-// cc.MenuItemLabel.create( label, callback_fn, [this] );
-bool js_cocos2dx_CCMenuItemLabel_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    if (argc >= 1 && argc <= 3) {
-        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        js_proxy_t *proxy;
-        JSObject *tmpObj = args.get(0).toObjectOrNull();
-        proxy = jsb_get_js_proxy(tmpObj);
-        cocos2d::Node* arg0 = (cocos2d::Node*)(proxy ? proxy->ptr : NULL);
-        TEST_NATIVE_OBJECT(cx, arg0)
-        cocos2d::MenuItemLabel* ret = cocos2d::MenuItemLabel::create(arg0);
-        JSObject *obj = bind_menu_item<cocos2d::MenuItemLabel>(cx, ret, (argc >= 2 ? args.get(1) : JSVAL_VOID), (argc == 3 ? args.get(2) : JSVAL_VOID) );
-        args.rval().set(OBJECT_TO_JSVAL(obj));
-        return true;
-    }
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d or %d or %d", argc, 1, 2, 3);
-    return false;
-}
-
-bool js_cocos2dx_CCMenuItemAtlasFont_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    if (argc >= 5) {
-        bool ok = true;
-        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        JSStringWrapper arg0(args.get(0));
-        JSStringWrapper arg1(args.get(1));
-        int arg2; ok &= jsval_to_int32(cx, args.get(2), &arg2);
-        int arg3; ok &= jsval_to_int32(cx, args.get(3), &arg3);
-        int arg4; ok &= jsval_to_int32(cx, args.get(4), &arg4);
-        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-        cocos2d::MenuItemAtlasFont* ret = cocos2d::MenuItemAtlasFont::create(arg0.get(), arg1.get(), arg2, arg3, arg4);
-        JSObject *obj = bind_menu_item<cocos2d::MenuItemAtlasFont>(cx, ret, (argc >= 6 ? args.get(5) : JSVAL_VOID), (argc == 7 ? args.get(6) : JSVAL_VOID));
-        args.rval().set(OBJECT_TO_JSVAL(obj));
-        return true;
-    }
-    JS_ReportError(cx, "wrong number of arguments");
-    return false;
-}
-
-// "create" in JS
-// cc.MenuItemFont.create( string, callback_fn, [this] );
-bool js_cocos2dx_CCMenuItemFont_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    if (argc >= 1 && argc <= 3) {
-        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        JSStringWrapper arg0(args.get(0));
-        cocos2d::MenuItemFont* ret = cocos2d::MenuItemFont::create(arg0.get());
-        JSObject *obj = bind_menu_item<cocos2d::MenuItemFont>(cx, ret, (argc >= 2 ? args.get(1) : JSVAL_VOID), (argc == 3 ? args.get(2) : JSVAL_VOID));
-        args.rval().set(OBJECT_TO_JSVAL(obj));
-        return true;
-    }
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d or %d or %d", argc, 1, 2, 3);
-    return false;
-}
-
-
 bool js_cocos2dx_CCMenuItemToggle_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc >= 1) {
@@ -619,63 +457,6 @@ bool js_cocos2dx_CCMenuItemToggle_create(JSContext *cx, uint32_t argc, jsval *vp
         return true;
     }
     JS_ReportError(cx, "wrong number of arguments");
-    return false;
-}
-
-bool js_cocos2dx_MenuItem_setCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::MenuItem* cobj = (cocos2d::MenuItem *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_MenuItem_setCallback : Invalid Native Object");
-    if (argc == 1 || argc == 2) {
-        std::function<void (cocos2d::Ref *)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args[0]) == JSTYPE_FUNCTION)
-		    {
-                JSObject* thisObj;
-                if (args.get(1).isObject())
-                {
-                    thisObj = args.get(1).toObjectOrNull();
-                }
-                else
-                {
-                    thisObj = JS_THIS_OBJECT(cx, vp);
-                }
-                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, thisObj, args[0]));
-		        auto lambda = [=](cocos2d::Ref* larg0) -> void {
-		            jsval largv[1];
-                    do {
-                        if (larg0) {
-                            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Ref>(cx, (cocos2d::Ref*)larg0);
-                            largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
-                        } else {
-                            largv[0] = JSVAL_NULL;
-                        }
-                    } while (0);
-                    JS::RootedValue rval(cx);
-		            bool invoke_ok = func->invoke(1, &largv[0], &rval);
-		            if (!invoke_ok && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MenuItem_setCallback : Error processing arguments");
-        cobj->setCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_MenuItem_setCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 
@@ -6255,21 +6036,6 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     JS_GetProperty(cx, ccObj, "Menu", &tmpVal);
     tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "_create", js_cocos2dx_CCMenu_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_GetProperty(cx, ccObj, "MenuItem", &tmpVal);
-    tmpObj = tmpVal.toObjectOrNull();
-    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItem_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_GetProperty(cx, ccObj, "MenuItemSprite", &tmpVal);
-    tmpObj = tmpVal.toObjectOrNull();
-    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItemSprite_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_GetProperty(cx, ccObj, "MenuItemLabel", &tmpVal);
-    tmpObj = tmpVal.toObjectOrNull();
-    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItemLabel_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_GetProperty(cx, ccObj, "MenuItemAtlasFont", &tmpVal);
-    tmpObj = tmpVal.toObjectOrNull();
-    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItemAtlasFont_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_GetProperty(cx, ccObj, "MenuItemFont", &tmpVal);
-    tmpObj = tmpVal.toObjectOrNull();
-    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItemFont_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_GetProperty(cx, ccObj, "MenuItemToggle", &tmpVal);
     tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "_create", js_cocos2dx_CCMenuItemToggle_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
