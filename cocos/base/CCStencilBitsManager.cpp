@@ -25,6 +25,8 @@
 
 #include "CCStencilBitsManager.hpp"
 
+NS_CC_BEGIN
+
 StencilBitsManager* StencilBitsManager::_stencilBitsManager = nullptr;
 
 GLint StencilBitsManager::getStencilLayerMask()const
@@ -42,3 +44,5 @@ StencilBitsManager::StencilBitsManager()
 {
     
 }
+
+NS_CC_END

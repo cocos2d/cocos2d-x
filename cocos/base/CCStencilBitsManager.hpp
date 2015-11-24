@@ -24,8 +24,17 @@
  ****************************************************************************/
 #ifndef StencilBitsManager_hpp
 #define StencilBitsManager_hpp
+#include "base/ccConfig.h"
+#include "platform/CCPlatformMacros.h"
+#include "platform/CCGL.h"
 
-class StencilBitsManager
+/**
+ * @addtogroup base
+ * @{
+ */
+NS_CC_BEGIN
+
+class CC_DLL StencilBitsManager
 {
 public:
     static StencilBitsManager* getInstance()
@@ -46,4 +55,7 @@ private:
     GLint _stencilLayerMask;
 };
 
+NS_CC_END
+// end of base group
+/** @} */
 #endif /* StencilBitsManager_hpp */
