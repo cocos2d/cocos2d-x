@@ -50,8 +50,8 @@ EditBoxImplCommon::EditBoxImplCommon(EditBox* pEditText)
 , _rightPadding(5.0f)
 , _topPadding(5.0f)
 , _bottomPadding(5.0f)
-, _textHorizontalAlignMent(TextHAlignment::LEFT)
-, _textVerticalAlignMent(TextVAlignment::CENTER)
+, _textHorizontalAlignment(TextHAlignment::LEFT)
+, _textVerticalAlignment(TextVAlignment::CENTER)
 {
 }
 
@@ -99,7 +99,7 @@ void EditBoxImplCommon::initInactiveLabels(const Size& size)
 
 void EditBoxImplCommon::placeInactiveLabels()
 {
-    switch (_textHorizontalAlignMent) {
+    switch (_textHorizontalAlignment) {
         case cocos2d::TextHAlignment::LEFT :
             _label->setPositionX(_leftPadding);
             _labelPlaceHolder->setPositionX(_leftPadding);
@@ -116,7 +116,7 @@ void EditBoxImplCommon::placeInactiveLabels()
             break;
     }
     
-    switch (_textVerticalAlignMent) {
+    switch (_textVerticalAlignment) {
         case cocos2d::TextVAlignment::TOP :
             _label->setPositionY(_contentSize.height - _topPadding);
             _labelPlaceHolder->setPositionY(_contentSize.height - _topPadding);
@@ -132,6 +132,8 @@ void EditBoxImplCommon::placeInactiveLabels()
         default:
             break;
     }
+    _label->setAlignment(_textHorizontalAlignment, _textVerticalAlignment);
+    _labelPlaceHolder->setAlignment(_textHorizontalAlignment, _textVerticalAlignment);
 }
 
 void EditBoxImplCommon::setInactiveText(const char* pText)
@@ -205,7 +207,7 @@ void EditBoxImplCommon::setInputMode(EditBox::InputMode inputMode)
     this->setNativeInputMode(inputMode);
     
     this->setNativePadding(_leftPadding, _topPadding, _rightPadding, _bottomPadding);
-    this->setNativeTextAlignment(_textHorizontalAlignMent, _textVerticalAlignMent);
+    this->setNativeTextAlignment(_textHorizontalAlignment, _textVerticalAlignment);
 }
 
 void EditBoxImplCommon::setMaxLength(int maxLength)
@@ -308,8 +310,8 @@ void EditBoxImplCommon::setPadding(float left, float top, float right, float bot
 
 void EditBoxImplCommon::setTextAlignment(cocos2d::TextHAlignment hAlign, cocos2d::TextVAlignment vAlign)
 {
-    _textHorizontalAlignMent = hAlign;
-    _textVerticalAlignMent = vAlign;
+    _textHorizontalAlignment = hAlign;
+    _textVerticalAlignment = vAlign;
     
     placeInactiveLabels();
     

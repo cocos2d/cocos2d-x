@@ -49,8 +49,8 @@ EditBox::EditBox(void)
 , _rightPadding(5.0f)
 , _topPadding(5.0f)
 , _bottomPadding(5.0f)
-, _textHorizontalAlignMent(TextHAlignment::LEFT)
-, _textVerticalAlignMent(TextVAlignment::CENTER)
+, _textHorizontalAlignment(TextHAlignment::LEFT)
+, _textVerticalAlignment(TextVAlignment::CENTER)
 #if CC_ENABLE_SCRIPT_BINDING
 , _scriptEditBoxHandler(0)
 #endif
@@ -131,7 +131,7 @@ bool EditBox::initWithSizeAndBackgroundSprite(const cocos2d::Size &size, cocos2d
         
         this->setPadding(_leftPadding, _topPadding, _rightPadding, _bottomPadding);
         
-        this->setTextAlignment(_textHorizontalAlignMent, _textVerticalAlignMent);
+        this->setTextAlignment(_textHorizontalAlignment, _textVerticalAlignment);
         
         return true;
     }
@@ -170,7 +170,7 @@ bool EditBox::initWithSizeAndBackgroundSprite(const Size& size,
         
         this->setPadding(_leftPadding, _topPadding, _rightPadding, _bottomPadding);
         
-        this->setTextAlignment(_textHorizontalAlignMent, _textVerticalAlignMent);
+        this->setTextAlignment(_textHorizontalAlignment, _textVerticalAlignment);
         
         return true;
     }
@@ -380,30 +380,30 @@ void EditBox::setPadding(float left, float top, float right, float bottom)
     }
 }
 
-float EditBox::getLeftPadding()
+float EditBox::getLeftPadding() const
 {
     return _leftPadding;
 }
 
-float EditBox::getTopPadding()
+float EditBox::getTopPadding() const
 {
     return _topPadding;
 }
 
-float EditBox::getRightPadding()
+float EditBox::getRightPadding() const
 {
     return _rightPadding;
 }
 
-float EditBox::getBottomPadding()
+float EditBox::getBottomPadding() const
 {
     return _bottomPadding;
 }
     
 void EditBox::setTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign)
 {
-    _textHorizontalAlignMent = hAlign;
-    _textVerticalAlignMent = vAlign;
+    _textHorizontalAlignment = hAlign;
+    _textVerticalAlignment = vAlign;
     
     if (_editBoxImpl != nullptr)
     {
@@ -413,24 +413,24 @@ void EditBox::setTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign)
 
 void EditBox::setHorizontalTextAlignment(TextHAlignment hAlign)
 {
-    _textHorizontalAlignMent = hAlign;
-    this->setTextAlignment(_textHorizontalAlignMent, _textVerticalAlignMent);
+    _textHorizontalAlignment = hAlign;
+    this->setTextAlignment(_textHorizontalAlignment, _textVerticalAlignment);
 }
 
-TextHAlignment EditBox::getHorizontalTextAlignment()
+TextHAlignment EditBox::getHorizontalTextAlignment() const
 {
-    return _textHorizontalAlignMent;
+    return _textHorizontalAlignment;
 }
 
 void EditBox::setVerticalTextAlignment(TextVAlignment vAlign)
 {
-    _textVerticalAlignMent = vAlign;
-    this->setTextAlignment(_textHorizontalAlignMent, _textVerticalAlignMent);
+    _textVerticalAlignment = vAlign;
+    this->setTextAlignment(_textHorizontalAlignment, _textVerticalAlignment);
 }
 
-TextVAlignment EditBox::getVerticalTextAlignment()
+TextVAlignment EditBox::getVerticalTextAlignment() const
 {
-    return _textVerticalAlignMent;
+    return _textVerticalAlignment;
 }
     
 /* override function */

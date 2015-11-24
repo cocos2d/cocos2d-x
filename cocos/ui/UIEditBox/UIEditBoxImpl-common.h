@@ -142,8 +142,8 @@ private:
     float _topPadding;
     float _bottomPadding;
     
-    TextHAlignment _textHorizontalAlignMent;
-    TextVAlignment _textVerticalAlignMent;
+    TextHAlignment _textHorizontalAlignment;
+    TextVAlignment _textVerticalAlignment;
 };
 
 

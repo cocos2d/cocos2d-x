@@ -410,7 +410,10 @@ namespace ui {
         
         /**
          * Set the inner padding in edit box.
-         * @param padding left, top, right, bottom.
+         * @param left   The left padding.
+         * @param top The top padding.
+         * @param right The right padding.
+         * @param bottom The bottom padding.
          */
         void setPadding(float left, float top, float right, float bottom);
         
@@ -418,25 +421,25 @@ namespace ui {
          * Get the inner left padding of edit box.
          * @return left padding.
          */
-        float getLeftPadding();
+        float getLeftPadding()const;
         
         /**
          * Get the inner top padding of edit box.
          * @return top padding.
          */
-        float getTopPadding();
+        float getTopPadding()const;
         
         /**
          * Get the inner right padding of edit box.
          * @return right padding.
          */
-        float getRightPadding();
+        float getRightPadding()const;
         
         /**
          * Get the inner bottom padding of edit box.
          * @return bottom padding.
          */
-        float getBottomPadding();
+        float getBottomPadding()const;
         
         /**
          * Set the input text horizontal alignment and vertical alignment.
@@ -455,7 +458,7 @@ namespace ui {
          * Get the horizontal alignment of edit box.
          * @return horizontal alignment of edit box.
          */
-        TextHAlignment getHorizontalTextAlignment();
+        TextHAlignment getHorizontalTextAlignment()const;
         
         /**
          * Set the input text only vertical alignment.
@@ -467,7 +470,7 @@ namespace ui {
          * Get the vertical alignment of edit box.
          * @return vertical alignment of edit box.
          */
-        TextVAlignment getVerticalTextAlignment();
+        TextVAlignment getVerticalTextAlignment()const;
         
         /* override functions */
         virtual void setPosition(const Vec2& pos) override;
@@ -554,8 +557,8 @@ namespace ui {
         float _topPadding;
         float _bottomPadding;
         
-        TextHAlignment _textHorizontalAlignMent;
-        TextVAlignment _textVerticalAlignMent;
+        TextHAlignment _textHorizontalAlignment;
+        TextVAlignment _textVerticalAlignment;
         
 #if CC_ENABLE_SCRIPT_BINDING
         int   _scriptEditBoxHandler;
