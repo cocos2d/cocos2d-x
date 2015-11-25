@@ -114,17 +114,14 @@ class JSB_EditBoxDelegate
 {
 public:
     JSB_EditBoxDelegate()
-    : _JSDelegate(nullptr)
-    , _needUnroot(false)
-    {}
+    {
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+        _JSDelegate.construct(cx, JS::NullHandleValue);
+    }
     
     virtual ~JSB_EditBoxDelegate()
     {
-        if (_needUnroot)
-        {
-            JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            JS::RemoveObjectRoot(cx, &_JSDelegate);
-        }
+        _JSDelegate.destroyIfConstructed();
     }
     
     virtual void editBoxEditingDidBegin(EditBox* editBox) override
@@ -133,7 +130,7 @@ public:
         if (!p) return;
         
         jsval arg = OBJECT_TO_JSVAL(p->obj);
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxEditingDidBegin", 1, &arg);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(_JSDelegate.ref().get(), "editBoxEditingDidBegin", 1, &arg);
     }
     
     virtual void editBoxEditingDidEnd(EditBox* editBox) override
@@ -142,7 +139,7 @@ public:
         if (!p) return;
         
         jsval arg = OBJECT_TO_JSVAL(p->obj);
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxEditingDidEnd", 1, &arg);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(_JSDelegate.ref().get(), "editBoxEditingDidEnd", 1, &arg);
     }
     
     virtual void editBoxTextChanged(EditBox* editBox, const std::string& text) override
@@ -155,7 +152,7 @@ public:
         std::string arg1 = text;
         dataVal[1] = std_string_to_jsval(ScriptingCore::getInstance()->getGlobalContext(), arg1);
         
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxTextChanged", 2, dataVal);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(_JSDelegate.ref().get(), "editBoxTextChanged", 2, dataVal);
     }
     
     virtual void editBoxReturn(EditBox* editBox) override
@@ -164,31 +161,21 @@ public:
         if (!p) return;
         
         jsval arg = OBJECT_TO_JSVAL(p->obj);
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxReturn", 1, &arg);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(_JSDelegate.ref().get(), "editBoxReturn", 1, &arg);
     }
     
-    void setJSDelegate(JSObject* pJSDelegate)
+    void setJSDelegate(JS::HandleValue pJSDelegate)
     {
-        _JSDelegate = pJSDelegate;
-        
-        // Check whether the js delegate is a pure js object.
-        js_proxy_t* p = jsb_get_js_proxy(_JSDelegate);
-        if (!p)
-        {
-            _needUnroot = true;
-            JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            JS::AddNamedObjectRoot(cx, &_JSDelegate, "TableViewDelegate");
-        }
+        _JSDelegate.ref() = pJSDelegate;
     }
 private:
-    JS::Heap<JSObject*> _JSDelegate;
-    bool _needUnroot;
+    mozilla::Maybe<JS::PersistentRootedValue> _JSDelegate;
 };
 
 static bool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::ui::EditBox* cobj = (cocos2d::ui::EditBox *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
@@ -196,9 +183,8 @@ static bool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, jsva
     if (argc == 1)
     {
         // save the delegate
-        JSObject *jsDelegate = args.get(0).toObjectOrNull();
         JSB_EditBoxDelegate* nativeDelegate = new JSB_EditBoxDelegate();
-        nativeDelegate->setJSDelegate(jsDelegate);
+        nativeDelegate->setJSDelegate(args.get(0));
         
         cobj->setUserObject(nativeDelegate);
         cobj->setDelegate(nativeDelegate);

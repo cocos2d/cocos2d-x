@@ -37,8 +37,7 @@ schedTarget_proxy_t *_schedObj_target_ht = NULL;
 JSTouchDelegate::TouchDelegateMap JSTouchDelegate::sTouchDelegateMap;
 
 JSTouchDelegate::JSTouchDelegate()
-: _needUnroot(false)
-, _touchListenerAllAtOnce(nullptr)
+: _touchListenerAllAtOnce(nullptr)
 , _touchListenerOneByOne(nullptr)
 {
     auto cx = ScriptingCore::getInstance()->getGlobalContext();
@@ -4837,7 +4836,7 @@ bool js_cocos2dx_RenderTexture_saveToFile(JSContext *cx, uint32_t argc, jsval *v
             arg2 = JS::ToBoolean(JS::RootedValue(cx, args.get(2)));
             std::function<void (cocos2d::RenderTexture *, const std::basic_string<char> &)> arg3;
             do {
-                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), args.get(3)));
+                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(3)));
                 auto lambda = [=](cocos2d::RenderTexture* larg0, const std::string& larg1) -> void {
                     jsval largv[2];
                     do {
@@ -4906,7 +4905,7 @@ bool js_cocos2dx_RenderTexture_saveToFile(JSContext *cx, uint32_t argc, jsval *v
             arg1 = JS::ToBoolean(JS::RootedValue(cx, args.get(1)));
             std::function<void (cocos2d::RenderTexture *, const std::basic_string<char> &)> arg2;
             do {
-                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), args.get(2)));
+                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(2)));
                 auto lambda = [=](cocos2d::RenderTexture* larg0, const std::string& larg1) -> void {
                     jsval largv[2];
                     do {

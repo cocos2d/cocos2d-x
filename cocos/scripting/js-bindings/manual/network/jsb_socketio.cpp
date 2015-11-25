@@ -43,6 +43,13 @@ public:
     {
         std::string s = "default";
         _eventRegistry[s] = nullptr;
+        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+        _JSDelegate.construct(cx);
+    }
+    
+    ~JSB_SocketIODelegate()
+    {
+        _JSDelegate.destroyIfConstructed();
     }
     
     virtual void onConnect(SIOClient* client)
@@ -86,8 +93,6 @@ public:
         {
             args = std_string_to_jsval(cx, data);
         }
-
-        //ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), eventName.c_str(), 1, &args);
         
         JSB_SIOCallbackRegistry::iterator it = _eventRegistry.find(eventName);
         
@@ -103,9 +108,9 @@ public:
         
     }
 
-    void setJSDelegate(JSObject* pJSDelegate)
+    void setJSDelegate(JS::HandleObject pJSDelegate)
     {
-        _JSDelegate = pJSDelegate;
+        _JSDelegate.ref() = pJSDelegate;
     }
 
     void addEvent(const std::string& eventName, std::shared_ptr<JSFunctionWrapper> callback)
@@ -114,7 +119,7 @@ public:
     }
 
 private:
-    JS::Heap<JSObject*> _JSDelegate;
+    mozilla::Maybe<JS::PersistentRootedObject> _JSDelegate;
     JSB_SIOCallbackRegistry _eventRegistry;
 
 };
@@ -166,8 +171,7 @@ bool js_cocos2dx_SocketIO_connect(JSContext* cx, uint32_t argc, jsval* vp)
                     //previous connection not found, create a new one
                     JSObject *obj = JS_NewObject(cx, js_cocos2dx_socketio_class, JS::RootedObject(cx, js_cocos2dx_socketio_prototype), JS::NullPtr());
                     p = jsb_new_proxy(ret, obj);
-                    JS::AddNamedObjectRoot(cx, &p->obj, "SocketIO");
-                    siodelegate->setJSDelegate(p->obj);
+                    siodelegate->setJSDelegate(JS::RootedObject(cx, p->obj));
                 }
                 jsret = OBJECT_TO_JSVAL(p->obj);
             }
@@ -352,7 +356,7 @@ bool js_cocos2dx_SocketIO_on(JSContext* cx, uint32_t argc, jsval* vp)
 
         CCLOG("JSB SocketIO eventName to: '%s'", eventName.c_str());
         
-        std::shared_ptr<JSFunctionWrapper> callback(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), args.get(1)));
+        std::shared_ptr<JSFunctionWrapper> callback(new JSFunctionWrapper(cx, obj, args.get(1)));
 
         ((JSB_SocketIODelegate *)cobj->getDelegate())->addEvent(eventName, callback);
 

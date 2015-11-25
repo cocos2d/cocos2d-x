@@ -60,6 +60,17 @@ class JSB_WebSocketDelegate : public WebSocket::Delegate
 {
 public:
     
+    JSB_WebSocketDelegate()
+    {
+        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+        _JSDelegate.construct(cx);
+    }
+    
+    ~JSB_WebSocketDelegate()
+    {
+        _JSDelegate.destroyIfConstructed();
+    }
+    
     virtual void onOpen(WebSocket* ws)
     {
         js_proxy_t * p = jsb_get_native_proxy(ws);
@@ -75,7 +86,7 @@ public:
         
         jsval args = OBJECT_TO_JSVAL(jsobj);
         
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "onopen", 1, &args);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate.ref()), "onopen", 1, &args);
     }
     
     virtual void onMessage(WebSocket* ws, const WebSocket::Data& data)
@@ -109,7 +120,7 @@ public:
             JS_SetProperty(cx, jsobj, "data", dataVal);
         }
 
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "onmessage", 1, &args);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate.ref()), "onmessage", 1, &args);
     }
     
     virtual void onClose(WebSocket* ws)
@@ -126,7 +137,7 @@ public:
         JS_SetProperty(cx, jsobj, "type", vp);
         
         jsval args = OBJECT_TO_JSVAL(jsobj);
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "onclose", 1, &args);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate.ref()), "onclose", 1, &args);
 
         js_proxy_t* jsproxy = jsb_get_js_proxy(p->obj);
         JS::RemoveObjectRoot(cx, &jsproxy->obj);
@@ -149,15 +160,15 @@ public:
         
         jsval args = OBJECT_TO_JSVAL(jsobj);
         
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "onerror", 1, &args);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate.ref()), "onerror", 1, &args);
     }
     
-    void setJSDelegate(JSObject* pJSDelegate)
+    void setJSDelegate(JS::HandleObject pJSDelegate)
     {
-        _JSDelegate = pJSDelegate;
+        _JSDelegate.ref() = pJSDelegate;
     }
 private:
-    JS::Heap<JSObject*> _JSDelegate;
+    mozilla::Maybe<JS::PersistentRootedObject> _JSDelegate;
 };
 
 JSClass  *js_cocos2dx_websocket_class;

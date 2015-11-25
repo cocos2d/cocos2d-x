@@ -31,6 +31,7 @@
 #include "js_bindings_config.h"
 #include "cocos2d.h"
 #include "spidermonkey_specifics.h"
+#include "mozilla/Maybe.h"
 
 #define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 
@@ -58,14 +59,14 @@ private:
 class JSFunctionWrapper
 {
 public:
-    JSFunctionWrapper(JSContext* cx, JSObject *jsthis, jsval fval);
+    JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval);
     ~JSFunctionWrapper();
 
     bool invoke(unsigned int argc, jsval *argv, JS::MutableHandleValue rval);
 private:
     JSContext *_cx;
-    JS::Heap<JSObject*> _jsthis;
-    JS::Heap<JS::Value> _fval;
+    mozilla::Maybe<JS::PersistentRootedObject> _jsthis;
+    mozilla::Maybe<JS::PersistentRootedValue> _fval;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(JSFunctionWrapper);
 };
