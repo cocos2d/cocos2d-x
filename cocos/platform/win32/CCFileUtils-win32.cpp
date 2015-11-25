@@ -136,14 +136,9 @@ static void _checkPath()
 {
     if (s_resourcePath.empty())
     {
-        WCHAR *pUtf16ExePath = nullptr;
-#ifdef CC_STUDIO_ENABLED_VIEW
         WCHAR utf16Path[CC_MAX_PATH] = { 0 };
         GetModuleFileNameW(NULL, utf16Path, CC_MAX_PATH - 1);
-        pUtf16ExePath = &(utf16Path[0]);
-#else
-        _get_wpgmptr(&pUtf16ExePath); // CocoStudio Notice : This function won't work under studio, will cause a assert in system library
-#endif
+        WCHAR *pUtf16ExePath = &(utf16Path[0]);
 
         // We need only directory part without exe
         WCHAR *pUtf16DirEnd = wcsrchr(pUtf16ExePath, L'\\');
