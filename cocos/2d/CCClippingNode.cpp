@@ -215,7 +215,8 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     _beforeVisitCmd.func = CC_CALLBACK_0(StencilStateManager::onBeforeVisit, _stencilStateManager);
     renderer->addCommand(&_beforeVisitCmd);
     
-    if (_stencilStateManager->getAlphaThreshold() < 1)
+    auto alphaThreshold = this->getAlphaThreshold();
+    if (alphaThreshold < 1)
     {
 #if CC_CLIPPING_NODE_OPENGLES
         // since glAlphaTest do not exists in OES, use a shader that writes
@@ -224,7 +225,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
         GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
         // set our alphaThreshold
         program->use();
-        program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
+        program->setUniformLocationWith1f(alphaValueLocation, alphaThreshold);
         // we need to recursively apply this shader to all the nodes in the stencil node
         // FIXME: we should have a way to apply shader to all nodes without having to do this
         setProgram(_stencil, program);
