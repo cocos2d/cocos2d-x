@@ -249,6 +249,13 @@
         
 --------------------------------
 -- 
+-- @function [parent=#PUParticleSystem3D] initSystem 
+-- @param self
+-- @param #string filePath
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#PUParticleSystem3D] makeParticleLocal 
 -- @param self
 -- @param #cc.PUParticle3D particle
