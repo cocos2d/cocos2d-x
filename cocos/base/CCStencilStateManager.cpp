@@ -41,7 +41,7 @@ GLint StencilStateManager::s_layer = -1;
 static GLint g_sStencilBits = -1;
 
 StencilStateManager::StencilStateManager()
-: _alphaThreshold(0.0f)
+: _alphaThreshold(1.0f)
 , _inverted(false)
 , _currentStencilEnabled(GL_FALSE)
 , _currentStencilWriteMask(~0)

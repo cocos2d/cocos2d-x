@@ -109,10 +109,6 @@ bool ClippingNode::init(Node *stencil)
     CC_SAFE_RELEASE(_stencil);
     _stencil = stencil;
     CC_SAFE_RETAIN(_stencil);
-    
-    _stencilStateManager->setAlphaThreshold(1.0f);
-    _stencilStateManager->setInverted(false);
-    
     return true;
 }
 
