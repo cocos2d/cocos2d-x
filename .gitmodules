@@ -13,6 +13,3 @@
 [submodule "web"]
         path = web
         url = git://github.com/cocos2d/cocos2d-html5.git
-[submodule "zenPlugin"]
-	path = zenPlugin
-	url = git@github.com:Zentertain/plugin-x.git
