@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "ui/UIHelper.h"
 #include <algorithm>
+#include "2d/CocosStudioExtension.h"
 
 NS_CC_BEGIN
 
@@ -49,6 +50,13 @@ _buttonClickedRenderer(nullptr),
 _buttonDisabledRenderer(nullptr),
 _titleRenderer(nullptr),
 _zoomScale(0.1f),
+_normalFileName(""),
+_clickedFileName(""),
+_disabledFileName(""),
+_normalTexType(TextureResType::LOCAL),
+_pressedTexType(TextureResType::LOCAL),
+_disabledTexType(TextureResType::LOCAL),
+_fontName(""),
 _prevIgnoreSize(true),
 _scale9Enabled(false),
 _pressedActionEnabled(false),
@@ -222,10 +230,9 @@ void Button::loadTextures(const std::string& normal,
 
 void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
 {
-    if(normal.empty())
-    {
-        return;
-    }
+    _normalFileName = normal;
+    _normalTexType = texType;
+
     switch (texType)
     {
         case TextureResType::LOCAL:
@@ -273,10 +280,8 @@ void Button::loadTextureNormal(SpriteFrame* normalSpriteFrame)
 
 void Button::loadTexturePressed(const std::string& selected,TextureResType texType)
 {
-    if (selected.empty())
-    {
-        return;
-    }
+    _clickedFileName = selected;
+    _pressedTexType = texType;
 
     switch (texType)
     {
@@ -311,10 +316,8 @@ void Button::loadTexturePressed(SpriteFrame* pressedSpriteFrame)
 
 void Button::loadTextureDisabled(const std::string& disabled,TextureResType texType)
 {
-    if (disabled.empty())
-    {
-        return;
-    }
+    _disabledFileName = disabled;
+    _disabledTexType = texType;
 
     switch (texType)
     {
@@ -876,6 +879,7 @@ void Button::setTitleFontName(const std::string& fontName)
         _titleRenderer->setSystemFontSize(_fontSize);
         _type = FontType::SYSTEM;
     }
+    _fontName = fontName;
     this->updateContentSize();
 }
 
@@ -903,7 +907,7 @@ const std::string Button::getTitleFontName() const
     }
     else
     {
-        return "";
+        return _fontName;
     }
 }
 
@@ -976,6 +980,67 @@ Size Button::getNormalTextureSize() const
 {
     return _normalTextureSize;
 }
+
+void Button::resetNormalRender()
+{
+    _normalFileName = "";
+    _normalTexType = TextureResType::LOCAL;
+
+    _normalTextureSize = Size(0, 0);
+
+    _normalTextureLoaded = false;
+    _normalTextureAdaptDirty = false;
+
+    _buttonNormalRenderer->resetRender();
+}
+void Button::resetPressedRender()
+{
+    _clickedFileName = "";
+    _pressedTexType = TextureResType::LOCAL;
+
+    _pressedTextureSize = Size(0, 0);
+
+    _pressedTextureLoaded = false;
+    _pressedTextureAdaptDirty = false;
+
+    _buttonClickedRenderer->resetRender();
+}
+
+void Button::resetDisabledRender()
+{
+    _disabledFileName = "";
+    _disabledTexType = TextureResType::LOCAL;
+
+    _disabledTextureSize = Size(0, 0);
+
+    _disabledTextureLoaded = false;
+    _disabledTextureAdaptDirty = false;
+
+    _buttonDisabledRenderer->resetRender();
+}
+
+ResouceData Button::getNormalFile()
+{
+    ResouceData rData;
+    rData.type = (int)_normalTexType;
+    rData.file = _normalFileName;
+    return rData;
+}
+ResouceData Button::getPressedFile()
+{
+    ResouceData rData;
+    rData.type = (int)_pressedTexType;
+    rData.file = _clickedFileName;
+    return rData;
+}
+ResouceData Button::getDisabledFile()
+{
+    ResouceData rData;
+    rData.type = (int)_disabledTexType;
+    rData.file = _disabledFileName;
+    return rData;
+}
+
 }
 
 NS_CC_END

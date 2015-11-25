@@ -187,6 +187,7 @@
         "cocos/2d/CCTweenFunction.cpp", 
         "cocos/2d/CCTweenFunction.h", 
         "cocos/2d/CMakeLists.txt", 
+        "cocos/2d/CocosStudioExtension.h", 
         "cocos/2d/cocos2d.def", 
         "cocos/2d/cocos2d_headers.props", 
         "cocos/2d/cocos2dx.props", 

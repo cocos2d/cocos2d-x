@@ -420,6 +420,10 @@ namespace ui {
                 _scale9Image->setSpriteFrame(sprite->getSpriteFrame());
             }
         }
+        else
+        {
+            CC_SAFE_RELEASE_NULL(_scale9Image);
+        }
 
         if (!_scale9Image)
         {
@@ -1294,6 +1298,14 @@ namespace ui {
     Scale9Sprite::RenderingType Scale9Sprite::getRenderingType()const
     {
         return _renderingType;
+    }
+
+    void Scale9Sprite::resetRender()
+    {
+        // Release old sprites
+        this->cleanupSlicedSprites();
+
+        CC_SAFE_RELEASE_NULL(this->_scale9Image);
     }
 
 }}

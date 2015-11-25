@@ -40,6 +40,7 @@ class DrawNode;
 class LayerColor;
 class LayerGradient;
 class StencilStateManager;
+struct CC_DLL ResouceData;
 
 namespace ui {
     
@@ -457,6 +458,8 @@ public:
      * @param applyChildren If true call this function recursively from this node to its children.
      */
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
+
+    ResouceData getRenderFile();
 
 CC_CONSTRUCTOR_ACCESS:
     //override "init" method of widget.
