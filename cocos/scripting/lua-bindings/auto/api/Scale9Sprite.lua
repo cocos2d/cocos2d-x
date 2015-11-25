@@ -202,6 +202,12 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- 
+-- @function [parent=#Scale9Sprite] resetRender 
+-- @param self
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
+        
+--------------------------------
 -- Return the slice sprite rendering type.
 -- @function [parent=#Scale9Sprite] getRenderingType 
 -- @param self
