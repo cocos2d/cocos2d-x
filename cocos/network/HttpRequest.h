@@ -252,7 +252,7 @@ public:
      * @param pTarget the target object pointer.
      * @param pSelector the SEL_HttpResponse function.
      */
-    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
+    inline void setResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
     {
         doSetResponseCallback(pTarget, pSelector);
     }
@@ -339,9 +339,13 @@ public:
 private:
     inline void doSetResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
     {
+        if (_pTarget)
+        {
+            _pTarget->release();
+        }
+        
         _pTarget = pTarget;
         _pSelector = pSelector;
-        
         if (_pTarget)
         {
             _pTarget->retain();
