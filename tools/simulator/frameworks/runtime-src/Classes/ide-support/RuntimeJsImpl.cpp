@@ -15,6 +15,7 @@
 #include "runtime/FileServer.h"
 
 // js
+#include "scripting/js-bindings/manual/ScriptingCore.h"
 #include "js_module_register.h"
 
 
@@ -146,10 +147,10 @@ void register_FileUtils(JSContext *cx, JS::HandleObject global)
     } else {
         ns.set(nsval.toObjectOrNull());
     }
-
-    JS::RootedObject proto(cx, jsb_cocos2d_FileUtils_prototype);
-    JS_DefineFunction(cx, proto, "addSearchPath", runtime_FileUtils_addSearchPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
-    JS_DefineFunction(cx, proto, "setSearchPaths", runtime_FileUtils_setSearchPaths, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    JSObject* fileUtils = get_jsb_cocos2d_FileUtils_prototype();
+   JS::RootedObject proto(cx, fileUtils);
+   JS_DefineFunction(cx, proto, "addSearchPath", runtime_FileUtils_addSearchPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+   JS_DefineFunction(cx, proto, "setSearchPaths", runtime_FileUtils_setSearchPaths, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
 }
 
 RuntimeJsImpl* RuntimeJsImpl::create()
