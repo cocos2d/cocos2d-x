@@ -30,6 +30,7 @@ extern "C" {
 }
 #include "tolua_fix.h"
 #include "cocos2d.h"
+#include "Lua-BindingsExport.h"
 
 using namespace cocos2d;
 
@@ -145,7 +146,7 @@ extern bool luaval_to_uint16(lua_State* L,int lo,uint16_t* outValue, const char*
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
  */
-extern bool luaval_to_boolean(lua_State* L,int lo,bool* outValue, const char* funcName = "");
+extern CC_LUA_DLL bool luaval_to_boolean(lua_State* L,int lo,bool* outValue, const char* funcName = "");
 
 /**
  * Get a double value from the given accpetable index of stack.
@@ -181,7 +182,7 @@ extern bool luaval_to_long_long(lua_State* L,int lo,long long* outValue, const c
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given acceptable index of stack is a string or a number convertible to a string, otherwise return false.
  */
-extern bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, const char* funcName = "");
+extern CC_LUA_DLL bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, const char* funcName = "");
 
 /**
  * Get a long value from the given accpetable index of stack.
@@ -569,7 +570,7 @@ bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret, const ch
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
  */
-bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
+CC_LUA_DLL bool   luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
 
 /**
  * Get a pointer points to a std::vector<std::int> from a Lua array table in the stack.

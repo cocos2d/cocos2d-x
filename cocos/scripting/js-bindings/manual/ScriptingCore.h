@@ -35,6 +35,7 @@
 #include "spidermonkey_specifics.h"
 #include "js_manual_conversions.h"
 #include "mozilla/Maybe.h"
+#include "js-BindingsExport.h"
 
 #include <assert.h>
 #include <memory>
@@ -75,7 +76,7 @@ public:
  * - Invoke garbage collection of JavaScript context
  * - etc...
  */
-class ScriptingCore : public cocos2d::ScriptEngineProtocol
+class CC_JS_DLL ScriptingCore : public cocos2d::ScriptEngineProtocol
 {
 private:
     JSRuntime *_rt;
