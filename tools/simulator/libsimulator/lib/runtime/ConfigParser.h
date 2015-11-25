@@ -11,9 +11,10 @@ using namespace std;
 USING_NS_CC;
 
 #define CONFIG_FILE "config.json"
+#include "libSimulatorExport.h"
 
 typedef vector<SimulatorScreenSize> ScreenSizeArray;
-class ConfigParser
+class CC_LIBSIM_DLL ConfigParser
 {
 public:
     static ConfigParser *getInstance(void);

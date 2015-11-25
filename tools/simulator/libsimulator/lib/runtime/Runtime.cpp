@@ -190,9 +190,29 @@ void RuntimeEngine::setProjectPath(const std::string &workPath)
 
     if (workPath.empty())
     {
-        extern std::string getCurAppPath();
-        std::string appPath = getCurAppPath();
+        //        extern std::string getCurAppPath();
+        std::string appPath = std::string("");// getCurAppPath();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        TCHAR szAppDir[MAX_PATH] = { 0 };
+        if (GetModuleFileName(NULL, szAppDir, MAX_PATH))
+        {
+            int nEnd = 0;
+            for (int i = 0; szAppDir[i]; i++)
+            {
+                if (szAppDir[i] == '\\')
+                    nEnd = i;
+            }
+            szAppDir[nEnd] = 0;
+            int iLen = 2 * wcslen(szAppDir);
+            char* chRtn = new char[iLen + 1];
+            wcstombs(chRtn, szAppDir, iLen + 1);
+            std::string strPath = chRtn;
+            delete[] chRtn;
+            chRtn = NULL;
+            char fuldir[MAX_PATH] = { 0 };
+            _fullpath(fuldir, strPath.c_str(), MAX_PATH);
+            appPath = fuldir;
+        }
         appPath.append("/../../");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
         appPath.append("/../../../");
