@@ -106,8 +106,7 @@ static Texture2D * getDummyTexture()
 
 
 Mesh::Mesh()
-: _texture(nullptr)
-, _skin(nullptr)
+: _skin(nullptr)
 , _visible(true)
 , _isTransparent(false)
 , _meshIndexData(nullptr)
@@ -122,7 +121,9 @@ Mesh::Mesh()
 }
 Mesh::~Mesh()
 {
-    CC_SAFE_RELEASE(_texture);
+    for (auto &tex : _textureList){
+        CC_SAFE_RELEASE(tex);
+    }
     CC_SAFE_RELEASE(_skin);
     CC_SAFE_RELEASE(_meshIndexData);
     CC_SAFE_RELEASE(_material);
@@ -251,13 +252,13 @@ bool Mesh::isVisible() const
     return _visible;
 }
 
-void Mesh::setTexture(const std::string& texPath)
+void Mesh::setTexture(const std::string& texPath, unsigned int index)
 {
     auto tex = Director::getInstance()->getTextureCache()->addImage(texPath);
-    setTexture(tex);
+    setTexture(tex, index);
 }
 
-void Mesh::setTexture(Texture2D* tex)
+void Mesh::setTexture(Texture2D* tex, unsigned int index)
 {
     // Texture must be saved for future use
     // it doesn't matter if the material is already set or not
@@ -265,30 +266,41 @@ void Mesh::setTexture(Texture2D* tex)
     if (tex == nullptr)
         tex = getDummyTexture();
     
-    if (tex != _texture)
-    {
-        CC_SAFE_RETAIN(tex);
-        CC_SAFE_RELEASE(_texture);
-        _texture = tex;
-    }
-
-    if (_material) {
-        auto technique = _material->_currentTechnique;
-        for(auto& pass: technique->_passes)
+    if (index < _textureList.size()){
+        if (tex != _textureList[index])
         {
-            // FIXME: Ideally it should use glProgramState->setUniformTexture()
-            // and set CC_Texture0 that way. But trying to it, will trigger
-            // another bug
-            pass->setTexture(tex);
+            CC_SAFE_RETAIN(tex);
+            CC_SAFE_RELEASE(_textureList[index]);
         }
     }
+    else{
+        _textureList.resize(index + 1);
+        CC_SAFE_RETAIN(tex);
+    }
+    _textureList[index] = tex;
 
-    bindMeshCommand();
+    if (index == 0){
+        if (_material) {
+            auto technique = _material->_currentTechnique;
+            for(auto& pass: technique->_passes)
+            {
+                // FIXME: Ideally it should use glProgramState->setUniformTexture()
+                // and set CC_Texture0 that way. But trying to it, will trigger
+                // another bug
+                pass->setTexture(tex);
+            }
+        }
+
+        bindMeshCommand();
+    }
 }
 
-Texture2D* Mesh::getTexture() const
+Texture2D* Mesh::getTexture(unsigned int index) const
 {
-    return _texture;
+    if (index < _textureList.size())
+        return _textureList[index];
+    else
+        return nullptr;
 }
 
 void Mesh::setMaterial(Material* material)
@@ -311,8 +323,9 @@ void Mesh::setMaterial(Material* material)
         }
     }
     // Was the texture set before teh GLProgramState ? Set it
-    if (_texture)
-        setTexture(_texture);
+    for (unsigned int i = 0; i < _textureList.size(); ++i){
+        setTexture(_textureList[i], i);
+    }
     
     if (_blendDirty)
         setBlendFunc(_blend);

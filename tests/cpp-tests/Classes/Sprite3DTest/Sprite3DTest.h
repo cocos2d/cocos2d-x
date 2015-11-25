@@ -584,4 +584,15 @@ protected:
     cocos2d::MotionStreak3D* _streak;
 };
 
+class Sprite3DNormalMappingTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DNormalMappingTest);
+    Sprite3DNormalMappingTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    virtual ~Sprite3DNormalMappingTest();
+};
+
 #endif

@@ -48,6 +48,9 @@
 
 #include "deprecated/CCString.h" // For StringUtils::format
 
+#define NORMAL_TEXTURE_UNIT 1
+#define NORMAL_TEXTURE_NAME "u_bumpTex"
+
 NS_CC_BEGIN
 
 static Sprite3DMaterial* getSprite3DMaterialForAttribs(MeshVertexData* meshVertexData, bool usesLight);
@@ -389,6 +392,21 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
                         mesh->_isTransparent = (materialData->getTextureData(NTextureData::Usage::Transparency) != nullptr);
                     }
                 }
+                textureData = materialData->getTextureData(NTextureData::Usage::Normal);
+                if (textureData)
+                {
+                    mesh->setTexture(textureData->filename, NORMAL_TEXTURE_UNIT);
+                    auto tex = mesh->getTexture(NORMAL_TEXTURE_UNIT);
+                    if(tex)
+                    {
+                        Texture2D::TexParams texParams;
+                        texParams.minFilter = GL_LINEAR;
+                        texParams.magFilter = GL_LINEAR;
+                        texParams.wrapS = textureData->wrapS;
+                        texParams.wrapT = textureData->wrapT;
+                        tex->setTexParameters(texParams);
+                    }
+                }
             }
         }
 
@@ -476,7 +494,13 @@ void Sprite3D::genMaterial(bool useLight)
     for (auto& mesh: _meshes)
     {
         auto material = materials[mesh->getMeshIndexData()->getMeshVertexData()];
-        
+        if (material->getMaterialType() == Sprite3DMaterial::MaterialType::BUMPED_DIFFUSE){
+            auto tex = mesh->getTexture(NORMAL_TEXTURE_UNIT);
+            if (tex){
+                auto state = material->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+                state->setUniformTexture(NORMAL_TEXTURE_NAME, tex);
+            }
+        }
         //keep original state block if exist
         auto oldmaterial = mesh->getMaterial();
         if (oldmaterial)
@@ -537,6 +561,21 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                                     texParams.wrapT = textureData->wrapT;
                                     tex->setTexParameters(texParams);
                                     mesh->_isTransparent = (materialData->getTextureData(NTextureData::Usage::Transparency) != nullptr);
+                                }
+                            }
+                            textureData = materialData->getTextureData(NTextureData::Usage::Normal);
+                            if (textureData)
+                            {
+                                mesh->setTexture(textureData->filename, NORMAL_TEXTURE_UNIT);
+                                auto tex = mesh->getTexture(NORMAL_TEXTURE_UNIT);
+                                if (tex)
+                                {
+                                    Texture2D::TexParams texParams;
+                                    texParams.minFilter = GL_LINEAR;
+                                    texParams.magFilter = GL_LINEAR;
+                                    texParams.wrapS = textureData->wrapS;
+                                    texParams.wrapT = textureData->wrapT;
+                                    tex->setTexParameters(texParams);
                                 }
                             }
                         }
@@ -967,10 +1006,17 @@ static Sprite3DMaterial* getSprite3DMaterialForAttribs(MeshVertexData* meshVerte
     bool hasSkin = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
     && meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
     bool hasNormal = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL);
+    bool hasTangentSpace = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TANGENT) 
+    && meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BINORMAL);
     Sprite3DMaterial::MaterialType type;
     if(textured)
     {
-        type = hasNormal && usesLight ? Sprite3DMaterial::MaterialType::DIFFUSE : Sprite3DMaterial::MaterialType::UNLIT;
+        if (hasTangentSpace){
+            type = hasNormal && usesLight ? Sprite3DMaterial::MaterialType::BUMPED_DIFFUSE : Sprite3DMaterial::MaterialType::UNLIT;
+        }
+        else{
+            type = hasNormal && usesLight ? Sprite3DMaterial::MaterialType::DIFFUSE : Sprite3DMaterial::MaterialType::UNLIT;
+        }
     }
     else
     {
