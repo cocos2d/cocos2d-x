@@ -548,7 +548,7 @@ bool Terrain::getIntersectionPoint(const Ray & ray_, Vec3 & intersectionPoint) c
     getWorldToNodeTransform().transformPoint(&(ray._origin));
 
     std::set<Chunk *> closeList;
-    Vec2 start = Vec2(ray._origin.x,ray._origin.z);
+    Vec2 start = Vec2(ray_._origin.x,ray_._origin.z);
     Vec2 dir = Vec2(ray._direction.x,ray._direction.z);
     start = convertToTerrainSpace(start);
     start.x /=(_terrainData._chunkSize.width+1);
