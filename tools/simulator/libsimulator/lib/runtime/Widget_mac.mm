@@ -1,9 +1,7 @@
 //
-//  Widget_mac.mm
-//  libsimulator_studio
+//  Widget_mac.cpp
+//  Simulator
 //
-//  Created by Norman on 11/20/15.
-//  Copyright (c) 2015 cocos. All rights reserved.
 //
 
 #include <string>
