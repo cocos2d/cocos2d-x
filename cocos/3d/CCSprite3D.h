@@ -200,7 +200,19 @@ public:
     */
     void setForce2DQueue(bool force2D);
 
+    /**
+    * Get meshes used in sprite 3d
+    */
     const Vector<Mesh*>& getMeshes() const { return _meshes; }
+
+    /*
+    * Get AABB
+    * If the sprite has animation, it can't be calculated accurately,
+    * because bone can drive the vertices, we just use the origin vertices
+    * to calculate the AABB.
+    *
+    * @param world Use world transform or not.
+    */
     const AABB& getAABB(bool world) const;
 
 CC_CONSTRUCTOR_ACCESS:
