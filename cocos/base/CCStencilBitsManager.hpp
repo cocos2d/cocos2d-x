@@ -34,25 +34,43 @@
  */
 NS_CC_BEGIN
 
-class CC_DLL StencilBitsManager
+class CC_DLL StencilStateManager
 {
 public:
-    static StencilBitsManager* getInstance()
-    {
-        if(nullptr == _stencilBitsManager)
-        {
-            _stencilBitsManager = new StencilBitsManager();
-        }
-        return _stencilBitsManager;
-    }
-    GLint getStencilLayerMask()const;
-    void setStencilLayerMask(GLint stencilLayer);
+    StencilStateManager();
+    void onBeforeVisit();
+    void onAfterDrawStencil();
+    void onAfterVisit();
+    void setAlphaThreshold(GLfloat alphaThreshold);
+    void setInverted(bool inverted);
+    bool isInverted()const;
+    GLfloat getAlphaThreshold()const;
 private:
-    static StencilBitsManager* _stencilBitsManager;
-    StencilBitsManager();
-    StencilBitsManager(const StencilBitsManager& other);
-    StencilBitsManager& operator=(const StencilBitsManager& other);
-    GLint _stencilLayerMask;
+    CC_DISALLOW_COPY_AND_ASSIGN(StencilStateManager);
+    static GLint s_layer;
+    /**draw fullscreen quad to clear stencil bits
+     */
+    void drawFullScreenQuadClearStencil();
+    
+    
+    GLfloat _alphaThreshold;
+    bool    _inverted;
+    
+    GLboolean _currentStencilEnabled;
+    GLuint _currentStencilWriteMask;
+    GLenum _currentStencilFunc;
+    GLint _currentStencilRef;
+    GLuint _currentStencilValueMask;
+    GLenum _currentStencilFail;
+    GLenum _currentStencilPassDepthFail;
+    GLenum _currentStencilPassDepthPass;
+    GLboolean _currentDepthWriteMask;
+    
+    GLboolean _currentAlphaTestEnabled;
+    GLenum _currentAlphaTestFunc;
+    GLclampf _currentAlphaTestRef;
+    
+    GLint _mask_layer_le;
 };
 
 NS_CC_END

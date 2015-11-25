@@ -39,7 +39,7 @@ NS_CC_BEGIN
 class DrawNode;
 class LayerColor;
 class LayerGradient;
-
+class StencilStateManager;
 
 namespace ui {
     
@@ -486,12 +486,6 @@ protected:
     virtual const Vector<Node*>& getLayoutElements()const override;
     
     //clipping
-    void onBeforeVisitStencil();
-    void onAfterDrawStencil();
-    void onAfterVisitStencil();
-    /**draw fullscreen quad to clear stencil bits
-     */
-    void drawFullScreenQuadClearStencil();
     
     void onBeforeVisitScissor();
     void onAfterVisitScissor();
@@ -635,23 +629,8 @@ protected:
     bool _clippingRectDirty;
     
     //clipping
+    StencilStateManager *_stencileStateManager;
 
-    GLboolean _currentStencilEnabled;
-    GLuint _currentStencilWriteMask;
-    GLenum _currentStencilFunc;
-    GLint _currentStencilRef;
-    GLuint _currentStencilValueMask;
-    GLenum _currentStencilFail;
-    GLenum _currentStencilPassDepthFail;
-    GLenum _currentStencilPassDepthPass;
-    GLboolean _currentDepthWriteMask;
-    
-    GLboolean _currentAlphaTestEnabled;
-    GLenum _currentAlphaTestFunc;
-    GLclampf _currentAlphaTestRef;
- 
-    
-    GLint _mask_layer_le;
     GroupCommand _groupCommand;
     CustomCommand _beforeVisitCmdStencil;
     CustomCommand _afterDrawStencilCmd;
