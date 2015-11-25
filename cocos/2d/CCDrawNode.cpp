@@ -104,13 +104,7 @@ static inline Tex2F __t(const Vec2 &v)
 
 // implementation of DrawNode
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
-static const int DEFAULT_LINE_WIDTH = 1;
-#else
-static const int DEFAULT_LINE_WIDTH = 2;
-#endif
-
-DrawNode::DrawNode()
+DrawNode::DrawNode(int lineWidth)
 : _vao(0)
 , _vbo(0)
 , _vaoGLPoint(0)
@@ -129,7 +123,8 @@ DrawNode::DrawNode()
 , _dirty(false)
 , _dirtyGLPoint(false)
 , _dirtyGLLine(false)
-, _lineWidth(DEFAULT_LINE_WIDTH)
+, _lineWidth(lineWidth)
+, _defaultLineWidth(lineWidth)
 , _lineSmoothEnable(false)
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
@@ -943,7 +938,7 @@ void DrawNode::clear()
     _dirtyGLLine = true;
     _bufferCountGLPoint = 0;
     _dirtyGLPoint = true;
-    _lineWidth = DEFAULT_LINE_WIDTH;
+    _lineWidth = _defaultLineWidth;
 }
 
 const BlendFunc& DrawNode::getBlendFunc() const
