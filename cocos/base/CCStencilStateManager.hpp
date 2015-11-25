@@ -22,8 +22,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef StencilBitsManager_hpp
-#define StencilBitsManager_hpp
+#ifndef StencilStateManager_hpp
+#define StencilStateManager_hpp
 #include "base/ccConfig.h"
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCGL.h"
@@ -76,4 +76,4 @@ private:
 NS_CC_END
 // end of base group
 /** @} */
-#endif /* StencilBitsManager_hpp */
+#endif /* StencilStateManager_hpp */

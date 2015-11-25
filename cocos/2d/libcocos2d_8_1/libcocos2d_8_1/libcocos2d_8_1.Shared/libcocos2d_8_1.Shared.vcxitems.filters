@@ -1812,7 +1812,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCStencilBitsManager.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCStencilStateManager.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DConstraint.h">
@@ -3528,7 +3528,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCStencilBitsManager.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCStencilStateManager.cpp">
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DDebugDrawer.cpp">

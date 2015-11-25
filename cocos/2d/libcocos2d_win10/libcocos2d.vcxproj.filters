@@ -1767,7 +1767,7 @@
     <ClCompile Include="..\..\base\CCNinePatchImageParser.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\base\CCStencilBitsManager.cpp">
+    <ClCompile Include="..\..\base\CCStencilStateManager.cpp">
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\renderer\CCMaterial.cpp">
@@ -3638,7 +3638,7 @@
     <ClInclude Include="..\..\base\CCNinePatchImageParser.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\base\CCStencilBitsManager.h">
+    <ClInclude Include="..\..\base\CCStencilStateManager.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\renderer\CCMaterial.h">

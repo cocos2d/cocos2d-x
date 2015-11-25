@@ -32,7 +32,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"
-#include "base/CCStencilBitsManager.hpp"
+#include "base/CCStencilStateManager.hpp"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 #define CC_CLIPPING_NODE_OPENGLES 0
