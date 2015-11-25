@@ -233,8 +233,14 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
     _normalFileName = normal;
     _normalTexType = texType;
 
-    switch (texType)
+    if (normal.empty())
     {
+        _buttonNormalRenderer->init();
+    }
+    else
+    {
+        switch (texType)
+        {
         case TextureResType::LOCAL:
             _buttonNormalRenderer->initWithFile(normal);
             break;
@@ -243,9 +249,9 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
             break;
         default:
             break;
+        }
     }
     this->setupNormalTexture();
-
 }
 
 void Button::setupNormalTexture()
@@ -283,8 +289,14 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
     _clickedFileName = selected;
     _pressedTexType = texType;
 
-    switch (texType)
+    if (selected.empty())
     {
+        _buttonClickedRenderer->init();
+    }
+    else
+    {
+        switch (texType)
+        {
         case TextureResType::LOCAL:
             _buttonClickedRenderer->initWithFile(selected);
             break;
@@ -293,8 +305,8 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
             break;
         default:
             break;
+        }
     }
-
     this->setupPressedTexture();
 }
 
@@ -319,8 +331,14 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
     _disabledFileName = disabled;
     _disabledTexType = texType;
 
-    switch (texType)
+    if (disabled.empty())
     {
+        _buttonDisabledRenderer->init();
+    }
+    else
+    {
+        switch (texType)
+        {
         case TextureResType::LOCAL:
             _buttonDisabledRenderer->initWithFile(disabled);
             break;
@@ -329,6 +347,7 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
             break;
         default:
             break;
+        }
     }
     this->setupDisabledTexture();
 }
