@@ -207,7 +207,7 @@ public:
     void setDirty(bool dirty) { _dirty = dirty; }
     bool isDirty() const { return _dirty; }
 
-    void renameTextureWithKey(std::string srcName, std::string dstName);
+    void renameTextureWithKey(const std::string srcName, const std::string dstName);
 
 
 private:

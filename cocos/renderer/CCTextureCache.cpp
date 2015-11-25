@@ -600,7 +600,7 @@ std::string TextureCache::getCachedTextureInfo() const
     return buffer;
 }
 
-void TextureCache::renameTextureWithKey(std::string srcName, std::string dstName)
+void TextureCache::renameTextureWithKey(const std::string srcName, const std::string dstName)
 {
     std::string key = srcName;
     auto it = _textures.find(key);
