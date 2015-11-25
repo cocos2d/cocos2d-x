@@ -45,7 +45,7 @@ public:
 
     static __Double* create(double v)
     {
-        __Double* pRet = new __Double(v);
+        __Double* pRet = new (std::nothrow) __Double(v);
         if (pRet)
         {
             pRet->autorelease();
@@ -56,7 +56,7 @@ public:
     /* override functions */
     virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
     
-    __Double* clone() const
+    virtual __Double* clone() const override
     {
         return __Double::create(_value);
     }

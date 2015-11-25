@@ -186,7 +186,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual __String* clone() const;
+    virtual __String* clone() const override;
     
 private:
 
