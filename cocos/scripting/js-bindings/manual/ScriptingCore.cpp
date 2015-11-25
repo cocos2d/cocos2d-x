@@ -1661,7 +1661,6 @@ bool JSBDebug_enterNestedEventLoop(JSContext* cx, unsigned argc, jsval* vp)
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().set(UINT_TO_JSVAL(s_nestedLoopLevel));
-//    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
     return true;
 }
 
@@ -1672,11 +1671,9 @@ bool JSBDebug_exitNestedEventLoop(JSContext* cx, unsigned argc, jsval* vp)
         --s_nestedLoopLevel;
     } else {
         args.rval().set(UINT_TO_JSVAL(0));
-//        JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(0));
         return true;
     }
     args.rval().setUndefined();
-//    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
     return true;
 }
 
@@ -1684,7 +1681,6 @@ bool JSBDebug_getEventLoopNestLevel(JSContext* cx, unsigned argc, jsval* vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().set(UINT_TO_JSVAL(s_nestedLoopLevel));
-//    JS_SET_RVAL(cx, vp, UINT_TO_JSVAL(s_nestedLoopLevel));
     return true;
 }
 

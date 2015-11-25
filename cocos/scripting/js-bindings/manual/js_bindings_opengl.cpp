@@ -104,12 +104,12 @@ void js_cocos2dx_GLNode_finalize(JSFreeOp *fop, JSObject *obj) {
 
 static bool js_cocos2dx_GLNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     cocos2d::GLNode *nobj = new cocos2d::GLNode();
     js_proxy_t* p = jsb_new_proxy(nobj, obj);
     nobj->autorelease();
     JS::AddNamedObjectRoot(cx, &p->obj, "GLNode");
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setUndefined();
     return true;
 }

@@ -31,19 +31,18 @@ using namespace cocos2d::ui;
 
 static bool js_cocos2dx_LayoutParameter_setMargin(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     ui::LayoutParameter* cobj = (ui::LayoutParameter *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 1) {
-        JS::CallArgs argv = CallArgsFromVp(argc, vp);
-
         JS::RootedObject tmp(cx);
         JS::RootedValue jsleft(cx), jstop(cx),jsright(cx),jsbottom(cx);
         double left, top,right,bottom;
-        bool ok = argv[0].isObject() &&
-            JS_ValueToObject(cx, argv[0], &tmp) &&
+        bool ok = args[0].isObject() &&
+            JS_ValueToObject(cx, args[0], &tmp) &&
             JS_GetProperty(cx, tmp, "left", &jsleft) &&
             JS_GetProperty(cx, tmp, "top", &jstop) &&
             JS_GetProperty(cx, tmp, "right", &jsright) &&
@@ -60,13 +59,12 @@ static bool js_cocos2dx_LayoutParameter_setMargin(JSContext *cx, uint32_t argc, 
         return true;
     }
     else if (argc == 4) {
-        JS::CallArgs argv = CallArgsFromVp(argc, vp);
         bool ok = true;
         double left, top,right,bottom;
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &left);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &top);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[2]), &right);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[3]), &bottom);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, args[0]), &left);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, args[1]), &top);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, args[2]), &right);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, args[3]), &bottom);
 
         JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
@@ -79,13 +77,13 @@ static bool js_cocos2dx_LayoutParameter_setMargin(JSContext *cx, uint32_t argc, 
 
 static bool js_cocos2dx_LayoutParameter_getMargin(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     ui::LayoutParameter* cobj = (ui::LayoutParameter *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 0) {
-        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
         JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
         if (!tmp) return false;
         ui::Margin margin = cobj->getMargin();
@@ -95,7 +93,6 @@ static bool js_cocos2dx_LayoutParameter_getMargin(JSContext *cx, uint32_t argc, 
             JS_DefineProperty(cx, tmp, "bottom", margin.bottom, JSPROP_ENUMERATE | JSPROP_PERMANENT);
         if (ok) 
         {
-            //JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(tmp));
             args.rval().set(OBJECT_TO_JSVAL(tmp));
         }
         else
