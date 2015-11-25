@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "ui/UIHelper.h"
 #include "2d/CCSprite.h"
 #include "2d/CCCamera.h"
+#include "2d/CocosStudioExtension.h"
 
 NS_CC_BEGIN
 
@@ -68,7 +69,12 @@ _ballNTexType(TextureResType::LOCAL),
 _ballPTexType(TextureResType::LOCAL),
 _ballDTexType(TextureResType::LOCAL),
 _barRendererAdaptDirty(true),
-_progressBarRendererDirty(true)
+_progressBarRendererDirty(true),
+_textureFile(""),
+_progressBarTextureFile(""),
+_slidBallNormalTextureFile(""),
+_slidBallPressedTextureFile(""),
+_slidBallDisabledTextureFile("")
 {
     setTouchEnabled(true);
 }
@@ -147,10 +153,7 @@ void Slider::initRenderer()
 
 void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
 {
-    if (fileName.empty())
-    {
-        return;
-    }
+    _textureFile = fileName;
     _barTexType = texType;
     switch (_barTexType)
     {
@@ -182,10 +185,7 @@ void Slider::setupBarTexture()
 
 void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType texType)
 {
-    if (fileName.empty())
-    {
-        return;
-    }
+    _progressBarTextureFile = fileName;
     _progressBarTexType = texType;
     switch (_progressBarTexType)
     {
@@ -305,10 +305,7 @@ void Slider::loadSlidBallTextures(const std::string& normal,
 
 void Slider::loadSlidBallTextureNormal(const std::string& normal,TextureResType texType)
 {
-    if (normal.empty())
-    {
-        return;
-    }
+    _slidBallNormalTextureFile = normal;
     _ballNTexType = texType;
     switch (_ballNTexType)
     {
@@ -331,12 +328,9 @@ void Slider::loadSlidBallTextureNormal(SpriteFrame* spriteframe)
 
 void Slider::loadSlidBallTexturePressed(const std::string& pressed,TextureResType texType)
 {
-    if (pressed.empty())
-    {
-        return;
-    }
+    _slidBallPressedTextureFile = pressed;
+    _isSliderBallPressedTextureLoaded = !pressed.empty();
     _ballPTexType = texType;
-    _isSliderBallPressedTextureLoaded = true;
     switch (_ballPTexType)
     {
         case TextureResType::LOCAL:
@@ -360,11 +354,8 @@ void Slider::loadSlidBallTexturePressed(SpriteFrame* spriteframe)
 
 void Slider::loadSlidBallTextureDisabled(const std::string& disabled,TextureResType texType)
 {
-    if (disabled.empty())
-    {
-        return;
-    }
-    _isSliderBallDisabledTexturedLoaded = true;
+    _slidBallDisabledTextureFile = disabled;
+    _isSliderBallDisabledTexturedLoaded = !disabled.empty();
     _ballDTexType = texType;
     switch (_ballDTexType)
     {
@@ -721,6 +712,42 @@ void Slider::copySpecialProperties(Widget *widget)
         _eventCallback = slider->_eventCallback;
         _ccEventCallback = slider->_ccEventCallback;
     }
+}
+
+ResouceData Slider::getBackFile()
+{
+    ResouceData rData;
+    rData.type = (int)_barTexType;
+    rData.file = _textureFile;
+    return rData;
+}
+ResouceData Slider::getProgressBarFile()
+{
+    ResouceData rData;
+    rData.type = (int)_progressBarTexType;
+    rData.file = _progressBarTextureFile;
+    return rData;
+}
+ResouceData Slider::getBallNormalFile()
+{
+    ResouceData rData;
+    rData.type = (int)_ballNTexType;
+    rData.file = _slidBallNormalTextureFile;
+    return rData;
+}
+ResouceData Slider::getBallPressedFile()
+{
+    ResouceData rData;
+    rData.type = (int)_ballPTexType;
+    rData.file = _slidBallPressedTextureFile;
+    return rData;
+}
+ResouceData Slider::getBallDisabeldFile()
+{
+    ResouceData rData;
+    rData.type = (int)_ballDTexType;
+    rData.file = _slidBallDisabledTextureFile;
+    return rData;
 }
 
 }

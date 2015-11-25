@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UITextAtlas.h"
 #include "2d/CCLabel.h"
+#include "2d/CocosStudioExtension.h"
 
 NS_CC_BEGIN
 
@@ -190,5 +191,13 @@ void TextAtlas::copySpecialProperties(Widget *widget)
     }
 }
     
+ResouceData TextAtlas::getRenderFile()
+{
+    ResouceData rData;
+    rData.type = 0;
+    rData.file = _charMapFileName;
+    return rData;
+}
+
 }
 NS_CC_END

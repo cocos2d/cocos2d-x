@@ -667,6 +667,9 @@ namespace ui {
          * Return the slice sprite rendering type.
          */
         RenderingType getRenderingType()const;
+
+        void resetRender();
+
     protected:
         void updateCapInset();
         void createSlicedSprites();

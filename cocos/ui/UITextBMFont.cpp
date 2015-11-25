@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UITextBMFont.h"
 #include "2d/CCLabel.h"
+#include "2d/CocosStudioExtension.h"
 
 NS_CC_BEGIN
 
@@ -184,6 +185,14 @@ void TextBMFont::copySpecialProperties(Widget *widget)
         setFntFile(labelBMFont->_fntFileName);
         setString(labelBMFont->_stringValue);
     }
+}
+
+ResouceData TextBMFont::getRenderFile()
+{
+    ResouceData rData;
+    rData.type = 0;
+    rData.file = _fntFileName;
+    return rData;
 }
 
 }
