@@ -26,6 +26,8 @@
 #ifndef __CC_LUA_ENGINE_H__
 #define __CC_LUA_ENGINE_H__
 
+#include "Lua-BingingsExport.h"
+
 extern "C" {
 #include "lua.h"
 }
@@ -49,7 +51,7 @@ NS_CC_BEGIN
  * @lua NA
  * @js NA
  */
-class LuaEngine : public ScriptEngineProtocol
+class CC_LUA_DLL LuaEngine : public ScriptEngineProtocol
 {
 public:
     /**

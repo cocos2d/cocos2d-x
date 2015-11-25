@@ -26,6 +26,8 @@
 
 #if CC_USE_NAVMESH
 
+#include "Lua-BingingsExport.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -48,7 +50,7 @@ extern "C" {
  * The current mechanism,this function is called in the lua_module_register.h
  */
 
-TOLUA_API int  register_navmesh_module(lua_State* L);
+CC_LUA_DLL TOLUA_API int  register_navmesh_module(lua_State* L);
 
 // end group
 /// @}

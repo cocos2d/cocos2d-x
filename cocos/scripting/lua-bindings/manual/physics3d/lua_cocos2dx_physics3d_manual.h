@@ -26,6 +26,8 @@
 
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
 
+#include "Lua-BingingsExport.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -48,7 +50,7 @@ extern "C" {
  * The current mechanism,this function is called in the lua_module_register.h
  */
 
-TOLUA_API int  register_physics3d_module(lua_State* L);
+CC_LUA_DLL TOLUA_API int  register_physics3d_module(lua_State* L);
 
 // end group
 /// @}
