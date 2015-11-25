@@ -32,20 +32,22 @@ using namespace cocos2d;
 
 class JSB_HeapValueWrapper{
 public:
-    JSB_HeapValueWrapper(JSContext* cx, JS::HandleValue value):_cx(cx), _data(value){
-        JS::AddValueRoot(_cx, &_data);
+    JSB_HeapValueWrapper(JSContext* cx, JS::HandleValue value)
+    :_cx(cx)
+    {
+        _data.construct(cx, value);
     }
 
     ~JSB_HeapValueWrapper(){
-        JS::RemoveValueRoot(_cx, &_data);
+        _data.destroyIfConstructed();
     }
 
-    JS::Value get(){
-        return _data.get();
+    JS::HandleValue get(){
+        return _data.ref();
     }
 private:
     JSContext* _cx;
-    JS::Heap<JS::Value> _data;
+    mozilla::Maybe<JS::PersistentRootedValue> _data;
 };
 
 static bool js_cocos2dx_Sprite3D_createAsync(JSContext *cx, uint32_t argc, jsval *vp)
@@ -57,7 +59,8 @@ static bool js_cocos2dx_Sprite3D_createAsync(JSContext *cx, uint32_t argc, jsval
         jsval_to_std_string(cx, args.get(0), &modelPath);
 
         std::function<void(Sprite3D*, void*)> callback;
-        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.get(argc == 4 ? 2 : 3).toObjectOrNull(), args.get(argc == 4 ? 1 : 2)));
+        JS::RootedObject cb(cx, args.get(argc == 4 ? 2 : 3).toObjectOrNull());
+        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, cb, args.get(argc == 4 ? 1 : 2)));
         auto lambda = [=](Sprite3D* larg0, void* larg1) -> void{
 
             jsval largv[2];

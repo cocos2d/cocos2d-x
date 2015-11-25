@@ -51,7 +51,7 @@ void JSB_cpConstraint_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpConstraint_activateBodies(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
 
@@ -65,7 +65,7 @@ bool JSB_cpConstraint_activateBodies(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpConstraint_destroy(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
 
@@ -79,7 +79,7 @@ bool JSB_cpConstraint_destroy(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpConstraint_getA(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
     cpBody* ret_val = nullptr;
@@ -97,7 +97,7 @@ bool JSB_cpConstraint_getA(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpConstraint_getB(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
     cpBody* ret_val = nullptr;
@@ -115,7 +115,7 @@ bool JSB_cpConstraint_getB(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpConstraint_getErrorBias(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
     cpFloat ret_val = 0;
@@ -130,7 +130,7 @@ bool JSB_cpConstraint_getErrorBias(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpConstraint_getImpulse(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
     cpFloat ret_val = 0;
@@ -145,7 +145,7 @@ bool JSB_cpConstraint_getImpulse(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpConstraint_getMaxBias(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
     cpFloat ret_val = 0;
@@ -160,7 +160,7 @@ bool JSB_cpConstraint_getMaxBias(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpConstraint_getMaxForce(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
     cpFloat ret_val = 0;
@@ -175,7 +175,7 @@ bool JSB_cpConstraint_getMaxForce(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpConstraint_getSpace(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
     cpSpace* ret_val = nullptr;
@@ -192,11 +192,10 @@ bool JSB_cpConstraint_getSpace(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpConstraint_setErrorBias(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1; 
 
@@ -212,11 +211,10 @@ bool JSB_cpConstraint_setErrorBias(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpConstraint_setMaxBias(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1; 
 
@@ -232,11 +230,10 @@ bool JSB_cpConstraint_setMaxBias(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpConstraint_setMaxForce(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1; 
 
@@ -342,7 +339,7 @@ void JSB_cpGrooveJoint_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpGrooveJoint_getAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpGrooveJoint* arg0 = (cpGrooveJoint*) proxy->handle;
     cpVect ret_val;
@@ -360,7 +357,7 @@ bool JSB_cpGrooveJoint_getAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpGrooveJoint_getGrooveA(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpGrooveJoint* arg0 = (cpGrooveJoint*) proxy->handle;
     cpVect ret_val;
@@ -378,7 +375,7 @@ bool JSB_cpGrooveJoint_getGrooveA(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpGrooveJoint_getGrooveB(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpGrooveJoint* arg0 = (cpGrooveJoint*) proxy->handle;
     cpVect ret_val;
@@ -395,11 +392,10 @@ bool JSB_cpGrooveJoint_getGrooveB(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpGrooveJoint_setAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpGrooveJoint* arg0 = (cpGrooveJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -415,11 +411,10 @@ bool JSB_cpGrooveJoint_setAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpGrooveJoint_setGrooveA(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpGrooveJoint* arg0 = (cpGrooveJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -435,11 +430,10 @@ bool JSB_cpGrooveJoint_setGrooveA(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpGrooveJoint_setGrooveB(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpGrooveJoint* arg0 = (cpGrooveJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -537,7 +531,7 @@ void JSB_cpSimpleMotor_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpSimpleMotor_getRate(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSimpleMotor* arg0 = (cpSimpleMotor*) proxy->handle;
     cpFloat ret_val = 0;
@@ -551,11 +545,10 @@ bool JSB_cpSimpleMotor_getRate(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpSimpleMotor_setRate(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSimpleMotor* arg0 = (cpSimpleMotor*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1; 
 
@@ -654,7 +647,7 @@ void JSB_cpPivotJoint_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpPivotJoint_getAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpPivotJoint* arg0 = (cpPivotJoint*) proxy->handle;
     cpVect ret_val;
@@ -672,7 +665,7 @@ bool JSB_cpPivotJoint_getAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpPivotJoint_getAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpPivotJoint* arg0 = (cpPivotJoint*) proxy->handle;
     cpVect ret_val;
@@ -689,11 +682,10 @@ bool JSB_cpPivotJoint_getAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpPivotJoint_setAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpPivotJoint* arg0 = (cpPivotJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -709,11 +701,10 @@ bool JSB_cpPivotJoint_setAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpPivotJoint_setAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpPivotJoint* arg0 = (cpPivotJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -810,7 +801,7 @@ void JSB_cpPinJoint_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpPinJoint_getAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpPinJoint* arg0 = (cpPinJoint*) proxy->handle;
     cpVect ret_val;
@@ -828,7 +819,7 @@ bool JSB_cpPinJoint_getAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpPinJoint_getAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpPinJoint* arg0 = (cpPinJoint*) proxy->handle;
     cpVect ret_val;
@@ -846,7 +837,7 @@ bool JSB_cpPinJoint_getAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpPinJoint_getDist(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpPinJoint* arg0 = (cpPinJoint*) proxy->handle;
     cpFloat ret_val = 0;
@@ -860,11 +851,10 @@ bool JSB_cpPinJoint_getDist(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpPinJoint_setAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpPinJoint* arg0 = (cpPinJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -880,11 +870,10 @@ bool JSB_cpPinJoint_setAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpPinJoint_setAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpPinJoint* arg0 = (cpPinJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -900,11 +889,10 @@ bool JSB_cpPinJoint_setAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpPinJoint_setDist(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpPinJoint* arg0 = (cpPinJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -1005,7 +993,7 @@ void JSB_cpSlideJoint_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpSlideJoint_getAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSlideJoint* arg0 = (cpSlideJoint*) proxy->handle;
     cpVect ret_val;
@@ -1023,7 +1011,7 @@ bool JSB_cpSlideJoint_getAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSlideJoint_getAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSlideJoint* arg0 = (cpSlideJoint*) proxy->handle;
     cpVect ret_val;
@@ -1041,7 +1029,7 @@ bool JSB_cpSlideJoint_getAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSlideJoint_getMax(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSlideJoint* arg0 = (cpSlideJoint*) proxy->handle;
     cpFloat ret_val = 0;
@@ -1056,7 +1044,7 @@ bool JSB_cpSlideJoint_getMax(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSlideJoint_getMin(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSlideJoint* arg0 = (cpSlideJoint*) proxy->handle;
     cpFloat ret_val = 0;
@@ -1070,11 +1058,10 @@ bool JSB_cpSlideJoint_getMin(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpSlideJoint_setAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSlideJoint* arg0 = (cpSlideJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -1090,11 +1077,10 @@ bool JSB_cpSlideJoint_setAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpSlideJoint_setAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSlideJoint* arg0 = (cpSlideJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -1110,11 +1096,10 @@ bool JSB_cpSlideJoint_setAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpSlideJoint_setMax(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSlideJoint* arg0 = (cpSlideJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -1130,11 +1115,10 @@ bool JSB_cpSlideJoint_setMax(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpSlideJoint_setMin(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSlideJoint* arg0 = (cpSlideJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -1235,7 +1219,7 @@ void JSB_cpGearJoint_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpGearJoint_getPhase(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpGearJoint* arg0 = (cpGearJoint*) proxy->handle;
     cpFloat ret_val = 0;
@@ -1250,7 +1234,7 @@ bool JSB_cpGearJoint_getPhase(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpGearJoint_getRatio(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpGearJoint* arg0 = (cpGearJoint*) proxy->handle;
     cpFloat ret_val = 0;
@@ -1264,11 +1248,10 @@ bool JSB_cpGearJoint_getRatio(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpGearJoint_setPhase(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpGearJoint* arg0 = (cpGearJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -1284,11 +1267,10 @@ bool JSB_cpGearJoint_setPhase(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpGearJoint_setRatio(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpGearJoint* arg0 = (cpGearJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -1386,7 +1368,7 @@ void JSB_cpDampedRotarySpring_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpDampedRotarySpring_getDamping(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedRotarySpring* arg0 = (cpDampedRotarySpring*) proxy->handle;
     cpFloat ret_val = 0;
@@ -1401,7 +1383,7 @@ bool JSB_cpDampedRotarySpring_getDamping(JSContext *cx, uint32_t argc, jsval *vp
 bool JSB_cpDampedRotarySpring_getRestAngle(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedRotarySpring* arg0 = (cpDampedRotarySpring*) proxy->handle;
     cpFloat ret_val = 0;
@@ -1416,7 +1398,7 @@ bool JSB_cpDampedRotarySpring_getRestAngle(JSContext *cx, uint32_t argc, jsval *
 bool JSB_cpDampedRotarySpring_getStiffness(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedRotarySpring* arg0 = (cpDampedRotarySpring*) proxy->handle;
     cpFloat ret_val = 0;
@@ -1430,11 +1412,10 @@ bool JSB_cpDampedRotarySpring_getStiffness(JSContext *cx, uint32_t argc, jsval *
 // Ret value: void
 bool JSB_cpDampedRotarySpring_setDamping(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedRotarySpring* arg0 = (cpDampedRotarySpring*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -1450,11 +1431,10 @@ bool JSB_cpDampedRotarySpring_setDamping(JSContext *cx, uint32_t argc, jsval *vp
 // Ret value: void
 bool JSB_cpDampedRotarySpring_setRestAngle(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedRotarySpring* arg0 = (cpDampedRotarySpring*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -1470,11 +1450,10 @@ bool JSB_cpDampedRotarySpring_setRestAngle(JSContext *cx, uint32_t argc, jsval *
 // Ret value: void
 bool JSB_cpDampedRotarySpring_setStiffness(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedRotarySpring* arg0 = (cpDampedRotarySpring*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -1576,7 +1555,7 @@ void JSB_cpDampedSpring_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpDampedSpring_getAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedSpring* arg0 = (cpDampedSpring*) proxy->handle;
     cpVect ret_val;
@@ -1594,7 +1573,7 @@ bool JSB_cpDampedSpring_getAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpDampedSpring_getAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedSpring* arg0 = (cpDampedSpring*) proxy->handle;
     cpVect ret_val;
@@ -1612,7 +1591,7 @@ bool JSB_cpDampedSpring_getAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpDampedSpring_getDamping(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedSpring* arg0 = (cpDampedSpring*) proxy->handle;
     cpFloat ret_val = 0;
@@ -1627,7 +1606,7 @@ bool JSB_cpDampedSpring_getDamping(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpDampedSpring_getRestLength(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedSpring* arg0 = (cpDampedSpring*) proxy->handle;
     cpFloat ret_val = 0;
@@ -1642,7 +1621,7 @@ bool JSB_cpDampedSpring_getRestLength(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpDampedSpring_getStiffness(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedSpring* arg0 = (cpDampedSpring*) proxy->handle;
     cpFloat ret_val = 0;
@@ -1656,11 +1635,10 @@ bool JSB_cpDampedSpring_getStiffness(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpDampedSpring_setAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedSpring* arg0 = (cpDampedSpring*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -1676,11 +1654,10 @@ bool JSB_cpDampedSpring_setAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpDampedSpring_setAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedSpring* arg0 = (cpDampedSpring*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -1696,11 +1673,10 @@ bool JSB_cpDampedSpring_setAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpDampedSpring_setDamping(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedSpring* arg0 = (cpDampedSpring*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -1716,11 +1692,10 @@ bool JSB_cpDampedSpring_setDamping(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpDampedSpring_setRestLength(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedSpring* arg0 = (cpDampedSpring*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -1736,11 +1711,10 @@ bool JSB_cpDampedSpring_setRestLength(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpDampedSpring_setStiffness(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedSpring* arg0 = (cpDampedSpring*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -1843,7 +1817,7 @@ void JSB_cpRatchetJoint_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpRatchetJoint_getAngle(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpRatchetJoint* arg0 = (cpRatchetJoint*) proxy->handle;
     cpFloat ret_val = 0;
@@ -1858,7 +1832,7 @@ bool JSB_cpRatchetJoint_getAngle(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpRatchetJoint_getPhase(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpRatchetJoint* arg0 = (cpRatchetJoint*) proxy->handle;
     cpFloat ret_val = 0;
@@ -1873,7 +1847,7 @@ bool JSB_cpRatchetJoint_getPhase(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpRatchetJoint_getRatchet(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpRatchetJoint* arg0 = (cpRatchetJoint*) proxy->handle;
     cpFloat ret_val = 0;
@@ -1887,11 +1861,10 @@ bool JSB_cpRatchetJoint_getRatchet(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpRatchetJoint_setAngle(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpRatchetJoint* arg0 = (cpRatchetJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -1907,11 +1880,10 @@ bool JSB_cpRatchetJoint_setAngle(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpRatchetJoint_setPhase(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpRatchetJoint* arg0 = (cpRatchetJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -1927,11 +1899,10 @@ bool JSB_cpRatchetJoint_setPhase(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpRatchetJoint_setRatchet(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpRatchetJoint* arg0 = (cpRatchetJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -2030,7 +2001,7 @@ void JSB_cpRotaryLimitJoint_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpRotaryLimitJoint_getMax(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpRotaryLimitJoint* arg0 = (cpRotaryLimitJoint*) proxy->handle;
     cpFloat ret_val = 0;
@@ -2045,7 +2016,7 @@ bool JSB_cpRotaryLimitJoint_getMax(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpRotaryLimitJoint_getMin(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpRotaryLimitJoint* arg0 = (cpRotaryLimitJoint*) proxy->handle;
     cpFloat ret_val = 0;
@@ -2059,11 +2030,10 @@ bool JSB_cpRotaryLimitJoint_getMin(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpRotaryLimitJoint_setMax(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpRotaryLimitJoint* arg0 = (cpRotaryLimitJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -2079,11 +2049,10 @@ bool JSB_cpRotaryLimitJoint_setMax(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpRotaryLimitJoint_setMin(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpRotaryLimitJoint* arg0 = (cpRotaryLimitJoint*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -2166,7 +2135,7 @@ void JSB_cpArbiter_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpArbiter_getCount(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
     int ret_val = 0;
@@ -2180,11 +2149,10 @@ bool JSB_cpArbiter_getCount(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: cpFloat
 bool JSB_cpArbiter_getDepth(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     int32_t arg1 = 0; 
 
@@ -2202,7 +2170,7 @@ bool JSB_cpArbiter_getDepth(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpArbiter_getElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
     cpFloat ret_val = 0;
@@ -2217,7 +2185,7 @@ bool JSB_cpArbiter_getElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpArbiter_getFriction(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
     cpFloat ret_val = 0;
@@ -2231,11 +2199,10 @@ bool JSB_cpArbiter_getFriction(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: cpVect
 bool JSB_cpArbiter_getNormal(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     int32_t arg1 = 0; 
 
@@ -2255,11 +2222,10 @@ bool JSB_cpArbiter_getNormal(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: cpVect
 bool JSB_cpArbiter_getPoint(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     int32_t arg1 = 0; 
 
@@ -2280,7 +2246,7 @@ bool JSB_cpArbiter_getPoint(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpArbiter_getSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
     cpVect ret_val;
@@ -2298,7 +2264,7 @@ bool JSB_cpArbiter_getSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpArbiter_ignore(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
 
@@ -2312,7 +2278,7 @@ bool JSB_cpArbiter_ignore(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpArbiter_isFirstContact(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
     cpBool ret_val;
@@ -2326,11 +2292,10 @@ bool JSB_cpArbiter_isFirstContact(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpArbiter_setElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -2346,11 +2311,10 @@ bool JSB_cpArbiter_setElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpArbiter_setFriction(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -2366,11 +2330,10 @@ bool JSB_cpArbiter_setFriction(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpArbiter_setSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -2387,7 +2350,7 @@ bool JSB_cpArbiter_setSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpArbiter_totalImpulse(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
     cpVect ret_val;
@@ -2405,7 +2368,7 @@ bool JSB_cpArbiter_totalImpulse(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpArbiter_totalImpulseWithFriction(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
     cpVect ret_val;
@@ -2423,7 +2386,7 @@ bool JSB_cpArbiter_totalImpulseWithFriction(JSContext *cx, uint32_t argc, jsval 
 bool JSB_cpArbiter_totalKE(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
     cpFloat ret_val = 0;
@@ -2556,7 +2519,6 @@ bool JSB_cpSpace_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==0, cx, false, "Invalid number of arguments");
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    //JSObject* jsobj = JS_NewObjectForConstructor(cx, JSB_cpSpace_class, args);
     JSObject *jsobj = JS_NewObject(cx, JSB_cpSpace_class, JS::RootedObject(cx, JSB_cpSpace_object), JS::NullPtr());
     void*   ret_val = cpSpaceNew( );
 
@@ -2571,11 +2533,10 @@ bool JSB_cpSpace_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Ret value: void
 bool JSB_cpSpace_activateShapesTouchingShape(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpShape* arg1 = nullptr; 
 
@@ -2591,11 +2552,10 @@ bool JSB_cpSpace_activateShapesTouchingShape(JSContext *cx, uint32_t argc, jsval
 // Ret value: cpBool
 bool JSB_cpSpace_containsBody(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg1 = nullptr; 
 
@@ -2612,11 +2572,10 @@ bool JSB_cpSpace_containsBody(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: cpBool
 bool JSB_cpSpace_containsConstraint(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpConstraint* arg1 = nullptr; 
 
@@ -2633,11 +2592,10 @@ bool JSB_cpSpace_containsConstraint(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: cpBool
 bool JSB_cpSpace_containsShape(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpShape* arg1 = nullptr; 
 
@@ -2655,7 +2613,7 @@ bool JSB_cpSpace_containsShape(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSpace_destroy(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
 
@@ -2669,7 +2627,7 @@ bool JSB_cpSpace_destroy(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSpace_getCollisionBias(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     cpFloat ret_val = 0;
@@ -2684,7 +2642,7 @@ bool JSB_cpSpace_getCollisionBias(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSpace_getCollisionPersistence(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     cpTimestamp ret_val = 0;
@@ -2699,7 +2657,7 @@ bool JSB_cpSpace_getCollisionPersistence(JSContext *cx, uint32_t argc, jsval *vp
 bool JSB_cpSpace_getCollisionSlop(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     cpFloat ret_val = 0;
@@ -2714,7 +2672,7 @@ bool JSB_cpSpace_getCollisionSlop(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSpace_getCurrentTimeStep(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     cpFloat ret_val = 0;
@@ -2729,7 +2687,7 @@ bool JSB_cpSpace_getCurrentTimeStep(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSpace_getDamping(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     cpFloat ret_val = 0;
@@ -2744,7 +2702,7 @@ bool JSB_cpSpace_getDamping(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSpace_getEnableContactGraph(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     cpBool ret_val;
@@ -2759,7 +2717,7 @@ bool JSB_cpSpace_getEnableContactGraph(JSContext *cx, uint32_t argc, jsval *vp) 
 bool JSB_cpSpace_getGravity(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     cpVect ret_val;
@@ -2777,7 +2735,7 @@ bool JSB_cpSpace_getGravity(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSpace_getIdleSpeedThreshold(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     cpFloat ret_val = 0;
@@ -2792,7 +2750,7 @@ bool JSB_cpSpace_getIdleSpeedThreshold(JSContext *cx, uint32_t argc, jsval *vp) 
 bool JSB_cpSpace_getIterations(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     int ret_val = 0;
@@ -2807,7 +2765,7 @@ bool JSB_cpSpace_getIterations(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSpace_getSleepTimeThreshold(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     cpFloat ret_val = 0;
@@ -2822,7 +2780,7 @@ bool JSB_cpSpace_getSleepTimeThreshold(JSContext *cx, uint32_t argc, jsval *vp) 
 bool JSB_cpSpace_getStaticBody(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     cpBody* ret_val = nullptr;
@@ -2840,7 +2798,7 @@ bool JSB_cpSpace_getStaticBody(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSpace_init(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     cpSpace* ret_val = nullptr;
@@ -2858,7 +2816,7 @@ bool JSB_cpSpace_init(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSpace_isLocked(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     cpBool ret_val;
@@ -2872,11 +2830,10 @@ bool JSB_cpSpace_isLocked(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: cpShape*
 bool JSB_cpSpace_pointQueryFirst(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 3, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; uint32_t arg2 = 0; cpGroup arg3 = 0;
 
@@ -2900,11 +2857,10 @@ bool JSB_cpSpace_pointQueryFirst(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpSpace_reindexShape(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpShape* arg1 = nullptr; 
 
@@ -2920,11 +2876,10 @@ bool JSB_cpSpace_reindexShape(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpSpace_reindexShapesForBody(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg1 = nullptr; 
 
@@ -2941,7 +2896,7 @@ bool JSB_cpSpace_reindexShapesForBody(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSpace_reindexStatic(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
 
@@ -2954,11 +2909,10 @@ bool JSB_cpSpace_reindexStatic(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpSpace_setCollisionBias(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -2974,11 +2928,10 @@ bool JSB_cpSpace_setCollisionBias(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpSpace_setCollisionPersistence(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     uint32_t arg1 = 0; 
 
@@ -2994,11 +2947,10 @@ bool JSB_cpSpace_setCollisionPersistence(JSContext *cx, uint32_t argc, jsval *vp
 // Ret value: void
 bool JSB_cpSpace_setCollisionSlop(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -3014,11 +2966,10 @@ bool JSB_cpSpace_setCollisionSlop(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpSpace_setDamping(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -3034,11 +2985,10 @@ bool JSB_cpSpace_setDamping(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpSpace_setEnableContactGraph(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     int32_t arg1 = 0; 
 
@@ -3054,11 +3004,10 @@ bool JSB_cpSpace_setEnableContactGraph(JSContext *cx, uint32_t argc, jsval *vp) 
 // Ret value: void
 bool JSB_cpSpace_setGravity(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -3074,11 +3023,10 @@ bool JSB_cpSpace_setGravity(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpSpace_setIdleSpeedThreshold(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -3094,11 +3042,10 @@ bool JSB_cpSpace_setIdleSpeedThreshold(JSContext *cx, uint32_t argc, jsval *vp) 
 // Ret value: void
 bool JSB_cpSpace_setIterations(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     int32_t arg1 = 0; 
 
@@ -3114,11 +3061,10 @@ bool JSB_cpSpace_setIterations(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpSpace_setSleepTimeThreshold(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -3134,11 +3080,10 @@ bool JSB_cpSpace_setSleepTimeThreshold(JSContext *cx, uint32_t argc, jsval *vp) 
 // Ret value: void
 bool JSB_cpSpace_step(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -3154,11 +3099,10 @@ bool JSB_cpSpace_step(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpSpace_useSpatialHash(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; int32_t arg2 = 0; 
 
@@ -3279,7 +3223,7 @@ void JSB_cpBody_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpBody_activate(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
 
@@ -3292,11 +3236,10 @@ bool JSB_cpBody_activate(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpBody_activateStatic(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpShape* arg1 = nullptr; 
 
@@ -3312,11 +3255,10 @@ bool JSB_cpBody_activateStatic(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpBody_applyForce(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; cpVect arg2; 
 
@@ -3333,11 +3275,10 @@ bool JSB_cpBody_applyForce(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpBody_applyImpulse(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; cpVect arg2; 
 
@@ -3355,7 +3296,7 @@ bool JSB_cpBody_applyImpulse(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_destroy(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
 
@@ -3369,7 +3310,7 @@ bool JSB_cpBody_destroy(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_getAngVel(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpFloat ret_val = 0;
@@ -3384,7 +3325,7 @@ bool JSB_cpBody_getAngVel(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_getAngVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpFloat ret_val = 0;
@@ -3399,7 +3340,7 @@ bool JSB_cpBody_getAngVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_getAngle(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpFloat ret_val = 0;
@@ -3414,7 +3355,7 @@ bool JSB_cpBody_getAngle(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_getForce(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpVect ret_val;
@@ -3432,7 +3373,7 @@ bool JSB_cpBody_getForce(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_getMass(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpFloat ret_val = 0;
@@ -3447,7 +3388,7 @@ bool JSB_cpBody_getMass(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_getMoment(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpFloat ret_val = 0;
@@ -3462,7 +3403,7 @@ bool JSB_cpBody_getMoment(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_getPos(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpVect ret_val;
@@ -3480,7 +3421,7 @@ bool JSB_cpBody_getPos(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_getRot(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpVect ret_val;
@@ -3498,7 +3439,7 @@ bool JSB_cpBody_getRot(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_getSpace(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpSpace* ret_val = nullptr;
@@ -3516,7 +3457,7 @@ bool JSB_cpBody_getSpace(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_getTorque(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpFloat ret_val = 0;
@@ -3531,7 +3472,7 @@ bool JSB_cpBody_getTorque(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_getVel(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpVect ret_val;
@@ -3548,11 +3489,10 @@ bool JSB_cpBody_getVel(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: cpVect
 bool JSB_cpBody_getVelAtLocalPoint(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -3572,11 +3512,10 @@ bool JSB_cpBody_getVelAtLocalPoint(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: cpVect
 bool JSB_cpBody_getVelAtWorldPoint(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -3597,7 +3536,7 @@ bool JSB_cpBody_getVelAtWorldPoint(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_getVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpFloat ret_val = 0;
@@ -3611,11 +3550,10 @@ bool JSB_cpBody_getVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: cpBody*
 bool JSB_cpBody_init(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; double arg2 = 0; 
 
@@ -3637,7 +3575,7 @@ bool JSB_cpBody_init(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_initStatic(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpBody* ret_val = nullptr;
@@ -3655,7 +3593,7 @@ bool JSB_cpBody_initStatic(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_isRogue(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpBool ret_val;
@@ -3670,7 +3608,7 @@ bool JSB_cpBody_isRogue(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_isSleeping(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpBool ret_val;
@@ -3685,7 +3623,7 @@ bool JSB_cpBody_isSleeping(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_isStatic(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpBool ret_val;
@@ -3700,7 +3638,7 @@ bool JSB_cpBody_isStatic(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_kineticEnergy(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
     cpFloat ret_val = 0;
@@ -3714,11 +3652,10 @@ bool JSB_cpBody_kineticEnergy(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: cpVect
 bool JSB_cpBody_local2World(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -3739,7 +3676,7 @@ bool JSB_cpBody_local2World(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_resetForces(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
 
@@ -3752,11 +3689,10 @@ bool JSB_cpBody_resetForces(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpBody_setAngVel(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -3772,11 +3708,10 @@ bool JSB_cpBody_setAngVel(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpBody_setAngVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -3792,11 +3727,10 @@ bool JSB_cpBody_setAngVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpBody_setAngle(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -3812,11 +3746,10 @@ bool JSB_cpBody_setAngle(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpBody_setForce(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -3832,11 +3765,10 @@ bool JSB_cpBody_setForce(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpBody_setMass(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -3852,11 +3784,10 @@ bool JSB_cpBody_setMass(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpBody_setMoment(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -3872,11 +3803,10 @@ bool JSB_cpBody_setMoment(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpBody_setPos(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -3892,11 +3822,10 @@ bool JSB_cpBody_setPos(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpBody_setTorque(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -3912,11 +3841,10 @@ bool JSB_cpBody_setTorque(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpBody_setVel(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -3932,11 +3860,10 @@ bool JSB_cpBody_setVel(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpBody_setVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -3953,7 +3880,7 @@ bool JSB_cpBody_setVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpBody_sleep(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
 
@@ -3966,11 +3893,10 @@ bool JSB_cpBody_sleep(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpBody_sleepWithGroup(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg1 = nullptr; 
 
@@ -3986,11 +3912,10 @@ bool JSB_cpBody_sleepWithGroup(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpBody_updatePosition(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -4006,11 +3931,10 @@ bool JSB_cpBody_updatePosition(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpBody_updateVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 3, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; double arg2 = 0; double arg3 = 0; 
 
@@ -4028,11 +3952,10 @@ bool JSB_cpBody_updateVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: cpVect
 bool JSB_cpBody_world2Local(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -4202,7 +4125,7 @@ void JSB_cpShape_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpShape_cacheBB(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
     cpBB ret_val;
@@ -4220,7 +4143,7 @@ bool JSB_cpShape_cacheBB(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpShape_destroy(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
 
@@ -4234,7 +4157,7 @@ bool JSB_cpShape_destroy(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpShape_getBB(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
     cpBB ret_val;
@@ -4252,7 +4175,7 @@ bool JSB_cpShape_getBB(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpShape_getBody(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
     cpBody* ret_val = nullptr;
@@ -4270,14 +4193,14 @@ bool JSB_cpShape_getBody(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpShape_getCollisionType(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
     cpCollisionType ret_val = 0;
 
     ret_val = cpShapeGetCollisionType((cpShape*)arg0  );
 
-    jsval ret_jsval = uint32_to_jsval( cx, (cpCollisionType)ret_val );
+    jsval ret_jsval = uint32_to_jsval( cx, (uint32_t)ret_val );
     args.rval().set(ret_jsval);
 
     return true;
@@ -4288,7 +4211,7 @@ bool JSB_cpShape_getCollisionType(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpShape_getElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
     cpFloat ret_val = 0;
@@ -4303,7 +4226,7 @@ bool JSB_cpShape_getElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpShape_getFriction(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
     cpFloat ret_val = 0;
@@ -4318,14 +4241,14 @@ bool JSB_cpShape_getFriction(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpShape_getGroup(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
     cpGroup ret_val = 0;
 
     ret_val = cpShapeGetGroup((cpShape*)arg0  );
 
-    jsval ret_jsval = uint32_to_jsval( cx, (cpGroup)ret_val );
+    jsval ret_jsval = uint32_to_jsval( cx, (uint32_t)ret_val );
     args.rval().set(ret_jsval);
 
     return true;
@@ -4336,7 +4259,7 @@ bool JSB_cpShape_getGroup(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpShape_getLayers(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
     cpLayers ret_val = 0;
@@ -4351,7 +4274,7 @@ bool JSB_cpShape_getLayers(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpShape_getSensor(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
     cpBool ret_val;
@@ -4366,7 +4289,7 @@ bool JSB_cpShape_getSensor(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpShape_getSpace(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
     cpSpace* ret_val = nullptr;
@@ -4384,7 +4307,7 @@ bool JSB_cpShape_getSpace(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpShape_getSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
     cpVect ret_val;
@@ -4401,11 +4324,10 @@ bool JSB_cpShape_getSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: cpBool
 bool JSB_cpShape_pointQuery(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -4422,11 +4344,10 @@ bool JSB_cpShape_pointQuery(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpShape_setBody(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg1 = nullptr; 
 
@@ -4442,11 +4363,10 @@ bool JSB_cpShape_setBody(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpShape_setCollisionType(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpCollisionType arg1 = 0;
 
@@ -4462,11 +4382,10 @@ bool JSB_cpShape_setCollisionType(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpShape_setElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -4482,11 +4401,10 @@ bool JSB_cpShape_setElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpShape_setFriction(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     double arg1 = 0; 
 
@@ -4502,11 +4420,10 @@ bool JSB_cpShape_setFriction(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpShape_setGroup(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpGroup arg1 = 0; 
 
@@ -4522,11 +4439,10 @@ bool JSB_cpShape_setGroup(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpShape_setLayers(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     uint32_t arg1 = 0; 
 
@@ -4542,11 +4458,10 @@ bool JSB_cpShape_setLayers(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpShape_setSensor(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     int32_t arg1 = 0; 
 
@@ -4562,11 +4477,10 @@ bool JSB_cpShape_setSensor(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpShape_setSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; 
 
@@ -4582,11 +4496,10 @@ bool JSB_cpShape_setSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: cpBB
 bool JSB_cpShape_update(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; cpVect arg2; 
 
@@ -4608,7 +4521,7 @@ bool JSB_cpShape_update(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpShape_active(JSContext *cx, uint32_t argc, jsval *vp){
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
 
@@ -4621,11 +4534,10 @@ bool JSB_cpShape_active(JSContext *cx, uint32_t argc, jsval *vp){
 bool JSB_cpShape_nearestPointQuery(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* shape = (cpShape*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
     cpVect p;
     bool ok = jsval_to_cpVect(cx, args.get(0), &p);
@@ -4644,11 +4556,10 @@ bool JSB_cpShape_nearestPointQuery(JSContext *cx, uint32_t argc, jsval *vp)
 bool JSB_cpShape_segmentQuery(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* shape = (cpShape*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
     cpVect a;
     cpVect b;
@@ -4844,7 +4755,7 @@ void JSB_cpCircleShape_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpCircleShape_getOffset(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpCircleShape* arg0 = (cpCircleShape*) proxy->handle;
     cpVect ret_val;
@@ -4862,7 +4773,7 @@ bool JSB_cpCircleShape_getOffset(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpCircleShape_getRadius(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpCircleShape* arg0 = (cpCircleShape*) proxy->handle;
     cpFloat ret_val = 0;
@@ -4955,7 +4866,7 @@ void JSB_cpSegmentShape_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpSegmentShape_getA(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSegmentShape* arg0 = (cpSegmentShape*) proxy->handle;
     cpVect ret_val;
@@ -4973,7 +4884,7 @@ bool JSB_cpSegmentShape_getA(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSegmentShape_getB(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSegmentShape* arg0 = (cpSegmentShape*) proxy->handle;
     cpVect ret_val;
@@ -4991,7 +4902,7 @@ bool JSB_cpSegmentShape_getB(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSegmentShape_getNormal(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSegmentShape* arg0 = (cpSegmentShape*) proxy->handle;
     cpVect ret_val;
@@ -5009,7 +4920,7 @@ bool JSB_cpSegmentShape_getNormal(JSContext *cx, uint32_t argc, jsval *vp) {
 bool JSB_cpSegmentShape_getRadius(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSegmentShape* arg0 = (cpSegmentShape*) proxy->handle;
     cpFloat ret_val = 0;
@@ -5023,11 +4934,10 @@ bool JSB_cpSegmentShape_getRadius(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: void
 bool JSB_cpSegmentShape_setNeighbors(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSegmentShape* arg0 = (cpSegmentShape*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpVect arg1; cpVect arg2; 
 
@@ -5127,7 +5037,7 @@ void JSB_cpPolyShape_finalize(JSFreeOp *fop, JSObject *jsthis)
 bool JSB_cpPolyShape_getNumVerts(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpPolyShape* arg0 = (cpPolyShape*) proxy->handle;
     int ret_val = 0;
@@ -5141,11 +5051,10 @@ bool JSB_cpPolyShape_getNumVerts(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: cpVect
 bool JSB_cpPolyShape_getVert(JSContext *cx, uint32_t argc, jsval *vp) {
     JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpPolyShape* arg0 = (cpPolyShape*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     int32_t arg1 = 0; 
 
@@ -5317,11 +5226,10 @@ void JSB_cpSplittingPlane_createClass(JSContext *cx, JS::HandleObject globalObj,
 
 bool JSB_cpSegmentQueryInfo_hitPoint(JSContext *cx, uint32_t argc, jsval *vp){
     JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSegmentQueryInfo* info = (cpSegmentQueryInfo*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
     cpVect start;
     cpVect end;
@@ -5339,11 +5247,10 @@ bool JSB_cpSegmentQueryInfo_hitPoint(JSContext *cx, uint32_t argc, jsval *vp){
 
 bool JSB_cpSegmentQueryInfo_hitDist(JSContext *cx, uint32_t argc, jsval *vp){
     JSB_PRECONDITION2( argc == 2, cx, false, "Invalid number of arguments" );
-
-    JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSegmentQueryInfo* info = (cpSegmentQueryInfo*) proxy->handle;
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
     cpVect start;
     cpVect end;

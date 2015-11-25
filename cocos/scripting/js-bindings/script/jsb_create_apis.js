@@ -1084,14 +1084,25 @@ cc.TMXTiledMap.create = function (tmxFile, resourcePath) {
     return null;
 };
 
-
-// MenuItemImage
+// MenuItems
+cc.MenuItem.create = function (callback, target) {
+    return new cc.MenuItem(callback, target);
+};
+cc.MenuItemLabel.create = function (label, selector, target) {
+    return new cc.MenuItemLabel(label, selector, target);
+};
+cc.MenuItemAtlasFont.create = function (value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
+    return new cc.MenuItemAtlasFont(value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target);
+};
+cc.MenuItemFont.create = function (value, callback, target) {
+    return new cc.MenuItemFont(value, callback, target);
+};
+cc.MenuItemSprite.create = function (normalSprite, selectedSprite, three, four, five) {
+    return new cc.MenuItemSprite(normalSprite, selectedSprite, three, four, five || undefined);
+};
 cc.MenuItemImage.create = function(normalImage, selectedImage, three, four, five) {
     return new cc.MenuItemImage(normalImage, selectedImage, three, four, five);
-}
-
-
-// MenuItemToggle
+};
 cc.MenuItemToggle.create = function(/* var args */) {
     var n = arguments.length;
 

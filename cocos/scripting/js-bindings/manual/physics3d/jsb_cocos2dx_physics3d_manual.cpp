@@ -265,7 +265,7 @@ bool jsb_cocos2d_Physics3DObject_setCollisionCallback(JSContext *cx, uint32_t ar
         JSB_PRECONDITION2( cobj, cx, false, "jsb_cocos2d_Physics3DObject_setCollisionCallback : Invalid Native Object");
 
         std::function<void(const Physics3DCollisionInfo &)> arg0;
-        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.get(1).toObjectOrNull(), args.get(0)));
+        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS::RootedObject(cx, args.get(1).toObjectOrNull()), args.get(0)));
         auto lambda = [=](const Physics3DCollisionInfo &ci) -> void {
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 

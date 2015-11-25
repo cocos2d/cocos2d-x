@@ -90,26 +90,24 @@ const char* JSStringWrapper::get()
 }
 
 // JSFunctionWrapper
-JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JSObject *jsthis, jsval fval)
+JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval)
 : _cx(cx)
-, _jsthis(jsthis)
-, _fval(fval)
 {
-    JS::AddNamedValueRoot(cx, &this->_fval, "JSFunctionWrapper");
-    JS::AddNamedObjectRoot(cx, &this->_jsthis, "JSFunctionWrapper");
+    _jsthis.construct(cx, jsthis);
+    _fval.construct(cx, fval);
 }
 
 JSFunctionWrapper::~JSFunctionWrapper()
 {
-    JS::RemoveValueRoot(this->_cx, &this->_fval);
-    JS::RemoveObjectRoot(this->_cx, &this->_jsthis);
+    _jsthis.destroyIfConstructed();
+    _fval.destroyIfConstructed();
 }
 
 bool JSFunctionWrapper::invoke(unsigned int argc, jsval *argv, JS::MutableHandleValue rval)
 {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    return JS_CallFunctionValue(this->_cx, JS::RootedObject(_cx, this->_jsthis.get()), JS::RootedValue(_cx, this->_fval.get()), JS::HandleValueArray::fromMarkedLocation(argc, argv), rval);
+    return JS_CallFunctionValue(this->_cx, _jsthis.ref(), _fval.ref(), JS::HandleValueArray::fromMarkedLocation(argc, argv), rval);
 }
 
 static Color3B getColorFromJSObject(JSContext *cx, JS::HandleObject colorObject)

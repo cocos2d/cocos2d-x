@@ -95,8 +95,7 @@ bool js_cocos2dx_CCBAnimationManager_animationCompleteCallback(JSContext *cx, ui
 {
     if (argc >= 1) {
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        
-        JSObject *obj = JS_THIS_OBJECT(cx, vp);
+        JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
         js_proxy_t *p = jsb_get_js_proxy(obj);
         cocosbuilder::CCBAnimationManager *node = (cocosbuilder::CCBAnimationManager *)(p ? p->ptr : NULL);
         
@@ -121,11 +120,9 @@ bool js_cocos2dx_CCBReader_readNodeGraphFromFile(JSContext *cx, uint32_t argc, j
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    JSObject *obj;
-    cocosbuilder::CCBReader* cobj;
-    obj = JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *p = jsb_get_js_proxy(obj);
-    cobj = (cocosbuilder::CCBReader *)(p ? p->ptr : NULL);
+    cocosbuilder::CCBReader* cobj = (cocosbuilder::CCBReader *)(p ? p->ptr : NULL);
     TEST_NATIVE_OBJECT(cx, cobj)
     
     if (argc == 2) {
@@ -204,11 +201,9 @@ bool js_cocos2dx_CCBReader_createSceneWithNodeGraphFromFile(JSContext *cx, uint3
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    JSObject *obj;
-    cocosbuilder::CCBReader* cobj;
-    obj = JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *p = jsb_get_js_proxy(obj);
-    cobj = (cocosbuilder::CCBReader *)(p ? p->ptr : NULL);
+    cocosbuilder::CCBReader* cobj = (cocosbuilder::CCBReader *)(p ? p->ptr : NULL);
     TEST_NATIVE_OBJECT(cx, cobj)
     
     if (argc == 2) {
