@@ -2526,7 +2526,7 @@ bool js_cocos2dx_ui_Layout_getRenderFile(JSContext *cx, uint32_t argc, jsval *vp
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getRenderFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -3397,7 +3397,7 @@ bool js_cocos2dx_ui_Button_getDisabledFile(JSContext *cx, uint32_t argc, jsval *
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getDisabledFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -3471,7 +3471,7 @@ bool js_cocos2dx_ui_Button_getNormalFile(JSContext *cx, uint32_t argc, jsval *vp
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getNormalFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -3945,7 +3945,7 @@ bool js_cocos2dx_ui_Button_getPressedFile(JSContext *cx, uint32_t argc, jsval *v
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getPressedFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -4369,7 +4369,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_getBackDisabledFile(JSContext *cx, uint3
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getBackDisabledFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -4387,7 +4387,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_getCrossDisabeldFile(JSContext *cx, uint
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getCrossDisabeldFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -4465,7 +4465,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_getCrossNormalFile(JSContext *cx, uint32
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getCrossNormalFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -4503,7 +4503,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_getBackPressedFile(JSContext *cx, uint32
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getBackPressedFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -4694,7 +4694,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_getBackNormalFile(JSContext *cx, uint32_
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getBackNormalFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -6053,7 +6053,7 @@ bool js_cocos2dx_ui_ImageView_getRenderFile(JSContext *cx, uint32_t argc, jsval 
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getRenderFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -7087,7 +7087,7 @@ bool js_cocos2dx_ui_TextAtlas_getRenderFile(JSContext *cx, uint32_t argc, jsval 
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getRenderFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -7412,7 +7412,7 @@ bool js_cocos2dx_ui_LoadingBar_getRenderFile(JSContext *cx, uint32_t argc, jsval
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getRenderFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -9934,7 +9934,7 @@ bool js_cocos2dx_ui_Slider_getBallNormalFile(JSContext *cx, uint32_t argc, jsval
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getBallNormalFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -9990,7 +9990,7 @@ bool js_cocos2dx_ui_Slider_getBallPressedFile(JSContext *cx, uint32_t argc, jsva
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getBallPressedFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -10132,7 +10132,7 @@ bool js_cocos2dx_ui_Slider_getProgressBarFile(JSContext *cx, uint32_t argc, jsva
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getProgressBarFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -10198,7 +10198,7 @@ bool js_cocos2dx_ui_Slider_getBackFile(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getBackFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -10274,7 +10274,7 @@ bool js_cocos2dx_ui_Slider_getBallDisabeldFile(JSContext *cx, uint32_t argc, jsv
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getBallDisabeldFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
@@ -12321,7 +12321,7 @@ bool js_cocos2dx_ui_TextBMFont_getRenderFile(JSContext *cx, uint32_t argc, jsval
     if (argc == 0) {
         cocos2d::ResouceData ret = cobj->getRenderFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
         args.rval().set(jsret);
         return true;
     }
