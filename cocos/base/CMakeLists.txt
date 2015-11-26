@@ -2,10 +2,11 @@
 if(MACOSX OR APPLE)
   set(COCOS_BASE_SPECIFIC_SRC
     base/CCUserDefault-apple.mm)
+elseif(ANDROID)
+  set(COCOS_BASE_SPECIFIC_SRC
+    base/CCUserDefault-android.cpp
+    base/CCController-android.cpp)
 endif()
-
-# todo: android support via base/CCUserDefaultAndroid.cpp
-# todo: also base/CCController-android.cpp
 
 set(COCOS_BASE_SRC
   base/CCAsyncTaskPool.cpp

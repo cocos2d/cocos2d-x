@@ -42,6 +42,10 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
 
 elseif(ANDROID)
 
+include_directories(
+  platform/android
+)
+
 set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/android/CCApplication-android.cpp
   platform/android/CCCommon-android.cpp
@@ -49,6 +53,7 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/android/CCGLViewImpl-android.cpp
   platform/android/CCFileUtils-android.cpp
   platform/android/javaactivity-android.cpp
+  platform/android/CCEnhanceAPI-android.cpp
   platform/android/jni/DPIJni.cpp
   platform/android/jni/IMEJni.cpp
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp
@@ -57,11 +62,12 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp
   platform/android/jni/JniHelper.cpp
   platform/android/jni/TouchesJni.cpp
+  platform/android/jni/CocosPlayClient.cpp
 )
 
 endif()
 
-#leave andatory external stuff here also
+#leave mandatory external stuff here also
 
 include_directories(
   platform/desktop

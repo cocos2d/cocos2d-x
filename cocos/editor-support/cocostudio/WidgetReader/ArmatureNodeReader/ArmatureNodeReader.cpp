@@ -1,4 +1,4 @@
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 #include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
 #include "cocostudio/CSParseBinary_generated.h"

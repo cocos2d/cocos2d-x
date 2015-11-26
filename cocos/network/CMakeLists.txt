@@ -7,6 +7,12 @@ else()
   set(PLATFORM_LINK websockets)
 endif()
 
+if(ANDROID)
+  set(COCOS_NETWORK_SPECIFIC_SRC
+    network/CCDownloader-android.cpp
+  )
+endif()
+
 set(COCOS_NETWORK_SRC
 
     network/HttpClient.cpp
@@ -14,6 +20,7 @@ set(COCOS_NETWORK_SRC
     network/WebSocket.cpp
     network/CCDownloader.cpp
     network/CCDownloader-curl.cpp
+    ${COCOS_NETWORK_SPECIFIC_SRC}
 )
 
 if(MSVC)
