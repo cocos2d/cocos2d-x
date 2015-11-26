@@ -156,9 +156,9 @@ DrawNode::~DrawNode()
     }
 }
 
-DrawNode* DrawNode::create()
+DrawNode* DrawNode::create(int defaultLineWidth)
 {
-    DrawNode* ret = new (std::nothrow) DrawNode();
+    DrawNode* ret = new (std::nothrow) DrawNode(defaultLineWidth);
     if (ret && ret->init())
     {
         ret->autorelease();

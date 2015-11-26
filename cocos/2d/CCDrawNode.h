@@ -58,7 +58,7 @@ public:
      *
      * @return Return an autorelease object.
      */
-    static DrawNode* create();
+    static DrawNode* create(int defaultLineWidth = DEFAULT_LINE_WIDTH);
     
     /** Draw a point.
      *
