@@ -18,7 +18,7 @@
     /* Define NULL pointer value */
     #ifndef NULL
         #ifdef __cplusplus
-            #define NULL    0
+            #define nullptr    0
         #else
             #define NULL    ((void *)0)
         #endif
