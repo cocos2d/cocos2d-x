@@ -402,6 +402,8 @@
         "cocos/base/CCScheduler.h", 
         "cocos/base/CCScriptSupport.cpp", 
         "cocos/base/CCScriptSupport.h", 
+        "cocos/base/CCStencilStateManager.cpp", 
+        "cocos/base/CCStencilStateManager.hpp", 
         "cocos/base/CCTouch.cpp", 
         "cocos/base/CCTouch.h", 
         "cocos/base/CCUserDefault-android.cpp", 
