@@ -43,7 +43,8 @@ extern JSObject* jsb_cocos2d_experimental_ui_VideoPlayer_prototype;
 
 void register_all_cocos2dx_experimental_video_manual(JSContext* cx, JS::HandleObject global)
 {
-    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_experimental_ui_VideoPlayer_prototype), "addEventListener", jsb_cocos2dx_experimental_ui_VideoPlayer_addEventListener, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS::RootedObject proto(cx, jsb_cocos2d_experimental_ui_VideoPlayer_prototype);
+    JS_DefineFunction(cx, proto, "addEventListener", jsb_cocos2dx_experimental_ui_VideoPlayer_addEventListener, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 }
 
 #endif

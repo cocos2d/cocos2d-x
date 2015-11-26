@@ -101,8 +101,6 @@ static std::vector<sc_register_sth> registrationList;
 static std::unordered_map<std::string, JSScript*> filename_script;
 // port ~> socket map
 static std::unordered_map<int,int> ports_sockets;
-// name ~> globals
-static std::unordered_map<std::string, JSObject*> globals;
 
 static void cc_closesocket(int fd)
 {
@@ -135,7 +133,8 @@ static void executeJSFunctionFromReservedSpot(JSContext *cx, JS::HandleObject ob
         JS_CallFunctionValue(cx, obj, func, dataVal, retval);
     } else {
         assert(!thisObj.isPrimitive());
-        JS_CallFunctionValue(cx, JS::RootedObject(cx, thisObj.toObjectOrNull()), func, dataVal, retval);
+        JS::RootedObject jsthis(cx, thisObj.toObjectOrNull());
+        JS_CallFunctionValue(cx, jsthis, func, dataVal, retval);
     }
 }
 
@@ -251,7 +250,8 @@ void ScriptingCore::executeJSFunctionWithThisObj(JS::HandleValue thisObj,
         // So we have to check the availability of 'retVal'.
 //        if (retVal)
 //        {
-            JS_CallFunctionValue(_cx, JS::RootedObject(_cx, thisObj.toObjectOrNull()), callback, vp, retVal);
+            JS::RootedObject jsthis(_cx, thisObj.toObjectOrNull());
+            JS_CallFunctionValue(_cx, jsthis, callback, vp, retVal);
 //        }
 //        else
 //        {
@@ -511,7 +511,8 @@ bool ScriptingCore::evalString(const char *string, jsval *outVal, const char *fi
         global = _global.ref().get();
 
     JSAutoCompartment ac(cx, global);
-    return JS_EvaluateScript(cx, JS::RootedObject(cx, global), string, strlen(string), "ScriptingCore::evalString", 1);
+    JS::RootedObject jsglobal(cx, global);
+    return JS_EvaluateScript(cx, jsglobal, string, (unsigned)strlen(string), "ScriptingCore::evalString", 1);
 }
 
 void ScriptingCore::start()
@@ -643,7 +644,7 @@ JSScript* ScriptingCore::getScript(const char *path)
     return NULL;
 }
 
-void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext* cx)
+void ScriptingCore::compileScript(const char *path, JS::HandleObject global, JSContext* cx)
 {
     if (!path) {
         return;
@@ -655,9 +656,6 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
 
     cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
 
-    if (global == NULL) {
-        global = _global.ref().get();
-    }
     if (cx == NULL) {
         cx = _cx;
     }
@@ -872,11 +870,15 @@ void ScriptingCore::removeScriptObjectByObject(Ref* pObj)
     js_proxy_t* jsproxy;
     void *ptr = (void*)pObj;
     nproxy = jsb_get_native_proxy(ptr);
-    if (nproxy) {
+    if (nproxy)
+    {
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
         jsproxy = jsb_get_js_proxy(nproxy->obj);
-        RemoveObjectRoot(cx, &jsproxy->obj);
-        jsb_remove_proxy(nproxy, jsproxy);
+        if (jsproxy)
+        {
+            RemoveObjectRoot(cx, &jsproxy->obj);
+            jsb_remove_proxy(nproxy, jsproxy);
+        }
     }
 }
 
@@ -890,7 +892,8 @@ bool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc >= 1) {
-        JSString* str = JS::ToString(cx, JS::RootedValue(cx, args.get(0)));
+        JS::RootedValue jsstr(cx, args.get(0));
+        JSString* str = JS::ToString(cx, jsstr);
         JSStringWrapper path(str);
         bool res = false;
         if (argc == 2 && args.get(1).isString()) {
@@ -1043,7 +1046,8 @@ int ScriptingCore::handleActionEvent(void* data)
     
     if (eventType == kActionUpdate)
     {
-        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "update", js_cocos2dx_Action_update))
+        JS::RootedObject jstarget(_cx, p->obj);
+        if (isFunctionOverridedInJS(jstarget, "update", js_cocos2dx_Action_update))
         {
             jsval dataVal = DOUBLE_TO_JSVAL(*((float *)actionObjectScriptData->param));
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "update", 1, &dataVal, &retval);
@@ -1070,10 +1074,12 @@ int ScriptingCore::handleNodeEvent(void* data)
     int ret = 0;
     JS::RootedValue retval(_cx);
     jsval dataVal = INT_TO_JSVAL(1);
+    
+    JS::RootedObject jstarget(_cx, p->obj);
 
     if (action == kNodeOnEnter)
     {
-        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onEnter", js_cocos2dx_Node_onEnter))
+        if (isFunctionOverridedInJS(jstarget, "onEnter", js_cocos2dx_Node_onEnter))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnter", 1, &dataVal, &retval);
         }
@@ -1081,7 +1087,7 @@ int ScriptingCore::handleNodeEvent(void* data)
     }
     else if (action == kNodeOnExit)
     {
-        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onExit", js_cocos2dx_Node_onExit))
+        if (isFunctionOverridedInJS(jstarget, "onExit", js_cocos2dx_Node_onExit))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExit", 1, &dataVal, &retval);
         }
@@ -1089,14 +1095,14 @@ int ScriptingCore::handleNodeEvent(void* data)
     }
     else if (action == kNodeOnEnterTransitionDidFinish)
     {
-        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onEnterTransitionDidFinish", js_cocos2dx_Node_onEnterTransitionDidFinish))
+        if (isFunctionOverridedInJS(jstarget, "onEnterTransitionDidFinish", js_cocos2dx_Node_onEnterTransitionDidFinish))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnterTransitionDidFinish", 1, &dataVal, &retval);
         }
     }
     else if (action == kNodeOnExitTransitionDidStart)
     {
-        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onExitTransitionDidStart", js_cocos2dx_Node_onExitTransitionDidStart))
+        if (isFunctionOverridedInJS(jstarget, "onExitTransitionDidStart", js_cocos2dx_Node_onExitTransitionDidStart))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExitTransitionDidStart", 1, &dataVal, &retval);
         }
@@ -1104,7 +1110,7 @@ int ScriptingCore::handleNodeEvent(void* data)
     else if (action == kNodeOnCleanup) {
         cleanupSchedulesAndActions(p);
         
-        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "cleanup", js_cocos2dx_Node_cleanup))
+        if (isFunctionOverridedInJS(jstarget, "cleanup", js_cocos2dx_Node_cleanup))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "cleanup", 1, &dataVal, &retval);
         }
@@ -1361,7 +1367,8 @@ bool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, cons
     bool hasAction;
     JSContext* cx = this->_cx;
     JS::RootedValue temp_retval(cx);
-    JS::RootedObject obj(cx, JS::RootedValue(cx, owner).toObjectOrNull());
+    JS::RootedValue ownerval(cx, owner);
+    JS::RootedObject obj(cx, ownerval.toObjectOrNull());
     
     do
     {
@@ -1612,7 +1619,8 @@ void ScriptingCore::debugProcessInput(const std::string& str)
     jsval argv = STRING_TO_JSVAL(jsstr);
     JS::RootedValue outval(_cx);
     
-    JS_CallFunctionName(_cx, JS::RootedObject(_cx, _debugGlobal.ref()), "processInput", JS::HandleValueArray::fromMarkedLocation(1, &argv), &outval);
+    JS::RootedObject debugGlobal(_cx, _debugGlobal.ref());
+    JS_CallFunctionName(_cx, debugGlobal, "processInput", JS::HandleValueArray::fromMarkedLocation(1, &argv), &outval);
 }
 
 static bool NS_ProcessNextEvent()
@@ -1857,14 +1865,14 @@ void ScriptingCore::enableDebugger(unsigned int port)
     }
 }
 
-JSObject* NewGlobalObject(JSContext* cx, bool debug)
+JS::HandleObject NewGlobalObject(JSContext* cx, bool debug)
 {
     JS::CompartmentOptions options;
     options.setVersion(JSVERSION_LATEST);
     
     JS::RootedObject glob(cx, JS_NewGlobalObject(cx, &global_class, &shellTrustedPrincipals, JS::DontFireOnNewGlobalHook, options));
     if (!glob) {
-        return NULL;
+        return JS::NullPtr();
     }
     JSAutoCompartment ac(cx, glob);
     bool ok = true;
@@ -1874,7 +1882,7 @@ JSObject* NewGlobalObject(JSContext* cx, bool debug)
     if (ok && debug)
         ok = JS_DefineDebuggerObject(cx, glob);
     if (!ok)
-        return NULL;
+        return JS::NullPtr();
 
     JS_FireOnNewGlobalObject(cx, glob);
     

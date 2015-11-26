@@ -123,14 +123,13 @@ bool jsvals_variadic_to_ccvector( JSContext *cx, /*jsval *vp, int argc,*/const J
     for (int i = 0; i < args.length(); i++)
     {
         js_proxy_t* p;
-        JSObject* obj = JS::RootedValue(cx, args.get(i)).toObjectOrNull();
+        JS::RootedObject obj(cx, args.get(i).toObjectOrNull());
 
         p = jsb_get_js_proxy(obj);
         CCASSERT(p, "Native object not found!");
         if (p) {
             ret->pushBack((T)p->ptr);
         }
-
     }
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");

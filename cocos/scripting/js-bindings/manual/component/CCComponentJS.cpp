@@ -61,10 +61,10 @@ ComponentJS::ComponentJS(const std::string& scriptFileName)
     
     if (_succeedLoadingScript)
     {
-        JSObject* classObj = classValue.toObjectOrNull();
+        JS::RootedObject classObj(cx, classValue.toObjectOrNull());
         const JSClass* theClass = JS_GetClass(classObj);
         JS::RootedValue protoValue(cx);
-        JS_GetProperty(cx, JS::RootedObject(cx, classObj), "prototype", &protoValue);
+        JS_GetProperty(cx, classObj, "prototype", &protoValue);
         
         TypeTest<ComponentJS> t;
         js_type_class_t *typeClass = nullptr;

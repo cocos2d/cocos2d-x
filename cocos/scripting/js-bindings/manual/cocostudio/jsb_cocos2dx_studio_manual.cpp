@@ -217,8 +217,6 @@ static bool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint32
     }
 
     if(argc == 5){
-        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-
         JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
         tmpObj->autorelease();
 
@@ -747,7 +745,8 @@ bool js_set_AnimationData_name(JSContext *cx, JS::HandleObject obj, JS::HandleId
     cocostudio::AnimationData* cobj = (cocostudio::AnimationData*)JS_GetPrivate(obj);
     if (cobj) {
         std::string name;
-        bool ok = jsval_to_std_string(cx, JS::RootedValue(cx, vp.get()), &name);
+        JS::RootedValue jsname(cx, vp.get());
+        bool ok = jsval_to_std_string(cx, jsname, &name);
         JSB_PRECONDITION2(ok, cx, false, "js_set_AnimationData_name : Error processing arguments");
         cobj->name = name;
         return true;
@@ -776,7 +775,8 @@ bool js_set_AnimationData_movementNames(JSContext *cx, JS::HandleObject obj, JS:
     cocostudio::AnimationData* cobj = (cocostudio::AnimationData*)JS_GetPrivate(obj);
     if (cobj) {
         std::vector<std::string> movementNames;
-        bool ok = jsval_to_std_vector_string(cx, JS::RootedValue(cx, vp.get()), &movementNames);
+        JS::RootedValue jsmovementNames(cx, vp.get());
+        bool ok = jsval_to_std_vector_string(cx, jsmovementNames, &movementNames);
         JSB_PRECONDITION2(ok, cx, false, "js_set_AnimationData_movementNames : Error processing arguments.");
         cobj->movementNames.clear();
         cobj->movementNames = movementNames;
@@ -901,7 +901,8 @@ bool js_set_MovementData_name(JSContext *cx, JS::HandleObject obj, JS::HandleId 
     cocostudio::MovementData* cobj = (cocostudio::MovementData*)JS_GetPrivate(obj);
     if (cobj) {
         std::string name;
-        bool ok = jsval_to_std_string(cx, JS::RootedValue(cx, vp.get()), &name);
+        JS::RootedValue jsname(cx, vp.get());
+        bool ok = jsval_to_std_string(cx, jsname, &name);
         JSB_PRECONDITION2(ok, cx, false, "js_set_MovementData_name : Error processing arguments");
         cobj->name = name;
         return true;
@@ -1375,7 +1376,8 @@ bool js_set_TextureData_name(JSContext *cx, JS::HandleObject obj, JS::HandleId i
     cocostudio::TextureData* cobj = (cocostudio::TextureData*)(proxy ? proxy->ptr : NULL);
     if (cobj) {
         std::string name;
-        bool ok = jsval_to_std_string(cx, JS::RootedValue(cx, vp.get()), &name);
+        JS::RootedValue jsname(cx, vp.get());
+        bool ok = jsval_to_std_string(cx, jsname, &name);
         JSB_PRECONDITION2(ok, cx, false, "js_set_TextureData_name : Error processing arguments");
         cobj->name = name;
         return true;
@@ -1398,15 +1400,18 @@ extern JSObject* jsb_cocostudio_timeline_Frame_prototype;
 
 void register_all_cocos2dx_studio_manual(JSContext* cx, JS::HandleObject global)
 {
-    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocostudio_ColliderBody_prototype), "getCalculatedVertexList", js_cocos2dx_studio_ColliderBody_getCalculatedVertexList, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS::RootedObject proto(cx, jsb_cocostudio_ColliderBody_prototype);
+    JS_DefineFunction(cx, proto, "getCalculatedVertexList", js_cocos2dx_studio_ColliderBody_getCalculatedVertexList, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocostudio_ArmatureAnimation_prototype), "setMovementEventCallFunc", js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-
-    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocostudio_ArmatureAnimation_prototype), "setFrameEventCallFunc", js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-
-    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocostudio_ArmatureDataManager_prototype), "addArmatureFileInfoAsync", jsb_Animation_addArmatureFileInfoAsyncCallFunc, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-   
-    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocostudio_ActionManagerEx_prototype), "initWithDictionaryEx", js_cocos2dx_studio_ActionManagerEx_initWithDictionaryEx, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    proto.set(jsb_cocostudio_ArmatureAnimation_prototype);
+    JS_DefineFunction(cx, proto, "setMovementEventCallFunc", js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, proto, "setFrameEventCallFunc", js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    proto.set(jsb_cocostudio_ArmatureDataManager_prototype);
+    JS_DefineFunction(cx, proto, "addArmatureFileInfoAsync", jsb_Animation_addArmatureFileInfoAsyncCallFunc, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    proto.set(jsb_cocostudio_ActionManagerEx_prototype);
+    JS_DefineFunction(cx, proto, "initWithDictionaryEx", js_cocos2dx_studio_ActionManagerEx_initWithDictionaryEx, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE);
 
     JS::RootedObject frame(cx, jsb_cocostudio_timeline_Frame_prototype);
     JS_DefineFunction(cx, frame, "setEasingParams", js_cocos2dx_studio_Frame_setEasingParams, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
@@ -1442,7 +1447,8 @@ void register_all_cocos2dx_studio_manual(JSContext* cx, JS::HandleObject global)
     JS_DefineProperty(cx, movementData, "loop", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_MovementData_loop, js_set_MovementData_loop);
     JS_DefineProperty(cx, movementData, "tweenEasing", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_MovementData_tweenEasing, js_set_MovementData_tweenEasing);
 
-    JS_DefineProperty(cx, JS::RootedObject(cx, jsb_cocostudio_ContourData_prototype), "vertextList", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_ContourData_vertexList, js_set_ContourData_vertexList);
+    proto.set(jsb_cocostudio_ContourData_prototype);
+    JS_DefineProperty(cx, proto, "vertextList", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_ContourData_vertexList, js_set_ContourData_vertexList);
     
     JS::RootedObject textureData(cx, jsb_cocostudio_TextureData_prototype);
     JS_DefineProperty(cx, textureData, "contourDataList", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_TextureData_contourDataList, js_set_TextureData_contourDataList);

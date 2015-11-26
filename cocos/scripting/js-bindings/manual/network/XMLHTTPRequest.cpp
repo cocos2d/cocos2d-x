@@ -341,7 +341,9 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
     js_proxy_t *p;
     jsval out;
     
-    JSObject *obj = JS_NewObject(cx, &MinXmlHttpRequest::js_class, JS::RootedObject(cx, MinXmlHttpRequest::js_proto), JS::RootedObject(cx, MinXmlHttpRequest::js_parent));
+    JS::RootedObject proto(cx, MinXmlHttpRequest::js_proto);
+    JS::RootedObject parentProto(cx, MinXmlHttpRequest::js_parent);
+    JSObject *obj = JS_NewObject(cx, &MinXmlHttpRequest::js_class, proto, parentProto);
     
     if (obj) {
         JS_SetPrivate(obj, req);
@@ -519,7 +521,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, readyState)
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, status)
 {
-    args.rval().set(INT_TO_JSVAL(_status));
+    args.rval().set(INT_TO_JSVAL((int)_status));
     return true;
 }
 
@@ -621,7 +623,8 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
             //size_t utf16Count = 0;
             //const jschar* utf16Buf = JS_GetStringCharsZAndLength(cx, JSVAL_TO_STRING(strVal), &utf16Count);
             //bool ok = JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
-            bool ok = JS_ParseJSON(cx, JS::RootedString(cx, strVal.toString()), &outVal);
+            JS::RootedString jsstr(cx, strVal.toString());
+            bool ok = JS_ParseJSON(cx, jsstr, &outVal);
             
             if (ok)
             {

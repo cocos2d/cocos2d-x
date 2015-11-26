@@ -248,7 +248,7 @@ public:
      * @param global    @~english The js global object
      * @param cx        @~english The js context
      */
-    void compileScript(const char *path, JSObject* global = NULL, JSContext* cx = NULL);
+    void compileScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
     
     /**@~english
      * Run the specified js file
@@ -502,10 +502,35 @@ public:
     void restartVM();
 };
 
-JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
+JS::HandleObject NewGlobalObject(JSContext* cx, bool debug = false);
 
 bool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
 bool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);
+
+template <class T>
+js_type_class_t *jsb_register_class(JSContext *cx, JSClass *jsClass, JS::HandleObject proto, JS::HandleObject parentProto)
+{
+    TypeTest<T> t;
+    js_type_class_t *p = nullptr;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsClass;
+        if (p->proto.empty())
+        {
+            p->proto.construct(cx);
+        }
+        p->proto.ref() = proto;
+        if (p->parentProto.empty())
+        {
+            p->parentProto.construct(cx);
+        }
+        p->parentProto.ref() = parentProto ;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    return p;
+}
 
 js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj);
 js_proxy_t* jsb_get_native_proxy(void* nativeObj);

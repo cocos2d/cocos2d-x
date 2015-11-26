@@ -83,6 +83,7 @@ extern JSObject *jsb_cocos2d_NavMeshAgent_prototype;
 
 void register_all_cocos2dx_navmesh_manual(JSContext *cx, JS::HandleObject global)
 {
-	JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_NavMeshAgent_prototype), "move", jsb_cocos2dx_navmesh_NavMeshAgent_move, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS::RootedObject proto(cx, jsb_cocos2d_NavMeshAgent_prototype);
+	JS_DefineFunction(cx, proto, "move", jsb_cocos2dx_navmesh_NavMeshAgent_move, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 }
 #endif //#if CC_USE_NAVMESH

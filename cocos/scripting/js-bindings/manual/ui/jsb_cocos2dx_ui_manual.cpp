@@ -61,10 +61,14 @@ static bool js_cocos2dx_LayoutParameter_setMargin(JSContext *cx, uint32_t argc, 
     else if (argc == 4) {
         bool ok = true;
         double left, top,right,bottom;
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, args[0]), &left);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, args[1]), &top);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, args[2]), &right);
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, args[3]), &bottom);
+        JS::RootedValue jsv(cx, args[0]);
+        ok &= JS::ToNumber( cx, jsv, &left);
+        jsv.set(args[1]);
+        ok &= JS::ToNumber( cx, jsv, &top);
+        jsv.set(args[2]);
+        ok &= JS::ToNumber( cx, jsv, &right);
+        jsv.set(args[3]);
+        ok &= JS::ToNumber( cx, jsv, &bottom);
 
         JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
@@ -200,7 +204,10 @@ extern JSObject* jsb_cocos2d_ui_EditBox_prototype;
 
 void register_all_cocos2dx_ui_manual(JSContext* cx, JS::HandleObject global)
 {
-    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_ui_LayoutParameter_prototype), "setMargin", js_cocos2dx_LayoutParameter_setMargin, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_ui_LayoutParameter_prototype), "getMargin", js_cocos2dx_LayoutParameter_getMargin, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_ui_EditBox_prototype), "setDelegate", js_cocos2dx_CCEditBox_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS::RootedObject proto(cx, jsb_cocos2d_ui_LayoutParameter_prototype);
+    JS_DefineFunction(cx, proto, "setMargin", js_cocos2dx_LayoutParameter_setMargin, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, proto, "getMargin", js_cocos2dx_LayoutParameter_getMargin, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    proto.set(jsb_cocos2d_ui_EditBox_prototype);
+    JS_DefineFunction(cx, proto, "setDelegate", js_cocos2dx_CCEditBox_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 }

@@ -86,7 +86,8 @@ bool JSB_cpConstraint_getA(JSContext *cx, uint32_t argc, jsval *vp) {
 
     ret_val = cpConstraintGetA((cpConstraint*)arg0  );
 
-    jsval ret_jsval = c_class_to_jsval( cx, ret_val, JS::RootedObject(cx, JSB_cpBody_object), JSB_cpBody_class, "cpBody" );
+    JS::RootedObject bodyProto(cx, JSB_cpBody_object);
+    jsval ret_jsval = c_class_to_jsval( cx, ret_val, bodyProto, JSB_cpBody_class, "cpBody" );
     args.rval().set(ret_jsval);
     
     return true;
@@ -103,8 +104,9 @@ bool JSB_cpConstraint_getB(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* ret_val = nullptr;
 
     ret_val = cpConstraintGetB((cpConstraint*)arg0  );
-
-    jsval ret_jsval = c_class_to_jsval( cx, ret_val, JS::RootedObject(cx, JSB_cpBody_object), JSB_cpBody_class, "cpBody" );
+    
+    JS::RootedObject bodyProto(cx, JSB_cpBody_object);
+    jsval ret_jsval = c_class_to_jsval( cx, ret_val, bodyProto, JSB_cpBody_class, "cpBody" );
     args.rval().set(ret_jsval);
     
     return true;
@@ -182,7 +184,8 @@ bool JSB_cpConstraint_getSpace(JSContext *cx, uint32_t argc, jsval *vp) {
 
     ret_val = cpConstraintGetSpace((cpConstraint*)arg0  );
 
-    jsval ret_jsval = c_class_to_jsval( cx, ret_val, JS::RootedObject(cx, JSB_cpSpace_object), JSB_cpSpace_class, "cpSpace" );
+    JS::RootedObject spaceProto(cx, JSB_cpSpace_object);
+    jsval ret_jsval = c_class_to_jsval( cx, ret_val, spaceProto, JSB_cpSpace_class, "cpSpace" );
     args.rval().set(ret_jsval);
     
     return true;
@@ -281,9 +284,8 @@ void JSB_cpConstraint_createClass(JSContext *cx, JS::HandleObject globalObj, con
         JS_FS_END
     };
 
-    JSB_cpConstraint_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpBase_object), JSB_cpConstraint_class, JSB_cpConstraint_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    JS::RootedObject baseProto(cx, JSB_cpBase_object);
+    JSB_cpConstraint_object = JS_InitClass(cx, globalObj, baseProto, JSB_cpConstraint_class, JSB_cpConstraint_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -298,7 +300,8 @@ JSObject* JSB_cpGrooveJoint_object = NULL;
 bool JSB_cpGrooveJoint_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==5, cx, false, "Invalid number of arguments");
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpGrooveJoint_class, JS::RootedObject(cx, JSB_cpGrooveJoint_object), JS::NullPtr());
+    JS::RootedObject grooveJointProto(cx, JSB_cpGrooveJoint_object);
+    JS::RootedObject jsobj(cx, JS_NewObject(cx, JSB_cpGrooveJoint_class, grooveJointProto, JS::NullPtr()));
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; cpVect arg2; cpVect arg3; cpVect arg4; 
@@ -475,9 +478,8 @@ void JSB_cpGrooveJoint_createClass(JSContext *cx, JS::HandleObject globalObj, co
         JS_FS_END
     };
 
-    JSB_cpGrooveJoint_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpConstraint_object), JSB_cpGrooveJoint_class, JSB_cpGrooveJoint_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    JS::RootedObject constraintProto(cx, JSB_cpConstraint_object);
+    JSB_cpGrooveJoint_object = JS_InitClass(cx, globalObj, constraintProto, JSB_cpGrooveJoint_class, JSB_cpGrooveJoint_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -492,7 +494,8 @@ JSObject* JSB_cpSimpleMotor_object = NULL;
 bool JSB_cpSimpleMotor_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==3, cx, false, "Invalid number of arguments");
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpSimpleMotor_class, JS::RootedObject(cx, JSB_cpSimpleMotor_object), JS::NullPtr());
+    JS::RootedObject simpleMotorProto(cx, JSB_cpSimpleMotor_object);
+    JS::RootedObject jsobj(cx, JS_NewObject(cx, JSB_cpSimpleMotor_class, simpleMotorProto, JS::NullPtr()));
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; double arg2 = 0; 
@@ -586,9 +589,8 @@ void JSB_cpSimpleMotor_createClass(JSContext *cx, JS::HandleObject globalObj, co
         JS_FS_END
     };
 
-    JSB_cpSimpleMotor_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpConstraint_object), JSB_cpSimpleMotor_class, JSB_cpSimpleMotor_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    JS::RootedObject constraintProto(cx, JSB_cpConstraint_object);
+    JSB_cpSimpleMotor_object = JS_InitClass(cx, globalObj, constraintProto, JSB_cpSimpleMotor_class, JSB_cpSimpleMotor_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -603,7 +605,8 @@ JSObject* JSB_cpPivotJoint_object = NULL;
 bool JSB_cpPivotJoint_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==4 || argc==3, cx, false, "Invalid number of arguments");
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpPivotJoint_class, JS::RootedObject(cx, JSB_cpPivotJoint_object), JS::NullPtr());
+    JS::RootedObject pivotJointProto(cx, JSB_cpPivotJoint_object);
+    JS::RootedObject jsobj(cx, JS_NewObject(cx, JSB_cpPivotJoint_class, pivotJointProto, JS::NullPtr()));
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; cpVect arg2; cpVect arg3; void *ret_val = nullptr;
@@ -743,10 +746,9 @@ void JSB_cpPivotJoint_createClass(JSContext *cx, JS::HandleObject globalObj, con
     static JSFunctionSpec st_funcs[] = {
         JS_FS_END
     };
-
-    JSB_cpPivotJoint_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpConstraint_object), JSB_cpPivotJoint_class, JSB_cpPivotJoint_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    
+    JS::RootedObject constraintProto(cx, JSB_cpConstraint_object);
+    JSB_cpPivotJoint_object = JS_InitClass(cx, globalObj, constraintProto, JSB_cpPivotJoint_class, JSB_cpPivotJoint_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -761,7 +763,8 @@ JSObject* JSB_cpPinJoint_object = NULL;
 bool JSB_cpPinJoint_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==4, cx, false, "Invalid number of arguments");
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpPinJoint_class, JS::RootedObject(cx, JSB_cpPinJoint_object), JS::NullPtr());
+    JS::RootedObject pinJointProto(cx, JSB_cpPinJoint_object);
+    JS::RootedObject jsobj(cx, JS_NewObject(cx, JSB_cpPinJoint_class, pinJointProto, JS::NullPtr()));
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; cpVect arg2; cpVect arg3; 
@@ -933,10 +936,9 @@ void JSB_cpPinJoint_createClass(JSContext *cx, JS::HandleObject globalObj, const
     static JSFunctionSpec st_funcs[] = {
         JS_FS_END
     };
-
-    JSB_cpPinJoint_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpConstraint_object), JSB_cpPinJoint_class, JSB_cpPinJoint_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    
+    JS::RootedObject constraintProto(cx, JSB_cpConstraint_object);
+    JSB_cpPinJoint_object = JS_InitClass(cx, globalObj, constraintProto, JSB_cpPinJoint_class, JSB_cpPinJoint_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -951,7 +953,8 @@ JSObject* JSB_cpSlideJoint_object = NULL;
 bool JSB_cpSlideJoint_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==6, cx, false, "Invalid number of arguments");
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpSlideJoint_class, JS::RootedObject(cx, JSB_cpSlideJoint_object), JS::NullPtr());
+    JS::RootedObject slideJointProto(cx, JSB_cpSlideJoint_object);
+    JS::RootedObject jsobj(cx, JS_NewObject(cx, JSB_cpSlideJoint_class, slideJointProto, JS::NullPtr()));
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; cpVect arg2; cpVect arg3; double arg4 = 0; double arg5 = 0; 
@@ -1161,10 +1164,9 @@ void JSB_cpSlideJoint_createClass(JSContext *cx, JS::HandleObject globalObj, con
     static JSFunctionSpec st_funcs[] = {
         JS_FS_END
     };
-
-    JSB_cpSlideJoint_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpConstraint_object), JSB_cpSlideJoint_class, JSB_cpSlideJoint_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    
+    JS::RootedObject constraintProto(cx, JSB_cpConstraint_object);
+    JSB_cpSlideJoint_object = JS_InitClass(cx, globalObj, constraintProto, JSB_cpSlideJoint_class, JSB_cpSlideJoint_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -1179,7 +1181,8 @@ JSObject* JSB_cpGearJoint_object = NULL;
 bool JSB_cpGearJoint_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==4, cx, false, "Invalid number of arguments");
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpGearJoint_class, JS::RootedObject(cx, JSB_cpGearJoint_object), JS::NullPtr());
+    JS::RootedObject gearJointProto(cx, JSB_cpGearJoint_object);
+    JS::RootedObject jsobj(cx, JS_NewObject(cx, JSB_cpGearJoint_class, gearJointProto, JS::NullPtr()));
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; double arg2 = 0; double arg3 = 0; 
@@ -1309,10 +1312,9 @@ void JSB_cpGearJoint_createClass(JSContext *cx, JS::HandleObject globalObj, cons
     static JSFunctionSpec st_funcs[] = {
         JS_FS_END
     };
-
-    JSB_cpGearJoint_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpConstraint_object), JSB_cpGearJoint_class, JSB_cpGearJoint_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    
+    JS::RootedObject constraintProto(cx, JSB_cpConstraint_object);
+    JSB_cpGearJoint_object = JS_InitClass(cx, globalObj, constraintProto, JSB_cpGearJoint_class, JSB_cpGearJoint_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -1327,7 +1329,8 @@ JSObject* JSB_cpDampedRotarySpring_object = NULL;
 bool JSB_cpDampedRotarySpring_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==5, cx, false, "Invalid number of arguments");
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpDampedRotarySpring_class, JS::RootedObject(cx, JSB_cpDampedRotarySpring_object), JS::NullPtr());
+    JS::RootedObject dampedRotarySringProto(cx, JSB_cpDampedRotarySpring_object);
+    JS::RootedObject jsobj(cx, JS_NewObject(cx, JSB_cpDampedRotarySpring_class, dampedRotarySringProto, JS::NullPtr()));
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; double arg2 = 0; double arg3 = 0; double arg4 = 0; 
@@ -1494,10 +1497,9 @@ void JSB_cpDampedRotarySpring_createClass(JSContext *cx, JS::HandleObject global
     static JSFunctionSpec st_funcs[] = {
         JS_FS_END
     };
-
-    JSB_cpDampedRotarySpring_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpConstraint_object), JSB_cpDampedRotarySpring_class, JSB_cpDampedRotarySpring_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    
+    JS::RootedObject constraintProto(cx, JSB_cpConstraint_object);
+    JSB_cpDampedRotarySpring_object = JS_InitClass(cx, globalObj, constraintProto, JSB_cpDampedRotarySpring_class, JSB_cpDampedRotarySpring_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -1512,7 +1514,8 @@ JSObject* JSB_cpDampedSpring_object = NULL;
 bool JSB_cpDampedSpring_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==7, cx, false, "Invalid number of arguments");
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpDampedSpring_class, JS::RootedObject(cx, JSB_cpDampedSpring_object), JS::NullPtr());
+    JS::RootedObject dampedSpringProto(cx, JSB_cpDampedSpring_object);
+    JS::RootedObject jsobj(cx, JS_NewObject(cx, JSB_cpDampedSpring_class, dampedSpringProto, JS::NullPtr()));
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; cpVect arg2; cpVect arg3; double arg4 = 0; double arg5 = 0; double arg6 = 0; 
@@ -1759,10 +1762,9 @@ void JSB_cpDampedSpring_createClass(JSContext *cx, JS::HandleObject globalObj, c
     static JSFunctionSpec st_funcs[] = {
         JS_FS_END
     };
-
-    JSB_cpDampedSpring_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpConstraint_object), JSB_cpDampedSpring_class, JSB_cpDampedSpring_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    
+    JS::RootedObject constraintProto(cx, JSB_cpConstraint_object);
+    JSB_cpDampedSpring_object = JS_InitClass(cx, globalObj, constraintProto, JSB_cpDampedSpring_class, JSB_cpDampedSpring_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -1777,7 +1779,8 @@ JSObject* JSB_cpRatchetJoint_object = NULL;
 bool JSB_cpRatchetJoint_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==4, cx, false, "Invalid number of arguments");
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpRatchetJoint_class, JS::RootedObject(cx, JSB_cpRatchetJoint_object), JS::NullPtr());
+    JS::RootedObject ratchetJointProto(cx, JSB_cpRatchetJoint_object);
+    JS::RootedObject jsobj(cx, JS_NewObject(cx, JSB_cpRatchetJoint_class, ratchetJointProto, JS::NullPtr()));
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; double arg2 = 0; double arg3 = 0; 
@@ -1943,10 +1946,9 @@ void JSB_cpRatchetJoint_createClass(JSContext *cx, JS::HandleObject globalObj, c
     static JSFunctionSpec st_funcs[] = {
         JS_FS_END
     };
-
-    JSB_cpRatchetJoint_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpConstraint_object), JSB_cpRatchetJoint_class, JSB_cpRatchetJoint_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    
+    JS::RootedObject constraintProto(cx, JSB_cpConstraint_object);
+    JSB_cpRatchetJoint_object = JS_InitClass(cx, globalObj, constraintProto, JSB_cpRatchetJoint_class, JSB_cpRatchetJoint_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -1961,7 +1963,8 @@ JSObject* JSB_cpRotaryLimitJoint_object = NULL;
 bool JSB_cpRotaryLimitJoint_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==4, cx, false, "Invalid number of arguments");
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpRotaryLimitJoint_class, JS::RootedObject(cx, JSB_cpRotaryLimitJoint_object), JS::NullPtr());
+    JS::RootedObject rotaryLimitJointProto(cx, JSB_cpRotaryLimitJoint_object);
+    JS::RootedObject jsobj(cx, JS_NewObject(cx, JSB_cpRotaryLimitJoint_class, rotaryLimitJointProto, JS::NullPtr()));
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; double arg2 = 0; double arg3 = 0; 
@@ -2091,10 +2094,9 @@ void JSB_cpRotaryLimitJoint_createClass(JSContext *cx, JS::HandleObject globalOb
     static JSFunctionSpec st_funcs[] = {
         JS_FS_END
     };
-
-    JSB_cpRotaryLimitJoint_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpConstraint_object), JSB_cpRotaryLimitJoint_class, JSB_cpRotaryLimitJoint_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    
+    JS::RootedObject constraintProto(cx, JSB_cpConstraint_object);
+    JSB_cpRotaryLimitJoint_object = JS_InitClass(cx, globalObj, constraintProto, JSB_cpRotaryLimitJoint_class, JSB_cpRotaryLimitJoint_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -2501,9 +2503,8 @@ void JSB_cpArbiter_createClass(JSContext *cx, JS::HandleObject globalObj, const 
         JS_FS_END
     };
 
-    JSB_cpArbiter_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpBase_object), JSB_cpArbiter_class, JSB_cpArbiter_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    JS::RootedObject baseProto(cx, JSB_cpBase_object);
+    JSB_cpArbiter_object = JS_InitClass(cx, globalObj, baseProto, JSB_cpArbiter_class, JSB_cpArbiter_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -2519,7 +2520,8 @@ bool JSB_cpSpace_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==0, cx, false, "Invalid number of arguments");
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpSpace_class, JS::RootedObject(cx, JSB_cpSpace_object), JS::NullPtr());
+    JS::RootedObject spaceProto(cx, JSB_cpSpace_object);
+    JS::RootedObject jsobj(cx, JS_NewObject(cx, JSB_cpSpace_class, spaceProto, JS::NullPtr()));
     void*   ret_val = cpSpaceNew( );
 
     jsb_set_jsobject_for_proxy(jsobj, ret_val);
@@ -2786,8 +2788,9 @@ bool JSB_cpSpace_getStaticBody(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* ret_val = nullptr;
 
     ret_val = cpSpaceGetStaticBody((cpSpace*)arg0  );
-
-    jsval ret_jsval = c_class_to_jsval( cx, ret_val, JS::RootedObject(cx, JSB_cpBody_object), JSB_cpBody_class, "cpBody" );
+    
+    JS::RootedObject bodyProto(cx, JSB_cpBody_object);
+    jsval ret_jsval = c_class_to_jsval( cx, ret_val, bodyProto, JSB_cpBody_class, "cpBody" );
     args.rval().set(ret_jsval);
     
     return true;
@@ -2804,8 +2807,9 @@ bool JSB_cpSpace_init(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSpace* ret_val = nullptr;
 
     ret_val = cpSpaceInit((cpSpace*)arg0  );
-
-    jsval ret_jsval = c_class_to_jsval( cx, ret_val, JS::RootedObject(cx, JSB_cpSpace_object), JSB_cpSpace_class, "cpSpace" );
+    
+    JS::RootedObject spaceProto(cx, JSB_cpSpace_object);
+    jsval ret_jsval = c_class_to_jsval( cx, ret_val, spaceProto, JSB_cpSpace_class, "cpSpace" );
     args.rval().set(ret_jsval);
     
     return true;
@@ -2846,7 +2850,8 @@ bool JSB_cpSpace_pointQueryFirst(JSContext *cx, uint32_t argc, jsval *vp) {
     ret_val = cpSpacePointQueryFirst((cpSpace*)arg0 , (cpVect)arg1 , (cpLayers)arg2 , (cpGroup)arg3  );
 
     if(ret_val) {
-        jsval ret_jsval = c_class_to_jsval( cx, ret_val, JS::RootedObject(cx, JSB_cpShape_object), JSB_cpShape_class, "cpShape" );
+        JS::RootedObject shapeProto(cx, JSB_cpShape_object);
+        jsval ret_jsval = c_class_to_jsval( cx, ret_val, shapeProto, JSB_cpShape_class, "cpShape" );
         args.rval().set(ret_jsval);
     } else {
         args.rval().set(JSVAL_NULL);
@@ -3188,10 +3193,9 @@ void JSB_cpSpace_createClass(JSContext *cx, JS::HandleObject globalObj, const ch
     static JSFunctionSpec st_funcs[] = {
         JS_FS_END
     };
-
-    JSB_cpSpace_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpBase_object), JSB_cpSpace_class, JSB_cpSpace_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    
+    JS::RootedObject baseProto(cx, JSB_cpBase_object);
+    JSB_cpSpace_object = JS_InitClass(cx, globalObj, baseProto, JSB_cpSpace_class, JSB_cpSpace_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -3445,8 +3449,9 @@ bool JSB_cpBody_getSpace(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSpace* ret_val = nullptr;
 
     ret_val = cpBodyGetSpace((cpBody*)arg0  );
-
-    jsval ret_jsval = c_class_to_jsval( cx, ret_val, JS::RootedObject(cx, JSB_cpSpace_object), JSB_cpSpace_class, "cpSpace" );
+    
+    JS::RootedObject spaceProto(cx, JSB_cpSpace_object);
+    jsval ret_jsval = c_class_to_jsval( cx, ret_val, spaceProto, JSB_cpSpace_class, "cpSpace" );
     args.rval().set(ret_jsval);
     
     return true;
@@ -3563,8 +3568,9 @@ bool JSB_cpBody_init(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* ret_val = nullptr;
 
     ret_val = cpBodyInit((cpBody*)arg0 , (cpFloat)arg1 , (cpFloat)arg2  );
-
-    jsval ret_jsval = c_class_to_jsval( cx, ret_val, JS::RootedObject(cx, JSB_cpBody_object), JSB_cpBody_class, "cpBody" );
+    
+    JS::RootedObject bodyProto(cx, JSB_cpBody_object);
+    jsval ret_jsval = c_class_to_jsval( cx, ret_val, bodyProto, JSB_cpBody_class, "cpBody" );
     args.rval().set(ret_jsval);
     
     return true;
@@ -3581,8 +3587,9 @@ bool JSB_cpBody_initStatic(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* ret_val = nullptr;
 
     ret_val = cpBodyInitStatic((cpBody*)arg0  );
-
-    jsval ret_jsval = c_class_to_jsval( cx, ret_val, JS::RootedObject(cx, JSB_cpBody_object), JSB_cpBody_class, "cpBody" );
+    
+    JS::RootedObject bodyProto(cx, JSB_cpBody_object);
+    jsval ret_jsval = c_class_to_jsval( cx, ret_val, bodyProto, JSB_cpBody_class, "cpBody" );
     args.rval().set(ret_jsval);
     
     return true;
@@ -4081,10 +4088,9 @@ void JSB_cpBody_createClass(JSContext *cx, JS::HandleObject globalObj, const cha
     static JSFunctionSpec st_funcs[] = {
         JS_FS_END
     };
-
-    JSB_cpBody_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpBase_object), JSB_cpBody_class, JSB_cpBody_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    
+    JS::RootedObject baseProto(cx, JSB_cpBase_object);
+    JSB_cpBody_object = JS_InitClass(cx, globalObj, baseProto, JSB_cpBody_class, JSB_cpBody_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -4181,8 +4187,9 @@ bool JSB_cpShape_getBody(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* ret_val = nullptr;
 
     ret_val = cpShapeGetBody((cpShape*)arg0  );
-
-    jsval ret_jsval = c_class_to_jsval( cx, ret_val, JS::RootedObject(cx, JSB_cpBody_object), JSB_cpBody_class, "cpBody" );
+    
+    JS::RootedObject bodyProto(cx, JSB_cpBody_object);
+    jsval ret_jsval = c_class_to_jsval( cx, ret_val, bodyProto, JSB_cpBody_class, "cpBody" );
     args.rval().set(ret_jsval);
     
     return true;
@@ -4295,8 +4302,9 @@ bool JSB_cpShape_getSpace(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSpace* ret_val = nullptr;
 
     ret_val = cpShapeGetSpace((cpShape*)arg0  );
-
-    jsval ret_jsval = c_class_to_jsval( cx, ret_val, JS::RootedObject(cx, JSB_cpSpace_object), JSB_cpSpace_class, "cpSpace" );
+    
+    JS::RootedObject spaceProto(cx, JSB_cpSpace_object);
+    jsval ret_jsval = c_class_to_jsval( cx, ret_val, spaceProto, JSB_cpSpace_class, "cpSpace" );
     args.rval().set(ret_jsval);
     
     return true;
@@ -4545,7 +4553,8 @@ bool JSB_cpShape_nearestPointQuery(JSContext *cx, uint32_t argc, jsval *vp)
 
     cpNearestPointQueryInfo* info = new cpNearestPointQueryInfo();
     cpShapeNearestPointQuery(shape, p, info);
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpNearestPointQueryInfo_class, JS::RootedObject(cx, JSB_cpNearestPointQueryInfo_object), JS::NullPtr());
+    JS::RootedObject nearestPointQueryInfoProto(cx, JSB_cpNearestPointQueryInfo_object);
+    JS::RootedObject jsobj(cx, JS_NewObject(cx, JSB_cpNearestPointQueryInfo_class, nearestPointQueryInfoProto, JS::NullPtr()));
     jsb_set_jsobject_for_proxy(jsobj, info);
     jsb_set_c_proxy_for_jsobject(jsobj, info, JSB_C_FLAG_CALL_FREE);
     args.rval().set(OBJECT_TO_JSVAL(jsobj));
@@ -4570,7 +4579,8 @@ bool JSB_cpShape_segmentQuery(JSContext *cx, uint32_t argc, jsval *vp)
     cpSegmentQueryInfo* info = new cpSegmentQueryInfo();
     if(cpShapeSegmentQuery(shape, a, b, info))
     {
-        JSObject* jsobj = JS_NewObject(cx, JSB_cpSegmentQueryInfo_class, JS::RootedObject(cx, JSB_cpSegmentQueryInfo_object), JS::NullPtr());
+        JS::RootedObject segmentQueryInfoProto(cx, JSB_cpSegmentQueryInfo_object);
+        JSObject* jsobj = JS_NewObject(cx, JSB_cpSegmentQueryInfo_class, segmentQueryInfoProto, JS::NullPtr());
         jsb_set_jsobject_for_proxy(jsobj, info);
         jsb_set_c_proxy_for_jsobject(jsobj, info, JSB_C_FLAG_CALL_FREE);
         args.rval().set(OBJECT_TO_JSVAL(jsobj));
@@ -4698,10 +4708,9 @@ void JSB_cpShape_createClass(JSContext *cx, JS::HandleObject globalObj, const ch
     static JSFunctionSpec st_funcs[] = {
         JS_FS_END
     };
-
-    JSB_cpShape_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpBase_object), JSB_cpShape_class, JSB_cpShape_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    
+    JS::RootedObject baseProto(cx, JSB_cpBase_object);
+    JSB_cpShape_object = JS_InitClass(cx, globalObj, baseProto, JSB_cpShape_class, JSB_cpShape_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -4716,7 +4725,8 @@ JSObject* JSB_cpCircleShape_object = NULL;
 bool JSB_cpCircleShape_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==3, cx, false, "Invalid number of arguments");
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpCircleShape_class, JS::RootedObject(cx, JSB_cpCircleShape_object), JS::NullPtr());
+    JS::RootedObject circleShapeProto(cx, JSB_cpCircleShape_object);
+    JS::RootedObject jsobj(cx, JS_NewObject(cx, JSB_cpCircleShape_class, circleShapeProto, JS::NullPtr()));
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg0 = nullptr; double arg1 = 0; cpVect arg2; 
@@ -4808,10 +4818,9 @@ void JSB_cpCircleShape_createClass(JSContext *cx, JS::HandleObject globalObj, co
     static JSFunctionSpec st_funcs[] = {
         JS_FS_END
     };
-
-    JSB_cpCircleShape_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpShape_object), JSB_cpCircleShape_class, JSB_cpCircleShape_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    
+    JS::RootedObject shapeProto(cx, JSB_cpShape_object);
+    JSB_cpCircleShape_object = JS_InitClass(cx, globalObj, shapeProto, JSB_cpCircleShape_class, JSB_cpCircleShape_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -4826,7 +4835,8 @@ JSObject* JSB_cpSegmentShape_object = NULL;
 bool JSB_cpSegmentShape_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSB_PRECONDITION2(argc==4, cx, false, "Invalid number of arguments");
-    JSObject *jsobj = JS_NewObject(cx, JSB_cpSegmentShape_class, JS::RootedObject(cx, JSB_cpSegmentShape_object), JS::NullPtr());
+    JS::RootedObject segmentShapeProto(cx, JSB_cpSegmentShape_object);
+    JS::RootedObject jsobj(cx, JS_NewObject(cx, JSB_cpSegmentShape_class, segmentShapeProto, JS::NullPtr()));
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cpBody* arg0 = nullptr; cpVect arg1; cpVect arg2; double arg3 = 0; 
@@ -5002,10 +5012,9 @@ void JSB_cpSegmentShape_createClass(JSContext *cx, JS::HandleObject globalObj, c
     static JSFunctionSpec st_funcs[] = {
         JS_FS_END
     };
-
-    JSB_cpSegmentShape_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpShape_object), JSB_cpSegmentShape_class, JSB_cpSegmentShape_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    
+    JS::RootedObject shapeProto(cx, JSB_cpShape_object);
+    JSB_cpSegmentShape_object = JS_InitClass(cx, globalObj, shapeProto, JSB_cpSegmentShape_class, JSB_cpSegmentShape_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 /*
@@ -5109,10 +5118,11 @@ static bool js_get_cpPolyShape_planes(JSContext *cx, uint32_t argc, jsval *vp)
         cpSplittingPlane *plane = planes + i;
         JS::RootedValue elem(cx);
 
-        JSObject *jsobj = jsb_get_jsobject_for_proxy(plane);
+        JS::RootedObject jsobj(cx, jsb_get_jsobject_for_proxy(plane));
         if(!jsobj)
         {
-            jsobj = JS_NewObject(cx, JSB_cpSplittingPlane_class, JS::RootedObject(cx, JSB_cpSplittingPlane_object), JS::NullPtr());
+            JS::RootedObject splittingPlaneProto(cx, JSB_cpSplittingPlane_object);
+            jsobj = JS_NewObject(cx, JSB_cpSplittingPlane_class, splittingPlaneProto, JS::NullPtr());
             jsb_set_jsobject_for_proxy(jsobj, plane);
             jsb_set_c_proxy_for_jsobject(jsobj, plane, JSB_C_FLAG_DO_NOT_CALL_FREE);
         }
@@ -5152,10 +5162,9 @@ void JSB_cpPolyShape_createClass(JSContext *cx, JS::HandleObject globalObj, cons
     static JSFunctionSpec st_funcs[] = {
         JS_FS_END
     };
-
-    JSB_cpPolyShape_object = JS_InitClass(cx, globalObj, JS::RootedObject(cx, JSB_cpShape_object), JSB_cpPolyShape_class, JSB_cpPolyShape_constructor,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+    
+    JS::RootedObject shapeProto(cx, JSB_cpShape_object);
+    JSB_cpPolyShape_object = JS_InitClass(cx, globalObj, shapeProto, JSB_cpPolyShape_class, JSB_cpPolyShape_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 // SplittingPlane
@@ -5293,7 +5302,8 @@ bool js_get_cpSegmentQueryInfo_shape(JSContext *cx, uint32_t argc, jsval *vp)
     cpShape* shape = info->shape;
     
     if(shape){
-        JSObject *jsobj = JS_NewObject(cx, JSB_cpShape_class, JS::RootedObject(cx, JSB_cpShape_object), JS::NullPtr());
+        JS::RootedObject shapeProto(cx, JSB_cpShape_object);
+        JS::RootedObject jsobj(cx, JS_NewObject(cx, JSB_cpShape_class, shapeProto, JS::NullPtr()));
         //jsb_set_jsobject_for_proxy(jsobj, shape);
         jsb_set_c_proxy_for_jsobject(jsobj, shape, JSB_C_FLAG_DO_NOT_CALL_FREE);
         args.rval().set(OBJECT_TO_JSVAL(jsobj));
@@ -5387,8 +5397,6 @@ void JSB_cpSegmentQueryInfo_createClass(JSContext *cx, JS::HandleObject globalOb
     };
 
     JSB_cpSegmentQueryInfo_object = JS_InitClass(cx, globalObj, JS::NullPtr(), JSB_cpSegmentQueryInfo_class, NULL,0,properties,funcs,NULL,st_funcs);
-//  bool found;
-//  JS_SetPropertyAttributes(cx, globalObj, name, JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 }
 
 bool js_get_cpNearestPointQueryInfo_shape(JSContext *cx, uint32_t argc, jsval *vp)
@@ -5399,7 +5407,8 @@ bool js_get_cpNearestPointQueryInfo_shape(JSContext *cx, uint32_t argc, jsval *v
     cpShape* shape = info->shape;
     
     if(shape){
-        JSObject *jsobj = JS_NewObject(cx, JSB_cpShape_class, JS::RootedObject(cx, JSB_cpShape_object), JS::NullPtr());
+        JS::RootedObject shapeProto(cx, JSB_cpShape_object);
+        JS::RootedObject jsobj(cx, JS_NewObject(cx, JSB_cpShape_class, shapeProto, JS::NullPtr()));
         //jsb_set_jsobject_for_proxy(jsobj, shape);
         jsb_set_c_proxy_for_jsobject(jsobj, shape, JSB_C_FLAG_DO_NOT_CALL_FREE);
         args.rval().set(OBJECT_TO_JSVAL(jsobj));

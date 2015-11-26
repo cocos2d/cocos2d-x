@@ -263,7 +263,8 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
         } while (0);
         
-        JS::RootedObject obj(cx, JS_NewObject(cx, js_cocos2dx_websocket_class, JS::RootedObject(cx, js_cocos2dx_websocket_prototype), JS::NullPtr()));
+        JS::RootedObject proto(cx, js_cocos2dx_websocket_prototype);
+        JS::RootedObject obj(cx, JS_NewObject(cx, js_cocos2dx_websocket_class, proto, JS::NullPtr()));
         //JS::RootedObject obj(cx, JS_NewObjectForConstructor(cx, js_cocos2dx_websocket_class, args));
         
         WebSocket* cobj = new WebSocket();
@@ -316,7 +317,8 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
         JS_DefineProperty(cx, obj, "URL", args.get(0), JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
         
         //protocol not support yet (always return "")
-        JS_DefineProperty(cx, obj, "protocol", JS::RootedValue(cx, c_string_to_jsval(cx, "")), JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
+        JS::RootedValue jsprotocol(cx, c_string_to_jsval(cx, ""));
+        JS_DefineProperty(cx, obj, "protocol", jsprotocol, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
         
         // link the native object with the javascript object
         js_proxy_t *p = jsb_new_proxy(cobj, obj);
@@ -392,10 +394,6 @@ void register_jsb_websocket(JSContext *cx, JS::HandleObject global) {
     JS_DefineProperty(cx, jsclassObj, "OPEN", (int)WebSocket::State::OPEN, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
     JS_DefineProperty(cx, jsclassObj, "CLOSING", (int)WebSocket::State::CLOSING, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
     JS_DefineProperty(cx, jsclassObj, "CLOSED", (int)WebSocket::State::CLOSED, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
-    
-    // make the class enumerable in the registered namespace
-//FIXME:    bool found;
-//    JS_SetPropertyAttributes(cx, global, "WebSocket", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 }
 
 

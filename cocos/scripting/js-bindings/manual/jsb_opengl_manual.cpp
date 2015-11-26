@@ -273,9 +273,10 @@ bool JSB_glGetActiveAttrib(JSContext *cx, uint32_t argc, jsval *vp)
     JS::RootedObject object(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr() ));
     JSB_PRECONDITION2(ok, cx, false, "Error creating JS Object");
 
+    JS::RootedValue jsname(cx, charptr_to_jsval(cx, buffer));
     if (!JS_DefineProperty(cx, object, "size", (int32_t)size, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
         !JS_DefineProperty(cx, object, "type", (int32_t)type, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
-        !JS_DefineProperty(cx, object, "name", JS::RootedValue(cx, charptr_to_jsval(cx, buffer)), JSPROP_ENUMERATE | JSPROP_PERMANENT) )
+        !JS_DefineProperty(cx, object, "name", jsname, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
         return false;
 
     retval = OBJECT_TO_JSVAL(object);
@@ -317,9 +318,10 @@ bool JSB_glGetActiveUniform(JSContext *cx, uint32_t argc, jsval *vp)
     JS::RootedObject object(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr() ));
     JSB_PRECONDITION2(ok, cx, false, "Error creating JS Object");
 
+    JS::RootedValue jsname(cx, charptr_to_jsval(cx, buffer));
     if (!JS_DefineProperty(cx, object, "size", (int32_t)size, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
         !JS_DefineProperty(cx, object, "type", (int32_t)type, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
-        !JS_DefineProperty(cx, object, "name", JS::RootedValue(cx, charptr_to_jsval(cx, buffer)), JSPROP_ENUMERATE | JSPROP_PERMANENT) )
+        !JS_DefineProperty(cx, object, "name", jsname, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
         return false;
 
     retval = OBJECT_TO_JSVAL(object);
