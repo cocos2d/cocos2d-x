@@ -4,9 +4,8 @@
 //
 //
 
-#ifndef libsimulator_studio_Widget_mac_h
-#define libsimulator_studio_Widget_mac_h
+#pragma once
 
-std::string getCurAppName(void);
+std::string getCurAppName();
 
 #endif
