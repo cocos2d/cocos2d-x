@@ -322,11 +322,11 @@ protected:
     virtual void onSizeChanged() override;
 
     void loadTextureNormal(SpriteFrame* normalSpriteFrame);
-    void setupNormalTexture();
+    void setupNormalTexture(bool textureLoaded);
     void loadTexturePressed(SpriteFrame* pressedSpriteFrame);
-    void setupPressedTexture();
+    void setupPressedTexture(bool textureLoaded);
     void loadTextureDisabled(SpriteFrame* disabledSpriteFrame);
-    void setupDisabledTexture();
+    void setupDisabledTexture(bool textureLoaded);
 
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
