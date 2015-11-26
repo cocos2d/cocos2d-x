@@ -92,20 +92,6 @@ public:
     template<class F>
     inline void enqueue(TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f);
 
-    /**
-    * Adds an object that will be managed later.
-    *
-    * The object will be added in an array specific to a thread id. The AutoreleasePool will call this method instead of managing the
-    * object directly when called from a thread other than the main one.
-    * Once the task is over and its callback called, it will be put in the autorelease pool in the cocos thread and then autoreleased.
-    *
-    * @param object Object pointer to be added in the managed object list.
-    * @param threadId Thread creating the object, when the current task is over in this thread the objects are autoreleased.
-    * @js  NA
-    * @lua NA
-    */
-    inline void addObject(Ref* object, std::thread::id threadId);
-
 CC_CONSTRUCTOR_ACCESS:
     AsyncTaskPool();
     ~AsyncTaskPool();
@@ -170,6 +156,21 @@ protected:
         bool _stop;
     };
     
+    /**
+     * Adds an object that will be managed later, to be called by AutoreleasePool.
+     *
+     * The object will be added in an array specific to a thread id. The AutoreleasePool will call this method instead of managing the
+     * object directly when called from a thread other than the main one.
+     * Once the task is over and its callback called, it will be put in the autorelease pool in the cocos thread and then autoreleased.
+     *
+     * @param object Object pointer to be added in the managed object list.
+     * @param threadId Thread creating the object, when the current task is over in this thread the objects are autoreleased.
+     * @js  NA
+     * @lua NA
+     */
+    inline void addObject(Ref* object, std::thread::id threadId);
+    friend class AutoreleasePool;
+
     //tasks
     ThreadTasks _threadTasks[int(TaskType::TASK_MAX_TYPE)];
     
