@@ -124,7 +124,7 @@ void EditBoxImplCommon::setInactiveText(const char* pText)
     
 void EditBoxImplCommon::setFont(const char* pFontName, int fontSize)
 {
-    this->setNativeFont(pFontName, fontSize);
+    this->setNativeFont(pFontName, fontSize * _label->getNodeToWorldAffineTransform().a);
 
     if(strlen(pFontName) > 0)
     {
@@ -145,7 +145,7 @@ void EditBoxImplCommon::setFontColor(const Color4B& color)
 
 void EditBoxImplCommon::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-    this->setNativePlaceholderFont(pFontName, fontSize);
+    this->setNativePlaceholderFont(pFontName, fontSize * _labelPlaceHolder->getNodeToWorldAffineTransform().a);
     
     if( strlen(pFontName) > 0)
     {
@@ -249,7 +249,7 @@ void EditBoxImplCommon::setContentSize(const Size& size)
     
     auto director = cocos2d::Director::getInstance();
     auto glview = director->getOpenGLView();
-    Size  controlSize = Size(size.width * glview->getScaleX(),size.height * glview->getScaleY());
+    Size  controlSize = Size(size.width * glview->getScaleX() * _label->getNodeToWorldAffineTransform().a,size.height * glview->getScaleY() * _label->getNodeToWorldAffineTransform().a);
        
     this->setNativeContentSize(controlSize);
 
@@ -350,7 +350,7 @@ void EditBoxImplCommon::editBoxEditingDidEnd(const std::string& text)
     
     if (_editBox != nullptr)
     {
-        this->onEndEditing(text);
+        this->onEndEditing(_text);
     }
 }
 

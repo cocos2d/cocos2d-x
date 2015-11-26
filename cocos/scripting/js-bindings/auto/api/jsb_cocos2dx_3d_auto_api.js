@@ -1329,11 +1329,11 @@ jsb.Terrain = {
 
 /**
  * @method initHeightMap
- * @param {char} arg0
+ * @param {String} arg0
  * @return {bool}
  */
 initHeightMap : function (
-char 
+str 
 )
 {
     return false;
@@ -1373,10 +1373,10 @@ map
 
 /**
  * @method resetHeightMap
- * @param {char} arg0
+ * @param {String} arg0
  */
 resetHeightMap : function (
-char 
+str 
 )
 {
 },

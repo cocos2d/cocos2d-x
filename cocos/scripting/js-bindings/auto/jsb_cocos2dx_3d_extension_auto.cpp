@@ -1020,6 +1020,28 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_removeAllListener(JSContext *cx
     JS_ReportError(cx, "js_cocos2dx_3d_extension_PUParticleSystem3D_removeAllListener : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_3d_extension_PUParticleSystem3D_initSystem(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::PUParticleSystem3D* cobj = (cocos2d::PUParticleSystem3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_initSystem : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_initSystem : Error processing arguments");
+        bool ret = cobj->initSystem(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_extension_PUParticleSystem3D_initSystem : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_setDefaultDepth(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -1191,6 +1213,7 @@ void js_register_cocos2dx_3d_extension_PUParticleSystem3D(JSContext *cx, JS::Han
         JS_FN("getDerivedScale", js_cocos2dx_3d_extension_PUParticleSystem3D_getDerivedScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDefaultHeight", js_cocos2dx_3d_extension_PUParticleSystem3D_setDefaultHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeAllListener", js_cocos2dx_3d_extension_PUParticleSystem3D_removeAllListener, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initSystem", js_cocos2dx_3d_extension_PUParticleSystem3D_initSystem, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDefaultDepth", js_cocos2dx_3d_extension_PUParticleSystem3D_setDefaultDepth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };

@@ -693,16 +693,6 @@ isPropagateTouchEvents : function (
 },
 
 /**
- * @method getCurrentFocusedWidget
- * @return {ccui.Widget}
- */
-getCurrentFocusedWidget : function (
-)
-{
-    return ccui.Widget;
-},
-
-/**
  * @method hitTest
  * @param {vec2_object} arg0
  * @param {cc.Camera} arg1
@@ -929,6 +919,16 @@ bool
 },
 
 /**
+ * @method getCurrentFocusedWidget
+ * @return {ccui.Widget}
+ */
+getCurrentFocusedWidget : function (
+)
+{
+    return ccui.Widget;
+},
+
+/**
  * @method create
  * @return {ccui.Widget}
  */
@@ -1022,6 +1022,16 @@ getClippingType : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getRenderFile
+ * @return {cc.ResouceData}
+ */
+getRenderFile : function (
+)
+{
+    return cc.ResouceData;
 },
 
 /**
@@ -1349,11 +1359,27 @@ float
 },
 
 /**
+ * @method resetPressedRender
+ */
+resetPressedRender : function (
+)
+{
+},
+
+/**
  * @method setScale9Enabled
  * @param {bool} arg0
  */
 setScale9Enabled : function (
 bool 
+)
+{
+},
+
+/**
+ * @method resetDisabledRender
+ */
+resetDisabledRender : function (
 )
 {
 },
@@ -1376,6 +1402,16 @@ getRendererClicked : function (
 )
 {
     return ccui.Scale9Sprite;
+},
+
+/**
+ * @method getDisabledFile
+ * @return {cc.ResouceData}
+ */
+getDisabledFile : function (
+)
+{
+    return cc.ResouceData;
 },
 
 /**
@@ -1404,6 +1440,24 @@ getCapInsetsDisabledRenderer : function (
  */
 setTitleColor : function (
 color3b 
+)
+{
+},
+
+/**
+ * @method getNormalFile
+ * @return {cc.ResouceData}
+ */
+getNormalFile : function (
+)
+{
+    return cc.ResouceData;
+},
+
+/**
+ * @method resetNormalRender
+ */
+resetNormalRender : function (
 )
 {
 },
@@ -1591,6 +1645,16 @@ rect
 },
 
 /**
+ * @method getPressedFile
+ * @return {cc.ResouceData}
+ */
+getPressedFile : function (
+)
+{
+    return cc.ResouceData;
+},
+
+/**
  * @method getTitleFontSize
  * @return {float}
  */
@@ -1695,6 +1759,26 @@ Button : function (
 ccui.AbstractCheckButton = {
 
 /**
+ * @method getBackDisabledFile
+ * @return {cc.ResouceData}
+ */
+getBackDisabledFile : function (
+)
+{
+    return cc.ResouceData;
+},
+
+/**
+ * @method getCrossDisabeldFile
+ * @return {cc.ResouceData}
+ */
+getCrossDisabeldFile : function (
+)
+{
+    return cc.ResouceData;
+},
+
+/**
  * @method loadTextureBackGroundSelected
  * @param {String} arg0
  * @param {ccui.Widget::TextureResType} arg1
@@ -1719,6 +1803,16 @@ texturerestype
 },
 
 /**
+ * @method getCrossNormalFile
+ * @return {cc.ResouceData}
+ */
+getCrossNormalFile : function (
+)
+{
+    return cc.ResouceData;
+},
+
+/**
  * @method setSelected
  * @param {bool} arg0
  */
@@ -1726,6 +1820,16 @@ setSelected : function (
 bool 
 )
 {
+},
+
+/**
+ * @method getBackPressedFile
+ * @return {cc.ResouceData}
+ */
+getBackPressedFile : function (
+)
+{
+    return cc.ResouceData;
 },
 
 /**
@@ -1800,6 +1904,16 @@ texturerestype
 )
 {
     return false;
+},
+
+/**
+ * @method getBackNormalFile
+ * @return {cc.ResouceData}
+ */
+getBackNormalFile : function (
+)
+{
+    return cc.ResouceData;
 },
 
 /**
@@ -2169,6 +2283,16 @@ setCapInsets : function (
 rect 
 )
 {
+},
+
+/**
+ * @method getRenderFile
+ * @return {cc.ResouceData}
+ */
+getRenderFile : function (
+)
+{
+    return cc.ResouceData;
 },
 
 /**
@@ -2550,6 +2674,16 @@ str
 },
 
 /**
+ * @method getRenderFile
+ * @return {cc.ResouceData}
+ */
+getRenderFile : function (
+)
+{
+    return cc.ResouceData;
+},
+
+/**
  * @method setProperty
  * @param {String} arg0
  * @param {String} arg1
@@ -2651,6 +2785,16 @@ setDirection : function (
 direction 
 )
 {
+},
+
+/**
+ * @method getRenderFile
+ * @return {cc.ResouceData}
+ */
+getRenderFile : function (
+)
+{
+    return cc.ResouceData;
 },
 
 /**
@@ -3353,12 +3497,12 @@ getItemsMargin : function (
 
 /**
  * @method jumpToItem
- * @param {int} arg0
+ * @param {long} arg0
  * @param {vec2_object} arg1
  * @param {vec2_object} arg2
  */
 jumpToItem : function (
-int, 
+long, 
 vec2, 
 vec2 
 )
@@ -3517,13 +3661,13 @@ long
 
 /**
  * @method scrollToItem
-* @param {int|int} int
+* @param {long|long} long
 * @param {vec2_object|vec2_object} vec2
 * @param {vec2_object|vec2_object} vec2
 * @param {float} float
 */
 scrollToItem : function(
-int,
+long,
 vec2,
 vec2,
 float 
@@ -3646,33 +3790,11 @@ ListView : function (
 ccui.Slider = {
 
 /**
- * @method setMaxPercent
- * @param {int} arg0
- */
-setMaxPercent : function (
-int 
-)
-{
-},
-
-/**
  * @method setPercent
  * @param {int} arg0
  */
 setPercent : function (
 int 
-)
-{
-},
-
-/**
- * @method loadSlidBallTextureDisabled
- * @param {String} arg0
- * @param {ccui.Widget::TextureResType} arg1
- */
-loadSlidBallTextureDisabled : function (
-str, 
-texturerestype 
 )
 {
 },
@@ -3700,18 +3822,6 @@ texturerestype
 },
 
 /**
- * @method loadBarTexture
- * @param {String} arg0
- * @param {ccui.Widget::TextureResType} arg1
- */
-loadBarTexture : function (
-str, 
-texturerestype 
-)
-{
-},
-
-/**
  * @method loadProgressBarTexture
  * @param {String} arg0
  * @param {ccui.Widget::TextureResType} arg1
@@ -3724,39 +3834,13 @@ texturerestype
 },
 
 /**
- * @method loadSlidBallTextures
- * @param {String} arg0
- * @param {String} arg1
- * @param {String} arg2
- * @param {ccui.Widget::TextureResType} arg3
+ * @method getBallNormalFile
+ * @return {cc.ResouceData}
  */
-loadSlidBallTextures : function (
-str, 
-str, 
-str, 
-texturerestype 
+getBallNormalFile : function (
 )
 {
-},
-
-/**
- * @method setCapInsetProgressBarRebderer
- * @param {rect_object} arg0
- */
-setCapInsetProgressBarRebderer : function (
-rect 
-)
-{
-},
-
-/**
- * @method setCapInsetsBarRenderer
- * @param {rect_object} arg0
- */
-setCapInsetsBarRenderer : function (
-rect 
-)
-{
+    return cc.ResouceData;
 },
 
 /**
@@ -3780,23 +3864,13 @@ bool
 },
 
 /**
- * @method setZoomScale
- * @param {float} arg0
+ * @method getBallPressedFile
+ * @return {cc.ResouceData}
  */
-setZoomScale : function (
-float 
+getBallPressedFile : function (
 )
 {
-},
-
-/**
- * @method setCapInsets
- * @param {rect_object} arg0
- */
-setCapInsets : function (
-rect 
-)
-{
+    return cc.ResouceData;
 },
 
 /**
@@ -3807,6 +3881,64 @@ getZoomScale : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method loadSlidBallTextures
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {ccui.Widget::TextureResType} arg3
+ */
+loadSlidBallTextures : function (
+str, 
+str, 
+str, 
+texturerestype 
+)
+{
+},
+
+/**
+ * @method setMaxPercent
+ * @param {int} arg0
+ */
+setMaxPercent : function (
+int 
+)
+{
+},
+
+/**
+ * @method loadBarTexture
+ * @param {String} arg0
+ * @param {ccui.Widget::TextureResType} arg1
+ */
+loadBarTexture : function (
+str, 
+texturerestype 
+)
+{
+},
+
+/**
+ * @method getProgressBarFile
+ * @return {cc.ResouceData}
+ */
+getProgressBarFile : function (
+)
+{
+    return cc.ResouceData;
+},
+
+/**
+ * @method getCapInsetsBarRenderer
+ * @return {rect_object}
+ */
+getCapInsetsBarRenderer : function (
+)
+{
+    return cc.Rect;
 },
 
 /**
@@ -3822,6 +3954,16 @@ texturerestype
 },
 
 /**
+ * @method getBackFile
+ * @return {cc.ResouceData}
+ */
+getBackFile : function (
+)
+{
+    return cc.ResouceData;
+},
+
+/**
  * @method isScale9Enabled
  * @return {bool}
  */
@@ -3832,13 +3974,33 @@ isScale9Enabled : function (
 },
 
 /**
- * @method getCapInsetsBarRenderer
- * @return {rect_object}
+ * @method setCapInsetProgressBarRebderer
+ * @param {rect_object} arg0
  */
-getCapInsetsBarRenderer : function (
+setCapInsetProgressBarRebderer : function (
+rect 
 )
 {
-    return cc.Rect;
+},
+
+/**
+ * @method setCapInsetsBarRenderer
+ * @param {rect_object} arg0
+ */
+setCapInsetsBarRenderer : function (
+rect 
+)
+{
+},
+
+/**
+ * @method getBallDisabeldFile
+ * @return {cc.ResouceData}
+ */
+getBallDisabeldFile : function (
+)
+{
+    return cc.ResouceData;
 },
 
 /**
@@ -3849,6 +4011,38 @@ getPercent : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setCapInsets
+ * @param {rect_object} arg0
+ */
+setCapInsets : function (
+rect 
+)
+{
+},
+
+/**
+ * @method loadSlidBallTextureDisabled
+ * @param {String} arg0
+ * @param {ccui.Widget::TextureResType} arg1
+ */
+loadSlidBallTextureDisabled : function (
+str, 
+texturerestype 
+)
+{
+},
+
+/**
+ * @method setZoomScale
+ * @param {float} arg0
+ */
+setZoomScale : function (
+float 
+)
+{
 },
 
 /**
@@ -4626,16 +4820,6 @@ TextField : function (
 ccui.TextBMFont = {
 
 /**
- * @method setFntFile
- * @param {String} arg0
- */
-setFntFile : function (
-str 
-)
-{
-},
-
-/**
  * @method getStringLength
  * @return {long}
  */
@@ -4643,6 +4827,16 @@ getStringLength : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getString
+ * @return {String}
+ */
+getString : function (
+)
+{
+    return ;
 },
 
 /**
@@ -4656,13 +4850,23 @@ str
 },
 
 /**
- * @method getString
- * @return {String}
+ * @method getRenderFile
+ * @return {cc.ResouceData}
  */
-getString : function (
+getRenderFile : function (
 )
 {
-    return ;
+    return cc.ResouceData;
+},
+
+/**
+ * @method setFntFile
+ * @param {String} arg0
+ */
+setFntFile : function (
+str 
+)
+{
 },
 
 /**
@@ -4706,119 +4910,115 @@ TextBMFont : function (
 ccui.PageView = {
 
 /**
- * @method getCustomScrollThreshold
- * @return {float}
- */
-getCustomScrollThreshold : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getCurPageIndex
- * @return {long}
- */
-getCurPageIndex : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setDirection
- * @param {ccui.PageView::Direction} arg0
- */
-setDirection : function (
-direction 
-)
-{
-},
-
-/**
- * @method addWidgetToPage
- * @param {ccui.Widget} arg0
- * @param {long} arg1
- * @param {bool} arg2
- */
-addWidgetToPage : function (
-widget, 
-long, 
-bool 
-)
-{
-},
-
-/**
- * @method isUsingCustomScrollThreshold
- * @return {bool}
- */
-isUsingCustomScrollThreshold : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setCurPageIndex
- * @param {long} arg0
- */
-setCurPageIndex : function (
-long 
-)
-{
-},
-
-/**
- * @method removePage
- * @param {ccui.Layout} arg0
- */
-removePage : function (
-layout 
-)
-{
-},
-
-/**
- * @method setUsingCustomScrollThreshold
- * @param {bool} arg0
- */
-setUsingCustomScrollThreshold : function (
-bool 
-)
-{
-},
-
-/**
- * @method setCustomScrollThreshold
+ * @method setIndicatorSpaceBetweenIndexNodes
  * @param {float} arg0
  */
-setCustomScrollThreshold : function (
+setIndicatorSpaceBetweenIndexNodes : function (
 float 
 )
 {
 },
 
 /**
+ * @method setIndicatorSelectedIndexColor
+ * @param {color3b_object} arg0
+ */
+setIndicatorSelectedIndexColor : function (
+color3b 
+)
+{
+},
+
+/**
+ * @method getIndicatorSelectedIndexColor
+ * @return {color3b_object}
+ */
+getIndicatorSelectedIndexColor : function (
+)
+{
+    return cc.Color3B;
+},
+
+/**
+ * @method getIndicatorPositionAsAnchorPoint
+ * @return {vec2_object}
+ */
+getIndicatorPositionAsAnchorPoint : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method setIndicatorPosition
+ * @param {vec2_object} arg0
+ */
+setIndicatorPosition : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method getIndicatorPosition
+ * @return {vec2_object}
+ */
+getIndicatorPosition : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
  * @method insertPage
- * @param {ccui.Layout} arg0
+ * @param {ccui.Widget} arg0
  * @param {int} arg1
  */
 insertPage : function (
-layout, 
+widget, 
 int 
 )
 {
 },
 
 /**
- * @method getDirection
- * @return {ccui.PageView::Direction}
+ * @method getCurrentPageIndex
+ * @return {long}
  */
-getDirection : function (
+getCurrentPageIndex : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method removePage
+ * @param {ccui.Widget} arg0
+ */
+removePage : function (
+widget 
+)
+{
+},
+
+/**
+ * @method setCurrentPageIndex
+ * @param {long} arg0
+ */
+setCurrentPageIndex : function (
+long 
+)
+{
+},
+
+/**
+ * @method getIndicatorEnabled
+ * @return {bool}
+ */
+getIndicatorEnabled : function (
+)
+{
+    return false;
 },
 
 /**
@@ -4832,35 +5032,53 @@ long
 },
 
 /**
- * @method getPage
- * @param {long} arg0
- * @return {ccui.Layout}
+ * @method setIndicatorPositionAsAnchorPoint
+ * @param {vec2_object} arg0
  */
-getPage : function (
-long 
-)
-{
-    return ccui.Layout;
-},
-
-/**
- * @method removePageAtIndex
- * @param {long} arg0
- */
-removePageAtIndex : function (
-long 
+setIndicatorPositionAsAnchorPoint : function (
+vec2 
 )
 {
 },
 
 /**
- * @method getPages
- * @return {Array}
+ * @method scrollToItem
+ * @param {long} arg0
  */
-getPages : function (
+scrollToItem : function (
+long 
 )
 {
-    return new Array();
+},
+
+/**
+ * @method setIndicatorEnabled
+ * @param {bool} arg0
+ */
+setIndicatorEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method addPage
+ * @param {ccui.Widget} arg0
+ */
+addPage : function (
+widget 
+)
+{
+},
+
+/**
+ * @method getIndicatorSpaceBetweenIndexNodes
+ * @return {float}
+ */
+getIndicatorSpaceBetweenIndexNodes : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -4872,11 +5090,11 @@ removeAllPages : function (
 },
 
 /**
- * @method addPage
- * @param {ccui.Layout} arg0
+ * @method removePageAtIndex
+ * @param {long} arg0
  */
-addPage : function (
-layout 
+removePageAtIndex : function (
+long 
 )
 {
 },
@@ -5575,6 +5793,16 @@ float
 },
 
 /**
+ * @method setRenderingType
+ * @param {ccui.Scale9Sprite::RenderingType} arg0
+ */
+setRenderingType : function (
+renderingtype 
+)
+{
+},
+
+/**
  * @method init
 * @param {cc.Sprite|cc.Sprite|cc.Sprite} sprite
 * @param {rect_object|rect_object|rect_object} rect
@@ -5656,6 +5884,24 @@ isScale9Enabled : function (
 )
 {
     return false;
+},
+
+/**
+ * @method resetRender
+ */
+resetRender : function (
+)
+{
+},
+
+/**
+ * @method getRenderingType
+ * @return {ccui.Scale9Sprite::RenderingType}
+ */
+getRenderingType : function (
+)
+{
+    return 0;
 },
 
 /**
