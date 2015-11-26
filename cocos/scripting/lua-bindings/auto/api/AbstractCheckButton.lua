@@ -5,6 +5,18 @@
 -- @parent_module ccui
 
 --------------------------------
+-- 
+-- @function [parent=#AbstractCheckButton] getBackDisabledFile 
+-- @param self
+-- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+        
+--------------------------------
+-- 
+-- @function [parent=#AbstractCheckButton] getCrossDisabeldFile 
+-- @param self
+-- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+        
+--------------------------------
 -- Load background selected state texture for check button.<br>
 -- param backGroundSelected    The background selected state image name.<br>
 -- param texType    @see `Widget::TextureResType`
@@ -25,6 +37,12 @@
 -- @return AbstractCheckButton#AbstractCheckButton self (return value: ccui.AbstractCheckButton)
         
 --------------------------------
+-- 
+-- @function [parent=#AbstractCheckButton] getCrossNormalFile 
+-- @param self
+-- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+        
+--------------------------------
 -- Change CheckBox state.<br>
 -- Set to true will cause the CheckBox's state to "selected", false otherwise.<br>
 -- param selected Set to true will change CheckBox to selected state, false otherwise.
@@ -32,6 +50,12 @@
 -- @param self
 -- @param #bool selected
 -- @return AbstractCheckButton#AbstractCheckButton self (return value: ccui.AbstractCheckButton)
+        
+--------------------------------
+-- 
+-- @function [parent=#AbstractCheckButton] getBackPressedFile 
+-- @param self
+-- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
         
 --------------------------------
 -- brief Return the sprite instance of front cross when disabled<br>
@@ -82,6 +106,12 @@
 -- @param #string frontCrossDisabled
 -- @param #int texType
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#AbstractCheckButton] getBackNormalFile 
+-- @param self
+-- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
         
 --------------------------------
 -- Load all textures for initializing a check button.<br>

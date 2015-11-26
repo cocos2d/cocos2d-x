@@ -32,6 +32,12 @@
 -- @return LoadingBar#LoadingBar self (return value: ccui.LoadingBar)
         
 --------------------------------
+-- 
+-- @function [parent=#LoadingBar] getRenderFile 
+-- @param self
+-- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+        
+--------------------------------
 -- Enable scale9 renderer.<br>
 -- param enabled Set to true will use scale9 renderer, false otherwise.
 -- @function [parent=#LoadingBar] setScale9Enabled 

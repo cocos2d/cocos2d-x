@@ -322,6 +322,7 @@ bool AudioEngineImpl::stop(int audioID)
     _alSourceUsed[player._alSource] = false;
     if (player._streamingSource)
     {
+        player._ready = false;
         player.notifyExitThread();
     } 
     else
@@ -346,6 +347,7 @@ void AudioEngineImpl::stopAll()
         auto& player = it->second;
         if (player._streamingSource)
         {
+            player._ready = false;
             player.notifyExitThread();
             ++it;
         }
@@ -457,7 +459,7 @@ void AudioEngineImpl::update(float dt)
         auto& player = it->second;
         alGetSourcei(player._alSource, AL_SOURCE_STATE, &sourceState);
         
-        if (player._readForRemove)
+        if (player._readForRemove && !player._ready)
         {
             it = _audioPlayers.erase(it);
         }
@@ -472,6 +474,7 @@ void AudioEngineImpl::update(float dt)
             
             if (player._streamingSource)
             {
+                player._ready = false;
                 player.notifyExitThread();
                 ++it;
             } 

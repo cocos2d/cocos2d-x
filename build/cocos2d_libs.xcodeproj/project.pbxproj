@@ -2072,6 +2072,10 @@
 		B5668D7E1B3838E4003CBD5E /* UIScrollViewBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5668D7B1B3838E4003CBD5E /* UIScrollViewBar.cpp */; };
 		B5668D7F1B3838E4003CBD5E /* UIScrollViewBar.h in Headers */ = {isa = PBXBuildFile; fileRef = B5668D7C1B3838E4003CBD5E /* UIScrollViewBar.h */; };
 		B5668D801B3838E4003CBD5E /* UIScrollViewBar.h in Headers */ = {isa = PBXBuildFile; fileRef = B5668D7C1B3838E4003CBD5E /* UIScrollViewBar.h */; };
+		B5A738961BB0051F00BAAEF8 /* UIPageViewIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5A738941BB0051F00BAAEF8 /* UIPageViewIndicator.cpp */; settings = {ASSET_TAGS = (); }; };
+		B5A738971BB0051F00BAAEF8 /* UIPageViewIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5A738941BB0051F00BAAEF8 /* UIPageViewIndicator.cpp */; settings = {ASSET_TAGS = (); }; };
+		B5A738981BB0051F00BAAEF8 /* UIPageViewIndicator.h in Headers */ = {isa = PBXBuildFile; fileRef = B5A738951BB0051F00BAAEF8 /* UIPageViewIndicator.h */; settings = {ASSET_TAGS = (); }; };
+		B5A738991BB0051F00BAAEF8 /* UIPageViewIndicator.h in Headers */ = {isa = PBXBuildFile; fileRef = B5A738951BB0051F00BAAEF8 /* UIPageViewIndicator.h */; settings = {ASSET_TAGS = (); }; };
 		B5CE6DBE1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5CE6DBC1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp */; };
 		B5CE6DBF1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5CE6DBC1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp */; };
 		B5CE6DC01B3BF2B1002B0419 /* UIAbstractCheckButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B5CE6DBD1B3BF2B1002B0419 /* UIAbstractCheckButton.h */; };
@@ -4805,6 +4809,8 @@
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
 		B5668D7B1B3838E4003CBD5E /* UIScrollViewBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScrollViewBar.cpp; sourceTree = "<group>"; };
 		B5668D7C1B3838E4003CBD5E /* UIScrollViewBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollViewBar.h; sourceTree = "<group>"; };
+		B5A738941BB0051F00BAAEF8 /* UIPageViewIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIPageViewIndicator.cpp; sourceTree = "<group>"; };
+		B5A738951BB0051F00BAAEF8 /* UIPageViewIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPageViewIndicator.h; sourceTree = "<group>"; };
 		B5CE6DBC1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIAbstractCheckButton.cpp; sourceTree = "<group>"; };
 		B5CE6DBD1B3BF2B1002B0419 /* UIAbstractCheckButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAbstractCheckButton.h; sourceTree = "<group>"; };
 		B5CE6DC61B3C05BA002B0419 /* UIRadioButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRadioButton.cpp; sourceTree = "<group>"; };
@@ -6971,6 +6977,8 @@
 				2905FA0118CF08D000240AA3 /* UILoadingBar.h */,
 				2905FA0218CF08D000240AA3 /* UIPageView.cpp */,
 				2905FA0318CF08D000240AA3 /* UIPageView.h */,
+				B5A738941BB0051F00BAAEF8 /* UIPageViewIndicator.cpp */,
+				B5A738951BB0051F00BAAEF8 /* UIPageViewIndicator.h */,
 				2905FA0418CF08D000240AA3 /* UIRichText.cpp */,
 				2905FA0518CF08D000240AA3 /* UIRichText.h */,
 				2905FA0718CF08D000240AA3 /* UIScrollView.cpp */,
@@ -9481,6 +9489,7 @@
 				B665E3F41AA80A6600DDB1C5 /* CCPUSlaveEmitter.h in Headers */,
 				15AE1B6919AADA9900C27E9E /* UIDeprecated.h in Headers */,
 				1A570223180BCC1A0088DEC7 /* CCParticleBatchNode.h in Headers */,
+				B5A738981BB0051F00BAAEF8 /* UIPageViewIndicator.h in Headers */,
 				B6CAB53F1AF9AA1A00B9B856 /* cl_platform.h in Headers */,
 				15AE1A8319AAD40300C27E9E /* b2GearJoint.h in Headers */,
 				15AE1BD519AAE01E00C27E9E /* CCControlSaturationBrightnessPicker.h in Headers */,
@@ -10984,6 +10993,7 @@
 				B665E2951AA80A6500DDB1C5 /* CCPUEmitter.h in Headers */,
 				B6CAB3BE1AF9AA1A00B9B856 /* btGeneric6DofSpringConstraint.h in Headers */,
 				B6CAB3521AF9AA1A00B9B856 /* gim_geometry.h in Headers */,
+				B5A738991BB0051F00BAAEF8 /* UIPageViewIndicator.h in Headers */,
 				15AE1BED19AAE01E00C27E9E /* CCControlColourPicker.h in Headers */,
 				15AE195019AAD35100C27E9E /* CCDatas.h in Headers */,
 				15AE18B319AAD33D00C27E9E /* CCBReader.h in Headers */,
@@ -11169,6 +11179,7 @@
 				ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */,
 				15AE1A2C19AAD3D500C27E9E /* b2DynamicTree.cpp in Sources */,
 				B665E36A1AA80A6500DDB1C5 /* CCPUOnVelocityObserver.cpp in Sources */,
+				B5A738961BB0051F00BAAEF8 /* UIPageViewIndicator.cpp in Sources */,
 				B665E3961AA80A6500DDB1C5 /* CCPUPointEmitter.cpp in Sources */,
 				15AE184019AAD2F700C27E9E /* CCSprite3D.cpp in Sources */,
 				B6CAB2E51AF9AA1A00B9B856 /* btSphereShape.cpp in Sources */,
@@ -12644,6 +12655,7 @@
 				B665E1FB1AA80A6500DDB1C5 /* CCPUAffectorTranslator.cpp in Sources */,
 				B665E3931AA80A6500DDB1C5 /* CCPUPlaneColliderTranslator.cpp in Sources */,
 				382383F71A258FA7002C4610 /* idl_gen_fbs.cpp in Sources */,
+				B5A738971BB0051F00BAAEF8 /* UIPageViewIndicator.cpp in Sources */,
 				B665E24B1AA80A6500DDB1C5 /* CCPUColorAffector.cpp in Sources */,
 				B665E20F1AA80A6500DDB1C5 /* CCPUBaseForceAffector.cpp in Sources */,
 				15AE1B7419AADA9A00C27E9E /* UILoadingBar.cpp in Sources */,

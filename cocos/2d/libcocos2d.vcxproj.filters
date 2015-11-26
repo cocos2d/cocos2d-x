@@ -934,6 +934,9 @@
     <ClCompile Include="..\ui\UIPageView.cpp">
       <Filter>ui\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
+    <ClCompile Include="..\ui\UIPageViewIndicator.cpp">
+      <Filter>ui\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
     <ClCompile Include="..\ui\UIScrollView.cpp">
       <Filter>ui\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
@@ -3776,6 +3779,9 @@
       <Filter>network\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h" />
+    <ClInclude Include="..\ui\UIAbstractCheckButton.h">
+      <Filter>ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">

@@ -4969,9 +4969,9 @@ int lua_cocos2dx_3d_Terrain_initHeightMap(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        const char* arg0;
+        std::string arg0;
 
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.Terrain:initHeightMap"); arg0 = arg0_tmp.c_str();
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Terrain:initHeightMap");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Terrain_initHeightMap'", nullptr);
@@ -5220,9 +5220,9 @@ int lua_cocos2dx_3d_Terrain_resetHeightMap(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        const char* arg0;
+        std::string arg0;
 
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.Terrain:resetHeightMap"); arg0 = arg0_tmp.c_str();
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Terrain:resetHeightMap");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Terrain_resetHeightMap'", nullptr);

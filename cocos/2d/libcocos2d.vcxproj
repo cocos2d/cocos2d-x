@@ -652,6 +652,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\ui\UIListView.cpp" />
     <ClCompile Include="..\ui\UILoadingBar.cpp" />
     <ClCompile Include="..\ui\UIPageView.cpp" />
+    <ClCompile Include="..\ui\UIPageViewIndicator.cpp" />
     <ClCompile Include="..\ui\UIRelativeBox.cpp" />
     <ClCompile Include="..\ui\UIRichText.cpp" />
     <ClCompile Include="..\ui\UIScale9Sprite.cpp" />
@@ -1254,6 +1255,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\storage\local-storage\LocalStorage.h" />
     <ClInclude Include="..\ui\CocosGUI.h" />
     <ClInclude Include="..\ui\GUIExport.h" />
+    <ClInclude Include="..\ui\UIAbstractCheckButton.h" />
     <ClInclude Include="..\ui\UIButton.h" />
     <ClInclude Include="..\ui\UICheckBox.h" />
     <ClInclude Include="..\ui\UIDeprecated.h" />
