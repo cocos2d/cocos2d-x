@@ -245,7 +245,7 @@ extern bool luaval_to_rect(lua_State* L,int lo,Rect* outValue, const char* funcN
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
  */
-extern bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue, const char* funcName = "");
+extern CC_LUA_DLL luaval_to_color3b(lua_State* L,int lo,Color3B* outValue, const char* funcName = "");
 
 /**
  * Get a Color4B object value from the given accpetable index of stack.
@@ -906,7 +906,7 @@ extern void rect_to_luaval(lua_State* L,const Rect& rt);
  * @param L the current lua_State.
  * @param cc  a cocos2d::Color3B object.
  */
-extern void color3b_to_luaval(lua_State* L,const Color3B& cc);
+extern CC_LUA_DLL void color3b_to_luaval(lua_State* L,const Color3B& cc);
 
 /**
  * Push a table converted from a cocos2d::Color4B object into the Lua stack.
