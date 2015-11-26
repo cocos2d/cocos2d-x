@@ -165,7 +165,6 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect)
 
 bool Sprite::initWithFile(const std::string& filename)
 {
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     if (filename.empty())
     {
         CCLOG("Call Sprite::initWithFile with blank resource filename.");
@@ -174,9 +173,6 @@ bool Sprite::initWithFile(const std::string& filename)
 
     _fileName = filename;
     _fileType = 0;
-#else
-    CCASSERT(filename.size()>0, "Invalid filename for sprite");
-#endif
 
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (texture)
@@ -196,10 +192,8 @@ bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
 {
     CCASSERT(filename.size()>0, "Invalid filename");
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     _fileName = filename;
     _fileType = 0;
-#endif
 
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (texture)
@@ -217,10 +211,8 @@ bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
 {
     CCASSERT(spriteFrameName.size() > 0, "Invalid spriteFrameName");
 
-#ifdef CC_STUDIO_ENABLED_VIEW   // for cocostudio only
     _fileName = spriteFrameName;
     _fileType = 1;
-#endif
 
     SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
     return initWithSpriteFrame(frame);
