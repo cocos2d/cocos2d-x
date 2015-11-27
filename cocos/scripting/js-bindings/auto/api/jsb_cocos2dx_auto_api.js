@@ -11964,6 +11964,16 @@ getBlendFunc : function (
 },
 
 /**
+ * @method enableWrap
+ * @param {bool} arg0
+ */
+enableWrap : function (
+bool 
+)
+{
+},
+
+/**
  * @method setWidth
  * @param {float} arg0
  */
@@ -11971,6 +11981,16 @@ setWidth : function (
 float 
 )
 {
+},
+
+/**
+ * @method getBMFontSize
+ * @return {float}
+ */
+getBMFontSize : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -12027,11 +12047,13 @@ str
  * @method setBMFontFilePath
  * @param {String} arg0
  * @param {vec2_object} arg1
+ * @param {float} arg2
  * @return {bool}
  */
 setBMFontFilePath : function (
 str, 
-vec2 
+vec2, 
+float 
 )
 {
     return false;
@@ -12053,6 +12075,16 @@ float
  */
 setSystemFontSize : function (
 float 
+)
+{
+},
+
+/**
+ * @method setOverflow
+ * @param {cc.Label::Overflow} arg0
+ */
+setOverflow : function (
+overflow 
 )
 {
 },
@@ -12246,6 +12278,18 @@ color4b
 },
 
 /**
+ * @method getLetter
+ * @param {int} arg0
+ * @return {cc.Sprite}
+ */
+getLetter : function (
+int 
+)
+{
+    return cc.Sprite;
+},
+
+/**
  * @method setHeight
  * @param {float} arg0
  */
@@ -12276,15 +12320,13 @@ color4b
 },
 
 /**
- * @method getLetter
- * @param {int} arg0
- * @return {cc.Sprite}
+ * @method getOverflow
+ * @return {cc.Label::Overflow}
  */
-getLetter : function (
-int 
+getOverflow : function (
 )
 {
-    return cc.Sprite;
+    return 0;
 },
 
 /**
@@ -12348,6 +12390,16 @@ texthalignment
 },
 
 /**
+ * @method isWrapEnabled
+ * @return {bool}
+ */
+isWrapEnabled : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setAlignment
 * @param {cc.TextHAlignment|cc.TextHAlignment} texthalignment
 * @param {cc.TextVAlignment} textvalignment
@@ -12363,6 +12415,16 @@ textvalignment
  * @method requestSystemFontRefresh
  */
 requestSystemFontRefresh : function (
+)
+{
+},
+
+/**
+ * @method setBMFontSize
+ * @param {float} arg0
+ */
+setBMFontSize : function (
+float 
 )
 {
 },
