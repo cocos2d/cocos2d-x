@@ -1234,6 +1234,11 @@
 		2980F02B1BA9A5550059E678 /* UITextView+CCUITextInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F0201BA9A5550059E678 /* UITextView+CCUITextInput.h */; };
 		2980F02C1BA9A5550059E678 /* UITextView+CCUITextInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F0211BA9A5550059E678 /* UITextView+CCUITextInput.mm */; };
 		2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
+		298C75D51C0465D0006BAE63 /* CCStencilStateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 298C75D31C0465D0006BAE63 /* CCStencilStateManager.cpp */; };
+		298C75D61C0465D1006BAE63 /* CCStencilStateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 298C75D31C0465D0006BAE63 /* CCStencilStateManager.cpp */; };
+		298C75D71C0465D1006BAE63 /* CCStencilStateManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 298C75D41C0465D0006BAE63 /* CCStencilStateManager.hpp */; };
+		298C75D81C0465D1006BAE63 /* CCStencilStateManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 298C75D41C0465D0006BAE63 /* CCStencilStateManager.hpp */; };
+		298C75D91C04681F006BAE63 /* CCStencilStateManager.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 298C75D41C0465D0006BAE63 /* CCStencilStateManager.hpp */; };
 		299754F4193EC95400A54AC3 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299754F2193EC95400A54AC3 /* ObjectFactory.cpp */; };
 		299754F5193EC95400A54AC3 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299754F2193EC95400A54AC3 /* ObjectFactory.cpp */; };
 		299754F6193EC95400A54AC3 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 299754F3193EC95400A54AC3 /* ObjectFactory.h */; };
@@ -2072,6 +2077,10 @@
 		B5668D7E1B3838E4003CBD5E /* UIScrollViewBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5668D7B1B3838E4003CBD5E /* UIScrollViewBar.cpp */; };
 		B5668D7F1B3838E4003CBD5E /* UIScrollViewBar.h in Headers */ = {isa = PBXBuildFile; fileRef = B5668D7C1B3838E4003CBD5E /* UIScrollViewBar.h */; };
 		B5668D801B3838E4003CBD5E /* UIScrollViewBar.h in Headers */ = {isa = PBXBuildFile; fileRef = B5668D7C1B3838E4003CBD5E /* UIScrollViewBar.h */; };
+		B5A738961BB0051F00BAAEF8 /* UIPageViewIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5A738941BB0051F00BAAEF8 /* UIPageViewIndicator.cpp */; };
+		B5A738971BB0051F00BAAEF8 /* UIPageViewIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5A738941BB0051F00BAAEF8 /* UIPageViewIndicator.cpp */; };
+		B5A738981BB0051F00BAAEF8 /* UIPageViewIndicator.h in Headers */ = {isa = PBXBuildFile; fileRef = B5A738951BB0051F00BAAEF8 /* UIPageViewIndicator.h */; };
+		B5A738991BB0051F00BAAEF8 /* UIPageViewIndicator.h in Headers */ = {isa = PBXBuildFile; fileRef = B5A738951BB0051F00BAAEF8 /* UIPageViewIndicator.h */; };
 		B5CE6DBE1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5CE6DBC1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp */; };
 		B5CE6DBF1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5CE6DBC1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp */; };
 		B5CE6DC01B3BF2B1002B0419 /* UIAbstractCheckButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B5CE6DBD1B3BF2B1002B0419 /* UIAbstractCheckButton.h */; };
@@ -4140,6 +4149,8 @@
 		2980F0211BA9A5550059E678 /* UITextView+CCUITextInput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UITextView+CCUITextInput.mm"; sourceTree = "<group>"; };
 		2986667818B1B079000E39CA /* CCTweenFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTweenFunction.cpp; sourceTree = "<group>"; };
 		2986667918B1B079000E39CA /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
+		298C75D31C0465D0006BAE63 /* CCStencilStateManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCStencilStateManager.cpp; path = ../base/CCStencilStateManager.cpp; sourceTree = "<group>"; };
+		298C75D41C0465D0006BAE63 /* CCStencilStateManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CCStencilStateManager.hpp; path = ../base/CCStencilStateManager.hpp; sourceTree = "<group>"; };
 		299754F2193EC95400A54AC3 /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObjectFactory.cpp; path = ../base/ObjectFactory.cpp; sourceTree = "<group>"; };
 		299754F3193EC95400A54AC3 /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectFactory.h; path = ../base/ObjectFactory.h; sourceTree = "<group>"; };
 		299CF1F919A434BC00C378C1 /* ccRandom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ccRandom.cpp; path = ../base/ccRandom.cpp; sourceTree = "<group>"; };
@@ -4805,6 +4816,8 @@
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
 		B5668D7B1B3838E4003CBD5E /* UIScrollViewBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScrollViewBar.cpp; sourceTree = "<group>"; };
 		B5668D7C1B3838E4003CBD5E /* UIScrollViewBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollViewBar.h; sourceTree = "<group>"; };
+		B5A738941BB0051F00BAAEF8 /* UIPageViewIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIPageViewIndicator.cpp; sourceTree = "<group>"; };
+		B5A738951BB0051F00BAAEF8 /* UIPageViewIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPageViewIndicator.h; sourceTree = "<group>"; };
 		B5CE6DBC1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIAbstractCheckButton.cpp; sourceTree = "<group>"; };
 		B5CE6DBD1B3BF2B1002B0419 /* UIAbstractCheckButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAbstractCheckButton.h; sourceTree = "<group>"; };
 		B5CE6DC61B3C05BA002B0419 /* UIRadioButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRadioButton.cpp; sourceTree = "<group>"; };
@@ -6031,6 +6044,8 @@
 				50ABBE1C1925AB6F00A911A9 /* utlist.h */,
 				50ABBE1D1925AB6F00A911A9 /* ZipUtils.cpp */,
 				50ABBE1E1925AB6F00A911A9 /* ZipUtils.h */,
+				298C75D31C0465D0006BAE63 /* CCStencilStateManager.cpp */,
+				298C75D41C0465D0006BAE63 /* CCStencilStateManager.hpp */,
 			);
 			name = base;
 			path = ../cocos/2d;
@@ -6971,6 +6986,8 @@
 				2905FA0118CF08D000240AA3 /* UILoadingBar.h */,
 				2905FA0218CF08D000240AA3 /* UIPageView.cpp */,
 				2905FA0318CF08D000240AA3 /* UIPageView.h */,
+				B5A738941BB0051F00BAAEF8 /* UIPageViewIndicator.cpp */,
+				B5A738951BB0051F00BAAEF8 /* UIPageViewIndicator.h */,
 				2905FA0418CF08D000240AA3 /* UIRichText.cpp */,
 				2905FA0518CF08D000240AA3 /* UIRichText.h */,
 				2905FA0718CF08D000240AA3 /* UIScrollView.cpp */,
@@ -9221,6 +9238,7 @@
 				15AE182A19AAD2F700C27E9E /* CCMeshSkin.h in Headers */,
 				B276EF5F1988D1D500CD400F /* CCVertexIndexData.h in Headers */,
 				1A57007F180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
+				298C75D71C0465D1006BAE63 /* CCStencilStateManager.hpp in Headers */,
 				B6DD2FDB1B04825B00E47F5F /* DetourLocalBoundary.h in Headers */,
 				B6CAB3491AF9AA1A00B9B856 /* gim_clip_polygon.h in Headers */,
 				B677B0DB1B18492D006762CB /* CCNavMeshUtils.h in Headers */,
@@ -9481,6 +9499,7 @@
 				B665E3F41AA80A6600DDB1C5 /* CCPUSlaveEmitter.h in Headers */,
 				15AE1B6919AADA9900C27E9E /* UIDeprecated.h in Headers */,
 				1A570223180BCC1A0088DEC7 /* CCParticleBatchNode.h in Headers */,
+				B5A738981BB0051F00BAAEF8 /* UIPageViewIndicator.h in Headers */,
 				B6CAB53F1AF9AA1A00B9B856 /* cl_platform.h in Headers */,
 				15AE1A8319AAD40300C27E9E /* b2GearJoint.h in Headers */,
 				15AE1BD519AAE01E00C27E9E /* CCControlSaturationBrightnessPicker.h in Headers */,
@@ -10660,6 +10679,7 @@
 				85505F051B60E3B2003F2CD4 /* CCBoneNode.h in Headers */,
 				B665E2491AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffectorTranslator.h in Headers */,
 				B6CAB4461AF9AA1A00B9B856 /* btParallelConstraintSolver.h in Headers */,
+				298C75D81C0465D1006BAE63 /* CCStencilStateManager.hpp in Headers */,
 				15AE18D119AAD33D00C27E9E /* CCNodeLoaderLibrary.h in Headers */,
 				15AE1AC319AAD40300C27E9E /* b2DistanceJoint.h in Headers */,
 				B6CAB5261AF9AA1A00B9B856 /* btQuickprof.h in Headers */,
@@ -10984,6 +11004,7 @@
 				B665E2951AA80A6500DDB1C5 /* CCPUEmitter.h in Headers */,
 				B6CAB3BE1AF9AA1A00B9B856 /* btGeneric6DofSpringConstraint.h in Headers */,
 				B6CAB3521AF9AA1A00B9B856 /* gim_geometry.h in Headers */,
+				B5A738991BB0051F00BAAEF8 /* UIPageViewIndicator.h in Headers */,
 				15AE1BED19AAE01E00C27E9E /* CCControlColourPicker.h in Headers */,
 				15AE195019AAD35100C27E9E /* CCDatas.h in Headers */,
 				15AE18B319AAD33D00C27E9E /* CCBReader.h in Headers */,
@@ -11169,6 +11190,7 @@
 				ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */,
 				15AE1A2C19AAD3D500C27E9E /* b2DynamicTree.cpp in Sources */,
 				B665E36A1AA80A6500DDB1C5 /* CCPUOnVelocityObserver.cpp in Sources */,
+				B5A738961BB0051F00BAAEF8 /* UIPageViewIndicator.cpp in Sources */,
 				B665E3961AA80A6500DDB1C5 /* CCPUPointEmitter.cpp in Sources */,
 				15AE184019AAD2F700C27E9E /* CCSprite3D.cpp in Sources */,
 				B6CAB2E51AF9AA1A00B9B856 /* btSphereShape.cpp in Sources */,
@@ -11819,6 +11841,7 @@
 				B665E2EE1AA80A6500DDB1C5 /* CCPULineEmitter.cpp in Sources */,
 				B6CAB2DD1AF9AA1A00B9B856 /* btScaledBvhTriangleMeshShape.cpp in Sources */,
 				B665E4121AA80A6600DDB1C5 /* CCPUTextureAnimator.cpp in Sources */,
+				298C75D51C0465D0006BAE63 /* CCStencilStateManager.cpp in Sources */,
 				B665E3D21AA80A6600DDB1C5 /* CCPUScriptLexer.cpp in Sources */,
 				B665E4021AA80A6600DDB1C5 /* CCPUSphereColliderTranslator.cpp in Sources */,
 				15AE1A3619AAD3D500C27E9E /* b2PolygonShape.cpp in Sources */,
@@ -11953,6 +11976,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				298C75D91C04681F006BAE63 /* CCStencilStateManager.hpp in Sources */,
 				D0FD03541A3B51AA00825BB5 /* CCAllocatorGlobalNewDelete.cpp in Sources */,
 				15AE1B9819AADAA100C27E9E /* UIVideoPlayer-ios.mm in Sources */,
 				B665E38F1AA80A6500DDB1C5 /* CCPUPlaneCollider.cpp in Sources */,
@@ -12103,6 +12127,7 @@
 				15AE193C19AAD35100C27E9E /* CCArmatureDefine.cpp in Sources */,
 				B665E35F1AA80A6500DDB1C5 /* CCPUOnRandomObserverTranslator.cpp in Sources */,
 				B29594B51926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */,
+				298C75D61C0465D1006BAE63 /* CCStencilStateManager.cpp in Sources */,
 				15AE194B19AAD35100C27E9E /* CCComRender.cpp in Sources */,
 				382384451A25915C002C4610 /* SpriteReader.cpp in Sources */,
 				B6CAB2321AF9AA1A00B9B856 /* btCollisionWorld.cpp in Sources */,
@@ -12644,6 +12669,7 @@
 				B665E1FB1AA80A6500DDB1C5 /* CCPUAffectorTranslator.cpp in Sources */,
 				B665E3931AA80A6500DDB1C5 /* CCPUPlaneColliderTranslator.cpp in Sources */,
 				382383F71A258FA7002C4610 /* idl_gen_fbs.cpp in Sources */,
+				B5A738971BB0051F00BAAEF8 /* UIPageViewIndicator.cpp in Sources */,
 				B665E24B1AA80A6500DDB1C5 /* CCPUColorAffector.cpp in Sources */,
 				B665E20F1AA80A6500DDB1C5 /* CCPUBaseForceAffector.cpp in Sources */,
 				15AE1B7419AADA9A00C27E9E /* UILoadingBar.cpp in Sources */,

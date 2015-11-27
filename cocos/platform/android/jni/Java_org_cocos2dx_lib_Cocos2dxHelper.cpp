@@ -83,6 +83,10 @@ const char * getApkPath() {
     return g_apkPath.c_str();
 }
 
+std::string getPackageNameJNI() {
+    return JniHelper::callStaticStringMethod(className, "getCocos2dxPackageName");
+}
+
 void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharset, char* dst, const char* newCharset)
 {
     JniMethodInfo methodInfo;

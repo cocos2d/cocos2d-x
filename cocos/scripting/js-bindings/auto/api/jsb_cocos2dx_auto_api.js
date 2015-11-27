@@ -20949,18 +20949,6 @@ char
 cc.Application = {
 
 /**
- * @method openURL
- * @param {String} arg0
- * @return {bool}
- */
-openURL : function (
-str 
-)
-{
-    return false;
-},
-
-/**
  * @method getTargetPlatform
  * @return {cc.ApplicationProtocol::Platform}
  */
@@ -20978,6 +20966,28 @@ getCurrentLanguage : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method openURL
+ * @param {String} arg0
+ * @return {bool}
+ */
+openURL : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method getVersion
+ * @return {String}
+ */
+getVersion : function (
+)
+{
+    return ;
 },
 
 /**

@@ -192,6 +192,11 @@ Application::Platform Application::getTargetPlatform()
     return Platform::OS_ANDROID;
 }
 
+std::string Application::getVersion()
+{
+    return JniHelper::callStaticStringMethod(helperClassName, "getVersion");
+}
+
 bool Application::openURL(const std::string &url)
 {
     return JniHelper::callStaticBooleanMethod(helperClassName, "openURL", url);
