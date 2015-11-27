@@ -5807,7 +5807,7 @@ bool js_cocos2dx_ComponentJS_getScriptObject(JSContext *cx, uint32_t argc, jsval
     cocos2d::ComponentJS* cobj = (cocos2d::ComponentJS *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ComponentJS_getScriptObject : Invalid Native Object");
     if (argc == 0) {
-        JSObject* ret = static_cast<JSObject*>(cobj->getScriptObject());
+        JS::RootedObject ret(cx, static_cast<JSObject*>(cobj->getScriptObject()));
         jsval jsret = OBJECT_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;

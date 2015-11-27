@@ -76,7 +76,7 @@ ComponentJS::ComponentJS(const std::string& scriptFileName)
         mozilla::Maybe<JS::PersistentRootedObject> *jsObj = new mozilla::Maybe<JS::PersistentRootedObject>();
         
         JS::RootedObject proto(cx, protoValue.toObjectOrNull());
-        JS::RootedObject parent(cx, typeClass->proto.get());
+        JS::RootedObject parent(cx, typeClass->proto.ref());
         jsObj->construct(cx);
         jsObj->ref() = JS_NewObject(cx, theClass, proto, parent);
         
@@ -85,7 +85,7 @@ ComponentJS::ComponentJS(const std::string& scriptFileName)
         JS::RemoveObjectRoot(cx, &jsproxy->obj);
         jsb_remove_proxy(jsb_get_native_proxy(this), jsproxy);
         // link the native object with the javascript object
-        jsb_new_proxy(this, jsObj->ref().get());
+        jsb_new_proxy(this, jsObj->ref());
         
         _jsObj = jsObj;
     }
