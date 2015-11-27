@@ -286,6 +286,7 @@ bool Sprite3D::init()
 
 bool Sprite3D::initWithFile(const std::string& path)
 {
+    _aabbDirty = true;
     _meshes.clear();
     _meshVertexDatas.clear();
     CC_SAFE_RELEASE_NULL(_skeleton);
