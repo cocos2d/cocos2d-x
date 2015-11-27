@@ -201,6 +201,7 @@ AudioPlayer::AudioPlayer()
     , _ready(false)
     , _current(0.0)
     , _volume(0.0)
+    , _pitch(1.0)
     , _duration(0.0)
     , _cache(nullptr)
     , _totalSamples(0)
@@ -337,6 +338,19 @@ void AudioPlayer::setVolume(float volume)
     }
 }
 
+void AudioPlayer::setPitch(float pitch)
+{
+    if (_xaSourceVoice != nullptr){
+        
+        if (FAILED(_xaSourceVoice->SetFrequencyRatio(pitch))) {
+            error();
+        }
+        else {
+            _pitch = pitch;
+        }
+    }
+}
+
 bool AudioPlayer::play2d(AudioCache* cache)
 {
     bool ret = false;
@@ -353,7 +367,7 @@ bool AudioPlayer::play2d(AudioCache* cache)
             XAUDIO2_VOICE_SENDS sends = { 0 };
             sends.SendCount = 1;
             sends.pSends = descriptors;
-            hr = _xaEngine->CreateSourceVoice(&_xaSourceVoice, &cache->_audInfo._wfx, 0, 1.0, this, &sends);
+            hr = _xaEngine->CreateSourceVoice(&_xaSourceVoice, &cache->_audInfo._wfx, 0, 2.0, this, &sends);
         }
 
         if (SUCCEEDED(hr)) {

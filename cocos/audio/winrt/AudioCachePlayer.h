@@ -97,6 +97,7 @@ private:
      float getCurrentTime();
      bool setTime(float time);
      void setVolume(float volume);
+     void setPitch(float pitch);
      bool play2d(AudioCache* cache);
      AudioPlayerState getState() { return _state; }
 
@@ -134,6 +135,7 @@ private:
      bool _loop;
      bool _ready;
      float _volume;
+     float _pitch;
      float _current;
      float _duration;
      bool _criticalError;

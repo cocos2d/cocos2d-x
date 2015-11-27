@@ -41,6 +41,7 @@ AudioEngineTests::AudioEngineTests()
     ADD_TEST_CASE(AudioProfileTest);
     ADD_TEST_CASE(InvalidAudioFileTest);
     ADD_TEST_CASE(LargeAudioFileTest);
+    ADD_TEST_CASE(AudioPitchTest);
 }
 
 namespace {
@@ -633,6 +634,61 @@ std::string AudioIssue11143Test::title() const
 std::string AudioIssue11143Test::subtitle() const
 {
     return "2 seconds after first sound play,you should hear another sound.";
+}
+
+bool AudioPitchTest::init()
+{
+    auto ret = AudioEngineTestDemo::init();
+
+    if (ret)
+    {
+        const auto& layerSize = this->getContentSize();
+        _audioID = AudioEngine::INVALID_AUDIO_ID;
+        _audioPitch = 1.0f;
+
+        auto playItem = TextButton::create("play", [&](TextButton* button){
+            _audioID = AudioEngine::play2d("background.mp3", true);
+            if (_audioID != AudioEngine::INVALID_AUDIO_ID)
+            {
+                AudioEngine::setPitch(_audioID, _audioPitch);
+                button->setEnabled(false);
+            }
+        });
+        playItem->setNormalizedPosition(Vec2::ANCHOR_MIDDLE);
+        this->addChild(playItem);
+
+        auto pitchSlider = SliderEx::create();
+        pitchSlider->setMaxPercent(150);
+        pitchSlider->setPercent(50);
+        pitchSlider->addEventListener([&](Ref* sender, Slider::EventType event){
+            SliderEx *slider = dynamic_cast<SliderEx *>(sender);
+            _audioPitch = 0.5f + 1.5f * slider->getRatio();
+
+            char pitchInfo[30];
+            sprintf(pitchInfo, "pitch:%.2f", _audioPitch);
+            _pitchLabel->setString(pitchInfo);
+
+            if (_audioID != AudioEngine::INVALID_AUDIO_ID) {
+                AudioEngine::setPitch(_audioID, _audioPitch);
+            }
+        });
+        pitchSlider->setPosition(Vec2(layerSize.width * 0.5f, layerSize.height * 0.35f));
+        addChild(pitchSlider);
+
+        const auto& pitchSliderPos = pitchSlider->getPosition();
+        const auto& sliderSize = pitchSlider->getContentSize();
+        _pitchLabel = Label::createWithTTF("pitch:1.00", "fonts/arial.ttf", 20);
+        _pitchLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
+        _pitchLabel->setPosition(pitchSliderPos.x - sliderSize.width / 2, pitchSliderPos.y);
+        addChild(_pitchLabel);
+    }
+
+    return ret;
+}
+
+std::string AudioPitchTest::title() const
+{
+    return "Test audio pitch";
 }
 
 #endif
