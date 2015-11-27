@@ -39,6 +39,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\cocostudio\jsb_cocos2dx_studio_manual.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\component\CCComponentJS.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\extension\jsb_cocos2dx_extension_manual.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\js-BindingsExport.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\jsb_event_dispatcher_manual.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\jsb_helper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\jsb_opengl_functions.h" />
@@ -48,6 +49,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_bindings_core.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_bindings_opengl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_manual_conversions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_module_register.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\localstorage\js_bindings_system_functions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\localstorage\js_bindings_system_functions_registration.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\localstorage\js_bindings_system_registration.h" />
@@ -93,6 +95,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_bindings_core.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_bindings_opengl.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_manual_conversions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_module_register.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\localstorage\js_bindings_system_functions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\localstorage\js_bindings_system_registration.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\navmesh\jsb_cocos2dx_navmesh_conversions.cpp" />
