@@ -406,7 +406,9 @@ public:
     /** Get a shader program from the texture.*/
     GLProgram* getGLProgram() const;
 
+    /** Set if the texture is valid, when it been set as false, it will display as default "file missing texture" */
     void setValid(bool valid) { _valid = valid; }
+
     bool isValid() const { return _valid; }
     std::string getPath()const { return _filePath; }
 
