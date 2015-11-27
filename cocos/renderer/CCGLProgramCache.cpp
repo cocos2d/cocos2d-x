@@ -532,13 +532,15 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
         case kShaderType_3DPositionBumpedNormalTex:
             {
                 std::string def = getShaderMacrosForLight();
-                p->initWithByteArrays((def + std::string(cc3D_PositionBumpedNormalTex_vert)).c_str(), (def + std::string(cc3D_ColorBumpedNormalTex_frag)).c_str());
+                std::string normalMapDef = "\n#define USE_NORMAL_MAPPING 1 \n";
+                p->initWithByteArrays((def + normalMapDef + std::string(cc3D_PositionNormalTex_vert)).c_str(), (def + normalMapDef + std::string(cc3D_ColorNormalTex_frag)).c_str());
             }
             break;
         case kShaderType_3DSkinPositionBumpedNormalTex:
             {
                 std::string def = getShaderMacrosForLight();
-                p->initWithByteArrays((def + std::string(cc3D_SkinPositionBumpedNormalTex_vert)).c_str(), (def + std::string(cc3D_ColorBumpedNormalTex_frag)).c_str());
+                std::string normalMapDef = "\n#define USE_NORMAL_MAPPING 1 \n";
+                p->initWithByteArrays((def + normalMapDef + std::string(cc3D_SkinPositionNormalTex_vert)).c_str(), (def + normalMapDef + std::string(cc3D_ColorNormalTex_frag)).c_str());
             }
             break;
         case kShaderType_3DParticleTex:

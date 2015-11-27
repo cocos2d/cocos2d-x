@@ -83,8 +83,6 @@ NS_CC_BEGIN
 #include "ccShader_3D_PositionNormalTex.vert"
 #include "ccShader_3D_ColorNormal.frag"
 #include "ccShader_3D_ColorNormalTex.frag"
-#include "ccShader_3D_PositionBumpedNormalTex.vert"
-#include "ccShader_3D_ColorBumpedNormalTex.frag"
 #include "ccShader_3D_Particle.vert"
 #include "ccShader_3D_Particle.frag"
 #include "ccShader_3D_Skybox.vert"
