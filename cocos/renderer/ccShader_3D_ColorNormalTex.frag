@@ -21,7 +21,7 @@ uniform vec3 u_AmbientLightSourceColor;
 \n#ifdef GL_ES\n
 varying mediump vec2 TextureCoordOut;
 
-\n#if USE_NORMAL_MAPPING\n
+\n#ifdef USE_NORMAL_MAPPING\n
 \n#if MAX_DIRECTIONAL_LIGHT_NUM\n
 varying mediump vec3 v_dirLightDirection[MAX_DIRECTIONAL_LIGHT_NUM];
 \n#endif\n
@@ -31,12 +31,12 @@ varying mediump vec3 v_vertexToPointLightDirection[MAX_POINT_LIGHT_NUM];
 \n#endif\n
 \n#if MAX_SPOT_LIGHT_NUM\n
 varying mediump vec3 v_vertexToSpotLightDirection[MAX_SPOT_LIGHT_NUM];
-\n#if USE_NORMAL_MAPPING\n
+\n#ifdef USE_NORMAL_MAPPING\n
 varying mediump vec3 v_spotLightDirection[MAX_SPOT_LIGHT_NUM];
 \n#endif\n
 \n#endif\n
 
-\n#if !USE_NORMAL_MAPPING\n
+\n#ifndef USE_NORMAL_MAPPING\n
 \n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n
 varying mediump vec3 v_normal;
 \n#endif\n
@@ -46,7 +46,7 @@ varying mediump vec3 v_normal;
 
 varying vec2 TextureCoordOut;
 
-\n#if USE_NORMAL_MAPPING\n
+\n#ifdef USE_NORMAL_MAPPING\n
 \n#if MAX_DIRECTIONAL_LIGHT_NUM\n
 varying vec3 v_dirLightDirection[MAX_DIRECTIONAL_LIGHT_NUM];
 \n#endif\n
@@ -56,12 +56,12 @@ varying vec3 v_vertexToPointLightDirection[MAX_POINT_LIGHT_NUM];
 \n#endif\n
 \n#if MAX_SPOT_LIGHT_NUM\n
 varying vec3 v_vertexToSpotLightDirection[MAX_SPOT_LIGHT_NUM];
-\n#if USE_NORMAL_MAPPING\n
+\n#ifdef USE_NORMAL_MAPPING\n
 varying vec3 v_spotLightDirection[MAX_SPOT_LIGHT_NUM];
 \n#endif\n
 \n#endif\n
 
-\n#if !USE_NORMAL_MAPPING\n
+\n#ifndef USE_NORMAL_MAPPING\n
 \n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n
 varying vec3 v_normal;
 \n#endif\n
@@ -70,7 +70,7 @@ varying vec3 v_normal;
 \n#endif\n
 
 uniform vec4 u_color;
-\n#if USE_NORMAL_MAPPING\n
+\n#ifdef USE_NORMAL_MAPPING\n
 uniform sampler2D u_bumpTex;
 \n#endif\n
 
@@ -85,7 +85,7 @@ vec3 computeLighting(vec3 normalVector, vec3 lightDirection, vec3 lightColor, fl
 void main(void)
 {
 
-\n#if USE_NORMAL_MAPPING\n
+\n#ifdef USE_NORMAL_MAPPING\n
     \n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n
         vec3 normal  = normalize(2.0 * texture2D(u_bumpTex, TextureCoordOut).xyz - 1.0);
     \n#endif\n
@@ -101,7 +101,7 @@ void main(void)
 \n#if (MAX_DIRECTIONAL_LIGHT_NUM > 0)\n
     for (int i = 0; i < MAX_DIRECTIONAL_LIGHT_NUM; ++i)
     {
-\n#if USE_NORMAL_MAPPING\n
+\n#ifdef USE_NORMAL_MAPPING\n
         vec3 lightDirection = normalize(v_dirLightDirection[i] * 2.0);
 \n#else\n
         vec3 lightDirection = normalize(u_DirLightSourceDirection[i] * 2.0);
@@ -129,7 +129,7 @@ void main(void)
         float attenuation = clamp(1.0 - dot(ldir, ldir), 0.0, 1.0);
         vec3 vertexToSpotLightDirection = normalize(v_vertexToSpotLightDirection[i]);
 
-\n#if USE_NORMAL_MAPPING\n
+\n#ifdef USE_NORMAL_MAPPING\n
         vec3 spotLightDirection = normalize(v_spotLightDirection[i] * 2.0);
 \n#else\n
         vec3 spotLightDirection = normalize(u_SpotLightSourceDirection[i] * 2.0);
