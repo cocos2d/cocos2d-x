@@ -59,6 +59,7 @@ TextureCache::TextureCache()
 : _loadingThread(nullptr)
 , _needQuit(false)
 , _asyncRefCount(0)
+, _dirty(false)
 {
 }
 
