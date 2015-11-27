@@ -1,6 +1,7 @@
 cocos2d-x-3.10 December ? 2015
 [NEW]           Core:  Added Application::getVersion() to get the app version.
 [NEW]           UI: Add PageView indicator.
+[NEW]           Label: Add three Overflow type to new label, see release note for more information.
 
 [REFINE]        UI: RichText support new line element.
 [REFINE]        UI: Set focus to Widget when touched.
