@@ -277,7 +277,7 @@ namespace cocos2d {
     }
 
     jstring JniHelper::convert(cocos2d::JniMethodInfo& t, const char* x) {
-        jstring ret = t.env->NewStringUTF(x ? x : "");
+        jstring ret = cocos2d::StringUtils::newStringUTFJNI(t.env, x ? x : "");
         localRefs[t.env].push_back(ret);
         return ret;
     }
@@ -297,5 +297,8 @@ namespace cocos2d {
         localRefs[env].clear();
     }
 
+    void JniHelper::reportError(const std::string& className, const std::string& methodName, const std::string& signature) {
+        LOGE("Failed to find static java method. Class name: %s, method name: %s, signature: %s ",  className.c_str(), methodName.c_str(), signature.c_str());
+    }
 
 } //namespace cocos2d

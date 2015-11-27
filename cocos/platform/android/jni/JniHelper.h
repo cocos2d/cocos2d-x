@@ -72,6 +72,8 @@ public:
             t.env->CallStaticVoidMethod(t.classID, t.methodID, convert(t, xs)...);
             t.env->DeleteLocalRef(t.classID);
             deleteLocalRefs(t.env);
+        } else {
+            reportError(className, methodName, signature);
         }
     }
 
@@ -86,14 +88,16 @@ public:
             jret = t.env->CallStaticBooleanMethod(t.classID, t.methodID, convert(t, xs)...);
             t.env->DeleteLocalRef(t.classID);
             deleteLocalRefs(t.env);
+        } else {
+            reportError(className, methodName, signature);
         }
         return (jret == JNI_TRUE);
     }
 
     template <typename... Ts>
     static int callStaticIntMethod(const std::string& className, 
-                                    const std::string& methodName, 
-                                    Ts... xs) {
+                                   const std::string& methodName, 
+                                   Ts... xs) {
         jint ret = 0;
         cocos2d::JniMethodInfo t;
         std::string signature = "(" + std::string(getJNISignature(xs...)) + ")I";
@@ -101,14 +105,16 @@ public:
             ret = t.env->CallStaticIntMethod(t.classID, t.methodID, convert(t, xs)...);
             t.env->DeleteLocalRef(t.classID);
             deleteLocalRefs(t.env);
+        } else {
+            reportError(className, methodName, signature);
         }
         return ret;
     }
 
     template <typename... Ts>
     static float callStaticFloatMethod(const std::string& className, 
-                                      const std::string& methodName, 
-                                      Ts... xs) {
+                                       const std::string& methodName, 
+                                       Ts... xs) {
         jfloat ret = 0.0;
         cocos2d::JniMethodInfo t;
         std::string signature = "(" + std::string(getJNISignature(xs...)) + ")F";
@@ -116,14 +122,16 @@ public:
             ret = t.env->CallStaticFloatMethod(t.classID, t.methodID, convert(t, xs)...);
             t.env->DeleteLocalRef(t.classID);
             deleteLocalRefs(t.env);
+        } else {
+            reportError(className, methodName, signature);
         }
         return ret;
     }
 
     template <typename... Ts>
     static double callStaticDoubleMethod(const std::string& className, 
-                                       const std::string& methodName, 
-                                       Ts... xs) {
+                                         const std::string& methodName, 
+                                         Ts... xs) {
         jdouble ret = 0.0;
         cocos2d::JniMethodInfo t;
         std::string signature = "(" + std::string(getJNISignature(xs...)) + ")D";
@@ -131,6 +139,8 @@ public:
             ret = t.env->CallStaticDoubleMethod(t.classID, t.methodID, convert(t, xs)...);
             t.env->DeleteLocalRef(t.classID);
             deleteLocalRefs(t.env);
+        } else {
+            reportError(className, methodName, signature);
         }
         return ret;
     }
@@ -149,6 +159,8 @@ public:
             t.env->DeleteLocalRef(t.classID);
             t.env->DeleteLocalRef(jret);
             deleteLocalRefs(t.env);
+        } else {
+            reportError(className, methodName, signature);
         }
         return ret;
     }
@@ -167,66 +179,68 @@ private:
 
     static jstring convert(cocos2d::JniMethodInfo& t, const std::string& x);
 
-    static std::unordered_map<JNIEnv*, std::vector<jobject>> localRefs;
-
-    static void deleteLocalRefs(JNIEnv* env);
-
     template <typename T>
     static T convert(cocos2d::JniMethodInfo&, T x) {
         return x;
     }
 
-    static constexpr const char* getJNISignature() {
+    static std::unordered_map<JNIEnv*, std::vector<jobject>> localRefs;
+
+    static void deleteLocalRefs(JNIEnv* env);
+
+    static std::string getJNISignature() {
         return "";
     }
 
-    static constexpr const char* getJNISignature(bool) {
+    static std::string getJNISignature(bool) {
         return "Z";
     }
 
-    static constexpr const char* getJNISignature(char) {
+    static std::string getJNISignature(char) {
         return "C";
     }
 
-    static constexpr const char* getJNISignature(short) {
+    static std::string getJNISignature(short) {
         return "S";
     }
 
-    static constexpr const char* getJNISignature(int) {
+    static std::string getJNISignature(int) {
         return "I";
     }
 
-    static constexpr const char* getJNISignature(long) {
+    static std::string getJNISignature(long) {
         return "J";
     }
 
-    static constexpr const char* getJNISignature(float) {
+    static std::string getJNISignature(float) {
         return "F";
     }
 
-    static constexpr const char* getJNISignature(double) {
+   static  std::string getJNISignature(double) {
         return "D";
     }
 
-    static constexpr const char* getJNISignature(const char*) {
+    static std::string getJNISignature(const char*) {
         return "Ljava/lang/String;";
     }
 
-    static constexpr const char* getJNISignature(const std::string&) {
+    static std::string getJNISignature(const std::string&) {
         return "Ljava/lang/String;";
     }
 
     template <typename T>
-    static constexpr const char* getJNISignature(T x) {
+    static std::string getJNISignature(T x) {
         // This template should never be instantiated
         static_assert(sizeof(x) == 0, "Unsupported argument type");
         return "";
     }
 
     template <typename T, typename... Ts>
-    static constexpr const char* getJNISignature(T x, Ts... xs) {
-        return (std::string(getJNISignature(x)) + std::string(getJNISignature(xs...))).c_str();
+    static std::string getJNISignature(T x, Ts... xs) {
+        return getJNISignature(x) + getJNISignature(xs...);
     }
+
+    static void reportError(const std::string& className, const std::string& methodName, const std::string& signature);
 };
 
 NS_CC_END
