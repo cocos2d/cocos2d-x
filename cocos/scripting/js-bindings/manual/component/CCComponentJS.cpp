@@ -78,7 +78,8 @@ ComponentJS::ComponentJS(const std::string& scriptFileName)
         JS::RootedObject proto(cx, protoValue.toObjectOrNull());
         JS::RootedObject parent(cx, typeClass->proto.ref());
         jsObj->construct(cx);
-        jsObj->ref() = JS_NewObject(cx, theClass, proto, parent);
+        JS::RootedObject obj(cx, JS_NewObject(cx, theClass, proto, parent));
+        jsObj->ref() = obj;
         
         // Unbind current proxy binding
         js_proxy_t* jsproxy = js_get_or_create_proxy<ComponentJS>(cx, this);

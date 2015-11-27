@@ -686,7 +686,7 @@ void ScriptingCore::compileScript(const char *path, JS::HandleObject global, JSC
         ReportException(cx);
 
         std::string fullPath = futil->fullPathForFilename(path);
-   
+
         JS::CompileOptions op(cx);
         op.setUTF8(true);
         op.setFileAndLine(fullPath.c_str(), 1);
@@ -1189,7 +1189,7 @@ bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::Eve
     
     for (const auto& touch : touches)
     {
-        JS::RootedValue jsret(_cx, getJSObject(this->_cx, touch));
+        JS::RootedValue jsret(_cx, getJSObject<cocos2d::Touch>(this->_cx, touch));
         if (!JS_SetElement(this->_cx, jsretArr, count, jsret))
         {
             break;
@@ -1204,7 +1204,7 @@ bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::Eve
         
         jsval dataVal[2];
         dataVal[0] = OBJECT_TO_JSVAL(jsretArr);
-        dataVal[1] = getJSObject(_cx, event);
+        dataVal[1] = getJSObject<cocos2d::Event>(_cx, event);
 
         ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 2, dataVal, jsvalRet);
 
@@ -1242,8 +1242,8 @@ bool ScriptingCore::handleTouchEvent(void* nativeObj, cocos2d::EventTouch::Event
         if (!p) break;
     
         jsval dataVal[2];
-        dataVal[0] = getJSObject(_cx, touch);
-        dataVal[1] = getJSObject(_cx, event);
+        dataVal[0] = getJSObject<cocos2d::Touch>(_cx, touch);
+        dataVal[1] = getJSObject<cocos2d::Event>(_cx, event);
         
 //        if (jsvalRet != nullptr)
 //        {
@@ -1293,7 +1293,7 @@ bool ScriptingCore::handleMouseEvent(void* nativeObj, cocos2d::EventMouse::Mouse
         if (!p) break;
         
         jsval dataVal[1];
-        dataVal[0] = getJSObject(_cx, event);
+        dataVal[0] = getJSObject<cocos2d::Event>(_cx, event);
         
 //        if (jsvalRet != nullptr)
 //        {
@@ -1404,7 +1404,7 @@ bool ScriptingCore::handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::
     
     jsval args[2] = {
         int32_to_jsval(_cx, (int32_t)keyCode),
-        getJSObject(_cx, event)
+        getJSObject<cocos2d::Event>(_cx, event)
     };
     
     if (isPressed)
@@ -1431,8 +1431,8 @@ bool ScriptingCore::handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widge
         return false;
 
     jsval args[2] = {
-        getJSObject(_cx, widgetLoseFocus),
-        getJSObject(_cx, widgetGetFocus)
+        getJSObject<cocos2d::ui::Widget>(_cx, widgetLoseFocus),
+        getJSObject<cocos2d::ui::Widget>(_cx, widgetGetFocus)
     };
 
     bool ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onFocusChanged", 2, args);
@@ -1451,7 +1451,7 @@ int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
     int count = 0;
     for (auto& touch : touches)
     {
-        jsval jsret = getJSObject(this->_cx, touch);
+        jsval jsret = getJSObject<Touch>(this->_cx, touch);
         JS::RootedValue jsval(_cx, jsret);
         if (!JS_SetElement(this->_cx, jsretArr, count, jsval)) {
             break;
@@ -1480,7 +1480,7 @@ int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
     JS::RootedValue retval(_cx);
     std::string funcName = getTouchFuncName(eventType);
 
-    jsval jsTouch = getJSObject(this->_cx, pTouch);
+    jsval jsTouch = getJSObject<Touch>(this->_cx, pTouch);
 
     executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsTouch, &retval);
 
@@ -1500,7 +1500,7 @@ int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
     
     std::string funcName = getTouchFuncName(eventType);
 
-    jsval jsTouch = getJSObject(this->_cx, pTouch);
+    jsval jsTouch = getJSObject<Touch>(this->_cx, pTouch);
 
     executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsTouch, retval);
 
