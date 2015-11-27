@@ -762,11 +762,11 @@ struct collision_handler {
     cpCollisionType     typeA;
     cpCollisionType     typeB;
     
-    JS::Heap<JSObject*> begin;
-    JS::Heap<JSObject*> pre;
-    JS::Heap<JSObject*> post;
-    JS::Heap<JSObject*> separate;
-    JS::Heap<JSObject*> jsthis;
+    mozilla::Maybe<JS::PersistentRootedObject> begin;
+    mozilla::Maybe<JS::PersistentRootedObject> pre;
+    mozilla::Maybe<JS::PersistentRootedObject> post;
+    mozilla::Maybe<JS::PersistentRootedObject> separate;
+    mozilla::Maybe<JS::PersistentRootedObject> jsthis;
     JSContext           *cx;
 
     // "owner" of the collision handler
@@ -777,6 +777,16 @@ struct collision_handler {
 
     unsigned int        is_oo; // Objected oriented API ?
     UT_hash_handle  hh;
+    
+    collision_handler()
+    {
+        JSContext *globalcx = ScriptingCore::getInstance()->getGlobalContext();
+        begin.construct(globalcx);
+        pre.construct(globalcx);
+        post.construct(globalcx);
+        separate.construct(globalcx);
+        jsthis.construct(globalcx);
+    }
 };
 
 // hash
@@ -803,16 +813,16 @@ static cpBool myCollisionBegin(cpArbiter *arb, cpSpace *space, void *data)
         args[0] = c_class_to_jsval(handler->cx, arb, arbiterProto, JSB_cpArbiter_class, "cpArbiter");
         args[1] = c_class_to_jsval(handler->cx, space, spaceProto, JSB_cpSpace_class, "cpArbiter");
     } else {
-        args[0] = opaque_to_jsval( handler->cx, arb);
-        args[1] = opaque_to_jsval( handler->cx, space );
+        args[0] = opaque_to_jsval(handler->cx, arb);
+        args[1] = opaque_to_jsval(handler->cx, space );
     }
     
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
     JS::RootedValue rval(handler->cx);
-    JS::RootedObject jsthis(handler->cx, handler->jsthis);
-    JS::RootedValue jsbegin(handler->cx, OBJECT_TO_JSVAL(handler->begin));
-    bool ok = JS_CallFunctionValue( handler->cx, jsthis, jsbegin, JS::HandleValueArray::fromMarkedLocation(2, args), &rval);
+    JS::RootedObject jsthis(handler->cx, handler->jsthis.ref());
+    JS::RootedValue jsbegin(handler->cx, OBJECT_TO_JSVAL(handler->begin.ref()));
+    bool ok = JS_CallFunctionValue(handler->cx, jsthis, jsbegin, JS::HandleValueArray::fromMarkedLocation(2, args), &rval);
     JSB_PRECONDITION2(ok, handler->cx, cpFalse, "Error calling collision callback: begin");
 
     if( rval.isBoolean() ) {
@@ -840,8 +850,8 @@ static cpBool myCollisionPre(cpArbiter *arb, cpSpace *space, void *data)
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
     JS::RootedValue rval(handler->cx);
-    JS::RootedObject jsthis(handler->cx, handler->jsthis);
-    JS::RootedValue jspre(handler->cx, OBJECT_TO_JSVAL(handler->pre));
+    JS::RootedObject jsthis(handler->cx, handler->jsthis.ref());
+    JS::RootedValue jspre(handler->cx, OBJECT_TO_JSVAL(handler->pre.ref()));
     bool ok = JS_CallFunctionValue( handler->cx, jsthis, jspre, JS::HandleValueArray::fromMarkedLocation(2, args), &rval);
     JSB_PRECONDITION2(ok, handler->cx, false, "Error calling collision callback: pre");
     
@@ -871,8 +881,8 @@ static void myCollisionPost(cpArbiter *arb, cpSpace *space, void *data)
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
     JS::RootedValue ignore(handler->cx);
-    JS::RootedObject jsthis(handler->cx, handler->jsthis);
-    JS::RootedValue jspost(handler->cx, OBJECT_TO_JSVAL(handler->post));
+    JS::RootedObject jsthis(handler->cx, handler->jsthis.ref());
+    JS::RootedValue jspost(handler->cx, OBJECT_TO_JSVAL(handler->post.ref()));
     bool ok = JS_CallFunctionValue( handler->cx, jsthis, jspost, JS::HandleValueArray::fromMarkedLocation(2, args), &ignore);
     JSB_PRECONDITION2(ok, handler->cx, , "Error calling collision callback: Post");
 }
@@ -897,8 +907,8 @@ static void myCollisionSeparate(cpArbiter *arb, cpSpace *space, void *data)
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
     JS::RootedValue ignore(handler->cx);
-    JS::RootedObject jsthis(handler->cx, handler->jsthis);
-    JS::RootedValue jssep(handler->cx, OBJECT_TO_JSVAL(handler->separate));
+    JS::RootedObject jsthis(handler->cx, handler->jsthis.ref());
+    JS::RootedValue jssep(handler->cx, OBJECT_TO_JSVAL(handler->separate.ref()));
     bool ok = JS_CallFunctionValue( handler->cx, jsthis, jssep, JS::HandleValueArray::fromMarkedLocation(2, args), &ignore);
     JSB_PRECONDITION2(ok, handler->cx, , "Error calling collision callback: Separate");}
 
@@ -920,22 +930,8 @@ void JSB_cpSpace_finalize(JSFreeOp *fop, JSObject *jsthis)
         struct collision_handler *current = nullptr, *tmp = nullptr;
         HASH_ITER(hh, collision_handler_hash, current, tmp) {
             if( current->space == space ) {
-
-                JSContext *cx = current->cx;
-
-                // unroot it
-                if( current->begin ) {
-                    JS::RemoveObjectRoot(cx, &current->begin);
-                }
-                if( current->pre )
-                    JS::RemoveObjectRoot(cx, &current->pre);
-                if( current->post )
-                    JS::RemoveObjectRoot(cx, &current->post);
-                if( current->separate )
-                    JS::RemoveObjectRoot(cx, &current->separate);
-                
                 HASH_DEL(collision_handler_hash,current);  /* delete; users advances to next */
-                free(current);            /* optional- if you want to free  */
+                delete current;            /* optional- if you want to free  */
             }
         }
         
@@ -953,13 +949,15 @@ void JSB_cpSpace_finalize(JSFreeOp *fop, JSObject *jsthis)
 #pragma mark addCollisionHandler
 
 static
-bool __jsb_cpSpace_addCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp, cpSpace *space, unsigned int is_oo)
+bool __jsb_cpSpace_addCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp, JS::HandleObject jsspace, cpSpace *space, unsigned int is_oo)
 {
-    struct collision_handler *handler = (struct collision_handler*) malloc( sizeof(*handler) );
+    struct collision_handler *handler = new collision_handler();
     handler->typeA = 0;
     handler->typeB = 0;
 
     JSB_PRECONDITION(handler, "Error allocating memory");
+
+    handler->jsthis.ref() = jsspace;
     
     bool ok = true;
     
@@ -969,40 +967,28 @@ bool __jsb_cpSpace_addCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp, c
     ok &= jsval_to_int(cx, jstypeA, (int32_t*) &handler->typeA );
     ok &= jsval_to_int(cx, jstypeB, (int32_t*) &handler->typeB );
     
-    handler->begin = argvp->toObjectOrNull();
+    handler->begin.ref() = argvp->toObjectOrNull();
     argvp++;
-    handler->pre = argvp->toObjectOrNull();
+    handler->pre.ref() = argvp->toObjectOrNull();
     argvp++;
-    handler->post = argvp->toObjectOrNull();
+    handler->post.ref() = argvp->toObjectOrNull();
     argvp++;
-    handler->separate = argvp->toObjectOrNull();
+    handler->separate.ref() = argvp->toObjectOrNull();
     argvp++;
     
     JSB_PRECONDITION(ok, "Error parsing arguments");
     
     // Object Oriented API ?
     handler->is_oo = is_oo;
-    
     // owner of the collision handler
     handler->space = space;
-    
-    // Root it
-    if( handler->begin )
-        JS::AddNamedObjectRoot(cx, &handler->begin, "begin collision_handler");
-    if( handler->pre )
-        JS::AddNamedObjectRoot(cx, &handler->pre, "pre collision_handler");
-    if( handler->post )
-        JS::AddNamedObjectRoot(cx, &handler->post, "post collision_handler");
-    if( handler->separate )
-        JS::AddNamedObjectRoot(cx, &handler->separate, "separate collision_handler");
-    
     handler->cx = cx;
     
     cpSpaceAddCollisionHandler(space, handler->typeA, handler->typeB,
-                               !handler->begin ? NULL : &myCollisionBegin,
-                               !handler->pre ? NULL : &myCollisionPre,
-                               !handler->post ? NULL : &myCollisionPost,
-                               !handler->separate ? NULL : &myCollisionSeparate,
+                               !handler->begin.ref() ? NULL : &myCollisionBegin,
+                               !handler->pre.ref() ? NULL : &myCollisionPre,
+                               !handler->post.ref() ? NULL : &myCollisionPost,
+                               !handler->separate.ref() ? NULL : &myCollisionSeparate,
                                handler );
     
     
@@ -1015,7 +1001,7 @@ bool __jsb_cpSpace_addCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp, c
     HASH_FIND_INT(collision_handler_hash, &paired_key, hashElement);
     if( hashElement ) {
         HASH_DEL( collision_handler_hash, hashElement );
-        free( hashElement );
+        delete hashElement;
     }
     
     handler->hash_key = paired_key;
@@ -1037,7 +1023,8 @@ bool JSB_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
     bool ok = jsval_to_opaque(cx, jsarg, (void**)&space);
     JSB_PRECONDITION(ok, "Error parsing arguments");
     
-    return __jsb_cpSpace_addCollisionHandler(cx, vp, argvp, space, 0);
+    JS::RootedObject jsspace(cx, jsarg.toObjectOrNull());
+    return __jsb_cpSpace_addCollisionHandler(cx, vp, argvp, jsspace, space, 0);
 }
 
 // method
@@ -1050,7 +1037,7 @@ bool JSB_cpSpace_addCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
     struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     void *handle = proxy->handle;
     
-    return __jsb_cpSpace_addCollisionHandler(cx, vp, args.array(), (cpSpace*)handle, 1);
+    return __jsb_cpSpace_addCollisionHandler(cx, vp, args.array(), jsthis, (cpSpace*)handle, 1);
 }
 
 bool JSB_cpSpace_setDefaultCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
@@ -1061,30 +1048,28 @@ bool JSB_cpSpace_setDefaultCollisionHandler(JSContext *cx, uint32_t argc, jsval 
     struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* space = (cpSpace*) proxy->handle;
 
-    collision_handler *handler = (collision_handler*) malloc( sizeof(collision_handler) );
+    collision_handler *handler = new collision_handler();
     JSB_PRECONDITION(handler, "Error allocating memory");
 
     handler->typeA = 0;
     handler->typeB = 0;
-    handler->jsthis = jsthis;
-
-    handler->begin = args.get(0).toObjectOrNull();
-    handler->pre = args.get(1).toObjectOrNull();
-    handler->post = args.get(2).toObjectOrNull();
-    handler->separate = args.get(3).toObjectOrNull();
+    handler->jsthis.ref() = jsthis;
+    handler->begin.ref() = args.get(0).toObjectOrNull();
+    handler->pre.ref() = args.get(1).toObjectOrNull();
+    handler->post.ref() = args.get(2).toObjectOrNull();
+    handler->separate.ref() = args.get(3).toObjectOrNull();
 
     // Object Oriented API ?
     handler->is_oo = 1;
-
     // owner of the collision handler
     handler->space = space;
     handler->cx = cx;
 
     cpSpaceSetDefaultCollisionHandler(space,
-                               !handler->begin ? NULL : &myCollisionBegin,
-                               !handler->pre ? NULL : &myCollisionPre,
-                               !handler->post ? NULL : &myCollisionPost,
-                               !handler->separate ? NULL : &myCollisionSeparate,
+                               !handler->begin.ref() ? NULL : &myCollisionBegin,
+                               !handler->pre.ref() ? NULL : &myCollisionPre,
+                               !handler->post.ref() ? NULL : &myCollisionPost,
+                               !handler->separate.ref() ? NULL : &myCollisionSeparate,
                                handler );
 
     //
@@ -1095,34 +1080,14 @@ bool JSB_cpSpace_setDefaultCollisionHandler(JSContext *cx, uint32_t argc, jsval 
     unsigned long paired_key = pair_ints(handler->typeA, handler->typeB );
     HASH_FIND_INT(collision_handler_hash, &paired_key, hashElement);
     if( hashElement ) {
-        if( hashElement->begin ) {
-            JS::RemoveObjectRoot(cx, &hashElement->begin);
-        }
-        if( hashElement->pre )
-            JS::RemoveObjectRoot(cx, &hashElement->pre);
-        if( hashElement->post )
-            JS::RemoveObjectRoot(cx, &hashElement->post);
-        if( hashElement->separate )
-            JS::RemoveObjectRoot(cx, &hashElement->separate);
         HASH_DEL( collision_handler_hash, hashElement );
-        free( hashElement );
+        delete hashElement;
     }
 
     handler->hash_key = paired_key;
     HASH_ADD_INT( collision_handler_hash, hash_key, handler );
 
-    // Root it
-    if( handler->begin )
-        JS::AddNamedObjectRoot(cx, &handler->begin, "begin collision_handler");
-    if( handler->pre )
-        JS::AddNamedObjectRoot(cx, &handler->pre, "pre collision_handler");
-    if( handler->post )
-        JS::AddNamedObjectRoot(cx, &handler->post, "post collision_handler");
-    if( handler->separate )
-        JS::AddNamedObjectRoot(cx, &handler->separate, "separate collision_handler");
-
     args.rval().setUndefined();
-
     return true;
 }
 
@@ -1149,19 +1114,8 @@ bool __jsb_cpSpace_removeCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp
     unsigned long key = pair_ints(typeA, typeB );
     HASH_FIND_INT(collision_handler_hash, &key, hashElement);
     if( hashElement ) {
-        
-        // unroot it
-        if( hashElement->begin )
-            JS::RemoveObjectRoot(cx, &hashElement->begin);
-        if( hashElement->pre )
-            JS::RemoveObjectRoot(cx, &hashElement->pre);
-        if( hashElement->post )
-            JS::RemoveObjectRoot(cx, &hashElement->post);
-        if( hashElement->separate )
-            JS::RemoveObjectRoot(cx, &hashElement->separate);
-        
         HASH_DEL( collision_handler_hash, hashElement );
-        free( hashElement );
+        delete hashElement;
     }
     
     return true;
