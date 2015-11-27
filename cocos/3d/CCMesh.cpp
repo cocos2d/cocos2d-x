@@ -662,7 +662,7 @@ GLuint Mesh::getIndexBuffer() const
     return _meshIndexData->getIndexBuffer()->getVBO();
 }
 
-GLuint Mesh::checkTextureName()
+GLuint Mesh::getTextureName()
 {
     if (TextureCache::getInstance()->isDirty())
     {

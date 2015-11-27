@@ -103,7 +103,7 @@ public:
     /**
     * Return the side where the point is.
     */
-    PointSide getSide(const Vec3& point, const Vec3& halfSize) const;
+    PointSide getSide(const Vec3& point, const Vec3& tolerance) const;
 
 protected:
     Vec3 _normal; // the normal line of the plane

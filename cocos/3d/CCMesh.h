@@ -194,7 +194,7 @@ public:
      */
     void setForce2DQueue(bool force2D) { _force2DQueue = force2D; }
 
-    GLuint checkTextureName();
+    GLuint getTextureName();
 
 CC_CONSTRUCTOR_ACCESS:
 

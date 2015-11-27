@@ -895,35 +895,6 @@ void Sprite3D::setForce2DQueue(bool force2D)
     }
 }
 
-const AABB& Sprite3D::getAABB(bool world) const
-{
-    _aabbDirty = true;
-
-    Mat4 nodeToWorldTransform(getNodeToWorldTransform());
-
-    // If nodeToWorldTransform matrix isn't changed, we don't need to transform aabb.
-    if (memcmp(_nodeToWorldTransform.m, nodeToWorldTransform.m, sizeof(Mat4)) == 0 && !_aabbDirty)
-    {
-        return _aabb;
-    }
-    else
-    {
-        _aabb.reset();
-        Mat4 transform(nodeToWorldTransform);
-        for (const auto& it : _meshes) {
-            if (it->isVisible())
-                _aabb.merge(it->getAABB());
-        }
-
-        if (world)
-            _aabb.transform(transform);
-
-        _nodeToWorldTransform = nodeToWorldTransform;
-    }
-
-    return _aabb;
-}
-
 ///////////////////////////////////////////////////////////////////////////////////
 Sprite3DCache* Sprite3DCache::_cacheInstance = nullptr;
 Sprite3DCache* Sprite3DCache::getInstance()
