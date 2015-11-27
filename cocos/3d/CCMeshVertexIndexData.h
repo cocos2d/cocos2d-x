@@ -54,7 +54,7 @@ class MeshVertexData;
  * @js NA
  * @lua NA
  */
-class MeshIndexData : public Ref
+class CC_DLL MeshIndexData : public Ref
 {
 public:
     /** create  */
