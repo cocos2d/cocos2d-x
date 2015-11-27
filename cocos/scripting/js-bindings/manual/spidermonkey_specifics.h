@@ -26,6 +26,7 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 #include "uthash.h"
+#include "mozilla/Maybe.h"
 #include <unordered_map>
 
 typedef struct js_proxy {
@@ -39,8 +40,8 @@ extern js_proxy_t *_js_native_global_ht;
 
 typedef struct js_type_class {
     JSClass *jsclass;
-    JS::Heap<JSObject*> proto;
-    JS::Heap<JSObject*> parentProto;
+    mozilla::Maybe<JS::PersistentRootedObject> proto;
+    mozilla::Maybe<JS::PersistentRootedObject> parentProto;
 } js_type_class_t;
 
 extern std::unordered_map<std::string, js_type_class_t*> _js_global_type_map;

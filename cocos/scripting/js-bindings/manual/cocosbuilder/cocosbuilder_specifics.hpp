@@ -44,7 +44,9 @@ public:
 
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             
-            JS_CallFunctionValue(cx, JS::RootedObject(cx, thisObj.toObjectOrNull()), JS::RootedValue(cx, callback), JS::HandleValueArray::empty(), &retval);
+            JS::RootedObject jsThis(cx, thisObj.toObjectOrNull());
+            JS::RootedValue jsCallback(cx, callback);
+            JS_CallFunctionValue(cx, jsThis, jsCallback, JS::HandleValueArray::empty(), &retval);
         }
     }
     
