@@ -267,7 +267,7 @@ public:
             cocos2d::extension::TableViewCell* arg0;
             do {
                 js_proxy_t *proxy;
-                JSObject *tmpObj = ret.toObjectOrNull();
+                JS::RootedObject tmpObj(cx, ret.toObjectOrNull());
                 proxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::extension::TableViewCell*)(proxy ? proxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, NULL, "Invalid Native Object");
@@ -444,7 +444,7 @@ static bool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval *
             do 
             {
                 js_proxy_t *proxy;
-                JSObject *tmpObj = args.get(2).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(2).toObjectOrNull());
                 proxy = jsb_get_js_proxy(tmpObj);
                 arg2 = (cocos2d::Node*)(proxy ? proxy->ptr : NULL);
                 JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
@@ -497,7 +497,7 @@ static bool js_cocos2dx_CCTableView_init(JSContext *cx, uint32_t argc, jsval *vp
             cocos2d::Node* arg2;
             do 
             {
-                JSObject *tmpObj = args.get(2).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(2).toObjectOrNull());
                 proxy = jsb_get_js_proxy(tmpObj);
                 arg2 = (cocos2d::Node*)(proxy ? proxy->ptr : NULL);
                 JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
@@ -705,7 +705,7 @@ static bool js_cocos2dx_ext_AssetsManager_updateAssets(JSContext *cx, uint32_t a
 {
     jsval *argv = JS_ARGV(cx, vp);
     bool ok = true;
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject obj(cx, JS_THIS_OBJECT(cx, vp));
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::extension::AssetsManager* cobj = (cocos2d::extension::AssetsManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_AssetsManager_updateAssets : Invalid Native Object");
@@ -713,7 +713,7 @@ static bool js_cocos2dx_ext_AssetsManager_updateAssets(JSContext *cx, uint32_t a
         std::unordered_map<std::string, Downloader::DownloadUnit> dict;
         do {
             if (!argv[0].isObject()) { ok = false; break; }
-            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+            JS::RootedObject tmpObj(cx, JSVAL_TO_OBJECT(argv[0]));
             
             if (!tmpObj) {
                 CCLOG("%s", "jsval_to_ccvaluemap: the jsval is not an object.");
@@ -786,7 +786,7 @@ static bool js_cocos2dx_ext_AssetsManager_updateAssets(JSContext *cx, uint32_t a
 
 bool js_cocos2dx_ext_AssetsManager_getFailedAssets(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject obj(cx, JS_THIS_OBJECT(cx, vp));
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::extension::AssetsManager* cobj = (cocos2d::extension::AssetsManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_AssetsManager_getFailedAssets : Invalid Native Object");
@@ -800,7 +800,7 @@ bool js_cocos2dx_ext_AssetsManager_getFailedAssets(JSContext *cx, uint32_t argc,
                 std::string key = it->first;
                 const Downloader::DownloadUnit& unit = it->second;
                 
-                JSObject *elem = JS_NewObject(cx, NULL, NULL, NULL);
+                JS::RootedObject elem(cx, JS_NewObject(cx, NULL, NULL, NULL));
                 if (!elem)
                 {
                     JS_ReportError(cx, "js_cocos2dx_extension_AssetsManager_getFailedAssets : can not create js object");
@@ -942,7 +942,7 @@ void __JSDownloaderDelegator::onSuccess(Texture2D *tex)
             if (!p)
             {
                 JS::RootedObject texProto(_cx, jsb_cocos2d_Texture2D_prototype);
-                JSObject *obj = JS_NewObject(_cx, jsb_cocos2d_Texture2D_class, texProto, global);
+                JS::RootedObject obj(_cx, JS_NewObject(_cx, jsb_cocos2d_Texture2D_class, texProto, global));
                 // link the native object with the javascript object
                 p = jsb_new_proxy(tex, obj);
                 JS::AddNamedObjectRoot(_cx, &p->obj, "cocos2d::Texture2D");

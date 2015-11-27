@@ -46,7 +46,8 @@ bool jsval_to_physics3DRigidBodyDes(JSContext* cx, JS::HandleValue v, Physics3DR
     }
     if(JS_GetProperty(cx, jsobj, "shape", &tmp))
     {
-        js_proxy_t* proxy = jsb_get_js_proxy(tmp.toObjectOrNull());
+        JS::RootedObject tmpObj(cx, tmp.toObjectOrNull());
+        js_proxy_t* proxy = jsb_get_js_proxy(tmpObj);
         des->shape = proxy ? (cocos2d::Physics3DShape*)proxy->ptr : nullptr;
     }
     if(JS_GetProperty(cx, jsobj, "localInertia", &tmp))
@@ -405,7 +406,8 @@ bool jsval_to_Physics3DWorld_HitResult(JSContext *cx, JS::HandleValue v, cocos2d
 
     JSB_PRECONDITION2(ok, cx, false, "jsval_to_Physics3DWorld_HitResult : Error processing arguments");
     
-    js_proxy_t *proxy = jsb_get_js_proxy(jshitObject.toObjectOrNull());
+    tmp.set(jshitObject.toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(tmp);
     ret->hitObj = (cocos2d::Physics3DObject *)(proxy ? proxy->ptr : nullptr);
     
     return true;

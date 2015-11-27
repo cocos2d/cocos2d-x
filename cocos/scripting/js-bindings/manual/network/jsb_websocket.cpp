@@ -139,7 +139,8 @@ public:
         jsval args = OBJECT_TO_JSVAL(jsobj);
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate.ref()), "onclose", 1, &args);
 
-        js_proxy_t* jsproxy = jsb_get_js_proxy(p->obj);
+        JS::RootedObject wsobj(cx, p->obj);
+        js_proxy_t* jsproxy = jsb_get_js_proxy(wsobj);
         JS::RemoveObjectRoot(cx, &jsproxy->obj);
         jsb_remove_proxy(p, jsproxy);
         CC_SAFE_DELETE(ws);
@@ -335,7 +336,7 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
 static bool js_cocos2dx_extension_WebSocket_get_readyState(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsobj = args.thisv().toObjectOrNull();
+    JS::RootedObject jsobj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");

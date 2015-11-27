@@ -239,7 +239,7 @@ JS_BINDED_CONSTRUCTOR_IMPL(JavaScriptObjCBridge)
     
     JS::RootedObject proto(cx, JavaScriptObjCBridge::js_proto);
     JS::RootedObject parentProto(cx, JavaScriptObjCBridge::js_parent);
-    JSObject *obj = JS_NewObject(cx, &JavaScriptObjCBridge::js_class, proto, parentProto);
+    JS::RootedObject obj(cx, JS_NewObject(cx, &JavaScriptObjCBridge::js_class, proto, parentProto));
     
     if (obj) {
         JS_SetPrivate(obj, jsj);
@@ -248,7 +248,7 @@ JS_BINDED_CONSTRUCTOR_IMPL(JavaScriptObjCBridge)
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().set(out);
-    p =jsb_new_proxy(jsj, obj);
+    p = jsb_new_proxy(jsj, obj);
     
     JS::AddNamedObjectRoot(cx, &p->obj, "JavaScriptObjCBridge");
     return true;

@@ -262,7 +262,7 @@ static bool js_cocos2dx_studio_ActionManagerEx_initWithDictionaryEx(JSContext *c
         do {
             if (!args.get(2).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(2).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(2).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg2 = (cocos2d::Ref*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
@@ -863,7 +863,7 @@ bool js_set_AnimationData_movementDataDic(JSContext *cx, JS::HandleObject obj, J
             do {
                 if (!value.isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = value.toObjectOrNull();
+                JS::RootedObject tmpObj(cx, value.toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 movementData = (cocostudio::MovementData*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2(movementData, cx, false, "js_set_AnimationData_movementDataDic : Invalid Native Object.");
@@ -1071,7 +1071,7 @@ bool js_set_MovementData_tweenEasing(JSContext *cx, JS::HandleObject obj, JS::Ha
 
 bool js_get_ContourData_vertexList(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
 {
-    JSObject* jsobj = obj.get();
+    JS::RootedObject jsobj(cx, obj);
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     cocostudio::ContourData* cobj = (cocostudio::ContourData*)(proxy ? proxy->ptr : NULL);
     if (cobj) {
@@ -1104,7 +1104,7 @@ bool js_get_ContourData_vertexList(JSContext *cx, JS::HandleObject obj, JS::Hand
 }
 bool js_set_ContourData_vertexList(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp)
 {
-    JSObject* jsobj = obj.get();
+    JS::RootedObject jsobj(cx, obj);
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     cocostudio::ContourData* cobj = (cocostudio::ContourData*)(proxy ? proxy->ptr : NULL);
     if (cobj) {
@@ -1142,7 +1142,7 @@ bool js_set_ContourData_vertexList(JSContext *cx, JS::HandleObject obj, JS::Hand
 
 bool js_get_TextureData_contourDataList(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
 {
-    JSObject* jsobj = obj.get();
+    JS::RootedObject jsobj(cx, obj);
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     cocostudio::TextureData* cobj = (cocostudio::TextureData*)(proxy ? proxy->ptr : NULL);
     if (cobj) {
@@ -1176,7 +1176,7 @@ bool js_get_TextureData_contourDataList(JSContext *cx, JS::HandleObject obj, JS:
 }
 bool js_set_TextureData_contourDataList(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp)
 {
-    JSObject* jsobj = obj.get();
+    JS::RootedObject jsobj(cx, obj);
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     cocostudio::TextureData* cobj = (cocostudio::TextureData*)(proxy ? proxy->ptr : NULL);
     if (cobj) {
@@ -1198,7 +1198,7 @@ bool js_set_TextureData_contourDataList(JSContext *cx, JS::HandleObject obj, JS:
                 do {
                     if (!value.isObject()) { ok = false; break; }
                     js_proxy_t *jsProxy;
-                    JSObject *tmpObj = value.toObjectOrNull();
+                    JS::RootedObject tmpObj(cx, value.toObjectOrNull());
                     jsProxy = jsb_get_js_proxy(tmpObj);
                     contourData = (cocostudio::ContourData*)(jsProxy ? jsProxy->ptr : NULL);
                     JSB_PRECONDITION2(contourData, cx, false, "Invalid Native Object");
@@ -1218,7 +1218,7 @@ bool js_set_TextureData_contourDataList(JSContext *cx, JS::HandleObject obj, JS:
 
 bool js_get_TextureData_width(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
 {
-    JSObject* jsobj = obj.get();
+    JS::RootedObject jsobj(cx, obj);
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     cocostudio::TextureData* cobj = (cocostudio::TextureData*)(proxy ? proxy->ptr : NULL);
     
@@ -1243,7 +1243,7 @@ bool js_get_TextureData_width(JSContext *cx, JS::HandleObject obj, JS::HandleId 
 }
 bool js_set_TextureData_width(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp)
 {
-    JSObject* jsobj = obj.get();
+    JS::RootedObject jsobj(cx, obj);
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     cocostudio::TextureData* cobj = (cocostudio::TextureData*)(proxy ? proxy->ptr : NULL);
     if (cobj) {
@@ -1256,7 +1256,7 @@ bool js_set_TextureData_width(JSContext *cx, JS::HandleObject obj, JS::HandleId 
 
 bool js_get_TextureData_height(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
 {
-    JSObject* jsobj = obj.get();
+    JS::RootedObject jsobj(cx, obj);
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     cocostudio::TextureData* cobj = (cocostudio::TextureData*)(proxy ? proxy->ptr : NULL);
     if (cobj) {
@@ -1275,7 +1275,7 @@ bool js_get_TextureData_height(JSContext *cx, JS::HandleObject obj, JS::HandleId
 }
 bool js_set_TextureData_height(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp)
 {
-    JSObject* jsobj = obj.get();
+    JS::RootedObject jsobj(cx, obj);
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     cocostudio::TextureData* cobj = (cocostudio::TextureData*)(proxy ? proxy->ptr : NULL);
     if (cobj) {
@@ -1288,7 +1288,7 @@ bool js_set_TextureData_height(JSContext *cx, JS::HandleObject obj, JS::HandleId
 
 bool js_get_TextureData_pivotX(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
 {
-    JSObject* jsobj = obj.get();
+    JS::RootedObject jsobj(cx, obj);
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     cocostudio::TextureData* cobj = (cocostudio::TextureData*)(proxy ? proxy->ptr : NULL);
     if (cobj) {
@@ -1307,7 +1307,7 @@ bool js_get_TextureData_pivotX(JSContext *cx, JS::HandleObject obj, JS::HandleId
 }
 bool js_set_TextureData_pivotX(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp)
 {
-    JSObject* jsobj = obj.get();
+    JS::RootedObject jsobj(cx, obj);
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     cocostudio::TextureData* cobj = (cocostudio::TextureData*)(proxy ? proxy->ptr : NULL);
     if (cobj) {
@@ -1320,7 +1320,7 @@ bool js_set_TextureData_pivotX(JSContext *cx, JS::HandleObject obj, JS::HandleId
 
 bool js_get_TextureData_pivotY(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
 {
-    JSObject* jsobj = obj.get();
+    JS::RootedObject jsobj(cx, obj);
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     cocostudio::TextureData* cobj = (cocostudio::TextureData*)(proxy ? proxy->ptr : NULL);
     if (cobj) {
@@ -1339,7 +1339,7 @@ bool js_get_TextureData_pivotY(JSContext *cx, JS::HandleObject obj, JS::HandleId
 }
 bool js_set_TextureData_pivotY(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp)
 {
-    JSObject* jsobj = obj.get();
+    JS::RootedObject jsobj(cx, obj);
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     cocostudio::TextureData* cobj = (cocostudio::TextureData*)(proxy ? proxy->ptr : NULL);
     if (cobj) {
@@ -1352,7 +1352,7 @@ bool js_set_TextureData_pivotY(JSContext *cx, JS::HandleObject obj, JS::HandleId
 
 bool js_get_TextureData_name(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
 {
-    JSObject* jsobj = obj.get();
+    JS::RootedObject jsobj(cx, obj);
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     cocostudio::TextureData* cobj = (cocostudio::TextureData*)(proxy ? proxy->ptr : NULL);
     if (cobj) {
@@ -1371,7 +1371,7 @@ bool js_get_TextureData_name(JSContext *cx, JS::HandleObject obj, JS::HandleId i
 }
 bool js_set_TextureData_name(JSContext *cx, JS::HandleObject obj, JS::HandleId id, bool strict, JS::MutableHandleValue vp)
 {
-    JSObject* jsobj = obj.get();
+    JS::RootedObject jsobj(cx, obj);
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     cocostudio::TextureData* cobj = (cocostudio::TextureData*)(proxy ? proxy->ptr : NULL);
     if (cobj) {

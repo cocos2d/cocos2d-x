@@ -343,7 +343,7 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
     
     JS::RootedObject proto(cx, MinXmlHttpRequest::js_proto);
     JS::RootedObject parentProto(cx, MinXmlHttpRequest::js_parent);
-    JSObject *obj = JS_NewObject(cx, &MinXmlHttpRequest::js_class, proto, parentProto);
+    JS::RootedObject obj(cx, JS_NewObject(cx, &MinXmlHttpRequest::js_class, proto, parentProto));
     
     if (obj) {
         JS_SetPrivate(obj, req);
@@ -351,7 +351,7 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
     }
 
     args.rval().set(out);
-    p =jsb_new_proxy(req, obj);
+    p = jsb_new_proxy(req, obj);
     
     JS::AddNamedObjectRoot(cx, &p->obj, "XMLHttpRequest");
     return true;

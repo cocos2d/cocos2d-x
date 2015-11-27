@@ -170,7 +170,7 @@ bool js_cocos2dx_SocketIO_connect(JSContext* cx, uint32_t argc, jsval* vp)
                 {
                     //previous connection not found, create a new one
                     JS::RootedObject proto(cx, js_cocos2dx_socketio_prototype);
-                    JSObject *obj = JS_NewObject(cx, js_cocos2dx_socketio_class, proto, JS::NullPtr());
+                    JS::RootedObject obj(cx, JS_NewObject(cx, js_cocos2dx_socketio_class, proto, JS::NullPtr()));
                     p = jsb_new_proxy(ret, obj);
                     JS::RootedObject jsdelegate(cx, p->obj);
                     siodelegate->setJSDelegate(jsdelegate);
@@ -297,7 +297,7 @@ static bool _js_set_SIOClient_tag(JSContext* cx, uint32_t argc, jsval* vp)
 {
     CCLOG("JSB SocketIO.setTag method called");
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsobj = args.thisv().toObjectOrNull();
+    JS::RootedObject jsobj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     SIOClient* cobj = (SIOClient *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
@@ -320,7 +320,7 @@ static bool _js_get_SIOClient_tag(JSContext* cx, uint32_t argc, jsval* vp)
 {
     CCLOG("JSB SocketIO.getTag method called");
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject* jsobj = args.thisv().toObjectOrNull();
+    JS::RootedObject jsobj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     SIOClient* cobj = (SIOClient *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");

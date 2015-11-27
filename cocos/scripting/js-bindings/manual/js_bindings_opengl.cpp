@@ -87,7 +87,7 @@ bool js_cocos2dx_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 
         JS::RootedObject proto(cx, typeClass->proto.ref());
         JS::RootedObject parentProto(cx, typeClass->parentProto.ref());
-        JSObject *obj = JS_NewObject(cx, typeClass->jsclass, proto, parentProto);
+        JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
         args.rval().set(OBJECT_TO_JSVAL(obj));
         // link the native object with the javascript object

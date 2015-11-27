@@ -224,7 +224,8 @@ void removeJSObject(JSContext* cx, void* nativeObj)
 
     nproxy = jsb_get_native_proxy(nativeObj);
     if (nproxy) {
-        jsproxy = jsb_get_js_proxy(nproxy->obj);
+        JS::RootedObject jsobj(cx, nproxy->obj);
+        jsproxy = jsb_get_js_proxy(jsobj);
         RemoveObjectRoot(cx, &jsproxy->obj);
         jsb_remove_proxy(nproxy, jsproxy);
     }
@@ -873,7 +874,8 @@ void ScriptingCore::removeScriptObjectByObject(Ref* pObj)
     if (nproxy)
     {
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        jsproxy = jsb_get_js_proxy(nproxy->obj);
+        JS::RootedObject jsobj(cx, nproxy->obj);
+        jsproxy = jsb_get_js_proxy(jsobj);
         if (jsproxy)
         {
             RemoveObjectRoot(cx, &jsproxy->obj);
