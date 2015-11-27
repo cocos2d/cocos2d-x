@@ -1915,10 +1915,28 @@ bool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret)
     return true;
 }
 
-js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj)
+js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsObj)
 {
     js_proxy_t* p = nullptr;
-    JS_NEW_PROXY(p, nativeObj, jsObj);
+    JSObject* ptr = jsObj.get();
+    do {
+        p = (js_proxy_t *)malloc(sizeof(js_proxy_t));
+        assert(p);
+        js_proxy_t* nativeObjJsObjtmp = NULL;
+        HASH_FIND_PTR(_native_js_global_ht, &nativeObj, nativeObjJsObjtmp);
+        assert(!nativeObjJsObjtmp);
+        p->ptr = nativeObj;
+        p->obj = ptr;
+        HASH_ADD_PTR(_native_js_global_ht, ptr, p);
+        p = (js_proxy_t *)malloc(sizeof(js_proxy_t));
+        assert(p);
+        nativeObjJsObjtmp = NULL;
+        HASH_FIND_PTR(_js_native_global_ht, &ptr, nativeObjJsObjtmp);
+        assert(!nativeObjJsObjtmp);
+        p->ptr = nativeObj;
+        p->obj = ptr;
+        HASH_ADD_PTR(_js_native_global_ht, obj, p);
+    } while(0);
     return p;
 }
 
@@ -1929,10 +1947,11 @@ js_proxy_t* jsb_get_native_proxy(void* nativeObj)
     return p;
 }
 
-js_proxy_t* jsb_get_js_proxy(JSObject* jsObj)
+js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj)
 {
     js_proxy_t* p = nullptr;
-    JS_GET_NATIVE_PROXY(p, jsObj);
+    JSObject* ptr = jsObj.get();
+    JS_GET_NATIVE_PROXY(p, ptr);
     return p;
 }
 

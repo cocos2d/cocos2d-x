@@ -113,7 +113,7 @@ bool jsval_to_obb(JSContext *cx, JS::HandleValue vp, cocos2d::OBB* ret);
 bool jsval_to_ray(JSContext *cx, JS::HandleValue vp, cocos2d::Ray* ret);
 
 // forward declaration
-js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
+js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj);
 
 template <class T>
 bool jsvals_variadic_to_ccvector( JSContext *cx, /*jsval *vp, int argc,*/const JS::CallArgs& args, cocos2d::Vector<T>* ret)
