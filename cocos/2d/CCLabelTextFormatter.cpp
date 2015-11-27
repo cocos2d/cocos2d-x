@@ -71,9 +71,9 @@ void Label::computeAlignmentOffset()
     }
 }
 
-static int getFirstWordLen(const std::u16string& utf16Text, int startIndex, int textLen)
+static int getFirstWordLen(const std::u32string& utf32Text, int startIndex, int textLen)
 {
-    auto character = utf16Text[startIndex];
+    auto character = utf32Text[startIndex];
     if (StringUtils::isCJKUnicode(character) || StringUtils::isUnicodeSpace(character) || character == '\n')
     {
         return 1;
@@ -82,7 +82,7 @@ static int getFirstWordLen(const std::u16string& utf16Text, int startIndex, int 
     int len = 1;
     for (int index = startIndex + 1; index < textLen; ++index)
     {
-        character = utf16Text[index];
+        character = utf32Text[index];
         if (character == '\n' || StringUtils::isUnicodeSpace(character) || StringUtils::isCJKUnicode(character))
         {
             break;
@@ -111,7 +111,7 @@ bool Label::multilineTextWrapByWord()
     
     for (int index = 0; index < textLen; )
     {
-        auto character = _utf16Text[index];
+        auto character = _utf32Text[index];
         if (character == '\n')
         {
             _linesWidth.push_back(letterRight);
@@ -124,7 +124,7 @@ bool Label::multilineTextWrapByWord()
             continue;
         }
 
-        auto wordLen = getFirstWordLen(_utf16Text, index, textLen);
+        auto wordLen = getFirstWordLen(_utf32Text, index, textLen);
         float wordHighestY = highestY;;
         float wordLowestY = lowestY;
         float wordRight = letterRight;
@@ -133,7 +133,7 @@ bool Label::multilineTextWrapByWord()
         for (int tmp = 0; tmp < wordLen;++tmp)
         {
             int letterIndex = index + tmp;
-            character = _utf16Text[letterIndex];
+            character = _utf32Text[letterIndex];
             if (character == '\r')
             {
                 recordPlaceholderInfo(letterIndex, character);
@@ -234,7 +234,7 @@ bool Label::multilineTextWrapByChar()
 
     for (int index = 0; index < textLen; index++)
     {
-        auto character = _utf16Text[index];
+        auto character = _utf32Text[index];
         if (character == '\r')
         {
             recordPlaceholderInfo(index, character);

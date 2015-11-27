@@ -483,7 +483,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     struct LetterInfo
     {
-        char16_t utf16Char;
+        char32_t utf16Char;
         bool valid;
         float positionX;
         float positionY;
@@ -512,7 +512,7 @@ protected:
     void updateLabelLetters();
     virtual void alignText();
     void computeAlignmentOffset();
-    bool computeHorizontalKernings(const std::u16string& stringToRender);
+    bool computeHorizontalKernings(const std::u32string& stringToRender);
 
     void recordLetterInfo(const cocos2d::Vec2& point, char16_t utf16Char, int letterIndex, int lineIndex);
     void recordPlaceholderInfo(int letterIndex, char16_t utf16Char);
@@ -532,7 +532,7 @@ protected:
 
     LabelType _currentLabelType;
     bool _contentDirty;
-    std::u16string _utf16Text;
+    std::u32string _utf32Text;
     std::string _utf8Text;
     int _numberOfLines;
 

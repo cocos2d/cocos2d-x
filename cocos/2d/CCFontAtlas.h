@@ -33,6 +33,7 @@
 
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
+#include "base/ccUTF8.h"
 #include "platform/CCStdC.h" // ssize_t on windows
 
 NS_CC_BEGIN
@@ -76,7 +77,13 @@ public:
     void addLetterDefinition(char16_t utf16Char, const FontLetterDefinition &letterDefinition);
     bool getLetterDefinitionForChar(char16_t utf16Char, FontLetterDefinition &letterDefinition);
     
-    bool prepareLetterDefinitions(const std::u16string& utf16String);
+    bool prepareLetterDefinitions(const std::u32string& utf32String);
+    CC_DEPRECATED_ATTRIBUTE inline bool prepareLetterDefinitions(const std::u16string& utf16String)
+    {
+        std::u32string utf32;
+        StringUtils::UTF16ToUTF32(utf16String, utf32);
+        return prepareLetterDefinitions(utf32);
+    }
 
     inline const std::unordered_map<ssize_t, Texture2D*>& getTextures() const{ return _atlasTextures;}
     void  addTexture(Texture2D *texture, int slot);
@@ -111,12 +118,12 @@ public:
 protected:
     void relaseTextures();
 
-    void findNewCharacters(const std::u16string& u16Text, std::unordered_map<unsigned short, unsigned short>& charCodeMap);
+    void findNewCharacters(const std::u32string& u32Text, std::unordered_map<char32_t, char32_t>& charCodeMap);
 
-    void conversionU16TOGB2312(const std::u16string& u16Text, std::unordered_map<unsigned short, unsigned short>& charCodeMap);
+    void conversionU32TOGB2312(const std::u32string& u32Text, std::unordered_map<char32_t, char32_t>& charCodeMap);
 
     std::unordered_map<ssize_t, Texture2D*> _atlasTextures;
-    std::unordered_map<char16_t, FontLetterDefinition> _letterDefinitions;
+    std::unordered_map<char32_t, FontLetterDefinition> _letterDefinitions;
     float _lineHeight;
     Font* _font;
     FontFreeType* _fontFreeType;

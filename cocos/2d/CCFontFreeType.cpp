@@ -208,10 +208,10 @@ FontAtlas * FontFreeType::createFontAtlas()
         _fontAtlas = new (std::nothrow) FontAtlas(*this);
         if (_fontAtlas && _usedGlyphs != GlyphCollection::DYNAMIC)
         {
-            std::u16string utf16;
-            if (StringUtils::UTF8ToUTF16(getGlyphCollection(), utf16))
+            std::u32string utf32;
+            if (StringUtils::UTF8ToUTF32(getGlyphCollection(), utf32))
             {
-                _fontAtlas->prepareLetterDefinitions(utf16);
+                _fontAtlas->prepareLetterDefinitions(utf32);
             }
         }
         this->release();
@@ -220,7 +220,7 @@ FontAtlas * FontFreeType::createFontAtlas()
     return _fontAtlas;
 }
 
-int * FontFreeType::getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const
+int* FontFreeType::getHorizontalKerningForTextUTF32(const std::u32string& text, int &outNumLetters) const
 {
     if (!_fontRef)
         return nullptr;
@@ -247,7 +247,7 @@ int * FontFreeType::getHorizontalKerningForTextUTF16(const std::u16string& text,
     return sizes;
 }
 
-int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const
+int  FontFreeType::getHorizontalKerningForChars(char32_t firstChar, char32_t secondChar) const
 {
     // get the ID to the char we need
     int glyphIndex1 = FT_Get_Char_Index(_fontRef, firstChar);
@@ -274,7 +274,7 @@ int FontFreeType::getFontAscender() const
     return (static_cast<int>(_fontRef->size->metrics.ascender >> 6));
 }
 
-unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance)
+unsigned char* FontFreeType::getGlyphBitmap(char32_t theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance)
 {
     bool invalidChar = true;
     unsigned char* ret = nullptr;
@@ -396,7 +396,7 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
     }
 }
 
-unsigned char * FontFreeType::getGlyphBitmapWithOutline(unsigned short theChar, FT_BBox &bbox)
+unsigned char* FontFreeType::getGlyphBitmapWithOutline(char32_t theChar, FT_BBox &bbox)
 {   
     unsigned char* ret = nullptr;
     if (FT_Load_Char(_fontRef, theChar, FT_LOAD_NO_BITMAP) == 0)

@@ -172,34 +172,36 @@ bool FontAtlas::getLetterDefinitionForChar(char16_t utf16Char, FontLetterDefinit
     }
 }
 
-void FontAtlas::conversionU16TOGB2312(const std::u16string& u16Text, std::unordered_map<unsigned short, unsigned short>& charCodeMap)
+void FontAtlas::conversionU32TOGB2312(const std::u32string& u32Text, std::unordered_map<char32_t, char32_t>& charCodeMap)
 {
-    size_t strLen = u16Text.length();
+    size_t strLen = u32Text.length();
     auto gb2312StrSize = strLen * 2;
     auto gb2312Text = new (std::nothrow) char[gb2312StrSize];
     memset(gb2312Text, 0, gb2312StrSize);
-
+    
     switch (_fontFreeType->getEncoding())
     {
     case FT_ENCODING_GB2312:
     {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+        std::u16string u16Text;
+        StringUtils::UTF32ToUTF16(u32Text, u16Text);
         WideCharToMultiByte(936, NULL, (LPCWCH)u16Text.c_str(), strLen, (LPSTR)gb2312Text, gb2312StrSize, NULL, NULL);
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-        conversionEncodingJNI((char*)u16Text.c_str(), gb2312StrSize, "UTF-16LE", gb2312Text, "GB2312");
+        conversionEncodingJNI((char*)u32Text.c_str(), gb2312StrSize, "UTF-16LE", gb2312Text, "GB2312");
 #else
         if (_iconv == nullptr)
         {
-            _iconv = iconv_open("gb2312", "utf-16le");
+            _iconv = iconv_open("gb2312", "utf-32le");
         }
 
         if (_iconv == (iconv_t)-1)
         {
-            CCLOG("conversion from utf16 to gb2312 not available");
+            CCLOG("conversion from utf32 to gb2312 not available");
         }
         else
         {
-            char* pin = (char*)u16Text.c_str();
+            char* pin = (char*)u32Text.c_str();
             char* pout = gb2312Text;
             size_t inLen = strLen * 2;
             size_t outLen = gb2312StrSize;
@@ -216,20 +218,20 @@ void FontAtlas::conversionU16TOGB2312(const std::u16string& u16Text, std::unorde
 
     unsigned short gb2312Code = 0;
     unsigned char* dst = (unsigned char*)&gb2312Code;
-    unsigned short u16Code;
+    char32_t u32Code;
     for (size_t index = 0, gbIndex = 0; index < strLen; ++index)
     {
-        u16Code = u16Text[index];
-        if (u16Code < 256)
+        u32Code = u32Text[index];
+        if (u32Code < 256)
         {
-            charCodeMap[u16Code] = u16Code;
+            charCodeMap[u32Code] = u32Code;
             gbIndex += 1;
         }
         else
         {
             dst[0] = gb2312Text[gbIndex + 1];
             dst[1] = gb2312Text[gbIndex];
-            charCodeMap[u16Code] = gb2312Code;
+            charCodeMap[u32Code] = gb2312Code;
 
             gbIndex += 2;
         }
@@ -238,26 +240,26 @@ void FontAtlas::conversionU16TOGB2312(const std::u16string& u16Text, std::unorde
     delete[] gb2312Text;
 }
 
-void FontAtlas::findNewCharacters(const std::u16string& u16Text, std::unordered_map<unsigned short, unsigned short>& charCodeMap)
+void FontAtlas::findNewCharacters(const std::u32string& u32Text, std::unordered_map<char32_t, char32_t>& charCodeMap)
 {
-    std::u16string newChars;
+    std::u32string newChars;
     FT_Encoding charEncoding = _fontFreeType->getEncoding();
 
     //find new characters
     if (_letterDefinitions.empty())
     {
-        newChars = u16Text;
+        newChars = u32Text;
     }
     else
     {
-        auto length = u16Text.length();
+        auto length = u32Text.length();
         newChars.reserve(length);
         for (size_t i = 0; i < length; ++i)
         {
-            auto outIterator = _letterDefinitions.find(u16Text[i]);
+            auto outIterator = _letterDefinitions.find(u32Text[i]);
             if (outIterator == _letterDefinitions.end())
             {
-                newChars.push_back(u16Text[i]);
+                newChars.push_back(u32Text[i]);
             }
         }
     }
@@ -268,15 +270,15 @@ void FontAtlas::findNewCharacters(const std::u16string& u16Text, std::unordered_
         {
         case FT_ENCODING_UNICODE:
         {
-            for (auto u16Code : newChars)
+            for (auto u32Code : newChars)
             {
-                charCodeMap[u16Code] = u16Code;
+                charCodeMap[u32Code] = u32Code;
             }
             break;
         }
         case FT_ENCODING_GB2312:
         {
-            conversionU16TOGB2312(newChars, charCodeMap);
+            conversionU32TOGB2312(newChars, charCodeMap);
             break;
         }
         default:
@@ -286,15 +288,15 @@ void FontAtlas::findNewCharacters(const std::u16string& u16Text, std::unordered_
     }
 }
 
-bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16Text)
+bool FontAtlas::prepareLetterDefinitions(const std::u32string& utf32String)
 {
     if (_fontFreeType == nullptr)
     {
         return false;
     } 
     
-    std::unordered_map<unsigned short, unsigned short> codeMapOfNewChar;
-    findNewCharacters(utf16Text, codeMapOfNewChar);
+    std::unordered_map<char32_t, char32_t> codeMapOfNewChar;
+    findNewCharacters(utf32String, codeMapOfNewChar);
     if (codeMapOfNewChar.empty())
     {
         return false;

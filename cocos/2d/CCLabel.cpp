@@ -428,7 +428,7 @@ void Label::reset()
     _contentDirty = false;
     _numberOfLines = 0;
     _lengthOfString = 0;
-    _utf16Text.clear();
+    _utf32Text.clear();
     _utf8Text.clear();
 
     TTFConfig temp;
@@ -601,11 +601,7 @@ void Label::setString(const std::string& text)
         _utf8Text = text;
         _contentDirty = true;
 
-        std::u16string utf16String;
-        if (StringUtils::UTF8ToUTF16(_utf8Text, utf16String))
-        {
-            _utf16Text  = utf16String;
-        }
+        StringUtils::UTF8ToUTF32(_utf8Text, _utf32Text);
     }
 }
 
@@ -703,13 +699,13 @@ void Label::updateLabelLetters()
 
 void Label::alignText()
 {
-    if (_fontAtlas == nullptr || _utf16Text.empty())
+    if (_fontAtlas == nullptr || _utf32Text.empty())
     {
         setContentSize(Size::ZERO);
         return;
     }
 
-    _fontAtlas->prepareLetterDefinitions(_utf16Text);
+    _fontAtlas->prepareLetterDefinitions(_utf32Text);
     auto& textures = _fontAtlas->getTextures();
     if (textures.size() > _batchNodes.size())
     {
@@ -752,7 +748,7 @@ void Label::alignText()
     updateColor();
 }
 
-bool Label::computeHorizontalKernings(const std::u16string& stringToRender)
+bool Label::computeHorizontalKernings(const std::u32string& stringToRender)
 {
     if (_horizontalKernings)
     {
@@ -761,7 +757,7 @@ bool Label::computeHorizontalKernings(const std::u16string& stringToRender)
     }
 
     int letterCount = 0;
-    _horizontalKernings = _fontAtlas->getFont()->getHorizontalKerningForTextUTF16(stringToRender, letterCount);
+    _horizontalKernings = _fontAtlas->getFont()->getHorizontalKerningForTextUTF32(stringToRender, letterCount);
 
     if(!_horizontalKernings)
         return false;
@@ -1105,13 +1101,9 @@ void Label::updateContent()
 
     if (_fontAtlas)
     {
-        std::u16string utf16String;
-        if (StringUtils::UTF8ToUTF16(_utf8Text, utf16String))
-        {
-            _utf16Text = utf16String;
-        }
-
-        computeHorizontalKernings(_utf16Text);
+        
+        StringUtils::UTF8ToUTF32(_utf8Text, _utf32Text); // will leave output u32string unchanged if convert failed
+        computeHorizontalKernings(_utf32Text);
         alignText();
     }
     else
@@ -1501,17 +1493,17 @@ void Label::computeStringNumLines()
 {
     int quantityOfLines = 1;
 
-    if (_utf16Text.empty())
+    if (_utf32Text.empty())
     {
         _numberOfLines = 0;
         return;
     }
 
     // count number of lines
-    size_t stringLen = _utf16Text.length();
+    size_t stringLen = _utf32Text.length();
     for (size_t i = 0; i < stringLen - 1; ++i)
     {
-        if (_utf16Text[i] == '\n')
+        if (_utf32Text[i] == '\n')
         {
             quantityOfLines++;
         }
@@ -1537,7 +1529,7 @@ int Label::getStringNumLines()
 
 int Label::getStringLength()
 {
-    _lengthOfString = static_cast<int>(_utf16Text.length());
+    _lengthOfString = static_cast<int>(_utf32Text.length());
     return _lengthOfString;
 }
 
