@@ -46,6 +46,7 @@ class Rect;
 class Size;
 class Texture2D;
 struct transformValues_;
+struct CC_DLL ResouceData;
 
 #ifdef SPRITE_RENDER_IN_SUBPIXEL
 #undef SPRITE_RENDER_IN_SUBPIXEL
@@ -474,7 +475,10 @@ public:
     virtual bool isOpacityModifyRGB() const override;
     /// @}
 
-CC_CONSTRUCTOR_ACCESS:
+    ResouceData getRenderFile();
+    void setOffsetPosFromCenter(Vec2 offsetFromCenter);
+
+CC_CONSTRUCTOR_ACCESS :
 	/**
      * @js ctor
      */
@@ -633,6 +637,10 @@ protected:
     bool _flippedY;                         /// Whether the sprite is flipped vertically or not
 
     bool _insideBounds;                     /// whether or not the sprite was inside bounds the previous frame
+
+    std::string _fileName;
+    int _fileType;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
 };

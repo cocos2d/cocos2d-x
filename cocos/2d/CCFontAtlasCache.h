@@ -53,7 +53,10 @@ public:
      It will purge the textures atlas and if multiple texture exist in one FontAtlas.
      */
     static void purgeCachedData();
-    
+
+    static void reloadFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset = Vec2::ZERO);
+    static void unloadFontAtlasTTF(const std::string& fontFileName);
+
 private:
     static std::string generateFontName(const std::string& fontFileName, float size, bool useDistanceField);
     static std::unordered_map<std::string, FontAtlas *> _atlasMap;

@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
 #include "2d/CCCamera.h"
+#include "2d/CocosStudioExtension.h"
 
 #include "deprecated/CCString.h"
 
@@ -164,7 +165,14 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect)
 
 bool Sprite::initWithFile(const std::string& filename)
 {
-    CCASSERT(filename.size()>0, "Invalid filename for sprite");
+    if (filename.empty())
+    {
+        CCLOG("Call Sprite::initWithFile with blank resource filename.");
+        return false;
+    }
+
+    _fileName = filename;
+    _fileType = 0;
 
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (texture)
@@ -184,6 +192,9 @@ bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
 {
     CCASSERT(filename.size()>0, "Invalid filename");
 
+    _fileName = filename;
+    _fileType = 0;
+
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (texture)
     {
@@ -199,6 +210,9 @@ bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
 bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
 {
     CCASSERT(spriteFrameName.size() > 0, "Invalid spriteFrameName");
+
+    _fileName = spriteFrameName;
+    _fileType = 1;
 
     SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
     return initWithSpriteFrame(frame);
@@ -1143,6 +1157,19 @@ PolygonInfo& Sprite::getPolygonInfo()
 void Sprite::setPolygonInfo(const PolygonInfo& info)
 {
     _polyInfo = info;
+}
+
+void Sprite::setOffsetPosFromCenter(Vec2 offsetFromCenter)
+{
+    _unflippedOffsetPositionFromCenter = offsetFromCenter;
+}
+
+ResouceData Sprite::getRenderFile()
+{
+    ResouceData rData;
+    rData.type = (int)_fileType;
+    rData.file = _fileName;
+    return rData;
 }
 
 NS_CC_END

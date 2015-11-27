@@ -33,6 +33,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+struct CC_DLL ResouceData;
+
 /**
  * @addtogroup _2d
  * @{
@@ -760,7 +762,9 @@ public:
     * @lua NA
     */
     virtual const BlendFunc &getBlendFunc() const override;
-    
+
+    ResouceData getRenderFile();
+
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor

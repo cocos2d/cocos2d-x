@@ -74,6 +74,9 @@ public:
 
     virtual FontAtlas* createFontAtlas() override;
     virtual int getFontMaxHeight() const override { return _lineHeight; }
+
+    static void releaseFont(const std::string &fontName);
+
 private:
     static const char* _glyphASCII;
     static const char* _glyphNEHE;

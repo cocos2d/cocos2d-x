@@ -37,6 +37,7 @@ class TMXLayer;
 class TMXLayerInfo;
 class TMXTilesetInfo;
 class TMXMapInfo;
+struct CC_DLL ResouceData;
 
 /**
  * @addtogroup _2d
@@ -251,7 +252,10 @@ public:
      * @js NA
      */
     virtual std::string getDescription() const override;
-    
+
+    ResouceData getRenderFile();
+    int  getLayerNum();
+
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
@@ -287,6 +291,11 @@ protected:
     
     //! tile properties
     ValueMapIntKey _tileProperties;
+
+    std::string _tmxFile;
+    int _tmxLayerNum;
+
+    static const int TMXLayerTag = 32768;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TMXTiledMap);

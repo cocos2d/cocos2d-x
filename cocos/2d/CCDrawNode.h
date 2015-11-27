@@ -38,6 +38,8 @@
 
 NS_CC_BEGIN
 
+static const int DEFAULT_LINE_WIDTH = 2;
+
 class PointArray;
 /**
  * @addtogroup _2d
@@ -56,7 +58,7 @@ public:
      *
      * @return Return an autorelease object.
      */
-    static DrawNode* create();
+    static DrawNode* create(int defaultLineWidth = DEFAULT_LINE_WIDTH);
     
     /** Draw a point.
      *
@@ -312,9 +314,18 @@ public:
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
     void setLineWidth(int lineWidth);
-    
+
+    // Set enable or disable multisampling effect on CocosStudio guide lines.
+    void setLineSmooth(bool enable);
+
+    // Get multisampling effect on CocosStudio guide lines mode.
+    bool isLineSmooth();
+
+    // Get CocosStudio guide lines width.
+    float getLineWidth();
+
 CC_CONSTRUCTOR_ACCESS:
-    DrawNode();
+    DrawNode(int lineWidth = DEFAULT_LINE_WIDTH);
     virtual ~DrawNode();
     virtual bool init() override;
 
@@ -355,6 +366,8 @@ protected:
     
     int         _lineWidth;
 
+    bool _lineSmoothEnable;
+    int  _defaultLineWidth;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);
 };
