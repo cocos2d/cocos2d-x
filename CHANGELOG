@@ -22,6 +22,7 @@ cocos2d-x-3.10 December ? 2015
 [FIX]           UI: Fix EditBox editBoxEditingDidEnd may use the original text after change the text of EditBox in user script.
 [FIX]           Audio: Fix `FinishCallback` never be called in Windows.
 [FIX]           UI:  Fix Layout stencil clipping nested with Clipping Node rendering issue.
+[FIX]           UI:  Keyboard doesn't hide when click the screen outside of EditBox on iOS platform.
 
 cocos2d-x-3.9 November.09 2015
 
