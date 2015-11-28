@@ -337,12 +337,16 @@ public:
     void scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec);
     
     /**
-     * @brief Query current selected widget's idnex.
-     *
-     
+     * @brief Query current selected widget's index.
      * @return A index of a selected item.
      */
     ssize_t getCurSelectedIndex() const;
+
+    /**
+     * @brief Set current selected widget's index and call TouchEventType::ENDED event.
+     * @param A index of a selected item.
+     */
+    void setSelectedItemIndex(int itemIndex);
     
     /**
      * Add a event click callback to ListView, then one item of Listview is clicked, the callback will be called.
