@@ -157,6 +157,18 @@ void FontAtlas::addLetterDefinition(char16_t utf16Char, const FontLetterDefiniti
     _letterDefinitions[utf16Char] = letterDefinition;
 }
 
+void FontAtlas::scaleFontLetterDefinition(float scaleFactor)
+{
+    for (auto&& fontDefinition : _letterDefinitions) {
+        auto& letterDefinition = fontDefinition.second;
+        letterDefinition.width *= scaleFactor;
+        letterDefinition.height *= scaleFactor;
+        letterDefinition.offsetX *= scaleFactor;
+        letterDefinition.offsetY *= scaleFactor;
+        letterDefinition.xAdvance *= scaleFactor;
+    }
+}
+
 bool FontAtlas::getLetterDefinitionForChar(char16_t utf16Char, FontLetterDefinition &letterDefinition)
 {
     auto outIterator = _letterDefinitions.find(utf16Char);
