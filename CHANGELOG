@@ -9,7 +9,8 @@ cocos2d-x-3.10 December ? 2015
 [REFINE]        UI: Rewrite Scale9Sprite and improve the scale9sprite performance and reduce memory consumption.
 [REFINE]        3D: Change char* to string in Terrain.
 [REFINE]        Editor: Merge Studio ActionTimeLine change back into engine.
-[REFINe]        Mac: Make engine compatible for 32bit Mac.
+[REFINE]        Mac: Make engine compatible for 32bit Mac.
+[REFINE]        Audio: AudioEngine on Linux replace the original simple AudioEngine with a new version of FMOD.
 
 [FIX]           Core: Fix premultiplyAlpha for mipmaps and compressed textures.
 [FIX]           UI: Fix Scale9sprite rendering error when content size smaller than the sum of leftInset and rightInset.
