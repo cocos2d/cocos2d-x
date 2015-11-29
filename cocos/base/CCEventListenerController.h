@@ -28,6 +28,7 @@
 
 #include "platform/CCPlatformMacros.h"
 #include "base/CCEventListener.h"
+#include "base/CCController.h"
 
 /**
  * @addtogroup base
@@ -37,7 +38,6 @@
 NS_CC_BEGIN
 
 class Event;
-class Controller;
 
 /** @class EventListenerController
  * @param Controller event listener.
@@ -61,11 +61,11 @@ public:
 	std::function<void(Controller*, Event*)> onConnected;
 	std::function<void(Controller*, Event*)> onDisconnected;
     
-    std::function<void(Controller*, int, Event*)> onKeyDown;
-    std::function<void(Controller*, int, Event*)> onKeyUp;
-	std::function<void(Controller*, int, Event*)> onKeyRepeat;
+    std::function<void(Controller*, Controller::Key, Event*)> onKeyDown;
+    std::function<void(Controller*, Controller::Key, Event*)> onKeyUp;
+	std::function<void(Controller*, Controller::Key, Event*)> onKeyRepeat;
     
-	std::function<void(Controller*, int, Event*)> onAxisEvent;
+	std::function<void(Controller*, Controller::Key, Event*)> onAxisEvent;
     
 protected:
     bool init();

@@ -26,7 +26,6 @@
 #include "base/CCEventListenerController.h"
 #include "base/CCEventController.h"
 #include "base/ccMacros.h"
-#include "base/CCController.h"
 
 NS_CC_BEGIN
 
@@ -66,8 +65,8 @@ bool EventListenerController::init()
             break;
         case EventController::ControllerEventType::BUTTON_STATUS_CHANGED:
             {
-                const auto&  keyStatus = evtController->_controller->_allKeyStatus[evtController->_keyCode];
-                const auto&  keyPrevStatus = evtController->_controller->_allKeyPrevStatus[evtController->_keyCode];
+                const auto& keyStatus = evtController->_controller->_allKeyStatus[static_cast<int>(evtController->_keyCode)];
+                const auto& keyPrevStatus = evtController->_controller->_allKeyPrevStatus[static_cast<int>(evtController->_keyCode)];
 
                 if (this->onKeyDown && keyStatus.isPressed && !keyPrevStatus.isPressed)
                 {
