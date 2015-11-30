@@ -95,9 +95,9 @@ public:
     int getVertexSizeInBytes() const;
 
     /**texture getter and setter*/
-    void setTexture(const std::string& texPath);
-    void setTexture(Texture2D* tex);
-    Texture2D* getTexture() const;
+    void setTexture(const std::string& texPath, unsigned int index = 0);
+    void setTexture(Texture2D* tex, unsigned int index = 0);
+    Texture2D* getTexture(unsigned int index = 0) const;
     
     /**visible getter and setter*/
     void setVisible(bool visible);
@@ -204,7 +204,7 @@ protected:
     void setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigned int lightmask);
     void bindMeshCommand();
 
-    Texture2D*          _texture;  //texture that submesh is using
+    std::vector<Texture2D *> _textureList; //textures that submesh is using
     MeshSkin*           _skin;     //skin
     bool                _visible; // is the submesh visible
     bool                _isTransparent; // is this mesh transparent, it is a property of material in fact

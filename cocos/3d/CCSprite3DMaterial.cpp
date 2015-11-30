@@ -100,6 +100,22 @@ void Sprite3DMaterial::createBuiltInMaterial()
     {
         _diffuseNoTexMaterial->_type = Sprite3DMaterial::MaterialType::DIFFUSE_NOTEX;
     }
+
+    glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_BUMPEDNORMAL_TEXTURE);
+    glprogramstate = GLProgramState::create(glProgram);
+    _bumpedDiffuseMaterial = new (std::nothrow) Sprite3DMaterial();
+    if (_bumpedDiffuseMaterial && _bumpedDiffuseMaterial->initWithGLProgramState(glprogramstate))
+    {
+        _bumpedDiffuseMaterial->_type = Sprite3DMaterial::MaterialType::BUMPED_DIFFUSE;
+    }
+
+    glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_BUMPEDNORMAL_TEXTURE);
+    glprogramstate = GLProgramState::create(glProgram);
+    _bumpedDiffuseMaterialSkin = new (std::nothrow) Sprite3DMaterial();
+    if (_bumpedDiffuseMaterialSkin && _bumpedDiffuseMaterialSkin->initWithGLProgramState(glprogramstate))
+    {
+        _bumpedDiffuseMaterialSkin->_type = Sprite3DMaterial::MaterialType::BUMPED_DIFFUSE;
+    }
 }
 
 void Sprite3DMaterial::releaseBuiltInMaterial()
@@ -182,7 +198,7 @@ Sprite3DMaterial* Sprite3DMaterial::createBuiltInMaterial(MaterialType type, boo
             break;
             
         case Sprite3DMaterial::MaterialType::BUMPED_DIFFUSE:
-            CCASSERT(0, "not implement");
+            material = skinned ? _bumpedDiffuseMaterialSkin : _bumpedDiffuseMaterial;
             break;
             
         default:

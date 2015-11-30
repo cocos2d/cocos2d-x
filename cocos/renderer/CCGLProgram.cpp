@@ -85,6 +85,8 @@ const char* GLProgram::SHADER_3D_SKINPOSITION_TEXTURE = "Shader3DSkinPositionTex
 const char* GLProgram::SHADER_3D_POSITION_NORMAL = "Shader3DPositionNormal";
 const char* GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE = "Shader3DPositionNormalTexture";
 const char* GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE = "Shader3DSkinPositionNormalTexture";
+const char* GLProgram::SHADER_3D_POSITION_BUMPEDNORMAL_TEXTURE = "Shader3DPositionBumpedNormalTexture";
+const char* GLProgram::SHADER_3D_SKINPOSITION_BUMPEDNORMAL_TEXTURE = "Shader3DSkinPositionBumpedNormalTexture";
 const char* GLProgram::SHADER_3D_PARTICLE_COLOR = "Shader3DParticleColor";
 const char* GLProgram::SHADER_3D_PARTICLE_TEXTURE = "Shader3DParticleTexture";
 const char* GLProgram::SHADER_3D_SKYBOX = "Shader3DSkybox";
@@ -118,6 +120,10 @@ const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD3 = "a_texCoord3";
 const char* GLProgram::ATTRIBUTE_NAME_NORMAL = "a_normal";
 const char* GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT = "a_blendWeight";
 const char* GLProgram::ATTRIBUTE_NAME_BLEND_INDEX = "a_blendIndex";
+const char* GLProgram::ATTRIBUTE_NAME_TANGENT = "a_tangent";
+const char* GLProgram::ATTRIBUTE_NAME_BINORMAL = "a_binormal";
+
+
 
 static const char * COCOS2D_SHADER_UNIFORMS =
         "uniform mat4 CC_PMatrix;\n"
@@ -174,7 +180,6 @@ GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, co
     CC_SAFE_DELETE(ret);
     return nullptr;
 }
-
 
 GLProgram::GLProgram()
 : _program(0)
