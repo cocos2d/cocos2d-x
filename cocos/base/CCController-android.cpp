@@ -183,12 +183,12 @@ extern "C" {
 
     void Java_org_cocos2dx_lib_GameControllerAdapter_nativeControllerButtonEvent(JNIEnv*  env, jobject thiz, jstring deviceName, jint controllerID, jint button, jboolean isPressed, jfloat value, jboolean isAnalog)
     {
-        cocos2d::ControllerImpl::onButtonEvent(cocos2d::JniHelper::jstring2string(deviceName), controllerID, static_cast<Controller::Key>(button), isPressed, value, isAnalog);
+        cocos2d::ControllerImpl::onButtonEvent(cocos2d::JniHelper::jstring2string(deviceName), controllerID, static_cast<cocos2d::Controller::Key>(button), isPressed, value, isAnalog);
     }
 
     void Java_org_cocos2dx_lib_GameControllerAdapter_nativeControllerAxisEvent(JNIEnv*  env, jobject thiz, jstring deviceName, jint controllerID, jint axis, jfloat value, jboolean isAnalog)
     {
-        cocos2d::ControllerImpl::onAxisEvent(cocos2d::JniHelper::jstring2string(deviceName), controllerID, static_cast<Controller::Key>(axis), value, isAnalog);
+        cocos2d::ControllerImpl::onAxisEvent(cocos2d::JniHelper::jstring2string(deviceName), controllerID, static_cast<cocos2d::Controller::Key>(axis), value, isAnalog);
     }
 
 } // extern "C" {
