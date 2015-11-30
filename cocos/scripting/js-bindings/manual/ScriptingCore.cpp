@@ -2004,23 +2004,24 @@ bool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret)
 js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsObj)
 {
     js_proxy_t* p = nullptr;
-    JSObject* ptr = jsObj.get();
+    JSObject* jsptr = jsObj.get();
+    
+    js_proxy_t* nativeJsProxy = NULL;
+    js_proxy_t* jsNativeProxy = NULL;
+    HASH_FIND_PTR(_native_js_global_ht, &nativeObj, nativeJsProxy);
+    HASH_FIND_PTR(_js_native_global_ht, &jsptr, jsNativeProxy);
+    assert(!nativeJsProxy && !jsNativeProxy);
+    
     do {
         p = (js_proxy_t *)malloc(sizeof(js_proxy_t));
         assert(p);
-        js_proxy_t* nativeObjJsObjtmp = NULL;
-        HASH_FIND_PTR(_native_js_global_ht, &nativeObj, nativeObjJsObjtmp);
-        assert(!nativeObjJsObjtmp);
         p->ptr = nativeObj;
-        p->obj = ptr;
+        p->obj = jsptr;
         HASH_ADD_PTR(_native_js_global_ht, ptr, p);
         p = (js_proxy_t *)malloc(sizeof(js_proxy_t));
         assert(p);
-        nativeObjJsObjtmp = NULL;
-        HASH_FIND_PTR(_js_native_global_ht, &ptr, nativeObjJsObjtmp);
-        assert(!nativeObjJsObjtmp);
         p->ptr = nativeObj;
-        p->obj = ptr;
+        p->obj = jsptr;
         HASH_ADD_PTR(_js_native_global_ht, obj, p);
     } while(0);
     return p;
