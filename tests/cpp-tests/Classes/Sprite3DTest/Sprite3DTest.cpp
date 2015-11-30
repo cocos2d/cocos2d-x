@@ -2567,13 +2567,13 @@ void Sprite3DPropertyTest::update(float delta)
 }
 void Sprite3DPropertyTest::printMeshName(cocos2d::Ref* sender)
 {
-    CCLOG("MeshName Begin\n");
+    CCLOG("MeshName Begin");
     Vector<Mesh*> meshes =_sprite->getMeshes();
-    for each (Mesh* mesh in meshes)
+    for(Mesh* mesh : meshes)
     {
-        CCLOG("MeshName: %s \n", mesh->getName().c_str());
+        CCLOG("MeshName: %s ", mesh->getName().c_str());
     }
-    CCLOG("MeshName End\n");
+    CCLOG("MeshName End");
 }
 void Sprite3DPropertyTest::removeUsedTexture(cocos2d::Ref* sender)
 {
