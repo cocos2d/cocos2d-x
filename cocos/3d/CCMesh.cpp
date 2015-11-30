@@ -339,6 +339,7 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
     if (isTransparent)
         flags |= Node::FLAGS_RENDER_AS_3D;
 
+    this->checkTexture();
 
     _meshCommand.init(globalZ,
                       _material,
@@ -662,22 +663,37 @@ GLuint Mesh::getIndexBuffer() const
     return _meshIndexData->getIndexBuffer()->getVBO();
 }
 
-GLuint Mesh::getTextureName()
+void Mesh::checkTexture()
 {
+    Texture2D* cacheTex = nullptr;
     if (TextureCache::getInstance()->isDirty())
     {
-        Texture2D* cacheTex = TextureCache::getInstance()->getTextureForKey(_texFile);
-        _texture = cacheTex;
+        cacheTex = TextureCache::getInstance()->getTextureForKey(_texFile);
+        if (cacheTex == nullptr)
+        {
+            cacheTex = getDummyTexture();
+        }
     }
-
-    if (_texture == nullptr || !_texture->isValid())
+    else if (_texture != nullptr && !_texture->isValid())
     {
-        _texture = nullptr;
-        Texture2D* dummyTex = getDummyTexture();
-        return dummyTex->getName();
+        cacheTex = getDummyTexture();
     }
 
-    return _texture->getName();
+    if (cacheTex != nullptr && _texture != cacheTex)
+    {
+        CC_SAFE_RETAIN(cacheTex);
+        CC_SAFE_RELEASE(_texture);
+        _texture = cacheTex;
+
+        if (_material) {
+            auto technique = _material->_currentTechnique;
+            for (auto& pass : technique->_passes)
+            {
+                pass->setTexture(_texture);
+            }
+        }
+        bindMeshCommand();
+    }
 }
 
 NS_CC_END
