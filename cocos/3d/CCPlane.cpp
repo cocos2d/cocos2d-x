@@ -92,17 +92,4 @@ PointSide Plane::getSide(const Vec3& point) const
         return PointSide::IN_PLANE;
 }
 
-PointSide Plane::getSide(const Vec3& point, const Vec3& tolerance) const
-{
-    float dist = dist2Plane(point);
-    float maxAbsDist = fabs(_normal.x * tolerance.x) + fabs(_normal.y * tolerance.y) + fabs(_normal.z * tolerance.z);
-
-    if (dist > maxAbsDist)
-        return PointSide::FRONT_PLANE;
-    else if (dist < -maxAbsDist)
-        return PointSide::BEHIND_PLANE;
-    else
-        return PointSide::IN_PLANE;
-}
-
 NS_CC_END
