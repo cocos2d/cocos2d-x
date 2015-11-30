@@ -75,7 +75,15 @@ bool UIButtonTest::init()
 
         _uiLayer->addChild(imageView);
 
+        _button = button;
 
+        TTFConfig ttfConfig("fonts/arial.ttf", 15);
+        auto label1 = Label::createWithTTF(ttfConfig, "Print Resources");
+        auto item1 = MenuItemLabel::create(label1, CC_CALLBACK_1(UIButtonTest::printCheckBoxResources, this));
+        item1->setPosition(Vec2(VisibleRect::left().x + 60, VisibleRect::bottom().y + item1->getContentSize().height * 3));
+        auto pMenu1 = Menu::create(item1, nullptr);
+        pMenu1->setPosition(Vec2(0, 0));
+        this->addChild(pMenu1, 10);
 
         return true;
     }
@@ -115,6 +123,16 @@ void UIButtonTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
         default:
             break;
     }
+}
+
+void UIButtonTest::printCheckBoxResources(cocos2d::Ref* sender)
+{
+    cocos2d::ResouceData normalFileName = _button->getNormalFile();
+    CCLOG("normalFileName  Name : %s, Type: %d", normalFileName.file.c_str(), normalFileName.type);
+    cocos2d::ResouceData clickedFileName = _button->getPressedFile();
+    CCLOG("clickedFileName  Name : %s, Type: %d", clickedFileName.file.c_str(), clickedFileName.type);
+    cocos2d::ResouceData disabledFileName = _button->getDisabledFile();
+    CCLOG("disabledFileName  Name : %s, Type: %d", disabledFileName.file.c_str(), disabledFileName.type);
 }
 
 

@@ -53,6 +53,15 @@ bool UISliderTest::init()
         slider->addEventListener(CC_CALLBACK_2(UISliderTest::sliderEvent, this));
         _uiLayer->addChild(slider);
 
+        _slider = slider;
+
+        TTFConfig ttfConfig("fonts/arial.ttf", 15);
+        auto label1 = Label::createWithTTF(ttfConfig, "Print Resources");
+        auto item1 = MenuItemLabel::create(label1, CC_CALLBACK_1(UISliderTest::printCheckBoxResources, this));
+        item1->setPosition(Vec2(VisibleRect::left().x + 60, VisibleRect::bottom().y + item1->getContentSize().height * 3));
+        auto pMenu1 = Menu::create(item1, nullptr);
+        pMenu1->setPosition(Vec2(0, 0));
+        this->addChild(pMenu1, 10);
         
         return true;
     }
@@ -68,6 +77,19 @@ void UISliderTest::sliderEvent(Ref *pSender, Slider::EventType type)
         int maxPercent = slider->getMaxPercent();
         _displayValueLabel->setString(StringUtils::format("Percent %f", 10000.0 * percent / maxPercent));
     }
+}
+void UISliderTest::printCheckBoxResources(cocos2d::Ref* sender)
+{
+    cocos2d::ResouceData textureFile = _slider->getBackFile();
+    CCLOG("textureFile  Name : %s, Type: %d", textureFile.file.c_str(), textureFile.type);
+    cocos2d::ResouceData progressBarTextureFile = _slider->getProgressBarFile();
+    CCLOG("progressBarTextureFile  Name : %s, Type: %d", progressBarTextureFile.file.c_str(), progressBarTextureFile.type);
+    cocos2d::ResouceData slidBallNormalTextureFile = _slider->getBallNormalFile();
+    CCLOG("slidBallNormalTextureFile  Name : %s, Type: %d", slidBallNormalTextureFile.file.c_str(), slidBallNormalTextureFile.type);
+    cocos2d::ResouceData slidBallPressedTextureFile = _slider->getBallPressedFile();
+    CCLOG("slidBallPressedTextureFile  Name : %s, Type: %d", slidBallPressedTextureFile.file.c_str(), slidBallPressedTextureFile.type);
+    cocos2d::ResouceData slidBallDisabledTextureFile = _slider->getBallDisabeldFile();
+    CCLOG("slidBallDisabledTextureFile  Name : %s, Type: %d", slidBallDisabledTextureFile.file.c_str(), slidBallDisabledTextureFile.type);
 }
 
 // UISliderTest_Scale9
