@@ -56,6 +56,9 @@ extern schedTarget_proxy_t *_schedObj_target_ht;
 
 extern callfuncTarget_proxy_t *_callfuncTarget_native_ht;
 
+extern JSClass  *jsb_FinalizeHook_class;
+extern JSObject *jsb_FinalizeHook_prototype;
+
 /**
  * You don't need to manage the returned pointer. They live for the whole life of
  * the app.
@@ -86,7 +89,7 @@ inline js_type_class_t *js_get_type_from_native(T* native_obj) {
  * time you do that in the C++ destructor.
  */
 template<class T>
-inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
+inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj, bool doRetainObj) {
     js_proxy_t *proxy;
     HASH_FIND_PTR(_native_js_global_ht, &native_obj, proxy);
     if (!proxy) {
@@ -102,18 +105,29 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
 
         JS::RootedObject proto(cx, typeProxy->proto.ref().get());
         JS::RootedObject parent(cx, typeProxy->parentProto.ref().get());
-        JS::RootedObject js_obj(cx, JS_NewObject(cx, typeProxy->jsclass, proto, parent));
-        proxy = jsb_new_proxy(native_obj, js_obj);
-#ifdef DEBUG
-        AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
-#else
-        AddObjectRoot(cx, &proxy->obj);
-#endif
+        JS::RootedObject jsObj(cx, JS_NewObject(cx, typeProxy->jsclass, proto, parent));
+        proxy = jsb_new_proxy(native_obj, jsObj);
+        
+        // Retain the native object to make sure the release won't have side effect
+        if (doRetainObj && std::is_convertible<T*, cocos2d::Ref*>::value) {
+            // Set finalize hook to automatically remove the proxy when finalize
+            proto.set(jsb_FinalizeHook_prototype);
+            JS::RootedObject hook(cx, JS_NewObject(cx, jsb_FinalizeHook_class, proto, JS::NullPtr()));
+            jsb_register_finalize_hook(hook.get(), jsObj.get());
+            JS::RootedValue hookVal(cx, OBJECT_TO_JSVAL(hook));
+            JS_SetProperty(cx, jsObj, "__hook", hookVal);
+            
+            cocos2d::Ref *refObj = (cocos2d::Ref *)native_obj;
+            int count = refObj->getReferenceCount();
+            refObj->retain();
+            ScriptingCore::retainCount++;
+            CCLOG("++++++RETAINED++++++ %d ref count: %d", ScriptingCore::retainCount, count+1);
+        }
+        
         return proxy;
     } else {
         return proxy;
     }
-    return NULL;
 }
 
 JS::Value anonEvaluate(JSContext *cx, JS::HandleObject thisObj, const char* string);

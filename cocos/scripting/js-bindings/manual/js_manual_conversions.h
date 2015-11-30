@@ -274,7 +274,7 @@ jsval meshVertexAttrib_to_jsval(JSContext* cx, const cocos2d::MeshVertexAttrib& 
 jsval uniform_to_jsval(JSContext* cx, const cocos2d::Uniform* uniform);
 
 template<class T>
-js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj);
+js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj, bool doRetainObj = true);
 
 template <class T>
 jsval ccvector_to_jsval(JSContext* cx, const cocos2d::Vector<T>& v)

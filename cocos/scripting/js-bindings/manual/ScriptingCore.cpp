@@ -1274,14 +1274,12 @@ bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::Eve
     std::string funcName = getTouchesFuncName(eventCode);
 
     JS::RootedObject jsretArr(_cx, JS_NewArrayObject(this->_cx, 0));
-
-//    AddNamedObjectRoot(this->_cx, &jsretArr, "touchArray");
     int count = 0;
     
     for (const auto& touch : touches)
     {
-        JS::RootedValue jsret(_cx, getJSObject<cocos2d::Touch>(this->_cx, touch));
-        if (!JS_SetElement(this->_cx, jsretArr, count, jsret))
+        JS::RootedValue jsret(_cx, getJSObject<cocos2d::Touch>(_cx, touch, false));
+        if (!JS_SetElement(_cx, jsretArr, count, jsret))
         {
             break;
         }
@@ -1295,11 +1293,9 @@ bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::Eve
         
         jsval dataVal[2];
         dataVal[0] = OBJECT_TO_JSVAL(jsretArr);
-        dataVal[1] = getJSObject<cocos2d::Event>(_cx, event);
+        dataVal[1] = getJSObject<cocos2d::Event>(_cx, event, false);
 
         ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 2, dataVal, jsvalRet);
-
-        
     } while(false);
 
 //    JS_RemoveObjectRoot(this->_cx, &jsretArr);
@@ -1333,8 +1329,8 @@ bool ScriptingCore::handleTouchEvent(void* nativeObj, cocos2d::EventTouch::Event
         if (!p) break;
     
         jsval dataVal[2];
-        dataVal[0] = getJSObject<cocos2d::Touch>(_cx, touch);
-        dataVal[1] = getJSObject<cocos2d::Event>(_cx, event);
+        dataVal[0] = getJSObject<cocos2d::Touch>(_cx, touch, false);
+        dataVal[1] = getJSObject<cocos2d::Event>(_cx, event, false);
         
 //        if (jsvalRet != nullptr)
 //        {
@@ -1384,7 +1380,7 @@ bool ScriptingCore::handleMouseEvent(void* nativeObj, cocos2d::EventMouse::Mouse
         if (!p) break;
         
         jsval dataVal[1];
-        dataVal[0] = getJSObject<cocos2d::Event>(_cx, event);
+        dataVal[0] = getJSObject<cocos2d::Event>(_cx, event, false);
         
 //        if (jsvalRet != nullptr)
 //        {
@@ -1522,8 +1518,8 @@ bool ScriptingCore::handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widge
         return false;
 
     jsval args[2] = {
-        getJSObject<cocos2d::ui::Widget>(_cx, widgetLoseFocus),
-        getJSObject<cocos2d::ui::Widget>(_cx, widgetGetFocus)
+        getJSObject<cocos2d::ui::Widget>(_cx, widgetLoseFocus, false),
+        getJSObject<cocos2d::ui::Widget>(_cx, widgetGetFocus, false)
     };
 
     bool ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onFocusChanged", 2, args);
@@ -1542,7 +1538,7 @@ int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
     int count = 0;
     for (auto& touch : touches)
     {
-        jsval jsret = getJSObject<Touch>(this->_cx, touch);
+        jsval jsret = getJSObject<Touch>(this->_cx, touch, false);
         JS::RootedValue jsval(_cx, jsret);
         if (!JS_SetElement(this->_cx, jsretArr, count, jsval)) {
             break;
@@ -1571,7 +1567,7 @@ int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
     JS::RootedValue retval(_cx);
     std::string funcName = getTouchFuncName(eventType);
 
-    jsval jsTouch = getJSObject<Touch>(this->_cx, pTouch);
+    jsval jsTouch = getJSObject<Touch>(this->_cx, pTouch, false);
 
     executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsTouch, &retval);
 
@@ -1591,7 +1587,7 @@ int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
     
     std::string funcName = getTouchFuncName(eventType);
 
-    jsval jsTouch = getJSObject<Touch>(this->_cx, pTouch);
+    jsval jsTouch = getJSObject<Touch>(this->_cx, pTouch, false);
 
     executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), funcName.c_str(), 1, &jsTouch, retval);
 
@@ -1599,7 +1595,6 @@ int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
     removeJSObject(this->_cx, pTouch);
 
     return 1;
-
 }
 
 int ScriptingCore::sendEvent(ScriptEvent* evt)

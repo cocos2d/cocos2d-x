@@ -550,13 +550,13 @@ js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj);
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
 
 template <class T>
-jsval getJSObject(JSContext* cx, T* nativeObj)
+jsval getJSObject(JSContext* cx, T* nativeObj, bool doRetainObj = true)
 {
     if (!nativeObj)
     {
         return JSVAL_NULL;
     }
-    js_proxy_t *proxy = js_get_or_create_proxy<T>(cx, nativeObj);
+    js_proxy_t *proxy = js_get_or_create_proxy<T>(cx, nativeObj, doRetainObj);
     return proxy ? OBJECT_TO_JSVAL(proxy->obj) : JSVAL_NULL;
 }
 
