@@ -91,9 +91,7 @@ bool js_cocos2dx_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
         args.rval().set(OBJECT_TO_JSVAL(obj));
         // link the native object with the javascript object
-        js_proxy_t *p = jsb_new_proxy(cobj, obj);
-
-        JS::AddNamedObjectRoot(cx, &p->obj, "cocos2d::GLNode");
+        jsb_new_proxy(cobj, obj);
 
         return true;
     }
@@ -102,6 +100,17 @@ bool js_cocos2dx_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 void js_cocos2dx_GLNode_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (GLNode)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+    JS::RootedObject jsobj(cx, obj);
+    jsproxy = jsb_get_js_proxy(jsobj);
+    if (jsproxy)
+    {
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+        jsb_remove_proxy(nproxy, jsproxy);
+    }
 }
 
 static bool js_cocos2dx_GLNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -109,9 +118,9 @@ static bool js_cocos2dx_GLNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     cocos2d::GLNode *nobj = new cocos2d::GLNode();
-    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    jsb_new_proxy(nobj, obj);
     nobj->autorelease();
-    JS::AddNamedObjectRoot(cx, &p->obj, "GLNode");
+    nobj->retain();
     args.rval().setUndefined();
     return true;
 }

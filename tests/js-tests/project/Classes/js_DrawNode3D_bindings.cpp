@@ -504,8 +504,7 @@ bool js_cocos2dx_DrawNode3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
     args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::DrawNode3D");
+    jsb_new_proxy(cobj, obj);
     if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;

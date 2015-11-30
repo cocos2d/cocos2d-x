@@ -83,7 +83,6 @@ ComponentJS::ComponentJS(const std::string& scriptFileName)
         
         // Unbind current proxy binding
         js_proxy_t* jsproxy = js_get_or_create_proxy<ComponentJS>(cx, this);
-        JS::RemoveObjectRoot(cx, &jsproxy->obj);
         jsb_remove_proxy(jsb_get_native_proxy(this), jsproxy);
         // link the native object with the javascript object
         jsb_new_proxy(this, jsObj->ref());
@@ -94,6 +93,10 @@ ComponentJS::ComponentJS(const std::string& scriptFileName)
 
 ComponentJS::~ComponentJS()
 {
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    js_proxy_t* jsproxy = js_get_or_create_proxy<ComponentJS>(cx, this);
+    jsb_remove_proxy(jsb_get_native_proxy(this), jsproxy);
+    
     mozilla::Maybe<JS::PersistentRootedObject>* jsObj = static_cast<mozilla::Maybe<JS::PersistentRootedObject>*>(_jsObj);
     if (jsObj != nullptr)
     {

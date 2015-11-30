@@ -229,7 +229,6 @@ void removeJSObject(JSContext* cx, void* nativeObj)
     if (nproxy) {
         JS::RootedObject jsobj(cx, nproxy->obj);
         jsproxy = jsb_get_js_proxy(jsobj);
-        RemoveObjectRoot(cx, &jsproxy->obj);
         jsb_remove_proxy(nproxy, jsproxy);
     }
 }

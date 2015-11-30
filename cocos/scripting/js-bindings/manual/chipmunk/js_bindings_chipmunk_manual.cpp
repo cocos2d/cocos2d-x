@@ -51,8 +51,7 @@ static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
     JS::RootedObject proto(cx, p->proto.ref());
     JS::RootedObject parentProto(cx, p->parentProto.ref());
     JS::RootedObject _tmp(cx, JS_NewObject(cx, p->jsclass, proto, parentProto));
-    js_proxy_t *pp = jsb_new_proxy(cobj, _tmp);
-    JS::AddObjectRoot(cx, &pp->obj);
+    jsb_new_proxy(cobj, _tmp);
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().set(OBJECT_TO_JSVAL(_tmp));
 
@@ -207,8 +206,7 @@ bool JSB_CCPhysicsDebugNode_debugNodeForCPSpace__static(JSContext *cx, uint32_t 
             JS::RootedObject parentProto(cx, typeClass->parentProto.ref());
             JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
             jsret = OBJECT_TO_JSVAL(obj);
-            js_proxy_t *p = jsb_new_proxy(ret, obj);
-            JS::AddNamedObjectRoot(cx, &p->obj, "CCDebugNode");
+            jsb_new_proxy(ret, obj);
         } else {
             jsret = JSVAL_NULL;
         }
@@ -277,8 +275,7 @@ bool JSB_CCPhysicsDebugNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
     args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS::AddNamedObjectRoot(cx, &p->obj, "PhysicsDebugNode");
+    jsb_new_proxy(cobj, obj);
     if (JS_HasProperty(cx, obj, "_ctor", &ok))
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
@@ -357,8 +354,7 @@ bool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t
                 JS::RootedObject parentProto(cx, typeClass->parentProto.ref());
                 JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
                 jsret = OBJECT_TO_JSVAL(obj);
-                js_proxy_t *p = jsb_new_proxy(ret, obj);
-                JS::AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
+                jsb_new_proxy(ret, obj);
             } else {
                 jsret = JSVAL_NULL;
             }
@@ -387,8 +383,7 @@ bool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t
                 JS::RootedObject parentProto(cx, typeClass->parentProto.ref());
                 JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
                 jsret = OBJECT_TO_JSVAL(obj);
-                js_proxy_t *p = jsb_new_proxy(ret, obj);
-                JS::AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
+                jsb_new_proxy(ret, obj);
             } else {
                 jsret = JSVAL_NULL;
             }
@@ -430,8 +425,7 @@ bool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint32
             JS::RootedObject parentProto(cx, typeClass->parentProto.ref());
             JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
             jsret = OBJECT_TO_JSVAL(obj);
-            js_proxy_t *p = jsb_new_proxy(ret, obj);
-            JS::AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
+            jsb_new_proxy(ret, obj);
         } else {
             jsret = JSVAL_NULL;
         }
@@ -466,8 +460,7 @@ bool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static(JSContext *cx, ui
                 JS::RootedObject parentProto(cx, typeClass->parentProto.ref());
                 JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
                 jsret = OBJECT_TO_JSVAL(obj);
-                js_proxy_t *p = jsb_new_proxy(ret, obj);
-                JS::AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
+                jsb_new_proxy(ret, obj);
             } else {
                 jsret = JSVAL_NULL;
             }
@@ -500,8 +493,7 @@ bool JSPROXY_CCPhysicsSprite_constructor(JSContext *cx, uint32_t argc, jsval *vp
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
     args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS::AddNamedObjectRoot(cx, &p->obj, "cocos2d::extension::PhysicsSprite");
+    jsb_new_proxy(cobj, obj);
     if (JS_HasProperty(cx, obj, "_ctor", &ok))
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
@@ -515,8 +507,7 @@ static bool JSPROXY_CCPhysicsSprite_ctor(JSContext *cx, uint32_t argc, jsval *vp
     if (nobj) {
         nobj->autorelease();
     }
-    js_proxy_t* p = jsb_new_proxy(nobj, obj);
-    JS::AddNamedObjectRoot(cx, &p->obj, "cocos2d::extension::SpriteFrame");
+    jsb_new_proxy(nobj, obj);
     bool isFound = false;
     if (JS_HasProperty(cx, obj, "_ctor", &isFound))
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
@@ -1275,7 +1266,7 @@ bool JSB_cpSpace_removeBody(JSContext *cx, uint32_t argc, jsval *vp) {
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, &retproxy );
     JSB_PRECONDITION(ok, "Error processing arguments");
     
-    cpSpaceRemoveBody((cpSpace*)arg0 , (cpBody*)arg1  );
+    cpSpaceRemoveBody((cpSpace*)arg0, (cpBody*)arg1);
     JS::RemoveObjectRoot(cx, &retproxy->jsobj);
     
     args.rval().setUndefined();

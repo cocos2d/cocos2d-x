@@ -24,7 +24,7 @@ static bool jsb_cocos2dx_experimental_webView_setOnShouldStartLoading(JSContext 
             {
                 JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
                 jsval arg[2];
-                js_proxy_t *proxy = js_get_or_create_proxy(cx, sender);
+                js_proxy_t *proxy = js_get_or_create_proxy<experimental::ui::WebView>(cx, sender);
                 if(proxy)
                     arg[0] = OBJECT_TO_JSVAL(proxy->obj);
                 else
@@ -58,7 +58,7 @@ static bool jsb_cocos2dx_experimental_webView_setOnDidFinishLoading(JSContext *c
             {
                 JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
                 jsval arg[2];
-                js_proxy_t *proxy = js_get_or_create_proxy(cx, sender);
+                js_proxy_t *proxy = js_get_or_create_proxy<experimental::ui::WebView>(cx, sender);
                 if(proxy)
                     arg[0] = OBJECT_TO_JSVAL(proxy->obj);
                 else
@@ -91,7 +91,7 @@ static bool jsb_cocos2dx_experimental_webView_setOnDidFailLoading(JSContext *cx,
             {
                 JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
                 jsval arg[2];
-                js_proxy_t *proxy = js_get_or_create_proxy(cx, sender);
+                js_proxy_t *proxy = js_get_or_create_proxy<experimental::ui::WebView>(cx, sender);
                 if(proxy)
                     arg[0] = OBJECT_TO_JSVAL(proxy->obj);
                 else
@@ -124,7 +124,7 @@ static bool jsb_cocos2dx_experimental_webView_setOnJSCallback(JSContext *cx, uin
             {
                 JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
                 jsval arg[2];
-                js_proxy_t *proxy = js_get_or_create_proxy(cx, sender);
+                js_proxy_t *proxy = js_get_or_create_proxy<experimental::ui::WebView>(cx, sender);
                 if(proxy)
                     arg[0] = OBJECT_TO_JSVAL(proxy->obj);
                 else

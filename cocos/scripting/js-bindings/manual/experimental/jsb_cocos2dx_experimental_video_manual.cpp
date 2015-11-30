@@ -22,7 +22,7 @@ static bool jsb_cocos2dx_experimental_ui_VideoPlayer_addEventListener(JSContext 
         std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0)));
         cobj->addEventListener([=](Ref* widget, experimental::ui::VideoPlayer::EventType type)->void{
             jsval arg[2];
-            js_proxy_t *proxy = js_get_or_create_proxy(cx, widget);
+            js_proxy_t *proxy = js_get_or_create_proxy<experimental::ui::VideoPlayer>(cx, widget);
             if(proxy)
                 arg[0] = OBJECT_TO_JSVAL(proxy->obj);
             else

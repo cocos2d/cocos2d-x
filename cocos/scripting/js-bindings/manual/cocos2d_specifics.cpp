@@ -2471,11 +2471,11 @@ bool js_cocos2dx_ActionInterval_repeat(JSContext *cx, uint32_t argc, jsval *vp)
         
         cocos2d::Repeat* action = cocos2d::Repeat::create(cobj, timesInt);
         // Unbind current proxy binding
-        JS::RemoveObjectRoot(cx, &proxy->obj);
         jsb_remove_proxy(jsb_get_native_proxy(cobj), proxy);
         // Rebind js obj with new action
-        js_proxy_t* newProxy = jsb_new_proxy(action, obj);
-        JS::AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::Repeat");
+        jsb_new_proxy(action, obj);
+        cobj->release();
+        action->retain();
 
         args.rval().set(OBJECT_TO_JSVAL(obj));
         return true;
@@ -2496,11 +2496,11 @@ bool js_cocos2dx_ActionInterval_repeatForever(JSContext *cx, uint32_t argc, jsva
     if (argc == 0) {
         cocos2d::RepeatForever* action = cocos2d::RepeatForever::create(cobj);
         // Unbind current proxy binding
-        JS::RemoveObjectRoot(cx, &proxy->obj);
         jsb_remove_proxy(jsb_get_native_proxy(cobj), proxy);
         // Rebind js obj with new action
-        js_proxy_t* newProxy = jsb_new_proxy(action, obj);
-        JS::AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::RepeatForever");
+        jsb_new_proxy(action, obj);
+        cobj->release();
+        action->retain();
 
         args.rval().set(OBJECT_TO_JSVAL(obj));
         return true;
@@ -2531,11 +2531,11 @@ bool js_cocos2dx_ActionInterval_speed(JSContext *cx, uint32_t argc, jsval *vp)
         
         cocos2d::Speed* action = cocos2d::Speed::create(cobj, speed);
         // Unbind current proxy binding
-        JS::RemoveObjectRoot(cx, &proxy->obj);
         jsb_remove_proxy(jsb_get_native_proxy(cobj), proxy);
         // Rebind js obj with new action
-        js_proxy_t* newProxy = jsb_new_proxy(action, obj);
-        JS::AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::Speed");
+        jsb_new_proxy(action, obj);
+        cobj->release();
+        action->retain();
 
         args.rval().set(OBJECT_TO_JSVAL(obj));
         return true;
@@ -2726,11 +2726,11 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
     }
     
     // Unbind current proxy binding
-    JS::RemoveObjectRoot(cx, &proxy->obj);
     jsb_remove_proxy(jsb_get_native_proxy(cobj), proxy);
     // Rebind js obj with new action
-    js_proxy_t* newProxy = jsb_new_proxy(currentAction, obj);
-    JS::AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::EaseAction");
+    jsb_new_proxy(currentAction, obj);
+    cobj->release();
+    currentAction->retain();
     args.rval().set(OBJECT_TO_JSVAL(obj));
     return true;
 }

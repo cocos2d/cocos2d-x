@@ -59,7 +59,7 @@ static bool jsb_cocos2dx_navmesh_NavMeshAgent_move(JSContext *cx, uint32_t argc,
 
 		cobj->move(arg0, [=](cocos2d::NavMeshAgent *agent, float totalTimeAfterMove)->void{
 			jsval arg[2];
-			js_proxy_t *agentProxy = js_get_or_create_proxy(cx, agent);
+			js_proxy_t *agentProxy = js_get_or_create_proxy<cocos2d::NavMeshAgent>(cx, agent);
 			if (proxy)
 				arg[0] = OBJECT_TO_JSVAL(agentProxy->obj);
 			else

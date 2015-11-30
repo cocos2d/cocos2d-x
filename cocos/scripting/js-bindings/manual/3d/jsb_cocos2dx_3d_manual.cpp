@@ -64,7 +64,7 @@ static bool js_cocos2dx_Sprite3D_createAsync(JSContext *cx, uint32_t argc, jsval
         auto lambda = [=](Sprite3D* larg0, void* larg1) -> void{
 
             jsval largv[2];
-            js_proxy_t* proxy = js_get_or_create_proxy(cx, larg0);
+            js_proxy_t* proxy = js_get_or_create_proxy<Sprite3D>(cx, larg0);
             largv[0] = proxy ? OBJECT_TO_JSVAL(proxy->obj) : JS::UndefinedValue();
             JSB_HeapValueWrapper* v = (JSB_HeapValueWrapper*)larg1;
             largv[1] = v->get();

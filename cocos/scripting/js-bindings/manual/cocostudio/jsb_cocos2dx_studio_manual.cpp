@@ -37,7 +37,7 @@ void JSArmatureWrapper::movementCallbackFunc(cocostudio::Armature *armature, coc
 {
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     JS::RootedObject thisObj(cx, getJSCallbackThis().toObjectOrNull());
-    js_proxy_t *proxy = js_get_or_create_proxy(cx, armature);
+    js_proxy_t *proxy = js_get_or_create_proxy<cocostudio::Armature>(cx, armature);
     JS::RootedValue callback(cx, getJSCallbackFunc());
     JS::RootedValue retval(cx);
     if (!callback.isNullOrUndefined())
@@ -82,7 +82,7 @@ void JSArmatureWrapper::frameCallbackFunc(cocostudio::Bone *bone, const std::str
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     JS::RootedObject thisObj(cx, getJSCallbackThis().toObjectOrNull());
     JS::RootedValue callback(cx, getJSCallbackFunc());
-    js_proxy_t *proxy = js_get_or_create_proxy(cx, bone);
+    js_proxy_t *proxy = js_get_or_create_proxy<cocostudio::Bone>(cx, bone);
     JS::RootedValue retval(cx);
     if (!callback.isNullOrUndefined())
     {
