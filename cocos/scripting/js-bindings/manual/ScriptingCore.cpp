@@ -94,6 +94,7 @@ static void serverEntryPoint(unsigned int port);
 js_proxy_t *_native_js_global_ht = NULL;
 js_proxy_t *_js_native_global_ht = NULL;
 std::unordered_map<std::string, js_type_class_t*> _js_global_type_map;
+std::unordered_map<JSObject*, JSObject*> _js_hook_owner_map;
 
 static char *_js_log_buf = NULL;
 
@@ -2050,4 +2051,28 @@ void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy)
     JS_REMOVE_PROXY(nativeProxy, jsProxy);
 }
 
+void jsb_register_finalize_hook(JSObject *hook, JSObject *owner)
+{
+    _js_hook_owner_map.insert(std::make_pair(hook, owner));
+}
 
+JSObject *jsb_get_hook_owner(JSObject *hook)
+{
+    auto ownerIt = _js_hook_owner_map.find(hook);
+    // Found
+    if (ownerIt != _js_hook_owner_map.cend())
+    {
+        return ownerIt->second;
+    }
+    return nullptr;
+}
+
+void jsb_remove_finalize_hook(JSObject *hook)
+{
+    auto ownerIt = _js_hook_owner_map.find(hook);
+    // Found
+    if (ownerIt != _js_hook_owner_map.cend())
+    {
+        _js_hook_owner_map.erase(ownerIt);
+    }
+}

@@ -5924,32 +5924,51 @@ static bool jsb_FinalizeHook_constructor(JSContext *cx, uint32_t argc, jsval *vp
     // Create new object
     JS::RootedObject proto(cx, jsb_FinalizeHook_prototype);
     JS::RootedObject obj(cx, JS_NewObject(cx, jsb_FinalizeHook_class, proto, JS::NullPtr()));
-    // this.owner = arguments[0];
-    JS_SetProperty(cx, obj, "owner", JS::RootedValue(cx, args.get(0)));
+    // Register arguments[0] as owner
+    if (!args.get(0).isNullOrUndefined())
+    {
+        jsb_register_finalize_hook(obj.get(), args.get(0).toObjectOrNull());
+    }
     args.rval().set(OBJECT_TO_JSVAL(obj));
     return true;
 }
-void jsb_FinalizeHook_finalize(JSFreeOp *fop, JSObject *obj) {
+void jsb_FinalizeHook_finalize(JSFreeOp *fop, JSObject *obj)
+{
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-    JS::RootedValue ownerValue(cx);
-    JS_GetProperty(cx, JS::RootedObject(cx, obj), "owner", &ownerValue);
-    JS::RootedObject owner(cx, ownerValue.toObjectOrNull());
-    CCLOGINFO("jsbindings: finalizing JS object via Finalizehook %p", owner.get());
-//    JS_CallFunctionName(cx, JS::RootedObject(cx, obj), "test", JS::HandleValueArray::empty(), &rval);
-    js_proxy_t* nproxy;
-    js_proxy_t* jsproxy;
-    jsproxy = jsb_get_js_proxy(owner);
-    if (jsproxy) {
-        cocos2d::Ref *refObj = static_cast<cocos2d::Ref *>(jsproxy->ptr);
-        nproxy = jsb_get_native_proxy(jsproxy->ptr);
-        
-        jsb_remove_proxy(nproxy, jsproxy);
-        if (refObj) {
-            int count = refObj->getReferenceCount();
-            refObj->release();
-            ScriptingCore::retainCount--;
-            CCLOG("------RELEASED------ %d ref count: %d", ScriptingCore::retainCount, count-1);
+    JS::RootedObject jsobj(cx, obj);
+    JSObject *ownerPtr = jsb_get_hook_owner(obj);
+    if (ownerPtr)
+    {
+        JS::RootedObject owner(cx, ownerPtr);
+        CCLOGINFO("jsbindings: finalizing JS object via Finalizehook %p", owner.get());
+        //    JS_CallFunctionName(cx, JS::RootedObject(cx, obj), "test", JS::HandleValueArray::empty(), &rval);
+        js_proxy_t* nproxy = nullptr;
+        js_proxy_t* jsproxy = nullptr;
+        jsproxy = jsb_get_js_proxy(owner);
+        if (jsproxy)
+        {
+            cocos2d::Ref *refObj = static_cast<cocos2d::Ref *>(jsproxy->ptr);
+            nproxy = jsb_get_native_proxy(jsproxy->ptr);
+            jsb_remove_proxy(nproxy, jsproxy);
+            
+            if (refObj)
+            {
+                int count = refObj->getReferenceCount();
+                CC_SAFE_RELEASE(refObj);
+                ScriptingCore::retainCount--;
+                CCLOG("------RELEASED------ %d ref count: %d", ScriptingCore::retainCount, count-1);
+            }
+#if DEBUG
+            else {
+                CCLOG("A non ref object have registered finalize hook: %p", nproxy->ptr);
+            }
+#endif
         }
+#if DEBUG
+        else {
+            CCLOG("jsbindings: Failed to remove proxy for js object: %p, it may cause memory leak and future crash", ownerPtr);
+        }
+#endif
     }
 }
 

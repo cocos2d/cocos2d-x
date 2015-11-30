@@ -46,6 +46,8 @@ typedef struct js_type_class {
 
 extern std::unordered_map<std::string, js_type_class_t*> _js_global_type_map;
 
+extern std::unordered_map<JSObject*, JSObject*> _js_hook_owner_map;
+
 template< typename DERIVED >
 class TypeTest
 {
