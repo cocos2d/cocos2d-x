@@ -50,7 +50,7 @@ bool runtime_FileUtils_addSearchPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "cocos2dx_FileUtils_addSearchPath : Invalid Native Object");
@@ -95,7 +95,7 @@ bool runtime_FileUtils_setSearchPaths(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FileUtils_setSearchPaths : Invalid Native Object");
@@ -144,13 +144,13 @@ void register_FileUtils(JSContext *cx, JS::HandleObject global)
     JS_GetProperty(cx, global, "cc", &nsval);
     if (nsval == JSVAL_VOID) {
         return;
-    } else {
+    }
+    else {
         ns.set(nsval.toObjectOrNull());
     }
-    JSObject* fileUtils = get_jsb_cocos2d_FileUtils_prototype();
-   JS::RootedObject proto(cx, fileUtils);
-   JS_DefineFunction(cx, proto, "addSearchPath", runtime_FileUtils_addSearchPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
-   JS_DefineFunction(cx, proto, "setSearchPaths", runtime_FileUtils_setSearchPaths, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    JS::RootedObject proto(cx, get_jsb_cocos2d_FileUtils_prototype());
+    JS_DefineFunction(cx, proto, "addSearchPath", runtime_FileUtils_addSearchPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    JS_DefineFunction(cx, proto, "setSearchPaths", runtime_FileUtils_setSearchPaths, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
 }
 
 RuntimeJsImpl* RuntimeJsImpl::create()
@@ -231,7 +231,12 @@ void RuntimeJsImpl::onPrecompile(const rapidjson::Document& dArgParse, rapidjson
     const rapidjson::Value& objectfiles = dArgParse["modulefiles"];
     for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
     {
-        ScriptingCore::getInstance()->compileScript(objectfiles[i].GetString());
+        ScriptingCore* sc = ScriptingCore::getInstance();
+        JSContext* gc = sc->getGlobalContext();
+
+        sc->compileScript(objectfiles[i].GetString(),
+                JS::RootedObject(gc, sc->getGlobalObject()),
+                gc);
     }
     
     dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
