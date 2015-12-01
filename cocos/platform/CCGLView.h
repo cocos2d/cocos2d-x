@@ -311,8 +311,10 @@ public:
      * @param ids The identity of the touch.
      * @param xs The points of x.
      * @param ys The points of y.
+     * @param fs The force of 3d touches.
+     # @param ms The maxium force of 3d touches
      */
-    virtual void handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[]);
+    virtual void handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[], float fs[] = nullptr, float ms[] = nullptr);
     
     /** Touch events are handled by default; if you want to customize your handlers, please override this function.
      *

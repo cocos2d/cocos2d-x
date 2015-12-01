@@ -57,7 +57,9 @@ public:
      */
     Touch() 
         : _id(0),
-        _startPointCaptured(false)
+        _startPointCaptured(false),
+        _curForce(0.f),
+        _maxForce(0.f)
     {}
 
     /** Returns the current touch location in OpenGL coordinates.
@@ -101,13 +103,17 @@ public:
      * @param id A given id
      * @param x A given x coordinate.
      * @param y A given y coordinate.
+     * @param force Current force for 3d touch.
+     * @param maxForce Maxium possible force for 3d touch.
      */
-    void setTouchInfo(int id, float x, float y)
+    void setTouchInfo(int id, float x, float y, float force = 0.0f, float maxForce = 0.0f)
     {
         _id = id;
         _prevPoint = _point;
         _point.x   = x;
         _point.y   = y;
+        _curForce = force;
+        _maxForce = maxForce;
         if (!_startPointCaptured)
         {
             _startPoint = _point;
@@ -125,6 +131,16 @@ public:
     {
         return _id;
     }
+    /** Returns the current touch force for 3d touch.
+     *
+     * @return The current touch force for 3d touch.
+     */
+    float getCurrentForce() const;
+    /** Returns the maxium touch force for 3d touch.
+     *
+     * @return The maxium touch force for 3d touch.
+     */
+    float getMaxForce() const;
 
 private:
     int _id;
@@ -132,6 +148,8 @@ private:
     Vec2 _startPoint;
     Vec2 _point;
     Vec2 _prevPoint;
+    float _curForce;
+    float _maxForce;
 };
 
 // end of base group
