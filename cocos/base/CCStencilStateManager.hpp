@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -22,53 +22,58 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#ifndef StencilStateManager_hpp
+#define StencilStateManager_hpp
+#include "base/ccConfig.h"
+#include "platform/CCPlatformMacros.h"
+#include "platform/CCGL.h"
 
-#ifndef _CCFontFNT_h_
-#define _CCFontFNT_h_
-
-/// @cond DO_NOT_SHOW
-
-#include "CCFont.h"
-
+/**
+ * @addtogroup base
+ * @{
+ */
 NS_CC_BEGIN
 
-class BMFontConfiguration;
-
-class CC_DLL FontFNT : public Font
+class CC_DLL StencilStateManager
 {
-    
 public:
-    
-    static FontFNT * create(const std::string& fntFilePath, const Vec2& imageOffset = Vec2::ZERO);
-    /** Purges the cached data.
-    Removes from memory the cached configurations and the atlas name dictionary.
-    */
-    static void purgeCachedData();
-    virtual int* getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
-    virtual FontAtlas *createFontAtlas() override;
-    void setFontSize(float fontSize);
-    int getOriginalFontSize()const;
-protected:
-    
-    FontFNT(BMFontConfiguration *theContfig, const Vec2& imageOffset = Vec2::ZERO);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~FontFNT();
-    
+    StencilStateManager();
+    void onBeforeVisit();
+    void onAfterDrawStencil();
+    void onAfterVisit();
+    void setAlphaThreshold(GLfloat alphaThreshold);
+    void setInverted(bool inverted);
+    bool isInverted()const;
+    GLfloat getAlphaThreshold()const;
 private:
+    CC_DISALLOW_COPY_AND_ASSIGN(StencilStateManager);
+    static GLint s_layer;
+    /**draw fullscreen quad to clear stencil bits
+     */
+    void drawFullScreenQuadClearStencil();
     
-    int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
     
-    BMFontConfiguration * _configuration;
-    Vec2                   _imageOffset;
-    //User defined font size
-    float  _fontSize;
+    GLfloat _alphaThreshold;
+    bool    _inverted;
+    
+    GLboolean _currentStencilEnabled;
+    GLuint _currentStencilWriteMask;
+    GLenum _currentStencilFunc;
+    GLint _currentStencilRef;
+    GLuint _currentStencilValueMask;
+    GLenum _currentStencilFail;
+    GLenum _currentStencilPassDepthFail;
+    GLenum _currentStencilPassDepthPass;
+    GLboolean _currentDepthWriteMask;
+    
+    GLboolean _currentAlphaTestEnabled;
+    GLenum _currentAlphaTestFunc;
+    GLclampf _currentAlphaTestRef;
+    
+    GLint _mask_layer_le;
 };
 
-/// @endcond
-
 NS_CC_END
-
-#endif /* defined(__cocos2d_libs__CCFontFNT__) */
+// end of base group
+/** @} */
+#endif /* StencilStateManager_hpp */

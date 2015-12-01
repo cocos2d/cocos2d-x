@@ -33,13 +33,13 @@ class JSScheduleWrapper;
 // To debug this, you could refer to JSScheduleWrapper::dump function.
 // It will prove that i'm right. :)
 typedef struct jsScheduleFunc_proxy {
-    JS::Heap<JSObject*> jsfuncObj;
+    JSObject* jsfuncObj;
     cocos2d::__Array*  targets;
     UT_hash_handle hh;
 } schedFunc_proxy_t;
 
 typedef struct jsScheduleTarget_proxy {
-    JS::Heap<JSObject*> jsTargetObj;
+    JSObject* jsTargetObj;
     cocos2d::__Array*  targets;
     UT_hash_handle hh;
 } schedTarget_proxy_t;
@@ -100,8 +100,8 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
         
         JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 
-        JS::RootedObject proto(cx, const_cast<JSObject*>(typeProxy->proto.get()));
-        JS::RootedObject parent(cx, const_cast<JSObject*>(typeProxy->parentProto.get()));
+        JS::RootedObject proto(cx, typeProxy->proto.ref().get());
+        JS::RootedObject parent(cx, typeProxy->parentProto.ref().get());
         JS::RootedObject js_obj(cx, JS_NewObject(cx, typeProxy->jsclass, proto, parent));
         proxy = jsb_new_proxy(native_obj, js_obj);
 #ifdef DEBUG
@@ -221,7 +221,6 @@ private:
     typedef std::unordered_map<JSObject*, JSTouchDelegate*> TouchDelegateMap;
     typedef std::pair<JSObject*, JSTouchDelegate*> TouchDelegatePair;
     static TouchDelegateMap sTouchDelegateMap;
-    bool _needUnroot;
     cocos2d::EventListenerTouchOneByOne*  _touchListenerOneByOne;
     cocos2d::EventListenerTouchAllAtOnce* _touchListenerAllAtOnce;
 };
@@ -252,7 +251,6 @@ public:
 
 private:
     cocos2d::SAXParser _parser;
-    JS::Heap<JSObject*> _obj;
     std::string _result;
     bool _isStoringCharacters;
     std::string _currentValue;

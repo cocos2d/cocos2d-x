@@ -20,8 +20,8 @@ static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
         typeClass = typeMapIter->second;
         CCASSERT(typeClass, "The value is null.");
 
-        JS::RootedObject proto(cx, typeClass->proto.get());
-        JS::RootedObject parent(cx, typeClass->parentProto.get());
+        JS::RootedObject proto(cx, typeClass->proto.ref());
+        JS::RootedObject parent(cx, typeClass->parentProto.ref());
         JS::RootedObject _tmp(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
         
         args.rval().set(OBJECT_TO_JSVAL(_tmp));
@@ -48,7 +48,8 @@ JSObject *jsb_cocos2d_experimental_AudioProfile_prototype;
 bool js_cocos2dx_audioengine_AudioProfile_get_name(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(args.thisv().toObjectOrNull());
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(jsthis);
     cocos2d::experimental::AudioProfile* cobj = (cocos2d::experimental::AudioProfile *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_audioengine_AudioProfile_get_name : Invalid Native Object");
 
@@ -59,7 +60,8 @@ bool js_cocos2dx_audioengine_AudioProfile_get_name(JSContext *cx, uint32_t argc,
 bool js_cocos2dx_audioengine_AudioProfile_set_name(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(args.thisv().toObjectOrNull());
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(jsthis);
     cocos2d::experimental::AudioProfile* cobj = (cocos2d::experimental::AudioProfile *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_audioengine_AudioProfile_set_name : Invalid Native Object");
 
@@ -73,7 +75,8 @@ bool js_cocos2dx_audioengine_AudioProfile_set_name(JSContext *cx, uint32_t argc,
 bool js_cocos2dx_audioengine_AudioProfile_get_maxInstances(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(args.thisv().toObjectOrNull());
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(jsthis);
     cocos2d::experimental::AudioProfile* cobj = (cocos2d::experimental::AudioProfile *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_audioengine_AudioProfile_get_maxInstances : Invalid Native Object");
 
@@ -84,7 +87,8 @@ bool js_cocos2dx_audioengine_AudioProfile_get_maxInstances(JSContext *cx, uint32
 bool js_cocos2dx_audioengine_AudioProfile_set_maxInstances(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(args.thisv().toObjectOrNull());
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(jsthis);
     cocos2d::experimental::AudioProfile* cobj = (cocos2d::experimental::AudioProfile *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_audioengine_AudioProfile_set_maxInstances : Invalid Native Object");
 
@@ -98,7 +102,8 @@ bool js_cocos2dx_audioengine_AudioProfile_set_maxInstances(JSContext *cx, uint32
 bool js_cocos2dx_audioengine_AudioProfile_get_minDelay(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(args.thisv().toObjectOrNull());
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(jsthis);
     cocos2d::experimental::AudioProfile* cobj = (cocos2d::experimental::AudioProfile *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_audioengine_AudioProfile_get_minDelay : Invalid Native Object");
 
@@ -109,7 +114,8 @@ bool js_cocos2dx_audioengine_AudioProfile_get_minDelay(JSContext *cx, uint32_t a
 bool js_cocos2dx_audioengine_AudioProfile_set_minDelay(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(args.thisv().toObjectOrNull());
+    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(jsthis);
     cocos2d::experimental::AudioProfile* cobj = (cocos2d::experimental::AudioProfile *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_audioengine_AudioProfile_set_minDelay : Invalid Native Object");
 
@@ -132,8 +138,8 @@ bool js_cocos2dx_audioengine_AudioProfile_constructor(JSContext *cx, uint32_t ar
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject proto(cx, typeClass->proto.ref());
+    JS::RootedObject parent(cx, typeClass->parentProto.ref());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
     args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
@@ -148,7 +154,9 @@ void js_cocos2d_experimental_AudioProfile_finalize(JSFreeOp *fop, JSObject *obj)
     CCLOGINFO("jsbindings: finalizing JS object %p (AudioProfile)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
-    jsproxy = jsb_get_js_proxy(obj);
+    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+    JS::RootedObject jsobj(cx, obj);
+    jsproxy = jsb_get_js_proxy(jsobj);
     if (jsproxy) {
         cocos2d::experimental::AudioProfile *nobj = static_cast<cocos2d::experimental::AudioProfile *>(jsproxy->ptr);
         nproxy = jsb_get_native_proxy(jsproxy->ptr);
@@ -189,30 +197,17 @@ void js_register_cocos2dx_audioengine_AudioProfile(JSContext *cx, JS::HandleObje
 
     jsb_cocos2d_experimental_AudioProfile_prototype = JS_InitClass(
         cx, global,
-        JS::NullPtr(), // parent proto
+        JS::NullPtr(),
         jsb_cocos2d_experimental_AudioProfile_class,
         js_cocos2dx_audioengine_AudioProfile_constructor, 0, // constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "AudioProfile", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::experimental::AudioProfile> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_experimental_AudioProfile_class;
-        p->proto = jsb_cocos2d_experimental_AudioProfile_prototype;
-        p->parentProto = NULL;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    JS::RootedObject proto(cx, jsb_cocos2d_experimental_AudioProfile_prototype);
+    jsb_register_class<cocos2d::experimental::AudioProfile>(cx, jsb_cocos2d_experimental_AudioProfile_class, proto, JS::NullPtr());
 }
 
 JSClass  *jsb_cocos2d_experimental_AudioEngine_class;
@@ -462,7 +457,8 @@ bool js_cocos2dx_audioengine_AudioEngine_preload(JSContext *cx, uint32_t argc, j
             do {
 			    if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
 			    {
-			        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(1)));
+			        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
+			        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1)));
 			        auto lambda = [=](bool larg0) -> void {
 			            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 			            jsval largv[1];
@@ -551,7 +547,7 @@ bool js_cocos2dx_audioengine_AudioEngine_play2d(JSContext *cx, uint32_t argc, js
             if (args.get(3).isNull()) { arg3 = nullptr; break; }
             if (!args.get(3).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(3).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(3).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg3 = (const cocos2d::experimental::AudioProfile*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg3, cx, false, "Invalid Native Object");
@@ -685,7 +681,8 @@ bool js_cocos2dx_audioengine_AudioEngine_setFinishCallback(JSContext *cx, uint32
         do {
 		    if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
 		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(1)));
+		        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1)));
 		        auto lambda = [=](int larg0, const std::basic_string<char> & larg1) -> void {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
@@ -818,30 +815,17 @@ void js_register_cocos2dx_audioengine_AudioEngine(JSContext *cx, JS::HandleObjec
 
     jsb_cocos2d_experimental_AudioEngine_prototype = JS_InitClass(
         cx, global,
-        JS::NullPtr(), // parent proto
+        JS::NullPtr(),
         jsb_cocos2d_experimental_AudioEngine_class,
         empty_constructor, 0,
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "AudioEngine", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::experimental::AudioEngine> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_experimental_AudioEngine_class;
-        p->proto = jsb_cocos2d_experimental_AudioEngine_prototype;
-        p->parentProto = NULL;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    JS::RootedObject proto(cx, jsb_cocos2d_experimental_AudioEngine_prototype);
+    jsb_register_class<cocos2d::experimental::AudioEngine>(cx, jsb_cocos2d_experimental_AudioEngine_class, proto, JS::NullPtr());
 }
 
 void register_all_cocos2dx_audioengine(JSContext* cx, JS::HandleObject obj) {
