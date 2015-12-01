@@ -32,20 +32,22 @@ using namespace cocos2d;
 
 class JSB_HeapValueWrapper{
 public:
-    JSB_HeapValueWrapper(JSContext* cx, JS::HandleValue value):_cx(cx), _data(value){
-        JS::AddValueRoot(_cx, &_data);
+    JSB_HeapValueWrapper(JSContext* cx, JS::HandleValue value)
+    :_cx(cx)
+    {
+        _data.construct(cx, value);
     }
 
     ~JSB_HeapValueWrapper(){
-        JS::RemoveValueRoot(_cx, &_data);
+        _data.destroyIfConstructed();
     }
 
-    JS::Value get(){
-        return _data.get();
+    JS::HandleValue get(){
+        return _data.ref();
     }
 private:
     JSContext* _cx;
-    JS::Heap<JS::Value> _data;
+    mozilla::Maybe<JS::PersistentRootedValue> _data;
 };
 
 static bool js_cocos2dx_Sprite3D_createAsync(JSContext *cx, uint32_t argc, jsval *vp)
@@ -57,7 +59,8 @@ static bool js_cocos2dx_Sprite3D_createAsync(JSContext *cx, uint32_t argc, jsval
         jsval_to_std_string(cx, args.get(0), &modelPath);
 
         std::function<void(Sprite3D*, void*)> callback;
-        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.get(argc == 4 ? 2 : 3).toObjectOrNull(), args.get(argc == 4 ? 1 : 2)));
+        JS::RootedObject cb(cx, args.get(argc == 4 ? 2 : 3).toObjectOrNull());
+        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, cb, args.get(argc == 4 ? 1 : 2)));
         auto lambda = [=](Sprite3D* larg0, void* larg1) -> void{
 
             jsval largv[2];
@@ -347,22 +350,26 @@ void register_all_cocos2dx_3d_manual(JSContext *cx, JS::HandleObject global)
     get_or_create_js_obj(cx, global, "jsb", &ccObj);
 
     JS_GetProperty(cx, ccObj, "Sprite3D", &tmpVal);
-    tmpObj = tmpVal.toObjectOrNull();
+    tmpObj.set(tmpVal.toObjectOrNull());
     JS_DefineFunction(cx, tmpObj, "createAsync", js_cocos2dx_Sprite3D_createAsync, 4, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_GetProperty(cx, ccObj, "Terrain", &tmpVal);
-    tmpObj = tmpVal.toObjectOrNull();
+    tmpObj.set(tmpVal.toObjectOrNull());
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_Terrain_create, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_GetProperty(cx, ccObj, "Bundle3D", &tmpVal);
-    tmpObj = tmpVal.toObjectOrNull();
+    tmpObj.set(tmpVal.toObjectOrNull());
     JS_DefineFunction(cx, tmpObj, "getTrianglesList", js_cocos2dx_Bundle3D_getTrianglesList, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Sprite3D_prototype), "getAABB", js_cocos2dx_Sprite3D_getAABB, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    tmpObj.set(jsb_cocos2d_Sprite3D_prototype);
+    JS_DefineFunction(cx, tmpObj, "getAABB", js_cocos2dx_Sprite3D_getAABB, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    tmpObj.set(jsb_cocos2d_Mesh_prototype);
+    JS_DefineFunction(cx, tmpObj, "getMeshVertexAttribute", js_cocos2dx_Mesh_getMeshVertexAttribute, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Mesh_prototype), "getMeshVertexAttribute", js_cocos2dx_Mesh_getMeshVertexAttribute, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    tmpObj.set(jsb_cocos2d_TextureCube_prototype);
+    JS_DefineFunction(cx, tmpObj, "setTexParameters", js_cocos2dx_CCTextureCube_setTexParameters, 4, JSPROP_READONLY | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_TextureCube_prototype), "setTexParameters", js_cocos2dx_CCTextureCube_setTexParameters, 4, JSPROP_READONLY | JSPROP_PERMANENT);
-
-    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Terrain_prototype), "getHeightData", js_cocos2dx_Terrain_getHeightData, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    tmpObj.set(jsb_cocos2d_Terrain_prototype);
+    JS_DefineFunction(cx, tmpObj, "getHeightData", js_cocos2dx_Terrain_getHeightData, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 }
