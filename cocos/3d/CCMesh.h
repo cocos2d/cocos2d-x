@@ -96,12 +96,12 @@ public:
     int getVertexSizeInBytes() const;
 
     /**
-     * set diffuse texture
+     * set texture (diffuse), which is responsible for the main apearence. It is also means main textrue, you can also call setTexture(texPath, NTextureData::Usage::Diffuse)
      * @param texPath texture path
      */
     void setTexture(const std::string& texPath);
     /**
-     * set diffuse texture
+     * set texture (diffuse), which is responsible for the main apearence. It is also means main textrue, you can also call setTexture(texPath, NTextureData::Usage::Diffuse)
      * @param tex texture to be set
      */
     void setTexture(Texture2D* tex);
@@ -118,7 +118,7 @@ public:
      */
     void setTexture(const std::string& texPath, NTextureData::Usage usage);
     /**
-     * Get texture
+     * Get texture (diffuse), which is responsible for the main apearence. It is also means main textrue, you can also call getTexture(NTextureData::Usage::Diffuse)
      * @return Texture used, return the texture of first mesh if multiple meshes exist
      */
     Texture2D* getTexture() const;
