@@ -2008,16 +2008,19 @@ void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj)
         else
             jsb_remove_proxy(nullptr, jsproxy);
     }
+#else
+    CCLOG("jsb_ref_finalize: JSObject address = %p", obj);
 #endif
 }
 
-
 void jsb_ref_rebind(JSContext* cx, JS::HandleObject jsobj, js_proxy_t *js2native_proxy, cocos2d::Ref* oldRef, cocos2d::Ref* newRef, const char* debug)
 {
+#if not CC_NATIVE_CONTROL_SCRIPT
     JS::RemoveObjectRoot(cx, &js2native_proxy->obj);
+#endif
     jsb_remove_proxy(jsb_get_native_proxy(oldRef), js2native_proxy);
 
     // Rebind js obj with new action
     js_proxy_t* newProxy = jsb_new_proxy(newRef, jsobj);
-    JS::AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::EaseAction");
+    jsb_ref_init(cx, &newProxy->obj, newRef, debug);
 }
