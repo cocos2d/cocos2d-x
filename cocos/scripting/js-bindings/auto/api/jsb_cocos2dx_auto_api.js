@@ -13514,6 +13514,16 @@ isSelected : function (
 },
 
 /**
+ * @method setCallback
+ * @param {function} arg0
+ */
+setCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method unselected
  */
 unselected : function (

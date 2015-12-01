@@ -779,6 +779,16 @@ getCallbackType : function (
 },
 
 /**
+ * @method addTouchEventListener
+ * @param {function} arg0
+ */
+addTouchEventListener : function (
+func 
+)
+{
+},
+
+/**
  * @method getTouchEndPosition
  * @return {vec2_object}
  */
@@ -2008,6 +2018,16 @@ texturerestype
 ccui.CheckBox = {
 
 /**
+ * @method addEventListener
+ * @param {function} arg0
+ */
+addEventListener : function (
+func 
+)
+{
+},
+
+/**
  * @method create
 * @param {String|String} str
 * @param {String|String} str
@@ -2054,6 +2074,16 @@ CheckBox : function (
  * @class RadioButton
  */
 ccui.RadioButton = {
+
+/**
+ * @method addEventListener
+ * @param {function} arg0
+ */
+addEventListener : function (
+func 
+)
+{
+},
 
 /**
  * @method create
@@ -2149,6 +2179,16 @@ bool
 */
 setSelectedButtonWithoutEvent : function(
 int 
+)
+{
+},
+
+/**
+ * @method addEventListener
+ * @param {function} arg0
+ */
+addEventListener : function (
+func 
 )
 {
 },
@@ -3118,6 +3158,16 @@ float
 },
 
 /**
+ * @method addEventListener
+ * @param {function} arg0
+ */
+addEventListener : function (
+func 
+)
+{
+},
+
+/**
  * @method setScrollBarAutoHideTime
  * @param {float} arg0
  */
@@ -3562,6 +3612,16 @@ bool
 },
 
 /**
+ * @method addEventListener
+ * @param {function} arg0
+ */
+addEventListener : function (
+func 
+)
+{
+},
+
+/**
  * @method doLayout
  */
 doLayout : function (
@@ -3895,6 +3955,16 @@ str,
 str, 
 str, 
 texturerestype 
+)
+{
+},
+
+/**
+ * @method addEventListener
+ * @param {function} arg0
+ */
+addEventListener : function (
+func 
 )
 {
 },
@@ -4522,6 +4592,16 @@ textvalignment
 },
 
 /**
+ * @method addEventListener
+ * @param {function} arg0
+ */
+addEventListener : function (
+func 
+)
+{
+},
+
+/**
  * @method didNotSelectSelf
  */
 didNotSelectSelf : function (
@@ -4997,6 +5077,16 @@ getCurrentPageIndex : function (
  */
 removePage : function (
 widget 
+)
+{
+},
+
+/**
+ * @method addEventListener
+ * @param {function} arg0
+ */
+addEventListener : function (
+func 
 )
 {
 },
