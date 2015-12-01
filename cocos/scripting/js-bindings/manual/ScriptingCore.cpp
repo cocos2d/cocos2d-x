@@ -76,6 +76,10 @@
 
 #define BYTE_CODE_FILE_EXT ".jsc"
 
+// EXPERIMENTAL: Enable this in order to get rid of retain/release
+// when using the Garbage Collector
+#define CC_NATIVE_CONTROL_SCRIPT 0
+
 using namespace cocos2d;
 
 static std::string inData;
@@ -206,15 +210,6 @@ static std::string getMouseFuncName(EventMouse::MouseEventType eventType)
     }
     
     return funcName;
-}
-
-static void rootObject(JSContext *cx, JS::Heap<JSObject*> *obj) {
-    AddNamedObjectRoot(cx, obj, "unnamed");
-}
-
-
-static void unRootObject(JSContext *cx, JS::Heap<JSObject*> *obj) {
-    RemoveObjectRoot(cx, obj);
 }
 
 void removeJSObject(JSContext* cx, void* nativeObj)
@@ -1590,6 +1585,36 @@ bool ScriptingCore::isObjectValid(JSContext *cx, uint32_t argc, jsval *vp)
         JS_ReportError(cx, "Invalid number of arguments: %d. Expecting: 1", argc);
         return false;
     }
+}
+
+void ScriptingCore::rootObject(Ref* ref)
+{
+//    js_proxy_t* nproxy;
+//    js_proxy_t* jsproxy;
+//    void *ptr = (void*)ref;
+//    nproxy = jsb_get_native_proxy(ptr);
+//    if (nproxy) {
+//        JSContext *cx = getGlobalContext();
+//        jsproxy = jsb_get_js_proxy(nproxy->obj);
+//        AddObjectRoot(cx, &jsproxy->obj);
+//
+//        CCLOG("Rooting %p - %p: %s", ref, &jsproxy->obj, typeid(*ref).name());
+//    }
+}
+
+void ScriptingCore::unrootObject(Ref* ref)
+{
+//    js_proxy_t* nproxy;
+//    js_proxy_t* jsproxy;
+//    void *ptr = (void*)ref;
+//    nproxy = jsb_get_native_proxy(ptr);
+//    if (nproxy) {
+//        JSContext *cx = getGlobalContext();
+//        jsproxy = jsb_get_js_proxy(nproxy->obj);
+//        RemoveObjectRoot(cx, &jsproxy->obj);
+//
+//        CCLOG("Unrooting %p - %p: %s", ref, &jsproxy->obj, typeid(*ref).name());
+//    }
 }
 
 #pragma mark - Debug

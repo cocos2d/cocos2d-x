@@ -478,7 +478,21 @@ public:
      * @return @~english The global object
      */
     bool isFunctionOverridedInJS(JS::HandleObject obj, const std::string& name, JSNative native);
-    
+
+    /**
+     * Roots the associated JSObj.
+     * The GC won't collected rooted objects. This function is only called
+     * when compiled with CC_NATIVE_CONTROL_SCRIPT=1
+     */
+    virtual void rootObject(cocos2d::Ref* ref) override;
+    /**
+     * Unroots the associated JSObj.
+     * The GC will collect this object the next time the GC
+     * is called.
+     * This function is only called when compiled with CC_NATIVE_CONTROL_SCRIPT=1
+     */
+    virtual void unrootObject(cocos2d::Ref* ref) override;
+
 private:
     void string_report(JS::HandleValue val);
     void initRegister();
