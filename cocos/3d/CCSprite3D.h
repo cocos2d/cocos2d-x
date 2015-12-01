@@ -80,7 +80,7 @@ public:
     
     static void createAsync(const std::string &modelPath, const std::string &texturePath, const std::function<void(Sprite3D*, void*)>& callback, void* callbackparam);
     
-    /**set texture, set the first if multiple textures exist*/
+    /**set diffuse texture, set the first if multiple textures exist*/
     void setTexture(const std::string& texFile);
     void setTexture(Texture2D* texture);
     

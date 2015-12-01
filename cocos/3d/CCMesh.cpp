@@ -46,10 +46,10 @@ NS_CC_BEGIN
 
 // Helpers
 
-//
+//sampler uniform names, only diffuse and normal texture are supported for now
 std::string s_uniformSamplerName[] =
 {
-    "",//NTextureData::Usage::Unknown
+    "",//NTextureData::Usage::Unknown,
     "",//NTextureData::Usage::None
     "",//NTextureData::Usage::Diffuse
     "",//NTextureData::Usage::Emissive

@@ -96,12 +96,12 @@ public:
     int getVertexSizeInBytes() const;
 
     /**
-     * set texture
+     * set diffuse texture
      * @param texPath texture path
      */
     void setTexture(const std::string& texPath);
     /**
-     * set texture
+     * set diffuse texture
      * @param tex texture to be set
      */
     void setTexture(Texture2D* tex);
