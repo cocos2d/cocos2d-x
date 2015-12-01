@@ -910,10 +910,6 @@ bool js_cocos2dx_builder_CCBAnimationManager_constructor(JSContext *cx, uint32_t
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocosbuilder::CCBAnimationManager* cobj = new (std::nothrow) cocosbuilder::CCBAnimationManager();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
     TypeTest<cocosbuilder::CCBAnimationManager> t;
     js_type_class_t *typeClass = nullptr;
     std::string typeName = t.s_name();
@@ -924,7 +920,9 @@ bool js_cocos2dx_builder_CCBAnimationManager_constructor(JSContext *cx, uint32_t
     JS::RootedObject proto(cx, typeClass->proto.ref());
     JS::RootedObject parent(cx, typeClass->parentProto.ref());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+    jsval objVal = OBJECT_TO_JSVAL(obj);
+    cobj->autorelease();
+    args.rval().set(objVal);
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     AddNamedObjectRoot(cx, &p->obj, "cocosbuilder::CCBAnimationManager");
@@ -933,9 +931,6 @@ bool js_cocos2dx_builder_CCBAnimationManager_constructor(JSContext *cx, uint32_t
     return true;
 }
 
-void js_cocosbuilder_CCBAnimationManager_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (CCBAnimationManager)", obj);
-}
 void js_register_cocos2dx_builder_CCBAnimationManager(JSContext *cx, JS::HandleObject global) {
     jsb_cocosbuilder_CCBAnimationManager_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocosbuilder_CCBAnimationManager_class->name = "BuilderAnimationManager";
@@ -946,11 +941,9 @@ void js_register_cocos2dx_builder_CCBAnimationManager(JSContext *cx, JS::HandleO
     jsb_cocosbuilder_CCBAnimationManager_class->enumerate = JS_EnumerateStub;
     jsb_cocosbuilder_CCBAnimationManager_class->resolve = JS_ResolveStub;
     jsb_cocosbuilder_CCBAnimationManager_class->convert = JS_ConvertStub;
-    jsb_cocosbuilder_CCBAnimationManager_class->finalize = js_cocosbuilder_CCBAnimationManager_finalize;
     jsb_cocosbuilder_CCBAnimationManager_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -1007,8 +1000,13 @@ void js_register_cocos2dx_builder_CCBAnimationManager(JSContext *cx, JS::HandleO
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocosbuilder_CCBAnimationManager_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "CCBAnimationManager"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocosbuilder::CCBAnimationManager>(cx, jsb_cocosbuilder_CCBAnimationManager_class, proto, JS::NullPtr());
 }
 
@@ -1435,10 +1433,6 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             } while (0);
             if (!ok) { ok = true; break; }
             cobj = new (std::nothrow) cocosbuilder::CCBReader(arg0);
-            cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-            if (_ccobj) {
-                _ccobj->autorelease();
-            }
 
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
@@ -1447,10 +1441,11 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
             typeClass = typeMapIter->second;
             CCASSERT(typeClass, "The value is null.");
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             JS::RootedObject proto(cx, typeClass->proto.ref());
             JS::RootedObject parent(cx, typeClass->parentProto.ref());
             obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
+
+            cobj->autorelease();
 
             js_proxy_t* p = jsb_new_proxy(cobj, obj);
             AddNamedObjectRoot(cx, &p->obj, "cocosbuilder::CCBReader");
@@ -1471,10 +1466,6 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             } while (0);
             if (!ok) { ok = true; break; }
             cobj = new (std::nothrow) cocosbuilder::CCBReader(arg0);
-            cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-            if (_ccobj) {
-                _ccobj->autorelease();
-            }
 
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
@@ -1483,10 +1474,11 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
             typeClass = typeMapIter->second;
             CCASSERT(typeClass, "The value is null.");
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             JS::RootedObject proto(cx, typeClass->proto.ref());
             JS::RootedObject parent(cx, typeClass->parentProto.ref());
             obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
+
+            cobj->autorelease();
 
             js_proxy_t* p = jsb_new_proxy(cobj, obj);
             AddNamedObjectRoot(cx, &p->obj, "cocosbuilder::CCBReader");
@@ -1518,10 +1510,6 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             } while (0);
             if (!ok) { ok = true; break; }
             cobj = new (std::nothrow) cocosbuilder::CCBReader(arg0, arg1);
-            cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-            if (_ccobj) {
-                _ccobj->autorelease();
-            }
 
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
@@ -1530,10 +1518,11 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
             typeClass = typeMapIter->second;
             CCASSERT(typeClass, "The value is null.");
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             JS::RootedObject proto(cx, typeClass->proto.ref());
             JS::RootedObject parent(cx, typeClass->parentProto.ref());
             obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
+
+            cobj->autorelease();
 
             js_proxy_t* p = jsb_new_proxy(cobj, obj);
             AddNamedObjectRoot(cx, &p->obj, "cocosbuilder::CCBReader");
@@ -1576,10 +1565,6 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             } while (0);
             if (!ok) { ok = true; break; }
             cobj = new (std::nothrow) cocosbuilder::CCBReader(arg0, arg1, arg2);
-            cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-            if (_ccobj) {
-                _ccobj->autorelease();
-            }
 
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
@@ -1588,10 +1573,11 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
             typeClass = typeMapIter->second;
             CCASSERT(typeClass, "The value is null.");
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             JS::RootedObject proto(cx, typeClass->proto.ref());
             JS::RootedObject parent(cx, typeClass->parentProto.ref());
             obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
+
+            cobj->autorelease();
 
             js_proxy_t* p = jsb_new_proxy(cobj, obj);
             AddNamedObjectRoot(cx, &p->obj, "cocosbuilder::CCBReader");
@@ -1645,10 +1631,6 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             } while (0);
             if (!ok) { ok = true; break; }
             cobj = new (std::nothrow) cocosbuilder::CCBReader(arg0, arg1, arg2, arg3);
-            cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-            if (_ccobj) {
-                _ccobj->autorelease();
-            }
 
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
@@ -1657,10 +1639,11 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
             typeClass = typeMapIter->second;
             CCASSERT(typeClass, "The value is null.");
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             JS::RootedObject proto(cx, typeClass->proto.ref());
             JS::RootedObject parent(cx, typeClass->parentProto.ref());
             obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
+
+            cobj->autorelease();
 
             js_proxy_t* p = jsb_new_proxy(cobj, obj);
             AddNamedObjectRoot(cx, &p->obj, "cocosbuilder::CCBReader");
@@ -1670,10 +1653,6 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
     do {
         if (argc == 0) {
             cobj = new (std::nothrow) cocosbuilder::CCBReader();
-            cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-            if (_ccobj) {
-                _ccobj->autorelease();
-            }
 
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
@@ -1682,10 +1661,11 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
             typeClass = typeMapIter->second;
             CCASSERT(typeClass, "The value is null.");
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             JS::RootedObject proto(cx, typeClass->proto.ref());
             JS::RootedObject parent(cx, typeClass->parentProto.ref());
             obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
+
+            cobj->autorelease();
 
             js_proxy_t* p = jsb_new_proxy(cobj, obj);
             AddNamedObjectRoot(cx, &p->obj, "cocosbuilder::CCBReader");
@@ -1704,9 +1684,6 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
 }
 
 
-void js_cocosbuilder_CCBReader_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (CCBReader)", obj);
-}
 void js_register_cocos2dx_builder_CCBReader(JSContext *cx, JS::HandleObject global) {
     jsb_cocosbuilder_CCBReader_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocosbuilder_CCBReader_class->name = "_Reader";
@@ -1717,11 +1694,9 @@ void js_register_cocos2dx_builder_CCBReader(JSContext *cx, JS::HandleObject glob
     jsb_cocosbuilder_CCBReader_class->enumerate = JS_EnumerateStub;
     jsb_cocosbuilder_CCBReader_class->resolve = JS_ResolveStub;
     jsb_cocosbuilder_CCBReader_class->convert = JS_ConvertStub;
-    jsb_cocosbuilder_CCBReader_class->finalize = js_cocosbuilder_CCBReader_finalize;
     jsb_cocosbuilder_CCBReader_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -1762,8 +1737,13 @@ void js_register_cocos2dx_builder_CCBReader(JSContext *cx, JS::HandleObject glob
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocosbuilder_CCBReader_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "CCBReader"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocosbuilder::CCBReader>(cx, jsb_cocosbuilder_CCBReader_class, proto, JS::NullPtr());
 }
 
