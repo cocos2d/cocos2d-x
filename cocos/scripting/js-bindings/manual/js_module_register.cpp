@@ -119,7 +119,8 @@ int js_module_register()
     return 1;
 }
 
-JSObject* get_jsb_cocos2d_FileUtils_prototype()
+JS::HandleObject get_jsb_cocos2d_FileUtils_prototype()
 {
-    return jsb_cocos2d_FileUtils_prototype;
+    JS::RootedObject fileUtilsProto(ScriptingCore::getInstance()->getGlobalContext(), jsb_cocos2d_FileUtils_prototype);
+    return fileUtilsProto;
 }
