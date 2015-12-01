@@ -26,6 +26,7 @@
 #define __CCMESH_H__
 
 #include <string>
+#include <map>
 
 #include "3d/CCBundle3DData.h"
 #include "3d/CCAABB.h"
@@ -94,10 +95,39 @@ public:
     /**get per vertex size in bytes*/
     int getVertexSizeInBytes() const;
 
-    /**texture getter and setter*/
-    void setTexture(const std::string& texPath, unsigned int index = 0);
-    void setTexture(Texture2D* tex, unsigned int index = 0);
-    Texture2D* getTexture(unsigned int index = 0) const;
+    /**
+     * set texture
+     * @param texPath texture path
+     */
+    void setTexture(const std::string& texPath);
+    /**
+     * set texture
+     * @param tex texture to be set
+     */
+    void setTexture(Texture2D* tex);
+    /**
+     * set texture
+     * @param tex texture to be set
+     * @param usage Usage of this texture
+     */
+    void setTexture(Texture2D* tex, NTextureData::Usage usage);
+    /**
+     * set texture
+     * @param texPath texture path
+     * @param usage Usage of this texture
+     */
+    void setTexture(const std::string& texPath, NTextureData::Usage usage);
+    /**
+     * Get texture
+     * @return Texture used, return the texture of first mesh if multiple meshes exist
+     */
+    Texture2D* getTexture() const;
+    /**
+     * Get textrue
+     * @param usage Usage of returned texture
+     * @return The texture of this usage, return the textrue of first mesh if multiple meshes exist
+     */
+    Texture2D* getTexture(NTextureData::Usage usage);
     
     /**visible getter and setter*/
     void setVisible(bool visible);
@@ -205,6 +235,7 @@ protected:
     void bindMeshCommand();
 
     std::vector<Texture2D *> _textureList; //textures that submesh is using
+    std::map<NTextureData::Usage, Texture2D*> _textures; //textures that submesh is using
     MeshSkin*           _skin;     //skin
     bool                _visible; // is the submesh visible
     bool                _isTransparent; // is this mesh transparent, it is a property of material in fact
@@ -239,6 +270,9 @@ protected:
 // end of 3d group
 /// @}
 
+/// @cond
+extern std::string CC_DLL s_uniformSamplerName[];//uniform sampler names array
+/// @endcond
 
 NS_CC_END
 

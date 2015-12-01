@@ -71,7 +71,7 @@ varying vec3 v_normal;
 
 uniform vec4 u_color;
 \n#ifdef USE_NORMAL_MAPPING\n
-uniform sampler2D u_bumpTex;
+uniform sampler2D u_normalTex;
 \n#endif\n
 
 vec3 computeLighting(vec3 normalVector, vec3 lightDirection, vec3 lightColor, float attenuation)
@@ -87,7 +87,7 @@ void main(void)
 
 \n#ifdef USE_NORMAL_MAPPING\n
     \n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n
-        vec3 normal  = normalize(2.0 * texture2D(u_bumpTex, TextureCoordOut).xyz - 1.0);
+        vec3 normal  = normalize(2.0 * texture2D(u_normalTex, TextureCoordOut).xyz - 1.0);
     \n#endif\n
 \n#else\n
     \n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n

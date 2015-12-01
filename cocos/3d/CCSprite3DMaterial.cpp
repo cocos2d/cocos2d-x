@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "3d/CCSprite3DMaterial.h"
+#include "3d/CCMesh.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCGLProgram.h"
@@ -245,6 +246,14 @@ Sprite3DMaterial* Sprite3DMaterial::createWithGLStateProgram(GLProgramState* pro
     }
     CC_SAFE_DELETE(mat);
     return nullptr;
+}
+
+void Sprite3DMaterial::setTexture(Texture2D* tex, NTextureData::Usage usage)
+{
+    const auto& passes = getTechnique()->getPasses();
+    for (auto& pass : passes) {
+        pass->getGLProgramState()->setUniformTexture(s_uniformSamplerName[(int)usage], tex);
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////

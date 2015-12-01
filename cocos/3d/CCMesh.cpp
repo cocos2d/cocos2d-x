@@ -46,6 +46,22 @@ NS_CC_BEGIN
 
 // Helpers
 
+//
+std::string s_uniformSamplerName[] =
+{
+    "",//NTextureData::Usage::Unknown
+    "",//NTextureData::Usage::None
+    "",//NTextureData::Usage::Diffuse
+    "",//NTextureData::Usage::Emissive
+    "",//NTextureData::Usage::Ambient
+    "",//NTextureData::Usage::Specular
+    "",//NTextureData::Usage::Shininess
+    "u_normalTex",//NTextureData::Usage::Normal
+    "",//NTextureData::Usage::Bump
+    "",//NTextureData::Usage::Transparency
+    "",//NTextureData::Usage::Reflection
+};
+
 static const char          *s_dirLightUniformColorName = "u_DirLightSourceColor";
 static const char          *s_dirLightUniformDirName = "u_DirLightSourceDirection";
 
@@ -121,8 +137,8 @@ Mesh::Mesh()
 }
 Mesh::~Mesh()
 {
-    for (auto &tex : _textureList){
-        CC_SAFE_RELEASE(tex);
+    for (auto &tex : _textures){
+        CC_SAFE_RELEASE(tex.second);
     }
     CC_SAFE_RELEASE(_skin);
     CC_SAFE_RELEASE(_meshIndexData);
@@ -252,13 +268,18 @@ bool Mesh::isVisible() const
     return _visible;
 }
 
-void Mesh::setTexture(const std::string& texPath, unsigned int index)
+void Mesh::setTexture(const std::string& texPath)
 {
     auto tex = Director::getInstance()->getTextureCache()->addImage(texPath);
-    setTexture(tex, index);
+    setTexture(tex, NTextureData::Usage::Diffuse);
 }
 
-void Mesh::setTexture(Texture2D* tex, unsigned int index)
+void Mesh::setTexture(Texture2D* tex)
+{
+    setTexture(tex, NTextureData::Usage::Diffuse);
+}
+
+void Mesh::setTexture(Texture2D* tex, NTextureData::Usage usage)
 {
     // Texture must be saved for future use
     // it doesn't matter if the material is already set or not
@@ -266,20 +287,11 @@ void Mesh::setTexture(Texture2D* tex, unsigned int index)
     if (tex == nullptr)
         tex = getDummyTexture();
     
-    if (index < _textureList.size()){
-        if (tex != _textureList[index])
-        {
-            CC_SAFE_RETAIN(tex);
-            CC_SAFE_RELEASE(_textureList[index]);
-        }
-    }
-    else{
-        _textureList.resize(index + 1);
-        CC_SAFE_RETAIN(tex);
-    }
-    _textureList[index] = tex;
-
-    if (index == 0){
+    CC_SAFE_RETAIN(tex);
+    CC_SAFE_RELEASE(_textures[usage]);
+    _textures[usage] = tex;   
+    
+    if (usage == NTextureData::Usage::Diffuse){
         if (_material) {
             auto technique = _material->_currentTechnique;
             for(auto& pass: technique->_passes)
@@ -290,17 +302,35 @@ void Mesh::setTexture(Texture2D* tex, unsigned int index)
                 pass->setTexture(tex);
             }
         }
-
+        
         bindMeshCommand();
+    }
+    else if (usage == NTextureData::Usage::Normal) // currently only diffuse and normal are supported
+    {
+        if (_material){
+            auto technique = _material->_currentTechnique;
+            for(auto& pass: technique->_passes)
+            {
+                pass->getGLProgramState()->setUniformTexture(s_uniformSamplerName[(int)usage], tex);
+            }
+        }
     }
 }
 
-Texture2D* Mesh::getTexture(unsigned int index) const
+void Mesh::setTexture(const std::string& texPath, NTextureData::Usage usage)
 {
-    if (index < _textureList.size())
-        return _textureList[index];
-    else
-        return nullptr;
+    auto tex = Director::getInstance()->getTextureCache()->addImage(texPath);
+    setTexture(tex, usage);
+}
+
+Texture2D* Mesh::getTexture() const
+{
+    return _textures.at(NTextureData::Usage::Diffuse);
+}
+
+Texture2D* Mesh::getTexture(NTextureData::Usage usage)
+{
+    return _textures[usage];
 }
 
 void Mesh::setMaterial(Material* material)
@@ -323,9 +353,9 @@ void Mesh::setMaterial(Material* material)
         }
     }
     // Was the texture set before teh GLProgramState ? Set it
-    for (unsigned int i = 0; i < _textureList.size(); ++i){
-        setTexture(_textureList[i], i);
-    }
+    for(auto& tex : _textures)
+        setTexture(tex.second, tex.first);
+        
     
     if (_blendDirty)
         setBlendFunc(_blend);
