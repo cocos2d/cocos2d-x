@@ -57,7 +57,7 @@ bool UISliderTest::init()
 
         TTFConfig ttfConfig("fonts/arial.ttf", 15);
         auto label1 = Label::createWithTTF(ttfConfig, "Print Resources");
-        auto item1 = MenuItemLabel::create(label1, CC_CALLBACK_1(UISliderTest::printCheckBoxResources, this));
+        auto item1 = MenuItemLabel::create(label1, CC_CALLBACK_1(UISliderTest::printWidgetResources, this));
         item1->setPosition(Vec2(VisibleRect::left().x + 60, VisibleRect::bottom().y + item1->getContentSize().height * 3));
         auto pMenu1 = Menu::create(item1, nullptr);
         pMenu1->setPosition(Vec2(0, 0));
@@ -78,7 +78,7 @@ void UISliderTest::sliderEvent(Ref *pSender, Slider::EventType type)
         _displayValueLabel->setString(StringUtils::format("Percent %f", 10000.0 * percent / maxPercent));
     }
 }
-void UISliderTest::printCheckBoxResources(cocos2d::Ref* sender)
+void UISliderTest::printWidgetResources(cocos2d::Ref* sender)
 {
     cocos2d::ResouceData textureFile = _slider->getBackFile();
     CCLOG("textureFile  Name : %s, Type: %d", textureFile.file.c_str(), textureFile.type);

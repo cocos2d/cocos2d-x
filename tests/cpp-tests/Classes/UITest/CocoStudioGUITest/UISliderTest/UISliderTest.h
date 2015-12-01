@@ -38,7 +38,7 @@ public:
     ~UISliderTest();
     virtual bool init() override;
     void sliderEvent(cocos2d::Ref* sender, cocos2d::ui::Slider::EventType type);
-    void printCheckBoxResources(cocos2d::Ref* sender);
+    void printWidgetResources(cocos2d::Ref* sender);
     
 protected:
     cocos2d::ui::TextBMFont* _displayValueLabel;

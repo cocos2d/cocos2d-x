@@ -13,7 +13,7 @@ public:
     CREATE_FUNC(UITextAtlasTest);
 
     virtual bool init() override;
-    void printCheckBoxResources(cocos2d::Ref* sender);
+    void printWidgetResources(cocos2d::Ref* sender);
 protected:
     cocos2d::ui::TextAtlas* _textAtlas;
 };

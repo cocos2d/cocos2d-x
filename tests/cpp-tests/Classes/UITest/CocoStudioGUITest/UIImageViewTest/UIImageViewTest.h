@@ -36,7 +36,7 @@ public:
 
     virtual bool init() override;
 
-    void printCheckBoxResources(cocos2d::Ref* sender);
+    void printWidgetResources(cocos2d::Ref* sender);
 protected:
     cocos2d::ui::ImageView* _image;
 };

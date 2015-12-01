@@ -68,7 +68,7 @@ public:
     
     CREATE_FUNC(UILayoutTest_BackGroundImage);
 
-    void printCheckBoxResources(cocos2d::Ref* sender);
+    void printWidgetResources(cocos2d::Ref* sender);
 protected:
     cocos2d::ui::Layout* _layout;
 };
