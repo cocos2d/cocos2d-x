@@ -54,8 +54,10 @@ public:
      * Controllers' standard  key
      * Controller receives only standard key which contained within enum Key by default.
      */
-    enum Key
+    enum class Key
     {
+        KEY_NONE,
+        
         JOYSTICK_LEFT_X = 1000,
         JOYSTICK_LEFT_Y,
         JOYSTICK_RIGHT_X,
@@ -154,7 +156,7 @@ public:
     /**
      * 
      */
-    const KeyStatus& getKeyStatus(int keyCode);
+    const KeyStatus& getKeyStatus(Key keyCode);
     
     /** 
      * Activate receives key event from external key. e.g. back,menu.
@@ -165,13 +167,13 @@ public:
      * @param externalKeyCode   External key code.
      * @param receive   True if external key event on this controller should be receive, false otherwise.
      */
-    void receiveExternalKeyEvent(int externalKeyCode,bool receive);
+    void receiveExternalKeyEvent(Key externalKeyCode, bool receive);
 
     /** 
      * Changes the tag that is used to identify the controller easily.
      * @param tag   A integer that identifies the controller.
      */
-    void setTag(int tag) { _controllerTag = tag;}
+    void setTag(int tag) { _controllerTag = tag; }
 
     /**
      * Returns a tag that is used to identify the controller easily.
@@ -190,8 +192,8 @@ private:
 
     void onConnected();
     void onDisconnected();
-    void onButtonEvent(int keyCode, bool isPressed, float value, bool isAnalog);
-    void onAxisEvent(int axisCode, float value, bool isAnalog);
+    void onButtonEvent(Key keyCode, bool isPressed, float value, bool isAnalog);
+    void onAxisEvent(Key axisCode, float value, bool isAnalog);
     void registerListeners();
 
     std::unordered_map<int, KeyStatus> _allKeyStatus;
