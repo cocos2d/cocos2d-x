@@ -373,10 +373,6 @@ bool js_cocos2dx_experimental_webView_WebView_constructor(JSContext *cx, uint32_
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::experimental::ui::WebView* cobj = new (std::nothrow) cocos2d::experimental::ui::WebView();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
     TypeTest<cocos2d::experimental::ui::WebView> t;
     js_type_class_t *typeClass = nullptr;
     std::string typeName = t.s_name();
@@ -387,7 +383,9 @@ bool js_cocos2dx_experimental_webView_WebView_constructor(JSContext *cx, uint32_
     JS::RootedObject proto(cx, typeClass->proto.ref());
     JS::RootedObject parent(cx, typeClass->parentProto.ref());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+    jsval objVal = OBJECT_TO_JSVAL(obj);
+    cobj->autorelease();
+    args.rval().set(objVal);
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     AddNamedObjectRoot(cx, &p->obj, "cocos2d::experimental::ui::WebView");
@@ -398,9 +396,6 @@ bool js_cocos2dx_experimental_webView_WebView_constructor(JSContext *cx, uint32_
 
 extern JSObject *jsb_cocos2d_ui_Widget_prototype;
 
-void js_cocos2d_experimental_ui_WebView_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (WebView)", obj);
-}
 void js_register_cocos2dx_experimental_webView_WebView(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_experimental_ui_WebView_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_experimental_ui_WebView_class->name = "WebView";
@@ -411,11 +406,9 @@ void js_register_cocos2dx_experimental_webView_WebView(JSContext *cx, JS::Handle
     jsb_cocos2d_experimental_ui_WebView_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_experimental_ui_WebView_class->resolve = JS_ResolveStub;
     jsb_cocos2d_experimental_ui_WebView_class->convert = JS_ConvertStub;
-    jsb_cocos2d_experimental_ui_WebView_class->finalize = js_cocos2d_experimental_ui_WebView_finalize;
     jsb_cocos2d_experimental_ui_WebView_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -455,8 +448,13 @@ void js_register_cocos2dx_experimental_webView_WebView(JSContext *cx, JS::Handle
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_experimental_ui_WebView_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "WebView"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::experimental::ui::WebView>(cx, jsb_cocos2d_experimental_ui_WebView_class, proto, parent_proto);
 }
 

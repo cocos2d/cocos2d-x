@@ -584,10 +584,6 @@ bool js_cocos2dx_navmesh_NavMeshAgent_constructor(JSContext *cx, uint32_t argc, 
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::NavMeshAgent* cobj = new (std::nothrow) cocos2d::NavMeshAgent();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
     TypeTest<cocos2d::NavMeshAgent> t;
     js_type_class_t *typeClass = nullptr;
     std::string typeName = t.s_name();
@@ -598,7 +594,9 @@ bool js_cocos2dx_navmesh_NavMeshAgent_constructor(JSContext *cx, uint32_t argc, 
     JS::RootedObject proto(cx, typeClass->proto.ref());
     JS::RootedObject parent(cx, typeClass->parentProto.ref());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+    jsval objVal = OBJECT_TO_JSVAL(obj);
+    cobj->autorelease();
+    args.rval().set(objVal);
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     AddNamedObjectRoot(cx, &p->obj, "cocos2d::NavMeshAgent");
@@ -609,9 +607,6 @@ bool js_cocos2dx_navmesh_NavMeshAgent_constructor(JSContext *cx, uint32_t argc, 
 
 extern JSObject *jsb_cocos2d_Component_prototype;
 
-void js_cocos2d_NavMeshAgent_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (NavMeshAgent)", obj);
-}
 void js_register_cocos2dx_navmesh_NavMeshAgent(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_NavMeshAgent_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_NavMeshAgent_class->name = "NavMeshAgent";
@@ -622,11 +617,9 @@ void js_register_cocos2dx_navmesh_NavMeshAgent(JSContext *cx, JS::HandleObject g
     jsb_cocos2d_NavMeshAgent_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_NavMeshAgent_class->resolve = JS_ResolveStub;
     jsb_cocos2d_NavMeshAgent_class->convert = JS_ConvertStub;
-    jsb_cocos2d_NavMeshAgent_class->finalize = js_cocos2d_NavMeshAgent_finalize;
     jsb_cocos2d_NavMeshAgent_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -678,8 +671,13 @@ void js_register_cocos2dx_navmesh_NavMeshAgent(JSContext *cx, JS::HandleObject g
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_NavMeshAgent_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "NavMeshAgent"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::NavMeshAgent>(cx, jsb_cocos2d_NavMeshAgent_class, proto, parent_proto);
 }
 
@@ -862,10 +860,6 @@ bool js_cocos2dx_navmesh_NavMeshObstacle_constructor(JSContext *cx, uint32_t arg
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::NavMeshObstacle* cobj = new (std::nothrow) cocos2d::NavMeshObstacle();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
     TypeTest<cocos2d::NavMeshObstacle> t;
     js_type_class_t *typeClass = nullptr;
     std::string typeName = t.s_name();
@@ -876,7 +870,9 @@ bool js_cocos2dx_navmesh_NavMeshObstacle_constructor(JSContext *cx, uint32_t arg
     JS::RootedObject proto(cx, typeClass->proto.ref());
     JS::RootedObject parent(cx, typeClass->parentProto.ref());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+    jsval objVal = OBJECT_TO_JSVAL(obj);
+    cobj->autorelease();
+    args.rval().set(objVal);
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     AddNamedObjectRoot(cx, &p->obj, "cocos2d::NavMeshObstacle");
@@ -887,9 +883,6 @@ bool js_cocos2dx_navmesh_NavMeshObstacle_constructor(JSContext *cx, uint32_t arg
 
 extern JSObject *jsb_cocos2d_Component_prototype;
 
-void js_cocos2d_NavMeshObstacle_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (NavMeshObstacle)", obj);
-}
 void js_register_cocos2dx_navmesh_NavMeshObstacle(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_NavMeshObstacle_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_NavMeshObstacle_class->name = "NavMeshObstacle";
@@ -900,11 +893,9 @@ void js_register_cocos2dx_navmesh_NavMeshObstacle(JSContext *cx, JS::HandleObjec
     jsb_cocos2d_NavMeshObstacle_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_NavMeshObstacle_class->resolve = JS_ResolveStub;
     jsb_cocos2d_NavMeshObstacle_class->convert = JS_ConvertStub;
-    jsb_cocos2d_NavMeshObstacle_class->finalize = js_cocos2d_NavMeshObstacle_finalize;
     jsb_cocos2d_NavMeshObstacle_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -936,8 +927,13 @@ void js_register_cocos2dx_navmesh_NavMeshObstacle(JSContext *cx, JS::HandleObjec
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_NavMeshObstacle_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "NavMeshObstacle"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::NavMeshObstacle>(cx, jsb_cocos2d_NavMeshObstacle_class, proto, parent_proto);
 }
 
@@ -1174,10 +1170,6 @@ bool js_cocos2dx_navmesh_NavMesh_constructor(JSContext *cx, uint32_t argc, jsval
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::NavMesh* cobj = new (std::nothrow) cocos2d::NavMesh();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
     TypeTest<cocos2d::NavMesh> t;
     js_type_class_t *typeClass = nullptr;
     std::string typeName = t.s_name();
@@ -1188,7 +1180,9 @@ bool js_cocos2dx_navmesh_NavMesh_constructor(JSContext *cx, uint32_t argc, jsval
     JS::RootedObject proto(cx, typeClass->proto.ref());
     JS::RootedObject parent(cx, typeClass->parentProto.ref());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+    jsval objVal = OBJECT_TO_JSVAL(obj);
+    cobj->autorelease();
+    args.rval().set(objVal);
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
     AddNamedObjectRoot(cx, &p->obj, "cocos2d::NavMesh");
@@ -1197,9 +1191,6 @@ bool js_cocos2dx_navmesh_NavMesh_constructor(JSContext *cx, uint32_t argc, jsval
     return true;
 }
 
-void js_cocos2d_NavMesh_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (NavMesh)", obj);
-}
 void js_register_cocos2dx_navmesh_NavMesh(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_NavMesh_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_NavMesh_class->name = "NavMesh";
@@ -1210,11 +1201,9 @@ void js_register_cocos2dx_navmesh_NavMesh(JSContext *cx, JS::HandleObject global
     jsb_cocos2d_NavMesh_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_NavMesh_class->resolve = JS_ResolveStub;
     jsb_cocos2d_NavMesh_class->convert = JS_ConvertStub;
-    jsb_cocos2d_NavMesh_class->finalize = js_cocos2d_NavMesh_finalize;
     jsb_cocos2d_NavMesh_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -1245,8 +1234,13 @@ void js_register_cocos2dx_navmesh_NavMesh(JSContext *cx, JS::HandleObject global
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_NavMesh_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "NavMesh"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::NavMesh>(cx, jsb_cocos2d_NavMesh_class, proto, JS::NullPtr());
 }
 
