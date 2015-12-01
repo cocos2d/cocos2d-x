@@ -31,6 +31,7 @@
 #include "js_bindings_config.h"
 #include "cocos2d.h"
 #include "spidermonkey_specifics.h"
+#include "js-BindingsExport.h"
 #include "mozilla/Maybe.h"
 
 #define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
@@ -99,7 +100,7 @@ bool jsval_to_uint16( JSContext *cx, JS::HandleValue vp, uint16_t *ret );
 bool jsval_to_long( JSContext *cx, JS::HandleValue vp, long *out);
 bool jsval_to_ulong( JSContext *cx, JS::HandleValue vp, unsigned long *out);
 bool jsval_to_long_long(JSContext *cx, JS::HandleValue v, long long* ret);
-bool jsval_to_std_string(JSContext *cx, JS::HandleValue v, std::string* ret);
+CC_JS_DLL bool jsval_to_std_string(JSContext *cx, JS::HandleValue v, std::string* ret);
 bool jsval_to_ccpoint(JSContext *cx, JS::HandleValue v, cocos2d::Point* ret);
 bool jsval_to_ccrect(JSContext *cx, JS::HandleValue v, cocos2d::Rect* ret);
 bool jsval_to_ccsize(JSContext *cx, JS::HandleValue v, cocos2d::Size* ret);
@@ -118,7 +119,7 @@ bool jsval_to_ray(JSContext *cx, JS::HandleValue vp, cocos2d::Ray* ret);
 bool jsval_to_resoucedata(JSContext *cx, JS::HandleValue v, cocos2d::ResouceData* ret);
 
 // forward declaration
-js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj);
+CC_JS_DLL js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj);
 
 template <class T>
 bool jsvals_variadic_to_ccvector( JSContext *cx, /*jsval *vp, int argc,*/const JS::CallArgs& args, cocos2d::Vector<T>* ret)
@@ -184,7 +185,7 @@ bool jsval_to_ccvaluemap(JSContext* cx, JS::HandleValue v, cocos2d::ValueMap* re
 bool jsval_to_ccvaluemapintkey(JSContext* cx, JS::HandleValue v, cocos2d::ValueMapIntKey* ret);
 bool jsval_to_ccvaluevector(JSContext* cx, JS::HandleValue v, cocos2d::ValueVector* ret);
 bool jsval_to_ssize( JSContext *cx, JS::HandleValue vp, ssize_t* ret);
-bool jsval_to_std_vector_string( JSContext *cx, JS::HandleValue vp, std::vector<std::string>* ret);
+CC_JS_DLL bool jsval_to_std_vector_string( JSContext *cx, JS::HandleValue vp, std::vector<std::string>* ret);
 bool jsval_to_std_vector_int( JSContext *cx, JS::HandleValue vp, std::vector<int>* ret);
 bool jsval_to_std_vector_float( JSContext *cx, JS::HandleValue vp, std::vector<float>* ret);
 bool jsval_to_matrix(JSContext *cx, JS::HandleValue vp, cocos2d::Mat4* ret);
