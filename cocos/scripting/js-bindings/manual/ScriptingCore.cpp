@@ -1960,4 +1960,64 @@ void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy)
     JS_REMOVE_PROXY(nativeProxy, jsProxy);
 }
 
+//
+// Ref functions
+//
+JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
+{
+    //    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    JS::RootedObject proto(cx, typeClass->proto.ref());
+    JS::RootedObject parent(cx, typeClass->parentProto.ref());
+    JS::RootedObject js_obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    js_proxy_t* newproxy = jsb_new_proxy(ref, js_obj);
+    jsb_ref_init(cx, &newproxy->obj, ref, debug);
+    return js_obj;
+}
 
+void jsb_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, Ref* ref, const char* debug)
+{
+    CCLOG("jsb_ref_init: JSObject address =  %p. %s", obj->get(), debug);
+#if CC_NATIVE_CONTROL_SCRIPT
+    (void)cx;
+    (void)obj;
+    ref->_scriptOwned = true;
+#else
+    ref->autorelease();
+    JS::AddNamedObjectRoot(cx, obj, debug);
+#endif
+}
+
+void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj)
+{
+#if CC_NATIVE_CONTROL_SCRIPT
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy)
+    {
+        auto ref = static_cast<cocos2d::Ref*>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (ref)
+        {
+            CCLOG("jsb_ref_finalize: JSObject address = %p (%s)", obj, typeid(*ref).name());
+
+            jsb_remove_proxy(nproxy, jsproxy);
+            ref->release();
+        }
+        else
+            jsb_remove_proxy(nullptr, jsproxy);
+    }
+#endif
+}
+
+
+void jsb_ref_rebind(JSContext* cx, JS::HandleObject jsobj, js_proxy_t *js2native_proxy, cocos2d::Ref* oldRef, cocos2d::Ref* newRef, const char* debug)
+{
+    JS::RemoveObjectRoot(cx, &js2native_proxy->obj);
+    jsb_remove_proxy(jsb_get_native_proxy(oldRef), js2native_proxy);
+
+    // Rebind js obj with new action
+    js_proxy_t* newProxy = jsb_new_proxy(newRef, jsobj);
+    JS::AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::EaseAction");
+}

@@ -2582,12 +2582,12 @@ enum ACTION_TAG {
 bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ActionInterval* cobj = (cocos2d::ActionInterval *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionInterval_easing : Invalid Native Object");
-    
-    cocos2d::ActionInterval* currentAction = cobj;
+    JS::RootedObject jsobj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
+    cocos2d::ActionInterval* oldAction = (cocos2d::ActionInterval *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2 (oldAction, cx, false, "js_cocos2dx_ActionInterval_easing : Invalid Native Object");
+
+    cocos2d::ActionInterval* newAction = nullptr;
     JS::RootedObject tmp(cx);
     JS::RootedValue jsTag(cx);
     JS::RootedValue jsParam(cx);
@@ -2596,103 +2596,221 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
 
     for (int i = 0; i < argc; i++)
     {
-//        jsval vpi = argv[i];
+        //        jsval vpi = argv[i];
         JS::RootedValue vpi(cx, args.get(i));
         bool ok = vpi.isObject() &&
-            JS_ValueToObject(cx, vpi, &tmp) &&
-            JS_GetProperty(cx, tmp, "tag", &jsTag) &&
-            JS::ToNumber(cx, jsTag, &tag);
+        JS_ValueToObject(cx, vpi, &tmp) &&
+        JS_GetProperty(cx, tmp, "tag", &jsTag) &&
+        JS::ToNumber(cx, jsTag, &tag);
         JS_GetProperty(cx, tmp, "param", &jsParam) && JS::ToNumber(cx, jsParam, &parameter);
         bool hasParam = (parameter == parameter);
         if (!ok) continue;
 
-        cocos2d::ActionEase* action;
         ok = true;
         if (tag == EASE_IN)
         {
             if (!hasParam) ok = false;
-            action = cocos2d::EaseIn::create(currentAction, parameter);
+            auto tmpaction = new (std::nothrow) cocos2d::EaseIn;
+            tmpaction->initWithAction(oldAction, parameter);
+            newAction = tmpaction;
         }
         else if (tag == EASE_OUT)
         {
             if (!hasParam) ok = false;
-            action = cocos2d::EaseOut::create(currentAction, parameter);
+            auto tmpaction = new (std::nothrow) cocos2d::EaseOut;
+            tmpaction->initWithAction(oldAction, parameter);
+            newAction = tmpaction;
         }
         else if (tag == EASE_INOUT)
         {
             if (!hasParam) ok = false;
-            action = cocos2d::EaseInOut::create(currentAction, parameter);
+            auto tmpaction = new (std::nothrow) cocos2d::EaseInOut;
+            tmpaction->initWithAction(oldAction, parameter);
+            newAction = tmpaction;
         }
         else if (tag == EASE_EXPONENTIAL_IN)
-            action = cocos2d::EaseExponentialIn::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseExponentialIn;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_EXPONENTIAL_OUT)
-            action = cocos2d::EaseExponentialOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseExponentialOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_EXPONENTIAL_INOUT)
-            action = cocos2d::EaseExponentialInOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow)cocos2d::EaseExponentialInOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_SINE_IN)
-            action = cocos2d::EaseSineIn::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow)cocos2d::EaseSineIn;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_SINE_OUT)
-            action = cocos2d::EaseSineOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow)cocos2d::EaseSineOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_SINE_INOUT)
-            action = cocos2d::EaseSineInOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow)cocos2d::EaseSineInOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_ELASTIC_IN)
         {
             if (!hasParam) parameter = 0.3;
-            action = cocos2d::EaseElasticIn::create(currentAction, parameter);
+            auto tmpaction = new (std::nothrow)cocos2d::EaseElasticIn;
+            tmpaction->initWithAction(oldAction, parameter);
+            newAction = tmpaction;
         }
         else if (tag == EASE_ELASTIC_OUT)
         {
             if (!hasParam) parameter = 0.3;
-            action = cocos2d::EaseElasticOut::create(currentAction, parameter);
+            auto tmpaction = new (std::nothrow)cocos2d::EaseElasticOut;
+            tmpaction->initWithAction(oldAction, parameter);
+            newAction = tmpaction;
         }
         else if (tag == EASE_ELASTIC_INOUT)
         {
             if (!hasParam) parameter = 0.3;
-            action = cocos2d::EaseElasticInOut::create(currentAction, parameter);
+            auto tmpaction = new (std::nothrow)cocos2d::EaseElasticInOut;
+            tmpaction->initWithAction(oldAction, parameter);
+            newAction = tmpaction;
         }
         else if (tag == EASE_BOUNCE_IN)
-            action = cocos2d::EaseBounceIn::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow)cocos2d::EaseBounceIn;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_BOUNCE_OUT)
-            action = cocos2d::EaseBounceOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseBounceOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_BOUNCE_INOUT)
-            action = cocos2d::EaseBounceInOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseBounceInOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_BACK_IN)
-            action = cocos2d::EaseBackIn::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseBackIn;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_BACK_OUT)
-            action = cocos2d::EaseBackOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseBackOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_BACK_INOUT)
-            action = cocos2d::EaseBackInOut::create(currentAction);
-        
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseBackInOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_QUADRATIC_IN)
-            action = cocos2d::EaseQuadraticActionIn::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseQuadraticActionIn;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_QUADRATIC_OUT)
-            action = cocos2d::EaseQuadraticActionOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseQuadraticActionOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_QUADRATIC_INOUT)
-            action = cocos2d::EaseQuadraticActionInOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseQuadraticActionInOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_QUARTIC_IN)
-            action = cocos2d::EaseQuarticActionIn::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseQuarticActionIn;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_QUARTIC_OUT)
-            action = cocos2d::EaseQuarticActionOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseQuarticActionOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_QUARTIC_INOUT)
-            action = cocos2d::EaseQuarticActionInOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseQuarticActionInOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_QUINTIC_IN)
-            action = cocos2d::EaseQuinticActionIn::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseQuinticActionIn;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_QUINTIC_OUT)
-            action = cocos2d::EaseQuinticActionOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseQuinticActionOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_QUINTIC_INOUT)
-            action = cocos2d::EaseQuinticActionInOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseQuinticActionInOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_CIRCLE_IN)
-            action = cocos2d::EaseCircleActionIn::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseCircleActionIn;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_CIRCLE_OUT)
-            action = cocos2d::EaseCircleActionOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseCircleActionOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_CIRCLE_INOUT)
-            action = cocos2d::EaseCircleActionInOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseCircleActionInOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_CUBIC_IN)
-            action = cocos2d::EaseCubicActionIn::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseCubicActionIn;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_CUBIC_OUT)
-            action = cocos2d::EaseCubicActionOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseCubicActionOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_CUBIC_INOUT)
-            action = cocos2d::EaseCubicActionInOut::create(currentAction);
+        {
+            auto tmpaction = new (std::nothrow) cocos2d::EaseCubicActionInOut;
+            tmpaction->initWithAction(oldAction);
+            newAction = tmpaction;
+        }
         else if (tag == EASE_BEZIER_ACTION)
         {
             JS::RootedValue jsParam2(cx);
@@ -2706,28 +2824,25 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
             ok &= JS_GetProperty(cx, tmp, "param4", &jsParam4);
             ok &= JS::ToNumber(cx, jsParam4, &parameter4);
             if (!ok) continue;
-            
-            action = cocos2d::EaseBezierAction::create(currentAction);
-            ((EaseBezierAction *)action)->setBezierParamer(parameter, parameter2, parameter3, parameter4);
+
+            auto tmpaction = new (std::nothrow) cocos2d::EaseBezierAction;
+            tmpaction->initWithAction(oldAction);
+            tmpaction->setBezierParamer(parameter, parameter2, parameter3, parameter4);
+            newAction = tmpaction;
         }
         else
             continue;
-        
-        if (!ok || !action) {
+
+        if (!ok || !newAction) {
             JS_ReportError(cx, "js_cocos2dx_ActionInterval_easing : Invalid action: At least one action was expecting parameter");
             return false;
         }
-        
-        currentAction = action;
     }
-    
-    // Unbind current proxy binding
-    JS::RemoveObjectRoot(cx, &proxy->obj);
-    jsb_remove_proxy(jsb_get_native_proxy(cobj), proxy);
-    // Rebind js obj with new action
-    js_proxy_t* newProxy = jsb_new_proxy(currentAction, obj);
-    JS::AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::EaseAction");
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+
+    // Unbind existing proxy binding with cobj, and rebind with the new action
+    jsb_ref_rebind(cx, jsobj, proxy, oldAction, newAction, "cocos2d::EaseAction");
+
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
     return true;
 }
 
@@ -2741,38 +2856,26 @@ bool js_BezierActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
         if( ! JS::ToNumber(cx, args.get(0), &t) ) {
             return false;
         }
-        
+
         int num;
         Point *arr;
         jsval_to_ccarray_of_CCPoint(cx, args.get(1), &arr, &num);
-        
+
         ccBezierConfig config;
         config.controlPoint_1 = arr[0];
         config.controlPoint_2 = arr[1];
         config.endPosition = arr[2];
-        
-        T* ret =  T::create(t, config);
-        
+
+        T* ret = new (std::nothrow) T;
+        ret->initWithDuration(t, config);
+
         delete [] arr;
 
-        jsval jsret;
-        do {
-            if (ret) {
-                js_proxy_t *p = jsb_get_native_proxy(ret);
-                if (p) {
-                    jsret = OBJECT_TO_JSVAL(p->obj);
-                } else {
-                    // create a new js obj of that class
-                    js_proxy_t *proxy = js_get_or_create_proxy<T>(cx, ret);
-                    jsret = OBJECT_TO_JSVAL(proxy->obj);
-                }
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
+        JSObject* jsobj;
+        js_type_class_t *typeProxy = js_get_type_from_native<T>(ret);
+        jsobj = jsb_ref_create_jsobject(cx, ret, typeProxy, typeid(*ret).name());
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
         return true;
-        
     }
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
@@ -2790,8 +2893,7 @@ bool js_BezierActions_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 2) {
         double arg0;
         cocos2d::_ccBezierConfig arg1;
-        JS::RootedValue jsarg0(cx, args.get(0));
-        ok &= JS::ToNumber( cx, jsarg0, &arg0);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, args.get(0)), &arg0);
 
         int num;
         cocos2d::Vec2 *arr;
@@ -2818,48 +2920,36 @@ template<class T>
 bool js_CardinalSplineActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    
+
     if (argc == 3) {
         double dur;
         ok &= JS::ToNumber(cx, args.get(0), &dur);
-        
+
         int num;
         Point *arr;
         ok &= jsval_to_ccarray_of_CCPoint(cx, args.get(1), &arr, &num);
-        
+
         double ten;
         ok &= JS::ToNumber(cx, args.get(2), &ten);
-        
+
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-        
+
         PointArray *points = PointArray::create(num);
-        
+
         for( int i=0; i < num;i++) {
             points->addControlPoint(arr[i]);
         }
-        
-        T *ret = T::create(dur, points, ten);
-        
+
+        T *ret = new (std::nothrow) T;
+        ret->initWithDuration(dur, points, ten);
+
         delete [] arr;
-        
-        jsval jsret;
-        do {
-            if (ret) {
-                js_proxy_t *p = jsb_get_native_proxy(ret);
-                if (p) {
-                    jsret = OBJECT_TO_JSVAL(p->obj);
-                } else {
-                    // create a new js obj of that class
-                    js_proxy_t *proxy = js_get_or_create_proxy<T>(cx, ret);
-                    jsret = OBJECT_TO_JSVAL(proxy->obj);
-                }
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
+
+        JSObject* jsobj;
+        js_type_class_t *typeProxy = js_get_type_from_native<T>(ret);
+        jsobj = jsb_ref_create_jsobject(cx, ret, typeProxy, typeid(*ret).name());
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
         return true;
-        
     }
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
@@ -2869,45 +2959,33 @@ template<class T>
 bool js_CatmullRomActions_create(JSContext *cx, uint32_t argc, jsval *vp) {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    
+
     if (argc == 2) {
         double dur;
         ok &= JS::ToNumber(cx, args.get(0), &dur);
-        
+
         int num;
         Point *arr;
         ok &= jsval_to_ccarray_of_CCPoint(cx, args.get(1), &arr, &num);
-        
+
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-        
+
         PointArray *points = PointArray::create(num);
-        
+
         for( int i=0; i < num;i++) {
             points->addControlPoint(arr[i]);
         }
-        
-        T *ret = T::create(dur, points);
-        
+
+        T *ret = new (std::nothrow) T;
+        ret->initWithDuration(dur, points);
+
         delete [] arr;
-        
-        jsval jsret;
-        do {
-            if (ret) {
-                js_proxy_t *p = jsb_get_native_proxy(ret);
-                if (p) {
-                    jsret = OBJECT_TO_JSVAL(p->obj);
-                } else {
-                    // create a new js obj of that class
-                    js_proxy_t *proxy = js_get_or_create_proxy<T>(cx, ret);
-                    jsret = OBJECT_TO_JSVAL(proxy->obj);
-                }
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
+
+        JSObject* jsobj;
+        js_type_class_t *typeProxy = js_get_type_from_native<T>(ret);
+        jsobj = jsb_ref_create_jsobject(cx, ret, typeProxy, typeid(*ret).name());
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
         return true;
-        
     }
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
@@ -2923,18 +3001,17 @@ bool js_CatmullRomActions_initWithDuration(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CatmullRom_initWithDuration : Invalid Native Object");
     if (argc == 2) {
         double arg0;
-        JS::RootedValue jsarg0(cx, args.get(0));
-        ok &= JS::ToNumber(cx, jsarg0, &arg0);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, args.get(0)), &arg0);
 
         int num;
         Point *arr;
         ok &= jsval_to_ccarray_of_CCPoint(cx, args.get(1), &arr, &num);
-                
-        cocos2d::PointArray* arg1 = cocos2d::PointArray::create(num);        
+
+        cocos2d::PointArray* arg1 = cocos2d::PointArray::create(num);
         for( int i=0; i < num;i++) {
             arg1->addControlPoint(arr[i]);
         }
-        
+
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CatmullRom_initWithDuration : Error processing arguments");
         bool ret = cobj->initWithDuration(arg0, arg1);
         delete [] arr;
@@ -2947,7 +3024,6 @@ bool js_CatmullRomActions_initWithDuration(JSContext *cx, uint32_t argc, jsval *
     JS_ReportError(cx, "js_cocos2dx_CatmullRom_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
-
 
 bool JSB_CCBezierBy_actionWithDuration(JSContext *cx, uint32_t argc, jsval *vp) {
     return js_BezierActions_create<cocos2d::BezierBy>(cx, argc, vp);
@@ -2967,6 +3043,7 @@ bool JSB_CCBezierTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
     return js_BezierActions_initWithDuration<cocos2d::BezierTo>(cx, argc, vp);
 }
 
+
 bool JSB_CCCardinalSplineBy_actionWithDuration(JSContext *cx, uint32_t argc, jsval *vp) {
     return js_CardinalSplineActions_create<cocos2d::CardinalSplineBy>(cx, argc, vp);
 }
@@ -2985,10 +3062,10 @@ bool js_cocos2dx_CardinalSplineTo_initWithDuration(JSContext *cx, uint32_t argc,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CardinalSplineTo_initWithDuration : Invalid Native Object");
     if (argc == 3) {
         double arg0;
+
         double arg2;
-        JS::RootedValue jsarg0(cx, args.get(0));
-        ok &= JS::ToNumber(cx, jsarg0, &arg0);
-        
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, args.get(0)), &arg0);
+
         int num;
         Point *arr;
         ok &= jsval_to_ccarray_of_CCPoint(cx, args.get(1), &arr, &num);
@@ -2996,12 +3073,11 @@ bool js_cocos2dx_CardinalSplineTo_initWithDuration(JSContext *cx, uint32_t argc,
         for( int i=0; i < num;i++) {
             arg1->addControlPoint(arr[i]);
         }
-        
-        JS::RootedValue jsarg2(cx, args.get(2));
-        ok &= JS::ToNumber(cx, jsarg2, &arg2);
+
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, args.get(2)), &arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CardinalSplineTo_initWithDuration : Error processing arguments");
         bool ret = cobj->initWithDuration(arg0, arg1, arg2);
-        
+
         delete [] arr;
         jsval jsret = JSVAL_NULL;
         jsret = BOOLEAN_TO_JSVAL(ret);
@@ -3013,6 +3089,7 @@ bool js_cocos2dx_CardinalSplineTo_initWithDuration(JSContext *cx, uint32_t argc,
     return false;
 }
 
+
 bool JSB_CCCatmullRomBy_actionWithDuration(JSContext *cx, uint32_t argc, jsval *vp) {
     return js_CatmullRomActions_create<cocos2d::CatmullRomBy>(cx, argc, vp);
 }
@@ -3021,11 +3098,13 @@ bool JSB_CCCatmullRomTo_actionWithDuration(JSContext *cx, uint32_t argc, jsval *
     return js_CatmullRomActions_create<cocos2d::CatmullRomTo>(cx, argc, vp);
 }
 
-bool JSB_CatmullRomBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp) {
+bool JSB_CatmullRomBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
     return js_CatmullRomActions_initWithDuration<cocos2d::CatmullRomBy>(cx, argc, vp);
 }
 
-bool JSB_CatmullRomTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp) {
+bool JSB_CatmullRomTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
     return js_CatmullRomActions_initWithDuration<cocos2d::CatmullRomTo>(cx, argc, vp);
 }
 

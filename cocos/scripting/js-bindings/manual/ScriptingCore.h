@@ -538,6 +538,27 @@ js_proxy_t* jsb_get_native_proxy(void* nativeObj);
 js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj);
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
 
+/**
+ * Generic initialization function for subclasses of Ref
+ */
+void jsb_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, cocos2d::Ref* ref, const char* debug);
+
+/**
+ * Generic finalize used by objects that are subclass of Ref
+ */
+void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj);
+
+/**
+ Disassociates oldRef from jsobj, and associates a new Ref.
+ Useful for the EaseActions and others
+ */
+void jsb_ref_rebind(JSContext* cx, JS::HandleObject jsobj, js_proxy_t *js2native_proxy, cocos2d::Ref* oldRef, cocos2d::Ref* newRef, const char* debug);
+
+/**
+ Creates a new JSObject of a certain type (typeClass) and creates a proxy associated with and the Ref
+ */
+JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+
 template <class T>
 jsval getJSObject(JSContext* cx, T* nativeObj)
 {
