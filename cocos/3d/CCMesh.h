@@ -26,6 +26,7 @@
 #define __CCMESH_H__
 
 #include <string>
+#include <map>
 
 #include "3d/CCBundle3DData.h"
 #include "3d/CCAABB.h"
@@ -94,10 +95,39 @@ public:
     /**get per vertex size in bytes*/
     int getVertexSizeInBytes() const;
 
-    /**texture getter and setter*/
+    /**
+     * set texture (diffuse), which is responsible for the main apearence. It is also means main textrue, you can also call setTexture(texPath, NTextureData::Usage::Diffuse)
+     * @param texPath texture path
+     */
     void setTexture(const std::string& texPath);
+    /**
+     * set texture (diffuse), which is responsible for the main apearence. It is also means main textrue, you can also call setTexture(texPath, NTextureData::Usage::Diffuse)
+     * @param tex texture to be set
+     */
     void setTexture(Texture2D* tex);
+    /**
+     * set texture
+     * @param tex texture to be set
+     * @param usage Usage of this texture
+     */
+    void setTexture(Texture2D* tex, NTextureData::Usage usage);
+    /**
+     * set texture
+     * @param texPath texture path
+     * @param usage Usage of this texture
+     */
+    void setTexture(const std::string& texPath, NTextureData::Usage usage);
+    /**
+     * Get texture (diffuse), which is responsible for the main apearence. It is also means main textrue, you can also call getTexture(NTextureData::Usage::Diffuse)
+     * @return Texture used, return the texture of first mesh if multiple meshes exist
+     */
     Texture2D* getTexture() const;
+    /**
+     * Get textrue
+     * @param usage Usage of returned texture
+     * @return The texture of this usage, return the textrue of first mesh if multiple meshes exist
+     */
+    Texture2D* getTexture(NTextureData::Usage usage);
     
     /**visible getter and setter*/
     void setVisible(bool visible);
@@ -194,6 +224,20 @@ public:
      */
     void setForce2DQueue(bool force2D) { _force2DQueue = force2D; }
 
+    /**
+     * check texture
+     */
+    void checkTexture();
+    
+    /**
+     * set enable check texture, check texture each frame if eanble is true. It is false by default
+     */
+    void setEnableCheckTexture(bool enableCheckTexture) { _enableCheckTexture = enableCheckTexture; }
+    /**
+     * check texture each frame? 
+     */
+    bool enableCheckTexture() const { return _enableCheckTexture; }
+
 CC_CONSTRUCTOR_ACCESS:
 
     Mesh();
@@ -204,7 +248,7 @@ protected:
     void setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigned int lightmask);
     void bindMeshCommand();
 
-    Texture2D*          _texture;  //texture that submesh is using
+    std::map<NTextureData::Usage, Texture2D*> _textures; //textures that submesh is using
     MeshSkin*           _skin;     //skin
     bool                _visible; // is the submesh visible
     bool                _isTransparent; // is this mesh transparent, it is a property of material in fact
@@ -234,11 +278,17 @@ protected:
     std::vector<float> _spotLightUniformInnerAngleCosValues;
     std::vector<float> _spotLightUniformOuterAngleCosValues;
     std::vector<float> _spotLightUniformRangeInverseValues;
+
+    std::string _texFile;
+    bool        _enableCheckTexture;
 };
 
 // end of 3d group
 /// @}
 
+/// @cond
+extern std::string CC_DLL s_uniformSamplerName[];//uniform sampler names array
+/// @endcond
 
 NS_CC_END
 

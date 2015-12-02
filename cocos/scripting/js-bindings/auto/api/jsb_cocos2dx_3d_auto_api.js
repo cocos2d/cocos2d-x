@@ -583,6 +583,14 @@ str
 },
 
 /**
+ * @method checkTexture
+ */
+checkTexture : function (
+)
+{
+},
+
+/**
  * @method getIndexCount
  * @return {long}
  */
@@ -976,6 +984,16 @@ setCullFace : function (
 int 
 )
 {
+},
+
+/**
+ * @method getMeshes
+ * @return {Array}
+ */
+getMeshes : function (
+)
+{
+    return new Array();
 },
 
 /**
