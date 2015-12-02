@@ -73,6 +73,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
 
     bool initRender(const std::string &texFile);
+    GLuint getTextureName();
 
 protected:
 
