@@ -46,6 +46,22 @@ NS_CC_BEGIN
 
 // Helpers
 
+//sampler uniform names, only diffuse and normal texture are supported for now
+std::string s_uniformSamplerName[] =
+{
+    "",//NTextureData::Usage::Unknown,
+    "",//NTextureData::Usage::None
+    "",//NTextureData::Usage::Diffuse
+    "",//NTextureData::Usage::Emissive
+    "",//NTextureData::Usage::Ambient
+    "",//NTextureData::Usage::Specular
+    "",//NTextureData::Usage::Shininess
+    "u_normalTex",//NTextureData::Usage::Normal
+    "",//NTextureData::Usage::Bump
+    "",//NTextureData::Usage::Transparency
+    "",//NTextureData::Usage::Reflection
+};
+
 static const char          *s_dirLightUniformColorName = "u_DirLightSourceColor";
 static const char          *s_dirLightUniformDirName = "u_DirLightSourceDirection";
 
@@ -106,8 +122,7 @@ static Texture2D * getDummyTexture()
 
 
 Mesh::Mesh()
-: _texture(nullptr)
-, _skin(nullptr)
+: _skin(nullptr)
 , _visible(true)
 , _isTransparent(false)
 , _meshIndexData(nullptr)
@@ -118,12 +133,15 @@ Mesh::Mesh()
 , _blendDirty(true)
 , _force2DQueue(false)
 , _texFile("")
+, _enableCheckTexture(false)
 {
     
 }
 Mesh::~Mesh()
 {
-    CC_SAFE_RELEASE(_texture);
+    for (auto &tex : _textures){
+        CC_SAFE_RELEASE(tex.second);
+    }
     CC_SAFE_RELEASE(_skin);
     CC_SAFE_RELEASE(_meshIndexData);
     CC_SAFE_RELEASE(_material);
@@ -256,10 +274,15 @@ void Mesh::setTexture(const std::string& texPath)
 {
     _texFile = texPath;
     auto tex = Director::getInstance()->getTextureCache()->addImage(texPath);
-    setTexture(tex);
+    setTexture(tex, NTextureData::Usage::Diffuse);
 }
 
 void Mesh::setTexture(Texture2D* tex)
+{
+    setTexture(tex, NTextureData::Usage::Diffuse);
+}
+
+void Mesh::setTexture(Texture2D* tex, NTextureData::Usage usage)
 {
     // Texture must be saved for future use
     // it doesn't matter if the material is already set or not
@@ -267,32 +290,51 @@ void Mesh::setTexture(Texture2D* tex)
     if (tex == nullptr)
         tex = getDummyTexture();
     
-    if (tex != _texture)
-    {
-        CC_SAFE_RETAIN(tex);
-        CC_SAFE_RELEASE(_texture);
-        _texture = tex;
+    CC_SAFE_RETAIN(tex);
+    CC_SAFE_RELEASE(_textures[usage]);
+    _textures[usage] = tex;   
+    
+    if (usage == NTextureData::Usage::Diffuse){
+        if (_material) {
+            auto technique = _material->_currentTechnique;
+            for(auto& pass: technique->_passes)
+            {
+                // FIXME: Ideally it should use glProgramState->setUniformTexture()
+                // and set CC_Texture0 that way. But trying to it, will trigger
+                // another bug
+                pass->setTexture(tex);
+            }
+        }
+        
+        bindMeshCommand();
+        _texFile = tex->getPath();
     }
-
-    if (_material) {
-        auto technique = _material->_currentTechnique;
-        for(auto& pass: technique->_passes)
-        {
-            // FIXME: Ideally it should use glProgramState->setUniformTexture()
-            // and set CC_Texture0 that way. But trying to it, will trigger
-            // another bug
-            pass->setTexture(tex);
+    else if (usage == NTextureData::Usage::Normal) // currently only diffuse and normal are supported
+    {
+        if (_material){
+            auto technique = _material->_currentTechnique;
+            for(auto& pass: technique->_passes)
+            {
+                pass->getGLProgramState()->setUniformTexture(s_uniformSamplerName[(int)usage], tex);
+            }
         }
     }
+}
 
-    bindMeshCommand();
-
-    _texFile = _texture->getPath();
+void Mesh::setTexture(const std::string& texPath, NTextureData::Usage usage)
+{
+    auto tex = Director::getInstance()->getTextureCache()->addImage(texPath);
+    setTexture(tex, usage);
 }
 
 Texture2D* Mesh::getTexture() const
 {
-    return _texture;
+    return _textures.at(NTextureData::Usage::Diffuse);
+}
+
+Texture2D* Mesh::getTexture(NTextureData::Usage usage)
+{
+    return _textures[usage];
 }
 
 void Mesh::setMaterial(Material* material)
@@ -315,8 +357,9 @@ void Mesh::setMaterial(Material* material)
         }
     }
     // Was the texture set before teh GLProgramState ? Set it
-    if (_texture)
-        setTexture(_texture);
+    for(auto& tex : _textures)
+        setTexture(tex.second, tex.first);
+        
     
     if (_blendDirty)
         setBlendFunc(_blend);
@@ -339,6 +382,7 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
     if (isTransparent)
         flags |= Node::FLAGS_RENDER_AS_3D;
 
+    if (_enableCheckTexture)
     this->checkTexture();
 
     _meshCommand.init(globalZ,
@@ -666,30 +710,31 @@ GLuint Mesh::getIndexBuffer() const
 void Mesh::checkTexture()
 {
     Texture2D* cacheTex = nullptr;
-    if (TextureCache::getInstance()->isDirty())
+    auto& texture = _textures[NTextureData::Usage::Diffuse];
+    if (Director::getInstance()->getTextureCache()->isDirty())
     {
-        cacheTex = TextureCache::getInstance()->getTextureForKey(_texFile);
+        cacheTex = Director::getInstance()->getTextureCache()->getTextureForKey(_texFile);
         if (cacheTex == nullptr)
         {
             cacheTex = getDummyTexture();
         }
     }
-    else if (_texture != nullptr && !_texture->isValid())
+    else if (texture != nullptr && !texture->isValid())
     {
         cacheTex = getDummyTexture();
     }
 
-    if (cacheTex != nullptr && _texture != cacheTex)
+    if (cacheTex != nullptr && texture != cacheTex)
     {
         CC_SAFE_RETAIN(cacheTex);
-        CC_SAFE_RELEASE(_texture);
-        _texture = cacheTex;
+        CC_SAFE_RELEASE(texture);
+        texture = cacheTex;
 
         if (_material) {
             auto technique = _material->_currentTechnique;
             for (auto& pass : technique->_passes)
             {
-                pass->setTexture(_texture);
+                pass->setTexture(texture);
             }
         }
         bindMeshCommand();

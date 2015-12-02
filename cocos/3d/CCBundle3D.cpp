@@ -2102,6 +2102,14 @@ unsigned int Bundle3D::parseGLProgramAttribute(const std::string& str)
     {
         return GLProgram::VERTEX_ATTRIB_BLEND_INDEX;
     }
+    else if (str == "VERTEX_ATTRIB_TANGENT")
+    {
+        return GLProgram::VERTEX_ATTRIB_TANGENT;
+    }
+    else if (str == "VERTEX_ATTRIB_BINORMAL")
+    {
+        return GLProgram::VERTEX_ATTRIB_BINORMAL;
+    }
     else
     {
         CCASSERT(false, "Wrong Attribute type");

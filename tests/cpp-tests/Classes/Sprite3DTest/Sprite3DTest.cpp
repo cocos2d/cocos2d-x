@@ -68,6 +68,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DVertexColorTest);
     ADD_TEST_CASE(MotionStreak3DTest);
     ADD_TEST_CASE(Sprite3DPropertyTest);
+    ADD_TEST_CASE(Sprite3DNormalMappingTest);
 };
 
 //------------------------------------------------------------------
@@ -2512,6 +2513,77 @@ void MotionStreak3DTest::update(float delta)
     _sprite->setPosition3D(Vec3(r * cosf(angle), 0, r * sinf(angle)));
     _streak->setPosition3D(_sprite->getPosition3D());
     _streak->setSweepAxis(Vec3(cosf(angle), 0, sinf(angle)));
+}
+
+Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    {
+        auto sprite = Sprite3D::create("Sprite3DTest/sphere.c3b");
+        sprite->setPosition(Vec2(-30, 0));
+        sprite->setRotation3D(Vec3(90.0f, 0.0f, 0.0f));
+        sprite->setScale(2.0);
+        sprite->setCameraMask(2);
+        sprite->setTexture("Sprite3DTest/brickwork-texture.jpg");
+        addChild(sprite);
+    }
+
+    int maxAttributes;
+    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &maxAttributes);
+    CCASSERT(maxAttributes > 8, "attributes supported must be greater than 8");
+    if (maxAttributes > 8)
+    {
+        auto sprite = Sprite3D::create("Sprite3DTest/sphere_bumped.c3b");
+        sprite->setPosition(Vec2(30, 0));
+        sprite->setRotation3D(Vec3(90.0f, 0.0f, 0.0f));
+        sprite->setScale(20.0);
+        sprite->setCameraMask(2);
+        sprite->setTexture("Sprite3DTest/brickwork-texture.jpg");
+        addChild(sprite);
+    }
+
+    float radius = 100.0;
+
+    PointLight* light = PointLight::create(Vec3(0.0, 0.0, 0.0), Color3B(255, 255, 255), 1000);
+    light->runAction(RepeatForever::create(Sequence::create(CallFuncN::create([radius](Node *node){
+        static float angle = 0.0;
+        static bool reverseDir = false;
+        node->setPosition3D(Vec3(radius * cos(angle), 0.0f, radius * sin(angle)));
+        if (reverseDir){
+            angle -= 0.01;
+            if (angle < 0.0)
+                reverseDir = false;
+        }
+        else{
+            angle += 0.01;
+            if (3.14159 < angle)
+                reverseDir = true;
+        }
+    }), nullptr)));
+    //setup camera
+    auto camera = Camera::createPerspective(60.0, s.width / s.height, 1.0f, 1000.f);
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setPosition3D(Vec3(0.f, 0.f, 100.f));
+    camera->lookAt(Vec3(0.f, 0.f, 0.f));
+    addChild(camera);
+
+    addChild(light);
+}
+
+Sprite3DNormalMappingTest::~Sprite3DNormalMappingTest()
+{
+
+}
+
+std::string Sprite3DNormalMappingTest::title() const
+{
+    return "NormalMapping Test";
+}
+
+std::string Sprite3DNormalMappingTest::subtitle() const
+{
+    return "";
 }
 
 Sprite3DPropertyTest::Sprite3DPropertyTest()
