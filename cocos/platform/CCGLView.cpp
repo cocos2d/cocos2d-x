@@ -317,6 +317,11 @@ void GLView::handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[])
     dispatcher->dispatchEvent(&touchEvent);
 }
 
+void GLView::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[])
+{
+    handleTouchesMove(num, ids, xs, ys, nullptr, nullptr);
+}
+
 void GLView::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[], float fs[], float ms[])
 {
     intptr_t id = 0;

@@ -22,7 +22,7 @@ enum
 TouchesTests::TouchesTests()
 {
     ADD_TEST_CASE(PongScene);
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0 // User 9.0 or higher SDK compiled
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0 // Use 9.0 or higher SDK to compile
     ADD_TEST_CASE(ForceTouchTest);
 #endif
 }
@@ -115,16 +115,16 @@ void PongLayer::doStep(float delta)
         resetAndScoreBallForPlayer( kHighPlayer );
 }
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0 // User 9.0 or higher SDK compiled
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0 // Use 9.0 or higher SDK to compile
 
-const char * _Info_Formatter = "Current force value : %0.02f, Maxium possible force : %0.02f";
+const char * _Info_Formatter = "Current force value : %0.02f, maximum possible force : %0.02f";
 char formatBuffer[256] = {0, };
 
 ForceTouchTest::ForceTouchTest()
 {
     auto s = Director::getInstance()->getWinSize();
 
-    _infoLabel = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "Current force value : 0.00, Maxium possible force : 0.00");
+    _infoLabel = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "Current force value : 0.00, maximum possible force : 0.00");
     _infoLabel->setPosition(s.width / 2, s.height / 2);
     addChild(_infoLabel);
 

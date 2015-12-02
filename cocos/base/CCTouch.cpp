@@ -76,7 +76,7 @@ float Touch::getCurrentForce() const
     return _curForce;
 }
 
-// Returns the maxium touch force for 3d touch.
+// Returns the maximum touch force for 3d touch.
 float Touch::getMaxForce() const
 {
     return _maxForce;

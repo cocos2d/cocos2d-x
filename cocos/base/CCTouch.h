@@ -103,10 +103,32 @@ public:
      * @param id A given id
      * @param x A given x coordinate.
      * @param y A given y coordinate.
-     * @param force Current force for 3d touch.
-     * @param maxForce Maxium possible force for 3d touch.
      */
-    void setTouchInfo(int id, float x, float y, float force = 0.0f, float maxForce = 0.0f)
+    void setTouchInfo(int id, float x, float y)
+    {
+        _id = id;
+        _prevPoint = _point;
+        _point.x   = x;
+        _point.y   = y;
+        _curForce = 0.0f;
+        _maxForce = 0.0f;
+        if (!_startPointCaptured)
+        {
+            _startPoint = _point;
+            _startPointCaptured = true;
+            _prevPoint = _point;
+        }
+    }
+
+    /** Set the touch information. It always used to monitor touch event.
+     *
+     * @param id A given id
+     * @param x A given x coordinate.
+     * @param y A given y coordinate.
+     * @param force Current force for 3d touch.
+     * @param maxForce maximum possible force for 3d touch.
+     */
+    void setTouchInfo(int id, float x, float y, float force, float maxForce)
     {
         _id = id;
         _prevPoint = _point;
@@ -136,9 +158,9 @@ public:
      * @return The current touch force for 3d touch.
      */
     float getCurrentForce() const;
-    /** Returns the maxium touch force for 3d touch.
+    /** Returns the maximum touch force for 3d touch.
      *
-     * @return The maxium touch force for 3d touch.
+     * @return The maximum touch force for 3d touch.
      */
     float getMaxForce() const;
 
