@@ -2465,13 +2465,9 @@ bool js_cocos2dx_ActionInterval_repeat(JSContext *cx, uint32_t argc, jsval *vp)
             JS_ReportError(cx, "js_cocos2dx_ActionInterval_repeat : Repeat times must be greater than 0");
         }
         
-        cocos2d::Repeat* action = cocos2d::Repeat::create(cobj, timesInt);
-        // Unbind current proxy binding
-        JS::RemoveObjectRoot(cx, &proxy->obj);
-        jsb_remove_proxy(jsb_get_native_proxy(cobj), proxy);
-        // Rebind js obj with new action
-        js_proxy_t* newProxy = jsb_new_proxy(action, obj);
-        JS::AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::Repeat");
+        cocos2d::Repeat* action = new (std::nothrow) cocos2d::Repeat;
+        action->initWithAction(cobj, timesInt);
+        jsb_ref_rebind(cx, obj, proxy, cobj, action, "cocos2d::Repeat");
 
         args.rval().set(OBJECT_TO_JSVAL(obj));
         return true;
@@ -2484,21 +2480,17 @@ bool js_cocos2dx_ActionInterval_repeat(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_ActionInterval_repeatForever(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    JS::RootedObject jsobj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
     cocos2d::ActionInterval* cobj = (cocos2d::ActionInterval *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionInterval_repeatForever : Invalid Native Object");
     
     if (argc == 0) {
-        cocos2d::RepeatForever* action = cocos2d::RepeatForever::create(cobj);
-        // Unbind current proxy binding
-        JS::RemoveObjectRoot(cx, &proxy->obj);
-        jsb_remove_proxy(jsb_get_native_proxy(cobj), proxy);
-        // Rebind js obj with new action
-        js_proxy_t* newProxy = jsb_new_proxy(action, obj);
-        JS::AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::RepeatForever");
+        cocos2d::RepeatForever* action = new (std::nothrow) cocos2d::RepeatForever;
+        action->initWithAction(cobj);
 
-        args.rval().set(OBJECT_TO_JSVAL(obj));
+        jsb_ref_rebind(cx, jsobj, proxy, cobj, action, "cocos2d::RepeatForever");
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
         return true;
     }
     
@@ -2525,13 +2517,9 @@ bool js_cocos2dx_ActionInterval_speed(JSContext *cx, uint32_t argc, jsval *vp)
             return false;
         }
         
-        cocos2d::Speed* action = cocos2d::Speed::create(cobj, speed);
-        // Unbind current proxy binding
-        JS::RemoveObjectRoot(cx, &proxy->obj);
-        jsb_remove_proxy(jsb_get_native_proxy(cobj), proxy);
-        // Rebind js obj with new action
-        js_proxy_t* newProxy = jsb_new_proxy(action, obj);
-        JS::AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::Speed");
+        cocos2d::Speed* action = new (std::nothrow) cocos2d::Speed;
+        action->initWithAction(cobj, speed);
+        jsb_ref_rebind(cx, obj, proxy, cobj, action, "cocos2d::Speed");
 
         args.rval().set(OBJECT_TO_JSVAL(obj));
         return true;
