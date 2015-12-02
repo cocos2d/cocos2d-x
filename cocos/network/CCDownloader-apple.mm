@@ -266,33 +266,44 @@ namespace cocos2d { namespace network {
     for (NSURLSessionDownloadTask *task in enumeratorKey)
     {
         DownloadTaskWrapper *wrapper = [self.taskDict objectForKey:task];
-        NSString *tempFilePath = [NSString stringWithFormat:@"%s%s", [wrapper get]->storagePath.c_str(), _hints.tempFileNameSuffix.c_str()];
-        NSString *tempFileDir = [tempFilePath stringByDeletingLastPathComponent];
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        BOOL isDir = false;
-        if ([fileManager fileExistsAtPath:tempFileDir isDirectory:&isDir])
-        {
-            if (NO == isDir)
-            {
-                // TODO: the directory is a file, not a directory, how to echo to developer?
-                continue;
-            }
+        
+        // no resume support for a data task
+        std::string storagePath = [wrapper get]->storagePath;
+        if(storagePath.length() == 0) {
+            [task cancel];
         }
-        else
-        {
-            NSURL *tempFileURL = [NSURL fileURLWithPath:tempFileDir];
-            if (NO == [fileManager createDirectoryAtURL:tempFileURL withIntermediateDirectories:YES attributes:nil error:nil])
-            {
-                // create directory failed
-                continue;
-            }
+        else {
+            [task cancelByProducingResumeData:^(NSData *resumeData) {
+                if (resumeData)
+                {
+                    NSString *tempFilePath = [NSString stringWithFormat:@"%s%s", storagePath.c_str(), _hints.tempFileNameSuffix.c_str()];
+                    NSString *tempFileDir = [tempFilePath stringByDeletingLastPathComponent];
+                    NSFileManager *fileManager = [NSFileManager defaultManager];
+                    BOOL isDir = false;
+                    if ([fileManager fileExistsAtPath:tempFileDir isDirectory:&isDir])
+                    {
+                        if (NO == isDir)
+                        {
+                            // TODO: the directory is a file, not a directory, how to echo to developer?
+                            DLLOG("DownloaderAppleImpl temp dir is a file!");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        NSURL *tempFileURL = [NSURL fileURLWithPath:tempFileDir];
+                        if (NO == [fileManager createDirectoryAtURL:tempFileURL withIntermediateDirectories:YES attributes:nil error:nil])
+                        {
+                            // create directory failed
+                            DLLOG("DownloaderAppleImpl create temp dir failed");
+                            return;
+                        }
+                    }
+
+                    [resumeData writeToFile:tempFilePath atomically:YES];
+                }
+            }];
         }
-        [task cancelByProducingResumeData:^(NSData *resumeData) {
-            if (resumeData)
-            {
-                [resumeData writeToFile:tempFilePath atomically:YES];
-            }
-        }];
     }
     _outer = nullptr;
     
