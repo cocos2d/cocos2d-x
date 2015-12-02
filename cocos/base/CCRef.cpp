@@ -98,7 +98,7 @@ void Ref::retain()
         auto scriptMgr = ScriptEngineManager::getInstance()->getScriptEngine();
         if (scriptMgr && scriptMgr->getScriptType() == kScriptTypeJavascript)
         {
-            scriptMgr->rootRef(this);
+            scriptMgr->rootObject(this);
             _rooted = true;
         }
     }
@@ -116,7 +116,7 @@ void Ref::release()
         auto scriptMgr = ScriptEngineManager::getInstance()->getScriptEngine();
         if (scriptMgr && scriptMgr->getScriptType() == kScriptTypeJavascript)
         {
-            scriptMgr->unrootRef(this);
+            scriptMgr->unrootObject(this);
             _rooted = false;
         }
     }
