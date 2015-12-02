@@ -84,6 +84,12 @@
 -- @return Mesh#Mesh self (return value: cc.Mesh)
         
 --------------------------------
+-- 
+-- @function [parent=#Mesh] checkTexture 
+-- @param self
+-- @return Mesh#Mesh self (return value: cc.Mesh)
+        
+--------------------------------
 -- Mesh index data setter
 -- @function [parent=#Mesh] setMeshIndexData 
 -- @param self

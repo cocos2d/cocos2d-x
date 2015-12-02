@@ -53,6 +53,13 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+--  Set if the texture is valid, when it been set as false, it will display as default "file missing texture" 
+-- @function [parent=#Texture2D] setValid 
+-- @param self
+-- @param #bool valid
+-- @return Texture2D#Texture2D self (return value: cc.Texture2D)
+        
+--------------------------------
 -- @overload self, int         
 -- @overload self         
 -- @function [parent=#Texture2D] getBitsPerPixelForFormat
@@ -87,6 +94,12 @@
 -- @return Texture2D#Texture2D self (return value: cc.Texture2D)
         
 --------------------------------
+-- 
+-- @function [parent=#Texture2D] getPath 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 --  Draws a texture inside a rect.
 -- @function [parent=#Texture2D] drawInRect 
 -- @param self
@@ -98,6 +111,12 @@
 -- @function [parent=#Texture2D] getContentSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#Texture2D] isValid 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  Sets alias texture parameters:<br>

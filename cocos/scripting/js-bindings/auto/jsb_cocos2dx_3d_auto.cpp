@@ -1716,6 +1716,22 @@ bool js_cocos2dx_3d_Mesh_setName(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_3d_Mesh_setName : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_3d_Mesh_checkTexture(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Mesh* cobj = (cocos2d::Mesh *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Mesh_checkTexture : Invalid Native Object");
+    if (argc == 0) {
+        cobj->checkTexture();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Mesh_checkTexture : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_3d_Mesh_getIndexCount(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -2015,6 +2031,7 @@ void js_register_cocos2dx_3d_Mesh(JSContext *cx, JS::HandleObject global) {
         JS_FN("getBlendFunc", js_cocos2dx_3d_Mesh_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMeshIndexData", js_cocos2dx_3d_Mesh_getMeshIndexData, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setName", js_cocos2dx_3d_Mesh_setName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("checkTexture", js_cocos2dx_3d_Mesh_checkTexture, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getIndexCount", js_cocos2dx_3d_Mesh_getIndexCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMeshIndexData", js_cocos2dx_3d_Mesh_setMeshIndexData, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMeshVertexAttribCount", js_cocos2dx_3d_Mesh_getMeshVertexAttribCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -2745,6 +2762,24 @@ bool js_cocos2dx_3d_Sprite3D_setCullFace(JSContext *cx, uint32_t argc, jsval *vp
     }
 
     JS_ReportError(cx, "js_cocos2dx_3d_Sprite3D_setCullFace : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_3d_Sprite3D_getMeshes(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Sprite3D* cobj = (cocos2d::Sprite3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Sprite3D_getMeshes : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::Vector<cocos2d::Mesh *>& ret = cobj->getMeshes();
+        jsval jsret = JSVAL_NULL;
+        jsret = ccvector_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Sprite3D_getMeshes : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_3d_Sprite3D_addMesh(JSContext *cx, uint32_t argc, jsval *vp)
@@ -3515,6 +3550,7 @@ void js_register_cocos2dx_3d_Sprite3D(JSContext *cx, JS::HandleObject global) {
         JS_FN("loadFromFile", js_cocos2dx_3d_Sprite3D_loadFromFile, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMaterial", js_cocos2dx_3d_Sprite3D_getMaterial, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCullFace", js_cocos2dx_3d_Sprite3D_setCullFace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getMeshes", js_cocos2dx_3d_Sprite3D_getMeshes, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addMesh", js_cocos2dx_3d_Sprite3D_addMesh, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeAllAttachNode", js_cocos2dx_3d_Sprite3D_removeAllAttachNode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMaterial", js_cocos2dx_3d_Sprite3D_setMaterial, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
