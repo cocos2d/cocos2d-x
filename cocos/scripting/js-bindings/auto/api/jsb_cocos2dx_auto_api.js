@@ -121,6 +121,16 @@ getPixelsHigh : function (
 },
 
 /**
+ * @method setValid
+ * @param {bool} arg0
+ */
+setValid : function (
+bool 
+)
+{
+},
+
+/**
  * @method getBitsPerPixelForFormat
 * @param {cc.Texture2D::PixelFormat} pixelformat
 * @return {unsigned int|unsigned int}
@@ -175,6 +185,16 @@ float
 },
 
 /**
+ * @method getPath
+ * @return {String}
+ */
+getPath : function (
+)
+{
+    return ;
+},
+
+/**
  * @method drawInRect
  * @param {rect_object} arg0
  */
@@ -192,6 +212,16 @@ getContentSize : function (
 )
 {
     return cc.Size;
+},
+
+/**
+ * @method isValid
+ * @return {bool}
+ */
+isValid : function (
+)
+{
+    return false;
 },
 
 /**
@@ -3747,6 +3777,16 @@ getFileType : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getFilePath
+ * @return {String}
+ */
+getFilePath : function (
+)
+{
+    return ;
 },
 
 /**
@@ -20903,11 +20943,43 @@ texture2d
 },
 
 /**
+ * @method setDirty
+ * @param {bool} arg0
+ */
+setDirty : function (
+bool 
+)
+{
+},
+
+/**
+ * @method renameTextureWithKey
+ * @param {String} arg0
+ * @param {String} arg1
+ */
+renameTextureWithKey : function (
+str, 
+str 
+)
+{
+},
+
+/**
  * @method removeUnusedTextures
  */
 removeUnusedTextures : function (
 )
 {
+},
+
+/**
+ * @method isDirty
+ * @return {bool}
+ */
+isDirty : function (
+)
+{
+    return false;
 },
 
 /**
