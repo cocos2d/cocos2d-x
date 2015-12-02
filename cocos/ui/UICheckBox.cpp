@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UICheckBox.h"
+#include "2d/CCCamera.h"
 
 NS_CC_BEGIN
 
@@ -96,18 +97,22 @@ CheckBox* CheckBox::create(const std::string& backGround,
     
 void CheckBox::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
-    if (_isSelected)
-    {
-        setSelected(false);
-        AbstractCheckButton::onTouchEnded(touch, unusedEvent);
-        dispatchSelectChangedEvent(false);
-    }
-    else
-    {
-        setSelected(true);
-        AbstractCheckButton::onTouchEnded(touch, unusedEvent);
-        dispatchSelectChangedEvent(true);
-    }
+	_touchBeganPosition = touch->getLocation();
+	auto camera = Camera::getVisitingCamera();
+	if (hitTest(_touchBeganPosition, camera, nullptr)) {
+		if (_isSelected)
+		{
+			setSelected(false);
+			AbstractCheckButton::onTouchEnded(touch, unusedEvent);
+			dispatchSelectChangedEvent(false);
+		}
+		else
+		{
+			setSelected(true);
+			AbstractCheckButton::onTouchEnded(touch, unusedEvent);
+			dispatchSelectChangedEvent(true);
+		}
+	}
 }
     
 
