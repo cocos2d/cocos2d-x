@@ -36,7 +36,7 @@ NS_CC_BEGIN
 
 // EXPERIMENTAL: Enable this in order to get rid of retain/release
 // when using the Garbage Collector
-#define CC_NATIVE_CONTROL_SCRIPT 0
+#define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 0
 
 #if CC_REF_LEAK_DETECTION
 static void trackRef(Ref* ref);
@@ -92,7 +92,7 @@ void Ref::retain()
     CCASSERT(_referenceCount > 0, "reference count should be greater than 0");
     ++_referenceCount;
 
-#if CC_ENABLE_SCRIPT_BINDING && CC_NATIVE_CONTROL_SCRIPT
+#if CC_ENABLE_SCRIPT_BINDING && CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     if (!_rooted && _scriptOwned)
     {
         auto scriptMgr = ScriptEngineManager::getInstance()->getScriptEngine();
@@ -110,7 +110,7 @@ void Ref::release()
     CCASSERT(_referenceCount > 0, "reference count should be greater than 0");
     --_referenceCount;
 
-#if CC_ENABLE_SCRIPT_BINDING && CC_NATIVE_CONTROL_SCRIPT
+#if CC_ENABLE_SCRIPT_BINDING && CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     if (_scriptOwned && _referenceCount==1 && _rooted)
     {
         auto scriptMgr = ScriptEngineManager::getInstance()->getScriptEngine();

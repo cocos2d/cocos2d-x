@@ -482,14 +482,14 @@ public:
     /**
      * Roots the associated JSObj.
      * The GC won't collected rooted objects. This function is only called
-     * when compiled with CC_NATIVE_CONTROL_SCRIPT=1
+     * when compiled with CC_ENABLE_GC_FOR_NATIVE_OBJECTS=1
      */
     virtual void rootObject(cocos2d::Ref* ref) override;
     /**
      * Unroots the associated JSObj.
      * The GC will collect this object the next time the GC
      * is called.
-     * This function is only called when compiled with CC_NATIVE_CONTROL_SCRIPT=1
+     * This function is only called when compiled with CC_ENABLE_GC_FOR_NATIVE_OBJECTS=1
      */
     virtual void unrootObject(cocos2d::Ref* ref) override;
 

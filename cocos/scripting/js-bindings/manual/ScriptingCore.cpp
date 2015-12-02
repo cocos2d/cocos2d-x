@@ -78,7 +78,7 @@
 
 // EXPERIMENTAL: Enable this in order to get rid of retain/release
 // when using the Garbage Collector
-#define CC_NATIVE_CONTROL_SCRIPT 0
+#define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 0
 
 using namespace cocos2d;
 
@@ -2001,8 +2001,8 @@ JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_clas
 
 void jsb_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, Ref* ref, const char* debug)
 {
-    CCLOG("jsb_ref_init: JSObject address =  %p. %s", obj->get(), debug);
-#if CC_NATIVE_CONTROL_SCRIPT
+//    CCLOG("jsb_ref_init: JSObject address =  %p. %s", obj->get(), debug);
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     (void)cx;
     (void)obj;
     ref->_scriptOwned = true;
@@ -2014,7 +2014,7 @@ void jsb_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, Ref* ref, const char*
 
 void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj)
 {
-#if CC_NATIVE_CONTROL_SCRIPT
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     jsproxy = jsb_get_js_proxy(obj);
@@ -2034,13 +2034,13 @@ void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj)
             jsb_remove_proxy(nullptr, jsproxy);
     }
 #else
-    CCLOG("jsb_ref_finalize: JSObject address = %p", obj);
+//    CCLOG("jsb_ref_finalize: JSObject address = %p", obj);
 #endif
 }
 
 void jsb_ref_rebind(JSContext* cx, JS::HandleObject jsobj, js_proxy_t *js2native_proxy, cocos2d::Ref* oldRef, cocos2d::Ref* newRef, const char* debug)
 {
-#if not CC_NATIVE_CONTROL_SCRIPT
+#if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     JS::RemoveObjectRoot(cx, &js2native_proxy->obj);
 #endif
     jsb_remove_proxy(jsb_get_native_proxy(oldRef), js2native_proxy);
