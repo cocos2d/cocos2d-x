@@ -2529,6 +2529,10 @@ Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
         addChild(sprite);
     }
 
+    int maxAttributes;
+    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &maxAttributes);
+    CCASSERT(maxAttributes > 8, "attributes supported must be greater than 8");
+    if (maxAttributes > 8)
     {
         auto sprite = Sprite3D::create("Sprite3DTest/sphere_bumped.c3b");
         sprite->setPosition(Vec2(30, 0));
