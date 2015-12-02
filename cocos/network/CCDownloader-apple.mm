@@ -59,7 +59,7 @@
 -(const cocos2d::network::DownloaderHints&)getHints;
 -(NSURLSessionDataTask *)createDataTask:(std::shared_ptr<const cocos2d::network::DownloadTask>&) task;
 -(NSURLSessionDownloadTask *)createFileTask:(std::shared_ptr<const cocos2d::network::DownloadTask>&) task;
--(void)doDestory;
+-(void)doDestroy;
 
 @end
 
@@ -97,7 +97,7 @@ namespace cocos2d { namespace network {
     DownloaderApple::~DownloaderApple()
     {
         DeclareDownloaderImplVar;
-        [impl doDestory];
+        [impl doDestroy];
         DLLOG("Destruct DownloaderApple %p", this);
     }
     IDownloadTask *DownloaderApple::createCoTask(std::shared_ptr<const DownloadTask>& task)
@@ -259,7 +259,7 @@ namespace cocos2d { namespace network {
     return ocTask;
 };
 
--(void)doDestory
+-(void)doDestroy
 {
     // cancel all download task
     NSEnumerator * enumeratorKey = [self.taskDict keyEnumerator];
