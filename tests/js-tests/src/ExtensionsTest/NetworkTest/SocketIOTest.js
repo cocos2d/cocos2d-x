@@ -153,7 +153,7 @@ var SocketIOTestLayer = cc.Layer.extend({
     onMenuSIOClientClicked: function(sender) {
 
         //create a client by using this static method, url does not need to contain the protocol
-        var sioclient = SocketIO.connect("ws://tools.itharbors.com:4000", {"force new connection" : true});
+        var sioclient = SocketIO.connect("ws://cocos2d-x.org/assets/cpp-tests-resources:4000", {"force new connection" : true});
 
         //if you need to track multiple sockets it is best to store them with tags in your own array for now
         sioclient.tag = "Test Client";
@@ -193,7 +193,7 @@ var SocketIOTestLayer = cc.Layer.extend({
     onMenuSIOEndpointClicked: function(sender) {
 
         //repeat the same connection steps for the namespace "testpoint"
-        var sioendpoint = SocketIO.connect("ws://tools.itharbors.com:4000/testpoint", {"force new connection" : true});
+        var sioendpoint = SocketIO.connect("ws://cocos2d-x.org/assets/cpp-tests-resources:4000/testpoint", {"force new connection" : true});
 
         //a tag to differentiate in shared callbacks
         sioendpoint.tag = "Test Endpoint";
