@@ -1,7 +1,5 @@
-#ifndef __JS_TEMPLATE_RUNTIME_FRAMEWORKS_RUNTIME_SRC_CLASSES_JS_MODULE_REGISTER_H__
-#define __JS_TEMPLATE_RUNTIME_FRAMEWORKS_RUNTIME_SRC_CLASSES_JS_MODULE_REGISTER_H__
+#include "js_module_register.h"
 
-#include "scripting/js-bindings/manual/ScriptingCore.h"
 #include "jsb_cocos2dx_auto.hpp"
 #include "jsb_cocos2dx_ui_auto.hpp"
 #include "jsb_cocos2dx_studio_auto.hpp"
@@ -121,5 +119,8 @@ int js_module_register()
     return 1;
 }
 
-#endif  // __JS_TEMPLATE_RUNTIME_FRAMEWORKS_RUNTIME_SRC_CLASSES_JS_MODULE_REGISTER_H__
-
+JS::HandleObject get_jsb_cocos2d_FileUtils_prototype()
+{
+    JS::RootedObject fileUtilsProto(ScriptingCore::getInstance()->getGlobalContext(), jsb_cocos2d_FileUtils_prototype);
+    return fileUtilsProto;
+}

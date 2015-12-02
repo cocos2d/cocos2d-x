@@ -224,6 +224,20 @@ public:
      */
     void setForce2DQueue(bool force2D) { _force2DQueue = force2D; }
 
+    /**
+     * check texture
+     */
+    void checkTexture();
+    
+    /**
+     * set enable check texture, check texture each frame if eanble is true. It is false by default
+     */
+    void setEnableCheckTexture(bool enableCheckTexture) { _enableCheckTexture = enableCheckTexture; }
+    /**
+     * check texture each frame? 
+     */
+    bool enableCheckTexture() const { return _enableCheckTexture; }
+
 CC_CONSTRUCTOR_ACCESS:
 
     Mesh();
@@ -234,7 +248,6 @@ protected:
     void setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigned int lightmask);
     void bindMeshCommand();
 
-    std::vector<Texture2D *> _textureList; //textures that submesh is using
     std::map<NTextureData::Usage, Texture2D*> _textures; //textures that submesh is using
     MeshSkin*           _skin;     //skin
     bool                _visible; // is the submesh visible
@@ -265,6 +278,9 @@ protected:
     std::vector<float> _spotLightUniformInnerAngleCosValues;
     std::vector<float> _spotLightUniformOuterAngleCosValues;
     std::vector<float> _spotLightUniformRangeInverseValues;
+
+    std::string _texFile;
+    bool        _enableCheckTexture;
 };
 
 // end of 3d group

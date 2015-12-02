@@ -475,6 +475,18 @@ removeAllListener : function (
 },
 
 /**
+ * @method initSystem
+ * @param {String} arg0
+ * @return {bool}
+ */
+initSystem : function (
+str 
+)
+{
+    return false;
+},
+
+/**
  * @method setDefaultDepth
  * @param {float} arg0
  */

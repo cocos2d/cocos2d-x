@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "ui/UIHelper.h"
 #include <algorithm>
+#include "2d/CocosStudioExtension.h"
 
 NS_CC_BEGIN
 
@@ -49,6 +50,13 @@ _buttonClickedRenderer(nullptr),
 _buttonDisabledRenderer(nullptr),
 _titleRenderer(nullptr),
 _zoomScale(0.1f),
+_normalFileName(""),
+_clickedFileName(""),
+_disabledFileName(""),
+_normalTexType(TextureResType::LOCAL),
+_pressedTexType(TextureResType::LOCAL),
+_disabledTexType(TextureResType::LOCAL),
+_fontName(""),
 _prevIgnoreSize(true),
 _scale9Enabled(false),
 _pressedActionEnabled(false),
@@ -222,12 +230,18 @@ void Button::loadTextures(const std::string& normal,
 
 void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
 {
-    if(normal.empty())
+    _normalFileName = normal;
+    _normalTexType = texType;
+    bool textureLoaded = true;
+    if (normal.empty())
     {
-        return;
+        _buttonNormalRenderer->init();
+        textureLoaded = false;
     }
-    switch (texType)
+    else
     {
+        switch (texType)
+        {
         case TextureResType::LOCAL:
             _buttonNormalRenderer->initWithFile(normal);
             break;
@@ -236,12 +250,12 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
             break;
         default:
             break;
+        }
     }
-    this->setupNormalTexture();
-
+    this->setupNormalTexture(textureLoaded);
 }
 
-void Button::setupNormalTexture()
+void Button::setupNormalTexture(bool textureLoaded)
 {
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
     // force update _customSize, fixed issue:
@@ -261,25 +275,30 @@ void Button::setupNormalTexture()
     {
         updateContentSizeWithTextureSize(_normalTextureSize);
     }
-    _normalTextureLoaded = true;
+    _normalTextureLoaded = textureLoaded;
     _normalTextureAdaptDirty = true;
 }
 
 void Button::loadTextureNormal(SpriteFrame* normalSpriteFrame)
 {
     _buttonNormalRenderer->initWithSpriteFrame(normalSpriteFrame);
-    this->setupNormalTexture();
+    this->setupNormalTexture(nullptr != normalSpriteFrame);
 }
 
 void Button::loadTexturePressed(const std::string& selected,TextureResType texType)
 {
+    _clickedFileName = selected;
+    _pressedTexType = texType;
+    bool textureLoade = true;
     if (selected.empty())
     {
-        return;
+        _buttonClickedRenderer->init();
+        textureLoade = false;
     }
-
-    switch (texType)
+    else
     {
+        switch (texType)
+        {
         case TextureResType::LOCAL:
             _buttonClickedRenderer->initWithFile(selected);
             break;
@@ -288,36 +307,41 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
             break;
         default:
             break;
+        }
     }
-
-    this->setupPressedTexture();
+    this->setupPressedTexture(textureLoade);
 }
 
-void Button::setupPressedTexture()
+void Button::setupPressedTexture(bool textureLoaded)
 {
     _pressedTextureSize = _buttonClickedRenderer->getContentSize();
 
     this->updateChildrenDisplayedRGBA();
 
-    _pressedTextureLoaded = true;
+    _pressedTextureLoaded = textureLoaded;
     _pressedTextureAdaptDirty = true;
 }
 
 void Button::loadTexturePressed(SpriteFrame* pressedSpriteFrame)
 {
     _buttonClickedRenderer->initWithSpriteFrame(pressedSpriteFrame);
-    this->setupPressedTexture();
+    this->setupPressedTexture(nullptr != pressedSpriteFrame);
 }
 
 void Button::loadTextureDisabled(const std::string& disabled,TextureResType texType)
 {
+    _disabledFileName = disabled;
+    _disabledTexType = texType;
+    bool textureLoaded = true;
     if (disabled.empty())
     {
-        return;
+        _buttonDisabledRenderer->init();
+        textureLoaded = false;
     }
-
-    switch (texType)
+    else
     {
+        switch (texType)
+        {
         case TextureResType::LOCAL:
             _buttonDisabledRenderer->initWithFile(disabled);
             break;
@@ -326,24 +350,25 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
             break;
         default:
             break;
+        }
     }
-    this->setupDisabledTexture();
+    this->setupDisabledTexture(textureLoaded);
 }
 
-void Button::setupDisabledTexture()
+void Button::setupDisabledTexture(bool textureLoaded)
 {
     _disabledTextureSize = _buttonDisabledRenderer->getContentSize();
 
     this->updateChildrenDisplayedRGBA();
 
-    _disabledTextureLoaded = true;
+    _disabledTextureLoaded = textureLoaded;
     _disabledTextureAdaptDirty = true;
 }
 
 void Button::loadTextureDisabled(SpriteFrame* disabledSpriteFrame)
 {
     _buttonDisabledRenderer->initWithSpriteFrame(disabledSpriteFrame);
-    this->setupDisabledTexture();
+    this->setupDisabledTexture(nullptr != disabledSpriteFrame);
 }
 
 void Button::setCapInsets(const Rect &capInsets)
@@ -876,6 +901,7 @@ void Button::setTitleFontName(const std::string& fontName)
         _titleRenderer->setSystemFontSize(_fontSize);
         _type = FontType::SYSTEM;
     }
+    _fontName = fontName;
     this->updateContentSize();
 }
 
@@ -903,7 +929,7 @@ const std::string Button::getTitleFontName() const
     }
     else
     {
-        return "";
+        return _fontName;
     }
 }
 
@@ -976,6 +1002,67 @@ Size Button::getNormalTextureSize() const
 {
     return _normalTextureSize;
 }
+
+void Button::resetNormalRender()
+{
+    _normalFileName = "";
+    _normalTexType = TextureResType::LOCAL;
+
+    _normalTextureSize = Size(0, 0);
+
+    _normalTextureLoaded = false;
+    _normalTextureAdaptDirty = false;
+
+    _buttonNormalRenderer->resetRender();
+}
+void Button::resetPressedRender()
+{
+    _clickedFileName = "";
+    _pressedTexType = TextureResType::LOCAL;
+
+    _pressedTextureSize = Size(0, 0);
+
+    _pressedTextureLoaded = false;
+    _pressedTextureAdaptDirty = false;
+
+    _buttonClickedRenderer->resetRender();
+}
+
+void Button::resetDisabledRender()
+{
+    _disabledFileName = "";
+    _disabledTexType = TextureResType::LOCAL;
+
+    _disabledTextureSize = Size(0, 0);
+
+    _disabledTextureLoaded = false;
+    _disabledTextureAdaptDirty = false;
+
+    _buttonDisabledRenderer->resetRender();
+}
+
+ResouceData Button::getNormalFile()
+{
+    ResouceData rData;
+    rData.type = (int)_normalTexType;
+    rData.file = _normalFileName;
+    return rData;
+}
+ResouceData Button::getPressedFile()
+{
+    ResouceData rData;
+    rData.type = (int)_pressedTexType;
+    rData.file = _clickedFileName;
+    return rData;
+}
+ResouceData Button::getDisabledFile()
+{
+    ResouceData rData;
+    rData.type = (int)_disabledTexType;
+    rData.file = _disabledFileName;
+    return rData;
+}
+
 }
 
 NS_CC_END

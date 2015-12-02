@@ -1,4 +1,30 @@
-cocos2d-x-3.9 beta0 October.20 2015
+cocos2d-x-3.10 December ? 2015
+[NEW]           Core:  Added Application::getVersion() to get the app version.
+[NEW]           UI: Add PageView indicator.
+[NEW]           Label: Add three Overflow type to new label, see release note for more information.
+
+[REFINE]        UI: RichText support new line element.
+[REFINE]        UI: Set focus to Widget when touched.
+[REFINE]        UI: Change PageView to derived from ListView.
+[REFINE]        UI: Rewrite Scale9Sprite and improve the scale9sprite performance and reduce memory consumption.
+[REFINE]        3D: Change char* to string in Terrain.
+[REFINE]        Editor: Merge Studio ActionTimeLine change back into engine.
+[REFINE]        Mac: Make engine compatible for 32bit Mac.
+[REFINE]        Audio: AudioEngine on Linux replace the original SimpleAudioEngine with a new version of FMOD, now AudioEngine support all platforms!
+
+[FIX]           Core: Fix premultiplyAlpha for mipmaps and compressed textures.
+[FIX]           UI: Fix Scale9sprite rendering error when content size smaller than the sum of leftInset and rightInset.
+[FIX]           Win32: Fix EditBox crash when removing an EditBox in a scheduler.
+[FIX]           Android: Fix cannot add view to mFrameLayout when extends Cocos2dxActivity.
+[FIX]           2D: Fixed actionNode position error bug.
+[FIX]           3D: Fix the  movement of PUParticle lags one frame.
+[FIX]           UI: Fix the wront argument of setPlaceholderFontName in EditBox.
+[FIX]           UI: Fix EditBox editBoxEditingDidEnd may use the original text after change the text of EditBox in user script.
+[FIX]           Audio: Fix `FinishCallback` never be called in Windows.
+[FIX]           UI:  Fix Layout stencil clipping nested with Clipping Node rendering issue.
+[FIX]           UI:  Keyboard doesn't hide when click the screen outside of EditBox on iOS platform.
+
+cocos2d-x-3.9 November.09 2015
 
 [NEW]           Label: Added line spacing/leading feature to Label.
 [NEW]           ListView: Added APIs to scroll to specific item in list.
@@ -123,6 +149,10 @@ cocos2d-x-3.9 beta0 October.20 2015
 [TEST]          Debug: Fixed a bug that RefPtr test wasn't executed even in debug build.
 [TEST]          JS: Fixed crash bug when click "remove ui" in "native test-JSBExtendTest" under project js-test.
 [TEST]          JS: Updated testcase in js-test to show notificationNode to runAction.
+
+cocos2d-x-3.8.1     September.17 2015
+
+    [HIGHLIGHT]     platform: Supported Xcode 7 for iOS 9 deployment
 
 cocos2d-x-3.8 final September.6 2015
 cocos2d-x-3.8 rc0   August.26 2015

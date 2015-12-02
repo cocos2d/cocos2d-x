@@ -62,7 +62,7 @@ bool ComponentContainer::add(Component *com)
 
         if (_componentMap.find(componentName) != _componentMap.end())
         {
-            CCASSERT(true, "ComponentContainer already have this kind of component");
+            CCASSERT(false, "ComponentContainer already have this kind of component");
             break;
         }
         _componentMap[componentName] = com;

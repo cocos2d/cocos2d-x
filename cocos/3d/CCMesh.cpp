@@ -132,6 +132,8 @@ Mesh::Mesh()
 , _visibleChanged(nullptr)
 , _blendDirty(true)
 , _force2DQueue(false)
+, _texFile("")
+, _enableCheckTexture(false)
 {
     
 }
@@ -270,6 +272,7 @@ bool Mesh::isVisible() const
 
 void Mesh::setTexture(const std::string& texPath)
 {
+    _texFile = texPath;
     auto tex = Director::getInstance()->getTextureCache()->addImage(texPath);
     setTexture(tex, NTextureData::Usage::Diffuse);
 }
@@ -304,6 +307,7 @@ void Mesh::setTexture(Texture2D* tex, NTextureData::Usage usage)
         }
         
         bindMeshCommand();
+        _texFile = tex->getPath();
     }
     else if (usage == NTextureData::Usage::Normal) // currently only diffuse and normal are supported
     {
@@ -378,6 +382,8 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
     if (isTransparent)
         flags |= Node::FLAGS_RENDER_AS_3D;
 
+    if (_enableCheckTexture)
+    this->checkTexture();
 
     _meshCommand.init(globalZ,
                       _material,
@@ -700,4 +706,39 @@ GLuint Mesh::getIndexBuffer() const
 {
     return _meshIndexData->getIndexBuffer()->getVBO();
 }
+
+void Mesh::checkTexture()
+{
+    Texture2D* cacheTex = nullptr;
+    auto& texture = _textures[NTextureData::Usage::Diffuse];
+    if (Director::getInstance()->getTextureCache()->isDirty())
+    {
+        cacheTex = Director::getInstance()->getTextureCache()->getTextureForKey(_texFile);
+        if (cacheTex == nullptr)
+        {
+            cacheTex = getDummyTexture();
+        }
+    }
+    else if (texture != nullptr && !texture->isValid())
+    {
+        cacheTex = getDummyTexture();
+    }
+
+    if (cacheTex != nullptr && texture != cacheTex)
+    {
+        CC_SAFE_RETAIN(cacheTex);
+        CC_SAFE_RELEASE(texture);
+        texture = cacheTex;
+
+        if (_material) {
+            auto technique = _material->_currentTechnique;
+            for (auto& pass : technique->_passes)
+            {
+                pass->setTexture(texture);
+            }
+        }
+        bindMeshCommand();
+    }
+}
+
 NS_CC_END

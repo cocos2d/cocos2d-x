@@ -38,6 +38,7 @@ set(COCOS_UI_SRC
   ui/UIListView.cpp
   ui/UILoadingBar.cpp
   ui/UIPageView.cpp
+  ui/UIPageViewIndicator.cpp
   ui/UIRelativeBox.cpp
   ui/UIRichText.cpp
   ui/UIScale9Sprite.cpp

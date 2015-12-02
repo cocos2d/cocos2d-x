@@ -67,6 +67,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_setParticleSystemScaleVelocity(
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_getDerivedScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_setDefaultHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_removeAllListener(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_extension_PUParticleSystem3D_initSystem(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_setDefaultDepth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_PUParticleSystem3D(JSContext *cx, uint32_t argc, jsval *vp);

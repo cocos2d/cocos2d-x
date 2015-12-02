@@ -30,9 +30,17 @@ local function ComponentTestLayer()
         cc.Director:getInstance():replaceScene(scene);
     end
 
+    local function onNodeEvent(event)
+        if "exit" == event then
+            ccexp.AudioEngine:stopAll()
+        end
+    end
+
     layer._listener1 = cc.EventListenerCustom:create("component game over", onEvent)
     local eventDispatcher = cc.Director:getInstance():getEventDispatcher()
     eventDispatcher:addEventListenerWithFixedPriority(layer._listener1, 1)
+
+    layer:registerScriptHandler(onNodeEvent)
 
     return layer
 end

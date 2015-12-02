@@ -18,6 +18,7 @@ CocosGUI.cpp \
 UIHelper.cpp \
 UIListView.cpp \
 UIPageView.cpp \
+UIPageViewIndicator.cpp \
 UIScrollView.cpp \
 UIScrollViewBar.cpp \
 UIButton.cpp \
