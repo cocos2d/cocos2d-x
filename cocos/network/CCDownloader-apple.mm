@@ -361,15 +361,34 @@ namespace cocos2d { namespace network {
     // clean wrapper C++ object
     DownloadTaskWrapper *wrapper = [self.taskDict objectForKey:task];
     
-    // if no error, callback has been called in finish task
-    if (_outer && error)
+    if(_outer)
     {
-        std::vector<unsigned char> buf; // just a placeholder
-        _outer->onTaskFinish(*[wrapper get],
+        if(error) {
+            std::vector<unsigned char> buf; // just a placeholder
+            _outer->onTaskFinish(*[wrapper get],
                              cocos2d::network::DownloadTask::ERROR_IMPL_INTERNAL,
                              (int)error.code,
                              [error.localizedDescription cStringUsingEncoding:NSUTF8StringEncoding],
                              buf);
+        }
+        else if(![wrapper get]->storagePath.length()) {
+            // call onTaskFinish for a data task
+            // (for a file download task, callback is called in didFinishDownloadingToURL)
+            std::string errorString;
+            
+            const int64_t buflen = [wrapper totalBytesReceived];
+            char buf[buflen];
+            
+            [wrapper transferDataToBuffer:buf lengthOfBuffer:buflen];
+            
+            std::vector<unsigned char> data(buf, buf + buflen);
+            
+            _outer->onTaskFinish(*[wrapper get],
+                                 cocos2d::network::DownloadTask::ERROR_NO_ERROR,
+                                  0,
+                                 errorString,
+                                 data);
+        }
     }
     [self.taskDict removeObjectForKey:task];
     [wrapper release];
