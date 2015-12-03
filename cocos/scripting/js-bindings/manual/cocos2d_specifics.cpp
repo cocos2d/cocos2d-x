@@ -4328,7 +4328,7 @@ bool js_cocos2dx_CCGLProgram_create(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
-
+// TODO: This function doesn't have test. I was impossible to test it
 bool js_cocos2dx_CCGLProgram_createWithString(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -4342,25 +4342,17 @@ bool js_cocos2dx_CCGLProgram_createWithString(JSContext *cx, uint32_t argc, jsva
     std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
     std::string arg1_tmp; ok &= jsval_to_std_string(cx, args.get(1), &arg1_tmp); arg1 = arg1_tmp.c_str();
     
-    GLProgram* ret = new GLProgram();
-    ret->initWithByteArrays(arg0, arg1);
+    GLProgram* ret = new (std::nothrow) GLProgram;
+    ok = ret->initWithByteArrays(arg0, arg1);
     
-    jsval jsret;
-    do {
-        if (ret) {
-            js_proxy_t *p = jsb_get_native_proxy(ret);
-            if (p) {
-                jsret = OBJECT_TO_JSVAL(p->obj);
-            } else {
-                // create a new js obj of that class
-                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::GLProgram>(cx, ret);
-                jsret = OBJECT_TO_JSVAL(proxy->obj);
-            }
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-    args.rval().set(jsret);
+    if (ok)
+    {
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::GLProgram>(ret);
+        // link the native object with the javascript object
+        JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, ret, typeClass, "cocos2d::GLProgram"));
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
+        return true;
+    }
     return true;
     
 }
