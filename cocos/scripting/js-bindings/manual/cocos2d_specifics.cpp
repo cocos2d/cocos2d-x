@@ -762,8 +762,9 @@ bool js_cocos2dx_CallFunc_initWithFunction(JSContext *cx, uint32_t argc, jsval *
             JS::RootedValue senderVal(cx);
             if (sender)
             {
-                js_proxy_t *senderProxy = js_get_or_create_proxy<cocos2d::Node>(cx, sender);
-                senderVal.set(OBJECT_TO_JSVAL(senderProxy->obj));
+                js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Node>(sender);
+                auto jsobj = jsb_ref_get_or_create_jsobject(cx, sender, typeClass, "cocos2d::Node");
+                senderVal.set(OBJECT_TO_JSVAL(jsobj));
             }
             else
             {
@@ -4253,8 +4254,6 @@ bool js_cocos2dx_CCGLProgram_setUniformLocationWith4f(JSContext *cx, uint32_t ar
     
     args.rval().setUndefined();
     return true;
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 5);
-    return false;
 }
 
 bool js_cocos2dx_CCGLProgram_setUniformLocationWithMatrixfvUnion(JSContext *cx, uint32_t argc, jsval *vp)
@@ -4313,29 +4312,20 @@ bool js_cocos2dx_CCGLProgram_create(JSContext *cx, uint32_t argc, jsval *vp)
     std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
     std::string arg1_tmp; ok &= jsval_to_std_string(cx, args.get(1), &arg1_tmp); arg1 = arg1_tmp.c_str();
 
-    GLProgram* ret = new GLProgram();
-    ret->autorelease();
+    GLProgram* ret = new (std::nothrow) cocos2d::GLProgram;
+    ok = ret->initWithFilenames(arg0, arg1);
     
-    ret->initWithFilenames(arg0, arg1);
-    
-    jsval jsret;
-    do {
-        if (ret) {
-            js_proxy_t *p = jsb_get_native_proxy(ret);
-            if (p) {
-                jsret = OBJECT_TO_JSVAL(p->obj);
-            } else {
-                // create a new js obj of that class
-                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::GLProgram>(cx, ret);
-                jsret = OBJECT_TO_JSVAL(proxy->obj);
-            }
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-    args.rval().set(jsret);
-    return true;
+    if (ok)
+    {
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::GLProgram>(ret);
+        // link the native object with the javascript object
+        JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, ret, typeClass, "cocos2d::GLProgram"));
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
+        return true;
+    }
 
+    JS_ReportError(cx, "Error creating GLProgram");
+    return false;
 }
 
 
