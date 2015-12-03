@@ -1589,32 +1589,40 @@ bool ScriptingCore::isObjectValid(JSContext *cx, uint32_t argc, jsval *vp)
 
 void ScriptingCore::rootObject(Ref* ref)
 {
-//    js_proxy_t* nproxy;
-//    js_proxy_t* jsproxy;
-//    void *ptr = (void*)ref;
-//    nproxy = jsb_get_native_proxy(ptr);
-//    if (nproxy) {
-//        JSContext *cx = getGlobalContext();
-//        jsproxy = jsb_get_js_proxy(nproxy->obj);
-//        AddObjectRoot(cx, &jsproxy->obj);
-//
-//        CCLOG("Rooting %p - %p: %s", ref, &jsproxy->obj, typeid(*ref).name());
-//    }
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    void *ptr = (void*)ref;
+    nproxy = jsb_get_native_proxy(ptr);
+    if (nproxy) {
+        JSContext *cx = getGlobalContext();
+        // FIXME: Creating a RootedObject here is not needed.
+        // it is being created only because jsb_get_js_proxy() requires one
+        // but only the raw pointer is used in jsb_get_js_proxy()
+        JS::RootedObject handle(cx, nproxy->obj.get());
+        jsproxy = jsb_get_js_proxy(handle);
+        AddObjectRoot(cx, &jsproxy->obj);
+
+        CCLOG("Rooting %p - %p: %s", ref, &jsproxy->obj, typeid(*ref).name());
+    }
 }
 
 void ScriptingCore::unrootObject(Ref* ref)
 {
-//    js_proxy_t* nproxy;
-//    js_proxy_t* jsproxy;
-//    void *ptr = (void*)ref;
-//    nproxy = jsb_get_native_proxy(ptr);
-//    if (nproxy) {
-//        JSContext *cx = getGlobalContext();
-//        jsproxy = jsb_get_js_proxy(nproxy->obj);
-//        RemoveObjectRoot(cx, &jsproxy->obj);
-//
-//        CCLOG("Unrooting %p - %p: %s", ref, &jsproxy->obj, typeid(*ref).name());
-//    }
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    void *ptr = (void*)ref;
+    nproxy = jsb_get_native_proxy(ptr);
+    if (nproxy) {
+        JSContext *cx = getGlobalContext();
+        // FIXME: Creating a RootedObject here is not needed.
+        // it is being created only because jsb_get_js_proxy() requires one
+        // but only the raw pointer is used in jsb_get_js_proxy()        
+        JS::RootedObject handle(cx, nproxy->obj.get());
+        jsproxy = jsb_get_js_proxy(handle);
+        RemoveObjectRoot(cx, &jsproxy->obj);
+
+        CCLOG("Unrooting %p - %p: %s", ref, &jsproxy->obj, typeid(*ref).name());
+    }
 }
 
 #pragma mark - Debug
