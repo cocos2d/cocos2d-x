@@ -122,6 +122,8 @@ cc.game.onStart = function(){
     }
     else
     {
+        cc.view.setDesignResolutionSize(800, 450, cc.ResolutionPolicy.SHOW_ALL);
+        cc.view.resizeWithBrowserSize(true);
         // js-test use cpptest resource in debug mode , and in the release mode, console will copy the resource into the res dir
         // so the respath will modify to res,
         if (cc.game.config[cc.game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
