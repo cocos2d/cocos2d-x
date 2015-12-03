@@ -25,6 +25,7 @@
 #include "network/CCDownloader-apple.h"
 
 #include "network/CCDownloader.h"
+#include <queue>
 
 ////////////////////////////////////////////////////////////////////////////////
 //  OC Classes Declaration
@@ -51,6 +52,7 @@
 {
     const cocos2d::network::DownloaderApple *_outer;
     cocos2d::network::DownloaderHints _hints;
+    std::queue<NSURLSessionTask*> _taskQueue;
 }
 @property (nonatomic, strong) NSURLSession *downloadSession;
 @property (nonatomic, strong) NSMutableDictionary *taskDict;    // ocTask: DownloadTaskWrapper
@@ -225,14 +227,20 @@ namespace cocos2d { namespace network {
     }
     NSURLSessionDataTask *ocTask = [self.downloadSession dataTaskWithRequest:request];
     [self.taskDict setObject:[[DownloadTaskWrapper alloc] init:task] forKey:ocTask];
-    [ocTask resume];
+
+    if (_taskQueue.size() < _hints.countOfMaxProcessingTasks) {
+        [ocTask resume];
+        _taskQueue.push(nil);
+    } else {
+        _taskQueue.push(ocTask);
+    }
     return ocTask;
 };
 
 -(NSURLSessionDownloadTask *)createFileTask:(std::shared_ptr<const cocos2d::network::DownloadTask>&) task
 {
     const char *urlStr = task->requestURL.c_str();
-    DLLOG("DownloaderAppleImpl createDataTask: %s", urlStr);
+    DLLOG("DownloaderAppleImpl createFileTask: %s", urlStr);
     NSURL *url = [NSURL URLWithString:[NSString stringWithUTF8String:urlStr]];
     NSURLRequest *request = nil;
     if (_hints.timeoutInSeconds > 0)
@@ -255,7 +263,13 @@ namespace cocos2d { namespace network {
         ocTask = [self.downloadSession downloadTaskWithRequest:request];
     }
     [self.taskDict setObject:[[DownloadTaskWrapper alloc] init:task] forKey:ocTask];
-    [ocTask resume];
+
+    if (_taskQueue.size() < _hints.countOfMaxProcessingTasks) {
+        [ocTask resume];
+        _taskQueue.push(nil);
+    } else {
+        _taskQueue.push(ocTask);
+    }
     return ocTask;
 };
 
@@ -373,6 +387,14 @@ namespace cocos2d { namespace network {
     }
     [self.taskDict removeObjectForKey:task];
     [wrapper release];
+
+    while (!_taskQueue.empty() && _taskQueue.front() == nil) {
+        _taskQueue.pop();
+    }
+    if (!_taskQueue.empty()) {
+        [_taskQueue.front() resume];
+        _taskQueue.pop();
+    }
 }
 
 #pragma mark - NSURLSessionDataDelegate methods
