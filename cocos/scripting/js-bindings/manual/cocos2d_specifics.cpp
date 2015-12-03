@@ -678,8 +678,9 @@ static bool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
             JS::RootedValue data(cx, args.get(2));
             tmpCobj->setJSExtraData(data);
         }
-        
-        CallFuncN *ret = CallFuncN::create([=](Node* sender){
+
+        cocos2d::CallFuncN *ret = new (std::nothrow) cocos2d::CallFuncN;
+        bool ok = ret->initWithFunction([=](Node* sender){
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             
             JS::RootedValue jsvalThis(cx, tmpCobj->getJSCallbackThis());
@@ -711,12 +712,17 @@ static bool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
             }
         });
         
-        js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CallFunc>(cx, ret);
-        args.rval().set(OBJECT_TO_JSVAL(proxy->obj));
-        
+        if (ok)
+        {
+            js_type_class_t *typeClass = js_get_type_from_native<cocos2d::CallFuncN>(ret);
+            // link the native object with the javascript object
+            JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, ret, typeClass, "cocos2d::CallFuncN"));
+            args.rval().set(OBJECT_TO_JSVAL(jsobj));
+            return true;
+        }
         return true;
     }
-    JS_ReportError(cx, "Invalid number of arguments");
+    JS_ReportError(cx, "js_callFunc: Invalid number of arguments");
     return false;
 }
 
