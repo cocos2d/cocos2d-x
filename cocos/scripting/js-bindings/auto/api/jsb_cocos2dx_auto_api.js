@@ -4880,6 +4880,18 @@ getElapsed : function (
 cc.Sequence = {
 
 /**
+ * @method init
+ * @param {Array} arg0
+ * @return {bool}
+ */
+init : function (
+array 
+)
+{
+    return false;
+},
+
+/**
  * @method initWithTwoActions
  * @param {cc.FiniteTimeAction} arg0
  * @param {cc.FiniteTimeAction} arg1
@@ -5032,6 +5044,18 @@ RepeatForever : function (
  * @class Spawn
  */
 cc.Spawn = {
+
+/**
+ * @method init
+ * @param {Array} arg0
+ * @return {bool}
+ */
+init : function (
+array 
+)
+{
+    return false;
+},
 
 /**
  * @method initWithTwoActions

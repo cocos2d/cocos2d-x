@@ -12386,6 +12386,28 @@ void js_register_cocos2dx_ActionInterval(JSContext *cx, JS::HandleObject global)
 JSClass  *jsb_cocos2d_Sequence_class;
 JSObject *jsb_cocos2d_Sequence_prototype;
 
+bool js_cocos2dx_Sequence_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Sequence* cobj = (cocos2d::Sequence *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Sequence_init : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Vector<cocos2d::FiniteTimeAction *> arg0;
+        ok &= jsval_to_ccvector(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Sequence_init : Error processing arguments");
+        bool ret = cobj->init(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Sequence_init : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_Sequence_initWithTwoActions(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -12478,6 +12500,7 @@ void js_register_cocos2dx_Sequence(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec funcs[] = {
+        JS_FN("init", js_cocos2dx_Sequence_init, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithTwoActions", js_cocos2dx_Sequence_initWithTwoActions, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocos2dx_Sequence_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -12909,6 +12932,28 @@ void js_register_cocos2dx_RepeatForever(JSContext *cx, JS::HandleObject global) 
 JSClass  *jsb_cocos2d_Spawn_class;
 JSObject *jsb_cocos2d_Spawn_prototype;
 
+bool js_cocos2dx_Spawn_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Spawn* cobj = (cocos2d::Spawn *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Spawn_init : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Vector<cocos2d::FiniteTimeAction *> arg0;
+        ok &= jsval_to_ccvector(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Spawn_init : Error processing arguments");
+        bool ret = cobj->init(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Spawn_init : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_Spawn_initWithTwoActions(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -13001,6 +13046,7 @@ void js_register_cocos2dx_Spawn(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec funcs[] = {
+        JS_FN("init", js_cocos2dx_Spawn_init, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithTwoActions", js_cocos2dx_Spawn_initWithTwoActions, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocos2dx_Spawn_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
