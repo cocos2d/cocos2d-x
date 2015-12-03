@@ -2881,7 +2881,7 @@ bool js_BezierActions_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 2) {
         double arg0;
         cocos2d::_ccBezierConfig arg1;
-        ok &= JS::ToNumber( cx, JS::RootedValue(cx, args.get(0)), &arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0);
 
         int num;
         cocos2d::Vec2 *arr;
