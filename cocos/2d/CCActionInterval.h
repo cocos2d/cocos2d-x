@@ -192,6 +192,7 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** initializes the action */
     bool initWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo);
+    bool init(const Vector<FiniteTimeAction*>& arrayOfActions);
 
 protected:
     FiniteTimeAction *_actions[2];
@@ -417,6 +418,7 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** initializes the Spawn action with the 2 actions to spawn */
     bool initWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2);
+    bool init(const Vector<FiniteTimeAction*>& arrayOfActions);
 
 protected:
     FiniteTimeAction *_one;
