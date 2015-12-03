@@ -12100,6 +12100,28 @@ float
 },
 
 /**
+ * @method initWithTTF
+* @param {cc._ttfConfig|String} _ttfconfig
+* @param {String|String} str
+* @param {cc.TextHAlignment|float} texthalignment
+* @param {int|size_object} int
+* @param {cc.TextHAlignment} texthalignment
+* @param {cc.TextVAlignment} textvalignment
+* @return {bool|bool}
+*/
+initWithTTF : function(
+str,
+str,
+float,
+size,
+texthalignment,
+textvalignment 
+)
+{
+    return false;
+},
+
+/**
  * @method setLineHeight
  * @param {float} arg0
  */
