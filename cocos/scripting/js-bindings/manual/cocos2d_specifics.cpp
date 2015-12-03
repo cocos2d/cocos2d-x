@@ -391,11 +391,14 @@ bool js_cocos2dx_CCSpawn_create(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
+// TODO: This function is deprecated. The new API is "new Sprite" instead of "Sprite.create"
+// There are not js tests for this function. Impossible to know weather it works Ok.
 bool js_cocos2dx_CCMenuItemToggle_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc >= 1) {
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        cocos2d::MenuItemToggle* ret = cocos2d::MenuItemToggle::create();
+        cocos2d::MenuItemToggle* ret = new (std::nothrow) cocos2d::MenuItemToggle;
+        ret->initWithItem(nullptr);
 
         for (uint32_t i=0; i < argc; i++) {
             js_proxy_t *proxy;
@@ -407,22 +410,11 @@ bool js_cocos2dx_CCMenuItemToggle_create(JSContext *cx, uint32_t argc, jsval *vp
         }
 
         ret->setSelectedIndex(0);
-        
-        jsval jsret;
-        if (ret) {
-            js_proxy_t *proxy = jsb_get_native_proxy(ret);
-            if (proxy) {
-                jsret = OBJECT_TO_JSVAL(proxy->obj);
-            } else {
-                // create a new js obj of that class
-                proxy = js_get_or_create_proxy<cocos2d::MenuItemToggle>(cx, ret);
-                jsret = OBJECT_TO_JSVAL(proxy->obj);
-            }
-        } else {
-            jsret = JSVAL_NULL;
-        }
-        
-        args.rval().set(jsret);
+
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::MenuItemToggle>(ret);
+        // link the native object with the javascript object
+        JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, ret, typeClass, "cocos2d::MenuItemToggle"));
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
         return true;
     }
     JS_ReportError(cx, "wrong number of arguments");
