@@ -3764,70 +3764,56 @@ bool js_cocos2dx_ccquatMultiply(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
+// TODO: This function is deprecated. The new API is "new Sprite" instead of "Sprite.create"
+// There are not js tests for this function. Impossible to know wether it works Ok.
 bool js_cocos2dx_Sprite_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    
-    do {
-        if (argc == 1) {
-            std::string arg0;
-            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-            if (!ok) { ok = true; break; }
-            cocos2d::Sprite* ret = cocos2d::Sprite::create(arg0);
-            jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
-            args.rval().set(jsret);
-            return true;
+    bool ok = false;
+
+    cocos2d::Sprite *sprite = nullptr;
+
+    if (argc == 0)
+    {
+        sprite = new (std::nothrow) cocos2d::Sprite;
+        sprite->init();
+        ok = true;
+    }
+    else if (argc == 1)
+    {
+        std::string arg0;
+        ok = jsval_to_std_string(cx, args.get(0), &arg0);
+        if (ok)
+        {
+            sprite = new (std::nothrow) cocos2d::Sprite;
+            sprite->initWithFile(arg0);
         }
-    } while (0);
-    
-    do {
-        if (argc == 0) {
-            cocos2d::Sprite* ret = cocos2d::Sprite::create();
-            jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
-            args.rval().set(jsret);
-            return true;
+    }
+    else if(argc == 2)
+    {
+        std::string arg0;
+        ok = jsval_to_std_string(cx, args.get(0), &arg0);
+        cocos2d::Rect arg1;
+        ok |= jsval_to_ccrect(cx, args.get(1), &arg1);
+
+        if (ok)
+        {
+            sprite = new (std::nothrow) cocos2d::Sprite;
+            sprite->initWithFile(arg0, arg1);
         }
-    } while (0);
-    
-    do {
-        if (argc == 2) {
-            std::string arg0;
-            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-            if (!ok) { ok = true; break; }
-            cocos2d::Rect arg1;
-            ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
-            if (!ok) { ok = true; break; }
-            cocos2d::Sprite* ret = cocos2d::Sprite::create(arg0, arg1);
-            jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
-            args.rval().set(jsret);
-            return true;
-        }
-    } while (0);
+    }
+
+    if (ok)
+    {
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Sprite>(sprite);
+        // link the native object with the javascript object
+        JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, sprite, typeClass, "cocos2d::Sprite"));
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
+        return true;
+    }
+
+    // else
+
     JS_ReportError(cx, "js_cocos2dx_Sprite_create : wrong number of arguments");
     return false;
 }
