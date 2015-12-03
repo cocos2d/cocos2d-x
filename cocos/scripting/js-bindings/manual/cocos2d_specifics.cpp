@@ -271,10 +271,23 @@ static void addCallBackAndThis(JSObject *obj, jsval callback, jsval &thisObj)
     }
 }
 
+// TODO: This function is deprecated. The new API is "new Menu" instead of "Menu.create"
+// There are not js tests for this function. Impossible to know wether it works Ok.
 bool js_cocos2dx_CCMenu_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (argc > 0) {
+
+    cocos2d::Menu* menu = nullptr;
+    bool ok = false;
+
+    if (argc == 0)
+    {
+        menu = new (std::nothrow) cocos2d::Menu;
+        Vector<MenuItem*> items;
+        ok = menu->initWithArray(items);
+    }
+    else // argc > 0
+    {
         Vector<MenuItem*> items;
         uint32_t i = 0;
         while (i < argc) {
@@ -286,45 +299,19 @@ bool js_cocos2dx_CCMenu_create(JSContext *cx, uint32_t argc, jsval *vp)
             items.pushBack(item);
             i++;
         }
-        cocos2d::Menu* ret = cocos2d::Menu::createWithArray(items);
-        jsval jsret;
-        do {
-            if (ret) {
-                js_proxy_t *p = jsb_get_native_proxy(ret);
-                if (p) {
-                    jsret = OBJECT_TO_JSVAL(p->obj);
-                } else {
-                    // create a new js obj of that class
-                    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Menu>(cx, ret);
-                    jsret = OBJECT_TO_JSVAL(proxy->obj);
-                }
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
+        menu = new (std::nothrow) cocos2d::Menu;
+        ok = menu->initWithArray(items);
+    }
+
+    if (ok)
+    {
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Menu>(menu);
+        // link the native object with the javascript object
+        JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, menu, typeClass, "cocos2d::Menu"));
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
         return true;
     }
-    if (argc == 0) {
-        cocos2d::Menu* ret = cocos2d::Menu::create();
-        jsval jsret;
-        do {
-            if (ret) {
-                js_proxy_t *p = jsb_get_native_proxy(ret);
-                if (p) {
-                    jsret = OBJECT_TO_JSVAL(p->obj);
-                } else {
-                    // create a new js obj of that class
-                    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Menu>(cx, ret);
-                    jsret = OBJECT_TO_JSVAL(proxy->obj);
-                }
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
+
     JS_ReportError(cx, "wrong number of arguments");
     return false;
 }
