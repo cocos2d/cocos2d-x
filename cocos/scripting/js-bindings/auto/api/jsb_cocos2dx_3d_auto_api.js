@@ -433,26 +433,6 @@ BillBoard : function (
 jsb.Mesh = {
 
 /**
- * @method setTexture
-* @param {cc.Texture2D|String} texture2d
-*/
-setTexture : function(
-str 
-)
-{
-},
-
-/**
- * @method getTexture
- * @return {cc.Texture2D}
- */
-getTexture : function (
-)
-{
-    return cc.Texture2D;
-},
-
-/**
  * @method getSkin
  * @return {cc.MeshSkin}
  */
@@ -480,6 +460,16 @@ getVertexSizeInBytes : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method enableCheckTexture
+ * @return {bool}
+ */
+enableCheckTexture : function (
+)
+{
+    return false;
 },
 
 /**
@@ -656,6 +646,16 @@ getPrimitiveType : function (
  */
 setSkin : function (
 meshskin 
+)
+{
+},
+
+/**
+ * @method setEnableCheckTexture
+ * @param {bool} arg0
+ */
+setEnableCheckTexture : function (
+bool 
 )
 {
 },

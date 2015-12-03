@@ -267,7 +267,7 @@ bool Label::isHorizontalClamp()
         {
             auto& letterDef = _fontAtlas->_letterDefinitions[_lettersInfo[ctr].utf16Char];
             
-            auto px = _lettersInfo[ctr].positionX + letterDef.width/2;
+            auto px = _lettersInfo[ctr].positionX + letterDef.width/2 * _bmfontScale;
             if(_labelWidth > 0.f){
                 if (px > _contentSize.width) {
                     letterClamp = true;

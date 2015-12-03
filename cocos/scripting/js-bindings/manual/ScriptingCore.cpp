@@ -76,6 +76,10 @@
 
 #define BYTE_CODE_FILE_EXT ".jsc"
 
+// EXPERIMENTAL: Enable this in order to get rid of retain/release
+// when using the Garbage Collector
+#define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 0
+
 using namespace cocos2d;
 
 static std::string inData;
@@ -206,15 +210,6 @@ static std::string getMouseFuncName(EventMouse::MouseEventType eventType)
     }
     
     return funcName;
-}
-
-static void rootObject(JSContext *cx, JS::Heap<JSObject*> *obj) {
-    AddNamedObjectRoot(cx, obj, "unnamed");
-}
-
-
-static void unRootObject(JSContext *cx, JS::Heap<JSObject*> *obj) {
-    RemoveObjectRoot(cx, obj);
 }
 
 void removeJSObject(JSContext* cx, void* nativeObj)
@@ -1592,6 +1587,36 @@ bool ScriptingCore::isObjectValid(JSContext *cx, uint32_t argc, jsval *vp)
     }
 }
 
+void ScriptingCore::rootObject(Ref* ref)
+{
+//    js_proxy_t* nproxy;
+//    js_proxy_t* jsproxy;
+//    void *ptr = (void*)ref;
+//    nproxy = jsb_get_native_proxy(ptr);
+//    if (nproxy) {
+//        JSContext *cx = getGlobalContext();
+//        jsproxy = jsb_get_js_proxy(nproxy->obj);
+//        AddObjectRoot(cx, &jsproxy->obj);
+//
+//        CCLOG("Rooting %p - %p: %s", ref, &jsproxy->obj, typeid(*ref).name());
+//    }
+}
+
+void ScriptingCore::unrootObject(Ref* ref)
+{
+//    js_proxy_t* nproxy;
+//    js_proxy_t* jsproxy;
+//    void *ptr = (void*)ref;
+//    nproxy = jsb_get_native_proxy(ptr);
+//    if (nproxy) {
+//        JSContext *cx = getGlobalContext();
+//        jsproxy = jsb_get_js_proxy(nproxy->obj);
+//        RemoveObjectRoot(cx, &jsproxy->obj);
+//
+//        CCLOG("Unrooting %p - %p: %s", ref, &jsproxy->obj, typeid(*ref).name());
+//    }
+}
+
 #pragma mark - Debug
 
 void SimpleRunLoop::update(float dt)
@@ -1960,4 +1985,67 @@ void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy)
     JS_REMOVE_PROXY(nativeProxy, jsProxy);
 }
 
+//
+// Ref functions
+//
+JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
+{
+    //    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    JS::RootedObject proto(cx, typeClass->proto.ref());
+    JS::RootedObject parent(cx, typeClass->parentProto.ref());
+    JS::RootedObject js_obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    js_proxy_t* newproxy = jsb_new_proxy(ref, js_obj);
+    jsb_ref_init(cx, &newproxy->obj, ref, debug);
+    return js_obj;
+}
 
+void jsb_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, Ref* ref, const char* debug)
+{
+//    CCLOG("jsb_ref_init: JSObject address =  %p. %s", obj->get(), debug);
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    (void)cx;
+    (void)obj;
+    ref->_scriptOwned = true;
+#else
+    ref->autorelease();
+    JS::AddNamedObjectRoot(cx, obj, debug);
+#endif
+}
+
+void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj)
+{
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy)
+    {
+        auto ref = static_cast<cocos2d::Ref*>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (ref)
+        {
+            CCLOG("jsb_ref_finalize: JSObject address = %p (%s)", obj, typeid(*ref).name());
+
+            jsb_remove_proxy(nproxy, jsproxy);
+            ref->release();
+        }
+        else
+            jsb_remove_proxy(nullptr, jsproxy);
+    }
+#else
+//    CCLOG("jsb_ref_finalize: JSObject address = %p", obj);
+#endif
+}
+
+void jsb_ref_rebind(JSContext* cx, JS::HandleObject jsobj, js_proxy_t *js2native_proxy, cocos2d::Ref* oldRef, cocos2d::Ref* newRef, const char* debug)
+{
+#if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    JS::RemoveObjectRoot(cx, &js2native_proxy->obj);
+#endif
+    jsb_remove_proxy(jsb_get_native_proxy(oldRef), js2native_proxy);
+
+    // Rebind js obj with new action
+    js_proxy_t* newProxy = jsb_new_proxy(newRef, jsobj);
+    jsb_ref_init(cx, &newProxy->obj, newRef, debug);
+}

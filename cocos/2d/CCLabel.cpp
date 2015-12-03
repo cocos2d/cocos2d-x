@@ -840,14 +840,14 @@ bool Label::updateQuads()
                     _reusedRect.size.height -= clipTop;
                     py -= clipTop;
                 }
-                if (py - letterDef.height < _tailoredBottomY)
+                if (py - letterDef.height * _bmfontScale < _tailoredBottomY)
                 {
                     _reusedRect.size.height = (py < _tailoredBottomY) ? 0.f : (py - _tailoredBottomY);
                 }
             }
 
             if(!_enableWrap){
-                auto px = _lettersInfo[ctr].positionX + letterDef.width/2 + _linesOffsetX[_lettersInfo[ctr].lineIndex];
+                auto px = _lettersInfo[ctr].positionX + letterDef.width/2 * _bmfontScale + _linesOffsetX[_lettersInfo[ctr].lineIndex];
                 if(_labelWidth > 0.f){
                     if (px > _contentSize.width || px < 0) {
                         if(_overflow == Overflow::CLAMP){
