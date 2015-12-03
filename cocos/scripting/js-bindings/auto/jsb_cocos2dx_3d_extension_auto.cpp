@@ -3,8 +3,30 @@
 #include "cocos-ext.h"
 
 template<class T>
-static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
+static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedValue initializing(cx);
+    bool isNewValid = true;
+    JS::RootedObject global(cx, ScriptingCore::getInstance()->getGlobalObject());
+    isNewValid = JS_GetProperty(cx, global, "initializing", &initializing) && initializing.toBoolean();
+    if (isNewValid)
+    {
+        TypeTest<T> t;
+        js_type_class_t *typeClass = nullptr;
+        std::string typeName = t.s_name();
+        auto typeMapIter = _js_global_type_map.find(typeName);
+        CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+        typeClass = typeMapIter->second;
+        CCASSERT(typeClass, "The value is null.");
+
+        JS::RootedObject proto(cx, typeClass->proto.ref());
+        JS::RootedObject parent(cx, typeClass->parentProto.ref());
+        JS::RootedObject _tmp(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+        
+        args.rval().set(OBJECT_TO_JSVAL(_tmp));
+        return true;
+    }
+
     JS_ReportError(cx, "Constructor for the requested class is not available, please refer to the API reference.");
     return false;
 }
@@ -279,20 +301,34 @@ bool js_cocos2dx_3d_extension_ParticleSystem3D_constructor(JSContext *cx, uint32
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::ParticleSystem3D* cobj = new (std::nothrow) cocos2d::ParticleSystem3D();
-
-    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::ParticleSystem3D>(cobj);
-
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::ParticleSystem3D> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.ref());
+    JS::RootedObject parent(cx, typeClass->parentProto.ref());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
-    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::ParticleSystem3D"));
-    args.rval().set(OBJECT_TO_JSVAL(jsobj));
-    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::ParticleSystem3D");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
 
-
 extern JSObject *jsb_cocos2d_Node_prototype;
 
+void js_cocos2d_ParticleSystem3D_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (ParticleSystem3D)", obj);
+}
 void js_register_cocos2dx_3d_extension_ParticleSystem3D(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_ParticleSystem3D_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_ParticleSystem3D_class->name = "ParticleSystem3D";
@@ -303,7 +339,7 @@ void js_register_cocos2dx_3d_extension_ParticleSystem3D(JSContext *cx, JS::Handl
     jsb_cocos2d_ParticleSystem3D_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_ParticleSystem3D_class->resolve = JS_ResolveStub;
     jsb_cocos2d_ParticleSystem3D_class->convert = JS_ConvertStub;
-    jsb_cocos2d_ParticleSystem3D_class->finalize = jsb_ref_finalize;
+    jsb_cocos2d_ParticleSystem3D_class->finalize = js_cocos2d_ParticleSystem3D_finalize;
     jsb_cocos2d_ParticleSystem3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
@@ -1086,20 +1122,34 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_constructor(JSContext *cx, uint
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::PUParticleSystem3D* cobj = new (std::nothrow) cocos2d::PUParticleSystem3D();
-
-    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::PUParticleSystem3D>(cobj);
-
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::PUParticleSystem3D> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.ref());
+    JS::RootedObject parent(cx, typeClass->parentProto.ref());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
-    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::PUParticleSystem3D"));
-    args.rval().set(OBJECT_TO_JSVAL(jsobj));
-    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::PUParticleSystem3D");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
 
-
 extern JSObject *jsb_cocos2d_ParticleSystem3D_prototype;
 
+void js_cocos2d_PUParticleSystem3D_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (PUParticleSystem3D)", obj);
+}
 void js_register_cocos2dx_3d_extension_PUParticleSystem3D(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_PUParticleSystem3D_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_PUParticleSystem3D_class->name = "PUParticleSystem3D";
@@ -1110,7 +1160,7 @@ void js_register_cocos2dx_3d_extension_PUParticleSystem3D(JSContext *cx, JS::Han
     jsb_cocos2d_PUParticleSystem3D_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_PUParticleSystem3D_class->resolve = JS_ResolveStub;
     jsb_cocos2d_PUParticleSystem3D_class->convert = JS_ConvertStub;
-    jsb_cocos2d_PUParticleSystem3D_class->finalize = jsb_ref_finalize;
+    jsb_cocos2d_PUParticleSystem3D_class->finalize = js_cocos2d_PUParticleSystem3D_finalize;
     jsb_cocos2d_PUParticleSystem3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
