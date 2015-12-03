@@ -3765,7 +3765,7 @@ bool js_cocos2dx_ccquatMultiply(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // TODO: This function is deprecated. The new API is "new Sprite" instead of "Sprite.create"
-// There are not js tests for this function. Impossible to know wether it works Ok.
+// There are not js tests for this function. Impossible to know weather it works Ok.
 bool js_cocos2dx_Sprite_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -4764,6 +4764,8 @@ bool jsval_to_TTFConfig(JSContext *cx, jsval v, TTFConfig* ret) {
     return true;
 }
 
+// TODO: This function is deprecated. The new API is "new Label" instead of "Label.create"
+// There are not js tests for this function. Impossible to know weather it works Ok.
 bool js_cocos2dx_Label_createWithTTF(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc < 2)
@@ -4778,48 +4780,43 @@ bool js_cocos2dx_Label_createWithTTF(JSContext *cx, uint32_t argc, jsval *vp)
     ok &= jsval_to_TTFConfig(cx, args.get(0), &ttfConfig);
     ok &= jsval_to_std_string(cx, args.get(1), &text);
 
-    cocos2d::Label* ret = nullptr;
+    cocos2d::Label* label = nullptr;
 
     if (argc == 2) {
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_createWithTTF : Error processing arguments");
-        ret = cocos2d::Label::createWithTTF(ttfConfig, text);
-        jsval jsret = JSVAL_NULL;
-        if (ret) {
-            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Label>(cx, (cocos2d::Label*)ret);
-            jsret = OBJECT_TO_JSVAL(proxy->obj);
-        }
-        args.rval().set(jsret);
-        return true;
+        label = new (std::nothrow) cocos2d::Label;
+        label->initWithTTF(ttfConfig, text);
     }
-    if (argc == 3) {
+    else if (argc == 3)
+    {
         int arg2;
         ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_createWithTTF : Error processing arguments");
         TextHAlignment alignment = TextHAlignment(arg2);
-        ret = cocos2d::Label::createWithTTF(ttfConfig, text, alignment);
-        jsval jsret = JSVAL_NULL;
-        if (ret) {
-            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Label>(cx, (cocos2d::Label*)ret);
-            jsret = OBJECT_TO_JSVAL(proxy->obj);
-        }
-        args.rval().set(jsret);
-        return true;
+        label = new (std::nothrow) cocos2d::Label;
+        label->initWithTTF(ttfConfig, text, alignment);
     }
-    if (argc == 4) {
+    else if (argc == 4)
+    {
         int arg2,arg3;
         ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
         ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_createWithTTF : Error processing arguments");
         TextHAlignment alignment = TextHAlignment(arg2);
-        ret = cocos2d::Label::createWithTTF(ttfConfig, text, alignment, arg3);
-        jsval jsret = JSVAL_NULL;
-        if (ret) {
-            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Label>(cx, (cocos2d::Label*)ret);
-            jsret = OBJECT_TO_JSVAL(proxy->obj);
-        }
-        args.rval().set(jsret);
+        label = new (std::nothrow) cocos2d::Label;
+        label->initWithTTF(ttfConfig, text, alignment, arg3);
+    }
+
+    if (ok)
+    {
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Label>(label);
+        // link the native object with the javascript object
+        JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, label, typeClass, "cocos2d::Label"));
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
         return true;
     }
+
+    // else
 
     JS_ReportError(cx, "js_cocos2dx_Label_createWithTTF : wrong number of arguments");
     return false;
