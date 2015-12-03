@@ -99,7 +99,7 @@ protected:
  * the MeshVertexData class.
  * @brief the MeshIndexData contain all of the vertices data which mesh need.
  */
-class MeshVertexData : public Ref
+class CC_DLL MeshVertexData : public Ref
 {
     friend class Sprite3D;
     friend class Mesh;

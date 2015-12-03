@@ -181,7 +181,6 @@ GLProgram::GLProgram()
 , _vertShader(0)
 , _fragShader(0)
 , _flags()
-, _isShaderClearable(true)
 {
     _director = Director::getInstance();
     CCASSERT(nullptr != _director, "Director is null when init a GLProgram");
@@ -221,11 +220,7 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
     std::string replacedDefines = "";
     replaceDefines(compileTimeDefines, replacedDefines);
 
-    if (_isShaderClearable)
-        // When _isShaderClearable = true, vertShader & _fragShader has been already released, won't need release again.
-        _vertShader = _fragShader = 0;
-    else
-        clearShader();
+    _vertShader = _fragShader = 0;
 
     if (vShaderByteArray)
     {
@@ -548,12 +543,7 @@ bool GLProgram::link()
     parseVertexAttribs();
     parseUniforms();
 
-    // Keep _vertShader & _fragShader for editor by set _isShaderClearable to false,
-    //  because them are needed for 3d object click detection in 3d scene editing.
-    if (_isShaderClearable)
-    {
-        clearShader();
-    }
+    clearShader();
 
 #if DEBUG || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
