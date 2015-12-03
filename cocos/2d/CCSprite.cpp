@@ -343,7 +343,7 @@ void Sprite::setTexture(const std::string &filename)
 {
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     setTexture(texture);
-
+    _unflippedOffsetPositionFromCenter = Vec2::ZERO;
     Rect rect = Rect::ZERO;
     if (texture)
         rect.size = texture->getContentSize();
@@ -1157,11 +1157,6 @@ PolygonInfo& Sprite::getPolygonInfo()
 void Sprite::setPolygonInfo(const PolygonInfo& info)
 {
     _polyInfo = info;
-}
-
-void Sprite::setOffsetPosFromCenter(Vec2 offsetFromCenter)
-{
-    _unflippedOffsetPositionFromCenter = offsetFromCenter;
 }
 
 ResouceData Sprite::getRenderFile()

@@ -421,7 +421,10 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
     if (this->_lineSmoothEnable == true)
+    {
         glEnable(GL_MULTISAMPLE);
+        glEnable(GL_LINE_SMOOTH);
+    }
 #endif
 
     CHECK_GL_ERROR_DEBUG();

@@ -1,5 +1,6 @@
 #include "ParticleTest.h"
 #include "../testResource.h"
+#include "2d/CocosStudioExtension.h"
 
 USING_NS_CC;
 
@@ -1241,6 +1242,8 @@ void ParticleReorder::onEnter()
     auto parent1 = Node::create();
     auto parent2 = ParticleBatchNode::createWithTexture(ignore->getTexture());
     ignore->unscheduleUpdate();
+    auto rd = ignore->getRenderFile();
+    CCLOG("Get resource data from particle file type : %d, file name : %s", rd.type, 0 == rd.type ? rd.file.c_str() : rd.plist.c_str());
 
     for( unsigned int i=0; i<2;i++)
     {

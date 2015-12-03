@@ -1,5 +1,6 @@
 #include "TileMapTest.h"
 #include "../testResource.h"
+#include "2d/CocosStudioExtension.h"
 
 USING_NS_CC;
 
@@ -857,6 +858,10 @@ TMXIsoZorder::TMXIsoZorder()
     _tamara->runAction( RepeatForever::create(seq) );
     
     schedule( CC_SCHEDULE_SELECTOR(TMXIsoZorder::repositionSprite) );
+
+    int layerCount = map->getLayerNum();
+    auto rd = map->getRenderFile();
+    CCLOG("There's %d layer in map. Resource type is : %d, file name : %s", layerCount, rd.type, 0 ==rd.type ? rd.file.c_str() : rd.plist.c_str());
 }
 
 TMXIsoZorder::~TMXIsoZorder()

@@ -497,6 +497,10 @@ LabelFNTGlyphDesigner::LabelFNTGlyphDesigner()
     addChild(layer, -10);
 
     auto label1 = Label::createWithBMFont("fonts/futura-48.fnt", "Testing Glyph Designer");
+    // Demo for reloadFontAtlasFNT function, after it been called, all UI widget
+    //  use the special font must reset font, because the old one is invalid.
+    FontAtlasCache::reloadFontAtlasFNT("fonts/futura-48.fnt");
+    label1->setBMFontFilePath("fonts/futura-48.fnt");
     addChild(label1);
     label1->setPosition(Vec2(winSize.width / 2, winSize.height * 0.4f));
 
@@ -933,6 +937,10 @@ LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
         label1->setPosition(Vec2(size.width * 0.1, size.height * 0.6));
         label1->setAnchorPoint(Vec2(0, 0.5));
         this->addChild(label1);
+        // Demo for unloadFontAtlasTTF function, after it been called, all UI widget
+        //  use the special font must reset font, because the old one is invalid.
+        FontAtlasCache::unloadFontAtlasTTF("fonts/HKYuanMini.ttf");
+        label1->setTTFConfig(ttfConfig);
     }
 
     auto label2 = Label::createWithTTF(ttfConfig,

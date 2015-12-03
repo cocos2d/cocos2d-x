@@ -476,7 +476,6 @@ public:
     /// @}
 
     ResouceData getRenderFile();
-    void setOffsetPosFromCenter(Vec2 offsetFromCenter);
 
 CC_CONSTRUCTOR_ACCESS :
 	/**

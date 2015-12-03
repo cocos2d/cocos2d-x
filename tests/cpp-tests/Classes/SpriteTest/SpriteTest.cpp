@@ -27,6 +27,7 @@
 
 #include <algorithm>
 #include "../testResource.h"
+#include "2d/CocosStudioExtension.h"
 
 USING_NS_CC;
 
@@ -167,6 +168,9 @@ void Sprite1::addNewSpriteWithCoords(Vec2 p)
     auto seq = Sequence::create( action, action_back, nullptr );
     
     sprite->runAction( RepeatForever::create(seq) );
+
+    auto rd = sprite->getRenderFile();
+    CCLOG("Test Sprite::getRenderFile function, texture type : %d, texture file : %s", rd.type, 0 == rd.type ? rd.file.c_str() : rd.plist.c_str());
 }
 
 void Sprite1::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
@@ -1775,6 +1779,8 @@ void SpriteFrameAliasNameTest::onEnter()
     auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
     // 14 frames * 1sec = 14 seconds
     sprite->runAction(RepeatForever::create(Animate::create(animation)));
+
+    cache->reloadTexture("animations/grossini-aliases.plist");
 }
 
 void SpriteFrameAliasNameTest::onExit()
