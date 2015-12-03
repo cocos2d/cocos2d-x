@@ -37,6 +37,8 @@
  * @{
  */
 NS_CC_BEGIN
+class DrawNode;
+
 namespace ui {
     
     /**
@@ -590,6 +592,7 @@ namespace ui {
         
         /// @} end of Children and Parent
         
+        virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
         virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
         
         virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
@@ -715,11 +718,17 @@ namespace ui {
         bool _isPatch9;
         State _brightState;
         Vec2 _nonSliceSpriteAnchor;
-        
+
         V3F_C4B_T2F* _sliceVertices;
         unsigned short* _sliceIndices;
         bool _sliceSpriteDirty;
         RenderingType _renderingType;
+        
+#if CC_SPRITE_DEBUG_DRAW
+        DrawNode *_debugDrawNode;
+#endif //CC_SPRITE_DEBUG_DRAW
+        bool _insideBounds;   /// whether or not the sprite was inside bounds the previous frame
+        TrianglesCommand _trianglesCommand;     ///
     };
     
 }}  //end of namespace
