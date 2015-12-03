@@ -508,6 +508,8 @@ bool js_cocos2dx_CCScene_init(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
+// TODO: This function is deprecated. The new API is "new LayerMultiplex" instead of "LayerMultiplex.create"
+// There are not js tests for this function. Impossible to know weather it works Ok.
 bool js_cocos2dx_CCLayerMultiplex_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -516,18 +518,18 @@ bool js_cocos2dx_CCLayerMultiplex_create(JSContext *cx, uint32_t argc, jsval *vp
     ok &= jsvals_variadic_to_ccvector(cx, args, &arg0);
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     
-    cocos2d::LayerMultiplex* ret = cocos2d::LayerMultiplex::createWithArray(arg0);
-    jsval jsret;
-    do {
-        if (ret) {
-            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::LayerMultiplex>(cx, ret);
-            jsret = OBJECT_TO_JSVAL(proxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-    args.rval().set(jsret);
-    return true;
+    cocos2d::LayerMultiplex* ret = new (std::nothrow) cocos2d::LayerMultiplex;
+    ok &= ret->initWithArray(arg0);
+    if (ok)
+    {
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::LayerMultiplex>(ret);
+        // link the native object with the javascript object
+        JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, ret, typeClass, "cocos2d::LayerMultiplex"));
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
+        return true;
+    }
+    JS_ReportError(cx, "Error creating LayerMultiplex");
+    return false;
 }
 
 bool js_cocos2dx_JSTouchDelegate_registerStandardDelegate(JSContext *cx, uint32_t argc, jsval *vp)
