@@ -207,10 +207,28 @@ public:
     void callback3(Node* sender, long data);
 };
 
+class ActionSequence3 : public ActionsDemo
+{
+public:
+    CREATE_FUNC(ActionSequence3);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 class ActionSpawn : public ActionsDemo
 {
 public:
     CREATE_FUNC(ActionSpawn);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
+class ActionSpawn2 : public ActionsDemo
+{
+public:
+    CREATE_FUNC(ActionSpawn2);
 
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
