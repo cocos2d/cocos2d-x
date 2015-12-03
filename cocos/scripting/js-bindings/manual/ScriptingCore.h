@@ -573,6 +573,13 @@ void jsb_ref_rebind(JSContext* cx, JS::HandleObject jsobj, js_proxy_t *js2native
  */
 JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
+/**
+ It will try to get the associated JSObjct for ref.
+ If it can't find it, it will create a new one associating it to Ref
+ */
+JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+
+
 template <class T>
 jsval getJSObject(JSContext* cx, T* nativeObj)
 {

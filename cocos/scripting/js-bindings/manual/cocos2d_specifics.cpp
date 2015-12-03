@@ -691,8 +691,9 @@ static bool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
             JS::RootedValue senderVal(cx);
             if (sender)
             {
-                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Node>(cx, sender);
-                senderVal.set(OBJECT_TO_JSVAL(proxy->obj));
+                js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Node>(sender);
+                auto jsobj = jsb_ref_get_or_create_jsobject(cx, sender, typeClass, "cocos2d::Node");
+                senderVal.set(OBJECT_TO_JSVAL(jsobj));
             }
             else
             {

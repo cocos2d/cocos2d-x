@@ -2007,6 +2007,15 @@ JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_clas
     return js_obj;
 }
 
+JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
+{
+    auto proxy = jsb_get_native_proxy(ref);
+    if (proxy)
+        return proxy->obj;
+    // else
+    return jsb_ref_create_jsobject(cx, ref, typeClass, debug);
+}
+
 void jsb_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, Ref* ref, const char* debug)
 {
 //    CCLOG("jsb_ref_init: JSObject address =  %p. %s", obj->get(), debug);
