@@ -35,9 +35,6 @@ USING_NS_CC;
 
 ActionsTests::ActionsTests()
 {
-    ADD_TEST_CASE(ActionSequence3);
-    ADD_TEST_CASE(ActionSpawn2);
-
     ADD_TEST_CASE(ActionMove);
     ADD_TEST_CASE(ActionMove3D);
     ADD_TEST_CASE(ActionRotate);
@@ -60,6 +57,7 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(ActionSequence3);
     ADD_TEST_CASE(ActionRemoveSelf);
     ADD_TEST_CASE(ActionSpawn);
+    ADD_TEST_CASE(ActionSpawn2);
     ADD_TEST_CASE(ActionReverse);
     ADD_TEST_CASE(ActionDelayTime);
     ADD_TEST_CASE(ActionRepeat);
