@@ -338,24 +338,17 @@ bool js_cocos2dx_CCSequence_create(JSContext *cx, uint32_t argc, jsval *vp)
                 i++;
             }
         }
-        cocos2d::FiniteTimeAction* ret = cocos2d::Sequence::create(array);
-        jsval jsret;
-        do {
-            if (ret) {
-                js_proxy_t *p = jsb_get_native_proxy(ret);
-                if (p) {
-                    jsret = OBJECT_TO_JSVAL(p->obj);
-                } else {
-                    // create a new js obj of that class
-                    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::FiniteTimeAction>(cx, ret);
-                    jsret = OBJECT_TO_JSVAL(proxy->obj);
-                }
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
+        auto ret = new (std::nothrow) cocos2d::Sequence;
+        auto ok = ret->init(array);
+
+        if (ok)
+        {
+            js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Sequence>(ret);
+            // link the native object with the javascript object
+            JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, ret, typeClass, "cocos2d::Sequence"));
+            args.rval().set(OBJECT_TO_JSVAL(jsobj));
+            return true;
+        }
     }
     JS_ReportError(cx, "wrong number of arguments");
     return false;
@@ -383,24 +376,16 @@ bool js_cocos2dx_CCSpawn_create(JSContext *cx, uint32_t argc, jsval *vp)
                 i++;
             }
         }
-        cocos2d::FiniteTimeAction* ret = cocos2d::Spawn::create(array);
-        jsval jsret;
-        do {
-            if (ret) {
-                js_proxy_t *p = jsb_get_native_proxy(ret);
-                if (p) {
-                    jsret = OBJECT_TO_JSVAL(p->obj);
-                } else {
-                    // create a new js obj of that class
-                    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::FiniteTimeAction>(cx, ret);
-                    jsret = OBJECT_TO_JSVAL(proxy->obj);
-                }
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
+        auto ret = new (std::nothrow) cocos2d::Spawn;
+        auto ok = ret->init(array);
+        if (ok)
+        {
+            js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Spawn>(ret);
+            // link the native object with the javascript object
+            JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, ret, typeClass, "cocos2d::Spawn"));
+            args.rval().set(OBJECT_TO_JSVAL(jsobj));
+            return true;
+        }
     }
     JS_ReportError(cx, "wrong number of arguments");
     return false;
