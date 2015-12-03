@@ -55,21 +55,21 @@ typedef struct _ttfConfig
     bool distanceFieldEnabled;
     int outlineSize;
 
-    _ttfConfig(const char* filePath = "",float size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
-        const char *customGlyphCollection = nullptr,bool useDistanceField = false,int outline = 0)
-        :fontFilePath(filePath)
-        ,fontSize(size)
-        ,glyphs(glyphCollection)
-        ,customGlyphs(customGlyphCollection)
-        ,distanceFieldEnabled(useDistanceField)
-        ,outlineSize(outline)
+    _ttfConfig(const std::string& filePath = "",float size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
+        const char *customGlyphCollection = nullptr, bool useDistanceField = false, int outline = 0)
+        : fontFilePath(filePath)
+        , fontSize(size)
+        , glyphs(glyphCollection)
+        , customGlyphs(customGlyphCollection)
+        , distanceFieldEnabled(useDistanceField)
+        , outlineSize(outline)
     {
         if(outline > 0)
         {
             distanceFieldEnabled = false;
         }
     }
-}TTFConfig;
+} TTFConfig;
 
 class Sprite;
 class SpriteBatchNode;
@@ -539,6 +539,13 @@ CC_CONSTRUCTOR_ACCESS:
      * @lua NA
      */
     virtual ~Label();
+
+    bool initWithTTF(const std::string& text, const std::string& fontFilePath, float fontSize,
+                     const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
+                     TextVAlignment vAlignment = TextVAlignment::TOP);
+
+    bool initWithTTF(const TTFConfig& ttfConfig, const std::string& text,
+                     TextHAlignment hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0);
 
 protected:
     struct LetterInfo

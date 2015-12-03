@@ -271,10 +271,23 @@ static void addCallBackAndThis(JSObject *obj, jsval callback, jsval &thisObj)
     }
 }
 
+// TODO: This function is deprecated. The new API is "new Menu" instead of "Menu.create"
+// There are not js tests for this function. Impossible to know wether it works Ok.
 bool js_cocos2dx_CCMenu_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (argc > 0) {
+
+    cocos2d::Menu* menu = nullptr;
+    bool ok = false;
+
+    if (argc == 0)
+    {
+        menu = new (std::nothrow) cocos2d::Menu;
+        Vector<MenuItem*> items;
+        ok = menu->initWithArray(items);
+    }
+    else // argc > 0
+    {
         Vector<MenuItem*> items;
         uint32_t i = 0;
         while (i < argc) {
@@ -286,45 +299,19 @@ bool js_cocos2dx_CCMenu_create(JSContext *cx, uint32_t argc, jsval *vp)
             items.pushBack(item);
             i++;
         }
-        cocos2d::Menu* ret = cocos2d::Menu::createWithArray(items);
-        jsval jsret;
-        do {
-            if (ret) {
-                js_proxy_t *p = jsb_get_native_proxy(ret);
-                if (p) {
-                    jsret = OBJECT_TO_JSVAL(p->obj);
-                } else {
-                    // create a new js obj of that class
-                    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Menu>(cx, ret);
-                    jsret = OBJECT_TO_JSVAL(proxy->obj);
-                }
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
+        menu = new (std::nothrow) cocos2d::Menu;
+        ok = menu->initWithArray(items);
+    }
+
+    if (ok)
+    {
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Menu>(menu);
+        // link the native object with the javascript object
+        JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, menu, typeClass, "cocos2d::Menu"));
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
         return true;
     }
-    if (argc == 0) {
-        cocos2d::Menu* ret = cocos2d::Menu::create();
-        jsval jsret;
-        do {
-            if (ret) {
-                js_proxy_t *p = jsb_get_native_proxy(ret);
-                if (p) {
-                    jsret = OBJECT_TO_JSVAL(p->obj);
-                } else {
-                    // create a new js obj of that class
-                    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Menu>(cx, ret);
-                    jsret = OBJECT_TO_JSVAL(proxy->obj);
-                }
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
+
     JS_ReportError(cx, "wrong number of arguments");
     return false;
 }
@@ -3764,70 +3751,56 @@ bool js_cocos2dx_ccquatMultiply(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
+// TODO: This function is deprecated. The new API is "new Sprite" instead of "Sprite.create"
+// There are not js tests for this function. Impossible to know weather it works Ok.
 bool js_cocos2dx_Sprite_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    
-    do {
-        if (argc == 1) {
-            std::string arg0;
-            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-            if (!ok) { ok = true; break; }
-            cocos2d::Sprite* ret = cocos2d::Sprite::create(arg0);
-            jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
-            args.rval().set(jsret);
-            return true;
+    bool ok = false;
+
+    cocos2d::Sprite *sprite = nullptr;
+
+    if (argc == 0)
+    {
+        sprite = new (std::nothrow) cocos2d::Sprite;
+        sprite->init();
+        ok = true;
+    }
+    else if (argc == 1)
+    {
+        std::string arg0;
+        ok = jsval_to_std_string(cx, args.get(0), &arg0);
+        if (ok)
+        {
+            sprite = new (std::nothrow) cocos2d::Sprite;
+            sprite->initWithFile(arg0);
         }
-    } while (0);
-    
-    do {
-        if (argc == 0) {
-            cocos2d::Sprite* ret = cocos2d::Sprite::create();
-            jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
-            args.rval().set(jsret);
-            return true;
+    }
+    else if(argc == 2)
+    {
+        std::string arg0;
+        ok = jsval_to_std_string(cx, args.get(0), &arg0);
+        cocos2d::Rect arg1;
+        ok |= jsval_to_ccrect(cx, args.get(1), &arg1);
+
+        if (ok)
+        {
+            sprite = new (std::nothrow) cocos2d::Sprite;
+            sprite->initWithFile(arg0, arg1);
         }
-    } while (0);
-    
-    do {
-        if (argc == 2) {
-            std::string arg0;
-            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-            if (!ok) { ok = true; break; }
-            cocos2d::Rect arg1;
-            ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
-            if (!ok) { ok = true; break; }
-            cocos2d::Sprite* ret = cocos2d::Sprite::create(arg0, arg1);
-            jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
-            args.rval().set(jsret);
-            return true;
-        }
-    } while (0);
+    }
+
+    if (ok)
+    {
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Sprite>(sprite);
+        // link the native object with the javascript object
+        JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, sprite, typeClass, "cocos2d::Sprite"));
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
+        return true;
+    }
+
+    // else
+
     JS_ReportError(cx, "js_cocos2dx_Sprite_create : wrong number of arguments");
     return false;
 }
@@ -4778,6 +4751,8 @@ bool jsval_to_TTFConfig(JSContext *cx, jsval v, TTFConfig* ret) {
     return true;
 }
 
+// TODO: This function is deprecated. The new API is "new Label" instead of "Label.create"
+// There are not js tests for this function. Impossible to know weather it works Ok.
 bool js_cocos2dx_Label_createWithTTF(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc < 2)
@@ -4792,48 +4767,43 @@ bool js_cocos2dx_Label_createWithTTF(JSContext *cx, uint32_t argc, jsval *vp)
     ok &= jsval_to_TTFConfig(cx, args.get(0), &ttfConfig);
     ok &= jsval_to_std_string(cx, args.get(1), &text);
 
-    cocos2d::Label* ret = nullptr;
+    cocos2d::Label* label = nullptr;
 
     if (argc == 2) {
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_createWithTTF : Error processing arguments");
-        ret = cocos2d::Label::createWithTTF(ttfConfig, text);
-        jsval jsret = JSVAL_NULL;
-        if (ret) {
-            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Label>(cx, (cocos2d::Label*)ret);
-            jsret = OBJECT_TO_JSVAL(proxy->obj);
-        }
-        args.rval().set(jsret);
-        return true;
+        label = new (std::nothrow) cocos2d::Label;
+        label->initWithTTF(ttfConfig, text);
     }
-    if (argc == 3) {
+    else if (argc == 3)
+    {
         int arg2;
         ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_createWithTTF : Error processing arguments");
         TextHAlignment alignment = TextHAlignment(arg2);
-        ret = cocos2d::Label::createWithTTF(ttfConfig, text, alignment);
-        jsval jsret = JSVAL_NULL;
-        if (ret) {
-            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Label>(cx, (cocos2d::Label*)ret);
-            jsret = OBJECT_TO_JSVAL(proxy->obj);
-        }
-        args.rval().set(jsret);
-        return true;
+        label = new (std::nothrow) cocos2d::Label;
+        label->initWithTTF(ttfConfig, text, alignment);
     }
-    if (argc == 4) {
+    else if (argc == 4)
+    {
         int arg2,arg3;
         ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
         ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_createWithTTF : Error processing arguments");
         TextHAlignment alignment = TextHAlignment(arg2);
-        ret = cocos2d::Label::createWithTTF(ttfConfig, text, alignment, arg3);
-        jsval jsret = JSVAL_NULL;
-        if (ret) {
-            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Label>(cx, (cocos2d::Label*)ret);
-            jsret = OBJECT_TO_JSVAL(proxy->obj);
-        }
-        args.rval().set(jsret);
+        label = new (std::nothrow) cocos2d::Label;
+        label->initWithTTF(ttfConfig, text, alignment, arg3);
+    }
+
+    if (ok)
+    {
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Label>(label);
+        // link the native object with the javascript object
+        JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, label, typeClass, "cocos2d::Label"));
+        args.rval().set(OBJECT_TO_JSVAL(jsobj));
         return true;
     }
+
+    // else
 
     JS_ReportError(cx, "js_cocos2dx_Label_createWithTTF : wrong number of arguments");
     return false;
