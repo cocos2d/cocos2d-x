@@ -462,12 +462,6 @@ public:
     /*Get the built in openGL handle of the program.*/
     inline const GLuint getProgram() const { return _program; }
 
-    /** Set if shader can be cleared after link. In editor mode, shader need to be kept to make click test working well. */
-    void setShaderClearable(bool isClearable) { _isShaderClearable = isClearable; }
-
-    GLuint getVertShader() const { return _vertShader; }
-    GLuint getFragShader() const { return _fragShader; }
-
     //DEPRECATED
     CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderByteArray(const GLchar* vertexByteArray, const GLchar* fragByteArray)
     { return initWithByteArrays(vertexByteArray, fragByteArray); }
@@ -507,8 +501,6 @@ protected:
     GLint             _builtInUniforms[UNIFORM_MAX];
     /**Indicate whether it has a offline shader compiler or not.*/
     bool              _hasShaderCompiler;
-
-    bool              _isShaderClearable;
 
     inline void clearShader();
 
