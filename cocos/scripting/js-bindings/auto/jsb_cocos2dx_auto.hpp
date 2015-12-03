@@ -2234,6 +2234,7 @@ bool js_cocos2dx_Label_setClipMarginEnabled(JSContext *cx, uint32_t argc, jsval 
 bool js_cocos2dx_Label_setString(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setSystemFontName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setBMFontFilePath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Label_initWithTTF(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setLineHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setSystemFontSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setOverflow(JSContext *cx, uint32_t argc, jsval *vp);
