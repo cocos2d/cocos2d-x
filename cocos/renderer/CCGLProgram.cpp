@@ -196,17 +196,7 @@ GLProgram::~GLProgram()
 {
     CCLOGINFO("%s %d deallocing GLProgram: %p", __FUNCTION__, __LINE__, this);
 
-    if (_vertShader)
-    {
-        glDeleteShader(_vertShader);
-    }
-
-    if (_fragShader)
-    {
-        glDeleteShader(_fragShader);
-    }
-
-    _vertShader = _fragShader = 0;
+    clearShader();
 
     if (_program)
     {
@@ -558,17 +548,7 @@ bool GLProgram::link()
     parseVertexAttribs();
     parseUniforms();
 
-    if (_vertShader)
-    {
-        glDeleteShader(_vertShader);
-    }
-
-    if (_fragShader)
-    {
-        glDeleteShader(_fragShader);
-    }
-
-    _vertShader = _fragShader = 0;
+    clearShader();
 
 #if DEBUG || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
@@ -938,6 +918,21 @@ void GLProgram::reset()
     }
 
     _hashForUniforms.clear();
+}
+
+inline void GLProgram::clearShader()
+{
+    if (_vertShader)
+    {
+        glDeleteShader(_vertShader);
+    }
+
+    if (_fragShader)
+    {
+        glDeleteShader(_fragShader);
+    }
+
+    _vertShader = _fragShader = 0;
 }
 
 NS_CC_END
