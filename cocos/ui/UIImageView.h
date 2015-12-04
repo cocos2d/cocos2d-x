@@ -34,7 +34,7 @@ THE SOFTWARE.
  */
 NS_CC_BEGIN
 
-struct CC_DLL ResouceData;
+struct CC_DLL ResourceData;
 
 namespace ui {
     class Scale9Sprite;
@@ -124,7 +124,7 @@ public:
     virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
 
-    ResouceData getRenderFile();
+    ResourceData getRenderFile();
 
 CC_CONSTRUCTOR_ACCESS:
     //initializes state of widget.

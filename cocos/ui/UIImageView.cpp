@@ -314,9 +314,9 @@ void ImageView::copySpecialProperties(Widget *widget)
     }
 }
 
-ResouceData ImageView::getRenderFile()
+ResourceData ImageView::getRenderFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_imageTexType;
     rData.file = _textureFile;
     return rData;

@@ -36,7 +36,7 @@ NS_CC_BEGIN
  */
 
 class Label;
-struct CC_DLL ResouceData;
+struct CC_DLL ResourceData;
 
 namespace ui {
     
@@ -140,7 +140,7 @@ public:
      */
     virtual void adaptRenderers() override;
 
-    ResouceData getRenderFile();
+    ResourceData getRenderFile();
 
 protected:
     virtual void initRenderer() override;
