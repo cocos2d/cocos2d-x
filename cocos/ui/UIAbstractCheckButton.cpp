@@ -607,7 +607,7 @@ ResouceData AbstractCheckButton::getCrossNormalFile()
     return rData;
 }
 
-ResouceData AbstractCheckButton::getCrossDisabeldFile()
+ResouceData AbstractCheckButton::getCrossDisabledFile()
 {
     ResouceData rData;
     rData.type = (int)_frontCrossDisabledTexType;

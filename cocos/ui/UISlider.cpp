@@ -777,7 +777,7 @@ ResouceData Slider::getBallPressedFile()
     rData.file = _slidBallPressedTextureFile;
     return rData;
 }
-ResouceData Slider::getBallDisabeldFile()
+ResouceData Slider::getBallDisabledFile()
 {
     ResouceData rData;
     rData.type = (int)_ballDTexType;

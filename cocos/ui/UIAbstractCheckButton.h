@@ -166,7 +166,7 @@ public:
     ResouceData getBackPressedFile();
     ResouceData getBackDisabledFile();
     ResouceData getCrossNormalFile();
-    ResouceData getCrossDisabeldFile();
+    ResouceData getCrossDisabledFile();
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;

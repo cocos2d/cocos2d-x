@@ -269,7 +269,7 @@ public:
     ResouceData getProgressBarFile();
     ResouceData getBallNormalFile();
     ResouceData getBallPressedFile();
-    ResouceData getBallDisabeldFile();
+    ResouceData getBallDisabledFile();
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
