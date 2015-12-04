@@ -227,7 +227,7 @@ public:
      */
     static CameraBackgroundSkyBoxBrush* create();
     /**
-     * Set skybox texutre 
+     * Set skybox texture 
      * @param texture Skybox texture
      */
     void setTexture(TextureCube*  texture);
