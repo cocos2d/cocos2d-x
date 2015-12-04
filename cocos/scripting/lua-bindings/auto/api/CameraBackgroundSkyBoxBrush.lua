@@ -5,7 +5,7 @@
 -- @parent_module cc
 
 --------------------------------
--- Set skybox texutre <br>
+-- Set skybox texture <br>
 -- param texture Skybox texture
 -- @function [parent=#CameraBackgroundSkyBoxBrush] setTexture 
 -- @param self
