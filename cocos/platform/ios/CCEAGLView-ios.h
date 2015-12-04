@@ -113,6 +113,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @property(nonatomic, readonly) id<UITextInputTokenizer> tokenizer;
 @property(nonatomic, readonly, getter = isKeyboardShown) BOOL isKeyboardShown;
 @property(nonatomic, copy) NSNotification* keyboardShowNotification;
+@property(nonatomic) UITextAutocorrectionType autocorrectionType;
+
 /** creates an initializes an CCEAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
 + (id) viewWithFrame:(CGRect)frame;
 /** creates an initializes an CCEAGLView with a frame, a color buffer format, and 0-bit depth buffer */

@@ -139,6 +139,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         requestedSamples_ = nSamples;
         preserveBackbuffer_ = retained;
         markedText_ = nil;
+        _autocorrectionType = UITextAutocorrectionTypeNo;
         if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
             [self release];
             return nil;
