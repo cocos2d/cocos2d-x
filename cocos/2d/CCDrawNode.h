@@ -300,11 +300,11 @@ public:
     /**
      * @js NA
      */
-	virtual void onDraw(const Mat4 &transform, uint32_t flags);
+    virtual void onDraw(const Mat4 &transform, uint32_t flags);
     /**
      * @js NA
      */
-	virtual void onDrawGLLine(const Mat4 &transform, uint32_t flags);
+    virtual void onDrawGLLine(const Mat4 &transform, uint32_t flags);
     /**
      * @js NA
      */
