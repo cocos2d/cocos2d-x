@@ -294,8 +294,7 @@ DrawNodeTest::DrawNodeTest()
 
     auto draw1 = DrawNode::create();
     this->addChild(draw1, 10);
-    draw1->setLineWidth(1);
-    draw1->setLineSmooth(true);
+    draw1->setLineWidth(4);
     draw1->drawLine(Vec2(0, s.height), Vec2(s.width, s.height - 20), Color4F::YELLOW);
     draw1->drawLine(Vec2(0, 0), Vec2(s.width, s.height - 20), Color4F::YELLOW);
 }

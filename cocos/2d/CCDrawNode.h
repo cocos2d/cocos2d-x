@@ -300,26 +300,20 @@ public:
     /**
      * @js NA
      */
-	void onDraw(const Mat4 &transform, uint32_t flags);
+	virtual void onDraw(const Mat4 &transform, uint32_t flags);
     /**
      * @js NA
      */
-	void onDrawGLLine(const Mat4 &transform, uint32_t flags);
+	virtual void onDrawGLLine(const Mat4 &transform, uint32_t flags);
     /**
      * @js NA
      */
-    void onDrawGLPoint(const Mat4 &transform, uint32_t flags);
+    virtual void onDrawGLPoint(const Mat4 &transform, uint32_t flags);
     
     // Overrides
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
     void setLineWidth(int lineWidth);
-
-    // Set enable or disable multisampling effect on CocosStudio guide lines.
-    void setLineSmooth(bool enable);
-
-    // Get multisampling effect on CocosStudio guide lines mode.
-    bool isLineSmooth();
 
     // Get CocosStudio guide lines width.
     float getLineWidth();
@@ -366,7 +360,6 @@ protected:
     
     int         _lineWidth;
 
-    bool _lineSmoothEnable;
     int  _defaultLineWidth;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);
