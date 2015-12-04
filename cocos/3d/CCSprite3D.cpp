@@ -457,9 +457,9 @@ void Sprite3D::setMaterial(Material *material, int meshIndex)
 
     if (meshIndex == -1)
     {
-        for (auto mesh: _meshes)
+        for (size_t i = 0; i < _meshes.size(); i++)
         {
-            mesh->setMaterial(material);
+            _meshes.at(i)->setMaterial(i == 0 ? material : material->clone());
         }
     }
     else
