@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include "2d/CCTMXLayer.h"
 #include "2d/CCSprite.h"
 #include "deprecated/CCString.h" // For StringUtils::format
-#include "2d/CocosStudioExtension.h"
 
 NS_CC_BEGIN
 
@@ -282,14 +281,6 @@ std::string TMXTiledMap::getDescription() const
 int TMXTiledMap::getLayerNum()
 {
     return _tmxLayerNum;
-}
-
-ResouceData TMXTiledMap::getRenderFile()
-{
-    ResouceData rData;
-    rData.type = 0;
-    rData.file = _tmxFile;
-    return rData;
 }
 
 NS_CC_END

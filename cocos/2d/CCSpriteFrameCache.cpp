@@ -701,8 +701,6 @@ bool SpriteFrameCache::reloadTexture(const std::string& plist)
 
         // append .png
         texturePath = texturePath.append(".png");
-
-        CCLOG("cocos2d: SpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
     }
 
     Texture2D *texture = nullptr;

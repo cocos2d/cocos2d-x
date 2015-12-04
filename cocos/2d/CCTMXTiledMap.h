@@ -37,7 +37,6 @@ class TMXLayer;
 class TMXLayerInfo;
 class TMXTilesetInfo;
 class TMXMapInfo;
-struct CC_DLL ResouceData;
 
 /**
  * @addtogroup _2d
@@ -253,8 +252,8 @@ public:
      */
     virtual std::string getDescription() const override;
 
-    ResouceData getRenderFile();
     int  getLayerNum();
+    const std::string getResourceFile() const { return _tmxFile; }
 
 CC_CONSTRUCTOR_ACCESS:
     /**

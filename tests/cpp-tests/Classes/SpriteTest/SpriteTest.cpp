@@ -27,7 +27,7 @@
 
 #include <algorithm>
 #include "../testResource.h"
-#include "2d/CocosStudioExtension.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 USING_NS_CC;
 
