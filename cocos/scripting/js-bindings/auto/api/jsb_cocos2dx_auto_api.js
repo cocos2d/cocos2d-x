@@ -395,6 +395,16 @@ getStartLocationInView : function (
 },
 
 /**
+ * @method getCurrentForce
+ * @return {float}
+ */
+getCurrentForce : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getStartLocation
  * @return {vec2_object}
  */
@@ -416,16 +426,30 @@ getID : function (
 
 /**
  * @method setTouchInfo
- * @param {int} arg0
- * @param {float} arg1
- * @param {float} arg2
- */
-setTouchInfo : function (
-int, 
-float, 
+* @param {int|int} int
+* @param {float|float} float
+* @param {float|float} float
+* @param {float} float
+* @param {float} float
+*/
+setTouchInfo : function(
+int,
+float,
+float,
+float,
 float 
 )
 {
+},
+
+/**
+ * @method getMaxForce
+ * @return {float}
+ */
+getMaxForce : function (
+)
+{
+    return 0;
 },
 
 /**
