@@ -48,6 +48,11 @@ include(network/CMakeLists.txt)
 include(audio/CMakeLists.txt)
 include(storage/CMakeLists.txt)
 
+if(BUILD_EDITOR_SPRITEBUILDER)
+include(editor-support/spritebuilder/CMakeLists.txt)
+set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_SB_SRC})
+endif(BUILD_EDITOR_SPRITEBUILDER)
+
 if(BUILD_EDITOR_COCOSBUILDER)
 include(editor-support/cocosbuilder/CMakeLists.txt)
 set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_CCB_SRC})

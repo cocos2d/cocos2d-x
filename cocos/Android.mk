@@ -303,6 +303,7 @@ LOCAL_STATIC_LIBRARIES := cocostudio_static
 LOCAL_STATIC_LIBRARIES += cocosbuilder_static
 LOCAL_STATIC_LIBRARIES += cocos3d_static
 LOCAL_STATIC_LIBRARIES += spine_static
+LOCAL_STATIC_LIBRARIES += spritebuilder_static
 LOCAL_STATIC_LIBRARIES += cocos_network_static
 LOCAL_STATIC_LIBRARIES += audioengine_static
 
@@ -322,6 +323,7 @@ $(call import-module,audio/android)
 $(call import-module,editor-support/cocosbuilder)
 $(call import-module,editor-support/cocostudio)
 $(call import-module,editor-support/spine)
+$(call import-module,editor-support/spritebuilder)
 $(call import-module,network)
 $(call import-module,ui)
 $(call import-module,extensions)

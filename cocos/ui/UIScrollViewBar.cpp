@@ -54,7 +54,8 @@ _marginForLength(DEFAULT_MARGIN),
 _touching(false),
 _autoHideEnabled(true),
 _autoHideTime(DEFAULT_AUTO_HIDE_TIME),
-_autoHideRemainingTime(0)
+_autoHideRemainingTime(0),
+_hideIfSizeFit(false)
 {
     CCASSERT(parent != nullptr, "Parent scroll view must not be null!");
     CCASSERT(direction != ScrollView::Direction::BOTH, "Illegal scroll direction for scroll bar!");
@@ -155,6 +156,30 @@ void ScrollViewBar::setAutoHideEnabled(bool autoHideEnabled)
         ProtectedNode::setOpacity(0);
 }
 
+void ScrollViewBar::setHideIfSizeFit(bool hideIfSizeFit)
+{
+    _hideIfSizeFit = hideIfSizeFit;
+    
+    Layout* innerContainer = _parent->getInnerContainer();
+    
+    float innerContainerMeasure = 0;
+    float scrollViewMeasure = 0;
+    if(_direction == ScrollView::Direction::VERTICAL)
+    {
+        innerContainerMeasure = innerContainer->getContentSize().height;
+        scrollViewMeasure = _parent->getContentSize().height;
+    }
+    else if(_direction == ScrollView::Direction::HORIZONTAL)
+    {
+        innerContainerMeasure = innerContainer->getContentSize().width;
+        scrollViewMeasure = _parent->getContentSize().width;
+    }
+    
+    if(_hideIfSizeFit && innerContainerMeasure == scrollViewMeasure)
+        ProtectedNode::setOpacity(0);
+}
+
+
 float ScrollViewBar::getWidth() const
 {
     return _body->getBoundingBox().size.width;
@@ -236,7 +261,6 @@ void ScrollViewBar::onScrolled(const Vec2& outOfBoundary)
     if(_autoHideEnabled)
     {
         _autoHideRemainingTime = _autoHideTime;
-        ProtectedNode::setOpacity(_opacity);
     }
     
     Layout* innerContainer = _parent->getInnerContainer();
@@ -259,6 +283,11 @@ void ScrollViewBar::onScrolled(const Vec2& outOfBoundary)
         outOfBoundaryValue = outOfBoundary.x;
         innerContainerPosition = -innerContainer->getPositionX();
     }
+    
+    if(_hideIfSizeFit && innerContainerMeasure == scrollViewMeasure)
+        ProtectedNode::setOpacity(0);
+    else
+        ProtectedNode::setOpacity(_opacity);
     
     float length = calculateLength(innerContainerMeasure, scrollViewMeasure, outOfBoundaryValue);
     Vec2 position = calculatePosition(innerContainerMeasure, scrollViewMeasure, innerContainerPosition, outOfBoundaryValue, length);

@@ -289,6 +289,15 @@
     <Filter Include="vr">
       <UniqueIdentifier>{5cbd879f-02ae-4f28-af33-2c4f980dd6f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="spritebuilder">
+      <UniqueIdentifier>{58e0d6ac-8ee1-4eb6-896f-048097774e90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="spritebuilder\Header Files">
+      <UniqueIdentifier>{88b95ff7-6360-4aa5-9d97-571a4f153ea1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="spritebuilder\Source Files">
+      <UniqueIdentifier>{e2bc8375-ecd3-4b0f-9f94-5096d6883f25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -1970,6 +1979,98 @@
     </ClCompile>
     <ClCompile Include="..\vr\CCVRGenericRenderer.cpp">
       <Filter>vr</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXScrollListViewLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCScrollListView.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXEditBoxLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXAnimationManager.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXButtonLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXFileLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXImageViewLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXKeyframe.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXLabelTTFLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXLayoutBoxLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXLoadingBarLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXNodeColorLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXNodeGradientLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXNodeLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXNodeLoaderLibrary.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXParser.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXParticleSystemQuadLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXProgressTimerLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXReaderParams.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXScale9SpriteLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXScissorsNodeLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXScrollViewLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXSequence.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\SpriteBuilder.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXWidgetLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXTextLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXTextFieldLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXSpriteLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXSliderLoader.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXSequenceProperty.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3850,6 +3951,98 @@
     </ClInclude>
     <ClInclude Include="..\vr\CCVRGenericRenderer.h">
       <Filter>vr</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXScrollListViewLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCScrollListView.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXEditBoxLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXAnimationManager.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXButtonLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXFileLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXImageViewLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXKeyframe.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXLabelTTFLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXLayoutBoxLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXLoadingBarLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXNodeColorLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXNodeGradientLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXNodeLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXNodeLoaderLibrary.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXParser.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXParticleSystemQuadLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXProgressTimerLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXReaderParams.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXScale9SpriteLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXScissorsNodeLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXScrollViewLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXSequence.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXSequenceProperty.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXSliderLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXSpriteLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXTextFieldLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXTextLoader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXWidgetloader.h">
+      <Filter>spritebuilder\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\SpriteBuilder.h">
+      <Filter>spritebuilder\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

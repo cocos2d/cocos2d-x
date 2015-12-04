@@ -44,7 +44,8 @@ _textureFile(""),
 _imageRenderer(nullptr),
 _imageTexType(TextureResType::LOCAL),
 _imageTextureSize(_contentSize),
-_imageRendererAdaptDirty(true)
+_imageRendererAdaptDirty(true),
+_imageScale(1.0f)
 {
 
 }
@@ -264,8 +265,8 @@ Node* ImageView::getVirtualRenderer()
 
 void ImageView::imageTextureScaleChangedWithSize()
 {
-    _imageRenderer->setPreferredSize(_contentSize);
-    
+    _imageRenderer->setScale(_imageScale);
+    _imageRenderer->setPreferredSize(_contentSize / _imageScale);
     _imageRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
@@ -292,6 +293,7 @@ void ImageView::copySpecialProperties(Widget *widget)
             loadTexture(imageSprite->getSpriteFrame());
         }
         setCapInsets(imageView->_capInsets);
+        setImageScale(imageView->_imageScale);
     }
 }
 
@@ -313,6 +315,20 @@ void ImageView::setGLProgramState(cocos2d::GLProgramState* glProgramState)
 {
     Widget::setGLProgramState(glProgramState);
     _imageRenderer->setGLProgramState(glProgramState);
+}
+    
+void ImageView::setImageScale(float scale)
+{
+    if(_imageScale != scale)
+    {
+        _imageScale = scale;
+        _imageRendererAdaptDirty = true;
+    }
+}
+    
+float ImageView::getImageScale() const
+{
+    return _imageScale;
 }
 
 }

@@ -6467,7 +6467,7 @@ int lua_cocos2dx_ui_Button_getRendererClicked(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Button_getRendererClicked'", nullptr);
             return 0;
         }
-        cocos2d::ui::Scale9Sprite* ret = cobj->getRendererClicked();
+        cocos2d::ui::Scale9Sprite* ret = cobj->getRendererPressed();
         object_to_luaval<cocos2d::ui::Scale9Sprite>(tolua_S, "ccui.Scale9Sprite",(cocos2d::ui::Scale9Sprite*)ret);
         return 1;
     }

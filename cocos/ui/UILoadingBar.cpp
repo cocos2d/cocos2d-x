@@ -48,6 +48,7 @@ _scale9Enabled(false),
 _prevIgnoreSize(true),
 _capInsets(Rect::ZERO),
 _barRendererAdaptDirty(true)
+,_imageScale(1.0f)
 {
 }
 
@@ -279,6 +280,20 @@ void LoadingBar::setPercent(float percent)
     this->updateProgressBar();
 }
     
+void LoadingBar::setImageScale(float scale)
+{
+    if(_imageScale != scale)
+    {
+        _imageScale = scale;
+        _barRendererAdaptDirty = true;
+    }
+}
+    
+float LoadingBar::getImageScale() const
+{
+    return _imageScale;
+}
+    
 void LoadingBar::updateProgressBar()
 {
     if (_scale9Enabled)
@@ -359,7 +374,7 @@ void LoadingBar::barRendererScaleChangedWithSize()
         if (_scale9Enabled)
         {
             this->setScale9Scale();
-            _barRenderer->setScale(1.0f);
+            _barRenderer->setScale(_imageScale);
         }
         else
         {
@@ -392,7 +407,7 @@ void LoadingBar::barRendererScaleChangedWithSize()
 void LoadingBar::setScale9Scale()
 {
     float width = (float)(_percent) / 100.0f * _totalLength;
-    _barRenderer->setPreferredSize(Size(width, _contentSize.height));
+    _barRenderer->setPreferredSize(Size(width, _contentSize.height) / _imageScale);
 }
 
 std::string LoadingBar::getDescription() const

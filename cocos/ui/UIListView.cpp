@@ -369,6 +369,7 @@ void ListView::removeLastItem()
 void ListView::removeAllItems()
 {
     removeAllChildren();
+    requestDoLayout();
 }
 
 Widget* ListView::getItem(ssize_t index) const

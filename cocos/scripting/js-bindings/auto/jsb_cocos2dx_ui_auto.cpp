@@ -3192,7 +3192,7 @@ bool js_cocos2dx_ui_Button_getRendererClicked(JSContext *cx, uint32_t argc, jsva
     cocos2d::ui::Button* cobj = (cocos2d::ui::Button *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getRendererClicked : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ui::Scale9Sprite* ret = cobj->getRendererClicked();
+        cocos2d::ui::Scale9Sprite* ret = cobj->getRendererPressed();
         jsval jsret = JSVAL_NULL;
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Scale9Sprite>(cx, (cocos2d::ui::Scale9Sprite*)ret));

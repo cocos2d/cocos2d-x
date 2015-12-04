@@ -36,6 +36,7 @@ NS_CC_BEGIN
 
 namespace ui {
 
+static const int BUTTON_RENDERER_Z = (-2);
 static const int NORMAL_RENDERER_Z = (-2);
 static const int PRESSED_RENDERER_Z = (-2);
 static const int DISABLED_RENDERER_Z = (-2);
@@ -46,9 +47,11 @@ IMPLEMENT_CLASS_GUI_INFO(Button)
 
 Button::Button():
 _buttonNormalRenderer(nullptr),
-_buttonClickedRenderer(nullptr),
+_buttonPressedRenderer(nullptr),
 _buttonDisabledRenderer(nullptr),
+_buttonRenderer(nullptr),
 _titleRenderer(nullptr),
+_imageScale(1.0f),
 _zoomScale(0.1f),
 _normalFileName(""),
 _clickedFileName(""),
@@ -66,14 +69,45 @@ _capInsetsDisabled(Rect::ZERO),
 _normalTextureSize(_contentSize),
 _pressedTextureSize(_contentSize),
 _disabledTextureSize(_contentSize),
+_normalTextureScaleXInSize(1.0f),
+_normalTextureScaleYInSize(1.0f),
+_pressedTextureScaleXInSize(1.0f),
+_pressedTextureScaleYInSize(1.0f),
+_titleScale(1.0f),
 _normalTextureLoaded(false),
 _pressedTextureLoaded(false),
 _disabledTextureLoaded(false),
 _normalTextureAdaptDirty(true),
 _pressedTextureAdaptDirty(true),
 _disabledTextureAdaptDirty(true),
+_titileAdaptDirty(true),
 _fontSize(10),
-_type(FontType::SYSTEM)
+_type(FontType::SYSTEM),
+_state(State::NORMAL),
+_normalBackgroundColor(Color3B::WHITE),
+_pressedBackgroundColor(Color3B::WHITE),
+_disabledBackgroundColor(Color3B::WHITE),
+_normalBackgroundOpacity(255),
+_pressedBackgroundOpacity(255),
+_disabledBackgroundOpacity(127),
+_normalTitleColor(Color3B::WHITE),
+_pressedTitleColor(Color3B::WHITE),
+_disabledTitleColor(Color3B::WHITE),
+_normalTitleOpacity(255),
+_pressedTitleOpacity(255),
+_disabledTitleOpacity(255),
+_leftPadding(0),
+_rightPadding(0),
+_topPadding(0),
+_bottomPadding(0),
+_leftOffsets(0.0f),
+_topOffsets(0.0f),
+_rightOffsets(0.0f),
+_bottomOffsets(0),
+_overflowLabel(static_cast<int>(Label::Overflow::NONE)),
+_wordWrapLabel(true),
+_hAlignment(TextHAlignment::CENTER),
+_vAlignment(TextVAlignment::CENTER)
 {
     setTouchEnabled(true);
 }
@@ -140,21 +174,36 @@ bool Button::init()
 void Button::initRenderer()
 {
     _buttonNormalRenderer = Scale9Sprite::create();
-    _buttonClickedRenderer = Scale9Sprite::create();
+    _buttonPressedRenderer = Scale9Sprite::create();
     _buttonDisabledRenderer = Scale9Sprite::create();
-    _buttonClickedRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+    _buttonPressedRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
     _buttonNormalRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
     _buttonDisabledRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+    
+    _buttonRenderer = Node::create();
+    
+    _buttonRenderer->addChild(_buttonNormalRenderer);
+    _buttonRenderer->addChild(_buttonPressedRenderer);
+    _buttonRenderer->addChild(_buttonDisabledRenderer);
+    _buttonRenderer->setCascadeColorEnabled(true);
+    _buttonRenderer->setCascadeOpacityEnabled(true);
+    
+    addProtectedChild(_buttonRenderer, BUTTON_RENDERER_Z, -1);
 
-    addProtectedChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
-    addProtectedChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
-    addProtectedChild(_buttonDisabledRenderer, DISABLED_RENDERER_Z, -1);
+    //addProtectedChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
+    //addProtectedChild(_buttonPressedRenderer, PRESSED_RENDERER_Z, -1);
+    //addProtectedChild(_buttonDisabledRenderer, DISABLED_RENDERER_Z, -1);
 }
 
 void Button::createTitleRenderer()
 {
     _titleRenderer = Label::create();
     _titleRenderer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    _titleRenderer->setAlignment(_hAlignment, _vAlignment);
+    updateFontName();
+    updateFontSize();
+    updateTextColor();
+    updateTextOpacity();
     addProtectedChild(_titleRenderer, TITLE_RENDERER_Z, -1);
 }
 
@@ -166,14 +215,14 @@ void Button::setScale9Enabled(bool able)
     }
 
     _scale9Enabled = able;
-
+    
     if (_scale9Enabled) {
         _buttonNormalRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
-        _buttonClickedRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+        _buttonPressedRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
         _buttonDisabledRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
     }else{
         _buttonNormalRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
-        _buttonClickedRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+        _buttonPressedRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
         _buttonDisabledRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
     }
     
@@ -236,7 +285,7 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
     _normalFileName = normal;
     _normalTexType = texType;
     bool textureLoaded = true;
-    if (normal.empty())
+    if(normal.empty())
     {
         _buttonNormalRenderer->resetRender();
         textureLoaded = false;
@@ -296,7 +345,7 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
     bool textureLoade = true;
     if (selected.empty())
     {
-        _buttonClickedRenderer->resetRender();
+        _buttonPressedRenderer->resetRender();
         textureLoade = false;
     }
     else
@@ -304,10 +353,10 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
         switch (texType)
         {
         case TextureResType::LOCAL:
-            _buttonClickedRenderer->initWithFile(selected);
+            _buttonPressedRenderer->initWithFile(selected);
             break;
         case TextureResType::PLIST:
-            _buttonClickedRenderer->initWithSpriteFrameName(selected);
+            _buttonPressedRenderer->initWithSpriteFrameName(selected);
             break;
         default:
             break;
@@ -318,7 +367,7 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
 
 void Button::setupPressedTexture(bool textureLoaded)
 {
-    _pressedTextureSize = _buttonClickedRenderer->getContentSize();
+    _pressedTextureSize = _buttonPressedRenderer->getContentSize();
 
     this->updateChildrenDisplayedRGBA();
 
@@ -328,7 +377,7 @@ void Button::setupPressedTexture(bool textureLoaded)
 
 void Button::loadTexturePressed(SpriteFrame* pressedSpriteFrame)
 {
-    _buttonClickedRenderer->initWithSpriteFrame(pressedSpriteFrame);
+    _buttonPressedRenderer->initWithSpriteFrame(pressedSpriteFrame);
     this->setupPressedTexture(nullptr != pressedSpriteFrame);
 }
 
@@ -404,7 +453,7 @@ void Button::setCapInsetsPressedRenderer(const Rect &capInsets)
     {
         return;
     }
-    _buttonClickedRenderer->setCapInsets(_capInsetsPressed);
+    _buttonPressedRenderer->setCapInsets(_capInsetsPressed);
 }
 
 void Button::setCapInsetsDisabledRenderer(const Rect &capInsets)
@@ -433,54 +482,150 @@ const Rect& Button::getCapInsetsDisabledRenderer()const
 {
     return _capInsetsDisabled;
 }
+    
+bool Button::hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const
+{
+    Rect rect;
+    rect.origin.x = _leftOffsets * _contentSize.width;
+    rect.origin.y = _topOffsets * _contentSize.height;
+    rect.size.width = _contentSize.width - rect.origin.x - _rightOffsets * _contentSize.width;
+    rect.size.height = _contentSize.height - rect.origin.y - _bottomOffsets * _contentSize.height;
+    return isScreenPointInRect(pt, camera, getWorldToNodeTransform(), rect, p);
+}
+    
+static Color3B multiplyColors(const Color3B& color1, const Color3B& color2)
+{
+    return Color3B(color1.r * color2.r/255.0,color1.g * color2.g/255.0,color1.b * color2.b/255.0);
+}
+    
+static GLubyte multiplyOpacity(GLubyte opacity1, GLubyte opacity2)
+{
+    return opacity1 * opacity2/255.0;
+}
+    
+class CC_DLL TextTintTo : public TintTo
+{
+public:
+    
+    static TextTintTo* create(float duration, GLubyte red, GLubyte green, GLubyte blue)
+    {
+        TextTintTo *tintTo = new (std::nothrow) TextTintTo();
+        tintTo->initWithDuration(duration, red, green, blue);
+        tintTo->autorelease();
+        
+        return tintTo;
+    }
+    
+    void startWithTarget(Node *target) override
+    {
+        ActionInterval::startWithTarget(target);
+        if (_target)
+        {
+            Label* label = dynamic_cast<Label*>(target);
+            _from = label ? Color3B(label->getTextColor()): _target->getColor();
+        }
+    }
+    
+    static TextTintTo* create(float duration, const Color3B& color)
+    {
+        return create(duration, color.r, color.g, color.b);
+    }
+    
+    bool initWithDuration(float duration, GLubyte red, GLubyte green, GLubyte blue)
+    {
+        if (ActionInterval::initWithDuration(duration))
+        {
+            _to = Color3B(red, green, blue);
+            return true;
+        }
+        
+        return false;
+    }
+    
+    virtual TintTo* clone() const  override
+    {
+        // no copy constructor
+        auto a = new (std::nothrow) TextTintTo();
+        a->initWithDuration(_duration, _to.r, _to.g, _to.b);
+        a->autorelease();
+        return a;
+    }
+    
+    virtual  TextTintTo* reverse() const  override
+    {
+        CCASSERT(false, "reverse() not supported in TintTo");
+        return nullptr;
+    }
+    virtual void update(float time) override
+    {
+        Label *label = dynamic_cast<Label*>(_target);
+        if (label)
+        {
+            label->setTextColor(Color4B(GLubyte(_from.r + (_to.r - _from.r) * time),
+                                        (GLubyte)(_from.g + (_to.g - _from.g) * time),
+                                        (GLubyte)(_from.b + (_to.b - _from.b) * time),
+                                        255));
+        }
+    }
+};
 
 void Button::onPressStateChangedToNormal()
 {
     _buttonNormalRenderer->setVisible(true);
-    _buttonClickedRenderer->setVisible(false);
+    _buttonPressedRenderer->setVisible(false);
     _buttonDisabledRenderer->setVisible(false);
     _buttonNormalRenderer->setState(Scale9Sprite::State::NORMAL);
-
+    _state = State::NORMAL;
+    
+    Color3B realBackgroundColor(multiplyColors(_normalBackgroundColor, _displayedColor));
+    GLubyte realBackgroundOpacity(multiplyOpacity(_normalBackgroundOpacity, _displayedOpacity));
+    Color3B realTitleColor(multiplyColors(_normalTitleColor, _displayedColor));
+    GLubyte realTitleOpacity(multiplyOpacity(_normalTitleOpacity, _displayedOpacity));
+    
+    _buttonNormalRenderer->stopAllActions();
     if (_pressedTextureLoaded)
     {
-        if (_pressedActionEnabled)
+        _buttonPressedRenderer->stopAllActions();
+        _buttonPressedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
+    }
+    
+    if (_pressedActionEnabled)
+    {
+        
+        FiniteTimeAction *backZoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, _normalTextureScaleXInSize, _normalTextureScaleYInSize);
+        _buttonNormalRenderer->runAction(backZoomAction);
+        
+        _buttonNormalRenderer->setColor(realBackgroundColor);
+        _buttonNormalRenderer->setOpacity(realBackgroundOpacity);
+        
+        if(_titleRenderer)
         {
-            _buttonNormalRenderer->stopAllActions();
-            _buttonClickedRenderer->stopAllActions();
-
-//            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, _normalTextureScaleXInSize, _normalTextureScaleYInSize);
-            //fixme: the zoomAction will run in the next frame which will cause the _buttonNormalRenderer to a wrong scale
-            _buttonNormalRenderer->setScale(1.0);
-            _buttonClickedRenderer->setScale(1.0);
-
-            if(nullptr != _titleRenderer)
-            {
-                _titleRenderer->stopAllActions();
-                if (_unifySize)
-                {
-                    Action *zoomTitleAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, 1.0f, 1.0f);
-                    _titleRenderer->runAction(zoomTitleAction);
-                }
-                else
-                {
-                    _titleRenderer->setScaleX(1.0f);
-                    _titleRenderer->setScaleY(1.0f);
-                }
-            }
+            _titleRenderer->stopAllActions();
+            FiniteTimeAction *titleZoomAction;
+            if (_unifySize)
+                titleZoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, 1.0f, 1.0f);
+            else
+                titleZoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, _titleScale, _titleScale);
+            FiniteTimeAction *titleColorAction = TextTintTo::create(ZOOM_ACTION_TIME_STEP, realTitleColor.r, realTitleColor.g, realTitleColor.b);
+            FiniteTimeAction *titleOpacityAction = FadeTo::create(ZOOM_ACTION_TIME_STEP, realTitleOpacity);
+            Action *titleSpawn = Spawn::create(titleZoomAction, titleColorAction, titleOpacityAction, nullptr);
+            _titleRenderer->runAction(titleSpawn);
         }
     }
     else
     {
-        _buttonNormalRenderer->stopAllActions();
-        _buttonNormalRenderer->setScale(1.0);
-
-        if(nullptr != _titleRenderer)
+        _buttonNormalRenderer->setColor(realBackgroundColor);
+        _buttonNormalRenderer->setOpacity(realBackgroundOpacity);
+        if(_titleRenderer)
         {
-            _titleRenderer->stopAllActions();
-            _titleRenderer->setScaleX(1.0f);
-            _titleRenderer->setScaleY(1.0f);
+            if(FontType::BMFONT != _type)
+                _titleRenderer->setTextColor(Color4B(realTitleColor));
+            _titleRenderer->setOpacity(realTitleOpacity);
+            if (_unifySize)
+                _titleRenderer->setScale(1.0f, 1.0f);
+            else
+                _titleRenderer->setScale(_titleScale, _titleScale);
         }
-
     }
 }
 
@@ -488,48 +633,71 @@ void Button::onPressStateChangedToPressed()
 {
     _buttonNormalRenderer->setState(Scale9Sprite::State::NORMAL);
 
+    _state = State::PRESSED;
+    _buttonDisabledRenderer->setVisible(false);
+    
+    Color3B realBackgroundColor(multiplyColors(_pressedBackgroundColor, _displayedColor));
+    GLubyte realBackgroundOpacity(multiplyOpacity(_pressedBackgroundOpacity, _displayedOpacity));
+    Color3B realTitleColor(multiplyColors(_pressedTitleColor, _displayedColor));
+    GLubyte realTitleOpacity(multiplyOpacity(_pressedTitleOpacity, _displayedOpacity));
+    
+    Scale9Sprite* nextRender = nullptr;
+    
+    _buttonNormalRenderer->stopAllActions();
+    _buttonPressedRenderer->stopAllActions();
+    
     if (_pressedTextureLoaded)
     {
         _buttonNormalRenderer->setVisible(false);
-        _buttonClickedRenderer->setVisible(true);
-        _buttonDisabledRenderer->setVisible(false);
-
-        if (_pressedActionEnabled)
-        {
-            _buttonNormalRenderer->stopAllActions();
-            _buttonClickedRenderer->stopAllActions();
-
-            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP,
-                                                 1.0f + _zoomScale,
-                                                 1.0f + _zoomScale);
-            _buttonClickedRenderer->runAction(zoomAction);
-
-            _buttonNormalRenderer->setScale(1.0f + _zoomScale,
-                                            1.0f + _zoomScale);
-
-            if(nullptr != _titleRenderer)
-            {
-                _titleRenderer->stopAllActions();
-                Action *zoomTitleAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP,
-                                                          1.0f + _zoomScale, 1.0f + _zoomScale);
-                _titleRenderer->runAction(zoomTitleAction);
-            }
-        }
+        _buttonPressedRenderer->setVisible(true);
+        nextRender = _buttonPressedRenderer;
     }
     else
     {
         _buttonNormalRenderer->setVisible(true);
-        _buttonClickedRenderer->setVisible(true);
-        _buttonDisabledRenderer->setVisible(false);
-
-        _buttonNormalRenderer->stopAllActions();
-        _buttonNormalRenderer->setScale(1.0f +_zoomScale, 1.0f + _zoomScale);
-
-        if(nullptr != _titleRenderer)
+        _buttonPressedRenderer->setVisible(false);
+        nextRender = _buttonNormalRenderer;
+    }
+    
+    nextRender->setColor(realBackgroundColor);
+    nextRender->setOpacity(realBackgroundOpacity);
+    
+    if (_pressedActionEnabled)
+    {
+        FiniteTimeAction *backZoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, _pressedTextureScaleXInSize + _zoomScale, _pressedTextureScaleYInSize + _zoomScale);
+        nextRender->runAction(backZoomAction);
+        
+        if(_titleRenderer)
         {
             _titleRenderer->stopAllActions();
-            _titleRenderer->setScaleX(1.0f + _zoomScale);
-            _titleRenderer->setScaleY(1.0f + _zoomScale);
+            FiniteTimeAction *titleZoomAction;
+            if (_unifySize)
+                titleZoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, 1.0f + _zoomScale, 1.0f + _zoomScale);
+            else
+                titleZoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, _titleScale * (1.0f + _zoomScale), _titleScale + (1.0f * _zoomScale));
+            FiniteTimeAction *titleColorAction = TextTintTo::create(ZOOM_ACTION_TIME_STEP, realTitleColor.r, realTitleColor.g, realTitleColor.b);
+            FiniteTimeAction *titleOpacityAction = FadeTo::create(ZOOM_ACTION_TIME_STEP, realTitleOpacity);
+            Action *titleSpawn =  nullptr;
+            if(FontType::BMFONT != _type)
+                titleSpawn = Spawn::create(titleZoomAction, titleColorAction, titleOpacityAction, nullptr);
+            else
+                titleSpawn = Spawn::create(titleZoomAction, titleOpacityAction, nullptr);
+            _titleRenderer->runAction(titleSpawn);
+        }
+    }
+    else
+    {
+        nextRender->setColor(realBackgroundColor);
+        nextRender->setOpacity(realBackgroundOpacity);
+        if(_titleRenderer)
+        {
+            if(FontType::BMFONT != _type)
+                _titleRenderer->setTextColor(Color4B(realTitleColor));
+            _titleRenderer->setOpacity(realTitleOpacity);
+            if (_unifySize)
+                _titleRenderer->setScale(1.0f, 1.0f);
+            else
+                _titleRenderer->setScale(_titleScale, _titleScale);
         }
     }
 }
@@ -537,27 +705,100 @@ void Button::onPressStateChangedToPressed()
 void Button::onPressStateChangedToDisabled()
 {
     //if disable resource is null
+    _state = State::DISABLED;
+    Scale9Sprite* nextRender = nullptr;
     if (!_disabledTextureLoaded)
     {
-        if (_normalTextureLoaded)
-        {
-            _buttonNormalRenderer->setState(Scale9Sprite::State::GRAY);
-        }
+        nextRender = _buttonNormalRenderer;
+        _buttonNormalRenderer->setVisible(true);
+        _buttonDisabledRenderer->setVisible(false);
     }
     else
     {
+        nextRender = _buttonDisabledRenderer;
         _buttonNormalRenderer->setVisible(false);
         _buttonDisabledRenderer->setVisible(true);
     }
 
-    _buttonClickedRenderer->setVisible(false);
-    _buttonNormalRenderer->setScale(1.0);
-    _buttonClickedRenderer->setScale(1.0);
+    _buttonPressedRenderer->setVisible(false);
+    _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
+    _buttonPressedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
+    nextRender->setColor(multiplyColors(_disabledBackgroundColor, _displayedColor));
+    nextRender->setOpacity(multiplyOpacity(_disabledBackgroundOpacity, _displayedOpacity));
+    if(_titleRenderer)
+    {
+        _titleRenderer->setTextColor(Color4B(multiplyColors(_disabledTitleColor, _displayedColor)));
+        _titleRenderer->setOpacity(multiplyOpacity(_disabledTitleOpacity, _displayedOpacity));
+        _titleRenderer->setScale(_titleScale);
+    }
+}
+    
+void Button::updateDisplayedOpacity(GLubyte parentOpacity)
+{
+    _displayedOpacity = _realOpacity * parentOpacity/255.0;
+    updateColor();
+    
+    if (_cascadeOpacityEnabled)
+    {
+        for(auto child : _children){
+            child->updateDisplayedOpacity(_displayedOpacity);
+        }
+    }
+    _buttonNormalRenderer->setOpacity(multiplyOpacity(_pressedBackgroundOpacity, _displayedOpacity));
+    _buttonNormalRenderer->setOpacity(multiplyOpacity(_disabledBackgroundOpacity, _displayedOpacity));
+    switch (_state) {
+        case State::NORMAL:
+            _buttonNormalRenderer->setOpacity(multiplyOpacity(_normalBackgroundOpacity, _displayedOpacity));
+            break;
+        case State::PRESSED:
+            if(!_pressedTextureLoaded)
+                _buttonNormalRenderer->setOpacity(multiplyOpacity(_pressedBackgroundOpacity, _displayedOpacity));
+            break;
+        case State::DISABLED:
+            if(!_disabledTextureLoaded)
+                _buttonNormalRenderer->setOpacity(multiplyOpacity(_disabledBackgroundOpacity, _displayedOpacity));
+            break;
+    }
+    if(_titleRenderer)
+        updateTextOpacity();
+}
+
+void Button::updateDisplayedColor(const Color3B& parentColor)
+{
+    _displayedColor.r = _realColor.r * parentColor.r/255.0;
+    _displayedColor.g = _realColor.g * parentColor.g/255.0;
+    _displayedColor.b = _realColor.b * parentColor.b/255.0;
+    updateColor();
+    
+    if (_cascadeColorEnabled)
+    {
+        for(const auto &child : _children){
+            child->updateDisplayedColor(_displayedColor);
+        }
+    }
+    _buttonNormalRenderer->setColor(multiplyColors(_pressedBackgroundColor, _displayedColor));
+    _buttonNormalRenderer->setColor(multiplyColors(_disabledBackgroundColor, _displayedColor));
+    switch (_state) {
+        case State::NORMAL:
+            _buttonNormalRenderer->setColor(multiplyColors(_normalBackgroundColor, _displayedColor));
+            break;
+        case State::PRESSED:
+            if(!_pressedTextureLoaded)
+                _buttonNormalRenderer->setColor(multiplyColors(_pressedBackgroundColor, _displayedColor));
+            break;
+        case State::DISABLED:
+            if(!_disabledTextureLoaded)
+                _buttonNormalRenderer->setColor(multiplyColors(_disabledBackgroundColor, _displayedColor));
+            break;
+    }
+    if(_titleRenderer)
+        updateTextColor();
 }
 
 void Button::updateTitleLocation()
 {
-    _titleRenderer->setPosition(_contentSize.width * 0.5f, _contentSize.height * 0.5f);
+    if(_titleRenderer)
+        _titleRenderer->setPosition(_contentSize.width * 0.5f + (_leftPadding - _rightPadding)/2.0f, _contentSize.height * 0.5f + (_bottomPadding - _topPadding)/2.0f);
 }
 
 void Button::updateContentSize()
@@ -593,6 +834,7 @@ void Button::onSizeChanged()
     _normalTextureAdaptDirty = true;
     _pressedTextureAdaptDirty = true;
     _disabledTextureAdaptDirty = true;
+    _titileAdaptDirty = true;
 }
 
 void Button::adaptRenderers()
@@ -613,6 +855,27 @@ void Button::adaptRenderers()
     {
         disabledTextureScaleChangedWithSize();
         _disabledTextureAdaptDirty = false;
+    }
+    
+    if(_titileAdaptDirty)
+    {
+        if(_titleRenderer)
+        {
+            Size contentSize = getContentSize();
+            Size paddedLabelSize = Size(contentSize.width - (_leftPadding + _rightPadding), contentSize.height -  (_topPadding + _bottomPadding));
+            _titleRenderer->setScale(1.0f);
+            
+            _titleRenderer->setOverflow(static_cast<Label::Overflow>(_overflowLabel));
+            _titleRenderer->setLineBreakWithoutSpace(!_wordWrapLabel);
+           
+            _titleRenderer->setDimensions(paddedLabelSize.width, paddedLabelSize.height);
+            _titleRenderer->getContentSize();
+            _titleRenderer->setScale(_normalTextureScaleXInSize);
+            _titleScale = _normalTextureScaleXInSize;
+            
+            updateTitleLocation();
+        }
+        _titileAdaptDirty = false;
     }
 }
 
@@ -643,7 +906,7 @@ Node* Button::getVirtualRenderer()
             case BrightStyle::NORMAL:
                 return _buttonNormalRenderer;
             case BrightStyle::HIGHLIGHT:
-                return _buttonClickedRenderer;
+                return _buttonPressedRenderer;
             default:
                 return nullptr;
         }
@@ -656,23 +919,23 @@ Node* Button::getVirtualRenderer()
 
 void Button::normalTextureScaleChangedWithSize()
 {
-    _buttonNormalRenderer->setPreferredSize(_contentSize);
+    _buttonNormalRenderer->setPreferredSize(_contentSize / _imageScale);
 
-    _buttonNormalRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
+    _buttonNormalRenderer->setPosition(_contentSize.width / _imageScale / 2.0f, _contentSize.height / _imageScale / 2.0f);
 }
 
 void Button::pressedTextureScaleChangedWithSize()
 {
-    _buttonClickedRenderer->setPreferredSize(_contentSize);
+    _buttonPressedRenderer->setPreferredSize(_contentSize / _imageScale);
 
-    _buttonClickedRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
+    _buttonPressedRenderer->setPosition(_contentSize.width / _imageScale / 2.0f, _contentSize.height / _imageScale / 2.0f);
 }
 
 void Button::disabledTextureScaleChangedWithSize()
 {
-    _buttonDisabledRenderer->setPreferredSize(_contentSize);
-    
-    _buttonDisabledRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
+    _buttonDisabledRenderer->setPreferredSize(_contentSize / _imageScale);
+
+    _buttonDisabledRenderer->setPosition(_contentSize.width / _imageScale / 2.0f, _contentSize.height / _imageScale / 2.0f);
 }
 
 void Button::setPressedActionEnabled(bool enabled)
@@ -682,20 +945,17 @@ void Button::setPressedActionEnabled(bool enabled)
 
 void Button::setTitleAlignment(TextHAlignment hAlignment)
 {
-    if (nullptr == _titleRenderer)
-    {
-        this->createTitleRenderer();
-    }
-    _titleRenderer->setAlignment(hAlignment);
+    if (_titleRenderer)
+        _titleRenderer->setAlignment(hAlignment);
+    _hAlignment = hAlignment;
 }
 
 void Button::setTitleAlignment(TextHAlignment hAlignment, TextVAlignment vAlignment)
 {
-    if (nullptr == _titleRenderer)
-    {
-        this->createTitleRenderer();
-    }
-    _titleRenderer->setAlignment(hAlignment, vAlignment);
+    if (_titleRenderer)
+        _titleRenderer->setAlignment(hAlignment, vAlignment);
+    _hAlignment = hAlignment;
+    _vAlignment = vAlignment;
 }
 
 void Button::setTitleText(const std::string& text)
@@ -709,61 +969,48 @@ void Button::setTitleText(const std::string& text)
         this->createTitleRenderer();
     }
     _titleRenderer->setString(text);
-    this->setTitleFontSize(_fontSize);
     updateContentSize();
     updateTitleLocation();
+    _titileAdaptDirty = true;
 }
 
 std::string Button::getTitleText() const
 {
-    if(nullptr == _titleRenderer)
+    if(_titleRenderer)
     {
-        return "";
+        return _titleRenderer->getString();
     }
-    return _titleRenderer->getString();
+    return "";
 }
 
 void Button::setTitleColor(const Color3B& color)
 {
-    if(nullptr == _titleRenderer)
+    if(_titleRenderer && FontType::BMFONT != _type)
     {
-        this->createTitleRenderer();
+        _titleRenderer->setTextColor(Color4B(color));
     }
-    _titleRenderer->setTextColor(Color4B(color));
+    _normalTitleColor = color;
+    _pressedTitleColor = color;
+    _disabledTitleColor = color;
 }
 
 Color3B Button::getTitleColor() const
 {
-    if(nullptr == _titleRenderer)
+    if(_titleRenderer)
     {
-        return Color3B::WHITE;
+        return Color3B(_titleRenderer->getTextColor());
     }
-    return Color3B(_titleRenderer->getTextColor());
+    return Color3B::WHITE;
 }
 
 void Button::setTitleFontSize(float size)
 {
-    if (nullptr == _titleRenderer)
+    if (_titleRenderer)
     {
-        this->createTitleRenderer();
-    }
-
-    _fontSize = size;
-    if (_type == FontType::SYSTEM)
-    {
-        _titleRenderer->setSystemFontSize(_fontSize);
-    }
-    else if (_type == FontType::TTF)
-    {
-        TTFConfig config = _titleRenderer->getTTFConfig();
-        config.fontSize = _fontSize;
-        _titleRenderer->setTTFConfig(config);
-    }
-    //we can't change font size of BMFont.
-    if(FontType::BMFONT != _type)
-    {
+        updateFontSize();
         updateContentSize();
     }
+    _fontSize = size;
 }
 
 float Button::getTitleFontSize() const
@@ -780,26 +1027,41 @@ float Button::getZoomScale()const
 {
     return _zoomScale;
 }
-
-void Button::setTitleFontName(const std::string& fontName)
+   
+void Button::updateFontSize()
 {
-    if(nullptr == _titleRenderer)
+    if (_type == FontType::SYSTEM)
     {
-        this->createTitleRenderer();
+        _titleRenderer->setSystemFontSize(_fontSize);
     }
-    if(FileUtils::getInstance()->isFileExist(fontName))
+    else if (_type == FontType::TTF)
     {
-        std::string lowerCasedFontName = fontName;
+        TTFConfig config = _titleRenderer->getTTFConfig();
+        config.fontSize = _fontSize;
+        _titleRenderer->setTTFConfig(config);
+    }
+    //we can't change font size of BMFont.
+    if(FontType::BMFONT != _type)
+    {
+        _titileAdaptDirty = true;
+    }
+}
+    
+void Button::updateFontName()
+{
+    if(FileUtils::getInstance()->isFileExist(_fontName))
+    {
+        std::string lowerCasedFontName = _fontName;
         std::transform(lowerCasedFontName.begin(), lowerCasedFontName.end(), lowerCasedFontName.begin(), ::tolower);
         if (lowerCasedFontName.find(".fnt") != std::string::npos)
         {
-            _titleRenderer->setBMFontFilePath(fontName);
+            _titleRenderer->setBMFontFilePath(_fontName);
             _type = FontType::BMFONT;
         }
         else
         {
             TTFConfig config = _titleRenderer->getTTFConfig();
-            config.fontFilePath = fontName;
+            config.fontFilePath = _fontName;
             config.fontSize = _fontSize;
             _titleRenderer->setTTFConfig(config);
             _type = FontType::TTF;
@@ -807,7 +1069,7 @@ void Button::setTitleFontName(const std::string& fontName)
     }
     else
     {
-        _titleRenderer->setSystemFontName(fontName);
+        _titleRenderer->setSystemFontName(_fontName);
         if (_type == FontType::TTF)
         {
             _titleRenderer->requestSystemFontRefresh();
@@ -815,8 +1077,50 @@ void Button::setTitleFontName(const std::string& fontName)
         _titleRenderer->setSystemFontSize(_fontSize);
         _type = FontType::SYSTEM;
     }
+}
+    
+void Button::updateTextColor()
+{
+    if(FontType::BMFONT != _type)
+    {
+        switch (_state) {
+            case State::NORMAL:
+                _titleRenderer->setTextColor(Color4B(multiplyColors(_normalTitleColor, _displayedColor)));
+                break;
+            case State::PRESSED:
+                _titleRenderer->setTextColor(Color4B(multiplyColors(_pressedTitleColor, _displayedColor)));
+                break;
+            case State::DISABLED:
+                _titleRenderer->setTextColor(Color4B(multiplyColors(_disabledTitleColor, _displayedColor)));
+                break;
+        }
+    }
+}
+    
+void Button::updateTextOpacity()
+{
+    switch (_state) {
+        case State::NORMAL:
+            _titleRenderer->setOpacity(multiplyOpacity(_normalTitleOpacity, _displayedOpacity));
+            break;
+        case State::PRESSED:
+            _titleRenderer->setOpacity(multiplyOpacity(_pressedTitleOpacity, _displayedOpacity));
+            break;
+        case State::DISABLED:
+            _titleRenderer->setOpacity(multiplyOpacity(_disabledTitleOpacity, _displayedOpacity));
+            break;
+    }
+}
+
+void Button::setTitleFontName(const std::string& fontName)
+{
+    if(_titleRenderer && _fontName != fontName)
+    {
+        updateFontName();
+        updateContentSize();
+    }
     _fontName = fontName;
-    this->updateContentSize();
+    _titileAdaptDirty = true;
 }
 
 Label* Button::getTitleRenderer()const
@@ -847,6 +1151,26 @@ std::string Button::getTitleFontName() const
     }
 }
 
+void Button::setOverflow(int value)
+{
+    _overflowLabel = value;
+}
+    
+int Button::getOverflow() const
+{
+    return _overflowLabel;
+}
+    
+void Button::setLabelWordWrap(bool value)
+{
+    _wordWrapLabel = value;
+}
+
+bool Button::getLabelWordWrap() const
+{
+    return _wordWrapLabel;
+}
+
 std::string Button::getDescription() const
 {
     return "Button";
@@ -855,6 +1179,296 @@ std::string Button::getDescription() const
 Widget* Button::createCloneInstance()
 {
     return Button::create();
+}
+    
+void Button::setNormalBackgroundColor(const Color3B &color)
+{
+    _normalBackgroundColor = color;
+    if(_state == State::NORMAL)
+        _buttonNormalRenderer->setColor(multiplyColors(color, _displayedColor));
+}
+
+const Color3B& Button::getNormalBackgroundColor() const
+{
+    return _normalBackgroundColor;
+}
+
+void Button::setPressedBackgroundColor(const Color3B &color)
+{
+    _pressedBackgroundColor = color;
+    if(_state == State::PRESSED)
+    {
+        if(_pressedTextureLoaded)
+            _buttonPressedRenderer->setColor(multiplyColors(color, _displayedColor));
+        else
+            _buttonNormalRenderer->setColor(multiplyColors(color, _displayedColor));
+    }
+}
+
+const Color3B& Button::getPressedBackgroundColor() const
+{
+    return _pressedBackgroundColor;
+}
+
+void Button::setDisabledBackgroundColor(const Color3B &color)
+{
+    _disabledBackgroundColor = color;
+    if(_state == State::DISABLED)
+    {
+        if(_disabledTextureLoaded)
+            _buttonDisabledRenderer->setColor(multiplyColors(color, _displayedColor));
+        else
+            _buttonNormalRenderer->setColor(multiplyColors(color, _displayedColor));
+    }
+}
+
+const Color3B& Button::getDisabledBackgroundColor() const
+{
+    return _disabledBackgroundColor;
+}
+
+
+void Button::setNormalBackgroundOpacity(GLubyte opacity)
+{
+    _normalBackgroundOpacity = opacity;
+    if(_state == State::NORMAL)
+        _buttonNormalRenderer->setOpacity(multiplyOpacity(opacity, _displayedOpacity));
+}
+
+GLubyte Button::getNormalBackgroundOpacity() const
+{
+    return _normalBackgroundOpacity;
+}
+
+void Button::setPressedBackgroundOpacity(GLubyte opacity)
+{
+    _pressedBackgroundOpacity = opacity;
+    if(_state == State::PRESSED)
+    {
+        if(_pressedTextureLoaded)
+            _buttonPressedRenderer->setOpacity(multiplyOpacity(opacity, _displayedOpacity));
+        else
+            _buttonNormalRenderer->setOpacity(multiplyOpacity(opacity, _displayedOpacity));
+    }
+}
+
+GLubyte Button::getPressedBackgroundOpacity() const
+{
+    return _pressedBackgroundOpacity;
+}
+
+void Button::setDisabledBackgroundOpacity(GLubyte opacity)
+{
+    _disabledBackgroundOpacity = opacity;
+    if(_state == State::DISABLED)
+    {
+        if(_disabledTextureLoaded)
+            _buttonDisabledRenderer->setOpacity(multiplyOpacity(opacity, _displayedOpacity));
+        else
+            _buttonNormalRenderer->setOpacity(multiplyOpacity(opacity, _displayedOpacity));
+    }
+}
+
+GLubyte Button::getDisabledBackgroundOpacity() const
+{
+    return _disabledBackgroundOpacity;
+}
+
+
+void Button::setNormalTitleColor(const Color3B &color)
+{
+    _normalTitleColor = color;
+    if(_state == State::NORMAL && FontType::BMFONT != _type)
+        if(_titleRenderer)
+            _titleRenderer->setTextColor(Color4B(multiplyColors(color, _displayedColor)));
+}
+
+const Color3B& Button::getNormalTitleColor() const
+{
+    return _normalTitleColor;
+}
+
+void Button::setPressedTitleColor(const Color3B &color)
+{
+    _pressedTitleColor = color;
+    if(_state == State::PRESSED && FontType::BMFONT != _type)
+        if(_titleRenderer)
+            _titleRenderer->setTextColor(Color4B(multiplyColors(color, _displayedColor)));
+}
+
+const Color3B& Button::getPressedTitleColor() const
+{
+    return _pressedTitleColor;
+}
+
+void Button::setDisabledTitleColor(const Color3B &color)
+{
+    _disabledTitleColor = color;
+    if(_state == State::DISABLED && FontType::BMFONT != _type)
+        if(_titleRenderer)
+            _titleRenderer->setTextColor(Color4B(multiplyColors(color, _displayedColor)));
+}
+
+const Color3B& Button::getDisabledTitleColor() const
+{
+    return _disabledTitleColor;
+}
+
+void Button::setNormalTitleOpacity(GLubyte opacity)
+{
+    _normalTitleOpacity = opacity;
+    if(_state == State::NORMAL)
+        if(_titleRenderer)
+            _titleRenderer->setOpacity(multiplyOpacity(opacity, _displayedOpacity));
+}
+
+GLubyte Button::getNormalTitleOpacity() const
+{
+    return _normalTitleOpacity;
+}
+
+void Button::setPressedTitleOpacity(GLubyte opacity)
+{
+    _pressedTitleOpacity = opacity;
+    if(_state == State::PRESSED)
+        if(_titleRenderer)
+            _titleRenderer->setOpacity(multiplyOpacity(opacity, _displayedOpacity));
+}
+
+GLubyte Button::getPressedTitleOpacity() const
+{
+    return _pressedTitleOpacity;
+}
+
+void Button::setDisabledTitleOpacity(GLubyte opacity)
+{
+    _disabledTitleOpacity = opacity;
+    if(_state == State::DISABLED)
+        if(_titleRenderer)
+            _titleRenderer->setOpacity(multiplyOpacity(opacity, _displayedOpacity));
+}
+
+GLubyte Button::getDisabledTitleOpacity() const
+{
+    return _disabledTitleOpacity;
+}
+    
+void Button::setPaddingPadding(float left, float top, float right, float bottom)
+{
+    _leftPadding = left;
+    _rightPadding = right;
+    _topPadding = top;
+    _bottomPadding = bottom;
+    onSizeChanged();
+}
+    
+void Button::setLeftPadding(float padding)
+{
+    _leftPadding = padding;
+    onSizeChanged();
+}
+
+float Button::getLeftPadding()
+{
+    return _leftPadding;
+}
+
+void Button::setRightPadding(float padding)
+{
+    _rightPadding = padding;
+    onSizeChanged();
+}
+
+float Button::getRightPadding()
+{
+    return _rightPadding;
+}
+
+void Button::setTopPadding(float padding)
+{
+    _topPadding = padding;
+    onSizeChanged();
+}
+
+float Button::getTopPadding()
+{
+    return _topPadding;
+}
+
+void Button::setBottomPadding(float padding)
+{
+    _bottomPadding = padding;
+    onSizeChanged();
+}
+
+float Button::getBottomPadding()
+{
+    return _bottomPadding;
+}
+    
+void Button::setOffsets(float left, float top, float right, float bottom)
+{
+    _leftOffsets = left;
+    _topOffsets = top;
+    _rightOffsets = right;
+    _bottomOffsets = bottom;
+}
+
+void Button::setLeftOffset(float left)
+{
+    _leftOffsets = left;
+}
+
+float Button::getLeftOffset() const
+{
+    return _leftOffsets;
+}
+
+void Button::setTopOffset(float top)
+{
+    _topOffsets = top;
+}
+
+float Button::getTopOffset() const
+{
+    return _topOffsets;
+}
+
+void Button::setRightOffset(float right)
+{
+    _rightOffsets = right;
+}
+
+float Button::getRightOffset() const
+{
+    return _rightOffsets;
+}
+
+void Button::setBottomOffset(float bottom)
+{
+    _bottomOffsets = bottom;
+}
+
+float Button::getBottomOffset() const
+{
+    return _bottomOffsets;
+}
+    
+void Button::setImageScale(float scale)
+{
+    if(_imageScale != scale)
+    {
+        _imageScale = scale;
+        _buttonRenderer->setScale(scale);
+        _normalTextureAdaptDirty = true;
+        _pressedTextureAdaptDirty = true;
+        _disabledTextureAdaptDirty = true;
+    }
+}
+
+float Button::getImageScale() const
+{
+    return _imageScale;
 }
 
 void Button::copySpecialProperties(Widget *widget)
@@ -869,7 +1483,7 @@ void Button::copySpecialProperties(Widget *widget)
         {
             loadTextureNormal(normalSprite->getSpriteFrame());
         }
-        auto clickedSprite = button->_buttonClickedRenderer->getSprite();
+        auto clickedSprite = button->_buttonPressedRenderer->getSprite();
         if (nullptr != clickedSprite)
         {
             loadTexturePressed(clickedSprite->getSpriteFrame());
@@ -891,9 +1505,21 @@ void Button::copySpecialProperties(Widget *widget)
         }
         setPressedActionEnabled(button->_pressedActionEnabled);
         setZoomScale(button->_zoomScale);
+        setNormalBackgroundColor(button->_normalBackgroundColor);
+        setPressedBackgroundColor(button->_pressedBackgroundColor);
+        setDisabledBackgroundColor(button->_disabledBackgroundColor);
+        setNormalBackgroundOpacity(button->_normalBackgroundOpacity);
+        setPressedBackgroundOpacity(button->_pressedBackgroundOpacity);
+        setDisabledBackgroundOpacity(button->_disabledBackgroundOpacity);
+        setNormalTitleColor(button->_normalTitleColor);
+        setPressedTitleColor(button->_pressedTitleColor);
+        setDisabledTitleColor(button->_disabledTitleColor);
+        setNormalTitleOpacity(button->_normalTitleOpacity);
+        setPressedTitleOpacity(button->_pressedTitleOpacity);
+        setDisabledTitleOpacity(button->_disabledTitleOpacity);
     }
-
 }
+
 Size Button::getNormalSize() const
 {
     Size titleSize;
@@ -911,7 +1537,7 @@ Size Button::getNormalSize() const
 
     return Size(width,height);
 }
-
+    
 Size Button::getNormalTextureSize() const
 {
     return _normalTextureSize;
@@ -939,7 +1565,7 @@ void Button::resetPressedRender()
     _pressedTextureLoaded = false;
     _pressedTextureAdaptDirty = false;
 
-    _buttonClickedRenderer->resetRender();
+    _buttonPressedRenderer->resetRender();
 }
 
 void Button::resetDisabledRender()

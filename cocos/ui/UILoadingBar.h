@@ -168,6 +168,18 @@ public:
      */
     const Rect& getCapInsets()const;
     
+    /**
+     * Sets image internal scale.
+     * @return internal image scale.
+     */
+    void setImageScale(float scale);
+    
+    /**
+     * Get image internal scale.
+     * @param scale image internal scale
+     */
+    float getImageScale() const;
+    
     //override methods.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
     virtual Size getVirtualRendererSize() const override;
@@ -204,6 +216,7 @@ protected:
     Rect _capInsets;
     bool _barRendererAdaptDirty;
     std::string _textureFile;
+    float _imageScale;
 };
 
 }

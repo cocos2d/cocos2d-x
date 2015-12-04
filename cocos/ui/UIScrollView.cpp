@@ -1315,6 +1315,33 @@ bool ScrollView::isScrollBarAutoHideEnabled() const
     }
     return false;
 }
+    
+void ScrollView::setScrollBarHideIfSizeFit(bool hideIfSizeFit)
+{
+    CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
+    if(_verticalScrollBar != nullptr)
+    {
+        _verticalScrollBar->setHideIfSizeFit(hideIfSizeFit);
+    }
+    if(_horizontalScrollBar != nullptr)
+    {
+        _horizontalScrollBar->setHideIfSizeFit(hideIfSizeFit);
+    }
+}
+    
+bool ScrollView::isScrollBarHideIfSizeFit() const
+{
+    CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
+    if(_verticalScrollBar != nullptr)
+    {
+        return _verticalScrollBar->isHideIfSizeFit();
+    }
+    else if(_horizontalScrollBar != nullptr)
+    {
+        return _horizontalScrollBar->isHideIfSizeFit();
+    }
+    return false;
+}
 
 void ScrollView::setScrollBarAutoHideTime(float autoHideTime)
 {

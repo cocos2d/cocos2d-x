@@ -499,6 +499,20 @@ public:
     bool isScrollBarAutoHideEnabled() const;
     
     /**
+     * @brief Set scroll bar hide if content fit container
+     *
+     * @param scroll bar hide if content fit container state
+     */
+    void setScrollBarHideIfSizeFit(bool hideIfSizeFit);
+    
+    /**
+     * @brief Query scroll bar hide if content fit container
+     *
+     * @return True if scroll bar hide if content fit container is enabled, false otherwise.
+     */
+    bool isScrollBarHideIfSizeFit() const;
+    
+    /**
      * @brief Set scroll bar auto hide time
      *
      * @param scroll bar auto hide time

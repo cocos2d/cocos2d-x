@@ -74,7 +74,8 @@ _textureFile(""),
 _progressBarTextureFile(""),
 _slidBallNormalTextureFile(""),
 _slidBallPressedTextureFile(""),
-_slidBallDisabledTextureFile("")
+_slidBallDisabledTextureFile(""),
+_imageScale(1.0f)
 {
     setTouchEnabled(true);
 }
@@ -456,6 +457,22 @@ void Slider::setPercent(int percent)
     }
 }
     
+void Slider::setImageScale(float scale)
+{
+    if(_imageScale != scale)
+    {
+        _imageScale = scale;
+        _barRendererAdaptDirty = true;
+        _progressBarRendererDirty = true;
+        _slidBallRenderer->setScale(scale);
+    }
+}
+
+float Slider::getImageScale() const
+{
+    return _imageScale;
+}
+    
 bool Slider::hitTest(const cocos2d::Vec2 &pt, const Camera *camera, Vec3 *p) const
 {
     Rect rect;
@@ -589,8 +606,8 @@ void Slider::barRendererScaleChangedWithSize()
         _barLength = _contentSize.width;
         if (_scale9Enabled)
         {
-            _barRenderer->setPreferredSize(_contentSize);
-            _barRenderer->setScale(1.0f);
+            _barRenderer->setPreferredSize(_contentSize / _imageScale);
+            _barRenderer->setScale(_imageScale);
         }
         else
         {
@@ -633,8 +650,8 @@ void Slider::progressBarRendererScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            _progressBarRenderer->setPreferredSize(_contentSize);
-            _progressBarRenderer->setScale(1.0);
+            _progressBarRenderer->setPreferredSize(_contentSize / _imageScale);
+            _progressBarRenderer->setScale(_imageScale);
         }
         else
         {

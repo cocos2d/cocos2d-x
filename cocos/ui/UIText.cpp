@@ -43,7 +43,9 @@ _fontSize(10.f),
 _onSelectedScaleOffset(0.5),
 _labelRenderer(nullptr),
 _labelRendererAdaptDirty(true),
-_type(Type::SYSTEM)
+_type(Type::SYSTEM),
+_overflowLabel(static_cast<int>(Label::Overflow::NONE)),
+_wordWrapLabel(true)
 {
 }
 
@@ -307,13 +309,16 @@ Node* Text::getVirtualRenderer()
 
 void Text::labelScaleChangedWithSize()
 {
+    Size paddedLabelSize = getContentSize();
     if (_ignoreSize)
     {
         _labelRenderer->setScale(1.0f);
         _normalScaleValueX = _normalScaleValueY = 1.0f;
+        setContentSize(_labelRenderer->getContentSize());
     }
     else
     {
+        _labelRenderer->setScale(1.0f);
         _labelRenderer->setDimensions(_contentSize.width,_contentSize.height);
         Size textureSize = _labelRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
@@ -325,6 +330,10 @@ void Text::labelScaleChangedWithSize()
         float scaleY = _contentSize.height / textureSize.height;
         _labelRenderer->setScaleX(scaleX);
         _labelRenderer->setScaleY(scaleY);
+        
+        _labelRenderer->setOverflow(static_cast<Label::Overflow>(_overflowLabel));
+        _labelRenderer->setLineBreakWithoutSpace(!_wordWrapLabel);
+        
         _normalScaleValueX = scaleX;
         _normalScaleValueY = scaleY;
     }
@@ -404,6 +413,26 @@ Color4B Text::getEffectColor() const
     return Color4B(effect.r * 255, effect.g * 255, effect.b * 255, effect.a * 255);
 }
 
+void Text::setLabelWordWrap(bool value)
+{
+    _wordWrapLabel = value;
+}
+    
+bool Text::getLabelWordWrap() const
+{
+    return _wordWrapLabel;
+}
+
+void Text::setOverflow(int value)
+{
+    _overflowLabel = value;
+}
+    
+int Text::getOverflow() const
+{
+    return _overflowLabel;
+}
+    
 Widget* Text::createCloneInstance()
 {
     return Text::create();

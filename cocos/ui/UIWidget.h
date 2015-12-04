@@ -75,6 +75,14 @@ typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
  * This class inherent from `ProtectedNode` and `LayoutParameterProtocol`.
  * If you want to implements your own ui widget, you should subclass it.
  */
+enum class WidgetTouchEventType
+{
+    BEGAN,
+    MOVED,
+    ENDED,
+    CANCELED
+};
+
 class CC_GUI_DLL Widget : public ProtectedNode, public LayoutParameterProtocol
 {
 public:
@@ -110,13 +118,7 @@ public:
     /**
      * Touch event type.
      */
-    enum class TouchEventType
-    {
-        BEGAN,
-        MOVED,
-        ENDED,
-        CANCELED
-    };
+    typedef WidgetTouchEventType TouchEventType;
     
     /**
      * Texture resource type.

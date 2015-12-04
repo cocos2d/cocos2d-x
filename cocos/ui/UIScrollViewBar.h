@@ -107,6 +107,20 @@ public:
     bool isAutoHideEnabled() const { return _autoHideEnabled; }
     
     /**
+     * @brief Set scroll bar hide if content fit container
+     *
+     * @param scroll bar hide if content fit container state
+     */
+    void setHideIfSizeFit(bool hideIfSizeFit);
+    
+    /**
+     * @brief Query scroll bar hide if content fit container
+     *
+     * @return True if scroll bar hide if content fit container is enabled, false otherwise.
+     */
+    bool isHideIfSizeFit() const { return _hideIfSizeFit; }
+    
+    /**
      * @brief Set scroll bar auto hide time
      *
      * @param scroll bar auto hide time
@@ -172,6 +186,7 @@ private:
     bool _autoHideEnabled;
     float _autoHideTime;
     float _autoHideRemainingTime;
+    bool _hideIfSizeFit;
     
 };
 
