@@ -27,6 +27,7 @@
 
 #include <algorithm>
 #include "../testResource.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 USING_NS_CC;
 
@@ -1775,6 +1776,8 @@ void SpriteFrameAliasNameTest::onEnter()
     auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
     // 14 frames * 1sec = 14 seconds
     sprite->runAction(RepeatForever::create(Animate::create(animation)));
+
+    cache->reloadTexture("animations/grossini-aliases.plist");
 }
 
 void SpriteFrameAliasNameTest::onExit()

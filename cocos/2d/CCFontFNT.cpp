@@ -805,5 +805,25 @@ FontAtlas * FontFNT::createFontAtlas()
     return tempAtlas;
 }
 
+void FontFNT::reloadBMFontResource(const std::string& fntFilePath)
+{
+    if (s_configurations == nullptr)
+    {
+        s_configurations = new (std::nothrow) Map<std::string, BMFontConfiguration*>();
+    }
+
+    BMFontConfiguration *ret = s_configurations->at(fntFilePath);
+    if (ret != nullptr)
+    {
+        s_configurations->erase(fntFilePath);
+    }
+    ret = BMFontConfiguration::create(fntFilePath.c_str());
+    if (ret)
+    {
+        s_configurations->insert(fntFilePath, ret);
+        TextureCache::getInstance()->reloadTexture(ret->getAtlasName());
+
+    }
+}
 
 NS_CC_END

@@ -474,7 +474,10 @@ public:
     virtual bool isOpacityModifyRGB() const override;
     /// @}
 
-CC_CONSTRUCTOR_ACCESS:
+    const int getResourceType() const { return _fileType; }
+    const std::string getResourceName() const { return _fileName; }
+
+CC_CONSTRUCTOR_ACCESS :
 	/**
      * @js ctor
      */
@@ -633,6 +636,10 @@ protected:
     bool _flippedY;                         /// Whether the sprite is flipped vertically or not
 
     bool _insideBounds;                     /// whether or not the sprite was inside bounds the previous frame
+
+    std::string _fileName;
+    int _fileType;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
 };
