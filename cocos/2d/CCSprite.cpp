@@ -38,7 +38,6 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
 #include "2d/CCCamera.h"
-#include "2d/CocosStudioExtension.h"
 
 #include "deprecated/CCString.h"
 
@@ -1157,14 +1156,6 @@ PolygonInfo& Sprite::getPolygonInfo()
 void Sprite::setPolygonInfo(const PolygonInfo& info)
 {
     _polyInfo = info;
-}
-
-ResouceData Sprite::getRenderFile()
-{
-    ResouceData rData;
-    rData.type = (int)_fileType;
-    rData.file = _fileName;
-    return rData;
 }
 
 NS_CC_END

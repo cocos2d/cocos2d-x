@@ -33,8 +33,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-struct CC_DLL ResouceData;
-
 /**
  * @addtogroup _2d
  * @{
@@ -763,7 +761,7 @@ public:
     */
     virtual const BlendFunc &getBlendFunc() const override;
 
-    ResouceData getRenderFile();
+    const std::string getResourceFile() const { return _plistFile; }
 
 CC_CONSTRUCTOR_ACCESS:
     /**

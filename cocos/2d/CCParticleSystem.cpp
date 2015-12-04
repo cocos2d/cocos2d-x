@@ -54,7 +54,6 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "deprecated/CCString.h"
 #include "platform/CCFileUtils.h"
-#include "2d/CocosStudioExtension.h"
 
 using namespace std;
 
@@ -1331,14 +1330,6 @@ void ParticleSystem::setScaleY(float newScaleY)
 {
     _transformSystemDirty = true;
     Node::setScaleY(newScaleY);
-}
-
-ResouceData ParticleSystem::getRenderFile()
-{
-    ResouceData rData;
-    rData.type = 0;
-    rData.file = _plistFile;
-    return rData;
 }
 
 NS_CC_END

@@ -46,7 +46,6 @@ class Rect;
 class Size;
 class Texture2D;
 struct transformValues_;
-struct CC_DLL ResouceData;
 
 #ifdef SPRITE_RENDER_IN_SUBPIXEL
 #undef SPRITE_RENDER_IN_SUBPIXEL
@@ -475,7 +474,8 @@ public:
     virtual bool isOpacityModifyRGB() const override;
     /// @}
 
-    ResouceData getRenderFile();
+    const int getResourceType() const { return _fileType; }
+    const std::string getResourceName() const { return _fileName; }
 
 CC_CONSTRUCTOR_ACCESS :
 	/**
