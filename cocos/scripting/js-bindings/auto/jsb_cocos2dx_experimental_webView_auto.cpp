@@ -329,17 +329,11 @@ bool js_cocos2dx_experimental_webView_WebView_create(JSContext *cx, uint32_t arg
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
-        cocos2d::experimental::ui::WebView* ret = cocos2d::experimental::ui::WebView::create();
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::experimental::ui::WebView>(cx, (cocos2d::experimental::ui::WebView*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
+
+        auto ret = cocos2d::experimental::ui::WebView::create();
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::experimental::ui::WebView>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::experimental::ui::WebView"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
     JS_ReportError(cx, "js_cocos2dx_experimental_webView_WebView_create : wrong number of arguments");
