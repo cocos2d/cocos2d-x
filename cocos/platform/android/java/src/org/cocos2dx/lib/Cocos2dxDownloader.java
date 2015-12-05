@@ -6,6 +6,8 @@ import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.RequestHandle;
 
+import android.util.SparseArray;
+
 import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
 
@@ -171,11 +173,11 @@ public class Cocos2dxDownloader {
     private AsyncHttpClient _httpClient = new AsyncHttpClient();
     private String _tempFileNameSufix;
     private int _countOfMaxProcessingTasks;
-    private HashMap _taskMap = new HashMap();
+    private SparseArray<DownloadTask> _taskMap = new SparseArray<DownloadTask>();
     private Queue<Runnable> _taskQueue = new LinkedList<Runnable>();
 
     void onProgress(final int id, final long downloadBytes, final long downloadNow, final long downloadTotal) {
-        DownloadTask task = (DownloadTask)_taskMap.get(id);
+        DownloadTask task = _taskMap.get(id);
         if (null != task) {
             task.bytesReceived = downloadBytes;
             task.totalBytesReceived = downloadNow;
@@ -190,14 +192,14 @@ public class Cocos2dxDownloader {
     }
 
     public void onStart(int id) {
-        DownloadTask task = (DownloadTask)_taskMap.get(id);
+        DownloadTask task = _taskMap.get(id);
         if (null != task) {
             task.resetStatus();
         }
     }
 
     public void onFinish(final int id, final int errCode, final String errStr, final byte[] data) {
-        DownloadTask task = (DownloadTask)_taskMap.get(id);
+        DownloadTask task = _taskMap.get(id);
         if (null == task) return;
         _taskMap.remove(id);
         Cocos2dxHelper.runOnGLThread(new Runnable() {
@@ -217,7 +219,7 @@ public class Cocos2dxDownloader {
             downloader._httpClient.setTimeout(timeoutInSeconds * 1000);
         }
         // downloader._httpClient.setMaxRetriesAndTimeout(3, timeoutInSeconds * 1000);
-        downloader._httpClient.allowRetryExceptionClass(javax.net.ssl.SSLException.class);
+        AsyncHttpClient.allowRetryExceptionClass(javax.net.ssl.SSLException.class);
 
         downloader._tempFileNameSufix = tempFileNameSufix;
         downloader._countOfMaxProcessingTasks = countOfMaxProcessingTasks;
@@ -289,15 +291,11 @@ public class Cocos2dxDownloader {
         Cocos2dxHelper.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-                //downloader._httpClient.cancelAllRequests(true);
-                Iterator iter = downloader._taskMap.entrySet().iterator();
-                while (iter.hasNext()) {
-                    Map.Entry entry = (Map.Entry) iter.next();
-                    //Object key = entry.getKey();
-                    DownloadTask task = (DownloadTask) entry.getValue();
-                    if (null != task.handle) {
-                        task.handle.cancel(true);
+                int s = downloader._taskMap.size();
+                for (int i = 0; i < s; i++) {
+                    DownloadTask task = downloader._taskMap.valueAt(i);
+                    if (task.handle != null) {
+                	task.handle.cancel(true);
                     }
                 }
             }
