@@ -519,6 +519,8 @@ protected:
     /**Indicate whether it has a offline shader compiler or not.*/
     bool              _hasShaderCompiler;
 
+    inline void clearShader();
+
     struct flag_struct {
         unsigned int usesTime:1;
         unsigned int usesNormal:1;

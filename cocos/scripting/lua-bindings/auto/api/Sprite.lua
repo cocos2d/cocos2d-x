@@ -43,6 +43,12 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
+-- / @}
+-- @function [parent=#Sprite] getResourceType 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 -- @overload self, cc.Texture2D, rect_table         
 -- @overload self, cc.Texture2D         
 -- @overload self, cc.Texture2D, rect_table, bool         
@@ -151,6 +157,12 @@
 -- @function [parent=#Sprite] getSpriteFrame 
 -- @param self
 -- @return SpriteFrame#SpriteFrame ret (return value: cc.SpriteFrame)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite] getResourceName 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- Whether or not the Sprite needs to be updated in the Atlas.<br>

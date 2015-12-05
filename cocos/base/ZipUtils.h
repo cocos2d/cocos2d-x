@@ -169,7 +169,7 @@ typedef struct unz_file_info_s unz_file_info;
          *
          * Splitting the key into 4 parts and calling the function from 4 different source
          * files increases the difficulty to reverse engineer the encryption key.
-         * Be aware that encrpytion is *never* 100% secure and the key code
+         * Be aware that encryption is *never* 100% secure and the key code
          * can be cracked by knowledgable persons. 
          *
          * IMPORTANT: Be sure to call setPvrEncryptionKey or
