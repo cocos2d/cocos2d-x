@@ -433,26 +433,6 @@ BillBoard : function (
 jsb.Mesh = {
 
 /**
- * @method setTexture
-* @param {cc.Texture2D|String} texture2d
-*/
-setTexture : function(
-str 
-)
-{
-},
-
-/**
- * @method getTexture
- * @return {cc.Texture2D}
- */
-getTexture : function (
-)
-{
-    return cc.Texture2D;
-},
-
-/**
  * @method getSkin
  * @return {cc.MeshSkin}
  */
@@ -480,6 +460,16 @@ getVertexSizeInBytes : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method enableCheckTexture
+ * @return {bool}
+ */
+enableCheckTexture : function (
+)
+{
+    return false;
 },
 
 /**
@@ -583,6 +573,14 @@ str
 },
 
 /**
+ * @method checkTexture
+ */
+checkTexture : function (
+)
+{
+},
+
+/**
  * @method getIndexCount
  * @return {long}
  */
@@ -648,6 +646,16 @@ getPrimitiveType : function (
  */
 setSkin : function (
 meshskin 
+)
+{
+},
+
+/**
+ * @method setEnableCheckTexture
+ * @param {bool} arg0
+ */
+setEnableCheckTexture : function (
+bool 
 )
 {
 },
@@ -976,6 +984,16 @@ setCullFace : function (
 int 
 )
 {
+},
+
+/**
+ * @method getMeshes
+ * @return {Array}
+ */
+getMeshes : function (
+)
+{
+    return new Array();
 },
 
 /**
@@ -1329,11 +1347,11 @@ jsb.Terrain = {
 
 /**
  * @method initHeightMap
- * @param {char} arg0
+ * @param {String} arg0
  * @return {bool}
  */
 initHeightMap : function (
-char 
+str 
 )
 {
     return false;
@@ -1373,10 +1391,10 @@ map
 
 /**
  * @method resetHeightMap
- * @param {char} arg0
+ * @param {String} arg0
  */
 resetHeightMap : function (
-char 
+str 
 )
 {
 },

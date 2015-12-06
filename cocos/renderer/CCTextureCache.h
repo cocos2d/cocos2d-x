@@ -204,6 +204,20 @@ public:
      */
     const std::string getTextureFilePath(Texture2D* texture)const;
 
+    void setDirty(bool dirty) { _dirty = dirty; }
+    bool isDirty() const { return _dirty; }
+
+    /** Reload texuture from a new file.
+    * This function is mainly for editor, won't suggest use it in game for performance reason.
+    *
+    * @param srcName Original texture file name.
+    * @param dstName New texture file name.
+    *
+    * @since v3.10
+    */
+    void renameTextureWithKey(const std::string srcName, const std::string dstName);
+
+
 private:
     void addImageAsyncCallBack(float dt);
     void loadImage();
@@ -228,6 +242,8 @@ protected:
     int _asyncRefCount;
 
     std::unordered_map<std::string, Texture2D*> _textures;
+
+    bool _dirty;
 };
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA

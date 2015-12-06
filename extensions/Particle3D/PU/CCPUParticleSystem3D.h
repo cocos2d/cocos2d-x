@@ -353,6 +353,8 @@ public:
     virtual PUParticleSystem3D* clone();
     virtual void copyAttributesTo(PUParticleSystem3D* system);
 
+    bool initSystem(const std::string &filePath);
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticleSystem3D();
     virtual ~PUParticleSystem3D();
@@ -379,7 +381,6 @@ protected:
     
     inline bool isExpired(PUParticle3D* particle, float timeElapsed);
 
-    bool initSystem(const std::string &filePath);
     static void convertToUnixStylePath(std::string &path);
 
 protected:

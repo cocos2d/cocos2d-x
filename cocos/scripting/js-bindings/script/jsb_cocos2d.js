@@ -2599,6 +2599,13 @@ cc.Texture2D.prototype.setTexParameters = function (texParams, magFilter, wrapS,
 
 cc.Texture2D.prototype.handleLoadedTexture = function (premultipled) {};
 
+// 
+// MenuItem setCallback support target
+//
+cc.MenuItem.prototype._setCallback = cc.MenuItem.prototype.setCallback;
+cc.MenuItem.prototype.setCallback = function (callback, target) {
+    this._setCallback(callback.bind(target));
+};
 
 //
 // MenuItemImage support sprite frame name as paramter

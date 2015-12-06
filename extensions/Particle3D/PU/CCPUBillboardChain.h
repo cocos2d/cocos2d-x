@@ -234,6 +234,8 @@ public:
     //void getWorldTransforms(Matrix4*) const;
     /// @copydoc MovableObject::visitRenderables
 
+    GLuint getTextureName();
+
 protected:
 
     /// Setup the STL collections
@@ -324,6 +326,8 @@ protected:
 
     std::vector<VertexInfo> _vertices;
     std::vector<unsigned short> _indices;
+
+    std::string            _texFile;
 };
 
 NS_CC_END

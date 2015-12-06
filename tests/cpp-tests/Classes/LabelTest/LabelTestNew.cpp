@@ -5,6 +5,7 @@
 
 USING_NS_CC;
 using namespace ui;
+using namespace extension;
 
 enum {
     kTagTileMap = 1,
@@ -88,6 +89,14 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue10688Test);
     ADD_TEST_CASE(LabelIssue13202Test);
     ADD_TEST_CASE(LabelIssue9500Test);
+    ADD_TEST_CASE(LabelWrapByWordTest);
+    ADD_TEST_CASE(LabelWrapByCharTest);
+    ADD_TEST_CASE(LabelShrinkByWordTest);
+    ADD_TEST_CASE(LabelShrinkByCharTest);
+    ADD_TEST_CASE(LabelResizeTest);
+    ADD_TEST_CASE(LabelToggleTypeTest);
+    ADD_TEST_CASE(LabelSystemFontTest);
+    ADD_TEST_CASE(LabelCharMapFontTest);
 };
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
@@ -488,6 +497,10 @@ LabelFNTGlyphDesigner::LabelFNTGlyphDesigner()
     addChild(layer, -10);
 
     auto label1 = Label::createWithBMFont("fonts/futura-48.fnt", "Testing Glyph Designer");
+    // Demo for reloadFontAtlasFNT function, after it been called, all UI widget
+    //  use the special font must reset font, because the old one is invalid.
+    FontAtlasCache::reloadFontAtlasFNT("fonts/futura-48.fnt");
+    label1->setBMFontFilePath("fonts/futura-48.fnt");
     addChild(label1);
     label1->setPosition(Vec2(winSize.width / 2, winSize.height * 0.4f));
 
@@ -924,6 +937,10 @@ LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
         label1->setPosition(Vec2(size.width * 0.1, size.height * 0.6));
         label1->setAnchorPoint(Vec2(0, 0.5));
         this->addChild(label1);
+        // Demo for unloadFontAtlasTTF function, after it been called, all UI widget
+        //  use the special font must reset font, because the old one is invalid.
+        FontAtlasCache::unloadFontAtlasTTF("fonts/HKYuanMini.ttf");
+        label1->setTTFConfig(ttfConfig);
     }
 
     auto label2 = Label::createWithTTF(ttfConfig,
@@ -2002,4 +2019,742 @@ std::string LabelIssue9500Test::title() const
 std::string LabelIssue9500Test::subtitle() const
 {
     return "Spaces should not be lost if label created with Fingerpop.ttf";
+}
+
+ControlStepper *LabelLayoutBaseTest::makeControlStepper()
+{
+    auto minusSprite       = Sprite::create("extensions/stepper-minus.png");
+    auto plusSprite        = Sprite::create("extensions/stepper-plus.png");
+    
+    return ControlStepper::create(minusSprite, plusSprite);
+}
+
+LabelLayoutBaseTest::LabelLayoutBaseTest()
+{
+    auto size = Director::getInstance()->getVisibleSize();
+    
+    this->initTestLabel(size);
+
+    this->initFontSizeChange(size);
+    this->initToggleLabelTypeOption(size);
+
+    this->initWrapOption(size);
+
+    this->initAlignmentOption(size);
+
+    this->initDrawNode(size);
+
+    this->initSliders(size);
+}
+
+void LabelLayoutBaseTest::initFontSizeChange(const cocos2d::Size& size)
+{
+    auto fontSizeLabel = Label::createWithSystemFont("font size:20", "Arial", 10);
+    fontSizeLabel->setName("fontSize");
+
+    ControlStepper *stepper   = this->makeControlStepper();
+    stepper->setPosition(size.width * 0.5 - stepper->getContentSize().width / 2,
+                         size.height * 0.8);
+    stepper->setValue(20);
+    stepper->addTargetWithActionForControlEvents(this,
+                                                 cccontrol_selector(LabelLayoutBaseTest::valueChanged),
+                                                 Control::EventType::VALUE_CHANGED);
+    this->addChild(stepper);
+    stepper->setName("stepper");
+    stepper->setScale(0.5);
+
+    fontSizeLabel->setPosition(stepper->getPosition() -
+                               Vec2(stepper->getContentSize().width/2  + fontSizeLabel->getContentSize().width/2,0));
+    this->addChild(fontSizeLabel);
+}
+
+void LabelLayoutBaseTest::initWrapOption(const cocos2d::Size& size)
+{
+    auto label = Label::createWithSystemFont("Enable Wrap:", "Arial", 10);
+    label->setColor(Color3B::WHITE);
+    label->setPosition(Vec2(size.width * 0.8f - 100, size.height * 0.8f));
+    this->addChild(label);
+
+    CheckBox* checkBox = CheckBox::create("cocosui/check_box_normal.png",
+                                          "cocosui/check_box_normal_press.png",
+                                          "cocosui/check_box_active.png",
+                                          "cocosui/check_box_normal_disable.png",
+                                          "cocosui/check_box_active_disable.png");
+    checkBox->setPosition(Vec2(size.width * 0.8f - 55, size.height * 0.8f));
+    checkBox->setScale(0.5);
+    checkBox->setSelected(true);
+    checkBox->setName("toggleWrap");
+
+    checkBox->addEventListener([=](Ref* ref, CheckBox::EventType event){
+        if (event == CheckBox::EventType::SELECTED) {
+            _label->enableWrap(true);
+        }else{
+            _label->enableWrap(false);
+        }
+        this->updateDrawNodeSize(_label->getContentSize());
+    });
+    this->addChild(checkBox);
+}
+
+void LabelLayoutBaseTest::initToggleLabelTypeOption(const cocos2d::Size& size)
+{
+    auto label = Label::createWithSystemFont("Toggle Label Type:", "Arial", 10);
+    label->setColor(Color3B::WHITE);
+    label->setPosition(Vec2(size.width * 0.8f + 15, size.height * 0.8f));
+    this->addChild(label);
+    
+    CheckBox* checkBox = CheckBox::create("cocosui/check_box_normal.png",
+                                          "cocosui/check_box_normal_press.png",
+                                          "cocosui/check_box_active.png",
+                                          "cocosui/check_box_normal_disable.png",
+                                          "cocosui/check_box_active_disable.png");
+    checkBox->setPosition(Vec2(size.width * 0.8f + 70, size.height * 0.8f));
+    checkBox->setScale(0.5);
+    checkBox->setName("toggleType");
+    checkBox->setSelected(true);
+
+   auto stepper = (ControlStepper*)this->getChildByName("stepper");
+
+    checkBox->addEventListener([=](Ref* ref, CheckBox::EventType event){
+       float fontSize = stepper->getValue();
+
+        if (event == CheckBox::EventType::SELECTED) {
+            _labelType = 0;
+            auto ttfConfig = _label->getTTFConfig();
+            ttfConfig.fontSize = fontSize;
+            _label->setTTFConfig(ttfConfig);
+        }else{
+            _labelType = 1;
+            _label->setBMFontFilePath("fonts/enligsh-chinese.fnt");
+            _label->setBMFontSize(fontSize);
+        }
+    });
+    this->addChild(checkBox);
+
+}
+
+void LabelLayoutBaseTest::initAlignmentOption(const cocos2d::Size& size)
+{
+    //add text alignment settings
+    MenuItemFont::setFontSize(30);
+    auto menu = Menu::create(
+        MenuItemFont::create("Left", CC_CALLBACK_1(LabelLayoutBaseTest::setAlignmentLeft, this)),
+        MenuItemFont::create("Center", CC_CALLBACK_1(LabelLayoutBaseTest::setAlignmentCenter, this)),
+        MenuItemFont::create("Right", CC_CALLBACK_1(LabelLayoutBaseTest::setAlignmentRight, this)),
+        nullptr);
+    menu->alignItemsVerticallyWithPadding(4);
+    menu->setPosition(Vec2(50, size.height / 2 - 20));
+    this->addChild(menu);
+
+    menu = Menu::create(
+        MenuItemFont::create("Top", CC_CALLBACK_1(LabelLayoutBaseTest::setAlignmentTop, this)),
+        MenuItemFont::create("Middle", CC_CALLBACK_1(LabelLayoutBaseTest::setAlignmentMiddle, this)),
+        MenuItemFont::create("Bottom", CC_CALLBACK_1(LabelLayoutBaseTest::setAlignmentBottom, this)),
+        nullptr);
+    menu->alignItemsVerticallyWithPadding(4);
+    menu->setPosition(Vec2(size.width - 50, size.height / 2 - 20));
+    this->addChild(menu);
+}
+
+void LabelLayoutBaseTest::initSliders(const cocos2d::Size& size)
+{
+    auto slider = ui::Slider::create();
+    slider->setTag(1);
+    slider->setTouchEnabled(true);
+    slider->loadBarTexture("cocosui/sliderTrack.png");
+    slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+    slider->setPosition(Vec2(size.width / 2.0f, size.height * 0.15f + slider->getContentSize().height * 2.0f - 5));
+    slider->setPercent(52);
+    addChild(slider);
+
+    auto slider2 = ui::Slider::create();
+    slider2->setTag(2);
+    slider2->setTouchEnabled(true);
+    slider2->loadBarTexture("cocosui/sliderTrack.png");
+    slider2->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider2->loadProgressBarTexture("cocosui/sliderProgress.png");
+    slider2->setPosition(Vec2(size.width * 0.2f, size.height / 2.0));
+    slider2->setRotation(90);
+    slider2->setPercent(52);
+    addChild(slider2);
+    auto winSize = Director::getInstance()->getVisibleSize();
+
+    slider->addEventListener([=](Ref* ref, Slider::EventType event){
+        float percent = slider->getPercent();
+        auto labelSize = _label->getContentSize();
+        auto drawNodeSize = Size(percent / 100.0 * winSize.width, labelSize.height);
+        if(drawNodeSize.width <=0){
+            drawNodeSize.width = 0.1f;
+        }
+        _label->setDimensions(drawNodeSize.width, drawNodeSize.height);
+        this->updateDrawNodeSize(drawNodeSize);
+    });
+
+    slider2->addEventListener([=](Ref* ref, Slider::EventType event){
+        float percent = slider2->getPercent();
+        auto labelSize = _label->getContentSize();
+        auto drawNodeSize = Size( labelSize.width, percent / 100.0 * winSize.height);
+        if(drawNodeSize.height <= 0){
+            drawNodeSize.height = 0.1f;
+        }
+        _label->setDimensions(drawNodeSize.width, drawNodeSize.height);
+        this->updateDrawNodeSize(drawNodeSize);
+    });
+}
+
+void LabelLayoutBaseTest::initTestLabel(const cocos2d::Size& size)
+{
+    auto center = VisibleRect::center();
+    _label = Label::createWithTTF("五六七八This is a very long sentence一二三四.", "fonts/HKYuanMini.ttf", 20);
+    _label->setDimensions(size.width/2, size.height/2);
+    _label->setPosition(center);
+    _label->setName("Label");
+    _label->setString("五六七八This is a very long sentence一二三.");
+    addChild(_label);
+    _labelType = 0;
+}
+
+void LabelLayoutBaseTest::initDrawNode(const cocos2d::Size& size)
+{
+    _drawNode = DrawNode::create();
+
+    _drawNode->setTag(3);
+    addChild(_drawNode);
+    this->updateDrawNodeSize(_label->getContentSize());
+}
+
+
+void LabelLayoutBaseTest::setAlignmentLeft(Ref* sender)
+{
+    _label->setHorizontalAlignment(TextHAlignment::LEFT);
+}
+
+void LabelLayoutBaseTest::setAlignmentCenter(Ref* sender)
+{
+    _label->setHorizontalAlignment(TextHAlignment::CENTER);
+}
+
+void LabelLayoutBaseTest::setAlignmentRight(Ref* sender)
+{
+    _label->setHorizontalAlignment(TextHAlignment::RIGHT);
+}
+
+void LabelLayoutBaseTest::setAlignmentTop(Ref* sender)
+{
+    _label->setVerticalAlignment(TextVAlignment::TOP);
+}
+
+void LabelLayoutBaseTest::setAlignmentMiddle(Ref* sender)
+{
+    _label->setVerticalAlignment(TextVAlignment::CENTER);
+}
+
+void LabelLayoutBaseTest::setAlignmentBottom(Ref* sender)
+{
+    _label->setVerticalAlignment(TextVAlignment::BOTTOM);
+}
+
+
+void LabelLayoutBaseTest::valueChanged(cocos2d::Ref *sender, cocos2d::extension::Control::EventType controlEvent)
+{
+    ControlStepper* pControl = (ControlStepper*)sender;
+    // Change value of label.
+    auto fontSizeLabel = (Label*)this->getChildByName("fontSize");
+    float fontSize = (float)pControl->getValue();
+    fontSizeLabel->setString(StringUtils::format("font size:%d", (int)fontSize));
+    
+    if (_labelType == 0) {
+        auto ttfConfig = _label->getTTFConfig();
+        ttfConfig.fontSize = fontSize;
+        _label->setTTFConfig(ttfConfig);
+    }else if(_labelType == 1){
+        _label->setBMFontSize(fontSize);
+    }
+    this->updateDrawNodeSize(_label->getContentSize());
+    
+    //FIXME::When calling getLetter, the label Overflow feature will be invalid.
+//    auto letterSprite = _label->getLetter(1);
+//    auto moveBy = ScaleBy::create(1.0,2.0);
+//    letterSprite->stopAllActions();
+//    letterSprite->runAction(Sequence::create(moveBy, moveBy->clone()->reverse(), nullptr ));
+//    
+//    CCLOG("label line height = %f", _label->getLineHeight());
+}
+
+void LabelLayoutBaseTest::updateDrawNodeSize(const cocos2d::Size &drawNodeSize)
+{
+    auto origin    = Director::getInstance()->getWinSize();
+    auto labelSize = _label->getContentSize();
+
+    origin.width = origin.width   / 2 - (labelSize.width / 2);
+    origin.height = origin.height / 2 - (labelSize.height / 2);
+
+    Vec2 vertices[4]=
+    {
+        Vec2(origin.width, origin.height),
+        Vec2(drawNodeSize.width + origin.width, origin.height),
+        Vec2(drawNodeSize.width + origin.width, drawNodeSize.height + origin.height),
+        Vec2(origin.width, drawNodeSize.height + origin.height)
+    };
+    _drawNode->clear();
+    _drawNode->drawLine(vertices[0], vertices[1], Color4F(1.0, 1.0, 1.0, 1.0));
+    _drawNode->drawLine(vertices[0], vertices[3], Color4F(1.0, 1.0, 1.0, 1.0));
+    _drawNode->drawLine(vertices[2], vertices[3], Color4F(1.0, 1.0, 1.0, 1.0));
+    _drawNode->drawLine(vertices[1], vertices[2], Color4F(1.0, 1.0, 1.0, 1.0));
+
+}
+
+LabelWrapByWordTest::LabelWrapByWordTest()
+{
+    _label->setLineSpacing(5);
+    _label->setAdditionalKerning(2);
+    _label->setVerticalAlignment(TextVAlignment::CENTER);
+    _label->setOverflow(Label::Overflow::CLAMP);
+
+}
+
+std::string LabelWrapByWordTest::title() const
+{
+    return "Clamp content Test: Word Wrap";
+}
+
+std::string LabelWrapByWordTest::subtitle() const
+{
+    return "";
+}
+
+LabelWrapByCharTest::LabelWrapByCharTest()
+{
+   _label->setLineBreakWithoutSpace(true);
+    _label->setString("五六七八This \nis a very long sentence一二三四.");
+    _label->setLineSpacing(5);
+    _label->setAdditionalKerning(2);
+    _label->setVerticalAlignment(TextVAlignment::TOP);
+    _label->setOverflow(Label::Overflow::CLAMP);
+
+}
+
+std::string LabelWrapByCharTest::title() const
+{
+    return "Clamp content Test: Char Wrap";
+}
+
+std::string LabelWrapByCharTest::subtitle() const
+{
+    return "";
+}
+
+LabelShrinkByWordTest::LabelShrinkByWordTest()
+{
+    _label->setLineSpacing(5);
+    _label->setAdditionalKerning(2);
+    _label->setString("This is  Hello World  hehe I love 一二三");
+    _label->setVerticalAlignment(TextVAlignment::TOP);
+    _label->setOverflow(Label::Overflow::SHRINK);
+}
+
+std::string LabelShrinkByWordTest::title() const
+{
+    return "Shrink content Test: Word Wrap";
+}
+
+std::string LabelShrinkByWordTest::subtitle() const
+{
+    return "";
+}
+
+LabelShrinkByCharTest::LabelShrinkByCharTest()
+{
+    _label->setLineSpacing(5);
+    _label->setAdditionalKerning(2);
+    _label->setLineBreakWithoutSpace(true);
+    _label->setString("This is  Hello World  hehe I love 一二三");
+    _label->setVerticalAlignment(TextVAlignment::CENTER);
+    _label->setOverflow(Label::Overflow::SHRINK);
+}
+
+std::string LabelShrinkByCharTest::title() const
+{
+    return "Shrink content Test: Char Wrap";
+}
+
+std::string LabelShrinkByCharTest::subtitle() const
+{
+    return "";
+}
+
+LabelResizeTest::LabelResizeTest()
+{
+    _label->setLineSpacing(5);
+    _label->setAdditionalKerning(2);
+    _label->setVerticalAlignment(TextVAlignment::TOP);
+    _label->setOverflow(Label::Overflow::RESIZE_HEIGHT);
+
+
+    this->updateDrawNodeSize(_label->getContentSize());
+
+    auto slider1 = (ui::Slider*)this->getChildByTag(1);
+
+     auto slider2 = (ui::Slider*)this->getChildByTag(2);
+     slider2->setVisible(false);
+    
+    auto winSize = Director::getInstance()->getVisibleSize();
+    slider1->addEventListener([=](Ref* ref, Slider::EventType event){
+        float percent = slider1->getPercent();
+        auto drawNodeSize = Size(percent / 100.0 * winSize.width,_label->getContentSize().height);
+        if(drawNodeSize.height <= 0){
+            drawNodeSize.height = 0.1f;
+        }
+        _label->setDimensions(drawNodeSize.width, drawNodeSize.height);
+        this->updateDrawNodeSize(drawNodeSize);
+    });
+
+    auto stepper = (ControlStepper*)this->getChildByName("stepper");
+    stepper->setValue(12);
+    
+    auto label = Label::createWithSystemFont("Char Line break:", "Arial", 10);
+    label->setColor(Color3B::WHITE);
+    label->setPosition(Vec2(winSize.width * 0.1f, winSize.height * 0.8f));
+    this->addChild(label);
+    
+    CheckBox* checkBox = CheckBox::create("cocosui/check_box_normal.png",
+                                          "cocosui/check_box_normal_press.png",
+                                          "cocosui/check_box_active.png",
+                                          "cocosui/check_box_normal_disable.png",
+                                          "cocosui/check_box_active_disable.png");
+    checkBox->setPosition(Vec2(winSize.width * 0.2f , winSize.height * 0.8f));
+    checkBox->setScale(0.5);
+    checkBox->setSelected(false);
+    checkBox->setName("LineBreak");
+    
+    checkBox->addEventListener([=](Ref* ref, CheckBox::EventType event){
+        if (event == CheckBox::EventType::SELECTED) {
+            _label->setLineBreakWithoutSpace(true);
+        }else{
+            _label->setLineBreakWithoutSpace(false);
+        }
+        this->updateDrawNodeSize(_label->getContentSize());
+    });
+    this->addChild(checkBox);
+
+}
+
+std::string LabelResizeTest::title() const
+{
+    return "Resize content Test";
+}
+
+std::string LabelResizeTest::subtitle() const
+{
+    return "";
+}
+
+LabelToggleTypeTest::LabelToggleTypeTest()
+{
+    _label->setLineSpacing(5);
+    _label->setAdditionalKerning(2);
+    _label->setVerticalAlignment(TextVAlignment::CENTER);
+    _label->setOverflow(Label::Overflow::NORMAL);
+
+
+    this->updateDrawNodeSize(_label->getContentSize());
+
+    auto slider1 = (ui::Slider*)this->getChildByTag(1);
+
+     auto slider2 = (ui::Slider*)this->getChildByTag(2);
+     slider2->setVisible(false);
+
+    auto winSize = Director::getInstance()->getVisibleSize();
+    slider1->addEventListener([=](Ref* ref, Slider::EventType event){
+        float percent = slider1->getPercent();
+        auto drawNodeSize = Size(percent / 100.0 * winSize.width,_label->getContentSize().height);
+        if(drawNodeSize.height <= 0){
+            drawNodeSize.height = 0.1f;
+        }
+        _label->setDimensions(drawNodeSize.width, drawNodeSize.height);
+        this->updateDrawNodeSize(drawNodeSize);
+    });
+
+    auto stepper = (ControlStepper*)this->getChildByName("stepper");
+    stepper->setValue(12);
+
+    auto label = Label::createWithSystemFont("Char Line break:", "Arial", 10);
+    label->setColor(Color3B::WHITE);
+    label->setPosition(Vec2(winSize.width * 0.1f, winSize.height * 0.8f));
+    this->addChild(label);
+
+    CheckBox* checkBox = CheckBox::create("cocosui/check_box_normal.png",
+                                          "cocosui/check_box_normal_press.png",
+                                          "cocosui/check_box_active.png",
+                                          "cocosui/check_box_normal_disable.png",
+                                          "cocosui/check_box_active_disable.png");
+    checkBox->setPosition(Vec2(winSize.width * 0.2f , winSize.height * 0.8f));
+    checkBox->setScale(0.5);
+    checkBox->setSelected(false);
+    checkBox->setName("LineBreak");
+
+    checkBox->addEventListener([=](Ref* ref, CheckBox::EventType event){
+        if (event == CheckBox::EventType::SELECTED) {
+            _label->setLineBreakWithoutSpace(true);
+        }else{
+            _label->setLineBreakWithoutSpace(false);
+        }
+        this->updateDrawNodeSize(_label->getContentSize());
+    });
+    this->addChild(checkBox);
+
+    this->initToggleCheckboxes();
+}
+
+void LabelToggleTypeTest::initToggleCheckboxes()
+{
+    const float BUTTON_WIDTH = 100;
+    float startPosX = 0;
+    Size winSize = Director::getInstance()->getVisibleSize();
+
+    // Create a radio button group
+    auto radioButtonGroup = RadioButtonGroup::create();
+    this->addChild(radioButtonGroup);
+
+    // Create the radio buttons
+    static const int NUMBER_OF_BUTTONS = 4;
+    startPosX = winSize.width / 2.0f - (NUMBER_OF_BUTTONS - 1 ) * 0.5 * BUTTON_WIDTH - 30;
+    std::vector<std::string> labelTypes = {"Normal", "Clamp", "Shrink", "RESIZE"};
+    
+    for(int i = 0; i < NUMBER_OF_BUTTONS; ++i)
+    {
+
+        RadioButton* radioButton = RadioButton::create("cocosui/radio_button_off.png", "cocosui/radio_button_on.png");
+        float posX = startPosX + BUTTON_WIDTH * i;
+        radioButton->setPosition(Vec2(posX, winSize.height / 2.0f + 70));
+        radioButton->setScale(1.2f);
+        radioButton->addEventListener(CC_CALLBACK_2(LabelToggleTypeTest::onChangedRadioButtonSelect, this));
+        radioButton->setTag(i);
+        radioButtonGroup->addRadioButton(radioButton);
+        this->addChild(radioButton);
+        
+        auto label = Label::createWithSystemFont(labelTypes.at(i), "Arial", 20);
+        label->setPosition(radioButton->getPosition() + Vec2(50,0));
+        this->addChild(label);
+    }
+}
+
+std::string LabelToggleTypeTest::title() const
+{
+    return "Toggle Label Type Test";
+}
+
+std::string LabelToggleTypeTest::subtitle() const
+{
+    return "";
+}
+
+
+void LabelToggleTypeTest::onChangedRadioButtonSelect(RadioButton* radioButton, RadioButton::EventType type)
+{
+    if(radioButton == nullptr)
+    {
+        return;
+    }
+    
+    switch (type)
+    {
+    case RadioButton::EventType::SELECTED:
+    {
+        switch (radioButton->getTag()) {
+            case 0:
+                _label->setOverflow(Label::Overflow::NORMAL);
+                break;
+            case 1:
+                _label->setOverflow(Label::Overflow::CLAMP);
+                break;
+            case 2:
+                _label->setOverflow(Label::Overflow::SHRINK);
+                break;
+            case 3:
+                _label->setOverflow(Label::Overflow::RESIZE_HEIGHT);
+                break;
+            default:
+                break;
+        }
+        break;
+    }
+    default:
+        break;
+    }
+    auto checkbox = (CheckBox*)(this->getChildByName("toggleWrap"));
+    checkbox->setSelected(_label->isWrapEnabled());
+    this->updateDrawNodeSize(_label->getContentSize());
+}
+
+LabelSystemFontTest::LabelSystemFontTest()
+{
+    _label->setLineSpacing(5);
+    _label->setVerticalAlignment(TextVAlignment::CENTER);
+   _label->setOverflow(Label::Overflow::NORMAL);
+   _label->setSystemFontName("Hiragino Sans GB");
+    
+    auto stepper = (ControlStepper*)this->getChildByName("stepper");
+    stepper->setEnabled(false);
+    
+    auto checkbox = (CheckBox*)(this->getChildByName("toggleType"));
+    checkbox->setEnabled(false);
+
+    this->updateDrawNodeSize(_label->getContentSize());
+
+    auto slider1 = (ui::Slider*)this->getChildByTag(1);
+
+     auto slider2 = (ui::Slider*)this->getChildByTag(2);
+     slider2->setVisible(false);
+
+    auto winSize = Director::getInstance()->getVisibleSize();
+    slider1->addEventListener([=](Ref* ref, Slider::EventType event){
+        float percent = slider1->getPercent();
+        auto drawNodeSize = Size(percent / 100.0 * winSize.width,_label->getContentSize().height);
+        if(drawNodeSize.height <= 0){
+            drawNodeSize.height = 0.1f;
+        }
+        _label->setDimensions(drawNodeSize.width, drawNodeSize.height);
+        this->updateDrawNodeSize(drawNodeSize);
+    });
+
+
+    auto label = Label::createWithSystemFont("char Line break:", "Arial", 10);
+    label->setColor(Color3B::WHITE);
+    label->setPosition(Vec2(winSize.width * 0.1f, winSize.height * 0.8f));
+    this->addChild(label);
+
+    CheckBox* checkBox = CheckBox::create("cocosui/check_box_normal.png",
+                                          "cocosui/check_box_normal_press.png",
+                                          "cocosui/check_box_active.png",
+                                          "cocosui/check_box_normal_disable.png",
+                                          "cocosui/check_box_active_disable.png");
+    checkBox->setPosition(Vec2(winSize.width * 0.2f , winSize.height * 0.8f));
+    checkBox->setScale(0.5);
+    checkBox->setSelected(false);
+    checkBox->setName("LineBreak");
+
+    checkBox->addEventListener([=](Ref* ref, CheckBox::EventType event){
+        if (event == CheckBox::EventType::SELECTED) {
+            _label->setLineBreakWithoutSpace(true);
+        }else{
+            _label->setLineBreakWithoutSpace(false);
+        }
+        this->updateDrawNodeSize(_label->getContentSize());
+    });
+    this->addChild(checkBox);
+
+    this->initToggleCheckboxes();
+}
+
+void LabelSystemFontTest::initToggleCheckboxes()
+{
+    const float BUTTON_WIDTH = 100;
+    float startPosX = 0;
+    Size winSize = Director::getInstance()->getVisibleSize();
+
+    // Create a radio button group
+    auto radioButtonGroup = RadioButtonGroup::create();
+    this->addChild(radioButtonGroup);
+
+    // Create the radio buttons
+    static const int NUMBER_OF_BUTTONS = 4;
+    startPosX = winSize.width / 2.0f - (NUMBER_OF_BUTTONS - 1 ) * 0.5 * BUTTON_WIDTH - 30;
+    std::vector<std::string> labelTypes = {"Normal", "Clamp", "Shrink", "RESIZE"};
+
+    for(int i = 0; i < NUMBER_OF_BUTTONS; ++i)
+    {
+
+        RadioButton* radioButton = RadioButton::create("cocosui/radio_button_off.png", "cocosui/radio_button_on.png");
+        float posX = startPosX + BUTTON_WIDTH * i;
+        radioButton->setPosition(Vec2(posX, winSize.height / 2.0f + 70));
+        radioButton->setScale(1.2f);
+        radioButton->addEventListener(CC_CALLBACK_2(LabelSystemFontTest::onChangedRadioButtonSelect, this));
+        radioButton->setTag(i);
+        radioButtonGroup->addRadioButton(radioButton);
+        this->addChild(radioButton);
+
+        auto label = Label::createWithSystemFont(labelTypes.at(i), "Arial", 20);
+        label->setPosition(radioButton->getPosition() + Vec2(50,0));
+        this->addChild(label);
+    }
+}
+
+std::string LabelSystemFontTest::title() const
+{
+    return "System Font Test";
+}
+
+std::string LabelSystemFontTest::subtitle() const
+{
+    return "";
+}
+
+
+void LabelSystemFontTest::onChangedRadioButtonSelect(RadioButton* radioButton, RadioButton::EventType type)
+{
+    if(radioButton == nullptr)
+    {
+        return;
+    }
+
+    switch (type)
+    {
+    case RadioButton::EventType::SELECTED:
+    {
+        switch (radioButton->getTag()) {
+            case 0:
+                _label->setOverflow(Label::Overflow::NORMAL);
+                break;
+            case 1:
+                _label->setOverflow(Label::Overflow::CLAMP);
+                break;
+            case 2:
+                _label->setOverflow(Label::Overflow::SHRINK);
+                break;
+            case 3:
+                _label->setOverflow(Label::Overflow::RESIZE_HEIGHT);
+                break;
+            default:
+                break;
+        }
+        break;
+    }
+    default:
+        break;
+    }
+    auto checkbox = (CheckBox*)(this->getChildByName("toggleWrap"));
+    checkbox->setSelected(_label->isWrapEnabled());
+    this->updateDrawNodeSize(_label->getContentSize());
+}
+
+LabelCharMapFontTest::LabelCharMapFontTest()
+{
+    _label->setLineSpacing(5);
+    _label->setVerticalAlignment(TextVAlignment::CENTER);
+    _label->setOverflow(Label::Overflow::NORMAL);
+    _label->setCharMap("fonts/tuffy_bold_italic-charmap.plist");
+    _label->setString("Hello World, This is a char map test.");
+    _label->setScale(0.5f);
+
+    auto stepper = (ControlStepper*)this->getChildByName("stepper");
+    stepper->setEnabled(false);
+
+    auto checkbox = (CheckBox*)(this->getChildByName("toggleType"));
+    checkbox->setEnabled(false);
+
+    this->updateDrawNodeSize(_label->getContentSize());
+
+}
+
+
+std::string LabelCharMapFontTest::title() const
+{
+    return "CharMap Font Test";
+}
+
+std::string LabelCharMapFontTest::subtitle() const
+{
+    return "";
 }

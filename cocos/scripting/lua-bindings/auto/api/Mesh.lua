@@ -5,20 +5,6 @@
 -- @parent_module cc
 
 --------------------------------
--- @overload self, cc.Texture2D         
--- @overload self, string         
--- @function [parent=#Mesh] setTexture
--- @param self
--- @param #string texPath
--- @return Mesh#Mesh self (return value: cc.Mesh)
-
---------------------------------
--- 
--- @function [parent=#Mesh] getTexture 
--- @param self
--- @return Texture2D#Texture2D ret (return value: cc.Texture2D)
-        
---------------------------------
 --  Returns the Material being used by the Mesh 
 -- @function [parent=#Mesh] getMaterial 
 -- @param self
@@ -29,6 +15,12 @@
 -- @function [parent=#Mesh] getVertexSizeInBytes 
 -- @param self
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+-- check texture each frame? 
+-- @function [parent=#Mesh] enableCheckTexture 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  Sets a new Material to the Mesh 
@@ -84,6 +76,12 @@
 -- @return Mesh#Mesh self (return value: cc.Mesh)
         
 --------------------------------
+-- check texture
+-- @function [parent=#Mesh] checkTexture 
+-- @param self
+-- @return Mesh#Mesh self (return value: cc.Mesh)
+        
+--------------------------------
 -- Mesh index data setter
 -- @function [parent=#Mesh] setMeshIndexData 
 -- @param self
@@ -115,6 +113,13 @@
 -- @function [parent=#Mesh] setSkin 
 -- @param self
 -- @param #cc.MeshSkin skin
+-- @return Mesh#Mesh self (return value: cc.Mesh)
+        
+--------------------------------
+-- set enable check texture, check texture each frame if eanble is true. It is false by default
+-- @function [parent=#Mesh] setEnableCheckTexture 
+-- @param self
+-- @param #bool enableCheckTexture
 -- @return Mesh#Mesh self (return value: cc.Mesh)
         
 --------------------------------

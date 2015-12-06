@@ -96,7 +96,7 @@ public:
     /** Create a Value by a ValueMapIntKey object. It will use std::move internally. */
     explicit Value(ValueMapIntKey&& v);
 
-    /** Create a Value by anthoer Value object. */
+    /** Create a Value by another Value object. */
     Value(const Value& other);
     /** Create a Value by a Value object. It will use std::move internally. */
     Value(Value&& other);

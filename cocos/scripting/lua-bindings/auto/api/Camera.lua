@@ -60,6 +60,12 @@
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
+-- 
+-- @function [parent=#Camera] isBrushValid 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Get object depth towards camera
 -- @function [parent=#Camera] getDepthInView 
 -- @param self

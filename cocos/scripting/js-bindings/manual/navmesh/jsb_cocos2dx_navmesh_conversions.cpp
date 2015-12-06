@@ -84,8 +84,10 @@ jsval offMeshLinkData_to_jsval(JSContext* cx, const cocos2d::OffMeshLinkData& v)
     JS::RootedObject parent(cx);
     JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
     if (!tmp) return JSVAL_NULL;
-    bool ok = JS_DefineProperty(cx, tmp, "startPosition", JS::RootedValue(cx, vector3_to_jsval(cx, v.startPosition)), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "endPosition", JS::RootedValue(cx, vector3_to_jsval(cx, v.endPosition)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS::RootedValue jsstartPos(cx, vector3_to_jsval(cx, v.startPosition));
+    JS::RootedValue jsendPos(cx, vector3_to_jsval(cx, v.endPosition));
+    bool ok = JS_DefineProperty(cx, tmp, "startPosition", jsstartPos, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "endPosition", jsendPos, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }

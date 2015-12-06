@@ -406,6 +406,11 @@ public:
     /** Get a shader program from the texture.*/
     GLProgram* getGLProgram() const;
 
+    /** Set if the texture is valid, when it been set as false, it will display as default "file missing texture" */
+    void setValid(bool valid) { _valid = valid; }
+
+    bool isValid() const { return _valid; }
+    std::string getPath()const { return _filePath; }
 
 public:
     /** Get pixel info map, the key-value pairs is PixelFormat and PixelFormatInfo.*/
@@ -540,6 +545,9 @@ protected:
     friend class SpriteFrameCache;
     friend class TextureCache;
     friend class ui::Scale9Sprite;
+
+    bool _valid;
+    std::string _filePath;
 };
 
 

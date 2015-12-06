@@ -57,6 +57,7 @@ THE SOFTWARE.
 #include "ui/UIScale9Sprite.h"
 #include "ui/UIEditBox/UIEditBox.h"
 #include "ui/UILayoutComponent.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 /**
  * @addtogroup ui

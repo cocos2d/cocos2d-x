@@ -130,6 +130,10 @@ var S9BatchNodeBasic = S9SpriteTestDemo.extend({
         cc.log("this..addChild");
 
         cc.log("... S9BatchNodeBasic done.");
+
+        var moveBy = cc.moveBy(1, cc.p(80, 80));
+        var moveByBack = moveBy.reverse();
+        blocks.runAction(cc.sequence(moveBy,moveByBack));
     }
 });
 
@@ -159,6 +163,10 @@ var S9FrameNameSpriteSheet = S9SpriteTestDemo.extend({
         cc.log("this..addChild");
 
         cc.log("... S9FrameNameSpriteSheet done.");
+
+        var moveBy = cc.moveBy(1, cc.p(80, 80));
+        var moveByBack = moveBy.reverse();
+        blocks.runAction(cc.sequence(moveBy,moveByBack));
     }
 });
 
@@ -570,6 +578,36 @@ var S9SpriteColorOpacityTest = S9SpriteTestDemo.extend({
     }
 });
 
+var S9SpriteOpacityWithFadeActionsTest = S9SpriteTestDemo.extend({
+    _title:"Test opacity cascade for Scale9Sprite with fade actions\n(fade to opacity 144, then fadeOut, then fadeIn)",
+
+    ctor:function() {
+        this._super();
+
+        var colorLayer = new cc.LayerColor(cc.color(144,144,144));
+        colorLayer.setContentSize(winSize.width / 2, winSize.height / 2);
+        colorLayer.x = winSize.width / 4;
+        colorLayer.y = winSize.height / 4;
+
+        colorLayer.setCascadeOpacityEnabled(true);
+
+        var blocks = new ccui.Scale9Sprite('blocks9.png');
+        blocks.x = winSize.width / 4;
+        blocks.y = winSize.height / 4;
+
+        colorLayer.addChild(blocks);
+
+        var fadeToAction = cc.fadeTo(1, 144);
+        var delay = cc.delayTime(0.5);
+        var fadeOutAction = cc.fadeOut(0.8);
+        var fadeInAction = cc.fadeIn(0.8);
+
+        colorLayer.runAction(cc.sequence(fadeToAction, delay, fadeOutAction, delay.clone(), fadeInAction));
+
+        this.addChild(colorLayer);
+    }
+});
+
 var S9SpriteTestScene = TestScene.extend({
     runThisTest:function (num) {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;
@@ -598,7 +636,8 @@ var arrayOfS9SpriteTest = [
     S9FrameNameSpriteSheetRotatedInsetsScaled,
     S9_TexturePacker,
     S9SpriteActionTest,
-    S9SpriteColorOpacityTest
+    S9SpriteColorOpacityTest,
+    S9SpriteOpacityWithFadeActionsTest
 ];
 
 var nextS9SpriteTest = function () {

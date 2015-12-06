@@ -94,7 +94,7 @@ private:
     void _setHttpRequestHeader();
     void _setHttpRequestData(const char *data, size_t len);
     void _sendRequest(JSContext *cx);
-    void _notify(JSObject * callback);
+    void _notify(JS::HandleObject callback);
     
     std::string                       _url;
     JSContext*                        _cx;
@@ -102,15 +102,15 @@ private:
     std::string                       _type;
     char*                             _data;
     uint32_t                          _dataSize;
-    JS::Heap<JSObject*>               _onloadstartCallback;
-    JS::Heap<JSObject*>               _onabortCallback;
-    JS::Heap<JSObject*>               _onerrorCallback;
-    JS::Heap<JSObject*>               _onloadCallback;
-    JS::Heap<JSObject*>               _onloadendCallback;
-    JS::Heap<JSObject*>               _ontimeoutCallback;
-    JS::Heap<JSObject*>               _onreadystateCallback;
+    mozilla::Maybe<JS::PersistentRootedObject> _onloadstartCallback;
+    mozilla::Maybe<JS::PersistentRootedObject> _onabortCallback;
+    mozilla::Maybe<JS::PersistentRootedObject> _onerrorCallback;
+    mozilla::Maybe<JS::PersistentRootedObject> _onloadCallback;
+    mozilla::Maybe<JS::PersistentRootedObject> _onloadendCallback;
+    mozilla::Maybe<JS::PersistentRootedObject> _ontimeoutCallback;
+    mozilla::Maybe<JS::PersistentRootedObject> _onreadystateCallback;
     int                               _readyState;
-    int                               _status;
+    long                              _status;
     std::string                       _statusText;
     ResponseType                      _responseType;
     unsigned long long                _timeout;

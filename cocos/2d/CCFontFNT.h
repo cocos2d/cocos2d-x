@@ -46,7 +46,11 @@ public:
     static void purgeCachedData();
     virtual int* getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
     virtual FontAtlas *createFontAtlas() override;
-    
+    void setFontSize(float fontSize);
+    int getOriginalFontSize()const;
+
+    static void reloadBMFontResource(const std::string& fntFilePath);
+
 protected:
     
     FontFNT(BMFontConfiguration *theContfig, const Vec2& imageOffset = Vec2::ZERO);
@@ -62,7 +66,8 @@ private:
     
     BMFontConfiguration * _configuration;
     Vec2                   _imageOffset;
-    
+    //User defined font size
+    float  _fontSize;
 };
 
 /// @endcond

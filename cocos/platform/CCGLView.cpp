@@ -319,9 +319,16 @@ void GLView::handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[])
 
 void GLView::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[])
 {
+    handleTouchesMove(num, ids, xs, ys, nullptr, nullptr);
+}
+
+void GLView::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[], float fs[], float ms[])
+{
     intptr_t id = 0;
     float x = 0.0f;
     float y = 0.0f;
+    float force = 0.0f;
+    float maxForce = 0.0f;
     EventTouch touchEvent;
     
     for (int i = 0; i < num; ++i)
@@ -329,6 +336,8 @@ void GLView::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[])
         id = ids[i];
         x = xs[i];
         y = ys[i];
+        force = fs ? fs[i] : 0.0f;
+        maxForce = ms ? ms[i] : 0.0f;
 
         auto iter = g_touchIdReorderMap.find(id);
         if (iter == g_touchIdReorderMap.end())
@@ -337,12 +346,12 @@ void GLView::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[])
             continue;
         }
 
-        CCLOGINFO("Moving touches with id: %d, x=%f, y=%f", id, x, y);
+        CCLOGINFO("Moving touches with id: %d, x=%f, y=%f, force=%f, maxFource=%f", id, x, y, force, maxForce);
         Touch* touch = g_touches[iter->second];
         if (touch)
         {
             touch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX,
-                                (y - _viewPortRect.origin.y) / _scaleY);
+                                (y - _viewPortRect.origin.y) / _scaleY, force, maxForce);
             
             touchEvent._touches.push_back(touch);
         }
