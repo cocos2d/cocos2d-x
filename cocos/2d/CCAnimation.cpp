@@ -82,7 +82,7 @@ AnimationFrame* AnimationFrame::clone() const
 
 // implementation of Animation
 
-Animation* Animation::create(void)
+Animation* Animation::create()
 {
     Animation *animation = new (std::nothrow) Animation();
     animation->init();

@@ -437,7 +437,7 @@ public:
 
 protected:
     GLProgramState();
-    ~GLProgramState();
+    virtual ~GLProgramState();
     bool init(GLProgram* program);
     void resetGLProgram();
     void updateUniformsAndAttributes();

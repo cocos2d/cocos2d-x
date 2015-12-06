@@ -558,6 +558,14 @@ void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
 void jsb_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, cocos2d::Ref* ref, const char* debug);
 
 /**
+ * Generic initialization function for subclasses of Ref.
+ * Similar to jsb_ref_init(), but call it if you know that Ref has been autoreleased
+ * This function should never be called. It is only added as way to fix
+ * an issue with the static auto-bindings with the "create" function
+ */
+void jsb_ref_autoreleased_init(JSContext* cx, JS::Heap<JSObject*> *obj, cocos2d::Ref* ref, const char* debug);
+
+/**
  * Generic finalize used by objects that are subclass of Ref
  */
 void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj);
@@ -572,6 +580,22 @@ void jsb_ref_rebind(JSContext* cx, JS::HandleObject jsobj, js_proxy_t *js2native
  Creates a new JSObject of a certain type (typeClass) and creates a proxy associated with and the Ref
  */
 JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+
+/**
+ * Creates a new JSObject of a certain type (typeClass) and creates a proxy associated with and the Ref
+ * Similar to jsb_ref_create_jsobject(), but call it if you know that Ref has been autoreleased
+ * This function should never be called. It is only added as way to fix
+ * an issue with the static auto-bindings with the "create" function
+ */
+JSObject* jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+
+
+/**
+ It will try to get the associated JSObjct for ref.
+ If it can't find it, it will create a new one associating it to Ref
+ */
+JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+
 
 template <class T>
 jsval getJSObject(JSContext* cx, T* nativeObj)
