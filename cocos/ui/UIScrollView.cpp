@@ -960,7 +960,8 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
         Layout::interceptTouchEvent(event, sender, touch);
         return;
     }
-
+    if(_direction == Direction::NONE)
+        return;
     Vec2 touchPoint = touch->getLocation();
     switch (event)
     {
