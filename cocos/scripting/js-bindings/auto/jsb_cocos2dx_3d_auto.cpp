@@ -609,17 +609,10 @@ bool js_cocos2dx_3d_Animate3D_createWithFrames(JSContext *cx, uint32_t argc, jsv
         ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_createWithFrames : Error processing arguments");
 
-        cocos2d::Animate3D* ret = cocos2d::Animate3D::createWithFrames(arg0, arg1, arg2);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Animate3D>(cx, (cocos2d::Animate3D*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
+        auto ret = cocos2d::Animate3D::createWithFrames(arg0, arg1, arg2);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Animate3D>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::Animate3D"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
     if (argc == 4) {
@@ -641,17 +634,10 @@ bool js_cocos2dx_3d_Animate3D_createWithFrames(JSContext *cx, uint32_t argc, jsv
         ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_createWithFrames : Error processing arguments");
 
-        cocos2d::Animate3D* ret = cocos2d::Animate3D::createWithFrames(arg0, arg1, arg2, arg3);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Animate3D>(cx, (cocos2d::Animate3D*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
+        auto ret = cocos2d::Animate3D::createWithFrames(arg0, arg1, arg2, arg3);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Animate3D>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::Animate3D"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
     JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_createWithFrames : wrong number of arguments");
@@ -1147,17 +1133,10 @@ bool js_cocos2dx_3d_BillBoard_createWithTexture(JSContext *cx, uint32_t argc, js
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_BillBoard_createWithTexture : Error processing arguments");
 
-        cocos2d::BillBoard* ret = cocos2d::BillBoard::createWithTexture(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::BillBoard>(cx, (cocos2d::BillBoard*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
+        auto ret = cocos2d::BillBoard::createWithTexture(arg0);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::BillBoard>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::BillBoard"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
     if (argc == 2) {
@@ -1175,17 +1154,10 @@ bool js_cocos2dx_3d_BillBoard_createWithTexture(JSContext *cx, uint32_t argc, js
         ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_BillBoard_createWithTexture : Error processing arguments");
 
-        cocos2d::BillBoard* ret = cocos2d::BillBoard::createWithTexture(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::BillBoard>(cx, (cocos2d::BillBoard*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
+        auto ret = cocos2d::BillBoard::createWithTexture(arg0, arg1);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::BillBoard>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::BillBoard"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
     JS_ReportError(cx, "js_cocos2dx_3d_BillBoard_createWithTexture : wrong number of arguments");

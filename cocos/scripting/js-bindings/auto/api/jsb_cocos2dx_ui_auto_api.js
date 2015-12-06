@@ -1313,16 +1313,6 @@ create : function (
 },
 
 /**
- * @method createInstance
- * @return {cc.Ref}
- */
-createInstance : function (
-)
-{
-    return cc.Ref;
-},
-
-/**
  * @method Layout
  * @constructor
  */
@@ -1743,16 +1733,6 @@ texturerestype
 },
 
 /**
- * @method createInstance
- * @return {cc.Ref}
- */
-createInstance : function (
-)
-{
-    return cc.Ref;
-},
-
-/**
  * @method Button
  * @constructor
  */
@@ -2050,16 +2030,6 @@ texturerestype
 },
 
 /**
- * @method createInstance
- * @return {cc.Ref}
- */
-createInstance : function (
-)
-{
-    return cc.Ref;
-},
-
-/**
  * @method CheckBox
  * @constructor
  */
@@ -2105,16 +2075,6 @@ texturerestype
 )
 {
     return ccui.RadioButton;
-},
-
-/**
- * @method createInstance
- * @return {cc.Ref}
- */
-createInstance : function (
-)
-{
-    return cc.Ref;
 },
 
 /**
@@ -2367,16 +2327,6 @@ texturerestype
 )
 {
     return ccui.ImageView;
-},
-
-/**
- * @method createInstance
- * @return {cc.Ref}
- */
-createInstance : function (
-)
-{
-    return cc.Ref;
 },
 
 /**
@@ -2658,16 +2608,6 @@ float
 },
 
 /**
- * @method createInstance
- * @return {cc.Ref}
- */
-createInstance : function (
-)
-{
-    return cc.Ref;
-},
-
-/**
  * @method Text
  * @constructor
  */
@@ -2767,16 +2707,6 @@ str
 )
 {
     return ccui.TextAtlas;
-},
-
-/**
- * @method createInstance
- * @return {cc.Ref}
- */
-createInstance : function (
-)
-{
-    return cc.Ref;
 },
 
 /**
@@ -2911,16 +2841,6 @@ float
 )
 {
     return ccui.LoadingBar;
-},
-
-/**
- * @method createInstance
- * @return {cc.Ref}
- */
-createInstance : function (
-)
-{
-    return cc.Ref;
 },
 
 /**
@@ -3472,16 +3392,6 @@ create : function (
 },
 
 /**
- * @method createInstance
- * @return {cc.Ref}
- */
-createInstance : function (
-)
-{
-    return cc.Ref;
-},
-
-/**
  * @method ScrollView
  * @constructor
  */
@@ -3824,16 +3734,6 @@ create : function (
 },
 
 /**
- * @method createInstance
- * @return {cc.Ref}
- */
-createInstance : function (
-)
-{
-    return cc.Ref;
-},
-
-/**
  * @method ListView
  * @constructor
  */
@@ -4129,16 +4029,6 @@ texturerestype
 )
 {
     return ccui.Slider;
-},
-
-/**
- * @method createInstance
- * @return {cc.Ref}
- */
-createInstance : function (
-)
-{
-    return cc.Ref;
 },
 
 /**
@@ -4874,16 +4764,6 @@ int
 },
 
 /**
- * @method createInstance
- * @return {cc.Ref}
- */
-createInstance : function (
-)
-{
-    return cc.Ref;
-},
-
-/**
  * @method TextField
  * @constructor
  */
@@ -4961,16 +4841,6 @@ str
 )
 {
     return ccui.TextBMFont;
-},
-
-/**
- * @method createInstance
- * @return {cc.Ref}
- */
-createInstance : function (
-)
-{
-    return cc.Ref;
 },
 
 /**
@@ -5197,16 +5067,6 @@ create : function (
 )
 {
     return ccui.PageView;
-},
-
-/**
- * @method createInstance
- * @return {cc.Ref}
- */
-createInstance : function (
-)
-{
-    return cc.Ref;
 },
 
 /**

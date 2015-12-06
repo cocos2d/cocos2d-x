@@ -200,17 +200,10 @@ bool js_cocos2dx_physics3d_Physics3DShape_createBox(JSContext *cx, uint32_t argc
         ok &= jsval_to_vector3(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DShape_createBox : Error processing arguments");
 
-        cocos2d::Physics3DShape* ret = cocos2d::Physics3DShape::createBox(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DShape>(cx, (cocos2d::Physics3DShape*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
+        auto ret = cocos2d::Physics3DShape::createBox(arg0);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Physics3DShape>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::Physics3DShape"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
     JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DShape_createBox : wrong number of arguments");
@@ -228,17 +221,10 @@ bool js_cocos2dx_physics3d_Physics3DShape_createCylinder(JSContext *cx, uint32_t
         ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DShape_createCylinder : Error processing arguments");
 
-        cocos2d::Physics3DShape* ret = cocos2d::Physics3DShape::createCylinder(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DShape>(cx, (cocos2d::Physics3DShape*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
+        auto ret = cocos2d::Physics3DShape::createCylinder(arg0, arg1);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Physics3DShape>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::Physics3DShape"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
     JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DShape_createCylinder : wrong number of arguments");
@@ -264,17 +250,10 @@ bool js_cocos2dx_physics3d_Physics3DShape_createConvexHull(JSContext *cx, uint32
         ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DShape_createConvexHull : Error processing arguments");
 
-        cocos2d::Physics3DShape* ret = cocos2d::Physics3DShape::createConvexHull(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DShape>(cx, (cocos2d::Physics3DShape*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
+        auto ret = cocos2d::Physics3DShape::createConvexHull(arg0, arg1);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Physics3DShape>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::Physics3DShape"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
     JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DShape_createConvexHull : wrong number of arguments");
@@ -292,17 +271,10 @@ bool js_cocos2dx_physics3d_Physics3DShape_createCapsule(JSContext *cx, uint32_t 
         ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DShape_createCapsule : Error processing arguments");
 
-        cocos2d::Physics3DShape* ret = cocos2d::Physics3DShape::createCapsule(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DShape>(cx, (cocos2d::Physics3DShape*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
+        auto ret = cocos2d::Physics3DShape::createCapsule(arg0, arg1);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Physics3DShape>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::Physics3DShape"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
     JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DShape_createCapsule : wrong number of arguments");
@@ -318,17 +290,10 @@ bool js_cocos2dx_physics3d_Physics3DShape_createSphere(JSContext *cx, uint32_t a
         ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DShape_createSphere : Error processing arguments");
 
-        cocos2d::Physics3DShape* ret = cocos2d::Physics3DShape::createSphere(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DShape>(cx, (cocos2d::Physics3DShape*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
+        auto ret = cocos2d::Physics3DShape::createSphere(arg0);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Physics3DShape>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::Physics3DShape"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
     JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DShape_createSphere : wrong number of arguments");
