@@ -36,6 +36,7 @@ NS_CC_BEGIN
 
 class Label;
 class SpriteFrame;
+struct CC_DLL ResouceData;
 
 namespace ui{
 
@@ -296,6 +297,14 @@ public:
      */
     Scale9Sprite* getRendererDisabled() const { return _buttonDisabledRenderer; }
 
+    void resetNormalRender();
+    void resetPressedRender();
+    void resetDisabledRender();
+
+    ResouceData getNormalFile();
+    ResouceData getPressedFile();
+    ResouceData getDisabledFile();
+
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     virtual bool init(const std::string& normalImage,
@@ -313,11 +322,11 @@ protected:
     virtual void onSizeChanged() override;
 
     void loadTextureNormal(SpriteFrame* normalSpriteFrame);
-    void setupNormalTexture();
+    void setupNormalTexture(bool textureLoaded);
     void loadTexturePressed(SpriteFrame* pressedSpriteFrame);
-    void setupPressedTexture();
+    void setupPressedTexture(bool textureLoaded);
     void loadTextureDisabled(SpriteFrame* disabledSpriteFrame);
-    void setupDisabledTexture();
+    void setupDisabledTexture(bool textureLoaded);
 
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
@@ -363,6 +372,13 @@ protected:
     bool _pressedTextureAdaptDirty;
     bool _disabledTextureAdaptDirty;
 
+    std::string _normalFileName;
+    std::string _clickedFileName;
+    std::string _disabledFileName;
+    TextureResType _normalTexType;
+    TextureResType _pressedTexType;
+    TextureResType _disabledTexType;
+
 private:
     enum class FontType
     {
@@ -373,6 +389,7 @@ private:
 
     int _fontSize;
     FontType _type;
+    std::string _fontName;
 };
 
 }

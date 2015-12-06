@@ -264,7 +264,7 @@ static keyCodeItem g_keyCodeStructArray[] = {
 //////////////////////////////////////////////////////////////////////////
 
 
-GLViewImpl::GLViewImpl()
+GLViewImpl::GLViewImpl(bool initglfw)
 : _captured(false)
 , _supportTouch(false)
 , _isInRetinaMonitor(false)
@@ -284,9 +284,11 @@ GLViewImpl::GLViewImpl()
     }
 
     GLFWEventHandler::setGLViewImpl(this);
-
-    glfwSetErrorCallback(GLFWEventHandler::onGLFWError);
-    glfwInit();
+    if (initglfw)
+    {
+        glfwSetErrorCallback(GLFWEventHandler::onGLFWError);
+        glfwInit();
+    }
 }
 
 GLViewImpl::~GLViewImpl()

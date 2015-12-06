@@ -499,8 +499,8 @@ bool js_cocos2dx_DrawNode3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
     // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject proto(cx, typeClass->proto.ref());
+    JS::RootedObject parent(cx, typeClass->parentProto.ref());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
     args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
@@ -557,32 +557,20 @@ void js_register_cocos2dx_DrawNode3D(JSContext *cx, JS::HandleObject global) {
         JS_FS_END
     };
 
-    jsb_cocos2d_DrawNode3D_prototype = JS_InitClass(
+    JS::RootedObject parentProto(cx, jsb_cocos2d_Node_prototype);
+    JS::RootedObject proto(cx, JS_InitClass(
         cx, global,
-        JS::RootedObject(cx, jsb_cocos2d_Node_prototype),
+        parentProto,
         jsb_cocos2d_DrawNode3D_class,
         js_cocos2dx_DrawNode3D_constructor, 0, // constructor
         properties,
         funcs,
         NULL, // no static properties
-        st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "DrawNode3D", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
-
+        st_funcs));
+    
+    jsb_cocos2d_DrawNode3D_prototype = proto.get();
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::DrawNode3D> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_DrawNode3D_class;
-        p->proto = jsb_cocos2d_DrawNode3D_prototype;
-        p->parentProto = jsb_cocos2d_Node_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    jsb_register_class<cocos2d::DrawNode3D>(cx, jsb_cocos2d_DrawNode3D_class, proto, parentProto);
 }
 
 void register_DrawNode3D_bindings(JSContext *cx, JS::HandleObject global)

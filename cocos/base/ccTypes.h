@@ -556,7 +556,7 @@ public:
     TextHAlignment        _alignment;
     /// vertical alignment
     TextVAlignment _vertAlignment;
-    /// renering box
+    /// rendering box
     Size                  _dimensions;
     /// font color
     Color3B               _fontFillColor;

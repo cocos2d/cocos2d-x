@@ -8,7 +8,7 @@
 		<false/>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>tools.itharbors.com</key>
+			<key>cocos2d-x.org</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>
 				<true/>

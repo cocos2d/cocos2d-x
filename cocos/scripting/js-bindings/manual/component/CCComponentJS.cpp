@@ -61,10 +61,10 @@ ComponentJS::ComponentJS(const std::string& scriptFileName)
     
     if (_succeedLoadingScript)
     {
-        JSObject* classObj = classValue.toObjectOrNull();
+        JS::RootedObject classObj(cx, classValue.toObjectOrNull());
         const JSClass* theClass = JS_GetClass(classObj);
         JS::RootedValue protoValue(cx);
-        JS_GetProperty(cx, JS::RootedObject(cx, classObj), "prototype", &protoValue);
+        JS_GetProperty(cx, classObj, "prototype", &protoValue);
         
         TypeTest<ComponentJS> t;
         js_type_class_t *typeClass = nullptr;
@@ -76,16 +76,17 @@ ComponentJS::ComponentJS(const std::string& scriptFileName)
         mozilla::Maybe<JS::PersistentRootedObject> *jsObj = new mozilla::Maybe<JS::PersistentRootedObject>();
         
         JS::RootedObject proto(cx, protoValue.toObjectOrNull());
-        JS::RootedObject parent(cx, typeClass->proto.get());
+        JS::RootedObject parent(cx, typeClass->proto.ref());
         jsObj->construct(cx);
-        jsObj->ref() = JS_NewObject(cx, theClass, proto, parent);
+        JS::RootedObject obj(cx, JS_NewObject(cx, theClass, proto, parent));
+        jsObj->ref() = obj;
         
         // Unbind current proxy binding
         js_proxy_t* jsproxy = js_get_or_create_proxy<ComponentJS>(cx, this);
         JS::RemoveObjectRoot(cx, &jsproxy->obj);
         jsb_remove_proxy(jsb_get_native_proxy(this), jsproxy);
         // link the native object with the javascript object
-        jsb_new_proxy(this, jsObj->ref().get());
+        jsb_new_proxy(this, jsObj->ref());
         
         _jsObj = jsObj;
     }
@@ -94,7 +95,7 @@ ComponentJS::ComponentJS(const std::string& scriptFileName)
 ComponentJS::~ComponentJS()
 {
     mozilla::Maybe<JS::PersistentRootedObject>* jsObj = static_cast<mozilla::Maybe<JS::PersistentRootedObject>*>(_jsObj);
-    if (jsObj == nullptr)
+    if (jsObj != nullptr)
     {
         delete jsObj;
     }

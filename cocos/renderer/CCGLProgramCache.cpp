@@ -61,6 +61,8 @@ enum {
     kShaderType_3DPositionNormal,
     kShaderType_3DPositionNormalTex,
     kShaderType_3DSkinPositionNormalTex,
+    kShaderType_3DPositionBumpedNormalTex,
+    kShaderType_3DSkinPositionBumpedNormalTex,
     kShaderType_3DParticleTex,
     kShaderType_3DParticleColor,
     kShaderType_3DSkyBox,
@@ -248,6 +250,14 @@ void GLProgramCache::loadDefaultGLPrograms()
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE, p));
 
     p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_3DPositionBumpedNormalTex);
+    _programs.insert(std::make_pair(GLProgram::SHADER_3D_POSITION_BUMPEDNORMAL_TEXTURE, p));
+
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_3DSkinPositionBumpedNormalTex);
+    _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_BUMPEDNORMAL_TEXTURE, p));
+
+    p = new GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DParticleColor);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_PARTICLE_COLOR, p));
 
@@ -384,6 +394,14 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
 
+    p = getGLProgram(GLProgram::SHADER_3D_POSITION_BUMPEDNORMAL_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DPositionBumpedNormalTex);
+
+    p = getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_BUMPEDNORMAL_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DSkinPositionBumpedNormalTex);
+
     p = getGLProgram(GLProgram::SHADER_3D_PARTICLE_TEXTURE);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DParticleTex);
@@ -418,6 +436,14 @@ void GLProgramCache::reloadDefaultGLProgramsRelativeToLights()
     p = getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
+
+    p = getGLProgram(GLProgram::SHADER_3D_POSITION_BUMPEDNORMAL_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DPositionBumpedNormalTex);
+
+    p = getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_BUMPEDNORMAL_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DSkinPositionBumpedNormalTex);
 }
 
 void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
@@ -501,6 +527,20 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
             {
                 std::string def = getShaderMacrosForLight();
                 p->initWithByteArrays((def + std::string(cc3D_SkinPositionNormalTex_vert)).c_str(), (def + std::string(cc3D_ColorNormalTex_frag)).c_str());
+            }
+            break;
+        case kShaderType_3DPositionBumpedNormalTex:
+            {
+                std::string def = getShaderMacrosForLight();
+                std::string normalMapDef = "\n#define USE_NORMAL_MAPPING 1 \n";
+                p->initWithByteArrays((def + normalMapDef + std::string(cc3D_PositionNormalTex_vert)).c_str(), (def + normalMapDef + std::string(cc3D_ColorNormalTex_frag)).c_str());
+            }
+            break;
+        case kShaderType_3DSkinPositionBumpedNormalTex:
+            {
+                std::string def = getShaderMacrosForLight();
+                std::string normalMapDef = "\n#define USE_NORMAL_MAPPING 1 \n";
+                p->initWithByteArrays((def + normalMapDef + std::string(cc3D_SkinPositionNormalTex_vert)).c_str(), (def + normalMapDef + std::string(cc3D_ColorNormalTex_frag)).c_str());
             }
             break;
         case kShaderType_3DParticleTex:

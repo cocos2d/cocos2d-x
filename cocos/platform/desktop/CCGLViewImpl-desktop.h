@@ -114,7 +114,7 @@ public:
     virtual void makeContextCurrent() override;
 
 protected:
-    GLViewImpl();
+    GLViewImpl(bool initglfw = true);
     virtual ~GLViewImpl();
 
     bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor);

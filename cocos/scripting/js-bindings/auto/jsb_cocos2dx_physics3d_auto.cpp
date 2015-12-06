@@ -5,30 +5,8 @@
 #include "physics3d/jsb_cocos2dx_physics3d_manual.h"
 
 template<class T>
-static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedValue initializing(cx);
-    bool isNewValid = true;
-    JS::RootedObject global(cx, ScriptingCore::getInstance()->getGlobalObject());
-    isNewValid = JS_GetProperty(cx, global, "initializing", &initializing) && initializing.toBoolean();
-    if (isNewValid)
-    {
-        TypeTest<T> t;
-        js_type_class_t *typeClass = nullptr;
-        std::string typeName = t.s_name();
-        auto typeMapIter = _js_global_type_map.find(typeName);
-        CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-        typeClass = typeMapIter->second;
-        CCASSERT(typeClass, "The value is null.");
-
-        JS::RootedObject proto(cx, typeClass->proto.get());
-        JS::RootedObject parent(cx, typeClass->parentProto.get());
-        JS::RootedObject _tmp(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-        
-        args.rval().set(OBJECT_TO_JSVAL(_tmp));
-        return true;
-    }
-
+static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
     JS_ReportError(cx, "Constructor for the requested class is not available, please refer to the API reference.");
     return false;
 }
@@ -61,7 +39,7 @@ bool js_cocos2dx_physics3d_Physics3DShape_initConvexHull(JSContext *cx, uint32_t
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (const cocos2d::Vec3*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -276,7 +254,7 @@ bool js_cocos2dx_physics3d_Physics3DShape_createConvexHull(JSContext *cx, uint32
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (const cocos2d::Vec3*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -357,32 +335,18 @@ bool js_cocos2dx_physics3d_Physics3DShape_constructor(JSContext *cx, uint32_t ar
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::Physics3DShape* cobj = new (std::nothrow) cocos2d::Physics3DShape();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::Physics3DShape> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+
+    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Physics3DShape>(cobj);
+
     // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Physics3DShape");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::Physics3DShape"));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
     return true;
 }
 
-void js_cocos2d_Physics3DShape_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Physics3DShape)", obj);
-}
+
 void js_register_cocos2dx_physics3d_Physics3DShape(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Physics3DShape_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Physics3DShape_class->name = "Physics3DShape";
@@ -393,7 +357,7 @@ void js_register_cocos2dx_physics3d_Physics3DShape(JSContext *cx, JS::HandleObje
     jsb_cocos2d_Physics3DShape_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DShape_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DShape_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DShape_class->finalize = js_cocos2d_Physics3DShape_finalize;
+    jsb_cocos2d_Physics3DShape_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DShape_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
@@ -423,30 +387,17 @@ void js_register_cocos2dx_physics3d_Physics3DShape(JSContext *cx, JS::HandleObje
 
     jsb_cocos2d_Physics3DShape_prototype = JS_InitClass(
         cx, global,
-        JS::NullPtr(), // parent proto
+        JS::NullPtr(),
         jsb_cocos2d_Physics3DShape_class,
         js_cocos2dx_physics3d_Physics3DShape_constructor, 0, // constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "Physics3DShape", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::Physics3DShape> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_Physics3DShape_class;
-        p->proto = jsb_cocos2d_Physics3DShape_prototype;
-        p->parentProto = NULL;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    JS::RootedObject proto(cx, jsb_cocos2d_Physics3DShape_prototype);
+    jsb_register_class<cocos2d::Physics3DShape>(cx, jsb_cocos2d_Physics3DShape_class, proto, JS::NullPtr());
 }
 
 JSClass  *jsb_cocos2d_Physics3DObject_class;
@@ -523,7 +474,7 @@ bool js_cocos2dx_physics3d_Physics3DObject_setPhysicsWorld(JSContext *cx, uint32
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (cocos2d::Physics3DWorld*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -655,9 +606,6 @@ bool js_cocos2dx_physics3d_Physics3DObject_needCollisionCallback(JSContext *cx, 
     return false;
 }
 
-void js_cocos2d_Physics3DObject_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Physics3DObject)", obj);
-}
 void js_register_cocos2dx_physics3d_Physics3DObject(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Physics3DObject_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Physics3DObject_class->name = "Physics3DObject";
@@ -668,7 +616,7 @@ void js_register_cocos2dx_physics3d_Physics3DObject(JSContext *cx, JS::HandleObj
     jsb_cocos2d_Physics3DObject_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DObject_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DObject_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DObject_class->finalize = js_cocos2d_Physics3DObject_finalize;
+    jsb_cocos2d_Physics3DObject_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DObject_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
@@ -694,30 +642,17 @@ void js_register_cocos2dx_physics3d_Physics3DObject(JSContext *cx, JS::HandleObj
 
     jsb_cocos2d_Physics3DObject_prototype = JS_InitClass(
         cx, global,
-        JS::NullPtr(), // parent proto
+        JS::NullPtr(),
         jsb_cocos2d_Physics3DObject_class,
         empty_constructor, 0,
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "Physics3DObject", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::Physics3DObject> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_Physics3DObject_class;
-        p->proto = jsb_cocos2d_Physics3DObject_prototype;
-        p->parentProto = NULL;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    JS::RootedObject proto(cx, jsb_cocos2d_Physics3DObject_prototype);
+    jsb_register_class<cocos2d::Physics3DObject>(cx, jsb_cocos2d_Physics3DObject_class, proto, JS::NullPtr());
 }
 
 JSClass  *jsb_cocos2d_Physics3DRigidBody_class;
@@ -768,7 +703,7 @@ bool js_cocos2dx_physics3d_Physics3DRigidBody_setAngularFactor(JSContext *cx, ui
 
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    obj = args.thisv().toObjectOrNull();
+    obj.set(args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cobj = (cocos2d::Physics3DRigidBody *)(proxy ? proxy->ptr : nullptr);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DRigidBody_setAngularFactor : Invalid Native Object");
@@ -811,7 +746,7 @@ bool js_cocos2dx_physics3d_Physics3DRigidBody_addConstraint(JSContext *cx, uint3
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (cocos2d::Physics3DConstraint*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -1449,7 +1384,7 @@ bool js_cocos2dx_physics3d_Physics3DRigidBody_removeConstraint(JSContext *cx, ui
 
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    obj = args.thisv().toObjectOrNull();
+    obj.set(args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cobj = (cocos2d::Physics3DRigidBody *)(proxy ? proxy->ptr : nullptr);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DRigidBody_removeConstraint : Invalid Native Object");
@@ -1471,7 +1406,7 @@ bool js_cocos2dx_physics3d_Physics3DRigidBody_removeConstraint(JSContext *cx, ui
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DConstraint*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -1740,34 +1675,20 @@ bool js_cocos2dx_physics3d_Physics3DRigidBody_constructor(JSContext *cx, uint32_
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::Physics3DRigidBody* cobj = new (std::nothrow) cocos2d::Physics3DRigidBody();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::Physics3DRigidBody> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+
+    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Physics3DRigidBody>(cobj);
+
     // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Physics3DRigidBody");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::Physics3DRigidBody"));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
     return true;
 }
 
+
 extern JSObject *jsb_cocos2d_Physics3DObject_prototype;
 
-void js_cocos2d_Physics3DRigidBody_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Physics3DRigidBody)", obj);
-}
 void js_register_cocos2dx_physics3d_Physics3DRigidBody(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Physics3DRigidBody_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Physics3DRigidBody_class->name = "Physics3DRigidBody";
@@ -1778,7 +1699,7 @@ void js_register_cocos2dx_physics3d_Physics3DRigidBody(JSContext *cx, JS::Handle
     jsb_cocos2d_Physics3DRigidBody_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DRigidBody_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DRigidBody_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DRigidBody_class->finalize = js_cocos2d_Physics3DRigidBody_finalize;
+    jsb_cocos2d_Physics3DRigidBody_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DRigidBody_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
@@ -1841,32 +1762,20 @@ void js_register_cocos2dx_physics3d_Physics3DRigidBody(JSContext *cx, JS::Handle
 
     JSFunctionSpec *st_funcs = NULL;
 
+    JS::RootedObject parent_proto(cx, jsb_cocos2d_Physics3DObject_prototype);
     jsb_cocos2d_Physics3DRigidBody_prototype = JS_InitClass(
         cx, global,
-        JS::RootedObject(cx, jsb_cocos2d_Physics3DObject_prototype),
+        parent_proto,
         jsb_cocos2d_Physics3DRigidBody_class,
         js_cocos2dx_physics3d_Physics3DRigidBody_constructor, 0, // constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "Physics3DRigidBody", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::Physics3DRigidBody> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_Physics3DRigidBody_class;
-        p->proto = jsb_cocos2d_Physics3DRigidBody_prototype;
-        p->parentProto = jsb_cocos2d_Physics3DObject_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    JS::RootedObject proto(cx, jsb_cocos2d_Physics3DRigidBody_prototype);
+    jsb_register_class<cocos2d::Physics3DRigidBody>(cx, jsb_cocos2d_Physics3DRigidBody_class, proto, parent_proto);
 }
 
 JSClass  *jsb_cocos2d_Physics3DComponent_class;
@@ -1902,7 +1811,7 @@ bool js_cocos2dx_physics3d_Physics3DComponent_addToPhysicsWorld(JSContext *cx, u
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (cocos2d::Physics3DWorld*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -1971,7 +1880,7 @@ bool js_cocos2dx_physics3d_Physics3DComponent_setPhysics3DObject(JSContext *cx, 
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (cocos2d::Physics3DObject*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -2039,7 +1948,7 @@ bool js_cocos2dx_physics3d_Physics3DComponent_create(JSContext *cx, uint32_t arg
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DObject*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -2066,7 +1975,7 @@ bool js_cocos2dx_physics3d_Physics3DComponent_create(JSContext *cx, uint32_t arg
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DObject*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -2096,7 +2005,7 @@ bool js_cocos2dx_physics3d_Physics3DComponent_create(JSContext *cx, uint32_t arg
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DObject*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -2161,34 +2070,20 @@ bool js_cocos2dx_physics3d_Physics3DComponent_constructor(JSContext *cx, uint32_
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::Physics3DComponent* cobj = new (std::nothrow) cocos2d::Physics3DComponent();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::Physics3DComponent> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+
+    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Physics3DComponent>(cobj);
+
     // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Physics3DComponent");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::Physics3DComponent"));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
     return true;
 }
 
+
 extern JSObject *jsb_cocos2d_Component_prototype;
 
-void js_cocos2d_Physics3DComponent_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Physics3DComponent)", obj);
-}
 void js_register_cocos2dx_physics3d_Physics3DComponent(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Physics3DComponent_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Physics3DComponent_class->name = "Physics3DComponent";
@@ -2199,7 +2094,7 @@ void js_register_cocos2dx_physics3d_Physics3DComponent(JSContext *cx, JS::Handle
     jsb_cocos2d_Physics3DComponent_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DComponent_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DComponent_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DComponent_class->finalize = js_cocos2d_Physics3DComponent_finalize;
+    jsb_cocos2d_Physics3DComponent_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DComponent_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
@@ -2224,32 +2119,20 @@ void js_register_cocos2dx_physics3d_Physics3DComponent(JSContext *cx, JS::Handle
         JS_FS_END
     };
 
+    JS::RootedObject parent_proto(cx, jsb_cocos2d_Component_prototype);
     jsb_cocos2d_Physics3DComponent_prototype = JS_InitClass(
         cx, global,
-        JS::RootedObject(cx, jsb_cocos2d_Component_prototype),
+        parent_proto,
         jsb_cocos2d_Physics3DComponent_class,
         js_cocos2dx_physics3d_Physics3DComponent_constructor, 0, // constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "Physics3DComponent", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::Physics3DComponent> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_Physics3DComponent_class;
-        p->proto = jsb_cocos2d_Physics3DComponent_prototype;
-        p->parentProto = jsb_cocos2d_Component_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    JS::RootedObject proto(cx, jsb_cocos2d_Physics3DComponent_prototype);
+    jsb_register_class<cocos2d::Physics3DComponent>(cx, jsb_cocos2d_Physics3DComponent_class, proto, parent_proto);
 }
 
 JSClass  *jsb_cocos2d_PhysicsSprite3D_class;
@@ -2337,34 +2220,20 @@ bool js_cocos2dx_physics3d_PhysicsSprite3D_constructor(JSContext *cx, uint32_t a
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::PhysicsSprite3D* cobj = new (std::nothrow) cocos2d::PhysicsSprite3D();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::PhysicsSprite3D> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+
+    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::PhysicsSprite3D>(cobj);
+
     // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::PhysicsSprite3D");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::PhysicsSprite3D"));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
     return true;
 }
 
+
 extern JSObject *jsb_cocos2d_Sprite3D_prototype;
 
-void js_cocos2d_PhysicsSprite3D_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (PhysicsSprite3D)", obj);
-}
 void js_register_cocos2dx_physics3d_PhysicsSprite3D(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_PhysicsSprite3D_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_PhysicsSprite3D_class->name = "PhysicsSprite3D";
@@ -2375,7 +2244,7 @@ void js_register_cocos2dx_physics3d_PhysicsSprite3D(JSContext *cx, JS::HandleObj
     jsb_cocos2d_PhysicsSprite3D_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_PhysicsSprite3D_class->resolve = JS_ResolveStub;
     jsb_cocos2d_PhysicsSprite3D_class->convert = JS_ConvertStub;
-    jsb_cocos2d_PhysicsSprite3D_class->finalize = js_cocos2d_PhysicsSprite3D_finalize;
+    jsb_cocos2d_PhysicsSprite3D_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_PhysicsSprite3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
@@ -2393,32 +2262,20 @@ void js_register_cocos2dx_physics3d_PhysicsSprite3D(JSContext *cx, JS::HandleObj
 
     JSFunctionSpec *st_funcs = NULL;
 
+    JS::RootedObject parent_proto(cx, jsb_cocos2d_Sprite3D_prototype);
     jsb_cocos2d_PhysicsSprite3D_prototype = JS_InitClass(
         cx, global,
-        JS::RootedObject(cx, jsb_cocos2d_Sprite3D_prototype),
+        parent_proto,
         jsb_cocos2d_PhysicsSprite3D_class,
         js_cocos2dx_physics3d_PhysicsSprite3D_constructor, 0, // constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "PhysicsSprite3D", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::PhysicsSprite3D> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_PhysicsSprite3D_class;
-        p->proto = jsb_cocos2d_PhysicsSprite3D_prototype;
-        p->parentProto = jsb_cocos2d_Sprite3D_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    JS::RootedObject proto(cx, jsb_cocos2d_PhysicsSprite3D_prototype);
+    jsb_register_class<cocos2d::PhysicsSprite3D>(cx, jsb_cocos2d_PhysicsSprite3D_class, proto, parent_proto);
 }
 
 JSClass  *jsb_cocos2d_Physics3DWorld_class;
@@ -2619,7 +2476,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_removePhysics3DConstraint(JSContext *c
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (cocos2d::Physics3DConstraint*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -2647,7 +2504,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_addPhysics3DObject(JSContext *cx, uint
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (cocos2d::Physics3DObject*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -2695,7 +2552,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_removePhysics3DObject(JSContext *cx, u
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (cocos2d::Physics3DObject*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -2723,7 +2580,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_getPhysicsObject(JSContext *cx, uint32
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (const btCollisionObject*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -2760,7 +2617,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_addPhysics3DConstraint(JSContext *cx, 
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (cocos2d::Physics3DConstraint*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -2777,7 +2634,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_addPhysics3DConstraint(JSContext *cx, 
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (cocos2d::Physics3DConstraint*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -2806,7 +2663,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_debugDraw(JSContext *cx, uint32_t argc
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (cocos2d::Renderer*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -2837,7 +2694,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_sweepShape(JSContext *cx, uint32_t arg
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (cocos2d::Physics3DShape*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -2888,32 +2745,18 @@ bool js_cocos2dx_physics3d_Physics3DWorld_constructor(JSContext *cx, uint32_t ar
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::Physics3DWorld* cobj = new (std::nothrow) cocos2d::Physics3DWorld();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::Physics3DWorld> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+
+    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Physics3DWorld>(cobj);
+
     // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Physics3DWorld");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::Physics3DWorld"));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
     return true;
 }
 
-void js_cocos2d_Physics3DWorld_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Physics3DWorld)", obj);
-}
+
 void js_register_cocos2dx_physics3d_Physics3DWorld(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Physics3DWorld_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Physics3DWorld_class->name = "Physics3DWorld";
@@ -2924,7 +2767,7 @@ void js_register_cocos2dx_physics3d_Physics3DWorld(JSContext *cx, JS::HandleObje
     jsb_cocos2d_Physics3DWorld_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DWorld_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DWorld_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DWorld_class->finalize = js_cocos2d_Physics3DWorld_finalize;
+    jsb_cocos2d_Physics3DWorld_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DWorld_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
@@ -2961,30 +2804,17 @@ void js_register_cocos2dx_physics3d_Physics3DWorld(JSContext *cx, JS::HandleObje
 
     jsb_cocos2d_Physics3DWorld_prototype = JS_InitClass(
         cx, global,
-        JS::NullPtr(), // parent proto
+        JS::NullPtr(),
         jsb_cocos2d_Physics3DWorld_class,
         js_cocos2dx_physics3d_Physics3DWorld_constructor, 0, // constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "Physics3DWorld", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::Physics3DWorld> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_Physics3DWorld_class;
-        p->proto = jsb_cocos2d_Physics3DWorld_prototype;
-        p->parentProto = NULL;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    JS::RootedObject proto(cx, jsb_cocos2d_Physics3DWorld_prototype);
+    jsb_register_class<cocos2d::Physics3DWorld>(cx, jsb_cocos2d_Physics3DWorld_class, proto, JS::NullPtr());
 }
 
 JSClass  *jsb_cocos2d_Physics3DConstraint_class;
@@ -3237,9 +3067,6 @@ bool js_cocos2dx_physics3d_Physics3DConstraint_getbtContraint(JSContext *cx, uin
     return false;
 }
 
-void js_cocos2d_Physics3DConstraint_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Physics3DConstraint)", obj);
-}
 void js_register_cocos2dx_physics3d_Physics3DConstraint(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Physics3DConstraint_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Physics3DConstraint_class->name = "Physics3DConstraint";
@@ -3250,7 +3077,7 @@ void js_register_cocos2dx_physics3d_Physics3DConstraint(JSContext *cx, JS::Handl
     jsb_cocos2d_Physics3DConstraint_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DConstraint_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DConstraint_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DConstraint_class->finalize = js_cocos2d_Physics3DConstraint_finalize;
+    jsb_cocos2d_Physics3DConstraint_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DConstraint_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
@@ -3278,30 +3105,17 @@ void js_register_cocos2dx_physics3d_Physics3DConstraint(JSContext *cx, JS::Handl
 
     jsb_cocos2d_Physics3DConstraint_prototype = JS_InitClass(
         cx, global,
-        JS::NullPtr(), // parent proto
+        JS::NullPtr(),
         jsb_cocos2d_Physics3DConstraint_class,
         dummy_constructor<cocos2d::Physics3DConstraint>, 0, // no constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "Physics3DConstraint", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::Physics3DConstraint> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_Physics3DConstraint_class;
-        p->proto = jsb_cocos2d_Physics3DConstraint_prototype;
-        p->parentProto = NULL;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    JS::RootedObject proto(cx, jsb_cocos2d_Physics3DConstraint_prototype);
+    jsb_register_class<cocos2d::Physics3DConstraint>(cx, jsb_cocos2d_Physics3DConstraint_class, proto, JS::NullPtr());
 }
 
 JSClass  *jsb_cocos2d_Physics3DPointToPointConstraint_class;
@@ -3350,7 +3164,7 @@ bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_init(JSContext *cx, u
 
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    obj = args.thisv().toObjectOrNull();
+    obj.set(args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cobj = (cocos2d::Physics3DPointToPointConstraint *)(proxy ? proxy->ptr : nullptr);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DPointToPointConstraint_init : Invalid Native Object");
@@ -3361,7 +3175,7 @@ bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_init(JSContext *cx, u
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -3372,7 +3186,7 @@ bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_init(JSContext *cx, u
                 if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(1).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(1).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg1 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
@@ -3399,7 +3213,7 @@ bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_init(JSContext *cx, u
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -3471,7 +3285,7 @@ bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_create(JSContext *cx,
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -3482,7 +3296,7 @@ bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_create(JSContext *cx,
                 if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(1).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(1).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg1 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
@@ -3516,7 +3330,7 @@ bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_create(JSContext *cx,
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -3547,34 +3361,20 @@ bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_constructor(JSContext
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::Physics3DPointToPointConstraint* cobj = new (std::nothrow) cocos2d::Physics3DPointToPointConstraint();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::Physics3DPointToPointConstraint> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+
+    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Physics3DPointToPointConstraint>(cobj);
+
     // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Physics3DPointToPointConstraint");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::Physics3DPointToPointConstraint"));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
     return true;
 }
 
+
 extern JSObject *jsb_cocos2d_Physics3DConstraint_prototype;
 
-void js_cocos2d_Physics3DPointToPointConstraint_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Physics3DPointToPointConstraint)", obj);
-}
 void js_register_cocos2dx_physics3d_Physics3DPointToPointConstraint(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Physics3DPointToPointConstraint_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Physics3DPointToPointConstraint_class->name = "Physics3DPointToPointConstraint";
@@ -3585,7 +3385,7 @@ void js_register_cocos2dx_physics3d_Physics3DPointToPointConstraint(JSContext *c
     jsb_cocos2d_Physics3DPointToPointConstraint_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DPointToPointConstraint_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DPointToPointConstraint_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DPointToPointConstraint_class->finalize = js_cocos2d_Physics3DPointToPointConstraint_finalize;
+    jsb_cocos2d_Physics3DPointToPointConstraint_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DPointToPointConstraint_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
@@ -3607,32 +3407,20 @@ void js_register_cocos2dx_physics3d_Physics3DPointToPointConstraint(JSContext *c
         JS_FS_END
     };
 
+    JS::RootedObject parent_proto(cx, jsb_cocos2d_Physics3DConstraint_prototype);
     jsb_cocos2d_Physics3DPointToPointConstraint_prototype = JS_InitClass(
         cx, global,
-        JS::RootedObject(cx, jsb_cocos2d_Physics3DConstraint_prototype),
+        parent_proto,
         jsb_cocos2d_Physics3DPointToPointConstraint_class,
         js_cocos2dx_physics3d_Physics3DPointToPointConstraint_constructor, 0, // constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "Physics3DPointToPointConstraint", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::Physics3DPointToPointConstraint> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_Physics3DPointToPointConstraint_class;
-        p->proto = jsb_cocos2d_Physics3DPointToPointConstraint_prototype;
-        p->parentProto = jsb_cocos2d_Physics3DConstraint_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    JS::RootedObject proto(cx, jsb_cocos2d_Physics3DPointToPointConstraint_prototype);
+    jsb_register_class<cocos2d::Physics3DPointToPointConstraint>(cx, jsb_cocos2d_Physics3DPointToPointConstraint_class, proto, parent_proto);
 }
 
 JSClass  *jsb_cocos2d_Physics3DHingeConstraint_class;
@@ -3645,7 +3433,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_getHingeAngle(JSContext *cx,
 
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    obj = args.thisv().toObjectOrNull();
+    obj.set(args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cobj = (cocos2d::Physics3DHingeConstraint *)(proxy ? proxy->ptr : nullptr);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DHingeConstraint_getHingeAngle : Invalid Native Object");
@@ -4037,7 +3825,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_setMotorTarget(JSContext *cx
 
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    obj = args.thisv().toObjectOrNull();
+    obj.set(args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cobj = (cocos2d::Physics3DHingeConstraint *)(proxy ? proxy->ptr : nullptr);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DHingeConstraint_setMotorTarget : Invalid Native Object");
@@ -4140,7 +3928,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -4173,7 +3961,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -4210,7 +3998,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -4240,7 +4028,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -4274,7 +4062,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -4285,7 +4073,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
                 if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(1).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(1).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg1 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
@@ -4324,7 +4112,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -4335,7 +4123,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
                 if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(1).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(1).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg1 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
@@ -4378,7 +4166,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -4389,7 +4177,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
                 if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(1).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(1).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg1 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
@@ -4422,7 +4210,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -4433,7 +4221,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
                 if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(1).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(1).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg1 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
@@ -4470,34 +4258,20 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_constructor(JSContext *cx, u
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::Physics3DHingeConstraint* cobj = new (std::nothrow) cocos2d::Physics3DHingeConstraint();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::Physics3DHingeConstraint> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+
+    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Physics3DHingeConstraint>(cobj);
+
     // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Physics3DHingeConstraint");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::Physics3DHingeConstraint"));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
     return true;
 }
 
+
 extern JSObject *jsb_cocos2d_Physics3DConstraint_prototype;
 
-void js_cocos2d_Physics3DHingeConstraint_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Physics3DHingeConstraint)", obj);
-}
 void js_register_cocos2dx_physics3d_Physics3DHingeConstraint(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Physics3DHingeConstraint_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Physics3DHingeConstraint_class->name = "Physics3DHingeConstraint";
@@ -4508,7 +4282,7 @@ void js_register_cocos2dx_physics3d_Physics3DHingeConstraint(JSContext *cx, JS::
     jsb_cocos2d_Physics3DHingeConstraint_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DHingeConstraint_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DHingeConstraint_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DHingeConstraint_class->finalize = js_cocos2d_Physics3DHingeConstraint_finalize;
+    jsb_cocos2d_Physics3DHingeConstraint_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DHingeConstraint_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
@@ -4546,32 +4320,20 @@ void js_register_cocos2dx_physics3d_Physics3DHingeConstraint(JSContext *cx, JS::
         JS_FS_END
     };
 
+    JS::RootedObject parent_proto(cx, jsb_cocos2d_Physics3DConstraint_prototype);
     jsb_cocos2d_Physics3DHingeConstraint_prototype = JS_InitClass(
         cx, global,
-        JS::RootedObject(cx, jsb_cocos2d_Physics3DConstraint_prototype),
+        parent_proto,
         jsb_cocos2d_Physics3DHingeConstraint_class,
         js_cocos2dx_physics3d_Physics3DHingeConstraint_constructor, 0, // constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "Physics3DHingeConstraint", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::Physics3DHingeConstraint> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_Physics3DHingeConstraint_class;
-        p->proto = jsb_cocos2d_Physics3DHingeConstraint_prototype;
-        p->parentProto = jsb_cocos2d_Physics3DConstraint_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    JS::RootedObject proto(cx, jsb_cocos2d_Physics3DHingeConstraint_prototype);
+    jsb_register_class<cocos2d::Physics3DHingeConstraint>(cx, jsb_cocos2d_Physics3DHingeConstraint_class, proto, parent_proto);
 }
 
 JSClass  *jsb_cocos2d_Physics3DSliderConstraint_class;
@@ -5805,7 +5567,7 @@ bool js_cocos2dx_physics3d_Physics3DSliderConstraint_create(JSContext *cx, uint3
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -5814,7 +5576,7 @@ bool js_cocos2dx_physics3d_Physics3DSliderConstraint_create(JSContext *cx, uint3
             if (args.get(1).isNull()) { arg1 = nullptr; break; }
             if (!args.get(1).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(1).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg1 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
@@ -5845,34 +5607,20 @@ bool js_cocos2dx_physics3d_Physics3DSliderConstraint_constructor(JSContext *cx, 
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::Physics3DSliderConstraint* cobj = new (std::nothrow) cocos2d::Physics3DSliderConstraint();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::Physics3DSliderConstraint> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+
+    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Physics3DSliderConstraint>(cobj);
+
     // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Physics3DSliderConstraint");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::Physics3DSliderConstraint"));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
     return true;
 }
 
+
 extern JSObject *jsb_cocos2d_Physics3DConstraint_prototype;
 
-void js_cocos2d_Physics3DSliderConstraint_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Physics3DSliderConstraint)", obj);
-}
 void js_register_cocos2dx_physics3d_Physics3DSliderConstraint(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Physics3DSliderConstraint_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Physics3DSliderConstraint_class->name = "Physics3DSliderConstraint";
@@ -5883,7 +5631,7 @@ void js_register_cocos2dx_physics3d_Physics3DSliderConstraint(JSContext *cx, JS:
     jsb_cocos2d_Physics3DSliderConstraint_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DSliderConstraint_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DSliderConstraint_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DSliderConstraint_class->finalize = js_cocos2d_Physics3DSliderConstraint_finalize;
+    jsb_cocos2d_Physics3DSliderConstraint_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DSliderConstraint_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
@@ -5964,32 +5712,20 @@ void js_register_cocos2dx_physics3d_Physics3DSliderConstraint(JSContext *cx, JS:
         JS_FS_END
     };
 
+    JS::RootedObject parent_proto(cx, jsb_cocos2d_Physics3DConstraint_prototype);
     jsb_cocos2d_Physics3DSliderConstraint_prototype = JS_InitClass(
         cx, global,
-        JS::RootedObject(cx, jsb_cocos2d_Physics3DConstraint_prototype),
+        parent_proto,
         jsb_cocos2d_Physics3DSliderConstraint_class,
         js_cocos2dx_physics3d_Physics3DSliderConstraint_constructor, 0, // constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "Physics3DSliderConstraint", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::Physics3DSliderConstraint> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_Physics3DSliderConstraint_class;
-        p->proto = jsb_cocos2d_Physics3DSliderConstraint_prototype;
-        p->parentProto = jsb_cocos2d_Physics3DConstraint_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    JS::RootedObject proto(cx, jsb_cocos2d_Physics3DSliderConstraint_prototype);
+    jsb_register_class<cocos2d::Physics3DSliderConstraint>(cx, jsb_cocos2d_Physics3DSliderConstraint_class, proto, parent_proto);
 }
 
 JSClass  *jsb_cocos2d_Physics3DConeTwistConstraint_class;
@@ -6387,7 +6123,7 @@ bool js_cocos2dx_physics3d_Physics3DConeTwistConstraint_create(JSContext *cx, ui
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -6398,7 +6134,7 @@ bool js_cocos2dx_physics3d_Physics3DConeTwistConstraint_create(JSContext *cx, ui
                 if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(1).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(1).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg1 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
@@ -6432,7 +6168,7 @@ bool js_cocos2dx_physics3d_Physics3DConeTwistConstraint_create(JSContext *cx, ui
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -6463,34 +6199,20 @@ bool js_cocos2dx_physics3d_Physics3DConeTwistConstraint_constructor(JSContext *c
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::Physics3DConeTwistConstraint* cobj = new (std::nothrow) cocos2d::Physics3DConeTwistConstraint();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::Physics3DConeTwistConstraint> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+
+    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Physics3DConeTwistConstraint>(cobj);
+
     // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Physics3DConeTwistConstraint");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::Physics3DConeTwistConstraint"));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
     return true;
 }
 
+
 extern JSObject *jsb_cocos2d_Physics3DConstraint_prototype;
 
-void js_cocos2d_Physics3DConeTwistConstraint_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Physics3DConeTwistConstraint)", obj);
-}
 void js_register_cocos2dx_physics3d_Physics3DConeTwistConstraint(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Physics3DConeTwistConstraint_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Physics3DConeTwistConstraint_class->name = "Physics3DConeTwistConstraint";
@@ -6501,7 +6223,7 @@ void js_register_cocos2dx_physics3d_Physics3DConeTwistConstraint(JSContext *cx, 
     jsb_cocos2d_Physics3DConeTwistConstraint_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DConeTwistConstraint_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DConeTwistConstraint_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DConeTwistConstraint_class->finalize = js_cocos2d_Physics3DConeTwistConstraint_finalize;
+    jsb_cocos2d_Physics3DConeTwistConstraint_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DConeTwistConstraint_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
@@ -6535,32 +6257,20 @@ void js_register_cocos2dx_physics3d_Physics3DConeTwistConstraint(JSContext *cx, 
         JS_FS_END
     };
 
+    JS::RootedObject parent_proto(cx, jsb_cocos2d_Physics3DConstraint_prototype);
     jsb_cocos2d_Physics3DConeTwistConstraint_prototype = JS_InitClass(
         cx, global,
-        JS::RootedObject(cx, jsb_cocos2d_Physics3DConstraint_prototype),
+        parent_proto,
         jsb_cocos2d_Physics3DConeTwistConstraint_class,
         js_cocos2dx_physics3d_Physics3DConeTwistConstraint_constructor, 0, // constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "Physics3DConeTwistConstraint", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::Physics3DConeTwistConstraint> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_Physics3DConeTwistConstraint_class;
-        p->proto = jsb_cocos2d_Physics3DConeTwistConstraint_prototype;
-        p->parentProto = jsb_cocos2d_Physics3DConstraint_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    JS::RootedObject proto(cx, jsb_cocos2d_Physics3DConeTwistConstraint_prototype);
+    jsb_register_class<cocos2d::Physics3DConeTwistConstraint>(cx, jsb_cocos2d_Physics3DConeTwistConstraint_class, proto, parent_proto);
 }
 
 JSClass  *jsb_cocos2d_Physics3D6DofConstraint_class;
@@ -6790,7 +6500,7 @@ bool js_cocos2dx_physics3d_Physics3D6DofConstraint_create(JSContext *cx, uint32_
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -6824,7 +6534,7 @@ bool js_cocos2dx_physics3d_Physics3D6DofConstraint_create(JSContext *cx, uint32_
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -6835,7 +6545,7 @@ bool js_cocos2dx_physics3d_Physics3D6DofConstraint_create(JSContext *cx, uint32_
                 if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(1).toObjectOrNull();
+                JS::RootedObject tmpObj(cx, args.get(1).toObjectOrNull());
                 jsProxy = jsb_get_js_proxy(tmpObj);
                 arg1 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
                 JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
@@ -6872,34 +6582,20 @@ bool js_cocos2dx_physics3d_Physics3D6DofConstraint_constructor(JSContext *cx, ui
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::Physics3D6DofConstraint* cobj = new (std::nothrow) cocos2d::Physics3D6DofConstraint();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::Physics3D6DofConstraint> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+
+    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Physics3D6DofConstraint>(cobj);
+
     // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Physics3D6DofConstraint");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::Physics3D6DofConstraint"));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
     return true;
 }
 
+
 extern JSObject *jsb_cocos2d_Physics3DConstraint_prototype;
 
-void js_cocos2d_Physics3D6DofConstraint_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Physics3D6DofConstraint)", obj);
-}
 void js_register_cocos2dx_physics3d_Physics3D6DofConstraint(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Physics3D6DofConstraint_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Physics3D6DofConstraint_class->name = "Physics3D6DofConstraint";
@@ -6910,7 +6606,7 @@ void js_register_cocos2dx_physics3d_Physics3D6DofConstraint(JSContext *cx, JS::H
     jsb_cocos2d_Physics3D6DofConstraint_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3D6DofConstraint_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3D6DofConstraint_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3D6DofConstraint_class->finalize = js_cocos2d_Physics3D6DofConstraint_finalize;
+    jsb_cocos2d_Physics3D6DofConstraint_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3D6DofConstraint_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
@@ -6938,32 +6634,20 @@ void js_register_cocos2dx_physics3d_Physics3D6DofConstraint(JSContext *cx, JS::H
         JS_FS_END
     };
 
+    JS::RootedObject parent_proto(cx, jsb_cocos2d_Physics3DConstraint_prototype);
     jsb_cocos2d_Physics3D6DofConstraint_prototype = JS_InitClass(
         cx, global,
-        JS::RootedObject(cx, jsb_cocos2d_Physics3DConstraint_prototype),
+        parent_proto,
         jsb_cocos2d_Physics3D6DofConstraint_class,
         js_cocos2dx_physics3d_Physics3D6DofConstraint_constructor, 0, // constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "Physics3D6DofConstraint", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::Physics3D6DofConstraint> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_Physics3D6DofConstraint_class;
-        p->proto = jsb_cocos2d_Physics3D6DofConstraint_prototype;
-        p->parentProto = jsb_cocos2d_Physics3DConstraint_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    JS::RootedObject proto(cx, jsb_cocos2d_Physics3D6DofConstraint_prototype);
+    jsb_register_class<cocos2d::Physics3D6DofConstraint>(cx, jsb_cocos2d_Physics3D6DofConstraint_class, proto, parent_proto);
 }
 
 void register_all_cocos2dx_physics3d(JSContext* cx, JS::HandleObject obj) {

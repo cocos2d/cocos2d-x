@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "UIScrollViewBar.h"
 #include "CCImage.h"
 #include "2d/CCSprite.h"
-#include "base/base64.h"
+#include "base/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -38,27 +38,6 @@ static const Color3B DEFAULT_COLOR(52, 65, 87);
 static const float DEFAULT_MARGIN = 20;
 static const float DEFAULT_AUTO_HIDE_TIME = 0.2f;
 static const float DEFAULT_SCROLLBAR_OPACITY = 0.4f;
-
-static Sprite* createSpriteFromBase64(const char* base64String)
-{
-    unsigned char* decoded;
-    int length = base64Decode((const unsigned char*) base64String, (unsigned int) strlen(base64String), &decoded);
-    
-    Image *image = new Image();
-    bool imageResult = image->initWithImageData(decoded, length);
-    CCASSERT(imageResult, "Failed to create image from base64!");
-    free(decoded);
-    
-    Texture2D *texture = new Texture2D();
-    texture->initWithImage(image);
-    texture->setAliasTexParameters();
-    image->release();
-    
-    Sprite* sprite = Sprite::createWithTexture(texture);
-    texture->release();
-    
-    return sprite;
-}
 
 ScrollViewBar::ScrollViewBar(ScrollView* parent, ScrollView::Direction direction):
 _parent(parent),
@@ -103,7 +82,7 @@ bool ScrollViewBar::init()
         return false;
     }
     
-    _upperHalfCircle = createSpriteFromBase64(HALF_CIRCLE_IMAGE);
+    _upperHalfCircle = utils::createSpriteFromBase64(HALF_CIRCLE_IMAGE);
     _upperHalfCircle->setAnchorPoint(Vec2::ANCHOR_MIDDLE_BOTTOM);
     addProtectedChild(_upperHalfCircle);
     
@@ -112,7 +91,7 @@ bool ScrollViewBar::init()
     _lowerHalfCircle->setAnchorPoint(Vec2::ANCHOR_MIDDLE_BOTTOM);
     addProtectedChild(_lowerHalfCircle);
     
-    _body = createSpriteFromBase64(BODY_IMAGE_1_PIXEL_HEIGHT);
+    _body = utils::createSpriteFromBase64(BODY_IMAGE_1_PIXEL_HEIGHT);
     _body->setAnchorPoint(Vec2::ANCHOR_MIDDLE_BOTTOM);
     addProtectedChild(_body);
     
