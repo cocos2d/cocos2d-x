@@ -44,7 +44,7 @@
 -- 
 -- @function [parent=#Slider] getBallNormalFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- Gets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
@@ -66,7 +66,7 @@
 -- 
 -- @function [parent=#Slider] getBallPressedFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- brief Return a zoom scale<br>
@@ -120,7 +120,7 @@
 -- 
 -- @function [parent=#Slider] getProgressBarFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- Gets capinsets for bar slider, if slider is using scale9 renderer.<br>
@@ -143,7 +143,7 @@
 -- 
 -- @function [parent=#Slider] getBackFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- Gets If slider is using scale9 renderer.<br>
@@ -151,6 +151,12 @@
 -- @function [parent=#Slider] isScale9Enabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Slider] getBallDisabledFile 
+-- @param self
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- Sets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
@@ -168,12 +174,6 @@
 -- @param self
 -- @param #rect_table capInsets
 -- @return Slider#Slider self (return value: ccui.Slider)
-        
---------------------------------
--- 
--- @function [parent=#Slider] getBallDisabeldFile 
--- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
         
 --------------------------------
 -- Gets the progress direction of slider.<br>
