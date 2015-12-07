@@ -64,7 +64,7 @@
 -- 
 -- @function [parent=#Layout] getRenderFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- return If focus loop is enabled, then it will return true, otherwise it returns false. The default value is false.

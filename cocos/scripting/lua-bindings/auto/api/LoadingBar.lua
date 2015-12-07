@@ -35,7 +35,7 @@
 -- 
 -- @function [parent=#LoadingBar] getRenderFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- Enable scale9 renderer.<br>
