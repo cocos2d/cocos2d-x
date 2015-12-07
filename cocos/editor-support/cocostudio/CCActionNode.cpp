@@ -63,6 +63,8 @@ ActionNode::~ActionNode()
         CC_SAFE_RELEASE_NULL(_action);
         CC_SAFE_RELEASE_NULL(_actionSpawn);
     }
+    
+    CC_SAFE_RELEASE(_object);
 
     for (auto object : _frameArray)
     {
@@ -363,7 +365,9 @@ int ActionNode::getActionTag()
 
 void ActionNode::setObject(Ref* node)
 {
+    CC_SAFE_RELEASE(_object);
     _object = node;
+    CC_SAFE_RETAIN(_object);
 }
 
 Ref*  ActionNode::getObject()
