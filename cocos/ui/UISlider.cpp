@@ -258,7 +258,7 @@ void Slider::setScale9Enabled(bool able)
         ignoreContentAdaptWithSize(_prevIgnoreSize);
     }
     setCapInsetsBarRenderer(_capInsetsBarRenderer);
-    setCapInsetProgressBarRebderer(_capInsetsProgressBarRenderer);
+    setCapInsetProgressBarRenderer(_capInsetsProgressBarRenderer);
     _barRendererAdaptDirty = true;
     _progressBarRendererDirty = true;
 }
@@ -280,7 +280,7 @@ void Slider::ignoreContentAdaptWithSize(bool ignore)
 void Slider::setCapInsets(const Rect &capInsets)
 {
     setCapInsetsBarRenderer(capInsets);
-    setCapInsetProgressBarRebderer(capInsets);
+    setCapInsetProgressBarRenderer(capInsets);
 }
 
 void Slider::setCapInsetsBarRenderer(const Rect &capInsets)
@@ -298,7 +298,7 @@ const Rect& Slider::getCapInsetsBarRenderer()const
     return _capInsetsBarRenderer;
 }
 
-void Slider::setCapInsetProgressBarRebderer(const Rect &capInsets)
+void Slider::setCapInsetProgressBarRenderer(const Rect &capInsets)
 {
     _capInsetsProgressBarRenderer = ui::Helper::restrictCapInsetRect(capInsets, _progressBarRenderer->getContentSize());
     if (!_scale9Enabled)
@@ -308,7 +308,7 @@ void Slider::setCapInsetProgressBarRebderer(const Rect &capInsets)
     _progressBarRenderer->setCapInsets(_capInsetsProgressBarRenderer);
 }
     
-const Rect& Slider::getCapInsetsProgressBarRebderer()const
+const Rect& Slider::getCapInsetsProgressBarRenderer()const
 {
     return _capInsetsProgressBarRenderer;
 }
