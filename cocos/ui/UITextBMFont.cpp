@@ -187,9 +187,9 @@ void TextBMFont::copySpecialProperties(Widget *widget)
     }
 }
 
-ResouceData TextBMFont::getRenderFile()
+ResourceData TextBMFont::getRenderFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = 0;
     rData.file = _fntFileName;
     return rData;

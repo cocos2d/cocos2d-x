@@ -575,41 +575,41 @@ void AbstractCheckButton::copySpecialProperties(Widget *widget)
 }
 
 
-ResouceData AbstractCheckButton::getBackNormalFile()
+ResourceData AbstractCheckButton::getBackNormalFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_backGroundTexType;
     rData.file = _backGroundFileName;
     return rData;
 }
 
-ResouceData AbstractCheckButton::getBackPressedFile()
+ResourceData AbstractCheckButton::getBackPressedFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_backGroundSelectedTexType;
     rData.file = _backGroundSelectedFileName;
     return rData;
 }
 
-ResouceData AbstractCheckButton::getBackDisabledFile()
+ResourceData AbstractCheckButton::getBackDisabledFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_backGroundDisabledTexType;
     rData.file = _backGroundDisabledFileName;
     return rData;
 }
 
-ResouceData AbstractCheckButton::getCrossNormalFile()
+ResourceData AbstractCheckButton::getCrossNormalFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_frontCrossTexType;
     rData.file = _frontCrossFileName;
     return rData;
 }
 
-ResouceData AbstractCheckButton::getCrossDisabeldFile()
+ResourceData AbstractCheckButton::getCrossDisabledFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_frontCrossDisabledTexType;
     rData.file = _frontCrossDisabledFileName;
     return rData;

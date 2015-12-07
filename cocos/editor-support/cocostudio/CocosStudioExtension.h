@@ -6,20 +6,20 @@
 
 NS_CC_BEGIN
 
-struct CC_DLL ResouceData
+struct CC_DLL ResourceData
 {
     int         type;
     std::string file;
     std::string plist;
 
-    ResouceData()
+    ResourceData()
     {
         type = 0;
         file = "";
         plist = "";
     }
 
-    ResouceData(int iType, std::string sFile, std::string sPlist)
+    ResourceData(int iType, std::string sFile, std::string sPlist)
     {
         type = iType;
         file = sFile;

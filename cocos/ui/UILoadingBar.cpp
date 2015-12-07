@@ -421,9 +421,9 @@ void LoadingBar::copySpecialProperties(Widget *widget)
     }
 }
 
-ResouceData LoadingBar::getRenderFile()
+ResourceData LoadingBar::getRenderFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_renderBarTexType;
     rData.file = _textureFile;
     return rData;

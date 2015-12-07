@@ -37,7 +37,7 @@
 #define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 
 NS_CC_BEGIN
-struct CC_DLL ResouceData;
+struct CC_DLL ResourceData;
 NS_CC_END
 
 // just a simple utility to avoid mem leaking when using JSString
@@ -116,7 +116,7 @@ bool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, cocos2d::__
 bool jsval_to_quaternion(JSContext *cx, JS::HandleValue vp, cocos2d::Quaternion* ret);
 bool jsval_to_obb(JSContext *cx, JS::HandleValue vp, cocos2d::OBB* ret);
 bool jsval_to_ray(JSContext *cx, JS::HandleValue vp, cocos2d::Ray* ret);
-bool jsval_to_resoucedata(JSContext *cx, JS::HandleValue v, cocos2d::ResouceData* ret);
+bool jsval_to_resourcedata(JSContext *cx, JS::HandleValue v, cocos2d::ResourceData* ret);
 
 // forward declaration
 CC_JS_DLL js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj);
@@ -278,7 +278,7 @@ jsval FontDefinition_to_jsval(JSContext* cx, const cocos2d::FontDefinition& t);
 jsval quaternion_to_jsval(JSContext* cx, const cocos2d::Quaternion& q);
 jsval meshVertexAttrib_to_jsval(JSContext* cx, const cocos2d::MeshVertexAttrib& q);
 jsval uniform_to_jsval(JSContext* cx, const cocos2d::Uniform* uniform);
-jsval resoucedata_to_jsval(JSContext* cx, const cocos2d::ResouceData& v);
+jsval resourcedata_to_jsval(JSContext* cx, const cocos2d::ResourceData& v);
 
 template<class T>
 js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj);

@@ -749,37 +749,37 @@ void Slider::copySpecialProperties(Widget *widget)
     }
 }
 
-ResouceData Slider::getBackFile()
+ResourceData Slider::getBackFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_barTexType;
     rData.file = _textureFile;
     return rData;
 }
-ResouceData Slider::getProgressBarFile()
+ResourceData Slider::getProgressBarFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_progressBarTexType;
     rData.file = _progressBarTextureFile;
     return rData;
 }
-ResouceData Slider::getBallNormalFile()
+ResourceData Slider::getBallNormalFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_ballNTexType;
     rData.file = _slidBallNormalTextureFile;
     return rData;
 }
-ResouceData Slider::getBallPressedFile()
+ResourceData Slider::getBallPressedFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_ballPTexType;
     rData.file = _slidBallPressedTextureFile;
     return rData;
 }
-ResouceData Slider::getBallDisabeldFile()
+ResourceData Slider::getBallDisabledFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_ballDTexType;
     rData.file = _slidBallDisabledTextureFile;
     return rData;

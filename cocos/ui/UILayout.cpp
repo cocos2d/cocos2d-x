@@ -1880,9 +1880,9 @@ void Layout::setCameraMask(unsigned short mask, bool applyChildren)
     }
 }
     
-ResouceData Layout::getRenderFile()
+ResourceData Layout::getRenderFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_bgImageTexType;
     rData.file = _backGroundImageFileName;
     return rData;

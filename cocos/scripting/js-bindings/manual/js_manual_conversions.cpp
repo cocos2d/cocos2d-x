@@ -2855,7 +2855,7 @@ jsval std_map_string_string_to_jsval(JSContext* cx, const std::map<std::string, 
     return OBJECT_TO_JSVAL(jsRet);
 }
 
-bool jsval_to_resoucedata(JSContext *cx, JS::HandleValue v, ResouceData* ret) {
+bool jsval_to_resourcedata(JSContext *cx, JS::HandleValue v, ResourceData* ret) {
     JS::RootedObject tmp(cx);
     JS::RootedValue jstype(cx);
     JS::RootedValue jsfile(cx);
@@ -2880,7 +2880,7 @@ bool jsval_to_resoucedata(JSContext *cx, JS::HandleValue v, ResouceData* ret) {
     return true;
 }
 
-jsval resoucedata_to_jsval(JSContext* cx, const ResouceData& v)
+jsval resourcedata_to_jsval(JSContext* cx, const ResourceData& v)
 {
     JS::RootedObject proto(cx);
     JS::RootedObject parent(cx);

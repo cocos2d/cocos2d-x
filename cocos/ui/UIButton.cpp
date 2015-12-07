@@ -1041,23 +1041,23 @@ void Button::resetDisabledRender()
     _buttonDisabledRenderer->resetRender();
 }
 
-ResouceData Button::getNormalFile()
+ResourceData Button::getNormalFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_normalTexType;
     rData.file = _normalFileName;
     return rData;
 }
-ResouceData Button::getPressedFile()
+ResourceData Button::getPressedFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_pressedTexType;
     rData.file = _clickedFileName;
     return rData;
 }
-ResouceData Button::getDisabledFile()
+ResourceData Button::getDisabledFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_disabledTexType;
     rData.file = _disabledFileName;
     return rData;

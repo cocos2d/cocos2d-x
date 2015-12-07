@@ -191,9 +191,9 @@ void TextAtlas::copySpecialProperties(Widget *widget)
     }
 }
     
-ResouceData TextAtlas::getRenderFile()
+ResourceData TextAtlas::getRenderFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = 0;
     rData.file = _charMapFileName;
     return rData;

@@ -34,7 +34,7 @@ THE SOFTWARE.
  */
 NS_CC_BEGIN
 class Sprite;
-struct CC_DLL ResouceData;
+struct CC_DLL ResourceData;
 
 namespace ui {
     
@@ -162,11 +162,11 @@ public:
      */
     Sprite* getRendererFrontCrossDisabled() const { return _frontCrossDisabledRenderer; }
 
-    ResouceData getBackNormalFile();
-    ResouceData getBackPressedFile();
-    ResouceData getBackDisabledFile();
-    ResouceData getCrossNormalFile();
-    ResouceData getCrossDisabeldFile();
+    ResourceData getBackNormalFile();
+    ResourceData getBackPressedFile();
+    ResourceData getBackDisabledFile();
+    ResourceData getCrossNormalFile();
+    ResourceData getCrossDisabledFile();
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
