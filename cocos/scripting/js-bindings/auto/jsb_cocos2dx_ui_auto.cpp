@@ -2425,9 +2425,9 @@ bool js_cocos2dx_ui_Layout_getRenderFile(JSContext *cx, uint32_t argc, jsval *vp
     cocos2d::ui::Layout* cobj = (cocos2d::ui::Layout *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_getRenderFile : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getRenderFile();
+        cocos2d::ResourceData ret = cobj->getRenderFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         args.rval().set(jsret);
         return true;
     }
@@ -3240,9 +3240,9 @@ bool js_cocos2dx_ui_Button_getDisabledFile(JSContext *cx, uint32_t argc, jsval *
     cocos2d::ui::Button* cobj = (cocos2d::ui::Button *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getDisabledFile : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getDisabledFile();
+        cocos2d::ResourceData ret = cobj->getDisabledFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         args.rval().set(jsret);
         return true;
     }
@@ -3314,9 +3314,9 @@ bool js_cocos2dx_ui_Button_getNormalFile(JSContext *cx, uint32_t argc, jsval *vp
     cocos2d::ui::Button* cobj = (cocos2d::ui::Button *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getNormalFile : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getNormalFile();
+        cocos2d::ResourceData ret = cobj->getNormalFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         args.rval().set(jsret);
         return true;
     }
@@ -3788,9 +3788,9 @@ bool js_cocos2dx_ui_Button_getPressedFile(JSContext *cx, uint32_t argc, jsval *v
     cocos2d::ui::Button* cobj = (cocos2d::ui::Button *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getPressedFile : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getPressedFile();
+        cocos2d::ResourceData ret = cobj->getPressedFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         args.rval().set(jsret);
         return true;
     }
@@ -4154,6 +4154,24 @@ void js_register_cocos2dx_ui_Button(JSContext *cx, JS::HandleObject global) {
 JSClass  *jsb_cocos2d_ui_AbstractCheckButton_class;
 JSObject *jsb_cocos2d_ui_AbstractCheckButton_prototype;
 
+bool js_cocos2dx_ui_AbstractCheckButton_getCrossDisabledFile(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::AbstractCheckButton* cobj = (cocos2d::ui::AbstractCheckButton *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getCrossDisabledFile : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::ResourceData ret = cobj->getCrossDisabledFile();
+        jsval jsret = JSVAL_NULL;
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_AbstractCheckButton_getCrossDisabledFile : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_ui_AbstractCheckButton_getBackDisabledFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -4162,32 +4180,14 @@ bool js_cocos2dx_ui_AbstractCheckButton_getBackDisabledFile(JSContext *cx, uint3
     cocos2d::ui::AbstractCheckButton* cobj = (cocos2d::ui::AbstractCheckButton *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getBackDisabledFile : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getBackDisabledFile();
+        cocos2d::ResourceData ret = cobj->getBackDisabledFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         args.rval().set(jsret);
         return true;
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_AbstractCheckButton_getBackDisabledFile : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_ui_AbstractCheckButton_getCrossDisabeldFile(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ui::AbstractCheckButton* cobj = (cocos2d::ui::AbstractCheckButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getCrossDisabeldFile : Invalid Native Object");
-    if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getCrossDisabeldFile();
-        jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_ui_AbstractCheckButton_getCrossDisabeldFile : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ui_AbstractCheckButton_loadTextureBackGroundSelected(JSContext *cx, uint32_t argc, jsval *vp)
@@ -4258,9 +4258,9 @@ bool js_cocos2dx_ui_AbstractCheckButton_getCrossNormalFile(JSContext *cx, uint32
     cocos2d::ui::AbstractCheckButton* cobj = (cocos2d::ui::AbstractCheckButton *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getCrossNormalFile : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getCrossNormalFile();
+        cocos2d::ResourceData ret = cobj->getCrossNormalFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         args.rval().set(jsret);
         return true;
     }
@@ -4296,9 +4296,9 @@ bool js_cocos2dx_ui_AbstractCheckButton_getBackPressedFile(JSContext *cx, uint32
     cocos2d::ui::AbstractCheckButton* cobj = (cocos2d::ui::AbstractCheckButton *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getBackPressedFile : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getBackPressedFile();
+        cocos2d::ResourceData ret = cobj->getBackPressedFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         args.rval().set(jsret);
         return true;
     }
@@ -4487,9 +4487,9 @@ bool js_cocos2dx_ui_AbstractCheckButton_getBackNormalFile(JSContext *cx, uint32_
     cocos2d::ui::AbstractCheckButton* cobj = (cocos2d::ui::AbstractCheckButton *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getBackNormalFile : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getBackNormalFile();
+        cocos2d::ResourceData ret = cobj->getBackNormalFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         args.rval().set(jsret);
         return true;
     }
@@ -4713,8 +4713,8 @@ void js_register_cocos2dx_ui_AbstractCheckButton(JSContext *cx, JS::HandleObject
     };
 
     static JSFunctionSpec funcs[] = {
+        JS_FN("getCrossDisabledFile", js_cocos2dx_ui_AbstractCheckButton_getCrossDisabledFile, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBackDisabledFile", js_cocos2dx_ui_AbstractCheckButton_getBackDisabledFile, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getCrossDisabeldFile", js_cocos2dx_ui_AbstractCheckButton_getCrossDisabeldFile, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadTextureBackGroundSelected", js_cocos2dx_ui_AbstractCheckButton_loadTextureBackGroundSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadTextureBackGroundDisabled", js_cocos2dx_ui_AbstractCheckButton_loadTextureBackGroundDisabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCrossNormalFile", js_cocos2dx_ui_AbstractCheckButton_getCrossNormalFile, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -5851,9 +5851,9 @@ bool js_cocos2dx_ui_ImageView_getRenderFile(JSContext *cx, uint32_t argc, jsval 
     cocos2d::ui::ImageView* cobj = (cocos2d::ui::ImageView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ImageView_getRenderFile : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getRenderFile();
+        cocos2d::ResourceData ret = cobj->getRenderFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         args.rval().set(jsret);
         return true;
     }
@@ -6785,9 +6785,9 @@ bool js_cocos2dx_ui_TextAtlas_getRenderFile(JSContext *cx, uint32_t argc, jsval 
     cocos2d::ui::TextAtlas* cobj = (cocos2d::ui::TextAtlas *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextAtlas_getRenderFile : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getRenderFile();
+        cocos2d::ResourceData ret = cobj->getRenderFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         args.rval().set(jsret);
         return true;
     }
@@ -7060,9 +7060,9 @@ bool js_cocos2dx_ui_LoadingBar_getRenderFile(JSContext *cx, uint32_t argc, jsval
     cocos2d::ui::LoadingBar* cobj = (cocos2d::ui::LoadingBar *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LoadingBar_getRenderFile : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getRenderFile();
+        cocos2d::ResourceData ret = cobj->getRenderFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         args.rval().set(jsret);
         return true;
     }
@@ -9522,9 +9522,9 @@ bool js_cocos2dx_ui_Slider_getBallNormalFile(JSContext *cx, uint32_t argc, jsval
     cocos2d::ui::Slider* cobj = (cocos2d::ui::Slider *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getBallNormalFile : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getBallNormalFile();
+        cocos2d::ResourceData ret = cobj->getBallNormalFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         args.rval().set(jsret);
         return true;
     }
@@ -9578,9 +9578,9 @@ bool js_cocos2dx_ui_Slider_getBallPressedFile(JSContext *cx, uint32_t argc, jsva
     cocos2d::ui::Slider* cobj = (cocos2d::ui::Slider *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getBallPressedFile : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getBallPressedFile();
+        cocos2d::ResourceData ret = cobj->getBallPressedFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         args.rval().set(jsret);
         return true;
     }
@@ -9770,9 +9770,9 @@ bool js_cocos2dx_ui_Slider_getProgressBarFile(JSContext *cx, uint32_t argc, jsva
     cocos2d::ui::Slider* cobj = (cocos2d::ui::Slider *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getProgressBarFile : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getProgressBarFile();
+        cocos2d::ResourceData ret = cobj->getProgressBarFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         args.rval().set(jsret);
         return true;
     }
@@ -9836,9 +9836,9 @@ bool js_cocos2dx_ui_Slider_getBackFile(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::ui::Slider* cobj = (cocos2d::ui::Slider *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getBackFile : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getBackFile();
+        cocos2d::ResourceData ret = cobj->getBackFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         args.rval().set(jsret);
         return true;
     }
@@ -9862,6 +9862,24 @@ bool js_cocos2dx_ui_Slider_isScale9Enabled(JSContext *cx, uint32_t argc, jsval *
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_Slider_isScale9Enabled : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_Slider_getBallDisabledFile(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::Slider* cobj = (cocos2d::ui::Slider *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getBallDisabledFile : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::ResourceData ret = cobj->getBallDisabledFile();
+        jsval jsret = JSVAL_NULL;
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_Slider_getBallDisabledFile : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ui_Slider_setCapInsetProgressBarRebderer(JSContext *cx, uint32_t argc, jsval *vp)
@@ -9902,24 +9920,6 @@ bool js_cocos2dx_ui_Slider_setCapInsetsBarRenderer(JSContext *cx, uint32_t argc,
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_Slider_setCapInsetsBarRenderer : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_ui_Slider_getBallDisabeldFile(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ui::Slider* cobj = (cocos2d::ui::Slider *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getBallDisabeldFile : Invalid Native Object");
-    if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getBallDisabeldFile();
-        jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_ui_Slider_getBallDisabeldFile : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ui_Slider_getPercent(JSContext *cx, uint32_t argc, jsval *vp)
@@ -10152,9 +10152,9 @@ void js_register_cocos2dx_ui_Slider(JSContext *cx, JS::HandleObject global) {
         JS_FN("loadSlidBallTexturePressed", js_cocos2dx_ui_Slider_loadSlidBallTexturePressed, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBackFile", js_cocos2dx_ui_Slider_getBackFile, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isScale9Enabled", js_cocos2dx_ui_Slider_isScale9Enabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getBallDisabledFile", js_cocos2dx_ui_Slider_getBallDisabledFile, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCapInsetProgressBarRebderer", js_cocos2dx_ui_Slider_setCapInsetProgressBarRebderer, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCapInsetsBarRenderer", js_cocos2dx_ui_Slider_setCapInsetsBarRenderer, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getBallDisabeldFile", js_cocos2dx_ui_Slider_getBallDisabeldFile, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPercent", js_cocos2dx_ui_Slider_getPercent, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCapInsets", js_cocos2dx_ui_Slider_setCapInsets, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadSlidBallTextureDisabled", js_cocos2dx_ui_Slider_loadSlidBallTextureDisabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -11879,9 +11879,9 @@ bool js_cocos2dx_ui_TextBMFont_getRenderFile(JSContext *cx, uint32_t argc, jsval
     cocos2d::ui::TextBMFont* cobj = (cocos2d::ui::TextBMFont *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextBMFont_getRenderFile : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ResouceData ret = cobj->getRenderFile();
+        cocos2d::ResourceData ret = cobj->getRenderFile();
         jsval jsret = JSVAL_NULL;
-        jsret = resoucedata_to_jsval(cx, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         args.rval().set(jsret);
         return true;
     }
