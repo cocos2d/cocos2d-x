@@ -56,7 +56,7 @@ const char* getRuntimeVersion();
 #define kRuntimeEngineCCS 4
 
 class RuntimeProtocol;
-class RuntimeEngine
+class CC_LIBSIM_DLL RuntimeEngine
 {
 public:
     static RuntimeEngine* getInstance();

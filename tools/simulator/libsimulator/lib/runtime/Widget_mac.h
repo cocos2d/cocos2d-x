@@ -7,5 +7,3 @@
 #pragma once
 
 std::string getCurAppName();
-
-#endif
