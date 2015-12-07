@@ -1589,32 +1589,40 @@ bool ScriptingCore::isObjectValid(JSContext *cx, uint32_t argc, jsval *vp)
 
 void ScriptingCore::rootObject(Ref* ref)
 {
-//    js_proxy_t* nproxy;
-//    js_proxy_t* jsproxy;
-//    void *ptr = (void*)ref;
-//    nproxy = jsb_get_native_proxy(ptr);
-//    if (nproxy) {
-//        JSContext *cx = getGlobalContext();
-//        jsproxy = jsb_get_js_proxy(nproxy->obj);
-//        AddObjectRoot(cx, &jsproxy->obj);
-//
-//        CCLOG("Rooting %p - %p: %s", ref, &jsproxy->obj, typeid(*ref).name());
-//    }
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    void *ptr = (void*)ref;
+    nproxy = jsb_get_native_proxy(ptr);
+    if (nproxy) {
+        JSContext *cx = getGlobalContext();
+        // FIXME: Creating a RootedObject here is not needed.
+        // it is being created only because jsb_get_js_proxy() requires one
+        // but only the raw pointer is used in jsb_get_js_proxy()
+        JS::RootedObject handle(cx, nproxy->obj.get());
+        jsproxy = jsb_get_js_proxy(handle);
+        AddObjectRoot(cx, &jsproxy->obj);
+
+        CCLOG("Rooting %p - %p: %s", ref, &jsproxy->obj, typeid(*ref).name());
+    }
 }
 
 void ScriptingCore::unrootObject(Ref* ref)
 {
-//    js_proxy_t* nproxy;
-//    js_proxy_t* jsproxy;
-//    void *ptr = (void*)ref;
-//    nproxy = jsb_get_native_proxy(ptr);
-//    if (nproxy) {
-//        JSContext *cx = getGlobalContext();
-//        jsproxy = jsb_get_js_proxy(nproxy->obj);
-//        RemoveObjectRoot(cx, &jsproxy->obj);
-//
-//        CCLOG("Unrooting %p - %p: %s", ref, &jsproxy->obj, typeid(*ref).name());
-//    }
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    void *ptr = (void*)ref;
+    nproxy = jsb_get_native_proxy(ptr);
+    if (nproxy) {
+        JSContext *cx = getGlobalContext();
+        // FIXME: Creating a RootedObject here is not needed.
+        // it is being created only because jsb_get_js_proxy() requires one
+        // but only the raw pointer is used in jsb_get_js_proxy()        
+        JS::RootedObject handle(cx, nproxy->obj.get());
+        jsproxy = jsb_get_js_proxy(handle);
+        RemoveObjectRoot(cx, &jsproxy->obj);
+
+        CCLOG("Unrooting %p - %p: %s", ref, &jsproxy->obj, typeid(*ref).name());
+    }
 }
 
 #pragma mark - Debug
@@ -1999,6 +2007,26 @@ JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_clas
     return js_obj;
 }
 
+JSObject* jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
+{
+    //    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    JS::RootedObject proto(cx, typeClass->proto.ref());
+    JS::RootedObject parent(cx, typeClass->parentProto.ref());
+    JS::RootedObject js_obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    js_proxy_t* newproxy = jsb_new_proxy(ref, js_obj);
+    jsb_ref_autoreleased_init(cx, &newproxy->obj, ref, debug);
+    return js_obj;
+}
+
+JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
+{
+    auto proxy = jsb_get_native_proxy(ref);
+    if (proxy)
+        return proxy->obj;
+    // else
+    return jsb_ref_create_jsobject(cx, ref, typeClass, debug);
+}
+
 void jsb_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, Ref* ref, const char* debug)
 {
 //    CCLOG("jsb_ref_init: JSObject address =  %p. %s", obj->get(), debug);
@@ -2008,6 +2036,21 @@ void jsb_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, Ref* ref, const char*
     ref->_scriptOwned = true;
 #else
     ref->autorelease();
+    JS::AddNamedObjectRoot(cx, obj, debug);
+#endif
+}
+
+void jsb_ref_autoreleased_init(JSContext* cx, JS::Heap<JSObject*> *obj, Ref* ref, const char* debug)
+{
+    //    CCLOG("jsb_ref_init: JSObject address =  %p. %s", obj->get(), debug);
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    (void)cx;
+    (void)obj;
+    ref->_scriptOwned = true;
+    // retain it, since the object is autoreleased
+    ret->retain();
+#else
+    // don't autorelease it, since it is already autoreleased
     JS::AddNamedObjectRoot(cx, obj, debug);
 #endif
 }

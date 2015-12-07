@@ -522,6 +522,7 @@ bool js_cocos2dx_navmesh_NavMeshAgent_getNavMeshAgentComponentName(JSContext *cx
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
+
         const std::string& ret = cocos2d::NavMeshAgent::getNavMeshAgentComponentName();
         jsval jsret = JSVAL_NULL;
         jsret = std_string_to_jsval(cx, ret);
@@ -540,17 +541,11 @@ bool js_cocos2dx_navmesh_NavMeshAgent_create(JSContext *cx, uint32_t argc, jsval
         cocos2d::NavMeshAgentParam arg0;
         ok &= jsval_to_NavMeshAgentParam(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_navmesh_NavMeshAgent_create : Error processing arguments");
-        cocos2d::NavMeshAgent* ret = cocos2d::NavMeshAgent::create(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::NavMeshAgent>(cx, (cocos2d::NavMeshAgent*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
+
+        auto ret = cocos2d::NavMeshAgent::create(arg0);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::NavMeshAgent>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::NavMeshAgent"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
     JS_ReportError(cx, "js_cocos2dx_navmesh_NavMeshAgent_create : wrong number of arguments");
@@ -790,17 +785,11 @@ bool js_cocos2dx_navmesh_NavMeshObstacle_create(JSContext *cx, uint32_t argc, js
         ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
         ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_navmesh_NavMeshObstacle_create : Error processing arguments");
-        cocos2d::NavMeshObstacle* ret = cocos2d::NavMeshObstacle::create(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::NavMeshObstacle>(cx, (cocos2d::NavMeshObstacle*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
+
+        auto ret = cocos2d::NavMeshObstacle::create(arg0, arg1);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::NavMeshObstacle>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::NavMeshObstacle"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
     JS_ReportError(cx, "js_cocos2dx_navmesh_NavMeshObstacle_create : wrong number of arguments");
@@ -811,6 +800,7 @@ bool js_cocos2dx_navmesh_NavMeshObstacle_getNavMeshObstacleComponentName(JSConte
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
+
         const std::string& ret = cocos2d::NavMeshObstacle::getNavMeshObstacleComponentName();
         jsval jsret = JSVAL_NULL;
         jsret = std_string_to_jsval(cx, ret);
@@ -1102,17 +1092,11 @@ bool js_cocos2dx_navmesh_NavMesh_create(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         ok &= jsval_to_std_string(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_navmesh_NavMesh_create : Error processing arguments");
-        cocos2d::NavMesh* ret = cocos2d::NavMesh::create(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::NavMesh>(cx, (cocos2d::NavMesh*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
+
+        auto ret = cocos2d::NavMesh::create(arg0, arg1);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::NavMesh>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::NavMesh"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
     JS_ReportError(cx, "js_cocos2dx_navmesh_NavMesh_create : wrong number of arguments");

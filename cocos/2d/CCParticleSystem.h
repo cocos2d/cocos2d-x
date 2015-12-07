@@ -760,7 +760,9 @@ public:
     * @lua NA
     */
     virtual const BlendFunc &getBlendFunc() const override;
-    
+
+    const std::string getResourceFile() const { return _plistFile; }
+
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor

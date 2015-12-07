@@ -27,7 +27,7 @@
 #include "js_manual_conversions.h"
 #include "cocos2d_specifics.hpp"
 #include "math/TransformUtils.h"
-#include "2d/CocosStudioExtension.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 USING_NS_CC;
 

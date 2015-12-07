@@ -2443,6 +2443,8 @@ void CameraBackgroundClearTest::switch_CameraClearMode(cocos2d::Ref* sender)
     {
         _camera->setBackgroundBrush(CameraBackgroundBrush::createDepthBrush(1.f));
         _label->setString("Depth Clear Brush");
+        // Test brush valid when set by user scene setting
+        CCLOG("Background brush valid status is : %s", _camera->isBrushValid() ? "true" : "false");
     }
     else if (type == CameraBackgroundBrush::BrushType::DEPTH)
     {

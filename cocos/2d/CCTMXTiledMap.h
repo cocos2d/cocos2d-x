@@ -251,7 +251,10 @@ public:
      * @js NA
      */
     virtual std::string getDescription() const override;
-    
+
+    int  getLayerNum();
+    const std::string getResourceFile() const { return _tmxFile; }
+
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
@@ -287,6 +290,11 @@ protected:
     
     //! tile properties
     ValueMapIntKey _tileProperties;
+
+    std::string _tmxFile;
+    int _tmxLayerNum;
+
+    static const int TMXLayerTag = 32768;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TMXTiledMap);

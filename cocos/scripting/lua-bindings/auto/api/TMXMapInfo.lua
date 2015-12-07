@@ -131,6 +131,12 @@
 -- @return map_table#map_table ret (return value: map_table)
         
 --------------------------------
+-- 
+-- @function [parent=#TMXMapInfo] getExternalTilesetFileName 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 -- @overload self         
 -- @overload self         
 -- @function [parent=#TMXMapInfo] getObjectGroups
