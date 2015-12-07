@@ -2084,6 +2084,7 @@ void LabelLayoutBaseTest::initWrapOption(const cocos2d::Size& size)
     checkBox->setScale(0.5);
     checkBox->setSelected(true);
     checkBox->setName("toggleWrap");
+    checkBox->setEnabled(false);
 
     checkBox->addEventListener([=](Ref* ref, CheckBox::EventType event){
         if (event == CheckBox::EventType::SELECTED) {

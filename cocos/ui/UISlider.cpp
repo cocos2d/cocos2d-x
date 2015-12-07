@@ -157,7 +157,7 @@ void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
     _barTexType = texType;
     if (fileName.empty())
     {
-        _barRenderer->init();
+        _barRenderer->resetRender();
     }
     else
     {
@@ -196,7 +196,7 @@ void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType 
     _progressBarTexType = texType;
     if (fileName.empty())
     {
-        _progressBarRenderer->init();
+        _progressBarRenderer->resetRender();
     }
     else
     {
