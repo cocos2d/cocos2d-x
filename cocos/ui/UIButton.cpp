@@ -258,9 +258,6 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
 void Button::setupNormalTexture(bool textureLoaded)
 {
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
-    // force update _customSize, fixed issue:
-    // https://github.com/cocos2d/cocos2d-x/issues/12249
-    _customSize = _normalTextureSize;
 
     this->updateChildrenDisplayedRGBA();
 
