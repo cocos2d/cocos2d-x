@@ -167,7 +167,8 @@ bool Label::multilineTextWrap(std::function<int(const std::u16string&, int, int)
             }
             
             auto letterX = (nextLetterX + letterDef.offsetX * _bmfontScale) / contentScaleFactor;
-            if (_enableWrap && _maxLineWidth > 0.f && nextTokenX > 0.f && letterX + letterDef.width * _bmfontScale > _maxLineWidth)
+            if (_enableWrap && _maxLineWidth > 0.f && nextTokenX > 0.f && letterX + letterDef.width * _bmfontScale > _maxLineWidth
+                && !StringUtils::isUnicodeSpace(character))
             {
                 _linesWidth.push_back(letterRight);
                 letterRight = 0.f;
@@ -268,11 +269,24 @@ bool Label::isHorizontalClamp()
             auto& letterDef = _fontAtlas->_letterDefinitions[_lettersInfo[ctr].utf16Char];
             
             auto px = _lettersInfo[ctr].positionX + letterDef.width/2 * _bmfontScale;
+            auto lineIndex = _lettersInfo[ctr].lineIndex;
+
             if(_labelWidth > 0.f){
-                if (px > _contentSize.width) {
-                    letterClamp = true;
-                    break;
+                if(!this->_enableWrap){
+                    if (px > _contentSize.width) {
+                        letterClamp = true;
+                        break;
+                    }
                 }
+                else{
+                    auto wordWidth = this->_linesWidth[lineIndex];
+                    if(wordWidth > this->_contentSize.width && (px > _contentSize.width)){
+                        letterClamp = true;
+                        break;
+                    }
+
+                }
+               
             }
         }
     }

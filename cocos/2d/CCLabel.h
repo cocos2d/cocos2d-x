@@ -600,6 +600,7 @@ protected:
     void scaleFontSizeDown(float fontSize);
     bool setTTFConfigInternal(const TTFConfig& ttfConfig);
     void setBMFontSizeInternal(float fontSize);
+    bool isHorizontalClamped(float letterPositionX, int lineInex);
     void restoreFontSize();
     void updateLetterSpriteScale(Sprite* sprite);
 
