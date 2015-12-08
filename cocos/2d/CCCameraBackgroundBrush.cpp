@@ -232,8 +232,8 @@ CameraBackgroundSkyBoxBrush::CameraBackgroundSkyBoxBrush()
 , _vertexBuffer(0)
 , _indexBuffer(0)
 , _texture(nullptr)
-, _actived(false)
-, _textureValid(false)
+, _actived(true)
+, _textureValid(true)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,

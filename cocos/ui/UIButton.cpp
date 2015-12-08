@@ -235,7 +235,7 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
     bool textureLoaded = true;
     if (normal.empty())
     {
-        _buttonNormalRenderer->init();
+        _buttonNormalRenderer->resetRender();
         textureLoaded = false;
     }
     else
@@ -289,7 +289,7 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
     bool textureLoade = true;
     if (selected.empty())
     {
-        _buttonClickedRenderer->init();
+        _buttonClickedRenderer->resetRender();
         textureLoade = false;
     }
     else
@@ -332,7 +332,7 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
     bool textureLoaded = true;
     if (disabled.empty())
     {
-        _buttonDisabledRenderer->init();
+        _buttonDisabledRenderer->resetRender();
         textureLoaded = false;
     }
     else
