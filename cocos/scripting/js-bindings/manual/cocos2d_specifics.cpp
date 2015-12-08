@@ -4498,10 +4498,14 @@ bool js_cocos2dx_SpriteBatchNode_getDescendants(JSContext *cx, uint32_t argc, js
         JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 0));
         size_t vSize = ret.size();
         JS::RootedValue jsret(cx);
+
+        js_type_class_t *typeClass = nullptr;
+        if (ret.size() > 0)
+            typeClass = js_get_type_from_native<cocos2d::Sprite>(ret[0]);
         for (size_t i = 0; i < vSize; i++)
         {
-            proxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, ret[i]);
-            jsret = OBJECT_TO_JSVAL(proxy->obj);
+            auto jsobj = jsb_ref_get_or_create_jsobject(cx, ret[i], typeClass, "cocos2d::Sprite");
+            jsret = OBJECT_TO_JSVAL(jsobj);
             JS_SetElement(cx, jsretArr, static_cast<uint32_t>(i), jsret);
         }
         args.rval().set(OBJECT_TO_JSVAL(jsretArr));

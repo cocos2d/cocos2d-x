@@ -66,14 +66,11 @@ bool js_cocos2dx_physics3d_Physics3DShape_getbtShape(JSContext *cx, uint32_t arg
     if (argc == 0) {
         btCollisionShape* ret = cobj->getbtShape();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<btCollisionShape>(cx, (btCollisionShape*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<btCollisionShape>(cx, (btCollisionShape*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -486,14 +483,11 @@ bool js_cocos2dx_physics3d_Physics3DObject_getPhysicsWorld(JSContext *cx, uint32
     if (argc == 0) {
         cocos2d::Physics3DWorld* ret = cobj->getPhysicsWorld();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DWorld>(cx, (cocos2d::Physics3DWorld*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DWorld>(cx, (cocos2d::Physics3DWorld*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -740,14 +734,11 @@ bool js_cocos2dx_physics3d_Physics3DRigidBody_getRigidBody(JSContext *cx, uint32
     if (argc == 0) {
         btRigidBody* ret = cobj->getRigidBody();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<btRigidBody>(cx, (btRigidBody*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<btRigidBody>(cx, (btRigidBody*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -1441,14 +1432,11 @@ bool js_cocos2dx_physics3d_Physics3DRigidBody_getConstraint(JSContext *cx, uint3
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DRigidBody_getConstraint : Error processing arguments");
         cocos2d::Physics3DConstraint* ret = cobj->getConstraint(arg0);
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DConstraint>(cx, (cocos2d::Physics3DConstraint*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DConstraint>(cx, (cocos2d::Physics3DConstraint*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -1821,14 +1809,11 @@ bool js_cocos2dx_physics3d_Physics3DComponent_getPhysics3DObject(JSContext *cx, 
     if (argc == 0) {
         cocos2d::Physics3DObject* ret = cobj->getPhysics3DObject();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DObject>(cx, (cocos2d::Physics3DObject*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DObject>(cx, (cocos2d::Physics3DObject*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -1926,14 +1911,11 @@ bool js_cocos2dx_physics3d_Physics3DComponent_create(JSContext *cx, uint32_t arg
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DComponent* ret = cocos2d::Physics3DComponent::create(arg0);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DComponent>(cx, (cocos2d::Physics3DComponent*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DComponent>(cx, (cocos2d::Physics3DComponent*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -1956,14 +1938,11 @@ bool js_cocos2dx_physics3d_Physics3DComponent_create(JSContext *cx, uint32_t arg
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DComponent* ret = cocos2d::Physics3DComponent::create(arg0, arg1);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DComponent>(cx, (cocos2d::Physics3DComponent*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DComponent>(cx, (cocos2d::Physics3DComponent*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -1989,14 +1968,11 @@ bool js_cocos2dx_physics3d_Physics3DComponent_create(JSContext *cx, uint32_t arg
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DComponent* ret = cocos2d::Physics3DComponent::create(arg0, arg1, arg2);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DComponent>(cx, (cocos2d::Physics3DComponent*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DComponent>(cx, (cocos2d::Physics3DComponent*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -2006,14 +1982,11 @@ bool js_cocos2dx_physics3d_Physics3DComponent_create(JSContext *cx, uint32_t arg
         if (argc == 0) {
             cocos2d::Physics3DComponent* ret = cocos2d::Physics3DComponent::create();
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DComponent>(cx, (cocos2d::Physics3DComponent*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DComponent>(cx, (cocos2d::Physics3DComponent*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -2151,14 +2124,11 @@ bool js_cocos2dx_physics3d_PhysicsSprite3D_getPhysicsObj(JSContext *cx, uint32_t
     if (argc == 0) {
         cocos2d::Physics3DObject* ret = cobj->getPhysicsObj();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DObject>(cx, (cocos2d::Physics3DObject*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DObject>(cx, (cocos2d::Physics3DObject*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -2559,14 +2529,11 @@ bool js_cocos2dx_physics3d_Physics3DWorld_getPhysicsObject(JSContext *cx, uint32
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_getPhysicsObject : Error processing arguments");
         cocos2d::Physics3DObject* ret = cobj->getPhysicsObject(arg0);
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DObject>(cx, (cocos2d::Physics3DObject*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DObject>(cx, (cocos2d::Physics3DObject*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -2871,14 +2838,11 @@ bool js_cocos2dx_physics3d_Physics3DConstraint_getBodyA(JSContext *cx, uint32_t 
     if (argc == 0) {
         cocos2d::Physics3DRigidBody* ret = cobj->getBodyA();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DRigidBody>(cx, (cocos2d::Physics3DRigidBody*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DRigidBody>(cx, (cocos2d::Physics3DRigidBody*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -2932,14 +2896,11 @@ bool js_cocos2dx_physics3d_Physics3DConstraint_getBodyB(JSContext *cx, uint32_t 
     if (argc == 0) {
         cocos2d::Physics3DRigidBody* ret = cobj->getBodyB();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DRigidBody>(cx, (cocos2d::Physics3DRigidBody*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DRigidBody>(cx, (cocos2d::Physics3DRigidBody*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -3016,14 +2977,11 @@ bool js_cocos2dx_physics3d_Physics3DConstraint_getbtContraint(JSContext *cx, uin
     if (argc == 0) {
         btTypedConstraint* ret = cobj->getbtContraint();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<btTypedConstraint>(cx, (btTypedConstraint*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<btTypedConstraint>(cx, (btTypedConstraint*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -3275,14 +3233,11 @@ bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_create(JSContext *cx,
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DPointToPointConstraint* ret = cocos2d::Physics3DPointToPointConstraint::create(arg0, arg1, arg2, arg3);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DPointToPointConstraint>(cx, (cocos2d::Physics3DPointToPointConstraint*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DPointToPointConstraint>(cx, (cocos2d::Physics3DPointToPointConstraint*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -3306,14 +3261,11 @@ bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_create(JSContext *cx,
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DPointToPointConstraint* ret = cocos2d::Physics3DPointToPointConstraint::create(arg0, arg1);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DPointToPointConstraint>(cx, (cocos2d::Physics3DPointToPointConstraint*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DPointToPointConstraint>(cx, (cocos2d::Physics3DPointToPointConstraint*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -3907,14 +3859,11 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DHingeConstraint* ret = cocos2d::Physics3DHingeConstraint::create(arg0, arg1, arg2);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DHingeConstraint>(cx, (cocos2d::Physics3DHingeConstraint*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DHingeConstraint>(cx, (cocos2d::Physics3DHingeConstraint*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -3943,14 +3892,11 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DHingeConstraint* ret = cocos2d::Physics3DHingeConstraint::create(arg0, arg1, arg2, arg3);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DHingeConstraint>(cx, (cocos2d::Physics3DHingeConstraint*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DHingeConstraint>(cx, (cocos2d::Physics3DHingeConstraint*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -3974,14 +3920,11 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DHingeConstraint* ret = cocos2d::Physics3DHingeConstraint::create(arg0, arg1);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DHingeConstraint>(cx, (cocos2d::Physics3DHingeConstraint*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DHingeConstraint>(cx, (cocos2d::Physics3DHingeConstraint*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -4007,14 +3950,11 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DHingeConstraint* ret = cocos2d::Physics3DHingeConstraint::create(arg0, arg1, arg2);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DHingeConstraint>(cx, (cocos2d::Physics3DHingeConstraint*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DHingeConstraint>(cx, (cocos2d::Physics3DHingeConstraint*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -4058,14 +3998,11 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DHingeConstraint* ret = cocos2d::Physics3DHingeConstraint::create(arg0, arg1, arg2, arg3, arg4, arg5);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DHingeConstraint>(cx, (cocos2d::Physics3DHingeConstraint*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DHingeConstraint>(cx, (cocos2d::Physics3DHingeConstraint*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -4111,14 +4048,11 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DHingeConstraint* ret = cocos2d::Physics3DHingeConstraint::create(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DHingeConstraint>(cx, (cocos2d::Physics3DHingeConstraint*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DHingeConstraint>(cx, (cocos2d::Physics3DHingeConstraint*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -4156,14 +4090,11 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DHingeConstraint* ret = cocos2d::Physics3DHingeConstraint::create(arg0, arg1, arg2, arg3);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DHingeConstraint>(cx, (cocos2d::Physics3DHingeConstraint*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DHingeConstraint>(cx, (cocos2d::Physics3DHingeConstraint*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -4203,14 +4134,11 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DHingeConstraint* ret = cocos2d::Physics3DHingeConstraint::create(arg0, arg1, arg2, arg3, arg4);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DHingeConstraint>(cx, (cocos2d::Physics3DHingeConstraint*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DHingeConstraint>(cx, (cocos2d::Physics3DHingeConstraint*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -6107,14 +6035,11 @@ bool js_cocos2dx_physics3d_Physics3DConeTwistConstraint_create(JSContext *cx, ui
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DConeTwistConstraint* ret = cocos2d::Physics3DConeTwistConstraint::create(arg0, arg1, arg2, arg3);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DConeTwistConstraint>(cx, (cocos2d::Physics3DConeTwistConstraint*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DConeTwistConstraint>(cx, (cocos2d::Physics3DConeTwistConstraint*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -6138,14 +6063,11 @@ bool js_cocos2dx_physics3d_Physics3DConeTwistConstraint_create(JSContext *cx, ui
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DConeTwistConstraint* ret = cocos2d::Physics3DConeTwistConstraint::create(arg0, arg1);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DConeTwistConstraint>(cx, (cocos2d::Physics3DConeTwistConstraint*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DConeTwistConstraint>(cx, (cocos2d::Physics3DConeTwistConstraint*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -6473,14 +6395,11 @@ bool js_cocos2dx_physics3d_Physics3D6DofConstraint_create(JSContext *cx, uint32_
             if (!ok) { ok = true; break; }
             cocos2d::Physics3D6DofConstraint* ret = cocos2d::Physics3D6DofConstraint::create(arg0, arg1, arg2);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3D6DofConstraint>(cx, (cocos2d::Physics3D6DofConstraint*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3D6DofConstraint>(cx, (cocos2d::Physics3D6DofConstraint*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -6521,14 +6440,11 @@ bool js_cocos2dx_physics3d_Physics3D6DofConstraint_create(JSContext *cx, uint32_
             if (!ok) { ok = true; break; }
             cocos2d::Physics3D6DofConstraint* ret = cocos2d::Physics3D6DofConstraint::create(arg0, arg1, arg2, arg3, arg4);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3D6DofConstraint>(cx, (cocos2d::Physics3D6DofConstraint*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3D6DofConstraint>(cx, (cocos2d::Physics3D6DofConstraint*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
