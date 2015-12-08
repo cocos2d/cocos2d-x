@@ -118,7 +118,8 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
 
 /**
  * Gets or creates a JSObject based on native_obj.
- If native_obj is subclass of Ref, do what it needs to do
+ If native_obj is subclass of Ref, it will use the jsb_ref functions.
+ Otherwise it will Root the newly created JSObject
  */
 template<class T>
 JSObject* js_get_or_create_jsobject(JSContext *cx, typename std::enable_if<!std::is_base_of<cocos2d::Ref,T>::value,T>::type *native_obj)
@@ -137,6 +138,11 @@ JSObject* js_get_or_create_jsobject(JSContext *cx, typename std::enable_if<!std:
     return proxy->obj;
 }
 
+/**
+ * Gets or creates a JSObject based on native_obj.
+ If native_obj is subclass of Ref, it will use the jsb_ref functions.
+ Otherwise it will Root the newly created JSObject
+ */
 template<class T>
 JSObject* js_get_or_create_jsobject(JSContext *cx, typename std::enable_if<std::is_base_of<cocos2d::Ref,T>::value,T>::type *native_obj)
 {
