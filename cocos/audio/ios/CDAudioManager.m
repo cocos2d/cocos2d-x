@@ -61,7 +61,7 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 }    
 
 -(void) load:(NSString*) filePath {
-    //We have alread loaded a file previously,  check if we are being asked to load the same file
+    //We have already loaded a file previously, check if we are being asked to load the same file
     if (state == kLAS_Init || ![filePath isEqualToString:audioSourceFilePath]) {
         CDLOGINFO(@"Denshion::CDLongAudioSource - Loading new audio source %@",filePath);
         //New file
@@ -627,7 +627,7 @@ static BOOL configured = FALSE;
 - (void) applicationWillResignActive {
     _resigned = YES;
     
-    //Set the audio sesssion to one that allows sharing so that other audio won't be clobbered on resume
+    //Set the audio session to one that allows sharing so that other audio won't be clobbered on resume
     [self audioSessionSetCategory:AVAudioSessionCategoryAmbient];
     
     switch (_resignBehavior) {

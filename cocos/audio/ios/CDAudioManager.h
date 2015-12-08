@@ -120,7 +120,7 @@ typedef enum {
 -(void) load:(NSString*) filePath;
 /** Plays the audio source */
 -(void) play;
-/** Stops playing the audio soruce */
+/** Stops playing the audio source */
 -(void) stop;
 /** Pauses the audio source */
 -(void) pause;

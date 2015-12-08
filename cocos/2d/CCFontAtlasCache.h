@@ -54,7 +54,7 @@ public:
      */
     static void purgeCachedData();
 
-    /** Release current FNT texutre and reload it.
+    /** Release current FNT texture and reload it.
      CAUTION : All component use this font texture should be reset font name, though the file name is same!
                otherwise, it will cause program crash!
     */
