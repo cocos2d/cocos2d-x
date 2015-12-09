@@ -96,12 +96,12 @@ public:
     int getVertexSizeInBytes() const;
 
     /**
-     * set texture (diffuse), which is responsible for the main apearence. It is also means main textrue, you can also call setTexture(texPath, NTextureData::Usage::Diffuse)
+     * set texture (diffuse), which is responsible for the main appearance. It is also means main texture, you can also call setTexture(texPath, NTextureData::Usage::Diffuse)
      * @param texPath texture path
      */
     void setTexture(const std::string& texPath);
     /**
-     * set texture (diffuse), which is responsible for the main apearence. It is also means main textrue, you can also call setTexture(texPath, NTextureData::Usage::Diffuse)
+     * set texture (diffuse), which is responsible for the main appearance. It is also means main texture, you can also call setTexture(texPath, NTextureData::Usage::Diffuse)
      * @param tex texture to be set
      */
     void setTexture(Texture2D* tex);
@@ -118,14 +118,14 @@ public:
      */
     void setTexture(const std::string& texPath, NTextureData::Usage usage);
     /**
-     * Get texture (diffuse), which is responsible for the main apearence. It is also means main textrue, you can also call getTexture(NTextureData::Usage::Diffuse)
+     * Get texture (diffuse), which is responsible for the main appearance. It is also means main texture, you can also call getTexture(NTextureData::Usage::Diffuse)
      * @return Texture used, return the texture of first mesh if multiple meshes exist
      */
     Texture2D* getTexture() const;
     /**
-     * Get textrue
+     * Get texture
      * @param usage Usage of returned texture
-     * @return The texture of this usage, return the textrue of first mesh if multiple meshes exist
+     * @return The texture of this usage, return the texture of first mesh if multiple meshes exist
      */
     Texture2D* getTexture(NTextureData::Usage usage);
     
@@ -230,7 +230,7 @@ public:
     void checkTexture();
     
     /**
-     * set enable check texture, check texture each frame if eanble is true. It is false by default
+     * set enable check texture, check texture each frame if enable is true. It is false by default
      */
     void setEnableCheckTexture(bool enableCheckTexture) { _enableCheckTexture = enableCheckTexture; }
     /**

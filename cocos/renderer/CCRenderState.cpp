@@ -197,7 +197,7 @@ RenderState::StateBlock* RenderState::StateBlock::create()
 }
 
 //
-// The defaults are based on GamePlay3D defaults, with the following chagnes
+// The defaults are based on GamePlay3D defaults, with the following changes
 // _depthWriteEnabled is FALSE
 // _depthTestEnabled is TRUE
 // _blendEnabled is TRUE

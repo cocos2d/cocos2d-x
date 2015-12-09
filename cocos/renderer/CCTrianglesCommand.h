@@ -54,7 +54,7 @@ public:
         /**The number of indices.*/
         ssize_t indexCount;
     };
-    /**Construtor.*/
+    /**Constructor.*/
     TrianglesCommand();
     /**Destructor.*/
     ~TrianglesCommand();
