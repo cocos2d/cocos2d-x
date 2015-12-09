@@ -110,4 +110,18 @@ public:
 protected:
     cocos2d::ui::Text* _displayValueLabel;
 };
+
+class UISliderIssue12249Test : public UIScene
+{
+public:
+    CREATE_FUNC(UISliderIssue12249Test);
+    
+    UISliderIssue12249Test();
+    ~UISliderIssue12249Test();
+    virtual bool init() override;
+    void sliderEvent(cocos2d::Ref* sender, cocos2d::ui::Slider::EventType type);
+    
+protected:
+    cocos2d::ui::TextBMFont* _displayValueLabel;
+};
 #endif /* defined(__TestCpp__UISliderTest__) */

@@ -360,11 +360,6 @@ protected:
     Size _pressedTextureSize;
     Size _disabledTextureSize;
 
-    float _normalTextureScaleXInSize;
-    float _normalTextureScaleYInSize;
-    float _pressedTextureScaleXInSize;
-    float _pressedTextureScaleYInSize;
-
     bool _normalTextureLoaded;
     bool _pressedTextureLoaded;
     bool _disabledTextureLoaded;

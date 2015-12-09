@@ -11,6 +11,7 @@ UILoadingBarTests::UILoadingBarTests()
     ADD_TEST_CASE(UILoadingBarTest_Right_Scale9);
     ADD_TEST_CASE(UILoadingBarTest_Scale9_State_Change);
     ADD_TEST_CASE(UILoadingBarReloadTexture);
+    ADD_TEST_CASE(UILoadingBarIssue12249);
 }
 
 // UILoadingBarTest_Left
@@ -402,4 +403,94 @@ void UILoadingBarReloadTexture::update(float delta)
     }
     LoadingBar* loadingBar = static_cast<LoadingBar*>(_uiLayer->getChildByTag(0));
     loadingBar->setPercent(_count);
+}
+
+
+// UILoadingBarIssue12249
+
+UILoadingBarIssue12249::UILoadingBarIssue12249()
+: _count(0)
+{
+    
+}
+
+UILoadingBarIssue12249::~UILoadingBarIssue12249()
+{
+    unscheduleUpdate();
+}
+
+bool UILoadingBarIssue12249::init()
+{
+    if (UIScene::init())
+    {
+        scheduleUpdate();
+        
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add the alert
+        Text* alert = Text::create("Test LoadingBar Change Direction",
+                                   "fonts/Marker Felt.ttf", 30);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
+        _uiLayer->addChild(alert);
+        
+        // Create the loading bar
+        LoadingBar* loadingBar = LoadingBar::create("cocosui/sliderProgress.png");
+        loadingBar->setScale9Enabled(true);
+        loadingBar->setContentSize(Size(200, loadingBar->getContentSize().height * 1.5));
+        loadingBar->setTag(0);
+        loadingBar->setPosition(Vec2(widgetSize.width / 2.0f,
+                                     widgetSize.height / 2.0f + loadingBar->getContentSize().height / 4.0f));
+        
+        LoadingBar* loadingBarCopy = LoadingBar::create();
+        loadingBarCopy->setScale9Enabled(true);
+        loadingBarCopy->loadTexture("cocosui/sliderProgress.png");
+        loadingBarCopy->setContentSize(Size(200, loadingBarCopy->getContentSize().height * 1.5));
+        loadingBarCopy->setTag(1);
+        loadingBarCopy->setPosition(loadingBar->getPosition()
+                                    + Vec2(0, -40));
+        loadingBarCopy->setDirection(LoadingBar::Direction::RIGHT);
+        
+        Button* button = Button::create("cocosui/animationbuttonnormal.png",
+                                        "cocosui/animationbuttonpressed.png");
+        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 50));
+        button->setTitleText("Click to change direction!");
+        
+        button->addTouchEventListener([=](Ref*, Widget::TouchEventType type)
+                                      {
+                                          if (type == Widget::TouchEventType::ENDED)
+                                          {
+                                              if (loadingBar->getDirection() == LoadingBar::Direction::LEFT)
+                                              {
+                                                  loadingBar->setDirection(LoadingBar::Direction::RIGHT);
+                                                  loadingBarCopy->setDirection(LoadingBar::Direction::LEFT);
+                                              }
+                                              else
+                                              {
+                                                  loadingBar->setDirection(LoadingBar::Direction::LEFT);
+                                                  loadingBarCopy->setDirection(LoadingBar::Direction::RIGHT);
+                                              }
+                                          }
+                                      });
+        _uiLayer->addChild(loadingBar,1);
+        _uiLayer->addChild(loadingBarCopy,2);
+        _uiLayer->addChild(button);
+        
+        return true;
+    }
+    return false;
+}
+
+void UILoadingBarIssue12249::update(float delta)
+{
+    _count++;
+    if (_count > 100)
+    {
+        _count = 0;
+    }
+    LoadingBar* loadingBar = static_cast<LoadingBar*>(_uiLayer->getChildByTag(0));
+    LoadingBar* loadingBarCopy = static_cast<LoadingBar*>(_uiLayer->getChildByTag(1));
+    loadingBar->setPercent(_count);
+    loadingBarCopy->setPercent(_count);
 }

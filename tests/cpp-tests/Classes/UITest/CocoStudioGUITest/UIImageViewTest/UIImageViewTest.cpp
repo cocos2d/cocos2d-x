@@ -10,6 +10,7 @@ UIImageViewTests::UIImageViewTests()
     ADD_TEST_CASE(UIImageViewTest_Scale9_State_Change);
     ADD_TEST_CASE(UIImageViewTest_ContentSize);
     ADD_TEST_CASE(UIImageViewFlipTest);
+    ADD_TEST_CASE(UIImageViewIssue12249Test);
 }
 
 // UIImageViewTest
@@ -239,3 +240,49 @@ bool UIImageViewFlipTest::init()
     }
     return false;
 }
+
+
+// UIImageViewIssue12249Test
+
+bool UIImageViewIssue12249Test::init()
+{
+    if (UIScene::init())
+    {
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/blocks9ss.plist");
+        Size widgetSize = _widget->getContentSize();
+        
+        Text* alert = Text::create("UIImageViewIssue12249Test", "fonts/Marker Felt.ttf", 26);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 2.125f));
+        
+        _uiLayer->addChild(alert);
+        
+        // Create the imageview
+        ImageView* imageView = ImageView::create("blocks9r.png", Widget::TextureResType::PLIST);
+        imageView->setScale9Enabled(true);
+        imageView->setContentSize(Size(250, imageView->getContentSize().height * 2));
+        imageView->setFlippedX(true);
+        imageView->setScale(0.5);
+        imageView->setPosition(Vec2(widgetSize.width / 2.0f - 80,
+                                    widgetSize.height / 2.0f));
+        
+        _uiLayer->addChild(imageView);
+        
+        ImageView* imageView2 = ImageView::create();
+        imageView2->setScale9Enabled(true);
+        imageView2->loadTexture("blocks9r.png", Widget::TextureResType::PLIST);
+        imageView2->setContentSize(Size(250, imageView2->getContentSize().height * 2));
+        imageView2->setFlippedX(true);
+        imageView2->setScale(0.5);
+        imageView2->setPosition(Vec2(widgetSize.width / 2.0f + 80,
+                                    widgetSize.height / 2.0f));
+        
+        _uiLayer->addChild(imageView2);
+        
+        
+        return true;
+    }
+    return false;
+}
+

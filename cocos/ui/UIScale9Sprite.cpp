@@ -39,8 +39,7 @@ NS_CC_BEGIN
 namespace ui {
 
     Scale9Sprite::Scale9Sprite()
-        : _spritesGenerated(false)
-        , _spriteFrameRotated(false)
+        : _spriteFrameRotated(false)
         , _scale9Image(nullptr)
         , _scale9Enabled(true)
         , _insetLeft(0)
@@ -401,10 +400,6 @@ namespace ui {
                                         const Size &originalSize,
                                         const Rect& capInsets)
     {
-        
-        GLubyte opacity = getOpacity();
-        Color3B color = getColor();
-
         // Release old sprites
         this->cleanupSlicedSprites();
 
@@ -477,15 +472,7 @@ namespace ui {
             size.height = size.height - 2;
         }
         this->setContentSize(size);
-
-        if (_spritesGenerated)
-        {
-            // Restore color and opacity
-            this->setOpacity(opacity);
-            this->setColor(color);
-        }
-        _spritesGenerated = true;
-
+        
         return true;
     }
     
