@@ -282,7 +282,10 @@ void Slider::setCapInsets(const Rect &capInsets)
 void Slider::setCapInsetsBarRenderer(const Rect &capInsets)
 {
     _capInsetsBarRenderer = ui::Helper::restrictCapInsetRect(capInsets, _barRenderer->getContentSize());
-   
+    if (!_scale9Enabled)
+    {
+        return;
+    }
     _barRenderer->setCapInsets(_capInsetsBarRenderer);
 }
     
@@ -294,7 +297,10 @@ const Rect& Slider::getCapInsetsBarRenderer()const
 void Slider::setCapInsetProgressBarRebderer(const Rect &capInsets)
 {
     _capInsetsProgressBarRenderer = ui::Helper::restrictCapInsetRect(capInsets, _progressBarRenderer->getContentSize());
-    
+    if (!_scale9Enabled)
+    {
+        return;
+    }
     _progressBarRenderer->setCapInsets(_capInsetsProgressBarRenderer);
 }
     
