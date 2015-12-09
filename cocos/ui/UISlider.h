@@ -315,8 +315,6 @@ protected:
     bool _prevIgnoreSize;
     
     float _zoomScale;
-    float _sliderBallNormalTextureScaleX;
-    float _sliderBallNormalTextureScaleY;
 
     bool _isSliderBallPressedTextureLoaded;
     bool _isSliderBallDisabledTexturedLoaded;
