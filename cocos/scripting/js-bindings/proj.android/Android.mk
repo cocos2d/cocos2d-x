@@ -57,6 +57,7 @@ LOCAL_SRC_FILES := ../auto/jsb_cocos2dx_3d_auto.cpp \
                    ../manual/jsb_opengl_manual.cpp \
                    ../manual/jsb_opengl_registration.cpp \
                    ../manual/jsb_event_dispatcher_manual.cpp \
+                   ../manual/js_module_register.cpp \
                    ../manual/component/CCComponentJS.cpp \
                    ../manual/3d/jsb_cocos2dx_3d_manual.cpp \
                    ../manual/experimental/jsb_cocos2dx_experimental_video_manual.cpp \
