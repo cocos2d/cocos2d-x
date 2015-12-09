@@ -680,14 +680,11 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_clone(JSContext *cx, uint32_t a
     if (argc == 0) {
         cocos2d::PUParticleSystem3D* ret = cobj->clone();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::PUParticleSystem3D>(cx, (cocos2d::PUParticleSystem3D*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PUParticleSystem3D>(cx, (cocos2d::PUParticleSystem3D*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -773,14 +770,11 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_getParentParticleSystem(JSConte
     if (argc == 0) {
         cocos2d::PUParticleSystem3D* ret = cobj->getParentParticleSystem();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::PUParticleSystem3D>(cx, (cocos2d::PUParticleSystem3D*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PUParticleSystem3D>(cx, (cocos2d::PUParticleSystem3D*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -1026,14 +1020,11 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_create(JSContext *cx, uint32_t 
             if (!ok) { ok = true; break; }
             cocos2d::PUParticleSystem3D* ret = cocos2d::PUParticleSystem3D::create(arg0);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::PUParticleSystem3D>(cx, (cocos2d::PUParticleSystem3D*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PUParticleSystem3D>(cx, (cocos2d::PUParticleSystem3D*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -1043,14 +1034,11 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_create(JSContext *cx, uint32_t 
         if (argc == 0) {
             cocos2d::PUParticleSystem3D* ret = cocos2d::PUParticleSystem3D::create();
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::PUParticleSystem3D>(cx, (cocos2d::PUParticleSystem3D*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PUParticleSystem3D>(cx, (cocos2d::PUParticleSystem3D*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -1066,14 +1054,11 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_create(JSContext *cx, uint32_t 
             if (!ok) { ok = true; break; }
             cocos2d::PUParticleSystem3D* ret = cocos2d::PUParticleSystem3D::create(arg0, arg1);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::PUParticleSystem3D>(cx, (cocos2d::PUParticleSystem3D*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PUParticleSystem3D>(cx, (cocos2d::PUParticleSystem3D*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }

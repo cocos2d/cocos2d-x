@@ -515,14 +515,11 @@ bool js_cocos2dx_studio_ActionManagerEx_stopActionByName(JSContext *cx, uint32_t
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionManagerEx_stopActionByName : Error processing arguments");
         cocostudio::ActionObject* ret = cobj->stopActionByName(arg0, arg1);
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ActionObject>(cx, (cocostudio::ActionObject*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::ActionObject>(cx, (cocostudio::ActionObject*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -546,14 +543,11 @@ bool js_cocos2dx_studio_ActionManagerEx_getActionByName(JSContext *cx, uint32_t 
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionManagerEx_getActionByName : Error processing arguments");
         cocostudio::ActionObject* ret = cobj->getActionByName(arg0, arg1);
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ActionObject>(cx, (cocostudio::ActionObject*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::ActionObject>(cx, (cocostudio::ActionObject*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -636,14 +630,11 @@ bool js_cocos2dx_studio_ActionManagerEx_playActionByName(JSContext *cx, uint32_t
             if (!ok) { ok = true; break; }
             cocostudio::ActionObject* ret = cobj->playActionByName(arg0, arg1, arg2);
             jsval jsret = JSVAL_NULL;
-            do {
             if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ActionObject>(cx, (cocostudio::ActionObject*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::ActionObject>(cx, (cocostudio::ActionObject*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
             args.rval().set(jsret);
             return true;
         }
@@ -659,14 +650,11 @@ bool js_cocos2dx_studio_ActionManagerEx_playActionByName(JSContext *cx, uint32_t
             if (!ok) { ok = true; break; }
             cocostudio::ActionObject* ret = cobj->playActionByName(arg0, arg1);
             jsval jsret = JSVAL_NULL;
-            do {
             if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ActionObject>(cx, (cocostudio::ActionObject*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::ActionObject>(cx, (cocostudio::ActionObject*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
             args.rval().set(jsret);
             return true;
         }
@@ -708,17 +696,10 @@ bool js_cocos2dx_studio_ActionManagerEx_getInstance(JSContext *cx, uint32_t argc
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
 
-        cocostudio::ActionManagerEx* ret = cocostudio::ActionManagerEx::getInstance();
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ActionManagerEx>(cx, (cocostudio::ActionManagerEx*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
+        auto ret = cocostudio::ActionManagerEx::getInstance();
+        js_type_class_t *typeClass = js_get_type_from_native<cocostudio::ActionManagerEx>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_singleton_get_or_create_jsobject(cx, ret, typeClass, "cocostudio::ActionManagerEx"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
     JS_ReportError(cx, "js_cocos2dx_studio_ActionManagerEx_getInstance : wrong number of arguments");
@@ -908,14 +889,11 @@ bool js_cocos2dx_studio_MovementData_getMovementBoneData(JSContext *cx, uint32_t
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_MovementData_getMovementBoneData : Error processing arguments");
         cocostudio::MovementBoneData* ret = cobj->getMovementBoneData(arg0);
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::MovementBoneData>(cx, (cocostudio::MovementBoneData*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::MovementBoneData>(cx, (cocostudio::MovementBoneData*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -1044,14 +1022,11 @@ bool js_cocos2dx_studio_AnimationData_getMovement(JSContext *cx, uint32_t argc, 
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_AnimationData_getMovement : Error processing arguments");
         cocostudio::MovementData* ret = cobj->getMovement(arg0);
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::MovementData>(cx, (cocostudio::MovementData*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::MovementData>(cx, (cocostudio::MovementData*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -1316,14 +1291,11 @@ bool js_cocos2dx_studio_TextureData_getContourData(JSContext *cx, uint32_t argc,
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_TextureData_getContourData : Error processing arguments");
         cocostudio::ContourData* ret = cobj->getContourData(arg0);
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ContourData>(cx, (cocostudio::ContourData*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::ContourData>(cx, (cocostudio::ContourData*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -1842,14 +1814,11 @@ bool js_cocos2dx_studio_Tween_getAnimation(JSContext *cx, uint32_t argc, jsval *
     if (argc == 0) {
         cocostudio::ArmatureAnimation* ret = cobj->getAnimation();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ArmatureAnimation>(cx, (cocostudio::ArmatureAnimation*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::ArmatureAnimation>(cx, (cocostudio::ArmatureAnimation*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -2185,14 +2154,11 @@ bool js_cocos2dx_studio_ColliderDetector_getBone(JSContext *cx, uint32_t argc, j
     if (argc == 0) {
         cocostudio::Bone* ret = cobj->getBone();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::Bone>(cx, (cocostudio::Bone*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::Bone>(cx, (cocostudio::Bone*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -2385,14 +2351,11 @@ bool js_cocos2dx_studio_ColliderDetector_create(JSContext *cx, uint32_t argc, js
             if (!ok) { ok = true; break; }
             cocostudio::ColliderDetector* ret = cocostudio::ColliderDetector::create(arg0);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ColliderDetector>(cx, (cocostudio::ColliderDetector*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::ColliderDetector>(cx, (cocostudio::ColliderDetector*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -2402,14 +2365,11 @@ bool js_cocos2dx_studio_ColliderDetector_create(JSContext *cx, uint32_t argc, js
         if (argc == 0) {
             cocostudio::ColliderDetector* ret = cocostudio::ColliderDetector::create();
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ColliderDetector>(cx, (cocostudio::ColliderDetector*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::ColliderDetector>(cx, (cocostudio::ColliderDetector*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -2481,14 +2441,11 @@ bool js_cocos2dx_studio_DecorativeDisplay_getColliderDetector(JSContext *cx, uin
     if (argc == 0) {
         cocostudio::ColliderDetector* ret = cobj->getColliderDetector();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ColliderDetector>(cx, (cocostudio::ColliderDetector*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::ColliderDetector>(cx, (cocostudio::ColliderDetector*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -2506,14 +2463,11 @@ bool js_cocos2dx_studio_DecorativeDisplay_getDisplay(JSContext *cx, uint32_t arg
     if (argc == 0) {
         cocos2d::Node* ret = cobj->getDisplay();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Node>(cx, (cocos2d::Node*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -2605,14 +2559,11 @@ bool js_cocos2dx_studio_DecorativeDisplay_getDisplayData(JSContext *cx, uint32_t
     if (argc == 0) {
         cocostudio::DisplayData* ret = cobj->getDisplayData();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::DisplayData>(cx, (cocostudio::DisplayData*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::DisplayData>(cx, (cocostudio::DisplayData*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -2726,14 +2677,11 @@ bool js_cocos2dx_studio_DisplayManager_getCurrentDecorativeDisplay(JSContext *cx
     if (argc == 0) {
         cocostudio::DecorativeDisplay* ret = cobj->getCurrentDecorativeDisplay();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::DecorativeDisplay>(cx, (cocostudio::DecorativeDisplay*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::DecorativeDisplay>(cx, (cocostudio::DecorativeDisplay*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -2751,14 +2699,11 @@ bool js_cocos2dx_studio_DisplayManager_getDisplayRenderNode(JSContext *cx, uint3
     if (argc == 0) {
         cocos2d::Node* ret = cobj->getDisplayRenderNode();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Node>(cx, (cocos2d::Node*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -3141,14 +3086,11 @@ bool js_cocos2dx_studio_DisplayManager_getDecorativeDisplayByIndex(JSContext *cx
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_DisplayManager_getDecorativeDisplayByIndex : Error processing arguments");
         cocostudio::DecorativeDisplay* ret = cobj->getDecorativeDisplayByIndex(arg0);
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::DecorativeDisplay>(cx, (cocostudio::DecorativeDisplay*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::DecorativeDisplay>(cx, (cocostudio::DecorativeDisplay*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -3441,14 +3383,11 @@ bool js_cocos2dx_studio_Bone_getDisplayRenderNode(JSContext *cx, uint32_t argc, 
     if (argc == 0) {
         cocos2d::Node* ret = cobj->getDisplayRenderNode();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Node>(cx, (cocos2d::Node*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -3512,14 +3451,11 @@ bool js_cocos2dx_studio_Bone_getWorldInfo(JSContext *cx, uint32_t argc, jsval *v
     if (argc == 0) {
         cocostudio::BaseData* ret = cobj->getWorldInfo();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::BaseData>(cx, (cocostudio::BaseData*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::BaseData>(cx, (cocostudio::BaseData*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -3537,14 +3473,11 @@ bool js_cocos2dx_studio_Bone_getTween(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 0) {
         cocostudio::Tween* ret = cobj->getTween();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::Tween>(cx, (cocostudio::Tween*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::Tween>(cx, (cocostudio::Tween*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -3562,14 +3495,11 @@ bool js_cocos2dx_studio_Bone_getParentBone(JSContext *cx, uint32_t argc, jsval *
     if (argc == 0) {
         cocostudio::Bone* ret = cobj->getParentBone();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::Bone>(cx, (cocostudio::Bone*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::Bone>(cx, (cocostudio::Bone*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -3855,14 +3785,11 @@ bool js_cocos2dx_studio_Bone_getColliderDetector(JSContext *cx, uint32_t argc, j
     if (argc == 0) {
         cocostudio::ColliderDetector* ret = cobj->getColliderDetector();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ColliderDetector>(cx, (cocostudio::ColliderDetector*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::ColliderDetector>(cx, (cocostudio::ColliderDetector*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -3880,14 +3807,11 @@ bool js_cocos2dx_studio_Bone_getChildArmature(JSContext *cx, uint32_t argc, jsva
     if (argc == 0) {
         cocostudio::Armature* ret = cobj->getChildArmature();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::Armature>(cx, (cocostudio::Armature*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::Armature>(cx, (cocostudio::Armature*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -4073,14 +3997,11 @@ bool js_cocos2dx_studio_Bone_getDisplayManager(JSContext *cx, uint32_t argc, jsv
     if (argc == 0) {
         cocostudio::DisplayManager* ret = cobj->getDisplayManager();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::DisplayManager>(cx, (cocostudio::DisplayManager*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::DisplayManager>(cx, (cocostudio::DisplayManager*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -4098,14 +4019,11 @@ bool js_cocos2dx_studio_Bone_getArmature(JSContext *cx, uint32_t argc, jsval *vp
     if (argc == 0) {
         cocostudio::Armature* ret = cobj->getArmature();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::Armature>(cx, (cocostudio::Armature*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::Armature>(cx, (cocostudio::Armature*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -4125,14 +4043,11 @@ bool js_cocos2dx_studio_Bone_create(JSContext *cx, uint32_t argc, jsval *vp)
             if (!ok) { ok = true; break; }
             cocostudio::Bone* ret = cocostudio::Bone::create(arg0);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::Bone>(cx, (cocostudio::Bone*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::Bone>(cx, (cocostudio::Bone*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -4142,14 +4057,11 @@ bool js_cocos2dx_studio_Bone_create(JSContext *cx, uint32_t argc, jsval *vp)
         if (argc == 0) {
             cocostudio::Bone* ret = cocostudio::Bone::create();
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::Bone>(cx, (cocostudio::Bone*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::Bone>(cx, (cocostudio::Bone*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -4498,14 +4410,11 @@ bool js_cocos2dx_studio_ArmatureAnimation_getAnimationData(JSContext *cx, uint32
     if (argc == 0) {
         cocostudio::AnimationData* ret = cobj->getAnimationData();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::AnimationData>(cx, (cocostudio::AnimationData*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::AnimationData>(cx, (cocostudio::AnimationData*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -4952,14 +4861,11 @@ bool js_cocos2dx_studio_ArmatureDataManager_getTextureData(JSContext *cx, uint32
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ArmatureDataManager_getTextureData : Error processing arguments");
         cocostudio::TextureData* ret = cobj->getTextureData(arg0);
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::TextureData>(cx, (cocostudio::TextureData*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::TextureData>(cx, (cocostudio::TextureData*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -4981,14 +4887,11 @@ bool js_cocos2dx_studio_ArmatureDataManager_getArmatureData(JSContext *cx, uint3
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ArmatureDataManager_getArmatureData : Error processing arguments");
         cocostudio::ArmatureData* ret = cobj->getArmatureData(arg0);
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ArmatureData>(cx, (cocostudio::ArmatureData*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::ArmatureData>(cx, (cocostudio::ArmatureData*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -5010,14 +4913,11 @@ bool js_cocos2dx_studio_ArmatureDataManager_getAnimationData(JSContext *cx, uint
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ArmatureDataManager_getAnimationData : Error processing arguments");
         cocostudio::AnimationData* ret = cobj->getAnimationData(arg0);
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::AnimationData>(cx, (cocostudio::AnimationData*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::AnimationData>(cx, (cocostudio::AnimationData*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -5270,17 +5170,10 @@ bool js_cocos2dx_studio_ArmatureDataManager_getInstance(JSContext *cx, uint32_t 
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
 
-        cocostudio::ArmatureDataManager* ret = cocostudio::ArmatureDataManager::getInstance();
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ArmatureDataManager>(cx, (cocostudio::ArmatureDataManager*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
+        auto ret = cocostudio::ArmatureDataManager::getInstance();
+        js_type_class_t *typeClass = js_get_type_from_native<cocostudio::ArmatureDataManager>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_singleton_get_or_create_jsobject(cx, ret, typeClass, "cocostudio::ArmatureDataManager"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
     JS_ReportError(cx, "js_cocos2dx_studio_ArmatureDataManager_getInstance : wrong number of arguments");
@@ -5364,14 +5257,11 @@ bool js_cocos2dx_studio_Armature_getBone(JSContext *cx, uint32_t argc, jsval *vp
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Armature_getBone : Error processing arguments");
         cocostudio::Bone* ret = cobj->getBone(arg0);
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::Bone>(cx, (cocostudio::Bone*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::Bone>(cx, (cocostudio::Bone*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -5453,14 +5343,11 @@ bool js_cocos2dx_studio_Armature_getBoneAtPoint(JSContext *cx, uint32_t argc, js
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Armature_getBoneAtPoint : Error processing arguments");
         cocostudio::Bone* ret = cobj->getBoneAtPoint(arg0, arg1);
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::Bone>(cx, (cocostudio::Bone*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::Bone>(cx, (cocostudio::Bone*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -5532,14 +5419,11 @@ bool js_cocos2dx_studio_Armature_getParentBone(JSContext *cx, uint32_t argc, jsv
     if (argc == 0) {
         cocostudio::Bone* ret = cobj->getParentBone();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::Bone>(cx, (cocostudio::Bone*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::Bone>(cx, (cocostudio::Bone*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -5587,14 +5471,11 @@ bool js_cocos2dx_studio_Armature_getBatchNode(JSContext *cx, uint32_t argc, jsva
     if (argc == 0) {
         cocostudio::BatchNode* ret = cobj->getBatchNode();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::BatchNode>(cx, (cocostudio::BatchNode*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::BatchNode>(cx, (cocostudio::BatchNode*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -5795,14 +5676,11 @@ bool js_cocos2dx_studio_Armature_getArmatureData(JSContext *cx, uint32_t argc, j
     if (argc == 0) {
         cocostudio::ArmatureData* ret = cobj->getArmatureData();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ArmatureData>(cx, (cocostudio::ArmatureData*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::ArmatureData>(cx, (cocostudio::ArmatureData*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -5856,14 +5734,11 @@ bool js_cocos2dx_studio_Armature_getAnimation(JSContext *cx, uint32_t argc, jsva
     if (argc == 0) {
         cocostudio::ArmatureAnimation* ret = cobj->getAnimation();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ArmatureAnimation>(cx, (cocostudio::ArmatureAnimation*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::ArmatureAnimation>(cx, (cocostudio::ArmatureAnimation*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -5939,14 +5814,11 @@ bool js_cocos2dx_studio_Armature_create(JSContext *cx, uint32_t argc, jsval *vp)
             if (!ok) { ok = true; break; }
             cocostudio::Armature* ret = cocostudio::Armature::create(arg0);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::Armature>(cx, (cocostudio::Armature*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::Armature>(cx, (cocostudio::Armature*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -5956,14 +5828,11 @@ bool js_cocos2dx_studio_Armature_create(JSContext *cx, uint32_t argc, jsval *vp)
         if (argc == 0) {
             cocostudio::Armature* ret = cocostudio::Armature::create();
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::Armature>(cx, (cocostudio::Armature*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::Armature>(cx, (cocostudio::Armature*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -5987,14 +5856,11 @@ bool js_cocos2dx_studio_Armature_create(JSContext *cx, uint32_t argc, jsval *vp)
             if (!ok) { ok = true; break; }
             cocostudio::Armature* ret = cocostudio::Armature::create(arg0, arg1);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::Armature>(cx, (cocostudio::Armature*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::Armature>(cx, (cocostudio::Armature*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -6116,14 +5982,11 @@ bool js_cocos2dx_studio_Skin_getBone(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 0) {
         cocostudio::Bone* ret = cobj->getBone();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::Bone>(cx, (cocostudio::Bone*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::Bone>(cx, (cocostudio::Bone*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -6223,14 +6086,11 @@ bool js_cocos2dx_studio_Skin_create(JSContext *cx, uint32_t argc, jsval *vp)
             if (!ok) { ok = true; break; }
             cocostudio::Skin* ret = cocostudio::Skin::create(arg0);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::Skin>(cx, (cocostudio::Skin*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::Skin>(cx, (cocostudio::Skin*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -6240,14 +6100,11 @@ bool js_cocos2dx_studio_Skin_create(JSContext *cx, uint32_t argc, jsval *vp)
         if (argc == 0) {
             cocostudio::Skin* ret = cocostudio::Skin::create();
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::Skin>(cx, (cocostudio::Skin*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::Skin>(cx, (cocostudio::Skin*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -7713,14 +7570,11 @@ bool js_cocos2dx_studio_ComRender_getNode(JSContext *cx, uint32_t argc, jsval *v
     if (argc == 0) {
         cocos2d::Node* ret = cobj->getNode();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Node>(cx, (cocos2d::Node*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -7751,14 +7605,11 @@ bool js_cocos2dx_studio_ComRender_create(JSContext *cx, uint32_t argc, jsval *vp
             if (!ok) { ok = true; break; }
             cocostudio::ComRender* ret = cocostudio::ComRender::create(arg0, arg1);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ComRender>(cx, (cocostudio::ComRender*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::ComRender>(cx, (cocostudio::ComRender*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -7768,14 +7619,11 @@ bool js_cocos2dx_studio_ComRender_create(JSContext *cx, uint32_t argc, jsval *vp
         if (argc == 0) {
             cocostudio::ComRender* ret = cocostudio::ComRender::create();
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ComRender>(cx, (cocostudio::ComRender*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::ComRender>(cx, (cocostudio::ComRender*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -7904,14 +7752,11 @@ bool js_cocos2dx_studio_Frame_clone(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 0) {
         cocostudio::timeline::Frame* ret = cobj->clone();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::timeline::Frame>(cx, (cocostudio::timeline::Frame*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::timeline::Frame>(cx, (cocostudio::timeline::Frame*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -8137,14 +7982,11 @@ bool js_cocos2dx_studio_Frame_getTimeline(JSContext *cx, uint32_t argc, jsval *v
     if (argc == 0) {
         cocostudio::timeline::Timeline* ret = cobj->getTimeline();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::timeline::Timeline>(cx, (cocostudio::timeline::Timeline*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::timeline::Timeline>(cx, (cocostudio::timeline::Timeline*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -8162,14 +8004,11 @@ bool js_cocos2dx_studio_Frame_getNode(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 0) {
         cocos2d::Node* ret = cobj->getNode();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Node>(cx, (cocos2d::Node*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -10243,14 +10082,11 @@ bool js_cocos2dx_studio_Timeline_clone(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 0) {
         cocostudio::timeline::Timeline* ret = cobj->clone();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::timeline::Timeline>(cx, (cocostudio::timeline::Timeline*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::timeline::Timeline>(cx, (cocostudio::timeline::Timeline*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -10316,14 +10152,11 @@ bool js_cocos2dx_studio_Timeline_getActionTimeline(JSContext *cx, uint32_t argc,
     if (argc == 0) {
         cocostudio::timeline::ActionTimeline* ret = cobj->getActionTimeline();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::timeline::ActionTimeline>(cx, (cocostudio::timeline::ActionTimeline*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::timeline::ActionTimeline>(cx, (cocostudio::timeline::ActionTimeline*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -10455,14 +10288,11 @@ bool js_cocos2dx_studio_Timeline_getNode(JSContext *cx, uint32_t argc, jsval *vp
     if (argc == 0) {
         cocos2d::Node* ret = cobj->getNode();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Node>(cx, (cocos2d::Node*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -10798,14 +10628,11 @@ bool js_cocos2dx_studio_ActionTimeline_setFrameEventCallFunc(JSContext *cx, uint
 		        auto lambda = [=](cocostudio::timeline::Frame* larg0) -> void {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[1];
-		            do {
 		            if (larg0) {
-		                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::timeline::Frame>(cx, (cocostudio::timeline::Frame*)larg0);
-		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
-		            } else {
-		                largv[0] = JSVAL_NULL;
-		            }
-		        } while (0);
+		            largv[0] = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::timeline::Frame>(cx, (cocostudio::timeline::Frame*)larg0));
+		        } else {
+		            largv[0] = JSVAL_NULL;
+		        };
 		            JS::RootedValue rval(cx);
 		            bool succeed = func->invoke(1, &largv[0], &rval);
 		            if (!succeed && JS_IsExceptionPending(cx)) {
@@ -11945,14 +11772,11 @@ bool js_cocos2dx_studio_BoneNode_getRootSkeletonNode(JSContext *cx, uint32_t arg
     if (argc == 0) {
         cocostudio::timeline::SkeletonNode* ret = cobj->getRootSkeletonNode();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::timeline::SkeletonNode>(cx, (cocostudio::timeline::SkeletonNode*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::timeline::SkeletonNode>(cx, (cocostudio::timeline::SkeletonNode*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
@@ -12120,14 +11944,11 @@ bool js_cocos2dx_studio_BoneNode_create(JSContext *cx, uint32_t argc, jsval *vp)
             if (!ok) { ok = true; break; }
             cocostudio::timeline::BoneNode* ret = cocostudio::timeline::BoneNode::create(arg0);
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::timeline::BoneNode>(cx, (cocostudio::timeline::BoneNode*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::timeline::BoneNode>(cx, (cocostudio::timeline::BoneNode*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -12137,14 +11958,11 @@ bool js_cocos2dx_studio_BoneNode_create(JSContext *cx, uint32_t argc, jsval *vp)
         if (argc == 0) {
             cocostudio::timeline::BoneNode* ret = cocostudio::timeline::BoneNode::create();
             jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::timeline::BoneNode>(cx, (cocostudio::timeline::BoneNode*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::timeline::BoneNode>(cx, (cocostudio::timeline::BoneNode*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
             args.rval().set(jsret);
             return true;
         }
@@ -12266,14 +12084,11 @@ bool js_cocos2dx_studio_SkeletonNode_getBoneNode(JSContext *cx, uint32_t argc, j
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_SkeletonNode_getBoneNode : Error processing arguments");
         cocostudio::timeline::BoneNode* ret = cobj->getBoneNode(arg0);
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::timeline::BoneNode>(cx, (cocostudio::timeline::BoneNode*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocostudio::timeline::BoneNode>(cx, (cocostudio::timeline::BoneNode*)ret));
+        } else {
+            jsret = JSVAL_NULL;
+        };
         args.rval().set(jsret);
         return true;
     }
