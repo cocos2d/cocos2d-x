@@ -105,9 +105,9 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
         JS::RootedObject js_obj(cx, JS_NewObject(cx, typeProxy->jsclass, proto, parent));
         proxy = jsb_new_proxy(native_obj, js_obj);
 #ifdef DEBUG
-        AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
+        JS::AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
 #else
-        AddObjectRoot(cx, &proxy->obj);
+        JS::AddObjectRoot(cx, &proxy->obj);
 #endif
         return proxy;
     } else {
@@ -133,7 +133,11 @@ JSObject* js_get_or_create_jsobject(JSContext *cx, typename std::enable_if<!std:
         JS::RootedObject parent(cx, typeClass->parentProto.ref().get());
         JS::RootedObject js_obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
         proxy = jsb_new_proxy(native_obj, js_obj);
+#ifdef DEBUG
         AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
+#else
+        AddObjectRoot(cx, &proxy->obj);
+#endif
     }
     return proxy->obj;
 }
