@@ -102,7 +102,7 @@
 -- @return TextureCache#TextureCache self (return value: cc.TextureCache)
         
 --------------------------------
---  Reload texuture from a new file.<br>
+--  Reload texture from a new file.<br>
 -- This function is mainly for editor, won't suggest use it in game for performance reason.<br>
 -- param srcName Original texture file name.<br>
 -- param dstName New texture file name.<br>
