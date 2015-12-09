@@ -1089,7 +1089,23 @@ bool UIButtonCloneTest::init()
         buttonCopy->setPosition(Vec2(widgetSize.width / 2.0f + 80,
                                      widgetSize.height / 2.0f + 40));
         this->addChild(buttonCopy);
-
+        
+        
+        
+        auto buttonScale9Copy = (Button*)button->clone();
+        buttonScale9Copy->setPosition(button->getPosition() + Vec2(0, -60));
+        buttonScale9Copy->setScale9Enabled(true);
+        buttonScale9Copy->setContentSize(button->getContentSize() * 1.5);
+        this->addChild(buttonScale9Copy);
+        
+        
+        auto buttonScale9Copy2 = (Button*)buttonScale9Copy->clone();
+        buttonScale9Copy2->setPosition(buttonCopy->getPosition() + Vec2(0, -60));
+        buttonScale9Copy2->setScale9Enabled(true);
+        buttonScale9Copy2->setContentSize(buttonCopy->getContentSize() * 1.5);
+        this->addChild(buttonScale9Copy2);
+        
+        
         CCASSERT(button->getTitleRenderer() == nullptr,
                  "Original Button title render must be nullptr ");
 

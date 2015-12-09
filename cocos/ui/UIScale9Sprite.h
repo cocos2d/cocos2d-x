@@ -687,7 +687,6 @@ namespace ui {
         TrianglesCommand::Triangles calculateTriangles(const std::vector<Vec2>& uv,
                                                       const std::vector<Vec2>& vertices);
         
-        bool _spritesGenerated;
         Rect _spriteRect;
         bool   _spriteFrameRotated;
         Rect _capInsetsInternal;
