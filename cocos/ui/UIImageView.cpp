@@ -136,7 +136,10 @@ void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
         default:
             break;
     }
-
+    //FIXME: https://github.com/cocos2d/cocos2d-x/issues/12249
+    if (!_ignoreSize) {
+        _customSize = _imageRenderer->getContentSize();
+    }
     this->setupTexture();
 }
 

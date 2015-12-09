@@ -11,6 +11,7 @@ UISliderTests::UISliderTests()
     ADD_TEST_CASE(UISliderNormalDefaultTest);
     ADD_TEST_CASE(UISliderDisabledDefaultTest);
     ADD_TEST_CASE(UISliderNewEventCallbackTest);
+    ADD_TEST_CASE(UISliderIssue12249Test);
 }
 
 // UISliderTest
@@ -369,4 +370,58 @@ bool UISliderNewEventCallbackTest::init()
         return true;
     }
     return false;
+}
+
+
+// UISliderIssue12249Test
+
+UISliderIssue12249Test::UISliderIssue12249Test()
+: _displayValueLabel(nullptr)
+{
+    
+}
+
+UISliderIssue12249Test::~UISliderIssue12249Test()
+{
+}
+
+bool UISliderIssue12249Test::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the slider alert will be displayed
+        _displayValueLabel = TextBMFont::create("Move the slider thumb", "ccb/markerfelt24shadow.fnt");
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Create the slider
+        Slider* slider = Slider::create();
+        slider->setScale9Enabled(true);
+        slider->loadBarTexture("cocosui/sliderTrack.png");
+        slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+        slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+        slider->setContentSize(Size(300, slider->getContentSize().height * 1.5));
+        slider->setMaxPercent(10000);
+        slider->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 2.0f*/));
+        slider->addEventListener(CC_CALLBACK_2(UISliderIssue12249Test::sliderEvent, this));
+        _uiLayer->addChild(slider);
+        
+        
+        return true;
+    }
+    return false;
+}
+
+void UISliderIssue12249Test::sliderEvent(Ref *pSender, Slider::EventType type)
+{
+    if (type == Slider::EventType::ON_PERCENTAGE_CHANGED)
+    {
+        Slider* slider = dynamic_cast<Slider*>(pSender);
+        int percent = slider->getPercent();
+        int maxPercent = slider->getMaxPercent();
+        _displayValueLabel->setString(StringUtils::format("Percent %f", 10000.0 * percent / maxPercent));
+    }
 }

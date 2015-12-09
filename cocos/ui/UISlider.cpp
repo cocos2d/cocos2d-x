@@ -171,6 +171,10 @@ void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
             break;
         }
     }
+    //FIXME: https://github.com/cocos2d/cocos2d-x/issues/12249
+    if (!_ignoreSize) {
+        _customSize = _barRenderer->getContentSize();
+    }
     this->setupBarTexture();
 }
 void Slider::loadBarTexture(SpriteFrame* spriteframe)

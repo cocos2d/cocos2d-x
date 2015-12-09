@@ -161,6 +161,11 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
         default:
             break;
     }
+    
+    //FIXME: https://github.com/cocos2d/cocos2d-x/issues/12249
+    if (!_ignoreSize) {
+        _customSize = _barRenderer->getContentSize();
+    }
     this->setupTexture();
 }
 
@@ -203,6 +208,7 @@ void LoadingBar::setupTexture()
     this->updateChildrenDisplayedRGBA();
 
     barRendererScaleChangedWithSize();
+
     updateContentSizeWithTextureSize(_barRendererTextureSize);
 
     this->updateProgressBar();
