@@ -294,6 +294,15 @@ public:
      */
     void disableEffect(LabelEffect effect);
 
+    bool isShadowEnabled() const;
+    Size getShadowOffset() const;
+    float getShadowBlurRadius() const;
+    Color4B getShadowColor() const;
+
+    int getOutlineSize() const;
+    LabelEffect getLabelEffectType() const;
+    Color4B getEffectColor() const;
+
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     virtual bool init(const std::string& textContent,
