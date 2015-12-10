@@ -1022,10 +1022,10 @@ void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */
             _effectColorF.g = outlineColor.g / 255.f;
             _effectColorF.b = outlineColor.b / 255.f;
             _effectColorF.a = outlineColor.a / 255.f;
-            _outlineSize = outlineSize;
             _currLabelEffect = LabelEffect::OUTLINE;
             _contentDirty = true;
         }
+        _outlineSize = outlineSize;
     }
 }
 

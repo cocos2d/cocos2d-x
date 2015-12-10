@@ -349,6 +349,15 @@ public:
      */
     virtual void disableEffect(LabelEffect effect);
 
+    bool isShadowEnabled() const { return _shadowEnabled; }
+    Size getShadowOffset() const { return _shadowOffset; }
+    float getShadowBlurRadius() const { return _shadowBlurRadius; }
+    Color4F getShadowColor() const { return _shadowColor4F; }
+
+    int getOutlineSize() const { return _outlineSize; }
+    LabelEffect getLabelEffectType() const { return _currLabelEffect; }
+    Color4F getEffectColor() const { return _effectColorF; }
+
     /** Sets the Label's text horizontal alignment.*/
     void setAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment);}
 
