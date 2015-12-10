@@ -872,16 +872,19 @@ void __JSDownloaderDelegator::startDownload()
         _downloader->onDataTaskSuccess = [this](const cocos2d::network::DownloadTask& task,
                                                 std::vector<unsigned char>& data)
         {
-            Image img;
+            Image* img = new (std::nothrow) Image();
             Texture2D *tex = nullptr;
             do
             {
-                if (false == img.initWithImageData(data.data(), data.size()))
+                if (false == img->initWithImageData(data.data(), data.size()))
                 {
                     break;
                 }
-                tex = Director::getInstance()->getTextureCache()->addImage(&img, _url);
+                tex = Director::getInstance()->getTextureCache()->addImage(img, _url);
             } while (0);
+            
+            CC_SAFE_RELEASE(img);
+            
             if (tex)
             {
                 this->onSuccess(tex);

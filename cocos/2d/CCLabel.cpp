@@ -586,7 +586,7 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& ima
         return false;
     }
 
-    //asign the default fontSize
+    //assign the default fontSize
     if (fabs(fontSize) < FLT_EPSILON) {
         FontFNT *bmFont = (FontFNT*)newAtlas->getFont();
         if (bmFont) {
@@ -1939,7 +1939,7 @@ float Label::getRenderingFontSize()const
         fontSize = this->getTTFConfig().fontSize;
     }else if(_currentLabelType == LabelType::STRING_TEXTURE){
         fontSize = _systemFontSize;
-    }else{ //FIXME: find a way to caculate char map font size
+    }else{ //FIXME: find a way to calculate char map font size
         fontSize = this->getLineHeight();
     }
     return fontSize;

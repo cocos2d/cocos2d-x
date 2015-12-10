@@ -116,7 +116,7 @@
 -- @return Mesh#Mesh self (return value: cc.Mesh)
         
 --------------------------------
--- set enable check texture, check texture each frame if eanble is true. It is false by default
+-- set enable check texture, check texture each frame if enable is true. It is false by default
 -- @function [parent=#Mesh] setEnableCheckTexture 
 -- @param self
 -- @param #bool enableCheckTexture
