@@ -207,7 +207,7 @@ public:
     void setDirty(bool dirty) { _dirty = dirty; }
     bool isDirty() const { return _dirty; }
 
-    /** Reload texuture from a new file.
+    /** Reload texture from a new file.
     * This function is mainly for editor, won't suggest use it in game for performance reason.
     *
     * @param srcName Original texture file name.

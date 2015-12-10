@@ -265,7 +265,7 @@ private:
 
    /**
     *QuadTree
-    * @breif use to hierarchically frustum culling and set LOD
+    * @brief use to hierarchically frustum culling and set LOD
     **/
     struct CC_DLL QuadTree
     {
