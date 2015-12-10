@@ -38,9 +38,11 @@ public:
     ~UISliderTest();
     virtual bool init() override;
     void sliderEvent(cocos2d::Ref* sender, cocos2d::ui::Slider::EventType type);
+    void printWidgetResources(cocos2d::Ref* sender);
     
 protected:
     cocos2d::ui::TextBMFont* _displayValueLabel;
+    cocos2d::ui::Slider* _slider;
 };
 
 class UISliderTest_Scale9 : public UIScene
