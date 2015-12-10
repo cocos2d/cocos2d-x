@@ -6,7 +6,7 @@
 
 --------------------------------
 --  Unbinds the Pass.<br>
--- This method must be called AFTER calling the actuall draw call
+-- This method must be called AFTER calling the actual draw call
 -- @function [parent=#Pass] unbind 
 -- @param self
 -- @return Pass#Pass self (return value: cc.Pass)
