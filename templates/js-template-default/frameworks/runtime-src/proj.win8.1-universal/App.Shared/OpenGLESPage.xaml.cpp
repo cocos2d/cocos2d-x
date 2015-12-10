@@ -155,7 +155,7 @@ void OpenGLESPage::CreateRenderSurface()
 {
     if (mOpenGLES && mRenderSurface == EGL_NO_SURFACE)
     {
-        // The app can configure the the SwapChainPanel which may boost performance.
+        // The app can configure the SwapChainPanel which may boost performance.
         // By default, this template uses the default configuration.
         mRenderSurface = mOpenGLES->CreateSurface(swapChainPanel, nullptr, nullptr);
 
