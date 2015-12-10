@@ -205,6 +205,11 @@ public:
     */
     const Vector<Mesh*>& getMeshes() const { return _meshes; }
 
+    /**
+    * set enable check texture, check texture each frame if enable is true. It is false by default
+    */
+    void setEnableCheckTexture(bool enableCheckTexture);
+
 CC_CONSTRUCTOR_ACCESS:
     
     Sprite3D();

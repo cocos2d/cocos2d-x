@@ -925,6 +925,13 @@ void Sprite3D::setForce2DQueue(bool force2D)
     }
 }
 
+void Sprite3D::setEnableCheckTexture(bool enableCheckTexture)
+{
+    for (const auto &mesh : _meshes) {
+        mesh->setEnableCheckTexture(enableCheckTexture);
+    }
+}
+
 ///////////////////////////////////////////////////////////////////////////////////
 Sprite3DCache* Sprite3DCache::_cacheInstance = nullptr;
 Sprite3DCache* Sprite3DCache::getInstance()
