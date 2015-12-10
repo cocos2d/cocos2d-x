@@ -19,6 +19,8 @@ public class Cocos2dxDownloader {
     private AsyncHttpClient _httpClient;
     private String _tempFileNameSufix;
     private int _countOfMaxProcessingTasks;
+    
+    private int runningTasks;
     private Queue<Runnable> _taskQueue;
 
     private SparseArray<RequestHandle> taskHandles;
@@ -70,6 +72,15 @@ public class Cocos2dxDownloader {
 		nativeOnFinish(_id, taskID, errCode, errStr, data);
 	    }
 	});
+	
+	synchronized (_taskQueue) {
+	    Runnable taskRunnable = Cocos2dxDownloader.this._taskQueue.poll();
+	    if (taskRunnable != null) {
+		Cocos2dxHelper.getActivity().runOnUiThread(taskRunnable);
+	    } else {
+		runningTasks--;
+	    }
+	}
     }
 
     @Deprecated
@@ -140,10 +151,14 @@ public class Cocos2dxDownloader {
 		taskHandles.put(taskID, handle);
 	    }
 	};
-	if (_taskQueue.size() < _countOfMaxProcessingTasks) {
-	    Cocos2dxHelper.getActivity().runOnUiThread(taskRunnable);
-	} else {
-	    _taskQueue.add(taskRunnable);
+	
+	synchronized (_taskQueue) {
+	    if (runningTasks < _countOfMaxProcessingTasks) {
+		Cocos2dxHelper.getActivity().runOnUiThread(taskRunnable);
+		runningTasks++;
+	    } else {
+		_taskQueue.add(taskRunnable);
+	    }
 	}
     }
     @Deprecated
@@ -251,15 +266,6 @@ public class Cocos2dxDownloader {
 	@Override
 	public void onStart() {
 	    Cocos2dxDownloader.this.onStart(_id);
-	}
-
-	@Override
-	public void onFinish() {
-	    // onFinish called after onSuccess/onFailure
-	    Runnable taskRunnable = Cocos2dxDownloader.this._taskQueue.poll();
-	    if (taskRunnable != null) {
-		Cocos2dxHelper.getActivity().runOnUiThread(taskRunnable);
-	    }
 	}
 
 	@Override
