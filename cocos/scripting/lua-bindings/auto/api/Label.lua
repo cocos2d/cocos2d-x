@@ -134,6 +134,19 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- @overload self, cc._ttfConfig, string, int, int         
+-- @overload self, string, string, float, size_table, int, int         
+-- @function [parent=#Label] initWithTTF
+-- @param self
+-- @param #string text
+-- @param #string fontFilePath
+-- @param #float fontSize
+-- @param #size_table dimensions
+-- @param #int hAlignment
+-- @param #int vAlignment
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
 -- 
 -- @function [parent=#Label] getFontAtlas 
 -- @param self

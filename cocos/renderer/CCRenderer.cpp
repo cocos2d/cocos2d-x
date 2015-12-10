@@ -869,7 +869,7 @@ void Renderer::drawBatchedTriangles()
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _filledIndex, _indices, GL_STATIC_DRAW);
     }
 
-    //Start drawing verties in batch
+    //Start drawing vertices in batch
     for(const auto& cmd : _batchedCommands)
     {
         auto newMaterialID = cmd->getMaterialID();

@@ -141,6 +141,12 @@
       <Filter>auto</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\component\CCComponentJS.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_module_register.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\js-BindingsExport.h">
+      <Filter>manual</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_auto.cpp">
@@ -261,6 +267,9 @@
       <Filter>auto</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\component\CCComponentJS.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_module_register.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="auto">

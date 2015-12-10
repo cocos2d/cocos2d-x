@@ -4650,8 +4650,8 @@ int lua_cocos2dx_ui_Layout_getRenderFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Layout_getRenderFile'", nullptr);
             return 0;
         }
-        cocos2d::ResouceData ret = cobj->getRenderFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
+        cocos2d::ResourceData ret = cobj->getRenderFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Layout:getRenderFile",argc, 0);
@@ -6515,8 +6515,8 @@ int lua_cocos2dx_ui_Button_getDisabledFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Button_getDisabledFile'", nullptr);
             return 0;
         }
-        cocos2d::ResouceData ret = cobj->getDisabledFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
+        cocos2d::ResourceData ret = cobj->getDisabledFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Button:getDisabledFile",argc, 0);
@@ -6706,8 +6706,8 @@ int lua_cocos2dx_ui_Button_getNormalFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Button_getNormalFile'", nullptr);
             return 0;
         }
-        cocos2d::ResouceData ret = cobj->getNormalFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
+        cocos2d::ResourceData ret = cobj->getNormalFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Button:getNormalFile",argc, 0);
@@ -7754,8 +7754,8 @@ int lua_cocos2dx_ui_Button_getPressedFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Button_getPressedFile'", nullptr);
             return 0;
         }
-        cocos2d::ResouceData ret = cobj->getPressedFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
+        cocos2d::ResourceData ret = cobj->getPressedFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Button:getPressedFile",argc, 0);
@@ -8288,6 +8288,53 @@ int lua_register_cocos2dx_ui_Button(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_ui_AbstractCheckButton_getCrossDisabledFile(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::AbstractCheckButton* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.AbstractCheckButton",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::AbstractCheckButton*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_AbstractCheckButton_getCrossDisabledFile'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_AbstractCheckButton_getCrossDisabledFile'", nullptr);
+            return 0;
+        }
+        cocos2d::ResourceData ret = cobj->getCrossDisabledFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.AbstractCheckButton:getCrossDisabledFile",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_AbstractCheckButton_getCrossDisabledFile'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_AbstractCheckButton_getBackDisabledFile(lua_State* tolua_S)
 {
     int argc = 0;
@@ -8321,8 +8368,8 @@ int lua_cocos2dx_ui_AbstractCheckButton_getBackDisabledFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_AbstractCheckButton_getBackDisabledFile'", nullptr);
             return 0;
         }
-        cocos2d::ResouceData ret = cobj->getBackDisabledFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
+        cocos2d::ResourceData ret = cobj->getBackDisabledFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.AbstractCheckButton:getBackDisabledFile",argc, 0);
@@ -8331,53 +8378,6 @@ int lua_cocos2dx_ui_AbstractCheckButton_getBackDisabledFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_AbstractCheckButton_getBackDisabledFile'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_ui_AbstractCheckButton_getCrossDisabeldFile(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::AbstractCheckButton* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.AbstractCheckButton",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::ui::AbstractCheckButton*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_AbstractCheckButton_getCrossDisabeldFile'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_AbstractCheckButton_getCrossDisabeldFile'", nullptr);
-            return 0;
-        }
-        cocos2d::ResouceData ret = cobj->getCrossDisabeldFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.AbstractCheckButton:getCrossDisabeldFile",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_AbstractCheckButton_getCrossDisabeldFile'.",&tolua_err);
 #endif
 
     return 0;
@@ -8549,8 +8549,8 @@ int lua_cocos2dx_ui_AbstractCheckButton_getCrossNormalFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_AbstractCheckButton_getCrossNormalFile'", nullptr);
             return 0;
         }
-        cocos2d::ResouceData ret = cobj->getCrossNormalFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
+        cocos2d::ResourceData ret = cobj->getCrossNormalFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.AbstractCheckButton:getCrossNormalFile",argc, 0);
@@ -8646,8 +8646,8 @@ int lua_cocos2dx_ui_AbstractCheckButton_getBackPressedFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_AbstractCheckButton_getBackPressedFile'", nullptr);
             return 0;
         }
-        cocos2d::ResouceData ret = cobj->getBackPressedFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
+        cocos2d::ResourceData ret = cobj->getBackPressedFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.AbstractCheckButton:getBackPressedFile",argc, 0);
@@ -9039,8 +9039,8 @@ int lua_cocos2dx_ui_AbstractCheckButton_getBackNormalFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_AbstractCheckButton_getBackNormalFile'", nullptr);
             return 0;
         }
-        cocos2d::ResouceData ret = cobj->getBackNormalFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
+        cocos2d::ResourceData ret = cobj->getBackNormalFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.AbstractCheckButton:getBackNormalFile",argc, 0);
@@ -9481,8 +9481,8 @@ int lua_register_cocos2dx_ui_AbstractCheckButton(lua_State* tolua_S)
     tolua_cclass(tolua_S,"AbstractCheckButton","ccui.AbstractCheckButton","ccui.Widget",nullptr);
 
     tolua_beginmodule(tolua_S,"AbstractCheckButton");
+        tolua_function(tolua_S,"getCrossDisabledFile",lua_cocos2dx_ui_AbstractCheckButton_getCrossDisabledFile);
         tolua_function(tolua_S,"getBackDisabledFile",lua_cocos2dx_ui_AbstractCheckButton_getBackDisabledFile);
-        tolua_function(tolua_S,"getCrossDisabeldFile",lua_cocos2dx_ui_AbstractCheckButton_getCrossDisabeldFile);
         tolua_function(tolua_S,"loadTextureBackGroundSelected",lua_cocos2dx_ui_AbstractCheckButton_loadTextureBackGroundSelected);
         tolua_function(tolua_S,"loadTextureBackGroundDisabled",lua_cocos2dx_ui_AbstractCheckButton_loadTextureBackGroundDisabled);
         tolua_function(tolua_S,"getCrossNormalFile",lua_cocos2dx_ui_AbstractCheckButton_getCrossNormalFile);
@@ -11017,8 +11017,8 @@ int lua_cocos2dx_ui_ImageView_getRenderFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ImageView_getRenderFile'", nullptr);
             return 0;
         }
-        cocos2d::ResouceData ret = cobj->getRenderFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
+        cocos2d::ResourceData ret = cobj->getRenderFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ImageView:getRenderFile",argc, 0);
@@ -12871,8 +12871,8 @@ int lua_cocos2dx_ui_TextAtlas_getRenderFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_TextAtlas_getRenderFile'", nullptr);
             return 0;
         }
-        cocos2d::ResouceData ret = cobj->getRenderFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
+        cocos2d::ResourceData ret = cobj->getRenderFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.TextAtlas:getRenderFile",argc, 0);
@@ -13350,8 +13350,8 @@ int lua_cocos2dx_ui_LoadingBar_getRenderFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_LoadingBar_getRenderFile'", nullptr);
             return 0;
         }
-        cocos2d::ResouceData ret = cobj->getRenderFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
+        cocos2d::ResourceData ret = cobj->getRenderFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.LoadingBar:getRenderFile",argc, 0);
@@ -18482,8 +18482,8 @@ int lua_cocos2dx_ui_Slider_getBallNormalFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Slider_getBallNormalFile'", nullptr);
             return 0;
         }
-        cocos2d::ResouceData ret = cobj->getBallNormalFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
+        cocos2d::ResourceData ret = cobj->getBallNormalFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Slider:getBallNormalFile",argc, 0);
@@ -18626,8 +18626,8 @@ int lua_cocos2dx_ui_Slider_getBallPressedFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Slider_getBallPressedFile'", nullptr);
             return 0;
         }
-        cocos2d::ResouceData ret = cobj->getBallPressedFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
+        cocos2d::ResourceData ret = cobj->getBallPressedFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Slider:getBallPressedFile",argc, 0);
@@ -19001,8 +19001,8 @@ int lua_cocos2dx_ui_Slider_getProgressBarFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Slider_getProgressBarFile'", nullptr);
             return 0;
         }
-        cocos2d::ResouceData ret = cobj->getProgressBarFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
+        cocos2d::ResourceData ret = cobj->getProgressBarFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Slider:getProgressBarFile",argc, 0);
@@ -19162,8 +19162,8 @@ int lua_cocos2dx_ui_Slider_getBackFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Slider_getBackFile'", nullptr);
             return 0;
         }
-        cocos2d::ResouceData ret = cobj->getBackFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
+        cocos2d::ResourceData ret = cobj->getBackFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Slider:getBackFile",argc, 0);
@@ -19219,6 +19219,53 @@ int lua_cocos2dx_ui_Slider_isScale9Enabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Slider_isScale9Enabled'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_Slider_getBallDisabledFile(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::Slider* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.Slider",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::Slider*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Slider_getBallDisabledFile'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Slider_getBallDisabledFile'", nullptr);
+            return 0;
+        }
+        cocos2d::ResourceData ret = cobj->getBallDisabledFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Slider:getBallDisabledFile",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Slider_getBallDisabledFile'.",&tolua_err);
 #endif
 
     return 0;
@@ -19319,53 +19366,6 @@ int lua_cocos2dx_ui_Slider_setCapInsetsBarRenderer(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Slider_setCapInsetsBarRenderer'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_ui_Slider_getBallDisabeldFile(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::Slider* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.Slider",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::ui::Slider*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Slider_getBallDisabeldFile'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Slider_getBallDisabeldFile'", nullptr);
-            return 0;
-        }
-        cocos2d::ResouceData ret = cobj->getBallDisabeldFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Slider:getBallDisabeldFile",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Slider_getBallDisabeldFile'.",&tolua_err);
 #endif
 
     return 0;
@@ -19753,9 +19753,9 @@ int lua_register_cocos2dx_ui_Slider(lua_State* tolua_S)
         tolua_function(tolua_S,"loadSlidBallTexturePressed",lua_cocos2dx_ui_Slider_loadSlidBallTexturePressed);
         tolua_function(tolua_S,"getBackFile",lua_cocos2dx_ui_Slider_getBackFile);
         tolua_function(tolua_S,"isScale9Enabled",lua_cocos2dx_ui_Slider_isScale9Enabled);
+        tolua_function(tolua_S,"getBallDisabledFile",lua_cocos2dx_ui_Slider_getBallDisabledFile);
         tolua_function(tolua_S,"setCapInsetProgressBarRebderer",lua_cocos2dx_ui_Slider_setCapInsetProgressBarRebderer);
         tolua_function(tolua_S,"setCapInsetsBarRenderer",lua_cocos2dx_ui_Slider_setCapInsetsBarRenderer);
-        tolua_function(tolua_S,"getBallDisabeldFile",lua_cocos2dx_ui_Slider_getBallDisabeldFile);
         tolua_function(tolua_S,"getPercent",lua_cocos2dx_ui_Slider_getPercent);
         tolua_function(tolua_S,"setCapInsets",lua_cocos2dx_ui_Slider_setCapInsets);
         tolua_function(tolua_S,"loadSlidBallTextureDisabled",lua_cocos2dx_ui_Slider_loadSlidBallTextureDisabled);
@@ -22127,8 +22127,8 @@ int lua_cocos2dx_ui_TextBMFont_getRenderFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_TextBMFont_getRenderFile'", nullptr);
             return 0;
         }
-        cocos2d::ResouceData ret = cobj->getRenderFile();
-        #pragma warning NO CONVERSION FROM NATIVE FOR ResouceData;
+        cocos2d::ResourceData ret = cobj->getRenderFile();
+        #pragma warning NO CONVERSION FROM NATIVE FOR ResourceData;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.TextBMFont:getRenderFile",argc, 0);

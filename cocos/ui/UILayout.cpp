@@ -38,7 +38,7 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "base/CCEventFocus.h"
 #include "base/CCStencilStateManager.hpp"
-#include "2d/CocosStudioExtension.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 
 NS_CC_BEGIN
@@ -557,8 +557,12 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
         addBackGroundImage();
         setBackGroundImage(_backGroundImageFileName,_bgImageTexType);
     }
-    _backGroundImage->setScale9Enabled(_backGroundScale9Enabled);
-    
+    if(_backGroundScale9Enabled){
+        _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+    }else{
+        _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+    }
+
     if (able) {
         _backGroundImage->setPreferredSize(_contentSize);
     }
@@ -580,7 +584,11 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
     if (_backGroundImage == nullptr)
     {
         addBackGroundImage();
-        _backGroundImage->setScale9Enabled(_backGroundScale9Enabled);
+        if(_backGroundScale9Enabled){
+            _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+        }else{
+            _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+        }
     }
     _backGroundImageFileName = fileName;
     _bgImageTexType = texType;
@@ -656,7 +664,7 @@ void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
 void Layout::addBackGroundImage()
 {
     _backGroundImage = Scale9Sprite::create();
-    _backGroundImage->setScale9Enabled(false);
+    _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
     
     addProtectedChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
    
@@ -1880,9 +1888,9 @@ void Layout::setCameraMask(unsigned short mask, bool applyChildren)
     }
 }
     
-ResouceData Layout::getRenderFile()
+ResourceData Layout::getRenderFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_bgImageTexType;
     rData.file = _backGroundImageFileName;
     return rData;

@@ -282,7 +282,7 @@ bool UILayoutTest_BackGroundImage::init()
 
 void UILayoutTest_BackGroundImage::printWidgetResources(cocos2d::Ref* sender)
 {
-    cocos2d::ResouceData textureFile = _layout->getRenderFile();
+    cocos2d::ResourceData textureFile = _layout->getRenderFile();
     CCLOG("textureFile  Name : %s, Type: %d", textureFile.file.c_str(), textureFile.type);
 }
 

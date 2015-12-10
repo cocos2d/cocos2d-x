@@ -634,4 +634,16 @@ const char* FontFreeType::getGlyphCollection() const
     return glyphCollection;
 }
 
+void FontFreeType::releaseFont(const std::string &fontName)
+{
+    auto item = s_cacheFontData.begin();
+    while (s_cacheFontData.end() != item)
+    {
+        if (item->first.find(fontName) >= 0)
+            item = s_cacheFontData.erase(item);
+        else
+            item++;
+    }
+}
+
 NS_CC_END

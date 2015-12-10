@@ -37,7 +37,7 @@ NS_CC_BEGIN
 
 
 /**
- * A pool for managing autorlease objects.
+ * A pool for managing autorelease objects.
  * @js NA
  */
 class CC_DLL AutoreleasePool

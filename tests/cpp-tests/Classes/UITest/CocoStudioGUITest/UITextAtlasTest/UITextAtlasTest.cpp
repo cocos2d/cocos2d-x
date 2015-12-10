@@ -49,6 +49,6 @@ bool UITextAtlasTest::init()
 }
 void UITextAtlasTest::printWidgetResources(cocos2d::Ref* sender)
 {
-    cocos2d::ResouceData textureFile = _textAtlas->getRenderFile();
+    cocos2d::ResourceData textureFile = _textAtlas->getRenderFile();
     CCLOG("textureFile  Name : %s, Type: %d", textureFile.file.c_str(), textureFile.type);
 }

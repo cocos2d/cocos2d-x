@@ -40,7 +40,7 @@ class DrawNode;
 class LayerColor;
 class LayerGradient;
 class StencilStateManager;
-struct CC_DLL ResouceData;
+struct CC_DLL ResourceData;
 
 namespace ui {
     
@@ -459,7 +459,7 @@ public:
      */
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
 
-    ResouceData getRenderFile();
+    ResourceData getRenderFile();
 
 CC_CONSTRUCTOR_ACCESS:
     //override "init" method of widget.

@@ -6,15 +6,15 @@
 
 --------------------------------
 -- 
--- @function [parent=#AbstractCheckButton] getBackDisabledFile 
+-- @function [parent=#AbstractCheckButton] getCrossDisabledFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- 
--- @function [parent=#AbstractCheckButton] getCrossDisabeldFile 
+-- @function [parent=#AbstractCheckButton] getBackDisabledFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- Load background selected state texture for check button.<br>
@@ -40,7 +40,7 @@
 -- 
 -- @function [parent=#AbstractCheckButton] getCrossNormalFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- Change CheckBox state.<br>
@@ -55,7 +55,7 @@
 -- 
 -- @function [parent=#AbstractCheckButton] getBackPressedFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- brief Return the sprite instance of front cross when disabled<br>
@@ -111,7 +111,7 @@
 -- 
 -- @function [parent=#AbstractCheckButton] getBackNormalFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- Load all textures for initializing a check button.<br>

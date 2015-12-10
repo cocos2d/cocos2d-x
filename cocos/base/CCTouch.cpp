@@ -70,4 +70,16 @@ Vec2 Touch::getDelta() const
     return getLocation() - getPreviousLocation();
 }
 
+// Returns the current touch force for 3d touch.
+float Touch::getCurrentForce() const
+{
+    return _curForce;
+}
+
+// Returns the maximum touch force for 3d touch.
+float Touch::getMaxForce() const
+{
+    return _maxForce;
+}
+
 NS_CC_END

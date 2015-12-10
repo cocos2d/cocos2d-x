@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "ui/UIHelper.h"
 #include "ui/UIScale9Sprite.h"
 #include "2d/CCSprite.h"
-#include "2d/CocosStudioExtension.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 NS_CC_BEGIN
 
@@ -92,7 +92,7 @@ LoadingBar* LoadingBar::create(const std::string &textureName,
 void LoadingBar::initRenderer()
 {
     _barRenderer = Scale9Sprite::create();
-    _barRenderer->setScale9Enabled(false);
+    _barRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
     addProtectedChild(_barRenderer, BAR_RENDERER_Z, -1);
     _barRenderer->setAnchorPoint(Vec2(0.0,0.5));
 }
@@ -161,6 +161,11 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
         default:
             break;
     }
+    
+    //FIXME: https://github.com/cocos2d/cocos2d-x/issues/12249
+    if (!_ignoreSize) {
+        _customSize = _barRenderer->getContentSize();
+    }
     this->setupTexture();
 }
 
@@ -203,6 +208,7 @@ void LoadingBar::setupTexture()
     this->updateChildrenDisplayedRGBA();
 
     barRendererScaleChangedWithSize();
+
     updateContentSizeWithTextureSize(_barRendererTextureSize);
 
     this->updateProgressBar();
@@ -216,7 +222,11 @@ void LoadingBar::setScale9Enabled(bool enabled)
         return;
     }
     _scale9Enabled = enabled;
-    _barRenderer->setScale9Enabled(_scale9Enabled);
+    if (_scale9Enabled) {
+        _barRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+    }else{
+        _barRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+    }
     
     if (_scale9Enabled)
     {
@@ -279,21 +289,8 @@ void LoadingBar::setPercent(float percent)
     
 void LoadingBar::updateProgressBar()
 {
-    if (_scale9Enabled)
-    {
-        setScale9Scale();
-    }
-    else
-    {
-        Sprite* innerSprite = _barRenderer->getSprite();
-        if (nullptr != innerSprite)
-        {
-            float res = _percent / 100.0f;
-            Rect rect = innerSprite->getTextureRect();
-            rect.size.width = _barRendererTextureSize.width * res;
-            innerSprite->setTextureRect(rect, innerSprite->isTextureRectRotated(), rect.size);
-        }
-    }
+    float width = (float)(_percent) / 100.0f * _totalLength;
+    _barRenderer->setPreferredSize(Size(width, _contentSize.height));
 }
 
 float LoadingBar::getPercent() const
@@ -354,25 +351,7 @@ void LoadingBar::barRendererScaleChangedWithSize()
     else
     {
         _totalLength = _contentSize.width;
-        if (_scale9Enabled)
-        {
-            this->setScale9Scale();
-            _barRenderer->setScale(1.0f);
-        }
-        else
-        {
-            
-            Size textureSize = _barRendererTextureSize;
-            if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
-            {
-                _barRenderer->setScale(1.0f);
-                return;
-            }
-            float scaleX = _contentSize.width / textureSize.width;
-            float scaleY = _contentSize.height / textureSize.height;
-            _barRenderer->setScaleX(scaleX);
-            _barRenderer->setScaleY(scaleY);
-        }
+        this->updateProgressBar();
     }
     switch (_direction)
     {
@@ -385,12 +364,6 @@ void LoadingBar::barRendererScaleChangedWithSize()
         default:
             break;
     }
-}
-
-void LoadingBar::setScale9Scale()
-{
-    float width = (float)(_percent) / 100.0f * _totalLength;
-    _barRenderer->setPreferredSize(Size(width, _contentSize.height));
 }
 
 std::string LoadingBar::getDescription() const
@@ -421,9 +394,9 @@ void LoadingBar::copySpecialProperties(Widget *widget)
     }
 }
 
-ResouceData LoadingBar::getRenderFile()
+ResourceData LoadingBar::getRenderFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_renderBarTexType;
     rData.file = _textureFile;
     return rData;

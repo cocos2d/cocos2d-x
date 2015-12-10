@@ -328,6 +328,9 @@ void Director::drawScene()
     {
         calculateMPF();
     }
+
+    if (_textureCache != nullptr)
+        _textureCache->setDirty(false);
 }
 
 void Director::calculateDeltaTime()
@@ -442,7 +445,7 @@ void Director::setNextDeltaTimeZero(bool nextDeltaTimeZero)
 //
 // FIXME TODO
 // Matrix code MUST NOT be part of the Director
-// MUST BE moved outide.
+// MUST BE moved outside.
 // Why the Director must have this code ?
 //
 void Director::initMatrixStack()

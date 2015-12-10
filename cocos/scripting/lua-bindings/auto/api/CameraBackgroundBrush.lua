@@ -25,6 +25,12 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- 
+-- @function [parent=#CameraBackgroundBrush] isValid 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Creates a Skybox brush with 6 textures.<br>
 -- param positive_x texture for the right side of the texture cube face.<br>
 -- param negative_x texture for the up side of the texture cube face.<br>

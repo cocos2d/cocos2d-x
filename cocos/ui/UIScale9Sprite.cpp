@@ -31,14 +31,15 @@
 #include "renderer/ccShaders.h"
 #include "platform/CCImage.h"
 #include "base/CCNinePatchImageParser.h"
-
+#include "2d/CCDrawNode.h"
+#include "2d/CCCamera.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 namespace ui {
 
     Scale9Sprite::Scale9Sprite()
-        : _spritesGenerated(false)
-        , _spriteFrameRotated(false)
+        : _spriteFrameRotated(false)
         , _scale9Image(nullptr)
         , _scale9Enabled(true)
         , _insetLeft(0)
@@ -54,8 +55,13 @@ namespace ui {
         ,_sliceIndices(nullptr)
         ,_sliceSpriteDirty(false)
         ,_renderingType(RenderingType::SLICE)
+        ,_insideBounds(true)
     {
         this->setAnchorPoint(Vec2(0.5,0.5));
+#if CC_SPRITE_DEBUG_DRAW
+        _debugDrawNode = DrawNode::create();
+        addChild(_debugDrawNode);
+#endif //CC_SPRITE_DEBUG_DRAW
     }
 
     Scale9Sprite::~Scale9Sprite()
@@ -394,10 +400,6 @@ namespace ui {
                                         const Size &originalSize,
                                         const Rect& capInsets)
     {
-        
-        GLubyte opacity = getOpacity();
-        Color3B color = getColor();
-
         // Release old sprites
         this->cleanupSlicedSprites();
 
@@ -470,15 +472,7 @@ namespace ui {
             size.height = size.height - 2;
         }
         this->setContentSize(size);
-
-        if (_spritesGenerated)
-        {
-            // Restore color and opacity
-            this->setOpacity(opacity);
-            this->setColor(color);
-        }
-        _spritesGenerated = true;
-
+        
         return true;
     }
     
@@ -673,10 +667,60 @@ namespace ui {
         this->_insetBottom = insetBottom;
         this->updateCapInset();
     }
+    
+    void Scale9Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+    {
+        if (_scale9Image) {
+#if CC_USE_CULLING
+            // Don't do calculate the culling if the transform was not updated
+            auto visitingCamera = Camera::getVisitingCamera();
+            auto defaultCamera = Camera::getDefaultCamera();
+            if (visitingCamera == defaultCamera) {
+                _insideBounds = ((flags & FLAGS_TRANSFORM_DIRTY)|| visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+            }
+            else
+            {
+                _insideBounds = renderer->checkVisibility(transform, _contentSize);
+            }
+            
+            if(_insideBounds)
+#endif
+            {
+                auto textureName = _scale9Image->getTexture()->getName();
+                auto programState = _scale9Image->getGLProgramState();
+                auto blendFunc = _scale9Image->getBlendFunc();
+                auto& polyInfo = _scale9Image->getPolygonInfo();
+                auto globalZOrder = _scale9Image->getGlobalZOrder();
+                _trianglesCommand.init(globalZOrder,textureName, programState, blendFunc, polyInfo.triangles, transform, flags);
+                renderer->addCommand(&_trianglesCommand);
+                
+#if CC_SPRITE_DEBUG_DRAW
+                _debugDrawNode->clear();
+                auto count = polyInfo.triangles.indexCount/3;
+                auto indices = polyInfo.triangles.indices;
+                auto verts = polyInfo.triangles.verts;
+                for(ssize_t i = 0; i < count; i++)
+                {
+                    //draw 3 lines
+                    Vec3 from =verts[indices[i*3]].vertices;
+                    Vec3 to = verts[indices[i*3+1]].vertices;
+                    _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+                    
+                    from =verts[indices[i*3+1]].vertices;
+                    to = verts[indices[i*3+2]].vertices;
+                    _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+                    
+                    from =verts[indices[i*3+2]].vertices;
+                    to = verts[indices[i*3]].vertices;
+                    _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+                }
+#endif //CC_SPRITE_DEBUG_DRAW
+            }
+        }
+    }
 
     void Scale9Sprite::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
     {
-
         // quick return if not visible. children won't be drawn.
         if (!_visible)
         {
@@ -714,25 +758,10 @@ namespace ui {
                 break;
         }
 
-        if (_scale9Image && _scale9Image->getLocalZOrder() < 0 )
-        {
-            _scale9Image->visit(renderer, _modelViewTransform, flags);
-        }
-        
-
-        //
         // draw self
         //
         if (isVisitableByVisitingCamera())
             this->draw(renderer, _modelViewTransform, flags);
-
-        //
-        // draw children and protectedChildren zOrder >= 0
-        //
-        if (_scale9Image && _scale9Image->getLocalZOrder() >= 0 )
-        {
-            _scale9Image->visit(renderer, _modelViewTransform, flags);
-        }
 
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)

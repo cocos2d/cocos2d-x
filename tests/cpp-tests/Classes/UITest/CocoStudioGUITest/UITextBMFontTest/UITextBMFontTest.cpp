@@ -41,6 +41,6 @@ bool UITextBMFontTest::init()
 }
 void UITextBMFontTest::printWidgetResources(cocos2d::Ref* sender)
 {
-    cocos2d::ResouceData textureFile = _textBMFont->getRenderFile();
+    cocos2d::ResourceData textureFile = _textBMFont->getRenderFile();
     CCLOG("textureFile  Name : %s, Type: %d", textureFile.file.c_str(), textureFile.type);
 }

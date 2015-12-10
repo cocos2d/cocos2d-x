@@ -367,7 +367,7 @@ public:
      */
     bool isScheduled(const std::string& key, void *target);
     
-    /** Checks whether a selector for a given taget is scheduled.
+    /** Checks whether a selector for a given target is scheduled.
      @param selector The selector to be checked.
      @param target The target of the callback.
      @return True if the specified selector is invoked, false if not.
@@ -475,7 +475,7 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE void unscheduleSelector(SEL_SCHEDULE selector, Ref *target) { unschedule(selector, target); };
     
-    /** Checks whether a selector for a given taget is scheduled.
+    /** Checks whether a selector for a given target is scheduled.
      @deprecated Please use 'Scheduler::isScheduled' instead.
      @since v0.99.3
      @js NA

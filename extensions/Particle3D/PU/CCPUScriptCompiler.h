@@ -71,7 +71,7 @@ public:
 
 
 /** This specific abstract node represents a script object */
-class PUObjectAbstractNode : public PUAbstractNode
+class CC_DLL PUObjectAbstractNode : public PUAbstractNode
 {
 private:
     std::map<std::string,std::string> _env;

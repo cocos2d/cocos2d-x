@@ -419,17 +419,27 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     UITouch* ids[IOS_MAX_TOUCHES_COUNT] = {0};
     float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
+    float fs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
+    float ms[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
         xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
         ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0 // Use 9.0 or higher SDK to compile
+        // running on iOS 9.0 or higher version
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0f) {
+            fs[i] = touch.force;
+            ms[i] = touch.maximumPossibleForce;
+        }
+#endif
         ++i;
     }
 
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-    glview->handleTouchesMove(i, (intptr_t*)ids, xs, ys);
+    glview->handleTouchesMove(i, (intptr_t*)ids, xs, ys, fs, ms);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
