@@ -555,7 +555,7 @@ var SchedulerTimeScale = SchedulerTestLayer.extend({
         var spawn = new cc.Spawn(seq3_1, seq3_2);
         var action = new cc.Repeat(spawn, 50);
 
-        var action2 = action.clone()/
+        var action2 = action.clone();
         var action3 = action.clone();
 
         var grossini = new cc.Sprite("Images/grossini.png");
