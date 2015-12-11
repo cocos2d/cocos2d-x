@@ -122,7 +122,7 @@ public:
     /**
      * Adds a target and action for a particular event (or events) to an internal
      * dispatch table.
-     * The action message may optionnaly include the sender and the event as
+     * The action message may optionally include the sender and the event as
      * parameters, in that order.
      * When you call this method, target is not retained.
      *
@@ -149,7 +149,7 @@ public:
     virtual void removeTargetWithActionForControlEvents(Ref* target, Handler action, EventType controlEvents);
 
     /**
-     * Returns a point corresponding to the touh location converted into the
+     * Returns a point corresponding to the touch location converted into the
      * control space coordinates.
      * @param touch A Touch object that represents a touch.
      */
@@ -190,7 +190,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     /**
      * Returns an Invocation object able to construct messages using a given 
-     * target-action pair. (The invocation may optionnaly include the sender and
+     * target-action pair. (The invocation may optionally include the sender and
      * the event as parameters, in that order)
      *
      * @param target The target object.
@@ -217,7 +217,7 @@ protected:
     /**
      * Adds a target and action for a particular event to an internal dispatch 
      * table.
-     * The action message may optionnaly include the sender and the event as 
+     * The action message may optionally include the sender and the event as 
      * parameters, in that order.
      * When you call this method, target is not retained.
      *

@@ -196,7 +196,7 @@ public:
     /** Returns the type op distribution.
     @remarks
         There are several ways to emit particles on the surface of a mesh. This attribute indicates
-        the type of distrubution on the surface.
+        the type of distribution on the surface.
     */
     const MeshInfo::MeshSurfaceDistribution getDistribution (void) const;
 

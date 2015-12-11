@@ -107,7 +107,7 @@ public:
     bool alwaysUsePosition(void) const {return _alwaysUsePosition;};
 
     /** Set the boolean to indicate whether the position of the particle that is handled must be used for emission of 
-        the new particle or whether the contact point of the physics actor must be used. This only applies if a physics angine
+        the new particle or whether the contact point of the physics actor must be used. This only applies if a physics engine
         is used, otherwise the default is used.
     */
     void setAlwaysUsePosition(bool alwaysUsePosition) {_alwaysUsePosition = alwaysUsePosition;};
