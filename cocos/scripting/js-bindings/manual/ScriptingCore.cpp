@@ -2018,16 +2018,6 @@ JSObject* jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref,
     return js_obj;
 }
 
-JSObject* jsb_ref_singleton_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
-{
-    JS::RootedObject proto(cx, typeClass->proto.ref());
-    JS::RootedObject parent(cx, typeClass->parentProto.ref());
-    JS::RootedObject js_obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    js_proxy_t* newproxy = jsb_new_proxy(ref, js_obj);
-    jsb_ref_singleton_init(cx, &newproxy->obj, ref, debug);
-    return js_obj;
-}
-
 // get_or_create
 JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
 {
@@ -2038,13 +2028,14 @@ JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_ty
     return jsb_ref_create_jsobject(cx, ref, typeClass, debug);
 }
 
-JSObject* jsb_ref_singleton_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
+// get_or_create: REf is already autoreleased (or created)
+JSObject* jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
 {
     auto proxy = jsb_get_native_proxy(ref);
     if (proxy)
         return proxy->obj;
     // else
-    return jsb_ref_singleton_create_jsobject(cx, ref, typeClass, debug);
+    return jsb_ref_autoreleased_create_jsobject(cx, ref, typeClass, debug);
 }
 
 // ref_init
@@ -2071,23 +2062,9 @@ void jsb_ref_autoreleased_init(JSContext* cx, JS::Heap<JSObject*> *obj, Ref* ref
     (void)obj;
     ref->_scriptOwned = true;
     // retain it, since the object is autoreleased
-    ret->retain();
+    ref->retain();
 #else
     // don't autorelease it, since it is already autoreleased
-    JS::AddNamedObjectRoot(cx, obj, debug);
-#endif
-}
-
-void jsb_ref_singleton_init(JSContext* cx, JS::Heap<JSObject*> *obj, Ref* ref, const char* debug)
-{
-    //    CCLOG("jsb_ref_singleton_init: JSObject address =  %p. %s", obj->get(), debug);
-#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-    (void)cx;
-    (void)obj;
-    ref->_scriptOwned = true;
-    // don't retain it: it is a singleton
-#else
-    // don't autorelease it: it is a singleton
     JS::AddNamedObjectRoot(cx, obj, debug);
 #endif
 }
@@ -2098,7 +2075,9 @@ void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj)
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
-    jsproxy = jsb_get_js_proxy(obj);
+
+    JS::RootedObject jsobj(ScriptingCore::getInstance()->getGlobalContext(), obj);
+    jsproxy = jsb_get_js_proxy(jsobj);
     if (jsproxy)
     {
         auto ref = static_cast<cocos2d::Ref*>(jsproxy->ptr);
