@@ -5313,9 +5313,10 @@ bool js_cocos2dx_Scene_getPhysics3DWorld(JSContext *cx, uint32_t argc, jsval *vp
         cocos2d::Physics3DWorld* ret = cobj->getPhysics3DWorld();
         jsval jsret = JSVAL_NULL;
         if (ret)
-            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Physics3DWorld>(cx, (cocos2d::Physics3DWorld*)ret));
-        else
-            jsret = JSVAL_NULL;
+        {
+            js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Physics3DWorld>(ret);
+            jsret = OBJECT_TO_JSVAL(jsb_ref_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::Physics3DWorld"));
+        }
         args.rval().set(jsret);
         return true;
     }
@@ -5392,9 +5393,10 @@ bool js_cocos2dx_Scene_getNavMesh(JSContext *cx, uint32_t argc, jsval *vp)
 		cocos2d::NavMesh* ret = cobj->getNavMesh();
 		jsval jsret = JSVAL_NULL;
         if (ret)
-            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::NavMesh>(cx, (cocos2d::NavMesh*)ret));
-        else
-            jsret = JSVAL_NULL;
+        {
+            js_type_class_t *typeClass = js_get_type_from_native<cocos2d::NavMesh>(ret);
+            jsret = OBJECT_TO_JSVAL(jsb_ref_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::NavMesh"));
+        }
 		args.rval().set(jsret);
 		return true;
 	}
@@ -5645,8 +5647,6 @@ bool js_cocos2dx_AutoPolygon_generatePolygon(JSContext *cx, uint32_t argc, jsval
         jsval jsret = JSVAL_NULL;
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PolygonInfo>(cx, ret));
-        } else {
-            jsret = JSVAL_NULL;
         }
         args.rval().set(jsret);
         return true;
@@ -5661,8 +5661,6 @@ bool js_cocos2dx_AutoPolygon_generatePolygon(JSContext *cx, uint32_t argc, jsval
         jsval jsret = JSVAL_NULL;
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PolygonInfo>(cx, ret));
-        } else {
-            jsret = JSVAL_NULL;
         }
         args.rval().set(jsret);
         return true;
@@ -5679,8 +5677,6 @@ bool js_cocos2dx_AutoPolygon_generatePolygon(JSContext *cx, uint32_t argc, jsval
         jsval jsret = JSVAL_NULL;
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PolygonInfo>(cx, ret));
-        } else {
-            jsret = JSVAL_NULL;
         }
         args.rval().set(jsret);
         return true;
@@ -5699,8 +5695,6 @@ bool js_cocos2dx_AutoPolygon_generatePolygon(JSContext *cx, uint32_t argc, jsval
         jsval jsret = JSVAL_NULL;
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PolygonInfo>(cx, ret));
-        } else {
-            jsret = JSVAL_NULL;
         }
         args.rval().set(jsret);
         return true;

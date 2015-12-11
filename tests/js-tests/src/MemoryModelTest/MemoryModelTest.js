@@ -188,6 +188,27 @@ var RetainRootsMemoryModelTest = MemoryModelTestBase.extend({
     },
 });
 
+//------------------------------------------------------------------
+//
+// Testing Root/Unroot
+//
+//------------------------------------------------------------------
+var RootUnrootMemoryModelTest = MemoryModelTestBase.extend({
+    _title:"root/unroot",
+    _subtitle:"rooting/unrooting with GC memory model",
+
+    ctor:function () {
+        this._super();
+        var sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 0, 85, 121));
+        // addChild should root the sprite
+        this.addChild(sprite);
+
+        // should unroot the sprite
+        this.removeChild(sprite)
+        cc.sys.garbageCollect();
+    },
+});
+
 
 //
 // Entry point
@@ -213,6 +234,7 @@ var arrayOfMemoryModelTest = [
     Ivar2MemoryModelTest,
     LocalVarMemoryModelTest,
     RetainRootsMemoryModelTest,
+    RootUnrootMemoryModelTest,
 ];
 
 var nextMemoryModelTest = function () {
