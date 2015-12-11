@@ -1563,14 +1563,12 @@ void ScriptingCore::rootObject(Ref* ref)
     nproxy = jsb_get_native_proxy(ptr);
     if (nproxy) {
         JSContext *cx = getGlobalContext();
-        // FIXME: Creating a RootedObject here is not needed.
-        // it is being created only because jsb_get_js_proxy() requires one
-        // but only the raw pointer is used in jsb_get_js_proxy()
-        JS::RootedObject handle(cx, nproxy->obj.get());
-        jsproxy = jsb_get_js_proxy(handle);
-        AddObjectRoot(cx, &jsproxy->obj);
-
-        CCLOG("Rooting %p - %p: %s", ref, &jsproxy->obj, typeid(*ref).name());
+        jsproxy = jsb_get_js_proxy(nproxy->obj);
+        JS::AddNamedObjectRoot(cx, &jsproxy->obj, typeid(*ref).name());
+    }
+    else
+    {
+        CCLOG("BUG in rootObject");
     }
 }
 
@@ -1583,14 +1581,12 @@ void ScriptingCore::unrootObject(Ref* ref)
     nproxy = jsb_get_native_proxy(ptr);
     if (nproxy) {
         JSContext *cx = getGlobalContext();
-        // FIXME: Creating a RootedObject here is not needed.
-        // it is being created only because jsb_get_js_proxy() requires one
-        // but only the raw pointer is used in jsb_get_js_proxy()        
-        JS::RootedObject handle(cx, nproxy->obj.get());
-        jsproxy = jsb_get_js_proxy(handle);
-        RemoveObjectRoot(cx, &jsproxy->obj);
-
-        CCLOG("Unrooting #2 %p - %p: %s", ref, &jsproxy->obj, typeid(*ref).name());
+        jsproxy = jsb_get_js_proxy(nproxy->obj);
+        JS::RemoveObjectRoot(cx, &jsproxy->obj);
+    }
+    else
+    {
+        CCLOG("BUG in unrootObject");
     }
 }
 
@@ -1949,11 +1945,10 @@ js_proxy_t* jsb_get_native_proxy(void* nativeObj)
     return p;
 }
 
-js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj)
+js_proxy_t* jsb_get_js_proxy(JSObject* jsObj)
 {
     js_proxy_t* p = nullptr;
-    JSObject* ptr = jsObj.get();
-    JS_GET_NATIVE_PROXY(p, ptr);
+    JS_GET_NATIVE_PROXY(p, jsObj);
     return p;
 }
 
@@ -2059,8 +2054,6 @@ void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj)
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
 
-    CCLOG("jsb_ref_finalize #1: JSObject address = %p", obj);
-
     JS::RootedObject jsobj(fop->runtime(), obj);
     jsproxy = jsb_get_js_proxy(jsobj);
     if (jsproxy)
@@ -2070,8 +2063,6 @@ void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj)
 
         if (ref)
         {
-            CCLOG("jsb_ref_finalize #2: JSObject address = %p (%s)", obj, typeid(*ref).name());
-
             jsb_remove_proxy(nproxy, jsproxy);
             ref->release();
         }

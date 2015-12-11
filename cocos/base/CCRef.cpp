@@ -50,6 +50,7 @@ Ref::Ref()
 , _scriptObject(nullptr)
 , _rooted(false)
 , _scriptOwned(false)
+,_referenceCountAtRootTime(0)
 #endif
 {
 #if CC_ENABLE_SCRIPT_BINDING
@@ -93,11 +94,15 @@ void Ref::retain()
     ++_referenceCount;
 
 #if CC_ENABLE_SCRIPT_BINDING && CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-    if (!_rooted && _scriptOwned)
+    if (_scriptOwned && !_rooted)
     {
         auto scriptMgr = ScriptEngineManager::getInstance()->getScriptEngine();
         if (scriptMgr && scriptMgr->getScriptType() == kScriptTypeJavascript)
         {
+            _referenceCountAtRootTime = _referenceCount-1;
+
+            CCLOG("retain + root: %p (%s) rc=%d rcrt=%d", this, typeid(*this).name(), _referenceCount, _referenceCountAtRootTime);
+
             scriptMgr->rootObject(this);
             _rooted = true;
         }
@@ -111,7 +116,7 @@ void Ref::release()
     --_referenceCount;
 
 #if CC_ENABLE_SCRIPT_BINDING && CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-    if (_scriptOwned && _referenceCount==1 && _rooted)
+    if (_scriptOwned && _rooted && _referenceCount==_referenceCountAtRootTime)
     {
         auto scriptMgr = ScriptEngineManager::getInstance()->getScriptEngine();
         if (scriptMgr && scriptMgr->getScriptType() == kScriptTypeJavascript)
