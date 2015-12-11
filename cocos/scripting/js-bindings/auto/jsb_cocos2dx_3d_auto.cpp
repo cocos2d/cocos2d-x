@@ -115,6 +115,38 @@ bool js_cocos2dx_3d_Animation3D_getDuration(JSContext *cx, uint32_t argc, jsval 
     JS_ReportError(cx, "js_cocos2dx_3d_Animation3D_getDuration : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_3d_Animation3D_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animation3D_create : Error processing arguments");
+
+        auto ret = cocos2d::Animation3D::create(arg0);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Animation3D>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::Animation3D"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
+        return true;
+    }
+    if (argc == 2) {
+        std::string arg0;
+        std::string arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animation3D_create : Error processing arguments");
+
+        auto ret = cocos2d::Animation3D::create(arg0, arg1);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Animation3D>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::Animation3D"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_3d_Animation3D_create : wrong number of arguments");
+    return false;
+}
+
 bool js_cocos2dx_3d_Animation3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -158,7 +190,10 @@ void js_register_cocos2dx_3d_Animation3D(JSContext *cx, JS::HandleObject global)
         JS_FS_END
     };
 
-    JSFunctionSpec *st_funcs = NULL;
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_3d_Animation3D_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
 
     jsb_cocos2d_Animation3D_prototype = JS_InitClass(
         cx, global,
