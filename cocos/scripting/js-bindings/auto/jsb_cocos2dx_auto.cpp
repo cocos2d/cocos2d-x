@@ -7635,7 +7635,7 @@ bool js_cocos2dx_Director_getInstance(JSContext *cx, uint32_t argc, jsval *vp)
 
         auto ret = cocos2d::Director::getInstance();
         js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Director>(ret);
-        JS::RootedObject jsret(cx, jsb_ref_singleton_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::Director"));
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::Director"));
         args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
@@ -16854,7 +16854,7 @@ bool js_cocos2dx_Configuration_getInstance(JSContext *cx, uint32_t argc, jsval *
 
         auto ret = cocos2d::Configuration::getInstance();
         js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Configuration>(ret);
-        JS::RootedObject jsret(cx, jsb_ref_singleton_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::Configuration"));
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::Configuration"));
         args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
@@ -56078,7 +56078,7 @@ bool js_cocos2dx_GLProgramCache_getInstance(JSContext *cx, uint32_t argc, jsval 
 
         auto ret = cocos2d::GLProgramCache::getInstance();
         js_type_class_t *typeClass = js_get_type_from_native<cocos2d::GLProgramCache>(ret);
-        JS::RootedObject jsret(cx, jsb_ref_singleton_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::GLProgramCache"));
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::GLProgramCache"));
         args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
@@ -58285,7 +58285,7 @@ bool js_cocos2dx_AnimationCache_getInstance(JSContext *cx, uint32_t argc, jsval 
 
         auto ret = cocos2d::AnimationCache::getInstance();
         js_type_class_t *typeClass = js_get_type_from_native<cocos2d::AnimationCache>(ret);
-        JS::RootedObject jsret(cx, jsb_ref_singleton_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::AnimationCache"));
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::AnimationCache"));
         args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
@@ -59435,7 +59435,7 @@ bool js_cocos2dx_SpriteFrameCache_getInstance(JSContext *cx, uint32_t argc, jsva
 
         auto ret = cocos2d::SpriteFrameCache::getInstance();
         js_type_class_t *typeClass = js_get_type_from_native<cocos2d::SpriteFrameCache>(ret);
-        JS::RootedObject jsret(cx, jsb_ref_singleton_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::SpriteFrameCache"));
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::SpriteFrameCache"));
         args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
