@@ -2062,7 +2062,7 @@ void jsb_ref_autoreleased_init(JSContext* cx, JS::Heap<JSObject*> *obj, Ref* ref
     (void)obj;
     ref->_scriptOwned = true;
     // retain it, since the object is autoreleased
-    ret->retain();
+    ref->retain();
 #else
     // don't autorelease it, since it is already autoreleased
     JS::AddNamedObjectRoot(cx, obj, debug);
@@ -2075,7 +2075,9 @@ void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj)
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
-    jsproxy = jsb_get_js_proxy(obj);
+
+    JS::RootedObject jsobj(ScriptingCore::getInstance()->getGlobalContext(), obj);
+    jsproxy = jsb_get_js_proxy(jsobj);
     if (jsproxy)
     {
         auto ref = static_cast<cocos2d::Ref*>(jsproxy->ptr);
