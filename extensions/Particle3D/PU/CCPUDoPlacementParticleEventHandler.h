@@ -143,14 +143,14 @@ protected:
 
     /** Store the technique value to keep up to speed.
     @remarks
-        If the ParticleTechnique has been destroyed, the DoPlacementParticleEventHandler isn´t automatically
+        If the ParticleTechnique has been destroyed, the DoPlacementParticleEventHandler isn't automatically
         notified. Using the pointer causes an exception.
     */
     PUParticleSystem3D* _system;
 
     /** Store the emitter value to keep up to speed.
     @remarks
-        If the ParticleEmitter has been destroyed, the DoPlacementParticleEventHandler isn´t automatically
+        If the ParticleEmitter has been destroyed, the DoPlacementParticleEventHandler isn't automatically
         notified. Using the pointer causes an exception.
     */
     PUEmitter* _emitter;

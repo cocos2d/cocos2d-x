@@ -213,8 +213,8 @@ protected:
     // Particle type to be observed. Default is that all particles are observed.
     PUParticle3D::ParticleType _particleTypeToObserve;
 
-    /** Determines whether mParticleTypeToObserve is set. If ´true? only that particles of the specified type
-        are observed. If ´false?(= default), all particles are observed.
+    /** Determines whether mParticleTypeToObserve is set. If true only that particles of the specified type
+        are observed. If false (= default), all particles are observed.
     */
     bool _particleTypeToObserveSet;
 

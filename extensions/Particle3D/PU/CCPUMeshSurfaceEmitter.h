@@ -133,7 +133,7 @@ public:
     /** Destructor **/
     ~MeshInfo (void);
 
-    /** Generate a random number. The ´high?argument determines that numbers are 
+    /** Generate a random number. The high argument determines that numbers are 
         returned between [0..high] **/
     float getGaussianRandom (float high, float cutoff = 4);
 
