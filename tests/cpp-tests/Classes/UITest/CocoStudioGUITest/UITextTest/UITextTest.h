@@ -71,4 +71,12 @@ public:
     virtual bool init() override;
 };
 
+class UITextTest_Clone : public UIScene
+{
+public:
+    CREATE_FUNC(UITextTest_Clone);
+
+    virtual bool init() override;
+};
+
 #endif /* defined(__TestCpp__UITextTest__) */
