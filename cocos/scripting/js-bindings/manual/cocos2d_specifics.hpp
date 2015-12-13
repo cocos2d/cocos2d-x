@@ -90,7 +90,7 @@ inline js_type_class_t *js_get_type_from_native(T* native_obj) {
  */
 template<class T>
 inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj, bool doRetainObj) {
-    js_proxy_t *proxy;
+    js_proxy_t *proxy = nullptr;
     HASH_FIND_PTR(_native_js_global_ht, &native_obj, proxy);
     if (!proxy) {
         js_type_class_t *typeProxy = js_get_type_from_native<T>(native_obj);
@@ -121,7 +121,11 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj, bool doR
             int count = refObj->getReferenceCount();
             refObj->retain();
             ScriptingCore::retainCount++;
-            CCLOG("++++++RETAINED++++++ %d ref count: %d", ScriptingCore::retainCount, count+1);
+            CCLOG("++++++RETAINED++++++ %d Native %p ref count: %d with JSObj %p", ScriptingCore::retainCount, refObj, count+1, jsObj.get());
+        }
+        else if (doRetainObj) {
+            CCLOG("++++++PROXY_CC++++++ Native %p with JSObj %p", native_obj, jsObj.get());
+            return proxy;
         }
         
         return proxy;

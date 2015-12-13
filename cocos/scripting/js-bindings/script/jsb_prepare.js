@@ -277,7 +277,7 @@ cc.Class.extend = function (prop) {
             this.__instanceId = ClassManager.getNewInstanceId();
             this.ctor && this.ctor.apply(this, arguments);
         }
-    }
+    };
     // Populate our constructed prototype object
     Class.prototype = prototype;
     // Enforce the constructor to be what we expect
@@ -305,9 +305,9 @@ jsb.registerNativeRef = function (owner, target) {
         }
         var index = refs.indexOf(target);
         if (index === -1) {
-            refs.push(target);
             __registeCount++;
             // cc.log("##########registered " + target + " : " + __registeCount);
+            owner.__nativeRefs.push(target);
         }
     }
 };
@@ -320,9 +320,27 @@ jsb.unregisterNativeRef = function (owner, target) {
         }
         var index = refs.indexOf(target);
         if (index !== -1) {
-            refs.splice(index, 1);
             __registeCount--;
             // cc.log("##------##unregistered " + target + " : " + __registeCount);
+            owner.__nativeRefs.splice(index, 1);
+        }
+    }
+};
+
+jsb.unregisterAllNativeRefs = function (owner) {
+    if (!owner) return;
+    owner.__nativeRefs.length = 0;
+};
+
+jsb.unregisterChildRefsForNode = function (node, recursive) {
+    if (!(node instanceof cc.Node)) return;
+    recursive = !!recursive;
+    var children = node.getChildren(), i, l, child;
+    for (i = 0, l = children.length; i < l; ++i) {
+        child = children[i];
+        jsb.unregisterNativeRef(node, child);
+        if (recursive) {
+            jsb.unregisterChildRefsForNode(child, recursive);
         }
     }
 };

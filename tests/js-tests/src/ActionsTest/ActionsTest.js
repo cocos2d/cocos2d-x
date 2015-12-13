@@ -2688,11 +2688,10 @@ var createCustomAction = function(actionObject) {
             if (this.getTarget()) { // rand color
                 this.getTarget().setColor(cc.color(cc.rand()%255, cc.rand()%255, cc.rand()%255));
             }
-
         }
     });
     return customAction;
-}
+};
 
 var ActionCustomTest = ActionsDemo.extend({
     _spritePos:null,

@@ -5940,7 +5940,7 @@ void jsb_FinalizeHook_finalize(JSFreeOp *fop, JSObject *obj)
 {
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     JS::RootedObject jsobj(cx, obj);
-    JSObject *ownerPtr = jsb_get_hook_owner(obj);
+    JSObject *ownerPtr = jsb_get_and_remove_hook_owner(obj);
     if (ownerPtr)
     {
         JS::RootedObject owner(cx, ownerPtr);
@@ -5958,9 +5958,16 @@ void jsb_FinalizeHook_finalize(JSFreeOp *fop, JSObject *obj)
             if (refObj)
             {
                 int count = refObj->getReferenceCount();
-                CC_SAFE_RELEASE(refObj);
+                if (count == 1)
+                {
+                    refObj->autorelease();
+                }
+                else
+                {
+                    CC_SAFE_RELEASE(refObj);
+                }
                 ScriptingCore::retainCount--;
-                CCLOG("------RELEASED------ %d ref count: %d", ScriptingCore::retainCount, count-1);
+                CCLOG("------RELEASED------ %d Native %p ref count: %d JSObj %p", ScriptingCore::retainCount, refObj, count-1, ownerPtr);
             }
 #if DEBUG
             else {

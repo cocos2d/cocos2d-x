@@ -583,7 +583,6 @@ jsval getJSObject(JSContext* cx, T* nativeObj, bool doRetainObj = true)
 void removeJSObject(JSContext* cx, void* nativeObj);
 
 void jsb_register_finalize_hook(JSObject *hook, JSObject *owner);
-JSObject *jsb_get_hook_owner(JSObject *hook);
-void jsb_remove_finalize_hook(JSObject *hook);
+JSObject *jsb_get_and_remove_hook_owner(JSObject *hook);
 
 #endif /* __SCRIPTING_CORE_H__ */

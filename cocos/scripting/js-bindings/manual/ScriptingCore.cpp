@@ -617,10 +617,10 @@ void ScriptingCore::createGlobalContext() {
     _global.construct(_cx);
     _global.ref() = NewGlobalObject(_cx);
     
-    JSAutoCompartment ac(_cx, _global.ref());
-    
     // Removed in Firefox v34
     js::SetDefaultObjectForContext(_cx, _global.ref());
+    
+    JSAutoCompartment ac(_cx, _global.ref());
     
     runScript("script/jsb_prepare.js");
     
@@ -1198,6 +1198,8 @@ int ScriptingCore::handleActionEvent(void* data)
     if (eventType == kActionUpdate)
     {
         JS::RootedObject jstarget(_cx, p->obj);
+        JSAutoCompartment ac(_cx, jstarget);
+        
         if (isFunctionOverridedInJS(jstarget, "update", js_cocos2dx_Action_update))
         {
             jsval dataVal = DOUBLE_TO_JSVAL(*((float *)actionObjectScriptData->param));
@@ -1227,6 +1229,7 @@ int ScriptingCore::handleNodeEvent(void* data)
     jsval dataVal = INT_TO_JSVAL(1);
     
     JS::RootedObject jstarget(_cx, p->obj);
+    JSAutoCompartment ac(_cx, jstarget);
 
     if (action == kNodeOnEnter)
     {
@@ -1289,6 +1292,7 @@ int ScriptingCore::handleComponentEvent(void* data)
     JS::RootedValue retval(_cx);
     jsval dataVal = INT_TO_JSVAL(1);
     
+    JSAutoCompartment ac(_cx, p->obj.get());
     JS::RootedValue nodeValue(_cx, OBJECT_TO_JSVAL(p->obj.get()));
     
     if (action == kComponentOnAdd)
@@ -1653,8 +1657,6 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
         restartVM();
         return 0;
     }
-
-    JSAutoCompartment ac(_cx, _global.ref().get());
     
     switch (evt->type)
     {
@@ -2051,10 +2053,17 @@ js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsObj)
     js_proxy_t* p = nullptr;
     JSObject* jsptr = jsObj.get();
     
-    js_proxy_t* nativeJsProxy = NULL;
-    js_proxy_t* jsNativeProxy = NULL;
+    js_proxy_t* nativeJsProxy = nullptr;
+    js_proxy_t* jsNativeProxy = nullptr;
     HASH_FIND_PTR(_native_js_global_ht, &nativeObj, nativeJsProxy);
     HASH_FIND_PTR(_js_native_global_ht, &jsptr, jsNativeProxy);
+    // JS object already been released need reclaim the hash entry
+    if (!nativeJsProxy && jsNativeProxy)
+    {
+        js_proxy_t* nproxy = jsb_get_native_proxy(jsNativeProxy->ptr);
+        jsb_remove_proxy(nproxy, jsNativeProxy);
+        jsNativeProxy = nullptr;
+    }
     assert(!nativeJsProxy && !jsNativeProxy);
     
     do {
@@ -2097,23 +2106,14 @@ void jsb_register_finalize_hook(JSObject *hook, JSObject *owner)
     _js_hook_owner_map.insert(std::make_pair(hook, owner));
 }
 
-JSObject *jsb_get_hook_owner(JSObject *hook)
-{
-    auto ownerIt = _js_hook_owner_map.find(hook);
-    // Found
-    if (ownerIt != _js_hook_owner_map.cend())
-    {
-        return ownerIt->second;
-    }
-    return nullptr;
-}
-
-void jsb_remove_finalize_hook(JSObject *hook)
+JSObject *jsb_get_and_remove_hook_owner(JSObject *hook)
 {
     auto ownerIt = _js_hook_owner_map.find(hook);
     // Found
     if (ownerIt != _js_hook_owner_map.cend())
     {
         _js_hook_owner_map.erase(ownerIt);
+        return ownerIt->second;
     }
+    return nullptr;
 }
