@@ -778,8 +778,7 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
 
 void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
 {
-    _screenSize = Size(width, height);
-    updateFrameSize();
+    setFrameSize(width, height);
     
     if (_resolutionPolicy != ResolutionPolicy::UNKNOWN)
     {
