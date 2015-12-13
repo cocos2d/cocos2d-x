@@ -452,9 +452,9 @@ void EventDispatcher::addEventListener(EventListener* listener)
     }
     
 #if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
-//    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-//    if (sEngine)
-//        sEngine->retainScriptObject(this, listener);
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+        sEngine->retainScriptObject(this, listener);
 #endif
     listener->retain();
 }
@@ -1608,12 +1608,12 @@ void EventDispatcher::cleanToRemovedListeners()
 void EventDispatcher::releaseListener(EventListener* listener)
 {
 #if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
-//    if (listener)
-//    {
-//        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-//        if (sEngine)
-//            sEngine->releaseScriptObject(this, listener);
-//    }
+    if (listener)
+    {
+        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (sEngine)
+            sEngine->releaseScriptObject(this, listener);
+    }
 #endif
     CC_SAFE_RELEASE(listener);
 }
