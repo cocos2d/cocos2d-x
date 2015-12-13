@@ -935,15 +935,7 @@ void __JSDownloaderDelegator::onSuccess(Texture2D *tex)
         if (tex)
         {
             valArr[0] = BOOLEAN_TO_JSVAL(true);
-            js_proxy_t* p = jsb_get_native_proxy(tex);
-            if (!p)
-            {
-                JS::RootedObject texProto(_cx, jsb_cocos2d_Texture2D_prototype);
-                JS::RootedObject obj(_cx, JS_NewObject(_cx, jsb_cocos2d_Texture2D_class, texProto, global));
-                // link the native object with the javascript object
-                p = jsb_new_proxy(tex, obj);
-                JS::AddNamedObjectRoot(_cx, &p->obj, "cocos2d::Texture2D");
-            }
+            js_proxy_t* p = js_get_or_create_proxy(_cx, tex);
             valArr[1] = OBJECT_TO_JSVAL(p->obj);
         }
         else
