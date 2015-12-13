@@ -37,25 +37,7 @@ void static freeSpaceChildren(cpSpace *space);
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
-    TypeTest<T> t;
-    T* cobj = new T();
-    cobj->autorelease();
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    p = typeMapIter->second;
-    CCASSERT(p, "The value is null.");
-    
-    JS::RootedObject proto(cx, p->proto.ref());
-    JS::RootedObject parentProto(cx, p->parentProto.ref());
-    JS::RootedObject _tmp(cx, JS_NewObject(cx, p->jsclass, proto, parentProto));
-    jsb_new_proxy(cobj, _tmp);
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    args.rval().set(OBJECT_TO_JSVAL(_tmp));
-
-    return true;
+    return false;
 }
 
 #pragma mark - convertions
@@ -70,9 +52,29 @@ JSObject* JSPROXY_CCPhysicsSprite_object = NULL;
 // Constructor
 
 // Destructor
-void JSPROXY_CCPhysicsSprite_finalize(JSFreeOp *fop, JSObject *obj)
+void JSPROXY_physics_finalize(JSFreeOp *fop, JSObject *obj)
 {
     CCLOGINFO("jsbindings: finalizing JS object %p (PhysicsSprite)", obj);
+    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+    JS::RootedObject jsobj(cx, obj);
+    
+    js_proxy_t* nproxy = nullptr;
+    js_proxy_t* jsproxy = nullptr;
+    jsproxy = jsb_get_js_proxy(jsobj);
+    if (jsproxy)
+    {
+        cocos2d::Ref *refObj = static_cast<cocos2d::Ref *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+        jsb_remove_proxy(nproxy, jsproxy);
+        
+        if (refObj)
+        {
+            int count = refObj->getReferenceCount();
+            CC_SAFE_RELEASE(refObj);
+            ScriptingCore::retainCount--;
+            CCLOG("------RELEASED------ %d Native %p ref count: %d JSObj %p", ScriptingCore::retainCount, refObj, count-1, obj);
+        }
+    }
 }
 
 // Arguments:
@@ -172,12 +174,6 @@ extern JSObject *js_cocos2dx_CCDrawNode_prototype;
 
 // Constructor
 
-// Destructor
-void JSB_CCPhysicsDebugNode_finalize(JSFreeOp *fop, JSObject *obj)
-{
-    CCLOGINFO("jsbindings: finalizing JS object %p (PhysicsDebugNode)", obj);
-}
-
 // Arguments: cpSpace*
 // Ret value: PhysicsDebugNode* (o)
 bool JSB_CCPhysicsDebugNode_debugNodeForCPSpace__static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -193,6 +189,8 @@ bool JSB_CCPhysicsDebugNode_debugNodeForCPSpace__static(JSContext *cx, uint32_t 
     jsval jsret;
     do {
         if (ret) {
+            ret->retain();
+            
             TypeTest<PhysicsDebugNode> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -207,6 +205,7 @@ bool JSB_CCPhysicsDebugNode_debugNodeForCPSpace__static(JSContext *cx, uint32_t 
             JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
             jsret = OBJECT_TO_JSVAL(obj);
             jsb_new_proxy(ret, obj);
+            CCLOG("++++++CHIPMUNK1++++++ Native %p with JSObj %p", ret, obj.get());
         } else {
             jsret = JSVAL_NULL;
         }
@@ -259,10 +258,9 @@ bool JSB_CCPhysicsDebugNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     PhysicsDebugNode* cobj = new (std::nothrow) PhysicsDebugNode();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
+//    cobj->autorelease();
+//    cobj->retain();
+    
     TypeTest<PhysicsDebugNode> t;
     js_type_class_t *typeClass = nullptr;
     std::string typeName = t.s_name();
@@ -276,6 +274,7 @@ bool JSB_CCPhysicsDebugNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
     jsb_new_proxy(cobj, obj);
+    CCLOG("++++++CHIPMUNK2++++++ Native %p with JSObj %p", cobj, obj.get());
     if (JS_HasProperty(cx, obj, "_ctor", &ok))
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
@@ -292,7 +291,7 @@ void JSB_CCPhysicsDebugNode_createClass(JSContext *cx, JS::HandleObject globalOb
     JSB_CCPhysicsDebugNode_class->enumerate = JS_EnumerateStub;
     JSB_CCPhysicsDebugNode_class->resolve = JS_ResolveStub;
     JSB_CCPhysicsDebugNode_class->convert = JS_ConvertStub;
-    JSB_CCPhysicsDebugNode_class->finalize = JSB_CCPhysicsDebugNode_finalize;
+    JSB_CCPhysicsDebugNode_class->finalize = JSPROXY_physics_finalize;
     JSB_CCPhysicsDebugNode_class->flags = 0;
 
     static JSPropertySpec properties[] = {
@@ -342,6 +341,8 @@ bool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t
         jsval jsret;
         do {
             if (ret) {
+                ret->retain();
+                
                 TypeTest<PhysicsSprite> t;
                 js_type_class_t *typeClass = nullptr;
                 std::string typeName = t.s_name();
@@ -355,6 +356,7 @@ bool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t
                 JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
                 jsret = OBJECT_TO_JSVAL(obj);
                 jsb_new_proxy(ret, obj);
+                CCLOG("++++++CHIPMUNK3++++++ Native %p with JSObj %p", ret, obj.get());
             } else {
                 jsret = JSVAL_NULL;
             }
@@ -372,6 +374,8 @@ bool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t
         jsval jsret;
         do {
             if (ret) {
+                ret->retain();
+                
                 TypeTest<PhysicsSprite> t;
                 js_type_class_t *typeClass = nullptr;
                 std::string typeName = t.s_name();
@@ -384,6 +388,7 @@ bool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t
                 JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
                 jsret = OBJECT_TO_JSVAL(obj);
                 jsb_new_proxy(ret, obj);
+                CCLOG("++++++CHIPMUNK4++++++ Native %p with JSObj %p", ret, obj.get());
             } else {
                 jsret = JSVAL_NULL;
             }
@@ -414,6 +419,8 @@ bool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint32
     jsval jsret;
     do {
         if (ret) {
+            ret->retain();
+            
             TypeTest<PhysicsSprite> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -426,6 +433,7 @@ bool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint32
             JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
             jsret = OBJECT_TO_JSVAL(obj);
             jsb_new_proxy(ret, obj);
+            CCLOG("++++++CHIPMUNK5++++++ Native %p with JSObj %p", ret, obj.get());
         } else {
             jsret = JSVAL_NULL;
         }
@@ -449,6 +457,8 @@ bool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static(JSContext *cx, ui
         jsval jsret;
         do {
             if (ret) {
+                ret->retain();
+                
                 TypeTest<PhysicsSprite> t;
                 js_type_class_t *typeClass = nullptr;
                 std::string typeName = t.s_name();
@@ -461,6 +471,7 @@ bool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrameName__static(JSContext *cx, ui
                 JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
                 jsret = OBJECT_TO_JSVAL(obj);
                 jsb_new_proxy(ret, obj);
+                CCLOG("++++++CHIPMUNK6++++++ Native %p with JSObj %p", ret, obj.get());
             } else {
                 jsret = JSVAL_NULL;
             }
@@ -477,10 +488,8 @@ bool JSPROXY_CCPhysicsSprite_constructor(JSContext *cx, uint32_t argc, jsval *vp
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     PhysicsSprite* cobj = new PhysicsSprite();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
+//    cobj->autorelease();
+//    cobj->retain();
     TypeTest<cocos2d::extension::PhysicsSprite> t;
     js_type_class_t *typeClass = nullptr;
     std::string typeName = t.s_name();
@@ -494,6 +503,7 @@ bool JSPROXY_CCPhysicsSprite_constructor(JSContext *cx, uint32_t argc, jsval *vp
     args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
     jsb_new_proxy(cobj, obj);
+    CCLOG("++++++CHIPMUNK7++++++ Native %p with JSObj %p", cobj, obj.get());
     if (JS_HasProperty(cx, obj, "_ctor", &ok))
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
@@ -504,10 +514,10 @@ static bool JSPROXY_CCPhysicsSprite_ctor(JSContext *cx, uint32_t argc, jsval *vp
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     PhysicsSprite *nobj = new PhysicsSprite();
-    if (nobj) {
-        nobj->autorelease();
-    }
+//    nobj->autorelease();
+//    nobj->retain();
     jsb_new_proxy(nobj, obj);
+    CCLOG("++++++CHIPMUNK8++++++ Native %p with JSObj %p", nobj, obj.get());
     bool isFound = false;
     if (JS_HasProperty(cx, obj, "_ctor", &isFound))
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
@@ -526,7 +536,7 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JS::HandleObject globalO
     JSPROXY_CCPhysicsSprite_class->enumerate = JS_EnumerateStub;
     JSPROXY_CCPhysicsSprite_class->resolve = JS_ResolveStub;
     JSPROXY_CCPhysicsSprite_class->convert = JS_ConvertStub;
-    JSPROXY_CCPhysicsSprite_class->finalize = JSPROXY_CCPhysicsSprite_finalize;
+    JSPROXY_CCPhysicsSprite_class->finalize = JSPROXY_physics_finalize;
     JSPROXY_CCPhysicsSprite_class->flags = 0;
 
     static JSPropertySpec properties[] = {
@@ -2143,14 +2153,6 @@ bool JSB_cpBase_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     return true;
 }
 
-// Destructor
-void JSB_cpBase_finalize(JSFreeOp *fop, JSObject *obj)
-{
-    CCLOGINFO("jsbindings: finalizing JS object %p (cpBase)", obj);
-    
-    // should not delete the handle since it was manually added
-}
-
 bool JSB_cpBase_getHandle(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -2196,7 +2198,7 @@ void JSB_cpBase_createClass(JSContext *cx, JS::HandleObject globalObj, const cha
     JSB_cpBase_class->enumerate = JS_EnumerateStub;
     JSB_cpBase_class->resolve = JS_ResolveStub;
     JSB_cpBase_class->convert = JS_ConvertStub;
-    JSB_cpBase_class->finalize = JSB_cpBase_finalize;
+    JSB_cpBase_class->finalize = JSPROXY_physics_finalize;
     JSB_cpBase_class->flags = JSCLASS_HAS_PRIVATE;
     
     static JSPropertySpec properties[] = {
