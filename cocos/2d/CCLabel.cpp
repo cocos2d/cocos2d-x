@@ -591,9 +591,7 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& ima
         FontFNT *bmFont = (FontFNT*)newAtlas->getFont();
         if (bmFont) {
             float originalFontSize = bmFont->getOriginalFontSize();
-            if(fabs(_bmFontSize+1) < FLT_EPSILON){
-                _bmFontSize = originalFontSize / CC_CONTENT_SCALE_FACTOR();
-            }
+            _bmFontSize = originalFontSize / CC_CONTENT_SCALE_FACTOR();
         }
     }
 
