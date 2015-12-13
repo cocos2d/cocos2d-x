@@ -5130,10 +5130,6 @@ bool js_cocos2dx_EventKeyboard_constructor(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventKeyboard_constructor : Error processing arguments");
     
     cocos2d::EventKeyboard* cobj = new (std::nothrow) cocos2d::EventKeyboard(arg0, arg1);
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
     TypeTest<cocos2d::EventKeyboard> t;
     js_type_class_t *typeClass = nullptr;
     std::string typeName = t.s_name();
@@ -5145,10 +5141,18 @@ bool js_cocos2dx_EventKeyboard_constructor(JSContext *cx, uint32_t argc, jsval *
     JS::RootedObject parentProto(cx, typeClass->parentProto.ref());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
     JS::RootedValue objVal(cx, OBJECT_TO_JSVAL(obj));
+    cobj->autorelease();
+    cobj->retain();
+    ScriptingCore::retainCount++;
+    CCLOG("++++++RETAINED++++++ %d cocos2d::EventKeyboard %p ref count: %d with JSObj %p", ScriptingCore::retainCount, cobj, cobj->getReferenceCount(), obj.get());
+    proto.set(jsb_FinalizeHook_prototype);
+    JS::RootedObject hook(cx, JS_NewObject(cx, jsb_FinalizeHook_class, proto, JS::NullPtr()));
+    jsb_register_finalize_hook(hook.get(), obj.get());
+    JS::RootedValue hookVal(cx, OBJECT_TO_JSVAL(hook));
+    JS_SetProperty(cx, obj, "__hook", hookVal);
     args.rval().set(objVal);
     // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS::AddNamedObjectRoot(cx, &p->obj, "cocos2d::EventKeyboard");
+    jsb_new_proxy(cobj, obj);
     return true;
 }
 

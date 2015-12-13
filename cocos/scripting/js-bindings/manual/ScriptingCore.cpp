@@ -1325,13 +1325,12 @@ bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::Eve
 
 bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event, JS::MutableHandleValue jsvalRet)
 {
-    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-    
     bool ret = false;
-    
     std::string funcName = getTouchesFuncName(eventCode);
+    
+    JSAutoCompartment ac(_cx, _global.ref());
 
-    JS::RootedObject jsretArr(_cx, JS_NewArrayObject(this->_cx, 0));
+    JS::RootedObject jsretArr(_cx, JS_NewArrayObject(_cx, 0));
     int count = 0;
     
     for (const auto& touch : touches)
@@ -1356,8 +1355,6 @@ bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::Eve
         ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 2, dataVal, jsvalRet);
     } while(false);
 
-//    JS_RemoveObjectRoot(this->_cx, &jsretArr);
-
     for (auto& touch : touches)
     {
         removeJSObject(this->_cx, touch);
@@ -1376,10 +1373,10 @@ bool ScriptingCore::handleTouchEvent(void* nativeObj, cocos2d::EventTouch::Event
 
 bool ScriptingCore::handleTouchEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, cocos2d::Touch* touch, cocos2d::Event* event, JS::MutableHandleValue jsvalRet)
 {
-    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-    
     std::string funcName = getTouchFuncName(eventCode);
     bool ret = false;
+    
+    JSAutoCompartment ac(_cx, _global.ref());
     
     do
     {
@@ -1427,8 +1424,6 @@ bool ScriptingCore::handleMouseEvent(void* nativeObj, cocos2d::EventMouse::Mouse
 
 bool ScriptingCore::handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event, JS::MutableHandleValue jsvalRet)
 {
-    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-    
     std::string funcName = getMouseFuncName(eventType);
     bool ret = false;
     
@@ -1461,9 +1456,9 @@ bool ScriptingCore::handleMouseEvent(void* nativeObj, cocos2d::EventMouse::Mouse
 //                ret = false;
 //            }
 //        }
+        
+        removeJSObject(_cx, event);
     } while(false);
-    
-    removeJSObject(_cx, event);
     
     return ret;
 }
@@ -1538,8 +1533,6 @@ bool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, cons
 
 bool ScriptingCore::handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event)
 {
-    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-    
     js_proxy_t * p = jsb_get_native_proxy(nativeObj);
 
     if (nullptr == p)
@@ -1568,8 +1561,6 @@ bool ScriptingCore::handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::
 
 bool ScriptingCore::handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widgetLoseFocus, cocos2d::ui::Widget* widgetGetFocus)
 {
-    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-
     js_proxy_t * p = jsb_get_native_proxy(nativeObj);
 
     if (nullptr == p)
@@ -1620,8 +1611,6 @@ int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
 int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
                                            Touch *pTouch, JSObject *obj)
 {
-    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-    
     JS::RootedValue retval(_cx);
     std::string funcName = getTouchFuncName(eventType);
 
@@ -1641,8 +1630,6 @@ int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
                                            Touch *pTouch, JSObject *obj,
                                            JS::MutableHandleValue retval)
 {
-    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-    
     std::string funcName = getTouchFuncName(eventType);
 
     jsval jsTouch = getJSObject<Touch>(this->_cx, pTouch, false);
