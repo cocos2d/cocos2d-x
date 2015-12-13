@@ -336,7 +336,7 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     MinXmlHttpRequest* req = new MinXmlHttpRequest();
-    req->autorelease();
+//    req->autorelease();
     
     js_proxy_t *p;
     jsval out;
@@ -350,10 +350,17 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
         out = OBJECT_TO_JSVAL(obj);
     }
 
-    args.rval().set(out);
     p = jsb_new_proxy(req, obj);
     
-    JS::AddNamedObjectRoot(cx, &p->obj, "XMLHttpRequest");
+    proto.set(jsb_FinalizeHook_prototype);
+    JS::RootedObject hook(cx, JS_NewObject(cx, jsb_FinalizeHook_class, proto, JS::NullPtr()));
+    jsb_register_finalize_hook(hook.get(), obj.get());
+    JS::RootedValue hookVal(cx, OBJECT_TO_JSVAL(hook));
+    JS_SetProperty(cx, obj, "__hook", hookVal);
+//    CCLOG("XHR PROXY : %p, %p", req, obj.get());
+    
+//    JS::AddNamedObjectRoot(cx, &p->obj, "XMLHttpRequest");
+    args.rval().set(out);
     return true;
 }
 
