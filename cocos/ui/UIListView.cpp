@@ -53,10 +53,6 @@ ListView::~ListView()
     _listViewEventListener = nullptr;
     _listViewEventSelector = nullptr;
     _items.clear();
-#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
-    if (_model)
-        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _model);
-#endif
     CC_SAFE_RELEASE(_model);
 }
 
