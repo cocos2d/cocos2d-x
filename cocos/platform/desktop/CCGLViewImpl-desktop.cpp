@@ -782,11 +782,8 @@ void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int 
     int frameHeight = height / _frameZoomFactor;
     setFrameSize(frameWidth, frameHeight);
     
-    if (_resolutionPolicy != ResolutionPolicy::UNKNOWN)
-    {
-        updateDesignResolutionSize();
-        Director::getInstance()->setViewport();
-    }
+    updateDesignResolutionSize();
+    Director::getInstance()->setViewport();
 }
 
 void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
