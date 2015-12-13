@@ -109,9 +109,29 @@ public:
     virtual void retainScriptObject(cocos2d::Ref* owner, cocos2d::Ref* target) override;
     
     /**
+     * Add the script object to root object
+     */
+    virtual void rootScriptObject(cocos2d::Ref* target) override;
+    
+    /**
      * Reflect the release relationship to script scope
      */
     virtual void releaseScriptObject(cocos2d::Ref* owner, cocos2d::Ref* target) override;
+    
+    /**
+     * Remove the script object from root object
+     */
+    virtual void unrootScriptObject(cocos2d::Ref* target) override;
+    
+    /**
+     * Release all children in script scope
+     */
+    virtual void releaseAllChildrenRecursive(cocos2d::Node *node) override;
+    
+    /**
+     * Release all native refs for the given owner in script scope
+     */
+    virtual void releaseAllNativeRefs(cocos2d::Ref* owner) override;
     
     /**
      * @brief @~english Removes the C++ object's linked JavaScript proxy object from JavaScript context

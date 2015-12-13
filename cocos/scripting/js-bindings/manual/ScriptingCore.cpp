@@ -211,15 +211,6 @@ static std::string getMouseFuncName(EventMouse::MouseEventType eventType)
     return funcName;
 }
 
-static void rootObject(JSContext *cx, JS::Heap<JSObject*> *obj) {
-    AddNamedObjectRoot(cx, obj, "unnamed");
-}
-
-
-static void unRootObject(JSContext *cx, JS::Heap<JSObject*> *obj) {
-    RemoveObjectRoot(cx, obj);
-}
-
 void removeJSObject(JSContext* cx, void* nativeObj)
 {
     js_proxy_t* nproxy;
@@ -438,8 +429,6 @@ void registerDefaultClasses(JSContext* cx, JS::HandleObject global) {
 
     JS_DefineFunction(cx, jsc, "garbageCollect", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, jsc, "dumpRoot", ScriptingCore::dumpRoot, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-    JS_DefineFunction(cx, jsc, "addGCRootObject", ScriptingCore::addRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-    JS_DefineFunction(cx, jsc, "removeGCRootObject", ScriptingCore::removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, jsc, "executeScript", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
     // register some global functions
@@ -889,13 +878,10 @@ bool ScriptingCore::log(JSContext* cx, uint32_t argc, jsval *vp)
 void ScriptingCore::retainScriptObject(cocos2d::Ref* owner, cocos2d::Ref* target)
 {
 #if !CC_NATIVE_CONTROL_SCRIPT
-    auto engine = ScriptingCore::getInstance();
-    JSContext *cx = engine->getGlobalContext();
-    JS::RootedObject global(cx, engine->getGlobalObject());
-    
-    JS::RootedObject jsbObj(cx);
-    get_or_create_js_obj(cx, global, "jsb", &jsbObj);
-    JS::RootedValue jsbVal(cx, OBJECT_TO_JSVAL(jsbObj));
+    JS::RootedObject global(_cx, _global.ref());
+    JS::RootedObject jsbObj(_cx);
+    get_or_create_js_obj(_cx, global, "jsb", &jsbObj);
+    JS::RootedValue jsbVal(_cx, OBJECT_TO_JSVAL(jsbObj));
     if (jsbVal.isNullOrUndefined())
     {
         return;
@@ -907,29 +893,58 @@ void ScriptingCore::retainScriptObject(cocos2d::Ref* owner, cocos2d::Ref* target
     {
         return;
     }
-    JS::RootedValue valOwner(cx, OBJECT_TO_JSVAL(pOwner->obj));
-    JS::RootedValue valTarget(cx, OBJECT_TO_JSVAL(pTarget->obj));
+    JS::RootedValue valOwner(_cx, OBJECT_TO_JSVAL(pOwner->obj));
+    JS::RootedValue valTarget(_cx, OBJECT_TO_JSVAL(pTarget->obj));
     
-    JS::RootedValue retval(cx);
+    JS::RootedValue retval(_cx);
     jsval valArr[2];
     valArr[0] = valOwner;
     valArr[1] = valTarget;
     
     JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(2, valArr);
-    engine->executeFunctionWithOwner(jsbVal, "registerNativeRef", args, &retval);
+    executeFunctionWithOwner(jsbVal, "registerNativeRef", args, &retval);
+#endif
+}
+
+void ScriptingCore::rootScriptObject(cocos2d::Ref* target)
+{
+#if !CC_NATIVE_CONTROL_SCRIPT
+    JS::RootedObject global(_cx, _global.ref());
+    JS::RootedObject jsbObj(_cx);
+    get_or_create_js_obj(_cx, global, "jsb", &jsbObj);
+    JS::RootedValue jsbVal(_cx, OBJECT_TO_JSVAL(jsbObj));
+    if (jsbVal.isNullOrUndefined())
+    {
+        return;
+    }
+    js_proxy_t *pTarget = jsb_get_native_proxy(target);
+    if (!pTarget)
+    {
+        return;
+    }
+    JS::RootedValue valTarget(_cx, OBJECT_TO_JSVAL(pTarget->obj));
+    
+    JS::RootedObject root(_cx);
+    get_or_create_js_obj(_cx, jsbObj, "_root", &root);
+    JS::RootedValue valRoot(_cx, OBJECT_TO_JSVAL(root));
+    
+    JS::RootedValue retval(_cx);
+    jsval valArr[2];
+    valArr[0] = valRoot;
+    valArr[1] = valTarget;
+    
+    JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(2, valArr);
+    executeFunctionWithOwner(jsbVal, "registerNativeRef", args, &retval);
 #endif
 }
 
 void ScriptingCore::releaseScriptObject(cocos2d::Ref* owner, cocos2d::Ref* target)
 {
 #if !CC_NATIVE_CONTROL_SCRIPT
-    auto engine = ScriptingCore::getInstance();
-    JSContext *cx = engine->getGlobalContext();
-    JS::RootedObject global(cx, engine->getGlobalObject());
-    
-    JS::RootedObject jsbObj(cx);
-    get_or_create_js_obj(cx, global, "jsb", &jsbObj);
-    JS::RootedValue jsbVal(cx, OBJECT_TO_JSVAL(jsbObj));
+    JS::RootedObject global(_cx, _global.ref());
+    JS::RootedObject jsbObj(_cx);
+    get_or_create_js_obj(_cx, global, "jsb", &jsbObj);
+    JS::RootedValue jsbVal(_cx, OBJECT_TO_JSVAL(jsbObj));
     if (jsbVal.isNullOrUndefined())
     {
         return;
@@ -941,16 +956,87 @@ void ScriptingCore::releaseScriptObject(cocos2d::Ref* owner, cocos2d::Ref* targe
     {
         return;
     }
-    JS::RootedValue valOwner(cx, OBJECT_TO_JSVAL(pOwner->obj));
-    JS::RootedValue valTarget(cx, OBJECT_TO_JSVAL(pTarget->obj));
+    JS::RootedValue valOwner(_cx, OBJECT_TO_JSVAL(pOwner->obj));
+    JS::RootedValue valTarget(_cx, OBJECT_TO_JSVAL(pTarget->obj));
     
-    JS::RootedValue retval(cx);
+    JS::RootedValue retval(_cx);
     jsval valArr[2];
     valArr[0] = valOwner;
     valArr[1] = valTarget;
     
     JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(2, valArr);
-    engine->executeFunctionWithOwner(jsbVal, "unregisterNativeRef", args, &retval);
+    executeFunctionWithOwner(jsbVal, "unregisterNativeRef", args, &retval);
+#endif
+}
+
+void ScriptingCore::unrootScriptObject(cocos2d::Ref* target)
+{
+#if !CC_NATIVE_CONTROL_SCRIPT
+    JS::RootedObject global(_cx, _global.ref());
+    JS::RootedObject jsbObj(_cx);
+    get_or_create_js_obj(_cx, global, "jsb", &jsbObj);
+    JS::RootedValue jsbVal(_cx, OBJECT_TO_JSVAL(jsbObj));
+    if (jsbVal.isNullOrUndefined())
+    {
+        return;
+    }
+    js_proxy_t *pTarget = jsb_get_native_proxy(target);
+    if (!pTarget)
+    {
+        return;
+    }
+    JS::RootedValue valTarget(_cx, OBJECT_TO_JSVAL(pTarget->obj));
+    
+    JS::RootedObject root(_cx);
+    get_or_create_js_obj(_cx, jsbObj, "_root", &root);
+    JS::RootedValue valRoot(_cx, OBJECT_TO_JSVAL(root));
+    
+    JS::RootedValue retval(_cx);
+    jsval valArr[2];
+    valArr[0] = valRoot;
+    valArr[1] = valTarget;
+    
+    JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(2, valArr);
+    executeFunctionWithOwner(jsbVal, "unregisterNativeRef", args, &retval);
+#endif
+}
+
+void ScriptingCore::releaseAllChildrenRecursive(cocos2d::Node *node)
+{
+#if !CC_NATIVE_CONTROL_SCRIPT
+    const Vector<Node*>& children = node->getChildren();
+    for (auto child : children)
+    {
+        releaseScriptObject(node, child);
+        releaseAllChildrenRecursive(child);
+    }
+#endif
+}
+
+void ScriptingCore::releaseAllNativeRefs(cocos2d::Ref* owner)
+{
+#if !CC_NATIVE_CONTROL_SCRIPT
+    JS::RootedObject global(_cx, _global.ref());
+    JS::RootedObject jsbObj(_cx);
+    get_or_create_js_obj(_cx, global, "jsb", &jsbObj);
+    JS::RootedValue jsbVal(_cx, OBJECT_TO_JSVAL(jsbObj));
+    if (jsbVal.isNullOrUndefined())
+    {
+        return;
+    }
+    
+    js_proxy_t *pOwner = jsb_get_native_proxy(owner);
+    if (!pOwner)
+    {
+        return;
+    }
+    JS::RootedValue valOwner(_cx, OBJECT_TO_JSVAL(pOwner->obj));
+    
+    JS::RootedValue retval(_cx);
+    jsval valArr[1];
+    valArr[0] = valOwner;
+    JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(1, valArr);
+    executeFunctionWithOwner(jsbVal, "unregisterAllNativeRefs", args, &retval);
 #endif
 }
 
@@ -1032,33 +1118,6 @@ bool ScriptingCore::dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 //    JS_DumpHeap(rt, stdout, NULL, JSTRACE_OBJECT, NULL, 2, NULL);
 #endif
     return true;
-}
-
-bool ScriptingCore::addRootJS(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    if (argc == 1) {
-        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        JS::Heap<JSObject*> o(args.get(0).toObjectOrNull());
-        if (AddNamedObjectRoot(cx, &o, "from-js") == false) {
-            LOGD("something went wrong when setting an object to the root");
-        }
-        
-        return true;
-    }
-    return false;
-}
-
-bool ScriptingCore::removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    if (argc == 1) {
-        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        JS::Heap<JSObject*> o(args.get(0).toObjectOrNull());
-        if (o != nullptr) {
-            RemoveObjectRoot(cx, &o);
-        }
-        return true;
-    }
-    return false;
 }
 
 void ScriptingCore::pauseSchedulesAndActions(js_proxy_t* p)

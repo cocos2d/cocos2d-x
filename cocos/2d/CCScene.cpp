@@ -92,6 +92,10 @@ Scene::~Scene()
 #if CC_USE_PHYSICS
     delete _physicsWorld;
 #endif
+
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+    ScriptEngineManager::getInstance()->getScriptEngine()->releaseAllChildrenRecursive(this);
+#endif
 }
 
 #if CC_USE_NAVMESH
