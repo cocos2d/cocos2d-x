@@ -73,10 +73,6 @@ RenderTexture::RenderTexture()
 
 RenderTexture::~RenderTexture()
 {
-#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
-    if (_sprite)
-        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _sprite);
-#endif
     CC_SAFE_RELEASE(_sprite);
     CC_SAFE_RELEASE(_textureCopy);
     

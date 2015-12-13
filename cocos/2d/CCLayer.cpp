@@ -829,9 +829,6 @@ LayerMultiplex::LayerMultiplex()
 LayerMultiplex::~LayerMultiplex()
 {
     for(const auto &layer : _layers) {
-#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
-        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, layer);
-#endif
         layer->cleanup();
     }
 }

@@ -70,11 +70,6 @@ void ActionManager::deleteHashElement(tHashElement *element)
 {
     ccArrayFree(element->actions);
     HASH_DEL(_targets, element);
-#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
-    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-    if (sEngine)
-        sEngine->releaseScriptObject(this, element->target);
-#endif
     element->target->release();
     free(element);
 }

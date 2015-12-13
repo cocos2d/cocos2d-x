@@ -75,10 +75,6 @@ void NodeGrid::setTarget(Node* target)
 
 NodeGrid::~NodeGrid()
 {
-#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
-    if (_gridTarget)
-        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, _gridTarget);
-#endif
     CC_SAFE_RELEASE(_nodeGrid);
     CC_SAFE_RELEASE(_gridTarget);
 }
