@@ -561,7 +561,7 @@ public:
         JS_GET_PROXY(p, controlButton);
         if (!p)
         {
-            log("Failed to get proxy for control button");
+            log("Failed to get proxy for control button %p", controlButton);
             return;
         }
         
