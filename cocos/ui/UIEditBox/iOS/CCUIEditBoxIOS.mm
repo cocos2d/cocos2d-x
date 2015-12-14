@@ -155,7 +155,7 @@
             self.keyboardType = UIKeyboardTypeEmailAddress;
             break;
         case cocos2d::ui::EditBox::InputMode::NUMERIC:
-            self.keyboardType = UIKeyboardTypeDecimalPad;
+            self.keyboardType = UIKeyboardTypeNumberPad;
             break;
         case cocos2d::ui::EditBox::InputMode::PHONE_NUMBER:
             self.keyboardType = UIKeyboardTypePhonePad;
