@@ -308,6 +308,11 @@ public:
      *  Sets writable path.
      */
     virtual void setWritablePath(const std::string& writablePath);
+    
+    /**
+     *  Sets cache path.
+     */
+    virtual void setCachePath(const std::string& cachePath);
 
     /**
      *  Sets whether to pop-up a message box when failed to load an image.

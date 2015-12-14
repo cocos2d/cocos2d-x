@@ -366,9 +366,9 @@ std::string FileUtilsApple::getWritablePath() const
 
 std::string FileUtilsApple::getCachePath() const
 {
-    if (_writablePath.length())
+    if (_cachePath.length())
     {
-        return _writablePath;
+        return _cachePath;
     }
     
     // save to document folder
