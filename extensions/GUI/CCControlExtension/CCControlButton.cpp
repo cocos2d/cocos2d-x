@@ -120,6 +120,14 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, ui::Scale9Sprit
     }
 }
 
+ControlButton* ControlButton::create(Node* label, cocos2d::ui::Scale9Sprite* backgroundSprite)
+{
+    ControlButton *pRet = new (std::nothrow) ControlButton();
+    pRet->initWithLabelAndBackgroundSprite(label, backgroundSprite, true);
+    pRet->autorelease();
+    return pRet;
+}
+
 ControlButton* ControlButton::create(Node* label, cocos2d::ui::Scale9Sprite* backgroundSprite, bool adjustBackGroundSize)
 {
     ControlButton *pRet = new (std::nothrow) ControlButton();
@@ -141,16 +149,16 @@ ControlButton* ControlButton::create(const std::string& title, const std::string
     return pRet;
 }
 
-bool ControlButton::initWithBackgroundSprite(cocos2d::ui::Scale9Sprite* sprite, bool adjustBackGroundSize)
+bool ControlButton::initWithBackgroundSprite(cocos2d::ui::Scale9Sprite* sprite)
 {
     Label *label = Label::createWithSystemFont("", "Arial", 30);//
-    return initWithLabelAndBackgroundSprite(label, sprite,adjustBackGroundSize);
+    return initWithLabelAndBackgroundSprite(label, sprite,false);
 }
 
-ControlButton* ControlButton::create(cocos2d::ui::Scale9Sprite* sprite, bool adjustBackGroundSize)
+ControlButton* ControlButton::create(cocos2d::ui::Scale9Sprite* sprite)
 {
     ControlButton *pRet = new (std::nothrow) ControlButton();
-    pRet->initWithBackgroundSprite(sprite,adjustBackGroundSize);
+    pRet->initWithBackgroundSprite(sprite);
     pRet->autorelease();
     return pRet;
 }
