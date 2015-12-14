@@ -517,7 +517,7 @@ public:
     void restartVM();
 };
 
-JS::HandleObject NewGlobalObject(JSContext* cx, bool debug = false);
+JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
 
 bool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
 bool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);
@@ -566,12 +566,6 @@ void jsb_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, cocos2d::Ref* ref, co
 void jsb_ref_autoreleased_init(JSContext* cx, JS::Heap<JSObject*> *obj, cocos2d::Ref* ref, const char* debug);
 
 /**
- * Generic initialization function for Singletons
- * Similar to jsb_ref_init(), but call it to initialize singletons
- */
-void jsb_ref_singleton_init(JSContext* cx, JS::Heap<JSObject*> *obj, cocos2d::Ref* ref, const char* debug);
-
-/**
  * Generic finalize used by objects that are subclass of Ref
  */
 void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj);
@@ -596,22 +590,19 @@ JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_clas
 JSObject* jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
 /**
- * Creates a new JSObject of a certain type (typeClass) and creates a proxy associated with and the Singleton (ref)
- * Similar to jsb_ref_create_jsobject(), but call it if you know that Ref is a Singleton
- */
-JSObject* jsb_ref_singleton_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
-
-/**
  It will try to get the associated JSObjct for ref.
- If it can't find it, it will create a new one associating it to Ref
+ If it can't find it, it will create a new one associating it to Ref.
+ Call this function for objects that were already created and initialized, when returning `getChild()`
  */
 JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
 /**
  It will try to get the associated JSObjct for ref.
  If it can't find it, it will create a new one associating it to Ref
+ Call this function for objects that might return an already existing copy when you create them. For example, `Animation3D::create()`;
  */
-JSObject* jsb_ref_singleton_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+JSObject* jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+
 
 void removeJSObject(JSContext* cx, void* nativeObj);
 

@@ -145,7 +145,7 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Sets the font of the label, changes the label to a BMFont if neccessary.<br>
+-- Sets the font of the label, changes the label to a BMFont if necessary.<br>
 -- param fntFile The name of the font to change to<br>
 -- param state The state that uses the specified fntFile. The values are described<br>
 -- in "CCControlState".

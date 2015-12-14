@@ -33,6 +33,7 @@
         "src/TouchesTest/TouchesTest.js",
         "src/SchedulerTest/SchedulerTest.js",
         "src/MenuTest/MenuTest.js",
+        "src/MemoryModelTest/MemoryModelTest.js",
         "src/ActionsTest/ActionsTest.js",
         "src/TileMapTest/TileMapTest.js",
         "src/TransitionsTest/TransitionsTest.js",
