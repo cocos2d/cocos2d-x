@@ -274,4 +274,20 @@ public:
     virtual bool init() override;
 };
 
+class UIS9GlobalZOrderTest: public UIScene
+{
+public:
+    CREATE_FUNC(UIS9GlobalZOrderTest);
+    
+    virtual bool init() override;
+};
+
+class UIS9EnableScale9FalseTest: public UIScene
+{
+public:
+    CREATE_FUNC(UIS9EnableScale9FalseTest);
+    
+    virtual bool init() override;
+};
+
 #endif /* defined(__cocos2d_tests__UIScale9SpriteTest__) */

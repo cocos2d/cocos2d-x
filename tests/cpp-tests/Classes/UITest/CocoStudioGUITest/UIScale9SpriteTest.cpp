@@ -55,6 +55,8 @@ UIScale9SpriteTests::UIScale9SpriteTests()
     ADD_TEST_CASE(UIS9NinePatchTest);
     ADD_TEST_CASE(UIS9BatchTest);
     ADD_TEST_CASE(UIS9ToggleRenderingTypeTest);
+    ADD_TEST_CASE(UIS9GlobalZOrderTest);
+    ADD_TEST_CASE(UIS9EnableScale9FalseTest);
 }
 
 // UIScale9SpriteTest
@@ -92,6 +94,7 @@ bool UIScale9SpriteTest::init()
         normalSprite2->setPosition(120, 270);
         normalSprite2->setScale9Enabled(false);
         normalSprite2->setOpacity(100);
+        normalSprite2->setContentSize(normalSprite2->getContentSize() * 2);
         this->addChild(normalSprite2);
         normalSprite2->setColor(Color3B::GREEN);
         normalSprite2->runAction(action);
@@ -988,6 +991,85 @@ bool UIS9ToggleRenderingTypeTest::init()
             }
         });
         this->addChild(addSliceSpriteButton);
+        
+        return true;
+    }
+    return false;
+}
+
+
+bool UIS9GlobalZOrderTest::init()
+{
+    if (UIScene::init()) {
+        
+        auto winSize = Director::getInstance()->getWinSize();
+        float x = winSize.width / 2;
+        float y = 0 + (winSize.height / 2 - 20);
+        
+        auto label = Label::createWithSystemFont("The green scale9sprite is in the back.", "Arial", 15);
+        label->setPosition(Vec2(winSize.width/2, winSize.height - 60));
+        this->addChild(label);
+        
+        auto blocks = ui::Scale9Sprite::create("Images/blocks9.png");
+        
+        blocks->setPosition(Vec2(x, y));
+        blocks->setPreferredSize(Size(96*2, 96*1.5));
+        blocks->setColor(Color3B::RED);
+        blocks->setGlobalZOrder(1);
+        this->addChild(blocks);
+        
+      
+        auto blocks2 = ui::Scale9Sprite::create("Images/blocks9.png");
+        blocks2->setPosition(Vec2(x, y));
+        blocks2->setPreferredSize(Size(96*3, 96));
+        blocks2->setGlobalZOrder(0);
+        blocks2->setColor(Color3B::GREEN);
+        this->addChild(blocks2);
+
+        
+        return true;
+    }
+    return false;
+}
+
+
+bool UIS9EnableScale9FalseTest::init()
+{
+    if (UIScene::init()) {
+        
+        auto winSize = Director::getInstance()->getWinSize();
+        float x = winSize.width / 2 + 50;
+        float y = 0 + (winSize.height / 2 + 10);
+        
+        auto label = Label::createWithSystemFont("Only the yellow block intersect with the green one.", "Arial", 15);
+        label->setPosition(Vec2(winSize.width/2, winSize.height - 60));
+        this->addChild(label);
+        
+        auto blocks = ui::Scale9Sprite::create("Images/blocks9.png");
+        blocks->setScale9Enabled(false);
+        blocks->setPosition(Vec2(x, y));
+        blocks->setPreferredSize(Size(96*2, 96));
+        blocks->setColor(Color3B::RED);
+        blocks->setGlobalZOrder(1);
+        this->addChild(blocks);
+        
+        
+        auto blocks2 = ui::Scale9Sprite::create("Images/blocks9.png");
+        blocks2->setScale9Enabled(false);
+        blocks2->setPosition(Vec2(0, 0));
+        blocks2->setPreferredSize(Size(96*1.5, 96));
+        blocks2->setGlobalZOrder(0);
+        blocks2->setColor(Color3B::GREEN);
+        blocks->addChild(blocks2);
+        
+        auto blocks3 = ui::Scale9Sprite::create("Images/blocks9.png");
+        blocks3->setScale9Enabled(false);
+        blocks3->setPosition(Vec2(0, 0));
+        blocks3->setPreferredSize(Size(96, 96));
+        blocks3->setGlobalZOrder(2);
+        blocks3->setColor(Color3B::YELLOW);
+        blocks2->addChild(blocks3);
+        
         
         return true;
     }
