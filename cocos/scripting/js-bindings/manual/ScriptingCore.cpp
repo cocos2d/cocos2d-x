@@ -500,10 +500,21 @@ void ScriptingCore::string_report(JS::HandleValue val) {
     }
 }
 
-bool ScriptingCore::evalString(const char *string, JS::MutableHandleValue outVal, JSContext* cx, JS::HandleObject global, const char *filename)
+bool ScriptingCore::evalString(const char *string, JS::MutableHandleValue outVal, const char *filename, JSContext* cx, JS::HandleObject global)
 {
     JSAutoCompartment ac(cx, global);
     return JS_EvaluateScript(cx, global, string, (unsigned)strlen(string), "ScriptingCore::evalString", 1, outVal);
+}
+
+bool ScriptingCore::evalString(const char *string, JS::MutableHandleValue outVal)
+{
+    return evalString(string, outVal, nullptr, _cx, _global.ref());
+}
+
+bool ScriptingCore::evalString(const char *string)
+{
+    JS::RootedValue retVal(_cx);
+    return evalString(string, &retVal);
 }
 
 void ScriptingCore::start()
