@@ -670,7 +670,7 @@ namespace ui {
     
     void Scale9Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     {
-        if (_scale9Image) {
+        if (_scale9Image && _scale9Enabled) {
 #if CC_USE_CULLING
             // Don't do calculate the culling if the transform was not updated
             auto visitingCamera = Camera::getVisitingCamera();
@@ -757,12 +757,21 @@ namespace ui {
             else
                 break;
         }
+        
+        if (!_scale9Enabled && _scale9Image && _scale9Image->getLocalZOrder() < 0 )
+        {
+            _scale9Image->visit(renderer, _modelViewTransform, flags);
+        }
 
         // draw self
         //
         if (isVisitableByVisitingCamera())
             this->draw(renderer, _modelViewTransform, flags);
 
+        if (!_scale9Enabled && _scale9Image && _scale9Image->getLocalZOrder() >= 0 )
+        {
+            _scale9Image->visit(renderer, _modelViewTransform, flags);
+        }
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
             (*it)->visit(renderer, _modelViewTransform, flags);
@@ -1335,6 +1344,15 @@ namespace ui {
         this->cleanupSlicedSprites();
 
         CC_SAFE_RELEASE_NULL(this->_scale9Image);
+    }
+    
+    void Scale9Sprite::setGlobalZOrder(float globalZOrder)
+    {
+        Node::setGlobalZOrder(globalZOrder);
+        if (_scale9Image)
+        {
+            _scale9Image->setGlobalZOrder(globalZOrder);
+        }
     }
 
 }}
