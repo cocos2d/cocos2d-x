@@ -58,6 +58,7 @@ public:
     static ControlButton* create(cocos2d::ui::Scale9Sprite* sprite);
     static ControlButton* create(Node* label, cocos2d::ui::Scale9Sprite* backgroundSprite);
     static ControlButton* create(const std::string& title, const std::string& fontName, float fontSize);
+    static ControlButton* create(Node* label, cocos2d::ui::Scale9Sprite* backgroundSprite, bool adjustBackGroundSize);
 
     virtual void needsLayout(void) override;
 
@@ -202,7 +203,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~ControlButton();
     
     virtual bool init() override;
-    virtual bool initWithLabelAndBackgroundSprite(Node* label, cocos2d::ui::Scale9Sprite* backgroundSprite);
+    virtual bool initWithLabelAndBackgroundSprite(Node* label, cocos2d::ui::Scale9Sprite* backgroundSprite, bool adjustBackGroundSize);
     virtual bool initWithBackgroundSprite(cocos2d::ui::Scale9Sprite* sprite);
     virtual bool initWithTitleAndFontNameAndFontSize(const std::string& title, const std::string& fontName, float fontSize);
     
