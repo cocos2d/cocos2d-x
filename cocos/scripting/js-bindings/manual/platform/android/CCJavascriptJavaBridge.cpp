@@ -46,7 +46,7 @@ JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalSt
         CCLOG("Cocos2dxJavascriptJavaBridge_evalString error, invalid string code");
         return 0;
     }
-    ScriptingCore::getInstance()->evalString(strValue.c_str(), nullptr);
+    ScriptingCore::getInstance()->evalString(strValue.c_str());
     return 1;
 }
 

@@ -234,7 +234,22 @@ public:
      * @param global    @~english The js global object
      * @return @~english Return true if successfully invoked, otherwise return false.
      */
-    bool evalString(const char *string, jsval *outVal, const char *filename = NULL, JSContext* cx = NULL, JSObject* global = NULL);
+    bool evalString(const char *string, JS::MutableHandleValue outVal, const char *filename, JSContext* cx, JS::HandleObject global);
+    
+    /**@~english
+     * Evaluate the specified js code string
+     * @param string    @~english The string with the javascript code to be evaluated
+     * @param outVal    @~english The jsval that will hold the return value of the evaluation.
+     * @return @~english Return true if successfully invoked, otherwise return false.
+     */
+    bool evalString(const char *string, JS::MutableHandleValue outVal);
+    
+    /**@~english
+     * Evaluate the specified js code string
+     * @param string    @~english The string with the javascript code to be evaluated
+     * @return @~english Return true if successfully invoked, otherwise return false.
+     */
+    bool evalString(const char *string);
     
     /**
      @brief @~english Get script object for the given path
