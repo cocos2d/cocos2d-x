@@ -256,7 +256,7 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
         }
     }
     //FIXME: https://github.com/cocos2d/cocos2d-x/issues/12249
-    if (!_ignoreSize) {
+    if (!_ignoreSize && _customSize.equals(Size::ZERO)) {
         _customSize = _buttonNormalRenderer->getContentSize();
     }
     this->setupNormalTexture(textureLoaded);
