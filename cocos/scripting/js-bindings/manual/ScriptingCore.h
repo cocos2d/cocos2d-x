@@ -517,7 +517,7 @@ public:
     void restartVM();
 };
 
-JS::HandleObject NewGlobalObject(JSContext* cx, bool debug = false);
+JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
 
 bool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
 bool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);

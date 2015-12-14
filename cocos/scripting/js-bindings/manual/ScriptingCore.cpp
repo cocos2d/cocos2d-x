@@ -1869,14 +1869,14 @@ void ScriptingCore::enableDebugger(unsigned int port)
     }
 }
 
-JS::HandleObject NewGlobalObject(JSContext* cx, bool debug)
+JSObject* NewGlobalObject(JSContext* cx, bool debug)
 {
     JS::CompartmentOptions options;
     options.setVersion(JSVERSION_LATEST);
     
     JS::RootedObject glob(cx, JS_NewGlobalObject(cx, &global_class, &shellTrustedPrincipals, JS::DontFireOnNewGlobalHook, options));
     if (!glob) {
-        return JS::NullPtr();
+        return nullptr;
     }
     JSAutoCompartment ac(cx, glob);
     bool ok = true;
@@ -1886,7 +1886,7 @@ JS::HandleObject NewGlobalObject(JSContext* cx, bool debug)
     if (ok && debug)
         ok = JS_DefineDebuggerObject(cx, glob);
     if (!ok)
-        return JS::NullPtr();
+        return nullptr;
 
     JS_FireOnNewGlobalObject(cx, glob);
     
