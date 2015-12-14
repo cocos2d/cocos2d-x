@@ -213,6 +213,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class SpriteAnchorPointFromFile : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteAnchorPointFromFile);
+    
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class Sprite6 : public SpriteTestDemo
 {
 public:

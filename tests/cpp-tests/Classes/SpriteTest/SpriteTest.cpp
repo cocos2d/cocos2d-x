@@ -59,6 +59,7 @@ SpriteTests::SpriteTests()
     ADD_TEST_CASE(SpriteBatchNode1);
     ADD_TEST_CASE(SpriteAnchorPoint);
     ADD_TEST_CASE(SpriteBatchNodeAnchorPoint);
+    ADD_TEST_CASE(SpriteAnchorPointFromFile);
     ADD_TEST_CASE(SpriteOffsetAnchorRotation);
     ADD_TEST_CASE(SpriteBatchNodeOffsetAnchorRotation);
     ADD_TEST_CASE(SpriteOffsetAnchorScale);
@@ -1114,6 +1115,67 @@ std::string SpriteBatchNodeAnchorPoint::subtitle() const
     return "anchor point";
 }
 
+//------------------------------------------------------------------
+//
+// SpriteAnchorPointFromFile
+//
+//------------------------------------------------------------------
+
+void SpriteAnchorPointFromFile::onEnter()
+{
+    SpriteTestDemo::onEnter();
+    auto screen = Director::getInstance()->getWinSize();
+    
+    auto rotate = RotateBy::create(10, 360);
+    auto action = RepeatForever::create(rotate);
+    char str[100] = {0};
+
+    auto cache = SpriteFrameCache::getInstance();
+    cache->addSpriteFramesWithFile("animations/grossini_anchors.plist");
+
+    Sprite *sprite;
+    for(int i=0;i<10;i++)
+    {
+        sprintf(str, "grossini_dance_%02d.png", i+1);
+        sprite = Sprite::createWithSpriteFrameName(str);
+
+        sprite->setPosition(Vec2(screen.width/6*(i%5+1), screen.height*2/3 - screen.height*(i/5)/3));
+        
+        auto point = Sprite::create("Images/r1.png");
+        point->setScale( 0.1f );
+        point->setPosition( sprite->getPosition() );
+        addChild(point, 10);
+        
+        sprite->runAction( action->clone() );
+        addChild(sprite, i);
+    }
+    
+    Vector<SpriteFrame*> animFrames(5);
+    for(int i = 9; i < 14; i++)
+    {
+        sprintf(str, "grossini_dance_%02d.png", i+1);
+        animFrames.pushBack(cache->getSpriteFrameByName(str));
+    }
+    auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
+    sprite->runAction(RepeatForever::create(Animate::create(animation)));
+
+}
+
+void SpriteAnchorPointFromFile::onExit()
+{
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("animations/grossini_anchors.plist");
+    SpriteTestDemo::onExit();
+}
+
+std::string SpriteAnchorPointFromFile::title() const
+{
+    return "Testing SpriteFrame";
+}
+
+std::string SpriteAnchorPointFromFile::subtitle() const
+{
+    return "anchor point";
+}
 
 //------------------------------------------------------------------
 //
