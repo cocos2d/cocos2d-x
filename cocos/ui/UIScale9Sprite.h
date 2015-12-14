@@ -577,7 +577,7 @@ namespace ui {
         /**
          * @brief Toggle 9-slice feature.
          * If Scale9Sprite is 9-slice disabled, the Scale9Sprite will rendered as a normal sprite.
-         * @waring: Don't use setScale9Enabled(false), use setRenderingType(RenderingType::SIMPLE) instead.
+         * @warning: Don't use setScale9Enabled(false), use setRenderingType(RenderingType::SIMPLE) instead.
          *        The setScale9Enabled(false) is kept only for back back compatibility.
          * @param enabled True to enable 9-slice, false otherwise.
          * @js NA
