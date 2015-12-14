@@ -1047,6 +1047,10 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     {
         _polyInfo = spriteFrame->getPolygonInfo();
     }
+    if (spriteFrame->hasAnchorPoint())
+    {
+        setAnchorPoint(spriteFrame->getAnchorPoint());
+    }
 }
 
 void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex)

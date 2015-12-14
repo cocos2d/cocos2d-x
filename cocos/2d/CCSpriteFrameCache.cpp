@@ -276,6 +276,10 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
                 initializePolygonInfo(textureSize, spriteSourceSize, vertices, verticesUV, indices, info);
                 spriteFrame->setPolygonInfo(info);
             }
+            if (frameDict.find("anchor") != frameDict.end())
+            {
+                spriteFrame->setAnchorPoint(PointFromString(frameDict["anchor"].asString()));
+            }
         }
 
         bool flag = NinePatchImageParser::isNinePatchImage(spriteFrameName);
