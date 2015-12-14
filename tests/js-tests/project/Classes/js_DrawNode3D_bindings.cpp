@@ -485,29 +485,15 @@ bool js_cocos2dx_DrawNode3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cocos2d::DrawNode3D* cobj = new (std::nothrow) cocos2d::DrawNode3D();
+    cocos2d::DrawNode3D* cobj = new (std::nothrow) cocos2d::DrawNode3D;
     cobj->init();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::DrawNode3D> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS::RootedObject proto(cx, typeClass->proto.ref());
-    JS::RootedObject parent(cx, typeClass->parentProto.ref());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
+    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::DrawNode3D>(cobj);
+
     // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::DrawNode3D");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::DrawNode3D"));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
     return true;
 }
 
@@ -520,9 +506,6 @@ static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 
 extern JSObject *jsb_cocos2d_Node_prototype;
 
-void js_cocos2d_DrawNode3D_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (DrawNode3D)", obj);
-}
 
 void js_register_cocos2dx_DrawNode3D(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_DrawNode3D_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -534,7 +517,7 @@ void js_register_cocos2dx_DrawNode3D(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_DrawNode3D_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_DrawNode3D_class->resolve = JS_ResolveStub;
     jsb_cocos2d_DrawNode3D_class->convert = JS_ConvertStub;
-    jsb_cocos2d_DrawNode3D_class->finalize = js_cocos2d_DrawNode3D_finalize;
+    jsb_cocos2d_DrawNode3D_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_DrawNode3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {

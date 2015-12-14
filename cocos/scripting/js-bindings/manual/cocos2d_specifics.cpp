@@ -5142,34 +5142,15 @@ bool js_cocos2dx_EventKeyboard_constructor(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventKeyboard_constructor : Error processing arguments");
     
     cocos2d::EventKeyboard* cobj = new (std::nothrow) cocos2d::EventKeyboard(arg0, arg1);
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::EventKeyboard> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.ref());
-    JS::RootedObject parentProto(cx, typeClass->parentProto.ref());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
-    JS::RootedValue objVal(cx, OBJECT_TO_JSVAL(obj));
-    args.rval().set(objVal);
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS::AddNamedObjectRoot(cx, &p->obj, "cocos2d::EventKeyboard");
+    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::EventKeyboard>(cobj);
+    auto jsobj = jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::EventKeyboard");
+
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
     return true;
 }
 
 
 extern JSObject *jsb_cocos2d_Event_prototype;
-
-void js_cocos2d_EventKeyboard_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (EventKeyboard)", obj);
-}
 
 static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -5188,7 +5169,7 @@ void js_register_cocos2dx_EventKeyboard(JSContext *cx, JS::HandleObject global) 
     jsb_cocos2d_EventKeyboard_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_EventKeyboard_class->resolve = JS_ResolveStub;
     jsb_cocos2d_EventKeyboard_class->convert = JS_ConvertStub;
-    jsb_cocos2d_EventKeyboard_class->finalize = js_cocos2d_EventKeyboard_finalize;
+    jsb_cocos2d_EventKeyboard_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_EventKeyboard_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
     
     static JSPropertySpec properties[] = {

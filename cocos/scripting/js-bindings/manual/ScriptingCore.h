@@ -549,7 +549,7 @@ js_type_class_t *jsb_register_class(JSContext *cx, JSClass *jsClass, JS::HandleO
 
 js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsObj);
 js_proxy_t* jsb_get_native_proxy(void* nativeObj);
-js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj);
+js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
 
 /**
