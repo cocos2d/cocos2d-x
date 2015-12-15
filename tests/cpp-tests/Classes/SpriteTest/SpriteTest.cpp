@@ -1965,8 +1965,10 @@ std::string SpritePolygonFromFileContent::sheetName() const
 // SpriteOffsetAnchorRotation
 //
 //------------------------------------------------------------------
-SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
+void SpriteOffsetAnchorRotation::onEnter()
 {
+    SpriteTestDemo::onEnter();
+
     auto s = Director::getInstance()->getWinSize();        
     auto cache = SpriteFrameCache::getInstance();
     cache->addSpriteFramesWithFile("animations/grossini.plist");
