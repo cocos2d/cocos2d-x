@@ -94,7 +94,7 @@ public:
     inline bool isFadeMode() const { return _fadeMode; }
     /** Sets fade mode or not.
     *
-    * @param bFadeMode True if enabled fast mode.
+    * @param bFadeMode True if enabled fade mode.
     */
     inline void setFadeMode(bool bFadeMode) { _fadeMode = bFadeMode; }
     /** Get stroke.
