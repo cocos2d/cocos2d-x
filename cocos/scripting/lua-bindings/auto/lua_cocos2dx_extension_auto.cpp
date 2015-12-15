@@ -2466,24 +2466,27 @@ int lua_cocos2dx_extension_ControlButton_initWithLabelAndBackgroundSprite(lua_St
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
+    if (argc == 3) 
     {
         cocos2d::Node* arg0;
         cocos2d::ui::Scale9Sprite* arg1;
+        bool arg2;
 
         ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ControlButton:initWithLabelAndBackgroundSprite");
 
         ok &= luaval_to_object<cocos2d::ui::Scale9Sprite>(tolua_S, 3, "ccui.Scale9Sprite",&arg1, "cc.ControlButton:initWithLabelAndBackgroundSprite");
+
+        ok &= luaval_to_boolean(tolua_S, 4,&arg2, "cc.ControlButton:initWithLabelAndBackgroundSprite");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_ControlButton_initWithLabelAndBackgroundSprite'", nullptr);
             return 0;
         }
-        bool ret = cobj->initWithLabelAndBackgroundSprite(arg0, arg1);
+        bool ret = cobj->initWithLabelAndBackgroundSprite(arg0, arg1, arg2);
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:initWithLabelAndBackgroundSprite",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:initWithLabelAndBackgroundSprite",argc, 3);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -2655,6 +2658,25 @@ int lua_cocos2dx_extension_ControlButton_create(lua_State* tolua_S)
             if (!ok) { break; }
             double arg2;
             ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.ControlButton:create");
+            if (!ok) { break; }
+            cocos2d::extension::ControlButton* ret = cocos2d::extension::ControlButton::create(arg0, arg1, arg2);
+            object_to_luaval<cocos2d::extension::ControlButton>(tolua_S, "cc.ControlButton",(cocos2d::extension::ControlButton*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 3)
+        {
+            cocos2d::Node* arg0;
+            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ControlButton:create");
+            if (!ok) { break; }
+            cocos2d::ui::Scale9Sprite* arg1;
+            ok &= luaval_to_object<cocos2d::ui::Scale9Sprite>(tolua_S, 3, "ccui.Scale9Sprite",&arg1, "cc.ControlButton:create");
+            if (!ok) { break; }
+            bool arg2;
+            ok &= luaval_to_boolean(tolua_S, 4,&arg2, "cc.ControlButton:create");
             if (!ok) { break; }
             cocos2d::extension::ControlButton* ret = cocos2d::extension::ControlButton::create(arg0, arg1, arg2);
             object_to_luaval<cocos2d::extension::ControlButton>(tolua_S, "cc.ControlButton",(cocos2d::extension::ControlButton*)ret);
