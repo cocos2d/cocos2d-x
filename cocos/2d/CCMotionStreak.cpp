@@ -37,6 +37,7 @@ NS_CC_BEGIN
 
 MotionStreak::MotionStreak()
 : _fastMode(false)
+, _fadeMode(true)
 , _startingPositionInitialized(false)
 , _texture(nullptr)
 , _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
@@ -232,13 +233,14 @@ const BlendFunc& MotionStreak::getBlendFunc(void) const
 
 void MotionStreak::setOpacity(GLubyte opacity)
 {
-    CCASSERT(false, "Set opacity no supported");
+    //CCASSERT(false, "Set opacity no supported");
+    _realOpacity = opacity;
 }
 
 GLubyte MotionStreak::getOpacity(void) const
 {
-    CCASSERT(false, "Opacity no supported");
-    return 0;
+    //CCASSERT(false, "Opacity no supported");
+    return _realOpacity;
 }
 
 void MotionStreak::setOpacityModifyRGB(bool bValue)
@@ -300,7 +302,13 @@ void MotionStreak::update(float delta)
             }else
                 newIdx2 = newIdx*8;
 
-            const GLubyte op = (GLubyte)(_pointState[newIdx] * 255.0f);
+            GLubyte op;
+            if (_fadeMode)// fade
+                op = (GLubyte)(_pointState[newIdx] * _realOpacity);
+            else //dont fade
+                op = (GLubyte)_realOpacity;
+
+            //const GLubyte op = (GLubyte)(_pointState[newIdx] * 255.0f);
             _colorPointer[newIdx2+3] = op;
             _colorPointer[newIdx2+7] = op;
         }

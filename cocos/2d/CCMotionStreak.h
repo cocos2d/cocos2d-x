@@ -86,6 +86,17 @@ public:
      * @param bFastMode True if enabled fast mode.
      */
     inline void setFastMode(bool bFastMode) { _fastMode = bFastMode; }
+
+    /** Get fade mode is enabled.
+    *
+    * @return True if fade mode is enabled.
+    */
+    inline bool isFadeMode() const { return _fadeMode; }
+    /** Sets fade mode or not.
+    *
+    * @param bFadeMode True if enabled fast mode.
+    */
+    inline void setFadeMode(bool bFadeMode) { _fadeMode = bFadeMode; }
     /** Get stroke.
      *
      * @return float stroke.
@@ -161,6 +172,7 @@ protected:
     //renderer callback
     void onDraw(const Mat4 &transform, uint32_t flags);
 
+    bool _fadeMode;
     bool _fastMode;
     bool _startingPositionInitialized;
 
