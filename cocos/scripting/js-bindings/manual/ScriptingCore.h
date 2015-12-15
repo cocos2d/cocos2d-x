@@ -234,7 +234,22 @@ public:
      * @param global    @~english The js global object
      * @return @~english Return true if successfully invoked, otherwise return false.
      */
-    bool evalString(const char *string, jsval *outVal, const char *filename = NULL, JSContext* cx = NULL, JSObject* global = NULL);
+    bool evalString(const char *string, JS::MutableHandleValue outVal, const char *filename, JSContext* cx, JS::HandleObject global);
+    
+    /**@~english
+     * Evaluate the specified js code string
+     * @param string    @~english The string with the javascript code to be evaluated
+     * @param outVal    @~english The jsval that will hold the return value of the evaluation.
+     * @return @~english Return true if successfully invoked, otherwise return false.
+     */
+    bool evalString(const char *string, JS::MutableHandleValue outVal);
+    
+    /**@~english
+     * Evaluate the specified js code string
+     * @param string    @~english The string with the javascript code to be evaluated
+     * @return @~english Return true if successfully invoked, otherwise return false.
+     */
+    bool evalString(const char *string);
     
     /**
      @brief @~english Get script object for the given path
@@ -517,7 +532,7 @@ public:
     void restartVM();
 };
 
-JS::HandleObject NewGlobalObject(JSContext* cx, bool debug = false);
+JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
 
 bool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
 bool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);
@@ -549,7 +564,7 @@ js_type_class_t *jsb_register_class(JSContext *cx, JSClass *jsClass, JS::HandleO
 
 js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsObj);
 js_proxy_t* jsb_get_native_proxy(void* nativeObj);
-js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj);
+js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
 
 /**
@@ -564,12 +579,6 @@ void jsb_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, cocos2d::Ref* ref, co
  * an issue with the static auto-bindings with the "create" function
  */
 void jsb_ref_autoreleased_init(JSContext* cx, JS::Heap<JSObject*> *obj, cocos2d::Ref* ref, const char* debug);
-
-/**
- * Generic initialization function for Singletons
- * Similar to jsb_ref_init(), but call it to initialize singletons
- */
-void jsb_ref_singleton_init(JSContext* cx, JS::Heap<JSObject*> *obj, cocos2d::Ref* ref, const char* debug);
 
 /**
  * Generic finalize used by objects that are subclass of Ref
@@ -596,22 +605,19 @@ JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_clas
 JSObject* jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
 /**
- * Creates a new JSObject of a certain type (typeClass) and creates a proxy associated with and the Singleton (ref)
- * Similar to jsb_ref_create_jsobject(), but call it if you know that Ref is a Singleton
- */
-JSObject* jsb_ref_singleton_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
-
-/**
  It will try to get the associated JSObjct for ref.
- If it can't find it, it will create a new one associating it to Ref
+ If it can't find it, it will create a new one associating it to Ref.
+ Call this function for objects that were already created and initialized, when returning `getChild()`
  */
 JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
 /**
  It will try to get the associated JSObjct for ref.
  If it can't find it, it will create a new one associating it to Ref
+ Call this function for objects that might return an already existing copy when you create them. For example, `Animation3D::create()`;
  */
-JSObject* jsb_ref_singleton_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+JSObject* jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+
 
 void removeJSObject(JSContext* cx, void* nativeObj);
 

@@ -203,10 +203,9 @@ bool js_cocos2dx_EventTouch_getTouches(JSContext *cx, uint32_t argc, jsval *vp) 
             JS::RootedValue arrElement(cx);
             
             //First, check whether object is associated with js object.
-            js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::Touch>(cx, touchObj);
-            if (jsproxy) {
-                arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
-            }
+            auto jsobj = js_get_or_create_jsobject<cocos2d::Touch>(cx, touchObj);
+            if (jsobj)
+                arrElement = OBJECT_TO_JSVAL(jsobj);
             if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
                 break;
             }
@@ -4558,8 +4557,7 @@ bool js_PlistParser_getInstance(JSContext *cx, unsigned argc, JS::Value *vp)
             jsret = OBJECT_TO_JSVAL(p->obj);
         } else {
             // create a new js obj of that class
-            js_proxy_t *proxy = js_get_or_create_proxy<SAXParser>(cx, parser);
-            jsret = OBJECT_TO_JSVAL(proxy->obj);
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<SAXParser>(cx, parser));
         }
     } else {
         jsret = JSVAL_NULL;
@@ -4878,8 +4876,8 @@ bool js_cocos2dx_RenderTexture_saveToFile(JSContext *cx, uint32_t argc, jsval *v
                     jsval largv[2];
                     do {
                         if (larg0) {
-                            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::RenderTexture>(cx, (cocos2d::RenderTexture*)larg0);
-                            largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
+                            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+                            largv[0] = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::RenderTexture>(cx, (cocos2d::RenderTexture*)larg0));
                         } else {
                             largv[0] = JSVAL_NULL;
                         }
@@ -4949,8 +4947,8 @@ bool js_cocos2dx_RenderTexture_saveToFile(JSContext *cx, uint32_t argc, jsval *v
                     jsval largv[2];
                     do {
                         if (larg0) {
-                            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::RenderTexture>(cx, (cocos2d::RenderTexture*)larg0);
-                            largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
+                            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+                            largv[0] = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::RenderTexture>(cx, (cocos2d::RenderTexture*)larg0));
                         } else {
                             largv[0] = JSVAL_NULL;
                         }
@@ -5144,34 +5142,15 @@ bool js_cocos2dx_EventKeyboard_constructor(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventKeyboard_constructor : Error processing arguments");
     
     cocos2d::EventKeyboard* cobj = new (std::nothrow) cocos2d::EventKeyboard(arg0, arg1);
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::EventKeyboard> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.ref());
-    JS::RootedObject parentProto(cx, typeClass->parentProto.ref());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
-    JS::RootedValue objVal(cx, OBJECT_TO_JSVAL(obj));
-    args.rval().set(objVal);
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS::AddNamedObjectRoot(cx, &p->obj, "cocos2d::EventKeyboard");
+    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::EventKeyboard>(cobj);
+    auto jsobj = jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::EventKeyboard");
+
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
     return true;
 }
 
 
 extern JSObject *jsb_cocos2d_Event_prototype;
-
-void js_cocos2d_EventKeyboard_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (EventKeyboard)", obj);
-}
 
 static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -5190,7 +5169,7 @@ void js_register_cocos2dx_EventKeyboard(JSContext *cx, JS::HandleObject global) 
     jsb_cocos2d_EventKeyboard_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_EventKeyboard_class->resolve = JS_ResolveStub;
     jsb_cocos2d_EventKeyboard_class->convert = JS_ConvertStub;
-    jsb_cocos2d_EventKeyboard_class->finalize = js_cocos2d_EventKeyboard_finalize;
+    jsb_cocos2d_EventKeyboard_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_EventKeyboard_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
     
     static JSPropertySpec properties[] = {
@@ -5314,17 +5293,11 @@ bool js_cocos2dx_Scene_getPhysics3DWorld(JSContext *cx, uint32_t argc, jsval *vp
     {
         cocos2d::Physics3DWorld* ret = cobj->getPhysics3DWorld();
         jsval jsret = JSVAL_NULL;
-        do
+        if (ret)
         {
-            if (ret)
-            {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DWorld>(cx, (cocos2d::Physics3DWorld*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else
-            {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+            js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Physics3DWorld>(ret);
+            jsret = OBJECT_TO_JSVAL(jsb_ref_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::Physics3DWorld"));
+        }
         args.rval().set(jsret);
         return true;
     }
@@ -5400,15 +5373,11 @@ bool js_cocos2dx_Scene_getNavMesh(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 0) {
 		cocos2d::NavMesh* ret = cobj->getNavMesh();
 		jsval jsret = JSVAL_NULL;
-		do {
-			if (ret) {
-				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::NavMesh>(cx, (cocos2d::NavMesh*)ret);
-				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-			}
-			else {
-				jsret = JSVAL_NULL;
-			}
-		} while (0);
+        if (ret)
+        {
+            js_type_class_t *typeClass = js_get_type_from_native<cocos2d::NavMesh>(ret);
+            jsret = OBJECT_TO_JSVAL(jsb_ref_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::NavMesh"));
+        }
 		args.rval().set(jsret);
 		return true;
 	}
@@ -5657,14 +5626,9 @@ bool js_cocos2dx_AutoPolygon_generatePolygon(JSContext *cx, uint32_t argc, jsval
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_AutoPolygon_generatePolygon : Error processing arguments");
         cocos2d::PolygonInfo* ret = new cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0));
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::PolygonInfo>(cx, ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PolygonInfo>(cx, ret));
+        }
         args.rval().set(jsret);
         return true;
     }
@@ -5676,14 +5640,9 @@ bool js_cocos2dx_AutoPolygon_generatePolygon(JSContext *cx, uint32_t argc, jsval
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_AutoPolygon_generatePolygon : Error processing arguments");
         cocos2d::PolygonInfo* ret = new cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1));
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::PolygonInfo>(cx, ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PolygonInfo>(cx, ret));
+        }
         args.rval().set(jsret);
         return true;
     }
@@ -5697,14 +5656,9 @@ bool js_cocos2dx_AutoPolygon_generatePolygon(JSContext *cx, uint32_t argc, jsval
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_AutoPolygon_generatePolygon : Error processing arguments");
         cocos2d::PolygonInfo* ret = new cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2));
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::PolygonInfo>(cx, ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PolygonInfo>(cx, ret));
+        }
         args.rval().set(jsret);
         return true;
     }
@@ -5720,14 +5674,9 @@ bool js_cocos2dx_AutoPolygon_generatePolygon(JSContext *cx, uint32_t argc, jsval
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_AutoPolygon_generatePolygon : Error processing arguments");
         cocos2d::PolygonInfo* ret = new cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2, arg3));
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::PolygonInfo>(cx, ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        if (ret) {
+            jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PolygonInfo>(cx, ret));
+        }
         args.rval().set(jsret);
         return true;
     }

@@ -57,20 +57,6 @@ getDuration : function (
 },
 
 /**
- * @method create
- * @param {String} arg0
- * @param {String} arg1
- * @return {cc.Animation3D}
- */
-create : function (
-str, 
-str 
-)
-{
-    return cc.Animation3D;
-},
-
-/**
  * @method Animation3D
  * @constructor
  */

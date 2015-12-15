@@ -133,11 +133,8 @@ JSObject* js_get_or_create_jsobject(JSContext *cx, typename std::enable_if<!std:
         JS::RootedObject parent(cx, typeClass->parentProto.ref().get());
         JS::RootedObject js_obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
         proxy = jsb_new_proxy(native_obj, js_obj);
-#ifdef DEBUG
-        AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
-#else
-        AddObjectRoot(cx, &proxy->obj);
-#endif
+
+        JS::AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
     }
     return proxy->obj;
 }
@@ -150,13 +147,8 @@ JSObject* js_get_or_create_jsobject(JSContext *cx, typename std::enable_if<!std:
 template<class T>
 JSObject* js_get_or_create_jsobject(JSContext *cx, typename std::enable_if<std::is_base_of<cocos2d::Ref,T>::value,T>::type *native_obj)
 {
-    js_proxy_t *proxy = jsb_get_native_proxy(native_obj);
-    if (proxy)
-        return proxy->obj;
-
-    // else
     js_type_class_t* typeClass = js_get_type_from_native<T>(native_obj);
-    return jsb_ref_autoreleased_create_jsobject(cx, native_obj, typeClass, typeid(*native_obj).name());
+    return jsb_ref_get_or_create_jsobject(cx, native_obj, typeClass, typeid(*native_obj).name());
 }
 
 JS::Value anonEvaluate(JSContext *cx, JS::HandleObject thisObj, const char* string);

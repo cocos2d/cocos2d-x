@@ -55,7 +55,7 @@ bool PURandomiserTranslator::translateChildProperty( PUScriptCompiler* compiler,
     }
     else if (prop->name == token[TOKEN_RND_MAX_DEVIATION_X])
     {
-        // Property: rand_aff_max_deviation_x (depreacted and replaced by 'max_deviation_x')
+        // Property: rand_aff_max_deviation_x (deprecated and replaced by 'max_deviation_x')
         if (passValidateProperty(compiler, prop, token[TOKEN_RND_MAX_DEVIATION_X], VAL_REAL))
         {
             float val = 0.0f;

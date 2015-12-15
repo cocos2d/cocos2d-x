@@ -698,7 +698,7 @@ bool js_cocos2dx_studio_ActionManagerEx_getInstance(JSContext *cx, uint32_t argc
 
         auto ret = cocostudio::ActionManagerEx::getInstance();
         js_type_class_t *typeClass = js_get_type_from_native<cocostudio::ActionManagerEx>(ret);
-        JS::RootedObject jsret(cx, jsb_ref_singleton_get_or_create_jsobject(cx, ret, typeClass, "cocostudio::ActionManagerEx"));
+        JS::RootedObject jsret(cx, jsb_ref_get_or_create_jsobject(cx, ret, typeClass, "cocostudio::ActionManagerEx"));
         args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }
@@ -5172,7 +5172,7 @@ bool js_cocos2dx_studio_ArmatureDataManager_getInstance(JSContext *cx, uint32_t 
 
         auto ret = cocostudio::ArmatureDataManager::getInstance();
         js_type_class_t *typeClass = js_get_type_from_native<cocostudio::ArmatureDataManager>(ret);
-        JS::RootedObject jsret(cx, jsb_ref_singleton_get_or_create_jsobject(cx, ret, typeClass, "cocostudio::ArmatureDataManager"));
+        JS::RootedObject jsret(cx, jsb_ref_get_or_create_jsobject(cx, ret, typeClass, "cocostudio::ArmatureDataManager"));
         args.rval().set(OBJECT_TO_JSVAL(jsret));
         return true;
     }

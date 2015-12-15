@@ -589,9 +589,9 @@ bool PUParticle3DEntityRender::initRender( const std::string &texFile )
 
 GLuint PUParticle3DEntityRender::getTextureName()
 {
-    if (TextureCache::getInstance()->isDirty())
+    if (Director::getInstance()->getTextureCache()->isDirty())
     {
-        if (TextureCache::getInstance()->getTextureForKey(_texFile) == nullptr)
+        if (Director::getInstance()->getTextureCache()->getTextureForKey(_texFile) == nullptr)
         {
             _texture = nullptr;
             this->initRender("");
