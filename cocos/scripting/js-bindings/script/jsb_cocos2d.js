@@ -2771,29 +2771,30 @@ cc.GLProgram.prototype.setUniformLocationWithMatrix2fv = function(){
     var tempArray = Array.prototype.slice.call(arguments);
     tempArray = Array.prototype.concat.call(tempArray, 2);
     this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
-}
+};
 
 cc.GLProgram.prototype.setUniformLocationWithMatrix3fv = function(){
     var tempArray = Array.prototype.slice.call(arguments);
     tempArray = Array.prototype.concat.call(tempArray, 3);
     this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
-}
+};
 cc.GLProgram.prototype.setUniformLocationWithMatrix4fv = function(){
     var tempArray = Array.prototype.slice.call(arguments);
     tempArray = Array.prototype.concat.call(tempArray, 4);
     this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
-}
+};
 
 
 //
 // Script Component
 //
 cc._ComponentJS = cc.ComponentJS;
+cc._ComponentJS.extend = cc.Class.extend;
 cc.ComponentJS = function (filename) {
     var comp = cc._ComponentJS.create(filename);
     var res = comp.getScriptObject();
     return res;
-}
+};
 cc.ComponentJS.extend = function (prop) {
     return cc._ComponentJS.extend(prop);
 };
