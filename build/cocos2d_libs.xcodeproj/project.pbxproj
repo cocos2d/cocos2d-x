@@ -1867,6 +1867,10 @@
 		5E9F612B1A3FFE3D0038DE01 /* CCPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F61241A3FFE3D0038DE01 /* CCPlane.cpp */; };
 		5E9F612C1A3FFE3D0038DE01 /* CCPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61251A3FFE3D0038DE01 /* CCPlane.h */; };
 		5E9F612D1A3FFE3D0038DE01 /* CCPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61251A3FFE3D0038DE01 /* CCPlane.h */; };
+		7F3CD2FA1C215AD1007D1AC0 /* CircularBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F3CD2F81C215AD1007D1AC0 /* CircularBuffer.cpp */; };
+		7F3CD2FB1C215AD1007D1AC0 /* CircularBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F3CD2F81C215AD1007D1AC0 /* CircularBuffer.cpp */; };
+		7F3CD2FC1C215AD1007D1AC0 /* CircularBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F3CD2F91C215AD1007D1AC0 /* CircularBuffer.h */; };
+		7F3CD2FD1C215AD1007D1AC0 /* CircularBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F3CD2F91C215AD1007D1AC0 /* CircularBuffer.h */; };
 		826294331AAF001C00CB7CF7 /* HttpAsynConnection-apple.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2A1A5349A3004E4C60 /* HttpAsynConnection-apple.m */; };
 		826294341AAF003E00CB7CF7 /* HttpClient-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2B1A5349A3004E4C60 /* HttpClient-apple.mm */; };
 		826294351AAF004C00CB7CF7 /* HttpCookie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2C1A5349A3004E4C60 /* HttpCookie.cpp */; };
@@ -4702,6 +4706,8 @@
 		5E9F61231A3FFE3D0038DE01 /* CCFrustum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFrustum.h; sourceTree = "<group>"; };
 		5E9F61241A3FFE3D0038DE01 /* CCPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPlane.cpp; sourceTree = "<group>"; };
 		5E9F61251A3FFE3D0038DE01 /* CCPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlane.h; sourceTree = "<group>"; };
+		7F3CD2F81C215AD1007D1AC0 /* CircularBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CircularBuffer.cpp; sourceTree = "<group>"; };
+		7F3CD2F91C215AD1007D1AC0 /* CircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularBuffer.h; sourceTree = "<group>"; };
 		8525E3A11B291E42008EE815 /* clipper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = clipper.hpp; sourceTree = "<group>"; };
 		85B374381B204B9400C488D6 /* clipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clipper.cpp; sourceTree = "<group>"; };
 		A045F6D41BA81577005076C7 /* CCTextureCube.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureCube.cpp; sourceTree = "<group>"; };
@@ -7183,6 +7189,7 @@
 		46A167981807AF4D005B8026 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				7F3CD2F71C215AD1007D1AC0 /* network */,
 				B6C0BF4D1A6F733D00BCF15A /* Particle3D */,
 				292DB15D19B461CA00A80320 /* ExtensionDeprecated.cpp */,
 				292DB15E19B461CA00A80320 /* ExtensionDeprecated.h */,
@@ -7946,6 +7953,15 @@
 			);
 			name = clipper;
 			path = ../external/clipper;
+			sourceTree = "<group>";
+		};
+		7F3CD2F71C215AD1007D1AC0 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				7F3CD2F81C215AD1007D1AC0 /* CircularBuffer.cpp */,
+				7F3CD2F91C215AD1007D1AC0 /* CircularBuffer.h */,
+			);
+			path = network;
 			sourceTree = "<group>";
 		};
 		A045F6EC1BA81821005076C7 /* GameNode3DReader */ = {
@@ -9959,6 +9975,7 @@
 				50ABBE3F1925AB6F00A911A9 /* CCDataVisitor.h in Headers */,
 				15AE199F19AAD39600C27E9E /* SliderReader.h in Headers */,
 				B665E2641AA80A6500DDB1C5 /* CCPUDoExpireEventHandler.h in Headers */,
+				7F3CD2FC1C215AD1007D1AC0 /* CircularBuffer.h in Headers */,
 				B6CAB2B91AF9AA1A00B9B856 /* btConvexTriangleMeshShape.h in Headers */,
 				B6CAB32B1AF9AA1A00B9B856 /* btGImpactCollisionAlgorithm.h in Headers */,
 				B6CAB24F1AF9AA1A00B9B856 /* btDefaultCollisionConfiguration.h in Headers */,
@@ -10160,6 +10177,7 @@
 				B6CAB43A1AF9AA1A00B9B856 /* btGpu3DGridBroadphaseSharedDefs.h in Headers */,
 				15AE1A4019AAD3D500C27E9E /* b2Collision.h in Headers */,
 				B665E36D1AA80A6500DDB1C5 /* CCPUOnVelocityObserver.h in Headers */,
+				7F3CD2FD1C215AD1007D1AC0 /* CircularBuffer.h in Headers */,
 				B6CAB4061AF9AA1A00B9B856 /* btMultiBodyDynamicsWorld.h in Headers */,
 				ED74D76A1A5B8A2600157FD4 /* CCPhysicsHelper.h in Headers */,
 				5034CA40191D591100CE6051 /* ccShader_Position_uColor.vert in Headers */,
@@ -11606,6 +11624,7 @@
 				15AE1BCB19AAE01E00C27E9E /* CCControlButton.cpp in Sources */,
 				B6CAB3731AF9AA1A00B9B856 /* btGjkEpa2.cpp in Sources */,
 				50ABBE791925AB6F00A911A9 /* CCEventMouse.cpp in Sources */,
+				7F3CD2FA1C215AD1007D1AC0 /* CircularBuffer.cpp in Sources */,
 				15AE1A2E19AAD3D500C27E9E /* b2TimeOfImpact.cpp in Sources */,
 				A05DCF9D1B90584E00EE040B /* CCDownloader-curl.cpp in Sources */,
 				B6CAB2FD1AF9AA1A00B9B856 /* btTriangleIndexVertexArray.cpp in Sources */,
@@ -12006,6 +12025,7 @@
 				50ABC0161926664800A911A9 /* CCImage.cpp in Sources */,
 				B665E3AB1AA80A6500DDB1C5 /* CCPURandomiserTranslator.cpp in Sources */,
 				B6DD2FE21B04825B00E47F5F /* DetourPathCorridor.cpp in Sources */,
+				7F3CD2FB1C215AD1007D1AC0 /* CircularBuffer.cpp in Sources */,
 				1A01C6A518F58F7500EFE3A6 /* CCNotificationCenter.cpp in Sources */,
 				292DB14E19B4574100A80320 /* UIEditBoxImpl-mac.mm in Sources */,
 				B6CAB4BC1AF9AA1A00B9B856 /* SpuGatheringCollisionDispatcher.cpp in Sources */,
