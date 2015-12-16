@@ -287,6 +287,7 @@
 		BA0CBB5F1BB0756F00003364 /* CCComponentLua.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA0CBB5C1BB0756F00003364 /* CCComponentLua.cpp */; settings = {ASSET_TAGS = (); }; };
 		BA0CBB601BB0756F00003364 /* CCComponentLua.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0CBB5D1BB0756F00003364 /* CCComponentLua.h */; settings = {ASSET_TAGS = (); }; };
 		BA0CBB611BB0756F00003364 /* CCComponentLua.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0CBB5D1BB0756F00003364 /* CCComponentLua.h */; settings = {ASSET_TAGS = (); }; };
+		ADAC23ED1C2044A60049A6A2 /* lua_module_register.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADD1C0D21C196B9500733781 /* lua_module_register.cpp */; };
 		ADD1C0D51C196B9500733781 /* lua_module_register.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADD1C0D21C196B9500733781 /* lua_module_register.cpp */; };
 		ADD1C0D61C196B9500733781 /* lua_module_register.h in Headers */ = {isa = PBXBuildFile; fileRef = ADD1C0D31C196B9500733781 /* lua_module_register.h */; };
 		ADD1C0D71C196B9500733781 /* Lua-BindingsExport.h in Headers */ = {isa = PBXBuildFile; fileRef = ADD1C0D41C196B9500733781 /* Lua-BindingsExport.h */; };
@@ -1145,7 +1146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADD1C0D81C196BBF00733781 /* lua_module_register.cpp in Sources */,
+				ADAC23ED1C2044A60049A6A2 /* lua_module_register.cpp in Sources */,
 				15415AC619A71A53004F1E71 /* select.c in Sources */,
 				15A561ED1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.cpp in Sources */,
 				15EFA646198B3311000C57D3 /* tolua_event.c in Sources */,
