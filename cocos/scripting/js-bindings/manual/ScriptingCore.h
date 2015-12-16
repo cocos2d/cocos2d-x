@@ -618,7 +618,4 @@ JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_ty
  */
 JSObject* jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
-
-void removeJSObject(JSContext* cx, void* nativeObj);
-
 #endif /* __SCRIPTING_CORE_H__ */

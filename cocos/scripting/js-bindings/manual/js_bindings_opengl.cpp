@@ -35,12 +35,10 @@ void GLNode::onDraw(Mat4 &transform, uint32_t flags)
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
 
     js_type_class_t *typeClass = js_get_type_from_native<cocos2d::GLNode>(this);
-    auto j = jsb_ref_get_or_create_jsobject(cx, this, typeClass, "cocos2d::GLNode");
+    JS::RootedObject jsObj(cx, jsb_ref_get_or_create_jsobject(cx, this, typeClass, "cocos2d::GLNode"));
 
-    if (j)
+    if (jsObj.get())
     {
-        JS::RootedObject jsObj(cx, j);
-
          bool found = false;
          JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 
