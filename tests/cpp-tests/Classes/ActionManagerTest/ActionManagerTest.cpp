@@ -14,6 +14,7 @@ enum
 ActionManagerTests::ActionManagerTests()
 {
     ADD_TEST_CASE(CrashTest);
+    ADD_TEST_CASE(CrashTest2);
     ADD_TEST_CASE(LogicTest);
     ADD_TEST_CASE(PauseTest);
     ADD_TEST_CASE(StopActionTest);
@@ -86,6 +87,77 @@ void CrashTest::removeThis()
 std::string CrashTest::subtitle() const
 {
     return "Test 1. Should not crash";
+}
+
+//------------------------------------------------------------------
+//
+// Crash Test 2:
+//
+// This test reproduces a crash in ActionManager::update with the
+// engine attempting to access a hash element that has been deleted.
+//
+// The problem was detected when using the Xcode 'Address Sanitzer'
+// feature with a 'heap use after free' error occuring in ActionManager::update.
+// It may be difficult/rare to reproduce (especially in debug) without
+// this feature enabled so you should make sure address sanitizer is turned
+// on when verifying the fix.
+//
+//------------------------------------------------------------------
+
+class CrashTest2Node : public Node
+{
+public:
+    
+    CREATE_FUNC(CrashTest2Node)
+    RefPtr<CrashTest2Node> _otherNodeToRemove;
+    
+    virtual ~CrashTest2Node() override
+    {
+        if (_otherNodeToRemove) {
+            _otherNodeToRemove->removeFromParent();
+        }
+    }
+};
+
+void CrashTest2::onEnter()
+{
+    ActionManagerTest::onEnter();
+    scheduleUpdate();
+}
+
+void CrashTest2::onExit()
+{
+    unscheduleUpdate();
+    ActionManagerTest::onExit();
+}
+
+void CrashTest2::update(float dt)
+{
+    const int NUM_NODES = 256;
+    RefPtr<CrashTest2Node> nodes[NUM_NODES];
+    
+    for (int i = 0; i < NUM_NODES; ++i) {
+        nodes[i] = CrashTest2Node::create();
+        addChild(nodes[i]);
+    }
+    
+    for (int i = 0; i < NUM_NODES; ++i) {
+        CrashTest2Node * thisNode = nodes[i];
+        
+        if (i + 1 < NUM_NODES) {
+            thisNode->_otherNodeToRemove = nodes[i + 1];
+        }
+        
+        thisNode->runAction(cocos2d::CallFunc::create([thisNode](){
+            thisNode->removeFromParent();
+        }));
+    }
+}
+
+std::string CrashTest2::subtitle() const
+{
+    return "Crash Test 2 - Should not crash! "
+        "NOTE: build with Xcode 'Address santizer' enabled (where applicable) to cause the crash more easily.";
 }
 
 //------------------------------------------------------------------

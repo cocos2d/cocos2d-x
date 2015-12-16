@@ -30,6 +30,17 @@ public:
     void removeThis();
 };
 
+class CrashTest2 : public ActionManagerTest
+{
+public:
+    CREATE_FUNC(CrashTest2);
+    
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual void update(float dt) override;
+};
+
 class LogicTest : public ActionManagerTest
 {
 public:

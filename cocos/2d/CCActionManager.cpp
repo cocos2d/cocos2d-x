@@ -448,7 +448,16 @@ void ActionManager::update(float dt)
         // only delete currentTarget if no actions were scheduled during the cycle (issue #481)
         if (_currentTargetSalvaged && _currentTarget->actions->num == 0)
         {
-            deleteHashElement(_currentTarget);
+            // N.B - CRASH FIX! Close a small window of opportunity here where the next hash element could
+            // potentially be destroyed before we move onto it. Calling 'deleteHashElement' could potentially
+            // trigger a series of cleanup/deallocation calls which might result in the hash element pointed
+            // to by 'elt' being destroyed before the next loop iteration. Combat this by setting '_currentTarget'
+            // here early, before the next loop iteration. This will safeguard the next hash element from being
+            // destroyed before we move onto it:
+            tHashElement* hashElementToDelete = _currentTarget;
+            _currentTarget = elt;
+            _currentTargetSalvaged = false;
+            deleteHashElement(hashElementToDelete);
         }
     }
 
