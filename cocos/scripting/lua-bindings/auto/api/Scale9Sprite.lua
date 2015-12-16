@@ -37,6 +37,8 @@
 --------------------------------
 -- brief Toggle 9-slice feature.<br>
 -- If Scale9Sprite is 9-slice disabled, the Scale9Sprite will rendered as a normal sprite.<br>
+-- warning: Don't use setScale9Enabled(false), use setRenderingType(RenderingType::SIMPLE) instead.<br>
+-- The setScale9Enabled(false) is kept only for back back compatibility.<br>
 -- param enabled True to enable 9-slice, false otherwise.<br>
 -- js NA
 -- @function [parent=#Scale9Sprite] setScale9Enabled 
@@ -387,6 +389,13 @@
 -- @function [parent=#Scale9Sprite] getScaleX 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Scale9Sprite] setGlobalZOrder 
+-- @param self
+-- @param #float globalZOrder
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
