@@ -25,6 +25,7 @@
 #include "network/CCDownloader-apple.h"
 
 #include "network/CCDownloader.h"
+#include "CCString.h"
 #include <queue>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -399,7 +400,7 @@ namespace cocos2d { namespace network {
         else if(![wrapper get]->storagePath.length()) {
             // call onTaskFinish for a data task
             // (for a file download task, callback is called in didFinishDownloadingToURL)
-            std::string errorString;
+            std::string errorString = cocos2d::StringUtils::format("Downloader: Failed to download %s with no error", [task.originalRequest.URL.absoluteString cStringUsingEncoding:NSUTF8StringEncoding]);
             
             const int64_t buflen = [wrapper totalBytesReceived];
             char buf[buflen];
@@ -522,7 +523,7 @@ namespace cocos2d { namespace network {
     NSInteger statusCode = ((NSHTTPURLResponse*)downloadTask.response).statusCode;
     if (statusCode >= 400) {
         std::vector<unsigned char> buf; // just a placeholder
-        std::string response = [[NSString stringWithContentsOfURL:location] UTF8String] ?: "";
+        std::string response = cocos2d::StringUtils::format("Downloader: Failed to download %s with status code (%d)", [downloadTask.originalRequest.URL.absoluteString cStringUsingEncoding:NSUTF8StringEncoding], (int)statusCode);
         _outer->onTaskFinish(*[wrapper get], cocos2d::network::DownloadTask::ERROR_IMPL_INTERNAL, noErr, response, buf);
         return;
     }
