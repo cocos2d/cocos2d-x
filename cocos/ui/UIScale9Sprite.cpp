@@ -118,10 +118,11 @@ namespace ui {
             auto spriteFrameCache = SpriteFrameCache::getInstance();
             CCASSERT(spriteFrameCache != nullptr,
                      "SpriteFrameCache::getInstance() must be non-NULL");
+            if(spriteFrameCache == nullptr) break;
             
             SpriteFrame *frame = spriteFrameCache->getSpriteFrameByName(spriteFrameName);
             CCASSERT(frame != nullptr, "CCSpriteFrame must be non-NULL");
-            if (frame == nullptr) return false;
+            if (frame == nullptr) break;
             
             ret = initWithSpriteFrame(frame, capInsets);
         } while (false);
