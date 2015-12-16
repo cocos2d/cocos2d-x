@@ -48,6 +48,7 @@ typedef std::function<void(int trackIndex, spEvent* event)> EventListener;
 class SkeletonAnimation: public SkeletonRenderer {
 public:
 	static SkeletonAnimation* createWithData (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
+    static SkeletonAnimation* createWithData (SkeletonAnimation* spineData);
 	static SkeletonAnimation* createWithFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
 	static SkeletonAnimation* createWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
 
@@ -79,6 +80,7 @@ public:
 
 CC_CONSTRUCTOR_ACCESS:
 	SkeletonAnimation ();
+    SkeletonAnimation (SkeletonAnimation* skeletonData);
 	SkeletonAnimation (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
 	SkeletonAnimation (const std::string&skeletonDataFile, spAtlas* atlas, float scale = 1);
 	SkeletonAnimation (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);

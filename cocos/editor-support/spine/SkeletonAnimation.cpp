@@ -76,6 +76,12 @@ SkeletonAnimation* SkeletonAnimation::createWithData (spSkeletonData* skeletonDa
 	node->autorelease();
 	return node;
 }
+    
+SkeletonAnimation* SkeletonAnimation::createWithData (SkeletonAnimation* spineData) {
+        SkeletonAnimation* node = new SkeletonAnimation(spineData);
+        node->autorelease();
+        return node;
+    }
 
 SkeletonAnimation* SkeletonAnimation::createWithFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale) {
 	SkeletonAnimation* node = new SkeletonAnimation(skeletonDataFile, atlas, scale);
@@ -106,6 +112,11 @@ SkeletonAnimation::SkeletonAnimation ()
 SkeletonAnimation::SkeletonAnimation (spSkeletonData *skeletonData, bool ownsSkeletonData)
 		: SkeletonRenderer(skeletonData, ownsSkeletonData) {
 	initialize();
+}
+    
+SkeletonAnimation::SkeletonAnimation (SkeletonAnimation *spineData)
+    : SkeletonRenderer(spineData->getSkeleton()->data) {
+    initialize();
 }
 
 SkeletonAnimation::SkeletonAnimation (const std::string& skeletonDataFile, spAtlas* atlas, float scale)
