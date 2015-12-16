@@ -16283,55 +16283,59 @@ int lua_cocos2dx_extension_CircularBuffer_Read(lua_State* tolua_S)
     int argc = 0;
     cocos2d::extension::CircularBuffer* cobj = nullptr;
     bool ok  = true;
-
+    
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
-
-
+    
+    
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"cc.CircularBuffer",0,&tolua_err)) goto tolua_lerror;
 #endif
-
+    
     cobj = (cocos2d::extension::CircularBuffer*)tolua_tousertype(tolua_S,1,0);
-
+    
 #if COCOS2D_DEBUG >= 1
-    if (!cobj) 
+    if (!cobj)
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_CircularBuffer_Read'", nullptr);
         return 0;
     }
 #endif
-
+    
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
+    if (argc == 1)
     {
-        void* arg0;
         unsigned long arg1;
-
-        #pragma warning NO CONVERSION TO NATIVE FOR void*
-		ok = false;
-
-        ok &= luaval_to_ulong(tolua_S, 3, &arg1, "cc.CircularBuffer:Read");
+        
+        ok = luaval_to_ulong(tolua_S, 2, &arg1, "cc.CircularBuffer:Read");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_CircularBuffer_Read'", nullptr);
             return 0;
         }
-        bool ret = cobj->Read(arg0, arg1);
-        tolua_pushboolean(tolua_S,(bool)ret);
+        char* buffer = new char[arg1];
+        if (cobj->Read(buffer, arg1)) {
+            lua_pushlstring(tolua_S, buffer, arg1);
+        } else {
+            lua_pushnil(tolua_S);
+        }
+        
+        if (buffer) delete [] buffer;
+        
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CircularBuffer:Read",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CircularBuffer:Read",argc, 1);
     return 0;
-
+    
 #if COCOS2D_DEBUG >= 1
-    tolua_lerror:
+tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_CircularBuffer_Read'.",&tolua_err);
 #endif
-
+    
     return 0;
 }
+
 int lua_cocos2dx_extension_CircularBuffer_clear(lua_State* tolua_S)
 {
     int argc = 0;
