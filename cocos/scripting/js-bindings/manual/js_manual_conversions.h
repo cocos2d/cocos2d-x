@@ -282,7 +282,8 @@ jsval resourcedata_to_jsval(JSContext* cx, const cocos2d::ResourceData& v);
 
 
 // forward declaration
-template <class T> js_type_class_t *js_get_type_from_native(T* native_obj);
+template <class T>
+js_type_class_t *js_get_type_from_native(T* native_obj);
 
 // Ref version of ccvector_to_jsval
 template <class T>

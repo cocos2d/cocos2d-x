@@ -893,9 +893,9 @@ void ScriptingCore::removeScriptObjectByObject(Ref* pObj)
             RemoveObjectRoot(cx, &jsproxy->obj);
             jsb_remove_proxy(nproxy, jsproxy);
         }
-        else CCLOG("removeScriptObjectByObject. BUG: jsproxy not found = %p", nproxy);
+//        else CCLOG("removeScriptObjectByObject. BUG: jsproxy not found = %p", nproxy);
     }
-    else CCLOG("removeScriptObjectByObject. BUG: nproxy not found = %p", nproxy);
+//    else CCLOG("removeScriptObjectByObject. BUG: nproxy not found = %p", nproxy);
 }
 
 
