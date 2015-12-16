@@ -515,7 +515,18 @@ namespace cocos2d { namespace network {
     NSString *destPath = [NSString stringWithUTF8String:storagePath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSURL *destURL = nil;
-    
+
+    // On iOS 9 a response with status code 4xx(Client Error) or 5xx(Server Error)
+    // might end up calling this delegate method, saving the error message to the storage path
+    // and treating this download task as a successful one, so we need to check the status code here
+    NSInteger statusCode = ((NSHTTPURLResponse*)downloadTask.response).statusCode;
+    if (statusCode >= 400) {
+        std::vector<unsigned char> buf; // just a placeholder
+        std::string response = [[NSString stringWithContentsOfURL:location] UTF8String] ?: "";
+        _outer->onTaskFinish(*[wrapper get], cocos2d::network::DownloadTask::ERROR_IMPL_INTERNAL, noErr, response, buf);
+        return;
+    }
+
     do
     {
         if ([destPath hasPrefix:@"file://"])
