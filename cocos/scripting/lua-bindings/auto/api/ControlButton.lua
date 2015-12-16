@@ -286,6 +286,7 @@
 -- @param self
 -- @param #cc.Node label
 -- @param #ccui.Scale9Sprite backgroundSprite
+-- @param #bool adjustBackGroundSize
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -309,11 +310,12 @@
 -- @overload self         
 -- @overload self, cc.Node, ccui.Scale9Sprite         
 -- @overload self, string, string, float         
+-- @overload self, cc.Node, ccui.Scale9Sprite, bool         
 -- @function [parent=#ControlButton] create
 -- @param self
--- @param #string title
--- @param #string fontName
--- @param #float fontSize
+-- @param #cc.Node label
+-- @param #ccui.Scale9Sprite backgroundSprite
+-- @param #bool adjustBackGroundSize
 -- @return ControlButton#ControlButton ret (return value: cc.ControlButton)
 
 --------------------------------
