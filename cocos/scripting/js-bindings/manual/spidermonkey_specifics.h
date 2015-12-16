@@ -25,14 +25,22 @@
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
-#include "uthash.h"
 #include "mozilla/Maybe.h"
 #include <unordered_map>
 
+// No need to keep this struct
+// since we are using unordered_map now
+// but can't remove it since easily since lot's of code depends on it
 typedef struct js_proxy {
+    /** the native object. usually a pointer to cocos2d::Ref, but could be a pointer to another object */
     void *ptr;
+    /** the JS object, as a heap object. Required by GC best practices */
     JS::Heap<JSObject*> obj;
-    UT_hash_handle hh;
+    /** This is the raw pointer. The same as the "obj", but 'raw'. This is needed
+     because under certain circumstances JS::RemoveRootObject will be called on "obj"
+     and "obj" will became NULL. Which is not Ok if we need to use "obj" later for other stuff
+     */
+    JSObject* _jsobj;
 } js_proxy_t;
 
 typedef struct js_type_class {
