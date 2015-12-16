@@ -79,7 +79,7 @@ FontAtlas::FontAtlas(Font &theFont)
             _currentPageDataSize *= 2;
         }
 
-        _currentPageData = new unsigned char[_currentPageDataSize];
+        _currentPageData = new (std::nothrow) unsigned char[_currentPageDataSize];
         memset(_currentPageData, 0, _currentPageDataSize);
 
         auto  pixelFormat = outlineSize > 0 ? Texture2D::PixelFormat::AI88 : Texture2D::PixelFormat::A8; 

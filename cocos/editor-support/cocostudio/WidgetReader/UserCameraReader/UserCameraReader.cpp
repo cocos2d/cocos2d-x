@@ -56,7 +56,7 @@ namespace cocostudio
     {
         if (!_instanceUserCameraReader)
         {
-            _instanceUserCameraReader = new UserCameraReader();
+            _instanceUserCameraReader = new (std::nothrow) UserCameraReader();
         }
         
         return _instanceUserCameraReader;

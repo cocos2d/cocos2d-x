@@ -225,7 +225,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
 
 bool Terrain::initHeightMap(const std::string& heightMap)
 {
-    _heightMapImage = new Image();
+    _heightMapImage = new (std::nothrow) Image();
     _heightMapImage->initWithImageFile(heightMap);
     _data = _heightMapImage->getData();
     _imageWidth =_heightMapImage->getWidth();
@@ -244,7 +244,7 @@ bool Terrain::initHeightMap(const std::string& heightMap)
         {
             for(int n =0; n<chunk_amount_x;n++)
             {
-                _chunkesArray[m][n] = new Chunk();
+                _chunkesArray[m][n] = new (std::nothrow) Chunk();
                 _chunkesArray[m][n]->_terrain = this;
                 _chunkesArray[m][n]->_size = _chunkSize;
                 _chunkesArray[m][n]->generate(_imageWidth,_imageHeight,m,n,_data);
@@ -262,7 +262,7 @@ bool Terrain::initHeightMap(const std::string& heightMap)
                 if(m+1<chunk_amount_y) _chunkesArray[m][n]->_front = _chunkesArray[m+1][n];
             }
         }
-        _quadRoot = new QuadTree(0,0,_imageWidth,_imageHeight,this);
+        _quadRoot = new (std::nothrow) QuadTree(0,0,_imageWidth,_imageHeight,this);
         setLODDistance(_chunkSize.width,2*_chunkSize.width,3*_chunkSize.width);
         return true;
     }else
@@ -1487,13 +1487,13 @@ Terrain::QuadTree::QuadTree(int x, int y, int w, int h, Terrain * terrain)
     if(_width> terrain->_chunkSize.width &&_height >terrain->_chunkSize.height) //subdivision
     {
         _isTerminal = false;
-        this->_tl = new QuadTree(x,y,_width/2,_height/2,terrain);
+        this->_tl = new (std::nothrow) QuadTree(x,y,_width/2,_height/2,terrain);
         this->_tl->_parent = this;
-        this->_tr = new QuadTree(x+_width/2,y,_width/2,_height/2,terrain);
+        this->_tr = new (std::nothrow) QuadTree(x+_width/2,y,_width/2,_height/2,terrain);
         this->_tr->_parent = this;
-        this->_bl = new QuadTree(x,y+_height/2,_width/2,_height/2,terrain);
+        this->_bl = new (std::nothrow) QuadTree(x,y+_height/2,_width/2,_height/2,terrain);
         this->_bl->_parent = this;
-        this->_br = new QuadTree(x+_width/2,y+_height/2,_width/2,_height/2,terrain);
+        this->_br = new (std::nothrow) QuadTree(x+_width/2,y+_height/2,_width/2,_height/2,terrain);
         this->_br->_parent = this;
 
         _localAABB.merge(_tl->_localAABB);

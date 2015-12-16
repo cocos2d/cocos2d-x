@@ -171,7 +171,7 @@ CSLoader* CSLoader::getInstance()
 {
     if (! _sharedCSLoader)
     {
-        _sharedCSLoader = new CSLoader();
+        _sharedCSLoader = new (std::nothrow) CSLoader();
         _sharedCSLoader->init();
     }
     
@@ -742,7 +742,7 @@ Node* CSLoader::loadWidget(const rapidjson::Value& json)
     
     
     
-    WidgetPropertiesReader0300* widgetPropertiesReader = new WidgetPropertiesReader0300();
+    WidgetPropertiesReader0300* widgetPropertiesReader = new (std::nothrow) WidgetPropertiesReader0300();
     Widget* widget = nullptr;
     
     if (isWidget(classname))

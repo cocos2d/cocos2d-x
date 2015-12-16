@@ -373,7 +373,7 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     if (_asyncStructQueue == nullptr)
     {
         _asyncStructQueue = new std::queue<AsyncStruct *>();
-        _dataQueue = new std::queue<DataInfo *>();
+        _dataQueue = new (std::nothrow) std::queue<DataInfo *>();
 
 		// create a new thread to load images
 		_loadingThread = new std::thread(&DataReaderHelper::loadData, this);
@@ -1644,7 +1644,7 @@ FrameData *DataReaderHelper::decodeFrame(const rapidjson::Value& json, DataInfo 
     int length = DICTOOL->getArrayCount_json(json, A_EASING_PARAM);
     if (length != 0)
     {
-        frameData->easingParams = new float[length];
+        frameData->easingParams = new (std::nothrow) float[length];
         frameData->easingParamNumber = length;
         
         for (int i = 0; i < length; i++)
@@ -2384,7 +2384,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                 int count = pFrameDataArray[i].GetChildNum();
                 if (count != 0 )
                 {
-                    frameData->easingParams = new float[count];
+                    frameData->easingParams = new (std::nothrow) float[count];
                     stExpCocoNode *pFrameData = pFrameDataArray[i].GetChildArray(cocoLoader);
                     for (int ii = 0; ii < count; ++ii)
                     {

@@ -271,7 +271,7 @@ void PhysicsShape::setSensor(bool sensor)
 
 void PhysicsShape::recenterPoints(Vec2* points, int count, const Vec2& center)
 {
-    cpVect* cpvs = new cpVect[count];
+    cpVect* cpvs = new (std::nothrow) cpVect[count];
     cpRecenterPoly(count, PhysicsHelper::points2cpvs(points, cpvs, count));
     PhysicsHelper::cpvs2points(cpvs, points, count);
     delete[] cpvs;
@@ -287,7 +287,7 @@ void PhysicsShape::recenterPoints(Vec2* points, int count, const Vec2& center)
 
 Vec2 PhysicsShape::getPolyonCenter(const Vec2* points, int count)
 {
-    cpVect* cpvs = new cpVect[count];
+    cpVect* cpvs = new (std::nothrow) cpVect[count];
     cpVect center = cpCentroidForPoly(count, PhysicsHelper::points2cpvs(points, cpvs, count));
     delete[] cpvs;
     
@@ -550,7 +550,7 @@ bool PhysicsShapePolygon::init(const Vec2* points, int count, const PhysicsMater
     {
         _type = Type::POLYGEN;
         
-        auto vecs = new cpVect[count];
+        auto vecs = new (std::nothrow) cpVect[count];
         PhysicsHelper::points2cpvs(points, vecs, count);
         auto shape = cpPolyShapeNew(s_sharedBody, count, vecs, PhysicsHelper::point2cpv(offset));
         CC_SAFE_DELETE_ARRAY(vecs);
@@ -573,7 +573,7 @@ bool PhysicsShapePolygon::init(const Vec2* points, int count, const PhysicsMater
 
 float PhysicsShapePolygon::calculateArea(const Vec2* points, int count)
 {
-    cpVect* vecs = new cpVect[count];
+    cpVect* vecs = new (std::nothrow) cpVect[count];
     PhysicsHelper::points2cpvs(points, vecs, count);
     float area = PhysicsHelper::cpfloat2float(cpAreaForPoly(count, vecs));
     CC_SAFE_DELETE_ARRAY(vecs);
@@ -583,7 +583,7 @@ float PhysicsShapePolygon::calculateArea(const Vec2* points, int count)
 
 float PhysicsShapePolygon::calculateMoment(float mass, const Vec2* points, int count, const Vec2& offset)
 {
-    cpVect* vecs = new cpVect[count];
+    cpVect* vecs = new (std::nothrow) cpVect[count];
     PhysicsHelper::points2cpvs(points, vecs, count);
     float moment = mass == PHYSICS_INFINITY ? PHYSICS_INFINITY
     : PhysicsHelper::cpfloat2float(cpMomentForPoly(mass, count, vecs, PhysicsHelper::point2cpv(offset)));
@@ -735,7 +735,7 @@ bool PhysicsShapeEdgePolygon::init(const Vec2* points, int count, const PhysicsM
     {
         _type = Type::EDGEPOLYGEN;
         
-        vec = new cpVect[count];
+        vec = new (std::nothrow) cpVect[count];
         PhysicsHelper::points2cpvs(points, vec, count);
         
         int i = 0;
@@ -767,7 +767,7 @@ bool PhysicsShapeEdgePolygon::init(const Vec2* points, int count, const PhysicsM
 Vec2 PhysicsShapeEdgePolygon::getCenter()
 {
     int count = (int)_cpShapes.size();
-    cpVect* points = new cpVect[count];
+    cpVect* points = new (std::nothrow) cpVect[count];
     int i = 0;
     for(auto shape : _cpShapes)
     {
@@ -834,7 +834,7 @@ bool PhysicsShapeEdgeChain::init(const Vec2* points, int count, const PhysicsMat
     {
         _type = Type::EDGECHAIN;
         
-        vec = new cpVect[count];
+        vec = new (std::nothrow) cpVect[count];
         PhysicsHelper::points2cpvs(points, vec, count);
         
         int i = 0;
@@ -865,7 +865,7 @@ bool PhysicsShapeEdgeChain::init(const Vec2* points, int count, const PhysicsMat
 Vec2 PhysicsShapeEdgeChain::getCenter()
 {
     int count = (int)_cpShapes.size() + 1;
-    cpVect* points = new cpVect[count];
+    cpVect* points = new (std::nothrow) cpVect[count];
     int i = 0;
     for(auto shape : _cpShapes)
     {

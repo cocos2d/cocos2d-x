@@ -1223,8 +1223,8 @@ namespace ui {
         CC_SAFE_DELETE_ARRAY(_sliceVertices);
         CC_SAFE_DELETE_ARRAY(_sliceIndices);
 
-        _sliceVertices = new V3F_C4B_T2F[slicedTotalVertexCount];
-        _sliceIndices = new unsigned short[slicedTotalIndices];
+        _sliceVertices = new (std::nothrow) V3F_C4B_T2F[slicedTotalVertexCount];
+        _sliceIndices = new (std::nothrow) unsigned short[slicedTotalIndices];
 
         unsigned short indicesStart = 0;
         const unsigned short indicesOffset = 6;

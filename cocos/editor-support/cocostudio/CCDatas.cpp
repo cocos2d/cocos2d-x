@@ -283,7 +283,7 @@ void FrameData::copy(const BaseData *baseData)
         CC_SAFE_DELETE(easingParams);
         if (easingParamNumber != 0)
         {
-            easingParams = new float[easingParamNumber];
+            easingParams = new (std::nothrow) float[easingParamNumber];
             for (int i = 0; i<easingParamNumber; i++)
             {
                 easingParams[i] = frameData->easingParams[i];

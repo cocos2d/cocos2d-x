@@ -9,7 +9,7 @@ NS_CC_BEGIN
 
 ClippingRectangleNode* ClippingRectangleNode::create(const Rect& clippingRegion)
 {
-    ClippingRectangleNode* node = new ClippingRectangleNode();
+    ClippingRectangleNode* node = new (std::nothrow) ClippingRectangleNode();
     if (node && node->init()) {
         node->setClippingRegion(clippingRegion);
         node->autorelease();
@@ -22,7 +22,7 @@ ClippingRectangleNode* ClippingRectangleNode::create(const Rect& clippingRegion)
 
 ClippingRectangleNode* ClippingRectangleNode::create()
 {
-    ClippingRectangleNode* node = new ClippingRectangleNode();
+    ClippingRectangleNode* node = new (std::nothrow) ClippingRectangleNode();
     if (node && node->init()) {
         node->autorelease();
     } else {
