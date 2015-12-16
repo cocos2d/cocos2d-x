@@ -32,6 +32,7 @@ THE SOFTWARE.
 */
 
 #include "renderer/CCTexture2D.h"
+#include "renderer/CCTextureCache.h"
 
 #include "platform/CCGL.h"
 #include "platform/CCImage.h"
@@ -718,7 +719,8 @@ std::string Texture2D::getDescription() const
 // implementation Texture2D (Image)
 bool Texture2D::initWithImage(Image *image)
 {
-    return initWithImage(image, g_defaultAlphaPixelFormat);
+    PixelFormat format = Director::getInstance()->getTextureCache()->getTexturePixelFormat(image->getFilePath());
+    return initWithImage(image, format);
 }
 
 bool Texture2D::initWithImage(Image *image, PixelFormat format)
