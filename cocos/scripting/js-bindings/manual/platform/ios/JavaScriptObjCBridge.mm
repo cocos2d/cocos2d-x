@@ -206,7 +206,7 @@ void JavaScriptObjCBridge::CallInfo::pushValue(void *val){
     else if ([oval isKindOfClass:[NSString class]])
     {
         const char *content = [oval cStringUsingEncoding:NSUTF8StringEncoding];
-        m_ret.stringValue = new string(content);
+        m_ret.stringValue = new (std::nothrow) string(content);
         m_returnType = TypeString;
     }
     else if ([oval isKindOfClass:[NSDictionary class]])
@@ -232,7 +232,7 @@ JS_BINDED_CLASS_GLUE_IMPL(JavaScriptObjCBridge);
  */
 JS_BINDED_CONSTRUCTOR_IMPL(JavaScriptObjCBridge)
 {
-    JavaScriptObjCBridge* jsj = new JavaScriptObjCBridge();
+    JavaScriptObjCBridge* jsj = new (std::nothrow) JavaScriptObjCBridge();
     
     js_proxy_t *p;
     jsval out;

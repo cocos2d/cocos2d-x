@@ -937,7 +937,7 @@ bool jsval_to_ccarray_of_CCPoint(JSContext* cx, JS::HandleValue v, Point **point
     uint32_t len;
     JS_GetArrayLength(cx, jsobj, &len);
     
-    Point *array = new Point[len];
+    Point *array = new (std::nothrow) Point[len];
 
     for( uint32_t i=0; i< len;i++ ) {
         JS::RootedValue valarg(cx);

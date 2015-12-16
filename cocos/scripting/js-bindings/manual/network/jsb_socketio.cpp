@@ -153,7 +153,7 @@ bool js_cocos2dx_SocketIO_connect(JSContext* cx, uint32_t argc, jsval* vp)
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
         } while (0);
         
-        JSB_SocketIODelegate* siodelegate = new JSB_SocketIODelegate();
+        JSB_SocketIODelegate* siodelegate = new (std::nothrow) JSB_SocketIODelegate();
         
         CCLOG("Calling native SocketIO.connect method");
         SIOClient* ret = SocketIO::connect(url, *siodelegate);

@@ -537,7 +537,7 @@ bool js_cocos2dx_JSTouchDelegate_registerStandardDelegate(JSContext *cx, uint32_
     {
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
-        JSTouchDelegate *touch = new JSTouchDelegate();
+        JSTouchDelegate *touch = new (std::nothrow) JSTouchDelegate();
         
         int priority = 1;
         if (argc == 2)
@@ -562,7 +562,7 @@ bool js_cocos2dx_JSTouchDelegate_registerTargetedDelegate(JSContext *cx, uint32_
     {
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
-        JSTouchDelegate *touch = new JSTouchDelegate();
+        JSTouchDelegate *touch = new (std::nothrow) JSTouchDelegate();
         touch->registerTargetedDelegate(args.get(0).toInt32(), args.get(1).toBoolean());
         
         JS::RootedObject jsobj(cx, args.get(2).toObjectOrNull());
@@ -807,7 +807,7 @@ void JSScheduleWrapper::setTargetForSchedule(JS::HandleValue sched, JSScheduleWr
         JSObject* jsfunc = sched.toObjectOrNull();
         auto targetArray = getTargetForSchedule(sched);
         if (NULL == targetArray) {
-            targetArray = new __Array();
+            targetArray = new (std::nothrow) __Array();
             targetArray->init();
             schedFunc_proxy_t *p = (schedFunc_proxy_t *)malloc(sizeof(schedFunc_proxy_t));
             assert(p);
@@ -834,7 +834,7 @@ void JSScheduleWrapper::setTargetForJSObject(JS::HandleObject jsTargetObj, JSSch
 {
     auto targetArray = getTargetForJSObject(jsTargetObj);
     if (NULL == targetArray) {
-        targetArray = new __Array();
+        targetArray = new (std::nothrow) __Array();
         targetArray->init();
         schedTarget_proxy_t *p = (schedTarget_proxy_t *)malloc(sizeof(schedTarget_proxy_t));
         assert(p);
@@ -1255,7 +1255,7 @@ bool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
 
         if (!bFound)
         {
-            tmpCobj = new JSScheduleWrapper();
+            tmpCobj = new (std::nothrow) JSScheduleWrapper();
             tmpCobj->autorelease();
             tmpCobj->setJSCallbackThis(thisValue);
             tmpCobj->setJSCallbackFunc(args.get(0));
@@ -1351,7 +1351,7 @@ bool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
 
         if (!bFound)
         {
-            tmpCobj = new JSScheduleWrapper();
+            tmpCobj = new (std::nothrow) JSScheduleWrapper();
             tmpCobj->autorelease();
             tmpCobj->setJSCallbackThis(thisValue);
             tmpCobj->setJSCallbackFunc(args.get(0));
@@ -1425,7 +1425,7 @@ bool js_cocos2dx_CCNode_scheduleUpdateWithPriority(JSContext *cx, uint32_t argc,
         
         if (!bFound)
         {
-            tmpCobj = new JSScheduleWrapper();
+            tmpCobj = new (std::nothrow) JSScheduleWrapper();
             tmpCobj->autorelease();
             tmpCobj->setJSCallbackThis(thisValue);
             tmpCobj->setJSCallbackFunc(jsUpdateFunc);
@@ -1526,7 +1526,7 @@ bool js_cocos2dx_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp)
         
         if (!bFound)
         {
-            tmpCobj = new JSScheduleWrapper();
+            tmpCobj = new (std::nothrow) JSScheduleWrapper();
             tmpCobj->autorelease();
             tmpCobj->setJSCallbackThis(thisValue);
             tmpCobj->setJSCallbackFunc(jsUpdateFunc);
@@ -1641,7 +1641,7 @@ bool js_CCScheduler_scheduleUpdateForTarget(JSContext *cx, uint32_t argc, jsval 
         
         if (!bFound)
         {
-            tmpCObj = new JSScheduleWrapper();
+            tmpCObj = new (std::nothrow) JSScheduleWrapper();
             tmpCObj->autorelease();
             tmpCObj->setJSCallbackThis(args.get(0));
             tmpCObj->setJSCallbackFunc(jsUpdateFunc);
@@ -1767,7 +1767,7 @@ bool js_CCScheduler_scheduleCallbackForTarget(JSContext *cx, uint32_t argc, jsva
         
         if (!bFound)
         {
-            tmpCObj = new JSScheduleWrapper();
+            tmpCObj = new (std::nothrow) JSScheduleWrapper();
             tmpCObj->autorelease();
             tmpCObj->setJSCallbackThis(args.get(0));
             tmpCObj->setJSCallbackFunc(args.get(1));
@@ -5643,7 +5643,7 @@ bool js_cocos2dx_AutoPolygon_generatePolygon(JSContext *cx, uint32_t argc, jsval
         std::string arg0;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_AutoPolygon_generatePolygon : Error processing arguments");
-        cocos2d::PolygonInfo* ret = new cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0));
+        cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0));
         jsval jsret = JSVAL_NULL;
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PolygonInfo>(cx, ret));
@@ -5657,7 +5657,7 @@ bool js_cocos2dx_AutoPolygon_generatePolygon(JSContext *cx, uint32_t argc, jsval
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_AutoPolygon_generatePolygon : Error processing arguments");
-        cocos2d::PolygonInfo* ret = new cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1));
+        cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1));
         jsval jsret = JSVAL_NULL;
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PolygonInfo>(cx, ret));
@@ -5673,7 +5673,7 @@ bool js_cocos2dx_AutoPolygon_generatePolygon(JSContext *cx, uint32_t argc, jsval
         ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
         ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_AutoPolygon_generatePolygon : Error processing arguments");
-        cocos2d::PolygonInfo* ret = new cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2));
+        cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2));
         jsval jsret = JSVAL_NULL;
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PolygonInfo>(cx, ret));
@@ -5691,7 +5691,7 @@ bool js_cocos2dx_AutoPolygon_generatePolygon(JSContext *cx, uint32_t argc, jsval
         ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
         ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_AutoPolygon_generatePolygon : Error processing arguments");
-        cocos2d::PolygonInfo* ret = new cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2, arg3));
+        cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2, arg3));
         jsval jsret = JSVAL_NULL;
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::PolygonInfo>(cx, ret));

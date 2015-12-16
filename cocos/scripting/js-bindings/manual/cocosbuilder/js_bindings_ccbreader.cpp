@@ -64,7 +64,7 @@ void CCBScriptCallbackProxy::onNodeLoaded(Node * pNode,
                                           NodeLoader * pNodeLoader) {}
 
 CCBSelectorResolver * CCBScriptCallbackProxy::createNew() {
-    CCBScriptCallbackProxy * ret = new CCBScriptCallbackProxy();
+    CCBScriptCallbackProxy * ret = new (std::nothrow) CCBScriptCallbackProxy();
     ret->setJSOwner(this->owner);
     return dynamic_cast<CCBSelectorResolver *>(ret);
 }
@@ -99,7 +99,7 @@ bool js_cocos2dx_CCBAnimationManager_animationCompleteCallback(JSContext *cx, ui
         js_proxy_t *p = jsb_get_js_proxy(obj);
         cocosbuilder::CCBAnimationManager *node = (cocosbuilder::CCBAnimationManager *)(p ? p->ptr : NULL);
         
-        JSCCBAnimationWrapper *tmpCobj = new JSCCBAnimationWrapper();
+        JSCCBAnimationWrapper *tmpCobj = new (std::nothrow) JSCCBAnimationWrapper();
         tmpCobj->autorelease();
         
         tmpCobj->setJSCallbackThis(args.get(0));
@@ -289,7 +289,7 @@ bool js_CocosBuilder_create(JSContext *cx, uint32_t argc, jsval *vp)
     
     ccNodeLoaderLibrary->registerNodeLoader("", JSLayerLoader::loader());
     
-    CCBReader * ret = new CCBReader(ccNodeLoaderLibrary);
+    CCBReader * ret = new (std::nothrow) CCBReader(ccNodeLoaderLibrary);
     ret->autorelease();
     
     jsval jsret;
