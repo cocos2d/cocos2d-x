@@ -553,7 +553,7 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
         return;
     }
     
-    // destory the body's joints
+    // destroy the body's joints
     auto removeCopy = body->_joints;
     for (auto joint : removeCopy)
     {
@@ -597,7 +597,7 @@ void PhysicsWorld::removeJoint(PhysicsJoint* joint, bool destroy)
             return;
         }
 
-        joint->_destoryMark = destroy;
+        joint->_destroyMark = destroy;
         if (cpSpaceIsLocked(_cpSpace))
         {
             auto it = std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint);
@@ -740,7 +740,7 @@ void PhysicsWorld::doRemoveJoint(PhysicsJoint* joint)
         joint->getBodyB()->removeJoint(joint);
     }
 
-    if (joint->_destoryMark)
+    if (joint->_destroyMark)
     {
         delete joint;
     }

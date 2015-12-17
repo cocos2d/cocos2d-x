@@ -56,7 +56,7 @@ public class Cocos2dxLocalStorage {
         return false;
     }
     
-    public static void destory() {
+    public static void destroy() {
         if (mDatabase != null) {
             mDatabase.close();
         }
