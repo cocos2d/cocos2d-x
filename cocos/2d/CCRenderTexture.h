@@ -327,6 +327,7 @@ protected:
     
     GLuint       _FBO;
     GLuint       _depthRenderBufffer;
+    GLuint       _stencilRenderBufffer;
     GLint        _oldFBO;
     Texture2D* _texture;
     Texture2D* _textureCopy;    // a copy of _texture
