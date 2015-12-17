@@ -775,6 +775,13 @@ MenuItemToggle * MenuItemToggle::createWithTarget(Ref* target, SEL_MenuHandler s
 {
     MenuItemToggle *ret = new (std::nothrow) MenuItemToggle();
     ret->MenuItem::initWithCallback(std::bind(selector, target, std::placeholders::_1));
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    for (const auto &item : menuItems)
+    {
+        if (item)
+            ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(ret, item);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     ret->_subItems = menuItems;
     ret->_selectedIndex = UINT_MAX;
     ret->setSelectedIndex(0);
@@ -785,6 +792,13 @@ MenuItemToggle * MenuItemToggle::createWithCallback(const ccMenuCallback &callba
 {
     MenuItemToggle *ret = new (std::nothrow) MenuItemToggle();
     ret->MenuItem::initWithCallback(callback);
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    for (const auto &item : menuItems)
+    {
+        if (item)
+            ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(ret, item);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     ret->_subItems = menuItems;
     ret->_selectedIndex = UINT_MAX;
     ret->setSelectedIndex(0);
@@ -850,6 +864,9 @@ bool MenuItemToggle::initWithCallback(const ccMenuCallback &callback, MenuItem *
     while(i)
     {
         z++;
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, i);
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         _subItems.pushBack(i);
         i = va_arg(args, MenuItem*);
     }
@@ -872,7 +889,7 @@ bool MenuItemToggle::initWithItem(MenuItem *item)
 
     if (item)
     {
-        _subItems.pushBack(item);
+        addSubItem(item);
     }
     _selectedIndex = UINT_MAX;
     this->setSelectedIndex(0);
@@ -885,14 +902,21 @@ bool MenuItemToggle::initWithItem(MenuItem *item)
 
 void MenuItemToggle::addSubItem(MenuItem *item)
 {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, item);
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     _subItems.pushBack(item);
 }
 
-MenuItemToggle::~MenuItemToggle()
+void MenuItemToggle::cleanup()
 {
     for(const auto &item : _subItems) {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, item);
+#endif
         item->cleanup();
     }
+    MenuItem::cleanup();
 }
 
 void MenuItemToggle::setSelectedIndex(unsigned int index)

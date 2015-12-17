@@ -101,6 +101,13 @@ void ProgressTimer::setSprite(Sprite *sprite)
 {
     if (_sprite != sprite)
     {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (_sprite)
+            sEngine->releaseScriptObject(this, _sprite);
+        if (sprite)
+            sEngine->retainScriptObject(this, sprite);
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         CC_SAFE_RETAIN(sprite);
         CC_SAFE_RELEASE(_sprite);
         _sprite = sprite;
