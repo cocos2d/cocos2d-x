@@ -270,12 +270,12 @@ bool Configuration::supportsShareableVAO() const
 }
 
 
-bool supportsOESDepth24() const
+bool Configuration::supportsOESDepth24() const
 {
     return _supportsOESDepth24;
     
 }
-bool supportsOESPackedDepthStencil() const
+bool Configuration::supportsOESPackedDepthStencil() const
 {
     return _supportsOESPackedDepthStencil;
 }
