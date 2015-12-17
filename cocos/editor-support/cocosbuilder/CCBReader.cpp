@@ -613,13 +613,6 @@ Node * CCBReader::readNodeGraph(Node * pParent)
         node = embeddedNode;
     }
 
-#ifdef CCB_ENABLE_JAVASCRIPT
-    /*
-     if (memberVarAssignmentType && memberVarAssignmentName && ![memberVarAssignmentName isEqualToString:@""])
-     {
-     [[JSCocoa sharedController] setObject:node withName:memberVarAssignmentName];
-     }*/
-#else
     if (memberVarAssignmentType != TargetType::NONE)
     {
         if(!_jsControlled)
@@ -696,8 +689,6 @@ Node * CCBReader::readNodeGraph(Node * pParent)
             }
         }
     }
-
-#endif // CCB_ENABLE_JAVASCRIPT
     
     delete _animatedProps;
     _animatedProps = nullptr;

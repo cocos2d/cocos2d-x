@@ -1073,7 +1073,7 @@ var arrayOfNodeTest = [
 
 if ('opengl' in cc.sys.capabilities) {
     cc.sys.isNative || arrayOfNodeTest.push(CameraCenterTest);
-    arrayOfNodeTest.push(CameraOrbitTest);
+    cc.sys.isNative || arrayOfNodeTest.push(CameraOrbitTest);
 	cc.sys.isNative || arrayOfNodeTest.push(CameraZoomTest);
     arrayOfNodeTest.push(NodeOpaqueTest);
     arrayOfNodeTest.push(NodeNonOpaqueTest);

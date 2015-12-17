@@ -78,7 +78,7 @@
 
 // EXPERIMENTAL: Enable this in order to get rid of retain/release
 // when using the Garbage Collector
-#define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 1
+#define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 0
 
 using namespace cocos2d;
 
@@ -2140,12 +2140,13 @@ JS::HandleObject jsb_create_weak_jsobject(JSContext *cx, void *native, js_type_c
     JS::RootedObject proto(cx, typeClass->proto.ref());
     JS::RootedObject parent(cx, typeClass->parentProto.ref());
     JS::RootedObject jsObj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    jsb_new_proxy(native, jsObj);
+    auto proxy = jsb_new_proxy(native, jsObj);
     
 #if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     JS::AddNamedObjectRoot(cx, &proxy->obj, debug);
 #else
 #if COCOS2D_DEBUG
+    CC_UNUSED_PARAM(proxy);
     CCLOG("++++++WEAK_REF++++++ Cpp(%s): %p - JS: %p", debug, native, jsObj.get());
 #endif // COCOS2D_DEBUG
 #endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
