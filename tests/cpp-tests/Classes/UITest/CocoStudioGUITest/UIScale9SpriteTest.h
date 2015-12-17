@@ -93,6 +93,47 @@ public:
 
 // S9FrameNameSpriteSheetCropped
 
+class UIS9FrameNameSpriteSheetCroppedImage : public UIScene
+{
+public:
+    CREATE_FUNC(UIS9FrameNameSpriteSheetCroppedImage);
+    
+    virtual bool init() override;
+};
+
+// S9FrameNameSpriteSheetCroppedRotated
+
+class UIS9FrameNameSpriteSheetCroppedRotatedImage : public UIScene
+{
+public:
+    CREATE_FUNC(UIS9FrameNameSpriteSheetCroppedRotatedImage);
+    
+    virtual bool init() override;
+};
+
+// S9FrameNameSpriteSheetCropped
+
+class UIS9FrameNameSpriteSheetCroppedSimple : public UIScene
+{
+public:
+    CREATE_FUNC(UIS9FrameNameSpriteSheetCroppedSimple);
+    
+    virtual bool init() override;
+};
+
+// S9FrameNameSpriteSheetCroppedRotated
+
+class UIS9FrameNameSpriteSheetCroppedRotatedSimple : public UIScene
+{
+public:
+    CREATE_FUNC(UIS9FrameNameSpriteSheetCroppedRotatedSimple);
+    
+    virtual bool init() override;
+};
+
+
+// S9FrameNameSpriteSheetCropped
+
 class UIS9FrameNameSpriteSheetCropped : public UIScene
 {
 public:

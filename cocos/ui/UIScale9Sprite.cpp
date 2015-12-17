@@ -454,6 +454,7 @@ namespace ui {
         _spriteFrameRotated = rotated;
         _originalSize = size;
         _preferredSize = size;
+        _offset = offset;
 
         _capInsetsInternal = capInsets;
 
@@ -503,23 +504,31 @@ namespace ui {
 
             auto capInsets = CC_RECT_POINTS_TO_PIXELS(_capInsetsInternal);
             auto textureRect = CC_RECT_POINTS_TO_PIXELS(_spriteRect);
-            auto spriteRectSize = CC_SIZE_POINTS_TO_PIXELS(_originalSize);
+            auto spriteRectSize = _spriteRect.size;
+            auto originalSize = CC_SIZE_POINTS_TO_PIXELS(_originalSize);
+            auto offset = CC_POINT_POINTS_TO_PIXELS(_offset);
+            
+            Vec4 offsets;
+            offsets.x = offset.x + (originalSize.width - textureRect.size.width) / 2;
+            offsets.w = offset.y + (originalSize.height - textureRect.size.height) / 2;
+            offsets.z = originalSize.width - textureRect.size.width - offsets.x;
+            offsets.y = originalSize.height - textureRect.size.height - offsets.w;
 
             //handle .9.png
             if (_isPatch9)
             {
-                spriteRectSize = Size(spriteRectSize.width - 2, spriteRectSize.height-2);
+                originalSize = Size(originalSize.width - 2, originalSize.height-2);
             }
 
 
             if(capInsets.equals(Rect::ZERO))
             {
-                capInsets = Rect(spriteRectSize.width/3, spriteRectSize.height/3,
-                                 spriteRectSize.width/3, spriteRectSize.height/3);
+                capInsets = Rect(originalSize.width/3, originalSize.height/3,
+                                 originalSize.width/3, originalSize.height/3);
             }
 
-            auto uv = this->calculateUV(tex, capInsets, spriteRectSize);
-            auto vertices = this->calculateVertices(capInsets, spriteRectSize);
+            auto uv = this->calculateUV(tex, capInsets, originalSize, offsets);
+            auto vertices = this->calculateVertices(capInsets, originalSize, offsets);
             auto triangles = this->calculateTriangles(uv, vertices);
 
             _scale9Image->getPolygonInfo().setTriangles(triangles);
@@ -633,7 +642,7 @@ namespace ui {
         this->updateWithSprite(this->_scale9Image,
                                _spriteRect,
                                _spriteFrameRotated,
-                               Vec2::ZERO,
+                               _offset,
                                _originalSize,
                                capInsets);
         this->_insetLeft = capInsets.origin.x;
@@ -1062,7 +1071,8 @@ namespace ui {
     // u0       u1     u2     u3
     std::vector<Vec2> Scale9Sprite::calculateUV(Texture2D *tex,
                                                const Rect& capInsets,
-                                               const Size& spriteRectSize)
+                                               const Size& originalSize,
+                                               const Vec4& offsets)
     {
         auto atlasWidth = tex->getPixelsWide();
         auto atlasHeight = tex->getPixelsHigh();
@@ -1073,23 +1083,46 @@ namespace ui {
 
         if (_spriteFrameRotated)
         {
-            rightWidth = capInsets.origin.y;
+            rightWidth = capInsets.origin.y - offsets.y;
             centerWidth = capInsets.size.height;
-            leftWidth = spriteRectSize.height - centerWidth - rightWidth;
+            leftWidth = originalSize.height - centerWidth - capInsets.origin.y - offsets.w;
 
-            topHeight = capInsets.origin.x;
+            topHeight = capInsets.origin.x - offsets.x;
             centerHeight = capInsets.size.width;
-            bottomHeight = spriteRectSize.width - (topHeight + centerHeight);
+            bottomHeight = originalSize.width - (capInsets.origin.x + centerHeight) - offsets.z;
         }
         else
         {
-            leftWidth = capInsets.origin.x;
+            leftWidth = capInsets.origin.x - offsets.x;
             centerWidth = capInsets.size.width;
-            rightWidth = spriteRectSize.width - (leftWidth + centerWidth);
+            rightWidth = originalSize.width - (capInsets.origin.x + centerWidth) - offsets.z;
 
-            topHeight = capInsets.origin.y;
+            topHeight = capInsets.origin.y - offsets.y;
             centerHeight = capInsets.size.height;
-            bottomHeight =spriteRectSize.height - (topHeight + centerHeight);
+            bottomHeight = originalSize.height - (capInsets.origin.x + centerHeight) - offsets.w;
+        }
+        
+        
+        if(leftWidth<0)
+        {
+            centerWidth += leftWidth;
+            leftWidth = 0;
+        }
+        if(rightWidth<0)
+        {
+            centerWidth += rightWidth;
+            rightWidth = 0;
+        }
+        
+        if(topHeight<0)
+        {
+            centerHeight += topHeight;
+            topHeight = 0;
+        }
+        if(bottomHeight<0)
+        {
+            centerHeight += bottomHeight;
+            bottomHeight = 0;
         }
 
         auto textureRect = CC_RECT_POINTS_TO_PIXELS(_spriteRect);
@@ -1159,67 +1192,111 @@ namespace ui {
     //x0,y0--------------------
     //         x1     x2     x3
     std::vector<Vec2> Scale9Sprite::calculateVertices(const Rect& capInsets,
-                                                     const Size& spriteRectSize)
+                                                     const Size& originalSize,
+                                                     const Vec4& offsets)
     {
-        float leftWidth = 0, centerWidth = 0, rightWidth = 0;
-        float topHeight = 0, centerHeight = 0, bottomHeight = 0;
-
-        leftWidth = capInsets.origin.x;
-        centerWidth = capInsets.size.width;
-        rightWidth = spriteRectSize.width - (leftWidth + centerWidth);
-
-        topHeight = capInsets.origin.y;
-        centerHeight = capInsets.size.height;
-        bottomHeight = spriteRectSize.height - (topHeight + centerHeight);
-
-
-        leftWidth = leftWidth / CC_CONTENT_SCALE_FACTOR();
-        rightWidth = rightWidth / CC_CONTENT_SCALE_FACTOR();
-        topHeight = topHeight / CC_CONTENT_SCALE_FACTOR();
-        bottomHeight = bottomHeight / CC_CONTENT_SCALE_FACTOR();
-        float sizableWidth = _preferredSize.width - leftWidth - rightWidth;
-        float sizableHeight = _preferredSize.height - topHeight - bottomHeight;
-        float x0,x1,x2,x3;
-        float y0,y1,y2,y3;
-        if(sizableWidth >= 0)
-        {
-            x0 = 0;
-            x1 = leftWidth;
-            x2 = leftWidth + sizableWidth;
-            x3 = _preferredSize.width;
-        }
-        else
-        {
-            float xScale = _preferredSize.width / (leftWidth + rightWidth);
-            x0 = 0;
-            x1 = x2 = leftWidth * xScale;
-            x3 = (leftWidth + rightWidth) * xScale;
-        }
-
-        if(sizableHeight >= 0)
-        {
-            y0 = 0;
-            y1 = bottomHeight;
-            y2 = bottomHeight + sizableHeight;
-            y3 = _preferredSize.height;
-        }
-        else
-        {
-            float yScale = _preferredSize.height / (topHeight + bottomHeight);
-            y0 = 0;
-            y1 = y2= bottomHeight * yScale;
-            y3 = (bottomHeight + topHeight) * yScale;
-        }
-
-        std::vector<Vec2> vertices;
         
+        float offsetLeft = offsets.x / CC_CONTENT_SCALE_FACTOR();
+        float offsetTop = offsets.y / CC_CONTENT_SCALE_FACTOR();
+        float offsetRight = offsets.z / CC_CONTENT_SCALE_FACTOR();
+        float offsetBottom = offsets.w / CC_CONTENT_SCALE_FACTOR();
+        
+        std::vector<Vec2> vertices;
         if (_renderingType == RenderingType::SIMPLE)
         {
-            vertices = {Vec2(x0,y0), Vec2(x3,y3)};
+            float hScale = _preferredSize.width / (originalSize.width / CC_CONTENT_SCALE_FACTOR());
+            float vScale = _preferredSize.height / (originalSize.height / CC_CONTENT_SCALE_FACTOR());
+            
+            vertices = {Vec2(offsetLeft * hScale, offsetBottom * vScale),
+                        Vec2(_preferredSize.width - offsetRight * hScale, _preferredSize.height - offsetTop * vScale)};
         }
         else
         {
-           vertices = {Vec2(x0,y0), Vec2(x1,y1), Vec2(x2,y2), Vec2(x3,y3)};
+            float leftWidth = 0, centerWidth = 0, rightWidth = 0;
+            float topHeight = 0, centerHeight = 0, bottomHeight = 0;
+
+            leftWidth = capInsets.origin.x;
+            centerWidth = capInsets.size.width;
+            rightWidth = originalSize.width - (leftWidth + centerWidth);
+
+            topHeight = capInsets.origin.y;
+            centerHeight = capInsets.size.height;
+            bottomHeight = originalSize.height - (topHeight + centerHeight);
+
+            leftWidth = leftWidth / CC_CONTENT_SCALE_FACTOR();
+            rightWidth = rightWidth / CC_CONTENT_SCALE_FACTOR();
+            centerWidth = centerWidth / CC_CONTENT_SCALE_FACTOR();
+            topHeight = topHeight / CC_CONTENT_SCALE_FACTOR();
+            bottomHeight = bottomHeight / CC_CONTENT_SCALE_FACTOR();
+            centerHeight = centerHeight / CC_CONTENT_SCALE_FACTOR();
+            
+            float sizableWidth = _preferredSize.width - leftWidth - rightWidth;
+            float sizableHeight = _preferredSize.height - topHeight - bottomHeight;
+            
+            leftWidth -= offsetLeft;
+            rightWidth -= offsetRight;
+            topHeight -= offsetTop;
+            bottomHeight -= offsetBottom;
+            
+            float hScale = sizableWidth / centerWidth;
+            float vScale = sizableHeight / centerHeight;
+            
+            if(leftWidth<0)
+            {
+                offsetLeft -= leftWidth * (hScale - 1.0f);
+                sizableWidth += leftWidth * hScale;
+                leftWidth = 0;
+            }
+            if(rightWidth<0)
+            {
+                sizableWidth += rightWidth * hScale;
+                rightWidth = 0;
+            }
+            if(topHeight<0)
+            {
+                sizableHeight += topHeight * vScale;
+                topHeight = 0;
+            }
+            if(bottomHeight<0)
+            {
+                offsetBottom -= bottomHeight * (vScale - 1.0f);
+                sizableHeight += bottomHeight * vScale;
+                bottomHeight = 0;
+            }
+            
+            float x0,x1,x2,x3;
+            float y0,y1,y2,y3;
+            if(sizableWidth >= 0)
+            {
+                x0 = offsetLeft;
+                x1 = x0 + leftWidth;
+                x2 = x1 + sizableWidth;
+                x3 = x2 + rightWidth;
+            }
+            else
+            {
+                float xScale = _preferredSize.width / (leftWidth + rightWidth);
+                x0 = offsetLeft;
+                x1 = x2 = offsetLeft + leftWidth * xScale;
+                x3 = x2 + rightWidth * xScale;
+            }
+
+            if(sizableHeight >= 0)
+            {
+                y0 = offsetBottom;
+                y1 = y0 + bottomHeight;
+                y2 = y1 + sizableHeight;
+                y3 = y2 + topHeight;
+            }
+            else
+            {
+                float yScale = _preferredSize.height / (topHeight + bottomHeight);
+                y0 = offsetBottom;
+                y1 = y2 = y0 + bottomHeight * yScale;
+                y3 = y2 + topHeight * yScale;
+            }
+
+            vertices = {Vec2(x0,y0), Vec2(x1,y1), Vec2(x2,y2), Vec2(x3,y3)};
         }
         return vertices;
     }

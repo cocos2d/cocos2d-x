@@ -38,6 +38,10 @@ UIScale9SpriteTests::UIScale9SpriteTests()
     ADD_TEST_CASE(UIS9FrameNameSpriteSheetRotated);
     ADD_TEST_CASE(UIS9FrameNameSpriteSheetCropped);
     ADD_TEST_CASE(UIS9FrameNameSpriteSheetCroppedRotated);
+    ADD_TEST_CASE(UIS9FrameNameSpriteSheetCroppedImage);
+    ADD_TEST_CASE(UIS9FrameNameSpriteSheetCroppedRotatedImage);
+    ADD_TEST_CASE(UIS9FrameNameSpriteSheetCroppedSimple);
+    ADD_TEST_CASE(UIS9FrameNameSpriteSheetCroppedRotatedSimple);
     ADD_TEST_CASE(UIS9BatchNodeScaledNoInsets);
     ADD_TEST_CASE(UIS9FrameNameSpriteSheetScaledNoInsets);
     ADD_TEST_CASE(UIS9FrameNameSpriteSheetRotatedScaledNoInsets);
@@ -330,6 +334,8 @@ bool UIS9FrameNameSpriteSheetRotated::init()
 
         auto blocks = ui::Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
         
+        blocks->setPreferredSize(Size(400,80));
+        
         blocks->setPosition(Vec2(x, y));
         
         this->addChild(blocks);
@@ -350,9 +356,8 @@ bool UIS9FrameNameSpriteSheetCropped::init()
         SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
         
         auto blocks = ui::Scale9Sprite::createWithSpriteFrameName("blocks9c.png");
-        blocks->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+        blocks->setPreferredSize(Size(400,80));
         blocks->setPosition(Vec2(x, y));
-        blocks->setCapInsets(Rect(5,5,5,5));
         this->addChild(blocks);
         
         return true;
@@ -371,9 +376,90 @@ bool UIS9FrameNameSpriteSheetCroppedRotated::init()
         SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
         
         auto blocks = ui::Scale9Sprite::createWithSpriteFrameName("blocks9cr.png");
-        blocks->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+        blocks->setPreferredSize(Size(400,80));
         blocks->setPosition(Vec2(x, y));
-        blocks->setInsetBottom(10);
+        this->addChild(blocks);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+bool UIS9FrameNameSpriteSheetCroppedImage::init()
+{
+    if (UIScene::init()) {
+        auto winSize = Director::getInstance()->getWinSize();
+        float x = winSize.width / 2;
+        float y = 0 + (winSize.height / 2);
+        
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
+        
+        auto blocks = Sprite::createWithSpriteFrameName("blocks9c.png");
+        blocks->setScale(400/blocks->getContentSize().width, 80/blocks->getContentSize().height);
+        blocks->setPosition(Vec2(x, y));
+        this->addChild(blocks);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+bool UIS9FrameNameSpriteSheetCroppedRotatedImage::init()
+{
+    if (UIScene::init()) {
+        auto winSize = Director::getInstance()->getWinSize();
+        float x = winSize.width / 2;
+        float y = 0 + (winSize.height / 2);
+        
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
+        
+        auto blocks = Sprite::createWithSpriteFrameName("blocks9cr.png");
+        blocks->setScale(400/blocks->getContentSize().width, 80/blocks->getContentSize().height);
+        blocks->setPosition(Vec2(x, y));
+        this->addChild(blocks);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+bool UIS9FrameNameSpriteSheetCroppedSimple::init()
+{
+    if (UIScene::init()) {
+        auto winSize = Director::getInstance()->getWinSize();
+        float x = winSize.width / 2;
+        float y = 0 + (winSize.height / 2);
+        
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
+        
+        auto blocks = ui::Scale9Sprite::createWithSpriteFrameName("blocks9c.png");
+        blocks->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+        blocks->setPreferredSize(Size(400,80));
+        blocks->setPosition(Vec2(x, y));
+        this->addChild(blocks);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+bool UIS9FrameNameSpriteSheetCroppedRotatedSimple::init()
+{
+    if (UIScene::init()) {
+        auto winSize = Director::getInstance()->getWinSize();
+        float x = winSize.width / 2;
+        float y = 0 + (winSize.height / 2);
+        
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
+        
+        auto blocks = ui::Scale9Sprite::createWithSpriteFrameName("blocks9cr.png");
+        blocks->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+        blocks->setPreferredSize(Size(400,80));
+        blocks->setPosition(Vec2(x, y));
         this->addChild(blocks);
         
         return true;
