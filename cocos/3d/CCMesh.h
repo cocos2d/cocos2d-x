@@ -109,8 +109,9 @@ public:
      * set texture
      * @param tex texture to be set
      * @param usage Usage of this texture
+     * @param whether refresh the cache file name
      */
-    void setTexture(Texture2D* tex, NTextureData::Usage usage);
+    void setTexture(Texture2D* tex, NTextureData::Usage usage,bool cacheFileName = true);
     /**
      * set texture
      * @param texPath texture path
@@ -224,19 +225,7 @@ public:
      */
     void setForce2DQueue(bool force2D) { _force2DQueue = force2D; }
 
-    /**
-     * check texture
-     */
-    void checkTexture();
-    
-    /**
-     * set enable check texture, check texture each frame if enable is true. It is false by default
-     */
-    void setEnableCheckTexture(bool enableCheckTexture) { _enableCheckTexture = enableCheckTexture; }
-    /**
-     * check texture each frame? 
-     */
-    bool enableCheckTexture() const { return _enableCheckTexture; }
+    std::string getTextureFileName(){ return _texFile; }
 
 CC_CONSTRUCTOR_ACCESS:
 
@@ -280,7 +269,6 @@ protected:
     std::vector<float> _spotLightUniformRangeInverseValues;
 
     std::string _texFile;
-    bool        _enableCheckTexture;
 };
 
 // end of 3d group
