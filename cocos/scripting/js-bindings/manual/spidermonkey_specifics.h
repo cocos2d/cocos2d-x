@@ -28,9 +28,8 @@
 #include "mozilla/Maybe.h"
 #include <unordered_map>
 
-// No need to keep this struct
-// since we are using unordered_map now
-// but can't remove it since easily since lot's of code depends on it
+// Probably we can get rid of this struct, but since a lot of code
+// depends on it, we cannot remove it easily
 typedef struct js_proxy {
     /** the native object. usually a pointer to cocos2d::Ref, but could be a pointer to another object */
     void *ptr;
