@@ -343,11 +343,51 @@ std::string FileUtilsApple::getWritablePath() const
     {
         return _writablePath;
     }
-
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString *bundleName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+    NSString *documentsDirectory = [[paths objectAtIndex:0] stringByAppendingPathComponent:bundleName];
+    BOOL isDir = NO;
+    NSError *error = nil;
+    if (! [[NSFileManager defaultManager] fileExistsAtPath:documentsDirectory isDirectory:&isDir] && isDir == NO) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:documentsDirectory withIntermediateDirectories:NO attributes:nil error:&error];
+    }
+#else
     // save to document folder
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
+#endif
+    
     std::string strRet = [documentsDirectory UTF8String];
+    strRet.append("/");
+    return strRet;
+}
+
+std::string FileUtilsApple::getCachePath() const
+{
+    if (_writablePath.length())
+    {
+        return _writablePath;
+    }
+    
+    // save to document folder
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    NSString *bundleName =
+    [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
+    NSString *cacheDirectory = [[paths objectAtIndex:0] stringByAppendingPathComponent:bundleName];
+    BOOL isDir = NO;
+    NSError *error = nil;
+    if (! [[NSFileManager defaultManager] fileExistsAtPath:cacheDirectory isDirectory:&isDir] && isDir == NO) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:cacheDirectory withIntermediateDirectories:NO attributes:nil error:&error];
+    }
+#else
+    NSString *cacheDirectory = [paths objectAtIndex:0];
+#endif
+    
+    std::string strRet = [cacheDirectory UTF8String];
     strRet.append("/");
     return strRet;
 }

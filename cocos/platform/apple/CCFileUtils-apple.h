@@ -48,6 +48,7 @@ public:
     /* override functions */
     virtual std::string getWritablePath() const override;
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const override;
+    virtual std::string getCachePath() const override;
 
     virtual ValueMap getValueMapFromFile(const std::string& filename) override;
     virtual ValueMap getValueMapFromData(const char* filedata, int filesize)override;
