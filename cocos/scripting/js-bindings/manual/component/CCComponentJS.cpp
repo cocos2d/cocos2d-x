@@ -88,12 +88,9 @@ ComponentJS::~ComponentJS()
     if (jsObj && !jsObj->empty())
     {
         // Remove proxy
-        js_proxy_t* jsproxy = jsb_get_js_proxy(jsObj->ref());
-        if (jsproxy)
-        {
-            js_proxy_t* nproxy = jsb_get_native_proxy(jsproxy->ptr);
-            jsb_remove_proxy(nproxy, jsproxy);
-        }
+        js_proxy_t* proxy = jsb_get_js_proxy(jsObj->ref());
+        if (proxy)
+            jsb_remove_proxy(proxy);
     }
     // Delete rooted object
     if (jsObj != nullptr)
