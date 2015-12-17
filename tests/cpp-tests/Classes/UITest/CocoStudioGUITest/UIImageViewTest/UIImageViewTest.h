@@ -35,6 +35,10 @@ public:
     CREATE_FUNC(UIImageViewTest);
 
     virtual bool init() override;
+
+    void printWidgetResources(cocos2d::Ref* sender);
+protected:
+    cocos2d::ui::ImageView* _image;
 };
 
 class UIImageViewTest_Scale9 : public UIScene

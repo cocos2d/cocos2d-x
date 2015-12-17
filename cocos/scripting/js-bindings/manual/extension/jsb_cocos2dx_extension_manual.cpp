@@ -557,8 +557,7 @@ public:
     
     virtual void onEvent(Ref *controlButton, Control::EventType event)
     {
-        js_proxy_t * p;
-        JS_GET_PROXY(p, controlButton);
+        js_proxy_t* p = jsb_get_native_proxy(controlButton);
         if (!p)
         {
             log("Failed to get proxy for control button");
