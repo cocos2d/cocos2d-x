@@ -61,7 +61,7 @@ public:
     /**
      * destroy instance
      */
-    static void destoryInstance();
+    static void destroyInstance();
     
     /**
      * stop tasks

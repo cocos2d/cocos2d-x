@@ -83,7 +83,7 @@ void localStorageFree()
 		
 		JniMethodInfo t;
         
-        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "destory", "()V"))
+        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "destroy", "()V"))
         {
             t.env->CallStaticVoidMethod(t.classID, t.methodID);
         	t.env->DeleteLocalRef(t.classID); 
