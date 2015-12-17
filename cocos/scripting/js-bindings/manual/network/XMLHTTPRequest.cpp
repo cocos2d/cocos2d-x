@@ -336,24 +336,36 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     MinXmlHttpRequest* req = new (std::nothrow) MinXmlHttpRequest();
-    req->autorelease();
-    
-    js_proxy_t *p;
-    jsval out;
     
     JS::RootedObject proto(cx, MinXmlHttpRequest::js_proto);
     JS::RootedObject parentProto(cx, MinXmlHttpRequest::js_parent);
     JS::RootedObject obj(cx, JS_NewObject(cx, &MinXmlHttpRequest::js_class, proto, parentProto));
+    js_proxy_t *p = jsb_new_proxy(req, obj);
     
-    if (obj) {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    js_add_FinalizeHook(cx, obj);
+    // don't retain it, already retained
+#if COCOS2D_DEBUG
+    ScriptingCore::retainCount++;
+    CCLOG("++++++RETAINED++++++ %d Cpp(XMLHttpRequest): %p - JS: %p", ScriptingCore::retainCount, ref, obj.get());
+#endif // COCOS2D_DEBUG
+#else
+    // autorelease it
+    req->autorelease();
+    JS::AddNamedObjectRoot(cx, &p->obj, "XMLHttpRequest");
+#endif
+    
+    jsval out;
+    if (obj)
+    {
         JS_SetPrivate(obj, req);
         out = OBJECT_TO_JSVAL(obj);
     }
-
+    else
+    {
+        out = JS::NullValue();
+    }
     args.rval().set(out);
-    p = jsb_new_proxy(req, obj);
-    
-    JS::AddNamedObjectRoot(cx, &p->obj, "XMLHttpRequest");
     return true;
 }
 

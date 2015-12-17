@@ -582,11 +582,12 @@ public:
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
         JS::RootedObject thisObj(cx, getJSCallbackThis().toObjectOrNull());
         JS::RootedValue callback(cx, getJSCallbackFunc());
-        js_proxy_t *proxy = js_get_or_create_proxy(cx, node);
+        
+        JS::RootedObject jsnode(cx, js_get_or_create_jsobject<spine::SkeletonAnimation>(cx, node));
         JS::RootedValue retval(cx);
         if (!callback.isNullOrUndefined())
         {
-            jsval nodeVal = OBJECT_TO_JSVAL(proxy->obj);
+            jsval nodeVal = OBJECT_TO_JSVAL(jsnode);
             jsval trackIndexVal = INT_TO_JSVAL(trackIndex);
             int tmpType = (int)type;
             jsval typeVal = INT_TO_JSVAL(tmpType);
