@@ -221,7 +221,6 @@ static void removeJSObject(JSContext* cx, cocos2d::Ref* nativeObj)
     if (proxy)
     {
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-        nativeObj->_rooted = false;
         // remove the proxy here, since this was a "stack" object, not heap
         // when js_finalize will be called, it will fail, but
         // the correct solution is to have a new finalize for event
@@ -2025,13 +2024,8 @@ JSObject* jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref,
 JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
 {
     auto proxy = jsb_get_native_proxy(ref);
-    if (proxy) {
-#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-        // needed, since removeObject() might "unown it"
-        ref->_scriptOwned = true;
-#endif //
+    if (proxy)
         return proxy->obj;
-    }
 
     // don't auto-release, don't retain.
     JS::RootedObject proto(cx, typeClass->proto.ref());
