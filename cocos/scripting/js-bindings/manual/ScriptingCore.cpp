@@ -78,7 +78,7 @@
 
 // EXPERIMENTAL: Enable this in order to get rid of retain/release
 // when using the Garbage Collector
-#define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 1
+#define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 0
 
 using namespace cocos2d;
 
@@ -222,9 +222,10 @@ static void removeJSObject(JSContext* cx, cocos2d::Ref* nativeObj)
     {
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         nativeObj->_rooted = false;
-        // FIXME BUG TODO: remove this line... but if I do so
-        // another misterious bug appears
-//        jsb_remove_proxy(proxy);
+        // remove the proxy here, since this was a "stack" object, not heap
+        // when js_finalize will be called, it will fail, but
+        // the correct solution is to have a new finalize for event
+        jsb_remove_proxy(proxy);
 #else
         // only remove when not using GC,
         // otherwise finalize won't be able to find the proxy
@@ -882,7 +883,6 @@ void ScriptingCore::removeScriptObjectByObject(cocos2d::Ref* nativeObj)
     if (proxy)
     {
         JSContext *cx = getGlobalContext();
-        // copy it before removing it
         JS::RemoveObjectRoot(cx, &proxy->obj);
         jsb_remove_proxy(proxy);
     }
@@ -1916,6 +1916,14 @@ js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsHandle)
         // native to JS index
         proxy = (js_proxy_t *)malloc(sizeof(js_proxy_t));
         CC_ASSERT(proxy && "not enough memory");
+
+#if 0
+        if (_js_native_global_map.find(jsObj) != _js_native_global_map.end())
+        {
+            CCLOG("BUG: old:%s new:%s", JS_GetClass(_js_native_global_map.at(jsObj)->_jsobj)->name, JS_GetClass(jsObj)->name);
+        }
+#endif
+
         CC_ASSERT(_native_js_global_map.find(nativeObj) == _native_js_global_map.end() && "Native Key should not be present");
         CC_ASSERT(_js_native_global_map.find(jsObj) == _js_native_global_map.end() && "JS Key should not be present");
 
@@ -1926,8 +1934,6 @@ js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsHandle)
         // One Proxy in two entries
         _native_js_global_map[nativeObj] = proxy;
         _js_native_global_map[jsObj] = proxy;
-
-        CCLOG("jsb_new_proxy: %p,%p = %p", nativeObj, jsObj, proxy);
     }
     else CCLOG("jsb_new_proxy: Invalid keys");
 
@@ -1964,16 +1970,16 @@ void jsb_remove_proxy(js_proxy_t* proxy)
     CC_ASSERT(nativeKey && "Invalid nativeKey");
     CC_ASSERT(jsKey && "Invalid JSKey");
 
-    CCLOG("jsb_remove_proxy: %p,%p", nativeKey, jsKey);
-
     auto it_nat = _native_js_global_map.find(nativeKey);
     auto it_js = _js_native_global_map.find(jsKey);
 
+#if 0
     // XXX FIXME: sanity check. Remove me once it is tested that it works Ok
     if (it_nat != _native_js_global_map.end() && it_js != _js_native_global_map.end())
     {
         CC_ASSERT(it_nat->second == it_js->second && "BUG. Different enties");
     }
+#endif
 
     if (it_nat != _native_js_global_map.end())
     {
@@ -2097,12 +2103,14 @@ void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj)
     if (proxy)
     {
         auto ref = static_cast<cocos2d::Ref*>(proxy->ptr);
-        CCLOG("jsb_ref_finalize: %s", typeid(*ref).name());
         jsb_remove_proxy(proxy);
         if (ref)
             ref->release();
     }
-    else CCLOG("jsb_ref_finalize: BUG: proxy not found for %p", obj);
+    else
+    {
+        CCLOG("jsb_ref_finalize: BUG: proxy not found for %p (%s)", obj, JS_GetClass(obj)->name);
+    }
 #else
 //    CCLOG("jsb_ref_finalize: JSObject address = %p", obj);
 #endif
