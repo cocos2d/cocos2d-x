@@ -161,6 +161,7 @@ public:
      When true, it means that the object was already rooted.
      */
     bool _rooted;
+    unsigned int _referenceCountAtRootTime;
 
     /**
      * The life of the object is scrolled by the scripting engine.

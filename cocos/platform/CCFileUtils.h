@@ -299,6 +299,12 @@ public:
     virtual std::string getWritablePath() const = 0;
 
     /**
+     *  Gets the cache path.
+     *  @return  The path that can be write/read a file in
+     */
+    virtual std::string getCachePath() const = 0;
+
+    /**
      *  Sets writable path.
      */
     virtual void setWritablePath(const std::string& writablePath);
@@ -578,6 +584,11 @@ protected:
      * Writable path.
      */
     std::string _writablePath;
+    
+    /**
+     * Cache path.
+     */
+    std::string _cachePath;
 
     /**
      *  The singleton pointer of FileUtils.

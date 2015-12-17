@@ -13,6 +13,7 @@ UIPageViewTests::UIPageViewTests()
     ADD_TEST_CASE(UIPageViewJumpToPageTest);
     ADD_TEST_CASE(UIPageViewVerticalTest);
     ADD_TEST_CASE(UIPageViewDisableTouchTest);
+    ADD_TEST_CASE(UIPageViewChildSizeTest);
 }
 
 // UIPageViewTest
@@ -874,5 +875,90 @@ bool UIPageViewDisableTouchTest::init()
         return true;
     }
     return false;
+}
+
+// UIPageViewTest
+UIPageViewChildSizeTest::UIPageViewChildSizeTest()
+    : _displayValueLabel(nullptr)
+{
+
+}
+
+UIPageViewChildSizeTest::~UIPageViewChildSizeTest()
+{
+}
+
+bool UIPageViewChildSizeTest::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        // Add a label in which the dragpanel events will be displayed
+        _displayValueLabel = Text::create("Move by horizontal direction", "fonts/Marker Felt.ttf", 32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
+            widgetSize.height / 2.0f +
+            _displayValueLabel->getContentSize().height * 1.5));
+        _uiLayer->addChild(_displayValueLabel);
+
+        // Add the black background
+        Text* alert = Text::create("PageView", "fonts/Marker Felt.ttf", 30);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
+        _uiLayer->addChild(alert);
+
+        Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
+
+        Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
+
+        // Create the page view
+        Size size(240, 130);
+        PageView* pageView = PageView::create();
+        pageView->setDirection(PageView::Direction::HORIZONTAL);
+        pageView->setContentSize(size);
+        Size backgroundSize = background->getContentSize();
+        pageView->setPosition((widgetSize - pageView->getContentSize()) / 2.0f);
+        pageView->removeAllItems();
+        pageView->setIndicatorEnabled(true);
+
+        int pageCount = 4;
+        for (int i = 0; i < pageCount; ++i)
+        {
+            ImageView* imageView = ImageView::create("cocosui/scrollviewbg.png");
+            imageView->setScale9Enabled(true);
+
+            Text* label = Text::create(StringUtils::format("page %d", (i + 1)), "fonts/Marker Felt.ttf", 30);
+            label->setColor(Color3B(192, 192, 192));
+            label->setAnchorPoint(Vec2::ZERO);
+            imageView->addChild(label);
+
+            pageView->insertCustomItem(imageView, i);
+        }
+
+        pageView->addEventListener(CC_CALLBACK_2(UIPageViewChildSizeTest::pageViewEvent, this));
+
+        _uiLayer->addChild(pageView);
+
+        return true;
+    }
+    return false;
+}
+
+void UIPageViewChildSizeTest::pageViewEvent(Ref *pSender, PageView::EventType type)
+{
+    switch (type)
+    {
+    case PageView::EventType::TURNING:
+    {
+        PageView* pageView = dynamic_cast<PageView*>(pSender);
+
+        _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurrentPageIndex() + 1));
+    }
+    break;
+
+    default:
+        break;
+    }
 }
 

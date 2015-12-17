@@ -87,6 +87,7 @@ _isFocusPassing(false)
 Layout::~Layout()
 {
     CC_SAFE_RELEASE(_clippingStencil);
+    CC_SAFE_DELETE(_stencileStateManager);
 }
     
 void Layout::onEnter()

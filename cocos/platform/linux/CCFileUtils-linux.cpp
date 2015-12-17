@@ -105,6 +105,17 @@ string FileUtilsLinux::getWritablePath() const
     return _writablePath;
 }
 
+string FileUtilsLinux::getCachePath() const
+{
+    struct stat st;
+    stat(_writablePath.c_str(), &st);
+    if (!S_ISDIR(st.st_mode)) {
+        mkdir(_writablePath.c_str(), 0744);
+    }
+
+    return _writablePath;
+}
+
 bool FileUtilsLinux::isFileExistInternal(const std::string& strFilePath) const
 {
     if (strFilePath.empty())

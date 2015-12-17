@@ -69,6 +69,7 @@ public class Cocos2dxHelper {
     private static boolean sActivityVisible;
     private static String sPackageName;
     private static String sFileDirectory;
+    private static String sCacheDirectory;
     private static Activity sActivity = null;
     private static Cocos2dxHelperListener sCocos2dxHelperListener;
     private static Set<OnActivityResultListener> onActivityResultListeners = new LinkedHashSet<OnActivityResultListener>();
@@ -96,9 +97,11 @@ public class Cocos2dxHelper {
             Cocos2dxHelper.sPackageName = applicationInfo.packageName;
             if (CocosPlayClient.isEnabled() && !CocosPlayClient.isDemo()) {
                 Cocos2dxHelper.sFileDirectory = CocosPlayClient.getGameRoot();
+                Cocos2dxHelper.sCacheDirectory = CocosPlayClient.getGameRoot();
             }
             else {
                 Cocos2dxHelper.sFileDirectory = activity.getFilesDir().getAbsolutePath();
+                Cocos2dxHelper.sCacheDirectory = activity.getCacheDir().getAbsolutePath();
             }
             
             Cocos2dxHelper.nativeSetApkPath(applicationInfo.sourceDir);
@@ -175,6 +178,10 @@ public class Cocos2dxHelper {
     }
     public static String getCocos2dxWritablePath() {
         return Cocos2dxHelper.sFileDirectory;
+    }
+    
+    public static String getCocos2dxCachePath() {
+        return Cocos2dxHelper.sCacheDirectory;
     }
 
     public static String getCurrentLanguage() {

@@ -485,6 +485,25 @@ string FileUtilsAndroid::getWritablePath() const
     }
 }
 
+string FileUtilsAndroid::getCachePath() const
+{
+    // Fix for Nexus 10 (Android 4.2 multi-user environment)
+    // the path is retrieved through Java Context.getCacheDir() method
+    string dir("");
+    string tmp = getCacheDirectoryJNI();
+
+    if (tmp.length() > 0)
+    {
+        dir.append(tmp).append("/");
+
+        return dir;
+    }
+    else
+    {
+        return "";
+    }
+}
+
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
