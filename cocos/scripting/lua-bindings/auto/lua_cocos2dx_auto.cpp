@@ -19113,21 +19113,21 @@ int lua_cocos2dx_GLProgramState_setUniformVec3(lua_State* tolua_S)
     }
 #endif
     argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 2) {
-            int arg0;
-            ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.GLProgramState:setUniformVec3");
-
-            if (!ok) { break; }
-            cocos2d::Vec3 arg1;
-            ok &= luaval_to_vec3(tolua_S, 3, &arg1, "cc.GLProgramState:setUniformVec3");
-
-            if (!ok) { break; }
-            cobj->setUniformVec3(arg0, arg1);
-            lua_settop(tolua_S, 1);
-            return 1;
-        }
-    }while(0);
+//    do{
+//        if (argc == 2) {
+//            int arg0;
+//            ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.GLProgramState:setUniformVec3");
+//
+//            if (!ok) { break; }
+//            cocos2d::Vec3 arg1;
+//            ok &= luaval_to_vec3(tolua_S, 3, &arg1, "cc.GLProgramState:setUniformVec3");
+//
+//            if (!ok) { break; }
+//            cobj->setUniformVec3(arg0, arg1);
+//            lua_settop(tolua_S, 1);
+//            return 1;
+//        }
+//    }while(0);
     ok  = true;
     do{
         if (argc == 2) {
