@@ -1099,7 +1099,7 @@ namespace ui {
 
             topHeight = capInsets.origin.y - offsets.y;
             centerHeight = capInsets.size.height;
-            bottomHeight = originalSize.height - (capInsets.origin.x + centerHeight) - offsets.w;
+            bottomHeight = originalSize.height - (capInsets.origin.y + centerHeight) - offsets.w;
         }
         
         
