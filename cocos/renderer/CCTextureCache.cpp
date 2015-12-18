@@ -59,7 +59,6 @@ TextureCache::TextureCache()
 : _loadingThread(nullptr)
 , _needQuit(false)
 , _asyncRefCount(0)
-, _dirty(false)
 {
 }
 
@@ -496,8 +495,7 @@ void TextureCache::removeTexture(Texture2D* texture)
 
     for( auto it=_textures.cbegin(); it!=_textures.cend(); /* nothing */ ) {
         if( it->second == texture ) {
-            texture->setValid(false);
-            texture->autorelease();
+            it->second->release();
             _textures.erase(it++);
             break;
         } else
@@ -516,8 +514,7 @@ void TextureCache::removeTextureForKey(const std::string &textureKeyName)
     }
 
     if( it != _textures.end() ) {
-        it->second->setValid(false);
-        (it->second)->autorelease();
+        it->second->release();
         _textures.erase(it);
     }
 }
@@ -626,7 +623,6 @@ void TextureCache::renameTextureWithKey(const std::string srcName, const std::st
                 tex->initWithImage(image);
                 _textures.insert(std::make_pair(fullpath, tex));
                 _textures.erase(it);
-                this->setDirty(true);
             }
             CC_SAFE_DELETE(image);
         }
