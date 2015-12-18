@@ -5632,6 +5632,8 @@ void jsb_FinalizeHook_finalize(JSFreeOp *fop, JSObject *obj)
                 int count = refObj->getReferenceCount();
                 if (count == 1)
                 {
+                    // Can't release directly the native object, otherwise any JS Object manipulation in destructor may cause JSB crash,
+                    // because it's during garbage collection process
                     refObj->autorelease();
                 }
                 else
@@ -5640,7 +5642,7 @@ void jsb_FinalizeHook_finalize(JSFreeOp *fop, JSObject *obj)
                 }
 #if COCOS2D_DEBUG
                 ScriptingCore::retainCount--;
-                CCLOG("------RELEASED------ %d Native %p ref count: %d JSObj %p", ScriptingCore::retainCount, refObj, count-1, ownerPtr);
+                CCLOG("------RELEASED------ %d Cpp: %p - JS: %p", ScriptingCore::retainCount, refObj, ownerPtr);
 #endif // COCOS2D_DEBUG
             }
 #if COCOS2D_DEBUG

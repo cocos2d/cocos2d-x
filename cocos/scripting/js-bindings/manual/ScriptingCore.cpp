@@ -1481,8 +1481,9 @@ bool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, cons
 
 bool ScriptingCore::handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event)
 {
+    JSAutoCompartment ac(_cx, _global.ref());
+    
     js_proxy_t * p = jsb_get_native_proxy(nativeObj);
-
     if (nullptr == p)
         return false;
     
@@ -1510,8 +1511,9 @@ bool ScriptingCore::handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::
 
 bool ScriptingCore::handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widgetLoseFocus, cocos2d::ui::Widget* widgetGetFocus)
 {
+    JSAutoCompartment ac(_cx, _global.ref());
+    
     js_proxy_t * p = jsb_get_native_proxy(nativeObj);
-
     if (nullptr == p)
         return false;
 
@@ -2035,7 +2037,19 @@ js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsHandle)
 #endif
 
         CC_ASSERT(_native_js_global_map.find(nativeObj) == _native_js_global_map.end() && "Native Key should not be present");
-        CC_ASSERT(_js_native_global_map.find(jsObj) == _js_native_global_map.end() && "JS Key should not be present");
+//        CC_ASSERT(_js_native_global_map.find(jsObj) == _js_native_global_map.end() && "JS Key should not be present");
+        // If native proxy doesn't exist, and js proxy exist, means previous js object in this location have already been released.
+        // In some circumstances, js object may be released without calling its finalizer, so the proxy haven't been removed.
+        // For ex: var seq = cc.sequence(moveBy, cc.callFunc(this.callback, this));
+        // In this code, cc.callFunc is created in parameter, and directly released after the native function call, the finalizer won't be triggered.
+        // The current solution keep the game running with a warning because it may cause memory leak as the native object may have been retained.
+        auto existJSProxy = _js_native_global_map.find(jsObj);
+        if (existJSProxy != _js_native_global_map.end()) {
+#if COCOS2D_DEBUG
+            CCLOG("jsbindings: Failed to remove proxy for native object: %p, force removing it, but it may cause memory leak", existJSProxy->second->ptr);
+#endif
+            jsb_remove_proxy(existJSProxy->second);
+        }
 
         proxy->ptr = nativeObj;
         proxy->obj = jsObj;
@@ -2143,7 +2157,7 @@ JS::HandleObject jsb_create_weak_jsobject(JSContext *cx, void *native, js_type_c
 #else
 #if COCOS2D_DEBUG
     CC_UNUSED_PARAM(proxy);
-    CCLOG("++++++WEAK_REF++++++ Cpp(%s): %p - JS: %p", debug, native, jsObj.get());
+//    CCLOG("++++++WEAK_REF++++++ Cpp(%s): %p - JS: %p", debug, native, jsObj.get());
 #endif // COCOS2D_DEBUG
 #endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     return jsObj;
@@ -2213,7 +2227,7 @@ JS::HandleObject jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js
     JS::AddNamedObjectRoot(cx, &proxy->obj, debug);
 #else
 #if COCOS2D_DEBUG
-    CCLOG("++++++WEAK_REF++++++ Cpp(%s): %p - JS: %p", debug, native, jsObj.get());
+//    CCLOG("++++++WEAK_REF++++++ Cpp(%s): %p - JS: %p", debug, native, jsObj.get());
 #endif // COCOS2D_DEBUG
 #endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     return jsObj;
