@@ -2,8 +2,10 @@ package org.cocos2dx.lib;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.Gravity;
+import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -43,7 +45,7 @@ public class Cocos2dxWebView extends WebView {
         this(context, -1);
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint({"SetJavaScriptEnabled", "NewApi"})
     public Cocos2dxWebView(Context context, int viewTag) {
         super(context);
         this.mViewTag = viewTag;
@@ -55,6 +57,14 @@ public class Cocos2dxWebView extends WebView {
         this.getSettings().setSupportZoom(false);
 
         this.getSettings().setJavaScriptEnabled(true);
+
+        this.getSettings().setDomStorageEnabled(true);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.setAcceptThirdPartyCookies(this, true);
+            this.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        }
 
         // `searchBoxJavaBridge_` has big security risk. http://jvn.jp/en/jp/JVN53768697
         try {
