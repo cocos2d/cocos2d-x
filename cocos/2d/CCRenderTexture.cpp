@@ -283,7 +283,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
                 glGenRenderbuffers(1, &_stencilRenderBufffer);
                 glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBufffer);
                 
-                if(Configuration::getInstance()->supportsOESPackedDepthStencil())
+                if(Configuration::getInstance()->supportsOESDepth24())
                 {
                     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24_OES, (GLsizei)powW, (GLsizei)powH);
                 }
