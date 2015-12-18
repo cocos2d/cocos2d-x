@@ -17,12 +17,6 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- check texture each frame? 
--- @function [parent=#Mesh] enableCheckTexture 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
 --  Sets a new Material to the Mesh 
 -- @function [parent=#Mesh] setMaterial 
 -- @param self
@@ -76,12 +70,6 @@
 -- @return Mesh#Mesh self (return value: cc.Mesh)
         
 --------------------------------
--- check texture
--- @function [parent=#Mesh] checkTexture 
--- @param self
--- @return Mesh#Mesh self (return value: cc.Mesh)
-        
---------------------------------
 -- Mesh index data setter
 -- @function [parent=#Mesh] setMeshIndexData 
 -- @param self
@@ -113,13 +101,6 @@
 -- @function [parent=#Mesh] setSkin 
 -- @param self
 -- @param #cc.MeshSkin skin
--- @return Mesh#Mesh self (return value: cc.Mesh)
-        
---------------------------------
--- set enable check texture, check texture each frame if enable is true. It is false by default
--- @function [parent=#Mesh] setEnableCheckTexture 
--- @param self
--- @param #bool enableCheckTexture
 -- @return Mesh#Mesh self (return value: cc.Mesh)
         
 --------------------------------

@@ -15,6 +15,7 @@ void register_all_cocos2dx_3d_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_3d_extension_ParticleSystem3D_resumeParticleSystem(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_ParticleSystem3D_startParticleSystem(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_ParticleSystem3D_isEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_extension_ParticleSystem3D_getRender(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_ParticleSystem3D_isKeepLocal(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_ParticleSystem3D_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_ParticleSystem3D_getParticleQuota(JSContext *cx, uint32_t argc, jsval *vp);

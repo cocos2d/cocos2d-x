@@ -449,16 +449,6 @@ getVertexSizeInBytes : function (
 },
 
 /**
- * @method enableCheckTexture
- * @return {bool}
- */
-enableCheckTexture : function (
-)
-{
-    return false;
-},
-
-/**
  * @method setMaterial
  * @param {cc.Material} arg0
  */
@@ -559,14 +549,6 @@ str
 },
 
 /**
- * @method checkTexture
- */
-checkTexture : function (
-)
-{
-},
-
-/**
  * @method getIndexCount
  * @return {long}
  */
@@ -632,16 +614,6 @@ getPrimitiveType : function (
  */
 setSkin : function (
 meshskin 
-)
-{
-},
-
-/**
- * @method setEnableCheckTexture
- * @param {bool} arg0
- */
-setEnableCheckTexture : function (
-bool 
 )
 {
 },
