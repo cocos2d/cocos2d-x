@@ -132,6 +132,11 @@ void FontAtlas::releaseTextures()
     _atlasTextures.clear();
 }
 
+void FontAtlas::relaseTextures()
+{
+    releaseTextures();
+}
+
 void FontAtlas::purgeTexturesAtlas()
 {
     if (_fontFreeType && _atlasTextures.size() > 1)
