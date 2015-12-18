@@ -39,7 +39,7 @@ THE SOFTWARE.
 #define CC_CREATE_NO_PARAM_NO_INIT(varType)\
 public: \
     static inline varType *create(void){ \
-    varType *var = new varType();\
+    varType *var = new (std::nothrow) varType();\
     if (var)\
 {\
     var->autorelease();\
@@ -52,7 +52,7 @@ public: \
 #define CC_CREATE_NO_PARAM(varType)\
 public: \
     static inline varType *create(void){ \
-    varType *var = new varType();\
+    varType *var = new (std::nothrow) varType();\
     if (var && var->init())\
 {\
     var->autorelease();\

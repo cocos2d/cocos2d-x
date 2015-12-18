@@ -740,7 +740,7 @@ namespace cocos2d { namespace network {
     
     IDownloadTask *DownloaderCURL::createCoTask(std::shared_ptr<const DownloadTask>& task)
     {
-        DownloadTaskCURL *coTask = new DownloadTaskCURL;
+        DownloadTaskCURL *coTask = new (std::nothrow) DownloadTaskCURL;
         coTask->init(task->storagePath, _impl->hints.tempFileNameSuffix);
         
         DLLOG("    DownloaderCURL: createTask: Id(%d)", coTask->serialId);

@@ -454,7 +454,7 @@ ScriptingCore* ScriptingCore::getInstance()
 {
     static ScriptingCore* instance = nullptr;
     if (instance == nullptr)
-        instance = new ScriptingCore();
+        instance = new (std::nothrow) ScriptingCore();
 
     return instance;
 }
@@ -475,7 +475,7 @@ ScriptingCore::ScriptingCore()
 void ScriptingCore::initRegister()
 {
     this->addRegisterCallback(registerDefaultClasses);
-    this->_runLoop = new SimpleRunLoop();
+    this->_runLoop = new (std::nothrow) SimpleRunLoop();
 }
 
 void ScriptingCore::string_report(JS::HandleValue val) {

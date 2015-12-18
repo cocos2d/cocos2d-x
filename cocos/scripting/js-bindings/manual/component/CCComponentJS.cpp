@@ -73,7 +73,7 @@ ComponentJS::ComponentJS(const std::string& scriptFileName)
         CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
         typeClass = typeMapIter->second;
         
-        mozilla::Maybe<JS::PersistentRootedObject> *jsObj = new mozilla::Maybe<JS::PersistentRootedObject>();
+        mozilla::Maybe<JS::PersistentRootedObject> *jsObj = new (std::nothrow) mozilla::Maybe<JS::PersistentRootedObject>();
         
         JS::RootedObject proto(cx, protoValue.toObjectOrNull());
         JS::RootedObject parent(cx, typeClass->proto.ref());

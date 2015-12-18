@@ -119,7 +119,7 @@ FlatBuffersSerialize* FlatBuffersSerialize::getInstance()
 {
     if (!_instanceFlatBuffersSerialize)
     {
-        _instanceFlatBuffersSerialize = new FlatBuffersSerialize();
+        _instanceFlatBuffersSerialize = new (std::nothrow) FlatBuffersSerialize();
     }
     
     return _instanceFlatBuffersSerialize;
@@ -161,7 +161,7 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
     std::string content = FileUtils::getInstance()->getStringFromFile(inFullpath);
     
     // xml parse
-    tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
+    tinyxml2::XMLDocument* document = new (std::nothrow) tinyxml2::XMLDocument();
     document->Parse(content.c_str());
     
     const tinyxml2::XMLElement* rootElement = document->RootElement();// Root
@@ -238,7 +238,7 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
     
     if (serializeEnabled)
     {
-        _builder = new FlatBufferBuilder();
+        _builder = new (std::nothrow) FlatBufferBuilder();
         
         Offset<NodeTree> nodeTree;
         Offset<NodeAction> aciton;
@@ -1292,7 +1292,7 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
     std::string content = FileUtils::getInstance()->getStringFromFile(inFullpath);
     
     // xml parse
-    tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
+    tinyxml2::XMLDocument* document = new (std::nothrow) tinyxml2::XMLDocument();
     document->Parse(content.c_str());
     
     const tinyxml2::XMLElement* rootElement = document->RootElement();// Root
@@ -1345,7 +1345,7 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
     
     if (serializeEnabled)
     {
-        _builder = new FlatBufferBuilder();
+        _builder = new (std::nothrow) FlatBufferBuilder();
 
         Offset<NodeTree> nodeTree;
         Offset<NodeAction> aciton;
