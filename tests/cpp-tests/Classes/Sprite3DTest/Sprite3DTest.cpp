@@ -2599,6 +2599,7 @@ Sprite3DPropertyTest::Sprite3DPropertyTest()
     addChild(camera);
 
     _sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+    _sprite->setEnableCheckTexture(true);
     _sprite->setPosition(20.f, 0.f);
     _sprite->setRotation3D(Vec3(0, 180, 0));
     _meshTex = _sprite->getMesh()->getTexture();
