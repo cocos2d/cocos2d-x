@@ -254,7 +254,10 @@ _p._ctor = function(normalImage, selectedImage, three, four, five) {
             target = five;
         }
         callback = callback ? callback.bind(target) : null;
-        this.initWithNormalSprite(new cc.Sprite(normalImage), new cc.Sprite(selectedImage), disabledImage ? new cc.Sprite(disabledImage) : new cc.Sprite(normalImage), callback);
+        var normalSprite = new cc.Sprite(normalImage);
+        var selectedSprite = new cc.Sprite(selectedImage);
+        var disabledSprite = disabledImage ? new cc.Sprite(disabledImage) : new cc.Sprite(normalImage);
+        this.initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, callback);
     }
 };
 

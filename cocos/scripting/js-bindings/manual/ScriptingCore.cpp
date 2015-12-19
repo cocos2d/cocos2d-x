@@ -925,8 +925,10 @@ bool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 
 bool ScriptingCore::forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 {
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32
     JSRuntime *rt = JS_GetRuntime(cx);
     JS_GC(rt);
+#endif
     return true;
 }
 
@@ -1047,6 +1049,8 @@ int ScriptingCore::handleActionEvent(void* data)
     js_proxy_t * p = jsb_get_native_proxy(actionObject);
     if (!p) return 0;
     
+    JSAutoCompartment ac(_cx, _global.ref());
+    
     int ret = 0;
     JS::RootedValue retval(_cx);
     
@@ -1076,7 +1080,9 @@ int ScriptingCore::handleNodeEvent(void* data)
                                                          
     js_proxy_t * p = jsb_get_native_proxy(node);
     if (!p) return 0;
-
+    
+    JSAutoCompartment ac(_cx, _global.ref());
+    
     int ret = 0;
     JS::RootedValue retval(_cx);
     jsval dataVal = INT_TO_JSVAL(1);
@@ -1140,6 +1146,8 @@ int ScriptingCore::handleComponentEvent(void* data)
     js_proxy_t * p = jsb_get_native_proxy(node);
     if (!p) return 0;
     
+    JSAutoCompartment ac(_cx, _global.ref());
+    
     int ret = 0;
     JS::RootedValue retval(_cx);
     jsval dataVal = INT_TO_JSVAL(1);
@@ -1180,7 +1188,7 @@ bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::Eve
 
 bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event, JS::MutableHandleValue jsvalRet)
 {
-    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    JSAutoCompartment ac(_cx, _global.ref());
     
     bool ret = false;
     
@@ -1234,7 +1242,7 @@ bool ScriptingCore::handleTouchEvent(void* nativeObj, cocos2d::EventTouch::Event
 
 bool ScriptingCore::handleTouchEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, cocos2d::Touch* touch, cocos2d::Event* event, JS::MutableHandleValue jsvalRet)
 {
-    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    JSAutoCompartment ac(_cx, _global.ref());
     
     std::string funcName = getTouchFuncName(eventCode);
     bool ret = false;
@@ -1491,7 +1499,7 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
         return 0;
     }
 
-    JSAutoCompartment ac(_cx, _global.ref().get());
+    JSAutoCompartment ac(_cx, _global.ref());
     
     switch (evt->type)
     {
