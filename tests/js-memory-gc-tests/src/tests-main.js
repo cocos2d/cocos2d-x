@@ -24,7 +24,7 @@ function runScene1(sender) {
     }
 
     // menu
-    var button = new cc.MenuItemFont("Go to Scene 3", runScene2);
+    var button = new cc.MenuItemFont("Go to Scene 2", runScene2);
     button.fontSize = 20;
     button.fontName = "Arial";
     var menu = new cc.Menu();
@@ -51,7 +51,7 @@ function runScene2(sender) {
     }
 
     // menu
-    var button = new cc.MenuItemFont("Go to Scene 2", runScene1);
+    var button = new cc.MenuItemFont("Go to Scene 1", runScene1);
     button.fontSize = 20;
     button.fontName = "Arial";
     var menu = new cc.Menu();
@@ -66,6 +66,9 @@ function runScene2(sender) {
 // Entry point
 //
 function runMain() {
+
+    // cc.sys.garbageCollect();
+
     var scene = new cc.Scene();
 
     // menu
