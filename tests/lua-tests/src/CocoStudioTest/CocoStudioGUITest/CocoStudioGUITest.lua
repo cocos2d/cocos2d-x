@@ -2341,6 +2341,15 @@ add_new_testcase(function()
             local eventDispatcher = self:getEventDispatcher()
             eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
 
+            local function onExit(tag)
+                if tag == "exit" then
+                    if eventListener ~= nil then
+                        eventDispatcher:removeEventListener(eventListener)
+                    end
+                end
+            end
+            self:registerScriptHandler(onExit)
+
             local winSize = cc.Director:getInstance():getVisibleSize()
             self._horizontalLayout = ccui.HBox:create()
             self._horizontalLayout:setPosition(cc.p(20, winSize.height / 2 + 40))
@@ -2474,6 +2483,15 @@ add_new_testcase(function()
             local eventDispatcher = self:getEventDispatcher()
             eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
 
+            local function onExit(tag)
+                if tag == "exit" then
+                    if eventListener ~= nil then
+                        eventDispatcher:removeEventListener(eventListener)
+                    end
+                end
+            end
+            self:registerScriptHandler(onExit)
+
             local winSize = cc.Director:getInstance():getVisibleSize()
             self._verticalLayout = ccui.VBox:create()
             self._verticalLayout:setPosition(cc.p(winSize.width/2 - 100, winSize.height - 70))
@@ -2606,6 +2624,15 @@ add_new_testcase(function()
             eventListener:registerScriptHandler(onFocusChanged)
             local eventDispatcher = self:getEventDispatcher()
             eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
+
+            local function onExit(tag)
+                if tag == "exit" then
+                    if eventListener ~= nil then
+                        eventDispatcher:removeEventListener(eventListener)
+                    end
+                end
+            end
+            self:registerScriptHandler(onExit)
 
             local winSize = cc.Director:getInstance():getVisibleSize()
 
@@ -2772,6 +2799,15 @@ add_new_testcase(function()
             local eventDispatcher = self:getEventDispatcher()
             eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
 
+            local function onExit(tag)
+                if tag == "exit" then
+                    if eventListener ~= nil then
+                        eventDispatcher:removeEventListener(eventListener)
+                    end
+                end
+            end
+            self:registerScriptHandler(onExit)
+
             local winSize = cc.Director:getInstance():getVisibleSize()
 
             self._horizontalLayout = ccui.HBox:create()
@@ -2936,6 +2972,15 @@ add_new_testcase(function()
             eventListener:registerScriptHandler(onFocusChanged)
             local eventDispatcher = self:getEventDispatcher()
             eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
+
+            local function onExit(tag)
+                if tag == "exit" then
+                    if eventListener ~= nil then
+                        eventDispatcher:removeEventListener(eventListener)
+                    end
+                end
+            end
+            self:registerScriptHandler(onExit)
 
             local winSize = cc.Director:getInstance():getVisibleSize()
 
