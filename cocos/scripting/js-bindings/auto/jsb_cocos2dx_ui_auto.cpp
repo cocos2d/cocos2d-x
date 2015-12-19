@@ -9482,24 +9482,6 @@ bool js_cocos2dx_ui_Slider_getBallNormalFile(JSContext *cx, uint32_t argc, jsval
     JS_ReportError(cx, "js_cocos2dx_ui_Slider_getBallNormalFile : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_ui_Slider_getCapInsetsProgressBarRebderer(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ui::Slider* cobj = (cocos2d::ui::Slider *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getCapInsetsProgressBarRebderer : Invalid Native Object");
-    if (argc == 0) {
-        const cocos2d::Rect& ret = cobj->getCapInsetsProgressBarRebderer();
-        jsval jsret = JSVAL_NULL;
-        jsret = ccrect_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_ui_Slider_getCapInsetsProgressBarRebderer : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_ui_Slider_setScale9Enabled(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -9554,6 +9536,26 @@ bool js_cocos2dx_ui_Slider_getZoomScale(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_Slider_getZoomScale : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_Slider_setCapInsetProgressBarRenderer(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::Slider* cobj = (cocos2d::ui::Slider *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_setCapInsetProgressBarRenderer : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Rect arg0;
+        ok &= jsval_to_ccrect(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Slider_setCapInsetProgressBarRenderer : Error processing arguments");
+        cobj->setCapInsetProgressBarRenderer(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_Slider_setCapInsetProgressBarRenderer : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_ui_Slider_loadSlidBallTextures(JSContext *cx, uint32_t argc, jsval *vp)
@@ -9745,6 +9747,24 @@ bool js_cocos2dx_ui_Slider_getCapInsetsBarRenderer(JSContext *cx, uint32_t argc,
     JS_ReportError(cx, "js_cocos2dx_ui_Slider_getCapInsetsBarRenderer : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_ui_Slider_getCapInsetsProgressBarRenderer(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::Slider* cobj = (cocos2d::ui::Slider *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getCapInsetsProgressBarRenderer : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::Rect& ret = cobj->getCapInsetsProgressBarRenderer();
+        jsval jsret = JSVAL_NULL;
+        jsret = ccrect_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_Slider_getCapInsetsProgressBarRenderer : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_ui_Slider_loadSlidBallTexturePressed(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -9827,26 +9847,6 @@ bool js_cocos2dx_ui_Slider_getBallDisabledFile(JSContext *cx, uint32_t argc, jsv
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_Slider_getBallDisabledFile : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_ui_Slider_setCapInsetProgressBarRebderer(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ui::Slider* cobj = (cocos2d::ui::Slider *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_setCapInsetProgressBarRebderer : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::Rect arg0;
-        ok &= jsval_to_ccrect(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Slider_setCapInsetProgressBarRebderer : Error processing arguments");
-        cobj->setCapInsetProgressBarRebderer(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_ui_Slider_setCapInsetProgressBarRebderer : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_ui_Slider_setCapInsetsBarRenderer(JSContext *cx, uint32_t argc, jsval *vp)
@@ -10077,21 +10077,21 @@ void js_register_cocos2dx_ui_Slider(JSContext *cx, JS::HandleObject global) {
         JS_FN("loadSlidBallTextureNormal", js_cocos2dx_ui_Slider_loadSlidBallTextureNormal, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadProgressBarTexture", js_cocos2dx_ui_Slider_loadProgressBarTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBallNormalFile", js_cocos2dx_ui_Slider_getBallNormalFile, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getCapInsetsProgressBarRebderer", js_cocos2dx_ui_Slider_getCapInsetsProgressBarRebderer, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setScale9Enabled", js_cocos2dx_ui_Slider_setScale9Enabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBallPressedFile", js_cocos2dx_ui_Slider_getBallPressedFile, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getZoomScale", js_cocos2dx_ui_Slider_getZoomScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setCapInsetProgressBarRenderer", js_cocos2dx_ui_Slider_setCapInsetProgressBarRenderer, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadSlidBallTextures", js_cocos2dx_ui_Slider_loadSlidBallTextures, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addEventListener", js_cocos2dx_ui_Slider_addEventListener, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMaxPercent", js_cocos2dx_ui_Slider_setMaxPercent, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadBarTexture", js_cocos2dx_ui_Slider_loadBarTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getProgressBarFile", js_cocos2dx_ui_Slider_getProgressBarFile, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCapInsetsBarRenderer", js_cocos2dx_ui_Slider_getCapInsetsBarRenderer, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getCapInsetsProgressBarRenderer", js_cocos2dx_ui_Slider_getCapInsetsProgressBarRenderer, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadSlidBallTexturePressed", js_cocos2dx_ui_Slider_loadSlidBallTexturePressed, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBackFile", js_cocos2dx_ui_Slider_getBackFile, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isScale9Enabled", js_cocos2dx_ui_Slider_isScale9Enabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBallDisabledFile", js_cocos2dx_ui_Slider_getBallDisabledFile, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCapInsetProgressBarRebderer", js_cocos2dx_ui_Slider_setCapInsetProgressBarRebderer, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCapInsetsBarRenderer", js_cocos2dx_ui_Slider_setCapInsetsBarRenderer, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPercent", js_cocos2dx_ui_Slider_getPercent, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCapInsets", js_cocos2dx_ui_Slider_setCapInsets, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
