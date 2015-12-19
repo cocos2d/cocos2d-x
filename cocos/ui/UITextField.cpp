@@ -575,6 +575,8 @@ int TextField::getMaxLength()const
 void TextField::setPasswordEnabled(bool enable)
 {
     _textFieldRenderer->setPasswordEnabled(enable);
+    if (enable)
+        setPasswordStyleText(getPasswordStyleText());
 }
 
 bool TextField::isPasswordEnabled()const
