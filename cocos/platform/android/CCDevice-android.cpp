@@ -178,6 +178,11 @@ void Device::vibrate(float duration)
     vibrateJni(duration);
 }
 
+std::string Device::getDevideUID()
+{
+    return getDevideUIDJni();
+}
+
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
