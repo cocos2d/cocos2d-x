@@ -78,7 +78,7 @@
 
 // EXPERIMENTAL: Enable this in order to get rid of retain/release
 // when using the Garbage Collector
-#define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 0
+#define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 1
 
 using namespace cocos2d;
 
@@ -2097,6 +2097,8 @@ void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj)
     if (proxy)
     {
         auto ref = static_cast<cocos2d::Ref*>(proxy->ptr);
+
+        CCLOG("jsb_ref_finalize: %s", typeid(*ref).name());
         jsb_remove_proxy(proxy);
         if (ref)
             ref->release();

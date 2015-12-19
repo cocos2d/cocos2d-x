@@ -27,7 +27,7 @@
 
 /**
  * A brief explanation for "project.json":
- * Here is the content ofproject.json file, this is the global configuration for your game, you can modify it to customize some behavior.
+ * Here is the content of project.json file, this is the global configuration for your game, you can modify it to customize some behavior.
  * The detail of each field is under it.
  {
     "debugMode"     : 1,
@@ -101,19 +101,7 @@ cc.game.onStart = function(){
         searchPaths.push('script');
         searchPaths.push('src');
         var paths = [
-            'res/resjs',
-            'res',
-            'res/scenetest',
-            'res/scenetest/ArmatureComponentTest',
-            'res/scenetest/AttributeComponentTest',
-            'res/scenetest/BackgroundComponentTest',
-            'res/scenetest/EffectComponentTest',
-            'res/scenetest/LoadSceneEdtiorFileTest',
-            'res/scenetest/ParticleComponentTest',
-            'res/scenetest/SpriteComponentTest',
-            'res/scenetest/TmxMapComponentTest',
-            'res/scenetest/UIComponentTest',
-            'res/scenetest/TriggerTest'
+            'res'
         ];
         for (var i = 0; i < paths.length; i++) {
             searchPaths.push(paths[i]);
@@ -135,14 +123,8 @@ cc.game.onStart = function(){
         }
     }
 
-    cc.LoaderScene.preload(g_resources, function () {
-        if(window.sideIndexBar && typeof sideIndexBar.start === 'function'){
-            sideIndexBar.start();
-        }else{
-            var scene = new cc.Scene();
-            scene.addChild(new TestController());
-            cc.director.runScene(scene);
-        }
+    cc.LoaderScene.preload([], function () {
+       runMain();
     }, this);
 };
 cc.game.run();
