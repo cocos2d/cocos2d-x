@@ -115,9 +115,15 @@ private:
     
     Vector<Widget*> getAllWidgets(LayoutProtocol *layout);
     Widget* getRelativeWidget(Widget* widget);
-    bool caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout);
-    void caculateFinalPositionWithRelativeAlign();
+    bool calculateFinalPositionWithRelativeWidget(LayoutProtocol *layout);
+    void calculateFinalPositionWithRelativeAlign();
     
+    /** @deprecated Use method calculateFinalPositionWithRelativeWidget() instead */
+    CC_DEPRECATED_ATTRIBUTE bool caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout);
+
+    /** @deprecated Use method calculateFinalPositionWithRelativeAlign() instead */
+    CC_DEPRECATED_ATTRIBUTE void caculateFinalPositionWithRelativeAlign();
+
     ssize_t _unlayoutChildCount;
     Vector<Widget*> _widgetChildren;
     Widget* _widget;
