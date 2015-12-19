@@ -47,14 +47,6 @@
 -- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
--- Gets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
--- return Capinsets for progress bar slider.<br>
--- js NA
--- @function [parent=#Slider] getCapInsetsProgressBarRebderer 
--- @param self
--- @return rect_table#rect_table ret (return value: rect_table)
-        
---------------------------------
 -- Sets if slider is using scale9 renderer.<br>
 -- param able True that using scale9 renderer, false otherwise.
 -- @function [parent=#Slider] setScale9Enabled 
@@ -74,6 +66,15 @@
 -- @function [parent=#Slider] getZoomScale 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- Sets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
+-- param capInsets Capinsets for progress bar slider.<br>
+-- js NA
+-- @function [parent=#Slider] setCapInsetProgressBarRenderer 
+-- @param self
+-- @param #rect_table capInsets
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- Load textures for slider ball.<br>
@@ -130,6 +131,14 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
+-- Gets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
+-- return Capinsets for progress bar slider.<br>
+-- js NA
+-- @function [parent=#Slider] getCapInsetsProgressBarRenderer 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
 -- Load pressed state texture for slider ball.<br>
 -- param pressed    Pressed state texture.<br>
 -- param resType    @see TextureResType .
@@ -157,15 +166,6 @@
 -- @function [parent=#Slider] getBallDisabledFile 
 -- @param self
 -- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
-        
---------------------------------
--- Sets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
--- param capInsets Capinsets for progress bar slider.<br>
--- js NA
--- @function [parent=#Slider] setCapInsetProgressBarRebderer 
--- @param self
--- @param #rect_table capInsets
--- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- Sets capinsets for bar slider, if slider is using scale9 renderer.<br>
