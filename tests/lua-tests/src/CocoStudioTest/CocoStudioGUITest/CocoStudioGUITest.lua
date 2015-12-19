@@ -1722,13 +1722,11 @@ add_new_testcase(function()
             local pageView = ccui.PageView:create()
             pageView:setTouchEnabled(true)
             pageView:setContentSize(cc.size(240, 130))
-            pageView:setDirection(ccui.PageViewDirection.HORIZONTAL)
             local backgroundSize = background:getContentSize()
             pageView:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
                                          (backgroundSize.width - pageView:getContentSize().width) / 2,
                                      (widgetSize.height - backgroundSize.height) / 2 +
                                          (backgroundSize.height - pageView:getContentSize().height) / 2))
-
             for i = 1 , 3 do
                 local layout = ccui.Layout:create()
                 layout:setContentSize(cc.size(240, 130))
@@ -1788,7 +1786,7 @@ add_new_testcase(function()
 
             local pageView = ccui.PageView:create()
             pageView:setTouchEnabled(true)
-            pageView:setDirection(ccui.PageViewDirection.VERTICAL)
+            pageView:setDirection(ccui.ScrollViewDir.vertical)
             pageView:setContentSize(cc.size(240, 130))
             local backgroundSize = background:getContentSize()
             pageView:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
