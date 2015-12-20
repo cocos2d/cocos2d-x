@@ -337,7 +337,7 @@ public:
     void scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec);
     
     /**
-     * @brief Query current selected widget's idnex.
+     * @brief Query current selected widget's index.
      *
      
      * @return A index of a selected item.

@@ -65,7 +65,7 @@ class CC_GUI_DLL PageView : public ListView
     
 public:
     /**
-     * Page turn event tpye.
+     * Page turn event type.
      */
     enum class EventType
     {

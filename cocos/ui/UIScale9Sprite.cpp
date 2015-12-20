@@ -613,7 +613,7 @@ namespace ui {
     }
 
 /** sets the opacity.
-    @warning If the texture has premultiplied alpha then, the R, G and B channels will be modifed.
+    @warning If the texture has premultiplied alpha then, the R, G and B channels will be modified.
     Values goes from 0 to 255, where 255 means fully opaque.
 */
 
@@ -857,7 +857,7 @@ namespace ui {
 
         this->cleanupSlicedSprites();
 
-        //we must invalide the transform when toggling scale9enabled
+        //we must invalid the transform when toggling scale9enabled
         _transformUpdated = _transformDirty = _inverseDirty = true;
 
         if (_scale9Enabled)
@@ -1094,7 +1094,7 @@ namespace ui {
         auto atlasWidth = tex->getPixelsWide();
         auto atlasHeight = tex->getPixelsHigh();
 
-        //caculate texture coordinate
+        //calculate texture coordinate
         float leftWidth = 0, centerWidth = 0, rightWidth = 0;
         float topHeight = 0, centerHeight = 0, bottomHeight = 0;
 

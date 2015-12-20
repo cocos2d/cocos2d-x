@@ -117,7 +117,7 @@ public:
      * @param text Content string.
      * @param fontName Content font name.
      * @param fontSize Content font size.
-     * @return True if initialize scucess, false otherwise.
+     * @return True if initialize success, false otherwise.
      */
     bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize);
 
