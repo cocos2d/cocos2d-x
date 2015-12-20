@@ -63,10 +63,10 @@ ControlButton::~ControlButton()
 
 bool ControlButton::init()
 {
-    return this->initWithLabelAndBackgroundSprite(Label::createWithSystemFont("", "Helvetica", 12), cocos2d::ui::Scale9Sprite::create());
+    return this->initWithLabelAndBackgroundSprite(Label::createWithSystemFont("", "Helvetica", 12), cocos2d::ui::Scale9Sprite::create(),true);
 }
 
-bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, ui::Scale9Sprite* backgroundSprite)
+bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, ui::Scale9Sprite* backgroundSprite, bool adjustBackGroundSize)
 {
     if (Control::init())
     {
@@ -79,9 +79,9 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, ui::Scale9Sprit
 
         _isPushed = false;
 
-        // Adjust the background image by default
-        setAdjustBackgroundImage(true);
+        // Adjust the background image by adjustBackGroundSize
         setPreferredSize(Size::ZERO);
+        setAdjustBackgroundImage(adjustBackGroundSize);
         // Zooming button by default
         _zoomOnTouchDown = true;
         _scaleRatio = 1.1f;
@@ -123,14 +123,22 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, ui::Scale9Sprit
 ControlButton* ControlButton::create(Node* label, cocos2d::ui::Scale9Sprite* backgroundSprite)
 {
     ControlButton *pRet = new (std::nothrow) ControlButton();
-    pRet->initWithLabelAndBackgroundSprite(label, backgroundSprite);
+    pRet->initWithLabelAndBackgroundSprite(label, backgroundSprite, true);
+    pRet->autorelease();
+    return pRet;
+}
+
+ControlButton* ControlButton::create(Node* label, cocos2d::ui::Scale9Sprite* backgroundSprite, bool adjustBackGroundSize)
+{
+    ControlButton *pRet = new (std::nothrow) ControlButton();
+    pRet->initWithLabelAndBackgroundSprite(label, backgroundSprite, adjustBackGroundSize);
     pRet->autorelease();
     return pRet;
 }
 
 bool ControlButton::initWithTitleAndFontNameAndFontSize(const std::string& title, const std::string& fontName, float fontSize)
 {
-    return initWithLabelAndBackgroundSprite(Label::createWithSystemFont(title, fontName, fontSize), cocos2d::ui::Scale9Sprite::create());
+    return initWithLabelAndBackgroundSprite(Label::createWithSystemFont(title, fontName, fontSize), cocos2d::ui::Scale9Sprite::create(),true);
 }
 
 ControlButton* ControlButton::create(const std::string& title, const std::string& fontName, float fontSize)
@@ -144,7 +152,7 @@ ControlButton* ControlButton::create(const std::string& title, const std::string
 bool ControlButton::initWithBackgroundSprite(cocos2d::ui::Scale9Sprite* sprite)
 {
     Label *label = Label::createWithSystemFont("", "Arial", 30);//
-    return initWithLabelAndBackgroundSprite(label, sprite);
+    return initWithLabelAndBackgroundSprite(label, sprite,false);
 }
 
 ControlButton* ControlButton::create(cocos2d::ui::Scale9Sprite* sprite)

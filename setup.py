@@ -676,7 +676,7 @@ class SetEnvVar(object):
         else:
             return SetEnvVar.RESULT_DO_NOTHING
 
-    def set_environment_variables(self, ndk_root, android_sdk_root, ant_root):
+    def set_environment_variables(self, ndk_root, android_sdk_root, ant_root, quiet):
 
         print('\nSetting up cocos2d-x...')
 
@@ -692,10 +692,10 @@ class SetEnvVar(object):
         else:
             print('->Configuration for Android platform only, you can also skip and manually edit "%s"\n' %
                   self.file_used_for_setup)
-
-        ndk_ret = self.set_variable(NDK_ROOT, ndk_root)
-        sdk_ret = self.set_variable(ANDROID_SDK_ROOT, android_sdk_root)
-        ant_ret = self.set_variable(ANT_ROOT, ant_root)
+        if(quiet) :
+            ndk_ret = self.set_variable(NDK_ROOT, ndk_root)
+            sdk_ret = self.set_variable(ANDROID_SDK_ROOT, android_sdk_root)
+            ant_ret = self.set_variable(ANT_ROOT, ant_root)
 
         # tip the backup file
         if (self.backup_file is not None) and (os.path.exists(self.backup_file)):
@@ -720,12 +720,15 @@ if __name__ == '__main__':
                       dest='android_sdk_root', help='directory of android sdk root')
     parser.add_option(
         '-t', '--antroot', dest='ant_root', help='directory that contains ant/ant.bat')
+
+    parser.add_option(
+        '-q', '--quiet', dest='quiet',action="store_false", default = True, help='setup without setting NDK,SDK,ANT')
     opts, args = parser.parse_args()
 
     # set environment variables
     env = SetEnvVar()
     env.set_environment_variables(
-        opts.ndk_root, opts.android_sdk_root, opts.ant_root)
+        opts.ndk_root, opts.android_sdk_root, opts.ant_root, opts.quiet)
 
     if env._isWindows():
         import ctypes

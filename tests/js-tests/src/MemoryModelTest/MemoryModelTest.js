@@ -70,6 +70,7 @@ var SetPropertyMemoryModelTest = MemoryModelTestBase.extend({
     _subtitle:"See console for possible errors",
 
     ctor:function () {
+        cc.sys.garbageCollect();
         this._super();
         var sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 0, 85, 121));
         var tag = 10;
@@ -157,6 +158,12 @@ var LocalVarMemoryModelTest = MemoryModelTestBase.extend({
         var sprite2 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 0, 85, 121));
         var sprite3 = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 0, 85, 121));
         var a = 10;
+        this.addChild(sprite1);
+        this.removeChild(sprite1);
+//        this.addChild(sprite2);
+//        this.removeChild(sprite2);
+        this.addChild(sprite3);
+        this.removeChild(sprite3);
         //cc.sys.dumpRoot();
         cc.sys.garbageCollect();
         cc.log(sprite1);

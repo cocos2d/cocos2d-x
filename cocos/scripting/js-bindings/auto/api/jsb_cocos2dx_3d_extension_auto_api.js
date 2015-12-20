@@ -35,6 +35,16 @@ isEnabled : function (
 },
 
 /**
+ * @method getRender
+ * @return {cc.Particle3DRender}
+ */
+getRender : function (
+)
+{
+    return cc.Particle3DRender;
+},
+
+/**
  * @method isKeepLocal
  * @return {bool}
  */

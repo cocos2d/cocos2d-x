@@ -188,8 +188,6 @@ var UIFocusTestVertical = UIFocusTestBase.extend({
                 w.setTag(i);
                 w.addTouchEventListener(this.onImageViewClicked, this);
                 this._verticalLayout.addChild(w);
-                if (i == 2)
-                    w.requestFocus();
             }
 
             this._loopText = new ccui.Text("loop enabled", "Arial", 20);

@@ -2602,6 +2602,7 @@ Sprite3DPropertyTest::Sprite3DPropertyTest()
     _sprite->setPosition(20.f, 0.f);
     _sprite->setRotation3D(Vec3(0, 180, 0));
     _meshTex = _sprite->getMesh()->getTexture();
+    _texFile = _meshTex->getPath();
     addChild(_sprite);
 
     setCameraMask(2);
@@ -2616,11 +2617,14 @@ Sprite3DPropertyTest::Sprite3DPropertyTest()
     auto item1 = MenuItemLabel::create(label1, CC_CALLBACK_1(Sprite3DPropertyTest::printMeshName, this));
     auto label2 = Label::createWithTTF(ttfConfig, "Remove Used Texture");
     auto item2 = MenuItemLabel::create(label2, CC_CALLBACK_1(Sprite3DPropertyTest::removeUsedTexture, this));
+    auto label3 = Label::createWithTTF(ttfConfig, "Reset");
+    auto item3 = MenuItemLabel::create(label3, CC_CALLBACK_1(Sprite3DPropertyTest::resetTexture, this));
 
     item1->setPosition(Vec2(VisibleRect::left().x + 100, VisibleRect::bottom().y + item1->getContentSize().height * 4));
     item2->setPosition(Vec2(VisibleRect::left().x + 100, VisibleRect::bottom().y + item1->getContentSize().height * 5));
+    item3->setPosition(Vec2(VisibleRect::left().x + 100, VisibleRect::bottom().y + item1->getContentSize().height * 6));
 
-    auto pMenu1 = Menu::create(item1, item2, nullptr);
+    auto pMenu1 = Menu::create(item1, item2, item3,nullptr);
     pMenu1->setPosition(Vec2(0, 0));
     this->addChild(pMenu1, 10);
 
@@ -2654,5 +2658,34 @@ void Sprite3DPropertyTest::removeUsedTexture(cocos2d::Ref* sender)
     if (_meshTex != nullptr)
     {
         TextureCache::getInstance()->removeTexture(_meshTex);
+        this->refreshSpriteRender();
+    }
+}
+
+void Sprite3DPropertyTest::resetTexture(cocos2d::Ref* sender)
+{
+    if (_meshTex != nullptr)
+    {
+        _meshTex = TextureCache::getInstance()->addImage(_texFile);
+        this->refreshSpriteRender();
+    }
+}
+
+void Sprite3DPropertyTest::refreshSpriteRender()
+{
+    Vector<Mesh*> meshes = _sprite->getMeshes();
+    for (Mesh* mesh : meshes)
+    {
+        std::string file = mesh->getTextureFileName();
+        Texture2D* cacheTex = Director::getInstance()->getTextureCache()->getTextureForKey(file);
+        if (cacheTex == nullptr)
+        {
+            unsigned char data[] = { 255, 0, 0, 255 };//1*1 red picture
+            Image * image = new (std::nothrow) Image();
+            image->initWithRawData(data, sizeof(data), 1, 1, sizeof(unsigned char));
+            cacheTex = Director::getInstance()->getTextureCache()->addImage(image, "/dummyTexture");
+            image->release();
+        }
+        mesh->setTexture(cacheTex, cocos2d::NTextureData::Usage::Diffuse, false);
     }
 }

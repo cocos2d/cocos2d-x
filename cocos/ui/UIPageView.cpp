@@ -427,6 +427,11 @@ const Color3B& PageView::getIndicatorSelectedIndexColor() const
     return _indicator->getSelectedIndexColor();
 }
 
+void PageView::remedyLayoutParameter(Widget *item)
+{
+    item->setContentSize(this->getContentSize());
+    ListView::remedyLayoutParameter(item);
+}
 
 }
 

@@ -139,10 +139,9 @@ public:
         jsval args = OBJECT_TO_JSVAL(jsobj);
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate.ref()), "onclose", 1, &args);
 
-        JS::RootedObject wsobj(cx, p->obj);
-        js_proxy_t* jsproxy = jsb_get_js_proxy(wsobj);
-        JS::RemoveObjectRoot(cx, &jsproxy->obj);
-        jsb_remove_proxy(p, jsproxy);
+        auto copy = &p->obj;
+        jsb_remove_proxy(p);
+        JS::RemoveObjectRoot(cx, copy);
         CC_SAFE_DELETE(ws);
     }
     
