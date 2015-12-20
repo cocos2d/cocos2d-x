@@ -2384,6 +2384,16 @@ labeleffect
 },
 
 /**
+ * @method getLabelEffectType
+ * @return {cc.LabelEffect}
+ */
+getLabelEffectType : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getTextColor
  * @return {color4b_object}
  */
@@ -2424,6 +2434,16 @@ bool
 },
 
 /**
+ * @method getShadowOffset
+ * @return {size_object}
+ */
+getShadowOffset : function (
+)
+{
+    return cc.Size;
+},
+
+/**
  * @method setString
  * @param {String} arg0
  */
@@ -2431,6 +2451,16 @@ setString : function (
 str 
 )
 {
+},
+
+/**
+ * @method getOutlineSize
+ * @return {int}
+ */
+getOutlineSize : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -2447,6 +2477,16 @@ float
 )
 {
     return false;
+},
+
+/**
+ * @method getShadowBlurRadius
+ * @return {float}
+ */
+getShadowBlurRadius : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -2512,6 +2552,16 @@ int
 },
 
 /**
+ * @method getEffectColor
+ * @return {color4b_object}
+ */
+getEffectColor : function (
+)
+{
+    return cc.Color4B;
+},
+
+/**
  * @method getType
  * @return {ccui.Text::Type}
  */
@@ -2532,6 +2582,16 @@ getTextHorizontalAlignment : function (
 },
 
 /**
+ * @method isShadowEnabled
+ * @return {bool}
+ */
+isShadowEnabled : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setFontSize
  * @param {float} arg0
  */
@@ -2539,6 +2599,16 @@ setFontSize : function (
 float 
 )
 {
+},
+
+/**
+ * @method getShadowColor
+ * @return {color4b_object}
+ */
+getShadowColor : function (
+)
+{
+    return cc.Color4B;
 },
 
 /**
@@ -3804,16 +3874,6 @@ getBallNormalFile : function (
 },
 
 /**
- * @method getCapInsetsProgressBarRebderer
- * @return {rect_object}
- */
-getCapInsetsProgressBarRebderer : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
  * @method setScale9Enabled
  * @param {bool} arg0
  */
@@ -3841,6 +3901,16 @@ getZoomScale : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setCapInsetProgressBarRenderer
+ * @param {rect_object} arg0
+ */
+setCapInsetProgressBarRenderer : function (
+rect 
+)
+{
 },
 
 /**
@@ -3912,6 +3982,16 @@ getCapInsetsBarRenderer : function (
 },
 
 /**
+ * @method getCapInsetsProgressBarRenderer
+ * @return {rect_object}
+ */
+getCapInsetsProgressBarRenderer : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method loadSlidBallTexturePressed
  * @param {String} arg0
  * @param {ccui.Widget::TextureResType} arg1
@@ -3951,16 +4031,6 @@ getBallDisabledFile : function (
 )
 {
     return cc.ResourceData;
-},
-
-/**
- * @method setCapInsetProgressBarRebderer
- * @param {rect_object} arg0
- */
-setCapInsetProgressBarRebderer : function (
-rect 
-)
-{
 },
 
 /**

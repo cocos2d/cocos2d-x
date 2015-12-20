@@ -1843,53 +1843,6 @@ int lua_cocos2dx_3d_Mesh_getVertexSizeInBytes(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_3d_Mesh_enableCheckTexture(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Mesh* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Mesh",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Mesh*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Mesh_enableCheckTexture'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_enableCheckTexture'", nullptr);
-            return 0;
-        }
-        bool ret = cobj->enableCheckTexture();
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:enableCheckTexture",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Mesh_enableCheckTexture'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_3d_Mesh_setMaterial(lua_State* tolua_S)
 {
     int argc = 0;
@@ -2249,53 +2202,6 @@ int lua_cocos2dx_3d_Mesh_setName(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_3d_Mesh_checkTexture(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Mesh* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Mesh",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Mesh*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Mesh_checkTexture'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_checkTexture'", nullptr);
-            return 0;
-        }
-        cobj->checkTexture();
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:checkTexture",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Mesh_checkTexture'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_3d_Mesh_setMeshIndexData(lua_State* tolua_S)
 {
     int argc = 0;
@@ -2543,56 +2449,6 @@ int lua_cocos2dx_3d_Mesh_setSkin(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_3d_Mesh_setEnableCheckTexture(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Mesh* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Mesh",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Mesh*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Mesh_setEnableCheckTexture'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        bool arg0;
-
-        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.Mesh:setEnableCheckTexture");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_setEnableCheckTexture'", nullptr);
-            return 0;
-        }
-        cobj->setEnableCheckTexture(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:setEnableCheckTexture",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Mesh_setEnableCheckTexture'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_3d_Mesh_isVisible(lua_State* tolua_S)
 {
     int argc = 0;
@@ -2792,7 +2648,6 @@ int lua_register_cocos2dx_3d_Mesh(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_3d_Mesh_constructor);
         tolua_function(tolua_S,"getMaterial",lua_cocos2dx_3d_Mesh_getMaterial);
         tolua_function(tolua_S,"getVertexSizeInBytes",lua_cocos2dx_3d_Mesh_getVertexSizeInBytes);
-        tolua_function(tolua_S,"enableCheckTexture",lua_cocos2dx_3d_Mesh_enableCheckTexture);
         tolua_function(tolua_S,"setMaterial",lua_cocos2dx_3d_Mesh_setMaterial);
         tolua_function(tolua_S,"getName",lua_cocos2dx_3d_Mesh_getName);
         tolua_function(tolua_S,"getMeshVertexAttribute",lua_cocos2dx_3d_Mesh_getMeshVertexAttribute);
@@ -2800,13 +2655,11 @@ int lua_register_cocos2dx_3d_Mesh(lua_State* tolua_S)
         tolua_function(tolua_S,"draw",lua_cocos2dx_3d_Mesh_draw);
         tolua_function(tolua_S,"getBlendFunc",lua_cocos2dx_3d_Mesh_getBlendFunc);
         tolua_function(tolua_S,"setName",lua_cocos2dx_3d_Mesh_setName);
-        tolua_function(tolua_S,"checkTexture",lua_cocos2dx_3d_Mesh_checkTexture);
         tolua_function(tolua_S,"setMeshIndexData",lua_cocos2dx_3d_Mesh_setMeshIndexData);
         tolua_function(tolua_S,"getMeshVertexAttribCount",lua_cocos2dx_3d_Mesh_getMeshVertexAttribCount);
         tolua_function(tolua_S,"setBlendFunc",lua_cocos2dx_3d_Mesh_setBlendFunc);
         tolua_function(tolua_S,"setForce2DQueue",lua_cocos2dx_3d_Mesh_setForce2DQueue);
         tolua_function(tolua_S,"setSkin",lua_cocos2dx_3d_Mesh_setSkin);
-        tolua_function(tolua_S,"setEnableCheckTexture",lua_cocos2dx_3d_Mesh_setEnableCheckTexture);
         tolua_function(tolua_S,"isVisible",lua_cocos2dx_3d_Mesh_isVisible);
         tolua_function(tolua_S,"setGLProgramState",lua_cocos2dx_3d_Mesh_setGLProgramState);
         tolua_function(tolua_S,"setVisible",lua_cocos2dx_3d_Mesh_setVisible);

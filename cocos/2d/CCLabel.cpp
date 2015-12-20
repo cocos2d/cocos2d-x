@@ -606,9 +606,7 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& ima
         FontFNT *bmFont = (FontFNT*)newAtlas->getFont();
         if (bmFont) {
             float originalFontSize = bmFont->getOriginalFontSize();
-            if(fabs(_bmFontSize+1) < FLT_EPSILON){
-                _bmFontSize = originalFontSize / CC_CONTENT_SCALE_FACTOR();
-            }
+            _bmFontSize = originalFontSize / CC_CONTENT_SCALE_FACTOR();
         }
     }
 
@@ -1037,10 +1035,10 @@ void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */
             _effectColorF.g = outlineColor.g / 255.f;
             _effectColorF.b = outlineColor.b / 255.f;
             _effectColorF.a = outlineColor.a / 255.f;
-            _outlineSize = outlineSize;
             _currLabelEffect = LabelEffect::OUTLINE;
             _contentDirty = true;
         }
+        _outlineSize = outlineSize;
     }
 }
 

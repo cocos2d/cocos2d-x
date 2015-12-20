@@ -280,12 +280,12 @@ ControlButton *ControlButtonTest_Styling::standardButtonWithTitle(const char *ti
     backgroundButton->setPreferredSize(Size(45, 45));  // Set the prefered size
     auto backgroundHighlightedButton = ui::Scale9Sprite::create("extensions/buttonHighlighted.png");
     backgroundHighlightedButton->setPreferredSize(Size(45, 45));  // Set the prefered size
-    
+
     auto titleButton = Label::createWithTTF(title, "fonts/Marker Felt.ttf", 30);
 
     titleButton->setColor(Color3B(159, 168, 176));
     
-    ControlButton *button = ControlButton::create(titleButton, backgroundButton);
+    ControlButton *button = ControlButton::create(titleButton, backgroundButton,false);
     button->setBackgroundSpriteForState(backgroundHighlightedButton, Control::State::HIGH_LIGHTED);
     button->setTitleColorForState(Color3B::WHITE, Control::State::HIGH_LIGHTED);
     

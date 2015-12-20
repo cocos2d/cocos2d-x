@@ -139,4 +139,20 @@ protected:
     cocos2d::ui::Text* _displayValueLabel;
 };
 
+class UIPageViewChildSizeTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewChildSizeTest);
+
+    UIPageViewChildSizeTest();
+    ~UIPageViewChildSizeTest();
+    virtual bool init() override;
+
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
+
+protected:
+
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
 #endif /* defined(__TestCpp__UIPageViewTest__) */

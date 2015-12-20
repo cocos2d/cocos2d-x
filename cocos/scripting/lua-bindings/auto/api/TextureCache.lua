@@ -95,13 +95,6 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- 
--- @function [parent=#TextureCache] setDirty 
--- @param self
--- @param #bool dirty
--- @return TextureCache#TextureCache self (return value: cc.TextureCache)
-        
---------------------------------
 --  Reload texture from a new file.<br>
 -- This function is mainly for editor, won't suggest use it in game for performance reason.<br>
 -- param srcName Original texture file name.<br>
@@ -121,12 +114,6 @@
 -- @function [parent=#TextureCache] removeUnusedTextures 
 -- @param self
 -- @return TextureCache#TextureCache self (return value: cc.TextureCache)
-        
---------------------------------
--- 
--- @function [parent=#TextureCache] isDirty 
--- @param self
--- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  Deletes a texture from the cache given a texture.

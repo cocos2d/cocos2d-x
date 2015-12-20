@@ -248,9 +248,12 @@ WebSocket::~WebSocket()
     close();
     CC_SAFE_RELEASE_NULL(_wsHelper);
     
-    for (int i = 0; _wsProtocols[i].callback != nullptr; ++i)
+    if(_wsProtocols)
     {
-        CC_SAFE_DELETE_ARRAY(_wsProtocols[i].name);
+        for (int i = 0; _wsProtocols[i].callback != nullptr; ++i)
+        {
+            CC_SAFE_DELETE_ARRAY(_wsProtocols[i].name);
+        }
     }
 	CC_SAFE_DELETE_ARRAY(_wsProtocols);
 }

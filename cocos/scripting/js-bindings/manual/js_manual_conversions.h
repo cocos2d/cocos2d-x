@@ -119,7 +119,7 @@ bool jsval_to_ray(JSContext *cx, JS::HandleValue vp, cocos2d::Ray* ret);
 bool jsval_to_resourcedata(JSContext *cx, JS::HandleValue v, cocos2d::ResourceData* ret);
 
 // forward declaration
-CC_JS_DLL js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj);
+CC_JS_DLL js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
 
 template <class T>
 bool jsvals_variadic_to_ccvector( JSContext *cx, /*jsval *vp, int argc,*/const JS::CallArgs& args, cocos2d::Vector<T>* ret)
@@ -280,9 +280,12 @@ jsval meshVertexAttrib_to_jsval(JSContext* cx, const cocos2d::MeshVertexAttrib& 
 jsval uniform_to_jsval(JSContext* cx, const cocos2d::Uniform* uniform);
 jsval resourcedata_to_jsval(JSContext* cx, const cocos2d::ResourceData& v);
 
-template<class T>
-js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj);
 
+// forward declaration
+template <class T>
+js_type_class_t *js_get_type_from_native(T* native_obj);
+
+// Ref version of ccvector_to_jsval
 template <class T>
 jsval ccvector_to_jsval(JSContext* cx, const cocos2d::Vector<T>& v)
 {
@@ -294,9 +297,10 @@ jsval ccvector_to_jsval(JSContext* cx, const cocos2d::Vector<T>& v)
         JS::RootedValue arrElement(cx);
         
         //First, check whether object is associated with js object.
-        js_proxy_t* jsproxy = js_get_or_create_proxy(cx, obj);
-        if (jsproxy) {
-            arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
+        js_type_class_t *typeClass = js_get_type_from_native(obj);
+        JS::RootedObject jsobject(cx, jsb_ref_get_or_create_jsobject(cx, obj, typeClass, typeid(*obj).name()));
+        if (jsobject.get()) {
+            arrElement = OBJECT_TO_JSVAL(jsobject);
         }
 
         if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
@@ -322,9 +326,11 @@ jsval ccmap_string_key_to_jsval(JSContext* cx, const cocos2d::Map<std::string, T
         T obj = iter->second;
         
         //First, check whether object is associated with js object.
-        js_proxy_t* jsproxy = js_get_or_create_proxy(cx, obj);
-        if (jsproxy) {
-            element = OBJECT_TO_JSVAL(jsproxy->obj);
+        js_type_class_t *typeClass = js_get_type_from_native(obj);
+        JS::RootedObject jsobject(cx, jsb_ref_get_or_create_jsobject(cx, obj, typeClass, typeid(*obj).name()));
+
+        if (jsobject.get()) {
+            element = OBJECT_TO_JSVAL(jsobject);
         }
         
         if (!key.empty())

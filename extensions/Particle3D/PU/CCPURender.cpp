@@ -244,7 +244,7 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
 
         _stateBlock->setBlendFunc(particleSystem->getBlendFunc());
         
-        GLuint texId = this->getTextureName();
+        GLuint texId = (_texture ? _texture->getName() : 0);
         _meshCommand->init(0,
                            texId,
                            _glProgramState,
@@ -525,6 +525,14 @@ PUParticle3DModelRender* PUParticle3DModelRender::clone()
     return mr;
 }
 
+void PUParticle3DModelRender::reset()
+{
+    for (auto iter : _spriteList){
+        iter->release();
+    }
+    _spriteList.clear();
+}
+
 
 PUParticle3DEntityRender::PUParticle3DEntityRender()
     : _meshCommand(nullptr)
@@ -564,6 +572,8 @@ bool PUParticle3DEntityRender::initRender( const std::string &texFile )
             _texture = tex;
             glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_PARTICLE_TEXTURE);
         }
+        else
+            _texture = nullptr;
     }
     auto glProgramState = GLProgramState::create(glProgram);
     glProgramState->retain();
@@ -587,33 +597,14 @@ bool PUParticle3DEntityRender::initRender( const std::string &texFile )
     return true;
 }
 
-GLuint PUParticle3DEntityRender::getTextureName()
-{
-    if (Director::getInstance()->getTextureCache()->isDirty())
-    {
-        if (Director::getInstance()->getTextureCache()->getTextureForKey(_texFile) == nullptr)
-        {
-            _texture = nullptr;
-            this->initRender("");
-        }
-        else
-            this->initRender(_texFile);
-    }
-    else if (_texture != nullptr && !_texture->isValid())
-    {
-        _texture = nullptr;
-        this->initRender("");
-    }
-
-    if (_texture == nullptr)
-        return 0;
-
-    return _texture->getName();
-}
-
 void PUParticle3DEntityRender::copyAttributesTo(PUParticle3DEntityRender *render)
 {
     PURender::copyAttributesTo(render);
+}
+
+void PUParticle3DEntityRender::reset()
+{
+    this->initRender(_texFile);
 }
 
 PUParticle3DBoxRender::PUParticle3DBoxRender()
@@ -725,7 +716,7 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
         _vertexBuffer->updateVertices(&_vertices[0], vertexindex/* * sizeof(_posuvcolors[0])*/, 0);
         _indexBuffer->updateIndices(&_indices[0], index/* * sizeof(unsigned short)*/, 0);
 
-        GLuint texId = this->getTextureName();
+        GLuint texId = (_texture ? _texture->getName() : 0);
         _stateBlock->setBlendFunc(_particleSystem->getBlendFunc());
         _meshCommand->init(0,
                            texId,
@@ -889,8 +880,7 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
         _vertexBuffer->updateVertices(&_vertices[0], vertexindex/* * sizeof(_posuvcolors[0])*/, 0);
         _indexBuffer->updateIndices(&_indices[0], index/* * sizeof(unsigned short)*/, 0);
 
-        GLuint texId = this->getTextureName();
-
+        GLuint texId = (_texture ? _texture->getName() : 0);
         _stateBlock->setBlendFunc(particleSystem->getBlendFunc());
         _meshCommand->init(
                            0,

@@ -390,8 +390,8 @@ protected:
 
     virtual void onItemListChanged();
 
+    virtual void remedyLayoutParameter(Widget* item);
     void updateInnerContainerSize();
-    void remedyLayoutParameter(Widget* item);
     void remedyVerticalLayoutParameter(LinearLayoutParameter* layoutParameter, ssize_t itemIndex);
     void remedyHorizontalLayoutParameter(LinearLayoutParameter* layoutParameter,ssize_t itemIndex);
     
