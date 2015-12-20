@@ -43,7 +43,7 @@ class CC_DLL __Integer : public Ref, public Clonable
 public:
     static __Integer* create(int v)
     {
-        __Integer* pRet = new __Integer(v);
+        __Integer* pRet = new (std::nothrow) __Integer(v);
         pRet->autorelease();
         return pRet;
     }

@@ -57,7 +57,7 @@ Configuration::Configuration()
 , _maxSpotLightInShader(1)
 , _animate3DQuality(Animate3DQuality::QUALITY_LOW)
 {
-    _loadedEvent = new EventCustom(CONFIG_FILE_LOADED);
+    _loadedEvent = new (std::nothrow) EventCustom(CONFIG_FILE_LOADED);
 }
 
 bool Configuration::init()

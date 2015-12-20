@@ -268,8 +268,8 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
         JS::RootedObject obj(cx, JS_NewObject(cx, js_cocos2dx_websocket_class, proto, JS::NullPtr()));
         //JS::RootedObject obj(cx, JS_NewObjectForConstructor(cx, js_cocos2dx_websocket_class, args));
         
-        WebSocket* cobj = new WebSocket();
-        JSB_WebSocketDelegate* delegate = new JSB_WebSocketDelegate();
+        WebSocket* cobj = new (std::nothrow) WebSocket();
+        JSB_WebSocketDelegate* delegate = new (std::nothrow) JSB_WebSocketDelegate();
         delegate->setJSDelegate(obj);
         
         if (argc == 2)

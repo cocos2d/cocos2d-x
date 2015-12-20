@@ -293,7 +293,7 @@ unsigned short* cc_utf8_to_utf16(const char* str_old, int length/* = -1*/, int* 
     
     if (succeed)
     {
-        ret = new unsigned short[outUtf16.length() + 1];
+        ret = new (std::nothrow) unsigned short[outUtf16.length() + 1];
         ret[outUtf16.length()] = 0;
         memcpy(ret, outUtf16.data(), outUtf16.length() * sizeof(unsigned short));
         if (rUtf16Size)
@@ -328,7 +328,7 @@ char * cc_utf16_to_utf8 (const unsigned short  *str,
     
     if (succeed)
     {
-        ret = new char[outUtf8.length() + 1];
+        ret = new (std::nothrow) char[outUtf8.length() + 1];
         ret[outUtf8.length()] = '\0';
         memcpy(ret, outUtf8.data(), outUtf8.length());
     }

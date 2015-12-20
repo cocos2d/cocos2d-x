@@ -70,7 +70,7 @@ bool js_cocos2dx_GLNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
 
     if (argc == 0) {
-        cocos2d::GLNode* cobj = new cocos2d::GLNode();
+        cocos2d::GLNode* cobj = new (std::nothrow) cocos2d::GLNode();
         cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
         if (_ccobj) {
             _ccobj->autorelease();
@@ -108,7 +108,7 @@ static bool js_cocos2dx_GLNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    cocos2d::GLNode *nobj = new cocos2d::GLNode();
+    cocos2d::GLNode *nobj = new (std::nothrow) cocos2d::GLNode();
     js_proxy_t* p = jsb_new_proxy(nobj, obj);
     nobj->autorelease();
     JS::AddNamedObjectRoot(cx, &p->obj, "GLNode");
@@ -119,7 +119,7 @@ static bool js_cocos2dx_GLNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_GLNode_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    cocos2d::GLNode* ret = new cocos2d::GLNode();
+    cocos2d::GLNode* ret = new (std::nothrow) cocos2d::GLNode();
     jsval jsret;
     do {
         if (ret) {

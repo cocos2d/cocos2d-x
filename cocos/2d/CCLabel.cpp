@@ -52,6 +52,7 @@ public:
     LabelLetter()
     {
         _textureAtlas = nullptr;
+        _letterVisible = true;
     }
 
     static LabelLetter* createWithTexture(Texture2D *texture, const Rect& rect, bool rotated = false)
@@ -59,7 +60,7 @@ public:
         auto letter = new (std::nothrow) LabelLetter();
         if (letter && letter->initWithTexture(texture, rect, rotated))
         {
-            letter->setVisible(false);
+            letter->Sprite::setVisible(false);
             letter->autorelease();
             return letter;
         }
@@ -130,13 +131,18 @@ public:
             return;
         }
 
-        Color4B color4(_displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity);
+        auto displayedOpacity = _displayedOpacity;
+        if(!_letterVisible)
+        {
+            displayedOpacity = 0.0f;
+        }
+        Color4B color4(_displayedColor.r, _displayedColor.g, _displayedColor.b, displayedOpacity);
         // special opacity for premultiplied textures
         if (_opacityModifyRGB)
         {
-            color4.r *= _displayedOpacity / 255.0f;
-            color4.g *= _displayedOpacity / 255.0f;
-            color4.b *= _displayedOpacity / 255.0f;
+            color4.r *= displayedOpacity / 255.0f;
+            color4.g *= displayedOpacity / 255.0f;
+            color4.b *= displayedOpacity / 255.0f;
         }
         _quad.bl.colors = color4;
         _quad.br.colors = color4;
@@ -146,10 +152,19 @@ public:
         _textureAtlas->updateQuad(&_quad, _atlasIndex);
     }
 
+    void setVisible(bool visible) override
+    {
+        _letterVisible = visible;
+        updateColor();
+    }
+    
     //LabelLetter doesn't need to draw directly.
     void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override
     {
     }
+    
+private:
+    bool _letterVisible;
 };
 
 Label* Label::create()

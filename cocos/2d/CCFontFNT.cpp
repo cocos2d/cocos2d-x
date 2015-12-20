@@ -290,7 +290,7 @@ std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& 
         return nullptr;
     }
 
-    std::set<unsigned int> *validCharsString = new std::set<unsigned int>();
+    std::set<unsigned int> *validCharsString = new (std::nothrow) std::set<unsigned int>();
     
     auto contentsLen = data.getSize();
     char line[512];
@@ -364,7 +364,7 @@ std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char
 {
     /* based on http://www.angelcode.com/products/bmfont/doc/file_format.html file format */
 
-    set<unsigned int> *validCharsString = new set<unsigned int>();
+    set<unsigned int> *validCharsString = new (std::nothrow) set<unsigned int>();
 
     unsigned long remains = size;
 
@@ -687,7 +687,7 @@ int * FontFNT::getHorizontalKerningForTextUTF16(const std::u16string& text, int 
     if (!outNumLetters)
         return 0;
     
-    int *sizes = new int[outNumLetters];
+    int *sizes = new (std::nothrow) int[outNumLetters];
     if (!sizes)
         return 0;
     
@@ -821,7 +821,7 @@ void FontFNT::reloadBMFontResource(const std::string& fntFilePath)
     if (ret)
     {
         s_configurations->insert(fntFilePath, ret);
-        TextureCache::getInstance()->reloadTexture(ret->getAtlasName());
+        Director::getInstance()->getTextureCache()->reloadTexture(ret->getAtlasName());
 
     }
 }

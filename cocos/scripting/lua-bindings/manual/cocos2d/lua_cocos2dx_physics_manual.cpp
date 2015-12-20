@@ -849,7 +849,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_getPoints(lua_State* tolua_S)
     if (argc == 0)
     {
         int count = cobj->getPointsCount();
-        cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
+        cocos2d::Vec2* arg0 = new (std::nothrow) cocos2d::Vec2[count];
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_DELETE_ARRAY(arg0);
@@ -1090,7 +1090,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPoints(lua_State* tolua_S)
     if (argc == 0)
     {
         int count = cobj->getPointsCount();
-        cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
+        cocos2d::Vec2* arg0 = new (std::nothrow) cocos2d::Vec2[count];
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_DELETE_ARRAY(arg0);
@@ -1134,7 +1134,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPoints(lua_State* tolua_S)
     if (argc == 0)
     {
         int count = cobj->getPointsCount();
-        cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
+        cocos2d::Vec2* arg0 = new (std::nothrow) cocos2d::Vec2[count];
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_DELETE_ARRAY(arg0);
@@ -1178,7 +1178,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPoints(lua_State* tolua_S)
     if (argc == 0)
     {
         int count = cobj->getPointsCount();
-        cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
+        cocos2d::Vec2* arg0 = new (std::nothrow) cocos2d::Vec2[count];
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_DELETE_ARRAY(arg0);

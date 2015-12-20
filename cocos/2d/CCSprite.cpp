@@ -142,9 +142,11 @@ Sprite* Sprite::create()
     return nullptr;
 }
 
-bool Sprite::init(void)
+bool Sprite::init()
 {
-    return initWithTexture(nullptr, Rect::ZERO );
+    initWithTexture(nullptr, Rect::ZERO);
+    
+    return true;
 }
 
 bool Sprite::initWithTexture(Texture2D *texture)
@@ -152,9 +154,11 @@ bool Sprite::initWithTexture(Texture2D *texture)
     CCASSERT(texture != nullptr, "Invalid texture for sprite");
 
     Rect rect = Rect::ZERO;
-    rect.size = texture->getContentSize();
+    if (texture) {
+        rect.size = texture->getContentSize();
+    }
 
-    return initWithTexture(texture, rect);
+    return initWithTexture(texture, rect, false);
 }
 
 bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect)
@@ -173,7 +177,7 @@ bool Sprite::initWithFile(const std::string& filename)
     _fileName = filename;
     _fileType = 0;
 
-    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
+    Texture2D *texture = _director->getTextureCache()->addImage(filename);
     if (texture)
     {
         Rect rect = Rect::ZERO;
@@ -189,12 +193,16 @@ bool Sprite::initWithFile(const std::string& filename)
 
 bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
 {
-    CCASSERT(filename.size()>0, "Invalid filename");
-
+    CCASSERT(!filename.empty(), "Invalid filename");
+    if (filename.empty())
+    {
+        return false;
+    }
+    
     _fileName = filename;
     _fileType = 0;
 
-    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
+    Texture2D *texture = _director->getTextureCache()->addImage(filename);
     if (texture)
     {
         return initWithTexture(texture, rect);
@@ -208,8 +216,12 @@ bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
 
 bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
 {
-    CCASSERT(spriteFrameName.size() > 0, "Invalid spriteFrameName");
-
+    CCASSERT(!spriteFrameName.empty(), "Invalid spriteFrameName");
+    if (spriteFrameName.empty())
+    {
+        return false;
+    }
+    
     _fileName = spriteFrameName;
     _fileType = 1;
 
@@ -220,7 +232,11 @@ bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
 bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
 {
     CCASSERT(spriteFrame != nullptr, "spriteFrame can't be nullptr!");
-
+    if (spriteFrame == nullptr)
+    {
+        return false;
+    }
+    
     bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect());
     setSpriteFrame(spriteFrame);
 
@@ -229,21 +245,23 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
 
 bool Sprite::initWithPolygon(const cocos2d::PolygonInfo &info)
 {
-    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(info.filename);
-    bool res = false;
-    if(initWithTexture(texture))
+    bool ret = false;
+    
+    Texture2D *texture = _director->getTextureCache()->addImage(info.filename);
+    if(texture && initWithTexture(texture))
     {
         _polyInfo = info;
-        setContentSize(_polyInfo.rect.size/Director::getInstance()->getContentScaleFactor());
-        res = true;
+        setContentSize(_polyInfo.rect.size / _director->getContentScaleFactor());
+        ret = true;
     }
-    return res;
+    
+    return ret;
 }
 
 // designated initializer
 bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 {
-    bool result;
+    bool result = false;
     if (Node::init())
     {
         _batchNode = nullptr;
@@ -284,12 +302,10 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         setBatchNode(nullptr);
         result = true;
     }
-    else
-    {
-        result = false;
-    }
+    
     _recursiveDirty = true;
     setDirty(true);
+    
     return result;
 }
 
@@ -359,7 +375,7 @@ void Sprite::setTexture(Texture2D *texture)
     if (texture == nullptr)
     {
         // Gets the texture by key firstly.
-        texture = Director::getInstance()->getTextureCache()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
+        texture = _director->getTextureCache()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
 
         // If texture wasn't in cache, create it from RAW data.
         if (texture == nullptr)
@@ -369,7 +385,7 @@ void Sprite::setTexture(Texture2D *texture)
             CC_UNUSED_PARAM(isOK);
             CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
 
-            texture = Director::getInstance()->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
+            texture = _director->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
             CC_SAFE_RELEASE(image);
         }
     }
@@ -451,13 +467,13 @@ void Sprite::setVertexRect(const Rect& rect)
 
 void Sprite::setTextureCoords(Rect rect)
 {
-    rect = CC_RECT_POINTS_TO_PIXELS(rect);
-
     Texture2D *tex = _batchNode ? _textureAtlas->getTexture() : _texture;
-    if (! tex)
+    if (tex == nullptr)
     {
         return;
     }
+    
+    rect = CC_RECT_POINTS_TO_PIXELS(rect);
 
     float atlasWidth = (float)tex->getPixelsWide();
     float atlasHeight = (float)tex->getPixelsHigh();
@@ -637,6 +653,11 @@ void Sprite::updateTransform(void)
 
 void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+    if (_texture == nullptr)
+    {
+        return;
+    }
+    
 #if CC_USE_CULLING
     // Don't do calculate the culling if the transform was not updated
     auto visitingCamera = Camera::getVisitingCamera();
@@ -684,7 +705,11 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 void Sprite::addChild(Node *child, int zOrder, int tag)
 {
     CCASSERT(child != nullptr, "Argument must be non-nullptr");
-
+    if (child == nullptr)
+    {
+        return;
+    }
+    
     if (_batchNode)
     {
         Sprite* childSprite = dynamic_cast<Sprite*>(child);
@@ -705,6 +730,10 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
 void Sprite::addChild(Node *child, int zOrder, const std::string &name)
 {
     CCASSERT(child != nullptr, "Argument must be non-nullptr");
+    if (child == nullptr)
+    {
+        return;
+    }
     
     if (_batchNode)
     {
@@ -1012,6 +1041,12 @@ bool Sprite::isOpacityModifyRGB(void) const
 
 void Sprite::setSpriteFrame(const std::string &spriteFrameName)
 {
+    CCASSERT(!spriteFrameName.empty(), "spriteFrameName must not be empty");
+    if (spriteFrameName.empty())
+    {
+        return;
+    }
+    
     SpriteFrameCache *cache = SpriteFrameCache::getInstance();
     SpriteFrame *spriteFrame = cache->getSpriteFrameByName(spriteFrameName);
 
@@ -1051,8 +1086,12 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
 
 void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex)
 {
-    CCASSERT(animationName.size()>0, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be nullptr");
-
+    CCASSERT(!animationName.empty(), "CCSprite#setDisplayFrameWithAnimationName. animationName must not be nullptr");
+    if (animationName.empty())
+    {
+        return;
+    }
+    
     Animation *a = AnimationCache::getInstance()->getAnimation(animationName);
 
     CCASSERT(a, "CCSprite#setDisplayFrameWithAnimationName: Frame not found");

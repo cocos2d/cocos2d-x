@@ -237,43 +237,43 @@ void GLProgramCache::loadDefaultGLPrograms()
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE, p));
 
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DPositionNormal);
     _programs.insert( std::make_pair(GLProgram::SHADER_3D_POSITION_NORMAL, p) );
 
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DPositionNormalTex);
     _programs.insert( std::make_pair(GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE, p) );
 
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE, p));
 
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DPositionBumpedNormalTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_POSITION_BUMPEDNORMAL_TEXTURE, p));
 
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionBumpedNormalTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_BUMPEDNORMAL_TEXTURE, p));
 
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DParticleColor);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_PARTICLE_COLOR, p));
 
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DParticleTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_PARTICLE_TEXTURE, p));
 
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkyBox);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKYBOX, p));
 
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DTerrain);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_TERRAIN, p));
     
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_CameraClear);
     _programs.insert(std::make_pair(GLProgram::SHADER_CAMERA_CLEAR, p));
 }
