@@ -57,7 +57,7 @@ namespace cocostudio
     {
         if (!_instanceParticle3DReader)
         {
-            _instanceParticle3DReader = new Particle3DReader();
+            _instanceParticle3DReader = new (std::nothrow) Particle3DReader();
         }
         
         return _instanceParticle3DReader;

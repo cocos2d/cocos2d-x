@@ -44,7 +44,7 @@ void MinXmlHttpRequest::_gotHeader(string header)
 {
     // Get Header and Set StatusText
     // Split String into Tokens
-    char * cstr = new char [header.length()+1];
+    char * cstr = new (std::nothrow) char [header.length()+1];
     
     // check for colon.
     size_t found_header_field = header.find_first_of(":");
@@ -335,25 +335,38 @@ JS_BINDED_CLASS_GLUE_IMPL(MinXmlHttpRequest);
 JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    MinXmlHttpRequest* req = new MinXmlHttpRequest();
-    req->autorelease();
-    
-    js_proxy_t *p;
-    jsval out;
+    MinXmlHttpRequest* req = new (std::nothrow) MinXmlHttpRequest();
     
     JS::RootedObject proto(cx, MinXmlHttpRequest::js_proto);
     JS::RootedObject parentProto(cx, MinXmlHttpRequest::js_parent);
     JS::RootedObject obj(cx, JS_NewObject(cx, &MinXmlHttpRequest::js_class, proto, parentProto));
+    js_proxy_t *p = jsb_new_proxy(req, obj);
     
-    if (obj) {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    CC_UNUSED_PARAM(p);
+    js_add_FinalizeHook(cx, obj);
+    // don't retain it, already retained
+#if COCOS2D_DEBUG
+    ScriptingCore::retainCount++;
+    CCLOG("++++++RETAINED++++++ %d Cpp(XMLHttpRequest): %p - JS: %p", ScriptingCore::retainCount, req, obj.get());
+#endif // COCOS2D_DEBUG
+#else
+    // autorelease it
+    req->autorelease();
+    JS::AddNamedObjectRoot(cx, &p->obj, "XMLHttpRequest");
+#endif
+    
+    jsval out;
+    if (obj)
+    {
         JS_SetPrivate(obj, req);
         out = OBJECT_TO_JSVAL(obj);
     }
-
+    else
+    {
+        out = JS::NullValue();
+    }
     args.rval().set(out);
-    p = jsb_new_proxy(req, obj);
-    
-    JS::AddNamedObjectRoot(cx, &p->obj, "XMLHttpRequest");
     return true;
 }
 

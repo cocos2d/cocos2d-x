@@ -71,7 +71,7 @@ EditBox* EditBox::create(const Size& size,
                          const std::string& normalSprite,
                         TextureResType texType /*= TextureResType::LOCAL*/)
 {
-    EditBox* pRet = new EditBox();
+    EditBox* pRet = new (std::nothrow) EditBox();
     
     if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, normalSprite, texType))
     {

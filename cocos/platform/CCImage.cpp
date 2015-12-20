@@ -869,7 +869,7 @@ bool Image::encodeWithWIC(const std::string& filePath, bool isToRGB, GUID contai
     {
         bpp = 3;
         saveLen = _width * _height * bpp;
-        pSaveData = new unsigned char[saveLen];
+        pSaveData = new (std::nothrow) unsigned char[saveLen];
         int indL = 0, indR = 0;
 
         while (indL < saveLen && indR < _dataLen)
@@ -881,7 +881,7 @@ bool Image::encodeWithWIC(const std::string& filePath, bool isToRGB, GUID contai
     }
     else
     {
-        pSaveData = new unsigned char[saveLen];
+        pSaveData = new (std::nothrow) unsigned char[saveLen];
         memcpy(pSaveData, _data, saveLen);
     }
 
@@ -1456,7 +1456,7 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
                     CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
                     _unpack = true;
                     _mipmaps[_numberOfMipmaps].len = width*height*4;
-                    _mipmaps[_numberOfMipmaps].address = new unsigned char[width*height*4];
+                    _mipmaps[_numberOfMipmaps].address = new (std::nothrow) unsigned char[width*height*4];
                     PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[_numberOfMipmaps].address, true);
                     bpp = 2;
                 }
@@ -1470,7 +1470,7 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
                     CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
                     _unpack = true;
                     _mipmaps[_numberOfMipmaps].len = width*height*4;
-                    _mipmaps[_numberOfMipmaps].address = new unsigned char[width*height*4];
+                    _mipmaps[_numberOfMipmaps].address = new (std::nothrow) unsigned char[width*height*4];
                     PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[_numberOfMipmaps].address, false);
                     bpp = 4;
                 }
@@ -1612,7 +1612,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
                     CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
                     _unpack = true;
                     _mipmaps[i].len = width*height*4;
-                    _mipmaps[i].address = new unsigned char[width*height*4];
+                    _mipmaps[i].address = new (std::nothrow) unsigned char[width*height*4];
                     PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[i].address, true);
                     bpp = 2;
                 }
@@ -1627,7 +1627,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
                     CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
                     _unpack = true;
                     _mipmaps[i].len = width*height*4;
-                    _mipmaps[i].address = new unsigned char[width*height*4];
+                    _mipmaps[i].address = new (std::nothrow) unsigned char[width*height*4];
                     PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[i].address, false);
                     bpp = 4;
                 }
@@ -1643,7 +1643,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
                     unsigned int stride = width * bytePerPixel;
                     _unpack = true;
                     _mipmaps[i].len = width*height*bytePerPixel;
-                    _mipmaps[i].address = new unsigned char[width*height*bytePerPixel];
+                    _mipmaps[i].address = new (std::nothrow) unsigned char[width*height*bytePerPixel];
                     if (etc1_decode_image(static_cast<const unsigned char*>(_data+dataOffset), static_cast<etc1_byte*>(_mipmaps[i].address), width, height, bytePerPixel, stride) != 0)
                     {
                         return false;

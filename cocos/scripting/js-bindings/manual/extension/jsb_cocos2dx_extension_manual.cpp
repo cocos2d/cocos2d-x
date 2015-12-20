@@ -86,7 +86,7 @@ static bool js_cocos2dx_CCScrollView_setDelegate(JSContext *cx, uint32_t argc, j
     {
         // save the delegate
         JS::RootedObject jsDelegate(cx, args.get(0).toObjectOrNull());
-        JSB_ScrollViewDelegate* nativeDelegate = new JSB_ScrollViewDelegate();
+        JSB_ScrollViewDelegate* nativeDelegate = new (std::nothrow) JSB_ScrollViewDelegate();
         nativeDelegate->setJSDelegate(jsDelegate);
         
         cobj->setUserObject(nativeDelegate);
@@ -196,13 +196,13 @@ static bool js_cocos2dx_CCTableView_setDelegate(JSContext *cx, uint32_t argc, js
     {
         // save the delegate
         JS::RootedObject jsDelegate(cx, args.get(0).toObjectOrNull());
-        JSB_TableViewDelegate* nativeDelegate = new JSB_TableViewDelegate();
+        JSB_TableViewDelegate* nativeDelegate = new (std::nothrow) JSB_TableViewDelegate();
         nativeDelegate->setJSDelegate(jsDelegate);
         
         __Dictionary* userDict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (NULL == userDict)
         {
-            userDict = new __Dictionary();
+            userDict = new (std::nothrow) __Dictionary();
             cobj->setUserObject(userDict);
             userDict->release();
         }
@@ -376,14 +376,14 @@ static bool js_cocos2dx_CCTableView_setDataSource(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     if (argc == 1)
     {
-        JSB_TableViewDataSource* pNativeSource = new JSB_TableViewDataSource();
+        JSB_TableViewDataSource* pNativeSource = new (std::nothrow) JSB_TableViewDataSource();
         JS::RootedObject jsdata(cx, args.get(0).toObjectOrNull());
         pNativeSource->setTableViewDataSource(jsdata);
     
         __Dictionary* userDict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (NULL == userDict)
         {
-            userDict = new __Dictionary();
+            userDict = new (std::nothrow) __Dictionary();
             cobj->setUserObject(userDict);
             userDict->release();
         }
@@ -409,14 +409,14 @@ static bool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval *
     if (argc == 3 || argc == 2)
     {
         
-        JSB_TableViewDataSource* pNativeSource = new JSB_TableViewDataSource();
+        JSB_TableViewDataSource* pNativeSource = new (std::nothrow) JSB_TableViewDataSource();
         JS::RootedObject jsdata(cx, args.get(0).toObjectOrNull());
         pNativeSource->setTableViewDataSource(jsdata);
         
         cocos2d::Size arg1;
         ok &= jsval_to_ccsize(cx, args.get(1), &arg1);
         cocos2d::extension::TableView* ret = NULL;
-        ret = new TableView();
+        ret = new (std::nothrow) TableView();
         ret->autorelease();
         
         ret->setDataSource(pNativeSource);
@@ -425,8 +425,8 @@ static bool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval *
         do {
             if (ret)
             {
-                js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::extension::TableView>(cx, ret);
-                jsret = OBJECT_TO_JSVAL(proxy->obj);
+                JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocos2d::extension::TableView>(cx, ret));
+                jsret = OBJECT_TO_JSVAL(jsobj);
             } 
             else
             {
@@ -454,7 +454,7 @@ static bool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval *
         }
         ret->reloadData();
         
-        __Dictionary* userDict = new __Dictionary();
+        __Dictionary* userDict = new (std::nothrow) __Dictionary();
         userDict->setObject(pNativeSource, KEY_TABLEVIEW_DATA_SOURCE);
         ret->setUserObject(userDict);
         userDict->release();
@@ -480,7 +480,7 @@ static bool js_cocos2dx_CCTableView_init(JSContext *cx, uint32_t argc, jsval *vp
     if (argc == 3 || argc == 2)
     {
         
-        JSB_TableViewDataSource* pNativeSource = new JSB_TableViewDataSource();
+        JSB_TableViewDataSource* pNativeSource = new (std::nothrow) JSB_TableViewDataSource();
         JS::RootedObject jsdata(cx, args.get(0).toObjectOrNull());
         pNativeSource->setTableViewDataSource(jsdata);
         cobj->setDataSource(pNativeSource);
@@ -507,7 +507,7 @@ static bool js_cocos2dx_CCTableView_init(JSContext *cx, uint32_t argc, jsval *vp
         }
         cobj->reloadData();
         
-        __Dictionary* userDict = new __Dictionary();
+        __Dictionary* userDict = new (std::nothrow) __Dictionary();
         userDict->setObject(pNativeSource, KEY_TABLEVIEW_DATA_SOURCE);
         cobj->setUserObject(userDict);
         userDict->release();
@@ -560,7 +560,7 @@ public:
         js_proxy_t* p = jsb_get_native_proxy(controlButton);
         if (!p)
         {
-            log("Failed to get proxy for control button");
+            log("Failed to get proxy for control button %p", controlButton);
             return;
         }
         
@@ -582,7 +582,7 @@ public:
             CC_SAFE_DELETE(_callback);
         }
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-        _callback = new JSFunctionWrapper(cx, jsTarget, jsFunc);
+        _callback = new (std::nothrow) JSFunctionWrapper(cx, jsTarget, jsFunc);
         _jsFunc.ref() = jsFunc.toObjectOrNull();
     }
     
@@ -630,7 +630,7 @@ static bool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContext 
         }
         
         // save the delegate
-        JSB_ControlButtonTarget* nativeDelegate = new JSB_ControlButtonTarget();
+        JSB_ControlButtonTarget* nativeDelegate = new (std::nothrow) JSB_ControlButtonTarget();
         
         JS::RootedObject jscb(cx, jsDelegate);
         nativeDelegate->setJSCallback(args.get(1), jscb);
@@ -639,7 +639,7 @@ static bool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContext 
         __Array* nativeDelegateArray = static_cast<__Array*>(cobj->getUserObject());
         if (nullptr == nativeDelegateArray)
         {
-            nativeDelegateArray = new __Array();
+            nativeDelegateArray = new (std::nothrow) __Array();
             nativeDelegateArray->init();
             cobj->setUserObject(nativeDelegateArray);  // The reference of nativeDelegateArray is added to 2
             nativeDelegateArray->release(); // Release nativeDelegateArray to make the reference to 1
@@ -699,133 +699,130 @@ static bool js_cocos2dx_CCControl_removeTargetWithActionForControlEvents(JSConte
     return false;
 }
 
-/*
-static bool js_cocos2dx_ext_AssetsManager_updateAssets(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_extension_EventListenerAssetsManagerEx_init(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    jsval *argv = JS_ARGV(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    JS::RootedObject obj(cx, JS_THIS_OBJECT(cx, vp));
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::extension::AssetsManager* cobj = (cocos2d::extension::AssetsManager *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_AssetsManager_updateAssets : Invalid Native Object");
-    if (argc == 1) {
-        std::unordered_map<std::string, Downloader::DownloadUnit> dict;
+    cocos2d::extension::EventListenerAssetsManagerEx* cobj = (cocos2d::extension::EventListenerAssetsManagerEx *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EventListenerAssetsManagerEx_init : Invalid Native Object");
+    if (argc == 2) {
+        const cocos2d::extension::AssetsManagerEx* arg0 = nullptr;
+        std::function<void (cocos2d::extension::EventAssetsManagerEx *)> arg1;
         do {
-            if (!argv[0].isObject()) { ok = false; break; }
-            JS::RootedObject tmpObj(cx, JSVAL_TO_OBJECT(argv[0]));
-            
-            if (!tmpObj) {
-                CCLOG("%s", "jsval_to_ccvaluemap: the jsval is not an object.");
-                return false;
-            }
-            
-            JSObject* it = JS_NewPropertyIterator(cx, tmpObj);
-            while (true)
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (const cocos2d::extension::AssetsManagerEx*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        do {
+            if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
             {
-                jsid idp;
-                jsval key;
-                if (! JS_NextProperty(cx, it, &idp) || ! JS_IdToValue(cx, idp, &key)) {
-                    return false; // error
-                }
-                
-                if (key == JSVAL_VOID) {
-                    break; // end of iteration
-                }
-                
-                if (!JSVAL_IS_STRING(key)) {
-                    continue; // ignore integer properties
-                }
-                
-                JSStringWrapper keyWrapper(JSVAL_TO_STRING(key), cx);
-                std::string keystr = keyWrapper.get();
-                
-                JS::RootedValue value(cx);
-                JS_GetPropertyById(cx, tmpObj, idp, &value);
-                
-                JS::RootedObject tmp(cx);
-                JS::RootedValue jsSrcUrl(cx);
-                JS::RootedValue jsStoragePath(cx);
-                JS::RootedValue jsCustomId(cx);
-                ok = value.isObject() &&
-                JS_ValueToObject(cx, JS::RootedValue(cx, value), &tmp) &&
-                JS_GetProperty(cx, tmp, "srcUrl", &jsSrcUrl) &&
-                JS_GetProperty(cx, tmp, "storagePath", &jsStoragePath) &&
-                JS_GetProperty(cx, tmp, "customId", &jsCustomId);
-                JSB_PRECONDITION3(ok, cx, false, "Error parsing map entry");
-                
-                Downloader::DownloadUnit unit;
-                
-                JSString *jsstr = JS::ToString(cx, jsSrcUrl);
-                JSB_PRECONDITION3(jsstr, cx, false, "Error processing srcUrl value of entry: %s", keystr);
-                JSStringWrapper srcUrlStr(jsstr);
-                unit.srcUrl = srcUrlStr.get();
-                
-                jsstr = JS::ToString(cx, jsStoragePath);
-                JSB_PRECONDITION3(jsstr, cx, false, "Error processing storagePath value of entry: %s", keystr);
-                JSStringWrapper storagePathStr(jsstr);
-                unit.storagePath = storagePathStr.get();
-                
-                jsstr = JS::ToString(cx, jsCustomId);
-                JSB_PRECONDITION3(jsstr, cx, false, "Error processing customId value of entry: %s", keystr);
-                JSStringWrapper customIdStr(jsstr);
-                unit.customId = customIdStr.get();
-                
-                dict[keystr] = unit;
+                JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
+                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1)));
+                auto lambda = [=](cocos2d::extension::EventAssetsManagerEx* larg0) -> void {
+                    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+                    jsval largv[1];
+                    do {
+                        if (larg0) {
+                            js_type_class_t* typeClass = js_get_type_from_native<cocos2d::extension::EventAssetsManagerEx>(larg0);
+                            largv[0] = OBJECT_TO_JSVAL(jsb_get_or_create_weak_jsobject(cx, larg0, typeClass, "cocos2d::extension::EventAssetsManagerEx"));
+                        } else {
+                            largv[0] = JSVAL_NULL;
+                        }
+                    } while (0);
+                    JS::RootedValue rval(cx);
+                    bool succeed = func->invoke(1, &largv[0], &rval);
+                    if (!succeed && JS_IsExceptionPending(cx)) {
+                        JS_ReportPendingException(cx);
+                    }
+                    removeJSObject(cx, larg0);
+                };
+                arg1 = lambda;
             }
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_AssetsManager_updateAssets : Error processing arguments");
-        cobj->updateAssets(dict);
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        return true;
-    }
-    
-    JS_ReportError(cx, "js_cocos2dx_extension_AssetsManager_updateAssets : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-
-bool js_cocos2dx_ext_AssetsManager_getFailedAssets(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::RootedObject obj(cx, JS_THIS_OBJECT(cx, vp));
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::extension::AssetsManager* cobj = (cocos2d::extension::AssetsManager *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_AssetsManager_getFailedAssets : Invalid Native Object");
-    if (argc == 0) {
-        const std::unordered_map<std::string, Downloader::DownloadUnit> &ret = cobj->getFailedAssets();
+            else
+            {
+                arg1 = nullptr;
+            }
+        } while(0)
+            ;
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_EventListenerAssetsManagerEx_init : Error processing arguments");
+        bool ret = cobj->init(arg0, arg1);
         jsval jsret = JSVAL_NULL;
-        do {
-            JSObject* jsRet = JS_NewObject(cx, NULL, NULL, NULL);
-            
-            for (auto it = ret.cbegin(); it != ret.cend(); ++it) {
-                std::string key = it->first;
-                const Downloader::DownloadUnit& unit = it->second;
-                
-                JS::RootedObject elem(cx, JS_NewObject(cx, NULL, NULL, NULL));
-                if (!elem)
-                {
-                    JS_ReportError(cx, "js_cocos2dx_extension_AssetsManager_getFailedAssets : can not create js object");
-                    break;
-                }
-                bool ok = JS_DefineProperty(cx, elem, "srcUrl", std_string_to_jsval(cx, unit.srcUrl), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-                JS_DefineProperty(cx, elem, "storagePath", std_string_to_jsval(cx, unit.storagePath), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-                JS_DefineProperty(cx, elem, "customId", std_string_to_jsval(cx, unit.customId), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-                JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_AssetsManager_getFailedAssets : Error processing DownloadUnit struct");
-                
-                if (!key.empty())
-                {
-                    JS::RootedValue dictElement(cx);
-                    dictElement = OBJECT_TO_JSVAL(elem);
-                    JS_SetProperty(cx, jsRet, key.c_str(), dictElement);
-                }
-            }
-        } while (0);
-        JS_SET_RVAL(cx, vp, jsret);
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
         return true;
     }
     
-    JS_ReportError(cx, "js_cocos2dx_extension_AssetsManager_getFailedAssets : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_extension_EventListenerAssetsManagerEx_init : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
-*/
+bool js_cocos2dx_extension_EventListenerAssetsManagerEx_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        cocos2d::extension::AssetsManagerEx* arg0 = nullptr;
+        std::function<void (cocos2d::extension::EventAssetsManagerEx *)> arg1;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::extension::AssetsManagerEx*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        do {
+            if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
+            {
+                JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
+                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1)));
+                auto lambda = [=](cocos2d::extension::EventAssetsManagerEx* larg0) -> void {
+                    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+                    jsval largv[1];
+                    do {
+                        if (larg0) {
+                            js_type_class_t* typeClass = js_get_type_from_native<cocos2d::extension::EventAssetsManagerEx>(larg0);
+                            largv[0] = OBJECT_TO_JSVAL(jsb_get_or_create_weak_jsobject(cx, larg0, typeClass, "cocos2d::extension::EventAssetsManagerEx"));
+                        } else {
+                            largv[0] = JSVAL_NULL;
+                        }
+                    } while (0);
+                    JS::RootedValue rval(cx);
+                    bool succeed = func->invoke(1, &largv[0], &rval);
+                    if (!succeed && JS_IsExceptionPending(cx)) {
+                        JS_ReportPendingException(cx);
+                    }
+                    removeJSObject(cx, larg0);
+                };
+                arg1 = lambda;
+            }
+            else
+            {
+                arg1 = nullptr;
+            }
+        } while(0)
+            ;
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_EventListenerAssetsManagerEx_create : Error processing arguments");
+        cocos2d::extension::EventListenerAssetsManagerEx* ret = cocos2d::extension::EventListenerAssetsManagerEx::create(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        if (ret) {
+            JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocos2d::extension::EventListenerAssetsManagerEx>(cx, ret));
+            jsret = OBJECT_TO_JSVAL(jsobj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_extension_EventListenerAssetsManagerEx_create : wrong number of arguments");
+    return false;
+}
 
 __JSDownloaderDelegator::__JSDownloaderDelegator(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleObject callback)
 : _cx(cx)
@@ -940,16 +937,8 @@ void __JSDownloaderDelegator::onSuccess(Texture2D *tex)
         if (tex)
         {
             valArr[0] = BOOLEAN_TO_JSVAL(true);
-            js_proxy_t* p = jsb_get_native_proxy(tex);
-            if (!p)
-            {
-                JS::RootedObject texProto(_cx, jsb_cocos2d_Texture2D_prototype);
-                JS::RootedObject obj(_cx, JS_NewObject(_cx, jsb_cocos2d_Texture2D_class, texProto, global));
-                // link the native object with the javascript object
-                p = jsb_new_proxy(tex, obj);
-                JS::AddNamedObjectRoot(_cx, &p->obj, "cocos2d::Texture2D");
-            }
-            valArr[1] = OBJECT_TO_JSVAL(p->obj);
+            JS::RootedObject jsobj(_cx, js_get_or_create_jsobject<Texture2D>(_cx, tex));
+            valArr[1] = OBJECT_TO_JSVAL(jsobj);
         }
         else
         {
@@ -994,14 +983,17 @@ extern JSObject* jsb_cocos2d_extension_ScrollView_prototype;
 extern JSObject* jsb_cocos2d_extension_TableView_prototype;
 extern JSObject* jsb_cocos2d_extension_Control_prototype;
 extern JSObject* jsb_cocos2d_extension_AssetsManagerEx_prototype;
+extern JSObject* jsb_cocos2d_extension_EventListenerAssetsManagerEx_prototype;
 extern JSObject* jsb_cocos2d_extension_Manifest_prototype;
 
 void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject global)
 {
     JS::RootedObject ccObj(cx);
+    JS::RootedObject jsbObj(cx);
     JS::RootedValue tmpVal(cx);
     JS::RootedObject tmpObj(cx);
     get_or_create_js_obj(cx, global, "cc", &ccObj);
+    get_or_create_js_obj(cx, global, "jsb", &jsbObj);
     
     tmpObj.set(jsb_cocos2d_extension_AssetsManagerEx_prototype);
     JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -1010,8 +1002,11 @@ void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject glob
     JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-    //JS_DefineFunction(cx, jsb_cocos2d_extension_AssetsManager_prototype, "updateAssets", js_cocos2dx_ext_AssetsManager_updateAssets, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    //JS_DefineFunction(cx, jsb_cocos2d_extension_AssetsManager_prototype, "getFailedAssets", js_cocos2dx_ext_AssetsManager_getFailedAssets, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_GetProperty(cx, ccObj, "EventListenerAssetsManager", &tmpVal);
+    tmpObj.set(tmpVal.toObjectOrNull());
+    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_extension_EventListenerAssetsManagerEx_create, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    tmpObj.set(jsb_cocos2d_extension_EventListenerAssetsManagerEx_prototype);
+    JS_DefineFunction(cx, tmpObj, "init", js_cocos2dx_extension_EventListenerAssetsManagerEx_init, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     tmpObj.set(jsb_cocos2d_extension_ScrollView_prototype);
     JS_DefineFunction(cx, tmpObj, "setDelegate", js_cocos2dx_CCScrollView_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -1026,9 +1021,6 @@ void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject glob
     JS_GetProperty(cx, ccObj, "TableView", &tmpVal);
     tmpObj.set(tmpVal.toObjectOrNull());
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCTableView_create, 3, JSPROP_READONLY | JSPROP_PERMANENT);
-    
-    JS::RootedObject jsbObj(cx);
-    get_or_create_js_obj(cx, global, "jsb", &jsbObj);
     
     JS_DefineFunction(cx, jsbObj, "loadRemoteImg", js_load_remote_image, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 }

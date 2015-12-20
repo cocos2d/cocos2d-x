@@ -46,8 +46,8 @@ rect()
     filename = other.filename;
     isVertsOwner = true;
     rect = other.rect;
-    triangles.verts = new V3F_C4B_T2F[other.triangles.vertCount];
-    triangles.indices = new unsigned short[other.triangles.indexCount];
+    triangles.verts = new (std::nothrow) V3F_C4B_T2F[other.triangles.vertCount];
+    triangles.indices = new (std::nothrow) unsigned short[other.triangles.indexCount];
     triangles.vertCount = other.triangles.vertCount;
     triangles.indexCount = other.triangles.indexCount;
     memcpy(triangles.verts, other.triangles.verts, other.triangles.vertCount*sizeof(V3F_C4B_T2F));
@@ -62,8 +62,8 @@ PolygonInfo& PolygonInfo::operator= (const PolygonInfo& other)
         filename = other.filename;
         isVertsOwner = true;
         rect = other.rect;
-        triangles.verts = new V3F_C4B_T2F[other.triangles.vertCount];
-        triangles.indices = new unsigned short[other.triangles.indexCount];
+        triangles.verts = new (std::nothrow) V3F_C4B_T2F[other.triangles.vertCount];
+        triangles.indices = new (std::nothrow) unsigned short[other.triangles.indexCount];
         triangles.vertCount = other.triangles.vertCount;
         triangles.indexCount = other.triangles.indexCount;
         memcpy(triangles.verts, other.triangles.verts, other.triangles.vertCount*sizeof(V3F_C4B_T2F));
@@ -148,7 +148,7 @@ AutoPolygon::AutoPolygon(const std::string &filename)
 ,_scaleFactor(0)
 {
     _filename = filename;
-    _image = new Image();
+    _image = new (std::nothrow) Image();
     _image->initWithImageFile(filename);
     CCASSERT(_image->getRenderFormat()==Texture2D::PixelFormat::RGBA8888, "unsupported format, currently only supports rgba8888");
     _data = _image->getData();
@@ -550,15 +550,15 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
     std::vector<p2t::Point*> p2points;
     for(std::vector<Vec2>::const_iterator it = points.begin(); it<points.end(); it++)
     {
-        p2t::Point * p = new p2t::Point(it->x, it->y);
+        p2t::Point * p = new (std::nothrow) p2t::Point(it->x, it->y);
         p2points.push_back(p);
     }
     p2t::CDT cdt(p2points);
     cdt.Triangulate();
     std::vector<p2t::Triangle*> tris = cdt.GetTriangles();
     
-    V3F_C4B_T2F* verts= new V3F_C4B_T2F[points.size()];
-    unsigned short* indices = new unsigned short[tris.size()*3];
+    V3F_C4B_T2F* verts= new (std::nothrow) V3F_C4B_T2F[points.size()];
+    unsigned short* indices = new (std::nothrow) unsigned short[tris.size()*3];
     unsigned short idx = 0;
     unsigned short vdx = 0;
 

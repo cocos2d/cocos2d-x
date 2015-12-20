@@ -37,26 +37,7 @@ void static freeSpaceChildren(cpSpace *space);
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
-    TypeTest<T> t;
-    T* cobj = new T();
-    cobj->autorelease();
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    p = typeMapIter->second;
-    CCASSERT(p, "The value is null.");
-    
-    JS::RootedObject proto(cx, p->proto.ref());
-    JS::RootedObject parentProto(cx, p->parentProto.ref());
-    JS::RootedObject _tmp(cx, JS_NewObject(cx, p->jsclass, proto, parentProto));
-    js_proxy_t *pp = jsb_new_proxy(cobj, _tmp);
-    JS::AddObjectRoot(cx, &pp->obj);
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    args.rval().set(OBJECT_TO_JSVAL(_tmp));
-
-    return true;
+    return false;
 }
 
 #pragma mark - convertions
@@ -68,7 +49,6 @@ static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 
 JSClass* JSPROXY_CCPhysicsSprite_class = NULL;
 JSObject* JSPROXY_CCPhysicsSprite_object = NULL;
-// Constructor
 
 // Arguments:
 // Ret value: BOOL (b)
@@ -180,27 +160,12 @@ bool JSB_CCPhysicsDebugNode_debugNodeForCPSpace__static(JSContext *cx, uint32_t 
 
     PhysicsDebugNode* ret = PhysicsDebugNode::create(arg0);
     jsval jsret;
-    do {
-        if (ret) {
-            TypeTest<PhysicsDebugNode> t;
-            js_type_class_t *typeClass = nullptr;
-            std::string typeName = t.s_name();
-            auto typeMapIter = _js_global_type_map.find(typeName);
-            
-            CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-            typeClass = typeMapIter->second;
-            CCASSERT(typeClass, "The value is null.");
-            
-            JS::RootedObject proto(cx, typeClass->proto.ref());
-            JS::RootedObject parentProto(cx, typeClass->parentProto.ref());
-            JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
-            jsret = OBJECT_TO_JSVAL(obj);
-            js_proxy_t *p = jsb_new_proxy(ret, obj);
-            JS::AddNamedObjectRoot(cx, &p->obj, "CCDebugNode");
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
+    if (ret) {
+        js_type_class_t *typeClass = js_get_type_from_native<PhysicsDebugNode>(ret);
+        JS::RootedValue jsret(cx, OBJECT_TO_JSVAL(jsb_ref_autoreleased_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::extension::PhysicsDebugNode")));
+    } else {
+        jsret = JSVAL_NULL;
+    }
     args.rval().set(jsret);
 
     return true;
@@ -249,24 +214,12 @@ bool JSB_CCPhysicsDebugNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     PhysicsDebugNode* cobj = new (std::nothrow) PhysicsDebugNode();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<PhysicsDebugNode> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.ref());
-    JS::RootedObject parentProto(cx, typeClass->parentProto.ref());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    JS::AddNamedObjectRoot(cx, &p->obj, "PhysicsDebugNode");
+    
+    js_type_class_t *typeClass = js_get_type_from_native<PhysicsDebugNode>(cobj);
+    JS::RootedObject obj(cx, jsb_ref_get_or_create_jsobject(cx, cobj, typeClass, "cocos2d::extension::PhysicsDebugNode"));
+    JS::RootedValue retVal(cx, OBJECT_TO_JSVAL(obj));
+    args.rval().set(retVal);
+    
     if (JS_HasProperty(cx, obj, "_ctor", &ok))
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
@@ -283,7 +236,6 @@ void JSB_CCPhysicsDebugNode_createClass(JSContext *cx, JS::HandleObject globalOb
     JSB_CCPhysicsDebugNode_class->enumerate = JS_EnumerateStub;
     JSB_CCPhysicsDebugNode_class->resolve = JS_ResolveStub;
     JSB_CCPhysicsDebugNode_class->convert = JS_ConvertStub;
-    JSB_CCPhysicsDebugNode_class->finalize = jsb_ref_finalize;
     JSB_CCPhysicsDebugNode_class->flags = 0;
 
     static JSPropertySpec properties[] = {
@@ -321,6 +273,7 @@ bool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t
 
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
+    PhysicsSprite* ret = nullptr;
     if (argc == 2) {
         const char* arg0 = nullptr;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
@@ -328,64 +281,28 @@ bool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t
         ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
-        PhysicsSprite* ret = PhysicsSprite::create(arg0, arg1);
-
-        jsval jsret;
-        do {
-            if (ret) {
-                TypeTest<PhysicsSprite> t;
-                js_type_class_t *typeClass = nullptr;
-                std::string typeName = t.s_name();
-                auto typeMapIter = _js_global_type_map.find(typeName);
-                CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-                typeClass = typeMapIter->second;
-                CCASSERT(typeClass, "The value is null.");
-                
-                JS::RootedObject proto(cx, typeClass->proto.ref());
-                JS::RootedObject parentProto(cx, typeClass->parentProto.ref());
-                JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
-                jsret = OBJECT_TO_JSVAL(obj);
-                js_proxy_t *p = jsb_new_proxy(ret, obj);
-                JS::AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
+        ret = PhysicsSprite::create(arg0, arg1);
     }
-    if (argc == 1) {
+    else if (argc == 1) {
         const char* arg0 = nullptr;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
-        PhysicsSprite* ret = PhysicsSprite::create(arg0);
-
-        jsval jsret;
-        do {
-            if (ret) {
-                TypeTest<PhysicsSprite> t;
-                js_type_class_t *typeClass = nullptr;
-                std::string typeName = t.s_name();
-                auto typeMapIter = _js_global_type_map.find(typeName);
-                CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-                typeClass = typeMapIter->second;
-                CCASSERT(typeClass, "The value is null.");
-                JS::RootedObject proto(cx, typeClass->proto.ref());
-                JS::RootedObject parentProto(cx, typeClass->parentProto.ref());
-                JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
-                jsret = OBJECT_TO_JSVAL(obj);
-                js_proxy_t *p = jsb_new_proxy(ret, obj);
-                JS::AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
+        ret = PhysicsSprite::create(arg0);
     }
-    return false;
-
+    else {
+        return false;
+    }
+    
+    jsval jsret;
+    if (ret) {
+        js_type_class_t *typeClass = js_get_type_from_native<PhysicsSprite>(ret);
+        jsret = OBJECT_TO_JSVAL(jsb_ref_autoreleased_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::extension::PhysicsSprite"));
+    } else {
+        jsret = JSVAL_NULL;
+    }
+    args.rval().set(jsret);
+    return true;
 }
 
 // Arguments: SpriteFrame*
@@ -405,25 +322,12 @@ bool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint32
     PhysicsSprite* ret = PhysicsSprite::createWithSpriteFrame(arg0);
 
     jsval jsret;
-    do {
-        if (ret) {
-            TypeTest<PhysicsSprite> t;
-            js_type_class_t *typeClass = nullptr;
-            std::string typeName = t.s_name();
-            auto typeMapIter = _js_global_type_map.find(typeName);
-            CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-            typeClass = typeMapIter->second;
-            CCASSERT(typeClass, "The value is null.");
-            JS::RootedObject proto(cx, typeClass->proto.ref());
-            JS::RootedObject parentProto(cx, typeClass->parentProto.ref());
-            JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parentProto));
-            jsret = OBJECT_TO_JSVAL(obj);
-            js_proxy_t *p = jsb_new_proxy(ret, obj);
-            JS::AddNamedObjectRoot(cx, &p->obj, "CCPhysicsSprite");
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
+    if (ret) {
+        js_type_class_t *typeClass = js_get_type_from_native<PhysicsSprite>(ret);
+        JS::RootedValue jsret(cx, OBJECT_TO_JSVAL(jsb_ref_autoreleased_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::extension::PhysicsSprite")));
+    } else {
+        jsret = JSVAL_NULL;
+    }
     args.rval().set(jsret);
     return true;
 }
@@ -456,10 +360,9 @@ bool JSPROXY_CCPhysicsSprite_constructor(JSContext *cx, uint32_t argc, jsval *vp
     bool ok = true;
     auto cobj = new (std::nothrow) cocos2d::extension::PhysicsSprite;
     js_type_class_t *typeClass = js_get_type_from_native<cocos2d::extension::PhysicsSprite>(cobj);
-
-    // link the native object with the javascript object
     JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::extension::PhysicsSprite"));
     args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    
     if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
     return true;
@@ -490,7 +393,6 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JS::HandleObject globalO
     JSPROXY_CCPhysicsSprite_class->enumerate = JS_EnumerateStub;
     JSPROXY_CCPhysicsSprite_class->resolve = JS_ResolveStub;
     JSPROXY_CCPhysicsSprite_class->convert = JS_ConvertStub;
-    JSPROXY_CCPhysicsSprite_class->finalize = jsb_ref_finalize;
     JSPROXY_CCPhysicsSprite_class->flags = 0;
 
     static JSPropertySpec properties[] = {
@@ -906,7 +808,7 @@ void JSB_cpSpace_finalize(JSFreeOp *fop, JSObject *jsthis)
 static
 bool __jsb_cpSpace_addCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp, JS::HandleObject jsspace, cpSpace *space, unsigned int is_oo)
 {
-    struct collision_handler *handler = new collision_handler();
+    struct collision_handler *handler = new (std::nothrow) collision_handler();
     handler->typeA = 0;
     handler->typeB = 0;
 
@@ -1003,7 +905,7 @@ bool JSB_cpSpace_setDefaultCollisionHandler(JSContext *cx, uint32_t argc, jsval 
     struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* space = (cpSpace*) proxy->handle;
 
-    collision_handler *handler = new collision_handler();
+    collision_handler *handler = new (std::nothrow) collision_handler();
     JSB_PRECONDITION(handler, "Error allocating memory");
 
     handler->typeA = 0;
@@ -1230,7 +1132,7 @@ bool JSB_cpSpace_removeBody(JSContext *cx, uint32_t argc, jsval *vp) {
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, &retproxy );
     JSB_PRECONDITION(ok, "Error processing arguments");
     
-    cpSpaceRemoveBody((cpSpace*)arg0 , (cpBody*)arg1  );
+    cpSpaceRemoveBody((cpSpace*)arg0, (cpBody*)arg1);
     JS::RemoveObjectRoot(cx, &retproxy->jsobj);
     
     args.rval().setUndefined();
@@ -1322,7 +1224,7 @@ bool JSB_cpSpace_segmentQueryFirst(JSContext *cx, uint32_t argc, jsval *vp){
     ok &= jsval_to_uint( cx, args.get(3), (unsigned int*)&group );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     
-    cpSegmentQueryInfo *out = new cpSegmentQueryInfo();
+    cpSegmentQueryInfo *out = new (std::nothrow) cpSegmentQueryInfo();
     cpShape* target = cpSpaceSegmentQueryFirst(space, start, end, layers, group, out);
     
     if(target)
@@ -1360,7 +1262,7 @@ bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *v
     ok &= jsval_to_uint( cx, args.get(3), (unsigned int*)&group );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     
-    cpNearestPointQueryInfo* info = new cpNearestPointQueryInfo();
+    cpNearestPointQueryInfo* info = new (std::nothrow) cpNearestPointQueryInfo();
     cpShape* target = cpSpaceNearestPointQueryNearest(space, point, maxDistance, layers, group, info);
     
     if(target)
@@ -2111,8 +2013,17 @@ bool JSB_cpBase_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 void JSB_cpBase_finalize(JSFreeOp *fop, JSObject *obj)
 {
     CCLOGINFO("jsbindings: finalizing JS object %p (cpBase)", obj);
+    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+    JS::RootedObject jsobj(cx, obj);
     
-    // should not delete the handle since it was manually added
+    js_proxy_t* nproxy = nullptr;
+    js_proxy_t* jsproxy = nullptr;
+    jsproxy = jsb_get_js_proxy(jsobj);
+    if (jsproxy)
+    {
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+        jsb_remove_proxy(nproxy, jsproxy);
+    }
 }
 
 bool JSB_cpBase_getHandle(JSContext *cx, uint32_t argc, jsval *vp)

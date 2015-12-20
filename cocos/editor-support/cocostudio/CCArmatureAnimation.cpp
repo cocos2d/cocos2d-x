@@ -230,7 +230,7 @@ void ArmatureAnimation::play(const std::string& animationName, int durationTo,  
         Tween *tween = bone->getTween();
         if(movementBoneData && movementBoneData->frameList.size() > 0)
         {
-            _tweenList.pushBack(tween);
+            _tweenList.push_back(tween);
             movementBoneData->duration = _movementData->duration;
             tween->play(movementBoneData, durationTo, durationTween, loop, tweenEasing);
 

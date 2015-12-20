@@ -755,4 +755,16 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
+
+class LabelIssue13846Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue13846Test);
+    
+    LabelIssue13846Test();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif

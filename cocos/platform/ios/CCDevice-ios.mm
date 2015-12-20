@@ -72,7 +72,7 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
 - (id) init
 {
     if( (self = [super init]) ) {
-        _acceleration = new cocos2d::Acceleration();
+        _acceleration = new (std::nothrow) cocos2d::Acceleration();
         _motionManager = [[CMMotionManager alloc] init];
         _motionManager.accelerometerUpdateInterval = SENSOR_DELAY_GAME;
     }

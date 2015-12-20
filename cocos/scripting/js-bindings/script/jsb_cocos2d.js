@@ -1595,14 +1595,7 @@ cc.Director.EVENT_BEFORE_UPDATE = "director_before_update";
 cc.Director.EVENT_AFTER_UPDATE = "director_after_update";
 cc.Director.EVENT_BEFORE_SCENE_LAUNCH = "director_before_scene_launch";
 
-cc.Director.prototype.runScene = function(scene){
-    if (!this.getRunningScene()) {
-        this.runWithScene(scene);
-    }
-    else {
-        this.replaceScene(scene);
-    }
-};
+cc.Director.prototype.runScene = cc.Director.prototype.replaceScene;
 
 cc.visibleRect = {
     topLeft:cc.p(0,0),

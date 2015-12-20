@@ -61,6 +61,13 @@ NodeGrid::NodeGrid()
 
 void NodeGrid::setTarget(Node* target)
 {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (_gridTarget)
+        sEngine->releaseScriptObject(this, _gridTarget);
+    if (target)
+        sEngine->retainScriptObject(this, target);
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     CC_SAFE_RELEASE(_gridTarget);
     CC_SAFE_RETAIN(target);
     _gridTarget = target;

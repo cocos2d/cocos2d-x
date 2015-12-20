@@ -5,6 +5,7 @@ cocos2d-x-3.10 December ? 2015
 [NEW]           UI: UIText::clone supports clone the text effect.
 [NEW]           Label: Add methods to query label effect state.
 
+[REFINE]        UI: Slider `setCapInsetProgressBarRebderer` change to `setCapInsetProgressBarRenderer`.
 [REFINE]        UI: RichText support new line element.
 [REFINE]        UI: Set focus to Widget when touched.
 [REFINE]        UI: Change PageView to derived from ListView.
@@ -14,6 +15,7 @@ cocos2d-x-3.10 December ? 2015
 [REFINE]        Mac: Make engine compatible for 32bit Mac.
 [REFINE]        Audio: AudioEngine on Linux replace the original SimpleAudioEngine with a new version of FMOD, now AudioEngine support all platforms!
 
+[FIX]           Network: fix possible websocket crash in its destructor.
 [FIX]           Core: Fix premultiplyAlpha for mipmaps and compressed textures.
 [FIX]           UI: Fix Scale9sprite rendering error when content size smaller than the sum of leftInset and rightInset.
 [FIX]           Win32: Fix EditBox crash when removing an EditBox in a scheduler.

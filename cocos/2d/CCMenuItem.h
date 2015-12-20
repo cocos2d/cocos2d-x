@@ -549,6 +549,7 @@ public:
     virtual void selected() override;
     virtual void unselected() override;
     virtual void setEnabled(bool var) override;
+    virtual void cleanup() override;
     
 CC_CONSTRUCTOR_ACCESS:
     /**
@@ -558,11 +559,6 @@ CC_CONSTRUCTOR_ACCESS:
     : _selectedIndex(0)
     , _selectedItem(nullptr)
     {}
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~MenuItemToggle();
     
     /** Initializes a menu item from a list of items with a target selector.
      * @js NA

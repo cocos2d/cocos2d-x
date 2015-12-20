@@ -58,12 +58,9 @@ static bool jsb_cocos2dx_navmesh_NavMeshAgent_move(JSContext *cx, uint32_t argc,
 		std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(1)));
 
 		cobj->move(arg0, [=](cocos2d::NavMeshAgent *agent, float totalTimeAfterMove)->void{
-			jsval arg[2];
-			js_proxy_t *agentProxy = js_get_or_create_proxy(cx, agent);
-			if (proxy)
-				arg[0] = OBJECT_TO_JSVAL(agentProxy->obj);
-			else
-				arg[0] = JSVAL_NULL;
+            jsval arg[2];
+            JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocos2d::NavMeshAgent>(cx, agent));
+            arg[0] = OBJECT_TO_JSVAL(jsobj);
 			arg[1] = DOUBLE_TO_JSVAL((double)totalTimeAfterMove);
 			JS::RootedValue rval(cx);
 

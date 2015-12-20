@@ -641,6 +641,36 @@ public:
      * @js NA
      */
     virtual ccScriptType getScriptType() { return kScriptTypeNone; };
+    
+    /**
+     * Reflect the retain relationship to script scope
+     */
+    virtual void retainScriptObject(Ref* owner, Ref* target) = 0;
+    
+    /**
+     * Add the script object to root object
+     */
+    virtual void rootScriptObject(Ref* target) = 0;
+    
+    /**
+     * Reflect the release relationship to script scope
+     */
+    virtual void releaseScriptObject(Ref* owner, Ref* target) = 0;
+    
+    /**
+     * Remove the script object from root object
+     */
+    virtual void unrootScriptObject(Ref* target) = 0;
+    
+    /**
+     * Release all children native refs for the given node in script scope
+     */
+    virtual void releaseAllChildrenRecursive(Node* node) = 0;
+    
+    /**
+     * Release all native refs for the given owner in script scope
+     */
+    virtual void releaseAllNativeRefs(cocos2d::Ref* owner) = 0;
 
     /** 
      * Remove script object,The specific meaning should refer to the ScriptType.
