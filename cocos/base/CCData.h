@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
  
@@ -48,7 +48,7 @@ public:
     /**@~english
      * This parameter is defined for convenient reference if a null Data object is needed.
      * @~chinese 
-     * Õâ¸ö²ÎÊı±»¶¨ÒåÎªnull Data¶ÔÏó£¬ÒÔ·½±ãĞèÒªÊ±½øĞĞÒıÓÃ¡£
+     * è¿™ä¸ªå‚æ•°è¢«å®šä¹‰ä¸ºnull Dataå¯¹è±¡ï¼Œä»¥æ–¹ä¾¿éœ€è¦æ—¶è¿›è¡Œå¼•ç”¨ã€‚
      */
     static const Data Null;
     
@@ -56,7 +56,7 @@ public:
     /**@~english
      * Constructor of Data.
      * @~chinese 
-     * DataµÄ¹¹Ôìº¯Êı¡£
+     * Dataçš„æ„é€ å‡½æ•°ã€‚
      */
     Data();
     
@@ -64,7 +64,7 @@ public:
     /**@~english
      * Copy constructor of Data.
      * @~chinese 
-     * DataµÄ¿½±´¹¹Ôìº¯Êı¡£
+     * Dataçš„æ‹·è´æ„é€ å‡½æ•°ã€‚
      */
     Data(const Data& other);
     
@@ -72,7 +72,7 @@ public:
     /**@~english
      * Copy constructor of Data.
      * @~chinese 
-     * DataµÄ¿½±´¹¹Ôìº¯Êı¡£
+     * Dataçš„æ‹·è´æ„é€ å‡½æ•°ã€‚
      */
     Data(Data&& other);
     
@@ -80,7 +80,7 @@ public:
     /**@~english
      * Destructor of Data.
      * @~chinese 
-     * DataµÄÎö¹¹º¯Êı¡£
+     * Dataçš„ææ„å‡½æ•°ã€‚
      */
     ~Data();
     
@@ -88,7 +88,7 @@ public:
     /**@~english
      * Overloads of operator=.
      * @~chinese 
-     * ÖØÔØ¸³Öµ²Ù×÷·û¡£
+     * é‡è½½èµ‹å€¼æ“ä½œç¬¦ã€‚
      */
     Data& operator= (const Data& other);
     
@@ -96,7 +96,7 @@ public:
     /**@~english
      * Overloads of operator=.
      * @~chinese 
-     * ÖØÔØ¸³Öµ²Ù×÷·û¡£
+     * é‡è½½èµ‹å€¼æ“ä½œç¬¦ã€‚
      */
     Data& operator= (Data&& other);
     
@@ -105,10 +105,10 @@ public:
      * Gets internal bytes of Data. It will return the pointer directly used in Data, so don't delete it.
      *
      * @~chinese 
-     * »ñÈ¡DataµÄÄÚ²¿×Ö½Ú¡£Ëü½«»á·µ»ØÒ»¸öDataÖĞÖ±½ÓÊ¹ÓÃµÄÖ¸Õë,ËùÒÔ²»ÒªÉ¾³ıËü¡£
+     * è·å–Dataçš„å†…éƒ¨å­—èŠ‚ã€‚å®ƒå°†ä¼šè¿”å›ä¸€ä¸ªDataä¸­ç›´æ¥ä½¿ç”¨çš„æŒ‡é’ˆ,æ‰€ä»¥ä¸è¦åˆ é™¤å®ƒã€‚
      * 
      * @return @~english Pointer of bytes used internal in Data.
-     * @~chinese DataÖĞÄÚ²¿Ê¹ÓÃµÄÖ¸Õë¡£
+     * @~chinese Dataä¸­å†…éƒ¨ä½¿ç”¨çš„æŒ‡é’ˆã€‚
      */
     unsigned char* getBytes() const;
     
@@ -117,35 +117,35 @@ public:
      * Gets the size of the bytes.
      *
      * @~chinese 
-     * »ñÈ¡×Ö½ÚµÄ´óĞ¡¡£
+     * è·å–å­—èŠ‚çš„å¤§å°ã€‚
      * 
      * @return @~english The size of bytes of Data.
-     * @~chinese ×Ö½ÚµÄÊı¾İµÄ´óĞ¡¡£
+     * @~chinese å­—èŠ‚çš„æ•°æ®çš„å¤§å°ã€‚
      */
     ssize_t getSize() const;
     
 
     /** @~english Copies the buffer pointer and its size.
-     * @~chinese ¿½±´»º³åÖ¸ÕëºÍËüµÄ´óĞ¡¡£
+     * @~chinese æ‹·è´ç¼“å†²æŒ‡é’ˆå’Œå®ƒçš„å¤§å°ã€‚
      *  @note @~english This method will copy the whole buffer.
      *        Developer should free the pointer after invoking this method.
-     * @~chinese ¸Ã·½·¨½«¸´ÖÆÕû¸ö»º³åÇø¡£
-     * ¿ª·¢ÈËÔ±Ó¦¸ÃÔÚµ÷ÓÃÕâ¸ö·½·¨ºóÊÍ·ÅÖ¸Õë¡£
+     * @~chinese è¯¥æ–¹æ³•å°†å¤åˆ¶æ•´ä¸ªç¼“å†²åŒºã€‚
+     * å¼€å‘äººå‘˜åº”è¯¥åœ¨è°ƒç”¨è¿™ä¸ªæ–¹æ³•åé‡Šæ”¾æŒ‡é’ˆã€‚
      *  @see Data::fastSet
      */
     void copy(const unsigned char* bytes, const ssize_t size);
     
 
     /** @~english Fast set the buffer pointer and its size. Please use it carefully.
-     * @~chinese ¿ìËÙÉèÖÃ»º³åÇøÖ¸ÕëºÍËüµÄ´óĞ¡¡£ÇëĞ¡ĞÄÊ¹ÓÃËü¡£
+     * @~chinese å¿«é€Ÿè®¾ç½®ç¼“å†²åŒºæŒ‡é’ˆå’Œå®ƒçš„å¤§å°ã€‚è¯·å°å¿ƒä½¿ç”¨å®ƒã€‚
      *  @param bytes @~english The buffer pointer, note that it have to be allocated by 'malloc' or 'calloc',
      *         since in the destructor of Data, the buffer will be deleted by 'free'.
-     * @~chinese »º³åÇøµÄÖ¸Õë,×¢Òâ,Ò»¶¨ÒªÓÉ¡°malloc¡±»ò¡°calloc¡±·ÖÅä
-     * ÒòÎªÔÚDataµÄÎö¹¹º¯ÊıÖĞ,»º³åÇø½«±»¡°free¡±É¾³ı¡£
+     * @~chinese ç¼“å†²åŒºçš„æŒ‡é’ˆ,æ³¨æ„,ä¸€å®šè¦ç”±â€œmallocâ€æˆ–â€œcallocâ€åˆ†é…
+     * å› ä¸ºåœ¨Dataçš„ææ„å‡½æ•°ä¸­,ç¼“å†²åŒºå°†è¢«â€œfreeâ€åˆ é™¤ã€‚
      *  @note @~english 1. This method will move the ownship of 'bytes'pointer to Data,
      *        2. The pointer should not be used outside after it was passed to this method.
-     * @~chinese 1¡£¸Ã·½·¨ÒÆ¶¯bufferÖ¸ÕëµÄËùÓĞÈ¨,
-     * 2¡£Õâ¸öÖ¸Õë²»Ó¦ÔÚ´«µİ¸øÕâ¸ö·½·¨ºóÔÙ½øĞĞÊ¹ÓÃ¡£
+     * @~chinese 1ã€‚è¯¥æ–¹æ³•ç§»åŠ¨bufferæŒ‡é’ˆçš„æ‰€æœ‰æƒ,
+     * 2ã€‚è¿™ä¸ªæŒ‡é’ˆä¸åº”åœ¨ä¼ é€’ç»™è¿™ä¸ªæ–¹æ³•åå†è¿›è¡Œä½¿ç”¨ã€‚
      *  @see Data::copy
      */
     void fastSet(unsigned char* bytes, const ssize_t size);
@@ -154,7 +154,7 @@ public:
     /** @~english
      * Clears data, free buffer and reset data size.
      * @~chinese 
-     * Çå³ıÊı¾İ,ÊÍ·Å»º³åÇøºÍÖØÖÃÊı¾İ´óĞ¡¡£
+     * æ¸…é™¤æ•°æ®,é‡Šæ”¾ç¼“å†²åŒºå’Œé‡ç½®æ•°æ®å¤§å°ã€‚
      */
     void clear();
     
@@ -163,10 +163,10 @@ public:
      * Check whether the data is null.
      *
      * @~chinese 
-     * ¼ì²éÊı¾İÊÇ·ñÎª¿Õ¡£
+     * æ£€æŸ¥æ•°æ®æ˜¯å¦ä¸ºç©ºã€‚
      * 
      * @return @~english True if the the Data is null, false if not.
-     * @~chinese Èç¹ûÊı¾İÎª¿Õ·µ»ØÕæ,Èç¹û²»ÊÇ·µ»Ø¼Ù¡£
+     * @~chinese å¦‚æœæ•°æ®ä¸ºç©ºè¿”å›çœŸ,å¦‚æœä¸æ˜¯è¿”å›å‡ã€‚
      */
     bool isNull() const;
     

@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
@@ -50,9 +50,9 @@ class CC_DLL Timer : public Ref
 protected:
     Timer();
 public:
-    /** @~english get interval in seconds  @~chinese »ñÈ¡Ê±¼ä¼ä¸ô£¬µ¥Î»ÎªÃë*/
+    /** @~english get interval in seconds  @~chinese è·å–æ—¶é—´é—´éš”ï¼Œå•ä½ä¸ºç§’*/
     inline float getInterval() const { return _interval; };
-    /** @~english set interval in seconds  @~chinese ÉèÖÃÊ±¼ä¼ä¸ô£¬µ¥Î»ÎªÃë*/
+    /** @~english set interval in seconds  @~chinese è®¾ç½®æ—¶é—´é—´éš”ï¼Œå•ä½ä¸ºç§’*/
     inline void setInterval(float interval) { _interval = interval; };
     
     void setupTimerWithInterval(float seconds, unsigned int repeat, float delay);
@@ -60,7 +60,7 @@ public:
     virtual void trigger(float dt) = 0;
     virtual void cancel() = 0;
     
-    /** @~english triggers the timer  @~chinese ´¥·¢¼ÆÊ±Æ÷*/
+    /** @~english triggers the timer  @~chinese è§¦å‘è®¡æ—¶å™¨*/
     void update(float dt);
     
 protected:
@@ -82,7 +82,7 @@ public:
     TimerTargetSelector();
 
     /** @~english Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds.
-     *  @~chinese Ê¹ÓÃÖ¸¶¨µÄÄ¿±ê¶ÔÏó£¬»Øµ÷º¯Êı£¬Ê±¼ä¼ä¸ô£¬ÖØ¸´´ÎÊıºÍÑÓ³ÙÊ±¼ä³õÊ¼»¯Ò»¸ö¶¨Ê±Æ÷¡£
+     *  @~chinese ä½¿ç”¨æŒ‡å®šçš„ç›®æ ‡å¯¹è±¡ï¼Œå›è°ƒå‡½æ•°ï¼Œæ—¶é—´é—´éš”ï¼Œé‡å¤æ¬¡æ•°å’Œå»¶è¿Ÿæ—¶é—´åˆå§‹åŒ–ä¸€ä¸ªå®šæ—¶å™¨ã€‚
      */
     bool initWithSelector(Scheduler* scheduler, SEL_SCHEDULE selector, Ref* target, float seconds, unsigned int repeat, float delay);
     
@@ -162,21 +162,21 @@ There are 2 different types of callbacks (selectors):
 The 'custom selectors' should be avoided when possible. It is faster, and consumes less memory to use the 'update selector'.
 
  * @~chinese
- * Scheduler ÊÇ¸ºÔğ´¥·¢»Øµ÷º¯ÊıµÄÀà¡£
- * ²»½¨ÒéÔÚÓÎÏ·´úÂëÖĞÖ±½ÓÊ¹ÓÃÏµÍ³µÄ¶¨Ê±Æ÷£¬ÍÆ¼öÊ¹ÓÃÕâ¸öÀàÀ´ÊµÏÖ¶¨Ê±Æ÷¹¦ÄÜ¡£
+ * Scheduler æ˜¯è´Ÿè´£è§¦å‘å›è°ƒå‡½æ•°çš„ç±»ã€‚
+ * ä¸å»ºè®®åœ¨æ¸¸æˆä»£ç ä¸­ç›´æ¥ä½¿ç”¨ç³»ç»Ÿçš„å®šæ—¶å™¨ï¼Œæ¨èä½¿ç”¨è¿™ä¸ªç±»æ¥å®ç°å®šæ—¶å™¨åŠŸèƒ½ã€‚
  * 
- * ÓĞÁ½ÖÖ²»Í¬ÀàĞÍµÄ¶¨Ê±Æ÷:
- * - update ¶¨Ê±Æ÷£ºÃ¿Ò»Ö¡¶¼»á´¥·¢¡£Äú¿ÉÒÔ×Ô¶¨ÒåÓÅÏÈ¼¶¡£
- * - ×Ô¶¨Òå¶¨Ê±Æ÷£º×Ô¶¨Òå¶¨Ê±Æ÷¿ÉÒÔÃ¿Ò»Ö¡»òÕß×Ô¶¨ÒåµÄÊ±¼ä¼ä¸ô´¥·¢¡£
+ * æœ‰ä¸¤ç§ä¸åŒç±»å‹çš„å®šæ—¶å™¨:
+ * - update å®šæ—¶å™¨ï¼šæ¯ä¸€å¸§éƒ½ä¼šè§¦å‘ã€‚æ‚¨å¯ä»¥è‡ªå®šä¹‰ä¼˜å…ˆçº§ã€‚
+ * - è‡ªå®šä¹‰å®šæ—¶å™¨ï¼šè‡ªå®šä¹‰å®šæ—¶å™¨å¯ä»¥æ¯ä¸€å¸§æˆ–è€…è‡ªå®šä¹‰çš„æ—¶é—´é—´éš”è§¦å‘ã€‚
  * 
- * Ó¦¸Ã¾¡Á¿±ÜÃâÊ¹ÓÃ×Ô¶¨Òå¶¨Ê±Æ÷¡£Ê¹ÓÃ update ¶¨Ê±Æ÷¸ü¿ì£¬¶øÇÒÏûºÄ¸üÉÙµÄÄÚ´æ¡£
+ * åº”è¯¥å°½é‡é¿å…ä½¿ç”¨è‡ªå®šä¹‰å®šæ—¶å™¨ã€‚ä½¿ç”¨ update å®šæ—¶å™¨æ›´å¿«ï¼Œè€Œä¸”æ¶ˆè€—æ›´å°‘çš„å†…å­˜ã€‚
  * 
 */
 class CC_DLL Scheduler : public Ref
 {
 public:
     /** @~english Priority level reserved for system services. 
-     * @~chinese ÏµÍ³·şÎñµÄÓÅÏÈ¼¶¡£
+     * @~chinese ç³»ç»ŸæœåŠ¡çš„ä¼˜å…ˆçº§ã€‚
      * @lua NA
      * @js NA
      */
@@ -185,8 +185,8 @@ public:
     /** @~english Minimum priority level for user scheduling. 
      * Priority level of user scheduling should bigger then this value.
      *
-     * @~chinese ÓÃ»§µ÷¶ÈµÄ×îµÍÓÅÏÈ¼¶¡£
-     * ÓÃ»§µ÷¶ÈµÄÓÅÏÈ¼¶Ó¦¸Ã±ÈÕâ¸öÖµ´ó¡£
+     * @~chinese ç”¨æˆ·è°ƒåº¦çš„æœ€ä½ä¼˜å…ˆçº§ã€‚
+     * ç”¨æˆ·è°ƒåº¦çš„ä¼˜å…ˆçº§åº”è¯¥æ¯”è¿™ä¸ªå€¼å¤§ã€‚
      * 
      * @lua NA
      * @js NA
@@ -197,7 +197,7 @@ public:
      * Constructor
      *
      * @~chinese 
-     * ¹¹Ôìº¯Êı
+     * æ„é€ å‡½æ•°
      * 
      * @js ctor
      */
@@ -207,7 +207,7 @@ public:
      * Destructor
      *
      * @~chinese 
-     * Îö¹¹º¯Êı
+     * ææ„å‡½æ•°
      * 
      * @js NA
      * @lua NA
@@ -217,7 +217,7 @@ public:
     /**@~english
      * Gets the time scale of schedule callbacks.
      * @~chinese 
-     * »ñÈ¡Ê±¼ä¼ä¸ôµÄËõ·Å±ÈÀı¡£
+     * è·å–æ—¶é—´é—´éš”çš„ç¼©æ”¾æ¯”ä¾‹ã€‚
      * @see Scheduler::setTimeScale()
      */
     inline float getTimeScale() { return _timeScale; }
@@ -225,20 +225,20 @@ public:
      * You can use this property to create a 'slow motion' or 'fast forward' effect.
      * Default is 1.0. To create a 'slow motion' effect, use values below 1.0.
      * To create a 'fast forward' effect, use values higher than 1.0.
-     * @~chinese ÉèÖÃÊ±¼ä¼ä¸ôµÄËõ·Å±ÈÀı¡£
-     * Äú¿ÉÒÔÊ¹ÓÃÕâ¸ö·½·¨À´´´½¨Ò»¸ö¡°Âı¶¯×÷¡±»ò¡°¿ì½ø¡±µÄĞ§¹û¡£
-     * Ä¬ÈÏÊÇ1.0¡£Òª´´½¨Ò»¸ö¡°Âı¶¯×÷¡±Ğ§¹û,Ê¹ÓÃÖµµÍÓÚ1.0¡£
-     * ÒªÊ¹ÓÃ¡°¿ì½ø¡±Ğ§¹û£¬Ê¹ÓÃÖµ´óÓÚ 1.0¡£
+     * @~chinese è®¾ç½®æ—¶é—´é—´éš”çš„ç¼©æ”¾æ¯”ä¾‹ã€‚
+     * æ‚¨å¯ä»¥ä½¿ç”¨è¿™ä¸ªæ–¹æ³•æ¥åˆ›å»ºä¸€ä¸ªâ€œæ…¢åŠ¨ä½œâ€æˆ–â€œå¿«è¿›â€çš„æ•ˆæœã€‚
+     * é»˜è®¤æ˜¯1.0ã€‚è¦åˆ›å»ºä¸€ä¸ªâ€œæ…¢åŠ¨ä½œâ€æ•ˆæœ,ä½¿ç”¨å€¼ä½äº1.0ã€‚
+     * è¦ä½¿ç”¨â€œå¿«è¿›â€æ•ˆæœï¼Œä½¿ç”¨å€¼å¤§äº 1.0ã€‚
      * @since v0.8
      * @warning @~english It will affect EVERY scheduled selector / action.
-     * @~chinese Ëü»áÓ°ÏìËùÓĞµÄ¶¨Ê±Æ÷¡£
+     * @~chinese å®ƒä¼šå½±å“æ‰€æœ‰çš„å®šæ—¶å™¨ã€‚
      */
     inline void setTimeScale(float timeScale) { _timeScale = timeScale; }
 
     /** @~english 'update' the scheduler.
      * You should NEVER call this method, unless you know what you are doing.
-     * @~chinese update µ÷¶ÈÆ÷¡£
-     * ²»Ó¦¸ÃÖ±½Óµ÷ÓÃÕâ¸ö·½·¨£¬³ı·ÇÍêÈ«ÁË½âÕâÃ´×öµÄ½á¹û¡£
+     * @~chinese update è°ƒåº¦å™¨ã€‚
+     * ä¸åº”è¯¥ç›´æ¥è°ƒç”¨è¿™ä¸ªæ–¹æ³•ï¼Œé™¤éå®Œå…¨äº†è§£è¿™ä¹ˆåšçš„ç»“æœã€‚
      * @lua NA
      */
     void update(float dt);
@@ -253,44 +253,44 @@ public:
      If the 'callback' is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
      repeat let the action be repeated repeat + 1 times, use CC_REPEAT_FOREVER to let the action run continuously
      delay is the amount of time the action will wait before it'll start.
-     * @~chinese µ±Ê±¼ä¼ä¸ô´ïµ½Ö¸¶¨ÖµÊ±£¬ÉèÖÃµÄ»Øµ÷º¯Êı½«»á±»µ÷ÓÃ¡£
-     * Èç¹û paused ÖµÎª true£¬ÄÇÃ´Ö±µ½ resume ±»µ÷ÓÃ²Å¿ªÊ¼¼ÆÊ±¡£
-     * Èç¹û interval ÖµÎª0£¬ÄÇÃ´»Øµ÷º¯ÊıÃ¿Ò»Ö¡¶¼»á±»µ÷ÓÃ¡£µ«Èç¹ûÊÇÕâÑù£¬½¨ÒéÊ¹ÓÃ `scheduleUpdate` ´úÌæ¡£
-     * Èç¹û»Øµ÷º¯ÊıÒÑ¾­±»¶¨Ê±Æ÷Ê¹ÓÃ£¬ÄÇÃ´Ö»»á¸üĞÂÖ®Ç°¶¨Ê±Æ÷µÄÊ±¼ä¼ä¸ô²ÎÊı£¬²»»áÉèÖÃĞÂµÄ¶¨Ê±Æ÷¡£
-     * repeat Öµ¿ÉÒÔÈÃ¶¨Ê±Æ÷´¥·¢ repeat + 1 ´Î£¬Ê¹ÓÃ `CC_REPEAT_FOREVER` ¿ÉÒÔÈÃ¶¨Ê±Æ÷Ò»Ö±Ñ­»·´¥·¢¡£
-     * delay ÖµÖ¸¶¨ÑÓ³ÙÊ±¼ä¡£¶¨Ê±Æ÷»áÔÚÑÓ³ÙÖ¸¶¨µÄÊ±¼äÖ®ºó¿ªÊ¼¼ÆÊ±¡£
+     * @~chinese å½“æ—¶é—´é—´éš”è¾¾åˆ°æŒ‡å®šå€¼æ—¶ï¼Œè®¾ç½®çš„å›è°ƒå‡½æ•°å°†ä¼šè¢«è°ƒç”¨ã€‚
+     * å¦‚æœ paused å€¼ä¸º trueï¼Œé‚£ä¹ˆç›´åˆ° resume è¢«è°ƒç”¨æ‰å¼€å§‹è®¡æ—¶ã€‚
+     * å¦‚æœ interval å€¼ä¸º0ï¼Œé‚£ä¹ˆå›è°ƒå‡½æ•°æ¯ä¸€å¸§éƒ½ä¼šè¢«è°ƒç”¨ã€‚ä½†å¦‚æœæ˜¯è¿™æ ·ï¼Œå»ºè®®ä½¿ç”¨ `scheduleUpdate` ä»£æ›¿ã€‚
+     * å¦‚æœå›è°ƒå‡½æ•°å·²ç»è¢«å®šæ—¶å™¨ä½¿ç”¨ï¼Œé‚£ä¹ˆåªä¼šæ›´æ–°ä¹‹å‰å®šæ—¶å™¨çš„æ—¶é—´é—´éš”å‚æ•°ï¼Œä¸ä¼šè®¾ç½®æ–°çš„å®šæ—¶å™¨ã€‚
+     * repeat å€¼å¯ä»¥è®©å®šæ—¶å™¨è§¦å‘ repeat + 1 æ¬¡ï¼Œä½¿ç”¨ `CC_REPEAT_FOREVER` å¯ä»¥è®©å®šæ—¶å™¨ä¸€ç›´å¾ªç¯è§¦å‘ã€‚
+     * delay å€¼æŒ‡å®šå»¶è¿Ÿæ—¶é—´ã€‚å®šæ—¶å™¨ä¼šåœ¨å»¶è¿ŸæŒ‡å®šçš„æ—¶é—´ä¹‹åå¼€å§‹è®¡æ—¶ã€‚
      @param callback @~english The callback function.
-     * @~chinese »Øµ÷º¯Êı¡£
+     * @~chinese å›è°ƒå‡½æ•°ã€‚
      @param target @~english The target of the callback function.
-     * @~chinese »Øµ÷º¯ÊıµÄ¶ÔÏó¡£
+     * @~chinese å›è°ƒå‡½æ•°çš„å¯¹è±¡ã€‚
      @param interval @~english The interval to schedule the callback. If the value is 0, then the callback will be scheduled every frame.
-     * @~chinese ÉèÖÃµÄÊ±¼ä¼ä¸ô¡£Èç¹û¸ÃÖµÎª0,ÔòÃ¿Ò»Ö¡¶¼»á´¥·¢»Øµ÷º¯Êı¡£
+     * @~chinese è®¾ç½®çš„æ—¶é—´é—´éš”ã€‚å¦‚æœè¯¥å€¼ä¸º0,åˆ™æ¯ä¸€å¸§éƒ½ä¼šè§¦å‘å›è°ƒå‡½æ•°ã€‚
      @param repeat @~english repeat+1 times to schedule the callback.
-     * @~chinese »Øµ÷º¯Êı±»´¥·¢ repeat + 1 ´Î¡£
+     * @~chinese å›è°ƒå‡½æ•°è¢«è§¦å‘ repeat + 1 æ¬¡ã€‚
      @param delay @~english Schedule call back after `delay` seconds. If the value is not 0, the first schedule will happen after `delay` seconds.
             But it will only affect first schedule. After first schedule, the delay time is determined by `interval`.
-     * @~chinese µÚÒ»´Î´¥·¢»Øµ÷µÄÑÓ³ÙÊ±¼ä¡£Èç¹û¸ÃÖµ²»ÊÇ0£¬µÚÒ»´Î»Øµ÷º¯ÊıµÄ´¥·¢Ê±¼ä½«±»ÍÆ³ÙÖ¸¶¨µÄÃëÊı¡£
-     * ÕâÖ»»áÓ°ÏìµÚÒ»´Î¶¨Ê±Æ÷µÄ´¥·¢¡£Ö®ºóÃ¿´Î¶¨Ê±Æ÷µÄ´¥·¢Ê±¼ä¼ä¸ôÓÉ interval Öµ¾ö¶¨¡£
+     * @~chinese ç¬¬ä¸€æ¬¡è§¦å‘å›è°ƒçš„å»¶è¿Ÿæ—¶é—´ã€‚å¦‚æœè¯¥å€¼ä¸æ˜¯0ï¼Œç¬¬ä¸€æ¬¡å›è°ƒå‡½æ•°çš„è§¦å‘æ—¶é—´å°†è¢«æ¨è¿ŸæŒ‡å®šçš„ç§’æ•°ã€‚
+     * è¿™åªä¼šå½±å“ç¬¬ä¸€æ¬¡å®šæ—¶å™¨çš„è§¦å‘ã€‚ä¹‹åæ¯æ¬¡å®šæ—¶å™¨çš„è§¦å‘æ—¶é—´é—´éš”ç”± interval å€¼å†³å®šã€‚
      @param paused @~english Whether or not to pause the schedule.
-     * @~chinese ÊÇ·ñÒªÔİÍ£¡£
+     * @~chinese æ˜¯å¦è¦æš‚åœã€‚
      @param key @~english The key to identify the callback function, because there is not way to identify a std::function<>.
-     * @~chinese Çø±ğÓÚÆäËû»Øµ÷º¯ÊıµÄ¹Ø¼ü×Ö£¬ÒòÎªÃ»ÓĞ°ì·¨Çø·Ö std::function<> ÊÇ·ñÏàÍ¬¡£
+     * @~chinese åŒºåˆ«äºå…¶ä»–å›è°ƒå‡½æ•°çš„å…³é”®å­—ï¼Œå› ä¸ºæ²¡æœ‰åŠæ³•åŒºåˆ† std::function<> æ˜¯å¦ç›¸åŒã€‚
      @since v3.0
      */
     void schedule(const ccSchedulerFunc& callback, void *target, float interval, unsigned int repeat, float delay, bool paused, const std::string& key);
 
     /** @~english The scheduled method will be called every 'interval' seconds for ever.
-     * @~chinese Õâ¸ö¶¨Ê±Æ÷»á°´ÕÕÖ¸¶¨µÄÊ±¼ä¼ä¸ô²»¶ÏµÄ´¥·¢¡£
+     * @~chinese è¿™ä¸ªå®šæ—¶å™¨ä¼šæŒ‰ç…§æŒ‡å®šçš„æ—¶é—´é—´éš”ä¸æ–­çš„è§¦å‘ã€‚
      @param callback @~english The callback function.
-     * @~chinese »Øµ÷º¯Êı¡£
+     * @~chinese å›è°ƒå‡½æ•°ã€‚
      @param target @~english The target of the callback function.
-     * @~chinese »Øµ÷º¯ÊıµÄ¶ÔÏó¡£
+     * @~chinese å›è°ƒå‡½æ•°çš„å¯¹è±¡ã€‚
      @param interval @~english The interval to schedule the callback. If the value is 0, then the callback will be scheduled every frame.
-     * @~chinese ÉèÖÃµÄÊ±¼ä¼ä¸ô¡£Èç¹û¸ÃÖµÎª0,ÔòÃ¿Ò»Ö¡¶¼»á´¥·¢»Øµ÷º¯Êı¡£
+     * @~chinese è®¾ç½®çš„æ—¶é—´é—´éš”ã€‚å¦‚æœè¯¥å€¼ä¸º0,åˆ™æ¯ä¸€å¸§éƒ½ä¼šè§¦å‘å›è°ƒå‡½æ•°ã€‚
      @param paused @~english Whether or not to pause the schedule.
-     * @~chinese ÊÇ·ñÒªÔİÍ£¡£
+     * @~chinese æ˜¯å¦è¦æš‚åœã€‚
      @param key @~english The key to identify the callback function, because there is not way to identify a std::function<>.
-     * @~chinese Çø±ğÓÚÆäËû»Øµ÷º¯ÊıµÄ¹Ø¼ü×Ö£¬ÒòÎªÃ»ÓĞ°ì·¨Çø·Ö std::function<> ÊÇ·ñÏàÍ¬¡£
+     * @~chinese åŒºåˆ«äºå…¶ä»–å›è°ƒå‡½æ•°çš„å…³é”®å­—ï¼Œå› ä¸ºæ²¡æœ‰åŠæ³•åŒºåˆ† std::function<> æ˜¯å¦ç›¸åŒã€‚
      @since v3.0
      */
     void schedule(const ccSchedulerFunc& callback, void *target, float interval, bool paused, const std::string& key);
@@ -303,49 +303,49 @@ public:
      repeat let the action be repeated repeat + 1 times, use CC_REPEAT_FOREVER to let the action run continuously
      delay is the amount of time the action will wait before it'll start
      
-     * @~chinese µ±Ê±¼ä¼ä¸ô´ïµ½Ö¸¶¨ÖµÊ±£¬ÉèÖÃµÄ»Øµ÷º¯Êı½«»á±»µ÷ÓÃ¡£
-     * Èç¹û paused ÖµÎª true£¬ÄÇÃ´Ö±µ½ resume ±»µ÷ÓÃ²Å¿ªÊ¼¼ÆÊ±¡£
-     * Èç¹û interval ÖµÎª0£¬ÄÇÃ´»Øµ÷º¯ÊıÃ¿Ò»Ö¡¶¼»á±»µ÷ÓÃ¡£µ«Èç¹ûÊÇÕâÑù£¬½¨ÒéÊ¹ÓÃ `scheduleUpdate` ´úÌæ¡£
-     * Èç¹û»Øµ÷º¯ÊıÒÑ¾­±»¶¨Ê±Æ÷Ê¹ÓÃ£¬ÄÇÃ´Ö»»á¸üĞÂÖ®Ç°¶¨Ê±Æ÷µÄÊ±¼ä¼ä¸ô²ÎÊı£¬²»»áÉèÖÃĞÂµÄ¶¨Ê±Æ÷¡£
-     * repeat Öµ¿ÉÒÔÈÃ¶¨Ê±Æ÷´¥·¢ repeat + 1 ´Î£¬Ê¹ÓÃ `CC_REPEAT_FOREVER` ¿ÉÒÔÈÃ¶¨Ê±Æ÷Ò»Ö±Ñ­»·´¥·¢¡£
-     * delay ÖµÖ¸¶¨ÑÓ³ÙÊ±¼ä¡£¶¨Ê±Æ÷»áÔÚÑÓ³ÙÖ¸¶¨µÄÊ±¼äÖ®ºó¿ªÊ¼¼ÆÊ±¡£
+     * @~chinese å½“æ—¶é—´é—´éš”è¾¾åˆ°æŒ‡å®šå€¼æ—¶ï¼Œè®¾ç½®çš„å›è°ƒå‡½æ•°å°†ä¼šè¢«è°ƒç”¨ã€‚
+     * å¦‚æœ paused å€¼ä¸º trueï¼Œé‚£ä¹ˆç›´åˆ° resume è¢«è°ƒç”¨æ‰å¼€å§‹è®¡æ—¶ã€‚
+     * å¦‚æœ interval å€¼ä¸º0ï¼Œé‚£ä¹ˆå›è°ƒå‡½æ•°æ¯ä¸€å¸§éƒ½ä¼šè¢«è°ƒç”¨ã€‚ä½†å¦‚æœæ˜¯è¿™æ ·ï¼Œå»ºè®®ä½¿ç”¨ `scheduleUpdate` ä»£æ›¿ã€‚
+     * å¦‚æœå›è°ƒå‡½æ•°å·²ç»è¢«å®šæ—¶å™¨ä½¿ç”¨ï¼Œé‚£ä¹ˆåªä¼šæ›´æ–°ä¹‹å‰å®šæ—¶å™¨çš„æ—¶é—´é—´éš”å‚æ•°ï¼Œä¸ä¼šè®¾ç½®æ–°çš„å®šæ—¶å™¨ã€‚
+     * repeat å€¼å¯ä»¥è®©å®šæ—¶å™¨è§¦å‘ repeat + 1 æ¬¡ï¼Œä½¿ç”¨ `CC_REPEAT_FOREVER` å¯ä»¥è®©å®šæ—¶å™¨ä¸€ç›´å¾ªç¯è§¦å‘ã€‚
+     * delay å€¼æŒ‡å®šå»¶è¿Ÿæ—¶é—´ã€‚å®šæ—¶å™¨ä¼šåœ¨å»¶è¿ŸæŒ‡å®šçš„æ—¶é—´ä¹‹åå¼€å§‹è®¡æ—¶ã€‚
      @param selector @~english The callback function.
-     * @~chinese »Øµ÷º¯Êı¡£
+     * @~chinese å›è°ƒå‡½æ•°ã€‚
      @param target @~english The target of the callback function.
-     * @~chinese »Øµ÷º¯ÊıµÄ¶ÔÏó¡£
+     * @~chinese å›è°ƒå‡½æ•°çš„å¯¹è±¡ã€‚
      @param interval @~english The interval to schedule the callback. If the value is 0, then the callback will be scheduled every frame.
-     * @~chinese ÉèÖÃµÄÊ±¼ä¼ä¸ô¡£Èç¹û¸ÃÖµÎª0,ÔòÃ¿Ò»Ö¡¶¼»á´¥·¢»Øµ÷º¯Êı¡£
+     * @~chinese è®¾ç½®çš„æ—¶é—´é—´éš”ã€‚å¦‚æœè¯¥å€¼ä¸º0,åˆ™æ¯ä¸€å¸§éƒ½ä¼šè§¦å‘å›è°ƒå‡½æ•°ã€‚
      @param repeat @~english repeat+1 times to schedule the callback.
-     * @~chinese »Øµ÷º¯Êı±»´¥·¢ repeat + 1 ´Î¡£
+     * @~chinese å›è°ƒå‡½æ•°è¢«è§¦å‘ repeat + 1 æ¬¡ã€‚
      @param delay @~english Schedule call back after `delay` seconds. If the value is not 0, the first schedule will happen after `delay` seconds.
      But it will only affect first schedule. After first schedule, the delay time is determined by `interval`.
-     * @~chinese µÚÒ»´Î´¥·¢»Øµ÷µÄÑÓ³ÙÊ±¼ä¡£Èç¹û¸ÃÖµ²»ÊÇ0£¬µÚÒ»´Î»Øµ÷º¯ÊıµÄ´¥·¢Ê±¼ä½«±»ÍÆ³ÙÖ¸¶¨µÄÃëÊı¡£
-     * ÕâÖ»»áÓ°ÏìµÚÒ»´Î¶¨Ê±Æ÷µÄ´¥·¢¡£Ö®ºóÃ¿´Î¶¨Ê±Æ÷µÄ´¥·¢Ê±¼ä¼ä¸ôÓÉ interval Öµ¾ö¶¨¡£
+     * @~chinese ç¬¬ä¸€æ¬¡è§¦å‘å›è°ƒçš„å»¶è¿Ÿæ—¶é—´ã€‚å¦‚æœè¯¥å€¼ä¸æ˜¯0ï¼Œç¬¬ä¸€æ¬¡å›è°ƒå‡½æ•°çš„è§¦å‘æ—¶é—´å°†è¢«æ¨è¿ŸæŒ‡å®šçš„ç§’æ•°ã€‚
+     * è¿™åªä¼šå½±å“ç¬¬ä¸€æ¬¡å®šæ—¶å™¨çš„è§¦å‘ã€‚ä¹‹åæ¯æ¬¡å®šæ—¶å™¨çš„è§¦å‘æ—¶é—´é—´éš”ç”± interval å€¼å†³å®šã€‚
      @param paused @~english Whether or not to pause the schedule.
-     * @~chinese ÊÇ·ñÒªÔİÍ£¡£
+     * @~chinese æ˜¯å¦è¦æš‚åœã€‚
      @since v3.0
      */
     void schedule(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused);
     
     /** @~english The scheduled method will be called every `interval` seconds for ever.
-     * @~chinese Õâ¸ö¶¨Ê±Æ÷»á°´ÕÕÖ¸¶¨µÄÊ±¼ä¼ä¸ô²»¶ÏµÄ´¥·¢¡£
+     * @~chinese è¿™ä¸ªå®šæ—¶å™¨ä¼šæŒ‰ç…§æŒ‡å®šçš„æ—¶é—´é—´éš”ä¸æ–­çš„è§¦å‘ã€‚
      @param selector @~english The callback function.
-     * @~chinese »Øµ÷º¯Êı¡£
+     * @~chinese å›è°ƒå‡½æ•°ã€‚
      @param target @~english The target of the callback function.
-     * @~chinese »Øµ÷º¯ÊıµÄ¶ÔÏó¡£
+     * @~chinese å›è°ƒå‡½æ•°çš„å¯¹è±¡ã€‚
      @param interval @~english The interval to schedule the callback. If the value is 0, then the callback will be scheduled every frame.
-     * @~chinese ÉèÖÃµÄÊ±¼ä¼ä¸ô¡£Èç¹û¸ÃÖµÎª0,ÔòÃ¿Ò»Ö¡¶¼»á´¥·¢»Øµ÷º¯Êı¡£
+     * @~chinese è®¾ç½®çš„æ—¶é—´é—´éš”ã€‚å¦‚æœè¯¥å€¼ä¸º0,åˆ™æ¯ä¸€å¸§éƒ½ä¼šè§¦å‘å›è°ƒå‡½æ•°ã€‚
      @param paused @~english Whether or not to pause the schedule.
-     * @~chinese ÊÇ·ñÒªÔİÍ£¡£
+     * @~chinese æ˜¯å¦è¦æš‚åœã€‚
      */
     void schedule(SEL_SCHEDULE selector, Ref *target, float interval, bool paused);
     
     /** @~english Schedules the 'update' selector for a given target with a given priority.
      The 'update' selector will be called every frame.
      The lower the priority, the earlier it is called.
-     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÓÅÏÈ¼¶ÎªÖ¸¶¨µÄ¶ÔÏóÉèÖÃ update ¶¨Ê±Æ÷¡£
-     * update ¶¨Ê±Æ÷Ã¿Ò»Ö¡¶¼»á±»´¥·¢¡£
-     * ÓÅÏÈ¼¶µÄÖµÔ½µÍ£¬¶¨Ê±Æ÷±»´¥·¢µÄÔ½Ôç¡£
+     * @~chinese ä½¿ç”¨æŒ‡å®šçš„ä¼˜å…ˆçº§ä¸ºæŒ‡å®šçš„å¯¹è±¡è®¾ç½® update å®šæ—¶å™¨ã€‚
+     * update å®šæ—¶å™¨æ¯ä¸€å¸§éƒ½ä¼šè¢«è§¦å‘ã€‚
+     * ä¼˜å…ˆçº§çš„å€¼è¶Šä½ï¼Œå®šæ—¶å™¨è¢«è§¦å‘çš„è¶Šæ—©ã€‚
      @since v3.0
      @lua NA
      */
@@ -364,13 +364,13 @@ public:
      If 'interval' is 0, it will be called every frame.
      return schedule script entry ID, used for unscheduleScriptFunc().
      
-     * @~chinese Îª½Å±¾²ã¶¨ÖÆµÄ¶¨Ê±Æ÷£¬»Øµ÷º¯ÊıÔÚÖ¸¶¨µÄÊ±¼ä¼ä¸ô±»´¥·¢¡£
-     * Èç¹û paused ÖµÎª true£¬ÄÇÃ´Ö±µ½¶¨Ê±Æ÷ resume ²Å»á¿ªÊ¼¼ÆÊ±¡£
-     * Èç¹û interval ÖµÎª0£¬ÔòÃ¿Ò»Ö¡¶¼»á´¥·¢»Øµ÷º¯Êı¡£
-     * ·µ»ØÒ»¸ö ID£¬ÓÃÓÚ unscheduleScriptFunc()¡£
+     * @~chinese ä¸ºè„šæœ¬å±‚å®šåˆ¶çš„å®šæ—¶å™¨ï¼Œå›è°ƒå‡½æ•°åœ¨æŒ‡å®šçš„æ—¶é—´é—´éš”è¢«è§¦å‘ã€‚
+     * å¦‚æœ paused å€¼ä¸º trueï¼Œé‚£ä¹ˆç›´åˆ°å®šæ—¶å™¨ resume æ‰ä¼šå¼€å§‹è®¡æ—¶ã€‚
+     * å¦‚æœ interval å€¼ä¸º0ï¼Œåˆ™æ¯ä¸€å¸§éƒ½ä¼šè§¦å‘å›è°ƒå‡½æ•°ã€‚
+     * è¿”å›ä¸€ä¸ª IDï¼Œç”¨äº unscheduleScriptFunc()ã€‚
      * 
      @warning @~english Don't invoke this function unless you know what you are doing.
-     * @~chinese ²»ÒªÖ±½Óµ÷ÓÃÕâ¸öº¯Êı£¬³ı·ÇÄãÖªµÀÄãÔÚ×öÊ²Ã´¡£
+     * @~chinese ä¸è¦ç›´æ¥è°ƒç”¨è¿™ä¸ªå‡½æ•°ï¼Œé™¤éä½ çŸ¥é“ä½ åœ¨åšä»€ä¹ˆã€‚
      @js NA
      @lua NA
      */
@@ -382,42 +382,42 @@ public:
 
     /** @~english Unschedules a callback for a key and a given target.
      If you want to unschedule the 'callbackPerFrame', use unscheduleUpdate.
-     * @~chinese ¸ù¾İÖ¸¶¨µÄ key ºÍ target È¡ÏûÏàÓ¦µÄ¶¨Ê±Æ÷¡£
-     * Èç¹ûĞèÒªÈ¡Ïû `callbackPerFrame` ¶¨Ê±Æ÷£¬ÇëÊ¹ÓÃ `unscheduleUpdate`¡£
+     * @~chinese æ ¹æ®æŒ‡å®šçš„ key å’Œ target å–æ¶ˆç›¸åº”çš„å®šæ—¶å™¨ã€‚
+     * å¦‚æœéœ€è¦å–æ¶ˆ `callbackPerFrame` å®šæ—¶å™¨ï¼Œè¯·ä½¿ç”¨ `unscheduleUpdate`ã€‚
      @param key @~english The key to identify the callback function, because there is not way to identify a std::function<>.
-     * @~chinese Ê¶±ğ»Øµ÷º¯ÊıµÄ¹Ø¼ü×Ö£¬ÒòÎªÃ»ÓĞ°ì·¨Çø·Ö std::function<> ÊÇ·ñÏàÍ¬¡£
+     * @~chinese è¯†åˆ«å›è°ƒå‡½æ•°çš„å…³é”®å­—ï¼Œå› ä¸ºæ²¡æœ‰åŠæ³•åŒºåˆ† std::function<> æ˜¯å¦ç›¸åŒã€‚
      @param target @~english The target to be unscheduled.
-     * @~chinese ĞèÒªÈ¡Ïû¶¨Ê±Æ÷µÄ¶ÔÏó¡£
+     * @~chinese éœ€è¦å–æ¶ˆå®šæ—¶å™¨çš„å¯¹è±¡ã€‚
      @since v3.0
      */
     void unschedule(const std::string& key, void *target);
 
     /** @~english Unschedules a selector for a given target.
      If you want to unschedule the "update", use `unscheudleUpdate()`.
-     * @~chinese ¸ù¾İÖ¸¶¨µÄ»Øµ÷º¯ÊıºÍ target ¶ÔÏóÈ¡ÏûÏàÓ¦µÄ¶¨Ê±Æ÷¡£
-     * Èç¹ûĞèÒªÈ¡Ïû `update` ¶¨Ê±Æ÷£¬ÇëÊ¹ÓÃ `unscheudleUpdate()`¡£
+     * @~chinese æ ¹æ®æŒ‡å®šçš„å›è°ƒå‡½æ•°å’Œ target å¯¹è±¡å–æ¶ˆç›¸åº”çš„å®šæ—¶å™¨ã€‚
+     * å¦‚æœéœ€è¦å–æ¶ˆ `update` å®šæ—¶å™¨ï¼Œè¯·ä½¿ç”¨ `unscheudleUpdate()`ã€‚
      @param selector @~english The selector that is unscheduled.
-     * @~chinese ĞèÒªÈ¡ÏûµÄ»Øµ÷º¯Êı¡£
+     * @~chinese éœ€è¦å–æ¶ˆçš„å›è°ƒå‡½æ•°ã€‚
      @param target @~english The target of the unscheduled selector.
-     * @~chinese ĞèÒªÈ¡Ïû¶¨Ê±Æ÷µÄ¶ÔÏó¡£
+     * @~chinese éœ€è¦å–æ¶ˆå®šæ—¶å™¨çš„å¯¹è±¡ã€‚
      @since v3.0
      */
     void unschedule(SEL_SCHEDULE selector, Ref *target);
     
     /** @~english Unschedules the update selector for a given target
-     * @~chinese È¡Ïû update ¶¨Ê±Æ÷¡£
+     * @~chinese å–æ¶ˆ update å®šæ—¶å™¨ã€‚
      @param target @~english The target to be unscheduled.
-     * @~chinese ĞèÒªÈ¡Ïû¶¨Ê±Æ÷µÄ¶ÔÏó¡£
+     * @~chinese éœ€è¦å–æ¶ˆå®šæ—¶å™¨çš„å¯¹è±¡ã€‚
      @since v0.99.3
      */
     void unscheduleUpdate(void *target);
     
     /** @~english Unschedules all selectors for a given target.
      This also includes the "update" selector.
-     * @~chinese È¡ÏûÖ¸¶¨¶ÔÏóµÄËùÓĞ¶¨Ê±Æ÷¡£
-     * °üÀ¨ update ¶¨Ê±Æ÷
+     * @~chinese å–æ¶ˆæŒ‡å®šå¯¹è±¡çš„æ‰€æœ‰å®šæ—¶å™¨ã€‚
+     * åŒ…æ‹¬ update å®šæ—¶å™¨
      @param target @~english The target to be unscheduled.
-     * @~chinese ĞèÒªÈ¡Ïû¶¨Ê±Æ÷µÄ¶ÔÏó¡£
+     * @~chinese éœ€è¦å–æ¶ˆå®šæ—¶å™¨çš„å¯¹è±¡ã€‚
      @since v0.99.3
      @lua NA
      */
@@ -425,28 +425,28 @@ public:
     
     /** @~english Unschedules all selectors from all targets.
      You should NEVER call this method, unless you know what you are doing.
-     * @~chinese È¡ÏûËùÓĞ¶ÔÏóµÄËùÓĞ¶¨Ê±Æ÷¡£
-     * ²»ÓÃµ÷ÓÃ´Ëº¯Êı£¬³ı·ÇÄãÖ¸¶¨ÄãÔÚ×öÊ²Ã´¡£
+     * @~chinese å–æ¶ˆæ‰€æœ‰å¯¹è±¡çš„æ‰€æœ‰å®šæ—¶å™¨ã€‚
+     * ä¸ç”¨è°ƒç”¨æ­¤å‡½æ•°ï¼Œé™¤éä½ æŒ‡å®šä½ åœ¨åšä»€ä¹ˆã€‚
      @since v0.99.3
      */
     void unscheduleAll();
     
     /** @~english Unschedules all selectors from all targets with a minimum priority.
      You should only call this with `PRIORITY_NON_SYSTEM_MIN` or higher.
-     * @~chinese È¡ÏûËùÓĞÓÅÏÈ¼¶µÄÖµ´óÓÚ minPriority µÄ¶¨Ê±Æ÷¡£
-     * ÄãÓ¦¸ÃÖ»È¡ÏûÓÅÏÈ¼¶µÄÖµ´óÓÚ `PRIORITY_NON_SYSTEM_MIN` µÄ¶¨Ê±Æ÷¡£
+     * @~chinese å–æ¶ˆæ‰€æœ‰ä¼˜å…ˆçº§çš„å€¼å¤§äº minPriority çš„å®šæ—¶å™¨ã€‚
+     * ä½ åº”è¯¥åªå–æ¶ˆä¼˜å…ˆçº§çš„å€¼å¤§äº `PRIORITY_NON_SYSTEM_MIN` çš„å®šæ—¶å™¨ã€‚
      @param minPriority @~english The minimum priority of selector to be unscheduled. Which means, all selectors which
             priority is higher than minPriority will be unscheduled.
-     * @~chinese Ö¸¶¨µÄÓÅÏÈ¼¶×îµÍÖµ¡£ÕâÒâÎ¶×Å£¬ËùÓĞÓÅÏÈ¼¶µÄÖµ¸ßÓÚ minPriority µÄ¶¨Ê±Æ÷¶¼»á±»È¡Ïû¡£
+     * @~chinese æŒ‡å®šçš„ä¼˜å…ˆçº§æœ€ä½å€¼ã€‚è¿™æ„å‘³ç€ï¼Œæ‰€æœ‰ä¼˜å…ˆçº§çš„å€¼é«˜äº minPriority çš„å®šæ—¶å™¨éƒ½ä¼šè¢«å–æ¶ˆã€‚
      @since v2.0.0
      */
     void unscheduleAllWithMinPriority(int minPriority);
     
 #if CC_ENABLE_SCRIPT_BINDING
     /** @~english Unschedule a script entry. 
-     * @~chinese È¡Ïû½Å±¾²ãµÄÖ¸¶¨¶¨Ê±Æ÷¡£
+     * @~chinese å–æ¶ˆè„šæœ¬å±‚çš„æŒ‡å®šå®šæ—¶å™¨ã€‚
      * @warning @~english Don't invoke this function unless you know what you are doing.
-     * @~chinese ²»Òªµ÷ÓÃÕâ¸öº¯Êı,³ı·ÇÄãÖªµÀÄãÔÚ×öÊ²Ã´¡£
+     * @~chinese ä¸è¦è°ƒç”¨è¿™ä¸ªå‡½æ•°,é™¤éä½ çŸ¥é“ä½ åœ¨åšä»€ä¹ˆã€‚
      * @js NA
      * @lua NA
      */
@@ -458,25 +458,25 @@ public:
     // isScheduled
     
     /** @~english Checks whether a callback associated with 'key' and 'target' is scheduled.
-     * @~chinese ¼ì²éÖ¸¶¨µÄ¹Ø¼ü×ÖÓë¶ÔÏóÊÇ·ñÉèÖÃÁË¶¨Ê±Æ÷¡£
+     * @~chinese æ£€æŸ¥æŒ‡å®šçš„å…³é”®å­—ä¸å¯¹è±¡æ˜¯å¦è®¾ç½®äº†å®šæ—¶å™¨ã€‚
      @param key @~english The key to identify the callback function, because there is not way to identify a std::function<>.
-     * @~chinese Ê¶±ğ»Øµ÷º¯ÊıµÄ¹Ø¼ü×Ö£¬ÒòÎªÃ»ÓĞ°ì·¨Çø·Ö std::function<> ÊÇ·ñÏàÍ¬¡£
+     * @~chinese è¯†åˆ«å›è°ƒå‡½æ•°çš„å…³é”®å­—ï¼Œå› ä¸ºæ²¡æœ‰åŠæ³•åŒºåˆ† std::function<> æ˜¯å¦ç›¸åŒã€‚
      @param target @~english The target of the callback.
-     * @~chinese »Øµ÷º¯ÊıµÄ¶ÔÏó¡£
+     * @~chinese å›è°ƒå‡½æ•°çš„å¯¹è±¡ã€‚
      @return @~english True if the specified callback is invoked, false if not.
-     * @~chinese Èç¹ûÉèÖÃÁË¶¨Ê±Æ÷£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè®¾ç½®äº†å®šæ—¶å™¨ï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      @since v3.0.0
      */
     bool isScheduled(const std::string& key, void *target);
     
     /** @~english Checks whether a selector for a given taget is scheduled.
-     * @~chinese ¼ì²éÖ¸¶¨µÄ»Øµ÷º¯ÊıºÍ¶ÔÏóÊÇ·ñÉèÖÃÁË¶¨Ê±Æ÷¡£
+     * @~chinese æ£€æŸ¥æŒ‡å®šçš„å›è°ƒå‡½æ•°å’Œå¯¹è±¡æ˜¯å¦è®¾ç½®äº†å®šæ—¶å™¨ã€‚
      @param selector @~english The selector to be checked.
-     * @~chinese ĞèÒª¼ì²éµÄ»Øµ÷º¯Êı¡£
+     * @~chinese éœ€è¦æ£€æŸ¥çš„å›è°ƒå‡½æ•°ã€‚
      @param target @~english The target of the callback.
-     * @~chinese »Øµ÷º¯ÊıµÄ¶ÔÏó¡£
+     * @~chinese å›è°ƒå‡½æ•°çš„å¯¹è±¡ã€‚
      @return @~english True if the specified selector is invoked, false if not.
-     * @~chinese Èç¹ûÉèÖÃÁË¶¨Ê±Æ÷£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè®¾ç½®äº†å®šæ—¶å™¨ï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      @since v3.0
      */
     bool isScheduled(SEL_SCHEDULE selector, Ref *target);
@@ -486,11 +486,11 @@ public:
     /** @~english Pauses the target.
      All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.
      If the target is not present, nothing happens.
-     * @~chinese ÔİÍ£Ö¸¶¨¶ÔÏóµÄ¶¨Ê±Æ÷¡£
-     * Ö¸¶¨¶ÔÏóµÄËùÓĞ¶¨Ê±Æ÷¶¼»á±»ÔİÍ£¡£
-     * Èç¹ûÖ¸¶¨µÄ¶ÔÏóÃ»ÓĞ¶¨Ê±Æ÷£¬Ê²Ã´Ò²²»»á·¢Éú¡£
+     * @~chinese æš‚åœæŒ‡å®šå¯¹è±¡çš„å®šæ—¶å™¨ã€‚
+     * æŒ‡å®šå¯¹è±¡çš„æ‰€æœ‰å®šæ—¶å™¨éƒ½ä¼šè¢«æš‚åœã€‚
+     * å¦‚æœæŒ‡å®šçš„å¯¹è±¡æ²¡æœ‰å®šæ—¶å™¨ï¼Œä»€ä¹ˆä¹Ÿä¸ä¼šå‘ç”Ÿã€‚
      @param target @~english The target to be paused.
-     * @~chinese ĞèÒªÔİÍ£µÄ¶ÔÏó¡£
+     * @~chinese éœ€è¦æš‚åœçš„å¯¹è±¡ã€‚
      @since v0.99.3
      */
     void pauseTarget(void *target);
@@ -498,21 +498,21 @@ public:
     /** @~english Resumes the target.
      The 'target' will be unpaused, so all schedule selectors/update will be 'ticked' again.
      If the target is not present, nothing happens.
-     * @~chinese »Ö¸´Ö¸¶¨¶ÔÏóµÄËùÓĞ¶¨Ê±Æ÷¡£
-     * Ö¸¶¨µÄ¶ÔÏóµÄËùÓĞ¶¨Ê±Æ÷½«¼ÌĞø¹¤×÷¡£
-     * Èç¹ûÖ¸¶¨µÄ¶ÔÏóÃ»ÓĞ¶¨Ê±Æ÷£¬Ê²Ã´Ò²²»»á·¢Éú¡£
+     * @~chinese æ¢å¤æŒ‡å®šå¯¹è±¡çš„æ‰€æœ‰å®šæ—¶å™¨ã€‚
+     * æŒ‡å®šçš„å¯¹è±¡çš„æ‰€æœ‰å®šæ—¶å™¨å°†ç»§ç»­å·¥ä½œã€‚
+     * å¦‚æœæŒ‡å®šçš„å¯¹è±¡æ²¡æœ‰å®šæ—¶å™¨ï¼Œä»€ä¹ˆä¹Ÿä¸ä¼šå‘ç”Ÿã€‚
      @param target @~english The target to be resumed.
-     * @~chinese ĞèÒª»Ö¸´¶¨Ê±Æ÷µÄ¶ÔÏó¡£
+     * @~chinese éœ€è¦æ¢å¤å®šæ—¶å™¨çš„å¯¹è±¡ã€‚
      @since v0.99.3
      */
     void resumeTarget(void *target);
 
     /** @~english Returns whether or not the target is paused.
-     * @~chinese ·µ»ØÖ¸¶¨µÄ¶ÔÏóµÄ¶¨Ê±Æ÷ÊÇ·ñÔİÍ£ÁË¡£
+     * @~chinese è¿”å›æŒ‡å®šçš„å¯¹è±¡çš„å®šæ—¶å™¨æ˜¯å¦æš‚åœäº†ã€‚
      * @param target @~english The target to be checked.
-     * @~chinese ĞèÒª¼ì²éµÄ¶ÔÏó¡£
+     * @~chinese éœ€è¦æ£€æŸ¥çš„å¯¹è±¡ã€‚
      * @return @~english True if the target is paused, false if not.
-     * @~chinese Èç¹ûÊÇÔİÍ£×´Ì¬£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœæ˜¯æš‚åœçŠ¶æ€ï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      * @since v1.0.0
      * @lua NA
      */
@@ -520,39 +520,39 @@ public:
 
     /** @~english Pause all selectors from all targets.
       You should NEVER call this method, unless you know what you are doing.
-     * @~chinese ÔİÍ£ËùÓĞ¶ÔÏóµÄËùÓĞ¶¨Ê±Æ÷¡£
-     * ²»Òªµ÷ÓÃÕâ¸ö·½·¨,³ı·ÇÄãÖªµÀÄãÕıÔÚ×öÊ²Ã´¡£
+     * @~chinese æš‚åœæ‰€æœ‰å¯¹è±¡çš„æ‰€æœ‰å®šæ—¶å™¨ã€‚
+     * ä¸è¦è°ƒç”¨è¿™ä¸ªæ–¹æ³•,é™¤éä½ çŸ¥é“ä½ æ­£åœ¨åšä»€ä¹ˆã€‚
      @since v2.0.0
       */
     std::set<void*> pauseAllTargets();
 
     /** @~english Pause all selectors from all targets with a minimum priority.
       You should only call this with PRIORITY_NON_SYSTEM_MIN or higher.
-     * @~chinese ÔİÍ£ËùÓĞÓÅÏÈ¼¶µÄÖµ´óÓÚ minPriority µÄ¶¨Ê±Æ÷¡£
-     * ÄãÓ¦¸ÃÖ»ÔİÍ£ÓÅÏÈ¼¶µÄÖµ´óÓÚ `PRIORITY_NON_SYSTEM_MIN` µÄ¶¨Ê±Æ÷¡£
+     * @~chinese æš‚åœæ‰€æœ‰ä¼˜å…ˆçº§çš„å€¼å¤§äº minPriority çš„å®šæ—¶å™¨ã€‚
+     * ä½ åº”è¯¥åªæš‚åœä¼˜å…ˆçº§çš„å€¼å¤§äº `PRIORITY_NON_SYSTEM_MIN` çš„å®šæ—¶å™¨ã€‚
       @param minPriority @~english The minimum priority of selector to be paused. Which means, all selectors which
             priority is higher than minPriority will be paused.
-     * @~chinese Ö¸¶¨µÄÓÅÏÈ¼¶×îµÍÖµ¡£ÕâÒâÎ¶×Å£¬ËùÓĞÓÅÏÈ¼¶µÄÖµ¸ßÓÚ minPriority µÄ¶¨Ê±Æ÷¶¼»á±»ÔİÍ£¡£
+     * @~chinese æŒ‡å®šçš„ä¼˜å…ˆçº§æœ€ä½å€¼ã€‚è¿™æ„å‘³ç€ï¼Œæ‰€æœ‰ä¼˜å…ˆçº§çš„å€¼é«˜äº minPriority çš„å®šæ—¶å™¨éƒ½ä¼šè¢«æš‚åœã€‚
       @since v2.0.0
       */
     std::set<void*> pauseAllTargetsWithMinPriority(int minPriority);
 
     /** @~english Resume selectors on a set of targets.
      This can be useful for undoing a call to pauseAllSelectors.
-     * @~chinese »Ö¸´Ö¸¶¨µÄÊı×éÖĞËùÓĞ¶ÔÏóµÄ¶¨Ê±Æ÷¡£
-     * Õâ¸öº¯Êı¿ÉÒÔÓÃÀ´È¡Ïû `pauseAllSelectors` µÄĞ§¹û¡£
+     * @~chinese æ¢å¤æŒ‡å®šçš„æ•°ç»„ä¸­æ‰€æœ‰å¯¹è±¡çš„å®šæ—¶å™¨ã€‚
+     * è¿™ä¸ªå‡½æ•°å¯ä»¥ç”¨æ¥å–æ¶ˆ `pauseAllSelectors` çš„æ•ˆæœã€‚
      @param targetsToResume @~english The set of targets to be resumed.
-     * @~chinese ĞèÒª»Ö¸´µÄ¶ÔÏóÊı×é¡£
+     * @~chinese éœ€è¦æ¢å¤çš„å¯¹è±¡æ•°ç»„ã€‚
      @since v2.0.0
       */
     void resumeTargets(const std::set<void*>& targetsToResume);
 
     /** @~english Calls a function on the cocos2d thread. Useful when you need to call a cocos2d function from another thread.
      This function is thread safe.
-     * @~chinese ÔÚ cocos2d Ïß³ÌÉÏµ÷ÓÃÒ»¸öº¯Êı¡£µ±ÄãĞèÒª´ÓÁíÒ»¸öÏß³Ìµ÷ÓÃ cocos2d º¯ÊıÊ±¿ÉÒÔÊ¹ÓÃÕâ¸ö·½·¨¡£
-     * Õâ¸öº¯ÊıÊÇÏß³Ì°²È«µÄ¡£
+     * @~chinese åœ¨ cocos2d çº¿ç¨‹ä¸Šè°ƒç”¨ä¸€ä¸ªå‡½æ•°ã€‚å½“ä½ éœ€è¦ä»å¦ä¸€ä¸ªçº¿ç¨‹è°ƒç”¨ cocos2d å‡½æ•°æ—¶å¯ä»¥ä½¿ç”¨è¿™ä¸ªæ–¹æ³•ã€‚
+     * è¿™ä¸ªå‡½æ•°æ˜¯çº¿ç¨‹å®‰å…¨çš„ã€‚
      @param function @~english The function to be run in cocos2d thread.
-     * @~chinese cocos2d Ïß³ÌÖĞÒªÔËĞĞµÄº¯Êı¡£
+     * @~chinese cocos2d çº¿ç¨‹ä¸­è¦è¿è¡Œçš„å‡½æ•°ã€‚
      @since v3.0
      @js NA
      */
@@ -568,12 +568,12 @@ public:
      If the selector is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
      repeat let the action be repeated repeat + 1 times, use CC_REPEAT_FOREVER to let the action run continuously
      delay is the amount of time the action will wait before it'll start
-     * @~chinese µ±Ê±¼ä¼ä¸ô´ïµ½Ö¸¶¨ÖµÊ±£¬ÉèÖÃµÄ»Øµ÷º¯Êı½«»á±»µ÷ÓÃ¡£
-     * Èç¹û paused ÖµÎª true£¬ÄÇÃ´Ö±µ½ resume ±»µ÷ÓÃ²Å¿ªÊ¼¼ÆÊ±¡£
-     * Èç¹û interval ÖµÎª0£¬ÄÇÃ´»Øµ÷º¯ÊıÃ¿Ò»Ö¡¶¼»á±»µ÷ÓÃ¡£µ«Èç¹ûÊÇÕâÑù£¬½¨ÒéÊ¹ÓÃ `scheduleUpdate` ´úÌæ¡£
-     * Èç¹û»Øµ÷º¯ÊıÒÑ¾­±»¶¨Ê±Æ÷Ê¹ÓÃ£¬ÄÇÃ´Ö»»á¸üĞÂÖ®Ç°¶¨Ê±Æ÷µÄÊ±¼ä¼ä¸ô²ÎÊı£¬²»»áÉèÖÃĞÂµÄ¶¨Ê±Æ÷¡£
-     * repeat Öµ¿ÉÒÔÈÃ¶¨Ê±Æ÷´¥·¢ repeat + 1 ´Î£¬Ê¹ÓÃ `CC_REPEAT_FOREVER` ¿ÉÒÔÈÃ¶¨Ê±Æ÷Ò»Ö±Ñ­»·´¥·¢¡£
-     * delay ÖµÖ¸¶¨ÑÓ³ÙÊ±¼ä¡£¶¨Ê±Æ÷»áÔÚÑÓ³ÙÖ¸¶¨µÄÊ±¼äÖ®ºó¿ªÊ¼¼ÆÊ±¡£
+     * @~chinese å½“æ—¶é—´é—´éš”è¾¾åˆ°æŒ‡å®šå€¼æ—¶ï¼Œè®¾ç½®çš„å›è°ƒå‡½æ•°å°†ä¼šè¢«è°ƒç”¨ã€‚
+     * å¦‚æœ paused å€¼ä¸º trueï¼Œé‚£ä¹ˆç›´åˆ° resume è¢«è°ƒç”¨æ‰å¼€å§‹è®¡æ—¶ã€‚
+     * å¦‚æœ interval å€¼ä¸º0ï¼Œé‚£ä¹ˆå›è°ƒå‡½æ•°æ¯ä¸€å¸§éƒ½ä¼šè¢«è°ƒç”¨ã€‚ä½†å¦‚æœæ˜¯è¿™æ ·ï¼Œå»ºè®®ä½¿ç”¨ `scheduleUpdate` ä»£æ›¿ã€‚
+     * å¦‚æœå›è°ƒå‡½æ•°å·²ç»è¢«å®šæ—¶å™¨ä½¿ç”¨ï¼Œé‚£ä¹ˆåªä¼šæ›´æ–°ä¹‹å‰å®šæ—¶å™¨çš„æ—¶é—´é—´éš”å‚æ•°ï¼Œä¸ä¼šè®¾ç½®æ–°çš„å®šæ—¶å™¨ã€‚
+     * repeat å€¼å¯ä»¥è®©å®šæ—¶å™¨è§¦å‘ repeat + 1 æ¬¡ï¼Œä½¿ç”¨ `CC_REPEAT_FOREVER` å¯ä»¥è®©å®šæ—¶å™¨ä¸€ç›´å¾ªç¯è§¦å‘ã€‚
+     * delay å€¼æŒ‡å®šå»¶è¿Ÿæ—¶é—´ã€‚å®šæ—¶å™¨ä¼šåœ¨å»¶è¿ŸæŒ‡å®šçš„æ—¶é—´ä¹‹åå¼€å§‹è®¡æ—¶ã€‚
      @deprecated Please use `Scheduler::schedule` instead.
      @since v0.99.3, repeat and delay added in v1.1
      @js NA
@@ -584,7 +584,7 @@ public:
     };
     
     /** @~english Calls scheduleSelector with CC_REPEAT_FOREVER and a 0 delay.
-     * @~chinese ÒÔ repeat ÖµÎª `CC_REPEAT_FOREVER` ºÍ delay ÖµÎª 0 µ÷ÓÃ `scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused)`.
+     * @~chinese ä»¥ repeat å€¼ä¸º `CC_REPEAT_FOREVER` å’Œ delay å€¼ä¸º 0 è°ƒç”¨ `scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused)`.
      *  @deprecated Please use `Scheduler::schedule` instead.
      *  @js NA
      */
@@ -596,8 +596,8 @@ public:
     /** @~english Schedules the 'update' selector for a given target with a given priority.
      The 'update' selector will be called every frame.
      The lower the priority, the earlier it is called.
-     * @~chinese ÎªÖ¸¶¨µÄ¶ÔÏóÉèÖÃ update ¶¨Ê±Æ÷¡£update ¶¨Ê±Æ÷Ã¿Ò»Ö¡¶¼»á±»µ÷ÓÃ¡£
-     * ÓÅÏÈ¼¶µÄÖµÔ½µÍ£¬Ô½Ôç±»µ÷ÓÃ¡£
+     * @~chinese ä¸ºæŒ‡å®šçš„å¯¹è±¡è®¾ç½® update å®šæ—¶å™¨ã€‚update å®šæ—¶å™¨æ¯ä¸€å¸§éƒ½ä¼šè¢«è°ƒç”¨ã€‚
+     * ä¼˜å…ˆçº§çš„å€¼è¶Šä½ï¼Œè¶Šæ—©è¢«è°ƒç”¨ã€‚
      @deprecated Please use 'Scheduler::scheduleUpdate' instead.
      @since v0.99.3
      */
@@ -606,8 +606,8 @@ public:
     
     /** @~english Unschedule a selector for a given target.
      If you want to unschedule the "update", use unscheudleUpdateForTarget.
-     * @~chinese ¸ù¾İÖ¸¶¨µÄ»Øµ÷º¯ÊıºÍ target ¶ÔÏóÈ¡ÏûÏàÓ¦µÄ¶¨Ê±Æ÷¡£
-     * Èç¹ûĞèÒªÈ¡Ïû `update` ¶¨Ê±Æ÷£¬ÇëÊ¹ÓÃ `unscheudleUpdate()`¡£
+     * @~chinese æ ¹æ®æŒ‡å®šçš„å›è°ƒå‡½æ•°å’Œ target å¯¹è±¡å–æ¶ˆç›¸åº”çš„å®šæ—¶å™¨ã€‚
+     * å¦‚æœéœ€è¦å–æ¶ˆ `update` å®šæ—¶å™¨ï¼Œè¯·ä½¿ç”¨ `unscheudleUpdate()`ã€‚
      @deprecated Please use 'Scheduler::unschedule' instead.
      @since v0.99.3
      @js NA
@@ -615,7 +615,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE void unscheduleSelector(SEL_SCHEDULE selector, Ref *target) { unschedule(selector, target); };
     
     /** @~english Checks whether a selector for a given target is scheduled.
-     * @~chinese ÅĞ¶ÏÖ¸¶¨µÄ¶ÔÏóºÍ»Øµ÷º¯ÊıÊÇ·ñÉèÖÃÁË¶¨Ê±Æ÷¡£
+     * @~chinese åˆ¤æ–­æŒ‡å®šçš„å¯¹è±¡å’Œå›è°ƒå‡½æ•°æ˜¯å¦è®¾ç½®äº†å®šæ—¶å™¨ã€‚
      @deprecated Please use 'Scheduler::isScheduled' instead.
      @since v0.99.3
      @js NA
@@ -623,7 +623,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE bool isScheduledForTarget(Ref *target, SEL_SCHEDULE selector) { return isScheduled(selector, target); };
     
     /** @~english Unschedules the update selector for a given target
-     * @~chinese È¡ÏûÖ¸¶¨¶ÔÏóµÄËùÓĞ¶¨Ê±Æ÷¡£
+     * @~chinese å–æ¶ˆæŒ‡å®šå¯¹è±¡çš„æ‰€æœ‰å®šæ—¶å™¨ã€‚
      @deprecated Please use 'Scheduler::unscheduleUpdate' instead.
      @since v0.99.3
      */

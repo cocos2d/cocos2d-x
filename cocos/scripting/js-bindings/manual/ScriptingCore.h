@@ -1,4 +1,4 @@
-/******************************************************************
+﻿/******************************************************************
  * Created by Rolando Abarca on 3/14/12.
  * Copyright (c) 2012 Zynga Inc. All rights reserved.
  * Copyright (c) 2013-2014 Chukong Technologies Inc.

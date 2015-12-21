@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2015 Neo Kim (neo.kim@neofect.com)
 
 http://www.cocos2d-x.org
@@ -40,7 +40,7 @@ namespace ui {
 /**@~english
  * Scroll bar being attached to ScrollView layout container.
  * @~chinese 
- * Ìí¼Óµ½ScrollView²¼¾ÖÈİÆ÷µÄ¹ö¶¯Ìõ¡£
+ * æ·»åŠ åˆ°ScrollViewå¸ƒå±€å®¹å™¨çš„æ»šåŠ¨æ¡ã€‚
  */
 class CC_GUI_DLL ScrollViewBar : public ProtectedNode
 {
@@ -49,7 +49,7 @@ public:
     /**@~english
      * Default constructor
      * @~chinese 
-     * Ä¬ÈÏ¹¹Ôìº¯Êı
+     * é»˜è®¤æ„é€ å‡½æ•°
      * @js ctor
      * @lua new
      */
@@ -58,7 +58,7 @@ public:
     /**@~english
      * Default destructor
      * @~chinese 
-     * Ä¬ÈÏµÄÎö¹¹º¯Êı
+     * é»˜è®¤çš„ææ„å‡½æ•°
      * @js NA
      * @lua NA
      */
@@ -67,99 +67,99 @@ public:
     /**@~english
      * Create a ScrollViewBar with its parent ScrollView and direction.
      * @~chinese 
-     * Í¨¹ıÒ»¸öScrollView¼°Æä¹ö¶¯·½Ïò´´½¨Ò»¸öScrollViewBar
+     * é€šè¿‡ä¸€ä¸ªScrollViewåŠå…¶æ»šåŠ¨æ–¹å‘åˆ›å»ºä¸€ä¸ªScrollViewBar
      * @return @~english A ScrollViewBar instance.
-     * @~chinese Ò»¸öScrollViewBarÊµÀı¡£
+     * @~chinese ä¸€ä¸ªScrollViewBarå®ä¾‹ã€‚
      */
     static ScrollViewBar* create(ScrollView* parent, ScrollView::Direction direction);
     
     /**
      * @brief @~english Set the scroll bar position from the left-bottom corner (horizontal) or right-top corner (vertical).
      *
-     * @~chinese ÉèÖÃ¹ö¶¯ÌõµÄÎ»ÖÃ, °´ÕÕÆ«ÒÆË®Æ½·½Ïò×óÏÂ½Ç»ò´¹Ö±·½ÏòÓÒÉÏ½ÇµÄ¾àÀëÀ´ÉèÖÃ
+     * @~chinese è®¾ç½®æ»šåŠ¨æ¡çš„ä½ç½®, æŒ‰ç…§åç§»æ°´å¹³æ–¹å‘å·¦ä¸‹è§’æˆ–å‚ç›´æ–¹å‘å³ä¸Šè§’çš„è·ç¦»æ¥è®¾ç½®
      * 
      * @param positionFromCorner @~english The position from the left-bottom corner (horizontal) or right-top corner (vertical).
-     * @~chinese Æ«ÒÆË®Æ½·½Ïò×óÏÂ½Ç»ò´¹Ö±·½ÏòÓÒÉÏ½ÇµÄ¾àÀë
+     * @~chinese åç§»æ°´å¹³æ–¹å‘å·¦ä¸‹è§’æˆ–å‚ç›´æ–¹å‘å³ä¸Šè§’çš„è·ç¦»
      */
     void setPositionFromCorner(const Vec2& positionFromCorner);
     
     /**
      * @brief @~english Get the scroll bar position from the left-bottom corner (horizontal) or right-top corner (vertical).
      *
-     * @~chinese »ñÈ¡Æ«ÒÆË®Æ½·½Ïò×óÏÂ½Ç»ò´¹Ö±·½ÏòÓÒÉÏ½ÇµÄ¾àÀë
+     * @~chinese è·å–åç§»æ°´å¹³æ–¹å‘å·¦ä¸‹è§’æˆ–å‚ç›´æ–¹å‘å³ä¸Šè§’çš„è·ç¦»
      * 
      * @return @~english A Vec2 struct.
-     * @~chinese Ò»¸öµã×ø±ê.
+     * @~chinese ä¸€ä¸ªç‚¹åæ ‡.
      */
     Vec2 getPositionFromCorner() const;
     
     /**
      * @brief @~english Set the scroll bar's width
      *
-     * @~chinese ÉèÖÃ¹ö¶¯ÌõµÄ¿í¶È
+     * @~chinese è®¾ç½®æ»šåŠ¨æ¡çš„å®½åº¦
      * 
      * @param width @~english The scroll bar's width
-     * @~chinese ¹ö¶¯ÌõµÄ¿í¶È
+     * @~chinese æ»šåŠ¨æ¡çš„å®½åº¦
      */
     void setWidth(float width);
     
     /**
      * @brief @~english Get the scroll bar's width
      *
-     * @~chinese »ñÈ¡¹ö¶¯ÌõµÄ¿í¶È
+     * @~chinese è·å–æ»šåŠ¨æ¡çš„å®½åº¦
      * 
      * @return @~english the scroll bar's width
-     * @~chinese ¹ö¶¯ÌõµÄ¿í¶È
+     * @~chinese æ»šåŠ¨æ¡çš„å®½åº¦
      */
     float getWidth() const;
     
     /**
      * @brief @~english Set scroll bar auto hide state
      *
-     * @~chinese ÉèÖÃ¹ö¶¯Ìõ×Ô¶¯Òş²Ø×´Ì¬
+     * @~chinese è®¾ç½®æ»šåŠ¨æ¡è‡ªåŠ¨éšè—çŠ¶æ€
      * 
      * @param scroll @~english bar auto hide state
-     * @~chinese ÊÇ·ñ×Ô¶¯Òş²Ø×´Ì¬À¸
+     * @~chinese æ˜¯å¦è‡ªåŠ¨éšè—çŠ¶æ€æ 
      */
     void setAutoHideEnabled(bool autoHideEnabled);
     
     /**
      * @brief @~english Query scroll bar auto hide state
      *
-     * @~chinese ²éÑ¯¹ö¶¯Ìõ×Ô¶¯Òş²Ø×´Ì¬
+     * @~chinese æŸ¥è¯¢æ»šåŠ¨æ¡è‡ªåŠ¨éšè—çŠ¶æ€
      * 
      * @return @~english True if scroll bar auto hide is enabled, false otherwise.
-     * @~chinese Èç¹ûÆôÓÃÁË¹ö¶¯Ìõ×Ô¶¯Òş²Ø,Ôò·µ»ØÕæ,·ñÔò·µ»Ø¼Ù¡£
+     * @~chinese å¦‚æœå¯ç”¨äº†æ»šåŠ¨æ¡è‡ªåŠ¨éšè—,åˆ™è¿”å›çœŸ,å¦åˆ™è¿”å›å‡ã€‚
      */
     bool isAutoHideEnabled() const { return _autoHideEnabled; }
     
     /**
      * @brief @~english Set scroll bar auto hide time
      *
-     * @~chinese ÉèÖÃ¹ö¶¯Ìõ×Ô¶¯Òş²ØÊ±¼ä
+     * @~chinese è®¾ç½®æ»šåŠ¨æ¡è‡ªåŠ¨éšè—æ—¶é—´
      * 
      * @param scroll @~english bar auto hide time
-     * @~chinese ¹ö¶¯Ìõ×Ô¶¯Òş²ØµÄÊ±¼ä
+     * @~chinese æ»šåŠ¨æ¡è‡ªåŠ¨éšè—çš„æ—¶é—´
      */
     void setAutoHideTime(float autoHideTime) { _autoHideTime = autoHideTime; }
     
     /**
      * @brief @~english Get the scroll bar's auto hide time
      *
-     * @~chinese »ñÈ¡¹ö¶¯ÌõµÄ×Ô¶¯Òş²ØÊ±¼ä
+     * @~chinese è·å–æ»šåŠ¨æ¡çš„è‡ªåŠ¨éšè—æ—¶é—´
      * 
      * @return @~english the scroll bar's auto hide time
-     * @~chinese ¹ö¶¯ÌõµÄ×Ô¶¯Òş²ØÊ±¼ä
+     * @~chinese æ»šåŠ¨æ¡çš„è‡ªåŠ¨éšè—æ—¶é—´
      */
     float getAutoHideTime() const { return _autoHideTime; }
     
     /**
      * @brief @~english This is called by parent ScrollView when the parent is scrolled. Don't call this directly.
      *
-     * @~chinese µ±ScrollView¹ö¶¯µÄÊ±ºò»áµ÷ÓÃ´Ë·½·¨À´¸üĞÂ¹ö¶¯Ìõ¡£¿ª·¢Õß²»ĞèÒªÖ±½Óµ÷ÓÃÕâ¸ö¡£
+     * @~chinese å½“ScrollViewæ»šåŠ¨çš„æ—¶å€™ä¼šè°ƒç”¨æ­¤æ–¹æ³•æ¥æ›´æ–°æ»šåŠ¨æ¡ã€‚å¼€å‘è€…ä¸éœ€è¦ç›´æ¥è°ƒç”¨è¿™ä¸ªã€‚
      * 
      * @param amount @~english how much the inner container of ScrollView is out of boundary
-     * @~chinese ScrollViewµÄÄÚ²¿ÈİÆ÷µÄ³¬³öÁË¶àÉÙ±ß½ç
+     * @~chinese ScrollViewçš„å†…éƒ¨å®¹å™¨çš„è¶…å‡ºäº†å¤šå°‘è¾¹ç•Œ
      */
     virtual void onScrolled(const Vec2& outOfBoundary);
     
@@ -173,13 +173,13 @@ public:
     
     /**
      * @brief @~english This is called by parent ScrollView when a touch is began. Don't call this directly.
-     * @~chinese µ±ScrollViewµÄ´¥ÃşÊÂÇé¿ªÊ¼µÄÊ±ºò»áµ÷ÓÃ´Ë·½·¨¡£¿ª·¢Õß²»ĞèÒªÖ±½Óµ÷ÓÃÕâ¸ö¡£
+     * @~chinese å½“ScrollViewçš„è§¦æ‘¸äº‹æƒ…å¼€å§‹çš„æ—¶å€™ä¼šè°ƒç”¨æ­¤æ–¹æ³•ã€‚å¼€å‘è€…ä¸éœ€è¦ç›´æ¥è°ƒç”¨è¿™ä¸ªã€‚
      */
     void onTouchBegan();
     
     /**
      * @brief @~english This is called by parent ScrollView when a touch is ended. Don't call this directly.
-     * @~chinese µ±ScrollViewµÄ´¥ÃşÊÂ¼ş½áÊøµÄÊ±ºò»áµ÷ÓÃ´Ë·½·¨¡£¿ª·¢Õß²»ĞèÒªÖ±½Óµ÷ÓÃÕâ¸ö¡£
+     * @~chinese å½“ScrollViewçš„è§¦æ‘¸äº‹ä»¶ç»“æŸçš„æ—¶å€™ä¼šè°ƒç”¨æ­¤æ–¹æ³•ã€‚å¼€å‘è€…ä¸éœ€è¦ç›´æ¥è°ƒç”¨è¿™ä¸ªã€‚
      */
     void onTouchEnded();
     

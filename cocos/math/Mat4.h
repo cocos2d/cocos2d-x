@@ -1,4 +1,4 @@
-/**
+﻿/**
  Copyright 2013 BlackBerry Inc.
  Copyright (c) 2014-2015 Chukong Technologies
 

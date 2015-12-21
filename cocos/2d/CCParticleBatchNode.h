@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2009 Matt Oswald
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2010-2012 cocos2d-x.org

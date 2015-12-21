@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  * Copyright (c) 2008 Radu Gruian
  * Copyright (c) 2011 Vit Valentin
  * Copyright (c) 2012 cocos2d-x.org
@@ -51,8 +51,8 @@ class Node;
 
 /** @~english An Array that contain control points.
  * Used by CardinalSplineTo, CardinalSplineBy, CatmullRomTo and CatmullRomBy actions.
- * @~chinese Ò»¸ö°üº¬¿ØÖÆµãĞÅÏ¢µÄÊı×é¡£
- * ±»»ùÊıÑùÌõÇúÏß¶¯×÷CardinalSplineTo£¬CardinalSplineByºÍCatmull-RomÑùÌõÇúÏß¶¯×÷CatmullRomTo£¬CatmullRomByËùÊ¹ÓÃ
+ * @~chinese ä¸€ä¸ªåŒ…å«æ§åˆ¶ç‚¹ä¿¡æ¯çš„æ•°ç»„ã€‚
+ * è¢«åŸºæ•°æ ·æ¡æ›²çº¿åŠ¨ä½œCardinalSplineToï¼ŒCardinalSplineByå’ŒCatmull-Romæ ·æ¡æ›²çº¿åŠ¨ä½œCatmullRomToï¼ŒCatmullRomByæ‰€ä½¿ç”¨
  * @ingroup Actions
  * @js NA
  */
@@ -61,9 +61,9 @@ class CC_DLL PointArray : public Ref, public Clonable
 public:
 
     /** @~english Creates and initializes a Points array with capacity.
-     * @~chinese ´´½¨²¢³õÊ¼»¯Ò»¸öÒ»¶¨ÈİÁ¿µÄÊı×é¡£
+     * @~chinese åˆ›å»ºå¹¶åˆå§‹åŒ–ä¸€ä¸ªä¸€å®šå®¹é‡çš„æ•°ç»„ã€‚
      * @param capacity @~english The size of the array.
-     * @~chinese Êı×éµÄÈİÁ¿¡£
+     * @~chinese æ•°ç»„çš„å®¹é‡ã€‚
      * @js NA
      */
     static PointArray* create(ssize_t capacity);
@@ -81,95 +81,95 @@ public:
 
     /** @~english Initializes a Catmull Rom or a Cardinal Spline control point array with a capacity hint.
      *
-     * @~chinese ÒÔÒ»¶¨ÈİÁ¿³õÊ¼»¯Ò»¸öCatmull-RomÑùÌõ»ò»ùÊıÑùÌõ¿ØÖÆµãÊı×é¡£
+     * @~chinese ä»¥ä¸€å®šå®¹é‡åˆå§‹åŒ–ä¸€ä¸ªCatmull-Romæ ·æ¡æˆ–åŸºæ•°æ ·æ¡æ§åˆ¶ç‚¹æ•°ç»„ã€‚
      * 
      * @param capacity @~english The size of the array.
-     * @~chinese Êı×éµÄÈİÁ¿¡£
+     * @~chinese æ•°ç»„çš„å®¹é‡ã€‚
      * @return @~english True if successfully initialized, false otherwise.
-     * @~chinese Èç¹û³õÊ¼»¯³É¹¦Ôò·µ»ØTrue£¬·ñÔò·µ»ØFalse¡£
+     * @~chinese å¦‚æœåˆå§‹åŒ–æˆåŠŸåˆ™è¿”å›Trueï¼Œå¦åˆ™è¿”å›Falseã€‚
      * @js NA
      */
     bool initWithCapacity(ssize_t capacity);
 
     /** @~english Appends a control point.
      *
-     * @~chinese ÔÚÊı×éÄ©Î²¸½¼ÓÒ»¸ö¿ØÖÆµã¡£
+     * @~chinese åœ¨æ•°ç»„æœ«å°¾é™„åŠ ä¸€ä¸ªæ§åˆ¶ç‚¹ã€‚
      * 
      * @param controlPoint @~english A control point.
-     * @~chinese Ò»¸ö¿ØÖÆµã¡£
+     * @~chinese ä¸€ä¸ªæ§åˆ¶ç‚¹ã€‚
      * @js NA
      */
     void addControlPoint(Vec2 controlPoint);
 
     /** @~english Inserts a control point at a given index.
      *
-     * @~chinese ÔÚÊı×éÖ¸¶¨Î»ÖÃ²åÈëÒ»¸ö¿ØÖÆµã¡£
+     * @~chinese åœ¨æ•°ç»„æŒ‡å®šä½ç½®æ’å…¥ä¸€ä¸ªæ§åˆ¶ç‚¹ã€‚
      * 
      * @param controlPoint @~english A control point.
-     * @~chinese Ò»¸ö¿ØÖÆµã¡£
+     * @~chinese ä¸€ä¸ªæ§åˆ¶ç‚¹ã€‚
      * @param index @~english The index to insert the point.
-     * @~chinese ²åÈëµÄÎ»ÖÃ¡£
+     * @~chinese æ’å…¥çš„ä½ç½®ã€‚
      * @js NA
      */
     void insertControlPoint(Vec2 &controlPoint, ssize_t index);
 
     /** @~english Replaces an existing control point at a given index.
      *
-     * @~chinese ÔÚÊı×éÖ¸¶¨Î»ÖÃÌæ»»Ò»¸ö¿ØÖÆµã¡£
+     * @~chinese åœ¨æ•°ç»„æŒ‡å®šä½ç½®æ›¿æ¢ä¸€ä¸ªæ§åˆ¶ç‚¹ã€‚
      * 
      * @param controlPoint @~english A new control point.
-     * @~chinese Ò»¸öĞÂµÄ¿ØÖÆµã¡£
+     * @~chinese ä¸€ä¸ªæ–°çš„æ§åˆ¶ç‚¹ã€‚
      * @param index @~english The index of the contorl point to be replaced.
-     * @~chinese ĞèÒªÌæ»»µÄ¿ØÖÆµãÔÚÊı×éÖĞµÄÎ»ÖÃ¡£
+     * @~chinese éœ€è¦æ›¿æ¢çš„æ§åˆ¶ç‚¹åœ¨æ•°ç»„ä¸­çš„ä½ç½®ã€‚
      * @js NA
      */
     void replaceControlPoint(Vec2 &controlPoint, ssize_t index);
 
     /** @~english Get the value of a control point at a given index.
      *
-     * @~chinese »ñµÃÊı×éÖ¸¶¨Î»ÖÃµÄ¿ØÖÆµã¡£
+     * @~chinese è·å¾—æ•°ç»„æŒ‡å®šä½ç½®çš„æ§åˆ¶ç‚¹ã€‚
      * 
      * @param index @~english The index of the control point.
-     * @~chinese ¿ØÖÆµãÔÚÊı×éÖĞµÄÎ»ÖÃ¡£
+     * @~chinese æ§åˆ¶ç‚¹åœ¨æ•°ç»„ä¸­çš„ä½ç½®ã€‚
      * @return @~english Return the control point.
-     * @~chinese ·µ»Ø¿ØÖÆµã¡£
+     * @~chinese è¿”å›æ§åˆ¶ç‚¹ã€‚
      * @js NA
      */
     Vec2 getControlPointAtIndex(ssize_t index);
 
     /** @~english Deletes a control point at a given index
      *
-     * @~chinese É¾³ıÖ¸¶¨Î»ÖÃµÄ¿ØÖÆµã
+     * @~chinese åˆ é™¤æŒ‡å®šä½ç½®çš„æ§åˆ¶ç‚¹
      * 
      * @param index @~english The index of the control point.
-     * @~chinese ĞèÒªÉ¾³ıµÄ¿ØÖÆµãÔÚÊı×éÖĞµÄÎ»ÖÃ¡£
+     * @~chinese éœ€è¦åˆ é™¤çš„æ§åˆ¶ç‚¹åœ¨æ•°ç»„ä¸­çš„ä½ç½®ã€‚
      * @js NA
      */
     void removeControlPointAtIndex(ssize_t index);
 
     /** @~english Returns the number of objects of the control point array.
      *
-     * @~chinese ·µ»ØÊı×éÖĞµÄ¿ØÖÆµãÊıÁ¿¡£
+     * @~chinese è¿”å›æ•°ç»„ä¸­çš„æ§åˆ¶ç‚¹æ•°é‡ã€‚
      * 
      * @return @~english The number of objects of the control point array.
-     * @~chinese Êı×éÖĞµÄ¿ØÖÆµãÊıÁ¿¡£
+     * @~chinese æ•°ç»„ä¸­çš„æ§åˆ¶ç‚¹æ•°é‡ã€‚
      * @js NA
      */
     ssize_t count() const;
 
     /** @~english Returns a new copy of the array reversed. User is responsible for releasing this copy.
      *
-     * @~chinese ·µ»ØÒ»¸öĞÂµÄ¿ØÖÆµãÊı×éµÄ¿½±´£¬Õâ¸öÊı×éÊÇÔ­Êı×éµÄ·­×ª¡£ÓÃ»§¸ºÔğÊÍ·ÅÕâ¸ö¸±±¾¡£
+     * @~chinese è¿”å›ä¸€ä¸ªæ–°çš„æ§åˆ¶ç‚¹æ•°ç»„çš„æ‹·è´ï¼Œè¿™ä¸ªæ•°ç»„æ˜¯åŸæ•°ç»„çš„ç¿»è½¬ã€‚ç”¨æˆ·è´Ÿè´£é‡Šæ”¾è¿™ä¸ªå‰¯æœ¬ã€‚
      * 
      * @return @~english A new copy of the array reversed.
-     * @~chinese Êı×éµÄ·­×ª¿½±´¡£
+     * @~chinese æ•°ç»„çš„ç¿»è½¬æ‹·è´ã€‚
      * @see `reverseInline`
      * @js NA
      */
     PointArray* reverse() const;
 
     /** @~english Reverse the current control point array inline, without generating a new one.
-     * @~chinese Ö±½Ó·­×ªµ±Ç°Êı×é£¬Õâ¸öAPI²»»á²úÉúĞÂµÄÊı×é¡£
+     * @~chinese ç›´æ¥ç¿»è½¬å½“å‰æ•°ç»„ï¼Œè¿™ä¸ªAPIä¸ä¼šäº§ç”Ÿæ–°çš„æ•°ç»„ã€‚
      * @see `reverse`
      * @js NA
      */
@@ -188,7 +188,7 @@ public:
      */
     void setControlPoints(std::vector<Vec2*> *controlPoints);
 private:
-    /** @~english Array that contains the control points.  @~chinese ¿ØÖÆµãÊı×é¡£*/
+    /** @~english Array that contains the control points.  @~chinese æ§åˆ¶ç‚¹æ•°ç»„ã€‚*/
     std::vector<Vec2*> *_controlPoints;
 };
 
@@ -197,7 +197,7 @@ private:
  * An action that moves the target with a Cardinal Spline curve to a destination point.
  * http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline
  * @~chinese 
- * CardinalSplineTo¶¯×÷ÊÇÒ»¸öÈÃÄ¿±ê½ÚµãÑØCardinal SplineÑùÌõÇúÏßµ½´ïÄ¿µÄµØµÄ¶¯×÷¡£
+ * CardinalSplineToåŠ¨ä½œæ˜¯ä¸€ä¸ªè®©ç›®æ ‡èŠ‚ç‚¹æ²¿Cardinal Splineæ ·æ¡æ›²çº¿åˆ°è¾¾ç›®çš„åœ°çš„åŠ¨ä½œã€‚
  * http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline
  * @ingroup Actions
  */
@@ -206,13 +206,13 @@ class CC_DLL CardinalSplineTo : public ActionInterval
 public:
 
     /** @~english Creates an CardinalSplineTo action with a Cardinal Spline array of control points and tension.
-     * @~chinese ÓÃÒ»¸ö»ùÊıÑùÌõÇúÏß¿ØÖÆµãĞÅÏ¢ºÍÕÅÁ¦´´½¨Ò»¸ö»ùÊıÑùÌõÇúÏß¶¯×÷¡£
+     * @~chinese ç”¨ä¸€ä¸ªåŸºæ•°æ ·æ¡æ›²çº¿æ§åˆ¶ç‚¹ä¿¡æ¯å’Œå¼ åŠ›åˆ›å»ºä¸€ä¸ªåŸºæ•°æ ·æ¡æ›²çº¿åŠ¨ä½œã€‚
      * @param duration @~english Duration in seconds.
-     * @~chinese ÒÔÃëÎªµ¥Î»µÄ³ÖĞøÊ±¼ä¡£
+     * @~chinese ä»¥ç§’ä¸ºå•ä½çš„æŒç»­æ—¶é—´ã€‚
      * @param points @~english An control point array.
-     * @~chinese ¿ØÖÆµãÊı×é¡£
+     * @~chinese æ§åˆ¶ç‚¹æ•°ç»„ã€‚
      * @param tension @~english Goodness of fit.
-     * @~chinese ÇúÏßÕÅÁ¦¡£
+     * @~chinese æ›²çº¿å¼ åŠ›ã€‚
      * @code
      * When this function bound to js or lua,the input params are changed.
      * In js: var create(var t,var table)
@@ -235,30 +235,30 @@ public:
      * Initializes the action with a duration and an array of control points.
      *
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍ¿ØÖÆµãÊı×é³õÊ¼»¯Õâ¸ö¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’Œæ§åˆ¶ç‚¹æ•°ç»„åˆå§‹åŒ–è¿™ä¸ªåŠ¨ä½œã€‚
      * 
      * @param duration @~english Duration in seconds.
-     * @~chinese ÒÔÃëÎªµ¥Î»µÄ³ÖĞøÊ±¼ä¡£
+     * @~chinese ä»¥ç§’ä¸ºå•ä½çš„æŒç»­æ—¶é—´ã€‚
      * @param points @~english An control point array.
-     * @~chinese ¿ØÖÆµãÊı×é¡£
+     * @~chinese æ§åˆ¶ç‚¹æ•°ç»„ã€‚
      * @param tension @~english Goodness of fit.
-     * @~chinese ÇúÏßÕÅÁ¦¡£
+     * @~chinese æ›²çº¿å¼ åŠ›ã€‚
      */
     bool initWithDuration(float duration, PointArray* points, float tension);
     /** @~english It will update the target position and change the `_previousPosition` to `newPos`
      *
-     * @~chinese Ëü½«¸üĞÂÄ¿±êÎ»ÖÃ²¢½«`_previousPosition`ÉèÖÃÎª`newPos`
+     * @~chinese å®ƒå°†æ›´æ–°ç›®æ ‡ä½ç½®å¹¶å°†`_previousPosition`è®¾ç½®ä¸º`newPos`
      * 
      * @param newPos @~english The new position.
-     * @~chinese ĞÂµÄÎ»ÖÃ¡£
+     * @~chinese æ–°çš„ä½ç½®ã€‚
      */
     virtual void updatePosition(Vec2 &newPos);
     /** @~english Return the control point array.
      *
-     * @~chinese ·µ»Ø¿ØÖÆµãÊı×é¡£
+     * @~chinese è¿”å›æ§åˆ¶ç‚¹æ•°ç»„ã€‚
      * 
      * @return @~english Control point array.
-     * @~chinese ¿ØÖÆµãÊı×é
+     * @~chinese æ§åˆ¶ç‚¹æ•°ç»„
      */
     inline PointArray* getPoints() { return _points; }
     /**
@@ -279,12 +279,12 @@ public:
     
     /**
      * @param time @~english Interval in seconds.
-     * @~chinese ÒÔÃëÎªµ¥Î»µÄÊ±¼ä¼ä¸ô¡£
+     * @~chinese ä»¥ç§’ä¸ºå•ä½çš„æ—¶é—´é—´éš”ã€‚
      */
     virtual void update(float time) override;
 
 protected:
-    /** @~english Array of control points  @~chinese Ò»ÏµÁĞ¿ØÖÆµã*/
+    /** @~english Array of control points  @~chinese ä¸€ç³»åˆ—æ§åˆ¶ç‚¹*/
     PointArray *_points;
     float _deltaT;
     float _tension;
@@ -297,7 +297,7 @@ protected:
  * An action that moves the target with a Cardinal Spline curve by a certain distance.
  * http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline
  * @~chinese 
- * CardinalSplineBy¶¯×÷ÊÇÒ»¸öÈÃÄ¿±ê½ÚµãÑØCardinal SplineÑùÌõÇúÏßÒÆ¶¯Ò»¶¨¾àÀëµÄ¶¯×÷¡£
+ * CardinalSplineByåŠ¨ä½œæ˜¯ä¸€ä¸ªè®©ç›®æ ‡èŠ‚ç‚¹æ²¿Cardinal Splineæ ·æ¡æ›²çº¿ç§»åŠ¨ä¸€å®šè·ç¦»çš„åŠ¨ä½œã€‚
  * http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline
  * @ingroup Actions
  */
@@ -306,7 +306,7 @@ class CC_DLL CardinalSplineBy : public CardinalSplineTo
 public:
 
     /** @~english Creates an CardinalSplineBy action with a Cardinal Spline array of control points and tension.
-     * @~chinese ÓÃÒ»¸ö»ùÊıÑùÌõÇúÏß¿ØÖÆµãĞÅÏ¢ºÍÕÅÁ¦´´½¨Ò»¸ö»ùÊıÑùÌõÇúÏß¶¯×÷¡£
+     * @~chinese ç”¨ä¸€ä¸ªåŸºæ•°æ ·æ¡æ›²çº¿æ§åˆ¶ç‚¹ä¿¡æ¯å’Œå¼ åŠ›åˆ›å»ºä¸€ä¸ªåŸºæ•°æ ·æ¡æ›²çº¿åŠ¨ä½œã€‚
      * @code
      * When this function bound to js or lua,the input params are changed.
      * In js: var create(var t,var table).
@@ -314,11 +314,11 @@ public:
      * @endcode
      * 
      * @param duration @~english Duration in seconds.
-     * @~chinese ÒÔÃëÎªµ¥Î»µÄ³ÖĞøÊ±¼ä¡£
+     * @~chinese ä»¥ç§’ä¸ºå•ä½çš„æŒç»­æ—¶é—´ã€‚
      * @param points @~english An control point array.
-     * @~chinese ¿ØÖÆµãÊı×é¡£
+     * @~chinese æ§åˆ¶ç‚¹æ•°ç»„ã€‚
      * @param tension @~english Goodness of fit.
-     * @~chinese ÇúÏßÕÅÁ¦¡£
+     * @~chinese æ›²çº¿å¼ åŠ›ã€‚
      */
     static CardinalSplineBy* create(float duration, PointArray* points, float tension);
 
@@ -340,8 +340,8 @@ protected:
  * A Catmull Rom is a Cardinal Spline with a tension of 0.5.
  * http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
  * @~chinese 
- * CatmullRomTo¶¯×÷ÊÇÒ»¸öÈÃÄ¿±ê½ÚµãÑØCatmull-RomÑùÌõÇúÏßµ½´ïÄ¿µÄµØµÄ¶¯×÷¡£
- * Ò»¸öCatmull-RomÑùÌõÇúÏßÊÇÒ»¸öÕÅÁ¦Îª0.5µÄ»ùÊıÑùÌõÇúÏß¡£
+ * CatmullRomToåŠ¨ä½œæ˜¯ä¸€ä¸ªè®©ç›®æ ‡èŠ‚ç‚¹æ²¿Catmull-Romæ ·æ¡æ›²çº¿åˆ°è¾¾ç›®çš„åœ°çš„åŠ¨ä½œã€‚
+ * ä¸€ä¸ªCatmull-Romæ ·æ¡æ›²çº¿æ˜¯ä¸€ä¸ªå¼ åŠ›ä¸º0.5çš„åŸºæ•°æ ·æ¡æ›²çº¿ã€‚
  * http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
  * @ingroup Actions
  */
@@ -350,11 +350,11 @@ class CC_DLL CatmullRomTo : public CardinalSplineTo
 public:
 
     /** @~english Creates an CatmullRomTo action with an array of control points and tension.
-     * @~chinese ÓÃÒ»¸öCatmull-RomÑùÌõÇúÏß¿ØÖÆµãĞÅÏ¢ºÍÕÅÁ¦´´½¨Ò»¸öCatmull-RomÑùÌõÇúÏß¶¯×÷¡£
+     * @~chinese ç”¨ä¸€ä¸ªCatmull-Romæ ·æ¡æ›²çº¿æ§åˆ¶ç‚¹ä¿¡æ¯å’Œå¼ åŠ›åˆ›å»ºä¸€ä¸ªCatmull-Romæ ·æ¡æ›²çº¿åŠ¨ä½œã€‚
      * @param dt @~english Duration in seconds.
-     * @~chinese ÒÔÃëÎªµ¥Î»µÄ³ÖĞøÊ±¼ä¡£
+     * @~chinese ä»¥ç§’ä¸ºå•ä½çš„æŒç»­æ—¶é—´ã€‚
      * @param points @~english An control point array.
-     * @~chinese ¿ØÖÆµãÊı×é¡£
+     * @~chinese æ§åˆ¶ç‚¹æ•°ç»„ã€‚
      * @code
      * When this function bound to js or lua,the input params are changed.
      * In js: var create(var dt,var table).
@@ -367,12 +367,12 @@ public:
      * Initializes the action with a duration and an array of points.
      *
      * @~chinese 
-     * ÓÃ³ÖĞøÊ±¼äºÍ¿ØÖÆµãÊı×é³õÊ¼»¯Õâ¸ö¶¯×÷¡£
+     * ç”¨æŒç»­æ—¶é—´å’Œæ§åˆ¶ç‚¹æ•°ç»„åˆå§‹åŒ–è¿™ä¸ªåŠ¨ä½œã€‚
      * 
      * @param dt @~english Duration in seconds.
-     * @~chinese ÒÔÃëÎªµ¥Î»µÄ³ÖĞøÊ±¼ä¡£
+     * @~chinese ä»¥ç§’ä¸ºå•ä½çš„æŒç»­æ—¶é—´ã€‚
      * @param points @~english An control point array.
-     * @~chinese ¿ØÖÆµãÊı×é¡£
+     * @~chinese æ§åˆ¶ç‚¹æ•°ç»„ã€‚
      */
     bool initWithDuration(float dt, PointArray* points);
 
@@ -387,8 +387,8 @@ public:
  * A Catmull Rom is a Cardinal Spline with a tension of 0.5.
  * http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
  * @~chinese 
- * CatmullRomBy¶¯×÷ÊÇÒ»¸öÈÃÄ¿±ê½ÚµãÑØCatmull-RomÑùÌõÇúÏßÒÆ¶¯Ò»¶¨¾àÀëµÄ¶¯×÷¡£
- * Ò»¸öCatmull-RomÑùÌõÇúÏßÊÇÒ»¸öÕÅÁ¦Îª0.5µÄ»ùÊıÑùÌõÇúÏß¡£
+ * CatmullRomByåŠ¨ä½œæ˜¯ä¸€ä¸ªè®©ç›®æ ‡èŠ‚ç‚¹æ²¿Catmull-Romæ ·æ¡æ›²çº¿ç§»åŠ¨ä¸€å®šè·ç¦»çš„åŠ¨ä½œã€‚
+ * ä¸€ä¸ªCatmull-Romæ ·æ¡æ›²çº¿æ˜¯ä¸€ä¸ªå¼ åŠ›ä¸º0.5çš„åŸºæ•°æ ·æ¡æ›²çº¿ã€‚
  * http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
  * @ingroup Actions
  */
@@ -396,11 +396,11 @@ class CC_DLL CatmullRomBy : public CardinalSplineBy
 {
 public:
     /** @~english Creates an CatmullRomBy action with an array of control points and tension.
-     * @~chinese ÓÃÒ»¸öCatmull-RomÑùÌõÇúÏß¿ØÖÆµãĞÅÏ¢ºÍÕÅÁ¦´´½¨Ò»¸öCatmull-RomÑùÌõÇúÏß¶¯×÷¡£
+     * @~chinese ç”¨ä¸€ä¸ªCatmull-Romæ ·æ¡æ›²çº¿æ§åˆ¶ç‚¹ä¿¡æ¯å’Œå¼ åŠ›åˆ›å»ºä¸€ä¸ªCatmull-Romæ ·æ¡æ›²çº¿åŠ¨ä½œã€‚
      * @param dt @~english Duration in seconds.
-     * @~chinese ÒÔÃëÎªµ¥Î»µÄ³ÖĞøÊ±¼ä¡£
+     * @~chinese ä»¥ç§’ä¸ºå•ä½çš„æŒç»­æ—¶é—´ã€‚
      * @param points @~english An control point array.
-     * @~chinese ¿ØÖÆµãÊı×é¡£
+     * @~chinese æ§åˆ¶ç‚¹æ•°ç»„ã€‚
      * @code
      * When this function bound to js or lua,the input params are changed.
      * In js: var create(var dt,var table).
@@ -411,12 +411,12 @@ public:
 
     /** @~english Initializes the action with a duration and an array of points.
      *
-     * @~chinese ÓÃ³ÖĞøÊ±¼äºÍ¿ØÖÆµãÊı×é³õÊ¼»¯Õâ¸ö¶¯×÷¡£
+     * @~chinese ç”¨æŒç»­æ—¶é—´å’Œæ§åˆ¶ç‚¹æ•°ç»„åˆå§‹åŒ–è¿™ä¸ªåŠ¨ä½œã€‚
      * 
      * @param dt @~english Duration in seconds.
-     * @~chinese ÒÔÃëÎªµ¥Î»µÄ³ÖĞøÊ±¼ä¡£
+     * @~chinese ä»¥ç§’ä¸ºå•ä½çš„æŒç»­æ—¶é—´ã€‚
      * @param points @~english An control point array.
-     * @~chinese ¿ØÖÆµãÊı×é¡£
+     * @~chinese æ§åˆ¶ç‚¹æ•°ç»„ã€‚
      */
     bool initWithDuration(float dt, PointArray* points);
 
@@ -426,7 +426,7 @@ public:
 
 };
 
-/** @~english Returns the Cardinal Spline position for a given set of control points, tension and time.  @~chinese »ùÓÚÒ»¸ö¸ø¶¨µÄ¿ØÖÆµã£¬ÕÅÁ¦ºÍÊ±¼äµã·µ»Ø»ùÊıÑùÌõÇúÏßÉÏµÄÎ»ÖÃ¡£ */
+/** @~english Returns the Cardinal Spline position for a given set of control points, tension and time.  @~chinese åŸºäºä¸€ä¸ªç»™å®šçš„æ§åˆ¶ç‚¹ï¼Œå¼ åŠ›å’Œæ—¶é—´ç‚¹è¿”å›åŸºæ•°æ ·æ¡æ›²çº¿ä¸Šçš„ä½ç½®ã€‚ */
 extern CC_DLL Vec2 ccCardinalSplineAt(Vec2 &p0, Vec2 &p1, Vec2 &p2, Vec2 &p3, float tension, float t);
 
 // end of actions group

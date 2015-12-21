@@ -1,4 +1,4 @@
-
+ï»¿
 #ifndef __TOLUA_FIX_H_
 #define __TOLUA_FIX_H_
 
@@ -25,25 +25,25 @@ TOLUA_API void toluafix_open(lua_State* L);
  * The ptr should be point to a Ref object.
  * 
  * @~chinese 
- * °Ñ¶ÔÓ¦ÓÚptrµÄuserdataÑ¹µ½LuaÕ»¶¥¡£
- * Èç¹û¶ÔÓ¦ptrµÄuserdata²»´æÔÚ,Ëü½«µ÷ÓÃlua_newuserdataĞÂ½¨Ò»¸öuserdata¡£
- * Èç¹û¶ÔÓ¦ptrµÄuserdata´æÔÚ,Ëü½«¸üĞÂ¸¸ÀàµÄÔª±íĞÅÏ¢¡£
- * ´ËÍâ,´Ëº¯Êı»á¸üĞÂÒ»Ğ©Lua×¢²á±íµÄÊôĞÔtable,Èçtoluafix_refid_ptr_mapping,toluafix_refid_type_mapping,tolua_value_rootµÈµÈ¡£
- * Í¬Ê±,ÔÚtolua_ubox tableÖĞÔö¼Ó¶ÔÓ¦ptrµÄÒ»¸öÒıÓÃ¡£
- * ptrÓ¦¸ÃÖ¸ÏòÒ»¸öRef¶ÔÏó¡£
+ * æŠŠå¯¹åº”äºptrçš„userdataå‹åˆ°Luaæ ˆé¡¶ã€‚
+ * å¦‚æœå¯¹åº”ptrçš„userdataä¸å­˜åœ¨,å®ƒå°†è°ƒç”¨lua_newuserdataæ–°å»ºä¸€ä¸ªuserdataã€‚
+ * å¦‚æœå¯¹åº”ptrçš„userdataå­˜åœ¨,å®ƒå°†æ›´æ–°çˆ¶ç±»çš„å…ƒè¡¨ä¿¡æ¯ã€‚
+ * æ­¤å¤–,æ­¤å‡½æ•°ä¼šæ›´æ–°ä¸€äº›Luaæ³¨å†Œè¡¨çš„å±æ€§table,å¦‚toluafix_refid_ptr_mapping,toluafix_refid_type_mapping,tolua_value_rootç­‰ç­‰ã€‚
+ * åŒæ—¶,åœ¨tolua_ubox tableä¸­å¢åŠ å¯¹åº”ptrçš„ä¸€ä¸ªå¼•ç”¨ã€‚
+ * ptråº”è¯¥æŒ‡å‘ä¸€ä¸ªRefå¯¹è±¡ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param uid @~english the object id of the ptr.
- * @~chinese ptrµÄobject id¡£
+ * @~chinese ptrçš„object idã€‚
  * @param p_refid @~english the pointer points to the Lua reference id of the ptr.
- * @~chinese Ö¸ÏòptrµÄreference id³ÉÔ±±äÁ¿µÄÖ¸Õë¡£
+ * @~chinese æŒ‡å‘ptrçš„reference idæˆå‘˜å˜é‡çš„æŒ‡é’ˆã€‚
  * @param ptr @~english the pointer points to the Ref object.
- * @~chinese Ref¶ÔÏóÖ¸Õë¡£
+ * @~chinese Refå¯¹è±¡æŒ‡é’ˆã€‚
  * @param type @~english the type name of the ptr.
- * @~chinese ptrµÄÀàĞÍÃû³Æ¡£
+ * @~chinese ptrçš„ç±»å‹åç§°ã€‚
  * @return @~english -1 if the p_refid equal to nullptr or ptr equal to nullptr, otherwise return 0.
- * @~chinese Èç¹ûp_refidÎªnullptr»òÕßptrÎªnullptr,·µ»Ø1£¬·ñÔò·µ»Ø0¡£
+ * @~chinese å¦‚æœp_refidä¸ºnullptræˆ–è€…pträ¸ºnullptr,è¿”å›1ï¼Œå¦åˆ™è¿”å›0ã€‚
  * @lua NA
  * @js NA
  */
@@ -60,17 +60,17 @@ TOLUA_API int toluafix_pushusertype_ccobject(lua_State* L,
  * This function is called in the destructor of the Ref automatically.
  *
  * @~chinese 
- * ÔÚLua×¢²á±íÖĞ¸ù¾İrefid²éÕÒ¶ÔÓ¦µÄRef¶ÔÏóÖ¸Õë¡£
- * È»ºó,ÒÆ³ıLua×¢²á±íÖĞÒ»Ğ©ÓërefidsÏà¹ØµÄtableÖĞµÄÖµÒıÓÃ£¬Èçtoluafix_refid_type_mapping,toluafix_refid_ptr_mapping tolua_value_rootµÈµÈ¡£
- * Í¬Ê±£¬ÉèÖÃ¶ÔÓ¦µÄuserdataÎªnullptrÒÔ¼°ÒÆ³ıtolua_ubox tableµÄ¹ØÓÚuserdataµÄÒıÓÃ¡£
- * Õâ¸öº¯Êı»áÔÚRefµÄÎö¹¹º¯ÊıÖĞ×Ô¶¯µ÷ÓÃ¡£
+ * åœ¨Luaæ³¨å†Œè¡¨ä¸­æ ¹æ®refidæŸ¥æ‰¾å¯¹åº”çš„Refå¯¹è±¡æŒ‡é’ˆã€‚
+ * ç„¶å,ç§»é™¤Luaæ³¨å†Œè¡¨ä¸­ä¸€äº›ä¸refidsç›¸å…³çš„tableä¸­çš„å€¼å¼•ç”¨ï¼Œå¦‚toluafix_refid_type_mapping,toluafix_refid_ptr_mapping tolua_value_rootç­‰ç­‰ã€‚
+ * åŒæ—¶ï¼Œè®¾ç½®å¯¹åº”çš„userdataä¸ºnullpträ»¥åŠç§»é™¤tolua_ubox tableçš„å…³äºuserdataçš„å¼•ç”¨ã€‚
+ * è¿™ä¸ªå‡½æ•°ä¼šåœ¨Refçš„ææ„å‡½æ•°ä¸­è‡ªåŠ¨è°ƒç”¨ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param refid @~english the value of the _luaID of a Ref object.
- * @~chinese Ref¶ÔÑ®ÖĞ_luaIDµÄÖµ
+ * @~chinese Refå¯¹æ—¬ä¸­_luaIDçš„å€¼
  * @return @~english -1,if refid equals to 0 , type name found by refid equals to nil or corresponding userdata pointer equal to nullptr; return -2, if the Ref object pointer found by refid is nullptr; return 3, if the value corresponding to the Ref object pointer in the tolua_ubox is nil; otherwise return 0.
- * @~chinese -1£ºÈç¹ûrefidµÈÓÚ0,¸ù¾İrefid²éÕÒµ½µÄÀàĞÍÃû×ÖÎªnil»òÕßÏàÓ¦µÄuserdataÖ¸ÕëµÈÓÚnullptr;-2 : Èç¹û¸ù¾İrefid²éÕÒµ½µÄRef¶ÔÏóÖ¸ÕëÎªnullptr;3:Èç¹ûÔÚtolua_ubox tableÖĞ¶ÔÓ¦Ref¶ÔÏóÖ¸ÕëµÄÖµÎªnil;·ñÔò·µ»Ø0¡£
+ * @~chinese -1ï¼šå¦‚æœrefidç­‰äº0,æ ¹æ®refidæŸ¥æ‰¾åˆ°çš„ç±»å‹åå­—ä¸ºnilæˆ–è€…ç›¸åº”çš„userdataæŒ‡é’ˆç­‰äºnullptr;-2 : å¦‚æœæ ¹æ®refidæŸ¥æ‰¾åˆ°çš„Refå¯¹è±¡æŒ‡é’ˆä¸ºnullptr;3:å¦‚æœåœ¨tolua_ubox tableä¸­å¯¹åº”Refå¯¹è±¡æŒ‡é’ˆçš„å€¼ä¸ºnil;å¦åˆ™è¿”å›0ã€‚
  * @lua NA
  * @js NA
  */
@@ -81,17 +81,17 @@ TOLUA_API int toluafix_remove_ccobject_by_refid(lua_State* L, int refid);
  * Meanwhile add reference about the Lua function through the toluafix_refid_function_mapping table in the Lua registry.
  *
  * @~chinese 
- * »ñÈ¡¸ø¶¨LuaÕ»Ë÷ÒıÉÏLuaº¯ÊıµÄÒıÓÃid¡£
- * Í¬Ê±£¬ÔÚLua×¢²á±íµÄtoluafix_refid_function_mapping tableÖĞÔö¼ÓLuaº¯ÊıµÄÒıÓÃÓ³Éä¡£
+ * è·å–ç»™å®šLuaæ ˆç´¢å¼•ä¸ŠLuaå‡½æ•°çš„å¼•ç”¨idã€‚
+ * åŒæ—¶ï¼Œåœ¨Luaæ³¨å†Œè¡¨çš„toluafix_refid_function_mapping tableä¸­å¢åŠ Luaå‡½æ•°çš„å¼•ç”¨æ˜ å°„ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given accepteable index lo of stack.
- * @~chinese ¸ø¶¨ºÏÀíµÄLuaÕ»Ë÷Òı¡£
+ * @~chinese ç»™å®šåˆç†çš„Luaæ ˆç´¢å¼•ã€‚
  * @param def @~english useless.
- * @~chinese ÎŞÓÃµÄ²ÎÊı¡£
+ * @~chinese æ— ç”¨çš„å‚æ•°ã€‚
  * @return @~english 0 if the type of value at the given accepteable index lo of stack is not LUA_TFUNCTION; otherwise return the reference id.
- * @~chinese Èç¹û¸ø¶¨ºÏÀíµÄLuaÕ»Ë÷ÒıÉÏµÄÖµµÄÀàĞÍ²»ÊÇLUA_TFUNCTION£¬·µ»Ø0£»·ñÔò£¬·µ»Ø¶ÔÓ¦µÄreference id¡£ 
+ * @~chinese å¦‚æœç»™å®šåˆç†çš„Luaæ ˆç´¢å¼•ä¸Šçš„å€¼çš„ç±»å‹ä¸æ˜¯LUA_TFUNCTIONï¼Œè¿”å›0ï¼›å¦åˆ™ï¼Œè¿”å›å¯¹åº”çš„reference idã€‚ 
  * @lua NA
  * @js NA
  */
@@ -101,12 +101,12 @@ TOLUA_API int toluafix_ref_function(lua_State* L, int lo, int def);
  * Push the Lua function found by the refid in the toluafix_refid_function_mapping table in the Lua registry on the top index of the current stack.
  *
  * @~chinese 
- * ÔÚLua×¢²á±íÖĞtoluafix_refid_function_mappingn tableÖĞ²éÕÒ¶ÔÓ¦refid¶ÔÓ¦µÄLuaº¯Êı£¬²¢ÇÒ½«Ñ¹µ½µ±Ç°µÄÕ»¶¥¡£
+ * åœ¨Luaæ³¨å†Œè¡¨ä¸­toluafix_refid_function_mappingn tableä¸­æŸ¥æ‰¾å¯¹åº”refidå¯¹åº”çš„Luaå‡½æ•°ï¼Œå¹¶ä¸”å°†å‹åˆ°å½“å‰çš„æ ˆé¡¶ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param refid @~english referenc id corresponding to the Lua function.
- * @~chinese ¶ÔÓ¦Luaº¯ÊıµÄreference id¡£
+ * @~chinese å¯¹åº”Luaå‡½æ•°çš„reference idã€‚
  * @lua NA
  * @js NA
  */
@@ -116,12 +116,12 @@ TOLUA_API void toluafix_get_function_by_refid(lua_State* L, int refid);
  * Remove the reference of the Lua function corresponding to the refid in the toluafix_refid_function_mapping table in the Lua registry.
  *
  * @~chinese
- * ÒÆ³ıLua×¢²á±íÖĞtoluafix_refid_function_mapping±íÖĞ¶ÔÓ¦refidµÄLuaº¯ÊıÒıÓÃ¡£
+ * ç§»é™¤Luaæ³¨å†Œè¡¨ä¸­toluafix_refid_function_mappingè¡¨ä¸­å¯¹åº”refidçš„Luaå‡½æ•°å¼•ç”¨ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param refid @~english referenc id corresponding to the Lua function.
- * @~chinese ¶ÔÓ¦Luaº¯ÊıµÄreference id¡£
+ * @~chinese å¯¹åº”Luaå‡½æ•°çš„reference idã€‚
  * @lua NA
  * @js NA
  */
@@ -131,20 +131,20 @@ TOLUA_API void toluafix_remove_function_by_refid(lua_State* L, int refid);
  * Verify the value at the given acceptable index is a function or not.
  * 
  * @~chinese 
- * ÑéÖ¤¸ø¶¨ºÏÀíµÄLuaÕ»Ë÷ÒıÉÏÊÇ·ñÎªÒ»¸öLuaº¯Êı¡£
+ * éªŒè¯ç»™å®šåˆç†çš„Luaæ ˆç´¢å¼•ä¸Šæ˜¯å¦ä¸ºä¸€ä¸ªLuaå‡½æ•°ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given accepteable index lo of stack.
- * @~chinese ¸ø¶¨ºÏÀíµÄLuaÕ»Ë÷Òı¡£
+ * @~chinese ç»™å®šåˆç†çš„Luaæ ˆç´¢å¼•ã€‚
  * @param type @~english useless.
- * @~chinese ÎŞÓÃµÄ¡£
+ * @~chinese æ— ç”¨çš„ã€‚
  * @param def @~english useless.
- * @~chinese ÎŞÓÃµÄ¡£
+ * @~chinese æ— ç”¨çš„ã€‚
  * @param err @~english if triggger the error, record the error message to err.
- * @~chinese Èç¹ûÑéÖ¤¹ı³ÌÖĞ´¥·¢ÁË´íÎó,½«´íÎóĞÅÏ¢¼ÇÂ¼ÔÚerrÖĞ¡£
+ * @~chinese å¦‚æœéªŒè¯è¿‡ç¨‹ä¸­è§¦å‘äº†é”™è¯¯,å°†é”™è¯¯ä¿¡æ¯è®°å½•åœ¨errä¸­ã€‚
  * @return @~english 1 if the value at the given acceptable index is a function, otherwise return 0.
- * @~chinese Èç¹û¸ø¶¨ºÏÀíµÄÕ»Ë÷ÒıÉÏÒ»¸öº¯Êı·µ»Ø1£¬·ñÔò·µ»Ø0¡£
+ * @~chinese å¦‚æœç»™å®šåˆç†çš„æ ˆç´¢å¼•ä¸Šä¸€ä¸ªå‡½æ•°è¿”å›1ï¼Œå¦åˆ™è¿”å›0ã€‚
  * @lua NA
  * @js NA
  */
@@ -158,20 +158,20 @@ TOLUA_API int toluafix_totable(lua_State* L, int lo, int def);
  * Verify the value at the given acceptable index is a table or not.
  * 
  * @~chinese 
- * ÑéÖ¤¸ø¶¨ºÏÀíµÄLuaÕ»Ë÷ÒıÉÏÊÇ·ñÎªÒ»¸ötable¡£
+ * éªŒè¯ç»™å®šåˆç†çš„Luaæ ˆç´¢å¼•ä¸Šæ˜¯å¦ä¸ºä¸€ä¸ªtableã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param lo @~english the given accepteable index lo of stack.
- * @~chinese ¸ø¶¨ºÏÀíµÄLuaÕ»Ë÷Òı¡£
+ * @~chinese ç»™å®šåˆç†çš„Luaæ ˆç´¢å¼•ã€‚
  * @param type @~english useless.
- * @~chinese ÎŞÓÃµÄ¡£
+ * @~chinese æ— ç”¨çš„ã€‚
  * @param def @~english whether has the default value or not.
- * @~chinese ÊÇ·ñÓĞÄ¬ÈÏÖµ¡£
+ * @~chinese æ˜¯å¦æœ‰é»˜è®¤å€¼ã€‚
  * @param err @~english if triggger the error, record the error message to err.
- * @~chinese Èç¹ûÑéÖ¤¹ı³ÌÖĞ´¥·¢ÁË´íÎó,½«´íÎóĞÅÏ¢¼ÇÂ¼ÔÚerrÖĞ¡£
+ * @~chinese å¦‚æœéªŒè¯è¿‡ç¨‹ä¸­è§¦å‘äº†é”™è¯¯,å°†é”™è¯¯ä¿¡æ¯è®°å½•åœ¨errä¸­ã€‚
  * @return @~english 1 if the value at the given acceptable index is a table or have def value is not 0, otherwise return 0.
- * @~chinese ¸ø¶¨ºÏÀíµÄLuaÕ»Ë÷ÒıÉÏÊÇÒ»¸ötable·µ»Ø1£¬·ñÔò·µ»Ø0¡£
+ * @~chinese ç»™å®šåˆç†çš„Luaæ ˆç´¢å¼•ä¸Šæ˜¯ä¸€ä¸ªtableè¿”å›1ï¼Œå¦åˆ™è¿”å›0ã€‚
  * @lua NA
  * @js NA
  */
@@ -182,13 +182,13 @@ TOLUA_API int toluafix_istable(lua_State* L, int lo, const char* type, int def, 
  * If the type corresponding to the index of the stack is LUA_TSTRING, LUA_TBOOLEAN or LUA_TNUMBER, it would output the value of the index,otherwise output the type name of the index.
  *
  * @~chinese 
- * ´òÓ¡Õ»¶¥¿ªÊ¼´òÓ¡Õ»ÖĞµÄËùÓĞĞÅÏ¢¡£
- * Èç¹ûÕ»Ë÷ÒıÉÏµÄÖµµÄÀàĞÍÊÇLUA_TSTRING LUA_TBOOLEAN»òLUA_TNUMBER,Ëü½«Êä³öÕ»Ë÷ÒıÉÏµÄÖµ,·ñÔòÊä³öÕ»Ë÷ÒıµÄÖµµÄÀàĞÍÃû³Æ¡£
+ * æ‰“å°æ ˆé¡¶å¼€å§‹æ‰“å°æ ˆä¸­çš„æ‰€æœ‰ä¿¡æ¯ã€‚
+ * å¦‚æœæ ˆç´¢å¼•ä¸Šçš„å€¼çš„ç±»å‹æ˜¯LUA_TSTRING LUA_TBOOLEANæˆ–LUA_TNUMBER,å®ƒå°†è¾“å‡ºæ ˆç´¢å¼•ä¸Šçš„å€¼,å¦åˆ™è¾“å‡ºæ ˆç´¢å¼•çš„å€¼çš„ç±»å‹åç§°ã€‚
  * 
  * @param L @~english the current lua_State.
- * @~chinese µ±Ç°lua_State¡£
+ * @~chinese å½“å‰lua_Stateã€‚
  * @param label @~english the string pointer to define the label of the dump information.
- * @~chinese Ö¸ÏòdumpĞÅÏ¢µÄ±êÇ©µÄ×Ö·û´®Ö¸Õë£¬¿ÉÒÔÎª¿Õ¡£
+ * @~chinese æŒ‡å‘dumpä¿¡æ¯çš„æ ‡ç­¾çš„å­—ç¬¦ä¸²æŒ‡é’ˆï¼Œå¯ä»¥ä¸ºç©ºã€‚
  * @lua NA
  * @js NA
  */

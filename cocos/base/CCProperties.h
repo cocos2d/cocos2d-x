@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright 2013 BlackBerry Inc.
  Copyright (c) 2015 Chukong Technologies
 
@@ -158,12 +158,12 @@ class Data;
  * as necessary.
  *
  * @~chinese 
- * ¶¨ÒåÒ»¸öÓÃÓÚ¼ÓÔØÎÄ±¾ÎÄ¼şµÄÊôĞÔÎÄ¼ş¡£
+ * å®šä¹‰ä¸€ä¸ªç”¨äºåŠ è½½æ–‡æœ¬æ–‡ä»¶çš„å±æ€§æ–‡ä»¶ã€‚
  *
- * Ò»¸öÊôĞÔÎÄ¼şÓï·¨ºÜ¼òµ¥£¬¿ÉÒÔÖ»°üº¬ÃüÃû¿Õ¼äºÍ¼üÖµ¶Ô£¨ÃüÃû¿Õ¼äÏÂµÄÊôĞÔ£©¡£
- * Õâ¸öÎÄ¼ş¿ÉÒÔÊ¹ÓÃÓÃ»§Ö¸¶¨µÄÈÎÒâÀ©Õ¹Ãû¡£
+ * ä¸€ä¸ªå±æ€§æ–‡ä»¶è¯­æ³•å¾ˆç®€å•ï¼Œå¯ä»¥åªåŒ…å«å‘½åç©ºé—´å’Œé”®å€¼å¯¹ï¼ˆå‘½åç©ºé—´ä¸‹çš„å±æ€§ï¼‰ã€‚
+ * è¿™ä¸ªæ–‡ä»¶å¯ä»¥ä½¿ç”¨ç”¨æˆ·æŒ‡å®šçš„ä»»æ„æ‰©å±•åã€‚
  *
- * ÕâÀïÓĞÒ»¸ö¼òµ¥µÄÊ¾ÀıÎÄ¼ş£¬¸²¸ÇÁË markup ÓïÑÔµÄËùÓĞ¿ÉÓÃ¹¦ÄÜ£º
+ * è¿™é‡Œæœ‰ä¸€ä¸ªç®€å•çš„ç¤ºä¾‹æ–‡ä»¶ï¼Œè¦†ç›–äº† markup è¯­è¨€çš„æ‰€æœ‰å¯ç”¨åŠŸèƒ½ï¼š
  *
   @verbatim
      // This is a comment.
@@ -206,12 +206,12 @@ class Data;
      }
   @endverbatim
  * 
- * ÓĞÁ½ÖÖ·½·¨¿ÉÒÔ´ÓÎÄ¼şÖĞ¼ìË÷Êı¾İ¡£
- * Èç¹ûÒÑÖª¿ÉÓÃµÄÃüÃû¿Õ¼äÓë¼üÖµ¶Ô£¬ÄÇÃ´¿ÉÒÔÊ¹ÓÃ ID »òÕßÃû³ÆÀ´²éÕÒÊôĞÔ¡£
- * ÀıÈç£ºÈç¹ûÒªÊ¹ÓÃ "spriteTexture" Õâ¸öÃüÃû¿Õ¼ä¼°ÆäÊôĞÔ£¬ÄÇÃ´¿ÉÒÔÍ¨¹ıµ÷ÓÃ getNamespace() »ñÈ¡ÃüÃû¿Õ¼ä£¬
- * ÔÙµ÷ÓÃ getString() »òÕß getInt() À´»ñÈ¡Êı¾İ¡£
- * ÃüÃû¿Õ¼äÔÚÄÚ´æÖĞÒ²ÊÇÒ»¸öÊôĞÔ¶ÔÏó¡£
- * ¿ÉÒÔ²Î¿¼ÈçÏÂ´úÂëÀ´¶ÁÈ¡ "spriteTexture" ÃüÃû¿Õ¼äÏÂµÄÊôĞÔ£º
+ * æœ‰ä¸¤ç§æ–¹æ³•å¯ä»¥ä»æ–‡ä»¶ä¸­æ£€ç´¢æ•°æ®ã€‚
+ * å¦‚æœå·²çŸ¥å¯ç”¨çš„å‘½åç©ºé—´ä¸é”®å€¼å¯¹ï¼Œé‚£ä¹ˆå¯ä»¥ä½¿ç”¨ ID æˆ–è€…åç§°æ¥æŸ¥æ‰¾å±æ€§ã€‚
+ * ä¾‹å¦‚ï¼šå¦‚æœè¦ä½¿ç”¨ "spriteTexture" è¿™ä¸ªå‘½åç©ºé—´åŠå…¶å±æ€§ï¼Œé‚£ä¹ˆå¯ä»¥é€šè¿‡è°ƒç”¨ getNamespace() è·å–å‘½åç©ºé—´ï¼Œ
+ * å†è°ƒç”¨ getString() æˆ–è€… getInt() æ¥è·å–æ•°æ®ã€‚
+ * å‘½åç©ºé—´åœ¨å†…å­˜ä¸­ä¹Ÿæ˜¯ä¸€ä¸ªå±æ€§å¯¹è±¡ã€‚
+ * å¯ä»¥å‚è€ƒå¦‚ä¸‹ä»£ç æ¥è¯»å– "spriteTexture" å‘½åç©ºé—´ä¸‹çš„å±æ€§ï¼š
  * 
   @verbatim
      // Create the top-level Properties object.
@@ -228,8 +228,8 @@ class Data;
      SAFE_DELETE(properties);
   @endverbatim
  *
- * ÁíÒ»·½Ãæ£¬Èç¹ûÃüÃû¿Õ¼ä¼°ÆäÊôĞÔÎ´Öª£¬ÄÇÃ´¿ÉÒÔÊ¹ÓÃ getNextNamespace() ºÍ getNextProperty() º¯ÊıÖğ¸ö¶ÁÈ¡ÃüÃû¿Õ¼äÓë¼üÖµ¶Ô¡£
- * ÏÂÃæµÄ´úÂë¿ÉÒÔ½«ÊôĞÔÎÄ¼şµÄÄÚÈİÊä³öµ½¿ØÖÆÌ¨£º
+ * å¦ä¸€æ–¹é¢ï¼Œå¦‚æœå‘½åç©ºé—´åŠå…¶å±æ€§æœªçŸ¥ï¼Œé‚£ä¹ˆå¯ä»¥ä½¿ç”¨ getNextNamespace() å’Œ getNextProperty() å‡½æ•°é€ä¸ªè¯»å–å‘½åç©ºé—´ä¸é”®å€¼å¯¹ã€‚
+ * ä¸‹é¢çš„ä»£ç å¯ä»¥å°†å±æ€§æ–‡ä»¶çš„å†…å®¹è¾“å‡ºåˆ°æ§åˆ¶å°ï¼š
  * 
   @verbatim
      void printProperties(Properties* properties)
@@ -260,9 +260,9 @@ class Data;
      }
   @endverbatim
  *
- * ×¢ÒâÉÏÊöÊ¾Àı´úÂë²»ÄÜ´¦Àí¶à²ã¼¶µÄÃüÃû¿Õ¼ä£¬¿ÉÒÔÍ¨¹ıµ÷ÕûÀ´ÊµÏÖ¡£
- * »¹Òª×¢ÒâµÄÊÇ£¬ÔÚÊôĞÔÎÄ¼şÖĞ£¬Ã»ÓĞ±íÊ¾ÊôĞÔÖµÀàĞÍµÄ×Ö¶Î¡£
- * Èç¹ûÊôĞÔÖµµÄÀàĞÍÎ´Öª£¬¿ÉÒÔ¶ÁÈ¡µ½×Ö·û´®ÀàĞÍµÄÖµ¡£
+ * æ³¨æ„ä¸Šè¿°ç¤ºä¾‹ä»£ç ä¸èƒ½å¤„ç†å¤šå±‚çº§çš„å‘½åç©ºé—´ï¼Œå¯ä»¥é€šè¿‡è°ƒæ•´æ¥å®ç°ã€‚
+ * è¿˜è¦æ³¨æ„çš„æ˜¯ï¼Œåœ¨å±æ€§æ–‡ä»¶ä¸­ï¼Œæ²¡æœ‰è¡¨ç¤ºå±æ€§å€¼ç±»å‹çš„å­—æ®µã€‚
+ * å¦‚æœå±æ€§å€¼çš„ç±»å‹æœªçŸ¥ï¼Œå¯ä»¥è¯»å–åˆ°å­—ç¬¦ä¸²ç±»å‹çš„å€¼ã€‚
  */
 class CC_DLL Properties
 {
@@ -273,7 +273,7 @@ public:
     /**@~english
      * Data types supported by the properties class.
      * @~chinese 
-     * Properties ÀàÖĞÖ§³ÖµÄÊı¾İÀàĞÍÁĞ±í¡£
+     * Properties ç±»ä¸­æ”¯æŒçš„æ•°æ®ç±»å‹åˆ—è¡¨ã€‚
      */
     enum Type
     {
@@ -292,23 +292,23 @@ public:
      * (and "#<namespace-id>/<namespace-id>/.../<namespace-id>" is optional).
      * 
      * @~chinese 
-     * ´ÓÖ¸¶¨µÄ URL ´´½¨Ò»¸ö Properties ¶ÔÏó¡£URL µÄ¸ñÊ½Îª£º
-     * "<ÎÄ¼şÂ·¾¶>.<À©Õ¹Ãû>#<ÃüÃû¿Õ¼ä ID>/<ÃüÃû¿Õ¼ä ID>/.../<ÃüÃû¿Õ¼ä ID>"
-     * (ÆäÖĞ "#<ÃüÃû¿Õ¼ä ID>" ÊÇ¿ÉÑ¡µÄ)
+     * ä»æŒ‡å®šçš„ URL åˆ›å»ºä¸€ä¸ª Properties å¯¹è±¡ã€‚URL çš„æ ¼å¼ä¸ºï¼š
+     * "<æ–‡ä»¶è·¯å¾„>.<æ‰©å±•å>#<å‘½åç©ºé—´ ID>/<å‘½åç©ºé—´ ID>/.../<å‘½åç©ºé—´ ID>"
+     * (å…¶ä¸­ "#<å‘½åç©ºé—´ ID>" æ˜¯å¯é€‰çš„)
      * 
      * @param url @~english The URL to create the properties from.
      * 
-     * @~chinese Ö¸¶¨µÄ URL¡£
+     * @~chinese æŒ‡å®šçš„ URLã€‚
      * 
      * @return @~english The created Properties or NULL if there was an error.
-     * @~chinese ·µ»Ø Properties ÊµÀı¡£Èç¹û´´½¨Ê§°Ü£¬·µ»Ø nullptr¡£
+     * @~chinese è¿”å› Properties å®ä¾‹ã€‚å¦‚æœåˆ›å»ºå¤±è´¥ï¼Œè¿”å› nullptrã€‚
      */
     static Properties* createNonRefCounted(const std::string& url);
 
     /**@~english
      * Destructor.
      * @~chinese 
-     * Îö¹¹º¯Êı¡£
+     * ææ„å‡½æ•°ã€‚
      */
     ~Properties();
 
@@ -320,19 +320,19 @@ public:
      * the property name.
      *
      * @~chinese 
-     * »ñÈ¡ÏÂÒ»¸öÊôĞÔµÄÃû³Æ¡£
+     * è·å–ä¸‹ä¸€ä¸ªå±æ€§çš„åç§°ã€‚
      * 
-     * Èç¹û·µ»ØÖµÊÇÒ»¸öÓĞĞ§µÄÊôĞÔ£¬¿ÉÒÔÍ¨¹ıÈÎºÎ get º¯ÊıÀ´»ñÈ¡ÊôĞÔÖµ£¨name ²ÎÊıÊ¹ÓÃ NULL£©¡£
+     * å¦‚æœè¿”å›å€¼æ˜¯ä¸€ä¸ªæœ‰æ•ˆçš„å±æ€§ï¼Œå¯ä»¥é€šè¿‡ä»»ä½• get å‡½æ•°æ¥è·å–å±æ€§å€¼ï¼ˆname å‚æ•°ä½¿ç”¨ NULLï¼‰ã€‚
      * 
      * @return @~english The name of the next property, or NULL if there are no properties remaining.
-     * @~chinese ÏÂÒ»¸öÊôĞÔµÄÃû³Æ£¬Èç¹û²»´æÔÚÔò·µ»Ø NULL¡£
+     * @~chinese ä¸‹ä¸€ä¸ªå±æ€§çš„åç§°ï¼Œå¦‚æœä¸å­˜åœ¨åˆ™è¿”å› NULLã€‚
      */
     const char* getNextProperty();
 
     /**@~english
      * Get the next namespace.
      * @~chinese 
-     * »ñÈ¡ÏÂÒ»¸öÃüÃû¿Õ¼ä¡£
+     * è·å–ä¸‹ä¸€ä¸ªå‘½åç©ºé—´ã€‚
      */
     Properties* getNextNamespace();
 
@@ -340,7 +340,7 @@ public:
      * Rewind the getNextProperty() and getNextNamespace() iterators
      * to the beginning of the file.
      * @~chinese 
-     * ÖØÖÃ getNextProperty() ºÍ getNextNamespace() »ñÈ¡µÄµü´úÆ÷µ½ÎÄ¼şµÄ¿ªÊ¼¡£
+     * é‡ç½® getNextProperty() å’Œ getNextNamespace() è·å–çš„è¿­ä»£å™¨åˆ°æ–‡ä»¶çš„å¼€å§‹ã€‚
      */
     void rewind();
 
@@ -350,22 +350,22 @@ public:
      * within this Property.
      *
      * @~chinese 
-     * Í¨¹ıÖ¸¶¨µÄ ID »òÕßÃû³ÆÀ´»ñÈ¡ÃüÃû¿Õ¼ä¡£¸Ã·½·¨¿ÉÒÔÑ¡ÔñÔÚ
-     * µ±Ç°¶ÔÏóµÄËùÓĞÃüÃû¿Õ¼äÒÔ¼°ÄÚ²¿µÄÃüÃû¿Õ¼äÖĞ½øĞĞµİ¹é²éÕÒ¡£
+     * é€šè¿‡æŒ‡å®šçš„ ID æˆ–è€…åç§°æ¥è·å–å‘½åç©ºé—´ã€‚è¯¥æ–¹æ³•å¯ä»¥é€‰æ‹©åœ¨
+     * å½“å‰å¯¹è±¡çš„æ‰€æœ‰å‘½åç©ºé—´ä»¥åŠå†…éƒ¨çš„å‘½åç©ºé—´ä¸­è¿›è¡Œé€’å½’æŸ¥æ‰¾ã€‚
      * 
      * @param id @~english The ID or name of the namespace to find.
-     * @~chinese ÃüÃû¿Õ¼äµÄID»òÃû³Æ¡£
+     * @~chinese å‘½åç©ºé—´çš„IDæˆ–åç§°ã€‚
      * @param searchNames @~english If true, namespace names are used in the search,
      *      instead of namespace IDs. By default this parameter is false
      *      and namespace IDs are searched.
-     * @~chinese Èç¹ûÎª true ÔòÊ¹ÓÃÃû³ÆÀ´²éÕÒ£¬·ñÔòÊ¹ÓÃ ID ½øĞĞ²éÕÒ¡£Ä¬ÈÏÊ¹ÓÃ ID ½øĞĞ²éÕÒ¡£
+     * @~chinese å¦‚æœä¸º true åˆ™ä½¿ç”¨åç§°æ¥æŸ¥æ‰¾ï¼Œå¦åˆ™ä½¿ç”¨ ID è¿›è¡ŒæŸ¥æ‰¾ã€‚é»˜è®¤ä½¿ç”¨ ID è¿›è¡ŒæŸ¥æ‰¾ã€‚
      * @param recurse @~english If true, perform a depth-first search, otherwise search
      *      only the immediate child namespaces.
      * 
-     * @~chinese Èç¹ûÎª true£¬Ôò½øĞĞµİ¹é²éÕÒ£»·ñÔòÖ»ÔÚµ±Ç°¶ÔÏóÖĞ²éÕÒ¡£
+     * @~chinese å¦‚æœä¸º trueï¼Œåˆ™è¿›è¡Œé€’å½’æŸ¥æ‰¾ï¼›å¦åˆ™åªåœ¨å½“å‰å¯¹è±¡ä¸­æŸ¥æ‰¾ã€‚
      * 
      * @return @~english A properties object with the given ID or name.
-     * @~chinese ÓëÖ¸¶¨µÄÃû³Æ»ò ID Æ¥ÅäµÄ Properties ¶ÔÏó¡£
+     * @~chinese ä¸æŒ‡å®šçš„åç§°æˆ– ID åŒ¹é…çš„ Properties å¯¹è±¡ã€‚
      */
     Properties* getNamespace(const char* id, bool searchNames = false, bool recurse = true) const;
 
@@ -373,10 +373,10 @@ public:
      * Get the name of this Property's namespace.
      *
      * @~chinese 
-     * »ñÈ¡µ±Ç°¶ÔÏóµÄÃüÃû¿Õ¼äÃû³Æ¡£
+     * è·å–å½“å‰å¯¹è±¡çš„å‘½åç©ºé—´åç§°ã€‚
      * 
      * @return @~english The name of this Property's namespace.
-     * @~chinese µ±Ç°¶ÔÏóµÄÃüÃû¿Õ¼äÃû³Æ¡£
+     * @~chinese å½“å‰å¯¹è±¡çš„å‘½åç©ºé—´åç§°ã€‚
      */
     const char* getNamespace() const;
 
@@ -385,10 +385,10 @@ public:
      * but its uniqueness is not enforced.
      *
      * @~chinese 
-     * »ñÈ¡µ±Ç°¶ÔÏóµÄÃüÃû¿Õ¼ä ID¡£ID Ó¦¸ÃÊÇÒ»¸öÎ¨Ò»µÄÖµ£¬µ«ÊÇ²¢²»Ç¿ÖÆÒªÇóÆäÎ¨Ò»ĞÔ¡£
+     * è·å–å½“å‰å¯¹è±¡çš„å‘½åç©ºé—´ IDã€‚ID åº”è¯¥æ˜¯ä¸€ä¸ªå”¯ä¸€çš„å€¼ï¼Œä½†æ˜¯å¹¶ä¸å¼ºåˆ¶è¦æ±‚å…¶å”¯ä¸€æ€§ã€‚
      * 
      * @return @~english The ID of this Property's namespace.
-     * @~chinese µ±Ç°¶ÔÏóµÄÃüÃû¿Õ¼ä ID¡£
+     * @~chinese å½“å‰å¯¹è±¡çš„å‘½åç©ºé—´ IDã€‚
      */
     const char* getId() const;
 
@@ -396,14 +396,14 @@ public:
      * Check if a property with the given name is specified in this Properties object.
      *
      * @~chinese 
-     * ¼ì²éÊÇ·ñ´æÔÚÖ¸¶¨Ãû³ÆµÄÊôĞÔ¡£
+     * æ£€æŸ¥æ˜¯å¦å­˜åœ¨æŒ‡å®šåç§°çš„å±æ€§ã€‚
      * 
      * @param name @~english The name of the property to query.
      * 
-     * @~chinese Òª¼ì²éµÄÊôĞÔµÄÃû³Æ¡£
+     * @~chinese è¦æ£€æŸ¥çš„å±æ€§çš„åç§°ã€‚
      * 
      * @return @~english True if the property exists, false otherwise.
-     * @~chinese Èç¹û´æÔÚ·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœå­˜åœ¨è¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     bool exists(const char* name) const;
 
@@ -411,14 +411,14 @@ public:
      * Returns the type of a property.
      *
      * @~chinese 
-     * ·µ»ØÊôĞÔµÄÀàĞÍ¡£
+     * è¿”å›å±æ€§çš„ç±»å‹ã€‚
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's type.
      *
-     * @~chinese ÊôĞÔµÄÃû³Æ£¬Èç¹ûÎª NULL Ôò»ñÈ¡µ±Ç°¶ÔÏóµÄÀàĞÍ¡£
+     * @~chinese å±æ€§çš„åç§°ï¼Œå¦‚æœä¸º NULL åˆ™è·å–å½“å‰å¯¹è±¡çš„ç±»å‹ã€‚
      * 
      * @return @~english The type of the property.
-     * @~chinese ÊôĞÔµÄÀàĞÍ¡£
+     * @~chinese å±æ€§çš„ç±»å‹ã€‚
      */
     Type getType(const char* name = NULL) const;
 
@@ -427,16 +427,16 @@ public:
      * whatever the intended type of the property.
      *
      * @~chinese 
-     * »ñÈ¡Ö¸¶¨ÊôĞÔÖµµÄ×Ö·û´®¡£¿ÉÒÔ¼ìË÷ÈÎÒâÀàĞÍµÄÊôĞÔ¡£
+     * è·å–æŒ‡å®šå±æ€§å€¼çš„å­—ç¬¦ä¸²ã€‚å¯ä»¥æ£€ç´¢ä»»æ„ç±»å‹çš„å±æ€§ã€‚
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese ÊôĞÔÃû³Æ£¬Èç¹ûÎª NULL Ôò·µ»Øµ±Ç°ÊôĞÔµÄÖµ¡£
+     * @~chinese å±æ€§åç§°ï¼Œå¦‚æœä¸º NULL åˆ™è¿”å›å½“å‰å±æ€§çš„å€¼ã€‚
      * @param defaultValue @~english The default value to return if the specified property does not exist.
      * 
-     * @~chinese Ä¬ÈÏÖµ£¬Èç¹ûÖ¸¶¨µÄÊôĞÔ²»´æÔÚ£¬Ôò·µ»Ø´ËÄ¬ÈÏÖµ¡£
+     * @~chinese é»˜è®¤å€¼ï¼Œå¦‚æœæŒ‡å®šçš„å±æ€§ä¸å­˜åœ¨ï¼Œåˆ™è¿”å›æ­¤é»˜è®¤å€¼ã€‚
      * 
      * @return @~english The value of the given property as a string, or the empty string if no property with that name exists.
-     * @~chinese Ö¸¶¨ÊôĞÔÖµµÄ×Ö·û´®¡£Èç¹ûÊôĞÔ²»´æÔÚ£¬Ôò·µ»ØÖ¸¶¨µÄÄ¬ÈÏÖµ»òÕß¿Õ×Ö·û´®¡£
+     * @~chinese æŒ‡å®šå±æ€§å€¼çš„å­—ç¬¦ä¸²ã€‚å¦‚æœå±æ€§ä¸å­˜åœ¨ï¼Œåˆ™è¿”å›æŒ‡å®šçš„é»˜è®¤å€¼æˆ–è€…ç©ºå­—ç¬¦ä¸²ã€‚
      */
     const char* getString(const char* name = NULL, const char* defaultValue = NULL) const;
 
@@ -452,20 +452,20 @@ public:
      * is returned.
      *
      * @~chinese 
-     * ÉèÖÃÖ¸¶¨Ãû³ÆµÄÊôĞÔÖµ×Ö·û´®¡£
+     * è®¾ç½®æŒ‡å®šåç§°çš„å±æ€§å€¼å­—ç¬¦ä¸²ã€‚
      * 
-     * Èç¹ûÊôĞÔ²»´æÔÚ£¬ÔòÔö¼Ó¸ÃÊôĞÔ¡£·ñÔò£¬²éÕÒµ½µÄµÚÒ»¸öÊôĞÔÖµ½«±»¸üĞÂ¡£
+     * å¦‚æœå±æ€§ä¸å­˜åœ¨ï¼Œåˆ™å¢åŠ è¯¥å±æ€§ã€‚å¦åˆ™ï¼ŒæŸ¥æ‰¾åˆ°çš„ç¬¬ä¸€ä¸ªå±æ€§å€¼å°†è¢«æ›´æ–°ã€‚
      * 
-     * Èç¹ûÃû³ÆÊÇ NULL£¬Ôò¸üĞÂµ±Ç°ÊôĞÔµÄÖµ¡£Èç¹ûµ±Ç°¶ÔÏó²»ÊÇÒ»¸öÊôĞÔ£¬Ôò·µ»Ø false¡£
+     * å¦‚æœåç§°æ˜¯ NULLï¼Œåˆ™æ›´æ–°å½“å‰å±æ€§çš„å€¼ã€‚å¦‚æœå½“å‰å¯¹è±¡ä¸æ˜¯ä¸€ä¸ªå±æ€§ï¼Œåˆ™è¿”å› falseã€‚
      * 
      * @param name @~english The name of the property to set.
-     * @~chinese Ö¸¶¨µÄÊôĞÔÃû³Æ¡£
+     * @~chinese æŒ‡å®šçš„å±æ€§åç§°ã€‚
      * @param value @~english The property value.
      *
-     * @~chinese ÉèÖÃµÄÊôĞÔÖµ¡£
+     * @~chinese è®¾ç½®çš„å±æ€§å€¼ã€‚
      * 
      * @return @~english True if the property was set, false otherwise.
-     * @~chinese Èç¹ûÉèÖÃ³É¹¦·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè®¾ç½®æˆåŠŸè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     bool setString(const char* name, const char* value);
 
@@ -473,16 +473,16 @@ public:
      * Interpret the value of the given property as a boolean.
      *
      * @~chinese 
-     * »ñÈ¡²¼¶ûÀàĞÍµÄÊôĞÔÖµ¡£
+     * è·å–å¸ƒå°”ç±»å‹çš„å±æ€§å€¼ã€‚
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese Ö¸¶¨µÄÊôĞÔÃû³Æ¡£Èç¹ûÎª NULL£¬Ôò»ñÈ¡µ±Ç°¶ÔÏóµÄÊôĞÔÖµ¡£
+     * @~chinese æŒ‡å®šçš„å±æ€§åç§°ã€‚å¦‚æœä¸º NULLï¼Œåˆ™è·å–å½“å‰å¯¹è±¡çš„å±æ€§å€¼ã€‚
      * @param defaultValue @~english the default value to return if the specified property does not exist within the properties file.
      * 
-     * @~chinese Ä¬ÈÏÖµ£¬Èç¹ûÕÒ²»µ½Ö¸¶¨µÄÊôĞÔ£¬Ôò·µ»Ø´ËÄ¬ÈÏÖµ¡£
+     * @~chinese é»˜è®¤å€¼ï¼Œå¦‚æœæ‰¾ä¸åˆ°æŒ‡å®šçš„å±æ€§ï¼Œåˆ™è¿”å›æ­¤é»˜è®¤å€¼ã€‚
      * 
      * @return @~english true if the property exists and its value is "true", otherwise false.
-     * @~chinese Ö¸¶¨ÊôĞÔµÄ²¼¶ûÖµ¡£Èç¹ûÊôĞÔ²»´æÔÚ£¬Ôò·µ»ØÖ¸¶¨µÄÄ¬ÈÏÖµ»òÕß false¡£
+     * @~chinese æŒ‡å®šå±æ€§çš„å¸ƒå°”å€¼ã€‚å¦‚æœå±æ€§ä¸å­˜åœ¨ï¼Œåˆ™è¿”å›æŒ‡å®šçš„é»˜è®¤å€¼æˆ–è€… falseã€‚
      */
     bool getBool(const char* name = NULL, bool defaultValue = false) const;
 
@@ -492,17 +492,17 @@ public:
      * If the property exists but could not be scanned, an error will be logged and zero will be returned.
      *
      * @~chinese 
-     * »ñÈ¡Ö¸¶¨ÊôĞÔµÄÕûÊıÖµ¡£
-     * Èç¹ûÊôĞÔ²»´æÔÚ£¬½«·µ»Ø 0¡£
-     * Èç¹ûÊôĞÔ´æÔÚ£¬µ«²¢·ÇÕûÊıÀàĞÍ£¬ÔòÊä³ö´íÎóÈÕÖ¾²¢·µ»Ø 0¡£
+     * è·å–æŒ‡å®šå±æ€§çš„æ•´æ•°å€¼ã€‚
+     * å¦‚æœå±æ€§ä¸å­˜åœ¨ï¼Œå°†è¿”å› 0ã€‚
+     * å¦‚æœå±æ€§å­˜åœ¨ï¼Œä½†å¹¶éæ•´æ•°ç±»å‹ï¼Œåˆ™è¾“å‡ºé”™è¯¯æ—¥å¿—å¹¶è¿”å› 0ã€‚
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
      * 
-     * @~chinese Ö¸¶¨µÄÊôĞÔÃû³Æ£¬Èç¹ûÎª NULL Ôò»ñÈ¡µ±Ç°¶ÔÏóµÄÊôĞÔÖµ¡£
+     * @~chinese æŒ‡å®šçš„å±æ€§åç§°ï¼Œå¦‚æœä¸º NULL åˆ™è·å–å½“å‰å¯¹è±¡çš„å±æ€§å€¼ã€‚
      * 
      * @return @~english The value of the given property interpreted as an integer.
      *   Zero if the property does not exist or could not be scanned.
-     * @~chinese »ñÈ¡ÊôĞÔµÄÕûÊıÖµ¡£Èç¹ûÊôĞÔ²»´æÔÚ»òÕß¶ÁÈ¡Ê§°ÜÔò·µ»Ø 0¡£
+     * @~chinese è·å–å±æ€§çš„æ•´æ•°å€¼ã€‚å¦‚æœå±æ€§ä¸å­˜åœ¨æˆ–è€…è¯»å–å¤±è´¥åˆ™è¿”å› 0ã€‚
      */
     int getInt(const char* name = NULL) const;
 
@@ -512,17 +512,17 @@ public:
      * If the property exists but could not be scanned, an error will be logged and zero will be returned.
      *
      * @~chinese 
-     * »ñÈ¡Ö¸¶¨ÊôĞÔµÄ¸¡µãÖµ¡£
-     * Èç¹ûÊôĞÔ²»´æÔÚ£¬½«·µ»Ø 0¡£
-     * Èç¹ûÊôĞÔ´æÔÚ£¬µ«²¢·Ç¸¡µãÀàĞÍ£¬ÔòÊä³ö´íÎóÈÕÖ¾²¢·µ»Ø 0¡£
+     * è·å–æŒ‡å®šå±æ€§çš„æµ®ç‚¹å€¼ã€‚
+     * å¦‚æœå±æ€§ä¸å­˜åœ¨ï¼Œå°†è¿”å› 0ã€‚
+     * å¦‚æœå±æ€§å­˜åœ¨ï¼Œä½†å¹¶éæµ®ç‚¹ç±»å‹ï¼Œåˆ™è¾“å‡ºé”™è¯¯æ—¥å¿—å¹¶è¿”å› 0ã€‚
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
      * 
-     * @~chinese Ö¸¶¨µÄÊôĞÔÃû³Æ£¬Èç¹ûÎª NULL Ôò»ñÈ¡µ±Ç°¶ÔÏóµÄÊôĞÔÖµ¡£
+     * @~chinese æŒ‡å®šçš„å±æ€§åç§°ï¼Œå¦‚æœä¸º NULL åˆ™è·å–å½“å‰å¯¹è±¡çš„å±æ€§å€¼ã€‚
      * 
      * @return @~english The value of the given property interpreted as a float.
      *   Zero if the property does not exist or could not be scanned.
-     * @~chinese »ñÈ¡ÊôĞÔµÄ¸¡µãÖµ¡£Èç¹ûÊôĞÔ²»´æÔÚ»òÕß¶ÁÈ¡Ê§°ÜÔò·µ»Ø 0¡£
+     * @~chinese è·å–å±æ€§çš„æµ®ç‚¹å€¼ã€‚å¦‚æœå±æ€§ä¸å­˜åœ¨æˆ–è€…è¯»å–å¤±è´¥åˆ™è¿”å› 0ã€‚
      */
     float getFloat(const char* name = NULL) const;
 
@@ -532,17 +532,17 @@ public:
      * If the property exists but could not be scanned, an error will be logged and zero will be returned.
      *
      * @~chinese 
-     * »ñÈ¡Ö¸¶¨ÊôĞÔµÄ³¤ÕûÊıÖµ¡£
-     * Èç¹ûÊôĞÔ²»´æÔÚ£¬½«·µ»Ø 0¡£
-     * Èç¹ûÊôĞÔ´æÔÚ£¬µ«²¢·Ç³¤ÕûÊıÀàĞÍ£¬ÔòÊä³ö´íÎóÈÕÖ¾²¢·µ»Ø 0¡£
+     * è·å–æŒ‡å®šå±æ€§çš„é•¿æ•´æ•°å€¼ã€‚
+     * å¦‚æœå±æ€§ä¸å­˜åœ¨ï¼Œå°†è¿”å› 0ã€‚
+     * å¦‚æœå±æ€§å­˜åœ¨ï¼Œä½†å¹¶éé•¿æ•´æ•°ç±»å‹ï¼Œåˆ™è¾“å‡ºé”™è¯¯æ—¥å¿—å¹¶è¿”å› 0ã€‚
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
      * 
-     * @~chinese Ö¸¶¨µÄÊôĞÔÃû³Æ£¬Èç¹ûÎª NULL Ôò»ñÈ¡µ±Ç°¶ÔÏóµÄÊôĞÔÖµ¡£
+     * @~chinese æŒ‡å®šçš„å±æ€§åç§°ï¼Œå¦‚æœä¸º NULL åˆ™è·å–å½“å‰å¯¹è±¡çš„å±æ€§å€¼ã€‚
      * 
      * @return @~english The value of the given property interpreted as a long.
      *   Zero if the property does not exist or could not be scanned.
-     * @~chinese »ñÈ¡ÊôĞÔµÄ³¤ÕûÊıÖµ¡£Èç¹ûÊôĞÔ²»´æÔÚ»òÕß¶ÁÈ¡Ê§°ÜÔò·µ»Ø 0¡£
+     * @~chinese è·å–å±æ€§çš„é•¿æ•´æ•°å€¼ã€‚å¦‚æœå±æ€§ä¸å­˜åœ¨æˆ–è€…è¯»å–å¤±è´¥åˆ™è¿”å› 0ã€‚
      */
     long getLong(const char* name = NULL) const;
 
@@ -553,18 +553,18 @@ public:
      * to the identity matrix.
      *
      * @~chinese 
-     * »ñÈ¡Ö¸¶¨ÊôĞÔµÄ¾ØÕóÖµ¡£
-     * Èç¹ûÊôĞÔ²»´æÔÚ£¬·µ»Ø²ÎÊı out ½«±»ÉèÖÃÎªµ¥Î»¾ØÕó¡£
-     * Èç¹ûÊôĞÔ´æÔÚ£¬µ«²¢·Ç¾ØÕóÀàĞÍ£¬ÔòÊä³ö´íÎóÈÕÖ¾²¢ÇÒ out ±»ÉèÖÃÎªµ¥Î»¾ØÕó¡£
+     * è·å–æŒ‡å®šå±æ€§çš„çŸ©é˜µå€¼ã€‚
+     * å¦‚æœå±æ€§ä¸å­˜åœ¨ï¼Œè¿”å›å‚æ•° out å°†è¢«è®¾ç½®ä¸ºå•ä½çŸ©é˜µã€‚
+     * å¦‚æœå±æ€§å­˜åœ¨ï¼Œä½†å¹¶éçŸ©é˜µç±»å‹ï¼Œåˆ™è¾“å‡ºé”™è¯¯æ—¥å¿—å¹¶ä¸” out è¢«è®¾ç½®ä¸ºå•ä½çŸ©é˜µã€‚
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese Ö¸¶¨µÄÊôĞÔÃû³Æ£¬Èç¹ûÎª NULL Ôò»ñÈ¡µ±Ç°¶ÔÏóµÄÊôĞÔÖµ¡£
+     * @~chinese æŒ‡å®šçš„å±æ€§åç§°ï¼Œå¦‚æœä¸º NULL åˆ™è·å–å½“å‰å¯¹è±¡çš„å±æ€§å€¼ã€‚
      * @param out @~english The matrix to set to this property's interpreted value.
      * 
-     * @~chinese ·µ»ØÀàĞÍ²ÎÊı£¬»ñÈ¡µÄ¾ØÕóÖµ¡£
+     * @~chinese è¿”å›ç±»å‹å‚æ•°ï¼Œè·å–çš„çŸ©é˜µå€¼ã€‚
      * 
      * @return @~english True on success, false if the property does not exist or could not be scanned.
-     * @~chinese Èç¹û»ñÈ¡³É¹¦·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè·å–æˆåŠŸè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     bool getMat4(const char* name, Mat4* out) const;
 
@@ -575,18 +575,18 @@ public:
      * to Vec2(0.0f, 0.0f).
      *
      * @~chinese 
-     * »ñÈ¡Ö¸¶¨ÊôĞÔµÄ Vec2 Öµ¡£
-     * Èç¹ûÊôĞÔ²»´æÔÚ£¬·µ»Ø²ÎÊı out ½«±»ÉèÖÃÎª Vec2(0.0f, 0.0f)¡£
-     * Èç¹ûÊôĞÔ´æÔÚ£¬µ«²¢·Ç Vec2 ÀàĞÍ£¬ÔòÊä³ö´íÎóÈÕÖ¾²¢ÇÒ out ±»ÉèÖÃÎª Vec2(0.0f, 0.0f)¡£
+     * è·å–æŒ‡å®šå±æ€§çš„ Vec2 å€¼ã€‚
+     * å¦‚æœå±æ€§ä¸å­˜åœ¨ï¼Œè¿”å›å‚æ•° out å°†è¢«è®¾ç½®ä¸º Vec2(0.0f, 0.0f)ã€‚
+     * å¦‚æœå±æ€§å­˜åœ¨ï¼Œä½†å¹¶é Vec2 ç±»å‹ï¼Œåˆ™è¾“å‡ºé”™è¯¯æ—¥å¿—å¹¶ä¸” out è¢«è®¾ç½®ä¸º Vec2(0.0f, 0.0f)ã€‚
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese Ö¸¶¨µÄÊôĞÔÃû³Æ£¬Èç¹ûÎª NULL Ôò»ñÈ¡µ±Ç°¶ÔÏóµÄÊôĞÔÖµ¡£
+     * @~chinese æŒ‡å®šçš„å±æ€§åç§°ï¼Œå¦‚æœä¸º NULL åˆ™è·å–å½“å‰å¯¹è±¡çš„å±æ€§å€¼ã€‚
      * @param out @~english The vector to set to this property's interpreted value.
      * 
-     * @~chinese ·µ»ØÀàĞÍ²ÎÊı£¬»ñÈ¡µÄ Vec2 ÊµÀı¡£
+     * @~chinese è¿”å›ç±»å‹å‚æ•°ï¼Œè·å–çš„ Vec2 å®ä¾‹ã€‚
      * 
      * @return @~english True on success, false if the property does not exist or could not be scanned.
-     * @~chinese Èç¹û»ñÈ¡³É¹¦·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè·å–æˆåŠŸè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     bool getVec2(const char* name, Vec2* out) const;
 
@@ -597,18 +597,18 @@ public:
      * to Vec3(0.0f, 0.0f, 0.0f).
      *
      * @~chinese 
-     * »ñÈ¡Ö¸¶¨ÊôĞÔµÄ Vec3 Öµ¡£
-     * Èç¹ûÊôĞÔ²»´æÔÚ£¬·µ»Ø²ÎÊı out ½«±»ÉèÖÃÎª Vec3(0.0f, 0.0f, 0.0f)¡£
-     * Èç¹ûÊôĞÔ´æÔÚ£¬µ«²¢·Ç Vec3 ÀàĞÍ£¬ÔòÊä³ö´íÎóÈÕÖ¾²¢ÇÒ out ±»ÉèÖÃÎª Vec3(0.0f, 0.0f, 0.0f)¡£
+     * è·å–æŒ‡å®šå±æ€§çš„ Vec3 å€¼ã€‚
+     * å¦‚æœå±æ€§ä¸å­˜åœ¨ï¼Œè¿”å›å‚æ•° out å°†è¢«è®¾ç½®ä¸º Vec3(0.0f, 0.0f, 0.0f)ã€‚
+     * å¦‚æœå±æ€§å­˜åœ¨ï¼Œä½†å¹¶é Vec3 ç±»å‹ï¼Œåˆ™è¾“å‡ºé”™è¯¯æ—¥å¿—å¹¶ä¸” out è¢«è®¾ç½®ä¸º Vec3(0.0f, 0.0f, 0.0f)ã€‚
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese Ö¸¶¨µÄÊôĞÔÃû³Æ£¬Èç¹ûÎª NULL Ôò»ñÈ¡µ±Ç°¶ÔÏóµÄÊôĞÔÖµ¡£
+     * @~chinese æŒ‡å®šçš„å±æ€§åç§°ï¼Œå¦‚æœä¸º NULL åˆ™è·å–å½“å‰å¯¹è±¡çš„å±æ€§å€¼ã€‚
      * @param out @~english The vector to set to this property's interpreted value.
      * 
-     * @~chinese ·µ»ØÀàĞÍ²ÎÊı£¬»ñÈ¡µÄ Vec3 ÊµÀı¡£
+     * @~chinese è¿”å›ç±»å‹å‚æ•°ï¼Œè·å–çš„ Vec3 å®ä¾‹ã€‚
      * 
      * @return @~english True on success, false if the property does not exist or could not be scanned.
-     * @~chinese Èç¹û»ñÈ¡³É¹¦·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè·å–æˆåŠŸè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     bool getVec3(const char* name, Vec3* out) const;
 
@@ -619,18 +619,18 @@ public:
      * to Vec4(0.0f, 0.0f, 0.0f, 0.0f).
      *
      * @~chinese 
-     * »ñÈ¡Ö¸¶¨ÊôĞÔµÄ Vec4 Öµ¡£
-     * Èç¹ûÊôĞÔ²»´æÔÚ£¬·µ»Ø²ÎÊı out ½«±»ÉèÖÃÎª Vec4(0.0f, 0.0f, 0.0f, 0.0f)¡£
-     * Èç¹ûÊôĞÔ´æÔÚ£¬µ«²¢·Ç Vec3 ÀàĞÍ£¬ÔòÊä³ö´íÎóÈÕÖ¾²¢ÇÒ out ±»ÉèÖÃÎª Vec4(0.0f, 0.0f, 0.0f, 0.0f)¡£
+     * è·å–æŒ‡å®šå±æ€§çš„ Vec4 å€¼ã€‚
+     * å¦‚æœå±æ€§ä¸å­˜åœ¨ï¼Œè¿”å›å‚æ•° out å°†è¢«è®¾ç½®ä¸º Vec4(0.0f, 0.0f, 0.0f, 0.0f)ã€‚
+     * å¦‚æœå±æ€§å­˜åœ¨ï¼Œä½†å¹¶é Vec3 ç±»å‹ï¼Œåˆ™è¾“å‡ºé”™è¯¯æ—¥å¿—å¹¶ä¸” out è¢«è®¾ç½®ä¸º Vec4(0.0f, 0.0f, 0.0f, 0.0f)ã€‚
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese Ö¸¶¨µÄÊôĞÔÃû³Æ£¬Èç¹ûÎª NULL Ôò»ñÈ¡µ±Ç°¶ÔÏóµÄÊôĞÔÖµ¡£
+     * @~chinese æŒ‡å®šçš„å±æ€§åç§°ï¼Œå¦‚æœä¸º NULL åˆ™è·å–å½“å‰å¯¹è±¡çš„å±æ€§å€¼ã€‚
      * @param out @~english The vector to set to this property's interpreted value.
      * 
-     * @~chinese ·µ»ØÀàĞÍ²ÎÊı£¬»ñÈ¡µÄ Vec4 ÊµÀı¡£
+     * @~chinese è¿”å›ç±»å‹å‚æ•°ï¼Œè·å–çš„ Vec4 å®ä¾‹ã€‚
      * 
      * @return @~english True on success, false if the property does not exist or could not be scanned.
-     * @~chinese Èç¹û»ñÈ¡³É¹¦·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè·å–æˆåŠŸè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     bool getVec4(const char* name, Vec4* out) const;
 
@@ -641,18 +641,18 @@ public:
      * to Quaternion().
      *
      * @~chinese 
-     * »ñÈ¡Ö¸¶¨ÊôĞÔµÄËÄÔªÊı¡£
-     * Èç¹ûÊôĞÔ²»´æÔÚ£¬·µ»Ø²ÎÊı out ½«±»ÉèÖÃÎª Quaternion()¡£
-     * Èç¹ûÊôĞÔ´æÔÚ£¬µ«²¢·ÇËÄÔªÊıÀàĞÍ£¬ÔòÊä³ö´íÎóÈÕÖ¾²¢ÇÒ out ±»ÉèÖÃÎª Quaternion()¡£
+     * è·å–æŒ‡å®šå±æ€§çš„å››å…ƒæ•°ã€‚
+     * å¦‚æœå±æ€§ä¸å­˜åœ¨ï¼Œè¿”å›å‚æ•° out å°†è¢«è®¾ç½®ä¸º Quaternion()ã€‚
+     * å¦‚æœå±æ€§å­˜åœ¨ï¼Œä½†å¹¶éå››å…ƒæ•°ç±»å‹ï¼Œåˆ™è¾“å‡ºé”™è¯¯æ—¥å¿—å¹¶ä¸” out è¢«è®¾ç½®ä¸º Quaternion()ã€‚
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese Ö¸¶¨µÄÊôĞÔÃû³Æ£¬Èç¹ûÎª NULL Ôò»ñÈ¡µ±Ç°¶ÔÏóµÄÊôĞÔÖµ¡£
+     * @~chinese æŒ‡å®šçš„å±æ€§åç§°ï¼Œå¦‚æœä¸º NULL åˆ™è·å–å½“å‰å¯¹è±¡çš„å±æ€§å€¼ã€‚
      * @param out @~english The quaternion to set to this property's interpreted value.
      * 
-     * @~chinese ·µ»ØÀàĞÍ²ÎÊı£¬»ñÈ¡µÄËÄÔªÊı¡£
+     * @~chinese è¿”å›ç±»å‹å‚æ•°ï¼Œè·å–çš„å››å…ƒæ•°ã€‚
      * 
      * @return @~english True on success, false if the property does not exist or could not be scanned.
-     * @~chinese Èç¹û»ñÈ¡³É¹¦·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè·å–æˆåŠŸè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     bool getQuaternionFromAxisAngle(const char* name, Quaternion* out) const;
 
@@ -664,19 +664,19 @@ public:
      * to Vec3(0.0f, 0.0f, 0.0f).
      *
      * @~chinese 
-     * ÊôĞÔÖµ°´ÕÕ RGB ÑÕÉ«½âÎö²¢´æ´¢ÔÚ Vec3 ¶ÔÏóÖĞ¡£
-     * ÀıÈç£º0xff0000 ´ú±íºìÉ«£¬out ²ÎÊıÖµÎª Vec3(1, 0, 0)¡£
-     * Èç¹ûÊôĞÔ²»´æÔÚ£¬·µ»Ø²ÎÊı out ½«±»ÉèÖÃÎª Vec3(0.0f, 0.0f, 0.0f)¡£
-     * Èç¹ûÊôĞÔ´æÔÚ£¬µ«½âÎöÊ§°Ü£¬ÔòÊä³ö´íÎóÈÕÖ¾²¢ÇÒ out ±»ÉèÖÃÎª Vec3(0.0f, 0.0f, 0.0f)¡£
+     * å±æ€§å€¼æŒ‰ç…§ RGB é¢œè‰²è§£æå¹¶å­˜å‚¨åœ¨ Vec3 å¯¹è±¡ä¸­ã€‚
+     * ä¾‹å¦‚ï¼š0xff0000 ä»£è¡¨çº¢è‰²ï¼Œout å‚æ•°å€¼ä¸º Vec3(1, 0, 0)ã€‚
+     * å¦‚æœå±æ€§ä¸å­˜åœ¨ï¼Œè¿”å›å‚æ•° out å°†è¢«è®¾ç½®ä¸º Vec3(0.0f, 0.0f, 0.0f)ã€‚
+     * å¦‚æœå±æ€§å­˜åœ¨ï¼Œä½†è§£æå¤±è´¥ï¼Œåˆ™è¾“å‡ºé”™è¯¯æ—¥å¿—å¹¶ä¸” out è¢«è®¾ç½®ä¸º Vec3(0.0f, 0.0f, 0.0f)ã€‚
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese Ö¸¶¨µÄÊôĞÔÃû³Æ£¬Èç¹ûÎª NULL Ôò»ñÈ¡µ±Ç°¶ÔÏóµÄÊôĞÔÖµ¡£
+     * @~chinese æŒ‡å®šçš„å±æ€§åç§°ï¼Œå¦‚æœä¸º NULL åˆ™è·å–å½“å‰å¯¹è±¡çš„å±æ€§å€¼ã€‚
      * @param out @~english The vector to set to this property's interpreted value.
      * 
-     * @~chinese ·µ»ØÀàĞÍ²ÎÊı£¬»ñÈ¡µÄÑÕÉ«ÖµÊı¾İ¡£
+     * @~chinese è¿”å›ç±»å‹å‚æ•°ï¼Œè·å–çš„é¢œè‰²å€¼æ•°æ®ã€‚
      * 
      * @return @~english True on success, false if the property does not exist or could not be scanned.
-     * @~chinese Èç¹û»ñÈ¡³É¹¦·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè·å–æˆåŠŸè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     bool getColor(const char* name, Vec3* out) const;
 
@@ -688,19 +688,19 @@ public:
      * to Vec4(0.0f, 0.0f, 0.0f, 0.0f).
      *
      * @~chinese 
-     * ÊôĞÔÖµ°´ÕÕ RGBA ÑÕÉ«½âÎö²¢´æ´¢ÔÚ Vec4 ¶ÔÏóÖĞ¡£
-     * ÀıÈç£º0xff0000ff ´ú±í²»Í¸Ã÷µÄºìÉ«£¬·µ»Ø²ÎÊı out ½«±»ÉèÖÃÎª Vec4(1, 0, 0, 1)¡£
-     * Èç¹ûÊôĞÔ²»´æÔÚ£¬·µ»Ø²ÎÊı out ½«±»ÉèÖÃÎª Vec4(0.0f, 0.0f, 0.0f, 0.0f)¡£
-     * Èç¹ûÊôĞÔ´æÔÚ£¬µ«½âÎöÊ§°Ü£¬ÔòÊä³ö´íÎóÈÕÖ¾²¢ÇÒ out ±»ÉèÖÃÎª Vec4(0.0f, 0.0f, 0.0f, 0.0f)¡£
+     * å±æ€§å€¼æŒ‰ç…§ RGBA é¢œè‰²è§£æå¹¶å­˜å‚¨åœ¨ Vec4 å¯¹è±¡ä¸­ã€‚
+     * ä¾‹å¦‚ï¼š0xff0000ff ä»£è¡¨ä¸é€æ˜çš„çº¢è‰²ï¼Œè¿”å›å‚æ•° out å°†è¢«è®¾ç½®ä¸º Vec4(1, 0, 0, 1)ã€‚
+     * å¦‚æœå±æ€§ä¸å­˜åœ¨ï¼Œè¿”å›å‚æ•° out å°†è¢«è®¾ç½®ä¸º Vec4(0.0f, 0.0f, 0.0f, 0.0f)ã€‚
+     * å¦‚æœå±æ€§å­˜åœ¨ï¼Œä½†è§£æå¤±è´¥ï¼Œåˆ™è¾“å‡ºé”™è¯¯æ—¥å¿—å¹¶ä¸” out è¢«è®¾ç½®ä¸º Vec4(0.0f, 0.0f, 0.0f, 0.0f)ã€‚
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese Ö¸¶¨µÄÊôĞÔÃû³Æ£¬Èç¹ûÎª NULL Ôò»ñÈ¡µ±Ç°¶ÔÏóµÄÊôĞÔÖµ¡£
+     * @~chinese æŒ‡å®šçš„å±æ€§åç§°ï¼Œå¦‚æœä¸º NULL åˆ™è·å–å½“å‰å¯¹è±¡çš„å±æ€§å€¼ã€‚
      * @param out @~english The vector to set to this property's interpreted value.
      * 
-     * @~chinese ·µ»ØÀàĞÍ²ÎÊı£¬»ñÈ¡µÄÑÕÉ«ÖµÊı¾İ¡£
+     * @~chinese è¿”å›ç±»å‹å‚æ•°ï¼Œè·å–çš„é¢œè‰²å€¼æ•°æ®ã€‚
      * 
      * @return @~english True on success, false if the property does not exist or could not be scanned.
-     * @~chinese Èç¹û»ñÈ¡³É¹¦·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè·å–æˆåŠŸè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     bool getColor(const char* name, Vec4* out) const;
 
@@ -711,20 +711,20 @@ public:
      * If the file is not found then it will search relative to the directory the bundle file is in.
      * 
      * @~chinese 
-     * »ñÈ¡Ö¸¶¨ÊôĞÔµÄÂ·¾¶Öµ¡£
+     * è·å–æŒ‡å®šå±æ€§çš„è·¯å¾„å€¼ã€‚
      * 
-     * ¸Ã·½·¨Ê×ÏÈÏà¶ÔÓÚ¹¤×÷Ä¿Â¼²éÕÒÊôĞÔÖµËù±íÊ¾µÄÎÄ¼ş¡£
-     * Èç¹ûÃ»ÓĞÕÒµ½ÎÄ¼ş£¬ÄÇÃ´Ëü½«ËÑË÷Õû¸ö°üÄ¿Â¼¡£
+     * è¯¥æ–¹æ³•é¦–å…ˆç›¸å¯¹äºå·¥ä½œç›®å½•æŸ¥æ‰¾å±æ€§å€¼æ‰€è¡¨ç¤ºçš„æ–‡ä»¶ã€‚
+     * å¦‚æœæ²¡æœ‰æ‰¾åˆ°æ–‡ä»¶ï¼Œé‚£ä¹ˆå®ƒå°†æœç´¢æ•´ä¸ªåŒ…ç›®å½•ã€‚
      * 
      * @param name @~english The name of the property.
-     * @~chinese ÊôĞÔµÄÃû³Æ¡£
+     * @~chinese å±æ€§çš„åç§°ã€‚
      * @param path @~english The string to copy the path to if the file exists.
      * 
-     * @~chinese ·µ»ØµÄÂ·¾¶Öµ¡£
+     * @~chinese è¿”å›çš„è·¯å¾„å€¼ã€‚
      * 
      * @return @~english True if the property exists and the file exists, false otherwise.
      *
-     * @~chinese Èç¹û»ñÈ¡³É¹¦·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè·å–æˆåŠŸè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     bool getPath(const char* name, std::string* path) const;
 
@@ -734,18 +734,18 @@ public:
      * Variables take on the format ${name} and are inherited from parent Property objects.
      *
      * @~chinese 
-     * »ñÈ¡Ö¸¶¨ÊôĞÔµÄ±äÁ¿Öµ¡£
+     * è·å–æŒ‡å®šå±æ€§çš„å˜é‡å€¼ã€‚
      * 
-     * ±äÁ¿µÄ¸ñÊ½ ${name}£¬ÊÇ¼Ì³Ğ×Ô¸¸ÀàÊôĞÔµÄ¶ÔÏó¡£
+     * å˜é‡çš„æ ¼å¼ ${name}ï¼Œæ˜¯ç»§æ‰¿è‡ªçˆ¶ç±»å±æ€§çš„å¯¹è±¡ã€‚
      * 
      * @param name @~english Name of the variable to get.
-     * @~chinese ÊôĞÔµÄÃû³Æ¡£
+     * @~chinese å±æ€§çš„åç§°ã€‚
      * @param defaultValue @~english Value to return if the variable is not found.
      *
-     * @~chinese Ä¬ÈÏÖµ£¬µ±ÊôĞÔ²»´æÔÚÊ±·µ»Ø´ËÄ¬ÈÏÖµ¡£
+     * @~chinese é»˜è®¤å€¼ï¼Œå½“å±æ€§ä¸å­˜åœ¨æ—¶è¿”å›æ­¤é»˜è®¤å€¼ã€‚
      * 
      * @return @~english The value of the specified variable, or defaultValue if not found.
-     * @~chinese »ñÈ¡µ½µÄ±äÁ¿Öµ£¬Èç¹û»ñÈ¡Ê§°Ü£¬Ôò·µ»ØÖ¸¶¨µÄÄ¬ÈÏÖµ¡£
+     * @~chinese è·å–åˆ°çš„å˜é‡å€¼ï¼Œå¦‚æœè·å–å¤±è´¥ï¼Œåˆ™è¿”å›æŒ‡å®šçš„é»˜è®¤å€¼ã€‚
      */
     const char* getVariable(const char* name, const char* defaultValue = NULL) const;
 
@@ -753,12 +753,12 @@ public:
      * Sets the value of the specified variable.
      *
      * @~chinese 
-     * ÉèÖÃÖ¸¶¨ÊôĞÔµÄ±äÁ¿Öµ¡£
+     * è®¾ç½®æŒ‡å®šå±æ€§çš„å˜é‡å€¼ã€‚
      * 
      * @param name @~english Name of the variable to set.
-     * @~chinese Ö¸¶¨µÄÊôĞÔÃû³Æ¡£
+     * @~chinese æŒ‡å®šçš„å±æ€§åç§°ã€‚
      * @param value @~english The value to set.
-     * @~chinese ÉèÖÃµÄ±äÁ¿Öµ¡£
+     * @~chinese è®¾ç½®çš„å˜é‡å€¼ã€‚
      */
     void setVariable(const char* name, const char* value);
 
@@ -768,18 +768,18 @@ public:
      * On error, false is returned and the output is set to all zero values.
      *
      * @~chinese 
-     * ³¢ÊÔ½«Ö¸¶¨µÄ×Ö·û´®½âÎöÎª Vec2 Êı¾İ¡£
+     * å°è¯•å°†æŒ‡å®šçš„å­—ç¬¦ä¸²è§£æä¸º Vec2 æ•°æ®ã€‚
      * 
-     * Èç¹û³ö´í£¬Ôò·µ»Ø false£¬·µ»ØÖµ²ÎÊı out ±»ÉèÖÃÎª `Vec2::ZERO`¡£
+     * å¦‚æœå‡ºé”™ï¼Œåˆ™è¿”å› falseï¼Œè¿”å›å€¼å‚æ•° out è¢«è®¾ç½®ä¸º `Vec2::ZERO`ã€‚
      * 
      * @param str @~english The string to parse.
-     * @~chinese Òª½âÎöµÄ×Ö·û´®
+     * @~chinese è¦è§£æçš„å­—ç¬¦ä¸²
      * @param out @~english The value to populate if successful.
      *
-     * @~chinese ½âÎö³öµÄ Vec2 ÊµÀı¡£
+     * @~chinese è§£æå‡ºçš„ Vec2 å®ä¾‹ã€‚
      * 
      * @return @~english True if a valid Vec2 was parsed, false otherwise.
-     * @~chinese Èç¹û½âÎö³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè§£ææˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     static bool parseVec2(const char* str, Vec2* out);
 
@@ -789,18 +789,18 @@ public:
      * On error, false is returned and the output is set to all zero values.
      *
      * @~chinese 
-     * ³¢ÊÔ½«Ö¸¶¨µÄ×Ö·û´®½âÎöÎª Vec3 Êı¾İ¡£
+     * å°è¯•å°†æŒ‡å®šçš„å­—ç¬¦ä¸²è§£æä¸º Vec3 æ•°æ®ã€‚
      * 
-     * Èç¹û³ö´í£¬Ôò·µ»Ø false£¬·µ»ØÖµ²ÎÊı out ±»ÉèÖÃÎª `Vec3::ZERO`¡£
+     * å¦‚æœå‡ºé”™ï¼Œåˆ™è¿”å› falseï¼Œè¿”å›å€¼å‚æ•° out è¢«è®¾ç½®ä¸º `Vec3::ZERO`ã€‚
      * 
      * @param str @~english The string to parse.
-     * @~chinese Òª½âÎöµÄ×Ö·û´®
+     * @~chinese è¦è§£æçš„å­—ç¬¦ä¸²
      * @param out @~english The value to populate if successful.
      *
-     * @~chinese ½âÎö³öµÄ Vec3 ÊµÀı¡£
+     * @~chinese è§£æå‡ºçš„ Vec3 å®ä¾‹ã€‚
      * 
      * @return @~english True if a valid Vec3 was parsed, false otherwise.
-     * @~chinese Èç¹û½âÎö³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè§£ææˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     static bool parseVec3(const char* str, Vec3* out);
     
@@ -810,18 +810,18 @@ public:
      * On error, false is returned and the output is set to all zero values.
      *
      * @~chinese 
-     * ³¢ÊÔ½«Ö¸¶¨µÄ×Ö·û´®½âÎöÎª Vec4 Êı¾İ¡£
+     * å°è¯•å°†æŒ‡å®šçš„å­—ç¬¦ä¸²è§£æä¸º Vec4 æ•°æ®ã€‚
      * 
-     * Èç¹û³ö´í£¬Ôò·µ»Ø false£¬·µ»ØÖµ²ÎÊı out ±»ÉèÖÃÎª `Vec4::ZERO`¡£
+     * å¦‚æœå‡ºé”™ï¼Œåˆ™è¿”å› falseï¼Œè¿”å›å€¼å‚æ•° out è¢«è®¾ç½®ä¸º `Vec4::ZERO`ã€‚
      * 
      * @param str @~english The string to parse.
-     * @~chinese Òª½âÎöµÄ×Ö·û´®
+     * @~chinese è¦è§£æçš„å­—ç¬¦ä¸²
      * @param out @~english The value to populate if successful.
      *
-     * @~chinese ½âÎö³öµÄ Vec4 ÊµÀı¡£
+     * @~chinese è§£æå‡ºçš„ Vec4 å®ä¾‹ã€‚
      * 
      * @return @~english True if a valid Vec4 was parsed, false otherwise.
-     * @~chinese Èç¹û½âÎö³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè§£ææˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     static bool parseVec4(const char* str, Vec4* out);
 
@@ -835,21 +835,21 @@ public:
      * On error, false is returned and the output is set to all zero values.
      *
      * @~chinese 
-     * ³¢ÊÔ½«Ö¸¶¨µÄ×Ö·û´®½âÎöÎªËÄÔªÊı¡£
+     * å°è¯•å°†æŒ‡å®šçš„å­—ç¬¦ä¸²è§£æä¸ºå››å…ƒæ•°ã€‚
      * 
-     * ÆÚÍûµÄ¸ñÊ½Îª£ºËÄ¸ö¶ººÅ·Ö¸ôµÄÊıÖµ£¬Ç°Èı¸öÖµ±íÊ¾Öá£¬
-     * µÚËÄ¸öÖµ±íÊ¾½Ç¶È¡£
+     * æœŸæœ›çš„æ ¼å¼ä¸ºï¼šå››ä¸ªé€—å·åˆ†éš”çš„æ•°å€¼ï¼Œå‰ä¸‰ä¸ªå€¼è¡¨ç¤ºè½´ï¼Œ
+     * ç¬¬å››ä¸ªå€¼è¡¨ç¤ºè§’åº¦ã€‚
      * 
-     * Èç¹û½âÎöÊ§°Ü£¬Ôò·µ»Ø false¡£·µ»ØÖµ²ÎÊı out µÄÈ«²¿Êı¾İ¶¼ÉèÖÃÎª 0¡£
+     * å¦‚æœè§£æå¤±è´¥ï¼Œåˆ™è¿”å› falseã€‚è¿”å›å€¼å‚æ•° out çš„å…¨éƒ¨æ•°æ®éƒ½è®¾ç½®ä¸º 0ã€‚
      * 
      * @param str @~english The string to parse.
-     * @~chinese Òª½âÎöµÄ×Ö·û´®¡£
+     * @~chinese è¦è§£æçš„å­—ç¬¦ä¸²ã€‚
      * @param out @~english A Quaternion populated with the orientation of the axis-angle, if successful.
      *
-     * @~chinese ½âÎö³öµÄËÄÔªÊıÊµÀı¡£
+     * @~chinese è§£æå‡ºçš„å››å…ƒæ•°å®ä¾‹ã€‚
      * 
      * @return @~english True if a valid axis-angle was parsed, false otherwise.
-     * @~chinese Èç¹û½âÎö³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè§£ææˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     static bool parseAxisAngle(const char* str, Quaternion* out);
 
@@ -857,16 +857,16 @@ public:
      * Attempts to parse the specified string as an RGB color value.
      *
      * @~chinese 
-     * ³¢ÊÔ½«Ö¸¶¨µÄ×Ö·û´®½âÎöÎª RGB ÑÕÉ«Öµ¡£
+     * å°è¯•å°†æŒ‡å®šçš„å­—ç¬¦ä¸²è§£æä¸º RGB é¢œè‰²å€¼ã€‚
      * 
      * @param str @~english The string to parse.
-     * @~chinese Òª½âÎöµÄ×Ö·û´®¡£
+     * @~chinese è¦è§£æçš„å­—ç¬¦ä¸²ã€‚
      * @param out @~english The value to populate if successful.
      *
-     * @~chinese ·µ»ØµÄÑÕÉ«Öµ¡£
+     * @~chinese è¿”å›çš„é¢œè‰²å€¼ã€‚
      * 
      * @return @~english True if a valid RGB color was parsed, false otherwise.
-     * @~chinese Èç¹û½âÎö³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè§£ææˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     static bool parseColor(const char* str, Vec3* out);
 
@@ -874,16 +874,16 @@ public:
      * Attempts to parse the specified string as an RGBA color value.
      *
      * @~chinese 
-     * ³¢ÊÔ½«Ö¸¶¨µÄ×Ö·û´®½âÎöÎª RGBA ÑÕÉ«Öµ¡£
+     * å°è¯•å°†æŒ‡å®šçš„å­—ç¬¦ä¸²è§£æä¸º RGBA é¢œè‰²å€¼ã€‚
      * 
      * @param str @~english The string to parse.
-     * @~chinese Òª½âÎöµÄ×Ö·û´®¡£
+     * @~chinese è¦è§£æçš„å­—ç¬¦ä¸²ã€‚
      * @param out @~english The value to populate if successful.
      *
-     * @~chinese ·µ»ØµÄÑÕÉ«Öµ¡£
+     * @~chinese è¿”å›çš„é¢œè‰²å€¼ã€‚
      * 
      * @return @~english True if a valid RGBA color was parsed, false otherwise.
-     * @~chinese Èç¹û½âÎö³É¹¦£¬·µ»Ø true£»·ñÔò·µ»Ø false¡£
+     * @~chinese å¦‚æœè§£ææˆåŠŸï¼Œè¿”å› trueï¼›å¦åˆ™è¿”å› falseã€‚
      */
     static bool parseColor(const char* str, Vec4* out);
 
