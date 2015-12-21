@@ -31,6 +31,9 @@ var UITextAtlasEditorTest = UIBaseLayer.extend({
         var root = this._parseUIFile("ccs-res/cocosui/UIEditorTest/UILabelAtlas/labelatlas_1.json");
 
         this._mainNode.addChild(root);
+        
+        var label =ccui.helper.seekWidgetByName(root, "LabelAtlas_961");
+        label.setString("0123456");
 
         var back_label =ccui.helper.seekWidgetByName(root, "back");
         back_label.addTouchEventListener(this.backEvent,this);
