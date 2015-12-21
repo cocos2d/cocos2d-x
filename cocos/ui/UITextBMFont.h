@@ -98,6 +98,10 @@ public:
 
     ResourceData getRenderFile();
 
+    /**
+    * reset TextBMFont inner label
+    */
+    void resetRender();
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
