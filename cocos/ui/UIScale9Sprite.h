@@ -72,7 +72,7 @@ namespace ui {
         
         /**
          * Builtin shader state.
-         * Currenly support Normal and Gray state.
+         * Currently support Normal and Gray state.
          */
         enum class State
         {
@@ -427,7 +427,7 @@ namespace ui {
          * @param rect A delimitation zone.
          * @param rotated Whether the sprite is rotated or not.
          * @param offset The offset when slice the sprite.
-         * @param originalSize The origial size of the sprite.
+         * @param originalSize The original size of the sprite.
          * @param capInsets The Values to use for the cap insets.
          * @return True if update success, false otherwise.
          * @js NA
