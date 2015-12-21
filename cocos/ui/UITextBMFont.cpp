@@ -195,6 +195,11 @@ ResourceData TextBMFont::getRenderFile()
     return rData;
 }
 
+void TextBMFont::resetRender()
+{
+    this->removeProtectedChild(_labelBMFontRenderer);
+    this->initRenderer();
+}
 }
 
 NS_CC_END
