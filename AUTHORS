@@ -20,6 +20,7 @@ Core Developers:
 
 Framework & Tools Developers:
     Bin Zhang (natural-law)
+    LunHao Guo
 
 Web Developers:
     Sijie Wang (VisualSJ)
@@ -326,6 +327,8 @@ Developers:
         author of Bada port
         Fixed wrong callback setting for webview:setOnDidFailLoading in Lua.
         Fixed life control for XMLHttpRequest.
+        Remove weak reference in ActionNode.
+        Bug fix for shouldStartLoading method, should return value from JS
 
     Erawppa
         implement CCNotificationCenter
@@ -422,6 +425,7 @@ Developers:
         Added APIs to get an item in specific position like center, leftmost, rightmost, topmost and bottommost.
         Added a feature for magnetic scrolling.
         Merge logics of Scroll View for scroll by inertia and auto scroll into one.
+        Change PageView to derive from ListView.
 
     Sam Clegg (sbc100)
         Author of Native Client port.
@@ -856,22 +860,26 @@ Developers:
         Fixed a bug that Node::removeAllChildrenWithCleanup() does not remove PhysicsBody.
         
     newnon
-        Adds getCurrentLanguageCode() which returns iso 639-1 language code
-        Adds support for get response when Activity's onActivityResult is triggered
-        Improve Android projects
-        Android jni error clear & more readable log
-        Add support of software PVRTC v1 decompression
-        Fixed a bug that ttf font have not effect on Mac OS X
-        Fixed a bug that before touchMove Touch::_prevPoint contains junk
-        Added Device::setKeepScreenOn()
-        Fixed Label performance problem
-        Added Node::stopAllActionsByTag && ActionManager::removeAllActionsByTag
-        Added getAllTouches() in GLViewProtocol
-        Precompiled headers improvements
-        Added Application::openUrl for all supported platforms ecept WP8 and WinRT
-        Scale9Sprite capInsets set fix
-        Clang static analyzer crash fix
-        
+        Adds getCurrentLanguageCode() which returns iso 639-1 language code.
+        Adds support for get response when Activity's onActivityResult is triggered.
+        Improve Android projects.
+        Android jni error clear & more readable log.
+        Add support of software PVRTC v1 decompression.
+        Fixed a bug that ttf font have not effect on Mac OS X.
+        Fixed a bug that before touchMove Touch::_prevPoint contains junk.
+        Added Device::setKeepScreenOn().
+        Fixed Label performance problem.
+        Added Node::stopAllActionsByTag && ActionManager::removeAllActionsByTag.
+        Added getAllTouches() in GLViewProtocol.
+        Precompiled headers improvements.
+        Added Application::openUrl for all supported platforms ecept WP8 and WinRT.
+        Scale9Sprite capInsets set fix.
+        Clang static analyzer crash fix.
+        Fix include in cocos network module.
+        Slider misprint fix.
+        Fix web socket crash.
+        Scale9Sprite cropped sprite frames support.
+
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
         
@@ -1082,7 +1090,8 @@ Developers:
         Fixed memory leak of TextureCache::reloadTexture()
         
     wohaaitinciu
-        WebView support on windows
+        WebView support on windows.
+        Fix a fatal bug in EditBox implement for platform win32.
         
     guykogus
         Implemented Application::openUrl for WP8 and WinRT
@@ -1113,8 +1122,12 @@ Developers:
         Add greater than operator to Vec2
         
     liamcindy
-        update ui button size changed logic
+        Update ui button size changed logic.
         Added support for Cocos Studio Light3D.
+        Fix scrollview render errorl.
+        Update for text effect clone.
+        Update controlButton size calculate with new Scale9Sprite logic.
+        Update pageview to support adjust child size.
         
     vovkasm
         Fix warnings for Xcode6.1
@@ -1201,6 +1214,7 @@ Developers:
         Fixed a crash bug when csb file is broken.
         Fixed a crash bug in LoadingBar.
         Fixed a crash bug in destructor of FontFreeType.
+        UI: Set focus to Widget when touched.
         
     tankorsmash
         Fixed the bug that ProgressTimer::setSprite() doesn't take effect
@@ -1227,7 +1241,8 @@ Developers:
         Lua: Fixed onTouch begin don't return value
 
     xpol
-        Sprite: Fixed some warnings and a related bug in CCSprite
+        Sprite: Fixed some warnings and a related bug in CCSprite.
+        Fixes boring deprecated warning.
 
     marzapower
         UI: Fixed inertial scrolling for CCScrollView
@@ -1237,6 +1252,34 @@ Developers:
 
     RUKD
         ParticleSystem: performance improvement
+
+    m-yukio
+        UI: RichText support new line element.
+
+    Fraggle
+        Fix PMA Handling issue.
+
+    nhuanvd
+        Fix cannot add view to mFrameLayout when extends Cocos2dxActivity.
+
+    1scaR1
+        Add Scale9Sprite fade actions with cascade opacity enabled in js-test.
+
+    FrancoisDupayrat
+        Fix edit box setPlaceholderFontName and scale font size issue.
+
+    cesarpachon
+        AudioEngine on Linux replace the original SimpleAudioEngine with a new version of FMOD, now AudioEngine support all platforms!
+
+    cezheng
+        Fix Downloader bug for iOS & Android.
+
+    pandemosth
+        Fix crash when removing a remotely downloaded image from texture cache in js-binding.
+
+    GuoLunHao
+        Add quiet option for Cocos Toolkit.
+        
 
 Retired Core Developers:
     WenSheng Yang
@@ -1290,10 +1333,14 @@ Retired Core Developers:
         Fixed some minor typos.
         Fixed Wformat-security warning on Xcode.
         Added missing override keyword.
+        Fix memory leak when initWithImage() failed.
+        Fix deprecation warning in SkeletonRenderer.
+        Fix typos in documentation and comments.
 
     njh0602
         Clean up the code of setRect() function.
         Fixed syntax error in comment.
+        Add virtual keyword for some render related function.
 
     noshbar
         Changed the size of startFlag to 13.
@@ -1315,6 +1362,7 @@ Retired Core Developers:
     TheCodez
         Added missing getChildByTag<>() API.
         Fixed a bug that RefPtr test wasn't executed even in debug build.
+        Added Application::getVersion() to get the app version.
 
     thuydx55
         Fixed a bug of loading pluginx lib when compile Android with --compile-script flag.
