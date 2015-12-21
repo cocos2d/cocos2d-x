@@ -617,7 +617,7 @@ void jsb_ref_rebind(JSContext* cx, JS::HandleObject jsobj, js_proxy_t *js2native
 /**
  * Creates a new JSObject of a certain type (typeClass) and creates a proxy associated with and the Ref
  */
-JS::HandleObject jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
 /**
  * Creates a new JSObject of a certain type (typeClass) and creates a proxy associated with and the Ref
@@ -625,28 +625,28 @@ JS::HandleObject jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_ty
  * This function should never be called. It is only added as way to fix
  * an issue with the static auto-bindings with the "create" function
  */
-JS::HandleObject jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+JSObject* jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
 /**
  * It will try to get the associated JSObjct for the native object.
  * The reference created from JSObject to native object is weak because it won't retain it.
  * The behavior is exactly the same with 'jsb_ref_create_jsobject' when CC_ENABLE_GC_FOR_NATIVE_OBJECTS desactivated.
  */
-JS::HandleObject jsb_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug);
+JSObject* jsb_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug);
 
 /**
  * It will try to get the associated JSObjct for ref.
  * If it can't find it, it will create a new one associating it to Ref.
  * Call this function for objects that were already created and initialized, when returning `getChild()`
  */
-JS::HandleObject jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
 /**
  * It will try to get the associated JSObjct for ref.
  * If it can't find it, it will create a new one associating it to Ref
  * Call this function for objects that might return an already existing copy when you create them. For example, `Animation3D::create()`;
  */
-JS::HandleObject jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+JSObject* jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
 /**
  * It will try to get the associated JSObjct for the native object.
@@ -654,7 +654,7 @@ JS::HandleObject jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, coco
  * The reference created from JSObject to native object is weak because it won't retain it.
  * The behavior is exactly the same with 'jsb_ref_get_or_create_jsobject' when CC_ENABLE_GC_FOR_NATIVE_OBJECTS desactivated.
  */
-JS::HandleObject jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug);
+JSObject* jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug);
 
 /**
  * Register finalize hook and its owner as an entry in _js_hook_owner_map,

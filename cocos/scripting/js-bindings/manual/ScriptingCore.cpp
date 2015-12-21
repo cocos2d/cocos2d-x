@@ -2125,7 +2125,7 @@ void jsb_remove_proxy(js_proxy_t* proxy)
 //
 
 // ref_create
-JS::HandleObject jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
+JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
 {
     JS::RootedObject proto(cx, typeClass->proto.ref());
     JS::RootedObject parent(cx, typeClass->parentProto.ref());
@@ -2135,7 +2135,7 @@ JS::HandleObject jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_ty
     return jsObj;
 }
 
-JS::HandleObject jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
+JSObject* jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
 {
     JS::RootedObject proto(cx, typeClass->proto.ref());
     JS::RootedObject parent(cx, typeClass->parentProto.ref());
@@ -2145,7 +2145,7 @@ JS::HandleObject jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Re
     return jsObj;
 }
 
-JS::HandleObject jsb_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug)
+JSObject* jsb_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug)
 {
     JS::RootedObject proto(cx, typeClass->proto.ref());
     JS::RootedObject parent(cx, typeClass->parentProto.ref());
@@ -2164,7 +2164,7 @@ JS::HandleObject jsb_create_weak_jsobject(JSContext *cx, void *native, js_type_c
 }
 
 // get_or_create
-JS::HandleObject jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
+JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
 {
     auto proxy = jsb_get_native_proxy(ref);
     if (proxy)
@@ -2195,7 +2195,7 @@ JS::HandleObject jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref
 }
 
 // get_or_create: Ref is already autoreleased (or created)
-JS::HandleObject jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
+JSObject* jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug)
 {
     auto proxy = jsb_get_native_proxy(ref);
     if (proxy)
@@ -2208,7 +2208,7 @@ JS::HandleObject jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, coco
 }
 
 // get_or_create: when native object isn't a ref object or when the native object life cycle don't need to be managed by js object
-JS::HandleObject jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug)
+JSObject* jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug)
 {
     auto proxy = jsb_get_native_proxy(native);
     if (proxy)

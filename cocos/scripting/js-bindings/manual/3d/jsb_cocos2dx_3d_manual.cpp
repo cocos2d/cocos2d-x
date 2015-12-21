@@ -42,7 +42,7 @@ public:
         _data.destroyIfConstructed();
     }
 
-    JS::HandleValue get(){
+    jsval get(){
         return _data.ref();
     }
 private:
@@ -67,7 +67,7 @@ static bool js_cocos2dx_Sprite3D_createAsync(JSContext *cx, uint32_t argc, jsval
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             largv[0] = OBJECT_TO_JSVAL(js_get_or_create_jsobject<Sprite3D>(cx, larg0));
             JSB_HeapValueWrapper* v = (JSB_HeapValueWrapper*)larg1;
-            largv[1] = v->get();
+            largv[1] = JS::RootedValue(cx, v->get());
 
             JS::RootedValue rval(cx);
 		    bool ok = func->invoke(2, largv, &rval);
