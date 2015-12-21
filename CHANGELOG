@@ -12,7 +12,6 @@ cocos2d-x-3.10 December ? 2015
 
 [REFINE]        UI: RichText support new line element.
 [REFINE]        UI: Set focus to Widget when touched.
-[REFINE]        UI: Change PageView to derived from ListView.
 [REFINE]        3D: Change char* to string in Terrain.
 [REFINE]        Studio: Merge Studio ActionTimeLine change back into engine.
 [REFINE]        Studio: Merge Studio changes for compatible withe 32bit Mac System.
