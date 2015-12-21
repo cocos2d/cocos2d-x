@@ -3874,16 +3874,6 @@ getBallNormalFile : function (
 },
 
 /**
- * @method getCapInsetsProgressBarRebderer
- * @return {rect_object}
- */
-getCapInsetsProgressBarRebderer : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
  * @method setScale9Enabled
  * @param {bool} arg0
  */
@@ -3911,6 +3901,16 @@ getZoomScale : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setCapInsetProgressBarRenderer
+ * @param {rect_object} arg0
+ */
+setCapInsetProgressBarRenderer : function (
+rect 
+)
+{
 },
 
 /**
@@ -3982,6 +3982,16 @@ getCapInsetsBarRenderer : function (
 },
 
 /**
+ * @method getCapInsetsProgressBarRenderer
+ * @return {rect_object}
+ */
+getCapInsetsProgressBarRenderer : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method loadSlidBallTexturePressed
  * @param {String} arg0
  * @param {ccui.Widget::TextureResType} arg1
@@ -4021,16 +4031,6 @@ getBallDisabledFile : function (
 )
 {
     return cc.ResourceData;
-},
-
-/**
- * @method setCapInsetProgressBarRebderer
- * @param {rect_object} arg0
- */
-setCapInsetProgressBarRebderer : function (
-rect 
-)
-{
 },
 
 /**

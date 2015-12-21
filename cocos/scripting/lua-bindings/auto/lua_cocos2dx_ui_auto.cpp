@@ -18832,53 +18832,6 @@ int lua_cocos2dx_ui_Slider_getBallNormalFile(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_Slider_getCapInsetsProgressBarRebderer(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::Slider* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.Slider",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::ui::Slider*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Slider_getCapInsetsProgressBarRebderer'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Slider_getCapInsetsProgressBarRebderer'", nullptr);
-            return 0;
-        }
-        const cocos2d::Rect& ret = cobj->getCapInsetsProgressBarRebderer();
-        rect_to_luaval(tolua_S, ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Slider:getCapInsetsProgressBarRebderer",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Slider_getCapInsetsProgressBarRebderer'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_ui_Slider_setScale9Enabled(lua_State* tolua_S)
 {
     int argc = 0;
@@ -19019,6 +18972,56 @@ int lua_cocos2dx_ui_Slider_getZoomScale(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Slider_getZoomScale'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_Slider_setCapInsetProgressBarRenderer(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::Slider* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.Slider",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::Slider*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Slider_setCapInsetProgressBarRenderer'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Rect arg0;
+
+        ok &= luaval_to_rect(tolua_S, 2, &arg0, "ccui.Slider:setCapInsetProgressBarRenderer");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Slider_setCapInsetProgressBarRenderer'", nullptr);
+            return 0;
+        }
+        cobj->setCapInsetProgressBarRenderer(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Slider:setCapInsetProgressBarRenderer",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Slider_setCapInsetProgressBarRenderer'.",&tolua_err);
 #endif
 
     return 0;
@@ -19398,6 +19401,53 @@ int lua_cocos2dx_ui_Slider_getCapInsetsBarRenderer(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_Slider_getCapInsetsProgressBarRenderer(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::Slider* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.Slider",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::Slider*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Slider_getCapInsetsProgressBarRenderer'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Slider_getCapInsetsProgressBarRenderer'", nullptr);
+            return 0;
+        }
+        const cocos2d::Rect& ret = cobj->getCapInsetsProgressBarRenderer();
+        rect_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Slider:getCapInsetsProgressBarRenderer",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Slider_getCapInsetsProgressBarRenderer'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_Slider_loadSlidBallTexturePressed(lua_State* tolua_S)
 {
     int argc = 0;
@@ -19602,56 +19652,6 @@ int lua_cocos2dx_ui_Slider_getBallDisabledFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Slider_getBallDisabledFile'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_ui_Slider_setCapInsetProgressBarRebderer(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::Slider* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.Slider",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::ui::Slider*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Slider_setCapInsetProgressBarRebderer'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::Rect arg0;
-
-        ok &= luaval_to_rect(tolua_S, 2, &arg0, "ccui.Slider:setCapInsetProgressBarRebderer");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Slider_setCapInsetProgressBarRebderer'", nullptr);
-            return 0;
-        }
-        cobj->setCapInsetProgressBarRebderer(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Slider:setCapInsetProgressBarRebderer",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Slider_setCapInsetProgressBarRebderer'.",&tolua_err);
 #endif
 
     return 0;
@@ -20076,21 +20076,21 @@ int lua_register_cocos2dx_ui_Slider(lua_State* tolua_S)
         tolua_function(tolua_S,"loadSlidBallTextureNormal",lua_cocos2dx_ui_Slider_loadSlidBallTextureNormal);
         tolua_function(tolua_S,"loadProgressBarTexture",lua_cocos2dx_ui_Slider_loadProgressBarTexture);
         tolua_function(tolua_S,"getBallNormalFile",lua_cocos2dx_ui_Slider_getBallNormalFile);
-        tolua_function(tolua_S,"getCapInsetsProgressBarRebderer",lua_cocos2dx_ui_Slider_getCapInsetsProgressBarRebderer);
         tolua_function(tolua_S,"setScale9Enabled",lua_cocos2dx_ui_Slider_setScale9Enabled);
         tolua_function(tolua_S,"getBallPressedFile",lua_cocos2dx_ui_Slider_getBallPressedFile);
         tolua_function(tolua_S,"getZoomScale",lua_cocos2dx_ui_Slider_getZoomScale);
+        tolua_function(tolua_S,"setCapInsetProgressBarRenderer",lua_cocos2dx_ui_Slider_setCapInsetProgressBarRenderer);
         tolua_function(tolua_S,"loadSlidBallTextures",lua_cocos2dx_ui_Slider_loadSlidBallTextures);
         tolua_function(tolua_S,"addEventListener",lua_cocos2dx_ui_Slider_addEventListener);
         tolua_function(tolua_S,"setMaxPercent",lua_cocos2dx_ui_Slider_setMaxPercent);
         tolua_function(tolua_S,"loadBarTexture",lua_cocos2dx_ui_Slider_loadBarTexture);
         tolua_function(tolua_S,"getProgressBarFile",lua_cocos2dx_ui_Slider_getProgressBarFile);
         tolua_function(tolua_S,"getCapInsetsBarRenderer",lua_cocos2dx_ui_Slider_getCapInsetsBarRenderer);
+        tolua_function(tolua_S,"getCapInsetsProgressBarRenderer",lua_cocos2dx_ui_Slider_getCapInsetsProgressBarRenderer);
         tolua_function(tolua_S,"loadSlidBallTexturePressed",lua_cocos2dx_ui_Slider_loadSlidBallTexturePressed);
         tolua_function(tolua_S,"getBackFile",lua_cocos2dx_ui_Slider_getBackFile);
         tolua_function(tolua_S,"isScale9Enabled",lua_cocos2dx_ui_Slider_isScale9Enabled);
         tolua_function(tolua_S,"getBallDisabledFile",lua_cocos2dx_ui_Slider_getBallDisabledFile);
-        tolua_function(tolua_S,"setCapInsetProgressBarRebderer",lua_cocos2dx_ui_Slider_setCapInsetProgressBarRebderer);
         tolua_function(tolua_S,"setCapInsetsBarRenderer",lua_cocos2dx_ui_Slider_setCapInsetsBarRenderer);
         tolua_function(tolua_S,"getPercent",lua_cocos2dx_ui_Slider_getPercent);
         tolua_function(tolua_S,"setCapInsets",lua_cocos2dx_ui_Slider_setCapInsets);

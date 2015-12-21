@@ -143,14 +143,14 @@ public:
      * @param capInsets Capinsets for progress bar slider.
      * @js NA
      */
-    void setCapInsetProgressBarRebderer(const Rect &capInsets);
+    void setCapInsetProgressBarRenderer(const Rect &capInsets);
     
     /**
      * Gets capinsets for progress bar slider, if slider is using scale9 renderer.
      * @return Capinsets for progress bar slider.
      * @js NA
      */
-    const Rect& getCapInsetsProgressBarRebderer()const;
+    const Rect& getCapInsetsProgressBarRenderer()const;
     
     /**
      * Load textures for slider ball.

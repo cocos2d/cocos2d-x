@@ -734,20 +734,14 @@ void PUBillboardChain::setBlendFunc(const BlendFunc& blendFunc)
 
 GLuint PUBillboardChain::getTextureName()
 {
-    if (Director::getInstance()->getTextureCache()->isDirty())
-    {
-        if (Director::getInstance()->getTextureCache()->getTextureForKey(_texFile) == nullptr)
-        {
-            _texture = nullptr;
-            this->init("");
-        }
-        else
-            this->init(_texFile);
-    }
-    else if (_texture != nullptr && !_texture->isValid())
+    if (Director::getInstance()->getTextureCache()->getTextureForKey(_texFile) == nullptr)
     {
         _texture = nullptr;
         this->init("");
+    }
+    else if (_texture == nullptr)
+    {
+        this->init(_texFile);
     }
 
     if (_texture == nullptr)

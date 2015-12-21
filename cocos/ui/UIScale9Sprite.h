@@ -685,8 +685,8 @@ namespace ui {
         void applyBlendFunc();
         void updateBlendFunc(Texture2D *texture);
         std::vector<Vec2> calculateUV(Texture2D *tex, const Rect& capInsets,
-                                     const Size& spriteRectSize);
-        std::vector<Vec2> calculateVertices(const Rect& capInsets, const Size& spriteRectSize);
+                                     const Size& originalSize, const Vec4& offsets);
+        std::vector<Vec2> calculateVertices(const Rect& capInsets, const Size& originalSize, const Vec4& offsets);
         TrianglesCommand::Triangles calculateTriangles(const std::vector<Vec2>& uv,
                                                       const std::vector<Vec2>& vertices);
         
@@ -701,6 +701,7 @@ namespace ui {
         
         /** Original sprite's size. */
         Size _originalSize;
+        Vec2 _offset;
         /** Preferred sprite's size. By default the preferred size is the original size. */
         
         //if the preferredSize component is given as -1, it is ignored

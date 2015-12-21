@@ -5549,20 +5549,15 @@ bool js_cocos2dx_PolygonInfo_constructor(JSContext *cx, uint32_t argc, jsval *vp
 
 void js_cocos2d_PolygonInfo_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (PolygonInfo)", obj);
-    js_proxy_t* nproxy;
-    js_proxy_t* jsproxy;
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     JS::RootedObject jsobj(cx, obj);
-    jsproxy = jsb_get_js_proxy(jsobj);
-    if (jsproxy)
+    auto proxy = jsb_get_js_proxy(jsobj);
+    if (proxy)
     {
-        nproxy = jsb_get_native_proxy(jsproxy->ptr);
-        
-        cocos2d::PolygonInfo *nobj = static_cast<cocos2d::PolygonInfo *>(nproxy->ptr);
+        cocos2d::PolygonInfo *nobj = static_cast<cocos2d::PolygonInfo *>(proxy->ptr);
         if (nobj)
             delete nobj;
-        
-        jsb_remove_proxy(nproxy, jsproxy);
+        jsb_remove_proxy(proxy);
     }
 }
 
@@ -5712,19 +5707,14 @@ bool js_cocos2dx_AutoPolygon_constructor(JSContext *cx, uint32_t argc, jsval *vp
 
 void js_cocos2d_AutoPolygon_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (AutoPolygon)", obj);
-    js_proxy_t* nproxy;
-    js_proxy_t* jsproxy;
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     JS::RootedObject jsobj(cx, obj);
-    jsproxy = jsb_get_js_proxy(jsobj);
-    if (jsproxy) {
-        nproxy = jsb_get_native_proxy(jsproxy->ptr);
-        
-        cocos2d::AutoPolygon *nobj = static_cast<cocos2d::AutoPolygon *>(nproxy->ptr);
+    auto proxy = jsb_get_js_proxy(jsobj);
+    if (proxy) {
+        cocos2d::AutoPolygon *nobj = static_cast<cocos2d::AutoPolygon *>(proxy->ptr);
         if (nobj)
             delete nobj;
-        
-        jsb_remove_proxy(nproxy, jsproxy);
+        jsb_remove_proxy(proxy);
     }
 }
 

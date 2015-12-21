@@ -272,26 +272,6 @@ bool js_cocos2dx_Texture2D_getPixelsHigh(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_cocos2dx_Texture2D_getPixelsHigh : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_Texture2D_setValid(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Texture2D* cobj = (cocos2d::Texture2D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Texture2D_setValid : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Texture2D_setValid : Error processing arguments");
-        cobj->setValid(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Texture2D_setValid : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_cocos2dx_Texture2D_getBitsPerPixelForFormat(JSContext *cx, uint32_t argc, jsval *vp)
 {
     bool ok = true;
@@ -545,24 +525,6 @@ bool js_cocos2dx_Texture2D_getContentSize(JSContext *cx, uint32_t argc, jsval *v
     }
 
     JS_ReportError(cx, "js_cocos2dx_Texture2D_getContentSize : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_Texture2D_isValid(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Texture2D* cobj = (cocos2d::Texture2D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Texture2D_isValid : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isValid();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Texture2D_isValid : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_Texture2D_setAliasTexParameters(JSContext *cx, uint32_t argc, jsval *vp)
@@ -820,7 +782,6 @@ void js_register_cocos2dx_Texture2D(JSContext *cx, JS::HandleObject global) {
         JS_FN("hasPremultipliedAlpha", js_cocos2dx_Texture2D_hasPremultipliedAlpha, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithMipmaps", js_cocos2dx_Texture2D_initWithMipmaps, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPixelsHigh", js_cocos2dx_Texture2D_getPixelsHigh, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setValid", js_cocos2dx_Texture2D_setValid, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBitsPerPixelForFormat", js_cocos2dx_Texture2D_getBitsPerPixelForFormat, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getName", js_cocos2dx_Texture2D_getName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithString", js_cocos2dx_Texture2D_initWithString, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -828,7 +789,6 @@ void js_register_cocos2dx_Texture2D(JSContext *cx, JS::HandleObject global) {
         JS_FN("getPath", js_cocos2dx_Texture2D_getPath, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("drawInRect", js_cocos2dx_Texture2D_drawInRect, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getContentSize", js_cocos2dx_Texture2D_getContentSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isValid", js_cocos2dx_Texture2D_isValid, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAliasTexParameters", js_cocos2dx_Texture2D_setAliasTexParameters, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAntiAliasTexParameters", js_cocos2dx_Texture2D_setAntiAliasTexParameters, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("generateMipmap", js_cocos2dx_Texture2D_generateMipmap, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -57727,26 +57687,6 @@ bool js_cocos2dx_TextureCache_getTextureFilePath(JSContext *cx, uint32_t argc, j
     JS_ReportError(cx, "js_cocos2dx_TextureCache_getTextureFilePath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_TextureCache_setDirty(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::TextureCache* cobj = (cocos2d::TextureCache *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TextureCache_setDirty : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TextureCache_setDirty : Error processing arguments");
-        cobj->setDirty(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_TextureCache_setDirty : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_cocos2dx_TextureCache_renameTextureWithKey(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -57783,24 +57723,6 @@ bool js_cocos2dx_TextureCache_removeUnusedTextures(JSContext *cx, uint32_t argc,
     }
 
     JS_ReportError(cx, "js_cocos2dx_TextureCache_removeUnusedTextures : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_TextureCache_isDirty(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::TextureCache* cobj = (cocos2d::TextureCache *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TextureCache_isDirty : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isDirty();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_TextureCache_isDirty : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_TextureCache_removeTexture(JSContext *cx, uint32_t argc, jsval *vp)
@@ -57894,10 +57816,8 @@ void js_register_cocos2dx_TextureCache(JSContext *cx, JS::HandleObject global) {
         JS_FN("unbindImageAsync", js_cocos2dx_TextureCache_unbindImageAsync, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTextureForKey", js_cocos2dx_TextureCache_getTextureForKey, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTextureFilePath", js_cocos2dx_TextureCache_getTextureFilePath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDirty", js_cocos2dx_TextureCache_setDirty, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("renameTextureWithKey", js_cocos2dx_TextureCache_renameTextureWithKey, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeUnusedTextures", js_cocos2dx_TextureCache_removeUnusedTextures, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isDirty", js_cocos2dx_TextureCache_isDirty, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeTexture", js_cocos2dx_TextureCache_removeTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("waitForQuit", js_cocos2dx_TextureCache_waitForQuit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END

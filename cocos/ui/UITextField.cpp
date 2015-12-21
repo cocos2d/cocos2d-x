@@ -299,7 +299,7 @@ _useTouchArea(false),
 _textFieldEventListener(nullptr),
 _textFieldEventSelector(nullptr),
 _eventCallback(nullptr),
-_passwordStyleText(""),
+_passwordStyleText("*"),
 _textFieldRendererAdaptDirty(true),
 _fontName("Thonburi"),
 _fontSize(10),
@@ -575,6 +575,8 @@ int TextField::getMaxLength()const
 void TextField::setPasswordEnabled(bool enable)
 {
     _textFieldRenderer->setPasswordEnabled(enable);
+    if (enable)
+        setPasswordStyleText(getPasswordStyleText());
 }
 
 bool TextField::isPasswordEnabled()const

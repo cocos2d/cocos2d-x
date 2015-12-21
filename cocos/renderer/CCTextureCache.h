@@ -207,9 +207,6 @@ public:
      */
     const std::string getTextureFilePath(Texture2D* texture)const;
 
-    void setDirty(bool dirty) { _dirty = dirty; }
-    bool isDirty() const { return _dirty; }
-
     /** Reload texture from a new file.
     * This function is mainly for editor, won't suggest use it in game for performance reason.
     *
@@ -246,8 +243,6 @@ protected:
 
     std::unordered_map<std::string, Texture2D::PixelFormat> _texturePixelFormats;
     std::unordered_map<std::string, Texture2D*> _textures;
-
-    bool _dirty;
 };
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA

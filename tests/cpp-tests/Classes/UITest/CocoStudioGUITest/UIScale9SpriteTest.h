@@ -91,6 +91,27 @@ public:
     virtual bool init() override;
 };
 
+// S9FrameNameSpriteSheetCroppedSimple
+
+class UIS9FrameNameSpriteSheetCroppedSimple : public UIScene
+{
+public:
+    CREATE_FUNC(UIS9FrameNameSpriteSheetCroppedSimple);
+    
+    virtual bool init() override;
+};
+
+// S9FrameNameSpriteSheetCroppedRotatedSimple
+
+class UIS9FrameNameSpriteSheetCroppedRotatedSimple : public UIScene
+{
+public:
+    CREATE_FUNC(UIS9FrameNameSpriteSheetCroppedRotatedSimple);
+    
+    virtual bool init() override;
+};
+
+
 // S9FrameNameSpriteSheetCropped
 
 class UIS9FrameNameSpriteSheetCropped : public UIScene
