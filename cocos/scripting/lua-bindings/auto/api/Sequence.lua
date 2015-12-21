@@ -5,6 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
+-- @function [parent=#Sequence] init 
+-- @param self
+-- @param #array_table arrayOfActions
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  initializes the action 
 -- @function [parent=#Sequence] initWithTwoActions 
 -- @param self

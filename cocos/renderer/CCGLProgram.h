@@ -56,28 +56,28 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 @struct VertexAttrib
 @brief
 @~english VertexAttrib is a structure to encapsulate data got from glGetActiveAttrib. 
-@~chinese VertexAttribç”¨äºå°è£…é¡¶ç‚¹å±æ€§ï¼Œè¯¥å±æ€§ä»glGetActiveAttribä¸­è·å–ã€‚
+@~chinese VertexAttribÓÃÓÚ·â×°¶¥µãÊôĞÔ£¬¸ÃÊôĞÔ´ÓglGetActiveAttribÖĞ»ñÈ¡¡£
 */
 struct VertexAttrib
 {
     /**
     @~english Index of attribute, start from 0. 
-    @~chinese ç´¢å¼•çš„å±æ€§,ä»0å¼€å§‹ã€‚
+    @~chinese Ë÷ÒıµÄÊôĞÔ,´Ó0¿ªÊ¼¡£
     */
     GLuint index;
     /**
     @~english Number of Data type in the attribute, could range from 1-4. 
-    @~chinese å±æ€§å€¼æ•°ç»„çš„ä¸ªæ•°,èŒƒå›´ä»1 - 4ã€‚
+    @~chinese ÊôĞÔÖµÊı×éµÄ¸öÊı,·¶Î§´Ó1 - 4¡£
     */
     GLint size;
     /**
     @~english Data type of the attribute, could be GL_FLOAT, GL_UNSIGNED_BYTE etc. 
-    @~chinese æ•°æ®ç±»å‹,å¯ä»¥æ˜¯GL_FLOATï¼ŒGL_UNSIGNED_BYTEç­‰ç­‰ã€‚
+    @~chinese Êı¾İÀàĞÍ,¿ÉÒÔÊÇGL_FLOAT£¬GL_UNSIGNED_BYTEµÈµÈ¡£
     */
     GLenum type;
     /**
     @~english The string name in vertex shader. 
-    @~chinese åœ¨vertex shaderä¸­çš„å­—ç¬¦ä¸².
+    @~chinese ÔÚvertex shaderÖĞµÄ×Ö·û´®.
     */
     std::string name;
 };
@@ -85,28 +85,28 @@ struct VertexAttrib
 @struct Uniform
 @brief
 @~english Uniform is a structure to encapsulate data got from glGetActiveUniform and glGetUniformLocation. 
-@~chinese Uniformæ˜¯ä¸€ä¸ªç»“æ„ï¼Œç”¨æ¥æ¥å°è£…ä»glGetActiveUniformï¼ŒglGetUniformLocationä¸­è·å¾—çš„æ•°æ®ã€‚
+@~chinese UniformÊÇÒ»¸ö½á¹¹£¬ÓÃÀ´À´·â×°´ÓglGetActiveUniform£¬glGetUniformLocationÖĞ»ñµÃµÄÊı¾İ¡£
 */
 struct Uniform
 {
     /**
     @~english The place where the uniform placed, starts from 0. 
-    @~chinese Uniformåœ¨shaderä¸­çš„å­˜å‚¨ä½ç½®,ä»0å¼€å§‹ã€‚
+    @~chinese UniformÔÚshaderÖĞµÄ´æ´¢Î»ÖÃ,´Ó0¿ªÊ¼¡£
     */
     GLint location;
     /**
     @~english Number of data type in Uniform. 
-    @~chinese Unifromæ•°å€¼ä¸­çš„æ•°æ®ä¸ªæ•°ã€‚
+    @~chinese UnifromÊıÖµÖĞµÄÊı¾İ¸öÊı¡£
     */
     GLint size;
     /**
     @~english Data type of the Uniform. 
-    @~chinese æ•°æ®ç±»å‹ã€‚
+    @~chinese Êı¾İÀàĞÍ¡£
     */
     GLenum type;
     /**
     @~english String of the uniform name. 
-    @~chinese Shaderä¸­çš„Unifromåå­—ã€‚*/
+    @~chinese ShaderÖĞµÄUnifromÃû×Ö¡£*/
     std::string name;
 };
 
@@ -118,7 +118,7 @@ struct Uniform
 
 
  * @~chinese
- * å°è£…openGL Programçš„ç±»
+ * ·â×°openGL ProgramµÄÀà
  * 
  * 
  @since v2.0.0
@@ -131,61 +131,65 @@ class CC_DLL GLProgram : public Ref
 public:
     /**
     @~english Enum the preallocated vertex attribute.  
-    @~chinese æšä¸¾é¢„å…ˆåˆ†é…çš„é¡¶ç‚¹å±æ€§ã€‚*/
+    @~chinese Ã¶¾ÙÔ¤ÏÈ·ÖÅäµÄ¶¥µãÊôĞÔ¡£*/
     enum
     {
-        /**@~english Index 0 will be used as Position. @~chinese ç´¢å¼•0å°†è¢«ç”¨ä½œä½ç½®ã€‚*/
+        /**@~english Index 0 will be used as Position. @~chinese Ë÷Òı0½«±»ÓÃ×÷Î»ÖÃ¡£*/
         VERTEX_ATTRIB_POSITION,
-        /**@~english Index 1 will be used as Color. @~chinese æŒ‡æ•°1å°†è¢«ç”¨ä½œé¢œè‰²ã€‚*/
+        /**@~english Index 1 will be used as Color. @~chinese Ö¸Êı1½«±»ÓÃ×÷ÑÕÉ«¡£*/
         VERTEX_ATTRIB_COLOR,
-        /**@~english Index 2 will be used as Tex coord unit 0. @~chinese æŒ‡æ•°2å°†è¢«ç”¨ä½œç¬¬0å¥—çº¹ç†åæ ‡ã€‚*/
+        /**@~english Index 2 will be used as Tex coord unit 0. @~chinese Ö¸Êı2½«±»ÓÃ×÷µÚ0Ì×ÎÆÀí×ø±ê¡£*/
         VERTEX_ATTRIB_TEX_COORD,
-        /**@~english Index 3 will be used as Tex coord unit 1. @~chinese æŒ‡æ•°3å°†è¢«ç”¨ä½œç¬¬1å¥—çº¹ç†åæ ‡ã€‚*/
+        /**@~english Index 3 will be used as Tex coord unit 1. @~chinese Ö¸Êı3½«±»ÓÃ×÷µÚ1Ì×ÎÆÀí×ø±ê¡£*/
         VERTEX_ATTRIB_TEX_COORD1,
-        /**@~english Index 4 will be used as Tex coord unit 2. @~chinese æŒ‡æ•°4å°†è¢«ç”¨ä½œç¬¬2å¥—çº¹ç†åæ ‡ã€‚*/
+        /**@~english Index 4 will be used as Tex coord unit 2. @~chinese Ö¸Êı4½«±»ÓÃ×÷µÚ2Ì×ÎÆÀí×ø±ê¡£*/
         VERTEX_ATTRIB_TEX_COORD2,
-        /**@~english Index 5 will be used as Tex coord unit 3. @~chinese æŒ‡æ•°5å°†è¢«ç”¨ä½œç¬¬3å¥—çº¹ç†åæ ‡ã€‚*/
+        /**@~english Index 5 will be used as Tex coord unit 3. @~chinese Ö¸Êı5½«±»ÓÃ×÷µÚ3Ì×ÎÆÀí×ø±ê¡£*/
         VERTEX_ATTRIB_TEX_COORD3,
-        /**@~english Index 6 will be used as Normal. @~chinese æŒ‡æ•°6å°†è¢«ç”¨ä½œæ³•çº¿ã€‚*/
+        /**@~english Index 6 will be used as Normal. @~chinese Ö¸Êı6½«±»ÓÃ×÷·¨Ïß¡£*/
         VERTEX_ATTRIB_NORMAL,
-        /**@~english Index 7 will be used as Blend weight for hardware skin. @~chinese æŒ‡æ•°7å°†è¢«ç”¨ä½œBlend Weight,ç”¨äºè’™çš®è®¡ç®—ã€‚*/
+        /**@~english Index 7 will be used as Blend weight for hardware skin. @~chinese Ö¸Êı7½«±»ÓÃ×÷Blend Weight,ÓÃÓÚÃÉÆ¤¼ÆËã¡£*/
         VERTEX_ATTRIB_BLEND_WEIGHT,
-        /**@~english Index 8 will be used as Blend index. @~chinese æŒ‡æ•°8å°†è¢«ç”¨ä½œBlend Indexï¼Œç”¨äºè’™çš®è®¡ç®—ã€‚*/
+        /**@~english Index 8 will be used as Blend index. @~chinese Ö¸Êı8½«±»ÓÃ×÷Blend Index£¬ÓÃÓÚÃÉÆ¤¼ÆËã¡£*/
         VERTEX_ATTRIB_BLEND_INDEX,
+        /**Index 9 will be used as tangent.*/
+        VERTEX_ATTRIB_TANGENT,
+        /**Index 10 will be used as Binormal.*/
+        VERTEX_ATTRIB_BINORMAL,
         VERTEX_ATTRIB_MAX,
 
         // backward compatibility
         VERTEX_ATTRIB_TEX_COORDS = VERTEX_ATTRIB_TEX_COORD,
     };
 
-    /**@~english Preallocated uniform handle. @~chinese é¢„å…ˆåˆ†é…çš„uniformå¥æŸ„.*/
+    /**@~english Preallocated uniform handle. @~chinese Ô¤ÏÈ·ÖÅäµÄuniform¾ä±ú.*/
     enum
     {
-        /**@~english Ambient color. @~chinese ç¯å¢ƒå…‰é¢œè‰²ã€‚*/
+        /**@~english Ambient color. @~chinese »·¾³¹âÑÕÉ«¡£*/
         UNIFORM_AMBIENT_COLOR,
-        /**@~english Projection matrix. @~chinese æŠ•å½±çŸ©é˜µã€‚*/
+        /**@~english Projection matrix. @~chinese Í¶Ó°¾ØÕó¡£*/
         UNIFORM_P_MATRIX,
-        /**@~english Model view matrix. @~chinese ModelViewçŸ©é˜µã€‚*/
+        /**@~english Model view matrix. @~chinese ModelView¾ØÕó¡£*/
         UNIFORM_MV_MATRIX,
-        /**@~english Model view projection matrix. @~chinese ModelViewå’ŒæŠ•å½±è¿ä¹˜çŸ©é˜µã€‚*/
+        /**@~english Model view projection matrix. @~chinese ModelViewºÍÍ¶Ó°Á¬³Ë¾ØÕó¡£*/
         UNIFORM_MVP_MATRIX,
-        /**@~english Normal matrix. @~chinese æ³•çº¿çš„å˜æ¢çŸ©é˜µã€‚*/
+        /**@~english Normal matrix. @~chinese ·¨ÏßµÄ±ä»»¾ØÕó¡£*/
         UNIFORM_NORMAL_MATRIX,
-        /**@~english Time. @~chinese æ—¶é—´ã€‚*/
+        /**@~english Time. @~chinese Ê±¼ä¡£*/
         UNIFORM_TIME,
-        /**@~english sin(Time). @~chinese æ—¶é—´çš„sinå€¼ã€‚*/
+        /**@~english sin(Time). @~chinese Ê±¼äµÄsinÖµ¡£*/
         UNIFORM_SIN_TIME,
-        /**@~english cos(Time). @~chinese æ—¶é—´çš„coså€¼ã€‚*/
+        /**@~english cos(Time). @~chinese Ê±¼äµÄcosÖµ¡£*/
         UNIFORM_COS_TIME,
-        /**@~english Random number. @~chinese éšæœºæ•°ã€‚*/
+        /**@~english Random number. @~chinese Ëæ»úÊı¡£*/
         UNIFORM_RANDOM01,
-        /** @~english Sampler 0, used for texture. @~chinese é‡‡æ ·å™¨ 0, ç”¨äºçº¹ç†é‡‡æ ·.*/
+        /** @~english Sampler 0, used for texture. @~chinese ²ÉÑùÆ÷ 0, ÓÃÓÚÎÆÀí²ÉÑù.*/
         UNIFORM_SAMPLER0,
-        /** @~english Sampler 1, used for texture. @~chinese é‡‡æ ·å™¨ 1, ç”¨äºçº¹ç†é‡‡æ ·.*/
+        /** @~english Sampler 1, used for texture. @~chinese ²ÉÑùÆ÷ 1, ÓÃÓÚÎÆÀí²ÉÑù.*/
         UNIFORM_SAMPLER1,
-        /** @~english Sampler 2, used for texture. @~chinese é‡‡æ ·å™¨ 2, ç”¨äºçº¹ç†é‡‡æ ·.*/
+        /** @~english Sampler 2, used for texture. @~chinese ²ÉÑùÆ÷ 2, ÓÃÓÚÎÆÀí²ÉÑù.*/
         UNIFORM_SAMPLER2,
-        /** @~english Sampler 3, used for texture. @~chinese é‡‡æ ·å™¨ 3, ç”¨äºçº¹ç†é‡‡æ ·.*/
+        /** @~english Sampler 3, used for texture. @~chinese ²ÉÑùÆ÷ 3, ÓÃÓÚÎÆÀí²ÉÑù.*/
         UNIFORM_SAMPLER3,
         UNIFORM_MAX,
     };
@@ -197,162 +201,171 @@ public:
 
     /**
     @~english Built in shader for 2d. Support Position, Texture and Color vertex attribute. 
-    @~chinese å†…ç½®shaderã€‚æ”¯æŒä½ç½®ï¼Œé¢œè‰²ï¼Œçº¹ç†åæ ‡ã€‚
+    @~chinese ÄÚÖÃshader¡£Ö§³ÖÎ»ÖÃ£¬ÑÕÉ«£¬ÎÆÀí×ø±ê¡£
     */
     static const char* SHADER_NAME_POSITION_TEXTURE_COLOR;
     /**
     @~english Built in shader for 2d. Support Position, Texture and Color vertex attribute, but without multiply vertex by MVP matrix. 
-    @~chinese å†…ç½®shaderã€‚æ”¯æŒä½ç½®ï¼Œé¢œè‰²ï¼Œçº¹ç†åæ ‡,ä½†é¡¶ç‚¹ä¸éœ€è¦ä¹˜ä»¥MVPçŸ©é˜µã€‚
+    @~chinese ÄÚÖÃshader¡£Ö§³ÖÎ»ÖÃ£¬ÑÕÉ«£¬ÎÆÀí×ø±ê,µ«¶¥µã²»ĞèÒª³ËÒÔMVP¾ØÕó¡£
     */
     static const char* SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP;
     /**
     @~english Built in shader for 2d. Support Position, Texture vertex attribute, but include alpha test. 
-    @~chinese å†…ç½®shaderã€‚æ”¯æŒä½ç½®ï¼Œçº¹ç†åæ ‡ï¼ŒåŒ…å«alphaæµ‹è¯•ã€‚
+    @~chinese ÄÚÖÃshader¡£Ö§³ÖÎ»ÖÃ£¬ÎÆÀí×ø±ê£¬°üº¬alpha²âÊÔ¡£
     */
     static const char* SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST;
     /**
     @~english Built in shader for 2d. Support Position, Texture and Color vertex attribute, include alpha test and without multiply vertex by MVP matrix. 
-    @~chinese å†…ç½®shaderã€‚æ”¯æŒä½ç½®ï¼Œçº¹ç†åæ ‡ï¼ŒåŒ…å«alphaæµ‹è¯•ã€‚é¡¶ç‚¹ä¸éœ€è¦ä¹˜ä»¥MVPçŸ©é˜µã€‚
+    @~chinese ÄÚÖÃshader¡£Ö§³ÖÎ»ÖÃ£¬ÎÆÀí×ø±ê£¬°üº¬alpha²âÊÔ¡£¶¥µã²»ĞèÒª³ËÒÔMVP¾ØÕó¡£
     */
     static const char* SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV;
     /**
     @~english Built in shader for 2d. Support Position, Color vertex attribute. 
-    @~chinese å†…ç½®shaderã€‚æ”¯æŒä½ç½®ï¼Œé¢œè‰²ã€‚
+    @~chinese ÄÚÖÃshader¡£Ö§³ÖÎ»ÖÃ£¬ÑÕÉ«¡£
     */
     static const char* SHADER_NAME_POSITION_COLOR;
     /**
     @~english Built in shader for 2d. Support Position, Color, Texture vertex attribute. texture coordinate will used as point size. 
-    @~chinese å†…ç½®shaderã€‚æ”¯æŒä½ç½®ï¼Œé¢œè‰²ï¼Œçº¹ç†åæ ‡ï¼Œçº¹ç†åæ ‡ä¼šè¢«å½“ä½œpoint sizeä½¿ç”¨ï¼Œç”¨äºç”»ç‚¹ã€‚
+    @~chinese ÄÚÖÃshader¡£Ö§³ÖÎ»ÖÃ£¬ÑÕÉ«£¬ÎÆÀí×ø±ê£¬ÎÆÀí×ø±ê»á±»µ±×÷point sizeÊ¹ÓÃ£¬ÓÃÓÚ»­µã¡£
     */
     static const char* SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE;
     /**
     @~english Built in shader for 2d. Support Position, Color vertex attribute, without multiply vertex by MVP matrix. 
-    @~chinese å†…ç½®shaderã€‚æ”¯æŒä½ç½®ï¼Œé¢œè‰²ï¼Œé¡¶ç‚¹ä¸éœ€è¦ä¹˜ä»¥MVPçŸ©é˜µã€‚
+    @~chinese ÄÚÖÃshader¡£Ö§³ÖÎ»ÖÃ£¬ÑÕÉ«£¬¶¥µã²»ĞèÒª³ËÒÔMVP¾ØÕó¡£
     */
     static const char* SHADER_NAME_POSITION_COLOR_NO_MVP;
     /**
     @~english Built in shader for 2d. Support Position, Texture vertex attribute. 
-    @~chinese å†…ç½®shaderã€‚æ”¯æŒä½ç½®ï¼Œçº¹ç†åæ ‡ã€‚
+    @~chinese ÄÚÖÃshader¡£Ö§³ÖÎ»ÖÃ£¬ÎÆÀí×ø±ê¡£
     */
     static const char* SHADER_NAME_POSITION_TEXTURE;
     /**
     @~english Built in shader for 2d. Support Position, Texture vertex attribute. with a specified uniform as color 
-    @~chinese å†…ç½®shaderã€‚æ”¯æŒä½ç½®ï¼Œçº¹ç†åæ ‡ï¼Œé¢œè‰²é€šè¿‡uniformæŒ‡å®šã€‚
+    @~chinese ÄÚÖÃshader¡£Ö§³ÖÎ»ÖÃ£¬ÎÆÀí×ø±ê£¬ÑÕÉ«Í¨¹ıuniformÖ¸¶¨¡£
     */
     static const char* SHADER_NAME_POSITION_TEXTURE_U_COLOR;
     /**
     @~english Built in shader for 2d. Support Position, Texture and Color vertex attribute. but alpha will be the multiplication of color attribute and texture. 
-    @~chinese å†…ç½®shaderã€‚æ”¯æŒä½ç½®ï¼Œé¢œè‰²ï¼Œçº¹ç†åæ ‡ï¼Œä½†æ˜¯alphaæ˜¯é¢œè‰²å±æ€§å’Œçº¹ç†çš„ä¹˜å€¼ã€‚
+    @~chinese ÄÚÖÃshader¡£Ö§³ÖÎ»ÖÃ£¬ÑÕÉ«£¬ÎÆÀí×ø±ê£¬µ«ÊÇalphaÊÇÑÕÉ«ÊôĞÔºÍÎÆÀíµÄ³ËÖµ¡£
     */
     static const char* SHADER_NAME_POSITION_TEXTURE_A8_COLOR;
     /**
     @~english Built in shader for 2d. Support Position, with color specified by a uniform. 
-    @~chinese å†…ç½®shaderã€‚æ”¯æŒä½ç½®ï¼Œé¢œè‰²é€šè¿‡uniformæŒ‡å®šã€‚
+    @~chinese ÄÚÖÃshader¡£Ö§³ÖÎ»ÖÃ£¬ÑÕÉ«Í¨¹ıuniformÖ¸¶¨¡£
     */
     static const char* SHADER_NAME_POSITION_U_COLOR;
     /**
     @~english Built in shader for draw a sector with 90 degrees with center at bottom left point. 
-    @~chinese å†…ç½®shaderã€‚ç”¨äºç”»ä¸€ä¸ª90æ‰‡å½¢ï¼Œåœ†å¿ƒåœ¨å·¦ä¸‹è§’ã€‚
+    @~chinese ÄÚÖÃshader¡£ÓÃÓÚ»­Ò»¸ö90ÉÈĞÎ£¬Ô²ĞÄÔÚ×óÏÂ½Ç¡£
     */
     static const char* SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR;
 
     /**
     @~english Built in shader for ui effects.
-    @~chinese å†…ç½®shaderã€‚ç”¨äºæ¸²æŸ“UIçš„å˜ç°æ•ˆæœã€‚
+    @~chinese ÄÚÖÃshader¡£ÓÃÓÚäÖÈ¾UIµÄ±ä»ÒĞ§¹û¡£
     */
     static const char* SHADER_NAME_POSITION_GRAYSCALE;
     /** @~english
         Built in shader for label.
      * @~chinese 
-     * å†…ç½®shaderã€‚ç”¨äºLabelçš„æ¸²æŸ“ã€‚
+     * ÄÚÖÃshader¡£ÓÃÓÚLabelµÄäÖÈ¾¡£
     */
     static const char* SHADER_NAME_LABEL_NORMAL;
     /** @~english
         Built in shader for label outline effects.
      * @~chinese 
-     * å†…ç½®shaderã€‚ç”¨äºLabelæè¾¹çš„æ¸²æŸ“ã€‚
+     * ÄÚÖÃshader¡£ÓÃÓÚLabelÃè±ßµÄäÖÈ¾¡£
     */
     static const char* SHADER_NAME_LABEL_OUTLINE;
     /** @~english
         Built in shader for label based on DISTANCEFIELD.
      * @~chinese 
-     * å†…ç½®shaderã€‚ç”¨äºåŸºäºDISTANCEFIELDæœºåˆ¶çš„Labelçš„æ¸²æŸ“ã€‚
+     * ÄÚÖÃshader¡£ÓÃÓÚ»ùÓÚDISTANCEFIELD»úÖÆµÄLabelµÄäÖÈ¾¡£
     */
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL;
     /** @~english
         Built in shader for label based on DISTANCEFIELD.
      * @~chinese 
-     * å†…ç½®shaderã€‚ç”¨äºåŸºäºDISTANCEFIELDæœºåˆ¶çš„Labelçš„å…‰æ™•æ•ˆæœçš„æ¸²æŸ“ã€‚
+     * ÄÚÖÃshader¡£ÓÃÓÚ»ùÓÚDISTANCEFIELD»úÖÆµÄLabelµÄ¹âÔÎĞ§¹ûµÄäÖÈ¾¡£
     */
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_GLOW;
 
     /**
     @~english Built in shader used for 3D, support Position vertex attribute, with color specified by a uniform. 
-    @~chinese å†…ç½®shaderã€‚æ”¯æŒä½ç½®ã€‚é¢œè‰²é€šè¿‡uniformæŒ‡å®šã€‚
+    @~chinese ÄÚÖÃshader¡£Ö§³ÖÎ»ÖÃ¡£ÑÕÉ«Í¨¹ıuniformÖ¸¶¨¡£
     */
     static const char* SHADER_3D_POSITION;
     /**
     @~english Built in shader used for 3D, support Position and Texture vertex attribute, with color specified by a uniform. 
-    @~chinese å†…ç½®shaderã€‚æ”¯æŒä½ç½®ï¼Œçº¹ç†åæ ‡ã€‚é¢œè‰²é€šè¿‡uniformæŒ‡å®šã€‚
+    @~chinese ÄÚÖÃshader¡£Ö§³ÖÎ»ÖÃ£¬ÎÆÀí×ø±ê¡£ÑÕÉ«Í¨¹ıuniformÖ¸¶¨¡£
     */
     static const char* SHADER_3D_POSITION_TEXTURE;
     /**@~english
     Built in shader used for 3D, support Position (Skeletal animation by hardware skin) and Texture vertex attribute,
     with color specified by a uniform.
      * @~chinese 
-     * å†…ç½®shaderã€‚æ”¯æŒä½ç½®ï¼Œçº¹ç†åæ ‡ï¼Œå’Œç¡¬ä»¶çš„è’™çš®ã€‚é¢œè‰²é€šè¿‡uniformæŒ‡å®šã€‚
+     * ÄÚÖÃshader¡£Ö§³ÖÎ»ÖÃ£¬ÎÆÀí×ø±ê£¬ºÍÓ²¼şµÄÃÉÆ¤¡£ÑÕÉ«Í¨¹ıuniformÖ¸¶¨¡£
     */
     static const char* SHADER_3D_SKINPOSITION_TEXTURE;
     /**@~english
     Built in shader used for 3D, support Position and Normal vertex attribute, used in lighting. with color specified by a uniform.
      * @~chinese 
-     * å†…ç½®shaderï¼Œç”¨äº3Då…‰ç…§æ¸²æŸ“ã€‚æ”¯æŒé¡¶ç‚¹ï¼Œæ³•çº¿ã€‚é¢œè‰²é€šè¿‡uniformæŒ‡å®šã€‚
+     * ÄÚÖÃshader£¬ÓÃÓÚ3D¹âÕÕäÖÈ¾¡£Ö§³Ö¶¥µã£¬·¨Ïß¡£ÑÕÉ«Í¨¹ıuniformÖ¸¶¨¡£
     */
     static const char* SHADER_3D_POSITION_NORMAL;
     /**@~english
     Built in shader used for 3D, support Position, Normal, Texture vertex attribute, used in lighting. with color specified by a uniform.
      * @~chinese 
-     * å†…ç½®shaderï¼Œç”¨äº3Då…‰ç…§æ¸²æŸ“ã€‚æ”¯æŒä½ç½®ï¼Œæ³•çº¿ï¼Œçº¹ç†åæ ‡ã€‚é¢œè‰²é€šè¿‡uniformæŒ‡å®šã€‚
+     * ÄÚÖÃshader£¬ÓÃÓÚ3D¹âÕÕäÖÈ¾¡£Ö§³ÖÎ»ÖÃ£¬·¨Ïß£¬ÎÆÀí×ø±ê¡£ÑÕÉ«Í¨¹ıuniformÖ¸¶¨¡£
     */
     static const char* SHADER_3D_POSITION_NORMAL_TEXTURE;
     /**@~english
     Built in shader used for 3D, support Position(skeletal animation by hardware skin), Normal, Texture vertex attribute,
     used in lighting. with color specified by a uniform.
      * @~chinese 
-     * å†…ç½®shaderï¼Œç”¨äº3Då…‰ç…§æ¸²æŸ“ã€‚æ”¯æŒé¡¶ç‚¹ï¼Œæ³•çº¿ï¼Œçº¹ç†åæ ‡ï¼Œå’Œç¡¬ä»¶çš„è’™çš®ã€‚é¢œè‰²é€šè¿‡uniformæŒ‡å®šã€‚
+     * ÄÚÖÃshader£¬ÓÃÓÚ3D¹âÕÕäÖÈ¾¡£Ö§³Ö¶¥µã£¬·¨Ïß£¬ÎÆÀí×ø±ê£¬ºÍÓ²¼şµÄÃÉÆ¤¡£ÑÕÉ«Í¨¹ıuniformÖ¸¶¨¡£
     */
     static const char* SHADER_3D_SKINPOSITION_NORMAL_TEXTURE;
     /**@~english
+    Built in shader used for 3D, support Position, Bumped Normal, Texture vertex attribute, used in lighting. with color specified by a uniform.
+    */
+    static const char* SHADER_3D_POSITION_BUMPEDNORMAL_TEXTURE;
+    /**
+    Built in shader used for 3D, support Position(skeletal animation by hardware skin), Bumped Normal, Texture vertex attribute,
+    used in lighting. with color specified by a uniform.
+    */
+    static const char* SHADER_3D_SKINPOSITION_BUMPEDNORMAL_TEXTURE;
+    /**
     Built in shader for particles, support Position and Texture, with a color specified by a uniform.
      * @~chinese 
-     * å†…ç½®shaderï¼Œç”¨äº3Dç²’å­ï¼ˆè´´å›¾ï¼‰æ¸²æŸ“ã€‚
+     * ÄÚÖÃshader£¬ÓÃÓÚ3DÁ£×Ó£¨ÌùÍ¼£©äÖÈ¾¡£
     */
     static const char* SHADER_3D_PARTICLE_TEXTURE;
     /**@~english
     Built in shader for particles, support Position, with a color specified by a uniform.
      * @~chinese 
-     * å†…ç½®shaderï¼Œç”¨äº3Dç²’å­ï¼ˆé¢œè‰²ï¼‰æ¸²æŸ“ã€‚
+     * ÄÚÖÃshader£¬ÓÃÓÚ3DÁ£×Ó£¨ÑÕÉ«£©äÖÈ¾¡£
     */
     static const char* SHADER_3D_PARTICLE_COLOR;
 
     /**@~english
      Built in shader for skybox
      * @~chinese 
-     * å†…ç½®shaderï¼Œç”¨äºå¤©ç©ºç›’ã€‚
+     * ÄÚÖÃshader£¬ÓÃÓÚÌì¿ÕºĞ¡£
      */
     static const char* SHADER_3D_SKYBOX;
 
     /**@~english
      Built in shader for terrain
      * @~chinese 
-     * å†…ç½®shaderï¼Œç”¨äºåœ°å½¢ã€‚
+     * ÄÚÖÃshader£¬ÓÃÓÚµØĞÎ¡£
      */
     static const char* SHADER_3D_TERRAIN;
     
     /**@~english
      Built in shader for camera clear
      * @~chinese 
-     * å†…ç½®shaderï¼Œç”¨äºcameraæ¸…é™¤èƒŒæ™¯ã€‚
+     * ÄÚÖÃshader£¬ÓÃÓÚcameraÇå³ı±³¾°¡£
      */
     static const char* SHADER_CAMERA_CLEAR;
     /**
@@ -364,33 +377,33 @@ public:
     @name Built uniform names
     @{
     */
-    /**@~english Ambient Color uniform. @~chinese Uniformå€¼: ç¯å¢ƒå…‰é¢œè‰²ã€‚*/
+    /**@~english Ambient Color uniform. @~chinese UniformÖµ: »·¾³¹âÑÕÉ«¡£*/
     static const char* UNIFORM_NAME_AMBIENT_COLOR;
-    /**@~english Projection Matrix uniform. @~chinese Uniformå€¼: æŠ•å½±çŸ©é˜µã€‚*/
+    /**@~english Projection Matrix uniform. @~chinese UniformÖµ: Í¶Ó°¾ØÕó¡£*/
     static const char* UNIFORM_NAME_P_MATRIX;
-    /**@~english Model view matrix uniform. @~chinese Uniformå€¼: ModelViewçŸ©é˜µã€‚*/
+    /**@~english Model view matrix uniform. @~chinese UniformÖµ: ModelView¾ØÕó¡£*/
     static const char* UNIFORM_NAME_MV_MATRIX;
-    /**@~english Model view projection uniform. @~chinese Uniformå€¼: ModelViewå’ŒæŠ•å½±çŸ©é˜µçš„è¿ä¹˜ã€‚*/
+    /**@~english Model view projection uniform. @~chinese UniformÖµ: ModelViewºÍÍ¶Ó°¾ØÕóµÄÁ¬³Ë¡£*/
     static const char* UNIFORM_NAME_MVP_MATRIX;
-    /**@~english Normal matrix uniform. @~chinese Uniformå€¼: æ³•çº¿çš„å˜æ¢çŸ©é˜µã€‚*/
+    /**@~english Normal matrix uniform. @~chinese UniformÖµ: ·¨ÏßµÄ±ä»»¾ØÕó¡£*/
     static const char* UNIFORM_NAME_NORMAL_MATRIX;
-    /**@~english Time uniform. @~chinese Uniformå€¼: æ—¶é—´ã€‚*/
+    /**@~english Time uniform. @~chinese UniformÖµ: Ê±¼ä¡£*/
     static const char* UNIFORM_NAME_TIME;
-    /**@~english Sin time uniform. @~chinese Uniformå€¼: æ—¶é—´çš„sinå€¼ã€‚*/
+    /**@~english Sin time uniform. @~chinese UniformÖµ: Ê±¼äµÄsinÖµ¡£*/
     static const char* UNIFORM_NAME_SIN_TIME;
-    /**@~english Cos time uniform. @~chinese Uniformå€¼: æ—¶é—´çš„coså€¼ã€‚*/
+    /**@~english Cos time uniform. @~chinese UniformÖµ: Ê±¼äµÄcosÖµ¡£*/
     static const char* UNIFORM_NAME_COS_TIME;
-    /**@~english Random number uniform. @~chinese Uniformå€¼: éšæœºæ•°ã€‚*/
+    /**@~english Random number uniform. @~chinese UniformÖµ: Ëæ»úÊı¡£*/
     static const char* UNIFORM_NAME_RANDOM01;
-    /**@~englishSampler uniform 0, used for textures. @~chinese Uniformå€¼: é‡‡æ ·å™¨0ã€‚*/
+    /**@~englishSampler uniform 0, used for textures. @~chinese UniformÖµ: ²ÉÑùÆ÷0¡£*/
     static const char* UNIFORM_NAME_SAMPLER0;
-    /**@~englishSampler uniform 1, used for textures. @~chinese Uniformå€¼: é‡‡æ ·å™¨1ã€‚*/
+    /**@~englishSampler uniform 1, used for textures. @~chinese UniformÖµ: ²ÉÑùÆ÷1¡£*/
     static const char* UNIFORM_NAME_SAMPLER1;
-    /**@~englishSampler uniform 2, used for textures. @~chinese Uniformå€¼: é‡‡æ ·å™¨2ã€‚*/
+    /**@~englishSampler uniform 2, used for textures. @~chinese UniformÖµ: ²ÉÑùÆ÷2¡£*/
     static const char* UNIFORM_NAME_SAMPLER2;
-    /**@~englishSampler uniform 3, used for textures. @~chinese Uniformå€¼: é‡‡æ ·å™¨3ã€‚*/
+    /**@~englishSampler uniform 3, used for textures. @~chinese UniformÖµ: ²ÉÑùÆ÷3¡£*/
     static const char* UNIFORM_NAME_SAMPLER3;
-    /**@~english Alpha test value uniform. @~chinese Uniformå€¼: Alpha Testã€‚*/
+    /**@~english Alpha test value uniform. @~chinese UniformÖµ: Alpha Test¡£*/
     static const char* UNIFORM_NAME_ALPHA_TEST_VALUE;
     /**
     end of Built uniform names
@@ -401,42 +414,46 @@ public:
         @name Built Attribute names
         @{
     */
-    /**@~english Attribute color. @~chinese é¢œè‰²å±æ€§ã€‚*/
+    /**@~english Attribute color. @~chinese ÑÕÉ«ÊôĞÔ¡£*/
     static const char* ATTRIBUTE_NAME_COLOR;
-    /**@~english Attribute position. @~chinese ä½ç½®å±æ€§ã€‚*/
+    /**@~english Attribute position. @~chinese Î»ÖÃÊôĞÔ¡£*/
     static const char* ATTRIBUTE_NAME_POSITION;
-    /**@~english Attribute Texcoord 0. @~chinese çº¹ç†åæ ‡å±æ€§0.*/
+    /**@~english Attribute Texcoord 0. @~chinese ÎÆÀí×ø±êÊôĞÔ0.*/
     static const char* ATTRIBUTE_NAME_TEX_COORD;
-    /**@~english Attribute Texcoord 1. @~chinese çº¹ç†åæ ‡å±æ€§1.*/
+    /**@~english Attribute Texcoord 1. @~chinese ÎÆÀí×ø±êÊôĞÔ1.*/
     static const char* ATTRIBUTE_NAME_TEX_COORD1;
-    /**@~english Attribute Texcoord 2. @~chinese çº¹ç†åæ ‡å±æ€§2.*/
+    /**@~english Attribute Texcoord 2. @~chinese ÎÆÀí×ø±êÊôĞÔ2.*/
     static const char* ATTRIBUTE_NAME_TEX_COORD2;
-    /**@~english Attribute Texcoord 3. @~chinese çº¹ç†åæ ‡å±æ€§3.*/
+    /**@~english Attribute Texcoord 3. @~chinese ÎÆÀí×ø±êÊôĞÔ3.*/
     static const char* ATTRIBUTE_NAME_TEX_COORD3;
 
-    /**@~english Attribute normal. @~chinese æ³•çº¿å±æ€§ã€‚*/
+    /**@~english Attribute normal. @~chinese ·¨ÏßÊôĞÔ¡£*/
     static const char* ATTRIBUTE_NAME_NORMAL;
-    /**@~english Attribute blend weight. @~chinese Blend Weightå±æ€§ã€‚*/
+    /**@~english Attribute blend weight. @~chinese Blend WeightÊôĞÔ¡£*/
     static const char* ATTRIBUTE_NAME_BLEND_WEIGHT;
-    /**@~english Attribute blend index. @~chinese Blend indexå±æ€§ã€‚*/
+    /**@~english Attribute blend index. @~chinese Blend indexÊôĞÔ¡£*/
     static const char* ATTRIBUTE_NAME_BLEND_INDEX;
+    /**Attribute blend tangent.*/
+    static const char* ATTRIBUTE_NAME_TANGENT;
+    /**Attribute blend binormal.*/
+    static const char* ATTRIBUTE_NAME_BINORMAL;
     /**
     end of Built Attribute names
     @}
     */
 
-    /**@~english Constructor. @~chinese æ„é€ å‡½æ•°ã€‚*/
+    /**@~english Constructor. @~chinese ¹¹Ôìº¯Êı¡£*/
     GLProgram();
-    /**@~english Destructor. @~chinese ææ„å‡½æ•°ã€‚*/
+    /**@~english Destructor. @~chinese Îö¹¹º¯Êı¡£*/
     virtual ~GLProgram();
 
     /** @~english
     Create the GLProgram with a vertex and fragment with bytes array.
      * @~chinese 
-     * ä»ç»™å®šçš„æºä»£ç å­—ç¬¦ä¸²ä¸­åˆ›å»ºGLProgramã€‚
-     @param vShaderByteArray @~english The source code of vertex shader. @~chinese VertexShaderæºä»£ç .
-     @param fShaderByteArray @~english The source code of fragment shader. @~chinese FragmentShaderæºä»£ç .
-     @return @~english The result GLProgram. @~chinese åˆ›å»ºçš„GLProgramã€‚
+     * ´Ó¸ø¶¨µÄÔ´´úÂë×Ö·û´®ÖĞ´´½¨GLProgram¡£
+     @param vShaderByteArray @~english The source code of vertex shader. @~chinese VertexShaderÔ´´úÂë.
+     @param fShaderByteArray @~english The source code of fragment shader. @~chinese FragmentShaderÔ´´úÂë.
+     @return @~english The result GLProgram. @~chinese ´´½¨µÄGLProgram¡£
      * @js initWithString.
      * @lua initWithString.
      */
@@ -444,40 +461,40 @@ public:
     /** @~english
     Init the GLProgram with a vertex and fragment with bytes array.
      * @~chinese 
-     * ä»ç»™å®šçš„æºä»£ç å­—ç¬¦ä¸²ä¸­åˆå§‹åŒ–GLProgramã€‚
-     @param vShaderByteArray @~english The source code of vertex shader. @~chinese VertexShaderæºä»£ç .
-     @param fShaderByteArray @~english The source code of fragment shader. @~chinese FragmentShaderæºä»£ç .
-     @return @~english The GLprogram is inited correctly or not. @~chinese GLProgramæ˜¯å¦è¢«æˆåŠŸåˆå§‹åŒ–ã€‚
+     * ´Ó¸ø¶¨µÄÔ´´úÂë×Ö·û´®ÖĞ³õÊ¼»¯GLProgram¡£
+     @param vShaderByteArray @~english The source code of vertex shader. @~chinese VertexShaderÔ´´úÂë.
+     @param fShaderByteArray @~english The source code of fragment shader. @~chinese FragmentShaderÔ´´úÂë.
+     @return @~english The GLprogram is inited correctly or not. @~chinese GLProgramÊÇ·ñ±»³É¹¦³õÊ¼»¯¡£
      */
     bool initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
     /** @~english
     Create the GLProgram with a vertex and fragment with bytes array.
      * @~chinese 
-     * ä»ç»™å®šçš„æºä»£ç å­—ç¬¦ä¸²ä¸­åˆ›å»ºGLProgramã€‚
-     @param vShaderByteArray @~english The source code of vertex shader. @~chinese VertexShaderæºä»£ç .
-     @param fShaderByteArray @~english The source code of fragment shader. @~chinese FragmentShaderæºä»£ç .
-     @param compileTimeDefines @~english compile macro and defines for shader. @~chinese ç¼–è¯‘æ—¶çš„é¢„å®šä¹‰å€¼å’Œå®ã€‚
-     @return @~english The result GLProgram. @~chinese åˆ›å»ºçš„GLProgramã€‚
+     * ´Ó¸ø¶¨µÄÔ´´úÂë×Ö·û´®ÖĞ´´½¨GLProgram¡£
+     @param vShaderByteArray @~english The source code of vertex shader. @~chinese VertexShaderÔ´´úÂë.
+     @param fShaderByteArray @~english The source code of fragment shader. @~chinese FragmentShaderÔ´´úÂë.
+     @param compileTimeDefines @~english compile macro and defines for shader. @~chinese ±àÒëÊ±µÄÔ¤¶¨ÒåÖµºÍºê¡£
+     @return @~english The result GLProgram. @~chinese ´´½¨µÄGLProgram¡£
      */
     static GLProgram* createWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray, const std::string& compileTimeDefines);
     /** @~english
     Init the GLProgram with a vertex and fragment with bytes array.
      * @~chinese 
-     * ä»ç»™å®šçš„æºä»£ç å­—ç¬¦ä¸²ä¸­åˆå§‹åŒ–GLProgramã€‚
-     @param vShaderByteArray @~english The source code of vertex shader. @~chinese VertexShaderæºä»£ç .
-     @param fShaderByteArray @~english The source code of fragment shader. @~chinese FragmentShaderæºä»£ç .
-     @param compileTimeDefines @~english compile macro and defines for shader. @~chinese ç¼–è¯‘æ—¶çš„é¢„å®šä¹‰å€¼å’Œå®ã€‚
-     @return @~english The GLprogram is inited correctly or not. @~chinese GLProgramæ˜¯å¦è¢«æˆåŠŸåˆå§‹åŒ–ã€‚
+     * ´Ó¸ø¶¨µÄÔ´´úÂë×Ö·û´®ÖĞ³õÊ¼»¯GLProgram¡£
+     @param vShaderByteArray @~english The source code of vertex shader. @~chinese VertexShaderÔ´´úÂë.
+     @param fShaderByteArray @~english The source code of fragment shader. @~chinese FragmentShaderÔ´´úÂë.
+     @param compileTimeDefines @~english compile macro and defines for shader. @~chinese ±àÒëÊ±µÄÔ¤¶¨ÒåÖµºÍºê¡£
+     @return @~english The GLprogram is inited correctly or not. @~chinese GLProgramÊÇ·ñ±»³É¹¦³õÊ¼»¯¡£
      */
     bool initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray, const std::string& compileTimeDefines);
 
     /** @~english
     Create the GLProgram with a vertex and fragment file.
      * @~chinese 
-     * ä»ç»™å®šçš„æºä»£ç æ–‡ä»¶ä¸­åˆ›å»ºGLProgramã€‚
-     @param vShaderFilename @~english The source code file of vertex shader. @~chinese VertexShaderæºä»£ç æ–‡ä»¶.
-     @param fShaderFilename @~english The source code file of fragment shader. @~chinese FragmentShaderæºä»£ç æ–‡ä»¶.
-     @return @~english The result GLProgram. @~chinese åˆ›å»ºçš„GLProgramã€‚
+     * ´Ó¸ø¶¨µÄÔ´´úÂëÎÄ¼şÖĞ´´½¨GLProgram¡£
+     @param vShaderFilename @~english The source code file of vertex shader. @~chinese VertexShaderÔ´´úÂëÎÄ¼ş.
+     @param fShaderFilename @~english The source code file of fragment shader. @~chinese FragmentShaderÔ´´úÂëÎÄ¼ş.
+     @return @~english The result GLProgram. @~chinese ´´½¨µÄGLProgram¡£
      * @js init
      * @lua init
      */
@@ -485,74 +502,74 @@ public:
     /** @~english
     Init the GLProgram with a vertex and fragment file.
      * @~chinese 
-     * ä»ç»™å®šçš„æºä»£ç æ–‡ä»¶ä¸­åˆå§‹åŒ–GLProgramã€‚
-     @param vShaderFilename @~english The source code file of vertex shader. @~chinese VertexShaderæºä»£ç æ–‡ä»¶.
-     @param fShaderFilename @~english The source code file of fragment shader. @~chinese FragmentShaderæºä»£ç æ–‡ä»¶.
-     @return @~english The GLprogram is inited correctly or not. @~chinese GLProgramæ˜¯å¦è¢«æˆåŠŸåˆå§‹åŒ–ã€‚
+     * ´Ó¸ø¶¨µÄÔ´´úÂëÎÄ¼şÖĞ³õÊ¼»¯GLProgram¡£
+     @param vShaderFilename @~english The source code file of vertex shader. @~chinese VertexShaderÔ´´úÂëÎÄ¼ş.
+     @param fShaderFilename @~english The source code file of fragment shader. @~chinese FragmentShaderÔ´´úÂëÎÄ¼ş.
+     @return @~english The GLprogram is inited correctly or not. @~chinese GLProgramÊÇ·ñ±»³É¹¦³õÊ¼»¯¡£
      */
     bool initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
     /** @~english
     Create the GLProgram with a vertex and fragment file.
      * @~chinese 
-     * ä»ç»™å®šçš„æºä»£ç æ–‡ä»¶ä¸­åˆ›å»ºGLProgramã€‚
-     @param vShaderFilename @~english The source code file of vertex shader. @~chinese VertexShaderæºä»£ç æ–‡ä»¶.
-     @param fShaderFilename @~english The source code file of fragment shader. @~chinese FragmentShaderæºä»£ç æ–‡ä»¶.
-     @param compileTimeDefines @~english compile macro and defines for shader. @~chinese ç¼–è¯‘æ—¶çš„é¢„å®šä¹‰å€¼å’Œå®ã€‚
-     @return @~english The result GLProgram. @~chinese åˆ›å»ºçš„GLProgramã€‚
+     * ´Ó¸ø¶¨µÄÔ´´úÂëÎÄ¼şÖĞ´´½¨GLProgram¡£
+     @param vShaderFilename @~english The source code file of vertex shader. @~chinese VertexShaderÔ´´úÂëÎÄ¼ş.
+     @param fShaderFilename @~english The source code file of fragment shader. @~chinese FragmentShaderÔ´´úÂëÎÄ¼ş.
+     @param compileTimeDefines @~english compile macro and defines for shader. @~chinese ±àÒëÊ±µÄÔ¤¶¨ÒåÖµºÍºê¡£
+     @return @~english The result GLProgram. @~chinese ´´½¨µÄGLProgram¡£
      */
     static GLProgram* createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& compileTimeDefines);
         /** @~english
     Init the GLProgram with a vertex and fragment file.
      * @~chinese 
-     * ä»ç»™å®šçš„æºä»£ç æ–‡ä»¶ä¸­åˆå§‹åŒ–GLProgramã€‚
-     @param vShaderFilename @~english The source code file of vertex shader. @~chinese VertexShaderæºä»£ç æ–‡ä»¶.
-     @param fShaderFilename @~english The source code file of fragment shader. @~chinese FragmentShaderæºä»£ç æ–‡ä»¶.
-     @param compileTimeDefines @~english compile macro and defines for shader. @~chinese ç¼–è¯‘æ—¶çš„é¢„å®šä¹‰å€¼å’Œå®ã€‚
-     @return @~english The GLprogram is inited correctly or not. @~chinese GLProgramæ˜¯å¦è¢«æˆåŠŸåˆå§‹åŒ–ã€‚
+     * ´Ó¸ø¶¨µÄÔ´´úÂëÎÄ¼şÖĞ³õÊ¼»¯GLProgram¡£
+     @param vShaderFilename @~english The source code file of vertex shader. @~chinese VertexShaderÔ´´úÂëÎÄ¼ş.
+     @param fShaderFilename @~english The source code file of fragment shader. @~chinese FragmentShaderÔ´´úÂëÎÄ¼ş.
+     @param compileTimeDefines @~english compile macro and defines for shader. @~chinese ±àÒëÊ±µÄÔ¤¶¨ÒåÖµºÍºê¡£
+     @return @~english The GLprogram is inited correctly or not. @~chinese GLProgramÊÇ·ñ±»³É¹¦³õÊ¼»¯¡£
      */
     bool initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& compileTimeDefines);
 
     /**
     @~english Get the uniform by string name in shader, return null if it does not exist.
-    @~chinese æŒ‰ç…§åå­—æ£€ç´¢Uniform, å¦‚æœä¸å­˜åœ¨ï¼Œå°†è¿”å›null
+    @~chinese °´ÕÕÃû×Ö¼ìË÷Uniform, Èç¹û²»´æÔÚ£¬½«·µ»Ønull
     */
     Uniform* getUniform(const std::string& name);
     /**
     @~english Get the vertex attribute by string name in shader, return null if it does not exist.
-    @~chinese æŒ‰ç…§åå­—æ£€ç´¢é¡¶ç‚¹å±æ€§, å¦‚æœä¸å­˜åœ¨ï¼Œå°†è¿”å›null
+    @~chinese °´ÕÕÃû×Ö¼ìË÷¶¥µãÊôĞÔ, Èç¹û²»´æÔÚ£¬½«·µ»Ønull
     */
     VertexAttrib* getVertexAttrib(const std::string& name);
 
     /**  
     @~english It will add a new attribute to the shader by calling glBindAttribLocation.  
-    @~chinese è°ƒç”¨glBindAttribLocationï¼Œå°†é¡¶ç‚¹å±æ€§ç»‘å®šç»™ç»™å®šçš„ä½ç½®ã€‚
-    @param attributeName @~english the name of vertex attribute. @~chinese é¡¶ç‚¹å±æ€§çš„åå­—ã€‚
-    @param index @~english the index location. @~chinese ç»™å®šçš„ä½ç½®ã€‚
+    @~chinese µ÷ÓÃglBindAttribLocation£¬½«¶¥µãÊôĞÔ°ó¶¨¸ø¸ø¶¨µÄÎ»ÖÃ¡£
+    @param attributeName @~english the name of vertex attribute. @~chinese ¶¥µãÊôĞÔµÄÃû×Ö¡£
+    @param index @~english the index location. @~chinese ¸ø¶¨µÄÎ»ÖÃ¡£
     */
     void bindAttribLocation(const std::string& attributeName, GLuint index) const;
 
-    /** @~english Calls glGetAttribLocation.  @~chinese è°ƒç”¨glGetAttribLocationã€‚*/
+    /** @~english Calls glGetAttribLocation.  @~chinese µ÷ÓÃglGetAttribLocation¡£*/
     GLint getAttribLocation(const std::string& attributeName) const;
 
-    /** @~english Calls glGetUniformLocation().  @~chinese è°ƒç”¨glGetUniformLocation()ã€‚*/
+    /** @~english Calls glGetUniformLocation().  @~chinese µ÷ÓÃglGetUniformLocation()¡£*/
     GLint getUniformLocation(const std::string& attributeName) const;
 
-    /** @~english links the glProgram  @~chinese é“¾æ¥openGL Programã€‚*/
+    /** @~english links the glProgram  @~chinese Á´½ÓopenGL Program¡£*/
     bool link();
-    /** @~english it will call glUseProgram()  @~chinese å®ƒå°†è°ƒç”¨glUseProgram()ã€‚*/
+    /** @~english it will call glUseProgram()  @~chinese Ëü½«µ÷ÓÃglUseProgram()¡£*/
     void use();
     /** @~english update the locations for built in uniforms.
-    @~chinese æ›´æ–°é¢„å®šä¹‰çš„Uniformå‚æ•°çš„ä½ç½®ã€‚*/
+    @~chinese ¸üĞÂÔ¤¶¨ÒåµÄUniform²ÎÊıµÄÎ»ÖÃ¡£*/
     void updateUniforms();
 
     /** 
     @~english calls retrieves the named uniform location for this shader program.  
-    @~chinese æŒ‰ç…§åå­—å»æ£€ç´¢Uniformçš„ä½ç½®ã€‚
+    @~chinese °´ÕÕÃû×ÖÈ¥¼ìË÷UniformµÄÎ»ÖÃ¡£
     */
     GLint getUniformLocationForName(const char* name) const;
 
     /** @~english calls glUniform1i only if the values are different than the previous call for this same shader program.
-     * @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniform1iã€‚
+     * @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniform1i¡£
      * @js setUniformLocationI32
      * @lua setUniformLocationI32
      */
@@ -560,150 +577,150 @@ public:
 
     /** 
     @~english calls glUniform2i only if the values are different than the previous call for this same shader program.  
-    @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniform2iã€‚
+    @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniform2i¡£
     */
     void setUniformLocationWith2i(GLint location, GLint i1, GLint i2);
 
     /** 
     @~english calls glUniform3i only if the values are different than the previous call for this same shader program.  
-    @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniform3iã€‚
+    @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniform3i¡£
     */
     void setUniformLocationWith3i(GLint location, GLint i1, GLint i2, GLint i3);
 
     /** 
     @~english calls glUniform4i only if the values are different than the previous call for this same shader program.  
-    @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniform4iã€‚
+    @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniform4i¡£
     */
     void setUniformLocationWith4i(GLint location, GLint i1, GLint i2, GLint i3, GLint i4);
 
     /** 
     @~english calls glUniform2iv only if the values are different than the previous call for this same shader program.  
-    @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniform2ivã€‚
+    @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniform2iv¡£
     */
     void setUniformLocationWith2iv(GLint location, GLint* ints, unsigned int numberOfArrays);
 
     /** 
     @~english calls glUniform3iv only if the values are different than the previous call for this same shader program.  
-    @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniform3ivã€‚
+    @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniform3iv¡£
     */
     void setUniformLocationWith3iv(GLint location, GLint* ints, unsigned int numberOfArrays);
 
     /** 
     @~english calls glUniform4iv only if the values are different than the previous call for this same shader program.  
-    @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniform4ivã€‚
+    @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniform4iv¡£
     */
 
     void setUniformLocationWith4iv(GLint location, GLint* ints, unsigned int numberOfArrays);
 
     /** @~english calls glUniform1f only if the values are different than the previous call for this same shader program.
      * In js or lua,please use setUniformLocationF32
-     * @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniform1fã€‚
-     * åœ¨jsæˆ–lua,è¯·ä½¿ç”¨setUniformLocationF32
+     * @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniform1f¡£
+     * ÔÚjs»òlua,ÇëÊ¹ÓÃsetUniformLocationF32
      * @js NA
      */
     void setUniformLocationWith1f(GLint location, GLfloat f1);
 
     /** @~english calls glUniform2f only if the values are different than the previous call for this same shader program.
      * In js or lua,please use setUniformLocationF32
-     * @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniform2fã€‚
-     * åœ¨jsæˆ–lua,è¯·ä½¿ç”¨setUniformLocationF32
+     * @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniform2f¡£
+     * ÔÚjs»òlua,ÇëÊ¹ÓÃsetUniformLocationF32
      * @js NA
      */
     void setUniformLocationWith2f(GLint location, GLfloat f1, GLfloat f2);
 
     /** @~english calls glUniform3f only if the values are different than the previous call for this same shader program.
      * In js or lua,please use setUniformLocationF32
-     * @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniform3fã€‚
-     * åœ¨jsæˆ–lua,è¯·ä½¿ç”¨setUniformLocationF32
+     * @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniform3f¡£
+     * ÔÚjs»òlua,ÇëÊ¹ÓÃsetUniformLocationF32
      * @js NA
      */
     void setUniformLocationWith3f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3);
 
     /** @~english calls glUniform4f only if the values are different than the previous call for this same shader program.
      * In js or lua,please use setUniformLocationF32
-     * @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniform4fã€‚
-     * åœ¨jsæˆ–lua,è¯·ä½¿ç”¨setUniformLocationF32
+     * @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniform4f¡£
+     * ÔÚjs»òlua,ÇëÊ¹ÓÃsetUniformLocationF32
      * @js NA
      */
     void setUniformLocationWith4f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3, GLfloat f4);
 
     /** 
     @~english calls glUniformfv only if the values are different than the previous call for this same shader program.  
-    @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniformfvã€‚
+    @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniformfv¡£
     */
     void setUniformLocationWith1fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
 
     /** 
     @~english calls glUniform2fv only if the values are different than the previous call for this same shader program.  
-    @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniform2fvã€‚
+    @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniform2fv¡£
     */
     void setUniformLocationWith2fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
 
     /** 
     @~english calls glUniform3fv only if the values are different than the previous call for this same shader program.  
-    @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniform3fvã€‚
+    @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniform3fv¡£
     */
     void setUniformLocationWith3fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
 
     /** 
     @~english calls glUniform4fv only if the values are different than the previous call for this same shader program.  
-    @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniform4fvã€‚
+    @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniform4fv¡£
     */
     void setUniformLocationWith4fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
 
     /** 
     @~english calls glUniformMatrix2fv only if the values are different than the previous call for this same shader program.  
-    @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniformMatrix2fvã€‚
+    @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniformMatrix2fv¡£
     */
     void setUniformLocationWithMatrix2fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
 
     /** 
     @~english calls glUniformMatrix3fv only if the values are different than the previous call for this same shader program.  
-    @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniformMatrix3fvã€‚
+    @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniformMatrix3fv¡£
     */
     void setUniformLocationWithMatrix3fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
 
     /** 
     @~english calls glUniformMatrix4fv only if the values are different than the previous call for this same shader program.  
-    @~chinese å½“æ•°æ®å€¼æœ‰æ›´æ–°æ—¶ï¼Œè°ƒç”¨glUniformMatrix4fvã€‚
+    @~chinese µ±Êı¾İÖµÓĞ¸üĞÂÊ±£¬µ÷ÓÃglUniformMatrix4fv¡£
     */
     void setUniformLocationWithMatrix4fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
 
     /**@~english
      Update the builtin uniforms if they are different than the previous call for this same shader program.
      * @~chinese 
-     * æ›´æ–°Shaderä¸­é¢„å…ˆå®šä¹‰çš„Uniform,å¦‚æœå®ƒä»¬çš„æ•°æ®æœ‰æ›´æ–°ã€‚
+     * ¸üĞÂShaderÖĞÔ¤ÏÈ¶¨ÒåµÄUniform,Èç¹ûËüÃÇµÄÊı¾İÓĞ¸üĞÂ¡£
      */
     void setUniformsForBuiltins();
     /**@~english
      Update the builtin uniforms if they are different than the previous call for this same shader program.
      * @~chinese 
-     * æ›´æ–°Shaderä¸­é¢„å…ˆå®šä¹‰çš„Uniform,å¦‚æœå®ƒä»¬çš„æ•°æ®æœ‰æ›´æ–°ã€‚
+     * ¸üĞÂShaderÖĞÔ¤ÏÈ¶¨ÒåµÄUniform,Èç¹ûËüÃÇµÄÊı¾İÓĞ¸üĞÂ¡£
      @param modelView @~english modelView matrix applied to the built in uniform of the shader.
-     * @~chinese æ›´æ–°éœ€è¦çš„ModelViewçŸ©é˜µã€‚
+     * @~chinese ¸üĞÂĞèÒªµÄModelView¾ØÕó¡£
      */
     void setUniformsForBuiltins(const Mat4 &modelView);
 
-    /** @~english returns the vertexShader error log  @~chinese è¿”å›vertexShaderé”™è¯¯æ—¥å¿—*/
+    /** @~english returns the vertexShader error log  @~chinese ·µ»ØvertexShader´íÎóÈÕÖ¾*/
     std::string getVertexShaderLog() const;
 
-    /** @~english returns the fragmentShader error log  @~chinese è¿”å›fragmentShaderé”™è¯¯æ—¥å¿—*/
+    /** @~english returns the fragmentShader error log  @~chinese ·µ»ØfragmentShader´íÎóÈÕÖ¾*/
     std::string getFragmentShaderLog() const;
 
-    /** @~english returns the program error log  @~chinese è¿”å›ç¨‹åºé”™è¯¯æ—¥å¿—*/
+    /** @~english returns the program error log  @~chinese ·µ»Ø³ÌĞò´íÎóÈÕÖ¾*/
     std::string getProgramLog() const;
 
     /** @~english Reload all shaders, this function is designed for android
     when opengl context lost, so don't call it.
-     * @~chinese é‡æ–°åŠ è½½æ‰€æœ‰Shader,è¿™ä¸ªå‡½æ•°æ˜¯ä¸ºandroidè®¾è®¡çš„
-     * å½“openglä¸Šä¸‹æ–‡ä¸¢å¤±,æ‰€ä»¥ä¸è¦è‡ªè¡Œè°ƒç”¨ã€‚
+     * @~chinese ÖØĞÂ¼ÓÔØËùÓĞShader,Õâ¸öº¯ÊıÊÇÎªandroidÉè¼ÆµÄ
+     * µ±openglÉÏÏÂÎÄ¶ªÊ§,ËùÒÔ²»Òª×ÔĞĞµ÷ÓÃ¡£
     */
     void reset();
     /*
     @~english Get the built in openGL handle of the program. 
-    @~chinese å¾—åˆ°openGL Programçš„å¥æŸ„ã€‚
+    @~chinese µÃµ½openGL ProgramµÄ¾ä±ú¡£
     @return @~english openGL Program handle.
-    @~chinese openGL Programçš„å¥æŸ„ã€‚
+    @~chinese openGL ProgramµÄ¾ä±ú¡£
     */
     inline const GLuint getProgram() const { return _program; }
 
@@ -719,25 +736,25 @@ protected:
     /**@~english
     Update the uniform data in location.
      * @~chinese 
-     * æ›´æ–°Uniformæ•°æ®çš„ä½ç½®ã€‚
+     * ¸üĞÂUniformÊı¾İµÄÎ»ÖÃ¡£
     @param location @~english The location of the uniform.
-     * @~chinese Uniformçš„ä½ç½®ã€‚
+     * @~chinese UniformµÄÎ»ÖÃ¡£
     @param data @~english Updated data.
-     * @~chinese æ›´æ–°çš„æ•°æ®ã€‚
+     * @~chinese ¸üĞÂµÄÊı¾İ¡£
     @oaram @~english bytes Data length in bytes to update.
-     * @~chinese è¦æ›´æ–°çš„æ•°æ®é•¿åº¦ï¼Œä»¥å­—èŠ‚ä¸ºå•ä½ã€‚
+     * @~chinese Òª¸üĞÂµÄÊı¾İ³¤¶È£¬ÒÔ×Ö½ÚÎªµ¥Î»¡£
     */
     bool updateUniformLocation(GLint location, const GLvoid* data, unsigned int bytes);
-    /**@~english Get a general description of the shader. @~chinese ç€è‰²å™¨çš„ç®€å•æè¿°ã€‚*/
+    /**@~english Get a general description of the shader. @~chinese ×ÅÉ«Æ÷µÄ¼òµ¥ÃèÊö¡£*/
     virtual std::string getDescription() const;
 
-    /**@~english Bind the predefined vertex attributes to their specific slot. @~chinese å°†é¡¶ç‚¹å±æ€§ç»‘å®šåˆ°é¢„å…ˆå®šä¹‰çš„ä½ç½®ã€‚*/
+    /**@~english Bind the predefined vertex attributes to their specific slot. @~chinese ½«¶¥µãÊôĞÔ°ó¶¨µ½Ô¤ÏÈ¶¨ÒåµÄÎ»ÖÃ¡£*/
     void bindPredefinedVertexAttribs();
-    /**@~english Parse user defined Vertex Attributes automatically. @~chinese è‡ªåŠ¨è§£æç”¨æˆ·å®šä¹‰çš„é¡¶ç‚¹å±æ€§ã€‚*/
+    /**@~english Parse user defined Vertex Attributes automatically. @~chinese ×Ô¶¯½âÎöÓÃ»§¶¨ÒåµÄ¶¥µãÊôĞÔ¡£*/
     void parseVertexAttribs();
-    /**@~english Parse user defined uniform automatically. @~chinese è‡ªåŠ¨è§£æç”¨æˆ·å®šä¹‰çš„Uniformã€‚*/
+    /**@~english Parse user defined uniform automatically. @~chinese ×Ô¶¯½âÎöÓÃ»§¶¨ÒåµÄUniform¡£*/
     void parseUniforms();
-    /**@~english Compile the shader sources. @~chinese ç¼–è¯‘Shaderçš„æºä»£ç ã€‚*/
+    /**@~english Compile the shader sources. @~chinese ±àÒëShaderµÄÔ´´úÂë¡£*/
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source, const std::string& convertedDefines);
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
 
@@ -751,6 +768,8 @@ protected:
     GLint             _builtInUniforms[UNIFORM_MAX];
     /** Indicate whether it has a offline shader compiler or not.*/
     bool              _hasShaderCompiler;
+
+    inline void clearShader();
 
     struct flag_struct {
         unsigned int usesTime:1;

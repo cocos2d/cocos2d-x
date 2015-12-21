@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -433,6 +433,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\base\ccFPSImages.c" />
     <ClCompile Include="..\base\CCIMEDispatcher.cpp" />
     <ClCompile Include="..\base\CCNinePatchImageParser.cpp" />
+    <ClCompile Include="..\base\CCStencilStateManager.cpp" />
     <ClCompile Include="..\base\CCNS.cpp" />
     <ClCompile Include="..\base\CCProfiling.cpp" />
     <ClCompile Include="..\base\CCProperties.cpp" />
@@ -652,6 +653,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\ui\UIListView.cpp" />
     <ClCompile Include="..\ui\UILoadingBar.cpp" />
     <ClCompile Include="..\ui\UIPageView.cpp" />
+    <ClCompile Include="..\ui\UIPageViewIndicator.cpp" />
     <ClCompile Include="..\ui\UIRelativeBox.cpp" />
     <ClCompile Include="..\ui\UIRichText.cpp" />
     <ClCompile Include="..\ui\UIScale9Sprite.cpp" />
@@ -1014,6 +1016,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\base\ccMacros.h" />
     <ClInclude Include="..\base\CCMap.h" />
     <ClInclude Include="..\base\CCNinePatchImageParser.h" />
+    <ClInclude Include="..\base\CCStencilStateManager.h" />
     <ClInclude Include="..\base\CCNS.h" />
     <ClInclude Include="..\base\CCProfiling.h" />
     <ClInclude Include="..\base\CCProperties.h" />
@@ -1254,6 +1257,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\storage\local-storage\LocalStorage.h" />
     <ClInclude Include="..\ui\CocosGUI.h" />
     <ClInclude Include="..\ui\GUIExport.h" />
+    <ClInclude Include="..\ui\UIAbstractCheckButton.h" />
     <ClInclude Include="..\ui\UIButton.h" />
     <ClInclude Include="..\ui\UICheckBox.h" />
     <ClInclude Include="..\ui\UIDeprecated.h" />

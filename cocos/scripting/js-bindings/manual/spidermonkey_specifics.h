@@ -25,22 +25,27 @@
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
-#include "uthash.h"
+#include "mozilla/Maybe.h"
 #include <unordered_map>
 
+// Probably we can get rid of this struct, but since a lot of code
+// depends on it, we cannot remove it easily
 typedef struct js_proxy {
+    /** the native object. usually a pointer to cocos2d::Ref, but could be a pointer to another object */
     void *ptr;
+    /** the JS object, as a heap object. Required by GC best practices */
     JS::Heap<JSObject*> obj;
-    UT_hash_handle hh;
+    /** This is the raw pointer. The same as the "obj", but 'raw'. This is needed
+     because under certain circumstances JS::RemoveRootObject will be called on "obj"
+     and "obj" will became NULL. Which is not Ok if we need to use "obj" later for other stuff
+     */
+    JSObject* _jsobj;
 } js_proxy_t;
-
-extern js_proxy_t *_native_js_global_ht;
-extern js_proxy_t *_js_native_global_ht;
 
 typedef struct js_type_class {
     JSClass *jsclass;
-    JS::Heap<JSObject*> proto;
-    JS::Heap<JSObject*> parentProto;
+    mozilla::Maybe<JS::PersistentRootedObject> proto;
+    mozilla::Maybe<JS::PersistentRootedObject> parentProto;
 } js_type_class_t;
 
 extern std::unordered_map<std::string, js_type_class_t*> _js_global_type_map;
@@ -58,42 +63,6 @@ public:
     }
 };
 
-
-#define JS_NEW_PROXY(p, native_obj, js_obj) \
-do { \
-    p = (js_proxy_t *)malloc(sizeof(js_proxy_t)); \
-    assert(p); \
-    js_proxy_t* native_obj##js_obj##tmp = NULL; \
-    HASH_FIND_PTR(_native_js_global_ht, &native_obj, native_obj##js_obj##tmp); \
-    assert(!native_obj##js_obj##tmp); \
-    p->ptr = native_obj; \
-    p->obj = js_obj; \
-    HASH_ADD_PTR(_native_js_global_ht, ptr, p); \
-    p = (js_proxy_t *)malloc(sizeof(js_proxy_t)); \
-    assert(p); \
-    native_obj##js_obj##tmp = NULL; \
-    HASH_FIND_PTR(_js_native_global_ht, &js_obj, native_obj##js_obj##tmp); \
-    assert(!native_obj##js_obj##tmp); \
-    p->ptr = native_obj; \
-    p->obj = js_obj; \
-    HASH_ADD_PTR(_js_native_global_ht, obj, p); \
-} while(0) \
-
-#define JS_GET_PROXY(p, native_obj) \
-do { \
-    HASH_FIND_PTR(_native_js_global_ht, &native_obj, p); \
-} while (0)
-
-#define JS_GET_NATIVE_PROXY(p, js_obj) \
-do { \
-    HASH_FIND_PTR(_js_native_global_ht, &js_obj, p); \
-} while (0)
-
-#define JS_REMOVE_PROXY(nproxy, jsproxy) \
-do { \
-    if (nproxy) { HASH_DEL(_native_js_global_ht, nproxy); free(nproxy); } \
-    if (jsproxy) { HASH_DEL(_js_native_global_ht, jsproxy); free(jsproxy); } \
-} while (0)
 
 #define TEST_NATIVE_OBJECT(cx, native_obj) \
 if (!native_obj) { \

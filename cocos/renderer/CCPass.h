@@ -52,7 +52,7 @@ class VertexAttribBinding;
  * @brief
  * @~english
  * Material contains one or more techniques. Each technique can contains one or more passes. And material can active one technique for drawing. Pass contains vertex attribute binding and GLProgramState. The Passes in the same Technique are applied one by one when drawing an object.
- * @~chinese æè´¨åŒ…å«ä¸€ä¸ªæˆ–è€…å¤šä¸ªTechniqueï¼Œæ¯ä¸ªTechniqueå¯ä»¥åŒ…å«ä¸€ä¸ªæˆ–è€…å¤šä¸ªPassã€‚Passæ˜¯å¯¹é¡¶ç‚¹å±æ€§å’ŒGLProgramStateçš„å°è£…ï¼Œç»˜åˆ¶ç‰©ä½“æ—¶ï¼Œæè´¨åœ¨ä½¿ç”¨æ—¶å¯ä»¥æ¿€æ´»ä¸€ä¸ªã€‚Techniqueä¸­çš„å¤šä¸ªPassä¸€ä¸ªæ¥ä¸€ä¸ªçš„åº”ç”¨ã€‚
+ * @~chinese ²ÄÖÊ°üº¬Ò»¸ö»òÕß¶à¸öTechnique£¬Ã¿¸öTechnique¿ÉÒÔ°üº¬Ò»¸ö»òÕß¶à¸öPass¡£PassÊÇ¶Ô¶¥µãÊôĞÔºÍGLProgramStateµÄ·â×°£¬»æÖÆÎïÌåÊ±£¬²ÄÖÊÔÚÊ¹ÓÃÊ±¿ÉÒÔ¼¤»îÒ»¸ö¡£TechniqueÖĞµÄ¶à¸öPassÒ»¸ö½ÓÒ»¸öµÄÓ¦ÓÃ¡£
  */
 
 class CC_DLL Pass : public RenderState
@@ -63,73 +63,73 @@ public:
     
     /**
      * @~english Creates a Pass with a GLProgramState.
-     * @~chinese ç”¨GLProgramStateåˆ›å»ºä¸€ä¸ªPassã€‚
-     * @param parent @~english Technique who owns this Pass. @~chinese æ‹¥æœ‰è¿™ä¸ªPassçš„Techniqueã€‚
-     * @param programState @~english GLProgramState used to create Pass. @~chinese ç”¨æ¥åˆ›å»ºPassçš„GLProgramStateã€‚
-     * @return @~english Created Pass. @~chinese æ–°åˆ›å»ºçš„Passã€‚
+     * @~chinese ÓÃGLProgramState´´½¨Ò»¸öPass¡£
+     * @param parent @~english Technique who owns this Pass. @~chinese ÓµÓĞÕâ¸öPassµÄTechnique¡£
+     * @param programState @~english GLProgramState used to create Pass. @~chinese ÓÃÀ´´´½¨PassµÄGLProgramState¡£
+     * @return @~english Created Pass. @~chinese ĞÂ´´½¨µÄPass¡£
      */
     static Pass* createWithGLProgramState(Technique* parent, GLProgramState* programState);
 
     /**
      * @~english Creates a Pass.
-     * @~chinese åˆ›å»ºä¸€ä¸ªPassã€‚
-     * @param parent @~english Technique who owns this Pass. @~chinese æ‹¥æœ‰è¿™ä¸ªPassçš„Techniqueã€‚
-     * @return @~english Created Pass. @~chinese æ–°åˆ›å»ºçš„Passã€‚
+     * @~chinese ´´½¨Ò»¸öPass¡£
+     * @param parent @~english Technique who owns this Pass. @~chinese ÓµÓĞÕâ¸öPassµÄTechnique¡£
+     * @return @~english Created Pass. @~chinese ĞÂ´´½¨µÄPass¡£
      */
     static Pass* create(Technique* parent);
 
     /**
      * @~english Gets the GLProgramState.
-     * @~chinese è·å–GLProgramStateã€‚
-     * @return @~english GLProgramState in the Pass. @~chinese Passä¸­çš„GLProgramStateã€‚
+     * @~chinese »ñÈ¡GLProgramState¡£
+     * @return @~english GLProgramState in the Pass. @~chinese PassÖĞµÄGLProgramState¡£
      */
     GLProgramState* getGLProgramState() const;
 
     /**
      * @~english Binds the GLProgramState and the RenderState. This method must be called before call the actuall draw call.
-     * @~chinese ç»‘å®šGLProgramStateå’Œæ¸²æŸ“çŠ¶æ€ï¼Œè¿™ä¸ªæ–¹æ³•å¿…é¡»åœ¨å®é™…ç»˜åˆ¶ä¹‹å‰è°ƒç”¨ã€‚
-     * @param modelView @~english Model view matrix which is going to pass to shader. @~chinese ä¼ æŸ“åˆ°shaderä¸­çš„æ¨¡å‹è§†å›¾çŸ©é˜µã€‚
+     * @~chinese °ó¶¨GLProgramStateºÍäÖÈ¾×´Ì¬£¬Õâ¸ö·½·¨±ØĞëÔÚÊµ¼Ê»æÖÆÖ®Ç°µ÷ÓÃ¡£
+     * @param modelView @~english Model view matrix which is going to pass to shader. @~chinese ´«È¾µ½shaderÖĞµÄÄ£ĞÍÊÓÍ¼¾ØÕó¡£
      */
     void bind(const Mat4& modelView);
     /**
      * @~english Binds the GLProgramState and the RenderState. This method must be called before call the actuall draw call.
-     * @~chinese ç»‘å®šGLProgramStateå’Œæ¸²æŸ“çŠ¶æ€ï¼Œè¿™ä¸ªæ–¹æ³•å¿…é¡»åœ¨å®é™…ç»˜åˆ¶ä¹‹å‰è°ƒç”¨ã€‚
-     * @param modelView @~english Model view matrix which is going to pass to shader. @~chinese ä¼ æŸ“åˆ°shaderä¸­çš„æ¨¡å‹è§†å›¾çŸ©é˜µã€‚
-     * @param bindAttributes @~english binding vertex attribute ? @~chinese æ˜¯å¦ç»‘å®šé¡¶ç‚¹å±æ€§ï¼Ÿ
+     * @~chinese °ó¶¨GLProgramStateºÍäÖÈ¾×´Ì¬£¬Õâ¸ö·½·¨±ØĞëÔÚÊµ¼Ê»æÖÆÖ®Ç°µ÷ÓÃ¡£
+     * @param modelView @~english Model view matrix which is going to pass to shader. @~chinese ´«È¾µ½shaderÖĞµÄÄ£ĞÍÊÓÍ¼¾ØÕó¡£
+     * @param bindAttributes @~english binding vertex attribute ? @~chinese ÊÇ·ñ°ó¶¨¶¥µãÊôĞÔ£¿
      */
     void bind(const Mat4& modelView, bool bindAttributes);
     
     /**
      * @~english Unbinds the Pass. This method must be called AFTER calling the actuall draw call.
-     * @~chinese è§£é™¤è¯¥Passçš„ç»‘å®šï¼Œè¿™ä¸ªæ–¹æ³•å¿…é¡»åœ¨å®é™…ç»˜åˆ¶ä¹‹åè°ƒç”¨ã€‚
+     * @~chinese ½â³ı¸ÃPassµÄ°ó¶¨£¬Õâ¸ö·½·¨±ØĞëÔÚÊµ¼Ê»æÖÆÖ®ºóµ÷ÓÃ¡£
      */
     void unbind();
 
     /**
      * @~english Sets a vertex attribute binding for this pass. When a mesh binding is set, the VertexAttribBinding will be automatically bound when the bind() method is called for the pass.
-     * @~chinese è®¾ç½®è¯¥Passçš„é¡¶ç‚¹ç»‘å®šå±æ€§ã€‚ å½“é¡¶ç‚¹ç»‘å®šå±æ€§è®¾ç½®åè°ƒç”¨bind()å‡½æ•°æ—¶ä¼šè‡ªåŠ¨ç»‘å®šè®¾ç½®çš„é¡¶ç‚¹å±æ€§ã€‚
-     * @param binding @~english The VertexAttribBinding to set (or NULL to remove an existing binding). @~chinese å¾…è®¾ç½®çš„é¡¶ç‚¹ç»‘å®šå±æ€§ï¼Œå½“å‚æ•°ä¸ºNULLæ—¶ç§»é™¤å·²ç»ç»‘å®šçš„é¡¶ç‚¹å±æ€§ã€‚
+     * @~chinese ÉèÖÃ¸ÃPassµÄ¶¥µã°ó¶¨ÊôĞÔ¡£ µ±¶¥µã°ó¶¨ÊôĞÔÉèÖÃºóµ÷ÓÃbind()º¯ÊıÊ±»á×Ô¶¯°ó¶¨ÉèÖÃµÄ¶¥µãÊôĞÔ¡£
+     * @param binding @~english The VertexAttribBinding to set (or NULL to remove an existing binding). @~chinese ´ıÉèÖÃµÄ¶¥µã°ó¶¨ÊôĞÔ£¬µ±²ÎÊıÎªNULLÊ±ÒÆ³ıÒÑ¾­°ó¶¨µÄ¶¥µãÊôĞÔ¡£
      */
     void setVertexAttribBinding(VertexAttribBinding* binding);
 
     /**
      * @~english Returns the vertex attribute binding for this pass.
-     * @~chinese è·å–é¡¶ç‚¹ç»‘å®šå±æ€§ã€‚
-     * @return @~english The vertex attribute binding for this pass. @~chinese Passä¸­çš„é¡¶ç‚¹ç»‘å®šå±æ€§ã€‚
+     * @~chinese »ñÈ¡¶¥µã°ó¶¨ÊôĞÔ¡£
+     * @return @~english The vertex attribute binding for this pass. @~chinese PassÖĞµÄ¶¥µã°ó¶¨ÊôĞÔ¡£
      */
     VertexAttribBinding* getVertexAttributeBinding() const;
 
     /**
      * @~english Get Hash code of the Pass.
-     * @~chinese è·å–è¯¥Passçš„å“ˆå¸Œç ã€‚
-     * @return @~english Hash code of this pass. @~chinese Passçš„å“ˆå¸Œç ã€‚
+     * @~chinese »ñÈ¡¸ÃPassµÄ¹şÏ£Âë¡£
+     * @return @~english Hash code of this pass. @~chinese PassµÄ¹şÏ£Âë¡£
      */
     uint32_t getHash() const;
 
     /**
      * @~english Returns a clone (deep-copy) of this instance.
-     * @~chinese è·å–Passçš„ä¸€ä¸ªæ·±åº¦æ‹·è´ã€‚
-     * @return @~english Copy of this pass. @~chinese Passçš„æ‹·è´ã€‚
+     * @~chinese »ñÈ¡PassµÄÒ»¸öÉî¶È¿½±´¡£
+     * @return @~english Copy of this pass. @~chinese PassµÄ¿½±´¡£
      */
     Pass* clone() const;
 

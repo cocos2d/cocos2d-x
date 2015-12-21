@@ -123,6 +123,16 @@ bool UIListViewTest_Vertical::init()
             custom_item->addChild(custom_button);
             
             listView->addChild(custom_item);
+            
+            auto clippingNode = ClippingNode::create();
+            auto sprite = Sprite::create("cocosui/clippingHead.jpg");
+            clippingNode->addChild(sprite);
+            auto stencil = Sprite::create("cocosui/clippingStencil.jpg");
+            clippingNode->setStencil(stencil);
+            auto custom_item_contentSize = custom_item->getContentSize();
+            clippingNode->setPosition(custom_item_contentSize.width/2, custom_item_contentSize.height/2);
+            clippingNode->setScale(0.5);
+            custom_item->addChild(clippingNode);
         }
         // insert custom item
         Vector<Widget*>& items = listView->getItems();

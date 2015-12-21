@@ -60,9 +60,9 @@ set(_OpenalSoft_libs OpenAL32)
 set(_zlib_inc zlib.h)
 set(_zlib_libs z libzlib libz)
 
-set(_fmod_prefix FMODEX)
-set(_fmod_inc fmod.h)
-set(_fmod_libs fmodex fmodex64 fmodexL fmodexL64)
+set(_fmod_prefix FMOD)
+set(_fmod_inc fmod.hpp)
+set(_fmod_libs fmod fmod64 fmod fmod64)
 
 set(all_prebuilt_libs
   chipmunk

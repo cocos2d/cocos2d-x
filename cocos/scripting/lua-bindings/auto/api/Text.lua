@@ -36,6 +36,12 @@
 -- @return Text#Text self (return value: ccui.Text)
 
 --------------------------------
+-- Return current effect type.
+-- @function [parent=#Text] getLabelEffectType 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 --  Gets text color.<br>
 -- return Text color.
 -- @function [parent=#Text] getTextColor 
@@ -78,11 +84,23 @@
 -- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------
+-- Return shadow effect offset value.
+-- @function [parent=#Text] getShadowOffset 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
 -- 
 -- @function [parent=#Text] setString 
 -- @param self
 -- @param #string text
 -- @return Text#Text self (return value: ccui.Text)
+        
+--------------------------------
+-- Return the outline effect size value.
+-- @function [parent=#Text] getOutlineSize 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- 
@@ -92,6 +110,12 @@
 -- @param #string fontName
 -- @param #float fontSize
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- Return the shadow effect blur radius.
+-- @function [parent=#Text] getShadowBlurRadius 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- Gets the touch scale enabled of label.<br>
@@ -146,6 +170,12 @@
 -- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------
+-- Return current effect color vlaue.
+-- @function [parent=#Text] getEffectColor 
+-- @param self
+-- @return color4b_table#color4b_table ret (return value: color4b_table)
+        
+--------------------------------
 --  Gets the font type.<br>
 -- return The font type.
 -- @function [parent=#Text] getType 
@@ -160,12 +190,24 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+-- Return whether the shadow effect is enabled.
+-- @function [parent=#Text] isShadowEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Sets the font size of label.<br>
 -- param size The font size.
 -- @function [parent=#Text] setFontSize 
 -- @param self
 -- @param #float size
 -- @return Text#Text self (return value: ccui.Text)
+        
+--------------------------------
+-- Return the shadow effect color value.
+-- @function [parent=#Text] getShadowColor 
+-- @param self
+-- @return color4b_table#color4b_table ret (return value: color4b_table)
         
 --------------------------------
 --  Sets text color.<br>

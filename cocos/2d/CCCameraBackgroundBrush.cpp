@@ -232,6 +232,8 @@ CameraBackgroundSkyBoxBrush::CameraBackgroundSkyBoxBrush()
 , _vertexBuffer(0)
 , _indexBuffer(0)
 , _texture(nullptr)
+, _actived(true)
+, _textureValid(true)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
@@ -296,6 +298,9 @@ CameraBackgroundSkyBoxBrush* CameraBackgroundSkyBoxBrush::create()
 
 void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
 {
+    if (!_actived)
+        return;
+
     Mat4 cameraModelMat = camera->getNodeToWorldTransform();
     
     Vec4 color(1.f, 1.f, 1.f, 1.f);
@@ -425,6 +430,25 @@ void CameraBackgroundSkyBoxBrush::setTexture(TextureCube*  texture)
     CC_SAFE_RELEASE(_texture);
     _texture = texture;
     _glProgramState->setUniformTexture("u_Env", _texture);
+}
+
+bool CameraBackgroundSkyBoxBrush::isActived() const
+{
+    return _actived;
+}
+void CameraBackgroundSkyBoxBrush::setActived(bool actived)
+{
+    _actived = actived;
+}
+
+void CameraBackgroundSkyBoxBrush::setTextureValid(bool valid)
+{
+    _textureValid = valid;
+}
+
+bool CameraBackgroundSkyBoxBrush::isValid()
+{
+    return _actived;
 }
 
 NS_CC_END

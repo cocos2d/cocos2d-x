@@ -89,7 +89,7 @@ bool isCJKUnicode(char16_t ch)
         || (ch >= 0xAC00 && ch <= 0xD7AF)   // Hangul Syllables
         || (ch >= 0xF900 && ch <= 0xFAFF)   // CJK Compatibility Ideographs
         || (ch >= 0xFE30 && ch <= 0xFE4F)   // CJK Compatibility Forms
-        || (ch >= 0x31C0 && ch <= 0x4DFF);  // Other exiensions
+        || (ch >= 0x31C0 && ch <= 0x4DFF);  // Other extensions
 }
 
 void trimUTF16Vector(std::vector<char16_t>& str)

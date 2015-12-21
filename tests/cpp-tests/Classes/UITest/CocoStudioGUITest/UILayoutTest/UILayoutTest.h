@@ -67,6 +67,10 @@ public:
     virtual bool init() override;
     
     CREATE_FUNC(UILayoutTest_BackGroundImage);
+
+    void printWidgetResources(cocos2d::Ref* sender);
+protected:
+    cocos2d::ui::Layout* _layout;
 };
 
 class UILayoutTest_BackGroundImage_Scale9 : public UIScene

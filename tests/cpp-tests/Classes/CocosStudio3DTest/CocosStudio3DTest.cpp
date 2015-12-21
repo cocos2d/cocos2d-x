@@ -170,6 +170,12 @@ CSSceneSkyBoxTest::CSSceneSkyBoxTest()
     addChild(node);
 
     _camera = static_cast<Camera*>(node->getChildByName("UserCamera_0"));
+    CameraBackgroundSkyBoxBrush * brush = dynamic_cast<CameraBackgroundSkyBoxBrush *>(_camera->getBackgroundBrush());
+    if (nullptr != brush)
+    {
+        CCLOG("CameraBackgroundSkyBoxBrush active value is : %s", brush->isActived() ? "true" : "false");
+        CCLOG("CameraBackgroundSkyBoxBrush valid value is : %s", brush->isValid() ? "true" : "false");
+    }
 
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(CSSceneSkyBoxTest::onTouchesMoved, this);

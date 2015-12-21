@@ -56,7 +56,7 @@ class MeshVertexData;
  * @js NA
  * @lua NA
  */
-class MeshIndexData : public Ref
+class CC_DLL MeshIndexData : public Ref
 {
 public:
     /**
@@ -168,7 +168,7 @@ protected:
  * @brief @~english The MeshIndexData contain all of the vertices data which mesh need.
  * @~chinese MeshVertexData包括了所有网格所需的顶点数据
  */
-class MeshVertexData : public Ref
+class CC_DLL MeshVertexData : public Ref
 {
     friend class Sprite3D;
     friend class Mesh;

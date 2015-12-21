@@ -29,6 +29,7 @@
 #include <unordered_map>
 #include "base/ccTypes.h"
 #include "renderer/CCMaterial.h"
+#include "3d/CCBundle3DData.h"
 
 NS_CC_BEGIN
 
@@ -96,6 +97,8 @@ public:
         @return @~english Created material @~chinese 创建的材质
     */
     static Sprite3DMaterial* createWithGLStateProgram(GLProgramState* programState);
+
+    void setTexture(Texture2D* tex, NTextureData::Usage usage);
 
     /** @~english Create all build in materials
         @~chinese 创建全部内置材质

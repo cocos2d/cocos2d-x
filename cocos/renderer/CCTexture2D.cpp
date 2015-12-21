@@ -436,6 +436,7 @@ Texture2D::Texture2D()
 , _shaderProgram(nullptr)
 , _antialiasEnabled(true)
 , _ninePatchInfo(nullptr)
+, _valid(true)
 {
 }
 
@@ -730,7 +731,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
 
     int imageWidth = image->getWidth();
     int imageHeight = image->getHeight();
-
+    this->_filePath = image->getFilePath();
     Configuration *conf = Configuration::getInstance();
 
     int maxTextureSize = conf->getMaxTextureSize();
@@ -756,6 +757,9 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
 
         initWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getRenderFormat(), imageWidth, imageHeight);
         
+        // set the premultiplied tag
+        _hasPremultipliedAlpha = image->hasPremultipliedAlpha();
+        
         return true;
     }
     else if (image->isCompressed())
@@ -766,6 +770,10 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
         }
 
         initWithData(tempData, tempDataLen, image->getRenderFormat(), imageWidth, imageHeight, imageSize);
+        
+        // set the premultiplied tag
+        _hasPremultipliedAlpha = image->hasPremultipliedAlpha();
+        
         return true;
     }
     else

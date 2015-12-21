@@ -584,4 +584,35 @@ protected:
     cocos2d::MotionStreak3D* _streak;
 };
 
+class Sprite3DNormalMappingTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DNormalMappingTest);
+    Sprite3DNormalMappingTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    virtual ~Sprite3DNormalMappingTest();
+};
+
+class Sprite3DPropertyTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DPropertyTest);
+    Sprite3DPropertyTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void update(float delta) override;
+
+    void printMeshName(cocos2d::Ref* sender);
+    void removeUsedTexture(cocos2d::Ref* sender);
+    void resetTexture(cocos2d::Ref* sender);
+
+    void refreshSpriteRender();
+protected:
+    cocos2d::Sprite3D* _sprite;
+    cocos2d::Texture2D* _meshTex;
+    std::string _texFile;
+};
+
 #endif

@@ -1049,7 +1049,9 @@ public:
     virtual void setTexture(Texture2D *texture) override;    
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc &getBlendFunc() const override;
-    
+
+    const std::string getResourceFile() const { return _plistFile; }
+
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor

@@ -61,6 +61,8 @@ NS_CC_BEGIN
 */
 int ccNextPOT(int value);
 
+class Sprite;
+
 namespace utils
 {
     /**
@@ -143,6 +145,14 @@ namespace utils
      * @~chinese 返回一个节点以及其子节点的边界框
      */
     Rect CC_DLL getCascadeBoundingBox(Node *node);
+
+    /**
+     * Create a sprite instance from base64 encoded image.
+
+     * @return Returns an instance of sprite
+     */
+    Sprite* createSpriteFromBase64(const char* base64String);
+
 }
 
 NS_CC_END

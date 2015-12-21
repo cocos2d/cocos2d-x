@@ -59,18 +59,18 @@ class Sprite;
  *  - The only object that is accepted as child (or grandchild, grand-grandchild, etc...) is Sprite or any subclass of Sprite. eg: particles, labels and layer can't be added to a SpriteBatchNode.
  *  - Either all its children are Aliased or Antialiased. It can't be a mix. This is because "alias" is a property of the texture, and all the sprites share the same texture.
  *
- * @~chinese SpriteBatchNode æ˜¯æ‰¹å¤„ç†èŠ‚ç‚¹:å¦‚æœå®ƒåŒ…å«å­èŠ‚ç‚¹ï¼Œå®ƒå°†é€šè¿‡ä¸€æ¬¡ OpenGL è°ƒç”¨ç»˜åˆ¶æ‰€æœ‰å­èŠ‚ç‚¹ã€‚
- * (é€šå¸¸è¢«ç§°ä¸ºâ€œæ‰¹å¤„ç†ç»˜åˆ¶â€)ã€‚
+ * @~chinese SpriteBatchNode ÊÇÅú´¦Àí½Úµã:Èç¹ûËü°üº¬×Ó½Úµã£¬Ëü½«Í¨¹ıÒ»´Î OpenGL µ÷ÓÃ»æÖÆËùÓĞ×Ó½Úµã¡£
+ * (Í¨³£±»³ÆÎª¡°Åú´¦Àí»æÖÆ¡±)¡£
  * 
- * ä¸€ä¸ª SpriteBatchNode å¯ä»¥å¼•ç”¨ä¸€ä¸ªä¸”åªæœ‰ä¸€ä¸ªçº¹ç†(ä¸€ä¸ªå›¾åƒæ–‡ä»¶, æˆ–è€…ä¸€ä¸ªçº¹ç†åœ°å›¾é›†)ã€‚
- * åªæœ‰å½“ Sprite ä½¿ç”¨çš„çº¹ç†ä¸ SpriteBatchNode ä¸€è‡´æ—¶æ‰èƒ½æ·»åŠ ä¸º SpriteBatchNode çš„å­èŠ‚ç‚¹ã€‚
- * æ‰€æœ‰æ·»åŠ åˆ° SpriteBatchNode çš„å­èŠ‚ç‚¹ä¼šé€šè¿‡ä¸€æ¬¡ OpenGL è°ƒç”¨å…¨éƒ¨ç»˜åˆ¶å‡ºæ¥ã€‚
- * å¦‚æœ Sprite æ²¡æœ‰æ·»åŠ åˆ° SpriteBatchNodeï¼Œé‚£ä¹ˆä¸€æ¬¡ OpenGL è°ƒç”¨åªèƒ½ç»˜åˆ¶ä¸€ä¸ª Spriteï¼Œè¿™æ ·æ•ˆç‡æ˜¯å¾ˆä½çš„ã€‚
+ * Ò»¸ö SpriteBatchNode ¿ÉÒÔÒıÓÃÒ»¸öÇÒÖ»ÓĞÒ»¸öÎÆÀí(Ò»¸öÍ¼ÏñÎÄ¼ş, »òÕßÒ»¸öÎÆÀíµØÍ¼¼¯)¡£
+ * Ö»ÓĞµ± Sprite Ê¹ÓÃµÄÎÆÀíÓë SpriteBatchNode Ò»ÖÂÊ±²ÅÄÜÌí¼ÓÎª SpriteBatchNode µÄ×Ó½Úµã¡£
+ * ËùÓĞÌí¼Óµ½ SpriteBatchNode µÄ×Ó½Úµã»áÍ¨¹ıÒ»´Î OpenGL µ÷ÓÃÈ«²¿»æÖÆ³öÀ´¡£
+ * Èç¹û Sprite Ã»ÓĞÌí¼Óµ½ SpriteBatchNode£¬ÄÇÃ´Ò»´Î OpenGL µ÷ÓÃÖ»ÄÜ»æÖÆÒ»¸ö Sprite£¬ÕâÑùĞ§ÂÊÊÇºÜµÍµÄ¡£
  * 
  * 
- * é™åˆ¶:
- * - åªæœ‰ Sprite æˆ–è€… Sprite å­ç±»çš„å®ä¾‹åŒ–å¯¹è±¡å¯ä»¥åšä¸º SpriteBatchNode çš„å­èŠ‚ç‚¹ã€‚æ¯”å¦‚ï¼šparticleï¼Œlabel å’Œ layer ä¸èƒ½åšä¸º SpriteBatchNode çš„å­èŠ‚ç‚¹ã€‚
- * - æ‰€æœ‰çš„å­èŠ‚ç‚¹è¦ä¹ˆéƒ½æœ‰åˆ«åï¼Œè¦ä¹ˆéƒ½æ²¡æœ‰åˆ«åï¼Œä¸èƒ½æ··åˆä½¿ç”¨ã€‚å› ä¸ºâ€œåˆ«åâ€æ˜¯çº¹ç†çš„å±æ€§ï¼Œè€Œæ‰€æœ‰çš„å­èŠ‚ç‚¹å…±ç”¨åŒä¸€ä¸ªçº¹ç†ã€‚
+ * ÏŞÖÆ:
+ * - Ö»ÓĞ Sprite »òÕß Sprite ×ÓÀàµÄÊµÀı»¯¶ÔÏó¿ÉÒÔ×öÎª SpriteBatchNode µÄ×Ó½Úµã¡£±ÈÈç£ºparticle£¬label ºÍ layer ²»ÄÜ×öÎª SpriteBatchNode µÄ×Ó½Úµã¡£
+ * - ËùÓĞµÄ×Ó½ÚµãÒªÃ´¶¼ÓĞ±ğÃû£¬ÒªÃ´¶¼Ã»ÓĞ±ğÃû£¬²»ÄÜ»ìºÏÊ¹ÓÃ¡£ÒòÎª¡°±ğÃû¡±ÊÇÎÆÀíµÄÊôĞÔ£¬¶øËùÓĞµÄ×Ó½Úµã¹²ÓÃÍ¬Ò»¸öÎÆÀí¡£
  * 
  * @since v0.7.1
  */
@@ -82,15 +82,15 @@ public:
     /** @~english Creates a SpriteBatchNode with a texture2d and capacity of children.
      * The capacity will be increased in 33% in runtime if it runs out of space.
      *
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„çº¹ç†ä¸å­èŠ‚ç‚¹æ•°é‡åˆ›å»ºä¸€ä¸ª SpriteBatchNodeã€‚
-     * å¦‚æœè¿è¡Œè¿‡ç¨‹ä¸­æ·»åŠ çš„å­èŠ‚ç‚¹æ•°è¶…è¿‡æŒ‡å®šçš„ä¸Šé™ï¼Œåˆ™ä¸Šé™å¢åŠ  33%%ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÎÆÀíÓë×Ó½ÚµãÊıÁ¿´´½¨Ò»¸ö SpriteBatchNode¡£
+     * Èç¹ûÔËĞĞ¹ı³ÌÖĞÌí¼ÓµÄ×Ó½ÚµãÊı³¬¹ıÖ¸¶¨µÄÉÏÏŞ£¬ÔòÉÏÏŞÔö¼Ó 33%%¡£
      * 
      * @param tex @~english A texture2d.
-     * @~chinese æŒ‡å®šçš„çº¹ç†å®ä¾‹ã€‚
+     * @~chinese Ö¸¶¨µÄÎÆÀíÊµÀı¡£
      * @param capacity @~english The capacity of children.
-     * @~chinese å­èŠ‚ç‚¹æ•°é‡ä¸Šé™ã€‚
+     * @~chinese ×Ó½ÚµãÊıÁ¿ÉÏÏŞ¡£
      * @return @~english Return an autorelease object.
-     * @~chinese è¿”å›ä¸€ä¸ª SpriteBatchNode å®ä¾‹ï¼ˆå·²è¢« autorelease ï¼‰ã€‚
+     * @~chinese ·µ»ØÒ»¸ö SpriteBatchNode ÊµÀı£¨ÒÑ±» autorelease £©¡£
      */
     static SpriteBatchNode* createWithTexture(Texture2D* tex, ssize_t capacity = DEFAULT_CAPACITY);
 
@@ -98,35 +98,35 @@ public:
      * The capacity will be increased in 33% in runtime if it runs out of space.
      * The file will be loaded using the TextureMgr.
      *
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„å›¾ç‰‡æ–‡ä»¶ï¼ˆ.pngï¼Œ.jpegï¼Œ.pvrç­‰ï¼‰å’Œå­èŠ‚ç‚¹ä¸Šé™åˆ›å»ºä¸€ä¸ª SpriteBatchNodeã€‚
-     * å¦‚æœè¿è¡Œè¿‡ç¨‹ä¸­æ·»åŠ çš„å­èŠ‚ç‚¹æ•°è¶…è¿‡æŒ‡å®šçš„ä¸Šé™ï¼Œåˆ™ä¸Šé™å¢åŠ  33%%ã€‚
-     * å›¾ç‰‡æ–‡ä»¶ä¼šé€šè¿‡ TextureMgr åŠ è½½ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÍ¼Æ¬ÎÄ¼ş£¨.png£¬.jpeg£¬.pvrµÈ£©ºÍ×Ó½ÚµãÉÏÏŞ´´½¨Ò»¸ö SpriteBatchNode¡£
+     * Èç¹ûÔËĞĞ¹ı³ÌÖĞÌí¼ÓµÄ×Ó½ÚµãÊı³¬¹ıÖ¸¶¨µÄÉÏÏŞ£¬ÔòÉÏÏŞÔö¼Ó 33%%¡£
+     * Í¼Æ¬ÎÄ¼ş»áÍ¨¹ı TextureMgr ¼ÓÔØ¡£
      * 
      * @param fileImage @~english A file image (.png, .jpeg, .pvr, etc).
-     * @~chinese å›¾ç‰‡æ–‡ä»¶è·¯å¾„ï¼ˆ.pngï¼Œ.jpegï¼Œ.pvrç­‰ï¼‰ã€‚
+     * @~chinese Í¼Æ¬ÎÄ¼şÂ·¾¶£¨.png£¬.jpeg£¬.pvrµÈ£©¡£
      * @param capacity @~english The capacity of children.
-     * @~chinese å­èŠ‚ç‚¹æ•°é‡ä¸Šé™ã€‚
+     * @~chinese ×Ó½ÚµãÊıÁ¿ÉÏÏŞ¡£
      * @return @~english Return an autorelease object.
-     * @~chinese è¿”å›ä¸€ä¸ª SpriteBatchNode å®ä¾‹ï¼ˆå·²è¢« autorelease ï¼‰ã€‚
+     * @~chinese ·µ»ØÒ»¸ö SpriteBatchNode ÊµÀı£¨ÒÑ±» autorelease £©¡£
      */
     static SpriteBatchNode* create(const std::string& fileImage, ssize_t capacity = DEFAULT_CAPACITY);
 
 
     /** @~english Returns the TextureAtlas object. 
      *
-     * @~chinese è·å–ä½¿ç”¨çš„ TextureAtlas å®ä¾‹ã€‚
+     * @~chinese »ñÈ¡Ê¹ÓÃµÄ TextureAtlas ÊµÀı¡£
      * 
      * @return @~english The TextureAtlas object.
-     * @~chinese TextureAtlas å®ä¾‹ã€‚
+     * @~chinese TextureAtlas ÊµÀı¡£
      */
     inline TextureAtlas* getTextureAtlas() { return _textureAtlas; }
 
     /** @~english Sets the TextureAtlas object. 
      *
-     * @~chinese è®¾ç½® TextureAtlas å®ä¾‹ã€‚
+     * @~chinese ÉèÖÃ TextureAtlas ÊµÀı¡£
      * 
      * @param textureAtlas @~english The TextureAtlas object.
-     * @~chinese TextureAtlas å®ä¾‹ã€‚
+     * @~chinese TextureAtlas ÊµÀı¡£
      */
     inline void setTextureAtlas(TextureAtlas* textureAtlas)
     { 
@@ -141,96 +141,96 @@ public:
     /** @~english Returns an array with the descendants (children, gran children, etc.).
      * This is specific to BatchNode. In order to use the children, use getChildren() instead.
      * 
-     * @~chinese è¿”å›åŒ…å«å­èŠ‚ç‚¹æ ‘ä¸­æ‰€æœ‰å­èŠ‚ç‚¹çš„æ•°ç»„ï¼ˆå­èŠ‚ç‚¹ï¼Œå­èŠ‚ç‚¹çš„å­èŠ‚ç‚¹...ï¼‰ã€‚
-     * è¿™æ˜¯ SpriteBatchNode çš„å®šåˆ¶æ¥å£ã€‚å¦‚æœè¦è·å–å­èŠ‚ç‚¹ï¼Œè¯·ä½¿ç”¨ getChildren()ã€‚
+     * @~chinese ·µ»Ø°üº¬×Ó½ÚµãÊ÷ÖĞËùÓĞ×Ó½ÚµãµÄÊı×é£¨×Ó½Úµã£¬×Ó½ÚµãµÄ×Ó½Úµã...£©¡£
+     * ÕâÊÇ SpriteBatchNode µÄ¶¨ÖÆ½Ó¿Ú¡£Èç¹ûÒª»ñÈ¡×Ó½Úµã£¬ÇëÊ¹ÓÃ getChildren()¡£
      * 
      * @return @~english An array with the descendants (children, gran children, etc.).
-     * @~chinese åŒ…å«å­èŠ‚ç‚¹æ ‘ä¸­æ‰€æœ‰å­èŠ‚ç‚¹çš„æ•°ç»„ã€‚
+     * @~chinese °üº¬×Ó½ÚµãÊ÷ÖĞËùÓĞ×Ó½ÚµãµÄÊı×é¡£
      */
     inline const std::vector<Sprite*>& getDescendants() const { return _descendants; }
 
-    /** @~english Increase the Atlas Capacity.  @~chinese å¢åŠ  Atlas çš„æ•°é‡ä¸Šé™ã€‚*/
+    /** @~english Increase the Atlas Capacity.  @~chinese Ôö¼Ó Atlas µÄÊıÁ¿ÉÏÏŞ¡£*/
     void increaseAtlasCapacity();
 
     /** @~english Removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
      *
-     * @~chinese åˆ é™¤æŒ‡å®šç´¢å¼•å€¼çš„å­èŠ‚ç‚¹ã€‚å¯ä»¥é€šè¿‡å‚æ•° doCleanup æŒ‡å®šæ˜¯å¦æ¸…ç†å­èŠ‚ç‚¹ç›¸å…³çš„ actionã€‚
+     * @~chinese É¾³ıÖ¸¶¨Ë÷ÒıÖµµÄ×Ó½Úµã¡£¿ÉÒÔÍ¨¹ı²ÎÊı doCleanup Ö¸¶¨ÊÇ·ñÇåÀí×Ó½ÚµãÏà¹ØµÄ action¡£
      * 
      * @param index @~english A certain index.
-     * @~chinese éœ€è¦åˆ é™¤çš„å­èŠ‚ç‚¹ç´¢å¼•å€¼ã€‚
+     * @~chinese ĞèÒªÉ¾³ıµÄ×Ó½ÚµãË÷ÒıÖµ¡£
      * @param doCleanup @~english Whether or not to cleanup the running actions.
-     * @~chinese æ˜¯å¦è¦æ¸…ç†å­èŠ‚ç‚¹ç›¸å…³çš„ actionã€‚
+     * @~chinese ÊÇ·ñÒªÇåÀí×Ó½ÚµãÏà¹ØµÄ action¡£
      * @warning @~english Removing a child from a SpriteBatchNode is very slow.
-     * @~chinese ä» SpriteBatchNode åˆ é™¤å­èŠ‚ç‚¹æ¯”è¾ƒæ…¢ã€‚
+     * @~chinese ´Ó SpriteBatchNode É¾³ı×Ó½Úµã±È½ÏÂı¡£
      */
     void removeChildAtIndex(ssize_t index, bool doCleanup);
     
     /** @~english Append the child. 
      *
-     * @~chinese å¢åŠ å­èŠ‚ç‚¹ã€‚
+     * @~chinese Ôö¼Ó×Ó½Úµã¡£
      * 
      * @param sprite @~english A Sprite.
-     * @~chinese éœ€è¦å¢åŠ çš„å­èŠ‚ç‚¹ã€‚
+     * @~chinese ĞèÒªÔö¼ÓµÄ×Ó½Úµã¡£
      */
     void appendChild(Sprite* sprite);
     
     /** @~english Remove a sprite from Atlas. 
      *
-     * @~chinese ä» Atlas ä¸­åˆ é™¤ä¸€ä¸ª Spriteã€‚
+     * @~chinese ´Ó Atlas ÖĞÉ¾³ıÒ»¸ö Sprite¡£
      * 
      * @param sprite @~english A Sprite.
-     * @~chinese éœ€è¦åˆ é™¤çš„ Spriteã€‚
+     * @~chinese ĞèÒªÉ¾³ıµÄ Sprite¡£
      */
     void removeSpriteFromAtlas(Sprite *sprite);
     
     /** @~english Rebuild index with a sprite all child. 
      *
-     * @~chinese é‡æ–°æ„å»ºæ‰€æœ‰å­èŠ‚ç‚¹çš„ç´¢å¼•ã€‚
+     * @~chinese ÖØĞÂ¹¹½¨ËùÓĞ×Ó½ÚµãµÄË÷Òı¡£
      * 
      * @param parent @~english The parent sprite.
-     * @~chinese éœ€è¦æ›´æ–°çš„ Spriteã€‚
+     * @~chinese ĞèÒª¸üĞÂµÄ Sprite¡£
      * @param index @~english The child index.
-     * @~chinese éœ€è¦æ›´æ–°çš„ç´¢å¼•å€¼
+     * @~chinese ĞèÒª¸üĞÂµÄË÷ÒıÖµ
      * @return @~english Index.
-     * @~chinese è¿”å›æ›´æ–°åçš„ç´¢å¼•å€¼
+     * @~chinese ·µ»Ø¸üĞÂºóµÄË÷ÒıÖµ
      */
     ssize_t rebuildIndexInOrder(Sprite *parent, ssize_t index);
     
     /** @~english Get the Max image block index,in all child.
      *
-     * @~chinese è·å–æ‰€æœ‰å­èŠ‚ç‚¹ä¸­ï¼ŒAtlas çš„æœ€å¤§ç´¢å¼•å€¼ã€‚
+     * @~chinese »ñÈ¡ËùÓĞ×Ó½ÚµãÖĞ£¬Atlas µÄ×î´óË÷ÒıÖµ¡£
      * 
      * @param sprite @~english The parent sprite.
-     * @~chinese çˆ¶èŠ‚ç‚¹
+     * @~chinese ¸¸½Úµã
      * @return @~english Index.
-     * @~chinese ç´¢å¼•å€¼
+     * @~chinese Ë÷ÒıÖµ
      */
     ssize_t highestAtlasIndexInChild(Sprite *sprite);
     
     /** @~english Get the Min image block index,in all child. 
      *
-     * @~chinese è·å–æ‰€æœ‰å­èŠ‚ç‚¹ä¸­ï¼ŒAtlas çš„æœ€å°ç´¢å¼•å€¼ã€‚
+     * @~chinese »ñÈ¡ËùÓĞ×Ó½ÚµãÖĞ£¬Atlas µÄ×îĞ¡Ë÷ÒıÖµ¡£
      * 
      * @param sprite @~english The parent sprite.
-     * @~chinese çˆ¶èŠ‚ç‚¹
+     * @~chinese ¸¸½Úµã
      * @return @~english Index.
-     * @~chinese ç´¢å¼•å€¼
+     * @~chinese Ë÷ÒıÖµ
      */
     ssize_t lowestAtlasIndexInChild(Sprite *sprite);
     
     /** @~english Get the nearest index from the sprite in z.
      *
-     * @~chinese è·å–ä¸æŒ‡å®šçš„ z å€¼æœ€æ¥è¿‘çš„ Atlas ç´¢å¼•å€¼ã€‚
+     * @~chinese »ñÈ¡ÓëÖ¸¶¨µÄ z Öµ×î½Ó½üµÄ Atlas Ë÷ÒıÖµ¡£
      * 
      * @param sprite @~english The parent sprite.
-     * @~chinese çˆ¶èŠ‚ç‚¹
+     * @~chinese ¸¸½Úµã
      * @param z @~english Z order for drawing priority.
-     * @~chinese æ§åˆ¶ç»˜åˆ¶é¡ºåºçš„ z å€¼
+     * @~chinese ¿ØÖÆ»æÖÆË³ĞòµÄ z Öµ
      * @return @~english Index.
-     * @~chinese ç´¢å¼•å€¼
+     * @~chinese Ë÷ÒıÖµ
      */
     ssize_t atlasIndexForChild(Sprite *sprite, int z);
-    /* @~english Sprites use this to start sortChildren, don't call this manually.  @~chinese ç²¾çµä½¿ç”¨è¿™ä¸ªsortChildrenå¼€å§‹,ä¸ç§°ä¹‹ä¸ºæ‰‹åŠ¨ã€‚*/
+    /* @~english Sprites use this to start sortChildren, don't call this manually.  @~chinese ¾«ÁéÊ¹ÓÃÕâ¸ösortChildren¿ªÊ¼,²»³ÆÖ®ÎªÊÖ¶¯¡£*/
     void reorderBatch(bool reorder);
 
     //
@@ -273,15 +273,15 @@ public:
     /** @~english Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
      * This method should be called only when you are dealing with very big AtlasSprite and when most of the Sprite won't be updated.
      * For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont).
-     * @~chinese ä»æŒ‡å®šçš„ Sprite å¯¹è±¡è·å– Atlas æ•°æ®å¹¶æ’å…¥åˆ°æŒ‡å®šçš„ç´¢å¼•å€¼ä½ç½®ï¼ŒSprite å¯¹è±¡ä¸ä¼šè¢«æ·»åŠ ä¸ºå­èŠ‚ç‚¹ã€‚
-     * åªæœ‰å½“éœ€è¦å¤„ç†å¾ˆå¤§çš„ AtlasSprite å¹¶ä¸”å…¶ä¸­å¤§éƒ¨åˆ† Sprite éƒ½ä¸ä¼šæ›´æ–°çš„æƒ…å†µï¼Œå¯ä»¥è°ƒç”¨è¿™ä¸ªæ–¹æ³•ã€‚
-     * ä¾‹å¦‚ï¼šä¸€ä¸ª tile map(TMXMap) æˆ–è€…åŒ…å«å¾ˆå¤šå­—ç¬¦çš„ label (LableBMFont)ã€‚
+     * @~chinese ´ÓÖ¸¶¨µÄ Sprite ¶ÔÏó»ñÈ¡ Atlas Êı¾İ²¢²åÈëµ½Ö¸¶¨µÄË÷ÒıÖµÎ»ÖÃ£¬Sprite ¶ÔÏó²»»á±»Ìí¼ÓÎª×Ó½Úµã¡£
+     * Ö»ÓĞµ±ĞèÒª´¦ÀíºÜ´óµÄ AtlasSprite ²¢ÇÒÆäÖĞ´ó²¿·Ö Sprite ¶¼²»»á¸üĞÂµÄÇé¿ö£¬¿ÉÒÔµ÷ÓÃÕâ¸ö·½·¨¡£
+     * ÀıÈç£ºÒ»¸ö tile map(TMXMap) »òÕß°üº¬ºÜ¶à×Ö·ûµÄ label (LableBMFont)¡£
      */
     void insertQuadFromSprite(Sprite *sprite, ssize_t index);
     /* @~english This is the opposite of "addQuadFromSprite".
      * It add the sprite to the children and descendants array, but it doesn't update add it to the texture atlas
-     * @~chinese è¿™æ˜¯ä¸ "addQuadFromSprite" ç›¸åçš„æ–¹æ³•.
-     * æ­¤æ–¹æ³•å°† Sprite æ·»åŠ åˆ°å­èŠ‚ç‚¹ä¸­ï¼Œä½†æ˜¯å¹¶ä¸ä¼šæ›´æ–° Atlas æ•°æ®ã€‚
+     * @~chinese ÕâÊÇÓë "addQuadFromSprite" Ïà·´µÄ·½·¨.
+     * ´Ë·½·¨½« Sprite Ìí¼Óµ½×Ó½ÚµãÖĞ£¬µ«ÊÇ²¢²»»á¸üĞÂ Atlas Êı¾İ¡£
      */
     SpriteBatchNode * addSpriteWithoutQuad(Sprite *child, int z, int aTag);
     
@@ -298,16 +298,16 @@ CC_CONSTRUCTOR_ACCESS:
     
     /** @~english initializes a SpriteBatchNode with a texture2d and capacity of children.
      The capacity will be increased in 33% in runtime if it runs out of space.
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„çº¹ç†ä¸å­èŠ‚ç‚¹æ•°é‡ä¸Šé™åˆå§‹åŒ–ä¸€ä¸ª SpriteBatchNodeã€‚
-     * å¦‚æœè¿è¡Œè¿‡ç¨‹ä¸­æ·»åŠ çš„å­èŠ‚ç‚¹æ•°è¶…è¿‡æŒ‡å®šçš„ä¸Šé™ï¼Œåˆ™ä¸Šé™å¢åŠ  33%%ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÎÆÀíÓë×Ó½ÚµãÊıÁ¿ÉÏÏŞ³õÊ¼»¯Ò»¸ö SpriteBatchNode¡£
+     * Èç¹ûÔËĞĞ¹ı³ÌÖĞÌí¼ÓµÄ×Ó½ÚµãÊı³¬¹ıÖ¸¶¨µÄÉÏÏŞ£¬ÔòÉÏÏŞÔö¼Ó 33%%¡£
      */
     bool initWithTexture(Texture2D *tex, ssize_t capacity = DEFAULT_CAPACITY);
     /** @~english initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
      The capacity will be increased in 33% in runtime if it runs out of space.
      The file will be loaded using the TextureMgr.
-     * @~chinese ä½¿ç”¨æŒ‡å®šçš„å›¾ç‰‡æ–‡ä»¶ï¼ˆ.pngï¼Œ.jpegï¼Œ.pvrç­‰ï¼‰å’Œå­èŠ‚ç‚¹ä¸Šé™åˆå§‹åŒ–ä¸€ä¸ª SpriteBatchNodeã€‚
-     * å¦‚æœè¿è¡Œè¿‡ç¨‹ä¸­æ·»åŠ çš„å­èŠ‚ç‚¹æ•°è¶…è¿‡æŒ‡å®šçš„ä¸Šé™ï¼Œåˆ™ä¸Šé™å¢åŠ  33%%ã€‚
-     * å›¾ç‰‡æ–‡ä»¶ä¼šé€šè¿‡ TextureMgr åŠ è½½ã€‚
+     * @~chinese Ê¹ÓÃÖ¸¶¨µÄÍ¼Æ¬ÎÄ¼ş£¨.png£¬.jpeg£¬.pvrµÈ£©ºÍ×Ó½ÚµãÉÏÏŞ³õÊ¼»¯Ò»¸ö SpriteBatchNode¡£
+     * Èç¹ûÔËĞĞ¹ı³ÌÖĞÌí¼ÓµÄ×Ó½ÚµãÊı³¬¹ıÖ¸¶¨µÄÉÏÏŞ£¬ÔòÉÏÏŞÔö¼Ó 33%%¡£
+     * Í¼Æ¬ÎÄ¼ş»áÍ¨¹ı TextureMgr ¼ÓÔØ¡£
      * @js init
      * @lua init
      */
@@ -315,6 +315,10 @@ CC_CONSTRUCTOR_ACCESS:
     bool init() override;
     
 protected:
+    /** Updates a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
+     This method should be called only when you are dealing with very big AtlasSprite and when most of the Sprite won't be updated.
+     For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
+     */
     void updateQuadFromSprite(Sprite *sprite, ssize_t index);   
 
     void updateAtlasIndex(Sprite* sprite, ssize_t* curIndex);

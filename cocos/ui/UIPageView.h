@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __UIPAGEVIEW_H__
 #define __UIPAGEVIEW_H__
 
-#include "ui/UILayout.h"
+#include "ui/UIListView.h"
 #include "ui/GUIExport.h"
 
 /**
@@ -35,6 +35,8 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace ui {
+
+class PageViewIndicator;
 
 /**
  *PageView page turn event type.
@@ -57,7 +59,7 @@ typedef void (Ref::*SEL_PageViewEvent)(Ref*, PageViewEventType);
  
  @~chinese Layout的管理器，可以让用户在多个Layout之间左右或者上下切换显示。
 */
-class CC_GUI_DLL PageView : public Layout
+class CC_GUI_DLL PageView : public ListView
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -81,18 +83,12 @@ public:
         UP,
         DOWN
     };
-    
-    enum class Direction
-    {
-        HORIZONTAL,
-        VERTICAL
-    };
-    
+
     /**
      * @~english PageView page turn event callback.
      * @~chinese 页面翻页时的事件回调。
      */
-    typedef std::function<void(Ref*,EventType)> ccPageViewCallback;
+    typedef std::function<void(Ref*, EventType)> ccPageViewCallback;
 
     /**
      * @~english Default constructor
@@ -116,7 +112,14 @@ public:
      * @return @~english A PageView instance.
      */
     static PageView* create();
-    
+
+    /**
+     * Changes direction
+     *  Direction Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll.
+     * @param direction Set the page view's scroll direction.
+     */
+    virtual void setDirection(Direction direction) override;
+
     /**
      * @~english Add a widget as a page of PageView in a given index.
      * @~chinese 把一个widget添加到指定的PageView页中。
@@ -124,29 +127,29 @@ public:
      * @param pageIdx   @~english A given index. @~chinese 页索引。
      * @param forceCreate   @~english If `forceCreate` is true and `widget` isn't exists, pageview would create a default page and add it. @~chinese 如果forceCreate为True，并且指定页不存在，将会创建一个默认页并把widget加入。
      */
-    void addWidgetToPage(Widget* widget, ssize_t pageIdx, bool forceCreate);
+    CC_DEPRECATED_ATTRIBUTE void addWidgetToPage(Widget* widget, ssize_t pageIdx, bool forceCreate);
     
     /**
      * @~english Insert a page into the end of PageView.
      * @~chinese 往PageView的最后插入一页。
      * @param page @~english Page to be inserted. @~chinese 被插入的页。
      */
-    void addPage(Layout* page);
-    
+    void addPage(Widget* page);
+
     /**
      * @~english Insert a page into PageView at a given index.
      * @~chinese 在指定位置插入一页。
      * @param page  @~english Page to be inserted. @~chinese 被插入的页。
      * @param idx   @~english A given index. @~chinese 页索引号。
      */
-    void insertPage(Layout* page, int idx);
-    
+    void insertPage(Widget* page, int idx);
+
     /**
      * @~english Remove a page of PageView.
      * @~chinese 从PageView中移除一页。
      * @param page  @~english Page to be removed. @~chinese 被移除的页。
      */
-    void removePage(Layout* page);
+    void removePage(Widget* page);
 
     /**
      * @~english Remove a page at a given index of PageView.
@@ -155,24 +158,6 @@ public:
      */
     void removePageAtIndex(ssize_t index);
 
-    /**
-     * Changes scroll direction of PageView
-     *
-     * @see `Direction`
-     * @param direction Scroll direction enum.
-     * @since v3.8
-     */
-    void setDirection(Direction direction);
-
-    /**
-     * Query scroll direction of PageView.
-     *
-     * @see `Direction`
-     * @since v3.8
-     * @return PageView scroll direction.
-     */
-    Direction getDirection()const;
-    
     /**
      * @~english Remove all pages of the PageView.
      * @~chinese 移除PageView中所有页。
@@ -187,13 +172,35 @@ public:
      */
     void scrollToPage(ssize_t idx);
 
+    /**
+     * Scroll to a page with a given index.
+     *
+     * @param idx   A given index in the PageView. Index start from 0 to pageCount -1.
+     */
+    void scrollToItem(ssize_t itemIndex);
 
     /**
      * @~english Gets current displayed page index.
      * @~chinese 获取当前显示页的索引号。
      * @return @~english current page index. @~chinese 当前页索引号。
      */
-    ssize_t getCurPageIndex() const;
+    CC_DEPRECATED_ATTRIBUTE ssize_t getCurPageIndex() const;
+
+    /**
+     * Gets current displayed page index.
+     * @return current page index.
+     */
+    ssize_t getCurrentPageIndex() const { return _currentPageIndex; }
+
+    /**
+     * Jump to a page with a given index without scrolling.
+     * This is the different between scrollToPage.
+     *
+     * @param index A given index in PageView. Index start from 0 to pageCount -1.
+     *
+     * Since v3.9, this is deprecated. Use `setCurrentPageIndex()` instead.
+     */
+    CC_DEPRECATED_ATTRIBUTE void setCurPageIndex(ssize_t index);
 
     /**
      * Jump to a page with a given index without scrolling.
@@ -201,23 +208,26 @@ public:
      *
      * @param index A given index in PageView. Index start from 0 to pageCount -1.
      */
-    void setCurPageIndex(ssize_t index);
-     
+    void setCurrentPageIndex(ssize_t index);
+
     /**
      * @~english Get all the pages in the PageView.
+     * @~english Since v3.9, this is obsolete. Use `Vector<Widget*>& ListView::getItems()` instead.
      * @~chinese 获取所有页的列表。
+     * @~chinese 从v3.9版开始此函数已废弃。使用`Vector<Widget*>& ListView::getItems()`取代.
      * @return @~english A vector of Layout pionters. @~chinese 一个Layout指针数组。
      */
-    Vector<Layout*>& getPages();
-    
-    
+    CC_DEPRECATED_ATTRIBUTE Vector<Layout*>& getPages();
+
     /**
      * @~english Get a page at a given index
+     * @~english Since v3.9, this is obsolete. Use `Widget* ListView::getItem(index)` instead.
      * @~chinese 获取指定的页。
+     * @~chinese 从v3.9版开始此函数已废弃。使用`Widget* ListView::getItem(index)`取代.
      * @param index @~english A given index. @~chinese 页索引号。
      * @return @~english A layout pointer in PageView container. @~chinese 一个已在PageView中的layout指针。
      */
-    Layout* getPage(ssize_t index);
+    CC_DEPRECATED_ATTRIBUTE Layout* getPage(ssize_t index);
     
     /**
      * @~english Add a page turn callback to PageView, then when one page is turning, the callback will be called.
@@ -228,7 +238,6 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerPageView(Ref *target, SEL_PageViewEvent selector);
 
-    
     /**
      * @~english Add a page turn callback to PageView, then when one page is turning, the callback will be called.
      * @~chinese 添加一个页面切换时的回调函数，当页面切换时被调用。
@@ -237,32 +246,91 @@ public:
     void addEventListener(const ccPageViewCallback& callback);
     
     //override methods
-    virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
-    virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;
-    virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
-    virtual void onTouchCancelled(Touch *touch, Event *unusedEvent) override;
-    virtual void update(float dt) override;
-    virtual void setLayoutType(Type type) override{};
-    virtual Type getLayoutType() const override{return Type::ABSOLUTE;};
     virtual std::string getDescription() const override;
+
     /**
-     * @lua NA
+     * @brief Toggle page indicator enabled.
+     *
+     * @param enabled True if enable page indicator, false otherwise.
      */
-    virtual void onEnter() override;
+    void setIndicatorEnabled(bool enabled);
+
+    /**
+     * @brief Query page indicator state.
+     *
+     * @return True if page indicator is enabled, false otherwise.
+     */
+    bool getIndicatorEnabled() const { return _indicator != nullptr; }
+
+    /**
+     * @brief Set the page indicator's position using anchor point.
+     *
+     * @param positionAsAnchorPoint The position as anchor point.
+     */
+    void setIndicatorPositionAsAnchorPoint(const Vec2& positionAsAnchorPoint);
+
+    /**
+     * @brief Get the page indicator's position as anchor point.
+     *
+     * @return positionAsAnchorPoint
+     */
+    const Vec2& getIndicatorPositionAsAnchorPoint() const;
+
+    /**
+     * @brief Set the page indicator's position in page view.
+     *
+     * @param position The position in page view
+     */
+    void setIndicatorPosition(const Vec2& position);
+    
+    /**
+     * @brief Get the page indicator's position.
+     *
+     * @return positionAsAnchorPoint
+     */
+    const Vec2& getIndicatorPosition() const;
+
+    /**
+     * @brief Set space between page indicator's index nodes.
+     *
+     * @param spaceBetweenIndexNodes Space between nodes in pixel.
+     */
+    void setIndicatorSpaceBetweenIndexNodes(float spaceBetweenIndexNodes);
+
+    /**
+     * @brief Get the space between page indicator's index nodes.
+     *
+     * @return spaceBetweenIndexNodes
+     */
+    float getIndicatorSpaceBetweenIndexNodes() const;
+
+    /**
+     * @brief Set color of page indicator's selected index.
+     *
+     * @param spaceBetweenIndexNodes Space between nodes in pixel.
+     */
+    void setIndicatorSelectedIndexColor(const Color3B& color);
+
+    /**
+     * @brief Get the color of page indicator's selected index.
+     *
+     * @return color
+     */
+    const Color3B& getIndicatorSelectedIndexColor() const;
 
     /**   
      * @~english If you don't specify the value, the pageView will turn page when scrolling at the half width of a page.
      * @~chinese 如果没有指定该值，pageView会在滚到页面一半时切换到下一页。
      * @param threshold  @~english A threshold in float. @~chinese 切换页面门限值。
      */
-    void setCustomScrollThreshold(float threshold);
+    CC_DEPRECATED_ATTRIBUTE void setCustomScrollThreshold(float threshold);
 
     /**
      * @~english Query the custom scroll threshold of the PageView.
      * @~chinese 请求设定的切换页面门限值。
      * @return @~english Custom scroll threshold in float. @~chinese 切换页面门限值。
      */
-    float getCustomScrollThreshold()const;
+    CC_DEPRECATED_ATTRIBUTE float getCustomScrollThreshold()const;
 
     /**
      * @~english Set using user defined scroll page threshold or not.
@@ -271,71 +339,40 @@ public:
      * 如果设为false，那么pageView会在滚到页面一半时切换到下一页。
      * @param flag @~english True if using custom scroll threshold, false otherwise. @~chinese 切换页面门限值。
      */
-    void setUsingCustomScrollThreshold(bool flag);
+    CC_DEPRECATED_ATTRIBUTE void setUsingCustomScrollThreshold(bool flag);
 
     /**
      * @~english Query whether use user defined scroll page threshold or not.
      * @~chinese 请求是否使用用户自定义页面切换门限值。
      * @return @~english True if using custom scroll threshold, false otherwise. @~chinese True表明使用用户设置的页面切换门限值。反之不使用。
      */
-    bool isUsingCustomScrollThreshold()const;
+    CC_DEPRECATED_ATTRIBUTE bool isUsingCustomScrollThreshold()const;
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
-protected:
-
-    Layout* createPage();
-    float getPositionXByIndex(ssize_t idx)const;
-    float getPositionYByIndex(ssize_t idx)const;
-    ssize_t getPageCount()const;
-
-    void updateBoundaryPages();
-    virtual bool scrollPages(Vec2 touchOffset);
-    void movePages(Vec2 offset);
-    void pageTurningEvent();
-    void updateAllPagesSize();
-    void updateAllPagesPosition();
-    void autoScroll(float dt);
-
-    virtual void handleMoveLogic(Touch *touch) ;
-    virtual void handleReleaseLogic(Touch *touch) ;
-    virtual void interceptTouchEvent(TouchEventType event, Widget* sender,Touch *touch) override;
-    
-    
-    virtual void onSizeChanged() override;
-    virtual Widget* createCloneInstance() override;
-    virtual void copySpecialProperties(Widget* model) override;
-    virtual void copyClonedWidgetChildren(Widget* model) override;
-
+    //override methods
     virtual void doLayout() override;
 
 protected:
-    enum class AutoScrollDirection
-    {
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN
-    };
-    bool _isAutoScrolling;
-    float _autoScrollDistance;
-    float _autoScrollSpeed;
-    AutoScrollDirection _autoScrollDirection;
-    Direction _direction;
-    
-    ssize_t _curPageIdx;
-    Vector<Layout*> _pages;
+    void pageTurningEvent();
 
-    TouchDirection _touchMoveDirection;
-   
-    Widget* _leftBoundaryChild;
-    Widget* _rightBoundaryChild;
-    
-    float _leftBoundary;
-    float _rightBoundary;
-    float _customScrollThreshold;
-    bool _usingCustomScrollThreshold;
+    virtual void remedyLayoutParameter(Widget* item)override;
+    virtual void moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack) override;
+    virtual void onItemListChanged() override;
+    virtual void onSizeChanged() override;
+    virtual void handleReleaseLogic(Touch *touch) override;
+
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
+
+    void refreshIndicatorPosition();
+
+protected:
+    PageViewIndicator* _indicator;
+    Vec2 _indicatorPositionAsAnchorPoint;
+
+    ssize_t _currentPageIndex;
 
     float _childFocusCancelOffset;
 

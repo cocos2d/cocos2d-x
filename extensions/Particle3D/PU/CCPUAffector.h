@@ -262,20 +262,30 @@ protected:
     
 protected:
 
-    Vec3 _position; ///< Although the scale is on a Particle System level, the affector can also be scaled.
+    Vec3 _position;
+        /** Although the scale is on a Particle System level, the affector can also be scaled.
+    */
+    Vec3 _affectorScale;
+        /** Because the public attribute position is sometimes used for both localspace and worldspace
+        position, the mDerivedPosition attribute is introduced.
+    */
+    Vec3 _derivedPosition;
 
-    Vec3 _affectorScale; ///< affector scale
-    Vec3 _derivedPosition; ///< Because the public attribute position is sometimes used for both localspace and worldspace position, the _derivedPosition attribute is introduced.
+    /** The mAffectSpecialisation is used to specialise the affector. This attribute is comparable with the 
+        mAutoDirection of the ParticleEmitter, it is an optional attribute and used in some of the Particle
+        Affectors.
+    */
+    AffectSpecialisation _affectSpecialisation;
 
-    AffectSpecialisation _affectSpecialisation;///< The _affectSpecialisation is used to specialise the affector.
+        // Type of the affector
+    std::string _affectorType;
 
-    std::string _affectorType;///< Type of the affector
+    std::vector<std::string> _excludedEmitters;
 
-    std::vector<std::string> _excludedEmitters; //< Excluded emitter list
+    // Name of the affector (optional)
+    std::string _name;
 
-    std::string _name;///< Name of the affector (optional)
-
-    float _mass;///< The mass of affector
+    float _mass;
 };
 
 // end of _3d group

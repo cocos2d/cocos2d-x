@@ -67,6 +67,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Image] getFilePath 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
 -- @function [parent=#Image] getNumberOfMipmaps 
 -- @param self
 -- @return int#int ret (return value: int)

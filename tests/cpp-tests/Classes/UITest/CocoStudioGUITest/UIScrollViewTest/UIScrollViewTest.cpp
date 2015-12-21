@@ -13,6 +13,7 @@ UIScrollViewTests::UIScrollViewTests()
     ADD_TEST_CASE(UIScrollViewNestTest);
     ADD_TEST_CASE(UIScrollViewRotated);
     ADD_TEST_CASE(UIScrollViewDisableTest);
+    ADD_TEST_CASE(UIScrollViewInnerSize);
 }
 // UIScrollViewTest_Vertical
 
@@ -612,6 +613,68 @@ bool UIScrollViewDisableTest::init()
         imageView->setPosition(Vec2(innerWidth / 2.0f, imageView->getContentSize().height / 2.0f));
         scrollView->addChild(imageView);
 
+
+        return true;
+    }
+
+    return false;
+}
+
+// UIScrollViewInnerSize
+
+UIScrollViewInnerSize::UIScrollViewInnerSize()
+    : _displayValueLabel(nullptr)
+{
+}
+
+UIScrollViewInnerSize::~UIScrollViewInnerSize()
+{
+}
+
+bool UIScrollViewInnerSize::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        // Add a label in which the scrollview alert will be displayed
+        _displayValueLabel = Text::create("ScrollView InnerSize Test", "fonts/Marker Felt.ttf", 32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
+            widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
+        _uiLayer->addChild(_displayValueLabel);
+
+        // Add the alert
+        Text* alert = Text::create("ScrollView & InnerContainer should be align to the left and top point", "fonts/Marker Felt.ttf", 10);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
+        _uiLayer->addChild(alert);
+
+        Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
+
+        Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
+
+        // Create the scrollview by vertical
+        ui::ScrollView* scrollView = ui::ScrollView::create();
+        scrollView->setContentSize(Size(200.0f, 50.0f));
+        Size backgroundSize = background->getContentSize();
+        scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
+            (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
+            (widgetSize.height - backgroundSize.height) / 2.0f +
+            (backgroundSize.height - scrollView->getContentSize().height) / 2.0f));
+        scrollView->setScrollBarWidth(4);
+        scrollView->setTouchEnabled(false);
+        scrollView->setScrollBarPositionFromCorner(Vec2(2, 2));
+        scrollView->setScrollBarColor(Color3B::WHITE);
+        scrollView->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
+        scrollView->setBackGroundColor(ccc3(150, 150, 100));
+        scrollView->getInnerContainer()->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
+        scrollView->getInnerContainer()->setBackGroundColor(ccc3(50, 100, 50));
+        scrollView->getInnerContainer()->setBackGroundColorOpacity(100);
+        scrollView->setClippingEnabled(false);
+        _uiLayer->addChild(scrollView);
+
+        scrollView->setInnerContainerSize(Size(250.f, 100.f));
 
         return true;
     }

@@ -36,6 +36,7 @@ NS_CC_BEGIN
  */
 
 class Sprite;
+struct CC_DLL ResourceData;
 
 namespace ui {
     class Scale9Sprite;
@@ -170,7 +171,7 @@ public:
      * @~chinese 进度条的capinsets
      * @js NA
      */
-    void setCapInsetProgressBarRebderer(const Rect &capInsets);
+    void setCapInsetProgressBarRenderer(const Rect &capInsets);
     
     /**
      * @~english Gets capinsets for progress bar slider, if slider is using scale9 renderer.
@@ -179,7 +180,7 @@ public:
      * @~chinese 进度跳的九宫格渲染
      * @js NA
      */
-    const Rect& getCapInsetsProgressBarRebderer()const;
+    const Rect& getCapInsetsProgressBarRenderer()const;
     
     /**
      * @~english Load textures for slider ball.
@@ -316,7 +317,12 @@ public:
      */
     float getZoomScale()const;
 
-    
+    ResourceData getBackFile();
+    ResourceData getProgressBarFile();
+    ResourceData getBallNormalFile();
+    ResourceData getBallPressedFile();
+    ResourceData getBallDisabledFile();
+
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
@@ -361,8 +367,6 @@ protected:
     bool _prevIgnoreSize;
     
     float _zoomScale;
-    float _sliderBallNormalTextureScaleX;
-    float _sliderBallNormalTextureScaleY;
 
     bool _isSliderBallPressedTextureLoaded;
     bool _isSliderBallDisabledTexturedLoaded;
@@ -393,6 +397,12 @@ protected:
     TextureResType _ballDTexType;
     bool _barRendererAdaptDirty;
     bool _progressBarRendererDirty;
+
+    std::string _textureFile;
+    std::string _progressBarTextureFile;
+    std::string _slidBallNormalTextureFile;
+    std::string _slidBallPressedTextureFile;
+    std::string _slidBallDisabledTextureFile;
 };
 
 }

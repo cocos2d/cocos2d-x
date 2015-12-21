@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2012      cocos2d-x.org
- opyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 

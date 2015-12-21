@@ -164,7 +164,14 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect)
 
 bool Sprite::initWithFile(const std::string& filename)
 {
-    CCASSERT(filename.size()>0, "Invalid filename for sprite");
+    if (filename.empty())
+    {
+        CCLOG("Call Sprite::initWithFile with blank resource filename.");
+        return false;
+    }
+
+    _fileName = filename;
+    _fileType = 0;
 
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (texture)
@@ -184,6 +191,9 @@ bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
 {
     CCASSERT(filename.size()>0, "Invalid filename");
 
+    _fileName = filename;
+    _fileType = 0;
+
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (texture)
     {
@@ -199,6 +209,9 @@ bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
 bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
 {
     CCASSERT(spriteFrameName.size() > 0, "Invalid spriteFrameName");
+
+    _fileName = spriteFrameName;
+    _fileType = 1;
 
     SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
     return initWithSpriteFrame(frame);
@@ -329,7 +342,7 @@ void Sprite::setTexture(const std::string &filename)
 {
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     setTexture(texture);
-
+    _unflippedOffsetPositionFromCenter = Vec2::ZERO;
     Rect rect = Rect::ZERO;
     if (texture)
         rect.size = texture->getContentSize();
@@ -1135,7 +1148,7 @@ std::string Sprite::getDescription() const
     return StringUtils::format("<Sprite | Tag = %d, TextureID = %d>", _tag, texture_id );
 }
 
-PolygonInfo Sprite::getPolygonInfo() const
+PolygonInfo& Sprite::getPolygonInfo()
 {
     return _polyInfo;
 }

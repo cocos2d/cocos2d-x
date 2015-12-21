@@ -397,7 +397,6 @@ FrameBuffer::FrameBuffer()
 
 FrameBuffer::~FrameBuffer()
 {
-    if(!isDefaultFBO())
     {
         CC_SAFE_RELEASE_NULL(_rt);
         CC_SAFE_RELEASE_NULL(_rtDepthStencil);
@@ -407,6 +406,8 @@ FrameBuffer::~FrameBuffer()
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         Director::getInstance()->getEventDispatcher()->removeEventListener(_dirtyFBOListener);
 #endif
+        if (isDefaultFBO())
+            _defaultFBO = nullptr;
     }
 }
 

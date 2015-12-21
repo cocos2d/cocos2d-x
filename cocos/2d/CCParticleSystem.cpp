@@ -1332,5 +1332,4 @@ void ParticleSystem::setScaleY(float newScaleY)
     Node::setScaleY(newScaleY);
 }
 
-
 NS_CC_END

@@ -27,6 +27,7 @@
 #include "js_manual_conversions.h"
 #include "cocos2d_specifics.hpp"
 #include "math/TransformUtils.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 USING_NS_CC;
 
@@ -73,15 +74,8 @@ void JSStringWrapper::set(JSString* str, JSContext* cx)
     {
         cx = ScriptingCore::getInstance()->getGlobalContext();
     }
-    // JS_EncodeString isn't supported in SpiderMonkey ff19.0.
-    //buffer = JS_EncodeString(cx, string);
-
-    //JS_GetStringCharsZ is removed in SpiderMonkey 33
-//    unsigned short* pStrUTF16 = (unsigned short*)JS_GetStringCharsZ(cx, str);
-
-//    _buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
-
-    _buffer = JS_EncodeStringToUTF8(cx, JS::RootedString(cx, str));
+    JS::RootedString jsstr(cx, str);
+    _buffer = JS_EncodeStringToUTF8(cx, jsstr);
 }
 
 const char* JSStringWrapper::get()
@@ -90,26 +84,24 @@ const char* JSStringWrapper::get()
 }
 
 // JSFunctionWrapper
-JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JSObject *jsthis, jsval fval)
+JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval)
 : _cx(cx)
-, _jsthis(jsthis)
-, _fval(fval)
 {
-    JS::AddNamedValueRoot(cx, &this->_fval, "JSFunctionWrapper");
-    JS::AddNamedObjectRoot(cx, &this->_jsthis, "JSFunctionWrapper");
+    _jsthis.construct(cx, jsthis);
+    _fval.construct(cx, fval);
 }
 
 JSFunctionWrapper::~JSFunctionWrapper()
 {
-    JS::RemoveValueRoot(this->_cx, &this->_fval);
-    JS::RemoveObjectRoot(this->_cx, &this->_jsthis);
+    _jsthis.destroyIfConstructed();
+    _fval.destroyIfConstructed();
 }
 
 bool JSFunctionWrapper::invoke(unsigned int argc, jsval *argv, JS::MutableHandleValue rval)
 {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    return JS_CallFunctionValue(this->_cx, JS::RootedObject(_cx, this->_jsthis.get()), JS::RootedValue(_cx, this->_fval.get()), JS::HandleValueArray::fromMarkedLocation(argc, argv), rval);
+    return JS_CallFunctionValue(this->_cx, _jsthis.ref(), _fval.ref(), JS::HandleValueArray::fromMarkedLocation(argc, argv), rval);
 }
 
 static Color3B getColorFromJSObject(JSContext *cx, JS::HandleObject colorObject)
@@ -317,7 +309,7 @@ bool jsval_to_charptr( JSContext *cx, JS::HandleValue vp, const char **ret )
     JSStringWrapper strWrapper(jsstr);
     
     // XXX: It is converted to String and then back to char* to autorelease the created object.
-    __String *tmp = String::create(strWrapper.get());
+    __String *tmp = __String::create(strWrapper.get());
 
     JSB_PRECONDITION2( tmp, cx, false, "Error creating string from UTF8");
 
@@ -698,27 +690,28 @@ bool jsval_to_ray(JSContext *cx, JS::HandleValue v, cocos2d::Ray* ret)
 bool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, __Array** ret)
 {
     bool ok = true;
-    __Array* pArray = Array::create();
+    __Array* pArray = __Array::create();
     for( int i=0; i < argc; i++ )
     {
         double num = 0.0;
         // optimization: JS::ToNumber is expensive. And can convert an string like "12" to a number
-        if (vp->isNumber()) {
-            ok &= JS::ToNumber(cx, JS::RootedValue(cx, *vp), &num );
+        JS::RootedValue jsv(cx, *vp);
+        if (jsv.isNumber()) {
+            ok &= JS::ToNumber(cx, jsv, &num );
             if (!ok) {
                 break;
             }
-            pArray->addObject(Integer::create((int)num));
+            pArray->addObject(__Integer::create((int)num));
         }
-        else if (vp->isString())
+        else if (jsv.isString())
         {
-            JSStringWrapper str(vp->toString(), cx);
-            pArray->addObject(String::create(str.get()));
+            JSStringWrapper str(jsv, cx);
+            pArray->addObject(__String::create(str.get()));
         }
         else
         {
             js_proxy_t* p;
-            JSObject* obj = vp->toObjectOrNull();
+            JS::RootedObject obj(cx, jsv.toObjectOrNull());
             p = jsb_get_js_proxy(obj);
             if (p) {
                 pArray->addObject((Ref*)p->ptr);
@@ -1005,20 +998,20 @@ bool jsval_to_ccarray(JSContext* cx, JS::HandleValue v, __Array** ret)
             }
             else if (value.isString()) {
                 JSStringWrapper valueWapper(value.toString(), cx);
-                arr->addObject(String::create(valueWapper.get()));
+                arr->addObject(__String::create(valueWapper.get()));
                 //                CCLOG("iterate array: value = %s", valueWapper.get().c_str());
             }
             else if (value.isNumber()) {
                 double number = 0.0;
                 ok = JS::ToNumber(cx, value, &number);
                 if (ok) {
-                    arr->addObject(Double::create(number));
+                    arr->addObject(__Double::create(number));
                     //                    CCLOG("iterate array: value = %lf", number);
                 }
             }
             else if (value.isBoolean()) {
                 bool boolVal = JS::ToBoolean(value);
-                arr->addObject(Bool::create(boolVal));
+                arr->addObject(__Bool::create(boolVal));
                 // CCLOG("iterate object: value = %d", boolVal);
             }
             else {
@@ -1768,9 +1761,10 @@ jsval ccarray_to_jsval(JSContext* cx, __Array *arr)
         JS::RootedValue arrElement(cx);
         
         //First, check whether object is associated with js object.
-        js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::Ref>(cx, obj);
-        if (jsproxy) {
-            arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Ref>(obj);
+        auto jsobj = jsb_ref_get_or_create_jsobject(cx, obj, typeClass, "cocos2d::Ref");
+        if (jsobj) {
+            arrElement = OBJECT_TO_JSVAL(jsobj);
         }
         else {
             __String* strVal = NULL;
@@ -1819,9 +1813,10 @@ jsval ccdictionary_to_jsval(JSContext* cx, __Dictionary* dict)
         JS::RootedValue dictElement(cx);
         Ref* obj = pElement->getObject();
         //First, check whether object is associated with js object.
-        js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::Ref>(cx, obj);
-        if (jsproxy) {
-            dictElement = OBJECT_TO_JSVAL(jsproxy->obj);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Ref>(obj);
+        auto jsobj = jsb_ref_get_or_create_jsobject(cx, obj, typeClass, "cocos2d::Ref");
+        if (jsobj) {
+            dictElement = OBJECT_TO_JSVAL(jsobj);
         }
         else {
             __String* strVal = NULL;
@@ -1930,20 +1925,20 @@ bool jsval_to_ccdictionary(JSContext* cx, JS::HandleValue v, __Dictionary** ret)
         }
         else if (value.isString()) {
             JSStringWrapper valueWapper(value.toString(), cx);
-            dict->setObject(String::create(valueWapper.get()), keyWrapper.get());
+            dict->setObject(__String::create(valueWapper.get()), keyWrapper.get());
             //            CCLOG("iterate object: key = %s, value = %s", keyWrapper.get().c_str(), valueWapper.get().c_str());
         }
         else if (value.isNumber()) {
             double number = 0.0;
             bool ok = JS::ToNumber(cx, value, &number);
             if (ok) {
-                dict->setObject(Double::create(number), keyWrapper.get());
+                dict->setObject(__Double::create(number), keyWrapper.get());
                 //                CCLOG("iterate object: key = %s, value = %lf", keyWrapper.get().c_str(), number);
             }
         }
         else if (value.isBoolean()) {
             bool boolVal = JS::ToBoolean(value);
-            dict->setObject(Bool::create(boolVal), keyWrapper.get());
+            dict->setObject(__Bool::create(boolVal), keyWrapper.get());
             // CCLOG("iterate object: key = %s, value = %d", keyWrapper.get().c_str(), boolVal);
         }
         else {
@@ -2186,10 +2181,11 @@ jsval uniform_to_jsval(JSContext* cx, const cocos2d::Uniform* uniform)
 {
     JS::RootedObject tmp(cx, JS_NewObject(cx, nullptr, JS::NullPtr(), JS::NullPtr()));
     if(!tmp) return JSVAL_NULL;
+    JS::RootedValue jsname(cx, std_string_to_jsval(cx, uniform->name));
     bool ok = JS_DefineProperty(cx, tmp, "location", uniform->location, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "size", uniform->size, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "type", uniform->type, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "name", JS::RootedValue(cx, std_string_to_jsval(cx, uniform->name)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineProperty(cx, tmp, "name", jsname, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if(ok)
         return OBJECT_TO_JSVAL(tmp);
     
@@ -2216,39 +2212,33 @@ jsval FontDefinition_to_jsval(JSContext* cx, const FontDefinition& t)
     JS::RootedObject proto(cx);
     JS::RootedObject parent(cx);
     JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
-//    if (!tmp) return JSVAL_NULL;
+    JS::RootedValue prop(cx);
+    
     bool ok = true;
-
-    ok &= JS_DefineProperty(cx, tmp, "fontName", JS::RootedValue(cx, std_string_to_jsval(cx, t._fontName)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
+    prop.set(std_string_to_jsval(cx, t._fontName));
+    ok &= JS_DefineProperty(cx, tmp, "fontName", prop, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     ok &= JS_DefineProperty(cx, tmp, "fontSize", t._fontSize, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
     ok &= JS_DefineProperty(cx, tmp, "textAlign", (int32_t)t._alignment, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
     ok &= JS_DefineProperty(cx, tmp, "verticalAlign", (int32_t)t._vertAlignment, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
-    ok &= JS_DefineProperty(cx, tmp, "fillStyle", JS::RootedValue(cx, cccolor3b_to_jsval(cx, t._fontFillColor)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
+    prop.set(cccolor3b_to_jsval(cx, t._fontFillColor));
+    ok &= JS_DefineProperty(cx, tmp, "fillStyle", prop, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     ok &= JS_DefineProperty(cx, tmp, "boundingWidth", t._dimensions.width, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
     ok &= JS_DefineProperty(cx, tmp, "boundingHeight", t._dimensions.height, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     // Shadow
-    ok &= JS_DefineProperty(cx, tmp, "shadowEnabled", JS::RootedValue(cx, BOOLEAN_TO_JSVAL(t._shadow._shadowEnabled)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
+    prop.set(BOOLEAN_TO_JSVAL(t._shadow._shadowEnabled));
+    ok &= JS_DefineProperty(cx, tmp, "shadowEnabled", prop, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     ok &= JS_DefineProperty(cx, tmp, "shadowOffsetX", t._shadow._shadowOffset.width, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
     ok &= JS_DefineProperty(cx, tmp, "shadowOffsetY", t._shadow._shadowOffset.height, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
     ok &= JS_DefineProperty(cx, tmp, "shadowBlur", t._shadow._shadowBlur, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
     ok &= JS_DefineProperty(cx, tmp, "shadowOpacity", t._shadow._shadowOpacity, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     // Stroke
-    ok &= JS_DefineProperty(cx, tmp, "strokeEnabled", JS::RootedValue(cx, BOOLEAN_TO_JSVAL(t._stroke._strokeEnabled)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
-    ok &= JS_DefineProperty(cx, tmp, "strokeStyle", JS::RootedValue(cx, cccolor3b_to_jsval(cx, t._stroke._strokeColor)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
+    prop.set(BOOLEAN_TO_JSVAL(t._stroke._strokeEnabled));
+    ok &= JS_DefineProperty(cx, tmp, "strokeEnabled", prop, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    prop.set(cccolor3b_to_jsval(cx, t._stroke._strokeColor));
+    ok &= JS_DefineProperty(cx, tmp, "strokeStyle", prop, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     ok &= JS_DefineProperty(cx, tmp, "lineWidth", t._stroke._strokeSize, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     if (ok) {
@@ -2345,7 +2335,8 @@ bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, FontDefinition 
         JS_GetProperty(cx, jsobj, "fillStyle", &jsr);
         
         JS::RootedObject jsobjColor(cx);
-        if (!JS_ValueToObject( cx, JS::RootedValue(cx, jsr), &jsobjColor ) )
+        JS::RootedValue jsvalColor(cx, jsr);
+        if (!JS_ValueToObject( cx, jsvalColor, &jsobjColor ) )
             return false;
         
         out->_fontFillColor = getColorFromJSObject(cx, jsobjColor);
@@ -2864,4 +2855,44 @@ jsval std_map_string_string_to_jsval(JSContext* cx, const std::map<std::string, 
         }
     }
     return OBJECT_TO_JSVAL(jsRet);
+}
+
+bool jsval_to_resourcedata(JSContext *cx, JS::HandleValue v, ResourceData* ret) {
+    JS::RootedObject tmp(cx);
+    JS::RootedValue jstype(cx);
+    JS::RootedValue jsfile(cx);
+    JS::RootedValue jsplist(cx);
+
+    double t = 0;
+    std::string file, plist;
+    bool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
+        JS_GetProperty(cx, tmp, "type", &jstype) &&
+        JS_GetProperty(cx, tmp, "name", &jsfile) &&
+        JS_GetProperty(cx, tmp, "plist", &jsplist) &&
+        JS::ToNumber(cx, jstype, &t) &&
+        jsval_to_std_string(cx, jsfile, &file) &&
+        jsval_to_std_string(cx, jsplist, &plist);
+
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+
+    ret->type = (int)t;
+    ret->file = file;
+    ret->plist = plist;
+    return true;
+}
+
+jsval resourcedata_to_jsval(JSContext* cx, const ResourceData& v)
+{
+    JS::RootedObject proto(cx);
+    JS::RootedObject parent(cx);
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    if (!tmp) return JSVAL_NULL;
+    bool ok = JS_DefineProperty(cx, tmp, "type", v.type, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "file", JS::RootedValue(cx, std_string_to_jsval(cx, v.file)), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "plist", JS::RootedValue(cx, std_string_to_jsval(cx, v.plist)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    if (ok) {
+        return OBJECT_TO_JSVAL(tmp);
+    }
+    return JSVAL_NULL;
 }

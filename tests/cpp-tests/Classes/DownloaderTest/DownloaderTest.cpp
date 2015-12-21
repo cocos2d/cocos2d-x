@@ -36,7 +36,7 @@ static const char* sURLList[] =
 {
     "http://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png",
     "http://www.cocos2d-x.org/docs/manual/framework/native/wiki/logo-resources-of-cocos2d-x/res/2dx_icon_512_rounded.png",
-    "http://www.cocos2d-x.org/attachments/1503/Cocos2CoordinateRelease.png",
+    "http://www.cocos2d-x.org/attachments/1503/inexist.png",
     "http://download.sdkbox.com/installer/v1/sdkbox-iap_v1.2.3.3.tar.gz",
 };
 const static int sListSize = (sizeof(sURLList)/sizeof(sURLList[0]));
@@ -44,7 +44,7 @@ static const char* sNameList[sListSize] =
 {
     "cocos2dx_landscape.png",
     "2dx_icon_512_rounded.png",
-    "Cocos2CoordinateRelease.png",
+    "inexist file",
     "big file",
 };
 
@@ -112,6 +112,7 @@ struct DownloaderTest : public TestCase
         label->setPosition(Vec2(viewSize.width / 2, viewSize.height / 2));
         label->setContentSize(Size(viewSize.width, 0));
         label->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
+        label->setDimensions(viewSize.width, viewSize.height);
         bg->addChild(label, 20);
         
         return bg;

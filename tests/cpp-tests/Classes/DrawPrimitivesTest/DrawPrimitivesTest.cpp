@@ -291,6 +291,12 @@ DrawNodeTest::DrawNodeTest()
     for (int i = 0; i < 100; i++) {
         draw->drawPoint(Vec2(i*7, 5), (float)i/5+1, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
     }
+
+    auto draw1 = DrawNode::create();
+    this->addChild(draw1, 10);
+    draw1->setLineWidth(4);
+    draw1->drawLine(Vec2(0, s.height), Vec2(s.width, s.height - 20), Color4F::YELLOW);
+    draw1->drawLine(Vec2(0, 0), Vec2(s.width, s.height - 20), Color4F::YELLOW);
 }
 
 string DrawNodeTest::title() const

@@ -22,6 +22,9 @@ enum
 TouchesTests::TouchesTests()
 {
     ADD_TEST_CASE(PongScene);
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0 // Use 9.0 or higher SDK to compile
+    ADD_TEST_CASE(ForceTouchTest);
+#endif
 }
 //------------------------------------------------------------------
 //
@@ -111,3 +114,60 @@ void PongLayer::doStep(float delta)
     else if (_ball->getPosition().y < VisibleRect::bottom().y-_ball->radius())
         resetAndScoreBallForPlayer( kHighPlayer );
 }
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0 // Use 9.0 or higher SDK to compile
+
+const char * _Info_Formatter = "Current force value : %0.02f, maximum possible force : %0.02f";
+char formatBuffer[256] = {0, };
+
+ForceTouchTest::ForceTouchTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    _infoLabel = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "Current force value : 0.00, maximum possible force : 0.00");
+    _infoLabel->setPosition(s.width / 2, s.height / 2);
+    addChild(_infoLabel);
+
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(ForceTouchTest::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(ForceTouchTest::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(ForceTouchTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+ForceTouchTest::~ForceTouchTest()
+{
+}
+
+std::string ForceTouchTest::title() const
+{
+    return std::string("3D Touch Test");
+}
+
+std::string ForceTouchTest::subtitle() const
+{
+    return std::string("Touch with force to see info label changes");
+}
+    
+void ForceTouchTest::onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
+{
+}
+
+void ForceTouchTest::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
+{
+    for(auto& t : touches)
+    {
+        float currentForce = t->getCurrentForce();
+        float maxForce = t->getMaxForce();
+        sprintf(formatBuffer, _Info_Formatter, currentForce, maxForce);
+        _infoLabel->setString(std::string(formatBuffer));
+    }
+}
+
+void ForceTouchTest::onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
+{
+    sprintf(formatBuffer, _Info_Formatter, 0.0f, 0.0f);
+    _infoLabel->setString(std::string(formatBuffer));
+}
+
+#endif

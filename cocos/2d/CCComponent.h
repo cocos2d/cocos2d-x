@@ -91,4 +91,4 @@ protected:
 NS_CC_END
 
 /// @endcond
-#endif  // __FUNDATION__CCCOMPONENT_H__
+#endif  // __CC_FRAMEWORK_COMPONENT_H__

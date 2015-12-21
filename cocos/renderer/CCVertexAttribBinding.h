@@ -61,7 +61,7 @@ class VertexAttribValue;
  * @~chinese 该类定义一个Mesh的顶点和vertex shader之间的绑定关系。理想情况下，这个类应该定义的绑定关系应该只与顶点格式布局和shader相关，而不是与vertex buffer也有关联，这样会阻止该类的通用性。但是OpenGL设置顶点绑定的机制采用的是VAO。对于每个顶点buffer OpenGL需要一个VAO，而不仅仅是顶点格式的布局。因此，尽管我们想定义一个顶点格式和shader的绑定关系，但由于OpenGL的要求，实际上我们定义的是一个Mesh和shader之间的绑定。
  * 
  */
-class VertexAttribBinding : public Ref
+class CC_DLL VertexAttribBinding : public Ref
 {
 public:
 

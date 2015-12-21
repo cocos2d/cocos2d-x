@@ -48,7 +48,7 @@ struct Color4F;
 /**@~english
  * RGB color composed of bytes 3 bytes.
  * @~chinese 
- * ç”± 3 ä¸ªå­—èŠ‚è¡¨ç¤ºçš„ RGB é¢œè‰²æ•°æ®ã€‚
+ * ÓÉ 3 ¸ö×Ö½Ú±íÊ¾µÄ RGB ÑÕÉ«Êı¾İ¡£
  * @since v3.0
  */
 struct CC_DLL Color3B
@@ -88,7 +88,7 @@ struct CC_DLL Color3B
 /**@~english
  * RGBA color composed of 4 bytes.
  * @~chinese 
- * ç”± 4 ä¸ªå­—èŠ‚è¡¨ç¤ºçš„ RGBA é¢œè‰²æ•°æ®ã€‚
+ * ÓÉ 4 ¸ö×Ö½Ú±íÊ¾µÄ RGBA ÑÕÉ«Êı¾İ¡£
  * @since v3.0
  */
 struct CC_DLL Color4B
@@ -133,7 +133,7 @@ struct CC_DLL Color4B
 /**@~english
  * RGBA color composed of 4 floats.
  * @~chinese 
- * ç”± 4 ä¸ªæµ®ç‚¹æ•°è¡¨ç¤ºçš„ RGBA é¢œè‰²æ•°æ®ã€‚
+ * ÓÉ 4 ¸ö¸¡µãÊı±íÊ¾µÄ RGBA ÑÕÉ«Êı¾İ¡£
  * @since v3.0
  */
 struct CC_DLL Color4F
@@ -201,7 +201,7 @@ struct CC_DLL Color4F
  * @brief @~english
  * A TEXCOORD composed of 2 floats: u, y
  * @~chinese
- * ä¸¤ä¸ªæµ®ç‚¹æ•°è¡¨ç¤ºçš„çº¹ç†åæ ‡æ•°æ®ã€‚
+ * Á½¸ö¸¡µãÊı±íÊ¾µÄÎÆÀí×ø±êÊı¾İ¡£
  * @since v3.0
  */
 struct CC_DLL Tex2F {
@@ -217,7 +217,7 @@ struct CC_DLL Tex2F {
  * @brief @~english
  * The point data of Sprite which contains position, color & szie.
  * @~chinese
- * åŒ…å«ä½ç½®ï¼Œé¢œè‰²å’Œå¤§å°ä¿¡æ¯çš„ Sprite æ•°æ®ã€‚
+ * °üº¬Î»ÖÃ£¬ÑÕÉ«ºÍ´óĞ¡ĞÅÏ¢µÄ Sprite Êı¾İ¡£
  */
 struct CC_DLL PointSprite
 {
@@ -228,7 +228,7 @@ struct CC_DLL PointSprite
 
 /** @struct Quad2
  * @brief @~english A 2D Quad. 4 * 2 floats.
- * @~chinese ä¸€ä¸ª 2D çš„çŸ©å½¢é¡¶ç‚¹æ•°æ®ã€‚
+ * @~chinese Ò»¸ö 2D µÄ¾ØĞÎ¶¥µãÊı¾İ¡£
  */
 struct CC_DLL Quad2
 {
@@ -240,7 +240,7 @@ struct CC_DLL Quad2
 
 /** @struct Quad3
  * @brief @~english A 3D Quad. 4 * 3 floats.
- * @~chinese ä¸€ä¸ª 3D çš„çŸ©å½¢é¡¶ç‚¹æ•°æ®ã€‚
+ * @~chinese Ò»¸ö 3D µÄ¾ØĞÎ¶¥µãÊı¾İ¡£
  */
 struct CC_DLL Quad3 {
     Vec3        bl;
@@ -253,20 +253,20 @@ struct CC_DLL Quad3 {
  * @brief @~english 
  * A Vec2 with a vertex point, a tex coord point and a color 4B.
  * @~chinese
- * Vec2 é¡¶ç‚¹åæ ‡ + Color4B é¢œè‰² + çº¹ç†åæ ‡
+ * Vec2 ¶¥µã×ø±ê + Color4B ÑÕÉ« + ÎÆÀí×ø±ê
  */
 struct V2F_C4B_T2F
 {
     /**@~english vertices (2F)
-     * @~chinese é¡¶ç‚¹åæ ‡ (2F)
+     * @~chinese ¶¥µã×ø±ê (2F)
      */
     Vec2       vertices;
     /**@~english colors (4B)
-     * @~chinese é¢œè‰² (4B)
+     * @~chinese ÑÕÉ« (4B)
      */
     Color4B        colors;
     /**@~english tex coords (2F)
-     * @~chinese çº¹ç†åæ ‡ (2F)
+     * @~chinese ÎÆÀí×ø±ê (2F)
      */
     Tex2F          texCoords;
 };
@@ -275,20 +275,20 @@ struct V2F_C4B_T2F
  * @brief @~english
  * A Vec2 with a vertex point, a color 4B and point size.
  * @~chinese 
- * Vec2 é¡¶ç‚¹åæ ‡ + Color4B é¢œè‰² + ç‚¹çš„å¤§å°
+ * Vec2 ¶¥µã×ø±ê + Color4B ÑÕÉ« + µãµÄ´óĞ¡
  */
 struct V2F_C4B_PF
 {
     /**@~english vertices (2F)
-     * @~chinese é¡¶ç‚¹åæ ‡ (2F)
+     * @~chinese ¶¥µã×ø±ê (2F)
      */
     Vec2       vertices;
     /**@~english colors (4B)
-     * @~chinese é¢œè‰² (4B)
+     * @~chinese ÑÕÉ« (4B)
      */
     Color4B        colors;
     /**@~english pointsize
-     * @~chinese ç‚¹å¤§å°
+     * @~chinese µã´óĞ¡
      */
     float      pointSize;
 };
@@ -297,20 +297,20 @@ struct V2F_C4B_PF
  * @brief @~english
  * A Vec2 with a vertex point, a tex coord point and a color 4F.
  * @~chinese
- * Vec2 é¡¶ç‚¹åæ ‡ + Color4F é¢œè‰² + çº¹ç†åæ ‡
+ * Vec2 ¶¥µã×ø±ê + Color4F ÑÕÉ« + ÎÆÀí×ø±ê
  */
 struct CC_DLL V2F_C4F_T2F
 {
     /**@~english vertices (2F)
-     * @~chinese é¡¶ç‚¹åæ ‡ (2F)
+     * @~chinese ¶¥µã×ø±ê (2F)
      */
     Vec2       vertices;
     /**@~english colors (4F)
-     * @~chinese é¢œè‰² (4F)
+     * @~chinese ÑÕÉ« (4F)
      */
     Color4F        colors;
     /**@~english tex coords (2F)
-     * @~chinese çº¹ç†åæ ‡ (2F)
+     * @~chinese ÎÆÀí×ø±ê (2F)
      */
     Tex2F          texCoords;
 };
@@ -319,22 +319,22 @@ struct CC_DLL V2F_C4F_T2F
  * @brief @~english
  * A Vec2 with a vertex point, a tex coord point and a color 4B.
  * @~chinese
- * Vec3 é¡¶ç‚¹åæ ‡ + Color4B é¢œè‰² + çº¹ç†åæ ‡
+ * Vec3 ¶¥µã×ø±ê + Color4B ÑÕÉ« + ÎÆÀí×ø±ê
  */
 struct CC_DLL V3F_C4B_T2F
 {
     /**@~english vertices (3F)
-     * @~chinese é¡¶ç‚¹åæ ‡ (3F)
+     * @~chinese ¶¥µã×ø±ê (3F)
      */
     Vec3     vertices;            // 12 bytes
 
     /**@~english colors (4B)
-     * @~chinese é¢œè‰² (4B)
+     * @~chinese ÑÕÉ« (4B)
      */
     Color4B      colors;              // 4 bytes
 
     /**@~english tex coords (2F)
-     * @~chinese çº¹ç†åæ ‡ (2F)
+     * @~chinese ÎÆÀí×ø±ê (2F)
      */
     Tex2F        texCoords;           // 8 bytes
 };
@@ -343,16 +343,16 @@ struct CC_DLL V3F_C4B_T2F
  * @brief @~english
  * A Vec3 with a vertex point, a tex coord point.
  * @~chinese
- * Vec3 é¡¶ç‚¹åæ ‡ + çº¹ç†åæ ‡
+ * Vec3 ¶¥µã×ø±ê + ÎÆÀí×ø±ê
  */
 struct CC_DLL V3F_T2F
 {
     /**@~english vertices (3F)
-     * @~chinese é¡¶ç‚¹åæ ‡ (3F)
+     * @~chinese ¶¥µã×ø±ê (3F)
      */
     Vec3       vertices;
     /**@~english tex coords (2F)
-     * @~chinese çº¹ç†åæ ‡ (2F)
+     * @~chinese ÎÆÀí×ø±ê (2F)
      */
     Tex2F          texCoords;
 };
@@ -361,7 +361,7 @@ struct CC_DLL V3F_T2F
  * @~english
  * A Triangle of `V2F_C4B_T2F`.
  * @~chinese
- * é¡¶ç‚¹æ•°æ®ä¸º `V2F_C4B_T2F` çš„ä¸‰è§’å½¢ã€‚
+ * ¶¥µãÊı¾İÎª `V2F_C4B_T2F` µÄÈı½ÇĞÎ¡£
  */
 struct CC_DLL V2F_C4B_T2F_Triangle
 {
@@ -374,24 +374,24 @@ struct CC_DLL V2F_C4B_T2F_Triangle
  * @brief @~english 
  * A Quad of `V2F_C4B_T2F`.
  * @~chinese
- * é¡¶ç‚¹æ•°æ®ä¸º `V2F_C4B_T2F` çš„çŸ©å½¢ã€‚
+ * ¶¥µãÊı¾İÎª `V2F_C4B_T2F` µÄ¾ØĞÎ¡£
  */
 struct CC_DLL V2F_C4B_T2F_Quad
 {
     /**@~english bottom left
-     * @~chinese å·¦ä¸‹è§’
+     * @~chinese ×óÏÂ½Ç
      */
     V2F_C4B_T2F    bl;
     /**@~english bottom right
-     * @~chinese å³ä¸‹è§’
+     * @~chinese ÓÒÏÂ½Ç
      */
     V2F_C4B_T2F    br;
     /**@~english top left
-     * @~chinese å·¦ä¸Šè§’
+     * @~chinese ×óÉÏ½Ç
      */
     V2F_C4B_T2F    tl;
     /**@~english top right
-     * @~chinese å³ä¸Šè§’
+     * @~chinese ÓÒÉÏ½Ç
      */
     V2F_C4B_T2F    tr;
 };
@@ -400,24 +400,24 @@ struct CC_DLL V2F_C4B_T2F_Quad
  * @brief @~english
  * A Quad of `Vertex3FTex2FColor4B`.
  * @~chinese
- * é¡¶ç‚¹æ•°æ®ä¸º `Vertex3FTex2FColor4B` çš„çŸ©å½¢ã€‚
+ * ¶¥µãÊı¾İÎª `Vertex3FTex2FColor4B` µÄ¾ØĞÎ¡£
  */
 struct CC_DLL V3F_C4B_T2F_Quad
 {
     /**@~english top left
-     * @~chinese å·¦ä¸Šè§’
+     * @~chinese ×óÉÏ½Ç
      */
     V3F_C4B_T2F    tl;
     /**@~english bottom left
-     * @~chinese å·¦ä¸‹è§’
+     * @~chinese ×óÏÂ½Ç
      */
     V3F_C4B_T2F    bl;
     /**@~english top right
-     * @~chinese å³ä¸Šè§’
+     * @~chinese ÓÒÉÏ½Ç
      */
     V3F_C4B_T2F    tr;
     /**@~english bottom right
-     * @~chinese å³ä¸‹è§’
+     * @~chinese ÓÒÏÂ½Ç
      */
     V3F_C4B_T2F    br;
 };
@@ -426,24 +426,24 @@ struct CC_DLL V3F_C4B_T2F_Quad
  * @brief @~english
  * A Quad of `Vertex2FTex2FColor4F`.
  * @~chinese
- * é¡¶ç‚¹æ•°æ®ä¸º `Vertex2FTex2FColor4F` çš„çŸ©å½¢ã€‚
+ * ¶¥µãÊı¾İÎª `Vertex2FTex2FColor4F` µÄ¾ØĞÎ¡£
  */
 struct CC_DLL V2F_C4F_T2F_Quad
 {
     /**@~english bottom left
-     * @~chinese å·¦ä¸‹è§’
+     * @~chinese ×óÏÂ½Ç
      */
     V2F_C4F_T2F    bl;
     /**@~english bottom right
-     * @~chinese å³ä¸‹è§’
+     * @~chinese ÓÒÏÂ½Ç
      */
     V2F_C4F_T2F    br;
     /**@~english top left
-     * @~chinese å·¦ä¸Šè§’
+     * @~chinese ×óÉÏ½Ç
      */
     V2F_C4F_T2F    tl;
     /**@~english top right
-     * @~chinese å³ä¸Šè§’
+     * @~chinese ÓÒÉÏ½Ç
      */
     V2F_C4F_T2F    tr;
 };
@@ -452,24 +452,24 @@ struct CC_DLL V2F_C4F_T2F_Quad
  * @brief @~english
  * A Quad with `V3F_T2F`
  * @~chinese
- * é¡¶ç‚¹æ•°æ®ä¸º `V3F_T2F` çš„çŸ©å½¢ã€‚
+ * ¶¥µãÊı¾İÎª `V3F_T2F` µÄ¾ØĞÎ¡£
  */
 struct CC_DLL V3F_T2F_Quad
 {
     /**@~english bottom left
-     * @~chinese å·¦ä¸‹è§’
+     * @~chinese ×óÏÂ½Ç
      */
     V3F_T2F    bl;
     /**@~english bottom right
-     * @~chinese å³ä¸‹è§’
+     * @~chinese ÓÒÏÂ½Ç
      */
     V3F_T2F    br;
     /**@~english top left
-     * @~chinese å·¦ä¸Šè§’
+     * @~chinese ×óÉÏ½Ç
      */
     V3F_T2F    tl;
     /**@~english top right
-     * @~chinese å³ä¸Šè§’
+     * @~chinese ÓÒÉÏ½Ç
      */
     V3F_T2F    tr;
 };
@@ -478,29 +478,29 @@ struct CC_DLL V3F_T2F_Quad
  * @~english
  * Blend Function used for textures.
  * @~chinese
- * ç”¨äºçº¹ç†çš„æ··åˆå‡½æ•°ã€‚
+ * ÓÃÓÚÎÆÀíµÄ»ìºÏº¯Êı¡£
  */
 struct CC_DLL BlendFunc
 {
-    /** @~english source blend factor  @~chinese æºæ··åˆå› å­ */
+    /** @~english source blend factor  @~chinese Ô´»ìºÏÒò×Ó */
     GLenum src;
-    /** @~english destination blend factor  @~chinese ç›®æ ‡æ··åˆå› å­ */
+    /** @~english destination blend factor  @~chinese Ä¿±ê»ìºÏÒò×Ó */
     GLenum dst;
 
     /** @~english Blending disabled. Uses {GL_ONE, GL_ZERO}
-     * @~chinese ä¸è¿›è¡Œæ··åˆã€‚ä½¿ç”¨ {GL_ONE, GL_ZERO}
+     * @~chinese ²»½øĞĞ»ìºÏ¡£Ê¹ÓÃ {GL_ONE, GL_ZERO}
      */
     static const BlendFunc DISABLE;
     /** @~english Blending enabled for textures with Alpha premultiplied. Uses {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}
-     * @~chinese æ··åˆæºé¢œè‰²ä¸å˜ï¼Œæ··åˆç›®æ ‡é¢œè‰²é¢„ä¹˜ (1 - æºçš„é€æ˜åº¦)ã€‚ä½¿ç”¨ {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}
+     * @~chinese »ìºÏÔ´ÑÕÉ«²»±ä£¬»ìºÏÄ¿±êÑÕÉ«Ô¤³Ë (1 - Ô´µÄÍ¸Ã÷¶È)¡£Ê¹ÓÃ {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}
      */
     static const BlendFunc ALPHA_PREMULTIPLIED;
     /** @~english Blending enabled for textures with Alpha NON premultiplied. Uses {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}
-     * @~chinese æ··åˆæºé¢œè‰²é¢„ä¹˜é€æ˜åº¦ï¼Œæ··åˆç›®æ ‡é¢œè‰²é¢„ä¹˜ (1 - æºçš„é€æ˜åº¦)ã€‚ä½¿ç”¨ {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}
+     * @~chinese »ìºÏÔ´ÑÕÉ«Ô¤³ËÍ¸Ã÷¶È£¬»ìºÏÄ¿±êÑÕÉ«Ô¤³Ë (1 - Ô´µÄÍ¸Ã÷¶È)¡£Ê¹ÓÃ {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}
      */
     static const BlendFunc ALPHA_NON_PREMULTIPLIED;
     /** @~english Enables Additive blending. Uses {GL_SRC_ALPHA, GL_ONE}
-     * @~chinese çº¿æ€§åŠ äº®æ··åˆã€‚ä½¿ç”¨ {GL_SRC_ALPHA, GL_ONE}
+     * @~chinese ÏßĞÔ¼ÓÁÁ»ìºÏ¡£Ê¹ÓÃ {GL_SRC_ALPHA, GL_ONE}
      */
     static const BlendFunc ADDITIVE;
 
@@ -524,10 +524,10 @@ struct CC_DLL BlendFunc
  * @~english Vertical text alignment type.
  *
  * @~chinese
- * æ–‡æœ¬å‚ç›´å¯¹é½çš„ç±»å‹ã€‚
+ * ÎÄ±¾´¹Ö±¶ÔÆëµÄÀàĞÍ¡£
  * 
  * @note @~english If any of these enums are edited and/or reordered, update Texture2D.m.
- * @~chinese å¦‚æœè¿™äº›æšä¸¾å€¼è¢«ç¼–è¾‘æˆ–è€…é‡æ–°æ’åºï¼Œéœ€è¦æ›´æ–° Texture2D.mã€‚
+ * @~chinese Èç¹ûÕâĞ©Ã¶¾ÙÖµ±»±à¼­»òÕßÖØĞÂÅÅĞò£¬ĞèÒª¸üĞÂ Texture2D.m¡£
  */
 enum class CC_DLL TextVAlignment
 {
@@ -541,10 +541,10 @@ enum class CC_DLL TextVAlignment
  * Horizontal text alignment type.
  *
  * @~chinese
- * æ–‡æœ¬æ°´å¹³å¯¹é½çš„ç±»å‹ã€‚
+ * ÎÄ±¾Ë®Æ½¶ÔÆëµÄÀàĞÍ¡£
  * 
  * @note @~english If any of these enums are edited and/or reordered, update Texture2D.m.
- * @~chinese å¦‚æœè¿™äº›æšä¸¾å€¼è¢«ç¼–è¾‘æˆ–è€…é‡æ–°æ’åºï¼Œéœ€è¦æ›´æ–° Texture2D.mã€‚
+ * @~chinese Èç¹ûÕâĞ©Ã¶¾ÙÖµ±»±à¼­»òÕßÖØĞÂÅÅĞò£¬ĞèÒª¸üĞÂ Texture2D.m¡£
  */
 enum class CC_DLL TextHAlignment
 {
@@ -572,24 +572,24 @@ enum class GlyphCollection {
  * @~english
  * Texture coordinates for a quad.
  * @~chinese 
- * çŸ©å½¢å››ä¸ªé¡¶ç‚¹çš„çº¹ç†åæ ‡
+ * ¾ØĞÎËÄ¸ö¶¥µãµÄÎÆÀí×ø±ê
  */
 struct CC_DLL T2F_Quad
 {
     /**@~english bottom left
-     * @~chinese å·¦ä¸‹è§’
+     * @~chinese ×óÏÂ½Ç
      */
     Tex2F    bl;
     /**@~english bottom right
-     * @~chinese å³ä¸‹è§’
+     * @~chinese ÓÒÏÂ½Ç
      */
     Tex2F    br;
     /** @~english top left
-     * @~chinese å·¦ä¸Šè§’
+     * @~chinese ×óÉÏ½Ç
      */
     Tex2F    tl;
     /**@~english top right
-     * @~chinese å³ä¸Šè§’
+     * @~chinese ÓÒÉÏ½Ç
      */
     Tex2F    tr;
 };
@@ -598,7 +598,7 @@ struct CC_DLL T2F_Quad
  * @~english
  * Struct that holds the size in pixels, texture coordinates and delays for animated ParticleSystemQuad.
  * @~chinese
- * ä¸º `ParticleSystemQuad` çš„åŠ¨ç”»è€Œè®¾è®¡çš„åŒ…å«åƒç´ çš„å¤§å°ï¼Œçº¹ç†åæ ‡ï¼Œå»¶è¿Ÿæ—¶é—´çš„ç»“æ„ä½“ã€‚
+ * Îª `ParticleSystemQuad` µÄ¶¯»­¶øÉè¼ÆµÄ°üº¬ÏñËØµÄ´óĞ¡£¬ÎÆÀí×ø±ê£¬ÑÓ³ÙÊ±¼äµÄ½á¹¹Ìå¡£
  */
 struct CC_DLL AnimationFrameData
 {
@@ -610,12 +610,12 @@ struct CC_DLL AnimationFrameData
 /**@~english
  * types used for defining fonts properties (i.e. font name, size, stroke or shadow)
  * @~chinese 
- * ç”¨äºå®šä¹‰å­—ä½“å±æ€§çš„ç»“æ„ä½“(å¦‚å­—ä½“åç§°ã€å¤§å°ã€æè¾¹æˆ–é˜´å½±)
+ * ÓÃÓÚ¶¨Òå×ÖÌåÊôĞÔµÄ½á¹¹Ìå(Èç×ÖÌåÃû³Æ¡¢´óĞ¡¡¢Ãè±ß»òÒõÓ°)
  */
 
 /** @struct FontShadow
  * @~english Shadow attributes.
- * @~chinese å­—ä½“çš„é˜´å½±æ•ˆæœå±æ€§ã€‚
+ * @~chinese ×ÖÌåµÄÒõÓ°Ğ§¹ûÊôĞÔ¡£
  */
 struct CC_DLL FontShadow
 {
@@ -629,26 +629,26 @@ public:
     {}
 
     /**@~english true if shadow enabled
-     * @~chinese å¦‚æœé˜´å½±æ•ˆæœå¼€å¯ï¼Œåˆ™ä¸º trueï¼›å¦åˆ™ä¸º falseã€‚
+     * @~chinese Èç¹ûÒõÓ°Ğ§¹û¿ªÆô£¬ÔòÎª true£»·ñÔòÎª false¡£
      */
     bool   _shadowEnabled;
     /**@~english shadow x and y offset
-     * @~chinese é˜´å½±çš„ x ä¸ y è½´åç§»é‡ã€‚
+     * @~chinese ÒõÓ°µÄ x Óë y ÖáÆ«ÒÆÁ¿¡£
      */
 	Size   _shadowOffset;
     /**@~english shadow blurriness
-     * @~chinese é˜´å½±çš„æ¨¡ç³Šåº¦ã€‚
+     * @~chinese ÒõÓ°µÄÄ£ºı¶È¡£
      */
 	float  _shadowBlur;
     /**@~english shadow opacity
-     * @~chinese é˜´å½±çš„ä¸é€æ˜åº¦ã€‚
+     * @~chinese ÒõÓ°µÄ²»Í¸Ã÷¶È¡£
      */
 	float  _shadowOpacity;
 };
 
 /** @struct FontStroke
  * @~english Stroke attributes.
- * @~chinese å­—ä½“çš„æè¾¹æ•ˆæœå±æ€§ã€‚
+ * @~chinese ×ÖÌåµÄÃè±ßĞ§¹ûÊôĞÔ¡£
  */
 struct CC_DLL FontStroke
 {
@@ -663,19 +663,19 @@ public:
     {}
 
     /**@~english true if stroke enabled
-     * @~chinese å¦‚æœå¯ç”¨äº†æè¾¹æ•ˆæœï¼Œåˆ™ä¸º trueï¼›å¦åˆ™ä¸º falseã€‚
+     * @~chinese Èç¹ûÆôÓÃÁËÃè±ßĞ§¹û£¬ÔòÎª true£»·ñÔòÎª false¡£
      */
     bool      _strokeEnabled;
     /**@~english stroke color
-     * @~chinese æè¾¹çš„é¢œè‰²ã€‚
+     * @~chinese Ãè±ßµÄÑÕÉ«¡£
      */
 	Color3B   _strokeColor;
     /**@~english stroke alpha
-     * @~chinese æè¾¹çš„é€æ˜åº¦ã€‚
+     * @~chinese Ãè±ßµÄÍ¸Ã÷¶È¡£
      */
     GLubyte   _strokeAlpha;
     /**@~english stroke size
-     * @~chinese æè¾¹çš„å¤§å°ã€‚
+     * @~chinese Ãè±ßµÄ´óĞ¡¡£
      */
     float     _strokeSize;
 
@@ -683,7 +683,7 @@ public:
 
 /** @struct FontDefinition
  * @~english Font attributes.
- * @~chinese å®šä¹‰å­—ä½“åŸºæœ¬å±æ€§çš„ç»“æ„ä½“ã€‚
+ * @~chinese ¶¨Òå×ÖÌå»ù±¾ÊôĞÔµÄ½á¹¹Ìå¡£
  */
 struct CC_DLL FontDefinition
 {
@@ -702,39 +702,39 @@ public:
     {}
 
     /**@~english font name
-     * @~chinese å­—ä½“åç§°ã€‚
+     * @~chinese ×ÖÌåÃû³Æ¡£
      */
     std::string           _fontName;
     /**@~english font size
-     * @~chinese å­—ä½“å¤§å°ã€‚
+     * @~chinese ×ÖÌå´óĞ¡¡£
      */
     int                   _fontSize;
     /**@~english horizontal alignment
-     * @~chinese æ°´å¹³å¯¹é½ç±»å‹ã€‚
+     * @~chinese Ë®Æ½¶ÔÆëÀàĞÍ¡£
      */
     TextHAlignment        _alignment;
     /**@~english vertical alignment
-     * @~chinese å‚ç›´å¯¹é½ç±»å‹ã€‚
+     * @~chinese ´¹Ö±¶ÔÆëÀàĞÍ¡£
      */
     TextVAlignment _vertAlignment;
     /**@~english renering box
-     * @~chinese æ¸²æŸ“ç›’å¤§å°ã€‚
+     * @~chinese äÖÈ¾ºĞ´óĞ¡¡£
      */
     Size                  _dimensions;
     /**@~english font color
-     * @~chinese å­—ä½“é¢œè‰²ã€‚
+     * @~chinese ×ÖÌåÑÕÉ«¡£
      */
     Color3B               _fontFillColor;
     /**@~english font alpha
-     * @~chinese å­—ä½“é€æ˜åº¦ã€‚
+     * @~chinese ×ÖÌåÍ¸Ã÷¶È¡£
      */
     GLubyte               _fontAlpha;
     /**@~english font shadow
-     * @~chinese å­—ä½“é˜´å½±æ•ˆæœã€‚
+     * @~chinese ×ÖÌåÒõÓ°Ğ§¹û¡£
      */
     FontShadow            _shadow;
     /**@~english font stroke
-     * @~chinese å­—ä½“æè¾¹æ•ˆæœã€‚
+     * @~chinese ×ÖÌåÃè±ßĞ§¹û¡£
      */
     FontStroke            _stroke;
 
@@ -743,7 +743,7 @@ public:
 /**
  * @brief @~english Possible LabelEffect used by Label.
  *
- * @~chinese å¯èƒ½è¢« `Label` ä½¿ç”¨åˆ°çš„å­—ä½“æ•ˆæœç±»å‹ã€‚
+ * @~chinese ¿ÉÄÜ±» `Label` Ê¹ÓÃµ½µÄ×ÖÌåĞ§¹ûÀàĞÍ¡£
  * 
  */
 enum class LabelEffect {
@@ -756,7 +756,7 @@ enum class LabelEffect {
 
 /** @struct Acceleration
  * @~english The device accelerometer reports values for each axis in units of g-force.
- * @~chinese è®¾å¤‡é‡åŠ›ä¼ æ„Ÿå™¨ä¼ é€’çš„å„ä¸ªè½´çš„æ•°æ®ã€‚
+ * @~chinese Éè±¸ÖØÁ¦´«¸ĞÆ÷´«µİµÄ¸÷¸öÖáµÄÊı¾İ¡£
  */
 class CC_DLL Acceleration
     : public Ref

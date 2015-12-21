@@ -50,168 +50,168 @@ CC_DLL extern const ValueMapIntKey ValueMapIntKeyNull;
 
 /*
  * @~english This class is provide as a wrapper of basic types, such as int and bool.
- * @~chinese è¿™ä¸ªç±»æä¾›åŸºæœ¬ç±»å‹çš„wrapper,å¦‚intå’Œboolã€‚
+ * @~chinese Õâ¸öÀàÌá¹©»ù±¾ÀàĞÍµÄwrapper,ÈçintºÍbool¡£
  */
 class CC_DLL Value
 {
 public:
 
-    /** @~english A predefined Value that has not value.  @~chinese ä¸€ä¸ªé¢„å®šä¹‰çš„ç©ºå€¼ã€‚*/
+    /** @~english A predefined Value that has not value.  @~chinese Ò»¸öÔ¤¶¨ÒåµÄ¿ÕÖµ¡£*/
     static const Value Null;
 
-    /** @~english Default constructor.  @~chinese é»˜è®¤æ„é€ å‡½æ•°ã€‚*/
+    /** @~english Default constructor.  @~chinese Ä¬ÈÏ¹¹Ôìº¯Êı¡£*/
     Value();
     
-    /** @~english Create a Value by an unsigned char value.  @~chinese ç”±ä¸€ä¸ªæ— ç¬¦å·å­—ç¬¦å€¼åˆ›å»ºä¸€ä¸ªValueã€‚*/
+    /** @~english Create a Value by an unsigned char value.  @~chinese ÓÉÒ»¸öÎŞ·ûºÅ×Ö·ûÖµ´´½¨Ò»¸öValue¡£*/
     explicit Value(unsigned char v);
     
-    /** @~english Create a Value by an integer value.  @~chinese ç”±ä¸€ä¸ªæ•´æ•°åˆ›å»ºä¸€ä¸ªValueã€‚*/
+    /** @~english Create a Value by an integer value.  @~chinese ÓÉÒ»¸öÕûÊı´´½¨Ò»¸öValue¡£*/
     explicit Value(int v);
     
-    /** @~english Create a Value by a float value.  @~chinese ç”±ä¸€ä¸ªæµ®ç‚¹æ•°åˆ›å»ºä¸€ä¸ªValueã€‚*/
+    /** @~english Create a Value by a float value.  @~chinese ÓÉÒ»¸ö¸¡µãÊı´´½¨Ò»¸öValue¡£*/
     explicit Value(float v);
     
-    /** @~english Create a Value by a double value.  @~chinese ä»ä¸€ä¸ªåŒç²¾åº¦æ•°å­—åˆ›å»ºä¸€ä¸ªValueã€‚*/
+    /** @~english Create a Value by a double value.  @~chinese ´ÓÒ»¸öË«¾«¶ÈÊı×Ö´´½¨Ò»¸öValue¡£*/
     explicit Value(double v);
     
-    /** @~english Create a Value by a bool value.  @~chinese ä»ä¸€ä¸ªboolå€¼åˆ›å»ºä¸€ä¸ªValueã€‚*/
+    /** @~english Create a Value by a bool value.  @~chinese ´ÓÒ»¸öboolÖµ´´½¨Ò»¸öValue¡£*/
     explicit Value(bool v);
     
-    /** @~english Create a Value by a char pointer. It will copy the chars internally.  @~chinese ä»ä¸€ä¸ªå­—ç¬¦æŒ‡é’ˆåˆ›å»ºä¸€ä¸ªValueã€‚å®ƒå°†å¤åˆ¶å­—ç¬¦å†…éƒ¨ã€‚*/
+    /** @~english Create a Value by a char pointer. It will copy the chars internally.  @~chinese ´ÓÒ»¸ö×Ö·ûÖ¸Õë´´½¨Ò»¸öValue¡£Ëü½«¸´ÖÆ×Ö·ûÄÚ²¿¡£*/
     explicit Value(const char* v);
     
-    /** @~english Create a Value by a string.  @~chinese ä»ä¸€ä¸ªå­—ç¬¦ä¸²åˆ›å»ºä¸€ä¸ªValueã€‚*/
+    /** @~english Create a Value by a string.  @~chinese ´ÓÒ»¸ö×Ö·û´®´´½¨Ò»¸öValue¡£*/
     explicit Value(const std::string& v);
     
-    /** @~english Create a Value by a ValueVector object.  @~chinese ä½¿ç”¨ValueVectorå¯¹è±¡åˆ›å»ºä¸€ä¸ªValueã€‚*/
+    /** @~english Create a Value by a ValueVector object.  @~chinese Ê¹ÓÃValueVector¶ÔÏó´´½¨Ò»¸öValue¡£*/
     explicit Value(const ValueVector& v);
 
-    /** @~english Create a Value by a ValueVector object. It will use std::move internally.  @~chinese ä½¿ç”¨ValueVectorå¯¹è±¡åˆ›å»ºä¸€ä¸ªValueã€‚å®ƒå°†ä½¿ç”¨std::moveç§»åŠ¨åˆ°å†…éƒ¨ã€‚*/
+    /** @~english Create a Value by a ValueVector object. It will use std::move internally.  @~chinese Ê¹ÓÃValueVector¶ÔÏó´´½¨Ò»¸öValue¡£Ëü½«Ê¹ÓÃstd::moveÒÆ¶¯µ½ÄÚ²¿¡£*/
     explicit Value(ValueVector&& v);
     
-    /** @~english Create a Value by a ValueMap object.  @~chinese ä½¿ç”¨ValueMapå¯¹è±¡åˆ›å»ºä¸€ä¸ªValueã€‚*/
+    /** @~english Create a Value by a ValueMap object.  @~chinese Ê¹ÓÃValueMap¶ÔÏó´´½¨Ò»¸öValue¡£*/
     explicit Value(const ValueMap& v);
 
-    /** @~english Create a Value by a ValueMap object. It will use std::move internally.  @~chinese ä½¿ç”¨ValueMapå¯¹è±¡åˆ›å»ºä¸€ä¸ªValueã€‚å®ƒå°†ä½¿ç”¨std::moveç§»åŠ¨åˆ°å†…éƒ¨ã€‚*/
+    /** @~english Create a Value by a ValueMap object. It will use std::move internally.  @~chinese Ê¹ÓÃValueMap¶ÔÏó´´½¨Ò»¸öValue¡£Ëü½«Ê¹ÓÃstd::moveÒÆ¶¯µ½ÄÚ²¿¡£*/
     explicit Value(ValueMap&& v);
     
-    /** @~english Create a Value by a ValueMapIntKey object.  @~chinese ä½¿ç”¨ValueMapIntKeyåˆ›å»ºä¸€ä¸ªValueå¯¹è±¡ã€‚*/
+    /** @~english Create a Value by a ValueMapIntKey object.  @~chinese Ê¹ÓÃValueMapIntKey´´½¨Ò»¸öValue¶ÔÏó¡£*/
     explicit Value(const ValueMapIntKey& v);
 
-    /** @~english Create a Value by a ValueMapIntKey object. It will use std::move internally.  @~chinese ä½¿ç”¨ValueMapIntKeyåˆ›å»ºä¸€ä¸ªValueå¯¹è±¡ã€‚å®ƒå°†ä½¿ç”¨std::moveç§»åŠ¨åˆ°å†…éƒ¨ã€‚*/
+    /** @~english Create a Value by a ValueMapIntKey object. It will use std::move internally.  @~chinese Ê¹ÓÃValueMapIntKey´´½¨Ò»¸öValue¶ÔÏó¡£Ëü½«Ê¹ÓÃstd::moveÒÆ¶¯µ½ÄÚ²¿¡£*/
     explicit Value(ValueMapIntKey&& v);
 
-    /** @~english Create a Value by another Value object.  @~chinese ä½¿ç”¨ä¸€ä¸ªValueåˆ›å»ºå¦ä¸€ä¸ªValueã€‚*/
+    /** @~english Create a Value by another Value object.  @~chinese Ê¹ÓÃÒ»¸öValue´´½¨ÁíÒ»¸öValue¡£*/
     Value(const Value& other);
 
-    /** @~english Create a Value by a Value object. It will use std::move internally.  @~chinese ä½¿ç”¨ä¸€ä¸ªValueåˆ›å»ºå¦ä¸€ä¸ªValueã€‚å®ƒå°†ä½¿ç”¨std::moveç§»åŠ¨åˆ°å†…éƒ¨ã€‚*/
+    /** @~english Create a Value by a Value object. It will use std::move internally.  @~chinese Ê¹ÓÃÒ»¸öValue´´½¨ÁíÒ»¸öValue¡£Ëü½«Ê¹ÓÃstd::moveÒÆ¶¯µ½ÄÚ²¿¡£*/
     Value(Value&& other);
     
-    /** @~english Destructor.  @~chinese ææ„å‡½æ•°ã€‚*/
+    /** @~english Destructor.  @~chinese Îö¹¹º¯Êı¡£*/
     ~Value();
 
-    /** @~english Assignment operator, assign from Value to Value.  @~chinese èµ‹å€¼è¿ç®—ç¬¦,ä»Valueèµ‹å€¼åˆ°Valueã€‚*/
+    /** @~english Assignment operator, assign from Value to Value.  @~chinese ¸³ÖµÔËËã·û,´ÓValue¸³Öµµ½Value¡£*/
     Value& operator= (const Value& other);
 
-    /** @~english Assignment operator, assign from Value to Value. It will use std::move internally.  @~chinese èµ‹å€¼è¿ç®—ç¬¦,ä»Valueèµ‹å€¼åˆ°Valueã€‚å®ƒå°†ä½¿ç”¨std::moveç§»åŠ¨åˆ°å†…éƒ¨ã€‚*/
+    /** @~english Assignment operator, assign from Value to Value. It will use std::move internally.  @~chinese ¸³ÖµÔËËã·û,´ÓValue¸³Öµµ½Value¡£Ëü½«Ê¹ÓÃstd::moveÒÆ¶¯µ½ÄÚ²¿¡£*/
     Value& operator= (Value&& other);
 
-    /** @~english Assignment operator, assign from unsigned char to Value.  @~chinese èµ‹å€¼è¿ç®—ç¬¦ï¼Œä»æ— ç¬¦å·å­—ç¬¦èµ‹å€¼ã€‚*/
+    /** @~english Assignment operator, assign from unsigned char to Value.  @~chinese ¸³ÖµÔËËã·û£¬´ÓÎŞ·ûºÅ×Ö·û¸³Öµ¡£*/
     Value& operator= (unsigned char v);
 
-    /** @~english Assignment operator, assign from integer to Value.  @~chinese èµ‹å€¼è¿ç®—ç¬¦,ä»æ•´æ•°èµ‹å€¼ã€‚*/
+    /** @~english Assignment operator, assign from integer to Value.  @~chinese ¸³ÖµÔËËã·û,´ÓÕûÊı¸³Öµ¡£*/
     Value& operator= (int v);
 
-    /** @~english Assignment operator, assign from float to Value.  @~chinese èµ‹å€¼è¿ç®—ç¬¦,ä»æµ®ç‚¹æ•°èµ‹å€¼ã€‚*/
+    /** @~english Assignment operator, assign from float to Value.  @~chinese ¸³ÖµÔËËã·û,´Ó¸¡µãÊı¸³Öµ¡£*/
     Value& operator= (float v);
 
-    /** @~english Assignment operator, assign from double to Value.  @~chinese èµ‹å€¼è¿ç®—ç¬¦,ä»åŒç²¾åº¦æ•°å­—èµ‹å€¼ã€‚*/
+    /** @~english Assignment operator, assign from double to Value.  @~chinese ¸³ÖµÔËËã·û,´ÓË«¾«¶ÈÊı×Ö¸³Öµ¡£*/
     Value& operator= (double v);
 
-    /** @~english Assignment operator, assign from bool to Value.  @~chinese èµ‹å€¼è¿ç®—ç¬¦,ä»å¸ƒå°”å€¼èµ‹å€¼ã€‚*/
+    /** @~english Assignment operator, assign from bool to Value.  @~chinese ¸³ÖµÔËËã·û,´Ó²¼¶ûÖµ¸³Öµ¡£*/
     Value& operator= (bool v);
     
-    /** Assignment operator, assign from char* to Value. @~chinese é‡è½½èµ‹å€¼è¿ç®—ç¬¦,ä»å­—ç¬¦ä¸²æŒ‡é’ˆèµ‹å€¼ã€‚*/
+    /** Assignment operator, assign from char* to Value. @~chinese ÖØÔØ¸³ÖµÔËËã·û,´Ó×Ö·û´®Ö¸Õë¸³Öµ¡£*/
     Value& operator= (const char* v);
 
-    /** @~english Assignment operator, assign from string to Value.  @~chinese èµ‹å€¼è¿ç®—ç¬¦,ä»å­—ç¬¦ä¸²èµ‹å€¼ã€‚*/
+    /** @~english Assignment operator, assign from string to Value.  @~chinese ¸³ÖµÔËËã·û,´Ó×Ö·û´®¸³Öµ¡£*/
     Value& operator= (const std::string& v);
 
-    /** @~english Assignment operator, assign from ValueVector to Value.  @~chinese èµ‹å€¼è¿ç®—ç¬¦,ä»ValueVectorèµ‹å€¼ã€‚*/
+    /** @~english Assignment operator, assign from ValueVector to Value.  @~chinese ¸³ÖµÔËËã·û,´ÓValueVector¸³Öµ¡£*/
     Value& operator= (const ValueVector& v);
 
-    /** @~english Assignment operator, assign from ValueVector to Value.  @~chinese èµ‹å€¼è¿ç®—ç¬¦,ä»ValueVectorèµ‹å€¼ã€‚*/
+    /** @~english Assignment operator, assign from ValueVector to Value.  @~chinese ¸³ÖµÔËËã·û,´ÓValueVector¸³Öµ¡£*/
     Value& operator= (ValueVector&& v);
 
-    /** @~english Assignment operator, assign from ValueMap to Value.  @~chinese èµ‹å€¼è¿ç®—ç¬¦,ä»ValueMapèµ‹å€¼ã€‚*/
+    /** @~english Assignment operator, assign from ValueMap to Value.  @~chinese ¸³ÖµÔËËã·û,´ÓValueMap¸³Öµ¡£*/
     Value& operator= (const ValueMap& v);
 
-    /** @~english Assignment operator, assign from ValueMap to Value. It will use std::move internally.  @~chinese èµ‹å€¼è¿ç®—ç¬¦,ä»ValueMapåˆ†é…å€¼ã€‚å®ƒå°†ä½¿ç”¨std::moveç§»åŠ¨åˆ°å†…éƒ¨ã€‚*/
+    /** @~english Assignment operator, assign from ValueMap to Value. It will use std::move internally.  @~chinese ¸³ÖµÔËËã·û,´ÓValueMap·ÖÅäÖµ¡£Ëü½«Ê¹ÓÃstd::moveÒÆ¶¯µ½ÄÚ²¿¡£*/
     Value& operator= (ValueMap&& v);
 
-    /** @~english Assignment operator, assign from ValueMapIntKey to Value.  @~chineseèµ‹å€¼è¿ç®—ç¬¦,ä»ValueMapIntKeyèµ‹å€¼ã€‚*/
+    /** @~english Assignment operator, assign from ValueMapIntKey to Value.  @~chinese¸³ÖµÔËËã·û,´ÓValueMapIntKey¸³Öµ¡£*/
     Value& operator= (const ValueMapIntKey& v);
 
-    /** @~english Assignment operator, assign from ValueMapIntKey to Value. It will use std::move internally.  @~chineseèµ‹å€¼è¿ç®—ç¬¦,ä»ValueMapIntKeyèµ‹å€¼ã€‚å®ƒå°†ä½¿ç”¨std::moveç§»åŠ¨åˆ°å†…éƒ¨ã€‚*/
+    /** @~english Assignment operator, assign from ValueMapIntKey to Value. It will use std::move internally.  @~chinese¸³ÖµÔËËã·û,´ÓValueMapIntKey¸³Öµ¡£Ëü½«Ê¹ÓÃstd::moveÒÆ¶¯µ½ÄÚ²¿¡£*/
     Value& operator= (ValueMapIntKey&& v);
 
-    /** @~english != operator overloading  @~chinese != æ“ä½œç¬¦é‡è½½*/
+    /** @~english != operator overloading  @~chinese != ²Ù×÷·ûÖØÔØ*/
     bool operator!= (const Value& v);
 
-    /** @~english != operator overloading  @~chinese != æ“ä½œç¬¦é‡è½½*/
+    /** @~english != operator overloading  @~chinese != ²Ù×÷·ûÖØÔØ*/
     bool operator!= (const Value& v) const;
 
-    /** @~english == operator overloading  @~chinese == æ“ä½œç¬¦é‡è½½*/
+    /** @~english == operator overloading  @~chinese == ²Ù×÷·ûÖØÔØ*/
     bool operator== (const Value& v);
 
-    /** @~english == operator overloading  @~chinese == æ“ä½œç¬¦é‡è½½*/
+    /** @~english == operator overloading  @~chinese == ²Ù×÷·ûÖØÔØ*/
     bool operator== (const Value& v) const;
 
-    /** @~english Gets as a byte value. Will convert to unsigned char if possible, or will trigger assert error.  @~chinese è·å–ä¸€ä¸ªå­—èŠ‚å€¼ã€‚å¦‚æœå¯èƒ½å°†è½¬æ¢ä¸ºæ— ç¬¦å·å­—ç¬¦,å¦åˆ™å¼•å‘æ–­è¨€é”™è¯¯ã€‚*/
+    /** @~english Gets as a byte value. Will convert to unsigned char if possible, or will trigger assert error.  @~chinese »ñÈ¡Ò»¸ö×Ö½ÚÖµ¡£Èç¹û¿ÉÄÜ½«×ª»»ÎªÎŞ·ûºÅ×Ö·û,·ñÔòÒı·¢¶ÏÑÔ´íÎó¡£*/
     unsigned char asByte() const;
 
-    /** @~english Gets as an integer value. Will convert to integer if possible, or will trigger assert error.  @~chinese è·å–ä¸€ä¸ªæ•´æ•°å€¼ã€‚å¦‚æœå¯èƒ½å°†è½¬æ¢ä¸ºæ•´æ•°,å¦åˆ™å¼•å‘æ–­è¨€é”™è¯¯ã€‚*/
+    /** @~english Gets as an integer value. Will convert to integer if possible, or will trigger assert error.  @~chinese »ñÈ¡Ò»¸öÕûÊıÖµ¡£Èç¹û¿ÉÄÜ½«×ª»»ÎªÕûÊı,·ñÔòÒı·¢¶ÏÑÔ´íÎó¡£*/
     int asInt() const;
 
-    /** @~english Gets as a float value. Will convert to float if possible, or will trigger assert error.  @~chinese è·å–ä¸€ä¸ªæµ®ç‚¹æ•°ã€‚å¦‚æœå¯èƒ½å°†è½¬æ¢ä¸ºæµ®åŠ¨,å¦åˆ™å¼•å‘æ–­è¨€é”™è¯¯ã€‚*/
+    /** @~english Gets as a float value. Will convert to float if possible, or will trigger assert error.  @~chinese »ñÈ¡Ò»¸ö¸¡µãÊı¡£Èç¹û¿ÉÄÜ½«×ª»»Îª¸¡¶¯,·ñÔòÒı·¢¶ÏÑÔ´íÎó¡£*/
     float asFloat() const;
 
-    /** @~english Gets as a double value. Will convert to double if possible, or will trigger assert error.  @~chinese è·å–ä¸€ä¸ªåŒç²¾åº¦æ•°ã€‚å¦‚æœå¯èƒ½å°†è½¬æ¢ä¸ºåŒ,å¦åˆ™å¼•å‘æ–­è¨€é”™è¯¯ã€‚*/
+    /** @~english Gets as a double value. Will convert to double if possible, or will trigger assert error.  @~chinese »ñÈ¡Ò»¸öË«¾«¶ÈÊı¡£Èç¹û¿ÉÄÜ½«×ª»»ÎªË«,·ñÔòÒı·¢¶ÏÑÔ´íÎó¡£*/
     double asDouble() const;
 
-    /** @~english Gets as a bool value. Will convert to bool if possible, or will trigger assert error.  @~chinese è·å–ä¸€ä¸ªboolå€¼ã€‚å¦‚æœå¯èƒ½å°†è½¬æ¢ä¸ºbool,å¦åˆ™å¼•å‘æ–­è¨€é”™è¯¯ã€‚*/
+    /** @~english Gets as a bool value. Will convert to bool if possible, or will trigger assert error.  @~chinese »ñÈ¡Ò»¸öboolÖµ¡£Èç¹û¿ÉÄÜ½«×ª»»Îªbool,·ñÔòÒı·¢¶ÏÑÔ´íÎó¡£*/
     bool asBool() const;
 
-    /** @~english Gets as a string value. Will convert to string if possible, or will trigger assert error.  @~chinese è·å–ä¸€ä¸ªå­—ç¬¦ä¸²ã€‚å¦‚æœå¯èƒ½å°†è½¬æ¢ä¸ºå­—ç¬¦ä¸²,å¦åˆ™å¼•å‘æ–­è¨€é”™è¯¯ã€‚*/
+    /** @~english Gets as a string value. Will convert to string if possible, or will trigger assert error.  @~chinese »ñÈ¡Ò»¸ö×Ö·û´®¡£Èç¹û¿ÉÄÜ½«×ª»»Îª×Ö·û´®,·ñÔòÒı·¢¶ÏÑÔ´íÎó¡£*/
     std::string asString() const;
 
-    /** @~english Gets as a ValueVector reference. Will convert to ValueVector if possible, or will trigger assert error.  @~chinese è·å–ValueVectorã€‚å¦‚æœå¯èƒ½å°†è½¬æ¢ä¸ºValueVector,å¦åˆ™å¼•å‘æ–­è¨€é”™è¯¯ã€‚*/
+    /** @~english Gets as a ValueVector reference. Will convert to ValueVector if possible, or will trigger assert error.  @~chinese »ñÈ¡ValueVector¡£Èç¹û¿ÉÄÜ½«×ª»»ÎªValueVector,·ñÔòÒı·¢¶ÏÑÔ´íÎó¡£*/
     ValueVector& asValueVector();
 
-    /** @~english Gets as a const ValueVector reference. Will convert to ValueVector if possible, or will trigger assert error.  @~chinese è·å–ä¸€ä¸ªå¸¸é‡ValueVectorã€‚å¦‚æœå¯èƒ½å°†è½¬æ¢ä¸ºValueVector,å¦åˆ™å¼•å‘æ–­è¨€é”™è¯¯ã€‚*/
+    /** @~english Gets as a const ValueVector reference. Will convert to ValueVector if possible, or will trigger assert error.  @~chinese »ñÈ¡Ò»¸ö³£Á¿ValueVector¡£Èç¹û¿ÉÄÜ½«×ª»»ÎªValueVector,·ñÔòÒı·¢¶ÏÑÔ´íÎó¡£*/
     const ValueVector& asValueVector() const;
 
-    /** @~english Gets as a ValueMap reference. Will convert to ValueMap if possible, or will trigger assert error.  @~chinese è·å–ValueMapã€‚å¦‚æœå¯èƒ½å°†è½¬æ¢ä¸ºValueMap,å¦åˆ™å¼•å‘æ–­è¨€é”™è¯¯ã€‚*/
+    /** @~english Gets as a ValueMap reference. Will convert to ValueMap if possible, or will trigger assert error.  @~chinese »ñÈ¡ValueMap¡£Èç¹û¿ÉÄÜ½«×ª»»ÎªValueMap,·ñÔòÒı·¢¶ÏÑÔ´íÎó¡£*/
     ValueMap& asValueMap();
 
-    /** @~english Gets as a const ValueMap reference. Will convert to ValueMap if possible, or will trigger assert error.  @~chinese è·å–ä¸€ä¸ªä¸€ä¸ªå¸¸é‡ValueMapã€‚å¦‚æœå¯èƒ½å°†è½¬æ¢ä¸ºValueMap,å¦åˆ™å¼•å‘æ–­è¨€é”™è¯¯ã€‚*/
+    /** @~english Gets as a const ValueMap reference. Will convert to ValueMap if possible, or will trigger assert error.  @~chinese »ñÈ¡Ò»¸öÒ»¸ö³£Á¿ValueMap¡£Èç¹û¿ÉÄÜ½«×ª»»ÎªValueMap,·ñÔòÒı·¢¶ÏÑÔ´íÎó¡£*/
     const ValueMap& asValueMap() const;
 
-    /** @~english Gets as a ValueMapIntKey reference. Will convert to ValueMapIntKey if possible, or will trigger assert error.  @~chinese è·å–ValueMapIntKeyã€‚å¦‚æœå¯èƒ½å°†è½¬æ¢ä¸ºValueMapIntKey,å¦åˆ™å¼•å‘æ–­è¨€é”™è¯¯ã€‚*/
+    /** @~english Gets as a ValueMapIntKey reference. Will convert to ValueMapIntKey if possible, or will trigger assert error.  @~chinese »ñÈ¡ValueMapIntKey¡£Èç¹û¿ÉÄÜ½«×ª»»ÎªValueMapIntKey,·ñÔòÒı·¢¶ÏÑÔ´íÎó¡£*/
     ValueMapIntKey& asIntKeyMap();
 
-    /** @~english Gets as a const ValueMapIntKey reference. Will convert to ValueMapIntKey if possible, or will trigger assert error.  @~chinese è·å–ä¸€ä¸ªå¸¸é‡ValueMapIntKeyã€‚å¦‚æœå¯èƒ½å°†è½¬æ¢ä¸ºValueMapIntKey,å¦åˆ™å¼•å‘æ–­è¨€é”™è¯¯ã€‚*/
+    /** @~english Gets as a const ValueMapIntKey reference. Will convert to ValueMapIntKey if possible, or will trigger assert error.  @~chinese »ñÈ¡Ò»¸ö³£Á¿ValueMapIntKey¡£Èç¹û¿ÉÄÜ½«×ª»»ÎªValueMapIntKey,·ñÔòÒı·¢¶ÏÑÔ´íÎó¡£*/
     const ValueMapIntKey& asIntKeyMap() const;
 
     /**
      * @~english Checks if the Value is null.
-     * @~chinese  æ£€æŸ¥å€¼æ˜¯å¦ä¸ºnullã€‚
+     * @~chinese  ¼ì²éÖµÊÇ·ñÎªnull¡£
      * @return @~english True if the Value is null, false if not.
-     * @~chinese å¦‚æœè¯¥å€¼ä¸ºnullåˆ™ä¸ºtrue,å¦åˆ™ä¸ºfalseã€‚
+     * @~chinese Èç¹û¸ÃÖµÎªnullÔòÎªtrue,·ñÔòÎªfalse¡£
      */
     inline bool isNull() const { return _type == Type::NONE; }
 
-    /** @~english Value type wrapped by Value.  @~chinese Valueçš„ç±»å‹ã€‚*/
+    /** @~english Value type wrapped by Value.  @~chinese ValueµÄÀàĞÍ¡£*/
     enum class Type
     {
         /// no value is wrapped, an empty Value
@@ -236,10 +236,10 @@ public:
         INT_KEY_MAP
     };
 
-    /** @~english Gets the value type.  @~chinese è·å–Valueçš„ç±»å‹ã€‚*/
+    /** @~english Gets the value type.  @~chinese »ñÈ¡ValueµÄÀàĞÍ¡£*/
     inline Type getType() const { return _type; }
 
-    /** @~english Gets the description of the class.  @~chinese è·å–Valueç±»çš„æè¿°ã€‚*/
+    /** @~english Gets the description of the class.  @~chinese »ñÈ¡ValueÀàµÄÃèÊö¡£*/
     std::string getDescription() const;
 
 private:

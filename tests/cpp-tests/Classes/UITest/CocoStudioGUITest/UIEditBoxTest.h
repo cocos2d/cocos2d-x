@@ -47,6 +47,7 @@ protected:
     cocos2d::ui::EditBox* _editName;
     cocos2d::ui::EditBox* _editPassword;
     cocos2d::ui::EditBox* _editEmail;
+    cocos2d::Node* _editEmailParent;
 };
 
 #endif /* defined(__cocos2d_tests__UIEditBoxTest__) */

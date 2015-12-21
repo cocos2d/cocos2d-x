@@ -5,13 +5,6 @@
 -- @parent_module ccui
 
 --------------------------------
---  init a bitmap font atlas with an initial string and the FNT file 
--- @function [parent=#TextBMFont] setFntFile 
--- @param self
--- @param #string fileName
--- @return TextBMFont#TextBMFont self (return value: ccui.TextBMFont)
-        
---------------------------------
 -- Gets the string length of the label.<br>
 -- Note: This length will be larger than the raw string length,<br>
 -- if you want to get the raw string length, you should call this->getString().size() instead<br>
@@ -22,6 +15,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#TextBMFont] getString 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
 -- @function [parent=#TextBMFont] setString 
 -- @param self
 -- @param #string value
@@ -29,9 +28,16 @@
         
 --------------------------------
 -- 
--- @function [parent=#TextBMFont] getString 
+-- @function [parent=#TextBMFont] getRenderFile 
 -- @param self
--- @return string#string ret (return value: string)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
+        
+--------------------------------
+--  init a bitmap font atlas with an initial string and the FNT file 
+-- @function [parent=#TextBMFont] setFntFile 
+-- @param self
+-- @param #string fileName
+-- @return TextBMFont#TextBMFont self (return value: ccui.TextBMFont)
         
 --------------------------------
 -- @overload self, string, string         

@@ -1,4 +1,4 @@
-ï»¿/****************************************************************************
+/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -44,8 +44,8 @@ class Skeleton3D;
 /**
  * @class MeshSkin
  * @brief @~english MeshSkin, A class maintain a collection of bones that affect Mesh vertex.
- * And it is responsible for computing matrix palletes that used by skin mesh rendering.
- * @~chinese MeshSkinï¼šåŒ…å«äº†ä¸€ç³»åˆ—è’™çš®éª¨éª¼çš„é›†åˆï¼Œè´Ÿè´£ä¸ºéª¨éª¼è’™çš®æ¸²æŸ“åˆ›å»ºéª¨éª¼çŸ©é˜µç»„
+ * And it is responsible for computing matrix palettes that used by skin mesh rendering.
+ * @~chinese MeshSkin£º°üº¬ÁËÒ»ÏµÁĞÃÉÆ¤¹Ç÷ÀµÄ¼¯ºÏ£¬¸ºÔğÎª¹Ç÷ÀÃÉÆ¤äÖÈ¾´´½¨¹Ç÷À¾ØÕó×é
  * @js NA
  * @lua NA
  */
@@ -62,79 +62,79 @@ public:
     
     /**
      * @~english Create a new meshskin if do not want to share meshskin
-     * @~chinese é€šè¿‡éå…±äº«æ–¹å¼åˆ›å»ºä¸€ä¸ªMeshSkinå¯¹è±¡
+     * @~chinese Í¨¹ı·Ç¹²Ïí·½Ê½´´½¨Ò»¸öMeshSkin¶ÔÏó
      * @param skeleton @~english The specified skeleton.
-     * @~chinese æŒ‡å®šçš„Skeleton3Då¯¹è±¡
+     * @~chinese Ö¸¶¨µÄSkeleton3D¶ÔÏó
      * @param boneNames @~english The bones names list.
-     * @~chinese éª¨éª¼åç§°æ•°ç»„
+     * @~chinese ¹Ç÷ÀÃû³ÆÊı×é
      * @param invBindPose @~english The bones' inverse binding pose.
-     * @~chinese éª¨éª¼çš„ç»‘å®šå§¿æ€é€†çŸ©é˜µ
+     * @~chinese ¹Ç÷ÀµÄ°ó¶¨×ËÌ¬Äæ¾ØÕó
      * @return @~english The meshSkin object.
-     * @~chinese è¢«åˆ›å»ºçš„MeshSkinå¯¹è±¡
+     * @~chinese ±»´´½¨µÄMeshSkin¶ÔÏó
      */
     static MeshSkin* create(Skeleton3D* skeleton, const std::vector<std::string>& boneNames, const std::vector<Mat4>& invBindPose);
     
     /**
      * @~english Get total bone count. (skin bone + node bone)
-     * @~chinese è·å–æ‰€æœ‰éª¨éª¼æ•°ï¼ŒåŒ…å«è’™çš®éª¨éª¼ä¸èŠ‚ç‚¹éª¨éª¼
+     * @~chinese »ñÈ¡ËùÓĞ¹Ç÷ÀÊı£¬°üº¬ÃÉÆ¤¹Ç÷ÀÓë½Úµã¹Ç÷À
      * @return @~english The bone count.
-     * @~chinese éª¨éª¼æ•°
+     * @~chinese ¹Ç÷ÀÊı
      */
     ssize_t getBoneCount() const;
     
     /**
      * @~english Get the specified bone by index.
-     * @~chinese é€šè¿‡ç´¢å¼•è·å–éª¨éª¼
+     * @~chinese Í¨¹ıË÷Òı»ñÈ¡¹Ç÷À
      * @param index @~english The index.
-     * @~chinese éª¨éª¼ç´¢å¼•
+     * @~chinese ¹Ç÷ÀË÷Òı
      * @return @~english The Bone3D object.
-     * @~chinese Bone3D å¯¹è±¡
+     * @~chinese Bone3D ¶ÔÏó
      */
     Bone3D* getBoneByIndex(unsigned int index) const;
 
     /**
     * @~english Get the specified bone by name.
-    * @~chinese é€šè¿‡éª¨éª¼åç§°è·å–éª¨éª¼
+    * @~chinese Í¨¹ı¹Ç÷ÀÃû³Æ»ñÈ¡¹Ç÷À
     * @param id @~english The name.
-    * @~chinese éª¨éª¼åç§°
+    * @~chinese ¹Ç÷ÀÃû³Æ
     * @return @~english The Bone3D object.
-    * @~chinese Bone3Då¯¹è±¡
+    * @~chinese Bone3D¶ÔÏó
     */
     Bone3D* getBoneByName(const std::string& id) const;
     
     /**
      * @~english Get the specified bone index.
-     * @~chinese è·å–æŒ‡å®šçš„éª¨éª¼ç´¢å¼•
+     * @~chinese »ñÈ¡Ö¸¶¨µÄ¹Ç÷ÀË÷Òı
      * @param bone @~english The specified Bone3D object.
-     * @~chinese æŒ‡å®šçš„Bone3Då¯¹è±¡
+     * @~chinese Ö¸¶¨µÄBone3D¶ÔÏó
      * @return @~english The index.
-     * @~chinese æŒ‡å®šçš„Bone3Då¯¹è±¡çš„ç´¢å¼•
+     * @~chinese Ö¸¶¨µÄBone3D¶ÔÏóµÄË÷Òı
      */
     int getBoneIndex(Bone3D* bone) const;
     
     /**
      * @~english Compute matrix palette used by gpu skin. The matrix palette is array of matrix which contatin
-     * @~chinese åˆ›å»ºä¸€ä¸ªçŸ©é˜µç»„(matrix palette)ç”¨ä»¥è¿›è¡ŒGPUè’™çš®
+     * @~chinese ´´½¨Ò»¸ö¾ØÕó×é(matrix palette)ÓÃÒÔ½øĞĞGPUÃÉÆ¤
      * @return @~english The matrix palette.
-     * @~chinese éª¨éª¼å˜æ¢çŸ©é˜µç»„
+     * @~chinese ¹Ç÷À±ä»»¾ØÕó×é
      */
     Vec4* getMatrixPalette();
     
     /**
      * @~english Get the MatrixPalette size.
-     * @~chinese è·å–éª¨éª¼å˜æ¢çŸ©é˜µç»„çš„å¤§å°
+     * @~chinese »ñÈ¡¹Ç÷À±ä»»¾ØÕó×éµÄ´óĞ¡
      * @return @~english The size.
-     * @~chinese å¤§å°
+     * @~chinese ´óĞ¡
      * @note @~english Equal to the getSkinBoneCount() * 3
-     * @~chinese ä¸getSkinBoneCount() * 3ç»“æœç›¸ç­‰
+     * @~chinese ÓëgetSkinBoneCount() * 3½á¹ûÏàµÈ
      */
     ssize_t getMatrixPaletteSize() const;
     
     /**
      * @~english Get the root bone of the skin.
-     * @~chinese è·å–æ ¹éª¨éª¼
+     * @~chinese »ñÈ¡¸ù¹Ç÷À
      * @return @~english The Bone3D object. 
-     * @~chinese Bone3Då¯¹è±¡
+     * @~chinese Bone3D¶ÔÏó
      */
     Bone3D* getRootBone() const;
     
@@ -146,25 +146,25 @@ CC_CONSTRUCTOR_ACCESS:
     
     /**
      * @~english Remove all bones.
-     * @~chinese åˆ é™¤æ‰€æœ‰éª¨éª¼
+     * @~chinese É¾³ıËùÓĞ¹Ç÷À
      */
     void removeAllBones();
     
     /**
      * @~english Add the specified skin bone
-     * @~chinese æ·»åŠ ä¸€ä¸ªç»™å®šçš„è’™çš®éª¨éª¼
+     * @~chinese Ìí¼ÓÒ»¸ö¸ø¶¨µÄÃÉÆ¤¹Ç÷À
      * @param bone @~english The Bone3D object.
-     * @~chinese Bone3Då¯¹è±¡
+     * @~chinese Bone3D¶ÔÏó
      */
     void addSkinBone(Bone3D* bone);
     
     /** 
      * @~english Get inverse bind pose by the specified Bone3D object.
-     * @~chinese è·å–æŒ‡å®šéª¨éª¼çš„ç»‘å®šå§¿æ€çš„é€†çŸ©é˜µ
+     * @~chinese »ñÈ¡Ö¸¶¨¹Ç÷ÀµÄ°ó¶¨×ËÌ¬µÄÄæ¾ØÕó
      * @param bone @~english The Bone3d object.
-     * @~chinese Bone3D å¯¹è±¡
+     * @~chinese Bone3D ¶ÔÏó
      * @return @~english The inverse bind pose matrix.
-     * @~chinese ç»‘å®šå§¿æ€é€†çŸ©é˜µ
+     * @~chinese °ó¶¨×ËÌ¬Äæ¾ØÕó
      */
     const Mat4& getInvBindPose(const Bone3D* bone);
     

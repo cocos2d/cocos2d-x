@@ -35,13 +35,13 @@
 NS_CC_MATH_BEGIN
 
 /** @~english Clamp a value between from and to.
- * @~chinese åŸºäºç»™å®šçš„é™åˆ¶èŒƒå›´è®¡ç®—ç»™å®šæ•°å€¼çš„é™åˆ¶å€¼ï¼Œæœ€ç»ˆæ•°å€¼å°†åœ¨[min_inclusive, max_inclusive]åŒºé—´å†…ã€‚
+ * @~chinese »ùÓÚ¸ø¶¨µÄÏŞÖÆ·¶Î§¼ÆËã¸ø¶¨ÊıÖµµÄÏŞÖÆÖµ£¬×îÖÕÊıÖµ½«ÔÚ[min_inclusive, max_inclusive]Çø¼äÄÚ¡£
  *
- * @param value @~english A value to clamp. @~chinese è¦é™åˆ¶çš„å€¼ã€‚
- * @param min_inclusive @~english The specified minimum range. @~chinese é™åˆ¶èŒƒå›´ä¸‹é™ã€‚
- * @param max_inclusive @~english The specified maximum range. @~chinese é™åˆ¶èŒƒå›´ä¸Šé™ã€‚
+ * @param value @~english A value to clamp. @~chinese ÒªÏŞÖÆµÄÖµ¡£
+ * @param min_inclusive @~english The specified minimum range. @~chinese ÏŞÖÆ·¶Î§ÏÂÏŞ¡£
+ * @param max_inclusive @~english The specified maximum range. @~chinese ÏŞÖÆ·¶Î§ÉÏÏŞ¡£
  *
- * @return @~english The clamped value for the value parameter.@~chinese å‚æ•°valueçš„é™åˆ¶å€¼ã€‚
+ * @return @~english The clamped value for the value parameter.@~chinese ²ÎÊıvalueµÄÏŞÖÆÖµ¡£
  */
 
 inline float clampf(float value, float min_inclusive, float max_inclusive)
@@ -55,142 +55,142 @@ inline float clampf(float value, float min_inclusive, float max_inclusive)
 class Mat4;
 
 /** @~english Defines a 2-element floating point vector.
- * @~chinese å®šä¹‰äº†ä¸€ä¸ªäºŒç»´æµ®ç‚¹å‘é‡ã€‚
+ * @~chinese ¶¨ÒåÁËÒ»¸ö¶şÎ¬¸¡µãÏòÁ¿¡£
  */
 class CC_DLL Vec2
 {
 public:
 
     /** @~english The x coordinate.
-     * @~chinese xåæ ‡ã€‚
+     * @~chinese x×ø±ê¡£
      */
     float x;
 
     /** @~english The y coordinate.
-     * @~chinese yåæ ‡ã€‚
+     * @~chinese y×ø±ê¡£
      */
     float y;
 
     /** 
      * @~english Constructs a new vector initialized to all zeros.
-     * @~chinese æ„é€ ä¸€ä¸ªæ–°çš„å‘é‡ï¼Œæ‰€æœ‰æˆå‘˜å±æ€§åˆå§‹åŒ–ä¸ºé›¶ã€‚
+     * @~chinese ¹¹ÔìÒ»¸öĞÂµÄÏòÁ¿£¬ËùÓĞ³ÉÔ±ÊôĞÔ³õÊ¼»¯ÎªÁã¡£
      */
     Vec2();
 
     /** 
      * @~english Constructs a new vector initialized to the specified values.
-     * @~chinese æ„é€ ä¸€ä¸ªæ–°çš„å‘é‡ï¼Œå¹¶åˆå§‹åŒ–æˆå‘˜å±æ€§ä¸ºæŒ‡å®šçš„å€¼ã€‚
+     * @~chinese ¹¹ÔìÒ»¸öĞÂµÄÏòÁ¿£¬²¢³õÊ¼»¯³ÉÔ±ÊôĞÔÎªÖ¸¶¨µÄÖµ¡£
      * 
-     * @param xx @~english The x coordinate. @~chinese xåæ ‡ã€‚
-     * @param yy @~english The y coordinate. @~chinese yåæ ‡ã€‚
+     * @param xx @~english The x coordinate. @~chinese x×ø±ê¡£
+     * @param yy @~english The y coordinate. @~chinese y×ø±ê¡£
      */
     Vec2(float xx, float yy);
 
     /**
      * @~english Constructs a new vector from the values in the specified array.
-     * @~chinese ç”¨ç»™å®šæ•°ç»„ä¸­çš„å€¼æ„é€ ä¸€ä¸ªæ–°çš„å‘é‡ã€‚
+     * @~chinese ÓÃ¸ø¶¨Êı×éÖĞµÄÖµ¹¹ÔìÒ»¸öĞÂµÄÏòÁ¿¡£
      * 
      * @param array @~english An array containing the elements of the vector in the order x, y.
-     * @~chinese ä¸€ä¸ªä¾æ¬¡åŒ…å«xï¼Œyåˆ†é‡çš„æ•°ç»„ã€‚
+     * @~chinese Ò»¸öÒÀ´Î°üº¬x£¬y·ÖÁ¿µÄÊı×é¡£
      */
     Vec2(const float* array);
 
     /**
      * @~english Constructs a vector that describes the direction between the specified points.
-     * @~chinese æ„é€ ä¸€ä¸ªç‚¹p1æŒ‡å‘ç‚¹p2çš„å‘é‡ã€‚
+     * @~chinese ¹¹ÔìÒ»¸öµãp1Ö¸Ïòµãp2µÄÏòÁ¿¡£
      * 
-     * @param p1 @~english The first point. @~chinese ç¬¬ä¸€ç‚¹ã€‚
-     * @param p2 @~english The second point. @~chinese ç¬¬äºŒç‚¹ã€‚
+     * @param p1 @~english The first point. @~chinese µÚÒ»µã¡£
+     * @param p2 @~english The second point. @~chinese µÚ¶şµã¡£
      */
     Vec2(const Vec2& p1, const Vec2& p2);
 
     /**
      * @~english Constructs a new vector that is a copy of the specified vector.
-     * @~chinese æ‹·è´æ„é€ å‡½æ•°ã€‚
+     * @~chinese ¿½±´¹¹Ôìº¯Êı¡£
      * 
-     * @param copy @~english The vector to copy. @~chinese è¢«æ‹·è´çš„å‘é‡ã€‚
+     * @param copy @~english The vector to copy. @~chinese ±»¿½±´µÄÏòÁ¿¡£
      */
     Vec2(const Vec2& copy);
 
-    /** @~english Destructor. @~chinese ææ„å‡½æ•°ã€‚*/
+    /** @~english Destructor. @~chinese Îö¹¹º¯Êı¡£*/
     ~Vec2();
 
     /** 
      * @~english Indicates whether this vector contains all zeros.
-     * @~chinese å‘é‡çš„æ‰€æœ‰åˆ†é‡å€¼æ˜¯å¦å‡ä¸º0.0fã€‚
+     * @~chinese ÏòÁ¿µÄËùÓĞ·ÖÁ¿ÖµÊÇ·ñ¾ùÎª0.0f¡£
      * 
      * @return @~english true if this vector contains all zeros, false otherwise.
-     * @~chinese å¦‚æœå‘é‡çš„æ‰€æœ‰åˆ†é‡å€¼éƒ½ä¸º0.0fåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹ûÏòÁ¿µÄËùÓĞ·ÖÁ¿Öµ¶¼Îª0.0fÔò·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     inline bool isZero() const;
 
     /**
      * @~english Indicates whether this vector contains all ones.
-     * @~chinese å‘é‡çš„æ‰€æœ‰åˆ†é‡å€¼æ˜¯å¦å‡ä¸º1.0fã€‚
+     * @~chinese ÏòÁ¿µÄËùÓĞ·ÖÁ¿ÖµÊÇ·ñ¾ùÎª1.0f¡£
      * 
      * @return @~english true if this vector contains all ones, false otherwise.
-     * @~chinese å¦‚æœå‘é‡çš„æ‰€æœ‰åˆ†é‡å€¼å‡ä¸º1.0fï¼Œåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹ûÏòÁ¿µÄËùÓĞ·ÖÁ¿Öµ¾ùÎª1.0f£¬Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     inline bool isOne() const;
 
     /**
      * @~english Returns the angle (in radians) between the specified vectors.
-     * @~chinese è¿”å›ç»™å®šçš„ä¸¤ä¸ªå‘é‡ä¹‹é—´çš„è§’åº¦(å¼§åº¦)ã€‚
+     * @~chinese ·µ»Ø¸ø¶¨µÄÁ½¸öÏòÁ¿Ö®¼äµÄ½Ç¶È(»¡¶È)¡£
      * 
-     * @param v1 @~english The first vector. @~chinese ç¬¬ä¸€ä¸ªå‘é‡ã€‚
-     * @param v2 @~english The second vector. @~chinese ç¬¬äºŒä¸ªå‘é‡ã€‚
+     * @param v1 @~english The first vector. @~chinese µÚÒ»¸öÏòÁ¿¡£
+     * @param v2 @~english The second vector. @~chinese µÚ¶ş¸öÏòÁ¿¡£
      *
      * @return @~english The angle between the two vectors (in radians).
-     * @~chinese ä¸¤ä¸ªå‘é‡ä¹‹é—´çš„è§’åº¦(å¼§åº¦)ã€‚
+     * @~chinese Á½¸öÏòÁ¿Ö®¼äµÄ½Ç¶È(»¡¶È)¡£
      */
     static float angle(const Vec2& v1, const Vec2& v2);
 
     /**
      * @~english Adds the elements of the specified vector to this one.
-     * @~chinese å°†æŒ‡å®šå‘é‡çš„å€¼æ·»åŠ ç»™è¿™ä¸ªå‘é‡ã€‚
+     * @~chinese ½«Ö¸¶¨ÏòÁ¿µÄÖµÌí¼Ó¸øÕâ¸öÏòÁ¿¡£
      * 
-     * @param v @~english The vector to add. @~chinese æ·»åŠ çš„å‘é‡ã€‚
+     * @param v @~english The vector to add. @~chinese Ìí¼ÓµÄÏòÁ¿¡£
      */
     inline void add(const Vec2& v);
 
     /**
      * @~english Adds the specified vectors and stores the result in dst.
-     * @~chinese å°†ç»™å®šå‘é‡v1å’Œå‘é‡v2ç›¸åŠ ï¼Œç»“æœä¿å­˜åˆ°å‘é‡dstã€‚ 
+     * @~chinese ½«¸ø¶¨ÏòÁ¿v1ºÍÏòÁ¿v2Ïà¼Ó£¬½á¹û±£´æµ½ÏòÁ¿dst¡£ 
      * 
-     * @param v1 @~english The first vector. @~chinese ç¬¬ä¸€ä¸ªå‘é‡ã€‚
-     * @param v2 @~english The second vector. @~chinese ç¬¬äºŒä¸ªå‘é‡ã€‚
-     * @param dst @~english A vector to store the result in. @~chinese ç”¨ä»¥ä¿å­˜ç»“æœçš„å‘é‡ã€‚
+     * @param v1 @~english The first vector. @~chinese µÚÒ»¸öÏòÁ¿¡£
+     * @param v2 @~english The second vector. @~chinese µÚ¶ş¸öÏòÁ¿¡£
+     * @param dst @~english A vector to store the result in. @~chinese ÓÃÒÔ±£´æ½á¹ûµÄÏòÁ¿¡£
      */
     static void add(const Vec2& v1, const Vec2& v2, Vec2* dst);
 
     /**
      * @~english Clamps this vector within the specified range.
-     * @~chinese å°†å‘é‡å€¼é™åˆ¶åœ¨æŒ‡å®šåŒºé—´å†…ã€‚
+     * @~chinese ½«ÏòÁ¿ÖµÏŞÖÆÔÚÖ¸¶¨Çø¼äÄÚ¡£
      * 
-     * @param min @~english The minimum value. @~chinese æœ€å°å€¼ã€‚ 
-     * @param max @~english The maximum value. @~chinese æœ€å¤§å€¼ã€‚ 
+     * @param min @~english The minimum value. @~chinese ×îĞ¡Öµ¡£ 
+     * @param max @~english The maximum value. @~chinese ×î´óÖµ¡£ 
      */
     void clamp(const Vec2& min, const Vec2& max);
 
     /**
      * @~english Clamps the specified vector within the specified range and returns it in dst.
-     * @~chinese å°†æŒ‡å®šå‘é‡vé™åˆ¶åœ¨[min,max]åŒºé—´å†…ï¼Œå¹¶ç”¨dstä¿å­˜ç»“æœã€‚
+     * @~chinese ½«Ö¸¶¨ÏòÁ¿vÏŞÖÆÔÚ[min,max]Çø¼äÄÚ£¬²¢ÓÃdst±£´æ½á¹û¡£
      * 
-     * @param v @~english The vector to clamp. @~chinese å°†è¢«é™å®šçš„å‘é‡ã€‚
-     * @param min @~english The minimum value. @~chinese æœ€å°å€¼ã€‚
-     * @param max @~english The maximum value. @~chinese æœ€å¤§å€¼ã€‚
-     * @param dst @~english A vector to store the result in. @~chinese ä¸€ä¸ªç”¨ä»¥ä¿å­˜ç»“æœçš„å‘é‡ã€‚
+     * @param v @~english The vector to clamp. @~chinese ½«±»ÏŞ¶¨µÄÏòÁ¿¡£
+     * @param min @~english The minimum value. @~chinese ×îĞ¡Öµ¡£
+     * @param max @~english The maximum value. @~chinese ×î´óÖµ¡£
+     * @param dst @~english A vector to store the result in. @~chinese Ò»¸öÓÃÒÔ±£´æ½á¹ûµÄÏòÁ¿¡£
      */
     static void clamp(const Vec2& v, const Vec2& min, const Vec2& max, Vec2* dst);
 
     /**
      * @~english Returns the distance between this point and v.
-     * @~chinese è¿”å›è¿™ä¸ªç‚¹ä¸ç›®æ ‡ç‚¹çš„è·ç¦»ã€‚
+     * @~chinese ·µ»ØÕâ¸öµãÓëÄ¿±êµãµÄ¾àÀë¡£
      * 
-     * @param v @~english The other point. @~chinese å¦ä¸€ä¸ªç‚¹ã€‚
+     * @param v @~english The other point. @~chinese ÁíÒ»¸öµã¡£
      * 
      * @return @~english The distance between this point and v.
-     * @~chinese è¿™ä¸ªç‚¹ä¸ç›®æ ‡ç‚¹vçš„è·ç¦»ã€‚
+     * @~chinese Õâ¸öµãÓëÄ¿±êµãvµÄ¾àÀë¡£
      * 
      * @see distanceSquared
      */
@@ -204,45 +204,45 @@ public:
      * distance between different points), it is advised to use
      * this method instead of distance.
      *
-     * @~chinese è¿”å›æœ¬è¿™ä¸ªç‚¹ä¸ç›®æ ‡ç‚¹vçš„è·ç¦»çš„å¹³æ–¹ã€‚
-     * å¦‚æœä¸éœ€è¦å¾—åˆ°ä¸¤ä¸ªç‚¹ä¹‹é—´çš„å‡†ç¡®è·ç¦»ï¼Œ ä¾‹å¦‚åªæ˜¯æ¯”è¾ƒä¸¤ç‚¹ä¹‹é—´çš„è·ç¦»å¤§å°çš„æ—¶å€™ï¼Œ 
-     * å»ºè®®ä½¿ç”¨è¿™ä¸ªå‡½æ•°æ¥ä»£æ›¿distanceå‡½æ•°ã€‚
+     * @~chinese ·µ»Ø±¾Õâ¸öµãÓëÄ¿±êµãvµÄ¾àÀëµÄÆ½·½¡£
+     * Èç¹û²»ĞèÒªµÃµ½Á½¸öµãÖ®¼äµÄ×¼È·¾àÀë£¬ ÀıÈçÖ»ÊÇ±È½ÏÁ½µãÖ®¼äµÄ¾àÀë´óĞ¡µÄÊ±ºò£¬ 
+     * ½¨ÒéÊ¹ÓÃÕâ¸öº¯ÊıÀ´´úÌædistanceº¯Êı¡£
      * 
-     * @param v @~english The other point. @~chinese å¦ä¸€ä¸ªç‚¹ã€‚
+     * @param v @~english The other point. @~chinese ÁíÒ»¸öµã¡£
      * 
      * @return @~english The squared distance between this point and v.
-     * @~chinese è¿™ä¸ªè¿™ä¸ªç‚¹ä¸ç›®æ ‡ç‚¹vçš„è·ç¦»çš„å¹³æ–¹ã€‚
+     * @~chinese Õâ¸öÕâ¸öµãÓëÄ¿±êµãvµÄ¾àÀëµÄÆ½·½¡£
      * @see distance
      */
     inline float distanceSquared(const Vec2& v) const;
 
     /** 
      * @~english Returns the dot product of this vector and the specified vector.
-     * @~chinese è¿”å›æœ¬å‘é‡ä¸æŒ‡å®šå‘é‡vçš„ç‚¹ç§¯
+     * @~chinese ·µ»Ø±¾ÏòÁ¿ÓëÖ¸¶¨ÏòÁ¿vµÄµã»ı
      * 
      * @param v @~english The vector to compute the dot product with.
-     * @~chinese ç”¨æ¥è®¡ç®—ç‚¹ç§¯çš„å¦ä¸€ä¸ªå‘é‡
+     * @~chinese ÓÃÀ´¼ÆËãµã»ıµÄÁíÒ»¸öÏòÁ¿
      * 
-     * @return @~english The dot product. @~chinese ç‚¹ç§¯ã€‚
+     * @return @~english The dot product. @~chinese µã»ı¡£
      */
     inline float dot(const Vec2& v) const;
 
     /**
      * @~english Returns the dot product between the specified vectors.
-     * @~chinese è¿”å›ä¸¤ä¸ªæŒ‡å®šå‘é‡çš„ç‚¹ç§¯ã€‚
+     * @~chinese ·µ»ØÁ½¸öÖ¸¶¨ÏòÁ¿µÄµã»ı¡£
      * 
-     * @param v1 @~english The first vector. @~chinese ç¬¬ä¸€ä¸ªå‘é‡ã€‚
-     * @param v2 @~english The second vector. @~chinese ç¬¬äºŒä¸ªå‘é‡ã€‚
+     * @param v1 @~english The first vector. @~chinese µÚÒ»¸öÏòÁ¿¡£
+     * @param v2 @~english The second vector. @~chinese µÚ¶ş¸öÏòÁ¿¡£
      * 
-     * @return @~english The dot product between the vectors. @~chinese å‘é‡çš„ç‚¹ç§¯ã€‚
+     * @return @~english The dot product between the vectors. @~chinese ÏòÁ¿µÄµã»ı¡£
      */
     static float dot(const Vec2& v1, const Vec2& v2);
 
     /**
      * @~english Computes the length of this vector.
-     * @~chinese è®¡ç®—è¿™ä¸ªå‘é‡çš„é•¿åº¦ã€‚
+     * @~chinese ¼ÆËãÕâ¸öÏòÁ¿µÄ³¤¶È¡£
      * 
-     * @return @~english The length of the vector. @~chinese è¿™ä¸ªå‘é‡çš„é•¿åº¦ã€‚
+     * @return @~english The length of the vector. @~chinese Õâ¸öÏòÁ¿µÄ³¤¶È¡£
      * @see lengthSquared
      */
     float length() const;
@@ -255,16 +255,16 @@ public:
      * different vectors), it is advised to use this method
      * instead of length.
      *
-     * @~chinese å½“ä¸éœ€è¦è·å–å‡†ç¡®çš„å‘é‡é•¿åº¦æ—¶ï¼Œ ä¾‹å¦‚åªæ˜¯ç®€å•æ¯”è¾ƒä¸åŒå‘é‡ä¹‹é—´çš„é•¿åº¦å¤§å°ï¼Œ 
-     * å¯ä»¥ä½¿ç”¨æœ¬æ–¹æ³•ä»£æ›¿lengthã€‚
+     * @~chinese µ±²»ĞèÒª»ñÈ¡×¼È·µÄÏòÁ¿³¤¶ÈÊ±£¬ ÀıÈçÖ»ÊÇ¼òµ¥±È½Ï²»Í¬ÏòÁ¿Ö®¼äµÄ³¤¶È´óĞ¡£¬ 
+     * ¿ÉÒÔÊ¹ÓÃ±¾·½·¨´úÌælength¡£
      * 
      * @return @~english The squared length of the vector.
-     * @~chinese å‘é‡çš„é•¿åº¦çš„å¹³æ–¹ã€‚
+     * @~chinese ÏòÁ¿µÄ³¤¶ÈµÄÆ½·½¡£
      * @see length
      */
     inline float lengthSquared() const;
 
-    /** @~english Negates this vector. @~chinese å‘é‡æ±‚è´Ÿã€‚*/
+    /** @~english Negates this vector. @~chinese ÏòÁ¿Çó¸º¡£*/
     inline void negate();
 
     /** @~english
@@ -277,19 +277,19 @@ public:
      * is zero, this method does nothing.
      * 
      * @~chinese 
-     * ä½¿è¿™ä¸ªå‘é‡å½’ä¸€åŒ–ä¸ºå•ä½é•¿åº¦ï¼ˆè°ƒç”¨è¿™ä¸ªæ–¹æ³•åå‘é‡é•¿åº¦ä¸º1.0fï¼‰ã€‚ 
-     * å¦‚æœå‘é‡å·²ç»æ˜¯å•ä½é•¿åº¦æˆ–è€…é•¿åº¦ä¸ºé›¶ï¼Œ è¿™ä¸ªæ–¹æ³•ä¸èµ·ä»»ä½•ä½œç”¨ã€‚
+     * Ê¹Õâ¸öÏòÁ¿¹éÒ»»¯Îªµ¥Î»³¤¶È£¨µ÷ÓÃÕâ¸ö·½·¨ºóÏòÁ¿³¤¶ÈÎª1.0f£©¡£ 
+     * Èç¹ûÏòÁ¿ÒÑ¾­ÊÇµ¥Î»³¤¶È»òÕß³¤¶ÈÎªÁã£¬ Õâ¸ö·½·¨²»ÆğÈÎºÎ×÷ÓÃ¡£
      */
     void normalize();
 
-    /** @~english Get the normalized vector. @~chinese å¾—åˆ°å½’ä¸€åŒ–å‘é‡ã€‚*/
+    /** @~english Get the normalized vector. @~chinese µÃµ½¹éÒ»»¯ÏòÁ¿¡£*/
     Vec2 getNormalized() const;
 
     /** 
      * @~english Scales all elements of this vector by the specified value.
-     * @~chinese ç”¨æŒ‡å®šçš„ç¼©æ”¾ç³»æ•°å¯¹å‘é‡çš„å„åˆ†é‡è¿›è¡Œç¼©æ”¾ã€‚
+     * @~chinese ÓÃÖ¸¶¨µÄËõ·ÅÏµÊı¶ÔÏòÁ¿µÄ¸÷·ÖÁ¿½øĞĞËõ·Å¡£
      * 
-     * @param scalar @~english The scalar value. @~chinese ç¼©æ”¾ç³»æ•°ã€‚
+     * @param scalar @~english The scalar value. @~chinese Ëõ·ÅÏµÊı¡£
      */
     inline void scale(float scalar);
 
@@ -297,59 +297,59 @@ public:
      * Scales each element of this vector by the matching component of scale.
      *
      * @~chinese 
-     * ç”¨scaleå‘é‡çš„xåˆ†é‡æ¥ç¼©æ”¾æœ¬å‘é‡çš„xåˆ†é‡ï¼Œç”¨scaleå‘é‡çš„yåˆ†é‡æ¥ç¼©æ”¾æœ¬å‘é‡çš„yåˆ†é‡ã€‚
+     * ÓÃscaleÏòÁ¿µÄx·ÖÁ¿À´Ëõ·Å±¾ÏòÁ¿µÄx·ÖÁ¿£¬ÓÃscaleÏòÁ¿µÄy·ÖÁ¿À´Ëõ·Å±¾ÏòÁ¿µÄy·ÖÁ¿¡£
      * 
-     * @param scale @~english The vector to scale by. @~chinese ç¼©æ”¾å› å­ã€‚ 
+     * @param scale @~english The vector to scale by. @~chinese Ëõ·ÅÒò×Ó¡£ 
      */
     inline void scale(const Vec2& scale);
 
     /** 
      * @~english Rotates this vector by angle (specified in radians) around the given point.
-     * @~chinese å‘é‡ç»•æŒ‡å®šç‚¹pointæ—‹è½¬angleåº¦ï¼Œå…¶ä¸­angleçš„å•ä½ä¸ºå¼§åº¦
+     * @~chinese ÏòÁ¿ÈÆÖ¸¶¨µãpointĞı×ªangle¶È£¬ÆäÖĞangleµÄµ¥Î»Îª»¡¶È
      * 
-     * @param point @~english The point to rotate around. @~chinese æ—‹è½¬é”šç‚¹ã€‚
-     * @param angle @~english The angle to rotate by (in radians). @~chinese æ—‹è½¬è§’åº¦(å•ä½ï¼šå¼§åº¦)ã€‚ 
+     * @param point @~english The point to rotate around. @~chinese Ğı×ªÃªµã¡£
+     * @param angle @~english The angle to rotate by (in radians). @~chinese Ğı×ª½Ç¶È(µ¥Î»£º»¡¶È)¡£ 
      */
     void rotate(const Vec2& point, float angle);
 
     /**
      * @~english Sets the elements of this vector to the specified values.
-     * @~chinese è®¾ç½®å‘é‡çš„åˆ†é‡å€¼ä¸ºæŒ‡å®šå€¼ã€‚
+     * @~chinese ÉèÖÃÏòÁ¿µÄ·ÖÁ¿ÖµÎªÖ¸¶¨Öµ¡£
      * 
-     * @param xx @~english The new x coordinate. @~chinese æ–°çš„xåæ ‡ã€‚ 
-     * @param yy @~english The new y coordinate. @~chinese æ–°çš„yåæ ‡ã€‚
+     * @param xx @~english The new x coordinate. @~chinese ĞÂµÄx×ø±ê¡£ 
+     * @param yy @~english The new y coordinate. @~chinese ĞÂµÄy×ø±ê¡£
      */
     inline void set(float xx, float yy);
 
     /**
      * @~english Sets the elements of this vector from the values in the specified array.
-     * @~chinese è®¾ç½®è¿™ä¸ªå‘é‡çš„åˆ†é‡ä¸ºæŒ‡å®šæ•°ç»„ä¸­çš„å€¼ã€‚
+     * @~chinese ÉèÖÃÕâ¸öÏòÁ¿µÄ·ÖÁ¿ÎªÖ¸¶¨Êı×éÖĞµÄÖµ¡£
      * 
      * @param array @~english An array containing the elements of the vector in the order x, y.
-     * @~chinese ä¸€ä¸ªä¾æ¬¡åŒ…å«xï¼Œyåˆ†é‡çš„æ•°ç»„ã€‚
+     * @~chinese Ò»¸öÒÀ´Î°üº¬x£¬y·ÖÁ¿µÄÊı×é¡£
      */
     void set(const float* array);
 
     /**
      * @~english Sets the elements of this vector to those in the specified vector.
-     * @~chinese å°†æŒ‡å®šå‘é‡çš„å„åˆ†é‡å€¼è®¾ç½®ç»™æœ¬å‘é‡ã€‚
+     * @~chinese ½«Ö¸¶¨ÏòÁ¿µÄ¸÷·ÖÁ¿ÖµÉèÖÃ¸ø±¾ÏòÁ¿¡£
      * 
-     * @param v @~english The vector to copy. @~chinese è¢«æ‹·è´çš„å‘é‡ã€‚
+     * @param v @~english The vector to copy. @~chinese ±»¿½±´µÄÏòÁ¿¡£
      */
     inline void set(const Vec2& v);
 
     /**
      * @~english Sets this vector to the directional vector between the specified points.
-     * @~chinese è®¾ç½®å‘é‡å€¼ä¸ºä¸¤ä¸ªæŒ‡å®šç‚¹ä¹‹é—´çš„å‘é‡ã€‚
+     * @~chinese ÉèÖÃÏòÁ¿ÖµÎªÁ½¸öÖ¸¶¨µãÖ®¼äµÄÏòÁ¿¡£
      * 
-     * @param p1 @~english The first point. @~chinese ç¬¬ä¸€ç‚¹ã€‚
-     * @param p2 @~english The second point. @~chinese ç¬¬äºŒç‚¹ã€‚
+     * @param p1 @~english The first point. @~chinese µÚÒ»µã¡£
+     * @param p2 @~english The second point. @~chinese µÚ¶şµã¡£
      */
     inline void set(const Vec2& p1, const Vec2& p2);
 
     /**
      * @~english Sets the elements of this vector to zero.
-     * @~chinese è¿™ä¸ªå‘é‡çš„å„åˆ†é‡è®¾ç½®ä¸ºé›¶ã€‚
+     * @~chinese Õâ¸öÏòÁ¿µÄ¸÷·ÖÁ¿ÉèÖÃÎªÁã¡£
      */
     inline void setZero();
 
@@ -357,10 +357,10 @@ public:
      * Subtracts this vector and the specified vector as (this - v)
      * and stores the result in this vector.
      *
-     * @~chinese å°†æœ¬å‘é‡çš„å„åˆ†é‡å‡æŒ‡å®šå‘é‡çš„å¯¹åº”åˆ†é‡å€¼å¹¶ä¿å­˜ã€‚
+     * @~chinese ½«±¾ÏòÁ¿µÄ¸÷·ÖÁ¿¼õÖ¸¶¨ÏòÁ¿µÄ¶ÔÓ¦·ÖÁ¿Öµ²¢±£´æ¡£
      * 
      * @param v @~english The vector to subtract.
-     * @~chinese ç”¨äºå‡å»çš„å‘é‡ã€‚
+     * @~chinese ÓÃÓÚ¼õÈ¥µÄÏòÁ¿¡£
      */
     inline void subtract(const Vec2& v);
 
@@ -369,14 +369,14 @@ public:
      * The resulting vector is computed as (v1 - v2).
      *
      * @~chinese 
-     * è®¡ç®—å‘é‡v1å‡å»v2ï¼ŒæŠŠç»“æœä¿å­˜åœ¨å‘é‡dst
+     * ¼ÆËãÏòÁ¿v1¼õÈ¥v2£¬°Ñ½á¹û±£´æÔÚÏòÁ¿dst
      * 
      * @param v1 @~english The first vector.
-     * @~chinese ç¬¬ä¸€ä¸ªå‘é‡ã€‚
+     * @~chinese µÚÒ»¸öÏòÁ¿¡£
      * @param v2 @~english The second vector.
-     * @~chinese ç¬¬äºŒä¸ªå‘é‡ã€‚
+     * @~chinese µÚ¶ş¸öÏòÁ¿¡£
      * @param dst @~english The destination vector.
-     * @~chinese å‘é‡å·®ã€‚
+     * @~chinese ÏòÁ¿²î¡£
      */
     static void subtract(const Vec2& v1, const Vec2& v2, Vec2* dst);
 
@@ -388,16 +388,16 @@ public:
      * to the given elapsed time.
      *
      * @~chinese 
-     * å¹³æ»‘æ›´æ–°å‘é‡çš„å½“å‰ä½ç½®ï¼ŒæŒ‡å‘ç›®æ ‡å‘é‡ã€‚
-     * responseTimeå®šä¹‰äº†å¹³æ»‘æ—¶é—´é‡ï¼Œè¯¥å€¼è¶Šå¤§ç»“æœè¶Šå¹³æ»‘ï¼Œ ç›¸åº”çš„å»¶è¿Ÿæ—¶é—´è¶Šé•¿ã€‚
-     * å¦‚æœå¸Œæœ›å‘é‡ç´§è·Ÿtargetå‘é‡ï¼Œ æä¾›ä¸€ä¸ªç›¸å¯¹elapsedTimeå°å¾ˆå¤šçš„responseTimeå€¼å³å¯ã€‚
+     * Æ½»¬¸üĞÂÏòÁ¿µÄµ±Ç°Î»ÖÃ£¬Ö¸ÏòÄ¿±êÏòÁ¿¡£
+     * responseTime¶¨ÒåÁËÆ½»¬Ê±¼äÁ¿£¬¸ÃÖµÔ½´ó½á¹ûÔ½Æ½»¬£¬ ÏàÓ¦µÄÑÓ³ÙÊ±¼äÔ½³¤¡£
+     * Èç¹ûÏ£ÍûÏòÁ¿½ô¸útargetÏòÁ¿£¬ Ìá¹©Ò»¸öÏà¶ÔelapsedTimeĞ¡ºÜ¶àµÄresponseTimeÖµ¼´¿É¡£
      * 
      * @param target @~english target value.
-     * @~chinese ç›®æ ‡å‘é‡ã€‚
+     * @~chinese Ä¿±êÏòÁ¿¡£
      * @param elapsedTime @~english elapsed time between calls.
-     * @~chinese æ¶ˆé€æ—¶é—´ã€‚
+     * @~chinese ÏûÊÅÊ±¼ä¡£
      * @param responseTime @~english response time (in the same units as elapsedTime).
-     * @~chinese å“åº”æ—¶é—´(æ—¶é—´å•ä½å’ŒelapsedTimeä¸€è‡´)ã€‚
+     * @~chinese ÏìÓ¦Ê±¼ä(Ê±¼äµ¥Î»ºÍelapsedTimeÒ»ÖÂ)¡£
      */
     inline void smooth(const Vec2& target, float elapsedTime, float responseTime);
 
@@ -405,133 +405,133 @@ public:
      * Calculates the sum of this vector with the given vector.
      * Note: this does not modify this vector.
      * 
-     * @~chinese å‘é‡åŠ æ³•ï¼Œæ±‚å‘é‡ä¸ç»™å®šå‘é‡vçš„å’Œ
-     * æ³¨æ„:è¿™å¹¶ä¸ä¿®æ”¹åŸå‘é‡çš„å€¼ã€‚
+     * @~chinese ÏòÁ¿¼Ó·¨£¬ÇóÏòÁ¿Óë¸ø¶¨ÏòÁ¿vµÄºÍ
+     * ×¢Òâ:Õâ²¢²»ĞŞ¸ÄÔ­ÏòÁ¿µÄÖµ¡£
      * 
-     * @param v @~english The vector to add. @~chinese è¢«åŠ çš„å‘é‡ã€‚
-     * @return @~english The vector sum. @~chinese å‘é‡å’Œã€‚ 
+     * @param v @~english The vector to add. @~chinese ±»¼ÓµÄÏòÁ¿¡£
+     * @return @~english The vector sum. @~chinese ÏòÁ¿ºÍ¡£ 
      */
     inline const Vec2 operator+(const Vec2& v) const;
 
     /**
      * @~english Adds the given vector to this vector.
-     * @~chinese å‘é‡åŠ æ³•ï¼Œæ±‚å‘é‡ä¸ç»™å®šå‘é‡vçš„å’Œï¼Œå°†ç»“æœä¿å­˜åœ¨è¯¥å‘é‡ä¸­å¹¶è¿”å›ã€‚
+     * @~chinese ÏòÁ¿¼Ó·¨£¬ÇóÏòÁ¿Óë¸ø¶¨ÏòÁ¿vµÄºÍ£¬½«½á¹û±£´æÔÚ¸ÃÏòÁ¿ÖĞ²¢·µ»Ø¡£
      * 
-     * @param v @~english The vector to add. @~chinese è¢«åŠ çš„å‘é‡ã€‚
+     * @param v @~english The vector to add. @~chinese ±»¼ÓµÄÏòÁ¿¡£
      * 
      * @return @~english This vector, after the addition occurs.
-     * @~chinese å‘é‡å’Œã€‚
+     * @~chinese ÏòÁ¿ºÍ¡£
      */
     inline Vec2& operator+=(const Vec2& v);
 
     /**
      * @~english Calculates the difference of this vector with the given vector.
      * Note: this does not modify this vector.
-     * @~chinese å‘é‡å‡æ³•ï¼Œæ±‚å‘é‡ä¸ç»™å®šå‘é‡vçš„å·®
-     * æ³¨æ„:è¿™å¹¶ä¸ä¿®æ”¹åŸå‘é‡çš„å€¼ã€‚
+     * @~chinese ÏòÁ¿¼õ·¨£¬ÇóÏòÁ¿Óë¸ø¶¨ÏòÁ¿vµÄ²î
+     * ×¢Òâ:Õâ²¢²»ĞŞ¸ÄÔ­ÏòÁ¿µÄÖµ¡£
      * 
-     * @param v @~english The vector to minus. @~chinese ç”¨äºå‡å»çš„å‘é‡ã€‚
+     * @param v @~english The vector to minus. @~chinese ÓÃÓÚ¼õÈ¥µÄÏòÁ¿¡£
      *
-     * @return @~english The vector difference. @~chinese ç»“æœå‘é‡ã€‚
+     * @return @~english The vector difference. @~chinese ½á¹ûÏòÁ¿¡£
      */
     inline const Vec2 operator-(const Vec2& v) const;
 
     /**
      * @~english Subtracts the given vector from this vector.
-     * @~chinese å‘é‡å‡æ³•ï¼Œæ±‚å‘é‡ä¸ç»™å®šå‘é‡vçš„å·®ï¼Œå°†ç»“æœä¿å­˜åœ¨è¯¥å‘é‡ä¸­å¹¶è¿”å›ã€‚
+     * @~chinese ÏòÁ¿¼õ·¨£¬ÇóÏòÁ¿Óë¸ø¶¨ÏòÁ¿vµÄ²î£¬½«½á¹û±£´æÔÚ¸ÃÏòÁ¿ÖĞ²¢·µ»Ø¡£
      * 
-     * @param v @~english The vector to subtract. @~chinese ç”¨äºå‡å»çš„å‘é‡ã€‚
+     * @param v @~english The vector to subtract. @~chinese ÓÃÓÚ¼õÈ¥µÄÏòÁ¿¡£
      * 
-     * @return @~english This vector, after the subtraction occurs. @~chinese ç»“æœå‘é‡ã€‚
+     * @return @~english This vector, after the subtraction occurs. @~chinese ½á¹ûÏòÁ¿¡£
      */
     inline Vec2& operator-=(const Vec2& v);
 
     /**@~english
      * Calculates the negation of this vector.
      * Note: this does not modify this vector.
-     * @~chinese æ±‚è´Ÿå‘é‡ã€‚
-     * æ³¨æ„:è¿™å¹¶ä¸ä¿®æ”¹åŸå‘é‡çš„å€¼ã€‚
+     * @~chinese Çó¸ºÏòÁ¿¡£
+     * ×¢Òâ:Õâ²¢²»ĞŞ¸ÄÔ­ÏòÁ¿µÄÖµ¡£
      * 
-     * @return @~english The negation of this vector. @~chinese è´Ÿå‘é‡ã€‚
+     * @return @~english The negation of this vector. @~chinese ¸ºÏòÁ¿¡£
      */
     inline const Vec2 operator-() const;
 
     /** @~english
      * Calculates the scalar product of this vector with the given value.
      * Note: this does not modify this vector.
-     * @~chinese æ±‚å‘é‡ä¸ç»™å®šç¼©æ”¾ç³»æ•°çš„ä¹˜ç§¯ã€‚
-     * æ³¨æ„:è¿™å¹¶ä¸ä¿®æ”¹åŸå‘é‡çš„å€¼ã€‚
+     * @~chinese ÇóÏòÁ¿Óë¸ø¶¨Ëõ·ÅÏµÊıµÄ³Ë»ı¡£
+     * ×¢Òâ:Õâ²¢²»ĞŞ¸ÄÔ­ÏòÁ¿µÄÖµ¡£
      * 
-     * @param s @~english The value to scale by. @~chinese ç¼©æ”¾ç³»æ•°ã€‚
+     * @param s @~english The value to scale by. @~chinese Ëõ·ÅÏµÊı¡£
      * 
-     * @return @~english The scaled vector. @~chinese ç¼©æ”¾åçš„å‘é‡ã€‚
+     * @return @~english The scaled vector. @~chinese Ëõ·ÅºóµÄÏòÁ¿¡£
      */
     inline const Vec2 operator*(float s) const;
 
     /**@~english
      * Scales this vector by the given value. 
-     * @~chinese  æ±‚å‘é‡ä¸ç»™å®šç¼©æ”¾ç³»æ•°çš„ä¹˜ç§¯ï¼Œå¹¶å°†ç»“æœä¿å­˜åˆ°æœ¬å‘é‡ã€‚
+     * @~chinese  ÇóÏòÁ¿Óë¸ø¶¨Ëõ·ÅÏµÊıµÄ³Ë»ı£¬²¢½«½á¹û±£´æµ½±¾ÏòÁ¿¡£
      * 
-     * @param s @~english The value to scale by. @~chinese ç¼©æ”¾ç³»æ•°ã€‚
+     * @param s @~english The value to scale by. @~chinese Ëõ·ÅÏµÊı¡£
      * 
-     * @return @~english This vector, after the scale occurs. @~chinese ç¼©æ”¾åçš„å‘é‡ã€‚
+     * @return @~english This vector, after the scale occurs. @~chinese Ëõ·ÅºóµÄÏòÁ¿¡£
      */
     inline Vec2& operator*=(float s);
     
     /**@~english
      * Returns the components of this vector divided by the given constant
      * Note: this does not modify this vector.
-     * @~chinese æ±‚å‘é‡ä¸ç»™å®šé™¤æ•°çš„å•†ã€‚
-     * æ³¨æ„:è¿™å¹¶ä¸ä¿®æ”¹åŸå‘é‡çš„å€¼ã€‚
+     * @~chinese ÇóÏòÁ¿Óë¸ø¶¨³ıÊıµÄÉÌ¡£
+     * ×¢Òâ:Õâ²¢²»ĞŞ¸ÄÔ­ÏòÁ¿µÄÖµ¡£
      * 
      * @param s @~english the constant to divide this vector with
-     * @~chinese å‘é‡è¦é™¤çš„å¸¸æ•°ã€‚
+     * @~chinese ÏòÁ¿Òª³ıµÄ³£Êı¡£
      * @return @~english the result is this vector divided by the given constant.
-     * @~chinese é™¤åçš„å‘é‡ç»“æœã€‚
+     * @~chinese ³ıºóµÄÏòÁ¿½á¹û¡£
      */
     inline const Vec2 operator/(float s) const;
 
     /**
      * @~english Determines if this vector is less than the given vector.
-     * @~chinese åˆ¤æ–­è¯¥å‘é‡æ˜¯å¦å°äºç»™å®šå‘é‡vã€‚
+     * @~chinese ÅĞ¶Ï¸ÃÏòÁ¿ÊÇ·ñĞ¡ÓÚ¸ø¶¨ÏòÁ¿v¡£
      * 
-     * @param v @~english The vector to compare against. @~chinese è¦æ¯”è¾ƒçš„å‘é‡ã€‚
+     * @param v @~english The vector to compare against. @~chinese Òª±È½ÏµÄÏòÁ¿¡£
      * 
      * @return @~english True if this vector is less than the given vector, false otherwise.
-     * @~chinese å¦‚æœæœ¬å‘é‡å°äºç»™å®šçš„å‘é‡è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹û±¾ÏòÁ¿Ğ¡ÓÚ¸ø¶¨µÄÏòÁ¿·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     inline bool operator<(const Vec2& v) const;
     
     /**
      * @~english Determines if this vector is greater than the given vector.
-     * @~chinese åˆ¤æ–­è¯¥å‘é‡æ˜¯å¦å¤§äºç»™å®šå‘é‡vã€‚
+     * @~chinese ÅĞ¶Ï¸ÃÏòÁ¿ÊÇ·ñ´óÓÚ¸ø¶¨ÏòÁ¿v¡£
      * 
-     * @param v @~english The vector to compare against. @~chinese è¦æ¯”è¾ƒçš„å‘é‡ã€‚
+     * @param v @~english The vector to compare against. @~chinese Òª±È½ÏµÄÏòÁ¿¡£
      * 
      * @return @~english True if this vector is greater than the given vector, false otherwise.
-     * @~chinese å¦‚æœæœ¬å‘é‡å¤§äºç»™å®šçš„å‘é‡è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹û±¾ÏòÁ¿´óÓÚ¸ø¶¨µÄÏòÁ¿·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     inline bool operator>(const Vec2& v) const;
 
     /**
      * @~english Determines if this vector is equal to the given vector.
-     * @~chinese åˆ¤æ–­è¯¥å‘é‡æ˜¯å¦ç­‰äºç»™å®šå‘é‡vã€‚
+     * @~chinese ÅĞ¶Ï¸ÃÏòÁ¿ÊÇ·ñµÈÓÚ¸ø¶¨ÏòÁ¿v¡£
      * 
-     * @param v @~english The vector to compare against. @~chinese è¦æ¯”è¾ƒçš„å‘é‡ã€‚
+     * @param v @~english The vector to compare against. @~chinese Òª±È½ÏµÄÏòÁ¿¡£
      * 
      * @return @~english True if this vector is equal to the given vector, false otherwise.
-     * @~chinese å¦‚æœæœ¬å‘é‡ç­‰äºç»™å®šçš„å‘é‡è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹û±¾ÏòÁ¿µÈÓÚ¸ø¶¨µÄÏòÁ¿·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     inline bool operator==(const Vec2& v) const;
 
     /**
      * @~english Determines if this vector is not equal to the given vector.
-     * @~chinese åˆ¤æ–­è¯¥å‘é‡æ˜¯å¦ä¸ç­‰äºç»™å®šå‘é‡vã€‚
+     * @~chinese ÅĞ¶Ï¸ÃÏòÁ¿ÊÇ·ñ²»µÈÓÚ¸ø¶¨ÏòÁ¿v¡£
      * 
-     * @param v @~english The vector to compare against. @~chinese è¦æ¯”è¾ƒçš„å‘é‡ã€‚
+     * @param v @~english The vector to compare against. @~chinese Òª±È½ÏµÄÏòÁ¿¡£
      * 
      * @return @~english True if this vector is not equal to the given vector, false otherwise.
-     * @~chinese å¦‚æœæœ¬å‘é‡ä¸ç­‰äºç»™å®šçš„å‘é‡è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹û±¾ÏòÁ¿²»µÈÓÚ¸ø¶¨µÄÏòÁ¿·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      */
     inline bool operator!=(const Vec2& v) const;
 
@@ -539,10 +539,10 @@ public:
 public:
     /**
      * @~english Sets the elements of this point to the specified values.
-     * @~chinese è®¾ç½®è¯¥ç‚¹çš„åæ ‡å€¼ä¸ºæŒ‡å®šå€¼ã€‚
+     * @~chinese ÉèÖÃ¸ÃµãµÄ×ø±êÖµÎªÖ¸¶¨Öµ¡£
      * 
-     * @param xx @~english The new x coordinate. @~chinese æ–°çš„xåæ ‡ã€‚
-     * @param yy @~english The new y coordinate. @~chinese æ–°çš„yåæ ‡ã€‚
+     * @param xx @~english The new x coordinate. @~chinese ĞÂµÄx×ø±ê¡£
+     * @param yy @~english The new y coordinate. @~chinese ĞÂµÄy×ø±ê¡£
      * @js NA
      * @lua NA
      */
@@ -550,18 +550,18 @@ public:
 
     /**
      * @~english Determines if this point is equal to the given point.
-     * @~chinese åˆ¤æ–­è¯¥ç‚¹æ˜¯å¦ç­‰äºç›®æ ‡ç‚¹ã€‚
+     * @~chinese ÅĞ¶Ï¸ÃµãÊÇ·ñµÈÓÚÄ¿±êµã¡£
      * 
-     * @param target @~english The point to compare against. @~chinese è¦æ¯”è¾ƒçš„å‘é‡ã€‚
+     * @param target @~english The point to compare against. @~chinese Òª±È½ÏµÄÏòÁ¿¡£
      * 
      * @return @~english True if this point is equal to the given point, false otherwise.
-     * @~chinese å¦‚æœæœ¬å‘é‡ç­‰äºç»™å®šçš„å‘é‡è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹û±¾ÏòÁ¿µÈÓÚ¸ø¶¨µÄÏòÁ¿·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      * @js NA
      */
     bool equals(const Vec2& target) const;
     
     /** @returns @~english if points have fuzzy equality which means equal with some degree of variance.
-     * @~chinese åˆ¤æ–­ç‚¹æ˜¯å¦åœ¨ç›®æ ‡ç‚¹ä¸€å®šåå·®èŒƒå›´å†…ã€‚
+     * @~chinese ÅĞ¶ÏµãÊÇ·ñÔÚÄ¿±êµãÒ»¶¨Æ«²î·¶Î§ÄÚ¡£
      * @since v2.1.4
      * @js NA
      * @lua NA
@@ -569,9 +569,9 @@ public:
     bool fuzzyEquals(const Vec2& target, float variance) const;
 
     /** @~english Calculates distance between point an origin.
-     * @~chinese è®¡ç®—è¯¥ç‚¹åˆ°åŸç‚¹çš„è·ç¦»ã€‚
+     * @~chinese ¼ÆËã¸Ãµãµ½Ô­µãµÄ¾àÀë¡£
      *
-     * @return @~english distance between two points. @~chinese ä¸¤ç‚¹è·ç¦»ã€‚
+     * @return @~english distance between two points. @~chinese Á½µã¾àÀë¡£
      * @since v2.1.4
      * @js NA
      * @lua NA
@@ -581,9 +581,9 @@ public:
     };
 
     /** @~english Calculates the square length of a Vec2 (not calling sqrt() )
-     * @~chinese è®¡ç®—è¯¥ç‚¹åˆ°åŸç‚¹è·ç¦»çš„å¹³æ–¹ã€‚
+     * @~chinese ¼ÆËã¸Ãµãµ½Ô­µã¾àÀëµÄÆ½·½¡£
      *
-     * @return @~english the square of distance. @~chinese è·ç¦»çš„å¹³æ–¹ã€‚
+     * @return @~english the square of distance. @~chinese ¾àÀëµÄÆ½·½¡£
      * @since v2.1.4
      * @js NA
      * @lua NA
@@ -593,9 +593,9 @@ public:
     };
 
     /** @~english Calculates the square distance between two points (not calling sqrt() )
-     * @~chinese è®¡ç®—è¯¥ç‚¹åˆ°ç»™å®šç‚¹è·ç¦»çš„å¹³æ–¹ã€‚
+     * @~chinese ¼ÆËã¸Ãµãµ½¸ø¶¨µã¾àÀëµÄÆ½·½¡£
      *
-     * @return @~english the square of distance. @~chinese è·ç¦»çš„å¹³æ–¹ã€‚
+     * @return @~english the square of distance. @~chinese ¾àÀëµÄÆ½·½¡£
      * @since v2.1.4
      * @js NA
      * @lua NA
@@ -605,9 +605,9 @@ public:
     };
 
     /** @~english Calculates the distance between two points
-     * @~chinese è®¡ç®—è¯¥ç‚¹åˆ°ç»™å®šç‚¹çš„è·ç¦»ã€‚
+     * @~chinese ¼ÆËã¸Ãµãµ½¸ø¶¨µãµÄ¾àÀë¡£
      *
-     * @return @~english distance between two points. @~chinese ä¸¤ç‚¹è·ç¦»ã€‚
+     * @return @~english distance between two points. @~chinese Á½µã¾àÀë¡£
      * @since v2.1.4
      * @js NA
      * @lua NA
@@ -617,7 +617,7 @@ public:
     };
 
     /** @returns @~english the angle in radians between this vector and the x axis
-     * @~chinese è·å–è¯¥å‘é‡å’Œxè½´çš„å¤¹è§’ï¼ˆå¼§åº¦ï¼‰ã€‚
+     * @~chinese »ñÈ¡¸ÃÏòÁ¿ºÍxÖáµÄ¼Ğ½Ç£¨»¡¶È£©¡£
      * @since v2.1.4
      * @js NA
      * @lua NA
@@ -627,7 +627,7 @@ public:
     };
 
     /** @returns @~english the angle in radians between two vector directions
-     * @~chinese è·å–è¯¥å‘é‡ä¸ç»™å®šå‘é‡çš„å¤¹è§’ï¼ˆå¼§åº¦ï¼‰ã€‚
+     * @~chinese »ñÈ¡¸ÃÏòÁ¿Óë¸ø¶¨ÏòÁ¿µÄ¼Ğ½Ç£¨»¡¶È£©¡£
      * @since v2.1.4
      * @js NA
      * @lua NA
@@ -635,9 +635,9 @@ public:
     float getAngle(const Vec2& other) const;
 
     /** @~english Calculates cross product of two vectors.
-     * @~chinese è®¡ç®—è¯¥å‘é‡ä¸ç»™å®šå‘é‡çš„å‘é‡ç§¯ã€‚
+     * @~chinese ¼ÆËã¸ÃÏòÁ¿Óë¸ø¶¨ÏòÁ¿µÄÏòÁ¿»ı¡£
      *
-     * @return @~english the cross product. @~chinese å‘é‡ç§¯ã€‚
+     * @return @~english the cross product. @~chinese ÏòÁ¿»ı¡£
      * @since v2.1.4
      * @js NA
      * @lua NA
@@ -647,8 +647,8 @@ public:
     };
 
     /** @~english Calculates perpendicular of v, rotated 90 degrees counter-clockwise -- cross(v, perp(v)) >= 0
-     * @~chinese è®¡ç®—è¯¥å‘é‡é€†æ—¶é’ˆæ—‹è½¬90åº¦çš„æ–°å‘é‡ã€‚
-     * @return @~english new vector. @~chinese æ–°å‘é‡ã€‚
+     * @~chinese ¼ÆËã¸ÃÏòÁ¿ÄæÊ±ÕëĞı×ª90¶ÈµÄĞÂÏòÁ¿¡£
+     * @return @~english new vector. @~chinese ĞÂÏòÁ¿¡£
      * @since v2.1.4
      * @js NA
      * @lua NA
@@ -658,8 +658,8 @@ public:
     };
     
     /** @~english Calculates midpoint between two points.
-     * @~chinese è®¡ç®—ä¸¤ç‚¹ä¹‹é—´çš„ä¸­å¿ƒç‚¹ã€‚
-     * @return @~english midpoint. @~chinese ä¸­å¿ƒç‚¹ã€‚
+     * @~chinese ¼ÆËãÁ½µãÖ®¼äµÄÖĞĞÄµã¡£
+     * @return @~english midpoint. @~chinese ÖĞĞÄµã¡£
      * @since v3.0
      * @js NA
      * @lua NA
@@ -670,7 +670,7 @@ public:
     }
     
     /** @~english Clamp a point between from and to.
-     * @~chinese è·å–ç»™å®šç‚¹åœ¨é™åˆ¶èŒƒå›´å†…çš„é™åˆ¶ç‚¹ã€‚
+     * @~chinese »ñÈ¡¸ø¶¨µãÔÚÏŞÖÆ·¶Î§ÄÚµÄÏŞÖÆµã¡£
      * @since v3.0
      * @js NA
      * @lua NA
@@ -681,14 +681,14 @@ public:
     }
     
     /** @~english Run a math operation function on each point component
-     * absf, fllorf, ceilf, roundf
+     * absf, floorf, ceilf, roundf
      * any function that has the signature: float func(float);
      * For example: let's try to take the floor of x,y
      * p.compOp(floorf);
      *
-     * @~chinese å¯¹è¯¥ç‚¹å‘é‡çš„å„åˆ†é‡æ‰§è¡Œç»™å®šæ“ä½œçš„è¿ç®—ï¼Œå¦‚ï¼š
-     * absfã€fllorf ceilf roundf
-     * ä¾‹å¦‚:å¯¹x,yè¿›è¡Œfloorè¿ç®—ï¼Œåˆ™è°ƒç”¨ p.compOp(floorf)
+     * @~chinese ¶Ô¸ÃµãÏòÁ¿µÄ¸÷·ÖÁ¿Ö´ĞĞ¸ø¶¨²Ù×÷µÄÔËËã£¬Èç£º
+     * absf¡¢fllorf ceilf roundf
+     * ÀıÈç:¶Ôx,y½øĞĞfloorÔËËã£¬Ôòµ÷ÓÃ p.compOp(floorf)
      * @since v3.0
      * @js NA
      * @lua NA
@@ -699,9 +699,9 @@ public:
     }
 
     /** @~english Calculates perpendicular of v, rotated 90 degrees clockwise -- cross(v, rperp(v)) <= 0
-     * @~chinese è®¡ç®—å‘é‡vé¡ºæ—¶é’ˆæ—‹è½¬90åº¦åçš„å€¼ã€‚
+     * @~chinese ¼ÆËãÏòÁ¿vË³Ê±ÕëĞı×ª90¶ÈºóµÄÖµ¡£
      *
-     * @return @~english Vec2 the result of rotated vector. @~chinese æ—‹è½¬åçš„å‘é‡ã€‚
+     * @return @~english Vec2 the result of rotated vector. @~chinese Ğı×ªºóµÄÏòÁ¿¡£
      * @since v2.1.4
      * @js NA
      * @lua NA
@@ -711,10 +711,10 @@ public:
     };
 
     /** @~english Calculates the projection of this over other.
-     * @~chinese è®¡ç®—è¯¥å‘é‡åœ¨å¦ä¸€å‘é‡otherä¸Šçš„æŠ•å½±ã€‚
+     * @~chinese ¼ÆËã¸ÃÏòÁ¿ÔÚÁíÒ»ÏòÁ¿otherÉÏµÄÍ¶Ó°¡£
      *
-     * @param other @~english the other vector.  @~chinese å¦ä¸€ä¸ªå‘é‡ã€‚
-     * @return @~english the projection. @~chinese æŠ•å½±ã€‚
+     * @param other @~english the other vector.  @~chinese ÁíÒ»¸öÏòÁ¿¡£
+     * @return @~english the projection. @~chinese Í¶Ó°¡£
      * @since v2.1.4
      * @js NA
      * @lua NA
@@ -724,12 +724,12 @@ public:
     };
 
     /** @~english Complex multiplication of two points ("rotates" two points).
-     * @~chinese è®¡ç®—è¯¥å‘é‡ç»•ç»™å®šå‘é‡æ—‹è½¬æ‰€å¾—çš„å‘é‡ã€‚
+     * @~chinese ¼ÆËã¸ÃÏòÁ¿ÈÆ¸ø¶¨ÏòÁ¿Ğı×ªËùµÃµÄÏòÁ¿¡£
      *
      * @return @~english Vec2 vector with an angle of this.getAngle() + other.getAngle(),
      * and a length of this.getLength() * other.getLength().
-     * @~chinese æ—‹è½¬æ‰€å¾—å‘é‡çš„è§’åº¦ç­‰äºï¼šthis.getAngle()+ other.getAngle(),
-     * é•¿åº¦ç­‰äºï¼šthis.getLengthé•¿åº¦()* other.getLength()ã€‚
+     * @~chinese Ğı×ªËùµÃÏòÁ¿µÄ½Ç¶ÈµÈÓÚ£ºthis.getAngle()+ other.getAngle(),
+     * ³¤¶ÈµÈÓÚ£ºthis.getLength³¤¶È()* other.getLength()¡£
      * @since v2.1.4
      * @js NA
      * @lua NA
@@ -739,12 +739,12 @@ public:
     };
 
     /** @~english Unrotates two points.
-     * @~chinese è®¡ç®—è¯¥å‘é‡ç»•ç»™å®šå‘é‡æ—‹è½¬å‰çš„å‘é‡ã€‚
+     * @~chinese ¼ÆËã¸ÃÏòÁ¿ÈÆ¸ø¶¨ÏòÁ¿Ğı×ªÇ°µÄÏòÁ¿¡£
      *
      * @return @~english Vec2 vector with an angle of this.getAngle() - other.getAngle(),
      * and a length of this.getLength() * other.getLength().
-     * @~chinese æ—‹è½¬å‰å‘é‡çš„è§’åº¦ç­‰äºï¼šthis.getAngle()â€”â€”other.getAngle(),
-     * é•¿åº¦ç­‰äºï¼šthis.getLengthé•¿åº¦()* other.getLength()ã€‚
+     * @~chinese Ğı×ªÇ°ÏòÁ¿µÄ½Ç¶ÈµÈÓÚ£ºthis.getAngle()¡ª¡ªother.getAngle(),
+     * ³¤¶ÈµÈÓÚ£ºthis.getLength³¤¶È()* other.getLength()¡£
      * @since v2.1.4
      * @js NA
      * @lua NA
@@ -754,15 +754,15 @@ public:
     };
 
     /** @~english Linear Interpolation between two points a and b
-     * @~chinese è®¡ç®—ä¸¤ä¸ªç‚¹aå’Œbä¹‹é—´çš„çº¿æ€§æ’å€¼ã€‚
+     * @~chinese ¼ÆËãÁ½¸öµãaºÍbÖ®¼äµÄÏßĞÔ²åÖµ¡£
      *
      * @param other @~english The point to compute the linear interpolation with. 
-     * @~chinese ç”¨ä»¥è®¡ç®—çº¿æ€§æ’å€¼çš„å¦ä¸€åæ ‡ã€‚
+     * @~chinese ÓÃÒÔ¼ÆËãÏßĞÔ²åÖµµÄÁíÒ»×ø±ê¡£
      * @param alpha @~english the coefficient of linear interpolation. 
-     * @~chinese çº¿æ€§æ’å€¼ç³»æ•°ã€‚
+     * @~chinese ÏßĞÔ²åÖµÏµÊı¡£
      *
      * @return @~english The result of the linear interpolation.
-     * @~chinese çº¿æ€§æ’å€¼ç»“æœã€‚
+     * @~chinese ÏßĞÔ²åÖµ½á¹û¡£
      * @since v2.1.4
      * @js NA
      * @lua NA
@@ -772,12 +772,12 @@ public:
     };
 
     /** @~english Rotates a point counter clockwise by the angle around a pivot
-     * @~chinese è®¡ç®—ä»¥pivotä¸ºè½´é€†æ—¶é’ˆæ—‹è½¬angleåº¦åçš„ç‚¹ã€‚ï¼ˆå•ä½ä¸ºå¼§åº¦ï¼‰ã€‚
+     * @~chinese ¼ÆËãÒÔpivotÎªÖáÄæÊ±ÕëĞı×ªangle¶ÈºóµÄµã¡££¨µ¥Î»Îª»¡¶È£©¡£
      *
-     * @param pivot @~english is the pivot, naturally. @~chinese è½´ã€‚
-     * @param angle @~english is the angle of rotation ccw in radians. @~chinese æ—‹è½¬è§’åº¦ã€‚
+     * @param pivot @~english is the pivot, naturally. @~chinese Öá¡£
+     * @param angle @~english is the angle of rotation ccw in radians. @~chinese Ğı×ª½Ç¶È¡£
      *
-     * @returns @~english the rotated point. @~chinese æ—‹è½¬åçš„ç‚¹ã€‚
+     * @returns @~english the rotated point. @~chinese Ğı×ªºóµÄµã¡£
      * @since v2.1.4
      * @js NA
      * @lua NA
@@ -794,20 +794,20 @@ public:
     }
     
     /** @~english A general line-line intersection test
-     * @~chinese åˆ¤æ–­ç»™å®šçš„ä¸¤æ¡çº¿æ®µæ˜¯å¦ç›¸äº¤ã€‚
+     * @~chinese ÅĞ¶Ï¸ø¶¨µÄÁ½ÌõÏß¶ÎÊÇ·ñÏà½»¡£
      *
      * @param A   @~english the startpoint for the first line L1 = (A - B)
-     * @~chinese ç¬¬ä¸€æ¡çº¿æ®µçš„èµ·å§‹ç«¯ç‚¹ã€‚
+     * @~chinese µÚÒ»ÌõÏß¶ÎµÄÆğÊ¼¶Ëµã¡£
      * @param B   @~english the endpoint for the first line L1 = (A - B)
-     * @~chinese ç¬¬ä¸€æ¡çº¿æ®µçš„ç»“æŸç«¯ç‚¹ã€‚
+     * @~chinese µÚÒ»ÌõÏß¶ÎµÄ½áÊø¶Ëµã¡£
      * @param C   @~english the startpoint for the second line L2 = (C - D)
-     * @~chinese ç¬¬äºŒæ¡çº¿æ®µçš„èµ·å§‹ç«¯ç‚¹ã€‚
+     * @~chinese µÚ¶şÌõÏß¶ÎµÄÆğÊ¼¶Ëµã¡£
      * @param D   @~english the endpoint for the second line L2 = (C - D)
-     * @~chinese ç¬¬äºŒæ¡çº¿æ®µçš„ç»“æŸç«¯ç‚¹ã€‚
+     * @~chinese µÚ¶şÌõÏß¶ÎµÄ½áÊø¶Ëµã¡£
      * @param S   @~english the range for a hitpoint in L1 (p = A + S*(B - A))
-     * @~chinese ç›¸äº¤ç‚¹åœ¨çº¿æ®µL1çš„èŒƒå›´(p = A + S*(B - A))
+     * @~chinese Ïà½»µãÔÚÏß¶ÎL1µÄ·¶Î§(p = A + S*(B - A))
      * @param T   @~english the range for a hitpoint in L2 (p = C + T*(D - C))
-     * @~chinese ç›¸äº¤ç‚¹åœ¨çº¿æ®µL2çš„èŒƒå›´(p = C + T*(D - C))
+     * @~chinese Ïà½»µãÔÚÏß¶ÎL2µÄ·¶Î§(p = C + T*(D - C))
      *
      * @returns @~english  whether these two lines interects.
      *
@@ -816,9 +816,9 @@ public:
      * the hit point is        C + T * (D - C);
      * the hit point also is   A + S * (B - A);
 
-     * @~chinese è¿”å›ä¸¤æ¡çº¿æ®µæ˜¯å¦ç›¸äº¤ã€‚ 
-     * æ³¨æ„, åˆ¤æ–­çº¿æ®µæ˜¯å¦ç›¸äº¤åº”è¯¥ç¡®è®¤è¿”å›å€¼Så’ŒTçš„å€¼éƒ½åœ¨åŒºé—´[0,1]å†…ï¼›åˆ¤æ–­å°„çº¿æ˜¯å¦ç›¸äº¤åº”è¯¥ç¡®è®¤ï¼ˆS & Tï¼‰çš„å€¼å¤§äº0.
-     * ç›¸äº¤ç‚¹ç­‰äºï¼šC + T * (D - C); ä¹Ÿç­‰äºA + S * (B - A);
+     * @~chinese ·µ»ØÁ½ÌõÏß¶ÎÊÇ·ñÏà½»¡£ 
+     * ×¢Òâ, ÅĞ¶ÏÏß¶ÎÊÇ·ñÏà½»Ó¦¸ÃÈ·ÈÏ·µ»ØÖµSºÍTµÄÖµ¶¼ÔÚÇø¼ä[0,1]ÄÚ£»ÅĞ¶ÏÉäÏßÊÇ·ñÏà½»Ó¦¸ÃÈ·ÈÏ£¨S & T£©µÄÖµ´óÓÚ0.
+     * Ïà½»µãµÈÓÚ£ºC + T * (D - C); Ò²µÈÓÚA + S * (B - A);
      * @since 3.0
      * @js NA
      * @lua NA
@@ -829,19 +829,19 @@ public:
     
     /**@~english
      * returns true if Line A-B overlap with segment C-D
-     * @~chinese åˆ¤æ–­ çº¿æ®µA-B ä¸ çº¿æ®µC-Dæ˜¯å¦é‡å ã€‚
+     * @~chinese ÅĞ¶Ï Ïß¶ÎA-B Óë Ïß¶ÎC-DÊÇ·ñÖØµş¡£
      *
      * @param A   @~english the startpoint for the first line L1 = (A - B)
-     * @~chinese ç¬¬ä¸€æ¡çº¿æ®µçš„èµ·å§‹ç«¯ç‚¹ã€‚
+     * @~chinese µÚÒ»ÌõÏß¶ÎµÄÆğÊ¼¶Ëµã¡£
      * @param B   @~english the endpoint for the first line L1 = (A - B)
-     * @~chinese ç¬¬ä¸€æ¡çº¿æ®µçš„ç»“æŸç«¯ç‚¹ã€‚
+     * @~chinese µÚÒ»ÌõÏß¶ÎµÄ½áÊø¶Ëµã¡£
      * @param C   @~english the startpoint for the second line L2 = (C - D)
-     * @~chinese ç¬¬äºŒæ¡çº¿æ®µçš„èµ·å§‹ç«¯ç‚¹ã€‚
+     * @~chinese µÚ¶şÌõÏß¶ÎµÄÆğÊ¼¶Ëµã¡£
      * @param D   @~english the endpoint for the second line L2 = (C - D)
-     * @~chinese ç¬¬äºŒæ¡çº¿æ®µçš„ç»“æŸç«¯ç‚¹ã€‚
+     * @~chinese µÚ¶şÌõÏß¶ÎµÄ½áÊø¶Ëµã¡£
      *
      * @returns @~english  whether these two lines overlap. 
-     * @~chinese å¦‚æœä¸¤çº¿æ®µé‡å è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹ûÁ½Ïß¶ÎÖØµş·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      * @since v3.0
      * @js NA
      * @lua NA
@@ -851,19 +851,19 @@ public:
     
     /**@~english
      * returns true if Line A-B parallel with segment C-D
-     * @~chinese åˆ¤æ–­ çº¿æ®µA-B ä¸ çº¿æ®µC-Dæ˜¯å¦å¹³è¡Œã€‚
+     * @~chinese ÅĞ¶Ï Ïß¶ÎA-B Óë Ïß¶ÎC-DÊÇ·ñÆ½ĞĞ¡£
      *
      * @param A   @~english the startpoint for the first line L1 = (A - B)
-     * @~chinese ç¬¬ä¸€æ¡çº¿æ®µçš„èµ·å§‹ç«¯ç‚¹ã€‚
+     * @~chinese µÚÒ»ÌõÏß¶ÎµÄÆğÊ¼¶Ëµã¡£
      * @param B   @~english the endpoint for the first line L1 = (A - B)
-     * @~chinese ç¬¬ä¸€æ¡çº¿æ®µçš„ç»“æŸç«¯ç‚¹ã€‚
+     * @~chinese µÚÒ»ÌõÏß¶ÎµÄ½áÊø¶Ëµã¡£
      * @param C   @~english the startpoint for the second line L2 = (C - D)
-     * @~chinese ç¬¬äºŒæ¡çº¿æ®µçš„èµ·å§‹ç«¯ç‚¹ã€‚
+     * @~chinese µÚ¶şÌõÏß¶ÎµÄÆğÊ¼¶Ëµã¡£
      * @param D   @~english the endpoint for the second line L2 = (C - D)
-     * @~chinese ç¬¬äºŒæ¡çº¿æ®µçš„ç»“æŸç«¯ç‚¹ã€‚
+     * @~chinese µÚ¶şÌõÏß¶ÎµÄ½áÊø¶Ëµã¡£
      *
      * @returns @~english  whether these two lines is parallel. 
-     * @~chinese å¦‚æœä¸¤çº¿æ®µå¹³è¡Œè¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹ûÁ½Ïß¶ÎÆ½ĞĞ·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      * @since v3.0
      * @js NA
      * @lua NA
@@ -873,23 +873,23 @@ public:
     
     /**@~english
      * returns true if Segment A-B overlap with segment C-D
-     * @~chinese åˆ¤æ–­ çº¿æ®µA-B ä¸ çº¿æ®µC-Dæ˜¯å¦é‡å ã€‚
+     * @~chinese ÅĞ¶Ï Ïß¶ÎA-B Óë Ïß¶ÎC-DÊÇ·ñÖØµş¡£
      *
      * @param A   @~english the startpoint for the first line L1 = (A - B)
-     * @~chinese ç¬¬ä¸€æ¡çº¿æ®µçš„èµ·å§‹ç«¯ç‚¹ã€‚
+     * @~chinese µÚÒ»ÌõÏß¶ÎµÄÆğÊ¼¶Ëµã¡£
      * @param B   @~english the endpoint for the first line L1 = (A - B)
-     * @~chinese ç¬¬ä¸€æ¡çº¿æ®µçš„ç»“æŸç«¯ç‚¹ã€‚
+     * @~chinese µÚÒ»ÌõÏß¶ÎµÄ½áÊø¶Ëµã¡£
      * @param C   @~english the startpoint for the second line L2 = (C - D)
-     * @~chinese ç¬¬äºŒæ¡çº¿æ®µçš„èµ·å§‹ç«¯ç‚¹ã€‚
+     * @~chinese µÚ¶şÌõÏß¶ÎµÄÆğÊ¼¶Ëµã¡£
      * @param D   @~english the endpoint for the second line L2 = (C - D)
-     * @~chinese ç¬¬äºŒæ¡çº¿æ®µçš„ç»“æŸç«¯ç‚¹ã€‚
+     * @~chinese µÚ¶şÌõÏß¶ÎµÄ½áÊø¶Ëµã¡£
      * @param S   @~english the start point
-     * @~chinese èµ·ç‚¹ã€‚
+     * @~chinese Æğµã¡£
      * @param E   @~english the endpoint
-     * @~chinese ç«¯ç‚¹ã€‚
+     * @~chinese ¶Ëµã¡£
      *
      * @returns @~english  whether these two lines overlap. 
-     * @~chinese å¦‚æœä¸¤çº¿æ®µé‡å è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹ûÁ½Ïß¶ÎÖØµş·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      * @since v3.0
      * @js NA
      * @lua NA
@@ -900,19 +900,19 @@ public:
     
     /**@~english
      * returns true if Segment A-B intersects with segment C-D
-     * @~chinese åˆ¤æ–­ç»™å®šçš„ä¸¤æ¡çº¿æ®µæ˜¯å¦ç›¸äº¤ã€‚
+     * @~chinese ÅĞ¶Ï¸ø¶¨µÄÁ½ÌõÏß¶ÎÊÇ·ñÏà½»¡£
      *
      * @param A   @~english the startpoint for the first line L1 = (A - B)
-     * @~chinese ç¬¬ä¸€æ¡çº¿æ®µçš„èµ·å§‹ç«¯ç‚¹ã€‚
+     * @~chinese µÚÒ»ÌõÏß¶ÎµÄÆğÊ¼¶Ëµã¡£
      * @param B   @~english the endpoint for the first line L1 = (A - B)
-     * @~chinese ç¬¬ä¸€æ¡çº¿æ®µçš„ç»“æŸç«¯ç‚¹ã€‚
+     * @~chinese µÚÒ»ÌõÏß¶ÎµÄ½áÊø¶Ëµã¡£
      * @param C   @~english the startpoint for the second line L2 = (C - D)
-     * @~chinese ç¬¬äºŒæ¡çº¿æ®µçš„èµ·å§‹ç«¯ç‚¹ã€‚
+     * @~chinese µÚ¶şÌõÏß¶ÎµÄÆğÊ¼¶Ëµã¡£
      * @param D   @~english the endpoint for the second line L2 = (C - D)
-     * @~chinese ç¬¬äºŒæ¡çº¿æ®µçš„ç»“æŸç«¯ç‚¹ã€‚
+     * @~chinese µÚ¶şÌõÏß¶ÎµÄ½áÊø¶Ëµã¡£
      *
      * @returns @~english whether these two lines interects.
-     * @~chinese å¦‚æœçº¿æ®µç›¸äº¤è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+     * @~chinese Èç¹ûÏß¶ÎÏà½»·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
      * @since v3.0
      * @js NA
      * @lua NA
@@ -921,60 +921,60 @@ public:
     
     /**@~english
      * returns the intersection point of line A-B, C-D
-     * @~chinese è·å–ä¸¤æ¡çº¿æ®µçš„ç›¸äº¤ç‚¹ã€‚
+     * @~chinese »ñÈ¡Á½ÌõÏß¶ÎµÄÏà½»µã¡£
      *
      * @param A   @~english the startpoint for the first line L1 = (A - B)
-     * @~chinese ç¬¬ä¸€æ¡çº¿æ®µçš„èµ·å§‹ç«¯ç‚¹ã€‚
+     * @~chinese µÚÒ»ÌõÏß¶ÎµÄÆğÊ¼¶Ëµã¡£
      * @param B   @~english the endpoint for the first line L1 = (A - B)
-     * @~chinese ç¬¬ä¸€æ¡çº¿æ®µçš„ç»“æŸç«¯ç‚¹ã€‚
+     * @~chinese µÚÒ»ÌõÏß¶ÎµÄ½áÊø¶Ëµã¡£
      * @param C   @~english the startpoint for the second line L2 = (C - D)
-     * @~chinese ç¬¬äºŒæ¡çº¿æ®µçš„èµ·å§‹ç«¯ç‚¹ã€‚
+     * @~chinese µÚ¶şÌõÏß¶ÎµÄÆğÊ¼¶Ëµã¡£
      * @param D   @~english the endpoint for the second line L2 = (C - D)
-     * @~chinese ç¬¬äºŒæ¡çº¿æ®µçš„ç»“æŸç«¯ç‚¹ã€‚
+     * @~chinese µÚ¶şÌõÏß¶ÎµÄ½áÊø¶Ëµã¡£
      *
-     * @returns @~english the intersection point. @~chinese ç›¸äº¤ç‚¹ã€‚
+     * @returns @~english the intersection point. @~chinese Ïà½»µã¡£
      * @since v3.0
      * @js NA
      * @lua NA
      */
     static Vec2 getIntersectPoint(const Vec2& A, const Vec2& B, const Vec2& C, const Vec2& D);
     
-    /** @~english equals to Vec2(0,0)  @~chinese ç­‰äºVec2(0,0)*/
+    /** @~english equals to Vec2(0,0)  @~chinese µÈÓÚVec2(0,0)*/
     static const Vec2 ZERO;
-    /** @~english equals to Vec2(1,1)  @~chinese ç­‰äºVec2(1,1)*/
+    /** @~english equals to Vec2(1,1)  @~chinese µÈÓÚVec2(1,1)*/
     static const Vec2 ONE;
-    /** @~english equals to Vec2(1,0)  @~chinese ç­‰äºVec2(0)*/
+    /** @~english equals to Vec2(1,0)  @~chinese µÈÓÚVec2(0)*/
     static const Vec2 UNIT_X;
-    /** @~english equals to Vec2(0,1)  @~chinese ç­‰äºVec2(0,1)*/
+    /** @~english equals to Vec2(0,1)  @~chinese µÈÓÚVec2(0,1)*/
     static const Vec2 UNIT_Y;
-    /** @~english equals to Vec2(0.5, 0.5)  @~chinese ç­‰äºVec2(0.5,0.5)*/
+    /** @~english equals to Vec2(0.5, 0.5)  @~chinese µÈÓÚVec2(0.5,0.5)*/
     static const Vec2 ANCHOR_MIDDLE;
-    /** @~english equals to Vec2(0, 0)  @~chinese ç­‰äºVec2(0,0)*/
+    /** @~english equals to Vec2(0, 0)  @~chinese µÈÓÚVec2(0,0)*/
     static const Vec2 ANCHOR_BOTTOM_LEFT;
-    /** @~english equals to Vec2(0, 1)  @~chinese ç­‰äºVec2(0,1)*/
+    /** @~english equals to Vec2(0, 1)  @~chinese µÈÓÚVec2(0,1)*/
     static const Vec2 ANCHOR_TOP_LEFT;
-    /** @~english equals to Vec2(1, 0)  @~chinese equals to Vec2(1ã€0)*/
+    /** @~english equals to Vec2(1, 0)  @~chinese equals to Vec2(1¡¢0)*/
     static const Vec2 ANCHOR_BOTTOM_RIGHT;
-    /** @~english equals to Vec2(1, 1)  @~chinese ç­‰äºVec2(1,1)*/
+    /** @~english equals to Vec2(1, 1)  @~chinese µÈÓÚVec2(1,1)*/
     static const Vec2 ANCHOR_TOP_RIGHT;
-    /** @~english equals to Vec2(1, 0.5)  @~chinese ç­‰äºVec2(0.5)*/
+    /** @~english equals to Vec2(1, 0.5)  @~chinese µÈÓÚVec2(0.5)*/
     static const Vec2 ANCHOR_MIDDLE_RIGHT;
-    /** @~english equals to Vec2(0, 0.5)  @~chinese ç­‰äºVec2(0,- 0.5)*/
+    /** @~english equals to Vec2(0, 0.5)  @~chinese µÈÓÚVec2(0,- 0.5)*/
     static const Vec2 ANCHOR_MIDDLE_LEFT;
-    /** @~english equals to Vec2(0.5, 1)  @~chinese ç­‰äºVec2(0.5,1)*/
+    /** @~english equals to Vec2(0.5, 1)  @~chinese µÈÓÚVec2(0.5,1)*/
     static const Vec2 ANCHOR_MIDDLE_TOP;
-    /** @~english equals to Vec2(0.5, 0)  @~chinese ç­‰äºVec2(0.5,0)*/
+    /** @~english equals to Vec2(0.5, 0)  @~chinese µÈÓÚVec2(0.5,0)*/
     static const Vec2 ANCHOR_MIDDLE_BOTTOM;
 };
 
 /**
  * @~english Calculates the scalar product of the given vector with the given value.
- * @~chinese è®¡ç®—ç»™å®šå‘é‡ä¸ç»™å®šç¼©æ”¾ç³»æ•°ç›¸ä¹˜åçš„å‘é‡ã€‚
+ * @~chinese ¼ÆËã¸ø¶¨ÏòÁ¿Óë¸ø¶¨Ëõ·ÅÏµÊıÏà³ËºóµÄÏòÁ¿¡£
  * 
- * @param x @~english The value to scale by. @~chinese ç¼©æ”¾ç³»æ•°ã€‚
- * @param v @~english The vector to scale. @~chinese è¢«ç¼©æ”¾çš„å‘é‡ã€‚
+ * @param x @~english The value to scale by. @~chinese Ëõ·ÅÏµÊı¡£
+ * @param v @~english The vector to scale. @~chinese ±»Ëõ·ÅµÄÏòÁ¿¡£
  * 
- * @return @~english The scaled vector. @~chinese ç¼©æ”¾åçš„å‘é‡ã€‚
+ * @return @~english The scaled vector. @~chinese Ëõ·ÅºóµÄÏòÁ¿¡£
  */
 inline const Vec2 operator*(float x, const Vec2& v);
 

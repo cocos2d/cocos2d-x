@@ -30,6 +30,8 @@ extern "C" {
 }
 #include "tolua_fix.h"
 #include "cocos2d.h"
+#include "Lua-BindingsExport.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 using namespace cocos2d;
 
@@ -215,7 +217,7 @@ extern bool luaval_to_uint16(lua_State* L,int lo,uint16_t* outValue, const char*
  * @return @~english Return true if the type at the given acceptable index of stack is a boolean, otherwise return false.
  * @~chinese 如果给定Lua栈索引上值的类型是boolean返回true,否则返回false。
  */
-extern bool luaval_to_boolean(lua_State* L,int lo,bool* outValue, const char* funcName = "");
+extern CC_LUA_DLL bool luaval_to_boolean(lua_State* L,int lo,bool* outValue, const char* funcName = "");
 
 /**@~english
  * Get a double value from the given acceptable index of Lua stack.
@@ -278,7 +280,7 @@ extern bool luaval_to_long_long(lua_State* L,int lo,long long* outValue, const c
  * @return @~english Return true if the value at the given acceptable index of stack is is a string or a number convertible to a string, otherwise return false.
  * @~chinese 如果给定Lua栈索引上是一个数字或一个可以转为字符串的数字，返回true，否则返回false。
  */
-extern bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, const char* funcName = "");
+extern CC_LUA_DLL bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, const char* funcName = "");
 
 /**@~english
  * Get a long value from the given acceptable index of stack.
@@ -389,7 +391,7 @@ extern bool luaval_to_rect(lua_State* L,int lo,Rect* outValue, const char* funcN
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  * @~chinese 如果给定Lua栈索引上是一个table,返回true,否则返回false。
  */
-extern bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue, const char* funcName = "");
+extern CC_LUA_DLL bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue, const char* funcName = "");
 
 /**@~english
  * Get a Color4B object value from the given acceptable index of stack.
@@ -895,7 +897,7 @@ bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret, const ch
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  * @~chinese 当Lua栈索引上的值是table时返回true,否则返回false。
  */
-bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
+CC_LUA_DLL bool   luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
 
 /**@~english
  * Get a pointer points to a std::vector<int> from a Lua array table in the stack.
@@ -1420,7 +1422,7 @@ extern void rect_to_luaval(lua_State* L,const Rect& rt);
  * @param cc  @~english a cocos2d::Color3B object.
  * @~chinese cocos2d::Color3B对象。
  */
-extern void color3b_to_luaval(lua_State* L,const Color3B& cc);
+extern CC_LUA_DLL void color3b_to_luaval(lua_State* L,const Color3B& cc);
 
 /**@~english
  * Push a table converted from a cocos2d::Color4B object into the Lua stack.
@@ -1986,6 +1988,10 @@ void std_vector_vec3_to_luaval(lua_State* L, const std::vector<cocos2d::Vec3>& i
  * @param inValue a std::map<std::string, std::string> vaule.
  */
 void std_map_string_string_to_luaval(lua_State* L, const std::map<std::string, std::string>& inValue);
+
+// Follow 2 function is added for Cocos Studio to make lua lib can be compile as dynamic library
+CC_LUA_DLL extern bool luaval_to_node(lua_State* L, int lo, const char* type, cocos2d::Node** node);
+CC_LUA_DLL extern void node_to_luaval(lua_State* L, const char* type, cocos2d::Node* node);
 
 // end group
 /// @}

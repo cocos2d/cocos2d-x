@@ -238,29 +238,30 @@ Sequence* Sequence::createWithVariableList(FiniteTimeAction *action1, va_list ar
 
 Sequence* Sequence::create(const Vector<FiniteTimeAction*>& arrayOfActions)
 {
-    Sequence* ret = nullptr;
-    do 
+    Sequence* seq = new (std::nothrow) Sequence;
+
+    if (seq && seq->init(arrayOfActions))
+        seq->autorelease();
+    return seq;
+}
+
+bool Sequence::init(const Vector<FiniteTimeAction*>& arrayOfActions)
+{
+    auto count = arrayOfActions.size();
+    if (count == 0)
+        return true;
+
+    if (count == 1)
+        return initWithTwoActions(arrayOfActions.at(0), ExtraAction::create());
+
+    // else size > 1
+    auto prev = arrayOfActions.at(0);
+    for (int i = 1; i < count-1; ++i)
     {
-        auto count = arrayOfActions.size();
-        CC_BREAK_IF(count == 0);
+        prev = createWithTwoActions(prev, arrayOfActions.at(i));
+    }
 
-        auto prev = arrayOfActions.at(0);
-
-        if (count > 1)
-        {
-            for (int i = 1; i < count; ++i)
-            {
-                prev = createWithTwoActions(prev, arrayOfActions.at(i));
-            }
-        }
-        else
-        {
-            // If only one action is added to Sequence, make up a Sequence by adding a simplest finite time action.
-            prev = createWithTwoActions(prev, ExtraAction::create());
-        }
-        ret = static_cast<Sequence*>(prev);
-    }while (0);
-    return ret;
+    return initWithTwoActions(prev, arrayOfActions.at(count-1));
 }
 
 bool Sequence::initWithTwoActions(FiniteTimeAction *actionOne, FiniteTimeAction *actionTwo)
@@ -633,27 +634,10 @@ Spawn* Spawn::createWithVariableList(FiniteTimeAction *action1, va_list args)
 
 Spawn* Spawn::create(const Vector<FiniteTimeAction*>& arrayOfActions)
 {
-    Spawn* ret = nullptr;
-    do 
-    {
-        auto count = arrayOfActions.size();
-        CC_BREAK_IF(count == 0);
-        auto prev = arrayOfActions.at(0);
-        if (count > 1)
-        {
-            for (int i = 1; i < arrayOfActions.size(); ++i)
-            {
-                prev = createWithTwoActions(prev, arrayOfActions.at(i));
-            }
-        }
-        else
-        {
-            // If only one action is added to Spawn, make up a Spawn by adding a simplest finite time action.
-            prev = createWithTwoActions(prev, ExtraAction::create());
-        }
-        ret = static_cast<Spawn*>(prev);
-    }while (0);
+    Spawn* ret = new (std::nothrow) Spawn;
 
+    if (ret && ret->init(arrayOfActions))
+        ret->autorelease();
     return ret;
 }
 
@@ -664,6 +648,26 @@ Spawn* Spawn::createWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *
     spawn->autorelease();
 
     return spawn;
+}
+
+bool Spawn::init(const Vector<FiniteTimeAction*>& arrayOfActions)
+{
+    auto count = arrayOfActions.size();
+
+    if (count == 0)
+        return true;
+
+    if (count == 1)
+        return initWithTwoActions(arrayOfActions.at(0), ExtraAction::create());
+
+    // else count > 1
+    auto prev = arrayOfActions.at(0);
+    for (int i = 1; i < count-1; ++i)
+    {
+        prev = createWithTwoActions(prev, arrayOfActions.at(i));
+    }
+
+    return initWithTwoActions(prev, arrayOfActions.at(count-1));
 }
 
 bool Spawn::initWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2)
