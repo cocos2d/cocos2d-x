@@ -9,8 +9,6 @@ cocos2d-x-3.10 December ? 2015
 [NEW]           UI: UIText::clone supports clone the text effect.
 [NEW]           Label: Add methods to query label effect state.
 [NEW]           UI: UIRichText support the new line element.
-[NEW]           UI: Scale9Sprite fade actions with cascade opacity.
-[NEW]           UI: Pageview support adjust child size.
 
 [REFINE]        UI: RichText support new line element.
 [REFINE]        UI: Set focus to Widget when touched.
@@ -36,7 +34,6 @@ cocos2d-x-3.10 December ? 2015
 [REFINE]        Win10: Added missing _USRJSSTATIC preprocessor define for ARM builds.
 [REFINE]        JS: Added ccvector_to / ccmap_to converted to new js-binding API.
 [REFINE]        UI: Slider misprint fix.
-[REFINE]        UI: Scale9Sprite cropped sprite frames support.
 
 [FIX]           Core: Fix premultiplyAlpha for mipmaps and compressed textures.
 [FIX]           UI: Fix Scale9sprite rendering error when content size smaller than the sum of leftInset and rightInset.
@@ -53,7 +50,6 @@ cocos2d-x-3.10 December ? 2015
 [FIX]           UI: Fix edit box setPlaceholderFontName and scale font size issue.
 [FIX]           Core: Fix memory leak when initWithImage() failed.
 [FIX]           Network: CCDownloader on iOS is broken in v3.9 js-binding.
-[FIX]           UI: Fix label clamp when scaled with bmfont.
 [FIX]           JS: Bindings fixes for Menu, Sprite and Label.
 [FIX]           Studio: Remove weak reference in ActionNode.
 [FIX]           UI: shouldStartLoading method should return value to js in js-binding.
