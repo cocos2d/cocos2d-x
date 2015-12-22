@@ -977,7 +977,7 @@ var SpriteZVertex = SpriteTestDemo.extend({
         this._super(cc.color(255, 0, 0, 80), cc.color(255, 98, 117, 20));
 
 
-        if ("opengl" in cc.sys.capabilities) {
+        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
 
             gl.enable(gl.DEPTH_TEST);
             //
