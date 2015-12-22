@@ -47,6 +47,7 @@ RenderTexture::RenderTexture()
 , _fullviewPort(Rect::ZERO)
 , _FBO(0)
 , _depthRenderBufffer(0)
+, _stencilBuffer(0)
 , _oldFBO(0)
 , _texture(0)
 , _textureCopy(0)
@@ -80,6 +81,10 @@ RenderTexture::~RenderTexture()
     if (_depthRenderBufffer)
     {
         glDeleteRenderbuffers(1, &_depthRenderBufffer);
+    }
+    if (_stencilBuffer)
+    {
+        glDeleteRenderbuffers(1, &_stencilBuffer);
     }
     CC_SAFE_DELETE(_UITextureImage);
 }
@@ -255,13 +260,41 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
             //create and attach depth buffer
             glGenRenderbuffers(1, &_depthRenderBufffer);
             glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBufffer);
-            glRenderbufferStorage(GL_RENDERBUFFER, depthStencilFormat, (GLsizei)powW, (GLsizei)powH);
-            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
 
-            // if depth format is the one with stencil part, bind same render buffer as stencil attachment
             if (depthStencilFormat == GL_DEPTH24_STENCIL8)
             {
-                glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
+                if (Configuration::getInstance()->checkForGLExtension("GL_OES_packed_depth_stencil") ||
+                    Configuration::getInstance()->checkForGLExtension("GL_EXT_packed_depth_stencil"))
+                {
+                    glRenderbufferStorage(GL_RENDERBUFFER, depthStencilFormat, (GLsizei)powW, (GLsizei)powH);
+                    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
+
+                    // if depth format is the one with stencil part, bind same render buffer as stencil attachment
+                    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
+                }
+                else
+                {
+                    // Make compatible with desktop OpenGL
+                    //if (Configuration::getInstance()->checkForGLExtension("GL_OES_depth24"))
+                    //{
+                    //    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24/*_OES*/, (GLsizei)powW, (GLsizei)powH);
+                    //}
+                    //else
+                    //{
+                        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, (GLsizei)powW, (GLsizei)powH);
+                    //}
+
+                    // We need stencil buffer too
+                    glGenRenderbuffers(1, &_stencilBuffer);
+                    glBindRenderbuffer(GL_RENDERBUFFER, _stencilBuffer);
+                    glRenderbufferStorage(GL_RENDERBUFFER, GL_STENCIL_INDEX8, (GLsizei)powW, (GLsizei)powH);
+                    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _stencilBuffer);
+                }
+            }
+            else
+            {
+                glRenderbufferStorage(GL_RENDERBUFFER, depthStencilFormat, (GLsizei)powW, (GLsizei)powH);
+                glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
             }
         }
 
