@@ -22,7 +22,7 @@ enum
 TouchesTests::TouchesTests()
 {
     ADD_TEST_CASE(PongScene);
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0 // Use 9.0 or higher SDK to compile
+#ifdef __IPHONE_9_0 && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0 // Use 9.0 or higher SDK to compile
     ADD_TEST_CASE(ForceTouchTest);
 #endif
 }
@@ -115,7 +115,7 @@ void PongLayer::doStep(float delta)
         resetAndScoreBallForPlayer( kHighPlayer );
 }
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0 // Use 9.0 or higher SDK to compile
+#ifdef __IPHONE_9_0 && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0 // Use 9.0 or higher SDK to compile
 
 const char * _Info_Formatter = "Current force value : %0.02f, maximum possible force : %0.02f";
 char formatBuffer[256] = {0, };
