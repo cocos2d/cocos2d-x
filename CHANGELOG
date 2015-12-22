@@ -10,6 +10,7 @@ cocos2d-x-3.10 December ? 2015
 [NEW]           Label: Add methods to query label effect state.
 [NEW]           UI: UIRichText support the new line element.
 
+[REFINE]        3rd party: WebP loading improvements WebP loaded as premultiplied alpha if it has.
 [REFINE]        UI: RichText support new line element.
 [REFINE]        UI: Set focus to Widget when touched.
 [REFINE]        3D: Change char* to string in Terrain.
