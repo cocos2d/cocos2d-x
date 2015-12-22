@@ -490,7 +490,17 @@ _pos = _max;        \
         
         auto ptNow  = sprite->getPosition();
         
-        log("acc: x = %lf, y = %lf", acc->x, acc->y);
+        log("acc: x = %lf, y = %lf, z = %lf", acc->x, acc->y, acc->z);
+        
+        Acceleration * polledAcceleration = Device::pollAccelerometer();
+        
+        if (polledAcceleration)
+        {
+            log("acc polled: x = %lf, y = %lf, z = %lf",
+                polledAcceleration->x,
+                polledAcceleration->y,
+                polledAcceleration->z);
+        }
         
         ptNow.x += acc->x * 9.81f;
         ptNow.y += acc->y * 9.81f;

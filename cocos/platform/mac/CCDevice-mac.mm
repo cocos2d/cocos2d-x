@@ -54,6 +54,11 @@ void Device::setAccelerometerInterval(float interval)
 
 }
 
+Acceleration * Device::pollAccelerometer()
+{
+    return nullptr;
+}
+
 typedef struct
 {
     int height;

@@ -186,7 +186,11 @@ void Device::setAccelerometerInterval(float interval)
     }
 }
 
-
+Acceleration * Device::pollAccelerometer()
+{
+    // TOOD: implement for Windows
+    return nullptr;
+}
 
 Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha)
 {

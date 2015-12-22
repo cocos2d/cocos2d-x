@@ -32,6 +32,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class Acceleration;
 struct FontDefinition;
 
 /**
@@ -75,6 +76,12 @@ public:
      *  Sets the interval of accelerometer.
      */
     static void setAccelerometerInterval(float interval);
+    
+    /**
+     * Polls the current values of the accelerometer. You should enable the accelerometer prior to calling this function.
+     * For devices or platforms which this is not implemented or supported for, will return a null Acceleration object.
+     */
+    static Acceleration * pollAccelerometer();
 
     /**
      * Controls whether the screen should remain on.
