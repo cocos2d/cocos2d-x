@@ -180,6 +180,7 @@ protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
    
+    void setScale9Scale();
     void updateProgressBar();
     void barRendererScaleChangedWithSize();
 
