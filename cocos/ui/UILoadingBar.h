@@ -180,10 +180,12 @@ protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
    
+    void setScale9Scale();
     void updateProgressBar();
     void barRendererScaleChangedWithSize();
 
     void setupTexture();
+    void handleSpriteFlipX();
     void loadTexture(SpriteFrame* spriteframe);
     
     virtual void adaptRenderers() override;
