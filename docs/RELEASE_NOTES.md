@@ -24,34 +24,40 @@ If you have the Samsung Z1 device, you can get more information from the followi
 * [Tizen SDK 2.3](https://developer.tizen.org/downloads/tizen-sdk), `please select custom mode and select gcc4.8 package`
 
 ![install-sdk](https://raw.githubusercontent.com/minggo/Pictures/master/tizen/tizen-install-sdk.png)
+* [Tizen SDK 2.4](https://developer.tizen.org/development/tools/download), `install the SDK with the installer`
 
 # How to run cpp-tests on Tizen
 
 * download Install-manager and Tizen SDK image from [here](https://developer.tizen.org/downloads/tizen-sdk)
-* install Tizen SDK and `select custom mode with GCC4.8`
+* install Tizen SDK 2.3 and `select custom mode with GCC4.8`, or install Tizen SDK 2.4 with gcc4.9
 * open Tizen IDE
 
   ![open-tizen-ide](https://raw.githubusercontent.com/minggo/Pictures/master/tizen/open-tizen-ide.png)
   
 * set workspace for the first launching
 
-  ![set-workspace](https://raw.githubusercontent.com/minggo/Pictures/master/tizen/tizen-set-workspace.png)
+  ![set-workspace](https://raw.githubusercontent.com/QingliWang/Pictures/master/tizen/workspace.png)
   
 * right click `Project Explorer` and select `import`
 
-  ![import-project](https://raw.githubusercontent.com/minggo/Pictures/master/tizen/tizen-import-project.png)
-  
+* select 'General' and 'Existing Projects into Workspace'
+  ![import](https://raw.githubusercontent.com/QingliWang/Pictures/master/tizen/tizen-import-projects.png)
+
 * select `cpp-tests` and `libcocos2dx` project
 
-  ![select-project](https://raw.githubusercontent.com/minggo/Pictures/master/tizen/tizen-select-cpp-tests.png)
+  ![select-project](https://raw.githubusercontent.com/QingliWang/Pictures/master/tizen/tizen-select-cpp-tests.png)
   
 ## Run on Tizen devices
 
 * change `libcocos2dx` to debug mode and build it
   * right click `libcocos2dx` and select `Build Configurations->Set Active->Debug`
+  * right click `libcocos2dx` and select 'Properties'->'C/C++ Build'->'Tizen Settings', make sure the Platform information is related to 'ARMv7-a'
+  ![set-platform](https://raw.githubusercontent.com/QingliWang/Pictures/master/tizen/tizen-platform-debug.png)
+
   * right click `libcocos2dx` and select `Build Project`
 * change `cpp-tests` to debug mode and build it
   * right click `cpp-tests` and select `Build Configurations->Set Active->Debug`
+  * right click `libcocos2dx` and select 'Properties'->'C/C++ Build'->'Tizen Settings', make sure the Platform information is related to 'ARMv7-a'
   * right click `cpp-tests` and select `Build Project`
 * right click `cpp-tests` and select `Run As->1 Tizen Native Application`, then cpp-tests will run on your Tizen device
 
@@ -69,9 +75,12 @@ If you meet `security profile` issue, you can refer to [Security profiles](#secu
 
 * change `libcocos2dx` to emulator mode and build it
   * right click `libcocos2dx` and select `Build Configurations->Set Active->Emulator`
+  * right click `libcocos2dx` and select 'Properties'->'C/C++ Build'->'Tizen Settings', make sure the Platform information is related to 'x86'
+  ![set-platform](https://raw.githubusercontent.com/QingliWang/Pictures/master/tizen/tizen-platform-emulator.png)
   * right click `libcocos2dx` and select `Build Project`
 * change `cpp-tests` to emulator mode and run it(`make sure screen is unlocked`)
   * right click `cpp-tests` and select `Build Configurations->Set Active->Emulator`
+  * right click `libcocos2dx` and select 'Properties'->'C/C++ Build'->'Tizen Settings', make sure the Platform information is related to 'x86'
   * right click `cpp-tests` and select `Build Project`
   * right click `cpp-tests` and select `Run As->1 Tizen Native Application`
   
@@ -87,9 +96,9 @@ You can resolve it by doing following steps:
 
 * click `Preferences->Security Profiles` to add one profile and generate it, `profile name` and `key filename` can be any string
 
-![add-profile-name](https://raw.githubusercontent.com/minggo/Pictures/master/tizen/tizen-add-profile-name.png)
+![add-profile-name](https://raw.githubusercontent.com/QingliWang/Pictures/master/tizen/tizen-add-profile-name.png)
 
-![generate-certification](https://raw.githubusercontent.com/minggo/Pictures/master/tizen/tizen-generate-certification.png)
+![generate-certification](https://raw.githubusercontent.com/QingliWang/Pictures/master/tizen/tizen-generate-certification.png)
 
 ![finish-profile](https://raw.githubusercontent.com/minggo/Pictures/master/tizen/tizen-security-profile-finish.png)
 

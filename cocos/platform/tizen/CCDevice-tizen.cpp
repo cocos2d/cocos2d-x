@@ -209,7 +209,7 @@ static void getTextBitmapData(const char * text, const FontDefinition& textDefin
         return ;
     }
 
-    evas_init();
+    //evas_init();//not necessary, removed when use Tizen 2.4.
     auto canvas = evas_new();
     if(!canvas){
         log("ERROR: could not instantiate new evas canvas.");
@@ -329,7 +329,7 @@ static void getTextBitmapData(const char * text, const FontDefinition& textDefin
     bitmapData.fastSet((unsigned char*)pixels,bitmapWidth * bitmapHeight * 4);
 
     evas_free(canvas);
-    evas_shutdown();
+    //evas_shutdown();//not necessary, removed when use Tizen 2.4.
 }
 
 Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha)

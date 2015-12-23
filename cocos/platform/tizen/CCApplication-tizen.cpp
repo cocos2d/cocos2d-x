@@ -314,7 +314,7 @@ static bool app_create(void *data) {
     GLContextAttrs attrs = GLView::getGLContextAttrs();
     char gl_mode[100] = "";
     get_glview_mode(attrs, gl_mode);
-    elm_config_accel_preference_set(gl_mode);
+    elm_config_accel_preference_set("opengl");//(gl_mode);
     /* Create the window */
     ad->_win = add_win("cocos2d-x");
 
@@ -451,17 +451,23 @@ static void app_control(app_control_h app_control, void *data)
 
 int Application::run()
 {
-    app_event_callback_s event_callback = { nullptr, };
+	ui_app_lifecycle_callback_s event_callback = {0,};
+	//app_event_handler_h handlers[5] = {NULL, };
 
-    event_callback.create = app_create;
-    event_callback.terminate = app_terminate;
-    event_callback.pause = app_pause;
-    event_callback.resume = app_resume;
-    event_callback.app_control = app_control;
+	event_callback.create = app_create;
+	event_callback.terminate = app_terminate;
+	event_callback.pause = app_pause;
+	event_callback.resume = app_resume;
+	event_callback.app_control = app_control;
 
-    //setenv("EVAS_GL_WIN_PREROTATION", "1", 1); //fixme sukwon.suh
-
-    int ret = app_main(0, nullptr, &event_callback, this);
+/*	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY], APP_EVENT_LOW_BATTERY, ui_app_low_battery, &ad);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY], APP_EVENT_LOW_MEMORY, ui_app_low_memory, &ad);
+	ui_app_add_event_handler(&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED], APP_EVENT_DEVICE_ORIENTATION_CHANGED, ui_app_orient_changed, &ad);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED], APP_EVENT_LANGUAGE_CHANGED, ui_app_lang_changed, &ad);
+	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED], APP_EVENT_REGION_FORMAT_CHANGED, ui_app_region_changed, &ad);
+	ui_app_remove_event_handler(handlers[APP_EVENT_LOW_MEMORY]);
+*/
+    int ret = ui_app_main(_argc, _argv, &event_callback, this);
     if (ret != APP_ERROR_NONE) {
         dlog_print(DLOG_ERROR, LOG_TAG, "The application failed to start, and returned %d", ret);
     }
@@ -503,6 +509,11 @@ void Application::setDeviceOrientation(int orientation)
     _orientation = orientation;
 }
 
+void Application::setMainArgs(int argc, char **argv)
+{
+    _argc = argc;
+    _argv = argv;
+}
 bool Application::openURL(const std::string &url)
 {
 	bool flag = false;

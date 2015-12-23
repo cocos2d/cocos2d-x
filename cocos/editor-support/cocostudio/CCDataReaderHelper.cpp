@@ -551,7 +551,11 @@ void DataReaderHelper::addDataFromCache(const std::string& pFileContent, DataInf
     * Begin decode armature data from xml
     */
     tinyxml2::XMLElement *armaturesXML = root->FirstChildElement(ARMATURES);
-    tinyxml2::XMLElement *armatureXML = armaturesXML->FirstChildElement(ARMATURE);
+    tinyxml2::XMLElement *armatureXML = nullptr;
+    if(armaturesXML)
+    {
+    	armatureXML = armaturesXML->FirstChildElement(ARMATURE);
+    }
     while(armatureXML)
     {
         ArmatureData *armatureData = DataReaderHelper::decodeArmature(armatureXML, dataInfo);

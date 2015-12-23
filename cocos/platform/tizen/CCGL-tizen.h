@@ -28,16 +28,17 @@
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 
-//fixme
-#define glGenVertexArrays glGenVertexArraysOES
-#define glDeleteVertexArrays glDeleteVertexArraysOES
 #define GL_WRITE_ONLY GL_WRITE_ONLY_OES
 #define glMapBuffer glMapBufferOES
-#define glUnmapBuffer glUnmapBufferOES
 #define GL_BGRA GL_BGRA_EXT
-#define glBindVertexArray glBindVertexArrayOES
 #define glClearDepth glClearDepthf
-#define GL_DEPTH24_STENCIL8 GL_DEPTH24_STENCIL8_OES
+
+//fixme, if Tizen 2.4, don't need these define, but Tizen 2.3 need them
+//#define glGenVertexArrays glGenVertexArraysOES
+//#define glDeleteVertexArrays glDeleteVertexArraysOES
+//#define glUnmapBuffer glUnmapBufferOES
+//#define glBindVertexArray glBindVertexArrayOES
+//#define GL_DEPTH24_STENCIL8 GL_DEPTH24_STENCIL8_OES
 
 #include <Elementary_GL_Helpers.h>
 
