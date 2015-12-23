@@ -5418,7 +5418,7 @@ bool js_cocos2dx_PolygonInfo_getTriaglesCount(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_PolygonInfo_getTriaglesCount : Invalid Native Object");
     if (argc == 0)
     {
-        const unsigned int ret = cobj->getTriaglesCount();
+        const unsigned int ret = cobj->getTrianglesCount();
         jsval jsret = JSVAL_NULL;
         jsret = uint32_to_jsval(cx, ret);
         args.rval().set(jsret);
