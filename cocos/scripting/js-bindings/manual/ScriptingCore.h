@@ -508,6 +508,11 @@ public:
      */
     virtual void unrootObject(cocos2d::Ref* ref) override;
 
+    /**
+     * Calls the Garbage Collector
+     */
+    virtual void garbageCollect() override;
+
 private:
     void string_report(JS::HandleValue val);
     void initRegister();

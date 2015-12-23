@@ -13,8 +13,6 @@ var MySprite = cc.Sprite.extend({
 //
 function runScene1(sender) {
 
-    cc.sys.garbageCollect();
-
     var scene = new cc.Scene();
 
     for (i = 0; i < 5; i++) {
@@ -39,8 +37,6 @@ function runScene1(sender) {
 // Scene Test 2
 //
 function runScene2(sender) {
-
-    cc.sys.garbageCollect();
 
     var scene = new cc.Scene();
 
@@ -67,7 +63,6 @@ function runScene2(sender) {
 //
 function runScene3(sender) {
 
-    cc.sys.garbageCollect();
     var scene = new cc.Scene();
 
     var fontDef = new cc.FontDefinition();
@@ -120,7 +115,6 @@ function runScene3(sender) {
 
 function runScene4(sender) {
 
-        cc.sys.garbageCollect();
         var scene = new cc.Scene();
 
         var actionTo = cc.jumpTo(2, cc.p(300, 300), 50, 4);
@@ -164,8 +158,6 @@ function runScene4(sender) {
 // Main Entry point
 //
 function runMain() {
-
-    // cc.sys.garbageCollect();
 
     var scene = new cc.Scene();
 

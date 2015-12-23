@@ -78,7 +78,7 @@
 
 // EXPERIMENTAL: Enable this in order to get rid of retain/release
 // when using the Garbage Collector
-#define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 0
+#define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 1
 
 using namespace cocos2d;
 
@@ -1668,7 +1668,7 @@ void ScriptingCore::rootObject(Ref* ref)
         JS::AddNamedObjectRoot(cx, &proxy->obj, typeid(*ref).name());
         ref->_rooted = true;
     }
-    else CCLOG("rootObject: BUG. native not found: %p",  ref);
+    else CCLOG("rootObject: BUG. native not found: %p (%s)",  ref, typeid(*ref).name());
 }
 
 void ScriptingCore::unrootObject(Ref* ref)
@@ -1679,7 +1679,19 @@ void ScriptingCore::unrootObject(Ref* ref)
         JS::RemoveObjectRoot(cx, &proxy->obj);
         ref->_rooted = false;
     }
-    else CCLOG("unrootObject: BUG. native not found: %p",  ref);
+    else CCLOG("unrootObject: BUG. native not found: %p (%s)",  ref, typeid(*ref).name());
+}
+
+void ScriptingCore::garbageCollect()
+{
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32
+    auto runtime = JS_GetRuntime(_cx);
+    // twice: yep, call it twice since this is a generational GC
+    // and we want to collect as much as possible when this is being called
+    // from replaceScene().
+    JS_GC(runtime);
+    JS_GC(runtime);
+#endif
 }
 
 #pragma mark - Debug
@@ -2224,11 +2236,13 @@ void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj)
     {
         auto ref = static_cast<cocos2d::Ref*>(proxy->ptr);
 
+        CCLOG("jsb_ref_finalize: %s", typeid(*ref).name());
+
         jsb_remove_proxy(proxy);
         if (ref)
             ref->release();
     }
-    else CCLOG("jsb_ref_finalize: BUG: proxy not found for %p (%s)", obj, JS_GetClass(obj)->name);
+//    else CCLOG("jsb_ref_finalize: BUG: proxy not found for %p (%s)", obj, JS_GetClass(obj)->name);
 #else
 //    CCLOG("jsb_ref_finalize: JSObject address = %p", obj);
 #endif
