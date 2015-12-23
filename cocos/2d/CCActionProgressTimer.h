@@ -48,7 +48,7 @@ public:
      * @brief Create and initializes with a duration and a destination percentage.
      * @param duration Specify the duration of the ProgressTo action. It's a value in seconds.
      * @param percent Specify the destination percentage.
-     * @return If the creation sucess, return a pointer of ProgressTo action; otherwise, return nil.
+     * @return If the creation success, return a pointer of ProgressTo action; otherwise, return nil.
      */
     static ProgressTo* create(float duration, float percent);
 
@@ -68,7 +68,7 @@ CC_CONSTRUCTOR_ACCESS:
      * @brief Initializes with a duration and destination percentage. 
      * @param duration Specify the duration of the ProgressTo action. It's a value in seconds.
      * @param percent Specify the destination percentage.
-     * @return If the creation sucess, return true; otherwise, return false.
+     * @return If the creation success, return true; otherwise, return false.
      */
     bool initWithDuration(float duration, float percent);
 
@@ -92,7 +92,7 @@ public:
      * @param duration Specify the duration of the ProgressFromTo action. It's a value in seconds.
      * @param fromPercentage Specify the source percentage.
      * @param toPercentage Specify the destination percentage.
-     * @return If the creation sucess, return a pointer of ProgressFromTo action; otherwise, return nil.
+     * @return If the creation success, return a pointer of ProgressFromTo action; otherwise, return nil.
      */
     static ProgressFromTo* create(float duration, float fromPercentage, float toPercentage);
 
@@ -113,7 +113,7 @@ CC_CONSTRUCTOR_ACCESS:
      * @param duration Specify the duration of the ProgressFromTo action. It's a value in seconds.
      * @param fromPercentage Specify the source percentage.
      * @param toPercentage Specify the destination percentage.
-     * @return If the creation sucess, return true; otherwise, return false.
+     * @return If the creation success, return true; otherwise, return false.
      */
     bool initWithDuration(float duration, float fromPercentage, float toPercentage);
 

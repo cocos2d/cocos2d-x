@@ -118,8 +118,8 @@ public:
     /**
      * @js NA
      * @lua NA
-     */
-    virtual void updateQuadWithParticle(tParticle* particle, const Vec2& newPosition) override;
+     */    
+    virtual void updateParticleQuads() override;
     /**
      * @js NA
      * @lua NA

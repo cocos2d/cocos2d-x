@@ -116,8 +116,7 @@ int iterPath(const char *fpath, const struct stat *sb, int typeflag)
 {
     if(typeflag == FTW_F)
     {
-        auto len = strlen(fpath);
-        if (len > 9 && strcmp(".material", fpath + len - 9) == 0)
+        if (FileUtils::getInstance()->getFileExtension(fpath) == ".material")
             PUMaterialCache::Instance()->loadMaterials(fpath);
     }
     return 0;
@@ -152,9 +151,9 @@ bool PUMaterialCache::loadMaterialsFromSearchPaths( const std::string &fileFolde
     std::string seg("/");
     while ((fileName = AAssetDir_getNextFileName(dir)) != nullptr)
     {
-        std::string fullpath = fileFolder + seg + std::string(fileName);
-        if (strlen(fileName) > 9 && (strcmp(".material", fileName + strlen(fileName) - 9) == 0))
+        if (FileUtils::getInstance()->getFileExtension(fileName) == ".material")
         {
+            std::string fullpath = fileFolder + seg + std::string(fileName);
             loadMaterials(fullpath);
         }
     }
@@ -179,9 +178,9 @@ bool PUMaterialCache::loadMaterialsFromSearchPaths( const std::string &fileFolde
             continue;
         }
 
-        std::string fullpath = fileFolder + "/" + file->d_name;
-        if (strlen(file->d_name) > 9 && (strcmp(".material", file->d_name + strlen(file->d_name) - 9) == 0))
+        if (FileUtils::getInstance()->getFileExtension(file->d_name) == ".material")
         {
+            std::string fullpath = fileFolder + "/" + file->d_name;
             CCLOG("%s", fullpath.c_str());
             loadMaterials(fullpath);
             state = true;

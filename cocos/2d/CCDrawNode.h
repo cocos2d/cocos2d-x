@@ -38,6 +38,8 @@
 
 NS_CC_BEGIN
 
+static const int DEFAULT_LINE_WIDTH = 2;
+
 class PointArray;
 /**
  * @addtogroup _2d
@@ -56,7 +58,7 @@ public:
      *
      * @return Return an autorelease object.
      */
-    static DrawNode* create();
+    static DrawNode* create(int defaultLineWidth = DEFAULT_LINE_WIDTH);
     
     /** Draw a point.
      *
@@ -143,7 +145,7 @@ public:
      * @param origin The origin of the bezier path.
      * @param control The control of the bezier path.
      * @param destination The destination of the bezier path.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @param color Set the quad bezier color.
      */
     void drawQuadBezier(const Vec2 &origin, const Vec2 &control, const Vec2 &destination, unsigned int segments, const Color4F &color);
@@ -154,7 +156,7 @@ public:
      * @param control1 The first control of the bezier path.
      * @param control2 The second control of the bezier path.
      * @param destination The destination of the bezier path.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @param color Set the cubic bezier color.
      */
     void drawCubicBezier(const Vec2 &origin, const Vec2 &control1, const Vec2 &control2, const Vec2 &destination, unsigned int segments, const Color4F &color);
@@ -163,7 +165,7 @@ public:
      *
      * @param config A array point.
      * @param tension The tension of the spline.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @param color Set the Spline color.
      */
     void drawCardinalSpline(PointArray *config, float tension,  unsigned int segments, const Color4F &color);
@@ -171,7 +173,7 @@ public:
     /** Draws a Catmull Rom path.
      *
      * @param points A point array  of control point.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @param color The Catmull Rom color.
      */
     void drawCatmullRom(PointArray *points, unsigned int segments, const Color4F &color);
@@ -274,7 +276,7 @@ public:
      * @param from The origin of the bezier path.
      * @param control The control of the bezier path.
      * @param to The destination of the bezier path.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @param color The quadratic bezier color.
      * @js NA
      */
@@ -298,23 +300,26 @@ public:
     /**
      * @js NA
      */
-	void onDraw(const Mat4 &transform, uint32_t flags);
+    virtual void onDraw(const Mat4 &transform, uint32_t flags);
     /**
      * @js NA
      */
-	void onDrawGLLine(const Mat4 &transform, uint32_t flags);
+    virtual void onDrawGLLine(const Mat4 &transform, uint32_t flags);
     /**
      * @js NA
      */
-    void onDrawGLPoint(const Mat4 &transform, uint32_t flags);
+    virtual void onDrawGLPoint(const Mat4 &transform, uint32_t flags);
     
     // Overrides
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
     void setLineWidth(int lineWidth);
-    
+
+    // Get CocosStudio guide lines width.
+    float getLineWidth();
+
 CC_CONSTRUCTOR_ACCESS:
-    DrawNode();
+    DrawNode(int lineWidth = DEFAULT_LINE_WIDTH);
     virtual ~DrawNode();
     virtual bool init() override;
 
@@ -355,6 +360,7 @@ protected:
     
     int         _lineWidth;
 
+    int  _defaultLineWidth;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);
 };

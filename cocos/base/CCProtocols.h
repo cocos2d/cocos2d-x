@@ -103,7 +103,7 @@ public:
     
     /**
      * Changes the OpacityModifyRGB property.
-     * If thie property is set to true, then the rendered color will be affected by opacity.
+     * If this property is set to true, then the rendered color will be affected by opacity.
      * Normally, r = r * opacity/255, g = g * opacity/255, b = b * opacity/255.
      *
      * @param value If true, then the opacity will be applied as: glColor(R,G,B,opacity);
@@ -208,14 +208,14 @@ public:
     /**
      * Returns the currently used texture
      *
-     * @return  The texture that is currenlty being used.
+     * @return  The texture that is currently being used.
      * @js NA
      * @lua NA
      */
     virtual Texture2D* getTexture() const = 0;
 
     /**
-     * Sets a new texuture. It will be retained.
+     * Sets a new texture. It will be retained.
      *
      * @param   texture A valid Texture2D object, which will be applied to this sprite object.
      * @js NA

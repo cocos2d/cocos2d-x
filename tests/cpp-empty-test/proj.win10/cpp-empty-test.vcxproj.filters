@@ -5,18 +5,6 @@
       <UniqueIdentifier>3d6eacf1-453c-497e-abc1-ba958539b0a5</UniqueIdentifier>
       <Extensions>bmp;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
     </Filter>
-    <Image Include="Assets\Logo.scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\SmallLogo.scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\StoreLogo.scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\SplashScreen.scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
     <Filter Include="Classes">
       <UniqueIdentifier>{482632c3-0bc4-4037-b656-2646b14d761f}</UniqueIdentifier>
     </Filter>
@@ -54,11 +42,6 @@
     <ClInclude Include="..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\WideLogo.scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
@@ -74,5 +57,28 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\LockScreenLogo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square150x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Wide310x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>

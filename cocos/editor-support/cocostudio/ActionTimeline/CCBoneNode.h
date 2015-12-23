@@ -49,7 +49,7 @@ public:
     virtual void addChild(cocos2d::Node* child, int localZOrder, const std::string &name) override;
     virtual void addChild(cocos2d::Node* child, int localZOrder, int tag) override;
 
-    // remove child, and remove child from bone list and skeleton's sub bone map or rmeove it from skin list
+    // remove child, and remove child from bone list and skeleton's sub bone map or remove it from skin list
     virtual void removeChild(Node* child, bool cleanup) override;
 
     // get child bone list
@@ -126,7 +126,7 @@ public:
     virtual void setDebugDrawColor(const cocos2d::Color4F &color);
     virtual cocos2d::Color4F getDebugDrawColor() const { return _rackColor; }
 
-    // get bone's bondingbox, depends on getVisibleSkinsRect, apply on node to parent's tranform
+    // get bone's bounding box, depends on getVisibleSkinsRect, apply on node to parent's transform
     cocos2d::Rect getBoundingBox() const override;
 
     /**
@@ -137,19 +137,19 @@ public:
     // transform & draw
     virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
 
-    // set localzorder, and dirty the debugdraw to make debugdraw's render layer right
+    // set local zorder, and dirty the debugdraw to make debugdraw's render layer right
     virtual void setLocalZOrder(int localZOrder) override;
 
-    // set name, and repalace the subbone map in skeleton
+    // set name, and replace the subbone map in skeleton
     virtual void setName(const std::string& name) override;
 
     // set visible, and dirty the debugdraw to make debugdraw's render layer right
     virtual void setVisible(bool visible) override;
 
-    // set contentsize, and reculate debugdraw
+    // set contentsize, and recalculate debugdraw
     virtual void setContentSize(const cocos2d::Size& contentSize) override;
 
-    // set localzorder, and reculate debugdraw
+    // set localzorder, and recalculate debugdraw
     virtual void setAnchorPoint(const cocos2d::Vec2& anchorPoint) override;
     
 #ifdef CC_STUDIO_ENABLED_VIEW
@@ -185,6 +185,12 @@ protected:
     virtual void updateVertices();
     virtual void updateColor() override;
 
+    // bone's color and opacity cannot cascade to bone
+    virtual void updateDisplayedColor(const cocos2d::Color3B& parentColor) override;
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
+    virtual void disableCascadeOpacity() override;
+    virtual void disableCascadeColor() override;
+
     virtual void onDraw(const cocos2d::Mat4 &transform, uint32_t flags); 
 
     // override Node::visit, just visit bones in children
@@ -194,7 +200,7 @@ protected:
     // for batch bone's draw to _rootSkeleton
     virtual void batchBoneDrawToSkeleton(BoneNode* bone) const; 
 
-    // a help funciton for SkeletonNode
+    // a help function for SkeletonNode
     // @param bone, visit bone's skins
     virtual void visitSkins(cocos2d::Renderer* renderer, BoneNode* bone) const;
 

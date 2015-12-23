@@ -44,10 +44,10 @@ isVertsOwner(true),
 rect()
 {
     filename = other.filename;
-    isVertsOwner = other.isVertsOwner;
+    isVertsOwner = true;
     rect = other.rect;
-    triangles.verts = new V3F_C4B_T2F[other.triangles.vertCount];
-    triangles.indices = new unsigned short[other.triangles.indexCount];
+    triangles.verts = new (std::nothrow) V3F_C4B_T2F[other.triangles.vertCount];
+    triangles.indices = new (std::nothrow) unsigned short[other.triangles.indexCount];
     triangles.vertCount = other.triangles.vertCount;
     triangles.indexCount = other.triangles.indexCount;
     memcpy(triangles.verts, other.triangles.verts, other.triangles.vertCount*sizeof(V3F_C4B_T2F));
@@ -60,10 +60,10 @@ PolygonInfo& PolygonInfo::operator= (const PolygonInfo& other)
     {
         releaseVertsAndIndices();
         filename = other.filename;
-        isVertsOwner = other.isVertsOwner;
+        isVertsOwner = true;
         rect = other.rect;
-        triangles.verts = new V3F_C4B_T2F[other.triangles.vertCount];
-        triangles.indices = new unsigned short[other.triangles.indexCount];
+        triangles.verts = new (std::nothrow) V3F_C4B_T2F[other.triangles.vertCount];
+        triangles.indices = new (std::nothrow) unsigned short[other.triangles.indexCount];
         triangles.vertCount = other.triangles.vertCount;
         triangles.indexCount = other.triangles.indexCount;
         memcpy(triangles.verts, other.triangles.verts, other.triangles.vertCount*sizeof(V3F_C4B_T2F));
@@ -85,6 +85,17 @@ void PolygonInfo::setQuad(V3F_C4B_T2F_Quad *quad)
     triangles.vertCount = 4;
     triangles.indexCount = 6;
     triangles.verts = (V3F_C4B_T2F*)quad;
+}
+
+void PolygonInfo::setTriangles(TrianglesCommand::Triangles other)
+{
+    this->releaseVertsAndIndices();
+    isVertsOwner = false;
+    
+    this->triangles.vertCount = other.vertCount;
+    this->triangles.indexCount = other.indexCount;
+    this->triangles.verts = other.verts;
+    this->triangles.indices = other.indices;
 }
 
 void PolygonInfo::releaseVertsAndIndices()
@@ -137,7 +148,7 @@ AutoPolygon::AutoPolygon(const std::string &filename)
 ,_scaleFactor(0)
 {
     _filename = filename;
-    _image = new Image();
+    _image = new (std::nothrow) Image();
     _image->initWithImageFile(filename);
     CCASSERT(_image->getRenderFormat()==Texture2D::PixelFormat::RGBA8888, "unsupported format, currently only supports rgba8888");
     _data = _image->getData();
@@ -304,7 +315,7 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
                  +---+---+
                  |   | 8 |
                  +---+---+
-                 this should normaly go UP, but if we already been here, we go down
+                 this should normally go UP, but if we already been here, we go down
                 */
                 //find index from xy;
                 i = getIndexFromPos(curx, cury);
@@ -367,7 +378,7 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
         }
         else if(problem)
         {
-            //TODO: we triangulation cannot work collineer points, so we need to modify same point a little
+            //TODO: we triangulation cannot work collinear points, so we need to modify same point a little
             //TODO: maybe we can detect if we go into a hole and coming back the hole, we should extract those points and remove them
             _points.push_back(Vec2((float)(curx- rect.origin.x) / _scaleFactor, (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor));
         }
@@ -473,7 +484,7 @@ std::vector<Vec2> AutoPolygon::reduce(const std::vector<Vec2>& points, const Rec
 std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const cocos2d::Rect &rect, const float& epsilon)
 {
     auto size = points.size();
-    // if there are less than 3 points, then we have nothig
+    // if there are less than 3 points, then we have nothing
     if(size<3)
     {
         log("AUTOPOLYGON: cannot expand points for %s with less than 3 points, e: %f", _filename.c_str(), epsilon);
@@ -539,15 +550,15 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
     std::vector<p2t::Point*> p2points;
     for(std::vector<Vec2>::const_iterator it = points.begin(); it<points.end(); it++)
     {
-        p2t::Point * p = new p2t::Point(it->x, it->y);
+        p2t::Point * p = new (std::nothrow) p2t::Point(it->x, it->y);
         p2points.push_back(p);
     }
     p2t::CDT cdt(p2points);
     cdt.Triangulate();
     std::vector<p2t::Triangle*> tris = cdt.GetTriangles();
     
-    V3F_C4B_T2F* verts= new V3F_C4B_T2F[points.size()];
-    unsigned short* indices = new unsigned short[tris.size()*3];
+    V3F_C4B_T2F* verts= new (std::nothrow) V3F_C4B_T2F[points.size()];
+    unsigned short* indices = new (std::nothrow) unsigned short[tris.size()*3];
     unsigned short idx = 0;
     unsigned short vdx = 0;
 
@@ -570,7 +581,7 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
             }
             if(found)
             {
-                //if we found the same vertice, don't add to verts, but use the same vert with indices
+                //if we found the same vertex, don't add to verts, but use the same vertex with indices
                 indices[idx] = j;
                 idx++;
             }
@@ -621,7 +632,7 @@ void AutoPolygon::calculateUV(const Rect& rect, V3F_C4B_T2F* verts, const ssize_
     auto end = &verts[count];
     for(auto i = verts; i != end; i++)
     {
-        // for every point, offcset with the centerpoint
+        // for every point, offset with the center point
         float u = (i->vertices.x*_scaleFactor + rect.origin.x) / texWidth;
         float v = (rect.origin.y+rect.size.height - i->vertices.y*_scaleFactor) / texHeight;
         i->texCoords.u = u;

@@ -353,6 +353,8 @@ public:
     virtual PUParticleSystem3D* clone();
     virtual void copyAttributesTo(PUParticleSystem3D* system);
 
+    bool initSystem(const std::string &filePath);
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticleSystem3D();
     virtual ~PUParticleSystem3D();
@@ -371,7 +373,7 @@ protected:
     void executeEmitParticles(PUEmitter* emitter, unsigned requested, float elapsedTime);
     void emitParticles(ParticlePool &pool, PUEmitter* emitter, unsigned requested, float elapsedTime);
     void processParticle(ParticlePool &pool, bool &firstActiveParticle, bool &firstParticle, float elapsedTime);
-    void processMotion(PUParticle3D* particle, float timeElapsed, bool firstParticle);
+    void processMotion(PUParticle3D* particle, float timeElapsed, const Vec3 &scl, bool firstParticle);
     void notifyRescaled(const Vec3 &scl);
     void initParticleForEmission(PUParticle3D* particle);
     void initParticleForExpiration(PUParticle3D* particle, float timeElapsed);
@@ -379,7 +381,6 @@ protected:
     
     inline bool isExpired(PUParticle3D* particle, float timeElapsed);
 
-    bool initSystem(const std::string &filePath);
     static void convertToUnixStylePath(std::string &path);
 
 protected:

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="physics">
@@ -392,9 +392,6 @@
       <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="CCDrawNode.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
-    <ClCompile Include="CCFont.cpp">
       <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="CCFontAtlas.cpp">
@@ -826,6 +823,9 @@
     <ClCompile Include="..\3d\CCSprite3DMaterial.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\3d\CCMotionStreak3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\extensions\assets-manager\AssetsManager.cpp">
       <Filter>extension\AssetsManager</Filter>
     </ClCompile>
@@ -932,6 +932,9 @@
       <Filter>ui\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
     <ClCompile Include="..\ui\UIPageView.cpp">
+      <Filter>ui\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui\UIPageViewIndicator.cpp">
       <Filter>ui\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
     <ClCompile Include="..\ui\UIScrollView.cpp">
@@ -1360,9 +1363,6 @@
       <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="..\3d\CCSkybox.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCTextureCube.cpp">
       <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extensions\Particle3D\PU\CCPUAffector.cpp">
@@ -1896,6 +1896,9 @@
     <ClCompile Include="..\base\CCNinePatchImageParser.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\CCStencilStateManager.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
     <ClCompile Include="..\base\CCNinePatchImageParser.cpp" />
     <ClCompile Include="..\renderer\CCFrameBuffer.cpp">
       <Filter>renderer</Filter>
@@ -1928,9 +1931,16 @@
     <ClCompile Include="..\network\CCDownloader.cpp">
       <Filter>network\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\network\CCDownloaderImpl.cpp">
-      <Filter>network\Source Files</Filter>
+    <ClCompile Include="CCCameraBackgroundBrush.cpp">
+      <Filter>2d</Filter>
     </ClCompile>
+    <ClCompile Include="..\renderer\CCTextureCube.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\network\CCDownloader-curl.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -2085,9 +2095,6 @@
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="CCLabelBMFont.h">
-      <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="CCLabelTextFormatter.h">
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="CCLabelTTF.h">
@@ -2544,6 +2551,9 @@
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\3d\CCSprite3DMaterial.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCMotionStreak3D.h">
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\3d\cocos3d.h">
@@ -3181,9 +3191,6 @@
     <ClInclude Include="..\3d\CCSkybox.h">
       <Filter>3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\3d\CCTextureCube.h">
-      <Filter>3d</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\CCPlatformConfig.h">
       <Filter>platform</Filter>
     </ClInclude>
@@ -3724,6 +3731,9 @@
     <ClInclude Include="..\base\CCNinePatchImageParser.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="..\base\CCStencilStateManager.h">
+      <Filter>base</Filter>
+    </ClInclude>
     <ClInclude Include="..\base\CCNinePatchImageParser.h" />
     <ClInclude Include="..\renderer\CCFrameBuffer.h">
       <Filter>renderer</Filter>
@@ -3764,6 +3774,19 @@
     </ClInclude>
     <ClInclude Include="..\network\CCIDownloaderImpl.h">
       <Filter>network\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CCCameraBackgroundBrush.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCTextureCube.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\CCDownloader-curl.h">
+      <Filter>network\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h" />
+    <ClInclude Include="..\ui\UIAbstractCheckButton.h">
+      <Filter>ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

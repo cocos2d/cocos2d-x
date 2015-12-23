@@ -26,8 +26,11 @@ package org.cocos2dx.lib;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -103,8 +106,14 @@ public class Cocos2dxEditBox extends EditText {
     private final int kKeyboardReturnTypeGo = 4;
 
     private int mInputFlagConstraints;
-    private int mInputModeContraints;
+    private int mInputModeConstraints;
     private  int mMaxLength;
+
+    //OpenGL view scaleX
+    private  float mScaleX;
+
+
+
 
     public  Cocos2dxEditBox(Context context){
         super(context);
@@ -121,6 +130,15 @@ public class Cocos2dxEditBox extends EditText {
         this.setLayoutParams(layoutParams);
     }
 
+    public float getOpenGLViewScaleX() {
+        return mScaleX;
+    }
+
+    public void setOpenGLViewScaleX(float mScaleX) {
+        this.mScaleX = mScaleX;
+    }
+
+
     public  void setMaxLength(int maxLength){
         this.mMaxLength = maxLength;
 
@@ -128,7 +146,7 @@ public class Cocos2dxEditBox extends EditText {
     }
 
     public void setMultilineEnabled(boolean flag){
-        this.mInputModeContraints |= InputType.TYPE_TEXT_FLAG_MULTI_LINE;
+        this.mInputModeConstraints |= InputType.TYPE_TEXT_FLAG_MULTI_LINE;
     }
 
     public void setReturnType(int returnType) {
@@ -158,32 +176,32 @@ public class Cocos2dxEditBox extends EditText {
 
         switch (inputMode) {
             case kEditBoxInputModeAny:
-                this.mInputModeContraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE;
+                this.mInputModeConstraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE;
                 break;
             case kEditBoxInputModeEmailAddr:
-                this.mInputModeContraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
+                this.mInputModeConstraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
                 break;
             case kEditBoxInputModeNumeric:
-                this.mInputModeContraints = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED;
+                this.mInputModeConstraints = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED;
                 break;
             case kEditBoxInputModePhoneNumber:
-                this.mInputModeContraints = InputType.TYPE_CLASS_PHONE;
+                this.mInputModeConstraints = InputType.TYPE_CLASS_PHONE;
                 break;
             case kEditBoxInputModeUrl:
-                this.mInputModeContraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI;
+                this.mInputModeConstraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI;
                 break;
             case kEditBoxInputModeDecimal:
-                this.mInputModeContraints = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED;
+                this.mInputModeConstraints = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED;
                 break;
             case kEditBoxInputModeSingleLine:
-                this.mInputModeContraints = InputType.TYPE_CLASS_TEXT;
+                this.mInputModeConstraints = InputType.TYPE_CLASS_TEXT;
                 break;
             default:
 
                 break;
         }
 
-        this.setInputType(this.mInputModeContraints | this.mInputFlagConstraints);
+        this.setInputType(this.mInputModeConstraints | this.mInputFlagConstraints);
 
     }
 
@@ -210,6 +228,8 @@ public class Cocos2dxEditBox extends EditText {
         switch (inputFlag) {
             case kEditBoxInputFlagPassword:
                 this.mInputFlagConstraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
+                this.setTypeface(Typeface.DEFAULT);
+                this.setTransformationMethod(new PasswordTransformationMethod());
                 break;
             case kEditBoxInputFlagSensitive:
                 this.mInputFlagConstraints = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
@@ -227,6 +247,6 @@ public class Cocos2dxEditBox extends EditText {
                 break;
         }
 
-        this.setInputType(this.mInputFlagConstraints | this.mInputModeContraints);
+        this.setInputType(this.mInputFlagConstraints | this.mInputModeConstraints);
     }
 }

@@ -31,6 +31,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libjscocos2d", "..\cocos\sc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js-tests", "..\tests\js-tests\project\proj.win32\js-tests.vcxproj", "{D0F06A44-A245-4D13-A498-0120C203B539}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "performance-tests", "..\tests\performance-tests\proj.win32\performance-tests.vcxproj", "{2778C02D-DDD0-4A92-A6AA-C3E2B7EDE3FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -111,6 +113,12 @@ Global
 		{D0F06A44-A245-4D13-A498-0120C203B539}.Release|ARM.ActiveCfg = Release|Win32
 		{D0F06A44-A245-4D13-A498-0120C203B539}.Release|Win32.ActiveCfg = Release|Win32
 		{D0F06A44-A245-4D13-A498-0120C203B539}.Release|Win32.Build.0 = Release|Win32
+		{2778C02D-DDD0-4A92-A6AA-C3E2B7EDE3FF}.Debug|ARM.ActiveCfg = Debug|Win32
+		{2778C02D-DDD0-4A92-A6AA-C3E2B7EDE3FF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2778C02D-DDD0-4A92-A6AA-C3E2B7EDE3FF}.Debug|Win32.Build.0 = Debug|Win32
+		{2778C02D-DDD0-4A92-A6AA-C3E2B7EDE3FF}.Release|ARM.ActiveCfg = Release|Win32
+		{2778C02D-DDD0-4A92-A6AA-C3E2B7EDE3FF}.Release|Win32.ActiveCfg = Release|Win32
+		{2778C02D-DDD0-4A92-A6AA-C3E2B7EDE3FF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

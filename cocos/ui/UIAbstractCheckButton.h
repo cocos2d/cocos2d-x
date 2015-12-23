@@ -34,6 +34,7 @@ THE SOFTWARE.
  */
 NS_CC_BEGIN
 class Sprite;
+struct CC_DLL ResourceData;
 
 namespace ui {
     
@@ -131,6 +132,42 @@ public:
      */
     float getZoomScale()const;
     
+    /**
+     * @brief Return the sprite instance of background
+     * @return the sprite instance of background.
+     */
+    Sprite* getRendererBackground() const { return _backGroundBoxRenderer; }
+    
+    /**
+     * @brief Return the sprite instance of background when selected
+     * @return the sprite instance of background when selected
+     */
+    Sprite* getRendererBackgroundSelected() const { return _backGroundSelectedBoxRenderer; }
+    
+    /**
+     * @brief Return the sprite instance of front cross
+     * @return the sprite instance of front cross
+     */
+    Sprite* getRendererFrontCross() const { return _frontCrossRenderer; }
+    
+    /**
+     * @brief Return the sprite instance of background when disabled
+     * @return the sprite instance of background when disabled
+     */
+    Sprite* getRendererBackgroundDisabled() const { return _backGroundBoxDisabledRenderer; }
+    
+    /**
+     * @brief Return the sprite instance of front cross when disabled
+     * @return the sprite instance of front cross when disabled
+     */
+    Sprite* getRendererFrontCrossDisabled() const { return _frontCrossDisabledRenderer; }
+
+    ResourceData getBackNormalFile();
+    ResourceData getBackPressedFile();
+    ResourceData getBackDisabledFile();
+    ResourceData getCrossNormalFile();
+    ResourceData getCrossDisabledFile();
+
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     virtual bool init(const std::string& backGround,
@@ -207,6 +244,12 @@ protected:
     bool _frontCrossRendererAdaptDirty;
     bool _backGroundBoxDisabledRendererAdaptDirty;
     bool _frontCrossDisabledRendererAdaptDirty;
+
+    std::string _backGroundFileName;
+    std::string _backGroundSelectedFileName;
+    std::string _frontCrossFileName;
+    std::string _backGroundDisabledFileName;
+    std::string _frontCrossDisabledFileName;
 };
     
 }

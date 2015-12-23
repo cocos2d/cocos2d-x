@@ -262,7 +262,7 @@ var PauseTest = ActionManagerTest.extend({
 //------------------------------------------------------------------
 var RemoveTest = ActionManagerTest.extend({
     title:function () {
-        return "Remove Test";
+        return "Stop Action Test";
     },
     onEnter:function () {
         //----start3----onEnter

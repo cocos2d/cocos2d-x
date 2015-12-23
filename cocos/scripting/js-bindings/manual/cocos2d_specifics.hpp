@@ -33,13 +33,13 @@ class JSScheduleWrapper;
 // To debug this, you could refer to JSScheduleWrapper::dump function.
 // It will prove that i'm right. :)
 typedef struct jsScheduleFunc_proxy {
-    JS::Heap<JSObject*> jsfuncObj;
+    JSObject* jsfuncObj;
     cocos2d::__Array*  targets;
     UT_hash_handle hh;
 } schedFunc_proxy_t;
 
 typedef struct jsScheduleTarget_proxy {
-    JS::Heap<JSObject*> jsTargetObj;
+    JSObject* jsTargetObj;
     cocos2d::__Array*  targets;
     UT_hash_handle hh;
 } schedTarget_proxy_t;
@@ -87,8 +87,7 @@ inline js_type_class_t *js_get_type_from_native(T* native_obj) {
  */
 template<class T>
 inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
-    js_proxy_t *proxy;
-    HASH_FIND_PTR(_native_js_global_ht, &native_obj, proxy);
+    js_proxy_t *proxy = jsb_get_native_proxy(native_obj);
     if (!proxy) {
         js_type_class_t *typeProxy = js_get_type_from_native<T>(native_obj);
         // Return NULL if can't find its type rather than making an assert.
@@ -100,20 +99,55 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
         
         JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 
-        JS::RootedObject proto(cx, const_cast<JSObject*>(typeProxy->proto.get()));
-        JS::RootedObject parent(cx, const_cast<JSObject*>(typeProxy->parentProto.get()));
+        JS::RootedObject proto(cx, typeProxy->proto.ref().get());
+        JS::RootedObject parent(cx, typeProxy->parentProto.ref().get());
         JS::RootedObject js_obj(cx, JS_NewObject(cx, typeProxy->jsclass, proto, parent));
         proxy = jsb_new_proxy(native_obj, js_obj);
 #ifdef DEBUG
-        AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
+        JS::AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
 #else
-        AddObjectRoot(cx, &proxy->obj);
+        JS::AddObjectRoot(cx, &proxy->obj);
 #endif
         return proxy;
     } else {
         return proxy;
     }
     return NULL;
+}
+
+/**
+ * Gets or creates a JSObject based on native_obj.
+ If native_obj is subclass of Ref, it will use the jsb_ref functions.
+ Otherwise it will Root the newly created JSObject
+ */
+template<class T>
+JSObject* js_get_or_create_jsobject(JSContext *cx, typename std::enable_if<!std::is_base_of<cocos2d::Ref,T>::value,T>::type *native_obj)
+{
+//    CCLOG("js_get_or_create_jsobject NO REF: %s", typeid(native_obj).name());
+    js_proxy_t *proxy = jsb_get_native_proxy(native_obj);
+    if (!proxy)
+    {
+        js_type_class_t* typeClass = js_get_type_from_native<T>(native_obj);
+        JS::RootedObject proto(cx, typeClass->proto.ref().get());
+        JS::RootedObject parent(cx, typeClass->parentProto.ref().get());
+        JS::RootedObject js_obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+        proxy = jsb_new_proxy(native_obj, js_obj);
+
+        JS::AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
+    }
+    return proxy->obj;
+}
+
+/**
+ * Gets or creates a JSObject based on native_obj.
+ If native_obj is subclass of Ref, it will use the jsb_ref functions.
+ Otherwise it will Root the newly created JSObject
+ */
+template<class T>
+JSObject* js_get_or_create_jsobject(JSContext *cx, typename std::enable_if<std::is_base_of<cocos2d::Ref,T>::value,T>::type *native_obj)
+{
+    js_type_class_t* typeClass = js_get_type_from_native<T>(native_obj);
+    return jsb_ref_get_or_create_jsobject(cx, native_obj, typeClass, typeid(*native_obj).name());
 }
 
 JS::Value anonEvaluate(JSContext *cx, JS::HandleObject thisObj, const char* string);
@@ -124,24 +158,24 @@ class JSCallbackWrapper: public cocos2d::Ref {
 public:
     JSCallbackWrapper();
     virtual ~JSCallbackWrapper();
-    void setJSCallbackFunc(jsval obj);
-    void setJSCallbackThis(jsval thisObj);
-    void setJSExtraData(jsval data);
+    void setJSCallbackFunc(JS::HandleValue callback);
+    void setJSCallbackThis(JS::HandleValue thisObj);
+    void setJSExtraData(JS::HandleValue data);
     
-    const jsval& getJSCallbackFunc() const;
-    const jsval& getJSCallbackThis() const;
-    const jsval& getJSExtraData() const;
+    const jsval getJSCallbackFunc() const;
+    const jsval getJSCallbackThis() const;
+    const jsval getJSExtraData() const;
 protected:
-    JS::Heap<JS::Value> _jsCallback;
-    JS::Heap<JS::Value> _jsThisObj;
-    JS::Heap<JS::Value> _extraData;
+    mozilla::Maybe<JS::PersistentRootedValue> _jsCallback;
+    mozilla::Maybe<JS::PersistentRootedValue> _jsThisObj;
+    mozilla::Maybe<JS::PersistentRootedValue> _extraData;
 };
 
 
 class JSScheduleWrapper: public JSCallbackWrapper {
     
 public:
-    JSScheduleWrapper() : _pTarget(NULL), _pPureJSTarget(NULL), _priority(0), _isUpdateSchedule(false) {}
+    JSScheduleWrapper();
     virtual ~JSScheduleWrapper();
 
     static void setTargetForSchedule(JS::HandleValue sched, JSScheduleWrapper *target);
@@ -178,7 +212,7 @@ public:
     
 protected:
     Ref* _pTarget;
-    JS::Heap<JSObject*> _pPureJSTarget;
+    mozilla::Maybe<JS::PersistentRootedObject> _pPureJSTarget;
     int _priority;
     bool _isUpdateSchedule;
 };
@@ -197,7 +231,7 @@ public:
     // Remove the delegate by the key (pJSObj).
     static void removeDelegateForJSObject(JSObject* pJSObj);
 
-    void setJSObject(JSObject *obj);
+    void setJSObject(JS::HandleObject obj);
     void registerStandardDelegate(int priority);
     void registerTargetedDelegate(int priority, bool swallowsTouches);
     // unregister touch delegate.
@@ -217,11 +251,10 @@ public:
     void onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
 
 private:
-    JS::Heap<JSObject*> _obj;
+    mozilla::Maybe<JS::PersistentRootedObject> _obj;
     typedef std::unordered_map<JSObject*, JSTouchDelegate*> TouchDelegateMap;
     typedef std::pair<JSObject*, JSTouchDelegate*> TouchDelegatePair;
     static TouchDelegateMap sTouchDelegateMap;
-    bool _needUnroot;
     cocos2d::EventListenerTouchOneByOne*  _touchListenerOneByOne;
     cocos2d::EventListenerTouchAllAtOnce* _touchListenerAllAtOnce;
 };
@@ -233,7 +266,7 @@ public:
     static __JSPlistDelegator* getInstance() {
         static __JSPlistDelegator* pInstance = NULL;
         if (pInstance == NULL) {
-            pInstance = new __JSPlistDelegator();
+            pInstance = new (std::nothrow) __JSPlistDelegator();
         }
         return pInstance;
     };
@@ -252,7 +285,6 @@ public:
 
 private:
     cocos2d::SAXParser _parser;
-    JS::Heap<JSObject*> _obj;
     std::string _result;
     bool _isStoringCharacters;
     std::string _currentValue;

@@ -54,7 +54,7 @@ public:
         /**The number of indices.*/
         ssize_t indexCount;
     };
-    /**Construtor.*/
+    /**Constructor.*/
     TrianglesCommand();
     /**Destructor.*/
     ~TrianglesCommand();
@@ -102,7 +102,7 @@ protected:
     uint32_t _materialID;
     /**OpenGL handle for texture.*/
     GLuint _textureID;
-    /**GLprogramstate for the commmand. encapsulate shaders and uniforms.*/
+    /**GLprogramstate for the command. encapsulate shaders and uniforms.*/
     GLProgramState* _glProgramState;
     /**Blend function when rendering the triangles.*/
     BlendFunc _blendType;

@@ -57,20 +57,6 @@ getDuration : function (
 },
 
 /**
- * @method create
- * @param {String} arg0
- * @param {String} arg1
- * @return {cc.Animation3D}
- */
-create : function (
-str, 
-str 
-)
-{
-    return cc.Animation3D;
-},
-
-/**
  * @method Animation3D
  * @constructor
  */
@@ -286,6 +272,54 @@ Animate3D : function (
 };
 
 /**
+ * @class TextureCube
+ */
+jsb.TextureCube = {
+
+/**
+ * @method reloadTexture
+ * @return {bool}
+ */
+reloadTexture : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @param {String} arg4
+ * @param {String} arg5
+ * @return {cc.TextureCube}
+ */
+create : function (
+str, 
+str, 
+str, 
+str, 
+str, 
+str 
+)
+{
+    return cc.TextureCube;
+},
+
+/**
+ * @method TextureCube
+ * @constructor
+ */
+TextureCube : function (
+)
+{
+},
+
+};
+
+/**
  * @class AttachNode
  */
 jsb.AttachNode = {
@@ -383,26 +417,6 @@ BillBoard : function (
  * @class Mesh
  */
 jsb.Mesh = {
-
-/**
- * @method setTexture
-* @param {cc.Texture2D|String} texture2d
-*/
-setTexture : function(
-str 
-)
-{
-},
-
-/**
- * @method getTexture
- * @return {cc.Texture2D}
- */
-getTexture : function (
-)
-{
-    return cc.Texture2D;
-},
 
 /**
  * @method getSkin
@@ -931,6 +945,16 @@ int
 },
 
 /**
+ * @method getMeshes
+ * @return {Array}
+ */
+getMeshes : function (
+)
+{
+    return new Array();
+},
+
+/**
  * @method addMesh
  * @param {cc.Mesh} arg0
  */
@@ -956,14 +980,6 @@ removeAllAttachNode : function (
 setMaterial : function(
 material,
 int 
-)
-{
-},
-
-/**
- * @method genGLProgramState
- */
-genGLProgramState : function (
 )
 {
 },
@@ -1165,6 +1181,14 @@ bool
 },
 
 /**
+ * @method genMaterial
+ */
+genMaterial : function (
+)
+{
+},
+
+/**
  * @method removeAttachNode
  * @param {String} arg0
  */
@@ -1281,11 +1305,11 @@ jsb.Terrain = {
 
 /**
  * @method initHeightMap
- * @param {char} arg0
+ * @param {String} arg0
  * @return {bool}
  */
 initHeightMap : function (
-char 
+str 
 )
 {
     return false;
@@ -1325,10 +1349,10 @@ map
 
 /**
  * @method resetHeightMap
- * @param {char} arg0
+ * @param {String} arg0
  */
 resetHeightMap : function (
-char 
+str 
 )
 {
 },
@@ -1544,54 +1568,6 @@ getMaxHeight : function (
  * @constructor
  */
 Terrain : function (
-)
-{
-},
-
-};
-
-/**
- * @class TextureCube
- */
-jsb.TextureCube = {
-
-/**
- * @method reloadTexture
- * @return {bool}
- */
-reloadTexture : function (
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {String} arg0
- * @param {String} arg1
- * @param {String} arg2
- * @param {String} arg3
- * @param {String} arg4
- * @param {String} arg5
- * @return {cc.TextureCube}
- */
-create : function (
-str, 
-str, 
-str, 
-str, 
-str, 
-str 
-)
-{
-    return cc.TextureCube;
-},
-
-/**
- * @method TextureCube
- * @constructor
- */
-TextureCube : function (
 )
 {
 },

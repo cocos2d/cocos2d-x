@@ -16,11 +16,15 @@
 * See the License for the specific language governing permissions and limitations under the License.
 */
 
+#include "base/ccMacros.h"
 #include "platform/CCPlatformConfig.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 
 #include "AudioEngine-winrt.h"
+#include "platform/CCFileUtils.h"
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;

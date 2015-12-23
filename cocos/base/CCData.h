@@ -69,17 +69,17 @@ public:
     ~Data();
     
     /**
-     * Overroads of operator=.
+     * Overloads of operator=.
      */
     Data& operator= (const Data& other);
     
     /**
-     * Overroads of operator=.
+     * Overloads of operator=.
      */
     Data& operator= (Data&& other);
     
     /**
-     * Gets internal bytes of Data. It will retrun the pointer directly used in Data, so don't delete it.
+     * Gets internal bytes of Data. It will return the pointer directly used in Data, so don't delete it.
      *
      * @return Pointer of bytes used internal in Data.
      */
@@ -116,7 +116,7 @@ public:
     /** 
      * Check whether the data is null.
      *
-     * @return True if the the Data is null, false if not.
+     * @return True if the Data is null, false if not.
      */
     bool isNull() const;
     

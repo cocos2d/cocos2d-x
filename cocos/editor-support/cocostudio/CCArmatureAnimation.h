@@ -229,8 +229,8 @@ public:
      *
      * Similar to UserData, but instead of holding a void* it holds an object.
      * The UserObject will be retained once in this method,
-     * and the previous UserObject (if existed) will be relese.
-     * The UserObject will be released in Node's destructure.
+     * and the previous UserObject (if existed) will be release.
+     * The UserObject will be released in Node's destructor.
      *
      * @param userObject    A user assigned Object
      */

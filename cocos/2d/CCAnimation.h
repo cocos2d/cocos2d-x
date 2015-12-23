@@ -103,7 +103,7 @@ public:
      */
     void setDelayUnits(float delayUnits) { _delayUnits = delayUnits; };
     
-    /** @brief Gets user infomation
+    /** @brief Gets user information
      * A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. 
      * If UserInfo is nil, then no notification will be broadcast.
      *
@@ -112,7 +112,7 @@ public:
     const ValueMap& getUserInfo() const { return _userInfo; };
     ValueMap& getUserInfo() { return _userInfo; };
     
-    /** Sets user infomation.
+    /** Sets user information.
      * @param userInfo A dictionary as UserInfo.
      */
     void setUserInfo(const ValueMap& userInfo)
@@ -183,7 +183,7 @@ public:
     /* Creates an animation with an array of AnimationFrame, the delay per units in seconds and and how many times it should be executed.
      * @since v2.0
      * @param arrayOfAnimationFrameNames An animation with an array of AnimationFrame.
-     * @param delayPerUnit The delay per units in seconds and and how many times it should be executed.
+     * @param delayPerUnit The delay per units in seconds and how many times it should be executed.
      * @param loops The times the animation is going to loop.
      */
     static Animation* create(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops = 1);

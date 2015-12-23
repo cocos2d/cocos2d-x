@@ -397,7 +397,6 @@ FrameBuffer::FrameBuffer()
 
 FrameBuffer::~FrameBuffer()
 {
-    if(!isDefaultFBO())
     {
         CC_SAFE_RELEASE_NULL(_rt);
         CC_SAFE_RELEASE_NULL(_rtDepthStencil);
@@ -407,6 +406,8 @@ FrameBuffer::~FrameBuffer()
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         Director::getInstance()->getEventDispatcher()->removeEventListener(_dirtyFBOListener);
 #endif
+        if (isDefaultFBO())
+            _defaultFBO = nullptr;
     }
 }
 
@@ -456,7 +457,7 @@ void FrameBuffer::applyFBO()
         CHECK_GL_ERROR_DEBUG();
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, nullptr == _rtDepthStencil ? 0 : _rtDepthStencil->getBuffer());
         CHECK_GL_ERROR_DEBUG();
-        CCLOG("FBO is %d _fbo %d color, %d ds", _fbo, RenderTargetBase::Type::Texture2D == _rt->getType() ? _rt->getTexture()->getName() : _rt->getBuffer(), _rtDepthStencil->getBuffer());
+        CCLOG("FBO is %d _fbo %d color, %d ds", _fbo, RenderTargetBase::Type::Texture2D == _rt->getType() ? _rt->getTexture()->getName() : _rt->getBuffer(), nullptr == _rtDepthStencil ? 0 : _rtDepthStencil->getBuffer());
         _fboBindingDirty = false;
     }
     if(GL_FRAMEBUFFER_COMPLETE != glCheckFramebufferStatus(GL_FRAMEBUFFER))

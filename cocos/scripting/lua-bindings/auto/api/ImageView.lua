@@ -48,6 +48,12 @@
 -- @return ImageView#ImageView self (return value: ccui.ImageView)
         
 --------------------------------
+-- 
+-- @function [parent=#ImageView] getRenderFile 
+-- @param self
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
+        
+--------------------------------
 -- Get ImageView's capInsets size.<br>
 -- return Query capInsets size in Rect<br>
 -- see `setCapInsets(const Rect&)`

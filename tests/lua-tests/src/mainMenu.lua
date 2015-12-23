@@ -16,6 +16,7 @@ require "Camera3DTest/Camera3DTest"
 require "ClickAndMoveTest/ClickAndMoveTest"
 require "CocosDenshionTest/CocosDenshionTest"
 require "CocoStudioTest/CocoStudioTest"
+require "ComponentTest/main"
 require "CurrentLanguageTest/CurrentLanguageTest"
 require "DrawPrimitivesTest/DrawPrimitivesTest"
 require "EffectsTest/EffectsTest"
@@ -36,7 +37,6 @@ require "OpenGLTest/OpenGLTest"
 require "ParallaxTest/ParallaxTest"
 require "ParticleTest/ParticleTest"
 require "Particle3DTest/Particle3DTest"
-require "PerformanceTest/PerformanceTest"
 require "RenderTextureTest/RenderTextureTest"
 require "RotateWorldTest/RotateWorldTest"
 require "Sprite3DTest/Sprite3DTest"
@@ -44,6 +44,7 @@ require "SpriteTest/SpriteTest"
 require "SceneTest/SceneTest"
 require "SpineTest/SpineTest"
 require "TerrainTest/TerrainTest"
+require "TextInputTest/TextInputTest"
 require "Texture2dTest/Texture2dTest"
 require "TileMapTest/TileMapTest"
 require "TouchesTest/TouchesTest"
@@ -97,7 +98,8 @@ local _allTests = {
     { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
     { isSupported = true,  name = "CocosStudio3DTest"      , create_func   =               CocosStudio3DTest},
-    { isSupported = true,  name = "CocoStudioTest"         , create_func   =         CocoStudioTestMain  },  
+    { isSupported = true,  name = "CocoStudioTest"         , create_func   =         CocoStudioTestMain  },
+    { isSupported = true,  name = "ComponentTest"          , create_func   =         ComponentTestMain  },
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
     { isSupported = true,  name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },
@@ -124,7 +126,6 @@ local _allTests = {
     { isSupported = true,  name = "ParallaxTest"           , create_func   =              ParallaxTestMain  },
     { isSupported = true,  name = "ParticleTest"           , create_func   =              ParticleTest      }, 
     { isSupported = true,  name = "Particle3D (PU)"        , create_func   =              Particle3DTest  },
-    { isSupported = true,  name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
     { isSupported = true,  name = "PhysicsTest"            , create_func =          PhysicsTest  },
     { isSupported = true,  name = "Physics3DTest"            , create_func =          Physics3DTest  },
     { isSupported = true,  name = "RenderTextureTest"      , create_func   =         RenderTextureTestMain  },
@@ -138,7 +139,7 @@ local _allTests = {
     { isSupported = true,  name = "TerrainTest"           , create_func   =                TerrainTest  },
     { isSupported = true,  name = "SpriteTest"             , create_func   =                SpriteTest      },
     { isSupported = true,  name = "SpritePolygonTest"             , create_func   =         SpritePolygonTest      },
-    { isSupported = false,  name = "TextInputTest"          , create_func=             TextInputTestMain  },
+    { isSupported = true,  name = "TextInputTest"          , create_func=             TextInputTestMain  },
     { isSupported = true,  name = "Texture2DTest"          , create_func   =             Texture2dTestMain  },
     { isSupported = false,  name = "TextureCacheTest"       , create_func=      TextureCacheTestMain      },
     { isSupported = true,  name = "TileMapTest"            , create_func   =               TileMapTestMain  }, 

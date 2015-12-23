@@ -9,9 +9,7 @@
 #include "ChipmunkTest/ChipmunkTest.h"
 #include "ClippingNodeTest/ClippingNodeTest.h"
 #endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "NewAudioEngineTest/NewAudioEngineTest.h"
-#endif
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPEN)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 // bada don't support libcurl
@@ -62,7 +60,6 @@
 #include "ParallaxTest/ParallaxTest.h"
 #include "Particle3DTest/Particle3DTest.h"
 #include "ParticleTest/ParticleTest.h"
-#include "PerformanceTest/PerformanceTest.h"
 #include "Physics3DTest/Physics3DTest.h"
 #include "PhysicsTest/PhysicsTest.h"
 #include "ReleasePoolTest/ReleasePoolTest.h"

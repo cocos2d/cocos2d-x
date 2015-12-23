@@ -400,54 +400,33 @@ namespace cocostudio
         bool touchScaleEnabled = options->touchScaleEnable() != 0;
         label->setTouchScaleChangeEnabled(touchScaleEnabled);
         
-        std::string text = options->text()->c_str();
-        label->setString(text);
-        
         int fontSize = options->fontSize();
         label->setFontSize(fontSize);
-        
-        std::string fontName = options->fontName()->c_str();
-        label->setFontName(fontName);
-        
+
         Size areaSize = Size(options->areaWidth(), options->areaHeight());
         if (!areaSize.equals(Size::ZERO))
         {
             label->setTextAreaSize(areaSize);
         }
+
+        auto resourceData = options->fontResource();
+        std::string path = resourceData->path()->c_str();
+        if (!path.empty() && FileUtils::getInstance()->isFileExist(path))
+        {
+            label->setFontName(path);
+        }
+        else
+        {
+            std::string fontName = options->fontName()->c_str();
+            label->setFontName(fontName);
+        }
         
         TextHAlignment h_alignment = (TextHAlignment)options->hAlignment();
         label->setTextHorizontalAlignment(h_alignment);
-        
+
         TextVAlignment v_alignment = (TextVAlignment)options->vAlignment();
         label->setTextVerticalAlignment((TextVAlignment)v_alignment);
-        
-        bool fileExist = false;
-        std::string errorFilePath = "";
-        auto resourceData = options->fontResource();
-        std::string path = resourceData->path()->c_str();
-        if (path != "")
-        {
-            if (FileUtils::getInstance()->isFileExist(path))
-            {
-                fileExist = true;
-            }
-            else
-            {
-                errorFilePath = path;
-                fileExist = false;
-            }
-            if (fileExist)
-            {
-                label->setFontName(path);
-            }
-            //else
-            //{
-            //    auto alert = Label::create();
-            //    alert->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-            //    label->addChild(alert);
-            //}
-        }
-        
+
         bool outlineEnabled = options->outlineEnabled() != 0;
         if (outlineEnabled)
         {
@@ -469,6 +448,9 @@ namespace cocostudio
                 label->enableShadow(shadowColor, Size(options->shadowOffsetX(), options->shadowOffsetY()), options->shadowBlurRadius());
             }
         }
+
+        std::string text = options->text()->c_str();
+        label->setString(text);
 
         // Save node color before set widget properties
         auto oldColor = node->getColor();
@@ -494,7 +476,6 @@ namespace cocostudio
             Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());
             label->setContentSize(contentSize);
         }
-        
     }
     
     Node* TextReader::createNodeWithFlatBuffers(const flatbuffers::Table *textOptions)

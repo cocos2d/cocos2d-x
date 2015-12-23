@@ -468,7 +468,7 @@ float * NodeLoader::parsePropTypeFloatXY(Node * pNode, Node * pParent, CCBReader
     float x = ccbReader->readFloat();
     float y = ccbReader->readFloat();
 
-    float * floatXY = new float[2];
+    float * floatXY = new (std::nothrow) float[2];
     floatXY[0] = x;
     floatXY[1] = y;
 
@@ -499,7 +499,7 @@ float * NodeLoader::parsePropTypeScaleLock(Node * pNode, Node * pParent, CCBRead
         y *= ccbReader->getResolutionScale();
     }
     
-    float * scaleLock = new float[2];
+    float * scaleLock = new (std::nothrow) float[2];
     scaleLock[0] = x;
     scaleLock[1] = y;
 
@@ -549,7 +549,7 @@ float * NodeLoader::parsePropTypeFloatVar(Node * pNode, Node * pParent, CCBReade
     float f = ccbReader->readFloat();
     float fVar = ccbReader->readFloat();
     
-    float * arr = new float[2];
+    float * arr = new (std::nothrow) float[2];
     arr[0] = f;
     arr[1] = fVar;
     
@@ -575,9 +575,9 @@ SpriteFrame * NodeLoader::parsePropTypeSpriteFrame(Node * pNode, Node * pParent,
     std::string spriteFile = ccbReader->readCachedString();
     
     SpriteFrame *spriteFrame = nullptr;
-    if (spriteFile.length() != 0)
+    if (!spriteFile.empty())
     {
-        if (spriteSheet.length() == 0)
+        if (spriteSheet.empty())
         {
             spriteFile = ccbReader->getCCBRootPath() + spriteFile;
             Texture2D * texture = Director::getInstance()->getTextureCache()->addImage(spriteFile.c_str());
@@ -623,7 +623,7 @@ Animation * NodeLoader::parsePropTypeAnimation(Node * pNode, Node * pParent, CCB
     animation = CCBReader::lastPathComponent(animation.c_str());
     animationFile = CCBReader::lastPathComponent(animationFile.c_str());
     
-    if (animation.length() > 0) 
+    if (!animation.empty()) 
     {
         AnimationCache * animationCache = AnimationCache::getInstance();
         animationCache->addAnimationsWithFile(animationFile.c_str());
@@ -636,7 +636,7 @@ Animation * NodeLoader::parsePropTypeAnimation(Node * pNode, Node * pParent, CCB
 Texture2D * NodeLoader::parsePropTypeTexture(Node * pNode, Node * pParent, CCBReader * ccbReader) {
     std::string spriteFile = ccbReader->getCCBRootPath() + ccbReader->readCachedString();
     
-    if (spriteFile.length() > 0)
+    if (!spriteFile.empty())
     {
         return Director::getInstance()->getTextureCache()->addImage(spriteFile.c_str());
     }
@@ -705,7 +705,7 @@ bool * NodeLoader::parsePropTypeFlip(Node * pNode, Node * pParent, CCBReader * c
     bool flipX = ccbReader->readBool();
     bool flipY = ccbReader->readBool();
 
-    bool * arr = new bool[2];
+    bool * arr = new (std::nothrow) bool[2];
     arr[0] = flipX;
     arr[1] = flipY;
 
@@ -775,7 +775,7 @@ BlockData * NodeLoader::parsePropTypeBlock(Node * pNode, Node * pParent, CCBRead
             
             if(target != nullptr)
             {
-                if(selectorName.length() > 0)
+                if(!selectorName.empty())
                 {
                     SEL_MenuHandler selMenuHandler = 0;
                     
@@ -856,7 +856,7 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
             
             if(target != nullptr)
             {
-                if(selectorName.length() > 0)
+                if(!selectorName.empty())
                 {
                     Control::Handler selControlHandler = 0;
                     

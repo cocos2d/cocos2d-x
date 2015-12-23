@@ -30,10 +30,12 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCAsyncTaskPool.h"
 #include "base/CCEventDispatcher.h"
+#include "base/base64.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
 #include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
 
@@ -158,7 +160,7 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
 {
     if (s_captureScreenListener)
     {
-        CCLOG("Warning: CaptureScreen has been caled yet, don't call more than once in one frame.");
+        CCLOG("Warning: CaptureScreen has been called already, don't call more than once in one frame.");
         return;
     }
     s_captureScreenCommand.init(std::numeric_limits<float>::max());
@@ -225,7 +227,7 @@ Rect getCascadeBoundingBox(Node *node)
     Rect cbb;
     Size contentSize = node->getContentSize();
     
-    // check all childrens bounding box, get maximize box
+    // check all children bounding box, get maximize box
     Node* child = nullptr;
     bool merge = false;
     for(auto object : node->getChildren())
@@ -263,7 +265,28 @@ Rect getCascadeBoundingBox(Node *node)
     
     return cbb;
 }
+
+Sprite* createSpriteFromBase64(const char* base64String)
+{
+    unsigned char* decoded;
+    int length = base64Decode((const unsigned char*) base64String, (unsigned int) strlen(base64String), &decoded);
+
+    Image *image = new (std::nothrow) Image();
+    bool imageResult = image->initWithImageData(decoded, length);
+    CCASSERT(imageResult, "Failed to create image from base64!");
+    free(decoded);
+
+    Texture2D *texture = new (std::nothrow) Texture2D();
+    texture->initWithImage(image);
+    texture->setAliasTexParameters();
+    image->release();
+
+    Sprite* sprite = Sprite::createWithTexture(texture);
+    texture->release();
     
+    return sprite;
+}
+
 }
 
 NS_CC_END

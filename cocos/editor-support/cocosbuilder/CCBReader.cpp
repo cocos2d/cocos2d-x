@@ -796,7 +796,7 @@ CCBKeyframe* CCBReader::readKeyframe(PropertyType type)
         
         SpriteFrame* spriteFrame;
 
-        if (spriteSheet.length() == 0)
+        if (spriteSheet.empty())
         {
             spriteFile = _CCBRootPath + spriteFile;
 

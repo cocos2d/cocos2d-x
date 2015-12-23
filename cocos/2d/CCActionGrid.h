@@ -350,7 +350,7 @@ CC_CONSTRUCTOR_ACCESS:
     @brief Initializes the action with an inner action that has the amplitude property, and a duration time.
     @param action The pointer of inner action.
     @param duration The duration of the DeccelAmplitude action.
-    @return If the initilization sucess, return true; otherwise, return false.
+    @return If the initialization success, return true; otherwise, return false.
     */
     bool initWithAction(Action *action, float duration);
 
@@ -365,7 +365,7 @@ private:
 /**
  @brief StopGrid action.
  @warning Don't call this action if another grid action is active.
- Call if you want to remove the the grid effect. Example:
+ Call if you want to remove the grid effect. Example:
  Sequence::actions(Lens::action(...), StopGrid::action(...), nullptr);
  */
 class CC_DLL StopGrid : public ActionInstant
@@ -420,7 +420,7 @@ CC_CONSTRUCTOR_ACCESS:
     /** 
     @brief Initializes an action with the number of times that the current grid will be reused.
     @param times Specify times the grid will be reused.
-    @return If the initialization sucess, return true; otherwise, return false.
+    @return If the initialization success, return true; otherwise, return false.
     */
     bool initWithTimes(int times);
 

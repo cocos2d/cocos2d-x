@@ -58,6 +58,7 @@ PUParticle3DQuadRender* PUParticle3DQuadRender::create(const std::string& texFil
     auto ret = new (std::nothrow) PUParticle3DQuadRender();
     if (ret && ret->initRender(texFile))
     {
+        ret->_texFile = texFile;
         ret->autorelease();
     }
     else
@@ -164,35 +165,36 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
         }
         Vec3 halfwidth = particle->width * 0.5f * right;
         Vec3 halfheight = particle->height * 0.5f * up;
+        Vec3 offset = halfwidth * offsetX + halfheight * offsetY;
         //transform.transformPoint(particle->position, &position);
         position = particle->position;
 
         if (_rotateType == TEXTURE_COORDS){
             float costheta = cosf(-particle->zRotation);
             float sintheta = sinf(-particle->zRotation);
-            Vec2 texOffset = particle->lb_uv + 0.5f * (particle->rt_uv - particle->lb_uv);
+            Vec2 texOffset = 0.5f * (particle->lb_uv + particle->rt_uv);
             Vec2 val;
             val.set((particle->lb_uv.x - texOffset.x), (particle->lb_uv.y - texOffset.y));
             val.set(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
-            fillVertex(vertexindex, (position + (- halfwidth - halfheight + halfwidth * offsetX + halfheight * offsetY)), particle->color, Vec2(val.x + texOffset.x, val.y + texOffset.y));
+            fillVertex(vertexindex, (position + (-halfwidth - halfheight + offset)), particle->color, val + texOffset);
 
             val.set(particle->rt_uv.x - texOffset.x, particle->lb_uv.y - texOffset.y);
             val.set(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
-            fillVertex(vertexindex + 1, (position + (halfwidth - halfheight + halfwidth * offsetX + halfheight * offsetY)), particle->color, Vec2(val.x + texOffset.x, val.y + texOffset.y));
+            fillVertex(vertexindex + 1, (position + (halfwidth - halfheight + offset)), particle->color, val + texOffset);
 
             val.set(particle->lb_uv.x - texOffset.x, particle->rt_uv.y - texOffset.y);
             val.set(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
-            fillVertex(vertexindex + 2, (position + (- halfwidth + halfheight + halfwidth * offsetX + halfheight * offsetY)), particle->color, Vec2(val.x + texOffset.x, val.y + texOffset.y));
+            fillVertex(vertexindex + 2, (position + (-halfwidth + halfheight + offset)), particle->color, val + texOffset);
 
             val.set(particle->rt_uv.x - texOffset.x, particle->rt_uv.y - texOffset.y);
             val.set(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
-            fillVertex(vertexindex + 3, (position + (halfwidth + halfheight + halfwidth * offsetX + halfheight * offsetY)), particle->color, Vec2(val.x + texOffset.x, val.y + texOffset.y));
+            fillVertex(vertexindex + 3, (position + (halfwidth + halfheight + offset)), particle->color, val + texOffset);
         }else{
             Mat4::createRotation(backward, -particle->zRotation, &pRotMat);
-            fillVertex(vertexindex    , (position + pRotMat * (- halfwidth - halfheight + halfwidth * offsetX + halfheight * offsetY)), particle->color, particle->lb_uv);
-            fillVertex(vertexindex + 1, (position + pRotMat * (halfwidth - halfheight + halfwidth * offsetX + halfheight * offsetY)), particle->color, Vec2(particle->rt_uv.x, particle->lb_uv.y));
-            fillVertex(vertexindex + 2, (position + pRotMat * (- halfwidth + halfheight + halfwidth * offsetX + halfheight * offsetY)), particle->color, Vec2(particle->lb_uv.x, particle->rt_uv.y));
-            fillVertex(vertexindex + 3, (position + pRotMat * (halfwidth + halfheight + halfwidth * offsetX + halfheight * offsetY)), particle->color, particle->rt_uv);
+            fillVertex(vertexindex    , (position + pRotMat * (- halfwidth - halfheight + offset)), particle->color, particle->lb_uv);
+            fillVertex(vertexindex + 1, (position + pRotMat * (halfwidth - halfheight + offset)), particle->color, Vec2(particle->rt_uv.x, particle->lb_uv.y));
+            fillVertex(vertexindex + 2, (position + pRotMat * (-halfwidth + halfheight + offset)), particle->color, Vec2(particle->lb_uv.x, particle->rt_uv.y));
+            fillVertex(vertexindex + 3, (position + pRotMat * (halfwidth + halfheight + offset)), particle->color, particle->rt_uv);
         }
 
         fillTriangle(index, vertexindex, vertexindex + 1, vertexindex + 3);
@@ -454,6 +456,8 @@ void PUParticle3DModelRender::render( Renderer* renderer, const Mat4 &transform,
                 continue;
             }
             sprite->setTexture(_texFile);
+            sprite->setBlendFunc(particleSystem->getBlendFunc());
+            sprite->setCullFaceEnabled(false);
             sprite->retain();
             _spriteList.push_back(sprite);
         }
@@ -488,9 +492,11 @@ void PUParticle3DModelRender::render( Renderer* renderer, const Mat4 &transform,
         mat.m[12] = particle->position.x;
         mat.m[13] = particle->position.y;
         mat.m[14] = particle->position.z;
+        if (_spriteList[index]->getCameraMask() != particleSystem->getCameraMask())
+            _spriteList[index]->setCameraMask(particleSystem->getCameraMask());
         _spriteList[index]->setColor(Color3B(particle->color.x * 255, particle->color.y * 255, particle->color.z * 255));
         _spriteList[index]->setOpacity(particle->color.w * 255);
-        _spriteList[index]->draw(renderer, mat, 0);
+        _spriteList[index]->visit(renderer, mat, Node::FLAGS_DIRTY_MASK);
         ++index;
     }
 }
@@ -517,6 +523,14 @@ PUParticle3DModelRender* PUParticle3DModelRender::clone()
     auto mr = PUParticle3DModelRender::create(_modelFile, _texFile);
     copyAttributesTo(mr);
     return mr;
+}
+
+void PUParticle3DModelRender::reset()
+{
+    for (auto iter : _spriteList){
+        iter->release();
+    }
+    _spriteList.clear();
 }
 
 
@@ -556,9 +570,10 @@ bool PUParticle3DEntityRender::initRender( const std::string &texFile )
         if (tex)
         {
             _texture = tex;
-            _texFile = texFile;
             glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_PARTICLE_TEXTURE);
         }
+        else
+            _texture = nullptr;
     }
     auto glProgramState = GLProgramState::create(glProgram);
     glProgramState->retain();
@@ -585,6 +600,11 @@ bool PUParticle3DEntityRender::initRender( const std::string &texFile )
 void PUParticle3DEntityRender::copyAttributesTo(PUParticle3DEntityRender *render)
 {
     PURender::copyAttributesTo(render);
+}
+
+void PUParticle3DEntityRender::reset()
+{
+    this->initRender(_texFile);
 }
 
 PUParticle3DBoxRender::PUParticle3DBoxRender()
@@ -861,7 +881,6 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
         _indexBuffer->updateIndices(&_indices[0], index/* * sizeof(unsigned short)*/, 0);
 
         GLuint texId = (_texture ? _texture->getName() : 0);
-
         _stateBlock->setBlendFunc(particleSystem->getBlendFunc());
         _meshCommand->init(
                            0,

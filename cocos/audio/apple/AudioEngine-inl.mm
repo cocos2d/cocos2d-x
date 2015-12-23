@@ -75,7 +75,7 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
     {
       if ([[[UIDevice currentDevice] systemVersion] intValue] > 5) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:AVAudioSessionInterruptionNotification object:[AVAudioSession sharedInstance]];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:UIApplicationDidBecomeActiveNotification object:[AVAudioSession sharedInstance]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:UIApplicationDidBecomeActiveNotification object:nil];
       }
       else {
         AudioSessionInitialize(NULL, NULL, AudioEngineInterruptionListenerCallback, self);

@@ -54,7 +54,7 @@ namespace cocostudio
     {
         if (!_instanceSpriteReader)
         {
-            _instanceSpriteReader = new SpriteReader();
+            _instanceSpriteReader = new (std::nothrow) SpriteReader();
         }
         
         return _instanceSpriteReader;
@@ -167,6 +167,8 @@ namespace cocostudio
         Sprite *sprite = static_cast<Sprite*>(node);
         auto options = (SpriteOptions*)spriteOptions;
         
+        auto nodeReader = NodeReader::getInstance();
+        nodeReader->setPropsWithFlatBuffers(node, (Table*)(options->nodeOptions()));
         
         auto fileNameData = options->fileNameData();
         
@@ -241,11 +243,6 @@ namespace cocostudio
             blendFunc.dst = f_blendFunc->dst();
             sprite->setBlendFunc(blendFunc);
         }
-        
-        
-        auto nodeReader = NodeReader::getInstance();
-        nodeReader->setPropsWithFlatBuffers(node, (Table*)(options->nodeOptions()));
-        
         
         auto nodeOptions = options->nodeOptions();
         

@@ -591,7 +591,7 @@ local function runCCControlTest()
 
     	pTitleButton:setColor(cc.c3b(159, 168, 176))
     
-    	local pButton = cc.ControlButton:create(pTitleButton, pBackgroundButton)
+    	local pButton = cc.ControlButton:create(pTitleButton, pBackgroundButton,false)
         pButton:setBackgroundSpriteForState(pBackgroundHighlightedButton, cc.CONTROL_STATE_HIGH_LIGHTED )
     	pButton:setTitleColorForState(cc.c3b(255,255,255), cc.CONTROL_STATE_HIGH_LIGHTED )
     

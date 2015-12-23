@@ -345,9 +345,9 @@ void Tween::arriveKeyFrame(FrameData *keyFrameData)
         Armature *childAramture = _bone->getChildArmature();
         if(childAramture)
         {
-            if(keyFrameData->strMovement.length() != 0)
+            if(!keyFrameData->strMovement.empty())
             {
-                childAramture->getAnimation()->play(keyFrameData->strMovement.c_str());
+                childAramture->getAnimation()->play(keyFrameData->strMovement);
             }
         }
     }
@@ -450,7 +450,7 @@ float Tween::updateFrameData(float currentPercent)
             to = frames.at(_toIndex);
 
             //! Guaranteed to trigger frame event
-            if(from->strEvent.length() != 0 && !_animation->isIgnoreFrameEvent())
+            if(!from->strEvent.empty() && !_animation->isIgnoreFrameEvent())
             {
                 _animation->frameEvent(_bone, from->strEvent.c_str(), from->frameID, playedTime);
             }

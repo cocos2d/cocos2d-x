@@ -119,7 +119,7 @@ protected:
         /** Although the scale is on a Particle System level, the affector can also be scaled.
     */
     Vec3 _affectorScale;
-        /** Because the public attribute ´position?is sometimes used for both localspace and worldspace
+        /** Because the public attribute position is sometimes used for both localspace and worldspace
         position, the mDerivedPosition attribute is introduced.
     */
     Vec3 _derivedPosition;

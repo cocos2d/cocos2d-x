@@ -54,6 +54,7 @@ set(JSBINDING_SRC
   manual/jsb_opengl_manual.cpp
   manual/jsb_opengl_registration.cpp
   manual/jsb_event_dispatcher_manual.cpp
+  manual/component/CCComponentJS.cpp
   manual/chipmunk/js_bindings_chipmunk_manual.cpp
   manual/chipmunk/js_bindings_chipmunk_functions.cpp
   manual/chipmunk/js_bindings_chipmunk_auto_classes.cpp

@@ -41,12 +41,12 @@ Requirements:
  - Frameworks: OpenAL, AudioToolbox, AVFoundation
  
 @par CDAudioManager
-CDAudioManager is basically a thin wrapper around an AVAudioPlayer object used for playing
+CDAudioManager is basically a thin wrapper around an CCAudioPlayer object used for playing
 background music and a CDSoundEngine object used for playing sound effects. It manages the
 audio session for you deals with audio session interruption. It is fairly low level and it
 is expected you have some understanding of the underlying technologies. For example, for 
 many use cases regarding background music it is expected you will work directly with the
-backgroundMusic AVAudioPlayer which is exposed as a property.
+backgroundMusic CCAudioPlayer which is exposed as a property.
  
 Requirements:
   - Firmware: OS 2.2 or greater 

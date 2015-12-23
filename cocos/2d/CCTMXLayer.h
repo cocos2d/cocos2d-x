@@ -88,7 +88,7 @@ public:
      * @param tilesetInfo An tileset info.
      * @param layerInfo A layer info.
      * @param mapInfo A map info.
-     * @return If initializes success，it will return true.
+     * @return If initializes successfully, it will return true.
      */
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
 
@@ -115,7 +115,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE Sprite* tileAt(const Vec2& tileCoordinate) { return getTileAt(tileCoordinate); };
     
     /** Returns the tile gid at a given tile coordinate. It also returns the tile flags.
-     * This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap]).
+     * This method requires the tile map has not been previously released (eg. don't call [layer releaseMap]).
      * 
      * @param tileCoordinate The tile coordinate.
      * @param flags Tile flags.
@@ -282,7 +282,7 @@ public:
     // Override
     //
     /** TMXLayer doesn't support adding a Sprite manually.
-     @warning addchild(z, tag); is not supported on TMXLayer. Instead of setTileGID.
+     @warning addChild(z, tag); is not supported on TMXLayer. Instead of setTileGID.
      */
     using SpriteBatchNode::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
@@ -305,7 +305,7 @@ protected:
     Sprite* insertTileForGID(uint32_t gid, const Vec2& pos);
     Sprite* updateTileForGID(uint32_t gid, const Vec2& pos);
 
-    /* The layer recognizes some special properties, like cc_vertez */
+    /* The layer recognizes some special properties, like cc_vertexz */
     void parseInternalProperties();
     void setupTileSprite(Sprite* sprite, Vec2 pos, int gid);
     Sprite* reusedTileWithRect(Rect rect);

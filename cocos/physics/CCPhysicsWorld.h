@@ -28,11 +28,10 @@
 #include "base/ccConfig.h"
 #if CC_USE_PHYSICS
 
+#include <list>
 #include "base/CCVector.h"
-#include "base/CCRef.h"
 #include "math/CCGeometry.h"
 #include "physics/CCPhysicsBody.h"
-#include <list>
 
 struct cpSpace;
 
@@ -43,14 +42,13 @@ class PhysicsJoint;
 class PhysicsShape;
 class PhysicsContact;
 
-typedef Vec2 Vect;
-
 class Director;
 class Node;
 class Sprite;
 class Scene;
 class DrawNode;
 class PhysicsDebugDraw;
+class EventDispatcher;
 
 class PhysicsWorld;
 
@@ -60,7 +58,7 @@ typedef struct PhysicsRayCastInfo
     Vec2 start;
     Vec2 end;              //< in lua, it's name is "ended"
     Vec2 contact;
-    Vect normal;
+    Vec2 normal;
     float fraction;
     void* data;
 }PhysicsRayCastInfo;
@@ -141,7 +139,7 @@ public:
     * 
     * If this world is not locked, the object is removed immediately, otherwise at next frame.
     * @attention If this body has joints, those joints will be removed also.    
-    * @param   tag   An interger number that identifies a PhysicsBody object.
+    * @param   tag   An integer number that identifies a PhysicsBody object.
     */
     virtual void removeBody(int tag);
 
@@ -184,7 +182,7 @@ public:
     void queryPoint(PhysicsQueryPointCallbackFunc func, const Vec2& point, void* data);
     
     /**
-    * Get phsyics shapes that contains the point. 
+    * Get physics shapes that contains the point. 
     * 
     * All shapes contains the point will be pushed in a Vector<PhysicsShape*> object.
     * @attention The point must lie inside a shape.
@@ -194,7 +192,7 @@ public:
     Vector<PhysicsShape*> getShapes(const Vec2& point) const;
     
     /**
-    * Get the nearest phsyics shape that contains the point. 
+    * Get the nearest physics shape that contains the point. 
     * 
     * Query this physics world at point and return the closest shape.
     * @param   point   A Vec2 object contains the position of the point.
@@ -203,7 +201,7 @@ public:
     PhysicsShape* getShape(const Vec2& point) const;
 
     /**
-    * Get all the bodys that in this physics world.
+    * Get all the bodies that in this physics world.
     *
     * @return A Vector<PhysicsBody*>& object contains all bodies in this physics world. 
     */
@@ -212,7 +210,7 @@ public:
     /**
     * Get a body by tag. 
     * 
-    * @param   tag   An interger number that identifies a PhysicsBody object. 
+    * @param   tag   An integer number that identifies a PhysicsBody object. 
     * @return A PhysicsBody object pointer or nullptr if no shapes were found.
     */
     PhysicsBody* getBody(int tag) const;
@@ -228,16 +226,16 @@ public:
     /**
     * Get the gravity value of this physics world.
     *
-    * @return A Vect object.
+    * @return A Vec2 object.
     */
-    inline Vect getGravity() const { return _gravity; }
+    inline Vec2 getGravity() const { return _gravity; }
     
     /**
     * set the gravity value of this physics world.
     *
     * @param gravity A gravity value of this physics world.
     */
-    void setGravity(const Vect& gravity);
+    void setGravity(const Vec2& gravity);
     
     /**
      * Set the speed of this physics world.
@@ -260,7 +258,7 @@ public:
      * Update rate is the value of EngineUpdateTimes/PhysicsWorldUpdateTimes.
      * Set it higher can improve performance, set it lower can improve accuracy of physics world simulation.
      * @attention if you setAutoStep(false), this won't work.
-     * @param rate An interger number, default value is 1.0.
+     * @param rate An integer number, default value is 1.0.
      */
     inline void setUpdateRate(int rate) { if(rate > 0) { _updateRate = rate; } }
 
@@ -268,7 +266,7 @@ public:
     /**
     * Get the update rate of this physics world.
     *
-    * @return An interger number.
+    * @return An integer number.
     */
     inline int getUpdateRate() { return _updateRate; }
 
@@ -276,29 +274,29 @@ public:
      * set the number of substeps in an update of the physics world.
      * 
      * One physics update will be divided into several substeps to increase its accuracy.
-     * @param steps An interger number, default value is 1.
+     * @param steps An integer number, default value is 1.
      */
     void setSubsteps(int steps);
 
     /**
     * Get the number of substeps of this physics world.
     *
-    * @return An interger number.
+    * @return An integer number.
     */
     inline int getSubsteps() const { return _substeps; }
 
     /**
     * Set the debug draw mask of this physics world.
     * 
-    * This physics world will draw shapes and joints by DrawNode acoording to mask.
+    * This physics world will draw shapes and joints by DrawNode according to mask.
     * @param mask Mask has four value:DEBUGDRAW_NONE, DEBUGDRAW_SHAPE, DEBUGDRAW_JOINT, DEBUGDRAW_CONTACT and DEBUGDRAW_ALL, default is DEBUGDRAW_NONE
     */
     void setDebugDrawMask(int mask);
 
     /**
-    * Get the bebug draw mask.
+    * Get the debug draw mask.
     *
-    * @return An interger number.
+    * @return An integer number.
     */
     inline int getDebugDrawMask() { return _debugDrawMask; }
     
@@ -307,7 +305,7 @@ public:
      *
      * If you want control it by yourself( fixed-timestep for example ), you can set this to false and call step by yourself.
      * @attention If you set auto step to false, setSpeed setSubsteps and setUpdateRate won't work, you need to control the time step by yourself.
-     * @param autoStep A bool object, defaut value is true.
+     * @param autoStep A bool object, default value is true.
      */
     void setAutoStep(bool autoStep){ _autoStep = autoStep; }
 
@@ -329,8 +327,9 @@ public:
     void step(float delta);
     
 protected:
-    static PhysicsWorld* construct(Scene& scene);
-    bool init(Scene& scene);
+    static PhysicsWorld* construct(Scene* scene);
+    bool init();
+    
     
     virtual void addBody(PhysicsBody* body);
     virtual void addShape(PhysicsShape* shape);
@@ -353,7 +352,7 @@ protected:
     virtual void updateJoints();
     
 protected:
-    Vect _gravity;
+    Vec2 _gravity;
     float _speed;
     int _updateRate;
     int _updateRateCount;
@@ -370,7 +369,8 @@ protected:
     PhysicsDebugDraw* _debugDraw;
     int _debugDrawMask;
     
-    
+    EventDispatcher* _eventDispatcher;
+
     Vector<PhysicsBody*> _delayAddBodies;
     Vector<PhysicsBody*> _delayRemoveBodies;
     std::vector<PhysicsJoint*> _delayAddJoints;
@@ -380,6 +380,9 @@ protected:
     PhysicsWorld();
     virtual ~PhysicsWorld();
     
+    void beforeSimulation(Node *node, const Mat4& parentToWorldTransform, float nodeParentScaleX, float nodeParentScaleY, float parentRotation);
+    void afterSimulation(Node* node, const Mat4& parentToWorldTransform, float parentRotation);
+
     friend class Node;
     friend class Sprite;
     friend class Scene;

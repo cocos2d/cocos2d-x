@@ -253,7 +253,9 @@ var TouchAllAtOnce = EventTest.extend({
             var touch = touches[i];
             var pos = touch.getLocation();
             var id = touch.getID();
-            cc.log("Touch #" + i + ". onTouchesMoved at: " + pos.x + " " + pos.y + " Id:" + id);
+            var force = touch.getCurrentForce();
+            var maxForce = touch.getMaxForce();
+            cc.log("Touch #" + i + ". onTouchesMoved at: " + pos.x + " " + pos.y + " Id:" + id + " current force:" + force + " maximum postible force:" + maxForce);
             target.update_id(id, pos);
         }
     },

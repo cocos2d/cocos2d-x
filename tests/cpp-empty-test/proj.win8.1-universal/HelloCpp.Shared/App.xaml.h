@@ -4,7 +4,7 @@
 #include "OpenGLES.h"
 #include "openglespage.xaml.h"
 
-namespace cocos2d
+namespace CocosAppWinRT
 {
     ref class App sealed
     {
@@ -22,6 +22,7 @@ namespace cocos2d
 #endif
 
         void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ e);
+        void OnResuming(Platform::Object ^sender, Platform::Object ^args);
 
         OpenGLESPage^ mPage;
         OpenGLES mOpenGLES;

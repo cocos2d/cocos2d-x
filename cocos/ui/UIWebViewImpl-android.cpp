@@ -45,7 +45,7 @@
 static const std::string s_defaultBaseUrl = "file:///android_asset/";
 static const std::string s_sdRootBaseUrl = "file://";
 
- static std::string getFixedBaseUrl(const std::string& baseUrl)
+static std::string getFixedBaseUrl(const std::string& baseUrl)
 {
     std::string fixedBaseUrl;
     if (baseUrl.empty())
@@ -402,20 +402,21 @@ namespace cocos2d {
             }
 
             bool WebViewImpl::shouldStartLoading(const int viewTag, const std::string &url) {
+                bool allowLoad = true;
                 auto it = s_WebViewImpls.find(viewTag);
                 if (it != s_WebViewImpls.end()) {
-                    auto webView = s_WebViewImpls[viewTag]->_webView;
+                    auto webView = it->second->_webView;
                     if (webView->_onShouldStartLoading) {
-                        return webView->_onShouldStartLoading(webView, url);
+                        allowLoad = webView->_onShouldStartLoading(webView, url);
                     }
                 }
-                return true;
+                return allowLoad;
             }
 
             void WebViewImpl::didFinishLoading(const int viewTag, const std::string &url){
                 auto it = s_WebViewImpls.find(viewTag);
                 if (it != s_WebViewImpls.end()) {
-                    auto webView = s_WebViewImpls[viewTag]->_webView;
+                    auto webView = it->second->_webView;
                     if (webView->_onDidFinishLoading) {
                         webView->_onDidFinishLoading(webView, url);
                     }
@@ -425,7 +426,7 @@ namespace cocos2d {
             void WebViewImpl::didFailLoading(const int viewTag, const std::string &url){
                 auto it = s_WebViewImpls.find(viewTag);
                 if (it != s_WebViewImpls.end()) {
-                    auto webView = s_WebViewImpls[viewTag]->_webView;
+                    auto webView = it->second->_webView;
                     if (webView->_onDidFailLoading) {
                         webView->_onDidFailLoading(webView, url);
                     }
@@ -435,7 +436,7 @@ namespace cocos2d {
             void WebViewImpl::onJsCallback(const int viewTag, const std::string &message){
                 auto it = s_WebViewImpls.find(viewTag);
                 if (it != s_WebViewImpls.end()) {
-                    auto webView = s_WebViewImpls[viewTag]->_webView;
+                    auto webView = it->second->_webView;
                     if (webView->_onJSCallback) {
                         webView->_onJSCallback(webView, message);
                     }

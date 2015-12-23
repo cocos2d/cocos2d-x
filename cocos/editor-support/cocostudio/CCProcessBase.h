@@ -138,13 +138,13 @@ protected:
     //! Scale the process speed
     float _processScale;
 
-    //! Set and get whether the aniamtion is pause
+    //! Set and get whether the animation is pause
     bool _isPause;
 
-    //! Set and get whether the aniamtion is complete
+    //! Set and get whether the animation is complete
     bool _isComplete;
 
-    //! Set and get whether the aniamtion is playing
+    //! Set and get whether the animation is playing
     bool _isPlaying;
 
     //! Current percent this process arrived
@@ -164,7 +164,7 @@ protected:
 
 
 protected:
-    //! The durantion frame count will run
+    //! The duration frame count will run
     int _durationTween;
 
     //! Current frame this process arrived, this frame is tween frame

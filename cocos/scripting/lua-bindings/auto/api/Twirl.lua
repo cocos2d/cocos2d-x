@@ -5,7 +5,7 @@
 -- @parent_module cc
 
 --------------------------------
--- brief Set the ampliture rate of the effect.<br>
+-- brief Set the amplitude rate of the effect.<br>
 -- param amplitudeRate The value of amplitude rate will be set.
 -- @function [parent=#Twirl] setAmplitudeRate 
 -- @param self
@@ -19,7 +19,7 @@
 -- param position Specify the center position of the twirl action.<br>
 -- param twirls Specify the twirls count of the Twirl action.<br>
 -- param amplitude Specify the amplitude of the Twirl action.<br>
--- return If the initialization sucess, return true; otherwise, return false.
+-- return If the initialization success, return true; otherwise, return false.
 -- @function [parent=#Twirl] initWithDuration 
 -- @param self
 -- @param #float duration
@@ -73,7 +73,7 @@
 -- param position Specify the center position of the twirl action.<br>
 -- param twirls Specify the twirls count of the Twirl action.<br>
 -- param amplitude Specify the amplitude of the Twirl action.<br>
--- return If the creation sucess, return a pointer of Twirl action; otherwise, return nil.
+-- return If the creation success, return a pointer of Twirl action; otherwise, return nil.
 -- @function [parent=#Twirl] create 
 -- @param self
 -- @param #float duration

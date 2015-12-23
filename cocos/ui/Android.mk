@@ -18,6 +18,7 @@ CocosGUI.cpp \
 UIHelper.cpp \
 UIListView.cpp \
 UIPageView.cpp \
+UIPageViewIndicator.cpp \
 UIScrollView.cpp \
 UIScrollViewBar.cpp \
 UIButton.cpp \
@@ -42,6 +43,7 @@ UIWebView.cpp \
 UIWebViewImpl-android.cpp \
 UIEditBox/UIEditBox.cpp \
 UIEditBox/UIEditBoxImpl-android.cpp \
+UIEditBox/UIEditBoxImpl-common.cpp \
 UILayoutComponent.cpp \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../editor-support

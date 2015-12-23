@@ -145,7 +145,7 @@
                 ]
             },
             {
-                "from": "tools/simulator/frameworks/runtime-src/Classes/lua_module_register.h",
+                "from": "cocos/scripting/lua-bindings/manual/lua_module_register.h",
                 "to": "frameworks/runtime-src/Classes/"
             }
         ],
@@ -174,6 +174,7 @@
                 "frameworks/runtime-src/proj.android/build.xml",
                 "frameworks/runtime-src/proj.android/res/values/strings.xml",
                 "frameworks/runtime-src/proj.android-studio/settings.gradle",
+                "frameworks/runtime-src/proj.android-studio/app/res/values/strings.xml",
                 "frameworks/runtime-src/proj.ios_mac/ios/main.m",
                 "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
                 "frameworks/runtime-src/proj.ios_mac/mac/SimulatorApp.mm",

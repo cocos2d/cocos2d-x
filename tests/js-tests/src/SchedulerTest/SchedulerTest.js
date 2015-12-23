@@ -499,7 +499,7 @@ var ScheduleUsingSchedulerTest = SchedulerTestLayer.extend({
         var repeat = cc.REPEAT_FOREVER; // how many repeats. cc.REPEAT_FOREVER means forever
         var delay = 2; // start after 2 seconds;
         paused = false; // not paused. queue it now.
-        scheduler.scheduleCallbackForTarget(this, this.onSchedUpdate, interval, repeat, delay, paused);
+        scheduler.schedule(this.onSchedUpdate, this, interval, repeat, delay, paused);
         //----end9----
     },
     title:function () {
@@ -522,6 +522,7 @@ var ScheduleUsingSchedulerTest = SchedulerTestLayer.extend({
         this._accum += dt;
         if( this._accum > 3 ) {
             var scheduler = director.getScheduler();
+            scheduler.unscheduleUpdate(this);
             scheduler.unscheduleAllCallbacksForTarget(this);
         }
         cc.log("onSchedUpdate accum: " + this._accum);

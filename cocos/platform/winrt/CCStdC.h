@@ -49,8 +49,10 @@ typedef SSIZE_T ssize_t;
     #define isnan   _isnan
 #endif
 
+#if _MSC_VER < 1900
 #ifndef snprintf
 #define snprintf _snprintf
+#endif
 #endif
 
 #include <math.h>

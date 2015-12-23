@@ -27,22 +27,6 @@ sp.ANIMATION_EVENT_TYPE = {
 	EVENT: 3
 };
 
-sp.SkeletonAnimation.prototype._ctor = function(skeletonDataFile, atlasFile, scale) {
-	if(atlasFile) {
-        if (isNaN(scale)) {
-            scale = 1;
-        }
-        
-        this.initWithFile(skeletonDataFile, atlasFile, scale);
-        this.initialize();
-
-        this._target = null;
-        this._callback = null;
-	}
-};
-
-sp.SkeletonAnimation.extend = cc.Class.extend;
-
 // Temporary solution before upgrade the Spine API
 sp.SkeletonAnimation.prototype.setAnimationListener = function (target, callback) {
     this._target = target;

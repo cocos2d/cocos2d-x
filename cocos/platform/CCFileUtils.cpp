@@ -827,7 +827,7 @@ std::string FileUtils::fullPathForFilename(const std::string &filename) const
         {
             fullpath = this->getPathForFilename(newFilename, resolutionIt, searchIt);
 
-            if (fullpath.length() > 0)
+            if (!fullpath.empty())
             {
                 // Using the filename passed in as key.
                 _fullPathCache.insert(std::make_pair(filename, fullpath));
@@ -926,7 +926,7 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
             prefix = _defaultResRootPath;
         }
         path = prefix + (iter);
-        if (path.length() > 0 && path[path.length()-1] != '/')
+        if (!path.empty() && path[path.length()-1] != '/')
         {
             path += "/";
         }
@@ -951,7 +951,7 @@ void FileUtils::addSearchPath(const std::string &searchpath,const bool front)
         prefix = _defaultResRootPath;
 
     std::string path = prefix + searchpath;
-    if (path.length() > 0 && path[path.length()-1] != '/')
+    if (!path.empty() && path[path.length()-1] != '/')
     {
         path += "/";
     }
@@ -971,7 +971,7 @@ void FileUtils::setFilenameLookupDictionary(const ValueMap& filenameLookupDict)
 void FileUtils::loadFilenameLookupDictionaryFromFile(const std::string &filename)
 {
     const std::string fullPath = fullPathForFilename(filename);
-    if (fullPath.length() > 0)
+    if (!fullPath.empty())
     {
         ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
         if (!dict.empty())
@@ -1102,6 +1102,12 @@ std::string FileUtils::getSuitableFOpen(const std::string& filenameUtf8) const
     return filenameUtf8;
 }
 
+long FileUtils::getFileSize(const std::string &filepath)
+{
+    CCASSERT(false, "getFileSize should be override by platform FileUtils");
+    return 0;
+}
+
 #else
 // default implements for unix like os
 #include <sys/types.h>
@@ -1185,7 +1191,7 @@ bool FileUtils::removeDirectory(const std::string& path)
 {
     if (path.size() > 0 && path[path.size() - 1] != '/')
     {
-        CCLOGERROR("Fail to remove directory, path must termniate with '/': %s", path.c_str());
+        CCLOGERROR("Fail to remove directory, path must terminate with '/': %s", path.c_str());
         return false;
     }
 
@@ -1236,7 +1242,6 @@ std::string FileUtils::getSuitableFOpen(const std::string& filenameUtf8) const
     return filenameUtf8;
 }
 
-#endif
 
 long FileUtils::getFileSize(const std::string &filepath)
 {
@@ -1252,10 +1257,10 @@ long FileUtils::getFileSize(const std::string &filepath)
 
     struct stat info;
     // Get data associated with "crt_stat.c":
-    int result = stat( fullpath.c_str(), &info );
+    int result = stat(fullpath.c_str(), &info);
 
     // Check if statistics are valid:
-    if( result != 0 )
+    if (result != 0)
     {
         // Failed
         return -1;
@@ -1265,6 +1270,7 @@ long FileUtils::getFileSize(const std::string &filepath)
         return (long)(info.st_size);
     }
 }
+#endif
 
 //////////////////////////////////////////////////////////////////////////
 // Notification support when getFileData from invalid file path.

@@ -26,9 +26,9 @@
 
 
 
-var sceneManifests = ["Manifests/AMTestScene1/project.manifest", "Manifests/AMTestScene2/project.manifest", "Manifests/AMTestScene3/project.manifest"];
-var storagePaths = ["JSBTests/AssetsManagerTest/scene1/", "JSBTests/AssetsManagerTest/scene2/", "JSBTests/AssetsManagerTest/scene3"];
-var backgroundPaths = ["Images/assetMgrBackground1.jpg", "Images/assetMgrBackground2.png", "Images/assetMgrBackground3.png"];
+var sceneManifests = ["Manifests/AMTestScene1/project.manifest", "Manifests/AMTestScene2/project.manifest", "Manifests/AMTestScene3/project.manifest", "Manifests/AMTestScene4/project.manifest"];
+var storagePaths = ["JSBTests/AssetsManagerTest/scene1/", "JSBTests/AssetsManagerTest/scene2/", "JSBTests/AssetsManagerTest/scene3", "JSBTests/AssetsManagerTest/scene4"];
+var backgroundPaths = ["Images/assetMgrBackground1.jpg", "Images/assetMgrBackground2.png", "Images/assetMgrBackground3.png", "Images/assetMgrBackground2.png"];
 
 var currentScene = 0;
 
@@ -60,7 +60,7 @@ var AssetsManagerTestLayer = BaseTestLayer.extend({
     },
 
     onNextCallback : function () {
-        if (currentScene < 2)
+        if (currentScene < sceneManifests.length - 1)
         {
             currentScene++;
         }
@@ -74,7 +74,7 @@ var AssetsManagerTestLayer = BaseTestLayer.extend({
         {
             currentScene--;
         }
-        else currentScene = 2;
+        else currentScene = sceneManifests.length - 1;
         var scene = new AssetsManagerLoaderScene();
         scene.runThisTest();
     }

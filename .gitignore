@@ -34,9 +34,11 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 ipch/
 *.opensdf
+*.opendb
 SubmissionInfo
 Generated Files
 AppPackages
+BundleArtifacts
 .vs/
 
 # Ignore files build by ndk and eclipse

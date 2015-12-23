@@ -47,6 +47,8 @@ public:
     virtual ~ComAttribute(void);
     
 public:
+    const static std::string COMPONENT_NAME;
+
     static ComAttribute* create(void);
     virtual bool init() override;
     virtual bool serialize(void* r) override;
@@ -67,4 +69,4 @@ private:
 
 }
 
-#endif  // __FUNDATION__CCCOMPONENT_H__
+#endif  // __CC_EXTENTIONS_CCCOMATTRIBUTE_H__

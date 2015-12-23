@@ -34,12 +34,14 @@
 #include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
+
+class StencilStateManager;
 /**
  *  @addtogroup _2d
  *  @{
  */
 /** ClippingNode is a subclass of Node.
- * It draws its content (childs) clipped using a stencil.
+ * It draws its content (children) clipped using a stencil.
  * The stencil is an other Node that will not be drawn.
  * The clipping is done using the alpha part of the stencil (adjusted with an alphaThreshold).
  */
@@ -72,7 +74,7 @@ public:
      */
     void setStencil(Node *stencil);
 
-    /** If stencil has no childre it will not be drawn.
+    /** If stencil has no children it will not be drawn.
      * If you have custom stencil-based node with stencil drawing mechanics other then children-based,
      * then this method should return true every time you wish stencil to be visited.
      * By default returns true if has any children attached.
@@ -153,34 +155,9 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init(Node *stencil);
 
 protected:
-    /**draw fullscreen quad to clear stencil bits
-    */
-    void drawFullScreenQuadClearStencil();
-
     Node* _stencil;
-    GLfloat _alphaThreshold;
-    bool    _inverted;
-
-    //renderData and callback
-    void onBeforeVisit();
-    void onAfterDrawStencil();
-    void onAfterVisit();
-
-    GLboolean _currentStencilEnabled;
-    GLuint _currentStencilWriteMask;
-    GLenum _currentStencilFunc;
-    GLint _currentStencilRef;
-    GLuint _currentStencilValueMask;
-    GLenum _currentStencilFail;
-    GLenum _currentStencilPassDepthFail;
-    GLenum _currentStencilPassDepthPass;
-    GLboolean _currentDepthWriteMask;
-
-    GLboolean _currentAlphaTestEnabled;
-    GLenum _currentAlphaTestFunc;
-    GLclampf _currentAlphaTestRef;
-
-    GLint _mask_layer_le;
+   
+    StencilStateManager* _stencilStateManager;
     
     GroupCommand _groupCommand;
     CustomCommand _beforeVisitCmd;

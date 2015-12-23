@@ -79,7 +79,7 @@ if (cc.BuilderAnimationManager) {
     require('script/jsb_cocosbuilder.js');
 }
 
-if (jsb.fileUtils.isFileExist('jsb_pluginx.js')) {
+if (jsb.fileUtils.isFileExist('jsb_pluginx.js') || jsb.fileUtils.isFileExist('jsb_pluginx.jsc')) {
     if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_ANDROID) {
         require('jsb_pluginx.js');
     }

@@ -28,10 +28,20 @@
 -- set the data to be a pointer to a quad<br>
 -- the member verts will not be released when this PolygonInfo destructs<br>
 -- as the verts memory are managed by other objects<br>
--- param quad  a pointer to the V3F_C4B_T2F_Quad obje
+-- param quad  a pointer to the V3F_C4B_T2F_Quad object
 -- @function [parent=#PolygonInfo] setQuad 
 -- @param self
 -- @param #cc.V3F_C4B_T2F_Quad quad
+-- @return PolygonInfo#PolygonInfo self (return value: cc.PolygonInfo)
+        
+--------------------------------
+-- set the data to be a pointer to a triangles<br>
+-- the member verts will not be released when this PolygonInfo destructs<br>
+-- as the verts memory are managed by other objects<br>
+-- param triangles  a pointer to the TrianglesCommand::Triangles object
+-- @function [parent=#PolygonInfo] setTriangles 
+-- @param self
+-- @param #cc.TrianglesCommand::Triangles triangles
 -- @return PolygonInfo#PolygonInfo self (return value: cc.PolygonInfo)
         
 --------------------------------

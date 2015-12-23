@@ -5,7 +5,7 @@
 -- @parent_module cc
 
 --------------------------------
---  If stencil has no childre it will not be drawn.<br>
+--  If stencil has no children it will not be drawn.<br>
 -- If you have custom stencil-based node with stencil drawing mechanics other then children-based,<br>
 -- then this method should return true every time you wish stencil to be visited.<br>
 -- By default returns true if has any children attached.<br>

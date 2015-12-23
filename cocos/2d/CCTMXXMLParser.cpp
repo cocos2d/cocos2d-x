@@ -88,11 +88,11 @@ Rect TMXTilesetInfo::getRectForGID(uint32_t gid)
     rect.size = _tileSize;
     gid &= kTMXFlippedMask;
     gid = gid - _firstGid;
-    // max_x means the colum count in tile map
+    // max_x means the column count in tile map
     // in the origin:
     // max_x = (int)((_imageSize.width - _margin*2 + _spacing) / (_tileSize.width + _spacing));
-    // but in editor "Tield", _margin variable only effect the left side
-    // for compatible with "Tield", change the max_x calculation
+    // but in editor "Tiled", _margin variable only effect the left side
+    // for compatible with "Tiled", change the max_x calculation
     int max_x = (int)((_imageSize.width - _margin + _spacing) / (_tileSize.width + _spacing));
     
     rect.origin.x = (gid % max_x) * (_tileSize.width + _spacing) + _margin;
@@ -266,6 +266,8 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         std::string externalTilesetFilename = attributeDict["source"].asString();
         if (externalTilesetFilename != "")
         {
+            _externalTilesetFilename = externalTilesetFilename;
+
             // Tileset file will be relative to the map file. So we need to convert it to an absolute path
             if (_TMXFileName.find_last_of("/") != string::npos)
             {
@@ -388,6 +390,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
         // build full path
         std::string imagename = attributeDict["source"].asString();
+        tileset->_originSourceImage = imagename;
 
         if (_TMXFileName.find_last_of("/") != string::npos)
         {

@@ -43,6 +43,7 @@ CocosStudio3DTests::CocosStudio3DTests()
     ADD_TEST_CASE(CSUserCameraTest);
     ADD_TEST_CASE(CSParticle3DTest);
     ADD_TEST_CASE(CSSceneSkyBoxTest);
+    ADD_TEST_CASE(CSSceneLight3DTest);
 }
 
 //------------------------------------------------------------------
@@ -169,6 +170,12 @@ CSSceneSkyBoxTest::CSSceneSkyBoxTest()
     addChild(node);
 
     _camera = static_cast<Camera*>(node->getChildByName("UserCamera_0"));
+    CameraBackgroundSkyBoxBrush * brush = dynamic_cast<CameraBackgroundSkyBoxBrush *>(_camera->getBackgroundBrush());
+    if (nullptr != brush)
+    {
+        CCLOG("CameraBackgroundSkyBoxBrush active value is : %s", brush->isActived() ? "true" : "false");
+        CCLOG("CameraBackgroundSkyBoxBrush valid value is : %s", brush->isValid() ? "true" : "false");
+    }
 
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(CSSceneSkyBoxTest::onTouchesMoved, this);
@@ -192,4 +199,20 @@ void CSSceneSkyBoxTest::onTouchesMoved(const std::vector<Touch*>& touches, cocos
         _camera->setPosition3D(Vec3(50.0f * sinf(_angle), 0.0f, 50.0f * cosf(_angle)));
         _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
     }
+}
+
+//------------------------------------------------------------------
+//
+// CSSceneLight3DTest
+//
+//------------------------------------------------------------------
+CSSceneLight3DTest::CSSceneLight3DTest()
+{
+    auto node = CSLoader::createNode("Light3D.csb");
+    addChild(node);
+}
+
+std::string CSSceneLight3DTest::title() const
+{
+    return "Light3DReader Test";
 }

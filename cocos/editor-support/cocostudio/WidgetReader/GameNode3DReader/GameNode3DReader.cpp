@@ -57,10 +57,15 @@ namespace cocostudio
     {
         if (!_instanceNode3DReader)
         {
-            _instanceNode3DReader = new GameNode3DReader();
+            _instanceNode3DReader = new (std::nothrow) GameNode3DReader();
         }
         
         return _instanceNode3DReader;
+    }
+    static CameraBackgroundBrush* _sceneBrushInstance = nullptr;
+    CameraBackgroundBrush* GameNode3DReader::getSceneBrushInstance()
+    {
+        return _sceneBrushInstance;
     }
     
     void GameNode3DReader::purge()
@@ -77,8 +82,10 @@ namespace cocostudio
         flatbuffers::FlatBufferBuilder *builder)
     {
         std::string name = "";
+        bool useDefaultLight = false;
         int skyBoxMask = 1;
         bool skyBoxEnabled = false;
+        bool skyBoxValid = true;
 
         std::string leftPath = "";
         std::string leftPlistFile = "";
@@ -118,9 +125,17 @@ namespace cocostudio
             {
                 name = value;
             }
+            else if (attriname == "UseDefaultLight")
+            {
+                useDefaultLight = (value == "True") ? true : false;
+            }
             else if (attriname == "SkyBoxEnabled")
             {
                 skyBoxEnabled = (value == "True") ? true : false;
+            }
+            else if (attriname == "SkyBoxValid")
+            {
+                skyBoxValid = (value == "True") ? true : false;
             }
             else if (attriname == "skyBoxMask")
             {
@@ -137,6 +152,9 @@ namespace cocostudio
             
             attribute = attribute->Next();
         }
+
+        if (!skyBoxValid)
+            skyBoxEnabled = false;
 
         const tinyxml2::XMLElement* child = objectData->FirstChildElement();
         while (child)
@@ -362,7 +380,8 @@ namespace cocostudio
                                 builder->CreateString(backPlistFile),
                                 backResourceType),
             builder->CreateString(frameEvent),
-            builder->CreateString(customProperty)
+            builder->CreateString(customProperty),
+            useDefaultLight
             );
 
         return *(Offset<Table>*)(&options);
@@ -376,28 +395,35 @@ namespace cocostudio
         std::string name = options->name()->c_str();
         node->setName(name);
 
+        _sceneBrushInstance = nullptr;
         bool skyBoxEnabled = options->skyBoxEnabled() != 0;
         if (skyBoxEnabled)
         {
-            auto leftFileData = options->leftFileData()->path()->c_str();
-            auto rightFileData = options->rightFileData()->path()->c_str();
-            auto upFileData = options->upFileData()->path()->c_str();
-            auto downFileData = options->downFileData()->path()->c_str();
-            auto forwardFileData = options->forwardFileData()->path()->c_str();
-            auto backFileData = options->backFileData()->path()->c_str();
+            std::string leftFileData = options->leftFileData()->path()->c_str();
+            std::string rightFileData = options->rightFileData()->path()->c_str();
+            std::string upFileData = options->upFileData()->path()->c_str();
+            std::string downFileData = options->downFileData()->path()->c_str();
+            std::string forwardFileData = options->forwardFileData()->path()->c_str();
+            std::string backFileData = options->backFileData()->path()->c_str();
+            FileUtils *fileUtils = FileUtils::getInstance();
 
-            Skybox* childBox = Skybox::create(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
-            unsigned short cameraFlag = 1 << 10;
-            childBox->setCameraMask(cameraFlag, false);
-            node->addChild(childBox,0,"_innerSkyBox");
+            if (fileUtils->isFileExist(leftFileData)
+                && fileUtils->isFileExist(rightFileData)
+                && fileUtils->isFileExist(upFileData)
+                && fileUtils->isFileExist(downFileData)
+                && fileUtils->isFileExist(forwardFileData)
+                && fileUtils->isFileExist(backFileData))
+            {
+                _sceneBrushInstance = CameraBackgroundSkyBoxBrush::create(leftFileData, rightFileData, upFileData, downFileData, forwardFileData, backFileData);
+            }
         }
 
         std::string customProperty = options->customProperty()->c_str();
         ComExtensionData* extensionData = ComExtensionData::create();
-        extensionData->setCustomProperty(customProperty);\
-        if (node->getComponent("ComExtensionData"))
+        extensionData->setCustomProperty(customProperty);
+        if (node->getComponent(ComExtensionData::COMPONENT_NAME))
         {
-            node->removeComponent("ComExtensionData");
+            node->removeComponent(ComExtensionData::COMPONENT_NAME);
         }
         node->addComponent(extensionData);
     }

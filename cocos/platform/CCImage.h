@@ -131,6 +131,7 @@ public:
     inline MipmapInfo*       getMipmaps()            { return _mipmaps; }
     inline bool              hasPremultipliedAlpha() { return _hasPremultipliedAlpha; }
     CC_DEPRECATED_ATTRIBUTE inline bool isPremultipliedAlpha()  { return _hasPremultipliedAlpha;   }
+    inline std::string getFilePath() const { return _filePath; }
 
     int                      getBitPerPixel();
     bool                     hasAlpha();
@@ -179,7 +180,7 @@ protected:
 protected:
     /**
      @brief Determine how many mipmaps can we have.
-     Its same as define but it respects namespaces
+     It's same as define but it respects namespaces
      */
     static const int MIPMAP_MAX = 16;
     unsigned char *_data;
@@ -191,7 +192,7 @@ protected:
     Texture2D::PixelFormat _renderFormat;
     MipmapInfo _mipmaps[MIPMAP_MAX];   // pointer to mipmap images
     int _numberOfMipmaps;
-    // false if we cann't auto detect the image is premultiplied or not.
+    // false if we can't auto detect the image is premultiplied or not.
     bool _hasPremultipliedAlpha;
     std::string _filePath;
 

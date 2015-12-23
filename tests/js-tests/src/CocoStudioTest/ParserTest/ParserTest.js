@@ -125,8 +125,13 @@ var CocostudioParserJsonScene = cc.Scene.extend({
             pMenu.y = 0;
             cc.MenuItemFont.setFontName("fonts/arial.ttf");
             cc.MenuItemFont.setFontSize(24);
-
-            for (var i = 0; i < g_parsersTests.length; ++i) {
+            var testNum = 0;
+            if(cocoStudioOldApiFlag == 0){
+                testNum = g_parsersTests.length;
+            }else{
+                testNum = g_parsersTests.length - 1;
+            }
+            for (var i = 0; i < testNum; ++i) {
                 var selItem = g_parsersTests[i];
                 var pItem = new cc.MenuItemFont(selItem.title,
                     selItem.test, this);

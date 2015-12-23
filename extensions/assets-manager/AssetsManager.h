@@ -33,7 +33,10 @@
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT && _MSC_VER < 1900)
+
+namespace cocos2d { namespace network {
+    class Downloader;
+}}
 
 NS_CC_EXT_BEGIN
 
@@ -52,7 +55,7 @@ public:
         // Error caused by creating a file to store downloaded data
         CREATE_FILE,
         /** Error caused by network
-         -- network unavaivable
+         -- network unavailable
          -- timeout
          -- ...
          */
@@ -159,28 +162,13 @@ public:
     /** @brief Gets connection time out in secondes
      */
     unsigned int getConnectionTimeout();
-    
-    /* downloadAndUncompress is the entry of a new thread 
-     */
-    friend int assetsManagerProgressFunc(void *, double, double, double, double);
 
 protected:
-    bool downLoad();
     void checkStoragePath();
     bool uncompress();
-    bool createDirectory(const char *path);
     void setSearchPath();
     void downloadAndUncompress();
 
-private:
-    /** @brief Initializes storage path.
-     */
-    void createStoragePath();
-    
-    /** @brief Destroys storage path.
-     */
-    void destroyStoragePath();
-    
 private:
     //! The path to store downloaded resources.
     std::string _storagePath;
@@ -193,7 +181,7 @@ private:
     
     std::string _downloadedVersion;
     
-    void *_curl;
+    cocos2d::network::Downloader* _downloader;
 
     unsigned int _connectionTimeout;
     
@@ -239,5 +227,4 @@ CC_DEPRECATED_ATTRIBUTE typedef AssetsManagerDelegateProtocol CCAssetsManagerDel
 
 NS_CC_EXT_END;
 
-#endif /* #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT && _MSC_VER < 1900) */
 #endif /* defined(__AssetsManager__) */

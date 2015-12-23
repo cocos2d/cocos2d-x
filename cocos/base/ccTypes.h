@@ -93,6 +93,14 @@ struct CC_DLL Color4B
     Color4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a);
     explicit Color4B(const Color3B& color);
     explicit Color4B(const Color4F& color);
+    
+    inline void set(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a)
+    {
+        r = _r;
+        g = _g;
+        b = _b;
+        a = _a;
+    }
 
     bool operator==(const Color4B& right) const;
     bool operator==(const Color3B& right) const;
@@ -548,7 +556,7 @@ public:
     TextHAlignment        _alignment;
     /// vertical alignment
     TextVAlignment _vertAlignment;
-    /// renering box
+    /// rendering box
     Size                  _dimensions;
     /// font color
     Color3B               _fontFillColor;

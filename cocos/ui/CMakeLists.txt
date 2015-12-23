@@ -13,7 +13,8 @@ elseif(MACOSX)
       )
 elseif(LINUX)
   set(COCOS_UI_SPECIFIC_SRC
-      ui/UIEditBox/UIEditBoxImpl-stub.cpp
+      ui/UIEditBox/UIEditBoxImpl-common.cpp
+      ui/UIEditBox/UIEditBoxImpl-linux.cpp
       )
 endif()
 
@@ -37,6 +38,7 @@ set(COCOS_UI_SRC
   ui/UIListView.cpp
   ui/UILoadingBar.cpp
   ui/UIPageView.cpp
+  ui/UIPageViewIndicator.cpp
   ui/UIRelativeBox.cpp
   ui/UIRichText.cpp
   ui/UIScale9Sprite.cpp

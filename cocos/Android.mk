@@ -35,6 +35,7 @@ cocos2d.cpp \
 2d/CCAnimationCache.cpp \
 2d/CCAtlasNode.cpp \
 2d/CCCamera.cpp \
+2d/CCCameraBackgroundBrush.cpp \
 2d/CCClippingNode.cpp \
 2d/CCClippingRectangleNode.cpp \
 2d/CCComponent.cpp \
@@ -106,6 +107,7 @@ math/Vec2.cpp \
 math/Vec3.cpp \
 math/Vec4.cpp \
 base/CCNinePatchImageParser.cpp \
+base/CCStencilStateManager.cpp \
 base/CCAsyncTaskPool.cpp \
 base/CCAutoreleasePool.cpp \
 base/CCConfiguration.cpp \
@@ -180,6 +182,7 @@ renderer/CCTechnique.cpp \
 renderer/CCTexture2D.cpp \
 renderer/CCTextureAtlas.cpp \
 renderer/CCTextureCache.cpp \
+renderer/CCTextureCube.cpp \
 renderer/CCTrianglesCommand.cpp \
 renderer/CCVertexAttribBinding.cpp \
 renderer/CCVertexIndexBuffer.cpp \
@@ -318,6 +321,6 @@ $(call import-module,extensions)
 $(call import-module,Box2D)
 $(call import-module,bullet)
 $(call import-module,recast)
-$(call import-module,curl/prebuilt/android)
+# $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
 $(call import-module,flatbuffers)

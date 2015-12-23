@@ -163,7 +163,7 @@ public:
 
 
     /**
-     *    @brief    Juge whether or not need auto load sprite file
+     *    @brief    Judge whether or not need auto load sprite file
      */
     bool isAutoLoadSpriteFile();
 
@@ -177,7 +177,7 @@ protected:
     RelativeData *getRelativeData(const std::string& configFilePath);
 private:
     /**
-     *    @brief    save amature datas
+     *    @brief    save armature datas
      *  @key    std::string
      *  @value    ArmatureData *
      */

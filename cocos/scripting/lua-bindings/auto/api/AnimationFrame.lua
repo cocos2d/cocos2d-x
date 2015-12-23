@@ -48,7 +48,7 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
---  Sets user infomation.<br>
+--  Sets user information.<br>
 -- param userInfo A dictionary as UserInfo.
 -- @function [parent=#AnimationFrame] setUserInfo 
 -- @param self

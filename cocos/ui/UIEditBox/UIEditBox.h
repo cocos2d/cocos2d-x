@@ -43,8 +43,8 @@ namespace ui {
     class EditBoxImpl;
         
     /**
-     *@brief Editbox delgate class.
-     * It's useful when you want to do some customization duing Editbox input event
+     *@brief Editbox delegate class.
+     * It's useful when you want to do some customization during Editbox input event
      *
      * @js NA
      * @lua NA
@@ -184,7 +184,7 @@ namespace ui {
             /**
              * Capitalize all characters automatically.
              */
-            INTIAL_CAPS_ALL_CHARACTERS,
+            INITIAL_CAPS_ALL_CHARACTERS,
         };
             
         /**
@@ -455,7 +455,7 @@ namespace ui {
          */
         virtual void keyboardDidHide(IMEKeyboardNotificationInfo& info) override;
             
-        /* callback funtions
+        /* callback functions
          * @js NA
          * @lua NA
          */

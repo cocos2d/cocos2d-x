@@ -112,7 +112,7 @@ public:
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 protected:
-    GLViewImpl();
+    GLViewImpl(bool initglfw = true);
     virtual ~GLViewImpl();
 
     bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor);
@@ -145,6 +145,8 @@ protected:
 
     GLFWwindow* _mainWindow;
     GLFWmonitor* _monitor;
+
+    std::string _glfwError;
 
     float _mouseX;
     float _mouseY;

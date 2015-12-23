@@ -50,7 +50,8 @@ public:
     {
         TEXT,
         IMAGE,
-        CUSTOM
+        CUSTOM,
+        NEWLINE
     };
     
     /**
@@ -116,7 +117,7 @@ public:
      * @param text Content string.
      * @param fontName Content font name.
      * @param fontSize Content font size.
-     * @return True if initialize scucess, false otherwise.
+     * @return True if initialize success, false otherwise.
      */
     bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize);
 
@@ -240,6 +241,41 @@ public:
     static RichElementCustomNode* create(int tag, const Color3B& color, GLubyte opacity, Node* customNode);
 protected:
     Node* _customNode;
+    friend class RichText;
+};
+    
+/**
+ *@brief Rich element for new line.
+ */
+class CC_GUI_DLL RichElementNewLine : public RichElement
+{
+public:
+    
+    /**
+     * @brief Default constructor.
+     * @js ctor
+     * @lua new
+     *
+     */
+    RichElementNewLine(){_type = Type::NEWLINE;};
+    
+    /**
+     * @brief Default destructor.
+     * @js NA
+     * @lua NA
+     */
+    virtual ~RichElementNewLine(){};
+    
+    /**
+     * @brief Create a RichElementNewLine with various arguments.
+     *
+     * @param tag A integer tag value.
+     * @param color A color in Color3B.
+     * @param opacity A opacity in GLubyte.
+     * @return A RichElementNewLine instance.
+     */
+    static RichElementNewLine* create(int tag, const Color3B& color, GLubyte opacity);
+protected:
     friend class RichText;
 };
     

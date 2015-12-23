@@ -88,7 +88,7 @@ public:
     @remarks
         If a new force-emitter name has been set, the removeAsListener must be called, to remove the DoPlacementParticleEventHandler
         from the old technique (to which the force-emitter belongs. Only then the new force-emitter is used. 
-        The reason why it is not called automatically in the setForceEmitterName() funtion is to offer some flexibility on 
+        The reason why it is not called automatically in the setForceEmitterName() function is to offer some flexibility on 
         the moment the removeAsListener() is called.
     */
     void removeAsListener(void);
@@ -107,7 +107,7 @@ public:
     bool alwaysUsePosition(void) const {return _alwaysUsePosition;};
 
     /** Set the boolean to indicate whether the position of the particle that is handled must be used for emission of 
-        the new particle or whether the contact point of the physics actor must be used. This only applies if a physics angine
+        the new particle or whether the contact point of the physics actor must be used. This only applies if a physics engine
         is used, otherwise the default is used.
     */
     void setAlwaysUsePosition(bool alwaysUsePosition) {_alwaysUsePosition = alwaysUsePosition;};
@@ -143,14 +143,14 @@ protected:
 
     /** Store the technique value to keep up to speed.
     @remarks
-        If the ParticleTechnique has been destroyed, the DoPlacementParticleEventHandler isn´t automatically
+        If the ParticleTechnique has been destroyed, the DoPlacementParticleEventHandler isn't automatically
         notified. Using the pointer causes an exception.
     */
     PUParticleSystem3D* _system;
 
     /** Store the emitter value to keep up to speed.
     @remarks
-        If the ParticleEmitter has been destroyed, the DoPlacementParticleEventHandler isn´t automatically
+        If the ParticleEmitter has been destroyed, the DoPlacementParticleEventHandler isn't automatically
         notified. Using the pointer causes an exception.
     */
     PUEmitter* _emitter;

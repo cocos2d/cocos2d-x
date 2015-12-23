@@ -121,8 +121,8 @@ public:
  How to deal add image many times?
  - At first, this situation is abnormal, we only ensure the logic is correct.
  - If the image has been loaded, the after load image call will return immediately.
- - If the image request is in queue already, there will be have more than one request in queue,
- - In addImageAsyncCallback, will deduplacated the request to ensure only create one texture.
+ - If the image request is in queue already, there will be more than one request in queue,
+ - In addImageAsyncCallback, will deduplicate the request to ensure only create one texture.
  
  Does process all response in addImageAsyncCallback consume more time?
  - Convert image to texture faster than load image from disk, so this isn't a problem.
@@ -153,7 +153,7 @@ void TextureCache::addImageAsync(const std::string &path, const std::function<vo
     if (_loadingThread == nullptr)
     {
         // create a new thread to load images
-        _loadingThread = new std::thread(&TextureCache::loadImage, this);
+        _loadingThread = new (std::nothrow) std::thread(&TextureCache::loadImage, this);
         _needQuit = false;
     }
 
@@ -360,6 +360,8 @@ Texture2D * TextureCache::addImage(const std::string &path)
             else
             {
                 CCLOG("cocos2d: Couldn't create texture for file:%s in TextureCache", path.c_str());
+                CC_SAFE_RELEASE(texture);
+                texture = nullptr;
             }
         } while (0);
     }
@@ -493,7 +495,7 @@ void TextureCache::removeTexture(Texture2D* texture)
 
     for( auto it=_textures.cbegin(); it!=_textures.cend(); /* nothing */ ) {
         if( it->second == texture ) {
-            texture->release();
+            it->second->release();
             _textures.erase(it++);
             break;
         } else
@@ -512,7 +514,7 @@ void TextureCache::removeTextureForKey(const std::string &textureKeyName)
     }
 
     if( it != _textures.end() ) {
-        (it->second)->release();
+        it->second->release();
         _textures.erase(it);
     }
 }
@@ -596,6 +598,35 @@ std::string TextureCache::getCachedTextureInfo() const
     buffer += buftmp;
 
     return buffer;
+}
+
+void TextureCache::renameTextureWithKey(const std::string srcName, const std::string dstName)
+{
+    std::string key = srcName;
+    auto it = _textures.find(key);
+
+    if( it == _textures.end() ) {
+        key = FileUtils::getInstance()->fullPathForFilename(srcName);
+        it = _textures.find(key);
+    }
+
+    if( it != _textures.end() ) {
+        std::string fullpath = FileUtils::getInstance()->fullPathForFilename(dstName);
+        Texture2D* tex = it->second;
+
+        Image* image = new (std::nothrow) Image();
+        if (image)
+        {
+            bool ret = image->initWithImageFile(dstName);
+            if (ret)
+            {
+                tex->initWithImage(image);
+                _textures.insert(std::make_pair(fullpath, tex));
+                _textures.erase(it);
+            }
+            CC_SAFE_DELETE(image);
+        }
+    }
 }
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA

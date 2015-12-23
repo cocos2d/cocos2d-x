@@ -12,6 +12,11 @@
 
 
 --------------------------------------------------------
+-- the cc TextureCube
+-- @field [parent=#cc] TextureCube#TextureCube TextureCube preloaded module
+
+
+--------------------------------------------------------
 -- the cc AttachNode
 -- @field [parent=#cc] AttachNode#AttachNode AttachNode preloaded module
 
@@ -49,11 +54,6 @@
 --------------------------------------------------------
 -- the cc Terrain
 -- @field [parent=#cc] Terrain#Terrain Terrain preloaded module
-
-
---------------------------------------------------------
--- the cc TextureCube
--- @field [parent=#cc] TextureCube#TextureCube TextureCube preloaded module
 
 
 --------------------------------------------------------

@@ -109,11 +109,21 @@ public:
      void setAliasTexParameters();
 
 protected:
-    void relaseTextures();
+    void releaseTextures();
+
+    /** @deprecated Use method releaseTextures() instead */
+    CC_DEPRECATED_ATTRIBUTE void relaseTextures();
 
     void findNewCharacters(const std::u16string& u16Text, std::unordered_map<unsigned short, unsigned short>& charCodeMap);
 
     void conversionU16TOGB2312(const std::u16string& u16Text, std::unordered_map<unsigned short, unsigned short>& charCodeMap);
+
+    /**
+     * Scale each font letter by scaleFactor.
+     *
+     * @param scaleFactor A float scale factor for scaling font letter info.
+     */
+    void scaleFontLetterDefinition(float scaleFactor);
 
     std::unordered_map<ssize_t, Texture2D*> _atlasTextures;
     std::unordered_map<char16_t, FontLetterDefinition> _letterDefinitions;

@@ -205,6 +205,19 @@ void vibrateJni(float duration) {
     }
 }
 
+std::string getVersionJNI() {
+    JniMethodInfo t;
+    std::string ret("");
+
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getVersion", "()Ljava/lang/String;")) {
+        jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
+        t.env->DeleteLocalRef(t.classID);
+        ret = JniHelper::jstring2string(str);
+        t.env->DeleteLocalRef(str);
+    }
+    return ret;
+}
+
 extern bool openURLJNI(const char* url) {
     JniMethodInfo t;
     
@@ -390,12 +403,12 @@ void deleteValueForKeyJNI(const char* key)
     }
 }
 
-int addEditBoxJNI(int left, int top, int width, int height){
+int addEditBoxJNI(int left, int top, int width, int height, float scaleX){
     JniMethodInfo t;
 
     int ret = -1;
-    if (JniHelper::getStaticMethodInfo(t, EDITBOX_CLASS_NAME, "createEditBox", "(IIII)I")) {
-        ret = t.env->CallStaticIntMethod(t.classID, t.methodID, left, top, width, height);
+    if (JniHelper::getStaticMethodInfo(t, EDITBOX_CLASS_NAME, "createEditBox", "(IIIIF)I")) {
+        ret = t.env->CallStaticIntMethod(t.classID, t.methodID, left, top, width, height, scaleX);
         t.env->DeleteLocalRef(t.classID);
     }
     return ret;

@@ -72,7 +72,7 @@ public:
     
     // @brief Calculate the next power of two for a given size.
     // Most blocks requested are already a power of two. For small block alloc
-    // this means we cannot add overhead, hence the slightly less performant
+    // this means we cannot add overhead, hence the slightly less performance
     // searching of fixed block pages to determine size if none is specified.
     CC_ALLOCATOR_INLINE size_t nextPow2BlockSize(size_t size) const
     {

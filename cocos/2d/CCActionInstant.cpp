@@ -47,7 +47,15 @@ bool ActionInstant::isDone() const
 
 void ActionInstant::step(float dt) {
     CC_UNUSED_PARAM(dt);
-    update(1);
+    float updateDt = 1;
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendActionEventToJS(this, kActionUpdate, (void *)&updateDt))
+            return;
+    }
+#endif
+    update(updateDt);
 }
 
 void ActionInstant::update(float time) {
@@ -486,7 +494,7 @@ CallFuncN * CallFuncN::clone() const
 
 __CCCallFuncND * __CCCallFuncND::create(Ref* selectorTarget, SEL_CallFuncND selector, void* d)
 {
-    __CCCallFuncND* ret = new __CCCallFuncND();
+    __CCCallFuncND* ret = new (std::nothrow) __CCCallFuncND();
     
     if (ret && ret->initWithTarget(selectorTarget, selector, d)) {
         ret->autorelease();
@@ -520,7 +528,7 @@ void __CCCallFuncND::execute()
 __CCCallFuncND * __CCCallFuncND::clone() const
 {
     // no copy constructor
-    auto a = new __CCCallFuncND();
+    auto a = new (std::nothrow) __CCCallFuncND();
     
     if( _selectorTarget)
     {
@@ -553,7 +561,7 @@ void __CCCallFuncO::execute()
 
 __CCCallFuncO * __CCCallFuncO::create(Ref* selectorTarget, SEL_CallFuncO selector, Ref* object)
 {
-    __CCCallFuncO *ret = new __CCCallFuncO();
+    __CCCallFuncO *ret = new (std::nothrow) __CCCallFuncO();
     
     if (ret && ret->initWithTarget(selectorTarget, selector, object)) {
         ret->autorelease();
@@ -581,7 +589,7 @@ bool __CCCallFuncO::initWithTarget(Ref* selectorTarget, SEL_CallFuncO selector, 
 __CCCallFuncO * __CCCallFuncO::clone() const
 {
     // no copy constructor
-    auto a = new __CCCallFuncO();
+    auto a = new (std::nothrow) __CCCallFuncO();
     
     if( _selectorTarget)
     {

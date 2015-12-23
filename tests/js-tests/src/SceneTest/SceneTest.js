@@ -45,7 +45,12 @@ var SceneTestLayer1 = cc.Layer.extend({
         }, this);
         var item4 = new cc.MenuItemFont("setNotificationNode", function () {
             var layerTemp = new cc.LayerColor(cc.color(0, 255, 255, 120));
+            var sprite = new cc.Sprite(s_pathGrossini);
+            sprite.setPosition(cc.p(winSize.width/2,winSize.height/2));
+            layerTemp.addChild(sprite);
             cc.director.setNotificationNode(layerTemp);
+            var rotation = cc.rotateBy(2,360);
+            sprite.runAction(rotation.repeatForever());
             cc.log("setNotificationNode!");
         }, this);
         var item5 = new cc.MenuItemFont("clearNotificationNode", function () {

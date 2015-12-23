@@ -24,7 +24,7 @@
 
 NS_CC_MATH_BEGIN
 
-// returns true if segment A-B intersects with segment C-D. S->E is the ovderlap part
+// returns true if segment A-B intersects with segment C-D. S->E is the overlap part
 bool isOneDimensionSegmentOverlap(float A, float B, float C, float D, float *S, float * E)
 {
     float ABmin = std::min(A, B);
@@ -61,7 +61,7 @@ bool isOneDimensionSegmentOverlap(float A, float B, float C, float D, float *S, 
     }
 }
 
-// cross procuct of 2 vector. A->B X C->D
+// cross product of 2 vector. A->B X C->D
 float crossProduct2Vector(const Vec2& A, const Vec2& B, const Vec2& C, const Vec2& D)
 {
     return (D.y - C.y) * (B.x - A.x) - (D.x - C.x) * (B.y - A.y);

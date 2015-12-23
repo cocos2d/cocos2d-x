@@ -22,10 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __cocos2d_libs__Node3DReader__
-#define __cocos2d_libs__Node3DReader__
+#ifndef __cocos2d_libs__GameNode3DReader__
+#define __cocos2d_libs__GameNode3DReader__
 
 #include "cocos2d.h"
+#include "2d/CCCameraBackgroundBrush.h"
 #include "cocostudio/CocosStudioExport.h"
 #include "cocostudio/WidgetReader/NodeReaderProtocol.h"
 #include "cocostudio/WidgetReader/NodeReaderDefine.h"
@@ -46,6 +47,7 @@ namespace cocostudio
         ~GameNode3DReader();
         
         static GameNode3DReader* getInstance();
+        static cocos2d::CameraBackgroundBrush* getSceneBrushInstance();
         /** @deprecated Use method destroyInstance() instead */
         CC_DEPRECATED_ATTRIBUTE static void purge();
         static void destroyInstance();

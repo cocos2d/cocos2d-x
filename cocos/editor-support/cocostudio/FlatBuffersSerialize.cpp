@@ -79,6 +79,7 @@ static const char* Property_Alpha           = "Alpha";
 static const char* Property_AnchorPoint     = "AnchorPoint";
 static const char* Property_ZOrder          = "ZOrder";
 static const char* Property_ActionValue     = "ActionValue";
+static const char* Property_BlendValue      = "BlendFunc";
 
 static FlatBuffersSerialize* _instanceFlatBuffersSerialize = nullptr;
     
@@ -118,7 +119,7 @@ FlatBuffersSerialize* FlatBuffersSerialize::getInstance()
 {
     if (!_instanceFlatBuffersSerialize)
     {
-        _instanceFlatBuffersSerialize = new FlatBuffersSerialize();
+        _instanceFlatBuffersSerialize = new (std::nothrow) FlatBuffersSerialize();
     }
     
     return _instanceFlatBuffersSerialize;
@@ -160,7 +161,7 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
     std::string content = FileUtils::getInstance()->getStringFromFile(inFullpath);
     
     // xml parse
-    tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
+    tinyxml2::XMLDocument* document = new (std::nothrow) tinyxml2::XMLDocument();
     document->Parse(content.c_str());
     
     const tinyxml2::XMLElement* rootElement = document->RootElement();// Root
@@ -237,7 +238,7 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
     
     if (serializeEnabled)
     {
-        _builder = new FlatBufferBuilder();
+        _builder = new (std::nothrow) FlatBufferBuilder();
         
         Offset<NodeTree> nodeTree;
         Offset<NodeAction> aciton;
@@ -761,7 +762,21 @@ Offset<TimeLine> FlatBuffersSerialize::createTimeLine(const tinyxml2::XMLElement
                                 0, // BoolFrame
                                 innerActionFrame);
         }
-        
+        else if (property == Property_BlendValue)
+        {
+            auto blendFrame = createBlendFrame(frameElement);
+            frame = CreateFrame(*_builder,
+                                0, // PointFrame
+                                0, // ScaleFrame
+                                0, // ColorFrame
+                                0, // TextureFrame
+                                0, // EventFrame
+                                0, // IntFrame
+                                0, // BoolFrame
+                                0, //InnerActionFrame
+                                blendFrame);
+        }
+
         frames.push_back(frame);
                 
         frameElement = frameElement->NextSiblingElement();
@@ -1155,7 +1170,50 @@ Offset<flatbuffers::InnerActionFrame> FlatBuffersSerialize::createInnerActionFra
                                   singleFrameIndex,
                                   createEasingData(objectData->FirstChildElement()));
 }
-    
+
+flatbuffers::Offset<flatbuffers::BlendFrame> FlatBuffersSerialize::createBlendFrame(const tinyxml2::XMLElement* objectData)
+{
+    int frameIndex = 0;
+    bool tween = true;
+    int32_t src = GL_ONE, dst = GL_ONE_MINUS_SRC_ALPHA;
+    std::string name = "";
+    std::string value = "";
+
+    const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+    while (attribute)
+    {
+        name = attribute->Name();
+        value = attribute->Value();
+
+        if (name == "FrameIndex")
+        {
+            frameIndex = atoi(value.c_str());
+        }
+        else if (name == "Tween")
+        {
+            tween = (value == "True") ? true : false;
+        }
+        else if (name == "Src")
+        {
+            src = atoi(value.c_str());
+        }
+        else if (name == "Dst")
+        {
+            dst = atoi(value.c_str());
+        }
+
+        attribute = attribute->Next();
+    }
+
+    flatbuffers::Offset<flatbuffers::EasingData> easingData;
+    flatbuffers::BlendFunc blendFunc(src, dst);
+    return CreateBlendFrame(*_builder,
+        frameIndex,
+        tween,
+        &blendFunc,
+        easingData);
+}
+
 flatbuffers::Offset<flatbuffers::EasingData> FlatBuffersSerialize::createEasingData(const tinyxml2::XMLElement *objectData)
 {
     if (!objectData)
@@ -1234,7 +1292,7 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
     std::string content = FileUtils::getInstance()->getStringFromFile(inFullpath);
     
     // xml parse
-    tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
+    tinyxml2::XMLDocument* document = new (std::nothrow) tinyxml2::XMLDocument();
     document->Parse(content.c_str());
     
     const tinyxml2::XMLElement* rootElement = document->RootElement();// Root
@@ -1287,7 +1345,7 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
     
     if (serializeEnabled)
     {
-        _builder = new FlatBufferBuilder();
+        _builder = new (std::nothrow) FlatBufferBuilder();
 
         Offset<NodeTree> nodeTree;
         Offset<NodeAction> aciton;

@@ -84,7 +84,7 @@ public:
      * @param tilesetInfo An tileset info.
      * @param layerInfo A layer info.
      * @param mapInfo A map info.
-     * @return Reruen an autorelease object.
+     * @return Return an autorelease object.
      */
     static TMXLayer * create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     /**
@@ -276,7 +276,7 @@ protected:
     void updateTiles(const Rect& culledRect);
     Vec2 calculateLayerOffset(const Vec2& offset);
 
-    /* The layer recognizes some special properties, like cc_vertez */
+    /* The layer recognizes some special properties, like cc_vertexz */
     void parseInternalProperties();
     
     Mat4 tileToNodeTransform();

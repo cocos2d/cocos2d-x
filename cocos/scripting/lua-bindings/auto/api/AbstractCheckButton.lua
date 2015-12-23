@@ -5,6 +5,18 @@
 -- @parent_module ccui
 
 --------------------------------
+-- 
+-- @function [parent=#AbstractCheckButton] getCrossDisabledFile 
+-- @param self
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
+        
+--------------------------------
+-- 
+-- @function [parent=#AbstractCheckButton] getBackDisabledFile 
+-- @param self
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
+        
+--------------------------------
 -- Load background selected state texture for check button.<br>
 -- param backGroundSelected    The background selected state image name.<br>
 -- param texType    @see `Widget::TextureResType`
@@ -25,6 +37,12 @@
 -- @return AbstractCheckButton#AbstractCheckButton self (return value: ccui.AbstractCheckButton)
         
 --------------------------------
+-- 
+-- @function [parent=#AbstractCheckButton] getCrossNormalFile 
+-- @param self
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
+        
+--------------------------------
 -- Change CheckBox state.<br>
 -- Set to true will cause the CheckBox's state to "selected", false otherwise.<br>
 -- param selected Set to true will change CheckBox to selected state, false otherwise.
@@ -32,6 +50,26 @@
 -- @param self
 -- @param #bool selected
 -- @return AbstractCheckButton#AbstractCheckButton self (return value: ccui.AbstractCheckButton)
+        
+--------------------------------
+-- 
+-- @function [parent=#AbstractCheckButton] getBackPressedFile 
+-- @param self
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
+        
+--------------------------------
+-- brief Return the sprite instance of front cross when disabled<br>
+-- return the sprite instance of front cross when disabled
+-- @function [parent=#AbstractCheckButton] getRendererFrontCrossDisabled 
+-- @param self
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
+        
+--------------------------------
+-- brief Return the sprite instance of background<br>
+-- return the sprite instance of background.
+-- @function [parent=#AbstractCheckButton] getRendererBackground 
+-- @param self
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
         
 --------------------------------
 -- Load cross texture for check button.<br>
@@ -42,6 +80,13 @@
 -- @param #string crossTextureName
 -- @param #int texType
 -- @return AbstractCheckButton#AbstractCheckButton self (return value: ccui.AbstractCheckButton)
+        
+--------------------------------
+-- brief Return the sprite instance of background when disabled<br>
+-- return the sprite instance of background when disabled
+-- @function [parent=#AbstractCheckButton] getRendererBackgroundDisabled 
+-- @param self
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
         
 --------------------------------
 -- Query whether CheckBox is selected or not.<br>
@@ -61,6 +106,12 @@
 -- @param #string frontCrossDisabled
 -- @param #int texType
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#AbstractCheckButton] getBackNormalFile 
+-- @param self
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- Load all textures for initializing a check button.<br>
@@ -87,6 +138,20 @@
 -- @function [parent=#AbstractCheckButton] getZoomScale 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- brief Return the sprite instance of front cross<br>
+-- return the sprite instance of front cross
+-- @function [parent=#AbstractCheckButton] getRendererFrontCross 
+-- @param self
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
+        
+--------------------------------
+-- brief Return the sprite instance of background when selected<br>
+-- return the sprite instance of background when selected
+-- @function [parent=#AbstractCheckButton] getRendererBackgroundSelected 
+-- @param self
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
         
 --------------------------------
 -- Load background texture for check button.<br>

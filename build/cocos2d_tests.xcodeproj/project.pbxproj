@@ -219,8 +219,6 @@
 		1A1645A9191B6283008C7C7F /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
 		1A221C9C191771E300FD2BE4 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
 		1A221C9D191771E400FD2BE4 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
-		1A97AC001A1DC3E30076D9CC /* PerformanceMathTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A97ABFE1A1DC3E30076D9CC /* PerformanceMathTest.cpp */; };
-		1A97AC011A1DC3E30076D9CC /* PerformanceMathTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A97ABFE1A1DC3E30076D9CC /* PerformanceMathTest.cpp */; };
 		1AAF534D180E2F4E000584C8 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
 		1AAF5400180E39D4000584C8 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
 		1ABCA28718CD91510087CE3A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
@@ -442,30 +440,6 @@
 		1AC35C2218CECF0C00F37B72 /* ParallaxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35ABC18CECF0C00F37B72 /* ParallaxTest.cpp */; };
 		1AC35C2318CECF0C00F37B72 /* ParticleTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35ABF18CECF0C00F37B72 /* ParticleTest.cpp */; };
 		1AC35C2418CECF0C00F37B72 /* ParticleTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35ABF18CECF0C00F37B72 /* ParticleTest.cpp */; };
-		1AC35C2518CECF0C00F37B72 /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AC218CECF0C00F37B72 /* PerformanceAllocTest.cpp */; };
-		1AC35C2618CECF0C00F37B72 /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AC218CECF0C00F37B72 /* PerformanceAllocTest.cpp */; };
-		1AC35C2718CECF0C00F37B72 /* PerformanceContainerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AC418CECF0C00F37B72 /* PerformanceContainerTest.cpp */; };
-		1AC35C2818CECF0C00F37B72 /* PerformanceContainerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AC418CECF0C00F37B72 /* PerformanceContainerTest.cpp */; };
-		1AC35C2918CECF0C00F37B72 /* PerformanceEventDispatcherTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AC618CECF0C00F37B72 /* PerformanceEventDispatcherTest.cpp */; };
-		1AC35C2A18CECF0C00F37B72 /* PerformanceEventDispatcherTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AC618CECF0C00F37B72 /* PerformanceEventDispatcherTest.cpp */; };
-		1AC35C2B18CECF0C00F37B72 /* PerformanceLabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AC818CECF0C00F37B72 /* PerformanceLabelTest.cpp */; };
-		1AC35C2C18CECF0C00F37B72 /* PerformanceLabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AC818CECF0C00F37B72 /* PerformanceLabelTest.cpp */; };
-		1AC35C2D18CECF0C00F37B72 /* PerformanceNodeChildrenTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35ACA18CECF0C00F37B72 /* PerformanceNodeChildrenTest.cpp */; };
-		1AC35C2E18CECF0C00F37B72 /* PerformanceNodeChildrenTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35ACA18CECF0C00F37B72 /* PerformanceNodeChildrenTest.cpp */; };
-		1AC35C2F18CECF0C00F37B72 /* PerformanceParticleTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35ACC18CECF0C00F37B72 /* PerformanceParticleTest.cpp */; };
-		1AC35C3018CECF0C00F37B72 /* PerformanceParticleTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35ACC18CECF0C00F37B72 /* PerformanceParticleTest.cpp */; };
-		1AC35C3118CECF0C00F37B72 /* PerformanceRendererTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35ACE18CECF0C00F37B72 /* PerformanceRendererTest.cpp */; };
-		1AC35C3218CECF0C00F37B72 /* PerformanceRendererTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35ACE18CECF0C00F37B72 /* PerformanceRendererTest.cpp */; };
-		1AC35C3318CECF0C00F37B72 /* PerformanceScenarioTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AD018CECF0C00F37B72 /* PerformanceScenarioTest.cpp */; };
-		1AC35C3418CECF0C00F37B72 /* PerformanceScenarioTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AD018CECF0C00F37B72 /* PerformanceScenarioTest.cpp */; };
-		1AC35C3518CECF0C00F37B72 /* PerformanceSpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AD218CECF0C00F37B72 /* PerformanceSpriteTest.cpp */; };
-		1AC35C3618CECF0C00F37B72 /* PerformanceSpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AD218CECF0C00F37B72 /* PerformanceSpriteTest.cpp */; };
-		1AC35C3718CECF0C00F37B72 /* PerformanceTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AD418CECF0C00F37B72 /* PerformanceTest.cpp */; };
-		1AC35C3818CECF0C00F37B72 /* PerformanceTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AD418CECF0C00F37B72 /* PerformanceTest.cpp */; };
-		1AC35C3918CECF0C00F37B72 /* PerformanceTextureTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AD618CECF0C00F37B72 /* PerformanceTextureTest.cpp */; };
-		1AC35C3A18CECF0C00F37B72 /* PerformanceTextureTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AD618CECF0C00F37B72 /* PerformanceTextureTest.cpp */; };
-		1AC35C3B18CECF0C00F37B72 /* PerformanceTouchesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AD818CECF0C00F37B72 /* PerformanceTouchesTest.cpp */; };
-		1AC35C3C18CECF0C00F37B72 /* PerformanceTouchesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AD818CECF0C00F37B72 /* PerformanceTouchesTest.cpp */; };
 		1AC35C3D18CECF0C00F37B72 /* PhysicsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35ADB18CECF0C00F37B72 /* PhysicsTest.cpp */; };
 		1AC35C3E18CECF0C00F37B72 /* PhysicsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35ADB18CECF0C00F37B72 /* PhysicsTest.cpp */; };
 		1AC35C3F18CECF0C00F37B72 /* ReleasePoolTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35ADE18CECF0C00F37B72 /* ReleasePoolTest.cpp */; };
@@ -687,8 +661,6 @@
 		1AC35DF418CEE65B00F37B72 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB518CED84500F37B72 /* effect1.raw */; };
 		1AC35DF718CEE65B00F37B72 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB618CED84500F37B72 /* effect1.wav */; };
 		1AC35DF818CEE65B00F37B72 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC418CED84500F37B72 /* pew-pew-lei.wav */; };
-		1AF152D918FD252A00A52F3D /* PerformanceCallbackTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF152D718FD252A00A52F3D /* PerformanceCallbackTest.cpp */; };
-		1AF152DA18FD252A00A52F3D /* PerformanceCallbackTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF152D718FD252A00A52F3D /* PerformanceCallbackTest.cpp */; };
 		1F33634F18E37E840074764D /* RefPtrTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F33634D18E37E840074764D /* RefPtrTest.cpp */; };
 		1F33635018E37E840074764D /* RefPtrTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F33634D18E37E840074764D /* RefPtrTest.cpp */; };
 		29080D1C191B574B0066F8DF /* UITest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D1A191B574B0066F8DF /* UITest.cpp */; };
@@ -917,8 +889,6 @@
 		B609E67419C18DAD003D0074 /* BillBoardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B609E67119C18DAD003D0074 /* BillBoardTest.cpp */; };
 		B61E90CB1B12B74B00BE69EA /* NavMesh in Resources */ = {isa = PBXBuildFile; fileRef = B61E90CA1B12B74B00BE69EA /* NavMesh */; };
 		B61E90CC1B12B74B00BE69EA /* NavMesh in Resources */ = {isa = PBXBuildFile; fileRef = B61E90CA1B12B74B00BE69EA /* NavMesh */; };
-		B6337DF71ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6337DF51ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp */; };
-		B6337DF81ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6337DF51ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp */; };
 		B639932E1A490EC700B07923 /* Particle3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B639932C1A490EC700B07923 /* Particle3DTest.cpp */; };
 		B639932F1A490EC700B07923 /* Particle3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B639932C1A490EC700B07923 /* Particle3DTest.cpp */; };
 		B63993311A49359F00B07923 /* Particle3D in Resources */ = {isa = PBXBuildFile; fileRef = B63993301A49359F00B07923 /* Particle3D */; };
@@ -951,6 +921,107 @@
 		ED545A781B68A1B800C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
 		ED545A791B68A1B900C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
+		FA94B0A31B8EF69A0074B261 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
+		FA94B0A41B8EF69A0074B261 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A331A534B2B004E4C60 /* Security.framework */; };
+		FA94B0A51B8EF69A0074B261 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
+		FA94B0A61B8EF69A0074B261 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
+		FA94B0A71B8EF69A0074B261 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		FA94B0A81B8EF69A0074B261 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
+		FA94B0A91B8EF69A0074B261 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
+		FA94B0AA1B8EF69A0074B261 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
+		FA94B0AB1B8EF69A0074B261 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
+		FA94B0AC1B8EF69A0074B261 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
+		FA94B0AD1B8EF69A0074B261 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */; };
+		FA94B0AE1B8EF69A0074B261 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
+		FA94B0AF1B8EF69A0074B261 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B71783AE6D0073F6A7 /* UIKit.framework */; };
+		FA94B0B01B8EF69A0074B261 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
+		FA94B1B81B8EF76D0074B261 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A6C1B68A18300C3958E /* libiconv.dylib */; };
+		FA94B1B91B8EF76D0074B261 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
+		FA94B1BA1B8EF76D0074B261 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
+		FA94B1BB1B8EF76D0074B261 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
+		FA94B1BC1B8EF76D0074B261 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
+		FA94B1BD1B8EF76D0074B261 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
+		FA94B1BE1B8EF76D0074B261 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
+		FA94B1BF1B8EF76D0074B261 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482A165F3979007D4F18 /* ApplicationServices.framework */; };
+		FA94B1C01B8EF76D0074B261 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
+		FA94B1C11B8EF76D0074B261 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
+		FA94B1C21B8EF76D0074B261 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
+		FA94B1C31B8EF76D0074B261 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
+		FA94B1CE1B8EF7BB0074B261 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B1CA1B8EF7BB0074B261 /* AppDelegate.cpp */; };
+		FA94B1CF1B8EF7BB0074B261 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B1CA1B8EF7BB0074B261 /* AppDelegate.cpp */; };
+		FA94B1ED1B8EF8250074B261 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA94B1D51B8EF8250074B261 /* AppController.mm */; };
+		FA94B1EE1B8EF8250074B261 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1D61B8EF8250074B261 /* Default-568h@2x.png */; };
+		FA94B1EF1B8EF8250074B261 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1D71B8EF8250074B261 /* Default-667h@2x.png */; };
+		FA94B1F01B8EF8250074B261 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1D81B8EF8250074B261 /* Default-736h@3x.png */; };
+		FA94B1F11B8EF8250074B261 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1D91B8EF8250074B261 /* Default.png */; };
+		FA94B1F21B8EF8250074B261 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1DA1B8EF8250074B261 /* Default@2x.png */; };
+		FA94B1F31B8EF8250074B261 /* Icon-100.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1DB1B8EF8250074B261 /* Icon-100.png */; };
+		FA94B1F41B8EF8250074B261 /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1DC1B8EF8250074B261 /* Icon-114.png */; };
+		FA94B1F51B8EF8250074B261 /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1DD1B8EF8250074B261 /* Icon-120.png */; };
+		FA94B1F61B8EF8250074B261 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1DE1B8EF8250074B261 /* Icon-144.png */; };
+		FA94B1F71B8EF8250074B261 /* Icon-152.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1DF1B8EF8250074B261 /* Icon-152.png */; };
+		FA94B1F81B8EF8250074B261 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1E01B8EF8250074B261 /* Icon-29.png */; };
+		FA94B1F91B8EF8250074B261 /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1E11B8EF8250074B261 /* Icon-40.png */; };
+		FA94B1FA1B8EF8250074B261 /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1E21B8EF8250074B261 /* Icon-50.png */; };
+		FA94B1FB1B8EF8250074B261 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1E31B8EF8250074B261 /* Icon-57.png */; };
+		FA94B1FC1B8EF8250074B261 /* Icon-58.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1E41B8EF8250074B261 /* Icon-58.png */; };
+		FA94B1FD1B8EF8250074B261 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1E51B8EF8250074B261 /* Icon-72.png */; };
+		FA94B1FE1B8EF8250074B261 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1E61B8EF8250074B261 /* Icon-76.png */; };
+		FA94B1FF1B8EF8250074B261 /* Icon-80.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1E71B8EF8250074B261 /* Icon-80.png */; };
+		FA94B2001B8EF8250074B261 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1E81B8EF8250074B261 /* Info.plist */; };
+		FA94B2011B8EF8250074B261 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA94B1E91B8EF8250074B261 /* main.m */; };
+		FA94B2021B8EF8250074B261 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA94B1EC1B8EF8250074B261 /* RootViewController.mm */; };
+		FA94B2081B8EF8430074B261 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = FA94B2041B8EF8430074B261 /* Icon.icns */; };
+		FA94B2091B8EF8430074B261 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA94B2051B8EF8430074B261 /* Info.plist */; };
+		FA94B20A1B8EF8430074B261 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B2061B8EF8430074B261 /* main.cpp */; };
+		FA94B2261B8EF9C50074B261 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B2211B8EF9C50074B261 /* CloseNormal.png */; };
+		FA94B2271B8EF9C50074B261 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B2211B8EF9C50074B261 /* CloseNormal.png */; };
+		FA94B2281B8EF9C50074B261 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B2221B8EF9C50074B261 /* CloseSelected.png */; };
+		FA94B2291B8EF9C50074B261 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B2221B8EF9C50074B261 /* CloseSelected.png */; };
+		FA94B2351B8F02880074B261 /* Profile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B2331B8F02880074B261 /* Profile.cpp */; };
+		FA94B2361B8F02880074B261 /* Profile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B2331B8F02880074B261 /* Profile.cpp */; };
+		FA94B23A1B9045160074B261 /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B2381B9045160074B261 /* PerformanceAllocTest.cpp */; };
+		FA94B23B1B9045160074B261 /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B2381B9045160074B261 /* PerformanceAllocTest.cpp */; };
+		FA94B2421B90497E0074B261 /* BaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B23C1B90497E0074B261 /* BaseTest.cpp */; };
+		FA94B2431B90497E0074B261 /* BaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B23C1B90497E0074B261 /* BaseTest.cpp */; };
+		FA94B2441B90497E0074B261 /* controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B23E1B90497E0074B261 /* controller.cpp */; };
+		FA94B2451B90497E0074B261 /* controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B23E1B90497E0074B261 /* controller.cpp */; };
+		FA94B24B1B9059540074B261 /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B2491B9059540074B261 /* VisibleRect.cpp */; };
+		FA94B24C1B9059540074B261 /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B2491B9059540074B261 /* VisibleRect.cpp */; };
+		FA94B24E1B93EF7B0074B261 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = FA94B24D1B93EF7B0074B261 /* Images */; };
+		FA94B24F1B93EF7B0074B261 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = FA94B24D1B93EF7B0074B261 /* Images */; };
+		FADE786B1B942DE30061590D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = FADE786A1B942DE30061590D /* fonts */; };
+		FADE786C1B942DE30061590D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = FADE786A1B942DE30061590D /* fonts */; };
+		FADE786F1B9451540061590D /* PerformanceNodeChildrenTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE786D1B9451540061590D /* PerformanceNodeChildrenTest.cpp */; };
+		FADE78701B9451540061590D /* PerformanceNodeChildrenTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE786D1B9451540061590D /* PerformanceNodeChildrenTest.cpp */; };
+		FADE78731B9572990061590D /* PerformanceParticleTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78711B9572990061590D /* PerformanceParticleTest.cpp */; };
+		FADE78741B9572990061590D /* PerformanceParticleTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78711B9572990061590D /* PerformanceParticleTest.cpp */; };
+		FADE78761B95740D0061590D /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = FADE78751B95740D0061590D /* fps_images.png */; };
+		FADE78771B95740D0061590D /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = FADE78751B95740D0061590D /* fps_images.png */; };
+		FADE78861B96C4780061590D /* PerformanceParticle3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78841B96C4780061590D /* PerformanceParticle3DTest.cpp */; };
+		FADE78871B96C4780061590D /* PerformanceParticle3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78841B96C4780061590D /* PerformanceParticle3DTest.cpp */; };
+		FADE78891B96C51C0061590D /* Particle3D in Resources */ = {isa = PBXBuildFile; fileRef = FADE78881B96C51C0061590D /* Particle3D */; };
+		FADE788A1B96C51C0061590D /* Particle3D in Resources */ = {isa = PBXBuildFile; fileRef = FADE78881B96C51C0061590D /* Particle3D */; };
+		FADE788D1B96D0710061590D /* PerformanceSpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE788B1B96D0710061590D /* PerformanceSpriteTest.cpp */; };
+		FADE788E1B96D0710061590D /* PerformanceSpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE788B1B96D0710061590D /* PerformanceSpriteTest.cpp */; };
+		FADE78911B9C363D0061590D /* PerformanceTextureTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE788F1B9C363D0061590D /* PerformanceTextureTest.cpp */; };
+		FADE78921B9C363D0061590D /* PerformanceTextureTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE788F1B9C363D0061590D /* PerformanceTextureTest.cpp */; };
+		FADE78951B9C42E80061590D /* PerformanceLabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78931B9C42E80061590D /* PerformanceLabelTest.cpp */; };
+		FADE78961B9C42E80061590D /* PerformanceLabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78931B9C42E80061590D /* PerformanceLabelTest.cpp */; };
+		FADE78991B9D5C640061590D /* PerformanceEventDispatcherTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78971B9D5C640061590D /* PerformanceEventDispatcherTest.cpp */; };
+		FADE789A1B9D5C640061590D /* PerformanceEventDispatcherTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78971B9D5C640061590D /* PerformanceEventDispatcherTest.cpp */; };
+		FADE78A61B9E86100061590D /* PerformanceScenarioTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78A41B9E86100061590D /* PerformanceScenarioTest.cpp */; };
+		FADE78A71B9E86100061590D /* PerformanceScenarioTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78A41B9E86100061590D /* PerformanceScenarioTest.cpp */; };
+		FADE78AD1B9E88420061590D /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = FADE78AB1B9E88420061590D /* Particles */; };
+		FADE78AE1B9E88420061590D /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = FADE78AB1B9E88420061590D /* Particles */; };
+		FADE78AF1B9E88420061590D /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = FADE78AC1B9E88420061590D /* TileMaps */; };
+		FADE78B01B9E88420061590D /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = FADE78AC1B9E88420061590D /* TileMaps */; };
+		FADE78B31B9EC0290061590D /* PerformanceCallbackTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78B11B9EC0290061590D /* PerformanceCallbackTest.cpp */; };
+		FADE78B41B9EC0290061590D /* PerformanceCallbackTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78B11B9EC0290061590D /* PerformanceCallbackTest.cpp */; };
+		FADE78B71B9EC6160061590D /* PerformanceMathTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78B51B9EC6160061590D /* PerformanceMathTest.cpp */; };
+		FADE78B81B9EC6160061590D /* PerformanceMathTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78B51B9EC6160061590D /* PerformanceMathTest.cpp */; };
+		FADE78FD1B9ECB7F0061590D /* PerformanceContainerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78FB1B9ECB7F0061590D /* PerformanceContainerTest.cpp */; };
+		FADE78FE1B9ECB7F0061590D /* PerformanceContainerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78FB1B9ECB7F0061590D /* PerformanceContainerTest.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1199,6 +1270,20 @@
 			remoteGlobalIDString = A07A517F1783A1D20073F6A7;
 			remoteInfo = "Test cpp iOS";
 		};
+		FA94AF981B8EF69A0074B261 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4C241783777C0073F6A7;
+			remoteInfo = "cocos2dx iOS";
+		};
+		FA94B0C21B8EF76D0074B261 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
+			remoteInfo = "cocos2dx Mac";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -1304,8 +1389,6 @@
 		1A0EE41318CDF775004CD58F /* cpp-empty-test iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-empty-test iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A0EE47E18CDF799004CD58F /* lua-empty-test iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-empty-test iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A221C9B191771E300FD2BE4 /* ccs-res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ccs-res"; path = "../tests/cpp-tests/Resources/ccs-res"; sourceTree = "<group>"; };
-		1A97ABFE1A1DC3E30076D9CC /* PerformanceMathTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceMathTest.cpp; sourceTree = "<group>"; };
-		1A97ABFF1A1DC3E30076D9CC /* PerformanceMathTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceMathTest.h; sourceTree = "<group>"; };
 		1A9F808C177E98A600D9A1CB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		1ABCA27618CD90A40087CE3A /* cocos2d_lua_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_lua_bindings.xcodeproj; path = "../cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj"; sourceTree = "<group>"; };
 		1ABCA28618CD91510087CE3A /* lua-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1591,30 +1674,6 @@
 		1AC35ABD18CECF0C00F37B72 /* ParallaxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParallaxTest.h; sourceTree = "<group>"; };
 		1AC35ABF18CECF0C00F37B72 /* ParticleTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleTest.cpp; sourceTree = "<group>"; };
 		1AC35AC018CECF0C00F37B72 /* ParticleTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleTest.h; sourceTree = "<group>"; };
-		1AC35AC218CECF0C00F37B72 /* PerformanceAllocTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceAllocTest.cpp; sourceTree = "<group>"; };
-		1AC35AC318CECF0C00F37B72 /* PerformanceAllocTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceAllocTest.h; sourceTree = "<group>"; };
-		1AC35AC418CECF0C00F37B72 /* PerformanceContainerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceContainerTest.cpp; sourceTree = "<group>"; };
-		1AC35AC518CECF0C00F37B72 /* PerformanceContainerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceContainerTest.h; sourceTree = "<group>"; };
-		1AC35AC618CECF0C00F37B72 /* PerformanceEventDispatcherTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceEventDispatcherTest.cpp; sourceTree = "<group>"; };
-		1AC35AC718CECF0C00F37B72 /* PerformanceEventDispatcherTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceEventDispatcherTest.h; sourceTree = "<group>"; };
-		1AC35AC818CECF0C00F37B72 /* PerformanceLabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceLabelTest.cpp; sourceTree = "<group>"; };
-		1AC35AC918CECF0C00F37B72 /* PerformanceLabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceLabelTest.h; sourceTree = "<group>"; };
-		1AC35ACA18CECF0C00F37B72 /* PerformanceNodeChildrenTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceNodeChildrenTest.cpp; sourceTree = "<group>"; };
-		1AC35ACB18CECF0C00F37B72 /* PerformanceNodeChildrenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceNodeChildrenTest.h; sourceTree = "<group>"; };
-		1AC35ACC18CECF0C00F37B72 /* PerformanceParticleTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceParticleTest.cpp; sourceTree = "<group>"; };
-		1AC35ACD18CECF0C00F37B72 /* PerformanceParticleTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceParticleTest.h; sourceTree = "<group>"; };
-		1AC35ACE18CECF0C00F37B72 /* PerformanceRendererTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceRendererTest.cpp; sourceTree = "<group>"; };
-		1AC35ACF18CECF0C00F37B72 /* PerformanceRendererTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceRendererTest.h; sourceTree = "<group>"; };
-		1AC35AD018CECF0C00F37B72 /* PerformanceScenarioTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceScenarioTest.cpp; sourceTree = "<group>"; };
-		1AC35AD118CECF0C00F37B72 /* PerformanceScenarioTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceScenarioTest.h; sourceTree = "<group>"; };
-		1AC35AD218CECF0C00F37B72 /* PerformanceSpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceSpriteTest.cpp; sourceTree = "<group>"; };
-		1AC35AD318CECF0C00F37B72 /* PerformanceSpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceSpriteTest.h; sourceTree = "<group>"; };
-		1AC35AD418CECF0C00F37B72 /* PerformanceTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceTest.cpp; sourceTree = "<group>"; };
-		1AC35AD518CECF0C00F37B72 /* PerformanceTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTest.h; sourceTree = "<group>"; };
-		1AC35AD618CECF0C00F37B72 /* PerformanceTextureTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceTextureTest.cpp; sourceTree = "<group>"; };
-		1AC35AD718CECF0C00F37B72 /* PerformanceTextureTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTextureTest.h; sourceTree = "<group>"; };
-		1AC35AD818CECF0C00F37B72 /* PerformanceTouchesTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceTouchesTest.cpp; sourceTree = "<group>"; };
-		1AC35AD918CECF0C00F37B72 /* PerformanceTouchesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTouchesTest.h; sourceTree = "<group>"; };
 		1AC35ADB18CECF0C00F37B72 /* PhysicsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicsTest.cpp; sourceTree = "<group>"; };
 		1AC35ADC18CECF0C00F37B72 /* PhysicsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsTest.h; sourceTree = "<group>"; };
 		1AC35ADE18CECF0C00F37B72 /* ReleasePoolTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReleasePoolTest.cpp; sourceTree = "<group>"; };
@@ -1776,8 +1835,6 @@
 		1AC35DAE18CEE5DA00F37B72 /* LuaObjectCBridgeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaObjectCBridgeTest.h; sourceTree = "<group>"; };
 		1AC35DAF18CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LuaObjectCBridgeTest.mm; sourceTree = "<group>"; };
 		1AC35DB018CEE5DA00F37B72 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		1AF152D718FD252A00A52F3D /* PerformanceCallbackTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceCallbackTest.cpp; sourceTree = "<group>"; };
-		1AF152D818FD252A00A52F3D /* PerformanceCallbackTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceCallbackTest.h; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* cpp-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F33634D18E37E840074764D /* RefPtrTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RefPtrTest.cpp; sourceTree = "<group>"; };
 		1F33634E18E37E840074764D /* RefPtrTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefPtrTest.h; sourceTree = "<group>"; };
@@ -1992,8 +2049,6 @@
 		B609E67119C18DAD003D0074 /* BillBoardTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BillBoardTest.cpp; path = BillBoardTest/BillBoardTest.cpp; sourceTree = "<group>"; };
 		B609E67219C18DAD003D0074 /* BillBoardTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BillBoardTest.h; path = BillBoardTest/BillBoardTest.h; sourceTree = "<group>"; };
 		B61E90CA1B12B74B00BE69EA /* NavMesh */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NavMesh; path = "../tests/cpp-tests/Resources/NavMesh"; sourceTree = "<group>"; };
-		B6337DF51ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceParticle3DTest.cpp; sourceTree = "<group>"; };
-		B6337DF61ABA9B44005AEF24 /* PerformanceParticle3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceParticle3DTest.h; sourceTree = "<group>"; };
 		B639932C1A490EC700B07923 /* Particle3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Particle3DTest.cpp; path = Particle3DTest/Particle3DTest.cpp; sourceTree = "<group>"; };
 		B639932D1A490EC700B07923 /* Particle3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Particle3DTest.h; path = Particle3DTest/Particle3DTest.h; sourceTree = "<group>"; };
 		B63993301A49359F00B07923 /* Particle3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particle3D; path = "../tests/cpp-tests/Resources/Particle3D"; sourceTree = "<group>"; };
@@ -2012,6 +2067,82 @@
 		ED545A6C1B68A18300C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		ED545A721B68A1AC00C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		FA94B0B41B8EF69A0074B261 /* performance-tests iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "performance-tests iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA94B1C71B8EF76D0074B261 /* performance-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "performance-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA94B1CA1B8EF7BB0074B261 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
+		FA94B1CB1B8EF7BB0074B261 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		FA94B1D41B8EF8250074B261 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		FA94B1D51B8EF8250074B261 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
+		FA94B1D61B8EF8250074B261 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		FA94B1D71B8EF8250074B261 /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
+		FA94B1D81B8EF8250074B261 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
+		FA94B1D91B8EF8250074B261 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		FA94B1DA1B8EF8250074B261 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		FA94B1DB1B8EF8250074B261 /* Icon-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-100.png"; sourceTree = "<group>"; };
+		FA94B1DC1B8EF8250074B261 /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-114.png"; sourceTree = "<group>"; };
+		FA94B1DD1B8EF8250074B261 /* Icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120.png"; sourceTree = "<group>"; };
+		FA94B1DE1B8EF8250074B261 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
+		FA94B1DF1B8EF8250074B261 /* Icon-152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-152.png"; sourceTree = "<group>"; };
+		FA94B1E01B8EF8250074B261 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
+		FA94B1E11B8EF8250074B261 /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40.png"; sourceTree = "<group>"; };
+		FA94B1E21B8EF8250074B261 /* Icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-50.png"; sourceTree = "<group>"; };
+		FA94B1E31B8EF8250074B261 /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = "<group>"; };
+		FA94B1E41B8EF8250074B261 /* Icon-58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-58.png"; sourceTree = "<group>"; };
+		FA94B1E51B8EF8250074B261 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		FA94B1E61B8EF8250074B261 /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
+		FA94B1E71B8EF8250074B261 /* Icon-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-80.png"; sourceTree = "<group>"; };
+		FA94B1E81B8EF8250074B261 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA94B1E91B8EF8250074B261 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FA94B1EA1B8EF8250074B261 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
+		FA94B1EB1B8EF8250074B261 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		FA94B1EC1B8EF8250074B261 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
+		FA94B2041B8EF8430074B261 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
+		FA94B2051B8EF8430074B261 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA94B2061B8EF8430074B261 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		FA94B2071B8EF8430074B261 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
+		FA94B2211B8EF9C50074B261 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CloseNormal.png; path = "../tests/performance-tests/Resources/CloseNormal.png"; sourceTree = "<group>"; };
+		FA94B2221B8EF9C50074B261 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CloseSelected.png; path = "../tests/performance-tests/Resources/CloseSelected.png"; sourceTree = "<group>"; };
+		FA94B2331B8F02880074B261 /* Profile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Profile.cpp; sourceTree = "<group>"; };
+		FA94B2341B8F02880074B261 /* Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Profile.h; sourceTree = "<group>"; };
+		FA94B2381B9045160074B261 /* PerformanceAllocTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceAllocTest.cpp; sourceTree = "<group>"; };
+		FA94B2391B9045160074B261 /* PerformanceAllocTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceAllocTest.h; sourceTree = "<group>"; };
+		FA94B23C1B90497E0074B261 /* BaseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseTest.cpp; sourceTree = "<group>"; };
+		FA94B23D1B90497E0074B261 /* BaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTest.h; sourceTree = "<group>"; };
+		FA94B23E1B90497E0074B261 /* controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = controller.cpp; sourceTree = "<group>"; };
+		FA94B23F1B90497E0074B261 /* controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controller.h; sourceTree = "<group>"; };
+		FA94B2411B90497E0074B261 /* testBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testBasic.h; sourceTree = "<group>"; };
+		FA94B2481B904E290074B261 /* tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tests.h; sourceTree = "<group>"; };
+		FA94B2491B9059540074B261 /* VisibleRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VisibleRect.cpp; sourceTree = "<group>"; };
+		FA94B24A1B9059540074B261 /* VisibleRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisibleRect.h; sourceTree = "<group>"; };
+		FA94B24D1B93EF7B0074B261 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = "../tests/performance-tests/Resources/Images"; sourceTree = "<group>"; };
+		FADE786A1B942DE30061590D /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = "../tests/performance-tests/Resources/fonts"; sourceTree = "<group>"; };
+		FADE786D1B9451540061590D /* PerformanceNodeChildrenTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceNodeChildrenTest.cpp; sourceTree = "<group>"; };
+		FADE786E1B9451540061590D /* PerformanceNodeChildrenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceNodeChildrenTest.h; sourceTree = "<group>"; };
+		FADE78711B9572990061590D /* PerformanceParticleTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceParticleTest.cpp; sourceTree = "<group>"; };
+		FADE78721B9572990061590D /* PerformanceParticleTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceParticleTest.h; sourceTree = "<group>"; };
+		FADE78751B95740D0061590D /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = "../tests/performance-tests/Resources/fps_images.png"; sourceTree = "<group>"; };
+		FADE78841B96C4780061590D /* PerformanceParticle3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceParticle3DTest.cpp; sourceTree = "<group>"; };
+		FADE78851B96C4780061590D /* PerformanceParticle3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceParticle3DTest.h; sourceTree = "<group>"; };
+		FADE78881B96C51C0061590D /* Particle3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particle3D; path = "../tests/performance-tests/Resources/Particle3D"; sourceTree = "<group>"; };
+		FADE788B1B96D0710061590D /* PerformanceSpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceSpriteTest.cpp; sourceTree = "<group>"; };
+		FADE788C1B96D0710061590D /* PerformanceSpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceSpriteTest.h; sourceTree = "<group>"; };
+		FADE788F1B9C363D0061590D /* PerformanceTextureTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceTextureTest.cpp; sourceTree = "<group>"; };
+		FADE78901B9C363D0061590D /* PerformanceTextureTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTextureTest.h; sourceTree = "<group>"; };
+		FADE78931B9C42E80061590D /* PerformanceLabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceLabelTest.cpp; sourceTree = "<group>"; };
+		FADE78941B9C42E80061590D /* PerformanceLabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceLabelTest.h; sourceTree = "<group>"; };
+		FADE78971B9D5C640061590D /* PerformanceEventDispatcherTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceEventDispatcherTest.cpp; sourceTree = "<group>"; };
+		FADE78981B9D5C640061590D /* PerformanceEventDispatcherTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceEventDispatcherTest.h; sourceTree = "<group>"; };
+		FADE78A41B9E86100061590D /* PerformanceScenarioTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceScenarioTest.cpp; sourceTree = "<group>"; };
+		FADE78A51B9E86100061590D /* PerformanceScenarioTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceScenarioTest.h; sourceTree = "<group>"; };
+		FADE78AB1B9E88420061590D /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = "../tests/performance-tests/Resources/Particles"; sourceTree = "<group>"; };
+		FADE78AC1B9E88420061590D /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = "../tests/performance-tests/Resources/TileMaps"; sourceTree = "<group>"; };
+		FADE78B11B9EC0290061590D /* PerformanceCallbackTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceCallbackTest.cpp; sourceTree = "<group>"; };
+		FADE78B21B9EC0290061590D /* PerformanceCallbackTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceCallbackTest.h; sourceTree = "<group>"; };
+		FADE78B51B9EC6160061590D /* PerformanceMathTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceMathTest.cpp; sourceTree = "<group>"; };
+		FADE78B61B9EC6160061590D /* PerformanceMathTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceMathTest.h; sourceTree = "<group>"; };
+		FADE78FB1B9ECB7F0061590D /* PerformanceContainerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceContainerTest.cpp; sourceTree = "<group>"; };
+		FADE78FC1B9ECB7F0061590D /* PerformanceContainerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceContainerTest.h; sourceTree = "<group>"; };
+		FADE79081B9FCD400061590D /* testResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testResource.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2262,6 +2393,46 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FA94B0A21B8EF69A0074B261 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA94B0A31B8EF69A0074B261 /* libiconv.dylib in Frameworks */,
+				FA94B0A41B8EF69A0074B261 /* Security.framework in Frameworks */,
+				FA94B0A51B8EF69A0074B261 /* MediaPlayer.framework in Frameworks */,
+				FA94B0A61B8EF69A0074B261 /* libcocos2d iOS.a in Frameworks */,
+				FA94B0A71B8EF69A0074B261 /* CoreMotion.framework in Frameworks */,
+				FA94B0A81B8EF69A0074B261 /* libz.dylib in Frameworks */,
+				FA94B0A91B8EF69A0074B261 /* Foundation.framework in Frameworks */,
+				FA94B0AA1B8EF69A0074B261 /* AudioToolbox.framework in Frameworks */,
+				FA94B0AB1B8EF69A0074B261 /* OpenAL.framework in Frameworks */,
+				FA94B0AC1B8EF69A0074B261 /* QuartzCore.framework in Frameworks */,
+				FA94B0AD1B8EF69A0074B261 /* CoreGraphics.framework in Frameworks */,
+				FA94B0AE1B8EF69A0074B261 /* OpenGLES.framework in Frameworks */,
+				FA94B0AF1B8EF69A0074B261 /* UIKit.framework in Frameworks */,
+				FA94B0B01B8EF69A0074B261 /* AVFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA94B1B71B8EF76D0074B261 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA94B1B81B8EF76D0074B261 /* libiconv.dylib in Frameworks */,
+				FA94B1B91B8EF76D0074B261 /* libcocos2d Mac.a in Frameworks */,
+				FA94B1BA1B8EF76D0074B261 /* Security.framework in Frameworks */,
+				FA94B1BB1B8EF76D0074B261 /* IOKit.framework in Frameworks */,
+				FA94B1BC1B8EF76D0074B261 /* libz.dylib in Frameworks */,
+				FA94B1BD1B8EF76D0074B261 /* Foundation.framework in Frameworks */,
+				FA94B1BE1B8EF76D0074B261 /* AudioToolbox.framework in Frameworks */,
+				FA94B1BF1B8EF76D0074B261 /* ApplicationServices.framework in Frameworks */,
+				FA94B1C01B8EF76D0074B261 /* OpenAL.framework in Frameworks */,
+				FA94B1C11B8EF76D0074B261 /* QuartzCore.framework in Frameworks */,
+				FA94B1C21B8EF76D0074B261 /* OpenGL.framework in Frameworks */,
+				FA94B1C31B8EF76D0074B261 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -2452,6 +2623,8 @@
 				15CBA063196EE56C005877BB /* lua-game-controller-test iOS.app */,
 				185663941B4155D4009EF2AE /* js-tests Mac.app */,
 				185663ED1B4155DD009EF2AE /* js-tests iOS.app */,
+				FA94B0B41B8EF69A0074B261 /* performance-tests iOS.app */,
+				FA94B1C71B8EF76D0074B261 /* performance-tests Mac.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2621,7 +2794,6 @@
 				1AC35AB818CECF0C00F37B72 /* NodeTest */,
 				1AC35ABB18CECF0C00F37B72 /* ParallaxTest */,
 				1AC35ABE18CECF0C00F37B72 /* ParticleTest */,
-				1AC35AC118CECF0C00F37B72 /* PerformanceTest */,
 				1AC35ADA18CECF0C00F37B72 /* PhysicsTest */,
 				1AC35ADD18CECF0C00F37B72 /* ReleasePoolTest */,
 				1AC35AE018CECF0C00F37B72 /* RenderTextureTest */,
@@ -3343,43 +3515,6 @@
 			path = ParticleTest;
 			sourceTree = "<group>";
 		};
-		1AC35AC118CECF0C00F37B72 /* PerformanceTest */ = {
-			isa = PBXGroup;
-			children = (
-				B6337DF51ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp */,
-				B6337DF61ABA9B44005AEF24 /* PerformanceParticle3DTest.h */,
-				1AC35AC218CECF0C00F37B72 /* PerformanceAllocTest.cpp */,
-				1AC35AC318CECF0C00F37B72 /* PerformanceAllocTest.h */,
-				1AF152D718FD252A00A52F3D /* PerformanceCallbackTest.cpp */,
-				1AF152D818FD252A00A52F3D /* PerformanceCallbackTest.h */,
-				1AC35AC418CECF0C00F37B72 /* PerformanceContainerTest.cpp */,
-				1AC35AC518CECF0C00F37B72 /* PerformanceContainerTest.h */,
-				1AC35AC618CECF0C00F37B72 /* PerformanceEventDispatcherTest.cpp */,
-				1AC35AC718CECF0C00F37B72 /* PerformanceEventDispatcherTest.h */,
-				1AC35AC818CECF0C00F37B72 /* PerformanceLabelTest.cpp */,
-				1AC35AC918CECF0C00F37B72 /* PerformanceLabelTest.h */,
-				1A97ABFE1A1DC3E30076D9CC /* PerformanceMathTest.cpp */,
-				1A97ABFF1A1DC3E30076D9CC /* PerformanceMathTest.h */,
-				1AC35ACA18CECF0C00F37B72 /* PerformanceNodeChildrenTest.cpp */,
-				1AC35ACB18CECF0C00F37B72 /* PerformanceNodeChildrenTest.h */,
-				1AC35ACC18CECF0C00F37B72 /* PerformanceParticleTest.cpp */,
-				1AC35ACD18CECF0C00F37B72 /* PerformanceParticleTest.h */,
-				1AC35ACE18CECF0C00F37B72 /* PerformanceRendererTest.cpp */,
-				1AC35ACF18CECF0C00F37B72 /* PerformanceRendererTest.h */,
-				1AC35AD018CECF0C00F37B72 /* PerformanceScenarioTest.cpp */,
-				1AC35AD118CECF0C00F37B72 /* PerformanceScenarioTest.h */,
-				1AC35AD218CECF0C00F37B72 /* PerformanceSpriteTest.cpp */,
-				1AC35AD318CECF0C00F37B72 /* PerformanceSpriteTest.h */,
-				1AC35AD418CECF0C00F37B72 /* PerformanceTest.cpp */,
-				1AC35AD518CECF0C00F37B72 /* PerformanceTest.h */,
-				1AC35AD618CECF0C00F37B72 /* PerformanceTextureTest.cpp */,
-				1AC35AD718CECF0C00F37B72 /* PerformanceTextureTest.h */,
-				1AC35AD818CECF0C00F37B72 /* PerformanceTouchesTest.cpp */,
-				1AC35AD918CECF0C00F37B72 /* PerformanceTouchesTest.h */,
-			);
-			path = PerformanceTest;
-			sourceTree = "<group>";
-		};
 		1AC35ADA18CECF0C00F37B72 /* PhysicsTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -3839,6 +3974,7 @@
 				1AC3592118CECEFF00F37B72 /* cpp-tests */,
 				1AC35D2418CEDE5600F37B72 /* lua-empty-test */,
 				1AC35D7118CEE4AE00F37B72 /* lua-tests */,
+				FA94B0B81B8EF73D0074B261 /* performance-tests */,
 			);
 			name = tests;
 			sourceTree = "<group>";
@@ -4483,6 +4619,130 @@
 			name = AllocatorTest;
 			sourceTree = "<group>";
 		};
+		FA94B0B81B8EF73D0074B261 /* performance-tests */ = {
+			isa = PBXGroup;
+			children = (
+				FA94B2201B8EF9A90074B261 /* Resources */,
+				FA94B2031B8EF8430074B261 /* proj.mac */,
+				FA94B1D31B8EF8250074B261 /* proj.ios */,
+				FA94B1C91B8EF7BB0074B261 /* Classes */,
+			);
+			name = "performance-tests";
+			sourceTree = "<group>";
+		};
+		FA94B1C91B8EF7BB0074B261 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				FA94B2371B9045160074B261 /* tests */,
+				FA94B2331B8F02880074B261 /* Profile.cpp */,
+				FA94B2341B8F02880074B261 /* Profile.h */,
+				FA94B1CA1B8EF7BB0074B261 /* AppDelegate.cpp */,
+				FA94B1CB1B8EF7BB0074B261 /* AppDelegate.h */,
+			);
+			name = Classes;
+			path = "../tests/performance-tests/Classes";
+			sourceTree = "<group>";
+		};
+		FA94B1D31B8EF8250074B261 /* proj.ios */ = {
+			isa = PBXGroup;
+			children = (
+				FA94B1D41B8EF8250074B261 /* AppController.h */,
+				FA94B1D51B8EF8250074B261 /* AppController.mm */,
+				FA94B1D61B8EF8250074B261 /* Default-568h@2x.png */,
+				FA94B1D71B8EF8250074B261 /* Default-667h@2x.png */,
+				FA94B1D81B8EF8250074B261 /* Default-736h@3x.png */,
+				FA94B1D91B8EF8250074B261 /* Default.png */,
+				FA94B1DA1B8EF8250074B261 /* Default@2x.png */,
+				FA94B1DB1B8EF8250074B261 /* Icon-100.png */,
+				FA94B1DC1B8EF8250074B261 /* Icon-114.png */,
+				FA94B1DD1B8EF8250074B261 /* Icon-120.png */,
+				FA94B1DE1B8EF8250074B261 /* Icon-144.png */,
+				FA94B1DF1B8EF8250074B261 /* Icon-152.png */,
+				FA94B1E01B8EF8250074B261 /* Icon-29.png */,
+				FA94B1E11B8EF8250074B261 /* Icon-40.png */,
+				FA94B1E21B8EF8250074B261 /* Icon-50.png */,
+				FA94B1E31B8EF8250074B261 /* Icon-57.png */,
+				FA94B1E41B8EF8250074B261 /* Icon-58.png */,
+				FA94B1E51B8EF8250074B261 /* Icon-72.png */,
+				FA94B1E61B8EF8250074B261 /* Icon-76.png */,
+				FA94B1E71B8EF8250074B261 /* Icon-80.png */,
+				FA94B1E81B8EF8250074B261 /* Info.plist */,
+				FA94B1E91B8EF8250074B261 /* main.m */,
+				FA94B1EA1B8EF8250074B261 /* Prefix.pch */,
+				FA94B1EB1B8EF8250074B261 /* RootViewController.h */,
+				FA94B1EC1B8EF8250074B261 /* RootViewController.mm */,
+			);
+			name = proj.ios;
+			path = "../tests/performance-tests/proj.ios";
+			sourceTree = "<group>";
+		};
+		FA94B2031B8EF8430074B261 /* proj.mac */ = {
+			isa = PBXGroup;
+			children = (
+				FA94B2041B8EF8430074B261 /* Icon.icns */,
+				FA94B2051B8EF8430074B261 /* Info.plist */,
+				FA94B2061B8EF8430074B261 /* main.cpp */,
+				FA94B2071B8EF8430074B261 /* Prefix.pch */,
+			);
+			name = proj.mac;
+			path = "../tests/performance-tests/proj.mac";
+			sourceTree = "<group>";
+		};
+		FA94B2201B8EF9A90074B261 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FADE78AB1B9E88420061590D /* Particles */,
+				FADE78AC1B9E88420061590D /* TileMaps */,
+				FADE78881B96C51C0061590D /* Particle3D */,
+				FADE78751B95740D0061590D /* fps_images.png */,
+				FADE786A1B942DE30061590D /* fonts */,
+				FA94B24D1B93EF7B0074B261 /* Images */,
+				FA94B2211B8EF9C50074B261 /* CloseNormal.png */,
+				FA94B2221B8EF9C50074B261 /* CloseSelected.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		FA94B2371B9045160074B261 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				FADE79081B9FCD400061590D /* testResource.h */,
+				FA94B2491B9059540074B261 /* VisibleRect.cpp */,
+				FA94B24A1B9059540074B261 /* VisibleRect.h */,
+				FA94B2481B904E290074B261 /* tests.h */,
+				FA94B23C1B90497E0074B261 /* BaseTest.cpp */,
+				FA94B23D1B90497E0074B261 /* BaseTest.h */,
+				FA94B23E1B90497E0074B261 /* controller.cpp */,
+				FA94B23F1B90497E0074B261 /* controller.h */,
+				FA94B2411B90497E0074B261 /* testBasic.h */,
+				FA94B2381B9045160074B261 /* PerformanceAllocTest.cpp */,
+				FA94B2391B9045160074B261 /* PerformanceAllocTest.h */,
+				FADE78B11B9EC0290061590D /* PerformanceCallbackTest.cpp */,
+				FADE78B21B9EC0290061590D /* PerformanceCallbackTest.h */,
+				FADE78FB1B9ECB7F0061590D /* PerformanceContainerTest.cpp */,
+				FADE78FC1B9ECB7F0061590D /* PerformanceContainerTest.h */,
+				FADE78971B9D5C640061590D /* PerformanceEventDispatcherTest.cpp */,
+				FADE78981B9D5C640061590D /* PerformanceEventDispatcherTest.h */,
+				FADE78931B9C42E80061590D /* PerformanceLabelTest.cpp */,
+				FADE78941B9C42E80061590D /* PerformanceLabelTest.h */,
+				FADE78B51B9EC6160061590D /* PerformanceMathTest.cpp */,
+				FADE78B61B9EC6160061590D /* PerformanceMathTest.h */,
+				FADE786D1B9451540061590D /* PerformanceNodeChildrenTest.cpp */,
+				FADE786E1B9451540061590D /* PerformanceNodeChildrenTest.h */,
+				FADE78711B9572990061590D /* PerformanceParticleTest.cpp */,
+				FADE78721B9572990061590D /* PerformanceParticleTest.h */,
+				FADE78841B96C4780061590D /* PerformanceParticle3DTest.cpp */,
+				FADE78851B96C4780061590D /* PerformanceParticle3DTest.h */,
+				FADE78A41B9E86100061590D /* PerformanceScenarioTest.cpp */,
+				FADE78A51B9E86100061590D /* PerformanceScenarioTest.h */,
+				FADE788B1B96D0710061590D /* PerformanceSpriteTest.cpp */,
+				FADE788C1B96D0710061590D /* PerformanceSpriteTest.h */,
+				FADE788F1B9C363D0061590D /* PerformanceTextureTest.cpp */,
+				FADE78901B9C363D0061590D /* PerformanceTextureTest.h */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -4718,6 +4978,42 @@
 			productReference = A07A52291783A1D20073F6A7 /* cpp-tests iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		FA94AF961B8EF69A0074B261 /* performance-tests iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA94B0B11B8EF69A0074B261 /* Build configuration list for PBXNativeTarget "performance-tests iOS" */;
+			buildPhases = (
+				FA94AF991B8EF69A0074B261 /* Resources */,
+				FA94AFD31B8EF69A0074B261 /* Sources */,
+				FA94B0A21B8EF69A0074B261 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FA94AF971B8EF69A0074B261 /* PBXTargetDependency */,
+			);
+			name = "performance-tests iOS";
+			productName = iphone;
+			productReference = FA94B0B41B8EF69A0074B261 /* performance-tests iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FA94B0C01B8EF76D0074B261 /* performance-tests Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA94B1C41B8EF76D0074B261 /* Build configuration list for PBXNativeTarget "performance-tests Mac" */;
+			buildPhases = (
+				FA94B0C31B8EF76D0074B261 /* Resources */,
+				FA94B0EC1B8EF76D0074B261 /* Sources */,
+				FA94B1B71B8EF76D0074B261 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FA94B0C11B8EF76D0074B261 /* PBXTargetDependency */,
+			);
+			name = "performance-tests Mac";
+			productName = iphone;
+			productReference = FA94B1C71B8EF76D0074B261 /* performance-tests Mac.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -4767,6 +5063,7 @@
 				1ABCA28518CD91510087CE3A /* lua-tests Mac */,
 				1A0EE2B818CDF733004CD58F /* lua-empty-test Mac */,
 				1856634B1B4155D3009EF2AE /* js-tests Mac */,
+				FA94B0C01B8EF76D0074B261 /* performance-tests Mac */,
 				A07A517B1783A1CC0073F6A7 /* build all tests iOS */,
 				A07A517F1783A1D20073F6A7 /* cpp-tests iOS */,
 				1A0EE31818CDF775004CD58F /* cpp-empty-test iOS */,
@@ -4775,6 +5072,7 @@
 				3E6176FF1960FAED00DE83F5 /* game-controller-test IOS */,
 				15CBA015196EE56C005877BB /* lua-game-controller-test iOS */,
 				185663961B4155DD009EF2AE /* js-tests iOS */,
+				FA94AF961B8EF69A0074B261 /* performance-tests iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -5200,6 +5498,57 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FA94AF991B8EF69A0074B261 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA94B24F1B93EF7B0074B261 /* Images in Resources */,
+				FA94B1F51B8EF8250074B261 /* Icon-120.png in Resources */,
+				FA94B1FA1B8EF8250074B261 /* Icon-50.png in Resources */,
+				FA94B1FF1B8EF8250074B261 /* Icon-80.png in Resources */,
+				FA94B1EE1B8EF8250074B261 /* Default-568h@2x.png in Resources */,
+				FA94B1EF1B8EF8250074B261 /* Default-667h@2x.png in Resources */,
+				FA94B1FB1B8EF8250074B261 /* Icon-57.png in Resources */,
+				FA94B1F71B8EF8250074B261 /* Icon-152.png in Resources */,
+				FA94B1F21B8EF8250074B261 /* Default@2x.png in Resources */,
+				FA94B1F01B8EF8250074B261 /* Default-736h@3x.png in Resources */,
+				FADE786C1B942DE30061590D /* fonts in Resources */,
+				FA94B2001B8EF8250074B261 /* Info.plist in Resources */,
+				FADE78AE1B9E88420061590D /* Particles in Resources */,
+				FA94B1F41B8EF8250074B261 /* Icon-114.png in Resources */,
+				FA94B1F81B8EF8250074B261 /* Icon-29.png in Resources */,
+				FADE78B01B9E88420061590D /* TileMaps in Resources */,
+				FA94B1F91B8EF8250074B261 /* Icon-40.png in Resources */,
+				FA94B1F31B8EF8250074B261 /* Icon-100.png in Resources */,
+				FA94B1FE1B8EF8250074B261 /* Icon-76.png in Resources */,
+				FA94B1F61B8EF8250074B261 /* Icon-144.png in Resources */,
+				FA94B1FD1B8EF8250074B261 /* Icon-72.png in Resources */,
+				FA94B2271B8EF9C50074B261 /* CloseNormal.png in Resources */,
+				FA94B1F11B8EF8250074B261 /* Default.png in Resources */,
+				FA94B1FC1B8EF8250074B261 /* Icon-58.png in Resources */,
+				FA94B2291B8EF9C50074B261 /* CloseSelected.png in Resources */,
+				FADE788A1B96C51C0061590D /* Particle3D in Resources */,
+				FADE78771B95740D0061590D /* fps_images.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA94B0C31B8EF76D0074B261 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA94B24E1B93EF7B0074B261 /* Images in Resources */,
+				FA94B2091B8EF8430074B261 /* Info.plist in Resources */,
+				FA94B2261B8EF9C50074B261 /* CloseNormal.png in Resources */,
+				FADE78AD1B9E88420061590D /* Particles in Resources */,
+				FADE786B1B942DE30061590D /* fonts in Resources */,
+				FADE78AF1B9E88420061590D /* TileMaps in Resources */,
+				FA94B2081B8EF8430074B261 /* Icon.icns in Resources */,
+				FADE78891B96C51C0061590D /* Particle3D in Resources */,
+				FADE78761B95740D0061590D /* fps_images.png in Resources */,
+				FA94B2281B8EF9C50074B261 /* CloseSelected.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -5464,7 +5813,6 @@
 				850F8A241B5F3A4F00780603 /* Bug-12847.cpp in Sources */,
 				A5030C3519D059DA000E78E7 /* OpenURLTest.cpp in Sources */,
 				29080D1C191B574B0066F8DF /* UITest.cpp in Sources */,
-				1AC35C3118CECF0C00F37B72 /* PerformanceRendererTest.cpp in Sources */,
 				1AC35C4518CECF0C00F37B72 /* SceneTest.cpp in Sources */,
 				1AC35B6F18CECF0C00F37B72 /* MenuTestLayer.cpp in Sources */,
 				59620E8F1921E5CF002021B6 /* Bug-Child.cpp in Sources */,
@@ -5488,7 +5836,6 @@
 				5046AB4A1AF2A8D80060550B /* MaterialSystemTest.cpp in Sources */,
 				B603F1AF1AC8EA4E00A9579C /* TerrainTest.cpp in Sources */,
 				29080DC7191B595E0066F8DF /* UISceneManager.cpp in Sources */,
-				1AC35C2F18CECF0C00F37B72 /* PerformanceParticleTest.cpp in Sources */,
 				1AC35B4918CECF0C00F37B72 /* Bug-914.cpp in Sources */,
 				1AC35B6318CECF0C00F37B72 /* EffectsAdvancedTest.cpp in Sources */,
 				B6CAB54E1AF9AA6C00B9B856 /* Physics3DTest.cpp in Sources */,
@@ -5504,7 +5851,6 @@
 				1AC35B6118CECF0C00F37B72 /* DrawPrimitivesTest.cpp in Sources */,
 				1AC35C1718CECF0C00F37B72 /* MotionStreakTest.cpp in Sources */,
 				1AC35C0518CECF0C00F37B72 /* FontTest.cpp in Sources */,
-				1AC35C3718CECF0C00F37B72 /* PerformanceTest.cpp in Sources */,
 				29080D99191B595E0066F8DF /* CustomImageViewReader.cpp in Sources */,
 				29080DD1191B595E0066F8DF /* UISliderTest_Editor.cpp in Sources */,
 				1AC35B2718CECF0C00F37B72 /* ActionsTest.cpp in Sources */,
@@ -5521,7 +5867,6 @@
 				29080DD5191B595E0066F8DF /* UITextAtlasTest_Editor.cpp in Sources */,
 				1AC35BFF18CECF0C00F37B72 /* CustomTableViewCell.cpp in Sources */,
 				29080DDF191B595E0066F8DF /* UITextTest.cpp in Sources */,
-				1AC35C2718CECF0C00F37B72 /* PerformanceContainerTest.cpp in Sources */,
 				1AC35BEF18CECF0C00F37B72 /* CCControlSwitchTest.cpp in Sources */,
 				29080D91191B595E0066F8DF /* CustomGUIScene.cpp in Sources */,
 				3E9E75D0199324CB005B7047 /* Camera3DTest.cpp in Sources */,
@@ -5539,14 +5884,12 @@
 				1AC35B5D18CECF0C00F37B72 /* CurrentLanguageTest.cpp in Sources */,
 				1AC35B3B18CECF0C00F37B72 /* Bug-350.cpp in Sources */,
 				1AC35C4718CECF0C00F37B72 /* SchedulerTest.cpp in Sources */,
-				1AF152D918FD252A00A52F3D /* PerformanceCallbackTest.cpp in Sources */,
 				29080DA3191B595E0066F8DF /* UIButtonTest.cpp in Sources */,
 				1AC35C5518CECF0C00F37B72 /* Texture2dTest.cpp in Sources */,
 				1AC35C0718CECF0C00F37B72 /* MouseTest.cpp in Sources */,
 				182C5CBA1A95B2FD00C30D34 /* CocosStudio3DTest.cpp in Sources */,
 				1AC35C5D18CECF0C00F37B72 /* Ball.cpp in Sources */,
 				1AC35B7B18CECF0C00F37B72 /* GameOverScene.cpp in Sources */,
-				B6337DF71ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp in Sources */,
 				1AC35BF318CECF0C00F37B72 /* ExtensionsTest.cpp in Sources */,
 				1AC35B3518CECF0C00F37B72 /* TestEntries.cpp in Sources */,
 				1AC35B2D18CECF0C00F37B72 /* Box2dTest.cpp in Sources */,
@@ -5567,7 +5910,6 @@
 				29080D8D191B595E0066F8DF /* CocosGUIScene.cpp in Sources */,
 				5EBEECB01995247000429821 /* DrawNode3D.cpp in Sources */,
 				1AC35BED18CECF0C00F37B72 /* CCControlStepperTest.cpp in Sources */,
-				1AC35C3318CECF0C00F37B72 /* PerformanceScenarioTest.cpp in Sources */,
 				1AC35C5918CECF0C00F37B72 /* TextureAtlasEncryptionTest.cpp in Sources */,
 				29080DA9191B595E0066F8DF /* UICheckBoxTest_Editor.cpp in Sources */,
 				1AC35B5518CECF0C00F37B72 /* ConfigurationTest.cpp in Sources */,
@@ -5575,7 +5917,6 @@
 				1AC35C5B18CECF0C00F37B72 /* TileMapTest.cpp in Sources */,
 				1AC35B4718CECF0C00F37B72 /* Bug-899.cpp in Sources */,
 				1AC35C1B18CECF0C00F37B72 /* NewEventDispatcherTest.cpp in Sources */,
-				1AC35C2D18CECF0C00F37B72 /* PerformanceNodeChildrenTest.cpp in Sources */,
 				29080DC5191B595E0066F8DF /* UIScene_Editor.cpp in Sources */,
 				1AC35BDD18CECF0C00F37B72 /* acts.cpp in Sources */,
 				1AC35B7518CECF0C00F37B72 /* ArmatureScene.cpp in Sources */,
@@ -5606,7 +5947,6 @@
 				1AC35C3F18CECF0C00F37B72 /* ReleasePoolTest.cpp in Sources */,
 				1AC35C5718CECF0C00F37B72 /* TextureCacheTest.cpp in Sources */,
 				1AC35B6D18CECF0C00F37B72 /* HelloCocosBuilderLayer.cpp in Sources */,
-				1AC35C2B18CECF0C00F37B72 /* PerformanceLabelTest.cpp in Sources */,
 				1AC35C0118CECF0C00F37B72 /* TableViewTestScene.cpp in Sources */,
 				1AC35C4B18CECF0C00F37B72 /* ShaderTest2.cpp in Sources */,
 				38FA2E73194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */,
@@ -5615,23 +5955,17 @@
 				29080DC9191B595E0066F8DF /* UISceneManager_Editor.cpp in Sources */,
 				1AC35B3F18CECF0C00F37B72 /* Bug-458.cpp in Sources */,
 				3E2F27B919CFF4AF00E7C490 /* NewAudioEngineTest.cpp in Sources */,
-				1A97AC001A1DC3E30076D9CC /* PerformanceMathTest.cpp in Sources */,
-				1AC35C3918CECF0C00F37B72 /* PerformanceTextureTest.cpp in Sources */,
 				1AC35B5318CECF0C00F37B72 /* CocosDenshionTest.cpp in Sources */,
 				29080DD3191B595E0066F8DF /* UITextAtlasTest.cpp in Sources */,
 				1AC35B7F18CECF0C00F37B72 /* ProjectileController.cpp in Sources */,
 				29080DB5191B595E0066F8DF /* UIListViewTest.cpp in Sources */,
-				1AC35C2518CECF0C00F37B72 /* PerformanceAllocTest.cpp in Sources */,
 				29080DAB191B595E0066F8DF /* UIFocusTest.cpp in Sources */,
 				29080DD9191B595E0066F8DF /* UITextBMFontTest_Editor.cpp in Sources */,
 				1AC35B5918CECF0C00F37B72 /* controller.cpp in Sources */,
-				1AC35C2918CECF0C00F37B72 /* PerformanceEventDispatcherTest.cpp in Sources */,
 				1AC35CA618CECF1E00F37B72 /* main.cpp in Sources */,
 				1AC35BE918CECF0C00F37B72 /* CCControlSceneManager.cpp in Sources */,
 				1AC35B7318CECF0C00F37B72 /* TimelineCallbackTestLayer.cpp in Sources */,
 				1AC35BFB18CECF0C00F37B72 /* NotificationCenterTest.cpp in Sources */,
-				1AC35C3518CECF0C00F37B72 /* PerformanceSpriteTest.cpp in Sources */,
-				1AC35C3B18CECF0C00F37B72 /* PerformanceTouchesTest.cpp in Sources */,
 				29080D8F191B595E0066F8DF /* CocoStudioGUITest.cpp in Sources */,
 				1AC35B3D18CECF0C00F37B72 /* Bug-422.cpp in Sources */,
 				1AC35BF518CECF0C00F37B72 /* HttpClientTest.cpp in Sources */,
@@ -5687,7 +6021,6 @@
 				1AC35B3818CECF0C00F37B72 /* Bug-1159.cpp in Sources */,
 				29080DBA191B595E0066F8DF /* UILoadingBarTest.cpp in Sources */,
 				29080D9C191B595E0066F8DF /* CustomParticleWidget.cpp in Sources */,
-				1AC35C3218CECF0C00F37B72 /* PerformanceRendererTest.cpp in Sources */,
 				1AC35C4618CECF0C00F37B72 /* SceneTest.cpp in Sources */,
 				29080D9A191B595E0066F8DF /* CustomImageViewReader.cpp in Sources */,
 				29080DD6191B595E0066F8DF /* UITextAtlasTest_Editor.cpp in Sources */,
@@ -5702,13 +6035,11 @@
 				1AC35C6818CECF0C00F37B72 /* UserDefaultTest.cpp in Sources */,
 				29080D1D191B574B0066F8DF /* UITest.cpp in Sources */,
 				3E9E75D1199324CB005B7047 /* Camera3DTest.cpp in Sources */,
-				1AF152DA18FD252A00A52F3D /* PerformanceCallbackTest.cpp in Sources */,
 				29080DA0191B595E0066F8DF /* CustomReader.cpp in Sources */,
 				1AC35C2218CECF0C00F37B72 /* ParallaxTest.cpp in Sources */,
 				1AC35C6C18CECF0C00F37B72 /* ZwoptexTest.cpp in Sources */,
 				1AC35C7118CECF0C00F37B72 /* VibrateTest.cpp in Sources */,
 				1AC35B7818CECF0C00F37B72 /* ComponentsTestScene.cpp in Sources */,
-				1AC35C3018CECF0C00F37B72 /* PerformanceParticleTest.cpp in Sources */,
 				1AC35B4A18CECF0C00F37B72 /* Bug-914.cpp in Sources */,
 				1AC35B6418CECF0C00F37B72 /* EffectsAdvancedTest.cpp in Sources */,
 				1AC35C6018CECF0C00F37B72 /* Paddle.cpp in Sources */,
@@ -5728,7 +6059,6 @@
 				1AC35C1818CECF0C00F37B72 /* MotionStreakTest.cpp in Sources */,
 				D0FD03651A3B546400825BB5 /* AllocatorTest.cpp in Sources */,
 				1AC35C0618CECF0C00F37B72 /* FontTest.cpp in Sources */,
-				1AC35C3818CECF0C00F37B72 /* PerformanceTest.cpp in Sources */,
 				1F33635018E37E840074764D /* RefPtrTest.cpp in Sources */,
 				292CF01519A1965E00E8E6A0 /* UIEditBoxTest.cpp in Sources */,
 				1AC35B2818CECF0C00F37B72 /* ActionsTest.cpp in Sources */,
@@ -5745,7 +6075,6 @@
 				1AC35B5C18CECF0C00F37B72 /* CurlTest.cpp in Sources */,
 				1AC35C0018CECF0C00F37B72 /* CustomTableViewCell.cpp in Sources */,
 				29080D92191B595E0066F8DF /* CustomGUIScene.cpp in Sources */,
-				1AC35C2818CECF0C00F37B72 /* PerformanceContainerTest.cpp in Sources */,
 				1AC35BF018CECF0C00F37B72 /* CCControlSwitchTest.cpp in Sources */,
 				1AC35B2C18CECF0C00F37B72 /* BaseTest.cpp in Sources */,
 				1AC35B7E18CECF0C00F37B72 /* PlayerController.cpp in Sources */,
@@ -5776,7 +6105,6 @@
 				1AC35C0A18CECF0C00F37B72 /* IntervalTest.cpp in Sources */,
 				29080DD0191B595E0066F8DF /* UISliderTest.cpp in Sources */,
 				1AC35BEE18CECF0C00F37B72 /* CCControlStepperTest.cpp in Sources */,
-				1AC35C3418CECF0C00F37B72 /* PerformanceScenarioTest.cpp in Sources */,
 				29080DA4191B595E0066F8DF /* UIButtonTest.cpp in Sources */,
 				1AC35C5A18CECF0C00F37B72 /* TextureAtlasEncryptionTest.cpp in Sources */,
 				1AC35B5618CECF0C00F37B72 /* ConfigurationTest.cpp in Sources */,
@@ -5787,7 +6115,6 @@
 				3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */,
 				1AC35B4818CECF0C00F37B72 /* Bug-899.cpp in Sources */,
 				1AC35C1C18CECF0C00F37B72 /* NewEventDispatcherTest.cpp in Sources */,
-				1AC35C2E18CECF0C00F37B72 /* PerformanceNodeChildrenTest.cpp in Sources */,
 				29080DCE191B595E0066F8DF /* UIScrollViewTest_Editor.cpp in Sources */,
 				1AC35BDE18CECF0C00F37B72 /* acts.cpp in Sources */,
 				1AC35B7618CECF0C00F37B72 /* ArmatureScene.cpp in Sources */,
@@ -5807,7 +6134,6 @@
 				1AC35C3E18CECF0C00F37B72 /* PhysicsTest.cpp in Sources */,
 				3825CC4A1A2C982A00C92EA8 /* CustomRootNode.cpp in Sources */,
 				29080DC6191B595E0066F8DF /* UIScene_Editor.cpp in Sources */,
-				B6337DF81ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp in Sources */,
 				29080DB2191B595E0066F8DF /* UILayoutTest.cpp in Sources */,
 				1AC35B6A18CECF0C00F37B72 /* ButtonTestLayer.cpp in Sources */,
 				29080DB6191B595E0066F8DF /* UIListViewTest.cpp in Sources */,
@@ -5821,11 +6147,9 @@
 				1AC35C6A18CECF0C00F37B72 /* VisibleRect.cpp in Sources */,
 				1AC35C4018CECF0C00F37B72 /* ReleasePoolTest.cpp in Sources */,
 				50921EB01B746D5F00C085CC /* DownloaderTest.cpp in Sources */,
-				1A97AC011A1DC3E30076D9CC /* PerformanceMathTest.cpp in Sources */,
 				1AC35C5818CECF0C00F37B72 /* TextureCacheTest.cpp in Sources */,
 				1AC35B6E18CECF0C00F37B72 /* HelloCocosBuilderLayer.cpp in Sources */,
 				29080D96191B595E0066F8DF /* CustomParticleWidgetTest.cpp in Sources */,
-				1AC35C2C18CECF0C00F37B72 /* PerformanceLabelTest.cpp in Sources */,
 				29080DE0191B595E0066F8DF /* UITextTest.cpp in Sources */,
 				29080DC0191B595E0066F8DF /* UIPageViewTest_Editor.cpp in Sources */,
 				1AC35C0218CECF0C00F37B72 /* TableViewTestScene.cpp in Sources */,
@@ -5833,15 +6157,12 @@
 				1AC35C6618CECF0C00F37B72 /* UnitTest.cpp in Sources */,
 				290E94B6196FC16900694919 /* CocostudioParserTest.cpp in Sources */,
 				1AC35B4018CECF0C00F37B72 /* Bug-458.cpp in Sources */,
-				1AC35C3A18CECF0C00F37B72 /* PerformanceTextureTest.cpp in Sources */,
 				29080DC4191B595E0066F8DF /* UIScene.cpp in Sources */,
 				1AC35B5418CECF0C00F37B72 /* CocosDenshionTest.cpp in Sources */,
 				1AC35B8018CECF0C00F37B72 /* ProjectileController.cpp in Sources */,
-				1AC35C2618CECF0C00F37B72 /* PerformanceAllocTest.cpp in Sources */,
 				3825CC4E1A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.cpp in Sources */,
 				3E92EA831921A1400094CD21 /* Sprite3DTest.cpp in Sources */,
 				1AC35B5A18CECF0C00F37B72 /* controller.cpp in Sources */,
-				1AC35C2A18CECF0C00F37B72 /* PerformanceEventDispatcherTest.cpp in Sources */,
 				1AC35BEA18CECF0C00F37B72 /* CCControlSceneManager.cpp in Sources */,
 				182C5CBB1A95B30500C30D34 /* CocosStudio3DTest.cpp in Sources */,
 				1AC35B7418CECF0C00F37B72 /* TimelineCallbackTestLayer.cpp in Sources */,
@@ -5849,10 +6170,8 @@
 				29080D9E191B595E0066F8DF /* CustomParticleWidgetReader.cpp in Sources */,
 				1AC35BFC18CECF0C00F37B72 /* NotificationCenterTest.cpp in Sources */,
 				29FBBBFF196A9ECD00E65826 /* CocostudioParserJsonTest.cpp in Sources */,
-				1AC35C3618CECF0C00F37B72 /* PerformanceSpriteTest.cpp in Sources */,
 				B6DD2FFD1B04979C00E47F5F /* NavMeshTest.cpp in Sources */,
 				B6C039DA19C95D83007207DC /* LightTest.cpp in Sources */,
-				1AC35C3C18CECF0C00F37B72 /* PerformanceTouchesTest.cpp in Sources */,
 				29080DA2191B595E0066F8DF /* GUIEditorTest.cpp in Sources */,
 				29080D94191B595E0066F8DF /* CustomImageTest.cpp in Sources */,
 				1AC35B3E18CECF0C00F37B72 /* Bug-422.cpp in Sources */,
@@ -5862,6 +6181,58 @@
 				29080DA6191B595E0066F8DF /* UIButtonTest_Editor.cpp in Sources */,
 				1AC35B5018CECF0C00F37B72 /* ClickAndMoveTest.cpp in Sources */,
 				B603F1B01AC8EA4E00A9579C /* TerrainTest.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA94AFD31B8EF69A0074B261 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FADE78921B9C363D0061590D /* PerformanceTextureTest.cpp in Sources */,
+				FADE78B41B9EC0290061590D /* PerformanceCallbackTest.cpp in Sources */,
+				FA94B2451B90497E0074B261 /* controller.cpp in Sources */,
+				FADE788E1B96D0710061590D /* PerformanceSpriteTest.cpp in Sources */,
+				FA94B2431B90497E0074B261 /* BaseTest.cpp in Sources */,
+				FADE78B81B9EC6160061590D /* PerformanceMathTest.cpp in Sources */,
+				FA94B23B1B9045160074B261 /* PerformanceAllocTest.cpp in Sources */,
+				FADE78741B9572990061590D /* PerformanceParticleTest.cpp in Sources */,
+				FADE789A1B9D5C640061590D /* PerformanceEventDispatcherTest.cpp in Sources */,
+				FA94B1ED1B8EF8250074B261 /* AppController.mm in Sources */,
+				FADE78A71B9E86100061590D /* PerformanceScenarioTest.cpp in Sources */,
+				FA94B24C1B9059540074B261 /* VisibleRect.cpp in Sources */,
+				FADE78701B9451540061590D /* PerformanceNodeChildrenTest.cpp in Sources */,
+				FADE78871B96C4780061590D /* PerformanceParticle3DTest.cpp in Sources */,
+				FADE78FE1B9ECB7F0061590D /* PerformanceContainerTest.cpp in Sources */,
+				FA94B2361B8F02880074B261 /* Profile.cpp in Sources */,
+				FADE78961B9C42E80061590D /* PerformanceLabelTest.cpp in Sources */,
+				FA94B2021B8EF8250074B261 /* RootViewController.mm in Sources */,
+				FA94B2011B8EF8250074B261 /* main.m in Sources */,
+				FA94B1CF1B8EF7BB0074B261 /* AppDelegate.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA94B0EC1B8EF76D0074B261 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA94B2421B90497E0074B261 /* BaseTest.cpp in Sources */,
+				FADE78861B96C4780061590D /* PerformanceParticle3DTest.cpp in Sources */,
+				FADE78911B9C363D0061590D /* PerformanceTextureTest.cpp in Sources */,
+				FADE786F1B9451540061590D /* PerformanceNodeChildrenTest.cpp in Sources */,
+				FA94B2351B8F02880074B261 /* Profile.cpp in Sources */,
+				FADE788D1B96D0710061590D /* PerformanceSpriteTest.cpp in Sources */,
+				FA94B1CE1B8EF7BB0074B261 /* AppDelegate.cpp in Sources */,
+				FA94B24B1B9059540074B261 /* VisibleRect.cpp in Sources */,
+				FADE78FD1B9ECB7F0061590D /* PerformanceContainerTest.cpp in Sources */,
+				FA94B20A1B8EF8430074B261 /* main.cpp in Sources */,
+				FADE78A61B9E86100061590D /* PerformanceScenarioTest.cpp in Sources */,
+				FA94B23A1B9045160074B261 /* PerformanceAllocTest.cpp in Sources */,
+				FADE78B31B9EC0290061590D /* PerformanceCallbackTest.cpp in Sources */,
+				FADE78991B9D5C640061590D /* PerformanceEventDispatcherTest.cpp in Sources */,
+				FADE78731B9572990061590D /* PerformanceParticleTest.cpp in Sources */,
+				FA94B2441B90497E0074B261 /* controller.cpp in Sources */,
+				FADE78B71B9EC6160061590D /* PerformanceMathTest.cpp in Sources */,
+				FADE78951B9C42E80061590D /* PerformanceLabelTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6012,6 +6383,16 @@
 			isa = PBXTargetDependency;
 			target = A07A517F1783A1D20073F6A7 /* cpp-tests iOS */;
 			targetProxy = A07A526C1783AB980073F6A7 /* PBXContainerItemProxy */;
+		};
+		FA94AF971B8EF69A0074B261 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx iOS";
+			targetProxy = FA94AF981B8EF69A0074B261 /* PBXContainerItemProxy */;
+		};
+		FA94B0C11B8EF76D0074B261 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "cocos2dx Mac";
+			targetProxy = FA94B0C21B8EF76D0074B261 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -6808,6 +7189,102 @@
 			};
 			name = Release;
 		};
+		FA94B0B21B8EF69A0074B261 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/../tests/performance-tests/proj.ios/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../external/curl/prebuilt/ios",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "performance-tests iOS";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
+				VALID_ARCHS = "arm64 armv7";
+			};
+			name = Debug;
+		};
+		FA94B0B31B8EF69A0074B261 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/../tests/performance-tests/proj.ios/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../external/curl/prebuilt/ios",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "performance-tests iOS";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7";
+			};
+			name = Release;
+		};
+		FA94B1C51B8EF76D0074B261 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.mac/Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_MAC,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/../tests/performance-tests/proj.mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "performance-tests Mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
+			};
+			name = Debug;
+		};
+		FA94B1C61B8EF76D0074B261 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.mac/Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_MAC,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/../tests/performance-tests/proj.mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "performance-tests Mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -6942,6 +7419,24 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FA94B0B11B8EF69A0074B261 /* Build configuration list for PBXNativeTarget "performance-tests iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA94B0B21B8EF69A0074B261 /* Debug */,
+				FA94B0B31B8EF69A0074B261 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FA94B1C41B8EF76D0074B261 /* Build configuration list for PBXNativeTarget "performance-tests Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA94B1C51B8EF76D0074B261 /* Debug */,
+				FA94B1C61B8EF76D0074B261 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

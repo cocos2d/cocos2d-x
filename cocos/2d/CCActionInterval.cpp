@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "base/CCEventCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "platform/CCStdC.h"
+#include "base/CCScriptSupport.h"
 
 NS_CC_BEGIN
 
@@ -105,6 +106,18 @@ bool ActionInterval::initWithDuration(float d)
     return true;
 }
 
+bool ActionInterval::sendUpdateEventToScript(float dt, Action *actionObject)
+{
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendActionEventToJS(actionObject, kActionUpdate, (void *)&dt))
+            return true;
+    }
+#endif
+    return false;
+}
+
 bool ActionInterval::isDone() const
 {
     return _elapsed >= _duration;
@@ -122,12 +135,16 @@ void ActionInterval::step(float dt)
         _elapsed += dt;
     }
     
-    this->update(MAX (0,                                  // needed for rewind. elapsed could be negative
-                      MIN(1, _elapsed /
-                          MAX(_duration, FLT_EPSILON)   // division by 0
-                          )
-                      )
-                 );
+    
+    float updateDt = MAX (0,                                  // needed for rewind. elapsed could be negative
+                           MIN(1, _elapsed /
+                               MAX(_duration, FLT_EPSILON)   // division by 0
+                               )
+                           );
+
+    if (sendUpdateEventToScript(updateDt, this)) return;
+    
+    this->update(updateDt);
 }
 
 void ActionInterval::setAmplitudeRate(float amp)
@@ -221,29 +238,30 @@ Sequence* Sequence::createWithVariableList(FiniteTimeAction *action1, va_list ar
 
 Sequence* Sequence::create(const Vector<FiniteTimeAction*>& arrayOfActions)
 {
-    Sequence* ret = nullptr;
-    do 
+    Sequence* seq = new (std::nothrow) Sequence;
+
+    if (seq && seq->init(arrayOfActions))
+        seq->autorelease();
+    return seq;
+}
+
+bool Sequence::init(const Vector<FiniteTimeAction*>& arrayOfActions)
+{
+    auto count = arrayOfActions.size();
+    if (count == 0)
+        return true;
+
+    if (count == 1)
+        return initWithTwoActions(arrayOfActions.at(0), ExtraAction::create());
+
+    // else size > 1
+    auto prev = arrayOfActions.at(0);
+    for (int i = 1; i < count-1; ++i)
     {
-        auto count = arrayOfActions.size();
-        CC_BREAK_IF(count == 0);
+        prev = createWithTwoActions(prev, arrayOfActions.at(i));
+    }
 
-        auto prev = arrayOfActions.at(0);
-
-        if (count > 1)
-        {
-            for (int i = 1; i < count; ++i)
-            {
-                prev = createWithTwoActions(prev, arrayOfActions.at(i));
-            }
-        }
-        else
-        {
-            // If only one action is added to Sequence, make up a Sequence by adding a simplest finite time action.
-            prev = createWithTwoActions(prev, ExtraAction::create());
-        }
-        ret = static_cast<Sequence*>(prev);
-    }while (0);
-    return ret;
+    return initWithTwoActions(prev, arrayOfActions.at(count-1));
 }
 
 bool Sequence::initWithTwoActions(FiniteTimeAction *actionOne, FiniteTimeAction *actionTwo)
@@ -323,13 +341,15 @@ void Sequence::update(float t)
         if( _last == -1 ) {
             // action[0] was skipped, execute it.
             _actions[0]->startWithTarget(_target);
-            _actions[0]->update(1.0f);
+            if (!(sendUpdateEventToScript(1.0f, _actions[0])))
+                _actions[0]->update(1.0f);
             _actions[0]->stop();
         }
         else if( _last == 0 )
         {
             // switching to action 1. stop action 0.
-            _actions[0]->update(1.0f);
+            if (!(sendUpdateEventToScript(1.0f, _actions[0])))
+                _actions[0]->update(1.0f);
             _actions[0]->stop();
         }
     }
@@ -338,8 +358,9 @@ void Sequence::update(float t)
         // Reverse mode ?
         // FIXME: Bug. this case doesn't contemplate when _last==-1, found=0 and in "reverse mode"
         // since it will require a hack to know if an action is on reverse mode or not.
-        // "step" should be overriden, and the "reverseMode" value propagated to inner Sequences.
-        _actions[1]->update(0);
+        // "step" should be overridden, and the "reverseMode" value propagated to inner Sequences.
+        if (!(sendUpdateEventToScript(0, _actions[1])))
+            _actions[1]->update(0);
         _actions[1]->stop();
     }
     // Last action found and it is done.
@@ -353,8 +374,8 @@ void Sequence::update(float t)
     {
         _actions[found]->startWithTarget(_target);
     }
-
-    _actions[found]->update(new_t);
+    if (!(sendUpdateEventToScript(new_t, _actions[found])))
+        _actions[found]->update(new_t);
     _last = found;
 }
 
@@ -436,8 +457,8 @@ void Repeat::update(float dt)
     {
         while (dt > _nextDt && _total < _times)
         {
-
-            _innerAction->update(1.0f);
+            if (!(sendUpdateEventToScript(1.0f, _innerAction)))
+                _innerAction->update(1.0f);
             _total++;
 
             _innerAction->stop();
@@ -456,19 +477,22 @@ void Repeat::update(float dt)
         {
             if (_total == _times)
             {
-                _innerAction->update(1);
+                if (!(sendUpdateEventToScript(1, _innerAction)))
+                    _innerAction->update(1);
                 _innerAction->stop();
             }
             else
             {
                 // issue #390 prevent jerk, use right update
-                _innerAction->update(dt - (_nextDt - _innerAction->getDuration()/_duration));
+                if (!(sendUpdateEventToScript(dt - (_nextDt - _innerAction->getDuration()/_duration), _innerAction)))
+                    _innerAction->update(dt - (_nextDt - _innerAction->getDuration()/_duration));
             }
         }
     }
     else
     {
-        _innerAction->update(fmodf(dt * _times,1.0f));
+        if (!(sendUpdateEventToScript(fmodf(dt * _times,1.0f), _innerAction)))
+            _innerAction->update(fmodf(dt * _times,1.0f));
     }
 }
 
@@ -610,27 +634,10 @@ Spawn* Spawn::createWithVariableList(FiniteTimeAction *action1, va_list args)
 
 Spawn* Spawn::create(const Vector<FiniteTimeAction*>& arrayOfActions)
 {
-    Spawn* ret = nullptr;
-    do 
-    {
-        auto count = arrayOfActions.size();
-        CC_BREAK_IF(count == 0);
-        auto prev = arrayOfActions.at(0);
-        if (count > 1)
-        {
-            for (int i = 1; i < arrayOfActions.size(); ++i)
-            {
-                prev = createWithTwoActions(prev, arrayOfActions.at(i));
-            }
-        }
-        else
-        {
-            // If only one action is added to Spawn, make up a Spawn by adding a simplest finite time action.
-            prev = createWithTwoActions(prev, ExtraAction::create());
-        }
-        ret = static_cast<Spawn*>(prev);
-    }while (0);
+    Spawn* ret = new (std::nothrow) Spawn;
 
+    if (ret && ret->init(arrayOfActions))
+        ret->autorelease();
     return ret;
 }
 
@@ -641,6 +648,26 @@ Spawn* Spawn::createWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *
     spawn->autorelease();
 
     return spawn;
+}
+
+bool Spawn::init(const Vector<FiniteTimeAction*>& arrayOfActions)
+{
+    auto count = arrayOfActions.size();
+
+    if (count == 0)
+        return true;
+
+    if (count == 1)
+        return initWithTwoActions(arrayOfActions.at(0), ExtraAction::create());
+
+    // else count > 1
+    auto prev = arrayOfActions.at(0);
+    for (int i = 1; i < count-1; ++i)
+    {
+        prev = createWithTwoActions(prev, arrayOfActions.at(i));
+    }
+
+    return initWithTwoActions(prev, arrayOfActions.at(count-1));
 }
 
 bool Spawn::initWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2)
@@ -710,11 +737,13 @@ void Spawn::update(float time)
 {
     if (_one)
     {
-        _one->update(time);
+        if (!(sendUpdateEventToScript(time, _one)))
+            _one->update(time);
     }
     if (_two)
     {
-        _two->update(time);
+        if (!(sendUpdateEventToScript(time, _two)))
+            _two->update(time);
     }
 }
 
@@ -2241,7 +2270,8 @@ void ReverseTime::update(float time)
 {
     if (_other)
     {
-        _other->update(1 - time);
+        if (!(sendUpdateEventToScript(1 - time, _other)))
+            _other->update(1 - time);
     }
 }
 
@@ -2502,7 +2532,8 @@ void TargetedAction::stop()
 
 void TargetedAction::update(float time)
 {
-    _action->update(time);
+    if (!(sendUpdateEventToScript(time, _action)))
+        _action->update(time);
 }
 
 bool TargetedAction::isDone(void) const

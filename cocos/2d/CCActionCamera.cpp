@@ -116,7 +116,7 @@ void ActionCamera::updateTransform()
     }
 
     // FIXME: Using the AdditionalTransform is a complete hack.
-    // This should be done by multipliying the lookup-Matrix with the Node's MV matrix
+    // This should be done by multiplying the lookup-Matrix with the Node's MV matrix
     // And then setting the result as the new MV matrix
     // But that operation needs to be done after all the 'updates'.
     // So the Director should emit an 'director_after_update' event.

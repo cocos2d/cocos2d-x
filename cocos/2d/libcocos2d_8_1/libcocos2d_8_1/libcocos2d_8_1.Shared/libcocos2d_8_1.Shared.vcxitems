@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -221,6 +221,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMeshSkin.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMeshVertexIndexData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMotionStreak3D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCOBB.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCObjLoader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCPlane.h" />
@@ -230,7 +231,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSprite3D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSprite3DMaterial.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTerrain.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTextureCube.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\cocos3d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\include\AudioEngine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\include\Export.h" />
@@ -286,6 +286,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccMacros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCMap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCStencilStateManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNS.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProfiling.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProperties.h" />
@@ -408,8 +409,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReaderDefine.h" />
@@ -454,7 +457,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloaderImpl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCIDownloaderImpl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader-curl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\HttpClient.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\HttpRequest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\HttpResponse.h" />
@@ -531,6 +534,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTexture2D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTextureAtlas.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTextureCache.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTextureCube.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTrianglesCommand.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCVertexAttribBinding.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCVertexIndexBuffer.h" />
@@ -583,6 +587,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCAtlasNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCAutoPolygon.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCCamera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCCameraBackgroundBrush.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCClippingNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCClippingRectangleNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCComponent.h" />
@@ -845,6 +850,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMesh.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMeshSkin.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMeshVertexIndexData.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMotionStreak3D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCOBB.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCObjLoader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCPlane.cpp" />
@@ -854,7 +860,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSprite3D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSprite3DMaterial.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTerrain.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTextureCube.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\AudioEngine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\Audio.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -913,6 +918,7 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCIMEDispatcher.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCStencilStateManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNS.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProfiling.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProperties.cpp" />
@@ -1014,8 +1020,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReaderDefine.cpp" />
@@ -1057,7 +1065,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshObstacle.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloaderImpl.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader-curl.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\HttpClient.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\SocketIO.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\WebSocket.cpp" />
@@ -1123,6 +1131,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTexture2D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTextureAtlas.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTextureCache.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTextureCube.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTrianglesCommand.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCVertexAttribBinding.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCVertexIndexBuffer.cpp" />
@@ -1146,6 +1155,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIListView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UILoadingBar.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIPageView.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIPageViewIndicator.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIRelativeBox.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIRichText.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIScale9Sprite.cpp" />
@@ -1176,6 +1186,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCAtlasNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCAutoPolygon.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCCamera.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCCameraBackgroundBrush.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCClippingNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCClippingRectangleNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCComponent.cpp" />

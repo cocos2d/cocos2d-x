@@ -383,10 +383,12 @@ bool DisplayManager::containPoint(Vec2 &point)
         Vec2 outPoint;
 
         Sprite *sprite = (Sprite *)_currentDecoDisplay->getDisplay();
-        sprite = (Sprite *)sprite->getChildByTag(0);
+        Sprite *child = (Sprite *)sprite->getChildByTag(0);
+        if(nullptr != child)
+            sprite = child;
 
-        ret = CC_SPRITE_CONTAIN_POINT_WITH_RETURN(sprite, point, outPoint);
-
+        if (nullptr != sprite)
+            ret = CC_SPRITE_CONTAIN_POINT_WITH_RETURN(sprite, point, outPoint);
     }
     break;
 

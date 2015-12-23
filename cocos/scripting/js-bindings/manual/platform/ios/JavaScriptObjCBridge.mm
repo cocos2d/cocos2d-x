@@ -48,6 +48,8 @@ JS::Value JavaScriptObjCBridge::convertReturnValue(JSContext *cx, ReturnValue re
             return BOOLEAN_TO_JSVAL(retValue.boolValue);
         case TypeString:
             return c_string_to_jsval(cx, retValue.stringValue->c_str(),retValue.stringValue->size());
+        default:
+            break;
     }
     
     return ret;
@@ -74,11 +76,13 @@ bool JavaScriptObjCBridge::CallInfo::execute(JSContext *cx,jsval *argv,unsigned 
             [m_dic setObject:[NSString stringWithCString:valueWapper.get() encoding:NSUTF8StringEncoding] forKey:key];
         }else if(arg.isNumber()){
             double a;
-            ok &= JS::ToNumber(cx, JS::RootedValue(cx,arg), &a);
+            JS::RootedValue jsa(cx,arg);
+            ok &= JS::ToNumber(cx, jsa, &a);
 
             [m_dic setObject:[NSNumber numberWithFloat:a] forKey:key];
         }else if(arg.isBoolean()){
-            bool a = JS::ToBoolean(JS::RootedValue(cx,arg));
+            JS::RootedValue jsa(cx,arg);
+            bool a = JS::ToBoolean(jsa);
             [m_dic setObject:[NSNumber numberWithBool:a] forKey:key];
         }
     }
@@ -202,7 +206,7 @@ void JavaScriptObjCBridge::CallInfo::pushValue(void *val){
     else if ([oval isKindOfClass:[NSString class]])
     {
         const char *content = [oval cStringUsingEncoding:NSUTF8StringEncoding];
-        m_ret.stringValue = new string(content);
+        m_ret.stringValue = new (std::nothrow) string(content);
         m_returnType = TypeString;
     }
     else if ([oval isKindOfClass:[NSDictionary class]])
@@ -228,12 +232,14 @@ JS_BINDED_CLASS_GLUE_IMPL(JavaScriptObjCBridge);
  */
 JS_BINDED_CONSTRUCTOR_IMPL(JavaScriptObjCBridge)
 {
-    JavaScriptObjCBridge* jsj = new JavaScriptObjCBridge();
+    JavaScriptObjCBridge* jsj = new (std::nothrow) JavaScriptObjCBridge();
     
     js_proxy_t *p;
     jsval out;
     
-    JSObject *obj = JS_NewObject(cx, &JavaScriptObjCBridge::js_class, JS::RootedObject(cx, JavaScriptObjCBridge::js_proto), JS::RootedObject(cx, JavaScriptObjCBridge::js_parent));
+    JS::RootedObject proto(cx, JavaScriptObjCBridge::js_proto);
+    JS::RootedObject parentProto(cx, JavaScriptObjCBridge::js_parent);
+    JS::RootedObject obj(cx, JS_NewObject(cx, &JavaScriptObjCBridge::js_class, proto, parentProto));
     
     if (obj) {
         JS_SetPrivate(obj, jsj);
@@ -242,7 +248,7 @@ JS_BINDED_CONSTRUCTOR_IMPL(JavaScriptObjCBridge)
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().set(out);
-    p =jsb_new_proxy(jsj, obj);
+    p = jsb_new_proxy(jsj, obj);
     
     JS::AddNamedObjectRoot(cx, &p->obj, "JavaScriptObjCBridge");
     return true;

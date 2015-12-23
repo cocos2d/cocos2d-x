@@ -27,7 +27,7 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
--- brief Set the clipping rectangle. The rectangle is base on screen coordinate, so ClippingRectangleNode's region doesn't support any transforms, such as setScale, setRotate and so on.<br>
+-- brief Set the clipping rectangle.<br>
 -- param clippingRegion Specify the clipping rectangle.
 -- @function [parent=#ClippingRectangleNode] setClippingRegion 
 -- @param self

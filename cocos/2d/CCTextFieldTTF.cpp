@@ -259,7 +259,7 @@ const std::string& TextFieldTTF::getContentText()
 void TextFieldTTF::setTextColor(const Color4B &color)
 {
     _colorText = color;
-    if (_inputText.length() > 0) {
+    if (!_inputText.empty()) {
         Label::setTextColor(_colorText);
     }
 }
@@ -284,7 +284,7 @@ void TextFieldTTF::setColorSpaceHolder(const Color3B& color)
     _colorSpaceHolder.g = color.g;
     _colorSpaceHolder.b = color.b;
     _colorSpaceHolder.a = 255;
-    if (0 == _inputText.length())
+    if (_inputText.empty())
     {
         Label::setTextColor(_colorSpaceHolder);
     }
@@ -293,7 +293,7 @@ void TextFieldTTF::setColorSpaceHolder(const Color3B& color)
 void TextFieldTTF::setColorSpaceHolder(const Color4B& color)
 {
     _colorSpaceHolder = color;
-    if (0 == _inputText.length()) {
+    if (_inputText.empty()) {
         Label::setTextColor(_colorSpaceHolder);
     }
 }
@@ -309,7 +309,7 @@ void TextFieldTTF::setString(const std::string &text)
     std::string displayText;
     size_t length;
 
-    if (text.length()>0)
+    if (!text.empty())
     {
         _inputText = text;
         displayText = _inputText;
@@ -330,7 +330,7 @@ void TextFieldTTF::setString(const std::string &text)
     }
 
     // if there is no input text, display placeholder instead
-    if (0 == _inputText.length())
+    if (_inputText.empty())
     {
         Label::setTextColor(_colorSpaceHolder);
         Label::setString(_placeHolder);
@@ -352,7 +352,7 @@ const std::string& TextFieldTTF::getString() const
 void TextFieldTTF::setPlaceHolder(const std::string& text)
 {
     _placeHolder = text;
-    if (0 == _inputText.length())
+    if (_inputText.empty())
     {
         Label::setTextColor(_colorSpaceHolder);
         Label::setString(_placeHolder);

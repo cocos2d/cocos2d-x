@@ -93,11 +93,14 @@ public:
 
                 if(std::get<0>(effect) >=0)
                     break;
-                QuadCommand &q = std::get<2>(effect);
-                q.init(_globalZOrder, _texture->getName(), std::get<1>(effect)->getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);
-                renderer->addCommand(&q);
+                auto glProgramState = std::get<1>(effect)->getGLProgramState();
+                if (glProgramState)
+                {
+                    QuadCommand &q = std::get<2>(effect);
+                    q.init(_globalZOrder, _texture->getName(), glProgramState, _blendFunc, &_quad, 1, transform, flags);
+                    renderer->addCommand(&q);
+                }
                 idx++;
-
             }
 
             // normal effect: order == 0
@@ -144,8 +147,8 @@ bool Effect::initGLProgramState(const std::string &fragmentFilename)
     _fragSource = fragSource;
 #endif
     
-    _glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
-    _glprogramstate->retain();
+    _glprogramstate = (glprogram == nullptr ? nullptr : GLProgramState::getOrCreateWithGLProgram(glprogram));
+    CC_SAFE_RETAIN(_glprogramstate);
 
     return _glprogramstate != nullptr;
 }
@@ -194,6 +197,9 @@ protected:
 
 void EffectBlur::setTarget(EffectSprite *sprite)
 {
+    if (_glprogramstate == nullptr)
+        return;
+    
     Size size = sprite->getTexture()->getContentSizeInPixels();
     _glprogramstate->setUniformVec2("resolution", size);
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
@@ -445,6 +451,10 @@ void EffectNormalMapped::setLightColor(const Color4F& color)
 
 EffectSpriteTest::EffectSpriteTest()
 {
+}
+
+bool EffectSpriteTest::init()
+{
     if (ShaderTestDemo2::init()) {
 
         auto layer = LayerColor::create(Color4B::BLUE);
@@ -503,11 +513,17 @@ EffectSpriteTest::EffectSpriteTest()
 
 //        _sprite->addEffect( _effects.at(8), -10 );
 //        _sprite->addEffect( _effects.at(1), 1 );
-
+        
+        return true;
     }
+    return false;
 }
 
 EffectSpriteLamp::EffectSpriteLamp()
+{
+}
+
+bool EffectSpriteLamp::init()
 {
     if (ShaderTestDemo2::init()) {
         
@@ -535,7 +551,9 @@ EffectSpriteLamp::EffectSpriteLamp()
         listerner->onTouchesMoved = CC_CALLBACK_2(EffectSpriteLamp::onTouchesMoved, this);
         listerner->onTouchesEnded = CC_CALLBACK_2(EffectSpriteLamp::onTouchesEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listerner, this);
+        return true;
     }
+    return false;
 }
 
 

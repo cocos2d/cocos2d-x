@@ -38,7 +38,7 @@ NS_CC_BEGIN
  */
 
 /**
- * @brief Defines a basic hierachial structure of transformation spaces.
+ * @brief Defines a basic hierarchical structure of transformation spaces.
  * @lua NA
  */
 class CC_DLL Bone3D : public Ref
@@ -57,7 +57,7 @@ public:
     /**update own world matrix and children's*/
     void updateWorldMat();
     
-    /**get wrod matrix*/
+    /**get world matrix*/
     const Mat4& getWorldMat();
     
     /**get bone name*/

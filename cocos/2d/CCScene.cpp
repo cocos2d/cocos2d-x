@@ -50,9 +50,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 Scene::Scene()
-#if CC_USE_PHYSICS
-: _physicsWorld(nullptr)
-#endif
 {
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     _physics3DWorld = nullptr;
@@ -61,6 +58,9 @@ Scene::Scene()
 #if CC_USE_NAVMESH
     _navMesh = nullptr;
     _navMeshDebugCamera = nullptr;
+#endif
+#if CC_USE_PHYSICS
+    _physicsWorld = nullptr;
 #endif
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Vec2(0.5f, 0.5f));
@@ -73,13 +73,12 @@ Scene::Scene()
     
     _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
     _event->retain();
+    
+    Camera::_visitingCamera = nullptr;
 }
 
 Scene::~Scene()
 {
-#if CC_USE_PHYSICS
-    CC_SAFE_DELETE(_physicsWorld);
-#endif
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     CC_SAFE_RELEASE(_physics3DWorld);
     CC_SAFE_RELEASE(_physics3dDebugCamera);
@@ -89,6 +88,10 @@ Scene::~Scene()
 #endif
     Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
     CC_SAFE_RELEASE(_event);
+    
+#if CC_USE_PHYSICS
+    delete _physicsWorld;
+#endif
 }
 
 #if CC_USE_NAVMESH
@@ -194,7 +197,7 @@ void Scene::render(Renderer* renderer)
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
         camera->apply();
         //clear background with max depth
-        camera->clearBackground(1.0);
+        camera->clearBackground();
         //visit the scene
         visit(renderer, transform, 0);
 #if CC_USE_NAVMESH
@@ -258,21 +261,6 @@ void Scene::setNavMeshDebugCamera(Camera *camera)
 #endif
 
 #if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION))
-void Scene::addChild(Node* child, int zOrder, int tag)
-{
-    Node::addChild(child, zOrder, tag);
-#if CC_USE_PHYSICS
-    addChildToPhysicsWorld(child);
-#endif
-}
-
-void Scene::addChild(Node* child, int zOrder, const std::string &name)
-{
-    Node::addChild(child, zOrder, name);
-#if CC_USE_PHYSICS
-    addChildToPhysicsWorld(child);
-#endif
-}
 
 Scene* Scene::createWithPhysics()
 {
@@ -291,6 +279,10 @@ Scene* Scene::createWithPhysics()
 
 bool Scene::initWithPhysics()
 {
+#if CC_USE_PHYSICS
+    _physicsWorld = PhysicsWorld::construct(this);
+#endif
+    
     bool ret = false;
     do
     {
@@ -298,9 +290,6 @@ bool Scene::initWithPhysics()
         CC_BREAK_IF( ! (director = Director::getInstance()) );
         
         this->setContentSize(director->getWinSize());
-#if CC_USE_PHYSICS
-        CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::construct(*this)));
-#endif
         
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
         Physics3DWorldDes info;
@@ -314,32 +303,6 @@ bool Scene::initWithPhysics()
     return ret;
 }
 
-void Scene::addChildToPhysicsWorld(Node* child)
-{
-#if CC_USE_PHYSICS
-    if (_physicsWorld)
-    {
-        std::function<void(Node*)> addToPhysicsWorldFunc = nullptr;
-        addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Node* node) -> void
-        {
-            node->_physicsWorld = _physicsWorld;
-
-            if (node->getPhysicsBody())
-            {
-                _physicsWorld->addBody(node->getPhysicsBody());
-            }
-            
-            auto& children = node->getChildren();
-            for( const auto &n : children) {
-                addToPhysicsWorldFunc(n);
-            }
-        };
-        
-        addToPhysicsWorldFunc(child);
-    }
-#endif
-}
-
 #endif
 
 #if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)
@@ -347,10 +310,9 @@ void Scene::stepPhysicsAndNavigation(float deltaTime)
 {
 #if CC_USE_PHYSICS
     if (_physicsWorld && _physicsWorld->isAutoStep())
-    {
-        _physicsWorld->update(deltaTime, false);
-    }
+        _physicsWorld->update(deltaTime);
 #endif
+    
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     if (_physics3DWorld)
     {

@@ -120,8 +120,8 @@ WsThreadHelper::WsThreadHelper()
 , _ws(nullptr)
 , _needQuit(false)
 {
-    _UIWsMessageQueue = new std::list<WsMessage*>();
-    _subThreadWsMessageQueue = new std::list<WsMessage*>();
+    _UIWsMessageQueue = new (std::nothrow) std::list<WsMessage*>();
+    _subThreadWsMessageQueue = new (std::nothrow) std::list<WsMessage*>();
     
     Director::getInstance()->getScheduler()->scheduleUpdate(this, 0, false);
 }
@@ -140,7 +140,7 @@ bool WsThreadHelper::createThread(const WebSocket& ws)
     _ws = const_cast<WebSocket*>(&ws);
     
     // Creates websocket thread
-    _subThreadInstance = new std::thread(&WsThreadHelper::wsThreadEntryFunc, this);
+    _subThreadInstance = new (std::nothrow) std::thread(&WsThreadHelper::wsThreadEntryFunc, this);
     return true;
 }
 
@@ -248,9 +248,12 @@ WebSocket::~WebSocket()
     close();
     CC_SAFE_RELEASE_NULL(_wsHelper);
     
-    for (int i = 0; _wsProtocols[i].callback != nullptr; ++i)
+    if(_wsProtocols)
     {
-        CC_SAFE_DELETE_ARRAY(_wsProtocols[i].name);
+        for (int i = 0; _wsProtocols[i].callback != nullptr; ++i)
+        {
+            CC_SAFE_DELETE_ARRAY(_wsProtocols[i].name);
+        }
     }
 	CC_SAFE_DELETE_ARRAY(_wsProtocols);
 }
@@ -309,7 +312,7 @@ bool WebSocket::init(const Delegate& delegate,
         protocolCount = 1;
     }
     
-	_wsProtocols = new libwebsocket_protocols[protocolCount+1];
+	_wsProtocols = new (std::nothrow) libwebsocket_protocols[protocolCount+1];
 	memset(_wsProtocols, 0, sizeof(libwebsocket_protocols)*(protocolCount+1));
 
     if (protocols && protocols->size() > 0)
@@ -317,7 +320,7 @@ bool WebSocket::init(const Delegate& delegate,
         int i = 0;
         for (std::vector<std::string>::const_iterator iter = protocols->begin(); iter != protocols->end(); ++iter, ++i)
         {
-            char* name = new char[(*iter).length()+1];
+            char* name = new (std::nothrow) char[(*iter).length()+1];
             strcpy(name, (*iter).c_str());
             _wsProtocols[i].name = name;
             _wsProtocols[i].callback = WebSocketCallbackWrapper::onSocketCallback;
@@ -325,7 +328,7 @@ bool WebSocket::init(const Delegate& delegate,
     }
     else
     {
-        char* name = new char[20];
+        char* name = new (std::nothrow) char[20];
         strcpy(name, "default-protocol");
         _wsProtocols[0].name = name;
         _wsProtocols[0].callback = WebSocketCallbackWrapper::onSocketCallback;
@@ -346,7 +349,7 @@ void WebSocket::send(const std::string& message)
         WsMessage* msg = new (std::nothrow) WsMessage();
         msg->what = WS_MSG_TO_SUBTRHEAD_SENDING_STRING;
         Data* data = new (std::nothrow) Data();
-        data->bytes = new char[message.length()+1];
+        data->bytes = new (std::nothrow) char[message.length()+1];
         strcpy(data->bytes, message.c_str());
         data->len = static_cast<ssize_t>(message.length());
         msg->obj = data;
@@ -364,7 +367,7 @@ void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
         WsMessage* msg = new (std::nothrow) WsMessage();
         msg->what = WS_MSG_TO_SUBTRHEAD_SENDING_BINARY;
         Data* data = new (std::nothrow) Data();
-        data->bytes = new char[len];
+        data->bytes = new (std::nothrow) char[len];
         memcpy((void*)data->bytes, (void*)binaryMsg, len);
         data->len = len;
         msg->obj = data;
@@ -546,7 +549,7 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                         //fixme: the log is not thread safe
 //                        CCLOG("[websocket:send] total: %d, sent: %d, remaining: %d, buffer size: %d", static_cast<int>(data->len), static_cast<int>(data->issued), static_cast<int>(remaining), static_cast<int>(n));
 
-                        unsigned char* buf = new unsigned char[LWS_SEND_BUFFER_PRE_PADDING + n + LWS_SEND_BUFFER_POST_PADDING];
+                        unsigned char* buf = new (std::nothrow) unsigned char[LWS_SEND_BUFFER_PRE_PADDING + n + LWS_SEND_BUFFER_POST_PADDING];
 
                         memcpy((char*)&buf[LWS_SEND_BUFFER_PRE_PADDING], data->bytes + data->issued, n);
                         
@@ -630,13 +633,13 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                     // Accumulate the data (increasing the buffer as we go)
                     if (_currentDataLen == 0)
                     {
-                        _currentData = new char[len];
+                        _currentData = new (std::nothrow) char[len];
                         memcpy (_currentData, in, len);
                         _currentDataLen = len;
                     }
                     else
                     {
-                        char *new_data = new char [_currentDataLen + len];
+                        char *new_data = new (std::nothrow) char [_currentDataLen + len];
                         memcpy (new_data, _currentData, _currentDataLen);
                         memcpy (new_data + _currentDataLen, in, len);
                         CC_SAFE_DELETE_ARRAY(_currentData);
@@ -663,12 +666,12 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
 						if (lws_frame_is_binary(wsi))
 						{
 
-							bytes = new char[_currentDataLen];
+							bytes = new (std::nothrow) char[_currentDataLen];
 							data->isBinary = true;
 						}
 						else
 						{
-							bytes = new char[_currentDataLen+1];
+							bytes = new (std::nothrow) char[_currentDataLen+1];
 							bytes[_currentDataLen] = '\0';
 							data->isBinary = false;
 						}

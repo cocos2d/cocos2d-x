@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="839e6be3-2571-47d8-910b-1d7386788d3b" Publisher="CN=dalestam" Version="1.0.0.5" />
-  <mp:PhoneIdentity PhoneProductId="839e6be3-2571-47d8-910b-1d7386788d3b" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="A6C07E44-59B3-477C-829D-18B4E183B079" Publisher="CN=dalestam" Version="1.0.0.5" />
+  <mp:PhoneIdentity PhoneProductId="cc03f9ac-ca18-456f-aa00-f9919d6b2389" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>HelloJavascript.WindowsPhone</DisplayName>
     <PublisherDisplayName>dalestam</PublisherDisplayName>

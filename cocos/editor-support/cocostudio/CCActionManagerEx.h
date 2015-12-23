@@ -81,7 +81,7 @@ public:
     *
     * @param jsonName  UI file name
     *
-    * @param actionName  action name in teh UIfile.
+    * @param actionName  action name in the UIfile.
     *
     * @return  ActionObject which named as the param name
     */
@@ -92,7 +92,7 @@ public:
     *
     * @param jsonName  UI file name
     *
-    * @param actionName  action name in teh UIfile.
+    * @param actionName  action name in the UIfile.
     *
     * @param func ui action call back
     */
@@ -103,7 +103,7 @@ public:
     *
     * @param jsonName  UI file name
     *
-    * @param actionName  action name in teh UIfile.
+    * @param actionName  action name in the UIfile.
     *
     * @return  ActionObject which named as the param name
     */

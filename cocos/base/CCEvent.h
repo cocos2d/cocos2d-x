@@ -82,7 +82,7 @@ public:
     
     /** Gets current target of the event.
      * @return The target with which the event associates.
-     * @note It onlys be available when the event listener is associated with node.
+     * @note It's only available when the event listener is associated with node.
      *        It returns 0 when the listener is associated with fixed priority.
      */
     inline Node* getCurrentTarget() { return _currentTarget; };

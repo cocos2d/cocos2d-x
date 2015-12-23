@@ -643,6 +643,7 @@ void Scene3DTestScene::createDetailDlg()
     float margin = 10;
     
     // create dialog
+    // use Scale9Sprite as background, it won't swallow touch event
     _detailDlg = ui::Scale9Sprite::createWithSpriteFrameName("button_actived.png");
     _detailDlg->setContentSize(dlgSize);
     _detailDlg->setAnchorPoint(Vec2(0, 0.5));
@@ -723,10 +724,17 @@ void Scene3DTestScene::createDescDlg()
     float margin = 10;
     
     // first, create dialog, add title and description text on it
-    _descDlg = ui::Scale9Sprite::createWithSpriteFrameName("button_actived.png");
-    _descDlg->setContentSize(dlgSize);
-    _descDlg->setOpacity(224);
-    _descDlg->setPosition(pos);
+    // use Layout, which setTouchEnabled(true), as background, it will swallow touch event
+    auto desdDlg = ui::Layout::create();
+    desdDlg->setBackGroundImageScale9Enabled(true);
+    desdDlg->setBackGroundImage("button_actived.png", ui::Widget::TextureResType::PLIST);
+    desdDlg->setContentSize(dlgSize);
+    desdDlg->setAnchorPoint(Vec2(0.5f, 0.5f));
+    desdDlg->setOpacity(224);
+    desdDlg->setPosition(pos);
+    desdDlg->setTouchEnabled(true);
+    _descDlg = desdDlg;
+
     
     // title
     auto title = Label::createWithTTF("Description Dialog","fonts/arial.ttf",16);

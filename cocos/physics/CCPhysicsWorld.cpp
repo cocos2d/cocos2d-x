@@ -281,7 +281,7 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     {
         contact.setEventCode(PhysicsContact::EventCode::BEGIN);
         contact.setWorld(this);
-        _scene->getEventDispatcher()->dispatchEvent(&contact);
+        _eventDispatcher->dispatchEvent(&contact);
     }
     
     return ret ? contact.resetResult() : false;
@@ -296,7 +296,7 @@ int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::PRESOLVE);
     contact.setWorld(this);
-    _scene->getEventDispatcher()->dispatchEvent(&contact);
+    _eventDispatcher->dispatchEvent(&contact);
     
     return contact.resetResult();
 }
@@ -310,7 +310,7 @@ void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::POSTSOLVE);
     contact.setWorld(this);
-    _scene->getEventDispatcher()->dispatchEvent(&contact);
+    _eventDispatcher->dispatchEvent(&contact);
 }
 
 void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
@@ -322,7 +322,7 @@ void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::SEPARATE);
     contact.setWorld(this);
-    _scene->getEventDispatcher()->dispatchEvent(&contact);
+    _eventDispatcher->dispatchEvent(&contact);
 }
 
 void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vec2& point1, const Vec2& point2, void* data)
@@ -333,7 +333,6 @@ void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vec2& point1, 
     {
         if (!_delayAddBodies.empty() || !_delayRemoveBodies.empty())
         {
-            _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
             updateBodies();
         }
         RayCastCallbackInfo info = { this, func, point1, point2, data };
@@ -357,7 +356,6 @@ void PhysicsWorld::queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect
     {
         if (!_delayAddBodies.empty() || !_delayRemoveBodies.empty())
         {
-            _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
             updateBodies();
         }
         RectQueryCallbackInfo info = {this, func, data};
@@ -380,7 +378,6 @@ void PhysicsWorld::queryPoint(PhysicsQueryPointCallbackFunc func, const Vec2& po
     {
         if (!_delayAddBodies.empty() || !_delayRemoveBodies.empty())
         {
-            _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
             updateBodies();
         }
         PointQueryCallbackInfo info = {this, func, data};
@@ -422,26 +419,12 @@ PhysicsShape* PhysicsWorld::getShape(const Vec2& point) const
     return shape == nullptr ? nullptr : s_physicsShapeMap.find(shape)->second;
 }
 
-PhysicsWorld* PhysicsWorld::construct(Scene& scene)
-{
-    PhysicsWorld * world = new (std::nothrow) PhysicsWorld();
-    if(world && world->init(scene))
-    {
-        return world;
-    }
-    
-    CC_SAFE_DELETE(world);
-    return nullptr;
-}
-
-bool PhysicsWorld::init(Scene& scene)
+bool PhysicsWorld::init()
 {
     do
     {
         _cpSpace = cpSpaceNew();
         CC_BREAK_IF(_cpSpace == nullptr);
-        
-        _scene = &scene;
         
         cpSpaceSetGravity(_cpSpace, PhysicsHelper::point2cpv(_gravity));
         
@@ -549,11 +532,11 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
 {
     if (body->getWorld() != this)
     {
-        CCLOG("Physics Warnning: this body doesn't belong to this world");
+        CCLOG("Physics Warning: this body doesn't belong to this world");
         return;
     }
     
-    // destory the body's joints
+    // destroy the body's joints
     auto removeCopy = body->_joints;
     for (auto joint : removeCopy)
     {
@@ -565,7 +548,6 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
     _bodies.eraseObject(body);
     body->_world = nullptr;
 }
-
 
 void PhysicsWorld::removeBodyOrDelay(PhysicsBody* body)
 {
@@ -593,20 +575,24 @@ void PhysicsWorld::removeJoint(PhysicsJoint* joint, bool destroy)
     {
         if (joint->getWorld() != this && destroy)
         {
-            CCLOG("physics warnning: the joint is not in this world, it won't be destoried utill the body it conntect is destoried");
+            CCLOG("physics warning: the joint is not in this world, it won't be destroyed until the body it connects is destroyed");
             return;
         }
 
         joint->_destoryMark = destroy;
+
+        bool removedFromDelayAdd = false;
+        auto it = std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint);
+        if (it != _delayAddJoints.end())
+        {
+            _delayAddJoints.erase(it);
+            removedFromDelayAdd = true;
+        }
+
         if (cpSpaceIsLocked(_cpSpace))
         {
-            auto it = std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint);
-            if (it != _delayAddJoints.end())
-            {
-                _delayAddJoints.erase(it);
+            if (removedFromDelayAdd)
                 return;
-            }
-
             if (std::find(_delayRemoveJoints.rbegin(), _delayRemoveJoints.rend(), joint) == _delayRemoveJoints.rend())
             {
                 _delayRemoveJoints.push_back(joint);
@@ -665,11 +651,9 @@ void PhysicsWorld::addJoint(PhysicsJoint* joint)
 {
     if (joint)
     {
-        if (joint->getWorld() && joint->getWorld() != this)
-        {
-            joint->removeFormWorld();
-        }
+        CCASSERT(joint->getWorld() == nullptr, "Can not add joint already add to other world!");
 
+        joint->_world = this;
         auto it = std::find(_delayRemoveJoints.begin(), _delayRemoveJoints.end(), joint);
         if (it != _delayRemoveJoints.end())
         {
@@ -708,7 +692,7 @@ void PhysicsWorld::doRemoveBody(PhysicsBody* body)
 {
     CCASSERT(body != nullptr, "the body can not be nullptr");
     
-    // remove shaps
+    // remove shapes
     for (auto& shape : body->getShapes())
     {
         removeShape(shape);
@@ -785,7 +769,7 @@ PhysicsBody* PhysicsWorld::getBody(int tag) const
     return nullptr;
 }
 
-void PhysicsWorld::setGravity(const Vect& gravity)
+void PhysicsWorld::setGravity(const Vec2& gravity)
 {
     _gravity = gravity;
     cpSpaceSetGravity(_cpSpace, PhysicsHelper::point2cpv(gravity));
@@ -817,17 +801,18 @@ void PhysicsWorld::step(float delta)
 
 void PhysicsWorld::update(float delta, bool userCall/* = false*/)
 {
-    if(_updateBodyTransform || !_delayAddBodies.empty())
+    if(!_delayAddBodies.empty())
     {
-        _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
         updateBodies();
-        _updateBodyTransform = false;
     }
     else if (!_delayRemoveBodies.empty())
     {
         updateBodies();
     }
     
+    auto sceneToWorldTransform = _scene->getNodeToParentTransform();
+    beforeSimulation(_scene, sceneToWorldTransform, 1.f, 1.f, 0.f);
+
     if (!_delayAddJoints.empty() || !_delayRemoveJoints.empty())
     {
         updateJoints();
@@ -841,10 +826,6 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
     if (userCall)
     {
         cpSpaceStep(_cpSpace, delta);
-        for (auto& body : _bodies)
-        {
-            body->update(delta);
-        }
     }
     else
     {
@@ -855,10 +836,6 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
             for (int i = 0; i < _substeps; ++i)
             {
                 cpSpaceStep(_cpSpace, dt);
-                for (auto& body : _bodies)
-                {
-                    body->update(dt);
-                }
             }
             _updateRateCount = 0;
             _updateTime = 0.0f;
@@ -869,6 +846,24 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
     {
         debugDraw();
     }
+
+    // Update physics position, should loop as the same sequence as node tree.
+    // PhysicsWorld::afterSimulation() will depend on the sequence.
+    afterSimulation(_scene, sceneToWorldTransform, 0.f);
+}
+
+PhysicsWorld* PhysicsWorld::construct(Scene* scene)
+{
+    PhysicsWorld * world = new (std::nothrow) PhysicsWorld();
+    if (world && world->init())
+    {
+        world->_scene = scene;
+        world->_eventDispatcher = scene->getEventDispatcher();
+        return world;
+    }
+
+    CC_SAFE_DELETE(world);
+    return nullptr;
 }
 
 PhysicsWorld::PhysicsWorld()
@@ -884,6 +879,7 @@ PhysicsWorld::PhysicsWorld()
 , _autoStep(true)
 , _debugDraw(nullptr)
 , _debugDrawMask(DEBUGDRAW_NONE)
+, _eventDispatcher(nullptr)
 {
     
 }
@@ -899,12 +895,46 @@ PhysicsWorld::~PhysicsWorld()
     CC_SAFE_DELETE(_debugDraw);
 }
 
+void PhysicsWorld::beforeSimulation(Node *node, const Mat4& parentToWorldTransform, float nodeParentScaleX, float nodeParentScaleY, float parentRotation)
+{
+    auto scaleX = nodeParentScaleX * node->getScaleX();
+    auto scaleY = nodeParentScaleY * node->getScaleY();
+    auto rotation = parentRotation + node->getRotation();
+
+    auto nodeToWorldTransform = parentToWorldTransform * node->getNodeToParentTransform();
+
+    auto physicsBody = node->getPhysicsBody();
+    if (physicsBody)
+    {
+        physicsBody->beforeSimulation(parentToWorldTransform, nodeToWorldTransform, scaleX, scaleY, rotation);
+    }
+
+    for (auto child : node->getChildren())
+        beforeSimulation(child, nodeToWorldTransform, scaleX, scaleY, rotation);
+}
+
+void PhysicsWorld::afterSimulation(Node *node, const Mat4& parentToWorldTransform, float parentRotation)
+{
+    auto nodeToWorldTransform = parentToWorldTransform * node->getNodeToParentTransform();
+    auto nodeRotation = parentRotation + node->getRotation();
+
+    auto physicsBody = node->getPhysicsBody();
+    if (physicsBody)
+    {
+        physicsBody->afterSimulation(parentToWorldTransform, parentRotation);
+    }
+
+    for (auto child : node->getChildren())
+        afterSimulation(child, nodeToWorldTransform, nodeRotation);
+}
+
+
 PhysicsDebugDraw::PhysicsDebugDraw(PhysicsWorld& world)
 : _drawNode(nullptr)
 , _world(world)
 {
     _drawNode = DrawNode::create();
-    _world.getScene().addChild(_drawNode);
+    Director::getInstance()->getRunningScene()->addChild(_drawNode);
 }
 
 PhysicsDebugDraw::~PhysicsDebugDraw()

@@ -556,6 +556,7 @@ CC_CONSTRUCTOR_ACCESS:
      */
     MenuItemToggle()
     : _selectedIndex(0)
+    , _selectedItem(nullptr)
     {}
     /**
      * @js NA
@@ -578,6 +579,8 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     /** Returns the selected item. */
     unsigned int _selectedIndex;
+    MenuItem* _selectedItem;
+
     /** Array that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
      @since v0.7.2
      */

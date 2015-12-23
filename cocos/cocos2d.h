@@ -29,8 +29,8 @@ THE SOFTWARE.
 #define __COCOS2D_H__
 
 // 0x00 HI ME LO
-// 00   03 07 00
-#define COCOS2D_VERSION 0x00030700
+// 00   03 08 00
+#define COCOS2D_VERSION 0x00031000
 
 //
 // all cocos2d include files
@@ -138,6 +138,7 @@ THE SOFTWARE.
 
 // 2d utils
 #include "2d/CCCamera.h"
+#include "2d/CCCameraBackgroundBrush.h"
 #include "2d/CCGrabber.h"
 #include "2d/CCGrid.h"
 #include "2d/CCLight.h"
@@ -162,6 +163,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTechnique.h"
 #include "renderer/CCTexture2D.h"
+#include "renderer/CCTextureCube.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCTrianglesCommand.h"
 #include "renderer/CCVertexAttribBinding.h"
@@ -288,6 +290,7 @@ THE SOFTWARE.
 #include "3d/CCFrustum.h"
 #include "3d/CCMesh.h"
 #include "3d/CCMeshSkin.h"
+#include "3d/CCMotionStreak3D.h"
 #include "3d/CCMeshVertexIndexData.h"
 #include "3d/CCOBB.h"
 #include "3d/CCPlane.h"
@@ -297,7 +300,7 @@ THE SOFTWARE.
 #include "3d/CCSprite3D.h"
 #include "3d/CCSprite3DMaterial.h"
 #include "3d/CCTerrain.h"
-#include "3d/CCTextureCube.h"
+
 
 // Deprecated include
 #include "deprecated/CCArray.h"

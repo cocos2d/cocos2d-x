@@ -30,6 +30,8 @@ extern "C" {
 }
 #include "tolua_fix.h"
 #include "cocos2d.h"
+#include "Lua-BindingsExport.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 using namespace cocos2d;
 
@@ -53,7 +55,7 @@ cocos2d::log(__VA_ARGS__);                                                  \
 /**
  * If the typename of userdata at the given accepteable index of stack is equal to type it return true,otherwise return false .
  * If def != 0, lo could greater than the top index of stack, return value is true.
- * If the value of the given index is nil, retrun value also is true.
+ * If the value of the given index is nil, return value also is true.
  *
  * @param L the current lua_State.
  * @param lo the given accpetable index of stack.
@@ -68,7 +70,7 @@ extern bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def);
  * @name luaval_to_native
  * The following function are all used to convert the Lua values at the given acceptable index to the corresponding c++ values.
  * If the Lua values can be converted the return value is true, otherwise return false.
- * If it happens error during the conversion process, it outputs the error msg in the console to provide infromation about the name of calling function, the typename of value at the given acceptable index, and so on.
+ * If it happens error during the conversion process, it outputs the error msg in the console to provide information about the name of calling function, the typename of value at the given acceptable index, and so on.
  * @{
  **/
 
@@ -145,7 +147,7 @@ extern bool luaval_to_uint16(lua_State* L,int lo,uint16_t* outValue, const char*
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
  */
-extern bool luaval_to_boolean(lua_State* L,int lo,bool* outValue, const char* funcName = "");
+extern CC_LUA_DLL bool luaval_to_boolean(lua_State* L,int lo,bool* outValue, const char* funcName = "");
 
 /**
  * Get a double value from the given accpetable index of stack.
@@ -179,9 +181,9 @@ extern bool luaval_to_long_long(lua_State* L,int lo,long long* outValue, const c
  * @param lo the given accpetable index of stack.
  * @param outValue the pointer to store std::string value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is is a string or a number convertible to a string, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a string or a number convertible to a string, otherwise return false.
  */
-extern bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, const char* funcName = "");
+extern CC_LUA_DLL bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, const char* funcName = "");
 
 /**
  * Get a long value from the given accpetable index of stack.
@@ -244,7 +246,7 @@ extern bool luaval_to_rect(lua_State* L,int lo,Rect* outValue, const char* funcN
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
  */
-extern bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue, const char* funcName = "");
+extern CC_LUA_DLL bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue, const char* funcName = "");
 
 /**
  * Get a Color4B object value from the given accpetable index of stack.
@@ -326,7 +328,7 @@ extern bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outVa
 extern bool luaval_to_mat4(lua_State* L, int lo, cocos2d::Mat4* outValue , const char* funcName = "");
 
 /**
- * Get a __Array object value frome the given accpetable index of stack.
+ * Get a __Array object value from the given accpetable index of stack.
  * Because __Array is deprecated, so this function would be not called anymore.
  */
 extern bool luaval_to_array(lua_State* L,int lo, __Array** outValue, const char* funcName = "");
@@ -569,7 +571,7 @@ bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret, const ch
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
  */
-bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
+CC_LUA_DLL bool   luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
 
 /**
  * Get a pointer points to a std::vector<std::int> from a Lua array table in the stack.
@@ -837,7 +839,7 @@ extern bool luaval_to_std_map_string_string(lua_State* L, int lo, std::map<std::
 
 /**
  * @name native_to_luaval
- * The following function are all used to convert native c++ values to the the corresponding Lua values,then push it into the Lua stack.
+ * The following function are all used to convert native c++ values to the corresponding Lua values, then push it into the Lua stack.
  *
  * @{
  **/
@@ -905,7 +907,7 @@ extern void rect_to_luaval(lua_State* L,const Rect& rt);
  * @param L the current lua_State.
  * @param cc  a cocos2d::Color3B object.
  */
-extern void color3b_to_luaval(lua_State* L,const Color3B& cc);
+extern CC_LUA_DLL void color3b_to_luaval(lua_State* L,const Color3B& cc);
 
 /**
  * Push a table converted from a cocos2d::Color4B object into the Lua stack.
@@ -1292,6 +1294,10 @@ void std_vector_vec3_to_luaval(lua_State* L, const std::vector<cocos2d::Vec3>& i
  * @param inValue a std::map<std::string, std::string> vaule.
  */
 void std_map_string_string_to_luaval(lua_State* L, const std::map<std::string, std::string>& inValue);
+
+// Follow 2 function is added for Cocos Studio to make lua lib can be compile as dynamic library
+CC_LUA_DLL extern bool luaval_to_node(lua_State* L, int lo, const char* type, cocos2d::Node** node);
+CC_LUA_DLL extern void node_to_luaval(lua_State* L, const char* type, cocos2d::Node* node);
 
 // end group
 /// @}

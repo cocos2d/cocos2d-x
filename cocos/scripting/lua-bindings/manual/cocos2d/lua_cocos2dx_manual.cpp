@@ -2261,10 +2261,10 @@ static int lua_cocos2dx_Node_enumerateChildren(lua_State* tolua_S)
             int* luaID = node ? &node->_luaID : nullptr;
             toluafix_pushusertype_ccobject(tolua_S, id, luaID, (void*)node,"cc.Node");
             bool ret = LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 1);
-            LuaEngine::getInstance()->removeScriptHandler(handler);
+            
             return ret;
         });
-        
+        LuaEngine::getInstance()->removeScriptHandler(handler);
         lua_settop(tolua_S, 1);
         return 1;
     }
@@ -2378,157 +2378,6 @@ tolua_lerror:
     
     return 0;
 }
-
-#if CC_USE_PHYSICS
-
-int lua_cocos2dx_Node_setPhysicsBody(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = nullptr;
-    bool ok  = true;
-    
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-    
-    
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-    
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setPhysicsBody'", nullptr);
-        return 0;
-    }
-#endif
-    
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1)
-    {
-        cocos2d::PhysicsBody* arg0;
-        
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.Node:setPhysicsBody");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_setPhysicsBody'", nullptr);
-            return 0;
-        }
-        cobj->setPhysicsBody(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:setPhysicsBody",argc, 1);
-    return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_setPhysicsBody'.",&tolua_err);
-#endif
-    
-    return 0;
-}
-
-int lua_cocos2dx_Node_removeFromPhysicsWorld(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = nullptr;
-    bool ok  = true;
-    
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-    
-    
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-    
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_removeFromPhysicsWorld'", nullptr);
-        return 0;
-    }
-#endif
-    
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0)
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_removeFromPhysicsWorld'", nullptr);
-            return 0;
-        }
-        cobj->removeFromPhysicsWorld();
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:removeFromPhysicsWorld",argc, 0);
-    return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_removeFromPhysicsWorld'.",&tolua_err);
-#endif
-    
-    return 0;
-}
-
-int lua_cocos2dx_Node_getPhysicsBody(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = nullptr;
-    bool ok  = true;
-    
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-    
-    
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-    
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPhysicsBody'", nullptr);
-        return 0;
-    }
-#endif
-    
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0)
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_getPhysicsBody'", nullptr);
-            return 0;
-        }
-        cocos2d::PhysicsBody* ret = cobj->getPhysicsBody();
-        object_to_luaval<cocos2d::PhysicsBody>(tolua_S, "cc.PhysicsBody",(cocos2d::PhysicsBody*)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:getPhysicsBody",argc, 0);
-    return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getPhysicsBody'.",&tolua_err);
-#endif
-    
-    return 0;
-}
-
-#endif //CC_USE_PHYSICS
 
 #if CC_USE_NAVMESH
 #include "navmesh/CCNavMesh.h"
@@ -3099,7 +2948,7 @@ static int tolua_cocos2dx_DrawNode_drawPolygon(lua_State* tolua_S)
         size_t size = lua_tonumber(tolua_S, 3);
         if ( size > 0 )
         {
-            cocos2d::Vec2* points = new cocos2d::Vec2[size];
+            cocos2d::Vec2* points = new (std::nothrow) cocos2d::Vec2[size];
             if (NULL == points)
                 return 0;
             
@@ -3185,7 +3034,7 @@ int tolua_cocos2dx_DrawNode_drawSolidPoly(lua_State* tolua_S)
         luaval_to_uint32(tolua_S, 3, &size, "cc.DrawNode:drawSolidPoly");
         if ( size > 0 )
         {
-            cocos2d::Vec2* points = new cocos2d::Vec2[size];
+            cocos2d::Vec2* points = new (std::nothrow) cocos2d::Vec2[size];
             if (NULL == points)
                 return 0;
             
@@ -3264,7 +3113,7 @@ int tolua_cocos2dx_DrawNode_drawPoly(lua_State* tolua_S)
         luaval_to_uint32(tolua_S, 3, &size, "cc.DrawNode:drawPoly");
         if ( size > 0 )
         {
-            cocos2d::Vec2* points = new cocos2d::Vec2[size];
+            cocos2d::Vec2* points = new (std::nothrow) cocos2d::Vec2[size];
             if (NULL == points)
                 return 0;
             
@@ -3474,7 +3323,7 @@ int tolua_cocos2dx_DrawNode_drawPoints(lua_State* tolua_S)
         luaval_to_uint32(tolua_S, 3, &size, "cc.DrawNode:drawPoints");
         if ( size > 0 )
         {
-            cocos2d::Vec2* points = new cocos2d::Vec2[size];
+            cocos2d::Vec2* points = new (std::nothrow) cocos2d::Vec2[size];
             if (NULL == points)
                 return 0;
             
@@ -3514,7 +3363,7 @@ int tolua_cocos2dx_DrawNode_drawPoints(lua_State* tolua_S)
         luaval_to_uint32(tolua_S, 3, &size, "cc.DrawNode:drawPoints");
         if ( size > 0 )
         {
-            cocos2d::Vec2* points = new cocos2d::Vec2[size];
+            cocos2d::Vec2* points = new (std::nothrow) cocos2d::Vec2[size];
             if (nullptr == points)
                 return 0;
             
@@ -4723,93 +4572,6 @@ tolua_lerror:
     return 0;
 }
 
-#if CC_USE_PHYSICS
-
-int lua_cocos2dx_Scene_getPhysicsWorld(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Scene* cobj = nullptr;
-    bool ok  = true;
-    
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-    
-    
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Scene",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    cobj = (cocos2d::Scene*)tolua_tousertype(tolua_S,1,0);
-    
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Scene_getPhysicsWorld'", nullptr);
-        return 0;
-    }
-#endif
-    
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0)
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Scene_getPhysicsWorld'", nullptr);
-            return 0;
-        }
-        cocos2d::PhysicsWorld* ret = cobj->getPhysicsWorld();
-        object_to_luaval<cocos2d::PhysicsWorld>(tolua_S, "cc.PhysicsWorld",(cocos2d::PhysicsWorld*)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Scene:getPhysicsWorld",argc, 0);
-    return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Scene_getPhysicsWorld'.",&tolua_err);
-#endif
-    
-    return 0;
-}
-
-int lua_cocos2dx_Scene_createWithPhysics(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-    
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-    
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.Scene",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    argc = lua_gettop(tolua_S) - 1;
-    
-    if (argc == 0)
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Scene_createWithPhysics'", nullptr);
-            return 0;
-        }
-        cocos2d::Scene* ret = cocos2d::Scene::createWithPhysics();
-        object_to_luaval<cocos2d::Scene>(tolua_S, "cc.Scene",(cocos2d::Scene*)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.Scene:createWithPhysics",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Scene_createWithPhysics'.",&tolua_err);
-#endif
-    return 0;
-}
-
-#endif //CC_USE_PHYSICS
-
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
 #include "physics3d/CCPhysics3DWorld.h"
 int lua_cocos2dx_Scene_getPhysics3DWorld(lua_State* tolua_S)
@@ -4916,10 +4678,6 @@ static void extendScene(lua_State* tolua_S)
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
-#if CC_USE_PHYSICS
-        tolua_function(tolua_S, "getPhysicsWorld", lua_cocos2dx_Scene_getPhysicsWorld);
-        tolua_function(tolua_S, "createWithPhysics", lua_cocos2dx_Scene_createWithPhysics);
-#endif
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
         tolua_function(tolua_S, "getPhysics3DWorld", lua_cocos2dx_Scene_getPhysics3DWorld);
         tolua_function(tolua_S, "setPhysics3DDebugCamera", lua_cocos2dx_Scene_setPhysics3DDebugCamera);
@@ -5083,18 +4841,6 @@ static void extendNode(lua_State* tolua_S)
         lua_pushstring(tolua_S, "setRotationQuat");
         lua_pushcfunction(tolua_S, lua_cocos2dx_Node_setRotationQuat);
         lua_rawset(tolua_S, -3);
-#if CC_USE_PHYSICS
-        lua_pushstring(tolua_S, "setPhysicsBody");
-        lua_pushcfunction(tolua_S, lua_cocos2dx_Node_setPhysicsBody);
-        lua_rawset(tolua_S, -3);
-        lua_pushstring(tolua_S, "removeFromPhysicsWorld");
-        lua_pushcfunction(tolua_S, lua_cocos2dx_Node_removeFromPhysicsWorld);
-        lua_rawset(tolua_S, -3);
-        lua_pushstring(tolua_S, "getPhysicsBody");
-        lua_pushcfunction(tolua_S, lua_cocos2dx_Node_getPhysicsBody);
-        lua_rawset(tolua_S, -3);
-#endif //CC_USE_PHYSICS
-        
     }
     lua_pop(tolua_S, 1);
 }
@@ -7213,67 +6959,6 @@ static int lua_cocos2dx_GLProgramState_setVertexAttribPointer(lua_State* tolua_S
         lua_settop(tolua_S, 1);
         return 1;
     }
-    else if (argc == 7)
-    {
-        std::string arg0;
-        int arg1;
-        unsigned int arg2;
-        bool arg3;
-        int arg4;
-        GLfloat* arg5;
-        int arg6;
-        
-        
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.GLProgramState:setVertexAttribPointer");
-        
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.GLProgramState:setVertexAttribPointer");
-        
-        ok &= luaval_to_uint32(tolua_S, 4,&arg2, "cc.GLProgramState:setVertexAttribPointer");
-        
-        ok &= luaval_to_boolean(tolua_S, 5, &arg3, "cc.GLProgramState:setVertexAttribPointer");
-        
-        ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4, "cc.GLProgramState:setVertexAttribPointer");
-        
-        ok &= luaval_to_int32(tolua_S, 8, (int *)&arg6, "cc.GLProgramState:setVertexAttribPointer");
-        
-        size_t len = lua_objlen(tolua_S, 7);
-        
-        if (len != arg6)
-        {
-            luaL_error(tolua_S, "table size is  %zu,but input size is %d \n", len, arg6);
-            return 0;
-        }
-        
-        arg5 = new (std::nothrow) GLfloat[len];
-        for (int i = 0; i < len; i++)
-        {
-            lua_pushnumber(tolua_S,i + 1);
-            lua_gettable(tolua_S,7);
-            bool isnum = true;
-#if COCOS2D_DEBUG >= 1
-            if (!tolua_isnumber(tolua_S, -1, 0, &tolua_err))
-            {
-                isnum = false;
-            }
-#endif
-            if (isnum)
-            {
-                arg5[i] = tolua_tonumber(tolua_S, -1, 0);
-            }
-            else
-            {
-                arg5[i] = 0;
-            }
-            lua_pop(tolua_S, 1);
-        }
-        
-        cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, (void*)arg5);
-        
-        CC_SAFE_DELETE(arg5);
-        
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.GLProgramState:setVertexAttribPointer",argc, 6);
     return 0;
     
@@ -7470,7 +7155,7 @@ int lua_cocos2dx_TMXLayer_setTiles(lua_State* tolua_S)
             luaL_error(tolua_S, "Table's len equal 0");
             return 0;
         }
-        arg0 = new uint32_t[len];
+        arg0 = new (std::nothrow) uint32_t[len];
         
         if (nullptr == arg0)
         {
@@ -8089,7 +7774,7 @@ int lua_cocos2dx_AutoPolygon_generatePolygon(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_AutoPolygon_generatePolygon'", nullptr);
             return 0;
         }
-        cocos2d::PolygonInfo* ret = new cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0));
+        cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0));
         object_to_luaval<cocos2d::PolygonInfo>(tolua_S, "cc.PolygonInfo",(cocos2d::PolygonInfo*)ret);
         tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         return 1;
@@ -8105,7 +7790,7 @@ int lua_cocos2dx_AutoPolygon_generatePolygon(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_AutoPolygon_generatePolygon'", nullptr);
             return 0;
         }
-        cocos2d::PolygonInfo* ret = new cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1));
+        cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1));
         object_to_luaval<cocos2d::PolygonInfo>(tolua_S, "cc.PolygonInfo",(cocos2d::PolygonInfo*)ret);
         tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         return 1;
@@ -8123,7 +7808,7 @@ int lua_cocos2dx_AutoPolygon_generatePolygon(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_AutoPolygon_generatePolygon'", nullptr);
             return 0;
         }
-        cocos2d::PolygonInfo* ret = new cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2));
+        cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2));
         object_to_luaval<cocos2d::PolygonInfo>(tolua_S, "cc.PolygonInfo",(cocos2d::PolygonInfo*)ret);
         tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         return 1;
@@ -8143,7 +7828,7 @@ int lua_cocos2dx_AutoPolygon_generatePolygon(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_AutoPolygon_generatePolygon'", nullptr);
             return 0;
         }
-        cocos2d::PolygonInfo* ret = new cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2, arg3));
+        cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2, arg3));
         object_to_luaval<cocos2d::PolygonInfo>(tolua_S, "cc.PolygonInfo",(cocos2d::PolygonInfo*)ret);
         tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         return 1;

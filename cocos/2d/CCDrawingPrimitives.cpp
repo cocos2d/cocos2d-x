@@ -90,7 +90,7 @@ static void lazy_init()
     }
 }
 
-// When switching from backround to foreground on android, we want the params to be initialized again
+// When switching from background to foreground on android, we want the parameters to be initialized again
 void init()
 {
     lazy_init();

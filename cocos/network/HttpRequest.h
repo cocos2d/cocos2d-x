@@ -78,7 +78,7 @@ public:
     
     /** 
      *  Constructor.
-     *   Because HttpRequest object will be used between UI thead and network thread,
+     *   Because HttpRequest object will be used between UI thread and network thread,
          requestObj->autorelease() is forbidden to avoid crashes in AutoreleasePool
          new/retain/release still works, which means you need to release it manually
          Please refer to HttpRequestTest.cpp to find its usage.
@@ -214,7 +214,7 @@ public:
     /**
      * Set user-customed data of HttpRequest object.
      * You can attach a customed data in each request, and get it back in response callback.
-     * But you need to new/delete the data pointer manully.
+     * But you need to new/delete the data pointer manually.
      *
      * @param pUserData the string pointer
      */
@@ -242,7 +242,7 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(Ref* pTarget, SEL_CallFuncND pSelector)
     {
-        setResponseCallback(pTarget, (SEL_HttpResponse) pSelector);
+        doSetResponseCallback(pTarget, (SEL_HttpResponse)pSelector);
     }
     
     /**
@@ -252,15 +252,9 @@ public:
      * @param pTarget the target object pointer.
      * @param pSelector the SEL_HttpResponse function.
      */
-    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
+    inline void setResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
     {
-        _pTarget = pTarget;
-        _pSelector = pSelector;
-        
-        if (_pTarget)
-        {
-            _pTarget->retain();
-        }
+        doSetResponseCallback(pTarget, pSelector);
     }
     /**
      * Set response callback function of HttpRequest object.
@@ -274,9 +268,9 @@ public:
     }
     
     /** 
-     * Get the target of callback selector funtion, mainly used by HttpClient.
+     * Get the target of callback selector function, mainly used by HttpClient.
      *
-     * @return Ref* the target of callback selector funtion
+     * @return Ref* the target of callback selector function
      */
     inline Ref* getTarget()
     {
@@ -342,6 +336,22 @@ public:
    		return _headers;
    	}
     
+private:
+    inline void doSetResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
+    {
+        if (_pTarget)
+        {
+            _pTarget->release();
+        }
+        
+        _pTarget = pTarget;
+        _pSelector = pSelector;
+        if (_pTarget)
+        {
+            _pTarget->retain();
+        }
+    }
+
 protected:
     // properties
     Type                        _requestType;    /// kHttpRequestGet, kHttpRequestPost or other enums

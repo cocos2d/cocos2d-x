@@ -5,7 +5,7 @@
 -- @parent_module cc
 
 --------------------------------
--- brief Set the ampliture rate of the effect.<br>
+-- brief Set the amplitude rate of the effect.<br>
 -- param amplitudeRate The value of amplitude rate will be set.
 -- @function [parent=#Liquid] setAmplitudeRate 
 -- @param self
@@ -18,7 +18,7 @@
 -- param gridSize Specify the size of the grid.<br>
 -- param waves Specify the waves count of the Liquid action.<br>
 -- param amplitude Specify the amplitude of the Liquid action.<br>
--- return If the initialization sucess, return true; otherwise, return false.
+-- return If the initialization success, return true; otherwise, return false.
 -- @function [parent=#Liquid] initWithDuration 
 -- @param self
 -- @param #float duration
@@ -55,7 +55,7 @@
 -- param gridSize Specify the size of the grid.<br>
 -- param waves Specify the waves count of the Liquid action.<br>
 -- param amplitude Specify the amplitude of the Liquid action.<br>
--- return If the creation sucess, return a pointer of Liquid action; otherwise, return nil.
+-- return If the creation success, return a pointer of Liquid action; otherwise, return nil.
 -- @function [parent=#Liquid] create 
 -- @param self
 -- @param #float duration

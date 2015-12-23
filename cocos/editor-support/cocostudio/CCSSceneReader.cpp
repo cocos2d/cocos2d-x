@@ -110,7 +110,6 @@ cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName,
                         {
                             pCom = createComponent(comName);
                         }
-                        CCLOG("classname = %s", comName);
                         if (pCom != nullptr)
                         {
                             data->_rData = nullptr;
@@ -223,15 +222,15 @@ std::string SceneReader::getComponentClassName(const std::string &name)
     {
         comName = "ComRender";
     }
-    else if (name == "CCComAudio" || name == "CCBackgroundAudio")
+    else if (name == ComAudio::COMPONENT_NAME || name == "CCBackgroundAudio")
     {
         comName = "ComAudio";
     }
-    else if (name == "CCComController")
+    else if (name == ComController::COMPONENT_NAME)
     {
         comName = "ComController";
     }
-    else if (name == "CCComAttribute")
+    else if (name == ComAttribute::COMPONENT_NAME)
     {
         comName = "ComAttribute";
     }
@@ -270,7 +269,6 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
             }
             const char *comName = DICTOOL->getStringValue_json(subDict, "classname");
             Component *com = this->createComponent(comName);
-            CCLOG("classname = %s", comName);
             SerData *data = new (std::nothrow) SerData();
             if (com != nullptr)
             {
@@ -388,7 +386,6 @@ cocos2d::Node* SceneReader::createObject(CocoLoader *cocoLoader, stExpCocoNode *
             {
                 pCom = createComponent(comName);
             }
-            CCLOG("classname = %s", comName);
             if (pCom != nullptr)
             {
                 data->_rData = nullptr;

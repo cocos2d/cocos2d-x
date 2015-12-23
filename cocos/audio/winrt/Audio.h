@@ -32,7 +32,8 @@ struct SoundEffectData
 	byte*						m_soundEffectBufferData;
 	uint32						m_soundEffectBufferLength;
 	uint32						m_soundEffectSampleRate;
-	bool						m_soundEffectStarted;
+    bool						m_soundEffectStarted;
+    bool						m_soundEffectPaused;
 };
 
 class Audio;
@@ -121,7 +122,7 @@ public:
     void Start();
     void Render();
 
-    // This flag can be used to tell when the audio system is experiencing critial errors.
+    // This flag can be used to tell when the audio system is experiencing critical errors.
     // XAudio2 gives a critical error when the user unplugs their headphones, and a new
     // speaker configuration is generated.
     void SetEngineExperiencedCriticalError()
@@ -148,8 +149,9 @@ public:
 
 	void PlaySoundEffect(const char* pszFilePath, bool bLoop, unsigned int& sound, bool isMusic = false);
     void PlaySoundEffect(unsigned int sound);
-	bool IsSoundEffectStarted(unsigned int sound);
-	void StopSoundEffect(unsigned int sound);
+    bool IsSoundEffectStarted(unsigned int sound);
+    bool IsSoundEffectPaused(unsigned int sound);
+    void StopSoundEffect(unsigned int sound);
     void PauseSoundEffect(unsigned int sound);
     void ResumeSoundEffect(unsigned int sound);
     void RewindSoundEffect(unsigned int sound);

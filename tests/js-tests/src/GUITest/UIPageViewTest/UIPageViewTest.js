@@ -308,13 +308,13 @@ var UIPageViewTouchPropagationTest = UIMainLayer.extend({
             var propagationText = new ccui.Text("Allow Propagation", "Arial", 10);
             propagationText.setAnchorPoint(cc.p(0,0.5));
             propagationText.setTextColor(cc.color.RED);
-            propagationText.setPosition(cc.p(0, pageView.getPosition().y + 50));
+            propagationText.setPosition(cc.p(20, pageView.getPosition().y + 50));
             this._mainNode.addChild(propagationText);
 
             var swallowTouchText = new ccui.Text("Swallow Touches", "Arial", 10);
             swallowTouchText.setAnchorPoint(cc.p(0,0.5));
             swallowTouchText.setTextColor(cc.color.RED);
-            swallowTouchText.setPosition(cc.p(0, pageView.getPosition().y));
+            swallowTouchText.setPosition(cc.p(20, pageView.getPosition().y));
             this._mainNode.addChild(swallowTouchText);
 
             // Create the checkbox
@@ -452,7 +452,8 @@ var UIPageViewDynamicAddAndRemoveTest = UIMainLayer.extend({
 
             //add buttons
             var button = new ccui.Button();
-//            button.setNormalizedPosition(cc.p(0.12,0.7));
+            button.setAnchorPoint(0, 0.5);
+            button.setTitleFontSize(12);
             button.setPosition(20, 220);
             button.setTitleText("Add A Page");
             button.setZoomScale(0.3);
@@ -484,7 +485,8 @@ var UIPageViewDynamicAddAndRemoveTest = UIMainLayer.extend({
             this._mainNode.addChild(button);
 
             var button2 = new ccui.Button();
-//            button2.setNormalizedPosition(cc.p(0.12,0.5));
+            button2.setAnchorPoint(0, 0.5);
+            button2.setTitleFontSize(12);
             button2.setPosition(20, 180);
             button2.setTitleText("Remove A Page");
             button2.setZoomScale(0.3);
@@ -502,7 +504,8 @@ var UIPageViewDynamicAddAndRemoveTest = UIMainLayer.extend({
             this._mainNode.addChild(button2);
 
             var button3 = new ccui.Button();
-//            button3.setNormalizedPosition(cc.p(0.12,0.3));
+            button3.setAnchorPoint(0, 0.5);
+            button3.setTitleFontSize(12);
             button3.setPosition(cc.p(20, 140));
             button3.setTitleText("Remove All Pages");
             button3.setZoomScale(0.3);

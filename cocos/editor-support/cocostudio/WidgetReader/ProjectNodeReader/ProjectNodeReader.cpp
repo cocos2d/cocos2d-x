@@ -51,7 +51,7 @@ namespace cocostudio
     {
         if (!_instanceProjectNodeReader)
         {
-            _instanceProjectNodeReader = new ProjectNodeReader();
+            _instanceProjectNodeReader = new (std::nothrow) ProjectNodeReader();
         }
         
         return _instanceProjectNodeReader;

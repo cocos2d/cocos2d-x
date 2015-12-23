@@ -40,6 +40,7 @@ extern void disableAccelerometerJni();
 extern void setAccelerometerIntervalJni(float interval);
 extern void setKeepScreenOnJni(bool value);
 extern void vibrateJni(float duration);
+extern std::string getVersionJNI();
 extern bool openURLJNI(const char* url);
 // functions for UserDefault
 extern bool getBoolForKeyJNI(const char* key, bool defaultValue);
@@ -55,7 +56,7 @@ extern void setStringForKeyJNI(const char* key, const char* value);
 extern void deleteValueForKeyJNI(const char* key);
 extern void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharset, char* dst, const char* newCharset);
 //Added for new Android EditBox
-extern int addEditBoxJNI(int left, int top, int width, int height);
+extern int addEditBoxJNI(int left, int top, int width, int height, float scaleX);
 extern void removeEditBoxJNI(int index);
 extern void setEditBoxViewRectJNI(int index, int left, int top, int width, int height);
 extern void setMaxLengthJNI(int index, int maxLength);

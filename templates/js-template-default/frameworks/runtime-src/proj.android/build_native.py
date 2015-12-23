@@ -136,7 +136,7 @@ def copy_resources(app_android_root):
     resources_dir = os.path.join(app_android_root, "../../../src")
     copy_files(resources_dir, assets_scripts_dir)
 
-    resources_dir = os.path.join(app_android_root, "../../../frameworks/js-bindings/bindings/script")
+    resources_dir = os.path.join(app_android_root, "../../../frameworks/cocos2d-x/cocos/js-bindings/bindings/script")
     copy_files(resources_dir, assets_jsb_dir)
 
 def build(targets,ndk_build_param,build_mode):
@@ -145,7 +145,7 @@ def build(targets,ndk_build_param,build_mode):
     sdk_root = None
 
     project_root = os.path.dirname(os.path.realpath(__file__))
-    cocos_root = os.path.join(project_root, "..", "..", "..", "frameworks/js-bindings/cocos2d-x")
+    cocos_root = os.path.join(project_root, "..", "..", "cocos2d-x")
 
     print cocos_root
 

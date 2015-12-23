@@ -1,0 +1,16 @@
+{
+	"packageUrl" : "http://cocostudio.download.appget.cn/Cocos2D-X/",
+	"remoteManifestUrl" : "http://cocos2d-x.org/assets/cpp-tests-resources/assets_manager/AMTestScene4/project_dev.manifest",
+	"remoteVersionUrl" : "http://cocos2d-x.org/assets/cpp-tests-resources/assets_manager/AMTestScene4/version_dev.manifest",
+	"version" : "1.0.0",
+	"engineVersion" : "3.0 beta",
+
+	"assets" : {
+		"Images/background1.jpg" : {
+			"md5" : "..."
+		}
+	},
+    
+    "searchPaths" : [
+    ]
+}

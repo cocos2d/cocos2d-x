@@ -40,7 +40,7 @@
         
 --------------------------------
 -- @{<br>
--- Implementations for interfaces in base calss.
+-- Implementations for interfaces in base class.
 -- @function [parent=#Grid3D] beforeBlit 
 -- @param self
 -- @return Grid3D#Grid3D self (return value: cc.Grid3D)

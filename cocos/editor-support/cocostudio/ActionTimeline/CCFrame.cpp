@@ -506,7 +506,10 @@ void AnchorPointFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
     {
 	    return;
     }
-
+    if (_tween)
+    {
+        _betweenAnchorPoint = static_cast<AnchorPointFrame*>(nextFrame)->_anchorPoint - _anchorPoint;
+    }
     _node->setAnchorPoint(_anchorPoint);
 }
 
@@ -519,6 +522,15 @@ Frame* AnchorPointFrame::clone()
     frame->cloneProperty(this);
 
     return frame;
+}
+
+void AnchorPointFrame::onApply(float percent)
+{
+    if ((nullptr != _node) && (_betweenAnchorPoint.x != 0 || _betweenAnchorPoint.y != 0))
+    {
+        auto applyAnchorP = _betweenAnchorPoint * percent + _anchorPoint;
+        _node->setAnchorPoint(applyAnchorP);
+    }
 }
 
 
@@ -606,20 +618,35 @@ void InnerActionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void InnerActionFrame::setStartFrameIndex(int frameIndex)
 {
-    CCASSERT(!_enterWithName, " cannot setStartFrameIndex when enterWithName is set");
+    if (_enterWithName)
+    {
+        CCLOG(" cannot set start when enter frame with name. setEnterWithName false firstly!");
+        return;
+    }
+
     _startFrameIndex = frameIndex;
 }
 
 
 void InnerActionFrame::setEndFrameIndex(int frameIndex)
 {
-    CCASSERT(!_enterWithName, " cannot setEndFrameIndex when enterWithName is set");
+    if (_enterWithName)
+    {
+        CCLOG(" cannot set end when enter frame with name. setEnterWithName false firstly!");
+        return;
+    }
+
     _endFrameIndex = frameIndex;
 }
 
 void InnerActionFrame::setAnimationName(const std::string& animationName)
 {
-    CCASSERT(_enterWithName, " cannot set aniamtioname when enter frame with index. setEnterWithName true firstly!");
+    if (!_enterWithName)
+    {
+        CCLOG(" cannot set aniamtioname when enter frame with index. setEnterWithName true firstly!");
+        return;
+    }
+
     _animationName = animationName;
    
 }

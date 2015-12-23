@@ -4,6 +4,7 @@
 #include "renderer/CCCustomCommand.h"
 #include "VisibleRect.h"
 #include "editor-support/cocostudio/CCComExtensionData.h"
+#include "ui/CocosGUI.h"
 
 
 USING_NS_CC;
@@ -23,6 +24,8 @@ CocoStudioActionTimelineTests::CocoStudioActionTimelineTests()
     ADD_TEST_CASE(TestActionTimelineEase);
     ADD_TEST_CASE(TestActionTimelineSkeleton);
     ADD_TEST_CASE(TestTimelineExtensionData);
+    ADD_TEST_CASE(TestActionTimelineBlendFuncFrame);
+    ADD_TEST_CASE(TestAnimationClipEndCallBack);
 }
 
 CocoStudioActionTimelineTests::~CocoStudioActionTimelineTests()
@@ -577,4 +580,100 @@ void TestTimelineExtensionData::onEnter()
 std::string TestTimelineExtensionData::title() const
 {
     return "Test Timeline extension data";
+}
+
+// TestActionTimelineBlendFuncFrame
+void TestActionTimelineBlendFuncFrame::onEnter()
+{
+    ActionTimelineBaseTest::onEnter();
+    Node* node = CSLoader::createNode("ActionTimeline/skeletonBlendFuncFrame.csb");
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/skeletonBlendFuncFrame.csb");
+    node->runAction(action);
+    node->setScale(0.2f);
+    node->setPosition(VisibleRect::center());
+    this->addChild(node);
+    action->gotoFrameAndPlay(0);
+}
+
+std::string TestActionTimelineBlendFuncFrame::title() const
+{
+    return "Test ActionTimeline BlendFunc Frame";
+}
+
+//TestAnimationClipEndCallBack
+void TestAnimationClipEndCallBack::onEnter()
+{
+    ActionTimelineBaseTest::onEnter();
+    Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer_skeleton.csb");
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer_skeleton.csb");
+    node->runAction(action);
+    node->setScale(0.2f);
+    node->setPosition(150, 150);
+
+     // test for frame end call back
+     action->addFrameEndCallFunc(5, "CallBackAfterFifthFrame", [this]{
+          auto text = ui::Text::create();
+          text->setString("CallBackAfterFifthFrame");
+          text->setPosition(Vec2(100, 40));
+          text->setLocalZOrder(1000);
+          this->runAction(Sequence::create(
+              CallFunc::create([this, text]{this->addChild(text); }),
+              DelayTime::create(3),
+              CallFunc::create([text]{text->removeFromParent(); }),
+              nullptr));
+     });
+     action->addFrameEndCallFunc(5, "AnotherCallBackAfterFifthFrame", [this]{
+         auto text = ui::Text::create();
+         text->setString("AnotherCallBackAfterFifthFrame");
+         text->setPosition(Vec2(100, 70));
+         this->runAction(Sequence::create(
+             CallFunc::create([this, text]{this->addChild(text); }),
+             DelayTime::create(3),
+             CallFunc::create([text]{text->removeFromParent(); }),
+             nullptr));
+     });
+     action->addFrameEndCallFunc(7, "CallBackAfterSenvnthFrame", [this]{
+         auto text = ui::Text::create();
+         text->setString("CallBackAfterSenvnthFrame");
+         text->setPosition(Vec2(100, 100));
+         this->runAction(Sequence::create(
+             CallFunc::create([this, text]{this->addChild(text); }),
+             DelayTime::create(3),
+             CallFunc::create([text]{text->removeFromParent(); }),
+             nullptr));
+     });
+     
+     // test for animation clip end call back
+     action->setAnimationEndCallFunc("stand", [this]{
+         auto text = ui::Text::create();
+         text->setString("CallBackAfterStandAnimationClip");
+         text->setPosition(Vec2(100, 130));
+         this->runAction(Sequence::create(
+             CallFunc::create([this, text]{this->addChild(text); }),
+             DelayTime::create(3),
+             CallFunc::create([text]{text->removeFromParent(); }),
+             nullptr));
+     });
+ 
+     AnimationClip animClip("testClip", 3, 13);
+     animClip.clipEndCallBack = ([this,node]{
+         auto text = ui::Text::create();
+         text->setString("testClip");
+         text->setPosition(Vec2(100, 140));
+         this->runAction(Sequence::create(
+             CallFunc::create([this, text]{this->addChild(text); }),
+             DelayTime::create(3),
+             CallFunc::create([text]{text->removeFromParent(); }),
+             nullptr));
+     });
+     action->addAnimationInfo(animClip);
+
+    action->setTimeSpeed(0.2f);
+    addChild(node);
+    action->gotoFrameAndPlay(0);
+}
+
+std::string TestAnimationClipEndCallBack::title() const
+{
+    return "Test ActionTimeline Frame End Call Back\n and Animation Clip End Call Back";
 }

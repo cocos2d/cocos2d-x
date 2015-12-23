@@ -61,7 +61,7 @@ public:
     int run();
 
     /**
-     @brief Get current applicaiton instance.
+     @brief Get current application instance.
      @return Current application instance pointer.
      */
     static Application* getInstance();
@@ -78,6 +78,11 @@ public:
     */
     virtual const char * getCurrentLanguageCode();
     
+    /**
+    @brief Get application version
+    */
+    virtual std::string getVersion() override;
+
   /**
    @brief Open url in default browser
    @param String with url to open.

@@ -152,7 +152,7 @@ static int lua_cocos2dx_experimental_WebView_setOnDidFailLoading(lua_State* L)
         };
         
         ScriptHandlerMgr::getInstance()->addCustomHandler((void*)self, handler);
-        self->setOnDidFinishLoading(callback);
+        self->setOnDidFailLoading(callback);
         return 0;
     }
     luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.WebView:setOnDidFailLoading",argc, 1);

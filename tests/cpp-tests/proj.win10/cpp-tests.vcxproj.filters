@@ -5,18 +5,6 @@
       <UniqueIdentifier>97d8d08c-848a-420e-aab1-5061457b491f</UniqueIdentifier>
       <Extensions>bmp;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
     </Filter>
-    <Image Include="Assets\Logo.scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\SmallLogo.scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\StoreLogo.scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\SplashScreen.scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
     <Filter Include="Classes">
       <UniqueIdentifier>{72a5938d-b456-4ee5-a76a-5e28c0cf30b5}</UniqueIdentifier>
     </Filter>
@@ -142,9 +130,6 @@
     </Filter>
     <Filter Include="Classes\ParticleTest">
       <UniqueIdentifier>{0648a349-fa88-45e2-8304-58576ac063b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\PerformanceTest">
-      <UniqueIdentifier>{a52b46b5-e7f9-4780-938f-98e58d702db3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\PhysicsTest">
       <UniqueIdentifier>{1a5d3f8b-3643-47e1-a6d9-7dad49dcb624}</UniqueIdentifier>
@@ -391,6 +376,12 @@
     </Filter>
     <Filter Include="Classes\NavMeshTest">
       <UniqueIdentifier>{a49e5dee-6eab-4a2a-9769-9f84ff6a5610}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\DownloaderTest">
+      <UniqueIdentifier>{a6b76076-ceeb-43e6-9005-1656c65778b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocoStudioGUITest\UIRadioButtonTest">
+      <UniqueIdentifier>{fd63b656-b611-447b-b4a1-f2d11f92ff83}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -680,51 +671,6 @@
     <ClCompile Include="..\Classes\ParticleTest\ParticleTest.cpp">
       <Filter>Classes\ParticleTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceCallbackTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceContainerTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceLabelTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceMathTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticleTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceRendererTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceScenarioTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceSpriteTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTextureTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTouchesTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\PhysicsTest\PhysicsTest.cpp">
       <Filter>Classes\PhysicsTest</Filter>
     </ClCompile>
@@ -990,9 +936,20 @@
     <ClCompile Include="..\Classes\NavMeshTest\NavMeshTest.cpp">
       <Filter>Classes\NavMeshTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-12847.cpp">
       <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CurlTest\CurlTest.cpp">
+      <Filter>Classes\CurlTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.cpp">
+      <Filter>Classes\ExtensionsTest\AssetsManagerExTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DownloaderTest\DownloaderTest.cpp">
+      <Filter>Classes\DownloaderTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp">
+      <Filter>Classes\UITest\CocoStudioGUITest\UIRadioButtonTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1477,51 +1434,6 @@
     <ClInclude Include="..\Classes\ParticleTest\ParticleTest.h">
       <Filter>Classes\ParticleTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceAllocTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceCallbackTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceContainerTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceLabelTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceMathTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticleTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceRendererTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceScenarioTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceSpriteTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTextureTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTouchesTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\PhysicsTest\PhysicsTest.h">
       <Filter>Classes\PhysicsTest</Filter>
     </ClInclude>
@@ -1796,11 +1708,18 @@
     <ClInclude Include="..\Classes\BugsTest\Bug-12847.h">
       <Filter>Classes\BugsTest</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\WideLogo.scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
+    <ClInclude Include="..\Classes\CurlTest\CurlTest.h">
+      <Filter>Classes\CurlTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.h">
+      <Filter>Classes\ExtensionsTest\AssetsManagerExTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DownloaderTest\DownloaderTest.h">
+      <Filter>Classes\DownloaderTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.h">
+      <Filter>Classes\UITest\CocoStudioGUITest\UIRadioButtonTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -1815,8 +1734,34 @@
     <None Include="$(OggBinPath)libogg.dll" />
     <None Include="$(OggBinPath)libvorbis.dll" />
     <None Include="$(OggBinPath)libvorbisfile.dll" />
+    <None Include="$(CurlBinPath)libcurl.dll" />
+    <None Include="$(CurlBinPath)libeay32.dll" />
+    <None Include="$(CurlBinPath)ssleay32.dll" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\LockScreenLogo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square150x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Wide310x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>

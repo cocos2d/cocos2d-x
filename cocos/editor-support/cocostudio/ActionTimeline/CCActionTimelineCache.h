@@ -48,6 +48,7 @@ namespace flatbuffers
     struct BoolFrame;
     struct InnerActionFrame;
     struct EasingData;
+    struct BlendFrame;
 }
 
 NS_TIMELINE_BEGIN
@@ -118,7 +119,7 @@ protected:
     Frame* loadAnchorPointFrameWithFlatBuffers  (const flatbuffers::ScaleFrame* flatbuffers);
     Frame* loadZOrderFrameWithFlatBuffers       (const flatbuffers::IntFrame* flatbuffers);
     Frame* loadInnerActionFrameWithFlatBuffers  (const flatbuffers::InnerActionFrame* flatbuffers);
-    
+    Frame* loadBlendFrameWithFlatBuffers        (const flatbuffers::BlendFrame* flatbuffers);
     void loadEasingDataWithFlatBuffers(Frame* frame, const flatbuffers::EasingData* flatbuffers);
 
     inline ActionTimeline* createActionWithDataBuffer(const cocos2d::Data data);

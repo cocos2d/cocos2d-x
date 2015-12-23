@@ -417,7 +417,7 @@ public:
     */
     inline float getAmplitudeRate() const { return _amplitudeRate; }
     /**
-    @brief Set the ampliture rate of the effect.
+    @brief Set the amplitude rate of the effect.
     @param amplitudeRate The value of amplitude rate will be set.
     */
     inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
@@ -483,7 +483,7 @@ public:
     */
     inline float getAmplitudeRate() const { return _amplitudeRate; }
     /**
-    @brief Set the ampliture rate of the effect.
+    @brief Set the amplitude rate of the effect.
     @param amplitudeRate The value of amplitude rate will be set.
     */
     inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
@@ -526,7 +526,7 @@ public :
     /** 
      * @brief Create the action with the number of rows and the duration.
      * @param duration Specify the duration of the SplitRows action. It's a value in seconds.
-     * @param rows Specify the rows count should be splited.
+     * @param rows Specify the rows count should be split.
      * @return If the creation success, return a pointer of SplitRows action; otherwise, return nil.
      */
     static SplitRows* create(float duration, unsigned int rows);
@@ -543,7 +543,7 @@ CC_CONSTRUCTOR_ACCESS:
     /** 
      * @brief Initializes the action with the number rows and the duration.
      * @param duration Specify the duration of the SplitRows action. It's a value in seconds.
-     * @param rows Specify the rows count should be splited.
+     * @param rows Specify the rows count should be split.
      * @return If the creation success, return true; otherwise, return false.
      */
     bool initWithDuration(float duration, unsigned int rows);
@@ -568,7 +568,7 @@ public:
     /** 
      * @brief Create the action with the number of columns and the duration.
      * @param duration Specify the duration of the SplitCols action. It's a value in seconds.
-     * @param cols Specify the columns count should be splited.
+     * @param cols Specify the columns count should be split.
      * @return If the creation success, return a pointer of SplitCols action; otherwise, return nil.
      */
     static SplitCols* create(float duration, unsigned int cols);
@@ -588,7 +588,7 @@ CC_CONSTRUCTOR_ACCESS:
     /** 
      * @brief Initializes the action with the number columns and the duration.
      * @param duration Specify the duration of the SplitCols action. It's a value in seconds.
-     * @param cols Specify the columns count should be splited.
+     * @param cols Specify the columns count should be split.
      * @return If the creation success, return true; otherwise, return false.
      */
     bool initWithDuration(float duration, unsigned int cols);

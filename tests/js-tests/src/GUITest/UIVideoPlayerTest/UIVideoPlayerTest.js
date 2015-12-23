@@ -10,98 +10,67 @@ var UIVideoPlayerTest = UIMainLayer.extend({
         window.video = video;
         this.addChild(video);
 
-        video.setEventListener(ccui.VideoPlayer.EventType.PLAYING, function(sender){
-            cc.log("VideoPlayer PLAYING");
-        });
-        video.setEventListener(ccui.VideoPlayer.EventType.PAUSED, function(sender){
-            cc.log("VideoPlayer PAUSED");
-        });
-        video.setEventListener(ccui.VideoPlayer.EventType.STOPPED, function(sender){
-            cc.log("VideoPlayer STOPPED");
-        });
-        video.setEventListener(ccui.VideoPlayer.EventType.COMPLETED, function(sender){
-            cc.log("VideoPlayer COMPLETED");
-        });
+        var widgetSize = this._widget.getContentSize();
+        var playState = this._topDisplayLabel;
+        playState.setString("Press buttons to start");
+        playState.y = widgetSize.height / 2.0 + playState.height * 1.5;
+        this._bottomDisplayLabel.setString("");
 
-        var playState = new cc.LabelTTF("PLAY State", "Thonburi", 28);
-        playState.setPosition(400, 350);
-        this.addChild(playState);
-
-        ccui.VideoPlayer.EventType = {
-            PLAYING: "play",
-            PAUSED: "pause",
-            STOPPED: "stop",
-            COMPLETED: "complete"
-        };
         var list = [
-            { name: "PLAYURL", func: function(){
-                cc.log("play!");
-                playState.setString("play");
+            { name: "playURL", func: function(){
+                playState.setString("Video from Web address");
                 video.setURL("http://benchmark.cocos2d-x.org/cocosvideo.mp4");
                 video.play();
             }},
-            { name: "PLAYLOCAL", func: function(){
-                cc.log("play!");
-                playState.setString("play");
+            { name: "PlayLocal", func: function(){
+                playState.setString("Video from Local resource");
                 video.setURL("cocosvideo.mp4");
                 video.play();
             }},
-            { name: "STOP", func: function(){
-                cc.log("stop!");
-                playState.setString("stop");
-                video.stop();
-            }},
-            { name: "PAUSE", func: function(){
-                cc.log("pause!");
-                playState.setString("pause");
+            { name: "Pause", func: function(){
+                playState.setString("Pause playing");
                 video.pause();
             }},
-            { name: "RESUME", func: function(){
-                cc.log("resume!");
-                playState.setString("resume");
+            { name: "Resume", func: function(){
+                playState.setString("Resume");
                 video.resume();
             }},
-            { name: "SEEKTO", func: function(){
+            { name: "Stop", func: function(){
+                playState.setString("Stop playing");
+                video.stop();
+            }},
+            { name: "SeekTo", func: function(){
                 var sec = ((Math.random() * 59) * 100 | 0) / 100;
-                cc.log("seekTo %f sec!", sec);
+                playState.setString("SeekTo %f sec", sec);
                 video.seekTo(sec);
             }},
-            { name: "ISPLAYING", func: function(){
-                cc.log("isPlaying!");
-                playState.setString("isPlaying");
-                cc.log(video.isPlaying());
-            }},
             { name: "Full Screen", func: function(){
-                cc.log("setFullScreenEnabled!");
                 playState.setString("setFullScreenEnabled");
                 video.setFullScreenEnabled(true);
             }},
             { name: "Scale", func: function(){
                 var scale = ((Math.random() * 0.5 + 0.2) * 100 | 0) / 100;
-                cc.log("setScale(%f)!", scale);
+                playState.setString( "setScale(%f)!" );
                 video.setScale(scale);
             }},
-            { name: "AnchorPoint 0 / 1", func: function(){
-                var anp = video.getAnchorPoint();
-                if(anp.x === 1)
-                    video.setAnchorPoint(0, 0);
-                else
-                    video.setAnchorPoint(1, 1);
-            }},
-            { name: "AnchorPoint 0.5", func: function(){
-                video.setAnchorPoint(0.5, 0.5);
+            { name: "setAnchorPoint", func: function(){
+                var anpX = video.getAnchorPoint().x === 1 ? 0: video.getAnchorPoint().x+ 0.5;
+                var anpY = video.getAnchorPoint().y === 1 ? 0: video.getAnchorPoint().y+ 0.5;
+                video.setAnchorPoint(anpX, anpY);
             }}
         ];
 
         var layer = this;
         list.forEach(function(item, i){
-            var but = new ccui.Button();
-            but.setPosition( 140 + (i / 6 | 0) * 500, 300 - (i % 6) * 35);
-            but.setTitleText(item.name);
-            but.setZoomScale(0.3);
-            but.setPressedActionEnabled(true);
-            but.addClickEventListener(item.func);
-            layer.addChild(but);
+            var button = new ccui.Button();
+            i+1 !== list.length ? button.setScale(1.3) : button.setScale(1);
+            button.setPosition( 140 + (i / 5 | 0) * 530, 320 - (i % 5) * 50);
+            button.setTitleText(item.name);
+            button.setTitleColor(cc.color.YELLOW);
+            button.setZoomScale(0.3);
+            button.setPressedActionEnabled(true);
+            button.addClickEventListener(item.func);
+            layer.addChild(button);
         });
 
     }

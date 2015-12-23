@@ -116,7 +116,7 @@
 -- @return Physics3DSliderConstraint#Physics3DSliderConstraint self (return value: cc.Physics3DSliderConstraint)
         
 --------------------------------
--- get upper anglular limit
+-- get upper angular limit
 -- @function [parent=#Physics3DSliderConstraint] getUpperAngLimit 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -140,14 +140,14 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- set lower angualr limit
+-- set lower angular limit
 -- @function [parent=#Physics3DSliderConstraint] setLowerAngLimit 
 -- @param self
 -- @param #float lowerLimit
 -- @return Physics3DSliderConstraint#Physics3DSliderConstraint self (return value: cc.Physics3DSliderConstraint)
         
 --------------------------------
--- set upper anglular limit
+-- set upper angular limit
 -- @function [parent=#Physics3DSliderConstraint] setUpperAngLimit 
 -- @param self
 -- @param #float upperLimit
@@ -414,7 +414,7 @@
 -- @return Physics3DSliderConstraint#Physics3DSliderConstraint self (return value: cc.Physics3DSliderConstraint)
         
 --------------------------------
--- use A's frame as linear refference
+-- use A's frame as linear reference
 -- @function [parent=#Physics3DSliderConstraint] getUseLinearReferenceFrameA 
 -- @param self
 -- @return bool#bool ret (return value: bool)

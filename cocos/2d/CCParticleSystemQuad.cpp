@@ -263,87 +263,180 @@ void ParticleSystemQuad::initIndices()
     }
 }
 
-void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Vec2& newPosition)
+inline void updatePosWithParticle(V3F_C4B_T2F_Quad *quad, const Vec2& newPosition,float size,float rotation)
 {
-    V3F_C4B_T2F_Quad *quad;
+    // vertices
+    GLfloat size_2 = size/2;
+    GLfloat x1 = -size_2;
+    GLfloat y1 = -size_2;
+    
+    GLfloat x2 = size_2;
+    GLfloat y2 = size_2;
+    GLfloat x = newPosition.x;
+    GLfloat y = newPosition.y;
+    
+    GLfloat r = (GLfloat)-CC_DEGREES_TO_RADIANS(rotation);
+    GLfloat cr = cosf(r);
+    GLfloat sr = sinf(r);
+    GLfloat ax = x1 * cr - y1 * sr + x;
+    GLfloat ay = x1 * sr + y1 * cr + y;
+    GLfloat bx = x2 * cr - y1 * sr + x;
+    GLfloat by = x2 * sr + y1 * cr + y;
+    GLfloat cx = x2 * cr - y2 * sr + x;
+    GLfloat cy = x2 * sr + y2 * cr + y;
+    GLfloat dx = x1 * cr - y2 * sr + x;
+    GLfloat dy = x1 * sr + y2 * cr + y;
+    
+    // bottom-left
+    quad->bl.vertices.x = ax;
+    quad->bl.vertices.y = ay;
+    
+    // bottom-right vertex:
+    quad->br.vertices.x = bx;
+    quad->br.vertices.y = by;
+    
+    // top-left vertex:
+    quad->tl.vertices.x = dx;
+    quad->tl.vertices.y = dy;
+    
+    // top-right vertex:
+    quad->tr.vertices.x = cx;
+    quad->tr.vertices.y = cy;
+}
 
+void ParticleSystemQuad::updateParticleQuads()
+{
+    if (_particleCount <= 0) {
+        return;
+    }
+ 
+    Vec2 currentPosition;
+    if (_positionType == PositionType::FREE)
+    {
+        currentPosition = this->convertToWorldSpace(Vec2::ZERO);
+    }
+    else if (_positionType == PositionType::RELATIVE)
+    {
+        currentPosition = _position;
+    }
+    
+    V3F_C4B_T2F_Quad *startQuad;
+    Vec2 pos = Vec2::ZERO;
     if (_batchNode)
     {
         V3F_C4B_T2F_Quad *batchQuads = _batchNode->getTextureAtlas()->getQuads();
-        quad = &(batchQuads[_atlasIndex+particle->atlasIndex]);
+        startQuad = &(batchQuads[_atlasIndex]);
+        pos = _position;
     }
     else
     {
-        quad = &(_quads[_particleIdx]);
+        startQuad = &(_quads[0]);
     }
-    Color4B color = (_opacityModifyRGB)
-        ? Color4B( particle->color.r*particle->color.a*255, particle->color.g*particle->color.a*255, particle->color.b*particle->color.a*255, particle->color.a*255)
-        : Color4B( particle->color.r*255, particle->color.g*255, particle->color.b*255, particle->color.a*255);
-
-    quad->bl.colors = color;
-    quad->br.colors = color;
-    quad->tl.colors = color;
-    quad->tr.colors = color;
-
-    // vertices
-    GLfloat size_2 = particle->size/2;
-    if (particle->rotation) 
+    
+    if( _positionType == PositionType::FREE )
     {
-        GLfloat x1 = -size_2;
-        GLfloat y1 = -size_2;
-
-        GLfloat x2 = size_2;
-        GLfloat y2 = size_2;
-        GLfloat x = newPosition.x;
-        GLfloat y = newPosition.y;
-
-        GLfloat r = (GLfloat)-CC_DEGREES_TO_RADIANS(particle->rotation);
-        GLfloat cr = cosf(r);
-        GLfloat sr = sinf(r);
-        GLfloat ax = x1 * cr - y1 * sr + x;
-        GLfloat ay = x1 * sr + y1 * cr + y;
-        GLfloat bx = x2 * cr - y1 * sr + x;
-        GLfloat by = x2 * sr + y1 * cr + y;
-        GLfloat cx = x2 * cr - y2 * sr + x;
-        GLfloat cy = x2 * sr + y2 * cr + y;
-        GLfloat dx = x1 * cr - y2 * sr + x;
-        GLfloat dy = x1 * sr + y2 * cr + y;
-
-        // bottom-left
-        quad->bl.vertices.x = ax;
-        quad->bl.vertices.y = ay;
-
-        // bottom-right vertex:
-        quad->br.vertices.x = bx;
-        quad->br.vertices.y = by;
-
-        // top-left vertex:
-        quad->tl.vertices.x = dx;
-        quad->tl.vertices.y = dy;
-
-        // top-right vertex:
-        quad->tr.vertices.x = cx;
-        quad->tr.vertices.y = cy;
-    } 
-    else 
+        Vec3 p1(currentPosition.x, currentPosition.y, 0);
+        Mat4 worldToNodeTM = getWorldToNodeTransform();
+        worldToNodeTM.transformPoint(&p1);
+        Vec3 p2;
+        Vec2 newPos;
+        float* startX = _particleData.startPosX;
+        float* startY = _particleData.startPosY;
+        float* x = _particleData.posx;
+        float* y = _particleData.posy;
+        float* s = _particleData.size;
+        float* r = _particleData.rotation;
+        V3F_C4B_T2F_Quad* quadStart = startQuad;
+        for (int i = 0 ; i < _particleCount; ++i, ++startX, ++startY, ++x, ++y, ++quadStart, ++s, ++r)
+        {
+            p2.set(*startX, *startY, 0);
+            worldToNodeTM.transformPoint(&p2);
+            newPos.set(*x,*y);
+            p2 = p1 - p2;
+            newPos.x -= p2.x - pos.x;
+            newPos.y -= p2.y - pos.y;
+            updatePosWithParticle(quadStart, newPos, *s, *r);
+        }
+    }
+    else if( _positionType == PositionType::RELATIVE )
     {
-        // bottom-left vertex:
-        quad->bl.vertices.x = newPosition.x - size_2;
-        quad->bl.vertices.y = newPosition.y - size_2;
-
-        // bottom-right vertex:
-        quad->br.vertices.x = newPosition.x + size_2;
-        quad->br.vertices.y = newPosition.y - size_2;
-
-        // top-left vertex:
-        quad->tl.vertices.x = newPosition.x - size_2;
-        quad->tl.vertices.y = newPosition.y + size_2;
-
-        // top-right vertex:
-        quad->tr.vertices.x = newPosition.x + size_2;
-        quad->tr.vertices.y = newPosition.y + size_2;                
+        Vec2 newPos;
+        float* startX = _particleData.startPosX;
+        float* startY = _particleData.startPosY;
+        float* x = _particleData.posx;
+        float* y = _particleData.posy;
+        float* s = _particleData.size;
+        float* r = _particleData.rotation;
+        V3F_C4B_T2F_Quad* quadStart = startQuad;
+        for (int i = 0 ; i < _particleCount; ++i, ++startX, ++startY, ++x, ++y, ++quadStart, ++s, ++r)
+        {
+            newPos.set(*x, *y);
+            newPos.x = *x - (currentPosition.x - *startX);
+            newPos.y = *y - (currentPosition.y - *startY);
+            newPos += pos;
+            updatePosWithParticle(quadStart, newPos, *s, *r);
+        }
+    }
+    else
+    {
+        Vec2 newPos;
+        float* startX = _particleData.startPosX;
+        float* startY = _particleData.startPosY;
+        float* x = _particleData.posx;
+        float* y = _particleData.posy;
+        float* s = _particleData.size;
+        float* r = _particleData.rotation;
+        V3F_C4B_T2F_Quad* quadStart = startQuad;
+        for (int i = 0 ; i < _particleCount; ++i, ++startX, ++startY, ++x, ++y, ++quadStart, ++s, ++r)
+        {
+            newPos.set(*x + pos.x, *y + pos.y);
+            updatePosWithParticle(quadStart, newPos, *s, *r);
+        }
+    }
+    
+    //set color
+    if(_opacityModifyRGB)
+    {
+        V3F_C4B_T2F_Quad* quad = startQuad;
+        float* r = _particleData.colorR;
+        float* g = _particleData.colorG;
+        float* b = _particleData.colorB;
+        float* a = _particleData.colorA;
+        
+        for (int i = 0; i < _particleCount; ++i,++quad,++r,++g,++b,++a)
+        {
+            GLubyte colorR = *r * *a * 255;
+            GLubyte colorG = *g * *a * 255;
+            GLubyte colorB = *b * *a * 255;
+            GLubyte colorA = *a * 255;
+            quad->bl.colors.set(colorR, colorG, colorB, colorA);
+            quad->br.colors.set(colorR, colorG, colorB, colorA);
+            quad->tl.colors.set(colorR, colorG, colorB, colorA);
+            quad->tr.colors.set(colorR, colorG, colorB, colorA);
+        }
+    }
+    else
+    {
+        V3F_C4B_T2F_Quad* quad = startQuad;
+        float* r = _particleData.colorR;
+        float* g = _particleData.colorG;
+        float* b = _particleData.colorB;
+        float* a = _particleData.colorA;
+        
+        for (int i = 0; i < _particleCount; ++i,++quad,++r,++g,++b,++a)
+        {
+            GLubyte colorR = *r * 255;
+            GLubyte colorG = *g * 255;
+            GLubyte colorB = *b * 255;
+            GLubyte colorA = *a * 255;
+            quad->bl.colors.set(colorR, colorG, colorB, colorA);
+            quad->br.colors.set(colorR, colorG, colorB, colorA);
+            quad->tl.colors.set(colorR, colorG, colorB, colorA);
+            quad->tr.colors.set(colorR, colorG, colorB, colorA);
+        }
     }
 }
+
 void ParticleSystemQuad::postStep()
 {
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
@@ -368,11 +461,10 @@ void ParticleSystemQuad::postStep()
 // overriding draw method
 void ParticleSystemQuad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    CCASSERT( _particleIdx == 0 || _particleIdx == _particleCount, "Abnormal error in particle quad");
     //quad command
-    if(_particleIdx > 0)
+    if(_particleCount > 0)
     {
-        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _quads, _particleIdx, transform, flags);
+        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _quads, _particleCount, transform, flags);
         renderer->addCommand(&_quadCommand);
     }
 }
@@ -384,23 +476,25 @@ void ParticleSystemQuad::setTotalParticles(int tp)
     if( tp > _allocatedParticles )
     {
         // Allocate new memory
-        size_t particlesSize = tp * sizeof(tParticle);
         size_t quadsSize = sizeof(_quads[0]) * tp * 1;
         size_t indicesSize = sizeof(_indices[0]) * tp * 6 * 1;
 
-        tParticle* particlesNew = (tParticle*)realloc(_particles, particlesSize);
+        _particleData.release();
+        if (!_particleData.init(tp))
+        {
+            CCLOG("Particle system: not enough memory");
+            return;
+        }
         V3F_C4B_T2F_Quad* quadsNew = (V3F_C4B_T2F_Quad*)realloc(_quads, quadsSize);
         GLushort* indicesNew = (GLushort*)realloc(_indices, indicesSize);
 
-        if (particlesNew && quadsNew && indicesNew)
+        if (quadsNew && indicesNew)
         {
             // Assign pointers
-            _particles = particlesNew;
             _quads = quadsNew;
             _indices = indicesNew;
 
             // Clear the memory
-            memset(_particles, 0, particlesSize);
             memset(_quads, 0, quadsSize);
             memset(_indices, 0, indicesSize);
             
@@ -409,7 +503,6 @@ void ParticleSystemQuad::setTotalParticles(int tp)
         else
         {
             // Out of memory, failed to resize some array
-            if (particlesNew) _particles = particlesNew;
             if (quadsNew) _quads = quadsNew;
             if (indicesNew) _indices = indicesNew;
 
@@ -424,7 +517,7 @@ void ParticleSystemQuad::setTotalParticles(int tp)
         {
             for (int i = 0; i < _totalParticles; i++)
             {
-                _particles[i].atlasIndex=i;
+                _particleData.atlasIndex[i] = i;
             }
         }
 

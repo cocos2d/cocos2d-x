@@ -87,10 +87,10 @@ public:
     /** Destructor */
     virtual ~Console();
 
-    /** starts listening to specifed TCP port */
+    /** starts listening to specified TCP port */
     bool listenOnTCP(int port);
 
-    /** starts listening to specifed file descriptor */
+    /** starts listening to specified file descriptor */
     bool listenOnFileDescriptor(int fd);
 
     /** stops the Console. 'stop' will be called at destruction time as well */

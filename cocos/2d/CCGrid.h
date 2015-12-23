@@ -63,7 +63,7 @@ public:
      @param gridSize the size of the grid.
      @param texture The texture used for grab.
      @param flipped whether or not the grab texture should be flip by Y or not.
-     @param rect The effct grid rect.
+     @param rect The effective grid rect.
     */
     bool initWithSize(const Size& gridSize);
     bool initWithSize(const Size& gridSize, const Rect& rect);
@@ -155,7 +155,7 @@ class CC_DLL Grid3D : public GridBase
 public:
     /** create one Grid. */
     static Grid3D* create(const Size& gridSize);
-    /** craete one Grid. */
+    /** create one Grid. */
     static Grid3D* create(const Size& gridSize, const Rect& rect);
     /** create one Grid. */
     static Grid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
@@ -197,7 +197,7 @@ public:
      */
     void setVertex(const Vec2& pos, const Vec3& vertex);
     /**@{
-     Implementations for interfaces in base calss.
+     Implementations for interfaces in base class.
      */
     virtual void beforeBlit() override;
     virtual void afterBlit() override;
@@ -275,7 +275,7 @@ public:
     void setTile(const Vec2& pos, const Quad3& coords);
 
     /**@{
-     Implementations for interfaces in base calss.
+     Implementations for interfaces in base class.
      */
     virtual void blit() override;
     virtual void reuse() override;

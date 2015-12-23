@@ -84,7 +84,7 @@ public:
      It will use a fixed priority of 1.
      * @param eventName A given name of the event.
      * @param callback A given callback method that associated the event name.
-     * @return the generated event. Needed in order to remove the event from the dispather
+     * @return the generated event. Needed in order to remove the event from the dispatcher
      */
     EventListenerCustom* addCustomEventListener(const std::string &eventName, const std::function<void(EventCustom*)>& callback);
 
@@ -300,7 +300,10 @@ protected:
     
     /** Walks though scene graph to get the draw order for each node, it's called before sorting event listener with scene graph priority */
     void visitTarget(Node* node, bool isRootNode);
-    
+
+    /** Remove all listeners in _toRemoveListeners list and cleanup */
+    void cleanToRemovedListeners();
+
     /** Listeners map */
     std::unordered_map<EventListener::ListenerID, EventListenerVector*> _listenerMap;
     
@@ -318,7 +321,10 @@ protected:
     
     /** The listeners to be added after dispatching event */
     std::vector<EventListener*> _toAddedListeners;
-    
+
+    /** The listeners to be removed after dispatching event */
+    std::vector<EventListener*> _toRemovedListeners;
+
     /** The nodes were associated with scene graph based priority listeners */
     std::set<Node*> _dirtyNodes;
     

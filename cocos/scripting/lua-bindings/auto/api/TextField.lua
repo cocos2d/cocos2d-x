@@ -151,7 +151,7 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- brief Get the the renderer size in auto mode.<br>
+-- brief Get the renderer size in auto mode.<br>
 -- return A delimitation zone.
 -- @function [parent=#TextField] getAutoRenderSize 
 -- @param self

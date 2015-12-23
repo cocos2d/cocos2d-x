@@ -25,6 +25,7 @@ Based upon code from the DirectX Tool Kit by Microsoft Corporation,
 obtained from https://directxtk.codeplex.com
 ****************************************************************************/
 #include "WICImageLoader-winrt.h"
+#include "CCWinRTUtils.h"
 
 NS_CC_BEGIN
 
@@ -321,9 +322,7 @@ bool WICImageLoader::encodeImageData(std::string path, const unsigned char* data
 	}
 
 	if (SUCCEEDED(hr)) {
-		std::wstring wpath;
-		wpath.assign(path.begin(), path.end());
-		hr = pStream->InitializeFromFilename(wpath.c_str(), GENERIC_WRITE);
+		hr = pStream->InitializeFromFilename(StringUtf8ToWideChar(path).c_str(), GENERIC_WRITE);
 	}
 
 	IWICBitmapEncoder* pEnc = NULL;

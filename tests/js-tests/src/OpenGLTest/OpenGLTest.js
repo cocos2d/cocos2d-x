@@ -216,7 +216,7 @@ var GLClearTest = OpenGLTestLayer.extend({
         return "gl.clear(gl.COLOR_BUFFER_BIT)";
     },
     subtitle:function () {
-        return "Testing gl.clear() with cc.GLNode";
+        return "Testing gl.clear() with cc.GLNode\n The layer should be in black";
     },
 
     //
@@ -1034,7 +1034,7 @@ var GLGetActiveTest = OpenGLTestLayer.extend({
     },
 
     title:function () {
-        return "gl.getActive***";
+        return "gl.getActiveXXX Function Test";
     },
     subtitle:function () {
         return "Tests gl.getActiveUniform / getActiveAttrib. See console";
@@ -1224,6 +1224,7 @@ var GLTexParamterTest = OpenGLTestLayer.extend({
 
         if( 'opengl' in cc.sys.capabilities ) {
             if( ! autoTestEnabled ) {
+                cc.log( "[Max, MIN, WRAP_S, WRAP_T]" );
                 cc.log( this.getTexValues() );
             }
         }
@@ -1233,7 +1234,7 @@ var GLTexParamterTest = OpenGLTestLayer.extend({
         return "GLTexParamterTest";
     },
     subtitle:function () {
-        return "tests texParameter()";
+        return "tests texParameter()\n See the Console";
     },
     getTexValues:function() {
         if(!cc.sys.isNative){
@@ -1250,7 +1251,7 @@ var GLTexParamterTest = OpenGLTestLayer.extend({
         var mag = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER);
         var min = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER);
         var w_s = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S);
-        var w_t = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S);
+        var w_t = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T);
 
         var a = [mag, min, w_s, w_t];
         return a;
@@ -1293,7 +1294,7 @@ var GLGetUniformTest = OpenGLTestLayer.extend({
         return "GLGetUniformTest";
     },
     subtitle:function () {
-        return "tests texParameter()";
+        return "tests texParameter()\n See the Console";
     },
     runTest:function() {
 
