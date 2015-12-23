@@ -71,7 +71,7 @@ TransitionScene * TransitionScene::create(float t, Scene *scene)
 
 bool TransitionScene::initWithDuration(float t, Scene *scene)
 {
-    CCASSERT( scene != nullptr, "Argument scene must be non-nil");
+    CCASSERT(scene != nullptr, "Argument scene must be non-nil");
 
     if (Scene::init())
     {
