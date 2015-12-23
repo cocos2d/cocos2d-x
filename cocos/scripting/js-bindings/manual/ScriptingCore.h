@@ -508,6 +508,11 @@ public:
      */
     virtual void unrootObject(cocos2d::Ref* ref) override;
 
+    /**
+     * Calls the Garbage Collector
+     */
+    virtual void garbageCollect() override;
+
 private:
     void string_report(JS::HandleValue val);
     void initRegister();
@@ -616,7 +621,7 @@ JSObject* jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref,
  If it can't find it, it will create a new one associating it to Ref.
  Call this function for objects that were already created and initialized, when returning `getChild()`
  */
-JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+JS::HandleObject jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
 /**
  It will try to get the associated JSObjct for ref.
@@ -624,5 +629,8 @@ JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_ty
  Call this function for objects that might return an already existing copy when you create them. For example, `Animation3D::create()`;
  */
 JSObject* jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+
+
+JS::HandleObject jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug);
 
 #endif /* __SCRIPTING_CORE_H__ */

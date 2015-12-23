@@ -2446,7 +2446,10 @@ bool js_cocos2dx_ActionInterval_repeat(JSContext *cx, uint32_t argc, jsval *vp)
         if (timesInt <= 0) {
             JS_ReportError(cx, "js_cocos2dx_ActionInterval_repeat : Repeat times must be greater than 0");
         }
-        
+
+        // no longer owned since it will be re-bound
+        cobj->_scriptOwned = false;
+
         cocos2d::Repeat* action = new (std::nothrow) cocos2d::Repeat;
         action->initWithAction(cobj, timesInt);
         jsb_ref_rebind(cx, obj, proxy, cobj, action, "cocos2d::Repeat");
@@ -2468,10 +2471,15 @@ bool js_cocos2dx_ActionInterval_repeatForever(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionInterval_repeatForever : Invalid Native Object");
     
     if (argc == 0) {
+
+        // no longer owned.
+        cobj->_scriptOwned = false;
+
         cocos2d::RepeatForever* action = new (std::nothrow) cocos2d::RepeatForever;
         action->initWithAction(cobj);
 
         jsb_ref_rebind(cx, jsobj, proxy, cobj, action, "cocos2d::RepeatForever");
+
         args.rval().set(OBJECT_TO_JSVAL(jsobj));
         return true;
     }
@@ -2498,7 +2506,10 @@ bool js_cocos2dx_ActionInterval_speed(JSContext *cx, uint32_t argc, jsval *vp)
             JS_ReportError(cx, "js_cocos2dx_ActionInterval_speed : Speed must not be negative");
             return false;
         }
-        
+
+        // no longer owned since it is going to be re-bound
+        cobj->_scriptOwned = false;
+
         cocos2d::Speed* action = new (std::nothrow) cocos2d::Speed;
         action->initWithAction(cobj, speed);
         jsb_ref_rebind(cx, obj, proxy, cobj, action, "cocos2d::Speed");
@@ -2563,6 +2574,9 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
     JS::RootedValue jsParam(cx);
     double tag;
     double parameter;
+
+    // no longer owned since it will be re-bound
+    oldAction->_scriptOwned = false;
 
     for (int i = 0; i < argc; i++)
     {
