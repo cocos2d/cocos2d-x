@@ -366,7 +366,7 @@ var MouseTest = EventTest.extend({
 
         if( 'mouse' in cc.sys.capabilities ) {
             cc.eventManager.addListener({
-                 event: cc.EventListener.MOUSE,
+                event: cc.EventListener.MOUSE,
                 onMouseDown: function(event){
                     var pos = event.getLocation(), target = event.getCurrentTarget();
                     if(event.getButton() === cc.EventMouse.BUTTON_RIGHT)
