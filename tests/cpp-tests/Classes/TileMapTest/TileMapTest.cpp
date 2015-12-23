@@ -48,7 +48,6 @@ TileMapTests::TileMapTests()
     ADD_TEST_CASE(TMXBug987);
     ADD_TEST_CASE(TMXBug787);
     ADD_TEST_CASE(TMXGIDObjectsTest);
-    ADD_TEST_CASE(TMXFlipTest);
 }
 
 TileDemo::TileDemo()
@@ -1457,25 +1456,4 @@ std::string TMXGIDObjectsTest::title() const
 std::string TMXGIDObjectsTest::subtitle() const
 {
     return "Tiles are created from an object group";
-}
-
-//------------------------------------------------------------------
-//
-// TMXFlipTest
-//
-//------------------------------------------------------------------
-TMXFlipTest::TMXFlipTest()
-{
-    auto map = TMXTiledMap::create("TileMaps/flip-test/flip-test.tmx");
-    addChild(map, -1, kTagTileMap);
-}
-
-std::string TMXFlipTest::title() const
-{
-    return "TMX With Flipped SpriteBatchNode";
-}
-
-std::string TMXFlipTest::subtitle() const
-{
-    return "There are tiles with Flipped SpriteBatchNode";
 }

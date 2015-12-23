@@ -323,13 +323,4 @@ public:
     virtual std::string subtitle() const override;    
 };
 
-class TMXFlipTest : public TileDemo
-{
-public:
-    CREATE_FUNC(TMXFlipTest);
-    TMXFlipTest();
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-};
-
 #endif
