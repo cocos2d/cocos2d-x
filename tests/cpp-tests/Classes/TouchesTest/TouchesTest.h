@@ -31,7 +31,6 @@ public:
     void doStep(float delta);
 };
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0 // Use 9.0 or higher SDK to compile
 class ForceTouchTest : public TestCase
 {
 public:
@@ -50,6 +49,5 @@ protected:
 
     cocos2d::Label * _infoLabel;
 };
-#endif
 
 #endif

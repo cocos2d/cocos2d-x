@@ -22,9 +22,7 @@ enum
 TouchesTests::TouchesTests()
 {
     ADD_TEST_CASE(PongScene);
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0 // Use 9.0 or higher SDK to compile
     ADD_TEST_CASE(ForceTouchTest);
-#endif
 }
 //------------------------------------------------------------------
 //
@@ -115,8 +113,6 @@ void PongLayer::doStep(float delta)
         resetAndScoreBallForPlayer( kHighPlayer );
 }
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0 // Use 9.0 or higher SDK to compile
-
 const char * _Info_Formatter = "Current force value : %0.02f, maximum possible force : %0.02f";
 char formatBuffer[256] = {0, };
 
@@ -146,7 +142,7 @@ std::string ForceTouchTest::title() const
 
 std::string ForceTouchTest::subtitle() const
 {
-    return std::string("Touch with force to see info label changes");
+    return std::string("Touch with force to see info label changes\nOnly work on iPhone6s / iPhone6s Plus");
 }
     
 void ForceTouchTest::onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
@@ -169,5 +165,3 @@ void ForceTouchTest::onTouchesEnded(const std::vector<cocos2d::Touch*>& touches,
     sprintf(formatBuffer, _Info_Formatter, 0.0f, 0.0f);
     _infoLabel->setString(std::string(formatBuffer));
 }
-
-#endif
