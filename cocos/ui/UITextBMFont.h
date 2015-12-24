@@ -112,7 +112,6 @@ protected:
     virtual void adaptRenderers() override;
 protected:
     Label* _labelBMFontRenderer;
-    bool _fntFileHasInit;
     std::string _fntFileName;
     std::string _stringValue;
     bool _labelBMFontRendererAdaptDirty;

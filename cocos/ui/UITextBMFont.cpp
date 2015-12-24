@@ -36,7 +36,6 @@ IMPLEMENT_CLASS_GUI_INFO(TextBMFont)
     
 TextBMFont::TextBMFont():
 _labelBMFontRenderer(nullptr),
-_fntFileHasInit(false),
 _fntFileName(""),
 _stringValue(""),
 _labelBMFontRendererAdaptDirty(true)
@@ -89,7 +88,6 @@ void TextBMFont::setFntFile(const std::string& fileName)
     _fntFileName = fileName;
     _labelBMFontRenderer->setBMFontFilePath(fileName);
     
-    _fntFileHasInit = true;
     updateContentSizeWithTextureSize(_labelBMFontRenderer->getContentSize());
     _labelBMFontRendererAdaptDirty = true;
 }
@@ -102,10 +100,6 @@ void TextBMFont::setString(const std::string& value)
     }
     _stringValue = value;
     _labelBMFontRenderer->setString(value);
-    if (!_fntFileHasInit)
-    {
-        return;
-    }
     updateContentSizeWithTextureSize(_labelBMFontRenderer->getContentSize());
     _labelBMFontRendererAdaptDirty = true;
 }
