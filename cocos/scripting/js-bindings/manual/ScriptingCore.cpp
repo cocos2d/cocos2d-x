@@ -925,10 +925,8 @@ bool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 
 bool ScriptingCore::forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 {
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32
     JSRuntime *rt = JS_GetRuntime(cx);
     JS_GC(rt);
-#endif
     return true;
 }
 

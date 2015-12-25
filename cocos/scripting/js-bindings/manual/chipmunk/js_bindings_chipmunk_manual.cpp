@@ -970,6 +970,9 @@ bool JSB_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2(argc==7, cx, false, "Invalid number of arguments");
 
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedValue spaceVal(cx, args.get(0));
+    JS::RootedObject jsspace(cx);
+    JS_ValueToObject(cx, spaceVal, &jsspace);
 
     // args
     cpSpace *space = nullptr;
@@ -978,7 +981,6 @@ bool JSB_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
     bool ok = jsval_to_opaque(cx, jsarg, (void**)&space);
     JSB_PRECONDITION(ok, "Error parsing arguments");
     
-    JS::RootedObject jsspace(cx, jsarg.toObjectOrNull());
     return __jsb_cpSpace_addCollisionHandler(cx, vp, argvp, jsspace, space, 0);
 }
 
