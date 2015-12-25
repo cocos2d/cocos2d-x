@@ -16509,13 +16509,10 @@ int lua_cocos2dx_extension_CircularBuffer_Write(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
-        const void* arg0;
+        char* arg0 = ((char*)  tolua_tostring(tolua_S,2,0));
         unsigned long arg1;
-
-        #pragma warning NO CONVERSION TO NATIVE FOR void*
-		ok = false;
-
-        ok &= luaval_to_ulong(tolua_S, 3, &arg1, "cc.CircularBuffer:Write");
+        
+        ok = luaval_to_ulong(tolua_S, 3, &arg1, "cc.CircularBuffer:Write");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_CircularBuffer_Write'", nullptr);
