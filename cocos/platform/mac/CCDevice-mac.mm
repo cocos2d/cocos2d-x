@@ -63,21 +63,21 @@ typedef struct
     unsigned char* data;
 } tImageInfo;
 
-static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize)
+static NSSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize)
 {
-    CGSize textRect = CGSizeZero;
+    NSSize textRect = NSZeroSize;
     textRect.width = constrainSize->width > 0 ? constrainSize->width
     : 0x7fffffff;
     textRect.height = constrainSize->height > 0 ? constrainSize->height
     : 0x7fffffff;
     
-    CGSize dim;
+    NSSize dim;
     NSDictionary *attibutes = @{NSFontAttributeName:font};
     dim = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) attributes:attibutes context:nil].size;
     
     dim.width = ceilf(dim.width);
     dim.height = ceilf(dim.height);
-    
+
     return dim;
 }
 
