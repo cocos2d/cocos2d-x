@@ -383,6 +383,11 @@ public:
      */
     void setForce2DQueue(bool force2D) { _force2DQueue = force2D; }
 
+    /**
+     * @brief @~english Return texture file name.
+     * @~chinese 返回素材图片文件名。
+     * @since v3.10
+     */
     std::string getTextureFileName(){ return _texFile; }
 
 CC_CONSTRUCTOR_ACCESS:

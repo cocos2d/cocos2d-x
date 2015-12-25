@@ -258,7 +258,7 @@ public:
      */
     void unprojectGL(const Size& size, const Vec3* src, Vec3* dst) const;
 
-    /**
+    /**@~english
      * Is this aabb visible in frustum
      * @~chinese 
      * aabb在视椎体内是否可见
@@ -358,6 +358,11 @@ public:
     
     virtual void visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
+    /**@~english Check if the background clear brush valid
+    * @~chinese 获取背景清空画刷是否有效
+    * @return @~english If the background brush is valid.
+    * @chinese 背景画刷是否有效。
+    */
     bool isBrushValid();
 
 CC_CONSTRUCTOR_ACCESS:

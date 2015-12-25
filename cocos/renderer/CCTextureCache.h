@@ -272,14 +272,13 @@ public:
      */
     const std::string getTextureFilePath(Texture2D* texture)const;
 
-    /** Reload texture from a new file.
-    * This function is mainly for editor, won't suggest use it in game for performance reason.
-    *
-    * @param srcName Original texture file name.
-    * @param dstName New texture file name.
-    *
-    * @since v3.10
-    */
+    /** @~english Reload texture from a new file.
+     * This function is mainly for editor, won't suggest use it in game for performance reason.
+     * @~chinese 使用新材质文件重新加载素材。这个函数主要是给编辑器使用，出于效率原因，不建议在游戏内使用。
+     * @param srcName @~english Original texture file name. @~chinese 原素材文件名。
+     * @param dstName @~english New texture file name. @~chinese 新素材文件名。
+     * @since v3.10
+     */
     void renameTextureWithKey(const std::string srcName, const std::string dstName);
 
 

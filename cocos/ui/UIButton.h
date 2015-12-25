@@ -406,12 +406,52 @@ public:
      */
     Scale9Sprite* getRendererDisabled() const { return _buttonDisabledRenderer; }
 
+    /**
+     * @brief @~english Reset normal state render to null.
+     * @~chinese 将普通状态render重置为空指针。
+     * @since v3.10
+     */
     void resetNormalRender();
+
+    /**
+     * @brief @~english Reset pressed state render to null.
+     * @~chinese 将按下状态render重置为空指针。
+     * @since v3.10
+     */
     void resetPressedRender();
+
+    /**
+     * @brief @~english Reset disabled state render to null.
+     * @~chinese 将禁用状态render重置为空指针。
+     * @since v3.10
+     */
     void resetDisabledRender();
 
+    /**
+     * @brief @~english Return the normal state image file name and type.
+     * @~chinese 返回普通状态图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain normal state image description.
+     * @~chinese 包含普通状态图片描述的ResourceData结构体。
+     * @since v3.10
+     */
     ResourceData getNormalFile();
+
+    /**
+     * @brief @~english Return the pressed state image file name and type.
+     * @~chinese 返回按下状态图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain pressed state image description.
+     * @~chinese 包含按下状态图片描述的ResourceData结构体。
+     * @since v3.10
+     */
     ResourceData getPressedFile();
+
+    /**
+     * @brief @~english Return the normal state image file name and type.
+     * @~chinese 返回禁用状态图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain normal state image description.
+     * @~chinese 包含禁用状态图片描述的ResourceData结构体。
+     * @since v3.10
+     */
     ResourceData getDisabledFile();
 
 CC_CONSTRUCTOR_ACCESS:

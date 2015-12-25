@@ -174,6 +174,13 @@ public:
      */
     virtual void adaptRenderers() override;
 
+    /**
+     * @brief @~english Return the char map file name.
+     * @~chinese 返回字符映射文件的名字。
+     * @return The ResourceData structure contain char map file description.
+     * @~chinese 包含字符映射文件描述的ResourceData结构体。
+     * @since v3.10
+     */
     ResourceData getRenderFile();
 
 protected:

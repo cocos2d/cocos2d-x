@@ -648,7 +648,18 @@ public:
     virtual bool isOpacityModifyRGB() const override;
     /// @}
 
+    /**
+     * @brief @~english Return texture file type(0 = file, 1 = plist).
+     * @~chinese 返回素材图片的类型（0 = 普通图片，1 = plist合图）。
+     * @since v3.10
+     */
     const int getResourceType() const { return _fileType; }
+
+    /**
+     * @brief @~english Return texture file name.
+     * @~chinese 返回素材图片文件名。
+     * @since v3.10
+     */
     const std::string getResourceName() const { return _fileName; }
 
 CC_CONSTRUCTOR_ACCESS :

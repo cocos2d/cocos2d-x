@@ -183,7 +183,14 @@ public:
     virtual Node* getVirtualRenderer() override;
     virtual std::string getDescription() const override;
 
-    ResourceData getRenderFile(); 
+    /**
+     * @brief @~english Return loading bar image file name and type.
+     * @~chinese 返回进度条图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain loading bar image description.
+     * @~chinese 包含进度条图片描述的ResourceData结构体。
+     * @since v3.10
+     */
+    ResourceData getRenderFile();
 
 protected:
     virtual void initRenderer() override;

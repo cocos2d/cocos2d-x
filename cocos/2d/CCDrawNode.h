@@ -59,6 +59,8 @@ class CC_DLL DrawNode : public Node
 public:
     /** @~english creates and initialize a DrawNode node.
      * @~chinese 创建并初始化DrawNode节点.
+     * @param defaultLineWidth @~english Default line width to be used.
+     * @~chinese 指定的默认线宽
      * @return @~english Return an autorelease object.
      * @~chinese 返回一个自动释放对象.
      */
@@ -456,7 +458,10 @@ public:
     
     void setLineWidth(int lineWidth);
 
-    // Get CocosStudio guide lines width.
+    /**@~english
+    * Get current line width setting
+    * @~chinese 获取当前设定的线宽
+    */
     float getLineWidth();
 
 CC_CONSTRUCTOR_ACCESS:

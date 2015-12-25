@@ -317,10 +317,49 @@ public:
      */
     float getZoomScale()const;
 
+    /**
+     * @brief @~english Return the background image file name and type.
+     * @~chinese 返回背景图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain background image description.
+     * @~chinese 包含背景图片描述的ResourceData结构体。
+     * @since v3.10
+     */
     ResourceData getBackFile();
+
+    /**
+     * @brief @~english Return the progress bar image file name and type.
+     * @~chinese 返回进度条图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain progress bar image description.
+     * @~chinese 包含进度条图片描述的ResourceData结构体。
+     * @since v3.10
+     */
     ResourceData getProgressBarFile();
+
+    /**
+     * @brief @~english Return the normal status slider ball image file name and type.
+     * @~chinese 返回普通状态滑块图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain normal status slider ball image description.
+     * @~chinese 包含普通状态滑块图片描述的ResourceData结构体。
+     * @since v3.10
+     */
     ResourceData getBallNormalFile();
+
+    /**
+     * @brief @~english Return the pressed status slider ball image file name and type.
+     * @~chinese 返回按下状态滑块图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain pressed status slider ball image description.
+     * @~chinese 包含按下状态滑块图片描述的ResourceData结构体。
+     * @since v3.10
+     */
     ResourceData getBallPressedFile();
+
+    /**
+     * @brief @~english Return the disabled status slider ball image file name and type.
+     * @~chinese 返回禁用状态滑块图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain disabled status slider ball image description.
+     * @~chinese 包含禁用状态滑块图片描述的ResourceData结构体。
+     * @since v3.10
+     */
     ResourceData getBallDisabledFile();
 
 CC_CONSTRUCTOR_ACCESS:

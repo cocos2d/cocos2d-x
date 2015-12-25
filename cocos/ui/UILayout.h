@@ -658,6 +658,13 @@ public:
      */
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
 
+    /**
+     * @brief @~english Return background image file name and type.
+     * @~chinese 返回背景图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain background image description.
+     * @~chinese 包含背景图片描述的ResourceData结构体。
+     * @since v3.10
+     */
     ResourceData getRenderFile();
 
 CC_CONSTRUCTOR_ACCESS:

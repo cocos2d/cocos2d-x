@@ -213,13 +213,52 @@ public:
      */
     Sprite* getRendererFrontCrossDisabled() const { return _frontCrossDisabledRenderer; }
 
+    /**
+     * @brief @~english Return the background image name and type.
+     * @~chinese 返回背景普通状态图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain background image description.
+     * @~chinese 包含背景普通状态图片描述的ResourceData结构体。
+     * @since v3.10
+     */
     ResourceData getBackNormalFile();
+
+    /**
+     * @brief @~english Return the background image name and type.
+     * @~chinese 返回背景选择状态图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain background image description.
+     * @~chinese 包含背景选择状态图片描述的ResourceData结构体。
+     * @since v3.10
+     */
     ResourceData getBackPressedFile();
+
+    /**
+     * @brief @~english Return the background image name and type.
+     * @~chinese 返回背景禁用状态图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain background image description.
+     * @~chinese 包含背景禁用状态图片描述的ResourceData结构体。
+     * @since v3.10
+     */
     ResourceData getBackDisabledFile();
+
+    /**
+     * @brief @~english Return the background image name and type.
+     * @~chinese 返回勾选选中状态图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain background image description.
+     * @~chinese 包含勾选选中状态图片描述的ResourceData结构体。
+     * @since v3.10
+     */
     ResourceData getCrossNormalFile();
+
+    /**
+     * @brief @~english Return the background image name and type.
+     * @~chinese 返回勾选禁用状态图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain background image description.
+     * @~chinese 包含勾选禁用状态图片描述的ResourceData结构体。
+     * @since v3.10
+     */
     ResourceData getCrossDisabledFile();
 
-CC_CONSTRUCTOR_ACCESS:
+CC_CONSTRUCTOR_ACCESS :
     virtual bool init() override;
     virtual bool init(const std::string& backGround,
                       const std::string& backGroundSeleted,

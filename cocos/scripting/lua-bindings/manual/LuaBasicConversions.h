@@ -1990,7 +1990,40 @@ void std_vector_vec3_to_luaval(lua_State* L, const std::vector<cocos2d::Vec3>& i
 void std_map_string_string_to_luaval(lua_State* L, const std::map<std::string, std::string>& inValue);
 
 // Follow 2 function is added for Cocos Studio to make lua lib can be compile as dynamic library
+
+/**@~english
+* Get a Node object from the given acceptable index of stack.
+*
+* @~chinese
+* 从给定Lua栈索引上获取一个Node对象。
+*
+* @param L @~english the current lua_State.
+* @~chinese 当前lua_State。
+* @param lo @~english the given acceptable index of stack.
+* @~chinese Lua栈索引。
+* @param type @~english a string pointer points to the type name.
+* @~chinese 类型名。
+* @param ret @~english the pointer points to a Node object.
+* @~chinese 指向Node类型的指针。
+* @return @~english Return true if the type of Lua value at the index is a Lua userdata, otherwise return false.
+* @~chinese 当Lua栈索引上的值是一个Lua userdata返回true，否则返回false。
+*/
 CC_LUA_DLL extern bool luaval_to_node(lua_State* L, int lo, const char* type, cocos2d::Node** node);
+
+/**@~english
+* Push the native Node object by userdata format into the Lua stack.@see toluafix_pushusertype_ccobject and tolua_pushusertype. if the native object is nullptr, push a nil value to the Lua stack
+*
+* @~chinese
+* 将一个native Node对象以Lua userdata的形式压入到Lua栈中。@see toluafix_pushusertype_ccobject and tolua_pushusertype。如果native Node对象为nullptr,则将一个nil值压入Lua栈中。
+*
+*
+* @param L @~english the current lua_State.
+* @~chinese 当前lua_State。
+* @param type @~english the string pointer points to the typename.
+* @~chinese typename字符串。
+* @param ret @~english the native Node object pointer.
+* @~chinese native Node对象指针。
+*/
 CC_LUA_DLL extern void node_to_luaval(lua_State* L, const char* type, cocos2d::Node* node);
 
 // end group

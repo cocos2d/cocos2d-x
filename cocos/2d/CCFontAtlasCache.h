@@ -54,16 +54,22 @@ public:
      */
     static void purgeCachedData();
 
-    /** Release current FNT texture and reload it.
-     CAUTION : All component use this font texture should be reset font name, though the file name is same!
-               otherwise, it will cause program crash!
-    */
+    /** @~english Release current FNT texture and reload it.
+     * CAUTION : All component use this font texture should be reset font name, though the file name is same!
+     *           otherwise, it will cause program crash!
+     * @~chinese 释放当前的FNT材质并且重新加载。
+     * 注意：所有使用这个字体材质的控件必须重新设置字体，即使还是继续使用相同的字体。
+     *       否则将导致程序崩溃！
+     */
     static void reloadFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset = Vec2::ZERO);
 
-    /** Unload all texture atlas texture create by special file name.
-     CAUTION : All component use this font texture should be reset font name, though the file name is same!
-               otherwise, it will cause program crash!
-    */
+    /** @~english Unload all texture atlas texture create by special file name.
+     * CAUTION : All component use this font texture should be reset font name, though the file name is same!
+     *           otherwise, it will cause program crash!
+     * @~chinese 释放所有使用指定字体创建的材质。
+     * 注意：所有使用这个字体材质的控件必须重新设置字体，即使还是继续使用相同的字体。
+     *       否则将导致程序崩溃！
+     */
     static void unloadFontAtlasTTF(const std::string& fontFileName);
 
 private:

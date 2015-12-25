@@ -367,7 +367,14 @@ public:
      */
     virtual std::string getDescription() const override;
 
+    /** @~english Get the layer count in map.
+     * @~chinese 获取地图包含的layer层数。
+     */
     int  getLayerNum();
+
+    /** @~english Get the map file name.
+     * @~chinese 获取地图文件名。
+     */
     const std::string getResourceFile() const { return _tmxFile; }
 
 CC_CONSTRUCTOR_ACCESS:

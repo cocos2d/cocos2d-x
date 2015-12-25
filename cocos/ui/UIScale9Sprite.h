@@ -809,6 +809,11 @@ namespace ui {
          */
         RenderingType getRenderingType()const;
 
+        /**
+         * @brief @~english Reset scale9 render to null.
+         * @~chinese 将9宫格精灵render重置为空指针。
+         * @since v3.10
+         */
         void resetRender();
 
     protected:

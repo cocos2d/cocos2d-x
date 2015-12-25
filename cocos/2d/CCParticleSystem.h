@@ -1050,6 +1050,12 @@ public:
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     virtual const BlendFunc &getBlendFunc() const override;
 
+    /** @~english Gets the resource file name of current component.
+    * @~chinese 获取当前控件使用的资源文件名。
+    *
+    * @return @~english The resource file name.
+    * @~chinese 资源文件名。
+    */
     const std::string getResourceFile() const { return _plistFile; }
 
 CC_CONSTRUCTOR_ACCESS:

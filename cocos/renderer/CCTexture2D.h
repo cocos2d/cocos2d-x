@@ -598,6 +598,11 @@ public:
      */
     GLProgram* getGLProgram() const;
 
+    /**
+     * @brief @~english Return texture file name.
+     * @~chinese 返回材质图片文件名。
+     * @since v3.10
+     */
     std::string getPath()const { return _filePath; }
 
 public:
