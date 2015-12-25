@@ -154,105 +154,90 @@ We are happy to announce the release of Cocos2d-x v3.10. Following are the highl
 
 1. UI System:
     - Reimplemented Scale9Sprite and improve the scale9sprite performance and reduce memory consumption.
-    - Changed PageView to derived from ListView.
-    - Added PageView indicator. 
-    - Added three Overflow type to new label. 
-    - RichText supported new line element.
-2. AudioEngine
-    - AudioEngine on Linux replace the original SimpleAudioEngine with a new version of FMOD, now AudioEngine support all platforms.
-3. Others: 
-    - Added Application::getVersion() to get the app version.
-    - Set focus to Widget when touched.
-    - Improved JS bindings with more secured memory management.
-
+    - Changed PageView to derived from ListView, PageView can be added any widget as child.
+    - Added three overflow type to new label: CLAMP，SHRINK，RESIZE_HEIGHT.
+2. JSModule:
+    - Improved JS bindings with more secured memory management, and enhance the stability of the engine, streamline all JSB code with the GC coding style of SpiderMonkey([https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide "https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide")).
 
 ## The main features in detail of Cocos2d-x v3.10:
 
 ### UI System
 
-1.  Reimplemented Scale9Sprite and improve the scale9sprite performance and reduce memory consumption.
+1. Reimplemented Scale9Sprite and improve the scale9sprite performance and reduce memory consumption.
+    
+    Reimplemented ui::Scale9Sprite, now the Slice sprite uses 16 vertices and 54 indices instead of the old 9 sprite way, The memory consumption is much lower than the previous implementation, and it is also more time efficient.
 
-    - Now the Slice sprite uses 16 vertices and 54 indices instead of the old 9 sprite way.
+    In SIMPLE mode, the 4 borders are all 0 and the whole sprite will scale horizontally and vertically. In this mode only 1 quad is used to rendering, for example:
 
-    - The memory consumption is much lower than the previous implementation. And it is also more time efficient.
+        auto blocks = ui::Scale9Sprite::createWithSpriteFrameName("blocks9c.png");
+        //When setting to SIMPLE, only 4 vertexes is used to rendering.
+        blocks->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
 
-    - Add RenderingType to slice sprite. When Scale9Enable is true, then we have two rendering type here.
+    In SLICE mode, it will use 18 triangles to rendering the slice 9 sprite. If the 4 borders are 0, there still be 18 triangles computed. So choose your RenderingType wisely,for example:
 
-    - In Simple mode, the 4 borders are all 0 and the whole sprite will scale horizontally and vertically. In this mode only 1 quad is used to rendering.
-
-    - In Slice mode, it will use 18 triangles to rendering the slice 9 sprite. If the 4 borders are 0, there still be 18 triangles computed. So choose your RenderingType wisely.
-
-2. Changed PageView to derived from ListView.
+		auto sprite = ui::Scale9Sprite::createWithSpriteFrameName("blocks9c.png");
+        //When setting to SLICE, 16 vertexes will be used to rendering.
+        sprite->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+    
+2. Changed PageView to derived from ListView, PageView can be added any widget as child.
 
     PageView was derived from Layout and it implemented the features of scrolling and item arrangement from scratch. But the features are already there in ListView. So remove those duplicated implementations from PageView and make it subclass from ListView.
 
-    By this, PageView becomes more simplified and maintainable because it considers only paging implementation. 
+    By this, PageView becomes more simplified and maintainable because it considers only paging implementation. for example:
 
-3. Added PageView indicator
-    
-    PageView now has a page indicator which is represented as a list of small circles.
+        // Create the page view
+        Size size(240, 130);
+        PageView* pageView = PageView::create();
+        pageView->setDirection(PageView::Direction::HORIZONTAL);
+        pageView->setContentSize(size);
+        Size backgroundSize = background->getContentSize();
+        //"removeAllPages" is changed to "removeAllItems"
+        pageView->removeAllItems();
+        pageView->setIndicatorEnabled(true);
 
-4. Added three Overflow type to new label. 
-
-    Add three different type of Overflow to Label.
-
-        enum class Overflow
+        int pageCount = 4;
+        for (int i = 0; i < pageCount; ++i)
         {
-            //for keep back compatibility
-            NORMAL,
-            /**
-             * In SHRINK mode, the font size will change dynamically to adapt the content size.
-            */
-            SHRINK,
-            /**
-             *In CLAMP mode, when label content goes out of the bounding box, it will be clipped.
-            */
-            CLAMP,
-            /**
-             *In RESIZE_HEIGHT mode, you can only change the width of label and the height is changed automatically.
-            */
-            RESIZE_HEIGHT
-        };
+            Layout* layout = Layout::create();
+            layout->setContentSize(size);
+            
+            ImageView* imageView = ImageView::create("cocosui/scrollviewbg.png");
+            imageView->setScale9Enabled(true);
+            imageView->setContentSize(size);
+            imageView->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
+            layout->addChild(imageView);
+            
+            Text* label = Text::create(StringUtils::format("page %d",(i+1)), "fonts/Marker Felt.ttf", 30);
+            label->setColor(Color3B(192, 192, 192));
+            label->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
+            layout->addChild(label);
+            //"insertPage" is changed to "insertCustomItem"
+            pageView->insertCustomItem(layout, i);
+        }
+        //"removePageAtIndex" is changed to "removeItem"
+        pageView->removeItem(0);
+        //"scrollToPage" is changed to "scrollToItem"
+        pageView->scrollToItem(pageCount - 2);
 
-    Limitations:
-
-     Currently the System font doesn't support these Overflow feature and Char Map font doesn't support Shrink feature.
-
-5.  RichText supported new line element.
-   
-    Added new "NEWLINE" type of RichElement to RichText. You can add new line to RichText.
-
-
-
-### AudioEngine
+     More detail usage please refer to: tests/cpp-tests/Classes/UITest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp.
     
-1.  AudioEngine on Linux replace the original SimpleAudioEngine with a new version of FMOD, now AudioEngine support all platforms.
+   
+3. Added three overflow type to new label: CLAMP, SHRINK, RESIZE_HEIGHT.
+  
+     Overflow type is used to control label overflow result, In SHRINK mode, the font size will change dynamically to adapt the content size,In CLAMP mode, when label content goes out of the bounding box, it will be clipped, In RESIZE_HEIGHT mode, you can only change the width of label and the height is changed automatically.For example:
+       
+        //Change the label's Overflow type
+        label->setOverflow(Label::Overflow::RESIZE_HEIGHT);
 
-### Others
+     More detail usage please refer to: tests/cpp-tests/Classes/LabelTest/LabelTestNew.cpp.
 
-1. Added Application::getVersion() to get the app version.
-
-    Added a method to the Application class to get the version of the app on iOS/Mac/Android/Win8, on the remaining platforms that don't have app versions it should return an empty string.
-
-    The feature has been requested in this discussion thread: http://discuss.cocos2d-x.org/t/check-app-version/6294/5
-
-2. Set focus to Widget when touched.
-
-    Automatically set focus for widgets if focus enabled.
-
-
-3. Improved JS bindings with more secured memory management.
-
-    Improvement covered both auto bindings and manual bindings.
-    All changes follow Generational GC style.
-
-    The background of this feature: [http://blogs.msdn.com/b/abhinaba/archive/2009/03/02/back-to-basics-generational-garbage-collection.aspx](http://blogs.msdn.com/b/abhinaba/archive/2009/03/02/back-to-basics-generational-garbage-collection.aspx "http://blogs.msdn.com/b/abhinaba/archive/2009/03/02/back-to-basics-generational-garbage-collection.aspx")
-
-    This requires to adopt the new GC coding style in all JSB code.
-
-    The new GC coding style can be verified with this tool: [https://github.com/joshuastray/RootAnalysis](https://github.com/joshuastray/RootAnalysis "https://github.com/joshuastray/RootAnalysis")
+     Limitations:
+     
+     currently only TTF and BMFont support all the valid Overflow type.Char Map font supports all the Overflow type except for SHRINK, because we can't measure it's font size.System font only support Overflow::Normal and Overflow::RESIZE_HEIGHT.
 
 ## Other changes
+[NEW]           RichText supported new line element.
+
 [NEW]           UIText::clone supports clone the text effect.
 
 [NEW]           UI: Added methods to query label effect state.
@@ -349,7 +334,6 @@ cache in js-binding.
 You can also take a l
 ook at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
 
-
 ## NEW APIS
 
 1. RichText
@@ -380,15 +364,7 @@ ook at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGEL
 
 6. Scale9Sprite
 
-    Added adjustNoneScale9ImagePosition, configureSimpleModeRendering, calculateUV, calculateVertices, calculateTriangles, setRenderingType, getRenderingType.
-
-7. CWin32InputBox
-
-    Added GetMsgProc, onWin32InputBoxClose.
-
-8. FontAtlas
-
-    Added scaleFontLetterDefinition.
+    Added setRenderingType, getRenderingType.
 
 9. FontFNT
 
@@ -396,7 +372,7 @@ ook at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGEL
 
 10. Label
 
-    Added setBMFontSize, getBMFontSize, enableWrap, isWrapEnabled, setOverflow, getOverflow, multilineTextWrap, shrinkLabelToContentSize, isHorizontalClamp, isVerticalClamp, getRenderingFontSize, rescaleWithOriginalFontSize, updateBMFontScale, scaleFontSizeDown, setTTFConfigInternal, setBMFontSizeInternal, restoreFontSize, updateLetterSpriteScale, initWithTTF, isShadowEnabled, getShadowOffset, getShadowBlurRadius, getShadowColor, getOutlineSize, getLabelEffectType, getEffectColor.
+    Added setBMFontSize, getBMFontSize, enableWrap, isWrapEnabled, setOverflow, getOverflow, initWithTTF, isShadowEnabled, getShadowOffset, getShadowBlurRadius, getShadowColor, getOutlineSize, getLabelEffectType, getEffectColor.
 
 11. AudioEngineImpl
 
@@ -412,7 +388,7 @@ ook at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGEL
     Added getCurAppName.
 
 
-14. Text
+14. ui::Text
 
     Added isShadowEnabled, getShadowOffset, getShadowBlurRadius, getShadowColor,  getOutlineSize, getLabelEffectType, getEffectColor.
 
