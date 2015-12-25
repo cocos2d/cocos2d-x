@@ -40,6 +40,12 @@
 -- @return TextBMFont#TextBMFont self (return value: ccui.TextBMFont)
         
 --------------------------------
+-- reset TextBMFont inner label
+-- @function [parent=#TextBMFont] resetRender 
+-- @param self
+-- @return TextBMFont#TextBMFont self (return value: ccui.TextBMFont)
+        
+--------------------------------
 -- @overload self, string, string         
 -- @overload self         
 -- @function [parent=#TextBMFont] create

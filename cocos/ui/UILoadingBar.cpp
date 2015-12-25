@@ -92,7 +92,7 @@ LoadingBar* LoadingBar::create(const std::string &textureName,
 void LoadingBar::initRenderer()
 {
     _barRenderer = Scale9Sprite::create();
-    _barRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+    _barRenderer->setScale9Enabled(false);
     addProtectedChild(_barRenderer, BAR_RENDERER_Z, -1);
     _barRenderer->setAnchorPoint(Vec2(0.0,0.5));
 }
@@ -117,7 +117,7 @@ void LoadingBar::setDirection(cocos2d::ui::LoadingBar::Direction direction)
             _barRenderer->setPosition(Vec2(_totalLength,_contentSize.height*0.5f));
             break;
     }
-
+    this->handleSpriteFlipX();
 }
 
 LoadingBar::Direction LoadingBar::getDirection()const
@@ -172,6 +172,8 @@ void LoadingBar::setupTexture()
             _barRenderer->setAnchorPoint(Vec2(1.0f,0.5f));
             break;
     }
+    this->handleSpriteFlipX();
+    
     _barRenderer->setCapInsets(_capInsets);
     this->updateChildrenDisplayedRGBA();
 
@@ -182,6 +184,32 @@ void LoadingBar::setupTexture()
     this->updateProgressBar();
     _barRendererAdaptDirty = true;
 }
+    
+void LoadingBar::handleSpriteFlipX()
+{
+    if (_direction == Direction::LEFT)
+    {
+        if (!_scale9Enabled)
+        {
+            auto innerSprite = _barRenderer->getSprite();
+            if (nullptr != innerSprite)
+            {
+                innerSprite->setFlippedX(false);
+            }
+        }
+    }
+    else
+    {
+        if (!_scale9Enabled)
+        {
+            auto innerSprite = _barRenderer->getSprite();
+            if (nullptr != innerSprite)
+            {
+                innerSprite->setFlippedX(true);
+            }
+        }
+    }
+}
 
 void LoadingBar::setScale9Enabled(bool enabled)
 {
@@ -190,11 +218,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
         return;
     }
     _scale9Enabled = enabled;
-    if (_scale9Enabled) {
-        _barRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
-    }else{
-        _barRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
-    }
+    _barRenderer->setScale9Enabled(_scale9Enabled);
     
     if (_scale9Enabled)
     {
@@ -257,8 +281,21 @@ void LoadingBar::setPercent(float percent)
     
 void LoadingBar::updateProgressBar()
 {
-    float width = (float)(_percent) / 100.0f * _totalLength;
-    _barRenderer->setPreferredSize(Size(width, _contentSize.height));
+    if (_scale9Enabled)
+    {
+        setScale9Scale();
+    }
+    else
+    {
+        Sprite* innerSprite = _barRenderer->getSprite();
+        if (nullptr != innerSprite)
+        {
+            float res = _percent / 100.0f;
+            Rect rect = innerSprite->getTextureRect();
+            rect.size.width = _barRendererTextureSize.width * res;
+            innerSprite->setTextureRect(rect, innerSprite->isTextureRectRotated(), rect.size);
+        }
+    }
 }
 
 float LoadingBar::getPercent() const
@@ -319,7 +356,25 @@ void LoadingBar::barRendererScaleChangedWithSize()
     else
     {
         _totalLength = _contentSize.width;
-        this->updateProgressBar();
+        if (_scale9Enabled)
+        {
+            this->setScale9Scale();
+            _barRenderer->setScale(1.0f);
+        }
+        else
+        {
+            
+            Size textureSize = _barRendererTextureSize;
+            if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
+            {
+                _barRenderer->setScale(1.0f);
+                return;
+            }
+            float scaleX = _contentSize.width / textureSize.width;
+            float scaleY = _contentSize.height / textureSize.height;
+            _barRenderer->setScaleX(scaleX);
+            _barRenderer->setScaleY(scaleY);
+        }
     }
     switch (_direction)
     {
@@ -332,6 +387,12 @@ void LoadingBar::barRendererScaleChangedWithSize()
         default:
             break;
     }
+}
+
+void LoadingBar::setScale9Scale()
+{
+    float width = (float)(_percent) / 100.0f * _totalLength;
+    _barRenderer->setPreferredSize(Size(width, _contentSize.height));
 }
 
 std::string LoadingBar::getDescription() const
