@@ -59,11 +59,18 @@ bool ComponentContainer::add(Component *com)
     do
     {
         auto componentName = com->getName();
+        auto iter = _componentMap.find(componentName);
 
-        if (_componentMap.find(componentName) != _componentMap.end())
+        if (iter != _componentMap.end())
         {
-            CCASSERT(false, "ComponentContainer already have this kind of component");
-            break;
+            auto component = iter->second;
+            CCLOG("ComponentContainer already have this kind of component! Replacing it.");
+            
+            _componentMap.erase(componentName);
+
+            component->onRemove();
+            component->setOwner(nullptr);
+            component->release();
         }
         _componentMap[componentName] = com;
         com->retain();
