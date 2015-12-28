@@ -329,11 +329,17 @@ static BOOL configured = FALSE;
     configured = TRUE;
 }    
 
--(BOOL) isOtherAudioPlaying {
+-(BOOL) isOtherAudioPlaying
+{
+    // AudioSessionGetProperty removed from tvOS 9.1
+#if defined(CC_TARGET_OS_TVOS)
+    return false;
+#else
     UInt32 isPlaying = 0;
     UInt32 varSize = sizeof(isPlaying);
     AudioSessionGetProperty (kAudioSessionProperty_OtherAudioIsPlaying, &varSize, &isPlaying);
     return (isPlaying != 0);
+#endif
 }
 
 -(void) setMode:(tAudioManagerMode) mode {
@@ -409,10 +415,13 @@ static BOOL configured = FALSE;
 
 - (id) init: (tAudioManagerMode) mode {
     if ((self = [super init])) {
-        
-        //Initialise the audio session 
+
+        // 'delegate' not supported on tvOS
+#if !defined(CC_TARGET_OS_TVOS)
+        //Initialise the audio session
         AVAudioSession* session = [AVAudioSession sharedInstance];
         session.delegate = self;
+#endif
     
         _mode = mode;
         backgroundMusicCompletionSelector = nil;
