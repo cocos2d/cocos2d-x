@@ -491,7 +491,7 @@ static BOOL configured = FALSE;
 //determine ringer switch state
 -(BOOL) isDeviceMuted {
 
-#if TARGET_IPHONE_SIMULATOR
+#if TARGET_IPHONE_SIMULATOR || defined(CC_TARGET_OS_TVOS)
     //Calling audio route stuff on the simulator causes problems
     return NO;
 #else    
