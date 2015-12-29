@@ -5715,8 +5715,20 @@
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = U7E7529TA5;
 					};
+					507B40FE1C31BEA60067B53E = {
+						DevelopmentTeam = MDDB52YB8L;
+					};
+					507B427E1C31E6070067B53E = {
+						DevelopmentTeam = MDDB52YB8L;
+					};
 					507B43541C31FB340067B53E = {
 						CreatedOnToolsVersion = 7.2;
+					};
+					507B43611C31FB670067B53E = {
+						DevelopmentTeam = MDDB52YB8L;
+					};
+					507B43C31C3201360067B53E = {
+						DevelopmentTeam = MDDB52YB8L;
 					};
 				};
 			};
@@ -8361,8 +8373,6 @@
 		507B43B71C31FB670067B53E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_TVOS,
@@ -8384,8 +8394,6 @@
 		507B43B81C31FB670067B53E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_TVOS,
@@ -8408,7 +8416,6 @@
 		507B43F01C3201360067B53E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_TVOS,
@@ -8425,7 +8432,6 @@
 		507B43F11C3201360067B53E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_TVOS,
@@ -8806,6 +8812,7 @@
 				507B435A1C31FB350067B53E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 		507B43B61C31FB670067B53E /* Build configuration list for PBXNativeTarget "lua-tests tvOS" */ = {
 			isa = XCConfigurationList;
