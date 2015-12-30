@@ -73,7 +73,15 @@ static NSSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
     
     NSSize dim;
     NSDictionary *attibutes = @{NSFontAttributeName:font};
+#ifdef __MAC_10_11
+    #if __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_11
     dim = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) attributes:attibutes context:nil].size;
+    #else
+    dim = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) attributes:attibutes].size;
+    #endif
+#else
+    dim = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) attributes:attibutes].size;
+#endif
     
     dim.width = ceilf(dim.width);
     dim.height = ceilf(dim.height);
