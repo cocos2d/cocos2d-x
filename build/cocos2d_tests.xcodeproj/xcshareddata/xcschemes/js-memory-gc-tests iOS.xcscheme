@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "50AC0E6E1C2A3CAA0065A4C7"
-               BuildableName = "js-tests-memory-gc iOS.app"
-               BlueprintName = "js-tests-memory-gc iOS"
+               BlueprintIdentifier = "50FC18B41C33725200DD15A3"
+               BuildableName = "js-memory-gc-tests iOS.app"
+               BlueprintName = "js-memory-gc-tests iOS"
                ReferencedContainer = "container:cocos2d_tests.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "50AC0E6E1C2A3CAA0065A4C7"
-            BuildableName = "js-tests-memory-gc iOS.app"
-            BlueprintName = "js-tests-memory-gc iOS"
+            BlueprintIdentifier = "50FC18B41C33725200DD15A3"
+            BuildableName = "js-memory-gc-tests iOS.app"
+            BlueprintName = "js-memory-gc-tests iOS"
             ReferencedContainer = "container:cocos2d_tests.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -55,9 +55,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "50AC0E6E1C2A3CAA0065A4C7"
-            BuildableName = "js-tests-memory-gc iOS.app"
-            BlueprintName = "js-tests-memory-gc iOS"
+            BlueprintIdentifier = "50FC18B41C33725200DD15A3"
+            BuildableName = "js-memory-gc-tests iOS.app"
+            BlueprintName = "js-memory-gc-tests iOS"
             ReferencedContainer = "container:cocos2d_tests.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -74,9 +74,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "50AC0E6E1C2A3CAA0065A4C7"
-            BuildableName = "js-tests-memory-gc iOS.app"
-            BlueprintName = "js-tests-memory-gc iOS"
+            BlueprintIdentifier = "50FC18B41C33725200DD15A3"
+            BuildableName = "js-memory-gc-tests iOS.app"
+            BlueprintName = "js-memory-gc-tests iOS"
             ReferencedContainer = "container:cocos2d_tests.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
