@@ -9,8 +9,5 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
-    auto simulator = SimulatorWin::getInstance();
-    int ret = simulator->run();
-    delete simulator;
-    return ret;
+    return SimulatorWin::getInstance()->run();
 }
