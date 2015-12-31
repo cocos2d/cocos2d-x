@@ -26,6 +26,7 @@ CocoStudioActionTimelineTests::CocoStudioActionTimelineTests()
     ADD_TEST_CASE(TestTimelineExtensionData);
     ADD_TEST_CASE(TestActionTimelineBlendFuncFrame);
     ADD_TEST_CASE(TestAnimationClipEndCallBack);
+    ADD_TEST_CASE(TestTimelineReverse);
 }
 
 CocoStudioActionTimelineTests::~CocoStudioActionTimelineTests()
@@ -676,4 +677,33 @@ void TestAnimationClipEndCallBack::onEnter()
 std::string TestAnimationClipEndCallBack::title() const
 {
     return "Test ActionTimeline Frame End Call Back\n and Animation Clip End Call Back";
+}
+
+//TestTimelineRevsese
+void TestTimelineReverse::onEnter()
+{
+    ActionTimelineBaseTest::onEnter();
+    Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer_skeleton.csb");
+    node->setScale(0.2f);
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer_skeleton.csb");
+    action->setTimeSpeed(0.5f);
+    node->runAction(action);
+    
+    node->setPosition(VisibleRect::center() - Vec2(100, 0));
+    this->addChild(node);
+    
+    Node* nodecopy = CSLoader::createNode("ActionTimeline/DemoPlayer_skeleton.csb");
+    nodecopy->setScale(0.2f);
+    auto reverseAction = action->reverse();
+    nodecopy->runAction(reverseAction);
+    nodecopy->setPosition(VisibleRect::center() + Vec2(100, 0));
+    this->addChild(nodecopy);
+    
+    action->play("walk", true);
+    reverseAction->play("walk", true);
+}
+
+std::string TestTimelineReverse::title() const
+{
+    return "Test ActiotnTimeline  reverse ";
 }

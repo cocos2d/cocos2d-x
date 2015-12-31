@@ -96,13 +96,33 @@ Timeline* Timeline::reverse(const int& duration) const
 	if (_frames.empty())
 		return rvsTimeline;
 
-	int frameNum = _frames.size();
-	for (int i = frameNum - 1; i >= 0; i--)
-	{
-		auto rvframe = _frames.at(i)->clone();
+	auto frameNumI = _frames.size() - 1;
+    auto rvframe = _frames.at(frameNumI)->clone();
+    do
+    {
 		rvframe->setFrameIndex(duration - rvframe->getFrameIndex());
 		rvsTimeline->addFrame(rvframe);
-	}
+        if(frameNumI == 0)
+            break;
+        auto preF = _frames.at(frameNumI -1)->clone();
+        rvframe->setTween(preF->isTween());
+        auto tweenT = preF->getTweenType();
+        auto tweenV = preF->getEasingParams();
+        if(tweenT == cocos2d::tweenfunc::TweenType::CUSTOM_EASING
+           && tweenV.size() >= 8)
+        {
+            auto tmp  = tweenV[2];
+            tweenV[2] = tweenV[5];
+            tweenV[5] = tmp;
+            tmp = tweenV[4];
+            tweenV[4] = tweenV[3];
+            tweenV[3] = tmp;
+        }
+        rvframe->setEasingParams(tweenV);
+        rvframe->setTweenType(tweenT);
+        rvframe = preF;
+        frameNumI--;
+    }while(frameNumI >= 0);
 	return rvsTimeline;
 }
 

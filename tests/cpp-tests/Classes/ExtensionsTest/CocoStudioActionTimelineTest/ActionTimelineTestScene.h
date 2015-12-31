@@ -155,4 +155,12 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
 };
+
+class TestTimelineReverse : public ActionTimelineBaseTest
+{
+public:
+    CREATE_FUNC(TestTimelineReverse);
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+};
 #endif  // __ANIMATION_SCENE_H__
