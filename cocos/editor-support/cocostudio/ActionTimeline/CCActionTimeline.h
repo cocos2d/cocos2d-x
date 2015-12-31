@@ -189,9 +189,8 @@ public:
     virtual ActionTimeline* clone() const override; 
 
     /** Returns a reverse of ActionTimeline. 
-     *  Not implement yet.
      */
-    virtual ActionTimeline* reverse() const override { return nullptr; }
+	virtual ActionTimeline* reverse() const override;
 
     virtual void step(float delta) override; 
     virtual void startWithTarget(cocos2d::Node *target) override;  

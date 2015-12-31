@@ -48,7 +48,7 @@ Timeline::Timeline()
     , _toIndex(0)
     , _betweenDuration(0)
     , _actionTag(0)
-    , _ActionTimeline(nullptr)
+    , _actionTimeline(nullptr)
     , _node(nullptr)
 {
 }
@@ -87,6 +87,23 @@ Timeline* Timeline::clone()
     }
 
     return timeline;
+}
+
+Timeline* Timeline::reverse(const int& duration) const
+{
+	Timeline* rvsTimeline = Timeline::create();
+	rvsTimeline->_actionTag = _actionTag;
+	if (_frames.empty())
+		return rvsTimeline;
+
+	int frameNum = _frames.size();
+	for (int i = frameNum - 1; i >= 0; i--)
+	{
+		auto rvframe = _frames.at(i)->clone();
+		rvframe->setFrameIndex(duration - rvframe->getFrameIndex());
+		rvsTimeline->addFrame(rvframe);
+	}
+	return rvsTimeline;
 }
 
 void Timeline::addFrame(Frame* frame)
