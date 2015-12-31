@@ -158,7 +158,7 @@ We are happy to announce the release of Cocos2d-x v3.10. Following are the highl
     - Changed PageView to derived from ListView, PageView can be added any widget as child.
     - Added three overflow type to new label: CLAMP，SHRINK，RESIZE_HEIGHT.
 2. JSModule:
-    - Improved JS bindings with more secured memory management, and enhance the stability of the engine, streamline all JSB code with the GC coding style of SpiderMonkey([https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide "https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide")).
+    - Improved JS bindings with more secured memory management, and enhance the stability of the engine, streamline all JSB code with the [GC coding style of SpiderMonkey](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide).
 
 ## The main features in detail of Cocos2d-x v3.10:
 
@@ -166,25 +166,25 @@ We are happy to announce the release of Cocos2d-x v3.10. Following are the highl
 
 1. Reimplemented Scale9Sprite and improve the scale9sprite performance and reduce memory consumption.
     
-    Reimplemented ui::Scale9Sprite, now the Slice sprite uses 16 vertices and 54 indices instead of the old 9 sprite way, The memory consumption is much lower than the previous implementation, and it is also more time efficient.
+    Reimplemented ui::Scale9Sprite, now the Slice sprite uses 16 vertices and 54 indices instead of the old 9 sprites way, The memory consumption is much lower than the previous implementation, and it is also more efficient.
 
-    In SIMPLE mode, the 4 borders are all 0 and the whole sprite will scale horizontally and vertically. In this mode only 1 quad is used to rendering, for example:
+    In SIMPLE mode, the 4 borders are all 0 and the whole sprite will scale horizontally and vertically. In this mode only 1 quad is used for rendering, for example:
 
         auto blocks = ui::Scale9Sprite::createWithSpriteFrameName("blocks9c.png");
         //When setting to SIMPLE, only 4 vertexes is used to rendering.
         blocks->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
 
-    In SLICE mode, it will use 18 triangles to rendering the slice 9 sprite. If the 4 borders are 0, there still be 18 triangles computed. So choose your RenderingType wisely,for example:
+    In SLICE mode, it will use 18 triangles to rendering the slice 9 sprite. If the 4 borders are 0, there still be 18 triangles computed. So choose your RenderingType wisely, for example:
 
 		auto sprite = ui::Scale9Sprite::createWithSpriteFrameName("blocks9c.png");
         //When setting to SLICE, 16 vertexes will be used to rendering.
         sprite->setRenderingType(Scale9Sprite::RenderingType::SLICE);
     
-2. Changed PageView to derived from ListView, PageView can be added any widget as child.
+2. Changed PageView to derived from ListView, PageView can add any type of widget as child.
 
-    PageView was derived from Layout and it implemented the features of scrolling and item arrangement from scratch. But the features are already there in ListView. So remove those duplicated implementations from PageView and make it subclass from ListView.
+    PageView was derived from Layout and it implemented the features of scrolling and item arrangement from scratch. But the features are already there in ListView. So remove those duplicated implementations from PageView and make it inherit from ListView.
 
-    By this, PageView becomes more simplified and maintainable because it considers only paging implementation. for example:
+    By consequence, PageView becomes simpler and easier to maintain because it considers only paging implementation. for example:
 
         // Create the page view
         Size size(240, 130);
@@ -225,7 +225,7 @@ We are happy to announce the release of Cocos2d-x v3.10. Following are the highl
    
 3. Added three overflow type to new label: CLAMP, SHRINK, RESIZE_HEIGHT.
   
-     Overflow type is used to control label overflow result, In SHRINK mode, the font size will change dynamically to adapt the content size,In CLAMP mode, when label content goes out of the bounding box, it will be clipped, In RESIZE_HEIGHT mode, you can only change the width of label and the height is changed automatically.For example:
+     Overflow type is used to control label overflow result, In SHRINK mode, the font size will change dynamically to adapt the content size. In CLAMP mode, when label content goes out of the bounding box, it will be clipped, In RESIZE_HEIGHT mode, you can only change the width of label and the height is changed automatically. For example:
        
         //Change the label's Overflow type
         label->setOverflow(Label::Overflow::RESIZE_HEIGHT);
@@ -233,8 +233,9 @@ We are happy to announce the release of Cocos2d-x v3.10. Following are the highl
      More detail usage please refer to: tests/cpp-tests/Classes/LabelTest/LabelTestNew.cpp.
 
      Limitations:
-     
-     currently only TTF and BMFont support all the valid Overflow type.Char Map font supports all the Overflow type except for SHRINK, because we can't measure it's font size.System font only support Overflow::Normal and Overflow::RESIZE_HEIGHT.
+
+
+     currently only TTF and BMFont support all the valid Overflow type. Char Map font supports all the Overflow type except for SHRINK, because we can't measure its font size. System font only support Overflow::Normal and Overflow::RESIZE_HEIGHT.
 
 ## Other changes
 [NEW]           RichText supported new line element.
@@ -332,8 +333,7 @@ cache in js-binding.
 
 [TEST]          Lua: Fixed pageViewTest Horizontal scroll won't work in Lua-test.
 
-You can also take a l
-ook at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
+You can also take a look at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
 
 ## NEW APIS
 
@@ -379,15 +379,13 @@ ook at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGEL
 
     Added AudioEngineImpl to implement FMOD.
 
-12. JS Module
+12. Lua Module
 
-    Added luaval_to_node, node_to_luaval, js_cocos2dx_ComponentJS_create.
+    Added luaval_to_node, node_to_luaval.
 
+13. JS Module
 
-13. Widget_mac.h
-
-    Added getCurAppName.
-
+    Added js_cocos2dx_ComponentJS_create
 
 14. ui::Text
 
