@@ -61,7 +61,7 @@ public:
 
     virtual Timeline* clone();
 
-	virtual Timeline* reverse(const int& duration) const;
+    virtual Timeline* reverse(const int& duration) const;
 protected:
     virtual void apply(unsigned int frameIndex);
 

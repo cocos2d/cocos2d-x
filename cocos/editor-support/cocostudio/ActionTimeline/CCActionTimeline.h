@@ -190,7 +190,7 @@ public:
 
     /** Returns a reverse of ActionTimeline. 
      */
-	virtual ActionTimeline* reverse() const override;
+    virtual ActionTimeline* reverse() const override;
 
     virtual void step(float delta) override; 
     virtual void startWithTarget(cocos2d::Node *target) override;  

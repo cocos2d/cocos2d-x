@@ -91,17 +91,17 @@ Timeline* Timeline::clone()
 
 Timeline* Timeline::reverse(const int& duration) const
 {
-	Timeline* rvsTimeline = Timeline::create();
-	rvsTimeline->_actionTag = _actionTag;
-	if (_frames.empty())
-		return rvsTimeline;
+    Timeline* rvsTimeline = Timeline::create();
+    rvsTimeline->_actionTag = _actionTag;
+    if (_frames.empty())
+        return rvsTimeline;
 
-	auto frameNumI = _frames.size() - 1;
+    auto frameNumI = _frames.size() - 1;
     auto rvframe = _frames.at(frameNumI)->clone();
     do
     {
-		rvframe->setFrameIndex(duration - rvframe->getFrameIndex());
-		rvsTimeline->addFrame(rvframe);
+        rvframe->setFrameIndex(duration - rvframe->getFrameIndex());
+        rvsTimeline->addFrame(rvframe);
         if(frameNumI == 0)
             break;
         auto preF = _frames.at(frameNumI -1)->clone();
@@ -123,7 +123,7 @@ Timeline* Timeline::reverse(const int& duration) const
         rvframe = preF;
         frameNumI--;
     }while(frameNumI >= 0);
-	return rvsTimeline;
+    return rvsTimeline;
 }
 
 void Timeline::addFrame(Frame* frame)
