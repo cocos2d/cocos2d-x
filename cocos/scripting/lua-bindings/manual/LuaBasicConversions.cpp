@@ -25,7 +25,9 @@
 #include "LuaBasicConversions.h"
 #include "tolua_fix.h"
 
-
+#ifdef min
+#undef min
+#endif
 
 std::unordered_map<std::string, std::string>  g_luaType;
 std::unordered_map<std::string, std::string>  g_typeCast;
