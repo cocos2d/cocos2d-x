@@ -33,10 +33,12 @@
 #include "lua_cocos2dx_coco_studio_manual.hpp"
 #include "lua_cocos2dx_ui_manual.hpp"
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #if _MSC_VER > 1800
 #pragma comment(lib,"lua51-2015.lib")
 #else
 #pragma comment(lib,"lua51.lib")
+#endif
 #endif
 
 NS_CC_BEGIN
