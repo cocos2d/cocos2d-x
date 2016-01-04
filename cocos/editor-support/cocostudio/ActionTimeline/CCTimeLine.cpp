@@ -112,11 +112,17 @@ Timeline* Timeline::reverse(const int& duration) const
            && tweenV.size() >= 8)
         {
             auto tmp  = tweenV[2];
-            tweenV[2] = tweenV[5];
-            tweenV[5] = tmp;
-            tmp = tweenV[4];
-            tweenV[4] = tweenV[3];
-            tweenV[3] = tmp;
+            tweenV[2] = 1 - tweenV[4];
+            tweenV[4] = 1 - tmp;
+            tmp = tweenV[3];
+            tweenV[3] = 1 - tweenV[5];
+            tweenV[5] = 1 - tmp;
+            tmp = tweenV[0];
+            tweenV[0] = 1 - tweenV[6];
+            tweenV[6] = 1 - tmp;
+            tmp = tweenV[1];
+            tweenV[1] = 1 - tweenV[7];
+            tweenV[7] = 1 - tmp;
         }
         rvframe->setEasingParams(tweenV);
         rvframe->setTweenType(tweenT);
