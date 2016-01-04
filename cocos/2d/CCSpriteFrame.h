@@ -196,7 +196,7 @@ public:
      * @param anchorPoint The anchor point of the sprite frame.
      */
     void setAnchorPoint(const Vec2& anchorPoint);
-    /** Check if anchor point is defined for frame.
+    /** Check if anchor point is defined for the frame.
      *
      * @return true if anchor point is available.
      */
