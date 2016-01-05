@@ -153,12 +153,21 @@ cocos new -l cpp|js|lua MyNewGame
 
 We are happy to announce the release of Cocos2d-x v3.10. Following are the highlighted features, improvements and API updates in this version. 
 
-1. UI System:
-    - Reimplemented Scale9Sprite and improve the scale9sprite performance and reduce memory consumption.
-    - Changed PageView to derived from ListView, PageView can be added any widget as child.
-    - Added three overflow type to new label: CLAMP，SHRINK，RESIZE_HEIGHT.
-2. JSModule:
-    - Improved JS bindings with more secured memory management, and enhance the stability of the engine, streamline all JSB code with the [GC coding style of SpiderMonkey](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide).
+1. Provides a unified setup for both Cocos2d-x and Cocos.
+2. New __Cocos Launcher__ too! __Cocos Launcher__:
+  * one step creates a new project by either using our precompiled libraries or
+    source code.
+  * easily integrate SDKBOX for 3rd party services. Easily add Facebook, in-app
+    purchase and many more.
+  * provide feedback and get support, directly within __Cocos Launcher__, making
+    it simple to contact the engine team for help.
+3. UI System:
+    - Reimplemented `Scale9Sprite` and improve the scale9sprite performance and reduce memory consumption.
+    - Changed `PageView` to derived from ListView, PageView can be added any widget as child.
+    - Added three overflow type to new label: **CLAMP**，**SHRINK**，**RESIZE_HEIGHT**.
+    - Fixed a bug in `ClippingNode` that corrects its behavior when being set as a child.
+5. JSModule:
+    - Improved JS Bindings: follows [SpiderMonkey](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide) GC best practices making it more robust.
 
 ## The main features in detail of Cocos2d-x v3.10:
 
