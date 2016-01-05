@@ -106,7 +106,7 @@ public:
         /**
          * In SHRINK mode, the font size will change dynamically to adapt the content size.
          */
-            SHRINK,
+        SHRINK,
         /**
          *In RESIZE_HEIGHT mode, you can only change the width of label and the height is changed automatically.
          */
