@@ -153,18 +153,22 @@ cocos new -l cpp|js|lua MyNewGame
 
 We are happy to announce the release of Cocos2d-x v3.10. Following are the highlighted features, improvements and API updates in this version. 
 
-1. UI System:
-    - Reimplemented Scale9Sprite and improve the scale9sprite performance and reduce memory consumption.
-    - Changed PageView to derived from ListView, PageView can be added any widget as child.
-    - Added three overflow type to new label: CLAMP，SHRINK，RESIZE_HEIGHT.
-2. JSModule:
-    - Improved JS bindings with more secured memory management, and enhance the stability of the engine, streamline all JSB code with the [GC coding style of SpiderMonkey](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide).
+1. Provides a unified setup for both Cocos2d-x and Cocos.
+2. New __Cocos Launcher__ tool:
+  * One step to create a new project by either using our precompiled libraries or source code engine.
+  * Easy integration with SDKBOX for 3rd party services: Facebook, IAP and many more.
+  * Provided feedback and support channel directly within Cocos Launcher for user to get help from the engine team easier.
+3. UI System:
+  * Reimplemented `Scale9Sprite` and improve the scale9sprite performance and reduce memory consumption.
+  * Changed `PageView` to derived from ListView, PageView can be added any widget as child.
+  * Added three overflow type to new label: **CLAMP**，**SHRINK**，**RESIZE_HEIGHT**.
+4. Improved JS Bindings: follows [SpiderMonkey GC best practices](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide) making it more robust.
 
 ## The main features in detail of Cocos2d-x v3.10:
 
 ### UI System
 
-1. Reimplemented Scale9Sprite and improve the scale9sprite performance and reduce memory consumption.
+1. Reimplemented `Scale9Sprite` and improve the scale9sprite performance and reduce memory consumption.
     
     Reimplemented ui::Scale9Sprite, now the Slice sprite uses 16 vertices and 54 indices instead of the old 9 sprites way, The memory consumption is much lower than the previous implementation, and it is also more efficient.
 
@@ -180,7 +184,7 @@ We are happy to announce the release of Cocos2d-x v3.10. Following are the highl
         //When setting to SLICE, 16 vertexes will be used to rendering.
         sprite->setRenderingType(Scale9Sprite::RenderingType::SLICE);
     
-2. Changed PageView to derived from ListView, PageView can add any type of widget as child.
+2. Changed `PageView` to derived from ListView, PageView can add any type of widget as child.
 
     PageView was derived from Layout and it implemented the features of scrolling and item arrangement from scratch. But the features are already there in ListView. So remove those duplicated implementations from PageView and make it inherit from ListView.
 
