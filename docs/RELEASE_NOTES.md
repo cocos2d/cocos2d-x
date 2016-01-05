@@ -160,8 +160,8 @@ We are happy to announce the release of Cocos2d-x v3.10. Following are the highl
   * Provided feedback and support channel directly within Cocos Launcher for user to get help from the engine team easier.
 3. UI System:
   * Reimplemented `Scale9Sprite` and improve the scale9sprite performance and reduce memory consumption.
-  * Changed `PageView` to derived from ListView, PageView can be added any widget as child.
-  * Added three overflow type to new label: **CLAMP**，**SHRINK**，**RESIZE_HEIGHT**.
+  * Changed `PageView` to derived from ListView, PageView can add any widget as child.
+  * Added three new overflow type to new label: **CLAMP**，**SHRINK**，**RESIZE_HEIGHT**.
 4. Improved JS Bindings: follows [SpiderMonkey GC best practices](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide) making it more robust.
 
 ## The main features in detail of Cocos2d-x v3.10:
