@@ -275,7 +275,7 @@ public:
     /** Returns the system font used by the Label.*/
     virtual const std::string& getSystemFontName() const { return _systemFont;}
 
-    /* Sets the system font size of Label.*/
+    /* Sets the system font size of the Label.*/
     virtual void setSystemFontSize(float fontSize);
 
     /** Returns the bitmap font path used by the Label.*/
@@ -292,7 +292,7 @@ public:
     /** Sets the text that this Label is to display.*/
     virtual void setString(const std::string& text) override;
 
-    /** Return the text the Label is displaying.*/
+    /** Return the text the Label is currently displaying.*/
     virtual const std::string& getString() const override {  return _utf8Text; }
 
     /**
@@ -337,7 +337,7 @@ public:
     virtual void enableGlow(const Color4B& glowColor);
 
     /**
-     * Disable all effect to Label.
+     * Disable all effects applied on Label.
      * @warning Please use disableEffect(LabelEffect::ALL) instead of this API.
      */
     virtual void disableEffect();
@@ -487,7 +487,7 @@ public:
     virtual void updateContent();
 
     /**
-     * Provides a way to treats each character like a Sprite.
+     * Provides a way to treat each character like a Sprite.
      * @warning No support system font.
      */
     virtual Sprite * getLetter(int lettetIndex);
