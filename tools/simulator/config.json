@@ -5,6 +5,9 @@
        "name": "simulator",
        "width": 960,
        "height": 640,
+       "designWidth": 960,
+       "designHeight": 640,
+       "designResolutionPolicy": "EXACT_FIT",
        "entry": "",
        "consolePort": 6050,
        "uploadPort": 6060

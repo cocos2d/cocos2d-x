@@ -34,6 +34,17 @@ typedef struct _SimulatorScreenSize {
 typedef vector<SimulatorScreenSize> ScreenSizeArray;
 typedef ScreenSizeArray::iterator ScreenSizeArrayIterator;
 
+typedef struct _SimulatorDesignResolutionPolicy {
+    string title;
+    ResolutionPolicy policy;
+
+    _SimulatorDesignResolutionPolicy (const string &title_, ResolutionPolicy policy_)
+    {
+        title = title_;
+        policy = policy_;
+    }
+} SimulatorDesignResolutionPolicy;
+
 class CC_LIBSIM_DLL SimulatorConfig
 {
 public:
@@ -43,6 +54,18 @@ public:
     int getScreenSizeCount() const;
     SimulatorScreenSize getScreenSize(int index) const;
     int checkScreenSize(const cocos2d::Size &size) const;
+    void addScreenSize(const SimulatorScreenSize &screenSize);
+
+    // predefined design resolution size
+    int getDesignResolutionSizeCount() const;
+    SimulatorScreenSize getDesignResolutionSize(int index) const;
+    int checkDesignResolutionSize(const cocos2d::Size &size) const;
+    void addDesignResolutionSize(const SimulatorScreenSize &screenSize);
+
+    // predefined design resolution policy
+    int getDesignResolutionPolicyCount() const;
+    SimulatorDesignResolutionPolicy getDesignResolutionPolicy(int index) const;
+    int checkDesignResolutionPolicy(ResolutionPolicy policy) const;
 
     // helper
     static void makeNormalizePath(string *path, const char *directorySeparator = NULL);
@@ -53,6 +76,8 @@ private:
     static SimulatorConfig *_instance;
 
     ScreenSizeArray _screenSizeArray;
+    ScreenSizeArray _designResolutionSizeArray;
+    vector<SimulatorDesignResolutionPolicy> _designResolutionPolicyArray;
 };
 
 #endif // __SIMULATOR_CONFIG_H_

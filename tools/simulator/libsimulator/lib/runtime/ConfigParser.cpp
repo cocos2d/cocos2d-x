@@ -72,6 +72,55 @@ void ConfigParser::readConfig(const string &filepath)
                 }
                 
             }
+            if (objectInitView.HasMember("designWidth") && objectInitView.HasMember("designHeight"))
+            {
+                _initDesignResolutionSize.width = objectInitView["designWidth"].GetUint();
+                _initDesignResolutionSize.height = objectInitView["designHeight"].GetUint();
+                if (_initDesignResolutionSize.height>_initDesignResolutionSize.width)
+                {
+                    float tmpvalue = _initDesignResolutionSize.height;
+                    _initDesignResolutionSize.height = _initDesignResolutionSize.width;
+                    _initDesignResolutionSize.width = tmpvalue;
+                }
+
+            }
+            else
+            {
+                _initDesignResolutionSize = _initViewSize;
+            }
+            if (objectInitView.HasMember("designResolutionPolicy") && objectInitView["designResolutionPolicy"].IsString())
+            {
+                std::string policyStr = objectInitView["designResolutionPolicy"].GetString();
+                ResolutionPolicy policy;
+
+                if (policyStr.compare("EXACT_FIT") == 0)
+                {
+                    policy = ResolutionPolicy::EXACT_FIT;
+                }
+                else if (policyStr.compare("NO_BORDER")  == 0)
+                {
+                    policy = ResolutionPolicy::NO_BORDER;
+                }
+                else if (policyStr.compare("SHOW_ALL")  == 0)
+                {
+                    policy = ResolutionPolicy::SHOW_ALL;
+                }
+                else if (policyStr.compare("FIXED_HEIGHT")  == 0)
+                {
+                    policy = ResolutionPolicy::FIXED_HEIGHT;
+                }
+                else if (policyStr.compare("FIXED_WIDTHT")  == 0)
+                {
+                    policy = ResolutionPolicy::FIXED_WIDTH;
+                }
+                else
+                {
+                    policy = ResolutionPolicy::UNKNOWN;
+                }
+
+                _initDesignResolutionPolicy = policy;
+
+            }
             if (objectInitView.HasMember("name") && objectInitView["name"].IsString())
             {
                 _viewName = objectInitView["name"].GetString();
@@ -107,6 +156,7 @@ void ConfigParser::readConfig(const string &filepath)
         const rapidjson::Value& ArrayScreenSize = _docRootjson["simulator_screen_size"];
         if (ArrayScreenSize.IsArray())
         {
+            _screenSizeArray.clear();
             for (int i = 0; i < ArrayScreenSize.Size(); i++)
             {
                 const rapidjson::Value& objectScreenSize = ArrayScreenSize[i];
@@ -117,6 +167,23 @@ void ConfigParser::readConfig(const string &filepath)
             }
         }
     }
+    if (_docRootjson.HasMember("design_resolution_size"))
+    {
+        const rapidjson::Value& ArrayScreenSize = _docRootjson["design_resolution_size"];
+        if (ArrayScreenSize.IsArray())
+        {
+            _designResolutionSizeArray.clear();
+            for (int i = 0; i < ArrayScreenSize.Size(); i++)
+            {
+                const rapidjson::Value& objectScreenSize = ArrayScreenSize[i];
+                if (objectScreenSize.HasMember("title") && objectScreenSize.HasMember("width") && objectScreenSize.HasMember("height"))
+                {
+                    _designResolutionSizeArray.push_back(SimulatorScreenSize(objectScreenSize["title"].GetString(), objectScreenSize["width"].GetUint(), objectScreenSize["height"].GetUint()));
+                }
+            }
+        }
+    }
+
 }
 
 ConfigParser::ConfigParser(void) :
@@ -128,6 +195,8 @@ _debugPort(kProjectConfigDebugger),
 _viewName("simulator"),
 _entryfile(""),
 _initViewSize(ProjectConfig::DEFAULT_HEIGHT, ProjectConfig::DEFAULT_WIDTH),
+_initDesignResolutionSize(ProjectConfig::DEFAULT_HEIGHT, ProjectConfig::DEFAULT_WIDTH),
+_initDesignResolutionPolicy(ProjectConfig::DEFAULT_RESOLUTION_POLICY),
 _bindAddress("")
 {
 }
@@ -150,6 +219,16 @@ string ConfigParser::getEntryFile()
 Size ConfigParser::getInitViewSize()
 {
     return _initViewSize;
+}
+
+Size ConfigParser::getInitDesignResolutionSize()
+{
+    return _initDesignResolutionSize;
+}
+
+ResolutionPolicy ConfigParser::getInitDesignResolutionPolicy()
+{
+    return _initDesignResolutionPolicy;
 }
 
 bool ConfigParser::isLanscape()
@@ -198,10 +277,19 @@ int ConfigParser::getScreenSizeCount(void)
 {
     return (int)_screenSizeArray.size();
 }
+int ConfigParser::getDesignResolutionSizeCount(void)
+{
+    return (int)_designResolutionSizeArray.size();
+}
 
 const SimulatorScreenSize ConfigParser::getScreenSize(int index)
 {
     return _screenSizeArray.at(index);
+}
+
+const SimulatorScreenSize ConfigParser::getDesignResolutionSize(int index)
+{
+    return _designResolutionSizeArray.at(index);
 }
 
 void ConfigParser::setEntryFile(const std::string &file)
@@ -212,6 +300,16 @@ void ConfigParser::setEntryFile(const std::string &file)
 void ConfigParser::setInitViewSize(const cocos2d::Size &size)
 {
     _initViewSize = size;
+}
+
+void ConfigParser::setInitDesignResolutionSize(const cocos2d::Size &size)
+{
+    _initDesignResolutionSize = size;
+}
+
+void ConfigParser::setInitDesignResolutionPolicy(ResolutionPolicy policy)
+{
+    _initDesignResolutionPolicy = policy;
 }
 
 void ConfigParser::setBindAddress(const std::string &address)

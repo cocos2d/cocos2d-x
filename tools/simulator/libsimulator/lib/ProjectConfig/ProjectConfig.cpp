@@ -38,6 +38,8 @@ ProjectConfig::ProjectConfig()
     , _writablePath("")
     , _packagePath("")
     , _frameSize(960, 640)
+    , _designResolutionSize(960, 640)
+    , _designResolutionPolicy(ResolutionPolicy::EXACT_FIT)
     , _frameScale(1.0f)
     , _showConsole(true)
     , _loadPrecompiledFramework(false)
@@ -170,6 +172,29 @@ void ProjectConfig::setFrameSize(const cocos2d::Size &frameSize)
     }
 }
 
+cocos2d::Size ProjectConfig::getDesignResolutionSize() const
+{
+    return _designResolutionSize;
+}
+
+void ProjectConfig::setDesignResolutionSize(const cocos2d::Size &resolutionSize)
+{
+    if (resolutionSize.width > 0 && resolutionSize.height > 0)
+    {
+        _designResolutionSize = resolutionSize;
+    }
+}
+
+ResolutionPolicy ProjectConfig::getDesignResolutionPolicy() const
+{
+    return _designResolutionPolicy;
+}
+
+void ProjectConfig::setDesignResolutionPolicy(ResolutionPolicy policy)
+{
+    _designResolutionPolicy = policy;
+}
+
 bool ProjectConfig::isLandscapeFrame() const
 {
     return _frameSize.width > _frameSize.height;
@@ -195,6 +220,33 @@ void ProjectConfig::changeFrameOrientationToPortait()
 void ProjectConfig::changeFrameOrientationToLandscape()
 {
     if (!isLandscapeFrame()) changeFrameOrientation();
+}
+
+bool ProjectConfig::isLandscapeDesignResolution() const
+{
+    return _designResolutionSize.width > _designResolutionSize.height;
+}
+
+bool ProjectConfig::isPortraitDesignResolution() const
+{
+    return _designResolutionSize.width < _designResolutionSize.height;
+}
+
+void ProjectConfig::changeDesignResolutionOrientation()
+{
+    float w = _designResolutionSize.width;
+    _designResolutionSize.width = _designResolutionSize.height;
+    _designResolutionSize.height = w;
+}
+
+void ProjectConfig::changeDesignResolutionOrientationToPortait()
+{
+    if (isLandscapeDesignResolution()) changeDesignResolutionOrientation();
+}
+
+void ProjectConfig::changeDesignResolutionOrientationToLandscape()
+{
+    if (!isLandscapeDesignResolution()) changeDesignResolutionOrientation();
 }
 
 float ProjectConfig::getFrameScale() const
@@ -422,6 +474,59 @@ void ProjectConfig::parseCommandLine(const vector<string> &args)
             if (it == args.end()) break;
             setLanguageDataPath(*it);
         }
+        else if (arg.compare("-design-resolution-size") == 0)
+        {
+            ++it;
+            if (it == args.end()) break;
+            const string& sizeStr(*it);
+            size_t pos = sizeStr.find('x');
+            int width = 0;
+            int height = 0;
+            if (pos != sizeStr.npos && pos > 0)
+            {
+                string widthStr, heightStr;
+                widthStr.assign(sizeStr, 0, pos);
+                heightStr.assign(sizeStr, pos + 1, sizeStr.length() - pos);
+                width = atoi(widthStr.c_str());
+                height = atoi(heightStr.c_str());
+                setDesignResolutionSize(cocos2d::Size(width, height));
+            }
+        }
+        else if (arg.compare("-design-resolution-policy") == 0)
+        {
+            ++it;
+            if (it == args.end()) break;
+            std::string policyStr(*it);
+            ResolutionPolicy policy;
+
+            if (policyStr.compare("EXACT_FIT") == 0)
+            {
+                policy = ResolutionPolicy::EXACT_FIT;
+            }
+            else if (policyStr.compare("NO_BORDER")  == 0)
+            {
+                policy = ResolutionPolicy::NO_BORDER;
+            }
+            else if (policyStr.compare("SHOW_ALL")  == 0)
+            {
+                policy = ResolutionPolicy::SHOW_ALL;
+            }
+            else if (policyStr.compare("FIXED_HEIGHT")  == 0)
+            {
+                policy = ResolutionPolicy::FIXED_HEIGHT;
+            }
+            else if (policyStr.compare("FIXED_WIDTHT")  == 0)
+            {
+                policy = ResolutionPolicy::FIXED_WIDTH;
+            }
+            else
+            {
+                policy = ResolutionPolicy::UNKNOWN;
+            }
+
+            setDesignResolutionPolicy(policy);
+        }
+
         ++it;
     }
 }
@@ -600,6 +705,24 @@ vector<string> ProjectConfig::makeCommandLineVector(unsigned int mask /* = kProj
             ret.push_back(pathArgs);
         }
     }
+    if (mask & kProjectConfigDesignResolutionSize)
+    {
+        buff.str("");
+        buff << (int)getDesignResolutionSize().width;
+        buff << "x";
+        buff << (int)getDesignResolutionSize().height;
+
+        ret.push_back("-design-resolution-size");
+        ret.push_back(buff.str());
+    }
+
+    if (mask & kProjectConfigDesignResolutionPolicy)
+    {
+        std::string policyStr = convertResolutionPolicyToStr(getDesignResolutionPolicy());
+        ret.push_back("-design-resolution-policy");
+        ret.push_back(policyStr);
+    }
+       
     return ret;
 }
 
@@ -733,6 +856,9 @@ void ProjectConfig::dump()
         CCLOG("        %s", path.c_str());
     }
 
+    CCLOG("    design resolution size: %0.0f x %0.0f", _designResolutionSize.width, _designResolutionSize.height);
+    CCLOG("    design resolution policy: %s", convertResolutionPolicyToStr(getDesignResolutionPolicy()).c_str());
+
     CCLOG("\n\n");
 }
 
@@ -832,6 +958,38 @@ bool ProjectConfig::isAbsolutePath(const string &path) const
 #endif
 }
 
+string ProjectConfig::convertResolutionPolicyToStr(ResolutionPolicy policy) const
+{
+    string policyStr;
+
+    if (policy == ResolutionPolicy::EXACT_FIT)
+    {
+        policyStr = "EXACT_FIT";
+    }
+    else if (policy == ResolutionPolicy::NO_BORDER)
+    {
+        policyStr = "NO_BORDER";
+    }
+    else if (policy == ResolutionPolicy::SHOW_ALL)
+    {
+        policyStr = "SHOW_ALL";
+    }
+    else if (policy == ResolutionPolicy::FIXED_HEIGHT)
+    {
+        policyStr = "FIXED_HEIGHT";
+    }
+    else if (policy == ResolutionPolicy::FIXED_WIDTH)
+    {
+        policyStr = "FIXED_WIDTHT";
+    }
+    else
+    {
+        policyStr = "UNKNOWN";
+    }
+
+    return policyStr;
+}
+
 string ProjectConfig::dealWithSpaceWithPath(const string &path) const
 {
 #if defined(_WINDOWS)
@@ -847,3 +1005,4 @@ string ProjectConfig::dealWithSpaceWithPath(const string &path) const
     return path;
 #endif
 }
+

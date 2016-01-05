@@ -93,7 +93,8 @@ const char* getRuntimeVersion()
 
 void resetDesignResolution()
 {
-    cocos2d::Size size = ConfigParser::getInstance()->getInitViewSize();
+    cocos2d::Size size = ConfigParser::getInstance()->getInitDesignResolutionSize();
+    ResolutionPolicy policy = ConfigParser::getInstance()->getInitDesignResolutionPolicy();
     if (!ConfigParser::getInstance()->isLanscape())
     {
         if (size.width > size.height)
@@ -104,7 +105,7 @@ void resetDesignResolution()
         if (size.width < size.height)
             std::swap(size.width, size.height);
     }
-    Director::getInstance()->getOpenGLView()->setDesignResolutionSize(size.width, size.height, ResolutionPolicy::EXACT_FIT);
+    Director::getInstance()->getOpenGLView()->setDesignResolutionSize(size.width, size.height, policy);
 }
 
 //

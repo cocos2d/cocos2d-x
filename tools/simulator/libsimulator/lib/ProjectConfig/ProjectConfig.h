@@ -29,10 +29,12 @@ using namespace std;
 #define kProjectConfigListen                    2048    //
 #define kProjectConfigSearchPath                4096    //
 #define kProjectConfigFirstSearchPath            8192    // -first-search-path
+#define kProjectConfigDesignResolutionSize      16384   // -design-resolution-size 960x640
+#define kProjectConfigDesignResolutionPolicy    32768   // -design-resolution-policy "EXACT_FIT"
 
-#define kProjectConfigOpenRecent (kProjectConfigProjectDir | kProjectConfigScriptFile | kProjectConfigPackagePath | kProjectConfigWritablePath | kProjectConfigFrameSize | kProjectConfigFrameScale | kProjectConfigShowConsole | kProjectConfigLoadPrecompiledFramework | kProjectConfigWriteDebugLogToFile)
+#define kProjectConfigOpenRecent (kProjectConfigProjectDir | kProjectConfigScriptFile | kProjectConfigPackagePath | kProjectConfigWritablePath | kProjectConfigFrameSize | kProjectConfigFrameScale | kProjectConfigShowConsole | kProjectConfigLoadPrecompiledFramework | kProjectConfigWriteDebugLogToFile | kProjectConfigDesignResolutionSize | kProjectConfigDesignResolutionPolicy)
 
-#define kProjectConfigAll (kProjectConfigProjectDir | kProjectConfigScriptFile | kProjectConfigPackagePath | kProjectConfigWritablePath | kProjectConfigFrameSize | kProjectConfigFrameScale | kProjectConfigShowConsole | kProjectConfigLoadPrecompiledFramework | kProjectConfigWriteDebugLogToFile | kProjectConfigWindowOffset | kProjectConfigDebugger | kProjectConfigListen | kProjectConfigSearchPath | kProjectConfigFirstSearchPath)
+#define kProjectConfigAll (kProjectConfigProjectDir | kProjectConfigScriptFile | kProjectConfigPackagePath | kProjectConfigWritablePath | kProjectConfigFrameSize | kProjectConfigFrameScale | kProjectConfigShowConsole | kProjectConfigLoadPrecompiledFramework | kProjectConfigWriteDebugLogToFile | kProjectConfigWindowOffset | kProjectConfigDebugger | kProjectConfigListen | kProjectConfigSearchPath | kProjectConfigFirstSearchPath | kProjectConfigDesignResolutionSize | kProjectConfigDesignResolutionPolicy)
 
 
 #define kProjectConfigConsolePort   6010
@@ -46,6 +48,7 @@ public:
 
     static const int DEFAULT_WIDTH = 640;
     static const int DEFAULT_HEIGHT = 960;
+	static const ResolutionPolicy DEFAULT_RESOLUTION_POLICY = ResolutionPolicy::EXACT_FIT;
 
     string getProjectDir() const;
     void setProjectDir(const string &projectDir);
@@ -66,11 +69,20 @@ public:
 
     cocos2d::Size getFrameSize() const;
     void setFrameSize(const cocos2d::Size &frameSize);
+    cocos2d::Size getDesignResolutionSize() const;
+    void setDesignResolutionSize(const cocos2d::Size &resolutionSize);
+    ResolutionPolicy getDesignResolutionPolicy() const;
+    void setDesignResolutionPolicy(ResolutionPolicy policy);
     bool isLandscapeFrame() const;
     bool isPortraitFrame() const;
     void changeFrameOrientation();
     void changeFrameOrientationToPortait();
     void changeFrameOrientationToLandscape();
+    bool isLandscapeDesignResolution() const;
+    bool isPortraitDesignResolution() const;
+    void changeDesignResolutionOrientation();
+    void changeDesignResolutionOrientationToPortait();
+    void changeDesignResolutionOrientationToLandscape();
 
     float getFrameScale() const;
     void setFrameScale(float frameScale);
@@ -122,6 +134,8 @@ private:
     string _packagePath;
     string _writablePath;
     cocos2d::Size _frameSize;
+    cocos2d::Size _designResolutionSize;
+    ResolutionPolicy _designResolutionPolicy;
     float _frameScale;
     bool _showConsole;
     bool _loadPrecompiledFramework;
@@ -144,6 +158,7 @@ private:
     string replaceProjectDirToMacro(const string &path) const;
     string replaceProjectDirToFullPath(const string &path) const;
     bool isAbsolutePath(const string &path) const;
+    string convertResolutionPolicyToStr(ResolutionPolicy policy) const;
     
     /**
      * windows : Y:\Documents\CocosProjects\Cocos Project\ -> "Y:\Documents\CocosProjects\Cocos Project\\"

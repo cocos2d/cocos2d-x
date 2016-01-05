@@ -29,6 +29,27 @@ SimulatorConfig::SimulatorConfig()
     _screenSizeArray.push_back(SimulatorScreenSize("Android (720x1280)", 720, 1280));
     _screenSizeArray.push_back(SimulatorScreenSize("Android (800x1280)", 800, 1280));
     _screenSizeArray.push_back(SimulatorScreenSize("Android (1080x1920)", 1080, 1920));
+
+    _designResolutionSizeArray.push_back(SimulatorScreenSize("Design Resolution (320x480)", 320, 480));
+    _designResolutionSizeArray.push_back(SimulatorScreenSize("Design Resolution (640x960)", 640, 960));
+    _designResolutionSizeArray.push_back(SimulatorScreenSize("Design Resolution (640x1136)", 640, 1136));
+    _designResolutionSizeArray.push_back(SimulatorScreenSize("Design Resolution (750x1334)", 750, 1334));
+    _designResolutionSizeArray.push_back(SimulatorScreenSize("Design Resolution (1242x2208)", 1242, 2208));
+    _designResolutionSizeArray.push_back(SimulatorScreenSize("Design Resolution (768x1024)", 768, 1024));
+    _designResolutionSizeArray.push_back(SimulatorScreenSize("Design Resolution (1536x2048)", 1536, 2048));
+    _designResolutionSizeArray.push_back(SimulatorScreenSize("Design Resolution (480x800)", 480, 800));
+    _designResolutionSizeArray.push_back(SimulatorScreenSize("Design Resolution (480x854)", 480, 854));
+    _designResolutionSizeArray.push_back(SimulatorScreenSize("Design Resolution (540x960)", 540, 960));
+    _designResolutionSizeArray.push_back(SimulatorScreenSize("Design Resolution (600x1024)", 600, 1024));
+    _designResolutionSizeArray.push_back(SimulatorScreenSize("Design Resolution (720x1280)", 720, 1280));
+    _designResolutionSizeArray.push_back(SimulatorScreenSize("Design Resolution (800x1280)", 800, 1280));
+    _designResolutionSizeArray.push_back(SimulatorScreenSize("Design Resolution (1080x1920)", 1080, 1920));
+
+    _designResolutionPolicyArray.push_back(SimulatorDesignResolutionPolicy("Resolution Policy (EXACT_FIT)", ResolutionPolicy::EXACT_FIT));
+    _designResolutionPolicyArray.push_back(SimulatorDesignResolutionPolicy("Resolution Policy (NO_BORDER)", ResolutionPolicy::NO_BORDER));
+    _designResolutionPolicyArray.push_back(SimulatorDesignResolutionPolicy("Resolution Policy (SHOW_ALL)", ResolutionPolicy::SHOW_ALL));
+    _designResolutionPolicyArray.push_back(SimulatorDesignResolutionPolicy("Resolution Policy (FIXED_HEIGHT)", ResolutionPolicy::FIXED_HEIGHT));
+    _designResolutionPolicyArray.push_back(SimulatorDesignResolutionPolicy("Resolution Policy (FIXED_WIDTH)", ResolutionPolicy::FIXED_WIDTH));
 }
 
 int SimulatorConfig::getScreenSizeCount() const
@@ -66,6 +87,76 @@ int SimulatorConfig::checkScreenSize(const cocos2d::Size &size) const
     return -1;
 }
 
+void SimulatorConfig::addScreenSize(const SimulatorScreenSize &screenSize)
+{
+    _screenSizeArray.push_back(screenSize);
+}
+
+int SimulatorConfig::getDesignResolutionSizeCount() const
+{
+    return (int)_designResolutionSizeArray.size();
+}
+
+SimulatorScreenSize SimulatorConfig::getDesignResolutionSize(int index) const
+{
+    return _designResolutionSizeArray.at(index);
+}
+
+int SimulatorConfig::checkDesignResolutionSize(const cocos2d::Size &size) const
+{
+    int width = size.width;
+    int height = size.height;
+
+    if (width > height)
+    {
+        int w = width;
+        width = height;
+        height = w;
+    }
+
+    int count = (int)_designResolutionSizeArray.size();
+    for (int i = 0; i < count; ++i)
+    {
+        const SimulatorScreenSize &size = _designResolutionSizeArray[i];
+        if (size.width == width && size.height == height)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+void SimulatorConfig::addDesignResolutionSize(const SimulatorScreenSize &screenSize)
+{
+    _designResolutionSizeArray.push_back(screenSize);
+}
+
+int SimulatorConfig::getDesignResolutionPolicyCount() const
+{
+    return (int)_designResolutionPolicyArray.size();
+}
+
+SimulatorDesignResolutionPolicy SimulatorConfig::getDesignResolutionPolicy(int index) const
+{
+    return _designResolutionPolicyArray.at(index);
+}
+
+int SimulatorConfig::checkDesignResolutionPolicy(ResolutionPolicy policy) const
+{
+    int count = (int)_designResolutionPolicyArray.size();
+    for (int i = 0; i < count; ++i)
+    {
+        const SimulatorDesignResolutionPolicy &policyInfo = _designResolutionPolicyArray[i];
+        if (policyInfo.policy == policy)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
 // helper
 
 void SimulatorConfig::makeNormalizePath(string *path, const char *directorySeparator/* = NULL*/)
@@ -77,3 +168,4 @@ void SimulatorConfig::makeNormalizePath(string *path, const char *directorySepar
         path->replace(pos, 1, directorySeparator);
     }
 }
+
