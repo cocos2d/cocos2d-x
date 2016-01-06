@@ -336,6 +336,18 @@ public:
      */
     int luaLoadChunksFromZIP(lua_State *L);
     
+    /**
+     *  Decrypt by xxtea
+     */
+    unsigned char *xxteaDecrypt(unsigned char *buffer, ssize_t size, ssize_t *outlen);
+    bool isXXTEA(unsigned char *data, ssize_t size);
+    
+    bool  _xxteaEnabled;
+    char* _xxteaKey;
+    int   _xxteaKeyLen;
+    char* _xxteaSign;
+    int   _xxteaSignLen;
+    
 protected:
     LuaStack(void)
     : _state(nullptr)
@@ -353,11 +365,6 @@ protected:
     
     lua_State *_state;
     int _callFromLua;
-    bool  _xxteaEnabled;
-    char* _xxteaKey;
-    int   _xxteaKeyLen;
-    char* _xxteaSign;
-    int   _xxteaSignLen;
 };
 
 NS_CC_END

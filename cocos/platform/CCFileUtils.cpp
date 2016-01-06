@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "platform/CCSAXParser.h"
 #include "base/ccUtils.h"
+#include "CCLuaEngine.h"
 
 #include "tinyxml2.h"
 #ifdef MINIZIP_FROM_SYSTEM
@@ -643,7 +644,23 @@ static Data getData(const std::string& filename, bool forString)
         }
         else
         {
-            buffer = (unsigned char*)malloc(sizeof(unsigned char) * size);
+            unsigned char* rbBuffer = (unsigned char*)malloc(sizeof(unsigned char) * size);
+            readsize = fread(rbBuffer, sizeof(unsigned char), size, fp);
+            
+            LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+            if (stack->isXXTEA(rbBuffer, readsize))
+            {
+                ssize_t len = 0;
+                buffer = stack->xxteaDecrypt(rbBuffer, size, &len);
+                
+                free(rbBuffer);
+                rbBuffer = NULL;
+                readsize = len;
+            }
+            else
+            {
+                buffer = rbBuffer;
+            }
         }
 
         readsize = fread(buffer, sizeof(unsigned char), size, fp);
@@ -684,11 +701,13 @@ Data FileUtils::getDataFromFile(const std::string& filename)
 
 unsigned char* FileUtils::getFileData(const std::string& filename, const char* mode, ssize_t *size)
 {
-    unsigned char * buffer = nullptr;
+    unsigned char *xxteaBuffer = nullptr;
+    
     CCASSERT(!filename.empty() && size != nullptr && mode != nullptr, "Invalid parameters.");
     *size = 0;
     do
     {
+        unsigned char * buffer = nullptr;
         // read the file from hardware
         const std::string fullPath = fullPathForFilename(filename);
         FILE *fp = fopen(getSuitableFOpen(fullPath).c_str(), mode);
@@ -700,16 +719,30 @@ unsigned char* FileUtils::getFileData(const std::string& filename, const char* m
         buffer = (unsigned char*)malloc(*size);
         *size = fread(buffer,sizeof(unsigned char), *size,fp);
         fclose(fp);
+        
+        LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+        if (stack->isXXTEA(buffer, *size))
+        {
+            ssize_t len = 0;
+            xxteaBuffer = stack->xxteaDecrypt(buffer, *size, &len);
+            free(buffer);
+            buffer = NULL;
+            *size = len;
+        }
+        else
+        {
+            xxteaBuffer = buffer;
+        }
     } while (0);
 
-    if (!buffer)
+    if (!xxteaBuffer)
     {
         std::string msg = "Get data from file(";
         msg.append(filename).append(") failed!");
-
+        
         CCLOG("%s", msg.c_str());
     }
-    return buffer;
+    return xxteaBuffer;
 }
 
 unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, ssize_t *size)

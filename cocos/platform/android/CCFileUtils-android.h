@@ -26,6 +26,7 @@ Copyright (c) 2013-2014 Chukong Technologies Inc.
 #define __CC_FILEUTILS_ANDROID_H__
 
 #include "platform/CCPlatformConfig.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #include "platform/CCFileUtils.h"
