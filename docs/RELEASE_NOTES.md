@@ -153,18 +153,23 @@ cocos new -l cpp|js|lua MyNewGame
 
 We are happy to announce the release of Cocos2d-x v3.10. Following are the highlighted features, improvements and API updates in this version. 
 
-1. UI System:
-    - Reimplemented Scale9Sprite and improve the scale9sprite performance and reduce memory consumption.
-    - Changed PageView to derived from ListView, PageView can be added any widget as child.
-    - Added three overflow type to new label: CLAMP，SHRINK，RESIZE_HEIGHT.
-2. JSModule:
-    - Improved JS bindings with more secured memory management, and enhance the stability of the engine, streamline all JSB code with the [GC coding style of SpiderMonkey](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide).
+1. Provides a unified setup for both Cocos2d-x and Cocos. This allows you to stay up to date with the latest Cocos2d-x releases. This includes using precompiled binaries and source code, in a single place. As always the source code is available from [GitHub](https://github.com/cocos2d/cocos2d-x) but, there is no longer a `.zip` file available containing the source code. 
+2. New __Cocos Launcher__ tool! __Cocos Launcher__ allows:
+  * One step to create a new project with the engine, by using precompiled libraries or source code.
+  * Easy integration with SDKBOX for 3rd party services: Facebook, IAP and many more.
+  * Developers to provide feedback and get support, directly within __Cocos Launcher__, making it simple to contact the engine team for help.　
+3. UI System:
+  * Reimplemented `Scale9Sprite` to improve performance and reduce memory consumption.
+  * Changed `PageView` to derive from `ListView`. `PageView` can add any widget as a child.
+  * Added three new *overflow types* to `Label`: **CLAMP**，**SHRINK**, **RESIZE_HEIGHT**.
+  * Fixed a bug in `ClippingNode` that corrects its behavior when being set as a child.
+4. Improved **JavaScript Bindings**: follows [SpiderMonkey GC best practices](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide) making it more robust.
 
 ## The main features in detail of Cocos2d-x v3.10:
 
 ### UI System
 
-1. Reimplemented Scale9Sprite and improve the scale9sprite performance and reduce memory consumption.
+1. Reimplemented `Scale9Sprite` and improve the scale9sprite performance and reduce memory consumption.
     
     Reimplemented ui::Scale9Sprite, now the Slice sprite uses 16 vertices and 54 indices instead of the old 9 sprites way, The memory consumption is much lower than the previous implementation, and it is also more efficient.
 
@@ -180,7 +185,7 @@ We are happy to announce the release of Cocos2d-x v3.10. Following are the highl
         //When setting to SLICE, 16 vertexes will be used to rendering.
         sprite->setRenderingType(Scale9Sprite::RenderingType::SLICE);
     
-2. Changed PageView to derived from ListView, PageView can add any type of widget as child.
+2. Changed `PageView` to derived from ListView, PageView can add any type of widget as child.
 
     PageView was derived from Layout and it implemented the features of scrolling and item arrangement from scratch. But the features are already there in ListView. So remove those duplicated implementations from PageView and make it inherit from ListView.
 
