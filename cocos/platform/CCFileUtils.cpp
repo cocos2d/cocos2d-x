@@ -641,6 +641,7 @@ static Data getData(const std::string& filename, bool forString)
         {
             buffer = (unsigned char*)malloc(sizeof(unsigned char) * (size + 1));
             buffer[size] = '\0';
+            readsize = fread(buffer, sizeof(unsigned char), size, fp);
         }
         else
         {
@@ -663,7 +664,6 @@ static Data getData(const std::string& filename, bool forString)
             }
         }
 
-        readsize = fread(buffer, sizeof(unsigned char), size, fp);
         fclose(fp);
 
         if (forString && readsize < size)
