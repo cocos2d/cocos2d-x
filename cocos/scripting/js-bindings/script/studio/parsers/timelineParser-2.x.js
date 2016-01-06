@@ -565,7 +565,7 @@
             widget.setFontSize(fontSize);
 
         var fontName = json["FontName"];
-        if(fontName != null)
+        if(fontName && "" !== fontName)
             widget.setFontName(fontName);
 
         var areaWidth = json["AreaWidth"];
@@ -601,7 +601,7 @@
         if(fontResource != null){
             var path = fontResource["Path"];
             //resoutceType = fontResource["Type"];
-            if(path != null){
+            if(path){
                 if (cc.sys.isNative) {
                     fontName = cc.path.join(cc.loader.resPath, resourcePath, path);
                 } else {
@@ -1133,7 +1133,7 @@
             widget.setFontSize(fontSize);
 
         var fontName = json["FontName"];
-        if(fontName != null)
+        if(fontName && "" !== fontName)
             widget.setFontName(fontName);
 
         var maxLengthEnabled = json["MaxLengthEnable"];
@@ -1154,7 +1154,7 @@
         if(fontResource != null){
             var path = fontResource["Path"];
             //resoutceType = fontResource["Type"];
-            if(path != null){
+            if(path){
                 if (cc.sys.isNative) {
                     fontName = cc.path.join(cc.loader.resPath, resourcePath, path);
                 } else {
