@@ -153,16 +153,17 @@ cocos new -l cpp|js|lua MyNewGame
 
 We are happy to announce the release of Cocos2d-x v3.10. Following are the highlighted features, improvements and API updates in this version. 
 
-1. Provides a unified setup for both Cocos2d-x and Cocos.
-2. New __Cocos Launcher__ tool:
-  * One step to create a new project by either using our precompiled libraries or source code engine.
+1. Provides a unified setup for both Cocos2d-x and Cocos. This allows you to stay up to date with the latest Cocos2d-x releases. This includes using precompiled binaries and source code, in a single place. As always the source code is available from [GitHub](https://github.com/cocos2d/cocos2d-x) but, there is no longer a `.zip` file available containing the source code. 
+2. New __Cocos Launcher__ tool! __Cocos Launcher__ allows:
+  * One step to create a new project with the engine, by using precompiled libraries or source code.
   * Easy integration with SDKBOX for 3rd party services: Facebook, IAP and many more.
-  * Provided feedback and support channel directly within Cocos Launcher for user to get help from the engine team easier.
+  * Developers to provide feedback and get support, directly within __Cocos Launcher__, making it simple to contact the engine team for help.　
 3. UI System:
-  * Reimplemented `Scale9Sprite` and improve the scale9sprite performance and reduce memory consumption.
-  * Changed `PageView` to derived from ListView, PageView can add any widget as child.
-  * Added three new overflow type to new label: **CLAMP**，**SHRINK**，**RESIZE_HEIGHT**.
-4. Improved JS Bindings: follows [SpiderMonkey GC best practices](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide) making it more robust.
+  * Reimplemented `Scale9Sprite` to improve performance and reduce memory consumption.
+  * Changed `PageView` to derive from `ListView`. `PageView` can add any widget as a child.
+  * Added three new *overflow types* to `Label`: **CLAMP**，**SHRINK**, **RESIZE_HEIGHT**.
+  * Fixed a bug in `ClippingNode` that corrects its behavior when being set as a child.
+4. Improved **JavaScript Bindings**: follows [SpiderMonkey GC best practices](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide) making it more robust.
 
 ## The main features in detail of Cocos2d-x v3.10:
 
