@@ -670,7 +670,7 @@
             widget.setTitleFontSize(fontSize);
 
         var fontName = json["FontName"];
-        if(fontName != null)
+        if(fontName && "" !== fontName)
             widget.setTitleFontName(fontName);
 
         var textColor = json["TextColor"];
@@ -685,7 +685,7 @@
         if(fontResource != null){
             var path = fontResource["Path"];
             //resoutceType = fontResource["Type"];
-            if(path != null){
+            if(path){
                 if (cc.sys.isNative) {
                     fontName = cc.path.join(cc.loader.resPath, resourcePath, path);
                 } else {
@@ -1354,8 +1354,12 @@
                     cb(path, type);
                 else
                     cc.log("failed to get spriteFrame: %s", path);
-            }else
-                cb(resourcePath + path, type);
+            }else{
+                if(path && "" !== path && jsb.fileUtils.isFileExist(resourcePath + path))
+                    cb(resourcePath + path, type);
+                else
+                    cb("", type);
+            }
         }
     };
 
