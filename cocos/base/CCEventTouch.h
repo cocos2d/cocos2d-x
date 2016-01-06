@@ -45,7 +45,7 @@ class Touch;
 class CC_DLL EventTouch : public Event
 {
 public:
-    static const int MAX_TOUCHES = 15;
+    static const int MAX_TOUCHES = 1;
     
     /** EventCode Touch event code.*/
     enum class EventCode
