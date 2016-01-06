@@ -48,7 +48,7 @@ THE SOFTWARE.
 
 /** @def CC_ENABLE_GL_STATE_CACHE
  * If enabled, cocos2d will maintain an OpenGL state cache internally to avoid unnecessary switches.
- * In order to use them, you have to use the following functions, instead of the the GL ones:
+ * In order to use them, you have to use the following functions, instead of the GL ones:
  *  - ccGLUseProgram() instead of glUseProgram().
  *  - GL::deleteProgram() instead of glDeleteProgram().
  *  - GL::blendFunc() instead of glBlendFunc().
@@ -57,9 +57,9 @@ THE SOFTWARE.
 
  * It is recommended to enable whenever possible to improve speed.
  * If you are migrating your code from GL ES 1.1, then keep it disabled. Once all your code works as expected, turn it on.
- 
+
  * Default value: Enabled by default
- 
+
  * @since v2.0.0
  */
 #ifndef CC_ENABLE_GL_STATE_CACHE
@@ -81,20 +81,20 @@ THE SOFTWARE.
  * - LabelAtlas.
  * - QuadParticleSystem.
  * - TileMap.
- 
+
  * To enabled set it to 1. Disabled by default.
- 
+
  * @since v0.99.5
  */
 #ifndef CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 #define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 0
 #endif
 
-/** @def CC_DIRECTOR_FPS_INTERVAL
+/** @def CC_DIRECTOR_STATS_INTERVAL
  * Seconds between FPS updates.
  * 0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
  * Having a bigger number means a more reliable FPS.
- 
+
  * Default value: 0.1f
  */
 #ifndef CC_DIRECTOR_STATS_INTERVAL
@@ -115,9 +115,9 @@ THE SOFTWARE.
  * dispatch all the events, even if there are not events to dispatch.
  * If your game uses lot's of events (eg: touches) it might be a good idea to enable this feature.
  * Otherwise, it is safe to leave it disabled.
- 
+
  * To enable set it to 1. Disabled by default.
- 
+
  * @warning This feature is experimental.
  */
 #ifndef CC_DIRECTOR_DISPATCH_FAST_EVENTS
@@ -165,7 +165,7 @@ THE SOFTWARE.
     #else
         /* Some Windows display adapter driver cannot support VAO.
          * Some android devices cannot support VAO very well, so we disable it by default for android platform.
-         * Blackberry also doesn't support this feature. 
+         * Blackberry also doesn't support this feature.
          */
 		#define CC_TEXTURE_ATLAS_USE_VAO 0
     #endif
@@ -193,6 +193,17 @@ THE SOFTWARE.
  */
 #ifndef CC_SPRITE_DEBUG_DRAW
 #define CC_SPRITE_DEBUG_DRAW 0
+#endif
+
+/** @def CC_LABEL_DEBUG_DRAW
+* If enabled, all subclasses of Label will draw a bounding box.
+* Useful for debugging purposes only. It is recommended to leave it disabled.
+* To enable set it to a value different than 0. Disabled by default:
+* 0 -- disabled
+* 1 -- draw bounding box
+*/
+#ifndef CC_LABEL_DEBUG_DRAW
+#define CC_LABEL_DEBUG_DRAW 0
 #endif
 
 /** @def CC_SPRITEBATCHNODE_DEBUG_DRAW
@@ -252,10 +263,35 @@ THE SOFTWARE.
 #define CC_USE_PHYSICS 1
 #endif
 
+/** Use 3d physics integration API. */
+#ifndef CC_USE_3D_PHYSICS
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#define CC_USE_3D_PHYSICS 1
+#endif
+#endif
+
+#if (CC_USE_3D_PHYSICS)
+/** Use bullet physics engine. */
+#ifndef CC_ENABLE_BULLET_INTEGRATION
+#define CC_ENABLE_BULLET_INTEGRATION 1
+#endif
+#endif
+
+/** Use 3D navigation API */
+#ifndef CC_USE_NAVMESH
+#define CC_USE_NAVMESH 1
+#endif
+
 /** Use culling or not. */
 #ifndef CC_USE_CULLING
 #define CC_USE_CULLING 1
 #endif
+
+/** Support PNG or not. If your application don't use png format picture, you can undefine this macro to save package size.
+*/
+#ifndef CC_USE_PNG
+#define CC_USE_PNG  1
+#endif // CC_USE_PNG
 
 /** Support JPEG or not. If your application don't use jpeg format picture, you can undefine this macro to save package size.
  */
@@ -272,23 +308,49 @@ THE SOFTWARE.
 /** Support webp or not. If your application don't use webp format picture, you can undefine this macro to save package size.
  */
 #ifndef CC_USE_WEBP
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #define CC_USE_WEBP  1
 #endif
 #endif // CC_USE_WEBP
+
+ /** Support WIC (Windows Image Component) or not. Replaces PNG, TIFF and JPEG
+ */
+#ifndef CC_USE_WIC
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#define CC_USE_WIC  1
+#undef CC_USE_TIFF
+#undef CC_USE_JPEG
+#undef CC_USE_PNG
+#endif
+#endif // CC_USE_WIC
 
 /** Enable Script binding. */
 #ifndef CC_ENABLE_SCRIPT_BINDING
 #define CC_ENABLE_SCRIPT_BINDING 1
 #endif
 
+/** When CC_ENABLE_SCRIPT_BINDING and CC_ENABLE_GC_FOR_NATIVE_OBJECTS are both 1
+ then the Garbage collector will will release the native objects, only when the JS/Lua objets
+ are collected.
+ The benefit is that users don't need to retain/release the JS/Lua objects manually.
+
+ By default this behavior is disabled by default
+ */
+#ifndef CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 0
+#endif
+
 /** @def CC_CONSTRUCTOR_ACCESS
  * Indicate the init functions access modifier. If value equals to protected, then these functions are protected.
- * If value equals to public, these functions are public
+ * If value equals to public, these functions are public,
  * protected by default.
  */
 #ifndef CC_CONSTRUCTOR_ACCESS
-#define CC_CONSTRUCTOR_ACCESS protected
+  #ifdef CC_ENABLE_SCRIPT_BINDING
+    #define CC_CONSTRUCTOR_ACCESS public
+  #else
+    #define CC_CONSTRUCTOR_ACCESS protected
+  #endif
 #endif
 
 /** @def CC_ENABLE_ALLOCATOR

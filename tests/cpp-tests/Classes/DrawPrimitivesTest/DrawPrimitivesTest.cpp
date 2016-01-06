@@ -2,6 +2,8 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
 
+USING_NS_CC;
+
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #elif _MSC_VER >= 1400 //vs 2005 or higher
@@ -11,108 +13,16 @@
 
 using namespace std;
 
-static int sceneIdx = -1;
-
-
-Layer* nextSpriteTestAction();
-Layer* backSpriteTestAction();
-Layer* restartSpriteTestAction();
-
-typedef Layer* (*NEWDRAWPRIMITIVESFUNC)();
-#define DRAWPRIMITIVES_CREATE_FUNC(className) \
-static Layer* create##className() \
-{ return new className(); }
-
-DRAWPRIMITIVES_CREATE_FUNC(DrawPrimitivesTest);
-DRAWPRIMITIVES_CREATE_FUNC(DrawNodeTest);
-
-static NEWDRAWPRIMITIVESFUNC createFunctions[] =
+DrawPrimitivesTests::DrawPrimitivesTests()
 {
-    createDrawPrimitivesTest,
-    createDrawNodeTest,
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-    
-    return layer;
+    ADD_TEST_CASE(DrawPrimitivesTest);
+    ADD_TEST_CASE(DrawNodeTest);
+    ADD_TEST_CASE(PrimitivesCommandTest);
 }
 
-static Layer* backAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-    
-    return layer;
-}
-
-static Layer* restartAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-    
-    return layer;
-}
-
-// BaseLayer
-
-BaseLayer::BaseLayer()
-{
-    
-}
-
-void BaseLayer::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void BaseLayer::restartCallback(cocos2d::Ref *pSender)
-{
-    auto s = new (std::nothrow) DrawPrimitivesTestScene();
-    s->addChild(restartAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void BaseLayer::nextCallback(cocos2d::Ref *pSender)
-{
-    auto s = new (std::nothrow) DrawPrimitivesTestScene();;
-    s->addChild(nextAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void BaseLayer::backCallback(cocos2d::Ref *pSender)
-{
-    auto s = new (std::nothrow) DrawPrimitivesTestScene();
-    s->addChild(backAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-string BaseLayer::title() const
+string DrawPrimitivesBaseTest::title() const
 {
     return "No title";
-}
-
-string BaseLayer::subtitle() const
-{
-    return "";
 }
 
 // DrawPrimitivesTest
@@ -381,6 +291,12 @@ DrawNodeTest::DrawNodeTest()
     for (int i = 0; i < 100; i++) {
         draw->drawPoint(Vec2(i*7, 5), (float)i/5+1, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
     }
+
+    auto draw1 = DrawNode::create();
+    this->addChild(draw1, 10);
+    draw1->setLineWidth(4);
+    draw1->drawLine(Vec2(0, s.height), Vec2(s.width, s.height - 20), Color4F::YELLOW);
+    draw1->drawLine(Vec2(0, 0), Vec2(s.width, s.height - 20), Color4F::YELLOW);
 }
 
 string DrawNodeTest::title() const
@@ -393,13 +309,80 @@ string DrawNodeTest::subtitle() const
     return "Testing DrawNode - batched draws. Concave polygons are BROKEN";
 }
 
-void DrawPrimitivesTestScene::runThisTest()
+// PrimitivesCommandTest
+PrimitivesCommandTest::PrimitivesCommandTest()
 {
-    auto layer = nextAction();
-    addChild(layer);
+    // draws a quad
+    V3F_C4B_T2F data[] = {
+        {{0,    0,0}, {255,  0,  0,255}, {0,1}},
+        {{200,  0,0}, {0,  255,255,255}, {1,1}},
+        {{200,200,0}, {255,255,  0,255}, {1,0}},
+        {{0,  200,0}, {255,255,255,255}, {0,0}},
+    };
 
-    Director::getInstance()->replaceScene(this);
+    uint16_t indices[] = {
+        0,1,2,
+        2,0,3
+    };
+
+    static const int TOTAL_VERTS = sizeof(data) / sizeof(data[0]);
+    static const int TOTAL_INDICES = TOTAL_VERTS*6/4;
+
+    auto vertexBuffer = VertexBuffer::create(sizeof(V3F_C4B_T2F), TOTAL_VERTS);
+    vertexBuffer->updateVertices(data, TOTAL_VERTS,0);
+
+    auto vertsData = VertexData::create();
+    vertsData->setStream(vertexBuffer, VertexStreamAttribute(0, GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
+    vertsData->setStream(vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors), GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
+    vertsData->setStream(vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
+
+
+    auto indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, TOTAL_INDICES);
+    indexBuffer->updateIndices(indices, TOTAL_INDICES, 0);
+
+    _primitive = Primitive::create(vertsData, indexBuffer, GL_TRIANGLES);
+    _primitive->setCount(TOTAL_INDICES);
+    _primitive->setStart(0);
+
+    auto cache = Director::getInstance()->getTextureCache();
+    _texture = cache->addImage("Images/grossini.png");
+    _programState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
+
+    _primitive->retain();
+    _texture->retain();
+    _programState->retain();
 }
+
+PrimitivesCommandTest::~PrimitivesCommandTest()
+{
+    CC_SAFE_RELEASE(_primitive);
+    CC_SAFE_RELEASE(_texture);
+    CC_SAFE_RELEASE(_programState);
+}
+
+
+void PrimitivesCommandTest::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
+{
+    _primitiveCommand.init(_globalZOrder,
+                           _texture->getName(),
+                           _programState,
+                           BlendFunc::ALPHA_NON_PREMULTIPLIED,
+                           _primitive,
+                           transform,
+                           flags);
+    renderer->addCommand(&_primitiveCommand);
+}
+
+string PrimitivesCommandTest::title() const
+{
+    return "PrimitiveCommand test";
+}
+
+string PrimitivesCommandTest::subtitle() const
+{
+    return "Drawing Primitives using PrimitiveCommand";
+}
+
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"

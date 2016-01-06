@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -40,7 +40,7 @@ THE SOFTWARE.
 #define IMPLEMENT_CLASS_INFO(className) \
         cocos2d::Ref* className::createInstance(void) \
         { \
-            auto ret = new className; \
+            auto ret = new (std::nothrow) className; \
             ret->autorelease(); \
             return ret; \
         } \

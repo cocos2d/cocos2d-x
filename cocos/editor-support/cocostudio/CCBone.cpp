@@ -257,13 +257,17 @@ void Bone::setBlendFunc(const BlendFunc& blendFunc)
 
 void Bone::updateDisplayedColor(const Color3B &parentColor)
 {
+#ifdef CC_STUDIO_ENABLED_VIEW
     _realColor = Color3B(255, 255, 255);
+#endif // CC_STUDIO_ENABLED_VIEW
     Node::updateDisplayedColor(parentColor);
 }
 
 void Bone::updateDisplayedOpacity(GLubyte parentOpacity)
 {
+#ifdef CC_STUDIO_ENABLED_VIEW
     _realOpacity = 255;
+#endif // CC_STUDIO_ENABLED_VIEW
     Node::updateDisplayedOpacity(parentOpacity);
 }
 

@@ -51,13 +51,18 @@ namespace cocostudio
     {
         if (!_instanceProjectNodeReader)
         {
-            _instanceProjectNodeReader = new ProjectNodeReader();
+            _instanceProjectNodeReader = new (std::nothrow) ProjectNodeReader();
         }
         
         return _instanceProjectNodeReader;
     }
     
     void ProjectNodeReader::purge()
+    {
+        CC_SAFE_DELETE(_instanceProjectNodeReader);
+    }
+    
+    void ProjectNodeReader::destroyInstance()
     {
         CC_SAFE_DELETE(_instanceProjectNodeReader);
     }

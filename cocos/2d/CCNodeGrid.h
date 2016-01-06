@@ -32,6 +32,10 @@
 NS_CC_BEGIN
 
 class GridBase;
+/**
+ *  @addtogroup _2d
+ *  @{
+ */
 
 /**
  * @brief Base class for Grid Node.
@@ -45,6 +49,8 @@ public:
      * @return An autorelease Grid Node.
      */
     static NodeGrid* create();
+    
+    static NodeGrid* create(const Rect& rect);
     
     /** Get a Grid Node. 
      *
@@ -68,6 +74,17 @@ public:
      * @param target A Node is used to set the Grid Target.
      */
     void setTarget(Node *target);
+    
+    /**
+     * @brief Set the effect grid rect.
+     * @param gridRect The effect grid rect.
+     */
+    inline void setGridRect(const Rect& gridRect){_gridRect = gridRect;}
+    /**
+     * @brief Get the effect grid rect.
+     * @return Return the effect grid rect.
+     */
+    inline const Rect& getGridRect() const { return _gridRect;}
 
     // overrides
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
@@ -85,10 +102,13 @@ protected:
     GroupCommand _groupCommand;
     CustomCommand _gridBeginCommand;
     CustomCommand _gridEndCommand;
+    
+    Rect _gridRect;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(NodeGrid);
 };
+/** @} */
 NS_CC_END
 
 #endif

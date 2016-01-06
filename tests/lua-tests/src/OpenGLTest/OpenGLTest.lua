@@ -190,268 +190,111 @@ local function OpenGLTestMainLayer()
         return RetroEffectlayer
     end
 
-    local function createShaderMajoriTest()
-        local majorLayer = cc.Layer:create()
+    local function createShaderNodeLayer(vSource, fSource)
+        local shaderNodeLayer = cc.Layer:create()
 
-        InitTitle(majorLayer)
+        InitTitle(shaderNodeLayer)
 
-        local fileUtiles = cc.FileUtils:getInstance()
-
-        local vertSource = vertDefaultSource
-        local fragSource = fileUtiles:getStringFromFile("Shaders/example_Monjori.fsh")
-        local glProgam = cc.GLProgram:createWithByteArrays(vertSource, fragSource)
-        local glprogramstate = cc.GLProgramState:getOrCreateWithGLProgram(glProgam)
-        local resolution = cc.p(256, 256)
+        local vertSource = vSource
+        local fragSource = fSource
+        local glProgram = cc.GLProgram:createWithByteArrays(vertSource, fragSource)
+        glProgram:retain()
 
         local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(cc.size(256, 256))
-        glNode:setAnchorPoint(cc.p(0.5, 0.5))
-        glNode:setGLProgramState(glprogramstate)
-        glNode:getGLProgramState():setUniformVec2("resolution", resolution)
 
-        local function updateMajori(fTime)
+        local resolution = cc.p(256, 256)
+        local director = cc.Director:getInstance()
+        local frameSize = director:getOpenGLView():getFrameSize()
+        local visibleSize = director:getVisibleSize()
+        local retinaFactor = director:getOpenGLView():getRetinaFactor()
+        local center = cc.p( size.width / 2 * frameSize.width / visibleSize.width * retinaFactor, size.height / 2 * frameSize.height / visibleSize.height * retinaFactor)
+
+        local function initBuffers()
+            local w = 256
+            local h = 256
+            local x = size.width / 2 - w / 2
+            local y = size.height / 2 -h / 2
+            local vertices ={ x,y, x+w,y, x+w,y+h, x,y, x,y+h, x+w,y+h }
+            local vbo = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER, vbo)
+            gl.bufferData(gl.ARRAY_BUFFER, table.getn(vertices), vertices, gl.STATIC_DRAW)
+            gl.bindBuffer(gl.ARRAY_BUFFER, 0)
+            return vbo
+        end
+
+        local vbo = initBuffers()
+
+        local function update(fTime)
             time = time + fTime
         end
 
-        local function majoriDraw(transform, transformUpdated)
-            local w = 256
-            local h = 256
+        local function draw(transform, transformUpdated)
+            glProgram:use()
+            glProgram:setUniformsForBuiltins()
 
-            local vertices ={ 0,0, w,0, w,h, 0,0, 0,h, w,h }
-            local glProgramState = glNode:getGLProgramState()
-            glProgramState:setVertexAttribPointer("a_position", 2, gl.FLOAT, false, 0, vertices, #vertices)
-            glProgramState:apply(transform)
+            local uniformCenter = gl.getUniformLocation(glProgram:getProgram(), "center")
+            glProgram:setUniformLocationF32(uniformCenter, center.x, center.y)
+            local uniformResolution = gl.getUniformLocation(glProgram:getProgram(), "resolution")
+            glProgram:setUniformLocationF32(uniformResolution, resolution.x, resolution.y)
+
+            gl.glEnableVertexAttribs(cc.VERTEX_ATTRIB_FLAG_POSITION)
+            gl.bindBuffer(gl.ARRAY_BUFFER, vbo)
+            gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0);
             gl.drawArrays(gl.TRIANGLES, 0, 6)
+            gl.bindBuffer(gl.ARRAY_BUFFER, 0)
         end
   
-        majorLayer:scheduleUpdateWithPriorityLua(updateMajori,0)
-        glNode:registerScriptDrawHandler(majoriDraw)
+        shaderNodeLayer:scheduleUpdateWithPriorityLua(update,0)
+        glNode:registerScriptDrawHandler(draw)
         time = 0
-        majorLayer:addChild(glNode,-10)
+        shaderNodeLayer:addChild(glNode,-10)
         glNode:setPosition( size.width/2, size.height/2)
-        local center = cc.p( size.width / 2 * scaleFactor, size.height / 2 * scaleFactor)
-        glNode:getGLProgramState():setUniformVec2("center", center)
-        return majorLayer
+
+        local function onNodeEvent(event)
+            if "exit" == event then
+                glProgram:release()
+            end
+        end
+        
+        shaderNodeLayer:registerScriptHandler(onNodeEvent)
+
+        return shaderNodeLayer
+    end
+
+    local function createShaderMajoriTest()
+        local vSource = vertDefaultSource
+        local fSource = cc.FileUtils:getInstance():getStringFromFile("Shaders/example_Monjori.fsh")
+        return createShaderNodeLayer(vSource, fSource)
     end
 
     local function createShaderMandelbrotTest()
-        local mandelbrotLayer = cc.Layer:create()
-
-        InitTitle(mandelbrotLayer)
-
-        local fileUtiles = cc.FileUtils:getInstance()
-        local vertSource = vertDefaultSource
-        local fragSource = fileUtiles:getStringFromFile("Shaders/example_Mandelbrot.fsh")
-        local glProgam = cc.GLProgram:createWithByteArrays(vertSource, fragSource)
-        local glprogramstate = cc.GLProgramState:getOrCreateWithGLProgram(glProgam)
-        local resolution = cc.p(256, 256)
-
-        local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(cc.size(256, 256))
-        glNode:setAnchorPoint(cc.p(0.5, 0.5))
-        glNode:setGLProgramState(glprogramstate)
-        glNode:getGLProgramState():setUniformVec2("resolution", resolution)
-
-        local function updateMandelbrot(fTime)
-            time = time + fTime
-        end
-
-        local function mandelbrotDraw(transform, transformUpdated)
-            local w = 256
-            local h = 256
-
-            local vertices ={ 0,0, w,0, w,h, 0,0, 0,h, w,h }
-            local glProgramState = glNode:getGLProgramState()
-            glProgramState:setVertexAttribPointer("a_position", 2, gl.FLOAT, false, 0, vertices, #vertices)
-            glProgramState:apply(transform)
-            gl.drawArrays(gl.TRIANGLES, 0, 6)
-        end
-
-        mandelbrotLayer:scheduleUpdateWithPriorityLua(updateMandelbrot,0)
-        glNode:registerScriptDrawHandler(mandelbrotDraw)
-        time = 0
-        mandelbrotLayer:addChild(glNode,-10)
-        glNode:setPosition( size.width/2, size.height/2)
-        local center = cc.p( size.width / 2 * scaleFactor, size.height / 2 * scaleFactor)
-        glNode:getGLProgramState():setUniformVec2("center", center)
-        return mandelbrotLayer
+        local vSource = vertDefaultSource
+        local fSource = cc.FileUtils:getInstance():getStringFromFile("Shaders/example_Mandelbrot.fsh")
+        return createShaderNodeLayer(vSource, fSource)
     end
 
     local function createShaderHeartTest()
-
-        local heartLayer = cc.Layer:create()
-
-        InitTitle(heartLayer)
-
-        local fileUtiles = cc.FileUtils:getInstance()
-        local vertSource = vertDefaultSource
-        local fragSource = fileUtiles:getStringFromFile("Shaders/example_Heart.fsh")
-        local glProgam = cc.GLProgram:createWithByteArrays(vertSource, fragSource)
-        local glprogramstate = cc.GLProgramState:getOrCreateWithGLProgram(glProgam)
-        local resolution = cc.p(256, 256)
-
-        local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(cc.size(256, 256))
-        glNode:setAnchorPoint(cc.p(0.5, 0.5))
-        glNode:setGLProgramState(glprogramstate)
-        glNode:getGLProgramState():setUniformVec2("resolution", resolution)
-
-        local function updateHeart(fTime)
-            time = time + fTime
-        end
-
-        local function heartDraw(transform, transformUpdated)
-            local w = 256
-            local h = 256
-
-            local vertices ={ 0,0, w,0, w,h, 0,0, 0,h, w,h }
-            local glProgramState = glNode:getGLProgramState()
-            glProgramState:setVertexAttribPointer("a_position", 2, gl.FLOAT, false, 0, vertices, #vertices)
-            glProgramState:apply(transform)
-            gl.drawArrays(gl.TRIANGLES, 0, 6)
-        end
-
-        heartLayer:scheduleUpdateWithPriorityLua(updateHeart,0)
-        glNode:registerScriptDrawHandler(heartDraw)
-        time = 0
-        heartLayer:addChild(glNode,-10)
-        glNode:setPosition( size.width/2, size.height/2)
-        local center = cc.p( size.width / 2 * scaleFactor, size.height / 2 * scaleFactor)
-        glNode:getGLProgramState():setUniformVec2("center", center)
-        return heartLayer
+        local vSource = vertDefaultSource
+        local fSource = cc.FileUtils:getInstance():getStringFromFile("Shaders/example_Heart.fsh")
+        return createShaderNodeLayer(vSource, fSource)
     end
 
     local function createShaderPlasmaTest()
-
-        local plasmaLayer = cc.Layer:create()
-
-        InitTitle(plasmaLayer)
-
-        local fileUtiles = cc.FileUtils:getInstance()
-        local vertSource = vertDefaultSource
-        local fragSource = fileUtiles:getStringFromFile("Shaders/example_Plasma.fsh")
-        local glProgam = cc.GLProgram:createWithByteArrays(vertSource, fragSource)
-        local glprogramstate = cc.GLProgramState:getOrCreateWithGLProgram(glProgam)
-        local resolution = cc.p(256, 256)
-
-        local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(cc.size(256, 256))
-        glNode:setAnchorPoint(cc.p(0.5, 0.5))
-        glNode:setGLProgramState(glprogramstate)
-        glNode:getGLProgramState():setUniformVec2("resolution", resolution)
-
-
-        local function updatePlasma(fTime)
-            time = time + fTime
-        end
-
-        local function plasmaDraw(transform, transformUpdated)
-            local w = 256
-            local h = 256
-
-            local vertices ={ 0,0, w,0, w,h, 0,0, 0,h, w,h }
-            local glProgramState = glNode:getGLProgramState()
-            glProgramState:setVertexAttribPointer("a_position", 2, gl.FLOAT, false, 0, vertices, #vertices)
-            glProgramState:apply(transform)
-            gl.drawArrays(gl.TRIANGLES, 0, 6)
-        end
-
-        plasmaLayer:scheduleUpdateWithPriorityLua(updatePlasma,0)
-        glNode:registerScriptDrawHandler(plasmaDraw)
-        time = 0
-        plasmaLayer:addChild(glNode,-10)
-        glNode:setPosition( size.width/2, size.height/2)
-        local center = cc.p( size.width / 2 * scaleFactor, size.height / 2 * scaleFactor)
-        glNode:getGLProgramState():setUniformVec2("center", center)
-        return plasmaLayer
+        local vSource = vertDefaultSource
+        local fSource = cc.FileUtils:getInstance():getStringFromFile("Shaders/example_Plasma.fsh")
+        return createShaderNodeLayer(vSource, fSource)
     end
 
     local function createShaderFlowerTest()
-
-        local flowerLayer = cc.Layer:create()
-
-        InitTitle(flowerLayer)
-
-        local fileUtiles = cc.FileUtils:getInstance()
-        local vertSource = vertDefaultSource
-        local fragSource = fileUtiles:getStringFromFile("Shaders/example_Flower.fsh")
-        local glProgam = cc.GLProgram:createWithByteArrays(vertSource, fragSource)
-        local glprogramstate = cc.GLProgramState:getOrCreateWithGLProgram(glProgam)
-        local resolution = cc.p(256, 256)
-
-        local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(cc.size(256, 256))
-        glNode:setAnchorPoint(cc.p(0.5, 0.5))
-        glNode:setGLProgramState(glprogramstate)
-        glNode:getGLProgramState():setUniformVec2("resolution", resolution)
-
-        local function updateFlower(fTime)
-            time = time + fTime
-        end
-
-        local function flowerDraw(transform, transformUpdated)
-            local w = 256
-            local h = 256
-
-            local vertices ={ 0,0, w,0, w,h, 0,0, 0,h, w,h }
-            local glProgramState = glNode:getGLProgramState()
-            glProgramState:setVertexAttribPointer("a_position", 2, gl.FLOAT, false, 0, vertices, #vertices)
-            glProgramState:apply(transform)
-            gl.drawArrays(gl.TRIANGLES, 0, 6)
-        end
-
-        flowerLayer:scheduleUpdateWithPriorityLua(updateFlower,0)
-        glNode:registerScriptDrawHandler(flowerDraw)
-        time = 0
-        flowerLayer:addChild(glNode,-10)
-        glNode:setPosition( size.width/2, size.height/2)
-        local center = cc.p( size.width / 2 * scaleFactor, size.height / 2 * scaleFactor)
-        glNode:getGLProgramState():setUniformVec2("center", center)
-        return flowerLayer
+        local vSource = vertDefaultSource
+        local fSource = cc.FileUtils:getInstance():getStringFromFile("Shaders/example_Flower.fsh")
+        return createShaderNodeLayer(vSource, fSource)
     end
 
     local function createShaderJuliaTest()
-
-        local juliaLayer = cc.Layer:create()
-
-        InitTitle(juliaLayer)
-
-        local fileUtiles = cc.FileUtils:getInstance()
-        local vertSource = vertDefaultSource
-        local fragSource = fileUtiles:getStringFromFile("Shaders/example_Julia.fsh")
-        local glProgam = cc.GLProgram:createWithByteArrays(vertSource, fragSource)
-        local glprogramstate = cc.GLProgramState:getOrCreateWithGLProgram(glProgam)
-        local resolution = cc.p(256, 256)
-
-        local glNode  = gl.glNodeCreate()
-        glNode:setContentSize(cc.size(256, 256))
-        glNode:setAnchorPoint(cc.p(0.5, 0.5))
-        glNode:setGLProgramState(glprogramstate)
-        glNode:getGLProgramState():setUniformVec2("resolution", resolution)
-
-        local function updateJulia(fTime)
-            time = time + fTime
-        end
-
-        local function juliaDraw(transform, transformUpdated)
-            local w = 256
-            local h = 256
-
-            local vertices ={ 0,0, w,0, w,h, 0,0, 0,h, w,h }
-            local glProgramState = glNode:getGLProgramState()
-            glProgramState:setVertexAttribPointer("a_position", 2, gl.FLOAT, false, 0, vertices, #vertices)
-            glProgramState:apply(transform)
-            gl.drawArrays(gl.TRIANGLES, 0, 6)
-        end
-
-        juliaLayer:scheduleUpdateWithPriorityLua(updateJulia,0)
-        glNode:registerScriptDrawHandler(juliaDraw)
-        time = 0
-        juliaLayer:addChild(glNode,-10)
-        glNode:setPosition( size.width/2, size.height/2)
-        local center = cc.p( size.width / 2 * scaleFactor, size.height / 2 * scaleFactor)
-        glNode:getGLProgramState():setUniformVec2("center", center)
-        return juliaLayer
+        local vSource = vertDefaultSource
+        local fSource = cc.FileUtils:getInstance():getStringFromFile("Shaders/example_Julia.fsh")
+        return createShaderNodeLayer(vSource, fSource)
     end
 
     local function createGLGetActiveTest()
@@ -466,9 +309,9 @@ local function OpenGLTestMainLayer()
 
         local function getCurrentResult()
             local var = {}
-            local glProgam = sprite:getGLProgram()
-            if nil ~= glProgam then
-                local p = glProgam:getProgram()
+            local glProgram = sprite:getGLProgram()
+            if nil ~= glProgram then
+                local p = glProgram:getProgram()
                 local aaSize,aaType,aaName = gl.getActiveAttrib(p,0)
                 local strFmt = "size:"..aaSize.." type:"..aaType.." name:"..aaName
                 print(strFmt)

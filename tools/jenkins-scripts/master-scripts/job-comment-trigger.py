@@ -7,9 +7,9 @@ import traceback
 import urllib2
 
 http_proxy = ''
-if(os.environ.has_key('HTTP_PROXY')):
+if('HTTP_PROXY' in os.environ):
     http_proxy = os.environ['HTTP_PROXY']
-proxyDict = {'http':http_proxy,'https':http_proxy}
+proxyDict = {'http': http_proxy, 'https': http_proxy}
 
 def main():
     #get payload from os env
@@ -23,8 +23,8 @@ def main():
     #get pull number
     pr_num = issue['number']
     print 'pr_num:' + str(pr_num)
-    payload_forword = {"number":pr_num}
-    
+    payload_forword = {"number": pr_num}
+
     comment = payload['comment']
     #get comment body
     comment_body = comment['body']
@@ -38,12 +38,12 @@ def main():
     if searchCI is None and searchConsole is None:
         print 'skip build for pull request #' + str(pr_num)
         return(0)
-    
+
     #build for pull request action 'open' and 'synchronize', skip 'close'
     action = issue['state']
     print 'action: ' + action
     payload_forword['action'] = action
-    
+
     pr = issue['pull_request']
     url = pr['html_url']
     print "url:" + url
@@ -74,20 +74,23 @@ def main():
 
     #set commit status to pending
     target_url = os.environ['JOB_PULL_REQUEST_BUILD_URL']
-    
-    if(action == 'closed' or action == 'assigned'):
-        print 'pull request #' + str(pr_num) + ' is '+action+', no build triggered'
+
+    if(action == 'closed' or action == 'assigned'
+       or branch == 'v2' or branch == 'v3-doc' or action == 'unassigned'):
+        print 'pull request #' + str(pr_num) + ' is ' + action + ', no build triggered'
         return(0)
-    
-    data = {"state":"pending", "target_url":target_url, "context":"Jenkins CI", "description":"Wait available build machine..."}
+
+    data = {"state": "pending", "target_url": target_url, "context": "Jenkins CI",
+            "description": "Wait available build machine..."}
     access_token = os.environ['GITHUB_ACCESS_TOKEN']
-    Headers = {"Authorization":"token " + access_token} 
+    Headers = {"Authorization": "token " + access_token}
 
     try:
         if searchCI:
-          ciOper = searchCI.group()
-          if('rebuild' in ciOper):
-            requests.post(statuses_url, data=json.dumps(data), headers=Headers, proxies = proxyDict)
+            ciOper = searchCI.group()
+            if('rebuild' in ciOper):
+                requests.post(statuses_url, data=json.dumps(data),
+                              headers=Headers, proxies=proxyDict)
     except:
         traceback.print_exc()
 
@@ -95,15 +98,15 @@ def main():
     if searchCI:
         ciOper = searchCI.group()
         if('rebuild' in ciOper):
-          job_trigger_url = os.environ['JOB_PULL_REQUEST_BUILD_TRIGGER_URL']
+            job_trigger_url = os.environ['JOB_PULL_REQUEST_BUILD_TRIGGER_URL']
         if('emptytest' in ciOper):
-          job_trigger_url = os.environ['JOB_EMPTYTEST_TRIGGER_URL']
+            job_trigger_url = os.environ['JOB_EMPTYTEST_TRIGGER_URL']
         if('release' in ciOper):
-          searchTag = re.search('\[ci release (.*)\]', ciOper)
-          if searchTag:
-            ci_tag = searchTag.group(1)
-            payload_forword['tag'] = ci_tag
-            job_trigger_url = os.environ['JOB_RELEASE_TRIGGER_URL']
+            searchTag = re.search('\[ci release (.*)\]', ciOper)
+            if searchTag:
+                ci_tag = searchTag.group(1)
+                payload_forword['tag'] = ci_tag
+                job_trigger_url = os.environ['JOB_RELEASE_TRIGGER_URL']
     if searchConsole:
         consoleOper = searchConsole.group()
         job_trigger_url = os.environ['JOB_CONSOLE_TEST_TRIGGER_URL']
@@ -112,19 +115,19 @@ def main():
 
     #send trigger and payload
     if('tag' in payload_forword):
-      post_data = {'tag':""}
-      post_data['tag'] = payload_forword['tag']
+        post_data = {'tag': ""}
+        post_data['tag'] = payload_forword['tag']
     else:
-      post_data = {'payload':""}
-      post_data['payload']= json.dumps(payload_forword)
-    requests.post(job_trigger_url, data=post_data, proxies = proxyDict)
+        post_data = {'payload': ""}
+        post_data['payload'] = json.dumps(payload_forword)
+    requests.post(job_trigger_url, data=post_data, proxies=proxyDict)
 
     return(0)
 
 # -------------- main --------------
 if __name__ == '__main__':
     sys_ret = 0
-    try:    
+    try:
         sys_ret = main()
     except:
         traceback.print_exc()

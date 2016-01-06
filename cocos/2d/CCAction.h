@@ -30,10 +30,16 @@ THE SOFTWARE.
 
 #include "base/CCRef.h"
 #include "math/CCGeometry.h"
+#include "base/CCScriptSupport.h"
 
 NS_CC_BEGIN
 
 class Node;
+
+enum {
+    kActionUpdate
+};
+
 /**
  * @addtogroup actions
  * @{
@@ -109,7 +115,7 @@ public:
      * @param time A value between 0 and 1.
      */
     virtual void update(float time);
-    /** Return certain target..
+    /** Return certain target.
      *
      * @return A certain target.
      */
@@ -143,6 +149,16 @@ public:
      * @param tag Used to identify the action easily.
      */
     inline void setTag(int tag) { _tag = tag; }
+    /** Returns a flag field that is used to group the actions easily.
+     *
+     * @return A tag.
+     */
+    inline unsigned int getFlags() const { return _flags; }
+    /** Changes the flag field that is used to group the actions easily.
+     *
+     * @param tag Used to identify the action easily.
+     */
+    inline void setFlags(unsigned int flags) { _flags = flags; }
 
 CC_CONSTRUCTOR_ACCESS:
     Action();
@@ -159,7 +175,12 @@ protected:
     Node    *_target;
     /** The action tag. An identifier of the action. */
     int     _tag;
+    /** The action flag field. To categorize action into certain groups.*/
+    unsigned int _flags;
 
+#if CC_ENABLE_SCRIPT_BINDING
+    ccScriptType _scriptType;         ///< type of script binding, lua or javascript
+#endif
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Action);
 };
@@ -209,7 +230,6 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     //! Duration in seconds.
     float _duration;
-
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(FiniteTimeAction);
 };
@@ -285,17 +305,15 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Speed);
 };
 
-/** 
-@brief Follow is an action that "follows" a node.
-
-Eg:
-@code
-layer->runAction(Follow::actionWithTarget(hero));
-@endcode
-
-Instead of using Camera as a "follower", use this action instead.
-@since v0.99.2
-*/
+/** @class Follow
+ * @brief Follow is an action that "follows" a node.
+ * Eg:
+ * @code
+ * layer->runAction(Follow::actionWithTarget(hero));
+ * @endcode
+ * Instead of using Camera as a "follower", use this action instead.
+ * @since v0.99.2
+ */
 class CC_DLL Follow : public Action
 {
 public:
@@ -307,10 +325,21 @@ public:
      *              with no boundary.
      */
     static Follow* create(Node *followedNode, const Rect& rect = Rect::ZERO);
-    /** Return boundarySet.*/
+    /** Return boundarySet.
+     *
+     * @return Return boundarySet.
+     */
     inline bool isBoundarySet() const { return _boundarySet; }
-    /** Alter behavior - turn on/off boundary. */
+    /** Alter behavior - turn on/off boundary. 
+     *
+     * @param value Turn on/off boundary.
+     */
     inline void setBoundarySet(bool value) { _boundarySet = value; }
+    
+    /** @deprecated Alter behavior - turn on/off boundary. 
+     *
+     * @param value Turn on/off boundary.
+     */
     CC_DEPRECATED_ATTRIBUTE inline void setBoudarySet(bool value) { setBoundarySet(value); }
 
     //

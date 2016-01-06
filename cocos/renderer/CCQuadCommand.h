@@ -28,6 +28,11 @@
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgramState.h"
 
+/**
+ * @addtogroup renderer
+ * @{
+ */
+
 NS_CC_BEGIN
 
 /** 
@@ -46,7 +51,7 @@ public:
     /** Initializes the command.
      @param globalOrder GlobalZOrder of the command.
      @param textureID The openGL handle of the used texture.
-     @param glProgramState The specified glProgram and its uniform.
+     @param shader The specified glProgram and its uniform.
      @param blendType Blend function for the command.
      @param quads Rendered quads for the command.
      @param quadCount The number of quads when rendering.
@@ -55,6 +60,7 @@ public:
      */
     void init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const Mat4& mv, uint32_t flags);
+
     /**Deprecated function, the params is similar as the upper init function, with flags equals 0.*/
     CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const Mat4& mv);
@@ -83,7 +89,7 @@ protected:
     uint32_t _materialID;
     /**OpenGL handle for texture.*/
     GLuint _textureID;
-    /**GLprogramstate for the commmand. encapsulate shaders and uniforms.*/
+    /**GLprogramstate for the command. encapsulate shaders and uniforms.*/
     GLProgramState* _glProgramState;
     /**Blend function when rendering the triangles.*/
     BlendFunc _blendType;
@@ -97,4 +103,8 @@ protected:
 
 NS_CC_END
 
+/**
+ end of support group
+ @}
+ */
 #endif //_CC_QUADCOMMAND_H_

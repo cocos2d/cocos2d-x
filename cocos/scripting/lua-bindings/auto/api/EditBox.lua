@@ -36,7 +36,7 @@
 -- @return EditBox#EditBox self (return value: ccui.EditBox)
         
 --------------------------------
--- Set the placeholder's font name.<br>
+-- Set the placeholder's font name. only system font is allowed.<br>
 -- param pFontName The font name.
 -- @function [parent=#EditBox] setPlaceholderFontName 
 -- @param self
@@ -51,7 +51,7 @@
 -- @return char#char ret (return value: char)
         
 --------------------------------
--- Set the font name.<br>
+-- Set the font name. Only system font is allowed.<br>
 -- param pFontName The font name.
 -- @function [parent=#EditBox] setFontName 
 -- @param self
@@ -150,7 +150,7 @@
 -- @return EditBox#EditBox self (return value: ccui.EditBox)
         
 --------------------------------
--- Set the placeholder's font.<br>
+-- Set the placeholder's font. Only system font is allowed.<br>
 -- param pFontName The font name.<br>
 -- param fontSize The font size.
 -- @function [parent=#EditBox] setPlaceholderFont 
@@ -173,7 +173,7 @@
 -- @function [parent=#EditBox] initWithSizeAndBackgroundSprite
 -- @param self
 -- @param #size_table size
--- @param #string pNormal9SpriteBg
+-- @param #string normal9SpriteBg
 -- @param #int texType
 -- @return bool#bool ret (return value: bool)
 
@@ -228,7 +228,7 @@
 -- @return EditBox#EditBox self (return value: ccui.EditBox)
         
 --------------------------------
--- Set the font.<br>
+-- Set the font. Only system font is allowed.<br>
 -- param pFontName The font name.<br>
 -- param fontSize The font size.
 -- @function [parent=#EditBox] setFont 
@@ -253,6 +253,16 @@
 -- @function [parent=#EditBox] setAnchorPoint 
 -- @param self
 -- @param #vec2_table anchorPoint
+-- @return EditBox#EditBox self (return value: ccui.EditBox)
+        
+--------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#EditBox] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #mat4_table parentTransform
+-- @param #unsigned int parentFlags
 -- @return EditBox#EditBox self (return value: ccui.EditBox)
         
 --------------------------------
@@ -284,7 +294,8 @@
         
 --------------------------------
 -- Constructor.<br>
--- js ctor
+-- js ctor<br>
+-- lua new
 -- @function [parent=#EditBox] EditBox 
 -- @param self
 -- @return EditBox#EditBox self (return value: ccui.EditBox)

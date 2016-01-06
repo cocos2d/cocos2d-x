@@ -58,11 +58,11 @@ set(_OpenalSoft_inc_paths AL)
 set(_OpenalSoft_libs OpenAL32)
 
 set(_zlib_inc zlib.h)
-set(_zlib_libs libzlib)
+set(_zlib_libs z libzlib libz)
 
-set(_fmod_prefix FMODEX)
-set(_fmod_inc fmod.h)
-set(_fmod_libs fmodex fmodex64 fmodexL fmodexL64)
+set(_fmod_prefix FMOD)
+set(_fmod_inc fmod.hpp)
+set(_fmod_libs fmod fmod64 fmod fmod64)
 
 set(all_prebuilt_libs
   chipmunk
@@ -77,7 +77,7 @@ set(all_prebuilt_libs
 
 
 if(MACOSX)
-  list(APPEND all_prebuilt_libs glfw3)
+  list(APPEND all_prebuilt_libs glfw3 zlib)
 endif()
 
 # We use MSVC instead of WINDOWS because it can be mingw that can't use our prebuilt libs

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,6 +24,10 @@
 
 #ifndef HTTP_COOKIE_H
 #define HTTP_COOKIE_H
+/// @cond DO_NOT_SHOW
+
+#include <string>
+#include <vector>
 
 struct CookiesInfo
 {
@@ -53,4 +57,5 @@ private:
     std::vector<CookiesInfo> _cookies;
 };
 
+/// @endcond
 #endif /* HTTP_COOKIE_H */

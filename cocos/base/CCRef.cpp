@@ -41,12 +41,17 @@ static void untrackRef(Ref* ref);
 
 Ref::Ref()
 : _referenceCount(1) // when the Ref is created, the reference count of it is 1
+#if CC_ENABLE_SCRIPT_BINDING
+, _luaID (0)
+, _scriptObject(nullptr)
+, _rooted(false)
+, _scriptOwned(false)
+,_referenceCountAtRootTime(0)
+#endif
 {
 #if CC_ENABLE_SCRIPT_BINDING
     static unsigned int uObjectCount = 0;
-    _luaID = 0;
     _ID = ++uObjectCount;
-    _scriptObject = nullptr;
 #endif
     
 #if CC_REF_LEAK_DETECTION
@@ -56,7 +61,7 @@ Ref::Ref()
 
 Ref::~Ref()
 {
-#if CC_ENABLE_SCRIPT_BINDING
+#if CC_ENABLE_SCRIPT_BINDING && not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     // if the object is referenced by Lua engine, remove it
     if (_luaID)
     {
@@ -83,12 +88,35 @@ void Ref::retain()
 {
     CCASSERT(_referenceCount > 0, "reference count should be greater than 0");
     ++_referenceCount;
+
+#if CC_ENABLE_SCRIPT_BINDING && CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    if (_scriptOwned && !_rooted)
+    {
+        auto scriptMgr = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (scriptMgr && scriptMgr->getScriptType() == kScriptTypeJavascript)
+        {
+            _referenceCountAtRootTime = _referenceCount-1;
+            scriptMgr->rootObject(this);
+        }
+    }
+#endif // CC_ENABLE_SCRIPT_BINDING
 }
 
 void Ref::release()
 {
     CCASSERT(_referenceCount > 0, "reference count should be greater than 0");
     --_referenceCount;
+
+#if CC_ENABLE_SCRIPT_BINDING && CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    if (_scriptOwned && _rooted && _referenceCount==/*_referenceCountAtRootTime*/ 1)
+    {
+        auto scriptMgr = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (scriptMgr && scriptMgr->getScriptType() == kScriptTypeJavascript)
+        {
+            scriptMgr->unrootObject(this);
+        }
+    }
+#endif // CC_ENABLE_SCRIPT_BINDING
 
     if (_referenceCount == 0)
     {

@@ -272,8 +272,8 @@ void PUBeamRender::prepare()
         for (size_t numDev = 0; numDev < _numberOfSegments; ++numDev)
         {
             // Initialise the positions
-            visualData->half[numDev] = Vec3::ZERO;
-            visualData->destinationHalf[numDev] = Vec3::ZERO;
+            visualData->half[numDev].setZero();
+            visualData->destinationHalf[numDev].setZero();
         }
         _allVisualData.push_back(visualData); // Managed by this renderer
         _visualData.push_back(visualData); // Used to assign to a particle
@@ -357,10 +357,9 @@ PUBeamRender* PUBeamRender::clone()
     return br;
 }
 
-void PUBeamRender::copyAttributesTo( PURender *render )
+void PUBeamRender::copyAttributesTo(PUBeamRender *beamRender)
 {
-    PURender::copyAttributesTo(render);
-    PUBeamRender *beamRender = static_cast<PUBeamRender*>(render);
+    PURender::copyAttributesTo(beamRender);
     beamRender->setUseVertexColours(_useVertexColours);
     beamRender->setMaxChainElements(_maxChainElements);
     beamRender->setUpdateInterval(_updateInterval);

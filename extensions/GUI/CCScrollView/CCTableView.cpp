@@ -55,7 +55,7 @@ bool TableView::initWithViewSize(Size size, Node* container/* = nullptr*/)
     if (ScrollView::initWithViewSize(size,container))
     {
         CC_SAFE_DELETE(_indices);
-        _indices        = new std::set<ssize_t>();
+        _indices        = new (std::nothrow) std::set<ssize_t>();
         _vordering      = VerticalFillOrder::BOTTOM_UP;
         this->setDirection(Direction::VERTICAL);
 
@@ -320,10 +320,10 @@ Vec2 TableView::__offsetFromIndex(ssize_t index)
     switch (this->getDirection())
     {
         case Direction::HORIZONTAL:
-            offset = Vec2(_vCellsPositions[index], 0.0f);
+            offset.set(_vCellsPositions[index], 0.0f);
             break;
         default:
-            offset = Vec2(0.0f, _vCellsPositions[index]);
+            offset.set(0.0f, _vCellsPositions[index]);
             break;
     }
 

@@ -58,6 +58,8 @@ static const char* Property_Alpha           = "Alpha";
 static const char* Property_AnchorPoint     = "AnchorPoint";
 static const char* Property_ZOrder          = "ZOrder";
 static const char* Property_ActionValue     = "ActionValue";
+static const char* Property_BlendValue      = "BlendFunc";
+
 
 static const char* ACTION           = "action";
 static const char* DURATION         = "duration";
@@ -137,7 +139,6 @@ ActionTimeline* ActionTimelineCache::createAction(const std::string& filename)
     std::string path = filename;
     size_t pos = path.find_last_of('.');
     std::string suffix = path.substr(pos + 1, path.length());
-    CCLOG("suffix = %s", suffix.c_str());
     
     ActionTimelineCache* cache = ActionTimelineCache::getInstance();
     
@@ -183,7 +184,7 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithContent(const std::s
     doc.Parse<0>(content.c_str());
     if (doc.HasParseError()) 
     {
-        CCLOG("GetParseError %s\n", doc.GetParseError());
+        CCLOG("GetParseError %d\n", doc.GetParseError());
     }
 
     const rapidjson::Value& json = DICTOOL->getSubDictionary_json(doc, ACTION);
@@ -350,12 +351,10 @@ Frame* ActionTimelineCache::loadColorFrame(const rapidjson::Value& json)
 {
     ColorFrame* frame = ColorFrame::create();
 
-    GLubyte alpha = (GLubyte)DICTOOL->getIntValue_json(json, ALPHA);
     GLubyte red   = (GLubyte)DICTOOL->getIntValue_json(json, RED);
     GLubyte green = (GLubyte)DICTOOL->getIntValue_json(json, GREEN);
     GLubyte blue  = (GLubyte)DICTOOL->getIntValue_json(json, BLUE);
 
-    frame->setAlpha(alpha);
     frame->setColor(Color3B(red, green, blue));
 
     return frame;
@@ -429,12 +428,38 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFlatBuffersFile(cons
     CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
     
     Data buf = FileUtils::getInstance()->getDataFromFile(fullPath);
-    
-    auto csparsebinary = GetCSParseBinary(buf.getBytes());
-    
-    auto nodeAction = csparsebinary->action();    
-    action = ActionTimeline::create();
-    
+    action = createActionWithDataBuffer(buf);
+    _animationActions.insert(fileName, action);
+
+    return action;
+}
+
+ActionTimeline* ActionTimelineCache::loadAnimationWithDataBuffer(const cocos2d::Data data, const std::string fileName)
+{
+    // if already exists an action with filename, then return this action
+    ActionTimeline* action = _animationActions.at(fileName);
+    if (action)
+        return action;
+
+    std::string path = fileName;
+
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName.c_str());
+
+    CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
+
+    action = createActionWithDataBuffer(data);
+    _animationActions.insert(fileName, action);
+
+    return action;
+}
+
+inline ActionTimeline* ActionTimelineCache::createActionWithDataBuffer(const cocos2d::Data data)
+{
+    auto csparsebinary = GetCSParseBinary(data.getBytes());
+
+    auto nodeAction = csparsebinary->action();
+    auto action = ActionTimeline::create();
+
     int duration = nodeAction->duration();
     action->setDuration(duration);
     float speed = nodeAction->speed();
@@ -452,19 +477,23 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFlatBuffersFile(cons
         action->addAnimationInfo(info);
     }
 
-    auto timelines = nodeAction->timeLines();
-    int timelineLength = timelines->size();
+    auto timeLines = nodeAction->timeLines();
+    int timelineLength = timeLines->size();
+    std::multimap<std::string, cocostudio::timeline::Timeline*> properTimelineMap;// order the timelines depends property name
     for (int i = 0; i < timelineLength; i++)
     {
-        auto timelineFlatBuf = timelines->Get(i);
+        auto timelineFlatBuf = timeLines->Get(i);
         Timeline* timeline = loadTimelineWithFlatBuffers(timelineFlatBuf);
-        
         if (timeline)
-            action->addTimeline(timeline);
+        {
+            properTimelineMap.insert(std::make_pair(timelineFlatBuf->property()->c_str(), timeline));
+        }
     }
-    
-    _animationActions.insert(fileName, action);
-    
+
+    for (const auto& properTimelinePair : properTimelineMap)
+    {
+        action->addTimeline(properTimelinePair.second);
+    }
     return action;
 }
 
@@ -477,7 +506,6 @@ Timeline* ActionTimelineCache::loadTimelineWithFlatBuffers(const flatbuffers::Ti
     if(property == "")
         return nullptr;
     
-    CCLOG("property = %s", property.c_str());
     
     if(property != "")
     {
@@ -549,7 +577,12 @@ Timeline* ActionTimelineCache::loadTimelineWithFlatBuffers(const flatbuffers::Ti
                 auto innerActionFrame = frameFlatbuf->innerActionFrame();
                 frame = loadInnerActionFrameWithFlatBuffers(innerActionFrame);
             }
-            
+            else if (property == Property_BlendValue)
+            {
+                auto blendFrame = frameFlatbuf->blendFrame();
+                frame = loadBlendFrameWithFlatBuffers(blendFrame);
+            }
+
             if (!frame)
             {
                 CCLOG("frame is invalid.");
@@ -576,6 +609,12 @@ Frame* ActionTimelineCache::loadVisibleFrameWithFlatBuffers(const flatbuffers::B
     bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
     
+    auto easingData = flatbuffers->easingData();
+    if (easingData)
+    {
+        loadEasingDataWithFlatBuffers(frame, easingData);
+    }
+    
     return frame;
 }
     
@@ -592,6 +631,12 @@ Frame* ActionTimelineCache::loadPositionFrameWithFlatBuffers(const flatbuffers::
     
     bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
+    
+    auto easingData = flatbuffers->easingData();
+    if (easingData)
+    {
+        loadEasingDataWithFlatBuffers(frame, easingData);
+    }
     
     return frame;
 }
@@ -611,6 +656,12 @@ Frame* ActionTimelineCache::loadScaleFrameWithFlatBuffers(const flatbuffers::Sca
     bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
     
+    auto easingData = flatbuffers->easingData();
+    if (easingData)
+    {
+        loadEasingDataWithFlatBuffers(frame, easingData);
+    }
+    
     return frame;
 }
 
@@ -629,6 +680,12 @@ Frame* ActionTimelineCache::loadRotationSkewFrameWithFlatBuffers(const flatbuffe
     bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
     
+    auto easingData = flatbuffers->easingData();
+    if (easingData)
+    {
+        loadEasingDataWithFlatBuffers(frame, easingData);
+    }
+    
     return frame;
 }
 
@@ -645,6 +702,12 @@ Frame* ActionTimelineCache::loadColorFrameWithFlatBuffers(const flatbuffers::Col
     
     bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
+    
+    auto easingData = flatbuffers->easingData();
+    if (easingData)
+    {
+        loadEasingDataWithFlatBuffers(frame, easingData);
+    }
     
     return frame;
 }
@@ -703,6 +766,12 @@ Frame* ActionTimelineCache::loadTextureFrameWithFlatBuffers(const flatbuffers::T
     bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
     
+    auto easingData = flatbuffers->easingData();
+    if (easingData)
+    {
+        loadEasingDataWithFlatBuffers(frame, easingData);
+    }
+    
     return frame;
 }
     
@@ -713,15 +782,19 @@ Frame* ActionTimelineCache::loadEventFrameWithFlatBuffers(const flatbuffers::Eve
     std::string event = flatbuffers->value()->c_str();
     
     if (event != "")
-        frame->setEvent(event);
-    
-    CCLOG("event = %s", event.c_str());
+        frame->setEvent(event);    
     
     int frameIndex = flatbuffers->frameIndex();
     frame->setFrameIndex(frameIndex);
     
     bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
+    
+    auto easingData = flatbuffers->easingData();
+    if (easingData)
+    {
+        loadEasingDataWithFlatBuffers(frame, easingData);
+    }
     
     return frame;
 }
@@ -743,22 +816,28 @@ Frame* ActionTimelineCache::loadAlphaFrameWithFlatBuffers(const flatbuffers::Int
     return frame;
 }
     
-    Frame* ActionTimelineCache::loadAnchorPointFrameWithFlatBuffers(const flatbuffers::ScaleFrame *flatbuffers)
+Frame* ActionTimelineCache::loadAnchorPointFrameWithFlatBuffers(const flatbuffers::ScaleFrame *flatbuffers)
+{
+    AnchorPointFrame* frame = AnchorPointFrame::create();
+    
+    auto f_scale = flatbuffers->scale();
+    Vec2 scale(f_scale->scaleX(), f_scale->scaleY());
+    frame->setAnchorPoint(scale);
+    
+    int frameIndex = flatbuffers->frameIndex();
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = flatbuffers->tween() != 0;
+    frame->setTween(tween);
+    
+    auto easingData = flatbuffers->easingData();
+    if (easingData)
     {
-        AnchorPointFrame* frame = AnchorPointFrame::create();
-        
-        auto f_scale = flatbuffers->scale();
-        Vec2 scale(f_scale->scaleX(), f_scale->scaleY());
-        frame->setAnchorPoint(scale);
-        
-        int frameIndex = flatbuffers->frameIndex();
-        frame->setFrameIndex(frameIndex);
-        
-        bool tween = flatbuffers->tween() != 0;
-        frame->setTween(tween);
-        
-        return frame;
+        loadEasingDataWithFlatBuffers(frame, easingData);
     }
+    
+    return frame;
+}
     
 Frame* ActionTimelineCache::loadZOrderFrameWithFlatBuffers(const flatbuffers::IntFrame *flatbuffers)
 {
@@ -773,6 +852,12 @@ Frame* ActionTimelineCache::loadZOrderFrameWithFlatBuffers(const flatbuffers::In
     
     bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
+    
+    auto easingData = flatbuffers->easingData();
+    if (easingData)
+    {
+        loadEasingDataWithFlatBuffers(frame, easingData);
+    }
     
     return frame;
 }
@@ -799,7 +884,60 @@ Frame* ActionTimelineCache::loadInnerActionFrameWithFlatBuffers(const flatbuffer
     frame->setEnterWithName(true);
     frame->setAnimationName(currentAnimationFrame);
     
+    auto easingData = flatbuffers->easingData();
+    if (easingData)
+    {
+        loadEasingDataWithFlatBuffers(frame, easingData);
+    }
+    
     return frame;
+}
+    
+Frame* ActionTimelineCache::loadBlendFrameWithFlatBuffers(const flatbuffers::BlendFrame* flatbuffers)
+{
+    BlendFuncFrame* frame = BlendFuncFrame::create();
+    cocos2d::BlendFunc blend;
+    blend.src = GL_ONE;
+    blend.dst = GL_ONE_MINUS_SRC_ALPHA;
+    if (nullptr != flatbuffers->blendFunc())
+    {
+        blend.src = flatbuffers->blendFunc()->src();
+        blend.dst = flatbuffers->blendFunc()->dst();
+    }
+    frame->setBlendFunc(blend);
+
+    int frameIndex = flatbuffers->frameIndex();
+    frame->setFrameIndex(frameIndex);
+
+    bool tween = flatbuffers->tween() != 0;
+    frame->setTween(tween);
+
+    // easing data won't use in blend frame
+    //auto easingData = flatbuffers->easingData();
+    //if (easingData)
+    //{
+    //    loadEasingDataWithFlatBuffers(frame, easingData);
+    //}
+
+    return frame;
+}
+
+void ActionTimelineCache::loadEasingDataWithFlatBuffers(cocostudio::timeline::Frame *frame,
+                                                        const flatbuffers::EasingData *flatbuffers)
+{
+    int type = flatbuffers->type();
+    frame->setTweenType((cocos2d::tweenfunc::TweenType)type);
+    auto points = flatbuffers->points();
+    if (points)
+    {
+        std::vector<float> easings;
+        for (auto it = points->begin(); it != points->end(); ++it)
+        {
+            easings.push_back(it->x());
+            easings.push_back(it->y());
+        }
+        frame->setEasingParams(easings);
+    }
 }
     
 ActionTimeline* ActionTimelineCache::createActionWithFlatBuffersForSimulator(const std::string& fileName)
@@ -835,17 +973,22 @@ ActionTimeline* ActionTimelineCache::createActionWithFlatBuffersForSimulator(con
 
     auto timeLines = nodeAction->timeLines();
     int timelineLength = timeLines->size();
+    std::multimap<std::string, cocostudio::timeline::Timeline*> properTimelineMap;// order the timelines depends property name
     for (int i = 0; i < timelineLength; i++)
     {
         auto timelineFlatBuf = timeLines->Get(i);
         Timeline* timeline = loadTimelineWithFlatBuffers(timelineFlatBuf);
-        
         if (timeline)
-            action->addTimeline(timeline);
+        {
+            properTimelineMap.insert(std::make_pair(timelineFlatBuf->property()->c_str(), timeline));
+        }
     }
-    
+
+    for (const auto& properTimelinePair : properTimelineMap)
+    {
+        action->addTimeline(properTimelinePair.second);
+    }
     fbs->deleteFlatBufferBuilder();
-    
     return action;
 }
 

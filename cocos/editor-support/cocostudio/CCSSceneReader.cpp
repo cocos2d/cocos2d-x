@@ -56,15 +56,8 @@ const char* SceneReader::sceneReaderVersion()
 
 cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName, AttachComponentType attachComponent /*= AttachComponentType::EMPTY_NODE*/)
 {
-    std::string reDir = fileName;
-    std::string file_extension = "";
-    size_t pos = reDir.find_last_of('.');
-    if (pos != std::string::npos)
-    {
-        file_extension = reDir.substr(pos, reDir.length());
-        std::transform(file_extension.begin(),file_extension.end(), file_extension.begin(), (int(*)(int))toupper);
-    }
-    if (file_extension == ".JSON")
+    std::string fileExtension = cocos2d::FileUtils::getInstance()->getFileExtension(fileName);
+    if (fileExtension == ".json")
     {
         _node = nullptr;
         rapidjson::Document jsonDict;
@@ -76,10 +69,10 @@ cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName,
         
         return _node;
     }
-    else if(file_extension == ".CSB")
+    else if(fileExtension == ".csb")
     {
         do {
-            std::string binaryFilePath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
+            std::string binaryFilePath = FileUtils::getInstance()->fullPathForFilename(fileName);
             auto fileData = FileUtils::getInstance()->getDataFromFile(binaryFilePath);
             auto fileDataBytes = fileData.getBytes();
             CC_BREAK_IF(fileData.isNull());
@@ -117,7 +110,6 @@ cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName,
                         {
                             pCom = createComponent(comName);
                         }
-                        CCLOG("classname = %s", comName);
                         if (pCom != nullptr)
                         {
                             data->_rData = nullptr;
@@ -230,15 +222,15 @@ std::string SceneReader::getComponentClassName(const std::string &name)
     {
         comName = "ComRender";
     }
-    else if (name == "CCComAudio" || name == "CCBackgroundAudio")
+    else if (name == ComAudio::COMPONENT_NAME || name == "CCBackgroundAudio")
     {
         comName = "ComAudio";
     }
-    else if (name == "CCComController")
+    else if (name == ComController::COMPONENT_NAME)
     {
         comName = "ComController";
     }
-    else if (name == "CCComAttribute")
+    else if (name == ComAttribute::COMPONENT_NAME)
     {
         comName = "ComAttribute";
     }
@@ -277,7 +269,6 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
             }
             const char *comName = DICTOOL->getStringValue_json(subDict, "classname");
             Component *com = this->createComponent(comName);
-            CCLOG("classname = %s", comName);
             SerData *data = new (std::nothrow) SerData();
             if (com != nullptr)
             {
@@ -340,12 +331,16 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
             createObject(subDict, gb, attachComponent);
         }
         
-        const rapidjson::Value &canvasSizeDict = DICTOOL->getSubDictionary_json(dict, "CanvasSize");
-        if (DICTOOL->checkObjectExist_json(canvasSizeDict))
+        if(dict.HasMember("CanvasSize"))
         {
-            int width = DICTOOL->getIntValue_json(canvasSizeDict, "_width");
-            int height = DICTOOL->getIntValue_json(canvasSizeDict, "_height");
-            gb->setContentSize(Size(width, height));
+            const rapidjson::Value &canvasSizeDict = DICTOOL->getSubDictionary_json(dict, "CanvasSize");
+            if (DICTOOL->checkObjectExist_json(canvasSizeDict))
+            {
+                int width = DICTOOL->getIntValue_json(canvasSizeDict, "_width");
+                int height = DICTOOL->getIntValue_json(canvasSizeDict, "_height");
+                gb->setContentSize(Size(width, height));
+            }
+
         }
         
         return gb;
@@ -391,7 +386,6 @@ cocos2d::Node* SceneReader::createObject(CocoLoader *cocoLoader, stExpCocoNode *
             {
                 pCom = createComponent(comName);
             }
-            CCLOG("classname = %s", comName);
             if (pCom != nullptr)
             {
                 data->_rData = nullptr;
@@ -425,7 +419,7 @@ cocos2d::Node* SceneReader::createObject(CocoLoader *cocoLoader, stExpCocoNode *
         {
             if (pRender == nullptr || attachComponent == AttachComponentType::EMPTY_NODE)
             {
-                gb = CCNode::create();
+                gb = Node::create();
                 if (pRender != nullptr)
                 {
                     _vecComs.push_back(pRender);

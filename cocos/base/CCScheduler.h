@@ -38,11 +38,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-/**
- * @addtogroup global
- * @{
- */
-
 class Scheduler;
 
 typedef std::function<void(float)> ccSchedulerFunc;
@@ -62,7 +57,7 @@ public:
     
     void setupTimerWithInterval(float seconds, unsigned int repeat, float delay);
     
-    virtual void trigger() = 0;
+    virtual void trigger(float dt) = 0;
     virtual void cancel() = 0;
     
     /** triggers the timer */
@@ -91,7 +86,7 @@ public:
     
     inline SEL_SCHEDULE getSelector() const { return _selector; };
     
-    virtual void trigger() override;
+    virtual void trigger(float dt) override;
     virtual void cancel() override;
     
 protected:
@@ -111,7 +106,7 @@ public:
     inline const ccSchedulerFunc& getCallback() const { return _callback; };
     inline const std::string& getKey() const { return _key; };
     
-    virtual void trigger() override;
+    virtual void trigger(float dt) override;
     virtual void cancel() override;
     
 protected:
@@ -128,7 +123,7 @@ public:
     bool initWithScriptHandler(int handler, float seconds);
     inline int getScriptHandler() const { return _scriptHandler; };
     
-    virtual void trigger() override;
+    virtual void trigger(float dt) override;
     virtual void cancel() override;
     
 private:
@@ -141,6 +136,10 @@ private:
  * @endcond
  */
 
+/**
+ * @addtogroup base
+ * @{
+ */
 
 struct _listEntry;
 struct _hashSelectorEntry;
@@ -349,7 +348,7 @@ public:
     
 #if CC_ENABLE_SCRIPT_BINDING
     /** Unschedule a script entry. 
-     * @warn Don't invoke this function unless you know what you are doing.
+     * @warning Don't invoke this function unless you know what you are doing.
      * @js NA
      * @lua NA
      */
@@ -368,7 +367,7 @@ public:
      */
     bool isScheduled(const std::string& key, void *target);
     
-    /** Checks whether a selector for a given taget is scheduled.
+    /** Checks whether a selector for a given target is scheduled.
      @param selector The selector to be checked.
      @param target The target of the callback.
      @return True if the specified selector is invoked, false if not.
@@ -476,7 +475,7 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE void unscheduleSelector(SEL_SCHEDULE selector, Ref *target) { unschedule(selector, target); };
     
-    /** Checks whether a selector for a given taget is scheduled.
+    /** Checks whether a selector for a given target is scheduled.
      @deprecated Please use 'Scheduler::isScheduled' instead.
      @since v0.99.3
      @js NA
@@ -535,8 +534,8 @@ protected:
     std::mutex _performMutex;
 };
 
-// end of global group
-/// @}
+// end of base group
+/** @} */
 
 NS_CC_END
 

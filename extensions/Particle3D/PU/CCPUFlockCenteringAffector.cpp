@@ -30,8 +30,6 @@ NS_CC_BEGIN
 //-----------------------------------------------------------------------
 PUFlockCenteringAffector::PUFlockCenteringAffector() 
 : PUAffector(),
-  _sum(Vec3::ZERO),
-  _average(Vec3::ZERO),
   _count(0.0f)
 {
 }
@@ -62,7 +60,7 @@ void PUFlockCenteringAffector::preUpdateAffector( float deltaTime )
     {
         _average = getDerivedPosition(); // Set to position of the affector
     }
-    _sum = Vec3::ZERO;
+    _sum.setZero();
     _count = 0;
 }
 

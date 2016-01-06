@@ -25,6 +25,13 @@
 -- @return bool#bool ret (return value: bool)
 
 --------------------------------
+-- 
+-- @function [parent=#Node] setPhysicsBody 
+-- @param self
+-- @param #cc.Component physicsBody
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
 -- Gets the description string. It makes debugging easier.<br>
 -- return A string<br>
 -- js NA<br>
@@ -40,7 +47,8 @@
 -- 0 is the default rotation angle.<br>
 -- Positive values rotate node clockwise, and negative values for anti-clockwise.<br>
 -- param rotationY    The Y rotation in degrees.<br>
--- warning The physics body doesn't support this.
+-- warning The physics body doesn't support this.<br>
+-- js setRotationY
 -- @function [parent=#Node] setRotationSkewY 
 -- @param self
 -- @param #float rotationY
@@ -117,6 +125,12 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
+-- 
+-- @function [parent=#Node] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  get & set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true 
 -- @function [parent=#Node] getCameraMask 
 -- @param self
@@ -169,7 +183,8 @@
 -- 0 is the default rotation angle.<br>
 -- Positive values rotate node clockwise, and negative values for anti-clockwise.<br>
 -- param rotationX    The X rotation in degrees which performs a horizontal rotational skew.<br>
--- warning The physics body doesn't support this.
+-- warning The physics body doesn't support this.<br>
+-- js setRotationX
 -- @function [parent=#Node] setRotationSkewX 
 -- @param self
 -- @param #float rotationX
@@ -189,7 +204,7 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
--- 
+-- / @} end of component functions
 -- @function [parent=#Node] getOpacity 
 -- @param self
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
@@ -227,7 +242,8 @@
         
 --------------------------------
 -- Returns the position (X,Y,Z) in its parent's coordinate system.<br>
--- return The position (X, Y, and Z) in its parent's coordinate system.
+-- return The position (X, Y, and Z) in its parent's coordinate system.<br>
+-- js NA
 -- @function [parent=#Node] getPosition3D 
 -- @param self
 -- @return vec3_table#vec3_table ret (return value: vec3_table)
@@ -297,6 +313,14 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
+-- Removes all actions from the running action list by its flags.<br>
+-- param flags   A flag field that removes actions based on bitwise AND.
+-- @function [parent=#Node] stopActionsByFlags 
+-- @param self
+-- @param #unsigned int flags
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
 --  Sets the position (x,y) using values between 0 and 1.<br>
 -- The positions in pixels is calculated like the following:<br>
 -- code pseudo code<br>
@@ -336,11 +360,13 @@
 -- @return Node#Node self (return value: cc.Node)
 
 --------------------------------
--- 
--- @function [parent=#Node] getNodeToParentAffineTransform 
+-- @overload self, cc.Node         
+-- @overload self         
+-- @function [parent=#Node] getNodeToParentAffineTransform
 -- @param self
+-- @param #cc.Node ancestor
 -- @return AffineTransform#AffineTransform ret (return value: cc.AffineTransform)
-        
+
 --------------------------------
 -- 
 -- @function [parent=#Node] isCascadeOpacityEnabled 
@@ -372,19 +398,20 @@
         
 --------------------------------
 -- Returns the rotation (X,Y,Z) in degrees.<br>
--- return The rotation of the node in 3d.
+-- return The rotation of the node in 3d.<br>
+-- js NA
 -- @function [parent=#Node] getRotation3D 
 -- @param self
 -- @return vec3_table#vec3_table ret (return value: vec3_table)
         
 --------------------------------
--- Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.<br>
--- The matrix is in Pixels.<br>
--- return The transformation matrix.
--- @function [parent=#Node] getNodeToParentTransform 
+-- @overload self, cc.Node         
+-- @overload self         
+-- @function [parent=#Node] getNodeToParentTransform
 -- @param self
+-- @param #cc.Node ancestor
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
-        
+
 --------------------------------
 -- converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).<br>
 -- param touch A given touch.<br>
@@ -402,6 +429,12 @@
 -- @param self
 -- @param #vec2_table worldPoint
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] isOpacityModifyRGB 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @overload self, float, float         
@@ -461,7 +494,8 @@
 -- In order to use this property correctly.<br>
 -- `setPositionZ()` also sets the `setGlobalZValue()` with the positionZ as value.<br>
 -- see `setGlobalZValue()`<br>
--- param positionZ  OpenGL Z vertex of this node.
+-- param positionZ  OpenGL Z vertex of this node.<br>
+-- js setVertexZ
 -- @function [parent=#Node] setPositionZ 
 -- @param self
 -- @param #float positionZ
@@ -471,7 +505,8 @@
 -- Sets the rotation (X,Y,Z) in degrees.<br>
 -- Useful for 3d rotations.<br>
 -- warning The physics body doesn't support this.<br>
--- param rotation The rotation of the node in 3d.
+-- param rotation The rotation of the node in 3d.<br>
+-- js NA
 -- @function [parent=#Node] setRotation3D 
 -- @param self
 -- @param #vec3_table rotation
@@ -561,7 +596,7 @@
 -- Executes an action, and returns the action that is executed.<br>
 -- This node becomes the action's target. Refer to Action::getTarget().<br>
 -- warning Actions don't retain their target.<br>
--- param An Action pointer
+-- param action An Action pointer.
 -- @function [parent=#Node] runAction 
 -- @param self
 -- @param #cc.Action action
@@ -578,18 +613,18 @@
 -- @return Node#Node self (return value: cc.Node)
 
 --------------------------------
--- 
--- @function [parent=#Node] isOpacityModifyRGB 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
 -- Returns the rotation of the node in degrees.<br>
 -- see `setRotation(float)`<br>
 -- return The rotation of the node in degrees.
 -- @function [parent=#Node] getRotation 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] getPhysicsBody 
+-- @param self
+-- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
         
 --------------------------------
 -- Returns the anchorPoint in absolute pixels.<br>
@@ -620,7 +655,7 @@
 --------------------------------
 -- Sets a Scheduler object that is used to schedule all "updates" and timers.<br>
 -- warning If you set a new Scheduler, then previously created timers/update are going to be removed.<br>
--- param scheduler     A Shdeduler object that is used to schedule all "update" and timers.
+-- param scheduler     A Scheduler object that is used to schedule all "update" and timers.
 -- @function [parent=#Node] setScheduler 
 -- @param self
 -- @param #cc.Scheduler scheduler
@@ -741,7 +776,8 @@
 --------------------------------
 -- Gets position Z coordinate of this node.<br>
 -- see setPositionZ(float)<br>
--- return The position Z coordinate of this node.
+-- return The position Z coordinate of this node.<br>
+-- js getVertexZ
 -- @function [parent=#Node] getPositionZ 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -762,7 +798,7 @@
         
 --------------------------------
 -- Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter.<br>
--- param tag       An interger number that identifies a child node.<br>
+-- param tag       An integer number that identifies a child node.<br>
 -- param cleanup   True if all running actions and callbacks on the child node will be cleanup, false otherwise.<br>
 -- Please use `removeChildByName` instead.
 -- @function [parent=#Node] removeChildByTag 
@@ -827,7 +863,7 @@
 -- The only exception if the Nodes have a Global Z Order == 0. In that case, the Scene Graph order is used.<br>
 -- By default, all nodes have a Global Z Order = 0. That means that by default, the Scene Graph order is used to render the nodes.<br>
 -- Global Z Order is useful when you need to render nodes in an order different than the Scene Graph order.<br>
--- Limitations: Global Z Order can't be used used by Nodes that have SpriteBatchNode as one of their acenstors.<br>
+-- Limitations: Global Z Order can't be used by Nodes that have SpriteBatchNode as one of their ancestors.<br>
 -- And if ClippingNode is one of the ancestors, then "global Z order" will be relative to the ClippingNode.<br>
 -- see `setLocalZOrder()`<br>
 -- see `setVertexZ()`<br>
@@ -1020,7 +1056,8 @@
 
 --------------------------------
 -- Sets the position (X, Y, and Z) in its parent's coordinate system.<br>
--- param position The position (X, Y, and Z) in its parent's coordinate system.
+-- param position The position (X, Y, and Z) in its parent's coordinate system.<br>
+-- js NA
 -- @function [parent=#Node] setPosition3D 
 -- @param self
 -- @param #vec3_table position
@@ -1036,7 +1073,7 @@
         
 --------------------------------
 -- Sorts the children array once before drawing, instead of every time when a child is added or reordered.<br>
--- This appraoch can improves the performance massively.<br>
+-- This approach can improves the performance massively.<br>
 -- note Don't call this manually unless a child added needs to be removed in the same frame.
 -- @function [parent=#Node] sortAllChildren 
 -- @param self
@@ -1081,7 +1118,8 @@
 --------------------------------
 -- Gets the X rotation (angle) of the node in degrees which performs a horizontal rotation skew.<br>
 -- see `setRotationSkewX(float)`<br>
--- return The X rotation in degrees.
+-- return The X rotation in degrees.<br>
+-- js getRotationX 
 -- @function [parent=#Node] getRotationSkewX 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -1089,7 +1127,8 @@
 --------------------------------
 -- Gets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.<br>
 -- see `setRotationSkewY(float)`<br>
--- return The Y rotation in degrees.
+-- return The Y rotation in degrees.<br>
+-- js getRotationY
 -- @function [parent=#Node] getRotationSkewY 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -1131,5 +1170,11 @@
 -- @function [parent=#Node] create 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] Node 
+-- @param self
+-- @return Node#Node self (return value: cc.Node)
         
 return nil

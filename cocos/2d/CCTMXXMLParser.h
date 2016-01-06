@@ -2,7 +2,7 @@
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,6 +28,8 @@ THE SOFTWARE.
 
 #ifndef __CC_TM_XML_PARSER__
 #define __CC_TM_XML_PARSER__
+
+/// @cond DO_NOT_SHOW
 
 #include "math/CCGeometry.h"
 #include "platform/CCSAXParser.h"
@@ -137,6 +139,8 @@ public:
     std::string     _sourceImage;
     //! size in pixels of the image
     Size            _imageSize;
+    std::string     _originSourceImage;
+
 public:
     /**
      * @js ctor
@@ -277,6 +281,7 @@ public:
     inline void setCurrentString(const std::string& currentString){ _currentString = currentString; }
     inline const std::string& getTMXFileName() const { return _TMXFileName; }
     inline void setTMXFileName(const std::string& fileName){ _TMXFileName = fileName; }
+    inline const std::string& getExternalTilesetFileName() const { return _externalTilesetFilename; }
 
 protected:
     void internalInit(const std::string& tmxFileName, const std::string& resourcePath);
@@ -316,6 +321,7 @@ protected:
     ValueMapIntKey _tileProperties;
     int _currentFirstGID;
     bool _recordFirstGID;
+    std::string _externalTilesetFilename;
 };
 
 // end of tilemap_parallax_nodes group
@@ -323,5 +329,5 @@ protected:
 
 NS_CC_END
 
+/// @endcond
 #endif
-

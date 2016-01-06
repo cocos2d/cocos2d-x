@@ -22,6 +22,8 @@
 		<integer>1</integer>
 		<key>cocos2d.x.3d.max_spot_light_in_shader</key>
 		<integer>1</integer>
+		<key>cocos2d.x.3d.animate_quality</key>
+		<integer>2</integer>
 	</dict>
 	<key>metadata</key>
 	<dict>

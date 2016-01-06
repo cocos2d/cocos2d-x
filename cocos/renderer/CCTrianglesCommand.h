@@ -28,6 +28,11 @@
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgramState.h"
 
+/**
+ * @addtogroup renderer
+ * @{
+ */
+
 NS_CC_BEGIN
 /** 
  Command used to render one or more Triangles, which is similar to QuadCommand.
@@ -49,7 +54,7 @@ public:
         /**The number of indices.*/
         ssize_t indexCount;
     };
-    /**Construtor.*/
+    /**Constructor.*/
     TrianglesCommand();
     /**Destructor.*/
     ~TrianglesCommand();
@@ -97,7 +102,7 @@ protected:
     uint32_t _materialID;
     /**OpenGL handle for texture.*/
     GLuint _textureID;
-    /**GLprogramstate for the commmand. encapsulate shaders and uniforms.*/
+    /**GLprogramstate for the command. encapsulate shaders and uniforms.*/
     GLProgramState* _glProgramState;
     /**Blend function when rendering the triangles.*/
     BlendFunc _blendType;
@@ -108,5 +113,8 @@ protected:
 };
 
 NS_CC_END
-
+/**
+ end of support group
+ @}
+ */
 #endif // defined(__CC_TRIANGLES_COMMAND__)

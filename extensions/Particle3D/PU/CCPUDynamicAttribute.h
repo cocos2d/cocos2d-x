@@ -258,7 +258,7 @@ class CC_DLL PUDynamicAttributeCurved : public PUDynamicAttribute
         inline ControlPointList::iterator getLastValidIterator(void);
 };
 
-/* This class generates values based on an oscillating functione (i.e. Sine).
+/* This class generates values based on an oscillating function (i.e. Sine).
 */
 class CC_DLL PUDynamicAttributeOscillate : public PUDynamicAttribute
 {

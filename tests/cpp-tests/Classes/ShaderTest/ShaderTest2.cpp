@@ -22,89 +22,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-
 #include "ShaderTest2.h"
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
 #include <tuple>
 
-namespace ShaderTest2
-{
-    static std::function<Layer*()> createFunctions[] =
-    {
-        CL(EffectSpriteTest),
-        CL(EffectSpriteLamp),
-    };
-    
-    static unsigned int TEST_CASE_COUNT = sizeof(ShaderTest2::createFunctions) / sizeof(ShaderTest2::createFunctions[0]);
-    
-    static int sceneIdx=-1;
-    Layer* createTest(int index)
-    {
-        auto layer = (createFunctions[index])();;
-        return layer;
-    }
-    
-    Layer* nextAction();
-    Layer* backAction();
-    Layer* restartAction();
-    
-    Layer* nextAction()
-    {
-        sceneIdx++;
-        sceneIdx = sceneIdx % TEST_CASE_COUNT;
-        
-        return createTest(sceneIdx);
-    }
-    
-    Layer* backAction()
-    {
-        sceneIdx--;
-        if( sceneIdx < 0 )
-            sceneIdx = TEST_CASE_COUNT -1;
-        
-        return createTest(sceneIdx);
-    }
-    
-    Layer* restartAction()
-    {
-        return createTest(sceneIdx);
-    }
-    
-}
+USING_NS_CC;
 
-ShaderTestDemo2::ShaderTestDemo2()
+Shader2Tests::Shader2Tests()
 {
-    
-}
-
-void ShaderTestDemo2::backCallback(Ref* sender)
-{
-    auto s = ShaderTestScene2::create();
-    s->addChild( ShaderTest2::backAction() );
-    Director::getInstance()->replaceScene(s);
-}
-
-void ShaderTestDemo2::nextCallback(Ref* sender)
-{
-    auto s = ShaderTestScene2::create();
-    s->addChild( ShaderTest2::nextAction() );
-    Director::getInstance()->replaceScene(s);
-}
-
-void ShaderTestDemo2::restartCallback(Ref* sender)
-{
-    auto s = ShaderTestScene2::create();
-    s->addChild(ShaderTest2::restartAction());    
-    Director::getInstance()->replaceScene(s);
-}
-
-void ShaderTestScene2::runThisTest()
-{
-    auto layer = ShaderTest2::nextAction();
-    addChild(layer);
-    Director::getInstance()->replaceScene(this);
+    ADD_TEST_CASE(EffectSpriteTest);
+    ADD_TEST_CASE(EffectSpriteLamp);
 }
 
 //
@@ -164,16 +93,19 @@ public:
 
                 if(std::get<0>(effect) >=0)
                     break;
-                QuadCommand &q = std::get<2>(effect);
-                q.init(_globalZOrder, _texture->getName(), std::get<1>(effect)->getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);
-                renderer->addCommand(&q);
+                auto glProgramState = std::get<1>(effect)->getGLProgramState();
+                if (glProgramState)
+                {
+                    QuadCommand &q = std::get<2>(effect);
+                    q.init(_globalZOrder, _texture->getName(), glProgramState, _blendFunc, &_quad, 1, transform, flags);
+                    renderer->addCommand(&q);
+                }
                 idx++;
-
             }
 
             // normal effect: order == 0
-            _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);
-            renderer->addCommand(&_quadCommand);
+            _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, transform, flags);
+            renderer->addCommand(&_trianglesCommand);
 
             // postive effects: oder >= 0
             for(auto it = std::begin(_effects)+idx; it != std::end(_effects); ++it) {
@@ -211,12 +143,12 @@ bool Effect::initGLProgramState(const std::string &fragmentFilename)
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
     auto glprogram = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.c_str());
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _fragSource = fragSource;
 #endif
     
-    _glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
-    _glprogramstate->retain();
+    _glprogramstate = (glprogram == nullptr ? nullptr : GLProgramState::getOrCreateWithGLProgram(glprogram));
+    CC_SAFE_RETAIN(_glprogramstate);
 
     return _glprogramstate != nullptr;
 }
@@ -224,7 +156,7 @@ bool Effect::initGLProgramState(const std::string &fragmentFilename)
 Effect::Effect()
 : _glprogramstate(nullptr)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backgroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                       [this](EventCustom*)
                                                       {
@@ -242,7 +174,7 @@ Effect::Effect()
 Effect::~Effect()
 {
     CC_SAFE_RELEASE_NULL(_glprogramstate);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backgroundListener);
 #endif
 }
@@ -265,15 +197,24 @@ protected:
 
 void EffectBlur::setTarget(EffectSprite *sprite)
 {
+    if (_glprogramstate == nullptr)
+        return;
+    
     Size size = sprite->getTexture()->getContentSizeInPixels();
     _glprogramstate->setUniformVec2("resolution", size);
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     _glprogramstate->setUniformFloat("blurRadius", _blurRadius);
     _glprogramstate->setUniformFloat("sampleNum", _blurSampleNum);
+#endif
 }
 
 bool EffectBlur::init(float blurRadius, float sampleNum)
 {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     initGLProgramState("Shaders/example_Blur.fsh");
+#else
+    initGLProgramState("Shaders/example_Blur_winrt.fsh");
+#endif
     _blurRadius = blurRadius;
     _blurSampleNum = sampleNum;
     
@@ -298,7 +239,7 @@ public:
 
     bool init()
     {
-        initGLProgramState("Shaders/example_outline.fsh");
+        initGLProgramState("Shaders/example_Outline.fsh");
 
         Vec3 color(1.0f, 0.2f, 0.3f);
         GLfloat radius = 0.01f;
@@ -338,7 +279,7 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_edgeDetection.fsh");
+        initGLProgramState("Shaders/example_EdgeDetection.fsh");
         return true;
     }
 
@@ -357,7 +298,7 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_greyScale.fsh");
+        initGLProgramState("Shaders/example_GreyScale.fsh");
         return true;
     }
 };
@@ -370,7 +311,7 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_sepia.fsh");
+        initGLProgramState("Shaders/example_Sepia.fsh");
         return true;
     }
 };
@@ -383,7 +324,7 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_bloom.fsh");
+        initGLProgramState("Shaders/example_Bloom.fsh");
         return true;
     }
 
@@ -402,7 +343,7 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_celShading.fsh");
+        initGLProgramState("Shaders/example_CelShading.fsh");
         return true;
     }
 
@@ -421,7 +362,7 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_lensFlare.fsh");
+        initGLProgramState("Shaders/example_LensFlare.fsh");
         return true;
     }
 
@@ -510,7 +451,14 @@ void EffectNormalMapped::setLightColor(const Color4F& color)
 
 EffectSpriteTest::EffectSpriteTest()
 {
+}
+
+bool EffectSpriteTest::init()
+{
     if (ShaderTestDemo2::init()) {
+
+        auto layer = LayerColor::create(Color4B::BLUE);
+        this->addChild(layer);
 
         auto s = Director::getInstance()->getWinSize();
 
@@ -565,11 +513,17 @@ EffectSpriteTest::EffectSpriteTest()
 
 //        _sprite->addEffect( _effects.at(8), -10 );
 //        _sprite->addEffect( _effects.at(1), 1 );
-
+        
+        return true;
     }
+    return false;
 }
 
 EffectSpriteLamp::EffectSpriteLamp()
+{
+}
+
+bool EffectSpriteLamp::init()
 {
     if (ShaderTestDemo2::init()) {
         
@@ -597,7 +551,9 @@ EffectSpriteLamp::EffectSpriteLamp()
         listerner->onTouchesMoved = CC_CALLBACK_2(EffectSpriteLamp::onTouchesMoved, this);
         listerner->onTouchesEnded = CC_CALLBACK_2(EffectSpriteLamp::onTouchesEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listerner, this);
+        return true;
     }
+    return false;
 }
 
 

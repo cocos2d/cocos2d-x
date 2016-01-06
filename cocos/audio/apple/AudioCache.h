@@ -51,11 +51,16 @@ public:
     AudioCache();
     ~AudioCache();
 
-    void addCallbacks(const std::function<void()> &callback);
+    void addPlayCallback(const std::function<void()>& callback);
+
+    void addLoadCallback(const std::function<void(bool)>& callback);
     
 protected:
     void readDataTask();
-    void invokingCallbacks();
+
+    void invokingPlayCallbacks();
+
+    void invokingLoadCallbacks();
     
     //pcm data related stuff
     ALsizei _dataSize;
@@ -81,9 +86,11 @@ protected:
     UInt32 _queBufferBytes;
 
     bool _alBufferReady;
+    bool _loadFail;
     std::mutex _callbackMutex;
     
     std::vector< std::function<void()> > _callbacks;
+    std::vector< std::function<void(bool)> > _loadCallbacks;
     std::mutex _readDataTaskMutex;
     
     bool _exitReadDataTask;

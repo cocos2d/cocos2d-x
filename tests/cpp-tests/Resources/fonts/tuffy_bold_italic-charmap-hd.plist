@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>version</key>
+	<integer>1</integer>
+	<key>textureFilename</key>
+	<string>tuffy_bold_italic-charmap-hd.png</string>
+	<key>itemHeight</key>
+	<integer>128</integer>
+	<key>itemWidth</key>
+	<integer>96</integer>
+	<key>firstChar</key>
+	<integer>32</integer>
+</dict>
+</plist>

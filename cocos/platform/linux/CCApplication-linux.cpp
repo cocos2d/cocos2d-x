@@ -107,7 +107,7 @@ int Application::run()
     return EXIT_SUCCESS;
 }
 
-void Application::setAnimationInterval(double interval)
+void Application::setAnimationInterval(float interval)
 {
     //TODO do something else
     _animationInterval = interval*1000.0f;
@@ -134,6 +134,11 @@ const std::string& Application::getResourceRootPath(void)
 Application::Platform Application::getTargetPlatform()
 {
     return Platform::OS_LINUX;
+}
+
+std::string Application::getVersion()
+{
+    return "";
 }
 
 bool Application::openURL(const std::string &url)

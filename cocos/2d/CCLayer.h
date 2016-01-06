@@ -36,7 +36,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup layer
+ * @addtogroup _2d
  * @{
  */
 
@@ -84,27 +84,31 @@ public:
     */
     /** Callback function for touch began.
      *
-     * @param touch Touch infomation.
+     * @param touch Touch information.
      * @param unused_event Event information.
      * @return if return false, onTouchMoved, onTouchEnded, onTouchCancelled will never called.
+     * @js NA
      */
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
     /** Callback function for touch moved.
     *
-    * @param touch Touch infomation.
+    * @param touch Touch information.
     * @param unused_event Event information.
+    * @js NA
     */
     virtual void onTouchMoved(Touch *touch, Event *unused_event);
     /** Callback function for touch ended.
     *
-    * @param touch Touch infomation.
+    * @param touch Touch information.
     * @param unused_event Event information.
+    * @js NA
     */
     virtual void onTouchEnded(Touch *touch, Event *unused_event);
     /** Callback function for touch cancelled.
     *
-    * @param touch Touch infomation.
+    * @param touch Touch information.
     * @param unused_event Event information.
+    * @js NA
     */
     virtual void onTouchCancelled(Touch *touch, Event *unused_event);
 
@@ -112,35 +116,43 @@ public:
     *
     * @param touches Touches information.
     * @param unused_event Event information.
+    * @js NA
     */
     virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
     /** Callback function for multiple touches moved.
     *
     * @param touches Touches information.
     * @param unused_event Event information.
+    * @js NA
     */
     virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event);
     /** Callback function for multiple touches ended.
     *
     * @param touches Touches information.
     * @param unused_event Event information.
+    * @js NA
     */
     virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event);
     /** Callback function for multiple touches cancelled.
     *
     * @param touches Touches information.
     * @param unused_event Event information.
+    * @js NA
     */
     virtual void onTouchesCancelled(const std::vector<Touch*>&touches, Event *unused_event);
-    /** @deprecated Please override onAcceleration */
+    /** 
+      @deprecated Please override onAcceleration 
+      @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final {};
 
 	/* Callback function should not be deprecated, it will generate lots of warnings.
 	Since 'setAccelerometerEnabled' was deprecated, it will make warnings if developer overrides onAcceleration and invokes setAccelerometerEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
     */
-    /** Callback funtion for acceleration.
+    /** Callback function for acceleration.
      * @param acc Acceleration information.
      * @param unused_event Event information.
+     * @js NA
      */
     virtual void onAcceleration(Acceleration* acc, Event* unused_event);
 
@@ -153,6 +165,7 @@ public:
     TouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,INT_MIN+1,true);
     }
     @since v0.8.0
+    @js NA
     */
     CC_DEPRECATED_ATTRIBUTE virtual void registerWithTouchDispatcher() final {};
 
@@ -160,6 +173,7 @@ public:
     You can enable / disable touch events with this property.
     Only the touches of this node will be affected. This "method" is not propagated to it's children.
     @since v0.8.1
+    @js NA
     */
     CC_DEPRECATED_ATTRIBUTE bool isTouchEnabled() const;
     CC_DEPRECATED_ATTRIBUTE void setTouchEnabled(bool value);
@@ -167,13 +181,17 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void setTouchMode(Touch::DispatchMode mode);
     CC_DEPRECATED_ATTRIBUTE virtual Touch::DispatchMode getTouchMode() const;
 
-    /** swallowsTouches of the touch events. Default is true */
+    /** 
+      swallowsTouches of the touch events. Default is true 
+      @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void setSwallowsTouches(bool swallowsTouches);
     CC_DEPRECATED_ATTRIBUTE virtual bool isSwallowsTouches() const;
 
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
     @since v0.8.1
+    @js NA
     */
     CC_DEPRECATED_ATTRIBUTE virtual bool isAccelerometerEnabled() const;
     CC_DEPRECATED_ATTRIBUTE virtual void setAccelerometerEnabled(bool value);
@@ -182,15 +200,22 @@ public:
     /** whether or not it will receive keyboard or keypad events
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x
+    @js NA
     */
 
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeyboardEnabled() const;
     CC_DEPRECATED_ATTRIBUTE virtual void setKeyboardEnabled(bool value);
 
-    /** Please use onKeyPressed instead. */
+    /** 
+      Please use onKeyPressed instead. 
+      @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void keyPressed(int keyCode) final {};
     
-    /** Please use onKeyReleased instead. */
+    /** 
+      Please use onKeyReleased instead. 
+      @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void keyReleased(int keyCode) final {};
 
 	/* Callback function should not be deprecated, it will generate lots of warnings.
@@ -199,18 +224,23 @@ public:
     /** Callback function for key pressed.
      * @param keyCode KeyCode information.
      * @param event Event information.
+     * @js NA
      */
     virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
     /** Callback function for key released.
     * @param keyCode KeyCode information.
     * @param event Event information.
+    * @js NA
     */
     virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
 
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return _keyboardEnabled; }
     CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value);
 
-    /** @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. */
+    /** 
+      @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. 
+      @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void keyBackClicked() final {};
     CC_DEPRECATED_ATTRIBUTE virtual void keyMenuClicked() final {};
 
@@ -254,6 +284,7 @@ private:
  - opacity
  - RGB colors
  @since 2.1
+ @js NA
  */
 class CC_DLL __LayerRGBA : public Layer, public __RGBAProtocol
 {
@@ -266,19 +297,19 @@ public:
     //
     virtual GLubyte getOpacity() const override { return Layer::getOpacity(); }
     virtual GLubyte getDisplayedOpacity() const override { return Layer::getDisplayedOpacity(); }
-    virtual void setOpacity(GLubyte opacity) override { return Layer::setOpacity(opacity); }
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override { return Layer::updateDisplayedOpacity(parentOpacity); }
+    virtual void setOpacity(GLubyte opacity) override { Layer::setOpacity(opacity); }
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override { Layer::updateDisplayedOpacity(parentOpacity); }
     virtual bool isCascadeOpacityEnabled() const override { return Layer::isCascadeOpacityEnabled(); }
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override { return Layer::setCascadeOpacityEnabled(cascadeOpacityEnabled); }
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override { Layer::setCascadeOpacityEnabled(cascadeOpacityEnabled); }
 
     virtual const Color3B& getColor() const override { return Layer::getColor(); }
     virtual const Color3B& getDisplayedColor() const override { return Layer::getDisplayedColor(); }
-    virtual void setColor(const Color3B& color) override { return Layer::setColor(color); }
-    virtual void updateDisplayedColor(const Color3B& parentColor) override { return Layer::updateDisplayedColor(parentColor); }
+    virtual void setColor(const Color3B& color) override { Layer::setColor(color); }
+    virtual void updateDisplayedColor(const Color3B& parentColor) override { Layer::updateDisplayedColor(parentColor); }
     virtual bool isCascadeColorEnabled() const override { return Layer::isCascadeOpacityEnabled(); }
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override { return Layer::setCascadeColorEnabled(cascadeColorEnabled); }
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override { Layer::setCascadeColorEnabled(cascadeColorEnabled); }
 
-    virtual void setOpacityModifyRGB(bool bValue) override { return Layer::setOpacityModifyRGB(bValue); }
+    virtual void setOpacityModifyRGB(bool bValue) override { Layer::setOpacityModifyRGB(bValue); }
     virtual bool isOpacityModifyRGB() const override { return Layer::isOpacityModifyRGB(); }
 
 CC_CONSTRUCTOR_ACCESS:
@@ -348,7 +379,6 @@ public:
     virtual void setContentSize(const Size & var) override;
     /** BlendFunction. Conforms to BlendProtocol protocol */
     /**
-    * @js NA
     * @lua NA
     */
     virtual const BlendFunc& getBlendFunc() const override;
@@ -544,7 +574,6 @@ class CC_DLL LayerMultiplex : public Layer
 {
 public:
     /** Creates and initializes a LayerMultiplex object.
-     * @js NA
      * @lua NA
      * 
      * @return An autoreleased LayerMultiplex object.
@@ -567,8 +596,8 @@ public:
      * In lua:local create(...)
      * @endcode
      */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported
     typedef Layer* M;
     static LayerMultiplex* create(M m1, std::nullptr_t listEnd) { return createVariadic(m1, NULL); }
     static LayerMultiplex* create(M m1, M m2, std::nullptr_t listEnd) { return createVariadic(m1, m2, NULL); }
@@ -652,7 +681,7 @@ private:
 };
 
 
-// end of layer group
+// end of _2d group
 /// @}
 
 NS_CC_END

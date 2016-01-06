@@ -24,14 +24,12 @@
 
 #include "UIWebViewTest.h"
 
-WebViewTest::WebViewTest()
-{
-    
-}
+USING_NS_CC;
+using namespace cocos2d::ui;
 
-WebViewTest::~WebViewTest()
+WebViewTests::WebViewTests()
 {
-
+    ADD_TEST_CASE(WebViewTest);
 }
 
 bool WebViewTest::init()
@@ -143,6 +141,7 @@ bool WebViewTest::init()
         evalJsBtn->addClickEventListener([=](Ref*){
             _webView->evaluateJS("alert(\"hello\")");
         });
+        evalJsBtn->setName("evalJs");
         this->addChild(evalJsBtn);
         
         return true;
@@ -153,19 +152,19 @@ bool WebViewTest::init()
 bool WebViewTest::onWebViewShouldStartLoading(experimental::ui::WebView *sender, const std::string &url)
 {
     CCLOG("onWebViewShouldStartLoading, url is %s", url.c_str());
-    
+    //don't do any OpenGL operation here!! It's forbidden!
     return true;
 }
 
 void WebViewTest::onWebViewDidFinishLoading(experimental::ui::WebView *sender, const std::string &url)
 {
+    auto node = (ui::Button*)this->getChildByName("evalJs");
+    node->setTitleText("start loading...");
     CCLOG("onWebViewDidFinishLoading, url is %s", url.c_str());
-
 }
 
 void WebViewTest::onWebViewDidFailLoading(experimental::ui::WebView *sender, const std::string &url)
 {
     CCLOG("onWebViewDidFailLoading, url is %s", url.c_str());
-
 }
 

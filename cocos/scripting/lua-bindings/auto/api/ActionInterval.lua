@@ -5,15 +5,22 @@
 -- @parent_module cc
 
 --------------------------------
---  Gets the ampliture rate, extension in GridAction<br>
--- return  The ampliture rate.
+--  Gets the amplitude rate, extension in GridAction<br>
+-- return  The amplitude rate.
 -- @function [parent=#ActionInterval] getAmplitudeRate 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
---  Sets the ampliture rate, extension in GridAction<br>
--- param amp   The ampliture rate.
+--  initializes the action 
+-- @function [parent=#ActionInterval] initWithDuration 
+-- @param self
+-- @param #float d
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  Sets the amplitude rate, extension in GridAction<br>
+-- param amp   The amplitude rate.
 -- @function [parent=#ActionInterval] setAmplitudeRate 
 -- @param self
 -- @param #float amp
@@ -21,7 +28,7 @@
         
 --------------------------------
 --  How many seconds had elapsed since the actions started to run.<br>
--- return The seconds had elapsed since the ations started to run.
+-- return The seconds had elapsed since the actions started to run.
 -- @function [parent=#ActionInterval] getElapsed 
 -- @param self
 -- @return float#float ret (return value: float)

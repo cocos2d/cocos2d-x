@@ -56,8 +56,8 @@ public:
         OS_NACL,/** Nacl */
         OS_EMSCRIPTEN,/** Emscripten */
         OS_TIZEN,/** Tizen */
-        OS_WINRT,/** Winrt */
-        OS_WP8/** WP8 */
+        OS_WINRT,/** Windows Store Applications */
+        OS_WP8/** Windows Phone Applications */
     };
 
     /**
@@ -101,7 +101,7 @@ public:
     * @js NA
     * @lua NA
     */
-    virtual void setAnimationInterval(double interval) = 0;
+    virtual void setAnimationInterval(float interval) = 0;
 
     /** Subclass override the function to set OpenGL context attribution instead of use default value.
     * And now can only set six attributions:redBits,greenBits,blueBits,alphaBits,depthBits,stencilBits.
@@ -135,6 +135,13 @@ public:
      * @lua NA
      */
     virtual Platform getTargetPlatform() = 0;
+    
+    /**
+     @brief Get application version.
+     * @js NA
+     * @lua NA
+     */
+    virtual std::string getVersion() = 0;
     
     /**
      @brief Open url in default browser.

@@ -33,7 +33,7 @@ void AnimationCurve<componentSize>::evaluate(float time, float* dst, EvaluateTyp
         break;
         case EvaluateType::INT_NEAR:
         {
-            float* src = t > 0.5f ? toValue : fromValue;
+            float* src = fabs(t) > 0.5f ? toValue : fromValue;
             memcpy(dst, src, _componentSizeByte);
         }
         break;
@@ -114,8 +114,8 @@ AnimationCurve<componentSize>::AnimationCurve()
 template <int componentSize>
 AnimationCurve<componentSize>::~AnimationCurve()
 {
-    CC_SAFE_DELETE(_keytime);
-    CC_SAFE_DELETE(_value);
+    CC_SAFE_DELETE_ARRAY(_keytime);
+    CC_SAFE_DELETE_ARRAY(_value);
 }
 
 template <int componentSize>

@@ -818,7 +818,16 @@ function RemoveAndRetainNodeTest:onEnter()
         local target = event:getCurrentTarget()
         local posX,posY = target:getPosition()
         local delta = touch:getDelta()
-        target:setPosition(cc.p(posX + delta.x, posY + delta.y))
+        local force = touch:getCurrentForce()
+        local maxForce = touch:getMaxForce()
+        if force > 0.0 and (force / maxForce) > 0.8 then
+            local origin = cc.Director:getInstance():getVisibleOrigin()
+            local size = cc.Director:getInstance():getVisibleSize()
+            target:setPosition(cc.p(origin.x + size.width/2, origin.y + size.height/2))
+            print(string.format("3D touch detected, reset to default position. force = %f, max force = %f", force, maxForce))
+        else
+            target:setPosition(cc.p(posX + delta.x, posY + delta.y))
+        end
     end
 
     local function onTouchEnded(touch,event)

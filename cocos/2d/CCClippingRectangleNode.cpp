@@ -9,7 +9,7 @@ NS_CC_BEGIN
 
 ClippingRectangleNode* ClippingRectangleNode::create(const Rect& clippingRegion)
 {
-    ClippingRectangleNode* node = new ClippingRectangleNode();
+    ClippingRectangleNode* node = new (std::nothrow) ClippingRectangleNode();
     if (node && node->init()) {
         node->setClippingRegion(clippingRegion);
         node->autorelease();
@@ -22,7 +22,7 @@ ClippingRectangleNode* ClippingRectangleNode::create(const Rect& clippingRegion)
 
 ClippingRectangleNode* ClippingRectangleNode::create()
 {
-    ClippingRectangleNode* node = new ClippingRectangleNode();
+    ClippingRectangleNode* node = new (std::nothrow) ClippingRectangleNode();
     if (node && node->init()) {
         node->autorelease();
     } else {
@@ -41,7 +41,7 @@ void ClippingRectangleNode::onBeforeVisitScissor()
 {
     if (_clippingEnabled) {
         glEnable(GL_SCISSOR_TEST);
-        
+
         float scaleX = _scaleX;
         float scaleY = _scaleY;
         Node *parent = this->getParent();
@@ -53,8 +53,8 @@ void ClippingRectangleNode::onBeforeVisitScissor()
         
         const Point pos = convertToWorldSpace(Point(_clippingRegion.origin.x, _clippingRegion.origin.y));
         GLView* glView = Director::getInstance()->getOpenGLView();
-        glView->setScissorInPoints(pos.x * scaleX,
-                                   pos.y * scaleY,
+        glView->setScissorInPoints(pos.x,
+                                   pos.y,
                                    _clippingRegion.size.width * scaleX,
                                    _clippingRegion.size.height * scaleY);
     }

@@ -6,11 +6,11 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.chukong.cocosplay.client.CocosPlayClient;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
-
-import com.chukong.cocosplay.client.CocosPlayClient;
 
 
 public class Cocos2dxWebViewHelper {
@@ -126,7 +126,7 @@ public class Cocos2dxWebViewHelper {
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
                 if (webView != null) {
-                	webView.loadDataWithBaseURL(baseURL, data, mimeType, encoding, null);
+                    webView.loadDataWithBaseURL(baseURL, data, mimeType, encoding, null);
                 }
             }
         });
@@ -138,7 +138,7 @@ public class Cocos2dxWebViewHelper {
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
                 if (webView != null) {
-                	webView.loadDataWithBaseURL(baseUrl, data, null, null, null);
+                    webView.loadDataWithBaseURL(baseUrl, data, null, null, null);
                 }
             }
         });

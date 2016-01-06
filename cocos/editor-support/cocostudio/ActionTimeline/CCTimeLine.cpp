@@ -120,7 +120,7 @@ Node* Timeline::getNode() const
     return _node;
 }
 
-void Timeline::apply(int frameIndex)
+void Timeline::apply(unsigned int frameIndex)
 {
     if (_currentKeyFrame)
     {
@@ -129,7 +129,7 @@ void Timeline::apply(int frameIndex)
     }
 }
 
-void Timeline::binarySearchKeyFrame(int frameIndex)
+void Timeline::binarySearchKeyFrame(unsigned int frameIndex)
 {
     Frame *from = nullptr;
     Frame *to   = nullptr;
@@ -202,7 +202,7 @@ void Timeline::binarySearchKeyFrame(int frameIndex)
     }
 }
 
-void Timeline::updateCurrentKeyFrame(int frameIndex)
+void Timeline::updateCurrentKeyFrame(unsigned int frameIndex)
 {
     //! If play to current frame's front or back, then find current frame again
     if (frameIndex < _currentKeyFrameIndex || frameIndex >= _currentKeyFrameIndex + _betweenDuration)
@@ -223,7 +223,7 @@ void Timeline::updateCurrentKeyFrame(int frameIndex)
             }
             else if(frameIndex >= _frames.at(length - 1)->getFrameIndex())
             {
-                int lastFrameIndex = _frames.at(length - 1)->getFrameIndex();
+				unsigned int lastFrameIndex = _frames.at(length - 1)->getFrameIndex();
                 if(_currentKeyFrameIndex >= lastFrameIndex)
                     return;
                 frameIndex = lastFrameIndex;
@@ -236,7 +236,7 @@ void Timeline::updateCurrentKeyFrame(int frameIndex)
                 _currentKeyFrameIndex  = from->getFrameIndex();
 
                 _toIndex = _fromIndex + 1;
-                if (_toIndex >= length)
+                if ((ssize_t)_toIndex >= length)
                 {
                     _toIndex = 0;
                 }

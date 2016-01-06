@@ -7,13 +7,15 @@
 #include "json/document.h"
 #include "ProjectConfig/SimulatorConfig.h"
 #include "ProjectConfig/ProjectConfig.h"
+#include "SimulatorExport.h"
+
 using namespace std;
 USING_NS_CC;
 
 #define CONFIG_FILE "config.json"
 
 typedef vector<SimulatorScreenSize> ScreenSizeArray;
-class ConfigParser
+class CC_LIBSIM_DLL ConfigParser
 {
 public:
     static ConfigParser *getInstance(void);
@@ -32,6 +34,7 @@ public:
     void setUploadPort(int port);
     int getConsolePort();
     int getUploadPort();
+    int getDebugPort();
     bool isLanscape();
     bool isWindowTop();
     
@@ -42,6 +45,7 @@ public:
     
 private:
     ConfigParser(void);
+    void setDebugPort(int port);
     static ConfigParser *s_sharedConfigParserInstance;
     ScreenSizeArray _screenSizeArray;
     cocos2d::Size _initViewSize;
@@ -51,6 +55,7 @@ private:
     bool _isWindowTop;
     int _consolePort;
     int _uploadPort;
+    int _debugPort;
     string _bindAddress;
     
     rapidjson::Document _docRootjson;

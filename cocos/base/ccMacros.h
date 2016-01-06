@@ -124,7 +124,7 @@ do { \
   */
 #define CC_DIRECTOR_END()                                       \
 do {                                                            \
-    Director *__director = Director::getInstance();             \
+    Director *__director = cocos2d::Director::getInstance();             \
     __director->end();                                          \
 } while(0)
 
@@ -132,7 +132,7 @@ do {                                                            \
 On Mac it returns 1;
 On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
 */
-#define CC_CONTENT_SCALE_FACTOR() Director::getInstance()->getContentScaleFactor()
+#define CC_CONTENT_SCALE_FACTOR() cocos2d::Director::getInstance()->getContentScaleFactor()
 
 /****************************/
 /** RETINA DISPLAY ENABLED **/
@@ -253,14 +253,34 @@ It should work same as apples CFSwapInt32LittleToHost(..)
     } while (false)
 #endif
 
+/**
+ * GL assertion that can be used for any OpenGL function call.
+ *
+ * This macro will assert if an error is detected when executing
+ * the specified GL code. This macro will do nothing in release
+ * mode and is therefore safe to use for realtime/per-frame GL
+ * function calls.
+ */
+#if defined(NDEBUG) || (defined(__APPLE__) && !defined(DEBUG))
+#define CC_GL_ASSERT( gl_code ) gl_code
+#else
+#define CC_GL_ASSERT( gl_code ) do \
+{ \
+gl_code; \
+__gl_error_code = glGetError(); \
+CC_ASSERT(__gl_error_code == GL_NO_ERROR, "Error"); \
+} while(0)
+#endif
+
+
 /** @def CC_INCREMENT_GL_DRAWS_BY_ONE
  Increments the GL Draws counts by one.
  The number of calls per frame are displayed on the screen when the Director's stats are enabled.
  */
-#define CC_INCREMENT_GL_DRAWS(__n__) Director::getInstance()->getRenderer()->addDrawnBatches(__n__)
+#define CC_INCREMENT_GL_DRAWS(__n__) cocos2d::Director::getInstance()->getRenderer()->addDrawnBatches(__n__)
 #define CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(__drawcalls__, __vertices__) \
     do {                                                                \
-        auto __renderer__ = Director::getInstance()->getRenderer();     \
+        auto __renderer__ = cocos2d::Director::getInstance()->getRenderer();     \
         __renderer__->addDrawnBatches(__drawcalls__);                   \
         __renderer__->addDrawnVertices(__vertices__);                   \
     } while(0)
@@ -272,6 +292,14 @@ It should work same as apples CFSwapInt32LittleToHost(..)
  Notification name when a SpriteFrame is displayed
  */
 #define AnimationFrameDisplayedNotification "CCAnimationFrameDisplayedNotification"
+
+/*******************/
+/** Notifications **/
+/*******************/
+/** @def Animate3DDisplayedNotification
+ Notification name when a frame in Animate3D is played
+ */
+#define Animate3DDisplayedNotification "CCAnimate3DDisplayedNotification"
 
 // new callbacks based on C++11
 #define CC_CALLBACK_0(__selector__,__target__, ...) std::bind(&__selector__,__target__, ##__VA_ARGS__)

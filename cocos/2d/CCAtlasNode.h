@@ -36,7 +36,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup base_nodes
+ * @addtogroup _2d
  * @{
  */
 
@@ -139,7 +139,7 @@ protected:
     ssize_t _quadsToDraw;
     /** Color uniform. */
     GLint    _uniformColor;
-    /** This varible is only used for LabelAtlas FPS display. So plz don't modify its value. */
+    /** This variable is only used for LabelAtlas FPS display. So plz don't modify its value. */
     bool _ignoreContentScaleFactor;
     /** Quad command. */
     QuadCommand _quadCommand;

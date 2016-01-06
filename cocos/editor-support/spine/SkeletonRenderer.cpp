@@ -1,25 +1,26 @@
 /******************************************************************************
  * Spine Runtimes Software License
- * Version 2.1
+ * Version 2.3
  * 
- * Copyright (c) 2013, Esoteric Software
+ * Copyright (c) 2013-2015, Esoteric Software
  * All rights reserved.
  * 
  * You are granted a perpetual, non-exclusive, non-sublicensable and
- * non-transferable license to install, execute and perform the Spine Runtimes
- * Software (the "Software") solely for internal use. Without the written
- * permission of Esoteric Software (typically granted by licensing Spine), you
- * may not (a) modify, translate, adapt or otherwise create derivative works,
- * improvements of the Software or develop new applications using the Software
- * or (b) remove, delete, alter or obscure any trademarks or any copyright,
- * trademark, patent or other intellectual property or proprietary rights
- * notices on or in the Software, including any copy thereof. Redistributions
- * in binary or source form must include this license and terms.
+ * non-transferable license to use, install, execute and perform the Spine
+ * Runtimes Software (the "Software") and derivative works solely for personal
+ * or internal use. Without the written permission of Esoteric Software (see
+ * Section 2 of the Spine Software License Agreement), you may not (a) modify,
+ * translate, adapt or otherwise create derivative works, improvements of the
+ * Software or develop new applications using the Software or (b) remove,
+ * delete, alter or obscure any trademarks or any copyright, trademark, patent
+ * or other intellectual property or proprietary rights notices on or in the
+ * Software, including any copy thereof. Redistributions in binary or source
+ * form must include this license and terms.
  * 
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL ESOTERIC SOFTARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
  * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
@@ -61,11 +62,6 @@ SkeletonRenderer* SkeletonRenderer::createWithFile (const std::string& skeletonD
 }
 
 void SkeletonRenderer::initialize () {
-	_atlas = 0;
-	_debugSlots = false;
-	_debugBones = false;
-	_timeScale = 1;
-
 	_worldVertices = MALLOC(float, 1000); // Max number of vertices per mesh.
 
 	_batch = PolygonBatch::createWithCapacity(2000); // Max number of vertices and triangles per batch.
@@ -74,8 +70,7 @@ void SkeletonRenderer::initialize () {
 	_blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 	setOpacityModifyRGB(true);
 
-	setGLProgram(ShaderCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-	scheduleUpdate();
+	setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 }
 
 void SkeletonRenderer::setSkeletonData (spSkeletonData *skeletonData, bool ownsSkeletonData) {
@@ -83,19 +78,40 @@ void SkeletonRenderer::setSkeletonData (spSkeletonData *skeletonData, bool ownsS
 	_ownsSkeletonData = ownsSkeletonData;
 }
 
-SkeletonRenderer::SkeletonRenderer () {
-	initialize();
+SkeletonRenderer::SkeletonRenderer ()
+	: _atlas(0), _debugSlots(false), _debugBones(false), _timeScale(1) {
 }
 
-SkeletonRenderer::SkeletonRenderer (spSkeletonData *skeletonData, bool ownsSkeletonData) {
-	initialize();
+SkeletonRenderer::SkeletonRenderer (spSkeletonData *skeletonData, bool ownsSkeletonData)
+	: _atlas(0), _debugSlots(false), _debugBones(false), _timeScale(1) {
+	initWithData(skeletonData, ownsSkeletonData);
+}
 
+SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, spAtlas* atlas, float scale)
+	: _atlas(0), _debugSlots(false), _debugBones(false), _timeScale(1) {
+	initWithFile(skeletonDataFile, atlas, scale);
+}
+
+SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, const std::string& atlasFile, float scale)
+	: _atlas(0), _debugSlots(false), _debugBones(false), _timeScale(1) {
+	initWithFile(skeletonDataFile, atlasFile, scale);
+}
+
+SkeletonRenderer::~SkeletonRenderer () {
+	if (_ownsSkeletonData) spSkeletonData_dispose(_skeleton->data);
+	if (_atlas) spAtlas_dispose(_atlas);
+	spSkeleton_dispose(_skeleton);
+	_batch->release();
+	FREE(_worldVertices);
+}
+
+void SkeletonRenderer::initWithData (spSkeletonData* skeletonData, bool ownsSkeletonData) {
 	setSkeletonData(skeletonData, ownsSkeletonData);
+
+	initialize();
 }
 
-SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, spAtlas* atlas, float scale) {
-	initialize();
-
+void SkeletonRenderer::initWithFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale) {
 	spSkeletonJson* json = spSkeletonJson_create(atlas);
 	json->scale = scale;
 	spSkeletonData* skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonDataFile.c_str());
@@ -103,11 +119,11 @@ SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, spAtlas
 	spSkeletonJson_dispose(json);
 
 	setSkeletonData(skeletonData, true);
+
+	initialize();
 }
 
-SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, const std::string& atlasFile, float scale) {
-	initialize();
-
+void SkeletonRenderer::initWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale) {
 	_atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
 	CCASSERT(_atlas, "Error reading atlas file.");
 
@@ -118,15 +134,10 @@ SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, const s
 	spSkeletonJson_dispose(json);
 
 	setSkeletonData(skeletonData, true);
+
+	initialize();
 }
 
-SkeletonRenderer::~SkeletonRenderer () {
-	if (_ownsSkeletonData) spSkeletonData_dispose(_skeleton->data);
-	if (_atlas) spAtlas_dispose(_atlas);
-	spSkeleton_dispose(_skeleton);
-	_batch->release();
-	FREE(_worldVertices);
-}
 
 void SkeletonRenderer::update (float deltaTime) {
 	spSkeleton_update(_skeleton, deltaTime * _timeScale);
@@ -147,7 +158,7 @@ void SkeletonRenderer::drawSkeleton (const Mat4 &transform, uint32_t transformFl
 	_skeleton->b = nodeColor.b / (float)255;
 	_skeleton->a = getDisplayedOpacity() / (float)255;
 
-	int additive = -1;
+	int blendMode = -1;
 	Color4B color;
 	const float* uvs = nullptr;
 	int verticesCount = 0;
@@ -204,10 +215,22 @@ void SkeletonRenderer::drawSkeleton (const Mat4 &transform, uint32_t transformFl
 		default: ;
 		} 
 		if (texture) {
-			if (slot->data->additiveBlending != additive) {
+			if (slot->data->blendMode != blendMode) {
 				_batch->flush();
-				GL::blendFunc(_blendFunc.src, slot->data->additiveBlending ? GL_ONE : _blendFunc.dst);
-				additive = slot->data->additiveBlending;
+				blendMode = slot->data->blendMode;
+				switch (slot->data->blendMode) {
+				case SP_BLEND_MODE_ADDITIVE:
+					GL::blendFunc(_premultipliedAlpha ? GL_ONE : GL_SRC_ALPHA, GL_ONE);
+					break;
+				case SP_BLEND_MODE_MULTIPLY:
+					GL::blendFunc(GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+					break;
+				case SP_BLEND_MODE_SCREEN:
+					GL::blendFunc(GL_ONE, GL_ONE_MINUS_SRC_COLOR);
+					break;
+				default:
+					GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+				}
 			}
 			color.a = _skeleton->a * slot->a * a * 255;
 			float multiplier = _premultipliedAlpha ? color.a : 255;
@@ -335,14 +358,20 @@ spSlot* SkeletonRenderer::findSlot (const std::string& slotName) const {
 }
 
 bool SkeletonRenderer::setSkin (const std::string& skinName) {
-	return spSkeleton_setSkinByName(_skeleton, skinName.c_str()) ? true : false;
+	return spSkeleton_setSkinByName(_skeleton, skinName.empty() ? 0 : skinName.c_str()) ? true : false;
+}
+bool SkeletonRenderer::setSkin (const char* skinName) {
+	return spSkeleton_setSkinByName(_skeleton, skinName) ? true : false;
 }
 
 spAttachment* SkeletonRenderer::getAttachment (const std::string& slotName, const std::string& attachmentName) const {
 	return spSkeleton_getAttachmentForSlotName(_skeleton, slotName.c_str(), attachmentName.c_str());
 }
 bool SkeletonRenderer::setAttachment (const std::string& slotName, const std::string& attachmentName) {
-	return spSkeleton_setAttachment(_skeleton, slotName.c_str(), attachmentName.c_str()) ? true : false;
+	return spSkeleton_setAttachment(_skeleton, slotName.c_str(), attachmentName.empty() ? 0 : attachmentName.c_str()) ? true : false;
+}
+bool SkeletonRenderer::setAttachment (const std::string& slotName, const char* attachmentName) {
+	return spSkeleton_setAttachment(_skeleton, slotName.c_str(), attachmentName) ? true : false;
 }
 
 spSkeleton* SkeletonRenderer::getSkeleton () {
@@ -368,6 +397,22 @@ void SkeletonRenderer::setDebugBonesEnabled (bool enabled) {
 }
 bool SkeletonRenderer::getDebugBonesEnabled () const {
 	return _debugBones;
+}
+
+void SkeletonRenderer::onEnter () {
+#if CC_ENABLE_SCRIPT_BINDING
+	if (_scriptType == kScriptTypeJavascript && ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter)) return;
+#endif
+	Node::onEnter();
+	scheduleUpdate();
+}
+
+void SkeletonRenderer::onExit () {
+#if CC_ENABLE_SCRIPT_BINDING
+	if (_scriptType == kScriptTypeJavascript && ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit)) return;
+#endif
+	Node::onExit();
+	unscheduleUpdate();
 }
 
 // --- CCBlendProtocol

@@ -302,8 +302,8 @@ void PUScriptCompiler::visit(PUConcreteNode *node)
             temp2 = *iter;
         
         
-        //brance inner//
-        if(temp1->type == CNT_RBRACE && temp2->type == CNT_LBRACE)
+        //brance inner
+        if(temp1 && temp1->type == CNT_RBRACE && temp2 && temp2->type == CNT_LBRACE)
         {
            
             if(node->children.size() < 2)

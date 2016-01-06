@@ -72,6 +72,7 @@ int DictionaryHelper::getIntValue_json(const rapidjson::Value& root, const char*
     int nRet = def;
     do {
         CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(!root.HasMember(key));
         CC_BREAK_IF(root[key].IsNull());
         nRet = root[key].GetInt();
     } while (0);
@@ -85,6 +86,7 @@ float DictionaryHelper::getFloatValue_json(const rapidjson::Value& root,const ch
 	float fRet = def;
     do {
         CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(!root.HasMember(key));
         CC_BREAK_IF(root[key].IsNull());
         fRet = (float)root[key].GetDouble();
     } while (0);
@@ -97,6 +99,7 @@ bool DictionaryHelper::getBooleanValue_json(const rapidjson::Value& root,const c
     bool bRet = def;
     do {
         CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(!root.HasMember(key));
         CC_BREAK_IF(root[key].IsNull());
         bRet = root[key].GetBool();
     } while (0);
@@ -109,6 +112,7 @@ const char* DictionaryHelper::getStringValue_json(const rapidjson::Value& root,c
     const char* sRet = def;
     do {
         CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(!root.HasMember(key));
         CC_BREAK_IF(root[key].IsNull());
         sRet = root[key].GetString();
     } while (0);
@@ -123,6 +127,7 @@ int DictionaryHelper::getArrayCount_json(const rapidjson::Value& root, const cha
     int nRet = def;
     do {
         CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(!root.HasMember(key));
         CC_BREAK_IF(root[key].IsNull());
         nRet = (int)(root[key].Size());
     } while (0);
@@ -136,6 +141,7 @@ int DictionaryHelper::getIntValueFromArray_json(const rapidjson::Value& root,con
     int nRet = def;
     do {
         CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(!root.HasMember(arrayKey));
         CC_BREAK_IF(root[arrayKey].IsNull());
         CC_BREAK_IF(root[arrayKey][idx].IsNull());
         nRet = root[arrayKey][idx].GetInt();

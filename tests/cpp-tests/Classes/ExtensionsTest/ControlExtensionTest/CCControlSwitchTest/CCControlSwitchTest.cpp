@@ -26,6 +26,9 @@
 
 #include "CCControlSwitchTest.h"
 
+USING_NS_CC;
+USING_NS_CC_EXT;
+
 ControlSwitchTest::~ControlSwitchTest()
 {
     CC_SAFE_RELEASE(_displayValueLabel);
@@ -44,7 +47,7 @@ bool ControlSwitchTest::init()
         double layer_width = 0;
         
         // Add the black background for the text
-        auto background = Scale9Sprite::create("extensions/buttonBackground.png");
+        auto background = ui::Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(Size(80, 50));
         background->setPosition(layer_width + background->getContentSize().width / 2.0f, 0);
         layer->addChild(background);

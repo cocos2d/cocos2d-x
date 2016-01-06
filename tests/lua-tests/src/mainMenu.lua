@@ -16,6 +16,7 @@ require "Camera3DTest/Camera3DTest"
 require "ClickAndMoveTest/ClickAndMoveTest"
 require "CocosDenshionTest/CocosDenshionTest"
 require "CocoStudioTest/CocoStudioTest"
+require "ComponentTest/main"
 require "CurrentLanguageTest/CurrentLanguageTest"
 require "DrawPrimitivesTest/DrawPrimitivesTest"
 require "EffectsTest/EffectsTest"
@@ -36,18 +37,20 @@ require "OpenGLTest/OpenGLTest"
 require "ParallaxTest/ParallaxTest"
 require "ParticleTest/ParticleTest"
 require "Particle3DTest/Particle3DTest"
-require "PerformanceTest/PerformanceTest"
 require "RenderTextureTest/RenderTextureTest"
 require "RotateWorldTest/RotateWorldTest"
 require "Sprite3DTest/Sprite3DTest"
 require "SpriteTest/SpriteTest"
 require "SceneTest/SceneTest"
 require "SpineTest/SpineTest"
+require "TerrainTest/TerrainTest"
+require "TextInputTest/TextInputTest"
 require "Texture2dTest/Texture2dTest"
 require "TileMapTest/TileMapTest"
 require "TouchesTest/TouchesTest"
 require "TransitionsTest/TransitionsTest"
 require "UserDefaultTest/UserDefaultTest"
+require "VibrateTest/VibrateTest"
 require "ZwoptexTest/ZwoptexTest"
 require "LuaBridgeTest/LuaBridgeTest"
 require "XMLHttpRequestTest/XMLHttpRequestTest"
@@ -57,6 +60,12 @@ require "VideoPlayerTest/VideoPlayerTest"
 require "FastTiledMapTest/FastTiledMapTest"
 require "NewAudioEngineTest/NewAudioEngineTest"
 require "CocosStudio3DTest/CocosStudio3DTest"
+require "WebViewTest/WebViewTest"
+require "SpritePolygonTest/SpritePolygonTest"
+require "Physics3DTest/Physics3DTest"
+require "Scene3DTest/Scene3DTest"
+require "MaterialSystemTest/MaterialSystemTest"
+require "NavMeshTest/NavMeshTest"
 
 local LINE_SPACE = 40
 
@@ -89,7 +98,8 @@ local _allTests = {
     { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
     { isSupported = true,  name = "CocosStudio3DTest"      , create_func   =               CocosStudio3DTest},
-    { isSupported = true,  name = "CocoStudioTest"         , create_func   =         CocoStudioTestMain  },  
+    { isSupported = true,  name = "CocoStudioTest"         , create_func   =         CocoStudioTestMain  },
+    { isSupported = true,  name = "ComponentTest"          , create_func   =         ComponentTestMain  },
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
     { isSupported = true,  name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },
@@ -105,26 +115,31 @@ local _allTests = {
     { isSupported = true,  name = "LayerTest"              , create_func   =                 LayerTestMain  },
     { isSupported = true,  name = "LightTest"          , create_func   =                 LightTestMain  },
     { isSupported = true,  name = "LuaBridgeTest"          , create_func   =        LuaBridgeMainTest },
+    { isSupported = true,  name = "MaterialSystemTest"     , create_func   =        MaterialSystemTest },
     { isSupported = true,  name = "MenuTest"               , create_func   =                  MenuTestMain  }, 
     { isSupported = true,  name = "MotionStreakTest"       , create_func   =          MotionStreakTest      },
     { isSupported = false,  name = "MutiTouchTest"          , create_func=          MutiTouchTestMain     },
+    { isSupported = true,  name = "NavMeshTest"            , create_func   =       NavMeshTest },
     { isSupported = true,  name = "NewEventDispatcherTest"  , create_func   =       NewEventDispatcherTest },
     { isSupported = true,  name = "NodeTest"               , create_func   =                  CocosNodeTest },
     { isSupported = true,   name = "OpenGLTest"             , create_func=          OpenGLTestMain     },
     { isSupported = true,  name = "ParallaxTest"           , create_func   =              ParallaxTestMain  },
     { isSupported = true,  name = "ParticleTest"           , create_func   =              ParticleTest      }, 
     { isSupported = true,  name = "Particle3D (PU)"        , create_func   =              Particle3DTest  },
-    { isSupported = true,  name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
     { isSupported = true,  name = "PhysicsTest"            , create_func =          PhysicsTest  },
+    { isSupported = true,  name = "Physics3DTest"            , create_func =          Physics3DTest  },
     { isSupported = true,  name = "RenderTextureTest"      , create_func   =         RenderTextureTestMain  },
     { isSupported = true,  name = "RotateWorldTest"        , create_func   =           RotateWorldTest      },
     { isSupported = true,  name = "SceneTest"              , create_func   =                 SceneTestMain  },
+    { isSupported = true,  name = "Scene3DTest"             , create_func=            Scene3DTestMain      },
     { isSupported = true,  name = "SpineTest"              , create_func   =                 SpineTestMain  },
     { isSupported = false,  name = "SchdulerTest"           , create_func=              SchdulerTestMain  },
-    { isSupported = false,  name = "ShaderTest"             , create_func=            ShaderTestMain      },
+    { isSupported = false, name = "ShaderTest"             , create_func=            ShaderTestMain      },
     { isSupported = true,  name = "Sprite3DTest"           , create_func   =                Sprite3DTest    },
+    { isSupported = true,  name = "TerrainTest"           , create_func   =                TerrainTest  },
     { isSupported = true,  name = "SpriteTest"             , create_func   =                SpriteTest      },
-    { isSupported = false,  name = "TextInputTest"          , create_func=             TextInputTestMain  },
+    { isSupported = true,  name = "SpritePolygonTest"             , create_func   =         SpritePolygonTest      },
+    { isSupported = true,  name = "TextInputTest"          , create_func=             TextInputTestMain  },
     { isSupported = true,  name = "Texture2DTest"          , create_func   =             Texture2dTestMain  },
     { isSupported = false,  name = "TextureCacheTest"       , create_func=      TextureCacheTestMain      },
     { isSupported = true,  name = "TileMapTest"            , create_func   =               TileMapTestMain  }, 
@@ -132,7 +147,9 @@ local _allTests = {
     { isSupported = true,  name = "TransitionsTest"        , create_func   =           TransitionsTest      },   
     { isSupported = true,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
     { isSupported = true,  name = "VideoPlayerTest"        , create_func=           VideoPlayerTestMain  },
+    { isSupported = true,  name = "WebViewTest"            , create_func=           WebViewTestMain  },
     { isSupported = true,  name = "XMLHttpRequestTest"     , create_func   =        XMLHttpRequestTestMain  },
+    { isSupported = true,  name = "VibrateTest"            , create_func   =               VibrateTestMain  },
     { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  }
 }
 
@@ -192,7 +209,21 @@ function CreateTestMenu()
             if cc.PLATFORM_OS_IPHONE ~= targetPlatform and cc.PLATFORM_OS_ANDROID ~= targetPlatform then
                 testMenuItem:setEnabled(false)
             end
-         end
+        end
+
+        if obj.name == "WebViewTest" then
+            if cc.PLATFORM_OS_IPHONE ~= targetPlatform and cc.PLATFORM_OS_ANDROID ~= targetPlatform then
+                testMenuItem:setEnabled(false)
+            end
+        end
+
+        if obj.name == "Physics3DTest" and nil == cc.Physics3DComponent then
+            testMenuItem:setEnabled(false) 
+        end
+
+        if obj.name == "NavMeshTest" and nil == cc.NavMesh then
+            testMenuItem:setEnabled(false) 
+        end
 
         testMenuItem:registerScriptTapHandler(menuCallback)
         testMenuItem:setPosition(cc.p(s.width / 2, (s.height - (index) * LINE_SPACE)))

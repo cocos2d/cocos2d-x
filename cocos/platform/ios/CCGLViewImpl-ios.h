@@ -58,16 +58,16 @@ public:
     static int _depthFormat;
 
     /** sets the content scale factor */
-    bool setContentScaleFactor(float contentScaleFactor);
+    virtual bool setContentScaleFactor(float contentScaleFactor) override;
 
     /** returns the content scale factor */
-    float getContentScaleFactor() const;
+    virtual float getContentScaleFactor() const override;
 
     /** returns whether or not the view is in Retina Display mode */
-    bool isRetinaDisplay() const { return getContentScaleFactor() == 2.0; }
+    virtual bool isRetinaDisplay() const override { return getContentScaleFactor() == 2.0; }
 
     /** returns the objective-c CCEAGLView instance */
-    void* getEAGLView() const { return _eaglview; }
+    virtual void* getEAGLView() const override { return _eaglview; }
 
     // overrides
     virtual bool isOpenGLReady() override;

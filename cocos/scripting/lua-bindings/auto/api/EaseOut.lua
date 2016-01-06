@@ -34,4 +34,10 @@
 -- @param self
 -- @return EaseOut#EaseOut ret (return value: cc.EaseOut)
         
+--------------------------------
+-- 
+-- @function [parent=#EaseOut] EaseOut 
+-- @param self
+-- @return EaseOut#EaseOut self (return value: cc.EaseOut)
+        
 return nil

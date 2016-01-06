@@ -19,20 +19,21 @@ void AppLang::readLocalizationFile()
     {
         _hasInit = true;
         
-        std::string fullPathFile = FileUtils::getInstance()->fullPathForFilename(_localizationFileName.c_str());
-        if (fullPathFile.compare(_localizationFileName) == 0)
+        auto fileUtils = FileUtils::getInstance();
+        
+        if (!fileUtils->isFileExist(_localizationFileName))
         {
-            cocos2d::log("[WARNING]:\nnot find %s", this->_localizationFileName.c_str());
+            cocos2d::log("[WARNING]:not find %s", _localizationFileName.c_str());
             return;
         }
-        std::string fileContent = FileUtils::getInstance()->getStringFromFile(fullPathFile);
-        
+        auto fullFilePath = fileUtils->fullPathForFilename(_localizationFileName);
+        std::string fileContent = FileUtils::getInstance()->getStringFromFile(fullFilePath);
         if(fileContent.empty())
             return;
         
         if (_docRootjson.Parse<0>(fileContent.c_str()).HasParseError())
         {
-            cocos2d::log("[WARNING]:\nread json file %s failed because of %s", fullPathFile.c_str(), _docRootjson.GetParseError());
+            cocos2d::log("[WARNING]:read json file %s failed because of %d", _localizationFileName.c_str(), _docRootjson.GetParseError());
             return;
         }
     }
@@ -66,8 +67,7 @@ std::string AppLang::getString(const std::string &lang, const std::string &key)
     {
         const rapidjson::Value& v = _docRootjson[langKey];
         if (v.HasMember(ckey))
-        { 
-            std::string tmpv = v[ckey].GetString();
+        {
             return v[ckey].GetString();
         }
     }

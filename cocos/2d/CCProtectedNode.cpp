@@ -29,10 +29,6 @@
 #include "CCProtectedNode.h"
 
 #include "base/CCDirector.h"
-
-#if CC_USE_PHYSICS
-#include "physics/CCPhysicsBody.h"
-#endif
 #include "2d/CCScene.h"
 
 NS_CC_BEGIN
@@ -63,6 +59,14 @@ ProtectedNode * ProtectedNode::create(void)
 
 void ProtectedNode::cleanup()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnCleanup))
+            return;
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     Node::cleanup();
     // timers
     for( const auto &child: _protectedChildren)
@@ -99,19 +103,6 @@ void ProtectedNode::addProtectedChild(Node *child, int zOrder, int tag)
     
     child->setParent(this);
     child->setOrderOfArrival(s_globalOrderOfArrival++);
-    
-#if CC_USE_PHYSICS
-    // Recursive add children with which have physics body.
-    for (Node* node = this; node != nullptr; node = node->getParent())
-    {
-        Scene* scene = dynamic_cast<Scene*>(node);
-        if (scene != nullptr && scene->getPhysicsWorld() != nullptr)
-        {
-            scene->addChildToPhysicsWorld(child);
-            break;
-        }
-    }
-#endif
     
     if( _running )
     {
@@ -170,13 +161,6 @@ void ProtectedNode::removeProtectedChild(cocos2d::Node *child, bool cleanup)
             child->onExit();
         }
         
-#if CC_USE_PHYSICS
-        if (child->getPhysicsBody() != nullptr)
-        {
-            child->getPhysicsBody()->removeFromWorld();
-        }
-        
-#endif
         // If you don't do cleanup, the child's actions will not get removed and the
         // its scheduledSelectors_ dict will not get released!
         if (cleanup)
@@ -209,13 +193,6 @@ void ProtectedNode::removeAllProtectedChildrenWithCleanup(bool cleanup)
             child->onExitTransitionDidStart();
             child->onExit();
         }
-        
-#if CC_USE_PHYSICS
-        if (child->getPhysicsBody() != nullptr)
-        {
-            child->getPhysicsBody()->removeFromWorld();
-        }
-#endif
         
         if (cleanup)
         {
@@ -271,7 +248,7 @@ void ProtectedNode::reorderProtectedChild(cocos2d::Node *child, int localZOrder)
 void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
-    if (!_visible || !isVisitableByVisitingCamera())
+    if (!_visible)
     {
         return;
     }
@@ -282,7 +259,7 @@ void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint3
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    CCASSERT(nullptr != director, "Director is null when setting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
@@ -354,6 +331,14 @@ void ProtectedNode::onEnter()
 
 void ProtectedNode::onEnterTransitionDidFinish()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnterTransitionDidFinish))
+            return;
+    }
+#endif
+    
     Node::onEnterTransitionDidFinish();
     for( const auto &child: _protectedChildren)
         child->onEnterTransitionDidFinish();
@@ -361,6 +346,14 @@ void ProtectedNode::onEnterTransitionDidFinish()
 
 void ProtectedNode::onExitTransitionDidStart()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExitTransitionDidStart))
+            return;
+    }
+#endif
+    
     Node::onExitTransitionDidStart();
     for( const auto &child: _protectedChildren)
         child->onExitTransitionDidStart();
@@ -368,6 +361,14 @@ void ProtectedNode::onExitTransitionDidStart()
 
 void ProtectedNode::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     Node::onExit();
     for( const auto &child: _protectedChildren)
         child->onExit();

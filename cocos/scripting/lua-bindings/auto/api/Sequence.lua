@@ -6,6 +6,21 @@
 
 --------------------------------
 -- 
+-- @function [parent=#Sequence] init 
+-- @param self
+-- @param #array_table arrayOfActions
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  initializes the action 
+-- @function [parent=#Sequence] initWithTwoActions 
+-- @param self
+-- @param #cc.FiniteTimeAction pActionOne
+-- @param #cc.FiniteTimeAction pActionTwo
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#Sequence] startWithTarget 
 -- @param self
 -- @param #cc.Node target
@@ -34,6 +49,12 @@
 -- @function [parent=#Sequence] update 
 -- @param self
 -- @param #float t
+-- @return Sequence#Sequence self (return value: cc.Sequence)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sequence] Sequence 
+-- @param self
 -- @return Sequence#Sequence self (return value: cc.Sequence)
         
 return nil

@@ -5,6 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
+--  initializes the action with an Animation and will restore the original frame when the animation is over 
+-- @function [parent=#Animate] initWithAnimation 
+-- @param self
+-- @param #cc.Animation animation
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @overload self         
 -- @overload self         
 -- @function [parent=#Animate] getAnimation
@@ -12,8 +19,15 @@
 -- @return Animation#Animation ret (return value: cc.Animation)
 
 --------------------------------
+-- Gets the index of sprite frame currently displayed.<br>
+-- return int  the index of sprite frame currently displayed.
+-- @function [parent=#Animate] getCurrentFrameIndex 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 --  Sets the Animation object to be animated <br>
--- param A certain animation.
+-- param animation certain animation.
 -- @function [parent=#Animate] setAnimation 
 -- @param self
 -- @param #cc.Animation animation
@@ -58,6 +72,12 @@
 -- @function [parent=#Animate] update 
 -- @param self
 -- @param #float t
+-- @return Animate#Animate self (return value: cc.Animate)
+        
+--------------------------------
+-- 
+-- @function [parent=#Animate] Animate 
+-- @param self
 -- @return Animate#Animate self (return value: cc.Animate)
         
 return nil

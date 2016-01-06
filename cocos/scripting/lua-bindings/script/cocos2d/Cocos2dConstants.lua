@@ -265,7 +265,7 @@ cc.Handler.EVENT_SPINE            = 52
 cc.Handler.EVENT_PHYSICS_CONTACT_BEGIN = 53
 cc.Handler.EVENT_PHYSICS_CONTACT_PRESOLVE = 54
 cc.Handler.EVENT_PHYSICS_CONTACT_POSTSOLVE = 55
-cc.Handler.EVENT_PHYSICS_CONTACT_SEPERATE = 56
+cc.Handler.EVENT_PHYSICS_CONTACT_SEPARATE = 56
 cc.Handler.EVENT_FOCUS = 57
 cc.Handler.EVENT_CONTROLLER_CONNECTED = 58
 cc.Handler.EVENT_CONTROLLER_DISCONNECTED = 59
@@ -508,6 +508,8 @@ cc.EventAssetsManagerEx =
         ASSET_UPDATED = 6,
         ERROR_UPDATING = 7,
         UPDATE_FINISHED = 8,
+        UPDATE_FAILED = 9,
+        ERROR_DECOMPRESS = 10
     },
 }
 
@@ -548,6 +550,14 @@ cc.CameraFlag =
     USER6 = 64,
     USER7 = 128,
     USER8 = 256,
+}
+
+cc.CameraBackgroundBrush.BrushType = 
+{
+    NONE = 0,
+    DEPTH = 1,
+    COLOR = 2,
+    SKYBOX = 3,
 }
 
 cc.BillBoard_Mode =
@@ -619,3 +629,10 @@ cc.AsyncTaskPool.TaskType =
     TASK_MAX_TYPE = 3,  
 }
 
+
+cc.RED = cc.c3b(255,0,0)
+cc.GREEN = cc.c3b(0,255,0)
+cc.BLUE = cc.c3b(0,0,255)
+cc.BLACK = cc.c3b(0,0,0)
+cc.WHITE = cc.c3b(255,255,255)
+cc.YELLOW = cc.c3b(255,255,0)

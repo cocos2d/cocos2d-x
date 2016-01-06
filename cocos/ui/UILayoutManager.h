@@ -29,6 +29,10 @@
 #include "base/CCVector.h"
 #include "ui/GUIExport.h"
 
+/**
+ * @addtogroup ui
+ * @{
+ */
 NS_CC_BEGIN
 
 namespace ui {
@@ -37,17 +41,30 @@ class LayoutProtocol;
 class Widget;
 class RelativeLayoutParameter;
 
+/**
+ *@brief Base class for managing layout.
+ * All the concrete layout manager should inherit from this class.
+ */
 class CC_GUI_DLL LayoutManager : public Ref
 {
 public:
     virtual ~LayoutManager(){};
     LayoutManager(){};
     
+    /**
+     * The interface does the actual layouting work.
+     */
     virtual void doLayout(LayoutProtocol *layout) = 0;
     
     friend class Layout;
 };
 
+/**
+ *@brief Linear vertical layouting class.
+ * Note: This class is used only by @see `Layout` class.
+ * @lua NA
+ * @js NA
+ */
 class CC_GUI_DLL LinearVerticalLayoutManager : public LayoutManager
 {
 private:
@@ -59,6 +76,12 @@ private:
     friend class Layout;
 };
 
+/**
+ *@brief Linear horizontal layouting class.
+ *Note: This class is used only by @see `Layout` class.
+ * @lua NA
+ * @js NA
+ */
 class CC_GUI_DLL LinearHorizontalLayoutManager : public LayoutManager
 {
 private:
@@ -70,6 +93,12 @@ private:
     friend class Layout;
 };
 
+/**
+ *@brief Relative layouting class.
+ *Note: This class is used only by `Layout` class.
+ * @lua NA
+ * @js NA
+ */
 class CC_GUI_DLL RelativeLayoutManager : public LayoutManager
 {
 private:
@@ -86,9 +115,15 @@ private:
     
     Vector<Widget*> getAllWidgets(LayoutProtocol *layout);
     Widget* getRelativeWidget(Widget* widget);
-    bool caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout);
-    void caculateFinalPositionWithRelativeAlign();
+    bool calculateFinalPositionWithRelativeWidget(LayoutProtocol *layout);
+    void calculateFinalPositionWithRelativeAlign();
     
+    /** @deprecated Use method calculateFinalPositionWithRelativeWidget() instead */
+    CC_DEPRECATED_ATTRIBUTE bool caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout);
+
+    /** @deprecated Use method calculateFinalPositionWithRelativeAlign() instead */
+    CC_DEPRECATED_ATTRIBUTE void caculateFinalPositionWithRelativeAlign();
+
     ssize_t _unlayoutChildCount;
     Vector<Widget*> _widgetChildren;
     Widget* _widget;
@@ -103,4 +138,6 @@ private:
 }
 
 NS_CC_END
+// end of ui group
+/// @}
 #endif /* defined(__cocos2d_libs__CCLayoutManager__) */

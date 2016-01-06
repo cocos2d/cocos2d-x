@@ -168,12 +168,12 @@ public:
 
     /** Creates an action with a Cardinal Spline array of points and tension.
      * @param duration In seconds.
-     * @param point An PointArray.
+     * @param points An PointArray.
      * @param tension Goodness of fit.
      * @code
      * When this function bound to js or lua,the input params are changed.
      * In js: var create(var t,var table)
-     * In lua: lcaol create(local t, local table)
+     * In lua: local create(local t, local table)
      * @endcode
      */
     static CardinalSplineTo* create(float duration, PointArray* points, float tension);
@@ -192,7 +192,7 @@ public:
      * Initializes the action with a duration and an array of points.
      *
      * @param duration In seconds.
-     * @param point An PointArray.
+     * @param points An PointArray.
      * @param tension Goodness of fit.
      */
     bool initWithDuration(float duration, PointArray* points, float tension);
@@ -249,7 +249,7 @@ public:
      * @code
      * When this function bound to js or lua,the input params are changed.
      * In js: var create(var t,var table).
-     * In lua: lcaol create(local t, local table).
+     * In lua: local create(local t, local table).
      * @param duration In seconds.
      * @param point An PointArray.
      * @param tension Goodness of fit.
@@ -285,7 +285,7 @@ public:
      * @code
      * When this function bound to js or lua,the input params are changed.
      * In js: var create(var dt,var table).
-     * In lua: lcaol create(local dt, local table).
+     * In lua: local create(local dt, local table).
      * @endcode
      */
     static CatmullRomTo* create(float dt, PointArray* points);
@@ -318,7 +318,7 @@ public:
      * @code
      * When this function bound to js or lua,the input params are changed.
      * In js: var create(var dt,var table).
-     * In lua: lcaol create(local dt, local table).
+     * In lua: local create(local dt, local table).
      * @endcode
      */
     static CatmullRomBy* create(float dt, PointArray* points);

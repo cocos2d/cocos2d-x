@@ -25,14 +25,14 @@ THE SOFTWARE.
 
 package org.cocos2dx.lib;
 
-import java.io.FileInputStream;
-
-import com.chukong.cocosplay.client.CocosPlayClient;
-
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.util.Log;
+
+import com.chukong.cocosplay.client.CocosPlayClient;
+
+import java.io.FileInputStream;
 
 public class Cocos2dxMusic {
     // ===========================================================

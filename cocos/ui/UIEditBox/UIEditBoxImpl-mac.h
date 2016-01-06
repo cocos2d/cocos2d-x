@@ -30,38 +30,9 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
-#import <Foundation/Foundation.h>
-#import <AppKit/AppKit.h>
-
 #include "UIEditBoxImpl.h"
 
-
-@interface UIEditBoxImplMac : NSObject <NSTextFieldDelegate>
-{
-    NSTextField* textField_;
-    NSSecureTextField* secureTextField_;
-    void* editBox_;
-    BOOL editState_;
-    NSMutableDictionary* placeholderAttributes_;
-}
-
-@property(nonatomic, retain) NSTextField* textField;
-@property(nonatomic, retain) NSSecureTextField* secureTextField;
-@property(nonatomic, retain) NSMutableDictionary* placeholderAttributes;
-@property(nonatomic, readonly, getter = isEditState) BOOL editState;
-@property(nonatomic, assign) void* editBox;
-@property(nonatomic, assign, getter = isSecure) BOOL secure;
-
--(id) initWithFrame: (NSRect) frameRect editBox: (void*) editBox;
--(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
--(void) setPosition:(NSPoint) pos;
--(void) setContentSize:(NSSize) size;
--(void) visit;
--(void) openKeyboard;
--(void) closeKeyboard;
-
-@end
-
+@class UIEditBoxImplMac;
 
 NS_CC_BEGIN
 
@@ -82,48 +53,49 @@ public:
      */
     virtual ~EditBoxImplMac();
     
-    virtual bool initWithSize(const Size& size);
-    virtual void setFont(const char* pFontName, int fontSize);
-    virtual void setFontColor(const Color4B& color);
-    virtual void setPlaceholderFont(const char* pFontName, int fontSize);
-    virtual void setPlaceholderFontColor(const Color4B& color);
-    virtual void setInputMode(EditBox::InputMode inputMode);
-    virtual void setInputFlag(EditBox::InputFlag inputFlag);
-    virtual void setMaxLength(int maxLength);
-    virtual int  getMaxLength();
-    virtual void setReturnType(EditBox::KeyboardReturnType returnType);
-    virtual bool isEditing();
+    virtual bool initWithSize(const Size& size) override;
+    virtual void setFont(const char* pFontName, int fontSize) override;
+    virtual void setFontColor(const Color4B& color) override;
+    virtual void setPlaceholderFont(const char* pFontName, int fontSize) override;
+    virtual void setPlaceholderFontColor(const Color4B& color) override;
+    virtual void setInputMode(EditBox::InputMode inputMode) override;
+    virtual void setInputFlag(EditBox::InputFlag inputFlag) override;
+    virtual void setMaxLength(int maxLength) override;
+    virtual int  getMaxLength() override;
+    virtual void setReturnType(EditBox::KeyboardReturnType returnType) override;
+    virtual bool isEditing() override;
     
-    virtual void setText(const char* pText);
-    virtual const char* getText(void);
-    virtual void setPlaceHolder(const char* pText);
-    virtual void setPosition(const Vec2& pos);
-    virtual void setVisible(bool visible);
-    virtual void setContentSize(const Size& size);
-    virtual void setAnchorPoint(const Vec2& anchorPoint);
+    virtual void setText(const char* pText) override;
+    virtual const char* getText(void) override;
+    virtual void setPlaceHolder(const char* pText) override;
+    virtual void setPosition(const Vec2& pos) override;
+    virtual void setVisible(bool visible) override;
+    virtual void setContentSize(const Size& size) override;
+    virtual void setAnchorPoint(const Vec2& anchorPoint) override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void visit(void);
-    virtual void doAnimationWhenKeyboardMove(float duration, float distance);
-    virtual void openKeyboard();
-    virtual void closeKeyboard();
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)override;
+    virtual void doAnimationWhenKeyboardMove(float duration, float distance) override;
+    virtual void openKeyboard() override;
+    virtual void closeKeyboard() override;
     virtual void updatePosition(float dt) override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onEnter(void);
+    virtual void onEnter(void) override;
 private:
     NSPoint    convertDesignCoordToScreenCoord(const Vec2& designCoord, bool bInRetinaMode);
     void       adjustTextFieldPosition();
-    Size     _contentSize;
-    Vec2    _position;
-    Vec2    _anchorPoint;
-    int        _maxTextLength;
-    bool       _inRetinaMode;
-    UIEditBoxImplMac*  _sysEdit;
+    NSFont*    constructFont(const char* fontName, int fontSize);
+    Size              _contentSize;
+    Vec2              _position;
+    Vec2              _anchorPoint;
+    int               _maxTextLength;
+    bool              _inRetinaMode;
+    UIEditBoxImplMac* _sysEdit;
 };
 
 

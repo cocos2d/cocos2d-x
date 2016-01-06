@@ -40,8 +40,6 @@ class PhysicsShape;
 class PhysicsBody;
 class PhysicsWorld;
 
-typedef Vec2 Vect;
-
 typedef struct CC_DLL PhysicsContactData
 {
     static const int POINT_MAX = 4;
@@ -57,12 +55,14 @@ typedef struct CC_DLL PhysicsContactData
 /**
  * @addtogroup physics
  * @{
+ * @addtogroup physics_2d
+ * @{
  */
 
 /**
- * @brief Contact infomation. 
+ * @brief Contact information. 
  
- * It will created automatically when two shape contact with each other. And it will destoried automatically when two shape separated.
+ * It will created automatically when two shape contact with each other. And it will destroyed automatically when two shape separated.
  */
 class CC_DLL PhysicsContact : public EventCustom
 {
@@ -74,7 +74,7 @@ public:
         BEGIN,
         PRESOLVE,
         POSTSOLVE,
-        SEPERATE
+        SEPARATE
     };
     
     /** Get contact shape A. */
@@ -89,13 +89,18 @@ public:
     /** Get previous contact data */
     inline const PhysicsContactData* getPreContactData() const { return _preContactData; }
     
-    /** Get data. */
+    /** 
+     * Get data. 
+     * @lua NA
+     */
     inline void* getData() const { return _data; }
     
     /**
      * @brief Set data to contact. 
      
-     * You must manage the memory yourself, Generally you can set data at contact begin, and distory it at contact seperate.
+     * You must manage the memory yourself, Generally you can set data at contact begin, and destroy it at contact separate.
+     *
+     * @lua NA
      */
     inline void setData(void* data) { _data = data; }
 
@@ -155,7 +160,7 @@ public:
     /** Set the friction.*/
     void setFriction(float friction);
     /** Set the surface velocity.*/
-    void setSurfaceVelocity(const Vect& velocity);
+    void setSurfaceVelocity(const Vec2& velocity);
     /** Ignore the rest of the contact presolve and postsolve callbacks. */
     void ignore();
     
@@ -192,7 +197,7 @@ private:
     friend class EventListenerPhysicsContact;
 };
 
-/** Contact listener. It will recive all the contact callbacks. */
+/** Contact listener. It will receive all the contact callbacks. */
 class CC_DLL EventListenerPhysicsContact : public EventListenerCustom
 {
 public:
@@ -230,9 +235,9 @@ public:
     std::function<void(PhysicsContact& contact, const PhysicsContactPostSolve& solve)> onContactPostSolve;
     /**
      * @brief It will called at two shapes separated, and only call it once.
-     * onContactBegin and onContactSeperate will called in pairs.
+     * onContactBegin and onContactSeparate will called in pairs.
      */
-    std::function<void(PhysicsContact& contact)> onContactSeperate;
+    std::function<void(PhysicsContact& contact)> onContactSeparate;
     
 protected:
     bool init();
@@ -302,6 +307,7 @@ protected:
     virtual ~EventListenerPhysicsContactWithGroup();
 };
 
+/** @} */
 /** @} */
 
 NS_CC_END

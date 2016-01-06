@@ -34,7 +34,7 @@ NS_CC_BEGIN
 class Sprite;
 
 /**
- * @addtogroup misc_nodes
+ * @addtogroup _2d
  * @{
  */
 

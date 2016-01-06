@@ -59,6 +59,7 @@ LuaMinXmlHttpRequest::~LuaMinXmlHttpRequest()
 {
     _httpHeader.clear();
     _requestHeader.clear();
+    CC_SAFE_RELEASE_NULL(_httpRequest);
 }
 
 /**
@@ -69,7 +70,7 @@ void LuaMinXmlHttpRequest::_gotHeader(string header)
 {
 	// Get Header and Set StatusText
     // Split String into Tokens
-    char * cstr = new char [header.length()+1];
+    char * cstr = new (std::nothrow) char [header.length()+1];
     
     // check for colon.
     size_t found_header_field = header.find_first_of(":");
@@ -205,8 +206,6 @@ void LuaMinXmlHttpRequest::_sendRequest()
         }
         
         long statusCode = response->getResponseCode();
-        char statusString[64] = {};
-        sprintf(statusString, "HTTP Status Code: %ld, tag = %s", statusCode, response->getHttpRequest()->getTag());
         
         if (!response->isSucceed())
         {
@@ -268,7 +267,6 @@ void LuaMinXmlHttpRequest::_sendRequest()
         release();
     });
     network::HttpClient::getInstance()->sendImmediate(_httpRequest);
-    _httpRequest->release();
     retain();
 }
 
@@ -286,7 +284,7 @@ static void lua_reg_xml_http_request(lua_State* L)
 static int lua_collect_xml_http_request (lua_State* L)
 {
     LuaMinXmlHttpRequest* self = (LuaMinXmlHttpRequest*) tolua_tousertype(L,1,0);
-    Mtolua_delete(self);
+    self->release();
     return 0;
 }
 
@@ -303,10 +301,8 @@ static int lua_cocos2dx_XMLHttpRequest_constructor(lua_State* L)
     if (argc == 0)
     {
         self = new (std::nothrow) LuaMinXmlHttpRequest();
-        self->autorelease();
-        int ID =  self? (int)self->_ID : -1;
-        int* luaID = self? &self->_luaID : NULL;
-        toluafix_pushusertype_ccobject(L, ID, luaID, (void*)self, "cc.XMLHttpRequest");
+        tolua_pushusertype(L, (void*)self, "cc.XMLHttpRequest");
+        tolua_register_gc(L, lua_gettop(L));
         return 1;
     }
     
@@ -687,7 +683,7 @@ static int lua_get_XMLHttpRequest_response(lua_State* L)
         
         LuaValueArray array;
         
-        uint8_t* tmpData = new uint8_t[self->getDataSize()];
+        uint8_t* tmpData = new (std::nothrow) uint8_t[self->getDataSize()];
         if (nullptr == tmpData)
         {
             return 0;

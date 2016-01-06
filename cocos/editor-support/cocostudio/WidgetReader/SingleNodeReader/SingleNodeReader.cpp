@@ -56,13 +56,18 @@ namespace cocostudio
     {
         if (!_instanceSingleNodeReader)
         {
-            _instanceSingleNodeReader = new SingleNodeReader();
+            _instanceSingleNodeReader = new (std::nothrow) SingleNodeReader();
         }
         
         return _instanceSingleNodeReader;
     }
     
     void SingleNodeReader::purge()
+    {
+        CC_SAFE_DELETE(_instanceSingleNodeReader);
+    }
+    
+    void SingleNodeReader::destroyInstance()
     {
         CC_SAFE_DELETE(_instanceSingleNodeReader);
     }

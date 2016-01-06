@@ -29,6 +29,7 @@ THE SOFTWARE.
 #define __SPRITE_CCSPRITE_FRAME_H__
 
 #include "2d/CCNode.h"
+#include "2d/CCAutoPolygon.h"
 #include "base/CCRef.h"
 #include "math/CCGeometry.h"
 
@@ -37,7 +38,7 @@ NS_CC_BEGIN
 class Texture2D;
 
 /**
- * @addtogroup sprite_nodes
+ * @addtogroup _2d
  * @{
  */
 
@@ -126,7 +127,7 @@ public:
     inline const Rect& getRect() const { return _rect; }
     /** Set rect of the frame.
      *
-     * @param The rect of the sprite.
+     * @param rect The rect of the sprite.
      */
     void setRect(const Rect& rect);
 
@@ -187,7 +188,25 @@ public:
 
     // Overrides
 	virtual SpriteFrame *clone() const override;
-    
+
+    /** Set the polygon info for polygon mesh sprites
+     *
+     * @param polygonInfo triangle mesh of the sprite
+     */
+    void setPolygonInfo(const PolygonInfo &polygonInfo);
+
+    /** Get the polygonInfo for this sprite
+     *
+     * @return polygonInfo structure
+     */
+    const PolygonInfo &getPolygonInfo() const;
+
+    /** Check if sprite frame is a polygon sprite
+     *
+     * @return true if polygonInfo is available
+     */
+    bool hasPolygonInfo() const;
+
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @lua NA
@@ -231,9 +250,10 @@ protected:
     Size _originalSizeInPixels;
     Texture2D *_texture;
     std::string  _textureFilename;
+    PolygonInfo _polygonInfo;
 };
 
-// end of sprite_nodes group
+// end of _2d group
 /// @}
 
 NS_CC_END

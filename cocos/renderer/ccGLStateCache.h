@@ -2,7 +2,7 @@
  Copyright (c) 2011      Ricardo Quesada
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
- Copyright (C) 2013-2014 Chukong Technologies Inc.
+ Copyright (C) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -36,7 +36,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup shaders
+ * @addtogroup renderer
  * @{
  */
 
@@ -44,7 +44,7 @@ class GLProgram;
 
 namespace GL {
 
-/** vertex attrib flags */
+/** Vertex attrib flags. */
 enum {
     VERTEX_ATTRIB_FLAG_NONE       = 0,
 
@@ -58,95 +58,121 @@ enum {
     VERTEX_ATTRIB_FLAG_POS_COLOR_TEX = (VERTEX_ATTRIB_FLAG_POSITION | VERTEX_ATTRIB_FLAG_COLOR | VERTEX_ATTRIB_FLAG_TEX_COORD),
 };
 
-/** @file ccGLStateCache.h
-*/
-
-/** Invalidates the GL state cache.
- If CC_ENABLE_GL_STATE_CACHE it will reset the GL state cache.
- @since v2.0.0
+/** 
+ * Invalidates the GL state cache.
+ *
+ * If CC_ENABLE_GL_STATE_CACHE it will reset the GL state cache.
+ * @since v2.0.0
  */
 void CC_DLL invalidateStateCache(void);
 
-/** Uses the GL program in case program is different than the current one.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glUseProgram() directly.
- @since v2.0.0
+/** 
+ * Uses the GL program in case program is different than the current one.
+
+ * If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glUseProgram() directly.
+ * @since v2.0.0
  */
 void CC_DLL useProgram(GLuint program);
 
-/** Deletes the GL program. If it is the one that is being used, it invalidates it.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glDeleteProgram() directly.
- @since v2.0.0
+/** 
+ * Deletes the GL program. If it is the one that is being used, it invalidates it.
+ *
+ * If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glDeleteProgram() directly.
+ * @since v2.0.0
  */
 void CC_DLL deleteProgram(GLuint program);
 
-/** Uses a blending function in case it not already used.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glBlendFunc() directly.
- @since v2.0.0
+/** 
+ * Uses a blending function in case it not already used.
+ *
+ * If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glBlendFunc() directly.
+ * @since v2.0.0
  */
 void CC_DLL blendFunc(GLenum sfactor, GLenum dfactor);
 
-/** Resets the blending mode back to the cached state in case you used glBlendFuncSeparate() or glBlendEquation().
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will just set the default blending mode using GL_FUNC_ADD.
- @since v2.0.0
+/** 
+ * Resets the blending mode back to the cached state in case you used glBlendFuncSeparate() or glBlendEquation().
+ *
+ * If CC_ENABLE_GL_STATE_CACHE is disabled, it will just set the default blending mode using GL_FUNC_ADD.
+ * @since v2.0.0
  */
 void CC_DLL blendResetToCache(void);
 
-/** sets the projection matrix as dirty
- @since v2.0.0
+/** 
+ * Sets the projection matrix as dirty.
+ * @since v2.0.0
  */
 void CC_DLL setProjectionMatrixDirty(void);
 
-/** Will enable the vertex attribs that are passed as flags.
- Possible flags:
-
-    * VERTEX_ATTRIB_FLAG_POSITION
-    * VERTEX_ATTRIB_FLAG_COLOR
-    * VERTEX_ATTRIB_FLAG_TEX_COORDS
-
- These flags can be ORed. The flags that are not present, will be disabled.
-
- @since v2.0.0
+/** 
+ * Will enable the vertex attribs that are passed as flags.
+ * Possible flags:
+ * 
+ *    * VERTEX_ATTRIB_FLAG_POSITION
+ *    * VERTEX_ATTRIB_FLAG_COLOR
+ *    * VERTEX_ATTRIB_FLAG_TEX_COORDS
+ * 
+ * These flags can be ORed. The flags that are not present, will be disabled.
+ * 
+ * @since v2.0.0
  */
 void CC_DLL enableVertexAttribs(uint32_t flags);
 
-/** If the texture is not already bound to texture unit 0, it binds it.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
- @since v2.0.0
+/** 
+ * If the texture is not already bound to texture unit 0, it binds it.
+ *
+ * If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
+ * @since v2.0.0
  */
 void CC_DLL bindTexture2D(GLuint textureId);
 
-
-/** If the texture is not already bound to a given unit, it binds it.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
- @since v2.1.0
+/** 
+ * If the texture is not already bound to a given unit, it binds it.
+ *
+ * If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
+ * @since v2.1.0
  */
 void CC_DLL bindTexture2DN(GLuint textureUnit, GLuint textureId);
 
-/** It will delete a given texture. If the texture was bound, it will invalidate the cached.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glDeleteTextures() directly.
- @since v2.0.0
+/** If the texture is not already bound to a given unit, it binds it.
+ * If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
+ * @since v3.6
+ */
+void CC_DLL bindTextureN(GLuint textureUnit, GLuint textureId, GLuint textureType = GL_TEXTURE_2D);
+
+/** 
+ * It will delete a given texture. If the texture was bound, it will invalidate the cached.
+ *
+ * If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glDeleteTextures() directly.
+ * @since v2.0.0
  */
 void CC_DLL deleteTexture(GLuint textureId);
 
-/** It will delete a given texture. If the texture was bound, it will invalidate the cached for the given texture unit.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glDeleteTextures() directly.
- @since v2.1.0
+/** 
+ * It will delete a given texture. If the texture was bound, it will invalidate the cached for the given texture unit.
+ *
+ * If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glDeleteTextures() directly.
+ * @since v2.1.0
  */
 CC_DEPRECATED_ATTRIBUTE void CC_DLL deleteTextureN(GLuint textureUnit, GLuint textureId);
 
-/** Select active texture unit.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glActiveTexture() directly.
- @since v3.0
+/** 
+ * Select active texture unit.
+ *
+ * If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glActiveTexture() directly.
+ * @since v3.0
  */
 void CC_DLL activeTexture(GLenum texture);
 
-/** If the vertex array is not already bound, it binds it.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindVertexArray() directly.
- @since v2.0.0
+/** 
+ * If the vertex array is not already bound, it binds it.
+ *
+ * If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindVertexArray() directly.
+ * @since v2.0.0
  */
 void CC_DLL bindVAO(GLuint vaoId);
 
-// end of shaders group
+// end of support group
 /// @}
 
 } // Namespace GL

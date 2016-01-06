@@ -49,6 +49,11 @@ namespace cocostudio
         return instanceTextFieldReader;
     }
     
+    void TextFieldReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceTextFieldReader);
+    }
+    
     void TextFieldReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode* cocoNode)
     {
         this->beginSetBasicProperties(widget);
@@ -327,12 +332,12 @@ namespace cocostudio
             {
                 textField->setFontName(path);
             }
-            else
-            {
-                auto label = Label::create();
-                label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-                textField->addChild(label);
-            }
+            //else
+            //{
+            //    auto label = Label::create();
+            //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+            //    textField->addChild(label);
+            //}
         }
         
         auto widgetReader = WidgetReader::getInstance();

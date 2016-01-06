@@ -57,13 +57,13 @@ void GridAction::startWithTarget(Node *target)
     if (targetGrid && targetGrid->getReuseGrid() > 0)
     {
         if (targetGrid->isActive() && targetGrid->getGridSize().width == _gridSize.width
-            && targetGrid->getGridSize().height == _gridSize.height /*&& dynamic_cast<GridBase*>(targetGrid) != nullptr*/)
+            && targetGrid->getGridSize().height == _gridSize.height)
         {
             targetGrid->reuse();
         }
         else
         {
-            CCASSERT(0, "");
+            CCASSERT(0, "Invalid grid parameters!");
         }
     }
     else
@@ -93,7 +93,7 @@ GridAction* GridAction::reverse() const
 GridBase* GridAction::getGrid()
 {
     // Abstract class needs implementation
-    CCASSERT(0, "");
+    CCASSERT(0, "Subclass should implement this method!");
 
     return nullptr;
 }
@@ -102,7 +102,7 @@ GridBase* GridAction::getGrid()
 
 GridBase* Grid3DAction::getGrid()
 {
-    return Grid3D::create(_gridSize);
+    return Grid3D::create(_gridSize, _gridNodeTarget->getGridRect());
 }
 
 Vec3 Grid3DAction::getVertex(const Vec2& position) const
@@ -123,11 +123,17 @@ void Grid3DAction::setVertex(const Vec2& position, const Vec3& vertex)
     g->setVertex(position, vertex);
 }
 
+Rect Grid3DAction::getGridRect() const
+{
+    Grid3D *g = (Grid3D*)_gridNodeTarget->getGrid();
+    return g->getGridRect();
+}
+
 // implementation of TiledGrid3DAction
 
 GridBase* TiledGrid3DAction::getGrid(void)
 {
-    return TiledGrid3D::create(_gridSize);
+    return TiledGrid3D::create(_gridSize, _gridNodeTarget->getGridRect());
 }
 
 Quad3 TiledGrid3DAction::getTile(const Vec2& pos) const

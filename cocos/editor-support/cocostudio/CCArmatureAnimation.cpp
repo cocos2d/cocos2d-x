@@ -166,10 +166,20 @@ float ArmatureAnimation::getSpeedScale() const
 
 void ArmatureAnimation::play(const std::string& animationName, int durationTo,  int loop)
 {
-    CCASSERT(_animationData, "_animationData can not be null");
+    if (animationName.empty())
+    {
+        CCLOG("_animationData can not be null");
+        return;
+    }
+//    CCASSERT(_animationData, "_animationData can not be null");
 
     _movementData = _animationData->getMovement(animationName.c_str());
-    CCASSERT(_movementData, "_movementData can not be null");
+    if (nullptr == _movementData)
+    {
+        CCLOG("_movementData can not be null");
+        return;
+    }
+//    CCASSERT(_movementData, "_movementData can not be null");
 
     //! Get key frame count
     _rawDuration = _movementData->duration;

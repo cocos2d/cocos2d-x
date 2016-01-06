@@ -19,7 +19,7 @@
         
 --------------------------------
 --  Set the selector target.<br>
--- param The selector target.
+-- param sel The selector target.
 -- @function [parent=#CallFunc] setTargetCallback 
 -- @param self
 -- @param #cc.Ref sel
@@ -43,5 +43,11 @@
 -- @function [parent=#CallFunc] reverse 
 -- @param self
 -- @return CallFunc#CallFunc ret (return value: cc.CallFunc)
+        
+--------------------------------
+-- 
+-- @function [parent=#CallFunc] CallFunc 
+-- @param self
+-- @return CallFunc#CallFunc self (return value: cc.CallFunc)
         
 return nil

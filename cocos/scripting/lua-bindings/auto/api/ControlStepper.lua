@@ -178,7 +178,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- js ctor
+-- js ctor<br>
+-- lua new
 -- @function [parent=#ControlStepper] ControlStepper 
 -- @param self
 -- @return ControlStepper#ControlStepper self (return value: cc.ControlStepper)

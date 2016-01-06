@@ -32,8 +32,26 @@ extern "C" {
 }
 #endif
 
-TOLUA_API int  register_all_cocos2dx_extension_manual(lua_State* tolua_S);
+/**
+ * @addtogroup lua
+ * @{
+ */
+
+/**
+ * Call this function can import the lua bindings for classes in the `cocos2d::extension` namespace like cocos2d::extension::Control, cocos2d::extension::ControlHuePicker, and so on.
+ * After registering, we could call the related cocosbuilder code conveniently in the lua.eg,.cc.Control:create().
+ * If you don't want to use the extension module in the lua, you only don't call this registering function.
+ * If you don't register the extension module, the package size would become smaller .
+ * The current mechanism,this registering function is called in the lua_module_register.h
+ */
 TOLUA_API int  register_extension_module(lua_State* tolua_S);
+
+// end group
+/// @}
+
+/// @cond
+TOLUA_API int  register_all_cocos2dx_extension_manual(lua_State* tolua_S);
+/// @endcond
 
 struct LuaAssetsManagerEventData
 {

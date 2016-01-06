@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -35,9 +35,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup GUI
- * @{
- * @addtogroup label
+ * @addtogroup _2d
  * @{
  */
 
@@ -88,6 +86,9 @@ public:
     virtual const std::string& getString(void) const override;
 
     virtual void updateAtlasValues() override;
+	/**
+     * @js NA
+     */
     virtual std::string getDescription() const override;
 
 #if CC_LABELATLAS_DEBUG_DRAW
@@ -122,8 +123,7 @@ protected:
     int _mapStartChar;
 };
 
-// end of GUI group
-/// @}
+// end group
 /// @}
 
 

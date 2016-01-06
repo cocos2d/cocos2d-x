@@ -22,8 +22,8 @@
 -- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
--- Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter<br>
--- param tag       An interger number that identifies a child node<br>
+-- Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter.<br>
+-- param tag       An integer number that identifies a child node.<br>
 -- param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
 -- @function [parent=#ProtectedNode] removeProtectedChildByTag 
 -- @param self
@@ -43,7 +43,7 @@
         
 --------------------------------
 -- Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.<br>
--- param cleanup   true if all running actions on all children nodes should be cleanup, false oterwise.<br>
+-- param cleanup   true if all running actions on all children nodes should be cleanup, false otherwise.<br>
 -- js removeAllChildren<br>
 -- lua removeAllChildren
 -- @function [parent=#ProtectedNode] removeAllProtectedChildrenWithCleanup 
@@ -59,16 +59,16 @@
         
 --------------------------------
 -- Sorts the children array once before drawing, instead of every time when a child is added or reordered.<br>
--- This appraoch can improves the performance massively.<br>
+-- This approach can improves the performance massively.<br>
 -- note Don't call this manually unless a child added needs to be removed in the same frame
 -- @function [parent=#ProtectedNode] sortAllProtectedChildren 
 -- @param self
 -- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
--- Gets a child from the container with its tag<br>
+-- Gets a child from the container with its tag.<br>
 -- param tag   An identifier to find the child node.<br>
--- return a Node object whose tag equals to the input parameter
+-- return a Node object whose tag equals to the input parameter.
 -- @function [parent=#ProtectedNode] getProtectedChildByTag 
 -- @param self
 -- @param #int tag
@@ -86,13 +86,14 @@
         
 --------------------------------
 -- Removes all children from the container with a cleanup.<br>
--- see `removeAllChildrenWithCleanup(bool)`
+-- see `removeAllChildrenWithCleanup(bool)`.
 -- @function [parent=#ProtectedNode] removeAllProtectedChildren 
 -- @param self
 -- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
--- 
+-- Creates a ProtectedNode with no argument.<br>
+-- return A instance of ProtectedNode.
 -- @function [parent=#ProtectedNode] create 
 -- @param self
 -- @return ProtectedNode#ProtectedNode ret (return value: cc.ProtectedNode)
@@ -106,7 +107,7 @@
 -- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
--- / @} end of Children and Parent
+-- js NA
 -- @function [parent=#ProtectedNode] visit 
 -- @param self
 -- @param #cc.Renderer renderer
@@ -131,6 +132,12 @@
 --------------------------------
 -- 
 -- @function [parent=#ProtectedNode] cleanup 
+-- @param self
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
+        
+--------------------------------
+-- 
+-- @function [parent=#ProtectedNode] ProtectedNode 
 -- @param self
 -- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         

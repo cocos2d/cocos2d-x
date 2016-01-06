@@ -36,6 +36,7 @@
 #include "platform/CCGLView.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
+#include "ui/UIHelper.h"
 
 #define CLASS_NAME "org/cocos2dx/lib/Cocos2dxWebViewHelper"
 
@@ -44,7 +45,7 @@
 static const std::string s_defaultBaseUrl = "file:///android_asset/";
 static const std::string s_sdRootBaseUrl = "file://";
 
- static std::string getFixedBaseUrl(const std::string& baseUrl)
+static std::string getFixedBaseUrl(const std::string& baseUrl)
 {
     std::string fixedBaseUrl;
     if (baseUrl.empty())
@@ -401,20 +402,21 @@ namespace cocos2d {
             }
 
             bool WebViewImpl::shouldStartLoading(const int viewTag, const std::string &url) {
+                bool allowLoad = true;
                 auto it = s_WebViewImpls.find(viewTag);
                 if (it != s_WebViewImpls.end()) {
-                    auto webView = s_WebViewImpls[viewTag]->_webView;
+                    auto webView = it->second->_webView;
                     if (webView->_onShouldStartLoading) {
-                        return webView->_onShouldStartLoading(webView, url);
+                        allowLoad = webView->_onShouldStartLoading(webView, url);
                     }
                 }
-                return true;
+                return allowLoad;
             }
 
             void WebViewImpl::didFinishLoading(const int viewTag, const std::string &url){
                 auto it = s_WebViewImpls.find(viewTag);
                 if (it != s_WebViewImpls.end()) {
-                    auto webView = s_WebViewImpls[viewTag]->_webView;
+                    auto webView = it->second->_webView;
                     if (webView->_onDidFinishLoading) {
                         webView->_onDidFinishLoading(webView, url);
                     }
@@ -424,7 +426,7 @@ namespace cocos2d {
             void WebViewImpl::didFailLoading(const int viewTag, const std::string &url){
                 auto it = s_WebViewImpls.find(viewTag);
                 if (it != s_WebViewImpls.end()) {
-                    auto webView = s_WebViewImpls[viewTag]->_webView;
+                    auto webView = it->second->_webView;
                     if (webView->_onDidFailLoading) {
                         webView->_onDidFailLoading(webView, url);
                     }
@@ -434,7 +436,7 @@ namespace cocos2d {
             void WebViewImpl::onJsCallback(const int viewTag, const std::string &message){
                 auto it = s_WebViewImpls.find(viewTag);
                 if (it != s_WebViewImpls.end()) {
-                    auto webView = s_WebViewImpls[viewTag]->_webView;
+                    auto webView = it->second->_webView;
                     if (webView->_onJSCallback) {
                         webView->_onJSCallback(webView, message);
                     }
@@ -443,21 +445,10 @@ namespace cocos2d {
 
             void WebViewImpl::draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) {
                 if (flags & cocos2d::Node::FLAGS_TRANSFORM_DIRTY) {
-                    auto directorInstance = cocos2d::Director::getInstance();
-                    auto glView = directorInstance->getOpenGLView();
-                    auto frameSize = glView->getFrameSize();
+                    auto uiRect = cocos2d::ui::Helper::convertBoundingBoxToScreen(_webView);
 
-                    auto winSize = directorInstance->getWinSize();
-
-                    auto leftBottom = this->_webView->convertToWorldSpace(cocos2d::Point::ZERO);
-                    auto rightTop = this->_webView->convertToWorldSpace(cocos2d::Point(this->_webView->getContentSize().width,this->_webView->getContentSize().height));
-
-                    auto uiLeft = frameSize.width / 2 + (leftBottom.x - winSize.width / 2 ) * glView->getScaleX();
-                    auto uiTop = frameSize.height /2 - (rightTop.y - winSize.height / 2) * glView->getScaleY();
-
-                    setWebViewRectJNI(_viewTag,uiLeft,uiTop,
-                                      (rightTop.x - leftBottom.x) * glView->getScaleX(),
-                                      (rightTop.y - leftBottom.y) * glView->getScaleY());
+                    setWebViewRectJNI(_viewTag, uiRect.origin.x, uiRect.origin.y,
+                                      uiRect.size.width, uiRect.size.height);
                 }
             }
 

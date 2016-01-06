@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -22,6 +22,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+/// @cond DO_NOT_SHOW
 
 /** Add deprecated global functions and variables here
  */
@@ -259,7 +261,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Vec2 ccpFromSize(const Size& s)
 }
 
 /** Run a math operation function on each point component
- * absf, fllorf, ceilf, roundf
+ * absf, floorf, ceilf, roundf
  * any function that has the signature: float func(float);
  * For example: let's try to take the floor of x,y
  * ccpCompOp(p,floorf);
@@ -1155,5 +1157,5 @@ CC_DEPRECATED_ATTRIBUTE CC_DLL Vec4* kmVec4Transform(Vec4* pOut, const Vec4* pV,
 
 NS_CC_END
 
-
+/// @endcond
 #endif // __COCOS2D_CCDEPRECATED_H__

@@ -25,6 +25,9 @@
 
 #include "CCControlStepperTest.h"
 
+USING_NS_CC;
+USING_NS_CC_EXT;
+
 ControlStepperTest::ControlStepperTest()
 : _displayValueLabel(nullptr)
 {
@@ -49,7 +52,7 @@ bool ControlStepperTest::init()
         double layer_width          = 0;
         
         // Add the black background for the text
-        auto background  = Scale9Sprite::create("extensions/buttonBackground.png");
+        auto background  = ui::Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(Size(100, 50));
         background->setPosition(layer_width + background->getContentSize().width / 2.0f, 0);
         layer->addChild(background);
@@ -91,6 +94,6 @@ void ControlStepperTest::valueChanged(Ref *sender, Control::EventType controlEve
 {
     ControlStepper* pControl = (ControlStepper*)sender;
     // Change value of label.
-    _displayValueLabel->setString(String::createWithFormat("%0.02f", (float)pControl->getValue())->getCString());	
+    _displayValueLabel->setString(StringUtils::format("%0.02f", (float)pControl->getValue()));
 }
 

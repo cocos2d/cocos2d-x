@@ -1,25 +1,26 @@
 /******************************************************************************
  * Spine Runtimes Software License
- * Version 2.1
+ * Version 2.3
  * 
- * Copyright (c) 2013, Esoteric Software
+ * Copyright (c) 2013-2015, Esoteric Software
  * All rights reserved.
  * 
  * You are granted a perpetual, non-exclusive, non-sublicensable and
- * non-transferable license to install, execute and perform the Spine Runtimes
- * Software (the "Software") solely for internal use. Without the written
- * permission of Esoteric Software (typically granted by licensing Spine), you
- * may not (a) modify, translate, adapt or otherwise create derivative works,
- * improvements of the Software or develop new applications using the Software
- * or (b) remove, delete, alter or obscure any trademarks or any copyright,
- * trademark, patent or other intellectual property or proprietary rights
- * notices on or in the Software, including any copy thereof. Redistributions
- * in binary or source form must include this license and terms.
+ * non-transferable license to use, install, execute and perform the Spine
+ * Runtimes Software (the "Software") and derivative works solely for personal
+ * or internal use. Without the written permission of Esoteric Software (see
+ * Section 2 of the Spine Software License Agreement), you may not (a) modify,
+ * translate, adapt or otherwise create derivative works, improvements of the
+ * Software or develop new applications using the Software or (b) remove,
+ * delete, alter or obscure any trademarks or any copyright, trademark, patent
+ * or other intellectual property or proprietary rights notices on or in the
+ * Software, including any copy thereof. Redistributions in binary or source
+ * form must include this license and terms.
  * 
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL ESOTERIC SOFTARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
  * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
@@ -47,14 +48,35 @@ struct spBone {
 	float x, y;
 	float rotation, rotationIK;
 	float scaleX, scaleY;
+	int/*bool*/flipX, flipY;
 
 	float const m00, m01, worldX; /* a b x */
 	float const m10, m11, worldY; /* c d y */
 	float const worldRotation;
 	float const worldScaleX, worldScaleY;
+	int/*bool*/const worldFlipX, worldFlipY;
+
+#ifdef __cplusplus
+	spBone() :
+		data(0),
+		skeleton(0),
+		parent(0),
+		x(0), y(0),
+		rotation(0), rotationIK(0),
+		scaleX(0), scaleY(0),
+		flipX(0), flipY(0),
+
+		m00(0), m01(0), worldX(0),
+		m10(0), m11(0), worldY(0),
+		worldRotation(0),
+		worldScaleX(0), worldScaleY(0),
+		worldFlipX(0), worldFlipY(0) {
+	}
+#endif
 };
 
 void spBone_setYDown (int/*bool*/yDown);
+int/*bool*/spBone_isYDown ();
 
 /* @param parent May be 0. */
 spBone* spBone_create (spBoneData* data, struct spSkeleton* skeleton, spBone* parent);
@@ -70,6 +92,7 @@ void spBone_localToWorld (spBone* self, float localX, float localY, float* world
 #ifdef SPINE_SHORT_NAMES
 typedef spBone Bone;
 #define Bone_setYDown(...) spBone_setYDown(__VA_ARGS__)
+#define Bone_isYDown() spBone_isYDown()
 #define Bone_create(...) spBone_create(__VA_ARGS__)
 #define Bone_dispose(...) spBone_dispose(__VA_ARGS__)
 #define Bone_setToSetupPose(...) spBone_setToSetupPose(__VA_ARGS__)

@@ -42,6 +42,8 @@ class PhysicsWorld;
 /**
  * @addtogroup physics
  * @{
+ * @addtogroup physics_2d
+ * @{
  */
 
 /**
@@ -66,14 +68,14 @@ public:
     /**
      * Get this joint's tag.
      *
-     * @return An interger number.
+     * @return An integer number.
      */
     inline int getTag() const { return _tag; }
     
     /**
      * Set this joint's tag.
      *
-     * @param tag An interger number that identifies a PhysicsJoint.
+     * @param tag An integer number that identifies a PhysicsJoint.
      */
     inline void setTag(int tag) { _tag = tag; }
     
@@ -83,7 +85,7 @@ public:
     /** Enable/Disable the joint. */
     void setEnable(bool enable);
     
-    /** Determines if the collsion is enable. */
+    /** Determines if the collision is enable. */
     inline bool isCollisionEnabled() const { return _collisionEnable; }
     
     /** Enable/disable the collision between two bodies. */
@@ -471,7 +473,7 @@ public:
      @param a A is the body to connect.
      @param b B is the body to connect.
      @param phase Phase is the initial offset to use when deciding where the ratchet angles are.
-     @param ratchet Ratchet is the distance between “clicks”.
+     @param ratchet Ratchet is the distance between "clicks".
      @return A object pointer.
      */
     static PhysicsJointRatchet* construct(PhysicsBody* a, PhysicsBody* b, float phase, float ratchet);
@@ -488,10 +490,10 @@ public:
     /** Set the initial offset.*/
     void setPhase(float phase);
     
-    /** Get the distance between “clicks”.*/
+    /** Get the distance between "clicks".*/
     float getRatchet() const;
 
-    /** Set the distance between “clicks”.*/
+    /** Set the distance between "clicks".*/
     void setRatchet(float ratchet);
     virtual bool createConstraints() override;
 
@@ -567,6 +569,8 @@ protected:
 };
 
 /** @} */
+/** @} */
+
 
 NS_CC_END
 

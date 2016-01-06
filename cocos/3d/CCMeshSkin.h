@@ -33,12 +33,19 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
 class Bone3D;
 class Skeleton3D;
 
 /**
- * MeshSkin, A class maintain a collection of bones that affect Mesh vertex.
- * And it is responsible for computing matrix palletes that used by skin mesh rendering.
+ * @brief MeshSkin, A class maintain a collection of bones that affect Mesh vertex.
+ * And it is responsible for computing matrix palettes that used by skin mesh rendering.
+ * @js NA
+ * @lua NA
  */
 class CC_DLL MeshSkin: public Ref
 {
@@ -90,7 +97,7 @@ protected:
     std::vector<Mat4>  _invBindPoses; //inverse bind pose of bone
 
     Bone3D* _rootBone;
-    Skeleton3D*     _skeleton; //skeleton the skin refered
+    Skeleton3D*     _skeleton; //skeleton the skin referred
     
     // Pointer to the array of palette matrices.
     // This array is passed to the vertex shader as a uniform.
@@ -98,6 +105,9 @@ protected:
     // The number of Vec4's is (_skinBones.size() * 3).
     Vec4* _matrixPalette;
 };
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 

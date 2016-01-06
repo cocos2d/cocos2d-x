@@ -414,7 +414,7 @@ void GameControllerTest::createControllerSprite(ControllerHolder& holder)
     holder._holderNode->addChild(buttonL2);
 
     auto buttonR2 = Sprite::create("R2.png");
-    buttonR2->setPosition(98-220,910);
+    buttonR2->setPosition(998-220,910);
     holder._holderNode->addChild(buttonR2);
 
     holder._buttonL2 = Sprite::create("L2.png");

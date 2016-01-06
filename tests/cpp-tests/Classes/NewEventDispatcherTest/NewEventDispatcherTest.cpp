@@ -9,118 +9,33 @@
 #include "NewEventDispatcherTest.h"
 #include "testResource.h"
 
-namespace {
-    
-std::function<Layer*()> createFunctions[] =
+USING_NS_CC;
+
+EventDispatcherTests::EventDispatcherTests()
 {
-    CL(TouchableSpriteTest),
-    CL(FixedPriorityTest),
-    CL(RemoveListenerWhenDispatching),
-    CL(CustomEventTest),
-    CL(LabelKeyboardEventTest),
-    CL(SpriteAccelerationEventTest),
-    CL(RemoveAndRetainNodeTest),
-    CL(RemoveListenerAfterAddingTest),
-    CL(DirectorEventTest),
-    CL(GlobalZTouchTest),
-    CL(StopPropagationTest),
-    CL(PauseResumeTargetTest),
-    CL(Issue4129),
-    CL(Issue4160),
-    CL(DanglingNodePointersTest),
-    CL(RegisterAndUnregisterWhileEventHanldingTest),
-    CL(Issue9898)
-};
-
-unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
-
-int sceneIdx=-1;
-Layer* createTest(int index)
-{
-    auto layer = (createFunctions[index])();;    
-    return layer;
-}
-
-Layer* nextAction();
-Layer* backAction();
-Layer* restartAction();
-
-Layer* nextAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % TEST_CASE_COUNT;
-    
-    return createTest(sceneIdx);
-}
-
-Layer* backAction()
-{
-    sceneIdx--;
-    if( sceneIdx < 0 )
-        sceneIdx = TEST_CASE_COUNT -1;
-    
-    return createTest(sceneIdx);
-}
-
-Layer* restartAction()
-{
-    return createTest(sceneIdx);
-}
-
-}
-
-void EventDispatcherTestScene::runThisTest()
-{
-    auto layer = nextAction();
-    addChild(layer);
-    
-    Director::getInstance()->replaceScene(this);
-}
-
-
-void EventDispatcherTestDemo::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void EventDispatcherTestDemo::backCallback(Ref* sender)
-{
-    auto scene = new (std::nothrow) EventDispatcherTestScene();
-    auto layer = backAction();
-    
-    scene->addChild(layer);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
-}
-
-void EventDispatcherTestDemo::nextCallback(Ref* sender)
-{
-    auto scene = new (std::nothrow) EventDispatcherTestScene();
-    auto layer = nextAction();
-    
-    scene->addChild(layer);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
-}
-
-void EventDispatcherTestDemo::restartCallback(Ref* sender)
-{
-    auto scene = new (std::nothrow) EventDispatcherTestScene();
-    auto layer = restartAction();
-    
-    scene->addChild(layer);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
+    ADD_TEST_CASE(TouchableSpriteTest);
+    ADD_TEST_CASE(FixedPriorityTest);
+    ADD_TEST_CASE(RemoveListenerWhenDispatching);
+    ADD_TEST_CASE(CustomEventTest);
+    ADD_TEST_CASE(LabelKeyboardEventTest);
+    ADD_TEST_CASE(SpriteAccelerationEventTest);
+    ADD_TEST_CASE(RemoveAndRetainNodeTest);
+    ADD_TEST_CASE(RemoveListenerAfterAddingTest);
+    ADD_TEST_CASE(DirectorEventTest);
+    ADD_TEST_CASE(GlobalZTouchTest);
+    ADD_TEST_CASE(StopPropagationTest);
+    ADD_TEST_CASE(PauseResumeTargetTest);
+    ADD_TEST_CASE(Issue4129);
+    ADD_TEST_CASE(Issue4160);
+    ADD_TEST_CASE(DanglingNodePointersTest);
+    ADD_TEST_CASE(RegisterAndUnregisterWhileEventHanldingTest);
+    ADD_TEST_CASE(Issue8194);
+    ADD_TEST_CASE(Issue9898)
 }
 
 std::string EventDispatcherTestDemo::title() const
 {
     return "No title";
-}
-
-std::string EventDispatcherTestDemo::subtitle() const
-{
-    return "";
 }
 
 // TouchableSpriteTest
@@ -196,7 +111,7 @@ void TouchableSpriteTest::onEnter()
         _eventDispatcher->removeEventListenersForType(EventListener::Type::TOUCH_ONE_BY_ONE);
         
         auto nextItem = MenuItemFont::create("Next", [=](Ref* sender){
-            nextCallback(nullptr);
+            getTestSuite()->enterNextTest();
         });
         
         nextItem->setFontSizeObj(16);
@@ -547,7 +462,7 @@ std::string LabelKeyboardEventTest::title() const
 
 std::string LabelKeyboardEventTest::subtitle() const
 {
-    return "Please click keyboard\n(Only available on Desktop and Android)";
+    return "Please click keyboard\n(Only available on Desktop, Android\nand Windows Universal Apps)";
 }
 
 // SpriteAccelerationEventTest
@@ -706,7 +621,7 @@ void RemoveListenerAfterAddingTest::onEnter()
     
     auto addNextButton = [this](){
         auto next = MenuItemFont::create("Please Click Me To Reset!", [this](Ref* sender){
-            this->restartCallback(nullptr);
+            getTestSuite()->restartCurrTest();
         });
         next->setPosition(VisibleRect::center() + Vec2(0, -40));
         
@@ -1211,7 +1126,7 @@ Issue4129::Issue4129()
         
         auto nextItem = MenuItemFont::create("Reset", [=](Ref* sender){
             CCASSERT(_bugFixed, "This issue was not fixed!");
-            this->restartCallback(nullptr);
+            getTestSuite()->restartCurrTest();
         });
         
         nextItem->setFontSizeObj(16);
@@ -1456,6 +1371,76 @@ std::string RegisterAndUnregisterWhileEventHanldingTest::subtitle() const
     return  "Tap the square multiple times - should not crash!";
 }
 
+// https://github.com/cocos2d/cocos2d-x/issues/8194
+Issue8194::Issue8194()
+{
+    auto origin = Director::getInstance()->getVisibleOrigin();
+    auto size = Director::getInstance()->getVisibleSize();
+    static bool nodesAdded = false;
+#define tagA 100
+#define tagB 101
+    // dispatch custom event in another custom event, make the custom event "Issue8194" take effect immediately
+    _listener = getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_UPDATE, [this](cocos2d::EventCustom *event){
+        if (nodesAdded)
+        {
+            // CCLOG("Fire Issue8194 Event");
+            getEventDispatcher()->dispatchCustomEvent("Issue8194");
+            
+            // clear test nodes and listeners
+            getEventDispatcher()->removeCustomEventListeners("Issue8194");
+            removeChildByTag(tagA);
+            removeChildByTag(tagB);
+            nodesAdded = false;
+        }
+    });
+    
+    // When click this menuitem, it will add two node A and B, then send a custom event.
+    // Because Node B's localZOrder < A's, the custom event should process by node B.
+    auto menuItem = MenuItemFont::create("Dispatch Custom Event", [this](Ref *sender) {
+        // add nodeA to scene
+        auto nodeA = Node::create();
+        addChild(nodeA, 1, tagA);
+        
+        cocos2d::EventListenerCustom* listenerA = cocos2d::EventListenerCustom::create("Issue8194", [&](cocos2d::EventCustom *event){
+            _subtitleLabel->setString("Bug has been fixed.");
+            event->stopPropagation();
+        });
+        getEventDispatcher()->addEventListenerWithSceneGraphPriority(listenerA, nodeA);
+       
+        // add nodeB to scene
+        auto nodeB = Node::create();
+        addChild(nodeB, -1, tagB);
+        
+        cocos2d::EventListenerCustom* listenerB = cocos2d::EventListenerCustom::create("Issue8194", [&](cocos2d::EventCustom *event){
+            _subtitleLabel->setString("Bug exist yet.");
+            event->stopPropagation();
+        });
+        getEventDispatcher()->addEventListenerWithSceneGraphPriority(listenerB, nodeB);
+        
+        nodesAdded = true;
+    });
+    
+    menuItem->setPosition(origin.x + size.width/2, origin.y + size.height/2);
+    auto menu = Menu::create(menuItem, nullptr);
+    menu->setPosition(Vec2::ZERO);
+    addChild(menu);
+}
+
+Issue8194::~Issue8194()
+{
+    getEventDispatcher()->removeEventListener(_listener);
+}
+
+std::string Issue8194::title() const
+{
+    return "Issue 8194";
+}
+
+std::string Issue8194::subtitle() const
+{
+    return  "After click button, should show 'Bug has been fixed.'";
+}
+
 Issue9898::Issue9898()
 {
     auto origin = Director::getInstance()->getVisibleOrigin();
@@ -1481,7 +1466,7 @@ Issue9898::Issue9898()
 
 std::string Issue9898::title() const
 {
-    return "";
+    return "Issue 9898";
 }
 
 std::string Issue9898::subtitle() const

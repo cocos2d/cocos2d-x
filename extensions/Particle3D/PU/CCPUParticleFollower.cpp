@@ -37,7 +37,6 @@ PUParticleFollower::PUParticleFollower(void) :
     PUAffector(),
     _minDistance(DEFAULT_MIN_DISTANCE),
     _maxDistance(DEFAULT_MAX_DISTANCE),
-    _positionPreviousParticle(Vec3::ZERO),
     _first(false)
 {
 }

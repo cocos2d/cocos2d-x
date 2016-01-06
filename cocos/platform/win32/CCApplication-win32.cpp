@@ -73,7 +73,7 @@ int Application::run()
     // Initialize instance and cocos2d.
     if (!applicationDidFinishLaunching())
     {
-        return 0;
+        return 1;
     }
 
     auto director = Director::getInstance();
@@ -106,10 +106,10 @@ int Application::run()
         director = nullptr;
     }
     glview->release();
-    return true;
+    return 0;
 }
 
-void Application::setAnimationInterval(double interval)
+void Application::setAnimationInterval(float interval)
 {
     LARGE_INTEGER nFreq;
     QueryPerformanceFrequency(&nFreq);
@@ -204,17 +204,22 @@ LanguageType Application::getCurrentLanguage()
 
 const char * Application::getCurrentLanguageCode()
 {
-	LANGID lid = GetUserDefaultUILanguage();
-	const LCID locale_id = MAKELCID(lid, SORT_DEFAULT);
-	static char code[3] = { 0 };
-	GetLocaleInfoA(locale_id, LOCALE_SISO639LANGNAME, code, sizeof(code));
-	code[2] = '\0';
-	return code;
+    LANGID lid = GetUserDefaultUILanguage();
+    const LCID locale_id = MAKELCID(lid, SORT_DEFAULT);
+    static char code[3] = { 0 };
+    GetLocaleInfoA(locale_id, LOCALE_SISO639LANGNAME, code, sizeof(code));
+    code[2] = '\0';
+    return code;
 }
 
 Application::Platform Application::getTargetPlatform()
 {
     return Platform::OS_WINDOWS;
+}
+
+std::string Application::getVersion()
+{
+    return "";
 }
 
 bool Application::openURL(const std::string &url)

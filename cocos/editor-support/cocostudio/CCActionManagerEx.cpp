@@ -63,7 +63,6 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
 	std::string path = jsonName;
 	ssize_t pos = path.find_last_of("/");
 	std::string fileName = path.substr(pos+1,path.length());
-	CCLOG("filename == %s",fileName.c_str());
 	cocos2d::Vector<ActionObject*> actionList;
 	int actionCount = DICTOOL->getArrayCount_json(dic, "actionlist");
 	for (int i=0; i<actionCount; i++) {
@@ -84,7 +83,6 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
         std::string path = file;
         ssize_t pos = path.find_last_of("/");
         std::string fileName = path.substr(pos+1,path.length());
-        CCLOG("filename == %s",fileName.c_str());
         cocos2d::Vector<ActionObject*> actionList;
         
         stExpCocoNode *stChildArray = pCocoNode->GetChildArray(cocoLoader);
@@ -118,7 +116,6 @@ ActionObject* ActionManagerEx::getActionByName(const char* jsonName,const char* 
 	std::string path = jsonName;
 	ssize_t pos = path.find_last_of("/");
 	std::string fileName = path.substr(pos+1,path.length());
-	CCLOG("find filename == %s",fileName.c_str());
 	auto iterator = _actionDic.find(fileName);
 	if (iterator == _actionDic.end())
 	{

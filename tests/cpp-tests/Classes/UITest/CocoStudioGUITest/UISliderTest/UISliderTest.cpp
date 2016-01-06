@@ -1,7 +1,18 @@
-
-
 #include "UISliderTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
+UISliderTests::UISliderTests()
+{
+    ADD_TEST_CASE(UISliderTest);
+    ADD_TEST_CASE(UISliderTest_Scale9);
+    ADD_TEST_CASE(UISliderTest_Scale9_State_Change);
+    ADD_TEST_CASE(UISliderNormalDefaultTest);
+    ADD_TEST_CASE(UISliderDisabledDefaultTest);
+    ADD_TEST_CASE(UISliderNewEventCallbackTest);
+    ADD_TEST_CASE(UISliderIssue12249Test);
+}
 
 // UISliderTest
 
@@ -22,7 +33,7 @@ bool UISliderTest::init()
         Size widgetSize = _widget->getContentSize();
         
         // Add a label in which the slider alert will be displayed
-        _displayValueLabel = Text::create("Move the slider thumb","Move the slider thumb",32);
+        _displayValueLabel = TextBMFont::create("Move the slider thumb", "ccb/markerfelt24shadow.fnt");
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);
@@ -38,10 +49,20 @@ bool UISliderTest::init()
         slider->loadBarTexture("cocosui/sliderTrack.png");
         slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
         slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+        slider->setMaxPercent(10000);
         slider->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 2.0f*/));
         slider->addEventListener(CC_CALLBACK_2(UISliderTest::sliderEvent, this));
         _uiLayer->addChild(slider);
 
+        _slider = slider;
+
+        TTFConfig ttfConfig("fonts/arial.ttf", 15);
+        auto label1 = Label::createWithTTF(ttfConfig, "Print Resources");
+        auto item1 = MenuItemLabel::create(label1, CC_CALLBACK_1(UISliderTest::printWidgetResources, this));
+        item1->setPosition(Vec2(VisibleRect::left().x + 60, VisibleRect::bottom().y + item1->getContentSize().height * 3));
+        auto pMenu1 = Menu::create(item1, nullptr);
+        pMenu1->setPosition(Vec2(0, 0));
+        this->addChild(pMenu1, 10);
         
         return true;
     }
@@ -54,8 +75,22 @@ void UISliderTest::sliderEvent(Ref *pSender, Slider::EventType type)
     {
         Slider* slider = dynamic_cast<Slider*>(pSender);
         int percent = slider->getPercent();
-        _displayValueLabel->setString(String::createWithFormat("Percent %d", percent)->getCString());
+        int maxPercent = slider->getMaxPercent();
+        _displayValueLabel->setString(StringUtils::format("Percent %f", 10000.0 * percent / maxPercent));
     }
+}
+void UISliderTest::printWidgetResources(cocos2d::Ref* sender)
+{
+    cocos2d::ResourceData textureFile = _slider->getBackFile();
+    CCLOG("textureFile  Name : %s, Type: %d", textureFile.file.c_str(), textureFile.type);
+    cocos2d::ResourceData progressBarTextureFile = _slider->getProgressBarFile();
+    CCLOG("progressBarTextureFile  Name : %s, Type: %d", progressBarTextureFile.file.c_str(), progressBarTextureFile.type);
+    cocos2d::ResourceData slidBallNormalTextureFile = _slider->getBallNormalFile();
+    CCLOG("slidBallNormalTextureFile  Name : %s, Type: %d", slidBallNormalTextureFile.file.c_str(), slidBallNormalTextureFile.type);
+    cocos2d::ResourceData slidBallPressedTextureFile = _slider->getBallPressedFile();
+    CCLOG("slidBallPressedTextureFile  Name : %s, Type: %d", slidBallPressedTextureFile.file.c_str(), slidBallPressedTextureFile.type);
+    cocos2d::ResourceData slidBallDisabledTextureFile = _slider->getBallDisabledFile();
+    CCLOG("slidBallDisabledTextureFile  Name : %s, Type: %d", slidBallDisabledTextureFile.file.c_str(), slidBallDisabledTextureFile.type);
 }
 
 // UISliderTest_Scale9
@@ -112,7 +147,7 @@ void UISliderTest_Scale9::sliderEvent(Ref *pSender, Slider::EventType type)
     {
         Slider* slider = dynamic_cast<Slider*>(pSender);
         int percent = slider->getPercent();
-        _displayValueLabel->setString(String::createWithFormat("Percent %d", percent)->getCString());
+        _displayValueLabel->setString(StringUtils::format("Percent %d", percent));
     }
 }
 
@@ -180,7 +215,7 @@ void UISliderTest_Scale9_State_Change::sliderEvent(Ref *pSender, Slider::EventTy
     {
         Slider* slider = dynamic_cast<Slider*>(pSender);
         int percent = slider->getPercent();
-        _displayValueLabel->setString(String::createWithFormat("Percent %d", percent)->getCString());
+        _displayValueLabel->setString(StringUtils::format("Percent %d", percent));
     }
 }
 
@@ -223,7 +258,7 @@ bool UISliderNormalDefaultTest::init()
                                  widgetSize.height / 2.0f + 50));
         _uiLayer->addChild(slider);
         
-        Slider* sliderScale9 = Slider::create("cocosui/sliderTrack2.png", "cocosui/sliderThumb.png");
+        Slider* sliderScale9 = (Slider*)slider->clone();
         sliderScale9->setScale9Enabled(true);
         sliderScale9->setCapInsets(Rect(0, 0, 0, 0));
         sliderScale9->setZoomScale(1.0);
@@ -278,7 +313,7 @@ bool UISliderDisabledDefaultTest::init()
                                  widgetSize.height / 2.0f + 50));
         _uiLayer->addChild(slider);
         
-        Slider* sliderScale9 = Slider::create("cocosui/slidbar.png", "cocosui/sliderballnormal.png");
+        Slider* sliderScale9 = (Slider*)slider->clone();
         sliderScale9->setScale9Enabled(true);
         sliderScale9->setEnabled(false);
         sliderScale9->setBright(false);
@@ -294,3 +329,121 @@ bool UISliderDisabledDefaultTest::init()
 }
 
 
+
+// UISliderNewEventCallbackTest
+
+UISliderNewEventCallbackTest::UISliderNewEventCallbackTest()
+: _displayValueLabel(nullptr)
+{
+
+}
+
+UISliderNewEventCallbackTest::~UISliderNewEventCallbackTest()
+{
+}
+
+bool UISliderNewEventCallbackTest::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        // Add a label in which the slider alert will be displayed
+        _displayValueLabel = Text::create("","Arial",32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 100));
+        _uiLayer->addChild(_displayValueLabel);
+
+        // Add the alert
+        Text* alert = Text::create("See console ouput for Slider Down and Up event.","fonts/Marker Felt.ttf",20);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 3.75f));
+        _uiLayer->addChild(alert);
+
+        // Create the slider
+        Slider* slider = Slider::create();
+        slider->loadBarTexture("cocosui/sliderTrack.png");
+        slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+        slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+        slider->setMaxPercent(1000);
+        slider->setPosition(Vec2(widgetSize.width / 2.0f,
+                                 widgetSize.height / 2.0f + 50));
+        slider->addEventListener([=](Ref* widget,Slider::EventType type)
+        {
+            Slider* slider = (Slider*)widget;
+            CC_UNUSED_PARAM(slider);
+            if(type == Slider::EventType::ON_SLIDEBALL_DOWN)
+            {
+                CCLOG("slider button pressed!");
+            }
+            else if(type == Slider::EventType::ON_PERCENTAGE_CHANGED)
+            {
+                CCLOG("slider is moving! percent = %f", 100.0f * slider->getPercent() / slider->getMaxPercent() );
+            }
+            else if(type == Slider::EventType::ON_SLIDEBALL_UP)
+            {
+                CCLOG("slider button is released.");
+            }
+        });
+        _uiLayer->addChild(slider);
+
+
+        return true;
+    }
+    return false;
+}
+
+
+// UISliderIssue12249Test
+
+UISliderIssue12249Test::UISliderIssue12249Test()
+: _displayValueLabel(nullptr)
+{
+    
+}
+
+UISliderIssue12249Test::~UISliderIssue12249Test()
+{
+}
+
+bool UISliderIssue12249Test::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the slider alert will be displayed
+        _displayValueLabel = TextBMFont::create("Move the slider thumb", "ccb/markerfelt24shadow.fnt");
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Create the slider
+        Slider* slider = Slider::create();
+        slider->setScale9Enabled(true);
+        slider->loadBarTexture("cocosui/sliderTrack.png");
+        slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+        slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+        slider->setContentSize(Size(300, slider->getContentSize().height * 1.5));
+        slider->setMaxPercent(10000);
+        slider->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 2.0f*/));
+        slider->addEventListener(CC_CALLBACK_2(UISliderIssue12249Test::sliderEvent, this));
+        _uiLayer->addChild(slider);
+        
+        
+        return true;
+    }
+    return false;
+}
+
+void UISliderIssue12249Test::sliderEvent(Ref *pSender, Slider::EventType type)
+{
+    if (type == Slider::EventType::ON_PERCENTAGE_CHANGED)
+    {
+        Slider* slider = dynamic_cast<Slider*>(pSender);
+        int percent = slider->getPercent();
+        int maxPercent = slider->getMaxPercent();
+        _displayValueLabel->setString(StringUtils::format("Percent %f", 10000.0 * percent / maxPercent));
+    }
+}

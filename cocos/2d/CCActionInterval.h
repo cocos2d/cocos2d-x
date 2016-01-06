@@ -68,19 +68,19 @@ class CC_DLL ActionInterval : public FiniteTimeAction
 public:
     /** How many seconds had elapsed since the actions started to run.
      *
-     * @return The seconds had elapsed since the ations started to run.
+     * @return The seconds had elapsed since the actions started to run.
      */
     inline float getElapsed(void) { return _elapsed; }
 
-    /** Sets the ampliture rate, extension in GridAction
+    /** Sets the amplitude rate, extension in GridAction
      *
-     * @param amp   The ampliture rate.
+     * @param amp   The amplitude rate.
      */
     void setAmplitudeRate(float amp);
     
-    /** Gets the ampliture rate, extension in GridAction
+    /** Gets the amplitude rate, extension in GridAction
      *
-     * @return  The ampliture rate.
+     * @return  The amplitude rate.
      */
     float getAmplitudeRate(void);
 
@@ -112,6 +112,9 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     float _elapsed;
     bool   _firstTick;
+
+protected:
+    bool sendUpdateEventToScript(float dt, Action *actionObject);
 };
 
 /** @class Sequence
@@ -124,8 +127,8 @@ public:
      *
      * @return An autoreleased Sequence object.
      */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported
     typedef FiniteTimeAction* M;
     static Sequence* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }
     static Sequence* create(M m1, M m2, std::nullptr_t listEnd) { return variadicCreate(m1, m2, NULL); }
@@ -146,7 +149,7 @@ public:
 
     /** Helper constructor to create an array of sequenceable actions given an array.
      * @code
-     * When this funtion bound to the js or lua,the input params changed
+     * When this function bound to the js or lua,the input params changed
      * in js  :var   create(var   object1,var   object2, ...)
      * in lua :local create(local object1,local object2, ...)
      * @endcode
@@ -189,6 +192,7 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** initializes the action */
     bool initWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo);
+    bool init(const Vector<FiniteTimeAction*>& arrayOfActions);
 
 protected:
     FiniteTimeAction *_actions[2];
@@ -344,15 +348,15 @@ class CC_DLL Spawn : public ActionInterval
 public:
     /** Helper constructor to create an array of spawned actions.
      * @code
-     * When this funtion bound to the js or lua, the input params changed.
+     * When this function bound to the js or lua, the input params changed.
      * in js  :var   create(var   object1,var   object2, ...)
      * in lua :local create(local object1,local object2, ...)
      * @endcode
      *
      * @return An autoreleased Spawn object.
      */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported.
     typedef FiniteTimeAction* M;
     static Spawn* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }
     static Spawn* create(M m1, M m2, std::nullptr_t listEnd) { return variadicCreate(m1, m2, NULL); }
@@ -390,7 +394,7 @@ public:
     /** Creates the Spawn action.
      *
      * @param action1   The first spawned action.
-     * @param action2   THe second spawned action.
+     * @param action2   The second spawned action.
      * @return An autoreleased Spawn object.
      * @js NA
      */
@@ -404,7 +408,7 @@ public:
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     /**
-     * @param dt In seconds.
+     * @param time In seconds.
      */
     virtual void update(float time) override;
     
@@ -414,6 +418,7 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** initializes the Spawn action with the 2 actions to spawn */
     bool initWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2);
+    bool init(const Vector<FiniteTimeAction*>& arrayOfActions);
 
 protected:
     FiniteTimeAction *_one;
@@ -464,7 +469,7 @@ public:
     virtual RotateTo* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     /**
-     * @param dt In seconds.
+     * @param time In seconds.
      */
     virtual void update(float time) override;
     
@@ -872,7 +877,7 @@ public:
      * @code
      * When this function bound to js or lua,the input params are changed.
      * in js: var create(var t,var table)
-     * in lua: lcaol create(local t, local table)
+     * in lua: local create(local t, local table)
      * @endcode
      */
     static BezierBy* create(float t, const ccBezierConfig& c);
@@ -921,7 +926,7 @@ public:
      * @code
      * when this function bound to js or lua,the input params are changed
      * in js: var create(var t,var table)
-     * in lua: lcaol create(local t, local table)
+     * in lua: local create(local t, local table)
      * @endcode
      */
     static BezierTo* create(float t, const ccBezierConfig& c);
@@ -1429,7 +1434,7 @@ public:
 
     /** Sets the Animation object to be animated 
      * 
-     * @param A certain animation.
+     * @param animation certain animation.
      */
     void setAnimation( Animation* animation );
     /** returns the Animation object that is being animated 
@@ -1439,6 +1444,11 @@ public:
     Animation* getAnimation() { return _animation; }
     const Animation* getAnimation() const { return _animation; }
 
+    /**
+     * Gets the index of sprite frame currently displayed.
+     * @return int  the index of sprite frame currently displayed.
+     */
+    int getCurrentFrameIndex() { return _currFrameIndex; }
     //
     // Overrides
     //
@@ -1462,6 +1472,7 @@ protected:
     std::vector<float>* _splitTimes;
     int             _nextFrame;
     SpriteFrame*    _origFrame;
+    int _currFrameIndex;
     unsigned int    _executedLoops;
     Animation*      _animation;
 
@@ -1509,6 +1520,10 @@ public:
      * @param time In seconds.
      */
     virtual void update(float time) override;
+    //
+    // Overrides
+    //
+    virtual bool isDone(void) const override;
     
 CC_CONSTRUCTOR_ACCESS:
     TargetedAction();
@@ -1523,6 +1538,58 @@ protected:
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TargetedAction);
+};
+
+/**
+ * @class ActionFloat
+ * @brief Action used to animate any value in range [from,to] over specified time interval
+ */
+class CC_DLL ActionFloat : public ActionInterval
+{
+public:
+    /**
+     *  Callback function used to report back result
+     */
+    typedef std::function<void(float value)> ActionFloatCallback;
+
+    /**
+     * Creates FloatAction with specified duration, from value, to value and callback to report back
+     * results
+     * @param duration of the action
+     * @param from value to start from
+     * @param to value to be at the end of the action
+     * @param callback to report back result
+     *
+     * @return An autoreleased ActionFloat object
+     */
+    static ActionFloat* create(float duration, float from, float to, ActionFloatCallback callback);
+
+    /**
+     * Overridden ActionInterval methods
+     */
+    void startWithTarget(Node* target) override;
+    void update(float delta) override;
+    ActionFloat* reverse() const override;
+    ActionFloat* clone() const override;
+
+CC_CONSTRUCTOR_ACCESS:
+    ActionFloat() {};
+    virtual ~ActionFloat() {};
+
+    bool initWithDuration(float duration, float from, float to, ActionFloatCallback callback);
+
+protected:
+    /* From value */
+    float _from;
+    /* To value */
+    float _to;
+    /* delta time */
+    float _delta;
+
+    /* Callback to report back results */
+    ActionFloatCallback _callback;
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ActionFloat);
 };
 
 // end of actions group

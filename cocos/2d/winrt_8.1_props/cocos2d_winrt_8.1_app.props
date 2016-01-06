@@ -6,6 +6,7 @@
     <CurlBinPath Condition=" '$(CurlBinPath)' == '' ">$(EngineRoot)external\curl\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</CurlBinPath>
     <WebsocketsBinPath Condition=" '$(WebsocketsBinPath)' == '' ">$(EngineRoot)external\websockets\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</WebsocketsBinPath>
     <SQLiteBinPath Condition=" '$(SQLiteBinPath)' == '' ">$(EngineRoot)external\sqlite3\libraries\$(COCOS2D_PLATFORM)\$(Platform)\</SQLiteBinPath>
+    <OggBinPath Condition=" '$(OggBinPath)' == '' ">$(EngineRoot)external\$(COCOS2D_PLATFORM)-specific\OggDecoder\prebuilt\$(Platform)\</OggBinPath>
   </PropertyGroup>
   <ItemGroup Label="ANGLE">
     <None Include="$(AngleBinPath)libEGL.dll">
@@ -27,6 +28,15 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="$(CurlBinPath)ssleay32.dll">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(OggBinPath)libogg.dll">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(OggBinPath)libvorbis.dll">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(OggBinPath)libvorbisfile.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
   </ItemGroup>

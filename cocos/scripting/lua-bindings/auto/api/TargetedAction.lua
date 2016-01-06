@@ -12,6 +12,14 @@
 -- @return Node#Node ret (return value: cc.Node)
 
 --------------------------------
+--  Init an action with the specified action and forced target 
+-- @function [parent=#TargetedAction] initWithTarget 
+-- @param self
+-- @param #cc.Node target
+-- @param #cc.FiniteTimeAction action
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Sets the target that the action will be forced to run with.<br>
 -- param forcedTarget The target that the action will be forced to run with.
 -- @function [parent=#TargetedAction] setForcedTarget 
@@ -39,6 +47,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#TargetedAction] reverse 
+-- @param self
+-- @return TargetedAction#TargetedAction ret (return value: cc.TargetedAction)
+        
+--------------------------------
+-- 
 -- @function [parent=#TargetedAction] clone 
 -- @param self
 -- @return TargetedAction#TargetedAction ret (return value: cc.TargetedAction)
@@ -50,16 +64,22 @@
 -- @return TargetedAction#TargetedAction self (return value: cc.TargetedAction)
         
 --------------------------------
--- 
--- @function [parent=#TargetedAction] reverse 
--- @param self
--- @return TargetedAction#TargetedAction ret (return value: cc.TargetedAction)
-        
---------------------------------
 -- param time In seconds.
 -- @function [parent=#TargetedAction] update 
 -- @param self
 -- @param #float time
+-- @return TargetedAction#TargetedAction self (return value: cc.TargetedAction)
+        
+--------------------------------
+-- 
+-- @function [parent=#TargetedAction] isDone 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#TargetedAction] TargetedAction 
+-- @param self
 -- @return TargetedAction#TargetedAction self (return value: cc.TargetedAction)
         
 return nil

@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "base/CCEventCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "platform/CCStdC.h"
+#include "base/CCScriptSupport.h"
 
 NS_CC_BEGIN
 
@@ -105,6 +106,18 @@ bool ActionInterval::initWithDuration(float d)
     return true;
 }
 
+bool ActionInterval::sendUpdateEventToScript(float dt, Action *actionObject)
+{
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendActionEventToJS(actionObject, kActionUpdate, (void *)&dt))
+            return true;
+    }
+#endif
+    return false;
+}
+
 bool ActionInterval::isDone() const
 {
     return _elapsed >= _duration;
@@ -122,25 +135,29 @@ void ActionInterval::step(float dt)
         _elapsed += dt;
     }
     
-    this->update(MAX (0,                                  // needed for rewind. elapsed could be negative
-                      MIN(1, _elapsed /
-                          MAX(_duration, FLT_EPSILON)   // division by 0
-                          )
-                      )
-                 );
+    
+    float updateDt = MAX (0,                                  // needed for rewind. elapsed could be negative
+                           MIN(1, _elapsed /
+                               MAX(_duration, FLT_EPSILON)   // division by 0
+                               )
+                           );
+
+    if (sendUpdateEventToScript(updateDt, this)) return;
+    
+    this->update(updateDt);
 }
 
 void ActionInterval::setAmplitudeRate(float amp)
 {
     CC_UNUSED_PARAM(amp);
     // Abstract class needs implementation
-    CCASSERT(0, "");
+    CCASSERT(0, "Subclass should implement this method!");
 }
 
 float ActionInterval::getAmplitudeRate()
 {
     // Abstract class needs implementation
-    CCASSERT(0, "");
+    CCASSERT(0, "Subclass should implement this method!");
 
     return 0;
 }
@@ -165,7 +182,7 @@ Sequence* Sequence::createWithTwoActions(FiniteTimeAction *actionOne, FiniteTime
     return sequence;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 Sequence* Sequence::variadicCreate(FiniteTimeAction *action1, ...)
 {
     va_list params;
@@ -221,35 +238,36 @@ Sequence* Sequence::createWithVariableList(FiniteTimeAction *action1, va_list ar
 
 Sequence* Sequence::create(const Vector<FiniteTimeAction*>& arrayOfActions)
 {
-    Sequence* ret = nullptr;
-    do 
+    Sequence* seq = new (std::nothrow) Sequence;
+
+    if (seq && seq->init(arrayOfActions))
+        seq->autorelease();
+    return seq;
+}
+
+bool Sequence::init(const Vector<FiniteTimeAction*>& arrayOfActions)
+{
+    auto count = arrayOfActions.size();
+    if (count == 0)
+        return true;
+
+    if (count == 1)
+        return initWithTwoActions(arrayOfActions.at(0), ExtraAction::create());
+
+    // else size > 1
+    auto prev = arrayOfActions.at(0);
+    for (int i = 1; i < count-1; ++i)
     {
-        auto count = arrayOfActions.size();
-        CC_BREAK_IF(count == 0);
+        prev = createWithTwoActions(prev, arrayOfActions.at(i));
+    }
 
-        auto prev = arrayOfActions.at(0);
-
-        if (count > 1)
-        {
-            for (int i = 1; i < count; ++i)
-            {
-                prev = createWithTwoActions(prev, arrayOfActions.at(i));
-            }
-        }
-        else
-        {
-            // If only one action is added to Sequence, make up a Sequence by adding a simplest finite time action.
-            prev = createWithTwoActions(prev, ExtraAction::create());
-        }
-        ret = static_cast<Sequence*>(prev);
-    }while (0);
-    return ret;
+    return initWithTwoActions(prev, arrayOfActions.at(count-1));
 }
 
 bool Sequence::initWithTwoActions(FiniteTimeAction *actionOne, FiniteTimeAction *actionTwo)
 {
-    CCASSERT(actionOne != nullptr, "");
-    CCASSERT(actionTwo != nullptr, "");
+    CCASSERT(actionOne != nullptr, "actionOne can't be nullptr!");
+    CCASSERT(actionTwo != nullptr, "actionTwo can't be nullptr!");
 
     float d = actionOne->getDuration() + actionTwo->getDuration();
     ActionInterval::initWithDuration(d);
@@ -323,13 +341,15 @@ void Sequence::update(float t)
         if( _last == -1 ) {
             // action[0] was skipped, execute it.
             _actions[0]->startWithTarget(_target);
-            _actions[0]->update(1.0f);
+            if (!(sendUpdateEventToScript(1.0f, _actions[0])))
+                _actions[0]->update(1.0f);
             _actions[0]->stop();
         }
         else if( _last == 0 )
         {
             // switching to action 1. stop action 0.
-            _actions[0]->update(1.0f);
+            if (!(sendUpdateEventToScript(1.0f, _actions[0])))
+                _actions[0]->update(1.0f);
             _actions[0]->stop();
         }
     }
@@ -338,8 +358,9 @@ void Sequence::update(float t)
         // Reverse mode ?
         // FIXME: Bug. this case doesn't contemplate when _last==-1, found=0 and in "reverse mode"
         // since it will require a hack to know if an action is on reverse mode or not.
-        // "step" should be overriden, and the "reverseMode" value propagated to inner Sequences.
-        _actions[1]->update(0);
+        // "step" should be overridden, and the "reverseMode" value propagated to inner Sequences.
+        if (!(sendUpdateEventToScript(0, _actions[1])))
+            _actions[1]->update(0);
         _actions[1]->stop();
     }
     // Last action found and it is done.
@@ -353,8 +374,8 @@ void Sequence::update(float t)
     {
         _actions[found]->startWithTarget(_target);
     }
-
-    _actions[found]->update(new_t);
+    if (!(sendUpdateEventToScript(new_t, _actions[found])))
+        _actions[found]->update(new_t);
     _last = found;
 }
 
@@ -436,8 +457,8 @@ void Repeat::update(float dt)
     {
         while (dt > _nextDt && _total < _times)
         {
-
-            _innerAction->update(1.0f);
+            if (!(sendUpdateEventToScript(1.0f, _innerAction)))
+                _innerAction->update(1.0f);
             _total++;
 
             _innerAction->stop();
@@ -456,19 +477,22 @@ void Repeat::update(float dt)
         {
             if (_total == _times)
             {
-                _innerAction->update(1);
+                if (!(sendUpdateEventToScript(1, _innerAction)))
+                    _innerAction->update(1);
                 _innerAction->stop();
             }
             else
             {
                 // issue #390 prevent jerk, use right update
-                _innerAction->update(dt - (_nextDt - _innerAction->getDuration()/_duration));
+                if (!(sendUpdateEventToScript(dt - (_nextDt - _innerAction->getDuration()/_duration), _innerAction)))
+                    _innerAction->update(dt - (_nextDt - _innerAction->getDuration()/_duration));
             }
         }
     }
     else
     {
-        _innerAction->update(fmodf(dt * _times,1.0f));
+        if (!(sendUpdateEventToScript(fmodf(dt * _times,1.0f), _innerAction)))
+            _innerAction->update(fmodf(dt * _times,1.0f));
     }
 }
 
@@ -504,7 +528,7 @@ RepeatForever *RepeatForever::create(ActionInterval *action)
 
 bool RepeatForever::initWithAction(ActionInterval *action)
 {
-    CCASSERT(action != nullptr, "");
+    CCASSERT(action != nullptr, "action can't be nullptr!");
     action->retain();
     _innerAction = action;
     return true;
@@ -554,7 +578,7 @@ RepeatForever *RepeatForever::reverse() const
 // Spawn
 //
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 Spawn* Spawn::variadicCreate(FiniteTimeAction *action1, ...)
 {
     va_list params;
@@ -610,27 +634,10 @@ Spawn* Spawn::createWithVariableList(FiniteTimeAction *action1, va_list args)
 
 Spawn* Spawn::create(const Vector<FiniteTimeAction*>& arrayOfActions)
 {
-    Spawn* ret = nullptr;
-    do 
-    {
-        auto count = arrayOfActions.size();
-        CC_BREAK_IF(count == 0);
-        auto prev = arrayOfActions.at(0);
-        if (count > 1)
-        {
-            for (int i = 1; i < arrayOfActions.size(); ++i)
-            {
-                prev = createWithTwoActions(prev, arrayOfActions.at(i));
-            }
-        }
-        else
-        {
-            // If only one action is added to Spawn, make up a Spawn by adding a simplest finite time action.
-            prev = createWithTwoActions(prev, ExtraAction::create());
-        }
-        ret = static_cast<Spawn*>(prev);
-    }while (0);
+    Spawn* ret = new (std::nothrow) Spawn;
 
+    if (ret && ret->init(arrayOfActions))
+        ret->autorelease();
     return ret;
 }
 
@@ -643,10 +650,30 @@ Spawn* Spawn::createWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *
     return spawn;
 }
 
+bool Spawn::init(const Vector<FiniteTimeAction*>& arrayOfActions)
+{
+    auto count = arrayOfActions.size();
+
+    if (count == 0)
+        return true;
+
+    if (count == 1)
+        return initWithTwoActions(arrayOfActions.at(0), ExtraAction::create());
+
+    // else count > 1
+    auto prev = arrayOfActions.at(0);
+    for (int i = 1; i < count-1; ++i)
+    {
+        prev = createWithTwoActions(prev, arrayOfActions.at(i));
+    }
+
+    return initWithTwoActions(prev, arrayOfActions.at(count-1));
+}
+
 bool Spawn::initWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2)
 {
-    CCASSERT(action1 != nullptr, "");
-    CCASSERT(action2 != nullptr, "");
+    CCASSERT(action1 != nullptr, "action1 can't be nullptr!");
+    CCASSERT(action2 != nullptr, "action2 can't be nullptr!");
 
     bool ret = false;
 
@@ -710,11 +737,13 @@ void Spawn::update(float time)
 {
     if (_one)
     {
-        _one->update(time);
+        if (!(sendUpdateEventToScript(time, _one)))
+            _one->update(time);
     }
     if (_two)
     {
-        _two->update(time);
+        if (!(sendUpdateEventToScript(time, _two)))
+            _two->update(time);
     }
 }
 
@@ -1464,7 +1493,7 @@ JumpTo* JumpTo::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) JumpTo();
-    a->initWithDuration(_duration, _delta, _height, _jumps);
+    a->initWithDuration(_duration, _endPosition, _height, _jumps);
     a->autorelease();
     return a;
 }
@@ -1478,7 +1507,7 @@ JumpTo* JumpTo::reverse() const
 void JumpTo::startWithTarget(Node *target)
 {
     JumpBy::startWithTarget(target);
-    _delta = Vec2(_endPosition.x - _startPosition.x, _endPosition.y - _startPosition.y);
+    _delta.set(_endPosition.x - _startPosition.x, _endPosition.y - _startPosition.y);
 }
 
 // Bezier cubic formula:
@@ -1814,7 +1843,8 @@ bool Blink::initWithDuration(float duration, int blinks)
 
 void Blink::stop()
 {
-    _target->setVisible(_originalState);
+    if(NULL != _target)
+        _target->setVisible(_originalState);
     ActionInterval::stop();
 }
 
@@ -2106,7 +2136,7 @@ TintBy* TintBy::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) TintBy();
-    a->initWithDuration(_duration, (GLubyte)_deltaR, (GLubyte)_deltaG, (GLubyte)_deltaB);
+    a->initWithDuration(_duration, _deltaR, _deltaG, _deltaB);
     a->autorelease();
     return a;
 }
@@ -2188,8 +2218,8 @@ ReverseTime* ReverseTime::create(FiniteTimeAction *action)
 
 bool ReverseTime::initWithAction(FiniteTimeAction *action)
 {
-    CCASSERT(action != nullptr, "");
-    CCASSERT(action != _other, "");
+    CCASSERT(action != nullptr, "action can't be nullptr!");
+    CCASSERT(action != _other, "action doesn't equal to _other!");
 
     if (ActionInterval::initWithDuration(action->getDuration()))
     {
@@ -2240,7 +2270,8 @@ void ReverseTime::update(float time)
 {
     if (_other)
     {
-        _other->update(1 - time);
+        if (!(sendUpdateEventToScript(1 - time, _other)))
+            _other->update(1 - time);
     }
 }
 
@@ -2269,6 +2300,7 @@ Animate::Animate()
 , _executedLoops(0)
 , _animation(nullptr)
 , _frameDisplayedEvent(nullptr)
+, _currFrameIndex(0)
 {
 
 }
@@ -2382,7 +2414,8 @@ void Animate::update(float t)
         float splitTime = _splitTimes->at(i);
 
         if( splitTime <= t ) {
-            AnimationFrame* frame = frames.at(i);
+            _currFrameIndex = i;
+            AnimationFrame* frame = frames.at(_currFrameIndex);
             frameToDisplay = frame->getSpriteFrame();
             static_cast<Sprite*>(_target)->setSpriteFrame(frameToDisplay);
 
@@ -2499,7 +2532,13 @@ void TargetedAction::stop()
 
 void TargetedAction::update(float time)
 {
-    _action->update(time);
+    if (!(sendUpdateEventToScript(time, _action)))
+        _action->update(time);
+}
+
+bool TargetedAction::isDone(void) const
+{
+    return _action->isDone();
 }
 
 void TargetedAction::setForcedTarget(Node* forcedTarget)
@@ -2509,6 +2548,62 @@ void TargetedAction::setForcedTarget(Node* forcedTarget)
         CC_SAFE_RELEASE(_forcedTarget);
         _forcedTarget = forcedTarget;
     }
+}
+
+// ActionFloat
+
+ActionFloat* ActionFloat::create(float duration, float from, float to, ActionFloatCallback callback)
+{
+    auto ref = new (std::nothrow) ActionFloat();
+    if (ref && ref->initWithDuration(duration, from, to, callback))
+    {
+        ref->autorelease();
+        return ref;
+    }
+    CC_SAFE_DELETE(ref);
+    return ref;
+}
+
+bool ActionFloat::initWithDuration(float duration, float from, float to, ActionFloatCallback callback)
+{
+    if (ActionInterval::initWithDuration(duration))
+    {
+        _from = from;
+        _to = to;
+        _callback = callback;
+        return true;
+    }
+    return false;
+}
+
+ActionFloat* ActionFloat::clone() const
+{
+    auto a = new (std::nothrow) ActionFloat();
+    a->initWithDuration(_duration, _from, _to, _callback);
+    a->autorelease();
+    return a;
+}
+
+void ActionFloat::startWithTarget(Node *target)
+{
+    ActionInterval::startWithTarget(target);
+    _delta = _to - _from;
+}
+
+void ActionFloat::update(float delta)
+{
+    float value = _to - _delta * (1 - delta);
+
+    if (_callback)
+    {
+        // report back value to caller
+        _callback(value);
+    }
+}
+
+ActionFloat* ActionFloat::reverse() const
+{
+    return ActionFloat::create(_duration, _to, _from, _callback);
 }
 
 NS_CC_END

@@ -27,7 +27,7 @@
 
 NS_CC_BEGIN
 
-const Vec3 PUForceFieldCalculationFactory::DEFAULT_WORLDSIZE = Vec3(500.0f, 500.0f, 500.0f);
+const Vec3 PUForceFieldCalculationFactory::DEFAULT_WORLDSIZE(500.0f, 500.0f, 500.0f);
 
 //-----------------------------------------------------------------------
 unsigned short PUForceFieldCalculationFactory::getOctaves(void) const
@@ -159,7 +159,6 @@ PUForceField::PUForceField(void) :
     _worldSize(PUForceFieldCalculationFactory::DEFAULT_WORLDSIZE),
     _forceFieldSize(64),
     _forceFieldCalculationFactory(0),
-    _forceFieldPositionBase(Vec3::ZERO),
     _forceFieldType(FF_REALTIME_CALC)
 {
 }

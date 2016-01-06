@@ -34,8 +34,7 @@ const float PUSphereSurfaceEmitter::DEFAULT_RADIUS = 10.0f;
 //-----------------------------------------------------------------------
 PUSphereSurfaceEmitter::PUSphereSurfaceEmitter(void) : 
     PUEmitter(),
-    _radius(DEFAULT_RADIUS),
-    _randomVector(Vec3::ZERO)
+    _radius(DEFAULT_RADIUS)
 {
 }
 //-----------------------------------------------------------------------
@@ -53,9 +52,7 @@ void PUSphereSurfaceEmitter::initParticlePosition(PUParticle3D* particle)
 {
     // Generate a random unit vector to calculate a point on the sphere. This unit vector is
     // also used as direction vector if mAutoDirection has been set.
-    _randomVector = Vec3(CCRANDOM_MINUS1_1(), 
-        CCRANDOM_MINUS1_1(),
-        CCRANDOM_MINUS1_1());
+    _randomVector.set(CCRANDOM_MINUS1_1(), CCRANDOM_MINUS1_1(), CCRANDOM_MINUS1_1());
     _randomVector.normalize();
     //ParticleSystem* sys = mParentTechnique->getParentSystem();
     //if (sys)

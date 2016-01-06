@@ -1,7 +1,16 @@
+#include "platform/CCPlatformConfig.h"
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 #include "CurlTest.h"
 #include "stdio.h"
 #include "stdlib.h"
 #include "curl/curl.h"
+
+USING_NS_CC;
+
+CurlTests::CurlTests()
+{
+    ADD_TEST_CASE(CurlTest);
+}
 
 CurlTest::CurlTest()
 {
@@ -93,12 +102,4 @@ CurlTest::~CurlTest()
 {
     _label->release();
 }
-
-void CurlTestScene::runThisTest()
-{
-    auto layer = new (std::nothrow) CurlTest();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
-    layer->release();
-}
+#endif

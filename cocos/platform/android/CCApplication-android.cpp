@@ -73,11 +73,11 @@ int Application::run()
     return -1;
 }
 
-void Application::setAnimationInterval(double interval)
+void Application::setAnimationInterval(float interval)
 {
   JniMethodInfo methodInfo;
   if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxRenderer", "setAnimationInterval",
-                                       "(D)V"))
+                                       "(F)V"))
   {
     CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
   }
@@ -198,6 +198,11 @@ LanguageType Application::getCurrentLanguage()
 Application::Platform Application::getTargetPlatform()
 {
     return Platform::OS_ANDROID;
+}
+
+std::string Application::getVersion()
+{
+    return getVersionJNI();
 }
 
 bool Application::openURL(const std::string &url)

@@ -42,6 +42,11 @@ namespace cocostudio
         return instanceListViewReader;
     }
     
+    void ListViewReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceListViewReader);
+    }
+    
     void ListViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode* cocoNode)
     {
         ScrollViewReader::setPropsFromBinary(widget, cocoLoader, cocoNode);
@@ -485,12 +490,12 @@ namespace cocostudio
             {
                 listView->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
             }
-            else
-            {
-                auto label = Label::create();
-                label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-                listView->addChild(label);
-            }
+            //else
+            //{
+            //    auto label = Label::create();
+            //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+            //    listView->addChild(label);
+            //}
         }
         
         auto widgetOptions = options->widgetOptions();

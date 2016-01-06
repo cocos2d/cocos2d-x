@@ -1,0 +1,179 @@
+{
+      "do_default":{
+         "exclude_from_template":[
+            "frameworks/runtime-src"
+         ],
+         "project_replace_project_name":{
+            "src_project_name":"HelloJavascript",
+            "files":[
+               "config.json",
+               ".project"
+               ]
+            },
+         "append_dir":[
+            {
+                "from": "web",
+                "to": "frameworks/cocos2d-html5"
+            }
+         ]
+      },
+      "do_add_native_support":{
+         "append_from_template":{
+            "from":"frameworks/runtime-src",
+            "to":"frameworks/runtime-src",
+            "exclude":[
+               "proj.android/bin",
+               "proj.android/assets",
+               "proj.ios_mac/HelloJavascript.xcodeproj/project.xcworkspace",
+               "proj.ios_mac/HelloJavascript.xcodeproj/xcuserdata",
+               "proj.win32/Debug.win32",
+               "proj.win32/Release.win32",
+               "proj.win32/HelloJavascript.sdf"
+            ]
+         },
+         "append_dir":[
+            {
+               "from":"tools/bindings-generator",
+               "to":"tools/bindings-generator",
+               "exclude":[
+                  ".git"
+               ]
+             },
+             {
+                "from":"tools",
+                "to":"tools",
+                "include":[
+                   "tojs"
+                ]
+             },
+            {
+                "from": "cocos/scripting/js-bindings/manual",
+                "to": "frameworks/runtime-src/Classes",
+                "include": [
+                    "js_module_register.h"
+                ]
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/Classes/ide-support",
+                "to": "frameworks/runtime-src/Classes/ide-support",
+                "exclude": [
+                    "RuntimeLuaImpl.*",
+                    "lua_debugger.*"
+                ]
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/ios",
+                "to": "frameworks/runtime-src/proj.ios_mac/ios",
+                "exclude": [
+                    "RootViewController.*",
+                    "Info.plist"
+                ]
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/mac",
+                "to": "frameworks/runtime-src/proj.ios_mac/mac",
+                "exclude": [
+                    "Info.plist",
+                    "Icon.icns",
+                    "build-cfg.json"
+                ]
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/",
+                "to": "frameworks/runtime-src/proj.win32/",
+                "include": [
+                    "game.rc",
+                    "main.cpp",
+                    "main.h",
+                    "res/",
+                    "resource.h",
+                    "SimulatorWin.*"
+                ]
+            }
+         ],
+         "append_x_engine":{
+            "from": ".",
+            "to": "frameworks/cocos2d-x"
+         },
+         "project_rename":{
+            "src_project_name":"HelloJavascript",
+            "files":[
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
+               "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj"
+            ]
+         },
+         "project_replace_project_name":{
+            "src_project_name":"HelloJavascript",
+            "files":[
+               "config.json",
+               "manifest.webapp",
+               ".project",
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
+               "frameworks/runtime-src/proj.win32/main.cpp",
+               "frameworks/runtime-src/proj.android/.project",
+               "frameworks/runtime-src/proj.android/AndroidManifest.xml",
+               "frameworks/runtime-src/proj.android/build.xml",
+               "frameworks/runtime-src/proj.android/res/values/strings.xml",
+               "frameworks/runtime-src/proj.ios_mac/ios/main.m",
+               "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
+               "frameworks/runtime-src/proj.ios_mac/mac/SimulatorApp.mm",
+               "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
+               "frameworks/runtime-src/Classes/AppDelegate.cpp"
+            ]
+         },
+         "project_replace_package_name":{
+            "src_package_name":"org.cocos2dx.hellojavascript",
+            "files":[
+               "frameworks/runtime-src/proj.android/AndroidManifest.xml"
+            ]
+         },
+         "project_replace_mac_bundleid":{
+            "src_bundle_id":"org.cocos2dx.hellojavascript",
+            "files":[
+               "frameworks/runtime-src/proj.ios_mac/mac/Info.plist"
+            ]
+         },
+         "project_replace_ios_bundleid":{
+            "src_bundle_id":"org.cocos2dx.hellojavascript",
+            "files":[
+               "frameworks/runtime-src/proj.ios_mac/ios/Info.plist"
+            ]
+         }
+    },
+    "change_orientation": {
+       "modify_files": [
+         {
+            "file_path": "config.json",
+            "pattern": "\\\"isLandscape\\\"\\s*:.*,",
+            "replace_string": "\"isLandscape\": false,"
+         },
+         {
+            "file_path": "main.js",
+            "pattern": "setDesignResolutionSize\\(\\s*(\\d+),\\s*(\\d+),(.*)\\)",
+            "replace_string": "setDesignResolutionSize(\\2, \\1,\\3)"
+         },
+         {
+            "file_path": "frameworks/runtime-src/proj.ios_mac/ios/Info.plist",
+            "pattern": "UIInterfaceOrientationLandscapeRight",
+            "replace_string": "UIInterfaceOrientationPortrait"
+         },
+         {
+            "file_path": "frameworks/runtime-src/proj.ios_mac/ios/Info.plist",
+            "pattern": "UIInterfaceOrientationLandscapeLeft",
+            "replace_string": "UIInterfaceOrientationPortraitUpsideDown"
+         },
+         {
+            "file_path": "frameworks/runtime-src/proj.android/AndroidManifest.xml",
+            "pattern": "android:screenOrientation=\\\".*\\\"",
+            "replace_string": "android:screenOrientation=\"portrait\""
+         }
+       ]
+    }
+}
+

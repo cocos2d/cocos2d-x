@@ -30,9 +30,7 @@
 NS_CC_BEGIN
 
 Particle3D::Particle3D()
-: position(Vec3::ZERO)
-, color(Vec4::ONE)
-, lb_uv(Vec2::ZERO)
+: color(Vec4::ONE)
 , rt_uv(Vec2::ONE)
 , width(1.0f)
 , height(1.0f)
@@ -154,7 +152,7 @@ void ParticleSystem3D::removeAllAffector()
 
 Particle3DAffector* ParticleSystem3D::getAffector(int index)
 {
-    CCASSERT(index < _affectors.size(), "wrong index");
+    CCASSERT(index < (int)_affectors.size(), "wrong index");
     return _affectors[index];
 }
 

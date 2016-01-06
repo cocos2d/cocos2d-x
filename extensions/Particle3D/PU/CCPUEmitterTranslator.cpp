@@ -108,7 +108,7 @@ void PUEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbstractNode *
             }
             else if (prop->name == token[TOKEN_POSITION])
             {
-                // Property: positon
+                // Property: position
                 if (passValidateProperty(compiler, prop, token[TOKEN_POSITION], VAL_VECTOR3))
                 {
                     Vec3 val;
@@ -514,10 +514,10 @@ void PUEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbstractNode *
                     }
                 }
             }
-            else if (prop->name == token[TOKEN_EMITTER_FORCE_EMISISON])
+            else if (prop->name == token[TOKEN_EMITTER_FORCE_EMISSION])
             {
                 // Property: force_emission
-                if (passValidateProperty(compiler, prop, token[TOKEN_EMITTER_FORCE_EMISISON], VAL_BOOL))
+                if (passValidateProperty(compiler, prop, token[TOKEN_EMITTER_FORCE_EMISSION], VAL_BOOL))
                 {
                     bool val;
                     if(getBoolean(*prop->values.front(), &val))

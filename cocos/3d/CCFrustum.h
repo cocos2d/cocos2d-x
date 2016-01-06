@@ -34,6 +34,13 @@
 NS_CC_BEGIN
 
 class Camera;
+
+/**
+ * the frustum is a six-side geometry, usually use the frustum to do fast-culling:
+ * check a entity whether is a potential visible entity
+ * @js NA
+ * @lua NA
+ */
 class CC_DLL Frustum
 {
     friend class Camera;

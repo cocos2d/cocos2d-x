@@ -49,6 +49,11 @@ namespace cocostudio
         return instanceImageViewReader;
     }
     
+    void ImageViewReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceImageViewReader);
+    }
+    
     void ImageViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
         WidgetReader::setPropsFromBinary(widget, cocoLoader, cocoNode);
@@ -348,12 +353,12 @@ namespace cocostudio
         {
             imageView->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
         }
-        else
-        {
-            auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-            imageView->addChild(label);
-        }
+        //else
+        //{
+        //    auto label = Label::create();
+        //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+        //    imageView->addChild(label);
+        //}
         
         bool scale9Enabled = options->scale9Enabled() != 0;
         imageView->setScale9Enabled(scale9Enabled);

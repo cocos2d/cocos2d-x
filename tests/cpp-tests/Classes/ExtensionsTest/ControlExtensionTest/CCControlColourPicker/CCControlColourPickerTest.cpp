@@ -1,30 +1,6 @@
-/*
- * ControlColourPickerTest.m
- *
- * Copyright (c) 2012 Yannick Loriot
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- */
-
 #include "CCControlColourPickerTest.h"
 
+USING_NS_CC;
 USING_NS_CC_EXT;
 
 ControlColourPickerTest::ControlColourPickerTest()
@@ -59,7 +35,7 @@ bool ControlColourPickerTest::init()
         layer_width += colourPicker->getContentSize().width;
 
         // Add the black background for the text
-        auto background = Scale9Sprite::create("extensions/buttonBackground.png");
+        auto background = ui::Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(Size(150, 50));
         background->setPosition(layer_width + background->getContentSize().width / 2.0f, 0);
         layer->addChild(background);
@@ -92,7 +68,7 @@ ControlColourPickerTest::~ControlColourPickerTest()
 void ControlColourPickerTest::colourValueChanged(Ref *sender, Control::EventType controlEvent)
 {
     ControlColourPicker* pPicker = (ControlColourPicker*)sender;
-    _colorLabel->setString(String::createWithFormat("#%02X%02X%02X",pPicker->getColor().r, pPicker->getColor().g, pPicker->getColor().b)->getCString());
+    _colorLabel->setString(StringUtils::format("#%02X%02X%02X",pPicker->getColor().r, pPicker->getColor().g, pPicker->getColor().b));
 }
 
 

@@ -78,7 +78,7 @@ namespace cocos2d {
              * @js NA
              * @lua NA
              */
-            virtual void visit(void) = 0;
+            virtual void draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) = 0;
             /**
              * @js NA
              * @lua NA

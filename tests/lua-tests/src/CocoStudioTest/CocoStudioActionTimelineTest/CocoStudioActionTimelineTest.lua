@@ -5,8 +5,13 @@ local TimelineTestIndex =
 {
     TEST_ACTION_TIMELINE        = 1,
     TEST_CHANGE_PLAY_SECTION    = 2,
-    --TEST_TIMELINE_FRAME_EVENT   = 3,
-    TEST_TIMELINE_PERFORMACE    = 3,
+    TEST_TIMELINE_FRAME_EVENT   = 3,
+    TEST_TIMELINE_PERFORMACE    = 4, 
+    TEST_TIMELINE_ANIMATION_LIST = 5,
+    TEST_TIMELINE_PROJECT_NODE   = 6,
+    TEST_PROJECT_NODE_FOR_SIMULATOR = 7,
+    TEST_TIMELINE_NODE_LOADED_CALLBACK = 8,
+    TEST_ACTION_TIMELINE_EASE    = 9,
 }
 local timelineSceneIdx   = TimelineTestIndex.TEST_ACTION_TIMELINE
 
@@ -62,10 +67,20 @@ function TimelineTestLayer.title(idx)
         return "Test ActionTimeline"
     elseif TimelineTestIndex.TEST_CHANGE_PLAY_SECTION == idx then
         return "Test Change Play Section"
-    --elseif TimelineTestIndex.TEST_TIMELINE_FRAME_EVENT == idx then
-    --    return "Test Frame Event"
+    elseif TimelineTestIndex.TEST_TIMELINE_FRAME_EVENT == idx then
+       return "Test Frame Event"
     elseif TimelineTestIndex.TEST_TIMELINE_PERFORMACE == idx then
         return "Test ActionTimeline performance"
+    elseif TimelineTestIndex.TEST_ACTION_TIMELINE_EASE == idx then
+        return "Test ActionTimelineEase"
+    elseif TimelineTestIndex.TEST_TIMELINE_ANIMATION_LIST == idx then
+        return "Test ActionTimeline AnimationList"
+    elseif TimelineTestIndex.TEST_TIMELINE_PROJECT_NODE == idx then
+        return "Test ActionTimeline ProjectNode"
+    elseif TimelineTestIndex.TEST_PROJECT_NODE_FOR_SIMULATOR == idx then
+        return "Test ProjectNode for Simalator"
+    elseif TimelineTestIndex.TEST_TIMELINE_NODE_LOADED_CALLBACK == idx then
+        return "Test node loaded call back"
     end
 end
 
@@ -417,12 +432,294 @@ function TestTimelinePerformance.create()
     return layer
 end
 
+-------------------------------------------
+---TestTimelineAnimationList
+-------------------------------------------
+local TestTimelineAnimationList = class("TestTimelineAnimationList",TimelineTestLayer)
+TestTimelineAnimationList.__index = TestTimelineAnimationList
+
+function TestTimelineAnimationList.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, TestTimelineAnimationList)
+    return target
+end
+
+function TestTimelineAnimationList:onEnter()
+    local node = cc.CSLoader:createNode("ActionTimeline/DemoPlayer.csb")
+    local action = cc.CSLoader:createTimeline("ActionTimeline/DemoPlayer.csb")
+    local standInfo = ccs.AnimationInfo("stand", 0, 40)
+    local walkInfo = ccs.AnimationInfo("walk",  41,  81)
+    action:addAnimationInfo(standInfo)
+    action:addAnimationInfo(walkInfo)
+    node:runAction(action)
+    action:play("walk", true)
+
+    node:setScale(0.2)
+    node:setPosition(150,100)
+    self:addChild(node)
+end
+
+function TestTimelineAnimationList.restartCallback()
+    ccs.ArmatureDataManager:destroyInstance()
+    local newScene = TimelineTestScene.create()
+    newScene:addChild(restartTimelineTest())
+    cc.Director:getInstance():replaceScene(newScene)
+end
+
+function TestTimelineAnimationList.create()
+    local layer = TestTimelineAnimationList.extend(cc.Layer:create())
+
+    if nil ~= layer then
+        layer:createMenu()
+        layer:createToExtensionMenu()
+        layer:creatTitleAndSubTitle(timelineSceneIdx)
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
+    end 
+
+    return layer
+end
+
+
+-------------------------------------------
+---TestTimelineProjectNode
+-------------------------------------------
+local TestTimelineProjectNode = class("TestTimelineProjectNode",TimelineTestLayer)
+TestTimelineProjectNode.__index = TestTimelineProjectNode
+
+function TestTimelineProjectNode.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, TestTimelineProjectNode)
+    return target
+end
+
+function TestTimelineProjectNode:onEnter()
+    local node = cc.CSLoader:createNode("ActionTimeline/TestAnimation.csb")
+    local action = cc.CSLoader:createTimeline("ActionTimeline/TestAnimation.csb")
+
+    node:runAction(action)
+    action:gotoFrameAndPlay(0, true)
+
+    node:setPosition(-300, -300)
+    self:addChild(node)
+end
+
+function TestTimelineProjectNode.restartCallback()
+    ccs.ArmatureDataManager:destroyInstance()
+    local newScene = TimelineTestScene.create()
+    newScene:addChild(restartTimelineTest())
+    cc.Director:getInstance():replaceScene(newScene)
+end
+
+function TestTimelineProjectNode.create()
+    local layer = TestTimelineProjectNode.extend(cc.Layer:create())
+
+    if nil ~= layer then
+        layer:createMenu()
+        layer:createToExtensionMenu()
+        layer:creatTitleAndSubTitle(timelineSceneIdx)
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
+    end 
+
+    return layer
+end
+
+
+-------------------------------------------
+---TestProjectNodeForSimulator
+-------------------------------------------
+local TestProjectNodeForSimulator = class("TestProjectNodeForSimulator",TimelineTestLayer)
+TestProjectNodeForSimulator.__index = TestProjectNodeForSimulator
+
+function TestProjectNodeForSimulator.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, TestProjectNodeForSimulator)
+    return target
+end
+
+function TestProjectNodeForSimulator:onEnter()
+    local node = cc.CSLoader:getInstance():createNodeWithFlatBuffersForSimulator("ActionTimeline/TestAnimation.csd")
+    local action = ccs.ActionTimelineCache:getInstance():createActionWithFlatBuffersForSimulator("ActionTimeline/TestAnimation.csd")
+
+    node:runAction(action)
+    action:gotoFrameAndPlay(0, true)
+    
+    node:setPosition(-300, -300)
+    self:addChild(node)
+
+    --test for when ProjectNode file lost
+    local lackProjectNodefileNode = cc.CSLoader:getInstance():createNodeWithFlatBuffersForSimulator("ActionTimeline/TestNullProjectNode.csd")
+    local lackProjectNodefileAction = ccs.ActionTimelineCache:getInstance():createActionWithFlatBuffersForSimulator("ActionTimeline/TestNullProjectNode.csd")
+    lackProjectNodefileNode:runAction(lackProjectNodefileAction)
+    lackProjectNodefileAction:gotoFrameAndPlay(0)
+    self:addChild(lackProjectNodefileNode)
+end
+
+function TestProjectNodeForSimulator.restartCallback()
+    ccs.ArmatureDataManager:destroyInstance()
+    local newScene = TimelineTestScene.create()
+    newScene:addChild(restartTimelineTest())
+    cc.Director:getInstance():replaceScene(newScene)
+end
+
+function TestProjectNodeForSimulator.create()
+    local layer = TestProjectNodeForSimulator.extend(cc.Layer:create())
+
+    if nil ~= layer then
+        layer:createMenu()
+        layer:createToExtensionMenu()
+        layer:creatTitleAndSubTitle(timelineSceneIdx)
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
+    end 
+
+    return layer
+end
+
+-------------------------------------------
+---TestTimelineNodeLoadedCallback
+-------------------------------------------
+local TestTimelineNodeLoadedCallback = class("TestTimelineNodeLoadedCallback",TimelineTestLayer)
+TestTimelineNodeLoadedCallback.__index = TestTimelineNodeLoadedCallback
+
+function TestTimelineNodeLoadedCallback.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, TestTimelineNodeLoadedCallback)
+    return target
+end
+
+function TestTimelineNodeLoadedCallback:onEnter()
+    local node = cc.CSLoader:createNode("ActionTimeline/DemoPlayer.csb", function(object)
+        if nil ~= object then
+            print("object type is ", tolua.type(object))
+            print("node name = ",object:getName())
+            print("node parent name = ", object:getParent():getName())
+        end
+    end)
+    local action = cc.CSLoader:createTimeline("ActionTimeline/DemoPlayer.csb")
+    node:runAction(action)
+    action:gotoFrameAndPlay(0)
+
+    node:setScale(0.2)
+    node:setPosition(VisibleRect:center())
+    
+    self:addChild(node)
+end
+
+function TestTimelineNodeLoadedCallback.restartCallback()
+    ccs.ArmatureDataManager:destroyInstance()
+    local newScene = TimelineTestScene.create()
+    newScene:addChild(restartTimelineTest())
+    cc.Director:getInstance():replaceScene(newScene)
+end
+
+function TestTimelineNodeLoadedCallback.create()
+    local layer = TestTimelineNodeLoadedCallback.extend(cc.Layer:create())
+
+    if nil ~= layer then
+        layer:createMenu()
+        layer:createToExtensionMenu()
+        layer:creatTitleAndSubTitle(timelineSceneIdx)
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
+    end 
+
+    return layer
+end
+
+-------------------------------------------
+---TestActionTimelineEase
+-------------------------------------------
+local TestActionTimelineEase = class("TestActionTimelineEase",TimelineTestLayer)
+TestActionTimelineEase.__index = TestActionTimelineEase
+
+function TestActionTimelineEase.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, TestActionTimelineEase)
+    return target
+end
+
+function TestActionTimelineEase:onEnter()
+    local node = cc.CSLoader:createNode("ActionTimeline/ActionTimelineEase.csb")
+    local action = cc.CSLoader:createTimeline("ActionTimeline/ActionTimelineEase.csb")
+    node:runAction(action)
+    action:gotoFrameAndPlay(0)
+    self:addChild(node)
+end
+
+function TestActionTimelineEase.restartCallback()
+    ccs.ArmatureDataManager:destroyInstance()
+    local newScene = TimelineTestScene.create()
+    newScene:addChild(restartTimelineTest())
+    cc.Director:getInstance():replaceScene(newScene)
+end
+
+function TestActionTimelineEase.create()
+    local layer = TestActionTimelineEase.extend(cc.Layer:create())
+
+    if nil ~= layer then
+        layer:createMenu()
+        layer:createToExtensionMenu()
+        layer:creatTitleAndSubTitle(timelineSceneIdx)
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
+    end 
+
+    return layer
+end
+
 local actionlineSceneArr =
 {
     TestActionTimeline.create,
     TestChangePlaySection.create,
-    --TestTimelineFrameEvent.create,
+    TestTimelineFrameEvent.create,
     TestTimelinePerformance.create,
+    TestTimelineAnimationList.create,
+    TestTimelineProjectNode.create,
+    TestProjectNodeForSimulator.create,
+    TestTimelineNodeLoadedCallback.create,
+    TestActionTimelineEase.create,
 }
 
 function nextTimelineTest()

@@ -27,12 +27,18 @@
 
 #include "base/CCEventListener.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class EventCustom;
 
-/**
- *  Usage:
+/** @class EventListenerCustom
+ * @brief Custom event listener.
+ * @code Usage:
  *        auto dispatcher = Director::getInstance()->getEventDispatcher();
  *     Adds a listener:
  *
@@ -40,7 +46,7 @@ class EventCustom;
  *        auto listener = EventListenerCustom::create(callback);
  *        dispatcher->addEventListenerWithSceneGraphPriority(listener, one_node);
  *
- *     Dispatchs a custom event:
+ *     Dispatches a custom event:
  *
  *        EventCustom event("your_event_type");
  *        dispatcher->dispatchEvent(&event);
@@ -48,13 +54,16 @@ class EventCustom;
  *     Removes a listener
  *
  *        dispatcher->removeEventListener(listener);
+ * \endcode
+ * @js cc._EventListenerCustom
  */
 class CC_DLL EventListenerCustom : public EventListener
 {
 public:
     /** Creates an event listener with type and callback.
-     *  @param eventType The type of the event.
-     *  @param callback The callback function when the specified event was emitted.
+     * @param eventName The type of the event.
+     * @param callback The callback function when the specified event was emitted.
+     * @return An autoreleased EventListenerCustom object.
      */
     static EventListenerCustom* create(const std::string& eventName, const std::function<void(EventCustom*)>& callback);
     
@@ -76,5 +85,8 @@ protected:
 };
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__CCCustomEventListener__) */

@@ -42,42 +42,47 @@ public:
     /**
      * @js ctor
      */
-	Application();
+    Application();
     /**
      * @js NA
      * @lua NA
      */
-	virtual ~Application();
+    virtual ~Application();
 
-	/**
-	 @brief	Callback by Director for limit FPS.
-	 @param interval    The time, which expressed in second in second, between current frame and next.
-	 */
-	void setAnimationInterval(double interval);
+    /**
+     @brief Callback by Director for limit FPS.
+     @param interval    The time, which expressed in second in second, between current frame and next.
+     */
+    void setAnimationInterval(float interval);
 
-	/**
-	 @brief	Run the message loop.
-	 */
-	int run();
+    /**
+     @brief Run the message loop.
+     */
+    int run();
 
-	/**
-	 @brief	Get current applicaiton instance.
-	 @return Current application instance pointer.
-	 */
-	static Application* getInstance();
+    /**
+     @brief Get current application instance.
+     @return Current application instance pointer.
+     */
+    static Application* getInstance();
 
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
     
-	/* override functions */
-	virtual LanguageType getCurrentLanguage();
+    /* override functions */
+    virtual LanguageType getCurrentLanguage();
 
-	/**
+    /**
     @brief Get current language iso 639-1 code
     @return Current language iso 639-1 code
     */
     virtual const char * getCurrentLanguageCode();
     
+    /**
+    @brief Get application version
+    */
+    virtual std::string getVersion() override;
+
   /**
    @brief Open url in default browser
    @param String with url to open.
@@ -86,13 +91,13 @@ public:
   virtual bool openURL(const std::string &url);
 
 
-	/**
+    /**
      *  Sets the Resource root path.
      *  @deprecated Please use FileUtils::getInstance()->setSearchPaths() instead.
      */
     CC_DEPRECATED_ATTRIBUTE void setResourceRootPath(const std::string& rootResDir);
     
-	/** 
+    /** 
      *  Gets the Resource root path.
      *  @deprecated Please use FileUtils::getInstance()->getSearchPaths() instead. 
      */
@@ -106,7 +111,7 @@ protected:
     long       _animationInterval;  //micro second
     std::string _resourceRootPath;
     
-	static Application * sm_pSharedApplication;
+    static Application * sm_pSharedApplication;
 };
 
 NS_CC_END

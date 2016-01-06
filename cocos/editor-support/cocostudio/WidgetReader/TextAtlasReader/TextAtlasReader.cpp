@@ -22,7 +22,7 @@ namespace cocostudio
     static const char* P_ItemHeight = "itemHeight";
     static const char* P_StartCharMap = "startCharMap";
     
-    static TextAtlasReader* instanceTextAtalsReader = nullptr;
+    static TextAtlasReader* instanceTextAtlasReader = nullptr;
     
     IMPLEMENT_CLASS_NODE_READER_INFO(TextAtlasReader)
     
@@ -38,11 +38,16 @@ namespace cocostudio
     
     TextAtlasReader* TextAtlasReader::getInstance()
     {
-        if (!instanceTextAtalsReader)
+        if (!instanceTextAtlasReader)
         {
-            instanceTextAtalsReader = new (std::nothrow) TextAtlasReader();
+            instanceTextAtlasReader = new (std::nothrow) TextAtlasReader();
         }
-        return instanceTextAtalsReader;
+        return instanceTextAtlasReader;
+    }
+    
+    void TextAtlasReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceTextAtlasReader);
     }
     
     void TextAtlasReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
@@ -247,19 +252,42 @@ namespace cocostudio
             case 0:
             {
                 const char* cmfPath = cmftDic->path()->c_str();
-                std::string stringValue = options->stringValue()->c_str();
-                int itemWidth = options->itemWidth();
-                int itemHeight = options->itemHeight();
-                labelAtlas->setProperty(stringValue,
-                                        cmfPath,
-                                        itemWidth,
-                                        itemHeight,
-                                        options->startCharMap()->c_str());
+                
+                bool fileExist = false;
+                std::string errorFilePath = "";
+                
+                if (FileUtils::getInstance()->isFileExist(cmfPath))
+                {
+                    fileExist = true;
+                    
+                    std::string stringValue = options->stringValue()->c_str();
+                    int itemWidth = options->itemWidth();
+                    int itemHeight = options->itemHeight();
+                    labelAtlas->setProperty(stringValue,
+                                            cmfPath,
+                                            itemWidth,
+                                            itemHeight,
+                                            options->startCharMap()->c_str());
+                }
+                else
+                {
+                    errorFilePath = cmfPath;
+                    fileExist = false;
+                }
+                
+                //if (!fileExist)
+                //{
+                //    auto label = Label::create();
+                //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+                //    labelAtlas->addChild(label);
+                //}
                 break;
             }
+                
             case 1:
                 CCLOG("Wrong res type of LabelAtlas!");
                 break;
+                
             default:
                 break;
         }

@@ -5,13 +5,26 @@
 -- @parent_module cc
 
 --------------------------------
+--  Initializes a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX. 
+-- @function [parent=#OrbitCamera] initWithDuration 
+-- @param self
+-- @param #float t
+-- @param #float radius
+-- @param #float deltaRadius
+-- @param #float angleZ
+-- @param #float deltaAngleZ
+-- @param #float angleX
+-- @param #float deltaAngleX
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Creates a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX. <br>
 -- param t Duration in seconds.<br>
 -- param radius The start radius.<br>
 -- param deltaRadius The delta radius.<br>
--- param angelZ The start Angel in Z.<br>
+-- param angleZ The start angle in Z.<br>
 -- param deltaAngleZ The delta angle in Z.<br>
--- param angelX The start Angel in X.<br>
+-- param angleX The start angle in X.<br>
 -- param deltaAngleX The delta angle in X.<br>
 -- return An OrbitCamera.
 -- @function [parent=#OrbitCamera] create 
@@ -43,6 +56,12 @@
 -- @function [parent=#OrbitCamera] update 
 -- @param self
 -- @param #float time
+-- @return OrbitCamera#OrbitCamera self (return value: cc.OrbitCamera)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#OrbitCamera] OrbitCamera 
+-- @param self
 -- @return OrbitCamera#OrbitCamera self (return value: cc.OrbitCamera)
         
 return nil

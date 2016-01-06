@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -137,7 +137,7 @@ public:
     static ColliderDetector *create();
     static ColliderDetector *create(Bone *bone);
 public:
-	/**
+    /**
      * @js ctor
      */
     ColliderDetector();

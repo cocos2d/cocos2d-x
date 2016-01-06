@@ -27,77 +27,132 @@
 
 #include "../UIScene.h"
 
+DEFINE_TEST_SUITE(UIPageViewTests);
+
 class UIPageViewTest : public UIScene
 {
 public:
+    CREATE_FUNC(UIPageViewTest);
+
     UIPageViewTest();
     ~UIPageViewTest();
-    bool init();
-    
-    void pageViewEvent(Ref* pSender, PageView::EventType type);
-    
+    virtual bool init() override;
+
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
+
 protected:
-    UI_SCENE_CREATE_FUNC(UIPageViewTest)
-    Text* _displayValueLabel;
+
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIPageViewButtonTest : public UIScene
 {
 public:
+    CREATE_FUNC(UIPageViewButtonTest);
+
     UIPageViewButtonTest();
     ~UIPageViewButtonTest();
-    bool init();
+    virtual bool init() override;
     
-    void pageViewEvent(Ref* pSender, PageView::EventType type);
-    void onButtonClicked(Ref* pSender, Widget::TouchEventType type);
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
+    void onButtonClicked(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 protected:
-    UI_SCENE_CREATE_FUNC(UIPageViewButtonTest)
-    Text* _displayValueLabel;
-};
-
-class UIPageViewCustomScrollThreshold : public UIScene
-{
-public:
-    UIPageViewCustomScrollThreshold();
-    ~UIPageViewCustomScrollThreshold();
-    bool init();
     
-    void sliderEvent(Ref* pSender, Slider::EventType type);
-
-    void pageViewEvent(Ref* pSender, PageView::EventType type);
-protected:
-    UI_SCENE_CREATE_FUNC(UIPageViewCustomScrollThreshold)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIPageViewTouchPropagationTest : public UIScene
 {
 public:
+    CREATE_FUNC(UIPageViewTouchPropagationTest);
+
     UIPageViewTouchPropagationTest();
     ~UIPageViewTouchPropagationTest();
-    bool init();
+    virtual bool init() override;
     
-    void pageViewEvent(Ref* pSender, PageView::EventType type);
-    void onButtonClicked(Ref* pSender, Widget::TouchEventType type);
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
+    void onButtonClicked(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 protected:
-    UI_SCENE_CREATE_FUNC(UIPageViewTouchPropagationTest)
-    Text* _displayValueLabel;
+    
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIPageViewDynamicAddAndRemoveTest : public UIScene
 {
 public:
+    CREATE_FUNC(UIPageViewDynamicAddAndRemoveTest);
+
     UIPageViewDynamicAddAndRemoveTest();
     ~UIPageViewDynamicAddAndRemoveTest();
-    bool init();
+    virtual bool init() override;
     
-    void pageViewEvent(Ref* pSender, PageView::EventType type);
-    void onButtonClicked(Ref* pSender, Widget::TouchEventType type);
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
+    void onButtonClicked(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPageViewDynamicAddAndRemoveTest)
-    Text* _displayValueLabel;
+    
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIPageViewJumpToPageTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewJumpToPageTest);
+
+    UIPageViewJumpToPageTest();
+    ~UIPageViewJumpToPageTest();
+    virtual bool init() override;
+
+protected:
+
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIPageViewVerticalTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewVerticalTest);
+    
+    UIPageViewVerticalTest();
+    ~UIPageViewVerticalTest();
+    virtual bool init() override;
+    
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
+    
+protected:
+    
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIPageViewDisableTouchTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewDisableTouchTest);
+    
+    UIPageViewDisableTouchTest();
+    ~UIPageViewDisableTouchTest();
+    virtual bool init() override;
+        
+protected:
+    
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIPageViewChildSizeTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewChildSizeTest);
+
+    UIPageViewChildSizeTest();
+    ~UIPageViewChildSizeTest();
+    virtual bool init() override;
+
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
+
+protected:
+
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIPageViewTest__) */

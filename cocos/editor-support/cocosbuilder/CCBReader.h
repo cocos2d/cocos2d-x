@@ -11,6 +11,12 @@
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 #include "cocosbuilder/CCBAnimationManager.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#ifdef ABSOLUTE
+#undef ABSOLUTE
+#endif
+#endif
+
 #define CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(T, METHOD) static T * METHOD() { \
     T * ptr = new (std::nothrow) T(); \
     if(ptr != NULL) { \
@@ -131,11 +137,6 @@ public:
         MULTIPLY_RESOLUTION,
     };
    
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-#ifdef ABSOLUTE
-#undef ABSOLUTE
-#endif
-#endif
     enum class SizeType
     {
         ABSOLUTE,

@@ -4,7 +4,6 @@
 #include "LuaBasicConversions.h"
 
 
-
 int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_preloadBackgroundMusic(lua_State* tolua_S)
 {
     int argc = 0;

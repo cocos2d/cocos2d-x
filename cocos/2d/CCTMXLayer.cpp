@@ -46,6 +46,7 @@ TMXLayer * TMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo
         ret->autorelease();
         return ret;
     }
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
@@ -60,6 +61,9 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
     {
         texture = Director::getInstance()->getTextureCache()->addImage(tilesetInfo->_sourceImage.c_str());
     }
+
+    if (nullptr == texture)
+        return false;
 
     if (SpriteBatchNode::initWithTexture(texture, static_cast<ssize_t>(capacity)))
     {
@@ -342,7 +346,7 @@ uint32_t TMXLayer::getTileGIDAt(const Vec2& pos, TMXTileFlags* flags/* = nullptr
     CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
     CCASSERT(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
 
-    ssize_t idx = static_cast<int>((pos.x + pos.y * _layerSize.width));
+    ssize_t idx = static_cast<int>(((int) pos.x + (int) pos.y * _layerSize.width));
     // Bits on the far end of the 32-bit global tile ID are used for tile flags
     uint32_t tile = _tiles[idx];
 
@@ -363,7 +367,7 @@ Sprite * TMXLayer::insertTileForGID(uint32_t gid, const Vec2& pos)
         Rect rect = _tileSet->getRectForGID(gid);
         rect = CC_RECT_PIXELS_TO_POINTS(rect);
         
-        intptr_t z = (intptr_t)(pos.x + pos.y * _layerSize.width);
+        intptr_t z = (intptr_t)((int) pos.x + (int) pos.y * _layerSize.width);
         
         Sprite *tile = reusedTileWithRect(rect);
         
@@ -400,7 +404,7 @@ Sprite * TMXLayer::updateTileForGID(uint32_t gid, const Vec2& pos)
 {
     Rect rect = _tileSet->getRectForGID(gid);
     rect = Rect(rect.origin.x / _contentScaleFactor, rect.origin.y / _contentScaleFactor, rect.size.width/ _contentScaleFactor, rect.size.height/ _contentScaleFactor);
-    int z = (int)(pos.x + pos.y * _layerSize.width);
+    int z = (int)((int) pos.x + (int) pos.y * _layerSize.width);
 
     Sprite *tile = reusedTileWithRect(rect);
 
@@ -513,7 +517,7 @@ void TMXLayer::setTileGID(uint32_t gid, const Vec2& pos, TMXTileFlags flags)
         // modifying an existing tile with a non-empty tile
         else 
         {
-            int z = pos.x + pos.y * _layerSize.width;
+            int z = (int) pos.x + (int) pos.y * _layerSize.width;
             Sprite *sprite = static_cast<Sprite*>(getChildByTag(z));
             if (sprite)
             {
@@ -605,27 +609,27 @@ void TMXLayer::removeTileAt(const Vec2& pos)
 //CCTMXLayer - obtaining positions, offset
 Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
 {
-    Vec2 ret = Vec2::ZERO;
+    Vec2 ret;
     switch (_layerOrientation) 
     {
     case TMXOrientationOrtho:
-        ret = Vec2( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
+        ret.set( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
         break;
     case TMXOrientationIso:
-        ret = Vec2((_mapTileSize.width /2) * (pos.x - pos.y),
+        ret.set((_mapTileSize.width /2) * (pos.x - pos.y),
                   (_mapTileSize.height /2 ) * (-pos.x - pos.y));
         break;
     case TMXOrientationHex:
-        CCASSERT(pos.equals(Vec2::ZERO), "offset for hexagonal map not implemented yet");
+        CCASSERT(pos.isZero(), "offset for hexagonal map not implemented yet");
         break;
     case TMXOrientationStaggered:
         {
             float diffX = 0;
-            if ((int)abs(pos.y) % 2 == 1)
+            if ((int)std::abs(pos.y) % 2 == 1)
             {
                 diffX = _mapTileSize.width/2;
             }
-            ret = Vec2(pos.x * _mapTileSize.width + diffX,
+            ret.set(pos.x * _mapTileSize.width + diffX,
                          (-pos.y) * _mapTileSize.height/2);
         }
         break;
@@ -635,7 +639,7 @@ Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
 
 Vec2 TMXLayer::getPositionAt(const Vec2& pos)
 {
-    Vec2 ret = Vec2::ZERO;
+    Vec2 ret;
     switch (_layerOrientation)
     {
     case TMXOrientationOrtho:
@@ -675,7 +679,8 @@ Vec2 TMXLayer::getPositionForHexAt(const Vec2& pos)
         diffY = -_mapTileSize.height/2 ;
     }
 
-    Vec2 xy = Vec2(pos.x * _mapTileSize.width*3/4,
+    Vec2 xy(
+        pos.x * _mapTileSize.width*3/4,
                             (_layerSize.height - pos.y - 1) * _mapTileSize.height + diffY);
     return xy;
 }

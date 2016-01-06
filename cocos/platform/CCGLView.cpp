@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "base/CCTouch.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
+#include "2d/CCCamera.h"
 
 NS_CC_BEGIN
 
@@ -85,7 +86,7 @@ namespace {
     
 }
 
-//default context attributions are setted as follows
+//default context attributions are set as follows
 GLContextAttrs GLView::_glContextAttrs = {5, 6, 5, 0, 16, 0};
 
 void GLView::setGLContextAttrs(GLContextAttrs& glContextAttrs)
@@ -156,7 +157,7 @@ void GLView::updateDesignResolutionSize()
         // reset director's member variables to fit visible rect
         auto director = Director::getInstance();
         director->_winSizeInPoints = getDesignResolutionSize();
-        director->createStatsLabel();
+        director->_isStatusLabelUpdated = true;
         director->setGLDefaultValues();
     }
 }
@@ -226,10 +227,11 @@ Vec2 GLView::getVisibleOrigin() const
 
 void GLView::setViewPortInPoints(float x , float y , float w , float h)
 {
-    glViewport((GLint)(x * _scaleX + _viewPortRect.origin.x),
-               (GLint)(y * _scaleY + _viewPortRect.origin.y),
-               (GLsizei)(w * _scaleX),
-               (GLsizei)(h * _scaleY));
+    experimental::Viewport vp((float)(x * _scaleX + _viewPortRect.origin.x),
+        (float)(y * _scaleY + _viewPortRect.origin.y),
+        (float)(w * _scaleX),
+        (float)(h * _scaleY));
+    Camera::setDefaultViewport(vp);
 }
 
 void GLView::setScissorInPoints(float x , float y , float w , float h)
@@ -242,18 +244,18 @@ void GLView::setScissorInPoints(float x , float y , float w , float h)
 
 bool GLView::isScissorEnabled()
 {
-	return (GL_FALSE == glIsEnabled(GL_SCISSOR_TEST)) ? false : true;
+    return (GL_FALSE == glIsEnabled(GL_SCISSOR_TEST)) ? false : true;
 }
 
 Rect GLView::getScissorRect() const
 {
-	GLfloat params[4];
-	glGetFloatv(GL_SCISSOR_BOX, params);
-	float x = (params[0] - _viewPortRect.origin.x) / _scaleX;
-	float y = (params[1] - _viewPortRect.origin.y) / _scaleY;
-	float w = params[2] / _scaleX;
-	float h = params[3] / _scaleY;
-	return Rect(x, y, w, h);
+    GLfloat params[4];
+    glGetFloatv(GL_SCISSOR_BOX, params);
+    float x = (params[0] - _viewPortRect.origin.x) / _scaleX;
+    float y = (params[1] - _viewPortRect.origin.y) / _scaleY;
+    float w = params[2] / _scaleX;
+    float h = params[3] / _scaleY;
+    return Rect(x, y, w, h);
 }
 
 void GLView::setViewName(const std::string& viewname )
@@ -294,7 +296,7 @@ void GLView::handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[])
             }
 
             Touch* touch = g_touches[unusedIndex] = new (std::nothrow) Touch();
-			touch->setTouchInfo(unusedIndex, (x - _viewPortRect.origin.x) / _scaleX,
+            touch->setTouchInfo(unusedIndex, (x - _viewPortRect.origin.x) / _scaleX,
                                      (y - _viewPortRect.origin.y) / _scaleY);
             
             CCLOGINFO("x = %f y = %f", touch->getLocationInView().x, touch->getLocationInView().y);
@@ -317,9 +319,16 @@ void GLView::handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[])
 
 void GLView::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[])
 {
+    handleTouchesMove(num, ids, xs, ys, nullptr, nullptr);
+}
+
+void GLView::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[], float fs[], float ms[])
+{
     intptr_t id = 0;
     float x = 0.0f;
     float y = 0.0f;
+    float force = 0.0f;
+    float maxForce = 0.0f;
     EventTouch touchEvent;
     
     for (int i = 0; i < num; ++i)
@@ -327,6 +336,8 @@ void GLView::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[])
         id = ids[i];
         x = xs[i];
         y = ys[i];
+        force = fs ? fs[i] : 0.0f;
+        maxForce = ms ? ms[i] : 0.0f;
 
         auto iter = g_touchIdReorderMap.find(id);
         if (iter == g_touchIdReorderMap.end())
@@ -335,12 +346,12 @@ void GLView::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[])
             continue;
         }
 
-        CCLOGINFO("Moving touches with id: %d, x=%f, y=%f", id, x, y);
+        CCLOGINFO("Moving touches with id: %d, x=%f, y=%f, force=%f, maxFource=%f", id, x, y, force, maxForce);
         Touch* touch = g_touches[iter->second];
         if (touch)
         {
-			touch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX,
-								(y - _viewPortRect.origin.y) / _scaleY);
+            touch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX,
+                                (y - _viewPortRect.origin.y) / _scaleY, force, maxForce);
             
             touchEvent._touches.push_back(touch);
         }
@@ -388,8 +399,8 @@ void GLView::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num
         if (touch)
         {
             CCLOGINFO("Ending touches with id: %d, x=%f, y=%f", id, x, y);
-			touch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX,
-								(y - _viewPortRect.origin.y) / _scaleY);
+            touch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX,
+                                (y - _viewPortRect.origin.y) / _scaleY);
 
             touchEvent._touches.push_back(touch);
             

@@ -6,12 +6,6 @@
 
 --------------------------------
 -- 
--- @function [parent=#Sprite3D] isForceDepthWrite 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
 -- @function [parent=#Sprite3D] setCullFaceEnabled 
 -- @param self
 -- @param #bool enable
@@ -32,23 +26,13 @@
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
--- remove all attach nodes
--- @function [parent=#Sprite3D] removeAllAttachNode 
+--  Adds a new material to a particular mesh of the sprite.<br>
+-- meshIndex is the mesh that will be applied to.<br>
+-- if meshIndex == -1, then it will be applied to all the meshes that belong to the sprite.
+-- @function [parent=#Sprite3D] getMaterial 
 -- @param self
--- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
-        
---------------------------------
--- 
--- @function [parent=#Sprite3D] setBlendFunc 
--- @param self
--- @param #cc.BlendFunc blendFunc
--- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
-        
---------------------------------
--- get mesh
--- @function [parent=#Sprite3D] getMesh 
--- @param self
--- @return Mesh#Mesh ret (return value: cc.Mesh)
+-- @param #int meshIndex
+-- @return Material#Material ret (return value: cc.Material)
         
 --------------------------------
 -- 
@@ -58,11 +42,50 @@
 -- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
---  light mask getter & setter, light works only when _lightmask & light's flag is true, default value of _lightmask is 0xffff 
--- @function [parent=#Sprite3D] setLightMask 
+-- Get meshes used in sprite 3d
+-- @function [parent=#Sprite3D] getMeshes 
 -- @param self
--- @param #unsigned int mask
+-- @return array_table#array_table ret (return value: array_table)
+        
+--------------------------------
+-- remove all attach nodes
+-- @function [parent=#Sprite3D] removeAllAttachNode 
+-- @param self
 -- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+        
+--------------------------------
+-- @overload self, cc.Material, int         
+-- @overload self, cc.Material         
+-- @function [parent=#Sprite3D] setMaterial
+-- @param self
+-- @param #cc.Material material
+-- @param #int meshIndex
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+
+--------------------------------
+-- get mesh
+-- @function [parent=#Sprite3D] getMesh 
+-- @param self
+-- @return Mesh#Mesh ret (return value: cc.Mesh)
+        
+--------------------------------
+--  get mesh count 
+-- @function [parent=#Sprite3D] getMeshCount 
+-- @param self
+-- @return long#long ret (return value: long)
+        
+--------------------------------
+-- get Mesh by index
+-- @function [parent=#Sprite3D] getMeshByIndex 
+-- @param self
+-- @param #int index
+-- @return Mesh#Mesh ret (return value: cc.Mesh)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite3D] isForceDepthWrite 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
@@ -71,10 +94,38 @@
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
---  get mesh count 
--- @function [parent=#Sprite3D] getMeshCount 
+--  light mask getter & setter, light works only when _lightmask & light's flag is true, default value of _lightmask is 0xffff 
+-- @function [parent=#Sprite3D] setLightMask 
 -- @param self
--- @return long#long ret (return value: long)
+-- @param #unsigned int mask
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+        
+--------------------------------
+-- get AttachNode by bone name, return nullptr if not exist
+-- @function [parent=#Sprite3D] getAttachNode 
+-- @param self
+-- @param #string boneName
+-- @return AttachNode#AttachNode ret (return value: cc.AttachNode)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite3D] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+        
+--------------------------------
+-- force set this Sprite3D to 2D render queue
+-- @function [parent=#Sprite3D] setForce2DQueue 
+-- @param self
+-- @param #bool force2D
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+        
+--------------------------------
+-- generate default material
+-- @function [parent=#Sprite3D] genMaterial 
+-- @param self
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
 -- remove attach node
@@ -88,13 +139,6 @@
 -- @function [parent=#Sprite3D] getSkeleton 
 -- @param self
 -- @return Skeleton3D#Skeleton3D ret (return value: cc.Skeleton3D)
-        
---------------------------------
--- get Mesh by index
--- @function [parent=#Sprite3D] getMeshByIndex 
--- @param self
--- @param #int index
--- @return Mesh#Mesh ret (return value: cc.Mesh)
         
 --------------------------------
 -- Force to write to depth buffer, this is useful if you want to achieve effects like fading.
@@ -111,13 +155,6 @@
 -- @return Mesh#Mesh ret (return value: cc.Mesh)
         
 --------------------------------
--- get AttachNode by bone name, return nullptr if not exist
--- @function [parent=#Sprite3D] getAttachNode 
--- @param self
--- @param #string boneName
--- @return AttachNode#AttachNode ret (return value: cc.AttachNode)
-        
---------------------------------
 -- @overload self, string         
 -- @overload self         
 -- @overload self, string, string         
@@ -128,26 +165,12 @@
 -- @return Sprite3D#Sprite3D ret (return value: cc.Sprite3D)
 
 --------------------------------
--- Returns 2d bounding-box<br>
--- Note: the bouding-box is just get from the AABB which as Z=0, so that is not very accurate.
--- @function [parent=#Sprite3D] getBoundingBox 
--- @param self
--- @return rect_table#rect_table ret (return value: rect_table)
-        
---------------------------------
 -- draw
 -- @function [parent=#Sprite3D] draw 
 -- @param self
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
--- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
-        
---------------------------------
---  set GLProgramState, you should bind attributes by yourself 
--- @function [parent=#Sprite3D] setGLProgramState 
--- @param self
--- @param #cc.GLProgramState glProgramState
 -- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
@@ -161,10 +184,24 @@
 -- @return Action#Action ret (return value: cc.Action)
         
 --------------------------------
---  just rember bind attributes 
+--  just remember bind attributes 
 -- @function [parent=#Sprite3D] setGLProgram 
 -- @param self
 -- @param #cc.GLProgram glprogram
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+        
+--------------------------------
+-- Returns 2d bounding-box<br>
+-- Note: the bounding-box is just get from the AABB which as Z=0, so that is not very accurate.
+-- @function [parent=#Sprite3D] getBoundingBox 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+--  set GLProgramState, you should bind attributes by yourself 
+-- @function [parent=#Sprite3D] setGLProgramState 
+-- @param self
+-- @param #cc.GLProgramState glProgramState
 -- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 return nil

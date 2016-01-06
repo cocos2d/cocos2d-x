@@ -43,6 +43,23 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
+-- / @}
+-- @function [parent=#Sprite] getResourceType 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- @overload self, cc.Texture2D, rect_table         
+-- @overload self, cc.Texture2D         
+-- @overload self, cc.Texture2D, rect_table, bool         
+-- @function [parent=#Sprite] initWithTexture
+-- @param self
+-- @param #cc.Texture2D texture
+-- @param #rect_table rect
+-- @param #bool rotated
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
 -- Returns the batch node object if this sprite is rendered by SpriteBatchNode.<br>
 -- return The SpriteBatchNode object if this sprite is rendered by SpriteBatchNode,<br>
 -- nullptr if the sprite isn't used batch node.
@@ -74,6 +91,17 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
 
 --------------------------------
+-- Initializes a sprite with an sprite frame name.<br>
+-- A SpriteFrame will be fetched from the SpriteFrameCache by name.<br>
+-- If the SpriteFrame doesn't exist it will raise an exception.<br>
+-- param   spriteFrameName  A key string that can fected a valid SpriteFrame from SpriteFrameCache.<br>
+-- return  True if the sprite is initialized properly, false otherwise.
+-- @function [parent=#Sprite] initWithSpriteFrameName 
+-- @param self
+-- @param #string spriteFrameName
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Returns whether or not a SpriteFrame is being displayed.
 -- @function [parent=#Sprite] isFrameDisplayed 
 -- @param self
@@ -87,7 +115,7 @@
 -- @return long#long ret (return value: long)
         
 --------------------------------
--- Sets the batch node to sprite<br>
+-- Sets the batch node to sprite.<br>
 -- warning This method is not recommended for game developers. Sample code for using batch node<br>
 -- code<br>
 -- SpriteBatchNode *batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 15);<br>
@@ -131,8 +159,14 @@
 -- @return SpriteFrame#SpriteFrame ret (return value: cc.SpriteFrame)
         
 --------------------------------
+-- 
+-- @function [parent=#Sprite] getResourceName 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 -- Whether or not the Sprite needs to be updated in the Atlas.<br>
--- return true if the sprite needs to be updated in the Atlas, false otherwise.
+-- return True if the sprite needs to be updated in the Atlas, false otherwise.
 -- @function [parent=#Sprite] isDirty 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -165,11 +199,20 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
--- / @{/ @name Functions inherited from TextureProtocol<br>
+-- @overload self, string, rect_table         
+-- @overload self, string         
+-- @function [parent=#Sprite] initWithFile
+-- @param self
+-- @param #string filename
+-- @param #rect_table rect
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
+-- / @{/ @name Functions inherited from TextureProtocol.<br>
 -- code<br>
 -- When this function bound into js or lua,the parameter will be changed.<br>
--- In js: var setBlendFunc(var src, var dst)<br>
--- In lua: local setBlendFunc(local src, local dst)<br>
+-- In js: var setBlendFunc(var src, var dst).<br>
+-- In lua: local setBlendFunc(local src, local dst).<br>
 -- endcode
 -- @function [parent=#Sprite] setBlendFunc 
 -- @param self
@@ -181,6 +224,15 @@
 -- @function [parent=#Sprite] getTextureAtlas 
 -- @param self
 -- @return TextureAtlas#TextureAtlas ret (return value: cc.TextureAtlas)
+        
+--------------------------------
+-- Initializes a sprite with an SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite.<br>
+-- param   spriteFrame  A SpriteFrame object. It should includes a valid texture and a rect.<br>
+-- return  True if the sprite is initialized properly, false otherwise.
+-- @function [parent=#Sprite] initWithSpriteFrame 
+-- @param self
+-- @param #cc.SpriteFrame spriteFrame
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Returns the flag which indicates whether the sprite is flipped horizontally or not.<br>
@@ -214,16 +266,6 @@
 -- @param #rect_table rect
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
---------------------------------
--- @overload self, string         
--- @overload self         
--- @overload self, string, rect_table         
--- @function [parent=#Sprite] create
--- @param self
--- @param #string filename
--- @param #rect_table rect
--- @return Sprite#Sprite ret (return value: cc.Sprite)
-
 --------------------------------
 -- @overload self, cc.Texture2D, rect_table, bool         
 -- @overload self, cc.Texture2D         
@@ -309,6 +351,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Sprite] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#Sprite] setRotation 
 -- @param self
 -- @param #float rotation
@@ -331,7 +379,7 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
--- / @}
+-- js NA
 -- @function [parent=#Sprite] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -404,6 +452,12 @@
 -- @function [parent=#Sprite] setVisible 
 -- @param self
 -- @param #bool bVisible
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#Sprite] Sprite 
+-- @param self
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 return nil

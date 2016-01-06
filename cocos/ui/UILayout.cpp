@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
+#include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "renderer/CCRenderer.h"
@@ -36,6 +37,8 @@ THE SOFTWARE.
 #include "2d/CCLayer.h"
 #include "2d/CCSprite.h"
 #include "base/CCEventFocus.h"
+#include "base/CCStencilStateManager.hpp"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 
 NS_CC_BEGIN
@@ -44,9 +47,6 @@ namespace ui {
     
 static const int BACKGROUNDIMAGE_Z = (-1);
 static const int BCAKGROUNDCOLORRENDERER_Z = (-2);
-
-static GLint g_sStencilBits = -1;
-static GLint s_layer = -1;
     
 IMPLEMENT_CLASS_GUI_INFO(Layout)
 
@@ -71,22 +71,10 @@ _clippingEnabled(false),
 _layoutType(Type::ABSOLUTE),
 _clippingType(ClippingType::STENCIL),
 _clippingStencil(nullptr),
-_scissorRectDirty(false),
 _clippingRect(Rect::ZERO),
 _clippingParent(nullptr),
 _clippingRectDirty(true),
-_currentStencilEnabled(GL_FALSE),
-_currentStencilWriteMask(~0),
-_currentStencilFunc(GL_ALWAYS),
-_currentStencilRef(0),
-_currentStencilValueMask(~0),
-_currentStencilFail(GL_KEEP),
-_currentStencilPassDepthFail(GL_KEEP),
-_currentStencilPassDepthPass(GL_KEEP),
-_currentDepthWriteMask(GL_TRUE),
-_currentAlphaTestEnabled(GL_FALSE),
-_currentAlphaTestFunc(GL_ALWAYS),
-_currentAlphaTestRef(1),
+_stencileStateManager(new StencilStateManager()),
 _doLayoutDirty(true),
 _isInterceptTouch(false),
 _loopFocus(false),
@@ -99,6 +87,7 @@ _isFocusPassing(false)
 Layout::~Layout()
 {
     CC_SAFE_RELEASE(_clippingStencil);
+    CC_SAFE_DELETE(_stencileStateManager);
 }
     
 void Layout::onEnter()
@@ -122,6 +111,14 @@ void Layout::onEnter()
     
 void Layout::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     Widget::onExit();
     if (_clippingStencil)
     {
@@ -246,7 +243,7 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransfor
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    CCASSERT(nullptr != director, "Director is null when setting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     //Add group command
@@ -257,13 +254,13 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransfor
     renderer->pushGroup(_groupCommand.getRenderQueueID());
     
     _beforeVisitCmdStencil.init(_globalZOrder);
-    _beforeVisitCmdStencil.func = CC_CALLBACK_0(Layout::onBeforeVisitStencil, this);
+    _beforeVisitCmdStencil.func = CC_CALLBACK_0(StencilStateManager::onBeforeVisit, _stencileStateManager);
     renderer->addCommand(&_beforeVisitCmdStencil);
     
     _clippingStencil->visit(renderer, _modelViewTransform, flags);
     
     _afterDrawStencilCmd.init(_globalZOrder);
-    _afterDrawStencilCmd.func = CC_CALLBACK_0(Layout::onAfterDrawStencil, this);
+    _afterDrawStencilCmd.func = CC_CALLBACK_0(StencilStateManager::onAfterDrawStencil, _stencileStateManager);
     renderer->addCommand(&_afterDrawStencilCmd);
     
     int i = 0;      // used by _children
@@ -311,7 +308,7 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransfor
 
     
     _afterVisitCmdStencil.init(_globalZOrder);
-    _afterVisitCmdStencil.func = CC_CALLBACK_0(Layout::onAfterVisitStencil, this);
+    _afterVisitCmdStencil.func = CC_CALLBACK_0(StencilStateManager::onAfterVisit, _stencileStateManager);
     renderer->addCommand(&_afterVisitCmdStencil);
     
     renderer->popGroup();
@@ -319,111 +316,55 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransfor
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
     
-void Layout::onBeforeVisitStencil()
-{
-    s_layer++;
-    GLint mask_layer = 0x1 << s_layer;
-    GLint mask_layer_l = mask_layer - 1;
-    _mask_layer_le = mask_layer | mask_layer_l;
-    _currentStencilEnabled = glIsEnabled(GL_STENCIL_TEST);
-    glGetIntegerv(GL_STENCIL_WRITEMASK, (GLint *)&_currentStencilWriteMask);
-    glGetIntegerv(GL_STENCIL_FUNC, (GLint *)&_currentStencilFunc);
-    glGetIntegerv(GL_STENCIL_REF, &_currentStencilRef);
-    glGetIntegerv(GL_STENCIL_VALUE_MASK, (GLint *)&_currentStencilValueMask);
-    glGetIntegerv(GL_STENCIL_FAIL, (GLint *)&_currentStencilFail);
-    glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, (GLint *)&_currentStencilPassDepthFail);
-    glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, (GLint *)&_currentStencilPassDepthPass);
-    
-    glEnable(GL_STENCIL_TEST);
-    CHECK_GL_ERROR_DEBUG();
-    glStencilMask(mask_layer);
-    glGetBooleanv(GL_DEPTH_WRITEMASK, &_currentDepthWriteMask);
-    glDepthMask(GL_FALSE);
-    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
-    glStencilOp(GL_ZERO, GL_KEEP, GL_KEEP);
-
-    this->drawFullScreenQuadClearStencil();
-    
-    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
-    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-}
-    
-void Layout::drawFullScreenQuadClearStencil()
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    
-    Vec2 vertices[] =
-    {
-        Vec2(-1, -1),
-        Vec2(1, -1),
-        Vec2(1, 1),
-        Vec2(-1, 1)
-    };
-    
-    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-    
-    int colorLocation = glProgram->getUniformLocation("u_color");
-    CHECK_GL_ERROR_DEBUG();
-    
-    Color4F color(1, 1, 1, 1);
-    
-    glProgram->use();
-    glProgram->setUniformsForBuiltins();
-    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
-    
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
-    
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-    
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
-    
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-}
-
-void Layout::onAfterDrawStencil()
-{
-    glDepthMask(_currentDepthWriteMask);
-    glStencilFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le);
-    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-}
-
-
-void Layout::onAfterVisitStencil()
-{
-    glStencilFunc(_currentStencilFunc, _currentStencilRef, _currentStencilValueMask);
-    glStencilOp(_currentStencilFail, _currentStencilPassDepthFail, _currentStencilPassDepthPass);
-    glStencilMask(_currentStencilWriteMask);
-    if (!_currentStencilEnabled)
-    {
-        glDisable(GL_STENCIL_TEST);
-    }
-    s_layer--;
-}
-    
 void Layout::onBeforeVisitScissor()
 {
-    Rect clippingRect = getClippingRect();
-    glEnable(GL_SCISSOR_TEST);
     auto glview = Director::getInstance()->getOpenGLView();
-    glview->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
+    // apply scissor test
+    _scissorOldState = glview->isScissorEnabled();
+    if (false == _scissorOldState)
+    {
+        glEnable(GL_SCISSOR_TEST);
+    }
+
+    // apply scissor box
+    Rect clippingRect = getClippingRect();
+    _clippingOldRect = glview->getScissorRect();
+    if (false == _clippingOldRect.equals(clippingRect))
+    {
+        glview->setScissorInPoints(clippingRect.origin.x,
+                                   clippingRect.origin.y,
+                                   clippingRect.size.width,
+                                   clippingRect.size.height);
+    }
 }
 
 void Layout::onAfterVisitScissor()
 {
-    glDisable(GL_SCISSOR_TEST);
+    if (_scissorOldState)
+    {
+        // revert scissor box
+        if (false == _clippingOldRect.equals(_clippingRect))
+        {
+            auto glview = Director::getInstance()->getOpenGLView();
+            glview->setScissorInPoints(_clippingOldRect.origin.x,
+                                       _clippingOldRect.origin.y,
+                                       _clippingOldRect.size.width,
+                                       _clippingOldRect.size.height);
+        }
+    }
+    else
+    {
+        // revert scissor test
+        glDisable(GL_SCISSOR_TEST);
+    }
 }
     
 void Layout::scissorClippingVisit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
 {
+    if (parentFlags & FLAGS_DIRTY_MASK)
+    {
+        _clippingRectDirty = true;
+    }
     _beforeVisitCmdScissor.init(_globalZOrder);
     _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);
     renderer->addCommand(&_beforeVisitCmdScissor);
@@ -447,16 +388,6 @@ void Layout::setClippingEnabled(bool able)
         case ClippingType::STENCIL:
             if (able)
             {
-                static bool once = true;
-                if (once)
-                {
-                    glGetIntegerv(GL_STENCIL_BITS, &g_sStencilBits);
-                    if (g_sStencilBits <= 0)
-                    {
-                        CCLOG("Stencil buffer is not enabled.");
-                    }
-                    once = false;
-                }
                 _clippingStencil = DrawNode::create();
                 if (_running)
                 {
@@ -502,11 +433,11 @@ void Layout::setStencilClippingSize(const Size &size)
     if (_clippingEnabled && _clippingType == ClippingType::STENCIL)
     {
         Vec2 rect[4];
-        rect[0] = Vec2::ZERO;
-        rect[1] = Vec2(_contentSize.width, 0);
-        rect[2] = Vec2(_contentSize.width, _contentSize.height);
-        rect[3] = Vec2(0, _contentSize.height);
-        Color4F green(0, 1, 0, 1);
+        // rect[0].setZero(); Zero default
+        rect[1].set(_contentSize.width, 0.0f);
+        rect[2].set(_contentSize.width, _contentSize.height);
+        rect[3].set(0.0f, _contentSize.height);
+        Color4F green(0.0f, 1.0f, 0.0f, 1.0f);
         _clippingStencil->clear();
         _clippingStencil->drawPolygon(rect, 4, green, 0, green);
     }
@@ -627,7 +558,16 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
         addBackGroundImage();
         setBackGroundImage(_backGroundImageFileName,_bgImageTexType);
     }
-    _backGroundImage->setScale9Enabled(_backGroundScale9Enabled);
+    if(_backGroundScale9Enabled){
+        _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+    }else{
+        _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+    }
+
+    if (able) {
+        _backGroundImage->setPreferredSize(_contentSize);
+    }
+    
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
 }
     
@@ -645,7 +585,11 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
     if (_backGroundImage == nullptr)
     {
         addBackGroundImage();
-        _backGroundImage->setScale9Enabled(_backGroundScale9Enabled);
+        if(_backGroundScale9Enabled){
+            _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+        }else{
+            _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+        }
     }
     _backGroundImageFileName = fileName;
     _bgImageTexType = texType;
@@ -721,7 +665,7 @@ void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
 void Layout::addBackGroundImage()
 {
     _backGroundImage = Scale9Sprite::create();
-    _backGroundImage->setScale9Enabled(false);
+    _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
     
     addProtectedChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
    
@@ -1101,7 +1045,7 @@ Size Layout::getLayoutAccumulatedSize()const
         }
     }
     
-    //substract extra size
+    //subtract extra size
     Type type = this->getLayoutType();
     if (type == Type::HORIZONTAL)
     {
@@ -1119,7 +1063,7 @@ Vec2 Layout::getWorldCenterPoint(Widget* widget)const
     Layout *layout = dynamic_cast<Layout*>(widget);
     //FIXEDME: we don't need to calculate the content size of layout anymore
     Size widgetSize = layout ? layout->getLayoutAccumulatedSize() :  widget->getContentSize();
-//    CCLOG("contnet size : width = %f, height = %f", widgetSize.width, widgetSize.height);
+//    CCLOG("content size : width = %f, height = %f", widgetSize.width, widgetSize.height);
     return widget->convertToWorldSpace(Vec2(widgetSize.width/2, widgetSize.height/2));
 }
 
@@ -1209,7 +1153,7 @@ int Layout::findFirstFocusEnabledWidgetIndex()
         }
         index++;
     }
-    CCASSERT(0, "invalide operation");
+    CCASSERT(0, "invalid operation");
     return 0;
 }
 
@@ -1523,7 +1467,7 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection direction, Widget *curre
         }
         else
         {
-            //handling the disabled widget, there is no actual focus lose or get, so we don't need any envet
+            //handling the disabled widget, there is no actual focus lose or get, so we don't need any event
             return this->getPreviousFocusedWidget(direction, nextWidget);
         }
     }
@@ -1937,5 +1881,21 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
     }
 }
     
+void Layout::setCameraMask(unsigned short mask, bool applyChildren)
+{
+    Widget::setCameraMask(mask, applyChildren);
+    if (_clippingStencil){
+        _clippingStencil->setCameraMask(mask, applyChildren);
+    }
+}
+    
+ResourceData Layout::getRenderFile()
+{
+    ResourceData rData;
+    rData.type = (int)_bgImageTexType;
+    rData.file = _backGroundImageFileName;
+    return rData;
+}
+
 }
 NS_CC_END
