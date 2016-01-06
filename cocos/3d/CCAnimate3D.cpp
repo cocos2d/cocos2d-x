@@ -385,7 +385,15 @@ void Animate3D::update(float t)
                         curve->scaleCurve->evaluate(t, scaleDst, _scaleEvaluate);
                         transform.scale(scaleDst[0], scaleDst[1], scaleDst[2]);
                     }
-                    node->setAdditionalTransform(&transform);
+                    Sprite3D* sprite = dynamic_cast<Sprite3D*>(node);
+                    if ((sprite != nullptr) && (sprite->isRootNode()))
+                    {
+                        node->setAdditionalTransform(&transform);
+                    }
+                    else
+                    {
+                        node->setNodeToParentTransform(transform);
+                    }
                 }
                 if (!_keyFrameUserInfos.empty()){
                     float prekeyTime = lastTime * getDuration() * _frameRate;
