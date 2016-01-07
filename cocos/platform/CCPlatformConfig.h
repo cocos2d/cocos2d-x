@@ -62,10 +62,16 @@ THE SOFTWARE.
 #define CC_TARGET_PLATFORM         CC_PLATFORM_MAC
 #endif
 
-// iphone
+// ios
 #if defined(CC_TARGET_OS_IPHONE)
     #undef  CC_TARGET_PLATFORM
     #define CC_TARGET_PLATFORM         CC_PLATFORM_IOS
+#endif
+
+// tvOS
+#if defined(CC_TARGET_OS_TVOS)
+#undef  CC_TARGET_PLATFORM
+#define CC_TARGET_PLATFORM         CC_PLATFORM_IOS
 #endif
 
 // android

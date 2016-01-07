@@ -1063,6 +1063,11 @@ void Director::setNextScene()
     {
         _runningScene->onEnter();
         _runningScene->onEnterTransitionDidFinish();
+
+#if CC_ENABLE_SCRIPT_BINDING
+        if (ScriptEngineManager::getInstance()->getScriptEngine())
+            ScriptEngineManager::getInstance()->getScriptEngine()->garbageCollect();
+#endif // CC_ENABLE_SCRIPT_BINDING
     }
 }
 

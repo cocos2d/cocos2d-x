@@ -142,7 +142,10 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
                                      multiSampling: NO
                                    numberOfSamples: 0];
 
+    // Not available on tvOS
+#if !defined(CC_TARGET_OS_TVOS)
     [eaglview setMultipleTouchEnabled:YES];
+#endif
 
     _screenSize.width = _designResolutionSize.width = [eaglview getWidth];
     _screenSize.height = _designResolutionSize.height = [eaglview getHeight];
