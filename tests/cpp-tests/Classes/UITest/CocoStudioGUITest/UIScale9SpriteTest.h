@@ -311,13 +311,4 @@ public:
     virtual bool init() override;
 };
 
-class UIS9GrayStateOpacityTest: public UIScene
-{
-public:
-    CREATE_FUNC(UIS9GrayStateOpacityTest);
-    void sliderEvent(cocos2d::Ref* sender, cocos2d::ui::Slider::EventType type);
-
-    virtual bool init() override;
-};
-
 #endif /* defined(__cocos2d_tests__UIScale9SpriteTest__) */
