@@ -35,7 +35,6 @@ cocos2d-x-3.10 December ? 2015
 [REFINE]        JS: Added ccvector_to / ccmap_to converted to new js-binding API.
 [REFINE]        UI: Slider misprint fix.
 
-[FIX]           UI: fix scale9sprite gray state opacity issue.
 [FIX]           Core: Fix premultiplyAlpha for mipmaps and compressed textures.
 [FIX]           UI: Fix Scale9sprite rendering error when content size smaller than the sum of leftInset and rightInset.
 [FIX]           Win32: Fix EditBox crash when removing an EditBox in a scheduler.
@@ -1632,49 +1631,4 @@ cocos2d-x-3.0alpha0-pre @Jul.30 2013
      [FIX]      #2230: Node::onEnterTransitionDidFinish was called twice when a node is added in Node::onEnter
      [FIX]      #2237: calculation offset in font rendering
      [FIX]      #2303: missing precision when getting strokeColor and fontFillColor
-     [FIX]      #2312: WebSocket can not parse url like "ws://domain.com/websocket"
-     [FIX]      #2327: implement Node::isScheduled
-     [FIX]      #2338: ccbRootPath is not passed to sub ccb nodes
-     [FIX]      #2346: OpenGL error 0x0502 in  TextureAtlas::drawNumberOfQuads
-     [FIX]      #2359: Sprite will become white block when using ControlSwitch
-     [FIX]      #2361: some bug fixed of the Set class
-     [FIX]      #2366: text shadow
-     [FIX]      #2367: ClippingNode works differently on different platforms
-     [FIX]      #2370: Pivotjoint constructor and pointQueryFirst in Space class will return false instead of invalid shape object
-     [FIX]      #2381: ControlSwitch wasn't displayed correctly when adding more than one switch
-     [FIX]      #2384: The submenu of ExtensionTest in TestCpp can't scroll
-     [FIX]      #2386: ClippingNode works wrongly when being set as a child
-     [FIX]      #2396: Scale9Sprite::setInsetLeft/XXX can't work for rotated sprite frame
-     [FIX]      #2401: LabelBMFont crashes in glDrawElements of CCTextureAtlas::drawNumberOfQuads randombly
-     [FIX]      #2410: Black screen appears on android randomly
-     [FIX]      #2411: Opacity option for shadow in CCLabelTTF is not working
-     [FIX]      #2406: Color and Opacity of Scale9Sprite will not be changed when it's added to NodeRGBA and run with FadeIn/Out actions
-     [FIX]      #2415: Warning of AL_INVALID_NAME and AL_INVALID_OPERATION in SimpleAudioEngineOpenAL.cpp
-     [FIX]      #2418: Unused spriteframes also need to be removed when purgeCachedData
-     [FIX]      #2431: Potential crash when loading js files
-     [FIX]      #2229: Explicitly initialising CCAcceleration structure
-     [FIX]      #2234: Add destructor to CCGLBufferedNode
-     [Feature]  #2232: adding Norwegian language support
-     [Feature]  #2235: Ability to save/retrieve CCData into/from CCUserDefault
-     [Feature]  #2250: add support for std::function<> in CCMemuItem and CCCallFunc
-     [Feature]  #2273: Hardware keyboard support
-     [Feature]  #2278: Adds CALLBACK_0, CALLBACK_1 and CALLBACK_2 macros for MenuItems
-     [Feature]  #2279: Updates chipmunk2d to v6.1.5
-     [Feature]  #2283: Adds Polish language support
-     [Feature]  #2289: Uses clone() pattern for actions
-     [Feature]  #2332: Adding project for QtCreator
-     [Feature]  #2364: Adds DrawPrimitives::DrawSolidCircle
-     [Feature]  #2365: Adds Rect::unionWithRect
-     [Feature]  #2385: Implemented pitch, pan and gain for SimpleAudioEngine
-     [Feature]  #2389: Adding cookie support for HttpClient
-     [Feature]  #2392: Adds append() function for String class
-     [Feature]  #2395: Adds Scale9SpriteTest for TestCpp
-     [Feature]  #2399: Adds SocketIO support
-     [Feature]  #2408: Adds String::componentsSeparatedByString function for splitting string
-     [Feature]  #2414: Bindings-generator could bind std::function<> argument
-     [Refactor] #2129: Removes Hungarian notation from ivars. Removes CC and cc prefixes from name classes and free functions.
-     [Refactor] #2242: Enables c++11
-     [Refactor] #2300: Using clone() pattern instead of 'copyWithZone' pattern
-     [Refactor] #2305: Use std::thread instead of pthread
-     [Refactor] #2328: ETC support for all platforms
-     [Refactor] #2373: C
+     [FIX]      #2312: WebSocket can not parse url like "ws://domain.com/websocket
