@@ -202,6 +202,11 @@ void TransitionScene::onExit()
     // _inScene should not receive the onEnter callback
     // only the onEnterTransitionDidFinish
     _inScene->onEnterTransitionDidFinish();
+
+#if CC_ENABLE_SCRIPT_BINDING
+    if (ScriptEngineManager::getInstance()->getScriptEngine())
+        ScriptEngineManager::getInstance()->getScriptEngine()->garbageCollect();
+#endif // CC_ENABLE_SCRIPT_BINDING
 }
 
 // custom cleanup
