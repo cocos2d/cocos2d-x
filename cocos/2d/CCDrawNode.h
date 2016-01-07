@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Scott Lembcke and Howling Moon Software
+﻿/* Copyright (c) 2012 Scott Lembcke and Howling Moon Software
  * Copyright (c) 2012 cocos2d-x.org
  * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
@@ -38,6 +38,8 @@
 
 NS_CC_BEGIN
 
+static const int DEFAULT_LINE_WIDTH = 2;
+
 class PointArray;
 /**
  * @addtogroup _2d
@@ -57,10 +59,12 @@ class CC_DLL DrawNode : public Node
 public:
     /** @~english creates and initialize a DrawNode node.
      * @~chinese 创建并初始化DrawNode节点.
+     * @param defaultLineWidth @~english Default line width to be used.
+     * @~chinese 指定的默认线宽
      * @return @~english Return an autorelease object.
      * @~chinese 返回一个自动释放对象.
      */
-    static DrawNode* create();
+    static DrawNode* create(int defaultLineWidth = DEFAULT_LINE_WIDTH);
     
     /** @~english Draw a point.
      *
@@ -439,23 +443,29 @@ public:
     /**
      * @js NA
      */
-    void onDraw(const Mat4 &transform, uint32_t flags);
+    virtual void onDraw(const Mat4 &transform, uint32_t flags);
     /**
      * @js NA
      */
-    void onDrawGLLine(const Mat4 &transform, uint32_t flags);
+    virtual void onDrawGLLine(const Mat4 &transform, uint32_t flags);
     /**
      * @js NA
      */
-    void onDrawGLPoint(const Mat4 &transform, uint32_t flags);
+    virtual void onDrawGLPoint(const Mat4 &transform, uint32_t flags);
     
     // Overrides
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
     void setLineWidth(int lineWidth);
-    
+
+    /**@~english
+    * Get current line width setting
+    * @~chinese 获取当前设定的线宽
+    */
+    float getLineWidth();
+
 CC_CONSTRUCTOR_ACCESS:
-    DrawNode();
+    DrawNode(int lineWidth = DEFAULT_LINE_WIDTH);
     virtual ~DrawNode();
     virtual bool init() override;
 
@@ -496,6 +506,7 @@ protected:
     
     int         _lineWidth;
 
+    int  _defaultLineWidth;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);
 };

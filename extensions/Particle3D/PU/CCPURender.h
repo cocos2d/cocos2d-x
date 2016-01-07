@@ -135,7 +135,7 @@ public:
     * @param render @~english The entity renderer. @~chinese 实体渲染器。
     */
     void copyAttributesTo(PUParticle3DEntityRender *render);
-
+    virtual void reset()override;
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DEntityRender();
     virtual ~PUParticle3DEntityRender();
@@ -143,7 +143,6 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
 
     bool initRender(const std::string &texFile);
-
 protected:
 
     struct VertexInfo
@@ -397,6 +396,7 @@ public:
     */
     void copyAttributesTo(PUParticle3DModelRender *render);
 
+    virtual void reset()override;
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DModelRender();
     virtual ~PUParticle3DModelRender();

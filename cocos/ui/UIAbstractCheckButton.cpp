@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UIAbstractCheckButton.h"
 #include "2d/CCSprite.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 NS_CC_BEGIN
 
@@ -53,6 +54,11 @@ _frontCrossDisabledTexType(TextureResType::LOCAL),
 _zoomScale(0.1f),
 _backgroundTextureScaleX(1.0),
 _backgroundTextureScaleY(1.0),
+_backGroundFileName(""),
+_backGroundSelectedFileName(""),
+_frontCrossFileName(""),
+_backGroundDisabledFileName(""),
+_frontCrossDisabledFileName(""),
 _backGroundBoxRendererAdaptDirty(true),
 _backGroundSelectedBoxRendererAdaptDirty(true),
 _frontCrossRendererAdaptDirty(true),
@@ -129,10 +135,8 @@ void AbstractCheckButton::loadTextures(const std::string& backGround,
 
 void AbstractCheckButton::loadTextureBackGround(const std::string& backGround,TextureResType texType)
 {
-    if (backGround.empty())
-    {
-        return;
-    }
+    _backGroundFileName = backGround;
+
     _backGroundTexType = texType;
     switch (_backGroundTexType)
     {
@@ -166,13 +170,10 @@ void AbstractCheckButton::loadTextureBackGround(SpriteFrame* spriteFrame)
 
 void AbstractCheckButton::loadTextureBackGroundSelected(const std::string& backGroundSelected,TextureResType texType)
 {
-    if (backGroundSelected.empty())
-    {
-        return;
-    }
-    
+    _backGroundSelectedFileName = backGroundSelected;
+    _isBackgroundSelectedTextureLoaded = !backGroundSelected.empty();
+
     _backGroundSelectedTexType = texType;
-    _isBackgroundSelectedTextureLoaded = true;
     switch (_backGroundSelectedTexType)
     {
         case TextureResType::LOCAL:
@@ -201,10 +202,8 @@ void AbstractCheckButton::setupBackgroundSelectedTexture()
 
 void AbstractCheckButton::loadTextureFrontCross(const std::string& cross,TextureResType texType)
 {
-    if (cross.empty())
-    {
-        return;
-    }
+    _frontCrossFileName = cross;
+
     _frontCrossTexType = texType;
     switch (_frontCrossTexType)
     {
@@ -234,12 +233,10 @@ void AbstractCheckButton::setupFrontCrossTexture()
 
 void AbstractCheckButton::loadTextureBackGroundDisabled(const std::string& backGroundDisabled,TextureResType texType)
 {
-    if (backGroundDisabled.empty())
-    {
-        return;
-    }
+    _backGroundDisabledFileName = backGroundDisabled;
+    _isBackgroundDisabledTextureLoaded = !backGroundDisabled.empty();
+
     _backGroundDisabledTexType = texType;
-    _isBackgroundDisabledTextureLoaded = true;
     switch (_backGroundDisabledTexType)
     {
         case TextureResType::LOCAL:
@@ -269,12 +266,10 @@ void AbstractCheckButton::setupBackgroundDisable()
 
 void AbstractCheckButton::loadTextureFrontCrossDisabled(const std::string& frontCrossDisabled,TextureResType texType)
 {
-    if (frontCrossDisabled.empty())
-    {
-        return;
-    }
+    _frontCrossDisabledFileName = frontCrossDisabled;
+    _isFrontCrossDisabledTextureLoaded = !frontCrossDisabled.empty();
+
     _frontCrossDisabledTexType = texType;
-    _isFrontCrossDisabledTextureLoaded = true;
     switch (_frontCrossDisabledTexType)
     {
         case TextureResType::LOCAL:
@@ -577,6 +572,47 @@ void AbstractCheckButton::copySpecialProperties(Widget *widget)
         _isBackgroundDisabledTextureLoaded = abstractCheckButton->_isBackgroundDisabledTextureLoaded;
         _isFrontCrossDisabledTextureLoaded = abstractCheckButton->_isFrontCrossDisabledTextureLoaded;
     }
+}
+
+
+ResourceData AbstractCheckButton::getBackNormalFile()
+{
+    ResourceData rData;
+    rData.type = (int)_backGroundTexType;
+    rData.file = _backGroundFileName;
+    return rData;
+}
+
+ResourceData AbstractCheckButton::getBackPressedFile()
+{
+    ResourceData rData;
+    rData.type = (int)_backGroundSelectedTexType;
+    rData.file = _backGroundSelectedFileName;
+    return rData;
+}
+
+ResourceData AbstractCheckButton::getBackDisabledFile()
+{
+    ResourceData rData;
+    rData.type = (int)_backGroundDisabledTexType;
+    rData.file = _backGroundDisabledFileName;
+    return rData;
+}
+
+ResourceData AbstractCheckButton::getCrossNormalFile()
+{
+    ResourceData rData;
+    rData.type = (int)_frontCrossTexType;
+    rData.file = _frontCrossFileName;
+    return rData;
+}
+
+ResourceData AbstractCheckButton::getCrossDisabledFile()
+{
+    ResourceData rData;
+    rData.type = (int)_frontCrossDisabledTexType;
+    rData.file = _frontCrossDisabledFileName;
+    return rData;
 }
 
 }

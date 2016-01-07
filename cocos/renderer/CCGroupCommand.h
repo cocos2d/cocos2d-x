@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -60,7 +60,7 @@ protected:
 @brief
 @~english
  GroupCommand is used to group several command together, and more, it can be nestd.
- So it is used to generate the hierarchy for the rendcommands. Evey group command will be assigned by a group ID.
+ So it is used to generate the hierarchy for the rendcommands. Every group command will be assigned by a group ID.
  * @~chinese 
  GroupCommand用于将多个渲染命令打包成一个命令，而且可以嵌套。
  所以GroupCommand主要用来构建渲染命令的层级结构。

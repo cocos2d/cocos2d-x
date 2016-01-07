@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2015 Neo Kim (neo.kim@neofect.com)
 
 http://www.cocos2d-x.org
@@ -195,13 +195,13 @@ private:
     
     ScrollView* _parent;
     ScrollView::Direction _direction;
-	
+    
     Sprite* _upperHalfCircle;
     Sprite* _lowerHalfCircle;
     Sprite* _body;
     
     GLubyte _opacity;
-	
+    
     float _marginFromBoundary;
     float _marginForLength;
 

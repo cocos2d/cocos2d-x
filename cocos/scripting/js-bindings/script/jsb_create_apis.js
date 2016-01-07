@@ -254,7 +254,10 @@ _p._ctor = function(normalImage, selectedImage, three, four, five) {
             target = five;
         }
         callback = callback ? callback.bind(target) : null;
-        this.initWithNormalSprite(new cc.Sprite(normalImage), new cc.Sprite(selectedImage), disabledImage ? new cc.Sprite(disabledImage) : new cc.Sprite(normalImage), callback);
+        var normalSprite = new cc.Sprite(normalImage);
+        var selectedSprite = new cc.Sprite(selectedImage);
+        var disabledSprite = disabledImage ? new cc.Sprite(disabledImage) : new cc.Sprite(normalImage);
+        this.initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, callback);
     }
 };
 
@@ -563,19 +566,13 @@ cc.ActionInterval.prototype._ctor = function(d) {
 };
 
 cc.Sequence.prototype._ctor = function(tempArray) {
-    var paramArray = (tempArray instanceof Array) ? tempArray : arguments;
+    var paramArray = (tempArray instanceof Array) ? tempArray : Array.prototype.slice.call(arguments);
     var last = paramArray.length - 1;
     if ((last >= 0) && (paramArray[last] == null))
         cc.log("parameters should not be ending with null in Javascript");
 
     if (last >= 0) {
-        var prev = paramArray[0];
-        for (var i = 1; i < last; i++) {
-            if (paramArray[i]) {
-                prev = cc.Sequence.create(prev, paramArray[i]);
-            }
-        }
-        this.initWithTwoActions(prev, paramArray[last]);
+        this.init(paramArray);
     }
 };
 
@@ -588,19 +585,13 @@ cc.RepeatForever.prototype._ctor = function(action) {
 };
 
 cc.Spawn.prototype._ctor = function(tempArray) {
-    var paramArray = (tempArray instanceof Array) ? tempArray : arguments;
+    var paramArray = (tempArray instanceof Array) ? tempArray : Array.prototype.slice.call(arguments);
     var last = paramArray.length - 1;
     if ((last >= 0) && (paramArray[last] == null))
         cc.log("parameters should not be ending with null in Javascript");
 
     if (last >= 0) {
-        var prev = paramArray[0];
-        for (var i = 1; i < last; i++) {
-            if (paramArray[i]) {
-                prev = cc.Spawn.create(prev, paramArray[i]);
-            }
-        }
-        this.initWithTwoActions(prev, paramArray[last]);
+        this.init(paramArray);
     }
 };
 
@@ -1084,14 +1075,25 @@ cc.TMXTiledMap.create = function (tmxFile, resourcePath) {
     return null;
 };
 
-
-// MenuItemImage
+// MenuItems
+cc.MenuItem.create = function (callback, target) {
+    return new cc.MenuItem(callback, target);
+};
+cc.MenuItemLabel.create = function (label, selector, target) {
+    return new cc.MenuItemLabel(label, selector, target);
+};
+cc.MenuItemAtlasFont.create = function (value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
+    return new cc.MenuItemAtlasFont(value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target);
+};
+cc.MenuItemFont.create = function (value, callback, target) {
+    return new cc.MenuItemFont(value, callback, target);
+};
+cc.MenuItemSprite.create = function (normalSprite, selectedSprite, three, four, five) {
+    return new cc.MenuItemSprite(normalSprite, selectedSprite, three, four, five || undefined);
+};
 cc.MenuItemImage.create = function(normalImage, selectedImage, three, four, five) {
     return new cc.MenuItemImage(normalImage, selectedImage, three, four, five);
-}
-
-
-// MenuItemToggle
+};
 cc.MenuItemToggle.create = function(/* var args */) {
     var n = arguments.length;
 

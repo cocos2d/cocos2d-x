@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2008      Apple Inc. All Rights Reserved.
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2013-2014 Chukong Technologies Inc.
@@ -598,6 +598,12 @@ public:
      */
     GLProgram* getGLProgram() const;
 
+    /**
+     * @brief @~english Return texture file name.
+     * @~chinese 返回材质图片文件名。
+     * @since v3.10
+     */
+    std::string getPath()const { return _filePath; }
 
 public:
     /** @~english Get pixel info map, the key-value pairs is PixelFormat and PixelFormatInfo.
@@ -734,6 +740,9 @@ protected:
     friend class SpriteFrameCache;
     friend class TextureCache;
     friend class ui::Scale9Sprite;
+
+    bool _valid;
+    std::string _filePath;
 };
 
 

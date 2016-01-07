@@ -26,6 +26,12 @@
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
+-- 
+-- @function [parent=#Label] getWidth 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 --  Return the text the Label is displaying.
 -- @function [parent=#Label] getString 
 -- @param self
@@ -66,12 +72,36 @@
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
+-- Toggle wrap option of the label.<br>
+-- Note: System font doesn't support manually toggle wrap.<br>
+-- param enable Set true to enable wrap and false to disable wrap.
+-- @function [parent=#Label] enableWrap 
+-- @param self
+-- @param #bool enable
+-- @return Label#Label self (return value: cc.Label)
+        
+--------------------------------
 -- Makes the Label exactly this untransformed width.<br>
 -- The Label's width be used for text align if the value not equal zero.
 -- @function [parent=#Label] setWidth 
 -- @param self
 -- @param #float width
 -- @return Label#Label self (return value: cc.Label)
+        
+--------------------------------
+-- Returns the additional kerning of the Label.<br>
+-- warning Not support system font.<br>
+-- since v3.2.0
+-- @function [parent=#Label] getAdditionalKerning 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- Return the user define BMFont size.<br>
+-- return The BMFont size in float value.
+-- @function [parent=#Label] getBMFontSize 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- 
@@ -84,6 +114,12 @@
 -- @function [parent=#Label] getHorizontalAlignment 
 -- @param self
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+-- Return shadow effect offset value.
+-- @function [parent=#Label] getShadowOffset 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 --  Makes the Label to clip upper and lower margin for reduce height of Label.
@@ -109,13 +145,33 @@
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
+-- Return the outline effect size value.
+-- @function [parent=#Label] getOutlineSize 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 --  Sets a new bitmap font to Label 
 -- @function [parent=#Label] setBMFontFilePath 
 -- @param self
 -- @param #string bmfontFilePath
 -- @param #vec2_table imageOffset
+-- @param #float fontSize
 -- @return bool#bool ret (return value: bool)
         
+--------------------------------
+-- @overload self, cc._ttfConfig, string, int, int         
+-- @overload self, string, string, float, size_table, int, int         
+-- @function [parent=#Label] initWithTTF
+-- @param self
+-- @param #string text
+-- @param #string fontFilePath
+-- @param #float fontSize
+-- @param #size_table dimensions
+-- @param #int hAlignment
+-- @param #int vAlignment
+-- @return bool#bool ret (return value: bool)
+
 --------------------------------
 -- 
 -- @function [parent=#Label] getFontAtlas 
@@ -136,6 +192,16 @@
 -- @function [parent=#Label] setSystemFontSize 
 -- @param self
 -- @param #float fontSize
+-- @return Label#Label self (return value: cc.Label)
+        
+--------------------------------
+-- Change the label's Overflow type, currently only TTF and BMFont support all the valid Overflow type.<br>
+-- Char Map font supports all the Overflow type except for SHRINK, because we can't measure it's font size.<br>
+-- System font only support Overflow::Normal and Overflow::RESIZE_HEIGHT.<br>
+-- param overflow   see `Overflow`
+-- @function [parent=#Label] setOverflow 
+-- @param self
+-- @param #int overflow
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
@@ -180,12 +246,16 @@
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
--- Returns the additional kerning of the Label.<br>
--- warning Not support system font.<br>
--- since v3.2.0
--- @function [parent=#Label] getAdditionalKerning 
+-- Return the shadow effect blur radius.
+-- @function [parent=#Label] getShadowBlurRadius 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- Return current effect color vlaue.
+-- @function [parent=#Label] getEffectColor 
+-- @param self
+-- @return color4f_table#color4f_table ret (return value: color4f_table)
         
 --------------------------------
 -- 
@@ -249,6 +319,12 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- Return the shadow effect color value.
+-- @function [parent=#Label] getShadowColor 
+-- @param self
+-- @return color4f_table#color4f_table ret (return value: color4f_table)
+        
+--------------------------------
 -- Returns the TTF configuration object used by the Label.<br>
 -- see `TTFConfig`
 -- @function [parent=#Label] getTTFConfig 
@@ -271,6 +347,14 @@
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
+-- Provides a way to treats each character like a Sprite.<br>
+-- warning No support system font.
+-- @function [parent=#Label] getLetter 
+-- @param self
+-- @param #int lettetIndex
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
+        
+--------------------------------
 -- Makes the Label exactly this untransformed height.<br>
 -- The Label's height be used for text align if the value not equal zero.<br>
 -- The text will display of incomplete when the size of Label not enough to support display all text.
@@ -280,10 +364,10 @@
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
--- 
--- @function [parent=#Label] getWidth 
+-- Return whether the shadow effect is enabled.
+-- @function [parent=#Label] isShadowEnabled 
 -- @param self
--- @return float#float ret (return value: float)
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Enable glow effect to Label.<br>
@@ -294,12 +378,11 @@
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
--- Provides a way to treats each character like a Sprite.<br>
--- warning No support system font.
--- @function [parent=#Label] getLetter 
+-- Query the label's Overflow type.<br>
+-- return see `Overflow`
+-- @function [parent=#Label] getOverflow 
 -- @param self
--- @param #int lettetIndex
--- @return Sprite#Sprite ret (return value: cc.Sprite)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Sets the additional kerning of the Label.<br>
@@ -343,6 +426,19 @@
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
+-- Query the wrap is enabled or not.<br>
+-- Note: System font will always return true.
+-- @function [parent=#Label] isWrapEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- Return current effect type.
+-- @function [parent=#Label] getLabelEffectType 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 -- @overload self, int, int         
 -- @overload self, int         
 -- @function [parent=#Label] setAlignment
@@ -355,6 +451,15 @@
 -- warning This method is not recommended for game developers.
 -- @function [parent=#Label] requestSystemFontRefresh 
 -- @param self
+-- @return Label#Label self (return value: cc.Label)
+        
+--------------------------------
+-- Change font size of label type BMFONT<br>
+-- Note: This function only scale the BMFONT letter to mimic the font size change effect.<br>
+-- param fontSize The desired font size in float.
+-- @function [parent=#Label] setBMFontSize 
+-- @param self
+-- @param #float fontSize
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------

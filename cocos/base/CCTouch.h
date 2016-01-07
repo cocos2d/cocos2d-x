@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
@@ -62,7 +62,9 @@ public:
      */
     Touch() 
         : _id(0),
-        _startPointCaptured(false)
+        _startPointCaptured(false),
+        _curForce(0.f),
+        _maxForce(0.f)
     {}
 
     /** @~english Returns the current touch location in OpenGL coordinates.
@@ -139,6 +141,38 @@ public:
         _prevPoint = _point;
         _point.x   = x;
         _point.y   = y;
+        _curForce = 0.0f;
+        _maxForce = 0.0f;
+        if (!_startPointCaptured)
+        {
+            _startPoint = _point;
+            _startPointCaptured = true;
+            _prevPoint = _point;
+        }
+    }
+
+    /** @~english Set the touch infomation. It always used to monitor touch event.
+     * @~chinese 设置触摸相关的信息。用于监控触摸事件。
+     *
+     * @param id @~english A given id
+     * @~chinese 一个给定的id
+     * @param x @~english A given x coordinate.
+     * @~chinese 一个给定的x坐标。
+     * @param y @~english A given y coordinate.
+     * @~chinese 一个给定的y坐标。
+     * @param force @~english The force value for 3d touch, if device won't support 3d touch or no 3d touch occurred it will be set to 0.
+     * @~chinese 3d touch的压感值，如果设备不支持3d touch或者当前没有3d touch事件，这个值被设置为0。
+     * @param maxForce @~english The max possible force value for 3d touch, if device won't support 3d touch or no 3d touch occurred it will be set to 0.
+     * @~chinese 3d touch的压感可以达到的值，如果设备不支持3d touch或者当前没有3d touch事件，这个值被设置为0。
+     */
+    void setTouchInfo(int id, float x, float y, float force, float maxForce)
+    {
+        _id = id;
+        _prevPoint = _point;
+        _point.x   = x;
+        _point.y   = y;
+        _curForce = force;
+        _maxForce = maxForce;
         if (!_startPointCaptured)
         {
             _startPoint = _point;
@@ -158,6 +192,20 @@ public:
     {
         return _id;
     }
+    /** @~english Returns the current touch force for 3d touch.
+     * @~chinese 返回当前点击事件的压感值。
+     *
+     * @return @~english The current touch force for 3d touch.
+     * @~chinese 当前点击事件的压感值。
+     */
+    float getCurrentForce() const;
+    /** @~english Returns the maximum touch force for 3d touch.
+    * @~chinese 返回当前点击事件的最大压感值。
+    *
+     * @return The maximum touch force for 3d touch.
+     * @~chinese 当前点击事件的最大压感值。
+     */
+    float getMaxForce() const;
 
 private:
     int _id;
@@ -165,6 +213,8 @@ private:
     Vec2 _startPoint;
     Vec2 _point;
     Vec2 _prevPoint;
+    float _curForce;
+    float _maxForce;
 };
 
 // end of base group

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -290,6 +290,15 @@ public:
     * force set this Sprite3D to 2D render queue
     */
     void setForce2DQueue(bool force2D);
+
+    /**
+    * @brief @~english Get meshes used in sprite 3d.
+    * @~chinese 返回3d精灵中使用的网格材质。
+    * @return Vector contain all used meshes.
+    * @~chinese 包含所有使用的网格材质的Vector数组。
+    * @since v3.10
+    */
+    const Vector<Mesh*>& getMeshes() const { return _meshes; }
 
 CC_CONSTRUCTOR_ACCESS:
 

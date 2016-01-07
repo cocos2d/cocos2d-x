@@ -720,6 +720,14 @@ public:
     */
     virtual void copyAttributesTo(PUParticleSystem3D* system);
 
+    /**
+    * @~english Initialize particle system with special particle file(internal method).
+    * @~chinese 使用指定粒子文件初始化粒子系统(内部方法)。
+    * @param filePath @~english The full path of particle file. @~chinese 粒子文件全路径。
+    * @return @~english If init success return true, otherwise return false. @~chinese 如果初始化成功，返回true，否则返回false。
+    */
+    bool initSystem(const std::string &filePath);
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticleSystem3D();
     virtual ~PUParticleSystem3D();
@@ -746,7 +754,6 @@ protected:
     
     inline bool isExpired(PUParticle3D* particle, float timeElapsed);
 
-    bool initSystem(const std::string &filePath);
     static void convertToUnixStylePath(std::string &path);
 
 protected:

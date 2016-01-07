@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
@@ -110,7 +110,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void setAnimationInterval(double interval) = 0;
+    virtual void setAnimationInterval(float interval) = 0;
 
     /** @~english Subclass override the function to set OpenGL context attribution instead of use default value.
      * And now can only set six attributions:redBits,greenBits,blueBits,alphaBits,depthBits,stencilBits.
@@ -162,6 +162,12 @@ public:
     virtual Platform getTargetPlatform() = 0;
     
     /**
+     @brief @~english Get application version. @~chinese 获取应用程序版本
+     * @js NA
+     * @lua NA
+     */
+    virtual std::string getVersion() = 0;
+
      *@brief @~english Open url in default browser.
      * @~chinese 在默认浏览器打开网址。
      *@param String @~english with url to open.

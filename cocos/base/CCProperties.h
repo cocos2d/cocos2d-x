@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright 2013 BlackBerry Inc.
  Copyright (c) 2015 Chukong Technologies
 
@@ -854,7 +854,7 @@ public:
     static bool parseAxisAngle(const char* str, Quaternion* out);
 
     /**@~english
-     * Atempts to parse the specified string as an RGB color value.
+     * Attempts to parse the specified string as an RGB color value.
      *
      * @~chinese 
      * 尝试将指定的字符串解析为 RGB 颜色值。
@@ -871,7 +871,7 @@ public:
     static bool parseColor(const char* str, Vec3* out);
 
     /**@~english
-     * Atempts to parse the specified string as an RGBA color value.
+     * Attempts to parse the specified string as an RGBA color value.
      *
      * @~chinese 
      * 尝试将指定的字符串解析为 RGBA 颜色值。

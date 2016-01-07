@@ -826,10 +826,6 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
     if (userCall)
     {
         cpSpaceStep(_cpSpace, delta);
-        for (auto& body : _bodies)
-        {
-            body->update(delta);
-        }
     }
     else
     {
@@ -840,10 +836,6 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
             for (int i = 0; i < _substeps; ++i)
             {
                 cpSpaceStep(_cpSpace, dt);
-                for (auto& body : _bodies)
-                {
-                    body->update(dt);
-                }
             }
             _updateRateCount = 0;
             _updateTime = 0.0f;

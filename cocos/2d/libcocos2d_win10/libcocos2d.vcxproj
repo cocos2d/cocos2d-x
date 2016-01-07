@@ -415,6 +415,7 @@
     </ClCompile>
     <ClCompile Include="..\..\base\CCIMEDispatcher.cpp" />
     <ClCompile Include="..\..\base\CCNinePatchImageParser.cpp" />
+    <ClCompile Include="..\..\base\CCStencilStateManager.cpp" />
     <ClCompile Include="..\..\base\CCNS.cpp" />
     <ClCompile Include="..\..\base\CCProfiling.cpp" />
     <ClCompile Include="..\..\base\CCProperties.cpp" />
@@ -653,6 +654,7 @@
     <ClCompile Include="..\..\ui\UIListView.cpp" />
     <ClCompile Include="..\..\ui\UILoadingBar.cpp" />
     <ClCompile Include="..\..\ui\UIPageView.cpp" />
+    <ClCompile Include="..\..\ui\UIPageViewIndicator.cpp" />
     <ClCompile Include="..\..\ui\UIRelativeBox.cpp" />
     <ClCompile Include="..\..\ui\UIRichText.cpp" />
     <ClCompile Include="..\..\ui\UIScale9Sprite.cpp" />
@@ -1012,6 +1014,7 @@
     <ClInclude Include="..\..\base\ccMacros.h" />
     <ClInclude Include="..\..\base\CCMap.h" />
     <ClInclude Include="..\..\base\CCNinePatchImageParser.h" />
+    <ClInclude Include="..\..\base\CCStencilStateManager.h" />
     <ClInclude Include="..\..\base\CCNS.h" />
     <ClInclude Include="..\..\base\CCProfiling.h" />
     <ClInclude Include="..\..\base\CCProperties.h" />
@@ -1523,34 +1526,34 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.10_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.10_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.10_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.10_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.10_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.10_Windows_10.0</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

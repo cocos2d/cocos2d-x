@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -75,4 +75,4 @@ private:
 NS_CC_END
 
 /// @endcond
-#endif  // __FUNDATION__CCCOMPONENT_H__
+#endif  // __CC_FRAMEWORK_COMCONTAINER_H__

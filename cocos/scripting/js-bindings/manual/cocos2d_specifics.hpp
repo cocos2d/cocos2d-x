@@ -33,13 +33,13 @@ class JSScheduleWrapper;
 // To debug this, you could refer to JSScheduleWrapper::dump function.
 // It will prove that i'm right. :)
 typedef struct jsScheduleFunc_proxy {
-    JS::Heap<JSObject*> jsfuncObj;
+    JSObject* jsfuncObj;
     cocos2d::__Array*  targets;
     UT_hash_handle hh;
 } schedFunc_proxy_t;
 
 typedef struct jsScheduleTarget_proxy {
-    JS::Heap<JSObject*> jsTargetObj;
+    JSObject* jsTargetObj;
     cocos2d::__Array*  targets;
     UT_hash_handle hh;
 } schedTarget_proxy_t;
@@ -87,8 +87,7 @@ inline js_type_class_t *js_get_type_from_native(T* native_obj) {
  */
 template<class T>
 inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
-    js_proxy_t *proxy;
-    HASH_FIND_PTR(_native_js_global_ht, &native_obj, proxy);
+    js_proxy_t *proxy = jsb_get_native_proxy(native_obj);
     if (!proxy) {
         js_type_class_t *typeProxy = js_get_type_from_native<T>(native_obj);
         // Return NULL if can't find its type rather than making an assert.
@@ -100,20 +99,55 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
         
         JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 
-        JS::RootedObject proto(cx, const_cast<JSObject*>(typeProxy->proto.get()));
-        JS::RootedObject parent(cx, const_cast<JSObject*>(typeProxy->parentProto.get()));
+        JS::RootedObject proto(cx, typeProxy->proto.ref().get());
+        JS::RootedObject parent(cx, typeProxy->parentProto.ref().get());
         JS::RootedObject js_obj(cx, JS_NewObject(cx, typeProxy->jsclass, proto, parent));
         proxy = jsb_new_proxy(native_obj, js_obj);
 #ifdef DEBUG
-        AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
+        JS::AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
 #else
-        AddObjectRoot(cx, &proxy->obj);
+        JS::AddObjectRoot(cx, &proxy->obj);
 #endif
         return proxy;
     } else {
         return proxy;
     }
     return NULL;
+}
+
+/**
+ * Gets or creates a JSObject based on native_obj.
+ If native_obj is subclass of Ref, it will use the jsb_ref functions.
+ Otherwise it will Root the newly created JSObject
+ */
+template<class T>
+JSObject* js_get_or_create_jsobject(JSContext *cx, typename std::enable_if<!std::is_base_of<cocos2d::Ref,T>::value,T>::type *native_obj)
+{
+//    CCLOG("js_get_or_create_jsobject NO REF: %s", typeid(native_obj).name());
+    js_proxy_t *proxy = jsb_get_native_proxy(native_obj);
+    if (!proxy)
+    {
+        js_type_class_t* typeClass = js_get_type_from_native<T>(native_obj);
+        JS::RootedObject proto(cx, typeClass->proto.ref().get());
+        JS::RootedObject parent(cx, typeClass->parentProto.ref().get());
+        JS::RootedObject js_obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+        proxy = jsb_new_proxy(native_obj, js_obj);
+
+        JS::AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
+    }
+    return proxy->obj;
+}
+
+/**
+ * Gets or creates a JSObject based on native_obj.
+ If native_obj is subclass of Ref, it will use the jsb_ref functions.
+ Otherwise it will Root the newly created JSObject
+ */
+template<class T>
+JSObject* js_get_or_create_jsobject(JSContext *cx, typename std::enable_if<std::is_base_of<cocos2d::Ref,T>::value,T>::type *native_obj)
+{
+    js_type_class_t* typeClass = js_get_type_from_native<T>(native_obj);
+    return jsb_ref_get_or_create_jsobject(cx, native_obj, typeClass, typeid(*native_obj).name());
 }
 
 JS::Value anonEvaluate(JSContext *cx, JS::HandleObject thisObj, const char* string);
@@ -221,7 +255,6 @@ private:
     typedef std::unordered_map<JSObject*, JSTouchDelegate*> TouchDelegateMap;
     typedef std::pair<JSObject*, JSTouchDelegate*> TouchDelegatePair;
     static TouchDelegateMap sTouchDelegateMap;
-    bool _needUnroot;
     cocos2d::EventListenerTouchOneByOne*  _touchListenerOneByOne;
     cocos2d::EventListenerTouchAllAtOnce* _touchListenerAllAtOnce;
 };
@@ -252,7 +285,6 @@ public:
 
 private:
     cocos2d::SAXParser _parser;
-    JS::Heap<JSObject*> _obj;
     std::string _result;
     bool _isStoringCharacters;
     std::string _currentValue;

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -26,6 +26,7 @@
 #define __CCMESH_H__
 
 #include <string>
+#include <map>
 
 #include "3d/CCBundle3DData.h"
 #include "3d/CCAABB.h"
@@ -172,6 +173,20 @@ public:
      * @~chinese Texture2D 对象
      */
     void setTexture(Texture2D* tex);
+    /**
+     * set texture
+     * @param tex texture to be set
+     * @param usage Usage of this texture
+     * @param whether refresh the cache file name
+     */
+    void setTexture(Texture2D* tex, NTextureData::Usage usage,bool cacheFileName = true);
+
+    /**
+     * set texture
+     * @param texPath texture path
+     * @param usage Usage of this texture
+     */
+    void setTexture(const std::string& texPath, NTextureData::Usage usage);
 
     /**
      * @~english Texture getter.
@@ -187,6 +202,14 @@ public:
      * @param visible @~english The visiblity
      * @~chinese 可见性
      */
+
+    /**
+     * Get texture
+     * @param usage Usage of returned texture
+     * @return The texture of this usage, return the texture of first mesh if multiple meshes exist
+     */
+    Texture2D* getTexture(NTextureData::Usage usage);
+
     void setVisible(bool visible);
 
     /**
@@ -360,6 +383,13 @@ public:
      */
     void setForce2DQueue(bool force2D) { _force2DQueue = force2D; }
 
+    /**
+     * @brief @~english Return texture file name.
+     * @~chinese 返回素材图片文件名。
+     * @since v3.10
+     */
+    std::string getTextureFileName(){ return _texFile; }
+
 CC_CONSTRUCTOR_ACCESS:
 
     Mesh();
@@ -370,7 +400,7 @@ protected:
     void setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigned int lightmask);
     void bindMeshCommand();
 
-    Texture2D*          _texture;  //texture that submesh is using
+    std::map<NTextureData::Usage, Texture2D*> _textures; //textures that submesh is using
     MeshSkin*           _skin;     //skin
     bool                _visible; // is the submesh visible
     bool                _isTransparent; // is this mesh transparent, it is a property of material in fact
@@ -400,11 +430,16 @@ protected:
     std::vector<float> _spotLightUniformInnerAngleCosValues;
     std::vector<float> _spotLightUniformOuterAngleCosValues;
     std::vector<float> _spotLightUniformRangeInverseValues;
+
+    std::string _texFile;
 };
 
 // end of 3d group
 /// @}
 
+/// @cond
+extern std::string CC_DLL s_uniformSamplerName[];//uniform sampler names array
+/// @endcond
 
 NS_CC_END
 

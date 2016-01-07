@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "ui/UIHelper.h"
 #include <algorithm>
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 NS_CC_BEGIN
 
@@ -49,6 +50,13 @@ _buttonClickedRenderer(nullptr),
 _buttonDisabledRenderer(nullptr),
 _titleRenderer(nullptr),
 _zoomScale(0.1f),
+_normalFileName(""),
+_clickedFileName(""),
+_disabledFileName(""),
+_normalTexType(TextureResType::LOCAL),
+_pressedTexType(TextureResType::LOCAL),
+_disabledTexType(TextureResType::LOCAL),
+_fontName(""),
 _prevIgnoreSize(true),
 _scale9Enabled(false),
 _pressedActionEnabled(false),
@@ -58,10 +66,6 @@ _capInsetsDisabled(Rect::ZERO),
 _normalTextureSize(_contentSize),
 _pressedTextureSize(_contentSize),
 _disabledTextureSize(_contentSize),
-_normalTextureScaleXInSize(1.0f),
-_normalTextureScaleYInSize(1.0f),
-_pressedTextureScaleXInSize(1.0f),
-_pressedTextureScaleYInSize(1.0f),
 _normalTextureLoaded(false),
 _pressedTextureLoaded(false),
 _disabledTextureLoaded(false),
@@ -138,9 +142,9 @@ void Button::initRenderer()
     _buttonNormalRenderer = Scale9Sprite::create();
     _buttonClickedRenderer = Scale9Sprite::create();
     _buttonDisabledRenderer = Scale9Sprite::create();
-    _buttonClickedRenderer->setScale9Enabled(false);
-    _buttonNormalRenderer->setScale9Enabled(false);
-    _buttonDisabledRenderer->setScale9Enabled(false);
+    _buttonClickedRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+    _buttonNormalRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+    _buttonDisabledRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
 
     addProtectedChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
     addProtectedChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
@@ -163,9 +167,16 @@ void Button::setScale9Enabled(bool able)
 
     _scale9Enabled = able;
 
-    _buttonNormalRenderer->setScale9Enabled(_scale9Enabled);
-    _buttonClickedRenderer->setScale9Enabled(_scale9Enabled);
-    _buttonDisabledRenderer->setScale9Enabled(_scale9Enabled);
+    if (_scale9Enabled) {
+        _buttonNormalRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+        _buttonClickedRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+        _buttonDisabledRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+    }else{
+        _buttonNormalRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+        _buttonClickedRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+        _buttonDisabledRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+    }
+    
 
     if (_scale9Enabled)
     {
@@ -222,12 +233,18 @@ void Button::loadTextures(const std::string& normal,
 
 void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
 {
-    if(normal.empty())
+    _normalFileName = normal;
+    _normalTexType = texType;
+    bool textureLoaded = true;
+    if (normal.empty())
     {
-        return;
+        _buttonNormalRenderer->resetRender();
+        textureLoaded = false;
     }
-    switch (texType)
+    else
     {
+        switch (texType)
+        {
         case TextureResType::LOCAL:
             _buttonNormalRenderer->initWithFile(normal);
             break;
@@ -236,17 +253,18 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
             break;
         default:
             break;
+        }
     }
-    this->setupNormalTexture();
-
+    //FIXME: https://github.com/cocos2d/cocos2d-x/issues/12249
+    if (!_ignoreSize && _customSize.equals(Size::ZERO)) {
+        _customSize = _buttonNormalRenderer->getContentSize();
+    }
+    this->setupNormalTexture(textureLoaded);
 }
 
-void Button::setupNormalTexture()
+void Button::setupNormalTexture(bool textureLoaded)
 {
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
-    // force update _customSize, fixed issue:
-    // https://github.com/cocos2d/cocos2d-x/issues/12249
-    _customSize = _normalTextureSize;
 
     this->updateChildrenDisplayedRGBA();
 
@@ -261,25 +279,30 @@ void Button::setupNormalTexture()
     {
         updateContentSizeWithTextureSize(_normalTextureSize);
     }
-    _normalTextureLoaded = true;
+    _normalTextureLoaded = textureLoaded;
     _normalTextureAdaptDirty = true;
 }
 
 void Button::loadTextureNormal(SpriteFrame* normalSpriteFrame)
 {
     _buttonNormalRenderer->initWithSpriteFrame(normalSpriteFrame);
-    this->setupNormalTexture();
+    this->setupNormalTexture(nullptr != normalSpriteFrame);
 }
 
 void Button::loadTexturePressed(const std::string& selected,TextureResType texType)
 {
+    _clickedFileName = selected;
+    _pressedTexType = texType;
+    bool textureLoade = true;
     if (selected.empty())
     {
-        return;
+        _buttonClickedRenderer->resetRender();
+        textureLoade = false;
     }
-
-    switch (texType)
+    else
     {
+        switch (texType)
+        {
         case TextureResType::LOCAL:
             _buttonClickedRenderer->initWithFile(selected);
             break;
@@ -288,36 +311,41 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
             break;
         default:
             break;
+        }
     }
-
-    this->setupPressedTexture();
+    this->setupPressedTexture(textureLoade);
 }
 
-void Button::setupPressedTexture()
+void Button::setupPressedTexture(bool textureLoaded)
 {
     _pressedTextureSize = _buttonClickedRenderer->getContentSize();
 
     this->updateChildrenDisplayedRGBA();
 
-    _pressedTextureLoaded = true;
+    _pressedTextureLoaded = textureLoaded;
     _pressedTextureAdaptDirty = true;
 }
 
 void Button::loadTexturePressed(SpriteFrame* pressedSpriteFrame)
 {
     _buttonClickedRenderer->initWithSpriteFrame(pressedSpriteFrame);
-    this->setupPressedTexture();
+    this->setupPressedTexture(nullptr != pressedSpriteFrame);
 }
 
 void Button::loadTextureDisabled(const std::string& disabled,TextureResType texType)
 {
+    _disabledFileName = disabled;
+    _disabledTexType = texType;
+    bool textureLoaded = true;
     if (disabled.empty())
     {
-        return;
+        _buttonDisabledRenderer->resetRender();
+        textureLoaded = false;
     }
-
-    switch (texType)
+    else
     {
+        switch (texType)
+        {
         case TextureResType::LOCAL:
             _buttonDisabledRenderer->initWithFile(disabled);
             break;
@@ -326,24 +354,25 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
             break;
         default:
             break;
+        }
     }
-    this->setupDisabledTexture();
+    this->setupDisabledTexture(textureLoaded);
 }
 
-void Button::setupDisabledTexture()
+void Button::setupDisabledTexture(bool textureLoaded)
 {
     _disabledTextureSize = _buttonDisabledRenderer->getContentSize();
 
     this->updateChildrenDisplayedRGBA();
 
-    _disabledTextureLoaded = true;
+    _disabledTextureLoaded = textureLoaded;
     _disabledTextureAdaptDirty = true;
 }
 
 void Button::loadTextureDisabled(SpriteFrame* disabledSpriteFrame)
 {
     _buttonDisabledRenderer->initWithSpriteFrame(disabledSpriteFrame);
-    this->setupDisabledTexture();
+    this->setupDisabledTexture(nullptr != disabledSpriteFrame);
 }
 
 void Button::setCapInsets(const Rect &capInsets)
@@ -421,8 +450,8 @@ void Button::onPressStateChangedToNormal()
 
 //            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, _normalTextureScaleXInSize, _normalTextureScaleYInSize);
             //fixme: the zoomAction will run in the next frame which will cause the _buttonNormalRenderer to a wrong scale
-            _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
-            _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
+            _buttonNormalRenderer->setScale(1.0);
+            _buttonClickedRenderer->setScale(1.0);
 
             if(nullptr != _titleRenderer)
             {
@@ -443,7 +472,7 @@ void Button::onPressStateChangedToNormal()
     else
     {
         _buttonNormalRenderer->stopAllActions();
-        _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
+        _buttonNormalRenderer->setScale(1.0);
 
         if(nullptr != _titleRenderer)
         {
@@ -471,12 +500,12 @@ void Button::onPressStateChangedToPressed()
             _buttonClickedRenderer->stopAllActions();
 
             Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP,
-                                                 _pressedTextureScaleXInSize + _zoomScale,
-                                                 _pressedTextureScaleYInSize + _zoomScale);
+                                                 1.0 + _zoomScale,
+                                                 1.0 + _zoomScale);
             _buttonClickedRenderer->runAction(zoomAction);
 
-            _buttonNormalRenderer->setScale(_pressedTextureScaleXInSize + _zoomScale,
-                                            _pressedTextureScaleYInSize + _zoomScale);
+            _buttonNormalRenderer->setScale(1.0 + _zoomScale,
+                                            1.0 + _zoomScale);
 
             if(nullptr != _titleRenderer)
             {
@@ -494,7 +523,7 @@ void Button::onPressStateChangedToPressed()
         _buttonDisabledRenderer->setVisible(false);
 
         _buttonNormalRenderer->stopAllActions();
-        _buttonNormalRenderer->setScale(_normalTextureScaleXInSize +_zoomScale, _normalTextureScaleYInSize + _zoomScale);
+        _buttonNormalRenderer->setScale(1.0 +_zoomScale, 1.0 + _zoomScale);
 
         if(nullptr != _titleRenderer)
         {
@@ -522,8 +551,8 @@ void Button::onPressStateChangedToDisabled()
     }
 
     _buttonClickedRenderer->setVisible(false);
-    _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
-    _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
+    _buttonNormalRenderer->setScale(1.0);
+    _buttonClickedRenderer->setScale(1.0);
 }
 
 void Button::updateTitleLocation()
@@ -627,112 +656,22 @@ Node* Button::getVirtualRenderer()
 
 void Button::normalTextureScaleChangedWithSize()
 {
-
-    if (_ignoreSize && !_unifySize)
-    {
-        if (!_scale9Enabled)
-        {
-            _buttonNormalRenderer->setScale(1.0f);
-            _normalTextureScaleXInSize = _normalTextureScaleYInSize = 1.0f;
-        }
-    }
-    else
-    {
-        if (_scale9Enabled)
-        {
-            _buttonNormalRenderer->setPreferredSize(_contentSize);
-            _normalTextureScaleXInSize = _normalTextureScaleYInSize = 1.0f;
-            _buttonNormalRenderer->setScale(_normalTextureScaleXInSize,_normalTextureScaleYInSize);
-        }
-        else
-        {
-            Size textureSize = _normalTextureSize;
-            if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
-            {
-                _buttonNormalRenderer->setScale(1.0f);
-                return;
-            }
-            float scaleX = _contentSize.width / textureSize.width;
-            float scaleY = _contentSize.height / textureSize.height;
-            _buttonNormalRenderer->setScaleX(scaleX);
-            _buttonNormalRenderer->setScaleY(scaleY);
-            _normalTextureScaleXInSize = scaleX;
-            _normalTextureScaleYInSize = scaleY;
-        }
-    }
+    _buttonNormalRenderer->setPreferredSize(_contentSize);
 
     _buttonNormalRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
 void Button::pressedTextureScaleChangedWithSize()
 {
+    _buttonClickedRenderer->setPreferredSize(_contentSize);
 
-    if (_ignoreSize && !_unifySize)
-    {
-        if (!_scale9Enabled)
-        {
-            _buttonClickedRenderer->setScale(1.0f);
-            _pressedTextureScaleXInSize = _pressedTextureScaleYInSize = 1.0f;
-        }
-    }
-    else
-    {
-        if (_scale9Enabled)
-        {
-            _buttonClickedRenderer->setPreferredSize(_contentSize);
-            _pressedTextureScaleXInSize = _pressedTextureScaleYInSize = 1.0f;
-            _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize,_pressedTextureScaleYInSize);
-        }
-        else
-        {
-            Size textureSize = _pressedTextureSize;
-            if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
-            {
-                _buttonClickedRenderer->setScale(1.0f);
-                return;
-            }
-            float scaleX = _contentSize.width / _pressedTextureSize.width;
-            float scaleY = _contentSize.height / _pressedTextureSize.height;
-            _buttonClickedRenderer->setScaleX(scaleX);
-            _buttonClickedRenderer->setScaleY(scaleY);
-            _pressedTextureScaleXInSize = scaleX;
-            _pressedTextureScaleYInSize = scaleY;
-        }
-    }
     _buttonClickedRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
 void Button::disabledTextureScaleChangedWithSize()
 {
-
-    if (_ignoreSize && !_unifySize)
-    {
-        if (!_scale9Enabled)
-        {
-            _buttonDisabledRenderer->setScale(1.0f);
-        }
-    }
-    else
-    {
-        if (_scale9Enabled)
-        {
-            _buttonDisabledRenderer->setScale(1.0);
-            _buttonDisabledRenderer->setPreferredSize(_contentSize);
-        }
-        else
-        {
-            Size textureSize = _disabledTextureSize;
-            if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
-            {
-                _buttonDisabledRenderer->setScale(1.0f);
-                return;
-            }
-            float scaleX = _contentSize.width / _disabledTextureSize.width;
-            float scaleY = _contentSize.height / _disabledTextureSize.height;
-            _buttonDisabledRenderer->setScaleX(scaleX);
-            _buttonDisabledRenderer->setScaleY(scaleY);
-        }
-    }
+    _buttonDisabledRenderer->setPreferredSize(_contentSize);
+    
     _buttonDisabledRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
@@ -876,6 +815,7 @@ void Button::setTitleFontName(const std::string& fontName)
         _titleRenderer->setSystemFontSize(_fontSize);
         _type = FontType::SYSTEM;
     }
+    _fontName = fontName;
     this->updateContentSize();
 }
 
@@ -903,7 +843,7 @@ const std::string Button::getTitleFontName() const
     }
     else
     {
-        return "";
+        return _fontName;
     }
 }
 
@@ -976,6 +916,67 @@ Size Button::getNormalTextureSize() const
 {
     return _normalTextureSize;
 }
+
+void Button::resetNormalRender()
+{
+    _normalFileName = "";
+    _normalTexType = TextureResType::LOCAL;
+
+    _normalTextureSize = Size(0, 0);
+
+    _normalTextureLoaded = false;
+    _normalTextureAdaptDirty = false;
+
+    _buttonNormalRenderer->resetRender();
+}
+void Button::resetPressedRender()
+{
+    _clickedFileName = "";
+    _pressedTexType = TextureResType::LOCAL;
+
+    _pressedTextureSize = Size(0, 0);
+
+    _pressedTextureLoaded = false;
+    _pressedTextureAdaptDirty = false;
+
+    _buttonClickedRenderer->resetRender();
+}
+
+void Button::resetDisabledRender()
+{
+    _disabledFileName = "";
+    _disabledTexType = TextureResType::LOCAL;
+
+    _disabledTextureSize = Size(0, 0);
+
+    _disabledTextureLoaded = false;
+    _disabledTextureAdaptDirty = false;
+
+    _buttonDisabledRenderer->resetRender();
+}
+
+ResourceData Button::getNormalFile()
+{
+    ResourceData rData;
+    rData.type = (int)_normalTexType;
+    rData.file = _normalFileName;
+    return rData;
+}
+ResourceData Button::getPressedFile()
+{
+    ResourceData rData;
+    rData.type = (int)_pressedTexType;
+    rData.file = _clickedFileName;
+    return rData;
+}
+ResourceData Button::getDisabledFile()
+{
+    ResourceData rData;
+    rData.type = (int)_disabledTexType;
+    rData.file = _disabledFileName;
+    return rData;
+}
+
 }
 
 NS_CC_END

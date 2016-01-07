@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -33,6 +33,8 @@ THE SOFTWARE.
  * @{
  */
 NS_CC_BEGIN
+
+struct CC_DLL ResourceData;
 
 namespace ui {
     class Scale9Sprite;
@@ -169,7 +171,16 @@ public:
     virtual std::string getDescription() const override;
     virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
-    
+
+    /**
+     * @brief @~english Return image file name and type.
+     * @~chinese 返回图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain image description.
+     * @~chinese 包含图片描述的ResourceData结构体。
+     * @since v3.10
+     */
+    ResourceData getRenderFile();
+
 CC_CONSTRUCTOR_ACCESS:
     //initializes state of widget.
     virtual bool init() override;
@@ -194,6 +205,7 @@ protected:
     TextureResType _imageTexType;
     Size _imageTextureSize;
     bool _imageRendererAdaptDirty;
+    std::string _textureFile;
 };
 
 }

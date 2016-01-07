@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
@@ -614,7 +614,7 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE void unscheduleSelector(SEL_SCHEDULE selector, Ref *target) { unschedule(selector, target); };
     
-    /** @~english Checks whether a selector for a given taget is scheduled.
+    /** @~english Checks whether a selector for a given target is scheduled.
      * @~chinese 判断指定的对象和回调函数是否设置了定时器。
      @deprecated Please use 'Scheduler::isScheduled' instead.
      @since v0.99.3

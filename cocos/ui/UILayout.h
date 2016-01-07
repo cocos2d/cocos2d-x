@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -40,7 +40,8 @@ NS_CC_BEGIN
 class DrawNode;
 class LayerColor;
 class LayerGradient;
-
+class StencilStateManager;
+struct CC_DLL ResourceData;
 
 namespace ui {
     
@@ -657,6 +658,15 @@ public:
      */
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
 
+    /**
+     * @brief @~english Return background image file name and type.
+     * @~chinese 返回背景图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain background image description.
+     * @~chinese 包含背景图片描述的ResourceData结构体。
+     * @since v3.10
+     */
+    ResourceData getRenderFile();
+
 CC_CONSTRUCTOR_ACCESS:
     //override "init" method of widget.
     virtual bool init() override;
@@ -908,23 +918,8 @@ protected:
     bool _clippingRectDirty;
     
     //clipping
+    StencilStateManager *_stencileStateManager;
 
-    GLboolean _currentStencilEnabled;
-    GLuint _currentStencilWriteMask;
-    GLenum _currentStencilFunc;
-    GLint _currentStencilRef;
-    GLuint _currentStencilValueMask;
-    GLenum _currentStencilFail;
-    GLenum _currentStencilPassDepthFail;
-    GLenum _currentStencilPassDepthPass;
-    GLboolean _currentDepthWriteMask;
-    
-    GLboolean _currentAlphaTestEnabled;
-    GLenum _currentAlphaTestFunc;
-    GLclampf _currentAlphaTestRef;
- 
-    
-    GLint _mask_layer_le;
     GroupCommand _groupCommand;
     CustomCommand _beforeVisitCmdStencil;
     CustomCommand _afterDrawStencilCmd;

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
@@ -126,7 +126,7 @@ public:
      * @~chinese 渲染场景使用的渲染器。
      * @js NA
      */
-    void render(Renderer* renderer);
+    virtual void render(Renderer* renderer);
     
     virtual void removeAllChildren() override;
     

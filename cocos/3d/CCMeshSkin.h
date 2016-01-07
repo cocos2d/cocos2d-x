@@ -44,7 +44,7 @@ class Skeleton3D;
 /**
  * @class MeshSkin
  * @brief @~english MeshSkin, A class maintain a collection of bones that affect Mesh vertex.
- * And it is responsible for computing matrix palletes that used by skin mesh rendering.
+ * And it is responsible for computing matrix palettes that used by skin mesh rendering.
  * @~chinese MeshSkin：包含了一系列蒙皮骨骼的集合，负责为骨骼蒙皮渲染创建骨骼矩阵组
  * @js NA
  * @lua NA

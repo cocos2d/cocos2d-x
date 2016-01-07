@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
@@ -366,7 +366,17 @@ public:
      * @js NA
      */
     virtual std::string getDescription() const override;
-    
+
+    /** @~english Get the layer count in map.
+     * @~chinese 获取地图包含的layer层数。
+     */
+    int  getLayerNum();
+
+    /** @~english Get the map file name.
+     * @~chinese 获取地图文件名。
+     */
+    const std::string getResourceFile() const { return _tmxFile; }
+
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
@@ -402,6 +412,11 @@ protected:
     
     //! tile properties
     ValueMapIntKey _tileProperties;
+
+    std::string _tmxFile;
+    int _tmxLayerNum;
+
+    static const int TMXLayerTag = 32768;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TMXTiledMap);

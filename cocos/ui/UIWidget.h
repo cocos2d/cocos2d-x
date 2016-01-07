@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -1082,7 +1082,7 @@ public:
      * 获取当前拥有焦点的控件。
      * 不管对什么控件对象调用这个方法，它将返回当前拥有焦点的控件。
      */
-    Widget* getCurrentFocusedWidget()const;
+    static Widget* getCurrentFocusedWidget();
 
     /*@~english
      * Enable or disable the Android Dpad focus navigation feature

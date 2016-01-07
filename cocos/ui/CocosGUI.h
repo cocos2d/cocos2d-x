@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -57,6 +57,7 @@ THE SOFTWARE.
 #include "ui/UIScale9Sprite.h"
 #include "ui/UIEditBox/UIEditBox.h"
 #include "ui/UILayoutComponent.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 /**
  * @addtogroup ui

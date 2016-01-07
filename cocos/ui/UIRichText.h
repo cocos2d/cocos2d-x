@@ -53,7 +53,8 @@ public:
     {
         TEXT,
         IMAGE,
-        CUSTOM
+        CUSTOM,
+        NEWLINE
     };
     
     /**
@@ -259,7 +260,42 @@ protected:
     Node* _customNode;
     friend class RichText;
 };
+
+/**
+ *@brief Rich element for new line.
+ */
+class CC_GUI_DLL RichElementNewLine : public RichElement
+{
+public:
     
+    /**
+     * @brief Default constructor.
+     * @js ctor
+     * @lua new
+     *
+     */
+    RichElementNewLine(){_type = Type::NEWLINE;};
+    
+    /**
+     * @brief Default destructor.
+     * @js NA
+     * @lua NA
+     */
+    virtual ~RichElementNewLine(){};
+    
+    /**
+     * @brief Create a RichElementNewLine with various arguments.
+     *
+     * @param tag A integer tag value.
+     * @param color A color in Color3B.
+     * @param opacity A opacity in GLubyte.
+     * @return A RichElementNewLine instance.
+     */
+    static RichElementNewLine* create(int tag, const Color3B& color, GLubyte opacity);
+protected:
+    friend class RichText;
+};
+
 /**
 *@brief @~english A container for displaying various RichElements.
  We could use it to display texts with images easily.

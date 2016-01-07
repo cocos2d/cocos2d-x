@@ -36,6 +36,7 @@ NS_CC_BEGIN
  */
 
 class Sprite;
+struct CC_DLL ResourceData;
 
 namespace ui {
     class Scale9Sprite;
@@ -170,7 +171,7 @@ public:
      * @~chinese 进度条的capinsets
      * @js NA
      */
-    void setCapInsetProgressBarRebderer(const Rect &capInsets);
+    void setCapInsetProgressBarRenderer(const Rect &capInsets);
     
     /**
      * @~english Gets capinsets for progress bar slider, if slider is using scale9 renderer.
@@ -179,7 +180,7 @@ public:
      * @~chinese 进度跳的九宫格渲染
      * @js NA
      */
-    const Rect& getCapInsetsProgressBarRebderer()const;
+    const Rect& getCapInsetsProgressBarRenderer()const;
     
     /**
      * @~english Load textures for slider ball.
@@ -316,7 +317,51 @@ public:
      */
     float getZoomScale()const;
 
-    
+    /**
+     * @brief @~english Return the background image file name and type.
+     * @~chinese 返回背景图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain background image description.
+     * @~chinese 包含背景图片描述的ResourceData结构体。
+     * @since v3.10
+     */
+    ResourceData getBackFile();
+
+    /**
+     * @brief @~english Return the progress bar image file name and type.
+     * @~chinese 返回进度条图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain progress bar image description.
+     * @~chinese 包含进度条图片描述的ResourceData结构体。
+     * @since v3.10
+     */
+    ResourceData getProgressBarFile();
+
+    /**
+     * @brief @~english Return the normal status slider ball image file name and type.
+     * @~chinese 返回普通状态滑块图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain normal status slider ball image description.
+     * @~chinese 包含普通状态滑块图片描述的ResourceData结构体。
+     * @since v3.10
+     */
+    ResourceData getBallNormalFile();
+
+    /**
+     * @brief @~english Return the pressed status slider ball image file name and type.
+     * @~chinese 返回按下状态滑块图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain pressed status slider ball image description.
+     * @~chinese 包含按下状态滑块图片描述的ResourceData结构体。
+     * @since v3.10
+     */
+    ResourceData getBallPressedFile();
+
+    /**
+     * @brief @~english Return the disabled status slider ball image file name and type.
+     * @~chinese 返回禁用状态滑块图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain disabled status slider ball image description.
+     * @~chinese 包含禁用状态滑块图片描述的ResourceData结构体。
+     * @since v3.10
+     */
+    ResourceData getBallDisabledFile();
+
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
@@ -361,8 +406,6 @@ protected:
     bool _prevIgnoreSize;
     
     float _zoomScale;
-    float _sliderBallNormalTextureScaleX;
-    float _sliderBallNormalTextureScaleY;
 
     bool _isSliderBallPressedTextureLoaded;
     bool _isSliderBallDisabledTexturedLoaded;
@@ -393,6 +436,12 @@ protected:
     TextureResType _ballDTexType;
     bool _barRendererAdaptDirty;
     bool _progressBarRendererDirty;
+
+    std::string _textureFile;
+    std::string _progressBarTextureFile;
+    std::string _slidBallNormalTextureFile;
+    std::string _slidBallPressedTextureFile;
+    std::string _slidBallDisabledTextureFile;
 };
 
 }

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -36,6 +36,7 @@ NS_CC_BEGIN
 
 class Label;
 class SpriteFrame;
+struct CC_DLL ResourceData;
 
 namespace ui{
 
@@ -405,6 +406,54 @@ public:
      */
     Scale9Sprite* getRendererDisabled() const { return _buttonDisabledRenderer; }
 
+    /**
+     * @brief @~english Reset normal state render to null.
+     * @~chinese 将普通状态render重置为空指针。
+     * @since v3.10
+     */
+    void resetNormalRender();
+
+    /**
+     * @brief @~english Reset pressed state render to null.
+     * @~chinese 将按下状态render重置为空指针。
+     * @since v3.10
+     */
+    void resetPressedRender();
+
+    /**
+     * @brief @~english Reset disabled state render to null.
+     * @~chinese 将禁用状态render重置为空指针。
+     * @since v3.10
+     */
+    void resetDisabledRender();
+
+    /**
+     * @brief @~english Return the normal state image file name and type.
+     * @~chinese 返回普通状态图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain normal state image description.
+     * @~chinese 包含普通状态图片描述的ResourceData结构体。
+     * @since v3.10
+     */
+    ResourceData getNormalFile();
+
+    /**
+     * @brief @~english Return the pressed state image file name and type.
+     * @~chinese 返回按下状态图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain pressed state image description.
+     * @~chinese 包含按下状态图片描述的ResourceData结构体。
+     * @since v3.10
+     */
+    ResourceData getPressedFile();
+
+    /**
+     * @brief @~english Return the normal state image file name and type.
+     * @~chinese 返回禁用状态图片的名字及类型（普通图片或plist合图）。
+     * @return The ResourceData structure contain normal state image description.
+     * @~chinese 包含禁用状态图片描述的ResourceData结构体。
+     * @since v3.10
+     */
+    ResourceData getDisabledFile();
+
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     virtual bool init(const std::string& normalImage,
@@ -422,11 +471,11 @@ protected:
     virtual void onSizeChanged() override;
 
     void loadTextureNormal(SpriteFrame* normalSpriteFrame);
-    void setupNormalTexture();
+    void setupNormalTexture(bool textureLoaded);
     void loadTexturePressed(SpriteFrame* pressedSpriteFrame);
-    void setupPressedTexture();
+    void setupPressedTexture(bool textureLoaded);
     void loadTextureDisabled(SpriteFrame* disabledSpriteFrame);
-    void setupDisabledTexture();
+    void setupDisabledTexture(bool textureLoaded);
 
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
@@ -460,17 +509,19 @@ protected:
     Size _pressedTextureSize;
     Size _disabledTextureSize;
 
-    float _normalTextureScaleXInSize;
-    float _normalTextureScaleYInSize;
-    float _pressedTextureScaleXInSize;
-    float _pressedTextureScaleYInSize;
-
     bool _normalTextureLoaded;
     bool _pressedTextureLoaded;
     bool _disabledTextureLoaded;
     bool _normalTextureAdaptDirty;
     bool _pressedTextureAdaptDirty;
     bool _disabledTextureAdaptDirty;
+
+    std::string _normalFileName;
+    std::string _clickedFileName;
+    std::string _disabledFileName;
+    TextureResType _normalTexType;
+    TextureResType _pressedTexType;
+    TextureResType _disabledTexType;
 
 private:
     enum class FontType
@@ -482,6 +533,7 @@ private:
 
     int _fontSize;
     FontType _type;
+    std::string _fontName;
 };
 
 }

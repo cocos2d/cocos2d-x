@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -112,7 +112,7 @@ public:
     {
         /*Constructors*/
         DetailMap();
-        DetailMap(const char* detailMapSrc, float size = 35);
+        DetailMap(const std::string& detailMapSrc, float size = 35);
         /*detail Image source file path*/
         std::string _detailMapSrc;
         /*detailMapSize determine how many tiles that Terrain represent*/
@@ -164,7 +164,7 @@ public:
         /** @~english the source path of the alpha map
             @~chinese alpha通道贴图的源路径
         */
-        char* _alphaMapSrc;
+        std::string _alphaMapSrc;
         /** @~english detail maps
             @~chinese 详细的地图
         */
@@ -210,7 +210,7 @@ private:
     /**
     *terrain vertices internal data format
     */
-    struct TerrainVertexData
+    struct CC_DLL TerrainVertexData
     {
         /*constructor*/
         TerrainVertexData() {};
@@ -225,7 +225,7 @@ private:
         cocos2d::Vec3 _normal;
     };
 
-    struct QuadTree;
+    struct CC_DLL QuadTree;
     /*
         the terminal node of quad, use to subdivision terrain mesh and LOD
     **/
@@ -339,7 +339,7 @@ private:
         QuadTree
         @breif use to hierarchically frustum culling and set LOD
      **/
-    struct QuadTree
+    struct CC_DLL QuadTree
     {
         /** @~english constructor
             @~chinese 构造函数
@@ -415,7 +415,7 @@ public:
     /** @~english initialize heightMap data
         @~chinese 高度图数据初始化
     */
-    bool initHeightMap(const char* heightMap);
+    bool initHeightMap(const std::string& heightMap);
 
     /** @~english initialize alphaMap ,detailMaps textures
         @~chinese 初始化alphamap，detailmaps纹理

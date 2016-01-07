@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
@@ -570,6 +570,19 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flippedY) { setFlippedY(flippedY); };
 
+    /**
+     * returns a reference of the polygon information associated with this sprite
+     *
+     * @return a copy of PolygonInfo
+     */
+    PolygonInfo& getPolygonInfo();
+
+    /**
+     * set the sprite to use this new PolygonInfo
+     *
+     * @param PolygonInfo the polygon information object
+     */
+    void setPolygonInfo(const PolygonInfo& info);
     //
     // Overrides
     //
@@ -635,7 +648,21 @@ public:
     virtual bool isOpacityModifyRGB() const override;
     /// @}
 
-CC_CONSTRUCTOR_ACCESS:
+    /**
+     * @brief @~english Return texture file type(0 = file, 1 = plist).
+     * @~chinese 返回素材图片的类型（0 = 普通图片，1 = plist合图）。
+     * @since v3.10
+     */
+    const int getResourceType() const { return _fileType; }
+
+    /**
+     * @brief @~english Return texture file name.
+     * @~chinese 返回素材图片文件名。
+     * @since v3.10
+     */
+    const std::string getResourceName() const { return _fileName; }
+
+CC_CONSTRUCTOR_ACCESS :
 	/**
      * @js ctor
      */
@@ -795,20 +822,6 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
     
-    /**
-     * returns a copy of the polygon information associated with this sprite
-     * because this is a copy process it is slower than getting the reference, so use wisely
-     *
-     * @return a copy of PolygonInfo
-     */
-    PolygonInfo getPolygonInfo() const;
-    
-    /**
-     * set the sprite to use this new PolygonInfo
-     *
-     * @param PolygonInfo the polygon information object
-     */
-    void setPolygonInfo(const PolygonInfo& info);
 protected:
 
     void updateColor() override;
@@ -865,6 +878,10 @@ protected:
     bool _flippedY;                         /// Whether the sprite is flipped vertically or not
 
     bool _insideBounds;                     /// whether or not the sprite was inside bounds the previous frame
+
+    std::string _fileName;
+    int _fileType;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
 };

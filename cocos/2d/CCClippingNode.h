@@ -1,4 +1,4 @@
-/*Copyright (c) 2012      Pierre-David Bélanger
+﻿/*Copyright (c) 2012      Pierre-David Bélanger
  * Copyright (c) 2012      cocos2d-x.org
  * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
@@ -33,6 +33,8 @@
 #include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
+
+class StencilStateManager;
 /**
  *  @addtogroup _2d
  *  @{
@@ -199,29 +201,8 @@ protected:
     void drawFullScreenQuadClearStencil();
 
     Node* _stencil;
-    GLfloat _alphaThreshold;
-    bool    _inverted;
-
-    //renderData and callback
-    void onBeforeVisit();
-    void onAfterDrawStencil();
-    void onAfterVisit();
-
-    GLboolean _currentStencilEnabled;
-    GLuint _currentStencilWriteMask;
-    GLenum _currentStencilFunc;
-    GLint _currentStencilRef;
-    GLuint _currentStencilValueMask;
-    GLenum _currentStencilFail;
-    GLenum _currentStencilPassDepthFail;
-    GLenum _currentStencilPassDepthPass;
-    GLboolean _currentDepthWriteMask;
-
-    GLboolean _currentAlphaTestEnabled;
-    GLenum _currentAlphaTestFunc;
-    GLclampf _currentAlphaTestRef;
-
-    GLint _mask_layer_le;
+   
+    StencilStateManager* _stencilStateManager;
     
     GroupCommand _groupCommand;
     CustomCommand _beforeVisitCmd;

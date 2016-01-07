@@ -507,3 +507,33 @@ if (ccui.VideoPlayer)
 ccui.Widget.prototype.addNode = ccui.Widget.prototype.addChild;
 ccui.Widget.prototype.getSize = ccui.Widget.prototype.getContentSize;
 ccui.Widget.prototype.setSize = ccui.Widget.prototype.setContentSize;
+
+/*
+ * UIWidget's event listeners wrapper
+ */
+ccui.Widget.prototype._addTouchEventListener = ccui.Widget.prototype.addTouchEventListener;
+ccui.Widget.prototype.addTouchEventListener = function (selector, target) {
+    if (target === undefined)
+        this._addTouchEventListener(selector);
+    else
+        this._addTouchEventListener(selector.bind(target));
+};
+
+function _ui_addEventListener(selector, target) {
+    if (target === undefined)
+        this._addEventListener(selector);
+    else
+        this._addEventListener(selector.bind(target));
+}
+function _ui_applyEventListener(ctor) {
+    var proto = ctor.prototype;
+    proto._addEventListener = proto.addEventListener;
+    proto.addEventListener = _ui_addEventListener;
+}
+
+_ui_applyEventListener(ccui.CheckBox);
+_ui_applyEventListener(ccui.Slider);
+_ui_applyEventListener(ccui.TextField);
+_ui_applyEventListener(ccui.PageView);
+_ui_applyEventListener(ccui.ScrollView);
+_ui_applyEventListener(ccui.ListView);

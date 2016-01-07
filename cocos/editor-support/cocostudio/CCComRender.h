@@ -168,4 +168,4 @@ private:
 };
 
 }
-#endif  // __FUNDATION__CCCOMPONENT_H__
+#endif  // __CC_EXTENTIONS_CCCOMRENDER_H__

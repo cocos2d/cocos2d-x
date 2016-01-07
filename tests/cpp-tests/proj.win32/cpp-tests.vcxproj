@@ -152,6 +152,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\BaseTest.cpp" />
     <ClCompile Include="..\Classes\BillBoardTest\BillBoardTest.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-12847.cpp" />
+    <ClCompile Include="..\Classes\BugsTest\Bug-14327.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-CCDrawNode.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-Child.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-PageViewLayout.cpp" />
@@ -346,6 +347,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\MobileBalanced.h" />
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\MotorJoint.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-12847.h" />
+    <ClInclude Include="..\Classes\BugsTest\Bug-14327.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-CCDrawNode.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-Child.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-PageViewLayout.h" />

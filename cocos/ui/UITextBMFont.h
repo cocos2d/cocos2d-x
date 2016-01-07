@@ -35,6 +35,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Label;
+struct CC_DLL ResourceData;
 
 namespace ui {
     
@@ -142,6 +143,16 @@ public:
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const override;
+
+    /**
+     * @brief @~english Return the BitMap font file name.
+     * @~chinese 返回位图字体文件的名字。
+     * @return The ResourceData structure contain BitMap font file description.
+     * @~chinese 包含位图字体文件描述的ResourceData结构体。
+     * @since v3.10
+     */
+    ResourceData getRenderFile();
+
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;

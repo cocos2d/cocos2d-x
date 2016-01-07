@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
  
@@ -829,6 +829,17 @@ public:
      * @~chinese 数据信息。
      */
     virtual bool parseConfig(ConfigType type, const std::string& str) = 0;
+
+
+    /** Root a Reference.
+     It tells the Garbage Collector that the associated Scripting object should not be collected
+     */
+    virtual void rootObject(Ref* obj) {}
+
+    /** Unroot a Reference.
+     It tells the Garbage Collector that the associated Scripting object can be collected
+     */
+    virtual void unrootObject(Ref* obj) {}
 };
 
 class Node;

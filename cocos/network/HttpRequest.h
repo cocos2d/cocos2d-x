@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
  
@@ -312,7 +312,7 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(Ref* pTarget, SEL_CallFuncND pSelector)
     {
-        setResponseCallback(pTarget, (SEL_HttpResponse) pSelector);
+        doSetResponseCallback(pTarget, (SEL_HttpResponse)pSelector);
     }
     
     /**@~english
@@ -328,15 +328,9 @@ public:
      * @param pSelector @~english the SEL_HttpResponse function.
      * @~chinese 回调函数。
      */
-    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
+    inline void setResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
     {
-        _pTarget = pTarget;
-        _pSelector = pSelector;
-        
-        if (_pTarget)
-        {
-            _pTarget->retain();
-        }
+        doSetResponseCallback(pTarget, pSelector);
     }
     /**@~english
      * Set response callback function of HttpRequest object.
@@ -446,6 +440,22 @@ public:
    		return _headers;
    	}
     
+private:
+    inline void doSetResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
+    {
+        if (_pTarget)
+        {
+            _pTarget->release();
+        }
+        
+        _pTarget = pTarget;
+        _pSelector = pSelector;
+        if (_pTarget)
+        {
+            _pTarget->retain();
+        }
+    }
+
 protected:
     // properties
     Type                        _requestType;    /// kHttpRequestGet, kHttpRequestPost or other enums

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2009      Matt Oswald
 Copyright (c) 2010-2012 cocos2d-x.org
@@ -315,6 +315,10 @@ CC_CONSTRUCTOR_ACCESS:
     bool init() override;
     
 protected:
+    /** Updates a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
+     This method should be called only when you are dealing with very big AtlasSprite and when most of the Sprite won't be updated.
+     For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
+     */
     void updateQuadFromSprite(Sprite *sprite, ssize_t index);   
 
     void updateAtlasIndex(Sprite* sprite, ssize_t* curIndex);

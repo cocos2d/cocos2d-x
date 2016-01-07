@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
@@ -164,7 +164,7 @@ protected:
     ssize_t _quadsToDraw;
     /** Color uniform.*/
     GLint    _uniformColor;
-    /** This varible is only used for LabelAtlas FPS display. So plz don't modify its value. */
+    /** This variable is only used for LabelAtlas FPS display. So plz don't modify its value. */
     bool _ignoreContentScaleFactor;
     /** Quad command.*/
     QuadCommand _quadCommand;

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright 2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
@@ -742,7 +742,7 @@ public:
 
 protected:
     GLProgramState();
-    ~GLProgramState();
+    virtual ~GLProgramState();
     bool init(GLProgram* program);
     void resetGLProgram();
     void updateUniformsAndAttributes();

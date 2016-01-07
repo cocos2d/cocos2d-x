@@ -175,6 +175,16 @@ float
 },
 
 /**
+ * @method getPath
+ * @return {String}
+ */
+getPath : function (
+)
+{
+    return ;
+},
+
+/**
  * @method drawInRect
  * @param {rect_object} arg0
  */
@@ -365,6 +375,16 @@ getStartLocationInView : function (
 },
 
 /**
+ * @method getCurrentForce
+ * @return {float}
+ */
+getCurrentForce : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getStartLocation
  * @return {vec2_object}
  */
@@ -386,16 +406,30 @@ getID : function (
 
 /**
  * @method setTouchInfo
- * @param {int} arg0
- * @param {float} arg1
- * @param {float} arg2
- */
-setTouchInfo : function (
-int, 
-float, 
+* @param {int|int} int
+* @param {float|float} float
+* @param {float|float} float
+* @param {float} float
+* @param {float} float
+*/
+setTouchInfo : function(
+int,
+float,
+float,
+float,
 float 
 )
 {
+},
+
+/**
+ * @method getMaxForce
+ * @return {float}
+ */
+getMaxForce : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -3750,6 +3784,16 @@ getFileType : function (
 },
 
 /**
+ * @method getFilePath
+ * @return {String}
+ */
+getFilePath : function (
+)
+{
+    return ;
+},
+
+/**
  * @method getNumberOfMipmaps
  * @return {int}
  */
@@ -4840,6 +4884,18 @@ getElapsed : function (
 cc.Sequence = {
 
 /**
+ * @method init
+ * @param {Array} arg0
+ * @return {bool}
+ */
+init : function (
+array 
+)
+{
+    return false;
+},
+
+/**
  * @method initWithTwoActions
  * @param {cc.FiniteTimeAction} arg0
  * @param {cc.FiniteTimeAction} arg1
@@ -4992,6 +5048,18 @@ RepeatForever : function (
  * @class Spawn
  */
 cc.Spawn = {
+
+/**
+ * @method init
+ * @param {Array} arg0
+ * @return {bool}
+ */
+init : function (
+array 
+)
+{
+    return false;
+},
 
 /**
  * @method initWithTwoActions
@@ -11824,6 +11892,16 @@ color4f
 },
 
 /**
+ * @method getLineWidth
+ * @return {float}
+ */
+getLineWidth : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method drawPoint
  * @param {vec2_object} arg0
  * @param {float} arg1
@@ -11914,6 +11992,16 @@ float
 },
 
 /**
+ * @method getWidth
+ * @return {float}
+ */
+getWidth : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getString
  * @return {String}
  */
@@ -11964,6 +12052,16 @@ getBlendFunc : function (
 },
 
 /**
+ * @method enableWrap
+ * @param {bool} arg0
+ */
+enableWrap : function (
+bool 
+)
+{
+},
+
+/**
  * @method setWidth
  * @param {float} arg0
  */
@@ -11971,6 +12069,26 @@ setWidth : function (
 float 
 )
 {
+},
+
+/**
+ * @method getAdditionalKerning
+ * @return {float}
+ */
+getAdditionalKerning : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getBMFontSize
+ * @return {float}
+ */
+getBMFontSize : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -11991,6 +12109,16 @@ getHorizontalAlignment : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getShadowOffset
+ * @return {size_object}
+ */
+getShadowOffset : function (
+)
+{
+    return cc.Size;
 },
 
 /**
@@ -12024,14 +12152,48 @@ str
 },
 
 /**
+ * @method getOutlineSize
+ * @return {int}
+ */
+getOutlineSize : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setBMFontFilePath
  * @param {String} arg0
  * @param {vec2_object} arg1
+ * @param {float} arg2
  * @return {bool}
  */
 setBMFontFilePath : function (
 str, 
-vec2 
+vec2, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithTTF
+* @param {cc._ttfConfig|String} _ttfconfig
+* @param {String|String} str
+* @param {cc.TextHAlignment|float} texthalignment
+* @param {int|size_object} int
+* @param {cc.TextHAlignment} texthalignment
+* @param {cc.TextVAlignment} textvalignment
+* @return {bool|bool}
+*/
+initWithTTF : function(
+str,
+str,
+float,
+size,
+texthalignment,
+textvalignment 
 )
 {
     return false;
@@ -12053,6 +12215,16 @@ float
  */
 setSystemFontSize : function (
 float 
+)
+{
+},
+
+/**
+ * @method setOverflow
+ * @param {cc.Label::Overflow} arg0
+ */
+setOverflow : function (
+overflow 
 )
 {
 },
@@ -12118,13 +12290,23 @@ int
 },
 
 /**
- * @method getAdditionalKerning
+ * @method getShadowBlurRadius
  * @return {float}
  */
-getAdditionalKerning : function (
+getShadowBlurRadius : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getEffectColor
+ * @return {color4f_object}
+ */
+getEffectColor : function (
+)
+{
+    return cc.Color4F;
 },
 
 /**
@@ -12216,6 +12398,16 @@ getLineHeight : function (
 },
 
 /**
+ * @method getShadowColor
+ * @return {color4f_object}
+ */
+getShadowColor : function (
+)
+{
+    return cc.Color4F;
+},
+
+/**
  * @method getTTFConfig
  * @return {cc._ttfConfig}
  */
@@ -12246,6 +12438,18 @@ color4b
 },
 
 /**
+ * @method getLetter
+ * @param {int} arg0
+ * @return {cc.Sprite}
+ */
+getLetter : function (
+int 
+)
+{
+    return cc.Sprite;
+},
+
+/**
  * @method setHeight
  * @param {float} arg0
  */
@@ -12256,13 +12460,13 @@ float
 },
 
 /**
- * @method getWidth
- * @return {float}
+ * @method isShadowEnabled
+ * @return {bool}
  */
-getWidth : function (
+isShadowEnabled : function (
 )
 {
-    return 0;
+    return false;
 },
 
 /**
@@ -12276,15 +12480,13 @@ color4b
 },
 
 /**
- * @method getLetter
- * @param {int} arg0
- * @return {cc.Sprite}
+ * @method getOverflow
+ * @return {cc.Label::Overflow}
  */
-getLetter : function (
-int 
+getOverflow : function (
 )
 {
-    return cc.Sprite;
+    return 0;
 },
 
 /**
@@ -12348,6 +12550,26 @@ texthalignment
 },
 
 /**
+ * @method isWrapEnabled
+ * @return {bool}
+ */
+isWrapEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getLabelEffectType
+ * @return {cc.LabelEffect}
+ */
+getLabelEffectType : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setAlignment
 * @param {cc.TextHAlignment|cc.TextHAlignment} texthalignment
 * @param {cc.TextVAlignment} textvalignment
@@ -12363,6 +12585,16 @@ textvalignment
  * @method requestSystemFontRefresh
  */
 requestSystemFontRefresh : function (
+)
+{
+},
+
+/**
+ * @method setBMFontSize
+ * @param {float} arg0
+ */
+setBMFontSize : function (
+float 
 )
 {
 },
@@ -13449,6 +13681,16 @@ isSelected : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setCallback
+ * @param {function} arg0
+ */
+setCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -15042,6 +15284,16 @@ getStartSpin : function (
 },
 
 /**
+ * @method getResourceFile
+ * @return {String}
+ */
+getResourceFile : function (
+)
+{
+    return ;
+},
+
+/**
  * @method getRotatePerSecond
  * @return {float}
  */
@@ -16624,6 +16876,16 @@ float
 },
 
 /**
+ * @method getResourceType
+ * @return {int}
+ */
+getResourceType : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method initWithTexture
 * @param {cc.Texture2D|cc.Texture2D|cc.Texture2D} texture2d
 * @param {rect_object|rect_object} rect
@@ -16767,6 +17029,16 @@ getSpriteFrame : function (
 )
 {
     return cc.SpriteFrame;
+},
+
+/**
+ * @method getResourceName
+ * @return {String}
+ */
+getResourceName : function (
+)
+{
+    return ;
 },
 
 /**
@@ -18617,6 +18889,16 @@ getProjectionMatrix : function (
 },
 
 /**
+ * @method isBrushValid
+ * @return {bool}
+ */
+isBrushValid : function (
+)
+{
+    return false;
+},
+
+/**
  * @method getDepthInView
  * @param {mat4_object} arg0
  * @return {float}
@@ -18977,6 +19259,16 @@ init : function (
 },
 
 /**
+ * @method isValid
+ * @return {bool}
+ */
+isValid : function (
+)
+{
+    return false;
+},
+
+/**
  * @method createSkyboxBrush
  * @param {String} arg0
  * @param {String} arg1
@@ -19127,6 +19419,16 @@ CameraBackgroundColorBrush : function (
 cc.CameraBackgroundSkyBoxBrush = {
 
 /**
+ * @method setTextureValid
+ * @param {bool} arg0
+ */
+setTextureValid : function (
+bool 
+)
+{
+},
+
+/**
  * @method setTexture
  * @param {cc.TextureCube} arg0
  */
@@ -19134,6 +19436,26 @@ setTexture : function (
 texturecube 
 )
 {
+},
+
+/**
+ * @method setActived
+ * @param {bool} arg0
+ */
+setActived : function (
+bool 
+)
+{
+},
+
+/**
+ * @method isActived
+ * @return {bool}
+ */
+isActived : function (
+)
+{
+    return false;
 },
 
 /**
@@ -20831,6 +21153,18 @@ texture2d
 },
 
 /**
+ * @method renameTextureWithKey
+ * @param {String} arg0
+ * @param {String} arg1
+ */
+renameTextureWithKey : function (
+str, 
+str 
+)
+{
+},
+
+/**
  * @method removeUnusedTextures
  */
 removeUnusedTextures : function (
@@ -20949,18 +21283,6 @@ char
 cc.Application = {
 
 /**
- * @method openURL
- * @param {String} arg0
- * @return {bool}
- */
-openURL : function (
-str 
-)
-{
-    return false;
-},
-
-/**
  * @method getTargetPlatform
  * @return {cc.ApplicationProtocol::Platform}
  */
@@ -20978,6 +21300,28 @@ getCurrentLanguage : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method openURL
+ * @param {String} arg0
+ * @return {bool}
+ */
+openURL : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method getVersion
+ * @return {String}
+ */
+getVersion : function (
+)
+{
+    return ;
 },
 
 /**
@@ -21358,6 +21702,18 @@ SpriteBatchNode : function (
  * @class SpriteFrameCache
  */
 cc.SpriteFrameCache = {
+
+/**
+ * @method reloadTexture
+ * @param {String} arg0
+ * @return {bool}
+ */
+reloadTexture : function (
+str 
+)
+{
+    return false;
+},
 
 /**
  * @method addSpriteFramesWithFileContent
@@ -22113,6 +22469,16 @@ getTileProperties : function (
 },
 
 /**
+ * @method getExternalTilesetFileName
+ * @return {String}
+ */
+getExternalTilesetFileName : function (
+)
+{
+    return ;
+},
+
+/**
  * @method getObjectGroups
 * @return {Array|Array}
 */
@@ -22575,6 +22941,16 @@ str
 },
 
 /**
+ * @method getLayerNum
+ * @return {int}
+ */
+getLayerNum : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setMapSize
  * @param {size_object} arg0
  */
@@ -22607,17 +22983,13 @@ getObjectGroups : function(
 },
 
 /**
- * @method initWithXML
- * @param {String} arg0
- * @param {String} arg1
- * @return {bool}
+ * @method getResourceFile
+ * @return {String}
  */
-initWithXML : function (
-str, 
-str 
+getResourceFile : function (
 )
 {
-    return false;
+    return ;
 },
 
 /**
@@ -22650,6 +23022,20 @@ getMapSize : function (
 )
 {
     return cc.Size;
+},
+
+/**
+ * @method initWithXML
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+initWithXML : function (
+str, 
+str 
+)
+{
+    return false;
 },
 
 /**
@@ -23106,28 +23492,5 @@ getInstance : function (
  * @class ComponentJS
  */
 cc.ComponentJS = {
-
-/**
- * @method create
- * @param {String} arg0
- * @return {cc.ComponentJS}
- */
-create : function (
-str 
-)
-{
-    return cc.ComponentJS;
-},
-
-/**
- * @method ComponentJS
- * @constructor
- * @param {String} arg0
- */
-ComponentJS : function (
-str 
-)
-{
-},
 
 };

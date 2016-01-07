@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
@@ -435,6 +435,25 @@ public:
      * @~chinese 触摸点的y坐标。
      */
     virtual void handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[]);
+
+
+    /** @~english Touch events are handled by default; if you want to customize your handlers, please override this function.
+     *
+     * @~chinese 默认处理触摸事件;如果你想定制处理程序,请重写这个函数。
+     * @param num @~english The number of touch.
+     * @~chinese 触摸的数量。
+     * @param ids @~english The identity of the touch.
+     * @~chinese 触摸的唯一标识
+     * @param xs @~english The points of x.
+     * @~chinese 触摸点的x坐标。
+     * @param ys @~english The points of y.
+     * @~chinese 触摸点的y坐标。
+     * @param fs The force of 3d touches.
+     * @~chinese 触摸点的3d touch压感值。
+     * @param ms The maximum force of 3d touches
+     * @~chinese 触摸点的最大3d touch压感值。
+     */
+    virtual void handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[], float fs[], float ms[]);
     
     /** @~english Touch events are handled by default; if you want to customize your handlers, please override this function.
      *

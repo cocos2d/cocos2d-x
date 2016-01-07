@@ -303,7 +303,7 @@ void Widget::setContentSize(const cocos2d::Size &contentSize)
     }
     else if (_ignoreSize)
     {
-        _contentSize = getVirtualRendererSize();
+        ProtectedNode::setContentSize(getVirtualRendererSize());
     }
     if (!_usingLayoutComponent && _running)
     {
@@ -609,6 +609,11 @@ bool Widget::isHighlighted() const
 
 void Widget::setHighlighted(bool highlight)
 {
+    if (highlight == _highlight)
+    {
+        return;
+    }
+
     _highlight = highlight;
     if (_bright)
     {
@@ -888,6 +893,12 @@ void Widget::moveEvent()
 void Widget::releaseUpEvent()
 {
     this->retain();
+
+    if (isFocusEnabled())
+    {
+        requestFocus();
+    }
+
     if (_touchEventCallback)
     {
         _touchEventCallback(this, TouchEventType::ENDED);
@@ -1449,7 +1460,7 @@ void Widget::onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus)
     }
 }
 
-Widget* Widget::getCurrentFocusedWidget()const
+Widget* Widget::getCurrentFocusedWidget()
 {
     return _focusedWidget;
 }

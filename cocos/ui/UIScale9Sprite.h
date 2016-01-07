@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -30,12 +30,15 @@
 #include "2d/CCSpriteBatchNode.h"
 #include "platform/CCPlatformMacros.h"
 #include "ui/GUIExport.h"
+#include "renderer/CCTrianglesCommand.h"
 
 /**
  * @addtogroup ui
  * @{
  */
 NS_CC_BEGIN
+class DrawNode;
+
 namespace ui {
     
     /**
@@ -82,6 +85,12 @@ namespace ui {
         {
             NORMAL,
             GRAY
+        };
+        
+        enum class RenderingType
+        {
+            SIMPLE,
+            SLICE
         };
         
     public:
@@ -714,42 +723,8 @@ namespace ui {
         
         /// @} end of Children and Parent
         
+        virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
         virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
-        virtual void cleanup() override;
-        
-        /**
-         * @lua NA
-         */
-        virtual void onEnter() override;
-        
-        /** @~english Event callback that is invoked when the Node enters in the 'stage'.
-         * If the Node enters the 'stage' with a transition, this event is called when the transition finishes.
-         * If you override onEnterTransitionDidFinish, you shall call its parent's one, e.g. Node::onEnterTransitionDidFinish()
-         * @~chinese 当九宫格进入场景时被调用的事件回调，如果有过渡动画，则在过渡动画完成后调用
-         * @js NA
-         * @lua NA
-         */
-        virtual void onEnterTransitionDidFinish() override;
-        
-        /**
-         * @~english Event callback that is invoked every time the Node leaves the 'stage'.
-         * If the Node leaves the 'stage' with a transition, this event is called when the transition finishes.
-         * During onExit you can't access a sibling node.
-         * If you override onExit, you shall call its parent's one, e.g., Node::onExit().
-         * @~chinese 当九宫格精灵离开场景时的事件回调，如果精灵在离开场景时有过渡动画，则在过渡动画完成后进行回调
-         * @js NA
-         * @lua NA
-         */
-        virtual void onExit() override;
-        
-        /**
-         * @~english Event callback that is called every time the Node leaves the 'stage'.
-         * If the Node leaves the 'stage' with a transition, this callback is called when the transition starts.
-         * @~chinese 当九宫格离开场景时触发的事件回调，如果精灵离开场景时有过渡动画，则在过渡动画开始时触发回调
-         * @js NA
-         * @lua NA
-         */
-        virtual void onExitTransitionDidStart() override;
         
         virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
         virtual void updateDisplayedColor(const Color3B& parentColor) override;
@@ -819,45 +794,50 @@ namespace ui {
         virtual float getScale() const override;
         using Node::getScaleZ;
         virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
+        virtual void setGlobalZOrder(float globalZOrder) override;
+
+        /**
+         * Set the slice sprite rendering type.
+         * When setting to SIMPLE, only 4 vertexes is used to rendering.
+         * otherwise 16 vertexes will be used to rendering.
+         * @see RenderingType
+         */
+        void setRenderingType(RenderingType type);
+        
+        /**
+         * Return the slice sprite rendering type.
+         */
+        RenderingType getRenderingType()const;
+
+        /**
+         * @brief @~english Reset scale9 render to null.
+         * @~chinese 将9宫格精灵render重置为空指针。
+         * @since v3.10
+         */
+        void resetRender();
+
     protected:
         void updateCapInset();
-        void updatePositions();
         void createSlicedSprites();
         void cleanupSlicedSprites();
-        void adjustScale9ImagePosition();
+        void adjustNoneScale9ImagePosition();
+        void configureSimpleModeRendering();
         void applyBlendFunc();
         void updateBlendFunc(Texture2D *texture);
-        /**
-         * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
-         * This approach can improves the performance massively.
-         * @note Don't call this manually unless a child added needs to be removed in the same frame
-         */
-        virtual void sortAllProtectedChildren();
+        std::vector<Vec2> calculateUV(Texture2D *tex, const Rect& capInsets,
+                                     const Size& originalSize, const Vec4& offsets);
+        std::vector<Vec2> calculateVertices(const Rect& capInsets, const Size& originalSize, const Vec4& offsets);
+        TrianglesCommand::Triangles calculateTriangles(const std::vector<Vec2>& uv,
+                                                      const std::vector<Vec2>& vertices);
         
-        bool _spritesGenerated;
         Rect _spriteRect;
         bool   _spriteFrameRotated;
         Rect _capInsetsInternal;
-        bool _positionsAreDirty;
         
         Sprite* _scale9Image; //the original sprite
-        Sprite* _topLeftSprite;
-        Sprite* _topSprite;
-        Sprite* _topRightSprite;
-        Sprite* _leftSprite;
-        Sprite* _centerSprite;
-        Sprite* _rightSprite;
-        Sprite* _bottomLeftSprite;
-        Sprite* _bottomSprite;
-        Sprite* _bottomRightSprite;
         
         bool _scale9Enabled;
         BlendFunc _blendFunc;
-        
-        Size _topLeftSize;
-        Size _centerSize;
-        Size _bottomRightSize;
-        Vec2 _centerOffset;
         
         /** Original sprite's size. */
         Size _originalSize;
@@ -866,12 +846,7 @@ namespace ui {
         
         //if the preferredSize component is given as -1, it is ignored
         Size _preferredSize;
-        /**
-         * The end-cap insets.
-         * On a non-resizeable sprite, this property is set to CGRect::ZERO; the sprite
-         * does not use end caps and the entire sprite is subject to stretching.
-         */
-        Rect _capInsets;
+        
         /** Sets the left side inset */
         float _insetLeft;
         /** Sets the top side inset */
@@ -881,16 +856,22 @@ namespace ui {
         /** Sets the bottom side inset */
         float _insetBottom;
         
-        /// helper that reorder a child
-        void addProtectedChild(Node* child);
-        
-        Vector<Node*> _protectedChildren;        ///holds the 9 sprites
-        bool _reorderProtectedChildDirty;
-        
         bool _flippedX;
         bool _flippedY;
         bool _isPatch9;
         State _brightState;
+        Vec2 _nonSliceSpriteAnchor;
+
+        V3F_C4B_T2F* _sliceVertices;
+        unsigned short* _sliceIndices;
+        bool _sliceSpriteDirty;
+        RenderingType _renderingType;
+        
+#if CC_SPRITE_DEBUG_DRAW
+        DrawNode *_debugDrawNode;
+#endif //CC_SPRITE_DEBUG_DRAW
+        bool _insideBounds;   /// whether or not the sprite was inside bounds the previous frame
+        TrianglesCommand _trianglesCommand;     ///
     };
     
 }}  //end of namespace

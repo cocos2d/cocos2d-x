@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -103,8 +103,10 @@ public:
      * draw the background
      */
     virtual void drawBackground(Camera* camera) {}
-    
-CC_CONSTRUCTOR_ACCESS:
+
+    virtual bool isValid() { return true; }
+
+CC_CONSTRUCTOR_ACCESS :
     CameraBackgroundBrush();
     virtual ~CameraBackgroundBrush();
 
@@ -227,7 +229,7 @@ public:
      */
     static CameraBackgroundSkyBoxBrush* create();
     /**
-     * Set skybox texutre 
+     * Set skybox texture 
      * @param texture Skybox texture
      */
     void setTexture(TextureCube*  texture);
@@ -236,8 +238,34 @@ public:
      * Draw background
      */
     virtual void drawBackground(Camera* camera) override;
-    
-CC_CONSTRUCTOR_ACCESS:
+
+    /** @~english Get if the sky box background brush is actived.
+     * @~chinese 获取天空盒背景画刷是否激活
+     * @return @~english If the background brush is actived.
+     * @~chinese 天空盒背景画刷是否激活
+     */
+    bool isActived() const;
+
+    /** @~english Set sky box background brush is actived status.
+     * @~chinese 设置天空盒背景刷激活状态
+     * @param actived @~english Background brush active status to be set.
+     * @~chinese 要设置的天空盒背景刷激活状态
+     */
+    void setActived(bool actived);
+
+    /** Set sky box background texture validate status.
+     @param valid Texture validate status to be set.
+    */
+    virtual void setTextureValid(bool valid);
+
+    /** @~english Get if the sky box background brush is valid.
+     * @~chinese 获取天空盒背景刷是否有效
+     * @return @~english If the background brush is valid.
+     * @~chinese 天空盒背景刷是否有效
+     */
+    virtual bool isValid()override;
+
+CC_CONSTRUCTOR_ACCESS :
     CameraBackgroundSkyBoxBrush();
     virtual ~CameraBackgroundSkyBoxBrush();
     
@@ -258,6 +286,10 @@ protected:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _backToForegroundListener;
 #endif
+
+private:
+    bool _actived;
+    bool _textureValid;
 };
 
 NS_CC_END

@@ -29,7 +29,8 @@ jsval animationInfo_to_jsval(JSContext* cx, const cocostudio::timeline::Animatio
 {
     JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
-    bool ok = JS_DefineProperty(cx, tmp, "name", JS::RootedValue(cx, std_string_to_jsval(cx, v.name)), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS::RootedValue jsname(cx, std_string_to_jsval(cx, v.name));
+    bool ok = JS_DefineProperty(cx, tmp, "name", jsname, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "startIndex", v.startIndex, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "endIndex", v.endIndex, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if (ok) {

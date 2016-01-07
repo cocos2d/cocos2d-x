@@ -448,6 +448,11 @@ void PUParticleSystem3D::forceUpdate( float delta )
 
     prepared();
 
+    Vec3 currentPos = getDerivedPosition();
+    _latestPositionDiff = currentPos - _latestPosition;
+    _latestPosition = currentPos;
+    _latestOrientation = getDerivedOrientation();
+
     if (!_emitters.empty()){
         emitParticles(delta);
         preUpdator(delta);
@@ -455,10 +460,6 @@ void PUParticleSystem3D::forceUpdate( float delta )
         postUpdator(delta);
     }
 
-    Vec3 currentPos = getDerivedPosition();
-    _latestPositionDiff = currentPos - _latestPosition;
-    _latestPosition = currentPos;
-    _latestOrientation = getDerivedOrientation();
     _timeElapsedSinceStart += delta;
 }
 
@@ -1010,7 +1011,7 @@ void PUParticleSystem3D::initParticleForExpiration( PUParticle3D* particle, floa
         it->particleExpired(this, particle);
     }
     ///** Externs are also called to perform expiration activities. If needed, affectors and emitters may be added, but at the moment
-    //	there is no reason for (and we don´t want to waste cpu resources).
+    //	there is no reason for (and we don't want to waste cpu resources).
     //*/
     //if (!mExterns.empty())
     //{

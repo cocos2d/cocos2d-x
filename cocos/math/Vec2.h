@@ -1,4 +1,4 @@
-/**
+﻿/**
  Copyright 2013 BlackBerry Inc.
  Copyright (c) 2014-2015 Chukong Technologies
 
@@ -681,7 +681,7 @@ public:
     }
     
     /** @~english Run a math operation function on each point component
-     * absf, fllorf, ceilf, roundf
+     * absf, floorf, ceilf, roundf
      * any function that has the signature: float func(float);
      * For example: let's try to take the floor of x,y
      * p.compOp(floorf);

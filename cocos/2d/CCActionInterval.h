@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2010-2012 cocos2d-x.org
@@ -235,6 +235,7 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** @~english initializes the action  @~chinese 用两个动作初始化动作 */
     bool initWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo);
+    bool init(const Vector<FiniteTimeAction*>& arrayOfActions);
 
 protected:
     FiniteTimeAction *_actions[2];
@@ -515,6 +516,7 @@ CC_CONSTRUCTOR_ACCESS:
      * @~chinese 如果初始化成功则返回true，否则返回false
      */
     bool initWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2);
+    bool init(const Vector<FiniteTimeAction*>& arrayOfActions);
 
 protected:
     FiniteTimeAction *_one;
@@ -1081,7 +1083,7 @@ public:
      * @code
      * When this function bound to js or lua,the input params are changed.
      * in js: var create(var t,var table)
-     * in lua: lcaol create(local t, local table)
+     * in lua: local create(local t, local table)
      * @endcode
      */
     static BezierBy* create(float t, const ccBezierConfig& c);
@@ -1139,7 +1141,7 @@ public:
      * @code
      * when this function bound to js or lua,the input params are changed
      * in js: var create(var t,var table)
-     * in lua: lcaol create(local t, local table)
+     * in lua: local create(local t, local table)
      * @endcode
      */
     static BezierTo* create(float t, const ccBezierConfig& c);
@@ -1431,7 +1433,7 @@ private:
 /** @class FadeTo
  * @brief @~english Fades an object that implements the RGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
  * @~chinese FadeTo（渐变）可以将一个实现了RGBAProtocol协议的对象从当前透明度渐变到指定透明度。
- @warning @~english This action doesn't support "reverse"
+ * @warning @~english This action doesn't support "reverse"
  * @~chinese 这个动作不支持“逆转”（reverse）
  */
 class CC_DLL FadeTo : public ActionInterval

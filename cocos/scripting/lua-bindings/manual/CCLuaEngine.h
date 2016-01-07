@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2012      cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
  
@@ -35,6 +35,8 @@ extern "C" {
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
 #include "cocos2d/LuaScriptHandlerMgr.h"
+#include "Lua-BindingsExport.h"
+
 
 /**
  * @addtogroup lua
@@ -53,8 +55,7 @@ NS_CC_BEGIN
  * @lua NA
  * @js NA
  */
-
-class LuaEngine : public ScriptEngineProtocol
+class CC_LUA_DLL LuaEngine : public ScriptEngineProtocol
 {
 public:
     /**@~english

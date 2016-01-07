@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Jason Booth
 Copyright (c) 2009      Robert J Payne
@@ -301,6 +301,16 @@ public:
     /** @deprecated use getSpriteFrameByName() instead */
     CC_DEPRECATED_ATTRIBUTE SpriteFrame* spriteFrameByName(const std::string&name) { return getSpriteFrameByName(name); }
 
+    /** @~english Reload packed texture with special file name.
+    * @~chinese 重新加载plist合图文件。
+    *
+    * @param plist @~english Plist file name.
+    * @~chinese plist 文件路径。
+    * @return @~english True if the file is loaded.
+    * @~chinese 如果文件重新加载成功，返回 true；否则返回 false。
+    */
+    bool reloadTexture(const std::string& plist);
+
 protected:
     // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
     SpriteFrameCache(){}
@@ -326,6 +336,8 @@ protected:
                                const std::vector<int> &verticesUV,
                                const std::vector<int> &triangleIndices,
                                PolygonInfo &polygonInfo);
+
+    void reloadSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture);
 
     Map<std::string, SpriteFrame*> _spriteFrames;
     ValueMap _spriteFramesAliases;

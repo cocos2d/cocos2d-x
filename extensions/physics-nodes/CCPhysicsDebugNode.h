@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Scott Lembcke and Howling Moon Software
+﻿/* Copyright (c) 2012 Scott Lembcke and Howling Moon Software
  * Copyright (c) 2012 cocos2d-x.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy

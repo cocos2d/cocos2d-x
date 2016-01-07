@@ -70,7 +70,7 @@ namespace cocos2d { namespace network {
             if (JniHelper::getStaticMethodInfo(methodInfo,
                                                JCLS_DOWNLOADER,
                                                "createDownloader",
-                                               "(II" JARG_STR ")" JARG_DOWNLOADER))
+                                               "(II" JARG_STR "I)" JARG_DOWNLOADER))
             {
                 jobject jStr = methodInfo.env->NewStringUTF(hints.tempFileNameSuffix.c_str());
                 jobject jObj = methodInfo.env->CallStaticObjectMethod(
@@ -78,7 +78,8 @@ namespace cocos2d { namespace network {
                         methodInfo.methodID,
                         _id,
                         hints.timeoutInSeconds,
-                        jStr
+                        jStr,
+                        hints.countOfMaxProcessingTasks
                 );
                 _impl = methodInfo.env->NewGlobalRef(jObj);
                 DLLOG("android downloader: jObj: %p, _impl: %p", jObj, _impl);

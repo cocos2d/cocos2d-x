@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
@@ -41,7 +41,7 @@ NS_CC_BEGIN
 /** @class AutoReleasePool
  * @brief
  * @~english
- * A pool for managing autorlease objects.
+ * A pool for managing autorelease objects.
  * @~chinese 
  * 自动释放对象管理池。
  * @js NA
