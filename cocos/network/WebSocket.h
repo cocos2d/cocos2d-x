@@ -36,9 +36,9 @@
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCStdC.h"
 
-struct libwebsocket;
-struct libwebsocket_context;
-struct libwebsocket_protocols;
+struct lws;
+struct lws_context;
+struct lws_protocols;
 
 /**
  * @addtogroup network
@@ -77,10 +77,11 @@ public:
      */
     struct Data
     {
-        Data():bytes(nullptr), len(0), issued(0), isBinary(false){}
+        Data():bytes(nullptr), len(0), issued(0), isBinary(false), ext(nullptr){}
         char* bytes;
         ssize_t len, issued;
         bool isBinary;
+        void* ext;
     };
 
     /**
@@ -190,17 +191,18 @@ public:
     State getReadyState();
 
 private:
-    virtual void onSubThreadStarted();
-    virtual int onSubThreadLoop();
-    virtual void onSubThreadEnded();
-    virtual void onUIThreadReceiveMessage(WsMessage* msg);
+    void onSubThreadStarted();
+    void onSubThreadLoop();
+    void onSubThreadEnded();
 
+    // The following callback functions are invoked in websocket thread
+    int onSocketCallback(struct lws *wsi, int reason, void *user, void *in, ssize_t len);
 
-    friend class WebSocketCallbackWrapper;
-    int onSocketCallback(struct libwebsocket_context *ctx,
-                         struct libwebsocket *wsi,
-                         int reason,
-                         void *user, void *in, ssize_t len);
+    void onClientWritable();
+    void onClientReceivedData(void* in, ssize_t len);
+    void onConnectionOpened();
+    void onConnectionError();
+    void onConnectionClosed();
 
 private:
     State        _readyState;
@@ -208,18 +210,17 @@ private:
     unsigned int _port;
     std::string  _path;
 
-    ssize_t _pendingFrameDataLen;
-    ssize_t _currentDataLen;
-    char *_currentData;
+    std::vector<char> _receivedData;
 
     friend class WsThreadHelper;
+    friend class WebSocketCallbackWrapper;
     WsThreadHelper* _wsHelper;
 
-    struct libwebsocket*         _wsInstance;
-    struct libwebsocket_context* _wsContext;
+    struct lws*         _wsInstance;
+    struct lws_context* _wsContext;
     Delegate* _delegate;
     int _SSLConnection;
-    struct libwebsocket_protocols* _wsProtocols;
+    struct lws_protocols* _wsProtocols;
 };
 
 }
