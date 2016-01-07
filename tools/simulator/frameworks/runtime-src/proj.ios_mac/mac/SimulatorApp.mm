@@ -726,4 +726,10 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     }
 }
 
+- (void)applicationWillTerminate:(NSNotification *)notification
+{
+    CC_SAFE_DELETE(_app);
+    [[NSApplication sharedApplication] terminate:self];
+}
+
 @end
