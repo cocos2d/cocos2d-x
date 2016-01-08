@@ -11,10 +11,13 @@ LOCAL_ARM_MODE := arm
 endif
 
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+LOCAL_CFLAGS := -DHAVE_NEON=1
 MATHNEONFILE := math/MathUtil.cpp.neon
 else
 MATHNEONFILE := math/MathUtil.cpp
 endif
+
+#for adding cpufeatures
 
 LOCAL_SRC_FILES := \
 cocos2d.cpp \
@@ -244,7 +247,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/poly2tri \
                     $(LOCAL_PATH)/../external/poly2tri/common \
                     $(LOCAL_PATH)/../external/poly2tri/sweep \
-                    $(LOCAL_PATH)/../external/clipper
+                    $(LOCAL_PATH)/../external/clipper  \
                     $(LOCAL_PATH)/../external/lua/lua   \
                     $(LOCAL_PATH)/../external/lua/tolua   \
                     $(LOCAL_PATH)/scripting/lua-bindings/manual
@@ -281,7 +284,7 @@ LOCAL_STATIC_LIBRARIES += cocos_zlib_static
 #LOCAL_STATIC_LIBRARIES += recast_static
 #LOCAL_STATIC_LIBRARIES += bullet_static
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dxandroid_static
+LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dxandroid_static cpufeatures
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   :=  -DUSE_FILE32API
@@ -330,3 +333,4 @@ $(call import-module,extensions)
 # $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
 $(call import-module,flatbuffers)
+$(call import-module, android/cpufeatures)

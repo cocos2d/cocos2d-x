@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #include "CCFileUtils-android.h"
