@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "lua_module_register.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include "ide-support/CodeIDESupport.h"
 #endif
 

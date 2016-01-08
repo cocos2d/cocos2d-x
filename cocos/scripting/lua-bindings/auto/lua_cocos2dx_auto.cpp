@@ -3741,6 +3741,7 @@ int lua_cocos2dx_Node_removeComponent(lua_State* tolua_S)
 
     return 0;
 }
+#if CC_USE_PHYSICS
 int lua_cocos2dx_Node_setPhysicsBody(lua_State* tolua_S)
 {
     int argc = 0;
@@ -3791,6 +3792,7 @@ int lua_cocos2dx_Node_setPhysicsBody(lua_State* tolua_S)
 
     return 0;
 }
+#endif
 int lua_cocos2dx_Node_getDescription(lua_State* tolua_S)
 {
     int argc = 0;
@@ -7140,6 +7142,7 @@ int lua_cocos2dx_Node_getRotation(lua_State* tolua_S)
 
     return 0;
 }
+#if CC_USE_PHYSICS
 int lua_cocos2dx_Node_getPhysicsBody(lua_State* tolua_S)
 {
     int argc = 0;
@@ -7187,6 +7190,7 @@ int lua_cocos2dx_Node_getPhysicsBody(lua_State* tolua_S)
 
     return 0;
 }
+#endif
 int lua_cocos2dx_Node_getAnchorPointInPoints(lua_State* tolua_S)
 {
     int argc = 0;
@@ -10421,7 +10425,9 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_Node_constructor);
         tolua_function(tolua_S,"addChild",lua_cocos2dx_Node_addChild);
         tolua_function(tolua_S,"removeComponent",lua_cocos2dx_Node_removeComponent);
+#if CC_USE_PHYSICS
         tolua_function(tolua_S,"setPhysicsBody",lua_cocos2dx_Node_setPhysicsBody);
+#endif
         tolua_function(tolua_S,"getDescription",lua_cocos2dx_Node_getDescription);
         tolua_function(tolua_S,"setRotationSkewY",lua_cocos2dx_Node_setRotationSkewY);
         tolua_function(tolua_S,"setOpacityModifyRGB",lua_cocos2dx_Node_setOpacityModifyRGB);
@@ -10489,7 +10495,9 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"runAction",lua_cocos2dx_Node_runAction);
         tolua_function(tolua_S,"visit",lua_cocos2dx_Node_visit);
         tolua_function(tolua_S,"getRotation",lua_cocos2dx_Node_getRotation);
+#if CC_USE_PHYSICS
         tolua_function(tolua_S,"getPhysicsBody",lua_cocos2dx_Node_getPhysicsBody);
+#endif
         tolua_function(tolua_S,"getAnchorPointInPoints",lua_cocos2dx_Node_getAnchorPointInPoints);
         tolua_function(tolua_S,"removeChildByName",lua_cocos2dx_Node_removeChildByName);
         tolua_function(tolua_S,"getGLProgramState",lua_cocos2dx_Node_getGLProgramState);
@@ -10561,7 +10569,7 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
     g_typeCast["Node"] = "cc.Node";
     return 1;
 }
-
+#if CC_USE_PHYSICS
 int lua_cocos2dx_Scene_initWithPhysics(lua_State* tolua_S)
 {
     int argc = 0;
@@ -10609,6 +10617,7 @@ int lua_cocos2dx_Scene_initWithPhysics(lua_State* tolua_S)
 
     return 0;
 }
+#endif
 int lua_cocos2dx_Scene_setCameraOrderDirty(lua_State* tolua_S)
 {
     int argc = 0;
@@ -10706,6 +10715,7 @@ int lua_cocos2dx_Scene_render(lua_State* tolua_S)
 
     return 0;
 }
+#if CC_USE_PHYSICS
 int lua_cocos2dx_Scene_stepPhysicsAndNavigation(lua_State* tolua_S)
 {
     int argc = 0;
@@ -10756,6 +10766,7 @@ int lua_cocos2dx_Scene_stepPhysicsAndNavigation(lua_State* tolua_S)
 
     return 0;
 }
+#endif
 int lua_cocos2dx_Scene_onProjectionChanged(lua_State* tolua_S)
 {
     int argc = 0;
@@ -10806,6 +10817,7 @@ int lua_cocos2dx_Scene_onProjectionChanged(lua_State* tolua_S)
 
     return 0;
 }
+#if CC_USE_PHYSICS
 int lua_cocos2dx_Scene_getPhysicsWorld(lua_State* tolua_S)
 {
     int argc = 0;
@@ -10853,6 +10865,7 @@ int lua_cocos2dx_Scene_getPhysicsWorld(lua_State* tolua_S)
 
     return 0;
 }
+#endif
 int lua_cocos2dx_Scene_initWithSize(lua_State* tolua_S)
 {
     int argc = 0;
@@ -11020,6 +11033,7 @@ int lua_cocos2dx_Scene_create(lua_State* tolua_S)
 #endif
     return 0;
 }
+#if CC_USE_PHYSICS
 int lua_cocos2dx_Scene_createWithPhysics(lua_State* tolua_S)
 {
     int argc = 0;
@@ -11054,6 +11068,7 @@ int lua_cocos2dx_Scene_createWithPhysics(lua_State* tolua_S)
 #endif
     return 0;
 }
+#endif
 int lua_cocos2dx_Scene_constructor(lua_State* tolua_S)
 {
     int argc = 0;
@@ -11104,17 +11119,25 @@ int lua_register_cocos2dx_Scene(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"Scene");
         tolua_function(tolua_S,"new",lua_cocos2dx_Scene_constructor);
+#if CC_USE_PHYSICS
         tolua_function(tolua_S,"initWithPhysics",lua_cocos2dx_Scene_initWithPhysics);
+#endif
         tolua_function(tolua_S,"setCameraOrderDirty",lua_cocos2dx_Scene_setCameraOrderDirty);
         tolua_function(tolua_S,"render",lua_cocos2dx_Scene_render);
+#if CC_USE_PHYSICS
         tolua_function(tolua_S,"stepPhysicsAndNavigation",lua_cocos2dx_Scene_stepPhysicsAndNavigation);
+#endif
         tolua_function(tolua_S,"onProjectionChanged",lua_cocos2dx_Scene_onProjectionChanged);
+#if CC_USE_PHYSICS
         tolua_function(tolua_S,"getPhysicsWorld",lua_cocos2dx_Scene_getPhysicsWorld);
+#endif
         tolua_function(tolua_S,"initWithSize",lua_cocos2dx_Scene_initWithSize);
         tolua_function(tolua_S,"getDefaultCamera",lua_cocos2dx_Scene_getDefaultCamera);
         tolua_function(tolua_S,"createWithSize", lua_cocos2dx_Scene_createWithSize);
         tolua_function(tolua_S,"create", lua_cocos2dx_Scene_create);
+#if CC_USE_PHYSICS
         tolua_function(tolua_S,"createWithPhysics", lua_cocos2dx_Scene_createWithPhysics);
+#endif
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Scene).name();
     g_luaType[typeName] = "cc.Scene";
@@ -89402,8 +89425,10 @@ int lua_cocos2dx_GLViewImpl_createWithRect(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_GLViewImpl_createWithRect'", nullptr);
             return 0;
         }
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
         cocos2d::GLViewImpl* ret = cocos2d::GLViewImpl::createWithRect(arg0, arg1);
         object_to_luaval<cocos2d::GLViewImpl>(tolua_S, "cc.GLViewImpl",(cocos2d::GLViewImpl*)ret);
+#endif
         return 1;
     }
     if (argc == 3)
@@ -89419,8 +89444,10 @@ int lua_cocos2dx_GLViewImpl_createWithRect(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_GLViewImpl_createWithRect'", nullptr);
             return 0;
         }
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
         cocos2d::GLViewImpl* ret = cocos2d::GLViewImpl::createWithRect(arg0, arg1, arg2);
         object_to_luaval<cocos2d::GLViewImpl>(tolua_S, "cc.GLViewImpl",(cocos2d::GLViewImpl*)ret);
+#endif
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.GLViewImpl:createWithRect",argc, 2);
@@ -89491,8 +89518,10 @@ int lua_cocos2dx_GLViewImpl_createWithFullScreen(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_GLViewImpl_createWithFullScreen'", nullptr);
             return 0;
         }
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
         cocos2d::GLViewImpl* ret = cocos2d::GLViewImpl::createWithFullScreen(arg0);
         object_to_luaval<cocos2d::GLViewImpl>(tolua_S, "cc.GLViewImpl",(cocos2d::GLViewImpl*)ret);
+#endif
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.GLViewImpl:createWithFullScreen",argc, 1);
