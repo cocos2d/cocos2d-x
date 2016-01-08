@@ -197,7 +197,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/. \
                            $(LOCAL_PATH)/.. \
                            $(LOCAL_PATH)/GUI/CCControlExtension \
-                           $(LOCAL_PATH)/GUI/CCScrollView 
+                           $(LOCAL_PATH)/GUI/CCScrollView 	\
                            $(LOCAL_PATH)/network
                     
 include $(BUILD_STATIC_LIBRARY)
