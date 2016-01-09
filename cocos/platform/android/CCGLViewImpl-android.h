@@ -48,6 +48,7 @@ public:
     void end() override;
     void swapBuffers() override;
     void setIMEKeyboardState(bool bOpen) override;
+    void setIMEKeyboardInputMode(KeyboardInputMode mode) override;
 
 protected:
     GLViewImpl();

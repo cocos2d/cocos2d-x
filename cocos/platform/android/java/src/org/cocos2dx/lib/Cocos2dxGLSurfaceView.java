@@ -34,6 +34,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.text.InputType;
 
 public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     // ===========================================================
@@ -44,6 +45,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
     private final static int HANDLER_OPEN_IME_KEYBOARD = 2;
     private final static int HANDLER_CLOSE_IME_KEYBOARD = 3;
+    private final static int HANDLER_SET_INPUT_TYPE = 4;
 
     // ===========================================================
     // Fields
@@ -117,6 +119,13 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
                             imm.hideSoftInputFromWindow(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getWindowToken(), 0);
                             Cocos2dxGLSurfaceView.this.requestFocus();
                             Log.d("GLSurfaceView", "HideSoftInput");
+                        }
+                        break;
+                    
+                    case HANDLER_SET_INPUT_TYPE:
+                        if (null != Cocos2dxGLSurfaceView.this.mCocos2dxEditText) {
+                            Cocos2dxGLSurfaceView.this.mCocos2dxEditText.setInputType(msg.arg1);
+                            Log.d("GLSurfaceView", "SetInputType");
                         }
                         break;
                 }
@@ -375,6 +384,40 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     public static void closeIMEKeyboard() {
         final Message msg = new Message();
         msg.what = Cocos2dxGLSurfaceView.HANDLER_CLOSE_IME_KEYBOARD;
+        Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
+    }
+    
+    public static void setIMEKeyboardInputMode(int mode) {
+        int inputType;
+        switch (mode) {
+            case 0:
+                inputType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE;
+                break;
+            case 1:
+                inputType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
+                break;
+            case 2:
+                inputType = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED;
+                break;
+            case 3:
+                inputType = InputType.TYPE_CLASS_PHONE;
+                break;
+            case 4:
+                inputType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI;
+                break;
+            case 5:
+                inputType = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED;
+                break;
+            case 6:
+                inputType = InputType.TYPE_CLASS_TEXT;
+                break;
+            default:
+                inputType = InputType.TYPE_CLASS_TEXT;
+                break;
+        }
+        final Message msg = new Message();
+        msg.what = Cocos2dxGLSurfaceView.HANDLER_SET_INPUT_TYPE;
+        msg.arg1 = inputType;
         Cocos2dxGLSurfaceView.sHandler.sendMessage(msg);
     }
 

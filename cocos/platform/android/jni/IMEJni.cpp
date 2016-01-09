@@ -58,4 +58,13 @@ extern "C" {
             t.env->DeleteLocalRef(t.classID);
         }
     }
+    
+    void setKeyboardInputModeJNI(int mode) {
+        JniMethodInfo t;
+        
+        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxGLSurfaceView", "setIMEKeyboardInputMode", "(I)V")) {
+            t.env->CallStaticVoidMethod(t.classID, t.methodID, mode);
+            t.env->DeleteLocalRef(t.classID);
+        }
+    }
 }

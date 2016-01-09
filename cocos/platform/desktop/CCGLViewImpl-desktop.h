@@ -84,6 +84,7 @@ public:
     virtual void swapBuffers() override;
     virtual void setFrameSize(float width, float height) override;
     virtual void setIMEKeyboardState(bool bOpen) override;
+    virtual void setIMEKeyboardInputMode(KeyboardInputMode mode) override;
 
     /*
      * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
