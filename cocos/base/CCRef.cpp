@@ -61,7 +61,7 @@ Ref::Ref()
 
 Ref::~Ref()
 {
-#if CC_ENABLE_SCRIPT_BINDING && not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#if CC_ENABLE_SCRIPT_BINDING && !CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     // if the object is referenced by Lua engine, remove it
     if (_luaID)
     {

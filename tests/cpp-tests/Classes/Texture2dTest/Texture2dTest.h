@@ -79,6 +79,14 @@ public:
     virtual void onEnter() override;
 };
 
+class TextureWEBPNoAlpha : public TextureDemo
+{
+public:
+    CREATE_FUNC(TextureWEBPNoAlpha);
+    virtual std::string title() const override;
+    virtual void onEnter() override;
+};
+
 class TextureMipMap : public TextureDemo
 {
 public:

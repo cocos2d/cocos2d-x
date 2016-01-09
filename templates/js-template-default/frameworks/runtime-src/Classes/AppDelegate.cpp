@@ -71,7 +71,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         glview = cocos2d::GLViewImpl::create("HelloJavascript");
 #else
-        glview = cocos2d::GLViewImpl::createWithRect("HelloJavascript", Rect(0,0,900,640));
+        glview = cocos2d::GLViewImpl::createWithRect("HelloJavascript", Rect(0,0,960,640));
 #endif
         director->setOpenGLView(glview);
 }

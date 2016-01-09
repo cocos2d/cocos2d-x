@@ -4900,6 +4900,14 @@ str
 },
 
 /**
+ * @method resetRender
+ */
+resetRender : function (
+)
+{
+},
+
+/**
  * @method create
 * @param {String} str
 * @param {String} str
