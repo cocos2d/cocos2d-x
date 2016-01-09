@@ -50,7 +50,6 @@ NS_CC_BEGIN
 namespace network {
 
 class WsThreadHelper;
-class WsMessage;
 
 /**
  * WebSocket is wrapper of the libwebsockets-protocol, let the develop could call the websocket easily.
@@ -58,6 +57,12 @@ class WsMessage;
 class CC_DLL WebSocket
 {
 public:
+    /**
+     * Close all connections and wait for all websocket threads to exit
+     * @note This method has to be invoked on Cocos Thread
+     */
+    static void closeAllConnections();
+    
     /**
      * Constructor of WebSocket.
      *

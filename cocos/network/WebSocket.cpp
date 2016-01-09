@@ -196,6 +196,7 @@ void WsThreadHelper::quitSubThread()
 
 void WsThreadHelper::wsThreadEntryFunc()
 {
+    LOGD("WebSocket thread start, helper instance: %p\n", this);
     _ws->onSubThreadStarted();
 
     while (!_needQuit)
@@ -204,8 +205,8 @@ void WsThreadHelper::wsThreadEntryFunc()
     }
 
     _ws->onSubThreadEnded();
-
-    LOGD("Websocket thread exit!\n");
+    
+    LOGD("WebSocket thread exit, helper instance: %p\n", this);
 }
 
 void WsThreadHelper::sendMessageToUIThread(const std::function<void()>& cb)
@@ -291,6 +292,27 @@ enum WS_MSG {
     WS_MSG_TO_SUBTRHEAD_SENDING_BINARY,
 };
 
+static std::vector<WebSocket*>* __websocketInstances = nullptr;
+
+void WebSocket::closeAllConnections()
+{
+    if (__websocketInstances != nullptr)
+    {
+        ssize_t count = __websocketInstances->size();
+        for (ssize_t i = count-1; i >=0 ; i--)
+        {
+            WebSocket* instance = __websocketInstances->at(i);
+            LOGD("Waiting WebSocket (%p) to exit!\n", instance);
+            instance->close();
+            // Wait for websocket thread to exit
+            instance->_wsHelper->joinSubThread();
+        }
+        
+        __websocketInstances->clear();
+        __websocketInstances = nullptr;
+    }
+}
+    
 WebSocket::WebSocket()
 : _readyState(State::CONNECTING)
 , _port(80)
@@ -303,10 +325,17 @@ WebSocket::WebSocket()
 {
     // reserve data buffer to avoid allocate memory frequently
     _receivedData.reserve(WS_RESERVE_RECEIVE_BUFFER_SIZE);
+    if (__websocketInstances == nullptr)
+    {
+        __websocketInstances = new std::vector<WebSocket*>();
+    }
+    
+    __websocketInstances->push_back(this);
 }
 
 WebSocket::~WebSocket()
 {
+    LOGD("In the destructor of WebSocket (%p)\n", this);
     CC_SAFE_DELETE(_wsHelper);
 
     if (_wsProtocols != nullptr)
@@ -317,6 +346,19 @@ WebSocket::~WebSocket()
         }
     }
     CC_SAFE_DELETE_ARRAY(_wsProtocols);
+    
+    if (__websocketInstances != nullptr)
+    {
+        auto iter = std::find(__websocketInstances->begin(), __websocketInstances->end(), this);
+        if (iter != __websocketInstances->end())
+        {
+            __websocketInstances->erase(iter);
+        }
+        else
+        {
+            LOGD("ERROR: WebSocket instance (%p) added to container!\n", this);
+        }
+    }
 }
 
 bool WebSocket::init(const Delegate& delegate,
@@ -361,7 +403,7 @@ bool WebSocket::init(const Delegate& delegate,
     _path = path;
     _SSLConnection = useSSL ? 1 : 0;
 
-    LOGD("[WebSocket::init] _host: %s, _port: %d, _path: %s", _host.c_str(), _port, _path.c_str());
+    LOGD("[WebSocket::init] _host: %s, _port: %d, _path: %s\n", _host.c_str(), _port, _path.c_str());
 
     size_t protocolCount = 0;
     if (protocols && protocols->size() > 0)
@@ -483,7 +525,7 @@ void WebSocket::onSubThreadLoop()
     }
     else
     {
-        LOGD("Ready state is closing or was closed, code=%d, quit websocket thread!", _readyState);
+        LOGD("Ready state is closing or was closed, code=%d, quit websocket thread!\n", _readyState);
         _wsHelper->quitSubThread();
     }
 }
@@ -591,7 +633,7 @@ void WebSocket::onClientWritable()
             else
             { // If frame initialization failed, delete the frame and drop the sending data
               // These codes should never be called.
-                LOGD("WebSocketFrame initialization failed, drop the sending data, msg(%d)", (int)subThreadMsg->id);
+                LOGD("WebSocketFrame initialization failed, drop the sending data, msg(%d)\n", (int)subThreadMsg->id);
                 delete frame;
                 CC_SAFE_FREE(data->bytes);
                 CC_SAFE_DELETE(data);
@@ -755,6 +797,8 @@ void WebSocket::onConnectionOpened()
 
 void WebSocket::onConnectionError()
 {
+    LOGD("WebSocket (%p) onConnectionError ...\n", this);
+    
     _readyState = State::CLOSING;
 
     _wsHelper->sendMessageToUIThread([this](){
@@ -764,10 +808,10 @@ void WebSocket::onConnectionError()
 
 void WebSocket::onConnectionClosed()
 {
-    LOGD("%s", "connection closing..\n");
+    LOGD("WebSocket (%p) onConnectionClosed ...\n", this);
     if (_readyState == State::CLOSED)
     {
-        LOGD("Websocket %p was closed, no need to close it again!", this);
+        LOGD("WebSocket (%p) was closed, no need to close it again!\n", this);
         return;
     }
 
