@@ -314,8 +314,7 @@ void Manifest::setAssetDownloadState(const std::string &key, const Manifest::Dow
                 {
                     for (rapidjson::Value::MemberIterator itr = assets.MemberBegin(); itr != assets.MemberEnd(); ++itr)
                     {
-                        std::string jkey = itr->name.GetString();
-                        if (jkey == key) {
+                        if (key.compare(itr->name.GetString()) == 0) {
                             rapidjson::Value &entry = itr->value;
                             if (entry.HasMember(KEY_DOWNLOAD_STATE) && entry[KEY_DOWNLOAD_STATE].IsInt())
                             {
