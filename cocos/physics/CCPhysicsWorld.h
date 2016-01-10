@@ -347,8 +347,8 @@ protected:
     
     virtual void debugDraw();
     
-    virtual int collisionBeginCallback(PhysicsContact& contact);
-    virtual int collisionPreSolveCallback(PhysicsContact& contact);
+    virtual bool collisionBeginCallback(PhysicsContact& contact);
+    virtual bool collisionPreSolveCallback(PhysicsContact& contact);
     virtual void collisionPostSolveCallback(PhysicsContact& contact);
     virtual void collisionSeparateCallback(PhysicsContact& contact);
     
@@ -376,7 +376,7 @@ protected:
     Scene* _scene;
     
     bool _autoStep;
-    PhysicsDebugDraw* _debugDraw;
+    DrawNode* _debugDraw;
     int _debugDrawMask;
     
     EventDispatcher* _eventDispatcher;
@@ -404,29 +404,6 @@ protected:
     friend class PhysicsDebugDraw;
 };
 
-/** A physics helper class. Draw physics shape, joint in debug mode. 
- 
- *  You do not create PhysicsDebugDraw objects directly; Instead, you can activate it by PhysicsWorld::setDebugDrawMask.
- */
-class CC_DLL PhysicsDebugDraw
-{
-protected:
-    virtual bool begin();
-    virtual void end();
-    virtual void drawShape(PhysicsShape& shape);
-    virtual void drawJoint(PhysicsJoint& joint);
-    virtual void drawContact();
-    
-protected:
-    PhysicsDebugDraw(PhysicsWorld& world);
-    virtual ~PhysicsDebugDraw();
-    
-protected:
-    DrawNode* _drawNode;
-    PhysicsWorld& _world;
-    
-    friend class PhysicsWorld;
-};
 extern const float CC_DLL PHYSICS_INFINITY;
 
 /** @} */
