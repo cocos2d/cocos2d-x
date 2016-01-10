@@ -34,10 +34,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-// EXPERIMENTAL: Enable this in order to get rid of retain/release
-// when using the Garbage Collector
-#define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 0
-
 #if CC_REF_LEAK_DETECTION
 static void trackRef(Ref* ref);
 static void untrackRef(Ref* ref);
