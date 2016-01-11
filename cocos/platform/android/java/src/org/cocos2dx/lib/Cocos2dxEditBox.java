@@ -249,4 +249,41 @@ public class Cocos2dxEditBox extends EditText {
 
         this.setInputType(this.mInputFlagConstraints | this.mInputModeConstraints);
     }
+
+    public void setInputTextAlignment(int hAlign, int vAlign) {
+        int gravity;
+        
+        switch (hAlign) {
+            case 0:
+                gravity = Gravity.LEFT;
+                break;
+            case 1:
+                gravity = Gravity.CENTER_HORIZONTAL;
+                break;
+            case 2:
+                gravity = Gravity.RIGHT;
+                break;
+            default:
+                gravity = Gravity.LEFT;
+                break;
+        }
+        
+        switch (vAlign) {
+            case 0:
+                gravity = gravity | Gravity.TOP;
+                break;
+            case 1:
+                gravity = gravity | Gravity.CENTER_VERTICAL;
+                break;
+            case 2:
+                gravity = gravity | Gravity.BOTTOM;
+                break;
+            default:
+                gravity = gravity | Gravity.CENTER_VERTICAL;
+                break;
+        }
+        
+        this.setGravity(gravity);
+    }
+    
 }

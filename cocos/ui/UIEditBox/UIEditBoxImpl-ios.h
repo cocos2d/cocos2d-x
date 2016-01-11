@@ -74,6 +74,8 @@ public:
     virtual const char* getNativeDefaultFontName() override;
     virtual void nativeOpenKeyboard() override;
     virtual void nativeCloseKeyboard() override;
+    virtual void setNativePadding(float left, float top, float right, float bottom) override;
+    virtual void setNativeTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign) override;
     
     //need to remove siri text
     virtual const char* getText(void)override;

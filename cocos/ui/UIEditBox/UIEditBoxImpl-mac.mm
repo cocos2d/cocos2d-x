@@ -593,6 +593,16 @@ void EditBoxImplMac::setAnchorPoint(const Vec2& anchorPoint)
     setPosition(_position);
 }
 
+void EditBoxImplMac::setPadding(float left, float top, float right, float bottom)
+{
+    //ToDo
+}
+
+void EditBoxImplMac::setTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign)
+{
+    //ToDo
+}
+    
 void EditBoxImplMac::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     

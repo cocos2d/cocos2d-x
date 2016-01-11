@@ -109,9 +109,8 @@
 - (void)createSingleLineTextField
 {
     CCUISingleLineTextField *textField = [[[CCUISingleLineTextField alloc] initWithFrame:self.frameRect] autorelease];
-    textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     textField.borderStyle = UITextBorderStyleNone;
-    
+
     [textField addTarget:self action:@selector(textChanged:) forControlEvents:UIControlEventEditingChanged];
     
     self.textInput = textField;
@@ -302,6 +301,26 @@
 {
     [self.textInput resignFirstResponder];
     [self.textInput removeFromSuperview];
+}
+
+- (void)setInnerPadding:(float)left :(float)top :(float)right :(float)bottom
+{
+    if ([self.textInput isKindOfClass:[UITextField class]]) {
+        [((CCUISingleLineTextField*) self.textInput) setInnerPadding:left :top :right :bottom];
+    }
+    else if ([self.textInput isKindOfClass:[UITextView class]]) {
+        [((CCUIMultilineTextField*) self.textInput) setInnerPadding:left :top :right :bottom];
+    }
+}
+
+- (void)setTextAlignment:(cocos2d::TextHAlignment)hAlign :(cocos2d::TextVAlignment)vAlign
+{
+    if ([self.textInput isKindOfClass:[UITextField class]]) {
+        [((CCUISingleLineTextField*) self.textInput) setTextAlignment:hAlign :vAlign];
+    }
+    else if ([self.textInput isKindOfClass:[UITextView class]]) {
+        [((CCUIMultilineTextField*) self.textInput) setTextAlignment:hAlign :vAlign];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)sender

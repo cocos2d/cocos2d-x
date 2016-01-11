@@ -32,8 +32,6 @@
 #include "2d/CCLabel.h"
 #include "ui/UIHelper.h"
 
-static const int CC_EDIT_BOX_PADDING = 5;
-
 NS_CC_BEGIN
 
 namespace ui {
@@ -48,6 +46,12 @@ EditBoxImplCommon::EditBoxImplCommon(EditBox* pEditText)
 , _colText(Color3B::WHITE)
 , _colPlaceHolder(Color3B::GRAY)
 , _maxLength(-1)
+, _leftPadding(5.0f)
+, _rightPadding(5.0f)
+, _topPadding(5.0f)
+, _bottomPadding(5.0f)
+, _textHorizontalAlignment(TextHAlignment::LEFT)
+, _textVerticalAlignment(TextVAlignment::CENTER)
 {
 }
 
@@ -95,8 +99,41 @@ void EditBoxImplCommon::initInactiveLabels(const Size& size)
 
 void EditBoxImplCommon::placeInactiveLabels()
 {
-    _label->setPosition(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f);
-    _labelPlaceHolder->setPosition(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f);
+    switch (_textHorizontalAlignment) {
+        case cocos2d::TextHAlignment::LEFT :
+            _label->setPositionX(_leftPadding);
+            _labelPlaceHolder->setPositionX(_leftPadding);
+            break;
+        case cocos2d::TextHAlignment::CENTER :
+            _label->setPositionX(_contentSize.width / 2);
+            _labelPlaceHolder->setPositionX(_contentSize.width / 2);
+            break;
+        case cocos2d::TextHAlignment::RIGHT :
+            _label->setPositionX(_contentSize.width - _rightPadding);
+            _labelPlaceHolder->setPositionX(_contentSize.width - _rightPadding);
+            break;
+        default:
+            break;
+    }
+    
+    switch (_textVerticalAlignment) {
+        case cocos2d::TextVAlignment::TOP :
+            _label->setPositionY(_contentSize.height - _topPadding);
+            _labelPlaceHolder->setPositionY(_contentSize.height - _topPadding);
+            break;
+        case cocos2d::TextVAlignment::CENTER :
+            _label->setPositionY(_contentSize.height / 2);
+            _labelPlaceHolder->setPositionY(_contentSize.height / 2);
+            break;
+        case cocos2d::TextVAlignment::BOTTOM :
+            _label->setPositionY(_bottomPadding);
+            _labelPlaceHolder->setPositionY(_bottomPadding);
+            break;
+        default:
+            break;
+    }
+    _label->setAlignment(_textHorizontalAlignment, _textVerticalAlignment);
+    _labelPlaceHolder->setAlignment(_textHorizontalAlignment, _textVerticalAlignment);
 }
 
 void EditBoxImplCommon::setInactiveText(const char* pText)
@@ -113,8 +150,8 @@ void EditBoxImplCommon::setInactiveText(const char* pText)
         _label->setString(pText);
     }
     // Clip the text width to fit to the text box
-    float fMaxWidth = _editBox->getContentSize().width;
-    float fMaxHeight = _editBox->getContentSize().height;
+    float fMaxWidth = _editBox->getContentSize().width - _leftPadding - _rightPadding;
+    float fMaxHeight = _editBox->getContentSize().height - _topPadding - _bottomPadding;
     Size labelSize = _label->getContentSize();
     if(labelSize.width > fMaxWidth || labelSize.height > fMaxHeight)
     {
@@ -168,6 +205,9 @@ void EditBoxImplCommon::setInputMode(EditBox::InputMode inputMode)
 {
     _editBoxInputMode = inputMode;
     this->setNativeInputMode(inputMode);
+    
+    this->setNativePadding(_leftPadding, _topPadding, _rightPadding, _bottomPadding);
+    this->setNativeTextAlignment(_textHorizontalAlignment, _textVerticalAlignment);
 }
 
 void EditBoxImplCommon::setMaxLength(int maxLength)
@@ -255,6 +295,33 @@ void EditBoxImplCommon::setContentSize(const Size& size)
 
 }
 
+void EditBoxImplCommon::setPadding(float left, float top, float right, float bottom)
+{
+    _leftPadding = left;
+    _topPadding = top;
+    _rightPadding = right;
+    _bottomPadding = bottom;
+    
+    placeInactiveLabels();
+    
+    this->setNativePadding(left, top, right, bottom);
+    
+}
+
+void EditBoxImplCommon::setTextAlignment(cocos2d::TextHAlignment hAlign, cocos2d::TextVAlignment vAlign)
+{
+    _textHorizontalAlignment = hAlign;
+    _textVerticalAlignment = vAlign;
+    
+    placeInactiveLabels();
+    
+    _label->setAnchorPoint(Point((float)hAlign / 2.0f, 1.0 - ((float)vAlign / 2.0f)));
+    _labelPlaceHolder->setAnchorPoint(Point((float)hAlign / 2.0f, 1.0 - ((float)vAlign / 2.0f)));
+    
+    this->setNativeTextAlignment(hAlign, vAlign);
+    
+}
+    
 void EditBoxImplCommon::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if(flags)

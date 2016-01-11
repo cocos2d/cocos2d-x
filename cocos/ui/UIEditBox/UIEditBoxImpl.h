@@ -69,6 +69,8 @@ namespace cocos2d {
             virtual void setVisible(bool visible) = 0;
             virtual void setContentSize(const Size& size) = 0;
             virtual void setAnchorPoint(const Vec2& anchorPoint) = 0;
+            virtual void setPadding(float left, float top, float right, float bottom) = 0;
+            virtual void setTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign) = 0;
             
             /**
              * check the editbox's position, update it when needed

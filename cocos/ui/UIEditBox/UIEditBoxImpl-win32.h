@@ -70,6 +70,8 @@ public:
 	virtual void setVisible(bool visible);
     virtual void setContentSize(const Size& size);
     virtual void setAnchorPoint(const Vec2& anchorPoint);
+    virtual void setPadding(float left, float top, float right, float bottom) override;
+    virtual void setTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign) override;
     /**
      * @js NA
      * @lua NA

@@ -112,6 +112,16 @@ void EditBoxImplLinux::nativeOpenKeyboard()
     }
 }
 
+void EditBoxImplLinux::setNativePadding(float left, float top, float right, float bottom)
+{
+    //TODO
+}
+    
+void EditBoxImplLinux::setNativeTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign)
+{
+    //TODO
+}
+
 }
 
 NS_CC_END

@@ -570,6 +570,16 @@ void UIEditBoxImplWinrt::onEnter( void )
 
 }
 
+void UIEditBoxImplWinrt::setPadding(float left, float top, float right, float bottom)
+{
+    //ToDo
+}
+
+void UIEditBoxImplWinrt::setTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign)
+{
+    //ToDo
+}
+
 }
 
 NS_CC_END

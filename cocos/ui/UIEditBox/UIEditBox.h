@@ -407,7 +407,71 @@ namespace ui {
          * @param returnType One of the EditBox::KeyboardReturnType constants.
          */
         void setReturnType(EditBox::KeyboardReturnType returnType);
-            
+        
+        /**
+         * Set the inner padding in edit box.
+         * @param left   The left padding.
+         * @param top The top padding.
+         * @param right The right padding.
+         * @param bottom The bottom padding.
+         */
+        void setPadding(float left, float top, float right, float bottom);
+        
+        /**
+         * Get the inner left padding of edit box.
+         * @return left padding.
+         */
+        float getLeftPadding()const;
+        
+        /**
+         * Get the inner top padding of edit box.
+         * @return top padding.
+         */
+        float getTopPadding()const;
+        
+        /**
+         * Get the inner right padding of edit box.
+         * @return right padding.
+         */
+        float getRightPadding()const;
+        
+        /**
+         * Get the inner bottom padding of edit box.
+         * @return bottom padding.
+         */
+        float getBottomPadding()const;
+        
+        /**
+         * Set the input text horizontal alignment and vertical alignment.
+         * @param hAlign the alignment for horizontally.
+         * @param vAlign the alignment for vertically.
+         */
+        void setTextAlignment(TextHAlignment hAlign, TextVAlignment vAlign);
+        
+        /**
+         * Set the input text only horizontal alignment.
+         * @param hAlign the alignment for horizontally.
+         */
+        void setHorizontalTextAlignment(TextHAlignment hAlign);
+        
+        /**
+         * Get the horizontal alignment of edit box.
+         * @return horizontal alignment of edit box.
+         */
+        TextHAlignment getHorizontalTextAlignment()const;
+        
+        /**
+         * Set the input text only vertical alignment.
+         * @param vAlign the alignment for vertically.
+         */
+        void setVerticalTextAlignment(TextVAlignment vAlign);
+        
+        /**
+         * Get the vertical alignment of edit box.
+         * @return vertical alignment of edit box.
+         */
+        TextVAlignment getVerticalTextAlignment()const;
+        
         /* override functions */
         virtual void setPosition(const Vec2& pos) override;
         virtual void setVisible(bool visible) override;
@@ -487,6 +551,15 @@ namespace ui {
             
         int   _maxLength;
         float _adjustHeight;
+        
+        float _leftPadding;
+        float _rightPadding;
+        float _topPadding;
+        float _bottomPadding;
+        
+        TextHAlignment _textHorizontalAlignment;
+        TextVAlignment _textVerticalAlignment;
+        
 #if CC_ENABLE_SCRIPT_BINDING
         int   _scriptEditBoxHandler;
 #endif

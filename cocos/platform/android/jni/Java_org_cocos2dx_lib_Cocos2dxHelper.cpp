@@ -565,6 +565,28 @@ void setPlaceHolderTextColorEditBoxJNI(int index, int red, int green, int blue, 
     }
 }
 
+void setEditBoxPaddingJNI(int index, float left, float top, float right, float bottom)
+{
+    JniMethodInfo t;
+
+    if (JniHelper::getStaticMethodInfo(t, EDITBOX_CLASS_NAME, "setInnerPadding", "(IFFFF)V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID,index, left, top, right, bottom);
+
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
+void setEditBoxTextAlignmentJNI(int index, int hAlign, int vAlign)
+{
+    JniMethodInfo t;
+
+    if (JniHelper::getStaticMethodInfo(t, EDITBOX_CLASS_NAME, "setTextAlignment", "(III)V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID,index, hAlign, vAlign);
+
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
 void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharset, char* dst, const char* newCharset)
 {
     JniMethodInfo methodInfo;
