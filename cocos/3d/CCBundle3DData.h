@@ -72,24 +72,25 @@ struct MeshVertexAttrib
 };
 
 
-/** Model node data, since 3.3.
+/** @~english Model node data, since 3.3.
+ * @~chinese 模型数据
 * @struct ModelData
 * @js NA
 * @lua NA
 */
 struct ModelData
 {
-    /** The sub mesh ID*/
+    /** @~english The sub mesh ID @~chinese 子mesh id*/
     std::string subMeshId;
-    /**The material ID.*/
+    /** @~english The material ID. @~chinese 材质ID*/
     std::string matrialId;
-    /**The bone list.*/
+    /** @~english The bone list. @~chinese 骨骼列表*/
     std::vector<std::string> bones;
-    /**The inverse bind pose matrix list.*/
+    /** @~english The inverse bind pose matrix list. @~chinese 绑定姿态逆矩阵列表*/
     std::vector<Mat4>        invBindPose;
     
     /**
-     * Destructor.
+     * @~english Destructor. @~chinese 析构函数
      **/
     virtual ~ModelData()
     {
@@ -97,7 +98,7 @@ struct ModelData
     }
 
     /**
-     * Reset the data of the ModelData object.
+     * @~english Reset the data of the ModelData object. @~chinese 重置模型数据
      **/
     virtual void resetData()
     {
@@ -106,24 +107,24 @@ struct ModelData
     }
 };
 
-/** Node data, since 3.3 
+/** @~english Node data, since 3.3 @~chinese节点数据
 * @struct NodeData
 * @js NA
 * @lua NA
 */
 struct NodeData
 {
-    /**The NodeData ID.*/
+    /**@~english The NodeData ID. @~chinese 节点数据ID*/
     std::string id;
-    /**The NodeData transform.*/
+    /** @~english The NodeData transform. @~chinese节点变换矩阵*/
     Mat4        transform;
-    /**The Model data list.*/
+    /**@~english The Model data list. @~chinese模型数据列表*/
     std::vector<ModelData*> modelNodeDatas;
-    /**The children list.*/
+    /** @~english The children list. @~chinese 孩子列表*/
     std::vector<NodeData*>  children;
 
     /**
-     *Destructor.
+     *@~english Destructor. @~chinese析构函数
      */
     virtual ~NodeData()
     {
@@ -131,7 +132,7 @@ struct NodeData
     }
 
     /**
-     * @~english Reset Data, will reset itself and children's data.
+     * @~english Reset Data, will reset itself and children's data. @~chinese 重置节点数据，孩子节点数据也将被重置
      */
     virtual void resetData()
     {
@@ -153,7 +154,7 @@ struct NodeData
 };
 
 /** 
- * @~english node datas, since 3.3 
+ * @~english node datas, since 3.3 @~chinese 节点数据集
  * @struct NodeDatas
  * @js NA
  * @lua NA
@@ -172,7 +173,7 @@ struct NodeDatas
     std::vector<NodeData*> nodes; // nodes, CCNode, Sprite3D or part of Sprite3D
 
     /**
-    *Destructor.
+    *@~english Destructor. @~chinese析构函数
     */
     virtual ~NodeDatas()
     {
@@ -281,7 +282,7 @@ public:
         attribCount = 0;
     }
     /**
-    * Constructor.
+    * @~english Constructor. @~chinese 析构函数
     */
     MeshData()
     : vertexSizeInFloat(0)
@@ -485,12 +486,15 @@ struct MaterialData
 
 
 /**
- * new material, since 3.3 
+ * @~english new Texture data, since 3.3 @~chinese 新的纹理数据
  * @js NA
  * @lua NA
  */
 struct NTextureData
 {
+    /**
+     * @~english Usage of texture @~chinese 纹理的用途
+     */
     enum class Usage {
         Unknown = 0,
         None = 1,
@@ -504,16 +508,31 @@ struct NTextureData
         Transparency = 9,
         Reflection = 10
     };
+    /** @~english texture id @~chinese 纹理ID */
      std::string id;
+    /** @~english texture file name. @~chinese 纹理文件名 */
      std::string filename;
+    /**@~english usage of texture @~chinese 纹理用途 */
      Usage type;
+    /** @~english texture wrap mode @~chinese 纹理Wrap的方式*/
      GLenum wrapS;
+    /** @~english texture wrap mode @~chinese 纹理Wrap的方式 */
      GLenum wrapT;
 } ;
+
+/**
+ * @~english new material data @~chinese 新的材质数据
+ */
 struct NMaterialData
 {
+    /** @~english textures list. @~chinese 纹理列表 */
     std::vector<NTextureData> textures;
+    /** @~english Material ID. @~chinese 材质ID */
     std::string id;
+    /** @~english Get texture data by given usage @~chinese 获取给定用途的纹理数据 
+     * @param type @~english Uage type. @~chinese 用途
+     * @return @~english Texture data of given usage. @~chinese 给定用途的纹理数据
+     */
     const NTextureData* getTextureData(const NTextureData::Usage& type) const
     {
         for(const auto& it : textures)
@@ -524,17 +543,23 @@ struct NMaterialData
         return nullptr;
     }
 };
-/** material datas, since 3.3 
+/** @~english material datas, since 3.3 @~chinese 材质数据集合
 * @js NA
 * @lua NA
 */
 struct MaterialDatas
 {
+    /** @~english material list @~chinese 材质列表 */
     std::vector<NMaterialData> materials;
+    /** @~english reset data. @~chinese 重置材质数据 */
     void resetData()
     {
         materials.clear();
     }
+    /** @~english Get material data by id. @~chinese 通过ID获取材质数据
+     * @param materialid @~english Material ID. @~chinese材质ID
+     * @return @~english Material data with given material ID. @~chinese给定材质ID的材质数据
+     */
     const NMaterialData* getMaterialData(const std::string& materialid) const
     {
         for(const auto& it : materials)
@@ -545,13 +570,14 @@ struct MaterialDatas
         return nullptr;
     }
 };
-/**animation data
+/** @~english animation data @~chinese 动画数据
 * @js NA
 * @lua NA
 */
 struct Animation3DData
 {
 public:
+    /** @~english key frame for vec3. Used internally. @~chinese vec3的关键帧数据，内部使用*/
     struct Vec3Key
     {
         Vec3Key()
@@ -568,7 +594,7 @@ public:
         float _time;
         Vec3 _key;
     };
-    
+    /** @~english key frame for Quaternion. Used internally. @~chinese 四元数的关键帧数据，内部使用*/
     struct QuatKey
     {
         QuatKey()
@@ -588,18 +614,23 @@ public:
     };
 
 public:
+    /** @~english translation key frame. @~chinese 平移关键帧数据*/
     std::map<std::string, std::vector<Vec3Key>> _translationKeys;
+    /** @~english rotation key frame. @~chinese 旋转关键帧数据*/
     std::map<std::string, std::vector<QuatKey>> _rotationKeys;
+    /** @~english scale key frame. @~chinese 缩放关键帧数据*/
     std::map<std::string, std::vector<Vec3Key>> _scaleKeys;
     
+    /** @~english total time of animation data. @~chinese 动画数据的时间长度*/
     float _totalTime;
 
 public:
+    /** @~english Constructor. @~chinese 构造函数*/
     Animation3DData()
     :_totalTime(0)
     {
     }
-    
+    /** @~english Copy constructor. @~chinese 拷贝构造函数*/
     Animation3DData(const Animation3DData& other)
     : _translationKeys(other._translationKeys)
     , _rotationKeys(other._rotationKeys)
@@ -607,7 +638,7 @@ public:
     , _totalTime(other._totalTime)
     {
     }
-    
+    /** @~english reset data. @~chinese 重置动画数据*/
     void resetData()
     {
         _totalTime = 0;
@@ -617,19 +648,24 @@ public:
     }
 };
 
-/**reference data
+/** @~english reference data used for bundle header. @~chinese Bundle的表头信息
 * @js NA
 * @lua NA
 */
 struct Reference
 {
 public:
+    /** @~english reference data id @~chinese 数据ID */
     std::string id;
+    /** @~english reference data type @~chinese 数据类型 */
     unsigned int type;
+    /** @~english reference data offset @~chinese 数据偏移 */
     unsigned int offset;
 
+    /** @~english Constructor @~chinese 构造函数 */
     Reference(){}
 
+    /** @~english Destructor @~chinese 析构函数 */
     ~Reference(){}
 };
 

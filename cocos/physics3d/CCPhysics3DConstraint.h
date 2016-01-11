@@ -149,7 +149,7 @@ protected:
 
 /**
     Point to point constraint limits the translation so that the local pivot points of 2 rigidbodies match in worldspace.
-    @~chinese
+    @~chinese 点对点的约束。
 */
 class CC_DLL Physics3DPointToPointConstraint : public Physics3DConstraint
 {
@@ -377,13 +377,14 @@ CC_CONSTRUCTOR_ACCESS:
 };
 
 /**
-    It allows the body to rotate around x axis and translate along this axis.
+    @~english It allows the body to rotate around x axis and translate along this axis.
     softness, restitution and damping for different cases
     DirLin - moving inside linear limits
     LimLin - hitting linear limit
     DirAng - moving inside angular limits
     LimAng - hitting angular limit
     OrthoLin, OrthoAng - against constraint axis
+ * @~chinese 滑动约束，可以沿着局部坐标轴的x轴旋转及滑动。
 */
 class CC_DLL Physics3DSliderConstraint : public Physics3DConstraint
 {
@@ -519,8 +520,8 @@ CC_CONSTRUCTOR_ACCESS:
 };
 
 /**
-    It is a special point to point constraint that adds cone and twist axis limits. The x-axis serves as twist axis.
-    @~chinese
+    @~english It is a special point to point constraint that adds cone and twist axis limits. The x-axis serves as twist axis.
+    @~chinese 锥形约束，类似于手腕关节，可以在锥形范围内旋转
 */
 class CC_DLL Physics3DConeTwistConstraint : public Physics3DConstraint
 {
@@ -653,7 +654,7 @@ CC_CONSTRUCTOR_ACCESS:
     Lowerlimit > Upperlimit -> axis is free
     Lowerlimit < Upperlimit -> axis it limited in that range
 
-    @~chinese
+    @~chinese 6自由度约束。这是一般的约束，可以有6个自由度，三个轴向的旋转及平移。
 */
 class CC_DLL Physics3D6DofConstraint : public Physics3DConstraint
 {

@@ -104,36 +104,57 @@ public:
     };
 
     /**
-     *DetailMap
-     *this struct maintain a detail map data ,including source file ,detail size.
-     *the DetailMap can use for terrain splatting
+     *@~english This struct maintain a detail map data ,including source file ,detail size. The DetailMap can use for terrain splatting
+     *@~chinese 这个结构维护地图的细节贴图数据，包括贴图文件，细节大小。
      **/
     struct CC_DLL DetailMap
     {
-        /*Constructors*/
+        /*@~english Constructors @~chinese默认构造函数*/
         DetailMap();
+        /**
+         * @~english Constructors @~chinese 构造函数
+         * @param detailMapSrc @~english detail map texture. @~chinese 细节贴图
+         * @param size @~english detial map size. @~chinese 细节贴图的大小
+         */
         DetailMap(const std::string& detailMapSrc, float size = 35);
-        /*detail Image source file path*/
+        /*@~english detail Image source file path @~chinese 细节贴图的路径*/
         std::string _detailMapSrc;
-        /*detailMapSize determine how many tiles that Terrain represent*/
+        /*@~english detailMapSize determine how many tiles that Terrain represent @~chinese细节贴图的大小*/
         float _detailMapSize;
     };
 
     /**
-     * Triangle
+     * @~english Triangle @~chinese 三角形
      */
     struct Triangle
     {
+        /** 
+         * @~english Constructors @~chinese 构造函数
+         * @param p1 @~english First point @~chinese 三角形第一个顶点
+         * @param p2 @~english Seconde point @~chinese 三角形第二个顶点
+         * @param p3 @~english Third point @~chinese 三角形第三个顶点
+         */
         Triangle(Vec3 p1, Vec3 p2, Vec3 p3);
+        /**
+         * @~english Get intersection point @~chinese 获取射线和三角形的交点
+         * @param ray @~english Ray using to intersect with triangle @~chinese 用来和三角形求交的射线
+         * @param interScetPoint @~english intersect point when exist @~chinese 当交点存在时，这个变量返回射线和三角形的交点
+         * @return @~english True if intersection point exist, false otherwise @~chinese 交点存在时返回true，否则返回false
+         */
         bool getInsterctPoint(const Ray &ray, Vec3& interScetPoint) const;
+        /**
+         * @~english Transform the triangle. @~chinese 对三角形进行变换
+         * @param matrix @~english Matrix used to transform the triangle. @~chinese 用来做变换的矩阵
+         */
         void transform(Mat4 matrix);
+        /** @~english three points of triangle @~chinese 三角形的三个顶点 */
         Vec3 _p1, _p2, _p3;
     };
 
 
    /**
-    *TerrainData
-    *This TerrainData struct warp all parameter that Terrain need to create
+    * @~english This TerrainData struct warp all parameter that Terrain need to create
+    * @~chinese 这个结构体包含了创建地形所需要的数据
     */
     struct CC_DLL TerrainData
     {
@@ -226,8 +247,9 @@ private:
     };
 
     struct CC_DLL QuadTree;
-    /*
-        the terminal node of quad, use to subdivision terrain mesh and LOD
+    /**
+        @~english The terminal node of quad, use to subdivision terrain mesh and LOD. Used by Terrain internally.
+        @~chinese 四叉树的叶子节点，用来管理地形划分和LOD. 该类为地形类内部使用
     **/
     struct Chunk
     {
@@ -285,6 +307,9 @@ private:
         */
         void updateIndicesLOD();
 
+        /*  @~english updateIndicesLODSkirt
+         @~chinese 为裙边策略更新地形mesh的index
+         */
         void updateIndicesLODSkirt();
 
         /** @~english calculate the average slop of chunk
@@ -292,6 +317,9 @@ private:
         */
         void calculateSlope();
 
+        /** @~english Get intersection point with ray
+         @~chinese 获取光线和地形的交点
+         */
         bool getInsterctPointWithRay(const Ray& ray, Vec3 &interscetPoint);
 
         /** @~english current LOD of the chunk
@@ -299,8 +327,14 @@ private:
         */
         int _currentLod;
 
+        /** @~english old load
+         @~chinese 旧的lod
+         */
         int _oldLod;
 
+        /** @~english lod of four neighbor tunk
+         @~chinese 四个邻居的lod
+         */
         int _neighborOldLOD[4];
         /*the left,right,front,back neighbors*/
         Chunk* _left;
@@ -308,6 +342,9 @@ private:
         Chunk* _front;
         Chunk* _back;
 
+        /** @~english parent node
+         @~chinese 父节点
+         */
         QuadTree* _parent;
 
         /** @~english the position X in terrain space
@@ -330,14 +367,21 @@ private:
             @~chinese 大块的斜率估计值
         */
         float _slope;
+        /** @~english vertex data
+         @~chinese 顶点数据
+         */
         std::vector<TerrainVertexData> _currentVertices;
 
+        /** @~english vertex index
+         @~chinese 顶点数据索引
+         */
         std::vector<Triangle> _trianglesList;
     };
 
     /**
         QuadTree
-        @breif use to hierarchically frustum culling and set LOD
+        @breif @~english use to hierarchically frustum culling and set LOD. User by Terrain internally
+     @~chinese 视锥裁剪和lod用的四叉树。地形类内部用。
      **/
     struct CC_DLL QuadTree
     {

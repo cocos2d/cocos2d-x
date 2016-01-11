@@ -323,39 +323,55 @@ public:
      */
     static Camera* getDefaultCamera();
     /**
-     Before rendering scene with this camera, the background need to be cleared. It clears the depth buffer with max depth by default. Use setBackgroundBrush to modify the default behavior
+     @~english Before rendering scene with this camera, the background need to be cleared. It clears the depth buffer with max depth by default. Use setBackgroundBrush to modify the default behavior
+     * @~chinese 场景渲染前该函数被调用，用来清除背景，默认情况下用最大深度值来清除背景深度，使用setBackgroundBrush来修改默认行为。
      */
     void clearBackground();
     /**
-     Apply the FBO, RenderTargets and viewport.
+     @~english Apply the FBO, RenderTargets and viewport.
+     * @~chinese 应用FBO、渲染目标和视口。
      */
     void apply();
     /**
-     Set FBO, which will attach several render target for the rendered result.
+     @~english Set FBO, which will attach several render target for the rendered result.
+     * @~chinese 设置FBO，FBO上可以绑定Render target用来绘制渲染结果。
+     * @param fbo @~english FBO.
+     * @~chinese 用来绑定到相机的FBO
     */
     void setFrameBufferObject(experimental::FrameBuffer* fbo);
     /**
-     Set Viewport for camera.
+     @~english Set Viewport for camera.
+     * @~chinese 设置相机的viewport
+     * @param vp @~english Viewport
+     * @~chinese 视口
      */
     void setViewport(const experimental::Viewport& vp) { _viewport = vp; }
     
     /**
-     * Whether or not the viewprojection matrix was updated since the last frame.
-     * @return True if the viewprojection matrix was updated since the last frame.
+     * @~english Whether or not the viewprojection matrix was updated since the last frame.
+     * @~chinese viewprojection矩阵是否需要更新
+     * @return @~english True if the viewprojection matrix was updated since the last frame.
+     * @~chinese 如果viewprojection矩阵需要更新返回true，否则false
      */
     bool isViewProjectionUpdated() const {return _viewProjectionUpdated;}
     
     /**
-     * set the background brush. See CameraBackgroundBrush for more information.
-     * @param clearBrush Brush used to clear the background
+     * @~english set the background brush. See CameraBackgroundBrush for more information.
+     * @~chinese 设置背景刷。
+     * @param clearBrush @~english Brush used to clear the background
+     * @~chinese 用来清除背景的背景刷
      */
     void setBackgroundBrush(CameraBackgroundBrush* clearBrush);
     
     /**
-     * Get clear brush
+     * @~english Get clear brush
+     * @~chinese 获取背景刷
      */
     CameraBackgroundBrush* getBackgroundBrush() const { return _clearBrush; }
     
+    /** @~english override visit routine which inherites from Node
+     * @~chinese 从Node继承来的visit方法，这里进行了重写
+     */
     virtual void visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
     /**@~english Check if the background clear brush valid

@@ -38,61 +38,79 @@ class Texture2D;
  */
 
 /** @class MotionStreak3D.
- * @brief Creates a trailing path. It is created from a line segment sweeping along the path.
+ * @brief @~english Creates a trailing path. It is created from a line segment sweeping along the path.
+ * @~chinese 路径轨迹，通过一个线段扫过一条路径创建。
  */
 class CC_DLL MotionStreak3D : public Node, public TextureProtocol
 {
 public:
-    /** Creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename.
+    /** @~english Creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename.
+     * @~chinese 创建并初始化一个运动轨迹，参数轨迹为消失的时间，单位秒，条纹的最小片段长度，轨迹宽度，轨迹颜色和材质贴图文件名。
      *
-     * @param fade The fade time, in seconds.
-     * @param minSeg The minimum segments.
-     * @param stroke The width of stroke.
-     * @param color The color of stroke.
-     * @param path The texture file name of stoke.
-     * @return An autoreleased MotionStreak3D object.
+     * @param fade @~english The fade time, in seconds. @~chinese轨迹消失时间，单位秒
+     * @param minSeg @~english The minimum segments. @~chinese 条纹的最小片段长度
+     * @param stroke @~english The width of stroke. @~chinese 轨迹宽度
+     * @param color @~english The color of stroke. @~chinese 轨迹颜色
+     * @param path @~english The texture file name of stoke. @~chinese 轨迹贴图文件名
+     * @return @~english An autoreleased MotionStreak3D object. @~chinese 创建的轨迹
      */
     static MotionStreak3D* create(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path);
-    /** Creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture.
-     * 
-     * @param fade The fade time, in seconds.
-     * @param minSeg The minimum segments.
-     * @param stroke The width of stroke.
-     * @param color The color of stroke.
-     * @param texture The texture name of stoke.
-     * @return An autoreleased MotionStreak3D object.
+    /** @~english Creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture.
+     * @~chinese 创建并初始化一个运动轨迹，参数为轨迹消失时间，单位秒，条纹的最小片段长度，轨迹宽度，轨迹颜色，轨迹纹理
+     * @param fade @~english The fade time, in seconds. @~chinese 轨迹消失时间，单位秒
+     * @param minSeg @~english The minimum segments. @~chinese 条纹的最小片段长度
+     * @param stroke @~english The width of stroke. @~chinese 轨迹宽度
+     * @param color @~english The color of stroke. @~chinese 轨迹颜色
+     * @param texture @~english The texture name of stoke. @~chinese 轨迹纹理
+     * @return @~english An autoreleased MotionStreak3D object. @~chinese 创建的纹理
      */
     static MotionStreak3D* create(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
 
-    /** Color used for the tint.
+    /** @~english Color used for the tint.
      *
-     * @param colors The color used for the tint.
+     * @~chinese 设定条纹的效果颜色。
+     *
+     * @param colors @~english The color used for the tint.
+     * @~chinese 效果颜色。
      */
     void tintWithColor(const Color3B& colors);
 
-    /** Remove all living segments of the ribbon.
+    /** @~english Remove all living segments of the ribbon.
+     * @~chinese 删除当前所有的条纹片段。
      */
     void reset();
     
-    /** Get stroke.
+    /** @~english Get stroke.
      *
-     * @return float stroke.
+     * @~chinese 获取条纹片段的宽度。
+     *
+     * @return @~english float stroke.
+     * @~chinese 返回条纹片段宽度值。
      */
     inline float getStroke() const { return _stroke; }
-    /** Set stroke.
+    /** @~english Set stroke.
      *
-     * @param stroke The width of stroke.
+     * @~chinese 设定条纹片段的宽度。
+     *
+     * @param stroke @~english The width of stroke.
+     * @~chinese 新的条纹片段宽度值。
      */
     inline void setStroke(float stroke) { _stroke = stroke; }
 
-    /** Is the starting position initialized or not.
+    /** @~english Is the starting position initialized or not.
      *
-     * @return True if the starting position is initialized.
+     * @~chinese 获取起始状态[即未开始移动]是否会添加条纹片段。
+     *
+     * @return @~english True if the starting position is initialized.
+     * @~chinese 如果起始状态会添加条纹片段返回true，否则返回false。
      */
     inline bool isStartingPositionInitialized() const { return _startingPositionInitialized; }
-    /** Sets the starting position initialized or not.
+    /** @~english Sets the starting position initialized or not.
      *
-     * @param bStartingPositionInitialized True if initialized the starting position.
+     * @~chinese 设置起始状态是否添加条纹片段，默认不添加。
+     *
+     * @param bStartingPositionInitialized @~english True if initialized the starting position.
+     * @~chinese true，起始状态会添加条纹片段；false，起始状态不添加条纹片段。
      */
     inline void setStartingPositionInitialized(bool bStartingPositionInitialized)
     {
@@ -113,23 +131,25 @@ public:
     virtual float getPositionX(void) const override;
     virtual float getPositionY(void) const override;
     virtual Vec3 getPosition3D() const override;
-    /**
+    /** @~english override draw routine @~chinese 重写的draw函数
     * @js NA
     * @lua NA
     */
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
-    /**
+    /** @~english update routine @~chinese 重写的update函数
     * @lua NA
     */
     virtual void update(float delta) override;
+    /** @~english Get texture @~chinese 获取Texture纹理*/
     virtual Texture2D* getTexture() const override;
+    /** @~english Set texture @~chinese 设置Texture纹理*/
     virtual void setTexture(Texture2D *texture) override;
-    /**
+    /** @~english Set blend function @~chinese 设置blend方式
     * @js NA
     * @lua NA
     */
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
-    /**
+    /** @~english Get blend function @~chinese 或者Blend function
     * @js NA
     * @lua NA
     */
@@ -140,13 +160,13 @@ public:
     virtual bool isOpacityModifyRGB() const override;
     
     /**
-     * Set the direction of sweeping line segment.
-     * @param sweepAxis Direction of sweeping line segment
+     * @~english Set the direction of sweeping line segment. @~chinese 设置扫描轴
+     * @param sweepAxis @english Direction of sweeping line segment @~chinese 扫描轴方向
      */
     void setSweepAxis(const Vec3& sweepAxis) { _sweepAxis = sweepAxis.getNormalized(); }
     
     /**
-     * Get the direction of sweeping line segment
+     * @~english Get the direction of sweeping line segment @~chinese 获取扫描轴的方向
      */
     const Vec3& getSweepAxis() const { return _sweepAxis; }
     
