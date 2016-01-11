@@ -815,7 +815,15 @@ std::string FileUtils::getPathForFilename(const std::string& filename, const std
     size_t pos = filename.find_last_of("/");
     if (pos != std::string::npos)
     {
-        file_path = filename.substr(0, pos+1);
+        if (filename[pos - 1] == '/')
+        {
+            file_path = filename.substr(0, pos);
+        }
+        else
+        {
+            file_path = filename.substr(0, pos+1);
+        }
+
         file = filename.substr(pos+1);
     }
 
