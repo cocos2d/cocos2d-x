@@ -42,68 +42,105 @@ class GLProgramState;
 class Camera;
 
 /**
- * Defines a brush to clear the background of camera.
- * There are 4 types of brush. None brush do nothing, Depth brush clear background with given depth, Color brush clear background with given color and depth, Skybox brush clear the background with a skybox. Camera uses depth brush by default.
+ * @class CameraBackgroundBrush
+ * @brief @~english Defines a brush to clear the background of camera. There are 4 types of brush. None brush do nothing, Depth brush clear background with given depth, Color brush clear background with given color and depth, Skybox brush clear the background with a skybox. Camera uses depth brush by default.
+ * @~chinese CameraBackgroundBrush 定义一个清除相机背景的背景刷。有4种类型的刷子，None brush不做任何事情，Depth brush用给定的深度来清除背景，Color brush用给定的颜色清除相机背景，Skybox brush用天空盒清除相机背景。相机默认使用depth brush，只清除深度。
  */
 class CC_DLL CameraBackgroundBrush : public Ref
 {
 public:
     /**
-     * Brush types. There are 4 types of brush. See CameraBackgroundDepthBrush, CameraBackgroundColorBrush, CameraBackgroundSkyBoxBrush for more information.
+     * @~english Brush types. There are 4 types of brush. See CameraBackgroundDepthBrush, CameraBackgroundColorBrush, CameraBackgroundSkyBoxBrush for more information.
+     * @~chinese 有4种类型的刷子，None brush不做任何事情，Depth brush用给定的深度来清除背景，Color brush用给定的颜色清除相机背景，Skybox brush用天空盒清除相机背景。
      */
     enum class BrushType
     {
-        NONE, //none brush
-        DEPTH, // depth brush. See CameraBackgroundDepthBrush
-        COLOR, // color brush. See CameraBackgroundColorBrush
-        SKYBOX, // skybox brush. See CameraBackgroundSkyBoxBrush
+        /** @~english none brush
+         * @~chinese None brush不做任何事情
+         */
+        NONE,
+        /** @~english depth brush. See CameraBackgroundDepthBrush
+         * @~chinese 深度背景刷
+         */
+        DEPTH,
+        /** @~english color brush. See CameraBackgroundColorBrush
+         * @~chinese 颜色背景刷
+         */
+        COLOR,
+        /** @~english skybox brush. See CameraBackgroundSkyBoxBrush
+         * @~chinese 天空盒背景刷
+         */
+        SKYBOX,
     };
     
-    /**
+    /**@~english
      * get brush type
-     * @return BrushType
+     * @~chinese 获取背景刷类型
+     * @return @~english BrushType
+     * @~chinese 背景刷类型
      */
     virtual BrushType getBrushType() const { return BrushType::NONE; }
     
-    /**
+    /** @~english
      * Creates a none brush, it does nothing when clear the background
-     * @return Created brush.
+     * @~chinese 创建一个空的背景刷
+     * @return @~english Created brush.
+     * @~chinese 创建的背景刷
      */
     static CameraBackgroundBrush* createNoneBrush();
     
     /**
      * Creates a depth brush, which clears depth buffer with a given depth.
-     * @param depth Depth used to clear depth buffer
-     * @return Created brush
+     * @param depth @~english Depth used to clear depth buffer
+     * @~chinese 清除背景刷的深度
+     * @return @~english Created brush
+     * @~chinese 创建的背景刷
      */
     static CameraBackgroundDepthBrush* createDepthBrush(float depth = 1.f);
     
-    /**
+    /** @~english
      * Creates a color brush
-     * @param color Color of brush
-     * @param depth Depth used to clear depth buffer
-     * @return Created brush
+     * @~chinese 创建颜色背景刷
+     * @param color @~english Color of brush
+     * @~chinese 背景刷的颜色
+     * @param depth @~english Depth used to clear depth buffer
+     * @~chinese 背景刷的深度
+     * @return @~english Created brush
+     * @~chinese 创建的背景刷
      */
     static CameraBackgroundColorBrush* createColorBrush(const Color4F& color, float depth);
     
     
-    /** Creates a Skybox brush with 6 textures.
-     @param positive_x texture for the right side of the texture cube face.
-     @param negative_x texture for the up side of the texture cube face.
-     @param positive_y texture for the top side of the texture cube face
-     @param negative_y texture for the bottom side of the texture cube face
-     @param positive_z texture for the forward side of the texture cube face.
-     @param negative_z texture for the rear side of the texture cube face.
-     @return  A new brush inited with given parameters.
+    /** @~english Creates a Skybox brush with 6 textures.
+     * @~chinese 用6张纹理创建一个天空盒背景刷
+     * @param @~english positive_x texture for the right side of the texture cube face.
+     * @~chinese 正x方向的纹理。
+     * @param negative_x @~english texture for the up side of the texture cube face.
+     * @~chinese 负x方向的纹理。
+     * @param positive_y @~english texture for the top side of the texture cube face
+     * @~chinese 正y方向的纹理。
+     * @param negative_y @~english texture for the bottom side of the texture cube face
+     * @~chinese 负y方向的纹理。
+     * @param positive_z @~english texture for the forward side of the texture cube face.
+     * @~chinese 正z方向的纹理。
+     * @param negative_z @~english negative_z texture for the rear side of the texture cube face.
+     * @~chinese 负z方向的纹理。
+     * @return @~english A new brush inited with given parameters.
+     * @~chinese 新创建的天空盒背景刷。
      */
     static CameraBackgroundSkyBoxBrush* createSkyboxBrush(const std::string& positive_x, const std::string& negative_x,
                                                           const std::string& positive_y, const std::string& negative_y,
                                                           const std::string& positive_z, const std::string& negative_z);
-    /**
+    /**@~english
      * draw the background
+     * @~chinese 绘制相机背景
      */
     virtual void drawBackground(Camera* camera) {}
 
+    /**@~english
+     * is valid?
+     * @~chinese 是否有效？
+     */
     virtual bool isValid() { return true; }
 
 CC_CONSTRUCTOR_ACCESS :
@@ -116,33 +153,42 @@ protected:
     GLProgramState* _glProgramState;
 };
 
-/**
- * Depth brush clear depth buffer with given depth
+/** @class CameraBackgroundDepthBrush
+ * @brief @~english Depth brush clear depth buffer with given depth
+ * @~chinese 深度刷用给定的深度清除深度缓冲
  */
 class CC_DLL CameraBackgroundDepthBrush : public CameraBackgroundBrush
 {
 public:
-    /**
+    /** @~english
      * Create a depth brush
-     * @param depth Depth used to clear the depth buffer
-     * @return Created brush
+     * @~chinese 创建深度背景刷
+     * @param depth @~english Depth used to clear the depth buffer
+     * @~chinese 用来清除背景的深度
+     * @return @~english Created brush
+     * @~chinese 创建的背景刷
      */
     static CameraBackgroundDepthBrush* create(float depth);
     
-    /**
+    /** @~english
      * Get brush type. Should be BrushType::DEPTH
-     * @return brush type
+     * @~chinese 获取相机背景刷的类型，应该为BrushType::DEPTH
+     * @return @~english brush type
+     * @~chinese 背景刷的类型
      */
     virtual BrushType getBrushType() const override { return BrushType::DEPTH; }
     
-    /**
+    /** @~english
      * Draw background
+     * @~chinese 绘制背景
      */
     virtual void drawBackground(Camera* camera) override;
     
-    /**
+    /** @~english
      * Set depth
-     * @param depth Depth used to clear depth buffer
+     * @~chinese 设置背景刷深度
+     * @param depth @~english Depth used to clear depth buffer
+     * @~chinese 清除背景的深度
      */
     void setDepth(float depth) { _depth = depth; }
     
@@ -160,29 +206,39 @@ protected:
     V3F_C4B_T2F_Quad _quad;
 };
 
-/**
+/**@class CameraBackgroundColorBrush
+ * @brief @~english
  * Color brush clear buffer with given depth and color
+ * @~chinese 颜色背景刷，用给定的颜色和深度清除背景缓冲
  */
 class CC_DLL CameraBackgroundColorBrush : public CameraBackgroundDepthBrush
 {
 public:
-    /**
+    /** @~english
      * Get brush type. Should be BrushType::COLOR
-     * @return brush type
+     * @~chinese 获取背景刷的类型，应该为BrushType::COLOR
+     * @return @~english brush type
+     * @~chinese 背景刷类型
      */
     virtual BrushType getBrushType() const override { return BrushType::COLOR; }
     
-    /**
+    /** @~english
      * Create a color brush
-     * @param color Color used to clear the color buffer
-     * @param depth Depth used to clear the depth buffer
-     * @return Created brush
+     * @~chinese 创建颜色背景刷
+     * @param color @~english Color used to clear the color buffer
+     * @~chinese 清除背景的颜色
+     * @param depth @~english Depth used to clear the depth buffer
+     * @~chinese 清除背景的深度
+     * @return @~english Created brush
+     * @~chinese 创建的背景刷
      */
     static CameraBackgroundColorBrush* create(const Color4F& color, float depth);
     
-    /**
+    /** @~english
      * Set clear color
-     * @param color Color used to clear the color buffer
+     * @~chinese 设置清除背景的颜色
+     * @param color @~english Color used to clear the color buffer
+     * @~chinese 清除颜色缓冲的颜色
      */
     void setColor(const Color4F& color);
     
@@ -200,42 +256,56 @@ class TextureCube;
 class GLProgramState;
 class EventListenerCustom;
 
-/**
- * Skybox brush clear buffer with a skybox
+/**@class CameraBackgroundSkyBoxBrush 
+ * @brief @~english Skybox brush clear buffer with a skybox
+ * @~chinese 天空盒背景刷，用天空盒来清除相机背景
  */
 class CC_DLL CameraBackgroundSkyBoxBrush : public CameraBackgroundBrush
 {
 public:
-    /**
+    /**@~english
      * Get brush type. Should be BrushType::SKYBOX
-     * @return brush type
+     * @~chinese 获取背景刷类型。应该为BrushType::SKYBOX
+     * @return @~english brush type
+     * @~chinese 背景刷类型
      */
     virtual BrushType getBrushType() const override { return BrushType::SKYBOX; }
     
-    /** Creates a Skybox brush with 6 textures.
-     @param positive_x texture for the right side of the texture cube face.
-     @param negative_x texture for the up side of the texture cube face.
-     @param positive_y texture for the top side of the texture cube face
-     @param negative_y texture for the bottom side of the texture cube face
-     @param positive_z texture for the forward side of the texture cube face.
-     @param negative_z texture for the rear side of the texture cube face.
-     @return  A new brush inited with given parameters.
+    /** @~english Creates a Skybox brush with 6 textures.
+     @param positive_x @~english texture for the right side of the texture cube face.
+     @~chinese 正x方向纹理
+     @param negative_x @~english texture for the up side of the texture cube face.
+     @~chinese 负x方向纹理
+     @param positive_y @~english texture for the top side of the texture cube face
+     @~chinese 正y方向纹理
+     @param negative_y @~english texture for the bottom side of the texture cube face
+     @~chinese 负y方向纹理
+     @param positive_z @~english texture for the forward side of the texture cube face.
+     @~chinese 正z方向纹理
+     @param negative_z @~english texture for the rear side of the texture cube face.
+     @~chinese 负z方向纹理
+     @return @~english A new brush inited with given parameters.
+     @~chinese 创建的天空盒背景刷
      */
     static CameraBackgroundSkyBoxBrush* create(const std::string& positive_x, const std::string& negative_x,
                                         const std::string& positive_y, const std::string& negative_y,
                                         const std::string& positive_z, const std::string& negative_z);
     
-    /** Creates a Skybox brush with 6 textures.
+    /** @~english Creates a Skybox brush
+     * @~chinese 创建天空盒背景刷
      */
     static CameraBackgroundSkyBoxBrush* create();
     /**
-     * Set skybox texture 
-     * @param texture Skybox texture
+     * @~english Set skybox texture
+     * @~chinese 设置天空盒的纹理
+     * @param texture @~english Skybox texture
+     * @~chinese 天空盒纹理
      */
     void setTexture(TextureCube*  texture);
     
-    /**
+    /** @~english
      * Draw background
+     * @~chinese 绘制背景刷
      */
     virtual void drawBackground(Camera* camera) override;
 
@@ -253,7 +323,8 @@ public:
      */
     void setActived(bool actived);
 
-    /** Set sky box background texture validate status.
+    /** @~english Set sky box background texture validate status.
+     * @~chinese 设置天空盒背景刷纹理的validate状态
      @param valid Texture validate status to be set.
     */
     virtual void setTextureValid(bool valid);
