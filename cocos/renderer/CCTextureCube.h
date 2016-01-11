@@ -41,8 +41,9 @@ NS_CC_BEGIN
 */
 
 /** @class TextureCube
-    TextureCube is a collection of six separate square textures that are put
+    @~english TextureCube is a collection of six separate square textures that are put
     onto the faces of an imaginary cube.
+ @~chinese 六面体纹理，每个面一个2D纹理
 */
 class CC_DLL TextureCube: public Texture2D
 {
