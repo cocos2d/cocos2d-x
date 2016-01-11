@@ -952,7 +952,7 @@ void Director::reset()
     
     // purge bitmap cache
     FontFNT::purgeCachedData();
-    
+    FontAtlasCache::purgeCachedData();
     FontFreeType::shutdownFreeType();
     
     // purge all managed caches
