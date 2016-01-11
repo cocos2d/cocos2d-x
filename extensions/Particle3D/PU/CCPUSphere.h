@@ -32,11 +32,16 @@
 #include <vector>
 
 NS_CC_BEGIN
-/** A sphere primitive, mostly used for bounds checking. 
-@remarks
-    A sphere in math texts is normally represented by the function
-    x^2 + y^2 + z^2 = r^2 (for sphere's centered on the origin). Ogre stores spheres
-    simply as a center point and a radius.
+
+/** @class PUSphere
+*@brief @~english Internal class，A sphere primitive, mostly used for bounds checking。
+A sphere in math texts is normally represented by the function
+x^2 + y^2 + z^2 = r^2 (for sphere's centered on the origin). this stores spheres
+simply as a center point and a radius.
+@~chinese 内部类，定义了球面网格，多数用来做边界检测。
+球体在数学上的定义如下：
+x^2 + y^2 + z^2 = r^2
+在此只用一个简单的半径和中心来定义。
 */
 class PUSphere
 {
@@ -46,25 +51,47 @@ protected:
 public:
     /** Standard constructor - creates a unit sphere around the origin.*/
     PUSphere();
-    /** Constructor allowing arbitrary spheres. 
-        @param center The center point of the sphere.
-        @param radius The radius of the sphere.
+    /**
+    * @~english Constructor allowing arbitrary spheres.
+    * @~chinese 根据3个点重新定义平面。
+    * @param center   @~english The center point of the sphere. @~chinese 球的中心点。
+    * @param radius   @~english The radius of the sphere. @~chinese 球的半径。
     */
     PUSphere(const Vec3& center, float radius);
 
-    /** Returns the radius of the sphere. */
+    /**
+    * @~english Returns the radius of the sphere.
+    * @~chinese 获取球半径。
+    * @return   @~english The radius of the sphere. @~chinese 球的半径。
+    */
     float getRadius(void) const { return _radius; }
 
-    /** Sets the radius of the sphere. */
+    /**
+    * @~english Sets the radius of the sphere.
+    * @~chinese 设置球半径。
+    * @param radius   @~english The radius of the sphere. @~chinese 球的半径。
+    */
     void setRadius(float radius) { _radius = radius; }
 
-    /** Returns the center point of the sphere. */
+    /**
+    * @~english Returns the center point of the sphere
+    * @~chinese 获取球中心。
+    * @return   @~english The center point of the sphere. @~chinese 球的中心点。
+    */
     const Vec3& getCenter(void) const { return _center; }
 
-    /** Sets the center point of the sphere. */
+    /**
+    * @~english Sets the center point of the sphere.
+    * @~chinese 设置球中心点。
+    * @param center   @~english The center point of the sphere. @~chinese 球的中心点。
+    */
     void setCenter(const Vec3& center) { _center = center; }
 
-    /** Returns whether or not this sphere intersects another sphere. */
+    /**
+    * @~english Returns whether or not this sphere intersects another sphere.
+    * @~chinese 检测两个球体是否发生碰撞。
+    * @param s   @~english The another sphere. @~chinese 另一个球体。
+    */
     bool intersects(const PUSphere& s) const
     {
         return (s._center - _center).lengthSquared() <= (s._radius + _radius) * (s._radius + _radius);
@@ -79,12 +106,20 @@ public:
     //{
     //	return Math::intersects(*this, plane);
     //}
-    /** Returns whether or not this sphere intersects a point. */
+    /**
+    * @~english Returns whether or not this sphere intersects a point.
+    * @~chinese 检测球体和点是否发生碰撞。
+    * @param v   @~english The Point. @~chinese 点位置。
+    */
     bool intersects(const Vec3& v) const
     {
         return ((v - _center).lengthSquared() <= _radius * _radius);
     }
-    /** Merges another Sphere into the current sphere */
+    /**
+    * @~english Merges another Sphere into the current sphere.
+    * @~chinese 把另一个球体合并到当前球体。
+    * @param oth   @~english The another sphere. @~chinese 另一个球体。
+    */
     void merge(const PUSphere& oth);
         
 

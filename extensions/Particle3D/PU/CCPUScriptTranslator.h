@@ -1184,6 +1184,10 @@ static const std::string token[1000] =
 
 
 /**script translator*/
+/** @struct PUScriptTranslator
+*@brief @~english Internal class, the script translator.
+@~chinese 内部类，脚本翻译器。
+*/
 class PUScriptTranslator
 {
     public:

@@ -32,16 +32,21 @@
 #include <vector>
 
 NS_CC_BEGIN
-/** Defines a plane in 3D space.
-    @remarks
-        A plane is defined in 3D space by the equation
-        Ax + By + Cz + D = 0
-    @par
-        This equates to a vector (the normal of the plane, whose x, y
-        and z components equate to the coefficients A, B and C
-        respectively), and a constant (D) which is the distance along
-        the normal you have to go to move the plane back to the origin.
-    */
+
+/** @class PUPlane
+*@brief @~english Internal class，defines a plane in 3D space.
+A plane is defined in 3D space by the equation
+Ax + By + Cz + D = 0
+This equates to a vector (the normal of the plane, whose x, y
+and z components equate to the coefficients A, B and C
+respectively), and a constant (D) which is the distance along
+the normal you have to go to move the plane back to the origin.
+@~chinese 内部类，定义了一个3D的平面类
+该平面基于以下平面方程：
+Ax + By + Cz + D = 0
+该等式由一个向量（法线(A,B,C)）和一个固定值（D）组成，该固定值是把平面移动到
+坐标系原点的距离。
+*/
 class PUPlane
 {
 public:
@@ -51,8 +56,8 @@ public:
     PUPlane (const PUPlane& rhs);
     /** Construct a plane through a normal, and a distance to move the plane along the normal.*/
     PUPlane (const Vec3& rkNormal, float fConstant);
-	/** Construct a plane using the 4 constants directly **/
-	PUPlane (float a, float b, float c, float d);
+    /** Construct a plane using the 4 constants directly **/
+    PUPlane (float a, float b, float c, float d);
     PUPlane (const Vec3& rkNormal, const Vec3& rkPoint);
     PUPlane (const Vec3& rkPoint0, const Vec3& rkPoint1,
         const Vec3& rkPoint2);
@@ -96,36 +101,52 @@ public:
         The absolute value of the return value is the true distance only
         when the plane normal is a unit length vector.
     */
+    /**
+    * @~english Get a pseudodistance,positive if the point is on the positive side of the plane,
+    * negative if the point is on the negative side, and zero if the point is on the plane.
+    * @~chinese 获取一个伪距离，该距离为正时表示在平面的正面，反正则在背面。
+    * @param rkPoint   @~english One point. @~chinese 一个点。
+    * @return   @~english The pseudodistance. @~chinese 伪距离。
+    */
     float getDistance (const Vec3& rkPoint) const;
 
-    /** Redefine this plane based on 3 points. */
+    /**
+    * @~english Redefine this plane based on 3 points.
+    * @~chinese 根据3个点重新定义平面。
+    * @param rkPoint0   @~english The Point 0. @~chinese 点0。
+    * @param rkPoint1   @~english The Point 1. @~chinese 点1。
+    * @param rkPoint2   @~english The Point 2. @~chinese 点2。
+    */
     void redefine(const Vec3& rkPoint0, const Vec3& rkPoint1,
         const Vec3& rkPoint2);
 
-	/** Redefine this plane based on a normal and a point. */
-	void redefine(const Vec3& rkNormal, const Vec3& rkPoint);
+    /**
+    * @~english Redefine this plane based on a normal and a point.
+    * @~chinese 根据法线和一个点重新定义平面。
+    * @param rkNormal   @~english The Normal. @~chinese 法线。
+    * @param rkPoint   @~english The Point. @~chinese 点。
+    */
+    void redefine(const Vec3& rkNormal, const Vec3& rkPoint);
 
-	/** Project a vector onto the plane. 
-	@remarks This gives you the element of the input vector that is perpendicular 
-		to the normal of the plane. You can get the element which is parallel
-		to the normal of the plane by subtracting the result of this method
-		from the original vector, since parallel + perpendicular = original.
-	@param v The input vector
-	*/
-	Vec3 projectVector(const Vec3& v) const;
+    /**
+    * @~english Project a vector onto the plane.
+    * @~chinese 投影一个点到平面。
+    * @param v   @~english The Point. @~chinese 被投影点。
+    * @remarks This gives you the element of the input vector that is perpendicular
+    * to the normal of the plane. You can get the element which is parallel
+    * to the normal of the plane by subtracting the result of this method
+    * from the original vector, since parallel + perpendicular = original.
+    */
+    Vec3 projectVector(const Vec3& v) const;
 
-    /** Normalises the plane.
-        @remarks
-            This method normalises the plane's normal and the length scale of d
-            is as well.
-        @note
-            This function will not crash for zero-sized vectors, but there
-            will be no changes made to their components.
-        @return The previous length of the plane's normal.
+    /**
+    * @~english Normalises the plane.
+    * @~chinese 规范化该平面。
+    * @return   @~english The previous length of the plane's normal. @~chinese 计算前平面法线的长度。
     */
     float normalize(void);
 
-	Vec3 normal;
+    Vec3 normal;
     float d;
 
     /// Comparison operator

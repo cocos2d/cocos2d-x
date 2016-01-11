@@ -31,7 +31,14 @@
 
 NS_CC_BEGIN
 
-/** Definition of a Triangle
+/**
+* @addtogroup _3d
+* @{
+*/
+
+/** @class PUTriangle
+*@brief @~english Definition of a Triangle.
+@~chinese 定义一个三角形类。
 */
 class PUTriangle
 {
@@ -46,40 +53,66 @@ public:
 
     /** Public attributes **/
     float squareSurface;
-    Vec3 surfaceNormal;	// Normal of triangle v1-v2-v3
-    Vec3 v1;				// Vertex v1
-    Vec3 v2;				// Vertex v2
-    Vec3 v3;				// Vertex v3
-    Vec3 vn1;			// Normal of vertex v1
-    Vec3 vn2;			// Normal of vertex v2
-    Vec3 vn3;			// Normal of vertex v3
-    Vec3 en1;			// Normal of edge v1-v2
-    Vec3 en2;			// Normal of edge v2-v3
-    Vec3 en3;			// Normal of edge v3-v1
+    Vec3 surfaceNormal;	/** Normal of triangle v1-v2-v3 */
+    Vec3 v1;				/** Vertex v1 */
+    Vec3 v2;				/** Vertex v2 */
+    Vec3 v3;				/** Vertex v3 */
+    Vec3 vn1;			/** Normal of vertex v1 */
+    Vec3 vn2;			/** Normal of vertex v2 */
+    Vec3 vn3;			/** Normal of vertex v3 */
+    Vec3 en1;			/** Normal of edge v1-v2 */
+    Vec3 en2;			/** Normal of edge v2-v3 */
+    Vec3 en3;			/** Normal of edge v3-v1 */
 
-    /** Constructor **/
+    /**
+    * @~english Constructor.
+    * @~chinese 构造器。
+    */
     PUTriangle(void){};
 
-    /** Calculate the (square) surface of the triangle **/
+    /**
+    * @~english Calculate the (square) surface of the triangle.
+    * @~chinese 计算三角形的表面。
+    */
     void calculateSquareSurface (void);
 
-    /** Calculate the surface normal of the triangle **/
+    /**
+    * @~english Calculate the surface normal of the triangle.
+    * @~chinese 计算三角形的表面法线。
+    */
     void calculateSurfaceNormal (void);
 
-    /** Calculate the edge normals of the 3 edges  **/
+    /**
+    * @~english Calculate the edge normals of the 3 edges.
+    * @~chinese 计算三角形的边法线。
+    */
     void calculateEdgeNormals (void);
 
-    /** Determine a random position on this triangle **/
+    /**
+    * @~english Determine a random position on this triangle.
+    * @~chinese 获取三角形内的一个随机点。
+    * @return   @~english A random position on this triangle. @~chinese 三角形的随机点。
+    */
     const Vec3 getRandomTrianglePosition (void);
 
-    /** Determine a random position including its normal on a one of the edges **/
+    /**
+    * @~english Determine a random position including its normal on a one of the edges.
+    * @~chinese 获取三角形内的一个随机点包含一条边的法线。
+    * @return   @~english Position and normal. @~chinese 位置和法线。
+    */
     const PositionAndNormal getRandomEdgePositionAndNormal (void);
 
-    /** Determine a random vertex including its normal of this triangle **/
+    /**
+    * @~english Determine a random vertex including its normal of this triangle.
+    * @~chinese 获取三角形内的一个随机顶点和法线。
+    * @return   @~english Position and normal. @~chinese 位置和法线。
+    */
     const PositionAndNormal getRandomVertexAndNormal (void);
 };
 
-/** Comparer used for sorting vector in ascending order
+/** @class PUSortAscending
+*@brief @~english Comparer used for sorting vector in ascending order.
+@~chinese 升序比较容器用以排序三角形。
 */
 struct PUSortAscending
 {
@@ -89,7 +122,9 @@ struct PUSortAscending
     }
 };
 
-/** Comparer used for sorting vector in descending order
+/** @class PUSortDescending
+*@brief @~english Comparer used for sorting vector in descending order.
+@~chinese 降序比较容器用以排序三角形。
 */
 struct PUSortDescending
 {
@@ -99,12 +134,12 @@ struct PUSortDescending
     }
 };
 
-/** Define a template class for a vector of triangles.
-*/
+
 typedef std::vector<PUTriangle> Triangles;
 
-/** Class that constructs mesh information of a given mesh name
-@remarks
+/** @class MeshInfo
+*@brief @~english Definition of a Mesh.
+@~chinese 定义一个网格类。
 */
 class MeshInfo
 {
@@ -117,11 +152,11 @@ public:
     */
     enum MeshSurfaceDistribution
     { 
-        MSD_HOMOGENEOUS,		// Distribute particles homogeneous (random) on the mesh surface
-        MSD_HETEROGENEOUS_1,	// Distribute more particles on the smaller faces
-        MSD_HETEROGENEOUS_2,	// Same as above, but now more particles are emitting from the larger faces
-        MSD_VERTEX,				// Particles only emit from the vertices
-        MSD_EDGE				// Particles emit random on the edges
+        MSD_HOMOGENEOUS,		/** Distribute particles homogeneous (random) on the mesh surface */
+        MSD_HETEROGENEOUS_1,	/** Distribute more particles on the smaller faces  */
+        MSD_HETEROGENEOUS_2,	/** Same as above, but now more particles are emitting from the larger faces  */
+        MSD_VERTEX,				/** Particles only emit from the vertices  */
+        MSD_EDGE				/** Particles emit random on the edges  */
     };
 
     /** Constructor **/
@@ -133,8 +168,13 @@ public:
     /** Destructor **/
     ~MeshInfo (void);
 
-    /** Generate a random number. The high argument determines that numbers are 
-        returned between [0..high] **/
+    /**
+    * @~english Generate a random number.
+    * @~chinese 生成高斯随机数。
+    * @param high   @~english The high argument determines that numbers are returned between [0..high]. @~chinese 最大的范围。
+    * @param cutoff   @~english The cutoff. @~chinese 截断值。
+    * @return   @~english The value. @~chinese 随机值。
+    */
     float getGaussianRandom (float high, float cutoff = 4);
 
     ///** Retrieve vertex info **/
@@ -143,18 +183,35 @@ public:
     //						const Quaternion& orient = Quaternion(),
     //						const Vec3& scale = Vec3::ONE);
 
-    /** Get a triangle based on the index. */
+    /**
+    * @~english Get one triangle.
+    * @~chinese 获取一个三角形。
+    * @param triangleIndex   @~english The index of triangle. @~chinese 三角形索引。
+    * @return   @~english The triangle. @~chinese 三角形。
+    */
     const PUTriangle& getTriangle (size_t triangleIndex);
 
-    /** Get a random triangle (index) from the mesh. */
+    /**
+    * @~english Get a random triangle (index) from the mesh.
+    * @~chinese 获取一个网格中的随机三角形索引。
+    * @return   @~english The index of triangle. @~chinese 三角形索引。
+    */
     const size_t getRandomTriangleIndex (void);
     
-    /** Get triangle number */
+    /**
+    * @~english Get triangle number.
+    * @~chinese 获取网格中三角形数目。
+    * @return   @~english The number of triangle. @~chinese 三角形数目。
+    */
     size_t getTriangleCount() const { return _triangles.size(); }
 
-    /** Returns both a random point on a given triangle and its normal vector.
-        How the random point and the normal are determined depends on the distribution type.
-    **/
+    /**
+    * @~english Returns both a random point on a given triangle and its normal vector.
+    *           How the random point and the normal are determined depends on the distribution type.
+    * @~chinese 返回指定三角形的所有随机点和法线。
+    * @param triangleIndex   @~english The index of triangle. @~chinese 三角形索引。
+    * @return   @~english Position and normal. @~chinese 位置和法线。
+    */
     const PUTriangle::PositionAndNormal getRandomPositionAndNormal (const size_t triangleIndex);
 
 protected:
@@ -177,68 +234,91 @@ public:
 
     static PUMeshSurfaceEmitter* create();
 
-    /** Returns the mesh name.
+    /**
+    * @~english Returns the mesh name.
+    * @~chinese 返回网格名称。
+    * @return   @~english The mesh nam. @~chinese 网格名称。
     */
     const std::string& getMeshName(void) const;
 
-    /** Sets the mesh name.
+    /**
+    * @~english Sets the mesh name.
+    * @~chinese 设置网格名称。
+    * @param meshName   @~english The index of triangle. @~chinese 网格名称。
+    * @param doBuild   @~english If need build mesh. @~chinese 是否构建网格。
     */
     void setMeshName(const std::string& meshName, bool doBuild = true);
 
-    /** Returns true if normals are used for the particle direction.
+    /**
+    * @~english Returns whether use normal.
+    * @~chinese 返回是否使用法线。
+    * @return   @~english Whether use normal. @~chinese 是否使用法线。
     */
     bool useNormals (void) const;
 
-    /** Set indication whether normals are used for the particle direction.
+    /**
+    * @~english Set indication whether normals are used for the particle direction.
+    * @~chinese 设置法线是否用于粒子方向。
+    * @param useNormals   @~english Whether use normal. @~chinese 是否使用法线。
     */
     void setUseNormals (bool useNormals);
 
-    /** Returns the type op distribution.
-    @remarks
-        There are several ways to emit particles on the surface of a mesh. This attribute indicates
-        the type of distribution on the surface.
+    /**
+    * @~english Returns the type of particle distribution.
+    * @~chinese 返回分布类型。
+    * @return   @~english  the type of particle distribution. @~chinese 粒子分布类型。
+    * @remarks
+    * There are several ways to emit particles on the surface of a mesh. This attribute indicates
+    * the type of distribution on the surface.
     */
     const MeshInfo::MeshSurfaceDistribution getDistribution (void) const;
 
-    /** Set the type of particle distribution on the surface of a mesh.
+    /**
+    * @~english Set the type of particle distribution on the surface of a mesh.
+    * @~chinese 设置网格的粒子分布类型。
+    * @param distribution   @~english the type of particle distribution. @~chinese 粒子分布类型。
     */
     void setDistribution(MeshInfo::MeshSurfaceDistribution distribution);
 
-    /** Returns the scale of the mesh.
+    /**
+    * @~english Returns the scale of the mesh.
+    * @~chinese 获取网格缩放。
+    * @return   @~english  the scale. @~chinese 缩放。
     */
     const Vec3& getScale (void) const;
 
-    /** Set the scale of the mesh.
-    @remarks
-        This options makes it possible to scale the mesh independently from the particle system scale as a whole.
+    /**
+    * @~english Set the scale of the mesh.
+    * @~chinese 设置网格缩放。
+    * @return   @~english  the scale. @~chinese 缩放。
     */
     void setScale (const Vec3& scale);
 
-    /** Build all the data needed to generate the particles.
+    /**
+    * @~english Build all the data needed to generate the particles.
+    * @~chinese 构建粒子所需的数据。
     */
     void build(void);
 
-    /** Build the data if the mesh name has been set.
-    */
+    /** override. */
     virtual void prepare() override;
 
-    /** Reverse it.
-    */
+    /** override. */
     virtual void unPrepare() override;
 
-    /** Determine a particle position on the mesh surface.
-    */
+    /** override. */
     virtual void initParticlePosition(PUParticle3D* particle) override;
 
-    /** See ParticleEmitter.
-    */
+    /** override. */
     virtual unsigned short calculateRequestedParticles(float timeElapsed) override;
 
-    /** Determine the particle direction.
-    */
+    /** override. */
     virtual void initParticleDirection(PUParticle3D* particle) override;
 
+    /** override. */
     virtual PUMeshSurfaceEmitter* clone() override;
+
+    /** override. */
     virtual void copyAttributesTo (PUEmitter* emitter) override;
 
 CC_CONSTRUCTOR_ACCESS:
@@ -254,6 +334,9 @@ protected:
     size_t _triangleIndex;
     bool _directionSet;
 };
+
+// end of _3d group
+/// @}
 
 NS_CC_END
 

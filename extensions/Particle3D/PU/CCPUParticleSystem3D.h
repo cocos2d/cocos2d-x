@@ -47,6 +47,10 @@ class Particle3DRender;
 * @{
 */
 
+/** @enum PUComponentType
+*@brief @~english The type of PUComponent.
+@~chinese PU组件的所有类型。
+*/
 enum PUComponentType
 {
     CT_PARTICLE,
@@ -84,6 +88,10 @@ struct CC_DLL PUParticle3D : public Particle3D
 
     typedef std::vector<PUBehaviour*> ParticleBehaviourList;
 
+	/** @enum ParticleType
+	*@brief @~english The type of Particle.
+	@~chinese 粒子的类型。
+	*/
     enum ParticleType
     {
         PT_VISUAL,
