@@ -59,6 +59,8 @@ public:
     virtual void setTouchEnabled(bool value);
     virtual bool isAccelerometerEnabled() const;
     virtual void setAccelerometerEnabled(bool value);
+    virtual bool isSensorEnabled() const;
+    virtual void setSensorEnabled(cocos2d::SensorType type, bool value);
     virtual bool isKeypadEnabled() const;
     virtual void setKeypadEnabled(bool value);
     virtual void setTouchMode(cocos2d::Touch::DispatchMode mode);
@@ -110,6 +112,10 @@ public:
     /**
      * @js NA
      */
+    virtual void onSensor(cocos2d::Sensor* sensor, cocos2d::Event* event) {};
+    /**
+     * @js NA
+     */
     virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {};
     /**
      * @js NA
@@ -153,6 +159,8 @@ protected:
     cocos2d::EventListener* _touchListener;
     bool _accelerometerEnabled;
     cocos2d::EventListener*  _accelerometerListener;
+    bool _sensorEnabled;
+    cocos2d::EventListener*  _sensorListener;
     bool _keypadEnabled;
     cocos2d::EventListener*  _keyboardListener;
 private:

@@ -75,8 +75,10 @@ THE SOFTWARE.
 #include "base/CCEventListenerFocus.h"
 #include "base/CCEventListenerKeyboard.h"
 #include "base/CCEventListenerMouse.h"
+#include "base/CCEventListenerSensor.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventMouse.h"
+#include "base/CCEventSensor.h"
 #include "base/CCEventTouch.h"
 #include "base/CCEventType.h"
 

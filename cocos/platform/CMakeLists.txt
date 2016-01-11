@@ -55,6 +55,7 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp
+  platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxSensor.cpp
   platform/android/jni/JniHelper.cpp
   platform/android/jni/TouchesJni.cpp
 )
