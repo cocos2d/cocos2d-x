@@ -79,7 +79,7 @@ FontAtlas::FontAtlas(Font &theFont)
             _currentPageDataSize *= 2;
         }
 
-        _currentPageData = new unsigned char[_currentPageDataSize];
+        _currentPageData = new (std::nothrow) unsigned char[_currentPageDataSize];
         memset(_currentPageData, 0, _currentPageDataSize);
 
         auto  pixelFormat = outlineSize > 0 ? Texture2D::PixelFormat::AI88 : Texture2D::PixelFormat::A8; 
@@ -110,7 +110,7 @@ FontAtlas::~FontAtlas()
 #endif
 
     _font->release();
-    relaseTextures();
+    releaseTextures();
 
     delete []_currentPageData;
 
@@ -123,13 +123,18 @@ FontAtlas::~FontAtlas()
 #endif
 }
 
-void FontAtlas::relaseTextures()
+void FontAtlas::releaseTextures()
 {
     for( auto &item: _atlasTextures)
     {
         item.second->release();
     }
     _atlasTextures.clear();
+}
+
+void FontAtlas::relaseTextures()
+{
+    releaseTextures();
 }
 
 void FontAtlas::purgeTexturesAtlas()
@@ -155,6 +160,18 @@ void FontAtlas::listenRendererRecreated(EventCustom *event)
 void FontAtlas::addLetterDefinition(char16_t utf16Char, const FontLetterDefinition &letterDefinition)
 {
     _letterDefinitions[utf16Char] = letterDefinition;
+}
+
+void FontAtlas::scaleFontLetterDefinition(float scaleFactor)
+{
+    for (auto&& fontDefinition : _letterDefinitions) {
+        auto& letterDefinition = fontDefinition.second;
+        letterDefinition.width *= scaleFactor;
+        letterDefinition.height *= scaleFactor;
+        letterDefinition.offsetX *= scaleFactor;
+        letterDefinition.offsetY *= scaleFactor;
+        letterDefinition.xAdvance *= scaleFactor;
+    }
 }
 
 bool FontAtlas::getLetterDefinitionForChar(char16_t utf16Char, FontLetterDefinition &letterDefinition)

@@ -54,8 +54,10 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(ActionAnimate);
     ADD_TEST_CASE(ActionSequence);
     ADD_TEST_CASE(ActionSequence2);
-	ADD_TEST_CASE(ActionRemoveSelf);
+    ADD_TEST_CASE(ActionSequence3);
+    ADD_TEST_CASE(ActionRemoveSelf);
     ADD_TEST_CASE(ActionSpawn);
+    ADD_TEST_CASE(ActionSpawn2);
     ADD_TEST_CASE(ActionReverse);
     ADD_TEST_CASE(ActionDelayTime);
     ADD_TEST_CASE(ActionRepeat);
@@ -778,6 +780,37 @@ std::string ActionSequence2::subtitle() const
 
 //------------------------------------------------------------------
 //
+//    ActionSequence3
+//
+//------------------------------------------------------------------
+void ActionSequence3::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    alignSpritesLeft(1);
+
+    // Uses Array API
+    auto action1 = MoveBy::create(2, Vec2(240,0));
+    auto action2 = RotateBy::create(2, 540);
+    auto action3 = action1->reverse();
+    auto action4 = action2->reverse();
+
+    Vector<FiniteTimeAction*> array;
+    array.pushBack(action1);
+    array.pushBack(action2);
+    array.pushBack(action3);
+    array.pushBack(action4);
+    auto action = Sequence::create(array);
+    _grossini->runAction(action);
+}
+
+std::string ActionSequence3::subtitle() const
+{
+    return "Sequence: Using Array API";
+}
+
+//------------------------------------------------------------------
+//
 // ActionCallFuncN
 //
 //------------------------------------------------------------------
@@ -947,6 +980,33 @@ std::string ActionSpawn::subtitle() const
     return "Spawn: Jump + Rotate";
 }
 
+//------------------------------------------------------------------
+//
+// ActionSpawn2
+//
+//------------------------------------------------------------------
+
+void ActionSpawn2::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    alignSpritesLeft(1);
+
+    auto action1 = JumpBy::create(2, Vec2(300,0), 50, 4);
+    auto action2 = RotateBy::create( 2,  720);
+
+    Vector<FiniteTimeAction*> array;
+    array.pushBack(action1);
+    array.pushBack(action2);
+
+    auto action = Spawn::create(array);
+    _grossini->runAction(action);
+}
+
+std::string ActionSpawn2::subtitle() const
+{
+    return "Spawn: using the Array API";
+}
 
 //------------------------------------------------------------------
 //

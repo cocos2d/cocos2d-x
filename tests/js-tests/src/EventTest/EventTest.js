@@ -253,7 +253,9 @@ var TouchAllAtOnce = EventTest.extend({
             var touch = touches[i];
             var pos = touch.getLocation();
             var id = touch.getID();
-            cc.log("Touch #" + i + ". onTouchesMoved at: " + pos.x + " " + pos.y + " Id:" + id);
+            var force = touch.getCurrentForce();
+            var maxForce = touch.getMaxForce();
+            cc.log("Touch #" + i + ". onTouchesMoved at: " + pos.x + " " + pos.y + " Id:" + id + " current force:" + force + " maximum postible force:" + maxForce);
             target.update_id(id, pos);
         }
     },
@@ -364,7 +366,7 @@ var MouseTest = EventTest.extend({
 
         if( 'mouse' in cc.sys.capabilities ) {
             cc.eventManager.addListener({
-                 event: cc.EventListener.MOUSE,
+                event: cc.EventListener.MOUSE,
                 onMouseDown: function(event){
                     var pos = event.getLocation(), target = event.getCurrentTarget();
                     if(event.getButton() === cc.EventMouse.BUTTON_RIGHT)

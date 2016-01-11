@@ -153,7 +153,7 @@ void EventDispatcher::EventListenerVector::push_back(EventListener* listener)
     {
         if (_sceneGraphListeners == nullptr)
         {
-            _sceneGraphListeners = new std::vector<EventListener*>();
+            _sceneGraphListeners = new (std::nothrow) std::vector<EventListener*>();
             _sceneGraphListeners->reserve(100);
         }
         
@@ -412,7 +412,7 @@ void EventDispatcher::associateNodeAndEventListener(Node* node, EventListener* l
     }
     else
     {
-        listeners = new std::vector<EventListener*>();
+        listeners = new (std::nothrow) std::vector<EventListener*>();
         _nodeListenersMap.insert(std::make_pair(node, listeners));
     }
     

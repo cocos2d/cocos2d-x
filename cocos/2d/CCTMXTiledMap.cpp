@@ -61,7 +61,9 @@ TMXTiledMap* TMXTiledMap::createWithXML(const std::string& tmxString, const std:
 bool TMXTiledMap::initWithTMXFile(const std::string& tmxFile)
 {
     CCASSERT(tmxFile.size()>0, "TMXTiledMap: tmx file should not be empty");
-    
+
+    _tmxFile = tmxFile;
+
     setContentSize(Size::ZERO);
 
     TMXMapInfo *mapInfo = TMXMapInfo::create(tmxFile);
@@ -78,6 +80,8 @@ bool TMXTiledMap::initWithTMXFile(const std::string& tmxFile)
 
 bool TMXTiledMap::initWithXML(const std::string& tmxString, const std::string& resourcePath)
 {
+    _tmxFile = tmxString;
+
     setContentSize(Size::ZERO);
 
     TMXMapInfo *mapInfo = TMXMapInfo::createWithXML(tmxString, resourcePath);
@@ -91,6 +95,8 @@ bool TMXTiledMap::initWithXML(const std::string& tmxString, const std::string& r
 TMXTiledMap::TMXTiledMap()
     :_mapSize(Size::ZERO)
     ,_tileSize(Size::ZERO)        
+    ,_tmxFile("")
+    , _tmxLayerNum(0)
 {
 }
 
@@ -173,10 +179,10 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 
     _tileProperties = mapInfo->getTileProperties();
 
-    int idx=0;
+    int idx = 0;
 
     auto& layers = mapInfo->getLayers();
-    for(const auto &layerInfo : layers) {
+    for (const auto &layerInfo : layers) {
         if (layerInfo->_visible) {
             TMXLayer *child = parseLayer(layerInfo, mapInfo);
             if (child == nullptr) {
@@ -184,17 +190,17 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
                 continue;
             }
             addChild(child, idx, idx);
-            
             // update content size with the max size
             const Size& childSize = child->getContentSize();
             Size currentSize = this->getContentSize();
-            currentSize.width = std::max( currentSize.width, childSize.width );
-            currentSize.height = std::max( currentSize.height, childSize.height );
+            currentSize.width = std::max(currentSize.width, childSize.width);
+            currentSize.height = std::max(currentSize.height, childSize.height);
             this->setContentSize(currentSize);
-            
+
             idx++;
         }
     }
+    _tmxLayerNum = idx;
 }
 
 // public
@@ -270,5 +276,9 @@ std::string TMXTiledMap::getDescription() const
     return StringUtils::format("<TMXTiledMap | Tag = %d, Layers = %d", _tag, static_cast<int>(_children.size()));
 }
 
+int TMXTiledMap::getLayerNum()
+{
+    return _tmxLayerNum;
+}
 
 NS_CC_END

@@ -303,7 +303,7 @@ void Widget::setContentSize(const cocos2d::Size &contentSize)
     }
     else if (_ignoreSize)
     {
-        _contentSize = getVirtualRendererSize();
+        ProtectedNode::setContentSize(getVirtualRendererSize());
     }
     if (!_usingLayoutComponent && _running)
     {
@@ -609,6 +609,11 @@ bool Widget::isHighlighted() const
 
 void Widget::setHighlighted(bool highlight)
 {
+    if (highlight == _highlight)
+    {
+        return;
+    }
+
     _highlight = highlight;
     if (_bright)
     {
@@ -956,7 +961,7 @@ bool Widget::hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const
 bool Widget::isClippingParentContainsPoint(const Vec2 &pt)
 {
     _affectByClipping = false;
-    Widget* parent = getWidgetParent();
+    Node* parent = getParent();
     Widget* clippingParent = nullptr;
     while (parent)
     {
@@ -970,7 +975,7 @@ bool Widget::isClippingParentContainsPoint(const Vec2 &pt)
                 break;
             }
         }
-        parent = parent->getWidgetParent();
+        parent = parent->getParent();
     }
 
     if (!_affectByClipping)

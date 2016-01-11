@@ -264,7 +264,7 @@ var ControlButtonTest_Styling = ControlScene.extend({
 
         titleButton.color = cc.color(159, 168, 176);
 
-        var button = new cc.ControlButton(titleButton, backgroundButton);
+        var button = new cc.ControlButton(titleButton, backgroundButton, null, null, false);
         button.setBackgroundSpriteForState(backgroundHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
         button.setTitleColorForState(cc.color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
 

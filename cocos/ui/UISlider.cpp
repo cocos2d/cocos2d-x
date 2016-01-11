@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "ui/UIHelper.h"
 #include "2d/CCSprite.h"
 #include "2d/CCCamera.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 NS_CC_BEGIN
 
@@ -68,7 +69,12 @@ _ballNTexType(TextureResType::LOCAL),
 _ballPTexType(TextureResType::LOCAL),
 _ballDTexType(TextureResType::LOCAL),
 _barRendererAdaptDirty(true),
-_progressBarRendererDirty(true)
+_progressBarRendererDirty(true),
+_textureFile(""),
+_progressBarTextureFile(""),
+_slidBallNormalTextureFile(""),
+_slidBallPressedTextureFile(""),
+_slidBallDisabledTextureFile("")
 {
     setTouchEnabled(true);
 }
@@ -147,13 +153,16 @@ void Slider::initRenderer()
 
 void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
 {
+    _textureFile = fileName;
+    _barTexType = texType;
     if (fileName.empty())
     {
-        return;
+        _barRenderer->resetRender();
     }
-    _barTexType = texType;
-    switch (_barTexType)
+    else
     {
+        switch (_barTexType)
+        {
         case TextureResType::LOCAL:
             _barRenderer->initWithFile(fileName);
             break;
@@ -162,6 +171,11 @@ void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
             break;
         default:
             break;
+        }
+    }
+    //FIXME: https://github.com/cocos2d/cocos2d-x/issues/12249
+    if (!_ignoreSize && _customSize.equals(Size::ZERO)) {
+        _customSize = _barRenderer->getContentSize();
     }
     this->setupBarTexture();
 }
@@ -182,13 +196,16 @@ void Slider::setupBarTexture()
 
 void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType texType)
 {
+    _progressBarTextureFile = fileName;
+    _progressBarTexType = texType;
     if (fileName.empty())
     {
-        return;
+        _progressBarRenderer->resetRender();
     }
-    _progressBarTexType = texType;
-    switch (_progressBarTexType)
+    else
     {
+        switch (_progressBarTexType)
+        {
         case TextureResType::LOCAL:
             _progressBarRenderer->initWithFile(fileName);
             break;
@@ -197,6 +214,7 @@ void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType 
             break;
         default:
             break;
+        }
     }
     this->setupProgressBarTexture();
 }
@@ -237,7 +255,7 @@ void Slider::setScale9Enabled(bool able)
         ignoreContentAdaptWithSize(_prevIgnoreSize);
     }
     setCapInsetsBarRenderer(_capInsetsBarRenderer);
-    setCapInsetProgressBarRebderer(_capInsetsProgressBarRenderer);
+    setCapInsetProgressBarRenderer(_capInsetsProgressBarRenderer);
     _barRendererAdaptDirty = true;
     _progressBarRendererDirty = true;
 }
@@ -259,7 +277,7 @@ void Slider::ignoreContentAdaptWithSize(bool ignore)
 void Slider::setCapInsets(const Rect &capInsets)
 {
     setCapInsetsBarRenderer(capInsets);
-    setCapInsetProgressBarRebderer(capInsets);
+    setCapInsetProgressBarRenderer(capInsets);
 }
 
 void Slider::setCapInsetsBarRenderer(const Rect &capInsets)
@@ -277,10 +295,10 @@ const Rect& Slider::getCapInsetsBarRenderer()const
     return _capInsetsBarRenderer;
 }
 
-void Slider::setCapInsetProgressBarRebderer(const Rect &capInsets)
+void Slider::setCapInsetProgressBarRenderer(const Rect &capInsets)
 {
     _capInsetsProgressBarRenderer = ui::Helper::restrictCapInsetRect(capInsets, _progressBarRenderer->getContentSize());
-    
+
     if (!_scale9Enabled)
     {
         return;
@@ -288,7 +306,7 @@ void Slider::setCapInsetProgressBarRebderer(const Rect &capInsets)
     _progressBarRenderer->setCapInsets(_capInsetsProgressBarRenderer);
 }
     
-const Rect& Slider::getCapInsetsProgressBarRebderer()const
+const Rect& Slider::getCapInsetsProgressBarRenderer()const
 {
     return _capInsetsProgressBarRenderer;
 }
@@ -305,13 +323,16 @@ void Slider::loadSlidBallTextures(const std::string& normal,
 
 void Slider::loadSlidBallTextureNormal(const std::string& normal,TextureResType texType)
 {
+    _slidBallNormalTextureFile = normal;
+    _ballNTexType = texType;
     if (normal.empty())
     {
-        return;
+        _slidBallNormalRenderer->init();
     }
-    _ballNTexType = texType;
-    switch (_ballNTexType)
+    else
     {
+        switch (_ballNTexType)
+        {
         case TextureResType::LOCAL:
             _slidBallNormalRenderer->setTexture(normal);
             break;
@@ -320,6 +341,7 @@ void Slider::loadSlidBallTextureNormal(const std::string& normal,TextureResType 
             break;
         default:
             break;
+        }
     }
     this->updateChildrenDisplayedRGBA();
 }
@@ -331,14 +353,17 @@ void Slider::loadSlidBallTextureNormal(SpriteFrame* spriteframe)
 
 void Slider::loadSlidBallTexturePressed(const std::string& pressed,TextureResType texType)
 {
+    _slidBallPressedTextureFile = pressed;
+    _isSliderBallPressedTextureLoaded = !pressed.empty();
+    _ballPTexType = texType;
     if (pressed.empty())
     {
-        return;
+        _slidBallPressedRenderer->init();
     }
-    _ballPTexType = texType;
-    _isSliderBallPressedTextureLoaded = true;
-    switch (_ballPTexType)
+    else
     {
+        switch (_ballPTexType)
+        {
         case TextureResType::LOCAL:
             _slidBallPressedRenderer->setTexture(pressed);
             break;
@@ -347,6 +372,7 @@ void Slider::loadSlidBallTexturePressed(const std::string& pressed,TextureResTyp
             break;
         default:
             break;
+        }
     }
     this->updateChildrenDisplayedRGBA();
 }
@@ -360,14 +386,17 @@ void Slider::loadSlidBallTexturePressed(SpriteFrame* spriteframe)
 
 void Slider::loadSlidBallTextureDisabled(const std::string& disabled,TextureResType texType)
 {
+    _slidBallDisabledTextureFile = disabled;
+    _isSliderBallDisabledTexturedLoaded = !disabled.empty();
+    _ballDTexType = texType;
     if (disabled.empty())
     {
-        return;
+        _slidBallDisabledRenderer->init();
     }
-    _isSliderBallDisabledTexturedLoaded = true;
-    _ballDTexType = texType;
-    switch (_ballDTexType)
+    else
     {
+        switch (_ballDTexType)
+        {
         case TextureResType::LOCAL:
             _slidBallDisabledRenderer->setTexture(disabled);
             break;
@@ -376,6 +405,7 @@ void Slider::loadSlidBallTextureDisabled(const std::string& disabled,TextureResT
             break;
         default:
             break;
+        }
     }
     this->updateChildrenDisplayedRGBA();
 }
@@ -721,6 +751,42 @@ void Slider::copySpecialProperties(Widget *widget)
         _eventCallback = slider->_eventCallback;
         _ccEventCallback = slider->_ccEventCallback;
     }
+}
+
+ResourceData Slider::getBackFile()
+{
+    ResourceData rData;
+    rData.type = (int)_barTexType;
+    rData.file = _textureFile;
+    return rData;
+}
+ResourceData Slider::getProgressBarFile()
+{
+    ResourceData rData;
+    rData.type = (int)_progressBarTexType;
+    rData.file = _progressBarTextureFile;
+    return rData;
+}
+ResourceData Slider::getBallNormalFile()
+{
+    ResourceData rData;
+    rData.type = (int)_ballNTexType;
+    rData.file = _slidBallNormalTextureFile;
+    return rData;
+}
+ResourceData Slider::getBallPressedFile()
+{
+    ResourceData rData;
+    rData.type = (int)_ballPTexType;
+    rData.file = _slidBallPressedTextureFile;
+    return rData;
+}
+ResourceData Slider::getBallDisabledFile()
+{
+    ResourceData rData;
+    rData.type = (int)_ballDTexType;
+    rData.file = _slidBallDisabledTextureFile;
+    return rData;
 }
 
 }

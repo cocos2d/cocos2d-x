@@ -140,4 +140,18 @@ protected:
 
     cocos2d::ui::Text* _displayValueLabel;
 };
+
+class UIScrollViewInnerSize : public UIScene
+{
+public:
+    CREATE_FUNC(UIScrollViewInnerSize);
+
+    UIScrollViewInnerSize();
+    ~UIScrollViewInnerSize();
+    virtual bool init() override;
+
+protected:
+
+    cocos2d::ui::Text* _displayValueLabel;
+};
 #endif /* defined(__TestCpp__UIScrollViewTest__) */

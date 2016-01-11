@@ -257,7 +257,7 @@ _responseEndThread(false)
     _writePath = FileUtils::getInstance()->getWritablePath();
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    std::string getCurAppName(void);
+#include "Widget_mac.h"
     _writePath += getCurAppName();
     _writePath += "/";
 #endif

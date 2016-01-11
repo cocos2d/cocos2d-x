@@ -62,7 +62,7 @@ public:
     */
     void setRotationSpeed(PUDynamicAttribute* dynRotationSpeed);
 
-    /** Returns the rotation defined in the the affector.
+    /** Returns the rotation defined in the affector.
     */
     PUDynamicAttribute* getRotation(void) const;
 

@@ -593,7 +593,7 @@ void SpritePolygonPerformanceTestDynamic::initIncrementStats()
 {
     _pinfo = AutoPolygon::generatePolygon(s_pathGrossini);
     _incVert = _pinfo.getVertCount();
-    _incTri = _pinfo.getTriaglesCount();
+    _incTri = _pinfo.getTrianglesCount();
     _incPix = _pinfo.getArea();
 }
 

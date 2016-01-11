@@ -65,7 +65,7 @@ class CC_GUI_DLL PageView : public ListView
     
 public:
     /**
-     * Page turn event tpye.
+     * Page turn event type.
      */
     enum class EventType
     {
@@ -350,6 +350,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     void pageTurningEvent();
 
+    virtual void remedyLayoutParameter(Widget* item)override;
     virtual void moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack) override;
     virtual void onItemListChanged() override;
     virtual void onSizeChanged() override;

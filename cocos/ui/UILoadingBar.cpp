@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "ui/UIHelper.h"
 #include "ui/UIScale9Sprite.h"
 #include "2d/CCSprite.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 NS_CC_BEGIN
 
@@ -39,6 +40,7 @@ LoadingBar::LoadingBar():
 _direction(Direction::LEFT),
 _percent(100.0),
 _totalLength(0),
+_textureFile(""),
 _barRenderer(nullptr),
 _renderBarTexType(TextureResType::LOCAL),
 _barRendererTextureSize(Size::ZERO),
@@ -109,29 +111,13 @@ void LoadingBar::setDirection(cocos2d::ui::LoadingBar::Direction direction)
         case Direction::LEFT:
             _barRenderer->setAnchorPoint(Vec2(0.0f,0.5f));
             _barRenderer->setPosition(Vec2(0,_contentSize.height*0.5f));
-            if (!_scale9Enabled)
-            {
-                auto innerSprite = _barRenderer->getSprite();
-                if (nullptr != innerSprite)
-                {
-                    innerSprite->setFlippedX(false);
-                }
-            }
             break;
         case Direction::RIGHT:
             _barRenderer->setAnchorPoint(Vec2(1.0f,0.5f));
             _barRenderer->setPosition(Vec2(_totalLength,_contentSize.height*0.5f));
-            if (!_scale9Enabled)
-            {
-                auto innerSprite = _barRenderer->getSprite();
-                if (nullptr != innerSprite)
-                {
-                    innerSprite->setFlippedX(true);
-                }
-            }
             break;
     }
-
+    this->handleSpriteFlipX();
 }
 
 LoadingBar::Direction LoadingBar::getDirection()const
@@ -146,6 +132,7 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
     {
         return;
     }
+    _textureFile = texture;
     _renderBarTexType = texType;
     switch (_renderBarTexType)
     {
@@ -157,6 +144,11 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
             break;
         default:
             break;
+    }
+    
+    //FIXME: https://github.com/cocos2d/cocos2d-x/issues/12249
+    if (!_ignoreSize && _customSize.equals(Size::ZERO)) {
+        _customSize = _barRenderer->getContentSize();
     }
     this->setupTexture();
 }
@@ -175,35 +167,48 @@ void LoadingBar::setupTexture()
     {
         case Direction::LEFT:
             _barRenderer->setAnchorPoint(Vec2(0.0f,0.5f));
-            if (!_scale9Enabled)
-            {
-                auto innerSprite = _barRenderer->getSprite();
-                if (nullptr != innerSprite)
-                {
-                    innerSprite->setFlippedX(false);
-                }
-            }
             break;
         case Direction::RIGHT:
             _barRenderer->setAnchorPoint(Vec2(1.0f,0.5f));
-            if (!_scale9Enabled)
-            {
-                auto innerSprite = _barRenderer->getSprite();
-                if (nullptr != innerSprite)
-                {
-                    innerSprite->setFlippedX(true);
-                }
-            }
             break;
     }
+    this->handleSpriteFlipX();
+    
     _barRenderer->setCapInsets(_capInsets);
     this->updateChildrenDisplayedRGBA();
 
     barRendererScaleChangedWithSize();
+
     updateContentSizeWithTextureSize(_barRendererTextureSize);
 
     this->updateProgressBar();
     _barRendererAdaptDirty = true;
+}
+    
+void LoadingBar::handleSpriteFlipX()
+{
+    if (_direction == Direction::LEFT)
+    {
+        if (!_scale9Enabled)
+        {
+            auto innerSprite = _barRenderer->getSprite();
+            if (nullptr != innerSprite)
+            {
+                innerSprite->setFlippedX(false);
+            }
+        }
+    }
+    else
+    {
+        if (!_scale9Enabled)
+        {
+            auto innerSprite = _barRenderer->getSprite();
+            if (nullptr != innerSprite)
+            {
+                innerSprite->setFlippedX(true);
+            }
+        }
+    }
 }
 
 void LoadingBar::setScale9Enabled(bool enabled)
@@ -416,6 +421,14 @@ void LoadingBar::copySpecialProperties(Widget *widget)
         setPercent(loadingBar->_percent);
         setDirection(loadingBar->_direction);
     }
+}
+
+ResourceData LoadingBar::getRenderFile()
+{
+    ResourceData rData;
+    rData.type = (int)_renderBarTexType;
+    rData.file = _textureFile;
+    return rData;
 }
 
 }

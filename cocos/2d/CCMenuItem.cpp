@@ -105,10 +105,10 @@ void MenuItem::activate()
             _callback(this);
         }
 #if CC_ENABLE_SCRIPT_BINDING
-        if (kScriptTypeNone != _scriptType)
+        if (kScriptTypeLua == _scriptType)
         {
             BasicScriptData data(this);
-            ScriptEvent scriptEvent(kMenuClickedEvent,&data);
+            ScriptEvent scriptEvent(kMenuClickedEvent, &data);
             ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
         }
 #endif

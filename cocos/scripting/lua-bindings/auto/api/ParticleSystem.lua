@@ -381,6 +381,12 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- 
+-- @function [parent=#ParticleSystem] getResourceFile 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 --  Gets the number of degrees to rotate a particle around the source pos per second.<br>
 -- return The number of degrees to rotate a particle around the source pos per second.
 -- @function [parent=#ParticleSystem] getRotatePerSecond 

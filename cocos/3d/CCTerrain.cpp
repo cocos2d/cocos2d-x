@@ -223,9 +223,9 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
 #endif
 }
 
-bool Terrain::initHeightMap(const char * heightMap)
+bool Terrain::initHeightMap(const std::string& heightMap)
 {
-    _heightMapImage = new Image();
+    _heightMapImage = new (std::nothrow) Image();
     _heightMapImage->initWithImageFile(heightMap);
     _data = _heightMapImage->getData();
     _imageWidth =_heightMapImage->getWidth();
@@ -244,7 +244,7 @@ bool Terrain::initHeightMap(const char * heightMap)
         {
             for(int n =0; n<chunk_amount_x;n++)
             {
-                _chunkesArray[m][n] = new Chunk();
+                _chunkesArray[m][n] = new (std::nothrow) Chunk();
                 _chunkesArray[m][n]->_terrain = this;
                 _chunkesArray[m][n]->_size = _chunkSize;
                 _chunkesArray[m][n]->generate(_imageWidth,_imageHeight,m,n,_data);
@@ -262,7 +262,7 @@ bool Terrain::initHeightMap(const char * heightMap)
                 if(m+1<chunk_amount_y) _chunkesArray[m][n]->_front = _chunkesArray[m+1][n];
             }
         }
-        _quadRoot = new QuadTree(0,0,_imageWidth,_imageHeight,this);
+        _quadRoot = new (std::nothrow) QuadTree(0,0,_imageWidth,_imageHeight,this);
         setLODDistance(_chunkSize.width,2*_chunkSize.width,3*_chunkSize.width);
         return true;
     }else
@@ -548,7 +548,7 @@ bool Terrain::getIntersectionPoint(const Ray & ray_, Vec3 & intersectionPoint) c
     getWorldToNodeTransform().transformPoint(&(ray._origin));
 
     std::set<Chunk *> closeList;
-    Vec2 start = Vec2(ray._origin.x,ray._origin.z);
+    Vec2 start = Vec2(ray_._origin.x,ray_._origin.z);
     Vec2 dir = Vec2(ray._direction.x,ray._direction.z);
     start = convertToTerrainSpace(start);
     start.x /=(_terrainData._chunkSize.width+1);
@@ -630,7 +630,7 @@ cocos2d::Vec2 Terrain::convertToTerrainSpace(Vec2 worldSpaceXZ) const
     return Vec2(image_x,image_y);
 }
 
-void Terrain::resetHeightMap(const char * heightMap)
+void Terrain::resetHeightMap(const std::string& heightMap)
 {
     _heightMapImage->release();
     _vertices.clear();
@@ -857,7 +857,7 @@ bool Terrain::initTextures()
     Texture2D::TexParams texParam;
     texParam.wrapS = GL_REPEAT;
     texParam.wrapT = GL_REPEAT;
-    if(!_terrainData._alphaMapSrc)
+    if(_terrainData._alphaMapSrc.empty())
     {
         auto textImage = new (std::nothrow)Image();
         textImage->initWithImageFile(_terrainData._detailMaps[0]._detailMapSrc);
@@ -1487,13 +1487,13 @@ Terrain::QuadTree::QuadTree(int x, int y, int w, int h, Terrain * terrain)
     if(_width> terrain->_chunkSize.width &&_height >terrain->_chunkSize.height) //subdivision
     {
         _isTerminal = false;
-        this->_tl = new QuadTree(x,y,_width/2,_height/2,terrain);
+        this->_tl = new (std::nothrow) QuadTree(x,y,_width/2,_height/2,terrain);
         this->_tl->_parent = this;
-        this->_tr = new QuadTree(x+_width/2,y,_width/2,_height/2,terrain);
+        this->_tr = new (std::nothrow) QuadTree(x+_width/2,y,_width/2,_height/2,terrain);
         this->_tr->_parent = this;
-        this->_bl = new QuadTree(x,y+_height/2,_width/2,_height/2,terrain);
+        this->_bl = new (std::nothrow) QuadTree(x,y+_height/2,_width/2,_height/2,terrain);
         this->_bl->_parent = this;
-        this->_br = new QuadTree(x+_width/2,y+_height/2,_width/2,_height/2,terrain);
+        this->_br = new (std::nothrow) QuadTree(x+_width/2,y+_height/2,_width/2,_height/2,terrain);
         this->_br->_parent = this;
 
         _localAABB.merge(_tl->_localAABB);
@@ -1581,21 +1581,21 @@ Terrain::QuadTree::~QuadTree()
     if(_br) delete _br;
 }
 
-Terrain::TerrainData::TerrainData(const char * heightMapsrc , const char * textureSrc, const Size & chunksize, float height, float scale)
+Terrain::TerrainData::TerrainData(const std::string& heightMapsrc , const std::string& textureSrc, const Size & chunksize, float height, float scale)
 { 
     this->_heightMapSrc = heightMapsrc;
     this->_detailMaps[0]._detailMapSrc = textureSrc;
-    this->_alphaMapSrc = nullptr;
+    this->_alphaMapSrc = "";
     this->_chunkSize = chunksize;
     this->_mapHeight = height;
     this->_mapScale = scale; 
     _skirtHeightRatio = 1;
 }
 
-Terrain::TerrainData::TerrainData(const char * heightMapsrc, const char * alphamap, const DetailMap& detail1, const DetailMap& detail2, const DetailMap& detail3, const DetailMap& detail4, const Size & chunksize, float height, float scale)
+Terrain::TerrainData::TerrainData(const std::string& heightMapsrc, const std::string& alphamap, const DetailMap& detail1, const DetailMap& detail2, const DetailMap& detail3, const DetailMap& detail4, const Size & chunksize, float height, float scale)
 {
     this->_heightMapSrc = heightMapsrc;
-    this->_alphaMapSrc = const_cast<char *>(alphamap);
+    this->_alphaMapSrc = alphamap;
     this->_detailMaps[0] = detail1;
     this->_detailMaps[1] = detail2;
     this->_detailMaps[2] = detail3;
@@ -1607,14 +1607,13 @@ Terrain::TerrainData::TerrainData(const char * heightMapsrc, const char * alpham
     _skirtHeightRatio = 1;
 }
 
-Terrain::TerrainData::TerrainData(const char* heightMapsrc, const char * alphamap, const DetailMap& detail1, const DetailMap& detail2, const DetailMap& detail3, const Size & chunksize /*= Size(32,32)*/, float height /*= 2*/, float scale /*= 0.1*/)
+Terrain::TerrainData::TerrainData(const std::string& heightMapsrc, const std::string& alphamap, const DetailMap& detail1, const DetailMap& detail2, const DetailMap& detail3, const Size & chunksize /*= Size(32,32)*/, float height /*= 2*/, float scale /*= 0.1*/)
 {
     this->_heightMapSrc = heightMapsrc;
-    this->_alphaMapSrc = const_cast<char *>(alphamap);
+    this->_alphaMapSrc = alphamap;
     this->_detailMaps[0] = detail1;
     this->_detailMaps[1] = detail2;
     this->_detailMaps[2] = detail3;
-    this->_detailMaps[3] = nullptr;
     this->_chunkSize = chunksize;
     this->_mapHeight = height;
     this->_mapScale = scale;
@@ -1627,7 +1626,7 @@ Terrain::TerrainData::TerrainData()
 
 }
 
-Terrain::DetailMap::DetailMap(const char * detailMapPath, float size /*= 35*/)
+Terrain::DetailMap::DetailMap(const std::string& detailMapPath, float size /*= 35*/)
 {
     this->_detailMapSrc = detailMapPath;
     this->_detailMapSize = size;

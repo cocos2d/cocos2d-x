@@ -40,15 +40,23 @@ bool UICheckBoxTest::init()
         _uiLayer->addChild(alert);        
         
         // Create the checkbox
-        CheckBox* checkBox = CheckBox::create("cocosui/check_box_normal.png",
+        _checkBox = CheckBox::create("cocosui/check_box_normal.png",
                                               "cocosui/check_box_normal_press.png",
                                               "cocosui/check_box_active.png",
                                               "cocosui/check_box_normal_disable.png",
                                               "cocosui/check_box_active_disable.png");
-        checkBox->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _checkBox->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         
-        checkBox->addEventListener(CC_CALLBACK_2(UICheckBoxTest::selectedEvent, this));
-        _uiLayer->addChild(checkBox);
+        _checkBox->addEventListener(CC_CALLBACK_2(UICheckBoxTest::selectedEvent, this));
+        _uiLayer->addChild(_checkBox);
+
+        TTFConfig ttfConfig("fonts/arial.ttf", 15);
+        auto label1 = Label::createWithTTF(ttfConfig, "Print Resources");
+        auto item1 = MenuItemLabel::create(label1, CC_CALLBACK_1(UICheckBoxTest::printWidgetResources, this));
+        item1->setPosition(Vec2(VisibleRect::left().x + 60, VisibleRect::bottom().y + item1->getContentSize().height * 3));
+        auto pMenu1 = Menu::create(item1, nullptr);
+        pMenu1->setPosition(Vec2(0, 0));
+        this->addChild(pMenu1, 10);
         
         return true;
     }
@@ -71,6 +79,20 @@ void UICheckBoxTest::selectedEvent(Ref* pSender,CheckBox::EventType type)
             break;
     }
     
+}
+
+void UICheckBoxTest::printWidgetResources(cocos2d::Ref* sender)
+{
+    cocos2d::ResourceData backGroundFileName = _checkBox->getBackNormalFile();
+    CCLOG("backGroundFile  Name : %s, Type: %d", backGroundFileName.file.c_str(),backGroundFileName.type);
+    cocos2d::ResourceData backGroundSelectedFileName = _checkBox->getBackPressedFile();
+    CCLOG("backGroundSelectedFile  Name : %s, Type: %d", backGroundSelectedFileName.file.c_str(), backGroundSelectedFileName.type);
+    cocos2d::ResourceData backGroundDisabledFileName = _checkBox->getBackDisabledFile();
+    CCLOG("backGroundDisabledFile  Name : %s, Type: %d", backGroundDisabledFileName.file.c_str(), backGroundDisabledFileName.type);
+    cocos2d::ResourceData frontCrossFileName = _checkBox->getCrossNormalFile();
+    CCLOG("frontCrossFile  Name : %s, Type: %d", frontCrossFileName.file.c_str(), frontCrossFileName.type);
+    cocos2d::ResourceData frontCrossDisabledFileName = _checkBox->getCrossDisabledFile();
+    CCLOG("frontCrossDisabledFile  Name : %s, Type: %d", frontCrossDisabledFileName.file.c_str(), frontCrossDisabledFileName.type);
 }
 
 

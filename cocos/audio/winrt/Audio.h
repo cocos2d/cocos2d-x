@@ -122,7 +122,7 @@ public:
     void Start();
     void Render();
 
-    // This flag can be used to tell when the audio system is experiencing critial errors.
+    // This flag can be used to tell when the audio system is experiencing critical errors.
     // XAudio2 gives a critical error when the user unplugs their headphones, and a new
     // speaker configuration is generated.
     void SetEngineExperiencedCriticalError()

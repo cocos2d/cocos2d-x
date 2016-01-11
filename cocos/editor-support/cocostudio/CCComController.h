@@ -82,4 +82,4 @@ public:
 
 }
 
-#endif  // __FUNDATION__CCCOMPONENT_H__
+#endif  // __CC_EXTENTIONS_CCCOMCONTROLLER_H__

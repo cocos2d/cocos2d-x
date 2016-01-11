@@ -130,6 +130,10 @@ var S9BatchNodeBasic = S9SpriteTestDemo.extend({
         cc.log("this..addChild");
 
         cc.log("... S9BatchNodeBasic done.");
+
+        var moveBy = cc.moveBy(1, cc.p(80, 80));
+        var moveByBack = moveBy.reverse();
+        blocks.runAction(cc.sequence(moveBy,moveByBack));
     }
 });
 
@@ -159,6 +163,10 @@ var S9FrameNameSpriteSheet = S9SpriteTestDemo.extend({
         cc.log("this..addChild");
 
         cc.log("... S9FrameNameSpriteSheet done.");
+
+        var moveBy = cc.moveBy(1, cc.p(80, 80));
+        var moveByBack = moveBy.reverse();
+        blocks.runAction(cc.sequence(moveBy,moveByBack));
     }
 });
 

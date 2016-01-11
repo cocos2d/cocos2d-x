@@ -1048,7 +1048,7 @@ bool Bundle3D::loadJson(const std::string& path)
     if (_jsonReader.ParseInsitu<0>(_jsonBuffer).HasParseError())
     {
         clear();
-        CCASSERT(false, "Parse json failed");
+        CCLOG("Parse json failed in Bundle3D::loadJson function");
         return false;
     }
 
@@ -1131,7 +1131,7 @@ bool Bundle3D::loadBinary(const std::string& path)
 bool Bundle3D::loadMeshDataJson_0_1(MeshDatas& meshdatas)
 {
     const rapidjson::Value& mesh_data_array = _jsonReader[MESH];
-    MeshData* meshdata= new   MeshData();
+    MeshData* meshdata= new (std::nothrow) MeshData();
     const rapidjson::Value& mesh_data_val = mesh_data_array[(rapidjson::SizeType)0];
 
     const rapidjson::Value& mesh_data_body_array = mesh_data_val[DEFAULTPART];
@@ -1179,7 +1179,7 @@ bool Bundle3D::loadMeshDataJson_0_1(MeshDatas& meshdatas)
 
 bool Bundle3D::loadMeshDataJson_0_2(MeshDatas& meshdatas)
 {
-    MeshData* meshdata= new   MeshData();
+    MeshData* meshdata= new (std::nothrow) MeshData();
     const rapidjson::Value& mesh_array = _jsonReader[MESH];
     const rapidjson::Value& mesh_array_0 = mesh_array[(rapidjson::SizeType)0];
 
@@ -2101,6 +2101,14 @@ unsigned int Bundle3D::parseGLProgramAttribute(const std::string& str)
     else if (str == "VERTEX_ATTRIB_BLEND_INDEX")
     {
         return GLProgram::VERTEX_ATTRIB_BLEND_INDEX;
+    }
+    else if (str == "VERTEX_ATTRIB_TANGENT")
+    {
+        return GLProgram::VERTEX_ATTRIB_TANGENT;
+    }
+    else if (str == "VERTEX_ATTRIB_BINORMAL")
+    {
+        return GLProgram::VERTEX_ATTRIB_BINORMAL;
     }
     else
     {

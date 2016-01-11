@@ -750,6 +750,20 @@ public:
      * @js NA
      */
     virtual bool parseConfig(ConfigType type, const std::string& str) = 0;
+
+
+    /** Root a Reference.
+     It tells the Garbage Collector that the associated Scripting object should not be collected
+     */
+    virtual void rootObject(Ref* obj) {}
+
+    /** Unroot a Reference.
+     It tells the Garbage Collector that the associated Scripting object can be collected
+     */
+    virtual void unrootObject(Ref* obj) {}
+
+    /** Triggers the garbage collector */
+    virtual void garbageCollect() {}
 };
 
 class Node;

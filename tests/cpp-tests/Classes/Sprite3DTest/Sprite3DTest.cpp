@@ -67,6 +67,8 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(CameraBackgroundClearTest);
     ADD_TEST_CASE(Sprite3DVertexColorTest);
     ADD_TEST_CASE(MotionStreak3DTest);
+    ADD_TEST_CASE(Sprite3DPropertyTest);
+    ADD_TEST_CASE(Sprite3DNormalMappingTest);
 };
 
 //------------------------------------------------------------------
@@ -2441,6 +2443,8 @@ void CameraBackgroundClearTest::switch_CameraClearMode(cocos2d::Ref* sender)
     {
         _camera->setBackgroundBrush(CameraBackgroundBrush::createDepthBrush(1.f));
         _label->setString("Depth Clear Brush");
+        // Test brush valid when set by user scene setting
+        CCLOG("Background brush valid status is : %s", _camera->isBrushValid() ? "true" : "false");
     }
     else if (type == CameraBackgroundBrush::BrushType::DEPTH)
     {
@@ -2511,4 +2515,177 @@ void MotionStreak3DTest::update(float delta)
     _sprite->setPosition3D(Vec3(r * cosf(angle), 0, r * sinf(angle)));
     _streak->setPosition3D(_sprite->getPosition3D());
     _streak->setSweepAxis(Vec3(cosf(angle), 0, sinf(angle)));
+}
+
+Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    {
+        auto sprite = Sprite3D::create("Sprite3DTest/sphere.c3b");
+        sprite->setPosition(Vec2(-30, 0));
+        sprite->setRotation3D(Vec3(90.0f, 0.0f, 0.0f));
+        sprite->setScale(2.0);
+        sprite->setCameraMask(2);
+        sprite->setTexture("Sprite3DTest/brickwork-texture.jpg");
+        addChild(sprite);
+    }
+
+    int maxAttributes;
+    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &maxAttributes);
+    CCASSERT(maxAttributes > 8, "attributes supported must be greater than 8");
+    if (maxAttributes > 8)
+    {
+        auto sprite = Sprite3D::create("Sprite3DTest/sphere_bumped.c3b");
+        sprite->setPosition(Vec2(30, 0));
+        sprite->setRotation3D(Vec3(90.0f, 0.0f, 0.0f));
+        sprite->setScale(20.0);
+        sprite->setCameraMask(2);
+        sprite->setTexture("Sprite3DTest/brickwork-texture.jpg");
+        addChild(sprite);
+    }
+
+    float radius = 100.0;
+
+    PointLight* light = PointLight::create(Vec3(0.0, 0.0, 0.0), Color3B(255, 255, 255), 1000);
+    light->runAction(RepeatForever::create(Sequence::create(CallFuncN::create([radius](Node *node){
+        static float angle = 0.0;
+        static bool reverseDir = false;
+        node->setPosition3D(Vec3(radius * cos(angle), 0.0f, radius * sin(angle)));
+        if (reverseDir){
+            angle -= 0.01;
+            if (angle < 0.0)
+                reverseDir = false;
+        }
+        else{
+            angle += 0.01;
+            if (3.14159 < angle)
+                reverseDir = true;
+        }
+    }), nullptr)));
+    //setup camera
+    auto camera = Camera::createPerspective(60.0, s.width / s.height, 1.0f, 1000.f);
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setPosition3D(Vec3(0.f, 0.f, 100.f));
+    camera->lookAt(Vec3(0.f, 0.f, 0.f));
+    addChild(camera);
+
+    addChild(light);
+}
+
+Sprite3DNormalMappingTest::~Sprite3DNormalMappingTest()
+{
+
+}
+
+std::string Sprite3DNormalMappingTest::title() const
+{
+    return "NormalMapping Test";
+}
+
+std::string Sprite3DNormalMappingTest::subtitle() const
+{
+    return "";
+}
+
+Sprite3DPropertyTest::Sprite3DPropertyTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setPosition3D(Vec3(0.f, 50.f, 200.f));
+    camera->lookAt(Vec3(0.f, 0.f, 0.f));
+    addChild(camera);
+
+    _sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+    _sprite->setPosition(20.f, 0.f);
+    _sprite->setRotation3D(Vec3(0, 180, 0));
+    _meshTex = _sprite->getMesh()->getTexture();
+    _texFile = _meshTex->getPath();
+    addChild(_sprite);
+
+    setCameraMask(2);
+
+    //auto listener = EventListenerTouchAllAtOnce::create();
+    ////listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DReskinTest::onTouchesEnded, this);
+    //_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+    TTFConfig ttfConfig("fonts/arial.ttf", 20);
+
+    auto label1 = Label::createWithTTF(ttfConfig, "Print Mesh Name");
+    auto item1 = MenuItemLabel::create(label1, CC_CALLBACK_1(Sprite3DPropertyTest::printMeshName, this));
+    auto label2 = Label::createWithTTF(ttfConfig, "Remove Used Texture");
+    auto item2 = MenuItemLabel::create(label2, CC_CALLBACK_1(Sprite3DPropertyTest::removeUsedTexture, this));
+    auto label3 = Label::createWithTTF(ttfConfig, "Reset");
+    auto item3 = MenuItemLabel::create(label3, CC_CALLBACK_1(Sprite3DPropertyTest::resetTexture, this));
+
+    item1->setPosition(Vec2(VisibleRect::left().x + 100, VisibleRect::bottom().y + item1->getContentSize().height * 4));
+    item2->setPosition(Vec2(VisibleRect::left().x + 100, VisibleRect::bottom().y + item1->getContentSize().height * 5));
+    item3->setPosition(Vec2(VisibleRect::left().x + 100, VisibleRect::bottom().y + item1->getContentSize().height * 6));
+
+    auto pMenu1 = Menu::create(item1, item2, item3,nullptr);
+    pMenu1->setPosition(Vec2(0, 0));
+    this->addChild(pMenu1, 10);
+
+    scheduleUpdate();
+}
+std::string Sprite3DPropertyTest::title() const
+{
+    return "Sprite3DPropertyTest Test";
+}
+std::string Sprite3DPropertyTest::subtitle() const
+{
+    return "";
+}
+
+void Sprite3DPropertyTest::update(float delta)
+{
+
+}
+void Sprite3DPropertyTest::printMeshName(cocos2d::Ref* sender)
+{
+    CCLOG("MeshName Begin");
+    Vector<Mesh*> meshes =_sprite->getMeshes();
+    for(Mesh* mesh : meshes)
+    {
+        CCLOG("MeshName: %s ", mesh->getName().c_str());
+    }
+    CCLOG("MeshName End");
+}
+void Sprite3DPropertyTest::removeUsedTexture(cocos2d::Ref* sender)
+{
+    if (_meshTex != nullptr)
+    {
+        TextureCache::getInstance()->removeTexture(_meshTex);
+        this->refreshSpriteRender();
+    }
+}
+
+void Sprite3DPropertyTest::resetTexture(cocos2d::Ref* sender)
+{
+    if (_meshTex != nullptr)
+    {
+        _meshTex = TextureCache::getInstance()->addImage(_texFile);
+        this->refreshSpriteRender();
+    }
+}
+
+void Sprite3DPropertyTest::refreshSpriteRender()
+{
+    Vector<Mesh*> meshes = _sprite->getMeshes();
+    for (Mesh* mesh : meshes)
+    {
+        std::string file = mesh->getTextureFileName();
+        Texture2D* cacheTex = Director::getInstance()->getTextureCache()->getTextureForKey(file);
+        if (cacheTex == nullptr)
+        {
+            unsigned char data[] = { 255, 0, 0, 255 };//1*1 red picture
+            Image * image = new (std::nothrow) Image();
+            image->initWithRawData(data, sizeof(data), 1, 1, sizeof(unsigned char));
+            cacheTex = Director::getInstance()->getTextureCache()->addImage(image, "/dummyTexture");
+            image->release();
+        }
+        mesh->setTexture(cacheTex, cocos2d::NTextureData::Usage::Diffuse, false);
+    }
 }

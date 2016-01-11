@@ -46,7 +46,7 @@ JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalSt
         CCLOG("Cocos2dxJavascriptJavaBridge_evalString error, invalid string code");
         return 0;
     }
-    ScriptingCore::getInstance()->evalString(strValue.c_str(), nullptr);
+    ScriptingCore::getInstance()->evalString(strValue.c_str());
     return 1;
 }
 
@@ -302,7 +302,9 @@ JS_BINDED_CONSTRUCTOR_IMPL(JavascriptJavaBridge)
     js_proxy_t *p;
     jsval out;
     
-    JSObject *obj = JS_NewObject(cx, &JavascriptJavaBridge::js_class, JS::RootedObject(cx, JavascriptJavaBridge::js_proto), JS::RootedObject(cx, JavascriptJavaBridge::js_parent));
+    JS::RootedObject proto(cx, JavascriptJavaBridge::js_proto);
+    JS::RootedObject parentProto(cx, JavascriptJavaBridge::js_parent);
+    JS::RootedObject obj(cx, JS_NewObject(cx, &JavascriptJavaBridge::js_class, proto, parentProto));
     
     if (obj) {
         JS_SetPrivate(obj, jsj);
@@ -310,7 +312,7 @@ JS_BINDED_CONSTRUCTOR_IMPL(JavascriptJavaBridge)
     }
 
     args.rval().set(out);
-    p =jsb_new_proxy(jsj, obj);
+    p = jsb_new_proxy(jsj, obj);
     
     JS::AddNamedObjectRoot(cx, &p->obj, "JavascriptJavaBridge");
     return true;

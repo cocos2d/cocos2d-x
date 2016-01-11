@@ -119,6 +119,8 @@ public://@public
     
     // Character Set defines the letters that actually exist in the font
     std::set<unsigned int> *_characterSet;
+    //! Font Size
+    int _fontSize;
 public:
     /**
      * @js ctor
@@ -225,6 +227,7 @@ BMFontConfiguration::BMFontConfiguration()
 , _commonHeight(0)
 , _kerningDictionary(nullptr)
 , _characterSet(nullptr)
+, _fontSize(0)
 {
 
 }
@@ -287,7 +290,7 @@ std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& 
         return nullptr;
     }
 
-    std::set<unsigned int> *validCharsString = new std::set<unsigned int>();
+    std::set<unsigned int> *validCharsString = new (std::nothrow) std::set<unsigned int>();
     
     auto contentsLen = data.getSize();
     char line[512];
@@ -361,7 +364,7 @@ std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char
 {
     /* based on http://www.angelcode.com/products/bmfont/doc/file_format.html file format */
 
-    set<unsigned int> *validCharsString = new set<unsigned int>();
+    set<unsigned int> *validCharsString = new (std::nothrow) set<unsigned int>();
 
     unsigned long remains = size;
 
@@ -539,7 +542,7 @@ void BMFontConfiguration::parseInfoArguments(const char* line)
     // info face="Script" size=32 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=1,4,3,2 spacing=0,0 outline=0
     // info face="Cracked" size=36 bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=1,1
     //////////////////////////////////////////////////////////////////////////
-
+    sscanf(strstr(line, "size=") + 5, "%d", &_fontSize);
     // padding
     sscanf(strstr(line,"padding=") + 8, "%d,%d,%d,%d", &_padding.top, &_padding.right, &_padding.bottom, &_padding.left);
     //CCLOG("cocos2d: padding: %d,%d,%d,%d", _padding.left, _padding.top, _padding.right, _padding.bottom);
@@ -647,7 +650,7 @@ FontFNT * FontFNT::create(const std::string& fntFilePath, const Vec2& imageOffse
     }
     
     FontFNT *tempFont =  new FontFNT(newConf,imageOffset);
-    
+    tempFont->setFontSize(newConf->_fontSize);
     if (!tempFont)
     {
         return nullptr;
@@ -684,7 +687,7 @@ int * FontFNT::getHorizontalKerningForTextUTF16(const std::u16string& text, int 
     if (!outNumLetters)
         return 0;
     
-    int *sizes = new int[outNumLetters];
+    int *sizes = new (std::nothrow) int[outNumLetters];
     if (!sizes)
         return 0;
     
@@ -716,6 +719,16 @@ int  FontFNT::getHorizontalKerningForChars(unsigned short firstChar, unsigned sh
     return ret;
 }
 
+void FontFNT::setFontSize(float fontSize)
+{
+    _fontSize = fontSize;
+}
+
+int FontFNT::getOriginalFontSize()const
+{
+    return _configuration->_fontSize;
+}
+
 FontAtlas * FontFNT::createFontAtlas()
 {
     FontAtlas *tempAtlas = new (std::nothrow) FontAtlas(*this);
@@ -734,7 +747,16 @@ FontAtlas * FontFNT::createFontAtlas()
         return nullptr;
     
     // common height
-    tempAtlas->setLineHeight(_configuration->_commonHeight);
+    int originalFontSize = _configuration->_fontSize;
+    float originalLineHeight = _configuration->_commonHeight;
+    float factor = 0.0f;
+    if (fabs(_fontSize - originalFontSize) < FLT_EPSILON) {
+        factor = 1.0f;
+    }else {
+        factor = _fontSize / originalFontSize;
+    }
+    
+    tempAtlas->setLineHeight(originalLineHeight * factor);
     
     
     BMFontDef fontDef;
@@ -783,5 +805,25 @@ FontAtlas * FontFNT::createFontAtlas()
     return tempAtlas;
 }
 
+void FontFNT::reloadBMFontResource(const std::string& fntFilePath)
+{
+    if (s_configurations == nullptr)
+    {
+        s_configurations = new (std::nothrow) Map<std::string, BMFontConfiguration*>();
+    }
+
+    BMFontConfiguration *ret = s_configurations->at(fntFilePath);
+    if (ret != nullptr)
+    {
+        s_configurations->erase(fntFilePath);
+    }
+    ret = BMFontConfiguration::create(fntFilePath.c_str());
+    if (ret)
+    {
+        s_configurations->insert(fntFilePath, ret);
+        Director::getInstance()->getTextureCache()->reloadTexture(ret->getAtlasName());
+
+    }
+}
 
 NS_CC_END

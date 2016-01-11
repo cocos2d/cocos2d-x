@@ -47,7 +47,7 @@
                 ]
              },
             {
-                "from": "tools/simulator/frameworks/runtime-src/Classes",
+                "from": "cocos/scripting/js-bindings/manual",
                 "to": "frameworks/runtime-src/Classes",
                 "include": [
                     "js_module_register.h"

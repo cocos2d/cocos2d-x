@@ -298,7 +298,7 @@ ssize_t PageView::getCurPageIndex() const
 
 Vector<Layout*>& PageView::getPages()
 {
-    CCASSERT(false, "This method is obsolete!");
+    CCLOG("This method is obsolete!");
 
     // Temporary code to keep backward compatibility.
     static Vector<Layout*> pages;
@@ -427,6 +427,11 @@ const Color3B& PageView::getIndicatorSelectedIndexColor() const
     return _indicator->getSelectedIndexColor();
 }
 
+void PageView::remedyLayoutParameter(Widget *item)
+{
+    item->setContentSize(this->getContentSize());
+    ListView::remedyLayoutParameter(item);
+}
 
 }
 

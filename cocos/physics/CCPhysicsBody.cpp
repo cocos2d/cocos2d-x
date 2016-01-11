@@ -76,6 +76,7 @@ PhysicsBody::PhysicsBody()
 , _recordScaleX(1.f)
 , _recordScaleY(1.f)
 {
+    _name = COMPONENT_NAME;
 }
 
 PhysicsBody::~PhysicsBody()

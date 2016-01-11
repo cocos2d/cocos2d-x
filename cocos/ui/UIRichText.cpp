@@ -426,7 +426,7 @@ void RichText::formarRenderers()
     else
     {
         float newContentSizeHeight = 0.0f;
-        float *maxHeights = new float[_elementRenders.size()];
+        float *maxHeights = new (std::nothrow) float[_elementRenders.size()];
         
         for (size_t i=0; i<_elementRenders.size(); i++)
         {

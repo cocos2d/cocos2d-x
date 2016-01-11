@@ -100,17 +100,25 @@ bool UIEditBoxTest::init()
         addChild(buttonPassword);
         
         // bottom
+        // Add an intermediate Node to test scaling and content size relative to world
+        _editEmailParent = Node::create();
+        _editEmailParent->setScale(0.5);
+        _editEmailParent->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, visibleOrigin.y+visibleSize.height/4));
+        addChild(_editEmailParent);
+					
         auto bottomButtonSize = Size(editBoxSize.width, editBoxSize.height + 10);
         _editEmail = ui::EditBox::create(bottomButtonSize, "extensions/yellow_edit.png");
-        _editEmail->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, visibleOrigin.y+visibleSize.height/4));
         _editEmail->setPlaceHolder("Email:");
         _editEmail->setInputMode(ui::EditBox::InputMode::EMAIL_ADDRESS);
         _editEmail->setDelegate(this);
-        addChild(_editEmail);
+        _editEmailParent->addChild(_editEmail);
+        //It is required to use setFontSize and setContentSize after adding it to the hierarchy, so that native EditBox get the right size
+        _editEmail->setFontSize(30);
+        _editEmail->setContentSize(bottomButtonSize);
         
         auto buttonEmail = (ui::Button*)button->clone();
         buttonEmail->setTitleText("Multiline");
-        buttonEmail->setPosition(_editEmail->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
+        buttonEmail->setPosition(_editEmailParent->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
         buttonEmail->addClickEventListener([=](Ref* ref){
             _editEmail->setInputMode(ui::EditBox::InputMode::ANY);
         });

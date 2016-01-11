@@ -112,4 +112,4 @@ private:
 
 }
 
-#endif  // __FUNDATION__CCCOMPONENT_H__
+#endif  // __CC_EXTENTIONS_CCCOMAUDIO_H__

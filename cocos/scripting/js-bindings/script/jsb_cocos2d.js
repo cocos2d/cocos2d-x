@@ -26,7 +26,7 @@
 
 // CCConfig.js
 //
-cc.ENGINE_VERSION = "Cocos2d-JS v3.9";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.10";
 
 cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
@@ -2599,6 +2599,13 @@ cc.Texture2D.prototype.setTexParameters = function (texParams, magFilter, wrapS,
 
 cc.Texture2D.prototype.handleLoadedTexture = function (premultipled) {};
 
+// 
+// MenuItem setCallback support target
+//
+cc.MenuItem.prototype._setCallback = cc.MenuItem.prototype.setCallback;
+cc.MenuItem.prototype.setCallback = function (callback, target) {
+    this._setCallback(callback.bind(target));
+};
 
 //
 // MenuItemImage support sprite frame name as paramter
@@ -2644,6 +2651,17 @@ cc.LabelTTF.prototype.enableShadow = function (shadowColor, offset, blurRadius) 
 }
 
 cc.LabelTTF.prototype.setDrawMode = function () {};
+
+
+//
+// Label overflow
+//
+cc.Label.Overflow = {
+    NONE: 0,
+    CLAMP: 1,
+    SHRINK: 2,
+    RESIZE_HEIGHT: 3
+};
 
 
 //
@@ -2764,29 +2782,30 @@ cc.GLProgram.prototype.setUniformLocationWithMatrix2fv = function(){
     var tempArray = Array.prototype.slice.call(arguments);
     tempArray = Array.prototype.concat.call(tempArray, 2);
     this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
-}
+};
 
 cc.GLProgram.prototype.setUniformLocationWithMatrix3fv = function(){
     var tempArray = Array.prototype.slice.call(arguments);
     tempArray = Array.prototype.concat.call(tempArray, 3);
     this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
-}
+};
 cc.GLProgram.prototype.setUniformLocationWithMatrix4fv = function(){
     var tempArray = Array.prototype.slice.call(arguments);
     tempArray = Array.prototype.concat.call(tempArray, 4);
     this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
-}
+};
 
 
 //
 // Script Component
 //
 cc._ComponentJS = cc.ComponentJS;
+cc._ComponentJS.extend = cc.Class.extend;
 cc.ComponentJS = function (filename) {
     var comp = cc._ComponentJS.create(filename);
     var res = comp.getScriptObject();
     return res;
-}
+};
 cc.ComponentJS.extend = function (prop) {
     return cc._ComponentJS.extend(prop);
 };

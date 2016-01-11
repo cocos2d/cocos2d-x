@@ -57,20 +57,6 @@ getDuration : function (
 },
 
 /**
- * @method create
- * @param {String} arg0
- * @param {String} arg1
- * @return {cc.Animation3D}
- */
-create : function (
-str, 
-str 
-)
-{
-    return cc.Animation3D;
-},
-
-/**
  * @method Animation3D
  * @constructor
  */
@@ -431,26 +417,6 @@ BillBoard : function (
  * @class Mesh
  */
 jsb.Mesh = {
-
-/**
- * @method setTexture
-* @param {cc.Texture2D|String} texture2d
-*/
-setTexture : function(
-str 
-)
-{
-},
-
-/**
- * @method getTexture
- * @return {cc.Texture2D}
- */
-getTexture : function (
-)
-{
-    return cc.Texture2D;
-},
 
 /**
  * @method getSkin
@@ -979,6 +945,16 @@ int
 },
 
 /**
+ * @method getMeshes
+ * @return {Array}
+ */
+getMeshes : function (
+)
+{
+    return new Array();
+},
+
+/**
  * @method addMesh
  * @param {cc.Mesh} arg0
  */
@@ -1329,11 +1305,11 @@ jsb.Terrain = {
 
 /**
  * @method initHeightMap
- * @param {char} arg0
+ * @param {String} arg0
  * @return {bool}
  */
 initHeightMap : function (
-char 
+str 
 )
 {
     return false;
@@ -1373,10 +1349,10 @@ map
 
 /**
  * @method resetHeightMap
- * @param {char} arg0
+ * @param {String} arg0
  */
 resetHeightMap : function (
-char 
+str 
 )
 {
 },

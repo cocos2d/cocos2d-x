@@ -35,6 +35,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Label;
+struct CC_DLL ResourceData;
 
 namespace ui {
     
@@ -94,6 +95,13 @@ public:
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const override;
+
+    ResourceData getRenderFile();
+
+    /**
+    * reset TextBMFont inner label
+    */
+    void resetRender();
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
@@ -104,7 +112,6 @@ protected:
     virtual void adaptRenderers() override;
 protected:
     Label* _labelBMFontRenderer;
-    bool _fntFileHasInit;
     std::string _fntFileName;
     std::string _stringValue;
     bool _labelBMFontRendererAdaptDirty;

@@ -145,7 +145,7 @@
                 ]
             },
             {
-                "from": "tools/simulator/frameworks/runtime-src/Classes/lua_module_register.h",
+                "from": "cocos/scripting/lua-bindings/manual/lua_module_register.h",
                 "to": "frameworks/runtime-src/Classes/"
             }
         ],

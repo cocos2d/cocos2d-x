@@ -156,6 +156,21 @@ public:
     int                 _luaID;
     /// scriptObject, support for swift
     void* _scriptObject;
+
+    /**
+     When true, it means that the object was already rooted.
+     */
+    bool _rooted;
+    unsigned int _referenceCountAtRootTime;
+
+    /**
+     * The life of the object is scrolled by the scripting engine.
+     *
+     * When the object is controlled by the scripting engine
+     * some additional logic is performed, like Rooting/Unrooting
+     * the object when retain/release is called.
+     */
+    bool _scriptOwned;
 #endif
 
     // Memory leak diagnostic data (only included when CC_REF_LEAK_DETECTION is defined and its value isn't zero)

@@ -149,7 +149,7 @@ protected:
      */
     const DownloadUnits& getFailedAssets() const;
     
-    /** @brief Function for destorying the downloaded version file and manifest file
+    /** @brief Function for destroying the downloaded version file and manifest file
      */
     void destroyDownloadedVersion();
     

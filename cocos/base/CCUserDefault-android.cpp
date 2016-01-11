@@ -74,7 +74,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
 
     do
     {
-        tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument* xmlDoc = new (std::nothrow) tinyxml2::XMLDocument();
         *doc = xmlDoc;
         ssize_t size;
 

@@ -1,5 +1,5 @@
 #include "lua_cocos2dx_experimental_video_auto.hpp"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
 #include "UIVideoPlayer.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"

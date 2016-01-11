@@ -1809,7 +1809,7 @@ protected:
     std::string _name;               ///<a string label, an user defined string to identify this node
     size_t _hashOfName;            ///<hash value of _name, used for speed in getChildByName
 
-    void *_userData;                ///< A user assingned void pointer, Can be point to any cpp object
+    void *_userData;                ///< A user assigned void pointer, Can be point to any cpp object
     Ref *_userObject;               ///< A user assigned Object
 
     GLProgramState *_glProgramState; ///< OpenGL Program State

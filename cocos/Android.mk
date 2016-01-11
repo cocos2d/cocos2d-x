@@ -107,6 +107,7 @@ math/Vec2.cpp \
 math/Vec3.cpp \
 math/Vec4.cpp \
 base/CCNinePatchImageParser.cpp \
+base/CCStencilStateManager.cpp \
 base/CCAsyncTaskPool.cpp \
 base/CCAutoreleasePool.cpp \
 base/CCConfiguration.cpp \

@@ -31,14 +31,15 @@
 #include "renderer/ccShaders.h"
 #include "platform/CCImage.h"
 #include "base/CCNinePatchImageParser.h"
-
+#include "2d/CCDrawNode.h"
+#include "2d/CCCamera.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 namespace ui {
 
     Scale9Sprite::Scale9Sprite()
-        : _spritesGenerated(false)
-        , _spriteFrameRotated(false)
+        : _spriteFrameRotated(false)
         , _scale9Image(nullptr)
         , _scale9Enabled(true)
         , _insetLeft(0)
@@ -54,8 +55,13 @@ namespace ui {
         ,_sliceIndices(nullptr)
         ,_sliceSpriteDirty(false)
         ,_renderingType(RenderingType::SLICE)
+        ,_insideBounds(true)
     {
         this->setAnchorPoint(Vec2(0.5,0.5));
+#if CC_SPRITE_DEBUG_DRAW
+        _debugDrawNode = DrawNode::create();
+        addChild(_debugDrawNode);
+#endif //CC_SPRITE_DEBUG_DRAW
     }
 
     Scale9Sprite::~Scale9Sprite()
@@ -78,17 +84,25 @@ namespace ui {
     bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame,
                                            const Rect& capInsets)
     {
-        Texture2D* texture = spriteFrame->getTexture();
-        CCASSERT(texture != NULL, "CCTexture must be not nil");
-        Sprite *sprite = Sprite::createWithSpriteFrame(spriteFrame);
-        CCASSERT(sprite != NULL, "sprite must be not nil");
-        bool pReturn = this->init(sprite,
-                                  spriteFrame->getRect(),
-                                  spriteFrame->isRotated(),
-                                  spriteFrame->getOffset(),
-                                  spriteFrame->getOriginalSize(),
-                                  capInsets);
-        return pReturn;
+        bool ret = false;
+        do {
+            Texture2D* texture = spriteFrame->getTexture();
+            CCASSERT(texture != NULL, "CCTexture must be not nil");
+            if(texture == nullptr) break;
+            
+            Sprite *sprite = Sprite::createWithSpriteFrame(spriteFrame);
+            CCASSERT(sprite != NULL, "sprite must be not nil");
+            if(sprite == nullptr) break;
+            
+            ret = this->init(sprite,
+                                      spriteFrame->getRect(),
+                                      spriteFrame->isRotated(),
+                                      spriteFrame->getOffset(),
+                                      spriteFrame->getOriginalSize(),
+                                      capInsets);
+        } while (false);
+        
+        return ret;
     }
     bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame)
     {
@@ -99,15 +113,21 @@ namespace ui {
     bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName,
                                                const Rect& capInsets)
     {
-        CCASSERT((SpriteFrameCache::getInstance()) != NULL,
-                 "SpriteFrameCache::getInstance() must be non-NULL");
-
-        SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
-        CCASSERT(frame != NULL, "CCSpriteFrame must be non-NULL");
-
-        if (NULL == frame) return false;
-        bool pReturn = this->initWithSpriteFrame(frame, capInsets);
-        return pReturn;
+        bool ret = false;
+        do {
+            auto spriteFrameCache = SpriteFrameCache::getInstance();
+            CCASSERT(spriteFrameCache != nullptr,
+                     "SpriteFrameCache::getInstance() must be non-NULL");
+            if(spriteFrameCache == nullptr) break;
+            
+            SpriteFrame *frame = spriteFrameCache->getSpriteFrameByName(spriteFrameName);
+            CCASSERT(frame != nullptr, "CCSpriteFrame must be non-NULL");
+            if (frame == nullptr) break;
+            
+            ret = initWithSpriteFrame(frame, capInsets);
+        } while (false);
+        
+        return ret;
     }
     bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
     {
@@ -192,16 +212,19 @@ namespace ui {
                                     const Rect& rect,
                                     const Rect& capInsets)
     {
-        Sprite *sprite = nullptr;
-        sprite = Sprite::create(file);
-        bool pReturn = this->init(sprite, rect, capInsets);
-        return pReturn;
+        CCASSERT(!file.empty(), "file must not be empty string!");
+        if(file.empty())
+        {
+            return false;
+        }
+        
+        auto sprite = Sprite::create(file);
+        return init(sprite, rect, capInsets);
     }
 
     bool Scale9Sprite::initWithFile(const std::string& file, const Rect& rect)
     {
-        bool pReturn = this->initWithFile(file, rect, Rect::ZERO);
-        return pReturn;
+        return initWithFile(file, rect, Rect::ZERO);
     }
 
     Scale9Sprite* Scale9Sprite::create()
@@ -394,10 +417,6 @@ namespace ui {
                                         const Size &originalSize,
                                         const Rect& capInsets)
     {
-        
-        GLubyte opacity = getOpacity();
-        Color3B color = getColor();
-
         // Release old sprites
         this->cleanupSlicedSprites();
 
@@ -419,6 +438,10 @@ namespace ui {
             {
                 _scale9Image->setSpriteFrame(sprite->getSpriteFrame());
             }
+        }
+        else
+        {
+            CC_SAFE_RELEASE_NULL(_scale9Image);
         }
 
         if (!_scale9Image)
@@ -448,6 +471,7 @@ namespace ui {
         _spriteFrameRotated = rotated;
         _originalSize = size;
         _preferredSize = size;
+        _offset = offset;
 
         _capInsetsInternal = capInsets;
 
@@ -466,15 +490,7 @@ namespace ui {
             size.height = size.height - 2;
         }
         this->setContentSize(size);
-
-        if (_spritesGenerated)
-        {
-            // Restore color and opacity
-            this->setOpacity(opacity);
-            this->setColor(color);
-        }
-        _spritesGenerated = true;
-
+        
         return true;
     }
     
@@ -505,23 +521,31 @@ namespace ui {
 
             auto capInsets = CC_RECT_POINTS_TO_PIXELS(_capInsetsInternal);
             auto textureRect = CC_RECT_POINTS_TO_PIXELS(_spriteRect);
-            auto spriteRectSize = CC_SIZE_POINTS_TO_PIXELS(_originalSize);
+            auto spriteRectSize = _spriteRect.size;
+            auto originalSize = CC_SIZE_POINTS_TO_PIXELS(_originalSize);
+            auto offset = CC_POINT_POINTS_TO_PIXELS(_offset);
+            
+            Vec4 offsets;
+            offsets.x = offset.x + (originalSize.width - textureRect.size.width) / 2;
+            offsets.w = offset.y + (originalSize.height - textureRect.size.height) / 2;
+            offsets.z = originalSize.width - textureRect.size.width - offsets.x;
+            offsets.y = originalSize.height - textureRect.size.height - offsets.w;
 
             //handle .9.png
             if (_isPatch9)
             {
-                spriteRectSize = Size(spriteRectSize.width - 2, spriteRectSize.height-2);
+                originalSize = Size(originalSize.width - 2, originalSize.height-2);
             }
 
 
             if(capInsets.equals(Rect::ZERO))
             {
-                capInsets = Rect(spriteRectSize.width/3, spriteRectSize.height/3,
-                                 spriteRectSize.width/3, spriteRectSize.height/3);
+                capInsets = Rect(originalSize.width/3, originalSize.height/3,
+                                 originalSize.width/3, originalSize.height/3);
             }
 
-            auto uv = this->calculateUV(tex, capInsets, spriteRectSize);
-            auto vertices = this->calculateVertices(capInsets, spriteRectSize);
+            auto uv = this->calculateUV(tex, capInsets, originalSize, offsets);
+            auto vertices = this->calculateVertices(capInsets, originalSize, offsets);
             auto triangles = this->calculateTriangles(uv, vertices);
 
             _scale9Image->getPolygonInfo().setTriangles(triangles);
@@ -589,7 +613,7 @@ namespace ui {
     }
 
 /** sets the opacity.
-    @warning If the texture has premultiplied alpha then, the R, G and B channels will be modifed.
+    @warning If the texture has premultiplied alpha then, the R, G and B channels will be modified.
     Values goes from 0 to 255, where 255 means fully opaque.
 */
 
@@ -635,7 +659,7 @@ namespace ui {
         this->updateWithSprite(this->_scale9Image,
                                _spriteRect,
                                _spriteFrameRotated,
-                               Vec2::ZERO,
+                               _offset,
                                _originalSize,
                                capInsets);
         this->_insetLeft = capInsets.origin.x;
@@ -669,10 +693,60 @@ namespace ui {
         this->_insetBottom = insetBottom;
         this->updateCapInset();
     }
+    
+    void Scale9Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+    {
+        if (_scale9Image && _scale9Enabled) {
+#if CC_USE_CULLING
+            // Don't do calculate the culling if the transform was not updated
+            auto visitingCamera = Camera::getVisitingCamera();
+            auto defaultCamera = Camera::getDefaultCamera();
+            if (visitingCamera == defaultCamera) {
+                _insideBounds = ((flags & FLAGS_TRANSFORM_DIRTY)|| visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+            }
+            else
+            {
+                _insideBounds = renderer->checkVisibility(transform, _contentSize);
+            }
+            
+            if(_insideBounds)
+#endif
+            {
+                auto textureName = _scale9Image->getTexture()->getName();
+                auto programState = _scale9Image->getGLProgramState();
+                auto blendFunc = _scale9Image->getBlendFunc();
+                auto& polyInfo = _scale9Image->getPolygonInfo();
+                auto globalZOrder = _scale9Image->getGlobalZOrder();
+                _trianglesCommand.init(globalZOrder,textureName, programState, blendFunc, polyInfo.triangles, transform, flags);
+                renderer->addCommand(&_trianglesCommand);
+                
+#if CC_SPRITE_DEBUG_DRAW
+                _debugDrawNode->clear();
+                auto count = polyInfo.triangles.indexCount/3;
+                auto indices = polyInfo.triangles.indices;
+                auto verts = polyInfo.triangles.verts;
+                for(ssize_t i = 0; i < count; i++)
+                {
+                    //draw 3 lines
+                    Vec3 from =verts[indices[i*3]].vertices;
+                    Vec3 to = verts[indices[i*3+1]].vertices;
+                    _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+                    
+                    from =verts[indices[i*3+1]].vertices;
+                    to = verts[indices[i*3+2]].vertices;
+                    _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+                    
+                    from =verts[indices[i*3+2]].vertices;
+                    to = verts[indices[i*3]].vertices;
+                    _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+                }
+#endif //CC_SPRITE_DEBUG_DRAW
+            }
+        }
+    }
 
     void Scale9Sprite::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
     {
-
         // quick return if not visible. children won't be drawn.
         if (!_visible)
         {
@@ -709,27 +783,21 @@ namespace ui {
             else
                 break;
         }
-
-        if (_scale9Image && _scale9Image->getLocalZOrder() < 0 )
+        
+        if (!_scale9Enabled && _scale9Image && _scale9Image->getLocalZOrder() < 0 )
         {
             _scale9Image->visit(renderer, _modelViewTransform, flags);
         }
-        
 
-        //
         // draw self
         //
         if (isVisitableByVisitingCamera())
             this->draw(renderer, _modelViewTransform, flags);
 
-        //
-        // draw children and protectedChildren zOrder >= 0
-        //
-        if (_scale9Image && _scale9Image->getLocalZOrder() >= 0 )
+        if (!_scale9Enabled && _scale9Image && _scale9Image->getLocalZOrder() >= 0 )
         {
             _scale9Image->visit(renderer, _modelViewTransform, flags);
         }
-
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
             (*it)->visit(renderer, _modelViewTransform, flags);
@@ -789,7 +857,7 @@ namespace ui {
 
         this->cleanupSlicedSprites();
 
-        //we must invalide the transform when toggling scale9enabled
+        //we must invalid the transform when toggling scale9enabled
         _transformUpdated = _transformDirty = _inverseDirty = true;
 
         if (_scale9Enabled)
@@ -1020,34 +1088,58 @@ namespace ui {
     // u0       u1     u2     u3
     std::vector<Vec2> Scale9Sprite::calculateUV(Texture2D *tex,
                                                const Rect& capInsets,
-                                               const Size& spriteRectSize)
+                                               const Size& originalSize,
+                                               const Vec4& offsets)
     {
         auto atlasWidth = tex->getPixelsWide();
         auto atlasHeight = tex->getPixelsHigh();
 
-        //caculate texture coordinate
+        //calculate texture coordinate
         float leftWidth = 0, centerWidth = 0, rightWidth = 0;
         float topHeight = 0, centerHeight = 0, bottomHeight = 0;
 
         if (_spriteFrameRotated)
         {
-            rightWidth = capInsets.origin.y;
+            rightWidth = capInsets.origin.y - offsets.y;
             centerWidth = capInsets.size.height;
-            leftWidth = spriteRectSize.height - centerWidth - rightWidth;
+            leftWidth = originalSize.height - centerWidth - capInsets.origin.y - offsets.w;
 
-            topHeight = capInsets.origin.x;
+            topHeight = capInsets.origin.x - offsets.x;
             centerHeight = capInsets.size.width;
-            bottomHeight = spriteRectSize.width - (topHeight + centerHeight);
+            bottomHeight = originalSize.width - (capInsets.origin.x + centerHeight) - offsets.z;
         }
         else
         {
-            leftWidth = capInsets.origin.x;
+            leftWidth = capInsets.origin.x - offsets.x;
             centerWidth = capInsets.size.width;
-            rightWidth = spriteRectSize.width - (leftWidth + centerWidth);
+            rightWidth = originalSize.width - (capInsets.origin.x + centerWidth) - offsets.z;
 
-            topHeight = capInsets.origin.y;
+            topHeight = capInsets.origin.y - offsets.y;
             centerHeight = capInsets.size.height;
-            bottomHeight =spriteRectSize.height - (topHeight + centerHeight);
+            bottomHeight = originalSize.height - (capInsets.origin.y + centerHeight) - offsets.w;
+        }
+        
+        
+        if(leftWidth<0)
+        {
+            centerWidth += leftWidth;
+            leftWidth = 0;
+        }
+        if(rightWidth<0)
+        {
+            centerWidth += rightWidth;
+            rightWidth = 0;
+        }
+        
+        if(topHeight<0)
+        {
+            centerHeight += topHeight;
+            topHeight = 0;
+        }
+        if(bottomHeight<0)
+        {
+            centerHeight += bottomHeight;
+            bottomHeight = 0;
         }
 
         auto textureRect = CC_RECT_POINTS_TO_PIXELS(_spriteRect);
@@ -1117,67 +1209,111 @@ namespace ui {
     //x0,y0--------------------
     //         x1     x2     x3
     std::vector<Vec2> Scale9Sprite::calculateVertices(const Rect& capInsets,
-                                                     const Size& spriteRectSize)
+                                                     const Size& originalSize,
+                                                     const Vec4& offsets)
     {
-        float leftWidth = 0, centerWidth = 0, rightWidth = 0;
-        float topHeight = 0, centerHeight = 0, bottomHeight = 0;
-
-        leftWidth = capInsets.origin.x;
-        centerWidth = capInsets.size.width;
-        rightWidth = spriteRectSize.width - (leftWidth + centerWidth);
-
-        topHeight = capInsets.origin.y;
-        centerHeight = capInsets.size.height;
-        bottomHeight = spriteRectSize.height - (topHeight + centerHeight);
-
-
-        leftWidth = leftWidth / CC_CONTENT_SCALE_FACTOR();
-        rightWidth = rightWidth / CC_CONTENT_SCALE_FACTOR();
-        topHeight = topHeight / CC_CONTENT_SCALE_FACTOR();
-        bottomHeight = bottomHeight / CC_CONTENT_SCALE_FACTOR();
-        float sizableWidth = _preferredSize.width - leftWidth - rightWidth;
-        float sizableHeight = _preferredSize.height - topHeight - bottomHeight;
-        float x0,x1,x2,x3;
-        float y0,y1,y2,y3;
-        if(sizableWidth >= 0)
-        {
-            x0 = 0;
-            x1 = leftWidth;
-            x2 = leftWidth + sizableWidth;
-            x3 = _preferredSize.width;
-        }
-        else
-        {
-            float xScale = _preferredSize.width / (leftWidth + rightWidth);
-            x0 = 0;
-            x1 = x2 = leftWidth * xScale;
-            x3 = (leftWidth + rightWidth) * xScale;
-        }
-
-        if(sizableHeight >= 0)
-        {
-            y0 = 0;
-            y1 = bottomHeight;
-            y2 = bottomHeight + sizableHeight;
-            y3 = _preferredSize.height;
-        }
-        else
-        {
-            float yScale = _preferredSize.height / (topHeight + bottomHeight);
-            y0 = 0;
-            y1 = y2= bottomHeight * yScale;
-            y3 = (bottomHeight + topHeight) * yScale;
-        }
-
-        std::vector<Vec2> vertices;
         
+        float offsetLeft = offsets.x / CC_CONTENT_SCALE_FACTOR();
+        float offsetTop = offsets.y / CC_CONTENT_SCALE_FACTOR();
+        float offsetRight = offsets.z / CC_CONTENT_SCALE_FACTOR();
+        float offsetBottom = offsets.w / CC_CONTENT_SCALE_FACTOR();
+        
+        std::vector<Vec2> vertices;
         if (_renderingType == RenderingType::SIMPLE)
         {
-            vertices = {Vec2(x0,y0), Vec2(x3,y3)};
+            float hScale = _preferredSize.width / (originalSize.width / CC_CONTENT_SCALE_FACTOR());
+            float vScale = _preferredSize.height / (originalSize.height / CC_CONTENT_SCALE_FACTOR());
+            
+            vertices = {Vec2(offsetLeft * hScale, offsetBottom * vScale),
+                        Vec2(_preferredSize.width - offsetRight * hScale, _preferredSize.height - offsetTop * vScale)};
         }
         else
         {
-           vertices = {Vec2(x0,y0), Vec2(x1,y1), Vec2(x2,y2), Vec2(x3,y3)};
+            float leftWidth = 0, centerWidth = 0, rightWidth = 0;
+            float topHeight = 0, centerHeight = 0, bottomHeight = 0;
+
+            leftWidth = capInsets.origin.x;
+            centerWidth = capInsets.size.width;
+            rightWidth = originalSize.width - (leftWidth + centerWidth);
+
+            topHeight = capInsets.origin.y;
+            centerHeight = capInsets.size.height;
+            bottomHeight = originalSize.height - (topHeight + centerHeight);
+
+            leftWidth = leftWidth / CC_CONTENT_SCALE_FACTOR();
+            rightWidth = rightWidth / CC_CONTENT_SCALE_FACTOR();
+            centerWidth = centerWidth / CC_CONTENT_SCALE_FACTOR();
+            topHeight = topHeight / CC_CONTENT_SCALE_FACTOR();
+            bottomHeight = bottomHeight / CC_CONTENT_SCALE_FACTOR();
+            centerHeight = centerHeight / CC_CONTENT_SCALE_FACTOR();
+            
+            float sizableWidth = _preferredSize.width - leftWidth - rightWidth;
+            float sizableHeight = _preferredSize.height - topHeight - bottomHeight;
+            
+            leftWidth -= offsetLeft;
+            rightWidth -= offsetRight;
+            topHeight -= offsetTop;
+            bottomHeight -= offsetBottom;
+            
+            float hScale = sizableWidth / centerWidth;
+            float vScale = sizableHeight / centerHeight;
+            
+            if(leftWidth<0)
+            {
+                offsetLeft -= leftWidth * (hScale - 1.0f);
+                sizableWidth += leftWidth * hScale;
+                leftWidth = 0;
+            }
+            if(rightWidth<0)
+            {
+                sizableWidth += rightWidth * hScale;
+                rightWidth = 0;
+            }
+            if(topHeight<0)
+            {
+                sizableHeight += topHeight * vScale;
+                topHeight = 0;
+            }
+            if(bottomHeight<0)
+            {
+                offsetBottom -= bottomHeight * (vScale - 1.0f);
+                sizableHeight += bottomHeight * vScale;
+                bottomHeight = 0;
+            }
+            
+            float x0,x1,x2,x3;
+            float y0,y1,y2,y3;
+            if(sizableWidth >= 0)
+            {
+                x0 = offsetLeft;
+                x1 = x0 + leftWidth;
+                x2 = x1 + sizableWidth;
+                x3 = x2 + rightWidth;
+            }
+            else
+            {
+                float xScale = _preferredSize.width / (leftWidth + rightWidth);
+                x0 = offsetLeft;
+                x1 = x2 = offsetLeft + leftWidth * xScale;
+                x3 = x2 + rightWidth * xScale;
+            }
+
+            if(sizableHeight >= 0)
+            {
+                y0 = offsetBottom;
+                y1 = y0 + bottomHeight;
+                y2 = y1 + sizableHeight;
+                y3 = y2 + topHeight;
+            }
+            else
+            {
+                float yScale = _preferredSize.height / (topHeight + bottomHeight);
+                y0 = offsetBottom;
+                y1 = y2 = y0 + bottomHeight * yScale;
+                y3 = y2 + topHeight * yScale;
+            }
+
+            vertices = {Vec2(x0,y0), Vec2(x1,y1), Vec2(x2,y2), Vec2(x3,y3)};
         }
         return vertices;
     }
@@ -1190,16 +1326,26 @@ namespace ui {
         CC_SAFE_DELETE_ARRAY(_sliceVertices);
         CC_SAFE_DELETE_ARRAY(_sliceIndices);
 
-        _sliceVertices = new V3F_C4B_T2F[slicedTotalVertexCount];
-        _sliceIndices = new unsigned short[slicedTotalIndices];
+        _sliceVertices = new (std::nothrow) V3F_C4B_T2F[slicedTotalVertexCount];
+        _sliceIndices = new (std::nothrow) unsigned short[slicedTotalIndices];
 
         unsigned short indicesStart = 0;
         const unsigned short indicesOffset = 6;
         const unsigned short sliceQuadIndices[] = {4,0,5, 1,5,0};
         const unsigned short simpleQuadIndices[] = {0,1,2, 3,2,1};
         
+        auto displayedColor = _scale9Image->getDisplayedColor();
+        auto displayedOpacity = _scale9Image->getDisplayedOpacity();
+        Color4B color4( displayedColor.r, displayedColor.g, displayedColor.b, displayedOpacity );
+        
+        // special opacity for premultiplied textures
+        if (_scale9Image->isOpacityModifyRGB())
+        {
+            color4.r *= displayedOpacity/255.0f;
+            color4.g *= displayedOpacity/255.0f;
+            color4.b *= displayedOpacity/255.0f;
+        }
 
-        Color4B color4 = Color4B(_scale9Image->getDisplayedColor());
         int vertexCount = (int)(vertices.size() - 1);
 
         for (int j = 0; j <= vertexCount; ++j)
@@ -1284,6 +1430,23 @@ namespace ui {
     Scale9Sprite::RenderingType Scale9Sprite::getRenderingType()const
     {
         return _renderingType;
+    }
+
+    void Scale9Sprite::resetRender()
+    {
+        // Release old sprites
+        this->cleanupSlicedSprites();
+
+        CC_SAFE_RELEASE_NULL(this->_scale9Image);
+    }
+    
+    void Scale9Sprite::setGlobalZOrder(float globalZOrder)
+    {
+        Node::setGlobalZOrder(globalZOrder);
+        if (_scale9Image)
+        {
+            _scale9Image->setGlobalZOrder(globalZOrder);
+        }
     }
 
 }}

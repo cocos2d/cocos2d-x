@@ -126,7 +126,7 @@ bool Director::init(void)
     _frameRate = 0.0f;
     _FPSLabel = _drawnBatchesLabel = _drawnVerticesLabel = nullptr;
     _totalFrames = 0;
-    _lastUpdate = new struct timeval;
+    _lastUpdate = new (std::nothrow) struct timeval;
     _secondsPerFrame = 1.0f;
 
     // paused ?
@@ -442,7 +442,7 @@ void Director::setNextDeltaTimeZero(bool nextDeltaTimeZero)
 //
 // FIXME TODO
 // Matrix code MUST NOT be part of the Director
-// MUST BE moved outide.
+// MUST BE moved outside.
 // Why the Director must have this code ?
 //
 void Director::initMatrixStack()
@@ -1063,6 +1063,11 @@ void Director::setNextScene()
     {
         _runningScene->onEnter();
         _runningScene->onEnterTransitionDidFinish();
+
+#if CC_ENABLE_SCRIPT_BINDING
+        if (ScriptEngineManager::getInstance()->getScriptEngine())
+            ScriptEngineManager::getInstance()->getScriptEngine()->garbageCollect();
+#endif // CC_ENABLE_SCRIPT_BINDING
     }
 }
 

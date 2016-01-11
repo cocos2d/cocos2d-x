@@ -94,7 +94,7 @@
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos\base;$(EngineRoot)cocos\3d;$(EngineRoot)cocos\navmesh;$(EngineRoot)cocos\physics3d;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support\spine;$(EngineRoot)cocos\editor-support\cocosbuilder;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\editor-support;$(EngineRoot)extensions;$(EngineRoot)external\spidermonkey\include\winrt_8.1;$(ProjectDir)..\..\..\auto;$(ProjectDir)..\..\..\manual;$(ProjectDir)..\..\..\manual\cocostudio;$(ProjectDir)..\..\..\manual\spine;$(ProjectDir)..\..\..\manual\navmesh;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4703;4101;4083;4700;4068;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;_USRJSSTATIC;_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -115,7 +115,7 @@
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos\base;$(EngineRoot)cocos\3d;$(EngineRoot)cocos\navmesh;$(EngineRoot)cocos\physics3d;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support\spine;$(EngineRoot)cocos\editor-support\cocosbuilder;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\editor-support;$(EngineRoot)extensions;$(EngineRoot)external\spidermonkey\include\winrt_8.1;$(ProjectDir)..\..\..\auto;$(ProjectDir)..\..\..\manual;$(ProjectDir)..\..\..\manual\cocostudio;$(ProjectDir)..\..\..\manual\navmesh;$(ProjectDir)..\..\..\manual\spine;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4703;4101;4083;4700;4068;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;_USRJSSTATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -137,7 +137,7 @@
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos\base;$(EngineRoot)cocos\3d;$(EngineRoot)cocos\navmesh;$(EngineRoot)cocos\physics3d;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support\spine;$(EngineRoot)cocos\editor-support\cocosbuilder;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\editor-support;$(EngineRoot)extensions;$(EngineRoot)external\spidermonkey\include\winrt_8.1;$(ProjectDir)..\..\..\auto;$(ProjectDir)..\..\..\manual;$(ProjectDir)..\..\..\manual\cocostudio;$(ProjectDir)..\..\..\manual\spine;$(ProjectDir)..\..\..\manual\navmesh;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4703;4101;4083;4700;4068;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;_USRJSSTATIC;_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -158,7 +158,7 @@
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos\base;$(EngineRoot)cocos\3d;$(EngineRoot)cocos\navmesh;$(EngineRoot)cocos\physics3d;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support\spine;$(EngineRoot)cocos\editor-support\cocosbuilder;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\editor-support;$(EngineRoot)extensions;$(EngineRoot)external\spidermonkey\include\winrt_8.1;$(ProjectDir)..\..\..\auto;$(ProjectDir)..\..\..\manual;$(ProjectDir)..\..\..\manual\cocostudio;$(ProjectDir)..\..\..\manual\navmesh;$(ProjectDir)..\..\..\manual\spine;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4800;4703;4101;4083;4700;4068;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;_USRJSSTATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>

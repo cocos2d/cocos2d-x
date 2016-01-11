@@ -56,7 +56,7 @@ namespace cocostudio
     {
         if (!_instanceSingleNodeReader)
         {
-            _instanceSingleNodeReader = new SingleNodeReader();
+            _instanceSingleNodeReader = new (std::nothrow) SingleNodeReader();
         }
         
         return _instanceSingleNodeReader;

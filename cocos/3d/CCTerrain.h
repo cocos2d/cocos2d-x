@@ -102,7 +102,7 @@ public:
     struct CC_DLL DetailMap{
         /*Constructors*/
         DetailMap();
-        DetailMap(const char * detailMapSrc, float size = 35);
+        DetailMap(const std::string& detailMapSrc, float size = 35);
         /*detail Image source file path*/
         std::string _detailMapSrc;
         /*detailMapSize determine how many tiles that Terrain represent*/
@@ -130,11 +130,11 @@ public:
         /**empty constructor*/
         TerrainData();
         /**constructor, this constructor construct a simple terrain which only have 1 detailmap*/
-        TerrainData(const char* heightMapsrc, const char * textureSrc, const Size & chunksize = Size(32,32), float mapHeight = 2, float mapScale = 0.1);
+        TerrainData(const std::string& heightMapsrc, const std::string& textureSrc, const Size & chunksize = Size(32,32), float mapHeight = 2, float mapScale = 0.1);
         /**constructor, this constructor construct a terrain which have 4 detailmaps, 1 alpha map*/
-        TerrainData(const char* heightMapsrc, const char * alphamap, const DetailMap& detail1,const DetailMap& detail2, const DetailMap& detail3, const DetailMap& detail4, const Size & chunksize = Size(32,32), float mapHeight = 2, float mapScale = 0.1);
+        TerrainData(const std::string& heightMapsrc, const std::string& alphamap, const DetailMap& detail1,const DetailMap& detail2, const DetailMap& detail3, const DetailMap& detail4, const Size & chunksize = Size(32,32), float mapHeight = 2, float mapScale = 0.1);
         /**constructor, this constructor construct a terrain which have 3 detailmaps, 1 alpha map*/
-        TerrainData(const char* heightMapsrc, const char * alphamap, const DetailMap& detail1,const DetailMap& detail2, const DetailMap& detail3, const Size & chunksize = Size(32,32), float mapHeight = 2, float mapScale = 0.1);
+        TerrainData(const std::string& heightMapsrc, const std::string& alphamap, const DetailMap& detail1,const DetailMap& detail2, const DetailMap& detail3, const Size & chunksize = Size(32,32), float mapHeight = 2, float mapScale = 0.1);
         /**
         *determine the chunk size,chunk is the minimal subdivision of the Terrain
         */
@@ -142,7 +142,7 @@ public:
         /**height Map source path*/
         std::string _heightMapSrc;
         /**the source path of the alpha map*/
-        char* _alphaMapSrc;
+        std::string _alphaMapSrc;
         /**detail maps*/
         DetailMap _detailMaps[4];
         /**terrain Maximum height*/
@@ -177,7 +177,7 @@ private:
     /*
     *terrain vertices internal data format
     **/
-    struct TerrainVertexData
+    struct CC_DLL TerrainVertexData
     {
         /*constructor*/
         TerrainVertexData(){};
@@ -192,7 +192,7 @@ private:
         cocos2d::Vec3 _normal;
     };
 
-    struct QuadTree;
+    struct CC_DLL QuadTree;
     /*
     *the terminal node of quad, use to subdivision terrain mesh and LOD
     **/
@@ -265,9 +265,9 @@ private:
 
    /**
     *QuadTree
-    * @breif use to hierarchically frustum culling and set LOD
+    * @brief use to hierarchically frustum culling and set LOD
     **/
-    struct QuadTree
+    struct CC_DLL QuadTree
     {
         /**constructor*/
         QuadTree(int x, int y, int width, int height, Terrain * terrain);
@@ -316,7 +316,7 @@ public:
     /**initialize all Properties which terrain need */
     bool initProperties();
     /**initialize heightMap data */
-    bool initHeightMap(const char* heightMap);
+    bool initHeightMap(const std::string& heightMap);
     /**initialize alphaMap ,detailMaps textures*/
     bool initTextures();
     /**create entry*/
@@ -392,7 +392,7 @@ public:
     /**
      * reset the heightmap data.
      */
-    void resetHeightMap(const char * heightMap);
+    void resetHeightMap(const std::string& heightMap);
 
     /**
      * get the terrain's minimal height.
