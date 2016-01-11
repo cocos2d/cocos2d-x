@@ -123,14 +123,14 @@ public:
     // Quits sub-thread (websocket thread).
     void quitSubThread();
 
-    // Sends message to UI thread. It's needed to be invoked in sub-thread.
-    void sendMessageToUIThread(const std::function<void()>& cb);
+    // Sends message to Cocos thread. It's needed to be invoked in Websocket thread.
+    void sendMessageToCocosThread(const std::function<void()>& cb);
 
-    // Sends message to sub-thread(websocket thread). It's needs to be invoked in UI thread.
-    void sendMessageToSubThread(WsMessage *msg);
+    // Sends message to Websocket thread. It's needs to be invoked in Cocos thread.
+    void sendMessageToWebSocketThread(WsMessage *msg);
 
     // Waits the sub-thread (websocket thread) to exit,
-    void joinSubThread();
+    void joinWebSocketThread();
 
 protected:
     void wsThreadEntryFunc();
@@ -170,12 +170,12 @@ WsThreadHelper::WsThreadHelper()
 , _ws(nullptr)
 , _needQuit(false)
 {
-    _subThreadWsMessageQueue = new std::list<WsMessage*>();
+    _subThreadWsMessageQueue = new (std::nothrow) std::list<WsMessage*>();
 }
 
 WsThreadHelper::~WsThreadHelper()
 {
-    joinSubThread();
+    joinWebSocketThread();
     CC_SAFE_DELETE(_subThreadInstance);
     delete _subThreadWsMessageQueue;
 }
@@ -185,7 +185,7 @@ bool WsThreadHelper::createThread(const WebSocket& ws)
     _ws = const_cast<WebSocket*>(&ws);
 
     // Creates websocket thread
-    _subThreadInstance = new std::thread(&WsThreadHelper::wsThreadEntryFunc, this);
+    _subThreadInstance = new (std::nothrow) std::thread(&WsThreadHelper::wsThreadEntryFunc, this);
     return true;
 }
 
@@ -209,18 +209,18 @@ void WsThreadHelper::wsThreadEntryFunc()
     LOGD("WebSocket thread exit, helper instance: %p\n", this);
 }
 
-void WsThreadHelper::sendMessageToUIThread(const std::function<void()>& cb)
+void WsThreadHelper::sendMessageToCocosThread(const std::function<void()>& cb)
 {
     Director::getInstance()->getScheduler()->performFunctionInCocosThread(cb);
 }
 
-void WsThreadHelper::sendMessageToSubThread(WsMessage *msg)
+void WsThreadHelper::sendMessageToWebSocketThread(WsMessage *msg)
 {
     std::lock_guard<std::mutex> lk(_subThreadWsMessageQueueMutex);
     _subThreadWsMessageQueue->push_back(msg);
 }
 
-void WsThreadHelper::joinSubThread()
+void WsThreadHelper::joinWebSocketThread()
 {
     if (_subThreadInstance->joinable())
     {
@@ -305,7 +305,7 @@ void WebSocket::closeAllConnections()
             LOGD("Waiting WebSocket (%p) to exit!\n", instance);
             instance->close();
             // Wait for websocket thread to exit
-            instance->_wsHelper->joinSubThread();
+            instance->_wsHelper->joinWebSocketThread();
         }
         
         __websocketInstances->clear();
@@ -327,7 +327,7 @@ WebSocket::WebSocket()
     _receivedData.reserve(WS_RESERVE_RECEIVE_BUFFER_SIZE);
     if (__websocketInstances == nullptr)
     {
-        __websocketInstances = new std::vector<WebSocket*>();
+        __websocketInstances = new (std::nothrow) std::vector<WebSocket*>();
     }
     
     __websocketInstances->push_back(this);
@@ -356,7 +356,7 @@ WebSocket::~WebSocket()
         }
         else
         {
-            LOGD("ERROR: WebSocket instance (%p) added to container!\n", this);
+            LOGD("ERROR: WebSocket instance (%p) wasn't added to the container which saves websocket instances!\n", this);
         }
     }
 }
@@ -415,7 +415,7 @@ bool WebSocket::init(const Delegate& delegate,
         protocolCount = 1;
     }
 
-    _wsProtocols = new lws_protocols[protocolCount+1];
+    _wsProtocols = new (std::nothrow) lws_protocols[protocolCount+1];
     memset(_wsProtocols, 0, sizeof(lws_protocols)*(protocolCount+1));
 
     if (protocols && protocols->size() > 0)
@@ -423,7 +423,7 @@ bool WebSocket::init(const Delegate& delegate,
         int i = 0;
         for (std::vector<std::string>::const_iterator iter = protocols->begin(); iter != protocols->end(); ++iter, ++i)
         {
-            char* name = new char[(*iter).length()+1];
+            char* name = new (std::nothrow) char[(*iter).length()+1];
             strcpy(name, (*iter).c_str());
             _wsProtocols[i].name = name;
             _wsProtocols[i].callback = WebSocketCallbackWrapper::onSocketCallback;
@@ -432,7 +432,7 @@ bool WebSocket::init(const Delegate& delegate,
     }
     else
     {
-        char* name = new char[20];
+        char* name = new (std::nothrow) char[20];
         strcpy(name, "default-protocol");
         _wsProtocols[0].name = name;
         _wsProtocols[0].callback = WebSocketCallbackWrapper::onSocketCallback;
@@ -461,7 +461,7 @@ void WebSocket::send(const std::string& message)
         WsMessage* msg = new (std::nothrow) WsMessage();
         msg->what = WS_MSG_TO_SUBTRHEAD_SENDING_STRING;
         msg->obj = data;
-        _wsHelper->sendMessageToSubThread(msg);
+        _wsHelper->sendMessageToWebSocketThread(msg);
     }
     else
     {
@@ -491,7 +491,7 @@ void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
         WsMessage* msg = new (std::nothrow) WsMessage();
         msg->what = WS_MSG_TO_SUBTRHEAD_SENDING_BINARY;
         msg->obj = data;
-        _wsHelper->sendMessageToSubThread(msg);
+        _wsHelper->sendMessageToWebSocketThread(msg);
     }
     else
     {
@@ -624,7 +624,7 @@ void WebSocket::onClientWritable()
         }
         else
         {
-            frame = new WebSocketFrame();
+            frame = new (std::nothrow) WebSocketFrame();
             bool success = frame && frame->init((unsigned char*)(data->bytes + data->issued), n);
             if (success)
             {
@@ -750,7 +750,7 @@ void WebSocket::onClientReceivedData(void* in, ssize_t len)
 
     if (remainingSize == 0 && isFinalFragment)
     {
-        std::vector<char>* frameData = new std::vector<char>(std::move(_receivedData));
+        std::vector<char>* frameData = new (std::nothrow) std::vector<char>(std::move(_receivedData));
 
         // reset capacity of received data buffer
         _receivedData.reserve(WS_RESERVE_RECEIVE_BUFFER_SIZE);
@@ -764,7 +764,7 @@ void WebSocket::onClientReceivedData(void* in, ssize_t len)
             frameData->push_back('\0');
         }
 
-        _wsHelper->sendMessageToUIThread([this, frameData, frameSize, isBinary](){
+        _wsHelper->sendMessageToCocosThread([this, frameData, frameSize, isBinary](){
             // In UI thread
             LOGD("Notify data len %d to Cocos thread.\n", (int)frameSize);
 
@@ -790,7 +790,7 @@ void WebSocket::onConnectionOpened()
 
     _readyState = State::OPEN;
 
-    _wsHelper->sendMessageToUIThread([this](){
+    _wsHelper->sendMessageToCocosThread([this](){
         _delegate->onOpen(this);
     });
 }
@@ -801,7 +801,7 @@ void WebSocket::onConnectionError()
     
     _readyState = State::CLOSING;
 
-    _wsHelper->sendMessageToUIThread([this](){
+    _wsHelper->sendMessageToCocosThread([this](){
         _delegate->onError(this, ErrorCode::CONNECTION_FAILURE);
     });
 }
@@ -818,9 +818,9 @@ void WebSocket::onConnectionClosed()
     _readyState = State::CLOSED;
 
     _wsHelper->quitSubThread();
-    _wsHelper->sendMessageToUIThread([this](){
+    _wsHelper->sendMessageToCocosThread([this](){
         //Waiting for the subThread safety exit
-        _wsHelper->joinSubThread();
+        _wsHelper->joinWebSocketThread();
         _delegate->onClose(this);
     });
 }
