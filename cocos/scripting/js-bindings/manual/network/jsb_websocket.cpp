@@ -140,8 +140,8 @@ public:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate.ref()), "onclose", 1, &args);
 
         auto copy = &p->obj;
-        jsb_remove_proxy(p);
         JS::RemoveObjectRoot(cx, copy);
+        jsb_remove_proxy(p);
         CC_SAFE_DELETE(ws);
     }
     

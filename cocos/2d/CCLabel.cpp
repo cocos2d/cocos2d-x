@@ -508,7 +508,7 @@ void Label::reset()
     _enableWrap = true;
     _bmFontSize = -1;
     _bmfontScale = 1.0f;
-    _overflow = Overflow::NORMAL;
+    _overflow = Overflow::NONE;
     _originalFontSize = 0.0f;
     
 }
