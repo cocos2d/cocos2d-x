@@ -380,7 +380,7 @@ public:
     LabelEffect getLabelEffectType() const { return _currLabelEffect; }
 
     /**
-    * Return current effect color vlaue.
+    * Return current effect color value.
     */
     Color4F getEffectColor() const { return _effectColorF; }
 
