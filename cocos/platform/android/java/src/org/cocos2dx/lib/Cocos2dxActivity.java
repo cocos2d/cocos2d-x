@@ -23,6 +23,16 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import javax.microedition.khronos.egl.EGL10;
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.egl.EGLDisplay;
+
+import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
+import org.cocos2dx.utils.PSNative;
+import org.cocos2dx.utils.PSNetwork;
+
+import com.chukong.cocosplay.client.CocosPlayClient;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -32,23 +42,12 @@ import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager.OnActivityResultListener;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
-
-import com.chukong.cocosplay.client.CocosPlayClient;
-
-import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
-
-import javax.microedition.khronos.egl.EGL10;
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.egl.EGLDisplay;
 
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
     // ===========================================================
@@ -264,6 +263,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
         sContext = this;
         this.mHandler = new Cocos2dxHandler(this);
+        
+        PSNative.init(this);
+		PSNetwork.init(this);
         
         Cocos2dxHelper.init(this);
         
