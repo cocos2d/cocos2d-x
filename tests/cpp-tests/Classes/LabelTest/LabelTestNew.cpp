@@ -2457,7 +2457,7 @@ LabelToggleTypeTest::LabelToggleTypeTest()
     _label->setLineSpacing(5);
     _label->setAdditionalKerning(2);
     _label->setVerticalAlignment(TextVAlignment::CENTER);
-    _label->setOverflow(Label::Overflow::NORMAL);
+    _label->setOverflow(Label::Overflow::NONE);
 
 
     this->updateDrawNodeSize(_label->getContentSize());
@@ -2566,7 +2566,7 @@ void LabelToggleTypeTest::onChangedRadioButtonSelect(RadioButton* radioButton, R
     {
         switch (radioButton->getTag()) {
             case 0:
-                _label->setOverflow(Label::Overflow::NORMAL);
+                _label->setOverflow(Label::Overflow::NONE);
                 break;
             case 1:
                 _label->setOverflow(Label::Overflow::CLAMP);
@@ -2594,7 +2594,7 @@ LabelSystemFontTest::LabelSystemFontTest()
 {
     _label->setLineSpacing(5);
     _label->setVerticalAlignment(TextVAlignment::CENTER);
-   _label->setOverflow(Label::Overflow::NORMAL);
+   _label->setOverflow(Label::Overflow::NONE);
    _label->setSystemFontName("Hiragino Sans GB");
     
     auto stepper = (ControlStepper*)this->getChildByName("stepper");
@@ -2707,7 +2707,7 @@ void LabelSystemFontTest::onChangedRadioButtonSelect(RadioButton* radioButton, R
     {
         switch (radioButton->getTag()) {
             case 0:
-                _label->setOverflow(Label::Overflow::NORMAL);
+                _label->setOverflow(Label::Overflow::NONE);
                 break;
             case 1:
                 _label->setOverflow(Label::Overflow::CLAMP);
@@ -2735,7 +2735,7 @@ LabelCharMapFontTest::LabelCharMapFontTest()
 {
     _label->setLineSpacing(5);
     _label->setVerticalAlignment(TextVAlignment::CENTER);
-    _label->setOverflow(Label::Overflow::NORMAL);
+    _label->setOverflow(Label::Overflow::NONE);
     _label->setCharMap("fonts/tuffy_bold_italic-charmap.plist");
     _label->setString("Hello World, This is a char map test.");
     _label->setScale(0.5f);
