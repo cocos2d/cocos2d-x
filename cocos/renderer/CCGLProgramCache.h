@@ -118,7 +118,7 @@ public:
     void addGLProgram(GLProgram* program, const std::string &key);
     CC_DEPRECATED_ATTRIBUTE void addProgram(GLProgram* program, const std::string &key) { addGLProgram(program, key); }
     
-    /** reload default programs these are relative to light */
+    /** @~english Reload default programs these are relative to light @~chinese 重新加载灯光相关的默认shader*/
     void reloadDefaultGLProgramsRelativeToLights();
 
 private:
