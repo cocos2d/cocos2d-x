@@ -26,6 +26,7 @@ PhysicsTests::PhysicsTests()
     ADD_TEST_CASE(PhysicsDemoBug5482);
     ADD_TEST_CASE(PhysicsFixedUpdate);
     ADD_TEST_CASE(PhysicsTransformTest);
+    ADD_TEST_CASE(PhysicsDebugColorTest);
     ADD_TEST_CASE(PhysicsIssue9959);
 }
 
@@ -173,9 +174,6 @@ Sprite* PhysicsDemo::makeBall(Vec2 point, float radius, PhysicsMaterial material
     
     // create a circle body with a green debug color
     auto circleBody = PhysicsBody::createCircle(ball->getContentSize().width / 2, material);
-    circleBody->setDebugFillColor(Color4F(0.0f, 1.0f, 0.0f, 0.3f));
-    circleBody->setDebugOutlineColor(Color4F(0.0f, 1.0f, 0.0f, 1.0f));
-
     ball->addComponent(circleBody);
     ball->setPosition(Vec2(point.x, point.y));
     
@@ -717,8 +715,6 @@ void PhysicsDemoJoints::onEnter()
                     sp2PhysicsBody->setTag(DRAG_BODYS_TAG);
                     
                     PhysicsJointPin* joint = PhysicsJointPin::construct(sp1PhysicsBody, sp2PhysicsBody, offset);
-                    joint->setDebugLineColor(Color4F::GREEN);
-                    joint->setDebugJointPointColor(Color4F::RED);
                     getPhysicsWorld()->addJoint(joint);
                     
                     this->addChild(sp1);
@@ -1839,6 +1835,51 @@ void PhysicsTransformTest::onEnter()
 std::string PhysicsTransformTest::title() const
 {
     return "Physics transform test";
+}
+
+void PhysicsDebugColorTest::onEnter()
+{
+    PhysicsDemo::onEnter();
+    toggleDebug();
+    _physicsWorld->setGravity(Point::ZERO);
+
+    Vec2 offset(VisibleRect::leftBottom().x + 100, VisibleRect::leftBottom().y + 100);
+
+    auto sp1 = makeBall(offset - Vec2(30, -100), 10);
+    auto sp1PhysicsBody = sp1->getPhysicsBody();
+
+    auto sp2 = makeBall(offset + Vec2(30, 100), 10);
+    auto sp2PhysicsBody = sp2->getPhysicsBody();
+
+    PhysicsJointDistance* joint = PhysicsJointDistance::construct(sp1PhysicsBody, sp2PhysicsBody, Point::ZERO, Point::ZERO);
+    getPhysicsWorld()->addJoint(joint);
+
+    auto sp3 = makeBall(offset - Vec2(30, 0), 10);
+    auto sp3PhysicsBody = sp3->getPhysicsBody();
+
+    auto sp4 = makeBall(offset + Vec2(30, 0), 10);
+    auto sp4PhysicsBody = sp4->getPhysicsBody();
+
+    PhysicsJointDistance* joint2 = PhysicsJointDistance::construct(sp3PhysicsBody, sp4PhysicsBody, Point::ZERO, Point::ZERO);
+    joint2->setDebugLineColor(Color4F::GREEN);
+    joint2->setDebugJointPointColor(Color4F::RED);
+    getPhysicsWorld()->addJoint(joint2);
+
+    auto defaultSprite = addGrossiniAtPosition(VisibleRect::center());
+    auto sprite = addGrossiniAtPosition(VisibleRect::center() + Vec2(defaultSprite->getContentSize().width, 0));
+
+    sprite->getPhysicsBody()->setDebugFillColor(Color4F(0.0f, 0.0f, 1.0f, 0.3f));
+    sprite->getPhysicsBody()->setDebugOutlineColor(Color4F(0.0f, 0.0f, 1.0f, 1.0f));
+
+    this->addChild(sp1);
+    this->addChild(sp2);
+    this->addChild(sp3);
+    this->addChild(sp4);
+}
+
+std::string PhysicsDebugColorTest::title() const
+{
+    return "Custom physics debug draw color";
 }
 
 void PhysicsIssue9959::onEnter()
