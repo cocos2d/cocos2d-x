@@ -56,11 +56,12 @@ public:
     virtual void setNode(cocos2d::Node* node);
     virtual cocos2d::Node* getNode() const;
 
-    virtual void setActionTimeline(ActionTimeline* action) { _ActionTimeline = action; }
-    virtual ActionTimeline* getActionTimeline() const { return _ActionTimeline; }
+    virtual void setActionTimeline(ActionTimeline* action) { _actionTimeline = action; }
+    virtual ActionTimeline* getActionTimeline() const { return _actionTimeline; }
 
     virtual Timeline* clone();
 
+    virtual Timeline* reverse(const int& duration) const;
 protected:
     virtual void apply(unsigned int frameIndex);
 
@@ -76,7 +77,7 @@ protected:
 	unsigned int _betweenDuration;
 	unsigned int _actionTag;
 
-    ActionTimeline*  _ActionTimeline;
+    ActionTimeline*  _actionTimeline;
     cocos2d::Node* _node;
 };
 

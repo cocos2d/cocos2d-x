@@ -191,6 +191,31 @@ ActionTimeline* ActionTimeline::clone() const
     return newAction;
 }
 
+ActionTimeline* ActionTimeline::reverse() const
+{
+    ActionTimeline* rvsAction = ActionTimeline::create();
+    rvsAction->setDuration(_duration);
+    rvsAction->setTimeSpeed(_timeSpeed);
+
+    for (auto timelines : _timelineMap)
+    {
+        for (auto timeline : timelines.second)
+        {
+            auto rvsTimeline = timeline->reverse(_duration);
+            rvsAction->addTimeline(rvsTimeline);
+        }
+    }
+
+    for (auto info : _animationInfos)
+    {
+        auto rvsInfo = info.second;
+        rvsInfo.startIndex = _duration - info.second.endIndex;
+        rvsInfo.endIndex = _duration - info.second.startIndex;
+        rvsAction->addAnimationInfo(rvsInfo);
+    }
+    return rvsAction;
+}
+
 void ActionTimeline::step(float delta)
 {
     if (!_playing || _timelineMap.size() == 0 || _duration == 0)

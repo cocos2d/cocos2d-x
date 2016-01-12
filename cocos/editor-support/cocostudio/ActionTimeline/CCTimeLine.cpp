@@ -48,7 +48,7 @@ Timeline::Timeline()
     , _toIndex(0)
     , _betweenDuration(0)
     , _actionTag(0)
-    , _ActionTimeline(nullptr)
+    , _actionTimeline(nullptr)
     , _node(nullptr)
 {
 }
@@ -87,6 +87,49 @@ Timeline* Timeline::clone()
     }
 
     return timeline;
+}
+
+Timeline* Timeline::reverse(const int& duration) const
+{
+    Timeline* rvsTimeline = Timeline::create();
+    rvsTimeline->_actionTag = _actionTag;
+    if (_frames.empty())
+        return rvsTimeline;
+
+    auto frameNumI = _frames.size() - 1;
+    auto rvframe = _frames.at(frameNumI)->clone();
+    do
+    {
+        rvframe->setFrameIndex(duration - rvframe->getFrameIndex());
+        rvsTimeline->addFrame(rvframe);
+        if(frameNumI == 0)
+            break;
+        auto preF = _frames.at(frameNumI -1)->clone();
+        rvframe->setTween(preF->isTween());
+        auto tweenT = preF->getTweenType();
+        auto tweenV = preF->getEasingParams();
+        if(tweenT == cocos2d::tweenfunc::TweenType::CUSTOM_EASING
+           && tweenV.size() >= 8)
+        {
+            auto tmp  = tweenV[2];
+            tweenV[2] = 1 - tweenV[4];
+            tweenV[4] = 1 - tmp;
+            tmp = tweenV[3];
+            tweenV[3] = 1 - tweenV[5];
+            tweenV[5] = 1 - tmp;
+            tmp = tweenV[0];
+            tweenV[0] = 1 - tweenV[6];
+            tweenV[6] = 1 - tmp;
+            tmp = tweenV[1];
+            tweenV[1] = 1 - tweenV[7];
+            tweenV[7] = 1 - tmp;
+        }
+        rvframe->setEasingParams(tweenV);
+        rvframe->setTweenType(tweenT);
+        rvframe = preF;
+        frameNumI--;
+    }while(frameNumI >= 0);
+    return rvsTimeline;
 }
 
 void Timeline::addFrame(Frame* frame)
