@@ -30,6 +30,8 @@ THE SOFTWARE.
 #include "base/CCEventDispatcher.h"
 #include "2d/CCCamera.h"
 
+#include "2d/CCScene.h"
+
 NS_CC_BEGIN
 
 namespace {
@@ -190,6 +192,23 @@ const Size& GLView::getFrameSize() const
 void GLView::setFrameSize(float width, float height)
 {
     _designResolutionSize = _screenSize = Size(width, height);
+
+    auto director = Director::getInstance();
+    if (director->getOpenGLView() != NULL)
+    {
+       director->_winSizeInPoints = _designResolutionSize;
+
+       director->setGLDefaultValues();
+       director->setProjection(director->_projection);
+
+       // It seems that the scene content size does not matter in most cases but just to be on the safe side.
+       auto scene = director->getRunningScene();
+       if (scene)
+          scene->setContentSize(_designResolutionSize);
+
+       for (auto &rcb : _resizeCallbacks)
+          rcb(_designResolutionSize);
+    }
 }
 
 Rect GLView::getVisibleRect() const
@@ -462,6 +481,11 @@ float GLView::getScaleX() const
 float GLView::getScaleY() const
 {
     return _scaleY;
+}
+
+void GLView::addResizeCalback(const std::function<void(const Size&)>& callback)
+{
+   _resizeCallbacks.push_back(callback);
 }
 
 NS_CC_END

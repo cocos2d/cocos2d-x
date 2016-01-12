@@ -11,6 +11,7 @@
 -- @param #string viewName
 -- @param #rect_table rect
 -- @param #float frameZoomFactor
+-- @param #bool resizable
 -- @return GLViewImpl#GLViewImpl ret (return value: cc.GLViewImpl)
         
 --------------------------------
