@@ -182,9 +182,10 @@ public:
     * @~english Sets whether vertex colour information should be included in the final buffers generated.
     * @~chinese 设置是否把顶点颜色信息包含进缓存区。
     * @param use   @~english If use vertex colour. @~chinese 是否使用顶点颜色。
-    * @note You must use either texture coordinates or vertex colour since the
+    * @note @~english You must use either texture coordinates or vertex colour since the
     * vertices have no normals and without one of these there is no source of
     * colour for the vertices.
+    * @~chinese 没有法线的时候，你必须使用纹理坐标或纹理颜色其中之一，如果不使用，则顶点将没有颜色。
     */
     virtual void setUseVertexColours(bool use);
     /**
