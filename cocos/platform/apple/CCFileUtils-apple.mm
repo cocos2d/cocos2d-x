@@ -394,6 +394,35 @@ bool FileUtilsApple::isFileExistInternal(const std::string& filePath) const
     return ret;
 }
 
+bool FileUtilsApple::isDirectoryExistInternal(const std::string& dirPath) const
+{
+    if (dirPath.empty())
+    {
+        return false;
+    }
+    
+    bool ret = false;
+    
+    if (dirPath[0] != '/')
+    {
+        BOOL isDir = false;
+        NSString *path = [NSString stringWithFormat:@"%s/%s",[getBundle() resourcePath].UTF8String, dirPath.c_str()];
+        if ([s_fileManager fileExistsAtPath:path isDirectory:&isDir]) {
+            ret = isDir;
+        }
+    }
+    else
+    {
+        // Search path is an absolute path.
+        BOOL isDir = false;
+        if ([s_fileManager fileExistsAtPath:[NSString stringWithUTF8String:dirPath.c_str()] isDirectory:&isDir]) {
+            ret = isDir;
+        }
+    }
+
+    return ret;
+}
+
 static int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf)
 {
     auto ret = remove(fpath);
