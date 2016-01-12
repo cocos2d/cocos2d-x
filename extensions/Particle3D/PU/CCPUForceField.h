@@ -32,7 +32,9 @@
 
 NS_CC_BEGIN
 
-/** Pure virtual ForceFieldCalculationFactory
+/** @class ForceFieldCalculationFactory
+*@brief @~english Internal class, the ForceField calculation factory.
+@~chinese 内部类，力场计算工厂类。
 */
 class  PUForceFieldCalculationFactory
 {
@@ -50,12 +52,15 @@ public:
     };
     virtual ~PUForceFieldCalculationFactory(void){};
 
-    /** Generates the force field
-    @remarks
-        This function takes several arguments. 
-        - forceFieldSize defines the internal dimensions of the force field. 
-        - octaves, frequency, amplitude and persistence define the noise that is being generated.
-        - worldSize defines the dimensions in the real world (scene).
+    /**
+    * @~english Generates the force field.
+    * @~chinese 生成一个力场。
+    * @param forceFieldSize   @~english The internal dimensions of the force field. @~chinese 力场大小。
+    * @param octaves   @~english The octaves. @~chinese 八度场。
+    * @param frequency   @~english The frequency. @~chinese 力场频率。
+    * @param amplitude   @~english The amplitude. @~chinese 力场振幅。
+    * @param persistence   @~english The persistence. @~chinese 持续性。
+    * @param worldSize   @~english The dimensions in the real world. @~chinese 在真实世界中的大小。
     */
     virtual void generate(unsigned int forceFieldSize, 
         unsigned short octaves, 
@@ -64,10 +69,12 @@ public:
         double persistence, 
         const Vec3& worldSize) = 0;
 
-    /** Determine force, based on the position of a particle.
-    #remarks
-        The position is the position of a particle. The argument 'delta' defines the radius around the position that contributes to the 
-        calculation of the force.
+    /**
+    * @~english Determine the force, based on the position of a particle.
+    * @~chinese 根据位置信息决定受力情况。
+    * @param position   @~english The position of a particle. @~chinese 力场大小。
+    * @param force   @~english The force. @~chinese 力大小。
+    * @param delta   @~english The radius around the position that contributes to the calculation of the force. @~chinese 当前粒子位置到中心力的半径。
     */
     virtual void determineForce(const Vec3& position, Vec3& force, float delta) = 0;
 
@@ -100,7 +107,9 @@ protected:
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
-/** Factory class to calculate forces in realtime
+/** @class PURealTimeForceFieldCalculationFactory
+*@brief @~english Internal class, Factory class to calculate forces in realtime
+@~chinese 内部类，实时力场计算工厂类。
 */
 class PURealTimeForceFieldCalculationFactory : public PUForceFieldCalculationFactory
 {
@@ -125,11 +134,12 @@ public:
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
-
-/** Force Field Affector Class:
-    This class defines a force field to affect the particle direction. The force field is based on 3D noise. The force can be calculated in
-    realtime or based on a precreated 3D force field matrix, which essentially involves one lookup. To speed things up, the 3d matrix can be
-    precreated in a separate thread (optionally).
+/** @class PUForceField
+*@brief @~english Internal class, This class defines a force field to affect the particle direction. The force field is based on 3D noise. 
+The force can be calculated in realtime or based on a precreated 3D force field matrix, which essentially involves one lookup. 
+To speed things up, the 3d matrix can be precreated in a separate thread (optionally)
+@~chinese 内部类，该类定义了一个影响粒子方向的力场，该力场基于3D噪声，该力场可以实时计算根据预先创建的3D力场变换矩阵，该矩阵本质上只包含了一个lookup分量。
+为了加速实现，该3D矩阵可以在独立的线程中进行计算。
 */
 class PUForceField
 {
@@ -143,7 +153,18 @@ class PUForceField
         PUForceField();
         virtual ~PUForceField();
 
-        /** Initialises a ForceField */
+        /**
+        * @~english Initialises the ForceField.
+        * @~chinese 初始化一个力场。
+        * @param type   @~english The type of force field. @~chinese 力场类型。
+        * @param position   @~english The position of force field. @~chinese 力场位置。
+        * @param forceFieldSize   @~english The internal dimensions of the force field. @~chinese 力场大小。
+        * @param octaves   @~english The octaves. @~chinese 八度场。
+        * @param frequency   @~english The frequency. @~chinese 力场频率。
+        * @param amplitude   @~english The amplitude. @~chinese 力场振幅。
+        * @param persistence   @~english The persistence. @~chinese 持续性。
+        * @param worldSize   @~english The dimensions in the real world. @~chinese 在真实世界中的大小。
+        */
         virtual void initialise(ForceFieldType type,
             const Vec3& position,
             unsigned int forceFieldSize, 
@@ -153,7 +174,17 @@ class PUForceField
             double persistence, 
             const Vec3& worldSize);
 
-        /** Initialises a ForceField */
+        /**
+        * @~english Initialises the ForceField.
+        * @~chinese 初始化一个力场。
+        * @param type   @~english The type of force field. @~chinese 力场类型。
+        * @param forceFieldSize   @~english The internal dimensions of the force field. @~chinese 力场大小。
+        * @param octaves   @~english The octaves. @~chinese 八度场。
+        * @param frequency   @~english The frequency. @~chinese 力场频率。
+        * @param amplitude   @~english The amplitude. @~chinese 力场振幅。
+        * @param persistence   @~english The persistence. @~chinese 持续性。
+        * @param worldSize   @~english The dimensions in the real world. @~chinese 在真实世界中的大小。
+        */
         virtual void initialise(ForceFieldType type,
             unsigned int forceFieldSize, 
             unsigned short octaves, 

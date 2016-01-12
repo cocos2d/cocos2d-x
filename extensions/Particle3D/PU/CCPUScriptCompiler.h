@@ -30,6 +30,11 @@
 
 NS_CC_BEGIN
 
+/**
+* @addtogroup _3d
+* @{
+*/
+
 /** This enum holds the types of the possible abstract nodes */
 enum PUAbstractNodeType
 {
@@ -44,6 +49,10 @@ enum PUAbstractNodeType
 class CC_DLL PUAbstractNode;
 typedef std::list<PUAbstractNode*> PUAbstractNodeList;
 
+/** @class PUAbstractNode
+*@brief @~english Internal class, The Abstract class of script element.
+@~chinese 内部类，脚本中元素的抽象类。
+*/
 class CC_DLL PUAbstractNode
 {
 public:
@@ -53,8 +62,6 @@ public:
     PUAbstractNode *parent;
     Ref *context;
     
-    //contextd//
-//    Any context; // A holder for translation context data
 public:
     PUAbstractNode(PUAbstractNode *ptr):line(0), type(ANT_UNKNOWN), parent(ptr), context(nullptr)
     {
@@ -62,15 +69,17 @@ public:
 
     }
     virtual ~PUAbstractNode(){}
-    /// Returns a new AbstractNode which is a replica of this one.
+    /** Returns a new AbstractNode which is a replica of this one. */
     virtual PUAbstractNode *clone() const = 0;
-    /// Returns a string value depending on the type of the AbstractNode.
+    /** Returns a string value depending on the type of the AbstractNode.  */
     virtual std::string getValue() const = 0;
 };
 
 
-
-/** This specific abstract node represents a script object */
+/** @class PUObjectAbstractNode
+*@brief @~english Internal class, This specific abstract node represents a script object.
+@~chinese 内部类，脚本中对象的抽象类。
+*/
 class CC_DLL PUObjectAbstractNode : public PUAbstractNode
 {
 private:
@@ -82,7 +91,7 @@ public:
     bool abstract;
     PUAbstractNodeList children;
     PUAbstractNodeList values;
-    PUAbstractNodeList overrides; // For use when processing object inheritance and overriding
+    PUAbstractNodeList overrides; 
 public:
     PUObjectAbstractNode(PUAbstractNode *ptr);
     virtual ~PUObjectAbstractNode();
@@ -96,7 +105,10 @@ public:
     const std::map<std::string,std::string> &getVariables() const;
 };
 
-/** This abstract node represents a script property */
+/** @class PUPropertyAbstractNode
+*@brief @~english Internal class, This abstract node represents a script property.
+@~chinese 内部类，脚本中属性的抽象类。
+*/
 class CC_DLL PUPropertyAbstractNode : public PUAbstractNode
 {
 public:
@@ -110,7 +122,10 @@ public:
     std::string getValue() const;
 };
 
-/** This is an abstract node which cannot be broken down further */
+/** @class PUObjectAbstractNode
+*@brief @~english Internal class, This is an abstract node which cannot be broken down further.
+@~chinese 内部类，脚本中原子类型（不可再细分）的抽象类。
+*/
 class CC_DLL PUAtomAbstractNode : public PUAbstractNode
 {
 public:
@@ -125,12 +140,16 @@ private:
 };
 
 class CC_DLL PUParticleSystem3D;
+
+/** @class PUScriptCompiler
+*@brief @~english Internal class, The compiler of scrip.
+@~chinese 内部类，脚本编译器。
+*/
 class CC_DLL PUScriptCompiler
 {
 
 private:
     bool compile(const PUConcreteNodeList &nodes, const std::string &file);
-    //is it excluded?//
     bool isNameExcluded(const std::string &cls, PUAbstractNode *parent);
     
 public:
@@ -138,10 +157,27 @@ public:
     
     static PUScriptCompiler* Instance();
 
+    /**
+    * @~english Set the particle system.
+    * @~chinese 设置粒子系统
+    * @param pu      @~english The particle system. @~chinese 粒子系统。
+    */
     void setParticleSystem3D(PUParticleSystem3D *pu);
 
+    /**
+    * @~english Compile a file.
+    * @~chinese 编译一个文件。
+    * @param file      @~english The path of file. @~chinese 文件路径。
+    * @param isFirstCompile      @~english Is first compile this file. @~chinese 是否第一次编译该文件。
+    */
     const PUAbstractNodeList* compile(const std::string &file, bool &isFirstCompile);
     
+    /**
+    * @~english PUConcreteNodeList Convert to PUAbstractNodeList.
+    * @~chinese PUConcreteNodeList转换为PUAbstractNodeList。
+    * @param nodes      @~english The PUConcreteNodeList. @~chinese PUConcreteNodeList。
+    * @param aNodes      @~english The PUAbstractNodeList. @~chinese PUAbstractNodeList。
+    */
     void convertToAST(const PUConcreteNodeList &nodes,PUAbstractNodeList &aNodes);
     
     std::map<std::string,std::string> env;
@@ -160,6 +196,8 @@ private:
     PUParticleSystem3D *_PUParticleSystem3D;
 };
 
+// end of _3d group
+/// @}
 
 NS_CC_END
 
