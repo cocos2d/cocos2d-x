@@ -640,43 +640,47 @@ public:
     /**@}*/
 
     /** 
-     * Returns the Node bound to the GLProgramState
+     * @~english Get the Node bound to the GLProgramState
+     * @~chinese 获取绑定到GLProgramState的Node
+     * @return @~english Node bound to the GLProgramState
+     * @~chinese 绑定到GLProgramState的节点
      */
     Node* getNodeBinding() const;
 
     /**
-     * Sets the node that this render state is bound to.
+     * @~english Sets the node that this render state is bound to.
      *
      * The specified node is used to apply auto-bindings for the render state.
      * This is typically set to the node of the model that a material is
      * applied to.
-     *
-     * @param node The node to use for applying auto-bindings.
+     * @~chinese 设置绑定的节点，用例实现渲染状态的自动绑定。通常要绑定到模型所在的节点。
+     * @param node @~english The node to use for applying auto-bindings. 
+     * @~chinese 用来自动绑定的节点
      */
     void setNodeBinding(Node* node);
 
     /**
-     * Applies the specified custom auto-binding.
-     *
-     * @param uniformName Name of the shader uniform.
-     * @param autoBinding Name of the auto binding.
+     * @~english Applies the specified custom auto-binding.
+     * @~chinese 应用自动绑定
+     * @param uniformName @~english Name of the shader uniform. @~chinese Shader中的unifrom名称。
+     * @param autoBinding @~english Name of the auto binding. @~chinese 自动绑定的名称。
      */
     void applyAutoBinding(const std::string& uniformName, const std::string& autoBinding);
 
     /**
-     * Sets a uniform auto-binding.
+     * @~english Sets a uniform auto-binding.
      *
      * This method parses the passed in autoBinding string and attempts to convert it
      * to an enumeration value. If it matches to one of the predefined strings, it will create a
      * callback to get the correct value at runtime.
-     *
-     * @param uniformName The name of the material parameter to store an auto-binding for.
-     * @param autoBinding A string matching one of the built-in AutoBinding enum constants.
+     * @~chinese 设置自动绑定的Uniform。这个方法解析传入的自动绑定字符串，如果自动绑定字符串与预先定义好的字符串相符，那么将创建一个callback，在运行时获取正确的值。
+     * @param uniformName @~english The name of the material parameter to store an auto-binding for. @~chinese 材质中uniform的名称。
+     * @param autoBinding @~english A string matching one of the built-in AutoBinding enum constants. @~chinese 自动绑定的字符串
      */
     void setParameterAutoBinding(const std::string& uniformName, const std::string& autoBinding);
 
     /**
-     * An abstract base class that can be extended to support custom material auto bindings.
+     * @~english An abstract base class that can be extended to support custom material auto bindings.
      *
      * Implementing a custom auto binding resolver allows the set of built-in parameter auto
      * bindings to be extended or overridden. Any parameter auto binding that is set on a
@@ -699,7 +703,7 @@ public:
      * When an instance of a class that extends AutoBindingResolver is created, it is automatically
      * registered as a custom auto binding handler. Likewise, it is automatically unregistered
      * on destruction.
-     *
+     * @~chinese 解析自动绑定的虚基类。实现自己的自动绑定解析类可以扩展或者重写自动绑定的内置参数。材质中的任何自动绑定参数都将映射到注册的一个自定义的自动绑定解析类。如果一个解析类返回true，自动解析部分代码将返回，因此，除了可以实现自定义绑定字符串，也可以重写已有的自定义绑定。自定义解析类只在材质设置绑定节点时执行一次。如果没有注册自定义绑定解析器，将使用内部的解析器。内部自动绑定解析器参见GLProgramState::AutoBinding枚举值。
      * @js NA
      * @lua NA
      */
@@ -708,12 +712,12 @@ public:
     public:
 
         /**
-         * Destructor.
+         * @~english Destructor. @~chinese 析构函数
          */
         virtual ~AutoBindingResolver();
 
         /**
-         * Called when an unrecognized uniform variable is encountered
+         * @~english Called when an unrecognized uniform variable is encountered
          * during material loading.
          *
          * Implementations of this method should do a string comparison on the passed
@@ -721,14 +725,15 @@ public:
          * parameter. If the parameter is not handled, false should be returned so
          * that other auto binding resolvers get a chance to handle the parameter.
          * Otherwise, the parameter should be set or bound and true should be returned.
+         * @~chinese 材质文件加载阶段遇到无法识别的自动绑定uniform变量的适合会被调用。注意，这个方法的实现要求做字符串比较来决定是否需要处理该变量，处理返回true，不处理返回false以便其他自定义解析器处理。
          *
-         * @param glProgramState The glProgramState
-         * @param node The node that the material is attached to.
-         * @param uniformName Name of the uniform
-         * @param autoBinding Name of the auto binding to be resolved.
+         * @param glProgramState @~english The glProgramState @~chinese GLProgramState实例
+         * @param node @~english The node that the material is attached to. @~chinese 材质绑定到的节点
+         * @param uniformName @~english Name of the uniform @~chinese uniform的名称。
+         * @param autoBinding @~english Name of the auto binding to be resolved. @~chinese 自动绑定字符串
          *
-         * @return True if the auto binding is handled and the associated parameter is
-         *      bound, false otherwise.
+         * @return @~english True if the auto binding is handled and the associated parameter is
+         *      bound, false otherwise. @~chinese如果自动绑定字符串已经处理返回true，否则返回false.
          */
         virtual bool resolveAutoBinding(GLProgramState* glProgramState, Node* node, const std::string& uniformName, const std::string& autoBinding) = 0;
 
