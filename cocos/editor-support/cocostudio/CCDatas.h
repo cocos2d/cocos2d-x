@@ -108,7 +108,7 @@ public:
     /**
     * x y skewX skewY scaleX scaleY used to calculate transform matrix
     * skewX, skewY can have rotation effect
-    * To get more matrix information, you can have a look at this pape : http://www.senocular.com/flash/tutorials/transformmatrix/
+    * To get more matrix information, you can have a look at this paper : http://www.senocular.com/flash/tutorials/transformmatrix/
     */
     float skewX;
     float skewY;
@@ -441,7 +441,7 @@ public:
     cocos2d::tweenfunc::TweenType tweenEasing;
 
     /**
-    * @brief    save movment bone data
+    * @brief    save movement bone data
     * @key    const std::string& 
     * @value    MovementBoneData *
     */
