@@ -218,7 +218,7 @@ public:
     /**
     * @~english Returns a flag field that is used to group the actions easily.
     * @~chinese 动作的标识，用于给动作分组
-    * @param  @~english A tag for group actions @~chinese 用于给动作分组的标识
+    * @param flags @~english A tag for group actions @~chinese 用于给动作分组的标识
     */
     inline void setFlags(unsigned int flags) { _flags = flags; }
 
