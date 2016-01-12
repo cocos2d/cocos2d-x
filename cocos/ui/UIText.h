@@ -319,7 +319,7 @@ public:
     */
     LabelEffect getLabelEffectType() const;
     /**
-    * Return current effect color vlaue.
+    * Return current effect color value.
     */
     Color4B getEffectColor() const;
 
