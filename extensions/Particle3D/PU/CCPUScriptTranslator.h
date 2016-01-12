@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
  Copyright (c) 2015 Chukong Technologies Inc.
  
@@ -1186,7 +1186,7 @@ static const std::string token[1000] =
 /**script translator*/
 /** @struct PUScriptTranslator
 *@brief @~english Internal class, the script translator.
-@~chinese ÄÚ²¿Àà£¬½Å±¾·­ÒëÆ÷¡£
+@~chinese å†…éƒ¨ç±»ï¼Œè„šæœ¬ç¿»è¯‘å™¨ã€‚
 */
 class PUScriptTranslator
 {

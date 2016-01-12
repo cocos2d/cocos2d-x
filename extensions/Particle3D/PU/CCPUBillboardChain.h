@@ -127,9 +127,10 @@ public:
     * @~english Sets whether texture coordinate information should be included in the final buffers generated.
     * @~chinese 设置是否把纹理坐标信息包含进缓存区。
     * @param use   @~english If use texture coordinate. @~chinese 是否使用纹理坐标。
-    * @note You must use either texture coordinates or vertex colour since the
+    * @note @~english You must use either texture coordinates or vertex colour since the
     * vertices have no normals and without one of these there is no source of
-    * colour for the vertices.
+    * colour for the vertices. 
+    * @~chinese 没有法线的时候，你必须使用纹理坐标或纹理颜色其中之一，如果不使用，则顶点将没有颜色。
     */
     virtual void setUseTextureCoords(bool use);
     /**
@@ -139,8 +140,10 @@ public:
     */
     virtual bool getUseTextureCoords(void) const { return _useTexCoords; }
 
-    /** The direction in which texture coordinates from elements of the
-        chain are used.
+    /** 
+    * @~english The direction in which texture coordinates from elements of the
+    * chain are used.
+    * @~chinese 每一个chain中元素使用的纹理坐标方向。
     */
     enum TexCoordDirection
     {
@@ -208,10 +211,10 @@ public:
     * @~chinese 添加一个元素到chain的前端。
     * @param chainIndex   @~english The index of the chain. @~chinese chain的索引。
     * @param billboardChainElement   @~english The details to add. @~chinese 元素的内容。
-    * @remarks
-    * If this causes the number of elements to exceed the maximum elements
+    * @remarks @~english If this causes the number of elements to exceed the maximum elements
     * per chain, the last element in the chain (the 'tail') will be removed
     * to allow the additional element to be added.
+    * @~chinese 如果添加的元素超过chain容纳的最大值，那么将会移除最后一个元素用以容纳该元素。
     */
     virtual void addChainElement(size_t chainIndex, 
         const Element& billboardChainElement);
@@ -261,13 +264,15 @@ public:
     * @~chinese 是否让公告板始终面向摄像机或者自定义的方向。
     * @param faceCamera @~english If facing the camera. @~chinese 是否面向相机。
     * @param normalVector @~english Only used when faceCamera == false. Must be a non-zero vector. @~chinese 自定义的朝向。
-    * @remarks
-    * Billboards facing the camera are useful for smoke trails, light beams, etc by
+    * @remarks @~english Billboards facing the camera are useful for smoke trails, light beams, etc by
     * simulating a cylinder. However, because of this property, wide trails can cause
     * several artefacts unless the head is properly covered.
     * Therefore, non-camera-facing billboards are much more convenient for leaving big
     * trails of movement from thin objects, for example a sword swing as seen in many
     * fighting games.
+    * @~chinese 公告板面向相机常用来模拟烟雾轨迹，光束等。用以仿真一个圆柱体。但是，正因为这个特性，
+    * 宽的拖尾可能会引起一些不真实的效果，除非相机完全覆盖该拖尾。因此，非面向相机的公告板对于大型拖尾特性来说是方便的，
+    * 例如在打斗游戏中的刀光效果。
     */
     void setFaceCamera( bool faceCamera, const Vec3& normalVector=Vec3::UNIT_X );
 
