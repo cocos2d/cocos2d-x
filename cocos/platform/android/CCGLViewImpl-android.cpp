@@ -29,9 +29,7 @@ THE SOFTWARE.
 #include "CCGLViewImpl-android.h"
 #include "base/CCDirector.h"
 #include "base/ccMacros.h"
-#include "jni/IMEJni.h"
-#include "jni/JniHelper.h"
-#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "platform/android/jni/JniHelper.h"
 #include "CCGL.h"
 
 #include <stdlib.h>
@@ -112,7 +110,7 @@ bool GLViewImpl::isOpenGLReady()
 
 void GLViewImpl::end()
 {
-    terminateProcessJNI();
+    JniHelper::callStaticVoidMethod("org/cocos2dx/lib/Cocos2dxHelper", "terminateProcess");
 }
 
 void GLViewImpl::swapBuffers()
@@ -121,7 +119,11 @@ void GLViewImpl::swapBuffers()
 
 void GLViewImpl::setIMEKeyboardState(bool bOpen)
 {
-    setKeyboardStateJNI((int)bOpen);
+    if (bOpen) {
+        JniHelper::callStaticVoidMethod("org/cocos2dx/lib/Cocos2dxGLSurfaceView", "openIMEKeyboard");
+    } else {
+        JniHelper::callStaticVoidMethod("org/cocos2dx/lib/Cocos2dxGLSurfaceView", "closeIMEKeyboard");
+    }
 }
 
 NS_CC_END

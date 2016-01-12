@@ -155,14 +155,8 @@ Controller::Controller()
     init();
 }
 
-void Controller::receiveExternalKeyEvent(int externalKeyCode,bool receive)
-{
-    JniMethodInfo t;
-    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/GameControllerHelper", "receiveExternalKeyEvent", "(IIZ)V")) {
-
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, _deviceId, externalKeyCode, receive);
-        t.env->DeleteLocalRef(t.classID);
-    }
+void Controller::receiveExternalKeyEvent(int externalKeyCode,bool receive) {
+    JniHelper::callStaticVoidMethod("org/cocos2dx/lib/GameControllerHelper", "receiveExternalKeyEvent", _deviceId, externalKeyCode, receive);
 }
 
 NS_CC_END
