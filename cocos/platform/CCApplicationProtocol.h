@@ -168,6 +168,7 @@ public:
      */
     virtual std::string getVersion() = 0;
 
+    /**
      *@brief @~english Open url in default browser.
      * @~chinese 在默认浏览器打开网址。
      *@param String @~english with url to open.

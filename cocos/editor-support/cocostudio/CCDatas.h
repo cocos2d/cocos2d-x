@@ -65,8 +65,8 @@ public: \
 namespace cocostudio {
 
 /**
- * @~english The base node include a lot of attributes.
- * @~chinese 根节点包含很多属性。
+ * @~english The base data node include a lot of attributes.
+ * @~chinese 根数据节点包含很多属性。
  * @js NA
  * @lua NA
  */
@@ -85,7 +85,7 @@ public:
      */
     ~BaseData(void);
 
-    /*
+    /**
     * @~english Copy data from node.
     * @~chinese 从节点复制数据。
     * @param node @~english A `BaseData` to be copied.
@@ -93,15 +93,17 @@ public:
     */
     virtual void copy(const BaseData *node);
 
-    /*
-    * @~english Calculate two `BaseData`'s between value(to - from) and set to self.
-    * @~chinese 计算两个`BaseData`的间距，并设置到自身。
+    /**
+    * @~english Calculate the difference data (to - from) bettween to and from, and store the data.
+    * @~chinese 计算两个数据的差值(to - from)，并设置到自身。
     * @param from @~english from `BaseData`. @~chinese 自`BaseData`。
     * @param to @~english to `BaseData`. @~chinese 到`BaseData`。
+    * @param limit @~english limit if true, the difference skew in result data should bettween Pi and -Pi
+    * @~chinese limit 当为true时，计算结果中的斜切值取值范围为 Pi 到 -Pi
     */
     virtual void subtract(BaseData *from, BaseData *to, bool limit);
 
-    /*
+    /**
     * @~english Set color.
     * @~chinese 设置颜色。
     * @param color @~english Color. 
@@ -109,7 +111,7 @@ public:
     */
     virtual void setColor(const cocos2d::Color4B &color);
 
-    /*
+    /**
     * @~english Get color.
     * @~chinese 获取颜色。
     * @return @~english Color.
@@ -138,9 +140,11 @@ public:
 
 };
 
-
 /**
-* DisplayType distinguish which type your display is.
+* @~english  DisplayType distinguish which type your display is,including sprite,armature,particle.
+* @~chinese  显示的类型，包括精灵/嵌套骨架/粒子。
+* @js NA
+* @lua NA
 */
 enum DisplayType
 {
@@ -150,10 +154,11 @@ enum DisplayType
 
     CS_DISPLAY_MAX
 };
+
 /**
- *  @js NA
- *  @lua NA
- */
+* @~english  class of Display data.
+* @~chinese  显示的数据。
+*/
 class CC_STUDIO_DLL DisplayData : public cocos2d::Ref
 {
 public:
@@ -179,20 +184,29 @@ public:
      */
     virtual ~DisplayData(void) {}
 
-    /*
+    /**
     * @~english Copy data from displayData.
     * @~chinese 从显示数据复制数据。
     * @param node @~english A `DisplayData` to be copied.
     * @~chinese 要复制的`DisplayData`对象。
     */
     virtual void copy(DisplayData *displayData);
-
+    /*
+    * @~english type of display data.
+    * @~chinese 显示数据的类型。
+    */
     DisplayType displayType;    //! mark which type your display is
+    /*
+    * @~english name of display data
+    * @~chinese 显示数据的名称
+    */
     std::string displayName;
 };
 
 
 /**
+ * @~english  data of sprite's display
+ * @~chinese  精灵显示数据。
  *  @js NA
  *  @lua NA
  */
@@ -211,11 +225,11 @@ public:
      */
     virtual ~SpriteDisplayData() {};
 
-    /*
-    * @~english Copy data from displayData.
-    * @~chinese 从显示数据复制数据。
+    /**
+    * @~english Copy sprite display data from displayData.
+    * @~chinese 从精灵显示数据复制数据。
     * @param node @~english A `DisplayData` to be copied.
-    * @~chinese 要复制的`DisplayData`对象。
+    * @~chinese 要复制的精灵显示数据对象。
     */
     void copy(DisplayData *displayData);
 public:
@@ -223,6 +237,8 @@ public:
 };
 
 /**
+ * @~english  data of armature's display
+ * @~chinese  嵌套骨架显示数据。
  *  @js NA
  *  @lua NA
  */
@@ -243,9 +259,11 @@ public:
 };
 
 /**
- *  @js NA
- *  @lua NA
- */
+* @~english  data of particle's display
+* @~chinese  粒子显示数据。
+*  @js NA
+*  @lua NA
+*/
 class CC_STUDIO_DLL ParticleDisplayData : public DisplayData
 {
 public:
@@ -319,7 +337,7 @@ public:
 * @~english ArmatureData saved the Armature name and Bonedata needed for the CCBones in this Armature
 * When we create a Armature, we need to get each Bone's BoneData as it's init information.
 * So we can get a `BoneData` from the Dictionary saved in the ArmatureData.
-* @~chinese 骨骼数据保存骨骼的名称和骨骼中的`CCBone`对象们所需的骨头数据，当创建骨骼的时候，需要获得每段骨头的骨头数据作为其初始化信息。
+* @~chinese 骨架数据保存骨骼的名称和骨骼中的`CCBone`对象们所需的骨头数据，当创建骨骼的时候，需要获得每段骨头的骨头数据作为其初始化信息。
 * 因此可以从骨骼数据中保存的`BoneData`集合中获取其中的骨头数据。
 * @js NA
 * @lua NA
@@ -364,6 +382,10 @@ public:
     float dataVersion;
 };
 
+/**
+* @~english blending type
+* *~chinese 混合类型
+*/
 enum BlendType
 {
     BLEND_NORMAL,
@@ -383,6 +405,8 @@ enum BlendType
 };
 
 /**
+ * @~english animation frame data
+ * @~chinese 动画帧数据
  *  @js NA
  *  @lua NA
  */
@@ -436,6 +460,8 @@ public:
 };
 
 /**
+ * @~english animation data in for bone, express with a `FrameData` list
+ * @~chinese 骨骼的动画数据, 表现为一个 `FrameData` 列表
  *  @js NA
  *  @lua NA
  */
@@ -483,6 +509,8 @@ public:
 };
 
 /**
+ * @~english animation data,store MovementBoneData in a map key with its name
+ * @~chinese 动画数据, 以骨骼的名字为key存储多个其动画数据
  *  @js NA
  *  @lua NA
  */
@@ -502,20 +530,20 @@ public:
     ~MovementData(void);
 
     /*
-    * @~english Add movBoneData.
-    * @~chinese 增加活动骨头数据。
-    * @param movBoneData @~english A `MovementBoneData` to be added.
-    * @~chinese 要增加的`MovementBoneData`对象。
+    * @~english Add MovementBoneData
+    * @~chinese 增加骨骼动画数据。
+    * @param movBoneData @~english A `MovementBoneData` to be added, and key with its name
+    * @~chinese 要增加的`MovementBoneData`对象,用其 name 作为标识。
     */
     void addMovementBoneData(MovementBoneData *movBoneData);
 
     /*
     * @~english Get movBoneData.
-    * @~chinese 获取活动骨头数据。
+    * @~chinese 获取骨骼动画数据。
     * @param boneName @~english The boneData's name.
-    * @~chinese 活动骨头数据的名称。
+    * @~chinese 骨骼动画数据的名称。
     * @return @~english The movBoneData.
-    * @~chinese 活动骨头数据。
+    * @~chinese 骨骼动画数据。
     */
     MovementBoneData *getMovementBoneData(const std::string& boneName);
 public:
@@ -557,8 +585,11 @@ public:
 
 
 /**
-*  AnimationData include all movement information for the Armature
+*  @~english AnimationData include all movement information for the Armature
 *  The struct is AnimationData -> MovementData -> MovementBoneData -> FrameData
+*                                              -> MovementFrameData
+*  @~chinese 骨架动画数据  骨架动画数据包含一个骨骼动画的所有动画数据信息
+*   其下的结构为 AnimationData -> MovementData -> MovementBoneData -> FrameData
 *                                              -> MovementFrameData
 *  @js NA
 *  @lua NA
@@ -580,7 +611,7 @@ public:
 
     /*
     * @~english Add movement data.
-    * @~chinese 增加活动数据。
+    * @~chinese 增加动画数据。
     * @param movData @~english A `MovementData` to be added.
     * @~chinese 要增加的`MovementData`对象。
     */
@@ -588,19 +619,19 @@ public:
 
     /*
     * @~english Get movement data.
-    * @~chinese 获取活动数据。
+    * @~chinese 获取动画数据。
     * @param movementName @~english The movement data's name.
-    * @~chinese 活动数据的名称。
+    * @~chinese 动画数据的名称。
     * @return @~english The movement data.
-    * @~chinese 活动数据。
+    * @~chinese 动画数据。
     */
     MovementData *getMovement(const std::string& movementName);
 
     /*
     * @~english Get movement data's count.
-    * @~chinese 获取活动数据的总数。
+    * @~chinese 获取动画数据的总数。
     * @return @~english Movement data's count.
-    * @~chinese 活动数据的总数。
+    * @~chinese 动画数据的总数。
     */
     ssize_t getMovementCount();
 public:
@@ -612,6 +643,8 @@ public:
 
 
 /*
+* @~english a Contour for collide
+* @~chinese 碰撞区轮廓数据
 * ContourData include a contour vertex information
 * @js NA
 * @lua NA
@@ -647,7 +680,8 @@ public:
 
 
 /*
-* TextureData include a texture's information
+* @~english TextureData include a texture's information, including a ContourData
+* @~chinese 纹理数据,包含一个碰撞区轮廓数据
 * @js NA
 * @lua NA
 */
@@ -670,7 +704,7 @@ public:
 
     /*
     * @~english Add contour data.
-    * @~chinese 增加轮廓数据。
+    * @~chinese 增加碰撞区轮廓数据。
     * @param contourData @~english A `ContourData` to be added.
     * @~chinese 要增加的`ContourData`对象。
     */
@@ -678,11 +712,11 @@ public:
 
     /*
     * @~english Get contour data.
-    * @~chinese 获取轮廓数据。
+    * @~chinese 获取碰撞区轮廓数据。
     * @param index @~english The contour data's index.
-    * @~chinese 轮廓数据的索引。
+    * @~chinese 碰撞区轮廓数据的索引。
     * @return @~english The contour data.
-    * @~chinese 轮廓数据。
+    * @~chinese 碰撞区轮廓数据。
     */
     ContourData *getContourData(int index);
 public:
