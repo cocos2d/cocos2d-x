@@ -294,15 +294,19 @@ int tolua_Cocos2d_CCSkeletonAnimation_unregisterSpineEventHandler00(lua_State* t
             ScriptHandlerMgr::HandlerType handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_START;
             switch (eventType) {
                 case spEventType::SP_ANIMATION_START:
+                    self->setStartListener(nullptr);
                     handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_START;
                     break;
                 case spEventType::SP_ANIMATION_END:
+                    self->setEndListener(nullptr);
                     handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_END;
                     break;
                 case spEventType::SP_ANIMATION_COMPLETE:
+                    self->setCompleteListener(nullptr);
                     handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_COMPLETE;
                     break;
                 case spEventType::SP_ANIMATION_EVENT:
+                    self->setEventListener(nullptr);
                     handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_EVENT;
                     break;
                     

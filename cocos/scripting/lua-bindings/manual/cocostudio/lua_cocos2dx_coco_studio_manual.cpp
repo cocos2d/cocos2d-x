@@ -52,7 +52,7 @@ LuaArmatureWrapper::LuaArmatureWrapper()
 
 LuaArmatureWrapper::~LuaArmatureWrapper()
 {
-    
+    ScriptHandlerMgr::getInstance()->removeObjectAllHandlers((void*)this);
 }
 
 void LuaArmatureWrapper::addArmatureFileInfoAsyncCallback(float percent)
