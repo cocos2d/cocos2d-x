@@ -1014,8 +1014,9 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, const
             cocostudio::timeline::ActionTimeline* action = nullptr;
             if (filePath != "" && FileUtils::getInstance()->isFileExist(filePath))
             {
-                node = createNode(filePath, callback);
-                action = createTimeline(filePath);
+                Data buf = FileUtils::getInstance()->getDataFromFile(filePath);
+                node = createNode(buf, callback);
+                action = timeline::ActionTimelineCache::getInstance()->loadAnimationWithDataBuffer(buf, filePath);
             }
             else
             {
