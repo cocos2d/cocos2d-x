@@ -527,6 +527,20 @@ void WebSocket::onSubThreadLoop()
 
 void WebSocket::onSubThreadStarted()
 {
+    static const struct lws_extension exts[] = {
+        {
+            "permessage-deflate",
+            lws_extension_callback_pm_deflate,
+            "permessage-deflate; client_no_context_takeover; client_max_window_bits"
+        },
+        {
+            "deflate-frame",
+            lws_extension_callback_pm_deflate,
+            "deflate_frame"
+        },
+        { nullptr, nullptr, nullptr /* terminator */ }
+    };
+    
     struct lws_context_creation_info info;
     memset(&info, 0, sizeof info);
     /*
@@ -539,7 +553,7 @@ void WebSocket::onSubThreadStarted()
 
     info.port = CONTEXT_PORT_NO_LISTEN;
     info.protocols = _wsProtocols;
-    info.extensions = lws_get_internal_extensions();
+    info.extensions = exts;
 
     info.gid = -1;
     info.uid = -1;
