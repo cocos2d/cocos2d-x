@@ -121,6 +121,11 @@ void ConfigParser::readConfig(const string &filepath)
                 _initDesignResolutionPolicy = policy;
 
             }
+            if (objectInitView.HasMember("designContentScaleFactor") && objectInitView["designContentScaleFactor"].IsDouble())
+            {
+                _initDesignContentScaleFactor = (float)objectInitView["designContentScaleFactor"].GetDouble();
+
+            }
             if (objectInitView.HasMember("name") && objectInitView["name"].IsString())
             {
                 _viewName = objectInitView["name"].GetString();
@@ -183,6 +188,23 @@ void ConfigParser::readConfig(const string &filepath)
             }
         }
     }
+    if (_docRootjson.HasMember("design_content_scale_factor"))
+    {
+        const rapidjson::Value& ContentScaleFactor = _docRootjson["design_content_scale_factor"];
+        if (ContentScaleFactor.IsArray())
+        {
+            _designContentScaleFactorArray.clear();
+            for (int i = 0; i < ContentScaleFactor.Size(); i++)
+            {
+                const rapidjson::Value& objectScaleFactor = ContentScaleFactor[i];
+                if (objectScaleFactor.HasMember("title") && objectScaleFactor.HasMember("scale"))
+                {
+                    float scaleFactor = (float)objectScaleFactor["scale"].GetDouble();
+                    _designContentScaleFactorArray.push_back(SimulatorDesignContentScaleFactor(objectScaleFactor["title"].GetString(), scaleFactor));
+                }
+            }
+        }
+    }
 
 }
 
@@ -197,6 +219,7 @@ _entryfile(""),
 _initViewSize(ProjectConfig::DEFAULT_HEIGHT, ProjectConfig::DEFAULT_WIDTH),
 _initDesignResolutionSize(ProjectConfig::DEFAULT_HEIGHT, ProjectConfig::DEFAULT_WIDTH),
 _initDesignResolutionPolicy(ProjectConfig::DEFAULT_RESOLUTION_POLICY),
+_initDesignContentScaleFactor(ProjectConfig::DEFAULT_CONTENT_SCALE_FACTOR),
 _bindAddress("")
 {
 }
@@ -229,6 +252,11 @@ Size ConfigParser::getInitDesignResolutionSize()
 ResolutionPolicy ConfigParser::getInitDesignResolutionPolicy()
 {
     return _initDesignResolutionPolicy;
+}
+
+float ConfigParser::getInitDesignContentScaleFactor()
+{
+    return _initDesignContentScaleFactor;
 }
 
 bool ConfigParser::isLanscape()
@@ -282,6 +310,11 @@ int ConfigParser::getDesignResolutionSizeCount(void)
     return (int)_designResolutionSizeArray.size();
 }
 
+int ConfigParser::getDesignContentScaleFactorCount(void)
+{
+    return (int)_designContentScaleFactorArray.size();
+}
+
 const SimulatorScreenSize ConfigParser::getScreenSize(int index)
 {
     return _screenSizeArray.at(index);
@@ -290,6 +323,11 @@ const SimulatorScreenSize ConfigParser::getScreenSize(int index)
 const SimulatorScreenSize ConfigParser::getDesignResolutionSize(int index)
 {
     return _designResolutionSizeArray.at(index);
+}
+
+const SimulatorDesignContentScaleFactor ConfigParser::getDesignContentScaleFactor(int index)
+{
+    return _designContentScaleFactorArray.at(index);
 }
 
 void ConfigParser::setEntryFile(const std::string &file)
@@ -310,6 +348,11 @@ void ConfigParser::setInitDesignResolutionSize(const cocos2d::Size &size)
 void ConfigParser::setInitDesignResolutionPolicy(ResolutionPolicy policy)
 {
     _initDesignResolutionPolicy = policy;
+}
+
+void ConfigParser::setInitDesignContentScaleFactor(float scaleFactor)
+{
+    _initDesignContentScaleFactor = scaleFactor;
 }
 
 void ConfigParser::setBindAddress(const std::string &address)

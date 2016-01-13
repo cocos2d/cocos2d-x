@@ -50,6 +50,12 @@ SimulatorConfig::SimulatorConfig()
     _designResolutionPolicyArray.push_back(SimulatorDesignResolutionPolicy("Resolution Policy (SHOW_ALL)", ResolutionPolicy::SHOW_ALL));
     _designResolutionPolicyArray.push_back(SimulatorDesignResolutionPolicy("Resolution Policy (FIXED_HEIGHT)", ResolutionPolicy::FIXED_HEIGHT));
     _designResolutionPolicyArray.push_back(SimulatorDesignResolutionPolicy("Resolution Policy (FIXED_WIDTH)", ResolutionPolicy::FIXED_WIDTH));
+
+    _designContentScaleFactorArray.push_back(SimulatorDesignContentScaleFactor("Content Scale Factor (1.0)", 1.0f));
+    _designContentScaleFactorArray.push_back(SimulatorDesignContentScaleFactor("Content Scale Factor (1.25)", 1.25f));
+    _designContentScaleFactorArray.push_back(SimulatorDesignContentScaleFactor("Content Scale Factor (1.5)", 1.5f));
+    _designContentScaleFactorArray.push_back(SimulatorDesignContentScaleFactor("Content Scale Factor (1.75)", 1.75f));
+    _designContentScaleFactorArray.push_back(SimulatorDesignContentScaleFactor("Content Scale Factor (2.0)", 2.0f));
 }
 
 int SimulatorConfig::getScreenSizeCount() const
@@ -157,6 +163,36 @@ int SimulatorConfig::checkDesignResolutionPolicy(ResolutionPolicy policy) const
     return -1;
 }
 
+int SimulatorConfig::getDesignContentScaleFactorCount() const
+{
+    return (int)_designContentScaleFactorArray.size();
+}
+
+SimulatorDesignContentScaleFactor SimulatorConfig::getDesignContentScaleFactor(int index) const
+{
+    return _designContentScaleFactorArray.at(index);
+}
+
+int SimulatorConfig::checkDesignContentScaleFactor(float scaleFactor) const
+{
+    int count = (int)_designResolutionPolicyArray.size();
+    for (int i = 0; i < count; ++i)
+    {
+        const SimulatorDesignContentScaleFactor &scaleFactorInfo = _designContentScaleFactorArray[i];
+        if (scaleFactorInfo.scaleFactor == scaleFactor)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void SimulatorConfig::addDesignContentScaleFactor(const SimulatorDesignContentScaleFactor &scaleFactor)
+{
+    _designContentScaleFactorArray.push_back(scaleFactor);
+}
+
+
 // helper
 
 void SimulatorConfig::makeNormalizePath(string *path, const char *directorySeparator/* = NULL*/)
@@ -168,4 +204,3 @@ void SimulatorConfig::makeNormalizePath(string *path, const char *directorySepar
         path->replace(pos, 1, directorySeparator);
     }
 }
-

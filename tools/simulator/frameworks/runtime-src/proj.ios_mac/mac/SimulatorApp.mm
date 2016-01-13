@@ -256,6 +256,7 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     config->setFrameSize(parser->getInitViewSize());
     config->setDesignResolutionSize(parser->getInitDesignResolutionSize());
     config->setDesignResolutionPolicy(parser->getInitDesignResolutionPolicy());
+    config->setDesignContentScaleFactor(parser->getInitDesignContentScaleFactor());
     if (parser->isLanscape())
     {
         config->changeFrameOrientationToLandscape();
@@ -373,7 +374,7 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
             break;
         }
     }
-    
+
     if (frameScale < 0.25f) frameScale = 0.25f;
     _project.setFrameScale(frameScale);
     CCLOG("FRAME SCALE = %0.2f", frameScale);
@@ -385,6 +386,10 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     // get design resolution policy
     enum ResolutionPolicy policy = _project.getDesignResolutionPolicy();
     ConfigParser::getInstance()->setInitDesignResolutionPolicy(policy);
+
+    // get design content scale factor
+    float designContentScaleFactor = _project.getDesignContentScaleFactor();
+    ConfigParser::getInstance()->setInitDesignContentScaleFactor(designContentScaleFactor);
 
     // check window offset
     Vec2 pos = _project.getWindowOffset();
@@ -470,6 +475,13 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
         SimulatorConfig::getInstance()->addDesignResolutionSize(screenSize);
     }
 
+    // add user defined Simulator Design Content Scale factor
+    for (int i=0; i < ConfigParser::getInstance()->getDesignContentScaleFactorCount(); i++)
+    {
+        SimulatorDesignContentScaleFactor scaleFactor = ConfigParser::getInstance()->getDesignContentScaleFactor(i);
+        SimulatorConfig::getInstance()->addDesignContentScaleFactor(scaleFactor);
+    }
+
     // app
     _app = new AppDelegate();
     
@@ -527,6 +539,21 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
         std::stringstream menuId;
         menuId << "DESIGN_RESOLUTION_POLICY_ITEM_MENU_" << i;
         auto menuItem = menuBar->addItem(menuId.str(), policyInfo.title.c_str(), "VIEW_MENU");
+
+        if (i == current)
+        {
+            menuItem->setChecked(true);
+        }
+    }
+
+    menuBar->addItem("DESIGN_CONTENT_SCALE_FACTOR_SEP", "-", "VIEW_MENU");
+    current = config->checkDesignContentScaleFactor(_project.getDesignContentScaleFactor());
+    for (int i = 0; i < config->getDesignContentScaleFactorCount(); i++)
+    {
+        SimulatorDesignContentScaleFactor scaleFactorInfo = config->getDesignContentScaleFactor(i);
+        std::stringstream menuId;
+        menuId << "DESIGN_CONTENT_SCALE_FACTOR_ITEM_MENU_" << i;
+        auto menuItem = menuBar->addItem(menuId.str(), scaleFactorInfo.title.c_str(), "VIEW_MENU");
 
         if (i == current)
         {
@@ -665,6 +692,15 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
                             SimulatorDesignResolutionPolicy policyInfo = SimulatorConfig::getInstance()->getDesignResolutionPolicy(index);
 
                             project.setDesignResolutionPolicy(policyInfo.policy);
+                            [SIMULATOR relaunch];
+                        }
+                        else if (data.find("DESIGN_CONTENT_SCALE_FACTOR_ITEM_MENU_") == 0) // begin with DESIGN_CONTENT_SCALE_FACTOR_ITEM_MENU_
+                        {
+                            string tmp = data.erase(0, strlen("DESIGN_CONTENT_SCALE_FACTOR_ITEM_MENU_"));
+                            int index = atoi(tmp.c_str());
+                            SimulatorDesignContentScaleFactor scaleFactorInfo = SimulatorConfig::getInstance()->getDesignContentScaleFactor(index);
+
+                            project.setDesignContentScaleFactor(scaleFactorInfo.scaleFactor);
                             [SIMULATOR relaunch];
                         }
                         else if (data == "DIRECTION_PORTRAIT_MENU")

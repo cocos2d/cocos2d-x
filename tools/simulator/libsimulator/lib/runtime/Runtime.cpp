@@ -108,6 +108,13 @@ void resetDesignResolution()
     Director::getInstance()->getOpenGLView()->setDesignResolutionSize(size.width, size.height, policy);
 }
 
+void resetDesignContentScaleFactor()
+{
+    float scaleFactor = ConfigParser::getInstance()->getInitDesignContentScaleFactor();
+    Director::getInstance()->setContentScaleFactor(scaleFactor);
+}
+
+
 //
 // RuntimeEngine
 //
@@ -241,6 +248,7 @@ void RuntimeEngine::setProjectPath(const std::string &workPath)
 void RuntimeEngine::startScript(const std::string &args)
 {
     resetDesignResolution();
+    resetDesignContentScaleFactor();
 
     if (_runtime)
     {

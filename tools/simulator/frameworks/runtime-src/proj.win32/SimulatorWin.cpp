@@ -277,6 +277,13 @@ int SimulatorWin::run()
 		SimulatorConfig::getInstance()->addDesignResolutionSize(screenSize);
 	}
 
+    // add user defined Simulator Design Content Scale factor
+    for (int i=0; i < ConfigParser::getInstance()->getDesignContentScaleFactorCount(); i++)
+    {
+        SimulatorDesignContentScaleFactor scaleFactor = ConfigParser::getInstance()->getDesignContentScaleFactor(i);
+        SimulatorConfig::getInstance()->addDesignContentScaleFactor(scaleFactor);
+    }
+
     // create the application instance
     _app = new AppDelegate();
     RuntimeEngine::getInstance()->setProjectConfig(_project);
@@ -394,6 +401,10 @@ int SimulatorWin::run()
 	// get design resolution policy
 	ResolutionPolicy policy = _project.getDesignResolutionPolicy();
 	ConfigParser::getInstance()->setInitDesignResolutionPolicy(policy);
+
+    // get design content scale factor
+    float designContentScaleFactor = _project.getDesignContentScaleFactor();
+    ConfigParser::getInstance()->setInitDesignContentScaleFactor(designContentScaleFactor);
 
     // create opengl view
     const Rect frameRect = Rect(0, 0, frameSize.width, frameSize.height);
@@ -519,7 +530,20 @@ void SimulatorWin::setupUI()
 		}
 	}
 
+    menuBar->addItem("DESIGN_CONTENT_SCALE_FACTOR_SEP", "-", "VIEW_MENU");
+    current = config->checkDesignContentScaleFactor(_project.getDesignContentScaleFactor());
+    for (int i = 0; i < config->getDesignContentScaleFactorCount(); i++)
+    {
+        SimulatorDesignContentScaleFactor scaleFactorInfo = config->getDesignContentScaleFactor(i);
+        std::stringstream menuId;
+        menuId << "DESIGN_CONTENT_SCALE_FACTOR_ITEM_MENU_" << i;
+        auto menuItem = menuBar->addItem(menuId.str(), scaleFactorInfo.title.c_str(), "VIEW_MENU");
 
+        if (i == current)
+        {
+            menuItem->setChecked(true);
+        }
+    }
 
     menuBar->addItem("DIRECTION_MENU_SEP", "-", "VIEW_MENU");
     menuBar->addItem("DIRECTION_PORTRAIT_MENU", tr("Portrait"), "VIEW_MENU")
@@ -662,29 +686,38 @@ void SimulatorWin::setupUI()
                             project.setWindowOffset(cocos2d::Vec2(_instance->getPositionX(), _instance->getPositionY()));
                             _instance->openProjectWithProjectConfig(project);
                         }
-						else if (data.find("DESIGN_RESOLUTION_SIZE_ITEM_MENU_") == 0) // begin with DESIGN_RESOLUTION_SIZE_ITEM_MENU_
-						{
-							string tmp = data.erase(0, strlen("DESIGN_RESOLUTION_SIZE_ITEM_MENU_"));
-							int index = atoi(tmp.c_str());
-							SimulatorScreenSize size = SimulatorConfig::getInstance()->getDesignResolutionSize(index);
+                        else if (data.find("DESIGN_RESOLUTION_SIZE_ITEM_MENU_") == 0) // begin with DESIGN_RESOLUTION_SIZE_ITEM_MENU_
+                        {
+                            string tmp = data.erase(0, strlen("DESIGN_RESOLUTION_SIZE_ITEM_MENU_"));
+                            int index = atoi(tmp.c_str());
+                            SimulatorScreenSize size = SimulatorConfig::getInstance()->getDesignResolutionSize(index);
 
-							if (project.isLandscapeFrame())
-							{
-								std::swap(size.width, size.height);
-							}
+                            if (project.isLandscapeFrame())
+                            {
+                                std::swap(size.width, size.height);
+                            }
 
-							project.setDesignResolutionSize(cocos2d::Size(size.width, size.height));
-							_instance->openProjectWithProjectConfig(project);
-						}
-						else if (data.find("DESIGN_RESOLUTION_POLICY_ITEM_MENU_") == 0) // begin with DESIGN_RESOLUTION_POLICY_ITEM_MENU_
-						{
-							string tmp = data.erase(0, strlen("DESIGN_RESOLUTION_POLICY_ITEM_MENU_"));
-							int index = atoi(tmp.c_str());
-							SimulatorDesignResolutionPolicy policyInfo = SimulatorConfig::getInstance()->getDesignResolutionPolicy(index);
+                            project.setDesignResolutionSize(cocos2d::Size(size.width, size.height));
+                            _instance->openProjectWithProjectConfig(project);
+                        }
+                        else if (data.find("DESIGN_RESOLUTION_POLICY_ITEM_MENU_") == 0) // begin with DESIGN_RESOLUTION_POLICY_ITEM_MENU_
+                        {
+                            string tmp = data.erase(0, strlen("DESIGN_RESOLUTION_POLICY_ITEM_MENU_"));
+                            int index = atoi(tmp.c_str());
+                            SimulatorDesignResolutionPolicy policyInfo = SimulatorConfig::getInstance()->getDesignResolutionPolicy(index);
 
-							project.setDesignResolutionPolicy(policyInfo.policy);
-							_instance->openProjectWithProjectConfig(project);
-						}
+                            project.setDesignResolutionPolicy(policyInfo.policy);
+                            _instance->openProjectWithProjectConfig(project);
+                        }
+                        else if (data.find("DESIGN_CONTENT_SCALE_FACTOR_ITEM_MENU_") == 0) // begin with DESIGN_CONTENT_SCALE_FACTOR_ITEM_MENU_
+                        {
+                            string tmp = data.erase(0, strlen("DESIGN_CONTENT_SCALE_FACTOR_ITEM_MENU_"));
+                            int index = atoi(tmp.c_str());
+                            SimulatorDesignContentScaleFactor scaleFactorInfo = SimulatorConfig::getInstance()->getDesignContentScaleFactor(index);
+
+                            project.setDesignContentScaleFactor(scaleFactorInfo.scaleFactor);
+                            _instance->openProjectWithProjectConfig(project);
+                        }
                         else if (data == "DIRECTION_PORTRAIT_MENU")
                         {
                             project.changeFrameOrientationToPortait();
@@ -837,8 +870,9 @@ void SimulatorWin::parseCocosProjectConfig(ProjectConfig &config)
     config.setConsolePort(parser->getConsolePort());
     config.setFileUploadPort(parser->getUploadPort());
     config.setFrameSize(parser->getInitViewSize());
-	config.setDesignResolutionSize(parser->getInitDesignResolutionSize());
-	config.setDesignResolutionPolicy(parser->getInitDesignResolutionPolicy());
+    config.setDesignResolutionSize(parser->getInitDesignResolutionSize());
+    config.setDesignResolutionPolicy(parser->getInitDesignResolutionPolicy());
+    config.setDesignContentScaleFactor(parser->getInitDesignContentScaleFactor());
     if (parser->isLanscape())
     {
         config.changeFrameOrientationToLandscape();

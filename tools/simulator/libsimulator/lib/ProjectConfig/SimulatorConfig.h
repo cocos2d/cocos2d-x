@@ -45,6 +45,17 @@ typedef struct _SimulatorDesignResolutionPolicy {
     }
 } SimulatorDesignResolutionPolicy;
 
+typedef struct _SimulatorDesignContentScaleFactor {
+    string title;
+    float scaleFactor;
+
+    _SimulatorDesignContentScaleFactor (const string &title_, float scaleFactor_)
+    {
+        title = title_;
+        scaleFactor = scaleFactor_;
+    }
+} SimulatorDesignContentScaleFactor;
+
 class CC_LIBSIM_DLL SimulatorConfig
 {
 public:
@@ -67,6 +78,12 @@ public:
     SimulatorDesignResolutionPolicy getDesignResolutionPolicy(int index) const;
     int checkDesignResolutionPolicy(ResolutionPolicy policy) const;
 
+    // preefined design content scale factor
+    int getDesignContentScaleFactorCount() const;
+    SimulatorDesignContentScaleFactor getDesignContentScaleFactor(int index) const;
+    int checkDesignContentScaleFactor(float scaleFactor) const;
+    void addDesignContentScaleFactor(const SimulatorDesignContentScaleFactor &scaleFactor);
+
     // helper
     static void makeNormalizePath(string *path, const char *directorySeparator = NULL);
 
@@ -78,6 +95,7 @@ private:
     ScreenSizeArray _screenSizeArray;
     ScreenSizeArray _designResolutionSizeArray;
     vector<SimulatorDesignResolutionPolicy> _designResolutionPolicyArray;
+    vector<SimulatorDesignContentScaleFactor> _designContentScaleFactorArray;
 };
 
 #endif // __SIMULATOR_CONFIG_H_

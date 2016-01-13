@@ -44,6 +44,7 @@ const char* getRuntimeVersion();
 
 //
 void resetDesignResolution();
+void resetDesignContentScaleFactor();
 const char* getRuntimeVersion();
 
 //
