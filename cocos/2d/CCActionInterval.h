@@ -106,18 +106,27 @@ public:
      */
     float getAmplitudeRate(void);
 
-    //
-    // Overrides
-    //
+   
+    /**
+    * @~english override `Action`.
+    */
     virtual bool isDone(void) const override;
     virtual void step(float dt) override;
     virtual void startWithTarget(Node *target) override;
+
+    /** 
+    * @~english override `Action`.
+    * @js NA
+    */
     virtual ActionInterval* reverse() const override
     {
         CC_ASSERT(0);
         return nullptr;
     }
 
+    /**
+    * @~english override `Action`.
+    */
     virtual ActionInterval *clone() const override
     {
         CC_ASSERT(0);
@@ -220,9 +229,9 @@ public:
 
     /// @} Constructor functions
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `ActionInterval` 
+    */
     virtual Sequence* clone() const override;
     virtual Sequence* reverse() const override;
     virtual void startWithTarget(Node *target) override;
@@ -385,9 +394,9 @@ public:
         return _innerAction;
     }
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `Action`.
+    */
     virtual RepeatForever* clone() const override;
     virtual RepeatForever* reverse(void) const override;
     virtual void startWithTarget(Node* target) override;
@@ -493,9 +502,9 @@ public:
     static Spawn* createWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2);
     /// @}
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual Spawn* clone() const override;
     virtual Spawn* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
@@ -694,9 +703,9 @@ public:
      */
     static RotateBy* create(float duration, const Vec3& deltaAngle3D);
 
-    //
-    // Override
-    //
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual RotateBy* clone() const override;
     virtual RotateBy* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
@@ -789,9 +798,9 @@ public:
      */
     static MoveBy* create(float duration, const Vec3& deltaPosition);
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual MoveBy* clone() const override;
     virtual MoveBy* reverse(void) const  override;
     virtual void startWithTarget(Node *target) override;
@@ -850,9 +859,9 @@ public:
      */
     static MoveTo* create(float duration, const Vec3& position);
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `MoveBy`.
+    */
     virtual MoveTo* clone() const override;
     virtual MoveTo* reverse() const  override;
     virtual void startWithTarget(Node *target) override;
@@ -894,9 +903,9 @@ public:
      */
     static SkewTo* create(float t, float sx, float sy);
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual SkewTo* clone() const override;
     virtual SkewTo* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
@@ -944,9 +953,9 @@ public:
      */
     static SkewBy* create(float t, float deltaSkewX, float deltaSkewY);
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `SkewTo`.
+    */
     virtual void startWithTarget(Node *target) override;
     virtual SkewBy* clone() const  override;
     virtual SkewBy* reverse(void) const override;
@@ -984,9 +993,9 @@ public:
      */
     static JumpBy* create(float duration, const Vec2& position, float height, int jumps);
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual JumpBy* clone() const override;
     virtual JumpBy* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
@@ -1033,11 +1042,17 @@ public:
      */
     static JumpTo* create(float duration, const Vec2& position, float height, int jumps);
 
-    //
-    // Override
-    //
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual void startWithTarget(Node *target) override;
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual JumpTo* clone() const override;
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual JumpTo* reverse(void) const override;
 
 CC_CONSTRUCTOR_ACCESS:
@@ -1088,12 +1103,21 @@ public:
      */
     static BezierBy* create(float t, const ccBezierConfig& c);
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual BezierBy* clone() const override;
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual BezierBy* reverse(void) const override;
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual void startWithTarget(Node *target) override;
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -1146,11 +1170,17 @@ public:
      */
     static BezierTo* create(float t, const ccBezierConfig& c);
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `BezierBy`.
+    */
     virtual void startWithTarget(Node *target) override;
+    /**
+    * @~english override `BezierBy`.
+    */
     virtual BezierTo* clone() const override;
+    /**
+    * @~english override `BezierBy`.
+    */
     virtual BezierTo* reverse(void) const override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -1233,12 +1263,21 @@ public:
      */
     static ScaleTo* create(float duration, float sx, float sy, float sz);
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual ScaleTo* clone() const override;
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual ScaleTo* reverse(void) const override;
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual void startWithTarget(Node *target) override;
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -1360,11 +1399,19 @@ public:
      */
     static ScaleBy* create(float duration, float sx, float sy, float sz);
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `ScaleTo`.
+    */
     virtual void startWithTarget(Node *target) override;
+
+    /**
+    * @~english override `ScaleTo`.
+    */
     virtual ScaleBy* clone() const override;
+
+    /**
+    * @~english override `ScaleTo`.
+    */
     virtual ScaleBy* reverse(void) const override;
 
 CC_CONSTRUCTOR_ACCESS:
@@ -1452,12 +1499,22 @@ public:
      */
     static FadeTo* create(float duration, GLubyte opacity);
 
-    //
-    // Overrides
-    //
+
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual FadeTo* clone() const override;
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual FadeTo* reverse(void) const override;
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual void startWithTarget(Node *target) override;
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -1506,11 +1563,17 @@ public:
      */
     static FadeIn* create(float d);
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `FadeTo`.
+    */
     virtual void startWithTarget(Node *target) override;
+    /**
+    * @~english override `FadeTo`.
+    */
     virtual FadeIn* clone() const override;
+    /**
+    * @~english override `FadeTo`.
+    */
     virtual FadeTo* reverse(void) const override;
 
     /**
@@ -1550,11 +1613,17 @@ public:
      */
     static FadeOut* create(float d);
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `FadeTo`.
+    */
     virtual void startWithTarget(Node *target) override;
+    /**
+    * @~english override `FadeTo`.
+    */
     virtual FadeOut* clone() const  override;
+    /**
+    * @~english override `FadeTo`.
+    */
     virtual FadeTo* reverse(void) const override;
 
     /**
@@ -1612,12 +1681,21 @@ public:
      */
     static TintTo* create(float duration, const Color3B& color);
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual TintTo* clone() const override;
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual TintTo* reverse(void) const override;
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual void startWithTarget(Node *target) override;
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -1659,9 +1737,9 @@ public:
      */
     static TintBy* create(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual TintBy* clone() const override;
     virtual TintBy* reverse() const override;
     virtual void startWithTarget(Node *target) override;
@@ -1704,9 +1782,9 @@ public:
      */
     static DelayTime* create(float d);
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual void update(float time) override;
     virtual DelayTime* reverse() const override;
     virtual DelayTime* clone() const override;
@@ -1745,9 +1823,9 @@ public:
      */
     static ReverseTime* create(FiniteTimeAction *action);
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual ReverseTime* reverse() const override;
     virtual ReverseTime* clone() const override;
     virtual void startWithTarget(Node *target) override;
@@ -1805,13 +1883,15 @@ public:
     const Animation* getAnimation() const { return _animation; }
 
     /**
-     * Gets the index of sprite frame currently displayed.
-     * @return int  the index of sprite frame currently displayed.
+     * @~english Gets the index of current frame's index.
+     * @~chinese 获取当前帧索引
+     * @return @~english int  the index of current frame. @~chinese 当前帧索引
      */
     int getCurrentFrameIndex() { return _currFrameIndex; }
-    //
-    // Overrides
-    //
+   
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual Animate* clone() const override;
     virtual Animate* reverse() const override;
     virtual void startWithTarget(Node *target) override;
@@ -1877,9 +1957,9 @@ public:
     Node* getForcedTarget() { return _forcedTarget; }
     const Node* getForcedTarget() const { return _forcedTarget; }
 
-    //
-    // Overrides
-    //
+    /**
+    * @~english override `ActionInterval`.
+    */
     virtual TargetedAction* clone() const override;
     virtual TargetedAction* reverse() const  override;
     virtual void startWithTarget(Node *target) override;
@@ -1935,7 +2015,9 @@ public:
      * @~chinese 一个自释放的ActionFloat对象
      */
     static ActionFloat* create(float duration, float from, float to, ActionFloatCallback callback);
-
+    /**
+    * @~english override `ActionInterval`.
+    */
     void startWithTarget(Node* target) override;
     void update(float delta) override;
     ActionFloat* reverse() const override;

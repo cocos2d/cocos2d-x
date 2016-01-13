@@ -194,30 +194,32 @@ public:
     
     /** @~english Returns a tag that is used to identify the action easily. 
      *
-     * @~chinese 返回一个用于识别动作的标签。
+     * @~chinese 返回一个用于标识动作的唯一标签。
      * 
      * @return @~english A tag.
-     * @~chinese 一个标签。
+     * @~chinese 获取用于标识动作的唯一标签。
      */
     inline int getTag() const { return _tag; }
 
     /** @~english Changes the tag that is used to identify the action easily. 
      *
-     * @~chinese 更改标签，用于识别动作。
+     * @~chinese 设置动作唯一标签，用于标识动作。
      * 
      * @param tag @~english Used to identify the action easily.
      * @~chinese 用于识别动作的标签。
      */
     inline void setTag(int tag) { _tag = tag; }
-    /** Returns a flag field that is used to group the actions easily.
-     *
-     * @return A tag.
+    /** 
+     * @~english Returns a flag field that is used to group the actions easily.
+     * @~chinese 动作的标识，用于给动作分组
+     * @return  @~english A tag for group actions @~chinese 用于给动作分组的标识
      */
     inline unsigned int getFlags() const { return _flags; }
-    /** Changes the flag field that is used to group the actions easily.
-     *
-     * @param tag Used to identify the action easily.
-     */
+    /**
+    * @~english Returns a flag field that is used to group the actions easily.
+    * @~chinese 动作的标识，用于给动作分组
+    * @param flags @~english A tag for group actions @~chinese 用于给动作分组的标识
+    */
     inline void setFlags(unsigned int flags) { _flags = flags; }
 
 CC_CONSTRUCTOR_ACCESS:
