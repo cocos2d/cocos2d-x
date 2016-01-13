@@ -205,7 +205,7 @@ void WsThreadHelper::wsThreadEntryFunc()
     }
 
     _ws->onSubThreadEnded();
-    
+
     LOGD("WebSocket thread exit, helper instance: %p\n", this);
 }
 
@@ -302,12 +302,12 @@ void WebSocket::closeAllConnections()
             // Wait for websocket thread to exit
             instance->_wsHelper->joinWebSocketThread();
         }
-        
+
         __websocketInstances->clear();
         __websocketInstances = nullptr;
     }
 }
-    
+
 WebSocket::WebSocket()
 : _readyState(State::CONNECTING)
 , _port(80)
@@ -324,7 +324,7 @@ WebSocket::WebSocket()
     {
         __websocketInstances = new (std::nothrow) std::vector<WebSocket*>();
     }
-    
+
     __websocketInstances->push_back(this);
 }
 
@@ -341,7 +341,7 @@ WebSocket::~WebSocket()
         }
     }
     CC_SAFE_DELETE_ARRAY(_wsProtocols);
-    
+
     if (__websocketInstances != nullptr)
     {
         auto iter = std::find(__websocketInstances->begin(), __websocketInstances->end(), this);
@@ -540,7 +540,7 @@ void WebSocket::onSubThreadStarted()
         },
         { nullptr, nullptr, nullptr /* terminator */ }
     };
-    
+
     struct lws_context_creation_info info;
     memset(&info, 0, sizeof info);
     /*
@@ -807,7 +807,7 @@ void WebSocket::onConnectionOpened()
 void WebSocket::onConnectionError()
 {
     LOGD("WebSocket (%p) onConnectionError ...\n", this);
-    
+
     _readyState = State::CLOSING;
 
     _wsHelper->sendMessageToCocosThread([this](){
@@ -822,7 +822,7 @@ void WebSocket::onConnectionClosed()
         LOGD("WebSocket (%p) was closed, no need to close it again!\n", this);
         return;
     }
-    
+
     LOGD("WebSocket (%p) onConnectionClosed ...\n", this);
     _readyState = State::CLOSED;
 
@@ -845,7 +845,7 @@ int WebSocket::onSocketCallback(struct lws *wsi,
         case LWS_CALLBACK_CLIENT_ESTABLISHED:
             onConnectionOpened();
             break;
-            
+
         case LWS_CALLBACK_CLIENT_CONNECTION_ERROR:
             onConnectionError();
             break;
@@ -858,11 +858,11 @@ int WebSocket::onSocketCallback(struct lws *wsi,
         case LWS_CALLBACK_CLIENT_RECEIVE:
             onClientReceivedData(in, len);
             break;
-            
+
         case LWS_CALLBACK_CLIENT_WRITEABLE:
             onClientWritable();
             break;
-            
+
         default:
 //            LOGD("Unhandled websocket event: %d\n", reason);
             break;
