@@ -119,9 +119,9 @@ public:
     ~WsThreadHelper();
 
     // Creates a new thread
-    bool createThread(const WebSocket& ws);
-    // Quits sub-thread (websocket thread).
-    void quitSubThread();
+    bool createWebSocketThread(const WebSocket& ws);
+    // Quits websocket thread.
+    void quitWebSocketThread();
 
     // Sends message to Cocos thread. It's needed to be invoked in Websocket thread.
     void sendMessageToCocosThread(const std::function<void()>& cb);
@@ -180,7 +180,7 @@ WsThreadHelper::~WsThreadHelper()
     delete _subThreadWsMessageQueue;
 }
 
-bool WsThreadHelper::createThread(const WebSocket& ws)
+bool WsThreadHelper::createWebSocketThread(const WebSocket& ws)
 {
     _ws = const_cast<WebSocket*>(&ws);
 
@@ -189,7 +189,7 @@ bool WsThreadHelper::createThread(const WebSocket& ws)
     return true;
 }
 
-void WsThreadHelper::quitSubThread()
+void WsThreadHelper::quitWebSocketThread()
 {
     _needQuit = true;
 }
@@ -436,7 +436,7 @@ bool WebSocket::init(const Delegate& delegate,
 
     // WebSocket thread needs to be invoked at the end of this method.
     _wsHelper = new (std::nothrow) WsThreadHelper();
-    ret = _wsHelper->createThread(*this);
+    ret = _wsHelper->createWebSocketThread(*this);
 
     return ret;
 }
@@ -496,7 +496,7 @@ void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
 
 void WebSocket::close()
 {
-    _wsHelper->quitSubThread();
+    _wsHelper->quitWebSocketThread();
 }
 
 WebSocket::State WebSocket::getReadyState()
@@ -521,7 +521,7 @@ void WebSocket::onSubThreadLoop()
     else
     {
         LOGD("Ready state is closing or was closed, code=%d, quit websocket thread!\n", _readyState);
-        _wsHelper->quitSubThread();
+        _wsHelper->quitWebSocketThread();
     }
 }
 
@@ -826,7 +826,7 @@ void WebSocket::onConnectionClosed()
     LOGD("WebSocket (%p) onConnectionClosed ...\n", this);
     _readyState = State::CLOSED;
 
-    _wsHelper->quitSubThread();
+    _wsHelper->quitWebSocketThread();
     _wsHelper->sendMessageToCocosThread([this](){
         //Waiting for the subThread safety exit
         _wsHelper->joinWebSocketThread();
