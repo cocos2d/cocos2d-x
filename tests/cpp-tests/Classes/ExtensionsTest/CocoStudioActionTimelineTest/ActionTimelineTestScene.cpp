@@ -26,6 +26,7 @@ CocoStudioActionTimelineTests::CocoStudioActionTimelineTests()
     ADD_TEST_CASE(TestTimelineExtensionData);
     ADD_TEST_CASE(TestActionTimelineBlendFuncFrame);
     ADD_TEST_CASE(TestAnimationClipEndCallBack);
+    ADD_TEST_CASE(TestActionTimelinePlayableFrame);
 }
 
 CocoStudioActionTimelineTests::~CocoStudioActionTimelineTests()
@@ -676,4 +677,68 @@ void TestAnimationClipEndCallBack::onEnter()
 std::string TestAnimationClipEndCallBack::title() const
 {
     return "Test ActionTimeline Frame End Call Back\n and Animation Clip End Call Back";
+}
+
+//TestActionTimelinePlayableFrame
+void TestActionTimelinePlayableFrame::onEnter()
+{
+    ActionTimelineBaseTest::onEnter();
+
+    Node* node = Node::create();
+    auto action = ActionTimeline::create();
+
+    auto particle = ParticleSystemQuad::create("Particles/Comet.plist");
+    particle->setPosition(VisibleRect::center());
+    ComExtensionData* extensionData_p = ComExtensionData::create();
+    extensionData_p->setActionTag(890890);
+    extensionData_p->setName(ComExtensionData::COMPONENT_NAME);
+    particle->addComponent(extensionData_p);
+    node->addChild(particle);
+
+    auto audio = ComAudio::create();
+    audio->setFile("audio/LuckyDay.mp3");
+    audio->start();
+    auto audioNode = Node::create();
+    audio->setName(PlayableFrame::PLAYABLE_EXTENTION);
+    audioNode->addComponent(audio);
+    ComExtensionData* extensionData_a = ComExtensionData::create();
+    extensionData_a->setActionTag(123123);
+    extensionData_a->setName(ComExtensionData::COMPONENT_NAME);
+    audioNode->addComponent(extensionData_a);
+    node->addChild(audioNode);
+
+    auto frame_a1 = PlayableFrame::create();
+    frame_a1->setFrameIndex(0);
+    frame_a1->setPlayableAct("start");
+    auto frame_a2 = PlayableFrame::create();
+    frame_a2->setFrameIndex(50);
+    frame_a2->setPlayableAct("stop");
+    auto timeline_a = Timeline::create();
+    timeline_a->setActionTag(123123);
+    timeline_a->addFrame(frame_a1);
+    timeline_a->addFrame(frame_a2);
+    action->addTimeline(timeline_a);
+
+    auto timeline_p = Timeline::create();
+    auto frame_p1 = PlayableFrame::create();
+    frame_p1->setFrameIndex(0);
+    frame_p1->setPlayableAct("start");
+    auto frame_p2 = PlayableFrame::create();
+    frame_p2->setFrameIndex(50);
+    frame_p2->setPlayableAct("stop");
+    timeline_p->setActionTag(890890);
+    timeline_p->addFrame(frame_p1);
+    timeline_p->addFrame(frame_p2);
+    action->addTimeline(timeline_p);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+
+    action->setTimeSpeed(0.2);
+    action->setDuration(65);
+    node->runAction(action);
+    action->gotoFrameAndPlay(0);
+    this->addChild(node);
+}
+
+std::string TestActionTimelinePlayableFrame::title() const
+{
+    return "Test Action Timeline PlayableFrame\n particle and audio";
 }
