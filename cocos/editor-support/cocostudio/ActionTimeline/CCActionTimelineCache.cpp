@@ -164,6 +164,16 @@ ActionTimeline* ActionTimelineCache::createActionFromJson(const std::string& fil
     return action->clone();
 }
 
+ActionTimeline* ActionTimelineCache::createActionFromContent(const std::string& fileName, const std::string& content)
+{
+    ActionTimeline* action = _animationActions.at(fileName);
+    if (action == nullptr)
+    {
+        action = loadAnimationActionWithContent(fileName, content);
+    }
+    return action->clone();
+}
+
 ActionTimeline* ActionTimelineCache::loadAnimationActionWithFile(const std::string& fileName)
 {
     // Read content from file
@@ -403,13 +413,23 @@ Frame* ActionTimelineCache::loadZOrderFrame(const rapidjson::Value& json)
 
     return frame;
 }
-    
+
 ActionTimeline* ActionTimelineCache::createActionWithFlatBuffersFile(const std::string &fileName)
 {
     ActionTimeline* action = _animationActions.at(fileName);
     if (action == NULL)
     {
         action = loadAnimationActionWithFlatBuffersFile(fileName);
+    }
+    return action->clone();
+}
+
+ActionTimeline* ActionTimelineCache::createActionWithDataBuffer(Data data, const std::string &fileName)
+{
+    ActionTimeline* action = _animationActions.at(fileName);
+    if (action == NULL)
+    {
+        action = loadAnimationWithDataBuffer(data, fileName);
     }
     return action->clone();
 }

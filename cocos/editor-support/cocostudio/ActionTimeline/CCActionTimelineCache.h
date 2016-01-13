@@ -78,11 +78,14 @@ public:
 
     /** Clone a action with the specified name from the container. */
     ActionTimeline* createActionFromJson(const std::string& fileName);
+    ActionTimeline* createActionFromContent(const std::string& fileName, const std::string& content);
 
     ActionTimeline* loadAnimationActionWithFile(const std::string& fileName);
     ActionTimeline* loadAnimationActionWithContent(const std::string&fileName, const std::string& content);
     
     ActionTimeline* createActionWithFlatBuffersFile(const std::string& fileName);
+    ActionTimeline* createActionWithDataBuffer(cocos2d::Data data, const std::string &fileName);
+
     ActionTimeline* loadAnimationActionWithFlatBuffersFile(const std::string& fileName);
     ActionTimeline* loadAnimationWithDataBuffer(const cocos2d::Data data, const std::string fileName);
     
