@@ -250,19 +250,14 @@ public:
             return false;
         }
 
-        _data.reserve(LWS_SEND_BUFFER_PRE_PADDING + len + LWS_SEND_BUFFER_POST_PADDING);
-        _data.resize(LWS_SEND_BUFFER_PRE_PADDING, 0x00);
+        _data.reserve(LWS_PRE + len);
+        _data.resize(LWS_PRE, 0x00);
         if (len > 0)
         {
             _data.insert(_data.end(), buf, buf + len);
         }
 
-        if (LWS_SEND_BUFFER_POST_PADDING > 0)
-        {
-            _data.insert(_data.end(), LWS_SEND_BUFFER_POST_PADDING, 0x00);
-        }
-
-        _payload = _data.data() + LWS_SEND_BUFFER_PRE_PADDING;
+        _payload = _data.data() + LWS_PRE;
         _payloadLength = len;
         _frameLength = len;
         return true;
