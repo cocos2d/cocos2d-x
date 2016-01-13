@@ -808,13 +808,13 @@ void WebSocket::onConnectionError()
 
 void WebSocket::onConnectionClosed()
 {
-    LOGD("WebSocket (%p) onConnectionClosed ...\n", this);
     if (_readyState == State::CLOSED)
     {
         LOGD("WebSocket (%p) was closed, no need to close it again!\n", this);
         return;
     }
-
+    
+    LOGD("WebSocket (%p) onConnectionClosed ...\n", this);
     _readyState = State::CLOSED;
 
     _wsHelper->quitSubThread();
@@ -829,35 +829,19 @@ int WebSocket::onSocketCallback(struct lws *wsi,
                      int reason,
                      void *user, void *in, ssize_t len)
 {
-    //LOGD("socket callback for %d reason", reason);
+    //LOGD("socket callback for %d reason\n", reason);
 
     switch (reason)
     {
-        case LWS_CALLBACK_DEL_POLL_FD:
-        case LWS_CALLBACK_PROTOCOL_DESTROY:
-        case LWS_CALLBACK_CLIENT_CONNECTION_ERROR:
-            {
-                if (reason == LWS_CALLBACK_CLIENT_CONNECTION_ERROR
-                    || (reason == LWS_CALLBACK_PROTOCOL_DESTROY && _readyState == State::CONNECTING)
-                    || (reason == LWS_CALLBACK_DEL_POLL_FD && _readyState == State::CONNECTING)
-                    )
-                {
-                    onConnectionError();
-                }
-                else if (reason == LWS_CALLBACK_PROTOCOL_DESTROY && _readyState == State::CLOSING)
-                {
-                    onConnectionClosed();
-                }
-            }
-            break;
         case LWS_CALLBACK_CLIENT_ESTABLISHED:
             onConnectionOpened();
             break;
-
-        case LWS_CALLBACK_CLIENT_WRITEABLE:
-            onClientWritable();
+            
+        case LWS_CALLBACK_CLIENT_CONNECTION_ERROR:
+            onConnectionError();
             break;
 
+        case LWS_CALLBACK_PROTOCOL_DESTROY:
         case LWS_CALLBACK_CLOSED:
             onConnectionClosed();
             break;
@@ -865,7 +849,13 @@ int WebSocket::onSocketCallback(struct lws *wsi,
         case LWS_CALLBACK_CLIENT_RECEIVE:
             onClientReceivedData(in, len);
             break;
+            
+        case LWS_CALLBACK_CLIENT_WRITEABLE:
+            onClientWritable();
+            break;
+            
         default:
+//            LOGD("Unhandled websocket event: %d\n", reason);
             break;
     }
 
