@@ -59,6 +59,7 @@ UIScale9SpriteTests::UIScale9SpriteTests()
     ADD_TEST_CASE(UIS9ToggleRenderingTypeTest);
     ADD_TEST_CASE(UIS9GlobalZOrderTest);
     ADD_TEST_CASE(UIS9EnableScale9FalseTest);
+    ADD_TEST_CASE(UIS9GrayStateOpacityTest);
 }
 
 // UIScale9SpriteTest
@@ -1140,3 +1141,52 @@ bool UIS9EnableScale9FalseTest::init()
     return false;
 }
 
+bool UIS9GrayStateOpacityTest::init()
+{
+    if (UIScene::init()) {
+        
+        auto winSize = Director::getInstance()->getWinSize();
+        float x = winSize.width / 2;
+        float y = 0 + (winSize.height / 2 + 10);
+        
+        auto label = Label::createWithSystemFont("Drap slider to change opacity of the scale9Sprite", "Arial", 15);
+        label->setPosition(Vec2(winSize.width/2, winSize.height - 60));
+        this->addChild(label);
+        
+        auto blocks = ui::Scale9Sprite::create("Images/blocks9.png");
+        
+        blocks->setPosition(Vec2(x, y));
+        blocks->setPreferredSize(Size(96*2, 96*1.5));
+        blocks->setOpacity(100);
+        blocks->setState(Scale9Sprite::State::GRAY);
+        blocks->setGlobalZOrder(1);
+        blocks->setName("GrayScale9");
+        this->addChild(blocks);
+        
+        Slider* slider = Slider::create();
+        slider->loadBarTexture("cocosui/sliderTrack.png");
+        slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+        slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+        slider->setContentSize(Size(300, slider->getContentSize().height * 1.5));
+        slider->setMaxPercent(100);
+        slider->setPercent(100 * 100.0 / 255.0);
+        slider->setPosition(Vec2(winSize.width / 2.0f, winSize.height / 2.0f - 100));
+        slider->addEventListener(CC_CALLBACK_2(UIS9GrayStateOpacityTest::sliderEvent, this));
+        _uiLayer->addChild(slider);
+
+        return true;
+    }
+    return false;
+}
+
+void UIS9GrayStateOpacityTest::sliderEvent(cocos2d::Ref *sender, cocos2d::ui::Slider::EventType type)
+{
+    if (type == Slider::EventType::ON_PERCENTAGE_CHANGED)
+    {
+        Slider* slider = dynamic_cast<Slider*>(sender);
+        int percent = slider->getPercent();
+        int maxPercent = slider->getMaxPercent();
+        auto scale9Sprite = (Scale9Sprite*)this->getChildByName("GrayScale9");
+        scale9Sprite->setOpacity(1.0 * percent / maxPercent * 255.0);
+    }
+}

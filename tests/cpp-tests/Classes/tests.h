@@ -18,6 +18,9 @@
 #endif
 #endif
 #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "JNITest/JNITest.h"
+#endif
 
 // sort them alphabetically. thanks
 #include "ActionManagerTest/ActionManagerTest.h"
