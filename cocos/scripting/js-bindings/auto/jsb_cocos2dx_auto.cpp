@@ -10457,6 +10457,26 @@ void js_register_cocos2dx_GLProgramState(JSContext *cx, JS::HandleObject global)
 JSClass  *jsb_cocos2d_SpriteFrame_class;
 JSObject *jsb_cocos2d_SpriteFrame_prototype;
 
+bool js_cocos2dx_SpriteFrame_setAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteFrame* cobj = (cocos2d::SpriteFrame *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteFrame_setAnchorPoint : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Vec2 arg0;
+        ok &= jsval_to_vector2(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteFrame_setAnchorPoint : Error processing arguments");
+        cobj->setAnchorPoint(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteFrame_setAnchorPoint : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_SpriteFrame_setTexture(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -10901,6 +10921,42 @@ bool js_cocos2dx_SpriteFrame_setOriginalSizeInPixels(JSContext *cx, uint32_t arg
     JS_ReportError(cx, "js_cocos2dx_SpriteFrame_setOriginalSizeInPixels : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_SpriteFrame_getAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteFrame* cobj = (cocos2d::SpriteFrame *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteFrame_getAnchorPoint : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::Vec2& ret = cobj->getAnchorPoint();
+        jsval jsret = JSVAL_NULL;
+        jsret = vector2_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteFrame_getAnchorPoint : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_SpriteFrame_hasAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteFrame* cobj = (cocos2d::SpriteFrame *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteFrame_hasAnchorPoint : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->hasAnchorPoint();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteFrame_hasAnchorPoint : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_SpriteFrame_getOffsetInPixels(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -11097,6 +11153,7 @@ void js_register_cocos2dx_SpriteFrame(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec funcs[] = {
+        JS_FN("setAnchorPoint", js_cocos2dx_SpriteFrame_setAnchorPoint, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTexture", js_cocos2dx_SpriteFrame_setTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTexture", js_cocos2dx_SpriteFrame_getTexture, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setOffsetInPixels", js_cocos2dx_SpriteFrame_setOffsetInPixels, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -11115,6 +11172,8 @@ void js_register_cocos2dx_SpriteFrame(JSContext *cx, JS::HandleObject global) {
         JS_FN("setRotated", js_cocos2dx_SpriteFrame_setRotated, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getOffset", js_cocos2dx_SpriteFrame_getOffset, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setOriginalSizeInPixels", js_cocos2dx_SpriteFrame_setOriginalSizeInPixels, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAnchorPoint", js_cocos2dx_SpriteFrame_getAnchorPoint, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("hasAnchorPoint", js_cocos2dx_SpriteFrame_hasAnchorPoint, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getOffsetInPixels", js_cocos2dx_SpriteFrame_getOffsetInPixels, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocos2dx_SpriteFrame_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END

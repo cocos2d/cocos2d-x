@@ -20779,6 +20779,56 @@ int lua_register_cocos2dx_AutoPolygon(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_SpriteFrame_setAnchorPoint(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::SpriteFrame* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.SpriteFrame",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_setAnchorPoint'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Vec2 arg0;
+
+        ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.SpriteFrame:setAnchorPoint");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpriteFrame_setAnchorPoint'", nullptr);
+            return 0;
+        }
+        cobj->setAnchorPoint(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SpriteFrame:setAnchorPoint",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteFrame_setAnchorPoint'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_SpriteFrame_setTexture(lua_State* tolua_S)
 {
     int argc = 0;
@@ -21705,6 +21755,100 @@ int lua_cocos2dx_SpriteFrame_setOriginalSizeInPixels(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_SpriteFrame_getAnchorPoint(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::SpriteFrame* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.SpriteFrame",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_getAnchorPoint'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpriteFrame_getAnchorPoint'", nullptr);
+            return 0;
+        }
+        const cocos2d::Vec2& ret = cobj->getAnchorPoint();
+        vec2_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SpriteFrame:getAnchorPoint",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteFrame_getAnchorPoint'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_SpriteFrame_hasAnchorPoint(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::SpriteFrame* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.SpriteFrame",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::SpriteFrame*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpriteFrame_hasAnchorPoint'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpriteFrame_hasAnchorPoint'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->hasAnchorPoint();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SpriteFrame:hasAnchorPoint",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpriteFrame_hasAnchorPoint'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_SpriteFrame_getOffsetInPixels(lua_State* tolua_S)
 {
     int argc = 0;
@@ -21928,6 +22072,7 @@ int lua_register_cocos2dx_SpriteFrame(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"SpriteFrame");
         tolua_function(tolua_S,"new",lua_cocos2dx_SpriteFrame_constructor);
+        tolua_function(tolua_S,"setAnchorPoint",lua_cocos2dx_SpriteFrame_setAnchorPoint);
         tolua_function(tolua_S,"setTexture",lua_cocos2dx_SpriteFrame_setTexture);
         tolua_function(tolua_S,"getTexture",lua_cocos2dx_SpriteFrame_getTexture);
         tolua_function(tolua_S,"setOffsetInPixels",lua_cocos2dx_SpriteFrame_setOffsetInPixels);
@@ -21946,6 +22091,8 @@ int lua_register_cocos2dx_SpriteFrame(lua_State* tolua_S)
         tolua_function(tolua_S,"setRotated",lua_cocos2dx_SpriteFrame_setRotated);
         tolua_function(tolua_S,"getOffset",lua_cocos2dx_SpriteFrame_getOffset);
         tolua_function(tolua_S,"setOriginalSizeInPixels",lua_cocos2dx_SpriteFrame_setOriginalSizeInPixels);
+        tolua_function(tolua_S,"getAnchorPoint",lua_cocos2dx_SpriteFrame_getAnchorPoint);
+        tolua_function(tolua_S,"hasAnchorPoint",lua_cocos2dx_SpriteFrame_hasAnchorPoint);
         tolua_function(tolua_S,"getOffsetInPixels",lua_cocos2dx_SpriteFrame_getOffsetInPixels);
         tolua_function(tolua_S,"create", lua_cocos2dx_SpriteFrame_create);
         tolua_function(tolua_S,"createWithTexture", lua_cocos2dx_SpriteFrame_createWithTexture);

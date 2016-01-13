@@ -4219,6 +4219,16 @@ str
 cc.SpriteFrame = {
 
 /**
+ * @method setAnchorPoint
+ * @param {vec2_object} arg0
+ */
+setAnchorPoint : function (
+vec2 
+)
+{
+},
+
+/**
  * @method setTexture
  * @param {cc.Texture2D} arg0
  */
@@ -4416,6 +4426,26 @@ setOriginalSizeInPixels : function (
 size 
 )
 {
+},
+
+/**
+ * @method getAnchorPoint
+ * @return {vec2_object}
+ */
+getAnchorPoint : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method hasAnchorPoint
+ * @return {bool}
+ */
+hasAnchorPoint : function (
+)
+{
+    return false;
 },
 
 /**
