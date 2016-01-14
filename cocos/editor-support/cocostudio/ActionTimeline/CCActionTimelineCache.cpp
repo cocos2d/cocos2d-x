@@ -59,7 +59,7 @@ static const char* Property_AnchorPoint     = "AnchorPoint";
 static const char* Property_ZOrder          = "ZOrder";
 static const char* Property_ActionValue     = "ActionValue";
 static const char* Property_BlendValue      = "BlendFunc";
-
+static const char* Property_PlayableAct     = "PlayableAct";
 
 static const char* ACTION           = "action";
 static const char* DURATION         = "duration";
@@ -479,7 +479,7 @@ inline ActionTimeline* ActionTimelineCache::createActionWithDataBuffer(const coc
 
     auto timeLines = nodeAction->timeLines();
     int timelineLength = timeLines->size();
-    std::multimap<std::string, cocostudio::timeline::Timeline*> properTimelineMap;// order the timelines depends property name
+    std::multimap<std::string,timeline::Timeline*> properTimelineMap;// order the timelines depends property name
     for (int i = 0; i < timelineLength; i++)
     {
         auto timelineFlatBuf = timeLines->Get(i);

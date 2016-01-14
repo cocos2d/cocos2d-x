@@ -1037,6 +1037,7 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, const
             Component* component = reader->createComAudioWithFlatBuffers(options->data());
             if (component)
             {
+                component->setName(PlayableFrame::PLAYABLE_EXTENTION);
                 node->addComponent(component);
                 reader->setPropsWithFlatBuffers(node, options->data());
             }

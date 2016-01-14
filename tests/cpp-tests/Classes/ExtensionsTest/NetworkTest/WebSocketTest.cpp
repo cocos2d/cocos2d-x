@@ -34,10 +34,15 @@ WebSocketTest::WebSocketTest()
     itemSendText->setPosition(Vec2(winSize.width / 2, winSize.height - MARGIN - SPACE));
     menuRequest->addChild(itemSendText);
     
+    labelSendText = Label::createWithTTF("Send Multiple Text", "fonts/arial.ttf", 20);
+    itemSendText = MenuItemLabel::create(labelSendText, CC_CALLBACK_1(WebSocketTest::onMenuSendMultipleTextClicked, this));
+    itemSendText->setPosition(Vec2(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE));
+    menuRequest->addChild(itemSendText);
+    
     // Send Binary
     auto labelSendBinary = Label::createWithTTF("Send Binary", "fonts/arial.ttf", 20);
     auto itemSendBinary = MenuItemLabel::create(labelSendBinary, CC_CALLBACK_1(WebSocketTest::onMenuSendBinaryClicked, this));
-    itemSendBinary->setPosition(Vec2(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE));
+    itemSendBinary->setPosition(Vec2(winSize.width / 2, winSize.height - MARGIN - 3 * SPACE));
     menuRequest->addChild(itemSendBinary);
     
 
@@ -201,6 +206,28 @@ void WebSocketTest::onMenuSendTextClicked(cocos2d::Ref *sender)
     {
         _sendTextStatus->setString("Send Text WS is waiting...");
         _wsiSendText->send("Hello WebSocket, I'm a text message.");
+    }
+    else
+    {
+        std::string warningStr = "send text websocket instance wasn't ready...";
+        log("%s", warningStr.c_str());
+        _sendTextStatus->setString(warningStr.c_str());
+    }
+}
+
+void WebSocketTest::onMenuSendMultipleTextClicked(cocos2d::Ref *sender)
+{
+    if (! _wsiSendText)
+    {
+        return;
+    }
+    
+    if (_wsiSendText->getReadyState() == network::WebSocket::State::OPEN)
+    {
+        _sendTextStatus->setString("Send Multiple Text WS is waiting...");
+        for (int index = 0; index < 15; ++index) {
+            _wsiSendText->send(StringUtils::format("Hello WebSocket, text message index:%d", index));
+        }
     }
     else
     {

@@ -104,6 +104,7 @@ bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, bool rot
     _originalSizeInPixels = originalSize;
     _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
     _rotated = rotated;
+    _anchorPoint = Vec2(NAN, NAN);
 
     return true;
 }
@@ -119,6 +120,7 @@ bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rec
     _originalSizeInPixels = originalSize;
     _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
     _rotated = rotated;
+    _anchorPoint = Vec2(NAN, NAN);
 
     return true;
 }
@@ -171,6 +173,21 @@ void SpriteFrame::setOffsetInPixels(const Vec2& offsetInPixels)
 {
     _offsetInPixels = offsetInPixels;
     _offset = CC_POINT_PIXELS_TO_POINTS( _offsetInPixels );
+}
+
+const Vec2& SpriteFrame::getAnchorPoint() const
+{
+    return _anchorPoint;
+}
+
+void SpriteFrame::setAnchorPoint(const Vec2& anchorPoint)
+{
+    _anchorPoint = anchorPoint;
+}
+
+bool SpriteFrame::hasAnchorPoint() const
+{
+    return !isnan(_anchorPoint.x);
 }
 
 void SpriteFrame::setTexture(Texture2D * texture)

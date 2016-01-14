@@ -531,9 +531,11 @@ void Layout::onSizeChanged()
     if (_backGroundImage)
     {
         _backGroundImage->setPosition(_contentSize.width/2.0f, _contentSize.height/2.0f);
-        if (_backGroundScale9Enabled && _backGroundImage)
-        {
+        if (_backGroundScale9Enabled){
             _backGroundImage->setPreferredSize(_contentSize);
+        }
+        else{
+            _backGroundImage->setPreferredSize(_backGroundImageTextureSize);
         }
     }
     if (_colorRender)
@@ -560,12 +562,10 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
     }
     if(_backGroundScale9Enabled){
         _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+        _backGroundImage->setPreferredSize(_contentSize);
     }else{
         _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
-    }
-
-    if (able) {
-        _backGroundImage->setPreferredSize(_contentSize);
+        _backGroundImage->setPreferredSize(_backGroundImageTextureSize);
     }
     
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
@@ -605,12 +605,15 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
         default:
             break;
     }
-    if (_backGroundScale9Enabled) {
-        _backGroundImage->setPreferredSize(_contentSize);
-    }
     
     _backGroundImageTextureSize = _backGroundImage->getContentSize();
     _backGroundImage->setPosition(_contentSize.width/2.0f, _contentSize.height/2.0f);
+    if (_backGroundScale9Enabled) {
+        _backGroundImage->setPreferredSize(_contentSize);
+    }
+    else{
+        _backGroundImage->setPreferredSize(_backGroundImageTextureSize);
+    }
     updateBackGroundImageRGBA();
 }
 

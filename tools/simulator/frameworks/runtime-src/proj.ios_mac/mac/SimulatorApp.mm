@@ -452,6 +452,7 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     
     RuntimeEngine::getInstance()->setProjectConfig(_project);
     Application::getInstance()->run();
+    CC_SAFE_DELETE(_app);
     // After run, application needs to be terminated immediately.
     [NSApp terminate: self];
 }
@@ -705,6 +706,7 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
 
 -(IBAction)onFileClose:(id)sender
 {
+    CC_SAFE_DELETE(_app);
     [[NSApplication sharedApplication] terminate:self];
 }
 
@@ -722,6 +724,12 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
         [_window setLevel:NSNormalWindowLevel];
         [sender setState:NSOffState];
     }
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification
+{
+    CC_SAFE_DELETE(_app);
+    [[NSApplication sharedApplication] terminate:self];
 }
 
 @end
