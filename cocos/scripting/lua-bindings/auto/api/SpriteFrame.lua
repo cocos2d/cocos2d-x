@@ -5,6 +5,14 @@
 -- @parent_module cc
 
 --------------------------------
+--  Set anchor point of the frame.<br>
+-- param anchorPoint The anchor point of the sprite frame.
+-- @function [parent=#SpriteFrame] setAnchorPoint 
+-- @param self
+-- @param #vec2_table anchorPoint
+-- @return SpriteFrame#SpriteFrame self (return value: cc.SpriteFrame)
+        
+--------------------------------
 --  Set texture of the frame, the texture is retained.<br>
 -- param pobTexture The texture of the sprite frame.
 -- @function [parent=#SpriteFrame] setTexture 
@@ -146,6 +154,20 @@
 -- @param self
 -- @param #size_table sizeInPixels
 -- @return SpriteFrame#SpriteFrame self (return value: cc.SpriteFrame)
+        
+--------------------------------
+--  Get anchor point of the frame.<br>
+-- return The anchor point of the sprite frame.
+-- @function [parent=#SpriteFrame] getAnchorPoint 
+-- @param self
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+--  Check if anchor point is defined for frame.<br>
+-- return true if anchor point is available.
+-- @function [parent=#SpriteFrame] hasAnchorPoint 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  Get offset of the frame.<br>
