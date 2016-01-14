@@ -348,7 +348,7 @@ ActionTimeline* CSLoader::createTimeline(const std::string &filename)
     return nullptr;
 }
 
-ActionTimeline* CSLoader::createTimeline(const Data data, const std::string& filename)
+ActionTimeline* CSLoader::createTimeline(const Data& data, const std::string& filename)
 {
     std::string suffix = getExtentionName(filename);
 
@@ -853,12 +853,12 @@ Component* CSLoader::loadComAudio(const rapidjson::Value &json)
     return audio;
 }
 
-cocos2d::Node* CSLoader::createNode(const Data data)
+cocos2d::Node* CSLoader::createNode(const Data& data)
 {
     return createNode(data, nullptr);
 }
 
-Node * CSLoader::createNode(const Data data, const ccNodeLoadCallback &callback)
+Node * CSLoader::createNode(const Data& data, const ccNodeLoadCallback &callback)
 {
     CSLoader * loader = CSLoader::getInstance();
     Node * node = nullptr;
