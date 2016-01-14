@@ -356,12 +356,12 @@ ActionTimeline* CSLoader::createTimeline(const Data data, const std::string& fil
 
     if (suffix == "csb")
     {
-        return cache->loadAnimationWithDataBuffer(data, filename);
+        return cache->createActionWithDataBuffer(data, filename);
     }
     else if (suffix == "json" || suffix == "ExportJson")
     {
         std::string content((char *)data.getBytes(), data.getSize());
-        return cache->loadAnimationActionWithContent(filename, content);
+        return cache->createActionFromContent(filename, content);
     }
 
     return nullptr;
@@ -1016,7 +1016,7 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, const
             {
                 Data buf = FileUtils::getInstance()->getDataFromFile(filePath);
                 node = createNode(buf, callback);
-                action = timeline::ActionTimelineCache::getInstance()->loadAnimationWithDataBuffer(buf, filePath);
+                action = createTimeline(buf, filePath);
             }
             else
             {
