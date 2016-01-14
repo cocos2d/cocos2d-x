@@ -155,4 +155,13 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
 };
+
+class TestActionTimelinePlayableFrame : public ActionTimelineBaseTest
+{
+public:
+    CREATE_FUNC(TestActionTimelinePlayableFrame);
+
+    virtual void onEnter() override;
+    virtual std::string  title() const override;
+};
 #endif  // __ANIMATION_SCENE_H__
