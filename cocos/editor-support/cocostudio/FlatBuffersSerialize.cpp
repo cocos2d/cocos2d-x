@@ -560,7 +560,7 @@ Offset<NodeAction> FlatBuffersSerialize::createNodeAction(const tinyxml2::XMLEle
     // ActionTimeline
     const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
     
-    // attibutes
+    // attributes
     while (attribute)
     {
         std::string name = attribute->Name();
@@ -634,7 +634,7 @@ Offset<TimeLine> FlatBuffersSerialize::createTimeLine(const tinyxml2::XMLElement
     int actionTag = 0;
     std::string property = "";
     
-    // TimelineData attrsibutes
+    // TimelineData attributes
     const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
     while (attribute)
     {
