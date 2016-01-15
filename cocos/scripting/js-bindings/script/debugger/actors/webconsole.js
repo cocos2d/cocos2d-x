@@ -36,20 +36,19 @@
 //          .ServerLoggingListener;
 // });
 
-// for (let name of ["WebConsoleUtils", "ConsoleServiceListener",
-//     "ConsoleAPIListener", "addWebConsoleCommands", "JSPropertyProvider",
-//     "ConsoleReflowListener", "CONSOLE_WORKER_IDS"]) {
-//   Object.defineProperty(this, name, {
-//     get: function(prop) {
-//       if (prop == "WebConsoleUtils") {
-//         prop = "Utils";
-//       }
-//       return require("devtools/toolkit/webconsole/utils")[prop];
-//     }.bind(null, name),
-//     configurable: true,
-//     enumerable: true
-//   });
-// }
+let webutils = require('script/debugger/webconsole/utils.js', 'debug');
+
+Object.defineProperty(this, "JSPropertyProvider", {
+  get: function() {
+    // if (prop == "WebConsoleUtils") {
+    //   prop = "Utils";
+    // }
+    return webutils["JSPropertyProvider"];
+  }.bind(null, "JSPropertyProvider"),
+  configurable: true,
+  enumerable: true
+});
+
 
 /**
  * The WebConsoleActor implements capabilities needed for the Web Console
@@ -569,12 +568,12 @@ WebConsoleActor.prototype =
       let listener = aRequest.listeners.shift();
       switch (listener) {
         case "PageError":
-          if (!this.consoleServiceListener) {
-            this.consoleServiceListener =
-              new ConsoleServiceListener(window, this);
-            this.consoleServiceListener.init();
-          }
-          startedListeners.push(listener);
+          // if (!this.consoleServiceListener) {
+          //   this.consoleServiceListener =
+          //     new ConsoleServiceListener(window, this);
+          //   this.consoleServiceListener.init();
+          // }
+          // startedListeners.push(listener);
           break;
         case "ConsoleAPI":
           if (!this.consoleAPIListener) {
@@ -599,15 +598,15 @@ WebConsoleActor.prototype =
           // startedListeners.push(listener);
           break;
         case "FileActivity":
-          if (this.window instanceof Ci.nsIDOMWindow) {
-            if (!this.consoleProgressListener) {
-              this.consoleProgressListener =
-                new ConsoleProgressListener(this.window, this);
-            }
-            this.consoleProgressListener.startMonitor(this.consoleProgressListener.
-                                                      MONITOR_FILE_ACTIVITY);
-            startedListeners.push(listener);
-          }
+          // if (this.window instanceof Ci.nsIDOMWindow) {
+          //   if (!this.consoleProgressListener) {
+          //     this.consoleProgressListener =
+          //       new ConsoleProgressListener(this.window, this);
+          //   }
+          //   this.consoleProgressListener.startMonitor(this.consoleProgressListener.
+          //                                             MONITOR_FILE_ACTIVITY);
+          //   startedListeners.push(listener);
+          // }
           break;
         case "ReflowActivity":
           if (!this.consoleReflowListener) {
@@ -897,7 +896,7 @@ WebConsoleActor.prototype =
         environment = frame.environment;
       }
       else {
-        Cu.reportError("Web Console Actor: the frame actor was not found: " +
+        log("Web Console Actor: the frame actor was not found: " +
                        frameActorId);
       }
     }
@@ -1036,8 +1035,8 @@ WebConsoleActor.prototype =
       // helpers like cd(), where we users sometimes want to pass a cross-origin
       // window. To circumvent this restriction, we use exportFunction along
       // with a special option designed for this purpose. See bug 1051224.
-      obj[name] =
-        Cu.exportFunction(obj[name], evalWindow, { allowCrossOriginArguments: true });
+      // obj[name] =
+      //   Cu.exportFunction(obj[name], evalWindow, { allowCrossOriginArguments: true });
     }
     for (let name in helpers.sandbox) {
       let desc = Object.getOwnPropertyDescriptor(helpers.sandbox, name);
