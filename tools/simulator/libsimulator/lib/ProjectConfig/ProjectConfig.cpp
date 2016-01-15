@@ -33,6 +33,8 @@ static std::vector<std::string> split(const std::string &s, char delim) {
     return elems;
 }
 
+const float ProjectConfig::DEFAULT_CONTENT_SCALE_FACTOR = 1.0f;
+
 ProjectConfig::ProjectConfig()
     : _scriptFile("")
     , _writablePath("")

@@ -50,7 +50,7 @@ public:
     static const int DEFAULT_WIDTH = 640;
     static const int DEFAULT_HEIGHT = 960;
 	static const ResolutionPolicy DEFAULT_RESOLUTION_POLICY = ResolutionPolicy::EXACT_FIT;
-    static constexpr float DEFAULT_CONTENT_SCALE_FACTOR = 1.0f;
+    static const float DEFAULT_CONTENT_SCALE_FACTOR;
 
     string getProjectDir() const;
     void setProjectDir(const string &projectDir);
