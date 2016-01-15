@@ -247,6 +247,7 @@ DebuggerTransport.prototype = {
     if (this._outgoing.length > 0) {
       // var threadManager = Cc["@mozilla.org/thread-manager;1"].getService();
       // this._output.asyncWait(this, 0, 0, threadManager.currentThread);
+      // log('send: ' + this._outgoing);
       _bufferWrite(this._outgoing);
     }
   },

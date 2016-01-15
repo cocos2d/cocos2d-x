@@ -1600,6 +1600,7 @@ DebuggerServerConnection.prototype = {
         this.transport.send(this._unknownError(
           "error occurred while processing '" + aPacket.type,
           e));
+        // log(e.stack);
       } finally {
         this.currentPacket = undefined;
       }

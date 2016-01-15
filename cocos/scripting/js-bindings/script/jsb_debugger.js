@@ -269,6 +269,7 @@ this.processInput = function (inputstr) {
       conn.onPacket(parsed);
     }
 
+    // log('receive: ' + inputstr);
     _processIncoming(inputstr);
 };
 
@@ -278,20 +279,20 @@ this._prepareDebugger = function (global) {
     globalDebuggee = global;
     require = global.require;
     cc = global.cc;
-    exports = global;
+    // exports = global;
 
     // load all functions exported in DevToolsUtils to global(exports)
-    require('script/debugger/DevToolsUtils.js', "debug");
+    require('script/debugger/DevToolsUtils.js', 'debug');
     require('script/debugger/event-emitter.js', 'debug');
     require('script/debugger/actors/utils/ScriptStore.js', 'debug');
     require('script/debugger/actors/common.js', 'debug');
-    require('script/debugger/core/promise.js', "debug");
-    require('script/debugger/transport.js', "debug");
-    require('script/debugger/main.js', "debug");
+    require('script/debugger/core/promise.js', 'debug');
+    require('script/debugger/transport.js', 'debug');
+    require('script/debugger/main.js', 'debug');
     require('script/debugger/actors/object.js', 'debug');
-    require('script/debugger/actors/root.js', "debug");
-    require('script/debugger/actors/script.js', "debug");
-    require('script/debugger/actors/webconsole.js', "debug")
+    require('script/debugger/actors/root.js', 'debug');
+    require('script/debugger/actors/script.js', 'debug');
+    require('script/debugger/actors/webconsole.js', 'debug')
     require('script/debugger/actors/utils/TabSources.js', 'debug');
     
     //DebuggerServer.addTestGlobal = function(aGlobal) {
