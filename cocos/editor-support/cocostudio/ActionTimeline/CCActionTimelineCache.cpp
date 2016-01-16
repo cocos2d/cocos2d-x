@@ -434,7 +434,7 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFlatBuffersFile(cons
     return action;
 }
 
-ActionTimeline* ActionTimelineCache::loadAnimationWithDataBuffer(const cocos2d::Data data, const std::string fileName)
+ActionTimeline* ActionTimelineCache::loadAnimationWithDataBuffer(const cocos2d::Data& data, const std::string& fileName)
 {
     // if already exists an action with filename, then return this action
     ActionTimeline* action = _animationActions.at(fileName);
@@ -453,7 +453,7 @@ ActionTimeline* ActionTimelineCache::loadAnimationWithDataBuffer(const cocos2d::
     return action;
 }
 
-inline ActionTimeline* ActionTimelineCache::createActionWithDataBuffer(const cocos2d::Data data)
+ActionTimeline* ActionTimelineCache::createActionWithDataBuffer(const cocos2d::Data& data)
 {
     auto csparsebinary = GetCSParseBinary(data.getBytes());
 

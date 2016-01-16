@@ -84,7 +84,7 @@ public:
     
     ActionTimeline* createActionWithFlatBuffersFile(const std::string& fileName);
     ActionTimeline* loadAnimationActionWithFlatBuffersFile(const std::string& fileName);
-    ActionTimeline* loadAnimationWithDataBuffer(const cocos2d::Data data, const std::string fileName);
+    ActionTimeline* loadAnimationWithDataBuffer(const cocos2d::Data& data, const std::string& fileName);
     
     ActionTimeline* createActionWithFlatBuffersForSimulator(const std::string& fileName);
     
@@ -122,7 +122,7 @@ protected:
     Frame* loadBlendFrameWithFlatBuffers        (const flatbuffers::BlendFrame* flatbuffers);
     void loadEasingDataWithFlatBuffers(Frame* frame, const flatbuffers::EasingData* flatbuffers);
 
-    inline ActionTimeline* createActionWithDataBuffer(const cocos2d::Data data);
+    inline ActionTimeline* createActionWithDataBuffer(const cocos2d::Data& data);
 protected:
 
     typedef std::function<Frame*(const rapidjson::Value& json)> FrameCreateFunc;
