@@ -294,7 +294,7 @@ public:
     
     /**@~english
      * Compile the specified js file
-     * @param path    @~english The path of the script to to compiled
+     * @param path    @~english The path of the script to be compiled
      * @param global    @~english The js global object
      * @param cx        @~english The js context
      */
@@ -439,7 +439,7 @@ public:
     static bool log(JSContext *cx, uint32_t argc, jsval *vp);
     
     /**@~english
-     * Sets a js value to the targeted js obejct's reserved slot, which is not exposed to script environment.
+     * Sets a js value to the targeted js object's reserved slot, which is not exposed to script environment.
      * @param i @~english The slot index
      * @param obj @~english The targeted object
      * @param value @~english The js value to set to the slot
@@ -526,6 +526,11 @@ public:
      */
     virtual void unrootObject(cocos2d::Ref* ref) override;
 
+    /**
+     * Calls the Garbage Collector
+     */
+    virtual void garbageCollect() override;
+
 private:
     void string_report(JS::HandleValue val);
     void initRegister();
@@ -580,7 +585,7 @@ js_type_class_t *jsb_register_class(JSContext *cx, JSClass *jsClass, JS::HandleO
     return p;
 }
 
-/** creates two new proxies: one associaged with the nativeObj,
+/** creates two new proxies: one associated with the nativeObj,
  and another one associated with the JsObj */
 js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsObj);
 /** returns the proxy associated with the Native* */

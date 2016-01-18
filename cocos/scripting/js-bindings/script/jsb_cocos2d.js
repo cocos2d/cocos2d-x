@@ -2647,6 +2647,17 @@ cc.LabelTTF.prototype.setDrawMode = function () {};
 
 
 //
+// Label overflow
+//
+cc.Label.Overflow = {
+    NONE: 0,
+    CLAMP: 1,
+    SHRINK: 2,
+    RESIZE_HEIGHT: 3
+};
+
+
+//
 // Label adaptation to LabelTTF/LabelBMFont/LabelAtlas
 //
 _p = cc.Label.prototype;

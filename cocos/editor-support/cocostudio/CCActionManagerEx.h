@@ -109,7 +109,7 @@ public:
     */
     ActionObject* stopActionByName(const char* jsonName,const char* actionName);
 
-    /*init properties with json dictionay*/
+    /*init properties with json dictionary*/
     void initWithDictionary(const char* jsonName,const rapidjson::Value &dic, Ref* root);
     void initWithBinary(const char* file, Ref* root,  CocoLoader* cocoLoader, stExpCocoNode*    pCocoNode);
 

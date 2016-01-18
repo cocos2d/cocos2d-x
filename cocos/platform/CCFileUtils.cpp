@@ -726,11 +726,11 @@ unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, con
         CC_BREAK_IF(!file);
 
         // FIXME: Other platforms should use upstream minizip like mingw-w64
-        #ifdef MINIZIP_FROM_SYSTEM
+#ifdef MINIZIP_FROM_SYSTEM
         int ret = unzLocateFile(file, filename.c_str(), NULL);
-        #else
+#else
         int ret = unzLocateFile(file, filename.c_str(), 1);
-        #endif
+#endif
         CC_BREAK_IF(UNZ_OK != ret);
 
         char filePathA[260];
@@ -1189,6 +1189,11 @@ bool FileUtils::createDirectory(const std::string& path)
 
 bool FileUtils::removeDirectory(const std::string& path)
 {
+    // FIXME: Why using subclassing? an interface probably will be better
+    // to support different OS
+    // FileUtils::removeDirectory is subclassed on iOS/tvOS
+    // and system() is not available on tvOS
+#if !defined(CC_PLATFORM_IOS)
     if (path.size() > 0 && path[path.size() - 1] != '/')
     {
         CCLOGERROR("Fail to remove directory, path must terminate with '/': %s", path.c_str());
@@ -1201,6 +1206,7 @@ bool FileUtils::removeDirectory(const std::string& path)
     if (system(command.c_str()) >= 0)
         return true;
     else
+#endif
         return false;
 }
 

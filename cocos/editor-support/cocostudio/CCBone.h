@@ -107,7 +107,7 @@ public:
 
     /**
      * Set parent bone.
-     * If parent is NUll, then also remove this bone from armature.
+     * If parent is null, then also remove this bone from armature.
      * It will not set the Armature, if you want to add the bone to a Armature, you should use Armature::addBone(Bone *bone, const char* parentName).
      *
      * @param parent  the parent bone.

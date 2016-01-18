@@ -48,7 +48,7 @@ public:
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static ArmatureDataManager *sharedArmatureDataManager() { return ArmatureDataManager::getInstance(); }
 
-    /** @deprecated Use destoryInstance() instead */
+    /** @deprecated Use destroyInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static void purge() { ArmatureDataManager::destroyInstance(); };
     
     static ArmatureDataManager *getInstance();

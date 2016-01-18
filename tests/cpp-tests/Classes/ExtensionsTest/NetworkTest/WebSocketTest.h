@@ -32,6 +32,7 @@ public:
     
     // Menu Callbacks
     void onMenuSendTextClicked(cocos2d::Ref *sender);
+    void onMenuSendMultipleTextClicked(cocos2d::Ref *sender);
     void onMenuSendBinaryClicked(cocos2d::Ref *sender);
 
     virtual std::string title() const override { return "WebSocket Test"; }

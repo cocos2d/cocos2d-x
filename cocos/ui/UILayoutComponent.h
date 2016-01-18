@@ -116,7 +116,7 @@ namespace ui {
 
         /**
          * Query the percent content size value.
-         *@return Percet (x,y) in Vec2.
+         *@return Percent (x,y) in Vec2.
          */
         Vec2 getPercentContentSize()const;
 

@@ -455,7 +455,7 @@ void ScrollView::startAutoScroll(const Vec2& deltaMove, float timeInSec, bool at
     _autoScrollBraking = false;
     _autoScrollBrakingStartPosition = Vec2::ZERO;
     
-    // If the destination is also out of boundary of same side, start brake from beggining.
+    // If the destination is also out of boundary of same side, start brake from beginning.
     Vec2 currentOutOfBoundary = getHowMuchOutOfBoundary();
     if(currentOutOfBoundary != Vec2::ZERO)
     {

@@ -145,6 +145,22 @@ public:
      * @since v2.0.0
      */
 	bool supportsShareableVAO() const;
+
+    /** Whether or not OES_depth24 is supported.
+     *
+     * @return Is true if supports OES_depth24.
+     * @since v2.0.0
+     */
+    bool supportsOESDepth24() const;
+    
+    /** Whether or not OES_Packed_depth_stencil is supported.
+     *
+     * @return Is true if supports OES_Packed_depth_stencil.
+     * @since v2.0.0
+     */
+    bool supportsOESPackedDepthStencil() const;
+
+    
     
     /** Max support directional light in shader, for Sprite3D.
      *
@@ -232,6 +248,9 @@ protected:
     bool            _supportsBGRA8888;
     bool            _supportsDiscardFramebuffer;
     bool            _supportsShareableVAO;
+    bool            _supportsOESDepth24;
+    bool            _supportsOESPackedDepthStencil;
+    
     GLint           _maxSamplesAllowed;
     GLint           _maxTextureUnits;
     char *          _glExtensions;

@@ -141,7 +141,7 @@
 }
 
 /**
- * This delegate methodis called if the connection cannot be established to the server.  
+ * This delegate method is called if the connection cannot be established to the server.  
  * The error object will have a description of the error
  **/
 - (void)connection:(NSURLConnection *)connection 

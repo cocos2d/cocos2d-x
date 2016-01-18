@@ -279,7 +279,7 @@ protected:
 
     Armature *_armature;                        //! A weak reference of armature
 
-    std::string _movementID;                //! Current movment's name
+    std::string _movementID;                //! Current movement's name
 
     int _toIndex;                                //! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 

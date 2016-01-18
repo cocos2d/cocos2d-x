@@ -295,6 +295,8 @@ __cocos2d-x_root/build.__
 Contributing to the Project
 --------------------------------
 
+Cocos2d-x is licensed under the [MIT License](https://opensource.org/licenses/MIT). We welcome paricipation!
+
 Did you find a bug? Do you have feature request? Do you want to merge a feature?
 
   * [contributing to cocos2d-x][8]
