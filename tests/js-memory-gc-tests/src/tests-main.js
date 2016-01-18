@@ -1,11 +1,11 @@
 // Custom Sprite
 var MySprite = cc.Sprite.extend({
-        ctor: function (path) {
-                this._super(path);
-        },
-        something: function (x, y) {
-                this.setPosition(x,y);
-        }
+    ctor: function (path) {
+            this._super(path);
+    },
+    something: function (x, y) {
+            this.setPosition(x,y);
+    }
 });
 
 //
@@ -115,43 +115,59 @@ function runScene3(sender) {
 
 function runScene4(sender) {
 
-        var scene = new cc.Scene();
+    var scene = new cc.Scene();
 
-        var actionTo = cc.jumpTo(2, cc.p(300, 300), 50, 4);
-        var actionBy = cc.jumpBy(2, cc.p(300, 0), 50, 4);
-        var actionUp = cc.jumpBy(2, cc.p(0, 0), 80, 4);
-        var actionByBack = actionBy.reverse();
+    var actionTo = cc.jumpTo(2, cc.p(300, 300), 50, 4);
+    var actionBy = cc.jumpBy(2, cc.p(300, 0), 50, 4);
+    var actionUp = cc.jumpBy(2, cc.p(0, 0), 80, 4);
+    var actionByBack = actionBy.reverse();
 
-        var delay = cc.delayTime(0.25);
+    var delay = cc.delayTime(0.25);
 
-        var sprite1 = new cc.Sprite("res/Images/grossini_dance_08.png");
-        sprite1.setPosition(10,10);
-        var sprite2 = new cc.Sprite("res/Images/grossini_dance_01.png");
-        sprite2.setPosition(200,10);
-        var sprite3 = new cc.Sprite("res/Images/grossini_dance_04.png");
-        sprite3.setPosition(400,10);
+    var sprite1 = new cc.Sprite("res/Images/grossini_dance_08.png");
+    sprite1.setPosition(10,10);
+    var sprite2 = new cc.Sprite("res/Images/grossini_dance_01.png");
+    sprite2.setPosition(200,10);
+    var sprite3 = new cc.Sprite("res/Images/grossini_dance_04.png");
+    sprite3.setPosition(400,10);
 
-        scene.addChild(sprite1);
-        scene.addChild(sprite2);
-        scene.addChild(sprite3);
+    scene.addChild(sprite1);
+    scene.addChild(sprite2);
+    scene.addChild(sprite3);
 
-        sprite1.runAction(actionTo);
-        sprite2.runAction(cc.sequence(actionBy, delay, actionByBack));
+    sprite1.runAction(actionTo);
+    sprite2.runAction(cc.sequence(actionBy, delay, actionByBack));
 
-        var action = cc.sequence(actionUp, delay.clone()).repeatForever();
-        sprite3.runAction(action);
+    var action = cc.sequence(actionUp, delay.clone()).repeatForever();
+    sprite3.runAction(action);
 
 
-        // menu
-        var button = new cc.MenuItemFont("Go to Scene 1", runScene1);
-        button.fontSize = 20;
-        button.fontName = "Arial";
-        var menu = new cc.Menu();
-        menu.addChild(button);
-        menu.setPosition(300,20);
-        scene.addChild(menu);
+    // menu
+    var button = new cc.MenuItemFont("Go to Scene 5", runScene5);
+    button.fontSize = 20;
+    button.fontName = "Arial";
+    var menu = new cc.Menu();
+    menu.addChild(button);
+    menu.setPosition(300,20);
+    scene.addChild(menu);
 
-        cc.director.replaceScene(scene);
+    cc.director.replaceScene(scene);
+}
+
+
+function runScene5(sender) {
+    var scene = new TreeScene(5);
+
+    // menu
+    var button = new cc.MenuItemFont("Go to Scene 1", runScene1);
+    button.fontSize = 20;
+    button.fontName = "Arial";
+    var menu = new cc.Menu();
+    menu.addChild(button);
+    menu.setPosition(cc.winSize.width/2, 20);
+    scene.addChild(menu);
+
+    cc.director.replaceScene(scene);
 }
 
 //
