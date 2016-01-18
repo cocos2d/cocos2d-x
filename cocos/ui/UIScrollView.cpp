@@ -59,6 +59,7 @@ _rightBoundary(0.0f),
 _bePressed(false),
 _childFocusCancelOffsetInInch(MOVE_INCH),
 _touchMovePreviousTimestamp(0),
+_touchTotalTimeThreshold(0.5f),
 _autoScrolling(false),
 _autoScrollAttenuate(true),
 _autoScrollTotalTime(0),
@@ -328,7 +329,7 @@ Vec2 ScrollView::calculateTouchMoveVelocity() const
     {
         totalTime += timeDelta;
     }
-    if(totalTime == 0 || totalTime >= 0.5f)
+    if(totalTime == 0 || totalTime >= _touchTotalTimeThreshold)
     {
         return Vec2::ZERO;
     }
@@ -1302,6 +1303,16 @@ float ScrollView::getScrollBarAutoHideTime() const
         return _horizontalScrollBar->getAutoHideTime();
     }
     return 0;
+}
+    
+void ScrollView::setTouchTotalTimeThreshold(float touchTotalTimeThreshold)
+{
+    _touchTotalTimeThreshold = touchTotalTimeThreshold;
+}
+
+float ScrollView::getTouchTotalTimeThreshold() const
+{
+    return _touchTotalTimeThreshold;
 }
 
 Layout* ScrollView::getInnerContainer()const
