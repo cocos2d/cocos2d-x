@@ -19,8 +19,7 @@ jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp \
 jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \
 jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp \
 jni/JniHelper.cpp \
-jni/TouchesJni.cpp \
-jni/CocosPlayClient.cpp
+jni/TouchesJni.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
 
