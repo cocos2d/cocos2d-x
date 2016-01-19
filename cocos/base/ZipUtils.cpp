@@ -518,7 +518,7 @@ public:
 
 ZipFile *ZipFile::createWithBuffer(const void* buffer, uLong size)
 {
-    ZipFile *zip = new ZipFile();
+    ZipFile *zip = new (std::nothrow) ZipFile();
     if (zip && zip->initWithBuffer(buffer, size)) {
         return zip;
     } else {

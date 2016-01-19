@@ -279,21 +279,37 @@ std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& 
     CCASSERT((!data.isNull()), "BMFontConfiguration::parseConfigFile | Open file error.");
 
     if (memcmp("BMF", data.getBytes(), 3) == 0) {
+        // Handle fnt file of binary format
         std::set<unsigned int>* ret = parseBinaryConfigFile(data.getBytes(), data.getSize(), controlFile);
         return ret;
     }
 
-    auto contents = (const char*)data.getBytes();
-    if (contents[0] == 0)
+    if (data.getBytes()[0] == 0)
     {
         CCLOG("cocos2d: Error parsing FNTfile %s", controlFile.c_str());
         return nullptr;
     }
-
-    std::set<unsigned int> *validCharsString = new std::set<unsigned int>();
     
-    auto contentsLen = data.getSize();
-    char line[512];
+    // Handle fnt file of string format, allocate one extra byte '\0' at the end since c string needs it.
+    // 'strchr' finds a char until it gets a '\0', if 'contents' self doesn't end with '\0',
+    // 'strchr' will search '\n' out of 'contents' 's buffer size, it will trigger potential and random crashes since
+    // lineLength may bigger than 512 and 'memcpy(line, contents + parseCount, lineLength);' will cause stack buffer overflow.
+    // Please note that 'contents' needs to be freed before this function returns.
+    char* contents = (char*)malloc(data.getSize() + 1);
+    if (contents == nullptr)
+    {
+        CCLOGERROR("BMFontConfiguration::parseConfigFile, out of memory!");
+        return nullptr;
+    }
+    
+    memcpy(contents, data.getBytes(), data.getSize());
+    // Ensure the last byte is '\0'
+    contents[data.getSize()] = '\0';
+    
+    std::set<unsigned int> *validCharsString = new (std::nothrow) std::set<unsigned int>();
+    
+    auto contentsLen = strlen(contents);
+    char line[512] = {0};
     
     auto next = strchr(contents, '\n');
     auto base = contents;
@@ -357,6 +373,8 @@ std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& 
         }
     }
     
+    CC_SAFE_FREE(contents);
+    
     return validCharsString;
 }
 
@@ -364,7 +382,7 @@ std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char
 {
     /* based on http://www.angelcode.com/products/bmfont/doc/file_format.html file format */
 
-    set<unsigned int> *validCharsString = new set<unsigned int>();
+    set<unsigned int> *validCharsString = new (std::nothrow) set<unsigned int>();
 
     unsigned long remains = size;
 
@@ -687,7 +705,7 @@ int * FontFNT::getHorizontalKerningForTextUTF16(const std::u16string& text, int 
     if (!outNumLetters)
         return 0;
     
-    int *sizes = new int[outNumLetters];
+    int *sizes = new (std::nothrow) int[outNumLetters];
     if (!sizes)
         return 0;
     
@@ -821,7 +839,7 @@ void FontFNT::reloadBMFontResource(const std::string& fntFilePath)
     if (ret)
     {
         s_configurations->insert(fntFilePath, ret);
-        TextureCache::getInstance()->reloadTexture(ret->getAtlasName());
+        Director::getInstance()->getTextureCache()->reloadTexture(ret->getAtlasName());
 
     }
 }

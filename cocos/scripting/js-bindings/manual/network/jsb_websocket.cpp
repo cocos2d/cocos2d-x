@@ -139,10 +139,9 @@ public:
         jsval args = OBJECT_TO_JSVAL(jsobj);
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate.ref()), "onclose", 1, &args);
 
-        JS::RootedObject wsobj(cx, p->obj);
-        js_proxy_t* jsproxy = jsb_get_js_proxy(wsobj);
-        JS::RemoveObjectRoot(cx, &jsproxy->obj);
-        jsb_remove_proxy(p, jsproxy);
+        auto copy = &p->obj;
+        JS::RemoveObjectRoot(cx, copy);
+        jsb_remove_proxy(p);
         CC_SAFE_DELETE(ws);
     }
     
@@ -268,8 +267,8 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
         JS::RootedObject obj(cx, JS_NewObject(cx, js_cocos2dx_websocket_class, proto, JS::NullPtr()));
         //JS::RootedObject obj(cx, JS_NewObjectForConstructor(cx, js_cocos2dx_websocket_class, args));
         
-        WebSocket* cobj = new WebSocket();
-        JSB_WebSocketDelegate* delegate = new JSB_WebSocketDelegate();
+        WebSocket* cobj = new (std::nothrow) WebSocket();
+        JSB_WebSocketDelegate* delegate = new (std::nothrow) JSB_WebSocketDelegate();
         delegate->setJSDelegate(obj);
         
         if (argc == 2)

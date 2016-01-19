@@ -184,7 +184,7 @@ static bool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, jsva
     if (argc == 1)
     {
         // save the delegate
-        JSB_EditBoxDelegate* nativeDelegate = new JSB_EditBoxDelegate();
+        JSB_EditBoxDelegate* nativeDelegate = new (std::nothrow) JSB_EditBoxDelegate();
         nativeDelegate->setJSDelegate(args.get(0));
         
         cobj->setUserObject(nativeDelegate);

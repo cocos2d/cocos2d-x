@@ -153,7 +153,7 @@ bool js_cocos2dx_SocketIO_connect(JSContext* cx, uint32_t argc, jsval* vp)
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
         } while (0);
         
-        JSB_SocketIODelegate* siodelegate = new JSB_SocketIODelegate();
+        JSB_SocketIODelegate* siodelegate = new (std::nothrow) JSB_SocketIODelegate();
         
         CCLOG("Calling native SocketIO.connect method");
         SIOClient* ret = SocketIO::connect(url, *siodelegate);
@@ -164,8 +164,7 @@ bool js_cocos2dx_SocketIO_connect(JSContext* cx, uint32_t argc, jsval* vp)
             if (ret)
             {
                 // link the native object with the javascript object
-                js_proxy_t *p;
-                HASH_FIND_PTR(_native_js_global_ht, &ret, p);
+                js_proxy_t *p = jsb_get_native_proxy(ret);
                 if(!p)
                 {
                     //previous connection not found, create a new one

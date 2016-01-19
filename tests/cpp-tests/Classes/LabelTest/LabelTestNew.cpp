@@ -97,6 +97,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelToggleTypeTest);
     ADD_TEST_CASE(LabelSystemFontTest);
     ADD_TEST_CASE(LabelCharMapFontTest);
+    ADD_TEST_CASE(LabelIssue13846Test);
 };
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
@@ -2084,6 +2085,7 @@ void LabelLayoutBaseTest::initWrapOption(const cocos2d::Size& size)
     checkBox->setScale(0.5);
     checkBox->setSelected(true);
     checkBox->setName("toggleWrap");
+    checkBox->setEnabled(false);
 
     checkBox->addEventListener([=](Ref* ref, CheckBox::EventType event){
         if (event == CheckBox::EventType::SELECTED) {
@@ -2455,7 +2457,7 @@ LabelToggleTypeTest::LabelToggleTypeTest()
     _label->setLineSpacing(5);
     _label->setAdditionalKerning(2);
     _label->setVerticalAlignment(TextVAlignment::CENTER);
-    _label->setOverflow(Label::Overflow::NORMAL);
+    _label->setOverflow(Label::Overflow::NONE);
 
 
     this->updateDrawNodeSize(_label->getContentSize());
@@ -2564,7 +2566,7 @@ void LabelToggleTypeTest::onChangedRadioButtonSelect(RadioButton* radioButton, R
     {
         switch (radioButton->getTag()) {
             case 0:
-                _label->setOverflow(Label::Overflow::NORMAL);
+                _label->setOverflow(Label::Overflow::NONE);
                 break;
             case 1:
                 _label->setOverflow(Label::Overflow::CLAMP);
@@ -2592,7 +2594,7 @@ LabelSystemFontTest::LabelSystemFontTest()
 {
     _label->setLineSpacing(5);
     _label->setVerticalAlignment(TextVAlignment::CENTER);
-   _label->setOverflow(Label::Overflow::NORMAL);
+   _label->setOverflow(Label::Overflow::NONE);
    _label->setSystemFontName("Hiragino Sans GB");
     
     auto stepper = (ControlStepper*)this->getChildByName("stepper");
@@ -2705,7 +2707,7 @@ void LabelSystemFontTest::onChangedRadioButtonSelect(RadioButton* radioButton, R
     {
         switch (radioButton->getTag()) {
             case 0:
-                _label->setOverflow(Label::Overflow::NORMAL);
+                _label->setOverflow(Label::Overflow::NONE);
                 break;
             case 1:
                 _label->setOverflow(Label::Overflow::CLAMP);
@@ -2733,7 +2735,7 @@ LabelCharMapFontTest::LabelCharMapFontTest()
 {
     _label->setLineSpacing(5);
     _label->setVerticalAlignment(TextVAlignment::CENTER);
-    _label->setOverflow(Label::Overflow::NORMAL);
+    _label->setOverflow(Label::Overflow::NONE);
     _label->setCharMap("fonts/tuffy_bold_italic-charmap.plist");
     _label->setString("Hello World, This is a char map test.");
     _label->setScale(0.5f);
@@ -2757,4 +2759,25 @@ std::string LabelCharMapFontTest::title() const
 std::string LabelCharMapFontTest::subtitle() const
 {
     return "";
+}
+
+LabelIssue13846Test::LabelIssue13846Test()
+{
+    auto center = VisibleRect::center();
+    
+    auto label = Label::createWithTTF("12345", "fonts/arial.ttf", 26);
+    label->setPosition(center);
+    addChild(label);
+    
+    label->getLetter(2)->setVisible(false);
+}
+
+std::string LabelIssue13846Test::title() const
+{
+    return "Test for Issue #13846";
+}
+
+std::string LabelIssue13846Test::subtitle() const
+{
+    return "Test hide label's letter,the label should display ‘12 45’ as expected";
 }

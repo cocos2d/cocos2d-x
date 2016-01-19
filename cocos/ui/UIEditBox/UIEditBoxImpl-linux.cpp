@@ -32,7 +32,7 @@
 #include "base/ccUTF8.h"
 #include <gtk/gtk.h>
 
-// desoty dialog when lost focus
+// destroy dialog when lost focus
 static void dialogFocusOutCallback(GtkWidget* widget, gpointer user_data)
 {
     gtk_widget_destroy(widget);

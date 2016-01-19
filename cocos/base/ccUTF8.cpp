@@ -89,7 +89,7 @@ bool isCJKUnicode(char16_t ch)
         || (ch >= 0xAC00 && ch <= 0xD7AF)   // Hangul Syllables
         || (ch >= 0xF900 && ch <= 0xFAFF)   // CJK Compatibility Ideographs
         || (ch >= 0xFE30 && ch <= 0xFE4F)   // CJK Compatibility Forms
-        || (ch >= 0x31C0 && ch <= 0x4DFF);  // Other exiensions
+        || (ch >= 0x31C0 && ch <= 0x4DFF);  // Other extensions
 }
 
 void trimUTF16Vector(std::vector<char16_t>& str)
@@ -293,7 +293,7 @@ unsigned short* cc_utf8_to_utf16(const char* str_old, int length/* = -1*/, int* 
     
     if (succeed)
     {
-        ret = new unsigned short[outUtf16.length() + 1];
+        ret = new (std::nothrow) unsigned short[outUtf16.length() + 1];
         ret[outUtf16.length()] = 0;
         memcpy(ret, outUtf16.data(), outUtf16.length() * sizeof(unsigned short));
         if (rUtf16Size)
@@ -328,7 +328,7 @@ char * cc_utf16_to_utf8 (const unsigned short  *str,
     
     if (succeed)
     {
-        ret = new char[outUtf8.length() + 1];
+        ret = new (std::nothrow) char[outUtf8.length() + 1];
         ret[outUtf8.length()] = '\0';
         memcpy(ret, outUtf8.data(), outUtf8.length());
     }

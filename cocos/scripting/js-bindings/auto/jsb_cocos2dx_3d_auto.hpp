@@ -16,7 +16,6 @@ bool js_cocos2dx_3d_Animation3D_initWithFile(JSContext *cx, uint32_t argc, jsval
 bool js_cocos2dx_3d_Animation3D_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Animation3D_getBoneCurveByName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Animation3D_getDuration(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animation3D_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Animation3D_Animation3D(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_Animate3D_class;
@@ -88,7 +87,6 @@ void register_all_cocos2dx_3d(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_3d_Mesh_getSkin(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_getMaterial(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_getVertexSizeInBytes(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Mesh_enableCheckTexture(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_setMaterial(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_getName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_getIndexFormat(JSContext *cx, uint32_t argc, jsval *vp);
@@ -99,7 +97,6 @@ bool js_cocos2dx_3d_Mesh_hasVertexAttrib(JSContext *cx, uint32_t argc, jsval *vp
 bool js_cocos2dx_3d_Mesh_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_getMeshIndexData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_setName(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Mesh_checkTexture(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_getIndexCount(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_setMeshIndexData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_getMeshVertexAttribCount(JSContext *cx, uint32_t argc, jsval *vp);
@@ -107,7 +104,6 @@ bool js_cocos2dx_3d_Mesh_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_setForce2DQueue(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_getPrimitiveType(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_setSkin(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Mesh_setEnableCheckTexture(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_isVisible(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_getIndexBuffer(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_setGLProgramState(JSContext *cx, uint32_t argc, jsval *vp);

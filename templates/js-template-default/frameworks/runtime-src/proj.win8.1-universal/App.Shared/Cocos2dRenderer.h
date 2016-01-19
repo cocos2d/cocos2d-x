@@ -29,7 +29,7 @@ class Cocos2dRenderer
 public:
     Cocos2dRenderer(int width, int height, float dpi, 
         Windows::Graphics::Display::DisplayOrientations orientation, 
-        Windows::UI::Core::CoreDispatcher^ dispathcer, Windows::UI::Xaml::Controls::Panel^ panel);
+        Windows::UI::Core::CoreDispatcher^ dispatcher, Windows::UI::Xaml::Controls::Panel^ panel);
     ~Cocos2dRenderer();
     void Draw(GLsizei width, GLsizei height, float dpi, Windows::Graphics::Display::DisplayOrientations orientation);
 	void QueuePointerEvent(cocos2d::PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);

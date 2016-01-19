@@ -97,16 +97,16 @@ class CC_DLL Label : public Node, public LabelProtocol, public BlendProtocol
 public:
     enum class Overflow
     {
-        //for keep back compatibility
-        NORMAL,
-        /**
-         * In SHRINK mode, the font size will change dynamically to adapt the content size.
-         */
-        SHRINK,
+        //In NONE mode, the dimensions is (0,0) and the content size will change dynamically to fit the label.
+        NONE,
         /**
          *In CLAMP mode, when label content goes out of the bounding box, it will be clipped.
          */
         CLAMP,
+        /**
+         * In SHRINK mode, the font size will change dynamically to adapt the content size.
+         */
+        SHRINK,
         /**
          *In RESIZE_HEIGHT mode, you can only change the width of label and the height is changed automatically.
          */
@@ -348,6 +348,41 @@ public:
      * @see `LabelEffect`
      */
     virtual void disableEffect(LabelEffect effect);
+
+    /**
+    * Return whether the shadow effect is enabled.
+    */
+    bool isShadowEnabled() const { return _shadowEnabled; }
+
+    /**
+    * Return shadow effect offset value.
+    */
+    Size getShadowOffset() const { return _shadowOffset; }
+
+    /**
+    * Return the shadow effect blur radius.
+    */
+    float getShadowBlurRadius() const { return _shadowBlurRadius; }
+
+    /**
+    * Return the shadow effect color value.
+    */
+    Color4F getShadowColor() const { return _shadowColor4F; }
+
+    /**
+    * Return the outline effect size value.
+    */
+    int getOutlineSize() const { return _outlineSize; }
+
+    /**
+    * Return current effect type.
+    */
+    LabelEffect getLabelEffectType() const { return _currLabelEffect; }
+
+    /**
+    * Return current effect color value.
+    */
+    Color4F getEffectColor() const { return _effectColorF; }
 
     /** Sets the Label's text horizontal alignment.*/
     void setAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment);}

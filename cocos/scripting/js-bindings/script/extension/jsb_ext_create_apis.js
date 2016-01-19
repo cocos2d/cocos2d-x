@@ -32,16 +32,24 @@ jsb.EventListenerAssetsManager.prototype._ctor = function(assetsManager, callbac
 
 
 
-cc.ControlButton.prototype._ctor = function(label, backgroundSprite, fontSize){
-    if(fontSize != undefined)
-        this.initWithTitleAndFontNameAndFontSize(label, backgroundSprite, fontSize);
-    else if(backgroundSprite != undefined)
-        this.initWithLabelAndBackgroundSprite(label, backgroundSprite);
-    else if(label != undefined)
+cc.ControlButton.prototype._ctor = function(label, backgroundSprite, fontSize, fontName, autoSizeWithLabel ){
+    if (autoSizeWithLabel !== undefined && backgroundSprite) {
+        this.initWithLabelAndBackgroundSprite(label, backgroundSprite, autoSizeWithLabel);
+    }
+    else if(fontName !== undefined && fontSize !== undefined) {
+        this.initWithTitleAndFontNameAndFontSize(label, fontName, fontSize);
+    }
+    else if(backgroundSprite !== undefined) {
+        this.initWithLabelAndBackgroundSprite(label, backgroundSprite, true);
+    }
+    else if(label !== undefined) {
         this.initWithBackgroundSprite(label);
-    else
+    }
+    else {
         this.init();
+    }
 };
+
 
 cc.ControlColourPicker.prototype._ctor = function(){
     this.init();

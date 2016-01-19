@@ -171,7 +171,7 @@ CSLoader* CSLoader::getInstance()
 {
     if (! _sharedCSLoader)
     {
-        _sharedCSLoader = new CSLoader();
+        _sharedCSLoader = new (std::nothrow) CSLoader();
         _sharedCSLoader->init();
     }
     
@@ -348,7 +348,7 @@ ActionTimeline* CSLoader::createTimeline(const std::string &filename)
     return nullptr;
 }
 
-ActionTimeline* CSLoader::createTimeline(const Data data, const std::string& filename)
+ActionTimeline* CSLoader::createTimeline(const Data& data, const std::string& filename)
 {
     std::string suffix = getExtentionName(filename);
 
@@ -742,7 +742,7 @@ Node* CSLoader::loadWidget(const rapidjson::Value& json)
     
     
     
-    WidgetPropertiesReader0300* widgetPropertiesReader = new WidgetPropertiesReader0300();
+    WidgetPropertiesReader0300* widgetPropertiesReader = new (std::nothrow) WidgetPropertiesReader0300();
     Widget* widget = nullptr;
     
     if (isWidget(classname))
@@ -853,12 +853,12 @@ Component* CSLoader::loadComAudio(const rapidjson::Value &json)
     return audio;
 }
 
-cocos2d::Node* CSLoader::createNode(const Data data)
+cocos2d::Node* CSLoader::createNode(const Data& data)
 {
     return createNode(data, nullptr);
 }
 
-Node * CSLoader::createNode(const Data data, const ccNodeLoadCallback &callback)
+Node * CSLoader::createNode(const Data& data, const ccNodeLoadCallback &callback)
 {
     CSLoader * loader = CSLoader::getInstance();
     Node * node = nullptr;
@@ -1037,6 +1037,7 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, const
             Component* component = reader->createComAudioWithFlatBuffers(options->data());
             if (component)
             {
+                component->setName(PlayableFrame::PLAYABLE_EXTENTION);
                 node->addComponent(component);
                 reader->setPropsWithFlatBuffers(node, options->data());
             }

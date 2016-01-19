@@ -521,9 +521,9 @@ ccui.Widget.prototype.addTouchEventListener = function (selector, target) {
 
 function _ui_addEventListener(selector, target) {
     if (target === undefined)
-        this._addTouchEventListener(selector);
+        this._addEventListener(selector);
     else
-        this._addTouchEventListener(selector.bind(target));
+        this._addEventListener(selector.bind(target));
 }
 function _ui_applyEventListener(ctor) {
     var proto = ctor.prototype;

@@ -278,6 +278,10 @@ cc.Class.extend = function (prop) {
                     cc.log("No ctor function found! Please check whether `classes_need_extend` section in `ini` file like which in `tools/tojs/cocos2dx.ini`");
             }
             else {
+                // "extended" object won't use the native finalize
+                // will will guarantee that the clean-up of the native
+                // object will called
+                this.__finalizeMe = new __jsc__.NativeFinalizeMe(this);
                 this.ctor.apply(this, arguments);
             }
         }

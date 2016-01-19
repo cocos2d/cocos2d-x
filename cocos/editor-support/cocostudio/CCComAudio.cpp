@@ -35,6 +35,7 @@ const std::string ComAudio::COMPONENT_NAME = "CCComAudio";
 ComAudio::ComAudio()
 : _filePath("")
 , _loop(false)
+, _startedSoundId(0)
 {
     _name = COMPONENT_NAME;
 }
@@ -321,4 +322,13 @@ bool ComAudio::isLoop()
 	return _loop;
 }
 
+void ComAudio::start()
+{
+    _startedSoundId = playEffect();
+}
+
+void ComAudio::stop()
+{
+    stopEffect(_startedSoundId);
+}
 }

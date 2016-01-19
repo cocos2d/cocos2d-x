@@ -2,7 +2,8 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x 3.9 Release Notes](#cocos2d-x-39-release-notes)
+- [Cocos2d-x 3.10 Release Notes](#cocos2d-x-
+- -release-notes)
 - [Misc Information](#misc-information)
 - [Requirements](#requirements)
   - [Runtime Requirements](#runtime-requirements)
@@ -14,18 +15,18 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [v3.9](#v39)
-  - [Highlights features, improvements and API updates of v3.9](#highlights-features-improvements-and-api-updates-of-v39)
-  - [The main features in detail of Cocos2d-x v3.9:](#the-main-features-in-detail-of-cocos2d-x-v39)
-    - [3D Module](#3d-module)
-    - [2D Module](#2d-module)
+- [v3.10](#v310)
+  - [Highlights features, improvements and API updates of v3.10](#highlights-features-improvements-and-api-updates-of-v310)
+  - [The main features in detail of Cocos2d-x v3.10:](#the-main-features-in-detail-of-cocos2d-x-v310)
+    - [UI System](#ui-system)
+    - [AudioEngine](#audioengine)
     - [Others](#others)
   - [Other changes](#other-changes)
   - [NEW APIS](#new-apis)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Cocos2d-x 3.9 Release Notes #
+# Cocos2d-x 3.10 Release Notes #
 
 # Misc Information
 
@@ -146,287 +147,256 @@ Use Cocos Console to create a new game:
 cocos new -l cpp|js|lua MyNewGame
 ```
 
-# v3.9
+# v3.10
 
-## Highlights features, improvements and API updates of v3.9
+## Highlights features, improvements and API updates of v3.10
 
-We are happy to announce the release of Cocos2d-x v3.9. Following are the highlighted features, improvements and API updates in this version. 
+We are happy to announce the release of Cocos2d-x v3.10. Following are the highlighted features, improvements and API updates in this version. 
 
-1. 3D Module: 
-    - Added 3D MotionStreak to support streak effect. 
-    - Refined Sprite3D to support material system. 
-2. 2D Module:
-    - Added frame callback function and animation callback function. 
-    - Added script component system. 
-    - Reconstruction of 2D physics with Component. 
-    - Improved EditBox implemention on iOS and Win32 platform.
-    - Removed dependence of libcurl on AssetsManager, AssetsManagerEx and Downloader (iOS & Android).
-    - Improved particle performance. 
-3. Others: 
-    - Supported Action inheritance, update function overwriting in JSB. 
-    - Improved ScrollView performance in Web engine. 
-    - Improved Scale9Sprite performance in Web engine. 
-    - Decoupled Sprite's setTexture and updateColor in Web engine.
-    - Added support for debugging and release on real devices with Xcode7 and iOS9.
+1. Provides a unified setup for both Cocos2d-x and Cocos. This allows you to stay up to date with the latest Cocos2d-x releases. This includes using precompiled binaries and source code, in a single place. As always the source code is available from [GitHub](https://github.com/cocos2d/cocos2d-x) but, there is no longer a `.zip` file available containing the source code. 
+2. New __Cocos Launcher__ tool! __Cocos Launcher__ allows:
+  * One step to create a new project with the engine, by using precompiled libraries or source code.
+  * Easy integration with SDKBOX for 3rd party services: Facebook, IAP and many more.
+  * Developers to provide feedback and get support, directly within __Cocos Launcher__, making it simple to contact the engine team for help.　
+3. UI System:
+  * Reimplemented `Scale9Sprite` to improve performance and reduce memory consumption.
+  * Changed `PageView` to derive from `ListView`. `PageView` can add any widget as a child.
+  * Added three new *overflow types* to `Label`: **CLAMP**，**SHRINK**, **RESIZE_HEIGHT**.
+  * Fixed a bug in `ClippingNode` that corrects its behavior when being set as a child.
+4. Improved **JavaScript Bindings**: follows [SpiderMonkey GC best practices](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide) making it more robust.
 
-## The main features in detail of Cocos2d-x v3.9:
+## The main features in detail of Cocos2d-x v3.10:
 
-### 3D Module
+### UI System
 
-1. 3D MotionStreak
+1. Reimplemented `Scale9Sprite` and improve the scale9sprite performance and reduce memory consumption.
     
-    In this version, 3D MotionStreak is added to support streak effect. Check the testcase: [Sprite3DTest](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/Sprite3DTest/Sprite3DTest.cpp#L2472) to see how to use it.
+    Reimplemented ui::Scale9Sprite, now the Slice sprite uses 16 vertices and 54 indices instead of the old 9 sprites way, The memory consumption is much lower than the previous implementation, and it is also more efficient.
 
-2. Sprite3D
+    In SIMPLE mode, the 4 borders are all 0 and the whole sprite will scale horizontally and vertically. In this mode only 1 quad is used for rendering, for example:
 
-    Added Sprite3D material class. It will be easy and convenient to create internal material. 
+        auto blocks = ui::Scale9Sprite::createWithSpriteFrameName("blocks9c.png");
+        //When setting to SIMPLE, only 4 vertexes is used to rendering.
+        blocks->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
 
-### 2D Module
+    In SLICE mode, it will use 18 triangles to rendering the slice 9 sprite. If the 4 borders are 0, there still be 18 triangles computed. So choose your RenderingType wisely, for example:
 
-1. Frame callback function and animation callback function
-
-    Three interfaces are added in ActionTimelineData class, which are addFrameEndCallFunc, removeFrameEndCall and clearFrameEndCalls. It will be easy to add or remove specific frame event. 
-
-2. Script Component 
-
-    Script component is used to extend c++ Nodes. You can add a script component to a Node, then the script component will receive onEnter,onExit and update events. For example:
-
-    ```c++ 
-    // create a sprite and add a lua component auto player =
-    Sprite::create("player.png");
+		auto sprite = ui::Scale9Sprite::createWithSpriteFrameName("blocks9c.png");
+        //When setting to SLICE, 16 vertexes will be used to rendering.
+        sprite->setRenderingType(Scale9Sprite::RenderingType::SLICE);
     
-    auto luaComponent = ComponentLua::create("player.lua");
-    player->addComponent(luaComponent);
-    ```
+2. Changed `PageView` to derived from ListView, PageView can add any type of widget as child.
+
+    PageView was derived from Layout and it implemented the features of scrolling and item arrangement from scratch. But the features are already there in ListView. So remove those duplicated implementations from PageView and make it inherit from ListView.
+
+    By consequence, PageView becomes simpler and easier to maintain because it considers only paging implementation. for example:
+
+        // Create the page view
+        Size size(240, 130);
+        PageView* pageView = PageView::create();
+        pageView->setDirection(PageView::Direction::HORIZONTAL);
+        pageView->setContentSize(size);
+        Size backgroundSize = background->getContentSize();
+        //"removeAllPages" is changed to "removeAllItems"
+        pageView->removeAllItems();
+        pageView->setIndicatorEnabled(true);
+
+        int pageCount = 4;
+        for (int i = 0; i < pageCount; ++i)
+        {
+            Layout* layout = Layout::create();
+            layout->setContentSize(size);
+            
+            ImageView* imageView = ImageView::create("cocosui/scrollviewbg.png");
+            imageView->setScale9Enabled(true);
+            imageView->setContentSize(size);
+            imageView->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
+            layout->addChild(imageView);
+            
+            Text* label = Text::create(StringUtils::format("page %d",(i+1)), "fonts/Marker Felt.ttf", 30);
+            label->setColor(Color3B(192, 192, 192));
+            label->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
+            layout->addChild(label);
+            //"insertPage" is changed to "insertCustomItem"
+            pageView->insertCustomItem(layout, i);
+        }
+        //"removePageAtIndex" is changed to "removeItem"
+        pageView->removeItem(0);
+        //"scrollToPage" is changed to "scrollToItem"
+        pageView->scrollToItem(pageCount - 2);
+
+     More detail usage please refer to: tests/cpp-tests/Classes/UITest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp.
     
-    ```lua
-    // player.lua
-    local player = { 
-        onEnter = function(self)
-        -- do some things in onEnter 
-        end
-        
-        onExit = function(slef) 
-        -- do some things in onExit 
-        end
-        
-        update = function(self)
-        -- do some things every frame 
-        end
-    }
-    
-    -- it is needed to return player to let c++ nodes know it 
-    return player 
-    ```
-    
-    Javascript can work as the same way, just use ComponentJS instead of ComponentLua. 
-    
-    There are some differences between lua component and Javascript component:
-    
-    Should return the object in lua component, in Javascript, you only have to extend cc.ComponentJS, and ensure the result of the last statement is the class of Component.
-    
-    Lua component can only be used in lua projects, Javascript component can only be used in Javascript projects.
-    
-    More detail usage please refer to: `tests/lua-tests/src/ComponentTest` and `tests/js-tests/src/ComponentTest`
+   
+3. Added three overflow type to new label: CLAMP, SHRINK, RESIZE_HEIGHT.
+  
+     Overflow type is used to control label overflow result, In SHRINK mode, the font size will change dynamically to adapt the content size. In CLAMP mode, when label content goes out of the bounding box, it will be clipped, In RESIZE_HEIGHT mode, you can only change the width of label and the height is changed automatically. For example:
+       
+        //Change the label's Overflow type
+        label->setOverflow(Label::Overflow::RESIZE_HEIGHT);
+
+     More detail usage please refer to: tests/cpp-tests/Classes/LabelTest/LabelTestNew.cpp.
+
+     Limitations:
 
 
-3. 2D Physics
-
-    Before v3.9, there are many physics related codes in Node, such as Node::setPhysicsBody(). Since v3.9, we move these codes into physics component.
-
-    After using physics component, the way to use physics is changed. Before v3.9, you can use physics like this:
-    
-    ```
-    auto node = Node::create(); 
-    node->setPhysicsBody(PhysicsBody::createEdgeBox(...));
-    ```
-    
-    Since v3.9 you should use like this:
-    
-    ```
-    auto node = Node::create();
-    node->addComponent(PhysicsBody::createEdgeBox(...));
-
-    ```
-
-4. EditBox implemention on iOS and Win32 platform
-
-    - Specify the maximum number of characters in the dialog box. 
-    - Support password input. 
-    - Games will continue when the dialogue box pops up. 
-    - Sync the content in dialogue box. 
-
-5. Remove dependence of curl on AssetsManager, AssetsManagerEx and Downloader (iOS & Android)
-
-    From v3.9, iOS and Android version will not depend on libcurl, which make
-    the game package smaller and solve some bugs caused by libcurl. Stability has
-    been improved with the updated iOS and Android system. 
-
-6. Improved particle performance. 
-
-### Others
-
-1. Supported Action inheritance, update function overwriting in JSB
-
-    In previous version of JSB, developers cannot inherit Action class in JS script, such as Action / ActionInterval / ActionInstant, for their update function will not be called. In v3.9, developers can create subclass of Action and make extensions. More detail usage please refer to the textcase in ActionTest / ActionCustomTest.
-
-2. ScrollView performance on Web engine
-
-    ScrollView and ListView are the popular UI controls in Web engine. Their
-    performance is not perfect in previous versions, especially when there are multiple sub-controls. In v3.9, we have improved its rendering performance. They only act on the contents displayed on the current screen. Test
-    date shows that, comparing with v3.8, rendering efficiency of v3.9 have been improved for twice to four times in different devices and browsers. 
-
-3. Scale9Sprite performance on Web engine
-
-    In this version, we have changed the way to construct 9-slice sprite. The engine uses 9 rendering commands instead of the 9 nodes in previous versions. This helps to reduce memory usage and improve rendering performance. 
-
-4. Decoupled Sprite's setTexture and updateColor in Web engine.
-
-    - Organized the rendering logic in Sprite. UpdateColor is accomplished by texture instead of the Sprite. 
-    - Fixed a bug about image with alpha channel that when the image is set to black, there is color difference between previous and current version. 
-    - Improved texture update logic to reduce texture updates when changing colors.
-    - Improved the logic about the rendering function in SpriteCanvasRenderCmd.
-    - Removed some duplicate codes about updateColor.
-
-5. Support for debugging and release on real devices with Xcode7 and iOS9
-
-    In v3.8.1, we have made it possible to debug on Xcode7. However, there was a bug with iOS9 real device debuging, and in v3.9, we have fixed the bug.
-
+     currently only TTF and BMFont support all the valid Overflow type. Char Map font supports all the Overflow type except for SHRINK, because we can't measure its font size. System font only support Overflow::Normal and Overflow::RESIZE_HEIGHT.
 
 ## Other changes
+[NEW]           RichText supported new line element.
 
-[NEW]           Label: Added line spacing/leading feature to Label.
+[NEW]           UIText::clone supports clone the text effect.
 
-[NEW]           ListView: Added APIs to scroll to specific item in list.
+[NEW]           UI: Added methods to query label effect state.
+    
+[REFINE]        IOS: Added virtual keyword for some render related function.
 
-[NEW]           ListView: Added APIs to get an item in specific position like center, leftmost, rightmost, topmost and bottommost.
+[REFINE]        UI: Fixed boring deprecated warning in HttpRequest.
 
-[NEW]           ListView: Added a feature for magnetic scrolling.
+[REFINE]        Network: Fixed Downloader bug on iOS & Android platform.
 
-[NEW]           Animate: Added ActionTimeline::setAnimationEndCallBack and ActionTimeline::addFrameEndCallFunc.
+[REFINE]        Studio: Fixed deprecation warning in SkeletonRenderer.
 
-[NEW]           Animate: Added CSLoader::createNodeWithVisibleSize, CSLoader::createNodeWithVisibleSize and moved "ui::Helper::DoLayout" into them.
+[REFINE]        JS: Added js test case for fix, improve template.
 
-[NEW]           Stuio: Added support for Cocos Studio Light3D.
+[REFINE]        Network: Permit http access to cocos2d-x.org in test projects on iOS.
 
-[NEW]           Platform: Added the missing CURL support to the Windows 10 UWP version.
+[REFINE]        Network: Crash when removing a remotely downloaded image from texture 
+cache in js-binding.
 
-[NEW]           Platform: Added UIEditBox support on linux platform.
+[REFINE]        Win10: WinRT project update version to v3.10.
 
-[REFINE]        3D: Added non-null checks in PUScriptCompiler::visit before dereferencing.
+[REFINE]        Console: Added quiet option for Cocos Toolkit.
 
-[REFINE]        3D: Refined SkyboxBrush by making the shader parameter take effect at once.
+[REFINE]        JS: New GC model for js-binding.
 
-[REFINE]        Label: Changed label font size type to float to support high precision when font size is small.
+[REFINE]        Doc: Fixed typos in documentation and comments.
 
-[REFINE]        ListView: Fixed an issue that list view's Magnetic::CENTER is not working well when non-bounceable.
+[REFINE]        UI: Updated controlButton size calculate with new Scale9Sprite logic.
 
-[REFINE]        ListView: Added feature of jumping to a specific item in list view.
+[REFINE]        Win10: Added missing _USRJSSTATIC preprocessor define for ARM builds.
 
-[REFINE]        Sprite: Added a "unsupport image format!" log when creating a sprite in CCImage.cpp.
+[REFINE]        JS: Added ccvector_to / ccmap_to converted to new js-binding API.
 
-[REFINE]        ScrollView: Merge logics of Scroll View for scroll by inertia and auto scroll into one.
+[REFINE]        UI: Slider misprint fix.
 
-[REFINE]        Animate: Moved initialization of image to an appropriate location, because it always called twice in 
-SpriteFrameCache::addSpriteFramesWithFile().
+[FIX]           Core: Fixed premultiplyAlpha for mipmaps and compressed textures.
 
-[REFINE]        Simulator: Changed the size of startFlag to 13.
+[FIX]           UI: Fixed Scale9sprite rendering error when content size smaller than the sum of leftInset and rightInset.
 
-[REFINE]        Simulator: Show Node and Skeleton in the middle of the simulator.
+[FIX]           Win32: Fixed EditBox crash when removing an EditBox in a scheduler.
 
-[REFINE]        Simulator: Removed screen direction check in simulator to avoid render error.
+[FIX]           Android: Fixed cannot add view to mFrameLayout when extends Cocos2dxActivity.
 
-[REFINE]        Pysics: Refined components to improve physics performance.
+[FIX]           2D: Fixed actionNode set at wrong position bug.
 
-[REFINE]        UI: Refined ComponentContainer to improve performance.
+[FIX]           3D: Fixed the movement of PUParticle lags one frame.
 
-[REFINE]        UI: EventListenerMouse will dispatch EventMouse events.
+[FIX]           UI: Fixed the wront argument of setPlaceholderFontName in EditBox.
 
-[REFINE]        OpenGL: Added check for glfwCreateWindow.
+[FIX]           UI: Fixed EditBox editBoxEditingDidEnd may use the original text after change the text of EditBox in user script.
 
-[REFINE]        Platform: Fixed a crash on xiaomi2 if Cocos2d-x is built as a dynamic library.
+[FIX]           Audio: Fixed `FinishCallback` never be called in Windows.
 
-[REFINE]        Platform: Updated libcococs2d name to v3.9 on WinRT platforms.
+[FIX]           UI: Fixed Layout stencil clipping nested with Clipping Node rendering issue.
 
-[REFINE]        Platform: Added some support for mouse on WinRT. Include: Show/Hide mouse cursor; Mouse event 
-implemented similar Desktop version; Left button send mouse event and touch; Support other mouse button and scroll 
-wheel.
+[FIX]           UI: Keyboard doesn't hide when click the screen outside of EditBox on iOS platform.
 
-[REFINE]        Platform: Correct the convertion between unicode and utf8 on WinRT.
+[FIX]           UI: Fixed a fatal bug in EditBox implement on Windows platform.
 
-[REFINE]        Platform: Improved EditBox implement on Win32 platform.
+[FIX]           UI: Fixed edit box setPlaceholderFontName and scale font size issue.
 
-[REFINE]        JS: Add jsb.fileUtils.writeDataToFile().
+[FIX]           Core: Fixed memory leak when initWithImage() failed.
 
-[REFINE]        JS: Set js templates Mac target platform from null to 10.7.
+[FIX]           Network: CCDownloader on iOS is broken in v3.9 js-binding.
 
-[REFINE]        JS: Removed the static define of variable in headfile of ScriptingCore.
+[FIX]           JS: Bindings fixes for Menu, Sprite and Label.
 
-[REFINE]        Lua: Added AssetsManagerEx constants UPDATE_FAILED and ERROR_DECOMPRESS in Lua.
+[FIX]           Studio: Removed weak reference in ActionNode.
 
-[REFINE]        Lua / JS: Refined lua/js binding tool.
+[FIX]           UI: shouldStartLoading method should return value to js in js-binding.
 
-[REFINE]        I/O: Refined AssetsManagerEx unzipping by using async.
+[FIX]           UI: Fixed scrollview render error.
 
-[REFINE]        Web: Improved logic of jsb_boot.js to sync with the web engine behavior.
+[FIX]           JS: Fixed win32 js project crash issue.
 
-[REFINE]        Web: Sync with CCBoot for web.
+[FIX]           UI: Button touch doesn't work with scale9 enabled.
 
-[REFINE]        Build: Fixed various compiler warnings on Xcode 7.
+[FIX]           JS: Fixed evalString doesn't return result issue.
 
-[REFINE]        Build: Fixed Wformat-security warning on Xcode.
+[FIX]           JS: Fixed ComponentJS proxy management issue in JSB.
 
-[REFINE]        Build: Fixed a compile error in __LayerRGBA.
+[FIX]           Android: Fixed include in cocos network module.
 
-[REFINE]        Tool: Added tools for generating documents automatically.
+[FIX]           Network: Fixed web socket crash.
 
-[REFINE]        Doc: Clean up the code of setRect() function.
+[FIX]           UI: Fixed TextField missing default password style text setting.
 
-[REFINE]        Doc: Fixed a minor typo and renamed INTIAL_CAPS_ALL_CHARACTERS to INITIAL_CAPS_ALL_CHARACTERS 
-in UIEditBox.
+[TEST]          S9SpriteTest: Scale9Sprite fade actions with cascade opacity.
+
+[TEST]          Web: Removed default focus block from UIFocusTestVertical.
+
+[TEST]          Lua: Fixed pageViewTest Horizontal scroll won't work in Lua-test.
 
 You can also take a look at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
 
-
 ## NEW APIS
 
-1. JSB Module
+1. RichText
 
-    Added jsb.fileUtils.writeDataToFile
+    Added RichElementNewLine class to create new RichText Element.
 
-2. Sprite3D
+    For more information: [https://github.com/cocos2d/cocos2d-x/pull/14033](https://github.com/cocos2d/cocos2d-x/pull/14033 "https://github.com/cocos2d/cocos2d-x/pull/14033")
 
-    Added Sprite3Dmaterial class to make it easy to create innate material. 
+2. PageViewIndicator
 
-3. ActionTimelineData 
+    Added PageViewIndicator class to create PageViewIndicator.
 
-    Three interfaces are added in ActionTimelineData class, which are addFrameEndCallFunc, removeFrameEndCall and clearFrameEndCalls.
+    For more information: [https://github.com/cocos2d/cocos2d-x/blob/v3/cocos/ui/UIPageViewIndicator.h](https://github.com/cocos2d/cocos2d-x/blob/v3/cocos/ui/UIPageViewIndicator.h "https://github.com/cocos2d/cocos2d-x/blob/v3/cocos/ui/UIPageViewIndicator.h")
 
-4. ActionTimeline::removeFrameEndCallFunc 
+3. PageView 
 
-5. Improvements for ListView
+    Changed PageView to derived from ListView.
+    For more information: [https://github.com/cocos2d/cocos2d-x/pull/14252](https://github.com/cocos2d/cocos2d-x/pull/14252 "https://github.com/cocos2d/cocos2d-x/pull/14252")
 
-    - Add APIs to scroll to specific item in list.
-    - Add APIs to get an item in specific position like center, leftmost, rightmost, topmost and bottommost.
-    - Add a feature for magnetic scrolling.
+4. ApplicationProtocol
 
-    For more information: https://github.com/cocos2d/cocos2d-x/pull/13723
+    Added the API getVersion.
 
-6. Node
 
-    Added the missing API getChildByTag
+5. PolygonInfo
 
-7. Label
+    Added the API setTriangles.
 
-    Added setLineSpacing, getLineSpacing
+6. Scale9Sprite
 
-8. CSLoader
+    Added setRenderingType, getRenderingType.
 
-    Added createNodeWithVisibleSize, createNodeWithVisibleSize
-9. ComponentContainer
+9. FontFNT
 
-    Removed isEmpty
+    Added setFontSize, getOriginalFontSize.
 
-10. Sprite
+10. Label
 
-    Removed debugDraw(bool on)
+    Added setBMFontSize, getBMFontSize, enableWrap, isWrapEnabled, setOverflow, getOverflow, initWithTTF, isShadowEnabled, getShadowOffset, getShadowBlurRadius, getShadowColor, getOutlineSize, getLabelEffectType, getEffectColor.
+
+11. AudioEngineImpl
+
+    Added AudioEngineImpl to implement FMOD.
+
+12. Lua Module
+
+    Added luaval_to_node, node_to_luaval.
+
+13. JS Module
+
+    Added js_cocos2dx_ComponentJS_create
+
+14. ui::Text
+
+    Added isShadowEnabled, getShadowOffset, getShadowBlurRadius, getShadowColor,  getOutlineSize, getLabelEffectType, getEffectColor.
+
+15. UITextTest_Clone 
+
+    Added UITextTest_Clone class.
+    

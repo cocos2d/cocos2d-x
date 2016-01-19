@@ -205,6 +205,10 @@ public:
      */
     void setRender(Particle3DRender* render);
     /**
+    * return particle render
+    */
+    Particle3DRender* getRender(){ return _render; }
+    /**
      * add particle affector
      */
     void addAffector(Particle3DAffector* affector);

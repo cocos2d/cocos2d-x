@@ -427,8 +427,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         ids[i] = touch;
         xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
         ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
-
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0 // Use 9.0 or higher SDK to compile
+#ifdef __IPHONE_9_0 && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
         // running on iOS 9.0 or higher version
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0f) {
             fs[i] = touch.force;
@@ -739,8 +738,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     double aniDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
     CGSize viewSize = self.frame.size;
+
+#if defined(CC_TARGET_OS_TVOS)
+    // statusBarOrientation not defined on tvOS, and also, orientation makes
+    // no sense on tvOS
+    begin.origin.y = viewSize.height - begin.origin.y - begin.size.height;
+    end.origin.y = viewSize.height - end.origin.y - end.size.height;
+#else
     CGFloat tmp;
-    
     switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
     {
         case UIInterfaceOrientationPortrait:
@@ -782,6 +787,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         default:
             break;
     }
+#endif
 
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     float scaleX = glview->getScaleX();
@@ -829,7 +835,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         //CGSize screenSize = self.window.screen.bounds.size;
         dispatcher->dispatchKeyboardDidShow(notiInfo);
         caretRect_ = end;
-        caretRect_.origin.y = viewSize.height - (caretRect_.origin.y + caretRect_.size.height + [UIFont smallSystemFontSize]);
+
+#if defined(CC_TARGET_OS_TVOS)
+        // smallSystemFontSize not available on TVOS
+        int fontSize = 12;
+#else
+        int fontSize = [UIFont smallSystemFontSize];
+#endif
+        caretRect_.origin.y = viewSize.height - (caretRect_.origin.y + caretRect_.size.height + fontSize);
         caretRect_.size.height = 0;
         isKeyboardShown_ = YES;
     }
@@ -845,6 +858,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     }
 }
 
+#if !defined(CC_TARGET_OS_TVOS)
 UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrientation)
 {
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
@@ -853,6 +867,7 @@ UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrien
     }
     return statusBarOrientation;
 }
+#endif
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)dis
 {
@@ -869,7 +884,10 @@ UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrien
     dis *= glview->getScaleY();
     
     dis /= self.contentScaleFactor;
-    
+
+#if defined(CC_TARGET_OS_TVOS)
+    self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y - dis, originalRect_.size.width, originalRect_.size.height);
+#else
     switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
     {
         case UIInterfaceOrientationPortrait:
@@ -891,6 +909,7 @@ UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrien
         default:
             break;
     }
+#endif
     
     [UIView commitAnimations];
 }

@@ -64,7 +64,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSM
 CAPTION "About Simulator"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    CTEXT           "Version 3.9 (20151106)",IDC_ABOUT_VERSION,35,70,173,17
+    CTEXT           "Version 3.10 (20151222)",IDC_ABOUT_VERSION,35,70,173,17
     CTEXT           "Cocos Simulator",IDC_ABOUT_TITLE,35,49,173,17
     CTEXT           "Copyright (C) 2015. All rights reserved.",IDC_STATIC,35,94,173,17
     ICON            "GLFW_ICON",IDC_STATIC,111,15,20,20
@@ -167,7 +167,7 @@ VS_VERSION_INFO VERSIONINFO
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "040904B0"
+        BLOCK "040904b0"
         BEGIN
             VALUE "FileDescription", "game Module"
             VALUE "FileVersion", "1, 0, 0, 1"

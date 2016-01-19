@@ -606,9 +606,13 @@ public:
 
     void printMeshName(cocos2d::Ref* sender);
     void removeUsedTexture(cocos2d::Ref* sender);
+    void resetTexture(cocos2d::Ref* sender);
+
+    void refreshSpriteRender();
 protected:
     cocos2d::Sprite3D* _sprite;
     cocos2d::Texture2D* _meshTex;
+    std::string _texFile;
 };
 
 #endif

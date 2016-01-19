@@ -42,7 +42,7 @@ public:
         _data.destroyIfConstructed();
     }
 
-    JS::HandleValue get(){
+    jsval get(){
         return _data.ref();
     }
 private:
@@ -64,10 +64,10 @@ static bool js_cocos2dx_Sprite3D_createAsync(JSContext *cx, uint32_t argc, jsval
         auto lambda = [=](Sprite3D* larg0, void* larg1) -> void{
 
             jsval largv[2];
-            js_proxy_t* proxy = js_get_or_create_proxy(cx, larg0);
-            largv[0] = proxy ? OBJECT_TO_JSVAL(proxy->obj) : JS::UndefinedValue();
+            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+            largv[0] = OBJECT_TO_JSVAL(js_get_or_create_jsobject<Sprite3D>(cx, larg0));
             JSB_HeapValueWrapper* v = (JSB_HeapValueWrapper*)larg1;
-            largv[1] = v->get();
+            largv[1] = JS::RootedValue(cx, v->get());
 
             JS::RootedValue rval(cx);
 		    bool ok = func->invoke(2, largv, &rval);
@@ -79,7 +79,7 @@ static bool js_cocos2dx_Sprite3D_createAsync(JSContext *cx, uint32_t argc, jsval
         };
         callback = lambda;
 
-        JSB_HeapValueWrapper* data = new JSB_HeapValueWrapper(cx, args.get(argc == 4 ? 3 : 4));
+        JSB_HeapValueWrapper* data = new (std::nothrow) JSB_HeapValueWrapper(cx, args.get(argc == 4 ? 3 : 4));
 
         if(argc == 4)
             cocos2d::Sprite3D::createAsync(modelPath, callback, data);
@@ -280,8 +280,7 @@ bool js_cocos2dx_Terrain_create(JSContext *cx, uint32_t argc, jsval *vp)
             ret = Terrain::create(arg0, arg1);
         }
 
-        js_proxy_t *jsProxy = js_get_or_create_proxy<Terrain>(cx, (Terrain*)ret);
-        args.rval().set(OBJECT_TO_JSVAL(jsProxy->obj));
+        args.rval().set(OBJECT_TO_JSVAL(js_get_or_create_jsobject<Terrain>(cx, ret)));
         return true;
     }
     JS_ReportError(cx, "wrong number of arguments");
@@ -342,6 +341,42 @@ bool js_cocos2dx_Terrain_getHeightData(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
+// this code cannot be automated since it must use
+// get_or_create_jsobject instead of create_jsobject
+// since Animation3D::create() might return an existing copy
+// since it caches them
+bool js_cocos2dx_3d_Animation3D_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animation3D_create : Error processing arguments");
+
+        auto ret = cocos2d::Animation3D::create(arg0);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Animation3D>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::Animation3D"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
+        return true;
+    }
+    if (argc == 2) {
+        std::string arg0;
+        std::string arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animation3D_create : Error processing arguments");
+
+        auto ret = cocos2d::Animation3D::create(arg0, arg1);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Animation3D>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_get_or_create_jsobject(cx, ret, typeClass, "cocos2d::Animation3D"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_3d_Animation3D_create : wrong number of arguments");
+    return false;
+}
+
 void register_all_cocos2dx_3d_manual(JSContext *cx, JS::HandleObject global)
 {
     JS::RootedValue tmpVal(cx);
@@ -356,6 +391,10 @@ void register_all_cocos2dx_3d_manual(JSContext *cx, JS::HandleObject global)
     JS_GetProperty(cx, ccObj, "Terrain", &tmpVal);
     tmpObj.set(tmpVal.toObjectOrNull());
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_Terrain_create, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+
+    JS_GetProperty(cx, ccObj, "Animation3D", &tmpVal);
+    tmpObj.set(tmpVal.toObjectOrNull());
+    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_3d_Animation3D_create, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_GetProperty(cx, ccObj, "Bundle3D", &tmpVal);
     tmpObj.set(tmpVal.toObjectOrNull());

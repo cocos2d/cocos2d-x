@@ -72,7 +72,7 @@ namespace ui {
         
         /**
          * Builtin shader state.
-         * Currenly support Normal and Gray state.
+         * Currently support Normal and Gray state.
          */
         enum class State
         {
@@ -427,7 +427,7 @@ namespace ui {
          * @param rect A delimitation zone.
          * @param rotated Whether the sprite is rotated or not.
          * @param offset The offset when slice the sprite.
-         * @param originalSize The origial size of the sprite.
+         * @param originalSize The original size of the sprite.
          * @param capInsets The Values to use for the cap insets.
          * @return True if update success, false otherwise.
          * @js NA
@@ -577,6 +577,8 @@ namespace ui {
         /**
          * @brief Toggle 9-slice feature.
          * If Scale9Sprite is 9-slice disabled, the Scale9Sprite will rendered as a normal sprite.
+         * @warning: Don't use setScale9Enabled(false), use setRenderingType(RenderingType::SIMPLE) instead.
+         *        The setScale9Enabled(false) is kept only for back back compatibility.
          * @param enabled True to enable 9-slice, false otherwise.
          * @js NA
          */
@@ -657,7 +659,8 @@ namespace ui {
         virtual float getScale() const override;
         using Node::getScaleZ;
         virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
-        
+        virtual void setGlobalZOrder(float globalZOrder) override;
+
         /**
          * Set the slice sprite rendering type.
          * When setting to SIMPLE, only 4 vertexes is used to rendering.
@@ -682,12 +685,11 @@ namespace ui {
         void applyBlendFunc();
         void updateBlendFunc(Texture2D *texture);
         std::vector<Vec2> calculateUV(Texture2D *tex, const Rect& capInsets,
-                                     const Size& spriteRectSize);
-        std::vector<Vec2> calculateVertices(const Rect& capInsets, const Size& spriteRectSize);
+                                     const Size& originalSize, const Vec4& offsets);
+        std::vector<Vec2> calculateVertices(const Rect& capInsets, const Size& originalSize, const Vec4& offsets);
         TrianglesCommand::Triangles calculateTriangles(const std::vector<Vec2>& uv,
                                                       const std::vector<Vec2>& vertices);
         
-        bool _spritesGenerated;
         Rect _spriteRect;
         bool   _spriteFrameRotated;
         Rect _capInsetsInternal;
@@ -699,6 +701,7 @@ namespace ui {
         
         /** Original sprite's size. */
         Size _originalSize;
+        Vec2 _offset;
         /** Preferred sprite's size. By default the preferred size is the original size. */
         
         //if the preferredSize component is given as -1, it is ignored

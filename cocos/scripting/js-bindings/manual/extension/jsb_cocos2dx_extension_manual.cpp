@@ -86,7 +86,7 @@ static bool js_cocos2dx_CCScrollView_setDelegate(JSContext *cx, uint32_t argc, j
     {
         // save the delegate
         JS::RootedObject jsDelegate(cx, args.get(0).toObjectOrNull());
-        JSB_ScrollViewDelegate* nativeDelegate = new JSB_ScrollViewDelegate();
+        JSB_ScrollViewDelegate* nativeDelegate = new (std::nothrow) JSB_ScrollViewDelegate();
         nativeDelegate->setJSDelegate(jsDelegate);
         
         cobj->setUserObject(nativeDelegate);
@@ -196,13 +196,13 @@ static bool js_cocos2dx_CCTableView_setDelegate(JSContext *cx, uint32_t argc, js
     {
         // save the delegate
         JS::RootedObject jsDelegate(cx, args.get(0).toObjectOrNull());
-        JSB_TableViewDelegate* nativeDelegate = new JSB_TableViewDelegate();
+        JSB_TableViewDelegate* nativeDelegate = new (std::nothrow) JSB_TableViewDelegate();
         nativeDelegate->setJSDelegate(jsDelegate);
         
         __Dictionary* userDict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (NULL == userDict)
         {
-            userDict = new __Dictionary();
+            userDict = new (std::nothrow) __Dictionary();
             cobj->setUserObject(userDict);
             userDict->release();
         }
@@ -376,14 +376,14 @@ static bool js_cocos2dx_CCTableView_setDataSource(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     if (argc == 1)
     {
-        JSB_TableViewDataSource* pNativeSource = new JSB_TableViewDataSource();
+        JSB_TableViewDataSource* pNativeSource = new (std::nothrow) JSB_TableViewDataSource();
         JS::RootedObject jsdata(cx, args.get(0).toObjectOrNull());
         pNativeSource->setTableViewDataSource(jsdata);
     
         __Dictionary* userDict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (NULL == userDict)
         {
-            userDict = new __Dictionary();
+            userDict = new (std::nothrow) __Dictionary();
             cobj->setUserObject(userDict);
             userDict->release();
         }
@@ -409,14 +409,14 @@ static bool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval *
     if (argc == 3 || argc == 2)
     {
         
-        JSB_TableViewDataSource* pNativeSource = new JSB_TableViewDataSource();
+        JSB_TableViewDataSource* pNativeSource = new (std::nothrow) JSB_TableViewDataSource();
         JS::RootedObject jsdata(cx, args.get(0).toObjectOrNull());
         pNativeSource->setTableViewDataSource(jsdata);
         
         cocos2d::Size arg1;
         ok &= jsval_to_ccsize(cx, args.get(1), &arg1);
         cocos2d::extension::TableView* ret = NULL;
-        ret = new TableView();
+        ret = new (std::nothrow) TableView();
         ret->autorelease();
         
         ret->setDataSource(pNativeSource);
@@ -454,7 +454,7 @@ static bool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval *
         }
         ret->reloadData();
         
-        __Dictionary* userDict = new __Dictionary();
+        __Dictionary* userDict = new (std::nothrow) __Dictionary();
         userDict->setObject(pNativeSource, KEY_TABLEVIEW_DATA_SOURCE);
         ret->setUserObject(userDict);
         userDict->release();
@@ -480,7 +480,7 @@ static bool js_cocos2dx_CCTableView_init(JSContext *cx, uint32_t argc, jsval *vp
     if (argc == 3 || argc == 2)
     {
         
-        JSB_TableViewDataSource* pNativeSource = new JSB_TableViewDataSource();
+        JSB_TableViewDataSource* pNativeSource = new (std::nothrow) JSB_TableViewDataSource();
         JS::RootedObject jsdata(cx, args.get(0).toObjectOrNull());
         pNativeSource->setTableViewDataSource(jsdata);
         cobj->setDataSource(pNativeSource);
@@ -507,7 +507,7 @@ static bool js_cocos2dx_CCTableView_init(JSContext *cx, uint32_t argc, jsval *vp
         }
         cobj->reloadData();
         
-        __Dictionary* userDict = new __Dictionary();
+        __Dictionary* userDict = new (std::nothrow) __Dictionary();
         userDict->setObject(pNativeSource, KEY_TABLEVIEW_DATA_SOURCE);
         cobj->setUserObject(userDict);
         userDict->release();
@@ -557,8 +557,7 @@ public:
     
     virtual void onEvent(Ref *controlButton, Control::EventType event)
     {
-        js_proxy_t * p;
-        JS_GET_PROXY(p, controlButton);
+        js_proxy_t* p = jsb_get_native_proxy(controlButton);
         if (!p)
         {
             log("Failed to get proxy for control button");
@@ -583,7 +582,7 @@ public:
             CC_SAFE_DELETE(_callback);
         }
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-        _callback = new JSFunctionWrapper(cx, jsTarget, jsFunc);
+        _callback = new (std::nothrow) JSFunctionWrapper(cx, jsTarget, jsFunc);
         _jsFunc.ref() = jsFunc.toObjectOrNull();
     }
     
@@ -631,7 +630,7 @@ static bool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContext 
         }
         
         // save the delegate
-        JSB_ControlButtonTarget* nativeDelegate = new JSB_ControlButtonTarget();
+        JSB_ControlButtonTarget* nativeDelegate = new (std::nothrow) JSB_ControlButtonTarget();
         
         JS::RootedObject jscb(cx, jsDelegate);
         nativeDelegate->setJSCallback(args.get(1), jscb);
@@ -640,7 +639,7 @@ static bool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContext 
         __Array* nativeDelegateArray = static_cast<__Array*>(cobj->getUserObject());
         if (nullptr == nativeDelegateArray)
         {
-            nativeDelegateArray = new __Array();
+            nativeDelegateArray = new (std::nothrow) __Array();
             nativeDelegateArray->init();
             cobj->setUserObject(nativeDelegateArray);  // The reference of nativeDelegateArray is added to 2
             nativeDelegateArray->release(); // Release nativeDelegateArray to make the reference to 1
@@ -872,16 +871,19 @@ void __JSDownloaderDelegator::startDownload()
         _downloader->onDataTaskSuccess = [this](const cocos2d::network::DownloadTask& task,
                                                 std::vector<unsigned char>& data)
         {
-            Image img;
+            Image* img = new (std::nothrow) Image();
             Texture2D *tex = nullptr;
             do
             {
-                if (false == img.initWithImageData(data.data(), data.size()))
+                if (false == img->initWithImageData(data.data(), data.size()))
                 {
                     break;
                 }
-                tex = Director::getInstance()->getTextureCache()->addImage(&img, _url);
+                tex = Director::getInstance()->getTextureCache()->addImage(img, _url);
             } while (0);
+            
+            CC_SAFE_RELEASE(img);
+            
             if (tex)
             {
                 this->onSuccess(tex);

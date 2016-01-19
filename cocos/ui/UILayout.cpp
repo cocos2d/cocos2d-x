@@ -87,6 +87,7 @@ _isFocusPassing(false)
 Layout::~Layout()
 {
     CC_SAFE_RELEASE(_clippingStencil);
+    CC_SAFE_DELETE(_stencileStateManager);
 }
     
 void Layout::onEnter()
@@ -530,9 +531,11 @@ void Layout::onSizeChanged()
     if (_backGroundImage)
     {
         _backGroundImage->setPosition(_contentSize.width/2.0f, _contentSize.height/2.0f);
-        if (_backGroundScale9Enabled && _backGroundImage)
-        {
+        if (_backGroundScale9Enabled){
             _backGroundImage->setPreferredSize(_contentSize);
+        }
+        else{
+            _backGroundImage->setPreferredSize(_backGroundImageTextureSize);
         }
     }
     if (_colorRender)
@@ -557,10 +560,12 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
         addBackGroundImage();
         setBackGroundImage(_backGroundImageFileName,_bgImageTexType);
     }
-    _backGroundImage->setScale9Enabled(_backGroundScale9Enabled);
-    
-    if (able) {
+    if(_backGroundScale9Enabled){
+        _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SLICE);
         _backGroundImage->setPreferredSize(_contentSize);
+    }else{
+        _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+        _backGroundImage->setPreferredSize(_backGroundImageTextureSize);
     }
     
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
@@ -580,7 +585,11 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
     if (_backGroundImage == nullptr)
     {
         addBackGroundImage();
-        _backGroundImage->setScale9Enabled(_backGroundScale9Enabled);
+        if(_backGroundScale9Enabled){
+            _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+        }else{
+            _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+        }
     }
     _backGroundImageFileName = fileName;
     _bgImageTexType = texType;
@@ -596,12 +605,15 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
         default:
             break;
     }
-    if (_backGroundScale9Enabled) {
-        _backGroundImage->setPreferredSize(_contentSize);
-    }
     
     _backGroundImageTextureSize = _backGroundImage->getContentSize();
     _backGroundImage->setPosition(_contentSize.width/2.0f, _contentSize.height/2.0f);
+    if (_backGroundScale9Enabled) {
+        _backGroundImage->setPreferredSize(_contentSize);
+    }
+    else{
+        _backGroundImage->setPreferredSize(_backGroundImageTextureSize);
+    }
     updateBackGroundImageRGBA();
 }
 
@@ -656,7 +668,7 @@ void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
 void Layout::addBackGroundImage()
 {
     _backGroundImage = Scale9Sprite::create();
-    _backGroundImage->setScale9Enabled(false);
+    _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
     
     addProtectedChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
    
@@ -1036,7 +1048,7 @@ Size Layout::getLayoutAccumulatedSize()const
         }
     }
     
-    //substract extra size
+    //subtract extra size
     Type type = this->getLayoutType();
     if (type == Type::HORIZONTAL)
     {
@@ -1054,7 +1066,7 @@ Vec2 Layout::getWorldCenterPoint(Widget* widget)const
     Layout *layout = dynamic_cast<Layout*>(widget);
     //FIXEDME: we don't need to calculate the content size of layout anymore
     Size widgetSize = layout ? layout->getLayoutAccumulatedSize() :  widget->getContentSize();
-//    CCLOG("contnet size : width = %f, height = %f", widgetSize.width, widgetSize.height);
+//    CCLOG("content size : width = %f, height = %f", widgetSize.width, widgetSize.height);
     return widget->convertToWorldSpace(Vec2(widgetSize.width/2, widgetSize.height/2));
 }
 
@@ -1144,7 +1156,7 @@ int Layout::findFirstFocusEnabledWidgetIndex()
         }
         index++;
     }
-    CCASSERT(0, "invalide operation");
+    CCASSERT(0, "invalid operation");
     return 0;
 }
 
@@ -1458,7 +1470,7 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection direction, Widget *curre
         }
         else
         {
-            //handling the disabled widget, there is no actual focus lose or get, so we don't need any envet
+            //handling the disabled widget, there is no actual focus lose or get, so we don't need any event
             return this->getPreviousFocusedWidget(direction, nextWidget);
         }
     }

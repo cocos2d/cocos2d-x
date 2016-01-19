@@ -57,20 +57,6 @@ getDuration : function (
 },
 
 /**
- * @method create
- * @param {String} arg0
- * @param {String} arg1
- * @return {cc.Animation3D}
- */
-create : function (
-str, 
-str 
-)
-{
-    return cc.Animation3D;
-},
-
-/**
  * @method Animation3D
  * @constructor
  */
@@ -463,16 +449,6 @@ getVertexSizeInBytes : function (
 },
 
 /**
- * @method enableCheckTexture
- * @return {bool}
- */
-enableCheckTexture : function (
-)
-{
-    return false;
-},
-
-/**
  * @method setMaterial
  * @param {cc.Material} arg0
  */
@@ -573,14 +549,6 @@ str
 },
 
 /**
- * @method checkTexture
- */
-checkTexture : function (
-)
-{
-},
-
-/**
  * @method getIndexCount
  * @return {long}
  */
@@ -646,16 +614,6 @@ getPrimitiveType : function (
  */
 setSkin : function (
 meshskin 
-)
-{
-},
-
-/**
- * @method setEnableCheckTexture
- * @param {bool} arg0
- */
-setEnableCheckTexture : function (
-bool 
 )
 {
 },

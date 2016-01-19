@@ -1011,7 +1011,7 @@ void PUParticleSystem3D::initParticleForExpiration( PUParticle3D* particle, floa
         it->particleExpired(this, particle);
     }
     ///** Externs are also called to perform expiration activities. If needed, affectors and emitters may be added, but at the moment
-    //	there is no reason for (and we don´t want to waste cpu resources).
+    //	there is no reason for (and we don't want to waste cpu resources).
     //*/
     //if (!mExterns.empty())
     //{

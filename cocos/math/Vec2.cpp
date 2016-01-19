@@ -24,7 +24,7 @@
 
 NS_CC_MATH_BEGIN
 
-// returns true if segment A-B intersects with segment C-D. S->E is the ovderlap part
+// returns true if segment A-B intersects with segment C-D. S->E is the overlap part
 bool isOneDimensionSegmentOverlap(float A, float B, float C, float D, float *S, float * E)
 {
     float ABmin = std::min(A, B);

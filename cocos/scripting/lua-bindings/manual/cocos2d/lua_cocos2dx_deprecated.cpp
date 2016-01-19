@@ -2767,7 +2767,7 @@ static int lua_cocos2dx_LabelBMFont_constructor(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cobj = new cocos2d::LabelBMFont();
+        cobj = new (std::nothrow) cocos2d::LabelBMFont();
         cobj->autorelease();
         int ID =  (int)cobj->_ID ;
         int* luaID =  &cobj->_luaID ;
@@ -4287,7 +4287,7 @@ static int lua_cocos2dx_LabelTTF_constructor(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cobj = new cocos2d::LabelTTF();
+        cobj = new (std::nothrow) cocos2d::LabelTTF();
         cobj->autorelease();
         int ID =  (int)cobj->_ID ;
         int* luaID =  &cobj->_luaID ;

@@ -28,10 +28,10 @@ THE SOFTWARE.
 
 #include "CCFileUtils-android.h"
 #include "platform/CCCommon.h"
-#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "platform/android/jni/JniHelper.h"
+#include "platform/android/jni/CocosPlayClient.h"
 #include "android/asset_manager.h"
 #include "android/asset_manager_jni.h"
-#include "jni/CocosPlayClient.h"
 #include <stdlib.h>
 #include <sys/stat.h>
 
@@ -471,7 +471,7 @@ string FileUtilsAndroid::getWritablePath() const
     // Fix for Nexus 10 (Android 4.2 multi-user environment)
     // the path is retrieved through Java Context.getCacheDir() method
     string dir("");
-    string tmp = getFileDirectoryJNI();
+    string tmp = JniHelper::callStaticStringMethod("org/cocos2dx/lib/Cocos2dxHelper", "getCocos2dxWritablePath");
 
     if (tmp.length() > 0)
     {

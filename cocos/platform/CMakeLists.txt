@@ -49,8 +49,6 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/android/CCGLViewImpl-android.cpp
   platform/android/CCFileUtils-android.cpp
   platform/android/javaactivity-android.cpp
-  platform/android/jni/DPIJni.cpp
-  platform/android/jni/IMEJni.cpp
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp

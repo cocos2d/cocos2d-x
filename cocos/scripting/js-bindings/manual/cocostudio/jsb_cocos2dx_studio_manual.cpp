@@ -115,7 +115,7 @@ static bool js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(JSContext *cx
             return true;
         }
         else if (argc == 1 || argc == 2) {
-            JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
+            JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper();
             tmpObj->autorelease();
             
             cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
@@ -161,7 +161,7 @@ static bool js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(JSContext *cx, u
             return true;
         }
         else if (argc == 1 || argc == 2) {
-            JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
+            JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper();
             tmpObj->autorelease();
             
             cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
@@ -202,7 +202,7 @@ static bool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint32
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 3) {
-        JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
+        JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper();
         tmpObj->autorelease();
 
         tmpObj->setJSCallbackFunc(args.get(1));
@@ -217,7 +217,7 @@ static bool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint32
     }
 
     if(argc == 5){
-        JSArmatureWrapper *tmpObj = new JSArmatureWrapper();
+        JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper();
         tmpObj->autorelease();
 
         tmpObj->setJSCallbackFunc(args.get(3));

@@ -74,7 +74,7 @@ Value::Value(bool v)
 Value::Value(const char* v)
 : _type(Type::STRING)
 {
-    _field.strVal = new std::string();
+    _field.strVal = new (std::nothrow) std::string();
     if (v)
     {
         *_field.strVal = v;
@@ -84,7 +84,7 @@ Value::Value(const char* v)
 Value::Value(const std::string& v)
 : _type(Type::STRING)
 {
-    _field.strVal = new std::string();
+    _field.strVal = new (std::nothrow) std::string();
     *_field.strVal = v;
 }
 
@@ -813,7 +813,7 @@ void Value::reset(Type type)
     switch (type)
     {
         case Type::STRING:
-            _field.strVal = new std::string();
+            _field.strVal = new (std::nothrow) std::string();
             break;
         case Type::VECTOR:
             _field.vectorVal = new (std::nothrow) ValueVector();

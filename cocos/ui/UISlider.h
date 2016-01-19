@@ -143,14 +143,14 @@ public:
      * @param capInsets Capinsets for progress bar slider.
      * @js NA
      */
-    void setCapInsetProgressBarRebderer(const Rect &capInsets);
+    void setCapInsetProgressBarRenderer(const Rect &capInsets);
     
     /**
      * Gets capinsets for progress bar slider, if slider is using scale9 renderer.
      * @return Capinsets for progress bar slider.
      * @js NA
      */
-    const Rect& getCapInsetsProgressBarRebderer()const;
+    const Rect& getCapInsetsProgressBarRenderer()const;
     
     /**
      * Load textures for slider ball.
@@ -247,7 +247,7 @@ public:
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
     
-    //override the widget's hitTest function to perfom its own
+    //override the widget's hitTest function to perform its own
     virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const override;
     /**
      * Returns the "class name" of widget.

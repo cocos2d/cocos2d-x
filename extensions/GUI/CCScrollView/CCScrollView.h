@@ -323,7 +323,7 @@ protected:
      */
     Node* _container;
     /**
-     * Determiens whether user touch is moved after begin phase.
+     * Determines whether user touch is moved after begin phase.
      */
     bool _touchMoved;
     /**

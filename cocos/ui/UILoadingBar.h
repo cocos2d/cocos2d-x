@@ -185,6 +185,7 @@ protected:
     void barRendererScaleChangedWithSize();
 
     void setupTexture();
+    void handleSpriteFlipX();
     void loadTexture(SpriteFrame* spriteframe);
     
     virtual void adaptRenderers() override;

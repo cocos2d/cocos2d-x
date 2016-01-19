@@ -130,7 +130,7 @@ namespace cocos2d { namespace network {
     
     std::shared_ptr<const DownloadTask> Downloader::createDownloadDataTask(const std::string& srcUrl, const std::string& identifier/* = ""*/)
     {
-        DownloadTask *task_ = new DownloadTask();
+        DownloadTask *task_ = new (std::nothrow) DownloadTask();
         std::shared_ptr<const DownloadTask> task(task_);
         do
         {
@@ -155,7 +155,7 @@ namespace cocos2d { namespace network {
                                                                            const std::string& storagePath,
                                                                            const std::string& identifier/* = ""*/)
     {
-        DownloadTask *task_ = new DownloadTask();
+        DownloadTask *task_ = new (std::nothrow) DownloadTask();
         std::shared_ptr<const DownloadTask> task(task_);
         do
         {

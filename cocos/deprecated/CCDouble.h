@@ -45,7 +45,7 @@ public:
 
     static __Double* create(double v)
     {
-        __Double* pRet = new __Double(v);
+        __Double* pRet = new (std::nothrow) __Double(v);
         if (pRet)
         {
             pRet->autorelease();

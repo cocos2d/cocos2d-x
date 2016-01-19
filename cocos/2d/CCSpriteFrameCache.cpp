@@ -113,7 +113,7 @@ void SpriteFrameCache::initializePolygonInfo(const Size &textureSize,
     
     float scaleFactor = CC_CONTENT_SCALE_FACTOR();
 
-    V3F_C4B_T2F *vertexData = new V3F_C4B_T2F[vertexCount];
+    V3F_C4B_T2F *vertexData = new (std::nothrow) V3F_C4B_T2F[vertexCount];
     for (size_t i = 0; i < vertexCount/2; i++)
     {
         vertexData[i].colors = Color4B::WHITE;
@@ -276,13 +276,17 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
                 initializePolygonInfo(textureSize, spriteSourceSize, vertices, verticesUV, indices, info);
                 spriteFrame->setPolygonInfo(info);
             }
+            if (frameDict.find("anchor") != frameDict.end())
+            {
+                spriteFrame->setAnchorPoint(PointFromString(frameDict["anchor"].asString()));
+            }
         }
 
         bool flag = NinePatchImageParser::isNinePatchImage(spriteFrameName);
         if(flag)
         {
             if (image == nullptr) {
-                image = new Image();
+                image = new (std::nothrow) Image();
                 image->initWithImageFile(textureFileName);
             }
             parser.setSpriteFrameInfo(image, spriteFrame->getRectInPixels(), spriteFrame->isRotated());

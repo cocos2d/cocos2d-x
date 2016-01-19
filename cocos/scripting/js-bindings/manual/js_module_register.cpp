@@ -100,7 +100,7 @@ int js_module_register()
     sc->addRegisterCallback(register_all_cocos2dx_navmesh_manual);
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
     sc->addRegisterCallback(register_all_cocos2dx_experimental_video);
     sc->addRegisterCallback(register_all_cocos2dx_experimental_video_manual);
     sc->addRegisterCallback(register_all_cocos2dx_experimental_webView);
@@ -119,7 +119,7 @@ int js_module_register()
     return 1;
 }
 
-JS::HandleObject get_jsb_cocos2d_FileUtils_prototype()
+JSObject* get_jsb_cocos2d_FileUtils_prototype()
 {
     JS::RootedObject fileUtilsProto(ScriptingCore::getInstance()->getGlobalContext(), jsb_cocos2d_FileUtils_prototype);
     return fileUtilsProto;
