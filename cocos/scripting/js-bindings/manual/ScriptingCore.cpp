@@ -2250,7 +2250,7 @@ void jsb_ref_rebind(JSContext* cx, JS::HandleObject jsobj, js_proxy_t *proxy, co
 {
     oldRef->_scriptOwned = false;
     
-#if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#if !CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     JS::RemoveObjectRoot(cx, &proxy->obj);
 #endif
     jsb_remove_proxy(proxy);
