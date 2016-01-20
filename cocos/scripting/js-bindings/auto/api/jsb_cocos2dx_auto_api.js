@@ -6156,6 +6156,16 @@ supportsPVRTC : function (
 },
 
 /**
+ * @method supportsOESDepth24
+ * @return {bool}
+ */
+supportsOESDepth24 : function (
+)
+{
+    return false;
+},
+
+/**
  * @method getMaxModelviewStackDepth
  * @return {int}
  */
@@ -6314,6 +6324,16 @@ str
  * @return {bool}
  */
 supportsDiscardFramebuffer : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsOESPackedDepthStencil
+ * @return {bool}
+ */
+supportsOESPackedDepthStencil : function (
 )
 {
     return false;
@@ -12152,6 +12172,16 @@ getShadowOffset : function (
 },
 
 /**
+ * @method getLineSpacing
+ * @return {float}
+ */
+getLineSpacing : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setClipMarginEnabled
  * @param {bool} arg0
  */
@@ -12179,6 +12209,16 @@ setSystemFontName : function (
 str 
 )
 {
+},
+
+/**
+ * @method isWrapEnabled
+ * @return {bool}
+ */
+isWrapEnabled : function (
+)
+{
+    return false;
 },
 
 /**
@@ -12260,13 +12300,11 @@ overflow
 },
 
 /**
- * @method getLineSpacing
- * @return {float}
+ * @method enableStrikethrough
  */
-getLineSpacing : function (
+enableStrikethrough : function (
 )
 {
-    return 0;
 },
 
 /**
@@ -12448,13 +12486,11 @@ getTTFConfig : function (
 },
 
 /**
- * @method getVerticalAlignment
- * @return {cc.TextVAlignment}
+ * @method enableItalics
  */
-getVerticalAlignment : function (
+enableItalics : function (
 )
 {
-    return 0;
 },
 
 /**
@@ -12514,6 +12550,16 @@ color4b
  * @return {cc.Label::Overflow}
  */
 getOverflow : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getVerticalAlignment
+ * @return {cc.TextVAlignment}
+ */
+getVerticalAlignment : function (
 )
 {
     return 0;
@@ -12580,13 +12626,19 @@ texthalignment
 },
 
 /**
- * @method isWrapEnabled
- * @return {bool}
+ * @method enableBold
  */
-isWrapEnabled : function (
+enableBold : function (
 )
 {
-    return false;
+},
+
+/**
+ * @method enableUnderline
+ */
+enableUnderline : function (
+)
+{
 },
 
 /**
@@ -15364,6 +15416,14 @@ vec2
 },
 
 /**
+ * @method stop
+ */
+stop : function (
+)
+{
+},
+
+/**
  * @method updateParticleQuads
  */
 updateParticleQuads : function (
@@ -15417,6 +15477,14 @@ float
  */
 setRotationIsDir : function (
 bool 
+)
+{
+},
+
+/**
+ * @method start
+ */
+start : function (
 )
 {
 },
