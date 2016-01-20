@@ -118,7 +118,9 @@ namespace cocostudio
         Size innerSize(200, 300);
         int direction = 0;
         bool bounceEnabled = false;
-        
+		bool scrollbarEnabled = true;
+		bool scrollbarAutoHide = true;
+		float scrollbarAutoHideTime = 0.2f;
         
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -129,7 +131,7 @@ namespace cocostudio
             
             if (name == "ClipAble")
             {
-                clipEnabled = (value == "True") ? true : false;
+				clipEnabled = FLATSTR_TO_BOOL(value);
             }
             else if (name == "ComboBoxIndex")
             {
@@ -141,10 +143,7 @@ namespace cocostudio
             }
             else if (name == "Scale9Enable")
             {
-                if (value == "True")
-                {
-                    backGroundScale9Enabled = true;
-                }
+				backGroundScale9Enabled = FLATSTR_TO_BOOL(value);
             }
             else if (name == "Scale9OriginX")
             {
@@ -179,9 +178,20 @@ namespace cocostudio
             }
             else if (name == "IsBounceEnabled")
             {
-                bounceEnabled = (value == "True") ? true : false;
+				bounceEnabled = FLATSTR_TO_BOOL(value);
             }
-            
+			else if (name.compare("IsScrollBarEnabled") == 0)
+			{
+				scrollbarEnabled = FLATSTR_TO_BOOL(value);
+			}
+			else if (name.compare("IsScrollBarAutoHide") == 0)
+			{
+				scrollbarAutoHide = FLATSTR_TO_BOOL(value);
+			}
+			else if (name.compare("ScrollbarAutoHideTime") == 0)
+			{
+				scrollbarAutoHideTime = atof(value.c_str());
+			}
             attribute = attribute->Next();
         }
         
@@ -392,7 +402,10 @@ namespace cocostudio
                                                backGroundScale9Enabled,
                                                &f_innerSize,
                                                direction,
-                                               bounceEnabled);
+                                               bounceEnabled,
+											   scrollbarEnabled,
+											   scrollbarAutoHide,
+											   scrollbarAutoHideTime);
         
         return *(Offset<Table>*)(&options);
     }
@@ -512,7 +525,16 @@ namespace cocostudio
         scrollView->setDirection((ScrollView::Direction)direction);
         bool bounceEnabled = options->bounceEnabled() != 0;
         scrollView->setBounceEnabled(bounceEnabled);
-        
+
+		bool scrollbarEnabled = options->scrollbarEnabeld() != 0;
+		scrollView->setScrollBarEnabled(scrollbarEnabled);
+		bool scrollbarAutoHide = options->scrollbarAutoHide() != 0;
+		if (scrollbarEnabled)
+		{
+			scrollView->setScrollBarAutoHideEnabled(scrollbarAutoHide);
+			float barAutoHideTime = options->scrollbarAutoHideTime();
+			scrollView->setScrollBarAutoHideTime(barAutoHideTime);
+		}
         
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
