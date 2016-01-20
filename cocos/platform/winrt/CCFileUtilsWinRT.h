@@ -53,6 +53,7 @@ public:
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename) const override;
 	virtual std::string getStringFromFile(const std::string& filename) override;
     virtual std::string getSuitableFOpen(const std::string& filenameUtf8) const override;
+    virtual long getFileSize(const std::string &filepath);
 	static std::string getAppPath();
 
 private:
