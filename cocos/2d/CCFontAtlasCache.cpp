@@ -266,7 +266,7 @@ void FontAtlasCache::unloadFontAtlasTTF(const std::string& fontFileName)
     auto item = _atlasMap.begin();
     while (item != _atlasMap.end())
     {
-        if (item->first.find(fontFileName) >= 0)
+        if (item->first.find(fontFileName) != std::string::npos)
         {
             CC_SAFE_RELEASE_NULL(item->second);
             item = _atlasMap.erase(item);
