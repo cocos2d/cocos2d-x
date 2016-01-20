@@ -1,4 +1,4 @@
-var TreeScene = (function () {
+var createTree = (function () {
 
 var _ORIGIN_WIDTH = 85;
 var _ORIGIN_HEIGHT = 121;
@@ -29,7 +29,7 @@ var _createLevel = function (upLevel, width, height, scale) {
     return level;
 };
 
-var _createTree = function (levels, zone) {
+return function (levels, zone) {
     var height = zone.height / levels;
     var scale = height * 0.9 / _ORIGIN_HEIGHT;
     if (scale > 1) scale = 1;
@@ -41,37 +41,5 @@ var _createTree = function (levels, zone) {
     }
     return root;
 };
-
-var TreeScene = cc.Scene.extend({
-    ctor: function (levels) {
-        this._super();
-        this.levels = levels;
-
-        this.tree = _createTree(levels, cc.rect(0, 0, cc.winSize.width, cc.winSize.height));
-        this.addChild(this.tree);
-
-        // menu
-        var menu = new cc.Menu();
-        var button = new cc.MenuItemFont("Replace Tree", this.replaceTree, this);
-        button.fontSize = 20;
-        button.fontName = "Arial";
-        menu.addChild(button);
-        button = new cc.MenuItemFont("Run GC", cc.sys.garbageCollect);
-        button.fontSize = 20;
-        button.fontName = "Arial";
-        button.x = 150;
-        menu.addChild(button);
-        menu.setPosition(cc.winSize.width * 3/4 - 50, cc.winSize.height - 40);
-        this.addChild(menu);
-    },
-
-    replaceTree: function () {
-        this.tree.removeFromParent(true);
-        this.tree = _createTree(this.levels, cc.rect(0, 0, cc.winSize.width, cc.winSize.height));
-        this.addChild(this.tree);
-    }
-});
-
-return TreeScene;
 
 })();
