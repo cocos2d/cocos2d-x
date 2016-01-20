@@ -5314,6 +5314,8 @@ ccui.RichElementText = {
  * @param {String} arg3
  * @param {String} arg4
  * @param {float} arg5
+ * @param {unsigned int} arg6
+ * @param {String} arg7
  * @return {bool}
  */
 init : function (
@@ -5322,7 +5324,9 @@ color3b,
 char, 
 str, 
 str, 
-float 
+float, 
+int, 
+str 
 )
 {
     return false;
@@ -5336,6 +5340,8 @@ float
  * @param {String} arg3
  * @param {String} arg4
  * @param {float} arg5
+ * @param {unsigned int} arg6
+ * @param {String} arg7
  * @return {ccui.RichElementText}
  */
 create : function (
@@ -5344,7 +5350,9 @@ color3b,
 char, 
 str, 
 str, 
-float 
+float, 
+int, 
+str 
 )
 {
     return ccui.RichElementText;
@@ -5367,6 +5375,16 @@ RichElementText : function (
 ccui.RichElementImage = {
 
 /**
+ * @method setHeight
+ * @param {int} arg0
+ */
+setHeight : function (
+int 
+)
+{
+},
+
+/**
  * @method init
  * @param {int} arg0
  * @param {color3b_object} arg1
@@ -5382,6 +5400,16 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method setWidth
+ * @param {int} arg0
+ */
+setWidth : function (
+int 
+)
+{
 },
 
 /**
@@ -5511,6 +5539,18 @@ formatText : function (
 },
 
 /**
+ * @method initWithXML
+ * @param {String} arg0
+ * @return {bool}
+ */
+initWithXML : function (
+str 
+)
+{
+    return false;
+},
+
+/**
  * @method removeElement
 * @param {ccui.RichElement|int} richelement
 */
@@ -5525,6 +5565,18 @@ int
  * @return {ccui.RichText}
  */
 create : function (
+)
+{
+    return ccui.RichText;
+},
+
+/**
+ * @method createWithXML
+ * @param {String} arg0
+ * @return {ccui.RichText}
+ */
+createWithXML : function (
+str 
 )
 {
     return ccui.RichText;

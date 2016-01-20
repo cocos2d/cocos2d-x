@@ -111,7 +111,7 @@
         
 --------------------------------
 -- Set parent bone.<br>
--- If parent is NUll, then also remove this bone from armature.<br>
+-- If parent is null, then also remove this bone from armature.<br>
 -- It will not set the Armature, if you want to add the bone to a Armature, you should use Armature::addBone(Bone *bone, const char* parentName).<br>
 -- param parent  the parent bone.<br>
 -- nullptr : remove this bone from armature

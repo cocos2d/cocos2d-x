@@ -38,6 +38,13 @@
 -- @return RichText#RichText self (return value: ccui.RichText)
         
 --------------------------------
+-- 
+-- @function [parent=#RichText] initWithXML 
+-- @param self
+-- @param #string xml
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @overload self, ccui.RichElement         
 -- @overload self, int         
 -- @function [parent=#RichText] removeElement
@@ -50,6 +57,14 @@
 -- return RichText instance.
 -- @function [parent=#RichText] create 
 -- @param self
+-- @return RichText#RichText ret (return value: ccui.RichText)
+        
+--------------------------------
+-- brief Create a RichText from an XML<br>
+-- return RichText instance.
+-- @function [parent=#RichText] createWithXML 
+-- @param self
+-- @param #string xml
 -- @return RichText#RichText ret (return value: ccui.RichText)
         
 --------------------------------
