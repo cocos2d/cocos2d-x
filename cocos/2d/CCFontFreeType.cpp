@@ -141,7 +141,7 @@ bool FontFreeType::createFontObject(const std::string &fontName, float fontSize)
 
     if (FT_New_Memory_Face(getFTLibrary(), s_cacheFontData[fontName].data.getBytes(), s_cacheFontData[fontName].data.getSize(), 0, &face ))
         return false;
-    
+
     if (FT_Select_Charmap(face, FT_ENCODING_UNICODE))
     {
         int foundIndex = -1;

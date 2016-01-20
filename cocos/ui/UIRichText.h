@@ -98,8 +98,16 @@ public:
      * @js ctor
      * @lua new
      */
-    RichElementText(){_type = Type::TEXT;};
+    RichElementText()
+    {_type = Type::TEXT;};
 
+    enum {
+        ITALICS_FLAG = 1 << 0,
+        BOLD_FLAG = 1 << 1,
+        UNDERLINE_FLAG = 1 << 2,
+        STRIKETHROUGH_FLAG = 1 << 3,
+        URL_FLAG = 1 << 4
+    };
     
     /**
      *@brief Default destructor.
@@ -117,9 +125,10 @@ public:
      * @param text Content string.
      * @param fontName Content font name.
      * @param fontSize Content font size.
+     * @param flags: italics, bold, underline or strikethrough
      * @return True if initialize success, false otherwise.
      */
-    bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize);
+    bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize, uint32_t flags, const std::string& url);
 
     
     /**
@@ -131,13 +140,17 @@ public:
      * @param text Content string.
      * @param fontName Content font name.
      * @param fontSize Content font size.
+     * @param flags: italics, bold, underline or strikethrough
      * @return RichElementText instance.
      */
-    static RichElementText* create(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize);
+    static RichElementText* create(int tag, const Color3B& color, GLubyte opacity, const std::string& text,
+                                   const std::string& fontName, float fontSize, uint32_t flags=0, const std::string& url="");
 protected:
     std::string _text;
     std::string _fontName;
     float _fontSize;
+    uint32_t _flags;
+    std::string _url;
     friend class RichText;
     
 };
@@ -188,11 +201,16 @@ public:
      * @return A RichElementImage instance.
      */
     static RichElementImage* create(int tag, const Color3B& color, GLubyte opacity, const std::string& filePath);
+
+    void setWidth(int width);
+    void setHeight(int height);
 protected:
     std::string _filePath;
     Rect _textureRect;
     int _textureType;
     friend class RichText;
+    int _width;
+    int _height;
 };
     
 /**
@@ -307,7 +325,14 @@ public:
      * @return RichText instance.
      */
     static RichText* create();
-    
+
+    /**
+     * @brief Create a RichText from an XML
+     *
+     * @return RichText instance.
+     */
+    static RichText* createWithXML(const std::string& xml);
+
     /**
      * @brief Insert a RichElement at a given index.
      *
@@ -356,14 +381,16 @@ public:
     
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
-    
+
+    bool initWithXML(const std::string& xml);
+
 protected:
     virtual void adaptRenderers() override;
 
     virtual void initRenderer() override;
     void pushToContainer(Node* renderer);
-    void handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize, const Color3B& color, GLubyte opacity);
-    void handleImageRenderer(const std::string& fileParh, const Color3B& color, GLubyte opacity);
+    void handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize, const Color3B& color, GLubyte opacity, uint32_t flags, const std::string& url="");
+    void handleImageRenderer(const std::string& fileParh, const Color3B& color, GLubyte opacity, int width, int height);
     void handleCustomRenderer(Node* renderer);
     void formarRenderers();
     void addNewLine();

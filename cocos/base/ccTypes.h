@@ -570,14 +570,19 @@ public:
 };
 
 /**
- * @brief Possible LabelEffect used by Label.
+ * @brief Effects used by `Label`
  *
  */
 enum class LabelEffect {
+    // FIXME: Covert them to bitwise. More than one effect should be supported
     NORMAL,
     OUTLINE,
     SHADOW,
     GLOW,
+    ITALICS,
+    BOLD,
+    UNDERLINE,
+    STRIKETHROUGH,
     ALL
 };
 
