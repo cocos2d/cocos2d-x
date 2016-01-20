@@ -526,12 +526,14 @@ bool RichText::initWithXML(const std::string& origxml)
         //  - makes sure that the xml well formed and starts with an element
         auto xml = "<font face=\"Verdana\" size=\"12\" color=\"#ffffff\">" + origxml + "</font>";
 
-        if (document.Parse(xml.c_str(), xml.length()) == tinyxml2::XML_SUCCESS)
+        auto error = document.Parse(xml.c_str(), xml.length());
+        if (error == tinyxml2::XML_SUCCESS)
         {
             MyXMLVisitor visitor(this);
             document.Accept(&visitor);
             return true;
         }
+        CCLOG("cocos2d: UI::RichText: Error parsing xml: %s, %s", document.GetErrorStr1(), document.GetErrorStr2());
     }
     return false;
 }

@@ -18,6 +18,7 @@ UIRichTextTests::UIRichTextTests()
     ADD_TEST_CASE(UIRichTextXMLUrl);
     ADD_TEST_CASE(UIRichTextXMLFace);
     ADD_TEST_CASE(UIRichTextXMLBR);
+    ADD_TEST_CASE(UIRichTextXMLInvalid);
 }
 
 
@@ -797,3 +798,41 @@ void UIRichTextXMLBR::touchEvent(Ref *pSender, Widget::TouchEventType type)
             break;
     }
 }
+
+//
+// UIRichTextXMLInvalid
+//
+bool UIRichTextXMLInvalid::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        // Add the alert
+        Text *alert = Text::create("Invalid XML test", "fonts/Marker Felt.ttf", 30);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.125));
+        _widget->addChild(alert);
+
+
+        // RichText
+        _richText = RichText::createWithXML("this is an invalid xml. <i>no closing tag");
+        if (_richText)
+        {
+            _richText->ignoreContentAdaptWithSize(false);
+            _richText->setContentSize(Size(100, 100));
+
+            _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
+            _richText->setLocalZOrder(10);
+
+
+            _widget->addChild(_richText);
+
+            // test remove all children, this call won't effect the test
+            _richText->removeAllChildren();
+        }
+        return true;        
+    }
+    return false;
+}
+
