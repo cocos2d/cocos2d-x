@@ -136,22 +136,22 @@ public:
     /** Align items in columns of rows. */
     void alignItemsInRows(int rows, va_list args);
     
-    /** Align items in array of rows.
+    /** Align items in an array of rows.
      * @js NA
      */
     void alignItemsInRowsWithArray(const ValueVector& columns);
 
     /**
-     * Determines if the menu is enable.
+     * Determines if the menu is enabled.
      * @see `setEnabled(bool)`.
      * @return whether the menu is enabled or not.
      */
     virtual bool isEnabled() const { return _enabled; }
 
     /**
-     * Set whether the menu is visible.
-     * The default value is true, a menu is default to visible.
-     *@param value true if menu is enable, false if menu is disable.
+     * Set whether the menu is to be enabled. Disabling the menu will make it unuseable
+     * The default value is true, the menu is enabled by default.
+     *@param value true if menu is to enabled, false if menu is to be disabled.
      */
     virtual void setEnabled(bool value) { _enabled = value; };
 

@@ -92,7 +92,8 @@ public:
     /// @{
 
     /**
-     * Creates an empty sprite without texture. You can call setTexture method subsequently.
+     * Creates an empty sprite without a texture. The setTexture method can be called later.
+     * to set the desired texture.
      *
      * @memberof Sprite
      * @return An autoreleased sprite object.
@@ -111,7 +112,7 @@ public:
     static Sprite* create(const std::string& filename);
     
     /**
-     * Creates a polygon sprite with a polygon info.
+     * Creates a polygon sprite with polygon info.
      *
      * After creation, the rect of sprite will be the size of the image,
      * and the offset will be (0,0).
@@ -154,7 +155,7 @@ public:
     static Sprite* createWithTexture(Texture2D *texture, const Rect& rect, bool rotated=false);
 
     /**
-     * Creates a sprite with an sprite frame.
+     * Creates a sprite with a sprite frame.
      *
      * @param   spriteFrame    A sprite frame which involves a texture and a rect.
      * @return  An autoreleased sprite object.
@@ -280,7 +281,7 @@ public:
     /// @name Animation methods
     /**
      * Changes the display frame with animation name and index.
-     * The animation name will be get from the AnimationCache.
+     * The animation name will be obtained from the AnimationCache.
      */
     virtual void setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex);
     /// @}
@@ -297,7 +298,7 @@ public:
     virtual bool isDirty() const { return _dirty; }
 
     /**
-     * Makes the Sprite to be updated in the Atlas.
+     * Allows the Sprite to be updated in the Atlas.
      */
     virtual void setDirty(bool dirty) { _dirty = dirty; }
 
@@ -484,7 +485,7 @@ CC_CONSTRUCTOR_ACCESS :
     Sprite();
     virtual ~Sprite();
 
-    /* Initializes an empty sprite with nothing init. */
+    /* Initializes an empty sprite. */
     virtual bool init() override;
 
     /**
