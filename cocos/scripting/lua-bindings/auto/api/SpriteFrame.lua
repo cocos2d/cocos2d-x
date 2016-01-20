@@ -163,7 +163,7 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
---  Check if anchor point is defined for frame.<br>
+--  Check if anchor point is defined for the frame.<br>
 -- return true if anchor point is available.
 -- @function [parent=#SpriteFrame] hasAnchorPoint 
 -- @param self
