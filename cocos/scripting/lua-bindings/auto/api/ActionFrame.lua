@@ -68,7 +68,7 @@
         
 --------------------------------
 -- Set the ActionInterval easing parameter.<br>
--- parame parameter   the parameter for frame ease
+-- param parameter   the parameter for frame ease
 -- @function [parent=#ActionFrame] setEasingParameter 
 -- @param self
 -- @param #array_table parameter
