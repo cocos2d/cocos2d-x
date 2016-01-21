@@ -35,7 +35,9 @@
 #import <UIKit/UIKit.h>
 
 // Accelerometer
+#if !defined(CC_TARGET_OS_TVOS)
 #import<CoreMotion/CoreMotion.h>
+#endif
 #import<CoreFoundation/CoreFoundation.h>
 
 // Vibrate
@@ -43,6 +45,7 @@
 
 #define SENSOR_DELAY_GAME 0.02
 
+#if !defined(CC_TARGET_OS_TVOS)
 @interface CCAccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
 {
     cocos2d::Acceleration *_acceleration;
@@ -72,7 +75,7 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
 - (id) init
 {
     if( (self = [super init]) ) {
-        _acceleration = new cocos2d::Acceleration();
+        _acceleration = new (std::nothrow) cocos2d::Acceleration();
         _motionManager = [[CMMotionManager alloc] init];
         _motionManager.accelerometerUpdateInterval = SENSOR_DELAY_GAME;
     }
@@ -142,8 +145,9 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
     auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
     dispatcher->dispatchEvent(&event);
 }
-
 @end
+#endif // !defined(CC_TARGET_OS_TVOS)
+
 
 //
 
@@ -173,16 +177,18 @@ int Device::getDPI()
 }
 
 
-
-
 void Device::setAccelerometerEnabled(bool isEnabled)
 {
+#if !defined(CC_TARGET_OS_TVOS)
     [[CCAccelerometerDispatcher sharedAccelerometerDispatcher] setAccelerometerEnabled:isEnabled];
+#endif
 }
 
 void Device::setAccelerometerInterval(float interval)
 {
+#if !defined(CC_TARGET_OS_TVOS)
     [[CCAccelerometerDispatcher sharedAccelerometerDispatcher] setAccelerometerInterval:interval];
+#endif
 }
 
 typedef struct
@@ -234,9 +240,12 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
         NSDictionary *attibutes = @{NSFontAttributeName:font};
         dim = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) attributes:attibutes context:nil].size;
     }
+#if !defined(CC_TARGET_OS_TVOS)
+    // not available on tvOS, and tvOS version is >= 7.0
     else {
         dim = [str sizeWithFont:font constrainedToSize:textRect];
     }
+#endif
 
     dim.width = ceilf(dim.width);
     dim.height = ceilf(dim.height);
@@ -421,6 +430,9 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
                 
                 [paragraphStyle release];
             }
+
+#if !defined(CC_TARGET_OS_TVOS)
+            // not available on tvOS, and tvOS version is >= 7.0
             else
             {
                 CGContextSetRGBStrokeColor(context, info->strokeColorR, info->strokeColorG, info->strokeColorB, info->strokeColorA);
@@ -429,13 +441,35 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
                 //original code that was not working in iOS 7
                 [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:nsAlign];
             }
+#endif
         }
         
         CGContextSetTextDrawingMode(context, kCGTextFill);
-        
+
         // actually draw the text in the context
-        [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:nsAlign];
-        
+        if (s_isIOS7OrHigher)
+        {
+            NSMutableParagraphStyle* paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+            paragraphStyle.alignment = nsAlign;
+
+            NSDictionary *attributes = @{ NSFontAttributeName: font,
+                                          NSParagraphStyleAttributeName: paragraphStyle,
+                                          NSForegroundColorAttributeName: [UIColor colorWithRed:info->tintColorR
+                                                                                         green:info->tintColorG
+                                                                                          blue:info->tintColorB
+                                                                                         alpha:info->tintColorA]
+                                          };
+            [str drawInRect:rect withAttributes: attributes];
+            [paragraphStyle release];
+        }
+#if !defined(CC_TARGET_OS_TVOS)
+        else
+        {
+            [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:nsAlign];
+        }
+#endif
+
         CGContextEndTransparencyLayer(context);
         
         // pop the context

@@ -46,7 +46,7 @@ public:
 
     static __Bool* create(bool v)
     {
-        __Bool* pRet = new __Bool(v);
+        __Bool* pRet = new (std::nothrow) __Bool(v);
         if (pRet)
         {
             pRet->autorelease();

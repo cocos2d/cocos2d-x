@@ -59,7 +59,7 @@ class CC_DLL WebSocket
 {
 public:
     /**
-     * Construtor of WebSocket.
+     * Constructor of WebSocket.
      *
      * @js ctor
      */

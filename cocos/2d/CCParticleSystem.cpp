@@ -1332,4 +1332,13 @@ void ParticleSystem::setScaleY(float newScaleY)
     Node::setScaleY(newScaleY);
 }
 
+void ParticleSystem::start()
+{
+    resetSystem();
+}
+
+void ParticleSystem::stop()
+{
+    stopSystem();
+}
 NS_CC_END

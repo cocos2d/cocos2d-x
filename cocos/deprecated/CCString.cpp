@@ -220,7 +220,7 @@ bool __String::isEqual(const Ref* pObject)
 
 __String* __String::create(const std::string& str)
 {
-    __String* ret = new __String(str);
+    __String* ret = new (std::nothrow) __String(str);
     ret->autorelease();
     return ret;
 }

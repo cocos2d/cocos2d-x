@@ -54,7 +54,7 @@ namespace cocostudio
     {
         if (!_instanceSpriteReader)
         {
-            _instanceSpriteReader = new SpriteReader();
+            _instanceSpriteReader = new (std::nothrow) SpriteReader();
         }
         
         return _instanceSpriteReader;

@@ -38,7 +38,7 @@ void static freeSpaceChildren(cpSpace *space);
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
     TypeTest<T> t;
-    T* cobj = new T();
+    T* cobj = new (std::nothrow) T();
     cobj->autorelease();
     js_type_class_t *p;
     std::string typeName = t.s_name();
@@ -906,7 +906,7 @@ void JSB_cpSpace_finalize(JSFreeOp *fop, JSObject *jsthis)
 static
 bool __jsb_cpSpace_addCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp, JS::HandleObject jsspace, cpSpace *space, unsigned int is_oo)
 {
-    struct collision_handler *handler = new collision_handler();
+    struct collision_handler *handler = new (std::nothrow) collision_handler();
     handler->typeA = 0;
     handler->typeB = 0;
 
@@ -1005,7 +1005,7 @@ bool JSB_cpSpace_setDefaultCollisionHandler(JSContext *cx, uint32_t argc, jsval 
     struct jsb_c_proxy_s* proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* space = (cpSpace*) proxy->handle;
 
-    collision_handler *handler = new collision_handler();
+    collision_handler *handler = new (std::nothrow) collision_handler();
     JSB_PRECONDITION(handler, "Error allocating memory");
 
     handler->typeA = 0;
@@ -1324,7 +1324,7 @@ bool JSB_cpSpace_segmentQueryFirst(JSContext *cx, uint32_t argc, jsval *vp){
     ok &= jsval_to_uint( cx, args.get(3), (unsigned int*)&group );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     
-    cpSegmentQueryInfo *out = new cpSegmentQueryInfo();
+    cpSegmentQueryInfo *out = new (std::nothrow) cpSegmentQueryInfo();
     cpShape* target = cpSpaceSegmentQueryFirst(space, start, end, layers, group, out);
     
     if(target)
@@ -1362,7 +1362,7 @@ bool JSB_cpSpace_nearestPointQueryNearest(JSContext *cx, uint32_t argc, jsval *v
     ok &= jsval_to_uint( cx, args.get(3), (unsigned int*)&group );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
     
-    cpNearestPointQueryInfo* info = new cpNearestPointQueryInfo();
+    cpNearestPointQueryInfo* info = new (std::nothrow) cpNearestPointQueryInfo();
     cpShape* target = cpSpaceNearestPointQueryNearest(space, point, maxDistance, layers, group, info);
     
     if(target)

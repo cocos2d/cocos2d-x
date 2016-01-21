@@ -11,6 +11,7 @@ cocos2d-x-3.10 December ? 2015
 [NEW]           UI: UIRichText support the new line element.
 
 [REFINE]        3rd party: WebP loading improvements WebP loaded as premultiplied alpha if it has.
+[REFINE]        UI: Slider `setCapInsetProgressBarRebderer` change to `setCapInsetProgressBarRenderer`.
 [REFINE]        UI: RichText support new line element.
 [REFINE]        UI: Set focus to Widget when touched.
 [REFINE]        3D: Change char* to string in Terrain.
@@ -18,6 +19,7 @@ cocos2d-x-3.10 December ? 2015
 [REFINE]        Studio: Merge Studio changes for compatible withe 32bit Mac System.
 [REFINE]        Studio: Merge Studio changes for lua-binding, js-binding and simulator.
 [REFINE]        Mac: Make engine compatible for 32bit Mac.
+[REFINE]        3rd party: WebP loading improvements WebP loaded as premultiplied alpha if it has.
 [REFINE]        Audio: AudioEngine on Linux replace the original SimpleAudioEngine with a new version of FMOD, now AudioEngine support all platforms!
 [REFINE]        IOS: Add virtual keyword for some render related function.
 [REFINE]        UI: Fixes boring deprecated warning in HttpRequest.
@@ -35,6 +37,7 @@ cocos2d-x-3.10 December ? 2015
 [REFINE]        JS: Added ccvector_to / ccmap_to converted to new js-binding API.
 [REFINE]        UI: Slider misprint fix.
 
+[FIX]           Network: fix possible websocket crash in its destructor.
 [FIX]           Core: Fix premultiplyAlpha for mipmaps and compressed textures.
 [FIX]           UI: Fix Scale9sprite rendering error when content size smaller than the sum of leftInset and rightInset.
 [FIX]           Win32: Fix EditBox crash when removing an EditBox in a scheduler.

@@ -42,8 +42,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
-import com.chukong.cocosplay.client.CocosPlayClient;
-
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
 import javax.microedition.khronos.egl.EGL10;
@@ -258,7 +256,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CocosPlayClient.init(this, false);
 
         onLoadNativeLibraries();
 

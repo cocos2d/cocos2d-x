@@ -24,7 +24,8 @@
 
 #include "platform/CCPlatformConfig.h"
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+// Webview not available on tvOS
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
 
 #include "UIWebViewImpl-ios.h"
 #include "renderer/CCRenderer.h"

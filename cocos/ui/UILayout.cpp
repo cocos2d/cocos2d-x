@@ -1048,7 +1048,7 @@ Size Layout::getLayoutAccumulatedSize()const
         }
     }
     
-    //substract extra size
+    //subtract extra size
     Type type = this->getLayoutType();
     if (type == Type::HORIZONTAL)
     {
@@ -1066,7 +1066,7 @@ Vec2 Layout::getWorldCenterPoint(Widget* widget)const
     Layout *layout = dynamic_cast<Layout*>(widget);
     //FIXEDME: we don't need to calculate the content size of layout anymore
     Size widgetSize = layout ? layout->getLayoutAccumulatedSize() :  widget->getContentSize();
-//    CCLOG("contnet size : width = %f, height = %f", widgetSize.width, widgetSize.height);
+//    CCLOG("content size : width = %f, height = %f", widgetSize.width, widgetSize.height);
     return widget->convertToWorldSpace(Vec2(widgetSize.width/2, widgetSize.height/2));
 }
 
@@ -1156,7 +1156,7 @@ int Layout::findFirstFocusEnabledWidgetIndex()
         }
         index++;
     }
-    CCASSERT(0, "invalide operation");
+    CCASSERT(0, "invalid operation");
     return 0;
 }
 
@@ -1470,7 +1470,7 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection direction, Widget *curre
         }
         else
         {
-            //handling the disabled widget, there is no actual focus lose or get, so we don't need any envet
+            //handling the disabled widget, there is no actual focus lose or get, so we don't need any event
             return this->getPreviousFocusedWidget(direction, nextWidget);
         }
     }

@@ -39,7 +39,7 @@ THE SOFTWARE.
 #define CC_CREATE_NO_PARAM_NO_INIT(varType)\
 public: \
     static inline varType *create(void){ \
-    varType *var = new varType();\
+    varType *var = new (std::nothrow) varType();\
     if (var)\
 {\
     var->autorelease();\
@@ -52,7 +52,7 @@ public: \
 #define CC_CREATE_NO_PARAM(varType)\
 public: \
     static inline varType *create(void){ \
-    varType *var = new varType();\
+    varType *var = new (std::nothrow) varType();\
     if (var && var->init())\
 {\
     var->autorelease();\
@@ -108,7 +108,7 @@ public:
     /**
     * x y skewX skewY scaleX scaleY used to calculate transform matrix
     * skewX, skewY can have rotation effect
-    * To get more matrix information, you can have a look at this pape : http://www.senocular.com/flash/tutorials/transformmatrix/
+    * To get more matrix information, you can have a look at this paper : http://www.senocular.com/flash/tutorials/transformmatrix/
     */
     float skewX;
     float skewY;
@@ -441,7 +441,7 @@ public:
     cocos2d::tweenfunc::TweenType tweenEasing;
 
     /**
-    * @brief    save movment bone data
+    * @brief    save movement bone data
     * @key    const std::string& 
     * @value    MovementBoneData *
     */

@@ -56,7 +56,7 @@ namespace cocostudio
     {
         if (!_instanceLight3DReader)
         {
-            _instanceLight3DReader = new Light3DReader();
+            _instanceLight3DReader = new (std::nothrow) Light3DReader();
         }
         
         return _instanceLight3DReader;

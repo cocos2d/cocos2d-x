@@ -260,7 +260,7 @@ public:
     
     /**@~english
      * Compile the specified js file
-     * @param path    @~english The path of the script to to compiled
+     * @param path    @~english The path of the script to be compiled
      * @param global    @~english The js global object
      * @param cx        @~english The js context
      */
@@ -405,7 +405,7 @@ public:
     static bool log(JSContext *cx, uint32_t argc, jsval *vp);
     
     /**@~english
-     * Sets a js value to the targeted js obejct's reserved slot, which is not exposed to script environment.
+     * Sets a js value to the targeted js object's reserved slot, which is not exposed to script environment.
      * @param i @~english The slot index
      * @param obj @~english The targeted object
      * @param value @~english The js value to set to the slot
@@ -508,6 +508,11 @@ public:
      */
     virtual void unrootObject(cocos2d::Ref* ref) override;
 
+    /**
+     * Calls the Garbage Collector
+     */
+    virtual void garbageCollect() override;
+
 private:
     void string_report(JS::HandleValue val);
     void initRegister();
@@ -562,7 +567,7 @@ js_type_class_t *jsb_register_class(JSContext *cx, JSClass *jsClass, JS::HandleO
     return p;
 }
 
-/** creates two new proxies: one associaged with the nativeObj,
+/** creates two new proxies: one associated with the nativeObj,
  and another one associated with the JsObj */
 js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsObj);
 /** returns the proxy associated with the Native* */
@@ -616,7 +621,7 @@ JSObject* jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref,
  If it can't find it, it will create a new one associating it to Ref.
  Call this function for objects that were already created and initialized, when returning `getChild()`
  */
-JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+JS::HandleObject jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
 /**
  It will try to get the associated JSObjct for ref.
@@ -624,5 +629,8 @@ JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_ty
  Call this function for objects that might return an already existing copy when you create them. For example, `Animation3D::create()`;
  */
 JSObject* jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+
+
+JS::HandleObject jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug);
 
 #endif /* __SCRIPTING_CORE_H__ */

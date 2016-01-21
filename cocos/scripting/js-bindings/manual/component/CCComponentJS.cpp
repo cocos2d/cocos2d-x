@@ -66,7 +66,7 @@ ComponentJS::ComponentJS(const std::string& scriptFileName)
         JS::RootedValue protoValue(cx);
         JS_GetProperty(cx, classObj, "prototype", &protoValue);
         
-        mozilla::Maybe<JS::PersistentRootedObject> *jsObj = new mozilla::Maybe<JS::PersistentRootedObject>();
+        mozilla::Maybe<JS::PersistentRootedObject> *jsObj = new (std::nothrow) mozilla::Maybe<JS::PersistentRootedObject>();
         
         js_type_class_t *typeClass = js_get_type_from_native<cocos2d::ComponentJS>(this);
         JS::RootedObject proto(cx, protoValue.toObjectOrNull());

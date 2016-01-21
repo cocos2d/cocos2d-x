@@ -266,7 +266,7 @@ public:
     static __JSPlistDelegator* getInstance() {
         static __JSPlistDelegator* pInstance = NULL;
         if (pInstance == NULL) {
-            pInstance = new __JSPlistDelegator();
+            pInstance = new (std::nothrow) __JSPlistDelegator();
         }
         return pInstance;
     };

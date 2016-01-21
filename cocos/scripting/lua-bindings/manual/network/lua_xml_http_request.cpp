@@ -70,7 +70,7 @@ void LuaMinXmlHttpRequest::_gotHeader(string header)
 {
 	// Get Header and Set StatusText
     // Split String into Tokens
-    char * cstr = new char [header.length()+1];
+    char * cstr = new (std::nothrow) char [header.length()+1];
     
     // check for colon.
     size_t found_header_field = header.find_first_of(":");
@@ -683,7 +683,7 @@ static int lua_get_XMLHttpRequest_response(lua_State* L)
         
         LuaValueArray array;
         
-        uint8_t* tmpData = new uint8_t[self->getDataSize()];
+        uint8_t* tmpData = new (std::nothrow) uint8_t[self->getDataSize()];
         if (nullptr == tmpData)
         {
             return 0;
