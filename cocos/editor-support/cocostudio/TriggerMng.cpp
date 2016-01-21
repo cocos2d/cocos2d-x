@@ -491,7 +491,7 @@ void TriggerMng::addEventListenerWithFixedPriority(cocos2d::EventListener* liste
 ArmatureMovementDispatcher::ArmatureMovementDispatcher(void)
 : _mapEventAnimation(nullptr)
 {
-	_mapEventAnimation = new std::unordered_map<Ref*, SEL_MovementEventCallFunc> ;
+	_mapEventAnimation = new (std::nothrow) std::unordered_map<Ref*, SEL_MovementEventCallFunc> ;
 }
 
 ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)

@@ -79,7 +79,7 @@ static bool js_cocos2dx_Sprite3D_createAsync(JSContext *cx, uint32_t argc, jsval
         };
         callback = lambda;
 
-        JSB_HeapValueWrapper* data = new JSB_HeapValueWrapper(cx, args.get(argc == 4 ? 3 : 4));
+        JSB_HeapValueWrapper* data = new (std::nothrow) JSB_HeapValueWrapper(cx, args.get(argc == 4 ? 3 : 4));
 
         if(argc == 4)
             cocos2d::Sprite3D::createAsync(modelPath, callback, data);

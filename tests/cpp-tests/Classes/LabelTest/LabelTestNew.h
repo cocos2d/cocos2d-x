@@ -755,4 +755,91 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
+
+class LabelIssue13846Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue13846Test);
+    
+    LabelIssue13846Test();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelRichText : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelRichText);
+
+    LabelRichText();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelItalics : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelItalics);
+
+    LabelItalics();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    cocos2d::Label* _label1a;
+    cocos2d::Label* _label2a;
+};
+
+class LabelBold : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelBold);
+
+    LabelBold();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    cocos2d::Label* _label1a;
+    cocos2d::Label* _label2a;
+};
+
+class LabelUnderline : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelUnderline);
+
+    LabelUnderline();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    cocos2d::Label* _label1a;
+    cocos2d::Label* _label2a;
+};
+
+class LabelUnderlineMultiline : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelUnderlineMultiline);
+
+    LabelUnderlineMultiline();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    cocos2d::Label* _label1a;
+    cocos2d::Label* _label2a;
+};
+
+class LabelStrikethrough : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelStrikethrough);
+
+    LabelStrikethrough();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    cocos2d::Label* _label1a;
+    cocos2d::Label* _label2a;
+};
+
 #endif

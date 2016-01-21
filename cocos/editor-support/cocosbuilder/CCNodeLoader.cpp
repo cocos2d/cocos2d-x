@@ -468,7 +468,7 @@ float * NodeLoader::parsePropTypeFloatXY(Node * pNode, Node * pParent, CCBReader
     float x = ccbReader->readFloat();
     float y = ccbReader->readFloat();
 
-    float * floatXY = new float[2];
+    float * floatXY = new (std::nothrow) float[2];
     floatXY[0] = x;
     floatXY[1] = y;
 
@@ -499,7 +499,7 @@ float * NodeLoader::parsePropTypeScaleLock(Node * pNode, Node * pParent, CCBRead
         y *= ccbReader->getResolutionScale();
     }
     
-    float * scaleLock = new float[2];
+    float * scaleLock = new (std::nothrow) float[2];
     scaleLock[0] = x;
     scaleLock[1] = y;
 
@@ -549,7 +549,7 @@ float * NodeLoader::parsePropTypeFloatVar(Node * pNode, Node * pParent, CCBReade
     float f = ccbReader->readFloat();
     float fVar = ccbReader->readFloat();
     
-    float * arr = new float[2];
+    float * arr = new (std::nothrow) float[2];
     arr[0] = f;
     arr[1] = fVar;
     
@@ -705,7 +705,7 @@ bool * NodeLoader::parsePropTypeFlip(Node * pNode, Node * pParent, CCBReader * c
     bool flipX = ccbReader->readBool();
     bool flipY = ccbReader->readBool();
 
-    bool * arr = new bool[2];
+    bool * arr = new (std::nothrow) bool[2];
     arr[0] = flipX;
     arr[1] = flipY;
 

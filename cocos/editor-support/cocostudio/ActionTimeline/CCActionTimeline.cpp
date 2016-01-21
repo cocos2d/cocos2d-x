@@ -441,4 +441,13 @@ void ActionTimeline::stepToFrame(int frameIndex)
     }
 }
 
+void ActionTimeline::start()
+{
+    gotoFrameAndPlay(0);
+}
+
+void ActionTimeline::stop()
+{
+    pause();
+}
 NS_TIMELINE_END

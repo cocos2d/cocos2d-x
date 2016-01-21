@@ -54,17 +54,14 @@ ProgressTimer::ProgressTimer()
 ProgressTimer* ProgressTimer::create(Sprite* sp)
 {
     ProgressTimer *progressTimer = new (std::nothrow) ProgressTimer();
-    if (progressTimer->initWithSprite(sp))
+    if (progressTimer && progressTimer->initWithSprite(sp))
     {
         progressTimer->autorelease();
+        return progressTimer;
     }
-    else
-    {
-        delete progressTimer;
-        progressTimer = nullptr;
-    }        
-
-    return progressTimer;
+    
+    delete progressTimer;
+    return nullptr;
 }
 
 bool ProgressTimer::initWithSprite(Sprite* sp)

@@ -78,7 +78,7 @@ namespace network {
 
     static void processHttpResponse(HttpResponse* response, std::string& errorStr);
 
-    static HttpRequest *s_requestSentinel = new HttpRequest;
+    static HttpRequest *s_requestSentinel = new (std::nothrow) HttpRequest;
 
     // Worker thread
     void HttpClient::networkThread()

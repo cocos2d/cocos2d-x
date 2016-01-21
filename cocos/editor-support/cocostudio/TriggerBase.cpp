@@ -29,10 +29,10 @@ using namespace cocostudio;
 
 void sendEvent(unsigned int event)
 {
-    char* buf = new char[10];
+    char buf[10];
     sprintf(buf, "%d", event);
     std::string custom_event_name(buf);
-    CC_SAFE_DELETE_ARRAY(buf);
+
     EventCustom eventCustom(custom_event_name);
     TriggerMng::getInstance()->dispatchEvent(&eventCustom);
 }
