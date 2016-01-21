@@ -27,6 +27,7 @@ CocoStudioActionTimelineTests::CocoStudioActionTimelineTests()
     ADD_TEST_CASE(TestActionTimelineBlendFuncFrame);
     ADD_TEST_CASE(TestAnimationClipEndCallBack);
     ADD_TEST_CASE(TestActionTimelinePlayableFrame);
+    ADD_TEST_CASE(TestActionTimelineIssueWith2SameActionInOneNode);
 }
 
 CocoStudioActionTimelineTests::~CocoStudioActionTimelineTests()
@@ -741,4 +742,22 @@ void TestActionTimelinePlayableFrame::onEnter()
 std::string TestActionTimelinePlayableFrame::title() const
 {
     return "Test Action Timeline PlayableFrame\n particle and audio";
+}
+
+void TestActionTimelineIssueWith2SameActionInOneNode::onEnter()
+{
+    CCFileUtils::getInstance()->addSearchPath("ActionTimeline");
+    ActionTimelineBaseTest::onEnter();
+
+    Node* node = CSLoader::createNode("ani2.csb");
+    ActionTimeline* action = CSLoader::createTimeline("ani2.csb");
+    node->setPosition(Vec2(150, 100));
+    node->runAction(action);
+    action->gotoFrameAndPlay(0);
+    this->addChild(node);
+}
+
+std::string TestActionTimelineIssueWith2SameActionInOneNode::title() const
+{
+    return "Add multi same action in one node issue\n  These two actions should play async.";
 }
