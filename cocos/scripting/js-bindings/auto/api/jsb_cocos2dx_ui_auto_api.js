@@ -3234,6 +3234,26 @@ jumpToBottomRight : function (
 },
 
 /**
+ * @method setTouchTotalTimeThreshold
+ * @param {float} arg0
+ */
+setTouchTotalTimeThreshold : function (
+float 
+)
+{
+},
+
+/**
+ * @method getTouchTotalTimeThreshold
+ * @return {float}
+ */
+getTouchTotalTimeThreshold : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getScrollBarPositionFromCornerForHorizontal
  * @return {vec2_object}
  */

@@ -247,6 +247,21 @@
 -- @return ScrollView#ScrollView self (return value: ccui.ScrollView)
         
 --------------------------------
+-- brief Set the touch total time threshold<br>
+-- param the touch total time threshold
+-- @function [parent=#ScrollView] setTouchTotalTimeThreshold 
+-- @param self
+-- @param #float touchTotalTimeThreshold
+-- @return ScrollView#ScrollView self (return value: ccui.ScrollView)
+        
+--------------------------------
+-- brief Get the touch total time threshold<br>
+-- return the touch total time threshold
+-- @function [parent=#ScrollView] getTouchTotalTimeThreshold 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 -- brief Get the horizontal scroll bar's position from right-top corner.<br>
 -- return positionFromCorner
 -- @function [parent=#ScrollView] getScrollBarPositionFromCornerForHorizontal 
