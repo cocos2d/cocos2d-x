@@ -6728,6 +6728,7 @@
         "cocos/scripting/lua-bindings/auto/api/PhysicsSprite3D.lua", 
         "cocos/scripting/lua-bindings/auto/api/PhysicsWorld.lua", 
         "cocos/scripting/lua-bindings/auto/api/Place.lua", 
+        "cocos/scripting/lua-bindings/auto/api/PlayableFrame.lua", 
         "cocos/scripting/lua-bindings/auto/api/PointLight.lua", 
         "cocos/scripting/lua-bindings/auto/api/PolygonInfo.lua", 
         "cocos/scripting/lua-bindings/auto/api/PositionFrame.lua", 
