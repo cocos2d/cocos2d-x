@@ -60,10 +60,12 @@ public class Cocos2dxWebView extends WebView {
 
         this.getSettings().setDomStorageEnabled(true);
 
-        if (Build.VERSION.SDK_INT >= 16) {
+        try {
             CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.setAcceptThirdPartyCookies(this, true);
             this.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        } catch (NoSuchMethodError error) {
+            Log.d(TAG, "This API level do not support `setAcceptThirdPartyCookies`");
         }
 
         // `searchBoxJavaBridge_` has big security risk. http://jvn.jp/en/jp/JVN53768697
