@@ -224,9 +224,10 @@ static int processTask(HttpClient* client, HttpRequest* request, NSString* reque
     }
     [httpAsynConn startRequest:nsrequest];
     
+    NSTimeInterval readTimeout = client->getTimeoutForRead();
     while( httpAsynConn.finish != true)
     {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow: readTimeout]];
     }
     
     //if http connection return error
