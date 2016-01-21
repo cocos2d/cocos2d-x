@@ -771,6 +771,87 @@ float Button::getTitleFontSize() const
     return _fontSize;
 }
 
+void Button::enableShadow(const Color4B& shadowColor, const Size &offset, int blurRadius)
+{
+    _titleRenderer->enableShadow(shadowColor, offset, blurRadius);
+}
+
+bool Button::isShadowEnabled() const
+{
+    return _titleRenderer->isShadowEnabled();
+}
+
+Color4B Button::getShadowColor() const
+{
+    Color4F shadowColor = _titleRenderer->getShadowColor();
+    return Color4B(shadowColor.r * 255, shadowColor.g * 255, shadowColor.b * 255, shadowColor.a * 255);
+}
+
+Size Button::getShadowOffset() const
+{
+    return _titleRenderer->getShadowOffset();
+}
+
+float Button::getShadowBlurRadius() const
+{
+    return _titleRenderer->getShadowBlurRadius();
+}
+
+void Button::enableOutline(const Color4B& outlineColor, int outlineSize)
+{
+    _titleRenderer->enableOutline(outlineColor, outlineSize);
+    updateContentSizeWithTextureSize(_titleRenderer->getContentSize());
+    _normalTextureAdaptDirty = true;
+    _pressedTextureAdaptDirty = true;
+    _disabledTextureAdaptDirty = true;
+}
+
+int Button::getOutlineSize() const
+{
+    return _titleRenderer->getOutlineSize();
+}
+
+void Button::enableGlow(const Color4B& glowColor)
+{
+    if (_type == FontType::TTF)
+    {
+        _titleRenderer->enableGlow(glowColor);
+    }
+}
+
+void Button::disableEffect()
+{
+    _titleRenderer->disableEffect();
+    updateContentSizeWithTextureSize(_titleRenderer->getContentSize());
+    _normalTextureAdaptDirty = true;
+    _pressedTextureAdaptDirty = true;
+    _disabledTextureAdaptDirty = true;
+}
+
+void Button::disableEffect(LabelEffect effect)
+{
+    _titleRenderer->disableEffect(effect);
+    //only outline effect will affect the content size of label
+    if (LabelEffect::OUTLINE == effect)
+    {
+        updateContentSizeWithTextureSize(_titleRenderer->getContentSize());
+        _normalTextureAdaptDirty = true;
+        _pressedTextureAdaptDirty = true;
+        _disabledTextureAdaptDirty = true;
+    }
+}
+
+LabelEffect Button::getLabelEffectType() const
+{
+    return _titleRenderer->getLabelEffectType();
+}
+
+Color4B Button::getEffectColor() const
+{
+    Color4F effect = _titleRenderer->getEffectColor();
+    return Color4B(effect.r * 255, effect.g * 255, effect.b * 255, effect.a * 255);
+}
+
 void Button::setZoomScale(float scale)
 {
     _zoomScale = scale;
