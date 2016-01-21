@@ -12,6 +12,7 @@ UIScrollViewEditorTests::UIScrollViewEditorTests()
 //    ADD_TEST_CASE(UIScrollViewTest_ScrollToPercentBothDirection_Editor);
 //    ADD_TEST_CASE(UIScrollViewTest_ScrollToPercentBothDirection_Bounce_Editor);
     ADD_TEST_CASE(UIScrollViewTest_ClippingWithNode);
+    ADD_TEST_CASE(UISscrollViewTestBar);
 }
 
 // UIScrollViewTest_Vertical_Editor
@@ -188,5 +189,24 @@ bool UIScrollViewTest_ClippingWithNode::init()
         return true;
     }
 
+    return false;
+}
+
+UISscrollViewTestBar::UISscrollViewTestBar()
+{
+}
+
+UISscrollViewTestBar::~UISscrollViewTestBar()
+{
+}
+
+bool UISscrollViewTestBar::init()
+{
+    if (UIScene_Editor::init())
+    {
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Both/ScrollBarTests.csb");
+        _touchGroup->addChild(node);
+        return true;
+    }
     return false;
 }
