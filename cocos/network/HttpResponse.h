@@ -141,6 +141,15 @@ public:
     }
 
     /** 
+     * Get the http error buffer data.
+     * @return std::string* the pointer that point to the _errorBuffer.
+     */
+    inline std::string* getErrorBufferData()
+    {
+        return &_errorBuffer;
+    }
+
+    /** 
      * Get the error buffer which will tell you more about the reason why http request failed.
      * @return const char* the pointer that point to _errorBuffer.
      */
