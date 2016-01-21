@@ -405,9 +405,9 @@ namespace cocostudio
                                                &f_innerSize,
                                                direction,
                                                bounceEnabled,
-											   scrollbarEnabled,
-											   scrollbarAutoHide,
-											   scrollbarAutoHideTime);
+                                               scrollbarEnabled,
+                                               scrollbarAutoHide,
+                                               scrollbarAutoHideTime);
         
         return *(Offset<Table>*)(&options);
     }
