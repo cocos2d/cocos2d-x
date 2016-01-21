@@ -417,7 +417,7 @@ void SIOClientImpl::handshake()
     pre << "http://" << _uri << "/socket.io/1/?EIO=2&transport=polling&b64=true";
 
     HttpRequest* request = new (std::nothrow) HttpRequest();
-    request->setUrl(pre.str().c_str());
+    request->setUrl(pre.str());
     request->setRequestType(HttpRequest::Type::GET);
 
     request->setResponseCallback(CC_CALLBACK_2(SIOClientImpl::handshakeResponse, this));
@@ -865,7 +865,7 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
             case 2:
                 CCLOGINFO("Ping received, send pong");
                 payload = "3" + payload;
-                _ws->send(payload.c_str());
+                _ws->send(payload);
                 break;
             case 3:
                 CCLOGINFO("Pong received");

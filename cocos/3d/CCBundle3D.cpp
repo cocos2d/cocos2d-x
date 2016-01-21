@@ -213,7 +213,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
     if (mtl_basepath)
         mtlPath = mtl_basepath;
     else
-        mtlPath = fullPath.substr(0, fullPath.find_last_of("\\/") + 1).c_str();
+        mtlPath = fullPath.substr(0, fullPath.find_last_of("\\/") + 1);
     
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;

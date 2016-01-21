@@ -13,6 +13,10 @@ SpritePolygonTest::SpritePolygonTest()
     ADD_TEST_CASE(SpritePolygonTest5);
     ADD_TEST_CASE(SpritePolygonPerformanceTestDynamic);
     ADD_TEST_CASE(SpritePerformanceTestDynamic);
+    ADD_TEST_CASE(SpritePolygonTestNoCrash);
+    ADD_TEST_CASE(SpritePolygonTestTPIsland);
+    ADD_TEST_CASE(SpritePolygonTestAutoPolyIsland);
+    ADD_TEST_CASE(SpritePolygonTestFrameAnim);
 }
 
 SpritePolygonTestCase::SpritePolygonTestCase()
@@ -275,11 +279,11 @@ void SpritePolygonTestSlider::initSliders()
 
 void SpritePolygonTestSlider::makeSprites(const std::string* list, const int count, const float y)
 {
-    auto vsize =Director::getInstance()->getVisibleSize();
-    float offset = (vsize.width-100)/(count-1);
+    auto vsize = Director::getInstance()->getVisibleSize();
     for(int i = 0; i < count; i++)
     {
-        auto sp = makeSprite(list[i], Vec2(50+offset*i, y));
+        float offset = (vsize.width/(count+1)) * (i+1);
+        auto sp = makeSprite(list[i], Vec2(offset, y));
         addChild(sp);
     }
 }
@@ -362,7 +366,7 @@ void SpritePolygonTest3::initSprites()
         s_pathB2,
         "Images/elephant1_Diffuse.png"
     };
-    int count = 4;
+    int count = sizeof(list)/sizeof(list[0]);
     makeSprites(list, count, vsize.height/2);
 }
 
@@ -629,4 +633,145 @@ Sprite* SpritePerformanceTestDynamic::makeSprite()
     auto ret =  Sprite::create(s_pathGrossini);
     ret->runAction(RepeatForever::create(RotateBy::create(1.0,360.0)));
     return ret;
+}
+
+//
+// SpritePolygonTestNoCrash
+//
+SpritePolygonTestNoCrash::SpritePolygonTestNoCrash()
+{
+    _title = "SpritePolygon ";
+    _subtitle = "AutoPolygon: should not crash";
+}
+
+void SpritePolygonTestNoCrash::initSprites()
+{
+    auto s = Director::getInstance()->getWinSize();
+    auto pinfo = AutoPolygon::generatePolygon("Images/sprite_polygon_crash.png", Rect::ZERO, 1);
+    auto sprite = Sprite::create(pinfo);
+    addChild(sprite);
+    sprite->setPosition(s.width/2, s.height/2);
+
+    //DrawNode
+    auto spDrawNode = DrawNode::create();
+    spDrawNode->setTag(sprite->getTag());
+    spDrawNode->clear();
+    sprite->addChild(spDrawNode);
+    _drawNodes.pushBack(spDrawNode);
+
+    updateDrawNode();
+}
+
+//
+// SpritePolygonTestTPIsland
+//
+SpritePolygonTestTPIsland::SpritePolygonTestTPIsland()
+{
+    _title = "SpritePolygon ";
+    _subtitle = "TexturePacker: Sprite with island";
+}
+
+void SpritePolygonTestTPIsland::initSprites()
+{
+    auto s = Director::getInstance()->getWinSize();
+    auto cache = SpriteFrameCache::getInstance();
+    cache->addSpriteFramesWithFile("Images/test_polygon.plist");
+
+    auto sprite = Sprite::createWithSpriteFrame(cache->getSpriteFrameByName("island_polygon.png"));
+    addChild(sprite);
+    sprite->setPosition(s.width/2, s.height/2);
+
+    //DrawNode
+    auto spDrawNode = DrawNode::create();
+    spDrawNode->setTag(sprite->getTag());
+    spDrawNode->clear();
+    sprite->addChild(spDrawNode);
+    _drawNodes.pushBack(spDrawNode);
+
+    updateDrawNode();
+}
+
+//
+// SpritePolygonTestAutoPolyIsland
+//
+SpritePolygonTestAutoPolyIsland::SpritePolygonTestAutoPolyIsland()
+{
+    _title = "SpritePolygon";
+    _subtitle = "AutoPolygon: Sprite with island";
+}
+
+void SpritePolygonTestAutoPolyIsland::initSprites()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto pinfo = AutoPolygon::generatePolygon("Images/island_polygon.png", Rect::ZERO, 1);
+    auto sprite = Sprite::create(pinfo);
+    addChild(sprite);
+    sprite->setPosition(s.width/2, s.height/2);
+
+    //DrawNode
+    auto spDrawNode = DrawNode::create();
+    spDrawNode->setTag(sprite->getTag());
+    spDrawNode->clear();
+    sprite->addChild(spDrawNode);
+    _drawNodes.pushBack(spDrawNode);
+
+    updateDrawNode();
+}
+
+//
+// SpritePolygonTestFrameAnim
+//
+SpritePolygonTestFrameAnim::SpritePolygonTestFrameAnim()
+{
+    _title = "SpritePolygon";
+    _subtitle = "SpriteFrame animation";
+}
+
+void SpritePolygonTestFrameAnim::initSprites()
+{
+    auto screen = Director::getInstance()->getWinSize();
+
+    auto rotate = RotateBy::create(10, 360);
+    auto action = RepeatForever::create(rotate);
+    char str[100] = {0};
+
+    auto cache = SpriteFrameCache::getInstance();
+    cache->addSpriteFramesWithFile("animations/grossini_dance_poly.plist");
+
+    Sprite *sprite;
+    for(int i=0;i<10;i++)
+    {
+        sprintf(str, "grossini_dance_%02d.png", i+1);
+        sprite = Sprite::createWithSpriteFrameName(str);
+
+        sprite->setPosition(Vec2(screen.width/6*(i%5+1), screen.height*2/3 - screen.height*(i/5)/3));
+
+        auto point = Sprite::create("Images/r1.png");
+        point->setScale( 0.1f );
+        point->setPosition( sprite->getPosition() );
+        addChild(point, 10);
+
+        sprite->runAction( action->clone() );
+        addChild(sprite, i);
+
+        //DrawNode
+        auto spDrawNode = DrawNode::create();
+        spDrawNode->clear();
+        sprite->addChild(spDrawNode);
+        _drawNodes.pushBack(spDrawNode);
+    }
+
+    updateDrawNode();
+
+
+    Vector<SpriteFrame*> animFrames(5);
+    for(int i = 9; i < 14; i++)
+    {
+        sprintf(str, "grossini_dance_%02d.png", i+1);
+        animFrames.pushBack(cache->getSpriteFrameByName(str));
+    }
+    auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
+    sprite->runAction(RepeatForever::create(Animate::create(animation)));
+    
 }
