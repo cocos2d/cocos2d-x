@@ -155,6 +155,11 @@ public:
     Layout* getInnerContainer()const;
 
     /**
+     * Immediately stops inner container scroll initiated by any of the "scrollTo*" member functions
+     */
+    void stopAutoScroll();
+
+    /**
      * Scroll inner container to bottom boundary of scrollview.
      * @param timeInSec Time in seconds.
      * @param attenuated Whether scroll speed attenuate or not.

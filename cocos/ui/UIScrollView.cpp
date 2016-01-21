@@ -468,6 +468,14 @@ void ScrollView::startAutoScroll(const Vec2& deltaMove, float timeInSec, bool at
     }
 }
 
+void ScrollView::stopAutoScroll()
+{
+    _autoScrolling = false;
+    _autoScrollAttenuate = true;
+    _autoScrollDuration = 0;
+    _autoScrollAccumulatedTime = 0;
+}
+
 bool ScrollView::isNecessaryAutoScrollBrake()
 {
     if(_autoScrollBraking)
