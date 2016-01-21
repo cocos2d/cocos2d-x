@@ -274,6 +274,14 @@ int FontFreeType::getFontAscender() const
     return (static_cast<int>(_fontRef->size->metrics.ascender >> 6));
 }
 
+const char* FontFreeType::getFontFamily() const
+{
+    if (!_fontRef)
+        return nullptr;
+
+    return _fontRef->family_name;
+}
+
 unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance)
 {
     bool invalidChar = true;
@@ -639,7 +647,7 @@ void FontFreeType::releaseFont(const std::string &fontName)
     auto item = s_cacheFontData.begin();
     while (s_cacheFontData.end() != item)
     {
-        if (item->first.find(fontName) >= 0)
+        if (item->first.find(fontName) != std::string::npos)
             item = s_cacheFontData.erase(item);
         else
             item++;
