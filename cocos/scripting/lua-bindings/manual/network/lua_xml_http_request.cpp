@@ -216,6 +216,12 @@ void LuaMinXmlHttpRequest::_sendRequest()
                 _status    = 0;
                 _statusText.clear();
             }
+
+            /** get the error data **/
+            std::string *buffer = response->getErrorBufferData();
+            _data.assign(*buffer);
+            _dataSize = buffer->size();
+
             // TODO: call back lua function
             int handler = cocos2d::ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, cocos2d::ScriptHandlerMgr::HandlerType::XMLHTTPREQUEST_READY_STATE_CHANGE );
             
@@ -242,18 +248,10 @@ void LuaMinXmlHttpRequest::_sendRequest()
         /** get the response data **/
         std::vector<char> *buffer = response->getResponseData();
         
-        if (statusCode == 200)
-        {
-            //Succeeded
-            _status = 200;
-            _readyState = DONE;
-            _data.assign(buffer->begin(), buffer->end());
-            _dataSize = buffer->size();
-        }
-        else
-        {
-            _status = 0;
-        }
+        _status = (int)statusCode;
+        _readyState = DONE;
+        _data.assign(buffer->begin(), buffer->end());
+        _dataSize = buffer->size();
         
         // TODO: call back lua function
         int handler = cocos2d::ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, cocos2d::ScriptHandlerMgr::HandlerType::XMLHTTPREQUEST_READY_STATE_CHANGE );
@@ -266,7 +264,11 @@ void LuaMinXmlHttpRequest::_sendRequest()
         }
         release();
     });
-    network::HttpClient::getInstance()->sendImmediate(_httpRequest);
+
+    cocos2d::network::HttpClient *client = network::HttpClient::getInstance();
+    client->setTimeoutForConnect(_timeout);
+    client->setTimeoutForRead(_timeout);
+    client->sendImmediate(_httpRequest);
     retain();
 }
 
