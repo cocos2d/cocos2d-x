@@ -813,9 +813,9 @@ void RichText::handleImageRenderer(const std::string& filePath, const Color3B &c
             imageRenderer->setScaleY(height / currentSize.height);
         imageRenderer->setContentSize(Size(currentSize.width * imageRenderer->getScaleX(),
                                              currentSize.height * imageRenderer->getScaleY()));
-    }
 
-    handleCustomRenderer(imageRenderer);
+        handleCustomRenderer(imageRenderer);
+    }
 }
 
 void RichText::handleCustomRenderer(cocos2d::Node *renderer)

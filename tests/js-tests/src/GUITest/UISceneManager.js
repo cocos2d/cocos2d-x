@@ -551,6 +551,72 @@
                 func: function () {
                     return new UIRichTextTest();
                 }
+            },
+            {
+                title: "UIRichTextXMLBasic",
+                func: function () {
+                    return new UIRichTextXMLBasic();
+                }
+            },
+            {
+                title: "UIRichTextXMLSmallBig",
+                func: function () {
+                    return new UIRichTextXMLSmallBig();
+                }
+            },
+            {
+                title: "UIRichTextXMLColor",
+                func: function () {
+                    return new UIRichTextXMLColor();
+                }
+            },
+            {
+                title: "UIRichTextXMLSUIB",
+                func: function () {
+                    return new UIRichTextXMLSUIB();
+                }
+            },
+            {
+                title: "UIRichTextXMLSUIB2",
+                func: function () {
+                    return new UIRichTextXMLSUIB2();
+                }
+            },
+            {
+                title: "UIRichTextXMLSUIB3",
+                func: function () {
+                    return new UIRichTextXMLSUIB3();
+                }
+            },
+            {
+                title: "UIRichTextXMLImg",
+                func: function () {
+                    return new UIRichTextXMLImg();
+                }
+            },
+            {
+                title: "UIRichTextXMLUrl",
+                func: function () {
+                    return new UIRichTextXMLUrl();
+                }
+            },
+            {
+                title: "UIRichTextXMLFace",
+                func: function () {
+                    return new UIRichTextXMLFace();
+                }
+            },
+            {
+                title: "UIRichTextXMLBR",
+                func: function () {
+                    return new UIRichTextXMLBR();
+                }
+            },
+            {
+                title: "UIRichTextXMLInvalid",
+                func: function () {
+                    return new UIRichTextXMLInvalid();
+                }
             }
         ]
     };

@@ -1184,6 +1184,7 @@ void Label::disableEffect(LabelEffect effect)
             {
                 _shadowEnabled = false;
                 CC_SAFE_RELEASE_NULL(_shadowNode);
+                updateShaderProgram();
             }
             break;
         case cocos2d::LabelEffect::GLOW:
@@ -1382,19 +1383,36 @@ void Label::updateContent()
 
     if (_underlineNode)
     {
-        const float charheight = (_textDesiredHeight / _numberOfLines);
-
         _underlineNode->clear();
-        _underlineNode->setLineWidth(charheight/6);
 
-        for (int i=0; i<_numberOfLines; ++i)
+        if (_numberOfLines)
         {
-            float offsety = 0;
+            const float charheight = (_textDesiredHeight / _numberOfLines);
+            _underlineNode->setLineWidth(charheight/6);
+
+            // atlas font
+            for (int i=0; i<_numberOfLines; ++i)
+            {
+                float offsety = 0;
+                if (_strikethroughEnabled)
+                    offsety += charheight / 2;
+                // FIXME: Might not work with different vertical alignments
+                float y = (_numberOfLines - i - 1) * charheight + offsety;
+                _underlineNode->drawLine(Vec2(_linesOffsetX[i],y), Vec2(_linesWidth[i] + _linesOffsetX[i],y), _textColorF);
+            }
+        }
+        else if (_textSprite)
+        {
+            // system font
+            float y = 0;
+            const auto spriteSize = _textSprite->getContentSize();
+            _underlineNode->setLineWidth(spriteSize.height/6);
+
             if (_strikethroughEnabled)
-                offsety += charheight / 2;
+                // FIXME: system fonts don't report the height of the font correctly. only the size of the texture, which is POT
+                y += spriteSize.height / 2;
             // FIXME: Might not work with different vertical alignments
-            float y = (_numberOfLines - i - 1) * charheight + offsety;
-            _underlineNode->drawLine(Vec2(_linesOffsetX[i],y), Vec2(_linesWidth[i] + _linesOffsetX[i],y), _textColorF);
+            _underlineNode->drawLine(Vec2(0,y), Vec2(spriteSize.width,y), Color4F(_textSprite->getDisplayedColor()));
         }
     }
 
@@ -1857,6 +1875,9 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
         {
             _shadowNode->updateDisplayedColor(_displayedColor);
         }
+
+        if (_underlineNode)
+            _contentDirty = true;
     }
 
     for (auto&& it : _letters)
