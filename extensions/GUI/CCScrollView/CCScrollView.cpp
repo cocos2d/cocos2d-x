@@ -64,6 +64,7 @@ ScrollView::ScrollView()
 , _maxScale(0.0f)
 , _scissorRestored(false)
 , _touchListener(nullptr)
+, _animatedScrollAction(nullptr)
 {
 
 }
@@ -234,10 +235,19 @@ void ScrollView::setContentOffsetInDuration(Vec2 offset, float dt)
 {
     FiniteTimeAction *scroll, *expire;
     
+    if (_animatedScrollAction) {
+        stopAnimatedContentOffset();
+    }
     scroll = MoveTo::create(dt, offset);
     expire = CallFuncN::create(CC_CALLBACK_1(ScrollView::stoppedAnimatedScroll,this));
-    _container->runAction(Sequence::create(scroll, expire, nullptr));
+    _animatedScrollAction = _container->runAction(Sequence::create(scroll, expire, nullptr));
     this->schedule(CC_SCHEDULE_SELECTOR(ScrollView::performedAnimatedScroll));
+}
+
+void ScrollView::stopAnimatedContentOffset() {
+    stopAction(_animatedScrollAction);
+    _animatedScrollAction = nullptr;
+    stoppedAnimatedScroll(this);
 }
 
 Vec2 ScrollView::getContentOffset()
