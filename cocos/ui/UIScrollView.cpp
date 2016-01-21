@@ -472,7 +472,7 @@ void ScrollView::stopAutoScroll()
 {
     _autoScrolling = false;
     _autoScrollAttenuate = true;
-    _autoScrollDuration = 0;
+    _autoScrollTotalTime = 0;
     _autoScrollAccumulatedTime = 0;
 }
 
