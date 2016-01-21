@@ -863,21 +863,28 @@ bool UIButtonTitleEffectTest::init()
         button->setZoomScale(0.3f);
         button->setScale(2.0f);
         button->setPressedActionEnabled(true);
-        Label *title = button->getTitleRenderer();
         button->setTitleColor(Color3B::RED);
-        title->enableShadow(Color4B::BLACK,Size(2,-2));
-
+        button->enableShadow(Color4B::BLACK, Size(2, -2));
 
         _uiLayer->addChild(button);
 
         // Create the button
         auto button2 = Button::create("cocosui/animationbuttonnormal.png",
                                       "cocosui/animationbuttonpressed.png");
-        button2->setNormalizedPosition(Vec2(0.8f, 0.5f));
+        button2->setNormalizedPosition(Vec2(0.6f, 0.5f));
         button2->setTitleText("PLAY GAME");
-        auto title2 = button2->getTitleRenderer();
-        title2->enableOutline(Color4B::GREEN, 3);
+        button2->setTitleFontName("fonts/Marker Felt.ttf");
+        button2->enableOutline(Color4B::GREEN, 3);
         _uiLayer->addChild(button2);
+
+        // Create the button
+        auto button3 = Button::create("cocosui/animationbuttonnormal.png",
+                                      "cocosui/animationbuttonpressed.png");
+        button3->setNormalizedPosition(Vec2(0.8f, 0.5f));
+        button3->setTitleFontName("fonts/Marker Felt.ttf");
+        button3->setTitleText("PLAY GAME");
+        button3->enableGlow(Color4B::RED);
+        _uiLayer->addChild(button3);
 
         return true;
     }
