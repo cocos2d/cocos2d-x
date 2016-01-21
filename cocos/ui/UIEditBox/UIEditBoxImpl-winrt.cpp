@@ -83,7 +83,6 @@ namespace cocos2d {
     {
       auto passwordBox = ref new PasswordBox;
       passwordBox->BorderThickness = 0;
-      passwordBox->Padding = Windows::UI::Xaml::Thickness(3.0f, 0.0f, 0.0f, 0.0f);
       passwordBox->Name = EDIT_BOX_XAML_NAME;
       passwordBox->Width = _size.Width;
       passwordBox->Height = _size.Height;
@@ -100,7 +99,6 @@ namespace cocos2d {
     {
       auto textBox = ref new TextBox;
       textBox->BorderThickness = 0;
-      textBox->Padding = Windows::UI::Xaml::Thickness(3.0f, 0.0f, 0.0f, 0.0f);
       textBox->Name = EDIT_BOX_XAML_NAME;
       textBox->Width = _size.Width;
       textBox->Height = _size.Height;
@@ -399,6 +397,8 @@ namespace cocos2d {
 
     void UIEditBoxImplWinrt::nativeOpenKeyboard() 
     {
+      // Update the text
+      _system_control->setText(PlatformStringFromString(getText()));
       // Size
       auto glView = cocos2d::Director::getInstance()->getOpenGLView();
       auto transform = _editBox->getNodeToWorldTransform();
