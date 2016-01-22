@@ -311,6 +311,7 @@ WebSocket::WebSocket()
 , _wsHelper(nullptr)
 , _wsInstance(nullptr)
 , _wsContext(nullptr)
+, _isDestroyed(std::make_shared<bool>(false))
 , _delegate(nullptr)
 , _SSLConnection(0)
 , _wsProtocols(nullptr)
@@ -351,6 +352,7 @@ WebSocket::~WebSocket()
             LOGD("ERROR: WebSocket instance (%p) wasn't added to the container which saves websocket instances!\n", this);
         }
     }
+    *_isDestroyed = true;
 }
 
 bool WebSocket::init(const Delegate& delegate,
@@ -493,11 +495,19 @@ void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
 
 void WebSocket::close()
 {
+    _readStateMutex.lock();
+    if (_readyState == State::CLOSED)
+    {
+        LOGD("close: WebSocket (%p) was closed, no need to close it again!\n", this);
+        _readStateMutex.unlock();
+        return;
+    }
     // Sets the state to 'closed' to make sure 'onConnectionClosed' which is
     // invoked by websocket thread don't post 'close' message to Cocos thread since
     // WebSocket instance is destroyed at next frame.
     // 'closed' state has to be set before quit websocket thread.
     _readyState = State::CLOSED;
+    _readStateMutex.unlock();
     
     _wsHelper->quitWebSocketThread();
     LOGD("Waiting WebSocket (%p) to exit!\n", this);
@@ -514,13 +524,16 @@ void WebSocket::closeAsync()
 
 WebSocket::State WebSocket::getReadyState()
 {
+    std::lock_guard<std::mutex> lk(_readStateMutex);
     return _readyState;
 }
 
 void WebSocket::onSubThreadLoop()
 {
+    _readStateMutex.lock();
     if (_wsContext && _readyState != State::CLOSED && _readyState != State::CLOSING)
     {
+        _readStateMutex.unlock();
         _wsHelper->_subThreadWsMessageQueueMutex.lock();
         bool isEmpty = _wsHelper->_subThreadWsMessageQueue->empty();
         _wsHelper->_subThreadWsMessageQueueMutex.unlock();
@@ -534,6 +547,7 @@ void WebSocket::onSubThreadLoop()
     else
     {
         LOGD("Ready state is closing or was closed, code=%d, quit websocket thread!\n", _readyState);
+        _readStateMutex.unlock();
         _wsHelper->quitWebSocketThread();
     }
 }
@@ -580,7 +594,10 @@ void WebSocket::onSubThreadStarted()
 
     if (nullptr != _wsContext)
     {
+        _readStateMutex.lock();
         _readyState = State::CONNECTING;
+        _readStateMutex.unlock();
+        
         std::string name;
         for (int i = 0; _wsProtocols[i].callback != nullptr; ++i)
         {
@@ -786,7 +803,8 @@ void WebSocket::onClientReceivedData(void* in, ssize_t len)
             frameData->push_back('\0');
         }
 
-        _wsHelper->sendMessageToCocosThread([this, frameData, frameSize, isBinary](){
+        std::shared_ptr<bool> isDestroyed = _isDestroyed;
+        _wsHelper->sendMessageToCocosThread([this, frameData, frameSize, isBinary, isDestroyed](){
             // In UI thread
             LOGD("Notify data len %d to Cocos thread.\n", (int)frameSize);
 
@@ -795,7 +813,14 @@ void WebSocket::onClientReceivedData(void* in, ssize_t len)
             data.bytes = (char*)frameData->data();
             data.len = frameSize;
 
-            _delegate->onMessage(this, data);
+            if (*isDestroyed)
+            {
+                LOGD("WebSocket instance was destroyed!\n");
+            }
+            else
+            {
+                _delegate->onMessage(this, data);
+            }
 
             delete frameData;
         });
@@ -810,10 +835,20 @@ void WebSocket::onConnectionOpened()
      */
     lws_callback_on_writable(_wsInstance);
 
+    _readStateMutex.lock();
     _readyState = State::OPEN;
+    _readStateMutex.unlock();
 
-    _wsHelper->sendMessageToCocosThread([this](){
-        _delegate->onOpen(this);
+    std::shared_ptr<bool> isDestroyed = _isDestroyed;
+    _wsHelper->sendMessageToCocosThread([this, isDestroyed](){
+        if (*isDestroyed)
+        {
+            LOGD("WebSocket instance was destroyed!\n");
+        }
+        else
+        {
+            _delegate->onOpen(this);
+        }
     });
 }
 
@@ -821,29 +856,50 @@ void WebSocket::onConnectionError()
 {
     LOGD("WebSocket (%p) onConnectionError ...\n", this);
 
+    _readStateMutex.lock();
     _readyState = State::CLOSING;
+    _readStateMutex.unlock();
 
-    _wsHelper->sendMessageToCocosThread([this](){
-        _delegate->onError(this, ErrorCode::CONNECTION_FAILURE);
+    std::shared_ptr<bool> isDestroyed = _isDestroyed;
+    _wsHelper->sendMessageToCocosThread([this, isDestroyed](){
+        if (*isDestroyed)
+        {
+            LOGD("WebSocket instance was destroyed!\n");
+        }
+        else
+        {
+            _delegate->onError(this, ErrorCode::CONNECTION_FAILURE);
+        }
     });
 }
 
 void WebSocket::onConnectionClosed()
 {
+    _readStateMutex.lock();
     if (_readyState == State::CLOSED)
     {
-        LOGD("WebSocket (%p) was closed, no need to close it again!\n", this);
+        LOGD("onConnectionClosed: WebSocket (%p) was closed, no need to close it again!\n", this);
+        _readStateMutex.unlock();
         return;
     }
 
     LOGD("WebSocket (%p) onConnectionClosed ...\n", this);
     _readyState = State::CLOSED;
+    _readStateMutex.unlock();
 
     _wsHelper->quitWebSocketThread();
-    _wsHelper->sendMessageToCocosThread([this](){
-        //Waiting for the subThread safety exit
-        _wsHelper->joinWebSocketThread();
-        _delegate->onClose(this);
+    std::shared_ptr<bool> isDestroyed = _isDestroyed;
+    _wsHelper->sendMessageToCocosThread([this, isDestroyed](){
+        if (*isDestroyed)
+        {
+            LOGD("WebSocket instance was destroyed!\n");
+        }
+        else
+        {
+            // Waiting for the subThread safety exit
+            _wsHelper->joinWebSocketThread();
+            _delegate->onClose(this);
+        }
     });
 }
 

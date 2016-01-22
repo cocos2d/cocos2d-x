@@ -220,6 +220,7 @@ private:
     void onConnectionClosed();
 
 private:
+    std::mutex   _readStateMutex;
     State        _readyState;
     std::string  _host;
     unsigned int _port;
@@ -233,6 +234,7 @@ private:
 
     struct lws*         _wsInstance;
     struct lws_context* _wsContext;
+    std::shared_ptr<bool> _isDestroyed;
     Delegate* _delegate;
     int _SSLConnection;
     struct lws_protocols* _wsProtocols;
