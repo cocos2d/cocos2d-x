@@ -189,12 +189,12 @@ RichElementNewLine* RichElementNewLine::create(int tag, const Color3B& color, GL
     return nullptr;
 }
     
-RichText::RichText():
-_formatTextDirty(true),
-_leftSpaceWidth(0.0f),
-_verticalSpace(0.0f)
+RichText::RichText()
+    : _formatTextDirty(true)
+    , _leftSpaceWidth(0.0f)
+    , _verticalSpace(0.0f)
+    , _wrapMode(WRAP_PER_WORD)
 {
-    
 }
     
 RichText::~RichText()
@@ -565,7 +565,21 @@ void RichText::removeElement(RichElement *element)
     _richElements.eraseObject(element);
     _formatTextDirty = true;
 }
-    
+
+RichText::WrapMode RichText::getWrapMode() const
+{
+    return _wrapMode;
+}
+
+void RichText::setWrapMode(RichText::WrapMode wrapMode)
+{
+    if (_wrapMode != wrapMode)
+    {
+        _wrapMode = wrapMode;
+        _formatTextDirty = true;
+    }
+}
+
 void RichText::formatText()
 {
     if (_formatTextDirty)
@@ -686,6 +700,117 @@ void RichText::formatText()
     }
 }
 
+static int getPrevWord(const std::string& text, int idx)
+{
+    // start from idx-1
+    for (int i=idx-1; i>=0; --i)
+    {
+        if (!std::isalnum(text[i]))
+            return i;
+    }
+    return -1;
+}
+
+static bool isWrappable(const std::string& text)
+{
+    for (int i=0; i<text.length(); ++i)
+    {
+        if (!std::isalnum(text[i]))
+            return true;
+    }
+    return false;
+}
+
+int RichText::findSplitPositionForWord(cocos2d::Label* label, const std::string& text)
+{
+    auto originalLeftSpaceWidth = _leftSpaceWidth + label->getContentSize().width;
+
+    bool startingNewLine = (_customSize.width == originalLeftSpaceWidth);
+    if (!isWrappable(text))
+    {
+        if (startingNewLine)
+            return (int) text.length();
+        return 0;
+    }
+
+    for(int idx = (int)text.size()-1; idx >=0; )
+    {
+        int newidx = getPrevWord(text, idx);
+        if (newidx >=0)
+        {
+            idx = newidx;
+            auto leftStr = Helper::getSubStringOfUTF8String(text, 0, idx);
+            label->setString(leftStr);
+            if (label->getContentSize().width <= originalLeftSpaceWidth)
+                return idx;
+        }
+        else
+        {
+            if (startingNewLine)
+                return idx;
+            return 0;
+        }
+    }
+
+    // no spaces... return the original label + size
+    label->setString(text);
+    return (int)text.size();
+}
+
+
+int RichText::findSplitPositionForChar(cocos2d::Label* label, const std::string& text)
+{
+    float textRendererWidth = label->getContentSize().width;
+
+    float overstepPercent = (-_leftSpaceWidth) / textRendererWidth;
+    std::string curText = text;
+    size_t stringLength = StringUtils::getCharacterCountInUTF8String(text);
+
+    // rough estimate
+    int leftLength = stringLength * (1.0f - overstepPercent);
+
+    // The adjustment of the new line position
+    auto originalLeftSpaceWidth = _leftSpaceWidth + textRendererWidth;
+    auto leftStr = Helper::getSubStringOfUTF8String(curText, 0, leftLength);
+    label->setString(leftStr);
+    auto leftWidth = label->getContentSize().width;
+    if (originalLeftSpaceWidth < leftWidth) {
+        // Have protruding
+        for (;;) {
+            leftLength--;
+            leftStr = Helper::getSubStringOfUTF8String(curText, 0, leftLength);
+            label->setString(leftStr);
+            leftWidth = label->getContentSize().width;
+            if (leftWidth <= originalLeftSpaceWidth) {
+                break;
+            }
+            else if (leftLength <= 0) {
+                break;
+            }
+        }
+    }
+    else if (leftWidth < originalLeftSpaceWidth) {
+        // A wide margin
+        for (;;) {
+            leftLength++;
+            leftStr = Helper::getSubStringOfUTF8String(curText, 0, leftLength);
+            label->setString(leftStr);
+            leftWidth = label->getContentSize().width;
+            if (originalLeftSpaceWidth < leftWidth) {
+                leftLength--;
+                break;
+            }
+            else if (stringLength <= leftLength) {
+                break;
+            }
+        }
+    }
+
+    if (leftLength < 0)
+        leftLength = (int)text.size()-1;
+    return leftLength;
+}
+
 void RichText::handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize, const Color3B &color, GLubyte opacity, uint32_t flags, const std::string& url)
 {
     auto fileExist = FileUtils::getInstance()->isFileExist(fontName);
@@ -713,52 +838,19 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
     _leftSpaceWidth -= textRendererWidth;
     if (_leftSpaceWidth < 0.0f)
     {
-        float overstepPercent = (-_leftSpaceWidth) / textRendererWidth;
-        std::string curText = text;
-        size_t stringLength = StringUtils::getCharacterCountInUTF8String(text);
-        int leftLength = stringLength * (1.0f - overstepPercent);
-        
-        // The adjustment of the new line position
-        auto originalLeftSpaceWidth = _leftSpaceWidth + textRendererWidth;
-        auto leftStr = Helper::getSubStringOfUTF8String(curText, 0, leftLength);
-        textRenderer->setString(leftStr);
-        auto leftWidth = textRenderer->getContentSize().width;
-        if (originalLeftSpaceWidth < leftWidth) {
-            // Have protruding
-            for (;;) {
-                leftLength--;
-                leftStr = Helper::getSubStringOfUTF8String(curText, 0, leftLength);
-                textRenderer->setString(leftStr);
-                leftWidth = textRenderer->getContentSize().width;
-                if (leftWidth <= originalLeftSpaceWidth) {
-                    break;
-                }
-                else if (leftLength <= 0) {
-                    break;
-                }
-            }
-        }
-        else if (leftWidth < originalLeftSpaceWidth) {
-            // A wide margin
-            for (;;) {
-                leftLength++;
-                leftStr = Helper::getSubStringOfUTF8String(curText, 0, leftLength);
-                textRenderer->setString(leftStr);
-                leftWidth = textRenderer->getContentSize().width;
-                if (originalLeftSpaceWidth < leftWidth) {
-                    leftLength--;
-                    break;
-                }
-                else if (stringLength <= leftLength) {
-                    break;
-                }
-            }
-        }
-        
+        int leftLength = 0;
+        if (_wrapMode == WRAP_PER_WORD)
+            leftLength = findSplitPositionForWord(textRenderer, text);
+        else
+            leftLength = findSplitPositionForChar(textRenderer, text);
+
         //The minimum cut length is 1, otherwise will cause the infinite loop.
-        if (0 == leftLength) leftLength = 1;
-        std::string leftWords = Helper::getSubStringOfUTF8String(curText,0,leftLength);
-        std::string cutWords = Helper::getSubStringOfUTF8String(curText, leftLength, stringLength - leftLength);
+//        if (0 == leftLength) leftLength = 1;
+        std::string leftWords = Helper::getSubStringOfUTF8String(text, 0, leftLength);
+        int rightStart = leftLength;
+        if (std::isspace(text[rightStart]))
+            rightStart++;
+        std::string cutWords = Helper::getSubStringOfUTF8String(text, rightStart, text.length() - leftLength);
         if (leftLength > 0)
         {
             Label* leftRenderer = nullptr;
