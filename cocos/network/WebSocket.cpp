@@ -494,9 +494,15 @@ void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
 void WebSocket::close()
 {
     _wsHelper->quitWebSocketThread();
-    // Wait for websocket thread to exit
+    // Sets the state to 'closed' to make sure 'onConnectionClosed' which is
+    // invoked by websocket thread don't post 'close' message to Cocos thread since
+    // WebSocket instance is destroyed at next frame.
+    _readyState = State::CLOSED;
     LOGD("Waiting WebSocket (%p) to exit!\n", this);
     _wsHelper->joinWebSocketThread();
+    // Since 'onConnectionClosed' didn't post message to Cocos Thread for invoking 'onClose' callback, do it here.
+    // onClose must be invoked at the end of this method.
+    _delegate->onClose(this);
 }
     
 void WebSocket::closeAsync()
