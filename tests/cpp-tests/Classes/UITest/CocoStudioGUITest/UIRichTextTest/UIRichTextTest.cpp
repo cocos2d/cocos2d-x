@@ -53,17 +53,24 @@ bool UIRichTextTest::init()
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.125));
         _widget->addChild(alert);
-        
-        
+
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setTouchEnabled(true);
         button->setTitleText("switch");
-        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
+        button->setPosition(Vec2(widgetSize.width * 1 / 3, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
         button->addTouchEventListener(CC_CALLBACK_2(UIRichTextTest::touchEvent, this));
         button->setLocalZOrder(10);
         _widget->addChild(button);
-        
-        
+
+        Button* button2 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button2->setTouchEnabled(true);
+        button2->setTitleText("wrap mode");
+        button2->setPosition(Vec2(widgetSize.width * 2 / 3, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
+        button2->addTouchEventListener(CC_CALLBACK_2(UIRichTextTest::switchWrapMode, this));
+        button2->setLocalZOrder(10);
+        _widget->addChild(button2);
+
+
         // RichText
         _richText = RichText::create();
         _richText->ignoreContentAdaptWithSize(false);
@@ -129,6 +136,16 @@ void UIRichTextTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
     }
 }
 
+void UIRichTextTest::switchWrapMode(Ref *pSender, Widget::TouchEventType type)
+{
+    if (type == Widget::TouchEventType::ENDED)
+    {
+        auto wrapMode = _richText->getWrapMode();
+        wrapMode = (wrapMode == RichText::WRAP_PER_WORD) ? RichText::WRAP_PER_CHAR : RichText::WRAP_PER_WORD;
+        _richText->setWrapMode(wrapMode);
+    }
+}
+
 //
 // UIRichTextXMLBasic
 //
@@ -148,10 +165,18 @@ bool UIRichTextXMLBasic::init()
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setTouchEnabled(true);
         button->setTitleText("switch");
-        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
+        button->setPosition(Vec2(widgetSize.width * 1 / 3, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
         button->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLBasic::touchEvent, this));
         button->setLocalZOrder(10);
         _widget->addChild(button);
+
+        Button* button2 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button2->setTouchEnabled(true);
+        button2->setTitleText("wrap mode");
+        button2->setPosition(Vec2(widgetSize.width * 2 / 3, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
+        button2->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLBasic::switchWrapMode, this));
+        button2->setLocalZOrder(10);
+        _widget->addChild(button2);
 
 
         // RichText
@@ -196,6 +221,16 @@ void UIRichTextXMLBasic::touchEvent(Ref *pSender, Widget::TouchEventType type)
     }
 }
 
+void UIRichTextXMLBasic::switchWrapMode(Ref *pSender, Widget::TouchEventType type)
+{
+    if (type == Widget::TouchEventType::ENDED)
+    {
+        auto wrapMode = _richText->getWrapMode();
+        wrapMode = (wrapMode == RichText::WRAP_PER_WORD) ? RichText::WRAP_PER_CHAR : RichText::WRAP_PER_WORD;
+        _richText->setWrapMode(wrapMode);
+    }
+}
+
 //
 // UIRichTextXMLSmallBig
 //
@@ -215,10 +250,18 @@ bool UIRichTextXMLSmallBig::init()
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setTouchEnabled(true);
         button->setTitleText("switch");
-        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
+        button->setPosition(Vec2(widgetSize.width * 1 / 3, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
         button->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLSmallBig::touchEvent, this));
         button->setLocalZOrder(10);
         _widget->addChild(button);
+
+        Button* button2 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button2->setTouchEnabled(true);
+        button2->setTitleText("wrap mode");
+        button2->setPosition(Vec2(widgetSize.width * 2 / 3, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
+        button2->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLSmallBig::switchWrapMode, this));
+        button2->setLocalZOrder(10);
+        _widget->addChild(button2);
 
 
         // RichText
@@ -263,6 +306,16 @@ void UIRichTextXMLSmallBig::touchEvent(Ref *pSender, Widget::TouchEventType type
     }
 }
 
+void UIRichTextXMLSmallBig::switchWrapMode(Ref *pSender, Widget::TouchEventType type)
+{
+    if (type == Widget::TouchEventType::ENDED)
+    {
+        auto wrapMode = _richText->getWrapMode();
+        wrapMode = (wrapMode == RichText::WRAP_PER_WORD) ? RichText::WRAP_PER_CHAR : RichText::WRAP_PER_WORD;
+        _richText->setWrapMode(wrapMode);
+    }
+}
+
 //
 // UIRichTextXMLColor
 //
@@ -282,10 +335,18 @@ bool UIRichTextXMLColor::init()
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setTouchEnabled(true);
         button->setTitleText("switch");
-        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
+        button->setPosition(Vec2(widgetSize.width * 1 / 3, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
         button->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLColor::touchEvent, this));
         button->setLocalZOrder(10);
         _widget->addChild(button);
+
+        Button* button2 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button2->setTouchEnabled(true);
+        button2->setTitleText("wrap mode");
+        button2->setPosition(Vec2(widgetSize.width * 2 / 3, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
+        button2->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLColor::switchWrapMode, this));
+        button2->setLocalZOrder(10);
+        _widget->addChild(button2);
 
 
         // RichText
@@ -330,6 +391,16 @@ void UIRichTextXMLColor::touchEvent(Ref *pSender, Widget::TouchEventType type)
     }
 }
 
+void UIRichTextXMLColor::switchWrapMode(Ref *pSender, Widget::TouchEventType type)
+{
+    if (type == Widget::TouchEventType::ENDED)
+    {
+        auto wrapMode = _richText->getWrapMode();
+        wrapMode = (wrapMode == RichText::WRAP_PER_WORD) ? RichText::WRAP_PER_CHAR : RichText::WRAP_PER_WORD;
+        _richText->setWrapMode(wrapMode);
+    }
+}
+
 //
 // UIRichTextXMLSUIB
 //
@@ -349,10 +420,18 @@ bool UIRichTextXMLSUIB::init()
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setTouchEnabled(true);
         button->setTitleText("switch");
-        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
+        button->setPosition(Vec2(widgetSize.width * 1 / 3, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
         button->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLSUIB::touchEvent, this));
         button->setLocalZOrder(10);
         _widget->addChild(button);
+
+        Button* button2 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button2->setTouchEnabled(true);
+        button2->setTitleText("wrap mode");
+        button2->setPosition(Vec2(widgetSize.width * 2 / 3, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
+        button2->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLSUIB::switchWrapMode, this));
+        button2->setLocalZOrder(10);
+        _widget->addChild(button2);
 
 
         // RichText
@@ -397,6 +476,16 @@ void UIRichTextXMLSUIB::touchEvent(Ref *pSender, Widget::TouchEventType type)
     }
 }
 
+void UIRichTextXMLSUIB::switchWrapMode(Ref *pSender, Widget::TouchEventType type)
+{
+    if (type == Widget::TouchEventType::ENDED)
+    {
+        auto wrapMode = _richText->getWrapMode();
+        wrapMode = (wrapMode == RichText::WRAP_PER_WORD) ? RichText::WRAP_PER_CHAR : RichText::WRAP_PER_WORD;
+        _richText->setWrapMode(wrapMode);
+    }
+}
+
 //
 // UIRichTextXMLSUIB2
 //
@@ -416,10 +505,18 @@ bool UIRichTextXMLSUIB2::init()
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setTouchEnabled(true);
         button->setTitleText("switch");
-        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
+        button->setPosition(Vec2(widgetSize.width * 1 / 3, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
         button->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLSUIB2::touchEvent, this));
         button->setLocalZOrder(10);
         _widget->addChild(button);
+
+        Button* button2 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button2->setTouchEnabled(true);
+        button2->setTitleText("wrap mode");
+        button2->setPosition(Vec2(widgetSize.width * 2 / 3, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
+        button2->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLSUIB2::switchWrapMode, this));
+        button2->setLocalZOrder(10);
+        _widget->addChild(button2);
 
 
         // RichText
@@ -464,6 +561,16 @@ void UIRichTextXMLSUIB2::touchEvent(Ref *pSender, Widget::TouchEventType type)
     }
 }
 
+void UIRichTextXMLSUIB2::switchWrapMode(Ref *pSender, Widget::TouchEventType type)
+{
+    if (type == Widget::TouchEventType::ENDED)
+    {
+        auto wrapMode = _richText->getWrapMode();
+        wrapMode = (wrapMode == RichText::WRAP_PER_WORD) ? RichText::WRAP_PER_CHAR : RichText::WRAP_PER_WORD;
+        _richText->setWrapMode(wrapMode);
+    }
+}
+
 //
 // UIRichTextXMLSUIB3
 //
@@ -483,10 +590,18 @@ bool UIRichTextXMLSUIB3::init()
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setTouchEnabled(true);
         button->setTitleText("switch");
-        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
+        button->setPosition(Vec2(widgetSize.width * 1 / 3, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
         button->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLSUIB3::touchEvent, this));
         button->setLocalZOrder(10);
         _widget->addChild(button);
+
+        Button* button2 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button2->setTouchEnabled(true);
+        button2->setTitleText("wrap mode");
+        button2->setPosition(Vec2(widgetSize.width * 2 / 3, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
+        button2->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLSUIB3::switchWrapMode, this));
+        button2->setLocalZOrder(10);
+        _widget->addChild(button2);
 
 
         // RichText
@@ -531,6 +646,16 @@ void UIRichTextXMLSUIB3::touchEvent(Ref *pSender, Widget::TouchEventType type)
     }
 }
 
+void UIRichTextXMLSUIB3::switchWrapMode(Ref *pSender, Widget::TouchEventType type)
+{
+    if (type == Widget::TouchEventType::ENDED)
+    {
+        auto wrapMode = _richText->getWrapMode();
+        wrapMode = (wrapMode == RichText::WRAP_PER_WORD) ? RichText::WRAP_PER_CHAR : RichText::WRAP_PER_WORD;
+        _richText->setWrapMode(wrapMode);
+    }
+}
+
 //
 // UIRichTextXMLImg
 //
@@ -550,10 +675,18 @@ bool UIRichTextXMLImg::init()
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setTouchEnabled(true);
         button->setTitleText("switch");
-        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
+        button->setPosition(Vec2(widgetSize.width * 1 / 3, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
         button->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLImg::touchEvent, this));
         button->setLocalZOrder(10);
         _widget->addChild(button);
+
+        Button* button2 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button2->setTouchEnabled(true);
+        button2->setTitleText("wrap mode");
+        button2->setPosition(Vec2(widgetSize.width * 2 / 3, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
+        button2->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLImg::switchWrapMode, this));
+        button2->setLocalZOrder(10);
+        _widget->addChild(button2);
 
 
         // RichText
@@ -598,6 +731,16 @@ void UIRichTextXMLImg::touchEvent(Ref *pSender, Widget::TouchEventType type)
     }
 }
 
+void UIRichTextXMLImg::switchWrapMode(Ref *pSender, Widget::TouchEventType type)
+{
+    if (type == Widget::TouchEventType::ENDED)
+    {
+        auto wrapMode = _richText->getWrapMode();
+        wrapMode = (wrapMode == RichText::WRAP_PER_WORD) ? RichText::WRAP_PER_CHAR : RichText::WRAP_PER_WORD;
+        _richText->setWrapMode(wrapMode);
+    }
+}
+
 //
 // UIRichTextXMLUrl
 //
@@ -617,10 +760,18 @@ bool UIRichTextXMLUrl::init()
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setTouchEnabled(true);
         button->setTitleText("switch");
-        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
+        button->setPosition(Vec2(widgetSize.width * 1 / 3, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
         button->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLUrl::touchEvent, this));
         button->setLocalZOrder(10);
         _widget->addChild(button);
+
+        Button* button2 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button2->setTouchEnabled(true);
+        button2->setTitleText("wrap mode");
+        button2->setPosition(Vec2(widgetSize.width * 2 / 3, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
+        button2->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLUrl::switchWrapMode, this));
+        button2->setLocalZOrder(10);
+        _widget->addChild(button2);
 
 
         // RichText
@@ -665,6 +816,16 @@ void UIRichTextXMLUrl::touchEvent(Ref *pSender, Widget::TouchEventType type)
     }
 }
 
+void UIRichTextXMLUrl::switchWrapMode(Ref *pSender, Widget::TouchEventType type)
+{
+    if (type == Widget::TouchEventType::ENDED)
+    {
+        auto wrapMode = _richText->getWrapMode();
+        wrapMode = (wrapMode == RichText::WRAP_PER_WORD) ? RichText::WRAP_PER_CHAR : RichText::WRAP_PER_WORD;
+        _richText->setWrapMode(wrapMode);
+    }
+}
+
 //
 // UIRichTextXMLFace
 //
@@ -684,10 +845,18 @@ bool UIRichTextXMLFace::init()
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setTouchEnabled(true);
         button->setTitleText("switch");
-        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
+        button->setPosition(Vec2(widgetSize.width * 1 / 3, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
         button->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLFace::touchEvent, this));
         button->setLocalZOrder(10);
         _widget->addChild(button);
+
+        Button* button2 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button2->setTouchEnabled(true);
+        button2->setTitleText("wrap mode");
+        button2->setPosition(Vec2(widgetSize.width * 2 / 3, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
+        button2->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLFace::switchWrapMode, this));
+        button2->setLocalZOrder(10);
+        _widget->addChild(button2);
 
 
         // RichText
@@ -732,6 +901,16 @@ void UIRichTextXMLFace::touchEvent(Ref *pSender, Widget::TouchEventType type)
     }
 }
 
+void UIRichTextXMLFace::switchWrapMode(Ref *pSender, Widget::TouchEventType type)
+{
+    if (type == Widget::TouchEventType::ENDED)
+    {
+        auto wrapMode = _richText->getWrapMode();
+        wrapMode = (wrapMode == RichText::WRAP_PER_WORD) ? RichText::WRAP_PER_CHAR : RichText::WRAP_PER_WORD;
+        _richText->setWrapMode(wrapMode);
+    }
+}
+
 //
 // UIRichTextXMLBR
 //
@@ -751,10 +930,18 @@ bool UIRichTextXMLBR::init()
         Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         button->setTouchEnabled(true);
         button->setTitleText("switch");
-        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
+        button->setPosition(Vec2(widgetSize.width * 1 / 3, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
         button->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLBR::touchEvent, this));
         button->setLocalZOrder(10);
         _widget->addChild(button);
+
+        Button* button2 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button2->setTouchEnabled(true);
+        button2->setTitleText("wrap mode");
+        button2->setPosition(Vec2(widgetSize.width * 2 / 3, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
+        button2->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLBR::switchWrapMode, this));
+        button2->setLocalZOrder(10);
+        _widget->addChild(button2);
 
 
         // RichText
@@ -796,6 +983,16 @@ void UIRichTextXMLBR::touchEvent(Ref *pSender, Widget::TouchEventType type)
             
         default:
             break;
+    }
+}
+
+void UIRichTextXMLBR::switchWrapMode(Ref *pSender, Widget::TouchEventType type)
+{
+    if (type == Widget::TouchEventType::ENDED)
+    {
+        auto wrapMode = _richText->getWrapMode();
+        wrapMode = (wrapMode == RichText::WRAP_PER_WORD) ? RichText::WRAP_PER_CHAR : RichText::WRAP_PER_WORD;
+        _richText->setWrapMode(wrapMode);
     }
 }
 
