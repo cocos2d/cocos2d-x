@@ -570,6 +570,11 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     menuBar->addItem("VIEW_SCALE_MENU_SEP", "-", "VIEW_MENU");
     
     std::vector<player::PlayerMenuItem*> scaleMenuVector;
+    auto scale200Menu = menuBar->addItem("VIEW_SCALE_MENU_200", tr("Zoom Out").append(" (200%)"), "VIEW_MENU");
+    auto scale175Menu = menuBar->addItem("VIEW_SCALE_MENU_175", tr("Zoom Out").append(" (175%)"), "VIEW_MENU");
+    auto scale150Menu = menuBar->addItem("VIEW_SCALE_MENU_150", tr("Zoom Out").append(" (150%)"), "VIEW_MENU");
+    auto scale125Menu = menuBar->addItem("VIEW_SCALE_MENU_125", tr("Zoom Out").append(" (125%)"), "VIEW_MENU");
+
     auto scale100Menu = menuBar->addItem("VIEW_SCALE_MENU_100", tr("Zoom Out").append(" (100%)"), "VIEW_MENU");
     scale100Menu->setShortcut("super+0");
     
@@ -581,9 +586,26 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     
     auto scale25Menu = menuBar->addItem("VIEW_SCALE_MENU_25", tr("Zoom Out").append(" (25%)"), "VIEW_MENU");
     scale25Menu->setShortcut("super+5");
-    
+
     int frameScale = int(_project.getFrameScale() * 100);
-    if (frameScale == 100)
+    if (frameScale == 200)
+    {
+        scale200Menu->setChecked(true);
+    }
+    else if (frameScale == 175)
+    {
+        scale175Menu->setChecked(true);
+    }
+    else if (frameScale == 150)
+    {
+        scale150Menu->setChecked(true);
+    }
+    else if (frameScale == 125)
+    {
+        scale125Menu->setChecked(true);
+    }
+
+    else if (frameScale == 100)
     {
         scale100Menu->setChecked(true);
     }
@@ -603,7 +625,11 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     {
         scale100Menu->setChecked(true);
     }
-    
+
+    scaleMenuVector.push_back(scale200Menu);
+    scaleMenuVector.push_back(scale175Menu);
+    scaleMenuVector.push_back(scale150Menu);
+    scaleMenuVector.push_back(scale125Menu);
     scaleMenuVector.push_back(scale100Menu);
     scaleMenuVector.push_back(scale75Menu);
     scaleMenuVector.push_back(scale50Menu);
