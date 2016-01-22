@@ -56,7 +56,7 @@
 			<key>sourceSize</key>
 			<string>{96, 96}</string>
 		</dict>
-		<key>grossini_dance_01.png</key>
+		<key>grossini_dance01.png</key>
 		<dict>
 			<key>frame</key>
 			<string>{{67,2},{51,109}}</string>
@@ -69,7 +69,7 @@
 			<key>sourceSize</key>
 			<string>{85,121}</string>
 		</dict>
-		<key>grossini_dance_02.png</key>
+		<key>grossini_dance02.png</key>
 		<dict>
 			<key>frame</key>
 			<string>{{2,113},{63,109}}</string>
@@ -82,7 +82,7 @@
 			<key>sourceSize</key>
 			<string>{85,121}</string>
 		</dict>
-		<key>grossini_dance_03.png</key>
+		<key>grossini_dance03.png</key>
 		<dict>
 			<key>frame</key>
 			<string>{{2,2},{63,109}}</string>

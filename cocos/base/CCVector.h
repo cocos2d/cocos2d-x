@@ -300,7 +300,7 @@ public:
      * @param other The vector to be compared.
      * @return True if two vectors are equal, false if not.
      */
-    bool equals(const Vector<T> &other)
+    bool equals(const Vector<T> &other) const
     {
         ssize_t s = this->size();
         if (s != other.size())

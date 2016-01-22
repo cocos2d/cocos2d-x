@@ -100,4 +100,28 @@ protected:
     cocos2d::ui::Text* _displayValueLabel;
 };
 
+class UIScrollViewTest_ClippingWithNode : public UIScene_Editor
+{
+public:
+    CREATE_FUNC(UIScrollViewTest_ClippingWithNode);
+
+    UIScrollViewTest_ClippingWithNode();
+    ~UIScrollViewTest_ClippingWithNode();
+
+    virtual bool init() override;
+protected:
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UISscrollViewTestBar : public UIScene_Editor
+{
+public:
+    CREATE_FUNC(UISscrollViewTestBar);
+
+    UISscrollViewTestBar();
+    ~UISscrollViewTestBar();
+
+    virtual bool init() override;
+
+};
 #endif /* defined(__TestCpp__UIScrollViewTest_Editor__) */

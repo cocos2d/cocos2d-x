@@ -559,4 +559,12 @@ int register_all_cocos2dx_studio(lua_State* tolua_S);
 
 
 
+
+
+
+
+
+
+
+
 #endif // __cocos2dx_studio_h__

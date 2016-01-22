@@ -46,7 +46,7 @@ namespace network {
     
 
 
-/** Singleton that handles asynchrounous http requests.
+/** Singleton that handles asynchronous http requests.
  *
  * Once the request completed, a callback will issued in main thread when it provided during make request.
  *
@@ -94,7 +94,7 @@ public:
     void setSSLVerification(const std::string& caFile);
     
     /**
-     * Get ths ssl CA filename
+     * Get the ssl CA filename
      * 
      * @return the ssl CA filename
      */

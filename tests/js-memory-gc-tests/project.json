@@ -18,6 +18,7 @@
     },
 
     "jsList"        : [
-        "src/tests-main.js"
+        "src/tests-main.js",
+        "src/tree-scene.js"
     ]
 }

@@ -426,7 +426,7 @@ void registerDefaultClasses(JSContext* cx, JS::HandleObject global) {
     JS_DefineFunction(cx, jsc, "executeScript", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
     // register some global functions
-    JS_DefineFunction(cx, global, "require", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, global, "require", ScriptingCore::executeScript, 1, JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "executeScript", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "forceGC", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -990,21 +990,24 @@ bool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
         JSString* str = JS::ToString(cx, jsstr);
         JSStringWrapper path(str);
         bool res = false;
+        JS::RootedValue jsret(cx);
         if (argc == 2 && args.get(1).isString()) {
             JSString* globalName = args.get(1).toString();
             JSStringWrapper name(globalName);
 
             JS::RootedObject debugObj(cx, ScriptingCore::getInstance()->getDebugGlobal());
             if (debugObj) {
-                res = ScriptingCore::getInstance()->runScript(path.get(), debugObj);
+                res = ScriptingCore::getInstance()->requireScript(path.get(), debugObj, cx, &jsret);
             } else {
                 JS_ReportError(cx, "Invalid global object: %s", name.get());
+                args.rval().setUndefined();
                 return false;
             }
         } else {
             JS::RootedObject glob(cx, JS::CurrentGlobalOrNull(cx));
-            res = ScriptingCore::getInstance()->runScript(path.get(), glob);
+            res = ScriptingCore::getInstance()->requireScript(path.get(), glob, cx, &jsret);
         }
+        args.rval().set(jsret);
         return res;
     }
     args.rval().setUndefined();
@@ -1013,10 +1016,8 @@ bool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 
 bool ScriptingCore::forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 {
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32
     JSRuntime *rt = JS_GetRuntime(cx);
     JS_GC(rt);
-#endif
     return true;
 }
 
@@ -2249,7 +2250,7 @@ void jsb_ref_rebind(JSContext* cx, JS::HandleObject jsobj, js_proxy_t *proxy, co
 {
     oldRef->_scriptOwned = false;
     
-#if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#if !CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     JS::RemoveObjectRoot(cx, &proxy->obj);
 #endif
     jsb_remove_proxy(proxy);

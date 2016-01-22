@@ -1497,6 +1497,9 @@ struct ScrollViewOptions : private flatbuffers::Table {
   const FlatSize *innerSize() const { return GetStruct<const FlatSize *>(28); }
   int32_t direction() const { return GetField<int32_t>(30, 0); }
   uint8_t bounceEnabled() const { return GetField<uint8_t>(32, 0); }
+  uint8_t scrollbarEnabeld() const { return GetField<uint8_t>(34, 1); }
+  uint8_t scrollbarAutoHide() const { return GetField<uint8_t>(36, 1); }
+  float scrollbarAutoHideTime() const { return GetField<float>(38, 0.2); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* widgetOptions */) &&
@@ -1516,6 +1519,9 @@ struct ScrollViewOptions : private flatbuffers::Table {
            VerifyField<FlatSize>(verifier, 28 /* innerSize */) &&
            VerifyField<int32_t>(verifier, 30 /* direction */) &&
            VerifyField<uint8_t>(verifier, 32 /* bounceEnabled */) &&
+           VerifyField<uint8_t>(verifier, 34 /* scrollbarEnabeld */) &&
+           VerifyField<uint8_t>(verifier, 36 /* scrollbarAutoHide */) &&
+           VerifyField<float>(verifier, 38 /* scrollbarAutoHideTime */) &&
            verifier.EndTable();
   }
 };
@@ -1538,10 +1544,13 @@ struct ScrollViewOptionsBuilder {
   void add_innerSize(const FlatSize *innerSize) { fbb_.AddStruct(28, innerSize); }
   void add_direction(int32_t direction) { fbb_.AddElement<int32_t>(30, direction, 0); }
   void add_bounceEnabled(uint8_t bounceEnabled) { fbb_.AddElement<uint8_t>(32, bounceEnabled, 0); }
+  void add_scrollbarEnabeld(uint8_t scrollbarEnabeld) { fbb_.AddElement<uint8_t>(34, scrollbarEnabeld, 1); }
+  void add_scrollbarAutoHide(uint8_t scrollbarAutoHide) { fbb_.AddElement<uint8_t>(36, scrollbarAutoHide, 1); }
+  void add_scrollbarAutoHideTime(float scrollbarAutoHideTime) { fbb_.AddElement<float>(38, scrollbarAutoHideTime, 0.2); }
   ScrollViewOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   ScrollViewOptionsBuilder &operator=(const ScrollViewOptionsBuilder &);
   flatbuffers::Offset<ScrollViewOptions> Finish() {
-    auto o = flatbuffers::Offset<ScrollViewOptions>(fbb_.EndTable(start_, 15));
+    auto o = flatbuffers::Offset<ScrollViewOptions>(fbb_.EndTable(start_, 18));
     return o;
   }
 };
@@ -1561,8 +1570,12 @@ inline flatbuffers::Offset<ScrollViewOptions> CreateScrollViewOptions(flatbuffer
    uint8_t backGroundScale9Enabled = 0,
    const FlatSize *innerSize = 0,
    int32_t direction = 0,
-   uint8_t bounceEnabled = 0) {
+   uint8_t bounceEnabled = 0,
+   uint8_t scrollbarEnabeld = 1,
+   uint8_t scrollbarAutoHide = 1,
+   float scrollbarAutoHideTime = 0.2) {
   ScrollViewOptionsBuilder builder_(_fbb);
+  builder_.add_scrollbarAutoHideTime(scrollbarAutoHideTime);
   builder_.add_direction(direction);
   builder_.add_innerSize(innerSize);
   builder_.add_scale9Size(scale9Size);
@@ -1574,6 +1587,8 @@ inline flatbuffers::Offset<ScrollViewOptions> CreateScrollViewOptions(flatbuffer
   builder_.add_bgColor(bgColor);
   builder_.add_backGroundImageData(backGroundImageData);
   builder_.add_widgetOptions(widgetOptions);
+  builder_.add_scrollbarAutoHide(scrollbarAutoHide);
+  builder_.add_scrollbarEnabeld(scrollbarEnabeld);
   builder_.add_bounceEnabled(bounceEnabled);
   builder_.add_backGroundScale9Enabled(backGroundScale9Enabled);
   builder_.add_bgColorOpacity(bgColorOpacity);

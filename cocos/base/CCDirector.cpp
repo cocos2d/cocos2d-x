@@ -1065,7 +1065,8 @@ void Director::setNextScene()
         _runningScene->onEnterTransitionDidFinish();
 
 #if CC_ENABLE_SCRIPT_BINDING
-        ScriptEngineManager::getInstance()->getScriptEngine()->garbageCollect();
+        if (ScriptEngineManager::getInstance()->getScriptEngine())
+            ScriptEngineManager::getInstance()->getScriptEngine()->garbageCollect();
 #endif // CC_ENABLE_SCRIPT_BINDING
     }
 }

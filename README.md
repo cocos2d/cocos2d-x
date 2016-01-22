@@ -24,7 +24,7 @@ cocos2d-x is:
   * Fast
   * Free
   * Easy to use
-  * Community Supported
+  * Community supported
 
 Git user attention
 -----------------------
@@ -110,7 +110,7 @@ Starting with Cocos2d-x v3.3, you can create Windows 8.1 Universal Apps (Windows
 Starting with Cocos2d-x v3.8 you can create Windows 10.0 UWP Apps (Windows Store and Windows Phone 10.0).
 Starting with Cocos2d-x v3.6 there will no longer be support for Windows Phone 8.0.
 
-See more info on How to install and Create games on Windows RT (Windows and Windows Phone 8.1) at http://msopentech.github.io/cocos2d-x/
+See more info on how to install and create games on Windows RT (Windows and Windows Phone 8.1) at http://msopentech.github.io/cocos2d-x/
 
 ### Build and run new project for web ###
 
@@ -295,7 +295,7 @@ __cocos2d-x_root/build.__
 Contributing to the Project
 --------------------------------
 
-Cocos2d-x is licensed under the [MIT License](https://opensource.org/licenses/MIT). We welcome paricipation!
+Cocos2d-x is licensed under the [MIT License](https://opensource.org/licenses/MIT). We welcome participation!
 
 Did you find a bug? Do you have feature request? Do you want to merge a feature?
 

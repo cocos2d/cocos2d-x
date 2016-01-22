@@ -129,6 +129,19 @@ std::string CCFileUtilsWinRT::getSuitableFOpen(const std::string& filenameUtf8) 
     return UTF8StringToMultiByte(filenameUtf8);
 }
 
+long CCFileUtilsWinRT::getFileSize(const std::string &filepath)
+{
+    WIN32_FILE_ATTRIBUTE_DATA fad;
+    if (!GetFileAttributesEx(StringUtf8ToWideChar(filepath).c_str(), GetFileExInfoStandard, &fad))
+    {
+        return 0; // error condition, could call GetLastError to find out more
+    }
+    LARGE_INTEGER size;
+    size.HighPart = fad.nFileSizeHigh;
+    size.LowPart = fad.nFileSizeLow;
+    return (long)size.QuadPart;
+}
+
 bool CCFileUtilsWinRT::isFileExistInternal(const std::string& strFilePath) const
 {
     bool ret = false;
