@@ -185,9 +185,18 @@ public:
     void send(const unsigned char* binaryMsg, unsigned int len);
 
     /**
-     *  @brief Closes the connection to server.
+     *  @brief Closes the connection to server synchronously.
+     *  @note It's a synchronous method, it will not return until websocket thread exits.
      */
     void close();
+    
+    /**
+     *  @brief Closes the connection to server asynchronously.
+     *  @note It's an asynchronous method, it just notifies websocket thread to exit and returns directly,
+     *        If using 'closeAsync' to close websocket connection, 
+     *        be carefull of not using destructed variables in the callback of 'onClose'.
+     */
+    void closeAsync();
 
     /**
      *  @brief Gets current state of connection.

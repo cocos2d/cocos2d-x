@@ -297,10 +297,7 @@ void WebSocket::closeAllConnections()
         for (ssize_t i = count-1; i >=0 ; i--)
         {
             WebSocket* instance = __websocketInstances->at(i);
-            LOGD("Waiting WebSocket (%p) to exit!\n", instance);
             instance->close();
-            // Wait for websocket thread to exit
-            instance->_wsHelper->joinWebSocketThread();
         }
 
         __websocketInstances->clear();
@@ -497,6 +494,14 @@ void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
 void WebSocket::close()
 {
     _wsHelper->quitWebSocketThread();
+    // Wait for websocket thread to exit
+    LOGD("Waiting WebSocket (%p) to exit!\n", this);
+    _wsHelper->joinWebSocketThread();
+}
+    
+void WebSocket::closeAsync()
+{
+    _wsHelper->quitWebSocketThread();
 }
 
 WebSocket::State WebSocket::getReadyState()
@@ -691,7 +696,7 @@ void WebSocket::onClientWritable()
             _wsHelper->_subThreadWsMessageQueue->erase(iter);
             CC_SAFE_DELETE(subThreadMsg);
 
-            close();
+            closeAsync();
         }
         else if (bytesWrite < frame->getPayloadLength())
         {
@@ -720,7 +725,7 @@ void WebSocket::onClientWritable()
             {
                 LOGD("ERROR: msg(%u), remaining(%d) < bytesWrite(%d)\n", subThreadMsg->id, (int)remaining, (int)frame->getFrameLength());
                 LOGD("Drop the msg(%u)\n", subThreadMsg->id);
-                close();
+                closeAsync();
             }
 
             CC_SAFE_FREE(data->bytes);

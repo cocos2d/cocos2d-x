@@ -130,7 +130,7 @@ public:
             
             if (dataVal.isNullOrUndefined())
             {
-                ws->close();
+                ws->closeAsync();
                 return;
             }
             JS_SetProperty(cx, jsobj, "data", dataVal);
@@ -264,7 +264,7 @@ bool js_cocos2dx_extension_WebSocket_close(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     
     if(argc == 0){
-        cobj->close();
+        cobj->closeAsync();
         args.rval().setUndefined();
         return true;
     }
