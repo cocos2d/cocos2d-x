@@ -12,14 +12,13 @@ LOCAL_SRC_FILES := ../manual/platform/android/CCLuaJavaBridge.cpp \
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../.. \
                     $(LOCAL_PATH)/../manual \
                     $(LOCAL_PATH)/../../../../external/lua/tolua \
+                    $(LOCAL_PATH)/../../../../external/lua/lua \
                     $(LOCAL_PATH)/../manual/platform/android \
                     $(LOCAL_PATH)/../manual/platform/android/jni
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
                        -landroid
-
-LOCAL_STATIC_LIBRARIES := luajit_static
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -60,6 +59,39 @@ LOCAL_SRC_FILES := ../manual/CCLuaBridge.cpp \
           ../../../../external/xxtea/xxtea.cpp \
           ../auto/lua_cocos2dx_audioengine_auto.cpp \
           ../manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
+
+# lua
+LOCAL_SRC_FILES += ../../../../external/lua/lua/lapi.c \
+                   ../../../../external/lua/lua/lauxlib.c \
+                   ../../../../external/lua/lua/lbaselib.c \
+                   ../../../../external/lua/lua/lcode.c \
+                   ../../../../external/lua/lua/ldblib.c \
+                   ../../../../external/lua/lua/ldebug.c \
+                   ../../../../external/lua/lua/ldo.c \
+                   ../../../../external/lua/lua/ldump.c \
+                   ../../../../external/lua/lua/lfunc.c \
+                   ../../../../external/lua/lua/lgc.c \
+                   ../../../../external/lua/lua/linit.c \
+                   ../../../../external/lua/lua/liolib.c \
+                   ../../../../external/lua/lua/llex.c \
+                   ../../../../external/lua/lua/lmathlib.c \
+                   ../../../../external/lua/lua/lmem.c \
+                   ../../../../external/lua/lua/loadlib.c \
+                   ../../../../external/lua/lua/lobject.c \
+                   ../../../../external/lua/lua/lopcodes.c \
+                   ../../../../external/lua/lua/loslib.c \
+                   ../../../../external/lua/lua/lparser.c \
+                   ../../../../external/lua/lua/lstate.c \
+                   ../../../../external/lua/lua/lstring.c \
+                   ../../../../external/lua/lua/lstrlib.c \
+                   ../../../../external/lua/lua/ltable.c \
+                   ../../../../external/lua/lua/ltablib.c \
+                   ../../../../external/lua/lua/ltm.c \
+                   ../../../../external/lua/lua/lua.c \
+                   ../../../../external/lua/lua/lundump.c \
+                   ../../../../external/lua/lua/lvm.c \
+                   ../../../../external/lua/lua/lzio.c \
+                   ../../../../external/lua/lua/print.c \
 
 #Component
 LOCAL_SRC_FILES += ../manual/CCComponentLua.cpp \
@@ -134,7 +166,7 @@ LOCAL_SRC_FILES += ../manual/navmesh/lua_cocos2dx_navmesh_conversions.cpp \
                    ../auto/lua_cocos2dx_navmesh_auto.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
-                    $(LOCAL_PATH)/../../../../external/lua/luajit/include \
+                    $(LOCAL_PATH)/../../../../external/lua/lua \
                     $(LOCAL_PATH)/../../../2d \
                     $(LOCAL_PATH)/../../../3d \
                     $(LOCAL_PATH)/../../../network \
@@ -164,7 +196,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                     $(LOCAL_PATH)/../../../../external/lua
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
-                           $(LOCAL_PATH)/../../../../external/lua/luajit/include \
+                           $(LOCAL_PATH)/../../../../external/lua/lua   \
                            $(LOCAL_PATH)/../auto \
                            $(LOCAL_PATH)/../manual \
                            $(LOCAL_PATH)/../manual/cocos2d \
@@ -186,5 +218,4 @@ LOCAL_STATIC_LIBRARIES := cocos2dx_static
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,lua/luajit/prebuilt/android)
 $(call import-module,.)

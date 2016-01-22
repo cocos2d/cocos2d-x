@@ -790,6 +790,29 @@ int LuaStack::loadChunksFromZIP(const char *zipFilePath)
     return ret;
 }
 
+unsigned char* LuaStack::xxteaDecrypt(unsigned char *buffer, ssize_t size, ssize_t *outlen)
+{
+    xxtea_long len = 0;
+    unsigned char *outbuffer = xxtea_decrypt(buffer + _xxteaSignLen,
+                                             (xxtea_long)size - (xxtea_long)_xxteaSignLen,
+                                             (unsigned char*)_xxteaKey,
+                                             (xxtea_long)_xxteaKeyLen,
+                                             &len);
+    *outlen = len;
+    return outbuffer;
+}
+
+bool LuaStack::isXXTEA(unsigned char *data, ssize_t size)
+{
+    bool bXXTEA = _xxteaEnabled && data;
+    for (unsigned int i = 0; bXXTEA && i < _xxteaSignLen && i < size; ++i)
+    {
+        bXXTEA = data[i] == _xxteaSign[i];
+    }
+    
+    return bXXTEA;
+}
+
 int LuaStack::luaLoadChunksFromZIP(lua_State *L)
 {
     if (lua_gettop(L) < 1) {
@@ -810,29 +833,20 @@ int LuaStack::luaLoadChunksFromZIP(lua_State *L)
         unsigned char *zipFileData = utils->getFileData(zipFilePath.c_str(), "rb", &size);
         ZipFile *zip = nullptr;
         
-        bool isXXTEA = stack && stack->_xxteaEnabled && zipFileData;
-        for (int i = 0; isXXTEA && i < stack->_xxteaSignLen && i < size; ++i) {
-            isXXTEA = zipFileData[i] == stack->_xxteaSign[i];
-        }
-        
-        if (isXXTEA) { // decrypt XXTEA
-            xxtea_long len = 0;
-            buffer = xxtea_decrypt(zipFileData + stack->_xxteaSignLen,
-                                   (xxtea_long)size - (xxtea_long)stack->_xxteaSignLen,
-                                   (unsigned char*)stack->_xxteaKey,
-                                   (xxtea_long)stack->_xxteaKeyLen,
-                                   &len);
+        if (this->isXXTEA(zipFileData, size))
+        {
+            ssize_t len = 0;
+            buffer = this->xxteaDecrypt(zipFileData, size, &len);
             free(zipFileData);
             zipFileData = nullptr;
             zip = ZipFile::createWithBuffer(buffer, len);
-        } else {
-            if (zipFileData) {
-                zip = ZipFile::createWithBuffer(zipFileData, size);
-            }
+        }
+        else
+        {
+            zip = ZipFile::createWithBuffer(zipFileData, size);
         }
         
         if (zip) {
-            CCLOG("lua_loadChunksFromZIP() - load zip file: %s%s", zipFilePath.c_str(), isXXTEA ? "*" : "");
             lua_getglobal(L, "package");
             lua_getfield(L, -1, "preload");
             

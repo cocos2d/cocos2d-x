@@ -194,6 +194,9 @@ public:
     //Wait for texture cache to quit before destroy instance.
     /**Called by director, please do not called outside.*/
     void waitForQuit();
+    
+    void setTexturePixelFormat(std::string path, Texture2D::PixelFormat pixelFormat);
+    Texture2D::PixelFormat getTexturePixelFormat(std::string path);
 
     /**
      * Get the file path of the texture
@@ -238,6 +241,7 @@ protected:
 
     int _asyncRefCount;
 
+    std::unordered_map<std::string, Texture2D::PixelFormat> _texturePixelFormats;
     std::unordered_map<std::string, Texture2D*> _textures;
 };
 

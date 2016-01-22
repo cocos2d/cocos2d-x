@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #include "CCFileUtils-android.h"
@@ -355,7 +356,22 @@ Data FileUtilsAndroid::getData(const std::string& filename, bool forString)
     }
     else
     {
-        ret.fastSet(data, size);
+        unsigned char* buffer = 0;
+        LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+        if (stack->isXXTEA(data, size))
+        {
+            ssize_t len = 0;
+            buffer = stack->xxteaDecrypt(data, size, &len);
+
+            free(data);
+            data = NULL;
+            size = len;
+        }
+        else
+        {
+            buffer = data;
+        }
+        ret.fastSet(buffer, size);
         cocosplay::notifyFileLoaded(fullPath);
     }
 
@@ -380,6 +396,7 @@ Data FileUtilsAndroid::getDataFromFile(const std::string& filename)
 unsigned char* FileUtilsAndroid::getFileData(const std::string& filename, const char* mode, ssize_t * size)
 {
     unsigned char * data = 0;
+    unsigned char * buffer = 0;
 
     if ( filename.empty() || (! mode) )
     {
@@ -461,9 +478,23 @@ unsigned char* FileUtilsAndroid::getFileData(const std::string& filename, const 
     }
     else
     {
+        LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+        if (stack->isXXTEA(data, *size))
+        {
+            ssize_t len = 0;
+            buffer = stack->xxteaDecrypt(data, *size, &len);
+
+            free(data);
+            data = NULL;
+            *size = len;
+        }
+        else
+        {
+            buffer = data;
+        }
         cocosplay::notifyFileLoaded(fullPath);
     }
-    return data;
+    return buffer;
 }
 
 string FileUtilsAndroid::getWritablePath() const

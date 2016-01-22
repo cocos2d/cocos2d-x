@@ -16278,6 +16278,417 @@ int lua_register_cocos2dx_extension_PUParticleSystem3D(lua_State* tolua_S)
     g_typeCast["PUParticleSystem3D"] = "cc.PUParticleSystem3D";
     return 1;
 }
+
+int lua_cocos2dx_extension_CircularBuffer_GetSize(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::CircularBuffer* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.CircularBuffer",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::CircularBuffer*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_CircularBuffer_GetSize'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_CircularBuffer_GetSize'", nullptr);
+            return 0;
+        }
+        unsigned long ret = cobj->GetSize();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CircularBuffer:GetSize",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_CircularBuffer_GetSize'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_extension_CircularBuffer_Read(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::CircularBuffer* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.CircularBuffer",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::extension::CircularBuffer*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_CircularBuffer_Read'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1)
+    {
+        unsigned long arg1;
+        
+        ok = luaval_to_ulong(tolua_S, 2, &arg1, "cc.CircularBuffer:Read");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_CircularBuffer_Read'", nullptr);
+            return 0;
+        }
+        char* buffer = new char[arg1];
+        if (cobj->Read(buffer, arg1)) {
+            lua_pushlstring(tolua_S, buffer, arg1);
+        } else {
+            lua_pushnil(tolua_S);
+        }
+        
+        if (buffer) delete [] buffer;
+        
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CircularBuffer:Read",argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_CircularBuffer_Read'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+int lua_cocos2dx_extension_CircularBuffer_clear(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::CircularBuffer* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.CircularBuffer",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::CircularBuffer*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_CircularBuffer_clear'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_CircularBuffer_clear'", nullptr);
+            return 0;
+        }
+        cobj->clear();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CircularBuffer:clear",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_CircularBuffer_clear'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_extension_CircularBuffer_Remove(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::CircularBuffer* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.CircularBuffer",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::CircularBuffer*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_CircularBuffer_Remove'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        unsigned long arg0;
+
+        ok &= luaval_to_ulong(tolua_S, 2, &arg0, "cc.CircularBuffer:Remove");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_CircularBuffer_Remove'", nullptr);
+            return 0;
+        }
+        cobj->Remove(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CircularBuffer:Remove",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_CircularBuffer_Remove'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_extension_CircularBuffer_Write(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::CircularBuffer* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.CircularBuffer",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::CircularBuffer*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_CircularBuffer_Write'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        char* arg0 = ((char*)  tolua_tostring(tolua_S,2,0));
+        unsigned long arg1;
+        
+        ok = luaval_to_ulong(tolua_S, 3, &arg1, "cc.CircularBuffer:Write");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_CircularBuffer_Write'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->Write(arg0, arg1);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CircularBuffer:Write",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_CircularBuffer_Write'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_extension_CircularBuffer_Allocate(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::CircularBuffer* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.CircularBuffer",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::CircularBuffer*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_CircularBuffer_Allocate'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        unsigned long arg0;
+
+        ok &= luaval_to_ulong(tolua_S, 2, &arg0, "cc.CircularBuffer:Allocate");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_CircularBuffer_Allocate'", nullptr);
+            return 0;
+        }
+        cobj->Allocate(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CircularBuffer:Allocate",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_CircularBuffer_Allocate'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_extension_CircularBuffer_GetBuffer(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::CircularBuffer* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.CircularBuffer",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::CircularBuffer*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_CircularBuffer_GetBuffer'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_CircularBuffer_GetBuffer'", nullptr);
+            return 0;
+        }
+        void* ret = cobj->GetBuffer();
+        #pragma warning NO CONVERSION FROM NATIVE FOR void*;
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CircularBuffer:GetBuffer",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_CircularBuffer_GetBuffer'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_extension_CircularBuffer_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.CircularBuffer",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_CircularBuffer_create'", nullptr);
+            return 0;
+        }
+        cocos2d::extension::CircularBuffer* ret = cocos2d::extension::CircularBuffer::create();
+        object_to_luaval<cocos2d::extension::CircularBuffer>(tolua_S, "cc.CircularBuffer",(cocos2d::extension::CircularBuffer*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.CircularBuffer:create",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_CircularBuffer_create'.",&tolua_err);
+#endif
+    return 0;
+}
+static int lua_cocos2dx_extension_CircularBuffer_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (CircularBuffer)");
+    return 0;
+}
+
+int lua_register_cocos2dx_extension_CircularBuffer(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.CircularBuffer");
+    tolua_cclass(tolua_S,"CircularBuffer","cc.CircularBuffer","",nullptr);
+
+    tolua_beginmodule(tolua_S,"CircularBuffer");
+        tolua_function(tolua_S,"GetSize",lua_cocos2dx_extension_CircularBuffer_GetSize);
+        tolua_function(tolua_S,"Read",lua_cocos2dx_extension_CircularBuffer_Read);
+        tolua_function(tolua_S,"clear",lua_cocos2dx_extension_CircularBuffer_clear);
+        tolua_function(tolua_S,"Remove",lua_cocos2dx_extension_CircularBuffer_Remove);
+        tolua_function(tolua_S,"Write",lua_cocos2dx_extension_CircularBuffer_Write);
+        tolua_function(tolua_S,"Allocate",lua_cocos2dx_extension_CircularBuffer_Allocate);
+        tolua_function(tolua_S,"GetBuffer",lua_cocos2dx_extension_CircularBuffer_GetBuffer);
+        tolua_function(tolua_S,"create", lua_cocos2dx_extension_CircularBuffer_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::extension::CircularBuffer).name();
+    g_luaType[typeName] = "cc.CircularBuffer";
+    g_typeCast["CircularBuffer"] = "cc.CircularBuffer";
+    return 1;
+}
 TOLUA_API int register_all_cocos2dx_extension(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
@@ -16301,6 +16712,7 @@ TOLUA_API int register_all_cocos2dx_extension(lua_State* tolua_S)
 	lua_register_cocos2dx_extension_Manifest(tolua_S);
 	lua_register_cocos2dx_extension_ControlPotentiometer(tolua_S);
 	lua_register_cocos2dx_extension_EventAssetsManagerEx(tolua_S);
+	lua_register_cocos2dx_extension_CircularBuffer(tolua_S);
 	lua_register_cocos2dx_extension_TableView(tolua_S);
 	lua_register_cocos2dx_extension_EventListenerAssetsManagerEx(tolua_S);
 	lua_register_cocos2dx_extension_ControlSwitch(tolua_S);

@@ -11,10 +11,13 @@ LOCAL_ARM_MODE := arm
 endif
 
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+LOCAL_CFLAGS := -DHAVE_NEON=1
 MATHNEONFILE := math/MathUtil.cpp.neon
 else
 MATHNEONFILE := math/MathUtil.cpp
 endif
+
+#for adding cpufeatures
 
 LOCAL_SRC_FILES := \
 cocos2d.cpp \
@@ -244,7 +247,10 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/poly2tri \
                     $(LOCAL_PATH)/../external/poly2tri/common \
                     $(LOCAL_PATH)/../external/poly2tri/sweep \
-                    $(LOCAL_PATH)/../external/clipper
+                    $(LOCAL_PATH)/../external/clipper  \
+                    $(LOCAL_PATH)/../external/lua/lua   \
+                    $(LOCAL_PATH)/../external/lua/tolua   \
+                    $(LOCAL_PATH)/scripting/lua-bindings/manual
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/platform \
@@ -259,7 +265,10 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/poly2tri \
                     $(LOCAL_PATH)/../external/poly2tri/common \
                     $(LOCAL_PATH)/../external/poly2tri/sweep \
-                    $(LOCAL_PATH)/../external/clipper
+                    $(LOCAL_PATH)/../external/clipper  \
+                    $(LOCAL_PATH)/../external/lua/lua   \
+                    $(LOCAL_PATH)/../external/lua/tolua   \
+                    $(LOCAL_PATH)/scripting/lua-bindings/manual
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
@@ -268,14 +277,14 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
 LOCAL_STATIC_LIBRARIES := cocos_freetype2_static
 LOCAL_STATIC_LIBRARIES += cocos_png_static
 LOCAL_STATIC_LIBRARIES += cocos_jpeg_static
-LOCAL_STATIC_LIBRARIES += cocos_tiff_static
-LOCAL_STATIC_LIBRARIES += cocos_webp_static
+#LOCAL_STATIC_LIBRARIES += cocos_tiff_static
+#LOCAL_STATIC_LIBRARIES += cocos_webp_static
 LOCAL_STATIC_LIBRARIES += cocos_chipmunk_static
 LOCAL_STATIC_LIBRARIES += cocos_zlib_static
-LOCAL_STATIC_LIBRARIES += recast_static
-LOCAL_STATIC_LIBRARIES += bullet_static
+#LOCAL_STATIC_LIBRARIES += recast_static
+#LOCAL_STATIC_LIBRARIES += bullet_static
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dxandroid_static
+LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dxandroid_static cpufeatures
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   :=  -DUSE_FILE32API
@@ -294,7 +303,7 @@ LOCAL_MODULE := cocos2dx_static
 LOCAL_MODULE_FILENAME := libcocos2d
 
 LOCAL_STATIC_LIBRARIES := cocostudio_static
-LOCAL_STATIC_LIBRARIES += cocosbuilder_static
+#LOCAL_STATIC_LIBRARIES += cocosbuilder_static
 LOCAL_STATIC_LIBRARIES += cocos3d_static
 LOCAL_STATIC_LIBRARIES += spine_static
 LOCAL_STATIC_LIBRARIES += cocos_network_static
@@ -307,20 +316,21 @@ $(call import-module,platform/android)
 $(call import-module,png/prebuilt/android)
 $(call import-module,zlib/prebuilt/android)
 $(call import-module,jpeg/prebuilt/android)
-$(call import-module,tiff/prebuilt/android)
-$(call import-module,webp/prebuilt/android)
+#$(call import-module,tiff/prebuilt/android)
+#$(call import-module,webp/prebuilt/android)
 $(call import-module,chipmunk/prebuilt/android)
 $(call import-module,3d)
 $(call import-module,audio/android)
-$(call import-module,editor-support/cocosbuilder)
+#$(call import-module,editor-support/cocosbuilder)
 $(call import-module,editor-support/cocostudio)
 $(call import-module,editor-support/spine)
 $(call import-module,network)
 $(call import-module,ui)
 $(call import-module,extensions)
-$(call import-module,Box2D)
-$(call import-module,bullet)
-$(call import-module,recast)
+#$(call import-module,Box2D)
+#$(call import-module,bullet)
+#$(call import-module,recast)
 # $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
 $(call import-module,flatbuffers)
+$(call import-module, android/cpufeatures)

@@ -38,6 +38,10 @@ LuaSkeletonAnimation::LuaSkeletonAnimation (const char* skeletonDataFile, const 
 	
 }
 
+LuaSkeletonAnimation::LuaSkeletonAnimation(SkeletonAnimation* spineData)
+: spine::SkeletonAnimation(spineData)
+{
+}
 
 LuaSkeletonAnimation::~LuaSkeletonAnimation()
 {
@@ -49,4 +53,11 @@ LuaSkeletonAnimation* LuaSkeletonAnimation::createWithFile (const char* skeleton
 	LuaSkeletonAnimation* node = new (std::nothrow) LuaSkeletonAnimation(skeletonDataFile, atlasFile, scale);
 	node->autorelease();
 	return node;
+}
+
+LuaSkeletonAnimation* LuaSkeletonAnimation::createWithData(SkeletonAnimation* spineData)
+{
+    LuaSkeletonAnimation* node = new (std::nothrow) LuaSkeletonAnimation(spineData);
+    node->autorelease();
+    return node;
 }

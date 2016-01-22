@@ -130,7 +130,8 @@ void TMXMapInfo::internalInit(const std::string& tmxFileName, const std::string&
 {
     if (!tmxFileName.empty())
     {
-        _TMXFileName = FileUtils::getInstance()->fullPathForFilename(tmxFileName);
+//        _TMXFileName = FileUtils::getInstance()->fullPathForFilename(tmxFileName);
+        _TMXFileName = tmxFileName;
     }
     
     if (!resourcePath.empty())

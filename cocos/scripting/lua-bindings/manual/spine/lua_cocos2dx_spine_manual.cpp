@@ -144,6 +144,40 @@ tolua_lerror:
     return 0;
 }
 
+//tolua代码，解决Spine缓存问题
+static int lua_cocos2dx_CCSkeletonAnimation_createWithData(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    int argc = 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertable(L, 1, "sp.SkeletonAnimation", 0, &tolua_err)) goto tolua_lerror;
+#endif
+    argc = lua_gettop(L) - 1;
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_isusertable(L, 1, "sp.SkeletonAnimation", 0, &tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        SkeletonAnimation* spineData = (SkeletonAnimation*)tolua_tousertype(L, 2, 0);
+        auto tolua_ret = LuaSkeletonAnimation::createWithData(spineData);
+        int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+        int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+        toluafix_pushusertype_ccobject(L, nID, pLuaID, (void*)tolua_ret, "sp.SkeletonAnimation");
+        return 1;
+    }
+    luaL_error(L, "'createWithData' function of SkeletonAnimation has wrong number of arguments: %d, was expecting %d\n", argc, 2);
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L, "#ferror in function 'createWithData'.", &tolua_err);
+#endif
+    return 0;
+}
+
 int executeSpineEvent(LuaSkeletonAnimation* skeletonAnimation, int handler, spEventType eventType, int trackIndex , int loopCount = 0, spEvent* event = nullptr )
 {
     if (nullptr == skeletonAnimation || 0 == handler)
@@ -473,6 +507,7 @@ static void extendCCSkeletonAnimation(lua_State* L)
     if (lua_istable(L,-1))
     {
         tolua_function(L, "create", lua_cocos2dx_CCSkeletonAnimation_createWithFile);
+        tolua_function(L, "createWithData", lua_cocos2dx_CCSkeletonAnimation_createWithData);
         tolua_function(L, "registerSpineEventHandler", tolua_Cocos2d_CCSkeletonAnimation_registerSpineEventHandler00);
         tolua_function(L, "unregisterSpineEventHandler", tolua_Cocos2d_CCSkeletonAnimation_unregisterSpineEventHandler00);
         tolua_function(L, "setBlendFunc", tolua_spine_SkeletoneAnimation_setBlendFunc);

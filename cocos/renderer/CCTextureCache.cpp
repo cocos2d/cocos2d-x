@@ -555,6 +555,24 @@ const std::string TextureCache::getTextureFilePath( cocos2d::Texture2D *texture 
     return "";
 }
 
+
+void TextureCache::setTexturePixelFormat(std::string path, Texture2D::PixelFormat pixelFormat)
+{
+    std::string key = FileUtils::getInstance()->fullPathForFilename(path);
+    _texturePixelFormats.insert(std::make_pair(key, pixelFormat));
+}
+
+Texture2D::PixelFormat TextureCache::getTexturePixelFormat(std::string path)
+{
+    std::string key = FileUtils::getInstance()->fullPathForFilename(path);
+    auto it = _texturePixelFormats.find(key);
+    if (it == _texturePixelFormats.end()) {
+        return Texture2D::PixelFormat::DEFAULT;
+    }
+    
+    return it->second;
+}
+
 void TextureCache::waitForQuit()
 {
     // notify sub thread to quick

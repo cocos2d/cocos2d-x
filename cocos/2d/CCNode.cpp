@@ -893,7 +893,7 @@ bool Node::doEnumerate(std::string name, std::function<bool (Node *)> callback) 
     }
     
     bool ret = false;
-    for (const auto& child : _children)
+    for (const auto& child : this->getChildren())
     {
         if (std::regex_match(child->_name, std::regex(searchName)))
         {

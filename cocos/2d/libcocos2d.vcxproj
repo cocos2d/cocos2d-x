@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -201,6 +201,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\..\extensions\GUI\CCScrollView\CCScrollView.cpp" />
     <ClCompile Include="..\..\extensions\GUI\CCScrollView\CCTableView.cpp" />
     <ClCompile Include="..\..\extensions\GUI\CCScrollView\CCTableViewCell.cpp" />
+    <ClCompile Include="..\..\extensions\network\CircularBuffer.cpp" />
     <ClCompile Include="..\..\extensions\Particle3D\CCParticle3DAffector.cpp" />
     <ClCompile Include="..\..\extensions\Particle3D\CCParticle3DEmitter.cpp" />
     <ClCompile Include="..\..\extensions\Particle3D\CCParticle3DRender.cpp" />
@@ -762,6 +763,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\..\extensions\GUI\CCScrollView\CCScrollView.h" />
     <ClInclude Include="..\..\extensions\GUI\CCScrollView\CCTableView.h" />
     <ClInclude Include="..\..\extensions\GUI\CCScrollView\CCTableViewCell.h" />
+    <ClInclude Include="..\..\extensions\network\CircularBuffer.h" />
     <ClInclude Include="..\..\extensions\Particle3D\CCParticle3DAffector.h" />
     <ClInclude Include="..\..\extensions\Particle3D\CCParticle3DEmitter.h" />
     <ClInclude Include="..\..\extensions\Particle3D\CCParticle3DRender.h" />

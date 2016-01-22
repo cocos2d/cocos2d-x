@@ -151,8 +151,8 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
     if( flags != 0 || _dirty || _quadsDirty || isViewProjectionUpdated)
     {
         Size s = Director::getInstance()->getVisibleSize();
-        auto rect = Rect(Camera::getVisitingCamera()->getPositionX() - s.width * 0.5,
-                     Camera::getVisitingCamera()->getPositionY() - s.height * 0.5,
+        auto rect = Rect(Camera::getVisitingCamera()->getPositionX(),
+                     Camera::getVisitingCamera()->getPositionY(),
                      s.width,
                      s.height);
         
@@ -177,7 +177,8 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
         if(iter.second->getCount() > 0)
         {
             auto& cmd = _renderCommands[index++];
-            cmd.init(iter.first, _texture->getName(), getGLProgramState(), BlendFunc::ALPHA_NON_PREMULTIPLIED, iter.second, _modelViewTransform, flags);
+            auto blendfunc = _texture->hasPremultipliedAlpha() ? BlendFunc::ALPHA_PREMULTIPLIED : BlendFunc::ALPHA_NON_PREMULTIPLIED;
+            cmd.init(iter.first, _texture->getName(), getGLProgramState(), blendfunc, iter.second, _modelViewTransform, flags);
             renderer->addCommand(&cmd);
         }
     }
