@@ -224,6 +224,12 @@ void Device::vibrate(float duration)
 #endif // (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
 }
 
+std::string Device::getDeviceUID()
+{
+	std::string ret;
+    return ret;
+}
+
 NS_CC_END
 
 #endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
