@@ -32,6 +32,8 @@
 
 #include <string>
 #include <vector>
+#include <mutex>
+#include <memory>  // for std::shared_ptr
 
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCStdC.h"
