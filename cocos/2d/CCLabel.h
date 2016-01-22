@@ -302,7 +302,7 @@ public:
     /** Sets the text that this Label is to display.*/
     virtual void setString(const std::string& text) override;
 
-    /** Return the text the Label is displaying.*/
+    /** Return the text the Label is currently displaying.*/
     virtual const std::string& getString() const override {  return _utf8Text; }
 
     /**
