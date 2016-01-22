@@ -193,7 +193,7 @@ RichText::RichText()
     : _formatTextDirty(true)
     , _leftSpaceWidth(0.0f)
     , _verticalSpace(0.0f)
-    , _wrapMode(WRAP_PER_CHAR)
+    , _wrapMode(WRAP_PER_WORD)
 {
 }
     
