@@ -34,6 +34,8 @@ NS_CC_BEGIN
  * @{
  */
 
+class Label;
+
 namespace ui {
     
 /**
@@ -304,6 +306,11 @@ protected:
 class CC_GUI_DLL RichText : public Widget
 {
 public:
+
+    enum WrapMode {
+        WRAP_PER_WORD,
+        WRAP_PER_CHAR
+    };
     
     /**
      * @brief Default constructor.
@@ -378,6 +385,13 @@ public:
     //override functions.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
     virtual std::string getDescription() const override;
+
+    /** @brief sets the wrapping mode: WRAP_PER_CHAR or WRAP_PER_WORD
+     */
+    void setWrapMode(WrapMode wrapMode);
+
+    /** @brief returns the current wrapping mode */
+    WrapMode getWrapMode() const;
     
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
@@ -394,12 +408,17 @@ protected:
     void handleCustomRenderer(Node* renderer);
     void formarRenderers();
     void addNewLine();
-protected:
+    int findSplitPositionForWord(cocos2d::Label* label, const std::string& text);
+    int findSplitPositionForChar(cocos2d::Label* label, const std::string& text);
+
     bool _formatTextDirty;
     Vector<RichElement*> _richElements;
     std::vector<Vector<Node*>*> _elementRenders;
     float _leftSpaceWidth;
     float _verticalSpace;
+
+    // per word, or per char
+    WrapMode _wrapMode;
 };
     
 }
