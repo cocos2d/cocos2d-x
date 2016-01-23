@@ -1072,7 +1072,7 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     
     if(spriteFrame->hasPolygonInfo())
     {
-        _polyInfo = spriteFrame->getPolygonInfo();
+        setPolygonInfo(spriteFrame->getPolygonInfo());
     }
     if (spriteFrame->hasAnchorPoint())
     {
@@ -1191,6 +1191,18 @@ PolygonInfo& Sprite::getPolygonInfo()
 void Sprite::setPolygonInfo(const PolygonInfo& info)
 {
     _polyInfo = info;
+    if (_flippedX) {
+        for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
+            auto& v = _polyInfo.triangles.verts[i].vertices;
+            v.x = _contentSize.width -v.x;
+        }
+    }
+    if (_flippedY) {
+        for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
+            auto& v = _polyInfo.triangles.verts[i].vertices;
+            v.y = _contentSize.height -v.y;
+        }
+    }
 }
 
 NS_CC_END
