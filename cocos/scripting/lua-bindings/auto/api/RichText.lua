@@ -23,12 +23,25 @@
 -- @return RichText#RichText self (return value: ccui.RichText)
         
 --------------------------------
+--  @brief sets the wrapping mode: WRAP_PER_CHAR or WRAP_PER_WORD
+-- @function [parent=#RichText] setWrapMode 
+-- @param self
+-- @param #int wrapMode
+-- @return RichText#RichText self (return value: ccui.RichText)
+        
+--------------------------------
 -- brief Set vertical space between each RichElement.<br>
 -- param space Point in float.
 -- @function [parent=#RichText] setVerticalSpace 
 -- @param self
 -- @param #float space
 -- @return RichText#RichText self (return value: ccui.RichText)
+        
+--------------------------------
+--  @brief returns the current wrapping mode 
+-- @function [parent=#RichText] getWrapMode 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- brief Rearrange all RichElement in the RichText.<br>
