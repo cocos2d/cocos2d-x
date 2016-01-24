@@ -65,13 +65,15 @@ class JSFunctionWrapper
 {
 public:
     JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval);
+    JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval, JS::HandleValue owner);
     ~JSFunctionWrapper();
 
     bool invoke(unsigned int argc, jsval *argv, JS::MutableHandleValue rval);
 private:
     JSContext *_cx;
-    mozilla::Maybe<JS::PersistentRootedObject> _jsthis;
-    mozilla::Maybe<JS::PersistentRootedValue> _fval;
+    mozilla::Maybe<JS::RootedObject> _jsthis;
+    mozilla::Maybe<JS::RootedValue> _fval;
+    mozilla::Maybe<JS::RootedValue> _owner;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(JSFunctionWrapper);
 };

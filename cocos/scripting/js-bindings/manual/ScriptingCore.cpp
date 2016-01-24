@@ -888,6 +888,10 @@ void ScriptingCore::retainScriptObject(cocos2d::Ref* owner, cocos2d::Ref* target
     }
     JS::RootedValue valOwner(_cx, OBJECT_TO_JSVAL(pOwner->obj));
     JS::RootedValue valTarget(_cx, OBJECT_TO_JSVAL(pTarget->obj));
+    if (valTarget.isPrimitive())
+    {
+        return;
+    }
     
     JS::RootedValue retval(_cx);
     jsval valArr[2];
@@ -914,6 +918,10 @@ void ScriptingCore::rootScriptObject(cocos2d::Ref* target)
         return;
     }
     JS::RootedValue valTarget(_cx, OBJECT_TO_JSVAL(pTarget->obj));
+    if (valTarget.isPrimitive())
+    {
+        return;
+    }
     
     JS::RootedObject root(_cx);
     get_or_create_js_obj(_cx, jsbObj, "_root", &root);
@@ -947,6 +955,10 @@ void ScriptingCore::releaseScriptObject(cocos2d::Ref* owner, cocos2d::Ref* targe
     }
     JS::RootedValue valOwner(_cx, OBJECT_TO_JSVAL(pOwner->obj));
     JS::RootedValue valTarget(_cx, OBJECT_TO_JSVAL(pTarget->obj));
+    if (valTarget.isPrimitive())
+    {
+        return;
+    }
     
     JS::RootedValue retval(_cx);
     jsval valArr[2];
@@ -973,6 +985,10 @@ void ScriptingCore::unrootScriptObject(cocos2d::Ref* target)
         return;
     }
     JS::RootedValue valTarget(_cx, OBJECT_TO_JSVAL(pTarget->obj));
+    if (valTarget.isPrimitive())
+    {
+        return;
+    }
     
     JS::RootedObject root(_cx);
     get_or_create_js_obj(_cx, jsbObj, "_root", &root);

@@ -89,19 +89,69 @@ JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS:
 {
     _jsthis.construct(cx, jsthis);
     _fval.construct(cx, fval);
+    _owner.construct(cx, JS::NullHandleValue);
+    
+    JS::RootedObject root(cx);
+    get_or_create_js_obj("jsb._root", &root);
+    JS::RootedValue valRoot(cx, OBJECT_TO_JSVAL(root));
+    _owner.ref() = valRoot;
+    
+    if (!valRoot.isNullOrUndefined())
+    {
+        JS::RootedValue thisVal(cx, OBJECT_TO_JSVAL(_jsthis.ref()));
+        if (!thisVal.isNullOrUndefined())
+        {
+            js_add_object_reference(valRoot, thisVal);
+        }
+        if (!_fval.ref().isNullOrUndefined())
+        {
+            js_add_object_reference(valRoot, _fval.ref());
+        }
+    }
+}
+JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval, JS::HandleValue owner)
+: _cx(cx)
+{
+    _jsthis.construct(cx, jsthis);
+    _fval.construct(cx, fval);
+    _owner.construct(cx, owner);
+    
+    JS::RootedValue thisVal(cx, OBJECT_TO_JSVAL(_jsthis.ref()));
+    if (!thisVal.isNullOrUndefined())
+    {
+        js_add_object_reference(owner, thisVal);
+    }
+    if (!_fval.ref().isNullOrUndefined())
+    {
+        js_add_object_reference(owner, _fval.ref());
+    }
 }
 
 JSFunctionWrapper::~JSFunctionWrapper()
 {
+    if (!_owner.ref().isNullOrUndefined())
+    {
+        JS::RootedValue thisVal(_cx, OBJECT_TO_JSVAL(_jsthis.ref()));
+        if (!thisVal.isNullOrUndefined())
+        {
+            js_remove_object_reference(_owner.ref(), thisVal);
+        }
+        if (!_fval.ref().isNullOrUndefined())
+        {
+            js_remove_object_reference(_owner.ref(), _fval.ref());
+        }
+    }
+    
     _jsthis.destroyIfConstructed();
     _fval.destroyIfConstructed();
+    _owner.destroyIfConstructed();
 }
 
 bool JSFunctionWrapper::invoke(unsigned int argc, jsval *argv, JS::MutableHandleValue rval)
 {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    return JS_CallFunctionValue(this->_cx, _jsthis.ref(), _fval.ref(), JS::HandleValueArray::fromMarkedLocation(argc, argv), rval);
+    return JS_CallFunctionValue(_cx, _jsthis.ref(), _fval.ref(), JS::HandleValueArray::fromMarkedLocation(argc, argv), rval);
 }
 
 static Color3B getColorFromJSObject(JSContext *cx, JS::HandleObject colorObject)

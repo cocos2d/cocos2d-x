@@ -295,43 +295,29 @@ cc.Class.extend = function (prop) {
     return Class;
 };
 
-var __registeCount = 0;
-
 jsb.registerNativeRef = function (owner, target) {
-    if (typeof owner === "object" && typeof target === "object") {
+    if (owner && target && owner !== target) {
         var refs = owner.__nativeRefs;
         if (!refs) {
-            refs = owner.__nativeRefs = [];
+            refs = owner.__nativeRefs = [1];
         }
         var index = refs.indexOf(target);
         if (index === -1) {
-            __registeCount++;
-            // cc.log("##########registered " + target + " : " + __registeCount);
             owner.__nativeRefs.push(target);
         }
-    }
-
-    if (target instanceof cc.MenuItemLabel) {
-        // cc.log("##########registered " + target);
     }
 };
 
 jsb.unregisterNativeRef = function (owner, target) {
-    if (typeof owner === "object" && typeof target === "object") {
+    if (owner && target && owner !== target) {
         var refs = owner.__nativeRefs;
         if (!refs) {
             return;
         }
         var index = refs.indexOf(target);
         if (index !== -1) {
-            __registeCount--;
-            // cc.log("##------##unregistered " + target + " : " + __registeCount);
             owner.__nativeRefs.splice(index, 1);
         }
-    }
-
-    if (target instanceof cc.MenuItemLabel) {
-        cc.log("##------##unregistered " + target);
     }
 };
 

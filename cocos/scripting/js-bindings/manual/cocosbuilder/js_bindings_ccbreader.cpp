@@ -99,7 +99,7 @@ bool js_cocos2dx_CCBAnimationManager_animationCompleteCallback(JSContext *cx, ui
         js_proxy_t *p = jsb_get_js_proxy(obj);
         cocosbuilder::CCBAnimationManager *node = (cocosbuilder::CCBAnimationManager *)(p ? p->ptr : NULL);
         
-        JSCCBAnimationWrapper *tmpCobj = new (std::nothrow) JSCCBAnimationWrapper();
+        JSCCBAnimationWrapper *tmpCobj = new (std::nothrow) JSCCBAnimationWrapper(args.thisv());
         tmpCobj->autorelease();
         
         tmpCobj->setJSCallbackThis(args.get(0));
@@ -108,9 +108,6 @@ bool js_cocos2dx_CCBAnimationManager_animationCompleteCallback(JSContext *cx, ui
         }
         
         node->setAnimationCompletedCallback(tmpCobj, callfunc_selector(JSCCBAnimationWrapper::animationCompleteCallback));
-        
-        JS_SetReservedSlot(p->obj, 0, args.get(0));
-        JS_SetReservedSlot(p->obj, 1, args.get(1));
         return true;
     }
     return false;

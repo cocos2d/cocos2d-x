@@ -115,6 +115,11 @@ JSObject* js_get_or_create_jsobject(JSContext *cx, typename std::enable_if<std::
  */
 void js_add_FinalizeHook(JSContext *cx, JS::HandleObject target);
 
+void js_add_object_reference(JS::HandleValue owner, JS::HandleValue target);
+void js_remove_object_reference(JS::HandleValue owner, JS::HandleValue target);
+void js_add_object_root(JS::HandleValue target);
+void js_remove_object_root(JS::HandleValue target);
+
 
 JS::Value anonEvaluate(JSContext *cx, JS::HandleObject thisObj, const char* string);
 void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject obj);
@@ -123,6 +128,7 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject obj);
 class JSCallbackWrapper: public cocos2d::Ref {
 public:
     JSCallbackWrapper();
+    JSCallbackWrapper(JS::HandleValue owner);
     virtual ~JSCallbackWrapper();
     void setJSCallbackFunc(JS::HandleValue callback);
     void setJSCallbackThis(JS::HandleValue thisObj);
@@ -132,9 +138,10 @@ public:
     const jsval getJSCallbackThis() const;
     const jsval getJSExtraData() const;
 protected:
-    mozilla::Maybe<JS::PersistentRootedValue> _jsCallback;
-    mozilla::Maybe<JS::PersistentRootedValue> _jsThisObj;
-    mozilla::Maybe<JS::PersistentRootedValue> _extraData;
+    mozilla::Maybe<JS::RootedValue> _owner;
+    mozilla::Maybe<JS::RootedValue> _jsCallback;
+    mozilla::Maybe<JS::RootedValue> _jsThisObj;
+    mozilla::Maybe<JS::RootedValue> _extraData;
 };
 
 
@@ -142,6 +149,7 @@ class JSScheduleWrapper: public JSCallbackWrapper {
     
 public:
     JSScheduleWrapper();
+    JSScheduleWrapper(JS::HandleValue owner);
     virtual ~JSScheduleWrapper();
 
     static void setTargetForSchedule(JS::HandleValue sched, JSScheduleWrapper *target);
@@ -178,7 +186,7 @@ public:
     
 protected:
     Ref* _pTarget;
-    mozilla::Maybe<JS::PersistentRootedObject> _pPureJSTarget;
+    mozilla::Maybe<JS::RootedObject> _pPureJSTarget;
     int _priority;
     bool _isUpdateSchedule;
 };
@@ -217,7 +225,7 @@ public:
     void onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
 
 private:
-    mozilla::Maybe<JS::PersistentRootedObject> _obj;
+    mozilla::Maybe<JS::RootedObject> _obj;
     typedef std::unordered_map<JSObject*, JSTouchDelegate*> TouchDelegateMap;
     typedef std::pair<JSObject*, JSTouchDelegate*> TouchDelegatePair;
     static TouchDelegateMap sTouchDelegateMap;
@@ -268,5 +276,6 @@ bool js_cocos2dx_retain(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_release(JSContext *cx, uint32_t argc, jsval *vp);
 
 void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string &name, JS::MutableHandleObject jsObj);
+void get_or_create_js_obj(const std::string &name, JS::MutableHandleObject jsObj);
 
 #endif
