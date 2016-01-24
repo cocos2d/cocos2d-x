@@ -310,6 +310,10 @@ jsb.registerNativeRef = function (owner, target) {
             owner.__nativeRefs.push(target);
         }
     }
+
+    if (target instanceof cc.MenuItemLabel) {
+        // cc.log("##########registered " + target);
+    }
 };
 
 jsb.unregisterNativeRef = function (owner, target) {
@@ -324,6 +328,10 @@ jsb.unregisterNativeRef = function (owner, target) {
             // cc.log("##------##unregistered " + target + " : " + __registeCount);
             owner.__nativeRefs.splice(index, 1);
         }
+    }
+
+    if (target instanceof cc.MenuItemLabel) {
+        cc.log("##------##unregistered " + target);
     }
 };
 
