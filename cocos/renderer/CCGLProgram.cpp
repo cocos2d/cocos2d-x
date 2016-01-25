@@ -571,17 +571,15 @@ void GLProgram::use()
 
 static std::string logForOpenGLShader(GLuint shader)
 {
-    std::string ret;
-    GLint logLength = 0, charsWritten = 0;
+    GLint logLength = 0;
 
     glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
     if (logLength < 1)
         return "";
 
-    char *logBytes = (char*)malloc(logLength + 1);
-    glGetShaderInfoLog(shader, logLength, &charsWritten, logBytes);
-    logBytes[logLength] = '\0';
-    ret = logBytes;
+    char *logBytes = (char*)malloc(sizeof(char) * logLength);
+    glGetShaderInfoLog(shader, logLength, nullptr, logBytes);
+    std::string ret(logBytes);
 
     free(logBytes);
     return ret;
@@ -589,17 +587,15 @@ static std::string logForOpenGLShader(GLuint shader)
 
 static std::string logForOpenGLProgram(GLuint program)
 {
-    std::string ret;
-    GLint logLength = 0, charsWritten = 0;
+    GLint logLength = 0;
 
     glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
     if (logLength < 1)
         return "";
 
-    char *logBytes = (char*)malloc(logLength + 1);
-    glGetProgramInfoLog(program, logLength, &charsWritten, logBytes);
-    logBytes[logLength] = '\0';
-    ret = logBytes;
+    char *logBytes = (char*)malloc(sizeof(char) * logLength);
+    glGetProgramInfoLog(program, logLength, nullptr, logBytes);
+    std::string ret(logBytes);
 
     free(logBytes);
     return ret;
