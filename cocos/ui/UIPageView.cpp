@@ -288,6 +288,12 @@ void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
 void PageView::addEventListener(const ccPageViewCallback& callback)
 {
     _eventCallback = callback;
+    ccScrollViewCallback scrollViewCallback = [=](Ref* ref, ScrollView::EventType type) -> void{
+        if (type == ScrollView::EventType::AUTOSCROLL_ENDED) {
+            callback(ref, PageView::EventType::TURNING);
+        }
+    };
+    this->addEventListener(scrollViewCallback);
 }
 
 ssize_t PageView::getCurPageIndex() const

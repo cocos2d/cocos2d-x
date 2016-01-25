@@ -237,8 +237,8 @@ public:
      *
      * @param callback A page turning callback.
      */
-    void addEventListener(const ccPageViewCallback& callback);
-    
+    CC_DEPRECATED_ATTRIBUTE void addEventListener(const ccPageViewCallback& callback);
+    using ScrollView::addEventListener;
     //override methods
     virtual std::string getDescription() const override;
 
