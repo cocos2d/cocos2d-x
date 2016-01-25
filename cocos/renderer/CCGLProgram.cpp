@@ -577,7 +577,7 @@ static std::string logForOpenGLShader(GLuint shader)
     if (logLength < 1)
         return "";
 
-    char *logBytes = (char*)malloc(logLength);
+    char *logBytes = (char*)malloc(sizeof(char) * logLength);
     glGetShaderInfoLog(shader, logLength, nullptr, logBytes);
     std::string ret(logBytes);
 
@@ -593,7 +593,7 @@ static std::string logForOpenGLProgram(GLuint program)
     if (logLength < 1)
         return "";
 
-    char *logBytes = (char*)malloc(logLength);
+    char *logBytes = (char*)malloc(sizeof(char) * logLength);
     glGetProgramInfoLog(program, logLength, nullptr, logBytes);
     std::string ret(logBytes);
 
