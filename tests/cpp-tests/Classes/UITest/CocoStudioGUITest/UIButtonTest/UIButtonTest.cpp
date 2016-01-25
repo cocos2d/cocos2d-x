@@ -871,20 +871,11 @@ bool UIButtonTitleEffectTest::init()
         // Create the button
         auto button2 = Button::create("cocosui/animationbuttonnormal.png",
                                       "cocosui/animationbuttonpressed.png");
-        button2->setNormalizedPosition(Vec2(0.6f, 0.5f));
+        button2->setNormalizedPosition(Vec2(0.8f, 0.5f));
         button2->setTitleText("PLAY GAME");
         button2->setTitleFontName("fonts/Marker Felt.ttf");
         button2->enableOutline(Color4B::GREEN, 3);
         _uiLayer->addChild(button2);
-
-        // Create the button
-        auto button3 = Button::create("cocosui/animationbuttonnormal.png",
-                                      "cocosui/animationbuttonpressed.png");
-        button3->setNormalizedPosition(Vec2(0.8f, 0.5f));
-        button3->setTitleFontName("fonts/Marker Felt.ttf");
-        button3->setTitleText("PLAY GAME");
-        button3->enableGlow(Color4B::RED);
-        _uiLayer->addChild(button3);
 
         return true;
     }

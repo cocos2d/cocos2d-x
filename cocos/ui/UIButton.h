@@ -317,16 +317,6 @@ public:
     int getOutlineSize() const;
 
     /** 
-     * Enable glow for the title's text.
-     * 
-     * @warning Only support for TTF.
-     *
-     * @param glowColor The color of glow.
-     * @since v3.11
-     */
-    void enableGlow(const Color4B& glowColor);
-
-    /** 
      * Disable all text effects, including shadow, outline and glow.
      * @since v3.11
      */

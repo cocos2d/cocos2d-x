@@ -773,32 +773,61 @@ float Button::getTitleFontSize() const
 
 void Button::enableShadow(const Color4B& shadowColor, const Size &offset, int blurRadius)
 {
+    if (nullptr == _titleRenderer)
+    {
+        this->createTitleRenderer();
+    }
+
     _titleRenderer->enableShadow(shadowColor, offset, blurRadius);
 }
 
 bool Button::isShadowEnabled() const
 {
+    if (nullptr == _titleRenderer)
+    {
+        return false;
+    }
     return _titleRenderer->isShadowEnabled();
 }
 
 Color4B Button::getShadowColor() const
 {
+    if (nullptr == _titleRenderer)
+    {
+        return Color4B::BLACK;
+    }
+
     Color4F shadowColor = _titleRenderer->getShadowColor();
     return Color4B(shadowColor.r * 255, shadowColor.g * 255, shadowColor.b * 255, shadowColor.a * 255);
 }
 
 Size Button::getShadowOffset() const
 {
+    if (nullptr == _titleRenderer)
+    {
+        return Size(2, -2);
+    }
+
     return _titleRenderer->getShadowOffset();
 }
 
 float Button::getShadowBlurRadius() const
 {
+    if (nullptr == _titleRenderer)
+    {
+        return 0;
+    }
+
     return _titleRenderer->getShadowBlurRadius();
 }
 
 void Button::enableOutline(const Color4B& outlineColor, int outlineSize)
 {
+    if (nullptr == _titleRenderer)
+    {
+        this->createTitleRenderer();
+    }
+
     _titleRenderer->enableOutline(outlineColor, outlineSize);
     updateContentSizeWithTextureSize(_titleRenderer->getContentSize());
     _normalTextureAdaptDirty = true;
@@ -808,19 +837,21 @@ void Button::enableOutline(const Color4B& outlineColor, int outlineSize)
 
 int Button::getOutlineSize() const
 {
-    return _titleRenderer->getOutlineSize();
-}
-
-void Button::enableGlow(const Color4B& glowColor)
-{
-    if (_type == FontType::TTF)
+    if (nullptr == _titleRenderer)
     {
-        _titleRenderer->enableGlow(glowColor);
+        return 1;
     }
+
+    return _titleRenderer->getOutlineSize();
 }
 
 void Button::disableEffect()
 {
+    if (nullptr == _titleRenderer)
+    {
+        return;
+    }
+
     _titleRenderer->disableEffect();
     updateContentSizeWithTextureSize(_titleRenderer->getContentSize());
     _normalTextureAdaptDirty = true;
@@ -830,6 +861,11 @@ void Button::disableEffect()
 
 void Button::disableEffect(LabelEffect effect)
 {
+    if (nullptr == _titleRenderer)
+    {
+        return;
+    }
+
     _titleRenderer->disableEffect(effect);
     //only outline effect will affect the content size of label
     if (LabelEffect::OUTLINE == effect)
@@ -843,11 +879,21 @@ void Button::disableEffect(LabelEffect effect)
 
 LabelEffect Button::getLabelEffectType() const
 {
+    if (nullptr == _titleRenderer)
+    {
+        return LabelEffect::NORMAL;
+    }
+
     return _titleRenderer->getLabelEffectType();
 }
 
 Color4B Button::getEffectColor() const
 {
+    if (nullptr == _titleRenderer)
+    {
+        return Color4B::BLACK;
+    }
+
     Color4F effect = _titleRenderer->getEffectColor();
     return Color4B(effect.r * 255, effect.g * 255, effect.b * 255, effect.a * 255);
 }
