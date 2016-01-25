@@ -162,6 +162,31 @@ function UIPageViewDeprecated.addEventListenerPageView(self,handler)
     return self:addEventListener(handler)
 end
 ccui.PageView.addEventListenerPageView = UIPageViewDeprecated.addEventListenerPageView
+function UIPageViewDeprecated.addWidgetToPage(self, widget, pageIdx)
+    deprecatedTip("ccui.PageView:addWidgetToPage","ccui.PageView:insertPage")
+    return self:insertPage(widget, pageIdx)
+end
+ccui.PageView.addWidgetToPage = UIPageViewDeprecated.addWidgetToPage
+function UIPageViewDeprecated.getCurPageIndex(self)
+    deprecatedTip("ccui.PageView:getCurPageIndex","ccui.PageView:getCurrentPageIndex")
+    return self:getCurrentPageIndex()
+end
+ccui.PageView.getCurPageIndex = UIPageViewDeprecated.getCurPageIndex
+function UIPageViewDeprecated.setCurPageIndex(self, index)
+    deprecatedTip("ccui.PageView:setCurPageIndex","ccui.PageView:setCurrentPageIndex")
+    return self:setCurrentPageIndex(index)
+end
+ccui.PageView.setCurPageIndex = UIPageViewDeprecated.setCurPageIndex
+function UIPageViewDeprecated.getPages(self)
+    deprecatedTip("ccui.PageView:getPages","ccui.PageView:getItems")
+    return self:getItems()
+end
+ccui.PageView.getPages = UIPageViewDeprecated.getPages
+function UIPageViewDeprecated.getPage(self, index)
+    deprecatedTip("ccui.PageView:getPage","ccui.PageView:getItem")
+    return self:getItem(index)
+end
+ccui.PageView.getPage = UIPageViewDeprecated.getPage
 --functions of ccui.PageView will be deprecated end
 
 --functions of ccui.ScrollView will be deprecated begin

@@ -1748,13 +1748,16 @@ add_new_testcase(function()
                 label:setPosition(cc.p(layout:getContentSize().width / 2, layout:getContentSize().height / 2))
                 layout:addChild(label)
 
-                pageView:addPage(layout)
+                pageView:addWidgetToPage(layout, i-1)
 
             end
+            pageView:setCurPageIndex(1)
 
             local function pageViewEvent(sender, eventType)
                 if eventType == ccui.PageViewEventType.turning then
                     local pageInfo = string.format("page %d " , pageView:getCurPageIndex() + 1)
+                    local pages = pageView:getPages()
+                    print("total items " .. table.getn(pages))
                     self._displayValueLabel:setString(pageInfo)
                 end
             end
