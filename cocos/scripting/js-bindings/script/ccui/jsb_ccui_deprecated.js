@@ -66,5 +66,30 @@ var cc = cc || {};
         return this.getItem(index);
     };
 
+    ccui.PageView.prototype.setCustomScrollThreshold = function() {
+        cc.log("Since v3.9, this method has no effect.");
+    };
+
+    ccui.PageView.prototype.getCustomScrollThreshold = function() {
+        cc.log("Since v3.9, this method has no effect.");
+    };
+
+    ccui.PageView.prototype.setUsingCustomScrollThreshold = function() {
+        cc.log("Since v3.9, this method has no effect.");
+    };
+
+    ccui.PageView.prototype.isUsingCustomScrollThreshold = function() {
+        cc.log("Since v3.9, this method has no effect.");
+    };
+
+    ccui.ListView.prototype.requestRefreshView = function() {
+        logW("ccui.ListView.requestRefreshView", "ccui.ListView.forceDoLayout");
+        this.forceDoLayout();
+    };
+
+    ccui.ListView.prototype.refreshView = function() {
+        logW("ccui.ListView.refreshView", "ccui.ListView.forceDoLayout");
+        this.forceDoLayout();
+    };
 
 })();
