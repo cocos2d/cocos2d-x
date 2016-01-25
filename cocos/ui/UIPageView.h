@@ -25,6 +25,7 @@ THE SOFTWARE.
 #ifndef __UIPAGEVIEW_H__
 #define __UIPAGEVIEW_H__
 
+#include "ui/UIScrollView.h"
 #include "ui/UIListView.h"
 #include "ui/GUIExport.h"
 
@@ -237,7 +238,8 @@ public:
      *
      * @param callback A page turning callback.
      */
-    void addEventListener(const ccPageViewCallback& callback);
+    CC_DEPRECATED_ATTRIBUTE void addEventListener(const ccPageViewCallback& callback);
+    using ScrollView::addEventListener;
     
     //override methods
     virtual std::string getDescription() const override;
