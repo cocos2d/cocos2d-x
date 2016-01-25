@@ -1279,20 +1279,24 @@ cc.defineGetterSetter(_proto, "GRAY", _proto._getGray);
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
 cc.Loader = cc.Class.extend({
-    initWith:function (resources, selector, target) {
-        if (selector) {
-            this._selector = selector;
-            this._target = target;
-        }
-        this._selector.call(this._target);
+    initWith:function (resources, cb, target) {
+        var self=this;
+        self._resources=resources;
+        self._cb = cb;
+        self._target = target;
+        cc.loader.load(self._resources,function(){
+            if(typeof(self._cb)=="function" ){
+                self._cb.call(self._target);
+            }
+        });
     }
 });
 
-cc.Loader.preload = function (resources, selector, target) {
+cc.Loader.preload = function (resources, cb, target) {
     if (!this._instance) {
         this._instance = new cc.Loader();
     }
-    this._instance.initWith(resources, selector, target);
+    this._instance.initWith(resources, cb, target);
     return this._instance;
 };
 
