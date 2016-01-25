@@ -575,7 +575,7 @@ bool FileUtils::writeDataToFile(Data retData, const std::string& fullPath)
     size_t size = 0;
     const char* mode = "wb";
 
-    CCASSERT(!fullPath.empty() && retData.getSize() != 0, "Invalid parameters.");
+    CCASSERT(!fullPath.empty(), "path is empty in FileUtils::writeDataToFile()");
 
     auto fileutils = FileUtils::getInstance();
     do
