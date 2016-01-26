@@ -619,11 +619,11 @@ struct collision_handler {
     cpCollisionType     typeA;
     cpCollisionType     typeB;
     
-    mozilla::Maybe<JS::PersistentRootedObject> begin;
-    mozilla::Maybe<JS::PersistentRootedObject> pre;
-    mozilla::Maybe<JS::PersistentRootedObject> post;
-    mozilla::Maybe<JS::PersistentRootedObject> separate;
-    mozilla::Maybe<JS::PersistentRootedObject> jsthis;
+    mozilla::Maybe<JS::RootedObject> begin;
+    mozilla::Maybe<JS::RootedObject> pre;
+    mozilla::Maybe<JS::RootedObject> post;
+    mozilla::Maybe<JS::RootedObject> separate;
+    mozilla::Maybe<JS::RootedObject> jsthis;
     JSContext           *cx;
 
     // "owner" of the collision handler
@@ -643,6 +643,35 @@ struct collision_handler {
         post.construct(globalcx);
         separate.construct(globalcx);
         jsthis.construct(globalcx);
+    }
+    
+    void setJSSpace(JS::HandleValue jsspace)
+    {
+        if (!jsspace.isNullOrUndefined())
+        {
+            jsthis.ref() = jsspace.toObjectOrNull();
+            JS::RootedValue callback(ScriptingCore::getInstance()->getGlobalContext());
+            callback.set(OBJECT_TO_JSVAL(begin.ref()));
+            if (!callback.isNullOrUndefined())
+            {
+                js_add_object_reference(jsspace, callback);
+            }
+            callback.set(OBJECT_TO_JSVAL(pre.ref()));
+            if (!callback.isNullOrUndefined())
+            {
+                js_add_object_reference(jsspace, callback);
+            }
+            callback.set(OBJECT_TO_JSVAL(post.ref()));
+            if (!callback.isNullOrUndefined())
+            {
+                js_add_object_reference(jsspace, callback);
+            }
+            callback.set(OBJECT_TO_JSVAL(separate.ref()));
+            if (!callback.isNullOrUndefined())
+            {
+                js_add_object_reference(jsspace, callback);
+            }
+        }
     }
 };
 
@@ -776,9 +805,7 @@ static void myCollisionSeparate(cpArbiter *arb, cpSpace *space, void *data)
 void JSB_cpSpace_finalize(JSFreeOp *fop, JSObject *jsthis)
 {
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
-    if( proxy ) {
-        CCLOGINFO("jsbindings: finalizing JS object %p (cpSpace), handle: %p", jsthis, proxy->handle);
-        
+    if ( proxy ) {
         // space
         cpSpace *space = (cpSpace*) proxy->handle;
         
@@ -799,6 +826,7 @@ void JSB_cpSpace_finalize(JSFreeOp *fop, JSObject *jsthis)
         if(proxy->flags == JSB_C_FLAG_CALL_FREE)
             cpSpaceFree(space);
         jsb_del_c_proxy_for_jsobject(jsthis);
+        CCLOG("------RELEASED------ %d Cpp(cp.Space): %p - JS: %p", ScriptingCore::retainCount, space, jsthis);
     }
 }
 
@@ -813,8 +841,6 @@ bool __jsb_cpSpace_addCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp, J
     handler->typeB = 0;
 
     JSB_PRECONDITION(handler, "Error allocating memory");
-
-    handler->jsthis.ref() = jsspace;
     
     bool ok = true;
     
@@ -832,6 +858,9 @@ bool __jsb_cpSpace_addCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp, J
     argvp++;
     handler->separate.ref() = argvp->toObjectOrNull();
     argvp++;
+    
+    JS::RootedValue spaceVal(cx, OBJECT_TO_JSVAL(jsspace));
+    handler->setJSSpace(spaceVal);
     
     JSB_PRECONDITION(ok, "Error parsing arguments");
     
@@ -912,11 +941,13 @@ bool JSB_cpSpace_setDefaultCollisionHandler(JSContext *cx, uint32_t argc, jsval 
 
     handler->typeA = 0;
     handler->typeB = 0;
-    handler->jsthis.ref() = jsthis;
     handler->begin.ref() = args.get(0).toObjectOrNull();
     handler->pre.ref() = args.get(1).toObjectOrNull();
     handler->post.ref() = args.get(2).toObjectOrNull();
     handler->separate.ref() = args.get(3).toObjectOrNull();
+    
+    JS::RootedValue spaceVal(cx, OBJECT_TO_JSVAL(jsthis));
+    handler->setJSSpace(spaceVal);
 
     // Object Oriented API ?
     handler->is_oo = 1;

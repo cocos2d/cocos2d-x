@@ -394,6 +394,11 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, x)\
     JS::RootedValue callback(cx, args.get(0));\
     if (!callback.isNullOrUndefined())\
     {\
+        js_proxy_t *p = jsb_get_native_proxy(this);\
+        if (p) {\
+            JS::RootedObject thisObj(cx, p->obj);\
+            JS_SetProperty(cx, thisObj, "y", callback);\
+        }\
         y.ref() = callback.toObjectOrNull();\
     }\
     return true;\

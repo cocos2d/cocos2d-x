@@ -71,7 +71,7 @@ public:
         _JSDelegate.ref() = pJSDelegate;
     }
 private:
-    mozilla::Maybe<JS::PersistentRootedObject> _JSDelegate;
+    mozilla::Maybe<JS::RootedObject> _JSDelegate;
 };
 
 static bool js_cocos2dx_CCScrollView_setDelegate(JSContext *cx, uint32_t argc, jsval *vp)
@@ -88,6 +88,8 @@ static bool js_cocos2dx_CCScrollView_setDelegate(JSContext *cx, uint32_t argc, j
         JS::RootedObject jsDelegate(cx, args.get(0).toObjectOrNull());
         JSB_ScrollViewDelegate* nativeDelegate = new (std::nothrow) JSB_ScrollViewDelegate();
         nativeDelegate->setJSDelegate(jsDelegate);
+        
+        JS_SetProperty(cx, obj, "_delegate", args.get(0));
         
         cobj->setUserObject(nativeDelegate);
         cobj->setDelegate(nativeDelegate);
@@ -181,7 +183,7 @@ private:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate.ref()), jsFunctionName.c_str(), 2, args);
     }
     
-    mozilla::Maybe<JS::PersistentRootedObject> _JSDelegate;
+    mozilla::Maybe<JS::RootedObject> _JSDelegate;
 };
 
 static bool js_cocos2dx_CCTableView_setDelegate(JSContext *cx, uint32_t argc, jsval *vp)
@@ -198,6 +200,8 @@ static bool js_cocos2dx_CCTableView_setDelegate(JSContext *cx, uint32_t argc, js
         JS::RootedObject jsDelegate(cx, args.get(0).toObjectOrNull());
         JSB_TableViewDelegate* nativeDelegate = new (std::nothrow) JSB_TableViewDelegate();
         nativeDelegate->setJSDelegate(jsDelegate);
+        
+        JS_SetProperty(cx, obj, "_delegate", args.get(0));
         
         __Dictionary* userDict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (NULL == userDict)
@@ -364,7 +368,7 @@ private:
     }
     
 private:
-    mozilla::Maybe<JS::PersistentRootedObject> _JSTableViewDataSource;
+    mozilla::Maybe<JS::RootedObject> _JSTableViewDataSource;
 };
 
 static bool js_cocos2dx_CCTableView_setDataSource(JSContext *cx, uint32_t argc, jsval *vp)
@@ -379,6 +383,8 @@ static bool js_cocos2dx_CCTableView_setDataSource(JSContext *cx, uint32_t argc, 
         JSB_TableViewDataSource* pNativeSource = new (std::nothrow) JSB_TableViewDataSource();
         JS::RootedObject jsdata(cx, args.get(0).toObjectOrNull());
         pNativeSource->setTableViewDataSource(jsdata);
+        
+        JS_SetProperty(cx, obj, "_dataSource", args.get(0));
     
         __Dictionary* userDict = static_cast<__Dictionary*>(cobj->getUserObject());
         if (NULL == userDict)
@@ -427,6 +433,8 @@ static bool js_cocos2dx_CCTableView_create(JSContext *cx, uint32_t argc, jsval *
             {
                 JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocos2d::extension::TableView>(cx, ret));
                 jsret = OBJECT_TO_JSVAL(jsobj);
+                
+                JS_SetProperty(cx, jsobj, "_dataSource", args.get(0));
             } 
             else
             {
@@ -484,6 +492,8 @@ static bool js_cocos2dx_CCTableView_init(JSContext *cx, uint32_t argc, jsval *vp
         JS::RootedObject jsdata(cx, args.get(0).toObjectOrNull());
         pNativeSource->setTableViewDataSource(jsdata);
         cobj->setDataSource(pNativeSource);
+        
+        JS_SetProperty(cx, obj, "_dataSource", args.get(0));
 
         cocos2d::Size arg1;
         ok &= jsval_to_ccsize(cx, args.get(1), &arg1);
@@ -595,7 +605,7 @@ public:
     static std::multimap<JSObject*, JSB_ControlButtonTarget*> _jsNativeTargetMap;
     JSFunctionWrapper *_callback;
     Control::EventType _type;
-    mozilla::Maybe<JS::PersistentRootedObject> _jsFunc;
+    mozilla::Maybe<JS::RootedObject> _jsFunc;
 };
 
 std::multimap<JSObject*, JSB_ControlButtonTarget*> JSB_ControlButtonTarget::_jsNativeTargetMap;
@@ -648,6 +658,8 @@ static bool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContext 
         nativeDelegateArray->addObject(nativeDelegate); // The reference of nativeDelegate is added to 2
         nativeDelegate->release(); // Release nativeDelegate to make the reference to 1
         
+        js_add_object_reference(args.thisv(), args.get(1));
+        
         cobj->addTargetWithActionForControlEvents(nativeDelegate, cccontrol_selector(JSB_ControlButtonTarget::onEvent), arg2);
         
         JSB_ControlButtonTarget::_jsNativeTargetMap.insert(std::make_pair(jsDelegate, nativeDelegate));
@@ -690,6 +702,8 @@ static bool js_cocos2dx_CCControl_removeTargetWithActionForControlEvents(JSConte
                 break;
             }
         }
+        
+        js_remove_object_reference(args.thisv(), args.get(1));
         
         cobj->removeTargetWithActionForControlEvents(nativeTargetToRemoved, cccontrol_selector(JSB_ControlButtonTarget::onEvent), arg2);
 
@@ -830,10 +844,32 @@ __JSDownloaderDelegator::__JSDownloaderDelegator(JSContext *cx, JS::HandleObject
 {
     _obj.construct(_cx, obj);
     _jsCallback.construct(_cx, callback);
+    
+    JS::RootedValue target(cx, OBJECT_TO_JSVAL(obj));
+    if (!target.isNullOrUndefined())
+    {
+        js_add_object_root(target);
+    }
+    target.set(OBJECT_TO_JSVAL(callback));
+    if (!target.isNullOrUndefined())
+    {
+        js_add_object_root(target);
+    }
 }
 
 __JSDownloaderDelegator::~__JSDownloaderDelegator()
 {
+    JS::RootedValue target(_cx, OBJECT_TO_JSVAL(_obj.ref()));
+    if (!target.isNullOrUndefined())
+    {
+        js_remove_object_root(target);
+    }
+    target.set(OBJECT_TO_JSVAL(_jsCallback.ref()));
+    if (!target.isNullOrUndefined())
+    {
+        js_remove_object_root(target);
+    }
+    
     _obj.destroyIfConstructed();
     _jsCallback.destroyIfConstructed();
     _downloader->onTaskError = (nullptr);

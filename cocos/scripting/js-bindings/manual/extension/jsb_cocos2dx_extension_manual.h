@@ -50,8 +50,8 @@ private:
     std::shared_ptr<cocos2d::network::Downloader> _downloader;
     std::string _url;
     JSContext *_cx;
-    mozilla::Maybe<JS::PersistentRootedObject> _jsCallback;
-    mozilla::Maybe<JS::PersistentRootedObject> _obj;
+    mozilla::Maybe<JS::RootedObject> _jsCallback;
+    mozilla::Maybe<JS::RootedObject> _obj;
 };
 
 void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject global);

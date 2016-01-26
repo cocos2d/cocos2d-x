@@ -170,7 +170,7 @@ public:
         _JSDelegate.ref() = pJSDelegate;
     }
 private:
-    mozilla::Maybe<JS::PersistentRootedValue> _JSDelegate;
+    mozilla::Maybe<JS::RootedValue> _JSDelegate;
 };
 
 static bool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, jsval *vp)
@@ -186,6 +186,8 @@ static bool js_cocos2dx_CCEditBox_setDelegate(JSContext *cx, uint32_t argc, jsva
         // save the delegate
         JSB_EditBoxDelegate* nativeDelegate = new (std::nothrow) JSB_EditBoxDelegate();
         nativeDelegate->setJSDelegate(args.get(0));
+        
+        JS_SetProperty(cx, obj, "_delegate", args.get(0));
         
         cobj->setUserObject(nativeDelegate);
         cobj->setDelegate(nativeDelegate);
