@@ -231,6 +231,39 @@ function runScene7 () {
     return scene;
 }
 
+function runScene8 () {
+    var scene = new cc.Scene();
+
+    var fontDef = new cc.FontDefinition();
+    fontDef.fontName = "Arial";
+    fontDef.fontSize = 20;
+    fontDef.boundingWidth = cc.winSize.width * 0.8;
+    var label = new cc.LabelTTF("Click screen to remove button and it should be garbage collected", fontDef);
+    label.setPosition(cc.winSize.width / 2, cc.winSize.height / 2 + 100);
+    scene.addChild(label);
+
+    var scrollView = new cc.ScrollView();
+    var obj = {
+        scrollView: scrollView
+    };
+    scrollView.setDelegate(obj);
+
+    var menu = new cc.Menu();
+    menu.scrollView = scrollView;
+    var button = new cc.MenuItemFont("Remove ScrollView (invisible)", function () {
+        cc.sys.garbageCollect();
+        label.string = "Now you should see finalize message of ScrollView";
+        cc.log("Now you should see finalize message of ScrollView");
+        delete menu.scrollView;
+        cc.sys.garbageCollect();
+    }, menu);
+    menu.addChild(button);
+    menu.setPosition(cc.winSize.width / 2, cc.winSize.height / 2);
+    scene.addChild(menu);
+
+    return scene;
+}
+
 var tests = [
     runScene1,
     runScene2,
@@ -238,7 +271,8 @@ var tests = [
     runScene4,
     runScene5,
     runScene6,
-    runScene7
+    runScene7,
+    runScene8
 ];
 
 var replaceScene = (function () {
