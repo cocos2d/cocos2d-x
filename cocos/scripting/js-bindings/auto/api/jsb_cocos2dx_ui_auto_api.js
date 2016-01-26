@@ -5541,6 +5541,16 @@ richelement
 },
 
 /**
+ * @method setWrapMode
+ * @param {ccui.RichText::WrapMode} arg0
+ */
+setWrapMode : function (
+wrapmode 
+)
+{
+},
+
+/**
  * @method setVerticalSpace
  * @param {float} arg0
  */
@@ -5548,6 +5558,16 @@ setVerticalSpace : function (
 float 
 )
 {
+},
+
+/**
+ * @method getWrapMode
+ * @return {ccui.RichText::WrapMode}
+ */
+getWrapMode : function (
+)
+{
+    return 0;
 },
 
 /**

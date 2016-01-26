@@ -13521,6 +13521,26 @@ bool js_cocos2dx_ui_RichText_pushBackElement(JSContext *cx, uint32_t argc, jsval
     JS_ReportError(cx, "js_cocos2dx_ui_RichText_pushBackElement : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_ui_RichText_setWrapMode(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_setWrapMode : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::ui::RichText::WrapMode arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setWrapMode : Error processing arguments");
+        cobj->setWrapMode(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_setWrapMode : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_ui_RichText_setVerticalSpace(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -13539,6 +13559,24 @@ bool js_cocos2dx_ui_RichText_setVerticalSpace(JSContext *cx, uint32_t argc, jsva
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_RichText_setVerticalSpace : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_getWrapMode(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getWrapMode : Invalid Native Object");
+    if (argc == 0) {
+        int ret = (int)cobj->getWrapMode();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getWrapMode : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ui_RichText_formatText(JSContext *cx, uint32_t argc, jsval *vp)
@@ -13711,7 +13749,9 @@ void js_register_cocos2dx_ui_RichText(JSContext *cx, JS::HandleObject global) {
     static JSFunctionSpec funcs[] = {
         JS_FN("insertElement", js_cocos2dx_ui_RichText_insertElement, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("pushBackElement", js_cocos2dx_ui_RichText_pushBackElement, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setWrapMode", js_cocos2dx_ui_RichText_setWrapMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setVerticalSpace", js_cocos2dx_ui_RichText_setVerticalSpace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getWrapMode", js_cocos2dx_ui_RichText_getWrapMode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("formatText", js_cocos2dx_ui_RichText_formatText, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithXML", js_cocos2dx_ui_RichText_initWithXML, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeElement", js_cocos2dx_ui_RichText_removeElement, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
