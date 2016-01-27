@@ -535,6 +535,7 @@ void ScrollView::processAutoScrolling(float deltaTime)
     if(reachedEnd)
     {
         _autoScrolling = false;
+        dispatchEvent(SCROLLVIEW_EVENT_AUTOSCROLL_ENDED, EventType::AUTOSCROLL_ENDED);
     }
 
     moveInnerContainer(newPosition - getInnerContainerPosition(), reachedEnd);
