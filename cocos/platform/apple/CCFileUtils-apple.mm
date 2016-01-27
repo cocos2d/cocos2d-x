@@ -304,16 +304,11 @@ static void addObjectToNSDict(const std::string& key, const Value& value, NSMuta
 }
 
 FileUtilsApple::FileUtilsApple() {
-    _bundle = [NSBundle mainBundle];
+
 }
 
-
-void FileUtilsApple::setBundle(NSBundle* bundle) {
-    _bundle = bundle;
-}
-
-NSBundle* FileUtilsApple::getBundle() const {
-    return _bundle;
+static NSBundle* getBundle() {
+    return [NSBundle mainBundle];
 }
 
 
