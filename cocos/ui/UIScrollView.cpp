@@ -219,7 +219,7 @@ void ScrollView::setInnerContainerPosition(const Vec2 &position)
     // Process bouncing events
     if(_bounceEnabled)
     {
-        for(int direction = (int) MoveDirection::TOP; direction < (int) MoveDirection::RIGHT; ++direction)
+        for(int direction = (int) MoveDirection::TOP; direction <= (int) MoveDirection::RIGHT; ++direction)
         {
             if(isOutOfBoundary((MoveDirection) direction))
             {
