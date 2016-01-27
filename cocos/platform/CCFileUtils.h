@@ -349,11 +349,11 @@ public:
     /**
      * write Data into a file
      *
-     *@param retData the data want to save
+     *@param data the data want to save
      *@param fullPath The full path to the file you want to save a string
      *@return bool
      */
-    virtual bool writeDataToFile(const Data& retData, const std::string& fullPath);
+    virtual bool writeDataToFile(const Data& data, const std::string& fullPath);
 
     /**
     * write ValueMap into a plist file

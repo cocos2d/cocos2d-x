@@ -564,18 +564,18 @@ FileUtils::~FileUtils()
 
 bool FileUtils::writeStringToFile(const std::string& dataStr, const std::string& fullPath)
 {
-    Data retData;
-    retData.copy((unsigned char*)dataStr.c_str(), dataStr.size());
+    Data data;
+    data.copy((unsigned char*)dataStr.c_str(), dataStr.size());
 
-    return writeDataToFile(retData, fullPath);
+    return writeDataToFile(data, fullPath);
 }
 
-bool FileUtils::writeDataToFile(const Data& retData, const std::string& fullPath)
+bool FileUtils::writeDataToFile(const Data& data, const std::string& fullPath)
 {
     size_t size = 0;
     const char* mode = "wb";
 
-    CCASSERT(!fullPath.empty() && retData.getSize() != 0, "Invalid parameters.");
+    CCASSERT(!fullPath.empty() && data.getSize() != 0, "Invalid parameters.");
 
     auto fileutils = FileUtils::getInstance();
     do
@@ -583,9 +583,9 @@ bool FileUtils::writeDataToFile(const Data& retData, const std::string& fullPath
         // Read the file from hardware
         FILE *fp = fopen(fileutils->getSuitableFOpen(fullPath).c_str(), mode);
         CC_BREAK_IF(!fp);
-        size = retData.getSize();
+        size = data.getSize();
 
-        fwrite(retData.getBytes(), size, 1, fp);
+        fwrite(data.getBytes(), size, 1, fp);
 
         fclose(fp);
 
