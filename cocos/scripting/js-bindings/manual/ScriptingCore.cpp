@@ -818,6 +818,7 @@ void ScriptingCore::cleanup()
 {
     localStorageFree();
     removeAllRoots(_cx);
+    garbageCollect();
     if (_cx)
     {
         JS_DestroyContext(_cx);
