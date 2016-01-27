@@ -356,12 +356,12 @@ static tinyxml2::XMLElement* generateElementForDict(const ValueMap& dict, tinyxm
 /*
  * Use tinyxml2 to write plist files
  */
-bool FileUtils::writeToFile(ValueMap& dict, const std::string &fullPath)
+bool FileUtils::writeToFile(const ValueMap& dict, const std::string &fullPath)
 {
     return writeValueMapToFile(dict, fullPath);
 }
 
-bool FileUtils::writeValueMapToFile(ValueMap& dict, const std::string& fullPath)
+bool FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& fullPath)
 {
     tinyxml2::XMLDocument *doc = new (std::nothrow)tinyxml2::XMLDocument();
     if (nullptr == doc)
@@ -401,7 +401,7 @@ bool FileUtils::writeValueMapToFile(ValueMap& dict, const std::string& fullPath)
     return ret;
 }
 
-bool FileUtils::writeValueVectorToFile(ValueVector vecData, const std::string& fullPath)
+bool FileUtils::writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath)
 {
     tinyxml2::XMLDocument *doc = new (std::nothrow)tinyxml2::XMLDocument();
     if (nullptr == doc)
@@ -533,7 +533,7 @@ static tinyxml2::XMLElement* generateElementForArray(const ValueVector& array, t
 ValueMap FileUtils::getValueMapFromFile(const std::string& filename) {return ValueMap();}
 ValueMap FileUtils::getValueMapFromData(const char* filedata, int filesize) {return ValueMap();}
 ValueVector FileUtils::getValueVectorFromFile(const std::string& filename) {return ValueVector();}
-bool FileUtils::writeToFile(ValueMap& dict, const std::string &fullPath) {return false;}
+bool FileUtils::writeToFile(const ValueMap& dict, const std::string &fullPath) {return false;}
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
 
@@ -562,7 +562,7 @@ FileUtils::~FileUtils()
 {
 }
 
-bool FileUtils::writeStringToFile(std::string dataStr, const std::string& fullPath)
+bool FileUtils::writeStringToFile(const std::string& dataStr, const std::string& fullPath)
 {
     Data retData;
     retData.copy((unsigned char*)dataStr.c_str(), dataStr.size());
@@ -570,7 +570,7 @@ bool FileUtils::writeStringToFile(std::string dataStr, const std::string& fullPa
     return writeDataToFile(retData, fullPath);
 }
 
-bool FileUtils::writeDataToFile(Data retData, const std::string& fullPath)
+bool FileUtils::writeDataToFile(const Data& retData, const std::string& fullPath)
 {
     size_t size = 0;
     const char* mode = "wb";
@@ -1308,4 +1308,3 @@ std::string FileUtils::getFileExtension(const std::string& filePath) const
 }
 
 NS_CC_END
-
