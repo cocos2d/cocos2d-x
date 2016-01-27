@@ -1060,6 +1060,7 @@ bool ScriptingCore::setReservedSpot(uint32_t i, JSObject *obj, jsval value) {
 
 bool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 {
+    ScriptingCore *engine = ScriptingCore::getInstance();
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc >= 1) {
         JS::RootedValue jsstr(cx, args.get(0));
@@ -1071,9 +1072,9 @@ bool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
             JSString* globalName = args.get(1).toString();
             JSStringWrapper name(globalName);
 
-            JS::RootedObject debugObj(cx, ScriptingCore::getInstance()->getDebugGlobal());
+            JS::RootedObject debugObj(cx, engine->getDebugGlobal());
             if (debugObj) {
-                res = ScriptingCore::getInstance()->requireScript(path.get(), debugObj, cx, &jsret);
+                res = engine->requireScript(path.get(), debugObj, cx, &jsret);
             } else {
                 JS_ReportError(cx, "Invalid global object: %s", name.get());
                 args.rval().setUndefined();
@@ -1081,7 +1082,7 @@ bool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
             }
         } else {
             JS::RootedObject glob(cx, JS::CurrentGlobalOrNull(cx));
-            res = ScriptingCore::getInstance()->requireScript(path.get(), glob, cx, &jsret);
+            res = engine->requireScript(path.get(), glob, cx, &jsret);
         }
         args.rval().set(jsret);
         return res;
@@ -1970,8 +1971,8 @@ void ScriptingCore::enableDebugger(unsigned int port)
         // Adds the debugger object to root, otherwise it may be collected by GC.
         //AddObjectRoot(_cx, &_debugGlobal.ref()); no need, it's persistent rooted now
         //JS_WrapObject(_cx, &_debugGlobal.ref()); Not really needed, JS_WrapObject makes a cross-compartment wrapper for the given JS object
-        JS::RootedObject rootedDebugObj(_cx, _debugGlobal.ref().get());
-        JSAutoCompartment ac(_cx, rootedDebugObj);
+        JS::RootedObject rootedDebugObj(_cx, _debugGlobal.ref());
+        JSAutoCompartment acDebug(_cx, rootedDebugObj);
         // these are used in the debug program
         JS_DefineFunction(_cx, rootedDebugObj, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_ENUMERATE | JSPROP_PERMANENT);
         JS_DefineFunction(_cx, rootedDebugObj, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -1981,12 +1982,13 @@ void ScriptingCore::enableDebugger(unsigned int port)
         
         runScript("script/jsb_debugger.js", rootedDebugObj);
         
-        JS::RootedObject globalObj(_cx, _global.ref().get());
+        JS::RootedObject globalObj(_cx, _global.ref());
         JS_WrapObject(_cx, &globalObj);
         // prepare the debugger
         jsval argv = OBJECT_TO_JSVAL(globalObj);
         JS::RootedValue outval(_cx);
-        bool ok = JS_CallFunctionName(_cx, rootedDebugObj, "_prepareDebugger", JS::HandleValueArray::fromMarkedLocation(1, &argv), &outval);
+        JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(1, &argv);
+        bool ok = JS_CallFunctionName(_cx, rootedDebugObj, "_prepareDebugger", args, &outval);
         if (!ok) {
             JS_ReportPendingException(_cx);
         }

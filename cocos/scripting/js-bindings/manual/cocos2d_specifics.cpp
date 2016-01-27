@@ -549,7 +549,6 @@ void js_add_FinalizeHook(JSContext *cx, JS::HandleObject target)
     JS::RootedObject proto(cx, jsb_FinalizeHook_prototype);
     JS::RootedObject hook(cx, JS_NewObject(cx, jsb_FinalizeHook_class, proto, JS::NullPtr()));
     jsb_register_finalize_hook(hook.get(), target.get());
-    CCLOG("======= %p", hook.get());
     JS::RootedValue hookVal(cx, OBJECT_TO_JSVAL(hook));
     JS_SetProperty(cx, target, "__hook", hookVal);
 }

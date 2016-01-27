@@ -273,10 +273,9 @@ this.processInput = function (inputstr) {
     _processIncoming(inputstr);
 };
 
-let globalDebuggee = null;
 this._prepareDebugger = function (global) {
 
-    globalDebuggee = global;
+    window.globalDebuggee = global;
     require = global.require;
     cc = global.cc;
     // exports = global;
