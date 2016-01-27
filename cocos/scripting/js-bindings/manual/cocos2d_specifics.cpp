@@ -40,20 +40,21 @@ JSTouchDelegate::JSTouchDelegate()
 : _touchListenerAllAtOnce(nullptr)
 , _touchListenerOneByOne(nullptr)
 {
-    auto cx = ScriptingCore::getInstance()->getGlobalContext();
-    _obj.construct(cx);
+    _obj = nullptr;
 }
 
 JSTouchDelegate::~JSTouchDelegate()
 {
     CCLOGINFO("In the destructor of JSTouchDelegate.");
-    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-    JS::RootedValue objVal(cx, OBJECT_TO_JSVAL(_obj.ref()));
-    if (!objVal.isNullOrUndefined())
+    if (_obj)
     {
-        js_remove_object_root(objVal);
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+        JS::RootedValue objVal(cx, OBJECT_TO_JSVAL(_obj));
+        if (!objVal.isNullOrUndefined())
+        {
+            js_remove_object_root(objVal);
+        }
     }
-    _obj.destroyIfConstructed();
 }
 
 void JSTouchDelegate::setDelegateForJSObject(JSObject* pJSObj, JSTouchDelegate* pDelegate)
@@ -84,13 +85,17 @@ void JSTouchDelegate::removeDelegateForJSObject(JSObject* pJSObj)
 void JSTouchDelegate::setJSObject(JS::HandleObject obj)
 {
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-    JS::RootedValue objVal(cx, OBJECT_TO_JSVAL(_obj.ref()));
-    if (!objVal.isNullOrUndefined())
+    JS::RootedValue objVal(cx);
+    if (_obj)
     {
-        js_remove_object_root(objVal);
+        objVal.set(OBJECT_TO_JSVAL(_obj));
+        if (!objVal.isNullOrUndefined())
+        {
+            js_remove_object_root(objVal);
+        }
     }
     
-    _obj.ref() = obj;
+    _obj = obj;
     
     objVal.set(OBJECT_TO_JSVAL(obj));
     if (!objVal.isNullOrUndefined())
@@ -149,7 +154,8 @@ bool JSTouchDelegate::onTouchBegan(Touch *touch, Event *event)
     JS::RootedValue retval(cx);
     bool bRet = false;
     
-    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::BEGAN, touch, _obj.ref(), &retval);
+    JS::RootedObject obj(cx, _obj);
+    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::BEGAN, touch, obj, &retval);
     
     if(retval.isBoolean())
     {
@@ -163,46 +169,51 @@ bool JSTouchDelegate::onTouchBegan(Touch *touch, Event *event)
 void JSTouchDelegate::onTouchMoved(Touch *touch, Event *event)
 {
     CC_UNUSED_PARAM(event);
-
-    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::MOVED, touch, _obj.ref());
+    JS::RootedObject obj(ScriptingCore::getInstance()->getGlobalContext(), _obj);
+    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::MOVED, touch, obj);
 }
 
 void JSTouchDelegate::onTouchEnded(Touch *touch, Event *event)
 {
     CC_UNUSED_PARAM(event);
-
-    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::ENDED, touch, _obj.ref());
+    JS::RootedObject obj(ScriptingCore::getInstance()->getGlobalContext(), _obj);
+    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::ENDED, touch, obj);
 }
 
 void JSTouchDelegate::onTouchCancelled(Touch *touch, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::CANCELLED, touch, _obj.ref());
+    JS::RootedObject obj(ScriptingCore::getInstance()->getGlobalContext(), _obj);
+    ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::CANCELLED, touch, obj);
 }
 
 // optional
 void JSTouchDelegate::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::BEGAN, touches, _obj.ref());
+    JS::RootedObject obj(ScriptingCore::getInstance()->getGlobalContext(), _obj);
+    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::BEGAN, touches, obj);
 }
 
 void JSTouchDelegate::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::MOVED, touches, _obj.ref());
+    JS::RootedObject obj(ScriptingCore::getInstance()->getGlobalContext(), _obj);
+    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::MOVED, touches, obj);
 }
 
 void JSTouchDelegate::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::ENDED, touches, _obj.ref());
+    JS::RootedObject obj(ScriptingCore::getInstance()->getGlobalContext(), _obj);
+    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::ENDED, touches, obj);
 }
 
 void JSTouchDelegate::onTouchesCancelled(const std::vector<Touch*>& touches, Event *event)
 {
     CC_UNUSED_PARAM(event);
-    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::CANCELLED, touches, _obj.ref());
+    JS::RootedObject obj(ScriptingCore::getInstance()->getGlobalContext(), _obj);
+    ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::CANCELLED, touches, obj);
 }
 
 // cc.EventTouch#getTouches
@@ -538,6 +549,7 @@ void js_add_FinalizeHook(JSContext *cx, JS::HandleObject target)
     JS::RootedObject proto(cx, jsb_FinalizeHook_prototype);
     JS::RootedObject hook(cx, JS_NewObject(cx, jsb_FinalizeHook_class, proto, JS::NullPtr()));
     jsb_register_finalize_hook(hook.get(), target.get());
+    CCLOG("======= %p", hook.get());
     JS::RootedValue hookVal(cx, OBJECT_TO_JSVAL(hook));
     JS_SetProperty(cx, target, "__hook", hookVal);
 }
@@ -678,111 +690,116 @@ void js_remove_object_root(JS::HandleValue target)
 
 JSCallbackWrapper::JSCallbackWrapper()
 {
-    ScriptingCore *engine = ScriptingCore::getInstance();
-    JSContext* cx = engine->getGlobalContext();
-    _jsCallback.construct(cx, JS::NullHandleValue);
-    _jsThisObj.construct(cx, JS::NullHandleValue);
-    _extraData.construct(cx, JS::NullHandleValue);
-    _owner.construct(cx, JS::NullHandleValue);
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    _jsCallback = JS::NullValue();
+    _jsThisObj = JS::NullValue();
+    _extraData = JS::NullValue();
     
     JS::RootedObject root(cx);
     get_or_create_js_obj("jsb._root", &root);
     JS::RootedValue valRoot(cx, OBJECT_TO_JSVAL(root));
-    _owner.ref() = valRoot;
+    _owner = valRoot;
 }
 
 JSCallbackWrapper::JSCallbackWrapper(JS::HandleValue owner)
 {
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-    _owner.construct(cx, JS::NullHandleValue);
-    _owner.ref() = owner;
-    _jsCallback.construct(cx, JS::NullHandleValue);
-    _jsThisObj.construct(cx, JS::NullHandleValue);
-    _extraData.construct(cx, JS::NullHandleValue);
+    _owner = owner;
+    _jsCallback = JS::NullValue();
+    _jsThisObj = JS::NullValue();
+    _extraData = JS::NullValue();
 }
 
 JSCallbackWrapper::~JSCallbackWrapper()
 {
-    if (!_owner.ref().isNullOrUndefined())
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    JS::RootedValue ownerVal(cx, _owner);
+    if (!ownerVal.isNullOrUndefined())
     {
-        if (!_jsCallback.ref().isNullOrUndefined())
+        JS::RootedValue target(cx, _jsCallback);
+        if (!target.isNullOrUndefined())
         {
-            js_remove_object_reference(_owner.ref(), _jsCallback.ref());
+            js_remove_object_reference(ownerVal, target);
         }
-        if (!_jsThisObj.ref().isNullOrUndefined())
+        target.set(_jsThisObj);
+        if (!target.isNullOrUndefined())
         {
-            js_remove_object_reference(_owner.ref(), _jsThisObj.ref());
+            js_remove_object_reference(ownerVal, target);
         }
-        if (!_extraData.ref().isNullOrUndefined())
+        target.set(_extraData);
+        if (!target.isNullOrUndefined())
         {
-            js_remove_object_reference(_owner.ref(), _extraData.ref());
+            js_remove_object_reference(ownerVal, target);
         }
     }
-    
-    _owner.destroyIfConstructed();
-    _jsCallback.destroyIfConstructed();
-    _jsThisObj.destroyIfConstructed();
-    _extraData.destroyIfConstructed();
 }
 
 void JSCallbackWrapper::setJSCallbackFunc(JS::HandleValue func) {
-    if (!_owner.ref().isNullOrUndefined())
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    JS::RootedValue ownerVal(cx, _owner);
+    if (!ownerVal.isNullOrUndefined())
     {
-        if (!_jsCallback.ref().isNullOrUndefined())
+        JS::RootedValue target(cx, _jsCallback);
+        if (!target.isNullOrUndefined())
         {
-            js_remove_object_reference(_owner.ref(), _jsCallback.ref());
+            js_remove_object_reference(ownerVal, target);
         }
-        js_add_object_reference(_owner.ref(), func);
+        js_add_object_reference(ownerVal, func);
     }
     if (!func.isNullOrUndefined())
     {
-        _jsCallback.ref() = func;
+        _jsCallback = func;
     }
 }
 
 void JSCallbackWrapper::setJSCallbackThis(JS::HandleValue thisObj) {
-    if (!_owner.ref().isNullOrUndefined())
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    JS::RootedValue ownerVal(cx, _owner);
+    if (!ownerVal.isNullOrUndefined())
     {
-        if (!_jsThisObj.ref().isNullOrUndefined())
+        JS::RootedValue target(cx, _jsThisObj);
+        if (!target.isNullOrUndefined())
         {
-            js_remove_object_reference(_owner.ref(), _jsThisObj.ref());
+            js_remove_object_reference(ownerVal, target);
         }
-        js_add_object_reference(_owner.ref(), thisObj);
+        js_add_object_reference(ownerVal, thisObj);
     }
     if (!thisObj.isNullOrUndefined())
     {
-        _jsThisObj.ref() = thisObj;
+        _jsThisObj = thisObj;
     }
 }
 
 void JSCallbackWrapper::setJSExtraData(JS::HandleValue data) {
-    if (!_owner.ref().isNullOrUndefined())
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    JS::RootedValue ownerVal(cx, _owner);
+    if (!ownerVal.isNullOrUndefined())
     {
-        if (!_extraData.ref().isNullOrUndefined())
+        JS::RootedValue target(cx, _extraData);
+        if (!target.isNullOrUndefined())
         {
-            js_remove_object_reference(_owner.ref(), _extraData.ref());
+            js_remove_object_reference(ownerVal, target);
         }
-        js_add_object_reference(_owner.ref(), data);
+        js_add_object_reference(ownerVal, data);
     }
     if (!data.isNullOrUndefined())
     {
-        _extraData.ref() = data;
+        _extraData = data;
     }
 }
 
 const jsval JSCallbackWrapper::getJSCallbackFunc() const
 {
-    return _jsCallback.ref().get();
+    return _jsCallback;
 }
 
 const jsval JSCallbackWrapper::getJSCallbackThis() const
 {
-    return _jsThisObj.ref().get();
+    return _jsThisObj;
 }
 
 const jsval JSCallbackWrapper::getJSExtraData() const
 {
-    return _extraData.ref().get();
+    return _extraData;
 }
 
 // cc.CallFunc.create( func, this, [data])
@@ -923,8 +940,7 @@ JSScheduleWrapper::JSScheduleWrapper()
 , _priority(0)
 , _isUpdateSchedule(false)
 {
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-    _pPureJSTarget.construct(cx);
+    _pPureJSTarget = nullptr;
 }
 
 JSScheduleWrapper::JSScheduleWrapper(JS::HandleValue owner)
@@ -933,13 +949,7 @@ JSScheduleWrapper::JSScheduleWrapper(JS::HandleValue owner)
 , _priority(0)
 , _isUpdateSchedule(false)
 {
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-    _pPureJSTarget.construct(cx);
-}
-
-JSScheduleWrapper::~JSScheduleWrapper()
-{
-    _pPureJSTarget.destroyIfConstructed();
+    _pPureJSTarget = nullptr;
 }
 
 void JSScheduleWrapper::setTargetForSchedule(JS::HandleValue sched, JSScheduleWrapper *target) {
@@ -1260,12 +1270,12 @@ void JSScheduleWrapper::setTarget(Ref* pTarget)
 
 void JSScheduleWrapper::setPureJSTarget(JS::HandleObject pPureJSTarget)
 {
-    _pPureJSTarget.ref() = pPureJSTarget;
+    _pPureJSTarget = pPureJSTarget;
 }
 
 JSObject* JSScheduleWrapper::getPureJSTarget()
 {
-    return _pPureJSTarget.ref().get();
+    return _pPureJSTarget;
 }
 
 void JSScheduleWrapper::setPriority(int priority)

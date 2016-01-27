@@ -138,10 +138,10 @@ public:
     const jsval getJSCallbackThis() const;
     const jsval getJSExtraData() const;
 protected:
-    mozilla::Maybe<JS::RootedValue> _owner;
-    mozilla::Maybe<JS::RootedValue> _jsCallback;
-    mozilla::Maybe<JS::RootedValue> _jsThisObj;
-    mozilla::Maybe<JS::RootedValue> _extraData;
+    JS::Heap<JS::Value> _owner;
+    JS::Heap<JS::Value> _jsCallback;
+    JS::Heap<JS::Value> _jsThisObj;
+    JS::Heap<JS::Value> _extraData;
 };
 
 
@@ -150,7 +150,6 @@ class JSScheduleWrapper: public JSCallbackWrapper {
 public:
     JSScheduleWrapper();
     JSScheduleWrapper(JS::HandleValue owner);
-    virtual ~JSScheduleWrapper();
 
     static void setTargetForSchedule(JS::HandleValue sched, JSScheduleWrapper *target);
     static cocos2d::__Array * getTargetForSchedule(JS::HandleValue sched);
@@ -186,7 +185,7 @@ public:
     
 protected:
     Ref* _pTarget;
-    mozilla::Maybe<JS::RootedObject> _pPureJSTarget;
+    JS::Heap<JSObject*> _pPureJSTarget;
     int _priority;
     bool _isUpdateSchedule;
 };
@@ -225,7 +224,7 @@ public:
     void onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
 
 private:
-    mozilla::Maybe<JS::RootedObject> _obj;
+    JS::Heap<JSObject*> _obj;
     typedef std::unordered_map<JSObject*, JSTouchDelegate*> TouchDelegateMap;
     typedef std::pair<JSObject*, JSTouchDelegate*> TouchDelegatePair;
     static TouchDelegateMap sTouchDelegateMap;

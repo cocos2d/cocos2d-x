@@ -56,6 +56,7 @@ public:
     static const unsigned short DONE = 4;
 
     MinXmlHttpRequest();
+    MinXmlHttpRequest(JSContext *cx);
     ~MinXmlHttpRequest();
     
     JS_BINDED_CLASS_GLUE(MinXmlHttpRequest);
@@ -102,13 +103,13 @@ private:
     std::string                       _type;
     char*                             _data;
     uint32_t                          _dataSize;
-    mozilla::Maybe<JS::RootedObject>  _onloadstartCallback;
-    mozilla::Maybe<JS::RootedObject>  _onabortCallback;
-    mozilla::Maybe<JS::RootedObject>  _onerrorCallback;
-    mozilla::Maybe<JS::RootedObject>  _onloadCallback;
-    mozilla::Maybe<JS::RootedObject>  _onloadendCallback;
-    mozilla::Maybe<JS::RootedObject>  _ontimeoutCallback;
-    mozilla::Maybe<JS::RootedObject>  _onreadystateCallback;
+    JS::Heap<JSObject*>               _onloadstartCallback;
+    JS::Heap<JSObject*>               _onabortCallback;
+    JS::Heap<JSObject*>               _onerrorCallback;
+    JS::Heap<JSObject*>               _onloadCallback;
+    JS::Heap<JSObject*>               _onloadendCallback;
+    JS::Heap<JSObject*>               _ontimeoutCallback;
+    JS::Heap<JSObject*>               _onreadystateCallback;
     int                               _readyState;
     long                              _status;
     std::string                       _statusText;

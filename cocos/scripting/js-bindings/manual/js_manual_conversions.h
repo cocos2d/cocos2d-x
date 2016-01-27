@@ -32,7 +32,6 @@
 #include "cocos2d.h"
 #include "spidermonkey_specifics.h"
 #include "js-BindingsExport.h"
-#include "mozilla/Maybe.h"
 
 #define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 
@@ -71,9 +70,9 @@ public:
     bool invoke(unsigned int argc, jsval *argv, JS::MutableHandleValue rval);
 private:
     JSContext *_cx;
-    mozilla::Maybe<JS::RootedObject> _jsthis;
-    mozilla::Maybe<JS::RootedValue> _fval;
-    mozilla::Maybe<JS::RootedValue> _owner;
+    JS::Heap<JSObject*> _jsthis;
+    JS::Heap<JS::Value> _fval;
+    JS::Heap<JS::Value> _owner;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(JSFunctionWrapper);
 };
