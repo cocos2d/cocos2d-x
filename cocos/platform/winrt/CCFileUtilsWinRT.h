@@ -43,6 +43,7 @@ NS_CC_BEGIN
 class CC_DLL CCFileUtilsWinRT : public FileUtils
 {
     friend class FileUtils;
+protected:
     CCFileUtilsWinRT();
 public:
     /* override functions */
