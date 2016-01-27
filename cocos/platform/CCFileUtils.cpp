@@ -565,10 +565,12 @@ FileUtils::~FileUtils()
 bool FileUtils::writeStringToFile(const std::string& dataStr, const std::string& fullPath)
 {
     Data data;
-    data.copy((unsigned char*)dataStr.c_str(), dataStr.size());
+    data.fastSet((unsigned char*)dataStr.c_str(), dataStr.size());
 
-    return writeDataToFile(data, fullPath);
-}
+    bool rv = writeDataToFile(data, fullPath);
+
+    data.fastSet(nullptr, 0);
+    return rv;}
 
 bool FileUtils::writeDataToFile(const Data& data, const std::string& fullPath)
 {
