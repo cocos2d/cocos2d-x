@@ -2618,6 +2618,14 @@ end : function (
 },
 
 /**
+ * @method start
+ */
+start : function (
+)
+{
+},
+
+/**
  * @method stopBackgroundMusic
 * @param {bool} bool
 */
@@ -2689,6 +2697,14 @@ char
 playBackgroundMusic : function(
 char,
 bool 
+)
+{
+},
+
+/**
+ * @method stop
+ */
+stop : function (
 )
 {
 },
@@ -4237,6 +4253,14 @@ getStartFrame : function (
  * @method pause
  */
 pause : function (
+)
+{
+},
+
+/**
+ * @method start
+ */
+start : function (
 )
 {
 },

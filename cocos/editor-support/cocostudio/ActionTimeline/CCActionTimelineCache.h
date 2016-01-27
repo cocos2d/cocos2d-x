@@ -78,13 +78,16 @@ public:
 
     /** Clone a action with the specified name from the container. */
     ActionTimeline* createActionFromJson(const std::string& fileName);
+    ActionTimeline* createActionFromContent(const std::string& fileName, const std::string& content);
 
     ActionTimeline* loadAnimationActionWithFile(const std::string& fileName);
     ActionTimeline* loadAnimationActionWithContent(const std::string&fileName, const std::string& content);
     
     ActionTimeline* createActionWithFlatBuffersFile(const std::string& fileName);
+    ActionTimeline* createActionWithDataBuffer(cocos2d::Data data, const std::string &fileName);
+
     ActionTimeline* loadAnimationActionWithFlatBuffersFile(const std::string& fileName);
-    ActionTimeline* loadAnimationWithDataBuffer(const cocos2d::Data data, const std::string fileName);
+    ActionTimeline* loadAnimationWithDataBuffer(const cocos2d::Data& data, const std::string& fileName);
     
     ActionTimeline* createActionWithFlatBuffersForSimulator(const std::string& fileName);
     
@@ -122,7 +125,7 @@ protected:
     Frame* loadBlendFrameWithFlatBuffers        (const flatbuffers::BlendFrame* flatbuffers);
     void loadEasingDataWithFlatBuffers(Frame* frame, const flatbuffers::EasingData* flatbuffers);
 
-    inline ActionTimeline* createActionWithDataBuffer(const cocos2d::Data data);
+    inline ActionTimeline* createActionWithDataBuffer(const cocos2d::Data& data);
 protected:
 
     typedef std::function<Frame*(const rapidjson::Value& json)> FrameCreateFunc;

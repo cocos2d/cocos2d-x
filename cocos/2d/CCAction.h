@@ -309,7 +309,7 @@ private:
  * @brief Follow is an action that "follows" a node.
  * Eg:
  * @code
- * layer->runAction(Follow::actionWithTarget(hero));
+ * layer->runAction(Follow::create(hero));
  * @endcode
  * Instead of using Camera as a "follower", use this action instead.
  * @since v0.99.2

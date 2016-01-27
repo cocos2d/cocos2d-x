@@ -348,7 +348,7 @@ ActionTimeline* CSLoader::createTimeline(const std::string &filename)
     return nullptr;
 }
 
-ActionTimeline* CSLoader::createTimeline(const Data data, const std::string& filename)
+ActionTimeline* CSLoader::createTimeline(const Data& data, const std::string& filename)
 {
     std::string suffix = getExtentionName(filename);
 
@@ -356,12 +356,12 @@ ActionTimeline* CSLoader::createTimeline(const Data data, const std::string& fil
 
     if (suffix == "csb")
     {
-        return cache->loadAnimationWithDataBuffer(data, filename);
+        return cache->createActionWithDataBuffer(data, filename);
     }
     else if (suffix == "json" || suffix == "ExportJson")
     {
         std::string content((char *)data.getBytes(), data.getSize());
-        return cache->loadAnimationActionWithContent(filename, content);
+        return cache->createActionFromContent(filename, content);
     }
 
     return nullptr;
@@ -853,12 +853,12 @@ Component* CSLoader::loadComAudio(const rapidjson::Value &json)
     return audio;
 }
 
-cocos2d::Node* CSLoader::createNode(const Data data)
+cocos2d::Node* CSLoader::createNode(const Data& data)
 {
     return createNode(data, nullptr);
 }
 
-Node * CSLoader::createNode(const Data data, const ccNodeLoadCallback &callback)
+Node * CSLoader::createNode(const Data& data, const ccNodeLoadCallback &callback)
 {
     CSLoader * loader = CSLoader::getInstance();
     Node * node = nullptr;
@@ -1016,7 +1016,7 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, const
             {
                 Data buf = FileUtils::getInstance()->getDataFromFile(filePath);
                 node = createNode(buf, callback);
-                action = timeline::ActionTimelineCache::getInstance()->loadAnimationWithDataBuffer(buf, filePath);
+                action = createTimeline(buf, filePath);
             }
             else
             {

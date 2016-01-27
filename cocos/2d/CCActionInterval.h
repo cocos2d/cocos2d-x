@@ -61,7 +61,10 @@ then running it again in Reverse mode.
 
 Example:
 
-Action *pingPongAction = Sequence::actions(action, action->reverse(), nullptr);
+@code
+auto action = MoveBy::create(1.0f, Vec2::ONE);
+auto pingPongAction = Sequence::create(action, action->reverse(), nullptr);
+@endcode
 */
 class CC_DLL ActionInterval : public FiniteTimeAction
 {

@@ -6,8 +6,6 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.chukong.cocosplay.client.CocosPlayClient;
-
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -157,10 +155,6 @@ public class Cocos2dxWebViewHelper {
     }
 
     public static void loadFile(final int index, final String filePath) {
-        if (CocosPlayClient.isEnabled() && !CocosPlayClient.isDemo()) {
-            CocosPlayClient.updateAssets(filePath);
-        }
-        CocosPlayClient.notifyFileLoaded(filePath);
         sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {

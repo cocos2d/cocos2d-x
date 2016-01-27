@@ -13,6 +13,7 @@
 #include "js_bindings_core.h"
 #include "js_manual_conversions.h"
 #include "jsb_opengl_functions.h"
+#include "platform/CCGL.h"
 
 // Arguments: GLenum
 // Ret value: void

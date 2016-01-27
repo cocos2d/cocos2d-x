@@ -3234,6 +3234,26 @@ jumpToBottomRight : function (
 },
 
 /**
+ * @method setTouchTotalTimeThreshold
+ * @param {float} arg0
+ */
+setTouchTotalTimeThreshold : function (
+float 
+)
+{
+},
+
+/**
+ * @method getTouchTotalTimeThreshold
+ * @return {float}
+ */
+getTouchTotalTimeThreshold : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getScrollBarPositionFromCornerForHorizontal
  * @return {vec2_object}
  */
@@ -5314,6 +5334,8 @@ ccui.RichElementText = {
  * @param {String} arg3
  * @param {String} arg4
  * @param {float} arg5
+ * @param {unsigned int} arg6
+ * @param {String} arg7
  * @return {bool}
  */
 init : function (
@@ -5322,7 +5344,9 @@ color3b,
 char, 
 str, 
 str, 
-float 
+float, 
+int, 
+str 
 )
 {
     return false;
@@ -5336,6 +5360,8 @@ float
  * @param {String} arg3
  * @param {String} arg4
  * @param {float} arg5
+ * @param {unsigned int} arg6
+ * @param {String} arg7
  * @return {ccui.RichElementText}
  */
 create : function (
@@ -5344,7 +5370,9 @@ color3b,
 char, 
 str, 
 str, 
-float 
+float, 
+int, 
+str 
 )
 {
     return ccui.RichElementText;
@@ -5367,6 +5395,16 @@ RichElementText : function (
 ccui.RichElementImage = {
 
 /**
+ * @method setHeight
+ * @param {int} arg0
+ */
+setHeight : function (
+int 
+)
+{
+},
+
+/**
  * @method init
  * @param {int} arg0
  * @param {color3b_object} arg1
@@ -5382,6 +5420,16 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method setWidth
+ * @param {int} arg0
+ */
+setWidth : function (
+int 
+)
+{
 },
 
 /**
@@ -5493,6 +5541,16 @@ richelement
 },
 
 /**
+ * @method setWrapMode
+ * @param {ccui.RichText::WrapMode} arg0
+ */
+setWrapMode : function (
+wrapmode 
+)
+{
+},
+
+/**
  * @method setVerticalSpace
  * @param {float} arg0
  */
@@ -5503,11 +5561,33 @@ float
 },
 
 /**
+ * @method getWrapMode
+ * @return {ccui.RichText::WrapMode}
+ */
+getWrapMode : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method formatText
  */
 formatText : function (
 )
 {
+},
+
+/**
+ * @method initWithXML
+ * @param {String} arg0
+ * @return {bool}
+ */
+initWithXML : function (
+str 
+)
+{
+    return false;
 },
 
 /**
@@ -5525,6 +5605,18 @@ int
  * @return {ccui.RichText}
  */
 create : function (
+)
+{
+    return ccui.RichText;
+},
+
+/**
+ * @method createWithXML
+ * @param {String} arg0
+ * @return {ccui.RichText}
+ */
+createWithXML : function (
+str 
 )
 {
     return ccui.RichText;

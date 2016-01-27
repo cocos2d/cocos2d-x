@@ -1868,27 +1868,16 @@ void SpriteFramesFromFileContent::onEnter()
 	SpriteTestDemo::onEnter();
 	auto s = Director::getInstance()->getWinSize();
 
-	std::string plist_content;
-	{
-		std::string fullPath = FileUtils::getInstance()->fullPathForFilename(sheetName() + ".plist");
-		Data data = FileUtils::getInstance()->getDataFromFile(fullPath);
-		if (!data.isNull())
-			plist_content.assign((const char*)data.getBytes(), data.getSize());
-	}
+	std::string plist_content = FileUtils::getInstance()->getStringFromFile(sheetName() + ".plist");
+	Data image_content = FileUtils::getInstance()->getDataFromFile(sheetName() + ".png");
 
-	std::string image_content;
-	{
-		std::string fullPath = FileUtils::getInstance()->fullPathForFilename(sheetName() + ".png");
-		Data data = FileUtils::getInstance()->getDataFromFile(fullPath);
-		if (!data.isNull())
-			image_content.assign((const char*)data.getBytes(), data.getSize());
-	}
-
-	Image image;
-	image.initWithImageData((const uint8_t*)image_content.c_str(), image_content.size());
+    Image* image = new (std::nothrow) Image();
+	image->initWithImageData((const uint8_t*)image_content.getBytes(), image_content.getSize());
 	Texture2D* texture = new (std::nothrow) Texture2D();
-	texture->initWithImage(&image);
+	texture->initWithImage(image);
 	texture->autorelease();
+    
+    CC_SAFE_RELEASE(image);
 
 	auto cache = SpriteFrameCache::getInstance();
 	cache->addSpriteFramesWithFileContent(plist_content, texture);
@@ -1918,13 +1907,7 @@ void SpriteFramesFromFileContent::onExit()
 {
 	SpriteTestDemo::onExit();
 
-	std::string plist_content;
-	{
-		std::string fullPath = FileUtils::getInstance()->fullPathForFilename("animations/grossini.plist");
-		Data data = FileUtils::getInstance()->getDataFromFile(fullPath);
-		if (!data.isNull())
-			plist_content.assign((const char*)data.getBytes(), data.getSize());
-	}
+	std::string plist_content = FileUtils::getInstance()->getStringFromFile("animations/grossini.plist");
 
 	SpriteFrameCache::getInstance()->removeSpriteFramesFromFileContent(plist_content);
 }

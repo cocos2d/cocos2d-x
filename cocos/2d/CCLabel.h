@@ -55,14 +55,24 @@ typedef struct _ttfConfig
     bool distanceFieldEnabled;
     int outlineSize;
 
+    bool italics;
+    bool bold;
+    bool underline;
+    bool strikethrough;
+
     _ttfConfig(const std::string& filePath = "",float size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
-        const char *customGlyphCollection = nullptr, bool useDistanceField = false, int outline = 0)
+        const char *customGlyphCollection = nullptr, bool useDistanceField = false, int outline = 0,
+               bool useItalics = false, bool useBold = false, bool useUnderline = false, bool useStrikethrough = false)
         : fontFilePath(filePath)
         , fontSize(size)
         , glyphs(glyphCollection)
         , customGlyphs(customGlyphCollection)
         , distanceFieldEnabled(useDistanceField)
         , outlineSize(outline)
+        , italics(useItalics)
+        , bold(useBold)
+        , underline(useUnderline)
+        , strikethrough(useStrikethrough)
     {
         if(outline > 0)
         {
@@ -337,6 +347,27 @@ public:
     virtual void enableGlow(const Color4B& glowColor);
 
     /**
+     * Enable italics rendering
+     */
+    void enableItalics();
+
+    /**
+     * Enable bold rendering
+     */
+    void enableBold();
+
+    /**
+     * Enable underline
+     */
+    void enableUnderline();
+
+    /**
+     * Enables strikethrough.
+     * Underline and Strikethrough cannot be enabled at the same time.
+     * Strikethough is like an underline but at the middle of the glyph
+     */
+    void enableStrikethrough();
+    /**
      * Disable all effect to Label.
      * @warning Please use disableEffect(LabelEffect::ALL) instead of this API.
      */
@@ -605,7 +636,7 @@ protected:
     void computeStringNumLines();
 
     void onDraw(const Mat4& transform, bool transformUpdated);
-    void onDrawShadow(GLProgram* glProgram);
+    void onDrawShadow(GLProgram* glProgram, const Color4F& shadowColor);
     void drawSelf(bool visibleByCamera, Renderer* renderer, uint32_t flags);
 
     bool multilineTextWrapByChar();
@@ -735,6 +766,11 @@ protected:
     float _bmfontScale;
     Overflow _overflow;
     float _originalFontSize;
+
+    bool _boldEnabled;
+    DrawNode* _underlineNode;
+    bool _strikethroughEnabled;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);
 };

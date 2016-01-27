@@ -50,8 +50,10 @@ class Texture2D;
 
  You can modify the frame of a Sprite by doing:
  
-    SpriteFrame *frame = SpriteFrame::frameWithTexture(texture, rect, offset);
-    sprite->setDisplayFrame(frame);
+ @code
+    SpriteFrame* frame = SpriteFrame::createWithTexture(texture, rect);
+    sprite->setSpriteFrame(frame);
+ @endcode
  */
 class CC_DLL SpriteFrame : public Ref, public Clonable
 {
