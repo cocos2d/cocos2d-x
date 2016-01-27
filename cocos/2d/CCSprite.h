@@ -484,7 +484,7 @@ CC_CONSTRUCTOR_ACCESS :
     Sprite();
     virtual ~Sprite();
 
-    /* Initializes an empty sprite with nothing init. */
+    /* Initializes an empty sprite with no parameters. */
     virtual bool init() override;
 
     /**

@@ -69,9 +69,9 @@ public:
         return nullptr;
     }
 
-    /** Returns a new action that performs the exactly the reverse action. 
+    /** Returns a new action that performs the exact reverse of the action. 
      *
-     * @return A new action that performs the exactly the reverse action.
+     * @return A new action that performs the exact reverse of the action.
      * @js NA
      */
     virtual Action* reverse() const
@@ -239,7 +239,7 @@ class RepeatForever;
 
 /** @class Speed
  * @brief Changes the speed of an action, making it take longer (speed>1)
- * or less (speed<1) time.
+ * or shorter (speed<1) time.
  * Useful to simulate 'slow motion' or 'fast forward' effect.
  * @warning This action can't be Sequenceable because it is not an IntervalAction.
  */
