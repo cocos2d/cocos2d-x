@@ -570,7 +570,8 @@ bool FileUtils::writeStringToFile(const std::string& dataStr, const std::string&
     bool rv = writeDataToFile(data, fullPath);
 
     data.fastSet(nullptr, 0);
-    return rv;}
+    return rv;
+}
 
 bool FileUtils::writeDataToFile(const Data& data, const std::string& fullPath)
 {
