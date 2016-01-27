@@ -45,6 +45,7 @@ NS_CC_BEGIN
 class CC_DLL FileUtilsWin32 : public FileUtils
 {
     friend class FileUtils;
+protected:
     FileUtilsWin32();
 public:
     /* override functions */
