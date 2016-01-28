@@ -302,7 +302,7 @@ public:
     /** Sets the text that this Label is to display.*/
     virtual void setString(const std::string& text) override;
 
-    /** Return the text the Label is displaying.*/
+    /** Return the text the Label is currently displaying.*/
     virtual const std::string& getString() const override {  return _utf8Text; }
 
     /**
@@ -368,7 +368,7 @@ public:
      */
     void enableStrikethrough();
     /**
-     * Disable all effect to Label.
+     * Disable all effect applied to Label.
      * @warning Please use disableEffect(LabelEffect::ALL) instead of this API.
      */
     virtual void disableEffect();
@@ -505,7 +505,7 @@ public:
      * Makes the Label exactly this untransformed height.
      *
      * The Label's height be used for text align if the value not equal zero.
-     * The text will display of incomplete when the size of Label not enough to support display all text.
+     * The text will display incomplete if the size of Label is not large enough to display all text.
      */
     void setHeight(float height){ setDimensions(_labelWidth, height); }
     float getHeight() const { return _labelHeight; }
@@ -518,12 +518,12 @@ public:
     virtual void updateContent();
 
     /**
-     * Provides a way to treats each character like a Sprite.
+     * Provides a way to treat each character like a Sprite.
      * @warning No support system font.
      */
     virtual Sprite * getLetter(int lettetIndex);
 
-    /** Makes the Label to clip upper and lower margin for reduce height of Label.*/
+    /** Clips upper and lower margin to reduce height of Label.*/
     void setClipMarginEnabled(bool clipEnabled) { _clipEnabled = clipEnabled; }
 
     bool isClipMarginEnabled() const { return _clipEnabled; }

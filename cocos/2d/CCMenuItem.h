@@ -155,10 +155,10 @@ public:
     /** Sets a new string to the inner label. */
     void setString(const std::string& label);
 
-    /** Gets the color that will be used to disable the item. */
+    /** Gets the color that will be used when the item is disabled. */
     inline const Color3B& getDisabledColor() const { return _disabledColor; };
 
-    /** Sets the color that will be used to disable the item. */
+    /** Sets the color that will be used when the item is disabled. */
     inline void setDisabledColor(const Color3B& color) { _disabledColor = color; };
     
     /** Gets the label that is rendered. */
@@ -342,7 +342,7 @@ public:
     static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* disabledSprite = nullptr);
     /** Creates a menu item with a normal and selected image with target/selector. */
     CC_DEPRECATED_ATTRIBUTE static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Ref* target, SEL_MenuHandler selector);
-    /** Creates a menu item with a normal,selected  and disabled image with target/selector. */
+    /** Creates a menu item with a normal, selected and disabled image with target/selector. */
     CC_DEPRECATED_ATTRIBUTE static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, Ref* target, SEL_MenuHandler selector);
     /** Creates a menu item with a normal and selected image with a callable object. */
     static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, const ccMenuCallback& callback);
@@ -386,10 +386,10 @@ CC_CONSTRUCTOR_ACCESS:
     ,_disabledImage(nullptr)
     {}
     
-    /** Initializes a menu item with a normal, selected  and disabled image with target/selector. */
+    /** Initializes a menu item with a normal, selected and disabled image with target/selector. */
     CC_DEPRECATED_ATTRIBUTE bool initWithNormalSprite(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, Ref* target, SEL_MenuHandler selector);
     
-    /** Initializes a menu item with a normal, selected  and disabled image with a callable object. */
+    /** Initializes a menu item with a normal, selected and disabled image with a callable object. */
     bool initWithNormalSprite(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, const ccMenuCallback& callback);
     
 protected:
@@ -429,9 +429,9 @@ public:
     /** Creates a menu item with a normal and selected image with a callable object. */
     static MenuItemImage* create(const std::string&normalImage, const std::string&selectedImage, const ccMenuCallback& callback);
 
-    /** Creates a menu item with a normal,selected  and disabled image with target/selector. */
+    /** Creates a menu item with a normal,selected and disabled image with target/selector. */
     CC_DEPRECATED_ATTRIBUTE static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, Ref* target, SEL_MenuHandler selector);
-    /** Creates a menu item with a normal,selected  and disabled image with a callable object. */
+    /** Creates a menu item with a normal,selected and disabled image with a callable object. */
     static MenuItemImage* create(const std::string&normalImage, const std::string&selectedImage, const std::string&disabledImage, const ccMenuCallback& callback);
 
     /** Sets the sprite frame for the normal image. */
@@ -454,10 +454,10 @@ CC_CONSTRUCTOR_ACCESS:
     
     bool init();
     
-    /** Initializes a menu item with a normal, selected  and disabled image with target/selector. */
+    /** Initializes a menu item with a normal, selected and disabled image with target/selector. */
     CC_DEPRECATED_ATTRIBUTE bool initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, Ref* target, SEL_MenuHandler selector);
     
-    /** Initializes a menu item with a normal, selected  and disabled image with a callable object. */
+    /** Initializes a menu item with a normal, selected and disabled image with a callable object. */
     bool initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, const ccMenuCallback& callback);
 
 private:

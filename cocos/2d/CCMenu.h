@@ -92,7 +92,7 @@ public:
 
     /**
      * Creates a Menu with it's item, then use addChild() to add 
-     * other items. It is used for script, it can't init with undetermined
+     * other items. It is used for script, it can't be initialized with undetermined
      * number of variables.
      * @js NA
      */
@@ -142,16 +142,17 @@ public:
     void alignItemsInRowsWithArray(const ValueVector& columns);
 
     /**
-     * Determines if the menu is enable.
+     * Determines if the menu is enabled.
      * @see `setEnabled(bool)`.
      * @return whether the menu is enabled or not.
      */
     virtual bool isEnabled() const { return _enabled; }
 
     /**
-     * Set whether the menu is visible.
+     * Set whether the menu is visible. If set false, interacting with the menu
+     * will have no effect.
      * The default value is true, a menu is default to visible.
-     *@param value true if menu is enable, false if menu is disable.
+     *@param value true if menu is to be enabled, false if menu is to be disabled.
      */
     virtual void setEnabled(bool value) { _enabled = value; };
 
