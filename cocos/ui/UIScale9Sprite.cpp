@@ -538,11 +538,14 @@ namespace ui {
             }
 
 
-            if(capInsets.equals(Rect::ZERO))
-            {
-                capInsets = Rect(originalSize.width/3, originalSize.height/3,
-                                 originalSize.width/3, originalSize.height/3);
-            }
+            //            if(capInsets.equals(Rect::ZERO))
+            //            {
+            //                capInsets = Rect(originalSize.width/2, originalSize.height/2,
+            //                                 originalSize.width/2, originalSize.height/2);
+            //            }
+            // By YCH: use old style to back compatible
+            capInsets = Rect(originalSize.width/2, originalSize.height/2,
+                             0, 0);
 
             auto uv = this->calculateUV(tex, capInsets, originalSize, offsets);
             auto vertices = this->calculateVertices(capInsets, originalSize, offsets);
