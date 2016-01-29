@@ -99,10 +99,17 @@ std::string TextureCache::getDescription() const
 struct TextureCache::AsyncStruct
 {
 public:
-    AsyncStruct(const std::string& fn,const std::function<void(Texture2D*)>& f) : filename(fn), callback(f), pixelFormat(Texture2D::getDefaultAlphaPixelFormat()), loadSuccess(false) {}
+    AsyncStruct
+    ( const std::string& fn,const std::function<void(Texture2D*)>& f,
+      const std::string& key )
+      : filename(fn), callback(f),callbackKey( key ),
+        pixelFormat(Texture2D::getDefaultAlphaPixelFormat()),
+        loadSuccess(false)
+    {}
 
     std::string filename;
     std::function<void(Texture2D*)> callback;
+    std::string callbackKey;
     Image image;
     Image imageAlpha;
     Texture2D::PixelFormat pixelFormat;
@@ -133,9 +140,50 @@ public:
  - In addImageAsyncCallback, will deduplicate the request to ensure only create one texture.
 
  Does process all response in addImageAsyncCallback consume more time?
- - Convert image to texture faster than load image from disk, so this isn't a problem.
+ - Convert image to texture faster than load image from disk, so this isn't a
+ problem.
+
+ Call unbindImageAsync(path) to prevent the call to the callback when the
+ texture is loaded.
  */
 void TextureCache::addImageAsync(const std::string &path, const std::function<void(Texture2D*)>& callback)
+{
+    addImageAsync( path, callback, path );
+}
+
+/**
+ The addImageAsync logic follow the steps:
+ - find the image has been add or not, if not add an AsyncStruct to _requestQueue  (GL thread)
+ - get AsyncStruct from _requestQueue, load res and fill image data to AsyncStruct.image, then add AsyncStruct to _responseQueue (Load thread)
+ - on schedule callback, get AsyncStruct from _responseQueue, convert image to texture, then delete AsyncStruct (GL thread)
+ 
+ the Critical Area include these members:
+ - _requestQueue: locked by _requestMutex
+ - _responseQueue: locked by _responseMutex
+ 
+ the object's life time:
+ - AsyncStruct: construct and destruct in GL thread
+ - image data: new in Load thread, delete in GL thread(by Image instance)
+ 
+ Note:
+ - all AsyncStruct referenced in _asyncStructQueue, for unbind function use.
+ 
+ How to deal add image many times?
+ - At first, this situation is abnormal, we only ensure the logic is correct.
+ - If the image has been loaded, the after load image call will return immediately.
+ - If the image request is in queue already, there will be more than one request in queue,
+ - In addImageAsyncCallback, will deduplicate the request to ensure only create one texture.
+ 
+ Does process all response in addImageAsyncCallback consume more time?
+ - Convert image to texture faster than load image from disk, so this isn't a
+ problem.
+
+ The callbackKey allows to unbind the callback in cases where the loading of
+ path is requested by several sources simultaneously. Each source can then
+ unbind the callback independently as needed whilst a call to
+ unbindImageAsync(path) would be ambiguous.
+ */
+void TextureCache::addImageAsync(const std::string &path, const std::function<void(Texture2D*)>& callback, const std::string& callbackKey)
 {
     Texture2D *texture = nullptr;
 
@@ -173,8 +221,9 @@ void TextureCache::addImageAsync(const std::string &path, const std::function<vo
     ++_asyncRefCount;
 
     // generate async struct
-    AsyncStruct *data = new (std::nothrow) AsyncStruct(fullpath, callback);
-
+    AsyncStruct *data =
+      new (std::nothrow) AsyncStruct(fullpath, callback, callbackKey);
+    
     // add async struct into queue
     _asyncStructQueue.push_back(data);
     _requestMutex.lock();
@@ -184,16 +233,16 @@ void TextureCache::addImageAsync(const std::string &path, const std::function<vo
     _sleepCondition.notify_one();
 }
 
-void TextureCache::unbindImageAsync(const std::string& filename)
+void TextureCache::unbindImageAsync(const std::string& callbackKey)
 {
     if (_asyncStructQueue.empty())
     {
         return;
     }
-    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(filename);
+
     for (auto& asyncStruct : _asyncStructQueue)
     {
-        if (asyncStruct->filename == fullpath)
+        if (asyncStruct->callbackKey == callbackKey)
         {
             asyncStruct->callback = nullptr;
         }
