@@ -304,6 +304,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCVector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\etc1.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\etc2.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\etc2types.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\firePngData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ObjectFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\pvr.h" />
@@ -933,6 +935,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCValue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\etc1.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\etc2.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\etc2unpack.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\etcdec.cxx" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ObjectFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\pvr.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\s3tc.cpp" />
