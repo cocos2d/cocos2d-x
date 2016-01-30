@@ -113,4 +113,15 @@ protected:
     cocos2d::ui::Text* _displayValueLabel;
 };
 
+class UISscrollViewTestBar : public UIScene_Editor
+{
+public:
+    CREATE_FUNC(UISscrollViewTestBar);
+
+    UISscrollViewTestBar();
+    ~UISscrollViewTestBar();
+
+    virtual bool init() override;
+
+};
 #endif /* defined(__TestCpp__UIScrollViewTest_Editor__) */

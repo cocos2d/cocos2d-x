@@ -423,6 +423,8 @@ bool js_cocos2dx_ui_ScrollView_getScrollBarColor(JSContext *cx, uint32_t argc, j
 bool js_cocos2dx_ui_ScrollView_jumpToTopLeft(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_ScrollView_jumpToPercentHorizontal(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_ScrollView_jumpToBottomRight(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_ScrollView_setTouchTotalTimeThreshold(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_ScrollView_getTouchTotalTimeThreshold(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForHorizontal(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_ScrollView_setScrollBarWidth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_ScrollView_setBounceEnabled(JSContext *cx, uint32_t argc, jsval *vp);
@@ -698,7 +700,9 @@ bool js_cocos2dx_ui_RichElementImage_constructor(JSContext *cx, uint32_t argc, j
 void js_cocos2dx_ui_RichElementImage_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_ui_RichElementImage(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx_ui(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_ui_RichElementImage_setHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_RichElementImage_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichElementImage_setWidth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_RichElementImage_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_RichElementImage_RichElementImage(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -722,10 +726,14 @@ void js_register_cocos2dx_ui_RichText(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx_ui(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_ui_RichText_insertElement(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_RichText_pushBackElement(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_setWrapMode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_RichText_setVerticalSpace(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_getWrapMode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_RichText_formatText(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_initWithXML(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_RichText_removeElement(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_RichText_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_RichText_createWithXML(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_RichText_RichText(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_ui_HBox_class;

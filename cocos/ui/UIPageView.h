@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -238,7 +238,7 @@ public:
      * @param callback A page turning callback.
      */
     void addEventListener(const ccPageViewCallback& callback);
-    
+    using ScrollView::addEventListener;
     //override methods
     virtual std::string getDescription() const override;
 

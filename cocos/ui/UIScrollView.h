@@ -55,7 +55,8 @@ typedef enum
     SCROLLVIEW_EVENT_BOUNCE_TOP,
     SCROLLVIEW_EVENT_BOUNCE_BOTTOM,
     SCROLLVIEW_EVENT_BOUNCE_LEFT,
-    SCROLLVIEW_EVENT_BOUNCE_RIGHT
+    SCROLLVIEW_EVENT_BOUNCE_RIGHT,
+    SCROLLVIEW_EVENT_AUTOSCROLL_ENDED
 }ScrollviewEventType;
 
 /**
@@ -100,7 +101,8 @@ public:
         BOUNCE_BOTTOM,
         BOUNCE_LEFT,
         BOUNCE_RIGHT,
-        CONTAINER_MOVED
+        CONTAINER_MOVED,
+        AUTOSCROLL_ENDED
     };
 
     /**
@@ -506,6 +508,20 @@ public:
     float getScrollBarAutoHideTime() const;
     
     /**
+     * @brief Set the touch total time threshold
+     *
+     * @param the touch total time threshold
+     */
+    void setTouchTotalTimeThreshold(float touchTotalTimeThreshold);
+    
+    /**
+     * @brief Get the touch total time threshold
+     *
+     * @return the touch total time threshold
+     */
+    float getTouchTotalTimeThreshold() const;
+    
+    /**
      * Set layout type for scrollview.
      *
      * @see `Layout::Type`
@@ -620,6 +636,7 @@ protected:
     std::list<Vec2> _touchMoveDisplacements;
     std::list<float> _touchMoveTimeDeltas;
     long long _touchMovePreviousTimestamp;
+    float _touchTotalTimeThreshold;
     
     bool _autoScrolling;
     bool _autoScrollAttenuate;

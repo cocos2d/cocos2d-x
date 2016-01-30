@@ -117,7 +117,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\debug-lib\*.*" 
       <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
       <ModuleDefinitionFile>cocos2d.def</ModuleDefinitionFile>
-      <AdditionalDependencies>sqlite3.lib;libcurl_imp.lib;websockets.lib;libmpg123.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;libbullet.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sqlite3.lib;libcurl_imp.lib;websockets.lib;libmpg123.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;libbullet.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -164,7 +164,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>sqlite3.lib;libcurl_imp.lib;websockets.lib;libmpg123.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;libbullet.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sqlite3.lib;libcurl_imp.lib;websockets.lib;libmpg123.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;libbullet.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBCMTD.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>

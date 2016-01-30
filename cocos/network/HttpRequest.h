@@ -142,9 +142,9 @@ public:
      * Set the url address of HttpRequest object.
      * The url value could be like these: "http://httpbin.org/ip" or "https://httpbin.org/get"
      *
-     * @param url the string pointer.
+     * @param url the string object.
      */
-    inline void setUrl(const char* url)
+    inline void setUrl(const std::string& url)
     {
         _url = url;
     };
@@ -194,9 +194,9 @@ public:
      * Set a string tag to identify your request.
      * This tag can be found in HttpResponse->getHttpRequest->getTag().
      *
-     * @param tag the string pointer
+     * @param tag the string object.
      */
-    inline void setTag(const char* tag)
+    inline void setTag(const std::string& tag)
     {
         _tag = tag;
     };

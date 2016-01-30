@@ -55,14 +55,24 @@ typedef struct _ttfConfig
     bool distanceFieldEnabled;
     int outlineSize;
 
+    bool italics;
+    bool bold;
+    bool underline;
+    bool strikethrough;
+
     _ttfConfig(const std::string& filePath = "",float size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
-        const char *customGlyphCollection = nullptr, bool useDistanceField = false, int outline = 0)
+        const char *customGlyphCollection = nullptr, bool useDistanceField = false, int outline = 0,
+               bool useItalics = false, bool useBold = false, bool useUnderline = false, bool useStrikethrough = false)
         : fontFilePath(filePath)
         , fontSize(size)
         , glyphs(glyphCollection)
         , customGlyphs(customGlyphCollection)
         , distanceFieldEnabled(useDistanceField)
         , outlineSize(outline)
+        , italics(useItalics)
+        , bold(useBold)
+        , underline(useUnderline)
+        , strikethrough(useStrikethrough)
     {
         if(outline > 0)
         {
@@ -292,7 +302,7 @@ public:
     /** Sets the text that this Label is to display.*/
     virtual void setString(const std::string& text) override;
 
-    /** Return the text the Label is displaying.*/
+    /** Return the text the Label is currently displaying.*/
     virtual const std::string& getString() const override {  return _utf8Text; }
 
     /**
@@ -337,7 +347,28 @@ public:
     virtual void enableGlow(const Color4B& glowColor);
 
     /**
-     * Disable all effect to Label.
+     * Enable italics rendering
+     */
+    void enableItalics();
+
+    /**
+     * Enable bold rendering
+     */
+    void enableBold();
+
+    /**
+     * Enable underline
+     */
+    void enableUnderline();
+
+    /**
+     * Enables strikethrough.
+     * Underline and Strikethrough cannot be enabled at the same time.
+     * Strikethough is like an underline but at the middle of the glyph
+     */
+    void enableStrikethrough();
+    /**
+     * Disable all effect applied to Label.
      * @warning Please use disableEffect(LabelEffect::ALL) instead of this API.
      */
     virtual void disableEffect();
@@ -474,7 +505,7 @@ public:
      * Makes the Label exactly this untransformed height.
      *
      * The Label's height be used for text align if the value not equal zero.
-     * The text will display of incomplete when the size of Label not enough to support display all text.
+     * The text will display incomplete if the size of Label is not large enough to display all text.
      */
     void setHeight(float height){ setDimensions(_labelWidth, height); }
     float getHeight() const { return _labelHeight; }
@@ -487,12 +518,12 @@ public:
     virtual void updateContent();
 
     /**
-     * Provides a way to treats each character like a Sprite.
+     * Provides a way to treat each character like a Sprite.
      * @warning No support system font.
      */
     virtual Sprite * getLetter(int lettetIndex);
 
-    /** Makes the Label to clip upper and lower margin for reduce height of Label.*/
+    /** Clips upper and lower margin to reduce height of Label.*/
     void setClipMarginEnabled(bool clipEnabled) { _clipEnabled = clipEnabled; }
 
     bool isClipMarginEnabled() const { return _clipEnabled; }
@@ -605,7 +636,7 @@ protected:
     void computeStringNumLines();
 
     void onDraw(const Mat4& transform, bool transformUpdated);
-    void onDrawShadow(GLProgram* glProgram);
+    void onDrawShadow(GLProgram* glProgram, const Color4F& shadowColor);
     void drawSelf(bool visibleByCamera, Renderer* renderer, uint32_t flags);
 
     bool multilineTextWrapByChar();
@@ -735,6 +766,11 @@ protected:
     float _bmfontScale;
     Overflow _overflow;
     float _originalFontSize;
+
+    bool _boldEnabled;
+    DrawNode* _underlineNode;
+    bool _strikethroughEnabled;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);
 };

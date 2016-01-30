@@ -66,9 +66,14 @@ var UIPageViewTest = UIMainLayer.extend({
                 text.y = layoutRect.height / 2;
                 layout.addChild(text);
 
-                pageView.addPage(layout);
+                pageView.addWidgetToPage(layout, i);
             }
+            pageView.setCurPageIndex(1);
             pageView.addEventListener(this.pageViewEvent, this);
+
+            //for test purpose only
+            cc.log(pageView.getPages());
+            cc.log(pageView.getPage(0));
             this._mainNode.addChild(pageView);
 
             return true;
