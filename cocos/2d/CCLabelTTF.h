@@ -88,42 +88,42 @@ public:
     /** Create a label with string and a font definition*/
     static LabelTTF * createWithFontDefinition(const std::string& string, FontDefinition &textDefinition);
     
-    /** initializes the LabelTTF with a font name, alignment, dimension and font size */
+    /** Initializes the LabelTTF with a font name, alignment, dimension and font size */
     bool initWithString(const std::string& string, const std::string& fontName, float fontSize,
                         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT, 
                         TextVAlignment vAlignment = TextVAlignment::TOP);
     
-    /** initializes the LabelTTF with a font name, alignment, dimension and font size */
+    /** Initializes the LabelTTF with a font name, alignment, dimension and font size */
     bool initWithStringAndTextDefinition(const std::string& string, FontDefinition &textDefinition);
     
-    /** set the text definition used by this label */
+    /** Set the text definition used by this label */
     void setTextDefinition(const FontDefinition& theDefinition);
     
-    /** get the text definition used by this label */
+    /** Get the text definition used by this label */
     const FontDefinition& getTextDefinition();
     
     
     
-    /** enable or disable shadow for the label */
+    /** Enable or disable shadow for the label */
     void enableShadow(const Size &shadowOffset, float shadowOpacity, float shadowBlur, bool mustUpdateTexture = true);
     
-    /** disable shadow rendering */
+    /** Disable shadow rendering */
     void disableShadow(bool mustUpdateTexture = true);
     
-    /** enable or disable stroke */
+    /** Enable or disable stroke */
     void enableStroke(const Color3B &strokeColor, float strokeSize, bool mustUpdateTexture = true);
     
-    /** disable stroke */
+    /** Disable stroke */
     void disableStroke(bool mustUpdateTexture = true);
     
-    /** set text tinting */
+    /** Set text tinting */
     void setFontFillColor(const Color3B &tintColor, bool mustUpdateTexture = true);
 
     /** Creates an label.
      */
     static LabelTTF * create();
 
-    /** changes the string to render
+    /** Changes the string to render
     * @warning Changing the string is as expensive as creating a new LabelTTF. To obtain better performance use LabelAtlas
     */
     virtual void setString(const std::string &label) override;
