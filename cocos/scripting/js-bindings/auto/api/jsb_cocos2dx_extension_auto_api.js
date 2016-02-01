@@ -1941,11 +1941,9 @@ direction
 },
 
 /**
- * @method setBounceable
- * @param {bool} arg0
+ * @method stopAnimatedContentOffset
  */
-setBounceable : function (
-bool 
+stopAnimatedContentOffset : function (
 )
 {
 },
@@ -2060,6 +2058,16 @@ maxContainerOffset : function (
 )
 {
     return cc.Vec2;
+},
+
+/**
+ * @method setBounceable
+ * @param {bool} arg0
+ */
+setBounceable : function (
+bool 
+)
+{
 },
 
 /**
