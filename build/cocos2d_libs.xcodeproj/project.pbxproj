@@ -1238,7 +1238,6 @@
 		298C75D61C0465D1006BAE63 /* CCStencilStateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 298C75D31C0465D0006BAE63 /* CCStencilStateManager.cpp */; };
 		298C75D71C0465D1006BAE63 /* CCStencilStateManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 298C75D41C0465D0006BAE63 /* CCStencilStateManager.hpp */; };
 		298C75D81C0465D1006BAE63 /* CCStencilStateManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 298C75D41C0465D0006BAE63 /* CCStencilStateManager.hpp */; };
-		298C75D91C04681F006BAE63 /* CCStencilStateManager.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 298C75D41C0465D0006BAE63 /* CCStencilStateManager.hpp */; };
 		299754F4193EC95400A54AC3 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299754F2193EC95400A54AC3 /* ObjectFactory.cpp */; };
 		299754F5193EC95400A54AC3 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299754F2193EC95400A54AC3 /* ObjectFactory.cpp */; };
 		299754F6193EC95400A54AC3 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 299754F3193EC95400A54AC3 /* ObjectFactory.h */; };
@@ -1499,7 +1498,6 @@
 		507003221B69735300E83DDD /* HttpConnection-winrt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507003191B69735200E83DDD /* HttpConnection-winrt.cpp */; };
 		507003231B69735300E83DDD /* HttpConnection-winrt.h in Headers */ = {isa = PBXBuildFile; fileRef = 5070031A1B69735200E83DDD /* HttpConnection-winrt.h */; };
 		507003241B69735300E83DDD /* HttpConnection-winrt.h in Headers */ = {isa = PBXBuildFile; fileRef = 5070031A1B69735200E83DDD /* HttpConnection-winrt.h */; };
-		507B39C11C31BDD30067B53E /* CCStencilStateManager.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 298C75D41C0465D0006BAE63 /* CCStencilStateManager.hpp */; };
 		507B39C21C31BDD30067B53E /* CCAllocatorGlobalNewDelete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD03401A3B51AA00825BB5 /* CCAllocatorGlobalNewDelete.cpp */; };
 		507B39C31C31BDD30067B53E /* UIVideoPlayer-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB6A191C841D00B170C8 /* UIVideoPlayer-ios.mm */; };
 		507B39C41C31BDD30067B53E /* CCPUPlaneCollider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E19A1AA80A6500DDB1C5 /* CCPUPlaneCollider.cpp */; };
@@ -14867,7 +14865,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				507B39C11C31BDD30067B53E /* CCStencilStateManager.hpp in Sources */,
 				507B39C21C31BDD30067B53E /* CCAllocatorGlobalNewDelete.cpp in Sources */,
 				507B39C31C31BDD30067B53E /* UIVideoPlayer-ios.mm in Sources */,
 				507B39C41C31BDD30067B53E /* CCPUPlaneCollider.cpp in Sources */,
@@ -15711,7 +15708,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				298C75D91C04681F006BAE63 /* CCStencilStateManager.hpp in Sources */,
 				D0FD03541A3B51AA00825BB5 /* CCAllocatorGlobalNewDelete.cpp in Sources */,
 				15AE1B9819AADAA100C27E9E /* UIVideoPlayer-ios.mm in Sources */,
 				B665E38F1AA80A6500DDB1C5 /* CCPUPlaneCollider.cpp in Sources */,
