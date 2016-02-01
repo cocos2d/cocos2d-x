@@ -733,6 +733,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="CCTMXObjectGroup.cpp" />
     <ClCompile Include="CCTMXTiledMap.cpp" />
     <ClCompile Include="CCTMXXMLParser.cpp" />
+    <ClCompile Include="CCTouchAction.cpp" />
     <ClCompile Include="CCTransition.cpp" />
     <ClCompile Include="CCTransitionPageTurn.cpp" />
     <ClCompile Include="CCTransitionProgress.cpp" />
@@ -1353,6 +1354,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="CCTMXObjectGroup.h" />
     <ClInclude Include="CCTMXTiledMap.h" />
     <ClInclude Include="CCTMXXMLParser.h" />
+    <ClInclude Include="CCTouchAction.h" />
     <ClInclude Include="CCTransition.h" />
     <ClInclude Include="CCTransitionPageTurn.h" />
     <ClInclude Include="CCTransitionProgress.h" />

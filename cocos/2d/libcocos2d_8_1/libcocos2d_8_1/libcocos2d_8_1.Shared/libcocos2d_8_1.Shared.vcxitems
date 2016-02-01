@@ -636,6 +636,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCTMXObjectGroup.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCTMXTiledMap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCTMXXMLParser.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCTouchAction.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCTransition.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCTransitionPageTurn.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCTransitionProgress.h" />
@@ -1235,6 +1236,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCTMXObjectGroup.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCTMXTiledMap.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCTMXXMLParser.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCTouchAction.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCTransition.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCTransitionPageTurn.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCTransitionProgress.cpp" />
