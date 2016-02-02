@@ -1975,15 +1975,17 @@ void ScriptingCore::enableDebugger(unsigned int port)
         JSAutoCompartment acDebug(_cx, rootedDebugObj);
         // these are used in the debug program
         JS_DefineFunction(_cx, rootedDebugObj, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_ENUMERATE | JSPROP_PERMANENT);
+        JS_DefineFunction(_cx, rootedDebugObj, "require", ScriptingCore::executeScript, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
         JS_DefineFunction(_cx, rootedDebugObj, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(_cx, rootedDebugObj, "_enterNestedEventLoop", JSBDebug_enterNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(_cx, rootedDebugObj, "_exitNestedEventLoop", JSBDebug_exitNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(_cx, rootedDebugObj, "_getEventLoopNestLevel", JSBDebug_getEventLoopNestLevel, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         
-        runScript("script/jsb_debugger.js", rootedDebugObj);
-        
         JS::RootedObject globalObj(_cx, _global.ref());
         JS_WrapObject(_cx, &globalObj);
+        
+        runScript("script/jsb_debugger.js", rootedDebugObj);
+        
         // prepare the debugger
         jsval argv = OBJECT_TO_JSVAL(globalObj);
         JS::RootedValue outval(_cx);
