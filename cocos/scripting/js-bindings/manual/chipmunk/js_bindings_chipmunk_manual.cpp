@@ -1619,6 +1619,7 @@ bool JSB_cpSpace_addPostStepCallback(JSContext *cx, uint32_t argc, jsval *vp)
 
     data->cx = cx;
     data->func = args.get(0);
+    js_add_object_reference(args.thisv(), args.get(0));
 
     cpSpaceAddPostStepCallback(space, (cpPostStepFunc)__JSB_PostStep_callback, data, data);
 

@@ -66,9 +66,8 @@ static bool js_cocos2dx_Sprite3D_createAsync(JSContext *cx, uint32_t argc, jsval
         JS::RootedValue fval(cx, args.get(argc == 4 ? 1 : 2));
         std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, target, fval));
         auto lambda = [=](Sprite3D* larg0, void* larg1) -> void{
-
-            jsval largv[2];
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+            jsval largv[2];
             largv[0] = OBJECT_TO_JSVAL(js_get_or_create_jsobject<Sprite3D>(cx, larg0));
             JSB_HeapValueWrapper* v = (JSB_HeapValueWrapper*)larg1;
             JS::RootedValue dataVal(cx, v->get());
