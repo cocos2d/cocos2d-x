@@ -464,6 +464,7 @@ ScriptingCore* ScriptingCore::getInstance()
 ScriptingCore::ScriptingCore()
 : _rt(nullptr)
 , _cx(nullptr)
+, _jsInited(false)
 //, _global(nullptr)
 //, _debugGlobal(nullptr)
 , _callFromScript(false)
@@ -579,8 +580,14 @@ void ScriptingCore::createGlobalContext() {
     }
     
     // Start the engine. Added in SpiderMonkey v25
-    if (!JS_Init())
+    if (!_jsInited && !JS_Init())
+    {
         return;
+    }
+    else
+    {
+        _jsInited = true;
+    }
     
     // Removed from Spidermonkey 19.
     //JS_SetCStringsAreUTF8();
@@ -812,6 +819,7 @@ void ScriptingCore::restartVM()
 ScriptingCore::~ScriptingCore()
 {
     cleanup();
+    JS_ShutDown();
 }
 
 void ScriptingCore::cleanup()
@@ -829,7 +837,8 @@ void ScriptingCore::cleanup()
         JS_DestroyRuntime(_rt);
         _rt = NULL;
     }
-    JS_ShutDown();
+    _global.destroyIfConstructed();
+    _debugGlobal.destroyIfConstructed();
     if (_js_log_buf) {
         free(_js_log_buf);
         _js_log_buf = NULL;
@@ -1163,9 +1172,10 @@ void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
 
 bool ScriptingCore::isFunctionOverridedInJS(JS::HandleObject obj, const std::string& name, JSNative native)
 {
-    JSAutoCompartment ac(_cx, obj);
+    JS::RootedObject jsobj(_cx, obj);
+    JSAutoCompartment ac(_cx, jsobj);
     JS::RootedValue value(_cx);
-    bool ok = JS_GetProperty(_cx, obj, name.c_str(), &value);
+    bool ok = JS_GetProperty(_cx, jsobj, name.c_str(), &value);
     if (ok && !value.isNullOrUndefined() && !JS_IsNativeFunction(value.toObjectOrNull(), native))
     {
         return true;
@@ -2331,8 +2341,9 @@ JSObject *jsb_get_and_remove_hook_owner(JSObject *hook)
     // Found
     if (ownerIt != _js_hook_owner_map.cend())
     {
+        JSObject *result = ownerIt->second;
         _js_hook_owner_map.erase(ownerIt);
-        return ownerIt->second;
+        return result;
     }
     return nullptr;
 }
