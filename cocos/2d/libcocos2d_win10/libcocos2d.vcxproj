@@ -640,6 +640,7 @@
     <ClCompile Include="..\..\ui\UIButton.cpp" />
     <ClCompile Include="..\..\ui\UIAbstractCheckButton.cpp" />
     <ClCompile Include="..\..\ui\UICheckBox.cpp" />
+    <ClCompile Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.cpp" />
     <ClCompile Include="..\..\ui\UIRadioButton.cpp" />
     <ClCompile Include="..\..\ui\UIDeprecated.cpp" />
     <ClCompile Include="..\..\ui\UIEditBox\UIEditBox.cpp" />
@@ -1242,6 +1243,7 @@
     <ClInclude Include="..\..\renderer\CCBatchCommand.h" />
     <ClInclude Include="..\..\renderer\CCCustomCommand.h" />
     <ClInclude Include="..\..\renderer\CCTextureCube.h" />
+    <ClInclude Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.h" />
     <ClInclude Include="..\CCAutoPolygon.h" />
     <ClInclude Include="..\CCCameraBackgroundBrush.h" />
     <ClInclude Include="..\renderer\CCFrameBuffer.h" />
