@@ -217,8 +217,6 @@ void Node::cleanup()
     this->stopAllActions();
     // timers
     this->unscheduleAllCallbacks();
-    // event listeners
-    Director::getInstance()->getEventDispatcher()->removeEventListenersForTarget(this);
     
     for( const auto &child: _children)
         child->cleanup();
