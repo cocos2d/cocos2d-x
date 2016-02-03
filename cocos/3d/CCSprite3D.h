@@ -232,7 +232,7 @@ CC_CONSTRUCTOR_ACCESS:
     void genMaterial(bool useLight = false);
 
     void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite);
-    void createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& matrialdatas);
+    void createAttachSprite3DNode(NodeData* nodedata, const MaterialDatas& materialdatas, const std::string& parentid);
     Sprite3D* createSprite3DNode(NodeData* nodedata,ModelData* modeldata,const MaterialDatas& matrialdatas);
 
     /**get MeshIndexData by Id*/

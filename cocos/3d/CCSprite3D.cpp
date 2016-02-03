@@ -213,7 +213,7 @@ bool Sprite3D::loadFromCache(const std::string& path)
         {
             if(it)
             {
-                createAttachSprite3DNode(it,*(spritedata->materialdatas));
+                createAttachSprite3DNode(it,*(spritedata->materialdatas),"");
             }
         }
         
@@ -350,7 +350,7 @@ bool Sprite3D::initFrom(const NodeDatas& nodeDatas, const MeshDatas& meshdatas, 
     {
         if(it)
         {
-             createAttachSprite3DNode(it,materialdatas);
+             createAttachSprite3DNode(it,materialdatas,"");
         }
     }
     genMaterial();
@@ -432,22 +432,22 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
     }
     return   sprite;
 }
-void Sprite3D::createAttachSprite3DNode(NodeData* nodedata, const MaterialDatas& materialdatas)
+void Sprite3D::createAttachSprite3DNode(NodeData* nodedata, const MaterialDatas& materialdatas, const std::string& parentid)
 {
     for(const auto& it : nodedata->modelNodeDatas)
     {
-        if(it && getAttachNode(nodedata->id))
+        if(it && getAttachNode(parentid))
         {
             auto sprite = createSprite3DNode(nodedata,it,materialdatas);
             if (sprite)
             {
-                getAttachNode(nodedata->id)->addChild(sprite);
+                getAttachNode(parentid)->addChild(sprite);
             } 
         }
     }
     for(const auto& it : nodedata->children)
     {
-        createAttachSprite3DNode(it,materialdatas);
+        createAttachSprite3DNode(it,materialdatas, nodedata->id);
     }
 }
 
