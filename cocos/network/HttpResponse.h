@@ -51,17 +51,13 @@ public:
      * @param request the corresponding HttpRequest which leads to this response.
      */
     HttpResponse(HttpRequest* request)
+        : _pHttpRequest(request)
+        , _succeed(false)
     {
-        _pHttpRequest = request;
         if (_pHttpRequest)
         {
             _pHttpRequest->retain();
         }
-        
-        _succeed = false;
-        _responseData.clear();
-        _errorBuffer.clear();
-        _responseDataString = "";
     }
     
     /** 
@@ -81,11 +77,11 @@ public:
      * If this method is called , it would trigger CCASSERT.
      * @return cocos2d::Ref* always return nullptr.
      */
-    cocos2d::Ref* autorelease(void)
+    cocos2d::Ref* autorelease()
     {
         CCASSERT(false, "HttpResponse is used between network thread and ui thread \
                         therefore, autorelease is forbidden here");
-        return NULL;
+        return nullptr;
     }
     
     // getters, will be called by users
@@ -106,10 +102,10 @@ public:
      * If this getter returns false, you can call getResponseCode and getErrorBuffer to find more details.
      * @return bool the flag that represent whether the http request return successfully or not.
      */
-    inline bool isSucceed()
+    inline bool isSucceed() const
     {
         return _succeed;
-    };
+    }
     
     /** 
      * Get the http response data.
@@ -135,7 +131,7 @@ public:
      * If _responseCode is not 200, you should check the meaning for _responseCode by the net.
      * @return long the value of _responseCode
      */
-    inline long getResponseCode()
+    inline long getResponseCode() const
     {
         return _responseCode;
     }
@@ -144,7 +140,7 @@ public:
      * Get the error buffer which will tell you more about the reason why http request failed.
      * @return const char* the pointer that point to _errorBuffer.
      */
-    inline const char* getErrorBuffer()
+    inline const char* getErrorBuffer() const
     {
         return _errorBuffer.c_str();
     }
@@ -161,7 +157,7 @@ public:
     inline void setSucceed(bool value)
     {
         _succeed = value;
-    };
+    }
     
     
     /** 
@@ -201,7 +197,7 @@ public:
     {
         _errorBuffer.clear();
         _errorBuffer.assign(value);
-    };
+    }
     
     /**
      * Set the response data by the string pointer and the defined size.
@@ -218,7 +214,7 @@ public:
      * Get the string pointer that point to the response data.
      * @return const char* the string pointer that point to the response data.
      */
-    inline const char* getResponseDataString()
+    inline const char* getResponseDataString() const
     {
         return _responseDataString.c_str();
     }
