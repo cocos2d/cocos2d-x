@@ -59,7 +59,7 @@ ActionTween *ActionTween::clone() const
 {
     // no copy constructor    
     auto a = new (std::nothrow) ActionTween();
-    a->initWithDuration(_duration, _key.c_str(), _from, _to);
+    a->initWithDuration(_duration, _key, _from, _to);
     a->autorelease();
     return a;
 }
@@ -73,12 +73,12 @@ void ActionTween::startWithTarget(Node *target)
 
 void ActionTween::update(float dt)
 {
-    dynamic_cast<ActionTweenDelegate*>(_target)->updateTweenAction(_to  - _delta * (1 - dt), _key.c_str());
+    dynamic_cast<ActionTweenDelegate*>(_target)->updateTweenAction(_to  - _delta * (1 - dt), _key);
 }
 
 ActionTween* ActionTween::reverse() const
 {
-    return ActionTween::create(_duration, _key.c_str(), _to, _from);
+    return ActionTween::create(_duration, _key, _to, _from);
 }
 
 

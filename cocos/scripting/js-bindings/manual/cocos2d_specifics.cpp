@@ -4260,7 +4260,7 @@ static bool js_cocos2dx_FileUtils_createDictionaryWithContentsOfFile(JSContext *
         std::string arg0;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-        cocos2d::ValueMap ret = FileUtils::getInstance()->getValueMapFromFile(arg0.c_str());
+        cocos2d::ValueMap ret = FileUtils::getInstance()->getValueMapFromFile(arg0);
         jsval jsret;
         jsret = ccvaluemap_to_jsval(cx, ret);
         args.rval().set(jsret);
@@ -4671,7 +4671,7 @@ std::string __JSPlistDelegator::parse(const std::string& path) {
     if (false != parser.init("UTF-8") )
     {
         parser.setDelegator(this);
-        parser.parse(FileUtils::getInstance()->fullPathForFilename(path).c_str());
+        parser.parse(FileUtils::getInstance()->fullPathForFilename(path));
     }
     
     return _result;

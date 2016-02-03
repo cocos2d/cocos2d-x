@@ -693,7 +693,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
                 cocos2d::network::HttpRequest::Type::UNKNOWN))));
 
             _httpRequest->setRequestType(requestType);
-            _httpRequest->setUrl(_url.c_str());
+            _httpRequest->setUrl(_url);
         }
         
        printf("[XMLHttpRequest] %s %s\n", _meth.c_str(), _url.c_str());

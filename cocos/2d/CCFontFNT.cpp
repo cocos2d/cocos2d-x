@@ -176,7 +176,7 @@ BMFontConfiguration* FNTConfigLoadFile(const std::string& fntFile)
     ret = s_configurations->at(fntFile);
     if( ret == nullptr )
     {
-        ret = BMFontConfiguration::create(fntFile.c_str());
+        ret = BMFontConfiguration::create(fntFile);
         if (ret)
         {
             s_configurations->insert(fntFile, ret);
@@ -835,7 +835,7 @@ void FontFNT::reloadBMFontResource(const std::string& fntFilePath)
     {
         s_configurations->erase(fntFilePath);
     }
-    ret = BMFontConfiguration::create(fntFilePath.c_str());
+    ret = BMFontConfiguration::create(fntFilePath);
     if (ret)
     {
         s_configurations->insert(fntFilePath, ret);
