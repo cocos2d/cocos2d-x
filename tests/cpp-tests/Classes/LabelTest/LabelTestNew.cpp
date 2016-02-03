@@ -98,6 +98,13 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelSystemFontTest);
     ADD_TEST_CASE(LabelCharMapFontTest);
     ADD_TEST_CASE(LabelIssue13846Test);
+
+    ADD_TEST_CASE(LabelRichText);
+    ADD_TEST_CASE(LabelStrikethrough);
+    ADD_TEST_CASE(LabelUnderline);
+    ADD_TEST_CASE(LabelUnderlineMultiline);
+    ADD_TEST_CASE(LabelItalics);
+    ADD_TEST_CASE(LabelBold);
 };
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
@@ -2781,3 +2788,268 @@ std::string LabelIssue13846Test::subtitle() const
 {
     return "Test hide label's letter,the label should display ‘12 45’ as expected";
 }
+
+//
+//
+
+LabelRichText::LabelRichText()
+{
+    auto center = VisibleRect::center();
+
+    auto richText2 = RichText::createWithXML("Mixing <b>UIRichText</b> with non <i>UIWidget</i> code. For more samples, see the UIRichTextTest.cpp file");
+    if (richText2)
+    {
+        richText2->ignoreContentAdaptWithSize(false);
+        richText2->setContentSize(Size(400, 400));
+
+        addChild(richText2);
+        richText2->setPosition(Vec2(200,0));
+    }
+}
+
+std::string LabelRichText::title() const
+{
+    return "RichText";
+}
+
+std::string LabelRichText::subtitle() const
+{
+    return "Testing RichText";
+}
+
+LabelItalics::LabelItalics()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    // LabelBMFont
+    auto label1 = Label::createWithBMFont("fonts/bitmapFontTest2.fnt", "hello non-italics", TextHAlignment::CENTER, s.width);
+    addChild(label1, 0, kTagBitmapAtlas1);
+    label1->setPosition(Vec2(s.width/2, s.height*4/6));
+    // you can enable italics by calling this method
+
+    _label1a = Label::createWithBMFont("fonts/bitmapFontTest2.fnt", "hello italics", TextHAlignment::CENTER, s.width);
+    addChild(_label1a, 0, kTagBitmapAtlas1);
+    _label1a->setPosition(Vec2(s.width/2, s.height*3/6));
+    // you can enable italics by calling this method
+    _label1a->enableItalics();
+
+
+    // LabelTTF
+    TTFConfig ttfConfig("fonts/arial.ttf",24);
+    auto label2 = Label::createWithTTF(ttfConfig, "hello non-italics", TextHAlignment::CENTER,s.width);
+    addChild(label2, 0, kTagBitmapAtlas2);
+    label2->setPosition(Vec2(s.width/2, s.height*2/6));
+
+    // or by setting the italics parameter on TTFConfig
+    ttfConfig.italics = true;
+    _label2a = Label::createWithTTF(ttfConfig, "hello italics", TextHAlignment::CENTER,s.width);
+    addChild(_label2a, 0, kTagBitmapAtlas2);
+    _label2a->setPosition(Vec2(s.width/2, s.height*1/6));
+
+    auto menuItem = MenuItemFont::create("disable italics", [&](cocos2d::Ref* sender) {
+        _label2a->disableEffect(LabelEffect::ITALICS);
+        _label1a->disableEffect(LabelEffect::ITALICS);
+    });
+    menuItem->setFontSizeObj(12);
+    auto menu = Menu::createWithItem(menuItem);
+    addChild(menu);
+    auto winSize = Director::getInstance()->getWinSize();
+    menu->setPosition(winSize.width * 0.9, winSize.height * 0.25f);
+}
+
+std::string LabelItalics::title() const
+{
+    return "Testing Italics";
+}
+
+std::string LabelItalics::subtitle() const
+{
+    return "italics on TTF and BMfont";
+}
+
+///
+
+LabelBold::LabelBold()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    // LabelBMFont
+    auto label1 = Label::createWithBMFont("fonts/bitmapFontTest2.fnt", "hello non-bold", TextHAlignment::CENTER, s.width);
+    addChild(label1, 0, kTagBitmapAtlas1);
+    label1->setPosition(Vec2(s.width/2, s.height*4/6));
+    // you can enable italics by calling this method
+
+    _label1a = Label::createWithBMFont("fonts/bitmapFontTest2.fnt", "hello bold", TextHAlignment::CENTER, s.width);
+    addChild(_label1a, 0, kTagBitmapAtlas1);
+    _label1a->setPosition(Vec2(s.width/2, s.height*3/6));
+    // you can enable italics by calling this method
+    _label1a->enableBold();
+
+
+    // LabelTTF
+    TTFConfig ttfConfig("fonts/arial.ttf",24);
+    auto label2 = Label::createWithTTF(ttfConfig, "hello non-bold", TextHAlignment::CENTER,s.width);
+    addChild(label2, 0, kTagBitmapAtlas2);
+    label2->setPosition(Vec2(s.width/2, s.height*2/6));
+
+    // or by setting the italics parameter on TTFConfig
+    ttfConfig.bold = true;
+    _label2a = Label::createWithTTF(ttfConfig, "hello bold", TextHAlignment::CENTER,s.width);
+    addChild(_label2a, 0, kTagBitmapAtlas2);
+    _label2a->setPosition(Vec2(s.width/2, s.height*1/6));
+
+    auto menuItem = MenuItemFont::create("disable bold", [&](cocos2d::Ref* sender) {
+        _label2a->disableEffect(LabelEffect::BOLD);
+        _label1a->disableEffect(LabelEffect::BOLD);
+    });
+    menuItem->setFontSizeObj(12);
+    auto menu = Menu::createWithItem(menuItem);
+    addChild(menu);
+    auto winSize = Director::getInstance()->getWinSize();
+    menu->setPosition(winSize.width * 0.9, winSize.height * 0.25f);
+}
+
+std::string LabelBold::title() const
+{
+    return "Testing Bold";
+}
+
+std::string LabelBold::subtitle() const
+{
+    return "Bold on TTF and BMfont";
+}
+
+///
+
+LabelUnderline::LabelUnderline()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    // LabelBMFont
+    auto label1 = Label::createWithBMFont("fonts/bitmapFontTest2.fnt", "hello non-underline", TextHAlignment::CENTER, s.width);
+    addChild(label1, 0, kTagBitmapAtlas1);
+    label1->setPosition(Vec2(s.width/2, s.height*4/6));
+    // you can enable italics by calling this method
+
+    _label1a = Label::createWithBMFont("fonts/bitmapFontTest2.fnt", "hello underline", TextHAlignment::CENTER, s.width);
+    addChild(_label1a, 0, kTagBitmapAtlas1);
+    _label1a->setPosition(Vec2(s.width/2, s.height*3/6));
+    // you can enable underline by calling this method
+    _label1a->enableUnderline();
+
+
+    // LabelTTF
+    TTFConfig ttfConfig("fonts/arial.ttf",24);
+    auto label2 = Label::createWithTTF(ttfConfig, "hello non-underline", TextHAlignment::CENTER,s.width);
+    addChild(label2, 0, kTagBitmapAtlas2);
+    label2->setPosition(Vec2(s.width/2, s.height*2/6));
+
+    // or by setting the italics parameter on TTFConfig
+    ttfConfig.underline = true;
+    _label2a = Label::createWithTTF(ttfConfig, "hello underline", TextHAlignment::CENTER,s.width);
+    addChild(_label2a, 0, kTagBitmapAtlas2);
+    _label2a->setPosition(Vec2(s.width/2, s.height*1/6));
+
+    auto menuItem = MenuItemFont::create("disable underline", [&](cocos2d::Ref* sender) {
+        _label2a->disableEffect(LabelEffect::UNDERLINE);
+        _label1a->disableEffect(LabelEffect::UNDERLINE);
+    });
+    menuItem->setFontSizeObj(12);
+    auto menu = Menu::createWithItem(menuItem);
+    addChild(menu);
+    auto winSize = Director::getInstance()->getWinSize();
+    menu->setPosition(winSize.width * 0.9, winSize.height * 0.25f);
+}
+
+std::string LabelUnderline::title() const
+{
+    return "Testing Underline";
+}
+
+std::string LabelUnderline::subtitle() const
+{
+    return "Underline on TTF and BMfont";
+}
+
+///
+
+LabelUnderlineMultiline::LabelUnderlineMultiline()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    // bmfont
+    _label1a = Label::createWithBMFont("fonts/bitmapFontTest5.fnt", "hello underline\nand multiline", TextHAlignment::CENTER, s.width);
+    addChild(_label1a, 0, kTagBitmapAtlas1);
+    _label1a->setPosition(Vec2(s.width/2, s.height*2/3));
+    // you can enable underline by calling this method
+    _label1a->enableUnderline();
+
+    // ttf
+    TTFConfig ttfConfig("fonts/arial.ttf",24);
+    ttfConfig.underline = true;
+    _label2a = Label::createWithTTF(ttfConfig, "hello\nunderline\nwith multiline", TextHAlignment::LEFT, s.width);
+    addChild(_label2a, 0, kTagBitmapAtlas2);
+    _label2a->setPosition(Vec2(s.width/2, s.height*1/3));
+
+    auto menuItem = MenuItemFont::create("disable underline", [&](cocos2d::Ref* sender) {
+        _label2a->disableEffect(LabelEffect::UNDERLINE);
+        _label1a->disableEffect(LabelEffect::UNDERLINE);
+    });
+    menuItem->setFontSizeObj(12);
+    auto menu = Menu::createWithItem(menuItem);
+    addChild(menu);
+    auto winSize = Director::getInstance()->getWinSize();
+    menu->setPosition(winSize.width * 0.9, winSize.height * 0.25f);
+}
+
+std::string LabelUnderlineMultiline::title() const
+{
+    return "Testing Underline + multiline";
+}
+
+std::string LabelUnderlineMultiline::subtitle() const
+{
+    return "Underline on TTF and BMfont with multiline";
+}
+
+///
+
+LabelStrikethrough::LabelStrikethrough()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    // bmfont
+    _label1a = Label::createWithBMFont("fonts/bitmapFontTest4.fnt", "hello strikethrough\nand multiline", TextHAlignment::LEFT, s.width);
+    addChild(_label1a, 0, kTagBitmapAtlas1);
+    _label1a->setPosition(Vec2(s.width/2, s.height*2/3));
+    // you can enable underline by calling this method
+    _label1a->enableStrikethrough();
+
+    // ttf
+    TTFConfig ttfConfig("fonts/arial.ttf",24);
+    ttfConfig.strikethrough = true;
+    _label2a = Label::createWithTTF(ttfConfig, "hello\nstrikethrough\nwith multiline", TextHAlignment::RIGHT, s.width);
+    addChild(_label2a, 0, kTagBitmapAtlas2);
+    _label2a->setPosition(Vec2(s.width/2, s.height*1/3));
+
+    auto menuItem = MenuItemFont::create("disable underline", [&](cocos2d::Ref* sender) {
+        _label2a->disableEffect(LabelEffect::STRIKETHROUGH);
+        _label1a->disableEffect(LabelEffect::STRIKETHROUGH);
+    });
+    menuItem->setFontSizeObj(12);
+    auto menu = Menu::createWithItem(menuItem);
+    addChild(menu);
+    auto winSize = Director::getInstance()->getWinSize();
+    menu->setPosition(winSize.width * 0.9, winSize.height * 0.25f);
+}
+
+std::string LabelStrikethrough::title() const
+{
+    return "Testing Strikethrough + multiline";
+}
+
+std::string LabelStrikethrough::subtitle() const
+{
+    return "Strikethrough on TTF and BMfont with multiline";
+}
+

@@ -990,21 +990,24 @@ bool ScriptingCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
         JSString* str = JS::ToString(cx, jsstr);
         JSStringWrapper path(str);
         bool res = false;
+        JS::RootedValue jsret(cx);
         if (argc == 2 && args.get(1).isString()) {
             JSString* globalName = args.get(1).toString();
             JSStringWrapper name(globalName);
 
             JS::RootedObject debugObj(cx, ScriptingCore::getInstance()->getDebugGlobal());
             if (debugObj) {
-                res = ScriptingCore::getInstance()->runScript(path.get(), debugObj);
+                res = ScriptingCore::getInstance()->requireScript(path.get(), debugObj, cx, &jsret);
             } else {
                 JS_ReportError(cx, "Invalid global object: %s", name.get());
+                args.rval().setUndefined();
                 return false;
             }
         } else {
             JS::RootedObject glob(cx, JS::CurrentGlobalOrNull(cx));
-            res = ScriptingCore::getInstance()->runScript(path.get(), glob);
+            res = ScriptingCore::getInstance()->requireScript(path.get(), glob, cx, &jsret);
         }
+        args.rval().set(jsret);
         return res;
     }
     args.rval().setUndefined();
@@ -2247,7 +2250,7 @@ void jsb_ref_rebind(JSContext* cx, JS::HandleObject jsobj, js_proxy_t *proxy, co
 {
     oldRef->_scriptOwned = false;
     
-#if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#if !CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     JS::RemoveObjectRoot(cx, &proxy->obj);
 #endif
     jsb_remove_proxy(proxy);

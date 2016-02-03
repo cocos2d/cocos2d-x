@@ -14,7 +14,7 @@
         
 --------------------------------
 -- Gets the ActionInterval of ActionFrame.<br>
--- parame duration   the duration time of ActionFrame<br>
+-- param duration   the duration time of ActionFrame<br>
 -- return ActionInterval
 -- @function [parent=#ActionMoveFrame] getAction 
 -- @param self

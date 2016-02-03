@@ -88,6 +88,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../Classes/FontTest/FontTest.cpp \
 ../../../Classes/InputTest/MouseTest.cpp \
 ../../../Classes/IntervalTest/IntervalTest.cpp \
+../../../Classes/JNITest/JNITest.cpp \
 ../../../Classes/LabelTest/LabelTest.cpp \
 ../../../Classes/LabelTest/LabelTestNew.cpp \
 ../../../Classes/LayerTest/LayerTest.cpp \

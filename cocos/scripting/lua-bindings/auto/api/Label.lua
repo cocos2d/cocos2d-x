@@ -32,7 +32,7 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
---  Return the text the Label is displaying.
+--  Return the text the Label is currently displaying.
 -- @function [parent=#Label] getString 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -122,7 +122,13 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
---  Makes the Label to clip upper and lower margin for reduce height of Label.
+-- 
+-- @function [parent=#Label] getLineSpacing 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+--  Clips upper and lower margin to reduce height of Label.
 -- @function [parent=#Label] setClipMarginEnabled 
 -- @param self
 -- @param #bool clipEnabled
@@ -143,6 +149,13 @@
 -- @param self
 -- @param #string font
 -- @return Label#Label self (return value: cc.Label)
+        
+--------------------------------
+-- Query the wrap is enabled or not.<br>
+-- Note: System font will always return true.
+-- @function [parent=#Label] isWrapEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Return the outline effect size value.
@@ -205,10 +218,12 @@
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
--- 
--- @function [parent=#Label] getLineSpacing 
+-- Enables strikethrough.<br>
+-- Underline and Strikethrough cannot be enabled at the same time.<br>
+-- Strikethough is like an underline but at the middle of the glyph
+-- @function [parent=#Label] enableStrikethrough 
 -- @param self
--- @return float#float ret (return value: float)
+-- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
 --  Update content immediately.
@@ -252,7 +267,7 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- Return current effect color vlaue.
+-- Return current effect color value.
 -- @function [parent=#Label] getEffectColor 
 -- @param self
 -- @return color4f_table#color4f_table ret (return value: color4f_table)
@@ -332,10 +347,10 @@
 -- @return _ttfConfig#_ttfConfig ret (return value: cc._ttfConfig)
         
 --------------------------------
---  Returns the Label's text vertical alignment.
--- @function [parent=#Label] getVerticalAlignment 
+-- Enable italics rendering
+-- @function [parent=#Label] enableItalics 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
 -- Sets the text color of Label.<br>
@@ -347,7 +362,7 @@
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
--- Provides a way to treats each character like a Sprite.<br>
+-- Provides a way to treat each character like a Sprite.<br>
 -- warning No support system font.
 -- @function [parent=#Label] getLetter 
 -- @param self
@@ -357,7 +372,7 @@
 --------------------------------
 -- Makes the Label exactly this untransformed height.<br>
 -- The Label's height be used for text align if the value not equal zero.<br>
--- The text will display of incomplete when the size of Label not enough to support display all text.
+-- The text will display incomplete if the size of Label is not large enough to display all text.
 -- @function [parent=#Label] setHeight 
 -- @param self
 -- @param #float height
@@ -381,6 +396,12 @@
 -- Query the label's Overflow type.<br>
 -- return see `Overflow`
 -- @function [parent=#Label] getOverflow 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+--  Returns the Label's text vertical alignment.
+-- @function [parent=#Label] getVerticalAlignment 
 -- @param self
 -- @return int#int ret (return value: int)
         
@@ -426,11 +447,16 @@
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
--- Query the wrap is enabled or not.<br>
--- Note: System font will always return true.
--- @function [parent=#Label] isWrapEnabled 
+-- Enable bold rendering
+-- @function [parent=#Label] enableBold 
 -- @param self
--- @return bool#bool ret (return value: bool)
+-- @return Label#Label self (return value: cc.Label)
+        
+--------------------------------
+-- Enable underline
+-- @function [parent=#Label] enableUnderline 
+-- @param self
+-- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
 -- Return current effect type.

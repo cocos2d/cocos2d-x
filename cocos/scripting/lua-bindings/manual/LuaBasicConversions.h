@@ -1238,7 +1238,7 @@ void ccvector_std_string_to_luaval(lua_State* L, const std::vector<std::string>&
  * The format of table as follows: {numberValue1, numberValue2, ..., numberVectorSize}
  *
  * @param L the current lua_State.
- * @param inValue a std::vector<int> vaule.
+ * @param inValue a std::vector<int> value.
  */
 void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue);
 
@@ -1247,7 +1247,7 @@ void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue);
  * The format of table as follows: {numberValue1, numberValue2, ..., numberVectorSize}
  *
  * @param L the current lua_State.
- * @param inValue a std::vector<float> vaule.
+ * @param inValue a std::vector<float> value.
  */
 void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
 
@@ -1256,7 +1256,7 @@ void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
  * The format of table as follows: {numberValue1, numberValue2, ..., numberVectorSize}
  *
  * @param L the current lua_State.
- * @param inValue a std::vector<float> vaule.
+ * @param inValue a std::vector<float> value.
  */
 void ccvector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& inValue);
 
@@ -1283,7 +1283,7 @@ void texParams_to_luaval(lua_State* L, const cocos2d::Texture2D::TexParams& inVa
  * The format of table as follows: {vec3Value1, vec3Value2, ..., vec3ValueSize}
  *
  * @param L the current lua_State.
- * @param inValue a std::vector<cocos2d::Vec3> vaule.
+ * @param inValue a std::vector<cocos2d::Vec3> value.
  */
 void std_vector_vec3_to_luaval(lua_State* L, const std::vector<cocos2d::Vec3>& inValue);
 
@@ -1291,7 +1291,7 @@ void std_vector_vec3_to_luaval(lua_State* L, const std::vector<cocos2d::Vec3>& i
  * Push a Lua dict table converted from a std::map<std::string, std::string> into the Lua stack.
  *
  * @param L the current lua_State.
- * @param inValue a std::map<std::string, std::string> vaule.
+ * @param inValue a std::map<std::string, std::string> value.
  */
 void std_map_string_string_to_luaval(lua_State* L, const std::map<std::string, std::string>& inValue);
 

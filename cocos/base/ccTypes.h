@@ -63,7 +63,7 @@ struct CC_DLL Color3B
     bool operator!=(const Color4B& right) const;
     bool operator!=(const Color4F& right) const;
 
-    bool equals(const Color3B& other)
+    bool equals(const Color3B& other) const
     {
         return (*this == other);
     }
@@ -144,7 +144,7 @@ struct CC_DLL Color4F
     bool operator!=(const Color3B& right) const;
     bool operator!=(const Color4B& right) const;
 
-    bool equals(const Color4F &other)
+    bool equals(const Color4F &other) const
     {
         return (*this == other);
     }
@@ -570,14 +570,19 @@ public:
 };
 
 /**
- * @brief Possible LabelEffect used by Label.
+ * @brief Effects used by `Label`
  *
  */
 enum class LabelEffect {
+    // FIXME: Covert them to bitwise. More than one effect should be supported
     NORMAL,
     OUTLINE,
     SHADOW,
     GLOW,
+    ITALICS,
+    BOLD,
+    UNDERLINE,
+    STRIKETHROUGH,
     ALL
 };
 

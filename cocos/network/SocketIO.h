@@ -213,7 +213,7 @@ private:
 
 public:
     /**
-     * Construtor of SIOClient class.
+     * Constructor of SIOClient class.
      *
      * @param host the string that represent the host address.
      * @param port the int value represent the port number.
@@ -223,7 +223,7 @@ public:
      */
     SIOClient(const std::string& host, int port, const std::string& path, SIOClientImpl* impl, SocketIO::SIODelegate& delegate);
     /**
-     * Destructior of SIOClient class.
+     * Destructor of SIOClient class.
      */
     virtual ~SIOClient(void);
 
