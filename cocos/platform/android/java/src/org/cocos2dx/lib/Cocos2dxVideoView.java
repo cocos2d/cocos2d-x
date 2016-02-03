@@ -386,7 +386,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
                 mVideoWidth = mp.getVideoWidth();
                 mVideoHeight = mp.getVideoHeight();
                 if (mVideoWidth != 0 && mVideoHeight != 0) {
-                    getHolder().setFixedSize(mVideoWidth, mVideoHeight);
+                    fixSize();
                 }
             }
     };
