@@ -443,7 +443,7 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFlatBuffersFile(cons
     
     std::string path = fileName;
     
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName.c_str());
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName);
     
     CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
     
@@ -463,7 +463,7 @@ ActionTimeline* ActionTimelineCache::loadAnimationWithDataBuffer(const cocos2d::
 
     std::string path = fileName;
 
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName.c_str());
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName);
 
     CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
 

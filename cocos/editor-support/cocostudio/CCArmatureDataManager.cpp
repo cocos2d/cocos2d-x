@@ -96,17 +96,17 @@ void ArmatureDataManager::removeArmatureFileInfo(const std::string& configFilePa
     {
         for (std::string str : data->armatures)
         {
-            removeArmatureData(str.c_str());
+            removeArmatureData(str);
         }
 
         for (std::string str : data->animations)
         {
-            removeAnimationData(str.c_str());
+            removeAnimationData(str);
         }
 
         for (std::string str : data->textures)
         {
-            removeTextureData(str.c_str());
+            removeTextureData(str);
         }
 
         for (std::string str : data->plistFiles)

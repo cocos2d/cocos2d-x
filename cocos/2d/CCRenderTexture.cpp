@@ -503,7 +503,7 @@ void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
     Image *image = newImage(true);
     if (image)
     {
-        image->saveToFile(filename.c_str(), !isRGBA);
+        image->saveToFile(filename, !isRGBA);
     }
     if(_saveFileCallback)
     {

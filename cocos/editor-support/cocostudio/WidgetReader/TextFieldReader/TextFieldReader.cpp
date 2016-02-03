@@ -332,12 +332,6 @@ namespace cocostudio
             {
                 textField->setFontName(path);
             }
-            //else
-            //{
-            //    auto label = Label::create();
-            //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-            //    textField->addChild(label);
-            //}
         }
         
         auto widgetReader = WidgetReader::getInstance();

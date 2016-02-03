@@ -999,20 +999,17 @@ bool jsval_to_ccarray(JSContext* cx, JS::HandleValue v, __Array** ret)
             else if (value.isString()) {
                 JSStringWrapper valueWapper(value.toString(), cx);
                 arr->addObject(__String::create(valueWapper.get()));
-                //                CCLOG("iterate array: value = %s", valueWapper.get().c_str());
             }
             else if (value.isNumber()) {
                 double number = 0.0;
                 ok = JS::ToNumber(cx, value, &number);
                 if (ok) {
                     arr->addObject(__Double::create(number));
-                    //                    CCLOG("iterate array: value = %lf", number);
                 }
             }
             else if (value.isBoolean()) {
                 bool boolVal = JS::ToBoolean(value);
                 arr->addObject(__Bool::create(boolVal));
-                // CCLOG("iterate object: value = %d", boolVal);
             }
             else {
                 CCASSERT(false, "not supported type");
@@ -1139,7 +1136,6 @@ bool jsval_to_ccvaluemap(JSContext* cx, JS::HandleValue v, cocos2d::ValueMap* re
         {
             JSStringWrapper valueWapper(value.toString(), cx);
             dict.insert(ValueMap::value_type(keyWrapper.get(), Value(valueWapper.get())));
-            //            CCLOG("iterate object: key = %s, value = %s", keyWrapper.get().c_str(), valueWapper.get().c_str());
         }
         else if (value.isNumber())
         {
@@ -1147,14 +1143,12 @@ bool jsval_to_ccvaluemap(JSContext* cx, JS::HandleValue v, cocos2d::ValueMap* re
             bool ok = JS::ToNumber(cx, value, &number);
             if (ok) {
                 dict.insert(ValueMap::value_type(keyWrapper.get(), Value(number)));
-                // CCLOG("iterate object: key = %s, value = %lf", keyWrapper.get().c_str(), number);
             }
         }
         else if (value.isBoolean())
         {
             bool boolVal = JS::ToBoolean(value);
             dict.insert(ValueMap::value_type(keyWrapper.get(), Value(boolVal)));
-            // CCLOG("iterate object: key = %s, value = %d", keyWrapper.get().c_str(), boolVal);
         }
         else {
             CCASSERT(false, "not supported type");
@@ -1926,20 +1920,17 @@ bool jsval_to_ccdictionary(JSContext* cx, JS::HandleValue v, __Dictionary** ret)
         else if (value.isString()) {
             JSStringWrapper valueWapper(value.toString(), cx);
             dict->setObject(__String::create(valueWapper.get()), keyWrapper.get());
-            //            CCLOG("iterate object: key = %s, value = %s", keyWrapper.get().c_str(), valueWapper.get().c_str());
         }
         else if (value.isNumber()) {
             double number = 0.0;
             bool ok = JS::ToNumber(cx, value, &number);
             if (ok) {
                 dict->setObject(__Double::create(number), keyWrapper.get());
-                //                CCLOG("iterate object: key = %s, value = %lf", keyWrapper.get().c_str(), number);
             }
         }
         else if (value.isBoolean()) {
             bool boolVal = JS::ToBoolean(value);
             dict->setObject(__Bool::create(boolVal), keyWrapper.get());
-            // CCLOG("iterate object: key = %s, value = %d", keyWrapper.get().c_str(), boolVal);
         }
         else {
             CCASSERT(false, "not supported type");
