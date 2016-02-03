@@ -161,17 +161,6 @@ protected:
     cocos2d::ui::RichText* _richText;
 };
 
-class UIRichTextXMLInvalid : public UIScene
-{
-public:
-    CREATE_FUNC(UIRichTextXMLInvalid);
-
-    bool init() override;
-
-protected:
-    cocos2d::ui::RichText* _richText;
-};
-
 
 
 #endif /* defined(__TestCpp__UIRichTextTest__) */
