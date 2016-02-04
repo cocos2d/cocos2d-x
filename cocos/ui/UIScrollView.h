@@ -624,6 +624,7 @@ protected:
     void updateScrollBar(const Vec2& outOfBoundary);
 
 protected:
+    virtual float getAutoScrollStopEpsilon();
     Layout* _innerContainer;
 
     Direction _direction;
