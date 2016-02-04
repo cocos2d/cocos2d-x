@@ -246,13 +246,6 @@ void EditBoxImplCommon::setContentSize(const Size& size)
     _contentSize = size;
     CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
     placeInactiveLabels();
-    
-    auto director = cocos2d::Director::getInstance();
-    auto glview = director->getOpenGLView();
-    Size  controlSize = Size(size.width * glview->getScaleX() * _label->getNodeToWorldAffineTransform().a,size.height * glview->getScaleY() * _label->getNodeToWorldAffineTransform().a);
-       
-    this->setNativeContentSize(controlSize);
-
 }
 
 void EditBoxImplCommon::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
