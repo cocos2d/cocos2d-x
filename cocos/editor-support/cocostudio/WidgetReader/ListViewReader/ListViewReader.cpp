@@ -490,12 +490,6 @@ namespace cocostudio
             {
                 listView->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
             }
-            //else
-            //{
-            //    auto label = Label::create();
-            //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-            //    listView->addChild(label);
-            //}
         }
         
         auto widgetOptions = options->widgetOptions();

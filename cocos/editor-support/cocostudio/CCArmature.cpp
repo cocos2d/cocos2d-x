@@ -143,15 +143,15 @@ bool Armature::init(const std::string& name)
 
             for (auto& element : armatureData->boneDataDic)
             {
-                Bone *bone = createBone(element.first.c_str());
+                Bone *bone = createBone(element.first);
 
                 //! init bone's  Tween to 1st movement's 1st frame
                 do
                 {
-                    MovementData *movData = animationData->getMovement(animationData->movementNames.at(0).c_str());
+                    MovementData *movData = animationData->getMovement(animationData->movementNames.at(0));
                     CC_BREAK_IF(!movData);
 
-                    MovementBoneData *movBoneData = movData->getMovementBoneData(bone->getName().c_str());
+                    MovementBoneData *movBoneData = movData->getMovementBoneData(bone->getName());
                     CC_BREAK_IF(!movBoneData || movBoneData->frameList.size() <= 0);
 
                     FrameData *frameData = movBoneData->getFrameData(0);
@@ -175,8 +175,8 @@ bool Armature::init(const std::string& name)
             AnimationData *animationData = AnimationData::create();
             animationData->name = _name;
 
-            armatureDataManager->addArmatureData(_name.c_str(), _armatureData);
-            armatureDataManager->addAnimationData(_name.c_str(), animationData);
+            armatureDataManager->addArmatureData(_name, _armatureData);
+            armatureDataManager->addAnimationData(_name, animationData);
 
             _animation->setAnimationData(animationData);
 
@@ -214,9 +214,9 @@ Bone *Armature::createBone(const std::string& boneName)
 
     if( !parentName.empty())
     {
-        createBone(parentName.c_str());
+        createBone(parentName);
         bone = Bone::create(boneName);
-        addBone(bone, parentName.c_str());
+        addBone(bone, parentName);
     }
     else
     {

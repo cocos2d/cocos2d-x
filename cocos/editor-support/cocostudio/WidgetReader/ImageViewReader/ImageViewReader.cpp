@@ -353,12 +353,6 @@ namespace cocostudio
         {
             imageView->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
         }
-        //else
-        //{
-        //    auto label = Label::create();
-        //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-        //    imageView->addChild(label);
-        //}
         
         bool scale9Enabled = options->scale9Enabled() != 0;
         imageView->setScale9Enabled(scale9Enabled);

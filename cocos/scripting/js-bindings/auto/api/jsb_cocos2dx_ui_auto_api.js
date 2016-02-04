@@ -2986,13 +2986,11 @@ isInertiaScrollEnabled : function (
 },
 
 /**
- * @method scrollToPercentBothDirection
- * @param {vec2_object} arg0
- * @param {float} arg1
- * @param {bool} arg2
+ * @method scrollToBottom
+ * @param {float} arg0
+ * @param {bool} arg1
  */
-scrollToPercentBothDirection : function (
-vec2, 
+scrollToBottom : function (
 float, 
 bool 
 )
@@ -3090,9 +3088,15 @@ jumpToTopRight : function (
 },
 
 /**
- * @method jumpToBottomLeft
+ * @method scrollToPercentBothDirection
+ * @param {vec2_object} arg0
+ * @param {float} arg1
+ * @param {bool} arg2
  */
-jumpToBottomLeft : function (
+scrollToPercentBothDirection : function (
+vec2, 
+float, 
+bool 
 )
 {
 },
@@ -3284,6 +3288,14 @@ bool
 },
 
 /**
+ * @method stopAutoScroll
+ */
+stopAutoScroll : function (
+)
+{
+},
+
+/**
  * @method jumpToTop
  */
 jumpToTop : function (
@@ -3331,18 +3343,6 @@ getScrollBarPositionFromCornerForVertical : function (
  */
 scrollToPercentVertical : function (
 float, 
-float, 
-bool 
-)
-{
-},
-
-/**
- * @method scrollToBottom
- * @param {float} arg0
- * @param {bool} arg1
- */
-scrollToBottom : function (
 float, 
 bool 
 )
@@ -3449,6 +3449,14 @@ isScrollBarAutoHideEnabled : function (
 )
 {
     return false;
+},
+
+/**
+ * @method jumpToBottomLeft
+ */
+jumpToBottomLeft : function (
+)
+{
 },
 
 /**
