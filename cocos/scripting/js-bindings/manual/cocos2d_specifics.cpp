@@ -6221,7 +6221,7 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     js_register_cocos2dx_EventKeyboard(cx, ccObj);
 
     get_or_create_js_obj(cx, global, "console", &tmpObj);
-    JS_DefineFunction(cx, tmpObj, "log", js_console_log, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "log", js_console_log, 1, JSPROP_PERMANENT);
     
     JS_DefineFunction(cx, global, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
