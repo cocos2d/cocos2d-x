@@ -840,6 +840,8 @@ namespace ui {
   
   void ScrollView::handlePressLogic(Touch *touch)
   {
+    this->getInnerContainer()->stopAllActions();
+
     _bePressed = true;
     _autoScrolling = false;
     
