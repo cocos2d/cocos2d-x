@@ -290,7 +290,7 @@ bool Sprite3D::initWithFile(const std::string& path)
     _meshVertexDatas.clear();
     CC_SAFE_RELEASE_NULL(_skeleton);
     removeAllAttachNode();
-    
+
     if (loadFromCache(path))
         return true;
     

@@ -205,7 +205,7 @@ bool Application::openURL(const std::string &url)
     return openURLJNI(url.c_str());
 }
 
-void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
+void Application::applicationScreenSizeChanged() {
 
 }
 

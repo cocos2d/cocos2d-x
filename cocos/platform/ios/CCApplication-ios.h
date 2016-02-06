@@ -98,7 +98,7 @@ public:
     @param new width
     @param new height
     */
-    virtual void applicationScreenSizeChanged(int newWidth, int newHeight);
+    virtual void applicationScreenSizeChanged();
 
 protected:
     static Application * sm_pSharedApplication;

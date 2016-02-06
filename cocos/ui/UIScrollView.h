@@ -1,26 +1,26 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
-
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #ifndef __UISCROLLVIEW_H__
 #define __UISCROLLVIEW_H__
@@ -38,15 +38,15 @@ NS_CC_BEGIN
 class EventFocusListener;
 
 namespace ui {
-
-class ScrollViewBar;
-
-/**
- *Scrollview scroll event type.
- *@deprecated use @see `ScrollView::EventType` instead.
- */
-typedef enum
-{
+  
+  class ScrollViewBar;
+  
+  /**
+   *Scrollview scroll event type.
+   *@deprecated use @see `ScrollView::EventType` instead.
+   */
+  typedef enum
+  {
     SCROLLVIEW_EVENT_SCROLL_TO_TOP,
     SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM,
     SCROLLVIEW_EVENT_SCROLL_TO_LEFT,
@@ -55,79 +55,81 @@ typedef enum
     SCROLLVIEW_EVENT_BOUNCE_TOP,
     SCROLLVIEW_EVENT_BOUNCE_BOTTOM,
     SCROLLVIEW_EVENT_BOUNCE_LEFT,
-    SCROLLVIEW_EVENT_BOUNCE_RIGHT
-}ScrollviewEventType;
-
-/**
- * A callback which would be called when a ScrollView is scrolling.
- *@deprecated Use @see `ccScrollViewCallback` instead.
- */
-typedef void (Ref::*SEL_ScrollViewEvent)(Ref*, ScrollviewEventType);
+    SCROLLVIEW_EVENT_BOUNCE_RIGHT,
+    SCROLLVIEW_EVENT_AUTOSCROLL_ENDED
+  }ScrollviewEventType;
+  
+  /**
+   * A callback which would be called when a ScrollView is scrolling.
+   *@deprecated Use @see `ccScrollViewCallback` instead.
+   */
+  typedef void (Ref::*SEL_ScrollViewEvent)(Ref*, ScrollviewEventType);
 #define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
-
-/**
- * Layout container for a view hierarchy that can be scrolled by the user, allowing it to be larger than the physical display.
- * It holds a inner `Layout` container for storing child items hironzontally or vertically.
- */
-class CC_GUI_DLL ScrollView : public Layout
-{
-
+  
+  /**
+   * Layout container for a view hierarchy that can be scrolled by the user, allowing it to be larger than the physical display.
+   * It holds a inner `Layout` container for storing child items horizontally or vertically.
+   */
+  class CC_GUI_DLL ScrollView : public Layout
+  {
+    
     DECLARE_CLASS_GUI_INFO
-
-public:
+    
+  public:
     /**
      * ScrollView scroll direction type.
      */
     enum class Direction
     {
-        NONE,
-        VERTICAL,
-        HORIZONTAL,
-        BOTH
+      NONE,
+      VERTICAL,
+      HORIZONTAL,
+      BOTH
     };
-
+    
     /**
      * Scrollview scroll event type.
      */
     enum class EventType
     {
-        SCROLL_TO_TOP,
-        SCROLL_TO_BOTTOM,
-        SCROLL_TO_LEFT,
-        SCROLL_TO_RIGHT,
-        SCROLLING,
-        BOUNCE_TOP,
-        BOUNCE_BOTTOM,
-        BOUNCE_LEFT,
-        BOUNCE_RIGHT,
-        CONTAINER_MOVED
+      SCROLL_TO_TOP,
+      SCROLL_TO_BOTTOM,
+      SCROLL_TO_LEFT,
+      SCROLL_TO_RIGHT,
+      SCROLLING,
+      BOUNCE_TOP,
+      BOUNCE_BOTTOM,
+      BOUNCE_LEFT,
+      BOUNCE_RIGHT,
+      CONTAINER_MOVED,
+      AUTOSCROLL_ENDED
     };
-
+    
     /**
      * A callback which would be called when a ScrollView is scrolling.
      */
     typedef std::function<void(Ref*, EventType)> ccScrollViewCallback;
-
+    
     /**
      * Default constructor
      * @js ctor
      * @lua new
      */
     ScrollView();
-
+    
     /**
      * Default destructor
      * @js NA
      * @lua NA
      */
     virtual ~ScrollView();
-
+    
     /**
      * Create an empty ScrollView.
      * @return A ScrollView instance.
      */
     static ScrollView* create();
-
+    
     /**
      * Changes scroll direction of scrollview.
      *
@@ -135,7 +137,7 @@ public:
      * @param dir Scroll direction enum.
      */
     virtual void setDirection(Direction dir);
-
+    
     /**
      * Query scroll direction of scrollview.
      *
@@ -144,7 +146,7 @@ public:
      * @return Scrollview scroll direction.
      */
     Direction getDirection()const;
-
+    
     /**
      * Get inner container of scrollview.
      *
@@ -153,145 +155,150 @@ public:
      * @return Inner container pointer.
      */
     Layout* getInnerContainer()const;
-
+    
+    /**
+     * Immediately stops inner container scroll initiated by any of the "scrollTo*" member functions
+     */
+    virtual void stopAutoScroll();
+    
     /**
      * Scroll inner container to bottom boundary of scrollview.
      * @param timeInSec Time in seconds.
      * @param attenuated Whether scroll speed attenuate or not.
      */
-    void scrollToBottom(float timeInSec, bool attenuated);
-
+    virtual void scrollToBottom(float timeInSec, bool attenuated);
+    
     /**
      * Scroll inner container to top boundary of scrollview.
      * @param timeInSec Time in seconds.
      * @param attenuated Whether scroll speed attenuate or not.
      */
-    void scrollToTop(float timeInSec, bool attenuated);
-
+    virtual void scrollToTop(float timeInSec, bool attenuated);
+    
     /**
      * Scroll inner container to left boundary of scrollview.
      * @param timeInSec Time in seconds.
      * @param attenuated Whether scroll speed attenuate or not.
      */
-    void scrollToLeft(float timeInSec, bool attenuated);
-
+    virtual void scrollToLeft(float timeInSec, bool attenuated);
+    
     /**
      * Scroll inner container to right boundary of scrollview.
      * @param timeInSec Time in seconds.
      * @param attenuated Whether scroll speed attenuate or not.
      */
-    void scrollToRight(float timeInSec, bool attenuated);
-
+    virtual void scrollToRight(float timeInSec, bool attenuated);
+    
     /**
      * Scroll inner container to top and left boundary of scrollview.
      * @param timeInSec Time in seconds.
      * @param attenuated Whether scroll speed attenuate or not.
      */
-    void scrollToTopLeft(float timeInSec, bool attenuated);
-
+    virtual void scrollToTopLeft(float timeInSec, bool attenuated);
+    
     /**
      * Scroll inner container to top and right boundary of scrollview.
      * @param timeInSec Time in seconds.
      * @param attenuated Whether scroll speed attenuate or not.
      */
-    void scrollToTopRight(float timeInSec, bool attenuated);
-
+    virtual void scrollToTopRight(float timeInSec, bool attenuated);
+    
     /**
      * Scroll inner container to bottom and left boundary of scrollview.
      * @param timeInSec Time in seconds.
      * @param attenuated Whether scroll speed attenuate or not.
      */
-    void scrollToBottomLeft(float timeInSec, bool attenuated);
-
+    virtual void scrollToBottomLeft(float timeInSec, bool attenuated);
+    
     /**
      * Scroll inner container to bottom and right boundary of scrollview.
      * @param timeInSec Time in seconds
      * @param attenuated Whether scroll speed attenuate or not.
      */
-    void scrollToBottomRight(float timeInSec, bool attenuated);
-
+    virtual void scrollToBottomRight(float timeInSec, bool attenuated);
+    
     /**
      * Scroll inner container to vertical percent position of scrollview.
      * @param percent A value between 0 and 100.
      * @param timeInSec Time in seconds.
      * @param attenuated Whether scroll speed attenuate or not.
      */
-    void scrollToPercentVertical(float percent, float timeInSec, bool attenuated);
-
+    virtual void scrollToPercentVertical(float percent, float timeInSec, bool attenuated);
+    
     /**
      * Scroll inner container to horizontal percent position of scrollview.
      * @param percent A value between 0 and 100.
      * @param timeInSec Time in seconds.
      * @param attenuated Whether scroll speed attenuate or not.
      */
-    void scrollToPercentHorizontal(float percent, float timeInSec, bool attenuated);
-
+    virtual void scrollToPercentHorizontal(float percent, float timeInSec, bool attenuated);
+    
     /**
      * Scroll inner container to both direction percent position of scrollview.
      * @param percent A value between 0 and 100.
      * @param timeInSec Time in seconds.
      * @param attenuated Whether scroll speed attenuate or not.
      */
-    void scrollToPercentBothDirection(const Vec2& percent, float timeInSec, bool attenuated);
-
+    virtual void scrollToPercentBothDirection(const Vec2& percent, float timeInSec, bool attenuated);
+    
     /**
      * Move inner container to bottom boundary of scrollview.
      */
     virtual void jumpToBottom();
-
+    
     /**
      * Move inner container to top boundary of scrollview.
      */
     virtual void jumpToTop();
-
+    
     /**
      * Move inner container to left boundary of scrollview.
      */
     virtual void jumpToLeft();
-
+    
     /**
      * Move inner container to right boundary of scrollview.
      */
     virtual void jumpToRight();
-
+    
     /**
      * Move inner container to top and left boundary of scrollview.
      */
     virtual void jumpToTopLeft();
-
+    
     /**
      * Move inner container to top and right boundary of scrollview.
      */
     virtual void jumpToTopRight();
-
+    
     /**
      * Move inner container to bottom and left boundary of scrollview.
      */
     virtual void jumpToBottomLeft();
-
+    
     /**
      * Move inner container to bottom and right boundary of scrollview.
      */
     virtual void jumpToBottomRight();
-
+    
     /**
      * Move inner container to vertical percent position of scrollview.
      * @param percent A value between 0 and 100.
      */
     virtual void jumpToPercentVertical(float percent);
-
+    
     /**
      * Move inner container to horizontal percent position of scrollview.
      * @param percent   A value between 0 and 100.
      */
     virtual void jumpToPercentHorizontal(float percent);
-
+    
     /**
      * Move inner container to both direction percent position of scrollview.
      * @param percent   A value between 0 and 100.
      */
     virtual void jumpToPercentBothDirection(const Vec2& percent);
-
+    
     /**
      * Change inner container size of scrollview.
      *
@@ -300,7 +307,7 @@ public:
      * @param size Inner container size.
      */
     void setInnerContainerSize(const Size &size);
-
+    
     /**
      * Get inner container size of scrollview.
      *
@@ -323,7 +330,7 @@ public:
      * @return The inner container position.
      */
     const Vec2 getInnerContainerPosition() const;
-
+    
     /**
      * Add callback function which will be called  when scrollview event triggered.
      * @deprecated Use @see `addEventListener` instead.
@@ -331,13 +338,13 @@ public:
      * @param selector A member function pointer with type of `SEL_ScrollViewEvent`.
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerScrollView(Ref* target, SEL_ScrollViewEvent selector);
-
+    
     /**
      * Add callback function which will be called  when scrollview event triggered.
      * @param callback A callback function with type of `ccScrollViewCallback`.
      */
     virtual void addEventListener(const ccScrollViewCallback& callback);
-
+    
     //override functions
     virtual void addChild(Node* child)override;
     virtual void addChild(Node * child, int localZOrder)override;
@@ -357,28 +364,28 @@ public:
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchCancelled(Touch *touch, Event *unusedEvent) override;
     virtual void update(float dt) override;
-
+    
     /**
      * @brief Toggle bounce enabled when scroll to the edge.
      *
      * @param enabled True if enable bounce, false otherwise.
      */
     void setBounceEnabled(bool enabled);
-
+    
     /**
      * @brief Query bounce state.
      *
      * @return True if bounce is enabled, false otherwise.
      */
     bool isBounceEnabled() const;
-
+    
     /**
      * @brief Toggle whether enable scroll inertia while scrolling.
      *
      * @param enabled True if enable inertia, false otherwise.
      */
     void setInertiaScrollEnabled(bool enabled);
-
+    
     /**
      * @brief Query inertia scroll state.
      *
@@ -506,13 +513,27 @@ public:
     float getScrollBarAutoHideTime() const;
     
     /**
+     * @brief Set the touch total time threshold
+     *
+     * @param the touch total time threshold
+     */
+    void setTouchTotalTimeThreshold(float touchTotalTimeThreshold);
+    
+    /**
+     * @brief Get the touch total time threshold
+     *
+     * @return the touch total time threshold
+     */
+    float getTouchTotalTimeThreshold() const;
+    
+    /**
      * Set layout type for scrollview.
      *
      * @see `Layout::Type`
      * @param type  Layout type enum.
      */
     virtual void setLayoutType(Type type) override;
-
+    
     /**
      * Get the layout type for scrollview.
      *
@@ -520,17 +541,17 @@ public:
      * @return LayoutType
      */
     virtual Type getLayoutType() const override;
-
+    
     /**
      * Return the "class name" of widget.
      */
     virtual std::string getDescription() const override;
-
+    
     /**
      * @lua NA
      */
     virtual void onEnter() override;
-
+    
     /**
      *  When a widget is in a layout, you could call this method to get the next focused widget within a specified direction.
      *  If the widget is not in a layout, it will return itself
@@ -539,24 +560,24 @@ public:
      *@return the next focused widget in a layout
      */
     virtual Widget* findNextFocusedWidget(FocusDirection direction, Widget* current) override;
-
-CC_CONSTRUCTOR_ACCESS:
+    
+  CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
-
-protected:
+    
+  protected:
     enum class MoveDirection
     {
-        TOP,
-        BOTTOM,
-        LEFT,
-        RIGHT,
+      TOP,
+      BOTTOM,
+      LEFT,
+      RIGHT,
     };
     
     virtual void initRenderer() override;
-
+    
     virtual void onSizeChanged() override;
     virtual void doLayout() override;
-
+    
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
@@ -570,11 +591,10 @@ protected:
     bool isOutOfBoundary(MoveDirection dir);
     bool isOutOfBoundary();
     
-    void moveChildren(float offsetX, float offsetY);
-    void moveChildrenToPosition(const Vec2& position);
-	
-	bool calculateCurrAndPrevTouchPoints(Touch* touch, Vec3* currPt, Vec3* prevPt);
-	void gatherTouchMove(const Vec2& delta);
+    virtual void moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack);
+    
+    bool calculateCurrAndPrevTouchPoints(Touch* touch, Vec3* currPt, Vec3* prevPt);
+    void gatherTouchMove(const Vec2& delta);
     Vec2 calculateTouchMoveVelocity() const;
     
     virtual void startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity);
@@ -582,19 +602,19 @@ protected:
     void startAutoScrollToDestination(const Vec2& des, float timeInSec, bool attenuated);
     bool isNecessaryAutoScrollBrake();
     void processAutoScrolling(float deltaTime);
-
+    
     void startInertiaScroll(const Vec2& touchMoveVelocity);
     
     bool startBounceBackIfNeeded();
-
+    
     void jumpToDestination(const Vec2& des);
-
-    virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
-
+    
+    virtual void scrollChildren(const Vec2& deltaMove);
+    
     virtual void handlePressLogic(Touch *touch);
     virtual void handleMoveLogic(Touch *touch);
     virtual void handleReleaseLogic(Touch *touch);
-
+    
     virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,Touch *touch) override;
     
     void processScrollEvent(MoveDirection dir, bool bounce);
@@ -602,25 +622,27 @@ protected:
     void dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType);
     
     void updateScrollBar(const Vec2& outOfBoundary);
-
-protected:
+    
+  protected:
+    virtual float getAutoScrollStopEpsilon();
     Layout* _innerContainer;
-
+    
     Direction _direction;
-
+    
     float _topBoundary;
     float _bottomBoundary;
     float _leftBoundary;
     float _rightBoundary;
-
+    
     bool _bePressed;
-
+    
     float _childFocusCancelOffsetInInch;
     
     // Touch move speed
     std::list<Vec2> _touchMoveDisplacements;
     std::list<float> _touchMoveTimeDeltas;
     long long _touchMovePreviousTimestamp;
+    float _touchTotalTimeThreshold;
     
     bool _autoScrolling;
     bool _autoScrollAttenuate;
@@ -633,7 +655,7 @@ protected:
     Vec2 _autoScrollBrakingStartPosition;
     
     bool _inertiaScrollEnabled;
-
+    
     bool _bounceEnabled;
     
     Vec2 _outOfBoundaryAmount;
@@ -657,8 +679,8 @@ protected:
 #pragma warning (pop)
 #endif
     ccScrollViewCallback _eventCallback;
-};
-
+  };
+  
 }
 // end of ui group
 /// @}

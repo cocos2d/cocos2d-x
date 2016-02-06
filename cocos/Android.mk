@@ -247,8 +247,10 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/clipper \
                     $(LOCAL_PATH)/../cocos/audio/include \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/entities \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/audio \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/pools \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/screens \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/translate \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/support \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform \
@@ -263,6 +265,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/screenshot \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/services \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/social \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/vote \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/platform \
@@ -281,8 +284,10 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/clipper \
                     $(LOCAL_PATH)/../cocos/audio/include \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/entities \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/audio \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/pools \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/screens \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/translate \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/support \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform \
@@ -297,6 +302,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/screenshot \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/services \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/social \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/vote \
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \

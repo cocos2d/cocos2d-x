@@ -309,7 +309,7 @@ THE SOFTWARE.
  */
 #ifndef CC_USE_WEBP
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-#define CC_USE_WEBP 1
+#define CC_USE_WEBP 0
 #endif
 #endif // CC_USE_WEBP
 
@@ -374,6 +374,20 @@ THE SOFTWARE.
  */
 #ifndef CC_ALLOCATOR_GLOBAL_NEW_DELETE
 # define CC_ALLOCATOR_GLOBAL_NEW_DELETE cocos2d::allocator::AllocatorStrategyGlobalSmallBlock
+#endif
+
+/** @def CC_ENABLE_NEW_AUDIO_API
+ * Specify audio API.
+ */
+#ifndef CC_ENABLE_NEW_AUDIO_API
+#define CC_ENABLE_NEW_AUDIO_API 0
+#endif
+
+/** @def CC_USE_DEFAULT_CAMERA
+ * Is using default camera for a 2D game.
+ */
+#ifndef CC_USE_DEFAULT_CAMERA
+#define CC_USE_DEFAULT_CAMERA 0
 #endif
 
 #endif // __CCCONFIG_H__

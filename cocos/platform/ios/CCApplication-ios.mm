@@ -146,8 +146,7 @@ bool Application::openURL(const std::string &url)
     return [[UIApplication sharedApplication] openURL:nsUrl];
 }
 
-void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
-
+void Application::applicationScreenSizeChanged() {
 }
 
 NS_CC_END

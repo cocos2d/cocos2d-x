@@ -47,6 +47,8 @@ THE SOFTWARE.
 #include "navmesh/CCNavMesh.h"
 #endif
 
+#import "CCApplication.h"
+
 NS_CC_BEGIN
 
 Scene::Scene()
@@ -66,11 +68,13 @@ Scene::Scene()
     setAnchorPoint(Vec2(0.5f, 0.5f));
     
     _cameraOrderDirty = true;
-    
+
+    #if CC_USE_DEFAULT_CAMERA
     //create default camera
     _defaultCamera = Camera::create();
     addChild(_defaultCamera);
-    
+    #endif
+
     _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
     _event->retain();
     
@@ -155,10 +159,6 @@ std::string Scene::getDescription() const
 
 void Scene::onProjectionChanged(EventCustom* event)
 {
-    if (_defaultCamera)
-    {
-        _defaultCamera->initDefault();
-    }
 }
 
 static bool camera_cmp(const Camera* a, const Camera* b)
@@ -182,7 +182,7 @@ void Scene::render(Renderer* renderer)
     Camera* defaultCamera = nullptr;
     const auto& transform = getNodeToParentTransform();
 
-    for (int i = getCameras().size() - 1; i >= 0; i--)
+    for (int i = 0; i < getCameras().size(); i++)
     {
         auto camera = getCameras().at(i);
 

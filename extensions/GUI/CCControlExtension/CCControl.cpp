@@ -29,7 +29,6 @@
 
 #include "CCControl.h"
 #include "base/CCDirector.h"
-#include "2d/CCMenu.h"
 #include "base/CCTouch.h"
 #include "CCInvocation.h"
 #include "base/CCEventDispatcher.h"

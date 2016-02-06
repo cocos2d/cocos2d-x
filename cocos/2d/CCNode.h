@@ -1915,6 +1915,8 @@ private:
 protected:
     bool _scheduleUpdate = false;
 
+    float _actionsTimeFactor = 1.0;
+
     void setScheduleUpdate(bool scheduleUpdate)
     {
         _scheduleUpdate = scheduleUpdate;
@@ -1961,8 +1963,14 @@ public:
     virtual void onSwipeLeft();
     virtual void onSwipeRight();
 
+    virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode key, Event *event);
+    virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode key, Event *event);
+
     virtual void onEnterShow();
     virtual void onExitHide();
+
+    void setActionsTimeFactor(float factor);
+    float getActionsTimeFactor();
 
     void bind(bool bind, bool swallowed = true);
 

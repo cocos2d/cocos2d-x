@@ -47,6 +47,7 @@ THE SOFTWARE.
 #include "math/TransformUtils.h"
 #include "deprecated/CCString.h"
 
+#include "Screen.h"
 #include "Pool.h"
 
 #if CC_NODE_RENDER_SUBPIXEL
@@ -2304,7 +2305,10 @@ void Node::onTouchMoved(Touch* touch, Event* e)
   {
     if(this->containsTouchLocation(touch))
     {
-      return this->onTouchCancelled(touch, e);
+      if(abs(this->touch->last.y - touch->getLocation().y) > 10) // TODO: Refactoring.
+      {
+        return this->onTouchCancelled(touch, e);
+      }
     }
   }
 
@@ -2425,6 +2429,14 @@ void Node::onSwipeRight()
 {
 }
 
+void Node::onKeyPressed(cocos2d::EventKeyboard::KeyCode key, Event *event)
+{
+}
+
+void Node::onKeyReleased(cocos2d::EventKeyboard::KeyCode key, Event *event)
+{
+}
+
 void Node::onEnterShow()
 {
   this->state->active = true;
@@ -2433,15 +2445,25 @@ void Node::onEnterShow()
   {
     this->touch->touched = false;
 
-    auto listener = EventListenerTouchOneByOne::create();
+    auto touchListener = EventListenerTouchOneByOne::create();
 
-    listener->onTouchBegan = CC_CALLBACK_2(Node::onTouchBegan, this);
-    listener->onTouchEnded = CC_CALLBACK_2(Node::onTouchEnded, this);
-    listener->onTouchMoved = CC_CALLBACK_2(Node::onTouchMoved, this);
-    listener->onTouchCancelled = CC_CALLBACK_2(Node::onTouchCancelled, this);
-    listener->setSwallowTouches(this->touch->swallowed);
+    touchListener->onTouchBegan = CC_CALLBACK_2(Node::onTouchBegan, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(Node::onTouchEnded, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(Node::onTouchMoved, this);
+    touchListener->onTouchCancelled = CC_CALLBACK_2(Node::onTouchCancelled, this);
+    touchListener->setSwallowTouches(this->touch->swallowed);
 
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
+
+    if(dynamic_cast<Screen*>(this))
+    {
+      auto keyboardListener = EventListenerKeyboard::create();
+
+      keyboardListener->onKeyPressed = CC_CALLBACK_2(Node::onKeyPressed, this);
+      keyboardListener->onKeyReleased = CC_CALLBACK_2(Node::onKeyReleased, this);
+
+      Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
+    }
   }
 
   if(this->state->create)
@@ -2542,6 +2564,16 @@ float Node::getRecursiveWidth(bool recursive)
 float Node::getRecursiveHeight(bool recursive)
 {
   return -1;
+}
+
+void Node::setActionsTimeFactor(float factor)
+{
+  this->_actionsTimeFactor = factor;
+}
+
+float Node::getActionsTimeFactor()
+{
+  return this->_actionsTimeFactor == 0 ? Config::ACTIONS_MANAGER_TIME_FACTOR : this->_actionsTimeFactor;
 }
 
 Node* Node::deepCopy()

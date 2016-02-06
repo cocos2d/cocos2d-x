@@ -92,12 +92,16 @@ public:
     {
         if (_view)
             _view->onGLFWframebuffersize(window, w, h);
+
+      //Director::getInstance()->drawScene();
     }
 
     static void onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
     {
         if (_view)
             _view->onGLFWWindowSizeFunCallback(window, width, height);
+
+      Director::getInstance()->getOpenGLView()->setFrameSize(width, height);
     }
 
     static void setGLViewImpl(GLViewImpl* view)
@@ -346,7 +350,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
 
     _frameZoomFactor = frameZoomFactor;
 
-    glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
+    glfwWindowHint(GLFW_RESIZABLE,GL_TRUE);
     glfwWindowHint(GLFW_RED_BITS,_glContextAttrs.redBits);
     glfwWindowHint(GLFW_GREEN_BITS,_glContextAttrs.greenBits);
     glfwWindowHint(GLFW_BLUE_BITS,_glContextAttrs.blueBits);

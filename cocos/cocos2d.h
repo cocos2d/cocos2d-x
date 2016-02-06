@@ -119,8 +119,6 @@ THE SOFTWARE.
 #include "2d/CCLabelBMFont.h"
 #include "2d/CCLabelTTF.h"
 #include "2d/CCLayer.h"
-#include "2d/CCMenu.h"
-#include "2d/CCMenuItem.h"
 #include "2d/CCMotionStreak.h"
 #include "2d/CCNode.h"
 #include "2d/CCNodeGrid.h"

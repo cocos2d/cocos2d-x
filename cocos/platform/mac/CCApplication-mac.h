@@ -97,6 +97,13 @@ public:
      @return true if the resource located by the URL was successfully opened; otherwise false.
      */
     virtual bool openURL(const std::string &url);
+    
+    /**
+     @brief  This function will be called when the application screen size is changed.
+     @param new width
+     @param new height
+     */
+    virtual void applicationScreenSizeChanged();
 
     /**
      *  Sets the Resource root path.

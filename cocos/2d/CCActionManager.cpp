@@ -34,6 +34,8 @@ THE SOFTWARE.
 #include "base/ccCArray.h"
 #include "base/uthash.h"
 
+#include "Config.h"
+
 NS_CC_BEGIN
 //
 // singleton stuff
@@ -399,10 +401,14 @@ ssize_t ActionManager::getNumberOfRunningActionsInTarget(const Node *target) con
 // main loop
 void ActionManager::update(float dt)
 {
+  float odt = dt;
+
     for (tHashElement *elt = _targets; elt != nullptr; )
     {
         _currentTarget = elt;
         _currentTargetSalvaged = false;
+      
+        dt = odt * _currentTarget->target->getActionsTimeFactor();
 
         if (! _currentTarget->paused)
         {
