@@ -106,7 +106,7 @@ void EditBoxImplCommon::setInactiveText(const char* pText)
         std::string passwordString;
         for(int i = 0; i < strlen(pText); ++i)
             passwordString.append("\u25CF");
-        _label->setString(passwordString.c_str());
+        _label->setString(passwordString);
     }
     else
     {
@@ -230,7 +230,7 @@ void EditBoxImplCommon::setPlaceHolder(const char* pText)
             _labelPlaceHolder->setVisible(true);
         }
 
-        _labelPlaceHolder->setString(_placeHolder.c_str());
+        _labelPlaceHolder->setString(_placeHolder);
         this->setNativePlaceHolder(pText);
     }
 }

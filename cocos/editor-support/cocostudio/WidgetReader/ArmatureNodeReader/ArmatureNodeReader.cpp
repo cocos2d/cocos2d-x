@@ -153,14 +153,6 @@ void ArmatureNodeReader::setPropsWithFlatBuffers(cocos2d::Node *node,
         errorFilePath = filepath;
         fileExist = false;
     }
-    
-    //if (!fileExist)
-    //{
-    //    auto label = Label::create();
-    //    label->setString(__String::createWithFormat("%s missed", filepath.c_str())->getCString());
-    //    custom->addChild(label);
-    //}
-    
 }
 
 cocos2d::Node*  ArmatureNodeReader::createNodeWithFlatBuffers(const flatbuffers::Table *nodeOptions)

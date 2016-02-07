@@ -157,7 +157,7 @@ void DisplayFactory::createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisp
     }
     else
     {
-        skin = Skin::createWithSpriteFrameName((textureName + ".png").c_str());
+        skin = Skin::createWithSpriteFrameName((textureName + ".png"));
     }
 
     decoDisplay->setDisplay(skin);
@@ -197,7 +197,7 @@ void DisplayFactory::initSpriteDisplay(Bone *bone, DecorativeDisplay *decoDispla
         textureName = textureName.erase(startPos);
     }
 
-    TextureData *textureData = ArmatureDataManager::getInstance()->getTextureData(textureName.c_str());
+    TextureData *textureData = ArmatureDataManager::getInstance()->getTextureData(textureName);
     if(textureData)
     {
         //! Init display anchorPoint, every Texture have a anchor point
@@ -232,7 +232,7 @@ void DisplayFactory::createArmatureDisplay(Bone *bone, DecorativeDisplay *decoDi
 {
     ArmatureDisplayData *displayData = (ArmatureDisplayData *)decoDisplay->getDisplayData();
 
-    Armature *armature = Armature::create(displayData->displayName.c_str(), bone);
+    Armature *armature = Armature::create(displayData->displayName, bone);
 
     decoDisplay->setDisplay(armature);
 }
@@ -259,7 +259,7 @@ void DisplayFactory::addParticleDisplay(Bone *bone, DecorativeDisplay *decoDispl
 void DisplayFactory::createParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay)
 {
     ParticleDisplayData *displayData = (ParticleDisplayData *)decoDisplay->getDisplayData();
-    ParticleSystem *system = ParticleSystemQuad::create(displayData->displayName.c_str());
+    ParticleSystem *system = ParticleSystemQuad::create(displayData->displayName);
 
     system->removeFromParent();
     system->cleanup();

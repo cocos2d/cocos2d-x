@@ -211,7 +211,7 @@ static bool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint32
         std::string ret;
         jsval_to_std_string(cx, args.get(0), &ret);
 
-        cobj->addArmatureFileInfoAsync(ret.c_str(), tmpObj, schedule_selector(JSArmatureWrapper::addArmatureFileInfoAsyncCallbackFunc));
+        cobj->addArmatureFileInfoAsync(ret, tmpObj, schedule_selector(JSArmatureWrapper::addArmatureFileInfoAsyncCallbackFunc));
 
         return true;
     }
@@ -232,7 +232,7 @@ static bool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint32
         std::string configFilePath;
         jsval_to_std_string(cx ,args.get(2) , &configFilePath);
 
-        cobj->addArmatureFileInfoAsync(imagePath.c_str(), plistPath.c_str(), configFilePath.c_str(), tmpObj, schedule_selector(JSArmatureWrapper::addArmatureFileInfoAsyncCallbackFunc));
+        cobj->addArmatureFileInfoAsync(imagePath, plistPath, configFilePath, tmpObj, schedule_selector(JSArmatureWrapper::addArmatureFileInfoAsyncCallbackFunc));
 
         return true;
     }
