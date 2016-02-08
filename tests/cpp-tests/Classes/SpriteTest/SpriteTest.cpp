@@ -4603,7 +4603,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
         
         point->setScale(0.25f);
         point->setPosition(sprite->getPosition());
-        addChild(point, 200);
+        addChild(point, 1);
         
         switch(i)
         {
@@ -4639,7 +4639,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
         auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
         
-        spritebatch->addChild(sprite, i);
+        spritebatch->addChild(sprite, 0);
     }
 }
 
@@ -4726,7 +4726,7 @@ SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
         auto seq_scale = Sequence::create(scale, scale_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_scale));
         
-        addChild(sprite, i);
+        addChild(sprite, 0);
     }
 }
 
@@ -4771,7 +4771,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
         
         point->setScale(0.25f);
         point->setPosition(sprite->getPosition());
-        addChild(point, 200);
+        addChild(point, 1);
         
         switch(i)
         {
@@ -4814,7 +4814,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
         auto seq_scale = Sequence::create(scale, scale_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_scale));
         
-        spritebatch->addChild(sprite, i);
+        spritebatch->addChild(sprite, 0);
     }
 }
 
@@ -4858,7 +4858,7 @@ SpriteRotationalSkewNegativeScaleChildren::SpriteRotationalSkewNegativeScaleChil
         
         point->setScale(0.25f);
         point->setPosition(sprite->getPosition());
-        addChild(point, 200);
+        addChild(point, 1);
         
         // Skew
         auto skewX = RotateBy::create(2, 45, 0);
@@ -4881,7 +4881,7 @@ SpriteRotationalSkewNegativeScaleChildren::SpriteRotationalSkewNegativeScaleChil
         
         child1->setScale(0.8f);
         
-        parent->addChild(sprite, i);
+        parent->addChild(sprite, 0);
     }
 }
 
@@ -4925,7 +4925,7 @@ SpriteBatchNodeRotationalSkewNegativeScaleChildren::SpriteBatchNodeRotationalSke
 
         point->setScale(0.25f);
         point->setPosition(sprite->getPosition());
-        addChild(point, 200);
+        addChild(point, 1);
 
         // Skew
         auto skewX = RotateBy::create(2, 45, 0);
@@ -4948,7 +4948,7 @@ SpriteBatchNodeRotationalSkewNegativeScaleChildren::SpriteBatchNodeRotationalSke
 
         child1->setScale(0.8f);
 
-        parent->addChild(sprite, i);
+        parent->addChild(sprite, 0);
     }
 }
 

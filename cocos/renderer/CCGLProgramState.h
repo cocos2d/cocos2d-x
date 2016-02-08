@@ -262,6 +262,7 @@ public:
      @param modelView The applied modelView matrix to shader.
      */
     void apply(const Mat4& modelView);
+
     /**
      Apply GLProgram, and built in uniforms.
      @param modelView The applied modelView matrix to shader.

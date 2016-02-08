@@ -484,7 +484,7 @@ public:
      * Gets the top matrix of specified type of matrix stack.
      * @js NA
      */
-    const Mat4& getMatrix(MATRIX_STACK_TYPE type);
+    const Mat4& getMatrix(MATRIX_STACK_TYPE type) const;
     /**
      * Clear all types of matrix stack, and add identity matrix to these matrix stacks.
      * @js NA

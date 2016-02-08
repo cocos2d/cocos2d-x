@@ -2649,7 +2649,7 @@ void Sprite3DPropertyTest::printMeshName(cocos2d::Ref* sender)
     Vector<Mesh*> meshes =_sprite->getMeshes();
     for(Mesh* mesh : meshes)
     {
-        CCLOG("MeshName: %s ", mesh->getName().c_str());
+        log("MeshName: %s ", mesh->getName().c_str());
     }
     CCLOG("MeshName End");
 }
@@ -2657,7 +2657,7 @@ void Sprite3DPropertyTest::removeUsedTexture(cocos2d::Ref* sender)
 {
     if (_meshTex != nullptr)
     {
-        TextureCache::getInstance()->removeTexture(_meshTex);
+        Director::getInstance()->getTextureCache()->removeTexture(_meshTex);
         this->refreshSpriteRender();
     }
 }
@@ -2666,7 +2666,7 @@ void Sprite3DPropertyTest::resetTexture(cocos2d::Ref* sender)
 {
     if (_meshTex != nullptr)
     {
-        _meshTex = TextureCache::getInstance()->addImage(_texFile);
+        _meshTex = Director::getInstance()->getTextureCache()->addImage(_texFile);
         this->refreshSpriteRender();
     }
 }
