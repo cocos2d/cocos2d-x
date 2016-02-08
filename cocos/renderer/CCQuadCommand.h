@@ -68,9 +68,11 @@ public:
 protected:
     void reIndex(int indices);
 
-    int _indexCapacity;
     int _indexSize;
-    GLushort* _indices;
+
+    // shared across all instances
+    static int __indexCapacity;
+    static GLushort* __indices;
 };
 
 NS_CC_END

@@ -36,17 +36,16 @@
 
 NS_CC_BEGIN
 
+int QuadCommand::__indexCapacity = -1;
+GLushort* QuadCommand::__indices = nullptr;
 
 QuadCommand::QuadCommand()
 : _indexSize(-1)
 {
-    _indexCapacity = 6 * 10;
-    _indices = (GLushort*) malloc(sizeof(GLushort) * _indexCapacity);
 }
 
 QuadCommand::~QuadCommand()
 {
-    free(_indices);
 }
 
 void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
@@ -56,32 +55,33 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glPr
     CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
 
     if (quadCount * 6 > _indexSize)
-        reIndex(quadCount*6);
+        reIndex((int)quadCount*6);
 
     Triangles triangles;
     triangles.verts = &quads->tl;
-    triangles.vertCount = quadCount * 4;
-    triangles.indices = _indices;
-    triangles.indexCount = quadCount * 6;
+    triangles.vertCount = (int)quadCount * 4;
+    triangles.indices = __indices;
+    triangles.indexCount = (int)quadCount * 6;
     TrianglesCommand::init(globalOrder, textureID, glProgramState, blendType, triangles, mv, flags);
 }
 
 void QuadCommand::reIndex(int indicesCount)
 {
-    if (indicesCount > _indexCapacity)
+    if (indicesCount > __indexCapacity)
     {
-        _indices = (GLushort*) realloc(_indices, indicesCount * sizeof(GLushort));
-        _indexCapacity = indicesCount;
+        CCLOG("cocos2d: QuadCommand: resizing index size from [%d] to [%d]", __indexCapacity, indicesCount);
+        __indices = (GLushort*) realloc(__indices, indicesCount * sizeof(__indices[0]));
+        __indexCapacity = indicesCount;
     }
 
-    for( int i=0; i < _indexCapacity/6; i++)
+    for( int i=0; i < __indexCapacity/6; i++)
     {
-        _indices[i*6+0] = (GLushort) (i*4+0);
-        _indices[i*6+1] = (GLushort) (i*4+1);
-        _indices[i*6+2] = (GLushort) (i*4+2);
-        _indices[i*6+3] = (GLushort) (i*4+3);
-        _indices[i*6+4] = (GLushort) (i*4+2);
-        _indices[i*6+5] = (GLushort) (i*4+1);
+        __indices[i*6+0] = (GLushort) (i*4+0);
+        __indices[i*6+1] = (GLushort) (i*4+1);
+        __indices[i*6+2] = (GLushort) (i*4+2);
+        __indices[i*6+3] = (GLushort) (i*4+3);
+        __indices[i*6+4] = (GLushort) (i*4+2);
+        __indices[i*6+5] = (GLushort) (i*4+1);
     }
 
     _indexSize = indicesCount;
