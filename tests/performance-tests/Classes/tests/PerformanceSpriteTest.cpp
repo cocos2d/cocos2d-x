@@ -38,7 +38,7 @@ USING_NS_CC;
 #define CC_ROUND(__f__) roundf(__f__)
 #endif
 
-#define MAX_SUB_TEST_NUM        15
+#define MAX_SUB_TEST_NUM        16
 #define DELAY_TIME              2
 #define STAT_TIME               3
 
@@ -106,6 +106,9 @@ void SubTest::initWithSubTest(int subtest, Node* p)
      *12: 64 (16-bit) PNG Batch Node of 32 x 32 each
      *
      *13:    (16-bit) PNG sprites. 33% from test4, 33% from test8, 33% from test12
+     *14:    (32-bit) PNG sprites: Batched Quads
+     *15:    (32-bit) PNG sprites: Batched Triangles
+     *16:    (16-bit) Similar to test 13, but uses polygon sprites instead of quads
     */
 
     // purge textures
@@ -167,17 +170,23 @@ void SubTest::initWithSubTest(int subtest, Node* p)
             Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
             _parentNode = Node::create();
             break;
-            
+
         case 14:
             Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
             _parentNode = Node::create();
             SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/grossini_quad.plist"); // sprite sheet with rectangular frames
             break;
-
         case 15:
             Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
             _parentNode = Node::create();
             SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/grossini_polygon.plist"); // sprite sheet with triangulation of sprite outlines
+            break;
+
+        case 16:
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
+            _parentNode = Node::create();
+            SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/grossinis_sister1_sp.plist");
+            SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/grossinis_sister2_sp.plist");
             break;
 
         default:
@@ -320,6 +329,20 @@ Sprite* SubTest::createSpriteWithTag(int tag)
         {
             sprite = Sprite::createWithSpriteFrameName("grossini_dance_05.png");
             _parentNode->addChild(sprite, 0, tag+100);
+            break;
+        }
+        case 16:
+        {
+            int test = (CCRANDOM_0_1() * 2);
+            if(test==0) {
+                sprite = Sprite::createWithSpriteFrameName("grossinis_sister1.png");
+                _parentNode->addChild(sprite, 0, tag+100);
+            }
+            else if(test==1)
+            {
+                sprite = Sprite::createWithSpriteFrameName("grossinis_sister2.png");
+                _parentNode->addChild(sprite, 0, tag+100);
+            }
             break;
         }
 
