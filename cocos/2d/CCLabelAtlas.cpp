@@ -108,7 +108,7 @@ bool LabelAtlas::initWithString(const std::string& theString, const std::string&
     std::string pathStr = FileUtils::getInstance()->fullPathForFilename(fntFile);
     std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
     
-    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(pathStr.c_str());
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(pathStr);
 
     CCASSERT(dict["version"].asInt() == 1, "Unsupported version. Upgrade cocos2d version");
 
@@ -119,7 +119,7 @@ bool LabelAtlas::initWithString(const std::string& theString, const std::string&
     unsigned int startChar = dict["firstChar"].asInt();
 
 
-    this->initWithString(theString, textureFilename.c_str(), width, height, startChar);
+    this->initWithString(theString, textureFilename, width, height, startChar);
 
     return true;
 }

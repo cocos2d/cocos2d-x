@@ -128,7 +128,7 @@ void AnimationCache::parseVersion1(const ValueMap& animations)
 
         animation = Animation::create(frames, delay, 1);
 
-        AnimationCache::getInstance()->addAnimation(animation, iter->first.c_str());
+        AnimationCache::getInstance()->addAnimation(animation, iter->first);
     }
 }
 

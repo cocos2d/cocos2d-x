@@ -789,7 +789,7 @@ static int lua_cocos2dx_XMLHttpRequest_open(lua_State* L)
                 self->getHttpRequest()->setRequestType(network::HttpRequest::Type::UNKNOWN);
             }
             
-            self->getHttpRequest()->setUrl(url.c_str());
+            self->getHttpRequest()->setUrl(url);
             
         }
         
