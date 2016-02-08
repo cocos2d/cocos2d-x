@@ -71,6 +71,7 @@ set(COCOS_2D_SRC
   ../external/clipper/clipper.cpp
   2d/CCTextFieldTTF.cpp
   2d/CCTileMapAtlas.cpp
+  2d/CCTouchAction.cpp
   2d/CCTMXLayer.cpp
   2d/CCTMXObjectGroup.cpp
   2d/CCTMXTiledMap.cpp
