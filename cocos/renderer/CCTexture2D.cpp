@@ -61,6 +61,7 @@ namespace {
     typedef Texture2D::PixelFormatInfoMap::value_type PixelFormatInfoMapValue;
     static const PixelFormatInfoMapValue TexturePixelFormatInfoTablesValue[] =
     {
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::RGBAintBGRAs8888, Texture2D::PixelFormatInfo(GL_RGBA, GL_BGRA, GL_UNSIGNED_BYTE, 32, false, true)),
         PixelFormatInfoMapValue(Texture2D::PixelFormat::BGRA8888, Texture2D::PixelFormatInfo(GL_BGRA, GL_BGRA, GL_UNSIGNED_BYTE, 32, false, true)),
         PixelFormatInfoMapValue(Texture2D::PixelFormat::RGBA8888, Texture2D::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, false, true)),
         PixelFormatInfoMapValue(Texture2D::PixelFormat::RGBA4444, Texture2D::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, false, true)),
