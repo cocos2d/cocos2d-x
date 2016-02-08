@@ -33,22 +33,36 @@ THE SOFTWARE.
 #define glDeleteVertexArrays        glDeleteVertexArraysOES
 #define glGenVertexArrays           glGenVertexArraysOES
 #define glBindVertexArray           glBindVertexArrayOES
+#if (CC_TARGET_OPENGLES != CC_OPENGLES_3)
 #define glMapBuffer                 glMapBufferOES
 #define glUnmapBuffer               glUnmapBufferOES
+#endif
 
+#if (CC_TARGET_OPENGLES != CC_OPENGLES_3)
 #define GL_DEPTH24_STENCIL8         GL_DEPTH24_STENCIL8_OES
 #define GL_WRITE_ONLY               GL_WRITE_ONLY_OES
+#endif
 
 // GL_GLEXT_PROTOTYPES isn't defined in glplatform.h on android ndk r7 
 // we manually define it here
+#if (CC_TARGET_OPENGLES == CC_OPENGLES_3)
+#include <GLES3/gl3platform.h>
+#else
 #include <GLES2/gl2platform.h>
+#endif
 #ifndef GL_GLEXT_PROTOTYPES
 #define GL_GLEXT_PROTOTYPES 1
 #endif
 
+#if (CC_TARGET_OPENGLES == CC_OPENGLES_3)
+#include <GLES3/gl3.h>
+#include <GLES3/gl3ext.h>
+#else
 // normal process
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
+#include "platform/CCGL_compatible.h"
+#endif
 // gl2.h doesn't define GLchar on Android
 typedef char GLchar;
 // android defines GL_BGRA_EXT but not GL_BRGA
@@ -56,6 +70,7 @@ typedef char GLchar;
 #define GL_BGRA  0x80E1
 #endif
 
+#if (CC_TARGET_OPENGLES != CC_OPENGLES_3)
 //declare here while define in EGLView_android.cpp
 extern PFNGLGENVERTEXARRAYSOESPROC glGenVertexArraysOESEXT;
 extern PFNGLBINDVERTEXARRAYOESPROC glBindVertexArrayOESEXT;
@@ -64,6 +79,7 @@ extern PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArraysOESEXT;
 #define glGenVertexArraysOES glGenVertexArraysOESEXT
 #define glBindVertexArrayOES glBindVertexArrayOESEXT
 #define glDeleteVertexArraysOES glDeleteVertexArraysOESEXT
+#endif
 
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
