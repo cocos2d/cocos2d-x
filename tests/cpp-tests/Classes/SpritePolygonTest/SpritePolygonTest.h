@@ -38,7 +38,7 @@ class SpritePolygonTest1 : public SpritePolygonTestDemo
 public:
     CREATE_FUNC(SpritePolygonTest1);
     SpritePolygonTest1();
-    virtual void initSprites() override;
+    void initSprites() override;
 };
 
 class SpritePolygonTest2 : public SpritePolygonTestDemo
@@ -151,6 +151,38 @@ public:
 protected:
     virtual cocos2d::Sprite* makeSprite() override;
     virtual void initIncrementStats() override;
+};
+
+class SpritePolygonTestNoCrash : public SpritePolygonTestDemo
+{
+public:
+    CREATE_FUNC(SpritePolygonTestNoCrash);
+    SpritePolygonTestNoCrash();
+    virtual void initSprites() override;
+};
+
+class SpritePolygonTestTPIsland : public SpritePolygonTestDemo
+{
+public:
+    CREATE_FUNC(SpritePolygonTestTPIsland);
+    SpritePolygonTestTPIsland();
+    virtual void initSprites() override;
+};
+
+class SpritePolygonTestAutoPolyIsland : public SpritePolygonTestDemo
+{
+public:
+    CREATE_FUNC(SpritePolygonTestAutoPolyIsland);
+    SpritePolygonTestAutoPolyIsland();
+    virtual void initSprites() override;
+};
+
+class SpritePolygonTestFrameAnim : public SpritePolygonTestDemo
+{
+public:
+    CREATE_FUNC(SpritePolygonTestFrameAnim);
+    SpritePolygonTestFrameAnim();
+    virtual void initSprites() override;
 };
 
 #endif /* defined(__cocos2d_tests__SpritePolygonTest__) */

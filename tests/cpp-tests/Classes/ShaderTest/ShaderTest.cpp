@@ -364,7 +364,7 @@ SpriteBlur* SpriteBlur::create(const char *pszFileName)
     if (pRet)
     {
         bool result = pRet->initWithFile("");
-        CCLOG("Test call Sprite::initWithFile with bad file name result is : %s", result ? "true" : "false");
+        log("Test call Sprite::initWithFile with bad file name result is : %s", result ? "true" : "false");
     }
 
     if (pRet && pRet->initWithFile(pszFileName))
