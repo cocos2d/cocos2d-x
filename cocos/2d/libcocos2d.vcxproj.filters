@@ -1944,6 +1944,9 @@
     <ClCompile Include="CCTouchAction.cpp">
       <Filter>2d</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\CCConsoleGestureCmd.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -3793,6 +3796,9 @@
     </ClInclude>
     <ClInclude Include="CCTouchAction.h">
       <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCConsoleGestureCmd.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

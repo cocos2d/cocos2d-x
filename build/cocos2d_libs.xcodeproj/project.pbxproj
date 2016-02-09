@@ -3763,6 +3763,12 @@
 		A0E749F81BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */; };
 		A0E749F91BA8FD7F001A8332 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */; };
 		A0E749FA1BA8FD7F001A8332 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */; };
+		A55B89BF1C6851DF009B2B6F /* CCConsoleGestureCmd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A55B89BD1C6851DF009B2B6F /* CCConsoleGestureCmd.cpp */; };
+		A55B89C01C6851DF009B2B6F /* CCConsoleGestureCmd.h in Headers */ = {isa = PBXBuildFile; fileRef = A55B89BE1C6851DF009B2B6F /* CCConsoleGestureCmd.h */; };
+		A55B89C11C685207009B2B6F /* CCConsoleGestureCmd.h in Headers */ = {isa = PBXBuildFile; fileRef = A55B89BE1C6851DF009B2B6F /* CCConsoleGestureCmd.h */; };
+		A55B89C21C685210009B2B6F /* CCConsoleGestureCmd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A55B89BD1C6851DF009B2B6F /* CCConsoleGestureCmd.cpp */; };
+		A55B89C31C685212009B2B6F /* CCConsoleGestureCmd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A55B89BD1C6851DF009B2B6F /* CCConsoleGestureCmd.cpp */; };
+		A55B89C41C685212009B2B6F /* CCConsoleGestureCmd.h in Headers */ = {isa = PBXBuildFile; fileRef = A55B89BE1C6851DF009B2B6F /* CCConsoleGestureCmd.h */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
 		B21770401977ECE6009EE11B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703F1977ECE6009EE11B /* OpenGL.framework */; };
@@ -6574,6 +6580,8 @@
 		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-common.cpp"; sourceTree = "<group>"; };
 		A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-common.h"; sourceTree = "<group>"; };
+		A55B89BD1C6851DF009B2B6F /* CCConsoleGestureCmd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCConsoleGestureCmd.cpp; path = ../base/CCConsoleGestureCmd.cpp; sourceTree = "<group>"; };
+		A55B89BE1C6851DF009B2B6F /* CCConsoleGestureCmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCConsoleGestureCmd.h; path = ../base/CCConsoleGestureCmd.h; sourceTree = "<group>"; };
 		B20564AA1A6E5744001C1B6E /* ccShader_PositionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
 		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B217703D1977ECC1009EE11B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -7838,6 +7846,8 @@
 				50ABBDCB1925AB6E00A911A9 /* CCConfiguration.h */,
 				50ABBDCC1925AB6E00A911A9 /* CCConsole.cpp */,
 				50ABBDCD1925AB6E00A911A9 /* CCConsole.h */,
+				A55B89BD1C6851DF009B2B6F /* CCConsoleGestureCmd.cpp */,
+				A55B89BE1C6851DF009B2B6F /* CCConsoleGestureCmd.h */,
 				50ABBDCE1925AB6E00A911A9 /* CCData.cpp */,
 				50ABBDCF1925AB6E00A911A9 /* CCData.h */,
 				50ABBDD01925AB6E00A911A9 /* CCDataVisitor.cpp */,
@@ -11591,6 +11601,7 @@
 				B665E24C1AA80A6500DDB1C5 /* CCPUColorAffector.h in Headers */,
 				29394CF019B01DBA00D2DE1A /* UIWebView.h in Headers */,
 				15AE186519AAD31D00C27E9E /* CDOpenALSupport.h in Headers */,
+				A55B89C01C6851DF009B2B6F /* CCConsoleGestureCmd.h in Headers */,
 				B6CAAFE81AF9A9E100B9B856 /* CCPhysics3DComponent.h in Headers */,
 				15AE1B5C19AADA9900C27E9E /* UITextAtlas.h in Headers */,
 				1A5702FC180BCE750088DEC7 /* CCTMXXMLParser.h in Headers */,
@@ -12118,6 +12129,7 @@
 				507B3DBB1C31BDD30067B53E /* btDantzigLCP.h in Headers */,
 				507B3DBC1C31BDD30067B53E /* CCPUAlignAffectorTranslator.h in Headers */,
 				507B3DBD1C31BDD30067B53E /* CCActionEase.h in Headers */,
+				A55B89C41C685212009B2B6F /* CCConsoleGestureCmd.h in Headers */,
 				507B3DBE1C31BDD30067B53E /* CCActionGrid.h in Headers */,
 				507B3DBF1C31BDD30067B53E /* CCComController.h in Headers */,
 				507B3DC01C31BDD30067B53E /* NodeReaderProtocol.h in Headers */,
@@ -13126,6 +13138,7 @@
 				B6CAB41C1AF9AA1A00B9B856 /* btDantzigLCP.h in Headers */,
 				B665E2051AA80A6500DDB1C5 /* CCPUAlignAffectorTranslator.h in Headers */,
 				1A570070180BC5A10088DEC7 /* CCActionEase.h in Headers */,
+				A55B89C11C685207009B2B6F /* CCConsoleGestureCmd.h in Headers */,
 				1A570074180BC5A10088DEC7 /* CCActionGrid.h in Headers */,
 				15AE194A19AAD35100C27E9E /* CCComController.h in Headers */,
 				382384161A259092002C4610 /* NodeReaderProtocol.h in Headers */,
@@ -14843,6 +14856,7 @@
 				B6CAAFFE1AF9A9E100B9B856 /* CCPhysicsSprite3D.cpp in Sources */,
 				B6CAB1ED1AF9AA1A00B9B856 /* btBroadphaseProxy.cpp in Sources */,
 				B29594B41926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */,
+				A55B89BF1C6851DF009B2B6F /* CCConsoleGestureCmd.cpp in Sources */,
 				15AE189619AAD33D00C27E9E /* CCMenuItemImageLoader.cpp in Sources */,
 				B665E23E1AA80A6500DDB1C5 /* CCPUCircleEmitterTranslator.cpp in Sources */,
 				15AE1BB719AADFEF00C27E9E /* WebSocket.cpp in Sources */,
@@ -15636,6 +15650,7 @@
 				507B3CB01C31BDD30067B53E /* Node3DReader.cpp in Sources */,
 				507B3CB11C31BDD30067B53E /* CCAsyncTaskPool.cpp in Sources */,
 				507B3CB21C31BDD30067B53E /* CCConsole.cpp in Sources */,
+				A55B89C31C685212009B2B6F /* CCConsoleGestureCmd.cpp in Sources */,
 				507B3CB31C31BDD30067B53E /* Bone.c in Sources */,
 				507B3CB41C31BDD30067B53E /* Win32ThreadSupport.cpp in Sources */,
 				507B3CB51C31BDD30067B53E /* CCPUVortexAffector.cpp in Sources */,
@@ -16481,6 +16496,7 @@
 				182C5CB41A95964C00C30D34 /* Node3DReader.cpp in Sources */,
 				B63990CD1A490AFE00B07923 /* CCAsyncTaskPool.cpp in Sources */,
 				50ABBE361925AB6F00A911A9 /* CCConsole.cpp in Sources */,
+				A55B89C21C685210009B2B6F /* CCConsoleGestureCmd.cpp in Sources */,
 				B29A7E1419EE1B7700872B35 /* Bone.c in Sources */,
 				B6CAB4F01AF9AA1A00B9B856 /* Win32ThreadSupport.cpp in Sources */,
 				B665E4371AA80A6600DDB1C5 /* CCPUVortexAffector.cpp in Sources */,
