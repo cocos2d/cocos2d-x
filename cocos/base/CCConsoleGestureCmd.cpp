@@ -23,6 +23,7 @@
 
 #include "CCConsoleGestureCmd.h"
 #include <sstream>
+#include <cstdlib>
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <io.h>
@@ -179,8 +180,8 @@ void ConsoleGestureCmd::commandTapInternal(int fd, const std::string &args, bool
         std::string forceStr = (argv.size() >= 5)? argv[4] : ""; // TODO: implement
         std::string asyncIDStr = (argv.size() >= 6)? argv[5] : "";
 
-        Vec2 pos(std::stof(xStr), std::stof(yStr));
-        float duration = (durationStr != "")? std::stof(durationStr) : 1.0f;
+        Vec2 pos(atof(xStr.c_str()), atof(yStr.c_str()));
+        float duration = (durationStr != "")? atof(durationStr.c_str()) : 1.0f;
         auto tap = Tap::create(duration, pos, true);
         
         auto director = Director::getInstance();
@@ -229,9 +230,9 @@ void ConsoleGestureCmd::commandSwipeInternal(int fd, const std::string &args, bo
         std::string durationStr = (argv.size() >= 6)? argv[5] : "";
         std::string asyncIDStr = (argv.size() >= 7)? argv[6] : "";
 
-        Vec2 srcPos(std::stof(srcXStr), std::stof(srcYStr));
-        Vec2 dstPos(std::stof(dstXStr), std::stof(dstYStr));
-        float duration = (durationStr != "")? std::stof(durationStr) : 1.0f ;
+        Vec2 srcPos(atof(srcXStr.c_str()), atof(srcYStr.c_str()));
+        Vec2 dstPos(atof(dstXStr.c_str()), atof(dstYStr.c_str()));
+        float duration = (durationStr != "")? atof(durationStr.c_str()) : 1.0f ;
         auto swipe = SwipeBetween::create(duration, srcPos, dstPos);
 
         auto director = Director::getInstance();
@@ -281,11 +282,11 @@ void ConsoleGestureCmd::commandPinchInInternal(int fd, const std::string &args, 
         std::string durationStr = (argv.size() >= 7)? argv[6] : "";
         std::string asyncIDStr = (argv.size() >= 8)? argv[7] : "";
 
-        Vec2 centerPos(std::stof(centerXStr), std::stof(centerYStr));
-        float initDistance = std::stof(initDistanceStr);
-        float pinchDistance = std::stof(pinchDistanceStr);
-        float degree = std::stof(degreeStr);
-        float duration = (durationStr != "")? std::stof(durationStr) : 1.0f ;
+        Vec2 centerPos(atof(centerXStr.c_str()), atof(centerYStr.c_str()));
+        float initDistance = atof(initDistanceStr.c_str());
+        float pinchDistance = atof(pinchDistanceStr.c_str());
+        float degree = atof(degreeStr.c_str());
+        float duration = (durationStr != "")? atof(durationStr.c_str()) : 1.0f ;
         auto pinchIn = PinchIn::create(duration, centerPos, initDistance, pinchDistance, true, degree);
 
         auto director = Director::getInstance();
@@ -335,11 +336,11 @@ void ConsoleGestureCmd::commandPinchOutInternal(int fd, const std::string &args,
         std::string durationStr = (argv.size() >= 7)? argv[6] : "";
         std::string asyncIDStr = (argv.size() >= 8)? argv[7] : "";
 
-        Vec2 centerPos(std::stof(centerXStr), std::stof(centerYStr));
-        float initDistance = std::stof(initDistanceStr);
-        float pinchDistance = std::stof(pinchDistanceStr);
-        float degree = std::stof(degreeStr);
-        float duration = (durationStr != "")? std::stof(durationStr) : 1.0f ;
+        Vec2 centerPos(atof(centerXStr.c_str()), atof(centerYStr.c_str()));
+        float initDistance = atof(initDistanceStr.c_str());
+        float pinchDistance = atof(pinchDistanceStr.c_str());
+        float degree = atof(degreeStr.c_str());
+        float duration = (durationStr != "")? atof(durationStr.c_str()) : 1.0f ;
         auto pinchOut = PinchOut::create(duration, centerPos, initDistance, pinchDistance, true, degree);
 
         auto director = Director::getInstance();
@@ -383,9 +384,9 @@ void ConsoleGestureCmd::commandTouchBegin(int fd, const std::string &args)
     std::string xStr = argv[1];
     std::string yStr = argv[2];
     std::string touchIDStr = argv[3];
-    float x = std::stof(xStr);
-    float y = std::stof(yStr);
-    int touchID = std::stoi(touchIDStr);
+    float x = atof(xStr.c_str());
+    float y = atof(yStr.c_str());
+    int touchID = atoi(touchIDStr.c_str());
 
     if(findTouch(touchID) != nullptr) {
         int ret;
@@ -425,9 +426,9 @@ void ConsoleGestureCmd::commandTouchMove(int fd, const std::string &args)
     std::string xStr = argv[1];
     std::string yStr = argv[2];
     std::string touchIDStr = argv[3];
-    float x = std::stof(xStr);
-    float y = std::stof(yStr);
-    int touchID = std::stoi(touchIDStr);
+    float x = atof(xStr.c_str());
+    float y = atof(yStr.c_str());
+    int touchID = atoi(touchIDStr.c_str());
 
     Touch *touch = findTouch(touchID);
     if(!touch) return;
@@ -458,9 +459,9 @@ void ConsoleGestureCmd::commandTouchEnd(int fd, const std::string &args)
     std::string xStr = argv[1];
     std::string yStr = argv[2];
     std::string touchIDStr = argv[3];
-    float x = std::stof(xStr);
-    float y = std::stof(yStr);
-    int touchID = std::stoi(touchIDStr);
+    float x = atof(xStr.c_str());
+    float y = atof(yStr.c_str());
+    int touchID = atoi(touchIDStr.c_str());
 
     Touch *touch = findTouch(touchID);
     if(!touch) return;
@@ -491,9 +492,9 @@ void ConsoleGestureCmd::commandTouchCancel(int fd, const std::string &args)
     std::string xStr = argv[1];
     std::string yStr = argv[2];
     std::string touchIDStr = argv[3];
-    float x = std::stof(xStr);
-    float y = std::stof(yStr);
-    int touchID = std::stoi(touchIDStr);
+    float x = atof(xStr.c_str());
+    float y = atof(yStr.c_str());
+    int touchID = atoi(touchIDStr.c_str());
 
     Touch *touch = findTouch(touchID);
     if(!touch) return;
