@@ -298,6 +298,55 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
     CC_SAFE_DELETE(image);
 }
 
+void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dict, const std::string &texturePath)
+{
+    std::string pixelFormatName;
+    if (dict.find("metadata") != dict.end())
+    {
+        ValueMap& metadataDict = dict.at("metadata").asValueMap();
+        if (metadataDict.find("pixelFormat") != metadataDict.end())
+        {
+            pixelFormatName = metadataDict.at("pixelFormat").asString();
+        }
+    }
+    
+    Texture2D *texture = nullptr;
+    static std::unordered_map<std::string, Texture2D::PixelFormat> pixelFormats = {
+        {"RGBA8888", Texture2D::PixelFormat::RGBA8888},
+        {"RGBA4444", Texture2D::PixelFormat::RGBA4444},
+        {"RGB5A1", Texture2D::PixelFormat::RGB5A1},
+        {"RGB565", Texture2D::PixelFormat::RGB565},
+        {"A8", Texture2D::PixelFormat::A8},
+        {"I8", Texture2D::PixelFormat::I8},
+        {"AI88", Texture2D::PixelFormat::AI88},
+        {"BGRA8888", Texture2D::PixelFormat::BGRA8888},
+        {"RGB888", Texture2D::PixelFormat::RGB888}
+    };
+
+    auto pixelFormatIt = pixelFormats.find(pixelFormatName);
+    if (pixelFormatIt != pixelFormats.end())
+    {
+        const Texture2D::PixelFormat pixelFormat = (*pixelFormatIt).second;
+        const Texture2D::PixelFormat currentPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
+        Texture2D::setDefaultAlphaPixelFormat(pixelFormat);
+        texture = Director::getInstance()->getTextureCache()->addImage(texturePath);
+        Texture2D::setDefaultAlphaPixelFormat(currentPixelFormat);
+    }
+    else
+    {
+        texture = Director::getInstance()->getTextureCache()->addImage(texturePath);
+    }
+    
+    if (texture)
+    {
+        addSpriteFramesWithDictionary(dict, texture);
+    }
+    else
+    {
+        CCLOG("cocos2d: SpriteFrameCache: Couldn't load texture");
+    }
+}
+
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, Texture2D *texture)
 {
     if (_loadedFileNames->find(plist) != _loadedFileNames->end())
@@ -321,16 +370,15 @@ void SpriteFrameCache::addSpriteFramesWithFileContent(const std::string& plist_c
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName)
 {
     CCASSERT(textureFileName.size()>0, "texture name should not be null");
-    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(textureFileName);
-
-    if (texture)
+    if (_loadedFileNames->find(plist) != _loadedFileNames->end())
     {
-        addSpriteFramesWithFile(plist, texture);
+        return; // We already added it
     }
-    else
-    {
-        CCLOG("cocos2d: SpriteFrameCache: couldn't load texture file. File not found %s", textureFileName.c_str());
-    }
+    
+    const std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
+    addSpriteFramesWithDictionary(dict, textureFileName);
+    _loadedFileNames->insert(plist);
 }
 
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
@@ -378,18 +426,8 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
 
             CCLOG("cocos2d: SpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
         }
-
-        Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(texturePath);
-
-        if (texture)
-        {
-            addSpriteFramesWithDictionary(dict, texture);
-            _loadedFileNames->insert(plist);
-        }
-        else
-        {
-            CCLOG("cocos2d: SpriteFrameCache: Couldn't load texture");
-        }
+        addSpriteFramesWithDictionary(dict, texturePath);
+        _loadedFileNames->insert(plist);
     }
 }
 
