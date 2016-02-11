@@ -1,8 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2012 James Chen
- Copyright (c) 2013-2015 zilongshanren
- Copyright (c) 2015 Mazyad Alabduljaleel
+ Copyright (c) 2013-2016 zilongshanren
  
  http://www.cocos2d-x.org
  
@@ -25,37 +23,42 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import <UIKit/UIKit.h>
-#import "CCUITextInput.h"
-#include "UIEditBoxImpl-ios.h"
+#import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
+#include "UIEditboxImpl-mac.h"
+#include "CCUITextInput.h"
 
+#pragma mark - UIEditBox mac implementation
 
-@interface UIEditBoxImplIOS_objc : NSObject <UITextFieldDelegate, UITextViewDelegate>
+@interface UIEditBoxImplMac : NSObject <NSTextFieldDelegate, NSTextViewDelegate>
 
-@property (nonatomic, retain) UIView<UITextInput, CCUITextInput> *textInput;
+@property (nonatomic, retain) NSView<CCUITextInput> *textInput;
+@property (nonatomic, readonly) NSWindow *window;
+
+@property (nonatomic, readonly, getter = isEditState) BOOL editState;
 @property (nonatomic, assign) void *editBox;
 @property (nonatomic, assign) NSString *text;
 @property (nonatomic, assign) CGRect frameRect;
 @property (nonatomic, assign) cocos2d::ui::EditBox::InputFlag dataInputMode;
 @property (nonatomic, assign) cocos2d::ui::EditBox::KeyboardReturnType keyboardReturnType;
-@property (nonatomic, readonly, getter = isEditState) BOOL editState;
 
-- (instancetype)initWithFrame:(CGRect)frameRect editBox:(void *)editBox;
-- (void)doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
-
-- (NSString *)getDefaultFontName;
-
-- (void)setInputMode:(cocos2d::ui::EditBox::InputMode)inputMode;
-- (void)setInputFlag:(cocos2d::ui::EditBox::InputFlag)flag;
-- (void)setReturnType:(cocos2d::ui::EditBox::KeyboardReturnType)returnType;
-
-- (void)setPlaceHolder:(NSString *)text;
-- (void)setVisible:(BOOL)visible;
-- (void)setTextColor:(UIColor*)color;
-- (void)setFont:(UIFont *)font;
+- (instancetype)initWithFrame:(NSRect)frameRect editBox:(void *)editBox;
+- (void)setMaxLength:(int)maxLength;
 - (void)updateFrame:(CGRect)rect;
 
 - (void)openKeyboard;
 - (void)closeKeyboard;
 
+- (NSString *)getDefaultFontName;
+
+- (void)setInputMode:(cocos2d::ui::EditBox::InputMode)inputMode;
+- (void)setInputFlag:(cocos2d::ui::EditBox::InputFlag)inputFlag;
+- (void)setReturnType:(cocos2d::ui::EditBox::KeyboardReturnType)returnType;
+
+- (void)setPlaceHolder:(const char *)text;
+- (void)setVisible:(BOOL)visible;
+- (void)setTextColor:(NSColor*)color;
+- (void)setFont:(NSFont *)font;
+- (void)setPlaceholderFontColor:(NSColor*)color;
+- (void)setPlaceholderFont:(NSFont*)font;
 @end
