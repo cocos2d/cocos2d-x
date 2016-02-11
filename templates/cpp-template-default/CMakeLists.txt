@@ -83,15 +83,9 @@ endif(MSVC)
 
 set(PLATFORM_SPECIFIC_SRC)
 set(PLATFORM_SPECIFIC_HEADERS)
-if(MACOSX OR APPLE)
+if(MACOSX)
 set(PLATFORM_SPECIFIC_SRC
-  proj.ios_mac/ios/main.m
-  proj.ios_mac/ios/RootViewController.mm
-  proj.ios_mac/ios/AppController.mm
-)
-set(PLATFORM_SPECIFIC_HEADERS
-  proj.ios_mac/ios/RootViewController.h
-  proj.ios_mac/ios/AppController.h
+  proj.ios_mac/mac/main.cpp
 )
 elseif(LINUX) #assume linux
 set(PLATFORM_SPECIFIC_SRC
@@ -110,6 +104,7 @@ endif()
 include_directories(
   /usr/local/include/GLFW
   /usr/include/GLFW
+  ${GLFW3_INCLUDE_DIRS}
   ${COCOS2D_ROOT}/cocos
   ${COCOS2D_ROOT}/cocos/platform
   ${COCOS2D_ROOT}/cocos/audio/include/
