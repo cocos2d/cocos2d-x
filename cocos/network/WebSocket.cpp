@@ -650,9 +650,11 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                     {
                         //CCLOG("%ld bytes of pending data to receive, consider increasing the libwebsocket rx_buffer_size value.", _pendingFrameDataLen);
                     }
+                    //to handle big frame packet
+                    bool isfinal = libwebsocket_is_final_fragment(wsi);
                     
                     // If no more data pending, send it to the client thread
-                    if (_pendingFrameDataLen == 0)
+                    if (_pendingFrameDataLen == 0 && isfinal )
                     {
 						WsMessage* msg = new (std::nothrow) WsMessage();
 						msg->what = WS_MSG_TO_UITHREAD_MESSAGE;
