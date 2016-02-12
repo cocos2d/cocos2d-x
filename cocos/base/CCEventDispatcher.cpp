@@ -1151,6 +1151,7 @@ void EventDispatcher::updateListeners(Event* event)
         
         if (sceneGraphPriorityListeners)
         {
+            bool isDirtyForSceneGraphPriorityListeners = false;
             for (auto iter = sceneGraphPriorityListeners->begin(); iter != sceneGraphPriorityListeners->end();)
             {
                 auto l = *iter;
@@ -1162,16 +1163,19 @@ void EventDispatcher::updateListeners(Event* event)
                     if (matchIter != _toRemovedListeners.end())
                         _toRemovedListeners.erase(matchIter);
                     l->release();
+                    isDirtyForSceneGraphPriorityListeners = true;
                 }
                 else
                 {
                     ++iter;
                 }
             }
+            if (isDirtyForSceneGraphPriorityListeners) setDirty(listenerID, DirtyFlag::SCENE_GRAPH_PRIORITY);
         }
         
         if (fixedPriorityListeners)
         {
+            bool isDirtyForFixedPriorityListeners = false;
             for (auto iter = fixedPriorityListeners->begin(); iter != fixedPriorityListeners->end();)
             {
                 auto l = *iter;
@@ -1183,12 +1187,14 @@ void EventDispatcher::updateListeners(Event* event)
                     if (matchIter != _toRemovedListeners.end())
                         _toRemovedListeners.erase(matchIter);
                     l->release();
+                    isDirtyForFixedPriorityListeners = true;
                 }
                 else
                 {
                     ++iter;
                 }
             }
+            if (isDirtyForFixedPriorityListeners) setDirty(listenerID, DirtyFlag::FIXED_PRIORITY);
         }
         
         if (sceneGraphPriorityListeners && sceneGraphPriorityListeners->empty())
