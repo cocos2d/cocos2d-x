@@ -555,7 +555,7 @@ public:
     /**
      * Creates a PhysicsShapeEdgeSegment with specified value.
      *
-     * @param   a It's the edge's begin position.
+     * @param   a It's the edge's start position.
      * @param   b It's the edge's end position.
      * @param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
      * @param   border It's a edge's border width.
@@ -564,7 +564,7 @@ public:
     static PhysicsShapeEdgeSegment* create(const Vec2& a, const Vec2& b, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
     
     /**
-     * Get this edge's begin position.
+     * Get this edge's start position.
      *
      * @return A Vec2 object.
      */
@@ -652,7 +652,7 @@ public:
      * @param   size Size contains this box's width and height.
      * @param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
      * @param   border It's a edge's border width.
-     * @param   offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.
+     * @param   offset A Vec2 object, it is the offset from the body's center of gravity in the body's local coordinates.
      * @return  An autoreleased PhysicsShapeEdgeBox object pointer.
      */
     static PhysicsShapeEdgeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 0, const Vec2& offset = Vec2::ZERO);

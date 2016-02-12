@@ -62,7 +62,8 @@ typedef struct CC_DLL PhysicsContactData
 /**
  * @brief Contact information. 
  
- * It will created automatically when two shape contact with each other. And it will destroyed automatically when two shape separated.
+ * It will be created automatically when two shapes come in contact with each other. 
+ * It will be destroyed automatically when two shapes are separated.
  */
 class CC_DLL PhysicsContact : public EventCustom
 {
@@ -215,18 +216,18 @@ public:
     
 protected:
     /**
-     * It will be call when two body have contact.
-     * if return false, it will not invoke callbacks.
+     * It will be called when two body make contact.
+     * If return false, it will not invoke callbacks.
      */
     virtual bool hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB);
     
 public:
     /**
-     * @brief It will called at two shapes start to contact, and only call it once.
+     * @brief It will be called when two shapes begin to make contact, and will only be called once.
      */
     std::function<bool(PhysicsContact& contact)> onContactBegin;
     /**
-     * @brief Two shapes are touching during this step. Return false from the callback to make world ignore the collision this step or true to process it normally. Additionally, you may override collision values, restitution, or surface velocity values.
+     * @brief Two shapes are touching during this step. Return false from the callback to make world ignore the collision or true to process it normally. Additionally, you may override collision values, restitution, or surface velocity values.
      */
     std::function<bool(PhysicsContact& contact, PhysicsContactPreSolve& solve)> onContactPreSolve;
     /**
@@ -234,7 +235,7 @@ public:
      */
     std::function<void(PhysicsContact& contact, const PhysicsContactPostSolve& solve)> onContactPostSolve;
     /**
-     * @brief It will called at two shapes separated, and only call it once.
+     * @brief It will called when the two shapes are separated, and will only be called once.
      * onContactBegin and onContactSeparate will called in pairs.
      */
     std::function<void(PhysicsContact& contact)> onContactSeparate;
@@ -250,7 +251,7 @@ protected:
     friend class PhysicsWorld;
 };
 
-/** This event listener only be called when bodyA and bodyB have contacts. */
+/** This event listener will only be called when bodyA and bodyB make contact. */
 class CC_DLL EventListenerPhysicsContactWithBodies : public EventListenerPhysicsContact
 {
 public:
@@ -270,7 +271,7 @@ protected:
     virtual ~EventListenerPhysicsContactWithBodies();
 };
 
-/** This event listener only be called when shapeA and shapeB have contacts. */
+/** This event listener only be called when shapeA and shapeB make contact. */
 class CC_DLL EventListenerPhysicsContactWithShapes : public EventListenerPhysicsContact
 {
 public:
@@ -289,7 +290,7 @@ protected:
     virtual ~EventListenerPhysicsContactWithShapes();
 };
 
-/** This event listener only be called when shapeA or shapeB is in the group your specified */
+/** This event listener only be called when shapeA or shapeB is in the group you specified */
 class CC_DLL EventListenerPhysicsContactWithGroup : public EventListenerPhysicsContact
 {
 public:

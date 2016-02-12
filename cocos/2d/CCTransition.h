@@ -165,7 +165,7 @@ private:
 
 /** @class TransitionRotoZoom
  * @brief TransitionRotoZoom:
-Rotate and zoom out the outgoing scene, and then rotate and zoom in the incoming 
+Rotate and zoom out ofthe outgoing scene, and then rotate and zoom in the incoming scene
 */
 class CC_DLL TransitionRotoZoom : public TransitionScene
 {
@@ -194,7 +194,7 @@ private:
 
 /** @class TransitionJumpZoom
  * @brief TransitionJumpZoom:
-Zoom out and jump the outgoing scene, and then jump and zoom in the incoming 
+Zoom out and jump the outgoing scene, and then jump and zoom in the incoming scene 
 */
 class CC_DLL TransitionJumpZoom : public TransitionScene
 {
@@ -262,7 +262,7 @@ private:
 
 /** @class TransitionMoveInR
  * @brief TransitionMoveInR:
-Move in from to the right the incoming scene.
+The incoming scene moves in from the right.
 */
 class CC_DLL TransitionMoveInR : public TransitionMoveInL
 {
@@ -288,7 +288,7 @@ private:
 
 /** @class TransitionMoveInT
  * @brief TransitionMoveInT:
-Move in from to the top the incoming scene.
+The incoming scene moves in from the top.
 */
 class CC_DLL TransitionMoveInT : public TransitionMoveInL 
 {
@@ -314,7 +314,7 @@ private:
 
 /** @class TransitionMoveInB
  * @brief TransitionMoveInB:
-Move in from to the bottom the incoming scene.
+The incoming scene moves in from the bottom.
 */
 class CC_DLL TransitionMoveInB : public TransitionMoveInL
 {
@@ -709,7 +709,7 @@ private:
 
 /** @class TransitionZoomFlipAngular
  * @brief TransitionZoomFlipAngular:
-Flips the screen half horizontally and half vertically doing a little zooming out/in.
+Flips the screen half horizontally and half vertically whilst performing a little zooming out/in.
 The front face is the outgoing scene and the back face is the incoming scene.
 */
 class CC_DLL TransitionZoomFlipAngular : public TransitionSceneOriented
@@ -953,7 +953,7 @@ private:
 
 /** @class TransitionFadeTR
  * @brief TransitionFadeTR:
-Fade the tiles of the outgoing scene from the left-bottom corner the to top-right corner.
+Fade the tiles of the outgoing scene from the left-bottom corner to the top-right corner.
 */
 class CC_DLL TransitionFadeTR : public TransitionScene , public TransitionEaseScene
 {
