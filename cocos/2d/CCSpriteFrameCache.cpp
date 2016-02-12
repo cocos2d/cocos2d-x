@@ -315,11 +315,14 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dict, const std::
         {"RGBA8888", Texture2D::PixelFormat::RGBA8888},
         {"RGBA4444", Texture2D::PixelFormat::RGBA4444},
         {"RGB5A1", Texture2D::PixelFormat::RGB5A1},
+        {"RGBA5551", Texture2D::PixelFormat::RGB5A1},
         {"RGB565", Texture2D::PixelFormat::RGB565},
         {"A8", Texture2D::PixelFormat::A8},
+        {"ALPHA", Texture2D::PixelFormat::A8},
         {"I8", Texture2D::PixelFormat::I8},
         {"AI88", Texture2D::PixelFormat::AI88},
-        {"BGRA8888", Texture2D::PixelFormat::BGRA8888},
+        {"ALPHA_INTENSITY", Texture2D::PixelFormat::AI88},
+        //{"BGRA8888", Texture2D::PixelFormat::BGRA8888}, no Image convertion RGBA -> BGRA
         {"RGB888", Texture2D::PixelFormat::RGB888}
     };
 
