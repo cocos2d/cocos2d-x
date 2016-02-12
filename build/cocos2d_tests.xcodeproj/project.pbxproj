@@ -677,6 +677,9 @@
 		1AC35DF818CEE65B00F37B72 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC418CED84500F37B72 /* pew-pew-lei.wav */; };
 		1F33634F18E37E840074764D /* RefPtrTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F33634D18E37E840074764D /* RefPtrTest.cpp */; };
 		1F33635018E37E840074764D /* RefPtrTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F33634D18E37E840074764D /* RefPtrTest.cpp */; };
+		27C5CE011C6E0469000CA4B3 /* SpriteFrameCacheTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C5CDFF1C6E0469000CA4B3 /* SpriteFrameCacheTest.cpp */; };
+		27C5CE021C6E0470000CA4B3 /* SpriteFrameCacheTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C5CDFF1C6E0469000CA4B3 /* SpriteFrameCacheTest.cpp */; };
+		27C5CE031C6E0477000CA4B3 /* SpriteFrameCacheTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C5CDFF1C6E0469000CA4B3 /* SpriteFrameCacheTest.cpp */; };
 		29080D1C191B574B0066F8DF /* UITest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D1A191B574B0066F8DF /* UITest.cpp */; };
 		29080D1D191B574B0066F8DF /* UITest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D1A191B574B0066F8DF /* UITest.cpp */; };
 		29080D8D191B595E0066F8DF /* CocosGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D1F191B595E0066F8DF /* CocosGUIScene.cpp */; };
@@ -2443,6 +2446,8 @@
 		1D6058910D05DD3D006BFB54 /* cpp-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F33634D18E37E840074764D /* RefPtrTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RefPtrTest.cpp; sourceTree = "<group>"; };
 		1F33634E18E37E840074764D /* RefPtrTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefPtrTest.h; sourceTree = "<group>"; };
+		27C5CDFF1C6E0469000CA4B3 /* SpriteFrameCacheTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteFrameCacheTest.cpp; sourceTree = "<group>"; };
+		27C5CE001C6E0469000CA4B3 /* SpriteFrameCacheTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteFrameCacheTest.h; sourceTree = "<group>"; };
 		29080D1A191B574B0066F8DF /* UITest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UITest.cpp; path = UITest/UITest.cpp; sourceTree = "<group>"; };
 		29080D1B191B574B0066F8DF /* UITest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UITest.h; path = UITest/UITest.h; sourceTree = "<group>"; };
 		29080D1F191B595E0066F8DF /* CocosGUIScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUIScene.cpp; sourceTree = "<group>"; };
@@ -3607,6 +3612,7 @@
 				A5030C3219D059AB000E78E7 /* OpenURLTest */,
 				1AC35B1C18CECF0C00F37B72 /* ZwoptexTest */,
 				1AC35C6F18CECF0C00F37B72 /* VibrateTest */,
+				27C5CDFE1C6E043D000CA4B3 /* SpriteFrameCacheTest */,
 			);
 			name = Classes;
 			path = "../tests/cpp-tests/Classes";
@@ -4761,6 +4767,15 @@
 				FA94B0B81B8EF73D0074B261 /* performance-tests */,
 			);
 			name = tests;
+			sourceTree = "<group>";
+		};
+		27C5CDFE1C6E043D000CA4B3 /* SpriteFrameCacheTest */ = {
+			isa = PBXGroup;
+			children = (
+				27C5CDFF1C6E0469000CA4B3 /* SpriteFrameCacheTest.cpp */,
+				27C5CE001C6E0469000CA4B3 /* SpriteFrameCacheTest.h */,
+			);
+			path = SpriteFrameCacheTest;
 			sourceTree = "<group>";
 		};
 		29080D17191B571F0066F8DF /* UITest */ = {
@@ -7134,6 +7149,7 @@
 				1AC35C5F18CECF0C00F37B72 /* Paddle.cpp in Sources */,
 				1AC35BDB18CECF0C00F37B72 /* SceneEditorTest.cpp in Sources */,
 				1AC35B4B18CECF0C00F37B72 /* BugsTest.cpp in Sources */,
+				27C5CE011C6E0469000CA4B3 /* SpriteFrameCacheTest.cpp in Sources */,
 				1AC35C5118CECF0C00F37B72 /* testBasic.cpp in Sources */,
 				1AC35B7918CECF0C00F37B72 /* EnemyController.cpp in Sources */,
 				1AC35B6B18CECF0C00F37B72 /* CocosBuilderTest.cpp in Sources */,
@@ -7362,6 +7378,7 @@
 				507B418A1C31BEA60067B53E /* SpriteTest.cpp in Sources */,
 				507B418B1C31BEA60067B53E /* NewAudioEngineTest.cpp in Sources */,
 				507B418C1C31BEA60067B53E /* FileUtilsTest.cpp in Sources */,
+				27C5CE031C6E0477000CA4B3 /* SpriteFrameCacheTest.cpp in Sources */,
 				507B418D1C31BEA60067B53E /* CustomRootNodeReader.cpp in Sources */,
 				507B418E1C31BEA60067B53E /* CurlTest.cpp in Sources */,
 				507B418F1C31BEA60067B53E /* CustomTableViewCell.cpp in Sources */,
@@ -7697,6 +7714,7 @@
 				50921EB01B746D5F00C085CC /* DownloaderTest.cpp in Sources */,
 				1AC35C5818CECF0C00F37B72 /* TextureCacheTest.cpp in Sources */,
 				1AC35B6E18CECF0C00F37B72 /* HelloCocosBuilderLayer.cpp in Sources */,
+				27C5CE021C6E0470000CA4B3 /* SpriteFrameCacheTest.cpp in Sources */,
 				29080D96191B595E0066F8DF /* CustomParticleWidgetTest.cpp in Sources */,
 				29080DE0191B595E0066F8DF /* UITextTest.cpp in Sources */,
 				29080DC0191B595E0066F8DF /* UIPageViewTest_Editor.cpp in Sources */,
