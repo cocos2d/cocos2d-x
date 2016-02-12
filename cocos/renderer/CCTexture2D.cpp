@@ -1358,6 +1358,33 @@ const char* Texture2D::getStringForFormat() const
 		case Texture2D::PixelFormat::PVRTC2:
 			return  "PVRTC2";
 
+        case Texture2D::PixelFormat::PVRTC2A:
+            return "PVRTC2A";
+        
+        case Texture2D::PixelFormat::PVRTC4A:
+            return "PVRTC4A";
+            
+        case Texture2D::PixelFormat::ETC:
+            return "ETC";
+
+        case Texture2D::PixelFormat::S3TC_DXT1:
+            return "S3TC_DXT1";
+            
+        case Texture2D::PixelFormat::S3TC_DXT3:
+            return "S3TC_DXT3";
+
+        case Texture2D::PixelFormat::S3TC_DXT5:
+            return "S3TC_DXT5";
+            
+        case Texture2D::PixelFormat::ATC_RGB:
+            return "ATC_RGB";
+
+        case Texture2D::PixelFormat::ATC_EXPLICIT_ALPHA:
+            return "ATC_EXPLICIT_ALPHA";
+
+        case Texture2D::PixelFormat::ATC_INTERPOLATED_ALPHA:
+            return "ATC_INTERPOLATED_ALPHA";
+            
 		default:
 			CCASSERT(false , "unrecognized pixel format");
 			CCLOG("stringForFormat: %ld, cannot give useful result", (long)_pixelFormat);
