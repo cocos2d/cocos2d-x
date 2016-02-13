@@ -529,8 +529,7 @@ bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
 bool LayerColor::initWithColor(const Color4B& color)
 {
     Size s = Director::getInstance()->getWinSize();
-    this->initWithColor(color, s.width, s.height);
-    return true;
+    return initWithColor(color, s.width, s.height);
 }
 
 /// override contentSize
