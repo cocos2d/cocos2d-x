@@ -324,11 +324,9 @@ void js_register_cocos2dx_physics3d_Physics3DShape(JSContext *cx, JS::HandleObje
     jsb_cocos2d_Physics3DShape_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DShape_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DShape_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DShape_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DShape_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -362,8 +360,12 @@ void js_register_cocos2dx_physics3d_Physics3DShape(JSContext *cx, JS::HandleObje
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_Physics3DShape_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "Physics3DShape"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::Physics3DShape>(cx, jsb_cocos2d_Physics3DShape_class, proto, JS::NullPtr());
 }
 
@@ -580,11 +582,9 @@ void js_register_cocos2dx_physics3d_Physics3DObject(JSContext *cx, JS::HandleObj
     jsb_cocos2d_Physics3DObject_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DObject_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DObject_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DObject_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DObject_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -614,8 +614,12 @@ void js_register_cocos2dx_physics3d_Physics3DObject(JSContext *cx, JS::HandleObj
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_Physics3DObject_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "Physics3DObject"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::Physics3DObject>(cx, jsb_cocos2d_Physics3DObject_class, proto, JS::NullPtr());
 }
 
@@ -1657,11 +1661,9 @@ void js_register_cocos2dx_physics3d_Physics3DRigidBody(JSContext *cx, JS::Handle
     jsb_cocos2d_Physics3DRigidBody_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DRigidBody_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DRigidBody_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DRigidBody_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DRigidBody_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -1731,8 +1733,12 @@ void js_register_cocos2dx_physics3d_Physics3DRigidBody(JSContext *cx, JS::Handle
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_Physics3DRigidBody_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "Physics3DRigidBody"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::Physics3DRigidBody>(cx, jsb_cocos2d_Physics3DRigidBody_class, proto, parent_proto);
 }
 
@@ -2038,11 +2044,9 @@ void js_register_cocos2dx_physics3d_Physics3DComponent(JSContext *cx, JS::Handle
     jsb_cocos2d_Physics3DComponent_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DComponent_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DComponent_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DComponent_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DComponent_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -2074,8 +2078,12 @@ void js_register_cocos2dx_physics3d_Physics3DComponent(JSContext *cx, JS::Handle
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_Physics3DComponent_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "Physics3DComponent"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::Physics3DComponent>(cx, jsb_cocos2d_Physics3DComponent_class, proto, parent_proto);
 }
 
@@ -2185,11 +2193,9 @@ void js_register_cocos2dx_physics3d_PhysicsSprite3D(JSContext *cx, JS::HandleObj
     jsb_cocos2d_PhysicsSprite3D_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_PhysicsSprite3D_class->resolve = JS_ResolveStub;
     jsb_cocos2d_PhysicsSprite3D_class->convert = JS_ConvertStub;
-    jsb_cocos2d_PhysicsSprite3D_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_PhysicsSprite3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -2214,8 +2220,12 @@ void js_register_cocos2dx_physics3d_PhysicsSprite3D(JSContext *cx, JS::HandleObj
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_PhysicsSprite3D_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "PhysicsSprite3D"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::PhysicsSprite3D>(cx, jsb_cocos2d_PhysicsSprite3D_class, proto, parent_proto);
 }
 
@@ -2699,11 +2709,9 @@ void js_register_cocos2dx_physics3d_Physics3DWorld(JSContext *cx, JS::HandleObje
     jsb_cocos2d_Physics3DWorld_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DWorld_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DWorld_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DWorld_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DWorld_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -2744,8 +2752,12 @@ void js_register_cocos2dx_physics3d_Physics3DWorld(JSContext *cx, JS::HandleObje
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_Physics3DWorld_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "Physics3DWorld"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::Physics3DWorld>(cx, jsb_cocos2d_Physics3DWorld_class, proto, JS::NullPtr());
 }
 
@@ -3000,11 +3012,9 @@ void js_register_cocos2dx_physics3d_Physics3DConstraint(JSContext *cx, JS::Handl
     jsb_cocos2d_Physics3DConstraint_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DConstraint_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DConstraint_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DConstraint_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DConstraint_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -3036,8 +3046,12 @@ void js_register_cocos2dx_physics3d_Physics3DConstraint(JSContext *cx, JS::Handl
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_Physics3DConstraint_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "Physics3DConstraint"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::Physics3DConstraint>(cx, jsb_cocos2d_Physics3DConstraint_class, proto, JS::NullPtr());
 }
 
@@ -3302,11 +3316,9 @@ void js_register_cocos2dx_physics3d_Physics3DPointToPointConstraint(JSContext *c
     jsb_cocos2d_Physics3DPointToPointConstraint_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DPointToPointConstraint_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DPointToPointConstraint_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DPointToPointConstraint_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DPointToPointConstraint_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -3335,8 +3347,12 @@ void js_register_cocos2dx_physics3d_Physics3DPointToPointConstraint(JSContext *c
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_Physics3DPointToPointConstraint_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "Physics3DPointToPointConstraint"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::Physics3DPointToPointConstraint>(cx, jsb_cocos2d_Physics3DPointToPointConstraint_class, proto, parent_proto);
 }
 
@@ -4175,11 +4191,9 @@ void js_register_cocos2dx_physics3d_Physics3DHingeConstraint(JSContext *cx, JS::
     jsb_cocos2d_Physics3DHingeConstraint_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DHingeConstraint_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DHingeConstraint_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DHingeConstraint_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DHingeConstraint_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -4224,8 +4238,12 @@ void js_register_cocos2dx_physics3d_Physics3DHingeConstraint(JSContext *cx, JS::
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_Physics3DHingeConstraint_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "Physics3DHingeConstraint"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::Physics3DHingeConstraint>(cx, jsb_cocos2d_Physics3DHingeConstraint_class, proto, parent_proto);
 }
 
@@ -5518,11 +5536,9 @@ void js_register_cocos2dx_physics3d_Physics3DSliderConstraint(JSContext *cx, JS:
     jsb_cocos2d_Physics3DSliderConstraint_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DSliderConstraint_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DSliderConstraint_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DSliderConstraint_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DSliderConstraint_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -5610,8 +5626,12 @@ void js_register_cocos2dx_physics3d_Physics3DSliderConstraint(JSContext *cx, JS:
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_Physics3DSliderConstraint_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "Physics3DSliderConstraint"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::Physics3DSliderConstraint>(cx, jsb_cocos2d_Physics3DSliderConstraint_class, proto, parent_proto);
 }
 
@@ -6104,11 +6124,9 @@ void js_register_cocos2dx_physics3d_Physics3DConeTwistConstraint(JSContext *cx, 
     jsb_cocos2d_Physics3DConeTwistConstraint_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3DConeTwistConstraint_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3DConeTwistConstraint_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3DConeTwistConstraint_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3DConeTwistConstraint_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -6149,8 +6167,12 @@ void js_register_cocos2dx_physics3d_Physics3DConeTwistConstraint(JSContext *cx, 
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_Physics3DConeTwistConstraint_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "Physics3DConeTwistConstraint"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::Physics3DConeTwistConstraint>(cx, jsb_cocos2d_Physics3DConeTwistConstraint_class, proto, parent_proto);
 }
 
@@ -6481,11 +6503,9 @@ void js_register_cocos2dx_physics3d_Physics3D6DofConstraint(JSContext *cx, JS::H
     jsb_cocos2d_Physics3D6DofConstraint_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_Physics3D6DofConstraint_class->resolve = JS_ResolveStub;
     jsb_cocos2d_Physics3D6DofConstraint_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Physics3D6DofConstraint_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_Physics3D6DofConstraint_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -6520,8 +6540,12 @@ void js_register_cocos2dx_physics3d_Physics3D6DofConstraint(JSContext *cx, JS::H
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_Physics3D6DofConstraint_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "Physics3D6DofConstraint"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::Physics3D6DofConstraint>(cx, jsb_cocos2d_Physics3D6DofConstraint_class, proto, parent_proto);
 }
 

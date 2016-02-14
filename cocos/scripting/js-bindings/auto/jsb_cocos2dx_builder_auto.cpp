@@ -901,11 +901,9 @@ void js_register_cocos2dx_builder_CCBAnimationManager(JSContext *cx, JS::HandleO
     jsb_cocosbuilder_CCBAnimationManager_class->enumerate = JS_EnumerateStub;
     jsb_cocosbuilder_CCBAnimationManager_class->resolve = JS_ResolveStub;
     jsb_cocosbuilder_CCBAnimationManager_class->convert = JS_ConvertStub;
-    jsb_cocosbuilder_CCBAnimationManager_class->finalize = jsb_ref_finalize;
     jsb_cocosbuilder_CCBAnimationManager_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -962,8 +960,12 @@ void js_register_cocos2dx_builder_CCBAnimationManager(JSContext *cx, JS::HandleO
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocosbuilder_CCBAnimationManager_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "CCBAnimationManager"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocosbuilder::CCBAnimationManager>(cx, jsb_cocosbuilder_CCBAnimationManager_class, proto, JS::NullPtr());
 }
 
@@ -1389,7 +1391,6 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             cobj = new (std::nothrow) cocosbuilder::CCBReader(arg0);
 
             js_type_class_t *typeClass = js_get_type_from_native<cocosbuilder::CCBReader>(cobj);
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             JS::RootedObject proto(cx, typeClass->proto.ref());
             JS::RootedObject parent(cx, typeClass->parentProto.ref());
             obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
@@ -1414,7 +1415,6 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             cobj = new (std::nothrow) cocosbuilder::CCBReader(arg0);
 
             js_type_class_t *typeClass = js_get_type_from_native<cocosbuilder::CCBReader>(cobj);
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             JS::RootedObject proto(cx, typeClass->proto.ref());
             JS::RootedObject parent(cx, typeClass->parentProto.ref());
             obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
@@ -1450,7 +1450,6 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             cobj = new (std::nothrow) cocosbuilder::CCBReader(arg0, arg1);
 
             js_type_class_t *typeClass = js_get_type_from_native<cocosbuilder::CCBReader>(cobj);
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             JS::RootedObject proto(cx, typeClass->proto.ref());
             JS::RootedObject parent(cx, typeClass->parentProto.ref());
             obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
@@ -1497,7 +1496,6 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             cobj = new (std::nothrow) cocosbuilder::CCBReader(arg0, arg1, arg2);
 
             js_type_class_t *typeClass = js_get_type_from_native<cocosbuilder::CCBReader>(cobj);
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             JS::RootedObject proto(cx, typeClass->proto.ref());
             JS::RootedObject parent(cx, typeClass->parentProto.ref());
             obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
@@ -1555,7 +1553,6 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             cobj = new (std::nothrow) cocosbuilder::CCBReader(arg0, arg1, arg2, arg3);
 
             js_type_class_t *typeClass = js_get_type_from_native<cocosbuilder::CCBReader>(cobj);
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             JS::RootedObject proto(cx, typeClass->proto.ref());
             JS::RootedObject parent(cx, typeClass->parentProto.ref());
             obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
@@ -1569,7 +1566,6 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             cobj = new (std::nothrow) cocosbuilder::CCBReader();
 
             js_type_class_t *typeClass = js_get_type_from_native<cocosbuilder::CCBReader>(cobj);
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
             JS::RootedObject proto(cx, typeClass->proto.ref());
             JS::RootedObject parent(cx, typeClass->parentProto.ref());
             obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
@@ -1600,11 +1596,9 @@ void js_register_cocos2dx_builder_CCBReader(JSContext *cx, JS::HandleObject glob
     jsb_cocosbuilder_CCBReader_class->enumerate = JS_EnumerateStub;
     jsb_cocosbuilder_CCBReader_class->resolve = JS_ResolveStub;
     jsb_cocosbuilder_CCBReader_class->convert = JS_ConvertStub;
-    jsb_cocosbuilder_CCBReader_class->finalize = jsb_ref_finalize;
     jsb_cocosbuilder_CCBReader_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -1645,8 +1639,12 @@ void js_register_cocos2dx_builder_CCBReader(JSContext *cx, JS::HandleObject glob
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocosbuilder_CCBReader_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "CCBReader"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocosbuilder::CCBReader>(cx, jsb_cocosbuilder_CCBReader_class, proto, JS::NullPtr());
 }
 

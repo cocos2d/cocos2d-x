@@ -312,11 +312,9 @@ void js_register_cocos2dx_extension_Control(JSContext *cx, JS::HandleObject glob
     jsb_cocos2d_extension_Control_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_extension_Control_class->resolve = JS_ResolveStub;
     jsb_cocos2d_extension_Control_class->convert = JS_ConvertStub;
-    jsb_cocos2d_extension_Control_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_extension_Control_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -352,8 +350,12 @@ void js_register_cocos2dx_extension_Control(JSContext *cx, JS::HandleObject glob
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_extension_Control_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "Control"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::extension::Control>(cx, jsb_cocos2d_extension_Control_class, proto, parent_proto);
 }
 
@@ -1425,11 +1427,9 @@ void js_register_cocos2dx_extension_ControlButton(JSContext *cx, JS::HandleObjec
     jsb_cocos2d_extension_ControlButton_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_extension_ControlButton_class->resolve = JS_ResolveStub;
     jsb_cocos2d_extension_ControlButton_class->convert = JS_ConvertStub;
-    jsb_cocos2d_extension_ControlButton_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_extension_ControlButton_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -1492,8 +1492,12 @@ void js_register_cocos2dx_extension_ControlButton(JSContext *cx, JS::HandleObjec
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_extension_ControlButton_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "ControlButton"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::extension::ControlButton>(cx, jsb_cocos2d_extension_ControlButton_class, proto, parent_proto);
     anonEvaluate(cx, global, "(function () { cc.ControlButton.extend = cc.Class.extend; })()");
 }
@@ -1785,11 +1789,9 @@ void js_register_cocos2dx_extension_ControlHuePicker(JSContext *cx, JS::HandleOb
     jsb_cocos2d_extension_ControlHuePicker_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_extension_ControlHuePicker_class->resolve = JS_ResolveStub;
     jsb_cocos2d_extension_ControlHuePicker_class->convert = JS_ConvertStub;
-    jsb_cocos2d_extension_ControlHuePicker_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_extension_ControlHuePicker_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -1823,8 +1825,12 @@ void js_register_cocos2dx_extension_ControlHuePicker(JSContext *cx, JS::HandleOb
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_extension_ControlHuePicker_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "ControlHuePicker"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::extension::ControlHuePicker>(cx, jsb_cocos2d_extension_ControlHuePicker_class, proto, parent_proto);
 }
 
@@ -2063,11 +2069,9 @@ void js_register_cocos2dx_extension_ControlSaturationBrightnessPicker(JSContext 
     jsb_cocos2d_extension_ControlSaturationBrightnessPicker_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_extension_ControlSaturationBrightnessPicker_class->resolve = JS_ResolveStub;
     jsb_cocos2d_extension_ControlSaturationBrightnessPicker_class->convert = JS_ConvertStub;
-    jsb_cocos2d_extension_ControlSaturationBrightnessPicker_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_extension_ControlSaturationBrightnessPicker_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -2099,8 +2103,12 @@ void js_register_cocos2dx_extension_ControlSaturationBrightnessPicker(JSContext 
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_extension_ControlSaturationBrightnessPicker_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "ControlSaturationBrightnessPicker"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::extension::ControlSaturationBrightnessPicker>(cx, jsb_cocos2d_extension_ControlSaturationBrightnessPicker_class, proto, parent_proto);
 }
 
@@ -2375,11 +2383,9 @@ void js_register_cocos2dx_extension_ControlColourPicker(JSContext *cx, JS::Handl
     jsb_cocos2d_extension_ControlColourPicker_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_extension_ControlColourPicker_class->resolve = JS_ResolveStub;
     jsb_cocos2d_extension_ControlColourPicker_class->convert = JS_ConvertStub;
-    jsb_cocos2d_extension_ControlColourPicker_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_extension_ControlColourPicker_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -2412,8 +2418,12 @@ void js_register_cocos2dx_extension_ControlColourPicker(JSContext *cx, JS::Handl
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_extension_ControlColourPicker_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "ControlColourPicker"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::extension::ControlColourPicker>(cx, jsb_cocos2d_extension_ControlColourPicker_class, proto, parent_proto);
     anonEvaluate(cx, global, "(function () { cc.ControlColourPicker.extend = cc.Class.extend; })()");
 }
@@ -2901,11 +2911,9 @@ void js_register_cocos2dx_extension_ControlPotentiometer(JSContext *cx, JS::Hand
     jsb_cocos2d_extension_ControlPotentiometer_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_extension_ControlPotentiometer_class->resolve = JS_ResolveStub;
     jsb_cocos2d_extension_ControlPotentiometer_class->convert = JS_ConvertStub;
-    jsb_cocos2d_extension_ControlPotentiometer_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_extension_ControlPotentiometer_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -2948,8 +2956,12 @@ void js_register_cocos2dx_extension_ControlPotentiometer(JSContext *cx, JS::Hand
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_extension_ControlPotentiometer_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "ControlPotentiometer"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::extension::ControlPotentiometer>(cx, jsb_cocos2d_extension_ControlPotentiometer_class, proto, parent_proto);
     anonEvaluate(cx, global, "(function () { cc.ControlPotentiometer.extend = cc.Class.extend; })()");
 }
@@ -3692,11 +3704,9 @@ void js_register_cocos2dx_extension_ControlSlider(JSContext *cx, JS::HandleObjec
     jsb_cocos2d_extension_ControlSlider_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_extension_ControlSlider_class->resolve = JS_ResolveStub;
     jsb_cocos2d_extension_ControlSlider_class->convert = JS_ConvertStub;
-    jsb_cocos2d_extension_ControlSlider_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_extension_ControlSlider_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -3741,8 +3751,12 @@ void js_register_cocos2dx_extension_ControlSlider(JSContext *cx, JS::HandleObjec
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_extension_ControlSlider_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "ControlSlider"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::extension::ControlSlider>(cx, jsb_cocos2d_extension_ControlSlider_class, proto, parent_proto);
     anonEvaluate(cx, global, "(function () { cc.ControlSlider.extend = cc.Class.extend; })()");
 }
@@ -4280,11 +4294,9 @@ void js_register_cocos2dx_extension_ControlStepper(JSContext *cx, JS::HandleObje
     jsb_cocos2d_extension_ControlStepper_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_extension_ControlStepper_class->resolve = JS_ResolveStub;
     jsb_cocos2d_extension_ControlStepper_class->convert = JS_ConvertStub;
-    jsb_cocos2d_extension_ControlStepper_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_extension_ControlStepper_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -4329,8 +4341,12 @@ void js_register_cocos2dx_extension_ControlStepper(JSContext *cx, JS::HandleObje
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_extension_ControlStepper_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "ControlStepper"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::extension::ControlStepper>(cx, jsb_cocos2d_extension_ControlStepper_class, proto, parent_proto);
     anonEvaluate(cx, global, "(function () { cc.ControlStepper.extend = cc.Class.extend; })()");
 }
@@ -4772,11 +4788,9 @@ void js_register_cocos2dx_extension_ControlSwitch(JSContext *cx, JS::HandleObjec
     jsb_cocos2d_extension_ControlSwitch_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_extension_ControlSwitch_class->resolve = JS_ResolveStub;
     jsb_cocos2d_extension_ControlSwitch_class->convert = JS_ConvertStub;
-    jsb_cocos2d_extension_ControlSwitch_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_extension_ControlSwitch_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -4806,8 +4820,12 @@ void js_register_cocos2dx_extension_ControlSwitch(JSContext *cx, JS::HandleObjec
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_extension_ControlSwitch_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "ControlSwitch"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::extension::ControlSwitch>(cx, jsb_cocos2d_extension_ControlSwitch_class, proto, parent_proto);
     anonEvaluate(cx, global, "(function () { cc.ControlSwitch.extend = cc.Class.extend; })()");
 }
@@ -5623,11 +5641,9 @@ void js_register_cocos2dx_extension_ScrollView(JSContext *cx, JS::HandleObject g
     jsb_cocos2d_extension_ScrollView_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_extension_ScrollView_class->resolve = JS_ResolveStub;
     jsb_cocos2d_extension_ScrollView_class->convert = JS_ConvertStub;
-    jsb_cocos2d_extension_ScrollView_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_extension_ScrollView_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -5684,8 +5700,12 @@ void js_register_cocos2dx_extension_ScrollView(JSContext *cx, JS::HandleObject g
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_extension_ScrollView_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "ScrollView"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::extension::ScrollView>(cx, jsb_cocos2d_extension_ScrollView_class, proto, parent_proto);
     anonEvaluate(cx, global, "(function () { cc.ScrollView.extend = cc.Class.extend; })()");
 }
@@ -5805,11 +5825,9 @@ void js_register_cocos2dx_extension_TableViewCell(JSContext *cx, JS::HandleObjec
     jsb_cocos2d_extension_TableViewCell_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_extension_TableViewCell_class->resolve = JS_ResolveStub;
     jsb_cocos2d_extension_TableViewCell_class->convert = JS_ConvertStub;
-    jsb_cocos2d_extension_TableViewCell_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_extension_TableViewCell_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -5837,8 +5855,12 @@ void js_register_cocos2dx_extension_TableViewCell(JSContext *cx, JS::HandleObjec
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_extension_TableViewCell_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "TableViewCell"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::extension::TableViewCell>(cx, jsb_cocos2d_extension_TableViewCell_class, proto, parent_proto);
     anonEvaluate(cx, global, "(function () { cc.TableViewCell.extend = cc.Class.extend; })()");
 }
@@ -6165,11 +6187,9 @@ void js_register_cocos2dx_extension_TableView(JSContext *cx, JS::HandleObject gl
     jsb_cocos2d_extension_TableView_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_extension_TableView_class->resolve = JS_ResolveStub;
     jsb_cocos2d_extension_TableView_class->convert = JS_ConvertStub;
-    jsb_cocos2d_extension_TableView_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_extension_TableView_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -6203,8 +6223,12 @@ void js_register_cocos2dx_extension_TableView(JSContext *cx, JS::HandleObject gl
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_extension_TableView_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "TableView"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::extension::TableView>(cx, jsb_cocos2d_extension_TableView_class, proto, parent_proto);
     anonEvaluate(cx, global, "(function () { cc.TableView.extend = cc.Class.extend; })()");
 }
@@ -6404,11 +6428,9 @@ void js_register_cocos2dx_extension_EventAssetsManagerEx(JSContext *cx, JS::Hand
     jsb_cocos2d_extension_EventAssetsManagerEx_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_extension_EventAssetsManagerEx_class->resolve = JS_ResolveStub;
     jsb_cocos2d_extension_EventAssetsManagerEx_class->convert = JS_ConvertStub;
-    jsb_cocos2d_extension_EventAssetsManagerEx_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_extension_EventAssetsManagerEx_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -6437,8 +6459,12 @@ void js_register_cocos2dx_extension_EventAssetsManagerEx(JSContext *cx, JS::Hand
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_extension_EventAssetsManagerEx_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "EventAssetsManagerEx"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::extension::EventAssetsManagerEx>(cx, jsb_cocos2d_extension_EventAssetsManagerEx_class, proto, parent_proto);
 }
 
@@ -6582,11 +6608,9 @@ void js_register_cocos2dx_extension_Manifest(JSContext *cx, JS::HandleObject glo
     jsb_cocos2d_extension_Manifest_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_extension_Manifest_class->resolve = JS_ResolveStub;
     jsb_cocos2d_extension_Manifest_class->convert = JS_ConvertStub;
-    jsb_cocos2d_extension_Manifest_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_extension_Manifest_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -6613,8 +6637,12 @@ void js_register_cocos2dx_extension_Manifest(JSContext *cx, JS::HandleObject glo
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_extension_Manifest_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "Manifest"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::extension::Manifest>(cx, jsb_cocos2d_extension_Manifest_class, proto, JS::NullPtr());
 }
 
@@ -6802,11 +6830,9 @@ void js_register_cocos2dx_extension_AssetsManagerEx(JSContext *cx, JS::HandleObj
     jsb_cocos2d_extension_AssetsManagerEx_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_extension_AssetsManagerEx_class->resolve = JS_ResolveStub;
     jsb_cocos2d_extension_AssetsManagerEx_class->convert = JS_ConvertStub;
-    jsb_cocos2d_extension_AssetsManagerEx_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_extension_AssetsManagerEx_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -6836,126 +6862,17 @@ void js_register_cocos2dx_extension_AssetsManagerEx(JSContext *cx, JS::HandleObj
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_extension_AssetsManagerEx_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "AssetsManagerEx"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::extension::AssetsManagerEx>(cx, jsb_cocos2d_extension_AssetsManagerEx_class, proto, JS::NullPtr());
 }
 
 JSClass  *jsb_cocos2d_extension_EventListenerAssetsManagerEx_class;
 JSObject *jsb_cocos2d_extension_EventListenerAssetsManagerEx_prototype;
-
-bool js_cocos2dx_extension_EventListenerAssetsManagerEx_init(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::extension::EventListenerAssetsManagerEx* cobj = (cocos2d::extension::EventListenerAssetsManagerEx *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_EventListenerAssetsManagerEx_init : Invalid Native Object");
-    if (argc == 2) {
-        const cocos2d::extension::AssetsManagerEx* arg0 = nullptr;
-        std::function<void (cocos2d::extension::EventAssetsManagerEx *)> arg1;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (const cocos2d::extension::AssetsManagerEx*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        do {
-		    if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
-		    {
-		        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1)));
-		        auto lambda = [=](cocos2d::extension::EventAssetsManagerEx* larg0) -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            if (larg0) {
-		            largv[0] = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::extension::EventAssetsManagerEx>(cx, (cocos2d::extension::EventAssetsManagerEx*)larg0));
-		        } else {
-		            largv[0] = JSVAL_NULL;
-		        };
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg1 = lambda;
-		    }
-		    else
-		    {
-		        arg1 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_EventListenerAssetsManagerEx_init : Error processing arguments");
-        bool ret = cobj->init(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_extension_EventListenerAssetsManagerEx_init : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_cocos2dx_extension_EventListenerAssetsManagerEx_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 2) {
-        cocos2d::extension::AssetsManagerEx* arg0 = nullptr;
-        std::function<void (cocos2d::extension::EventAssetsManagerEx *)> arg1;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::extension::AssetsManagerEx*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        do {
-		    if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
-		    {
-		        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1)));
-		        auto lambda = [=](cocos2d::extension::EventAssetsManagerEx* larg0) -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            if (larg0) {
-		            largv[0] = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::extension::EventAssetsManagerEx>(cx, (cocos2d::extension::EventAssetsManagerEx*)larg0));
-		        } else {
-		            largv[0] = JSVAL_NULL;
-		        };
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg1 = lambda;
-		    }
-		    else
-		    {
-		        arg1 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_EventListenerAssetsManagerEx_create : Error processing arguments");
-
-        auto ret = cocos2d::extension::EventListenerAssetsManagerEx::create(arg0, arg1);
-        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::extension::EventListenerAssetsManagerEx>(ret);
-        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::extension::EventListenerAssetsManagerEx"));
-        args.rval().set(OBJECT_TO_JSVAL(jsret));
-        return true;
-    }
-    JS_ReportError(cx, "js_cocos2dx_extension_EventListenerAssetsManagerEx_create : wrong number of arguments");
-    return false;
-}
 
 bool js_cocos2dx_extension_EventListenerAssetsManagerEx_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -6986,23 +6903,17 @@ void js_register_cocos2dx_extension_EventListenerAssetsManagerEx(JSContext *cx, 
     jsb_cocos2d_extension_EventListenerAssetsManagerEx_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_extension_EventListenerAssetsManagerEx_class->resolve = JS_ResolveStub;
     jsb_cocos2d_extension_EventListenerAssetsManagerEx_class->convert = JS_ConvertStub;
-    jsb_cocos2d_extension_EventListenerAssetsManagerEx_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_extension_EventListenerAssetsManagerEx_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("init", js_cocos2dx_extension_EventListenerAssetsManagerEx_init, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
-    static JSFunctionSpec st_funcs[] = {
-        JS_FN("create", js_cocos2dx_extension_EventListenerAssetsManagerEx_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FS_END
-    };
+    JSFunctionSpec *st_funcs = NULL;
 
     JS::RootedObject parent_proto(cx, jsb_cocos2d_EventListenerCustom_prototype);
     jsb_cocos2d_extension_EventListenerAssetsManagerEx_prototype = JS_InitClass(
@@ -7015,8 +6926,12 @@ void js_register_cocos2dx_extension_EventListenerAssetsManagerEx(JSContext *cx, 
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_extension_EventListenerAssetsManagerEx_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "EventListenerAssetsManagerEx"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::extension::EventListenerAssetsManagerEx>(cx, jsb_cocos2d_extension_EventListenerAssetsManagerEx_class, proto, parent_proto);
 }
 
