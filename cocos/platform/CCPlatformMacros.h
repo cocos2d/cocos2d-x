@@ -220,7 +220,7 @@ public: virtual void set##funName(varType var)   \
 #define CC_BREAK_IF(cond)           if(cond) break
 
 #define __CCLOGWITHFUNCTION(s, ...) \
-    log("%s : %s",__FUNCTION__, StringUtils::format(s, ##__VA_ARGS__).c_str())
+    cocos2d::log("%s : %s",__FUNCTION__, cocos2d::StringUtils::format(s, ##__VA_ARGS__).c_str())
 
 /// @name Cocos2d debug
 /// @{
