@@ -118,7 +118,7 @@
         
 --------------------------------
 --  Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.<br>
--- This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.<br>
+-- This method should be called only when you are dealing with very big AtlasSprite and when most of the Sprite won't be updated.<br>
 -- For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont).
 -- @function [parent=#SpriteBatchNode] insertQuadFromSprite 
 -- @param self

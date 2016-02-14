@@ -480,6 +480,15 @@ var testNames = [
         }
     },
     {
+        title:"Memory Model Test",
+        resource:g_menu,
+        platforms: PLATFORM_JSB,
+        linksrc:"src/MemoryModelTest/MemoryModelTest.js",
+        testScene:function () {
+            return new MemoryModelTestScene();
+        }
+    },
+    {
         title:"Menu Test",
         resource:g_menu,
         platforms: PLATFORM_ALL,

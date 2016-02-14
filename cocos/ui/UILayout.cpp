@@ -38,7 +38,7 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "base/CCEventFocus.h"
 #include "base/CCStencilStateManager.hpp"
-#include "2d/CocosStudioExtension.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 
 NS_CC_BEGIN
@@ -87,6 +87,7 @@ _isFocusPassing(false)
 Layout::~Layout()
 {
     CC_SAFE_RELEASE(_clippingStencil);
+    CC_SAFE_DELETE(_stencileStateManager);
 }
     
 void Layout::onEnter()
@@ -530,9 +531,11 @@ void Layout::onSizeChanged()
     if (_backGroundImage)
     {
         _backGroundImage->setPosition(_contentSize.width/2.0f, _contentSize.height/2.0f);
-        if (_backGroundScale9Enabled && _backGroundImage)
-        {
+        if (_backGroundScale9Enabled){
             _backGroundImage->setPreferredSize(_contentSize);
+        }
+        else{
+            _backGroundImage->setPreferredSize(_backGroundImageTextureSize);
         }
     }
     if (_colorRender)
@@ -557,10 +560,12 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
         addBackGroundImage();
         setBackGroundImage(_backGroundImageFileName,_bgImageTexType);
     }
-    _backGroundImage->setScale9Enabled(_backGroundScale9Enabled);
-    
-    if (able) {
+    if(_backGroundScale9Enabled){
+        _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SLICE);
         _backGroundImage->setPreferredSize(_contentSize);
+    }else{
+        _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+        _backGroundImage->setPreferredSize(_backGroundImageTextureSize);
     }
     
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
@@ -580,7 +585,11 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
     if (_backGroundImage == nullptr)
     {
         addBackGroundImage();
-        _backGroundImage->setScale9Enabled(_backGroundScale9Enabled);
+        if(_backGroundScale9Enabled){
+            _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+        }else{
+            _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+        }
     }
     _backGroundImageFileName = fileName;
     _bgImageTexType = texType;
@@ -596,12 +605,15 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
         default:
             break;
     }
-    if (_backGroundScale9Enabled) {
-        _backGroundImage->setPreferredSize(_contentSize);
-    }
     
     _backGroundImageTextureSize = _backGroundImage->getContentSize();
     _backGroundImage->setPosition(_contentSize.width/2.0f, _contentSize.height/2.0f);
+    if (_backGroundScale9Enabled) {
+        _backGroundImage->setPreferredSize(_contentSize);
+    }
+    else{
+        _backGroundImage->setPreferredSize(_backGroundImageTextureSize);
+    }
     updateBackGroundImageRGBA();
 }
 
@@ -656,7 +668,7 @@ void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
 void Layout::addBackGroundImage()
 {
     _backGroundImage = Scale9Sprite::create();
-    _backGroundImage->setScale9Enabled(false);
+    _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
     
     addProtectedChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
    
@@ -1880,9 +1892,9 @@ void Layout::setCameraMask(unsigned short mask, bool applyChildren)
     }
 }
     
-ResouceData Layout::getRenderFile()
+ResourceData Layout::getRenderFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_bgImageTexType;
     rData.file = _backGroundImageFileName;
     return rData;

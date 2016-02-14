@@ -406,6 +406,7 @@ public:
     /** Get a shader program from the texture.*/
     GLProgram* getGLProgram() const;
 
+    std::string getPath()const { return _filePath; }
 
 public:
     /** Get pixel info map, the key-value pairs is PixelFormat and PixelFormatInfo.*/
@@ -540,6 +541,9 @@ protected:
     friend class SpriteFrameCache;
     friend class TextureCache;
     friend class ui::Scale9Sprite;
+
+    bool _valid;
+    std::string _filePath;
 };
 
 

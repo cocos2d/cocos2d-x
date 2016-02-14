@@ -169,7 +169,7 @@ typedef struct unz_file_info_s unz_file_info;
          *
          * Splitting the key into 4 parts and calling the function from 4 different source
          * files increases the difficulty to reverse engineer the encryption key.
-         * Be aware that encrpytion is *never* 100% secure and the key code
+         * Be aware that encryption is *never* 100% secure and the key code
          * can be cracked by knowledgable persons. 
          *
          * IMPORTANT: Be sure to call setPvrEncryptionKey or
@@ -225,7 +225,7 @@ typedef struct unz_file_info_s unz_file_info;
     * Zip file - reader helper class.
     *
     * It will cache the file list of a particular zip file with positions inside an archive,
-    * so it would be much faster to read some particular files or to check their existance.
+    * so it would be much faster to read some particular files or to check their existence.
     *
     * @since v2.0.5
     */
@@ -258,7 +258,7 @@ typedef struct unz_file_info_s unz_file_info;
         /**
         * Check does a file exists or not in zip file
         *
-        * @param fileName File to be checked on existance
+        * @param fileName File to be checked on existence
         * @return true whenever file exists, false otherwise
         *
         * @since v2.0.5

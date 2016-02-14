@@ -215,8 +215,8 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sen
             _errorFlag = true;
             _status = 0;
             _statusText.clear();
-            _notify(_onerrorCallback);
-            _notify(_onloadendCallback);
+            _notify(_onerrorCallback.ref());
+            _notify(_onloadendCallback.ref());
             return;
         }
     }
@@ -244,9 +244,9 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sen
     _data[_dataSize] = '\0';
     memcpy((void*)_data, (const void*)buffer->data(), _dataSize);
     
-    _notify(_onreadystateCallback);
-    _notify(_onloadCallback);
-    _notify(_onloadendCallback);
+    _notify(_onreadystateCallback.ref());
+    _notify(_onloadCallback.ref());
+    _notify(_onloadendCallback.ref());
 }
 /**
  * @brief   Send out request and fire callback when done.
@@ -270,13 +270,6 @@ MinXmlHttpRequest::MinXmlHttpRequest()
 , _type()
 , _data(nullptr)
 , _dataSize()
-, _onreadystateCallback(nullptr)
-, _onloadstartCallback(nullptr)
-, _onabortCallback(nullptr)
-, _onerrorCallback(nullptr)
-, _onloadCallback(nullptr)
-, _onloadendCallback(nullptr)
-, _ontimeoutCallback(nullptr)
 , _readyState(UNSENT)
 , _status(0)
 , _statusText()
@@ -294,6 +287,15 @@ MinXmlHttpRequest::MinXmlHttpRequest()
 {
     _scheduler = cocos2d::Director::getInstance()->getScheduler();
     _scheduler->retain();
+    
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    _onreadystateCallback.construct(cx);
+    _onloadstartCallback.construct(cx);
+    _onabortCallback.construct(cx);
+    _onerrorCallback.construct(cx);
+    _onloadCallback.construct(cx);
+    _onloadendCallback.construct(cx);
+    _ontimeoutCallback.construct(cx);
 }
 
 /**
@@ -302,19 +304,13 @@ MinXmlHttpRequest::MinXmlHttpRequest()
  */
 MinXmlHttpRequest::~MinXmlHttpRequest()
 {
-
-#define SAFE_REMOVE_OBJECT(callback) if (callback != NULL)\
-    {\
-        JS::RemoveObjectRoot(_cx, &callback);\
-    }
-
-    SAFE_REMOVE_OBJECT(_onreadystateCallback);
-    SAFE_REMOVE_OBJECT(_onloadstartCallback);
-    SAFE_REMOVE_OBJECT(_onloadendCallback);
-    SAFE_REMOVE_OBJECT(_onloadCallback);
-    SAFE_REMOVE_OBJECT(_onerrorCallback);
-    SAFE_REMOVE_OBJECT(_onabortCallback);
-    SAFE_REMOVE_OBJECT(_ontimeoutCallback);
+    _onreadystateCallback.destroyIfConstructed();
+    _onloadstartCallback.destroyIfConstructed();
+    _onloadendCallback.destroyIfConstructed();
+    _onloadCallback.destroyIfConstructed();
+    _onerrorCallback.destroyIfConstructed();
+    _onabortCallback.destroyIfConstructed();
+    _ontimeoutCallback.destroyIfConstructed();
     
     if (_httpRequest)
     {
@@ -345,7 +341,9 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
     js_proxy_t *p;
     jsval out;
     
-    JSObject *obj = JS_NewObject(cx, &MinXmlHttpRequest::js_class, JS::RootedObject(cx, MinXmlHttpRequest::js_proto), JS::RootedObject(cx, MinXmlHttpRequest::js_parent));
+    JS::RootedObject proto(cx, MinXmlHttpRequest::js_proto);
+    JS::RootedObject parentProto(cx, MinXmlHttpRequest::js_parent);
+    JS::RootedObject obj(cx, JS_NewObject(cx, &MinXmlHttpRequest::js_class, proto, parentProto));
     
     if (obj) {
         JS_SetPrivate(obj, req);
@@ -353,7 +351,7 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
     }
 
     args.rval().set(out);
-    p =jsb_new_proxy(req, obj);
+    p = jsb_new_proxy(req, obj);
     
     JS::AddNamedObjectRoot(cx, &p->obj, "XMLHttpRequest");
     return true;
@@ -367,9 +365,9 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
  */
 #define GETTER_SETTER_FOR_CALLBACK_PROP(x,y) JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, x)\
 {\
-    if (y)\
+    if (y.ref())\
     {\
-        jsval out = OBJECT_TO_JSVAL(y);\
+        JS::RootedValue out(cx, OBJECT_TO_JSVAL(y.ref()));\
         args.rval().set(out);\
     }\
     else\
@@ -380,11 +378,10 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
 }\
 JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, x)\
 {\
-    jsval callback = args.get(0);\
-    if (callback != JSVAL_NULL)\
+    JS::RootedValue callback(cx, args.get(0));\
+    if (!callback.isNullOrUndefined())\
     {\
-        y = callback.toObjectOrNull();\
-        JS::AddNamedObjectRoot(cx, &y, #y);\
+        y.ref() = callback.toObjectOrNull();\
     }\
     return true;\
 }
@@ -524,7 +521,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, readyState)
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, status)
 {
-    args.rval().set(INT_TO_JSVAL(_status));
+    args.rval().set(INT_TO_JSVAL((int)_status));
     return true;
 }
 
@@ -626,7 +623,8 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
             //size_t utf16Count = 0;
             //const jschar* utf16Buf = JS_GetStringCharsZAndLength(cx, JSVAL_TO_STRING(strVal), &utf16Count);
             //bool ok = JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
-            bool ok = JS_ParseJSON(cx, JS::RootedString(cx, strVal.toString()), &outVal);
+            JS::RootedString jsstr(cx, strVal.toString());
+            bool ok = JS_ParseJSON(cx, jsstr, &outVal);
             
             if (ok)
             {
@@ -759,7 +757,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
 
     _setHttpRequestHeader();
     _sendRequest(cx);
-    _notify(_onloadstartCallback);
+    _notify(_onloadstartCallback.ref());
     
     //begin schedule for timeout
     if(_timeout > 0)
@@ -775,7 +773,7 @@ void MinXmlHttpRequest::update(float dt)
     _elapsedTime += dt;
     if(_elapsedTime * 1000 >= _timeout)
     {
-        _notify(_ontimeoutCallback);
+        _notify(_ontimeoutCallback.ref());
         _elapsedTime = 0;
         _readyState = UNSENT;
         _scheduler->unscheduleAllForTarget(this);
@@ -797,7 +795,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, abort)
     //3.Change the state to UNSENT.
     _readyState = UNSENT;
     
-    _notify(_onabortCallback);
+    _notify(_onabortCallback.ref());
     
     return true;
 }
@@ -922,7 +920,7 @@ static void basic_object_finalize(JSFreeOp *freeOp, JSObject *obj)
    CCLOG("basic_object_finalize %p ...", obj);
 }
 
-void MinXmlHttpRequest::_notify(JSObject * callback)
+void MinXmlHttpRequest::_notify(JS::HandleObject callback)
 {
     js_proxy_t * p;
     void* ptr = (void*)this;

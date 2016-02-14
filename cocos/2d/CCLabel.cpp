@@ -154,7 +154,7 @@ public:
 
 Label* Label::create()
 {
-    auto ret = new (std::nothrow) Label();
+    auto ret = new (std::nothrow) Label;
 
     if (ret)
     {
@@ -200,21 +200,13 @@ Label* Label::createWithTTF(const std::string& text, const std::string& fontFile
 {
     auto ret = new (std::nothrow) Label(hAlignment,vAlignment);
 
-    if (ret && FileUtils::getInstance()->isFileExist(fontFile))
+    if (ret && ret->initWithTTF(text, fontFile, fontSize, dimensions, hAlignment, vAlignment))
     {
-        TTFConfig ttfConfig(fontFile.c_str(),fontSize,GlyphCollection::DYNAMIC);
-        if (ret->setTTFConfig(ttfConfig))
-        {
-            ret->setDimensions(dimensions.width,dimensions.height);
-            ret->setString(text);
-
-            ret->autorelease();
-
-            return ret;
-        }
+        ret->autorelease();
+        return ret;
     }
 
-    delete ret;
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
@@ -222,16 +214,13 @@ Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text,
 {
     auto ret = new (std::nothrow) Label(hAlignment);
 
-    if (ret && FileUtils::getInstance()->isFileExist(ttfConfig.fontFilePath) && ret->setTTFConfig(ttfConfig))
+    if (ret && ret->initWithTTF(ttfConfig, text, hAlignment, maxLineWidth))
     {
-        ret->setMaxLineWidth(maxLineWidth);
-        ret->setString(text);
         ret->autorelease();
-
         return ret;
     }
 
-    delete ret;
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
@@ -308,6 +297,34 @@ bool Label::setCharMap(const std::string& plistFile)
     setFontAtlas(newAtlas);
 
     return true;
+}
+
+
+bool Label::initWithTTF(const std::string& text, const std::string& fontFilePath, float fontSize,
+                        const Size& dimensions, TextHAlignment hAlignment, TextVAlignment vAlignment)
+{
+    if (FileUtils::getInstance()->isFileExist(fontFilePath))
+    {
+        TTFConfig ttfConfig(fontFilePath, fontSize, GlyphCollection::DYNAMIC);
+        if (setTTFConfig(ttfConfig))
+        {
+            setDimensions(dimensions.width, dimensions.height);
+            setString(text);
+        }
+        return true;
+    }
+    return false;
+}
+
+bool Label::initWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment hAlignment, int maxLineWidth)
+{
+    if (FileUtils::getInstance()->isFileExist(ttfConfig.fontFilePath) && setTTFConfig(ttfConfig))
+    {
+        setMaxLineWidth(maxLineWidth);
+        setString(text);
+        return true;
+    }
+    return false;
 }
 
 bool Label::setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
@@ -476,7 +493,7 @@ void Label::reset()
     _enableWrap = true;
     _bmFontSize = -1;
     _bmfontScale = 1.0f;
-    _overflow = Overflow::NORMAL;
+    _overflow = Overflow::NONE;
     _originalFontSize = 0.0f;
     
 }
@@ -569,14 +586,12 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& ima
         return false;
     }
 
-    //asign the default fontSize
+    //assign the default fontSize
     if (fabs(fontSize) < FLT_EPSILON) {
         FontFNT *bmFont = (FontFNT*)newAtlas->getFont();
         if (bmFont) {
             float originalFontSize = bmFont->getOriginalFontSize();
-            if(fabs(_bmFontSize+1) < FLT_EPSILON){
-                _bmFontSize = originalFontSize / CC_CONTENT_SCALE_FACTOR();
-            }
+            _bmFontSize = originalFontSize / CC_CONTENT_SCALE_FACTOR();
         }
     }
 
@@ -780,7 +795,7 @@ bool Label::alignText()
 
         if(!updateQuads()){
             ret = false;
-            if(!_enableWrap && _overflow == Overflow::SHRINK){
+            if(_overflow == Overflow::SHRINK){
                 this->shrinkLabelToContentSize(CC_CALLBACK_0(Label::isHorizontalClamp, this));
             }
             break;
@@ -809,6 +824,17 @@ bool Label::computeHorizontalKernings(const std::u16string& stringToRender)
         return false;
     else
         return true;
+}
+
+bool Label::isHorizontalClamped(float letterPositionX, int lineIndex)
+{
+    auto wordWidth = this->_linesWidth[lineIndex];
+    bool letterOverClamp = (letterPositionX > _contentSize.width || letterPositionX < 0);
+    if (!_enableWrap) {
+        return letterOverClamp;
+    }else{
+        return (wordWidth > this->_contentSize.width && letterOverClamp);
+    }
 }
 
 bool Label::updateQuads()
@@ -840,33 +866,32 @@ bool Label::updateQuads()
                     _reusedRect.size.height -= clipTop;
                     py -= clipTop;
                 }
-                if (py - letterDef.height < _tailoredBottomY)
+                if (py - letterDef.height * _bmfontScale < _tailoredBottomY)
                 {
                     _reusedRect.size.height = (py < _tailoredBottomY) ? 0.f : (py - _tailoredBottomY);
                 }
             }
 
-            if(!_enableWrap){
-                auto px = _lettersInfo[ctr].positionX + letterDef.width/2 + _linesOffsetX[_lettersInfo[ctr].lineIndex];
-                if(_labelWidth > 0.f){
-                    if (px > _contentSize.width || px < 0) {
-                        if(_overflow == Overflow::CLAMP){
+            auto lineIndex = _lettersInfo[ctr].lineIndex;
+            auto px = _lettersInfo[ctr].positionX + letterDef.width/2 * _bmfontScale + _linesOffsetX[lineIndex];
+
+            if(_labelWidth > 0.f){
+                if (this->isHorizontalClamped(px, lineIndex)) {
+                    if(_overflow == Overflow::CLAMP){
+                        _reusedRect.size.width = 0;
+                    }else if(_overflow == Overflow::SHRINK){
+                        if (_contentSize.width > letterDef.width) {
+                            letterClamp = true;
+                            ret = false;
+                            break;
+                        }else{
                             _reusedRect.size.width = 0;
-                        }else if(_overflow == Overflow::SHRINK){
-                            if (letterDef.width > 0
-                                && _contentSize.width > letterDef.width) {
-                                letterClamp = true;
-                                ret = false;
-                                break;
-                            }else{
-                                //clamp
-                                _reusedRect.size.width = 0;
-                            }
-                           
                         }
+
                     }
                 }
             }
+
 
             if (_reusedRect.size.height > 0.f && _reusedRect.size.width > 0.f)
             {
@@ -875,7 +900,7 @@ bool Label::updateQuads()
                 _reusedLetter->setPosition(letterPositionX, py);
                 auto index = static_cast<int>(_batchNodes.at(letterDef.textureID)->getTextureAtlas()->getTotalQuads());
                 _lettersInfo[ctr].atlasIndex = index;
-                
+
                 this->updateLetterSpriteScale(_reusedLetter);
 
                 _batchNodes.at(letterDef.textureID)->insertQuadFromSprite(_reusedLetter, index);
@@ -995,10 +1020,10 @@ void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */
             _effectColorF.g = outlineColor.g / 255.f;
             _effectColorF.b = outlineColor.b / 255.f;
             _effectColorF.a = outlineColor.a / 255.f;
-            _outlineSize = outlineSize;
             _currLabelEffect = LabelEffect::OUTLINE;
             _contentDirty = true;
         }
+        _outlineSize = outlineSize;
     }
 }
 
@@ -1912,7 +1937,7 @@ float Label::getRenderingFontSize()const
         fontSize = this->getTTFConfig().fontSize;
     }else if(_currentLabelType == LabelType::STRING_TEXTURE){
         fontSize = _systemFontSize;
-    }else{ //FIXME: find a way to caculate char map font size
+    }else{ //FIXME: find a way to calculate char map font size
         fontSize = this->getLineHeight();
     }
     return fontSize;

@@ -75,7 +75,7 @@
 -- @return Control#Control self (return value: cc.Control)
         
 --------------------------------
--- Returns a point corresponding to the touh location converted into the<br>
+-- Returns a point corresponding to the touch location converted into the<br>
 -- control space coordinates.<br>
 -- param touch A Touch object that represents a touch.
 -- @function [parent=#Control] getTouchLocation 

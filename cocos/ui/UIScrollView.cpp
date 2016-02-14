@@ -178,19 +178,11 @@ void ScrollView::setInnerContainerSize(const Size &size)
 
     // Calculate and set the position of the inner container.
     Vec2 pos = _innerContainer->getPosition();
-    if (_innerContainer->getLeftBoundary() > 0.0f)
+    if (_innerContainer->getLeftBoundary() != 0.0f)
     {
         pos.x = _innerContainer->getAnchorPoint().x * _innerContainer->getContentSize().width;
     }
-    if (_innerContainer->getRightBoundary() < _contentSize.width)
-    {
-        pos.x = _contentSize.width - ((1.0f - _innerContainer->getAnchorPoint().x) * _innerContainer->getContentSize().width);
-    }
-    if (_innerContainer->getPosition().y > 0.0f)
-    {
-        pos.y = _innerContainer->getAnchorPoint().y * _innerContainer->getContentSize().height;
-    }
-    if (_innerContainer->getTopBoundary() < _contentSize.height)
+    if (_innerContainer->getTopBoundary() != _contentSize.height)
     {
         pos.y = _contentSize.height - (1.0f - _innerContainer->getAnchorPoint().y) * _innerContainer->getContentSize().height;
     }

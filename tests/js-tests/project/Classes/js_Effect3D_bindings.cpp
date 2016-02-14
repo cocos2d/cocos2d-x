@@ -483,9 +483,8 @@ bool jsb_Effect3DOutline_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject proto(cx, typeClass->proto.ref());
+    JS::RootedObject parent(cx, typeClass->parentProto.ref());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
     args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
@@ -525,32 +524,20 @@ void js_register_cocos2dx_Effect3DOutline(JSContext *cx, JS::HandleObject global
         JS_FS_END
     };
     
+    JS::RootedObject parentProto(cx, jsb_Effect3D_prototype);
     jsb_Effect3DOutline_prototype = JS_InitClass(
                                                  cx, global,
-                                                 JS::RootedObject(cx, jsb_Effect3D_prototype),
+                                                 parentProto,
                                                  jsb_Effect3DOutline_class,
                                                  jsb_Effect3DOutline_constructor, 0, 
                                                  properties,
                                                  funcs,
                                                  NULL, // no static properties
                                                  st_funcs);
-    // make the class enumerable in the registered namespace
-    //  bool found;
-    //FIXME: Removed in Firefox v27
-    //  JS_SetPropertyAttributes(cx, global, "Effect3DOutline", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
     
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<Effect3DOutline> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_Effect3DOutline_class;
-        p->proto = jsb_Effect3DOutline_prototype;
-        p->parentProto = jsb_Effect3D_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    JS::RootedObject proto(cx, jsb_Effect3DOutline_prototype);
+    jsb_register_class<Effect3DOutline>(cx, jsb_Effect3DOutline_class, proto, parentProto);
 }
 
 
@@ -570,7 +557,7 @@ bool js_cocos2dx_EffectSprite3D_setEffect3D(JSContext *cx, uint32_t argc, jsval 
         do {
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (Effect3D*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -598,7 +585,7 @@ bool js_cocos2dx_EffectSprite3D_addEffect(JSContext *cx, uint32_t argc, jsval *v
         do {
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
             arg0 = (Effect3DOutline*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
@@ -697,9 +684,8 @@ bool jsb_EffectSprite3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject proto(cx, typeClass->proto.ref());
+    JS::RootedObject parent(cx, typeClass->parentProto.ref());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
     args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
@@ -740,32 +726,20 @@ void js_register_cocos2dx_EffectSprite3D(JSContext *cx, JS::HandleObject global)
         JS_FS_END
     };
     
+    JS::RootedObject parentProto(cx, jsb_cocos2d_Sprite3D_prototype);
     jsb_EffectSprite3D_prototype = JS_InitClass(
                                                 cx, global,
-                                                JS::RootedObject(cx, jsb_cocos2d_Sprite3D_prototype),
+                                                parentProto,
                                                 jsb_EffectSprite3D_class,
                                                 jsb_EffectSprite3D_constructor, 1,
                                                 properties,
                                                 funcs,
                                                 NULL, // no static properties
                                                 st_funcs);
-    // make the class enumerable in the registered namespace
-    //  bool found;
-    //FIXME: Removed in Firefox v27
-    //  JS_SetPropertyAttributes(cx, global, "EffectSprite3D", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
     
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<EffectSprite3D> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_EffectSprite3D_class;
-        p->proto = jsb_EffectSprite3D_prototype;
-        p->parentProto = jsb_cocos2d_Sprite3D_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    JS::RootedObject proto(cx, jsb_EffectSprite3D_prototype);
+    jsb_register_class<EffectSprite3D>(cx, jsb_EffectSprite3D_class, proto, parentProto);
 }
 
 void register_Effect3D_bindings(JSContext *cx, JS::HandleObject global)

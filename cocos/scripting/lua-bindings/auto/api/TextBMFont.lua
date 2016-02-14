@@ -30,13 +30,19 @@
 -- 
 -- @function [parent=#TextBMFont] getRenderFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 --  init a bitmap font atlas with an initial string and the FNT file 
 -- @function [parent=#TextBMFont] setFntFile 
 -- @param self
 -- @param #string fileName
+-- @return TextBMFont#TextBMFont self (return value: ccui.TextBMFont)
+        
+--------------------------------
+-- reset TextBMFont inner label
+-- @function [parent=#TextBMFont] resetRender 
+-- @param self
 -- @return TextBMFont#TextBMFont self (return value: ccui.TextBMFont)
         
 --------------------------------

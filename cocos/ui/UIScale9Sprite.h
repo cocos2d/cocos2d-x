@@ -37,6 +37,8 @@
  * @{
  */
 NS_CC_BEGIN
+class DrawNode;
+
 namespace ui {
     
     /**
@@ -575,6 +577,8 @@ namespace ui {
         /**
          * @brief Toggle 9-slice feature.
          * If Scale9Sprite is 9-slice disabled, the Scale9Sprite will rendered as a normal sprite.
+         * @warning: Don't use setScale9Enabled(false), use setRenderingType(RenderingType::SIMPLE) instead.
+         *        The setScale9Enabled(false) is kept only for back back compatibility.
          * @param enabled True to enable 9-slice, false otherwise.
          * @js NA
          */
@@ -590,6 +594,7 @@ namespace ui {
         
         /// @} end of Children and Parent
         
+        virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
         virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
         
         virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
@@ -654,7 +659,8 @@ namespace ui {
         virtual float getScale() const override;
         using Node::getScaleZ;
         virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
-        
+        virtual void setGlobalZOrder(float globalZOrder) override;
+
         /**
          * Set the slice sprite rendering type.
          * When setting to SIMPLE, only 4 vertexes is used to rendering.
@@ -679,12 +685,11 @@ namespace ui {
         void applyBlendFunc();
         void updateBlendFunc(Texture2D *texture);
         std::vector<Vec2> calculateUV(Texture2D *tex, const Rect& capInsets,
-                                     const Size& spriteRectSize);
-        std::vector<Vec2> calculateVertices(const Rect& capInsets, const Size& spriteRectSize);
+                                     const Size& originalSize, const Vec4& offsets);
+        std::vector<Vec2> calculateVertices(const Rect& capInsets, const Size& originalSize, const Vec4& offsets);
         TrianglesCommand::Triangles calculateTriangles(const std::vector<Vec2>& uv,
                                                       const std::vector<Vec2>& vertices);
         
-        bool _spritesGenerated;
         Rect _spriteRect;
         bool   _spriteFrameRotated;
         Rect _capInsetsInternal;
@@ -696,6 +701,7 @@ namespace ui {
         
         /** Original sprite's size. */
         Size _originalSize;
+        Vec2 _offset;
         /** Preferred sprite's size. By default the preferred size is the original size. */
         
         //if the preferredSize component is given as -1, it is ignored
@@ -715,11 +721,17 @@ namespace ui {
         bool _isPatch9;
         State _brightState;
         Vec2 _nonSliceSpriteAnchor;
-        
+
         V3F_C4B_T2F* _sliceVertices;
         unsigned short* _sliceIndices;
         bool _sliceSpriteDirty;
         RenderingType _renderingType;
+        
+#if CC_SPRITE_DEBUG_DRAW
+        DrawNode *_debugDrawNode;
+#endif //CC_SPRITE_DEBUG_DRAW
+        bool _insideBounds;   /// whether or not the sprite was inside bounds the previous frame
+        TrianglesCommand _trianglesCommand;     ///
     };
     
 }}  //end of namespace

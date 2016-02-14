@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "ui/UIHelper.h"
 #include "2d/CCSprite.h"
 #include "2d/CCCamera.h"
-#include "2d/CocosStudioExtension.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 NS_CC_BEGIN
 
@@ -157,7 +157,7 @@ void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
     _barTexType = texType;
     if (fileName.empty())
     {
-        _barRenderer->init();
+        _barRenderer->resetRender();
     }
     else
     {
@@ -172,6 +172,10 @@ void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
         default:
             break;
         }
+    }
+    //FIXME: https://github.com/cocos2d/cocos2d-x/issues/12249
+    if (!_ignoreSize && _customSize.equals(Size::ZERO)) {
+        _customSize = _barRenderer->getContentSize();
     }
     this->setupBarTexture();
 }
@@ -196,7 +200,7 @@ void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType 
     _progressBarTexType = texType;
     if (fileName.empty())
     {
-        _progressBarRenderer->init();
+        _progressBarRenderer->resetRender();
     }
     else
     {
@@ -251,7 +255,7 @@ void Slider::setScale9Enabled(bool able)
         ignoreContentAdaptWithSize(_prevIgnoreSize);
     }
     setCapInsetsBarRenderer(_capInsetsBarRenderer);
-    setCapInsetProgressBarRebderer(_capInsetsProgressBarRenderer);
+    setCapInsetProgressBarRenderer(_capInsetsProgressBarRenderer);
     _barRendererAdaptDirty = true;
     _progressBarRendererDirty = true;
 }
@@ -273,7 +277,7 @@ void Slider::ignoreContentAdaptWithSize(bool ignore)
 void Slider::setCapInsets(const Rect &capInsets)
 {
     setCapInsetsBarRenderer(capInsets);
-    setCapInsetProgressBarRebderer(capInsets);
+    setCapInsetProgressBarRenderer(capInsets);
 }
 
 void Slider::setCapInsetsBarRenderer(const Rect &capInsets)
@@ -291,10 +295,10 @@ const Rect& Slider::getCapInsetsBarRenderer()const
     return _capInsetsBarRenderer;
 }
 
-void Slider::setCapInsetProgressBarRebderer(const Rect &capInsets)
+void Slider::setCapInsetProgressBarRenderer(const Rect &capInsets)
 {
     _capInsetsProgressBarRenderer = ui::Helper::restrictCapInsetRect(capInsets, _progressBarRenderer->getContentSize());
-    
+
     if (!_scale9Enabled)
     {
         return;
@@ -302,7 +306,7 @@ void Slider::setCapInsetProgressBarRebderer(const Rect &capInsets)
     _progressBarRenderer->setCapInsets(_capInsetsProgressBarRenderer);
 }
     
-const Rect& Slider::getCapInsetsProgressBarRebderer()const
+const Rect& Slider::getCapInsetsProgressBarRenderer()const
 {
     return _capInsetsProgressBarRenderer;
 }
@@ -749,37 +753,37 @@ void Slider::copySpecialProperties(Widget *widget)
     }
 }
 
-ResouceData Slider::getBackFile()
+ResourceData Slider::getBackFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_barTexType;
     rData.file = _textureFile;
     return rData;
 }
-ResouceData Slider::getProgressBarFile()
+ResourceData Slider::getProgressBarFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_progressBarTexType;
     rData.file = _progressBarTextureFile;
     return rData;
 }
-ResouceData Slider::getBallNormalFile()
+ResourceData Slider::getBallNormalFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_ballNTexType;
     rData.file = _slidBallNormalTextureFile;
     return rData;
 }
-ResouceData Slider::getBallPressedFile()
+ResourceData Slider::getBallPressedFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_ballPTexType;
     rData.file = _slidBallPressedTextureFile;
     return rData;
 }
-ResouceData Slider::getBallDisabeldFile()
+ResourceData Slider::getBallDisabledFile()
 {
-    ResouceData rData;
+    ResourceData rData;
     rData.type = (int)_ballDTexType;
     rData.file = _slidBallDisabledTextureFile;
     return rData;

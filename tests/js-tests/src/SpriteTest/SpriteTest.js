@@ -977,7 +977,7 @@ var SpriteZVertex = SpriteTestDemo.extend({
         this._super(cc.color(255, 0, 0, 80), cc.color(255, 98, 117, 20));
 
 
-        if ("opengl" in cc.sys.capabilities) {
+        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
 
             gl.enable(gl.DEPTH_TEST);
             //
@@ -1047,7 +1047,7 @@ var SpriteZVertex = SpriteTestDemo.extend({
     onEnter:function () {
         //----start19----onEnter
         this._super();
-        if ("opengl" in cc.sys.capabilities) {
+        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
             director.setProjection(cc.Director.PROJECTION_3D);
             gl.enable(gl.DEPTH_TEST);
 
@@ -1063,7 +1063,7 @@ var SpriteZVertex = SpriteTestDemo.extend({
     },
     onExit:function () {
         //----start19----onExit
-        if ("opengl" in cc.sys.capabilities) {
+        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
             director.setProjection(cc.Director.PROJECTION_2D);
             gl.disable(gl.DEPTH_TEST);
         }
@@ -1104,7 +1104,7 @@ var SpriteBatchNodeZVertex = SpriteTestDemo.extend({
         //----start20----ctor
         this._super(cc.color(255, 0, 0, 80), cc.color(255, 98, 117, 20));
 
-        if ("opengl" in cc.sys.capabilities) {
+        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
 
             //
             // This test tests z-order
@@ -1174,7 +1174,7 @@ var SpriteBatchNodeZVertex = SpriteTestDemo.extend({
         //----start20----onEnter
         this._super();
 
-        if ("opengl" in cc.sys.capabilities) {
+        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
             director.setProjection(cc.Director.PROJECTION_3D);
             gl.enable(gl.DEPTH_TEST);
 
@@ -1191,7 +1191,7 @@ var SpriteBatchNodeZVertex = SpriteTestDemo.extend({
     },
     onExit:function () {
         //----start20----onExit
-        if ("opengl" in cc.sys.capabilities) {
+        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
             director.setProjection(cc.Director.PROJECTION_2D);
             gl.disable(gl.DEPTH_TEST);
         }
@@ -1607,7 +1607,7 @@ var SpriteAliased = SpriteTestDemo.extend({
         // This change will affect every sprite that uses the same texture
         // So sprite1 and sprite2 will be affected by this change
         //
-        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
+        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL)) {
             var label = new cc.LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
             label.x = winSize.width / 2;
@@ -1621,7 +1621,7 @@ var SpriteAliased = SpriteTestDemo.extend({
     },
     onExit:function () {
         //----start24----onExit
-        if (cc.sys.isNative || ("opengl" in cc.sys.capabilities)) {
+        if (cc.sys.isNative || ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL)) {
             var sprite = this.getChildByTag(TAG_SPRITE1);
             sprite.texture.setAntiAliasTexParameters();
         }
@@ -1677,7 +1677,7 @@ var SpriteBatchNodeAliased = SpriteTestDemo.extend({
         // This change will affect every sprite that uses the same texture
         // So sprite1 and sprite2 will be affected by this change
         //
-        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
+        if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL)) {
             var label = new cc.LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
             this.addChild(label);
             label.x = winSize.width / 2;
@@ -1691,7 +1691,7 @@ var SpriteBatchNodeAliased = SpriteTestDemo.extend({
     },
     onExit:function () {
         //----start25----onExit
-        if (cc.sys.isNative || ("opengl" in cc.sys.capabilities)) {
+        if (cc.sys.isNative || ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL)) {
             var sprite = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
             sprite.texture.setAntiAliasTexParameters();
         }
@@ -4203,7 +4203,7 @@ var SpriteBatchNodeChildrenChildren = SpriteTestDemo.extend({
         // SpriteBatchNode: 3 levels of children
         //
         var aParent = new cc.SpriteBatchNode(s_ghosts);
-        if ("opengl" in cc.sys.capabilities)
+        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL)
             aParent.texture.generateMipmap();
         this.addChild(aParent);
 
@@ -4710,7 +4710,7 @@ var SpriteBatchNodeReorderOneChild = SpriteTestDemo.extend({
 
         this._batchNode = aParent;
         //[[aParent texture] generateMipmap];
-        if ("opengl" in cc.sys.capabilities)
+        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL)
             aParent.texture.generateMipmap();
         this.addChild(aParent);
 

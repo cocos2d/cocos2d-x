@@ -55,21 +55,21 @@ typedef struct _ttfConfig
     bool distanceFieldEnabled;
     int outlineSize;
 
-    _ttfConfig(const char* filePath = "",float size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
-        const char *customGlyphCollection = nullptr,bool useDistanceField = false,int outline = 0)
-        :fontFilePath(filePath)
-        ,fontSize(size)
-        ,glyphs(glyphCollection)
-        ,customGlyphs(customGlyphCollection)
-        ,distanceFieldEnabled(useDistanceField)
-        ,outlineSize(outline)
+    _ttfConfig(const std::string& filePath = "",float size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
+        const char *customGlyphCollection = nullptr, bool useDistanceField = false, int outline = 0)
+        : fontFilePath(filePath)
+        , fontSize(size)
+        , glyphs(glyphCollection)
+        , customGlyphs(customGlyphCollection)
+        , distanceFieldEnabled(useDistanceField)
+        , outlineSize(outline)
     {
         if(outline > 0)
         {
             distanceFieldEnabled = false;
         }
     }
-}TTFConfig;
+} TTFConfig;
 
 class Sprite;
 class SpriteBatchNode;
@@ -97,16 +97,16 @@ class CC_DLL Label : public Node, public LabelProtocol, public BlendProtocol
 public:
     enum class Overflow
     {
-        //for keep back compatibility
-        NORMAL,
-        /**
-         * In SHRINK mode, the font size will change dynamically to adapt the content size.
-         */
-        SHRINK,
+        //In NONE mode, the dimensions is (0,0) and the content size will change dynamically to fit the label.
+        NONE,
         /**
          *In CLAMP mode, when label content goes out of the bounding box, it will be clipped.
          */
         CLAMP,
+        /**
+         * In SHRINK mode, the font size will change dynamically to adapt the content size.
+         */
+        SHRINK,
         /**
          *In RESIZE_HEIGHT mode, you can only change the width of label and the height is changed automatically.
          */
@@ -349,6 +349,41 @@ public:
      */
     virtual void disableEffect(LabelEffect effect);
 
+    /**
+    * Return whether the shadow effect is enabled.
+    */
+    bool isShadowEnabled() const { return _shadowEnabled; }
+
+    /**
+    * Return shadow effect offset value.
+    */
+    Size getShadowOffset() const { return _shadowOffset; }
+
+    /**
+    * Return the shadow effect blur radius.
+    */
+    float getShadowBlurRadius() const { return _shadowBlurRadius; }
+
+    /**
+    * Return the shadow effect color value.
+    */
+    Color4F getShadowColor() const { return _shadowColor4F; }
+
+    /**
+    * Return the outline effect size value.
+    */
+    int getOutlineSize() const { return _outlineSize; }
+
+    /**
+    * Return current effect type.
+    */
+    LabelEffect getLabelEffectType() const { return _currLabelEffect; }
+
+    /**
+    * Return current effect color vlaue.
+    */
+    Color4F getEffectColor() const { return _effectColorF; }
+
     /** Sets the Label's text horizontal alignment.*/
     void setAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment);}
 
@@ -540,6 +575,13 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~Label();
 
+    bool initWithTTF(const std::string& text, const std::string& fontFilePath, float fontSize,
+                     const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
+                     TextVAlignment vAlignment = TextVAlignment::TOP);
+
+    bool initWithTTF(const TTFConfig& ttfConfig, const std::string& text,
+                     TextHAlignment hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0);
+
 protected:
     struct LetterInfo
     {
@@ -593,6 +635,7 @@ protected:
     void scaleFontSizeDown(float fontSize);
     bool setTTFConfigInternal(const TTFConfig& ttfConfig);
     void setBMFontSizeInternal(float fontSize);
+    bool isHorizontalClamped(float letterPositionX, int lineInex);
     void restoreFontSize();
     void updateLetterSpriteScale(Sprite* sprite);
 

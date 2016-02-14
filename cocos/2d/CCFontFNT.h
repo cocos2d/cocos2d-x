@@ -48,6 +48,9 @@ public:
     virtual FontAtlas *createFontAtlas() override;
     void setFontSize(float fontSize);
     int getOriginalFontSize()const;
+
+    static void reloadBMFontResource(const std::string& fntFilePath);
+
 protected:
     
     FontFNT(BMFontConfiguration *theContfig, const Vec2& imageOffset = Vec2::ZERO);

@@ -36,7 +36,7 @@ NS_CC_BEGIN
 
 class Label;
 class SpriteFrame;
-struct CC_DLL ResouceData;
+struct CC_DLL ResourceData;
 
 namespace ui{
 
@@ -301,9 +301,9 @@ public:
     void resetPressedRender();
     void resetDisabledRender();
 
-    ResouceData getNormalFile();
-    ResouceData getPressedFile();
-    ResouceData getDisabledFile();
+    ResourceData getNormalFile();
+    ResourceData getPressedFile();
+    ResourceData getDisabledFile();
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
@@ -359,11 +359,6 @@ protected:
     Size _normalTextureSize;
     Size _pressedTextureSize;
     Size _disabledTextureSize;
-
-    float _normalTextureScaleXInSize;
-    float _normalTextureScaleYInSize;
-    float _pressedTextureScaleXInSize;
-    float _pressedTextureScaleYInSize;
 
     bool _normalTextureLoaded;
     bool _pressedTextureLoaded;

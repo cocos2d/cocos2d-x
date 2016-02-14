@@ -521,7 +521,7 @@ public:
     static bool parseAxisAngle(const char* str, Quaternion* out);
 
     /**
-     * Atempts to parse the specified string as an RGB color value.
+     * Attempts to parse the specified string as an RGB color value.
      *
      * @param str The string to parse.
      * @param out The value to populate if successful.
@@ -531,7 +531,7 @@ public:
     static bool parseColor(const char* str, Vec3* out);
 
     /**
-     * Atempts to parse the specified string as an RGBA color value.
+     * Attempts to parse the specified string as an RGBA color value.
      *
      * @param str The string to parse.
      * @param out The value to populate if successful.

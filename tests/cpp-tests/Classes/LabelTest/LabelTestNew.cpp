@@ -497,6 +497,10 @@ LabelFNTGlyphDesigner::LabelFNTGlyphDesigner()
     addChild(layer, -10);
 
     auto label1 = Label::createWithBMFont("fonts/futura-48.fnt", "Testing Glyph Designer");
+    // Demo for reloadFontAtlasFNT function, after it been called, all UI widget
+    //  use the special font must reset font, because the old one is invalid.
+    FontAtlasCache::reloadFontAtlasFNT("fonts/futura-48.fnt");
+    label1->setBMFontFilePath("fonts/futura-48.fnt");
     addChild(label1);
     label1->setPosition(Vec2(winSize.width / 2, winSize.height * 0.4f));
 
@@ -933,6 +937,10 @@ LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
         label1->setPosition(Vec2(size.width * 0.1, size.height * 0.6));
         label1->setAnchorPoint(Vec2(0, 0.5));
         this->addChild(label1);
+        // Demo for unloadFontAtlasTTF function, after it been called, all UI widget
+        //  use the special font must reset font, because the old one is invalid.
+        FontAtlasCache::unloadFontAtlasTTF("fonts/HKYuanMini.ttf");
+        label1->setTTFConfig(ttfConfig);
     }
 
     auto label2 = Label::createWithTTF(ttfConfig,
@@ -2076,6 +2084,7 @@ void LabelLayoutBaseTest::initWrapOption(const cocos2d::Size& size)
     checkBox->setScale(0.5);
     checkBox->setSelected(true);
     checkBox->setName("toggleWrap");
+    checkBox->setEnabled(false);
 
     checkBox->addEventListener([=](Ref* ref, CheckBox::EventType event){
         if (event == CheckBox::EventType::SELECTED) {
@@ -2447,7 +2456,7 @@ LabelToggleTypeTest::LabelToggleTypeTest()
     _label->setLineSpacing(5);
     _label->setAdditionalKerning(2);
     _label->setVerticalAlignment(TextVAlignment::CENTER);
-    _label->setOverflow(Label::Overflow::NORMAL);
+    _label->setOverflow(Label::Overflow::NONE);
 
 
     this->updateDrawNodeSize(_label->getContentSize());
@@ -2556,7 +2565,7 @@ void LabelToggleTypeTest::onChangedRadioButtonSelect(RadioButton* radioButton, R
     {
         switch (radioButton->getTag()) {
             case 0:
-                _label->setOverflow(Label::Overflow::NORMAL);
+                _label->setOverflow(Label::Overflow::NONE);
                 break;
             case 1:
                 _label->setOverflow(Label::Overflow::CLAMP);
@@ -2584,7 +2593,7 @@ LabelSystemFontTest::LabelSystemFontTest()
 {
     _label->setLineSpacing(5);
     _label->setVerticalAlignment(TextVAlignment::CENTER);
-   _label->setOverflow(Label::Overflow::NORMAL);
+   _label->setOverflow(Label::Overflow::NONE);
    _label->setSystemFontName("Hiragino Sans GB");
     
     auto stepper = (ControlStepper*)this->getChildByName("stepper");
@@ -2697,7 +2706,7 @@ void LabelSystemFontTest::onChangedRadioButtonSelect(RadioButton* radioButton, R
     {
         switch (radioButton->getTag()) {
             case 0:
-                _label->setOverflow(Label::Overflow::NORMAL);
+                _label->setOverflow(Label::Overflow::NONE);
                 break;
             case 1:
                 _label->setOverflow(Label::Overflow::CLAMP);
@@ -2725,7 +2734,7 @@ LabelCharMapFontTest::LabelCharMapFontTest()
 {
     _label->setLineSpacing(5);
     _label->setVerticalAlignment(TextVAlignment::CENTER);
-    _label->setOverflow(Label::Overflow::NORMAL);
+    _label->setOverflow(Label::Overflow::NONE);
     _label->setCharMap("fonts/tuffy_bold_italic-charmap.plist");
     _label->setString("Hello World, This is a char map test.");
     _label->setScale(0.5f);

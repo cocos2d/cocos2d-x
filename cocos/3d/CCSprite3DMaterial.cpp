@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "3d/CCSprite3DMaterial.h"
+#include "3d/CCMesh.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCGLProgram.h"
@@ -99,6 +100,22 @@ void Sprite3DMaterial::createBuiltInMaterial()
     if (_diffuseNoTexMaterial && _diffuseNoTexMaterial->initWithGLProgramState(glprogramstate))
     {
         _diffuseNoTexMaterial->_type = Sprite3DMaterial::MaterialType::DIFFUSE_NOTEX;
+    }
+
+    glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_BUMPEDNORMAL_TEXTURE);
+    glprogramstate = GLProgramState::create(glProgram);
+    _bumpedDiffuseMaterial = new (std::nothrow) Sprite3DMaterial();
+    if (_bumpedDiffuseMaterial && _bumpedDiffuseMaterial->initWithGLProgramState(glprogramstate))
+    {
+        _bumpedDiffuseMaterial->_type = Sprite3DMaterial::MaterialType::BUMPED_DIFFUSE;
+    }
+
+    glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_BUMPEDNORMAL_TEXTURE);
+    glprogramstate = GLProgramState::create(glProgram);
+    _bumpedDiffuseMaterialSkin = new (std::nothrow) Sprite3DMaterial();
+    if (_bumpedDiffuseMaterialSkin && _bumpedDiffuseMaterialSkin->initWithGLProgramState(glprogramstate))
+    {
+        _bumpedDiffuseMaterialSkin->_type = Sprite3DMaterial::MaterialType::BUMPED_DIFFUSE;
     }
 }
 
@@ -182,7 +199,7 @@ Sprite3DMaterial* Sprite3DMaterial::createBuiltInMaterial(MaterialType type, boo
             break;
             
         case Sprite3DMaterial::MaterialType::BUMPED_DIFFUSE:
-            CCASSERT(0, "not implement");
+            material = skinned ? _bumpedDiffuseMaterialSkin : _bumpedDiffuseMaterial;
             break;
             
         default:
@@ -229,6 +246,14 @@ Sprite3DMaterial* Sprite3DMaterial::createWithGLStateProgram(GLProgramState* pro
     }
     CC_SAFE_DELETE(mat);
     return nullptr;
+}
+
+void Sprite3DMaterial::setTexture(Texture2D* tex, NTextureData::Usage usage)
+{
+    const auto& passes = getTechnique()->getPasses();
+    for (auto& pass : passes) {
+        pass->getGLProgramState()->setUniformTexture(s_uniformSamplerName[(int)usage], tex);
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////

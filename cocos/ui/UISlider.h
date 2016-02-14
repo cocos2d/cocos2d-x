@@ -36,7 +36,7 @@ NS_CC_BEGIN
  */
 
 class Sprite;
-struct CC_DLL ResouceData;
+struct CC_DLL ResourceData;
 
 namespace ui {
     class Scale9Sprite;
@@ -143,14 +143,14 @@ public:
      * @param capInsets Capinsets for progress bar slider.
      * @js NA
      */
-    void setCapInsetProgressBarRebderer(const Rect &capInsets);
+    void setCapInsetProgressBarRenderer(const Rect &capInsets);
     
     /**
      * Gets capinsets for progress bar slider, if slider is using scale9 renderer.
      * @return Capinsets for progress bar slider.
      * @js NA
      */
-    const Rect& getCapInsetsProgressBarRebderer()const;
+    const Rect& getCapInsetsProgressBarRenderer()const;
     
     /**
      * Load textures for slider ball.
@@ -265,11 +265,11 @@ public:
      */
     float getZoomScale()const;
 
-    ResouceData getBackFile();
-    ResouceData getProgressBarFile();
-    ResouceData getBallNormalFile();
-    ResouceData getBallPressedFile();
-    ResouceData getBallDisabeldFile();
+    ResourceData getBackFile();
+    ResourceData getProgressBarFile();
+    ResourceData getBallNormalFile();
+    ResourceData getBallPressedFile();
+    ResourceData getBallDisabledFile();
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;

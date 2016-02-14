@@ -2121,19 +2121,19 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
         if (WebPGetFeatures(static_cast<const uint8_t*>(data), dataLen, &config.input) != VP8_STATUS_OK) break;
         if (config.input.width == 0 || config.input.height == 0) break;
         
-        config.output.colorspace = MODE_RGBA;
-        _renderFormat = Texture2D::PixelFormat::RGBA8888;
+        config.output.colorspace = config.input.has_alpha?MODE_rgbA:MODE_RGB;
+        _renderFormat = config.input.has_alpha?Texture2D::PixelFormat::RGBA8888:Texture2D::PixelFormat::RGB888;
         _width    = config.input.width;
         _height   = config.input.height;
         
-        //webp doesn't have premultipliedAlpha
-        _hasPremultipliedAlpha = false;
+        //we ask webp to give data with premultiplied alpha
+        _hasPremultipliedAlpha = config.input.has_alpha;
         
-        _dataLen = _width * _height * 4;
+        _dataLen = _width * _height * (config.input.has_alpha?4:3);
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         
         config.output.u.RGBA.rgba = static_cast<uint8_t*>(_data);
-        config.output.u.RGBA.stride = _width * 4;
+        config.output.u.RGBA.stride = _width * (config.input.has_alpha?4:3);
         config.output.u.RGBA.size = _dataLen;
         config.output.is_external_memory = 1;
         

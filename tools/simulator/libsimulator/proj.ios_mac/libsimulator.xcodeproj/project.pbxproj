@@ -147,6 +147,7 @@
 		9FF504BF1A5EA75D00AFDA55 /* PlayerTaskServiceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 9FF504AA1A5EA75D00AFDA55 /* PlayerTaskServiceProtocol.h */; };
 		9FF504C01A5EA75D00AFDA55 /* PlayerUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FF504AB1A5EA75D00AFDA55 /* PlayerUtils.cpp */; };
 		9FF504C11A5EA75D00AFDA55 /* PlayerUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 9FF504AC1A5EA75D00AFDA55 /* PlayerUtils.h */; };
+		ADD1C0E11C196C2500733781 /* SimulatorExport.h in Headers */ = {isa = PBXBuildFile; fileRef = ADD1C0E01C196C2500733781 /* SimulatorExport.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -274,6 +275,7 @@
 		9FF504AA1A5EA75D00AFDA55 /* PlayerTaskServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerTaskServiceProtocol.h; sourceTree = "<group>"; };
 		9FF504AB1A5EA75D00AFDA55 /* PlayerUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerUtils.cpp; sourceTree = "<group>"; };
 		9FF504AC1A5EA75D00AFDA55 /* PlayerUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerUtils.h; sourceTree = "<group>"; };
+		ADD1C0E01C196C2500733781 /* SimulatorExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorExport.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -449,6 +451,7 @@
 				9FF504AB1A5EA75D00AFDA55 /* PlayerUtils.cpp */,
 				9FF504AC1A5EA75D00AFDA55 /* PlayerUtils.h */,
 				9FD6FC0E1A5D281D0028EDC6 /* cocos2dx_extra.h */,
+				ADD1C0E01C196C2500733781 /* SimulatorExport.h */,
 				9FD6FC0F1A5D281D0028EDC6 /* network */,
 				9FD6FC131A5D281D0028EDC6 /* platform */,
 				9FD6FC161A5D281D0028EDC6 /* ProjectConfig */,
@@ -565,6 +568,7 @@
 				9FB638931A635BA300AAEC43 /* stringprintf.h in Headers */,
 				9FB6388E1A635BA300AAEC43 /* once.h in Headers */,
 				9FD6FC671A5D2A380028EDC6 /* PlayerMac.h in Headers */,
+				ADD1C0E11C196C2500733781 /* SimulatorExport.h in Headers */,
 				9FB6386E1A635BA300AAEC43 /* coded_stream_inl.h in Headers */,
 				9F2F21BF1A635F1C006B8BF1 /* RuntimeCCSImpl.h in Headers */,
 				9FD6FC311A5D281D0028EDC6 /* cocos2dx_extra.h in Headers */,

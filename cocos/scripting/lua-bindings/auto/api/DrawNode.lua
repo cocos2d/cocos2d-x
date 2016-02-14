@@ -186,6 +186,12 @@
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
+-- 
+-- @function [parent=#DrawNode] getLineWidth 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 --  Draw a point.<br>
 -- param point A Vec2 used to point.<br>
 -- param pointSize The point size.<br>

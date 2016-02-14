@@ -71,7 +71,7 @@ protected:
     void updateSliderPosition(Vec2 location);
     bool checkSliderPosition(Vec2 location);
 
-    //maunally put in the setters
+    //manually put in the setters
     CC_SYNTHESIZE_READONLY(float, _hue, Hue);
     virtual void setHue(float val);
     CC_SYNTHESIZE_READONLY(float, _huePercentage, HuePercentage);

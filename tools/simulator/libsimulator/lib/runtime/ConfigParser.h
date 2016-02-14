@@ -7,13 +7,15 @@
 #include "json/document.h"
 #include "ProjectConfig/SimulatorConfig.h"
 #include "ProjectConfig/ProjectConfig.h"
+#include "SimulatorExport.h"
+
 using namespace std;
 USING_NS_CC;
 
 #define CONFIG_FILE "config.json"
 
 typedef vector<SimulatorScreenSize> ScreenSizeArray;
-class ConfigParser
+class CC_LIBSIM_DLL ConfigParser
 {
 public:
     static ConfigParser *getInstance(void);

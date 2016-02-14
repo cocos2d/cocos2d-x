@@ -44,15 +44,7 @@
 -- 
 -- @function [parent=#Slider] getBallNormalFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
-        
---------------------------------
--- Gets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
--- return Capinsets for progress bar slider.<br>
--- js NA
--- @function [parent=#Slider] getCapInsetsProgressBarRebderer 
--- @param self
--- @return rect_table#rect_table ret (return value: rect_table)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- Sets if slider is using scale9 renderer.<br>
@@ -66,7 +58,7 @@
 -- 
 -- @function [parent=#Slider] getBallPressedFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- brief Return a zoom scale<br>
@@ -74,6 +66,15 @@
 -- @function [parent=#Slider] getZoomScale 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- Sets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
+-- param capInsets Capinsets for progress bar slider.<br>
+-- js NA
+-- @function [parent=#Slider] setCapInsetProgressBarRenderer 
+-- @param self
+-- @param #rect_table capInsets
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- Load textures for slider ball.<br>
@@ -120,12 +121,20 @@
 -- 
 -- @function [parent=#Slider] getProgressBarFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- Gets capinsets for bar slider, if slider is using scale9 renderer.<br>
 -- return capInsets Capinsets for bar slider.
 -- @function [parent=#Slider] getCapInsetsBarRenderer 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+-- Gets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
+-- return Capinsets for progress bar slider.<br>
+-- js NA
+-- @function [parent=#Slider] getCapInsetsProgressBarRenderer 
 -- @param self
 -- @return rect_table#rect_table ret (return value: rect_table)
         
@@ -143,7 +152,7 @@
 -- 
 -- @function [parent=#Slider] getBackFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- Gets If slider is using scale9 renderer.<br>
@@ -153,13 +162,10 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Sets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
--- param capInsets Capinsets for progress bar slider.<br>
--- js NA
--- @function [parent=#Slider] setCapInsetProgressBarRebderer 
+-- 
+-- @function [parent=#Slider] getBallDisabledFile 
 -- @param self
--- @param #rect_table capInsets
--- @return Slider#Slider self (return value: ccui.Slider)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- Sets capinsets for bar slider, if slider is using scale9 renderer.<br>
@@ -168,12 +174,6 @@
 -- @param self
 -- @param #rect_table capInsets
 -- @return Slider#Slider self (return value: ccui.Slider)
-        
---------------------------------
--- 
--- @function [parent=#Slider] getBallDisabeldFile 
--- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
         
 --------------------------------
 -- Gets the progress direction of slider.<br>

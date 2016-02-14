@@ -261,7 +261,7 @@ CC_DEPRECATED_ATTRIBUTE static inline Vec2 ccpFromSize(const Size& s)
 }
 
 /** Run a math operation function on each point component
- * absf, fllorf, ceilf, roundf
+ * absf, floorf, ceilf, roundf
  * any function that has the signature: float func(float);
  * For example: let's try to take the floor of x,y
  * ccpCompOp(p,floorf);

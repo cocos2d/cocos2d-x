@@ -481,4 +481,9 @@ void Camera::setBackgroundBrush(CameraBackgroundBrush* clearBrush)
     _clearBrush = clearBrush;
 }
 
+bool Camera::isBrushValid()
+{
+    return _clearBrush != nullptr && _clearBrush->isValid();
+}
+
 NS_CC_END

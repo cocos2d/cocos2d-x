@@ -162,4 +162,4 @@ private:
 
 }
 
-#endif  // __FUNDATION__CCCOMPONENT_H__
+#endif  // __CC_EXTENTIONS_CCINPUTDELEGATE_H__

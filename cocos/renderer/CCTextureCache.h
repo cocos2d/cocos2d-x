@@ -204,6 +204,17 @@ public:
      */
     const std::string getTextureFilePath(Texture2D* texture)const;
 
+    /** Reload texture from a new file.
+    * This function is mainly for editor, won't suggest use it in game for performance reason.
+    *
+    * @param srcName Original texture file name.
+    * @param dstName New texture file name.
+    *
+    * @since v3.10
+    */
+    void renameTextureWithKey(const std::string srcName, const std::string dstName);
+
+
 private:
     void addImageAsyncCallBack(float dt);
     void loadImage();

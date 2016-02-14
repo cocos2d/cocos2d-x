@@ -34,7 +34,8 @@ THE SOFTWARE.
 
 static bool jsb_cocos2dx_navmesh_NavMeshAgent_move(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::NavMeshAgent* cobj = (cocos2d::NavMeshAgent *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2(cobj, cx, false, "Invalid Native Object");
@@ -42,7 +43,6 @@ static bool jsb_cocos2dx_navmesh_NavMeshAgent_move(JSContext *cx, uint32_t argc,
 	bool ok = true;
 
 	if (argc == 1){
-		JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 		cocos2d::Vec3 arg0;
 		ok &= jsval_to_vector3(cx, args.get(0), &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "jsb_cocos2dx_navmesh_NavMeshAgent_move : Error processing arguments");
@@ -51,7 +51,6 @@ static bool jsb_cocos2dx_navmesh_NavMeshAgent_move(JSContext *cx, uint32_t argc,
 	}
 
 	if (argc == 2){
-		JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 		cocos2d::Vec3 arg0;
 		ok &= jsval_to_vector3(cx, args.get(0), &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "jsb_cocos2dx_navmesh_NavMeshAgent_move : Error processing arguments");
@@ -84,6 +83,7 @@ extern JSObject *jsb_cocos2d_NavMeshAgent_prototype;
 
 void register_all_cocos2dx_navmesh_manual(JSContext *cx, JS::HandleObject global)
 {
-	JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_NavMeshAgent_prototype), "move", jsb_cocos2dx_navmesh_NavMeshAgent_move, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS::RootedObject proto(cx, jsb_cocos2d_NavMeshAgent_prototype);
+	JS_DefineFunction(cx, proto, "move", jsb_cocos2dx_navmesh_NavMeshAgent_move, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 }
 #endif //#if CC_USE_NAVMESH

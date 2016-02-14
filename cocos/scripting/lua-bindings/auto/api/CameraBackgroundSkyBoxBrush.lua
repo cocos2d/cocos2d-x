@@ -5,12 +5,32 @@
 -- @parent_module cc
 
 --------------------------------
--- Set skybox texutre <br>
+-- 
+-- @function [parent=#CameraBackgroundSkyBoxBrush] setTextureValid 
+-- @param self
+-- @param #bool valid
+-- @return CameraBackgroundSkyBoxBrush#CameraBackgroundSkyBoxBrush self (return value: cc.CameraBackgroundSkyBoxBrush)
+        
+--------------------------------
+-- Set skybox texture <br>
 -- param texture Skybox texture
 -- @function [parent=#CameraBackgroundSkyBoxBrush] setTexture 
 -- @param self
 -- @param #cc.TextureCube texture
 -- @return CameraBackgroundSkyBoxBrush#CameraBackgroundSkyBoxBrush self (return value: cc.CameraBackgroundSkyBoxBrush)
+        
+--------------------------------
+-- 
+-- @function [parent=#CameraBackgroundSkyBoxBrush] setActived 
+-- @param self
+-- @param #bool actived
+-- @return CameraBackgroundSkyBoxBrush#CameraBackgroundSkyBoxBrush self (return value: cc.CameraBackgroundSkyBoxBrush)
+        
+--------------------------------
+-- 
+-- @function [parent=#CameraBackgroundSkyBoxBrush] isActived 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @overload self         
@@ -42,6 +62,12 @@
 --------------------------------
 -- init Skybox.
 -- @function [parent=#CameraBackgroundSkyBoxBrush] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#CameraBackgroundSkyBoxBrush] isValid 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         

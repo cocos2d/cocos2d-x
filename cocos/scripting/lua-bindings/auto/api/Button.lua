@@ -65,7 +65,7 @@
 -- 
 -- @function [parent=#Button] getDisabledFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- brief Return a zoom scale<br>
@@ -94,7 +94,7 @@
 -- 
 -- @function [parent=#Button] getNormalFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- 
@@ -247,7 +247,7 @@
 -- 
 -- @function [parent=#Button] getPressedFile 
 -- @param self
--- @return ResouceData#ResouceData ret (return value: cc.ResouceData)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- Query the font size of button title<br>

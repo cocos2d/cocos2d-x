@@ -87,6 +87,12 @@
 -- @return Texture2D#Texture2D self (return value: cc.Texture2D)
         
 --------------------------------
+-- 
+-- @function [parent=#Texture2D] getPath 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 --  Draws a texture inside a rect.
 -- @function [parent=#Texture2D] drawInRect 
 -- @param self

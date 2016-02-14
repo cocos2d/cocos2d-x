@@ -35,11 +35,12 @@
 #include "spidermonkey_specifics.h"
 #include "js_manual_conversions.h"
 #include "mozilla/Maybe.h"
+#include "js-BindingsExport.h"
 
 #include <assert.h>
 #include <memory>
 
-#define ENGINE_VERSION "Cocos2d-JS v3.9"
+#define ENGINE_VERSION "Cocos2d-JS v3.10"
 
 void js_log(const char *format, ...);
 
@@ -75,7 +76,7 @@ public:
  * - Invoke garbage collection of JavaScript context
  * - etc...
  */
-class ScriptingCore : public cocos2d::ScriptEngineProtocol
+class CC_JS_DLL ScriptingCore : public cocos2d::ScriptEngineProtocol
 {
 private:
     JSRuntime *_rt;
@@ -233,7 +234,22 @@ public:
      * @param global    @~english The js global object
      * @return @~english Return true if successfully invoked, otherwise return false.
      */
-    bool evalString(const char *string, jsval *outVal, const char *filename = NULL, JSContext* cx = NULL, JSObject* global = NULL);
+    bool evalString(const char *string, JS::MutableHandleValue outVal, const char *filename, JSContext* cx, JS::HandleObject global);
+    
+    /**@~english
+     * Evaluate the specified js code string
+     * @param string    @~english The string with the javascript code to be evaluated
+     * @param outVal    @~english The jsval that will hold the return value of the evaluation.
+     * @return @~english Return true if successfully invoked, otherwise return false.
+     */
+    bool evalString(const char *string, JS::MutableHandleValue outVal);
+    
+    /**@~english
+     * Evaluate the specified js code string
+     * @param string    @~english The string with the javascript code to be evaluated
+     * @return @~english Return true if successfully invoked, otherwise return false.
+     */
+    bool evalString(const char *string);
     
     /**
      @brief @~english Get script object for the given path
@@ -248,7 +264,7 @@ public:
      * @param global    @~english The js global object
      * @param cx        @~english The js context
      */
-    void compileScript(const char *path, JSObject* global = NULL, JSContext* cx = NULL);
+    void compileScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
     
     /**@~english
      * Run the specified js file
@@ -477,7 +493,21 @@ public:
      * @return @~english The global object
      */
     bool isFunctionOverridedInJS(JS::HandleObject obj, const std::string& name, JSNative native);
-    
+
+    /**
+     * Roots the associated JSObj.
+     * The GC won't collected rooted objects. This function is only called
+     * when compiled with CC_ENABLE_GC_FOR_NATIVE_OBJECTS=1
+     */
+    virtual void rootObject(cocos2d::Ref* ref) override;
+    /**
+     * Unroots the associated JSObj.
+     * The GC will collect this object the next time the GC
+     * is called.
+     * This function is only called when compiled with CC_ENABLE_GC_FOR_NATIVE_OBJECTS=1
+     */
+    virtual void unrootObject(cocos2d::Ref* ref) override;
+
 private:
     void string_report(JS::HandleValue val);
     void initRegister();
@@ -507,18 +537,92 @@ JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
 bool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
 bool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);
 
-js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj);
-js_proxy_t* jsb_get_native_proxy(void* nativeObj);
-js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
-void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
-
 template <class T>
-jsval getJSObject(JSContext* cx, T* nativeObj)
+js_type_class_t *jsb_register_class(JSContext *cx, JSClass *jsClass, JS::HandleObject proto, JS::HandleObject parentProto)
 {
-    js_proxy_t *proxy = js_get_or_create_proxy<T>(cx, nativeObj);
-    return proxy ? OBJECT_TO_JSVAL(proxy->obj) : JSVAL_NULL;
+    TypeTest<T> t;
+    js_type_class_t *p = nullptr;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsClass;
+        if (p->proto.empty())
+        {
+            p->proto.construct(cx);
+        }
+        p->proto.ref() = proto;
+        if (p->parentProto.empty())
+        {
+            p->parentProto.construct(cx);
+        }
+        p->parentProto.ref() = parentProto ;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    return p;
 }
 
-void removeJSObject(JSContext* cx, void* nativeObj);
+/** creates two new proxies: one associaged with the nativeObj,
+ and another one associated with the JsObj */
+js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsObj);
+/** returns the proxy associated with the Native* */
+js_proxy_t* jsb_get_native_proxy(void* nativeObj);
+/** returns the proxy associated with the JSObject* */
+js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
+/** deprecated: use jsb_remove_proxy(js_proxy_t* proxy) instead */
+void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
+/** removes both the native and js proxies */
+void jsb_remove_proxy(js_proxy_t* proxy);
+
+/**
+ * Generic initialization function for subclasses of Ref
+ */
+void jsb_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, cocos2d::Ref* ref, const char* debug);
+
+/**
+ * Generic initialization function for subclasses of Ref.
+ * Similar to jsb_ref_init(), but call it if you know that Ref has been autoreleased
+ * This function should never be called. It is only added as way to fix
+ * an issue with the static auto-bindings with the "create" function
+ */
+void jsb_ref_autoreleased_init(JSContext* cx, JS::Heap<JSObject*> *obj, cocos2d::Ref* ref, const char* debug);
+
+/**
+ * Generic finalize used by objects that are subclass of Ref
+ */
+void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj);
+
+/**
+ Disassociates oldRef from jsobj, and associates a new Ref.
+ Useful for the EaseActions and others
+ */
+void jsb_ref_rebind(JSContext* cx, JS::HandleObject jsobj, js_proxy_t *js2native_proxy, cocos2d::Ref* oldRef, cocos2d::Ref* newRef, const char* debug);
+
+/**
+ Creates a new JSObject of a certain type (typeClass) and creates a proxy associated with and the Ref
+ */
+JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+
+/**
+ * Creates a new JSObject of a certain type (typeClass) and creates a proxy associated with and the Ref
+ * Similar to jsb_ref_create_jsobject(), but call it if you know that Ref has been autoreleased
+ * This function should never be called. It is only added as way to fix
+ * an issue with the static auto-bindings with the "create" function
+ */
+JSObject* jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+
+/**
+ It will try to get the associated JSObjct for ref.
+ If it can't find it, it will create a new one associating it to Ref.
+ Call this function for objects that were already created and initialized, when returning `getChild()`
+ */
+JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+
+/**
+ It will try to get the associated JSObjct for ref.
+ If it can't find it, it will create a new one associating it to Ref
+ Call this function for objects that might return an already existing copy when you create them. For example, `Animation3D::create()`;
+ */
+JSObject* jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
 #endif /* __SCRIPTING_CORE_H__ */
