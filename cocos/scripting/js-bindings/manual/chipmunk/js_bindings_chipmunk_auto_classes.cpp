@@ -2526,6 +2526,7 @@ bool JSB_cpSpace_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 
     jsb_set_jsobject_for_proxy(jsobj, ret_val);
     jsb_set_c_proxy_for_jsobject(jsobj, ret_val, JSB_C_FLAG_CALL_FREE);
+    CCLOG("++++++RETAINED++++++ %d Cpp(%s): %p - JS: %p", ScriptingCore::retainCount, "cp.Space", ret_val, jsobj.get());
     args.rval().set(OBJECT_TO_JSVAL(jsobj));
 
     return true;

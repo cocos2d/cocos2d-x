@@ -215,9 +215,9 @@ void Node::cleanup()
     
     // actions
     this->stopAllActions();
-    this->unscheduleAllCallbacks();
-
     // timers
+    this->unscheduleAllCallbacks();
+    
     for( const auto &child: _children)
         child->cleanup();
 }
@@ -706,6 +706,13 @@ void Node::setOrderOfArrival(int orderOfArrival)
 
 void Node::setUserObject(Ref* userObject)
 {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (userObject)
+        sEngine->retainScriptObject(this, userObject);
+    if (_userObject)
+        sEngine->releaseScriptObject(this, _userObject);
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     CC_SAFE_RETAIN(userObject);
     CC_SAFE_RELEASE(_userObject);
     _userObject = userObject;
@@ -1073,6 +1080,9 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
         {
             child->cleanup();
         }
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, child);
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         // set parent nil at the end
         child->setParent(nullptr);
     }
@@ -1097,7 +1107,10 @@ void Node::detachChild(Node *child, ssize_t childIndex, bool doCleanup)
     {
         child->cleanup();
     }
-
+    
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, child);
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     // set parent nil at the end
     child->setParent(nullptr);
 
@@ -1108,6 +1121,9 @@ void Node::detachChild(Node *child, ssize_t childIndex, bool doCleanup)
 // helper used by reorderChild & add
 void Node::insertChild(Node* child, int z)
 {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    ScriptEngineManager::getInstance()->getScriptEngine()->retainScriptObject(this, child);
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     _transformUpdated = true;
     _reorderChildDirty = true;
     _children.pushBack(child);

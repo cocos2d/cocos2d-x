@@ -383,7 +383,7 @@ void EventDispatcher::removeEventListenersForTarget(Node* target, bool recursive
         {
             listener->setAssociatedNode(nullptr);   // Ensure no dangling ptr to the target node.
             listener->setRegistered(false);
-            listener->release();
+            releaseListener(listener);
             iter = _toAddedListeners.erase(iter);
         }
         else
@@ -450,7 +450,11 @@ void EventDispatcher::addEventListener(EventListener* listener)
     {
         _toAddedListeners.push_back(listener);
     }
-
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+        sEngine->retainScriptObject(this, listener);
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     listener->retain();
 }
 
@@ -621,7 +625,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
                 if (_inDispatch == 0)
                 {
                     iter = listeners->erase(iter);
-                    CC_SAFE_RELEASE(l);
+                    releaseListener(l);
                 }
                 else
                 {
@@ -685,7 +689,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
 
     if (isFound)
     {
-        CC_SAFE_RELEASE(listener);
+        releaseListener(listener);
     }
     else
     {
@@ -694,7 +698,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
             if (*iter == listener)
             {
                 listener->setRegistered(false);
-                listener->release();
+                releaseListener(listener);
                 _toAddedListeners.erase(iter);
                 break;
             }
@@ -1161,7 +1165,7 @@ void EventDispatcher::updateListeners(Event* event)
                     auto matchIter = std::find(_toRemovedListeners.begin(), _toRemovedListeners.end(), l);
                     if (matchIter != _toRemovedListeners.end())
                         _toRemovedListeners.erase(matchIter);
-                    l->release();
+                    releaseListener(l);
                 }
                 else
                 {
@@ -1182,7 +1186,7 @@ void EventDispatcher::updateListeners(Event* event)
                     auto matchIter = std::find(_toRemovedListeners.begin(), _toRemovedListeners.end(), l);
                     if (matchIter != _toRemovedListeners.end())
                         _toRemovedListeners.erase(matchIter);
-                    l->release();
+                    releaseListener(l);
                 }
                 else
                 {
@@ -1403,7 +1407,7 @@ void EventDispatcher::removeEventListenersForListenerID(const EventListener::Lis
                 if (_inDispatch == 0)
                 {
                     iter = listenerVector->erase(iter);
-                    CC_SAFE_RELEASE(l);
+                    releaseListener(l);
                 }
                 else
                 {
@@ -1432,7 +1436,7 @@ void EventDispatcher::removeEventListenersForListenerID(const EventListener::Lis
         if ((*iter)->getListenerID() == listenerID)
         {
             (*iter)->setRegistered(false);
-            (*iter)->release();
+            releaseListener(*iter);
             iter = _toAddedListeners.erase(iter);
         }
         else
@@ -1550,7 +1554,7 @@ void EventDispatcher::cleanToRemovedListeners()
         auto listenersIter = _listenerMap.find(l->getListenerID());
         if (listenersIter == _listenerMap.end())
         {
-            CC_SAFE_RELEASE(l);
+            releaseListener(l);
             continue;
         }
 
@@ -1565,7 +1569,7 @@ void EventDispatcher::cleanToRemovedListeners()
             if (machedIter != sceneGraphPriorityListeners->end())
             {
                 find = true;
-                CC_SAFE_RELEASE(l);
+                releaseListener(l);
                 sceneGraphPriorityListeners->erase(machedIter);
             }
         }
@@ -1576,7 +1580,7 @@ void EventDispatcher::cleanToRemovedListeners()
             if (machedIter != fixedPriorityListeners->end())
             {
                 find = true;
-                CC_SAFE_RELEASE(l);
+                releaseListener(l);
                 fixedPriorityListeners->erase(machedIter);
             }
         }
@@ -1598,6 +1602,19 @@ void EventDispatcher::cleanToRemovedListeners()
     }
 
     _toRemovedListeners.clear();
+}
+
+void EventDispatcher::releaseListener(EventListener* listener)
+{
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    if (listener)
+    {
+        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (sEngine)
+            sEngine->releaseScriptObject(this, listener);
+        }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    CC_SAFE_RELEASE(listener);
 }
 
 NS_CC_END

@@ -28,6 +28,8 @@
 
 class JSArmatureWrapper: public JSCallbackWrapper {
 public:
+    JSArmatureWrapper(JS::HandleValue owner) : JSCallbackWrapper(owner) {};
+    
     void movementCallbackFunc(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const std::string& movementID);
     void frameCallbackFunc(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
     void addArmatureFileInfoAsyncCallbackFunc(float percent);
@@ -37,7 +39,7 @@ void JSArmatureWrapper::movementCallbackFunc(cocostudio::Armature *armature, coc
 {
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     JS::RootedObject thisObj(cx, getJSCallbackThis().toObjectOrNull());
-    js_proxy_t *proxy = js_get_or_create_proxy(cx, armature);
+    JS::RootedObject jsarmature(cx, js_get_or_create_jsobject<cocostudio::Armature>(cx, armature));
     JS::RootedValue callback(cx, getJSCallbackFunc());
     JS::RootedValue retval(cx);
     if (!callback.isNullOrUndefined())
@@ -48,7 +50,7 @@ void JSArmatureWrapper::movementCallbackFunc(cocostudio::Armature *armature, coc
         jsval idVal = std_string_to_jsval(cx, movementID);
 
         jsval valArr[3];
-        valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
+        valArr[0] = OBJECT_TO_JSVAL(jsarmature);
         valArr[1] = movementVal;
         valArr[2] = idVal;
         
@@ -82,7 +84,7 @@ void JSArmatureWrapper::frameCallbackFunc(cocostudio::Bone *bone, const std::str
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     JS::RootedObject thisObj(cx, getJSCallbackThis().toObjectOrNull());
     JS::RootedValue callback(cx, getJSCallbackFunc());
-    js_proxy_t *proxy = js_get_or_create_proxy(cx, bone);
+    JS::RootedObject jsbone(cx, js_get_or_create_jsobject<cocostudio::Bone>(cx, bone));
     JS::RootedValue retval(cx);
     if (!callback.isNullOrUndefined())
     {
@@ -91,7 +93,7 @@ void JSArmatureWrapper::frameCallbackFunc(cocostudio::Bone *bone, const std::str
         jsval currentIndexVal = INT_TO_JSVAL(currentFrameIndex);
 
         jsval valArr[4];
-        valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
+        valArr[0] = OBJECT_TO_JSVAL(jsbone);
         valArr[1] = nameVal;
         valArr[2] = originIndexVal;
         valArr[3] = currentIndexVal;
@@ -115,7 +117,7 @@ static bool js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(JSContext *cx
             return true;
         }
         else if (argc == 1 || argc == 2) {
-            JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper();
+            JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper(args.thisv());
             tmpObj->autorelease();
             
             cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
@@ -161,7 +163,7 @@ static bool js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(JSContext *cx, u
             return true;
         }
         else if (argc == 1 || argc == 2) {
-            JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper();
+            JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper(args.thisv());
             tmpObj->autorelease();
             
             cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
@@ -202,7 +204,7 @@ static bool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint32
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 3) {
-        JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper();
+        JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper(args.thisv());
         tmpObj->autorelease();
 
         tmpObj->setJSCallbackFunc(args.get(1));
@@ -217,7 +219,7 @@ static bool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint32
     }
 
     if(argc == 5){
-        JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper();
+        JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper(args.thisv());
         tmpObj->autorelease();
 
         tmpObj->setJSCallbackFunc(args.get(3));
@@ -800,8 +802,8 @@ bool js_get_AnimationData_movementDataDic(JSContext *cx, JS::HandleObject obj, J
             cocostudio::MovementData* movementData = iter->second;
             do {
                 if (movementData) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::MovementData>(cx, (cocostudio::MovementData*)movementData);
-                    dictElement = OBJECT_TO_JSVAL(jsProxy->obj);
+                    JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocostudio::MovementData>(cx, movementData));
+                    dictElement = OBJECT_TO_JSVAL(jsobj);
                 } else {
                     CCLOGERROR("js_get_AnimationData_movementDataDic : Fail to retrieve property movementDataDic of AnimationData.");
                     return false;
@@ -1154,8 +1156,8 @@ bool js_get_TextureData_contourDataList(JSContext *cx, JS::HandleObject obj, JS:
         for(const auto& contourData : ret)
         {
             JS::RootedValue arrElement(cx);
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ContourData>(cx, (cocostudio::ContourData*)contourData);
-            arrElement = OBJECT_TO_JSVAL(jsProxy->obj);
+            JS::RootedObject contourObj(cx, js_get_or_create_jsobject<cocostudio::ContourData>(cx, contourData));
+            arrElement = OBJECT_TO_JSVAL(contourObj);
             
             if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
                 break;

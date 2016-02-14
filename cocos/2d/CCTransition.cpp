@@ -78,6 +78,10 @@ bool TransitionScene::initWithDuration(float t, Scene *scene)
         _duration = t;
 
         // retain
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        sEngine->retainScriptObject(this, scene);
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         _inScene = scene;
         _inScene->retain();
         _outScene = Director::getInstance()->getRunningScene();
@@ -147,6 +151,10 @@ void TransitionScene::setNewScene(float dt)
     _isSendCleanupToScene = director->isSendCleanupToScene();
     
     director->replaceScene(_inScene);
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    sEngine->releaseScriptObject(this, _inScene);
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     
     // issue #267
     _outScene->setVisible(true);

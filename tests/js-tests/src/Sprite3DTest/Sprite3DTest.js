@@ -237,7 +237,7 @@ var AsyncLoadSprite3DTest = Sprite3DTestDemo.extend({
         this._super();
 
         var label = new cc.LabelTTF("AsyncLoad Sprite3D", "Arial", 15);
-        var item = new cc.MenuItemLabel(label, this. menuCallback_asyncLoadSprite, this);
+        var item = new cc.MenuItemLabel(label, this.menuCallback_asyncLoadSprite, this);
 
         var s = cc.winSize;
         item.setPosition(s.width / 2, s.height / 2);
@@ -251,11 +251,16 @@ var AsyncLoadSprite3DTest = Sprite3DTestDemo.extend({
         this.addChild(node);
 
         this.menuCallback_asyncLoadSprite();
+
+        this.asyncPool = null;
     },
 
     menuCallback_asyncLoadSprite:function(sender){
+        if (!this.asyncPool) {
+            this.asyncPool = cc.AsyncTaskPool.getInstance();
+        }
         //Note that you must stop the tasks before leaving the scene.
-        cc.AsyncTaskPool.getInstance().stopTasks(cc.AsyncTaskPool.TaskType.TASK_IO);
+        this.asyncPool.stopTasks(cc.AsyncTaskPool.TaskType.TASK_IO);
 
         var node = this.getChildByTag(101);
         node.removeAllChildren(); // remove all loaded sprites
@@ -266,7 +271,6 @@ var AsyncLoadSprite3DTest = Sprite3DTestDemo.extend({
         for(var i = 0; i < this._path.length; ++i){
             jsb.Sprite3D.createAsync(this._path[i], this.asyncLoad_Callback, this, i);
         }
-
     },
 
     asyncLoad_Callback:function(sprite, data){

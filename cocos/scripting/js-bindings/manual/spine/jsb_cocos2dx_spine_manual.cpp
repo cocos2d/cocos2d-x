@@ -572,43 +572,6 @@ bool jsb_cocos2dx_spine_addAnimation(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 
-class JSSkeletonAnimationWrapper: public JSCallbackWrapper
-{
-public:
-    JSSkeletonAnimationWrapper() {}
-    virtual ~JSSkeletonAnimationWrapper() {}
-    
-    void animationCallbackFunc(spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount) const {
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS::RootedObject thisObj(cx, getJSCallbackThis().toObjectOrNull());
-        JS::RootedValue callback(cx, getJSCallbackFunc());
-        js_proxy_t *proxy = js_get_or_create_proxy(cx, node);
-        JS::RootedValue retval(cx);
-        if (!callback.isNullOrUndefined())
-        {
-            jsval nodeVal = OBJECT_TO_JSVAL(proxy->obj);
-            jsval trackIndexVal = INT_TO_JSVAL(trackIndex);
-            int tmpType = (int)type;
-            jsval typeVal = INT_TO_JSVAL(tmpType);
-            jsval eventVal = JSVAL_NULL;
-            if (event)
-                eventVal = spevent_to_jsval(cx, *event);
-            jsval loopCountVal = INT_TO_JSVAL(loopCount);
-            
-            jsval valArr[5];
-            valArr[0] = nodeVal;
-            valArr[1] = trackIndexVal;
-            valArr[2] = typeVal;
-            valArr[3] = eventVal;
-            valArr[4] = loopCountVal;
-            
-            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-            JS_CallFunctionValue(cx, thisObj, callback, JS::HandleValueArray::fromMarkedLocation(5, valArr), &retval);
-        }
-    }
-};
-
-
 extern JSObject* jsb_spine_SkeletonRenderer_prototype;
 extern JSObject* jsb_spine_SkeletonAnimation_prototype;
 

@@ -222,7 +222,7 @@ var TransitionBase = BaseTestLayer.extend({
         label.y = y / 2;
         this.addChild(label);
 
-        this.schedule(this.step, 1.0);
+        // this.schedule(this.step, 1.0);
     },
     onRestartCallback:function (sender) {
         var s = new TransitionsTestScene();

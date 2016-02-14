@@ -68,10 +68,8 @@ Bone::Bone()
     _childArmature = nullptr;
     _boneData = nullptr;
     _tween = nullptr;
-    _tween = nullptr;
     _displayManager = nullptr;
     _ignoreMovementBoneData = false;
-//    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
     _worldTransform = Mat4::IDENTITY;
     _boneTransformDirty = true;
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
