@@ -110,9 +110,11 @@
 - (void)updateFrame:(CGRect)rect
 {
     NSRect frame = self.textInput.frame;
-    frame.origin = rect.origin;
-    frame.size = rect.size;
-    
+    frame.origin.x = rect.origin.x;
+    frame.origin.y = rect.origin.y;
+    frame.size.height = rect.size.height;
+    frame.size.width = rect.size.width;
+
     self.textInput.frame = frame;
     [self.window makeFirstResponder:self.window.contentView];
 }
