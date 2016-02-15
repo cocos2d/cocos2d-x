@@ -1049,6 +1049,9 @@ void Director::restartDirector()
     
     // release the objects
     PoolManager::getInstance()->getCurrentPool()->clear();
+
+    // Restart animation
+    startAnimation();
     
     // Real restart in script level
 #if CC_ENABLE_SCRIPT_BINDING
