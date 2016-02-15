@@ -31,6 +31,11 @@
 #pragma mark - UIEditBox mac implementation
 
 @interface UIEditBoxImplMac : NSObject <NSTextFieldDelegate, NSTextViewDelegate>
+{
+    BOOL _editState;
+    NSView<CCUITextInput> * _textInput;
+    void * _editBox;
+}
 
 @property (nonatomic, retain) NSView<CCUITextInput> *textInput;
 @property (nonatomic, readonly) NSWindow *window;
@@ -38,7 +43,7 @@
 @property (nonatomic, readonly, getter = isEditState) BOOL editState;
 @property (nonatomic, assign) void *editBox;
 @property (nonatomic, assign) NSString *text;
-@property (nonatomic, assign) CGRect frameRect;
+@property (nonatomic, assign) NSRect frameRect;
 @property (nonatomic, assign) cocos2d::ui::EditBox::InputFlag dataInputMode;
 @property (nonatomic, assign) cocos2d::ui::EditBox::KeyboardReturnType keyboardReturnType;
 

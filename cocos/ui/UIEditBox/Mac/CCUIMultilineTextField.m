@@ -31,8 +31,8 @@
 
 @implementation CCUIMultilineTextField
 {
-    NSString* _placeHolder;
 }
+
 @synthesize placeHolder = _placeHolder;
 
 -(void)dealloc

@@ -27,7 +27,6 @@
 
 @implementation CCUITextFieldFormatter
 {
-    int _maximumLength;
 }
 
 @synthesize maximumLength = _maximumLength;

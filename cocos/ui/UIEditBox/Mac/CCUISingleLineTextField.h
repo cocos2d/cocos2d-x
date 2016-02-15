@@ -27,6 +27,9 @@
 #include "CCUITextInput.h"
 
 @interface CCUISingleLineTextField : NSTextField<CCUITextInput>
+{
+    NSMutableDictionary* _placeholderAttributes;
+}
 
 @end
 
