@@ -475,7 +475,7 @@ public:
     /// @}
 
     const int getResourceType() const { return _fileType; }
-    const std::string getResourceName() const { return _fileName; }
+    const std::string& getResourceName() const { return _fileName; }
 
 CC_CONSTRUCTOR_ACCESS :
 	/**
