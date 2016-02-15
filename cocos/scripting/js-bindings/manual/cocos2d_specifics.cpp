@@ -5901,8 +5901,7 @@ void jsb_FinalizeHook_finalize(JSFreeOp *fop, JSObject *obj)
                     CC_SAFE_RELEASE(refObj);
                 }
 #if COCOS2D_DEBUG
-                ScriptingCore::retainCount--;
-                CCLOG("------RELEASED------ %d Cpp: %p - JS: %p", ScriptingCore::retainCount, refObj, ownerPtr);
+                CCLOG("------RELEASED------ Cpp: %p - JS: %p", refObj, ownerPtr);
 #endif // COCOS2D_DEBUG
             }
 #if COCOS2D_DEBUG

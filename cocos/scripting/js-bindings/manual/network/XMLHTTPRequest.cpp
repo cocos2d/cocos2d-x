@@ -402,8 +402,7 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
     js_add_FinalizeHook(cx, obj);
     // don't retain it, already retained
 #if COCOS2D_DEBUG
-    ScriptingCore::retainCount++;
-    CCLOG("++++++RETAINED++++++ %d Cpp(XMLHttpRequest): %p - JS: %p", ScriptingCore::retainCount, req, obj.get());
+    CCLOG("++++++RETAINED++++++ Cpp(XMLHttpRequest): %p - JS: %p", req, obj.get());
 #endif // COCOS2D_DEBUG
 #else
     // autorelease it

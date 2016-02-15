@@ -825,7 +825,7 @@ void JSB_cpSpace_finalize(JSFreeOp *fop, JSObject *jsthis)
         if(proxy->flags == JSB_C_FLAG_CALL_FREE)
             cpSpaceFree(space);
         jsb_del_c_proxy_for_jsobject(jsthis);
-        CCLOG("------RELEASED------ %d Cpp(cp.Space): %p - JS: %p", ScriptingCore::retainCount, space, jsthis);
+        CCLOG("------RELEASED------ Cpp(cp.Space): %p - JS: %p", space, jsthis);
     }
 }
 

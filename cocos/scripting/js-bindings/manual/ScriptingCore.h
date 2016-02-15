@@ -89,9 +89,6 @@ private:
     bool _callFromScript;
     ScriptingCore();
 public:
-#if COCOS2D_DEBUG
-    static int retainCount;
-#endif // COCOS2D_DEBUG
     
     ~ScriptingCore();
 

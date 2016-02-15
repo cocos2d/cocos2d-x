@@ -78,10 +78,6 @@
 
 using namespace cocos2d;
 
-#if COCOS2D_DEBUG
-int ScriptingCore::retainCount = 0;
-#endif //COCOS2D_DEBUG
-
 static std::string inData;
 static std::string outData;
 static std::vector<std::string> g_queue;
@@ -2227,8 +2223,7 @@ JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_ty
     ref->retain();
     js_add_FinalizeHook(cx, jsObj);
 #if COCOS2D_DEBUG
-    ScriptingCore::retainCount++;
-    CCLOG("++++++RETAINED++++++ %d Cpp(%s): %p - JS: %p", ScriptingCore::retainCount, debug, ref, jsObj.get());
+    CCLOG("++++++RETAINED++++++ Cpp(%s): %p - JS: %p", debug, ref, jsObj.get());
 #endif // COCOS2D_DEBUG
 #else
     // don't autorelease it
@@ -2287,8 +2282,7 @@ void jsb_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, Ref* ref, const char*
     js_add_FinalizeHook(cx, jsObj);
     // don't retain it, already retained
 #if COCOS2D_DEBUG
-    ScriptingCore::retainCount++;
-    CCLOG("++++++RETAINED++++++ %d Cpp(%s): %p - JS: %p", ScriptingCore::retainCount, debug, ref, jsObj.get());
+    CCLOG("++++++RETAINED++++++ Cpp(%s): %p - JS: %p", debug, ref, jsObj.get());
 #endif // COCOS2D_DEBUG
 #else
     // autorelease it
