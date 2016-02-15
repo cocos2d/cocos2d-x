@@ -78,10 +78,6 @@
 
 using namespace cocos2d;
 
-#if COCOS2D_DEBUG
-int ScriptingCore::retainCount = 0;
-#endif //COCOS2D_DEBUG
-
 static std::string inData;
 static std::string outData;
 static std::vector<std::string> g_queue;
@@ -2199,9 +2195,9 @@ JSObject* jsb_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t 
 #if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     JS::AddNamedObjectRoot(cx, &proxy->obj, debug);
 #else
-#if COCOS2D_DEBUG
+#if COCOS2D_DEBUG > 1
     CC_UNUSED_PARAM(proxy);
-//    CCLOG("++++++WEAK_REF++++++ Cpp(%s): %p - JS: %p", debug, native, jsObj.get());
+    CCLOG("++++++WEAK_REF++++++ Cpp(%s): %p - JS: %p", debug, native, jsObj.get());
 #endif // COCOS2D_DEBUG
 #endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     return jsObj;
@@ -2226,9 +2222,8 @@ JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_ty
     CC_UNUSED_PARAM(newproxy);
     ref->retain();
     js_add_FinalizeHook(cx, jsObj);
-#if COCOS2D_DEBUG
-    ScriptingCore::retainCount++;
-    CCLOG("++++++RETAINED++++++ %d Cpp(%s): %p - JS: %p", ScriptingCore::retainCount, debug, ref, jsObj.get());
+#if COCOS2D_DEBUG > 1
+    CCLOG("++++++RETAINED++++++ Cpp(%s): %p - JS: %p", debug, ref, jsObj.get());
 #endif // COCOS2D_DEBUG
 #else
     // don't autorelease it
@@ -2270,8 +2265,8 @@ JSObject* jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js_type_c
 #if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     JS::AddNamedObjectRoot(cx, &proxy->obj, debug);
 #else
-#if COCOS2D_DEBUG
-//    CCLOG("++++++WEAK_REF++++++ Cpp(%s): %p - JS: %p", debug, native, jsObj.get());
+#if COCOS2D_DEBUG > 1
+    CCLOG("++++++WEAK_REF++++++ Cpp(%s): %p - JS: %p", debug, native, jsObj.get());
 #endif // COCOS2D_DEBUG
 #endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     return jsObj;
@@ -2286,9 +2281,8 @@ void jsb_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, Ref* ref, const char*
     JS::RootedObject jsObj(cx, *obj);
     js_add_FinalizeHook(cx, jsObj);
     // don't retain it, already retained
-#if COCOS2D_DEBUG
-    ScriptingCore::retainCount++;
-    CCLOG("++++++RETAINED++++++ %d Cpp(%s): %p - JS: %p", ScriptingCore::retainCount, debug, ref, jsObj.get());
+#if COCOS2D_DEBUG > 1
+    CCLOG("++++++RETAINED++++++ Cpp(%s): %p - JS: %p", debug, ref, jsObj.get());
 #endif // COCOS2D_DEBUG
 #else
     // autorelease it
