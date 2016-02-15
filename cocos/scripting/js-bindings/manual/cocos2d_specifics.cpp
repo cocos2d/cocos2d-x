@@ -5900,17 +5900,17 @@ void jsb_FinalizeHook_finalize(JSFreeOp *fop, JSObject *obj)
                 {
                     CC_SAFE_RELEASE(refObj);
                 }
-#if COCOS2D_DEBUG
+#if COCOS2D_DEBUG > 1
                 CCLOG("------RELEASED------ Cpp: %p - JS: %p", refObj, ownerPtr);
 #endif // COCOS2D_DEBUG
             }
-#if COCOS2D_DEBUG
+#if COCOS2D_DEBUG > 1
             else {
                 CCLOG("A non ref object have registered finalize hook: %p", nproxy->ptr);
             }
 #endif // COCOS2D_DEBUG
         }
-#if COCOS2D_DEBUG
+#if COCOS2D_DEBUG > 1
         else {
             CCLOG("jsbindings: Failed to remove proxy for js object: %p, it may cause memory leak and future crash", ownerPtr);
         }

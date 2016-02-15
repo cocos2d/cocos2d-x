@@ -2526,7 +2526,9 @@ bool JSB_cpSpace_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 
     jsb_set_jsobject_for_proxy(jsobj, ret_val);
     jsb_set_c_proxy_for_jsobject(jsobj, ret_val, JSB_C_FLAG_CALL_FREE);
+#if COCOS2D_DEBUG > 1
     CCLOG("++++++RETAINED++++++ Cpp(%s): %p - JS: %p", "cp.Space", ret_val, jsobj.get());
+#endif // COCOS2D_DEBUG
     args.rval().set(OBJECT_TO_JSVAL(jsobj));
 
     return true;
