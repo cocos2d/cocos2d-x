@@ -336,8 +336,10 @@ THE SOFTWARE.
 
  By default this behavior is disabled by default
  */
-#ifndef CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-#define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 1
+#ifdef CC_ENABLE_SCRIPT_BINDING
+  #ifndef CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+  #define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 1
+  #endif
 #endif
 
 /** @def CC_CONSTRUCTOR_ACCESS
