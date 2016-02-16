@@ -80,7 +80,10 @@ bool TransitionScene::initWithDuration(float t, Scene *scene)
         // retain
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-        sEngine->retainScriptObject(this, scene);
+        if (sEngine)
+        {
+            sEngine->retainScriptObject(this, scene);
+        }
 #endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         _inScene = scene;
         _inScene->retain();
@@ -153,7 +156,10 @@ void TransitionScene::setNewScene(float dt)
     director->replaceScene(_inScene);
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-    sEngine->releaseScriptObject(this, _inScene);
+    if (sEngine)
+    {
+        sEngine->releaseScriptObject(this, _inScene);
+    }
 #endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     
     // issue #267

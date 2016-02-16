@@ -27,5 +27,8 @@
 #include "CCUITextInput.h"
 
 @interface CCUIMultilineTextField : NSTextView <CCUITextInput>
+{
+    NSString* _placeHolder;
+}
 
 @end

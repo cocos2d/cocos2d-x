@@ -401,9 +401,8 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
     CC_UNUSED_PARAM(p);
     js_add_FinalizeHook(cx, obj);
     // don't retain it, already retained
-#if COCOS2D_DEBUG
-    ScriptingCore::retainCount++;
-    CCLOG("++++++RETAINED++++++ %d Cpp(XMLHttpRequest): %p - JS: %p", ScriptingCore::retainCount, req, obj.get());
+#if COCOS2D_DEBUG > 1
+    CCLOG("++++++RETAINED++++++ Cpp(XMLHttpRequest): %p - JS: %p", req, obj.get());
 #endif // COCOS2D_DEBUG
 #else
     // autorelease it

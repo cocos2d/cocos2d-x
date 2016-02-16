@@ -27,6 +27,9 @@
 #include "CCUITextInput.h"
 
 @interface CCUIPasswordTextField : NSSecureTextField<CCUITextInput>
+{
+    NSMutableDictionary* _placeholderAttributes;
+}
 
 @end
 

@@ -33,8 +33,8 @@
 
 @implementation CCUIPasswordTextField
 {
-    NSMutableDictionary* _placeholderAttributes;
 }
+
 @synthesize placeholderAttributes = _placeholderAttributes;
 
 -(id) initWithFrame:(NSRect)frameRect

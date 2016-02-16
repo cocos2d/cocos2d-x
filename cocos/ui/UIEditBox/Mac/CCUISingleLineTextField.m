@@ -33,7 +33,6 @@
 
 @implementation CCUISingleLineTextField
 {
-    NSMutableDictionary* _placeholderAttributes;
 }
 
 @synthesize placeholderAttributes = _placeholderAttributes;

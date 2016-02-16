@@ -26,6 +26,10 @@
 #import <Foundation/Foundation.h>
 
 @interface CCUITextFieldFormatter : NSFormatter
+{
+    int _maximumLength;
+}
+
 @property (nonatomic, assign) int maximumLength;
 
 @end

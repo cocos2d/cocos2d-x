@@ -351,10 +351,13 @@ void RenderTexture::setSprite(Sprite* sprite)
 {
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-    if (sprite)
-        sEngine->retainScriptObject(this, sprite);
-    if (_sprite)
-        sEngine->releaseScriptObject(this, _sprite);
+    if (sEngine)
+    {
+        if (sprite)
+            sEngine->retainScriptObject(this, sprite);
+        if (_sprite)
+            sEngine->releaseScriptObject(this, _sprite);
+    }
 #endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     CC_SAFE_RETAIN(sprite);
     CC_SAFE_RELEASE(_sprite);
