@@ -94,10 +94,10 @@ Scene::~Scene()
 #endif
     
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-    auto engine = ScriptEngineManager::getInstance()->getScriptEngine();
-    if (engine)
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
     {
-        engine->releaseAllChildrenRecursive(this);
+        sEngine->releaseAllChildrenRecursive(this);
     }
 #endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
 }
