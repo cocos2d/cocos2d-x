@@ -471,6 +471,9 @@
     <ClCompile Include="..\Classes\ZwoptexTest\ZwoptexTest.cpp">
       <Filter>Classes\ZwoptexTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.cpp">
+      <Filter>Classes\SpriteFrameCacheTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\CurlTest\CurlTest.cpp">
       <Filter>Classes\CurlTest</Filter>
     </ClCompile>
@@ -1040,6 +1043,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ZwoptexTest\ZwoptexTest.h">
       <Filter>Classes\ZwoptexTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.h">
+      <Filter>Classes\SpriteFrameCacheTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\CurlTest\CurlTest.h">
       <Filter>Classes\CurlTest</Filter>
