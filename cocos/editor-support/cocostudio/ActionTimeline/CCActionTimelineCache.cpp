@@ -59,7 +59,7 @@ static const char* Property_AnchorPoint     = "AnchorPoint";
 static const char* Property_ZOrder          = "ZOrder";
 static const char* Property_ActionValue     = "ActionValue";
 static const char* Property_BlendValue      = "BlendFunc";
-
+static const char* Property_PlayableAct     = "PlayableAct";
 
 static const char* ACTION           = "action";
 static const char* DURATION         = "duration";
@@ -160,6 +160,16 @@ ActionTimeline* ActionTimelineCache::createActionFromJson(const std::string& fil
     if (action == nullptr)
     {
         action = loadAnimationActionWithFile(fileName);
+    }
+    return action->clone();
+}
+
+ActionTimeline* ActionTimelineCache::createActionFromContent(const std::string& fileName, const std::string& content)
+{
+    ActionTimeline* action = _animationActions.at(fileName);
+    if (action == nullptr)
+    {
+        action = loadAnimationActionWithContent(fileName, content);
     }
     return action->clone();
 }
@@ -403,13 +413,23 @@ Frame* ActionTimelineCache::loadZOrderFrame(const rapidjson::Value& json)
 
     return frame;
 }
-    
+
 ActionTimeline* ActionTimelineCache::createActionWithFlatBuffersFile(const std::string &fileName)
 {
     ActionTimeline* action = _animationActions.at(fileName);
     if (action == NULL)
     {
         action = loadAnimationActionWithFlatBuffersFile(fileName);
+    }
+    return action->clone();
+}
+
+ActionTimeline* ActionTimelineCache::createActionWithDataBuffer(Data data, const std::string &fileName)
+{
+    ActionTimeline* action = _animationActions.at(fileName);
+    if (action == NULL)
+    {
+        action = loadAnimationWithDataBuffer(data, fileName);
     }
     return action->clone();
 }
@@ -423,7 +443,7 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFlatBuffersFile(cons
     
     std::string path = fileName;
     
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName.c_str());
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName);
     
     CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
     
@@ -434,7 +454,7 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFlatBuffersFile(cons
     return action;
 }
 
-ActionTimeline* ActionTimelineCache::loadAnimationWithDataBuffer(const cocos2d::Data data, const std::string fileName)
+ActionTimeline* ActionTimelineCache::loadAnimationWithDataBuffer(const cocos2d::Data& data, const std::string& fileName)
 {
     // if already exists an action with filename, then return this action
     ActionTimeline* action = _animationActions.at(fileName);
@@ -443,7 +463,7 @@ ActionTimeline* ActionTimelineCache::loadAnimationWithDataBuffer(const cocos2d::
 
     std::string path = fileName;
 
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName.c_str());
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName);
 
     CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
 
@@ -453,7 +473,7 @@ ActionTimeline* ActionTimelineCache::loadAnimationWithDataBuffer(const cocos2d::
     return action;
 }
 
-inline ActionTimeline* ActionTimelineCache::createActionWithDataBuffer(const cocos2d::Data data)
+ActionTimeline* ActionTimelineCache::createActionWithDataBuffer(const cocos2d::Data& data)
 {
     auto csparsebinary = GetCSParseBinary(data.getBytes());
 
@@ -479,7 +499,7 @@ inline ActionTimeline* ActionTimelineCache::createActionWithDataBuffer(const coc
 
     auto timeLines = nodeAction->timeLines();
     int timelineLength = timeLines->size();
-    std::multimap<std::string, cocostudio::timeline::Timeline*> properTimelineMap;// order the timelines depends property name
+    std::multimap<std::string,timeline::Timeline*> properTimelineMap;// order the timelines depends property name
     for (int i = 0; i < timelineLength; i++)
     {
         auto timelineFlatBuf = timeLines->Get(i);

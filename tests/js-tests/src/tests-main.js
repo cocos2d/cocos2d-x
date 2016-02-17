@@ -97,7 +97,7 @@ var TestController = cc.LayerGradient.extend({
         // add close menu
         var closeItem = new cc.MenuItemImage(s_pathClose, s_pathClose, this.onCloseCallback, this);
         closeItem.x = winSize.width - 30;
-	    closeItem.y = winSize.height - 30;
+        closeItem.y = winSize.height - 30;
 
         var subItem1 = new cc.MenuItemFont("Automated Test: Off");
         subItem1.fontSize = 18;
@@ -115,7 +115,7 @@ var TestController = cc.LayerGradient.extend({
 
         var menu = new cc.Menu(closeItem, toggleAutoTestItem);//pmenu is just a holder for the close button
         menu.x = 0;
-	    menu.y = 0;
+        menu.y = 0;
 
         // sort the test title
         testNames.sort(function(first, second){
@@ -134,7 +134,7 @@ var TestController = cc.LayerGradient.extend({
             var menuItem = new cc.MenuItemLabel(label, this.onMenuCallback, this);
             this._itemMenu.addChild(menuItem, i + 10000);
             menuItem.x = winSize.width / 2;
-	        menuItem.y = (winSize.height - (i + 1) * LINE_SPACE);
+            menuItem.y = (winSize.height - (i + 1) * LINE_SPACE);
 
             // enable disable
             if ( !cc.sys.isNative) {
@@ -157,15 +157,15 @@ var TestController = cc.LayerGradient.extend({
         }
 
         this._itemMenu.width = winSize.width;
-	    this._itemMenu.height = (testNames.length + 1) * LINE_SPACE;
+        this._itemMenu.height = (testNames.length + 1) * LINE_SPACE;
         this._itemMenu.x = curPos.x;
-	    this._itemMenu.y = curPos.y;
+        this._itemMenu.y = curPos.y;
         this.addChild(this._itemMenu);
         this.addChild(menu, 1);
 
         // 'browser' can use touches or mouse.
         // The benefit of using 'touches' in a browser, is that it works both with mouse events or touches events
-        if ('touches' in cc.sys.capabilities)
+        if ('touches' in cc.sys.capabilities) {
             cc.eventManager.addListener({
                 event: cc.EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesMoved: function (touches, event) {
@@ -175,6 +175,7 @@ var TestController = cc.LayerGradient.extend({
                     return true;
                 }
             }, this);
+        }
         else if ('mouse' in cc.sys.capabilities) {
             cc.eventManager.addListener({
                 event: cc.EventListener.MOUSE,
@@ -232,7 +233,7 @@ var TestController = cc.LayerGradient.extend({
         if( newY > ((testNames.length + 1) * LINE_SPACE - winSize.height))
             newY = ((testNames.length + 1) * LINE_SPACE - winSize.height);
 
-	    this._itemMenu.y = newY;
+        this._itemMenu.y = newY;
     }
 });
 TestController.YOffset = 0;

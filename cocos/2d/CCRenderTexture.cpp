@@ -347,6 +347,23 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
     return ret;
 }
 
+void RenderTexture::setSprite(Sprite* sprite)
+{
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        if (sprite)
+            sEngine->retainScriptObject(this, sprite);
+        if (_sprite)
+            sEngine->releaseScriptObject(this, _sprite);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    CC_SAFE_RETAIN(sprite);
+    CC_SAFE_RELEASE(_sprite);
+    _sprite = sprite;
+}
+
 void RenderTexture::setKeepMatrix(bool keepMatrix)
 {
     _keepMatrix = keepMatrix;
@@ -503,7 +520,7 @@ void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
     Image *image = newImage(true);
     if (image)
     {
-        image->saveToFile(filename.c_str(), !isRGBA);
+        image->saveToFile(filename, !isRGBA);
     }
     if(_saveFileCallback)
     {

@@ -641,6 +641,36 @@ public:
      * @js NA
      */
     virtual ccScriptType getScriptType() { return kScriptTypeNone; };
+    
+    /**
+     * Reflect the retain relationship to script scope
+     */
+    virtual void retainScriptObject(Ref* owner, Ref* target) {};
+    
+    /**
+     * Add the script object to root object
+     */
+    virtual void rootScriptObject(Ref* target) {};
+    
+    /**
+     * Reflect the release relationship to script scope
+     */
+    virtual void releaseScriptObject(Ref* owner, Ref* target) {};
+    
+    /**
+     * Remove the script object from root object
+     */
+    virtual void unrootScriptObject(Ref* target) {};
+    
+    /**
+     * Release all children native refs for the given node in script scope
+     */
+    virtual void releaseAllChildrenRecursive(Node* node) {};
+    
+    /**
+     * Release all native refs for the given owner in script scope
+     */
+    virtual void releaseAllNativeRefs(cocos2d::Ref* owner) {};
 
     /** 
      * Remove script object,The specific meaning should refer to the ScriptType.
@@ -649,7 +679,7 @@ public:
      * @lua NA
      * @js NA
      */
-    virtual void removeScriptObjectByObject(Ref* obj) = 0;
+    virtual void removeScriptObjectByObject(Ref* obj) {};
     
     /** 
      * Remove script function handler, only LuaEngine class need to implement this function.

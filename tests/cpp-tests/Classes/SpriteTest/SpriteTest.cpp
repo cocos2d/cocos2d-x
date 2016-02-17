@@ -59,6 +59,7 @@ SpriteTests::SpriteTests()
     ADD_TEST_CASE(SpriteBatchNode1);
     ADD_TEST_CASE(SpriteAnchorPoint);
     ADD_TEST_CASE(SpriteBatchNodeAnchorPoint);
+    ADD_TEST_CASE(SpriteAnchorPointFromFile);
     ADD_TEST_CASE(SpriteOffsetAnchorRotation);
     ADD_TEST_CASE(SpriteBatchNodeOffsetAnchorRotation);
     ADD_TEST_CASE(SpriteOffsetAnchorScale);
@@ -1114,6 +1115,67 @@ std::string SpriteBatchNodeAnchorPoint::subtitle() const
     return "anchor point";
 }
 
+//------------------------------------------------------------------
+//
+// SpriteAnchorPointFromFile
+//
+//------------------------------------------------------------------
+
+void SpriteAnchorPointFromFile::onEnter()
+{
+    SpriteTestDemo::onEnter();
+    auto screen = Director::getInstance()->getWinSize();
+    
+    auto rotate = RotateBy::create(10, 360);
+    auto action = RepeatForever::create(rotate);
+    char str[100] = {0};
+
+    auto cache = SpriteFrameCache::getInstance();
+    cache->addSpriteFramesWithFile("animations/grossini_anchors.plist");
+
+    Sprite *sprite;
+    for(int i=0;i<10;i++)
+    {
+        sprintf(str, "grossini_dance_%02d.png", i+1);
+        sprite = Sprite::createWithSpriteFrameName(str);
+
+        sprite->setPosition(Vec2(screen.width/6*(i%5+1), screen.height*2/3 - screen.height*(i/5)/3));
+        
+        auto point = Sprite::create("Images/r1.png");
+        point->setScale( 0.1f );
+        point->setPosition( sprite->getPosition() );
+        addChild(point, 10);
+        
+        sprite->runAction( action->clone() );
+        addChild(sprite, i);
+    }
+    
+    Vector<SpriteFrame*> animFrames(5);
+    for(int i = 9; i < 14; i++)
+    {
+        sprintf(str, "grossini_dance_%02d.png", i+1);
+        animFrames.pushBack(cache->getSpriteFrameByName(str));
+    }
+    auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
+    sprite->runAction(RepeatForever::create(Animate::create(animation)));
+
+}
+
+void SpriteAnchorPointFromFile::onExit()
+{
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("animations/grossini_anchors.plist");
+    SpriteTestDemo::onExit();
+}
+
+std::string SpriteAnchorPointFromFile::title() const
+{
+    return "Testing SpriteFrame";
+}
+
+std::string SpriteAnchorPointFromFile::subtitle() const
+{
+    return "anchor point";
+}
 
 //------------------------------------------------------------------
 //
@@ -1806,27 +1868,16 @@ void SpriteFramesFromFileContent::onEnter()
 	SpriteTestDemo::onEnter();
 	auto s = Director::getInstance()->getWinSize();
 
-	std::string plist_content;
-	{
-		std::string fullPath = FileUtils::getInstance()->fullPathForFilename(sheetName() + ".plist");
-		Data data = FileUtils::getInstance()->getDataFromFile(fullPath);
-		if (!data.isNull())
-			plist_content.assign((const char*)data.getBytes(), data.getSize());
-	}
+	std::string plist_content = FileUtils::getInstance()->getStringFromFile(sheetName() + ".plist");
+	Data image_content = FileUtils::getInstance()->getDataFromFile(sheetName() + ".png");
 
-	std::string image_content;
-	{
-		std::string fullPath = FileUtils::getInstance()->fullPathForFilename(sheetName() + ".png");
-		Data data = FileUtils::getInstance()->getDataFromFile(fullPath);
-		if (!data.isNull())
-			image_content.assign((const char*)data.getBytes(), data.getSize());
-	}
-
-	Image image;
-	image.initWithImageData((const uint8_t*)image_content.c_str(), image_content.size());
+    Image* image = new (std::nothrow) Image();
+	image->initWithImageData((const uint8_t*)image_content.getBytes(), image_content.getSize());
 	Texture2D* texture = new (std::nothrow) Texture2D();
-	texture->initWithImage(&image);
+	texture->initWithImage(image);
 	texture->autorelease();
+    
+    CC_SAFE_RELEASE(image);
 
 	auto cache = SpriteFrameCache::getInstance();
 	cache->addSpriteFramesWithFileContent(plist_content, texture);
@@ -1856,13 +1907,7 @@ void SpriteFramesFromFileContent::onExit()
 {
 	SpriteTestDemo::onExit();
 
-	std::string plist_content;
-	{
-		std::string fullPath = FileUtils::getInstance()->fullPathForFilename("animations/grossini.plist");
-		Data data = FileUtils::getInstance()->getDataFromFile(fullPath);
-		if (!data.isNull())
-			plist_content.assign((const char*)data.getBytes(), data.getSize());
-	}
+	std::string plist_content = FileUtils::getInstance()->getStringFromFile("animations/grossini.plist");
 
 	SpriteFrameCache::getInstance()->removeSpriteFramesFromFileContent(plist_content);
 }
@@ -1903,8 +1948,10 @@ std::string SpritePolygonFromFileContent::sheetName() const
 // SpriteOffsetAnchorRotation
 //
 //------------------------------------------------------------------
-SpriteOffsetAnchorRotation::SpriteOffsetAnchorRotation()
+void SpriteOffsetAnchorRotation::onEnter()
 {
+    SpriteTestDemo::onEnter();
+
     auto s = Director::getInstance()->getWinSize();        
     auto cache = SpriteFrameCache::getInstance();
     cache->addSpriteFramesWithFile("animations/grossini.plist");
@@ -4556,7 +4603,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
         
         point->setScale(0.25f);
         point->setPosition(sprite->getPosition());
-        addChild(point, 200);
+        addChild(point, 1);
         
         switch(i)
         {
@@ -4592,7 +4639,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
         auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
         
-        spritebatch->addChild(sprite, i);
+        spritebatch->addChild(sprite, 0);
     }
 }
 
@@ -4679,7 +4726,7 @@ SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
         auto seq_scale = Sequence::create(scale, scale_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_scale));
         
-        addChild(sprite, i);
+        addChild(sprite, 0);
     }
 }
 
@@ -4724,7 +4771,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
         
         point->setScale(0.25f);
         point->setPosition(sprite->getPosition());
-        addChild(point, 200);
+        addChild(point, 1);
         
         switch(i)
         {
@@ -4767,7 +4814,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
         auto seq_scale = Sequence::create(scale, scale_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_scale));
         
-        spritebatch->addChild(sprite, i);
+        spritebatch->addChild(sprite, 0);
     }
 }
 
@@ -4811,7 +4858,7 @@ SpriteRotationalSkewNegativeScaleChildren::SpriteRotationalSkewNegativeScaleChil
         
         point->setScale(0.25f);
         point->setPosition(sprite->getPosition());
-        addChild(point, 200);
+        addChild(point, 1);
         
         // Skew
         auto skewX = RotateBy::create(2, 45, 0);
@@ -4834,7 +4881,7 @@ SpriteRotationalSkewNegativeScaleChildren::SpriteRotationalSkewNegativeScaleChil
         
         child1->setScale(0.8f);
         
-        parent->addChild(sprite, i);
+        parent->addChild(sprite, 0);
     }
 }
 
@@ -4878,7 +4925,7 @@ SpriteBatchNodeRotationalSkewNegativeScaleChildren::SpriteBatchNodeRotationalSke
 
         point->setScale(0.25f);
         point->setPosition(sprite->getPosition());
-        addChild(point, 200);
+        addChild(point, 1);
 
         // Skew
         auto skewX = RotateBy::create(2, 45, 0);
@@ -4901,7 +4948,7 @@ SpriteBatchNodeRotationalSkewNegativeScaleChildren::SpriteBatchNodeRotationalSke
 
         child1->setScale(0.8f);
 
-        parent->addChild(sprite, i);
+        parent->addChild(sprite, 0);
     }
 }
 

@@ -904,6 +904,13 @@ LayerMultiplex* LayerMultiplex::createWithArray(const Vector<Layer*>& arrayOfLay
 
 void LayerMultiplex::addLayer(Layer* layer)
 {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        sEngine->retainScriptObject(this, layer);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     _layers.pushBack(layer);
 }
 
@@ -922,10 +929,23 @@ bool LayerMultiplex::initWithLayers(Layer *layer, va_list params)
     if (Layer::init())
     {
         _layers.reserve(5);
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (sEngine)
+        {
+            sEngine->retainScriptObject(this, layer);
+        }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         _layers.pushBack(layer);
 
         Layer *l = va_arg(params,Layer*);
         while( l ) {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+            if (sEngine)
+            {
+                sEngine->retainScriptObject(this, l);
+            }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
             _layers.pushBack(l);
             l = va_arg(params,Layer*);
         }
@@ -942,6 +962,19 @@ bool LayerMultiplex::initWithArray(const Vector<Layer*>& arrayOfLayers)
 {
     if (Layer::init())
     {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (sEngine)
+        {
+            for (const auto &layer : arrayOfLayers)
+            {
+                if (layer)
+                {
+                    sEngine->retainScriptObject(this, layer);
+                }
+            }
+        }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         _layers.reserve(arrayOfLayers.size());
         _layers.pushBack(arrayOfLayers);
 
@@ -968,7 +1001,14 @@ void LayerMultiplex::switchToAndReleaseMe(int n)
     CCASSERT( n < _layers.size(), "Invalid index in MultiplexLayer switchTo message" );
 
     this->removeChild(_layers.at(_enabledLayer), true);
-
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        sEngine->releaseScriptObject(this, _layers.at(_enabledLayer));
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    
     _layers.replace(_enabledLayer, nullptr);
 
     _enabledLayer = n;

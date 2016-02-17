@@ -53,8 +53,7 @@
 - (void)setVisible:(BOOL)visible;
 - (void)setTextColor:(UIColor*)color;
 - (void)setFont:(UIFont *)font;
-- (void)setPosition:(CGPoint)pos;
-- (void)setContentSize:(CGSize)size;
+- (void)updateFrame:(CGRect)rect;
 
 - (void)openKeyboard;
 - (void)closeKeyboard;

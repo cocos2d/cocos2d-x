@@ -236,17 +236,20 @@ var ClassManager = {
 //
 cc.Class = function(){};
 cc.Class.extend = function (prop) {
-    var _super = this.prototype;
+    var _super = this.prototype,
+        prototype, Class, classId,
+        className = prop._className || "",
+        name, desc;
 
     // Instantiate a base class (but only create the instance,
     // don't run the init constructor)
     initializing = true;
-    var prototype = Object.create(_super);
+    prototype = Object.create(_super);
     initializing = false;
     fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
 
     // Copy the properties over onto the new prototype
-    for (var name in prop) {
+    for (name in prop) {
         // Check if we're overwriting an existing function
         prototype[name] = typeof prop[name] == "function" &&
             typeof _super[name] == "function" && fnTest.test(prop[name]) ?
@@ -269,39 +272,69 @@ cc.Class.extend = function (prop) {
             prop[name];
     }
 
-    // The dummy class constructor
-    function Class() {
+    Class = function () {
         if (!initializing) {
             this.__instanceId = ClassManager.getNewInstanceId();
-            if (!this.ctor) {
-                if (this.__nativeObj)
-                    cc.log("No ctor function found! Please check whether `classes_need_extend` section in `ini` file like which in `tools/tojs/cocos2dx.ini`");
-            }
-            else {
-                // "extended" object won't use the native finalize
-                // will will guarantee that the clean-up of the native
-                // object will called
-                this.__finalizeMe = new __jsc__.NativeFinalizeMe(this);
-                this.ctor.apply(this, arguments);
-            }
+            this.ctor && this.ctor.apply(this, arguments);
         }
-    }
+    };
+    // Populate our constructed prototype object
+    Class.prototype = prototype;
+    // Enforce the constructor to be what we expect
+    Class.prototype.constructor = Class;
+    // And make this class extendable
+    Class.extend = cc.Class.extend;
 
-    var classId = ClassManager.getNewID();
+    classId = ClassManager.getNewID();
     ClassManager[classId] = _super;
-    var desc = { writable: true, enumerable: false, configurable: true };
+    desc = { writable: true, enumerable: false, configurable: true };
     Class.id = classId;
     desc.value = classId;
     Object.defineProperty(prototype, '__pid', desc);
 
-    // Populate our constructed prototype object
-    Class.prototype = prototype;
-
-    // Enforce the constructor to be what we expect
-    Class.prototype.constructor = Class;
-
-    // And make this class extendable
-    Class.extend = arguments.callee;
-
     return Class;
+};
+
+jsb.registerNativeRef = function (owner, target) {
+    if (owner && target && owner !== target) {
+        var refs = owner.__nativeRefs;
+        if (!refs) {
+            refs = owner.__nativeRefs = [1];
+        }
+        var index = refs.indexOf(target);
+        if (index === -1) {
+            owner.__nativeRefs.push(target);
+        }
+    }
+};
+
+jsb.unregisterNativeRef = function (owner, target) {
+    if (owner && target && owner !== target) {
+        var refs = owner.__nativeRefs;
+        if (!refs) {
+            return;
+        }
+        var index = refs.indexOf(target);
+        if (index !== -1) {
+            owner.__nativeRefs.splice(index, 1);
+        }
+    }
+};
+
+jsb.unregisterAllNativeRefs = function (owner) {
+    if (!owner) return;
+    owner.__nativeRefs.length = 0;
+};
+
+jsb.unregisterChildRefsForNode = function (node, recursive) {
+    if (!(node instanceof cc.Node)) return;
+    recursive = !!recursive;
+    var children = node.getChildren(), i, l, child;
+    for (i = 0, l = children.length; i < l; ++i) {
+        child = children[i];
+        jsb.unregisterNativeRef(node, child);
+        if (recursive) {
+            jsb.unregisterChildRefsForNode(child, recursive);
+        }
+    }
 };

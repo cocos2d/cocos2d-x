@@ -136,6 +136,7 @@ var UIListViewTest_Vertical = UIMainLayer.extend({
 
             // set all items layout gravity
             listView.setGravity(ccui.ListView.GRAVITY_CENTER_VERTICAL);
+            listView.requestRefreshView();
 
             return true;
         }

@@ -276,6 +276,10 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
                 initializePolygonInfo(textureSize, spriteSourceSize, vertices, verticesUV, indices, info);
                 spriteFrame->setPolygonInfo(info);
             }
+            if (frameDict.find("anchor") != frameDict.end())
+            {
+                spriteFrame->setAnchorPoint(PointFromString(frameDict["anchor"].asString()));
+            }
         }
 
         bool flag = NinePatchImageParser::isNinePatchImage(spriteFrameName);
@@ -358,7 +362,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
         if (!texturePath.empty())
         {
             // build texture path relative to plist file
-            texturePath = FileUtils::getInstance()->fullPathFromRelativeFile(texturePath.c_str(), plist);
+            texturePath = FileUtils::getInstance()->fullPathFromRelativeFile(texturePath, plist);
         }
         else
         {
@@ -375,7 +379,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
             CCLOG("cocos2d: SpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
         }
 
-        Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(texturePath.c_str());
+        Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(texturePath);
 
         if (texture)
         {
@@ -688,7 +692,7 @@ bool SpriteFrameCache::reloadTexture(const std::string& plist)
     if (!texturePath.empty())
     {
         // build texture path relative to plist file
-        texturePath = FileUtils::getInstance()->fullPathFromRelativeFile(texturePath.c_str(), plist);
+        texturePath = FileUtils::getInstance()->fullPathFromRelativeFile(texturePath, plist);
     }
     else
     {
@@ -704,7 +708,7 @@ bool SpriteFrameCache::reloadTexture(const std::string& plist)
     }
 
     Texture2D *texture = nullptr;
-    if (Director::getInstance()->getTextureCache()->reloadTexture(texturePath.c_str()))
+    if (Director::getInstance()->getTextureCache()->reloadTexture(texturePath))
         texture = Director::getInstance()->getTextureCache()->getTextureForKey(texturePath);
 
     if (texture)

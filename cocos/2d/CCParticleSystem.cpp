@@ -278,7 +278,7 @@ bool ParticleSystem::initWithFile(const std::string& plistFile)
     if (listFilePath.find('/') != string::npos)
     {
         listFilePath = listFilePath.substr(0, listFilePath.rfind('/') + 1);
-        ret = this->initWithDictionary(dict, listFilePath.c_str());
+        ret = this->initWithDictionary(dict, listFilePath);
     }
     else
     {
@@ -1332,4 +1332,13 @@ void ParticleSystem::setScaleY(float newScaleY)
     Node::setScaleY(newScaleY);
 }
 
+void ParticleSystem::start()
+{
+    resetSystem();
+}
+
+void ParticleSystem::stop()
+{
+    stopSystem();
+}
 NS_CC_END

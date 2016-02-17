@@ -97,6 +97,7 @@ cc.BuilderReader.load = function(file, owner, parentSize)
     }
 
     var nodesWithAnimationManagers = reader.getNodesWithAnimationManagers();
+    node._nodesWithAnimationManagers = nodesWithAnimationManagers;
     var animationManagersForNodes = reader.getAnimationManagersForNodes();
 
     var controllerClassCache = cc.BuilderReader._controllerClassCache;
@@ -123,6 +124,7 @@ cc.BuilderReader.load = function(file, owner, parentSize)
         // Callbacks
         var documentCallbackNames = animationManager.getDocumentCallbackNames();
         var documentCallbackNodes = animationManager.getDocumentCallbackNodes();
+        innerNode._documentCallbackNodes = documentCallbackNodes;
 
         for (var j = 0; j < documentCallbackNames.length; j++)
         {

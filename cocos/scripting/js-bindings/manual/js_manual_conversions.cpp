@@ -87,21 +87,74 @@ const char* JSStringWrapper::get()
 JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval)
 : _cx(cx)
 {
-    _jsthis.construct(cx, jsthis);
-    _fval.construct(cx, fval);
+    _jsthis = jsthis;
+    _fval = fval;
+    
+    JS::RootedObject root(cx);
+    get_or_create_js_obj("jsb._root", &root);
+    JS::RootedValue valRoot(cx, OBJECT_TO_JSVAL(root));
+    _owner = valRoot;
+    
+    if (!valRoot.isNullOrUndefined())
+    {
+        JS::RootedValue thisVal(cx, OBJECT_TO_JSVAL(_jsthis));
+        if (!thisVal.isNullOrUndefined())
+        {
+            js_add_object_reference(valRoot, thisVal);
+        }
+        JS::RootedValue funcVal(cx, _fval);
+        if (!funcVal.isNullOrUndefined())
+        {
+            js_add_object_reference(valRoot, funcVal);
+        }
+    }
+}
+JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval, JS::HandleValue owner)
+: _cx(cx)
+{
+    _jsthis = jsthis;
+    _fval = fval;
+    _owner = owner;
+    JS::RootedValue ownerVal(cx, owner);
+    
+    JS::RootedValue thisVal(cx, OBJECT_TO_JSVAL(jsthis));
+    if (!thisVal.isNullOrUndefined())
+    {
+        js_add_object_reference(ownerVal, thisVal);
+    }
+    JS::RootedValue funcVal(cx, _fval);
+    if (!funcVal.isNullOrUndefined())
+    {
+        js_add_object_reference(ownerVal, funcVal);
+    }
 }
 
 JSFunctionWrapper::~JSFunctionWrapper()
 {
-    _jsthis.destroyIfConstructed();
-    _fval.destroyIfConstructed();
+    JS::RootedValue ownerVal(_cx, _owner);
+    
+    if (!ownerVal.isNullOrUndefined())
+    {
+        JS::RootedValue thisVal(_cx, OBJECT_TO_JSVAL(_jsthis));
+        if (!thisVal.isNullOrUndefined())
+        {
+            js_remove_object_reference(ownerVal, thisVal);
+        }
+        JS::RootedValue funcVal(_cx, _fval);
+        if (!funcVal.isNullOrUndefined())
+        {
+            js_remove_object_reference(ownerVal, funcVal);
+        }
+    }
 }
 
 bool JSFunctionWrapper::invoke(unsigned int argc, jsval *argv, JS::MutableHandleValue rval)
 {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    return JS_CallFunctionValue(this->_cx, _jsthis.ref(), _fval.ref(), JS::HandleValueArray::fromMarkedLocation(argc, argv), rval);
+    JS::RootedObject thisObj(_cx, _jsthis);
+    JS::RootedValue fval(_cx, _fval);
+    return JS_CallFunctionValue(_cx, thisObj, fval, JS::HandleValueArray::fromMarkedLocation(argc, argv), rval);
 }
 
 static Color3B getColorFromJSObject(JSContext *cx, JS::HandleObject colorObject)
@@ -999,20 +1052,17 @@ bool jsval_to_ccarray(JSContext* cx, JS::HandleValue v, __Array** ret)
             else if (value.isString()) {
                 JSStringWrapper valueWapper(value.toString(), cx);
                 arr->addObject(__String::create(valueWapper.get()));
-                //                CCLOG("iterate array: value = %s", valueWapper.get().c_str());
             }
             else if (value.isNumber()) {
                 double number = 0.0;
                 ok = JS::ToNumber(cx, value, &number);
                 if (ok) {
                     arr->addObject(__Double::create(number));
-                    //                    CCLOG("iterate array: value = %lf", number);
                 }
             }
             else if (value.isBoolean()) {
                 bool boolVal = JS::ToBoolean(value);
                 arr->addObject(__Bool::create(boolVal));
-                // CCLOG("iterate object: value = %d", boolVal);
             }
             else {
                 CCASSERT(false, "not supported type");
@@ -1139,7 +1189,6 @@ bool jsval_to_ccvaluemap(JSContext* cx, JS::HandleValue v, cocos2d::ValueMap* re
         {
             JSStringWrapper valueWapper(value.toString(), cx);
             dict.insert(ValueMap::value_type(keyWrapper.get(), Value(valueWapper.get())));
-            //            CCLOG("iterate object: key = %s, value = %s", keyWrapper.get().c_str(), valueWapper.get().c_str());
         }
         else if (value.isNumber())
         {
@@ -1147,14 +1196,12 @@ bool jsval_to_ccvaluemap(JSContext* cx, JS::HandleValue v, cocos2d::ValueMap* re
             bool ok = JS::ToNumber(cx, value, &number);
             if (ok) {
                 dict.insert(ValueMap::value_type(keyWrapper.get(), Value(number)));
-                // CCLOG("iterate object: key = %s, value = %lf", keyWrapper.get().c_str(), number);
             }
         }
         else if (value.isBoolean())
         {
             bool boolVal = JS::ToBoolean(value);
             dict.insert(ValueMap::value_type(keyWrapper.get(), Value(boolVal)));
-            // CCLOG("iterate object: key = %s, value = %d", keyWrapper.get().c_str(), boolVal);
         }
         else {
             CCASSERT(false, "not supported type");
@@ -1926,20 +1973,17 @@ bool jsval_to_ccdictionary(JSContext* cx, JS::HandleValue v, __Dictionary** ret)
         else if (value.isString()) {
             JSStringWrapper valueWapper(value.toString(), cx);
             dict->setObject(__String::create(valueWapper.get()), keyWrapper.get());
-            //            CCLOG("iterate object: key = %s, value = %s", keyWrapper.get().c_str(), valueWapper.get().c_str());
         }
         else if (value.isNumber()) {
             double number = 0.0;
             bool ok = JS::ToNumber(cx, value, &number);
             if (ok) {
                 dict->setObject(__Double::create(number), keyWrapper.get());
-                //                CCLOG("iterate object: key = %s, value = %lf", keyWrapper.get().c_str(), number);
             }
         }
         else if (value.isBoolean()) {
             bool boolVal = JS::ToBoolean(value);
             dict->setObject(__Bool::create(boolVal), keyWrapper.get());
-            // CCLOG("iterate object: key = %s, value = %d", keyWrapper.get().c_str(), boolVal);
         }
         else {
             CCASSERT(false, "not supported type");

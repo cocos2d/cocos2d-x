@@ -51,7 +51,7 @@ public:
 
     /**
      * Use BoneData to init the display list.
-     * If display is a sprite, and it have texture info in the TexutreData, then use TexutreData to init the display's anchor point
+     * If display is a sprite, and it have texture info in the TextureData, then use TextureData to init the display's anchor point
      * If the display is a Armature, then create a new Armature
      */
     virtual void initDisplayList(BoneData *boneData);

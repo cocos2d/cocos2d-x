@@ -480,12 +480,12 @@ ValueMap FileUtilsApple::getValueMapFromData(const char* filedata, int filesize)
     return ret;
 }
 
-bool FileUtilsApple::writeToFile(ValueMap& dict, const std::string &fullPath)
+bool FileUtilsApple::writeToFile(const ValueMap& dict, const std::string &fullPath)
 {
     return writeValueMapToFile(dict, fullPath);
 }
 
-bool FileUtils::writeValueMapToFile(ValueMap& dict, const std::string& fullPath)
+bool FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& fullPath)
 {
     
     //CCLOG("iOS||Mac Dictionary %d write to file %s", dict->_ID, fullPath.c_str());
@@ -503,7 +503,7 @@ bool FileUtils::writeValueMapToFile(ValueMap& dict, const std::string& fullPath)
     return true;
 }
 
-bool FileUtils::writeValueVectorToFile(ValueVector vecData, const std::string& fullPath)
+bool FileUtils::writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath)
 {
     NSString* path = [NSString stringWithUTF8String:fullPath.c_str()];
     NSMutableArray* array = [NSMutableArray array];
@@ -539,4 +539,3 @@ ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename)
 }
 
 NS_CC_END
-

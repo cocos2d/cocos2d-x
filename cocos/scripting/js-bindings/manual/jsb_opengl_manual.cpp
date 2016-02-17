@@ -28,6 +28,7 @@
 #include "js_manual_conversions.h"
 #include "js_bindings_core.h"
 #include "jsb_opengl_functions.h"
+#include "platform/CCGL.h"
 
 
 // Helper functions that link "glGenXXXs" (OpenGL ES 2.0 spec), with "gl.createXXX" (WebGL spec)

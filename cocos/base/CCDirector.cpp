@@ -573,7 +573,7 @@ void Director::pushMatrix(MATRIX_STACK_TYPE type)
     }
 }
 
-const Mat4& Director::getMatrix(MATRIX_STACK_TYPE type)
+const Mat4& Director::getMatrix(MATRIX_STACK_TYPE type) const
 {
     if(type == MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW)
     {
@@ -824,10 +824,18 @@ void Director::replaceScene(Scene *scene)
         _nextScene = nullptr;
     }
 
-    ssize_t index = _scenesStack.size();
+    ssize_t index = _scenesStack.size() - 1;
 
     _sendCleanupToScene = true;
-    _scenesStack.replace(index - 1, scene);
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        sEngine->retainScriptObject(this, scene);
+        sEngine->releaseScriptObject(this, _scenesStack.at(index));
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    _scenesStack.replace(index, scene);
 
     _nextScene = scene;
 }
@@ -838,6 +846,13 @@ void Director::pushScene(Scene *scene)
 
     _sendCleanupToScene = false;
 
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        sEngine->retainScriptObject(this, scene);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     _scenesStack.pushBack(scene);
     _nextScene = scene;
 }
@@ -845,7 +860,14 @@ void Director::pushScene(Scene *scene)
 void Director::popScene(void)
 {
     CCASSERT(_runningScene != nullptr, "running scene should not null");
-
+    
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        sEngine->releaseScriptObject(this, _scenesStack.back());
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     _scenesStack.popBack();
     ssize_t c = _scenesStack.size();
 
@@ -884,6 +906,13 @@ void Director::popToSceneStackLevel(int level)
     auto fisrtOnStackScene = _scenesStack.back();
     if (fisrtOnStackScene == _runningScene)
     {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (sEngine)
+        {
+            sEngine->releaseScriptObject(this, _scenesStack.back());
+        }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         _scenesStack.popBack();
         --c;
     }
@@ -899,6 +928,13 @@ void Director::popToSceneStackLevel(int level)
         }
 
         current->cleanup();
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (sEngine)
+        {
+            sEngine->releaseScriptObject(this, _scenesStack.back());
+        }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         _scenesStack.popBack();
         --c;
     }
@@ -920,9 +956,19 @@ void Director::restart()
 }
 
 void Director::reset()
-{    
+{
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    
     if (_runningScene)
     {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        if (sEngine)
+        {
+            sEngine->releaseScriptObject(this, _runningScene);
+        }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         _runningScene->onExit();
         _runningScene->cleanup();
         _runningScene->release();
@@ -945,6 +991,16 @@ void Director::reset()
     
     // remove all objects, but don't release it.
     // runWithScene might be executed after 'end'.
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    if (sEngine)
+    {
+        for (const auto &scene : _scenesStack)
+        {
+            if (scene)
+                sEngine->releaseScriptObject(this, scene);
+        }
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     _scenesStack.clear();
     
     stopAnimation();
@@ -1025,6 +1081,9 @@ void Director::restartDirector()
     
     // release the objects
     PoolManager::getInstance()->getCurrentPool()->clear();
+
+    // Restart animation
+    startAnimation();
     
     // Real restart in script level
 #if CC_ENABLE_SCRIPT_BINDING
@@ -1067,11 +1126,6 @@ void Director::setNextScene()
     {
         _runningScene->onEnter();
         _runningScene->onEnterTransitionDidFinish();
-
-#if CC_ENABLE_SCRIPT_BINDING
-        if (ScriptEngineManager::getInstance()->getScriptEngine())
-            ScriptEngineManager::getInstance()->getScriptEngine()->garbageCollect();
-#endif // CC_ENABLE_SCRIPT_BINDING
     }
 }
 
