@@ -15,9 +15,6 @@
     <None Include="$(AngleBinPath)libGLESv2.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="$(WebsocketsBinPath)libwebsockets.dll">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
     <None Include="$(SQLiteBinPath)sqlite3.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
