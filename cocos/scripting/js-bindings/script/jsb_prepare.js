@@ -129,7 +129,7 @@ cc.isUndefined = function(obj) {
  * @returns {boolean}
  */
 cc.isObject = function(obj) {
-    return obj.__nativeObj !== undefined ||
+    return obj && obj.__nativeObj !== undefined ||
         ( typeof obj === "object" && Object.prototype.toString.call(obj) === '[object Object]' );
 };
 
