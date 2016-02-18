@@ -75,6 +75,7 @@ void EditBoxImplMac::createNativeControl(const cocos2d::Rect &frame)
 NSFont* EditBoxImplMac::constructFont(const char *fontName, int fontSize)
 {
     NSString * fntName = [NSString stringWithUTF8String:fontName];
+    fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
     float retinaFactor = _inRetinaMode ? 2.0f : 1.0f;
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     float scaleFactor = glview->getScaleX();
