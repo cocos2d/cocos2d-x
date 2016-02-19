@@ -29,6 +29,7 @@
 #if CC_USE_PHYSICS
 
 #include "base/CCRef.h"
+#include "base/ccTypes.h"
 #include "math/CCGeometry.h"
 
 struct cpConstraint;
@@ -100,6 +101,34 @@ public:
     /** Get the max force setting. */
     float getMaxForce() const { return _maxForce; }
 
+    /**
+    * Set the lines debug color.
+    * The default line color is blue
+    * @param outlineColor The line color.
+    */
+    inline void setDebugLineColor(const Color4F& outlineColor) { _lineColor = outlineColor; }
+
+    /**
+    * Gets the lines debug color.
+    *
+    * @return The line color.
+    */
+    inline const Color4F& getDebugLineColor()  const { return _lineColor; }
+
+    /**
+    * Set the debug point color of this shape.
+    * The default point color is green
+    * @param fillColor The point color of this joint.
+    */
+    inline void setDebugJointPointColor(const Color4F& jointPointColor) { _jointPointColor = jointPointColor; }
+
+    /**
+    * Gets the debug point color of this joint.
+    *
+    * @return The point color.
+    */
+    inline const Color4F& getDebugJointPointColor() const { return _jointPointColor; }
+
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b);
 
@@ -120,6 +149,9 @@ protected:
     float _maxForce;
 
     bool _initDirty;
+
+    Color4F _lineColor;
+    Color4F _jointPointColor;
 
     friend class PhysicsBody;
     friend class PhysicsWorld;

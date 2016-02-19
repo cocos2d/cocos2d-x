@@ -56,6 +56,8 @@ PhysicsShape::PhysicsShape()
 , _collisionBitmask(UINT_MAX)
 , _contactTestBitmask(0)
 , _group(0)
+, _outlineColor(1.0f, 0.0f, 0.0f, 1.0f)
+, _fillColor(1.0f, 0.0f, 0.0f, 0.3f)
 {
     if (s_sharedBody == nullptr)
     {

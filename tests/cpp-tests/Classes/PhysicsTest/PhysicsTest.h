@@ -257,6 +257,15 @@ private:
     cocos2d::Layer* _rootLayer;
 };
 
+class PhysicsDebugColorTest : public PhysicsDemo
+{
+public:
+    CREATE_FUNC(PhysicsDebugColorTest);
+
+    void onEnter() override;
+    virtual std::string title() const override;
+};
+
 class PhysicsIssue9959 : public PhysicsDemo
 {
 public:
