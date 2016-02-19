@@ -198,7 +198,7 @@ protected:
     void mapBuffers();
     void drawBatchedTriangles();
 
-    //Draw the previews queued triagnles and flush previous context
+    //Draw the previews queued triangles and flush previous context
     void flush();
     
     void flush2D();

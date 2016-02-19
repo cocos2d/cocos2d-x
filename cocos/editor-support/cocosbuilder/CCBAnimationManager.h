@@ -112,7 +112,7 @@ public:
     cocos2d::Sequence* actionForCallbackChannel(CCBSequenceProperty* channel);
     cocos2d::Sequence* actionForSoundChannel(CCBSequenceProperty* channel);
 
-	// return -1 if timeline not exsit
+	// return -1 if timeline not exist
     int getSequenceId(const char* pSequenceName);
     
     // get timeline duration
