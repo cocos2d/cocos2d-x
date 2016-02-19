@@ -725,7 +725,7 @@ unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, con
     {
         CC_BREAK_IF(zipFilePath.empty());
 
-        file = unzOpen(zipFilePath.c_str());
+        file = unzOpen(FileUtils::getInstance()->getSuitableFOpen(zipFilePath).c_str());
         CC_BREAK_IF(!file);
 
         // FIXME: Other platforms should use upstream minizip like mingw-w64
