@@ -57,7 +57,7 @@
 -- @return char#char ret (return value: char)
         
 --------------------------------
---  @brief Gets connection time out in secondes
+--  @brief Gets connection time out in seconds
 -- @function [parent=#AssetsManager] getConnectionTimeout 
 -- @param self
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
