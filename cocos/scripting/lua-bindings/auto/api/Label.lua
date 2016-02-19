@@ -220,7 +220,7 @@
 --------------------------------
 -- Enables strikethrough.<br>
 -- Underline and Strikethrough cannot be enabled at the same time.<br>
--- Strikethough is like an underline but at the middle of the glyph
+-- Strikethrough is like an underline but at the middle of the glyph
 -- @function [parent=#Label] enableStrikethrough 
 -- @param self
 -- @return Label#Label self (return value: cc.Label)

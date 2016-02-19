@@ -61,7 +61,7 @@
 --------------------------------
 -- Midpoint is used to modify the progress start position.<br>
 -- If you're using radials type then the midpoint changes the center point.<br>
--- If you're using bar type the the midpoint changes the bar growth.<br>
+-- If you're using bar type then the midpoint changes the bar growth.<br>
 -- it expands from the center but clamps to the sprites edge so:<br>
 -- you want a left to right then set the midpoint all the way to Vec2(0,y).<br>
 -- you want a right to left then set the midpoint all the way to Vec2(1,y).<br>
