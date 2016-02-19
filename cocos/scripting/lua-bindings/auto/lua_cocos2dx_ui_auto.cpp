@@ -15079,7 +15079,7 @@ int lua_cocos2dx_ui_ScrollView_getInnerContainerPosition(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_getInnerContainerPosition'", nullptr);
             return 0;
         }
-        cocos2d::Vec2 ret = cobj->getInnerContainerPosition();
+        const cocos2d::Vec2& ret = cobj->getInnerContainerPosition();
         vec2_to_luaval(tolua_S, ret);
         return 1;
     }

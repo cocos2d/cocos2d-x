@@ -7752,7 +7752,7 @@ bool js_cocos2dx_ui_ScrollView_getInnerContainerPosition(JSContext *cx, uint32_t
     cocos2d::ui::ScrollView* cobj = (cocos2d::ui::ScrollView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_getInnerContainerPosition : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::Vec2 ret = cobj->getInnerContainerPosition();
+        const cocos2d::Vec2& ret = cobj->getInnerContainerPosition();
         jsval jsret = JSVAL_NULL;
         jsret = vector2_to_jsval(cx, ret);
         args.rval().set(jsret);

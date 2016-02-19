@@ -64640,7 +64640,7 @@ int lua_cocos2dx_ParticleSystem_getResourceFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ParticleSystem_getResourceFile'", nullptr);
             return 0;
         }
-        const std::string ret = cobj->getResourceFile();
+        const std::string& ret = cobj->getResourceFile();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
@@ -72402,7 +72402,7 @@ int lua_cocos2dx_Sprite_getResourceName(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Sprite_getResourceName'", nullptr);
             return 0;
         }
-        const std::string ret = cobj->getResourceName();
+        const std::string& ret = cobj->getResourceName();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
@@ -96631,7 +96631,7 @@ int lua_cocos2dx_TMXTiledMap_getResourceFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TMXTiledMap_getResourceFile'", nullptr);
             return 0;
         }
-        const std::string ret = cobj->getResourceFile();
+        const std::string& ret = cobj->getResourceFile();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
