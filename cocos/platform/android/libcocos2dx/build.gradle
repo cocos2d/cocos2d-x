@@ -26,5 +26,6 @@ android {
 }
 
 dependencies {
+    compile project(':gps')
     compile fileTree(dir: '../java/libs', include: ['*.jar'])
 }

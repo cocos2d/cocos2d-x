@@ -50,6 +50,7 @@ import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLDisplay;
 
+import com.sdkbox.plugin.SDKBox;
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
     // ===========================================================
     // Constants
@@ -261,6 +262,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         CocosPlayClient.init(this, false);
 
         onLoadNativeLibraries();
+        SDKBox.init(this);
 
         sContext = this;
         this.mHandler = new Cocos2dxHandler(this);
@@ -298,9 +300,21 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     // ===========================================================
 
     @Override
+    protected void onStart() {
+          super.onStart();
+          SDKBox.onStart();
+    }
+    @Override
+    protected void onStop() {
+          super.onStop();
+          SDKBox.onStop();
+    }
+
+    @Override
     protected void onResume() {
     	Log.d(TAG, "onResume()");
         super.onResume();
+        SDKBox.onResume();
        	resumeIfHasFocus();
     }
     
@@ -324,10 +338,18 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     protected void onPause() {
     	Log.d(TAG, "onPause()");
         super.onPause();
+        SDKBox.onPause();
         Cocos2dxHelper.onPause();
         mGLSurfaceView.onPause();
     }
-    
+
+    @Override
+    public void onBackPressed() {
+          if(!SDKBox.onBackPressed()) {
+            super.onBackPressed();
+          }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -353,7 +375,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
             listener.onActivityResult(requestCode, resultCode, data);
         }
 
-        super.onActivityResult(requestCode, resultCode, data);
+        if(!SDKBox.onActivityResult(requestCode, resultCode, data)) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 
