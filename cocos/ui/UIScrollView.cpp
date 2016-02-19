@@ -230,7 +230,7 @@ void ScrollView::setInnerContainerPosition(const Vec2 &position)
     this->release();
 }
     
-const Vec2 ScrollView::getInnerContainerPosition() const
+const Vec2& ScrollView::getInnerContainerPosition() const
 {
     return _innerContainer->getPosition();
 }
