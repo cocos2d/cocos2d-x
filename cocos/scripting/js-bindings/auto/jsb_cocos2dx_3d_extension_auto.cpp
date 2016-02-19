@@ -519,7 +519,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_getMaterialName(JSContext *cx, 
     cocos2d::PUParticleSystem3D* cobj = (cocos2d::PUParticleSystem3D *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_getMaterialName : Invalid Native Object");
     if (argc == 0) {
-        const std::string ret = cobj->getMaterialName();
+        const std::string& ret = cobj->getMaterialName();
         jsval jsret = JSVAL_NULL;
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
