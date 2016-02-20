@@ -101,8 +101,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup>
     <CustomBuildStep>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
+      <Command>if not exist "$(OutDir)\Resources" mkdir "$(OutDir)\Resources"
+xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources" /D /E /I /F /Y
       </Command>
       <Outputs>$(TargetName).cab</Outputs>
       <Inputs>$(TargetFileName)</Inputs>
