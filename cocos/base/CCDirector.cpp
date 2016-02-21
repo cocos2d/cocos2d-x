@@ -61,6 +61,7 @@ THE SOFTWARE.
 #include "base/CCConfiguration.h"
 #include "base/CCAsyncTaskPool.h"
 #include "platform/CCApplication.h"
+#include "network/WebSocket.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
 #include "CCScriptSupport.h"
@@ -976,6 +977,9 @@ void Director::reset()
     _runningScene = nullptr;
     _nextScene = nullptr;
 
+    // Close all websocket connection. It has to be invoked before cleaning scheduler
+    network::WebSocket::closeAllConnections();
+    
     // cleanup scheduler
     getScheduler()->unscheduleAll();
     

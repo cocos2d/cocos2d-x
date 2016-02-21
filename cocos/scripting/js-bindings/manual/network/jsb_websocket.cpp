@@ -107,8 +107,11 @@ public:
         if (data.isBinary)
         {// data is binary
             JSObject* buffer = JS_NewArrayBuffer(cx, static_cast<uint32_t>(data.len));
-            uint8_t* bufdata = JS_GetArrayBufferData(buffer);
-            memcpy((void*)bufdata, (void*)data.bytes, data.len);
+            if (data.len > 0)
+            {
+                uint8_t* bufdata = JS_GetArrayBufferData(buffer);
+                memcpy((void*)bufdata, (void*)data.bytes, data.len);
+            }
             JS::RootedValue dataVal(cx);
             dataVal = OBJECT_TO_JSVAL(buffer);
             JS_SetProperty(cx, jsobj, "data", dataVal);
@@ -116,7 +119,20 @@ public:
         else
         {// data is string
             JS::RootedValue dataVal(cx);
-            dataVal = c_string_to_jsval(cx, data.bytes);
+            if (strlen(data.bytes) == 0 && data.len > 0)
+            {// String with 0x00 prefix
+                dataVal = STRING_TO_JSVAL(JS_NewStringCopyN(cx, data.bytes, data.len));
+            }
+            else
+            {// Normal string
+                dataVal = c_string_to_jsval(cx, data.bytes);
+            }
+            
+            if (dataVal.isNullOrUndefined())
+            {
+                ws->closeAsync();
+                return;
+            }
             JS_SetProperty(cx, jsobj, "data", dataVal);
         }
 
@@ -142,7 +158,10 @@ public:
         auto copy = &p->obj;
         JS::RemoveObjectRoot(cx, copy);
         jsb_remove_proxy(p);
+        // Delete WebSocket instance
         CC_SAFE_DELETE(ws);
+        // Delete self at last while websocket was closed.
+        delete this;
     }
     
     virtual void onError(WebSocket* ws, const WebSocket::ErrorCode& error)
@@ -180,57 +199,61 @@ void js_cocos2dx_WebSocket_finalize(JSFreeOp *fop, JSObject *obj) {
 
 bool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    JS::CallArgs argv = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, argv.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     WebSocket* cobj = (WebSocket *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
-    if(argc == 1){
-        do
+    if(argc == 1)
+    {
+        if (argv[0].isString())
         {
-            if (args.get(0).isString())
+            ssize_t len = JS_GetStringLength(argv[0].toString());
+            std::string data;
+            jsval_to_std_string(cx, argv[0], &data);
+            
+            if (data.empty() && len > 0)
             {
-                std::string data;
-                jsval_to_std_string(cx, args.get(0), &data);
-                cobj->send(data);
-                break;
-            }
-
-            if (args.get(0).isObject())
-            {
-                uint8_t *bufdata = NULL;
-                uint32_t len = 0;
-                
-                JSObject* jsobj = args.get(0).toObjectOrNull();
-                if (JS_IsArrayBufferObject(jsobj))
-                {
-                    bufdata = JS_GetArrayBufferData(jsobj);
-                    len = JS_GetArrayBufferByteLength(jsobj);
-                }
-                else if (JS_IsArrayBufferViewObject(jsobj))
-                {
-                    bufdata = (uint8_t*)JS_GetArrayBufferViewData(jsobj);
-                    len = JS_GetArrayBufferViewByteLength(jsobj);
-                }
-                
-                if (bufdata && len > 0)
-                {
-                    cobj->send(bufdata, len);
-                    break;
-                }
+                CCLOGWARN("Text message to send is empty, but its length is greater than 0!");
+                //FIXME: Note that this text message contains '0x00' prefix, so its length calcuted by strlen is 0.
+                // we need to fix that if there is '0x00' in text message,
+                // since javascript language could support '0x00' inserted at the beginning or the middle of text message
             }
             
+            cobj->send(data);
+        }
+        else if (argv[0].isObject())
+        {
+            uint8_t *bufdata = NULL;
+            uint32_t len = 0;
+            
+            JS::RootedObject jsobj(cx, argv[0].toObjectOrNull());
+            if (JS_IsArrayBufferObject(jsobj))
+            {
+                bufdata = JS_GetArrayBufferData(jsobj);
+                len = JS_GetArrayBufferByteLength(jsobj);
+            }
+            else if (JS_IsArrayBufferViewObject(jsobj))
+            {
+                bufdata = (uint8_t*)JS_GetArrayBufferViewData(jsobj);
+                len = JS_GetArrayBufferViewByteLength(jsobj);
+            }
+            
+            cobj->send(bufdata, len);
+        }
+        else
+        {
             JS_ReportError(cx, "data type to be sent is unsupported.");
-
-        } while (0);
+            return false;
+        }
         
-        args.rval().setUndefined();
-
+        argv.rval().setUndefined();
+        
         return true;
     }
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-    return true;
+    return false;
 }
 
 bool js_cocos2dx_extension_WebSocket_close(JSContext *cx, uint32_t argc, jsval *vp){
@@ -241,7 +264,7 @@ bool js_cocos2dx_extension_WebSocket_close(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     
     if(argc == 0){
-        cobj->close();
+        cobj->closeAsync();
         args.rval().setUndefined();
         return true;
     }
