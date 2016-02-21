@@ -61,12 +61,13 @@ Ref::Ref()
 
 Ref::~Ref()
 {
-#if CC_ENABLE_SCRIPT_BINDING && !CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#if CC_ENABLE_SCRIPT_BINDING
     // if the object is referenced by Lua engine, remove it
     if (_luaID)
     {
         ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptObjectByObject(this);
     }
+#if !CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     else
     {
         ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
@@ -75,7 +76,8 @@ Ref::~Ref()
             pEngine->removeScriptObjectByObject(this);
         }
     }
-#endif
+#endif // !CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#endif // CC_ENABLE_SCRIPT_BINDING
 
 
 #if CC_REF_LEAK_DETECTION
