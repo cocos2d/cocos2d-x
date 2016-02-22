@@ -218,11 +218,6 @@ namespace cocostudio
                         fileExist = false;
                     }
                 }
-                //else
-                //{
-                //    errorContent = "missed";
-                //    fileExist = false;
-                //}
                 break;
             }
                 
@@ -233,16 +228,6 @@ namespace cocostudio
         {
             labelBMFont->setFntFile(path);
         }
-        //else
-        //{
-        //    if (!errorContent.empty())
-        //    {
-        //        errorFilePath = path;
-        //        auto label = Label::create();
-        //        label->setString(__String::createWithFormat("%s %s", errorFilePath.c_str(), errorContent.c_str())->getCString());
-        //        labelBMFont->addChild(label);
-        //    }
-        //}
         
         std::string text = options->text()->c_str();
         labelBMFont->setString(text);

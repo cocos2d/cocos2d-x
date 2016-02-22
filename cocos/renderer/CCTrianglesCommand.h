@@ -50,9 +50,9 @@ public:
         /**Index data pointer.*/
         unsigned short* indices;
         /**The number of vertices.*/
-        ssize_t vertCount;
+        int vertCount;
         /**The number of indices.*/
-        ssize_t indexCount;
+        int indexCount;
     };
     /**Constructor.*/
     TrianglesCommand();
@@ -104,6 +104,8 @@ protected:
     GLuint _textureID;
     /**GLprogramstate for the command. encapsulate shaders and uniforms.*/
     GLProgramState* _glProgramState;
+    /**The GLProgram used by GLProgramState*/
+    GLProgram* _glProgram;
     /**Blend function when rendering the triangles.*/
     BlendFunc _blendType;
     /**Rendered triangles.*/

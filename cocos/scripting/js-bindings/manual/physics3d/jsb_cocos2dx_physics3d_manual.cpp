@@ -81,9 +81,9 @@ bool js_cocos2dx_PhysicsSprite3D_create(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_physics3DRigidBodyDes(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_PhysicsSprite3D_create : Error processing arguments");
         cocos2d::PhysicsSprite3D* ret = cocos2d::PhysicsSprite3D::create(arg0, &arg1);
-
-        js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::PhysicsSprite3D>(cx, (cocos2d::PhysicsSprite3D*)ret);
-        jsval jsret = jsProxy ? OBJECT_TO_JSVAL(jsProxy->obj) : JSVAL_VOID;
+        
+        JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocos2d::PhysicsSprite3D>(cx, ret));
+        jsval jsret = OBJECT_TO_JSVAL(jsobj);
 
         args.rval().set(jsret);
         return true;
@@ -98,9 +98,9 @@ bool js_cocos2dx_PhysicsSprite3D_create(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_vector3(cx, args.get(2), &arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_PhysicsSprite3D_create : Error processing arguments");
         cocos2d::PhysicsSprite3D* ret = cocos2d::PhysicsSprite3D::create(arg0, &arg1, arg2);
-
-        js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::PhysicsSprite3D>(cx, (cocos2d::PhysicsSprite3D*)ret);
-        jsval jsret = jsProxy ? OBJECT_TO_JSVAL(jsProxy->obj) : JSVAL_VOID;
+        
+        JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocos2d::PhysicsSprite3D>(cx, ret));
+        jsval jsret = OBJECT_TO_JSVAL(jsobj);
 
         args.rval().set(jsret);
         return true;
@@ -117,9 +117,9 @@ bool js_cocos2dx_PhysicsSprite3D_create(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_quaternion(cx, args.get(3), &arg3);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_PhysicsSprite3D_create : Error processing arguments");
         cocos2d::PhysicsSprite3D* ret = cocos2d::PhysicsSprite3D::create(arg0, &arg1, arg2, arg3);
-
-        js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::PhysicsSprite3D>(cx, (cocos2d::PhysicsSprite3D*)ret);
-        jsval jsret = jsProxy ? OBJECT_TO_JSVAL(jsProxy->obj) : JSVAL_VOID;
+        
+        JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocos2d::PhysicsSprite3D>(cx, ret));
+        jsval jsret = OBJECT_TO_JSVAL(jsobj);
 
         args.rval().set(jsret);
         return true;
@@ -138,9 +138,9 @@ bool js_cocos2dx_physics3d_Physics3DRigidBody_create(JSContext *cx, uint32_t arg
         ok &= jsval_to_physics3DRigidBodyDes(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DRigidBody_create : Error processing arguments");
         cocos2d::Physics3DRigidBody* ret = cocos2d::Physics3DRigidBody::create(&arg0);
-
-        js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DRigidBody>(cx, (cocos2d::Physics3DRigidBody*)ret);
-        jsval jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        
+        JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocos2d::Physics3DRigidBody>(cx, ret));
+        jsval jsret = OBJECT_TO_JSVAL(jsobj);
 
         args.rval().set(jsret);
         return true;
@@ -207,10 +207,10 @@ bool js_cocos2dx_physics3d_Physics3dShape_createMesh(JSContext *cx, uint32_t arg
 
         bool ok = jsval_to_int(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3dShape_createMesh : Error processing arguments");
-
+        
         Physics3DShape* ret = Physics3DShape::createMesh(&arg0[0], arg1);
-        js_proxy_t* proxy = js_get_or_create_proxy<Physics3DShape>(cx, ret);
-        jsval jsret = OBJECT_TO_JSVAL(proxy->obj);
+        JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocos2d::Physics3DShape>(cx, ret));
+        jsval jsret = OBJECT_TO_JSVAL(jsobj);
 
         args.rval().set(jsret);
         return true;
@@ -240,13 +240,13 @@ jsval physics3d_collisionPoint_to_jsval(JSContext*cx, const Physics3DCollisionIn
 jsval physics3d_collisioninfo_to_jsval(JSContext* cx, const Physics3DCollisionInfo& ci)
 {
     JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
-
-    js_proxy_t* proxy = js_get_or_create_proxy<Physics3DObject>(cx, ci.objA);
-    JS::RootedValue prop(cx, OBJECT_TO_JSVAL(proxy->obj));
+    
+    JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocos2d::Physics3DObject>(cx, ci.objA));
+    JS::RootedValue prop(cx, OBJECT_TO_JSVAL(jsobj));
     JS_DefineProperty(cx, tmp, "objA", prop, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    proxy = js_get_or_create_proxy<Physics3DObject>(cx, ci.objB);
-    prop.set(OBJECT_TO_JSVAL(proxy->obj));
+    jsobj.set(js_get_or_create_jsobject<cocos2d::Physics3DObject>(cx, ci.objB));
+    prop.set(OBJECT_TO_JSVAL(jsobj));
     JS_DefineProperty(cx, tmp, "objB", prop, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
     JS::RootedObject jsarr(cx, JS_NewArrayObject(cx, ci.collisionPointList.size()));
@@ -377,9 +377,9 @@ bool js_cocos2dx_physics3d_Physics3dShape_createHeightfield(JSContext *cx, uint3
             ret = cocos2d::Physics3DShape::createHeightfield(arg0, arg1, &arg2[0], arg3, arg4, arg5, arg6, arg7);
         else if(argc == 9)
             ret = cocos2d::Physics3DShape::createHeightfield(arg0, arg1, &arg2[0], arg3, arg4, arg5, arg6, arg7, arg8);
-
-        js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DShape>(cx, ret);
-        jsval jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        
+        JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocos2d::Physics3DShape>(cx, ret));
+        jsval jsret = OBJECT_TO_JSVAL(jsobj);
 
         args.rval().set(jsret);
         return true;
@@ -425,8 +425,8 @@ jsval Physics3DWorld_HitResult_to_jsval(JSContext *cx, const cocos2d::Physics3DW
     
     if (v.hitObj)
     {
-        js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DObject>(cx, (cocos2d::Physics3DObject*)v.hitObj);
-        hitobject.set(OBJECT_TO_JSVAL(jsProxy->obj));
+        JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocos2d::Physics3DObject>(cx, v.hitObj));
+        hitobject.set(OBJECT_TO_JSVAL(jsobj));
     }
     
     bool ok = JS_DefineProperty(cx, tmp, "hitPosition", hitPosition, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&

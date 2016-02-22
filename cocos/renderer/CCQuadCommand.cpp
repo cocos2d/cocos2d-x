@@ -36,39 +36,55 @@
 
 NS_CC_BEGIN
 
+int QuadCommand::__indexCapacity = -1;
+GLushort* QuadCommand::__indices = nullptr;
 
 QuadCommand::QuadCommand()
-:_materialID(0)
-,_textureID(0)
-,_glProgramState(nullptr)
-,_blendType(BlendFunc::DISABLE)
-,_quads(nullptr)
-,_quadsCount(0)
+: _indexSize(-1)
 {
-    _type = RenderCommand::Type::QUAD_COMMAND;
 }
 
-void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
+QuadCommand::~QuadCommand()
+{
+}
+
+void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
                        const Mat4& mv, uint32_t flags)
 {
-    CCASSERT(shader, "Invalid GLProgramState");
-    CCASSERT(shader->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
-    
-    RenderCommand::init(globalOrder, mv, flags);
-    
-    _quadsCount = quadCount;
-    _quads = quads;
-    
-    _mv = mv;
-    
-    if( _textureID != textureID || _blendType.src != blendType.src || _blendType.dst != blendType.dst || _glProgramState != shader) {
-        
-        _textureID = textureID;
-        _blendType = blendType;
-        _glProgramState = shader;
-        
-        generateMaterialID();
+    CCASSERT(glProgramState, "Invalid GLProgramState");
+    CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
+
+    if (quadCount * 6 > _indexSize)
+        reIndex((int)quadCount*6);
+
+    Triangles triangles;
+    triangles.verts = &quads->tl;
+    triangles.vertCount = (int)quadCount * 4;
+    triangles.indices = __indices;
+    triangles.indexCount = (int)quadCount * 6;
+    TrianglesCommand::init(globalOrder, textureID, glProgramState, blendType, triangles, mv, flags);
+}
+
+void QuadCommand::reIndex(int indicesCount)
+{
+    if (indicesCount > __indexCapacity)
+    {
+        CCLOG("cocos2d: QuadCommand: resizing index size from [%d] to [%d]", __indexCapacity, indicesCount);
+        __indices = (GLushort*) realloc(__indices, indicesCount * sizeof(__indices[0]));
+        __indexCapacity = indicesCount;
     }
+
+    for( int i=0; i < __indexCapacity/6; i++)
+    {
+        __indices[i*6+0] = (GLushort) (i*4+0);
+        __indices[i*6+1] = (GLushort) (i*4+1);
+        __indices[i*6+2] = (GLushort) (i*4+2);
+        __indices[i*6+3] = (GLushort) (i*4+3);
+        __indices[i*6+4] = (GLushort) (i*4+2);
+        __indices[i*6+5] = (GLushort) (i*4+1);
+    }
+
+    _indexSize = indicesCount;
 }
 
 void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount, const Mat4 &mv)
@@ -76,38 +92,5 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* shad
     init(globalOrder, textureID, shader, blendType, quads, quadCount, mv, 0);
 }
 
-QuadCommand::~QuadCommand()
-{
-}
-
-void QuadCommand::generateMaterialID()
-{
-    _skipBatching = false;
-
-    if(_glProgramState->getUniformCount() == 0)
-    {
-        int glProgram = (int)_glProgramState->getGLProgram()->getProgram();
-        int intArray[4] = { glProgram, (int)_textureID, (int)_blendType.src, (int)_blendType.dst};
-
-        _materialID = XXH32((const void*)intArray, sizeof(intArray), 0);
-    }
-    else
-    {
-        _materialID = Renderer::MATERIAL_ID_DO_NOT_BATCH;
-        _skipBatching = true;
-    }
-}
-
-void QuadCommand::useMaterial() const
-{
-    //Set texture
-    GL::bindTexture2D(_textureID);
-    
-    //set blend mode
-    GL::blendFunc(_blendType.src, _blendType.dst);
-    
-    _glProgramState->applyGLProgram(_mv);
-    _glProgramState->applyUniforms();
-}
 
 NS_CC_END

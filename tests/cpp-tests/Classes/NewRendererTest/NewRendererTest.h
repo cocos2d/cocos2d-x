@@ -137,7 +137,16 @@ public:
     virtual std::string subtitle() const override;
 protected:
     BugAutoCulling();
-    virtual ~BugAutoCulling();
+};
+
+class RendererBatchQuadTri : public MultiSceneTest
+{
+public:
+    CREATE_FUNC(RendererBatchQuadTri);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+protected:
+    RendererBatchQuadTri();
 };
 
 #endif //__NewRendererTest_H_

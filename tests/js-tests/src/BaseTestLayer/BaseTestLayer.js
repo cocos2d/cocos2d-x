@@ -38,8 +38,6 @@ var BaseTestLayerProps = {
 
     ctor:function(colorA, colorB ) {
 
-        cc.sys.garbageCollect();
-
         // default gradient colors
         var a = cc.color(98,99,117,255);
         var b = cc.color(0,0,0,255);
@@ -102,6 +100,8 @@ var BaseTestLayerProps = {
     //
     onEnter:function () {
         this._super();
+
+        cc.sys.garbageCollect();
 
         var t = this.getTitle();
         var label = new cc.LabelTTF(t, "Arial", 28);

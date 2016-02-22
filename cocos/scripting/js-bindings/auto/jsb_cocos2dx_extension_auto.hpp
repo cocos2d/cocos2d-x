@@ -366,8 +366,6 @@ bool js_cocos2dx_extension_EventListenerAssetsManagerEx_constructor(JSContext *c
 void js_cocos2dx_extension_EventListenerAssetsManagerEx_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_extension_EventListenerAssetsManagerEx(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_extension_EventListenerAssetsManagerEx_init(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_EventListenerAssetsManagerEx_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_EventListenerAssetsManagerEx_EventListenerAssetsManagerEx(JSContext *cx, uint32_t argc, jsval *vp);
 
 #endif // __cocos2dx_extension_h__

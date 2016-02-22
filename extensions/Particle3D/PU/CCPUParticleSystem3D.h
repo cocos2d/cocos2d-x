@@ -303,7 +303,7 @@ public:
     void setMaxVelocity(float maxVelocity);
 
     void setMaterialName(const std::string &name) { _matName = name; };
-    const std::string getMaterialName() const { return _matName; };
+    const std::string& getMaterialName() const { return _matName; };
 
     /** Forces emission of particles.
      * @remarks The number of requested particles are the exact number that are emitted. No down-scalling is applied.

@@ -102,7 +102,7 @@ bool UIEditBoxTest::init()
         // bottom
         // Add an intermediate Node to test scaling and content size relative to world
         _editEmailParent = Node::create();
-        _editEmailParent->setScale(0.5);
+//        _editEmailParent->setScale(0.5);
         _editEmailParent->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, visibleOrigin.y+visibleSize.height/4));
         addChild(_editEmailParent);
 					

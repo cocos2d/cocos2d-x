@@ -761,7 +761,7 @@ public:
     */
     virtual const BlendFunc &getBlendFunc() const override;
 
-    const std::string getResourceFile() const { return _plistFile; }
+    const std::string& getResourceFile() const { return _plistFile; }
 
     /// @{
     /// @name implement Playable Protocol

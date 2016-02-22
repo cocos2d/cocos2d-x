@@ -449,8 +449,8 @@ bool js_cocos2dx_Effect3DOutline_create(JSContext *cx, uint32_t argc, jsval *vp)
         jsval jsret = JSVAL_NULL;
         do {
             if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<Effect3DOutline>(cx, (Effect3DOutline*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                JS::RootedObject jsobj(cx, js_get_or_create_jsobject<Effect3DOutline>(cx, ret));
+                jsret = OBJECT_TO_JSVAL(jsobj);
             } else {
                 jsret = JSVAL_NULL;
             }
@@ -465,33 +465,19 @@ bool js_cocos2dx_Effect3DOutline_create(JSContext *cx, uint32_t argc, jsval *vp)
 
 JSObject *jsb_Effect3D_prototype;
 
-void js_Effect3DOutline_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Effect3DOutline)", obj);
-}
-
 bool jsb_Effect3DOutline_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     Effect3DOutline* cobj = new (std::nothrow) Effect3DOutline();
     cobj->init();
-    cobj->autorelease();
-    TypeTest<Effect3DOutline> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.ref());
-    JS::RootedObject parent(cx, typeClass->parentProto.ref());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Effect3DOutline");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    
+    js_type_class_t *typeClass = js_get_type_from_native<Effect3DOutline>(cobj);
+    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "Effect3DOutline"));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    
+    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
     return true;
 }
 
@@ -505,7 +491,6 @@ void js_register_cocos2dx_Effect3DOutline(JSContext *cx, JS::HandleObject global
     jsb_Effect3DOutline_class->enumerate = JS_EnumerateStub;
     jsb_Effect3DOutline_class->resolve = JS_ResolveStub;
     jsb_Effect3DOutline_class->convert = JS_ConvertStub;
-    jsb_Effect3DOutline_class->finalize = js_Effect3DOutline_finalize;
     jsb_Effect3DOutline_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
     
     static JSPropertySpec properties[] = {
@@ -614,8 +599,8 @@ bool js_cocos2dx_EffectSprite3D_createFromObjFileAndTexture(JSContext *cx, uint3
         jsval jsret = JSVAL_NULL;
         do {
             if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<EffectSprite3D>(cx, (EffectSprite3D*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                JS::RootedObject jsobj(cx, js_get_or_create_jsobject<EffectSprite3D>(cx, ret));
+                jsret = OBJECT_TO_JSVAL(jsobj);
             } else {
                 jsret = JSVAL_NULL;
             }
@@ -639,8 +624,8 @@ bool js_cocos2dx_EffectSprite3D_create(JSContext *cx, uint32_t argc, jsval *vp)
         jsval jsret = JSVAL_NULL;
         do {
             if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<EffectSprite3D>(cx, (EffectSprite3D*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                JS::RootedObject jsobj(cx, js_get_or_create_jsobject<EffectSprite3D>(cx, ret));
+                jsret = OBJECT_TO_JSVAL(jsobj);
             } else {
                 jsret = JSVAL_NULL;
             }
@@ -654,10 +639,6 @@ bool js_cocos2dx_EffectSprite3D_create(JSContext *cx, uint32_t argc, jsval *vp)
 
 
 extern JSObject *jsb_cocos2d_Sprite3D_prototype;
-
-void js_EffectSprite3D_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (EffectSprite3D)", obj);
-}
 
 bool jsb_EffectSprite3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -676,23 +657,13 @@ bool jsb_EffectSprite3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
             cobj->setTexture(texture);
         }
     }
-    cobj->autorelease();
-    TypeTest<EffectSprite3D> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.ref());
-    JS::RootedObject parent(cx, typeClass->parentProto.ref());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::EffectSprite3D");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    
+    js_type_class_t *typeClass = js_get_type_from_native<EffectSprite3D>(cobj);
+    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "EffectSprite3D"));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    
+    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
     return true;
 }
 
@@ -706,7 +677,6 @@ void js_register_cocos2dx_EffectSprite3D(JSContext *cx, JS::HandleObject global)
     jsb_EffectSprite3D_class->enumerate = JS_EnumerateStub;
     jsb_EffectSprite3D_class->resolve = JS_ResolveStub;
     jsb_EffectSprite3D_class->convert = JS_ConvertStub;
-    jsb_EffectSprite3D_class->finalize = js_EffectSprite3D_finalize;
     jsb_EffectSprite3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
     
     static JSPropertySpec properties[] = {

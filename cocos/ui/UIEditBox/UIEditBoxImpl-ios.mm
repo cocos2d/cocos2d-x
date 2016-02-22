@@ -54,7 +54,6 @@ EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 EditBoxImplIOS::EditBoxImplIOS(EditBox* pEditText)
 : EditBoxImplCommon(pEditText)
 , _systemControl(nullptr)
-, _anchorPoint(Vec2(0.5f, 0.5f))
 {
     
 }
@@ -126,6 +125,10 @@ void EditBoxImplIOS::setNativePlaceholderFontColor(const Color4B& color)
 void EditBoxImplIOS::setNativeInputMode(EditBox::InputMode inputMode)
 {
     [_systemControl setInputMode:inputMode];
+
+    auto oldPos = _editBox->getPosition();
+    _editBox->setPosition(oldPos + Vec2(10,10));
+    _editBox->setPosition(oldPos);
 }
 
 void EditBoxImplIOS::setNativeInputFlag(EditBox::InputFlag inputFlag)
@@ -170,17 +173,16 @@ void EditBoxImplIOS::setNativeVisible(bool visible)
 
 void EditBoxImplIOS::updateNativeFrame(const Rect& rect)
 {
-    //no-op
-}
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    CCEAGLView *eaglview = (CCEAGLView *) glview->getEAGLView();
 
-void EditBoxImplIOS::setNativeContentSize(const Size& size)
-{
-    auto director = cocos2d::Director::getInstance();
-    auto glview = director->getOpenGLView();
-    CCEAGLView *eaglview = static_cast<CCEAGLView *>(glview->getEAGLView());
     float factor = eaglview.contentScaleFactor;
     
-    [_systemControl setContentSize:CGSizeMake(size.width / factor, size.height / factor)];
+    [_systemControl updateFrame:CGRectMake(rect.origin.x / factor,
+                                           rect.origin.y / factor,
+                                           rect.size.width / factor,
+                                           rect.size.height / factor)];
+
 }
 
 const char* EditBoxImplIOS::getNativeDefaultFontName()
@@ -230,58 +232,6 @@ UIFont* EditBoxImplIOS::constructFont(const char *fontName, int fontSize)
     }
     return textFont;
 }
-    
-void EditBoxImplIOS::setPosition(const Vec2& pos)
-{
-    _position = pos;
-    adjustTextFieldPosition();
-}
-
-void EditBoxImplIOS::setAnchorPoint(const Vec2& anchorPoint)
-{
-    CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
-    _anchorPoint = anchorPoint;
-    setPosition(_position);
-}
-
-void EditBoxImplIOS::updatePosition(float dt)
-{
-    if (nullptr != _systemControl) {
-        this->adjustTextFieldPosition();
-    }
-}
-
-static CGPoint convertDesignCoordToScreenCoord(const Vec2& designCoord)
-{
-    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-    CCEAGLView *eaglview = (CCEAGLView *) glview->getEAGLView();
-    
-    float viewH = (float)[eaglview getHeight];
-    
-    Vec2 visiblePos = Vec2(designCoord.x * glview->getScaleX(), designCoord.y * glview->getScaleY());
-    Vec2 screenGLPos = visiblePos + glview->getViewPortRect().origin;
-    
-    CGPoint screenPos = CGPointMake(screenGLPos.x, viewH - screenGLPos.y);
-    
-    float factor = eaglview.contentScaleFactor;
-    screenPos.x = screenPos.x / factor;
-    screenPos.y = screenPos.y / factor;
-    
-    CCLOGINFO("[EditBox] pos x = %f, y = %f", screenGLPos.x, screenGLPos.y);
-    return screenPos;
-}
-
-
-void EditBoxImplIOS::adjustTextFieldPosition()
-{
-    Size contentSize = _editBox->getContentSize();
-    Rect rect = Rect(0, 0, contentSize.width, contentSize.height);
-    rect = RectApplyAffineTransform(rect, _editBox->nodeToWorldTransform());
-    
-    Vec2 designCoord = Vec2(rect.origin.x, rect.origin.y + rect.size.height);
-    [_systemControl setPosition:convertDesignCoordToScreenCoord(designCoord)];
-}
-
 }
 
 NS_CC_END

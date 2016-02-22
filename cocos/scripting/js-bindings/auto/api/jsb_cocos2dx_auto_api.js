@@ -20297,6 +20297,16 @@ int
 },
 
 /**
+ * @method getUniformFlags
+ * @return {cc.GLProgram::UniformFlags}
+ */
+getUniformFlags : function (
+)
+{
+    return cc.GLProgram::UniformFlags;
+},
+
+/**
  * @method getUniformLocationForName
  * @param {char} arg0
  * @return {int}

@@ -273,14 +273,11 @@ this.processInput = function (inputstr) {
     _processIncoming(inputstr);
 };
 
-let globalDebuggee = null;
 this._prepareDebugger = function (global) {
 
-    globalDebuggee = global;
-    require = global.require;
+    this.globalDebuggee = global;
     cc = global.cc;
     // exports = global;
-
     // load all functions exported in DevToolsUtils to global(exports)
     require('script/debugger/DevToolsUtils.js', 'debug');
     require('script/debugger/event-emitter.js', 'debug');

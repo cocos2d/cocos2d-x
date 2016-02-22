@@ -3640,6 +3640,7 @@ void js_register_cocos2dx_GLProgram(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_GLProgram_getFragmentShaderLog(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_bindAttribLocation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgram_getUniformFlags(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_getUniformLocationForName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_use(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgram_getVertexShaderLog(JSContext *cx, uint32_t argc, jsval *vp);

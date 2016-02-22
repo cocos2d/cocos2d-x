@@ -135,7 +135,7 @@ SpriteFrame* SpriteFrame::clone() const
 {
 	// no copy constructor	
     SpriteFrame *copy = new (std::nothrow) SpriteFrame();
-    copy->initWithTextureFilename(_textureFilename.c_str(), _rectInPixels, _rotated, _offsetInPixels, _originalSizeInPixels);
+    copy->initWithTextureFilename(_textureFilename, _rectInPixels, _rotated, _offsetInPixels, _originalSizeInPixels);
     copy->setTexture(_texture);
     copy->autorelease();
     return copy;
@@ -206,7 +206,7 @@ Texture2D* SpriteFrame::getTexture()
     }
 
     if( !_textureFilename.empty()) {
-        return Director::getInstance()->getTextureCache()->addImage(_textureFilename.c_str());
+        return Director::getInstance()->getTextureCache()->addImage(_textureFilename);
     }
     // no texture or texture filename
     return nullptr;

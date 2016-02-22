@@ -32,13 +32,15 @@
 
 #include <string>
 #include <vector>
+#include <mutex>
+#include <memory>  // for std::shared_ptr
 
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCStdC.h"
 
-struct libwebsocket;
-struct libwebsocket_context;
-struct libwebsocket_protocols;
+struct lws;
+struct lws_context;
+struct lws_protocols;
 
 /**
  * @addtogroup network
@@ -50,14 +52,20 @@ NS_CC_BEGIN
 namespace network {
 
 class WsThreadHelper;
-class WsMessage;
 
 /**
  * WebSocket is wrapper of the libwebsockets-protocol, let the develop could call the websocket easily.
+ * Please note that all public methods of WebSocket have to be invoked on Cocos Thread.
  */
 class CC_DLL WebSocket
 {
 public:
+    /**
+     * Close all connections and wait for all websocket threads to exit
+     * @note This method has to be invoked on Cocos Thread
+     */
+    static void closeAllConnections();
+    
     /**
      * Constructor of WebSocket.
      *
@@ -77,10 +85,11 @@ public:
      */
     struct Data
     {
-        Data():bytes(nullptr), len(0), issued(0), isBinary(false){}
+        Data():bytes(nullptr), len(0), issued(0), isBinary(false), ext(nullptr){}
         char* bytes;
         ssize_t len, issued;
         bool isBinary;
+        void* ext;
     };
 
     /**
@@ -179,9 +188,18 @@ public:
     void send(const unsigned char* binaryMsg, unsigned int len);
 
     /**
-     *  @brief Closes the connection to server.
+     *  @brief Closes the connection to server synchronously.
+     *  @note It's a synchronous method, it will not return until websocket thread exits.
      */
     void close();
+    
+    /**
+     *  @brief Closes the connection to server asynchronously.
+     *  @note It's an asynchronous method, it just notifies websocket thread to exit and returns directly,
+     *        If using 'closeAsync' to close websocket connection, 
+     *        be carefull of not using destructed variables in the callback of 'onClose'.
+     */
+    void closeAsync();
 
     /**
      *  @brief Gets current state of connection.
@@ -190,36 +208,38 @@ public:
     State getReadyState();
 
 private:
-    virtual void onSubThreadStarted();
-    virtual int onSubThreadLoop();
-    virtual void onSubThreadEnded();
-    virtual void onUIThreadReceiveMessage(WsMessage* msg);
+    void onSubThreadStarted();
+    void onSubThreadLoop();
+    void onSubThreadEnded();
 
+    // The following callback functions are invoked in websocket thread
+    int onSocketCallback(struct lws *wsi, int reason, void *user, void *in, ssize_t len);
 
-    friend class WebSocketCallbackWrapper;
-    int onSocketCallback(struct libwebsocket_context *ctx,
-                         struct libwebsocket *wsi,
-                         int reason,
-                         void *user, void *in, ssize_t len);
+    void onClientWritable();
+    void onClientReceivedData(void* in, ssize_t len);
+    void onConnectionOpened();
+    void onConnectionError();
+    void onConnectionClosed();
 
 private:
+    std::mutex   _readStateMutex;
     State        _readyState;
     std::string  _host;
     unsigned int _port;
     std::string  _path;
 
-    ssize_t _pendingFrameDataLen;
-    ssize_t _currentDataLen;
-    char *_currentData;
+    std::vector<char> _receivedData;
 
     friend class WsThreadHelper;
+    friend class WebSocketCallbackWrapper;
     WsThreadHelper* _wsHelper;
 
-    struct libwebsocket*         _wsInstance;
-    struct libwebsocket_context* _wsContext;
+    struct lws*         _wsInstance;
+    struct lws_context* _wsContext;
+    std::shared_ptr<bool> _isDestroyed;
     Delegate* _delegate;
     int _SSLConnection;
-    struct libwebsocket_protocols* _wsProtocols;
+    struct lws_protocols* _wsProtocols;
 };
 
 }

@@ -35,7 +35,8 @@ NewRendererTests::NewRendererTests()
     ADD_TEST_CASE(NewCullingTest);
     ADD_TEST_CASE(VBOFullTest);
     ADD_TEST_CASE(CaptureScreenTest);
-    ADD_TEST_CASE(BugAutoCulling)
+    ADD_TEST_CASE(BugAutoCulling);
+    ADD_TEST_CASE(RendererBatchQuadTri);
 };
 
 std::string MultiSceneTest::title() const
@@ -497,11 +498,6 @@ BugAutoCulling::BugAutoCulling()
     }, 1.0f, "lambda-autoculling-bug");
 }
 
-BugAutoCulling::~BugAutoCulling()
-{
-    
-}
-
 std::string BugAutoCulling::title() const
 {
     return "Bug-AutoCulling";
@@ -510,4 +506,40 @@ std::string BugAutoCulling::title() const
 std::string BugAutoCulling::subtitle() const
 {
     return "Moving the camera to the right instead of moving the layer";
+}
+
+//
+// RendererBatchQuadTri
+//
+
+RendererBatchQuadTri::RendererBatchQuadTri()
+{
+    Size s = Director::getInstance()->getWinSize();
+
+    for (int i=0; i<250; i++)
+    {
+        int x = CCRANDOM_0_1() * s.width;
+        int y = CCRANDOM_0_1() * s.height;
+
+        auto label = LabelAtlas::create("This is a label", "fonts/tuffy_bold_italic-charmap.plist");
+        label->setColor(Color3B::RED);
+        label->setPosition(Vec2(x,y));
+        addChild(label);
+
+        auto sprite = Sprite::create("fonts/tuffy_bold_italic-charmap.png");
+        sprite->setTextureRect(Rect(0,0,100,100));
+        sprite->setPosition(Vec2(x,y));
+        sprite->setColor(Color3B::BLUE);
+        addChild(sprite);
+    }
+}
+
+std::string RendererBatchQuadTri::title() const
+{
+    return "RendererBatchQuadTri";
+}
+
+std::string RendererBatchQuadTri::subtitle() const
+{
+    return "QuadCommand and TriangleCommands are batched together";
 }

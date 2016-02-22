@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>grossinis_sister1.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,-11.5}</string>
+                <key>spriteSize</key>
+                <string>{50,116}</string>
+                <key>spriteSourceSize</key>
+                <string>{52,139}</string>
+                <key>textureRect</key>
+                <string>{{1,1},{50,116}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>16 18 19 16 17 18 1 16 19 14 15 16 1 14 16 14 1 2 11 12 13 10 11 13 13 3 4 9 7 8 9 10 7 5 6 7 4 5 7 4 7 10 13 2 3 13 4 10 14 2 13 0 1 19</string>
+                <key>vertices</key>
+                <string>45 29 48 46 48 65 51 84 39 102 45 124 45 139 29 138 6 138 6 127 12 101 1 85 1 79 3 73 1 58 1 47 5 39 5 31 11 25 39 23</string>
+                <key>verticesUV</key>
+                <string>45 7 48 24 48 43 51 62 39 80 45 102 45 117 29 116 6 116 6 105 12 79 1 63 1 57 3 51 1 36 1 25 5 17 5 9 11 3 39 1</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>realTextureFileName</key>
+            <string>grossinis_sister1_sp.png</string>
+            <key>size</key>
+            <string>{52,118}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:a632b88b8f71f86e81dffd935afa622d:8f53269304b49fd81b3a067cc4073fdd:131452efc5aa6c3e0298766c7aa2649b$</string>
+            <key>textureFileName</key>
+            <string>grossinis_sister1_sp.png</string>
+        </dict>
+    </dict>
+</plist>
