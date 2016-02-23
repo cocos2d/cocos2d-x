@@ -448,7 +448,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         // Create an instance of TMXObjectInfo to store the object and its properties
         ValueMap dict;
         // Parse everything automatically
-        const char* keys[] = {"name", "type", "width", "height", "gid"};
+        const char* keys[] = {"name", "type", "width", "height", "gid", "id"};
         
         for (const auto& key : keys)
         {
