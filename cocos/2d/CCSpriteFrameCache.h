@@ -265,6 +265,8 @@ protected:
 
     void reloadSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture);
 
+    void loadSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture, bool removeOld);
+
     Map<std::string, SpriteFrame*> _spriteFrames;
     ValueMap _spriteFramesAliases;
     std::set<std::string>*  _loadedFileNames;
