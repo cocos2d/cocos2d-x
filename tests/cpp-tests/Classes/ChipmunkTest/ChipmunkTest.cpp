@@ -109,36 +109,37 @@ void ChipmunkTest::initPhysics()
 
     _space = cpSpaceNew();
 
-    _space->gravity = cpv(0, -100);
+    cpSpaceSetGravity(_space, cpv(0, -100));
 
     //
     // rogue shapes
     // We have to free them manually
     //
     // bottom
-    _walls[0] = cpSegmentShapeNew( _space->staticBody,
+    _walls[0] = cpSegmentShapeNew( cpSpaceGetStaticBody(_space),
         cpv(VisibleRect::leftBottom().x,VisibleRect::leftBottom().y),
         cpv(VisibleRect::rightBottom().x, VisibleRect::rightBottom().y), 0.0f);
 
     // top
-    _walls[1] = cpSegmentShapeNew( _space->staticBody, 
+    _walls[1] = cpSegmentShapeNew( cpSpaceGetStaticBody(_space),
         cpv(VisibleRect::leftTop().x, VisibleRect::leftTop().y),
         cpv(VisibleRect::rightTop().x, VisibleRect::rightTop().y), 0.0f);
 
     // left
-    _walls[2] = cpSegmentShapeNew( _space->staticBody,
+    _walls[2] = cpSegmentShapeNew( cpSpaceGetStaticBody(_space),
         cpv(VisibleRect::leftBottom().x,VisibleRect::leftBottom().y),
         cpv(VisibleRect::leftTop().x,VisibleRect::leftTop().y), 0.0f);
 
     // right
-    _walls[3] = cpSegmentShapeNew( _space->staticBody, 
+    _walls[3] = cpSegmentShapeNew( cpSpaceGetStaticBody(_space), 
         cpv(VisibleRect::rightBottom().x, VisibleRect::rightBottom().y),
         cpv(VisibleRect::rightTop().x, VisibleRect::rightTop().y), 0.0f);
 
     for( int i=0;i<4;i++) {
-        _walls[i]->e = 1.0f;
-        _walls[i]->u = 1.0f;
-        cpSpaceAddStaticShape(_space, _walls[i] );
+        
+        cpShapeSetElasticity(_walls[i], 1.0f);
+        cpShapeSetFriction(_walls[i], 1.0f);
+        cpSpaceAddShape(_space, _walls[i]);
     }
 
     // Physics debug layer
@@ -195,13 +196,14 @@ void ChipmunkTest::addNewSpriteAtPosition(cocos2d::Vec2 pos)
         cpv( 24,-54),
     };
 
-    cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
+    cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero, 0.0f));
 
-    body->p = cpv(pos.x, pos.y);
+    cpBodySetPosition(body, cpv(pos.x, pos.y));
     cpSpaceAddBody(_space, body);
 
-    cpShape* shape = cpPolyShapeNew(body, num, verts, cpvzero);
-    shape->e = 0.5f; shape->u = 0.5f;
+    cpShape* shape = cpPolyShapeNew(body, num, verts, cpTransformIdentity, 0.0f);
+    cpShapeSetElasticity(shape, 0.5f);
+    cpShapeSetFriction(shape, 0.5f);
     cpSpaceAddShape(_space, shape);
 
     auto sprite = PhysicsSprite::createWithTexture(_spriteTexture, cocos2d::Rect(posx, posy, 85, 121));
@@ -243,7 +245,7 @@ void ChipmunkTest::onAcceleration(Acceleration* acc, Event* event)
 
     auto v = cocos2d::Vec2( accelX, accelY);
     v = v * 200;
-    _space->gravity = cpv(v.x, v.y);
+    cpSpaceSetGravity(_space, cpv(v.x, v.y));
 }
 
 ChipmunkTests::ChipmunkTests()
