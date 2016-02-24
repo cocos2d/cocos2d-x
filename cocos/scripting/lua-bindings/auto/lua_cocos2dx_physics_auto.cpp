@@ -12475,7 +12475,7 @@ int lua_register_cocos2dx_physics_PhysicsDebugDraw(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"PhysicsDebugDraw");
     tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::PhysicsDebugDraw).name();
+    std::string typeName = "DebugDrawNode";
     g_luaType[typeName] = "cc.PhysicsDebugDraw";
     g_typeCast["PhysicsDebugDraw"] = "cc.PhysicsDebugDraw";
     return 1;
