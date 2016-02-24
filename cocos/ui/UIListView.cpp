@@ -903,10 +903,16 @@ Vec2 ListView::getHowMuchOutOfBoundary(const Vec2& addition)
         {
             firstItemAdjustment = contentSize - _items.at(0)->getContentSize();
         }
-        leftBoundary += firstItemAdjustment.x;
-        rightBoundary -= lastItemAdjustment.x;
-        topBoundary -= firstItemAdjustment.y;
-        bottomBoundary += lastItemAdjustment.y;
+        if(_direction == Direction::HORIZONTAL || _direction == Direction::BOTH)
+        {
+            leftBoundary += firstItemAdjustment.x;
+            rightBoundary -= lastItemAdjustment.x;
+        }
+        if(_direction == Direction::VERTICAL || _direction == Direction::BOTH)
+        {
+            topBoundary -= firstItemAdjustment.y;
+            bottomBoundary += lastItemAdjustment.y;
+        }
     }
     
     // Calculate the actual amount
