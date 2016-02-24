@@ -1705,10 +1705,10 @@ public:
     const std::function<void()>& getOnEnterCallback() const { return _onEnterCallback; }   
     void setOnExitCallback(const std::function<void()>& callback) { _onExitCallback = callback; }
     const std::function<void()>& getOnExitCallback() const { return _onExitCallback; }   
-    void setonEnterTransitionDidFinishCallback(const std::function<void()>& callback) { _onEnterTransitionDidFinishCallback = callback; }
-    const std::function<void()>& getonEnterTransitionDidFinishCallback() const { return _onEnterTransitionDidFinishCallback; }   
-    void setonExitTransitionDidStartCallback(const std::function<void()>& callback) { _onExitTransitionDidStartCallback = callback; }
-    const std::function<void()>& getonExitTransitionDidStartCallback() const { return _onExitTransitionDidStartCallback; }
+    void setOnEnterTransitionDidFinishCallback(const std::function<void()>& callback) { _onEnterTransitionDidFinishCallback = callback; }
+    const std::function<void()>& getOnEnterTransitionDidFinishCallback() const { return _onEnterTransitionDidFinishCallback; }   
+    void setOnExitTransitionDidStartCallback(const std::function<void()>& callback) { _onExitTransitionDidStartCallback = callback; }
+    const std::function<void()>& getOnExitTransitionDidStartCallback() const { return _onExitTransitionDidStartCallback; }
     
     /** get & set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true */
     unsigned short getCameraMask() const { return _cameraMask; }
