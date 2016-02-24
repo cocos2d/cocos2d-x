@@ -27,6 +27,7 @@
 #include "base/ObjectFactory.h"
 #include "ui/CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
+#include "CSLanguageDataBinary_generated.h"
 #include "CSParseBinary_generated.h"
 
 #include "WidgetReader/NodeReaderProtocol.h"
@@ -545,8 +546,6 @@ std::string FlatBuffersSerialize::getWidgetReaderClassName(Widget* widget)
     
     return readerName;
 }
-//
-
 
 // NodeAction
 Offset<NodeAction> FlatBuffersSerialize::createNodeAction(const tinyxml2::XMLElement *objectData)
@@ -599,7 +598,6 @@ Offset<NodeAction> FlatBuffersSerialize::createNodeAction(const tinyxml2::XMLEle
                             _builder->CreateVector(timelines),
                             _builder->CreateString(currentAnimationName));
 }
-
 
 Offset<flatbuffers::AnimationInfo> FlatBuffersSerialize::createAnimationInfo(const tinyxml2::XMLElement *objectData)
  {
@@ -1573,6 +1571,78 @@ Offset<ProjectNodeOptions> FlatBuffersSerialize::createProjectNodeOptionsForSimu
                                     _builder->CreateString(filename),
                                     innerspeed);
 }
-    
+
+/* Serialize language XML file to Flat Buffers file. */
+std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFileForLanguageData(const std::string& xmlFilePath,
+                                                                                 const std::string& flatBuffersFilePath,
+                                                                                 const std::string& languageName)
+{
+    //Read and parse XML data file.
+    if (!FileUtils::getInstance()->isFileExist(xmlFilePath))
+        return "Language XML file doesn not exists.";
+    std::string content = FileUtils::getInstance()->getStringFromFile(xmlFilePath);
+    tinyxml2::XMLDocument* document = new (std::nothrow) tinyxml2::XMLDocument();
+    document->Parse(content.c_str());
+    const tinyxml2::XMLElement* element = document->RootElement();
+    element = element->FirstChildElement();
+
+    //Create FlatBuffers file using the language data in XML file.
+    _builder = new (std::nothrow) FlatBufferBuilder();
+    std::vector<Offset<LanguageItem>> langItemList;
+    while (element)
+    {
+        if (strcmp("language", element->Name()) != 0)
+        {
+            element = element->NextSiblingElement();
+            continue;
+        }
+
+        //Read all of the Key-Values in the XML file.
+        std::string key = "";
+        std::string text = "";
+        bool hasKeyReaded = false;
+        bool hasTextReaded = false;
+        const tinyxml2::XMLElement* childElement = element->FirstChildElement();
+        while (childElement)
+        {
+            //Record language key.
+            if (strcmp("key", childElement->Name()) == 0)
+            {
+                key = childElement->GetText();
+                hasKeyReaded = true;
+            }
+            //Record corresponding text.
+            else if (strcmp(languageName.c_str(), childElement->Name()) == 0)
+            {
+                const char* langText = childElement->GetText();
+                if (langText)
+                    text = langText;
+                hasTextReaded = true;
+            }
+
+            if (hasKeyReaded && hasTextReaded)
+                break;
+
+            childElement = childElement->NextSiblingElement();
+        }
+
+        Offset<flatbuffers::LanguageItem> langItem = CreateLanguageItem(*_builder, _builder->CreateString(key), _builder->CreateString(text));
+        langItemList.push_back(langItem);
+
+        element = element->NextSiblingElement();
+    }
+
+    auto langSet = CreateLanguageSet(*_builder, _builder->CreateVector(langItemList));
+    _builder->Finish(langSet);
+    bool isSuccess = flatbuffers::SaveFile(flatBuffersFilePath.c_str(),
+        reinterpret_cast<const char *>(_builder->GetBufferPointer()),
+        _builder->GetSize(),
+        true);
+
+    if (isSuccess)
+        return "";
+    else
+        return "Failed to save language .csb file.";
+}
 }
 /**/
