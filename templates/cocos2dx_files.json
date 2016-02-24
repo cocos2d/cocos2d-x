@@ -612,6 +612,7 @@
         "cocos/editor-support/cocostudio/CCUtilMath.cpp", 
         "cocos/editor-support/cocostudio/CCUtilMath.h", 
         "cocos/editor-support/cocostudio/CMakeLists.txt", 
+        "cocos/editor-support/cocostudio/CSLanguageDataBinary_generated.h", 
         "cocos/editor-support/cocostudio/CSParse3DBinary_generated.h", 
         "cocos/editor-support/cocostudio/CSParseBinary_generated.h", 
         "cocos/editor-support/cocostudio/CocoLoader.cpp", 
