@@ -63,12 +63,13 @@ bool UIEditBoxTest::init()
         _editName->setPlaceHolder("Name:");
         _editName->setPlaceholderFontColor(Color3B::WHITE);
         _editName->setMaxLength(8);
-       _editName->setFontSize(editBoxSize.height/2);
+        _editName->setFontSize(editBoxSize.height/2);
         _editName->setText("v👐👊💝");
         _editName->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
         _editName->setDelegate(this);
+        _editName->setVisible(true);
         addChild(_editName);
-
+       
         Button* button = Button::create("cocosui/animationbuttonnormal.png",
                                         "cocosui/animationbuttonpressed.png");
         auto buttonSize = button->getContentSize();
@@ -87,10 +88,11 @@ bool UIEditBoxTest::init()
         _editPassword->setMaxLength(6);
         _editPassword->setInputFlag(ui::EditBox::InputFlag::PASSWORD);
         _editPassword->setInputMode(ui::EditBox::InputMode::SINGLE_LINE);
-       _editPassword->setFontSize(editBoxSize.height/2);
+        _editPassword->setFontSize(editBoxSize.height/2);
         _editPassword->setDelegate(this);
+        _editPassword->setVisible(true);
         addChild(_editPassword);
-        
+       
         auto buttonPassword = (ui::Button*)button->clone();
         buttonPassword->setTitleText("Multiline");
         buttonPassword->setPosition(_editPassword->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
@@ -111,6 +113,7 @@ bool UIEditBoxTest::init()
         _editEmail->setPlaceHolder("Email:");
         _editEmail->setInputMode(ui::EditBox::InputMode::EMAIL_ADDRESS);
         _editEmail->setDelegate(this);
+        _editEmail->setVisible(true);
         _editEmailParent->addChild(_editEmail);
         //It is required to use setFontSize and setContentSize after adding it to the hierarchy, so that native EditBox get the right size
         _editEmail->setFontSize(30);

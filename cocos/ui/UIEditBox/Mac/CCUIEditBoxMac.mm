@@ -48,7 +48,6 @@
         self.keyboardReturnType = cocos2d::ui::EditBox::KeyboardReturnType::DEFAULT;
         
         [self createMultiLineTextField];
-        [self.window.contentView addSubview:self.textInput];
     }
     
     return self;
@@ -96,7 +95,8 @@
     [_textInput performSelector:@selector(setBackgroundColor:) withObject:[NSColor clearColor]];
  
     if (![_textInput isKindOfClass:[NSTextView class]]) {
-        [_textInput performSelector:@selector(setBordered:) withObject:[NSNumber numberWithBool:NO]];
+        [_textInput performSelector:@selector(setBordered:)
+                         withObject:[NSNumber numberWithBool:NO]];
     }
     _textInput.hidden = NO;
     _textInput.wantsLayer = YES;
@@ -116,7 +116,6 @@
     frame.size.width = rect.size.width;
 
     self.textInput.frame = frame;
-    [self.window makeFirstResponder:self.window.contentView];
 }
 
 - (void)dealloc
@@ -140,6 +139,11 @@
     }else {
         [self.window makeFirstResponder:self.textInput];
     }
+    
+    auto editbox = getEditBoxImplMac()->getEditBox();
+    auto oldPos = editbox->getPosition();
+    editbox->setPosition(oldPos + cocos2d::Vec2(10,20));
+    editbox->setPosition(oldPos);
 }
 
 - (void)closeKeyboard
@@ -189,30 +193,18 @@
     return self.textInput.ccui_font.fontName ?: @"";
 }
 
-- (void) hackingCodeForRefreshPosition
-{
-    [self.window.contentView addSubview:self.textInput];
-    if (![self.textInput isKindOfClass:[NSTextView class]]) {
-        [self.textInput becomeFirstResponder];
-    }else {
-        [self.window makeFirstResponder:self.textInput];
-    }
-}
-
 - (void)setInputMode:(cocos2d::ui::EditBox::InputMode)inputMode
 {
     //multiline input
     if (inputMode == cocos2d::ui::EditBox::InputMode::ANY) {
         if (![self.textInput isKindOfClass:[NSTextView class]]) {
             [self createMultiLineTextField];
-            [self hackingCodeForRefreshPosition];
         }
     }
     else {
         if (self.dataInputMode != cocos2d::ui::EditBox::InputFlag::PASSWORD) {
             if (![self.textInput isKindOfClass:[NSTextField class]]) {
                 [self createSingleLineTextField];
-                [self hackingCodeForRefreshPosition];
             }
         }
     }
