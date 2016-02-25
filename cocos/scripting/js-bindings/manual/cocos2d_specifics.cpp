@@ -544,6 +544,11 @@ JSObject* getObjectFromNamespace(JSContext* cx, JS::HandleObject ns, const char 
     return NULL;
 }
 
+js_type_class_t *js_get_type_from_node(cocos2d::Node* native_obj)
+{
+    return js_get_type_from_native<cocos2d::Node>(native_obj);
+}
+
 void js_add_FinalizeHook(JSContext *cx, JS::HandleObject target)
 {
     JS::RootedObject proto(cx, jsb_FinalizeHook_prototype);
