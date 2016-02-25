@@ -64,11 +64,328 @@
 #include "base/CCConfiguration.h"
 #include "2d/CCScene.h"
 #include "platform/CCFileUtils.h"
+#include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"
 #include "base/base64.h"
 #include "base/ccUtils.h"
 #include "base/allocator/CCAllocatorDiagnostics.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
 NS_CC_BEGIN
+
+namespace {
+    class Trap {
+    public:
+        using CommandCallback = std::function<void(int, const std::string&)>;
+
+        static Trap *getInstance() {
+            static Trap instance;
+            return &instance;
+        }
+        Console::Command &getCommand() { return _command; }
+
+    private:
+        class Service {
+        public:
+            Service () = default;
+
+            int setFPSThreshold(int fpsThreshold)
+            {
+                return _fpsThreshold = std::max(0, fpsThreshold);
+            }
+
+            int setVertexCountThreshold(int vertexCountThreshold)
+            {
+                return _vertexCountThreshold = std::max(0, vertexCountThreshold);
+            }
+
+            int setDrawCallsThreshold(int drawCallsThreshold)
+            {
+                return _drawCallsThreshold = std::max(0, drawCallsThreshold);
+            }
+
+            int getFPSThreshold() { return _fpsThreshold; }
+            int getVertexCountThreshold() { return _vertexCountThreshold; }
+            int getDrawCallsThreshold() { return _drawCallsThreshold; }
+
+            void reset()
+            {
+                _fpsThreshold = 0;
+                _vertexCountThreshold = 0;
+                _drawCallsThreshold = 0;
+            }
+
+            void schedule(int fd)
+            {
+                unschedule();
+
+                _fd = fd;
+                _listener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_VISIT, CC_CALLBACK_0(Service::inspect, this));
+            }
+
+            void unschedule()
+            {
+                if (!_listener)
+                    return;
+
+                Director::getInstance()->getEventDispatcher()->removeEventListener(_listener);
+                _listener = nullptr;
+            }
+
+            std::string getSceneGraph()
+            {
+                std::lock_guard<std::mutex> lock(_mutex);
+                return _sceneGraph;
+            }
+
+            std::string getTextureCacheInfo()
+            {
+                std::lock_guard<std::mutex> lock(_mutex);
+                return _textureCacheInfo;
+            }
+
+            bool IsRunning () { return _listener; }
+
+        private:
+            void inspect ()
+            {
+                auto fpsThreshold = _fpsThreshold;
+                auto vertexCountThreshold = _vertexCountThreshold;
+                auto drawCallsThreshold = _drawCallsThreshold;
+
+                if (fpsThreshold > 0) {
+                    float fps = Director::getInstance()->getFrameRate();
+                    if (fps <= fpsThreshold) {
+                        trap ("traped by fps threshold.");
+                        return;
+                    }
+                }
+                if (vertexCountThreshold > 0) {
+                    auto drawnVertices = Director::getInstance()->getRenderer()->getDrawnVertices();
+                    if (drawnVertices >= vertexCountThreshold) {
+                        trap ("traped by vertex count threshold.");
+                        return;
+                    }
+                }
+                if (drawCallsThreshold > 0) {
+                    auto drawnBatches = Director::getInstance()->getRenderer()->getDrawnBatches();
+                    if (drawnBatches >= drawCallsThreshold) {
+                        trap ("traped by draw call threshold.");
+                        return;
+                    }
+                }
+            }
+
+            void trap (const std::string& message)
+            {
+                std::lock_guard<std::mutex> lock(_mutex);
+
+                auto scene = Director::getInstance()->getRunningScene();
+                _sceneGraph = getSceneGraph(scene, 0);
+                auto textureCache = Director::getInstance()->getTextureCache();
+                _textureCacheInfo = textureCache->getCachedTextureInfo();
+
+                unschedule ();
+                Director::getInstance()->stopAnimation();
+
+                sendTo (_fd, ("\n" + message + "\n> ").c_str());
+            }
+
+            std::string getSceneGraph(const Node* node, int level)
+            {
+                std::string str;
+
+                for(int i = 0; i < level; ++i)
+                    str += "-";
+
+                str += " " + node->getDescription() + "\n";
+
+                for(const auto& child: node->getChildren())
+                    str += getSceneGraph(child, level + 1);
+
+                return str;
+            }
+
+            EventListenerCustom *_listener = nullptr;
+            
+            std::mutex _mutex;
+            int _fpsThreshold = 0;
+            int _vertexCountThreshold = 0;
+            int _drawCallsThreshold = 0;
+
+            int _fd = 0;
+
+            std::string _sceneGraph;
+            std::string _textureCacheInfo;
+            
+            CC_DISALLOW_COPY_AND_ASSIGN(Service);
+        };
+
+        Trap ();
+
+        void addSubCommand(const std::string &name, const std::string &help, CommandCallback callback);
+        void commandTrap(int fd, const std::string &args);
+        void commandHelp(int fd, const std::string &args);
+
+        static std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems);
+        static std::vector<std::string> split(const std::string &s, char delim);
+        static void sendTo(int fd, const std::string &logStr);
+
+        Console::Command _command;
+        std::vector<Console::Command> _subCommands;
+
+        Service _service;
+
+        CC_DISALLOW_COPY_AND_ASSIGN(Trap);
+    };
+
+    Trap::Trap ()
+    : _command("trap", "")
+    {
+        _command.addSubCommand({"start", ": start inspecting.", [](int fd, const std::string &args) {
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([fd](){
+                Trap::getInstance()->_service.schedule(fd);
+            });
+            sendTo (fd, "start inspecting.\n");
+        }});
+        _command.addSubCommand({"stop", ": stop inspecting.", [](int fd, const std::string &args) {
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([](){
+                Trap::getInstance()->_service.unschedule();
+            });
+            sendTo (fd, "stop inspecting.\n");
+
+        }});
+        _command.addSubCommand({"fps", "<threshold> : set lower fps threshold", [this](int fd, const std::string &args){
+            auto argstr = split(args, ' ');
+            if (argstr.empty())
+                return;
+
+            _service.setFPSThreshold(std::atoi(argstr.at(1).c_str()));
+            sendTo(fd, "fps threshold setted.\n");
+        }});
+        _command.addSubCommand({"drawcall", "<threshold> : set upper fps threshold", [this](int fd, const std::string &args){
+            auto argstr = split(args, ' ');
+            if (argstr.empty())
+                return;
+
+            _service.setDrawCallsThreshold(std::atoi(argstr.at(1).c_str()));
+            sendTo(fd, "draw calls threshold setted.\n");
+        }});
+        _command.addSubCommand({"vertices", "<threshold> : set upper vertices threshold", [this](int fd, const std::string &args){
+            auto argstr = split(args, ' ');
+            if (argstr.empty())
+                return;
+
+            _service.setVertexCountThreshold(std::atoi(argstr.at(1).c_str()));
+            sendTo(fd, "vertex count threshold setted.\n");
+        }});
+        _command.addSubCommand({"reset", ": reset threshold", CC_CALLBACK_0(Service::reset, &_service)});
+            _command.addSubCommand({"scenegraph", ": show latest scenegraph.", [this](int fd, const std::string &args){
+            sendTo(fd, _service.getSceneGraph());
+        }});
+
+        _command.addSubCommand({"texture", ": show latest texturecache info.", [this](int fd, const std::string &args){
+            sendTo(fd, _service.getTextureCacheInfo());
+        }});
+        _command.addSubCommand({"status", ": show state and threshold settings.", [this](int fd, const std::string &args){
+            std::stringstream stream;
+
+            stream << "state : " << (_service.IsRunning()? "run" : "stop") << "\n";
+            auto fpsThreshold = _service.getFPSThreshold();
+            if (fpsThreshold > 0) {
+                stream << "fps threshold : " << fpsThreshold << "\n";
+            }
+            auto vertexCountThreshold = _service.getVertexCountThreshold();
+            if (vertexCountThreshold > 0) {
+                stream << "vertices threshold : " << vertexCountThreshold << "\n";
+            }
+            auto drawCallsThreshold = _service.getDrawCallsThreshold();
+            if (drawCallsThreshold > 0) {
+                stream << "drawcall threshold : " << drawCallsThreshold << "\n";
+            }
+
+            sendTo(fd, stream.str());
+        }});
+
+        _command.addSubCommand({"help", "", CC_CALLBACK_2(Trap::commandHelp, this)});
+    }
+
+    void Trap::commandTrap(int fd, const std::string &args)
+    {
+        auto argv = split(args, ' ');
+
+        if(!argv.empty()) {
+            auto commandIt = std::find_if(_subCommands.begin(), _subCommands.end(), [&argv](const Console::Command &command) {
+                return argv[0] == command.name;
+            });
+
+            if(commandIt != _subCommands.end()) {
+                commandIt->callback(fd, args);
+                return;
+            }
+        }
+
+        auto helpCommandIt = std::find_if(_subCommands.begin(), _subCommands.end(), [](const Console::Command &command) {
+            return "help" == command.name;
+        });
+
+        if(helpCommandIt != _subCommands.end()) {
+            helpCommandIt->callback(fd, args);
+            return;
+        }
+    }
+
+    void Trap::commandHelp(int fd, const std::string &args)
+    {
+        std::string logStr;
+        logStr.append(_command.name);
+        logStr.append(" commands:\n");
+        for(auto &cmd : this->_subCommands) {
+            if(cmd.name == "help") continue;
+            std::stringstream ss;
+            ss << "\t" << cmd.name << " " << cmd.help << std::endl;
+            logStr.append(ss.str());
+        }
+        sendTo(fd, logStr);
+    }
+
+    std::vector<std::string> &Trap::split(const std::string &s, char delim, std::vector<std::string> &elems)
+    {
+        std::stringstream ss(s);
+        std::string item;
+        while (std::getline(ss, item, delim)) {
+            elems.push_back(item);
+        }
+        return elems;
+    }
+
+    std::vector<std::string> Trap::split(const std::string &s, char delim)
+    {
+        std::vector<std::string> elems;
+        split(s, delim, elems);
+        return elems;
+    }
+
+    void Trap::sendTo(int fd, const std::string &logStr)
+    {
+        static const size_t SEND_SIZE_LIMIT = 1000;
+
+        size_t index = 0;
+        while (true) {
+            auto splitedText = logStr.substr(index, SEND_SIZE_LIMIT);
+            if (splitedText.empty())
+                return;
+
+            auto ret = send(fd, splitedText.c_str(), splitedText.size(), 0);
+            if(ret < 0) {
+                CCLOG("send() error");
+                return;
+            }
+
+            index += splitedText.size();
+        }
+    }
+}
 
 extern const char* cocos2dVersion(void);
 
@@ -404,6 +721,7 @@ Console::Console()
     createCommandTouch();
     createCommandUpload();
     createCommandVersion();
+    createCommandTrap();
 }
 
 Console::~Console()
@@ -996,6 +1314,11 @@ void Console::createCommandUpload()
 void Console::createCommandVersion()
 {
     addCommand({"version", "print version string ", CC_CALLBACK_2(Console::commandVersion, this)});
+}
+
+void Console::createCommandTrap()
+{
+    addCommand(Trap::getInstance()->getCommand());
 }
 
 //
