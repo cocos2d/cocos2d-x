@@ -87,7 +87,7 @@ bool JSB_cpBody_eachConstraint(JSContext *cx, uint32_t argc, jsval *vp);
 bool JSB_cpBody_eachArbiter(JSContext *cx, uint32_t argc, jsval *vp);
 
 
-// convertions
+// conversions
 
 jsval cpBB_to_jsval(JSContext *cx, cpBB bb );
 bool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret );

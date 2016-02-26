@@ -369,11 +369,9 @@ void js_register_cocos2dx_experimental_webView_WebView(JSContext *cx, JS::Handle
     jsb_cocos2d_experimental_ui_WebView_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_experimental_ui_WebView_class->resolve = JS_ResolveStub;
     jsb_cocos2d_experimental_ui_WebView_class->convert = JS_ConvertStub;
-    jsb_cocos2d_experimental_ui_WebView_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_experimental_ui_WebView_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -413,8 +411,12 @@ void js_register_cocos2dx_experimental_webView_WebView(JSContext *cx, JS::Handle
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_experimental_ui_WebView_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "WebView"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::experimental::ui::WebView>(cx, jsb_cocos2d_experimental_ui_WebView_class, proto, parent_proto);
 }
 

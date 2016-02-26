@@ -328,9 +328,9 @@ public:
 
 ValueMap FileUtils::getValueMapFromFile(const std::string& filename)
 {
-    const std::string fullPath = fullPathForFilename(filename.c_str());
+    const std::string fullPath = fullPathForFilename(filename);
     DictMaker tMaker;
-    return tMaker.dictionaryWithContentsOfFile(fullPath.c_str());
+    return tMaker.dictionaryWithContentsOfFile(fullPath);
 }
 
 ValueMap FileUtils::getValueMapFromData(const char* filedata, int filesize)
@@ -341,9 +341,9 @@ ValueMap FileUtils::getValueMapFromData(const char* filedata, int filesize)
 
 ValueVector FileUtils::getValueVectorFromFile(const std::string& filename)
 {
-    const std::string fullPath = fullPathForFilename(filename.c_str());
+    const std::string fullPath = fullPathForFilename(filename);
     DictMaker tMaker;
-    return tMaker.arrayWithContentsOfFile(fullPath.c_str());
+    return tMaker.arrayWithContentsOfFile(fullPath);
 }
 
 
@@ -725,7 +725,7 @@ unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, con
     {
         CC_BREAK_IF(zipFilePath.empty());
 
-        file = unzOpen(zipFilePath.c_str());
+        file = unzOpen(FileUtils::getInstance()->getSuitableFOpen(zipFilePath).c_str());
         CC_BREAK_IF(!file);
 
         // FIXME: Other platforms should use upstream minizip like mingw-w64
@@ -796,7 +796,6 @@ std::string FileUtils::getPathForFilename(const std::string& filename, const std
 
     path = getFullPathForDirectoryAndFilename(path, file);
 
-    //CCLOG("getPathForFilename, fullPath = %s", path.c_str());
     return path;
 }
 

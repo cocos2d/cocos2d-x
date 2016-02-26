@@ -1523,10 +1523,6 @@ public:
      * @param time In seconds.
      */
     virtual void update(float time) override;
-    //
-    // Overrides
-    //
-    virtual bool isDone(void) const override;
     
 CC_CONSTRUCTOR_ACCESS:
     TargetedAction();

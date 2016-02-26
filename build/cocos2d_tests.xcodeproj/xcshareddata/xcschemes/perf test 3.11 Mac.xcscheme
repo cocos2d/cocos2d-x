@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "507EE84B1C24C94600839198"
-               BuildableName = "js-tests-memory-gc Mac.app"
-               BlueprintName = "js-tests-memory-gc Mac"
+               BlueprintIdentifier = "FA94B0C01B8EF76D0074B261"
+               BuildableName = "perf test 3.11 Mac.app"
+               BlueprintName = "perf test 3.11 Mac"
                ReferencedContainer = "container:cocos2d_tests.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "507EE84B1C24C94600839198"
-            BuildableName = "js-tests-memory-gc Mac.app"
-            BlueprintName = "js-tests-memory-gc Mac"
+            BlueprintIdentifier = "FA94B0C01B8EF76D0074B261"
+            BuildableName = "perf test 3.11 Mac.app"
+            BlueprintName = "perf test 3.11 Mac"
             ReferencedContainer = "container:cocos2d_tests.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -55,9 +55,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "507EE84B1C24C94600839198"
-            BuildableName = "js-tests-memory-gc Mac.app"
-            BlueprintName = "js-tests-memory-gc Mac"
+            BlueprintIdentifier = "FA94B0C01B8EF76D0074B261"
+            BuildableName = "perf test 3.11 Mac.app"
+            BlueprintName = "perf test 3.11 Mac"
             ReferencedContainer = "container:cocos2d_tests.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -74,9 +74,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "507EE84B1C24C94600839198"
-            BuildableName = "js-tests-memory-gc Mac.app"
-            BlueprintName = "js-tests-memory-gc Mac"
+            BlueprintIdentifier = "FA94B0C01B8EF76D0074B261"
+            BuildableName = "perf test 3.11 Mac.app"
+            BlueprintName = "perf test 3.11 Mac"
             ReferencedContainer = "container:cocos2d_tests.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

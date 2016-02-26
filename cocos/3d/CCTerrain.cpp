@@ -73,7 +73,7 @@ bool Terrain::initWithTerrainData(TerrainData &parameter, CrackFixedType fixedTy
     bool initResult = true;
 
     //init heightmap
-    initResult &= this->initHeightMap(parameter._heightMapSrc.c_str());
+    initResult &= this->initHeightMap(parameter._heightMapSrc);
     //init textures alpha map,detail Maps
     initResult &= this->initTextures();
     initResult &= this->initProperties();

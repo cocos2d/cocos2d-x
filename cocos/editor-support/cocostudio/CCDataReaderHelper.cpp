@@ -190,11 +190,11 @@ void DataReaderHelper::loadData()
 
         if (pAsyncStruct->configType == DragonBone_XML)
         {
-            DataReaderHelper::addDataFromCache(pAsyncStruct->fileContent.c_str(), pDataInfo);
+            DataReaderHelper::addDataFromCache(pAsyncStruct->fileContent, pDataInfo);
         }
         else if(pAsyncStruct->configType == CocoStudio_JSON)
         {
-            DataReaderHelper::addDataFromJsonCache(pAsyncStruct->fileContent.c_str(), pDataInfo);
+            DataReaderHelper::addDataFromJsonCache(pAsyncStruct->fileContent, pDataInfo);
         }
         else if(pAsyncStruct->configType == CocoStudio_Binary)
         {
@@ -419,7 +419,7 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     // This getFileData only read exportJson file, it takes only a little time.
     // Large image files are loaded in DataReaderHelper::addDataFromJsonCache(dataInfo) asynchronously.
     _dataReaderHelper->_getFileMutex.lock();
-    unsigned char *pBytes = FileUtils::getInstance()->getFileData(fullPath.c_str() , filereadmode.c_str(), &size);
+    unsigned char *pBytes = FileUtils::getInstance()->getFileData(fullPath, filereadmode.c_str(), &size);
     _dataReaderHelper->_getFileMutex.unlock();
     
 	Data bytecpy;
@@ -473,7 +473,7 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
         if (pAsyncStruct->imagePath != "" && pAsyncStruct->plistPath != "")
         {
             _getFileMutex.lock();
-            ArmatureDataManager::getInstance()->addSpriteFrameFromFile(pAsyncStruct->plistPath.c_str(), pAsyncStruct->imagePath.c_str(), pDataInfo->filename.c_str());
+            ArmatureDataManager::getInstance()->addSpriteFrameFromFile(pAsyncStruct->plistPath, pAsyncStruct->imagePath, pDataInfo->filename);
             _getFileMutex.unlock();
         }
 
@@ -481,7 +481,7 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
         {
             std::string configPath = pDataInfo->configFileQueue.front();
             _getFileMutex.lock();
-            ArmatureDataManager::getInstance()->addSpriteFrameFromFile((pAsyncStruct->baseFilePath + configPath + ".plist").c_str(), (pAsyncStruct->baseFilePath + configPath + ".png").c_str(),pDataInfo->filename.c_str());
+            ArmatureDataManager::getInstance()->addSpriteFrameFromFile((pAsyncStruct->baseFilePath + configPath + ".plist"), (pAsyncStruct->baseFilePath + configPath + ".png"), pDataInfo->filename);
             _getFileMutex.unlock();
             pDataInfo->configFileQueue.pop();
         }
@@ -554,7 +554,7 @@ void DataReaderHelper::addDataFromCache(const std::string& pFileContent, DataInf
         {
             _dataReaderHelper->_addDataMutex.lock();
         }
-        ArmatureDataManager::getInstance()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
+        ArmatureDataManager::getInstance()->addArmatureData(armatureData->name, armatureData, dataInfo->filename);
         armatureData->release();
         if (dataInfo->asyncStruct)
         {
@@ -577,7 +577,7 @@ void DataReaderHelper::addDataFromCache(const std::string& pFileContent, DataInf
         {
             _dataReaderHelper->_addDataMutex.lock();
         }
-        ArmatureDataManager::getInstance()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
+        ArmatureDataManager::getInstance()->addAnimationData(animationData->name, animationData, dataInfo->filename);
         animationData->release();
         if (dataInfo->asyncStruct)
         {
@@ -600,7 +600,7 @@ void DataReaderHelper::addDataFromCache(const std::string& pFileContent, DataInf
         {
             _dataReaderHelper->_addDataMutex.lock();
         }
-        ArmatureDataManager::getInstance()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
+        ArmatureDataManager::getInstance()->addTextureData(textureData->name, textureData, dataInfo->filename);
         textureData->release();
         if (dataInfo->asyncStruct)
         {
@@ -1257,7 +1257,7 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
         {
             _dataReaderHelper->_addDataMutex.lock();
         }
-        ArmatureDataManager::getInstance()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
+        ArmatureDataManager::getInstance()->addArmatureData(armatureData->name, armatureData, dataInfo->filename);
         armatureData->release();
         if (dataInfo->asyncStruct)
         {
@@ -1276,7 +1276,7 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
         {
             _dataReaderHelper->_addDataMutex.lock();
         }
-        ArmatureDataManager::getInstance()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
+        ArmatureDataManager::getInstance()->addAnimationData(animationData->name, animationData, dataInfo->filename);
         animationData->release();
         if (dataInfo->asyncStruct)
         {
@@ -1295,7 +1295,7 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
         {
             _dataReaderHelper->_addDataMutex.lock();
         }
-        ArmatureDataManager::getInstance()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
+        ArmatureDataManager::getInstance()->addTextureData(textureData->name, textureData, dataInfo->filename);
         textureData->release();
         if (dataInfo->asyncStruct)
         {
@@ -1333,7 +1333,7 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
                     ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(dataInfo->baseFilePath + plistPath);
                     if (dict.find("particleLifespan") != dict.end()) continue;
 
-                    ArmatureDataManager::getInstance()->addSpriteFrameFromFile((dataInfo->baseFilePath + plistPath).c_str(), (dataInfo->baseFilePath + pngPath).c_str(), dataInfo->filename.c_str());
+                    ArmatureDataManager::getInstance()->addSpriteFrameFromFile((dataInfo->baseFilePath + plistPath), (dataInfo->baseFilePath + pngPath), dataInfo->filename);
                 }
             }
         }
@@ -1786,7 +1786,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                             {
                                 _dataReaderHelper->_addDataMutex.lock();
                             }
-                            ArmatureDataManager::getInstance()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
+                            ArmatureDataManager::getInstance()->addArmatureData(armatureData->name, armatureData, dataInfo->filename);
                             armatureData->release();
                             if (dataInfo->asyncStruct)
                             {
@@ -1806,7 +1806,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                             {
                                 _dataReaderHelper->_addDataMutex.lock();
                             }
-                            ArmatureDataManager::getInstance()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
+                            ArmatureDataManager::getInstance()->addAnimationData(animationData->name, animationData, dataInfo->filename);
                             animationData->release();
                             if (dataInfo->asyncStruct)
                             {
@@ -1825,7 +1825,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                             {
                                 _dataReaderHelper->_addDataMutex.lock();
                             }
-                            ArmatureDataManager::getInstance()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
+                            ArmatureDataManager::getInstance()->addTextureData(textureData->name, textureData, dataInfo->filename);
                             textureData->release();
                             if (dataInfo->asyncStruct)
                             {
@@ -1868,7 +1868,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                                 std::string plistPath = filePath + ".plist";
                                 std::string pngPath =  filePath + ".png";
                                 
-                                ArmatureDataManager::getInstance()->addSpriteFrameFromFile((dataInfo->baseFilePath + plistPath).c_str(), (dataInfo->baseFilePath + pngPath).c_str(), dataInfo->filename.c_str());
+                                ArmatureDataManager::getInstance()->addSpriteFrameFromFile((dataInfo->baseFilePath + plistPath), (dataInfo->baseFilePath + pngPath), dataInfo->filename);
                             }
                         }
                     }

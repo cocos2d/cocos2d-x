@@ -274,13 +274,6 @@ namespace cocostudio
                     errorFilePath = cmfPath;
                     fileExist = false;
                 }
-                
-                //if (!fileExist)
-                //{
-                //    auto label = Label::create();
-                //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-                //    labelAtlas->addChild(label);
-                //}
                 break;
             }
                 

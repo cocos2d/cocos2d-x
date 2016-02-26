@@ -64640,7 +64640,7 @@ int lua_cocos2dx_ParticleSystem_getResourceFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ParticleSystem_getResourceFile'", nullptr);
             return 0;
         }
-        const std::string ret = cobj->getResourceFile();
+        const std::string& ret = cobj->getResourceFile();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
@@ -72402,7 +72402,7 @@ int lua_cocos2dx_Sprite_getResourceName(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Sprite_getResourceName'", nullptr);
             return 0;
         }
-        const std::string ret = cobj->getResourceName();
+        const std::string& ret = cobj->getResourceName();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
@@ -85747,6 +85747,14 @@ int lua_cocos2dx_GLProgram_setUniformsForBuiltins(lua_State* tolua_S)
 #endif
     argc = lua_gettop(tolua_S)-1;
     do{
+        if (argc == 0) {
+            cobj->setUniformsForBuiltins();
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
         if (argc == 1) {
             cocos2d::Mat4 arg0;
             ok &= luaval_to_mat4(tolua_S, 2, &arg0, "cc.GLProgram:setUniformsForBuiltins");
@@ -85758,15 +85766,7 @@ int lua_cocos2dx_GLProgram_setUniformsForBuiltins(lua_State* tolua_S)
         }
     }while(0);
     ok  = true;
-    do{
-        if (argc == 0) {
-            cobj->setUniformsForBuiltins();
-            lua_settop(tolua_S, 1);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.GLProgram:setUniformsForBuiltins",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.GLProgram:setUniformsForBuiltins",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -96631,7 +96631,7 @@ int lua_cocos2dx_TMXTiledMap_getResourceFile(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TMXTiledMap_getResourceFile'", nullptr);
             return 0;
         }
-        const std::string ret = cobj->getResourceFile();
+        const std::string& ret = cobj->getResourceFile();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }

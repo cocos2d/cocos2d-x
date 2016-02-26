@@ -128,6 +128,10 @@ public:
      * @param dt        The animation duration.
      */
     void setContentOffsetInDuration(Vec2 offset, float dt); 
+    /**
+     * Halts the movement animation of the inner content started with setContentOffset() or setContentOffsetInDuration()
+     */
+    void stopAnimatedContentOffset();
 
     void setZoomScale(float s);
     /**
@@ -378,6 +382,11 @@ protected:
     
     CustomCommand _beforeDrawCommand;
     CustomCommand _afterDrawCommand;
+
+    /**
+     * Action created with setContentOffsetInDuration(), saved so it can be halted
+     */
+    Action* _animatedScrollAction;
 };
 
 

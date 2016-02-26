@@ -3800,6 +3800,9 @@
     <ClInclude Include="..\base\CCConsoleGestureCmd.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\CSLanguageDataBinary_generated.h">
+      <Filter>cocostudio\json</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">
