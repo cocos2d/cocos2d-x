@@ -615,4 +615,31 @@ protected:
     std::string _texFile;
 };
 
+class Sprite3DProgramGeneratedGeometryTest : public Sprite3DTestDemo
+{
+    int perVertexSizeInFloat;
+    int numberOfIterationSteps;
+    
+    cocos2d::Sprite3D* tetrahedron;
+    cocos2d::Action* rotation;
+public:
+    CREATE_FUNC(Sprite3DProgramGeneratedGeometryTest);
+    Sprite3DProgramGeneratedGeometryTest();
+    ~Sprite3DProgramGeneratedGeometryTest();
+
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+private:
+    cocos2d::Sprite3D* generateSprite3d();
+    void AddTetrahedron(std::vector< float > &vertices, cocos2d::MeshData::IndexArray& indices,
+                        float x, float y, float z, float size, int steps);
+    void AddCube(std::vector< float > &vertices, cocos2d::MeshData::IndexArray& indices,
+                        float x, float y, float z, float size);
+
+};
+
 #endif
