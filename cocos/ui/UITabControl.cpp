@@ -235,7 +235,7 @@ namespace ui
             _containerSize = Size(_contentSize.width, _contentSize.height - _headerHeight);
             break;
         case TabControl::LEFT:
-            _containerPosition = Vec2( _headerWidth, 0);
+            _containerPosition = Vec2(_headerWidth, 0);
             _containerSize = Size(_contentSize.width - _headerWidth, _contentSize.height);
             break;
         case TabControl::BOTTOM:
@@ -249,7 +249,7 @@ namespace ui
         default:
             break;
         }
-       
+
         for (auto& tabItem : _tabItems)
         {
             Layout* container = tabItem.container;

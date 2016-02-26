@@ -55,7 +55,15 @@ flatbuffers::Offset<flatbuffers::Table> TabControlReader::createOptionsWithFlatB
 
         if (attriname == "HeaderPlace")
         {
-            headerPlace = atoi(value.c_str());
+            auto placeStr = value.c_str();
+            if (strcmp(placeStr, "TOP") == 0)
+                headerPlace = 0;
+            else if (strcmp(placeStr, "LEFT") == 0)
+                headerPlace = 1;
+            else if (strcmp(placeStr, "BOTTOM") == 0)
+                headerPlace = 2;
+            else if (strcmp(placeStr, "RIGHT") == 0)
+                headerPlace = 3;
         }
         else if (attriname == "HeaderWidth")
         {
@@ -101,15 +109,19 @@ flatbuffers::Offset<flatbuffers::Table> TabControlReader::createOptionsWithFlatB
                 std::string attriname = attribute->Name();
                 std::string value = attribute->Value();
 
-                if (attriname == "ctype" && value.compare("TabItemObjectData") == 0)
+                if (attriname == "ctype")
                 {
-                    auto itemOption = TabItemReader::getInstance()->createTabItemOptionWithFlatBuffers(child, builder);
-                    tabItems.push_back(itemOption);
+                    if (value.compare("TabItemObjectData") == 0)
+                    {
+                        auto itemOption = TabItemReader::getInstance()->createTabItemOptionWithFlatBuffers(child, builder);
+                        tabItems.push_back(itemOption);
+                        break;
+                    }
+                    else
+                        hasItem = false;
+
                     break;
                 }
-                else
-                    hasItem = false;
-
                 attribute = attribute->Next();
             }
             child = child->NextSiblingElement();
@@ -138,7 +150,6 @@ void TabControlReader::setPropsWithFlatBuffers(cocos2d::Node* node, const flatbu
     tabControl->setHeaderWidth(options->headerWidth());
     tabControl->setHeaderHeight(options->headerHeight());
     tabControl->setHeaderSelectedZoom(options->selectedTabZoom());
-    tabControl->setSelectTab(options->selectedTabIndex());
 
     int tabItemCount = options->tabItems()->size();
     for (int i = 0; i < tabItemCount; i++)
@@ -148,6 +159,7 @@ void TabControlReader::setPropsWithFlatBuffers(cocos2d::Node* node, const flatbu
         auto container = LayoutReader::getInstance()->createNodeWithFlatBuffers((Table*)item->container());
         tabControl->insertTab(i, (TabHeader*)header, (Layout*)container);
     }
+    tabControl->setSelectTab(options->selectedTabIndex());
 }
 
 cocos2d::Node* TabControlReader::createNodeWithFlatBuffers(const flatbuffers::Table* nodeOptions)
@@ -914,7 +926,7 @@ flatbuffers::Offset<flatbuffers::TabItemOption> TabItemReader::createTabItemOpti
             header = *(Offset<flatbuffers::TabHeaderOption>*)(&
                 (TabHeaderReader::getInstance()->createOptionsWithFlatBuffers(child, builder)));
         }
-        else if (attriName.compare("Container"))
+        else if (attriName.compare("Container") == 0)
         {
             container = *(Offset<flatbuffers::PanelOptions>*)(&
                 (LayoutReader::getInstance()->createOptionsWithFlatBuffers(child, builder)));
