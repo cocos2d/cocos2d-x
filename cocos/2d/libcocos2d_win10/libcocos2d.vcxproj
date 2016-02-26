@@ -509,6 +509,7 @@
     <ClCompile Include="..\..\editor-support\cocostudio\CocoStudio.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\DictionaryHelper.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\FlatBuffersSerialize.cpp" />
+    <ClCompile Include="..\..\editor-support\cocostudio\LocalizationManager.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\TriggerBase.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\TriggerMng.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\TriggerObj.cpp" />
@@ -1127,6 +1128,7 @@
     <ClInclude Include="..\..\editor-support\cocostudio\CSParseBinary_generated.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\DictionaryHelper.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\FlatBuffersSerialize.h" />
+    <ClInclude Include="..\..\editor-support\cocostudio\LocalizationManager.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\TriggerBase.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\TriggerMng.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\TriggerObj.h" />
