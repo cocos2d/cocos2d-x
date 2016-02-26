@@ -854,8 +854,10 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    cocos2d::Label* _label;
-    cocostudio::LocalizationManager* _localization;
+    cocos2d::Label* _label1;
+    cocos2d::Label* _label2;
+    cocostudio::JsonLocalizationManager* _localizationJson;
+    cocostudio::BinLocalizationManager* _localizationBin;
 };
 
 #endif
