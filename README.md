@@ -69,6 +69,15 @@ You can also create a JS project or Lua project with `-l js` or `-l lua`.
 
     $ cocos run -p android -j 4
 
+### Build a new project for Android ###
+
+    $ cd NEW_PROJECTS_DIR/proj.android
+    $ python ./build_native.py
+
+### Build a new project for Android Studio ###
+
+    $ cocos compile -p android --android-studio
+
 ### Build and run a new project for iOS ###
 
     $ cocos run -p ios
