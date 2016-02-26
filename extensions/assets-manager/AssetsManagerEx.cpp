@@ -624,10 +624,17 @@ void AssetsManagerEx::startUpdate()
                 }
             }
             _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
-            this->batchDownload();
-            
-            std::string msg = StringUtils::format("Start to update %d files from remote package.", _totalToDownload);
-            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "", msg);
+            if (_totalWaitToDownload > 0)
+            {
+                this->batchDownload();
+                
+                std::string msg = StringUtils::format("Start to update %d files from remote package.", _totalToDownload);
+                dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "", msg);
+            }
+            else
+            {
+                updateSucceed();
+            }
         }
     }
 
