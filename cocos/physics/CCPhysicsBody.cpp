@@ -581,9 +581,41 @@ void PhysicsBody::setVelocity(const Vec2& velocity)
     cpBodySetVel(_cpBody, PhysicsHelper::point2cpv(velocity));
 }
 
+void PhysicsBody::setVelocityX(float velocity)
+{
+    if (!_dynamic)
+    {
+        CCLOG("physics warning: your can't set velocity for a static body.");
+        return;
+    }
+    
+    cpBodySetVel(_cpBody, PhysicsHelper::point2cpv(Vec2(velocity, getVelocityY())));
+}
+
+void PhysicsBody::setVelocityY(float velocity)
+{
+    if (!_dynamic)
+    {
+        CCLOG("physics warning: your can't set velocity for a static body.");
+        return;
+    }
+    
+    cpBodySetVel(_cpBody, PhysicsHelper::point2cpv(Vec2(getVelocityX(), velocity)));
+}
+
 Vec2 PhysicsBody::getVelocity()
 {
     return PhysicsHelper::cpv2point(cpBodyGetVel(_cpBody));
+}
+
+float PhysicsBody::getVelocityX()
+{
+    return PhysicsHelper::cpv2point(cpBodyGetVel(_cpBody)).x;
+}
+
+float PhysicsBody::getVelocityY()
+{
+    return PhysicsHelper::cpv2point(cpBodyGetVel(_cpBody)).y;
 }
 
 Vec2 PhysicsBody::getVelocityAtLocalPoint(const Vec2& point)

@@ -242,9 +242,29 @@ public:
      * @param velocity The velocity is set to this body.
      */
     virtual void setVelocity(const Vec2& velocity);
-    
+
+    /**
+    * Set the x-component of velocity of a body. The y-component remains unchanged.
+    *
+    * @param velocity The x component of velocity set to this body
+    */
+    virtual void setVelocityX(float velocity);
+
+     /**
+    * Set the y-component of velocity of a body. The x-component remains unchanged.
+    *
+    * @param velocity The y component of velocity set to this body
+    */
+    virtual void setVelocityY(float velocity);   
+
     /** Get the velocity of a body. */
     virtual Vec2 getVelocity();
+
+    /** Get the x-component of velocity of a body. */
+    float getVelocityX();
+
+     /** Get the x-component of velocity of a body. */
+    float getVelocityY();   
     
     /** 
      * Set the angular velocity of a body.
