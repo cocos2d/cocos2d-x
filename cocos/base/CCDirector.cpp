@@ -61,6 +61,7 @@ THE SOFTWARE.
 #include "base/CCConfiguration.h"
 #include "base/CCAsyncTaskPool.h"
 #include "platform/CCApplication.h"
+#include "network/WebSocket.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
 #include "CCScriptSupport.h"
@@ -976,6 +977,9 @@ void Director::reset()
     _runningScene = nullptr;
     _nextScene = nullptr;
 
+    // Close all websocket connection. It has to be invoked before cleaning scheduler
+    network::WebSocket::closeAllConnections();
+    
     // cleanup scheduler
     getScheduler()->unscheduleAll();
     
@@ -1033,7 +1037,7 @@ void Director::reset()
     GLProgramCache::destroyInstance();
     GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
-    AsyncTaskPool::destoryInstance();
+    AsyncTaskPool::destroyInstance();
     
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();

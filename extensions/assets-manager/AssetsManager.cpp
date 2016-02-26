@@ -260,7 +260,7 @@ bool AssetsManager::uncompress()
 {
     // Open the zip file
     string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
-    unzFile zipfile = unzOpen(outFileName.c_str());
+    unzFile zipfile = unzOpen(FileUtils::getInstance()->getSuitableFOpen(outFileName).c_str());
     if (! zipfile)
     {
         CCLOG("can not open downloaded zip file %s", outFileName.c_str());

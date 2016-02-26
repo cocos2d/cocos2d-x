@@ -1629,7 +1629,7 @@ public:
      */
     Vec2 convertTouchToNodeSpaceAR(Touch * touch) const;
 
-	/**
+    /**
      *  Sets an additional transform matrix to the node.
      *
      *  In order to remove it, call it again with the argument `nullptr`.
@@ -1684,34 +1684,133 @@ public:
     /// @} end of component functions
     
     // overrides
+    /**
+     * Return the node's opacity.
+     * @return A GLubyte value.
+     */
     virtual GLubyte getOpacity() const;
+    /**
+     * Return the node's display opacity.
+     * The difference between opacity and displayedOpacity is:
+     * The displayedOpacity is what's the final rendering opacity of node.
+     * @return A GLubyte value.
+     */
     virtual GLubyte getDisplayedOpacity() const;
+    /**
+     * Change node opacity.
+     * @param opacity A GLubyte opacity value.
+     */
     virtual void setOpacity(GLubyte opacity);
+    /**
+     * Update the displayed opacity of node with it's parent opacity;
+     * @param parentOpacity The opacity of parent node.
+     */
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    /**
+     * Whether cascadeOpacity is enabled or not.
+     * @return A boolean value.
+     */
     virtual bool isCascadeOpacityEnabled() const;
+    /**
+     * Change node's cascadeOpacity property.
+     * @param cascadeOpacityEnabled True to enable cascadeOpacity, false otherwise.
+     */
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
-    
+
+    /**
+     * Query node's color value.
+     * @return A Color3B color value.
+     */
     virtual const Color3B& getColor() const;
+    /**
+     * Query node's displayed color.
+     * @return A Color3B color value.
+     */
     virtual const Color3B& getDisplayedColor() const;
+    /**
+     * Change the color of node.
+     * @param color A Color3B color value.
+     */
     virtual void setColor(const Color3B& color);
+    /**
+     * Update node's displayed color with its parent color.
+     * @param parentColor A Color3B color value.
+     */
     virtual void updateDisplayedColor(const Color3B& parentColor);
+    /**
+     * Query whether cascadeColor is enabled or not.
+     * @return Whether cascadeColor is enabled or not.
+     */
     virtual bool isCascadeColorEnabled() const;
+    /**
+     * If you want node's color affect the children node's color, then set it to true.
+     * Otherwise, set it to false.
+     * @param cascadeColorEnabled A boolean value.
+     */
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
-    
+
+    /**
+     *  If you want the opacity affect the color property, then set to true.
+     * @param value A boolean value.
+     */
     virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
+    /**
+     * If node opacity will modify the RGB color value, then you should override this method and return true.
+     * @return A boolean value, true indicates that opacity will modify color; false otherwise.
+     */
     virtual bool isOpacityModifyRGB() const { return false; };
 
+    /**
+     * Set the callback of event onEnter.
+     * @param callback A std::function<void()> callback.
+     */
     void setOnEnterCallback(const std::function<void()>& callback) { _onEnterCallback = callback; }
-    const std::function<void()>& getOnEnterCallback() const { return _onEnterCallback; }   
+    /**
+     * Get the callback of event onEnter.
+     * @return A std:function<void()> callback.
+     */
+    const std::function<void()>& getOnEnterCallback() const { return _onEnterCallback; }
+    /**
+     * Set the callback of event onExit.
+     * @param callback A std::function<void()> callback.
+     */
     void setOnExitCallback(const std::function<void()>& callback) { _onExitCallback = callback; }
-    const std::function<void()>& getOnExitCallback() const { return _onExitCallback; }   
+    /**
+     * Get the callback of event onExit.
+     * @return A std::function<void()>.
+     */
+    const std::function<void()>& getOnExitCallback() const { return _onExitCallback; }
+    /**
+     * Set the callback of event EnterTransitionDidFinish.
+     * @param callback A std::function<void()> callback.
+     */
     void setonEnterTransitionDidFinishCallback(const std::function<void()>& callback) { _onEnterTransitionDidFinishCallback = callback; }
-    const std::function<void()>& getonEnterTransitionDidFinishCallback() const { return _onEnterTransitionDidFinishCallback; }   
+    /**
+     * Get the callback of event EnterTransitionDidFinish.
+     * @return std::function<void()>
+     */
+    const std::function<void()>& getonEnterTransitionDidFinishCallback() const { return _onEnterTransitionDidFinishCallback; }
+    /**
+     * Set the callback of event ExitTransitionDidStart.
+     * @param callback A std::function<void()> callback.
+     */
     void setonExitTransitionDidStartCallback(const std::function<void()>& callback) { _onExitTransitionDidStartCallback = callback; }
+    /**
+     * Get the callback of event ExitTransitionDidStart.
+     * @return std::function<void()>
+     */
     const std::function<void()>& getonExitTransitionDidStartCallback() const { return _onExitTransitionDidStartCallback; }
     
-    /** get & set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true */
+    /**
+     * get & set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true
+     */
     unsigned short getCameraMask() const { return _cameraMask; }
+    /**
+     * Modify the camera mask for current node.
+     * If applyChildren is true, then it will modify the camera mask of its children recursively.
+     * @param mask A unsigned short bit for mask.
+     * @param applyChildren A boolean value to determine whether the mask bit should apply to its children or not.
+     */
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true);
 
 CC_CONSTRUCTOR_ACCESS:
@@ -1841,11 +1940,11 @@ protected:
     ComponentContainer *_componentContainer;        ///< Dictionary of components
     
     // opacity controls
-    GLubyte		_displayedOpacity;
+    GLubyte         _displayedOpacity;
     GLubyte     _realOpacity;
-    Color3B	    _displayedColor;
+    Color3B         _displayedColor;
     Color3B     _realColor;
-    bool		_cascadeColorEnabled;
+    bool        _cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
 
     static int s_globalOrderOfArrival;

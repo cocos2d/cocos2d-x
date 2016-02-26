@@ -51,7 +51,7 @@
 --------------------------------
 --  @brief Create function for creating a new AssetsManagerEx<br>
 -- param manifestUrl   The url for the local manifest file<br>
--- param storagePath   The storage path for downloaded assetes<br>
+-- param storagePath   The storage path for downloaded assets<br>
 -- warning   The cached manifest in your storage path have higher priority and will be searched first,<br>
 -- only if it doesn't exist, AssetsManagerEx will use the given manifestUrl.
 -- @function [parent=#AssetsManagerEx] create 

@@ -329,7 +329,7 @@ public:
      *
      * @return The inner container position.
      */
-    const Vec2 getInnerContainerPosition() const;
+    const Vec2& getInnerContainerPosition() const;
 
     /**
      * Add callback function which will be called  when scrollview event triggered.

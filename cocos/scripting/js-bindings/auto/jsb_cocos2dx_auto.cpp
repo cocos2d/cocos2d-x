@@ -42114,7 +42114,7 @@ bool js_cocos2dx_ParticleSystem_getResourceFile(JSContext *cx, uint32_t argc, js
     cocos2d::ParticleSystem* cobj = (cocos2d::ParticleSystem *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleSystem_getResourceFile : Invalid Native Object");
     if (argc == 0) {
-        const std::string ret = cobj->getResourceFile();
+        const std::string& ret = cobj->getResourceFile();
         jsval jsret = JSVAL_NULL;
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
@@ -46458,7 +46458,7 @@ bool js_cocos2dx_Sprite_getResourceName(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::Sprite* cobj = (cocos2d::Sprite *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Sprite_getResourceName : Invalid Native Object");
     if (argc == 0) {
-        const std::string ret = cobj->getResourceName();
+        const std::string& ret = cobj->getResourceName();
         jsval jsret = JSVAL_NULL;
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
@@ -63056,7 +63056,7 @@ bool js_cocos2dx_TMXTiledMap_getResourceFile(JSContext *cx, uint32_t argc, jsval
     cocos2d::TMXTiledMap* cobj = (cocos2d::TMXTiledMap *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXTiledMap_getResourceFile : Invalid Native Object");
     if (argc == 0) {
-        const std::string ret = cobj->getResourceFile();
+        const std::string& ret = cobj->getResourceFile();
         jsval jsret = JSVAL_NULL;
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);

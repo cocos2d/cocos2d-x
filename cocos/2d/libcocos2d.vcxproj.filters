@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="physics">
@@ -1941,9 +1941,6 @@
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
-    <ClCompile Include="..\editor-support\cocostudio\LocalizationManager.cpp">
-      <Filter>cocostudio\components</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -3791,8 +3788,8 @@
     <ClInclude Include="..\ui\UIAbstractCheckButton.h">
       <Filter>ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\editor-support\cocostudio\LocalizationManager.h">
-      <Filter>cocostudio\components</Filter>
+    <ClInclude Include="..\editor-support\cocostudio\CSLanguageDataBinary_generated.h">
+      <Filter>cocostudio\json</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -275,7 +275,7 @@ public:
 
     /** Insert an object to dictionary, and match it with the specified string key.
      *
-     *  @note Whe the first time this method is invoked, the key type will be set to string.
+     *  @note When the first time this method is invoked, the key type will be set to string.
      *        After that you can't setObject with an integer key.
      *        If the dictionary contains the key you passed, the object matching the key will be released and removed from dictionary.
      *        Then the new object will be inserted after that.

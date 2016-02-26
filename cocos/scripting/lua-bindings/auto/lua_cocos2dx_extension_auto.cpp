@@ -14493,7 +14493,7 @@ int lua_cocos2dx_extension_PUParticleSystem3D_getMaterialName(lua_State* tolua_S
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_PUParticleSystem3D_getMaterialName'", nullptr);
             return 0;
         }
-        const std::string ret = cobj->getMaterialName();
+        const std::string& ret = cobj->getMaterialName();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }

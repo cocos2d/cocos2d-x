@@ -253,7 +253,7 @@ public:
     virtual std::string getDescription() const override;
 
     int  getLayerNum();
-    const std::string getResourceFile() const { return _tmxFile; }
+    const std::string& getResourceFile() const { return _tmxFile; }
 
 CC_CONSTRUCTOR_ACCESS:
     /**

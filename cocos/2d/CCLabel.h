@@ -364,7 +364,7 @@ public:
     /**
      * Enables strikethrough.
      * Underline and Strikethrough cannot be enabled at the same time.
-     * Strikethough is like an underline but at the middle of the glyph
+     * Strikethrough is like an underline but at the middle of the glyph
      */
     void enableStrikethrough();
     /**
