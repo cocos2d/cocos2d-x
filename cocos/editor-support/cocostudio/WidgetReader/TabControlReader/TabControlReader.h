@@ -46,11 +46,8 @@ public:
 
     void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* nodeOption) override;
 
-    //CSArmatureNode
     cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* nodeOptions) override;
 private:
-
-
     static TabControlReader* _tabReaderInstance;
 };
 

@@ -1,4 +1,31 @@
+/****************************************************************************
+Copyright (c) 2015 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+
 #include "platform/CCFileUtils.h"
+#include "2d/CCSprite.h"
+#include "2d/CCLabel.h"
+#include "ui/UILayout.h"
 #include "UITabControl.h"
 
 NS_CC_BEGIN
@@ -25,28 +52,6 @@ namespace ui
         _tabItems.clear();
     }
 
-    void TabControl::insertTab(int index, std::string textStr)
-    {
-        int cellSize = _tabItems.size();
-        if (index > cellSize)
-        {
-            CCLOG("%s", "insert index error");
-            return;
-        }
-
-        auto tab = TabHeader::create(textStr, _headerBackGround, _headerBackGroundSelected,
-            _headerCross, _headerBackGroundDisabled, _headerFrontCrossDisabled);
-
-        tab->setTitleFontName(_headerFontName);
-        tab->setTitleFontSize(_headerFontSize);
-        tab->setTitleText(textStr);
-
-        auto container = Layout::create();
-        container->setBackGroundImage(_containerBackGround);
-        
-        insertTab(index, tab, container);
-    }
-
     void TabControl::insertTab(int index, TabHeader* headerCell, Layout* container)
     {
         int cellSize = _tabItems.size();
@@ -63,10 +68,10 @@ namespace ui
         headerCell->_tabView = this;
         headerCell->_tabSelectedEvent = CC_CALLBACK_2(TabControl::dispatchSelectedTabChanged, this); // binding tab selected event
 
-        formatAfterInsert(index);
+        initAfterInsert(index);
     }
 
-    void TabControl::formatAfterInsert(int index)
+    void TabControl::initAfterInsert(int index)
     {
         int cellSize =_tabItems.size();
         auto tabItem = _tabItems.at(index);
@@ -86,11 +91,13 @@ namespace ui
             headerCell->setSelected(false);
             container->setVisible(false);
         }
-        headerCell->setContentSize(Size(_headerWidth, _headerHeight));
 
-        resetTabHeadersPos(index);
+        headerCell->setContentSize(Size(_headerWidth, _headerHeight));
+		headerCell->setAnchorPoint(getHeaderAnchorWithDock());
+
+        initTabHeadersPos(index);
         if (_containerSize.equals(Size::ZERO))
-            resetContainers();
+            initContainers();
         else
         {
             container->setPosition(_containerPosition);
@@ -117,11 +124,14 @@ namespace ui
             removeProtectedChild(cell);
         }
         _tabItems.erase(_tabItems.begin() + index);
-        if (index == _currItemIndex)
-        {
-            setSelectTab(0);
-        }
-        resetTabHeadersPos(index);
+		if (index == _currItemIndex)
+		{
+			setSelectTab(0);
+		}
+		else if (index < _currItemIndex)
+			_currItemIndex--;
+
+        initTabHeadersPos(index);
     }
 
     int TabControl::getTabCount() const
@@ -129,28 +139,22 @@ namespace ui
         return _tabItems.size();
     }
 
-    void TabControl::setAutoAdjustHeaders(bool autoAdjust)
-    {
-        _autoAdjustHeaders = true;
-        resetTabHeadersPos(0);
-    }
-
     void TabControl::setHeaderWidth(float headerWith)
     {
         _headerWidth = headerWith;
         if (_headerDockPlace == Dock::TOP || _headerDockPlace == Dock::BOTTOM)
-            resetTabHeadersPos(0);
+            initTabHeadersPos(0);
         if (_headerDockPlace == Dock::LEFT || _headerDockPlace == Dock::RIGHT)
-            resetContainers();
+            initContainers();
     }
 
     void TabControl::setHeaderHeight(float headerHeigt)
     {
         _headerHeight = headerHeigt;
         if (_headerDockPlace == Dock::LEFT || _headerDockPlace == Dock::RIGHT)
-            resetTabHeadersPos(0);
+            initTabHeadersPos(0);
         if (_headerDockPlace == Dock::TOP || _headerDockPlace == Dock::BOTTOM)
-            resetContainers();
+            initContainers();
     }
 
     void TabControl::setHeaderDockPlace(TabControl::Dock dockPlace)
@@ -158,13 +162,43 @@ namespace ui
         if (_headerDockPlace != dockPlace)
         {
             _headerDockPlace = dockPlace;
-            auto zoom = _currentHeaderZoom;
-            setHeaderSelectedZoom(0.f);
-            resetTabHeadersPos(0);
-            resetContainers();
-            setHeaderSelectedZoom(zoom);
+            initTabHeadersPos(0);
+            initContainers();
+			
+			auto anpoint = getHeaderAnchorWithDock();
+			for (auto& item : _tabItems)
+			{
+				item.header->setAnchorPoint(anpoint);
+			}
         }
     }
+
+
+	cocos2d::Vec2 TabControl::getHeaderAnchorWithDock() const
+	{
+		Vec2 anpoint(.5f, .0f);
+		switch (_headerDockPlace)
+		{
+		case TabControl::TOP:
+			break;
+		case TabControl::LEFT:
+			anpoint.x = 1.f;
+			anpoint.y = .5f;
+			break;
+		case TabControl::BOTTOM:
+			anpoint.x = .5f;
+			anpoint.y = 1.f;
+			break;
+		case TabControl::RIGHT:
+			anpoint.x = 0.f;
+			anpoint.y = .5f;
+			break;
+		default:
+			break;
+		}
+		return anpoint;
+	}
+
 
     void TabControl::setHeaderFontSize(float fontsize)
     {
@@ -186,18 +220,18 @@ namespace ui
 
     void TabControl::onSizeChanged()
     {
-        resetTabHeadersPos(0);
-        resetContainers();
+        initTabHeadersPos(0);
+        initContainers();
     }
 
-    void TabControl::resetTabHeadersPos(int startIndex)
+    void TabControl::initTabHeadersPos(int startIndex)
     {
         int cellSize = _tabItems.size();
         if (startIndex >= cellSize)
             return;
 
-        float originX = _headerWidth >> 1;
-        float originY = _contentSize.height - (_headerHeight >> 1);
+        float originX = _headerWidth * .5f;
+        float originY = _contentSize.height - _headerHeight;
         Vec2 deltaPos(0.f, 0.f);
         switch (_headerDockPlace)
         {
@@ -205,14 +239,17 @@ namespace ui
             deltaPos.x = _headerWidth;
             break;
         case TabControl::LEFT:
+			originX = _headerWidth;
+			originY = _contentSize.height - _headerHeight * .5f;
             deltaPos.y = 0 - _headerHeight;
             break;
         case TabControl::BOTTOM:
-            originY = _headerHeight >> 1;
+            originY = _headerHeight;
             deltaPos.x = _headerWidth;
             break;
         case TabControl::RIGHT:
-            originX = _contentSize.width - originX;
+            originX = _contentSize.width - _headerWidth;
+			originY = _contentSize.height - _headerHeight * .5f;
             deltaPos.y = 0 - _headerHeight;
             break;
         default:
@@ -226,7 +263,7 @@ namespace ui
         }
     }
 
-    void TabControl::resetContainers()
+    void TabControl::initContainers()
     {
         switch (_headerDockPlace)
         {
@@ -351,35 +388,6 @@ namespace ui
         return nullptr;
     }
 
-    TabControl* TabControl::create(const std::string& headerBackGround,
-        const std::string& headerBackGroundSelected,
-        const std::string& headerCross,
-        const std::string& headerBackGroundDisabled,
-        const std::string& headerFrontCrossDisabled,
-        const std::string& containerBackGround)
-    {
-
-        auto tabControl = TabControl::create();
-        if (tabControl != nullptr)
-        {
-            tabControl->_headerBackGround = headerBackGround;
-            tabControl->_headerBackGroundSelected = headerBackGroundSelected;
-            tabControl->_headerCross = headerCross;
-            tabControl->_headerBackGroundDisabled = headerBackGroundDisabled;
-            tabControl->_headerFrontCrossDisabled = headerFrontCrossDisabled;
-            tabControl->_containerBackGround = containerBackGround;
-            return tabControl;
-        }
-        return nullptr;
-    }
-
-    TabControl* TabControl::create(const std::string& headerBackGround,
-        const std::string& headerCross,
-        const std::string& containerBackGround)
-    {
-        return TabControl::create(headerBackGround, "", headerCross, "", "", containerBackGround);
-    }
-
     void TabControl::setSelectTab(int index)
     {
         int cellSize = _tabItems.size();
@@ -404,18 +412,6 @@ namespace ui
             {
                 auto currentHeader = _tabItems.at(_currItemIndex).header;
                 currentHeader->setScale(1.0f + _currentHeaderZoom);
-                float deltay = (_headerHeight * 0.5f * deltaZoom);
-                float deltax = (_headerWidth * 0.5f * deltaZoom);
-                auto pos = currentHeader->getPosition();
-                if (_headerDockPlace == Dock::TOP)
-                    pos.y += deltay;
-                else if (_headerDockPlace == Dock::LEFT)
-                    pos.x -= deltax;
-                else if (_headerDockPlace == Dock::BOTTOM)
-                    pos.y -= deltay;
-                else if (_headerDockPlace == Dock::RIGHT)
-                    pos.x += deltax;
-                currentHeader->setPosition(pos);
             }
         }
     }
@@ -430,47 +426,31 @@ namespace ui
         {
             currentHeader = _tabItems.at(_currItemIndex).header;
             currentHeader->setLocalZOrder(-2);
+			currentHeader->setScale(1.0f);
         }
         TabHeader *activeHeader = nullptr;
         if (tabIndex != -1)
         {
             activeHeader = _tabItems.at(tabIndex).header;
             activeHeader->setLocalZOrder(-1);
+			activeHeader->setScale(1.0f + _currentHeaderZoom);
         }
         _reorderProtectedChildDirty = true;
-
-        float deltay = (_headerHeight * 0.5f * _currentHeaderZoom);
-        float deltax = (_headerWidth * 0.5f * _currentHeaderZoom);
-        if (currentHeader != nullptr)
-        {
-            currentHeader->setScale(1.0f);
-            auto pos = currentHeader->getPosition();
-            if (_headerDockPlace == Dock::TOP)
-                pos.y -= deltay;
-            else if (_headerDockPlace == Dock::LEFT)
-                pos.x += deltax;
-            else if (_headerDockPlace == Dock::BOTTOM)
-                pos.y += deltay;
-            else if (_headerDockPlace == Dock::RIGHT)
-                pos.x -= deltax;
-            currentHeader->setPosition(pos);
-        }
-
-        if (activeHeader != nullptr)
-        {
-            activeHeader->setScale(1.0f + _currentHeaderZoom);
-            auto pos = activeHeader->getPosition();
-            if (_headerDockPlace == Dock::TOP)
-                pos.y += deltay;
-            else if (_headerDockPlace == Dock::LEFT)
-                pos.x -= deltax;
-            else if (_headerDockPlace == Dock::BOTTOM)
-                pos.y -= deltay;
-            else if (_headerDockPlace == Dock::RIGHT)
-                pos.x += deltax;
-            activeHeader->setPosition(pos);
-        }
     }
+
+	void TabControl::copySpecialProperties(Widget* model)
+	{
+		auto srcTab = dynamic_cast<TabControl*>(model);
+		if (srcTab != nullptr)
+		{
+			Layout::copySpecialProperties(srcTab);
+			_headerWidth = srcTab->_headerWidth;
+			_headerHeight = srcTab->_headerHeight;
+			_headerDockPlace = srcTab->_headerDockPlace;
+			_currentHeaderZoom = srcTab->_currentHeaderZoom;
+			_tabChangedCallback = srcTab->_tabChangedCallback;
+		}
+	}
 
     TabHeader::TabHeader()
         : _tabLabelRender(nullptr)
@@ -494,6 +474,7 @@ namespace ui
         if (tabcell != nullptr && tabcell->init())
         {
             tabcell->_frontCrossRenderer->setVisible(false); // _isSelected == fales
+			tabcell->_anchorPoint = Vec2(.5f, 0);
             tabcell->autorelease();
             return tabcell;
         }
@@ -505,20 +486,21 @@ namespace ui
         const std::string & backGround,
         const std::string & cross, TextureResType texType)
     {
-        TabHeader *pWidget = new (std::nothrow) TabHeader;
-        if (pWidget && pWidget->init(backGround,
+		TabHeader *tabcell = new (std::nothrow) TabHeader;
+		if (tabcell && tabcell->init(backGround,
             "",
             cross,
             "",
             "",
             texType))
         {
-            pWidget->_frontCrossRenderer->setVisible(false); // _isSelected == false
-            pWidget->_tabLabelRender->setString(titleStr);
-            pWidget->autorelease();
-            return pWidget;
+			tabcell->_frontCrossRenderer->setVisible(false); // _isSelected == false
+			tabcell->_tabLabelRender->setString(titleStr);
+			tabcell->_anchorPoint = Vec2(.5f, 0);
+			tabcell->autorelease();
+			return tabcell;
         }
-        CC_SAFE_DELETE(pWidget);
+		CC_SAFE_DELETE(tabcell);
         return nullptr;
     }
 
@@ -530,20 +512,21 @@ namespace ui
         const std::string& frontCrossDisabled,
         TextureResType texType /*= TextureResType::LOCAL*/)
     {
-        TabHeader *pWidget = new (std::nothrow) TabHeader;
-        if (pWidget && pWidget->init(backGround,
+		TabHeader *tabcell = new (std::nothrow) TabHeader;
+		if (tabcell && tabcell->init(backGround,
             backGroundSelected,
             cross,
             backGroundDisabled,
             frontCrossDisabled,
             texType))
         {
-            pWidget->_frontCrossRenderer->setVisible(false); // _isSelected == false
-            pWidget->_tabLabelRender->setString(titleStr);
-            pWidget->autorelease();
-            return pWidget;
+			tabcell->_frontCrossRenderer->setVisible(false); // _isSelected == false
+			tabcell->_tabLabelRender->setString(titleStr);
+			tabcell->_anchorPoint = Vec2(.5f, 0);
+			tabcell->autorelease();
+			return tabcell;
         }
-        CC_SAFE_DELETE(pWidget);
+		CC_SAFE_DELETE(tabcell);
         return nullptr;
     }
 
@@ -586,9 +569,9 @@ namespace ui
         return _tabLabelRender->getString();
     }
 
-    void TabHeader::setTitleColor(const Color3B& color)
+    void TabHeader::setTitleColor(const Color4B& color)
     {
-        _tabLabelRender->setTextColor(Color4B(color));
+        _tabLabelRender->setTextColor(color);
     }
 
     Color3B TabHeader::getTitleColor() const
@@ -730,6 +713,18 @@ namespace ui
             return -1;
         return _tabView->indexOfTabHeader(this);
     }
+
+	void TabHeader::copySpecialProperties(Widget* model)
+	{
+		auto header = dynamic_cast<TabHeader*>(model);
+		if (header != nullptr)
+		{
+			AbstractCheckButton::copySpecialProperties(model);
+			_fontType = header->_fontType;
+			_tabLabelFontSize = header->_tabLabelFontSize;
+			_tabSelectedEvent = header->_tabSelectedEvent;
+		}
+	}
 
 }
 NS_CC_END

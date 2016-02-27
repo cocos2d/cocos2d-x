@@ -1,9 +1,31 @@
+/****************************************************************************
+Copyright (c) 2015 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+
 
 #ifndef __UITABVIEW_H__
 #define __UITABVIEW_H__
 
-#include "2d/CCSprite.h"
-#include "2d/CCLabel.h"
 #include "ui/UIAbstractCheckButton.h"
 #include "ui/UILayout.h"
 
@@ -18,7 +40,7 @@ class Label;
 namespace ui {
 
     /**
-    *
+    * the header button in TabControl
     */
     class CC_GUI_DLL TabHeader : public AbstractCheckButton
     {
@@ -80,7 +102,7 @@ namespace ui {
         * Change the color of Cell's title.
         *@param color The title color in Color3B.
         */
-        void setTitleColor(const Color3B& color);
+        void setTitleColor(const Color4B& color);
 
         /**
         * Query the Cell title color.
@@ -112,7 +134,12 @@ namespace ui {
         */
         const std::string getTitleFontName() const;
 
+		/**
+		* get the index this header in the TabControl
+		* @return -1 means not in this TabControl
+		*/
         int   getIndexInTabControl();
+
 
     protected:
         TabHeader();
@@ -125,6 +152,8 @@ namespace ui {
 
         virtual void releaseUpEvent() override;
         void dispatchSelectChangedEvent(bool select) override;
+
+		virtual void copySpecialProperties(Widget* model) override;
 
     private:
         Label*       _tabLabelRender;
@@ -147,6 +176,10 @@ namespace ui {
         CustomCommand _beforeVisitCmdScissor;
         CustomCommand _afterVisitCmdScissor;*/
     };
+
+	/**
+	* TabControl, use header button switch container
+	*/
     class CC_GUI_DLL TabControl : public Layout
     {
     public:
@@ -167,65 +200,72 @@ namespace ui {
 
         static TabControl* create();
 
-        static TabControl* create(const std::string& headerBackGround,
-            const std::string& headerCross,
-            const std::string& containerBackGround);
-
-        static TabControl* TabControl::create(const std::string& headerBackGround,
-            const std::string& headerBackGroundSelected,
-            const std::string& headerCross,
-            const std::string& headerBackGroundDisabled,
-            const std::string& headerFrontCrossDisabled,
-            const std::string& containerBackGround);
         /// @{
         /// @name behaviours
 
-        // tab options
-        void      insertTab(int index, std::string textStr);
+		/**
+		* remove the tabItem
+		*/
         void      removeTab(int index);
 
+		/**
+		* set tab selected
+		*/
         void      setSelectTab(int index);
+
+		/**
+		* set tab selected
+		*/
         void      setSelectTab(TabHeader* tabHeaderCell);
 
+		/**
+		* get TabHeader
+		*/
         TabHeader* getTabHeader(int index) const;
+
+		/**
+		* get Container
+		*/
         Layout*   getTabContainer(int index) const;
 
         /**
-        * insert a custom tab, and format the header and container
-        * @param index the index tab should be
-        * @param headerBtn, the header Button, will be a protected child in tabcontrol
-        * @param the container, will be a protected child in tabcontrol
+        * insert tab, and init the position of header and container
+        * @param index, the index tab should be
+        * @param headerCell, the header Button, will be a protected child in TabControl
+        * @param the container, will be a protected child in TabControl
         */
         void      insertTab(int index, TabHeader* headerCell, Layout* container);
 
         // the tab count
         int         getTabCount() const;
+
         // get current selected tab's index
         inline int  getCurrentTabIndex() { return _currItemIndex; }
 
-        // auto adjust header width
-        void        setAutoAdjustHeaders(bool autoAdjust);
-        inline bool isAutoAdjsutHeaders() const { return _autoAdjustHeaders; }
-        // set header width, no affect when auto adjust headers
-        void         setHeaderWidth(float headerWith);
-        inline float getHeaderWidth() const { return _headerWidth; }
+		// get the index of tabCell in TabView, return -1 if not exists in.
+		int indexOfTabHeader(TabHeader* tabCell);
 
-        // set header height, no affect when auto adjust headers
-        void         setHeaderHeight(float headerHeigt);
-        inline int   getHeaderHeight() const { return _headerHeight; }
-
-        void         setHeaderSelectedZoom(float zoom);
-        inline float getHeaderSelectedZoom() { return _currentHeaderZoom; }
-
-        // set header dock place
-        void         setHeaderDockPlace(TabControl::Dock dockPlace);
-        inline TabControl::Dock getHeaderDockPlace() const { return _headerDockPlace; }
-
+		// callback after selected changed
         void setTabChangedEventListener(const ccTabViewCallback& callBack);
         /// @} 
 
         /// @{ 
         /// @ properties
+		// set header width, affect all tabitems
+		void         setHeaderWidth(float headerWith);
+		inline float getHeaderWidth() const { return _headerWidth; }
+
+		// set header height, , affect all tabitems
+		void         setHeaderHeight(float headerHeigt);
+		inline int   getHeaderHeight() const { return _headerHeight; }
+
+		// the delta Zoom after selected tab actived
+		void         setHeaderSelectedZoom(float zoom);
+		inline float getHeaderSelectedZoom() { return _currentHeaderZoom; }
+
+		// set header dock place
+		void         setHeaderDockPlace(TabControl::Dock dockPlace);
+		inline TabControl::Dock getHeaderDockPlace() const { return _headerDockPlace; }
 
         /**
         * set fontsize and all existed header cell
@@ -239,48 +279,36 @@ namespace ui {
         */
         void setHeaderFontName(std::string fontName);
 
-        // get the index of tabCell in TabView, return -1 if not exists in.
-        int indexOfTabHeader(TabHeader* tabCell);
-
         /// @}
     protected:
         TabControl();
         ~TabControl();
 
         void onSizeChanged() override;
-        void resetTabHeadersPos(int startIndex);
-        void resetContainers();
+        void initTabHeadersPos(int startIndex);
+        void initContainers();
+		virtual void copySpecialProperties(Widget* model) override;
 
         ccTabViewCallback _tabChangedCallback;
         // dispatch selected changed
         void dispatchSelectedTabChanged(int tabIndex, TabHeader::EventType eventType);
     private:
         // format tabheader and container after insert
-        void formatAfterInsert(int index);
+        void initAfterInsert(int index);
         void activeHeader(int tabindex);
+		Vec2 getHeaderAnchorWithDock() const;
+
         int         _currItemIndex;
-        bool        _crossTextureLoaded;
 
         float       _headerFontSize;
         std::string _headerFontName;
 
-        bool        _autoAdjustHeaders;
         int         _headerHeight;
         int         _headerWidth;
         Dock        _headerDockPlace;
         Vec2        _containerPosition;
         Size        _containerSize;
         float       _currentHeaderZoom;
-
-        // normal textures
-        std::string _headerBackGround;
-        std::string _headerBackGroundSelected;
-        std::string _headerCross;
-        std::string _headerBackGroundDisabled;
-        std::string _headerFrontCrossDisabled;
-        std::string _headerContainerBackground;
-        std::string _containerBackGround;
-
 
         typedef struct CellContainer
         {
