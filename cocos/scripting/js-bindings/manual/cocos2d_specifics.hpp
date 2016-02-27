@@ -84,6 +84,11 @@ inline js_type_class_t *js_get_type_from_native(T* native_obj) {
 }
 
 /**
+* get type from a cocos2d::Node, call function(js_get_type_from_native) above.
+*/
+CC_JS_DLL js_type_class_t *js_get_type_from_node(cocos2d::Node* native_obj);
+
+/**
  * Gets or creates a JSObject based on native_obj.
  * If native_obj is subclass of Ref, it will use the jsb_ref functions.
  * Otherwise it will Root the newly created JSObject

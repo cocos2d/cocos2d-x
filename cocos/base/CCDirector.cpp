@@ -1037,7 +1037,7 @@ void Director::reset()
     GLProgramCache::destroyInstance();
     GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
-    AsyncTaskPool::destoryInstance();
+    AsyncTaskPool::destroyInstance();
     
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
