@@ -95,7 +95,11 @@ ChipmunkTest::~ChipmunkTest()
         cpShapeFree( _walls[i] );
     }
 
-    cpHastySpaceFree( _space );
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+	cpSpaceFree(_space);
+#else
+	cpHastySpaceFree(_space);
+#endif
 
     Device::setAccelerometerEnabled(false);
 #endif
@@ -107,8 +111,12 @@ void ChipmunkTest::initPhysics()
     // init chipmunk
     //cpInitChipmunk();
 
-    _space = cpHastySpaceNew();
-    cpHastySpaceSetThreads(_space, 0);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+	_space = cpSpaceNew();
+#else
+	_space = cpHastySpaceNew();
+	cpHastySpaceSetThreads(_space, 0);
+#endif
 
     cpSpaceSetGravity(_space, cpv(0, -100));
 
@@ -156,7 +164,12 @@ void ChipmunkTest::update(float delta)
     float dt = Director::getInstance()->getAnimationInterval()/(float)steps;
 
     for(int i=0; i<steps; i++){
-        cpHastySpaceStep(_space, dt);
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+		cpSpaceStep(_space, dt);
+#else
+		cpHastySpaceStep(_space, dt);
+#endif
     }
 }
 
