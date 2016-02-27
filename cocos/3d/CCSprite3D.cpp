@@ -664,6 +664,20 @@ void Sprite3D::setTexture(Texture2D* texture)
         mesh->setTexture(texture);
     }
 }
+
+void Sprite3D::setTexture(const std::string& texFile, NTextureData::Usage usage)
+{
+    auto tex = Director::getInstance()->getTextureCache()->addImage(texFile);
+    setTexture(tex, usage);
+}
+
+void Sprite3D::setTexture(Texture2D* texture, NTextureData::Usage usage)
+{
+    for (auto mesh: _meshes) {
+        mesh->setTexture(texture, usage);
+    }
+}
+
 AttachNode* Sprite3D::getAttachNode(const std::string& boneName)
 {
     auto it = _attachments.find(boneName);

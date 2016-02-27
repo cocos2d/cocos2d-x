@@ -83,6 +83,10 @@ public:
     /**set diffuse texture, set the first if multiple textures exist*/
     void setTexture(const std::string& texFile);
     void setTexture(Texture2D* texture);
+
+    /**set texture with usage specified. set the first if multiple textures exist */
+    void setTexture(const std::string& texFile, NTextureData::Usage usage);
+    void setTexture(Texture2D* texture, NTextureData::Usage usage);
     
     /**get Mesh by index*/
     Mesh* getMeshByIndex(int index) const;
