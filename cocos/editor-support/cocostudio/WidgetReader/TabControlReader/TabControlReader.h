@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __TABCONTROLREADER_H_
 #define __TABCONTROLREADER_H_
 
-#include "cocos2d.h"
 #include "cocostudio/WidgetReader/NodeReaderProtocol.h"
 #include "cocostudio/WidgetReader/NodeReaderDefine.h"
 #include "cocostudio/WidgetReader/TabControlReader/CSTabControl_generated.h"

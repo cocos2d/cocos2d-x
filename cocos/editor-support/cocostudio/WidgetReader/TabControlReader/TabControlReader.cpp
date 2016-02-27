@@ -3,8 +3,8 @@
 #include "cocostudio/WidgetReader/WidgetReader.h"
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/WidgetReader/TabControlReader/TabControlReader.h"
-#include "cocostudio/WidgetReader/LayoutReader/LayoutReader.h"
 #include "cocostudio/FlatBuffersSerialize.h"
+#include "cocostudio/ActionTimeline/CSLoader.h"
 #include "cocos/ui/UITabControl.h"
 
 
@@ -156,7 +156,7 @@ void TabControlReader::setPropsWithFlatBuffers(cocos2d::Node* node, const flatbu
     {
         auto item = options->tabItems()->Get(i);
         auto header = TabHeaderReader::getInstance()->createNodeWithFlatBuffers((Table*)item->header());
-        auto container = LayoutReader::getInstance()->createNodeWithFlatBuffers((Table*)item->container());
+        auto container = CSLoader::getInstance()->nodeWithFlatBuffers(item->container());
         tabControl->insertTab(i, (TabHeader*)header, (Layout*)container);
     }
     tabControl->setSelectTab(options->selectedTabIndex());
@@ -211,7 +211,7 @@ flatbuffers::Offset<flatbuffers::Table> TabHeaderReader::createOptionsWithFlatBu
     auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
     auto nodeOptions = *(Offset<WidgetOptions>*)(&temp);
 
-    
+
     int fontsize = 12;
     std::string text = "";
     cocos2d::Color4B textColor(255, 255, 255, 255);
@@ -289,7 +289,7 @@ flatbuffers::Offset<flatbuffers::Table> TabHeaderReader::createOptionsWithFlatBu
 
                 attribute = attribute->Next();
             }
-        } 
+        }
         else if (name == "NormalBackFileData")
         {
             std::string texture = "";
@@ -915,12 +915,18 @@ flatbuffers::Offset<flatbuffers::TabItemOption> TabItemReader::createTabItemOpti
 {
 
     flatbuffers::Offset<TabHeaderOption> header;
-    flatbuffers::Offset<PanelOptions> container;
+    flatbuffers::Offset<NodeTree> container;
+    tinyxml2::XMLElement* containerData = nullptr;
+    tinyxml2::XMLElement* containerChildrenData = nullptr;
 
     const tinyxml2::XMLElement* child = objectData->FirstChildElement();
     while (child)
     {
         std::string attriName = child->Name();
+        if (attriName.compare("Children") == 0)
+        {
+            containerChildrenData = const_cast<tinyxml2::XMLElement*>(child);
+        }
         if (attriName.compare("Header") == 0)
         {
             header = *(Offset<flatbuffers::TabHeaderOption>*)(&
@@ -928,15 +934,22 @@ flatbuffers::Offset<flatbuffers::TabItemOption> TabItemReader::createTabItemOpti
         }
         else if (attriName.compare("Container") == 0)
         {
-            container = *(Offset<flatbuffers::PanelOptions>*)(&
-                (LayoutReader::getInstance()->createOptionsWithFlatBuffers(child, builder)));
+            containerData = const_cast<tinyxml2::XMLElement*>(child);
         }
-
         child = child->NextSiblingElement();
     }
+
+    if (containerChildrenData != nullptr)
+    {
+        containerData->InsertEndChild(containerChildrenData);
+    }
+
+    container = *(Offset<flatbuffers::NodeTree>*)(&
+        (FlatBuffersSerialize::getInstance()->createNodeTree(containerData, "PanelObjectData")));
+
     auto options = CreateTabItemOption(*builder,
-        *(Offset<flatbuffers::TabHeaderOption>*)(&header), 
-        *(Offset<flatbuffers::PanelOptions>*)(&container)
+        *(Offset<flatbuffers::TabHeaderOption>*)(&header),
+        container
         );
     return  *(&options);
 }
@@ -955,7 +968,7 @@ cocos2d::Node* TabItemReader::createNodeWithFlatBuffers(const flatbuffers::Table
 flatbuffers::Offset<flatbuffers::Table> TabItemReader::createOptionsWithFlatBuffers(
     const tinyxml2::XMLElement* objectData, flatbuffers::FlatBufferBuilder* builder)
 {
-    
+
     // nothing
     return *(Offset<Table>*)(&CreateTabItemOption(*builder));
 }

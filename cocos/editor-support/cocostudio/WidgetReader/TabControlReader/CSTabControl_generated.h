@@ -160,9 +160,10 @@ inline flatbuffers::Offset<TabHeaderOption> CreateTabHeaderOption(flatbuffers::F
     return builder_.Finish();
 }
 
+
 struct TabItemOption : private flatbuffers::Table {
     const TabHeaderOption *header() const { return GetPointer<const TabHeaderOption *>(4); }
-    const PanelOptions *container() const { return GetPointer<const PanelOptions *>(6); }
+    const NodeTree *container() const { return GetPointer<const NodeTree *>(6); }
     bool Verify(flatbuffers::Verifier &verifier) const {
         return VerifyTableStart(verifier) &&
             VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* header */) &&
@@ -177,7 +178,7 @@ struct TabItemOptionBuilder {
     flatbuffers::FlatBufferBuilder &fbb_;
     flatbuffers::uoffset_t start_;
     void add_header(flatbuffers::Offset<TabHeaderOption> header) { fbb_.AddOffset(4, header); }
-    void add_container(flatbuffers::Offset<PanelOptions> container) { fbb_.AddOffset(6, container); }
+    void add_container(flatbuffers::Offset<NodeTree> container) { fbb_.AddOffset(6, container); }
     TabItemOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
     TabItemOptionBuilder &operator=(const TabItemOptionBuilder &);
     flatbuffers::Offset<TabItemOption> Finish() {
@@ -188,13 +189,12 @@ struct TabItemOptionBuilder {
 
 inline flatbuffers::Offset<TabItemOption> CreateTabItemOption(flatbuffers::FlatBufferBuilder &_fbb,
     flatbuffers::Offset<TabHeaderOption> header = 0,
-    flatbuffers::Offset<PanelOptions> container = 0) {
+    flatbuffers::Offset<NodeTree> container = 0) {
     TabItemOptionBuilder builder_(_fbb);
     builder_.add_container(container);
     builder_.add_header(header);
     return builder_.Finish();
 }
-
 
 inline const TabControlOption *GetTabControlOption(const void *buf) { return flatbuffers::GetRoot<TabControlOption>(buf); }
 

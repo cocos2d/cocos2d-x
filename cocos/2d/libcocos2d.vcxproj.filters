@@ -1944,9 +1944,6 @@
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
-    <ClCompile Include="..\..\..\ckCocoStudio2.0\cocos2dx\cocos\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.cpp">
-      <Filter>cocostudio\reader\WidgetReader</Filter>
-    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\TabControlReader</Filter>
     </ClCompile>
@@ -3804,9 +3801,6 @@
       <Filter>cocostudio\json</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ckCocoStudio2.0\cocos2dx\cocos\editor-support\cocostudio\WidgetReader\TabControlReader\CSTabControl_generated.h">
-      <Filter>cocostudio\reader\WidgetReader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ckCocoStudio2.0\cocos2dx\cocos\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.h">
       <Filter>cocostudio\reader\WidgetReader</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TabControlReader\CSTabControl_generated.h">
