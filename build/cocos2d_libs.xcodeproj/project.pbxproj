@@ -5513,6 +5513,14 @@
 		C5F516181C8216C60013B695 /* CSTabControl_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516151C8216C60013B695 /* CSTabControl_generated.h */; };
 		C5F516191C8216C60013B695 /* TabControlReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5F516161C8216C60013B695 /* TabControlReader.cpp */; };
 		C5F5161A1C8216C60013B695 /* TabControlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516171C8216C60013B695 /* TabControlReader.h */; };
+		C5F5161D1C822D400013B695 /* TabControlReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5F516161C8216C60013B695 /* TabControlReader.cpp */; };
+		C5F5161E1C822D5B0013B695 /* TabControlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516171C8216C60013B695 /* TabControlReader.h */; };
+		C5F5161F1C822D6D0013B695 /* UITabControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5F516101C8216660013B695 /* UITabControl.cpp */; };
+		C5F516201C822D900013B695 /* UITabControl.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516111C8216660013B695 /* UITabControl.h */; };
+		C5F516211C822DED0013B695 /* UITabControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5F516101C8216660013B695 /* UITabControl.cpp */; };
+		C5F516221C822E060013B695 /* TabControlReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5F516161C8216C60013B695 /* TabControlReader.cpp */; };
+		C5F516231C822E190013B695 /* UITabControl.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516111C8216660013B695 /* UITabControl.h */; };
+		C5F516251C822E470013B695 /* TabControlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516171C8216C60013B695 /* TabControlReader.h */; };
 		D0FD03491A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034A1A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034B1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */; };
@@ -12019,6 +12027,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F516251C822E470013B695 /* TabControlReader.h in Headers */,
+				C5F516231C822E190013B695 /* UITabControl.h in Headers */,
 				507B3D121C31BDD30067B53E /* CCStdC-ios.h in Headers */,
 				507B3D131C31BDD30067B53E /* b2Math.h in Headers */,
 				507B3D141C31BDD30067B53E /* CCUITextInput.h in Headers */,
@@ -13026,6 +13036,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F516201C822D900013B695 /* UITabControl.h in Headers */,
+				C5F5161E1C822D5B0013B695 /* TabControlReader.h in Headers */,
 				503DD8F01926736A00CD74DD /* CCStdC-ios.h in Headers */,
 				15AE1A9A19AAD40300C27E9E /* b2Math.h in Headers */,
 				2980F0281BA9A5550059E678 /* CCUITextInput.h in Headers */,
@@ -14961,6 +14973,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F516221C822E060013B695 /* TabControlReader.cpp in Sources */,
+				C5F516211C822DED0013B695 /* UITabControl.cpp in Sources */,
 				507B39C21C31BDD30067B53E /* CCAllocatorGlobalNewDelete.cpp in Sources */,
 				507B39C31C31BDD30067B53E /* UIVideoPlayer-ios.mm in Sources */,
 				507B39C41C31BDD30067B53E /* CCPUPlaneCollider.cpp in Sources */,
@@ -15804,6 +15818,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F5161F1C822D6D0013B695 /* UITabControl.cpp in Sources */,
+				C5F5161D1C822D400013B695 /* TabControlReader.cpp in Sources */,
 				D0FD03541A3B51AA00825BB5 /* CCAllocatorGlobalNewDelete.cpp in Sources */,
 				15AE1B9819AADAA100C27E9E /* UIVideoPlayer-ios.mm in Sources */,
 				B665E38F1AA80A6500DDB1C5 /* CCPUPlaneCollider.cpp in Sources */,
