@@ -23,8 +23,8 @@
     <ClCompile Include="..\auto\jsb_cocos2dx_studio_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_ui_auto.cpp" />
     <ClCompile Include="..\manual\3d\jsb_cocos2dx_3d_manual.cpp" />
-    <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_auto_classes.cpp" />
-    <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_functions.cpp" />
+    <ClCompile Include="..\auto\js_bindings_chipmunk_auto_classes.cpp" />
+    <ClCompile Include="..\auto\js_bindings_chipmunk_functions.cpp" />
     <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_manual.cpp" />
     <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_registration.cpp" />
     <ClCompile Include="..\manual\cocos2d_specifics.cpp" />

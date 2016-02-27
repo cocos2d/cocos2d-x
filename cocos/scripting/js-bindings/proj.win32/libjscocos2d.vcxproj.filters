@@ -96,10 +96,10 @@
       <Filter>auto</Filter>
     </ClCompile>
     <ClCompile Include="..\auto\js_bindings_chipmunk_auto_classes.cpp">
-      <Filter>manual\chipmunk</Filter>
+      <Filter>auto</Filter>
     </ClCompile>
     <ClCompile Include="..\auto\js_bindings_chipmunk_functions.cpp">
-      <Filter>manual\chipmunk</Filter>
+      <Filter>auto</Filter>
     </ClCompile>
     <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_manual.cpp">
       <Filter>manual\chipmunk</Filter>
