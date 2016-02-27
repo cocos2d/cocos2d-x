@@ -128,11 +128,11 @@ flatbuffers::Offset<flatbuffers::Table> TabControlReader::createOptionsWithFlatB
         bool hasItem = true;
         while (child && hasItem)
         {
-            const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
-            while (attribute)
+            const tinyxml2::XMLAttribute* childattribute = child->FirstAttribute();
+            while (childattribute)
             {
-                std::string attriname = attribute->Name();
-                std::string value = attribute->Value();
+                std::string attriname = childattribute->Name();
+                std::string value = childattribute->Value();
 
                 if (attriname == "ctype")
                 {
@@ -147,7 +147,7 @@ flatbuffers::Offset<flatbuffers::Table> TabControlReader::createOptionsWithFlatB
 
                     break;
                 }
-                attribute = attribute->Next();
+                childattribute = childattribute->Next();
             }
             child = child->NextSiblingElement();
         }
@@ -289,7 +289,6 @@ flatbuffers::Offset<flatbuffers::Table> TabHeaderReader::createOptionsWithFlatBu
     while (child)
     {
         std::string name = child->Name();
-        std::string value = child->Value();
 
         if (name == "TextColor")
         {
@@ -939,7 +938,7 @@ flatbuffers::Offset<flatbuffers::TabItemOption> TabItemReader::createTabItemOpti
     const tinyxml2::XMLElement* objectData, flatbuffers::FlatBufferBuilder* builder)
 {
 
-    flatbuffers::Offset<TabHeaderOption> header;
+    flatbuffers::Offset<Table> header;
     flatbuffers::Offset<NodeTree> container;
     tinyxml2::XMLElement* containerData = nullptr;
     tinyxml2::XMLElement* containerChildrenData = nullptr;
@@ -954,8 +953,7 @@ flatbuffers::Offset<flatbuffers::TabItemOption> TabItemReader::createTabItemOpti
         }
         if (attriName.compare("Header") == 0)
         {
-            header = *(Offset<flatbuffers::TabHeaderOption>*)(&
-                (TabHeaderReader::getInstance()->createOptionsWithFlatBuffers(child, builder)));
+            header = TabHeaderReader::getInstance()->createOptionsWithFlatBuffers(child, builder);
         }
         else if (attriName.compare("Container") == 0)
         {
@@ -969,8 +967,7 @@ flatbuffers::Offset<flatbuffers::TabItemOption> TabItemReader::createTabItemOpti
         containerData->InsertEndChild(containerChildrenData);
     }
 
-    container = *(Offset<flatbuffers::NodeTree>*)(&
-        (FlatBuffersSerialize::getInstance()->createNodeTree(containerData, "PanelObjectData")));
+    container = FlatBuffersSerialize::getInstance()->createNodeTree(containerData, "PanelObjectData");
 
     auto options = CreateTabItemOption(*builder,
         *(Offset<flatbuffers::TabHeaderOption>*)(&header),
@@ -995,5 +992,5 @@ flatbuffers::Offset<flatbuffers::Table> TabItemReader::createOptionsWithFlatBuff
 {
 
     // nothing
-    return *(Offset<Table>*)(&CreateTabItemOption(*builder));
+    return flatbuffers::Offset<flatbuffers::Table>();
 }
