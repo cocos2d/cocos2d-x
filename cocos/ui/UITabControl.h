@@ -238,7 +238,7 @@ namespace ui {
         void      insertTab(int index, TabHeader* headerCell, Layout* container);
 
         // the tab count
-        int         getTabCount() const;
+        size_t    getTabCount() const;
 
         // get current selected tab's index
         inline int  getCurrentTabIndex() { return _currItemIndex; }
@@ -268,18 +268,6 @@ namespace ui {
 		void         setHeaderDockPlace(TabControl::Dock dockPlace);
 		inline TabControl::Dock getHeaderDockPlace() const { return _headerDockPlace; }
 
-        /**
-        * set fontsize and all existed header cell
-        * @param fontsize the font size of header cell 's label
-        */
-        void setHeaderFontSize(float fontsize);
-
-        /**
-        * set fontsize and all existed header cell
-        * @param set the font name of header cell 's label
-        */
-        void setHeaderFontName(std::string fontName);
-
         /// @}
     protected:
         TabControl();
@@ -300,9 +288,6 @@ namespace ui {
 		Vec2 getHeaderAnchorWithDock() const;
 
         int         _currItemIndex;
-
-        float       _headerFontSize;
-        std::string _headerFontName;
 
         int         _headerHeight;
         int         _headerWidth;

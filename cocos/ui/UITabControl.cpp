@@ -34,8 +34,7 @@ namespace ui
 {
 
     TabControl::TabControl()
-        : _headerFontSize(12.f)
-        , _currItemIndex(-1)
+        : _currItemIndex(-1)
         , _headerHeight(20)
         , _headerWidth(50)
         , _headerDockPlace(TabControl::TOP)
@@ -54,7 +53,7 @@ namespace ui
 
     void TabControl::insertTab(int index, TabHeader* headerCell, Layout* container)
     {
-        int cellSize = _tabItems.size();
+        auto cellSize = _tabItems.size();
         if (index > cellSize)
         {
             CCLOG("%s", "insert index error");
@@ -73,7 +72,7 @@ namespace ui
 
     void TabControl::initAfterInsert(int index)
     {
-        int cellSize =_tabItems.size();
+        auto cellSize =_tabItems.size();
         auto tabItem = _tabItems.at(index);
         auto headerCell = tabItem.header;
         auto container = tabItem.container;
@@ -107,7 +106,7 @@ namespace ui
 
     void TabControl::removeTab(int index)
     {
-        int cellSize = _tabItems.size();
+        auto cellSize = _tabItems.size();
         if (cellSize == 0 || index >= cellSize)
         {
             CCLOG("%s", "no tab or remove index error");
@@ -134,7 +133,7 @@ namespace ui
         initTabHeadersPos(index);
     }
 
-    int TabControl::getTabCount() const
+    size_t TabControl::getTabCount() const
     {
         return _tabItems.size();
     }
@@ -199,25 +198,6 @@ namespace ui
 		return anpoint;
 	}
 
-
-    void TabControl::setHeaderFontSize(float fontsize)
-    {
-        _headerFontSize = fontsize;
-        for (auto& item : _tabItems)
-        {
-            item.header->setTitleFontSize(fontsize);
-        }
-    }
-
-    void TabControl::setHeaderFontName(std::string fontName)
-    {
-        _headerFontName = fontName;
-        for (auto& item : _tabItems)
-        {
-            item.header->setTitleFontName(fontName);
-        }
-    }
-
     void TabControl::onSizeChanged()
     {
         initTabHeadersPos(0);
@@ -226,7 +206,7 @@ namespace ui
 
     void TabControl::initTabHeadersPos(int startIndex)
     {
-        int cellSize = _tabItems.size();
+        auto cellSize = _tabItems.size();
         if (startIndex >= cellSize)
             return;
 
@@ -318,7 +298,7 @@ namespace ui
                 return;
 
             bool selected = false;
-            const int n = _tabItems.size();
+            const auto n = _tabItems.size();
             for (int cellI = 0; cellI < n; cellI++)
             {
                 auto& tabItem = _tabItems.at(cellI);
@@ -365,7 +345,7 @@ namespace ui
 
     int TabControl::indexOfTabHeader(TabHeader* tabCell)
     {
-        int n = _tabItems.size();
+        auto n = _tabItems.size();
         for (auto i = 0; i < n; i++)
         {
             if (tabCell == _tabItems.at(i).header)
@@ -390,7 +370,7 @@ namespace ui
 
     void TabControl::setSelectTab(int index)
     {
-        int cellSize = _tabItems.size();
+        auto cellSize = _tabItems.size();
         if (cellSize > 0 && index < cellSize)
         {
             dispatchSelectedTabChanged(index, TabHeader::EventType::SELECTED);
@@ -406,7 +386,6 @@ namespace ui
     {
         if (_currentHeaderZoom != zoom)
         {
-            auto deltaZoom = zoom - _currentHeaderZoom;
             _currentHeaderZoom = zoom;
             if (_currItemIndex != -1)
             {
@@ -494,8 +473,8 @@ namespace ui
             "",
             texType))
         {
-			tabcell->_frontCrossRenderer->setVisible(false); // _isSelected == false
-			tabcell->_tabLabelRender->setString(titleStr);
+			tabcell->_frontCrossRenderer->setVisible(false);
+            tabcell->_tabLabelRender->setString(titleStr);
 			tabcell->_anchorPoint = Vec2(.5f, 0);
 			tabcell->autorelease();
 			return tabcell;
@@ -520,7 +499,7 @@ namespace ui
             frontCrossDisabled,
             texType))
         {
-			tabcell->_frontCrossRenderer->setVisible(false); // _isSelected == false
+			tabcell->_frontCrossRenderer->setVisible(false);
 			tabcell->_tabLabelRender->setString(titleStr);
 			tabcell->_anchorPoint = Vec2(.5f, 0);
 			tabcell->autorelease();
@@ -555,7 +534,6 @@ namespace ui
         }
 
         _tabLabelRender->setString(text);
-        //this->setTitleFontSize(_fontSize);
         updateContentSize();
         _tabLabelRender->setPosition(_contentSize * 0.5f);
     }
