@@ -2,8 +2,8 @@
 
 # START CONFIG
 
-set(_chipmunk_inc chipmunk.h)
-set(_chipmunk_inc_paths chipmunk)
+set(_chipmunk_inc chipmunk/chipmunk.h)
+set(_chipmunk_inc_paths include)
 set(_chipmunk_libs chipmunk libchipmunk)
 
 set(_curl_inc curl/curl.h)
