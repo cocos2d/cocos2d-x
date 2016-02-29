@@ -355,7 +355,7 @@ namespace ui
         _tabChangedCallback = callBack;
     }
     
-    int TabControl::indexOfTabHeader(TabHeader* tabCell)
+    int TabControl::indexOfTabHeader(const TabHeader* tabCell) const
     {
         auto n = _tabItems.size();
         for (auto i = 0; i < n; i++)
@@ -716,7 +716,7 @@ namespace ui
         }
     }
     
-    int TabHeader::getIndexInTabControl()
+    int TabHeader::getIndexInTabControl() const
     {
         if (_tabView == nullptr)
             return -1;

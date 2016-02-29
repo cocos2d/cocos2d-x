@@ -153,7 +153,7 @@ namespace ui {
          * get the index this header in the TabControl
          * @return -1 means not in any TabControl
          */
-        int   getIndexInTabControl();
+        int   getIndexInTabControl() const;
         
         
     protected:
@@ -178,7 +178,6 @@ namespace ui {
         typedef std::function<void(int tabindex, TabHeader::EventType)> ccTabCallback;
         ccTabCallback  _tabSelectedEvent;
         
-        //Color4B      _backgroundColor;
         enum FontType
         {
             SYSTEM,
@@ -186,10 +185,6 @@ namespace ui {
             BMFONT
         };
         FontType  _fontType;
-        
-        /* CustomCommand _backgroundCmd;
-         CustomCommand _beforeVisitCmdScissor;
-         CustomCommand _afterVisitCmdScissor;*/
     };
     
     /**
@@ -266,13 +261,13 @@ namespace ui {
         * get current selected tab's index
         * @return the current selected tab index
         */
-        inline int  getCurrentTabIndex() { return _currItemIndex; }
+        inline int  getCurrentTabIndex() const { return _currItemIndex; }
         
         /**
         * get the index of tabCell in TabView, return -1 if not exists in.
         / @return the index of tabCell in TabView,  `-1` means not exists in.
         */
-        int indexOfTabHeader(TabHeader* tabCell);
+        int indexOfTabHeader(const TabHeader* tabCell) const;
         
         /**
         * Add a callback function which would be called when selcted tab changed
@@ -331,7 +326,7 @@ namespace ui {
         * get the delta zoom of selected tab
         * @return zoom, the delta zoom
         */
-        inline float getHeaderSelectedZoom() { return _currentHeaderZoom; }
+        inline float getHeaderSelectedZoom() const { return _currentHeaderZoom; }
         
         /**
         * the header dock place of header in TabControl
@@ -354,7 +349,7 @@ namespace ui {
         // dispatch selected changed
         void dispatchSelectedTabChanged(int tabIndex, TabHeader::EventType eventType);
     private:
-        // format tabheader and container after insert
+        // format tab header and container after insert
         void initAfterInsert(int index);
         void activeHeader(int tabindex);
         Vec2 getHeaderAnchorWithDock() const;
@@ -380,7 +375,7 @@ namespace ui {
                 container = layout;
             }
         } TabItem;
-        // for indexs the cells and containers
+        // for index the cells and containers
         std::vector<TabItem> _tabItems;
     };
 }
