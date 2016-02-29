@@ -52,7 +52,7 @@ namespace ui
         _tabItems.clear();
     }
     
-    void TabControl::insertTab(int index, TabHeader* headerCell, Layout* container)
+    void TabControl::insertTab(int index, TabHeader* header, Layout* container)
     {
         auto cellSize = _tabItems.size();
         if (index > cellSize)
@@ -62,11 +62,11 @@ namespace ui
         }
         
         addProtectedChild(container, -3, -1);
-        addProtectedChild(headerCell, -2, -1);
+        addProtectedChild(header, -2, -1);
         
-        _tabItems.insert(_tabItems.begin() + index, TabItem(headerCell, container));
-        headerCell->_tabView = this;
-        headerCell->_tabSelectedEvent = CC_CALLBACK_2(TabControl::dispatchSelectedTabChanged, this); // binding tab selected event
+        _tabItems.insert(_tabItems.begin() + index, TabItem(header, container));
+        header->_tabView = this;
+        header->_tabSelectedEvent = CC_CALLBACK_2(TabControl::dispatchSelectedTabChanged, this); // binding tab selected event
         
         initAfterInsert(index);
     }
@@ -94,6 +94,17 @@ namespace ui
         
         headerCell->setContentSize(Size(_headerWidth, _headerHeight));
         headerCell->setAnchorPoint(getHeaderAnchorWithDock());
+        if (headerCell->isIgnoreContentAdaptWithSize() == _igoreHeaderTextureSize)
+        {
+            headerCell->ignoreContentAdaptWithSize(!_igoreHeaderTextureSize);
+            if (_igoreHeaderTextureSize)
+                headerCell->setContentSize(Size(_headerWidth, _headerHeight));
+            headerCell->backGroundDisabledTextureScaleChangedWithSize();
+            headerCell->backGroundSelectedTextureScaleChangedWithSize();
+            headerCell->backGroundDisabledTextureScaleChangedWithSize();
+            headerCell->frontCrossTextureScaleChangedWithSize();
+            headerCell->frontCrossDisabledTextureScaleChangedWithSize();
+        }
         
         initTabHeadersPos(index);
         if (_containerSize.equals(Size::ZERO))
@@ -339,7 +350,7 @@ namespace ui
         }
     }
     
-    void TabControl::setTabChangedEventListener(const ccTabViewCallback& callBack)
+    void TabControl::setTabChangedEventListener(const ccTabControlCallback& callBack)
     {
         _tabChangedCallback = callBack;
     }
@@ -378,9 +389,9 @@ namespace ui
         }
     }
     
-    void TabControl::setSelectTab(TabHeader* tabHeaderCell)
+    void TabControl::setSelectTab(TabHeader* tabHeader)
     {
-        setSelectTab(indexOfTabHeader(tabHeaderCell));
+        setSelectTab(indexOfTabHeader(tabHeader));
     }
     
     void TabControl::setHeaderSelectedZoom(float zoom)
@@ -423,7 +434,7 @@ namespace ui
         auto srcTab = dynamic_cast<TabControl*>(model);
         if (srcTab != nullptr)
         {
-            Layout::copySpecialProperties(srcTab);
+            Widget::copySpecialProperties(srcTab);
             _headerWidth = srcTab->_headerWidth;
             _headerHeight = srcTab->_headerHeight;
             _headerDockPlace = srcTab->_headerDockPlace;
@@ -572,13 +583,13 @@ namespace ui
         _tabLabelRender->setTextColor(color);
     }
     
-    Color3B TabHeader::getTitleColor() const
+    const Color4B& TabHeader::getTitleColor() const
     {
         if (nullptr == _tabLabelRender)
         {
-            return Color3B::WHITE;
+            return Color4B::WHITE;
         }
-        return Color3B(_tabLabelRender->getTextColor());
+        return _tabLabelRender->getTextColor();
     }
     
     void TabHeader::setTitleFontSize(float size)

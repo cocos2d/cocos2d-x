@@ -27,7 +27,7 @@
 #define __UITABVIEW_H__
 
 #include "ui/UIAbstractCheckButton.h"
-#include "ui/UILayout.h"
+#include "ui/UIWidget.h"
 
 /**
  * @addtogroup ui
@@ -39,6 +39,7 @@ class Label;
 
 namespace ui {
     
+    class Layout;
     class TabControl;
     /**
      * the header button in TabControl
@@ -57,23 +58,36 @@ namespace ui {
         
         
         /**
-         * Create and return a empty TabHeaderCell instance pointer.
+         * Create and return a empty TabHeader instance pointer.
          */
         static TabHeader* create();
         
         /**
-         * Another factory method to create a TabHeaderCell instance.
-         * This method uses less resource to create a RadioButton.
+         * factory method to create a TabHeader instance.
+         * This method uses less resource to create a TabHeader.
+         * @param titleStr The text on the TabHeader
          * @param backGround The background image name in `std::string`.
          * @param cross The cross image name in `std::string`.
          * @param texType  The texture's resource type in `Widget::TextureResType`.
-         * @return A TabHeaderCell instance pointer
+         * @return A TabHeader instance pointer
          */
         static TabHeader* create(const std::string& titleStr,
                                  const std::string& backGround,
                                  const std::string& cross,
                                  TextureResType texType = TextureResType::LOCAL);
         
+        /**
+        * Create a TabHeader with various images.
+        * @param titleStr The text on the TabHeader
+        * @param backGround    backGround texture.
+        * @param backGroundSelected    backGround selected state texture.
+        * @param cross    cross texture.
+        * @param backGroundDisabled    backGround disabled state texture.
+        * @param frontCrossDisabled    cross dark state texture.
+        * @param texType    @see `Widget::TextureResType`
+        *
+        * @return A TabHeader instance pointer.
+        */
         static TabHeader* create(const std::string& titleStr,
                                  const std::string& backGround,
                                  const std::string& backGroundSelected,
@@ -82,62 +96,62 @@ namespace ui {
                                  const std::string& frontCrossDisabled,
                                  TextureResType texType = TextureResType::LOCAL);
         /**
-         * Return the inner title renderer of Cell.
-         * @return The Cell title.
+         * Return the inner Label renderer of TabHeader.
+         * @return The TabHeader Label.
          */
         Label* getTitleRenderer()const;
         
         /**
-         * Change the content of Cell's title.
-         *@param text The title in std::string.
+         * Change the content of Header's text.
+         *@param text The Header's text.
          */
         void setTitleText(const std::string& text);
         
         /**
-         * Query the Cell title content.
-         *@return Get the Cell's title content.
+         * get the TabHeader text
+         *@return he TabHeader text
          */
         const std::string getTitleText() const;
         
         /**
-         * Change the color of Cell's title.
-         *@param color The title color in Color3B.
+         * Change the color of he TabHeader text
+         *@param color The he TabHeader text's color in Color4B.
          */
         void setTitleColor(const Color4B& color);
         
         /**
-         * Query the Cell title color.
-         *@return Color3B of button title.
+         * get the TabHeader text color.
+         *@return Color4B of TabHeader text.
          */
-        Color3B getTitleColor() const;
+        const Color4B& getTitleColor() const;
         
         /**
-         * Change the font size of Cell's title
-         *@param size Title font size in float.
+         * Change the font size of TabHeader text
+         *@param size TabHeader text's font size in float.
          */
         void setTitleFontSize(float size);
         
         /**
-         * Query the font size of Cell title
-         *@return font size in float.
+         * get the font size of TabHeader text
+         *@return TabHeader text's font size in float.
          */
         float getTitleFontSize() const;
         
         /**
-         * Change the font name of Cell's title
+         * Change the font name of TabHeader text
          *@param fontName a font name string.
          */
         void setTitleFontName(const std::string& fontName);
         
         /**
-         * Query the font name of Cell's title
+         * get the font name of TabHeader text
          *@return font name in std::string
          */
         const std::string getTitleFontName() const;
         
         /**
          * get the index this header in the TabControl
-         * @return -1 means not in this TabControl
+         * @return -1 means not in any TabControl
          */
         int   getIndexInTabControl();
         
@@ -181,7 +195,7 @@ namespace ui {
     /**
      * TabControl, use header button switch container
      */
-    class CC_GUI_DLL TabControl : public Layout
+    class CC_GUI_DLL TabControl : public Widget
     {
     public:
         enum Dock
@@ -197,7 +211,7 @@ namespace ui {
             SELECT_CHANGED,
         };
         
-        typedef std::function<void(int tabIndex, EventType)> ccTabViewCallback;
+        typedef std::function<void(int tabIndex, EventType)> ccTabControlCallback;
         
         static TabControl* create();
         
@@ -205,72 +219,124 @@ namespace ui {
         /// @name behaviours
         
         /**
-         * remove the tabItem
+         * remove the tab from this TabControl
+         * @param index: the index of tab
          */
         void      removeTab(int index);
         
         /**
-         * set tab selected
+         * set tab selected, switch the current selected tab and visible container
+         * @param index: the index of tab
          */
         void      setSelectTab(int index);
         
         /**
-         * set tab selected
+         * set tab selected, switch the current selected tab and visible container
+         * @param tabHeader, the tab instance
          */
-        void      setSelectTab(TabHeader* tabHeaderCell);
+        void      setSelectTab(TabHeader* tabHeader);
         
         /**
          * get TabHeader
+         * @param index, the index of tab
          */
         TabHeader* getTabHeader(int index) const;
         
         /**
          * get Container
+         * @param index, the index of tab
          */
         Layout*   getTabContainer(int index) const;
         
         /**
          * insert tab, and init the position of header and container
          * @param index, the index tab should be
-         * @param headerCell, the header Button, will be a protected child in TabControl
+         * @param header, the header Button, will be a protected child in TabControl
          * @param the container, will be a protected child in TabControl
          */
-        void      insertTab(int index, TabHeader* headerCell, Layout* container);
+        void      insertTab(int index, TabHeader* header, Layout* container);
         
-        // the tab count
+        /**
+        * get the count of tabs in this TabControl
+        * @return the count of tabs
+        */
         size_t    getTabCount() const;
         
-        // get current selected tab's index
+        /**
+        * get current selected tab's index
+        * @return the current selected tab index
+        */
         inline int  getCurrentTabIndex() { return _currItemIndex; }
         
-        // get the index of tabCell in TabView, return -1 if not exists in.
+        /**
+        * get the index of tabCell in TabView, return -1 if not exists in.
+        / @return the index of tabCell in TabView,  `-1` means not exists in.
+        */
         int indexOfTabHeader(TabHeader* tabCell);
         
-        // callback after selected changed
-        void setTabChangedEventListener(const ccTabViewCallback& callBack);
+        /**
+        * Add a callback function which would be called when selcted tab changed
+        *@param callback A std::function with type @see `ccTabControlCallback`
+        */
+        void setTabChangedEventListener(const ccTabControlCallback& callBack);
         /// @}
         
         /// @{
         /// @ properties
-        // set header width, affect all tabitems
+
+        /**
+        * set header width, affect all tab
+        * @param headerWith: each tab header's width
+        */
         void         setHeaderWidth(float headerWith);
+
+        /**
+        * get tab header's width
+        * @return header's width
+        */
         inline float getHeaderWidth() const { return _headerWidth; }
         
-        // set header height, , affect all tabitems
+        /**
+        * set header height, affect all tab
+        * @param headerHeigt: each tab header's height
+        */
         void         setHeaderHeight(float headerHeigt);
+
+        /**
+        * get tab header's height
+        * @return header's height
+        */
         inline int   getHeaderHeight() const { return _headerHeight; }
 
         /**
-        * @ignore ignore is true, the header's texture scale with _headerWidth and _headerHieght
+        * ignore the textures' size in header, scale them with _headerWidth and _headerHieght
+        * @param ignore is `true`, the header's texture scale with _headerWidth and _headerHieght
+        *        ignore is `false`£¬ use the texture's size£¬ do not scale them
         */
         void         ignoreHeadersTextureSize(bool ignore);
+
+        /**
+        * get whether ignore the textures' size in header, scale them with _headerWidth and _headerHieght
+        * @return whether ignore the textures' size in header
+        */
         inline bool  isIgnoreHeadersTextureSize() const { return _igoreHeaderTextureSize; };
 
-        // the delta Zoom after selected tab actived
+        /**
+        * set the delta zoom of selected tab
+        * @param zoom, the delta zoom
+        */
         void         setHeaderSelectedZoom(float zoom);
+
+        /**
+        * get the delta zoom of selected tab
+        * @return zoom, the delta zoom
+        */
         inline float getHeaderSelectedZoom() { return _currentHeaderZoom; }
         
-        // set header dock place
+        /**
+        * the header dock place of header in TabControl
+        * @param: dockPlace, the strip place
+        */
         void         setHeaderDockPlace(TabControl::Dock dockPlace);
         inline TabControl::Dock getHeaderDockPlace() const { return _headerDockPlace; }
         
@@ -284,7 +350,7 @@ namespace ui {
         void initContainers();
         virtual void copySpecialProperties(Widget* model) override;
         
-        ccTabViewCallback _tabChangedCallback;
+        ccTabControlCallback _tabChangedCallback;
         // dispatch selected changed
         void dispatchSelectedTabChanged(int tabIndex, TabHeader::EventType eventType);
     private:
