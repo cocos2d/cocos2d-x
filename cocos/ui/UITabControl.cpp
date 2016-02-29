@@ -442,7 +442,7 @@ namespace ui
         {
             item.header->ignoreContentAdaptWithSize(!ignore);
             if (ignore)
-                item.header->setContentSize(Size(_headerWidth, _headerHeight);
+                item.header->setContentSize(Size(_headerWidth, _headerHeight));
             item.header->backGroundDisabledTextureScaleChangedWithSize();
             item.header->backGroundSelectedTextureScaleChangedWithSize();
             item.header->backGroundDisabledTextureScaleChangedWithSize();
