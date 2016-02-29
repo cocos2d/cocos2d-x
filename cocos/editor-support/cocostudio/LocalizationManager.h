@@ -26,6 +26,8 @@ namespace cocostudio {
     class CC_STUDIO_DLL JsonLocalizationManager : ILocalizationManager
     {
     public:
+        static JsonLocalizationManager* getInstance();
+
         JsonLocalizationManager();
         ~JsonLocalizationManager();
 
@@ -50,6 +52,8 @@ namespace cocostudio {
     class CC_STUDIO_DLL BinLocalizationManager : ILocalizationManager
     {
     public:
+        static BinLocalizationManager* getInstance();
+
         BinLocalizationManager();
         ~BinLocalizationManager();
 

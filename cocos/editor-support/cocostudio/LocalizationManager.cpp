@@ -6,6 +6,18 @@
 using namespace cocostudio;
 using namespace cocos2d;
 
+static JsonLocalizationManager* _sharedJsonLocalizationManager = nullptr;
+
+JsonLocalizationManager* JsonLocalizationManager::getInstance()
+{
+    if (!_sharedJsonLocalizationManager)
+    {
+        _sharedJsonLocalizationManager = new (std::nothrow) JsonLocalizationManager();
+    }
+
+    return _sharedJsonLocalizationManager;
+}
+
 JsonLocalizationManager::JsonLocalizationManager()
     :languageData(nullptr)
 {
@@ -44,6 +56,18 @@ std::string JsonLocalizationManager::getLocalizationString(std::string key)
         result = (*languageData)[key.c_str()].GetString();
 
     return result;
+}
+
+static BinLocalizationManager* _sharedBinLocalizationManager = nullptr;
+
+BinLocalizationManager* BinLocalizationManager::getInstance()
+{
+    if (!_sharedBinLocalizationManager)
+    {
+        _sharedBinLocalizationManager = new (std::nothrow) BinLocalizationManager();
+    }
+
+    return _sharedBinLocalizationManager;
 }
 
 BinLocalizationManager::BinLocalizationManager()
