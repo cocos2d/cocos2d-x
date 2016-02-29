@@ -9,7 +9,7 @@
 # ::
 #
 #   CHIPMUNK_LIBRARIES, the library to link against
-#   CHIPMUNK_FOUND, if false, do not try to link to FREETYPE
+#   CHIPMUNK_FOUND, if false, do not try to link to Chipmunk 
 #   CHIPMUNK_INCLUDE_DIRS, where to find headers.
 #   This is the concatenation of the paths:
 #   CHIPMUNK_INCLUDE_DIR
@@ -27,10 +27,10 @@
 # (To distribute this file outside of CMake, substitute the full
 #  License text for the above reference.)
 
-FIND_PATH(CHIPMUNK_INCLUDE_DIR chipmunk.h
+FIND_PATH(CHIPMUNK_INCLUDE_DIR chipmunk/chipmunk.h
   HINTS
   ENV CHIPMUNK_DIR
-  PATH_SUFFIXES include/chipmunk include
+  PATH_SUFFIXES include
   PATHS
   ~/Library/Frameworks
   /Library/Frameworks
@@ -42,7 +42,7 @@ FIND_PATH(CHIPMUNK_INCLUDE_DIR chipmunk.h
   /opt
 )
 
-FIND_LIBRARY(CHIPMUNK_LIBRARY 
+FIND_LIBRARY(CHIPMUNK_LIBRARY
   NAMES chipmunk libchipmunk
   HINTS
   ENV CHIPMUNK_DIR
