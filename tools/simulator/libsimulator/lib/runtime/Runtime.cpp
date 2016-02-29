@@ -223,8 +223,12 @@ void RuntimeEngine::setProjectPath(const std::string &workPath)
         g_projectPath = workPath;
     }
 
-    // add project's root directory to search path
-    searchPathArray.insert(searchPathArray.begin(), g_projectPath);
+    if (!_project.isUseLocalScript())
+    {
+        // add project's root directory to search path
+        searchPathArray.insert(searchPathArray.begin(), g_projectPath);
+    }
+    
 
     // add writable path to search path
     searchPathArray.insert(searchPathArray.begin(), FileServer::getShareInstance()->getWritePath());

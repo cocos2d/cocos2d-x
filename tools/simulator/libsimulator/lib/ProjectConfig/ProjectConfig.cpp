@@ -50,6 +50,7 @@ ProjectConfig::ProjectConfig()
     , _consolePort(kProjectConfigConsolePort)
     , _fileUploadPort(kProjectConfigUploadPort)
     , _bindAddress("")
+    , _useLocalScript(false)
 {
     normalize();
 }
@@ -272,6 +273,17 @@ void ProjectConfig::setDebuggerType(int debuggerType)
     _debuggerType = debuggerType;
 }
 
+
+bool ProjectConfig::isUseLocalScript() const
+{
+    return _useLocalScript;
+}
+
+void ProjectConfig::setUseLocalScript(bool useLocalScript)
+{
+    _useLocalScript = useLocalScript;
+}
+
 void ProjectConfig::parseCommandLine(const vector<string> &args)
 {
     auto it = args.begin();
@@ -409,7 +421,19 @@ void ProjectConfig::parseCommandLine(const vector<string> &args)
             vector<string> pathes = split((*it), ';');
             setSearchPath(pathes);
         }
-
+        else if (arg.compare("-use-local-script") == 0)
+        {
+            ++it;
+            if (it == args.end()) break;
+            if ((*it).compare("enable") == 0)
+            {
+                setUseLocalScript(true);
+            }
+            else
+            {
+                setUseLocalScript(false);
+            }
+        }
         ++it;
     }
 }
@@ -571,7 +595,20 @@ vector<string> ProjectConfig::makeCommandLineVector(unsigned int mask /* = kProj
             ret.push_back(pathArgs);
         }
     }
-       
+
+    if (mask & kProjectConfigUseLocalScript)
+    {
+        if (isUseLocalScript())
+        {
+            ret.push_back("-use-local-script");
+            ret.push_back("enable");
+        }
+        else
+        {
+            ret.push_back("-use-local-script");
+            ret.push_back("disable");
+        }
+    }
     return ret;
 }
 
