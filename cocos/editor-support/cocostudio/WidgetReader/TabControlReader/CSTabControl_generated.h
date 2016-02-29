@@ -24,7 +24,8 @@ struct TabControlOption : private flatbuffers::Table {
     int32_t headerHeight() const { return GetField<int32_t>(10, 0); }
     float selectedTabZoom() const { return GetField<float>(12, 0); }
     int32_t selectedTabIndex() const { return GetField<int32_t>(14, 0); }
-    const flatbuffers::Vector<flatbuffers::Offset<TabItemOption>> *tabItems() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<TabItemOption>> *>(16); }
+    uint8_t ignoreHeaderTextureSize() const { return GetField<uint8_t>(16, 0); }
+    const flatbuffers::Vector<flatbuffers::Offset<TabItemOption>> *tabItems() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<TabItemOption>> *>(18); }
     bool Verify(flatbuffers::Verifier &verifier) const {
         return VerifyTableStart(verifier) &&
             VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* nodeOptions */) &&
@@ -34,7 +35,8 @@ struct TabControlOption : private flatbuffers::Table {
             VerifyField<int32_t>(verifier, 10 /* headerHeight */) &&
             VerifyField<float>(verifier, 12 /* selectedTabZoom */) &&
             VerifyField<int32_t>(verifier, 14 /* selectedTabIndex */) &&
-            VerifyField<flatbuffers::uoffset_t>(verifier, 16 /* tabItems */) &&
+            VerifyField<uint8_t>(verifier, 16 /* ignoreHeaderTextureSize */) &&
+            VerifyField<flatbuffers::uoffset_t>(verifier, 18 /* tabItems */) &&
             verifier.Verify(tabItems()) &&
             verifier.VerifyVectorOfTables(tabItems()) &&
             verifier.EndTable();
@@ -50,11 +52,12 @@ struct TabControlOptionBuilder {
     void add_headerHeight(int32_t headerHeight) { fbb_.AddElement<int32_t>(10, headerHeight, 0); }
     void add_selectedTabZoom(float selectedTabZoom) { fbb_.AddElement<float>(12, selectedTabZoom, 0); }
     void add_selectedTabIndex(int32_t selectedTabIndex) { fbb_.AddElement<int32_t>(14, selectedTabIndex, 0); }
-    void add_tabItems(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<TabItemOption>>> tabItems) { fbb_.AddOffset(16, tabItems); }
+    void add_ignoreHeaderTextureSize(uint8_t ignoreHeaderTextureSize) { fbb_.AddElement<uint8_t>(16, ignoreHeaderTextureSize, 0); }
+    void add_tabItems(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<TabItemOption>>> tabItems) { fbb_.AddOffset(18, tabItems); }
     TabControlOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
     TabControlOptionBuilder &operator=(const TabControlOptionBuilder &);
     flatbuffers::Offset<TabControlOption> Finish() {
-        auto o = flatbuffers::Offset<TabControlOption>(fbb_.EndTable(start_, 7));
+        auto o = flatbuffers::Offset<TabControlOption>(fbb_.EndTable(start_, 8));
         return o;
     }
 };
@@ -66,6 +69,7 @@ inline flatbuffers::Offset<TabControlOption> CreateTabControlOption(flatbuffers:
     int32_t headerHeight = 0,
     float selectedTabZoom = 0,
     int32_t selectedTabIndex = 0,
+    uint8_t ignoreHeaderTextureSize = 0,
     flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<TabItemOption>>> tabItems = 0) {
     TabControlOptionBuilder builder_(_fbb);
     builder_.add_tabItems(tabItems);
@@ -75,9 +79,9 @@ inline flatbuffers::Offset<TabControlOption> CreateTabControlOption(flatbuffers:
     builder_.add_headerWidth(headerWidth);
     builder_.add_headerPlace(headerPlace);
     builder_.add_nodeOptions(nodeOptions);
+    builder_.add_ignoreHeaderTextureSize(ignoreHeaderTextureSize);
     return builder_.Finish();
 }
-
 
 struct TabHeaderOption : private flatbuffers::Table {
     const WidgetOptions *nodeOptions() const { return GetPointer<const WidgetOptions *>(4); }

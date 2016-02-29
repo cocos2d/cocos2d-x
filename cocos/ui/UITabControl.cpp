@@ -41,7 +41,7 @@ namespace ui
     , _containerPosition(Vec2::ZERO)
     , _containerSize(Size::ZERO)
     , _currentHeaderZoom(0.1f)
-    , _igoreHeaderTextureSize(true)
+    , _ignoreHeaderTextureSize(true)
     {
         this->_anchorPoint = Vec2(0.f, 0.f);
         setContentSize(Size(200, 200));
@@ -54,7 +54,7 @@ namespace ui
     
     void TabControl::insertTab(int index, TabHeader* header, Layout* container)
     {
-        auto cellSize = _tabItems.size();
+        int cellSize = (int)_tabItems.size();
         if (index > cellSize)
         {
             CCLOG("%s", "insert index error");
@@ -94,10 +94,10 @@ namespace ui
         
         headerCell->setContentSize(Size(_headerWidth, _headerHeight));
         headerCell->setAnchorPoint(getHeaderAnchorWithDock());
-        if (headerCell->isIgnoreContentAdaptWithSize() == _igoreHeaderTextureSize)
+        if (headerCell->isIgnoreContentAdaptWithSize() == _ignoreHeaderTextureSize)
         {
-            headerCell->ignoreContentAdaptWithSize(!_igoreHeaderTextureSize);
-            if (_igoreHeaderTextureSize)
+            headerCell->ignoreContentAdaptWithSize(!_ignoreHeaderTextureSize);
+            if (_ignoreHeaderTextureSize)
                 headerCell->setContentSize(Size(_headerWidth, _headerHeight));
             headerCell->backGroundDisabledTextureScaleChangedWithSize();
             headerCell->backGroundSelectedTextureScaleChangedWithSize();
@@ -118,7 +118,7 @@ namespace ui
     
     void TabControl::removeTab(int index)
     {
-        auto cellSize = _tabItems.size();
+        int cellSize = (int)_tabItems.size();
         if (cellSize == 0 || index >= cellSize)
         {
             CCLOG("%s", "no tab or remove index error");
@@ -137,7 +137,8 @@ namespace ui
         _tabItems.erase(_tabItems.begin() + index);
         if (index == _currItemIndex)
         {
-            setSelectTab(0);
+            _currItemIndex = -1;
+            setSelectTab(-1);
         }
         else if (index < _currItemIndex)
             _currItemIndex--;
@@ -218,7 +219,7 @@ namespace ui
     
     void TabControl::initTabHeadersPos(int startIndex)
     {
-        auto cellSize = _tabItems.size();
+        int cellSize = (int)_tabItems.size();
         if (startIndex >= cellSize)
             return;
         
@@ -289,7 +290,7 @@ namespace ui
     
     TabHeader* TabControl::getTabHeader(int index) const
     {
-        if (index >= getTabCount())
+        if (index >= (int)getTabCount())
             return nullptr;
         
         return _tabItems.at(index).header;
@@ -297,7 +298,7 @@ namespace ui
     
     Layout* TabControl::getTabContainer(int index) const
     {
-        if (index >= getTabCount())
+        if (index >= (int)getTabCount())
             return nullptr;
         return _tabItems.at(index).container;
     }
@@ -310,7 +311,7 @@ namespace ui
                 return;
             
             bool selected = false;
-            const auto n = _tabItems.size();
+            const int n = (int)_tabItems.size();
             for (int cellI = 0; cellI < n; cellI++)
             {
                 auto& tabItem = _tabItems.at(cellI);
@@ -346,7 +347,7 @@ namespace ui
         
         if (_tabChangedCallback != nullptr)
         {
-            _tabChangedCallback(tabIndex, EventType::SELECT_CHANGED);
+            _tabChangedCallback(_currItemIndex, EventType::SELECT_CHANGED);
         }
     }
     
@@ -357,7 +358,7 @@ namespace ui
     
     int TabControl::indexOfTabHeader(const TabHeader* tabCell) const
     {
-        auto n = _tabItems.size();
+        int n = (int)_tabItems.size();
         for (auto i = 0; i < n; i++)
         {
             if (tabCell == _tabItems.at(i).header)
@@ -382,7 +383,7 @@ namespace ui
     
     void TabControl::setSelectTab(int index)
     {
-        auto cellSize = _tabItems.size();
+        int cellSize = (int)_tabItems.size();
         if (cellSize > 0 && index < cellSize)
         {
             dispatchSelectedTabChanged(index, TabHeader::EventType::SELECTED);
@@ -445,10 +446,10 @@ namespace ui
     
     void TabControl::ignoreHeadersTextureSize(bool ignore)
     {
-        if (_igoreHeaderTextureSize == ignore)
+        if (_ignoreHeaderTextureSize == ignore)
             return;
 
-        _igoreHeaderTextureSize = ignore;
+        _ignoreHeaderTextureSize = ignore;
         for (auto& item : _tabItems)
         {
             item.header->ignoreContentAdaptWithSize(!ignore);

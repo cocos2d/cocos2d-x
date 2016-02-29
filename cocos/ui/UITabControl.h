@@ -314,7 +314,7 @@ namespace ui {
         * get whether ignore the textures' size in header, scale them with _headerWidth and _headerHieght
         * @return whether ignore the textures' size in header
         */
-        inline bool  isIgnoreHeadersTextureSize() const { return _igoreHeaderTextureSize; };
+        inline bool  isIgnoreHeadersTextureSize() const { return _ignoreHeaderTextureSize; };
 
         /**
         * set the delta zoom of selected tab
@@ -362,7 +362,7 @@ namespace ui {
         Vec2        _containerPosition;
         Size        _containerSize;
         float       _currentHeaderZoom;
-        bool        _igoreHeaderTextureSize;
+        bool        _ignoreHeaderTextureSize;
         
         typedef struct CellContainer
         {

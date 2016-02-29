@@ -71,6 +71,8 @@ flatbuffers::Offset<flatbuffers::Table> TabControlReader::createOptionsWithFlatB
     int headerHeight = 20;
     float selectedTabZoom = 0.0f;
     int selectedIndex = 0;
+    bool ignoretexturesize = true;
+
     std::vector<Offset<TabItemOption>>  tabItems;
     const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
     while (attribute)
@@ -105,6 +107,10 @@ flatbuffers::Offset<flatbuffers::Table> TabControlReader::createOptionsWithFlatB
         else if (attriname == "SelectedTabIndex")
         {
             selectedIndex = atoi(value.c_str());
+        }
+        else if (attriname == "IgnoreHeaderTextureSize")
+        {
+            ignoretexturesize = FLATSTR_TO_BOOL(value);
         }
         attribute = attribute->Next();
     }
@@ -160,6 +166,7 @@ flatbuffers::Offset<flatbuffers::Table> TabControlReader::createOptionsWithFlatB
                                           headerHeight,
                                           selectedTabZoom,
                                           selectedIndex,
+                                          ignoretexturesize,
                                           builder->CreateVector(tabItems));
     
     return *(Offset<Table>*)(&options);
@@ -171,6 +178,7 @@ void TabControlReader::setPropsWithFlatBuffers(cocos2d::Node* node, const flatbu
     auto options = (flatbuffers::TabControlOption*)nodeOption;
     
     int headerPlace = options->headerPlace();
+    tabControl->ignoreHeadersTextureSize((bool)options->ignoreHeaderTextureSize());
     tabControl->setHeaderDockPlace((cocos2d::ui::TabControl::Dock)headerPlace);
     tabControl->setHeaderWidth(options->headerWidth());
     tabControl->setHeaderHeight(options->headerHeight());
