@@ -260,7 +260,14 @@ void UIListViewTest_Vertical::selectedItemEventScrollView(Ref* pSender, ui::Scro
 // UIListViewTest_Horizontal
 
 UIListViewTest_Horizontal::UIListViewTest_Horizontal()
-: _displayValueLabel(nullptr)
+: _displayValueLabel(nullptr),
+_spawnCount(5), //swpanCount should > (listview.width + 2 * bufferZone) / tempalteWidth
+_totalCount(100),
+_bufferZone(240), //bufferZone should be larger than ListView's viewPort width
+_updateTimer(0),
+_updateInterval(1.0 / 24), // you could tweak this value to adjust ListView data update rate
+_lastContentPosX(0), //use this value to detect if we are scrolling left or right
+_itemTemplateWidth(0)
 {
 }
 
@@ -274,7 +281,10 @@ bool UIListViewTest_Horizontal::init()
     {
         Size widgetSize = _widget->getContentSize();
         
-        _displayValueLabel = Text::create("Move by horizontal direction", "fonts/Marker Felt.ttf", 32);
+        _displayValueLabel = Text::create("Move by horizontal direction",
+                                          "fonts/Marker Felt.ttf",
+                                          32);
+        
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
                                               widgetSize.height / 2.0f
@@ -285,7 +295,8 @@ bool UIListViewTest_Horizontal::init()
         
         Text* alert = Text::create("ListView horizontal", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
         _uiLayer->addChild(alert);
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
@@ -294,9 +305,8 @@ bool UIListViewTest_Horizontal::init()
         Size backgroundSize = background->getContentSize();
         
         
-        // create list view ex data
-      
-        for (int i = 0; i < 20; ++i)
+        // create listview  data
+        for (int i = 0; i < _totalCount; ++i)
         {
             std::string ccstr = StringUtils::format("listview_item_%d", i);
             _array.push_back(ccstr);
@@ -304,110 +314,117 @@ bool UIListViewTest_Horizontal::init()
         
         
         // Create the list view ex
-        ListView* listView = ListView::create();
+        _listView = ListView::create();
         // set list view ex direction
-        listView->setDirection(ui::ScrollView::Direction::HORIZONTAL);
-        listView->setTouchEnabled(true);
-        listView->setBounceEnabled(true);
-        listView->setBackGroundImage("cocosui/green_edit.png");
-        listView->setBackGroundImageScale9Enabled(true);
-        listView->setContentSize(Size(240, 130));
-        listView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                    (backgroundSize.width - listView->getContentSize().width) / 2.0f,
+        _listView->setDirection(ui::ScrollView::Direction::HORIZONTAL);
+        _listView->setTouchEnabled(true);
+        _listView->setBounceEnabled(true);
+        _listView->setBackGroundImage("cocosui/green_edit.png");
+        _listView->setBackGroundImageScale9Enabled(true);
+        _listView->setContentSize(Size(240, 130));
+        _listView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
+                                    (backgroundSize.width - _listView->getContentSize().width) / 2.0f,
                                     (widgetSize.height - backgroundSize.height) / 2.0f +
-                                    (backgroundSize.height - listView->getContentSize().height) / 2.0f));
-        listView->addEventListener((ui::ListView::ccListViewCallback)CC_CALLBACK_2(UIListViewTest_Horizontal::selectedItemEvent, this));
-		listView->setScrollBarPositionFromCorner(Vec2(7, 7));
-        _uiLayer->addChild(listView);
+                                    (backgroundSize.height - _listView->getContentSize().height) / 2.0f));
+        _listView->addEventListener((ui::ListView::ccListViewCallback)CC_CALLBACK_2(UIListViewTest_Horizontal::selectedItemEvent, this));
+		_listView->setScrollBarPositionFromCorner(Vec2(7, 7));
+        _uiLayer->addChild(_listView);
         
         
         // create model
-        Button* default_button = Button::create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png");
+        Button* default_button = Button::create("cocosui/backtotoppressed.png",
+                                                "cocosui/backtotopnormal.png");
         default_button->setName("Title Button");
         
         Layout *default_item = Layout::create();
         default_item->setTouchEnabled(true);
         default_item->setContentSize(default_button->getContentSize());
-        default_button->setPosition(Vec2(default_item->getContentSize().width / 2.0f, default_item->getContentSize().height / 2.0f));
+        default_button->setPosition(Vec2(default_item->getContentSize().width / 2.0f,
+                                         default_item->getContentSize().height / 2.0f));
         default_item->addChild(default_button);
         
         // set model
-        listView->setItemModel(default_item);
+        _listView->setItemModel(default_item);
         
-        // add default item
-        ssize_t count = _array.size();
-        for (int i = 0; i < count / 4; ++i)
+        // add reusable items
+        for (int i = 0; i < _spawnCount; ++i)
         {
-            listView->pushBackDefaultItem();
+            auto item = default_item->clone();
+            //we use tag to store item ID
+            item->setTag(i);
+            Button* btn = (Button*)item->getChildByName("Title Button");
+            btn->setTitleText(_array.at(i));
+            _listView->pushBackCustomItem(item);
         }
-        // insert default item
-        for (int i = 0; i < count / 4; ++i)
-        {
-            listView->insertDefaultItem(0);
-        }
-        
-        // add custom item
-        for (int i = 0; i < count / 4; ++i)
-        {
-            Button* custom_button = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
-            custom_button->setName("Title Button");
-            custom_button->setScale9Enabled(true);
-            custom_button->setContentSize(default_button->getContentSize());
-            
-            Layout* custom_item = Layout::create();
-            custom_item->setContentSize(custom_button->getContentSize());
-            custom_button->setPosition(Vec2(custom_item->getContentSize().width / 2.0f, custom_item->getContentSize().height / 2.0f));
-            custom_item->addChild(custom_button);
-            
-            listView->pushBackCustomItem(custom_item);
-        }
-        // insert custom item
-        Vector<Widget*>& items = listView->getItems();
-        ssize_t items_count = items.size();
-        for (int i = 0; i < count / 4; ++i)
-        {
-            Button* custom_button = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
-            custom_button->setName("Title Button");
-            custom_button->setScale9Enabled(true);
-            custom_button->setContentSize(default_button->getContentSize());
-            
-            Layout* custom_item = Layout::create();
-            custom_item->setContentSize(custom_button->getContentSize());
-            custom_button->setPosition(Vec2(custom_item->getContentSize().width / 2.0f, custom_item->getContentSize().height / 2.0f));
-            custom_item->addChild(custom_button);
-            
-            listView->insertCustomItem(custom_item, items_count);
-        }
-        
-        // set item data
-        items_count = items.size();
-        for (int i = 0; i < items_count; ++i)
-        {
-            Widget *item = listView->getItem(i);
-            Button *button = static_cast<Button*>(item->getChildByName("Title Button"));
-            ssize_t index = listView->getIndex(item);
-            button->setTitleText(_array[index]);
-        }
-        // remove last item
-        listView->removeLastItem();
-        
-        // remove item by index
-        items_count = items.size();
-        listView->removeItem(items_count - 1);        
         
         // set all items layout gravity
-        listView->setGravity(ListView::Gravity::CENTER_VERTICAL);
+        _listView->setGravity(ListView::Gravity::CENTER_VERTICAL);
         
         // set items margin
-        listView->setItemsMargin(2);
-
-        // Jump to right
-        listView->jumpToRight();
-
+        float spacing = 4;
+        _listView->setItemsMargin(spacing);
+        _itemTemplateWidth = default_item->getContentSize().width;
+        this->_reuseItemOffset = (_itemTemplateWidth + spacing) * _spawnCount;
+        //update listview data
+        this->scheduleUpdate();
+        
         return true;
     }
     
     return false;
+}
+
+float UIListViewTest_Horizontal::getItemPositionXInView(cocos2d::ui::Widget *item) const
+{
+    auto worldPos = item->getParent()->convertToWorldSpaceAR(item->getPosition());
+    auto viewPos = this->_listView->convertToNodeSpaceAR(worldPos);
+    return viewPos.x;
+}
+
+void UIListViewTest_Horizontal::updateItem(int itemID, int templateID)
+{
+    auto itemTemplate = _listView->getItems().at(templateID);
+    Button* btn = (Button*)itemTemplate->getChildByName("Title Button");
+    //If you have  the item ID and templateID, you could fill in the data here
+    itemTemplate->setTag(itemID);
+    btn->setTitleText(_array.at(itemID));
+}
+
+void UIListViewTest_Horizontal::update(float dt)
+{
+    this->_updateTimer += dt;
+    if (this->_updateTimer < this->_updateInterval) {
+        return;
+    }
+    float totalWidth = _itemTemplateWidth * _totalCount + (_totalCount - 1) * 4;
+    _listView->getInnerContainer()->setContentSize(Size(totalWidth, _listView->getInnerContainerSize().height));
+    
+    this->_updateTimer = 0;
+    auto isRight = this->_listView->getInnerContainer()->getPosition().x < this->_lastContentPosX;
+    auto items = _listView->getItems();
+    
+    for (int i = 0; i < _spawnCount; ++i) {
+        auto item = items.at(i);
+        auto itemPos = this->getItemPositionXInView(item);
+        if (isRight) {
+            if (itemPos < -_bufferZone && item->getPosition().x + _reuseItemOffset < totalWidth) {
+                int itemID = item->getTag() + (int)items.size();
+                item->setPositionX(item->getPositionX() + _reuseItemOffset);
+                CCLOG("itemPos = %f, itemID = %d, tempateID = %d", itemPos, itemID, i);
+                this->updateItem(itemID, i);
+            }
+        }
+        else {
+            if (itemPos > _bufferZone && item->getPosition().x - _reuseItemOffset >= 0) {
+                item->setPositionX(item->getPositionX() - _reuseItemOffset);
+                int itemID = item->getTag() - (int)items.size();
+                CCLOG("itemPos = %f, itemID = %d, templateID = %d", itemPos, itemID, i);
+                this->updateItem(itemID, i);
+            }
+        }
+    }
+    //update ListView Items
+    this->_lastContentPosX = this->_listView->getInnerContainer()->getPosition().x;
 }
 
 void UIListViewTest_Horizontal::selectedItemEvent(Ref *pSender, ListView::EventType type)

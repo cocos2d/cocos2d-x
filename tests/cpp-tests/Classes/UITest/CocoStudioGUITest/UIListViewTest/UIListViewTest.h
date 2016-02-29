@@ -61,12 +61,24 @@ public:
 
     virtual bool init() override;
     void selectedItemEvent(cocos2d::Ref* sender, cocos2d::ui::ListView::EventType type);
-
-    
+    virtual void update(float dt) override;
 protected:
+    float getItemPositionXInView(cocos2d::ui::Widget* item) const;
+    void updateItem(int itemID, int templateID);
     
     cocos2d::ui::Text* _displayValueLabel;
-    
+    //how many items we actually spawn, these items will be reused.
+    int _spawnCount;
+    // how many items we need for the ListView. Usually this is a big number.
+    int _totalCount;
+    //when item is away from bufferSzone, we relocate it.
+    float _bufferZone;
+    float _itemTemplateWidth;
+    float _updateInterval;
+    float _updateTimer;
+    float _lastContentPosX;
+    float _reuseItemOffset;
+    cocos2d::ui::ListView* _listView;
     std::vector<std::string> _array;
 };
 
