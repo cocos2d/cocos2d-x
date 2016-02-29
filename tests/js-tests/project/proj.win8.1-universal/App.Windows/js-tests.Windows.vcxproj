@@ -195,6 +195,7 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\cocos2d-js\pch.h" "$(EngineR
     </PreBuildEvent>
     <Link>
       <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
       <Command>echo "Copying Windows 8.1 Universal App JavaScript template files"
@@ -241,6 +242,9 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(Engine
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\cocos2d-js\pch.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq</Command>
     </PostBuildEvent>
+    <Link>
+      <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
