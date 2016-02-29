@@ -259,7 +259,13 @@ namespace ui {
         // set header height, , affect all tabitems
         void         setHeaderHeight(float headerHeigt);
         inline int   getHeaderHeight() const { return _headerHeight; }
-        
+
+        /**
+        * @ignore ignore is true, the header's texture scale with _headerWidth and _headerHieght
+        */
+        void         ignoreHeadersTextureSize(bool ignore);
+        inline bool  isIgnoreHeadersTextureSize() const { return _igoreHeaderTextureSize; };
+
         // the delta Zoom after selected tab actived
         void         setHeaderSelectedZoom(float zoom);
         inline float getHeaderSelectedZoom() { return _currentHeaderZoom; }
@@ -295,6 +301,7 @@ namespace ui {
         Vec2        _containerPosition;
         Size        _containerSize;
         float       _currentHeaderZoom;
+        bool        _igoreHeaderTextureSize;
         
         typedef struct CellContainer
         {

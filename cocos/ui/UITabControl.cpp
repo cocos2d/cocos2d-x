@@ -41,6 +41,7 @@ namespace ui
     , _containerPosition(Vec2::ZERO)
     , _containerSize(Size::ZERO)
     , _currentHeaderZoom(0.1f)
+    , _igoreHeaderTextureSize(true)
     {
         this->_anchorPoint = Vec2(0.f, 0.f);
         setContentSize(Size(200, 200));
@@ -431,6 +432,25 @@ namespace ui
         }
     }
     
+    void TabControl::ignoreHeadersTextureSize(bool ignore)
+    {
+        if (_igoreHeaderTextureSize == ignore)
+            return;
+
+        _igoreHeaderTextureSize = ignore;
+        for (auto& item : _tabItems)
+        {
+            item.header->ignoreContentAdaptWithSize(!ignore);
+            if (ignore)
+                item.header->setContentSize(Size(_headerWidth, _headerHeight);
+            item.header->backGroundDisabledTextureScaleChangedWithSize();
+            item.header->backGroundSelectedTextureScaleChangedWithSize();
+            item.header->backGroundDisabledTextureScaleChangedWithSize();
+            item.header->frontCrossTextureScaleChangedWithSize();
+            item.header->frontCrossDisabledTextureScaleChangedWithSize();
+        }
+    }
+
     TabHeader::TabHeader()
     : _tabLabelRender(nullptr)
     , _tabLabelFontSize(12)
