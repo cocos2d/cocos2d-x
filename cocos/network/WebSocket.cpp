@@ -30,6 +30,8 @@
 #include "WebSocket.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventListenerCustom.h"
 
 #include <thread>
 #include <mutex>
@@ -324,6 +326,13 @@ WebSocket::WebSocket()
     }
 
     __websocketInstances->push_back(this);
+    
+    std::shared_ptr<bool> isDestroyed = _isDestroyed;
+    _resetDirectorListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_RESET, [this, isDestroyed](EventCustom*){
+        if (*isDestroyed)
+            return;
+        close();
+    });
 }
 
 WebSocket::~WebSocket()
@@ -352,6 +361,9 @@ WebSocket::~WebSocket()
             LOGD("ERROR: WebSocket instance (%p) wasn't added to the container which saves websocket instances!\n", this);
         }
     }
+    
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_resetDirectorListener);
+    
     *_isDestroyed = true;
 }
 
