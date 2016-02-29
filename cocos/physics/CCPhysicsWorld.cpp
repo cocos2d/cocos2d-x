@@ -108,13 +108,11 @@ cpBool PhysicsWorldCallback::collisionBeginCallbackFunc(cpArbiter *arb, struct c
     contact->_contactInfo = arb;
     
     return world->collisionBeginCallback(*contact);
-    return true;
 }
 
 cpBool PhysicsWorldCallback::collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
 {
     return world->collisionPreSolveCallback(*static_cast<PhysicsContact*>(cpArbiterGetUserData(arb)));
-    return true;
 }
 
 void PhysicsWorldCallback::collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
