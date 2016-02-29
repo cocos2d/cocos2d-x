@@ -73,7 +73,7 @@ public:
     /**
      *  @js NA
      */
-    const cocos2d::Size getFileDesignSize(const char* fileName) const;
+    cocos2d::Size getFileDesignSize(const char* fileName) const;
     
     void setFilePath(const std::string& strFilePath) { m_strFilePath = strFilePath; }
     const std::string& getFilePath() const { return m_strFilePath; }

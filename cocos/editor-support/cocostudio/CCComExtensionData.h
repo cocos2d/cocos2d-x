@@ -73,7 +73,7 @@ namespace cocostudio
         virtual std::string getCustomProperty() const { return _customProperty; };
         
         virtual void setActionTag(int actionTag);
-        virtual const int getActionTag() const;
+        virtual int getActionTag() const;
         
     public:
         ComExtensionData();
