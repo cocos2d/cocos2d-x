@@ -19,11 +19,13 @@
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
--- Get the debug draw mask.<br>
--- return An integer number.
--- @function [parent=#PhysicsWorld] getDebugDrawMask 
+-- set the number of update of the physics world in a second.<br>
+-- 0 - disable fixed step system<br>
+-- default value is 0
+-- @function [parent=#PhysicsWorld] setFixedUpdateRate 
 -- @param self
--- @return int#int ret (return value: int)
+-- @param #int updatesPerSecond
+-- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
         
 --------------------------------
 -- set the number of substeps in an update of the physics world.<br>
@@ -61,6 +63,13 @@
 -- @function [parent=#PhysicsWorld] removeAllJoints 
 -- @param self
 -- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
+        
+--------------------------------
+-- Get the debug draw mask.<br>
+-- return An integer number.
+-- @function [parent=#PhysicsWorld] getDebugDrawMask 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Get the auto step of this physics world.<br>
@@ -136,6 +145,12 @@
 -- @param self
 -- @param #int rate
 -- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
+        
+--------------------------------
+--  get the number of substeps 
+-- @function [parent=#PhysicsWorld] getFixedUpdateRate 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Get the number of substeps of this physics world.<br>
