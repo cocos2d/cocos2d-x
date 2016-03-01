@@ -227,6 +227,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.cpp" />
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UILayoutTest\UILayoutTest_Editor.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIFocusTest\UIFocusTest.cpp" />
@@ -430,6 +431,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest_Editor.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UILayoutTest\UILayoutTest.h" />
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UILayoutTest\UILayoutTest_Editor.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIListViewTest\UIListViewTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIListViewTest\UIListViewTest_Editor.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.h" />

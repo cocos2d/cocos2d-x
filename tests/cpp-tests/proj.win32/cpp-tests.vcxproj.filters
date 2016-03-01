@@ -940,6 +940,9 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UITabContorlTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UILayoutTest\UILayoutTest_Editor.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\UILayoutTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1700,6 +1703,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.h">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UITabContorlTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UILayoutTest\UILayoutTest_Editor.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\UILayoutTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
