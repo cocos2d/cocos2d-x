@@ -170,7 +170,7 @@ namespace {
                 if (drawCallsThreshold > 0) {
                     auto drawnBatches = Director::getInstance()->getRenderer()->getDrawnBatches();
                     if (drawnBatches >= drawCallsThreshold) {
-                        trap ("traped by draw call threshold.");
+                        trap ("trapped by draw call threshold.");
                         return;
                     }
                 }
@@ -257,7 +257,7 @@ namespace {
         }});
         _command.addSubCommand({"fps", "<threshold> : set lower fps threshold", [this](int fd, const std::string &args){
             auto argstr = split(args, ' ');
-            if (argstr.empty())
+            if (argstr.size() < 2)
                 return;
 
             _service.setFPSThreshold(std::atoi(argstr.at(1).c_str()));
@@ -265,7 +265,7 @@ namespace {
         }});
         _command.addSubCommand({"drawcall", "<threshold> : set upper fps threshold", [this](int fd, const std::string &args){
             auto argstr = split(args, ' ');
-            if (argstr.empty())
+            if (argstr.size() < 2)
                 return;
 
             _service.setDrawCallsThreshold(std::atoi(argstr.at(1).c_str()));
@@ -273,7 +273,7 @@ namespace {
         }});
         _command.addSubCommand({"vertices", "<threshold> : set upper vertices threshold", [this](int fd, const std::string &args){
             auto argstr = split(args, ' ');
-            if (argstr.empty())
+            if (argstr.size() < 2)
                 return;
 
             _service.setVertexCountThreshold(std::atoi(argstr.at(1).c_str()));
