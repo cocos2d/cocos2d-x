@@ -59,6 +59,13 @@ typedef struct PhysicsRayCastInfo
     Vec2 end;              //< in lua, it's name is "ended"
     Vec2 contact;
     Vec2 normal;
+
+    // FIXME: correct thing to do is use `cpFlaot` instead of float.
+    // but in order to do so, we should include "chipmunk_types.h"
+    // in in Chipmunk v7.0, chipmunk_types includes all the mac types that
+    // conflicts with cocos2d Size, Point,... etc types. And all the CocosStudio
+    // lib will need to use the `cocos2d::` namespace prefix. And it is easier to do this
+    // than change all the cocosstudio library (and also users code)
     float fraction;
     void* data;
 }PhysicsRayCastInfo;
@@ -284,6 +291,15 @@ public:
     * @return An integer number.
     */
     inline int getSubsteps() const { return _substeps; }
+    
+    /**
+     * set the number of update of the physics world in a second.
+     * 0 - disable fixed step system
+     * default value is 0
+     */
+    void setFixedUpdateRate(int updatesPerSecond) { if(updatesPerSecond > 0) { _fixedRate = updatesPerSecond; } }
+    /** get the number of substeps */
+    inline int getFixedUpdateRate() const { return _fixedRate; }
 
     /**
     * Set the debug draw mask of this physics world.
@@ -338,8 +354,8 @@ protected:
     
     virtual void debugDraw();
     
-    virtual int collisionBeginCallback(PhysicsContact& contact);
-    virtual int collisionPreSolveCallback(PhysicsContact& contact);
+    virtual bool collisionBeginCallback(PhysicsContact& contact);
+    virtual bool collisionPreSolveCallback(PhysicsContact& contact);
     virtual void collisionPostSolveCallback(PhysicsContact& contact);
     virtual void collisionSeparateCallback(PhysicsContact& contact);
     
@@ -358,6 +374,7 @@ protected:
     int _updateRateCount;
     float _updateTime;
     int _substeps;
+    int _fixedRate;
     cpSpace* _cpSpace;
     
     bool _updateBodyTransform;
@@ -366,7 +383,7 @@ protected:
     Scene* _scene;
     
     bool _autoStep;
-    PhysicsDebugDraw* _debugDraw;
+    DrawNode* _debugDraw;
     int _debugDrawMask;
     
     EventDispatcher* _eventDispatcher;
@@ -394,29 +411,6 @@ protected:
     friend class PhysicsDebugDraw;
 };
 
-/** A physics helper class. Draw physics shape, joint in debug mode. 
- 
- *  You do not create PhysicsDebugDraw objects directly; Instead, you can activate it by PhysicsWorld::setDebugDrawMask.
- */
-class CC_DLL PhysicsDebugDraw
-{
-protected:
-    virtual bool begin();
-    virtual void end();
-    virtual void drawShape(PhysicsShape& shape);
-    virtual void drawJoint(PhysicsJoint& joint);
-    virtual void drawContact();
-    
-protected:
-    PhysicsDebugDraw(PhysicsWorld& world);
-    virtual ~PhysicsDebugDraw();
-    
-protected:
-    DrawNode* _drawNode;
-    PhysicsWorld& _world;
-    
-    friend class PhysicsWorld;
-};
 extern const float CC_DLL PHYSICS_INFINITY;
 
 /** @} */
