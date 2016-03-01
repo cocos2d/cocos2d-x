@@ -226,9 +226,9 @@ void RuntimeEngine::setProjectPath(const std::string &workPath)
     // add project's root directory to search path
     searchPathArray.insert(searchPathArray.begin(), g_projectPath);
 
-    if (_project.isFirstSearchPath())
+    if (!_project.getFirstSearchPath().empty())
     {
-        searchPathArray.insert(searchPathArray.begin(), _project.getSearchPath().begin(), _project.getSearchPath().end());
+        searchPathArray.insert(searchPathArray.begin(), _project.getFirstSearchPath().begin(), _project.getFirstSearchPath().end());
     }
 
     // add writable path to search path

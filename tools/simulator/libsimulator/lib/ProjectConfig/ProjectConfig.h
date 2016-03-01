@@ -28,7 +28,7 @@ using namespace std;
 #define kProjectConfigDebugger                  1024    // -debugger-ldt, -debugger-codeide, -disable-debugger
 #define kProjectConfigListen                    2048    //
 #define kProjectConfigSearchPath                4096    //
-#define kProjectConfigUseLocalScript            8192    // -first-search-path
+#define kProjectConfigFirstSearchPath            8192    // -first-search-path
 
 #define kProjectConfigOpenRecent (kProjectConfigProjectDir | kProjectConfigScriptFile | kProjectConfigPackagePath | kProjectConfigWritablePath | kProjectConfigFrameSize | kProjectConfigFrameScale | kProjectConfigShowConsole | kProjectConfigLoadPrecompiledFramework | kProjectConfigWriteDebugLogToFile)
 
@@ -105,9 +105,8 @@ public:
     const std::string &getBindAddress() const;
     void setSearchPath(const vector<string> &args);
     const vector<string> &getSearchPath() const;
-
-    bool isFirstSearchPath() const;
-    void setFirstSearchPath(bool firstSearchPath);
+    void setFirstSearchPath(const vector<string> &args);
+    const vector<string> &getFirstSearchPath() const;
 
     bool isAppMenu() const;
     bool isResizeWindow() const;
@@ -137,7 +136,7 @@ private:
     int _fileUploadPort;
     string _bindAddress;
     vector<string> _searchPath;
-    bool _firstSearchPath;
+    vector<string> _firstSearchPath;
 
     void normalize();
     string replaceProjectDirToMacro(const string &path) const;

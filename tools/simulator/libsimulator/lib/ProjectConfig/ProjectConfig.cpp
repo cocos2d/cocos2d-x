@@ -273,17 +273,6 @@ void ProjectConfig::setDebuggerType(int debuggerType)
     _debuggerType = debuggerType;
 }
 
-
-bool ProjectConfig::isFirstSearchPath() const
-{
-    return _firstSearchPath;
-}
-
-void ProjectConfig::setFirstSearchPath(bool firstSearchPath)
-{
-    _firstSearchPath = firstSearchPath;
-}
-
 void ProjectConfig::parseCommandLine(const vector<string> &args)
 {
     auto it = args.begin();
@@ -424,15 +413,8 @@ void ProjectConfig::parseCommandLine(const vector<string> &args)
         else if (arg.compare("-first-search-path") == 0)
         {
             ++it;
-            if (it == args.end()) break;
-            if ((*it).compare("enable") == 0)
-            {
-                setFirstSearchPath(true);
-            }
-            else
-            {
-                setFirstSearchPath(false);
-            }
+            vector<string> pathes = split((*it), ';');
+            setFirstSearchPath(pathes);
         }
         ++it;
     }
@@ -596,17 +578,20 @@ vector<string> ProjectConfig::makeCommandLineVector(unsigned int mask /* = kProj
         }
     }
 
-    if (mask & kProjectConfigUseLocalScript)
+    if (mask & kProjectConfigFirstSearchPath)
     {
-        if (isFirstSearchPath())
+        if (_searchPath.size() > 0)
         {
+            stringstream pathbuff;
+            for (auto &path : _searchPath)
+            {
+                pathbuff << dealWithSpaceWithPath(path) << ";";
+            }
+            string pathArgs = pathbuff.str();
+            pathArgs[pathArgs.length() - 1] = '\0';
+
             ret.push_back("-first-search-path");
-            ret.push_back("enable");
-        }
-        else
-        {
-            ret.push_back("-first-search-path");
-            ret.push_back("disable");
+            ret.push_back(pathArgs);
         }
     }
     return ret;
@@ -651,6 +636,17 @@ const vector<string> &ProjectConfig::getSearchPath() const
 {
     return _searchPath;
 }
+
+void ProjectConfig::setFirstSearchPath(const vector<string> &args)
+{
+    _firstSearchPath = args;
+}
+
+const vector<string> &ProjectConfig::getFirstSearchPath() const
+{
+    return _firstSearchPath;
+}
+
 
 bool ProjectConfig::isAppMenu() const
 {
