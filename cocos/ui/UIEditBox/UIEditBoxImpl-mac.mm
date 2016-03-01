@@ -23,14 +23,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIEditBoxImpl-mac.h"
-
+#include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
+#include "UIEditBoxImpl-mac.h"
 #include "base/CCDirector.h"
 #include "UIEditBox.h"
 #include "deprecated/CCString.h"
-#include "CCUIEditBoxMac.h"
+#include "Mac/CCUIEditBoxMac.h"
 
 NS_CC_BEGIN
 
