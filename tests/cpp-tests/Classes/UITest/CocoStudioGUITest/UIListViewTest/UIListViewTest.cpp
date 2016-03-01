@@ -133,7 +133,7 @@ bool UIListViewTest_Vertical::init()
         this->scheduleUpdate();
         
         _listView->forceDoLayout();
-        float totalHeight = _itemTemplateHeight * _totalCount + (_totalCount - 1) * 4;
+        float totalHeight = _itemTemplateHeight * _totalCount + (_totalCount - 1) * spacing;
         _listView->setInnerContainerSize(Size(_listView->getInnerContainerSize().width, totalHeight));
         _listView->jumpToTop();
         
@@ -217,9 +217,7 @@ void UIListViewTest_Vertical::update(float dt)
                 int itemID = item->getTag() - (int)items.size();
                 item->setPositionY(item->getPositionY() + _reuseItemOffset);
                 CCLOG("itemPos = %f, itemID = %d, tempateID = %d", itemPos, itemID, i);
-                if (itemID >= 0) {
-                    this->updateItem(itemID, i);
-                }
+                this->updateItem(itemID, i);
             }
         }
         else {
