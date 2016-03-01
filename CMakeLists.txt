@@ -224,7 +224,9 @@ endif(USE_WEBP)
 
 # Chipmunk
 if(USE_CHIPMUNK)
-  cocos_find_package(Chipmunk CHIPMUNK REQUIRED)
+  if(USE_PREBUILT_LIBS)
+    cocos_find_package(Chipmunk CHIPMUNK REQUIRED)
+  endif()
   add_definitions(-DCC_ENABLE_CHIPMUNK_INTEGRATION=1)
   if(IOS OR MACOSX)
     # without this chipmunk will try to use apple defined geometry types, that conflicts with cocos

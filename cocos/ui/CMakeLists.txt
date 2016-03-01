@@ -10,10 +10,14 @@ if(WINDOWS)
 elseif(MACOSX)
   set(COCOS_UI_SPECIFIC_SRC
       ui/UIEditBox/UIEditBoxImpl-mac.mm
+      ui/UIEditBox/Mac/CCUIEditBoxMac.mm
+      ui/UIEditBox/Mac/CCUIMultilineTextField.m
+      ui/UIEditBox/Mac/CCUIPasswordTextField.m
+      ui/UIEditBox/Mac/CCUISingleLineTextField.m
+      ui/UIEditBox/Mac/CCUITextFieldFormatter.m
       )
 elseif(LINUX)
   set(COCOS_UI_SPECIFIC_SRC
-      ui/UIEditBox/UIEditBoxImpl-common.cpp
       ui/UIEditBox/UIEditBoxImpl-linux.cpp
       )
 endif()
@@ -54,6 +58,7 @@ set(COCOS_UI_SRC
   ui/UIWidget.cpp
   ui/UIEditBox/UIEditBox.cpp
   ui/UILayoutComponent.cpp
+  ui/UIEditBox/UIEditBoxImpl-common.cpp
   ${COCOS_UI_SPECIFIC_SRC}
 
 )

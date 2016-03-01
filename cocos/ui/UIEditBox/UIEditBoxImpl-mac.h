@@ -33,6 +33,7 @@
 #include "UIEditBoxImpl-common.h"
 
 @class UIEditBoxImplMac;
+@class NSFont;
 
 NS_CC_BEGIN
 

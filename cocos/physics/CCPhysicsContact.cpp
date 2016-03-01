@@ -23,7 +23,7 @@
  ****************************************************************************/
 #include "CCPhysicsContact.h"
 #if CC_USE_PHYSICS
-#include "chipmunk.h"
+#include "chipmunk/chipmunk.h"
 
 #include "CCPhysicsBody.h"
 #include "CCPhysicsHelper.h"
@@ -96,10 +96,10 @@ void PhysicsContact::generateContactData()
     _contactData->count = cpArbiterGetCount(arb);
     for (int i=0; i<_contactData->count && i<PhysicsContactData::POINT_MAX; ++i)
     {
-        _contactData->points[i] = PhysicsHelper::cpv2point(cpArbiterGetPoint(arb, i));
+        _contactData->points[i] = PhysicsHelper::cpv2point(cpArbiterGetPointA(arb, i));
     }
     
-    _contactData->normal = _contactData->count > 0 ? PhysicsHelper::cpv2point(cpArbiterGetNormal(arb, 0)) : Vec2::ZERO;
+    _contactData->normal = _contactData->count > 0 ? PhysicsHelper::cpv2point(cpArbiterGetNormal(arb)) : Vec2::ZERO;
 }
 
 // PhysicsContactPreSolve implementation
@@ -114,32 +114,32 @@ PhysicsContactPreSolve::~PhysicsContactPreSolve()
 
 float PhysicsContactPreSolve::getRestitution() const
 {
-    return static_cast<cpArbiter*>(_contactInfo)->e;
+    return cpArbiterGetRestitution(static_cast<cpArbiter*>(_contactInfo));
 }
 
 float PhysicsContactPreSolve::getFriction() const
 {
-    return static_cast<cpArbiter*>(_contactInfo)->u;
+    return cpArbiterGetFriction(static_cast<cpArbiter*>(_contactInfo));
 }
 
 Vec2 PhysicsContactPreSolve::getSurfaceVelocity() const
 {
-    return PhysicsHelper::cpv2point(static_cast<cpArbiter*>(_contactInfo)->surface_vr);
+    return PhysicsHelper::cpv2point(cpArbiterGetSurfaceVelocity(static_cast<cpArbiter*>(_contactInfo)));
 }
 
 void PhysicsContactPreSolve::setRestitution(float restitution)
 {
-    static_cast<cpArbiter*>(_contactInfo)->e = restitution;
+    cpArbiterSetRestitution(static_cast<cpArbiter*>(_contactInfo), restitution);
 }
 
 void PhysicsContactPreSolve::setFriction(float friction)
 {
-    static_cast<cpArbiter*>(_contactInfo)->u = friction;
+    cpArbiterSetFriction(static_cast<cpArbiter*>(_contactInfo), friction);
 }
 
 void PhysicsContactPreSolve::setSurfaceVelocity(const Vec2& velocity)
 {
-    static_cast<cpArbiter*>(_contactInfo)->surface_vr = PhysicsHelper::point2cpv(velocity);
+    cpArbiterSetSurfaceVelocity(static_cast<cpArbiter*>(_contactInfo), PhysicsHelper::point2cpv(velocity));
 }
 
 void PhysicsContactPreSolve::ignore()
@@ -161,17 +161,17 @@ PhysicsContactPostSolve::~PhysicsContactPostSolve()
 
 float PhysicsContactPostSolve::getRestitution() const
 {
-    return static_cast<cpArbiter*>(_contactInfo)->e;
+    return cpArbiterGetRestitution(static_cast<cpArbiter*>(_contactInfo));
 }
 
 float PhysicsContactPostSolve::getFriction() const
 {
-    return static_cast<cpArbiter*>(_contactInfo)->u;
+    return cpArbiterGetFriction(static_cast<cpArbiter*>(_contactInfo));
 }
 
 Vec2 PhysicsContactPostSolve::getSurfaceVelocity() const
 {
-    return PhysicsHelper::cpv2point(static_cast<cpArbiter*>(_contactInfo)->surface_vr);
+    return PhysicsHelper::cpv2point(cpArbiterGetSurfaceVelocity(static_cast<cpArbiter*>(_contactInfo)));
 }
 
 EventListenerPhysicsContact::EventListenerPhysicsContact()
