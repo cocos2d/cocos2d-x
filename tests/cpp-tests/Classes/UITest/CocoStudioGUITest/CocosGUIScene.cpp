@@ -60,5 +60,5 @@ GUIDynamicCreateTests::GUIDynamicCreateTests()
     addTest("WidgetAddNode Test", [](){ return new (std::nothrow) UIWidgetAddNodeTests; });
     addTest("RichText Test", [](){ return new (std::nothrow) UIRichTextTests; });
 
-    addTest("TabControl Test", [](){return new (std::nothrow) UITabControlTests(); });
+    addTest("TabControl Test", [](){return new (std::nothrow) UITabControlTests; });
 }
