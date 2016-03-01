@@ -50,7 +50,6 @@ ProjectConfig::ProjectConfig()
     , _consolePort(kProjectConfigConsolePort)
     , _fileUploadPort(kProjectConfigUploadPort)
     , _bindAddress("")
-    , _firstSearchPath(false)
 {
     normalize();
 }
