@@ -50,7 +50,7 @@ ProjectConfig::ProjectConfig()
     , _consolePort(kProjectConfigConsolePort)
     , _fileUploadPort(kProjectConfigUploadPort)
     , _bindAddress("")
-    , _useLocalScript(false)
+    , _firstSearchPath(false)
 {
     normalize();
 }
@@ -274,14 +274,14 @@ void ProjectConfig::setDebuggerType(int debuggerType)
 }
 
 
-bool ProjectConfig::isUseLocalScript() const
+bool ProjectConfig::isFirstSearchPath() const
 {
-    return _useLocalScript;
+    return _firstSearchPath;
 }
 
-void ProjectConfig::setUseLocalScript(bool useLocalScript)
+void ProjectConfig::setFirstSearchPath(bool firstSearchPath)
 {
-    _useLocalScript = useLocalScript;
+    _firstSearchPath = firstSearchPath;
 }
 
 void ProjectConfig::parseCommandLine(const vector<string> &args)
@@ -421,17 +421,17 @@ void ProjectConfig::parseCommandLine(const vector<string> &args)
             vector<string> pathes = split((*it), ';');
             setSearchPath(pathes);
         }
-        else if (arg.compare("-use-local-script") == 0)
+        else if (arg.compare("-first-search-path") == 0)
         {
             ++it;
             if (it == args.end()) break;
             if ((*it).compare("enable") == 0)
             {
-                setUseLocalScript(true);
+                setFirstSearchPath(true);
             }
             else
             {
-                setUseLocalScript(false);
+                setFirstSearchPath(false);
             }
         }
         ++it;
@@ -598,14 +598,14 @@ vector<string> ProjectConfig::makeCommandLineVector(unsigned int mask /* = kProj
 
     if (mask & kProjectConfigUseLocalScript)
     {
-        if (isUseLocalScript())
+        if (isFirstSearchPath())
         {
-            ret.push_back("-use-local-script");
+            ret.push_back("-first-search-path");
             ret.push_back("enable");
         }
         else
         {
-            ret.push_back("-use-local-script");
+            ret.push_back("-first-search-path");
             ret.push_back("disable");
         }
     }
