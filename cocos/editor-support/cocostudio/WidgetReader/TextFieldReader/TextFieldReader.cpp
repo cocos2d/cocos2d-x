@@ -298,8 +298,8 @@ namespace cocostudio
         bool isLocalized = options->isLocalized() != 0;
         if (isLocalized)
         {
-            BinLocalizationManager* localizer = BinLocalizationManager::getInstance();
-            textField->setString(localizer->getLocalizationString(text));
+            ILocalizationManager* lm = LocalizationHelper::getCurrentManager();
+            textField->setString(lm->getLocalizationString(text));
         }
         else
         {

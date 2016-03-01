@@ -8,7 +8,7 @@ using namespace cocos2d;
 
 static JsonLocalizationManager* _sharedJsonLocalizationManager = nullptr;
 
-JsonLocalizationManager* JsonLocalizationManager::getInstance()
+ILocalizationManager* JsonLocalizationManager::getInstance()
 {
     if (!_sharedJsonLocalizationManager)
     {
@@ -60,7 +60,7 @@ std::string JsonLocalizationManager::getLocalizationString(std::string key)
 
 static BinLocalizationManager* _sharedBinLocalizationManager = nullptr;
 
-BinLocalizationManager* BinLocalizationManager::getInstance()
+ILocalizationManager* BinLocalizationManager::getInstance()
 {
     if (!_sharedBinLocalizationManager)
     {
@@ -120,4 +120,20 @@ std::string BinLocalizationManager::getLocalizationString(std::string key)
     }
 
     return result;
+}
+
+static ILocalizationManager* _sharedLocalizationManager = nullptr;
+
+ILocalizationManager* LocalizationHelper::getCurrentManager()
+{
+    if (!_sharedLocalizationManager)
+    {
+        _sharedLocalizationManager = BinLocalizationManager::getInstance();
+    }
+    return _sharedLocalizationManager;
+}
+
+void LocalizationHelper::setCurrentManager(ILocalizationManager* manager)
+{
+    _sharedLocalizationManager = manager;
 }

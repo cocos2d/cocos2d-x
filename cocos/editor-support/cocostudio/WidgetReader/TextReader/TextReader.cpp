@@ -460,8 +460,8 @@ namespace cocostudio
         bool isLocalized = options->isLocalized() != 0;
         if (isLocalized)
         {
-            BinLocalizationManager* localizer = BinLocalizationManager::getInstance();
-            label->setString(localizer->getLocalizationString(text));
+            ILocalizationManager* lm = LocalizationHelper::getCurrentManager();
+            label->setString(lm->getLocalizationString(text));
         }
         else
         {

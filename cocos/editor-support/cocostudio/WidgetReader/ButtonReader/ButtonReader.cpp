@@ -834,8 +834,8 @@ namespace cocostudio
         bool isLocalized = options->isLocalized() != 0;
         if (isLocalized)
         {
-            BinLocalizationManager* localizer = BinLocalizationManager::getInstance();
-            button->setTitleText(localizer->getLocalizationString(titleText));
+            ILocalizationManager* lm = LocalizationHelper::getCurrentManager();
+            button->setTitleText(lm->getLocalizationString(titleText));
         }
         else
         {

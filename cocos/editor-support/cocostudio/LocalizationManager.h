@@ -26,7 +26,7 @@ namespace cocostudio {
     class CC_STUDIO_DLL JsonLocalizationManager : ILocalizationManager
     {
     public:
-        static JsonLocalizationManager* getInstance();
+        static ILocalizationManager* getInstance();
 
         JsonLocalizationManager();
         ~JsonLocalizationManager();
@@ -52,7 +52,7 @@ namespace cocostudio {
     class CC_STUDIO_DLL BinLocalizationManager : ILocalizationManager
     {
     public:
-        static BinLocalizationManager* getInstance();
+        static ILocalizationManager* getInstance();
 
         BinLocalizationManager();
         ~BinLocalizationManager();
@@ -72,6 +72,21 @@ namespace cocostudio {
 
     protected:
         std::unordered_map<std::string, std::string> languageData;
+    };
+
+    class CC_STUDIO_DLL LocalizationHelper
+    {
+    public:
+        /* Get current localization manager.
+        * @return If the manager has been set, return current localization manager, 
+        * otherwise return the singleton instance of BinLocalizationManager.
+        */
+        static ILocalizationManager* getCurrentManager();
+
+        /* Set current localization manager.
+        * @param manager Instance of current localization manager.
+        */
+        static void setCurrentManager(ILocalizationManager* manager);
     };
 }
 
