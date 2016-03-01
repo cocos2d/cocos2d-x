@@ -79,6 +79,7 @@ protected:
     float _lastContentPosX;
     float _reuseItemOffset;
     cocos2d::ui::ListView* _listView;
+    
     std::vector<std::string> _array;
 };
 

@@ -261,9 +261,9 @@ void UIListViewTest_Vertical::selectedItemEventScrollView(Ref* pSender, ui::Scro
 
 UIListViewTest_Horizontal::UIListViewTest_Horizontal()
 : _displayValueLabel(nullptr),
-_spawnCount(5), //swpanCount should > (listview.width + 2 * bufferZone) / tempalteWidth
-_totalCount(100),
-_bufferZone(240), //bufferZone should be larger than ListView's viewPort width
+_spawnCount(4), //swpanCount should > listview.width / tempalteWidth + 2
+_totalCount(50),
+_bufferZone(140), //bufferZone should be larger than List item width
 _updateTimer(0),
 _updateInterval(1.0 / 24), // you could tweak this value to adjust ListView data update rate
 _lastContentPosX(0), //use this value to detect if we are scrolling left or right
@@ -281,14 +281,14 @@ bool UIListViewTest_Horizontal::init()
     {
         Size widgetSize = _widget->getContentSize();
         
-        _displayValueLabel = Text::create("Move by horizontal direction",
+        _displayValueLabel = Text::create("There are 50 items, but we only create 5 templates",
                                           "fonts/Marker Felt.ttf",
-                                          32);
+                                          20);
         
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
                                               widgetSize.height / 2.0f
-                                              + _displayValueLabel->getContentSize().height * 1.5f));
+                                             + _displayValueLabel->getContentSize().height * 2));
         
         _uiLayer->addChild(_displayValueLabel);
         
@@ -306,6 +306,7 @@ bool UIListViewTest_Horizontal::init()
         
         
         // create listview  data
+        //The data is usually fetch from the server
         for (int i = 0; i < _totalCount; ++i)
         {
             std::string ccstr = StringUtils::format("listview_item_%d", i);
@@ -346,15 +347,15 @@ bool UIListViewTest_Horizontal::init()
         // set model
         _listView->setItemModel(default_item);
         
-        // add reusable items
-        for (int i = 0; i < _spawnCount; ++i)
-        {
-            auto item = default_item->clone();
-            //we use tag to store item ID
-            item->setTag(i);
-            Button* btn = (Button*)item->getChildByName("Title Button");
-            btn->setTitleText(_array.at(i));
-            _listView->pushBackCustomItem(item);
+        //initial the data
+        for (int i = 0; i < _totalCount; ++i) {
+            if (i < _spawnCount) {
+                Widget* item = default_item->clone();
+                item->setTag(i);
+                Button* btn = (Button*)item->getChildByName("Title Button");
+                btn->setTitleText(_array.at(i));
+                _listView->pushBackCustomItem(item);
+            }
         }
         
         // set all items layout gravity
@@ -397,13 +398,13 @@ void UIListViewTest_Horizontal::update(float dt)
         return;
     }
     float totalWidth = _itemTemplateWidth * _totalCount + (_totalCount - 1) * 4;
-    _listView->getInnerContainer()->setContentSize(Size(totalWidth, _listView->getInnerContainerSize().height));
-    
+    _listView->getInnerContainer()->setContentSize(Size(totalWidth,
+                                                        _listView->getInnerContainerSize().height));
     this->_updateTimer = 0;
     auto isRight = this->_listView->getInnerContainer()->getPosition().x < this->_lastContentPosX;
     auto items = _listView->getItems();
     
-    for (int i = 0; i < _spawnCount; ++i) {
+    for (int i = 0; i < _spawnCount && i < _totalCount; ++i) {
         auto item = items.at(i);
         auto itemPos = this->getItemPositionXInView(item);
         if (isRight) {
@@ -415,7 +416,9 @@ void UIListViewTest_Horizontal::update(float dt)
             }
         }
         else {
-            if (itemPos > _bufferZone && item->getPosition().x - _reuseItemOffset >= 0) {
+            if (itemPos > _bufferZone + _listView->getContentSize().width &&
+                item->getPosition().x - _reuseItemOffset >= 0) {
+                
                 item->setPositionX(item->getPositionX() - _reuseItemOffset);
                 int itemID = item->getTag() - (int)items.size();
                 CCLOG("itemPos = %f, itemID = %d, templateID = %d", itemPos, itemID, i);
