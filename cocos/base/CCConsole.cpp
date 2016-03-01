@@ -240,7 +240,7 @@ namespace {
     };
 
     Trap::Trap ()
-    : _command("trap", "")
+    : _command("trap", "Inspect application, to stop application if it exceeds a set threshold")
     {
         _command.addSubCommand({"start", ": start inspecting.", [](int fd, const std::string &args) {
             Director::getInstance()->getScheduler()->performFunctionInCocosThread([fd](){
