@@ -30,6 +30,7 @@
 #include <cctype>
 #include <locale>
 #include <sstream>
+#include <iomanip>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -242,20 +243,19 @@ namespace {
     Trap::Trap ()
     : _command("trap", "Inspect application, to stop application if it exceeds a set threshold")
     {
-        _command.addSubCommand({"start", ": start inspecting.", [](int fd, const std::string &args) {
+        _command.addSubCommand({"start", "Start inspecting", [](int fd, const std::string &args) {
             Director::getInstance()->getScheduler()->performFunctionInCocosThread([fd](){
                 Trap::getInstance()->_service.schedule(fd);
             });
             sendTo (fd, "start inspecting.\n");
         }});
-        _command.addSubCommand({"stop", ": stop inspecting.", [](int fd, const std::string &args) {
+        _command.addSubCommand({"stop", "Stop inspecting", [](int fd, const std::string &args) {
             Director::getInstance()->getScheduler()->performFunctionInCocosThread([](){
                 Trap::getInstance()->_service.unschedule();
             });
             sendTo (fd, "stop inspecting.\n");
-
         }});
-        _command.addSubCommand({"fps", "<threshold> : set lower fps threshold", [this](int fd, const std::string &args){
+        _command.addSubCommand({"fps", "Set lower fps threshold. Args: [fps_threshold]", [this](int fd, const std::string &args){
             auto argstr = split(args, ' ');
             if (argstr.size() < 2)
                 return;
@@ -263,7 +263,7 @@ namespace {
             _service.setFPSThreshold(std::atoi(argstr.at(1).c_str()));
             sendTo(fd, "fps threshold setted.\n");
         }});
-        _command.addSubCommand({"drawcall", "<threshold> : set upper fps threshold", [this](int fd, const std::string &args){
+        _command.addSubCommand({"drawcall", "Set upper fps threshold. Args: [drawcall_threshold]", [this](int fd, const std::string &args){
             auto argstr = split(args, ' ');
             if (argstr.size() < 2)
                 return;
@@ -271,7 +271,7 @@ namespace {
             _service.setDrawCallsThreshold(std::atoi(argstr.at(1).c_str()));
             sendTo(fd, "draw calls threshold setted.\n");
         }});
-        _command.addSubCommand({"vertices", "<threshold> : set upper vertices threshold", [this](int fd, const std::string &args){
+        _command.addSubCommand({"vertices", "Set upper vertices threshold. Args: [vertices_threshold]", [this](int fd, const std::string &args){
             auto argstr = split(args, ' ');
             if (argstr.size() < 2)
                 return;
@@ -279,15 +279,14 @@ namespace {
             _service.setVertexCountThreshold(std::atoi(argstr.at(1).c_str()));
             sendTo(fd, "vertex count threshold setted.\n");
         }});
-        _command.addSubCommand({"reset", ": reset threshold", CC_CALLBACK_0(Service::reset, &_service)});
-            _command.addSubCommand({"scenegraph", ": show latest scenegraph.", [this](int fd, const std::string &args){
+        _command.addSubCommand({"reset", "Reset threshold", CC_CALLBACK_0(Service::reset, &_service)});
+            _command.addSubCommand({"scenegraph", "Show latest scenegraph", [this](int fd, const std::string &args){
             sendTo(fd, _service.getSceneGraph());
         }});
-
-        _command.addSubCommand({"texture", ": show latest texturecache info.", [this](int fd, const std::string &args){
+        _command.addSubCommand({"texture", "Show latest texturecache info", [this](int fd, const std::string &args){
             sendTo(fd, _service.getTextureCacheInfo());
         }});
-        _command.addSubCommand({"status", ": show state and threshold settings.", [this](int fd, const std::string &args){
+        _command.addSubCommand({"status", "Show state and threshold settings", [this](int fd, const std::string &args){
             std::stringstream stream;
 
             stream << "state : " << (_service.IsRunning()? "run" : "stop") << "\n";
@@ -343,7 +342,7 @@ namespace {
         for(auto &cmd : this->_subCommands) {
             if(cmd.name == "help") continue;
             std::stringstream ss;
-            ss << "\t" << cmd.name << " " << cmd.help << std::endl;
+            ss << "\t" << std::setw(24) << std::left << cmd.name << cmd.help << std::endl;
             logStr.append(ss.str());
         }
         sendTo(fd, logStr);
