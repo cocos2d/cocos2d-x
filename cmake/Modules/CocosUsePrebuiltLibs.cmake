@@ -7,7 +7,8 @@ set(_chipmunk_inc_paths include)
 set(_chipmunk_libs chipmunk libchipmunk)
 
 set(_curl_inc curl/curl.h)
-set(_curl_libs ssl crypto libeay32 ssleay32 curl libcurl_imp libcurl)
+# order: curl, ssl, crypto
+set(_curl_libs curl libcurl_imp libcurl ssl libeay32 ssleay32 crypto)
 
 set(_freetype2_prefix FREETYPE)
 set(_freetype2_inc ft2build.h freetype/freetype.h)
