@@ -332,7 +332,10 @@ namespace ui
                 }
             }
             if (!selected)
+            {
+                activeHeader(-1);
                 _currItemIndex = -1;
+            }
         }
         else if (eventType == TabHeader::EventType::UNSELECTED)
         {
