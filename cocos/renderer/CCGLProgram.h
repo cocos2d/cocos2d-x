@@ -489,7 +489,7 @@ public:
     */
     void reset();
     /** returns the OpenGL Program object */
-    inline const GLuint getProgram() const { return _program; }
+    inline GLuint getProgram() const { return _program; }
 
     /** returns the Uniform flags */
     inline const UniformFlags& getUniformFlags() const { return _flags; }
