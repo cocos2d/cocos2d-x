@@ -309,7 +309,10 @@ namespace ui
         {
             if (tabIndex == _currItemIndex)
                 return;
-            
+
+            if (_currItemIndex != -1)
+                deactiveHeader(_tabItems.at(_currItemIndex).header);
+
             bool selected = false;
             const int n = (int)_tabItems.size();
             for (int cellI = 0; cellI < n; cellI++)
@@ -319,7 +322,7 @@ namespace ui
                 auto cellHeader = tabItem.header;
                 if (tabIndex == cellI)
                 {
-                    activeHeader(cellI);
+                    activeHeader(cellHeader);
                     cellHeader->setSelected(true);
                     container->setVisible(true);
                     _currItemIndex = cellI;
@@ -332,18 +335,19 @@ namespace ui
                 }
             }
             if (!selected)
-            {
-                activeHeader(-1);
                 _currItemIndex = -1;
-            }
         }
         else if (eventType == TabHeader::EventType::UNSELECTED)
         {
-            auto& tabItem = _tabItems.at(tabIndex);
-            auto container = tabItem.container;
-            auto cellHeader = tabItem.header;
-            cellHeader->setSelected(false);
-            container->setVisible(false);
+            if (tabIndex > 0 && tabIndex < _tabItems.size())
+            {
+                auto& tabItem = _tabItems.at(tabIndex);
+                auto container = tabItem.container;
+                auto cellHeader = tabItem.header;
+                deactiveHeader(cellHeader);
+                cellHeader->setSelected(false);
+                container->setVisible(false);
+            }
             if (tabIndex == _currItemIndex)
                 _currItemIndex = -1;
         }
@@ -411,27 +415,20 @@ namespace ui
         }
     }
     
-    void TabControl::activeHeader(int tabIndex)
+    void TabControl::activeHeader(TabHeader* header)
     {
-        if (tabIndex == _currItemIndex)
-            return;
-        
-        TabHeader* currentHeader = nullptr;
-        if (_currItemIndex != -1)
-        {
-            currentHeader = _tabItems.at(_currItemIndex).header;
-            currentHeader->setLocalZOrder(-2);
-            currentHeader->setScale(1.0f);
-        }
-        TabHeader *activeHeader = nullptr;
-        if (tabIndex != -1)
-        {
-            activeHeader = _tabItems.at(tabIndex).header;
-            activeHeader->setLocalZOrder(-1);
-            activeHeader->setScale(1.0f + _currentHeaderZoom);
-        }
+        header->setLocalZOrder(-1);
+        header->setScale(1.0f + _currentHeaderZoom);
         _reorderProtectedChildDirty = true;
     }
+
+    void TabControl::deactiveHeader(TabHeader* header)
+    {
+        header->setLocalZOrder(-2);
+        header->setScale(1.0f);
+        _reorderProtectedChildDirty = true;
+    }
+
     
     void TabControl::copySpecialProperties(Widget* model)
     {

@@ -351,7 +351,8 @@ namespace ui {
     private:
         // format tab header and container after insert
         void initAfterInsert(int index);
-        void activeHeader(int tabindex);
+        void activeHeader(TabHeader* header);
+        void deactiveHeader(TabHeader* header);
         Vec2 getHeaderAnchorWithDock() const;
         
         int         _currItemIndex;
