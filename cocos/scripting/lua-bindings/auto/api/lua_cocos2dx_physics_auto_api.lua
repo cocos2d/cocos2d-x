@@ -146,4 +146,9 @@
 -- @field [parent=#cc] PhysicsWorld#PhysicsWorld PhysicsWorld preloaded module
 
 
+--------------------------------------------------------
+-- the cc PhysicsDebugDraw
+-- @field [parent=#cc] PhysicsDebugDraw#PhysicsDebugDraw PhysicsDebugDraw preloaded module
+
+
 return nil
