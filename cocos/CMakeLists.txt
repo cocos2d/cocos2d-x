@@ -65,7 +65,7 @@ endif(BUILD_EDITOR_SPINE)
 
 include(../extensions/CMakeLists.txt)
 
-set(COCOS_SRC cocos2d.cpp
+set(COCOS_SRC
     ${COCOS_2D_SRC}
     ${COCOS_3D_SRC}
     ${COCOS_PLATFORM_SRC}
@@ -166,7 +166,9 @@ if(USE_RECAST)
   cocos_use_pkg(cocos2dInternal RECAST)
 endif()
 
-ADD_LIBRARY(cocos2d)
+ADD_LIBRARY(cocos2d
+        cocos2d.cpp
+        )
 
 if(ANDROID)
   target_link_libraries(cocos2d -Wl,-whole-archive cocos2dxandroid_static -Wl,-no-whole-archive)
