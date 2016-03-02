@@ -166,7 +166,7 @@ if(USE_RECAST)
   cocos_use_pkg(cocos2dInternal RECAST)
 endif()
 
-ADD_LIBRARY(cocos2d cocos2d.h)
+ADD_LIBRARY(cocos2d cc_dummy.c)
 
 if(ANDROID)
   target_link_libraries(cocos2d -Wl,-whole-archive cocos2dxandroid_static -Wl,-no-whole-archive)
