@@ -339,7 +339,7 @@ namespace ui
         }
         else if (eventType == TabHeader::EventType::UNSELECTED)
         {
-            if (tabIndex > 0 && tabIndex < _tabItems.size())
+            if (tabIndex >= 0 && tabIndex < (int)_tabItems.size())
             {
                 auto& tabItem = _tabItems.at(tabIndex);
                 auto container = tabItem.container;
