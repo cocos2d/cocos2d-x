@@ -35,7 +35,7 @@ THE SOFTWARE.
 
 
 #if ENABLE_PHYSICS_CHIPMUNK_DETECT
-#include "chipmunk.h"
+#include "chipmunk/chipmunk.h"
 #elif ENABLE_PHYSICS_BOX2D_DETECT
 #include "Box2D/Box2D.h"
 #endif
