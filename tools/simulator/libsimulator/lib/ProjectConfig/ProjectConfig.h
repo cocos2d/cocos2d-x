@@ -106,7 +106,7 @@ public:
     void setSearchPath(const vector<string> &args);
     const vector<string> &getSearchPath() const;
     void setLanguageDataPath(const std::string &filePath);
-    
+
     bool isUseLocalScript() const;
     void setUseLocalScript(bool useLocalScript);
 

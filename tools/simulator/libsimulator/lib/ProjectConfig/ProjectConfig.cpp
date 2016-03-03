@@ -421,25 +421,24 @@ void ProjectConfig::parseCommandLine(const vector<string> &args)
             vector<string> pathes = split((*it), ';');
             setSearchPath(pathes);
         }
+        else if (arg.compare("-use-local-script") == 0)
+        {
+            ++it;
+            if (it == args.end()) break;
+            if ((*it).compare("enable") == 0)
+            {
+                setUseLocalScript(true);
+            }
+            else
+            {
+                setUseLocalScript(false);
+            }
+        }
         else if (arg.compare("-language-data-path") == 0)
         {
             ++it;
             if (it == args.end()) break;
             setLanguageDataPath(*it);
-        }
-
-        else if (arg.compare("-use-local-script") == 0)
-        {
-        ++it;
-            if (it == args.end()) break;
-            if ((*it).compare("enable") == 0)
-            {
-                setUseLocalScript(true);
-    }
-            else
-            {
-                setUseLocalScript(false);
-}
         }
         ++it;
     }
@@ -602,7 +601,7 @@ vector<string> ProjectConfig::makeCommandLineVector(unsigned int mask /* = kProj
             ret.push_back(pathArgs);
         }
     }
-       
+
     if (mask & kProjectConfigUseLocalScript)
     {
         if (isUseLocalScript())
