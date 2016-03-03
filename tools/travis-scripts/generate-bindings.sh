@@ -73,11 +73,30 @@ git config user.email ${GH_EMAIL}
 git config user.name ${GH_USER}
 popd
 
+#backup the chipmunk js bindings
+backup_dir="$JS_AUTO_GENERATED_DIR"/../backup
+echo $backup_dir
+mkdir $backup_dir
+cp "$JS_AUTO_GENERATED_DIR"/js_bindings_chipmunk_auto_classes.cpp "$backup_dir"/
+cp "$JS_AUTO_GENERATED_DIR"/js_bindings_chipmunk_auto_classes.h "$backup_dir"/
+cp "$JS_AUTO_GENERATED_DIR"/js_bindings_chipmunk_auto_classes_registration.h "$backup_dir"/
+cp "$JS_AUTO_GENERATED_DIR"/js_bindings_chipmunk_functions.cpp "$backup_dir"/
+cp "$JS_AUTO_GENERATED_DIR"/js_bindings_chipmunk_functions.h "$backup_dir"/
+cp "$JS_AUTO_GENERATED_DIR"/js_bindings_chipmunk_functions_registration.h "$backup_dir"/
+
 rm -rf "$LUA_AUTO_GENERATED_DIR"
 mkdir "$LUA_AUTO_GENERATED_DIR"
 
 rm -rf "$JS_AUTO_GENERATED_DIR"
 mkdir "$JS_AUTO_GENERATED_DIR"
+
+cp "$backup_dir"/js_bindings_chipmunk_auto_classes.cpp "$JS_AUTO_GENERATED_DIR"/
+cp "$backup_dir"/js_bindings_chipmunk_auto_classes.h "$JS_AUTO_GENERATED_DIR"/
+cp "$backup_dir"/js_bindings_chipmunk_auto_classes_registration.h "$JS_AUTO_GENERATED_DIR"/
+cp "$backup_dir"/js_bindings_chipmunk_functions.cpp "$JS_AUTO_GENERATED_DIR"/
+cp "$backup_dir"/js_bindings_chipmunk_functions.h "$JS_AUTO_GENERATED_DIR"/
+cp "$backup_dir"/js_bindings_chipmunk_functions_registration.h "$JS_AUTO_GENERATED_DIR"/
+#move the backup chipmunk js bindings to js auto directory
 
 # 1. Generate LUA bindings
 generate_bindings_glue_codes
