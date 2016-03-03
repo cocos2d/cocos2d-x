@@ -65,6 +65,7 @@ set(COCOS_UI_SRC
   ui/UIEditBox/UIEditBox.cpp
   ui/UILayoutComponent.cpp
   ui/UIEditBox/UIEditBoxImpl-common.cpp
+  ui/UITabControl.cpp
   ${COCOS_UI_SPECIFIC_SRC}
 
 )
