@@ -553,6 +553,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\SkeletonReader\SkeletonNodeReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TextAtlasReader\TextAtlasReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.cpp" />
@@ -660,6 +661,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\ui\UIScrollView.cpp" />
     <ClCompile Include="..\ui\UIScrollViewBar.cpp" />
     <ClCompile Include="..\ui\UISlider.cpp" />
+    <ClCompile Include="..\ui\UITabControl.cpp" />
     <ClCompile Include="..\ui\UIText.cpp" />
     <ClCompile Include="..\ui\UITextAtlas.cpp" />
     <ClCompile Include="..\ui\UITextBMFont.cpp" />
@@ -1159,6 +1161,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\SkeletonReader\SkeletonNodeReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.h" />
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TabControlReader\CSTabControl_generated.h" />
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TextAtlasReader\TextAtlasReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.h" />
@@ -1280,6 +1284,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\ui\UIScale9Sprite.h" />
     <ClInclude Include="..\ui\UIScrollView.h" />
     <ClInclude Include="..\ui\UISlider.h" />
+    <ClInclude Include="..\ui\UITabControl.h" />
     <ClInclude Include="..\ui\UIText.h" />
     <ClInclude Include="..\ui\UITextAtlas.h" />
     <ClInclude Include="..\ui\UITextBMFont.h" />

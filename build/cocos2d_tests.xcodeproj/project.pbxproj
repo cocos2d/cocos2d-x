@@ -1391,6 +1391,9 @@
 		C08689C218D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		C08689C318D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		C08689C418D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
+		C5384A7E1C85314A00EC986E /* UITabControlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5384A7C1C8530E200EC986E /* UITabControlTest.cpp */; };
+		C5384A7F1C8531A700EC986E /* UITabControlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5384A7C1C8530E200EC986E /* UITabControlTest.cpp */; };
+		C5384A801C85339200EC986E /* UITabControlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5384A7C1C8530E200EC986E /* UITabControlTest.cpp */; };
 		D0FD03641A3B546400825BB5 /* AllocatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD03621A3B546400825BB5 /* AllocatorTest.cpp */; };
 		D0FD03651A3B546400825BB5 /* AllocatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD03621A3B546400825BB5 /* AllocatorTest.cpp */; };
 		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
@@ -2704,6 +2707,8 @@
 		C04F93581941B05400E9FEAB /* TileMapTest2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TileMapTest2.cpp; sourceTree = "<group>"; };
 		C04F93591941B05400E9FEAB /* TileMapTest2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileMapTest2.h; sourceTree = "<group>"; };
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
+		C5384A7C1C8530E200EC986E /* UITabControlTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UITabControlTest.cpp; path = UITabControlTest/UITabControlTest.cpp; sourceTree = "<group>"; };
+		C5384A7D1C8530E200EC986E /* UITabControlTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UITabControlTest.h; path = UITabControlTest/UITabControlTest.h; sourceTree = "<group>"; };
 		D0FD03621A3B546400825BB5 /* AllocatorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AllocatorTest.cpp; path = AllocatorTest/AllocatorTest.cpp; sourceTree = "<group>"; };
 		D0FD03631A3B546400825BB5 /* AllocatorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllocatorTest.h; path = AllocatorTest/AllocatorTest.h; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
@@ -5116,6 +5121,7 @@
 		29FBBC00196A9F0D00E65826 /* UIAndEditorTests */ = {
 			isa = PBXGroup;
 			children = (
+				C58126F61C84959600C92DE2 /* UITabControlTest */,
 				29080D1F191B595E0066F8DF /* CocosGUIScene.cpp */,
 				29080D20191B595E0066F8DF /* CocosGUIScene.h */,
 				29080D37191B595E0066F8DF /* GUIEditorTest.cpp */,
@@ -5465,6 +5471,15 @@
 				B6DD2FFB1B04979C00E47F5F /* NavMeshTest.h */,
 			);
 			name = NavMeshTest;
+			sourceTree = "<group>";
+		};
+		C58126F61C84959600C92DE2 /* UITabControlTest */ = {
+			isa = PBXGroup;
+			children = (
+				C5384A7C1C8530E200EC986E /* UITabControlTest.cpp */,
+				C5384A7D1C8530E200EC986E /* UITabControlTest.h */,
+			);
+			name = UITabControlTest;
 			sourceTree = "<group>";
 		};
 		D0FD03611A3B543700825BB5 /* AllocatorTest */ = {
@@ -7075,6 +7090,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5384A801C85339200EC986E /* UITabControlTest.cpp in Sources */,
 				3825CC491A2C982A00C92EA8 /* CustomRootNode.cpp in Sources */,
 				1AC35B3118CECF0C00F37B72 /* GLES-Render.cpp in Sources */,
 				29080DE1191B595E0066F8DF /* UITextTest_Editor.cpp in Sources */,
@@ -7281,6 +7297,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5384A7F1C8531A700EC986E /* UITabControlTest.cpp in Sources */,
 				507B413C1C31BEA60067B53E /* GLES-Render.cpp in Sources */,
 				507B413D1C31BEA60067B53E /* SpritePolygonTest.cpp in Sources */,
 				507B413E1C31BEA60067B53E /* TextInputTest.cpp in Sources */,
@@ -7538,6 +7555,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5384A7E1C85314A00EC986E /* UITabControlTest.cpp in Sources */,
 				1AC35B3218CECF0C00F37B72 /* GLES-Render.cpp in Sources */,
 				688669721AE8E8B500C2CFD9 /* SpritePolygonTest.cpp in Sources */,
 				1AC35C5418CECF0C00F37B72 /* TextInputTest.cpp in Sources */,
