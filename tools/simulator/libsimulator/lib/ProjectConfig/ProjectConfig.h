@@ -104,6 +104,7 @@ public:
     const std::string &getBindAddress() const;
     void setSearchPath(const vector<string> &args);
     const vector<string> &getSearchPath() const;
+    void setLanguageDataPath(const std::string &filePath);
     
     bool isAppMenu() const;
     bool isResizeWindow() const;
@@ -133,6 +134,7 @@ private:
     int _fileUploadPort;
     string _bindAddress;
     vector<string> _searchPath;
+    string _languageDataPath;
 
     void normalize();
     string replaceProjectDirToMacro(const string &path) const;

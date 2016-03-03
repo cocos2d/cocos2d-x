@@ -27,9 +27,7 @@ namespace cocostudio {
     {
     public:
         static ILocalizationManager* getInstance();
-
-        JsonLocalizationManager();
-        ~JsonLocalizationManager();
+        static void destroyInstance();
 
     public:
         /* Init manager with special localize json data file.
@@ -46,6 +44,10 @@ namespace cocostudio {
         virtual std::string getLocalizationString(std::string key);
 
     protected:
+        JsonLocalizationManager();
+        ~JsonLocalizationManager();
+
+    protected:
         rapidjson::Document * languageData;
     };
 
@@ -53,9 +55,7 @@ namespace cocostudio {
     {
     public:
         static ILocalizationManager* getInstance();
-
-        BinLocalizationManager();
-        ~BinLocalizationManager();
+        static void destroyInstance();
 
         /* Init manager with special localize binary data file.
         * @param file Name of localize file.
@@ -71,6 +71,10 @@ namespace cocostudio {
         virtual std::string getLocalizationString(std::string key);
 
     protected:
+        BinLocalizationManager();
+        ~BinLocalizationManager();
+
+    protected:
         std::unordered_map<std::string, std::string> languageData;
     };
 
@@ -78,15 +82,22 @@ namespace cocostudio {
     {
     public:
         /* Get current localization manager.
-        * @return If the manager has been set, return current localization manager, 
-        * otherwise return the singleton instance of BinLocalizationManager.
+        * @return The instance of current localization manager.
+        * If the manager hasn't been set, the default manager will be BinLocalizationManager.
         */
         static ILocalizationManager* getCurrentManager();
 
         /* Set current localization manager.
-        * @param manager Instance of current localization manager.
+        * @param isBinary If the param is true, current manager will be set to BinLocalizationManager.
+        * If the param is false, current manager will be set to JsonLocalizationManager.
         */
-        static void setCurrentManager(ILocalizationManager* manager);
+        static void setCurrentManager(bool isBinary);
+
+        /* Get the type of current localization manager.
+        * @return If current manager is BinLocalizationManager, return true.
+        * Otherwise return false, that means current manager is JsonLocalizationManager.
+        */
+        static bool isBinManager();
     };
 }
 

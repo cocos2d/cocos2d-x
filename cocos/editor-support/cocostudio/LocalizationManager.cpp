@@ -18,6 +18,15 @@ ILocalizationManager* JsonLocalizationManager::getInstance()
     return _sharedJsonLocalizationManager;
 }
 
+void JsonLocalizationManager::destroyInstance()
+{
+    if (_sharedJsonLocalizationManager != nullptr)
+    {
+        delete _sharedJsonLocalizationManager;
+        _sharedJsonLocalizationManager = nullptr;
+    }
+}
+
 JsonLocalizationManager::JsonLocalizationManager()
     :languageData(nullptr)
 {
@@ -58,6 +67,8 @@ std::string JsonLocalizationManager::getLocalizationString(std::string key)
     return result;
 }
 
+
+
 static BinLocalizationManager* _sharedBinLocalizationManager = nullptr;
 
 ILocalizationManager* BinLocalizationManager::getInstance()
@@ -70,14 +81,21 @@ ILocalizationManager* BinLocalizationManager::getInstance()
     return _sharedBinLocalizationManager;
 }
 
+void BinLocalizationManager::destroyInstance()
+{
+    if (_sharedBinLocalizationManager != nullptr)
+    {
+        delete _sharedBinLocalizationManager;
+        _sharedBinLocalizationManager = nullptr;
+    }
+}
+
 BinLocalizationManager::BinLocalizationManager()
 {
-
 }
 
 BinLocalizationManager::~BinLocalizationManager()
 {
-
 }
 
 bool BinLocalizationManager::initLanguageData(std::string file)
@@ -122,18 +140,24 @@ std::string BinLocalizationManager::getLocalizationString(std::string key)
     return result;
 }
 
-static ILocalizationManager* _sharedLocalizationManager = nullptr;
+
+
+static bool isCurrentBinManager = true;
 
 ILocalizationManager* LocalizationHelper::getCurrentManager()
 {
-    if (!_sharedLocalizationManager)
-    {
-        _sharedLocalizationManager = BinLocalizationManager::getInstance();
-    }
-    return _sharedLocalizationManager;
+    if (isCurrentBinManager)
+        return BinLocalizationManager::getInstance();
+    else
+        return JsonLocalizationManager::getInstance();
 }
 
-void LocalizationHelper::setCurrentManager(ILocalizationManager* manager)
+void LocalizationHelper::setCurrentManager(bool isBinary)
 {
-    _sharedLocalizationManager = manager;
+    isCurrentBinManager = isBinary;
+}
+
+bool LocalizationHelper::isBinManager()
+{
+    return isCurrentBinManager;
 }
