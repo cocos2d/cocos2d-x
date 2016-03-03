@@ -676,6 +676,15 @@ ObjectActor.prototype = {
         functionDisplayName: stack.functionDisplayName
       };
     });
+  },
+   
+  /**
+   * Added by minggo
+   * To get the name of this object. It is used to get function name,
+   * which is needed by dispalying function name in stack strace.
+   */
+  onName: function() {
+    return { from: this.actorID, name: this.obj.name };
   }
 };
 
@@ -694,7 +703,8 @@ ObjectActor.prototype.requestTypes = {
   "dependentPromises": ObjectActor.prototype.onDependentPromises,
   "allocationStack": ObjectActor.prototype.onAllocationStack,
   "fulfillmentStack": ObjectActor.prototype.onFulfillmentStack,
-  "rejectionStack": ObjectActor.prototype.onRejectionStack
+  "rejectionStack": ObjectActor.prototype.onRejectionStack,
+  "name": ObjectActor.prototype.onName, // added by minggo
 };
 
 /**
