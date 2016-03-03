@@ -17,6 +17,8 @@
 #include "UIWidgetAddNodeTest/UIWidgetAddNodeTest.h"
 #include "UIRichTextTest/UIRichTextTest.h"
 #include "UIFocusTest/UIFocusTest.h"
+#include "UITabControlTest/UITabControlTest.h"
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
 #include "UIVideoPlayerTest/UIVideoPlayerTest.h"
 #include "UIWebViewTest/UIWebViewTest.h"
@@ -57,4 +59,6 @@ GUIDynamicCreateTests::GUIDynamicCreateTests()
     
     addTest("WidgetAddNode Test", [](){ return new (std::nothrow) UIWidgetAddNodeTests; });
     addTest("RichText Test", [](){ return new (std::nothrow) UIRichTextTests; });
+
+    addTest("TabControl Test", [](){return new (std::nothrow) UITabControlTests; });
 }
