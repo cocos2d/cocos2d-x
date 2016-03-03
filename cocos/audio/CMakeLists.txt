@@ -13,6 +13,14 @@ if(WINDOWS)
         audio/win32/AudioPlayer.cpp
     )
 
+ELSEIF(ANDROID)
+    set(COCOS_AUDIO_PLATFORM_SRC
+        audio/android/AudioEngine-inl.cpp
+        audio/android/ccdandroidUtils.cpp
+        audio/android/cddSimpleAudioEngine.cpp
+        audio/android/jni/cddandroidAndroidJavaEngine.cpp
+    )
+
 elseif(LINUX)
     set(COCOS_AUDIO_PLATFORM_SRC
         audio/linux/SimpleAudioEngine.cpp

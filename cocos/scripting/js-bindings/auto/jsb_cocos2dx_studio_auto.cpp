@@ -12457,7 +12457,7 @@ bool js_cocos2dx_studio_ComExtensionData_getActionTag(JSContext *cx, uint32_t ar
     cocostudio::ComExtensionData* cobj = (cocostudio::ComExtensionData *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ComExtensionData_getActionTag : Invalid Native Object");
     if (argc == 0) {
-        const int ret = cobj->getActionTag();
+        int ret = cobj->getActionTag();
         jsval jsret = JSVAL_NULL;
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);

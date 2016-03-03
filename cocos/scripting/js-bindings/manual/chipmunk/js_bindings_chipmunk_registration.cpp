@@ -63,12 +63,19 @@ void jsb_register_chipmunk(JSContext* cx, JS::HandleObject object)
     JS_DefineFunction(cx, chipmunk, "centroidForPoly", JSB_cpCentroidForPoly, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, chipmunk, "recenterPoly", JSB_cpRecenterPoly, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
+    // Compatibility with Chipmunk 6.2
+    JS_DefineFunction(cx, chipmunk, "momentForSegment", JSB_cpMomentForSegment, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+
     JS::RootedObject space(cx, JSB_cpSpace_object);
     JS_DefineFunction(cx, space, "segmentQueryFirst", JSB_cpSpace_segmentQueryFirst, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE);
-    JS_DefineFunction(cx, space, "nearestPointQueryNearest", JSB_cpSpace_nearestPointQueryNearest, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE);
-    JS_DefineFunction(cx, space, "eachShape", JSB_cpSpace_eachShape, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
-    JS_DefineFunction(cx, space, "eachBody", JSB_cpSpace_eachBody, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
-    JS_DefineFunction(cx, space, "eachConstraint", JSB_cpSpace_eachConstraint, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    JS_DefineFunction(cx, space, "pointQueryNearest", JSB_cpSpace_pointQueryNearest, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+
+    // Compatibility with Chipmunk 6.2
+    JS_DefineFunction(cx, space, "removeCollisionHandler", JSB_cpSpace_removeCollisionHandler, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+    JS_DefineFunction(cx, space, "setDefaultCollisionHandler", JSB_cpSpace_setDefaultCollisionHandler, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+
+    JS::RootedObject polyShape(cx, JSB_cpPolyShape_object);
+    JS_DefineFunction(cx, polyShape, "getVerts", JSB_cpPolyShape_getVerts, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE);
 
     register_CCPhysicsSprite(cx, object);
     register_CCPhysicsDebugNode(cx, object);

@@ -145,7 +145,7 @@ void GUIReader::storeFileDesignSize(const char *fileName, const cocos2d::Size &s
     _fileDesignSizes[keyHeight] = cocos2d::Value(size.height);
 }
 
-const cocos2d::Size GUIReader::getFileDesignSize(const char* fileName) const
+cocos2d::Size GUIReader::getFileDesignSize(const char* fileName) const
 {
     std::string keyWidth = fileName;
     keyWidth.append("width");

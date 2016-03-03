@@ -187,6 +187,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.cpp \
 ../../Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp \
 ../../Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest_Editor.cpp \
+../../Classes/UITest/CocoStudioGUITest/UITabControlTest/UITabControlTest.cpp \
 ../../Classes/UITest/UITest.cpp \
 ../../Classes/UnitTest/RefPtrTest.cpp \
 ../../Classes/UnitTest/UnitTest.cpp \

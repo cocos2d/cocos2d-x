@@ -210,7 +210,7 @@ public:
      * Query the button title content.
      *@return Get the button's title content.
      */
-    const std::string getTitleText() const;
+    std::string getTitleText() const;
 
     /**
      * Change the color of button's title.
@@ -246,7 +246,7 @@ public:
      * Query the font name of button's title
      *@return font name in std::string
      */
-    const std::string getTitleFontName() const;
+    std::string getTitleFontName() const;
 
     /**
      * Sets the title's text horizontal alignment.
