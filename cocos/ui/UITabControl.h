@@ -364,8 +364,8 @@ namespace ui {
 
         // format tab header and container after insert
         void initAfterInsert(int index);
-        void activeHeader(TabItem* item);
-        void deactiveHeader(TabItem* item);
+        void activeTabItem(TabItem* item);
+        void deactiveTabItem(TabItem* item);
         Vec2 getHeaderAnchorWithDock() const;
 
         TabItem*    _selectedItem;
