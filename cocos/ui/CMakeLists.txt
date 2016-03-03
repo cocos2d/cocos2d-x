@@ -20,6 +20,12 @@ elseif(LINUX)
   set(COCOS_UI_SPECIFIC_SRC
       ui/UIEditBox/UIEditBoxImpl-linux.cpp
       )
+ELSEIF(ANDROID)
+    set(COCOS_UI_SPECIFIC_SRC
+        ui/UIEditBox/UIEditBoxImpl-android.cpp
+        ui/UIVideoPlayer-android.cpp
+        ui/UIWebViewImpl-android.cpp
+    )
 endif()
 
 #todo: android UIWebViewImpl and UIVideoPlayer
