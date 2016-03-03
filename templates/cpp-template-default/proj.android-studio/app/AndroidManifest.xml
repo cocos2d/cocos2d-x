@@ -10,9 +10,9 @@
         android:icon="@mipmap/ic_launcher">
         
         <!-- Tell Cocos2dxActivity the name of our .so -->
-		<meta-data android:name="android.app.lib_name"
-				   android:value="cocos2dcpp" />
-		
+        <meta-data android:name="android.app.lib_name"
+                   android:value="MyGame" />
+
         <activity
             android:name="org.cocos2dx.cpp.AppActivity"
             android:screenOrientation="landscape"
