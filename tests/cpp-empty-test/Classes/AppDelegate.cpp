@@ -6,7 +6,8 @@
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
 
-#include "editor-support/cocostudio/LocalizationManager.h"
+//Uncomment the following line to use localize manager
+//#include "editor-support/cocostudio/LocalizationManager.h"
 
 USING_NS_CC;
 using namespace std;
