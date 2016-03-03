@@ -25,10 +25,12 @@
 
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
-#include "UIEditboxImpl-mac.h"
+#include "../UIEditBoxImpl-mac.h"
 #include "CCUITextInput.h"
 
 #pragma mark - UIEditBox mac implementation
+
+@class NSFont;
 
 @interface UIEditBoxImplMac : NSObject <NSTextFieldDelegate, NSTextViewDelegate>
 {

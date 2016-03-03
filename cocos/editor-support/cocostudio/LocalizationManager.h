@@ -83,15 +83,16 @@ namespace cocostudio {
     public:
         /* Get current localization manager.
         * @return The instance of current localization manager.
-        * If the manager hasn't been set, the default manager will be BinLocalizationManager.
+        * If the manager hasn't been set, it will return the singleton instance of BinLocalizationManager.
         */
         static ILocalizationManager* getCurrentManager();
 
         /* Set current localization manager.
-        * @param isBinary If the param is true, current manager will be set to BinLocalizationManager.
+        * @param manager The instance of current manager.
+        * @param isBinary Wether the manager is binary localization manager.
         * If the param is false, current manager will be set to JsonLocalizationManager.
         */
-        static void setCurrentManager(bool isBinary);
+        static void setCurrentManager(ILocalizationManager* manager, bool isBinary);
 
         /* Get the type of current localization manager.
         * @return If current manager is BinLocalizationManager, return true.

@@ -3057,10 +3057,10 @@ std::string LabelStrikethrough::subtitle() const
 
 LabelLocalizationTest::LabelLocalizationTest()
 {
-    _localizationJson = new cocostudio::JsonLocalizationManager();
+    _localizationJson = cocostudio::JsonLocalizationManager::getInstance();
     _localizationJson->initLanguageData("configs/en-US.lang.json");
 
-    _localizationBin = new cocostudio::BinLocalizationManager;
+    _localizationBin = cocostudio::BinLocalizationManager::getInstance();
     _localizationBin->initLanguageData("configs/ENGLISH.lang.csb");
 
     const float BUTTON_WIDTH = 100;

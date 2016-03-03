@@ -79,16 +79,16 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     //  If you want to load json localize data, use follow block
     /*
-    cocostudio::LocalizationHelper::setCurrentManager(false);
-    cocostudio::ILocalizationManager * lm = cocostudio::LocalizationHelper::getCurrentManager();
+    cocostudio::ILocalizationManager * lm = cocostudio::JsonLocalizationManager::getInstance();
     lm->initLanguageData("your localize file name.lang.json");
+    cocostudio::LocalizationHelper::setCurrentManager(lm, false);
     */
 
     //  If you want to load binary localize data, use follow block
     /*
-    cocostudio::LocalizationHelper::setCurrentManager(true);
-    cocostudio::ILocalizationManager * lm = cocostudio::LocalizationHelper::getCurrentManager();
+    cocostudio::ILocalizationManager * lm = cocostudio::BinLocalizationManager::getInstance();
     lm->initLanguageData("your localize file name.lang.csb");
+    cocostudio::LocalizationHelper::setCurrentManager(lm, true);
     */
 
     // turn on display FPS

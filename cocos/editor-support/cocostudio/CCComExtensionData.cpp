@@ -88,7 +88,7 @@ namespace cocostudio
         _timelineData->setActionTag(actionTag);
     }
     
-    const int ComExtensionData::getActionTag() const
+    int ComExtensionData::getActionTag() const
     {
         return _timelineData->getActionTag();
     }

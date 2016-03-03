@@ -1519,7 +1519,7 @@ struct ScrollViewOptions : private flatbuffers::Table {
   uint8_t bounceEnabled() const { return GetField<uint8_t>(32, 0); }
   uint8_t scrollbarEnabeld() const { return GetField<uint8_t>(34, 1); }
   uint8_t scrollbarAutoHide() const { return GetField<uint8_t>(36, 1); }
-  float scrollbarAutoHideTime() const { return GetField<float>(38, 0.2); }
+  float scrollbarAutoHideTime() const { return GetField<float>(38, 0.2f); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* widgetOptions */) &&
@@ -1566,7 +1566,7 @@ struct ScrollViewOptionsBuilder {
   void add_bounceEnabled(uint8_t bounceEnabled) { fbb_.AddElement<uint8_t>(32, bounceEnabled, 0); }
   void add_scrollbarEnabeld(uint8_t scrollbarEnabeld) { fbb_.AddElement<uint8_t>(34, scrollbarEnabeld, 1); }
   void add_scrollbarAutoHide(uint8_t scrollbarAutoHide) { fbb_.AddElement<uint8_t>(36, scrollbarAutoHide, 1); }
-  void add_scrollbarAutoHideTime(float scrollbarAutoHideTime) { fbb_.AddElement<float>(38, scrollbarAutoHideTime, 0.2); }
+  void add_scrollbarAutoHideTime(float scrollbarAutoHideTime) { fbb_.AddElement<float>(38, scrollbarAutoHideTime, 0.2f); }
   ScrollViewOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   ScrollViewOptionsBuilder &operator=(const ScrollViewOptionsBuilder &);
   flatbuffers::Offset<ScrollViewOptions> Finish() {

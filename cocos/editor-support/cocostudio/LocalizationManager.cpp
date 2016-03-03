@@ -143,17 +143,22 @@ std::string BinLocalizationManager::getLocalizationString(std::string key)
 
 
 static bool isCurrentBinManager = true;
+static ILocalizationManager* _sharedLocalizationManager = nullptr;
 
 ILocalizationManager* LocalizationHelper::getCurrentManager()
 {
-    if (isCurrentBinManager)
-        return BinLocalizationManager::getInstance();
-    else
-        return JsonLocalizationManager::getInstance();
+    if (!_sharedLocalizationManager)
+    {
+        _sharedLocalizationManager = BinLocalizationManager::getInstance();
+        isCurrentBinManager = true;
+    }
+    
+    return _sharedLocalizationManager;
 }
 
-void LocalizationHelper::setCurrentManager(bool isBinary)
+void LocalizationHelper::setCurrentManager(ILocalizationManager* manager, bool isBinary)
 {
+    _sharedLocalizationManager = manager;
     isCurrentBinManager = isBinary;
 }
 

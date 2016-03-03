@@ -143,7 +143,7 @@ class CC_STUDIO_DLL DisplayData : public cocos2d::Ref
 public:
     CC_CREATE_NO_PARAM_NO_INIT(DisplayData)
 
-    static const std::string changeDisplayToTexture(const std::string& displayName);
+    static std::string changeDisplayToTexture(const std::string& displayName);
 public:
     /**
      * @js ctor

@@ -50,6 +50,7 @@ ProjectConfig::ProjectConfig()
     , _consolePort(kProjectConfigConsolePort)
     , _fileUploadPort(kProjectConfigUploadPort)
     , _bindAddress("")
+    , _useLocalScript(false)
 {
     normalize();
 }
@@ -272,6 +273,17 @@ void ProjectConfig::setDebuggerType(int debuggerType)
     _debuggerType = debuggerType;
 }
 
+
+bool ProjectConfig::isUseLocalScript() const
+{
+    return _useLocalScript;
+}
+
+void ProjectConfig::setUseLocalScript(bool useLocalScript)
+{
+    _useLocalScript = useLocalScript;
+}
+
 void ProjectConfig::parseCommandLine(const vector<string> &args)
 {
     auto it = args.begin();
@@ -409,13 +421,25 @@ void ProjectConfig::parseCommandLine(const vector<string> &args)
             vector<string> pathes = split((*it), ';');
             setSearchPath(pathes);
         }
+        else if (arg.compare("-use-local-script") == 0)
+        {
+            ++it;
+            if (it == args.end()) break;
+            if ((*it).compare("enable") == 0)
+            {
+                setUseLocalScript(true);
+            }
+            else
+            {
+                setUseLocalScript(false);
+            }
+        }
         else if (arg.compare("-language-data-path") == 0)
         {
             ++it;
             if (it == args.end()) break;
             setLanguageDataPath(*it);
         }
-
         ++it;
     }
 }
@@ -577,7 +601,20 @@ vector<string> ProjectConfig::makeCommandLineVector(unsigned int mask /* = kProj
             ret.push_back(pathArgs);
         }
     }
-       
+
+    if (mask & kProjectConfigUseLocalScript)
+    {
+        if (isUseLocalScript())
+        {
+            ret.push_back("-use-local-script");
+            ret.push_back("enable");
+        }
+        else
+        {
+            ret.push_back("-use-local-script");
+            ret.push_back("disable");
+        }
+    }
     return ret;
 }
 
@@ -632,9 +669,13 @@ void ProjectConfig::setLanguageDataPath(const std::string &filePath)
         isBinary = false;
     }
 
-    cocostudio::LocalizationHelper::setCurrentManager(isBinary);
-    cocostudio::ILocalizationManager* lm = cocostudio::LocalizationHelper::getCurrentManager();
+    cocostudio::ILocalizationManager* lm;
+    if (isBinary)
+        lm = cocostudio::BinLocalizationManager::getInstance();
+    else
+        lm = cocostudio::JsonLocalizationManager::getInstance();
     lm->initLanguageData(filePath);
+    cocostudio::LocalizationHelper::setCurrentManager(lm, isBinary);
 }
 
 bool ProjectConfig::isAppMenu() const

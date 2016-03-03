@@ -101,22 +101,22 @@ public:
      * get vertex count
      * @return number of vertices
      */
-    const unsigned int getVertCount() const;
+    unsigned int getVertCount() const;
     
     /**
      * get triangles count
      * @return number of triangles
      */
-    const unsigned int getTrianglesCount() const;
+    unsigned int getTrianglesCount() const;
 
     /** @deprecated Use method getTrianglesCount() instead */
-    CC_DEPRECATED_ATTRIBUTE const unsigned int getTriaglesCount() const;
+    CC_DEPRECATED_ATTRIBUTE unsigned int getTriaglesCount() const;
     
     /**
      * get sum of all triangle area size
      * @return sum of all triangle area size
      */
-    const float getArea() const;
+    float getArea() const;
     
     Rect rect;
     std::string filename;
