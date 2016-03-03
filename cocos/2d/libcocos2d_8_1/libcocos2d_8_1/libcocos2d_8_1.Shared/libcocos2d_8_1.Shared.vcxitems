@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -429,6 +429,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SkeletonReader\SkeletonNodeReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TabControlReader\CSTabControl_generated.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TextAtlasReader\TextAtlasReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.h" />
@@ -563,6 +565,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIScale9Sprite.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIScrollView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UISlider.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UITabControl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIText.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UITextAtlas.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UITextBMFont.h" />
@@ -1038,6 +1041,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SkeletonReader\SkeletonNodeReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TextAtlasReader\TextAtlasReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.cpp" />
@@ -1162,6 +1166,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIScrollView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIScrollViewBar.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UISlider.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UITabControl.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIText.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UITextAtlas.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UITextBMFont.cpp" />

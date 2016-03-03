@@ -195,6 +195,7 @@ set(TESTS_SRC
   Classes/UITest/CocoStudioGUITest/UITextTest/UITextTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp
   Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest_Editor.cpp
+  Classes/UITest/CocoStudioGUITest/UITabControlTest/UITabControlTest.cpp
   Classes/UITest/UITest.cpp
   Classes/UnitTest/RefPtrTest.cpp
   Classes/UnitTest/UnitTest.cpp

@@ -86,6 +86,7 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/ActionTimeline/CCSkinNode.cpp
   editor-support/cocostudio/FlatBuffersSerialize.cpp
   editor-support/cocostudio/WidgetReader/ArmatureNodeReader/ArmatureNodeReader.cpp
+  editor-support/cocostudio/WidgetReader/TabControlReader/TabControlReader.cpp 
 )
 
 include_directories( editor-support )
