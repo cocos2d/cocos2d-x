@@ -32,26 +32,31 @@ NS_CC_BEGIN
 
 namespace ui
 {
-    
+
     TabControl::TabControl()
-    : _currItemIndex(-1)
-    , _headerHeight(20)
-    , _headerWidth(50)
-    , _headerDockPlace(TabControl::TOP)
-    , _containerPosition(Vec2::ZERO)
-    , _containerSize(Size::ZERO)
-    , _currentHeaderZoom(0.1f)
-    , _ignoreHeaderTextureSize(true)
+        : _selectedItem(nullptr)
+        , _headerHeight(20)
+        , _headerWidth(50)
+        , _headerDockPlace(Dock::TOP)
+        , _containerPosition(Vec2::ZERO)
+        , _containerSize(Size::ZERO)
+        , _currentHeaderZoom(0.1f)
+        , _ignoreHeaderTextureSize(true)
     {
         this->_anchorPoint = Vec2(0.f, 0.f);
         setContentSize(Size(200, 200));
     }
-    
+
     TabControl::~TabControl()
     {
+        for (auto& item : _tabItems)
+        {
+            if (item)
+                CC_SAFE_DELETE(item);
+        }
         _tabItems.clear();
     }
-    
+
     void TabControl::insertTab(int index, TabHeader* header, Layout* container)
     {
         int cellSize = (int)_tabItems.size();
@@ -60,38 +65,34 @@ namespace ui
             CCLOG("%s", "insert index error");
             return;
         }
-        
+
         addProtectedChild(container, -3, -1);
         addProtectedChild(header, -2, -1);
-        
-        _tabItems.insert(_tabItems.begin() + index, TabItem(header, container));
+
+        _tabItems.insert(_tabItems.begin() + index, new TabItem(header, container));
         header->_tabView = this;
         header->_tabSelectedEvent = CC_CALLBACK_2(TabControl::dispatchSelectedTabChanged, this); // binding tab selected event
-        
+
         initAfterInsert(index);
     }
-    
+
     void TabControl::initAfterInsert(int index)
     {
-        auto cellSize =_tabItems.size();
+        auto cellSize = _tabItems.size();
         auto tabItem = _tabItems.at(index);
-        auto headerCell = tabItem.header;
-        auto container = tabItem.container;
-        
+        auto headerCell = tabItem->header;
+        auto container = tabItem->container;
+
         if (cellSize == 1)
         {
             setSelectTab(0);
-        }
-        else if (index <= _currItemIndex)
-        {
-            _currItemIndex += 1;
         }
         else
         {
             headerCell->setSelected(false);
             container->setVisible(false);
         }
-        
+
         headerCell->setContentSize(Size(_headerWidth, _headerHeight));
         headerCell->setAnchorPoint(getHeaderAnchorWithDock());
         if (headerCell->isIgnoreContentAdaptWithSize() == _ignoreHeaderTextureSize)
@@ -105,7 +106,7 @@ namespace ui
             headerCell->frontCrossTextureScaleChangedWithSize();
             headerCell->frontCrossDisabledTextureScaleChangedWithSize();
         }
-        
+
         initTabHeadersPos(index);
         if (_containerSize.equals(Size::ZERO))
             initContainers();
@@ -115,7 +116,7 @@ namespace ui
             container->setContentSize(_containerSize);
         }
     }
-    
+
     void TabControl::removeTab(int index)
     {
         int cellSize = (int)_tabItems.size();
@@ -124,33 +125,32 @@ namespace ui
             CCLOG("%s", "no tab or remove index error");
             return;
         }
-        
-        auto& tabItem = _tabItems.at(index);
-        auto cell = tabItem.header;
-        if (cell != nullptr)
-        {
-            cell->_tabSelectedEvent = nullptr;
-            cell->_tabView = nullptr;
-            removeProtectedChild(tabItem.container);
-            removeProtectedChild(cell);
-        }
+
+        auto tabItem = _tabItems.at(index);
+        if (tabItem == _selectedItem)
+            _selectedItem = nullptr;
+
+        auto header = tabItem->header;
+        auto container = tabItem->container;
+        if (tabItem)
+            CC_SAFE_DELETE(tabItem);
         _tabItems.erase(_tabItems.begin() + index);
-        if (index == _currItemIndex)
+
+        if (header != nullptr)
         {
-            _currItemIndex = -1;
-            setSelectTab(-1);
+            header->_tabSelectedEvent = nullptr;
+            header->_tabView = nullptr;
+            removeProtectedChild(header);
+            removeProtectedChild(container);
         }
-        else if (index < _currItemIndex)
-            _currItemIndex--;
-        
         initTabHeadersPos(index);
     }
-    
+
     size_t TabControl::getTabCount() const
     {
         return _tabItems.size();
     }
-    
+
     void TabControl::setHeaderWidth(float headerWith)
     {
         _headerWidth = headerWith;
@@ -159,7 +159,7 @@ namespace ui
         if (_headerDockPlace == Dock::LEFT || _headerDockPlace == Dock::RIGHT)
             initContainers();
     }
-    
+
     void TabControl::setHeaderHeight(float headerHeigt)
     {
         _headerHeight = headerHeigt;
@@ -168,7 +168,7 @@ namespace ui
         if (_headerDockPlace == Dock::TOP || _headerDockPlace == Dock::BOTTOM)
             initContainers();
     }
-    
+
     void TabControl::setHeaderDockPlace(TabControl::Dock dockPlace)
     {
         if (_headerDockPlace != dockPlace)
@@ -176,206 +176,188 @@ namespace ui
             _headerDockPlace = dockPlace;
             initTabHeadersPos(0);
             initContainers();
-            
+
             auto anpoint = getHeaderAnchorWithDock();
             for (auto& item : _tabItems)
             {
-                item.header->setAnchorPoint(anpoint);
+                item->header->setAnchorPoint(anpoint);
             }
         }
     }
-    
-    
+
+
     cocos2d::Vec2 TabControl::getHeaderAnchorWithDock() const
     {
         Vec2 anpoint(.5f, .0f);
         switch (_headerDockPlace)
         {
-            case TabControl::TOP:
-                break;
-            case TabControl::LEFT:
-                anpoint.x = 1.f;
-                anpoint.y = .5f;
-                break;
-            case TabControl::BOTTOM:
-                anpoint.x = .5f;
-                anpoint.y = 1.f;
-                break;
-            case TabControl::RIGHT:
-                anpoint.x = 0.f;
-                anpoint.y = .5f;
-                break;
-            default:
-                break;
+        case Dock::TOP:
+            break;
+        case Dock::LEFT:
+            anpoint.x = 1.f;
+            anpoint.y = .5f;
+            break;
+        case Dock::BOTTOM:
+            anpoint.x = .5f;
+            anpoint.y = 1.f;
+            break;
+        case Dock::RIGHT:
+            anpoint.x = 0.f;
+            anpoint.y = .5f;
+            break;
+        default:
+            break;
         }
         return anpoint;
     }
-    
+
     void TabControl::onSizeChanged()
     {
         initTabHeadersPos(0);
         initContainers();
     }
-    
+
     void TabControl::initTabHeadersPos(int startIndex)
     {
         int cellSize = (int)_tabItems.size();
         if (startIndex >= cellSize)
             return;
-        
+
         float originX = _headerWidth * .5f;
         float originY = _contentSize.height - _headerHeight;
         Vec2 deltaPos(0.f, 0.f);
         switch (_headerDockPlace)
         {
-            case TabControl::TOP:
-                deltaPos.x = _headerWidth;
-                break;
-            case TabControl::LEFT:
-                originX = _headerWidth;
-                originY = _contentSize.height - _headerHeight * .5f;
-                deltaPos.y = 0 - _headerHeight;
-                break;
-            case TabControl::BOTTOM:
-                originY = _headerHeight;
-                deltaPos.x = _headerWidth;
-                break;
-            case TabControl::RIGHT:
-                originX = _contentSize.width - _headerWidth;
-                originY = _contentSize.height - _headerHeight * .5f;
-                deltaPos.y = 0 - _headerHeight;
-                break;
-            default:
-                break;
+        case Dock::TOP:
+            deltaPos.x = _headerWidth;
+            break;
+        case Dock::LEFT:
+            originX = _headerWidth;
+            originY = _contentSize.height - _headerHeight * .5f;
+            deltaPos.y = 0 - _headerHeight;
+            break;
+        case Dock::BOTTOM:
+            originY = _headerHeight;
+            deltaPos.x = _headerWidth;
+            break;
+        case Dock::RIGHT:
+            originX = _contentSize.width - _headerWidth;
+            originY = _contentSize.height - _headerHeight * .5f;
+            deltaPos.y = 0 - _headerHeight;
+            break;
+        default:
+            break;
         }
-        
+
         for (int cellI = startIndex; cellI < cellSize; cellI++)
         {
-            auto headerCell = _tabItems.at(cellI).header;
+            auto headerCell = _tabItems.at(cellI)->header;
             headerCell->setPosition(Vec2(originX + cellI* deltaPos.x, originY + cellI * deltaPos.y));
         }
     }
-    
+
     void TabControl::initContainers()
     {
         switch (_headerDockPlace)
         {
-            case TabControl::TOP:
-                _containerPosition = Vec2(0, 0);
-                _containerSize = Size(_contentSize.width, _contentSize.height - _headerHeight);
-                break;
-            case TabControl::LEFT:
-                _containerPosition = Vec2(_headerWidth, 0);
-                _containerSize = Size(_contentSize.width - _headerWidth, _contentSize.height);
-                break;
-            case TabControl::BOTTOM:
-                _containerPosition = Vec2(0, _headerHeight);
-                _containerSize = Size(_contentSize.width, _contentSize.height - _headerHeight);
-                break;
-            case TabControl::RIGHT:
-                _containerPosition = Vec2(0, 0);
-                _containerSize = Size(_contentSize.width - _headerWidth, _contentSize.height);
-                break;
-            default:
-                break;
+        case Dock::TOP:
+            _containerPosition = Vec2(0, 0);
+            _containerSize = Size(_contentSize.width, _contentSize.height - _headerHeight);
+            break;
+        case Dock::LEFT:
+            _containerPosition = Vec2(_headerWidth, 0);
+            _containerSize = Size(_contentSize.width - _headerWidth, _contentSize.height);
+            break;
+        case Dock::BOTTOM:
+            _containerPosition = Vec2(0, _headerHeight);
+            _containerSize = Size(_contentSize.width, _contentSize.height - _headerHeight);
+            break;
+        case Dock::RIGHT:
+            _containerPosition = Vec2(0, 0);
+            _containerSize = Size(_contentSize.width - _headerWidth, _contentSize.height);
+            break;
+        default:
+            break;
         }
-        
+
         for (auto& tabItem : _tabItems)
         {
-            Layout* container = tabItem.container;
+            Layout* container = tabItem->container;
             container->setPosition(_containerPosition);
             container->setContentSize(_containerSize);
         }
     }
-    
+
     TabHeader* TabControl::getTabHeader(int index) const
     {
         if (index >= (int)getTabCount())
             return nullptr;
-        
-        return _tabItems.at(index).header;
+
+        return _tabItems.at(index)->header;
     }
-    
+
     Layout* TabControl::getTabContainer(int index) const
     {
         if (index >= (int)getTabCount())
             return nullptr;
-        return _tabItems.at(index).container;
+        return _tabItems.at(index)->container;
     }
-    
+
     void TabControl::dispatchSelectedTabChanged(int tabIndex, TabHeader::EventType eventType)
     {
         if (eventType == TabHeader::EventType::SELECTED)
         {
-            if (tabIndex == _currItemIndex)
-                return;
-
-            if (_currItemIndex != -1)
-                deactiveHeader(_tabItems.at(_currItemIndex).header);
-
-            bool selected = false;
-            const int n = (int)_tabItems.size();
-            for (int cellI = 0; cellI < n; cellI++)
+            if (tabIndex <= -1 || tabIndex >= (int)_tabItems.size())
             {
-                auto& tabItem = _tabItems.at(cellI);
-                auto container = tabItem.container;
-                auto cellHeader = tabItem.header;
-                if (tabIndex == cellI)
-                {
-                    activeHeader(cellHeader);
-                    cellHeader->setSelected(true);
-                    container->setVisible(true);
-                    _currItemIndex = cellI;
-                    selected = true;
-                }
-                else
-                {
-                    cellHeader->setSelected(false);
-                    container->setVisible(false);
-                }
+                deactiveHeader(_selectedItem);
+                _selectedItem = nullptr;
             }
-            if (!selected)
-                _currItemIndex = -1;
+            else
+            {
+                deactiveHeader(_selectedItem);
+                auto tabItem = _tabItems.at(tabIndex);
+                activeHeader(tabItem);
+                _selectedItem = tabItem;
+            }
         }
         else if (eventType == TabHeader::EventType::UNSELECTED)
         {
             if (tabIndex >= 0 && tabIndex < (int)_tabItems.size())
             {
-                auto& tabItem = _tabItems.at(tabIndex);
-                auto container = tabItem.container;
-                auto cellHeader = tabItem.header;
-                deactiveHeader(cellHeader);
-                cellHeader->setSelected(false);
-                container->setVisible(false);
+                auto tabItem = _tabItems.at(tabIndex);
+                if (tabItem == _selectedItem)
+                {
+                    deactiveHeader(_selectedItem);
+                    _selectedItem = nullptr;
+                }
             }
-            if (tabIndex == _currItemIndex)
-                _currItemIndex = -1;
         }
-        
+
         if (_tabChangedCallback != nullptr)
         {
-            _tabChangedCallback(_currItemIndex, EventType::SELECT_CHANGED);
+            int currentIndex = getSelectedTabIndex();
+            _tabChangedCallback(currentIndex, EventType::SELECT_CHANGED);
         }
     }
-    
+
     void TabControl::setTabChangedEventListener(const ccTabControlCallback& callBack)
     {
         _tabChangedCallback = callBack;
     }
-    
+
     int TabControl::indexOfTabHeader(const TabHeader* tabCell) const
     {
         int n = (int)_tabItems.size();
         for (auto i = 0; i < n; i++)
         {
-            if (tabCell == _tabItems.at(i).header)
+            if (tabCell == _tabItems.at(i)->header)
             {
                 return i;
             }
         }
         return -1;
     }
-    
+
     TabControl* TabControl::create()
     {
         TabControl* tabview = new (std::nothrow) TabControl();
@@ -387,49 +369,58 @@ namespace ui
         CC_SAFE_DELETE(tabview);
         return nullptr;
     }
-    
+
     void TabControl::setSelectTab(int index)
     {
-        int cellSize = (int)_tabItems.size();
-        if (cellSize > 0 && index < cellSize)
-        {
-            dispatchSelectedTabChanged(index, TabHeader::EventType::SELECTED);
-        }
+        dispatchSelectedTabChanged(index, TabHeader::EventType::SELECTED);
     }
-    
+
     void TabControl::setSelectTab(TabHeader* tabHeader)
     {
+        if (_selectedItem != nullptr && tabHeader == _selectedItem->header)
+            return;
+
         setSelectTab(indexOfTabHeader(tabHeader));
     }
-    
+
     void TabControl::setHeaderSelectedZoom(float zoom)
     {
         if (_currentHeaderZoom != zoom)
         {
             _currentHeaderZoom = zoom;
-            if (_currItemIndex != -1)
+            if (_selectedItem != nullptr)
             {
-                auto currentHeader = _tabItems.at(_currItemIndex).header;
+                auto currentHeader = _selectedItem->header;
                 currentHeader->setScale(1.0f + _currentHeaderZoom);
             }
         }
     }
-    
-    void TabControl::activeHeader(TabHeader* header)
+
+    void TabControl::activeHeader(TabItem* item)
     {
-        header->setLocalZOrder(-1);
-        header->setScale(1.0f + _currentHeaderZoom);
-        _reorderProtectedChildDirty = true;
+        if (item != nullptr)
+        {
+            item->header->setLocalZOrder(-1);
+            item->header->setScale(1.0f + _currentHeaderZoom);
+            item->header->setSelected(true);
+            item->container->setVisible(true);
+            _reorderProtectedChildDirty = true;
+        }
     }
 
-    void TabControl::deactiveHeader(TabHeader* header)
+    void TabControl::deactiveHeader(TabItem* item)
     {
-        header->setLocalZOrder(-2);
-        header->setScale(1.0f);
-        _reorderProtectedChildDirty = true;
+        if (item != nullptr)
+        {
+            item->header->setLocalZOrder(-2);
+            item->header->setScale(1.0f);
+            item->header->setSelected(false);
+            item->container->setVisible(false);
+            _reorderProtectedChildDirty = true;
+        }
     }
 
-    
+
     void TabControl::copySpecialProperties(Widget* model)
     {
         auto srcTab = dynamic_cast<TabControl*>(model);
@@ -443,7 +434,7 @@ namespace ui
             _tabChangedCallback = srcTab->_tabChangedCallback;
         }
     }
-    
+
     void TabControl::ignoreHeadersTextureSize(bool ignore)
     {
         if (_ignoreHeaderTextureSize == ignore)
@@ -452,33 +443,38 @@ namespace ui
         _ignoreHeaderTextureSize = ignore;
         for (auto& item : _tabItems)
         {
-            item.header->ignoreContentAdaptWithSize(!ignore);
+            item->header->ignoreContentAdaptWithSize(!ignore);
             if (ignore)
-                item.header->setContentSize(Size(_headerWidth, _headerHeight));
-            item.header->backGroundDisabledTextureScaleChangedWithSize();
-            item.header->backGroundSelectedTextureScaleChangedWithSize();
-            item.header->backGroundDisabledTextureScaleChangedWithSize();
-            item.header->frontCrossTextureScaleChangedWithSize();
-            item.header->frontCrossDisabledTextureScaleChangedWithSize();
+                item->header->setContentSize(Size(_headerWidth, _headerHeight));
+            item->header->backGroundDisabledTextureScaleChangedWithSize();
+            item->header->backGroundSelectedTextureScaleChangedWithSize();
+            item->header->backGroundDisabledTextureScaleChangedWithSize();
+            item->header->frontCrossTextureScaleChangedWithSize();
+            item->header->frontCrossDisabledTextureScaleChangedWithSize();
         }
     }
 
+    int TabControl::getSelectedTabIndex() const
+    {
+        return _selectedItem == nullptr ? -1 : indexOfTabHeader(_selectedItem->header);
+    }
+
     TabHeader::TabHeader()
-    : _tabLabelRender(nullptr)
-    , _tabLabelFontSize(12)
-    , _tabView(nullptr)
-    , _tabSelectedEvent(nullptr)
-    , _fontType(FontType::SYSTEM)
+        : _tabLabelRender(nullptr)
+        , _tabLabelFontSize(12)
+        , _tabView(nullptr)
+        , _tabSelectedEvent(nullptr)
+        , _fontType(FontType::SYSTEM)
     {
     }
-    
+
     TabHeader::~TabHeader()
     {
         _tabLabelRender = nullptr;
         _tabView = nullptr;
         _tabSelectedEvent = nullptr;
     }
-    
+
     TabHeader * TabHeader::create()
     {
         TabHeader* tabcell = new (std::nothrow) TabHeader();
@@ -492,18 +488,18 @@ namespace ui
         CC_SAFE_DELETE(tabcell);
         return nullptr;
     }
-    
+
     TabHeader * TabHeader::create(const std::string& titleStr,
-                                  const std::string & backGround,
-                                  const std::string & cross, TextureResType texType)
+        const std::string & backGround,
+        const std::string & cross, TextureResType texType)
     {
         TabHeader *tabcell = new (std::nothrow) TabHeader;
         if (tabcell && tabcell->init(backGround,
-                                     "",
-                                     cross,
-                                     "",
-                                     "",
-                                     texType))
+            "",
+            cross,
+            "",
+            "",
+            texType))
         {
             tabcell->_frontCrossRenderer->setVisible(false);
             tabcell->_tabLabelRender->setString(titleStr);
@@ -514,22 +510,22 @@ namespace ui
         CC_SAFE_DELETE(tabcell);
         return nullptr;
     }
-    
+
     TabHeader* TabHeader::create(const std::string& titleStr,
-                                 const std::string& backGround,
-                                 const std::string& backGroundSelected,
-                                 const std::string& cross,
-                                 const std::string& backGroundDisabled,
-                                 const std::string& frontCrossDisabled,
-                                 TextureResType texType /*= TextureResType::LOCAL*/)
+        const std::string& backGround,
+        const std::string& backGroundSelected,
+        const std::string& cross,
+        const std::string& backGroundDisabled,
+        const std::string& frontCrossDisabled,
+        TextureResType texType /*= TextureResType::LOCAL*/)
     {
         TabHeader *tabcell = new (std::nothrow) TabHeader;
         if (tabcell && tabcell->init(backGround,
-                                     backGroundSelected,
-                                     cross,
-                                     backGroundDisabled,
-                                     frontCrossDisabled,
-                                     texType))
+            backGroundSelected,
+            cross,
+            backGroundDisabled,
+            frontCrossDisabled,
+            texType))
         {
             tabcell->_frontCrossRenderer->setVisible(false);
             tabcell->_tabLabelRender->setString(titleStr);
@@ -540,7 +536,7 @@ namespace ui
         CC_SAFE_DELETE(tabcell);
         return nullptr;
     }
-    
+
     void TabHeader::initRenderer()
     {
         _backGroundBoxRenderer = Sprite::create();
@@ -549,7 +545,7 @@ namespace ui
         _backGroundBoxDisabledRenderer = Sprite::create();
         _frontCrossDisabledRenderer = Sprite::create();
         _tabLabelRender = Label::create();
-        
+
         addProtectedChild(_backGroundBoxRenderer, -2, -1);
         addProtectedChild(_backGroundSelectedBoxRenderer, -2, -1);
         addProtectedChild(_frontCrossRenderer, -2, -1);
@@ -557,19 +553,19 @@ namespace ui
         addProtectedChild(_frontCrossDisabledRenderer, -2, -1);
         addProtectedChild(_tabLabelRender, -1, -1);
     }
-    
+
     void TabHeader::setTitleText(const std::string& text)
     {
         if (text == getTitleText())
         {
             return;
         }
-        
+
         _tabLabelRender->setString(text);
         updateContentSize();
         _tabLabelRender->setPosition(_contentSize * 0.5f);
     }
-    
+
     const std::string TabHeader::getTitleText() const
     {
         if (nullptr == _tabLabelRender)
@@ -578,12 +574,12 @@ namespace ui
         }
         return _tabLabelRender->getString();
     }
-    
+
     void TabHeader::setTitleColor(const Color4B& color)
     {
         _tabLabelRender->setTextColor(color);
     }
-    
+
     const Color4B& TabHeader::getTitleColor() const
     {
         if (nullptr == _tabLabelRender)
@@ -592,7 +588,7 @@ namespace ui
         }
         return _tabLabelRender->getTextColor();
     }
-    
+
     void TabHeader::setTitleFontSize(float size)
     {
         _tabLabelFontSize = size;
@@ -612,19 +608,19 @@ namespace ui
             updateContentSize();
         }
     }
-    
+
     float TabHeader::getTitleFontSize() const
     {
         return _tabLabelFontSize;
     }
-    
+
     void TabHeader::updateContentSize()
     {
         ProtectedNode::setContentSize(_customSize);
         onSizeChanged();
     }
-    
-    
+
+
     void TabHeader::setTitleFontName(const std::string& fontName)
     {
         if (FileUtils::getInstance()->isFileExist(fontName))
@@ -657,12 +653,12 @@ namespace ui
         }
         this->updateContentSize();
     }
-    
+
     Label* TabHeader::getTitleRenderer()const
     {
         return _tabLabelRender;
     }
-    
+
     const std::string TabHeader::getTitleFontName() const
     {
         if (this->_fontType == FontType::SYSTEM)
@@ -679,51 +675,51 @@ namespace ui
         }
         return "";
     }
-    
+
     void TabHeader::onSizeChanged()
     {
         AbstractCheckButton::onSizeChanged();
         _tabLabelRender->setPosition(_contentSize * 0.5f);
     }
-    
+
     void TabHeader::releaseUpEvent()
     {
         Widget::releaseUpEvent();
-        
+
         if (!_isSelected)
         {
             setSelected(true);
             dispatchSelectChangedEvent(true);
         }
     }
-    
+
     void TabHeader::dispatchSelectChangedEvent(bool select)
     {
         if (_tabView == nullptr)
             return;
-        
+
         EventType eventType = (select ? EventType::SELECTED : EventType::UNSELECTED);
-        
+
         if (_tabSelectedEvent != nullptr)
         {
             int index = _tabView->indexOfTabHeader(this);
             if (index != -1)
                 _tabSelectedEvent(index, eventType);
         }
-        
+
         if (_ccEventCallback != nullptr)
         {
             _ccEventCallback(this, static_cast<int>(eventType));
         }
     }
-    
+
     int TabHeader::getIndexInTabControl() const
     {
         if (_tabView == nullptr)
             return -1;
         return _tabView->indexOfTabHeader(this);
     }
-    
+
     void TabHeader::copySpecialProperties(Widget* model)
     {
         auto header = dynamic_cast<TabHeader*>(model);
@@ -735,6 +731,6 @@ namespace ui
             _tabSelectedEvent = header->_tabSelectedEvent;
         }
     }
-    
+
 }
 NS_CC_END

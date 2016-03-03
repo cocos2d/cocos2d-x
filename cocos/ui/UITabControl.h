@@ -49,8 +49,8 @@ namespace ui {
         friend class TabControl;
         
     public:
-        
-        enum EventType
+
+        enum class EventType
         {
             SELECTED,
             UNSELECTED
@@ -177,8 +177,8 @@ namespace ui {
         
         typedef std::function<void(int tabindex, TabHeader::EventType)> ccTabCallback;
         ccTabCallback  _tabSelectedEvent;
-        
-        enum FontType
+
+        enum class FontType
         {
             SYSTEM,
             TTF,
@@ -186,21 +186,21 @@ namespace ui {
         };
         FontType  _fontType;
     };
-    
+
     /**
-     * TabControl, use header button switch container
-     */
+    * TabControl, use header button switch container
+    */
     class CC_GUI_DLL TabControl : public Widget
     {
     public:
-        enum Dock
+        enum class Dock
         {
             TOP,
             LEFT,
             BOTTOM,
             RIGHT
         };
-        
+
         enum class EventType
         {
             SELECT_CHANGED,
@@ -261,21 +261,21 @@ namespace ui {
         * get current selected tab's index
         * @return the current selected tab index
         */
-        inline int  getCurrentTabIndex() const { return _currItemIndex; }
-        
+        inline int  getSelectedTabIndex() const;
+
         /**
         * get the index of tabCell in TabView, return -1 if not exists in.
         / @return the index of tabCell in TabView,  `-1` means not exists in.
         */
         int indexOfTabHeader(const TabHeader* tabCell) const;
-        
+
         /**
         * Add a callback function which would be called when selcted tab changed
         *@param callback A std::function with type @see `ccTabControlCallback`
         */
         void setTabChangedEventListener(const ccTabControlCallback& callBack);
         /// @}
-        
+
         /// @{
         /// @ properties
 
@@ -290,7 +290,7 @@ namespace ui {
         * @return header's width
         */
         inline float getHeaderWidth() const { return _headerWidth; }
-        
+
         /**
         * set header height, affect all tab
         * @param headerHeigt: each tab header's height
@@ -327,36 +327,49 @@ namespace ui {
         * @return zoom, the delta zoom
         */
         inline float getHeaderSelectedZoom() const { return _currentHeaderZoom; }
-        
+
         /**
         * the header dock place of header in TabControl
         * @param: dockPlace, the strip place
         */
         void         setHeaderDockPlace(TabControl::Dock dockPlace);
         inline TabControl::Dock getHeaderDockPlace() const { return _headerDockPlace; }
-        
+
         /// @}
     protected:
         TabControl();
         ~TabControl();
-        
+
         void onSizeChanged() override;
         void initTabHeadersPos(int startIndex);
         void initContainers();
         virtual void copySpecialProperties(Widget* model) override;
-        
+
         ccTabControlCallback _tabChangedCallback;
         // dispatch selected changed
         void dispatchSelectedTabChanged(int tabIndex, TabHeader::EventType eventType);
     private:
+
+        typedef struct CellContainer
+        {
+            TabHeader* header;
+            Layout*        container;
+
+            CellContainer(TabHeader* headerCell, Layout* layout)
+            {
+                header = headerCell;
+                container = layout;
+            }
+        } TabItem;
+
         // format tab header and container after insert
         void initAfterInsert(int index);
-        void activeHeader(TabHeader* header);
-        void deactiveHeader(TabHeader* header);
+        void activeHeader(TabItem* item);
+        void deactiveHeader(TabItem* item);
         Vec2 getHeaderAnchorWithDock() const;
-        
-        int         _currItemIndex;
-        
+
+        TabItem*    _selectedItem;
+
         int         _headerHeight;
         int         _headerWidth;
         Dock        _headerDockPlace;
@@ -364,20 +377,9 @@ namespace ui {
         Size        _containerSize;
         float       _currentHeaderZoom;
         bool        _ignoreHeaderTextureSize;
-        
-        typedef struct CellContainer
-        {
-            TabHeader* header;
-            Layout*        container;
-            
-            CellContainer(TabHeader* headerCell, Layout* layout)
-            {
-                header = headerCell;
-                container = layout;
-            }
-        } TabItem;
+
         // for index the cells and containers
-        std::vector<TabItem> _tabItems;
+        std::vector<TabItem*> _tabItems;
     };
 }
 // end group
