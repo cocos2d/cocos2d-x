@@ -50,7 +50,6 @@ ProjectConfig::ProjectConfig()
     , _consolePort(kProjectConfigConsolePort)
     , _fileUploadPort(kProjectConfigUploadPort)
     , _bindAddress("")
-    , _useLocalScript(false)
 {
     normalize();
 }
@@ -273,17 +272,6 @@ void ProjectConfig::setDebuggerType(int debuggerType)
     _debuggerType = debuggerType;
 }
 
-
-bool ProjectConfig::isUseLocalScript() const
-{
-    return _useLocalScript;
-}
-
-void ProjectConfig::setUseLocalScript(bool useLocalScript)
-{
-    _useLocalScript = useLocalScript;
-}
-
 void ProjectConfig::parseCommandLine(const vector<string> &args)
 {
     auto it = args.begin();
@@ -421,24 +409,11 @@ void ProjectConfig::parseCommandLine(const vector<string> &args)
             vector<string> pathes = split((*it), ';');
             setSearchPath(pathes);
         }
-        else if (arg.compare("-use-local-script") == 0)
+        else if (arg.compare("-first-search-path") == 0)
         {
             ++it;
-            if (it == args.end()) break;
-            if ((*it).compare("enable") == 0)
-            {
-                setUseLocalScript(true);
-            }
-            else
-            {
-                setUseLocalScript(false);
-            }
-        }
-        else if (arg.compare("-language-data-path") == 0)
-        {
-            ++it;
-            if (it == args.end()) break;
-            setLanguageDataPath(*it);
+            vector<string> pathes = split((*it), ';');
+            setFirstSearchPath(pathes);
         }
         ++it;
     }
@@ -602,17 +577,20 @@ vector<string> ProjectConfig::makeCommandLineVector(unsigned int mask /* = kProj
         }
     }
 
-    if (mask & kProjectConfigUseLocalScript)
+    if (mask & kProjectConfigFirstSearchPath)
     {
-        if (isUseLocalScript())
+        if (_searchPath.size() > 0)
         {
-            ret.push_back("-use-local-script");
-            ret.push_back("enable");
-        }
-        else
-        {
-            ret.push_back("-use-local-script");
-            ret.push_back("disable");
+            stringstream pathbuff;
+            for (auto &path : _searchPath)
+            {
+                pathbuff << dealWithSpaceWithPath(path) << ";";
+            }
+            string pathArgs = pathbuff.str();
+            pathArgs[pathArgs.length() - 1] = '\0';
+
+            ret.push_back("-first-search-path");
+            ret.push_back(pathArgs);
         }
     }
     return ret;
@@ -658,25 +636,16 @@ const vector<string> &ProjectConfig::getSearchPath() const
     return _searchPath;
 }
 
-void ProjectConfig::setLanguageDataPath(const std::string &filePath)
+void ProjectConfig::setFirstSearchPath(const vector<string> &args)
 {
-    bool isBinary = true;
-    string jsonExtension = ".json";
-    int exLength = jsonExtension.length();
-    if (filePath.length() >= exLength && 
-        (0 == filePath.compare(filePath.length() - exLength, exLength, jsonExtension)))
-    {
-        isBinary = false;
-    }
-
-    cocostudio::ILocalizationManager* lm;
-    if (isBinary)
-        lm = cocostudio::BinLocalizationManager::getInstance();
-    else
-        lm = cocostudio::JsonLocalizationManager::getInstance();
-    lm->initLanguageData(filePath);
-    cocostudio::LocalizationHelper::setCurrentManager(lm, isBinary);
+    _firstSearchPath = args;
 }
+
+const vector<string> &ProjectConfig::getFirstSearchPath() const
+{
+    return _firstSearchPath;
+}
+
 
 bool ProjectConfig::isAppMenu() const
 {
