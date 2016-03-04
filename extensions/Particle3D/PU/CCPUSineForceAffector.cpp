@@ -63,7 +63,7 @@ void PUSineForceAffector::preUpdateAffector(float deltaTime)
     }
 }
 //-----------------------------------------------------------------------
-const float PUSineForceAffector::getFrequencyMin(void) const
+float PUSineForceAffector::getFrequencyMin() const
 {
     return _frequencyMin;
 }
@@ -77,7 +77,7 @@ void PUSineForceAffector::setFrequencyMin(const float frequencyMin)
     }
 }
 //-----------------------------------------------------------------------
-const float PUSineForceAffector::getFrequencyMax(void) const
+float PUSineForceAffector::getFrequencyMax() const
 {
     return _frequencyMax;
 }
