@@ -3838,6 +3838,12 @@
 		85505F0E1B60E3DB003F2CD4 /* SkeletonNodeReader.h in Headers */ = {isa = PBXBuildFile; fileRef = C50306741B60B5B2001E6D43 /* SkeletonNodeReader.h */; };
 		85B3743A1B204B9400C488D6 /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85B374381B204B9400C488D6 /* clipper.cpp */; };
 		85B3743B1B204B9400C488D6 /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85B374381B204B9400C488D6 /* clipper.cpp */; };
+		94A6DF051C7303FD0094AEF7 /* LocalizationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94A6DF031C7303FD0094AEF7 /* LocalizationManager.cpp */; };
+		94A6DF061C7303FD0094AEF7 /* LocalizationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 94A6DF041C7303FD0094AEF7 /* LocalizationManager.h */; };
+		94A6DF071C73040D0094AEF7 /* LocalizationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94A6DF031C7303FD0094AEF7 /* LocalizationManager.cpp */; };
+		94A6DF081C73040E0094AEF7 /* LocalizationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94A6DF031C7303FD0094AEF7 /* LocalizationManager.cpp */; };
+		94A6DF091C7304120094AEF7 /* LocalizationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 94A6DF041C7303FD0094AEF7 /* LocalizationManager.h */; };
+		94A6DF0A1C7304120094AEF7 /* LocalizationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 94A6DF041C7303FD0094AEF7 /* LocalizationManager.h */; };
 		A045F6D61BA81577005076C7 /* CCTextureCube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A045F6D41BA81577005076C7 /* CCTextureCube.cpp */; };
 		A045F6D71BA81577005076C7 /* CCTextureCube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A045F6D41BA81577005076C7 /* CCTextureCube.cpp */; };
 		A045F6D81BA81577005076C7 /* CCTextureCube.h in Headers */ = {isa = PBXBuildFile; fileRef = A045F6D51BA81577005076C7 /* CCTextureCube.h */; };
@@ -6717,6 +6723,8 @@
 		5E9F61251A3FFE3D0038DE01 /* CCPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlane.h; sourceTree = "<group>"; };
 		8525E3A11B291E42008EE815 /* clipper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = clipper.hpp; sourceTree = "<group>"; };
 		85B374381B204B9400C488D6 /* clipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clipper.cpp; sourceTree = "<group>"; };
+		94A6DF031C7303FD0094AEF7 /* LocalizationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalizationManager.cpp; sourceTree = "<group>"; };
+		94A6DF041C7303FD0094AEF7 /* LocalizationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationManager.h; sourceTree = "<group>"; };
 		A045F6D41BA81577005076C7 /* CCTextureCube.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureCube.cpp; sourceTree = "<group>"; };
 		A045F6D51BA81577005076C7 /* CCTextureCube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureCube.h; sourceTree = "<group>"; };
 		A045F6DA1BA816A1005076C7 /* CCCameraBackgroundBrush.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCameraBackgroundBrush.cpp; sourceTree = "<group>"; };
@@ -8510,6 +8518,8 @@
 		1A8C5946180E930E00EF57C3 /* cocostudio */ = {
 			isa = PBXGroup;
 			children = (
+				94A6DF031C7303FD0094AEF7 /* LocalizationManager.cpp */,
+				94A6DF041C7303FD0094AEF7 /* LocalizationManager.h */,
 				382384021A259005002C4610 /* CSParseBinary_generated.h */,
 				182C5CAD1A95961600C30D34 /* CSParse3DBinary_generated.h */,
 				382384051A25900F002C4610 /* FlatBuffersSerialize.cpp */,
@@ -11339,6 +11349,7 @@
 				15AE187F19AAD33D00C27E9E /* CCBKeyframe.h in Headers */,
 				B665E2B41AA80A6500DDB1C5 /* CCPUForceField.h in Headers */,
 				1A570073180BC5A10088DEC7 /* CCActionGrid.h in Headers */,
+				94A6DF061C7303FD0094AEF7 /* LocalizationManager.h in Headers */,
 				15AE1BCC19AAE01E00C27E9E /* CCControlButton.h in Headers */,
 				B6CAB3D71AF9AA1A00B9B856 /* btSolve2LinearConstraint.h in Headers */,
 				C50306771B60B5B2001E6D43 /* CSBoneBinary_generated.h in Headers */,
@@ -12267,6 +12278,7 @@
 				507B3D3A1C31BDD30067B53E /* CCEventListenerAssetsManagerEx.h in Headers */,
 				507B3D3B1C31BDD30067B53E /* btGpu3DGridBroadphase.h in Headers */,
 				507B3D3C1C31BDD30067B53E /* CCAllocatorGlobal.h in Headers */,
+				94A6DF0A1C7304120094AEF7 /* LocalizationManager.h in Headers */,
 				507B3D3D1C31BDD30067B53E /* btSolverConstraint.h in Headers */,
 				507B3D3E1C31BDD30067B53E /* SpuDoubleBuffer.h in Headers */,
 				507B3D3F1C31BDD30067B53E /* CCPUScriptCompiler.h in Headers */,
@@ -13307,6 +13319,7 @@
 				15B3708319EE414C00ABE682 /* CCEventListenerAssetsManagerEx.h in Headers */,
 				B6CAB4361AF9AA1A00B9B856 /* btGpu3DGridBroadphase.h in Headers */,
 				D0FD03521A3B51AA00825BB5 /* CCAllocatorGlobal.h in Headers */,
+				94A6DF091C7304120094AEF7 /* LocalizationManager.h in Headers */,
 				B6CAB3DC1AF9AA1A00B9B856 /* btSolverConstraint.h in Headers */,
 				B6CAB4B61AF9AA1A00B9B856 /* SpuDoubleBuffer.h in Headers */,
 				B665E3D11AA80A6600DDB1C5 /* CCPUScriptCompiler.h in Headers */,
@@ -14984,6 +14997,7 @@
 				1A570354180BD0B00088DEC7 /* ioapi.cpp in Sources */,
 				15B3707819EE414C00ABE682 /* AssetsManagerEx.cpp in Sources */,
 				1A570358180BD0B00088DEC7 /* unzip.cpp in Sources */,
+				94A6DF051C7303FD0094AEF7 /* LocalizationManager.cpp in Sources */,
 				B665E3861AA80A6500DDB1C5 /* CCPUPathFollowerTranslator.cpp in Sources */,
 				B29A7DCB19EE1B7700872B35 /* Skeleton.c in Sources */,
 				15AE196E19AAD35700C27E9E /* CCActionTimelineCache.cpp in Sources */,
@@ -15829,6 +15843,7 @@
 				507B3C141C31BDD30067B53E /* CCPUBoxCollider.cpp in Sources */,
 				507B3C151C31BDD30067B53E /* CCPUMeshSurfaceEmitter.cpp in Sources */,
 				507B3C161C31BDD30067B53E /* CCPUOnQuotaObserverTranslator.cpp in Sources */,
+				94A6DF081C73040E0094AEF7 /* LocalizationManager.cpp in Sources */,
 				507B3C171C31BDD30067B53E /* UIPageView.cpp in Sources */,
 				507B3C181C31BDD30067B53E /* CCComponentContainer.cpp in Sources */,
 				507B3C191C31BDD30067B53E /* ccCArray.cpp in Sources */,
@@ -16674,6 +16689,7 @@
 				B665E22B1AA80A6500DDB1C5 /* CCPUBoxCollider.cpp in Sources */,
 				B665E3031AA80A6500DDB1C5 /* CCPUMeshSurfaceEmitter.cpp in Sources */,
 				B665E3571AA80A6500DDB1C5 /* CCPUOnQuotaObserverTranslator.cpp in Sources */,
+				94A6DF071C73040D0094AEF7 /* LocalizationManager.cpp in Sources */,
 				15AE1B7619AADA9A00C27E9E /* UIPageView.cpp in Sources */,
 				1A570311180BCF190088DEC7 /* CCComponentContainer.cpp in Sources */,
 				50ABBE2C1925AB6F00A911A9 /* ccCArray.cpp in Sources */,

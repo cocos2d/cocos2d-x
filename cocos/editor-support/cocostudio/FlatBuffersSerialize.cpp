@@ -1615,8 +1615,10 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFileForLanguageData
             else if (strcmp(languageName.c_str(), childElement->Name()) == 0)
             {
                 const char* langText = childElement->GetText();
-                if (langText)
+                if (langText && langText[0] != '\0')
                     text = langText;
+                else
+                    text = key;
                 hasTextReaded = true;
             }
 

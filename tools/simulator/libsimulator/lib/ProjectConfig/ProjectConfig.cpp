@@ -434,6 +434,12 @@ void ProjectConfig::parseCommandLine(const vector<string> &args)
                 setUseLocalScript(false);
             }
         }
+        else if (arg.compare("-language-data-path") == 0)
+        {
+            ++it;
+            if (it == args.end()) break;
+            setLanguageDataPath(*it);
+        }
         ++it;
     }
 }
@@ -650,6 +656,26 @@ void ProjectConfig::setSearchPath(const vector<string> &args)
 const vector<string> &ProjectConfig::getSearchPath() const
 {
     return _searchPath;
+}
+
+void ProjectConfig::setLanguageDataPath(const std::string &filePath)
+{
+    bool isBinary = true;
+    string jsonExtension = ".json";
+    int exLength = jsonExtension.length();
+    if (filePath.length() >= exLength && 
+        (0 == filePath.compare(filePath.length() - exLength, exLength, jsonExtension)))
+    {
+        isBinary = false;
+    }
+
+    cocostudio::ILocalizationManager* lm;
+    if (isBinary)
+        lm = cocostudio::BinLocalizationManager::getInstance();
+    else
+        lm = cocostudio::JsonLocalizationManager::getInstance();
+    lm->initLanguageData(filePath);
+    cocostudio::LocalizationHelper::setCurrentManager(lm, isBinary);
 }
 
 bool ProjectConfig::isAppMenu() const

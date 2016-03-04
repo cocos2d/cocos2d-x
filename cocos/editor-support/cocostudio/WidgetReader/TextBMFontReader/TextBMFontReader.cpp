@@ -6,6 +6,7 @@
 #include "ui/UITextBMFont.h"
 #include "cocostudio/CocoLoader.h"
 #include "cocostudio/CSParseBinary_generated.h"
+#include "cocostudio/LocalizationManager.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -124,6 +125,7 @@ namespace cocostudio
         auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
         
         std::string text = "Fnt Text Label";
+        bool isLocalized = false;
         
         std::string path = "";
         std::string plistFlie = "";
@@ -139,6 +141,10 @@ namespace cocostudio
             if (name == "LabelText")
             {
                 text = value;
+            }
+            else if (name == "IsLocalized")
+            {
+                isLocalized = (value == "True") ? true : false;
             }
             
             attribute = attribute->Next();
@@ -185,7 +191,8 @@ namespace cocostudio
                                                                   builder->CreateString(path),
                                                                   builder->CreateString(plistFlie),
                                                                   resourceType),
-                                               builder->CreateString(text));
+                                               builder->CreateString(text),
+                                               isLocalized);
         
         return *(Offset<Table>*)(&options);
     }
@@ -230,7 +237,16 @@ namespace cocostudio
         }
         
         std::string text = options->text()->c_str();
-        labelBMFont->setString(text);
+        bool isLocalized = options->isLocalized() != 0;
+        if (isLocalized)
+        {
+            ILocalizationManager* lm = LocalizationHelper::getCurrentManager();
+            labelBMFont->setString(lm->getLocalizationString(text));
+        }
+        else
+        {
+            labelBMFont->setString(text);
+        }
         
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());

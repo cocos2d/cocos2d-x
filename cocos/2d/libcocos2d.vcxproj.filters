@@ -1950,6 +1950,9 @@
     <ClCompile Include="..\ui\UITabControl.cpp">
       <Filter>ui\UIWidgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\LocalizationManager.cpp">
+      <Filter>cocostudio\json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -3808,6 +3811,9 @@
     </ClInclude>
     <ClInclude Include="..\ui\UITabControl.h">
       <Filter>ui\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\LocalizationManager.h">
+      <Filter>cocostudio\json</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
