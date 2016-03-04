@@ -629,6 +629,8 @@
         "cocos/editor-support/cocostudio/DictionaryHelper.h", 
         "cocos/editor-support/cocostudio/FlatBuffersSerialize.cpp", 
         "cocos/editor-support/cocostudio/FlatBuffersSerialize.h", 
+        "cocos/editor-support/cocostudio/LocalizationManager.cpp", 
+        "cocos/editor-support/cocostudio/LocalizationManager.h", 
         "cocos/editor-support/cocostudio/TriggerBase.cpp", 
         "cocos/editor-support/cocostudio/TriggerBase.h", 
         "cocos/editor-support/cocostudio/TriggerMng.cpp", 
