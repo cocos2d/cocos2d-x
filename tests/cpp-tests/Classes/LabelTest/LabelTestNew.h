@@ -856,8 +856,8 @@ public:
 
     cocos2d::Label* _label1;
     cocos2d::Label* _label2;
-    cocostudio::JsonLocalizationManager* _localizationJson;
-    cocostudio::BinLocalizationManager* _localizationBin;
+    cocostudio::ILocalizationManager* _localizationJson;
+    cocostudio::ILocalizationManager* _localizationBin;
 };
 
 #endif
