@@ -6827,6 +6827,8 @@
         "cocos/scripting/lua-bindings/auto/api/TMXObjectGroup.lua", 
         "cocos/scripting/lua-bindings/auto/api/TMXTiledMap.lua", 
         "cocos/scripting/lua-bindings/auto/api/TMXTilesetInfo.lua", 
+        "cocos/scripting/lua-bindings/auto/api/TabControl.lua", 
+        "cocos/scripting/lua-bindings/auto/api/TabHeader.lua", 
         "cocos/scripting/lua-bindings/auto/api/TableView.lua", 
         "cocos/scripting/lua-bindings/auto/api/TableViewCell.lua", 
         "cocos/scripting/lua-bindings/auto/api/TargetedAction.lua", 
