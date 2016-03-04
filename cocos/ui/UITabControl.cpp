@@ -89,8 +89,7 @@ namespace ui
         }
         else
         {
-            headerCell->setSelected(false);
-            container->setVisible(false);
+            deactiveTabItem(tabItem);
         }
 
         headerCell->setContentSize(Size(_headerWidth, _headerHeight));
@@ -309,14 +308,14 @@ namespace ui
         {
             if (tabIndex <= -1 || tabIndex >= (int)_tabItems.size())
             {
-                deactiveHeader(_selectedItem);
+                deactiveTabItem(_selectedItem);
                 _selectedItem = nullptr;
             }
             else
             {
-                deactiveHeader(_selectedItem);
+                deactiveTabItem(_selectedItem);
                 auto tabItem = _tabItems.at(tabIndex);
-                activeHeader(tabItem);
+                activeTabItem(tabItem);
                 _selectedItem = tabItem;
             }
         }
@@ -327,7 +326,7 @@ namespace ui
                 auto tabItem = _tabItems.at(tabIndex);
                 if (tabItem == _selectedItem)
                 {
-                    deactiveHeader(_selectedItem);
+                    deactiveTabItem(_selectedItem);
                     _selectedItem = nullptr;
                 }
             }
@@ -396,7 +395,7 @@ namespace ui
         }
     }
 
-    void TabControl::activeHeader(TabItem* item)
+    void TabControl::activeTabItem(TabItem* item)
     {
         if (item != nullptr)
         {
@@ -408,7 +407,7 @@ namespace ui
         }
     }
 
-    void TabControl::deactiveHeader(TabItem* item)
+    void TabControl::deactiveTabItem(TabItem* item)
     {
         if (item != nullptr)
         {
