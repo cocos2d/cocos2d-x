@@ -95,11 +95,15 @@ if(USE_PREBUILT_LIBS AND MINGW)
   message(FATAL_ERROR "Prebuilt windows libs can't be used with mingw, please use packages.")
 endif()
 
-if(DEBUG_MODE)
-  set(CMAKE_BUILD_TYPE DEBUG)
-else(DEBUG_MODE)
-  set(CMAKE_BUILD_TYPE RELEASE)
-endif(DEBUG_MODE)
+# CMAKE_BUILD_TYPE has precedence over DEBUG_MODE
+# Still supporting DEBUG_MODE for backwards compatibility
+if (NOT CMAKE_BUILD_TYPE)
+  if(DEBUG_MODE)
+    set(CMAKE_BUILD_TYPE DEBUG)
+  else(DEBUG_MODE)
+    set(CMAKE_BUILD_TYPE RELEASE)
+  endif(DEBUG_MODE)
+endif(NOT CMAKE_BUILD_TYPE)
 
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCOCOS2D_DEBUG=1")
 set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
