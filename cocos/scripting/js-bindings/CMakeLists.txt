@@ -29,6 +29,7 @@ if(WIN32) # Win32
   set(PLATFORM_FOLDER win32)
 elseif(APPLE)# osx or ios
   set(PLATFORM_FOLDER mac)
+  set(PLATFORM_SRC manual/platform/ios/JavaScriptObjCBridge.mm)
 else() # Assume Linux
   set(PLATFORM_FOLDER linux)
 endif()
@@ -75,6 +76,7 @@ set(JSBINDING_SRC
   manual/navmesh/jsb_cocos2dx_navmesh_conversions.cpp
   manual/navmesh/jsb_cocos2dx_navmesh_manual.cpp
   ${cocos_root}/cocos/storage/local-storage/LocalStorage.cpp
+  ${PLATFORM_SRC}
 )
 
 include_directories(
