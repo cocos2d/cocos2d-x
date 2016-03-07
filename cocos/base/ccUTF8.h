@@ -142,6 +142,43 @@ CC_DLL unsigned int getIndexOfLastNotChar16(const std::vector<char16_t>& str, ch
  */
 CC_DLL std::vector<char16_t> getChar16VectorFromUTF16String(const std::u16string& utf16);
 
+
+
+/**
+* Utf8 sequence
+* Store all utf8 chars as std::string
+* Build from std::string
+*/
+class CC_DLL StringUTF8
+{
+public:
+    struct CharUTF8
+    {
+        std::string _char;
+        bool isAnsi() { return _char.size() == 1; }
+    };
+    typedef std::vector<CharUTF8> CharUTF8Store;
+
+    StringUTF8();
+    StringUTF8(const std::string& newStr);
+    explicit StringUTF8(const StringUTF8& copyStrUtf8);
+    ~StringUTF8();
+
+    std::size_t length() const;
+    void set(const std::string& newStr);
+
+    std::string getAsCharSequence() const;
+
+    bool deleteChar(std::size_t pos);
+    bool insert(std::size_t pos, const std::string& insertStr);
+    bool insert(std::size_t pos, const StringUTF8& insertStr);
+
+    CharUTF8Store& getString() { return _str; }
+
+private:
+    CharUTF8Store _str;
+};
+
 } // namespace StringUtils {
 
 /**
