@@ -261,7 +261,7 @@ namespace ui {
         * get current selected tab's index
         * @return the current selected tab index
         */
-        inline int  getSelectedTabIndex() const;
+        int getSelectedTabIndex() const;
 
         /**
         * get the index of tabCell in TabView, return -1 if not exists in.
@@ -283,57 +283,57 @@ namespace ui {
         * set header width, affect all tab
         * @param headerWith: each tab header's width
         */
-        void         setHeaderWidth(float headerWith);
+        void  setHeaderWidth(float headerWith);
 
         /**
         * get tab header's width
         * @return header's width
         */
-        inline float getHeaderWidth() const { return _headerWidth; }
+        float getHeaderWidth() const { return _headerWidth; }
 
         /**
         * set header height, affect all tab
         * @param headerHeigt: each tab header's height
         */
-        void         setHeaderHeight(float headerHeigt);
+        void  setHeaderHeight(float headerHeigt);
 
         /**
         * get tab header's height
         * @return header's height
         */
-        inline int   getHeaderHeight() const { return _headerHeight; }
+        int   getHeaderHeight() const { return _headerHeight; }
 
         /**
         * ignore the textures' size in header, scale them with _headerWidth and _headerHieght
         * @param ignore is `true`, the header's texture scale with _headerWidth and _headerHieght
         *        ignore is `false`£¬ use the texture's size£¬ do not scale them
         */
-        void         ignoreHeadersTextureSize(bool ignore);
+        void  ignoreHeadersTextureSize(bool ignore);
 
         /**
         * get whether ignore the textures' size in header, scale them with _headerWidth and _headerHieght
         * @return whether ignore the textures' size in header
         */
-        inline bool  isIgnoreHeadersTextureSize() const { return _ignoreHeaderTextureSize; };
+        bool  isIgnoreHeadersTextureSize() const { return _ignoreHeaderTextureSize; };
 
         /**
         * set the delta zoom of selected tab
         * @param zoom, the delta zoom
         */
-        void         setHeaderSelectedZoom(float zoom);
+        void  setHeaderSelectedZoom(float zoom);
 
         /**
         * get the delta zoom of selected tab
         * @return zoom, the delta zoom
         */
-        inline float getHeaderSelectedZoom() const { return _currentHeaderZoom; }
+        float getHeaderSelectedZoom() const { return _currentHeaderZoom; }
 
         /**
         * the header dock place of header in TabControl
         * @param: dockPlace, the strip place
         */
         void         setHeaderDockPlace(TabControl::Dock dockPlace);
-        inline TabControl::Dock getHeaderDockPlace() const { return _headerDockPlace; }
+        TabControl::Dock getHeaderDockPlace() const { return _headerDockPlace; }
 
         /// @}
     protected:
