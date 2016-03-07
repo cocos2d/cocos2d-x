@@ -5,6 +5,7 @@
 #include "ui/UITextField.h"
 #include "cocostudio/CocoLoader.h"
 #include "cocostudio/CSParseBinary_generated.h"
+#include "cocostudio/LocalizationManager.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -164,6 +165,7 @@ namespace cocostudio
         std::string fontName = "";
         int fontSize = 20;
         std::string text = "";
+        bool isLocalized = false;
         std::string placeHolder = "Text Field";
         bool passwordEnabled = false;
         std::string passwordStyleText = "*";
@@ -188,6 +190,10 @@ namespace cocostudio
             else if (name == "LabelText")
             {
                 text = value;
+            }
+            else if (name == "IsLocalized")
+            {
+                isLocalized = (value == "True") ? true : false;
             }
             else if (name == "FontSize")
             {
@@ -266,6 +272,7 @@ namespace cocostudio
                                               builder->CreateString(fontName),
                                               fontSize,
                                               builder->CreateString(text),
+                                              isLocalized,
                                               builder->CreateString(placeHolder),
                                               passwordEnabled,
                                               builder->CreateString(passwordStyleText),
@@ -288,7 +295,16 @@ namespace cocostudio
         textField->setPlaceHolder(placeholder);
         
         std::string text = options->text()->c_str();
-        textField->setString(text);
+        bool isLocalized = options->isLocalized() != 0;
+        if (isLocalized)
+        {
+            ILocalizationManager* lm = LocalizationHelper::getCurrentManager();
+            textField->setString(lm->getLocalizationString(text));
+        }
+        else
+        {
+            textField->setString(text);
+        }
         
         int fontSize = options->fontSize();
         textField->setFontSize(fontSize);

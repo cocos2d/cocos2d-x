@@ -28,11 +28,11 @@ using namespace std;
 #define kProjectConfigDebugger                  1024    // -debugger-ldt, -debugger-codeide, -disable-debugger
 #define kProjectConfigListen                    2048    //
 #define kProjectConfigSearchPath                4096    //
-#define kProjectConfigUseLocalScript            8192    // -use-local-script
+#define kProjectConfigFirstSearchPath            8192    // -first-search-path
 
 #define kProjectConfigOpenRecent (kProjectConfigProjectDir | kProjectConfigScriptFile | kProjectConfigPackagePath | kProjectConfigWritablePath | kProjectConfigFrameSize | kProjectConfigFrameScale | kProjectConfigShowConsole | kProjectConfigLoadPrecompiledFramework | kProjectConfigWriteDebugLogToFile)
 
-#define kProjectConfigAll (kProjectConfigProjectDir | kProjectConfigScriptFile | kProjectConfigPackagePath | kProjectConfigWritablePath | kProjectConfigFrameSize | kProjectConfigFrameScale | kProjectConfigShowConsole | kProjectConfigLoadPrecompiledFramework | kProjectConfigWriteDebugLogToFile | kProjectConfigWindowOffset | kProjectConfigDebugger | kProjectConfigListen | kProjectConfigSearchPath)
+#define kProjectConfigAll (kProjectConfigProjectDir | kProjectConfigScriptFile | kProjectConfigPackagePath | kProjectConfigWritablePath | kProjectConfigFrameSize | kProjectConfigFrameScale | kProjectConfigShowConsole | kProjectConfigLoadPrecompiledFramework | kProjectConfigWriteDebugLogToFile | kProjectConfigWindowOffset | kProjectConfigDebugger | kProjectConfigListen | kProjectConfigSearchPath | kProjectConfigFirstSearchPath)
 
 
 #define kProjectConfigConsolePort   6010
@@ -105,9 +105,9 @@ public:
     const std::string &getBindAddress() const;
     void setSearchPath(const vector<string> &args);
     const vector<string> &getSearchPath() const;
-
-    bool isUseLocalScript() const;
-    void setUseLocalScript(bool useLocalScript);
+    void setFirstSearchPath(const vector<string> &args);
+    const vector<string> &getFirstSearchPath() const;
+    void setLanguageDataPath(const std::string &filePath);
 
     bool isAppMenu() const;
     bool isResizeWindow() const;
@@ -137,7 +137,8 @@ private:
     int _fileUploadPort;
     string _bindAddress;
     vector<string> _searchPath;
-    bool _useLocalScript;
+    vector<string> _firstSearchPath;
+    string _languageDataPath;
 
     void normalize();
     string replaceProjectDirToMacro(const string &path) const;

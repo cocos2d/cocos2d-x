@@ -5,6 +5,7 @@
 #include "renderer/CCCustomCommand.h"
 #include "ui/CocosGUI.h"
 #include "extensions/cocos-ext.h"
+#include "editor-support/cocostudio/LocalizationManager.h"
 
 DEFINE_TEST_SUITE(NewLabelTests);
 
@@ -840,6 +841,23 @@ public:
 
     cocos2d::Label* _label1a;
     cocos2d::Label* _label2a;
+};
+
+class LabelLocalizationTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelLocalizationTest);
+
+    LabelLocalizationTest();
+    void onChangedRadioButtonSelect(cocos2d::ui::RadioButton* radioButton, cocos2d::ui::RadioButton::EventType type);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    cocos2d::Label* _label1;
+    cocos2d::Label* _label2;
+    cocostudio::ILocalizationManager* _localizationJson;
+    cocostudio::ILocalizationManager* _localizationBin;
 };
 
 #endif

@@ -6968,6 +6968,354 @@ LayoutComponent : function (
 };
 
 /**
+ * @class TabHeader
+ */
+ccui.TabHeader = {
+
+/**
+ * @method getIndexInTabControl
+ * @return {int}
+ */
+getIndexInTabControl : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTitleText
+ * @return {String}
+ */
+getTitleText : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setTitleFontSize
+ * @param {float} arg0
+ */
+setTitleFontSize : function (
+float 
+)
+{
+},
+
+/**
+ * @method setTitleFontName
+ * @param {String} arg0
+ */
+setTitleFontName : function (
+str 
+)
+{
+},
+
+/**
+ * @method getTitleFontSize
+ * @return {float}
+ */
+getTitleFontSize : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTitleFontName
+ * @return {String}
+ */
+getTitleFontName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getTitleColor
+ * @return {color4b_object}
+ */
+getTitleColor : function (
+)
+{
+    return cc.Color4B;
+},
+
+/**
+ * @method getTitleRenderer
+ * @return {cc.Label}
+ */
+getTitleRenderer : function (
+)
+{
+    return cc.Label;
+},
+
+/**
+ * @method setTitleText
+ * @param {String} arg0
+ */
+setTitleText : function (
+str 
+)
+{
+},
+
+/**
+ * @method setTitleColor
+ * @param {color4b_object} arg0
+ */
+setTitleColor : function (
+color4b 
+)
+{
+},
+
+/**
+ * @method create
+* @param {String|String} str
+* @param {String|String} str
+* @param {String|String} str
+* @param {ccui.Widget::TextureResType|String} texturerestype
+* @param {String} str
+* @param {String} str
+* @param {ccui.Widget::TextureResType} texturerestype
+* @return {ccui.TabHeader|ccui.TabHeader|ccui.TabHeader}
+*/
+create : function(
+str,
+str,
+str,
+str,
+str,
+str,
+texturerestype 
+)
+{
+    return ccui.TabHeader;
+},
+
+};
+
+/**
+ * @class TabControl
+ */
+ccui.TabControl = {
+
+/**
+ * @method setHeaderWidth
+ * @param {float} arg0
+ */
+setHeaderWidth : function (
+float 
+)
+{
+},
+
+/**
+ * @method removeTab
+ * @param {int} arg0
+ */
+removeTab : function (
+int 
+)
+{
+},
+
+/**
+ * @method getTabCount
+ * @return {unsigned long}
+ */
+getTabCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getHeaderDockPlace
+ * @return {ccui.TabControl::Dock}
+ */
+getHeaderDockPlace : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getSelectedTabIndex
+ * @return {int}
+ */
+getSelectedTabIndex : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method insertTab
+ * @param {int} arg0
+ * @param {ccui.TabHeader} arg1
+ * @param {ccui.Layout} arg2
+ */
+insertTab : function (
+int, 
+tabheader, 
+layout 
+)
+{
+},
+
+/**
+ * @method ignoreHeadersTextureSize
+ * @param {bool} arg0
+ */
+ignoreHeadersTextureSize : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getHeaderWidth
+ * @return {float}
+ */
+getHeaderWidth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setHeaderDockPlace
+ * @param {ccui.TabControl::Dock} arg0
+ */
+setHeaderDockPlace : function (
+dock 
+)
+{
+},
+
+/**
+ * @method setSelectTab
+* @param {ccui.TabHeader|int} tabheader
+*/
+setSelectTab : function(
+int 
+)
+{
+},
+
+/**
+ * @method getTabHeader
+ * @param {int} arg0
+ * @return {ccui.TabHeader}
+ */
+getTabHeader : function (
+int 
+)
+{
+    return ccui.TabHeader;
+},
+
+/**
+ * @method isIgnoreHeadersTextureSize
+ * @return {bool}
+ */
+isIgnoreHeadersTextureSize : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setTabChangedEventListener
+ * @param {function} arg0
+ */
+setTabChangedEventListener : function (
+func 
+)
+{
+},
+
+/**
+ * @method setHeaderSelectedZoom
+ * @param {float} arg0
+ */
+setHeaderSelectedZoom : function (
+float 
+)
+{
+},
+
+/**
+ * @method setHeaderHeight
+ * @param {float} arg0
+ */
+setHeaderHeight : function (
+float 
+)
+{
+},
+
+/**
+ * @method indexOfTabHeader
+ * @param {ccui.TabHeader} arg0
+ * @return {int}
+ */
+indexOfTabHeader : function (
+tabheader 
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTabContainer
+ * @param {int} arg0
+ * @return {ccui.Layout}
+ */
+getTabContainer : function (
+int 
+)
+{
+    return ccui.Layout;
+},
+
+/**
+ * @method getHeaderSelectedZoom
+ * @return {float}
+ */
+getHeaderSelectedZoom : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getHeaderHeight
+ * @return {int}
+ */
+getHeaderHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method create
+ * @return {ccui.TabControl}
+ */
+create : function (
+)
+{
+    return ccui.TabControl;
+},
+
+};
+
+/**
  * @class ScrollViewBar
  */
 ccui.ScrollViewBar = {

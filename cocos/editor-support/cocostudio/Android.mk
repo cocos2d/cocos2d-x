@@ -34,6 +34,7 @@ CCComController.cpp \
 CCComRender.cpp \
 CCInputDelegate.cpp \
 DictionaryHelper.cpp \
+LocalizationManager.cpp \
 CCSGUIReader.cpp \
 CCSSceneReader.cpp \
 TriggerBase.cpp \
