@@ -323,8 +323,15 @@ public:
      * @param followedNode  The node to be followed.
      * @param rect  The boundary. If \p rect is equal to Rect::ZERO, it'll work
      *              with no boundary.
+     * @param xOffset The horizontal offset from the center of the screen from which the
+     *               node  is to be followed.It can be positive,negative or zero.If
+     *               set to zero the node will be horizontally centered followed.
+     *  @param yOffset The vertical offset from the center of the screen from which the
+     *                 node is to be followed.It can be positive,negative or zero.
+     *                 If set to zero the node will be vertically centered followed.
+     *   If both xOffset and yOffset are set to zero,then the node will be horizontally and vertically centered followed.
      */
-    static Follow* create(Node *followedNode, const Rect& rect = Rect::ZERO);
+    static Follow* create(Node *followedNode, const Rect& rect = Rect::ZERO,float xOffset=0.0,float yOffset=0.0);
     /** Return boundarySet.
      *
      * @return Return boundarySet.
@@ -367,6 +374,8 @@ CC_CONSTRUCTOR_ACCESS:
     , _rightBoundary(0.0)
     , _topBoundary(0.0)
     , _bottomBoundary(0.0)
+    , _offsetX(0.0)
+    , _offsetY(0.0)
     , _worldRect(Rect::ZERO)
     {}
     /**
@@ -381,8 +390,16 @@ CC_CONSTRUCTOR_ACCESS:
      * @param followedNode  The node to be followed.
      * @param rect  The boundary. If \p rect is equal to Rect::ZERO, it'll work
      *              with no boundary.
+     * @param xOffset The horizontal offset from the center of the screen from which the
+     *                node  is to be followed.It can be positive,negative or zero.If
+     *                set to zero the node will be horizontally centered followed.
+     * @param yOffset The vertical offset from the center of the screen from which the
+     *                node is to be followed.It can be positive,negative or zero.
+     *                If set to zero the node will be vertically centered followed.
+     *   If both xOffset and yOffset are set to zero,then the node will be horizontally and vertically centered followed.
+
      */
-    bool initWithTarget(Node *followedNode, const Rect& rect = Rect::ZERO);
+    bool initWithTarget(Node *followedNode, const Rect& rect = Rect::ZERO,float xOffset=0.0,float yOffset=0.0);
 
 protected:
     /** Node to follow. */
@@ -403,6 +420,11 @@ protected:
     float _rightBoundary;
     float _topBoundary;
     float _bottomBoundary;
+    
+    /** Horizontal (x) and vertical (y) offset values. */
+    float _offsetX;
+    float _offsetY;
+    
     Rect _worldRect;
 
 private:
