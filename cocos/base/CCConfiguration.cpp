@@ -51,6 +51,7 @@ Configuration::Configuration()
 , _supportsShareableVAO(false)
 , _supportsOESDepth24(false)
 , _supportsOESPackedDepthStencil(false)
+, _supportsGenerateMipmap(false)
 , _maxSamplesAllowed(0)
 , _maxTextureUnits(0)
 , _glExtensions(nullptr)
@@ -159,6 +160,20 @@ void Configuration::gatherGPUInfo()
     _supportsOESPackedDepthStencil = checkForGLExtension("GL_OES_packed_depth_stencil");
     _valueDict["gl.supports_OES_packed_depth_stencil"] = Value(_supportsOESPackedDepthStencil);
 
+    _supportsGenerateMipmap = true;
+
+#ifndef GL_ES_VERSION_2_0
+    // glGenerateMipmap supports:
+    // OpenGL ES 2.0 or greater https://www.khronos.org/opengles/sdk/docs/man3/html/glGenerateMipmap.xhtml
+    // OpenGL 3.0 or greater https://www.opengl.org/sdk/docs/man/html/glGenerateMipmap.xhtml
+
+    float glVersion = _valueDict["gl.version"].asFloat();
+    if (glVersion < 3.0)
+    {
+        _supportsGenerateMipmap = false;
+    }
+#endif
+    _valueDict["gl.supports_generate_mipmap"] = Value(_supportsGenerateMipmap);
 
     CHECK_GL_ERROR_DEBUG();
 }
@@ -275,12 +290,16 @@ bool Configuration::supportsOESDepth24() const
     return _supportsOESDepth24;
     
 }
+
 bool Configuration::supportsOESPackedDepthStencil() const
 {
     return _supportsOESPackedDepthStencil;
 }
 
-
+bool Configuration::supportsGenerateMipmap() const
+{
+    return _supportsGenerateMipmap;
+}
 
 int Configuration::getMaxSupportDirLightInShader() const
 {

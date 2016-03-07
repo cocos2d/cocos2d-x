@@ -217,7 +217,15 @@ bool Material::parseSampler(GLProgramState* glProgramState, Properties* samplerP
     // required
     auto filename = samplerProperties->getString("path");
 
-    auto texture = Director::getInstance()->getTextureCache()->addImage(filename);
+    // mipmap
+    bool generateMipMap = false;
+    const char* mipmap = getOptionalString(samplerProperties, "mipmap", "false");
+    if (mipmap && strcasecmp(mipmap, "true") == 0) 
+    {
+        generateMipMap = true;
+    }
+
+    auto texture = Director::getInstance()->getTextureCache()->addImage(filename, generateMipMap);
     if (!texture) {
         CCLOG("Invalid filepath");
         return false;
@@ -227,14 +235,6 @@ bool Material::parseSampler(GLProgramState* glProgramState, Properties* samplerP
 
     {
         Texture2D::TexParams texParams;
-
-        // mipmap
-        bool usemipmap = false;
-        const char* mipmap = getOptionalString(samplerProperties, "mipmap", "false");
-        if (mipmap && strcasecmp(mipmap, "true")==0) {
-            texture->generateMipmap();
-            usemipmap = true;
-        }
 
         // valid options: REPEAT, CLAMP
         const char* wrapS = getOptionalString(samplerProperties, "wrapS", "CLAMP_TO_EDGE");
@@ -257,7 +257,7 @@ bool Material::parseSampler(GLProgramState* glProgramState, Properties* samplerP
 
 
         // valid options: NEAREST, LINEAR, NEAREST_MIPMAP_NEAREST, LINEAR_MIPMAP_NEAREST, NEAREST_MIPMAP_LINEAR, LINEAR_MIPMAP_LINEAR
-        const char* minFilter = getOptionalString(samplerProperties, "minFilter", usemipmap ? "LINEAR_MIPMAP_NEAREST" : "LINEAR");
+        const char* minFilter = getOptionalString(samplerProperties, "minFilter", generateMipMap ? "LINEAR_MIPMAP_NEAREST" : "LINEAR");
         if (strcasecmp(minFilter, "NEAREST")==0)
             texParams.minFilter = GL_NEAREST;
         else if(strcasecmp(minFilter, "LINEAR")==0)

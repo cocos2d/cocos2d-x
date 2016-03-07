@@ -159,8 +159,14 @@ public:
      * @since v2.0.0
      */
     bool supportsOESPackedDepthStencil() const;
-
     
+
+    /** Whether or not glGenerateMipmap are supported.
+    *
+    * @return Is true if glGenerateMipmap.
+    * @since v3.8.0
+    */
+    bool supportsGenerateMipmap() const;
     
     /** Max support directional light in shader, for Sprite3D.
      *
@@ -250,6 +256,7 @@ protected:
     bool            _supportsShareableVAO;
     bool            _supportsOESDepth24;
     bool            _supportsOESPackedDepthStencil;
+    bool            _supportsGenerateMipmap;
     
     GLint           _maxSamplesAllowed;
     GLint           _maxTextureUnits;
