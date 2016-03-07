@@ -107,6 +107,7 @@ public:
     const vector<string> &getSearchPath() const;
     void setFirstSearchPath(const vector<string> &args);
     const vector<string> &getFirstSearchPath() const;
+    void setLanguageDataPath(const std::string &filePath);
 
     bool isAppMenu() const;
     bool isResizeWindow() const;
@@ -137,6 +138,7 @@ private:
     string _bindAddress;
     vector<string> _searchPath;
     vector<string> _firstSearchPath;
+    string _languageDataPath;
 
     void normalize();
     string replaceProjectDirToMacro(const string &path) const;
