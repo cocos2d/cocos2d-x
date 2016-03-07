@@ -1824,7 +1824,7 @@ void Label::computeStringNumLines()
     size_t stringLen = _utf16Text.length();
     for (size_t i = 0; i < stringLen - 1; ++i)
     {
-        if (_utf16Text[i] == '\n')
+        if (_utf16Text[i] == (char16_t)TextFormatter::NewLine)
         {
             quantityOfLines++;
         }
