@@ -66,13 +66,13 @@ static GLViewImpl* s_pEglView = NULL;
 
 GLViewImpl* GLViewImpl::create(const std::string& viewName)
 {
-    auto ret = new GLViewImpl;
+    auto ret = new (std::nothrow) GLViewImpl;
     if(ret && ret->initWithFullScreen(viewName))
     {
         ret->autorelease();
         return ret;
     }
-
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
@@ -209,9 +209,11 @@ void GLViewImpl::OnResuming(Platform::Object^ sender, Platform::Object^ args)
 // user pressed the Back Key on the phone
 void GLViewImpl::OnBackKeyPress()
 {
-    cocos2d::EventKeyboard::KeyCode cocos2dKey = EventKeyboard::KeyCode::KEY_ESCAPE;
-    cocos2d::EventKeyboard event(cocos2dKey, false);
-    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+    cocos2d::EventKeyboard eventPress(EventKeyboard::KeyCode::KEY_ESCAPE, true);
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&eventPress);
+
+    cocos2d::EventKeyboard eventUnPress(EventKeyboard::KeyCode::KEY_ESCAPE, false);
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&eventUnPress);
 }
 
 void GLViewImpl::BackButtonListener(EventKeyboard::KeyCode keyCode, Event* event)
