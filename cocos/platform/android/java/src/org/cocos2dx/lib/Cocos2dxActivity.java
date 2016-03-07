@@ -66,7 +66,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     private Cocos2dxVideoHelper mVideoHelper = null;
     private Cocos2dxWebViewHelper mWebViewHelper = null;
     private Cocos2dxEditBoxHelper mEditBoxHelper = null;
-    private boolean hasFocus = false;
 
     public Cocos2dxGLSurfaceView getGLSurfaceView(){
         return  mGLSurfaceView;
@@ -298,23 +297,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     protected void onResume() {
     	Log.d(TAG, "onResume()");
         super.onResume();
-       	resumeIfHasFocus();
-    }
-    
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-    	Log.d(TAG, "onWindowFocusChanged() hasFocus=" + hasFocus);
-        super.onWindowFocusChanged(hasFocus);
-        
-        this.hasFocus = hasFocus;
-        resumeIfHasFocus();
-    }
-    
-    private void resumeIfHasFocus() {
-        if(hasFocus) {
-        	Cocos2dxHelper.onResume();
-        	mGLSurfaceView.onResume();
-        }
+        Cocos2dxHelper.onResume();
+        mGLSurfaceView.onResume();
     }
 
     @Override
