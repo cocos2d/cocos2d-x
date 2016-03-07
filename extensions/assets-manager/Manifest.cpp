@@ -246,7 +246,12 @@ void Manifest::prependSearchPaths()
 {
     std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
     std::vector<std::string>::iterator iter = searchPaths.begin();
-    searchPaths.insert(iter, _manifestRoot);
+    bool needChangeSearchPaths = false;
+    if (std::find(searchPaths.begin(), searchPaths.end(), _manifestRoot) == searchPaths.end())
+    {
+        searchPaths.insert(iter, _manifestRoot);
+        needChangeSearchPaths = true;
+    }
     
     for (int i = (int)_searchPaths.size()-1; i >= 0; i--)
     {
@@ -256,8 +261,12 @@ void Manifest::prependSearchPaths()
         path = _manifestRoot + path;
         iter = searchPaths.begin();
         searchPaths.insert(iter, path);
+        needChangeSearchPaths = true;
     }
-    FileUtils::getInstance()->setSearchPaths(searchPaths);
+    if (needChangeSearchPaths)
+    {
+        FileUtils::getInstance()->setSearchPaths(searchPaths);
+    }
 }
 
 
