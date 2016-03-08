@@ -34,6 +34,7 @@ CCComController.cpp \
 CCComRender.cpp \
 CCInputDelegate.cpp \
 DictionaryHelper.cpp \
+LocalizationManager.cpp \
 CCSGUIReader.cpp \
 CCSSceneReader.cpp \
 TriggerBase.cpp \
@@ -81,6 +82,7 @@ ActionTimeline/CCSkinNode.cpp \
 FlatBuffersSerialize.cpp \
 WidgetCallBackHandlerProtocol.cpp \
 WidgetReader/ArmatureNodeReader/ArmatureNodeReader.cpp \
+WidgetReader/TabControlReader/TabControlReader.cpp \
 CCComExtensionData.cpp \
 CocoStudio.cpp
 

@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include <android/log.h>
 #include <sys/system_properties.h>
-#include "ccdandroidUtils.h"
+#include "audio/android/ccdandroidUtils.h"
 #include "audio/include/AudioEngine.h"
 #include "platform/android/jni/JniHelper.h"
 

@@ -16446,7 +16446,7 @@ int lua_cocos2dx_AsyncTaskPool_stopTasks(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_AsyncTaskPool_destoryInstance(lua_State* tolua_S)
+int lua_cocos2dx_AsyncTaskPool_destroyInstance(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -16465,18 +16465,18 @@ int lua_cocos2dx_AsyncTaskPool_destoryInstance(lua_State* tolua_S)
     {
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_AsyncTaskPool_destoryInstance'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_AsyncTaskPool_destroyInstance'", nullptr);
             return 0;
         }
-        cocos2d::AsyncTaskPool::destoryInstance();
+        cocos2d::AsyncTaskPool::destroyInstance();
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.AsyncTaskPool:destoryInstance",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.AsyncTaskPool:destroyInstance",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_AsyncTaskPool_destoryInstance'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_AsyncTaskPool_destroyInstance'.",&tolua_err);
 #endif
     return 0;
 }
@@ -16563,7 +16563,7 @@ int lua_register_cocos2dx_AsyncTaskPool(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"AsyncTaskPool");
         tolua_function(tolua_S,"new",lua_cocos2dx_AsyncTaskPool_constructor);
         tolua_function(tolua_S,"stopTasks",lua_cocos2dx_AsyncTaskPool_stopTasks);
-        tolua_function(tolua_S,"destoryInstance", lua_cocos2dx_AsyncTaskPool_destoryInstance);
+        tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_AsyncTaskPool_destroyInstance);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_AsyncTaskPool_getInstance);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::AsyncTaskPool).name();
@@ -20451,7 +20451,7 @@ int lua_cocos2dx_PolygonInfo_getArea(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_PolygonInfo_getArea'", nullptr);
             return 0;
         }
-        const float ret = cobj->getArea();
+        double ret = cobj->getArea();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -20498,7 +20498,7 @@ int lua_cocos2dx_PolygonInfo_getVertCount(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_PolygonInfo_getVertCount'", nullptr);
             return 0;
         }
-        const unsigned int ret = cobj->getVertCount();
+        unsigned int ret = cobj->getVertCount();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -20545,7 +20545,7 @@ int lua_cocos2dx_PolygonInfo_getTrianglesCount(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_PolygonInfo_getTrianglesCount'", nullptr);
             return 0;
         }
-        const unsigned int ret = cobj->getTrianglesCount();
+        unsigned int ret = cobj->getTrianglesCount();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -49576,7 +49576,7 @@ int lua_cocos2dx_ClippingRectangleNode_isClippingEnabled(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ClippingRectangleNode_isClippingEnabled'", nullptr);
             return 0;
         }
-        const bool ret = cobj->isClippingEnabled();
+        bool ret = cobj->isClippingEnabled();
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
@@ -71675,7 +71675,7 @@ int lua_cocos2dx_Sprite_getResourceType(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Sprite_getResourceType'", nullptr);
             return 0;
         }
-        const int ret = cobj->getResourceType();
+        int ret = cobj->getResourceType();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -88979,7 +88979,7 @@ int lua_cocos2dx_TextureCache_getTextureFilePath(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TextureCache_getTextureFilePath'", nullptr);
             return 0;
         }
-        const std::string ret = cobj->getTextureFilePath(arg0);
+        std::string ret = cobj->getTextureFilePath(arg0);
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }

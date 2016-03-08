@@ -6,6 +6,9 @@
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
 
+//Uncomment the following line to use localize manager
+//#include "editor-support/cocostudio/LocalizationManager.h"
+
 USING_NS_CC;
 using namespace std;
 
@@ -71,7 +74,23 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     // set searching path
     FileUtils::getInstance()->setSearchPaths(searchPath);
-	
+
+    // Uncomment follow block to use localize manager to set localize strings
+
+    //  If you want to load json localize data, use follow block
+    /*
+    cocostudio::ILocalizationManager * lm = cocostudio::JsonLocalizationManager::getInstance();
+    lm->initLanguageData("your localize file name.lang.json");
+    cocostudio::LocalizationHelper::setCurrentManager(lm, false);
+    */
+
+    //  If you want to load binary localize data, use follow block
+    /*
+    cocostudio::ILocalizationManager * lm = cocostudio::BinLocalizationManager::getInstance();
+    lm->initLanguageData("your localize file name.lang.csb");
+    cocostudio::LocalizationHelper::setCurrentManager(lm, true);
+    */
+
     // turn on display FPS
     director->setDisplayStats(true);
 

@@ -1,4 +1,4 @@
-set(APP_NAME lua-empty-test)
+set(APP_NAME lua_empty_test)
 
 set(SAMPLE_SRC Classes/AppDelegate.cpp)
 
