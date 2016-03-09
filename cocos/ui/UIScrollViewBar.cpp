@@ -106,6 +106,7 @@ bool ScrollViewBar::init()
     {
         ProtectedNode::setOpacity(0);
     }
+    onScrolled(Vec2::ZERO);
     return true;
 }
     
