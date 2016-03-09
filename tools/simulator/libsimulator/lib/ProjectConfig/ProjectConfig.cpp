@@ -3,6 +3,7 @@
 
 #include "ProjectConfig/ProjectConfig.h"
 #include "ProjectConfig/SimulatorConfig.h"
+#include "cocostudio/LocalizationManager.h"
 
 #ifdef _MSC_VER
 #define strcasecmp _stricmp
