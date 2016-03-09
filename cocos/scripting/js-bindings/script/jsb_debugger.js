@@ -204,7 +204,7 @@ this.processInput = function (inputstr) {
       DebuggerServer.setRootActor(createRootActor);
       conn = DebuggerServer._onConnection(transport);
         
-      eturn;
+      return;
     }
 
     
