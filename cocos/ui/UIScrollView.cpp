@@ -68,6 +68,7 @@ _autoScrollCurrentlyOutOfBoundary(false),
 _autoScrollBraking(false),
 _inertiaScrollEnabled(true),
 _bounceEnabled(false),
+_outOfBoundaryAmount(Vec2::ZERO),
 _outOfBoundaryAmountDirty(true),
 _scrollBarEnabled(true),
 _verticalScrollBar(nullptr),
@@ -356,7 +357,7 @@ bool ScrollView::startBounceBackIfNeeded()
         return false;
     }
     Vec2 bounceBackAmount = getHowMuchOutOfBoundary();
-    if(bounceBackAmount == Vec2::ZERO)
+    if(fltEqualZero(bounceBackAmount))
     {
         return false;
     }
@@ -380,7 +381,7 @@ Vec2 ScrollView::getHowMuchOutOfBoundary(const Vec2& addition)
         return _outOfBoundaryAmount;
     }
     
-    Vec2 outOfBoundaryAmount;
+    Vec2 outOfBoundaryAmount(Vec2::ZERO);
     if(_innerContainer->getLeftBoundary() + addition.x > _leftBoundary)
     {
         outOfBoundaryAmount.x = _leftBoundary - (_innerContainer->getLeftBoundary() + addition.x);
@@ -422,7 +423,7 @@ bool ScrollView::isOutOfBoundary(MoveDirection dir)
 
 bool ScrollView::isOutOfBoundary()
 {
-    return getHowMuchOutOfBoundary() != Vec2::ZERO;
+    return !fltEqualZero(getHowMuchOutOfBoundary());
 }
 
 void ScrollView::startAutoScrollToDestination(const Vec2& destination, float timeInSec, bool attenuated)
@@ -458,7 +459,7 @@ void ScrollView::startAutoScroll(const Vec2& deltaMove, float timeInSec, bool at
     
     // If the destination is also out of boundary of same side, start brake from beginning.
     Vec2 currentOutOfBoundary = getHowMuchOutOfBoundary();
-    if(currentOutOfBoundary != Vec2::ZERO)
+    if (!fltEqualZero(currentOutOfBoundary))
     {
         _autoScrollCurrentlyOutOfBoundary = true;
         Vec2 afterOutOfBoundary = getHowMuchOutOfBoundary(adjustedDeltaMove);
@@ -502,10 +503,18 @@ bool ScrollView::isNecessaryAutoScrollBrake()
     return false;
 }
     
-float ScrollView::getAutoScrollStopEpsilon()
+float ScrollView::getAutoScrollStopEpsilon() const
 {
     return FLT_EPSILON;
 }
+
+
+bool ScrollView::fltEqualZero(const Vec2& point) const
+{
+    return (fabsf(point.x) <= 0.0001f && fabsf(point.y) <= 0.0001f);
+}
+
+
     
 void ScrollView::processAutoScrolling(float deltaTime)
 {
@@ -537,7 +546,7 @@ void ScrollView::processAutoScrolling(float deltaTime)
         // Don't let go out of boundary
         Vec2 moveDelta = newPosition - getInnerContainerPosition();
         Vec2 outOfBoundary = getHowMuchOutOfBoundary(moveDelta);
-        if(outOfBoundary != Vec2::ZERO)
+        if (!fltEqualZero(outOfBoundary))
         {
             newPosition += outOfBoundary;
             reachedEnd = true;
