@@ -524,9 +524,9 @@ namespace cocostudio
 
         bool scrollbarEnabled = options->scrollbarEnabeld() != 0;
         scrollView->setScrollBarEnabled(scrollbarEnabled);
-        bool scrollbarAutoHide = options->scrollbarAutoHide() != 0;
         if (scrollbarEnabled)
         {
+            bool scrollbarAutoHide = options->scrollbarAutoHide() != 0;
             scrollView->setScrollBarAutoHideEnabled(scrollbarAutoHide);
             float barAutoHideTime = options->scrollbarAutoHideTime();
             scrollView->setScrollBarAutoHideTime(barAutoHideTime);
