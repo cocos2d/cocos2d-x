@@ -52,4 +52,24 @@ private:
     int _sendBinaryTimes;
 };
 
+class WebSocketCloseTest : public TestCase
+    , public cocos2d::network::WebSocket::Delegate
+{
+public:
+    CREATE_FUNC(WebSocketCloseTest);
+
+    virtual void onOpen(cocos2d::network::WebSocket* ws)override;
+    virtual void onMessage(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::Data& data)override;
+    virtual void onClose(cocos2d::network::WebSocket* ws)override;
+    virtual void onError(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::ErrorCode& error)override;
+
+    WebSocketCloseTest();
+
+    virtual std::string title() const override { return "WebSocket close by resetDirector event Test"; }
+    std::string subtitle() const override { return "Click close button, Program should close without crash."; }
+
+private:
+    cocos2d::network::WebSocket* _wsiTest;
+};
+
 #endif /* defined(__TestCpp__WebSocketTest__) */
