@@ -349,7 +349,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     void pageTurningEvent();
-    virtual float getAutoScrollStopEpsilon() override;
+    virtual float getAutoScrollStopEpsilon() const override;
 
     virtual void remedyLayoutParameter(Widget* item)override;
     virtual void moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack) override;
