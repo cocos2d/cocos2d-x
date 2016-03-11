@@ -1081,10 +1081,18 @@ bool __jsb_cpSpace_addCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp, J
 
     cpCollisionHandler* cp_collision_handler = cpSpaceAddCollisionHandler(space, handler->typeA, handler->typeB);
     cp_collision_handler->userData = handler;
+#ifdef _USRDLL
+    cpCollisionHandler *  cpHandler = get_cpCollisionHandlerDoNothing();
+    cp_collision_handler->beginFunc = handler->begin ? &myCollisionBegin : cpHandler->beginFunc;
+    cp_collision_handler->preSolveFunc = handler->pre ? &myCollisionPre : cpHandler->preSolveFunc;
+    cp_collision_handler->postSolveFunc = handler->post ? &myCollisionPost : cpHandler->postSolveFunc;
+    cp_collision_handler->separateFunc = handler->separate ? &myCollisionSeparate : cpHandler->separateFunc;
+#else
     cp_collision_handler->beginFunc = handler->begin ? &myCollisionBegin : cpCollisionHandlerDoNothing.beginFunc;
-    cp_collision_handler->preSolveFunc = handler->pre ?  &myCollisionPre : cpCollisionHandlerDoNothing.preSolveFunc;
-    cp_collision_handler->postSolveFunc = handler->post ?  &myCollisionPost : cpCollisionHandlerDoNothing.postSolveFunc;
+    cp_collision_handler->preSolveFunc = handler->pre ? &myCollisionPre : cpCollisionHandlerDoNothing.preSolveFunc;
+    cp_collision_handler->postSolveFunc = handler->post ? &myCollisionPost : cpCollisionHandlerDoNothing.postSolveFunc;
     cp_collision_handler->separateFunc = handler->separate ? &myCollisionSeparate : cpCollisionHandlerDoNothing.separateFunc;
+#endif
 
     //
     // Already added ? If so, remove it.
