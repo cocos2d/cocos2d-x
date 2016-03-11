@@ -270,7 +270,7 @@ namespace ui {
         int indexOfTabHeader(const TabHeader* tabCell) const;
 
         /**
-        * Add a callback function which would be called when selcted tab changed
+        * Add a callback function which would be called when selected tab changed
         *@param callback A std::function with type @see `ccTabControlCallback`
         */
         void setTabChangedEventListener(const ccTabControlCallback& callBack);
@@ -304,14 +304,14 @@ namespace ui {
         int   getHeaderHeight() const { return _headerHeight; }
 
         /**
-        * ignore the textures' size in header, scale them with _headerWidth and _headerHieght
-        * @param ignore is `true`, the header's texture scale with _headerWidth and _headerHieght
-        *        ignore is `false`£¬ use the texture's size£¬ do not scale them
+        * ignore the textures' size in header, scale them with _headerWidth and _headerHeight
+        * @param ignore is `true`, the header's texture scale with _headerWidth and _headerHeight
+        *        ignore is `false`, use the texture's size, do not scale them
         */
         void  ignoreHeadersTextureSize(bool ignore);
 
         /**
-        * get whether ignore the textures' size in header, scale them with _headerWidth and _headerHieght
+        * get whether ignore the textures' size in header, scale them with _headerWidth and _headerHeight
         * @return whether ignore the textures' size in header
         */
         bool  isIgnoreHeadersTextureSize() const { return _ignoreHeaderTextureSize; };
