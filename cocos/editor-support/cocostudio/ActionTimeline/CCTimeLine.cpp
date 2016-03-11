@@ -158,6 +158,9 @@ void Timeline::binarySearchKeyFrame(unsigned int frameIndex)
             _toIndex = 0;
             
             from = to = _frames.at(length - 1); 
+            if (from->isEnterWhenPassed())
+                needEnterFrame = true;
+
             _currentKeyFrameIndex = _frames.at(length - 1)->getFrameIndex();
             _betweenDuration = 0;
             break;
