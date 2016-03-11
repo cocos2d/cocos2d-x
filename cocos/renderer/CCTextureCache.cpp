@@ -128,6 +128,11 @@ public:
  Does process all response in addImageAsyncCallback consume more time?
  - Convert image to texture faster than load image from disk, so this isn't a problem.
  */
+void TextureCache::addImageAsync(const std::string &path, const std::function<void(Texture2D*)>& callback)
+{
+    addImageAsync(path, callback, false);
+}
+
 void TextureCache::addImageAsync(const std::string &path, const std::function<void(Texture2D*)>& callback, bool generateMipMap)
 {
     Texture2D *texture = nullptr;
@@ -321,6 +326,11 @@ void TextureCache::addImageAsyncCallBack(float dt)
     {
         Director::getInstance()->getScheduler()->unschedule(CC_SCHEDULE_SELECTOR(TextureCache::addImageAsyncCallBack), this);
     }
+}
+
+Texture2D * TextureCache::addImage(const std::string &path)
+{
+    return addImage(path, false);
 }
 
 Texture2D * TextureCache::addImage(const std::string &path, bool generateMipMap)

@@ -349,7 +349,7 @@ public:
     /** Need generate mipmap images for the texture.
     Call before init
     It only works if the texture size is POT (power of 2).
-    @since v3.8.0
+    @since v3.11
     */
     void setAutoGenerateMipmap(bool generateMipmaps);
 
@@ -441,7 +441,7 @@ private:
 
     /** Generates mipmap images for the texture.
     It only works if the texture size is POT (power of 2).
-    @since v0.99.0
+    @since v3.11
     */
     void generateMipmapInternal();
 
