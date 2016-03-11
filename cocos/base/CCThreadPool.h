@@ -48,45 +48,98 @@ NS_CC_BEGIN
 class CC_DLL ThreadPool
 {
 public:
+    
+    enum TaskType
+    {
+        TASK_TYPE_DEFAULT = 0,
+        TASK_TYPE_NETWORK,
+        TASK_TYPE_IO,
+        TASK_TYPE_AUDIO,
+        TASK_TYPE_USER = 1000
+    };
+    
+    /*
+     * Gets the default thread pool which is a cached thread pool with default parameters.
+     */
     static ThreadPool* getDefaultThreadPool();
+    
+    /*
+     * Destroys the default thread pool
+     */
     static void destroyDefaultThreadPool();
     
-    ThreadPool(int minNum, int maxNum);
+    /*
+     * Creates a cached thread pool
+     * @note The return value has to be delete while it doesn't needed
+     */
+    static ThreadPool* newCachedThreadPool(int minThreadNum, int maxThreadNum, int shrinkInterval, int shrinkStep, int stretchStep);
+    
+    /*
+     * Creates a thread pool with fixed thread count
+     * @note The return value has to be delete while it doesn't needed
+     */
+    static ThreadPool* newFixedThreadPool(int threadNum);
+    
+    /*
+     * Creates a thread pool with only one thread in the pool, it could be used to exeute multipy tasks serially in just one thread.
+     * @note The return value has to be delete while it doesn't needed
+     */
+    static ThreadPool* newSingleThreadPool();
     
     // the destructor waits for all the functions in the queue to be finished
     ~ThreadPool();
     
+    /* Pushs a task to thread pool
+     *  @param runnable The callback of the task executed in sub thread
+     *  @param type The task type, it's TASK_TYPE_DEFAULT if this argument isn't assigned
+     *  @note This function has to be invoked in cocos thread
+     */
+    void pushTask(const std::function<void(int)>& runnable, int type = TASK_TYPE_DEFAULT);
+    
+    // Stops all tasks, it will remove all tasks in queue
+    void stopAllTasks();
+    
+    // Stops some tasks by type
+    void stopTasksByType(int type);
+    
+    // Gets the minimum thread numbers
     inline int getMinThreadNum() { return _minThreadNum; };
+    
+    // Gets the maximum thread numbers
     inline int getMaxThreadNum() { return _maxThreadNum; };
     
-    // number of idle threads
+    // Gets the number of idle threads
     int getIdleThreadNum();
     
+    // Gets the number of initialized threads
     inline int getInitedThreadNum() { return _initedThreadNum; };
-
-    void pushTask(const std::function<void(int)>& runnable);
+    
+    // Gets the task number
     size_t getTaskNum();
+
+    /* 
+     * Trys to shrink pool
+     * @note This method is only avaiable for cached thread pool
+     */
+    bool tryShrinkPool();
     
-    void setShrinkInterval(int seconds);
-    void setShrinkStep(int step);
-    void setStretchStep(int step);
-    
-    bool shrinkPool();
 private:
-    // deleted
-    ThreadPool(const ThreadPool &);// = delete;
-    ThreadPool(ThreadPool &&);// = delete;
-    ThreadPool& operator=(const ThreadPool &);// = delete;
-    ThreadPool& operator=(ThreadPool &&);// = delete;
+    ThreadPool(int minNum, int maxNum);
+    ThreadPool(const ThreadPool&);
+    ThreadPool(ThreadPool&&);
+    ThreadPool& operator=(const ThreadPool&);
+    ThreadPool& operator=(ThreadPool&&);
     
     void init();
     void stop();
-    void setThread(int i);
+    void setThread(int tid);
+    void joinThread(int tid);
 
+    void setFixedSize(bool isFixedSize);
+    void setShrinkInterval(int seconds);
+    void setShrinkStep(int step);
+    void setStretchStep(int step);
     void stretchPool(int count);
-
-    // empty the queue
-    void clearQueue();
     
     std::vector<std::unique_ptr<std::thread>> _threads;
     std::vector<std::shared_ptr<std::atomic<bool>>> _abortFlags;
@@ -130,7 +183,13 @@ private:
         std::mutex mutex;
     };
     
-    ThreadSafeQueue<std::function<void(int tid)> *> _taskQueue;
+    struct Task
+    {
+        int type;
+        std::function<void(int)>* callback;
+    };
+    
+    ThreadSafeQueue<Task> _taskQueue;
     std::atomic<bool> _isDone;
     std::atomic<bool> _isStop;
     std::atomic<int> _idleThreadNum;  // how many threads are waiting
@@ -146,6 +205,7 @@ private:
     float _shrinkInterval;
     int _shrinkStep;
     int _stretchStep;
+    bool _isFixedSize;
 };
     
 // end of base group
