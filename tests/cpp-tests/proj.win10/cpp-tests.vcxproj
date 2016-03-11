@@ -8,7 +8,7 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>8.2</ApplicationTypeRevision>
-    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -475,6 +475,7 @@
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest_Editor.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UISliderTest\UISliderTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UISliderTest\UISliderTest_Editor.h" />
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITextAtlasTest\UITextAtlasTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITextAtlasTest\UITextAtlasTest_Editor.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITextBMFontTest\UITextBMFontTest.h" />
@@ -690,6 +691,7 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest_Editor.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UISliderTest\UISliderTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UISliderTest\UISliderTest_Editor.cpp" />
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITextAtlasTest\UITextAtlasTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITextAtlasTest\UITextAtlasTest_Editor.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITextBMFontTest\UITextBMFontTest.cpp" />
