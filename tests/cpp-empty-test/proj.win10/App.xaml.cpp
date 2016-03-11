@@ -85,7 +85,10 @@ void App::OnSuspending(Object^ sender, SuspendingEventArgs^ e)
     (void)sender;	// Unused parameter
     (void)e;		// Unused parameter
 
-    mPage->SetVisibility(false);
+    if (mPage)
+    {
+        mPage->SetVisibility(false);
+    }
 }
 
 /// <summary>
@@ -98,7 +101,10 @@ void App::OnResuming(Object ^sender, Object ^args)
     (void)sender; // Unused parameter
     (void)args; // Unused parameter
 
-    mPage->SetVisibility(true);
+    if (mPage)
+    {
+        mPage->SetVisibility(true);
+    }
 }
 
 /// <summary>
@@ -110,5 +116,7 @@ void App::OnNavigationFailed(Platform::Object ^sender, Windows::UI::Xaml::Naviga
 {
     throw ref new FailureException("Failed to load Page " + e->SourcePageType.Name);
 }
+
+
 
 
