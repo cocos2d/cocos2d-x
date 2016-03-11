@@ -53,9 +53,9 @@
 -- @return TabControl#TabControl self (return value: ccui.TabControl)
         
 --------------------------------
--- ignore the textures' size in header, scale them with _headerWidth and _headerHieght<br>
--- param ignore is `true`, the header's texture scale with _headerWidth and _headerHieght<br>
--- ignore is `false`£¬ use the texture's size£¬ do not scale them
+-- ignore the textures' size in header, scale them with _headerWidth and _headerHeight<br>
+-- param ignore is `true`, the header's texture scale with _headerWidth and _headerHeight<br>
+-- ignore is `false`, use the texture's size, do not scale them
 -- @function [parent=#TabControl] ignoreHeadersTextureSize 
 -- @param self
 -- @param #bool ignore
@@ -93,14 +93,14 @@
 -- @return TabHeader#TabHeader ret (return value: ccui.TabHeader)
         
 --------------------------------
--- get whether ignore the textures' size in header, scale them with _headerWidth and _headerHieght<br>
+-- get whether ignore the textures' size in header, scale them with _headerWidth and _headerHeight<br>
 -- return whether ignore the textures' size in header
 -- @function [parent=#TabControl] isIgnoreHeadersTextureSize 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Add a callback function which would be called when selcted tab changed<br>
+-- Add a callback function which would be called when selected tab changed<br>
 -- param callback A std::function with type @see `ccTabControlCallback`
 -- @function [parent=#TabControl] setTabChangedEventListener 
 -- @param self
