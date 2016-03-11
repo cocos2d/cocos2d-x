@@ -213,6 +213,101 @@ long getCharacterCountInUTF8String(const std::string& utf8)
     return getUTF8StringLength((const UTF8*)utf8.c_str());
 }
 
+
+StringUTF8::StringUTF8()
+{
+
+}
+
+StringUTF8::StringUTF8(const std::string& newStr)
+{
+    replace(newStr);
+}
+
+StringUTF8::~StringUTF8()
+{
+
+}
+
+std::size_t StringUTF8::length() const
+{
+    return _str.size();
+}
+
+void StringUTF8::replace(const std::string& newStr)
+{
+    _str.clear();
+    if (!newStr.empty())
+    {
+        UTF8* sequenceUtf8 = (UTF8*)newStr.c_str();
+
+        int lengthString = getUTF8StringLength(sequenceUtf8);
+
+        if (lengthString == 0)
+        {
+            CCLOG("Bad utf-8 set string: %s", newStr.c_str());
+            return;
+        }
+
+        while (*sequenceUtf8)
+        {
+            std::size_t lengthChar = getNumBytesForUTF8(*sequenceUtf8);
+
+            CharUTF8 charUTF8;
+            charUTF8._char.append((char*)sequenceUtf8, lengthChar);
+            sequenceUtf8 += lengthChar;
+
+            _str.push_back(charUTF8);
+        }
+    }
+}
+
+std::string StringUTF8::getAsCharSequence() const
+{
+    std::string charSequence;
+
+    for (auto& charUtf8 : _str)
+    {
+        charSequence.append(charUtf8._char);
+    }
+
+    return charSequence;
+}
+
+bool StringUTF8::deleteChar(std::size_t pos)
+{
+    if (pos < _str.size())
+    {
+        _str.erase(_str.begin() + pos);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool StringUTF8::insert(std::size_t pos, const std::string& insertStr)
+{
+    StringUTF8 utf8(insertStr);
+
+    return insert(pos, utf8);
+}
+
+bool StringUTF8::insert(std::size_t pos, const StringUTF8& insertStr)
+{
+    if (pos <= _str.size())
+    {
+        _str.insert(_str.begin() + pos, insertStr._str.begin(), insertStr._str.end());
+
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 } //namespace StringUtils {
 
 
