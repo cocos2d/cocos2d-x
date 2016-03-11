@@ -153,6 +153,15 @@ void ScrollView::onSizeChanged()
     float innerSizeHeight = MAX(orginInnerSizeHeight, _contentSize.height);
     _innerContainer->setContentSize(Size(innerSizeWidth, innerSizeHeight));
     setInnerContainerPosition(Vec2(0, _contentSize.height - _innerContainer->getContentSize().height));
+
+    if (_verticalScrollBar != nullptr)
+    {
+        _verticalScrollBar->onScrolled(getHowMuchOutOfBoundary());
+    }
+    if (_horizontalScrollBar != nullptr)
+    {
+        _horizontalScrollBar->onScrolled(getHowMuchOutOfBoundary());
+    }
 }
 
 void ScrollView::setInnerContainerSize(const Size &size)

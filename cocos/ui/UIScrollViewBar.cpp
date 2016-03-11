@@ -96,17 +96,14 @@ bool ScrollViewBar::init()
     addProtectedChild(_body);
     
     setColor(DEFAULT_COLOR);
-    
+    onScrolled(Vec2::ZERO);
+    ProtectedNode::setOpacity(0);
+    _autoHideRemainingTime = 0.0f;
+
     if(_direction == ScrollView::Direction::HORIZONTAL)
     {
         setRotation(90);
     }
-    
-    if(_autoHideEnabled)
-    {
-        ProtectedNode::setOpacity(0);
-    }
-    onScrolled(Vec2::ZERO);
     return true;
 }
     
@@ -147,7 +144,12 @@ void ScrollViewBar::setWidth(float width)
 void ScrollViewBar::setAutoHideEnabled(bool autoHideEnabled)
 {
     _autoHideEnabled = autoHideEnabled;
-    ProtectedNode::setOpacity(_opacity);
+    if (!_autoHideEnabled && !_touching && _autoHideRemainingTime <= 0)
+    {
+        ProtectedNode::setOpacity(_opacity);
+    }
+    else
+        ProtectedNode::setOpacity(0);
 }
 
 float ScrollViewBar::getWidth() const
