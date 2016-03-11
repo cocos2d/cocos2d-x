@@ -63,7 +63,7 @@ TextFieldTTF::TextFieldTTF()
 , _placeHolder("")   // prevent Label initWithString assertion
 , _colorText(Color4B::WHITE)
 , _secureTextEntry(false)
-, _cursorUse(false)
+, _cursorEnabled(false)
 , _cursorPosition(0)
 , _cursorChar(CURSOR_DEFAULT_CHAR)
 , _cursorShowingTime(0.0f)
@@ -153,7 +153,7 @@ bool TextFieldTTF::initWithPlaceHolder(const std::string& placeholder, const std
     // On desktop default enable cursor
     if (_currentLabelType == LabelType::TTF)
     {
-        setCursorUse(true);
+        setCursorEnabled(true);
     }
 #endif
 
@@ -237,11 +237,11 @@ void TextFieldTTF::insertText(const char * text, size_t len)
         int countInsertChar = _calcCharCount(insert.c_str());
         _charCount += countInsertChar;
 
-        if (_cursorUse)
+        if (_cursorEnabled)
         {
             StringUtils::StringUTF8 stringUTF8;
 
-            stringUTF8.set(_inputText);
+            stringUTF8.replace(_inputText);
             stringUTF8.insert(_cursorPosition, insert);
 
             setCursorPosition(_cursorPosition + countInsertChar);            
@@ -304,7 +304,7 @@ void TextFieldTTF::deleteBackward()
     }
 
     // set new input text
-    if (_cursorUse)
+    if (_cursorEnabled)
     {
         if (_cursorPosition)
         {
@@ -312,7 +312,7 @@ void TextFieldTTF::deleteBackward()
 
             StringUtils::StringUTF8 stringUTF8;
 
-            stringUTF8.set(_inputText);
+            stringUTF8.replace(_inputText);
             stringUTF8.deleteChar(_cursorPosition);
 
             _charCount = stringUTF8.length();
@@ -333,7 +333,7 @@ const std::string& TextFieldTTF::getContentText()
 
 void TextFieldTTF::setCursorPosition(std::size_t cursorPosition)
 {
-    if (_cursorUse && cursorPosition <= (std::size_t)_charCount)
+    if (_cursorEnabled && cursorPosition <= (std::size_t)_charCount)
     {
         _cursorPosition = cursorPosition;
         _cursorShowingTime = CURSOR_TIME_SHOW_HIDE*2.0;
@@ -342,7 +342,7 @@ void TextFieldTTF::setCursorPosition(std::size_t cursorPosition)
 
 void TextFieldTTF::setCursorFromPoint(const Vec2 &point, const Camera* camera)
 {
-    if (_cursorUse)
+    if (_cursorEnabled)
     {
         // Reset Label, no cursor
         bool oldIsAttachWithIME = _isAttachWithIME;
@@ -413,7 +413,7 @@ void TextFieldTTF::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
 
 void TextFieldTTF::update(float delta)
 {
-    if (_cursorUse && _isAttachWithIME)
+    if (_cursorEnabled && _isAttachWithIME)
     {
         _cursorShowingTime -= delta;
         if (_cursorShowingTime < -CURSOR_TIME_SHOW_HIDE)
@@ -496,19 +496,19 @@ void TextFieldTTF::setString(const std::string &text)
         _inputText = "";
     }
 
-    if (_cursorUse && charCount != _charCount)
+    if (_cursorEnabled && charCount != _charCount)
     {
         _cursorPosition = charCount;
     }
 
-    if (_cursorUse)
+    if (_cursorEnabled)
     {
         // Need for recreate all letters in Label
         Label::removeAllChildrenWithCleanup(false);
     }
 
     // if there is no input text, display placeholder instead
-    if (_inputText.empty() && (!_cursorUse || !_isAttachWithIME))
+    if (_inputText.empty() && (!_cursorEnabled || !_isAttachWithIME))
     {
         Label::setTextColor(_colorSpaceHolder);
         Label::setString(_placeHolder);
@@ -530,7 +530,7 @@ void TextFieldTTF::appendString(const std::string& text)
 
 void TextFieldTTF::makeStringSupportCursor(std::string& displayText)
 {
-    if (_cursorUse && _isAttachWithIME)
+    if (_cursorEnabled && _isAttachWithIME)
     {
         if (displayText.empty())
         {
@@ -542,7 +542,7 @@ void TextFieldTTF::makeStringSupportCursor(std::string& displayText)
         {
             StringUtils::StringUTF8 stringUTF8;
 
-            stringUTF8.set(displayText);
+            stringUTF8.replace(displayText);
 
             if (_cursorPosition > stringUTF8.length())
             {
@@ -576,7 +576,7 @@ void TextFieldTTF::setCursorChar(char cursor)
 
 void TextFieldTTF::controlKey(EventKeyboard::KeyCode keyCode)
 {
-    if (_cursorUse)
+    if (_cursorEnabled)
     {
         switch (keyCode)
         {
@@ -595,7 +595,7 @@ void TextFieldTTF::controlKey(EventKeyboard::KeyCode keyCode)
             {
                 StringUtils::StringUTF8 stringUTF8;
 
-                stringUTF8.set(_inputText);
+                stringUTF8.replace(_inputText);
                 stringUTF8.deleteChar(_cursorPosition);
                 setCursorPosition(_cursorPosition);
                 _charCount = stringUTF8.length();
@@ -646,14 +646,14 @@ const std::string& TextFieldTTF::getPlaceHolder() const
     return _placeHolder;
 }
 
-void TextFieldTTF::setCursorUse(bool value)
+void TextFieldTTF::setCursorEnabled(bool enabled)
 {
     if (_currentLabelType == LabelType::TTF)
     {
-        if (_cursorUse != value)
+        if (_cursorEnabled != enabled)
         {
-            _cursorUse = value;
-            if (_cursorUse)
+            _cursorEnabled = enabled;
+            if (_cursorEnabled)
             {
                 _cursorPosition = _charCount;
 

@@ -242,7 +242,7 @@ public:
     * Set enable cursor use.
     * @js NA
     */
-    void setCursorUse(bool value);
+    void setCursorEnabled(bool enabled);
 
     /**
     * Set char showing cursor.
@@ -288,7 +288,7 @@ protected:
     bool _secureTextEntry;
 
     // Need use cursor
-    bool _cursorUse;
+    bool _cursorEnabled;
     // Current position cursor
     std::size_t _cursorPosition;
     // Char showing cursor

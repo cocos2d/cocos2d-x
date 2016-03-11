@@ -221,12 +221,7 @@ StringUTF8::StringUTF8()
 
 StringUTF8::StringUTF8(const std::string& newStr)
 {
-    set(newStr);
-}
-
-StringUTF8::StringUTF8(const StringUTF8& copyStrUtf8)
-{
-    _str = copyStrUtf8._str;
+    replace(newStr);
 }
 
 StringUTF8::~StringUTF8()
@@ -239,7 +234,7 @@ std::size_t StringUTF8::length() const
     return _str.size();
 }
 
-void StringUTF8::set(const std::string& newStr)
+void StringUTF8::replace(const std::string& newStr)
 {
     _str.clear();
     if (!newStr.empty())

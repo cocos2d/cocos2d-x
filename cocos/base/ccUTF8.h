@@ -161,11 +161,10 @@ public:
 
     StringUTF8();
     StringUTF8(const std::string& newStr);
-    explicit StringUTF8(const StringUTF8& copyStrUtf8);
     ~StringUTF8();
 
     std::size_t length() const;
-    void set(const std::string& newStr);
+    void replace(const std::string& newStr);
 
     std::string getAsCharSequence() const;
 
