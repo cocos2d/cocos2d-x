@@ -58,7 +58,7 @@ void jsb_register_system( JSContext *_cx,  JS::HandleObject object)
     //NSString *fullpath = [path stringByAppendingPathComponent:@"jsb.sqlite"];
     std::string strFilePath = cocos2d::FileUtils::getInstance()->getWritablePath();
     strFilePath += "/jsb.sqlite";
-    localStorageInit(strFilePath.c_str());
+    localStorageInit(strFilePath);
     
 }
 

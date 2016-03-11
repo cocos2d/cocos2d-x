@@ -270,33 +270,47 @@ void KeyBoardWinRT::OnWinRTKeyboardEvent(WinRTKeyboardEventType type, KeyEventAr
 {
     bool pressed = (type == WinRTKeyboardEventType::KeyPressed);
 
-    // don't allow key repeats
-    if (pressed && args->KeyStatus.WasKeyDown)
-    {
-        return;
-    }
+    // Is key repeats
+    bool repeat = pressed && args->KeyStatus.WasKeyDown;
 
     int key = static_cast<int>(args->VirtualKey);
     auto it = g_keyCodeMap.find(key);
     if (it != g_keyCodeMap.end())
     {
-        switch (it->second)
+
+        EventKeyboard::KeyCode keyCode = it->second;
+
+        EventKeyboard event(keyCode, pressed);
+        if (!repeat)
         {
-        case EventKeyboard::KeyCode::KEY_BACKSPACE:
-            if (pressed)
-            {
-                IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
-            }
-            break;
-        default:
-            EventKeyboard event(it->second, pressed);
             auto dispatcher = Director::getInstance()->getEventDispatcher();
             dispatcher->dispatchEvent(&event);
-            if (it->second == EventKeyboard::KeyCode::KEY_ENTER)
+            if (keyCode == EventKeyboard::KeyCode::KEY_ENTER)
             {
                 IMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
-                }
-            break;
+            }
+        }
+
+        if (pressed && !event.isStopped())
+        {
+            switch (keyCode)
+            {
+            case EventKeyboard::KeyCode::KEY_BACKSPACE:
+                IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+                break;
+            case EventKeyboard::KeyCode::KEY_HOME:
+            case EventKeyboard::KeyCode::KEY_KP_HOME:
+            case EventKeyboard::KeyCode::KEY_DELETE:
+            case EventKeyboard::KeyCode::KEY_KP_DELETE:
+            case EventKeyboard::KeyCode::KEY_END:
+            case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+            case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+            case EventKeyboard::KeyCode::KEY_ESCAPE:
+                IMEDispatcher::sharedDispatcher()->dispatchControlKey(keyCode);
+                break;
+            default:
+                break;
+            }
         }
     }
     else

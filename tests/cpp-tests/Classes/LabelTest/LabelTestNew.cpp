@@ -105,6 +105,8 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelUnderlineMultiline);
     ADD_TEST_CASE(LabelItalics);
     ADD_TEST_CASE(LabelBold);
+
+    ADD_TEST_CASE(LabelLocalizationTest);
 };
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
@@ -3053,3 +3055,109 @@ std::string LabelStrikethrough::subtitle() const
     return "Strikethrough on TTF and BMfont with multiline";
 }
 
+LabelLocalizationTest::LabelLocalizationTest()
+{
+    _localizationJson = cocostudio::JsonLocalizationManager::getInstance();
+    _localizationJson->initLanguageData("configs/en-US.lang.json");
+
+    _localizationBin = cocostudio::BinLocalizationManager::getInstance();
+    _localizationBin->initLanguageData("configs/ENGLISH.lang.csb");
+
+    const float BUTTON_WIDTH = 100;
+    float startPosX = 0;
+    Size winSize = Director::getInstance()->getVisibleSize();
+
+    // Create a radio button group
+    auto radioButtonGroup = RadioButtonGroup::create();
+    this->addChild(radioButtonGroup);
+
+    // Create the radio buttons
+    const int NUMBER_OF_BUTTONS = 3;
+    startPosX = winSize.width / 2.0f - (NUMBER_OF_BUTTONS - 1) * 0.5 * BUTTON_WIDTH - 30;
+    std::vector<std::string> labelTypes = { "English", "Chinese", "Japanese" };
+
+    for (int i = 0; i < NUMBER_OF_BUTTONS; ++i)
+    {
+        RadioButton* radioButton = RadioButton::create("cocosui/radio_button_off.png", "cocosui/radio_button_on.png");
+        float posX = startPosX + BUTTON_WIDTH * i;
+        radioButton->setPosition(Vec2(posX, winSize.height / 2.0f + 70));
+        radioButton->setScale(1.2f);
+        radioButton->addEventListener(CC_CALLBACK_2(LabelLocalizationTest::onChangedRadioButtonSelect, this));
+        radioButton->setTag(i);
+        radioButtonGroup->addRadioButton(radioButton);
+        this->addChild(radioButton);
+
+        auto label = Label::createWithSystemFont(labelTypes.at(i), "Arial", 20);
+        label->setPosition(radioButton->getPosition() + Vec2(50, 0));
+        this->addChild(label);
+    }
+
+    _label1 = Label::createWithSystemFont(_localizationJson->getLocalizationString("Text Label"), "Arial", 24);
+    addChild(_label1, 0);
+    _label1->setPosition(Vec2(winSize.width / 2, winSize.height * 1 / 3));
+
+    Label * label = Label::createWithSystemFont("From json data :", "Arial", 24);
+    label->setAnchorPoint(Vec2(0, 0.5));
+    addChild(label, 0);
+    label->setPosition(Vec2(20, winSize.height * 1 / 3 + 24));
+
+    _label2 = Label::createWithSystemFont(_localizationBin->getLocalizationString("Text Label"), "Arial", 24);
+    addChild(_label2, 0);
+    _label2->setPosition(Vec2(winSize.width / 2, winSize.height * 1 / 2));
+
+    label = Label::createWithSystemFont("From binary data :", "Arial", 24);
+    label->setAnchorPoint(Vec2(0, 0.5));
+    addChild(label, 0);
+    label->setPosition(Vec2(20, winSize.height * 1 / 2 + 24));
+}
+
+std::string LabelLocalizationTest::title() const
+{
+    return "Localization Test";
+}
+
+std::string LabelLocalizationTest::subtitle() const
+{
+    return "Change language selected and see label change";
+}
+
+
+void LabelLocalizationTest::onChangedRadioButtonSelect(RadioButton* radioButton, RadioButton::EventType type)
+{
+    if (radioButton == nullptr)
+    {
+        return;
+    }
+
+    switch (type)
+    {
+    case RadioButton::EventType::SELECTED:
+    {
+        switch (radioButton->getTag()) {
+        case 0:
+            _localizationJson->initLanguageData("configs/en-US.lang.json");
+            _label1->setString(_localizationJson->getLocalizationString("Text Label"));
+            _localizationBin->initLanguageData("configs/ENGLISH.lang.csb");
+            _label2->setString(_localizationJson->getLocalizationString("Text Label"));
+            break;
+        case 1:
+            _localizationJson->initLanguageData("configs/zh-CN.lang.json");
+            _label1->setString(_localizationJson->getLocalizationString("Text Label"));
+            _localizationBin->initLanguageData("configs/CHINESE.lang.csb");
+            _label2->setString(_localizationJson->getLocalizationString("Text Label"));
+            break;
+        case 2:
+            _localizationJson->initLanguageData("configs/ja-JP.lang.json");
+            _label1->setString(_localizationJson->getLocalizationString("Text Label"));
+            _localizationBin->initLanguageData("configs/JAPANESE.lang.csb");
+            _label2->setString(_localizationJson->getLocalizationString("Text Label"));
+            break;
+        default:
+            break;
+        }
+        break;
+    }
+    default:
+        break;
+    }
+}

@@ -260,6 +260,11 @@ void PageView::handleReleaseLogic(Touch *touch)
         }
     }
 }
+    
+float PageView::getAutoScrollStopEpsilon() const
+{
+    return 0.001;
+}
 
 void PageView::pageTurningEvent()
 {

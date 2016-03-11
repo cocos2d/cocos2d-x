@@ -286,6 +286,8 @@ protected:
      */
     void dispatchTouchEventToListeners(EventListenerVector* listeners, const std::function<bool(EventListener*)>& onEvent);
     
+    void releaseListener(EventListener* listener);
+    
     /// Priority dirty flag
     enum class DirtyFlag
     {

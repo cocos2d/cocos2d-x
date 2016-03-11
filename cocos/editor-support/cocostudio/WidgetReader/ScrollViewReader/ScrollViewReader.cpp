@@ -504,12 +504,6 @@ namespace cocostudio
             {
                 scrollView->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
             }
-            //else
-            //{
-            //    auto label = Label::create();
-            //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-            //    scrollView->addChild(label);
-            //}
         }
 
         auto widgetOptions = options->widgetOptions();
@@ -530,9 +524,9 @@ namespace cocostudio
 
         bool scrollbarEnabled = options->scrollbarEnabeld() != 0;
         scrollView->setScrollBarEnabled(scrollbarEnabled);
-        bool scrollbarAutoHide = options->scrollbarAutoHide() != 0;
         if (scrollbarEnabled)
         {
+            bool scrollbarAutoHide = options->scrollbarAutoHide() != 0;
             scrollView->setScrollBarAutoHideEnabled(scrollbarAutoHide);
             float barAutoHideTime = options->scrollbarAutoHideTime();
             scrollView->setScrollBarAutoHideTime(barAutoHideTime);

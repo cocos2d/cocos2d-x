@@ -145,7 +145,7 @@ void GUIReader::storeFileDesignSize(const char *fileName, const cocos2d::Size &s
     _fileDesignSizes[keyHeight] = cocos2d::Value(size.height);
 }
 
-const cocos2d::Size GUIReader::getFileDesignSize(const char* fileName) const
+cocos2d::Size GUIReader::getFileDesignSize(const char* fileName) const
 {
     std::string keyWidth = fileName;
     keyWidth.append("width");
@@ -492,7 +492,7 @@ Widget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data, c
         const char* file = DICTOOL->getStringValueFromArray_json(data, "textures", i);
         std::string tp = fullPath;
         tp.append(file);
-        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(tp.c_str());
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(tp);
     }
     float fileDesignWidth = DICTOOL->getFloatValue_json(data, "designWidth");
     float fileDesignHeight = DICTOOL->getFloatValue_json(data, "designHeight");
@@ -1214,7 +1214,7 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
         const char* file = DICTOOL->getStringValueFromArray_json(data, "textures", i);
         std::string tp = fullPath;
         tp.append(file);
-        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(tp.c_str());
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(tp);
     }
     float fileDesignWidth = DICTOOL->getFloatValue_json(data, "designWidth");
     float fileDesignHeight = DICTOOL->getFloatValue_json(data, "designHeight");

@@ -39,6 +39,7 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/CCUtilMath.cpp
   editor-support/cocostudio/CocoLoader.cpp
   editor-support/cocostudio/DictionaryHelper.cpp
+  editor-support/cocostudio/LocalizationManager.cpp
   editor-support/cocostudio/TriggerBase.cpp
   editor-support/cocostudio/TriggerMng.cpp
   editor-support/cocostudio/TriggerObj.cpp
@@ -86,6 +87,7 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/ActionTimeline/CCSkinNode.cpp
   editor-support/cocostudio/FlatBuffersSerialize.cpp
   editor-support/cocostudio/WidgetReader/ArmatureNodeReader/ArmatureNodeReader.cpp
+  editor-support/cocostudio/WidgetReader/TabControlReader/TabControlReader.cpp 
 )
 
 include_directories( editor-support )

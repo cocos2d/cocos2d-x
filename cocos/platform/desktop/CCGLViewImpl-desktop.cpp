@@ -728,10 +728,27 @@ void GLViewImpl::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, in
         auto dispatcher = Director::getInstance()->getEventDispatcher();
         dispatcher->dispatchEvent(&event);
     }
-    
-    if (GLFW_RELEASE != action && g_keyCodeMap[key] == EventKeyboard::KeyCode::KEY_BACKSPACE)
+
+    if (GLFW_RELEASE != action)
     {
-        IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+        switch (g_keyCodeMap[key])
+        {
+        case EventKeyboard::KeyCode::KEY_BACKSPACE:
+            IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+            break;
+        case EventKeyboard::KeyCode::KEY_HOME:
+        case EventKeyboard::KeyCode::KEY_KP_HOME:
+        case EventKeyboard::KeyCode::KEY_DELETE:
+        case EventKeyboard::KeyCode::KEY_KP_DELETE:
+        case EventKeyboard::KeyCode::KEY_END:
+        case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+        case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+        case EventKeyboard::KeyCode::KEY_ESCAPE:
+            IMEDispatcher::sharedDispatcher()->dispatchControlKey(g_keyCodeMap[key]);
+            break;
+        default:
+            break;
+        }
     }
 }
 
@@ -741,7 +758,23 @@ void GLViewImpl::onGLFWCharCallback(GLFWwindow *window, unsigned int character)
     std::string utf8String;
 
     StringUtils::UTF16ToUTF8( wcharString, utf8String );
-    IMEDispatcher::sharedDispatcher()->dispatchInsertText( utf8String.c_str(), utf8String.size() );
+    static std::set<std::string> controlUnicode = {
+        "\xEF\x9C\x80", // up
+        "\xEF\x9C\x81", // down
+        "\xEF\x9C\x82", // left
+        "\xEF\x9C\x83", // right
+        "\xEF\x9C\xA8", // delete
+        "\xEF\x9C\xA9", // home
+        "\xEF\x9C\xAB", // end
+        "\xEF\x9C\xAC", // pageup
+        "\xEF\x9C\xAD", // pagedown
+        "\xEF\x9C\xB9"  // clear
+    };
+    // Check for send control key
+    if (controlUnicode.find(utf8String) == controlUnicode.end())
+    {
+        IMEDispatcher::sharedDispatcher()->dispatchInsertText( utf8String.c_str(), utf8String.size() );
+    }
 }
 
 void GLViewImpl::onGLFWWindowPosCallback(GLFWwindow *windows, int x, int y)

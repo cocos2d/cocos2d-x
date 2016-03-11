@@ -19,9 +19,6 @@
     <None Include="$(ZLibBinPath)zlib.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="$(WebsocketsBinPath)libwebsockets.dll">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
     <None Include="$(SQLiteBinPath)sqlite3.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>

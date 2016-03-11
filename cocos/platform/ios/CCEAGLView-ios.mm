@@ -266,7 +266,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
     // Avoid flicker. Issue #350
     //[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
-    cocos2d::Director::getInstance()->drawScene();
+    if ([NSThread isMainThread])
+    {
+        cocos2d::Director::getInstance()->drawScene();
+    }
 }
 
 - (void) swapBuffers

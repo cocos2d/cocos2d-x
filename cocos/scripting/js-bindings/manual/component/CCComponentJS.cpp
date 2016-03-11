@@ -75,6 +75,15 @@ ComponentJS::ComponentJS(const std::string& scriptFileName)
         JS::RootedObject obj(cx, JS_NewObject(cx, theClass, proto, parent));
         jsObj->ref() = obj;
         
+        // Unbind current proxy binding
+        js_proxy_t* nproxy = jsb_get_native_proxy(this);
+        if (nproxy)
+        {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+            JS::RemoveObjectRoot(cx, &nproxy->obj);
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+            jsb_remove_proxy(nproxy, jsb_get_js_proxy(nproxy->obj));
+        }
         // link the native object with the javascript object
         jsb_new_proxy(this, jsObj->ref());
         

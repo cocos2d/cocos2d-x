@@ -283,7 +283,7 @@ protected:
 
     int _toIndex;                                //! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
-    cocos2d::Vector<Tween*> _tweenList;
+    std::vector<Tween*> _tweenList;
 
     bool _ignoreFrameEvent;
     

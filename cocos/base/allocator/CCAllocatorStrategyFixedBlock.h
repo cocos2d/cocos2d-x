@@ -222,7 +222,7 @@ protected:
 protected:
         
     // @brief Returns the size of a page in bytes + overhead.
-    const size_t pageSize() const
+    size_t pageSize() const
     {
         return AllocatorBase::kDefaultAlignment + AllocatorBase::nextPow2BlockSize(block_size) * _pageSize;
     }

@@ -32,7 +32,6 @@
 #include "cocos2d.h"
 #include "spidermonkey_specifics.h"
 #include "js-BindingsExport.h"
-#include "mozilla/Maybe.h"
 
 #define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 
@@ -65,13 +64,15 @@ class JSFunctionWrapper
 {
 public:
     JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval);
+    JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval, JS::HandleValue owner);
     ~JSFunctionWrapper();
 
     bool invoke(unsigned int argc, jsval *argv, JS::MutableHandleValue rval);
 private:
     JSContext *_cx;
-    mozilla::Maybe<JS::PersistentRootedObject> _jsthis;
-    mozilla::Maybe<JS::PersistentRootedValue> _fval;
+    JS::Heap<JSObject*> _jsthis;
+    JS::Heap<JS::Value> _fval;
+    JS::Heap<JS::Value> _owner;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(JSFunctionWrapper);
 };
@@ -262,7 +263,7 @@ jsval ushort_to_jsval( JSContext *cx, unsigned short number );
 jsval long_to_jsval( JSContext *cx, long number );
 jsval ulong_to_jsval(JSContext* cx, unsigned long v);
 jsval long_long_to_jsval(JSContext* cx, long long v);
-jsval std_string_to_jsval(JSContext* cx, const std::string& v);
+CC_JS_DLL jsval std_string_to_jsval(JSContext* cx, const std::string& v);
 jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);
 jsval ccpoint_to_jsval(JSContext* cx, const cocos2d::Point& v);
 jsval ccrect_to_jsval(JSContext* cx, const cocos2d::Rect& v);

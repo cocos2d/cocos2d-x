@@ -2536,11 +2536,6 @@ void TargetedAction::update(float time)
         _action->update(time);
 }
 
-bool TargetedAction::isDone(void) const
-{
-    return _action->isDone();
-}
-
 void TargetedAction::setForcedTarget(Node* forcedTarget)
 {
     if( _forcedTarget != forcedTarget ) {

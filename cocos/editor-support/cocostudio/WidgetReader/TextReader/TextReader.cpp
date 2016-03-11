@@ -5,6 +5,7 @@
 #include "ui/UIText.h"
 #include "cocostudio/CocoLoader.h"
 #include "cocostudio/CSParseBinary_generated.h"
+#include "cocostudio/LocalizationManager.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -160,6 +161,7 @@ namespace cocostudio
         std::string fontName = "";
         int fontSize = 20;
         std::string text = "Text Label";
+        bool isLocalized = false;
         int areaWidth = 0;
         int areaHeight = 0;
         int h_alignment = 0;
@@ -190,6 +192,10 @@ namespace cocostudio
             else if (name == "LabelText")
             {
                 text = value;
+            }
+            else if (name == "IsLocalized")
+            {
+                isLocalized = (value == "True") ? true : false;
             }
             else if (name == "FontSize")
             {
@@ -374,6 +380,7 @@ namespace cocostudio
                                          builder->CreateString(fontName),
                                          fontSize,
                                          builder->CreateString(text),
+                                         isLocalized,
                                          areaWidth,
                                          areaHeight,
                                          h_alignment,
@@ -450,7 +457,16 @@ namespace cocostudio
         }
 
         std::string text = options->text()->c_str();
-        label->setString(text);
+        bool isLocalized = options->isLocalized() != 0;
+        if (isLocalized)
+        {
+            ILocalizationManager* lm = LocalizationHelper::getCurrentManager();
+            label->setString(lm->getLocalizationString(text));
+        }
+        else
+        {
+            label->setString(text);
+        }
 
         // Save node color before set widget properties
         auto oldColor = node->getColor();

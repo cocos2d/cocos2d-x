@@ -1735,8 +1735,7 @@ void PhysicsFixedUpdate::updateStart(float delta)
 {
     addBall();
     
-    _physicsWorld->setAutoStep(false);
-    scheduleUpdate();
+    _physicsWorld->setFixedUpdateRate(180);
 }
 
 void PhysicsFixedUpdate::update(float delta)

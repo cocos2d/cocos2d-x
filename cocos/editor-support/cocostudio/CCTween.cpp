@@ -452,7 +452,7 @@ float Tween::updateFrameData(float currentPercent)
             //! Guaranteed to trigger frame event
             if(!from->strEvent.empty() && !_animation->isIgnoreFrameEvent())
             {
-                _animation->frameEvent(_bone, from->strEvent.c_str(), from->frameID, playedTime);
+                _animation->frameEvent(_bone, from->strEvent, from->frameID, playedTime);
             }
 
             if (playedTime == from->frameID || (_passLastFrame && _fromIndex == length-1))

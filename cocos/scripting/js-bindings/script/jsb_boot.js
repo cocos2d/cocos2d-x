@@ -852,7 +852,7 @@ cc.TextureCache.prototype.addImage = function(url, cb, target) {
     }
     else {
         if (cb) {
-            return this._addImage(url, cb)
+            return this._addImage(url, cb);
         }
         else {
             return this._addImage(url);
@@ -1312,6 +1312,8 @@ var _initSys = function () {
                     platform === sys.WP8 || 
                     platform === sys.TIZEN ||
                     platform === sys.BLACKBERRY) ? true : false;
+    
+    sys._application = cc.Application.getInstance();
 
     /**
      * Indicate the current language of the running system
@@ -1320,7 +1322,7 @@ var _initSys = function () {
      * @type {String}
      */
     sys.language = (function(){
-        var language = cc.Application.getInstance().getCurrentLanguage();
+        var language = sys._application.getCurrentLanguage();
         switch(language){
             case 0: return sys.LANGUAGE_ENGLISH;
             case 1: return sys.LANGUAGE_CHINESE;
@@ -1472,7 +1474,7 @@ var _initSys = function () {
         str += "os : " + self.os + "\r\n";
         str += "platform : " + self.platform + "\r\n";
         cc.log(str);
-    }
+    };
 
     /**
      * Open a url in browser
@@ -1481,8 +1483,8 @@ var _initSys = function () {
      * @param {String} url
      */
     sys.openURL = function(url){
-        cc.Application.getInstance().openURL(url);
-    }
+        sys._application.openURL(url);
+    };
 
     // JS to Native bridges
     if(window.JavascriptJavaBridge && cc.sys.os == cc.sys.OS_ANDROID){

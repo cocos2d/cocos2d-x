@@ -60,7 +60,8 @@ static void addItemToArray(id item, ValueVector& array)
         const char* numType = [num objCType];
         if(num == (void*)kCFBooleanFalse || num == (void*)kCFBooleanTrue)
         {
-            array.push_back(Value([num boolValue]));
+            bool v = [num boolValue];
+            array.push_back(Value(v));
         }
         else if(strcmp(numType, @encode(float)) == 0)
         {
@@ -190,7 +191,8 @@ static void addValueToDict(id nsKey, id nsValue, ValueMap& dict)
         const char* numType = [num objCType];
         if(num == (void*)kCFBooleanFalse || num == (void*)kCFBooleanTrue)
         {
-             dict[key] = Value([num boolValue]);
+             bool v = [num boolValue];
+             dict[key] = Value(v);
         }
         else if(strcmp(numType, @encode(float)) == 0)
         {

@@ -329,7 +329,7 @@ public:
      *
      * @return The inner container position.
      */
-    const Vec2 getInnerContainerPosition() const;
+    const Vec2& getInnerContainerPosition() const;
 
     /**
      * Add callback function which will be called  when scrollview event triggered.
@@ -624,6 +624,8 @@ protected:
     void updateScrollBar(const Vec2& outOfBoundary);
 
 protected:
+    virtual float getAutoScrollStopEpsilon() const;
+    bool fltEqualZero(const Vec2& point) const;
     Layout* _innerContainer;
 
     Direction _direction;

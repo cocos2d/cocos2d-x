@@ -128,7 +128,6 @@ void js_register_cocos2dx_GLNode(JSContext *cx, JS::HandleObject global) {
     js_cocos2dx_GLNode_class->enumerate = JS_EnumerateStub;
     js_cocos2dx_GLNode_class->resolve = JS_ResolveStub;
     js_cocos2dx_GLNode_class->convert = JS_ConvertStub;
-    js_cocos2dx_GLNode_class->finalize = jsb_ref_finalize;
     js_cocos2dx_GLNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
