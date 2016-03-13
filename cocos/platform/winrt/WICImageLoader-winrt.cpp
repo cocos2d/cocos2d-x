@@ -95,7 +95,7 @@ WICImageLoader::~WICImageLoader()
 bool WICImageLoader::decodeImageData(ImageBlob blob, size_t size)
 {
     bool bRet = false;
-    HRESULT hr = E_FAIL; // S_FALSE is succeeded
+    HRESULT hr = E_FAIL;
 
 	IWICStream* pWicStream = NULL;
 	IWICImagingFactory* pWicFactory = getWICFactory();
@@ -127,7 +127,7 @@ bool WICImageLoader::decodeImageData(ImageBlob blob, size_t size)
 
 bool WICImageLoader::processImage(IWICBitmapDecoder* pDecoder)
 {
-    HRESULT hr = E_FAIL; // S_FALSE is succeeded
+    HRESULT hr = E_FAIL;
 	IWICBitmapFrameDecode* pFrame = NULL;
 
 	if(NULL != pDecoder)
@@ -240,7 +240,7 @@ HRESULT WICImageLoader::convertFormatIfRequired(IWICBitmapFrameDecode* pFrame, I
 
 size_t WICImageLoader::getBitsPerPixel(WICPixelFormatGUID format)
 {
-    HRESULT hr = E_FAIL; // S_FALSE is succeeded
+    HRESULT hr = E_FAIL;
 
 	IWICImagingFactory* pfactory = getWICFactory();
 
