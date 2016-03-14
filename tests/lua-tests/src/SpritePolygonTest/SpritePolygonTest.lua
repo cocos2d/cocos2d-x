@@ -690,7 +690,7 @@ end
 
 function SpritePolygonPerformanceTestDynamic:initIncrementStats()
     self._incVert = self._info:getVertCount()
-    self._incTri  = self._info:getTriaglesCount()
+    self._incTri  = self._info:getTrianglesCount()
     self._incPix  = self._info:getArea()
 end
 

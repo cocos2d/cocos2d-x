@@ -5453,13 +5453,13 @@ bool js_cocos2dx_PolygonInfo_getArea(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_PolygonInfo_getArea : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_PolygonInfo_getTriaglesCount(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_PolygonInfo_getTrianglesCount(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::PolygonInfo* cobj = (cocos2d::PolygonInfo *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_PolygonInfo_getTriaglesCount : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_PolygonInfo_getTrianglesCount : Invalid Native Object");
     if (argc == 0)
     {
         const unsigned int ret = cobj->getTrianglesCount();
@@ -5469,7 +5469,7 @@ bool js_cocos2dx_PolygonInfo_getTriaglesCount(JSContext *cx, uint32_t argc, jsva
         return true;
     }
     
-    JS_ReportError(cx, "js_cocos2dx_PolygonInfo_getTriaglesCount : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_PolygonInfo_getTrianglesCount : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_PolygonInfo_getVertCount(JSContext *cx, uint32_t argc, jsval *vp)
@@ -5630,7 +5630,7 @@ void js_register_cocos2dx_PolygonInfo(JSContext *cx, JS::HandleObject global)
     static JSFunctionSpec funcs[] =
     {
         JS_FN("getArea", js_cocos2dx_PolygonInfo_getArea, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getTriaglesCount", js_cocos2dx_PolygonInfo_getTriaglesCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTrianglesCount", js_cocos2dx_PolygonInfo_getTrianglesCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getVertCount", js_cocos2dx_PolygonInfo_getVertCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
