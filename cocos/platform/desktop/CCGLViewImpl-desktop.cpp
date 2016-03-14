@@ -780,11 +780,13 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
 
 void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
 {
+    Size baseDesignSize = _designResolutionSize;
+    ResolutionPolicy baseResolutionPolicy = _resolutionPolicy;
+
     int frameWidth = width / _frameZoomFactor;
     int frameHeight = height / _frameZoomFactor;
     setFrameSize(frameWidth, frameHeight);
-    
-    updateDesignResolutionSize();
+    setDesignResolutionSize(baseDesignSize.width, baseDesignSize.height, baseResolutionPolicy);
     Director::getInstance()->setViewport();
 }
 
