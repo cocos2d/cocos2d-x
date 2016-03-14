@@ -696,7 +696,7 @@ namespace ui {
     
     void Scale9Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     {
-        if (_scale9Image && _scale9Enabled) {
+        if (_scale9Image) {
 #if CC_USE_CULLING
             // Don't do calculate the culling if the transform was not updated
             auto visitingCamera = Camera::getVisitingCamera();
@@ -783,21 +783,10 @@ namespace ui {
             else
                 break;
         }
-        
-        if (!_scale9Enabled && _scale9Image && _scale9Image->getLocalZOrder() < 0 )
-        {
-            _scale9Image->visit(renderer, _modelViewTransform, flags);
-        }
 
         // draw self
-        //
         if (isVisitableByVisitingCamera())
             this->draw(renderer, _modelViewTransform, flags);
-
-        if (!_scale9Enabled && _scale9Image && _scale9Image->getLocalZOrder() >= 0 )
-        {
-            _scale9Image->visit(renderer, _modelViewTransform, flags);
-        }
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
             (*it)->visit(renderer, _modelViewTransform, flags);
@@ -876,9 +865,7 @@ namespace ui {
         {
             if (_scale9Image)
             {
-                auto quad = _scale9Image->getQuad();
-                PolygonInfo polyInfo;
-                polyInfo.setQuad(&quad);
+                auto polyInfo = _scale9Image->getSpriteFrame()->getPolygonInfo();
                 _scale9Image->setPolygonInfo(polyInfo);
             }
           
