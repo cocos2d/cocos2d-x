@@ -1081,7 +1081,7 @@ bool __jsb_cpSpace_addCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp, J
 
     cpCollisionHandler* cp_collision_handler = cpSpaceAddCollisionHandler(space, handler->typeA, handler->typeB);
     cp_collision_handler->userData = handler;
-#ifdef _USRDLL
+#if defined(_WINDOWS) && (defined(_WIN32) || defined(WIN32))
     cpCollisionHandler *  cpHandler = get_cpCollisionHandlerDoNothing();
     cp_collision_handler->beginFunc = handler->begin ? &myCollisionBegin : cpHandler->beginFunc;
     cp_collision_handler->preSolveFunc = handler->pre ? &myCollisionPre : cpHandler->preSolveFunc;
@@ -1092,7 +1092,7 @@ bool __jsb_cpSpace_addCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp, J
     cp_collision_handler->preSolveFunc = handler->pre ? &myCollisionPre : cpCollisionHandlerDoNothing.preSolveFunc;
     cp_collision_handler->postSolveFunc = handler->post ? &myCollisionPost : cpCollisionHandlerDoNothing.postSolveFunc;
     cp_collision_handler->separateFunc = handler->separate ? &myCollisionSeparate : cpCollisionHandlerDoNothing.separateFunc;
-#endif
+#endif // DEBUG
 
     //
     // Already added ? If so, remove it.
@@ -1213,10 +1213,18 @@ bool __jsb_cpSpace_removeCollisionHandler(JSContext *cx, jsval *vp, jsval *argvp
     JSB_PRECONDITION(ok, "Error parsing arguments");
 
     cpCollisionHandler* collisionHandler = cpSpaceAddCollisionHandler(space, typeA, typeB);
+#if defined(_WINDOWS) && (defined(_WIN32) || defined(WIN32))
+    cpCollisionHandler *  cpHandler = get_cpCollisionHandlerDoNothing();
+    collisionHandler->beginFunc = cpHandler->beginFunc;
+    collisionHandler->postSolveFunc = cpHandler->postSolveFunc;
+    collisionHandler->preSolveFunc = cpHandler->preSolveFunc;
+    collisionHandler->separateFunc = cpHandler->separateFunc;
+#else
     collisionHandler->beginFunc = cpCollisionHandlerDoNothing.beginFunc;
     collisionHandler->postSolveFunc = cpCollisionHandlerDoNothing.postSolveFunc;
     collisionHandler->preSolveFunc = cpCollisionHandlerDoNothing.preSolveFunc;
     collisionHandler->separateFunc = cpCollisionHandlerDoNothing.separateFunc;
+#endif // _WINDOWS
 
     // Remove it
     struct collision_handler *hashElement = NULL;
