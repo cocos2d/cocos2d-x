@@ -1135,6 +1135,9 @@ bool CSLoader::bindCallback(const std::string &callbackName,
                             cocos2d::ui::Widget *sender,
                             cocos2d::Node *handler)
 {
+    if (callbackName.empty())
+        return false;
+
     auto callbackHandler = dynamic_cast<WidgetCallBackHandlerProtocol *>(handler);
     if (callbackHandler) //The handler can handle callback
     {
@@ -1170,7 +1173,6 @@ bool CSLoader::bindCallback(const std::string &callbackName,
     CCLOG("callBackName %s cannot be found", callbackName.c_str());
     
     return false;
-    
 }
 
 bool CSLoader::isWidget(const std::string &type)
