@@ -181,7 +181,34 @@ Particle3D/PU/CCPUBehaviour.cpp \
 Particle3D/PU/CCPUBehaviourManager.cpp \
 Particle3D/PU/CCPUBehaviourTranslator.cpp \
 Particle3D/PU/CCPUSlaveBehaviour.cpp \
-Particle3D/PU/CCPUSlaveBehaviourTranslator.cpp
+Particle3D/PU/CCPUSlaveBehaviourTranslator.cpp \
+TapRecorder/CCCapture.cpp \
+TapRecorder/CCCapture.h \
+TapRecorder/CCEventListenerTapRecorder.cpp \
+TapRecorder/CCEventListenerTapRecorder.h \
+TapRecorder/CCPlayer.cpp \
+TapRecorder/CCPlayer.h \
+TapRecorder/CCProtocol.cpp \
+TapRecorder/CCProtocol.h \
+TapRecorder/CCRecord.cpp \
+TapRecorder/CCRecord.h \
+TapRecorder/CCRecordAdapter.cpp \
+TapRecorder/CCRecordAdapter.h \
+TapRecorder/CCRecorder.cpp \
+TapRecorder/CCRecorder.h \
+TapRecorder/CCUrl.cpp \
+TapRecorder/CCUrl.h \
+TapRecorder/CCUtilTapRecorder.h \
+TapRecorder/command/CCCommandCapture.cpp \
+TapRecorder/command/CCCommandCapture.h \
+TapRecorder/command/CCCommandPlayer.cpp \
+TapRecorder/command/CCCommandPlayer.h \
+TapRecorder/command/CCCommandRecorder.cpp \
+TapRecorder/command/CCCommandRecorder.h \
+TapRecorder/command/CCCommandTapRecorder.cpp \
+TapRecorder/command/CCCommandTapRecorder.h \
+TapRecorder/command/CCCommandUrl.cpp \
+TapRecorder/command/CCCommandUrl.h \
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
 LOCAL_STATIC_LIBRARIES += cocos_curl_static
