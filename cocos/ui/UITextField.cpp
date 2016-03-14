@@ -68,6 +68,7 @@ UICCTextField * UICCTextField::create(const std::string& placeholder, const std:
 
 void UICCTextField::onEnter()
 {
+    TextFieldTTF::onEnter();
     TextFieldTTF::setDelegate(this);
 }
 
@@ -863,6 +864,27 @@ TextVAlignment TextField::getTextVerticalAlignment() const
 {
     return _textFieldRenderer->getVerticalAlignment();
 }
+    
+void TextField::setCursorEnabled(bool enabled)
+{
+    _textFieldRenderer->setCursorEnabled(enabled);
+}
+    
+void TextField::setCursorChar(char cursor)
+{
+    _textFieldRenderer->setCursorChar(cursor);
+}
+
+void TextField::setCursorPosition(std::size_t cursorPosition)
+{
+    _textFieldRenderer->setCursorPosition(cursorPosition);
+}
+
+void TextField::setCursorFromPoint(const Vec2 &point, const Camera* camera)
+{
+    _textFieldRenderer->setCursorFromPoint(point, camera);
+}
+
 
 }
 
