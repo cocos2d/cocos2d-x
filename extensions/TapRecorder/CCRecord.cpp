@@ -21,6 +21,7 @@
 #include "CCRecord.h"
 #include "extensions/TapRecorder/CCUtilTapRecorder.h"
 
+USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace TapRecorder;
 

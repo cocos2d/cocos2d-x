@@ -67,7 +67,7 @@ void Capture::capture(const std::string& savename)
             log("capture succeed: %s", outputFile.c_str());
         }
         else {
-            _eventListener->dispatchEvent(EventType::ERROR);
+            _eventListener->dispatchEvent(EventType::FAILED);
             log("faled to save capture");
         }
     }, filename);

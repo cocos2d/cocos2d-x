@@ -23,6 +23,7 @@
 #include "base/CCEventDispatcher.h"
 #include "extensions/TapRecorder/CCCapture.h"
 
+USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace TapRecorder;
 
