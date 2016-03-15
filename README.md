@@ -278,6 +278,12 @@ You can help us spread the word about cocos2d-x! We would surely appreciate it!
 * Read our [Blog](http://blog.cocos2d-x.org/) and promote it on your social media.
 * Become a [Regional Coordinator](http://discuss.cocos2d-x.org/t/we-need-regional-coordinators/24104)
 
+See what we are planning!
+--------------------------------
+You can see exactly what we are planning to do with the Cocos family of products.
+
+* [Cocos2d-x roadmap](https://trello.com/b/Np6obnuE/cocos2d-x-roadmap)
+
 Where to get help
 --------------------------------
 
@@ -300,7 +306,6 @@ Cocos2d-x is licensed under the [MIT License](https://opensource.org/licenses/MI
 Did you find a bug? Do you have feature request? Do you want to merge a feature?
 
   * [contributing to cocos2d-x][8]
-
 
 Contact us
 ----------
