@@ -56,7 +56,7 @@ THE SOFTWARE.
 // Determine target platform by compile environment macro.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN
 
-// mac
+// Apple: Mac and iOS
 #if defined(__APPLE__)
     #include <TargetConditionals.h>
     #if TARGET_OS_IPHONE // TARGET_OS_IPHONE inlcudes TARGET_OS_IOS TARGET_OS_TV and TARGET_OS_WATCH. see TargetConditionals.h
