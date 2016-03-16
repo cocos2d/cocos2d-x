@@ -1,10 +1,15 @@
-#include "cocos2d.h"
-
 #include "CCNodeLoader.h"
 #include "CCBSelectorResolver.h"
 #include "CCBMemberVariableAssigner.h"
 #include "CCBAnimationManager.h"
 #include "CCNode+CCBRelativePositioning.h"
+#include "deprecated/CCArray.h"
+#include "deprecated/CCString.h"
+#include "base/CCDirector.h"
+#include "renderer/CCTextureCache.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "2d/CCAnimationCache.h"
+#include "platform/CCFileUtils.h"
 
 
 using namespace std;

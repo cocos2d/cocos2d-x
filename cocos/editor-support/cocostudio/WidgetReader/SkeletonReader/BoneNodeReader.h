@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __BONENODEREADER_H_
 #define __BONENODEREADER_H_
 
-#include "cocos2d.h"
 #include "cocostudio/WidgetReader/NodeReaderProtocol.h"
 #include "cocostudio/WidgetReader/NodeReaderDefine.h"
 

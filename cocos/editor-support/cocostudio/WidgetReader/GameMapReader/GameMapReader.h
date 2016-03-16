@@ -25,7 +25,6 @@
 #ifndef __cocos2d_libs__GameMapReader__
 #define __cocos2d_libs__GameMapReader__
 
-#include "cocos2d.h"
 #include "cocostudio/CocosStudioExport.h"
 #include "cocostudio/WidgetReader/NodeReaderProtocol.h"
 #include "cocostudio/WidgetReader/NodeReaderDefine.h"

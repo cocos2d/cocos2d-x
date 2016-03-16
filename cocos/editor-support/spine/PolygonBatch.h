@@ -32,7 +32,7 @@
 #ifndef SPINE_POLYGONBATCH_H_
 #define SPINE_POLYGONBATCH_H_
 
-#include "cocos2d.h"
+#include "renderer/CCTexture2D.h"
 
 namespace spine {
 

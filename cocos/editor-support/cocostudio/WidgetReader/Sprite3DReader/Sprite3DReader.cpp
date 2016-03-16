@@ -22,6 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include "2d/CCLight.h"
+#include "3d/CCSprite3D.h"
+#include "3d/CCAnimate3D.h"
+#include "3d/CCAnimation3D.h"
+#include "platform/CCFileUtils.h"
 #include "Sprite3DReader.h"
 
 #include "cocostudio/CSParseBinary_generated.h"
