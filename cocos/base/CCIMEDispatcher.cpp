@@ -53,6 +53,11 @@ bool IMEDelegate::detachWithIME()
     return IMEDispatcher::sharedDispatcher()->detachDelegateWithIME(this);
 }
 
+bool IMEDelegate::isAttachedWithIME()
+{
+    return IMEDispatcher::sharedDispatcher()->isAttachedWithIME(this);
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 typedef std::list< IMEDelegate * > DelegateList;
