@@ -115,9 +115,9 @@ void Command::Capture::capture(int fd, const std::string& saveName, bool sync)
             return;
         
         switch (eventType) {
-            case ::Capture::EventType::BEGAN : (void)(message(fd, createResponse(eventType, "capturring"))); break;
-            case ::Capture::EventType::ENDED : (void)(message(fd, createResponse(eventType, "capture succeed: " + cap->outputPath))); break;
-            case ::Capture::EventType::ERROR : (void)(message(fd, createResponse(eventType, "an error occured"))); break;
+            case ::Capture::EventType::BEGAN  : (void)(message(fd, createResponse(eventType, "capturring"))); break;
+            case ::Capture::EventType::ENDED  : (void)(message(fd, createResponse(eventType, "capture succeed: " + cap->outputPath))); break;
+            case ::Capture::EventType::FAILED : (void)(message(fd, createResponse(eventType, "an error occured"))); break;
         }
         
         conditionBlock.notify_one();

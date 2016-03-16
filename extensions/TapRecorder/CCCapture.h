@@ -31,7 +31,7 @@ namespace TapRecorder
     class Capture : public Protocol
     {
     public:
-        enum EventType { BEGAN = 1, ENDED, ERROR };
+        enum EventType { BEGAN = 1, ENDED, FAILED };
         
         static Capture* getInstance()
         {

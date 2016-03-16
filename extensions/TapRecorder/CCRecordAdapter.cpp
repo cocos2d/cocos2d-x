@@ -26,7 +26,9 @@
 #include "json/writer.h"
 #include <fstream>
 
+USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace TapRecorder;
 using namespace TapRecorder::RecordAdapter;
 using namespace rapidjson;
 
