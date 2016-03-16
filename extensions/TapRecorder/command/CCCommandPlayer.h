@@ -25,6 +25,7 @@
 #include "extensions/TapRecorder/CCPlayer.h"
 #include "extensions/TapRecorder/CCRecord.h"
 #include <vector>
+#include <condition_variable>
 
 NS_CC_EXT_BEGIN
 

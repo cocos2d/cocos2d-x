@@ -20,6 +20,7 @@
 
 #include "CCCommandCapture.h"
 #include <sstream>
+#include <condition_variable>
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "extensions/TapRecorder/CCCapture.h"

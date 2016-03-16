@@ -20,6 +20,7 @@
 
 #include "CCUrl.h"
 #include <sstream>
+#include <cstdio>
 #include "platform/CCFileUtils.h"
 
 USING_NS_CC_EXT;

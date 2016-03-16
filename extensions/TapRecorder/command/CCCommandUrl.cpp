@@ -20,6 +20,7 @@
 
 #include "CCCommandUrl.h"
 #include <sstream>
+#include <condition_variable>
 #include "network/HttpClient.h"
 #include "platform/CCFileUtils.h"
 #include "extensions/TapRecorder/CCUrl.h"
