@@ -398,10 +398,13 @@ Texture2D* TextureCache::addImage(Image *image, const std::string &key)
 
         // prevents overloading the autorelease pool
         texture = new (std::nothrow) Texture2D();
-        texture->initWithImage(image);
 
-        if(texture)
+		if (texture && texture->initWithImage(image))
         {
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+			VolatileTextureMgr::addImage(texture, image);
+#endif
+
             _textures.insert( std::make_pair(key, texture) );
             texture->retain();
 
@@ -413,10 +416,6 @@ Texture2D* TextureCache::addImage(Image *image, const std::string &key)
         }
 
     } while (0);
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    VolatileTextureMgr::addImage(texture, image);
-#endif
     
     return texture;
 }
