@@ -21,6 +21,12 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+-- 
+-- @function [parent=#EditBox] canAttachWithIME 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Get the text entered in the edit box.<br>
 -- return The text entered in the edit box.
 -- @function [parent=#EditBox] getText 
@@ -59,6 +65,12 @@
 -- @return EditBox#EditBox self (return value: ccui.EditBox)
         
 --------------------------------
+-- 
+-- @function [parent=#EditBox] canDetachWithIME 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Registers a script function that will be called for EditBox events.<br>
 -- This handler will be removed automatically after onExit() called.<br>
 -- code<br>
@@ -91,6 +103,12 @@
 -- @function [parent=#EditBox] setPlaceholderFontSize 
 -- @param self
 -- @param #int fontSize
+-- @return EditBox#EditBox self (return value: ccui.EditBox)
+        
+--------------------------------
+-- 
+-- @function [parent=#EditBox] didAttachWithIME 
+-- @param self
 -- @return EditBox#EditBox self (return value: ccui.EditBox)
         
 --------------------------------
@@ -215,6 +233,12 @@
 -- @function [parent=#EditBox] setText 
 -- @param self
 -- @param #char pText
+-- @return EditBox#EditBox self (return value: ccui.EditBox)
+        
+--------------------------------
+-- 
+-- @function [parent=#EditBox] didDetachWithIME 
+-- @param self
 -- @return EditBox#EditBox self (return value: ccui.EditBox)
         
 --------------------------------
