@@ -39,7 +39,7 @@
 -- warning Removing a child from a SpriteBatchNode is very slow.
 -- @function [parent=#SpriteBatchNode] removeChildAtIndex 
 -- @param self
--- @param #int index
+-- @param #long index
 -- @param #bool doCleanup
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
@@ -69,7 +69,7 @@
 -- @param self
 -- @param #cc.Sprite sprite
 -- @param #int z
--- @return int#int ret (return value: int)
+-- @return long#long ret (return value: long)
         
 --------------------------------
 --  Increase the Atlas Capacity. 
@@ -84,7 +84,7 @@
 -- @function [parent=#SpriteBatchNode] lowestAtlasIndexInChild 
 -- @param self
 -- @param #cc.Sprite sprite
--- @return int#int ret (return value: int)
+-- @return long#long ret (return value: long)
         
 --------------------------------
 -- lua NA
@@ -98,7 +98,7 @@
 -- @function [parent=#SpriteBatchNode] initWithTexture 
 -- @param self
 -- @param #cc.Texture2D tex
--- @param #int capacity
+-- @param #long capacity
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -123,7 +123,7 @@
 -- @function [parent=#SpriteBatchNode] insertQuadFromSprite 
 -- @param self
 -- @param #cc.Sprite sprite
--- @param #int index
+-- @param #long index
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
@@ -135,7 +135,7 @@
 -- @function [parent=#SpriteBatchNode] initWithFile 
 -- @param self
 -- @param #string fileImage
--- @param #int capacity
+-- @param #long capacity
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -157,8 +157,8 @@
 -- @function [parent=#SpriteBatchNode] rebuildIndexInOrder 
 -- @param self
 -- @param #cc.Sprite parent
--- @param #int index
--- @return int#int ret (return value: int)
+-- @param #long index
+-- @return long#long ret (return value: long)
         
 --------------------------------
 --  Returns the TextureAtlas object. <br>
@@ -174,7 +174,7 @@
 -- @function [parent=#SpriteBatchNode] highestAtlasIndexInChild 
 -- @param self
 -- @param #cc.Sprite sprite
--- @return int#int ret (return value: int)
+-- @return long#long ret (return value: long)
         
 --------------------------------
 --  Creates a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.<br>
@@ -186,7 +186,7 @@
 -- @function [parent=#SpriteBatchNode] create 
 -- @param self
 -- @param #string fileImage
--- @param #int capacity
+-- @param #long capacity
 -- @return SpriteBatchNode#SpriteBatchNode ret (return value: cc.SpriteBatchNode)
         
 --------------------------------
@@ -198,7 +198,7 @@
 -- @function [parent=#SpriteBatchNode] createWithTexture 
 -- @param self
 -- @param #cc.Texture2D tex
--- @param #int capacity
+-- @param #long capacity
 -- @return SpriteBatchNode#SpriteBatchNode ret (return value: cc.SpriteBatchNode)
         
 --------------------------------
