@@ -405,7 +405,7 @@ str
 
 /**
  * @method getMovementCount
- * @return {long}
+ * @return {int}
  */
 getMovementCount : function (
 )
@@ -1776,7 +1776,7 @@ bool
 
 /**
  * @method getMovementCount
- * @return {long}
+ * @return {int}
  */
 getMovementCount : function (
 )
