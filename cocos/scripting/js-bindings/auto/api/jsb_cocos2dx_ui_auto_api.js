@@ -2175,7 +2175,7 @@ int
 
 /**
  * @method getNumberOfRadioButtons
- * @return {int}
+ * @return {long}
  */
 getNumberOfRadioButtons : function (
 )
@@ -2521,7 +2521,7 @@ size
 
 /**
  * @method getStringLength
- * @return {int}
+ * @return {long}
  */
 getStringLength : function (
 )
@@ -2695,7 +2695,7 @@ ccui.TextAtlas = {
 
 /**
  * @method getStringLength
- * @return {int}
+ * @return {long}
  */
 getStringLength : function (
 )
@@ -3535,7 +3535,7 @@ getCenterItemInCurrentView : function (
 
 /**
  * @method getCurSelectedIndex
- * @return {int}
+ * @return {long}
  */
 getCurSelectedIndex : function (
 )
@@ -3555,12 +3555,12 @@ getItemsMargin : function (
 
 /**
  * @method jumpToItem
- * @param {int} arg0
+ * @param {long} arg0
  * @param {vec2_object} arg1
  * @param {vec2_object} arg2
  */
 jumpToItem : function (
-int, 
+long, 
 vec2, 
 vec2 
 )
@@ -3580,7 +3580,7 @@ magnetictype
 /**
  * @method getIndex
  * @param {ccui.Widget} arg0
- * @return {int}
+ * @return {long}
  */
 getIndex : function (
 widget 
@@ -3601,10 +3601,10 @@ widget
 
 /**
  * @method insertDefaultItem
- * @param {int} arg0
+ * @param {long} arg0
  */
 insertDefaultItem : function (
-int 
+long 
 )
 {
 },
@@ -3707,11 +3707,11 @@ getMagneticType : function (
 
 /**
  * @method getItem
- * @param {int} arg0
+ * @param {long} arg0
  * @return {ccui.Widget}
  */
 getItem : function (
-int 
+long 
 )
 {
     return ccui.Widget;
@@ -3719,23 +3719,23 @@ int
 
 /**
  * @method removeItem
- * @param {int} arg0
+ * @param {long} arg0
  */
 removeItem : function (
-int 
+long 
 )
 {
 },
 
 /**
  * @method scrollToItem
-* @param {int|int} int
+* @param {long|long} long
 * @param {vec2_object|vec2_object} vec2
 * @param {vec2_object|vec2_object} vec2
 * @param {float} float
 */
 scrollToItem : function(
-int,
+long,
 vec2,
 vec2,
 float 
@@ -3812,11 +3812,11 @@ widget
 /**
  * @method insertCustomItem
  * @param {ccui.Widget} arg0
- * @param {int} arg1
+ * @param {long} arg1
  */
 insertCustomItem : function (
 widget, 
-int 
+long 
 )
 {
 },
@@ -4921,7 +4921,7 @@ ccui.TextBMFont = {
 
 /**
  * @method getStringLength
- * @return {int}
+ * @return {long}
  */
 getStringLength : function (
 )
@@ -5081,7 +5081,7 @@ int
 
 /**
  * @method getCurrentPageIndex
- * @return {int}
+ * @return {long}
  */
 getCurrentPageIndex : function (
 )
@@ -5111,10 +5111,10 @@ func
 
 /**
  * @method setCurrentPageIndex
- * @param {int} arg0
+ * @param {long} arg0
  */
 setCurrentPageIndex : function (
-int 
+long 
 )
 {
 },
@@ -5131,10 +5131,10 @@ getIndicatorEnabled : function (
 
 /**
  * @method scrollToPage
- * @param {int} arg0
+ * @param {long} arg0
  */
 scrollToPage : function (
-int 
+long 
 )
 {
 },
@@ -5151,10 +5151,10 @@ vec2
 
 /**
  * @method scrollToItem
- * @param {int} arg0
+ * @param {long} arg0
  */
 scrollToItem : function (
-int 
+long 
 )
 {
 },
@@ -5199,10 +5199,10 @@ removeAllPages : function (
 
 /**
  * @method removePageAtIndex
- * @param {int} arg0
+ * @param {long} arg0
  */
 removePageAtIndex : function (
-int 
+long 
 )
 {
 },

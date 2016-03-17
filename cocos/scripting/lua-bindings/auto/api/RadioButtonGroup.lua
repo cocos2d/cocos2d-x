@@ -73,7 +73,7 @@
 -- return the number of radio buttons in this group
 -- @function [parent=#RadioButtonGroup] getNumberOfRadioButtons 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return long#long ret (return value: long)
         
 --------------------------------
 -- Add a radio button into this group.<br>

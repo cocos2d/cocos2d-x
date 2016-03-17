@@ -30,7 +30,7 @@
 -- return An index of a selected item.
 -- @function [parent=#ListView] getCurSelectedIndex 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return long#long ret (return value: long)
         
 --------------------------------
 -- brief Query margin between each item in ListView.<br>
@@ -46,7 +46,7 @@
 -- param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
 -- @function [parent=#ListView] jumpToItem 
 -- @param self
--- @param #int itemIndex
+-- @param #long itemIndex
 -- @param #vec2_table positionRatioInView
 -- @param #vec2_table itemAnchorPoint
 -- @return ListView#ListView self (return value: ccui.ListView)
@@ -66,7 +66,7 @@
 -- @function [parent=#ListView] getIndex 
 -- @param self
 -- @param #ccui.Widget item
--- @return int#int ret (return value: int)
+-- @return long#long ret (return value: long)
         
 --------------------------------
 -- Insert a  custom item into the end of ListView.<br>
@@ -81,7 +81,7 @@
 -- param index  An index in ssize_t.
 -- @function [parent=#ListView] insertDefaultItem 
 -- @param self
--- @param #int index
+-- @param #long index
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
@@ -159,7 +159,7 @@
 -- return A widget instance.
 -- @function [parent=#ListView] getItem 
 -- @param self
--- @param #int index
+-- @param #long index
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
@@ -167,15 +167,15 @@
 -- param index A given index in ssize_t.
 -- @function [parent=#ListView] removeItem 
 -- @param self
--- @param #int index
+-- @param #long index
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- @overload self, int, vec2_table, vec2_table, float         
--- @overload self, int, vec2_table, vec2_table         
+-- @overload self, long, vec2_table, vec2_table, float         
+-- @overload self, long, vec2_table, vec2_table         
 -- @function [parent=#ListView] scrollToItem
 -- @param self
--- @param #int itemIndex
+-- @param #long itemIndex
 -- @param #vec2_table positionRatioInView
 -- @param #vec2_table itemAnchorPoint
 -- @param #float timeInSec
@@ -239,7 +239,7 @@
 -- @function [parent=#ListView] insertCustomItem 
 -- @param self
 -- @param #ccui.Widget item
--- @param #int index
+-- @param #long index
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
