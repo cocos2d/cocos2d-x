@@ -14,13 +14,13 @@
 -- The index used internally by SWTableView and its subclasses
 -- @function [parent=#TableViewCell] getIdx 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return long#long ret (return value: long)
         
 --------------------------------
 -- 
 -- @function [parent=#TableViewCell] setIdx 
 -- @param self
--- @param #int uIdx
+-- @param #long uIdx
 -- @return TableViewCell#TableViewCell self (return value: cc.TableViewCell)
         
 --------------------------------

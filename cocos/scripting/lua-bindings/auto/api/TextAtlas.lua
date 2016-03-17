@@ -11,7 +11,7 @@
 -- return  string length.
 -- @function [parent=#TextAtlas] getStringLength 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return long#long ret (return value: long)
         
 --------------------------------
 -- 

@@ -14,7 +14,7 @@
 --  Returns the number of Techniques in the Material. 
 -- @function [parent=#Material] getTechniqueCount 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return long#long ret (return value: long)
         
 --------------------------------
 -- / sets the material name
@@ -28,7 +28,7 @@
 -- returns `nullptr` if the index is invalid.
 -- @function [parent=#Material] getTechniqueByIndex 
 -- @param self
--- @param #int index
+-- @param #long index
 -- @return Technique#Technique ret (return value: cc.Technique)
         
 --------------------------------

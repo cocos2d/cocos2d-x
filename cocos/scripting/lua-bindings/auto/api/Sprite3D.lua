@@ -72,7 +72,7 @@
 --  get mesh count 
 -- @function [parent=#Sprite3D] getMeshCount 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return long#long ret (return value: long)
         
 --------------------------------
 -- get Mesh by index
