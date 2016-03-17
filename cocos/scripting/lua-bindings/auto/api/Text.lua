@@ -149,7 +149,7 @@
 -- return  String length.
 -- @function [parent=#Text] getStringLength 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return long#long ret (return value: long)
         
 --------------------------------
 --  Gets the render size in auto mode.<br>
