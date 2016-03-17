@@ -126,7 +126,7 @@ static Color4F CONSTRAINT_COLOR(0, 1, 0, 0.5);
 static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
 {
 	cpBody *body_a = cpConstraintGetBodyA(constraint);
-	cpBody *body_b = cpConstraintGetBodyA(constraint);
+	cpBody *body_b = cpConstraintGetBodyB(constraint);
     
     if(cpConstraintIsPinJoint(constraint))
     {
