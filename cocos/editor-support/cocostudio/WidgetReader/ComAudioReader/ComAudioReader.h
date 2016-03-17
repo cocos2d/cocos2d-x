@@ -25,7 +25,9 @@
 #ifndef __cocos2d_libs__ComAudioReader__
 #define __cocos2d_libs__ComAudioReader__
 
-#include "cocos2d.h"
+#include "base/CCRef.h"
+#include "2d/CCComponent.h"
+#include "2d/CCNode.h"
 #include "cocostudio/CocosStudioExport.h"
 #include "cocostudio/WidgetReader/NodeReaderProtocol.h"
 

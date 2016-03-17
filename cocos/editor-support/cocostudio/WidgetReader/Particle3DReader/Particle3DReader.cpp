@@ -22,6 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include "platform/CCFileUtils.h"
 #include "Particle3DReader.h"
 
 #include "cocostudio/CSParseBinary_generated.h"

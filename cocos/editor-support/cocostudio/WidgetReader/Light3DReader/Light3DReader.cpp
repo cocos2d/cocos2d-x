@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "Light3DReader.h"
+#include "2d/CCLight.h"
 
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/CSParse3DBinary_generated.h"

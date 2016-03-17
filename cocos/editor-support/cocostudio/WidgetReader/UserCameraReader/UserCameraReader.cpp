@@ -22,6 +22,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include "base/CCDirector.h"
+#include "2d/CCCamera.h"
+#include "platform/CCFileUtils.h"
 #include "UserCameraReader.h"
 
 #include "cocostudio/CSParseBinary_generated.h"
