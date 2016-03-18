@@ -1,4 +1,3 @@
-Binz
 cocos2d-x
 =========
 
