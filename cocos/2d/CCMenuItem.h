@@ -155,6 +155,9 @@ public:
     /** Sets a new string to the inner label. */
     void setString(const std::string& label);
 
+    /** Get the inner string of the inner label. */
+    std::string getString() const;
+
     /** Gets the color that will be used when the item is disabled. */
     inline const Color3B& getDisabledColor() const { return _disabledColor; };
 
