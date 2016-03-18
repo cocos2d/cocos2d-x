@@ -13820,6 +13820,16 @@ node
 },
 
 /**
+ * @method getString
+ * @return {String}
+ */
+getString : function (
+)
+{
+    return ;
+},
+
+/**
  * @method getDisabledColor
  * @return {color3b_object}
  */

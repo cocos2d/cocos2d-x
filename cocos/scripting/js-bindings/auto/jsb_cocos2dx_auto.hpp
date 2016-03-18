@@ -2464,6 +2464,7 @@ void js_cocos2dx_MenuItemLabel_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_MenuItemLabel(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_MenuItemLabel_setLabel(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_MenuItemLabel_getString(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_MenuItemLabel_getDisabledColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_MenuItemLabel_setString(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_MenuItemLabel_initWithLabel(JSContext *cx, uint32_t argc, jsval *vp);

@@ -38132,6 +38132,24 @@ bool js_cocos2dx_MenuItemLabel_setLabel(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_MenuItemLabel_setLabel : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_MenuItemLabel_getString(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::MenuItemLabel* cobj = (cocos2d::MenuItemLabel *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_MenuItemLabel_getString : Invalid Native Object");
+    if (argc == 0) {
+        std::string ret = cobj->getString();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_MenuItemLabel_getString : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_MenuItemLabel_getDisabledColor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -38321,6 +38339,7 @@ void js_register_cocos2dx_MenuItemLabel(JSContext *cx, JS::HandleObject global) 
 
     static JSFunctionSpec funcs[] = {
         JS_FN("setLabel", js_cocos2dx_MenuItemLabel_setLabel, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getString", js_cocos2dx_MenuItemLabel_getString, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDisabledColor", js_cocos2dx_MenuItemLabel_getDisabledColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setString", js_cocos2dx_MenuItemLabel_setString, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithLabel", js_cocos2dx_MenuItemLabel_initWithLabel, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),

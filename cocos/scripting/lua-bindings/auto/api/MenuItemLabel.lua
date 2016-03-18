@@ -12,6 +12,12 @@
 -- @return MenuItemLabel#MenuItemLabel self (return value: cc.MenuItemLabel)
         
 --------------------------------
+--  Get the inner string of the inner label. 
+-- @function [parent=#MenuItemLabel] getString 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 --  Gets the color that will be used when the item is disabled. 
 -- @function [parent=#MenuItemLabel] getDisabledColor 
 -- @param self
