@@ -24,12 +24,12 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 #include "extensions/cocos-ext.h"
-#include "js_bindings_config.h"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #ifdef JSB_INCLUDE_CHIPMUNK
 
-#include "js_bindings_chipmunk_manual.h"
-#include "js_manual_conversions.h"
+#include "scripting/js-bindings/manual/chipmunk/js_bindings_chipmunk_manual.h"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
 
 USING_NS_CC_EXT;
 // Function declarations

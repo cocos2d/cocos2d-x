@@ -44,9 +44,9 @@
 #endif
 #define bzero(a, b) memset(a, 0, b);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-#include "inet_ntop_winrt.h"
-#include "inet_pton_winrt.h"
-#include "CCWinRTUtils.h"
+#include "platform/winrt/inet_ntop_winrt.h"
+#include "platform/winrt/inet_pton_winrt.h"
+#include "platform/winrt/CCWinRTUtils.h"
 #endif
 #else
 #include <netdb.h>

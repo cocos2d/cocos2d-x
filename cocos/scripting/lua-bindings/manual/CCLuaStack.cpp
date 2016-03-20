@@ -23,8 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCLuaStack.h"
-#include "tolua_fix.h"
+#include "scripting/lua-bindings/manual/CCLuaStack.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "external/xxtea/xxtea.h"
 extern "C" {
 #include "lua.h"
@@ -33,26 +33,26 @@ extern "C" {
 #include "lauxlib.h"
 }
 
-#include "Cocos2dxLuaLoader.h"
+#include "scripting/lua-bindings/manual/Cocos2dxLuaLoader.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-#include "platform/ios/CCLuaObjcBridge.h"
+#include "scripting/lua-bindings/manual/platform/ios/CCLuaObjcBridge.h"
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "platform/android/CCLuaJavaBridge.h"
+#include "scripting/lua-bindings/manual/platform/android/CCLuaJavaBridge.h"
 #endif
 
-#include "LuaOpengl.h"
-#include "LuaScriptHandlerMgr.h"
-#include "lua_cocos2dx_auto.hpp"
-#include "lua_cocos2dx_manual.hpp"
-#include "LuaBasicConversions.h"
-#include "lua_cocos2dx_deprecated.h"
-#include "lua_cocos2dx_physics_auto.hpp"
-#include "lua_cocos2dx_physics_manual.hpp"
-#include "lua_cocos2dx_experimental_auto.hpp"
-#include "lua_cocos2dx_experimental_manual.hpp"
+#include "scripting/lua-bindings/manual/cocos2d/LuaOpengl.h"
+#include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_auto.hpp"
+#include "scripting/lua-bindings/manual/cocos2d/lua_cocos2dx_manual.hpp"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/cocos2d/lua_cocos2dx_deprecated.h"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_physics_auto.hpp"
+#include "scripting/lua-bindings/manual/cocos2d/lua_cocos2dx_physics_manual.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_experimental_auto.hpp"
+#include "scripting/lua-bindings/manual/cocos2d/lua_cocos2dx_experimental_manual.hpp"
 
 
 namespace {

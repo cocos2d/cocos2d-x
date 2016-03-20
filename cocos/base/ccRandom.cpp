@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "ccRandom.h"
+#include "base/ccRandom.h"
 
 std::mt19937 &cocos2d::RandomHelper::getEngine() {
     static std::random_device seed_gen;

@@ -31,8 +31,8 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 #include "2d/CCSprite.h"
 #include "2d/CCTweenFunction.h"
-#include "CCTimelineMacro.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimelineMacro.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 NS_TIMELINE_BEGIN
 

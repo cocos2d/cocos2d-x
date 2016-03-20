@@ -24,14 +24,14 @@
 
 #ifdef __ANDROID__
 
-#include "UIWebViewImpl-android.h"
+#include "ui/UIWebViewImpl-android.h"
 
 #include <unordered_map>
 #include <stdlib.h>
 #include <string>
 #include "platform/android/jni/JniHelper.h"
 
-#include "UIWebView.h"
+#include "ui/UIWebView.h"
 #include "platform/CCGLView.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"

@@ -415,6 +415,6 @@ NS_CC_MATH_END
  end of base group
  @}
  */
-#include "Quaternion.inl"
+#include "math/Quaternion.inl"
 
 #endif

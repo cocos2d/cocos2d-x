@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysics3D.h"
+#include "physics3d/CCPhysics3D.h"
 #include "renderer/CCRenderer.h"
 
 #if CC_USE_3D_PHYSICS

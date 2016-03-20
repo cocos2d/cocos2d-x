@@ -28,13 +28,13 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
-#include "UIEditBoxImpl-winrt.h"
-#include "UIEditBox.h"
-#include "CCGLViewImpl-winrt.h"
+#include "ui/UIEditBox/UIEditBoxImpl-winrt.h"
+#include "ui/UIEditBox/UIEditBox.h"
+#include "platform/winrt/CCGLViewImpl-winrt.h"
 #include "base/CCScriptSupport.h"
 #include "base/ccUTF8.h"
 #include "2d/CCLabel.h"
-#include "CCWinRTUtils.h"
+#include "platform/winrt/CCWinRTUtils.h"
 
 using namespace Platform;
 using namespace Concurrency;

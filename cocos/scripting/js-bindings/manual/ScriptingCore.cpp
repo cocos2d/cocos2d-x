@@ -22,17 +22,17 @@
  * THE SOFTWARE.
  */
 
-#include "ScriptingCore.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
 
 // Removed in Firefox v27, use 'js/OldDebugAPI.h' instead
 //#include "jsdbgapi.h"
 #include "js/OldDebugAPI.h"
 
 #include "cocos2d.h"
-#include "local-storage/LocalStorage.h"
-#include "cocos2d_specifics.hpp"
-#include "jsb_cocos2dx_auto.hpp"
-#include "js_bindings_config.h"
+#include "storage/local-storage/LocalStorage.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_auto.hpp"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
 
 // for debug socket
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
@@ -66,7 +66,7 @@
 #define  LOGD(...) js_log(__VA_ARGS__)
 #endif
 
-#include "js_bindings_config.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
 
 #if COCOS2D_DEBUG
 #define TRACE_DEBUGGER_SERVER(...) CCLOG(__VA_ARGS__)

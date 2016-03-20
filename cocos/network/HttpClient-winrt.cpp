@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
-#include "HttpClient.h"
+#include "network/HttpClient.h"
 
 #include <thread>
 #include <queue>
@@ -40,7 +40,7 @@ THE SOFTWARE.
 #include "base/CCScheduler.h"
 
 #include "platform/CCFileUtils.h"
-#include "HttpConnection-winrt.h"
+#include "network/HttpConnection-winrt.h"
 
 NS_CC_BEGIN
 

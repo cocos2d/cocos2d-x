@@ -22,12 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCArmatureAnimation.h"
-#include "cocostudio/CCArmature.h"
-#include "cocostudio/CCBone.h"
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CCUtilMath.h"
-#include "cocostudio/CCDatas.h"
+#include "editor-support/cocostudio/CCArmatureAnimation.h"
+#include "editor-support/cocostudio/CCArmature.h"
+#include "editor-support/cocostudio/CCBone.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CCUtilMath.h"
+#include "editor-support/cocostudio/CCDatas.h"
 
 using namespace cocos2d;
 

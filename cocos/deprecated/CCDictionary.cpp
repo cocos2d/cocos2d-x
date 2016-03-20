@@ -23,16 +23,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCDictionary.h"
+#include "deprecated/CCDictionary.h"
 #include "deprecated/CCString.h"
-#include "CCInteger.h"
+#include "deprecated/CCInteger.h"
 #include "platform/CCFileUtils.h"
 #include "deprecated/CCString.h"
-#include "CCBool.h"
-#include "CCInteger.h"
-#include "CCFloat.h"
-#include "CCDouble.h"
-#include "CCArray.h"
+#include "deprecated/CCBool.h"
+#include "deprecated/CCInteger.h"
+#include "deprecated/CCFloat.h"
+#include "deprecated/CCDouble.h"
+#include "deprecated/CCArray.h"
 
 using namespace std;
 

@@ -1,5 +1,5 @@
-#include "LocalizationManager.h"
-#include "CCPlatformMacros.h"
+#include "editor-support/cocostudio/LocalizationManager.h"
+#include "platform/CCPlatformMacros.h"
 #include "platform/CCFileUtils.h"
 #include "editor-support/cocostudio/CSLanguageDataBinary_generated.h"
 

@@ -35,7 +35,7 @@
 #include <mutex>
 #include <vector>
 
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 #define QUEUEBUFFER_NUM 3
 #define QUEUEBUFFER_TIME_STEP 0.1

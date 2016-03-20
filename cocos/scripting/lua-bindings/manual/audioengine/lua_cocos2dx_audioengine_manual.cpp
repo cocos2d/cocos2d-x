@@ -23,15 +23,15 @@
  ****************************************************************************/
 #include "platform/CCPlatformConfig.h"
 
-#include "lua_cocos2dx_audioengine_manual.h"
+#include "scripting/lua-bindings/manual/audioengine/lua_cocos2dx_audioengine_manual.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
-#include "lua_cocos2dx_audioengine_auto.hpp"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-#include "CCLuaEngine.h"
-#include "AudioEngine.h"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_audioengine_auto.hpp"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "audio/include/AudioEngine.h"
 
 static int lua_get_AudioProfile_name(lua_State* L)
 {

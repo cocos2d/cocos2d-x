@@ -16,9 +16,9 @@
 * See the License for the specific language governing permissions and limitations under the License.
 */
 
-#include "Cocos2dRenderer.h"
+#include "platform/win8.1-universal/Cocos2dRenderer.h"
 #include "AppDelegate.h"
-#include "CCGLViewImpl-winrt.h"
+#include "platform/winrt/CCGLViewImpl-winrt.h"
 #include "CCApplication.h"
 #include "cocos2d.h"
 #include "renderer/CCTextureCache.h"

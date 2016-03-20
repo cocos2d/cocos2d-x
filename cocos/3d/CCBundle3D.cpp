@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCGLProgram.h"
-#include "CCBundleReader.h"
+#include "3d/CCBundleReader.h"
 #include "base/CCData.h"
 #include "json/document.h"
 

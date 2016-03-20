@@ -21,13 +21,13 @@
  * THE SOFTWARE.
  */
 
-#include "js_bindings_config.h"
-#include "js_bindings_core.h"
-#include "local-storage/LocalStorage.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/js_bindings_core.h"
+#include "storage/local-storage/LocalStorage.h"
 #include "cocos2d.h"
 
 // system
-#include "js_bindings_system_functions.h"
+#include "scripting/js-bindings/manual/localstorage/js_bindings_system_functions.h"
 
 
 void jsb_register_system( JSContext *_cx,  JS::HandleObject object)
@@ -51,7 +51,7 @@ void jsb_register_system( JSContext *_cx,  JS::HandleObject object)
 
     // sys.localStorage functions
     JS::RootedObject system(_cx, ls);
-#include "js_bindings_system_functions_registration.h"
+#include "scripting/js-bindings/manual/localstorage/js_bindings_system_functions_registration.h"
     
     // Init DB with full path
     //NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];

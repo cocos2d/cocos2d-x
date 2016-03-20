@@ -25,9 +25,9 @@
 #ifndef __TABCONTROLREADER_H_
 #define __TABCONTROLREADER_H_
 
-#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
-#include "cocostudio/WidgetReader/NodeReaderDefine.h"
-#include "cocostudio/WidgetReader/TabControlReader/CSTabControl_generated.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderProtocol.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderDefine.h"
+#include "editor-support/cocostudio/WidgetReader/TabControlReader/CSTabControl_generated.h"
 
 
 class TabControlReader : public cocos2d::Ref, public cocostudio::NodeReaderProtocol

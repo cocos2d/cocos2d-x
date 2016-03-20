@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-#include "js_bindings_opengl.h"
+#include "scripting/js-bindings/manual/js_bindings_opengl.h"
 
 NS_CC_BEGIN
 

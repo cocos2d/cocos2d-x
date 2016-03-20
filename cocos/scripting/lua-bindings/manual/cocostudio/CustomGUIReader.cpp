@@ -1,5 +1,5 @@
-#include "CustomGUIReader.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/cocostudio/CustomGUIReader.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "json/writer.h"
 #include "json/stringbuffer.h"
 

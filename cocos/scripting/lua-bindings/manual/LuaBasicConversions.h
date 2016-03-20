@@ -28,9 +28,9 @@ extern "C" {
 #include "lua.h"
 #include "tolua++.h"
 }
-#include "tolua_fix.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "cocos2d.h"
-#include "Lua-BindingsExport.h"
+#include "scripting/lua-bindings/manual/Lua-BindingsExport.h"
 #include "editor-support/cocostudio/CocosStudioExtension.h"
 
 using namespace cocos2d;

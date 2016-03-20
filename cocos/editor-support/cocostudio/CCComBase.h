@@ -26,10 +26,10 @@ THE SOFTWARE.
 #define __CC_EXTENTIONS_CCCOMBASE_H__
 
 #include <string>
-#include "DictionaryHelper.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include "base/ObjectFactory.h"
-#include "CocoLoader.h"
+#include "editor-support/cocostudio/CocoLoader.h"
 
 
 #define DECLARE_CLASS_COMPONENT_INFO \

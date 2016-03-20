@@ -28,7 +28,7 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-#include "UIEditBoxImpl-common.h"
+#include "ui/UIEditBox/UIEditBoxImpl-common.h"
 
 
 

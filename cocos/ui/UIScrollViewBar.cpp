@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "UIScrollViewBar.h"
-#include "CCImage.h"
+#include "ui/UIScrollViewBar.h"
+#include "platform/CCImage.h"
 #include "2d/CCSprite.h"
 #include "base/ccUtils.h"
 

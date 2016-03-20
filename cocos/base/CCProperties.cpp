@@ -20,7 +20,7 @@
  */
 
 
-#include "CCProperties.h"
+#include "base/CCProperties.h"
 
 #include <string.h>
 

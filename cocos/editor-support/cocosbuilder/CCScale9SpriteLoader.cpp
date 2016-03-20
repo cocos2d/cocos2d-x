@@ -1,4 +1,4 @@
-#include "CCScale9SpriteLoader.h"
+#include "editor-support/cocosbuilder/CCScale9SpriteLoader.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;

@@ -24,7 +24,7 @@
 #ifndef __JS_COCOS2D_X_SPECIFICS_H__
 #define __JS_COCOS2D_X_SPECIFICS_H__
 
-#include "ScriptingCore.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
 #include "platform/CCSAXParser.h"
 
 class JSScheduleWrapper;

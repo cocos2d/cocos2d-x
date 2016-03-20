@@ -25,7 +25,7 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
-#include "AudioCache.h"
+#include "audio/win32/AudioCache.h"
 #include <thread>
 #include <algorithm>
 #include "vorbis/codec.h"

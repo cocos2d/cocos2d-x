@@ -27,7 +27,7 @@
 #if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
 #include <iconv.h>
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-#include "android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #endif
 #include "2d/CCFontFreeType.h"
 #include "base/ccUTF8.h"

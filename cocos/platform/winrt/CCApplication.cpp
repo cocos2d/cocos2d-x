@@ -34,7 +34,7 @@ using namespace Windows::Foundation;
 #include "base/CCDirector.h"
 #include <algorithm>
 #include "platform/CCFileUtils.h"
-#include "CCWinRTUtils.h"
+#include "platform/winrt/CCWinRTUtils.h"
 #include "platform/CCApplication.h"
 #include "tinyxml2/tinyxml2.h"
 

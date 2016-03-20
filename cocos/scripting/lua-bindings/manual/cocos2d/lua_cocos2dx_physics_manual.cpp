@@ -1,10 +1,10 @@
-#include "lua_cocos2dx_manual.hpp"
+#include "scripting/lua-bindings/manual/cocos2d/lua_cocos2dx_manual.hpp"
 
 #if CC_USE_PHYSICS
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-#include "CCLuaValue.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/CCLuaValue.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 
 #ifndef CC_SAFE_DELETE_ARRAY
 #define do { if(p) { delete[] (p); (p) = nullptr; } } while(0)

@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "HttpClient.h"
+#include "network/HttpClient.h"
 #include <queue>
 #include <errno.h>
 #include <curl/curl.h>

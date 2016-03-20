@@ -20,8 +20,8 @@
  * THE SOFTWARE.
  */
 
-#include "ScriptingCore.h"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 
 NS_CC_BEGIN
 

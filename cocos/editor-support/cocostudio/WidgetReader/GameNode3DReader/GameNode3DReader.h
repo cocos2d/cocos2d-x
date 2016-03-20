@@ -26,9 +26,9 @@
 #define __cocos2d_libs__GameNode3DReader__
 
 #include "2d/CCCameraBackgroundBrush.h"
-#include "cocostudio/CocosStudioExport.h"
-#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
-#include "cocostudio/WidgetReader/NodeReaderDefine.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderProtocol.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderDefine.h"
 
 namespace tinyxml2
 {
