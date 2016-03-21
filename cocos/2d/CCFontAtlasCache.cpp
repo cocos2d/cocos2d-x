@@ -44,6 +44,7 @@ void FontAtlasCache::purgeCachedData()
     {
         atlas.second->purgeTexturesAtlas();
     }
+    _atlasMap.clear();
 }
 
 FontAtlas* FontAtlasCache::getFontAtlasTTF(const _ttfConfig* config)

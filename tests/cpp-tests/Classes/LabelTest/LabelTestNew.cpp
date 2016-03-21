@@ -3165,12 +3165,12 @@ void LabelLocalizationTest::onChangedRadioButtonSelect(RadioButton* radioButton,
 
 std::string LabelBMFontScaleFactorTest::title() const
 {
-    return "LabelBMFont on scaleFactor 2.0";
+    return "different scaleFactor LabelBMFont";
 }
 
 std::string LabelBMFontScaleFactorTest::subtitle() const
 {
-    return "Should not crash!";
+    return "Should be valid size";
 }
 
 void LabelBMFontScaleFactorTest::onEnter()

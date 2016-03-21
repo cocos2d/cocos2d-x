@@ -1315,6 +1315,7 @@ void Director::setContentScaleFactor(float scaleFactor)
     {
         _contentScaleFactor = scaleFactor;
         _isStatusLabelUpdated = true;
+        FontAtlasCache::purgeCachedData();
     }
 }
 
