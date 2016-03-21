@@ -1,7 +1,7 @@
-#include "scripting/js-bindings/auto/jsb_cocos2dx_ui_auto.hpp"
-#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
-#include "ui/CocosGUI.h"
-#include "ui/UIScrollViewBar.h"
+#include "jsb_cocos2dx_ui_auto.hpp"
+#include "cocos2d_specifics.hpp"
+#include "CocosGUI.h"
+#include "UIScrollViewBar.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp)

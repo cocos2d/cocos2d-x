@@ -1,9 +1,9 @@
-#include "scripting/lua-bindings/auto/lua_cocos2dx_navmesh_auto.hpp"
+#include "lua_cocos2dx_navmesh_auto.hpp"
 #if CC_USE_NAVMESH
-#include "navmesh/CCNavMesh.h"
-#include "scripting/lua-bindings/manual/navmesh/lua_cocos2dx_navmesh_conversions.h"
-#include "scripting/lua-bindings/manual/tolua_fix.h"
-#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "CCNavMesh.h"
+#include "lua_cocos2dx_navmesh_conversions.h"
+#include "tolua_fix.h"
+#include "LuaBasicConversions.h"
 
 
 int lua_cocos2dx_navmesh_NavMeshAgent_setMaxSpeed(lua_State* tolua_S)
