@@ -29,9 +29,9 @@ THE SOFTWARE.
 #include "base/CCProtocols.h"
 #include "2d/CCNode.h"
 #include "renderer/CCCustomCommand.h"
-#include "CCTimelineMacro.h"
-#include "cocostudio/CocosStudioExport.h"
-#include "CCSkinNode.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimelineMacro.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/ActionTimeline/CCSkinNode.h"
 
 
 NS_TIMELINE_BEGIN

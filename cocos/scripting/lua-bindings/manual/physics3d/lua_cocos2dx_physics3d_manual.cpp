@@ -24,11 +24,11 @@
 #include "platform/CCPlatformConfig.h"
 #include "base/ccConfig.h"
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
-#include "lua_cocos2dx_physics3d_manual.h"
-#include "lua_cocos2dx_physics3d_auto.hpp"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/physics3d/lua_cocos2dx_physics3d_manual.h"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_physics3d_auto.hpp"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "physics3d/CCPhysics3D.h"
 
 bool luaval_to_Physics3DRigidBodyDes(lua_State* L,int lo,cocos2d::Physics3DRigidBodyDes* outValue, const char* funcName)

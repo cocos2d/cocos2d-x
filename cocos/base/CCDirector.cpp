@@ -63,7 +63,7 @@ THE SOFTWARE.
 #include "platform/CCApplication.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
-#include "CCScriptSupport.h"
+#include "base/CCScriptSupport.h"
 #endif
 
 /**

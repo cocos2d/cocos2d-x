@@ -22,10 +22,10 @@
  * THE SOFTWARE.
  */
 
-#include "ScriptingCore.h"
-#include "js_bindings_config.h"
-#include "js_manual_conversions.h"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "math/TransformUtils.h"
 #include "editor-support/cocostudio/CocosStudioExtension.h"
 

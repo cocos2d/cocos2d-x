@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCTerrain.h"
+#include "3d/CCTerrain.h"
 
 USING_NS_CC;
 #include <stdlib.h>

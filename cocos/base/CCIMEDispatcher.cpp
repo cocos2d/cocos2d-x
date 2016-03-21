@@ -53,6 +53,11 @@ bool IMEDelegate::detachWithIME()
     return IMEDispatcher::sharedDispatcher()->detachDelegateWithIME(this);
 }
 
+bool IMEDelegate::isAttachedWithIME()
+{
+    return IMEDispatcher::sharedDispatcher()->isAttachedWithIME(this);
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 typedef std::list< IMEDelegate * > DelegateList;
@@ -211,6 +216,21 @@ void IMEDispatcher::removeDelegate(IMEDelegate* delegate)
         }
         _impl->_delegateList.erase(iter);
     } while (0);
+}
+
+bool IMEDispatcher::isAttachedWithIME(IMEDelegate * delegate)
+{
+    bool ret = false;
+    do
+    {
+        CC_BREAK_IF(! delegate || ! _impl);
+		
+        // if pDelegate is not the current delegate attached to IME, return
+        CC_BREAK_IF(_impl->_delegateWithIme != delegate);
+		
+        ret = true;
+    } while (0);
+    return ret;
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "UITextField+CCUITextInput.h"
+#import "ui/UIEditBox/iOS/UITextField+CCUITextInput.h"
 
 @implementation UITextField (CCUITextInput)
 

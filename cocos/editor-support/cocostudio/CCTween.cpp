@@ -23,12 +23,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 
-#include "cocostudio/CCTween.h"
-#include "cocostudio/CCArmatureAnimation.h"
-#include "cocostudio/CCBone.h"
-#include "cocostudio/CCArmature.h"
-#include "cocostudio/CCUtilMath.h"
-#include "cocostudio/CCTransformHelp.h"
+#include "editor-support/cocostudio/CCTween.h"
+#include "editor-support/cocostudio/CCArmatureAnimation.h"
+#include "editor-support/cocostudio/CCBone.h"
+#include "editor-support/cocostudio/CCArmature.h"
+#include "editor-support/cocostudio/CCUtilMath.h"
+#include "editor-support/cocostudio/CCTransformHelp.h"
 
 
 namespace cocostudio {

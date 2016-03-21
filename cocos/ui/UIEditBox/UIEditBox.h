@@ -461,6 +461,11 @@ namespace ui {
          */
         void touchDownAction(Ref *sender, TouchEventType controlEvent);
             
+        virtual bool canAttachWithIME() override { return true; }
+        virtual bool canDetachWithIME() override { return true; }
+        virtual void didAttachWithIME() override;
+        virtual void didDetachWithIME() override;
+
     protected:
         virtual void adaptRenderers() override;
 

@@ -23,8 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include <math.h>
-#include "cocostudio/CCActionFrameEasing.h"
-#include "cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/CCActionFrameEasing.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
 #include "platform/CCStdC.h"
 
 namespace cocostudio {

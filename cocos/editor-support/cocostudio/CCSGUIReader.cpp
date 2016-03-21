@@ -21,25 +21,25 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "cocostudio/CCSGUIReader.h"
+#include "editor-support/cocostudio/CCSGUIReader.h"
 #include "ui/CocosGUI.h"
-#include "cocostudio/CCActionManagerEx.h"
+#include "editor-support/cocostudio/CCActionManagerEx.h"
 #include <fstream>
 #include <iostream>
-#include "WidgetReader/ButtonReader/ButtonReader.h"
-#include "WidgetReader/CheckBoxReader/CheckBoxReader.h"
-#include "WidgetReader/SliderReader/SliderReader.h"
-#include "WidgetReader/ImageViewReader/ImageViewReader.h"
-#include "WidgetReader/LoadingBarReader/LoadingBarReader.h"
-#include "WidgetReader/TextAtlasReader/TextAtlasReader.h"
-#include "WidgetReader/TextReader/TextReader.h"
-#include "WidgetReader/TextBMFontReader/TextBMFontReader.h"
-#include "WidgetReader/TextFieldReader/TextFieldReader.h"
-#include "WidgetReader/LayoutReader/LayoutReader.h"
-#include "WidgetReader/PageViewReader/PageViewReader.h"
-#include "WidgetReader/ScrollViewReader/ScrollViewReader.h"
-#include "WidgetReader/ListViewReader/ListViewReader.h"
-#include "cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/WidgetReader/ButtonReader/ButtonReader.h"
+#include "editor-support/cocostudio/WidgetReader/CheckBoxReader/CheckBoxReader.h"
+#include "editor-support/cocostudio/WidgetReader/SliderReader/SliderReader.h"
+#include "editor-support/cocostudio/WidgetReader/ImageViewReader/ImageViewReader.h"
+#include "editor-support/cocostudio/WidgetReader/LoadingBarReader/LoadingBarReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextAtlasReader/TextAtlasReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextReader/TextReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextBMFontReader/TextBMFontReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextFieldReader/TextFieldReader.h"
+#include "editor-support/cocostudio/WidgetReader/LayoutReader/LayoutReader.h"
+#include "editor-support/cocostudio/WidgetReader/PageViewReader/PageViewReader.h"
+#include "editor-support/cocostudio/WidgetReader/ScrollViewReader/ScrollViewReader.h"
+#include "editor-support/cocostudio/WidgetReader/ListViewReader/ListViewReader.h"
+#include "editor-support/cocostudio/CocoLoader.h"
 #include "tinyxml2.h"
 
 using namespace cocos2d;

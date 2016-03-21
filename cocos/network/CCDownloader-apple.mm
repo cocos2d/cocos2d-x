@@ -25,7 +25,7 @@
 #include "network/CCDownloader-apple.h"
 
 #include "network/CCDownloader.h"
-#include "CCString.h"
+#include "deprecated/CCString.h"
 #include <queue>
 
 ////////////////////////////////////////////////////////////////////////////////

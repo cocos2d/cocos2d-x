@@ -7,15 +7,15 @@
 #include "2d/CCSpriteFrameCache.h"
 #include "renderer/CCTextureCache.h"
 
-#include "CCBReader.h"
-#include "CCNodeLoader.h"
-#include "CCNodeLoaderLibrary.h"
-#include "CCNodeLoaderListener.h"
-#include "CCBMemberVariableAssigner.h"
-#include "CCBSelectorResolver.h"
-#include "CCBAnimationManager.h"
-#include "CCBSequenceProperty.h"
-#include "CCBKeyframe.h"
+#include "editor-support/cocosbuilder/CCBReader.h"
+#include "editor-support/cocosbuilder/CCNodeLoader.h"
+#include "editor-support/cocosbuilder/CCNodeLoaderLibrary.h"
+#include "editor-support/cocosbuilder/CCNodeLoaderListener.h"
+#include "editor-support/cocosbuilder/CCBMemberVariableAssigner.h"
+#include "editor-support/cocosbuilder/CCBSelectorResolver.h"
+#include "editor-support/cocosbuilder/CCBAnimationManager.h"
+#include "editor-support/cocosbuilder/CCBSequenceProperty.h"
+#include "editor-support/cocosbuilder/CCBKeyframe.h"
 #include <sstream>
 
 using namespace cocos2d;

@@ -25,9 +25,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "Keyboard-winrt.h"
+#include "platform/winrt/Keyboard-winrt.h"
 #include "base/CCEventKeyboard.h"
-#include "CCGLViewImpl-winrt.h"
+#include "platform/winrt/CCGLViewImpl-winrt.h"
 #include "base/CCIMEDispatcher.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"

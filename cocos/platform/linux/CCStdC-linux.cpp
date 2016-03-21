@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
-#include "CCStdC-linux.h"
+#include "platform/linux/CCStdC-linux.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 

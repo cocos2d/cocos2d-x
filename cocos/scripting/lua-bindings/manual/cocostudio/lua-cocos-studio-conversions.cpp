@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "lua-cocos-studio-conversions.h"
-#include "ActionTimeline/CCActionTimeline.h"
+#include "scripting/lua-bindings/manual/cocostudio/lua-cocos-studio-conversions.h"
+#include "editor-support/cocostudio/ActionTimeline/CCActionTimeline.h"
 
 #if COCOS2D_DEBUG >=1
 extern void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err, const char* funcName);

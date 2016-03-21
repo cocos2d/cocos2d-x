@@ -4706,6 +4706,16 @@ bool
 },
 
 /**
+ * @method setCursorPosition
+ * @param {unsigned long} arg0
+ */
+setCursorPosition : function (
+long 
+)
+{
+},
+
+/**
  * @method getTextHorizontalAlignment
  * @return {cc.TextHAlignment}
  */
@@ -4736,6 +4746,18 @@ str
 },
 
 /**
+ * @method setCursorFromPoint
+ * @param {vec2_object} arg0
+ * @param {cc.Camera} arg1
+ */
+setCursorFromPoint : function (
+vec2, 
+camera 
+)
+{
+},
+
+/**
  * @method setPlaceHolderColor
 * @param {color4b_object|color3b_object} color4b
 */
@@ -4761,6 +4783,16 @@ texthalignment
  */
 setTextColor : function (
 color4b 
+)
+{
+},
+
+/**
+ * @method setCursorChar
+ * @param {char} arg0
+ */
+setCursorChar : function (
+char 
 )
 {
 },
@@ -4821,6 +4853,16 @@ bool
  */
 setMaxLength : function (
 int 
+)
+{
+},
+
+/**
+ * @method setCursorEnabled
+ * @param {bool} arg0
+ */
+setCursorEnabled : function (
+bool 
 )
 {
 },
@@ -6243,6 +6285,16 @@ int
 },
 
 /**
+ * @method canAttachWithIME
+ * @return {bool}
+ */
+canAttachWithIME : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setPlaceholderFontName
  * @param {char} arg0
  */
@@ -6273,6 +6325,16 @@ char
 },
 
 /**
+ * @method canDetachWithIME
+ * @return {bool}
+ */
+canDetachWithIME : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setText
  * @param {char} arg0
  */
@@ -6288,6 +6350,14 @@ char
  */
 setPlaceholderFontSize : function (
 int 
+)
+{
+},
+
+/**
+ * @method didAttachWithIME
+ */
+didAttachWithIME : function (
 )
 {
 },
@@ -6388,6 +6458,14 @@ getMaxLength : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method didDetachWithIME
+ */
+didDetachWithIME : function (
+)
+{
 },
 
 /**

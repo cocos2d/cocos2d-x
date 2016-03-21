@@ -1,4 +1,4 @@
-#include "CocoLoader.h"
+#include "editor-support/cocostudio/CocoLoader.h"
 #include "zlib.h"
 
 using namespace std;

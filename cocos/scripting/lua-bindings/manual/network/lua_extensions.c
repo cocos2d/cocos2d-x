@@ -1,5 +1,5 @@
 
-#include "lua_extensions.h"
+#include "scripting/lua-bindings/manual/network/lua_extensions.h"
 
 #if __cplusplus
 extern "C" {

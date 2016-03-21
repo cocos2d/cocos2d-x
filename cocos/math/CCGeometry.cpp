@@ -192,7 +192,7 @@ bool Rect::intersectsRect(const Rect& rect) const
              rect.getMaxY() <      getMinY());
 }
 
-bool Rect::intersectsCircle(const cocos2d::Vec2 &center, float radius) const
+bool Rect::intersectsCircle(const Vec2& center, float radius) const
 {
     Vec2 rectangleCenter((origin.x + size.width / 2),
                          (origin.y + size.height / 2));

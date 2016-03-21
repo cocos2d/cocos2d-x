@@ -25,8 +25,8 @@
 
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
-#include "../UIEditBoxImpl-mac.h"
-#include "CCUITextInput.h"
+#include "ui/UIEditBox/UIEditBoxImpl-mac.h"
+#include "ui/UIEditBox/Mac/CCUITextInput.h"
 
 #pragma mark - UIEditBox mac implementation
 

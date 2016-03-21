@@ -23,9 +23,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "SimpleAudioEngine.h"
-#include "jni/cddandroidAndroidJavaEngine.h"
-#include "ccdandroidUtils.h"
+#include "audio/include/SimpleAudioEngine.h"
+#include "audio/android/jni/cddandroidAndroidJavaEngine.h"
+#include "audio/android/ccdandroidUtils.h"
 
 namespace CocosDenshion {
 

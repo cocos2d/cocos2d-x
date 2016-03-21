@@ -22,22 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCActionTimelineCache.h"
-#include "CSLoader.h"
-#include "CCFrame.h"
-#include "CCTimeLine.h"
-#include "CCActionTimeline.h"
+#include "editor-support/cocostudio/ActionTimeline/CCActionTimelineCache.h"
+#include "editor-support/cocostudio/ActionTimeline/CSLoader.h"
+#include "editor-support/cocostudio/ActionTimeline/CCFrame.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimeLine.h"
+#include "editor-support/cocostudio/ActionTimeline/CCActionTimeline.h"
 #include "platform/CCFileUtils.h"
 #include "2d/CCSpriteFrameCache.h"
 #include "2d/CCSpriteFrame.h"
 
-#include "cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/util.h"
 
-#include "cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
 
 #include <fstream>
 

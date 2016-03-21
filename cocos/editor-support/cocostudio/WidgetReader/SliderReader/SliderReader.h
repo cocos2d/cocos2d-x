@@ -25,8 +25,8 @@
 #ifndef __TestCpp__SliderReader__
 #define __TestCpp__SliderReader__
 
-#include "cocostudio/WidgetReader/WidgetReader.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/WidgetReader/WidgetReader.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio
 {

@@ -25,7 +25,7 @@
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
-#include "AudioEngine-inl.h"
+#include "audio/apple/AudioEngine-inl.h"
 
 #import <OpenAL/alc.h>
 #import <AVFoundation/AVFoundation.h>

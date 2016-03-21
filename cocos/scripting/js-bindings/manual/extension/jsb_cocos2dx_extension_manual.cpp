@@ -21,11 +21,11 @@
  * THE SOFTWARE.
  */
 
-#include "jsb_cocos2dx_extension_manual.h"
+#include "scripting/js-bindings/manual/extension/jsb_cocos2dx_extension_manual.h"
 #include "extensions/cocos-ext.h"
-#include "ScriptingCore.h"
-#include "cocos2d_specifics.hpp"
-#include "jsb_cocos2dx_auto.hpp"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_auto.hpp"
 #include <thread>
 
 USING_NS_CC;

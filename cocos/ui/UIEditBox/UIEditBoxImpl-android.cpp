@@ -24,11 +24,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIEditBoxImpl-android.h"
+#include "ui/UIEditBox/UIEditBoxImpl-android.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
-#include "UIEditBox.h"
+#include "ui/UIEditBox/UIEditBox.h"
 #include <jni.h>
 #include "platform/android/jni/JniHelper.h"
 #include "2d/CCLabel.h"
@@ -194,7 +194,7 @@ void EditBoxImplAndroid::nativeOpenKeyboard()
 
 void EditBoxImplAndroid::nativeCloseKeyboard()
 {
-    JniHelper::callStaticVoidMethod(editBoxClassName, "closeKeyboard", _editBoxIndex);
+    JniHelper::callStaticVoidMethod(editBoxClassName, "clearFocus", _editBoxIndex);
 }
 
 void editBoxEditingDidBegin(int index)

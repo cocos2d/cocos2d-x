@@ -230,6 +230,12 @@ void MenuItemLabel::setString(const std::string& label)
     this->setContentSize(_label->getContentSize());
 }
 
+std::string MenuItemLabel::getString() const
+{
+    auto label = dynamic_cast<LabelProtocol*>(_label);
+    return label->getString();
+}
+
 void MenuItemLabel::activate()
 {
     if(_enabled)

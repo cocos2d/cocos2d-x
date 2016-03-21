@@ -1,4 +1,4 @@
-#include "CCSpriteLoader.h"
+#include "editor-support/cocosbuilder/CCSpriteLoader.h"
 
 using namespace cocos2d;
 

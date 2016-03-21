@@ -21,9 +21,9 @@
  * THE SOFTWARE.
  */
 
-#include "jsb_cocos2dx_ui_manual.h"
-#include "ScriptingCore.h"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/ui/jsb_cocos2dx_ui_manual.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "ui/CocosGUI.h"
 
 using namespace cocos2d;

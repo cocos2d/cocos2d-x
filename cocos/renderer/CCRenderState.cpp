@@ -24,7 +24,7 @@
 
  ****************************************************************************/
 
-#include "CCRenderState.h"
+#include "renderer/CCRenderState.h"
 
 #include <string>
 

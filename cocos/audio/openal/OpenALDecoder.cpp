@@ -1,4 +1,4 @@
-#include "OpenALDecoder.h"
+#include "audio/openal/OpenALDecoder.h"
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <AL/alut.h>

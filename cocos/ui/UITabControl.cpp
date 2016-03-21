@@ -26,7 +26,7 @@
 #include "2d/CCSprite.h"
 #include "2d/CCLabel.h"
 #include "ui/UILayout.h"
-#include "UITabControl.h"
+#include "ui/UITabControl.h"
 
 NS_CC_BEGIN
 

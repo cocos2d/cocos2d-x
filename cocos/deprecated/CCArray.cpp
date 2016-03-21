@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCArray.h"
+#include "deprecated/CCArray.h"
 #include "deprecated/CCString.h"
 #include "platform/CCFileUtils.h"
 
