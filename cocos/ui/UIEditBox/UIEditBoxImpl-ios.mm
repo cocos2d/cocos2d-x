@@ -23,13 +23,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "UIEditBoxImpl-ios.h"
+#include "ui/UIEditBox/UIEditBoxImpl-ios.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 #define kLabelZOrder  9999
 
-#include "UIEditBox.h"
+#include "ui/UIEditBox/UIEditBox.h"
 #include "base/CCDirector.h"
 #include "2d/CCLabel.h"
 #import "platform/ios/CCEAGLView-ios.h"

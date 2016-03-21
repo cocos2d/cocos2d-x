@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 #import "CCUIPasswordTextField.h"
-#include "CCUITextFieldFormatter.h"
+#include "ui/UIEditBox/Mac/CCUITextFieldFormatter.h"
 
 @interface CCUIPasswordTextField()
 @property (nonatomic, retain) NSMutableDictionary *placeholderAttributes;

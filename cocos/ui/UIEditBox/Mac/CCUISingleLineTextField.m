@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 #import "CCUISingleLineTextField.h"
-#include "CCUITextFieldFormatter.h"
+#include "ui/UIEditBox/Mac/CCUITextFieldFormatter.h"
 
 @interface CCUISingleLineTextField()
 @property (nonatomic, retain) NSMutableDictionary *placeholderAttributes;
