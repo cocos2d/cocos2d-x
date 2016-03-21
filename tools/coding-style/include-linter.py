@@ -111,7 +111,7 @@ class LintContext:
     return p
 
 def fix(match, cwd, ctx, fixed):
-  h = match.group(1)
+  h = match.group(2)
   # return original if already in search path (cocos directory)
   if ctx.in_search_path(h):
     return match.group(0)
@@ -121,8 +121,9 @@ def fix(match, cwd, ctx, fixed):
     return match.group(0)
 
   ctx.errors += 1
-  fixed[h] = p
-  return '#include "%s"' % (p)
+  fix = '#%s "%s"' % (match.group(1), p)
+  fixed[match.group(0)] = fix
+  return fix
 
 def lint_one(header, ctx):
   cwd = Path.dirname(header)
@@ -133,7 +134,7 @@ def lint_one(header, ctx):
   content = open(filename, 'r').read()
   fixed = {}
   # check all #include "header.*"
-  linted = re.sub('#\s*include\s*"(.*)"', lambda m: fix(m, cwd, ctx, fixed), content)
+  linted = re.sub('#\s*(include|import)\s*"(.*)"', lambda m: fix(m, cwd, ctx, fixed), content)
   if content != linted:
     ctx.error_files += 1
     if ctx.fix:
@@ -142,7 +143,7 @@ def lint_one(header, ctx):
     else:
       print('%s:' % (header))
       for k, v in fixed.iteritems():
-        print('\t#include "%s" should be #include "%s"' % (k, v))
+        print('\t%s should be %s' % (k, v))
 
 
 def lint(ctx):
