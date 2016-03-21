@@ -43,7 +43,6 @@ class Path:
 
 class LintContext:
   def __init__(self, root, fix):
-    print('Creating LintContext in directory:', root)
     self.exclude = [
       # we are leaving win8.1 and winrt pch.cpp unchanged.
       'platform/win8.1-universal/pch.cpp',
@@ -65,7 +64,6 @@ class LintContext:
     for root, dirnames, filenames in os.walk(top):
       for f in filenames:
         p = Path.relpath(Path.join(root, f), top)
-        print(Path.join(root, f), top, p)
         if self._source_to_lint(p):
           self.sources.append(p)
         if self._is_header(p):
