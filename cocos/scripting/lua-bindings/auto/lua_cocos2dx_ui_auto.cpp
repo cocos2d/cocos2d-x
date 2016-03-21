@@ -1,7 +1,7 @@
-#include "scripting/lua-bindings/auto/lua_cocos2dx_ui_auto.hpp"
-#include "ui/CocosGUI.h"
-#include "scripting/lua-bindings/manual/tolua_fix.h"
-#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "lua_cocos2dx_ui_auto.hpp"
+#include "CocosGUI.h"
+#include "tolua_fix.h"
+#include "LuaBasicConversions.h"
 
 
 int lua_cocos2dx_ui_LayoutParameter_clone(lua_State* tolua_S)

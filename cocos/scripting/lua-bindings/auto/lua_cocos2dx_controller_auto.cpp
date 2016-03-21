@@ -1,8 +1,8 @@
-#include "scripting/lua-bindings/auto/lua_cocos2dx_controller_auto.hpp"
+#include "lua_cocos2dx_controller_auto.hpp"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#include "base/CCGameController.h"
-#include "scripting/lua-bindings/manual/tolua_fix.h"
-#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "CCGameController.h"
+#include "tolua_fix.h"
+#include "LuaBasicConversions.h"
 
 
 int lua_cocos2dx_controller_Controller_receiveExternalKeyEvent(lua_State* tolua_S)
