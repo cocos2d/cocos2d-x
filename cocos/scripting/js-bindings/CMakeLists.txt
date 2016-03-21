@@ -1,6 +1,6 @@
 #/****************************************************************************
 # Copyright (c) 2014 Chukong Technologies Inc.
-# 
+#
 # http://www.cocos2d-x.org
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -80,29 +80,11 @@ set(JSBINDING_SRC
 )
 
 include_directories(
-  auto
-  manual
-  manual/cocostudio
-  manual/spine
-  manual/navmesh
   ${cocos_root}/external/spidermonkey/include/${PLATFORM_FOLDER}
   ${cocos_root}/cocos
-  ${cocos_root}/cocos/base
-  ${cocos_root}/cocos/2d
-  ${cocos_root}/cocos/3d
-  ${cocos_root}/cocos/ui 
-  ${cocos_root}/cocos/audio/include
-  ${cocos_root}/cocos/storage
-  ${cocos_root}/cocos/network
-  ${cocos_root}/cocos/platform
-  ${cocos_root}/cocos/physics3d
-  ${cocos_root}/cocos/navmesh
+  ${cocos_root}/cocos/editor-support
   ${cocos_root}/extensions
   ${cocos_root}/external
-  ${cocos_root}/cocos/editor-support
-  ${cocos_root}/cocos/editor-support/spine
-  ${cocos_root}/cocos/editor-support/cocosbuilder
-  ${cocos_root}/cocos/editor-support/cocostudio
   ${CHIPMUNK_INCLUDE_DIRS}
 )
 
@@ -110,9 +92,16 @@ add_library(jscocos2d STATIC
   ${JSBINDING_SRC}
 )
 
+find_library(SPIDERMONKEY_LIBRARY NAMES js_static mozjs HINTS
+  ${cocos_root}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+  ${cocos_root}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}
+)
+
+message("SPIDERMONKEY_LIBRARY: ${SPIDERMONKEY_LIBRARY}")
+
 target_link_libraries(jscocos2d
   sqlite3
-  js_static
+  ${SPIDERMONKEY_LIBRARY}
   xxhash
 )
 
@@ -121,4 +110,3 @@ set_target_properties(jscocos2d
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
-

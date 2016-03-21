@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "cocos2d.h"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "js_DrawNode3D_bindings.h"
 
 NS_CC_BEGIN

@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "js_Effect3D_bindings.h"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 
 using namespace cocos2d;
 

@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "../../BaseTest.h"
-#include "cocostudio/CocoStudio.h"
+#include "editor-support/cocostudio/CocoStudio.h"
 
 class CocoStudioActionTimelineTests : public TestSuite
 {

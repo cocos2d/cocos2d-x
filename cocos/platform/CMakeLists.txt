@@ -65,10 +65,6 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
 
 elseif(ANDROID)
 
-  include_directories(
-    platform/android
-  )
-
 set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/android/CCApplication-android.cpp
   platform/android/CCCommon-android.cpp
@@ -86,7 +82,7 @@ set(COCOS2DX_ANDROID_STATIC
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp
-  
+
 )
 
 add_library(cocos2dxandroid_static STATIC ${COCOS2DX_ANDROID_STATIC})
@@ -97,8 +93,6 @@ endif()
 #leave andatory external stuff here also
 
 include_directories(
-  platform/desktop
-  platform
   ../external/ConvertUTF
   ../external/edtaa3func
   ../external/poly2tri

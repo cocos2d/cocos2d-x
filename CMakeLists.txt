@@ -383,10 +383,6 @@ endif(BUILD_LUA_LIBS)
 
 ## JS
 if(BUILD_JS_LIBS)
-  link_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-  )
-
   add_subdirectory(cocos/scripting/js-bindings)
 
   # build js tests

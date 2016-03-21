@@ -1,55 +1,55 @@
 #include "AppDelegate.h"
 
 #include "cocos2d.h"
-#include "SimpleAudioEngine.h"
-#include "ScriptingCore.h"
-#include "jsb_cocos2dx_auto.hpp"
-#include "jsb_cocos2dx_extension_auto.hpp"
-#include "jsb_cocos2dx_builder_auto.hpp"
-#include "jsb_cocos2dx_spine_auto.hpp"
-#include "jsb_cocos2dx_3d_auto.hpp"
-#include "jsb_cocos2dx_3d_extension_auto.hpp"
-#include "jsb_cocos2dx_physics3d_auto.hpp"
-#include "physics3d/jsb_cocos2dx_physics3d_manual.h"
-#include "jsb_cocos2dx_navmesh_auto.hpp"
-#include "navmesh/jsb_cocos2dx_navmesh_manual.h"
-#include "3d/jsb_cocos2dx_3d_manual.h"
-#include "extension/jsb_cocos2dx_extension_manual.h"
-#include "cocostudio/jsb_cocos2dx_studio_manual.h"
-#include "jsb_cocos2dx_studio_auto.hpp"
-#include "jsb_cocos2dx_ui_auto.hpp"
-#include "ui/jsb_cocos2dx_ui_manual.h"
-#include "spine/jsb_cocos2dx_spine_manual.h"
-#include "cocos2d_specifics.hpp"
-#include "cocosbuilder/cocosbuilder_specifics.hpp"
-#include "chipmunk/js_bindings_chipmunk_registration.h"
-#include "localstorage/js_bindings_system_registration.h"
-#include "jsb_opengl_registration.h"
-#include "network/XMLHTTPRequest.h"
-#include "network/jsb_websocket.h"
-#include "network/jsb_socketio.h"
-#include "cocosbuilder/js_bindings_ccbreader.h"
+#include "audio/include/SimpleAudioEngine.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_extension_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_builder_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_spine_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_3d_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_3d_extension_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_physics3d_auto.hpp"
+#include "scripting/js-bindings/manual/physics3d/jsb_cocos2dx_physics3d_manual.h"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_navmesh_auto.hpp"
+#include "scripting/js-bindings/manual/navmesh/jsb_cocos2dx_navmesh_manual.h"
+#include "scripting/js-bindings/manual/3d/jsb_cocos2dx_3d_manual.h"
+#include "scripting/js-bindings/manual/extension/jsb_cocos2dx_extension_manual.h"
+#include "scripting/js-bindings/manual/cocostudio/jsb_cocos2dx_studio_manual.h"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_studio_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_ui_auto.hpp"
+#include "scripting/js-bindings/manual/ui/jsb_cocos2dx_ui_manual.h"
+#include "scripting/js-bindings/manual/spine/jsb_cocos2dx_spine_manual.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/cocosbuilder/cocosbuilder_specifics.hpp"
+#include "scripting/js-bindings/manual/chipmunk/js_bindings_chipmunk_registration.h"
+#include "scripting/js-bindings/manual/localstorage/js_bindings_system_registration.h"
+#include "scripting/js-bindings/manual/jsb_opengl_registration.h"
+#include "scripting/js-bindings/manual/network/XMLHTTPRequest.h"
+#include "scripting/js-bindings/manual/network/jsb_websocket.h"
+#include "scripting/js-bindings/manual/network/jsb_socketio.h"
+#include "scripting/js-bindings/manual/cocosbuilder/js_bindings_ccbreader.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "platform/android/CCJavascriptJavaBridge.h"
+#include "scripting/js-bindings/manual/platform/android/CCJavascriptJavaBridge.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-#include "platform/ios/JavaScriptObjCBridge.h"
+#include "scripting/js-bindings/manual/platform/ios/JavaScriptObjCBridge.h"
 #endif
 
 #include "js_Effect3D_bindings.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "jsb_cocos2dx_experimental_webView_auto.hpp"
-#include "experimental/jsb_cocos2dx_experimental_webView_manual.h"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_experimental_webView_auto.hpp"
+#include "scripting/js-bindings/manual/experimental/jsb_cocos2dx_experimental_webView_manual.h"
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "jsb_cocos2dx_experimental_video_auto.hpp"
-#include "experimental/jsb_cocos2dx_experimental_video_manual.h"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_experimental_video_auto.hpp"
+#include "scripting/js-bindings/manual/experimental/jsb_cocos2dx_experimental_video_manual.h"
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include "jsb_cocos2dx_audioengine_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_audioengine_auto.hpp"
 #endif
 
 USING_NS_CC;

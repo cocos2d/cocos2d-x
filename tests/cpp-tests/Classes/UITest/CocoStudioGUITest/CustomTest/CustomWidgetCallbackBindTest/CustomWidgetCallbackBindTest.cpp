@@ -1,8 +1,8 @@
 #include "CustomWidgetCallbackBindTest.h"
 
 #include "../../CustomGUIScene.h"
-#include "cocostudio/ActionTimeline/CSLoader.h"
-#include "cocostudio/CocoStudio.h"
+#include "editor-support/cocostudio/ActionTimeline/CSLoader.h"
+#include "editor-support/cocostudio/CocoStudio.h"
 #include "base/ObjectFactory.h"
 #include "CustomRootNode.h"
 #include "CustomRootNodeReader.h"
