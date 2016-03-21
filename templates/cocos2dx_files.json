@@ -5272,6 +5272,7 @@
         "plugin/tools/toolsForPublish/checkEnvironment.sh", 
         "plugin/tools/toolsForPublish/genPrebuildMK.sh", 
         "plugin/tools/toolsForPublish/publishPlugin.sh", 
+        "tools/coding-style/include-linter.py", 
         "tools/fbx-conv/README.md", 
         "tools/fbx-conv/mac/fbx-conv", 
         "tools/fbx-conv/mac/libfbxsdk.dylib", 
