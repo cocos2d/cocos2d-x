@@ -30,7 +30,7 @@
 #include <mfreadwrite.h>
 #include <queue>
 #include <mutex>
-#include "MediaStreamer.h"
+#include "audio/winrt/MediaStreamer.h"
 #include "ogg/ogg.h"
 #include "vorbis/vorbisfile.h"
 

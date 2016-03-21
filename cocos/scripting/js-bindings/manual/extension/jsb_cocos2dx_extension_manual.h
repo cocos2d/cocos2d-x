@@ -26,7 +26,7 @@
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
-#include "cocos/network/CCDownloader.h"
+#include "network/CCDownloader.h"
 #include "renderer/CCTexture2D.h"
 
 class __JSDownloaderDelegator : cocos2d::Ref

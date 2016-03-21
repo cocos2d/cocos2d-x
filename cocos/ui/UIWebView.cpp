@@ -25,7 +25,7 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-#include "UIWebViewImpl-android.h"
-#include "UIWebView-inl.h"
+#include "ui/UIWebViewImpl-android.h"
+#include "ui/UIWebView-inl.h"
 
 #endif

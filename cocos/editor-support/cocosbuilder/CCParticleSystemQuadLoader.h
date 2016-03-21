@@ -4,7 +4,7 @@
 #include "base/CCRef.h"
 #include "2d/CCParticleSystemQuad.h"
 
-#include "CCNodeLoader.h"
+#include "editor-support/cocosbuilder/CCNodeLoader.h"
 
 namespace cocosbuilder {
 

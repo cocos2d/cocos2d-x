@@ -25,11 +25,11 @@ THE SOFTWARE.
 #ifndef __TRIGGEREVENT_H__
 #define __TRIGGEREVENT_H__
 
-#include "cocostudio/CocoStudio.h"
+#include "editor-support/cocostudio/CocoStudio.h"
 #include "base/ObjectFactory.h"
-#include "TriggerObj.h"
-#include "TriggerMng.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/TriggerObj.h"
+#include "editor-support/cocostudio/TriggerMng.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 
 #define DECLARE_CLASS_INFO \

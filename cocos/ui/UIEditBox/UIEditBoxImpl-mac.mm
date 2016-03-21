@@ -26,11 +26,11 @@
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
-#include "UIEditBoxImpl-mac.h"
+#include "ui/UIEditBox/UIEditBoxImpl-mac.h"
 #include "base/CCDirector.h"
-#include "UIEditBox.h"
+#include "ui/UIEditBox/UIEditBox.h"
 #include "deprecated/CCString.h"
-#include "Mac/CCUIEditBoxMac.h"
+#include "ui/UIEditBox/Mac/CCUIEditBoxMac.h"
 
 NS_CC_BEGIN
 

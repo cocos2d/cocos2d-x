@@ -25,9 +25,9 @@ THE SOFTWARE.
 #ifndef __CCTIMELINE_H__
 #define __CCTIMELINE_H__
 
-#include "CCFrame.h"
-#include "CCTimelineMacro.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/ActionTimeline/CCFrame.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimelineMacro.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 NS_TIMELINE_BEGIN
 

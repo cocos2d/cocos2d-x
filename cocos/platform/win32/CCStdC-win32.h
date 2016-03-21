@@ -89,7 +89,7 @@ typedef SSIZE_T ssize_t;
 #if _MSC_VER >= 1600 || defined(__MINGW32__)
     #include <stdint.h>
 #else
-    #include "./compat/stdint.h"
+    #include "platform/win32/compat/stdint.h"
 #endif
 
 #define _WINSOCKAPI_

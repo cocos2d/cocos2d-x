@@ -26,9 +26,9 @@ THE SOFTWARE.
 #ifndef __CCTWEEN_H__
 #define __CCTWEEN_H__
 
-#include "cocostudio/CCProcessBase.h"
+#include "editor-support/cocostudio/CCProcessBase.h"
 #include "2d/CCTweenFunction.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 

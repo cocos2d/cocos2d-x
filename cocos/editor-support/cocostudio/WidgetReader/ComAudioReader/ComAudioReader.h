@@ -28,8 +28,8 @@
 #include "base/CCRef.h"
 #include "2d/CCComponent.h"
 #include "2d/CCNode.h"
-#include "cocostudio/CocosStudioExport.h"
-#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderProtocol.h"
 
 
 namespace cocostudio

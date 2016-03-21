@@ -28,8 +28,8 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 
-#include "CCBoneNode.h"
-#include "CCSkeletonNode.h"
+#include "editor-support/cocostudio/ActionTimeline/CCBoneNode.h"
+#include "editor-support/cocostudio/ActionTimeline/CCSkeletonNode.h"
 
 NS_TIMELINE_BEGIN
 

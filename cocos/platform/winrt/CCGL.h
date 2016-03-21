@@ -41,7 +41,7 @@ THE SOFTWARE.
 #define glMapBuffer                 glMapBufferOES
 
 #else
-#include "CCGL_Angle.h"
+#include "platform/winrt/CCGL_Angle.h"
 #endif
 
 

@@ -21,16 +21,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "LuaOpengl.h"
+#include "scripting/lua-bindings/manual/cocos2d/LuaOpengl.h"
 #include <map>
 #include <string>
-#include "tolua_fix.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "cocos2d.h"
-#include "CCLuaStack.h"
-#include "CCLuaValue.h"
-#include "CCLuaEngine.h"
-#include "LuaScriptHandlerMgr.h"
-#include "LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/CCLuaStack.h"
+#include "scripting/lua-bindings/manual/CCLuaValue.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
 using namespace cocos2d;
 

@@ -22,6 +22,12 @@ def download_3rd_libs(branch):
     print("prepare to downloading ...")
     os.system('python download-deps.py -r no')
 
+def lint_include_of_cocos_headers():
+  global branch
+  if(branch != 'v1' and branch != 'v2'):
+      ret = os.system("python tools/coding-style/include-linter.py")
+  if(ret != 0):
+      sys.exit(1)
 
 def gen_scripting_bindings():
     global branch
@@ -75,6 +81,7 @@ def cleanup_workspace():
 
 def main():
     download_3rd_libs(branch)
+    lint_include_of_cocos_headers()
     #generate jsb and luabindings
     gen_scripting_bindings()
     #start build jobs on each slave

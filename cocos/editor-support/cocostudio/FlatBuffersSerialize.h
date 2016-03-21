@@ -29,7 +29,7 @@
 #include <vector>
 
 #include "ExtensionMacros.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include "platform/CCPlatformMacros.h"
 #include "ui/UIWidget.h"
 

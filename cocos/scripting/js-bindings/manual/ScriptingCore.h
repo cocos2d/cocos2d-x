@@ -30,12 +30,12 @@
 #include "jsfriendapi.h"
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "js_bindings_config.h"
-#include "js_bindings_core.h"
-#include "spidermonkey_specifics.h"
-#include "js_manual_conversions.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/js_bindings_core.h"
+#include "scripting/js-bindings/manual/spidermonkey_specifics.h"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
 #include "mozilla/Maybe.h"
-#include "js-BindingsExport.h"
+#include "scripting/js-bindings/manual/js-BindingsExport.h"
 
 #include <assert.h>
 #include <memory>

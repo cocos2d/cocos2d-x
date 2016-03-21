@@ -25,8 +25,8 @@ THE SOFTWARE.
 #define __CCSPRITEFRAMECACHEHELPER_H__
 
 #include "platform/CCPlatformMacros.h"
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include <string>
 #include <map>
 #include <vector>

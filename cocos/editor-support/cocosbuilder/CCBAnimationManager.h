@@ -7,9 +7,9 @@
 #include "2d/CCActionEase.h"
 
 #include "extensions/ExtensionMacros.h"
-#include "CCBSequence.h"
-#include "CCBKeyframe.h"
-#include "CCBSequenceProperty.h"
+#include "editor-support/cocosbuilder/CCBSequence.h"
+#include "editor-support/cocosbuilder/CCBKeyframe.h"
+#include "editor-support/cocosbuilder/CCBSequenceProperty.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 
 namespace cocosbuilder {

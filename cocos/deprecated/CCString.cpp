@@ -28,7 +28,7 @@ Copyright (c) 2013-2014 Chukong Technologies
 #include "base/ccMacros.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "CCArray.h"
+#include "deprecated/CCArray.h"
 #include "base/ccUtils.h"
 
 NS_CC_BEGIN

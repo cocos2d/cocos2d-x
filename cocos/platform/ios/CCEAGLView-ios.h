@@ -71,7 +71,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <OpenGLES/ES2/glext.h>
 #import <CoreFoundation/CoreFoundation.h>
 
-#import "CCESRenderer-ios.h"
+#import "platform/ios/CCESRenderer-ios.h"
 
 //CLASS INTERFACE:
 

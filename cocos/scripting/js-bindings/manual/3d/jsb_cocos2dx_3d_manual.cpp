@@ -23,9 +23,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "jsb_cocos2dx_3d_manual.h"
-#include "cocos2d_specifics.hpp"
-#include "jsb_cocos2dx_3d_auto.hpp"
+#include "scripting/js-bindings/manual/3d/jsb_cocos2dx_3d_manual.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_3d_auto.hpp"
 #include "3d/CCBundle3D.h"
 
 using namespace cocos2d;

@@ -21,14 +21,14 @@
  * THE SOFTWARE.
  */
 
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "cocos2d.h"
 #include <typeinfo>
-#include "js_bindings_config.h"
-#include "jsb_cocos2dx_auto.hpp"
-#include "jsb_event_dispatcher_manual.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_auto.hpp"
+#include "scripting/js-bindings/manual/jsb_event_dispatcher_manual.h"
 #include "navmesh/CCNavMesh.h"
-#include "component/CCComponentJS.h"
+#include "scripting/js-bindings/manual/component/CCComponentJS.h"
 using namespace cocos2d;
 
 schedFunc_proxy_t *_schedFunc_target_ht = NULL;

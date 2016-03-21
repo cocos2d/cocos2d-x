@@ -31,9 +31,9 @@
 #include "chipmunk/chipmunk.h"
 #include "chipmunk/chipmunk_unsafe.h"
 
-#include "CCPhysicsBody.h"
-#include "CCPhysicsWorld.h"
-#include "CCPhysicsHelper.h"
+#include "physics/CCPhysicsBody.h"
+#include "physics/CCPhysicsWorld.h"
+#include "physics/CCPhysicsHelper.h"
 
 NS_CC_BEGIN
 extern const float PHYSICS_INFINITY;

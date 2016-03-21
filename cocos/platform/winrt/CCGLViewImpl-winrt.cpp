@@ -23,14 +23,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCGLViewImpl-winrt.h"
+#include "platform/winrt/CCGLViewImpl-winrt.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
 #include "base/CCTouch.h"
 #include "base/CCIMEDispatcher.h"
 #include "base/CCEventListenerKeyboard.h"
-#include "CCApplication.h"
-#include "CCWinRTUtils.h"
+#include "platform/winrt/CCApplication.h"
+#include "platform/winrt/CCWinRTUtils.h"
 #include "deprecated/CCNotificationCenter.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"

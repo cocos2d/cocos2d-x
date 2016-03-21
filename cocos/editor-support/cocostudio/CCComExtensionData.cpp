@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCComExtensionData.h"
-#include "cocostudio/ActionTimeline/CCActionTimeline.h"
+#include "editor-support/cocostudio/CCComExtensionData.h"
+#include "editor-support/cocostudio/ActionTimeline/CCActionTimeline.h"
 
 namespace cocostudio
 {

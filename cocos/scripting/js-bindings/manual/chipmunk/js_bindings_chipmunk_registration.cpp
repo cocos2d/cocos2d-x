@@ -25,14 +25,14 @@
 #define JSB_INCLUDE_CHIPMUNK
 #endif
 
-#include "js_bindings_config.h"
-#include "ScriptingCore.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
 
 
 // chipmunk
-#include "js_bindings_chipmunk_auto_classes.h"
-#include "js_bindings_chipmunk_functions.h"
-#include "js_bindings_chipmunk_manual.h"
+#include "scripting/js-bindings/auto/js_bindings_chipmunk_auto_classes.h"
+#include "scripting/js-bindings/auto/js_bindings_chipmunk_functions.h"
+#include "scripting/js-bindings/manual/chipmunk/js_bindings_chipmunk_manual.h"
 
 
 void jsb_register_chipmunk(JSContext* cx, JS::HandleObject object)
@@ -47,8 +47,8 @@ void jsb_register_chipmunk(JSContext* cx, JS::HandleObject object)
     JS_SetProperty(cx, object, "cp", chipmunkVal);
     
     JSB_cpBase_createClass(cx, chipmunk, "Base");  // manual base class registration
-#include "js_bindings_chipmunk_auto_classes_registration.h"
-#include "js_bindings_chipmunk_functions_registration.h"
+#include "scripting/js-bindings/auto/js_bindings_chipmunk_auto_classes_registration.h"
+#include "scripting/js-bindings/auto/js_bindings_chipmunk_functions_registration.h"
 
     // manual
     JS_DefineFunction(cx, chipmunk, "spaceAddCollisionHandler", JSB_cpSpaceAddCollisionHandler, 8, JSPROP_PERMANENT | JSPROP_ENUMERATE );

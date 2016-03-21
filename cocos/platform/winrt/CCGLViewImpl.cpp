@@ -26,13 +26,13 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
-#include "CCGLViewImpl.h"
+#include "platform/winrt/CCGLViewImpl.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
 #include "base/CCTouch.h"
 #include "base/CCIMEDispatcher.h"
-#include "CCApplication.h"
-#include "CCWinRTUtils.h"
+#include "platform/winrt/CCApplication.h"
+#include "platform/winrt/CCWinRTUtils.h"
 
 #if (_MSC_VER >= 1800)
 #include <d3d11_2.h>

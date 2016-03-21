@@ -27,7 +27,7 @@
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#include "CCDevice.h"
+#include "platform/CCDevice.h"
 #include "base/ccTypes.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventAcceleration.h"

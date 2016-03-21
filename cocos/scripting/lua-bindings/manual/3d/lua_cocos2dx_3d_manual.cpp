@@ -21,10 +21,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "lua_cocos2dx_3d_manual.h"
-#include "lua_cocos2dx_3d_auto.hpp"
-#include "LuaBasicConversions.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/3d/lua_cocos2dx_3d_manual.h"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_3d_auto.hpp"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "3d/CCBundle3D.h"
 
 extern int lua_cocos2dx_3d_Sprite3D_setBlendFunc(lua_State* L);

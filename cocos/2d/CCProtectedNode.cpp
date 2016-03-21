@@ -26,7 +26,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCProtectedNode.h"
+#include "2d/CCProtectedNode.h"
 
 #include "base/CCDirector.h"
 #include "2d/CCScene.h"

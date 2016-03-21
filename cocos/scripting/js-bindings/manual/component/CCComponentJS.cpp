@@ -24,11 +24,11 @@
 
 #include "jsapi.h"
 #include "mozilla/Maybe.h"
-#include "CCComponentJS.h"
+#include "scripting/js-bindings/manual/component/CCComponentJS.h"
 #include "base/CCScriptSupport.h"
-#include "ScriptingCore.h"
-#include "cocos2d_specifics.hpp"
-#include "js_manual_conversions.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
 
 NS_CC_BEGIN
 

@@ -26,8 +26,8 @@
 #define __cocos2d_libs__ProjectNodeReader__
 
 #include "base/CCRef.h"
-#include "cocostudio/CocosStudioExport.h"
-#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderProtocol.h"
 
 
 namespace cocostudio

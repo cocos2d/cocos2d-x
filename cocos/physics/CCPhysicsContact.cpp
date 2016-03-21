@@ -21,12 +21,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "CCPhysicsContact.h"
+#include "physics/CCPhysicsContact.h"
 #if CC_USE_PHYSICS
 #include "chipmunk/chipmunk.h"
 
-#include "CCPhysicsBody.h"
-#include "CCPhysicsHelper.h"
+#include "physics/CCPhysicsBody.h"
+#include "physics/CCPhysicsHelper.h"
 #include "base/CCEventCustom.h"
 
 NS_CC_BEGIN

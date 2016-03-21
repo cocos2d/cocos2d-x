@@ -21,12 +21,12 @@
  * THE SOFTWARE.
  */
 
-#include "jsb_websocket.h"
+#include "scripting/js-bindings/manual/network/jsb_websocket.h"
 #include "cocos2d.h"
 #include "network/WebSocket.h"
-#include "spidermonkey_specifics.h"
-#include "ScriptingCore.h"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/spidermonkey_specifics.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 
 using namespace cocos2d::network;
 

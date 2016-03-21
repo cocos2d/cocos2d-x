@@ -22,9 +22,9 @@
  * THE SOFTWARE.
  */
 
-#include "js_bindings_ccbreader.h"
-#include "ScriptingCore.h"
-#include "js_bindings_config.h"
+#include "scripting/js-bindings/manual/cocosbuilder/js_bindings_ccbreader.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
