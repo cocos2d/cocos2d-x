@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "CCUISingleLineTextField.h"
+#import "ui/UIEditBox/Mac/CCUISingleLineTextField.h"
 #include "ui/UIEditBox/Mac/CCUITextFieldFormatter.h"
 
 @interface CCUISingleLineTextField()

@@ -37,7 +37,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "iOS/CCUIEditBoxIOS.h"
+#import "ui/UIEditBox/iOS/CCUIEditBoxIOS.h"
 
 #define getEditBoxImplIOS() ((cocos2d::ui::EditBoxImplIOS *)_editBox)
 

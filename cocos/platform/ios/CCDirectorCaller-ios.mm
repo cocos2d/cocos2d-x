@@ -26,13 +26,13 @@
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#import "CCDirectorCaller-ios.h"
+#import "platform/ios/CCDirectorCaller-ios.h"
 
 #import <Foundation/Foundation.h>
 #import <OpenGLES/EAGL.h>
 
 #import "base/CCDirector.h"
-#import "CCEAGLView-ios.h"
+#import "platform/ios/CCEAGLView-ios.h"
 
 static id s_sharedDirectorCaller;
 

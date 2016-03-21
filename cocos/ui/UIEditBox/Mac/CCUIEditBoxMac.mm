@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "CCUIEditBoxMac.h"
+#import "ui/UIEditBox/Mac/CCUIEditBoxMac.h"
 #include "base/CCDirector.h"
 #include "ui/UIEditBox/Mac/CCUISingleLineTextField.h"
 #include "ui/UIEditBox/Mac/CCUIPasswordTextField.h"

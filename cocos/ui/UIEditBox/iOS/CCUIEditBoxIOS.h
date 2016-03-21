@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 #import <UIKit/UIKit.h>
-#import "CCUITextInput.h"
+#import "ui/UIEditBox/iOS/CCUITextInput.h"
 #include "ui/UIEditBox/UIEditBoxImpl-ios.h"
 
 

@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "CCUIPasswordTextField.h"
+#import "ui/UIEditBox/Mac/CCUIPasswordTextField.h"
 #include "ui/UIEditBox/Mac/CCUITextFieldFormatter.h"
 
 @interface CCUIPasswordTextField()

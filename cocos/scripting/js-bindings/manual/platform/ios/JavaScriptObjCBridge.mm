@@ -22,7 +22,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "JavaScriptObjCBridge.h"
+#import "scripting/js-bindings/manual/platform/ios/JavaScriptObjCBridge.h"
 #include "scripting/js-bindings/manual/spidermonkey_specifics.h"
 #include "scripting/js-bindings/manual/ScriptingCore.h"
 #include "scripting/js-bindings/manual/js_manual_conversions.h"
