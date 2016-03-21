@@ -3,10 +3,43 @@
 
 import os, re, argparse, sys
 import posixpath
-path = posixpath
 
-def forward_slashe(p):
-  return p.replace('\\', '/')
+class Path:
+  @staticmethod
+  def _forward_slash(p):
+    return p.replace(os.path.sep, '/')
+
+  @staticmethod
+  def join(p, *paths):
+    return Path._forward_slash(posixpath.join(p, *paths))
+
+  @staticmethod
+  def abspath(p):
+    return Path._forward_slash(posixpath.abspath(p))
+
+  @staticmethod
+  def normpath(p):
+    return Path._forward_slash(posixpath.normpath(p))
+
+  @staticmethod
+  def relpath(p, s):
+    return Path._forward_slash(posixpath.relpath(p, s))
+
+  @staticmethod
+  def exists(p):
+    return os.path.exists(p)
+
+  @staticmethod
+  def basename(p):
+    return posixpath.basename(p)
+
+  @staticmethod
+  def extname(p):
+    return posixpath.splitext(p)[1]
+
+  @staticmethod
+  def dirname(p):
+    return posixpath.dirname(p)
 
 class LintContext:
   def __init__(self, root, fix):
@@ -31,12 +64,8 @@ class LintContext:
     self.headers = []
     for root, dirnames, filenames in os.walk(top):
       for f in filenames:
-        p = path.join(root, f)
-        print('Joind:', p)
-        p = path.relpath(p, top)
-        print('Relpath:', p)
-        p = forward_slashe(p)
-        print('Forward Slash:', p)
+        p = Path.relpath(Path.join(root, f), top)
+        print(Path.join(root, f), top, p)
         if self._source_to_lint(p):
           self.sources.append(p)
         if self._is_header(p):
@@ -45,18 +74,18 @@ class LintContext:
   def _source_to_lint(self, p):
     if p in self.exclude:
       return False
-    ext = path.splitext(p)[1]
+    ext = Path.extname(p)
     return ext in self.source_exts
 
   def _is_header(self, name):
-    return path.splitext(name)[1] in self.header_exts
+    return Path.extname(name) in self.header_exts
 
   # find headers have unique base filenames
   # this is used to get included headers in other search paths
   def _scan_unique_headers(self, headers):
     known = {}
     for f in headers:
-      name = path.basename(f)
+      name = Path.basename(f)
       if known.has_key(name):
         known[name].append(f)
       else:
@@ -68,19 +97,17 @@ class LintContext:
     self.uniq = uniq
 
   def in_search_path(self, filename):
-    return path.exists(path.join(self.root, filename))
+    return Path.exists(Path.join(self.root, filename))
 
   def find_uniq(self, basename):
     return self.uniq[basename] if self.uniq.has_key(basename) else None
 
   def get_include_path(self, original, directory):
     # 1. try search in uniq cocos header names
-    p = self.find_uniq(path.basename(original))
-    print('Uniq:', p)
+    p = self.find_uniq(Path.basename(original))
     if not p:
       # 2. try search in current header directory
-      p = path.normpath(path.join(directory, original))
-      print('Uniq:', p)
+      p = Path.normpath(Path.join(directory, original))
       if not self.in_search_path(p):
         return None
     return p
@@ -91,20 +118,20 @@ def fix(match, cwd, ctx, fixed):
   if ctx.in_search_path(h):
     return match.group(0)
 
-  path = ctx.get_include_path(h, cwd)
-  if not path:
+  p = ctx.get_include_path(h, cwd)
+  if not p:
     return match.group(0)
 
   ctx.errors += 1
-  fixed[h] = path
-  return '#include "%s"' % (path)
+  fixed[h] = p
+  return '#include "%s"' % (p)
 
 def lint_one(header, ctx):
-  cwd = path.dirname(header)
+  cwd = Path.dirname(header)
   if not cwd:
     return
 
-  filename = path.join(ctx.root, header)
+  filename = Path.join(ctx.root, header)
   content = open(filename, 'r').read()
   fixed = {}
   # check all #include "header.*"
@@ -135,12 +162,12 @@ def lint(ctx):
 
 
 def main():
-  default_root = path.abspath(path.join(path.dirname(__file__), '..', '..'))
+  default_root = Path.abspath(Path.join(Path.dirname(__file__), '..', '..'))
   parser = argparse.ArgumentParser(description='The cocos headers lint script.')
   parser.add_argument('-f','--fix', action='store_true', help='fixe the headers while linting')
   parser.add_argument('root', nargs='?', default= default_root, help='path to cocos2d-x source root directory')
   args = parser.parse_args()
 
-  lint(LintContext(path.join(args.root, 'cocos'), args.fix))
+  lint(LintContext(Path.join(args.root, 'cocos'), args.fix))
 
 main()
