@@ -3,8 +3,15 @@
 
 import os, re, argparse, sys
 
-class LintCtx:
+class LintContext:
   def __init__(self, root, fix):
+    self.exclude = [
+      # we are leaving win8.1 and winrt pch.cpp unchanged.
+      'platform/win8.1-universal/pch.cpp',
+      'platform/winrt/pch.cpp'
+    ]
+    self.source_exts = ['.h','.hpp','.inl','.c','.cpp', '.m', '.mm']
+    self.header_exts = ['.h','.hpp','.inl']
     self.root = root
     self.fix = fix
     self.errors = 0
@@ -17,16 +24,24 @@ class LintCtx:
     headers = []
     sources = []
     for root, dirnames, filenames in os.walk(top):
-      sources += [os.path.join(root, f)[len(top)+1:] for f in filenames if os.path.splitext(f)[1][1:] in '.h|.hpp|.inl|.c|.cpp']
-    self.headers = [f for f in sources if os.path.splitext(f)[1][1:] in '.h|.hpp|.inl']
+      sources += [os.path.join(root, f)[len(top)+1:] for f in filenames if self._source_to_lint(root, f)]
+    self.headers = [f for f in sources if self._is_header(f)]
     self.sources = sources
+
+  def _source_to_lint(self, directory, name):
+    if os.path.relpath(os.path.join(directory, name), self.root) in self.exclude:
+      return False
+    ext = os.path.splitext(name)[1]
+    return ext in self.source_exts
+
+  def _is_header(self, name):
+    return os.path.splitext(name)[1] in self.header_exts
 
   # find headers have unique base filenames
   # this is used to get included headers in other search paths
   def _scan_unique_headers(self, headers):
     known = {}
     for f in headers:
-      #f = f[len(root)+1:]
       name = os.path.basename(f)
       if known.has_key(name):
         known[name].append(f)
@@ -59,7 +74,6 @@ def fix(match, cwd, ctx, fixed):
   # return original if already in search path (cocos directory)
   if ctx.in_search_path(h):
     return match.group(0)
-
 
   path = ctx.get_include_path(h, cwd)
   if not path:
@@ -111,6 +125,6 @@ def main():
   parser.add_argument('root', nargs='?', default= default_root, help='path to cocos2d-x source root directory')
   args = parser.parse_args()
 
-  lint(LintCtx(os.path.join(args.root, 'cocos'), args.fix))
+  lint(LintContext(os.path.join(args.root, 'cocos'), args.fix))
 
 main()
