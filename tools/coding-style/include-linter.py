@@ -23,18 +23,21 @@ class LintContext:
     self._scan_unique_headers(self.headers)
 
   def _scan_source(self, top):
-    # find all headers relative to self.root
-    headers = []
-    sources = []
+    # find all sources and headers relative to self.root
+    self.sources = []
+    self.headers = []
     for root, dirnames, filenames in os.walk(top):
-      sources += [path.join(root, f)[len(top)+1:] for f in filenames if self._source_to_lint(root, f)]
-    self.headers = [f for f in sources if self._is_header(f)]
-    self.sources = sources
+      for f in filenames:
+        p = path.relpath(path.join(root, f), top).replace('\\', '/')
+        if self._source_to_lint(p):
+          self.sources.append(p)
+        if self._is_header(p):
+          self.headers.append(p)
 
-  def _source_to_lint(self, directory, name):
-    if path.relpath(path.join(directory, name), self.root) in self.exclude:
+  def _source_to_lint(self, p):
+    if p in self.exclude:
       return False
-    ext = path.splitext(name)[1]
+    ext = path.splitext(p)[1]
     return ext in self.source_exts
 
   def _is_header(self, name):
