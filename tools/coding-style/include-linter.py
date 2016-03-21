@@ -5,9 +5,12 @@ import os, re, argparse, sys
 import posixpath
 path = posixpath
 
+def forward_slashe(p):
+  return p.replace('\\', '/')
 
 class LintContext:
   def __init__(self, root, fix):
+    print('Creating LintContext in directory:', root)
     self.exclude = [
       # we are leaving win8.1 and winrt pch.cpp unchanged.
       'platform/win8.1-universal/pch.cpp',
@@ -28,7 +31,12 @@ class LintContext:
     self.headers = []
     for root, dirnames, filenames in os.walk(top):
       for f in filenames:
-        p = path.relpath(path.join(root, f), top).replace('\\', '/')
+        p = path.join(root, f)
+        print('Joind:', p)
+        p = path.relpath(p, top)
+        print('Relpath:', p)
+        p = forward_slashe(p)
+        print('Forward Slash:', p)
         if self._source_to_lint(p):
           self.sources.append(p)
         if self._is_header(p):
@@ -68,9 +76,11 @@ class LintContext:
   def get_include_path(self, original, directory):
     # 1. try search in uniq cocos header names
     p = self.find_uniq(path.basename(original))
+    print('Uniq:', p)
     if not p:
       # 2. try search in current header directory
       p = path.normpath(path.join(directory, original))
+      print('Uniq:', p)
       if not self.in_search_path(p):
         return None
     return p
