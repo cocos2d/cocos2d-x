@@ -1,8 +1,8 @@
-#include "scripting/lua-bindings/auto/lua_cocos2dx_physics3d_auto.hpp"
+#include "lua_cocos2dx_physics3d_auto.hpp"
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
-#include "physics3d/CCPhysics3D.h"
-#include "scripting/lua-bindings/manual/tolua_fix.h"
-#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "CCPhysics3D.h"
+#include "tolua_fix.h"
+#include "LuaBasicConversions.h"
 
 
 int lua_cocos2dx_physics3d_Physics3DShape_getbtShape(lua_State* tolua_S)

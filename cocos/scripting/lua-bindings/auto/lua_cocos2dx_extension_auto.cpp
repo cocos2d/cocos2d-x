@@ -1,7 +1,7 @@
-#include "scripting/lua-bindings/auto/lua_cocos2dx_extension_auto.hpp"
+#include "lua_cocos2dx_extension_auto.hpp"
 #include "cocos-ext.h"
-#include "scripting/lua-bindings/manual/tolua_fix.h"
-#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "tolua_fix.h"
+#include "LuaBasicConversions.h"
 
 
 int lua_cocos2dx_extension_Control_setEnabled(lua_State* tolua_S)
