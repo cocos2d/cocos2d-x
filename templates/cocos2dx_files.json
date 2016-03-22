@@ -6730,7 +6730,6 @@
         "cocos/scripting/lua-bindings/auto/api/PhysicsContact.lua", 
         "cocos/scripting/lua-bindings/auto/api/PhysicsContactPostSolve.lua", 
         "cocos/scripting/lua-bindings/auto/api/PhysicsContactPreSolve.lua", 
-        "cocos/scripting/lua-bindings/auto/api/PhysicsDebugDraw.lua", 
         "cocos/scripting/lua-bindings/auto/api/PhysicsJoint.lua", 
         "cocos/scripting/lua-bindings/auto/api/PhysicsJointDistance.lua", 
         "cocos/scripting/lua-bindings/auto/api/PhysicsJointFixed.lua", 
