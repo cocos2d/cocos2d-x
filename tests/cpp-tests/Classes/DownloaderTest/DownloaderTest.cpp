@@ -27,7 +27,7 @@
 
 #include "../testResource.h"
 
-#include "cocos/ui/UILoadingBar.h"
+#include "ui/UILoadingBar.h"
 #include "network/CCDownloader.h"
 
 USING_NS_CC;

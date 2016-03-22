@@ -1,8 +1,8 @@
-#include "jsb_cocos2dx_physics3d_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_physics3d_auto.hpp"
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
-#include "cocos2d_specifics.hpp"
-#include "CCPhysics3D.h"
-#include "physics3d/jsb_cocos2dx_physics3d_manual.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "physics3d/CCPhysics3D.h"
+#include "scripting/js-bindings/manual/physics3d/jsb_cocos2dx_physics3d_manual.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp)

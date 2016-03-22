@@ -1,5 +1,5 @@
-#include "jsb_cocos2dx_extension_auto.hpp"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_extension_auto.hpp"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "cocos-ext.h"
 
 template<class T>
