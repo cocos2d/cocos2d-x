@@ -194,7 +194,7 @@ void EditBoxImplAndroid::nativeOpenKeyboard()
 
 void EditBoxImplAndroid::nativeCloseKeyboard()
 {
-    JniHelper::callStaticVoidMethod(editBoxClassName, "clearFocus", _editBoxIndex);
+    JniHelper::callStaticVoidMethod(editBoxClassName, "closeKeyboard", _editBoxIndex);
 }
 
 void editBoxEditingDidBegin(int index)

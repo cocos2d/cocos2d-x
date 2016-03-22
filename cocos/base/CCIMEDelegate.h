@@ -79,13 +79,6 @@ public:
      */
     virtual bool detachWithIME();
 
-    /**
-     * Check whether the IME is attached or not.
-     * @js NA
-     * @lua NA
-     */
-    virtual bool isAttachedWithIME();
-
 protected:
     friend class IMEDispatcher;
 
