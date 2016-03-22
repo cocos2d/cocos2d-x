@@ -52,15 +52,15 @@ public:
     // Iterators
     // ------------------------------------------
     
-    /** Iterator, can be used to loop the Vector. */
-    typedef typename std::vector<T>::iterator iterator;
-    /** Const iterator, can be used to loop the Vector. */
-    typedef typename std::vector<T>::const_iterator const_iterator;
-    
-    /** Reversed iterator, can be used to loop the Vector in reverse sequence. */
-    typedef typename std::vector<T>::reverse_iterator reverse_iterator;
-    /** Reversed iterator, can be used to loop the Vector in reverse sequence. */
-    typedef typename std::vector<T>::const_reverse_iterator const_reverse_iterator;
+	/** Iterator, can be used to loop the Vector. */
+	using iterator = typename std::vector<T>::iterator;
+	/** Const iterator, can be used to loop the Vector. */
+	using const_iterator = typename std::vector<T>::const_iterator;
+
+	/** Reversed iterator, can be used to loop the Vector in reverse sequence. */
+	using reverse_iterator = typename std::vector<T>::reverse_iterator;
+	/** Reversed iterator, can be used to loop the Vector in reverse sequence. */
+	using const_reverse_iterator = typename std::vector<T>::const_reverse_iterator;
     
     /** Returns an iterator pointing the first element of the Vector. */
     iterator begin() { return _data.begin(); }
