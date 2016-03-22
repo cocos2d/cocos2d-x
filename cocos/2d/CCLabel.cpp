@@ -630,6 +630,7 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& ima
     _bmFontPath = bmfontFilePath;
 
     _currentLabelType = LabelType::BMFONT;
+    _systemFontDirty = false;
     setFontAtlas(newAtlas);
 
     return true;
