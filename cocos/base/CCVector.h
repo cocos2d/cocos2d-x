@@ -125,6 +125,15 @@ public:
         reserve(capacity);
     }
 
+	/** Constructor with initializer list. */
+	Vector<T>(std::initializer_list<T> list)
+	{
+		for (auto& element : list)
+		{
+			pushBack(element);
+		}
+	}
+
     /** Destructor. */
     ~Vector<T>()
     {
