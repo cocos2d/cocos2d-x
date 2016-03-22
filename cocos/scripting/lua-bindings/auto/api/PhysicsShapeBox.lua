@@ -22,6 +22,7 @@
 -- @param #size_table size
 -- @param #cc.PhysicsMaterial material
 -- @param #vec2_table offset
+-- @param #float radius
 -- @return PhysicsShapeBox#PhysicsShapeBox ret (return value: cc.PhysicsShapeBox)
         
 --------------------------------
