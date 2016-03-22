@@ -312,28 +312,14 @@ public class Cocos2dxEditBoxHelper {
                         editBox.requestFocus();
                         Cocos2dxEditBoxHelper.openKeyboard(index);
                     }else{
-                        if (editBox == mCocos2dxActivity.getCurrentFocus()) {
-                            mCocos2dxActivity.getGLSurfaceView().requestFocus();
-                            Cocos2dxEditBoxHelper.closeKeyboard(index);
-                        }
+                        mCocos2dxActivity.getGLSurfaceView().requestFocus();
+                        Cocos2dxEditBoxHelper.closeKeyboard(index);
                     }
                 }
             }
         });
     }
 
-    public static void clearFocus(final int index) {
-        mCocos2dxActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Cocos2dxEditBox editBox = mEditBoxArray.get(index);
-                if (editBox != null && editBox == mCocos2dxActivity.getCurrentFocus()) {
-                    mCocos2dxActivity.getGLSurfaceView().requestFocus();
-                    Cocos2dxEditBoxHelper.closeKeyboard(index);
-                }
-            }
-        });
-    }
 
     public static void setText(final int index, final String text){
         mCocos2dxActivity.runOnUiThread(new Runnable() {
