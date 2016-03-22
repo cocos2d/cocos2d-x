@@ -4,7 +4,6 @@
 #include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
-
 int lua_cocos2dx_audioengine_AudioProfile_constructor(lua_State* tolua_S)
 {
     int argc = 0;
