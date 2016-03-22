@@ -2,7 +2,7 @@
 
 #include "app.g.h"
 #include "platform/win8.1-universal/OpenGLES.h"
-#include "openglespage.xaml.h"
+#include "platform/win8.1-universal/OpenGLESPage.xaml.h"
 
 namespace CocosAppWinRT
 {

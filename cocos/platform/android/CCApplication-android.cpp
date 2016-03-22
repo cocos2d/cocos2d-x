@@ -27,7 +27,7 @@ THE SOFTWARE.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #include "platform/android/jni/JniHelper.h"
-#include "CCApplication.h"
+#include "platform/CCApplication.h"
 #include "base/CCDirector.h"
 #include <android/log.h>
 #include <jni.h>
@@ -70,7 +70,7 @@ int Application::run()
     {
         return 0;
     }
-    
+
     return -1;
 }
 
@@ -107,7 +107,7 @@ LanguageType Application::getCurrentLanguage()
     std::string languageName = JniHelper::callStaticStringMethod(helperClassName, "getCurrentLanguage");
     const char* pLanguageName = languageName.c_str();
     LanguageType ret = LanguageType::ENGLISH;
-    
+
     if (0 == strcmp("zh", pLanguageName))
     {
         ret = LanguageType::CHINESE;
@@ -209,4 +209,3 @@ void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-
