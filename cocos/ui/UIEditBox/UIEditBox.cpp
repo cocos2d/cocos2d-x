@@ -63,7 +63,7 @@ EditBox::~EditBox(void)
 void EditBox::touchDownAction(Ref *sender, TouchEventType controlEvent)
 {
     if (controlEvent == Widget::TouchEventType::ENDED) {
-        attachWithIME();
+        _editBoxImpl->openKeyboard();
     }
 }
 
@@ -455,7 +455,7 @@ void EditBox::onExit(void)
     if (_editBoxImpl != nullptr)
     {
         // remove system edit control
-        detachWithIME();
+        _editBoxImpl->closeKeyboard();
     }
 }
 
@@ -525,16 +525,6 @@ void EditBox::unregisterScriptEditBoxHandler(void)
     }
 }
 #endif
-
-void EditBox::didAttachWithIME()
-{
-    _editBoxImpl->openKeyboard();
-}
-
-void EditBox::didDetachWithIME()
-{
-    _editBoxImpl->closeKeyboard();
-}
 
 }
 

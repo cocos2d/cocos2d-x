@@ -1,7 +1,7 @@
 #include "extensions/cocos-ext.h"
 #include "../ExtensionsTest.h"
 #include "SceneEditorTest.h"
-#include "cocostudio/CocoStudio.h"
+#include "editor-support/cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
 #include "TriggerCode/EventDef.h"
 #include "../../testResource.h"

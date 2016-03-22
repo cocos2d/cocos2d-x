@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
 #include "../../BaseTest.h"
-#include "cocostudio/CocoStudio.h"
+#include "editor-support/cocostudio/CocoStudio.h"
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 #include "../../Box2DTestBed/GLES-Render.h"

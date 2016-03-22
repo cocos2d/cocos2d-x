@@ -2,7 +2,7 @@
 #define __CONS_H__
 
 #include "cocos2d.h"
-#include "cocostudio/TriggerBase.h"
+#include "editor-support/cocostudio/TriggerBase.h"
 
 
 class TimeElapsed : public cocostudio::BaseTriggerCondition

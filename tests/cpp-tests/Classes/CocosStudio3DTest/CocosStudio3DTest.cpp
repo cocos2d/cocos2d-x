@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 #include "CocosStudio3DTest.h"
-#include "cocostudio/CocoStudio.h"
+#include "editor-support/cocostudio/CocoStudio.h"
 
 USING_NS_CC;
 

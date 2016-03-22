@@ -6285,16 +6285,6 @@ int
 },
 
 /**
- * @method canAttachWithIME
- * @return {bool}
- */
-canAttachWithIME : function (
-)
-{
-    return false;
-},
-
-/**
  * @method setPlaceholderFontName
  * @param {char} arg0
  */
@@ -6325,16 +6315,6 @@ char
 },
 
 /**
- * @method canDetachWithIME
- * @return {bool}
- */
-canDetachWithIME : function (
-)
-{
-    return false;
-},
-
-/**
  * @method setText
  * @param {char} arg0
  */
@@ -6350,14 +6330,6 @@ char
  */
 setPlaceholderFontSize : function (
 int 
-)
-{
-},
-
-/**
- * @method didAttachWithIME
- */
-didAttachWithIME : function (
 )
 {
 },
@@ -6458,14 +6430,6 @@ getMaxLength : function (
 )
 {
     return 0;
-},
-
-/**
- * @method didDetachWithIME
- */
-didDetachWithIME : function (
-)
-{
 },
 
 /**

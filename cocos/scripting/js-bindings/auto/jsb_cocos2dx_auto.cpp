@@ -1,10 +1,10 @@
-#include "jsb_cocos2dx_auto.hpp"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_auto.hpp"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "cocos2d.h"
-#include "SimpleAudioEngine.h"
-#include "CCProtectedNode.h"
-#include "CCAsyncTaskPool.h"
-#include "component/CCComponentJS.h"
+#include "audio/include/SimpleAudioEngine.h"
+#include "2d/CCProtectedNode.h"
+#include "base/CCAsyncTaskPool.h"
+#include "scripting/js-bindings/manual/component/CCComponentJS.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -21,7 +21,7 @@ static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
-    return true;    
+    return true;
 }
 JSClass  *jsb_cocos2d_Texture2D_class;
 JSObject *jsb_cocos2d_Texture2D_prototype;

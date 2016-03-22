@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
-#include "cocostudio/CocoStudio.h"
+#include "editor-support/cocostudio/CocoStudio.h"
 #include "BaseTest.h"
 
 DEFINE_TEST_SUITE(CocoStudioSceneEditTests);

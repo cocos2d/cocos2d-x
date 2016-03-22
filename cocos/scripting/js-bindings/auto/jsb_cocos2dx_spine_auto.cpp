@@ -1,7 +1,7 @@
-#include "jsb_cocos2dx_spine_auto.hpp"
-#include "cocos2d_specifics.hpp"
-#include "spine-cocos2dx.h"
-#include "jsb_cocos2dx_spine_manual.h"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_spine_auto.hpp"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "editor-support/spine/spine-cocos2dx.h"
+#include "scripting/js-bindings/manual/spine/jsb_cocos2dx_spine_manual.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -18,7 +18,7 @@ static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
-    return true;    
+    return true;
 }
 JSClass  *jsb_spine_SkeletonRenderer_class;
 JSObject *jsb_spine_SkeletonRenderer_prototype;

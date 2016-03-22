@@ -45,7 +45,6 @@ include(deprecated/CMakeLists.txt)
 include(ui/CMakeLists.txt)
 include(network/CMakeLists.txt)
 include(audio/CMakeLists.txt)
-include_directories(audio/include)
 include(storage/CMakeLists.txt)
 
 if(BUILD_EDITOR_COCOSBUILDER)
