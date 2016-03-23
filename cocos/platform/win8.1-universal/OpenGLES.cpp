@@ -16,7 +16,7 @@
 * See the License for the specific language governing permissions and limitations under the License.
 */
 
-#include "platform/win8.1-universal/OpenGLES.h"
+#include "OpenGLES.h"
 using namespace Platform;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::Foundation;

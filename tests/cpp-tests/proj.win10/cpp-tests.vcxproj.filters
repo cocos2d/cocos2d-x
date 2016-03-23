@@ -383,6 +383,9 @@
     <Filter Include="Classes\UITest\CocoStudioGUITest\UIRadioButtonTest">
       <UniqueIdentifier>{fd63b656-b611-447b-b4a1-f2d11f92ff83}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\UITest\CocoStudioGUITest\UITabContorlTest">
+      <UniqueIdentifier>{c6bd28ea-2696-4d05-90b2-2646ed934a49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -953,6 +956,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp">
       <Filter>Classes\UITest\CocoStudioGUITest\UIRadioButtonTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.cpp">
+      <Filter>Classes\UITest\CocoStudioGUITest\UITabContorlTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1726,6 +1732,9 @@
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.h">
       <Filter>Classes\UITest\CocoStudioGUITest\UIRadioButtonTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.h">
+      <Filter>Classes\UITest\CocoStudioGUITest\UITabContorlTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -1735,7 +1744,6 @@
     <None Include="$(AngleBinPath)libEGL.dll" />
     <None Include="$(AngleBinPath)libGLESv2.dll" />
     <None Include="$(ZLibBinPath)zlib.dll" />
-    <None Include="$(WebsocketsBinPath)libwebsockets.dll" />
     <None Include="$(SQLiteBinPath)sqlite3.dll" />
     <None Include="$(OggBinPath)libogg.dll" />
     <None Include="$(OggBinPath)libvorbis.dll" />
