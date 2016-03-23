@@ -91,5 +91,6 @@
 #include "UserDefaultTest/UserDefaultTest.h"
 #include "VibrateTest/VibrateTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
+#include "SpriteFrameCacheTest/SpriteFrameCacheTest.h"
 
 #endif

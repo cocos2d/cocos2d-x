@@ -203,6 +203,7 @@ set(TESTS_SRC
   Classes/VisibleRect.cpp
   Classes/VibrateTest/VibrateTest.cpp
   Classes/ZwoptexTest/ZwoptexTest.cpp
+  Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp
   Classes/controller.cpp
   Classes/testBasic.cpp
   ${PLATFORM_SRC}

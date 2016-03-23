@@ -914,6 +914,9 @@
     <ClCompile Include="..\Classes\ZwoptexTest\ZwoptexTest.cpp">
       <Filter>Classes\ZwoptexTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.cpp">
+      <Filter>Classes\SpriteFrameCacheTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" />
     <ClCompile Include="..\..\..\cocos\platform\win8.1-universal\OpenGLES.cpp" />
     <ClCompile Include="..\..\..\cocos\platform\win8.1-universal\pch.cpp" />
@@ -1682,6 +1685,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ZwoptexTest\ZwoptexTest.h">
       <Filter>Classes\ZwoptexTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.h">
+      <Filter>Classes\SpriteFrameCacheTest</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\cocos\platform\win8.1-universal\Cocos2dRenderer.h" />
     <ClInclude Include="..\..\..\cocos\platform\win8.1-universal\OpenGLES.h" />
