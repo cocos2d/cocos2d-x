@@ -60,8 +60,6 @@ cocos2d.cpp \
 2d/CCLabelTextFormatter.cpp \
 2d/CCLayer.cpp \
 2d/CCLight.cpp \
-2d/CCMenu.cpp \
-2d/CCMenuItem.cpp \
 2d/CCMotionStreak.cpp \
 2d/CCNode.cpp \
 2d/CCNodeGrid.cpp \

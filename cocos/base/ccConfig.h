@@ -284,7 +284,7 @@ THE SOFTWARE.
 
 /** Use culling or not. */
 #ifndef CC_USE_CULLING
-#define CC_USE_CULLING 1
+#define CC_USE_CULLING 0
 #endif
 
 /** Support PNG or not. If your application don't use png format picture, you can undefine this macro to save package size.
@@ -380,7 +380,7 @@ THE SOFTWARE.
  * Specify audio API.
  */
 #ifndef CC_ENABLE_NEW_AUDIO_API
-#define CC_ENABLE_NEW_AUDIO_API 0
+#define CC_ENABLE_NEW_AUDIO_API 1
 #endif
 
 /** @def CC_USE_DEFAULT_CAMERA
