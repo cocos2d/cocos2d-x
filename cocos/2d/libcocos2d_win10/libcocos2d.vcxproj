@@ -540,6 +540,7 @@
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.cpp" />
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\TextAtlasReader\TextAtlasReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.cpp" />
@@ -662,6 +663,7 @@
     <ClCompile Include="..\..\ui\UIScrollView.cpp" />
     <ClCompile Include="..\..\ui\UIScrollViewBar.cpp" />
     <ClCompile Include="..\..\ui\UISlider.cpp" />
+    <ClCompile Include="..\..\ui\UITabControl.cpp" />
     <ClCompile Include="..\..\ui\UIText.cpp" />
     <ClCompile Include="..\..\ui\UITextAtlas.cpp" />
     <ClCompile Include="..\..\ui\UITextBMFont.cpp" />
@@ -1161,6 +1163,8 @@
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.h" />
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TabControlReader\CSTabControl_generated.h" />
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TextAtlasReader\TextAtlasReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.h" />
@@ -1244,6 +1248,7 @@
     <ClInclude Include="..\..\renderer\CCBatchCommand.h" />
     <ClInclude Include="..\..\renderer\CCCustomCommand.h" />
     <ClInclude Include="..\..\renderer\CCTextureCube.h" />
+    <ClInclude Include="..\..\ui\UITabControl.h" />
     <ClInclude Include="..\CCAutoPolygon.h" />
     <ClInclude Include="..\CCCameraBackgroundBrush.h" />
     <ClInclude Include="..\renderer\CCFrameBuffer.h" />
@@ -1528,34 +1533,34 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.10_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.11_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.10_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.11_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.10_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.11_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.10_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.11_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.10_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.11_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.10_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.11_Windows_10.0</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
