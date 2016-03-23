@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "app.g.h"
-#include "platform/win8.1-universal/OpenGLES.h"
+#include "OpenGLES.h"
 #include "openglespage.xaml.h"
 
 namespace CocosAppWinRT
