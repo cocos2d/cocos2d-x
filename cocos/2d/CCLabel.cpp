@@ -587,6 +587,7 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
     {
         _lineHeight = _fontAtlas->getLineHeight();
         _contentDirty = true;
+        _systemFontDirty = false;
     }
     _useDistanceField = distanceFieldEnabled;
     _useA8Shader = useA8Shader;
@@ -630,7 +631,6 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& ima
     _bmFontPath = bmfontFilePath;
 
     _currentLabelType = LabelType::BMFONT;
-    _systemFontDirty = false;
     setFontAtlas(newAtlas);
 
     return true;
@@ -950,7 +950,6 @@ bool Label::setTTFConfigInternal(const TTFConfig& ttfConfig)
         reset();
         return false;
     }
-    _systemFontDirty = false;
 
     _currentLabelType = LabelType::TTF;
     setFontAtlas(newAtlas,ttfConfig.distanceFieldEnabled,true);
