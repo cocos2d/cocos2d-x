@@ -40,6 +40,18 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+struct FileUtilsApple::IMPL {
+    IMPL(NSBundle* bundle):bundle_([NSBundle mainBundle]) {}
+    void setBundle(NSBundle* bundle) {
+        bundle_ = bundle;
+    }
+    NSBundle* getBundle() const {
+        return bundle_;
+    }
+private:
+    NSBundle* bundle_;
+};
+
 static void addValueToDict(id nsKey, id nsValue, ValueMap& dict);
 static void addObjectToNSDict(const std::string& key, const Value& value, NSMutableDictionary *dict);
 
@@ -306,18 +318,14 @@ static void addObjectToNSDict(const std::string& key, const Value& value, NSMuta
 }
 
 FileUtilsApple::FileUtilsApple() {
-    _bundle = [NSBundle mainBundle];
+    pimpl_ = new IMPL([NSBundle mainBundle]);
 }
 
-
+#ifdef FILEUTILS_APPLE_ENABLE_OBJC
 void FileUtilsApple::setBundle(NSBundle* bundle) {
-    _bundle = bundle;
+    pimpl_->setBundle(bundle);
 }
-
-NSBundle* FileUtilsApple::getBundle() const {
-    return _bundle;
-}
-
+#endif
 
 #pragma mark - FileUtils
 
@@ -378,7 +386,7 @@ bool FileUtilsApple::isFileExistInternal(const std::string& filePath) const
             file = filePath;
         }
 
-        NSString* fullpath = [getBundle() pathForResource:[NSString stringWithUTF8String:file.c_str()]
+        NSString* fullpath = [pimpl_->getBundle() pathForResource:[NSString stringWithUTF8String:file.c_str()]
                                                              ofType:nil
                                                         inDirectory:[NSString stringWithUTF8String:path.c_str()]];
         if (fullpath != nil) {
@@ -403,7 +411,7 @@ static int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, str
     {
         log("Fail to remove: %s ",fpath);
     }
-    
+
     return ret;
 }
 
@@ -425,7 +433,7 @@ std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string
 {
     if (directory[0] != '/')
     {
-        NSString* fullpath = [getBundle() pathForResource:[NSString stringWithUTF8String:filename.c_str()]
+        NSString* fullpath = [pimpl_->getBundle() pathForResource:[NSString stringWithUTF8String:filename.c_str()]
                                                              ofType:nil
                                                         inDirectory:[NSString stringWithUTF8String:directory.c_str()]];
         if (fullpath != nil) {
@@ -489,19 +497,19 @@ bool FileUtilsApple::writeToFile(const ValueMap& dict, const std::string &fullPa
 
 bool FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& fullPath)
 {
-    
+
     //CCLOG("iOS||Mac Dictionary %d write to file %s", dict->_ID, fullPath.c_str());
     NSMutableDictionary *nsDict = [NSMutableDictionary dictionary];
-    
+
     for (auto iter = dict.begin(); iter != dict.end(); ++iter)
     {
         addObjectToNSDict(iter->first, iter->second, nsDict);
     }
-    
+
     NSString *file = [NSString stringWithUTF8String:fullPath.c_str()];
     // do it atomically
     [nsDict writeToFile:file atomically:YES];
-    
+
     return true;
 }
 
@@ -509,14 +517,14 @@ bool FileUtils::writeValueVectorToFile(const ValueVector& vecData, const std::st
 {
     NSString* path = [NSString stringWithUTF8String:fullPath.c_str()];
     NSMutableArray* array = [NSMutableArray array];
-    
+
     for (const auto &e : vecData)
     {
         addObjectToNSArray(e, array);
     }
-    
+
     [array writeToFile:path atomically:YES];
-    
+
     return true;
 }
 ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename)
