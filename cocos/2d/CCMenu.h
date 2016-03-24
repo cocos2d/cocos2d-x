@@ -86,7 +86,7 @@ public:
 	static Menu* create(ItemType... item)
 	{
 		const int size = sizeof...(item);
-		MenuItem* items[size] = { item... };
+		MenuItem* items[size + 1] = { item... };
 
 		Vector<MenuItem*> itemVector;
 
