@@ -44,9 +44,13 @@ class Path:
 class LintContext:
   def __init__(self, root, fix):
     self.exclude = [
-      # we are leaving win8.1 and winrt pch.cpp unchanged.
+      # exclude some platform specific files.
+      'platform/win8.1-universal/Cocos2dRenderer.cpp',
+      'platform/win8.1-universal/OpenGLES.cpp',
+      'platform/win8.1-universal/OpenGLESPage.xaml.cpp',
+      'platform/win8.1-universal/OpenGLESPage.xaml.h',
       'platform/win8.1-universal/pch.cpp',
-      'platform/winrt/pch.cpp'
+      'platform/winrt/pch.cpp',
     ]
     self.source_exts = ['.h','.hpp','.inl','.c','.cpp', '.m', '.mm']
     self.header_exts = ['.h','.hpp','.inl']
