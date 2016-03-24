@@ -754,15 +754,21 @@ FontAtlas * FontFNT::createFontAtlas()
         return nullptr;
     
     // check that everything is fine with the BMFontCofniguration
-    if (!_configuration->_fontDefDictionary)
+    if (!_configuration->_fontDefDictionary) {
+        CC_SAFE_RELEASE(tempAtlas);
         return nullptr;
+    }
     
     size_t numGlyphs = _configuration->_characterSet->size();
-    if (!numGlyphs)
+    if (!numGlyphs) {
+        CC_SAFE_RELEASE(tempAtlas);
         return nullptr;
+    }
     
-    if (_configuration->_commonHeight == 0)
+    if (_configuration->_commonHeight == 0) {
+        CC_SAFE_RELEASE(tempAtlas);
         return nullptr;
+    }
     
     // common height
     int originalFontSize = _configuration->_fontSize;
@@ -813,8 +819,10 @@ FontAtlas * FontFNT::createFontAtlas()
     // add the texture (only one texture for now)
     
     Texture2D *tempTexture = Director::getInstance()->getTextureCache()->addImage(_configuration->getAtlasName());
-    if (!tempTexture)
-        return 0;
+    if (!tempTexture) {
+        CC_SAFE_RELEASE(tempAtlas);
+        return nullptr;
+    }
     
     // add the texture
     tempAtlas->addTexture(tempTexture, 0);
