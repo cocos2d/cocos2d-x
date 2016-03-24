@@ -26,6 +26,7 @@
 #ifndef __CC_FILEUTILS_APPLE_H__
 #define __CC_FILEUTILS_APPLE_H__
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -62,7 +63,7 @@ private:
     virtual bool removeDirectory(const std::string& dirPath) override;
 
     struct IMPL;
-    IMPL* pimpl_;
+    std::unique_ptr<IMPL> pimpl_;
 };
 
 // end of platform group

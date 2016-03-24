@@ -317,8 +317,7 @@ static void addObjectToNSDict(const std::string& key, const Value& value, NSMuta
     }
 }
 
-FileUtilsApple::FileUtilsApple() {
-    pimpl_ = new IMPL([NSBundle mainBundle]);
+FileUtilsApple::FileUtilsApple() : pimpl_(new IMPL([NSBundle mainBundle])) {
 }
 
 #ifdef FILEUTILS_APPLE_ENABLE_OBJC
