@@ -219,6 +219,9 @@ void SkeletonRenderer::drawSkeleton (const Mat4 &transform, uint32_t transformFl
 				_batch->flush();
 				blendMode = slot->data->blendMode;
 				switch (slot->data->blendMode) {
+				case SP_BLEND_MODE_NORMAL:
+					GL::blendFunc(_premultipliedAlpha ? GL_ONE : GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					break;
 				case SP_BLEND_MODE_ADDITIVE:
 					GL::blendFunc(_premultipliedAlpha ? GL_ONE : GL_SRC_ALPHA, GL_ONE);
 					break;
