@@ -125,6 +125,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>cpp-empty-test_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>8E2EFFE1B27ACCF9CDBF2D5496DEE796CE2E6569</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -150,7 +151,7 @@
       <DisableSpecificWarnings>4453;28204;4251;4244;4056;</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
@@ -178,7 +179,7 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templat
       <DisableSpecificWarnings>4453;28204;4251;4244;4056;</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
@@ -203,7 +204,7 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templat
       <DisableSpecificWarnings>4453;28204;4251;4244;4056;</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
@@ -231,7 +232,7 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templat
       <DisableSpecificWarnings>4453;28204;4251;4244;4056;</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
@@ -256,7 +257,7 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templat
       <DisableSpecificWarnings>4453;28204;4251;4244;4056;</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
@@ -284,7 +285,7 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templat
       <DisableSpecificWarnings>4453;28204;4251;4244;4056;</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>

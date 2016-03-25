@@ -18,13 +18,13 @@
 
 #pragma once
 
-#include "platform/win8.1-universal/OpenGLES.h"
+#include "OpenGLES.h"
 #include "OpenGLESPage.g.h"
 #include <memory>
 #include <condition_variable>
 #include <mutex>
 
-#include "platform/win8.1-universal/Cocos2dRenderer.h"
+#include "Cocos2dRenderer.h"
 
 namespace CocosAppWinRT
 {

@@ -1,5 +1,5 @@
 ﻿#include "App.xaml.h"
-#include "platform/win8.1-universal/OpenGLESPage.xaml.h"
+#include "OpenGLESPage.xaml.h"
 
 using namespace Platform;
 using namespace Windows::ApplicationModel;

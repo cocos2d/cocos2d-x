@@ -588,9 +588,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ZwoptexTest\ZwoptexTest.h">
       <Filter>Classes\ZwoptexTest</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.h">
-      <Filter>Classes\SpriteFrameCacheTest</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\UITest.h">
       <Filter>Classes\UITest</Filter>
     </ClInclude>
@@ -773,6 +770,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UITabControlTest</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionManagerTest\ActionManagerTest.cpp">
@@ -1158,9 +1156,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ZwoptexTest\ZwoptexTest.cpp">
       <Filter>Classes\ZwoptexTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.cpp">
-      <Filter>Classes\SpriteFrameCacheTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\UITest.cpp">
       <Filter>Classes\UITest</Filter>
@@ -1726,5 +1721,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.h">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UITabControlTest</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.h" />
   </ItemGroup>
 </Project>

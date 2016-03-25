@@ -125,6 +125,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>cpp-tests_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>41A5E0A283A14FFD10B4B42BB4458F11FD954DC1</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -149,7 +150,7 @@
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204;4251;4244;4056;4800;</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -163,7 +164,7 @@
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204;4251;4244;4056;</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -178,7 +179,7 @@
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204;4251;4244;4056;4800;</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -192,7 +193,7 @@
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204;4251;4244;4056;</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -207,7 +208,7 @@
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204;4251;4244;4056;4800;</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -221,7 +222,7 @@
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204;4251;4244;4056;</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -475,6 +476,7 @@
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest_Editor.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UISliderTest\UISliderTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UISliderTest\UISliderTest_Editor.h" />
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITextAtlasTest\UITextAtlasTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITextAtlasTest\UITextAtlasTest_Editor.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITextBMFontTest\UITextBMFontTest.h" />
@@ -691,6 +693,7 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest_Editor.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UISliderTest\UISliderTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UISliderTest\UISliderTest_Editor.cpp" />
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITextAtlasTest\UITextAtlasTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITextAtlasTest\UITextAtlasTest_Editor.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITextBMFontTest\UITextBMFontTest.cpp" />
