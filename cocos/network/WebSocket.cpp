@@ -558,7 +558,7 @@ void WebSocket::onSubThreadStarted()
         {
             "permessage-deflate",
             lws_extension_callback_pm_deflate,
-            "permessage-deflate; client_no_context_takeover; client_max_window_bits"
+            "permessage-deflate; client_max_window_bits"
         },
         {
             "deflate-frame",
