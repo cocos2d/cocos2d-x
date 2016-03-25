@@ -332,6 +332,16 @@ bool Camera::isVisibleInFrustum(const AABB* aabb) const
     return !_frustum.isOutOfFrustum(*aabb);
 }
 
+bool Camera::isVisibleInFrustum(const Rect& rect) const
+{
+    if (_frustumDirty)
+    {
+        _frustum.initFrustum(this);
+        _frustumDirty = false;
+    }
+    return !_frustum.isOutOfFrustum(rect);
+}
+
 float Camera::getDepthInView(const Mat4& transform) const
 {
     Mat4 camWorldMat = getNodeToWorldTransform();

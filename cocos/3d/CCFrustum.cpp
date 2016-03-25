@@ -54,6 +54,30 @@ bool Frustum::isOutOfFrustum(const AABB& aabb) const
     return false;
 }
 
+bool Frustum::isOutOfFrustum(const Rect& rect)
+{
+    if (_initialized)
+    {
+        Vec3 point;
+        
+        int plane = _clipZ ? 6 : 4;
+        float minX = rect.getMinX();
+        float maxX = rect.getMaxX();
+        float minY = rect.getMinY();
+        float maxY = rect.getMaxY();
+        for (int i = 0; i < plane; i++)
+        {
+            const Vec3& normal = _plane[i].getNormal();
+            point.x = normal.x < 0 ? maxX : minX;
+            point.y = normal.y < 0 ? maxY : minY;
+            
+            if (_plane[i].getSide(point) == PointSide::FRONT_PLANE )
+                return true;
+        }
+    }
+    return false;
+}
+
 bool Frustum::isOutOfFrustum(const OBB& obb) const
 {
     if (_initialized)

@@ -194,6 +194,11 @@ public:
     bool isVisibleInFrustum(const AABB* aabb) const;
     
     /**
+     * Is this rect visible in frustum
+     */
+    bool isVisibleInFrustum(const Rect& rect) const;
+    
+    /**
      * Get object depth towards camera
      */
     float getDepthInView(const Mat4& transform) const;
