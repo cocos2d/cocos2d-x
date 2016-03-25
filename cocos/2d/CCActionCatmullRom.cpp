@@ -2,7 +2,7 @@
  * Copyright (c) 2008 Radu Gruian
  * Copyright (c) 2011 Vit Valentin
  * Copyright (c) 2012 cocos2d-x.org
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,22 +44,15 @@ NS_CC_BEGIN;
 PointArray* PointArray::create(ssize_t capacity)
 {
     PointArray* pointArray = new (std::nothrow) PointArray();
-    if (pointArray)
+    if (pointArray && pointArray->initWithCapacity(capacity))
     {
-        if (pointArray->initWithCapacity(capacity))
-        {
-            pointArray->autorelease();
-        }
-        else 
-        {
-            delete pointArray;
-            pointArray = nullptr;
-        }
+        pointArray->autorelease();
+        return pointArray;
     }
 
-    return pointArray;
+    delete pointArray;
+    return nullptr;
 }
-
 
 bool PointArray::initWithCapacity(ssize_t capacity)
 {
@@ -70,7 +63,7 @@ bool PointArray::initWithCapacity(ssize_t capacity)
 
 PointArray* PointArray::clone() const
 {
-    vector<Vec2*> *newArray = new vector<Vec2*>();
+    vector<Vec2*> *newArray = new (std::nothrow) vector<Vec2*>();
     vector<Vec2*>::iterator iter;
     for (iter = _controlPoints->begin(); iter != _controlPoints->end(); ++iter)
     {

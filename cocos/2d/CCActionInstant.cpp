@@ -2,7 +2,7 @@
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
 
@@ -88,12 +88,10 @@ ActionInstant* Show::reverse() const
     return Hide::create();
 }
 
-Show * Show::clone() const
+Show* Show::clone() const
 {
     // no copy constructor
-    auto a = new (std::nothrow) Show();
-    a->autorelease();
-    return a;
+    return Show::create();
 }
 
 //
@@ -120,12 +118,10 @@ ActionInstant *Hide::reverse() const
     return Show::create();
 }
 
-Hide * Hide::clone() const
+Hide* Hide::clone() const
 {
     // no copy constructor
-    auto a = new (std::nothrow) Hide();
-    a->autorelease();
-    return a;
+    return Hide::create();
 }
 
 //
@@ -157,9 +153,7 @@ ToggleVisibility * ToggleVisibility::reverse() const
 ToggleVisibility * ToggleVisibility::clone() const
 {
     // no copy constructor
-    auto a = new (std::nothrow) ToggleVisibility();
-    a->autorelease();
-    return a;
+    return ToggleVisibility::create();
 }
 
 //
@@ -194,10 +188,7 @@ RemoveSelf *RemoveSelf::reverse() const
 RemoveSelf * RemoveSelf::clone() const
 {
     // no copy constructor
-    auto a = new (std::nothrow) RemoveSelf();
-    a->init(_isNeedCleanUp);
-    a->autorelease();
-    return a;
+    return RemoveSelf::create(_isNeedCleanUp);
 }
 
 //
@@ -235,10 +226,7 @@ FlipX* FlipX::reverse() const
 FlipX * FlipX::clone() const
 {
     // no copy constructor
-    auto a = new (std::nothrow) FlipX();
-    a->initWithFlipX(_flipX);
-    a->autorelease();
-    return a;
+    return FlipX::create(_flipX);
 }
 //
 // FlipY
@@ -275,10 +263,7 @@ FlipY* FlipY::reverse() const
 FlipY * FlipY::clone() const
 {
     // no copy constructor
-    auto a = new (std::nothrow) FlipY();
-    a->initWithFlipY(_flipY);
-    a->autorelease();
-    return a;
+    return FlipY::create(_flipY);
 }
 
 //
@@ -294,7 +279,7 @@ Place* Place::create(const Vec2& pos)
         return ret;
     }
 
-    CC_SAFE_DELETE(ret);
+    delete ret;
     return nullptr;
 }
 
@@ -306,10 +291,7 @@ bool Place::initWithPosition(const Vec2& pos) {
 Place * Place::clone() const
 {
     // no copy constructor
-    auto a = new (std::nothrow) Place();
-    a->initWithPosition(_position);
-    a->autorelease();
-    return a;
+    return Place::create(_position);
 }
 
 Place * Place::reverse() const
