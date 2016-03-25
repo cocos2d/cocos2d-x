@@ -47,14 +47,14 @@ void ActionCamera::startWithTarget(Node *target)
 ActionCamera* ActionCamera::clone() const
 {
 	// no copy constructor
-	auto action = new (std::nothrow) ActionCamera();
+    auto action = new (std::nothrow) ActionCamera();
     if (action) {
         action->autorelease();
         return action;
     }
-	
+    
     delete action;
-	return nullptr;
+    return nullptr;
 }
 
 ActionCamera * ActionCamera::reverse() const

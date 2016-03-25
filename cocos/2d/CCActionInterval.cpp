@@ -1163,10 +1163,10 @@ MoveBy* MoveBy::create(float duration, const Vec3 &deltaPosition)
     if (ret && ret->initWithDuration(duration, deltaPosition))
     {
         ret->autorelease();
-		return ret;
+        return ret;
     }
     
-	delete ret;
+    delete ret;
     return nullptr;
 }
 
@@ -1240,8 +1240,9 @@ MoveTo* MoveTo::create(float duration, const Vec3& position)
     if (ret && ret->initWithDuration(duration, position))
     {
         ret->autorelease();
-		return ret;
-	}
+        return ret;
+    }
+    
     delete ret;
     return nullptr;
 }

@@ -31,15 +31,15 @@ NS_CC_BEGIN
 
 Waves3D* Waves3D::create(float duration, const Size& gridSize, unsigned int waves, float amplitude)
 {
-    Waves3D *pAction = new (std::nothrow) Waves3D();
+    Waves3D *action = new (std::nothrow) Waves3D();
 
-    if (pAction && pAction->initWithDuration(duration, gridSize, waves, amplitude))
+    if (action && action->initWithDuration(duration, gridSize, waves, amplitude))
     {
-        pAction->autorelease();
-        return pAction;
+        action->autorelease();
+        return action;
     }
 
-    delete pAction;
+    delete action;
     return nullptr;
 }
 

@@ -829,15 +829,15 @@ EaseBackInOut* EaseBackInOut::reverse() const
 
 EaseBezierAction* EaseBezierAction::create(cocos2d::ActionInterval* action)
 {
-	EaseBezierAction *ret = new (std::nothrow) EaseBezierAction();
-	if (ret && ret->initWithAction(action))
-	{  
-		ret->autorelease();
+    EaseBezierAction *ret = new (std::nothrow) EaseBezierAction();
+    if (ret && ret->initWithAction(action))
+    {
+        ret->autorelease();
         return ret;
-	}
-
+    }
+    
     delete ret;
-	return nullptr;
+    return nullptr;
 }
 
 void EaseBezierAction::setBezierParamer( float p0, float p1, float p2, float p3)
@@ -1287,15 +1287,15 @@ EaseCircleActionOut* EaseCircleActionOut::reverse() const
 
 EaseCircleActionInOut* EaseCircleActionInOut::create(ActionInterval* action)
 {
-	EaseCircleActionInOut *ret = new (std::nothrow) EaseCircleActionInOut();
-	if (ret && ret->initWithAction(action))
-	{
-		ret->autorelease();
+    EaseCircleActionInOut *ret = new (std::nothrow) EaseCircleActionInOut();
+    if (ret && ret->initWithAction(action))
+    {
+        ret->autorelease();
         return ret;
-	}
-
+    }
+    
     delete ret;
-	return nullptr;
+    return nullptr;
 }
 
 EaseCircleActionInOut* EaseCircleActionInOut::clone() const
@@ -1337,12 +1337,12 @@ EaseCubicActionIn* EaseCubicActionIn::create(ActionInterval* action)
 
 EaseCubicActionIn* EaseCubicActionIn::clone() const
 {
-	// no copy constructor
+    // no copy constructor
     if (_inner) {
         return EaseCubicActionIn::create(_inner->clone());
     }
     
-	return nullptr;
+    return nullptr;
 }
 
 void EaseCubicActionIn::update(float time)
