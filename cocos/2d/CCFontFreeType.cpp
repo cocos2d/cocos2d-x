@@ -85,6 +85,7 @@ void FontFreeType::shutdownFreeType()
     if (_FTInitialized == true)
     {
         FT_Done_FreeType(_FTlibrary);
+        s_cacheFontData.clear();
         _FTInitialized = false;
     }
 }

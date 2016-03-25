@@ -123,6 +123,17 @@ FontAtlas::~FontAtlas()
 #endif
 }
 
+void FontAtlas::reset()
+{
+    releaseTextures();
+    
+    _currLineHeight = 0;
+    _currentPage = 0;
+    _currentPageOrigX = 0;
+    _currentPageOrigY = 0;
+    _letterDefinitions.clear();
+}
+
 void FontAtlas::releaseTextures()
 {
     for( auto &item: _atlasTextures)
@@ -132,15 +143,11 @@ void FontAtlas::releaseTextures()
     _atlasTextures.clear();
 }
 
-void FontAtlas::relaseTextures()
-{
-    releaseTextures();
-}
-
 void FontAtlas::purgeTexturesAtlas()
 {
-    if (_fontFreeType && _atlasTextures.size() > 1)
+    if (_fontFreeType)
     {
+        reset();
         auto eventDispatcher = Director::getInstance()->getEventDispatcher();
         eventDispatcher->dispatchCustomEvent(CMD_PURGE_FONTATLAS,this);
         eventDispatcher->dispatchCustomEvent(CMD_RESET_FONTATLAS,this);
@@ -149,12 +156,7 @@ void FontAtlas::purgeTexturesAtlas()
 
 void FontAtlas::listenRendererRecreated(EventCustom *event)
 {
-    if (_fontFreeType)
-    {
-        auto eventDispatcher = Director::getInstance()->getEventDispatcher();
-        eventDispatcher->dispatchCustomEvent(CMD_PURGE_FONTATLAS,this);
-        eventDispatcher->dispatchCustomEvent(CMD_RESET_FONTATLAS,this);
-    }
+    purgeTexturesAtlas();
 }
 
 void FontAtlas::addLetterDefinition(char16_t utf16Char, const FontLetterDefinition &letterDefinition)
