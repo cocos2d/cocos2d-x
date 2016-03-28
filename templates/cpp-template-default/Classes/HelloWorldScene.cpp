@@ -1,4 +1,5 @@
 #include "HelloWorldScene.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -40,7 +41,7 @@ bool HelloWorld::init()
                                            "CloseSelected.png",
                                            CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
     
-	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
+    closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
                                 origin.y + closeItem->getContentSize().height/2));
 
     // create menu, it's an autorelease object
