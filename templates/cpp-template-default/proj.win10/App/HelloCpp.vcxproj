@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <ProjectGuid>{187d3e60-961a-41ee-bc18-c510a431d22e}</ProjectGuid>
@@ -150,7 +150,7 @@
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204;4251</DisableSpecificWarnings>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\Classes;Cocos2dEngine;Generated Files\Cocos2dEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Classes;$(EngineRoot)cocos\audio\include;Cocos2dEngine;Generated Files\Cocos2dEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -163,7 +163,7 @@
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204;4251</DisableSpecificWarnings>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\Classes;Cocos2dEngine;Generated Files\Cocos2dEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Classes;$(EngineRoot)cocos\audio\include;Cocos2dEngine;Generated Files\Cocos2dEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -173,7 +173,7 @@
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204;4251</DisableSpecificWarnings>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\Classes;Cocos2dEngine;Generated Files\Cocos2dEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Classes;$(EngineRoot)cocos\audio\include;Cocos2dEngine;Generated Files\Cocos2dEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -186,7 +186,7 @@
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204;4251</DisableSpecificWarnings>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\Classes;Cocos2dEngine;Generated Files\Cocos2dEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Classes;$(EngineRoot)cocos\audio\include;Cocos2dEngine;Generated Files\Cocos2dEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -196,7 +196,7 @@
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204;4251</DisableSpecificWarnings>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\Classes;Cocos2dEngine;Generated Files\Cocos2dEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Classes;$(EngineRoot)cocos\audio\include;Cocos2dEngine;Generated Files\Cocos2dEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -209,7 +209,7 @@
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204;4251</DisableSpecificWarnings>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\Classes;Cocos2dEngine;Generated Files\Cocos2dEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Classes;$(EngineRoot)cocos\audio\include;Cocos2dEngine;Generated Files\Cocos2dEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
