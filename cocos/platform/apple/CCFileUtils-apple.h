@@ -55,7 +55,7 @@ public:
     virtual bool writeToFile(const ValueMap& dict, const std::string& fullPath) override;
 
     virtual ValueVector getValueVectorFromFile(const std::string& filename) override;
-#ifdef FILEUTILS_APPLE_ENABLE_OBJC
+#if CC_FILEUTILS_APPLE_ENABLE_OBJC
     CC_DEPRECATED_ATTRIBUTE void setBundle(NSBundle* bundle);
 #endif
 private:

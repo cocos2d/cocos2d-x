@@ -320,7 +320,7 @@ static void addObjectToNSDict(const std::string& key, const Value& value, NSMuta
 FileUtilsApple::FileUtilsApple() : pimpl_(new IMPL([NSBundle mainBundle])) {
 }
 
-#ifdef FILEUTILS_APPLE_ENABLE_OBJC
+#if CC_FILEUTILS_APPLE_ENABLE_OBJC
 void FileUtilsApple::setBundle(NSBundle* bundle) {
     pimpl_->setBundle(bundle);
 }
