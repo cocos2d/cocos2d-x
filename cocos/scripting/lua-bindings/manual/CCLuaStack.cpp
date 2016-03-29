@@ -851,7 +851,7 @@ int LuaStack::luaLoadChunksFromZIP(lua_State *L)
                             filename.erase(pos);
                         }
                     }
-                    // replace path seperator '/' '\' to '.'
+                    // replace path separator '/' '\' to '.'
                     for (int i=0; i<filename.size(); i++) {
                         if (filename[i] == '/' || filename[i] == '\\') {
                             filename[i] = '.';

@@ -64,7 +64,7 @@ namespace cocos2d { namespace network {
         
         virtual ~DownloadTaskCURL()
         {
-            // if task destoried unnormally, we should release WritenFileName stored in set.
+            // if task destroyed unnormally, we should release WritenFileName stored in set.
             // Normally, this action should done when task finished.
             if (_tempFileName.length() && _sStoragePathSet.end() != _sStoragePathSet.find(_tempFileName))
             {
@@ -94,7 +94,7 @@ namespace cocos2d { namespace network {
             
             if (_sStoragePathSet.end() != _sStoragePathSet.find(_tempFileName))
             {
-                // there is another task uses this storate path
+                // there is another task uses this storage path
                 _errCode = DownloadTask::ERROR_FILE_OP_FAILED;
                 _errCodeInternal = 0;
                 _errDescription = "More than one download file task write to same file:";

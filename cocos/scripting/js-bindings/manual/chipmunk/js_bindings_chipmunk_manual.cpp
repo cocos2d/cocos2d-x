@@ -40,7 +40,7 @@ static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
     return false;
 }
 
-#pragma mark - convertions
+#pragma mark - conversions
 
 /*
  * PhysicsSprite
