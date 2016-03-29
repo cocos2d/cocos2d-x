@@ -1,4 +1,37 @@
-cocos2d-x-3.10 December ? 2015
+cocos2d-x-3.11 Apr ? 2016
+
+[HIGHLIGHT]     Physics: upgrade chipmunk to v7.0.1
+[HIGHLIGHT]     JS: new memory model, don't have to use retain/release in JS
+
+[NEW]           JS: web console is enabled debugging JSB projects via firefox
+[NEW]           UI: add a setter for touch total time threshold in ScrollView
+[NEW]           UI: add ability to get font family
+[NEW]           UI: add xml support in RichText
+[NEW]           UI: add ability to stop auto scrolling in ScrollView
+[NEW]           UI: EditBox supports multiline on Mac
+[NEW]           UI: Scale9Sprite allows to set custom shaders
+[NEW]           UI: ImageView allows to set custom shaders
+[NEW]           UI: TextFiled supports cursor
+[NEW]           FileUtils: add missing getFileSize() for winrt
+[NEW]           Network: close websocket connection by dispatching a resetDirector event
+[NEW]           Tool: cmake supports on Android        
+
+
+[REFINE]        Network: upgrated to latest libwebsockets, add more callbacks and bugs fixed
+[REFINE]        Network: replace char* with std::string in HttpRequest
+[REFINE]        Renderer: TriangleCommand and QuadCommand are merged
+[REFINE]        2D: SpriteFrameCache takes pixelFormat into account if specified
+[REFINE]        UI: let ScrollView swallow touch events by default
+
+[FIX]           JS: firefox v30+ can not debug cocos2d-x JSB projects
+[FIX]           UI: can not get event when PageView was turning
+[FIX]           UI: bitmap font sizes are not loaded from binary .fnt files
+[FIX]           2D: TargetedAction::isDone() always return false
+[FIX]           2D: some fonts were rendered incorreclty
+[FIX]           2D: drawing in incorrect app state on iOS
+[FIX]           2D: FileUtils::getValueVectorFromFile() returns wrong value on iOS and Mac
+
+cocos2d-x-3.10 Jan 11 2016
 
 [HIGHLIGHT]     UI: Rewrite Scale9Sprite and improve the scale9sprite performance and reduce memory consumption.
 [HIGHLIGHT]     UI: Change PageView to derive from ListView.
