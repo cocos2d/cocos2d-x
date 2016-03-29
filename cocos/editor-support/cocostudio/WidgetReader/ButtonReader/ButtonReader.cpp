@@ -630,7 +630,6 @@ namespace cocostudio
                                                               builder->CreateString(fontResourcePlistFile),
                                                               fontResourceResourceType),
                                            builder->CreateString(text),
-                                           isLocalized,
                                            builder->CreateString(fontName),
                                            fontSize,
                                            &f_textColor,
@@ -645,7 +644,8 @@ namespace cocostudio
                                            &f_shadowColor,
                                            shadowOffset.width,
                                            shadowOffset.height,
-                                           shadowBlurRadius);
+                                           shadowBlurRadius,
+                                           isLocalized);
         
         return *(Offset<Table>*)(&options);
     }
