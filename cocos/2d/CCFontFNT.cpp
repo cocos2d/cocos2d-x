@@ -414,6 +414,7 @@ std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char
              fontName       n+1 string   14 null terminated string with length n
              */
 
+            memcpy(&_fontSize, pData, 2);
             _padding.top = (unsigned char)pData[7];
             _padding.right = (unsigned char)pData[8];
             _padding.bottom = (unsigned char)pData[9];

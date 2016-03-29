@@ -209,6 +209,8 @@ UIFont* EditBoxImplIOS::constructFont(const char *fontName, int fontSize)
     float retinaFactor = eaglview.contentScaleFactor;
     NSString * fntName = [NSString stringWithUTF8String:fontName];
     
+    fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
+    
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     float scaleFactor = glview->getScaleX();
     
