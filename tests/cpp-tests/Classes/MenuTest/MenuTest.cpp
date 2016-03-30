@@ -80,7 +80,6 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     auto item3 = MenuItemLabel::create(labelAtlas, CC_CALLBACK_1(MenuLayerMainMenu::menuCallbackDisabled, this) );
     item3->setDisabledColor( Color3B(32,32,64) );
     item3->setColor( Color3B(200,200,255) );
-    item3->setString("hello");
     CCLOG("test MenuItem Label getString: %s", item3->getString().c_str());
     // Font Item
     auto item4 = MenuItemFont::create("I toggle enable items", [&](Ref *sender) {
