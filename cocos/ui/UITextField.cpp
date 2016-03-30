@@ -204,6 +204,7 @@ int UICCTextField::getCharCount()const
 void UICCTextField::setPasswordEnabled(bool enable)
 {
     _passwordEnabled = enable;
+    this->setSecureTextEntry(enable);
 }
 
 bool UICCTextField::isPasswordEnabled()const
