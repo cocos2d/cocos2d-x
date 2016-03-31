@@ -35,8 +35,6 @@ namespace ui {
 UICCTextField::UICCTextField()
 : _maxLengthEnabled(false)
 , _maxLength(0)
-, _passwordEnabled(false)
-, _passwordStyleText("*")
 , _attachWithIME(false)
 , _detachWithIME(false)
 , _insertText(false)
@@ -121,7 +119,7 @@ void UICCTextField::insertText(const char*  text, size_t len)
             if (text_count >= _maxLength)
             {
                 // password
-                if (_passwordEnabled)
+                if (this->isSecureTextEntry())
                 {
                     setPasswordText(getString());
                 }
@@ -143,7 +141,7 @@ void UICCTextField::insertText(const char*  text, size_t len)
     TextFieldTTF::insertText(input_text.c_str(), len);
     
     // password
-    if (_passwordEnabled)
+    if (this->isSecureTextEntry())
     {
         if (TextFieldTTF::getCharCount() > 0)
         {
@@ -159,7 +157,7 @@ void UICCTextField::deleteBackward()
     if (TextFieldTTF::getCharCount() > 0)
     {
         // password
-        if (_passwordEnabled)
+        if (this->isSecureTextEntry())
         {
             setPasswordText(_inputText);
         }
@@ -203,13 +201,12 @@ int UICCTextField::getCharCount()const
 
 void UICCTextField::setPasswordEnabled(bool enable)
 {
-    _passwordEnabled = enable;
     this->setSecureTextEntry(enable);
 }
 
 bool UICCTextField::isPasswordEnabled()const
 {
-    return _passwordEnabled;
+    return this->isSecureTextEntry();
 }
 
 void UICCTextField::setPasswordStyleText(const std::string& styleText)
@@ -223,7 +220,7 @@ void UICCTextField::setPasswordStyleText(const std::string& styleText)
     {
         return;
     }
-    _passwordStyleText = styleText;
+    this->setPasswordTextStyle(styleText);
 }
 
 void UICCTextField::setPasswordText(const std::string& text)
@@ -301,7 +298,6 @@ _useTouchArea(false),
 _textFieldEventListener(nullptr),
 _textFieldEventSelector(nullptr),
 _eventCallback(nullptr),
-_passwordStyleText("*"),
 _textFieldRendererAdaptDirty(true),
 _fontName("Thonburi"),
 _fontSize(10),
@@ -589,14 +585,13 @@ bool TextField::isPasswordEnabled()const
 void TextField::setPasswordStyleText(const char *styleText)
 {
     _textFieldRenderer->setPasswordStyleText(styleText);
-    _passwordStyleText = styleText;
     
     setString(getString());
 }
     
 const char* TextField::getPasswordStyleText()const
 {
-    return _passwordStyleText.c_str();
+    return _textFieldRenderer->getPasswordTextStyle().c_str();
 }
 
 void TextField::update(float dt)
@@ -829,7 +824,7 @@ void TextField::copySpecialProperties(Widget *widget)
         setMaxLengthEnabled(textField->isMaxLengthEnabled());
         setMaxLength(textField->getMaxLength());
         setPasswordEnabled(textField->isPasswordEnabled());
-        setPasswordStyleText(textField->_passwordStyleText.c_str());
+        setPasswordStyleText(textField->getPasswordStyleText());
         setAttachWithIME(textField->getAttachWithIME());
         setDetachWithIME(textField->getDetachWithIME());
         setInsertText(textField->getInsertText());

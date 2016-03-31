@@ -209,8 +209,6 @@ public:
 protected:
     bool _maxLengthEnabled;
     int _maxLength;
-    bool _passwordEnabled;
-    std::string _passwordStyleText;
     bool _attachWithIME;
     bool _detachWithIME;
     bool _insertText;
@@ -685,7 +683,6 @@ protected:
 #endif
     ccTextFieldCallback _eventCallback;
     
-    std::string _passwordStyleText;
     bool _textFieldRendererAdaptDirty;
 private:
     enum class FontType

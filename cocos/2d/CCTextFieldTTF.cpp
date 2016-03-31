@@ -71,6 +71,7 @@ TextFieldTTF::TextFieldTTF()
 {
     _colorSpaceHolder.r = _colorSpaceHolder.g = _colorSpaceHolder.b = 127;
     _colorSpaceHolder.a = 255;
+    _passwordStyleText = {(char)0xe2, (char)0x80, (char)0xa2, (char)0x00};
 }
 
 TextFieldTTF::~TextFieldTTF()
@@ -471,7 +472,6 @@ void TextFieldTTF::setColorSpaceHolder(const Color4B& color)
 // input text property
 void TextFieldTTF::setString(const std::string &text)
 {
-    static char bulletString[] = {(char)0xe2, (char)0x80, (char)0xa2, (char)0x00};
     std::string displayText;
 
     int charCount = 0;
@@ -486,7 +486,7 @@ void TextFieldTTF::setString(const std::string &text)
             size_t length = charCount;
             while (length)
             {
-                displayText.append(bulletString);
+                displayText.append(_passwordStyleText.c_str());
                 --length;
             }
         }
@@ -522,6 +522,8 @@ void TextFieldTTF::setString(const std::string &text)
     }
     _charCount = charCount;
 }
+
+
 
 void TextFieldTTF::appendString(const std::string& text)
 {
@@ -683,7 +685,20 @@ void TextFieldTTF::setSecureTextEntry(bool value)
     }
 }
 
-bool TextFieldTTF::isSecureTextEntry()
+void TextFieldTTF::setPasswordTextStyle(const std::string &text)
+{
+    if (text != _passwordStyleText) {
+        _passwordStyleText = text;
+        setString(_inputText);
+    }
+}
+
+std::string TextFieldTTF::getPasswordTextStyle()const
+{
+    return _passwordStyleText;
+}
+
+bool TextFieldTTF::isSecureTextEntry() const
 {
     return _secureTextEntry;
 }

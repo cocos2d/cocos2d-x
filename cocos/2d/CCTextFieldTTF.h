@@ -226,13 +226,15 @@ public:
      * @js NA
      */
     virtual void setSecureTextEntry(bool value);
+    virtual void setPasswordTextStyle(const std::string& text);
+    std::string getPasswordTextStyle() const;
 
     /**
      * Query whether the currently display mode is secure text entry or not.
      *@return Whether current text is displayed as secure text entry.
      * @js NA
      */
-    virtual bool isSecureTextEntry();
+    virtual bool isSecureTextEntry()const;
 
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
@@ -286,6 +288,7 @@ protected:
     Color4B _colorText;
 
     bool _secureTextEntry;
+    std::string _passwordStyleText;
 
     // Need use cursor
     bool _cursorEnabled;
