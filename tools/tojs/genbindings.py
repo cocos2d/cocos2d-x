@@ -76,14 +76,20 @@ def main():
         sys.exit(1)
 
     if platform == 'win32':
-        x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s' % cur_platform))
+        x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.5/prebuilt', '%s' % cur_platform))
+        if not os.path.exists(x86_llvm_path):
+            x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s' % cur_platform))
         if not os.path.exists(x86_llvm_path):
             x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.3/prebuilt', '%s' % cur_platform))
     else:
-        x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s-%s' % (cur_platform, 'x86')))
+        x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.5/prebuilt', '%s-%s' % (cur_platform, 'x86')))
+        if not os.path.exists(x86_llvm_path):
+            x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s-%s' % (cur_platform, 'x86')))
         if not os.path.exists(x86_llvm_path):
             x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.3/prebuilt', '%s-%s' % (cur_platform, 'x86')))
-    x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
+    x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.5/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
+    if not os.path.exists(x64_llvm_path):
+        x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
     if not os.path.exists(x64_llvm_path):
         x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.3/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
 
@@ -110,7 +116,9 @@ def main():
     config.set('DEFAULT', 'cxxgeneratordir', cxx_generator_root)
     config.set('DEFAULT', 'extra_flags', '')
     
-    if '3.4' in llvm_path:
+    if '3.5' in llvm_path:
+        config.set('DEFAULT', 'clang_version', '3.5')
+    elif '3.4' in llvm_path:
         config.set('DEFAULT', 'clang_version', '3.4')
     else:
         config.set('DEFAULT', 'clang_version', '3.3')
@@ -129,6 +137,7 @@ def main():
     # set proper environment variables
     if 'linux' in platform or platform == 'darwin':
         os.putenv('LD_LIBRARY_PATH', '%s/libclang' % cxx_generator_root)
+        print '%s/libclang' % cxx_generator_root
     if platform == 'win32':
         path_env = os.environ['PATH']
         os.putenv('PATH', r'%s;%s\libclang;%s\tools\win32;' % (path_env, cxx_generator_root, cxx_generator_root))
