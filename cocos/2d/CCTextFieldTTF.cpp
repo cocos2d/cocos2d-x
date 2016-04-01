@@ -486,7 +486,7 @@ void TextFieldTTF::setString(const std::string &text)
             size_t length = charCount;
             while (length)
             {
-                displayText.append(_passwordStyleText.c_str());
+                displayText.append(_passwordStyleText);
                 --length;
             }
         }
