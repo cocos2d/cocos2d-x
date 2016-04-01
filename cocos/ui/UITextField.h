@@ -119,7 +119,7 @@ public:
      * Return the total inputed characters.
      *@return Total inputed character count.
      */
-    int getCharCount()const;
+    std::size_t getCharCount()const;
     
     
     /**

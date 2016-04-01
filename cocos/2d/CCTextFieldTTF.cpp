@@ -63,6 +63,7 @@ TextFieldTTF::TextFieldTTF()
 , _placeHolder("")   // prevent Label initWithString assertion
 , _colorText(Color4B::WHITE)
 , _secureTextEntry(false)
+,_passwordStyleText("\u25CF")
 , _cursorEnabled(false)
 , _cursorPosition(0)
 , _cursorChar(CURSOR_DEFAULT_CHAR)
@@ -71,7 +72,6 @@ TextFieldTTF::TextFieldTTF()
 {
     _colorSpaceHolder.r = _colorSpaceHolder.g = _colorSpaceHolder.b = 127;
     _colorSpaceHolder.a = 255;
-    _passwordStyleText = {(char)0xe2, (char)0x80, (char)0xa2, (char)0x00};
 }
 
 TextFieldTTF::~TextFieldTTF()
@@ -422,7 +422,7 @@ void TextFieldTTF::update(float delta)
             _cursorShowingTime = CURSOR_TIME_SHOW_HIDE;
         }
         // before cursor inserted '\b', need next letter
-        auto sprite = getLetter(_cursorPosition + 1);
+        auto sprite = getLetter((int)_cursorPosition + 1);
 
         if (sprite)
         {
@@ -687,6 +687,11 @@ void TextFieldTTF::setSecureTextEntry(bool value)
 
 void TextFieldTTF::setPasswordTextStyle(const std::string &text)
 {
+    if (text.length() < 1)
+    {
+        return;
+    }
+
     if (text != _passwordStyleText) {
         _passwordStyleText = text;
         setString(_inputText);

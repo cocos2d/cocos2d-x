@@ -194,7 +194,7 @@ int UICCTextField::getMaxLength()const
     return _maxLength;
 }
 
-int UICCTextField::getCharCount()const
+std::size_t UICCTextField::getCharCount()const
 {
     return TextFieldTTF::getCharCount();
 }
@@ -211,15 +211,6 @@ bool UICCTextField::isPasswordEnabled()const
 
 void UICCTextField::setPasswordStyleText(const std::string& styleText)
 {
-    if (styleText.length() > 1)
-    {
-        return;
-    }
-    char value = styleText[0];
-    if (value < 33 || value > 126)
-    {
-        return;
-    }
     this->setPasswordTextStyle(styleText);
 }
 
@@ -573,8 +564,6 @@ int TextField::getMaxLength()const
 void TextField::setPasswordEnabled(bool enable)
 {
     _textFieldRenderer->setPasswordEnabled(enable);
-    if (enable)
-        setPasswordStyleText(getPasswordStyleText());
 }
 
 bool TextField::isPasswordEnabled()const

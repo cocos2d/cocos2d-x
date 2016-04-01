@@ -162,7 +162,7 @@ public:
      * Query the currently inputed character count.
      *@return The total input character count.
      */
-    inline int getCharCount() const { return _charCount; };
+    inline std::size_t getCharCount() const { return _charCount; };
     
     /**
      * Query the color of place holder.
@@ -279,7 +279,7 @@ protected:
     virtual void controlKey(EventKeyboard::KeyCode keyCode) override;
 
     TextFieldDelegate * _delegate;
-    int _charCount;
+    std::size_t _charCount;
 
     std::string _inputText;
 
