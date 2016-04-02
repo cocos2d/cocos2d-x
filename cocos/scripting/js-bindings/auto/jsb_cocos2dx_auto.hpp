@@ -3897,6 +3897,8 @@ bool js_cocos2dx_TextFieldTTF_setCursorEnabled(JSContext *cx, uint32_t argc, jsv
 bool js_cocos2dx_TextFieldTTF_getColorSpaceHolder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TextFieldTTF_initWithPlaceHolder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TextFieldTTF_appendString(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TextFieldTTF_getPasswordTextStyle(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TextFieldTTF_setPasswordTextStyle(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TextFieldTTF_setColorSpaceHolder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TextFieldTTF_detachWithIME(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TextFieldTTF_setPlaceHolder(JSContext *cx, uint32_t argc, jsval *vp);
