@@ -4253,7 +4253,7 @@ getDetachWithIME : function (
 
 /**
  * @method getCharCount
- * @return {int}
+ * @return {unsigned long}
  */
 getCharCount : function (
 )
