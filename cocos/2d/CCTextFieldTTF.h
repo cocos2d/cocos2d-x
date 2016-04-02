@@ -162,7 +162,7 @@ public:
      * Query the currently inputed character count.
      *@return The total input character count.
      */
-    inline int getCharCount() const { return _charCount; };
+    inline std::size_t getCharCount() const { return _charCount; };
     
     /**
      * Query the color of place holder.
@@ -226,13 +226,15 @@ public:
      * @js NA
      */
     virtual void setSecureTextEntry(bool value);
+    virtual void setPasswordTextStyle(const std::string& text);
+    std::string getPasswordTextStyle() const;
 
     /**
      * Query whether the currently display mode is secure text entry or not.
      *@return Whether current text is displayed as secure text entry.
      * @js NA
      */
-    virtual bool isSecureTextEntry();
+    virtual bool isSecureTextEntry()const;
 
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
@@ -277,7 +279,7 @@ protected:
     virtual void controlKey(EventKeyboard::KeyCode keyCode) override;
 
     TextFieldDelegate * _delegate;
-    int _charCount;
+    std::size_t _charCount;
 
     std::string _inputText;
 
@@ -286,6 +288,7 @@ protected:
     Color4B _colorText;
 
     bool _secureTextEntry;
+    std::string _passwordStyleText;
 
     // Need use cursor
     bool _cursorEnabled;
