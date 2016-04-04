@@ -15,8 +15,6 @@ public:
     
     cocos2d::Scene* createScene();
     
-    void init();
-    
     inline std::vector<cocos2d::Sprite*>& getAliens() { return _vAliens; };
     inline const std::vector<cocos2d::Sprite*>& getAliens() const { return _vAliens; }
     

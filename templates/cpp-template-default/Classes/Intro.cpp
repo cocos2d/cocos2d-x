@@ -228,8 +228,6 @@ Scene* Intro::createScene()
     return scene;
 }
 
-void Intro::init() {}
-
 void Intro::makeAliensMove(const std::vector<Sprite*> _aliens, const float& _screenWidth, const float& _screenHeight)
 {
     auto delay = DelayTime::create(0.25f);
