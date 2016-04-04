@@ -28,7 +28,7 @@
  Works on cocos2d-iphone and cocos2d-x.
  */
 
-#include "LocalStorage.h"
+#include "storage/local-storage/LocalStorage.h"
 #include "platform/CCPlatformMacros.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -37,7 +37,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "jni.h"
-#include "jni/JniHelper.h"
+#include "platform/android/jni/JniHelper.h"
 
 USING_NS_CC;
 static int _initialized = 0;

@@ -26,9 +26,9 @@
 #define __cocos2d_libs__CCObjectExtensionData__
 
 #include <string>
-#include "CCComBase.h"
+#include "editor-support/cocostudio/CCComBase.h"
 #include "2d/CCComponent.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio
 {
@@ -73,7 +73,7 @@ namespace cocostudio
         virtual std::string getCustomProperty() const { return _customProperty; };
         
         virtual void setActionTag(int actionTag);
-        virtual const int getActionTag() const;
+        virtual int getActionTag() const;
         
     public:
         ComExtensionData();

@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "CCUIEditBoxIOS.h"
-#import "CCUISingleLineTextField.h"
-#import "CCUIMultilineTextField.h"
+#import "ui/UIEditBox/iOS/CCUIEditBoxIOS.h"
+#import "ui/UIEditBox/iOS/CCUISingleLineTextField.h"
+#import "ui/UIEditBox/iOS/CCUIMultilineTextField.h"
 
 #import "platform/ios/CCEAGLView-ios.h"
 #include "base/CCDirector.h"

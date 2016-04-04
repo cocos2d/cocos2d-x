@@ -1,9 +1,8 @@
-#include "lua_cocos2dx_audioengine_auto.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_audioengine_auto.hpp"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-#include "AudioEngine.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-
+#include "audio/include/AudioEngine.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
 int lua_cocos2dx_audioengine_AudioProfile_constructor(lua_State* tolua_S)
 {

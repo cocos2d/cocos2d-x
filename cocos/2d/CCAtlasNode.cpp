@@ -25,7 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCAtlasNode.h"
+#include "2d/CCAtlasNode.h"
 #include "renderer/CCTextureAtlas.h"
 #include "base/CCDirector.h"
 #include "base/CCDirector.h"

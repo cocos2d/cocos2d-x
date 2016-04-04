@@ -31,9 +31,9 @@ THE SOFTWARE.
 #include "base/CCMap.h"
 #include "math/CCAffineTransform.h"
 
-#include "cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
 #include "2d/CCTweenFunction.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 
 #define CC_CREATE_NO_PARAM_NO_INIT(varType)\
@@ -143,7 +143,7 @@ class CC_STUDIO_DLL DisplayData : public cocos2d::Ref
 public:
     CC_CREATE_NO_PARAM_NO_INIT(DisplayData)
 
-    static const std::string changeDisplayToTexture(const std::string& displayName);
+    static std::string changeDisplayToTexture(const std::string& displayName);
 public:
     /**
      * @js ctor

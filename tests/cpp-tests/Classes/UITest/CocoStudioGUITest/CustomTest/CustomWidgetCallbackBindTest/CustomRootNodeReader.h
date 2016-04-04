@@ -2,8 +2,8 @@
 #define __cocos2d_libs__CustomRootNodeReader__
 
 #include "cocos2d.h"
-#include "cocostudio/CocosStudioExport.h"
-#include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.h"
 
 
 class CustomRootNodeReader : public cocostudio::NodeReader

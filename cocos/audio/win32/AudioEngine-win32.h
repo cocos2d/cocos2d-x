@@ -31,8 +31,8 @@
 #include <unordered_map>
 
 #include "base/CCRef.h"
-#include "AudioCache.h"
-#include "AudioPlayer.h"
+#include "audio/win32/AudioCache.h"
+#include "audio/win32/AudioPlayer.h"
 
 NS_CC_BEGIN
     namespace experimental{

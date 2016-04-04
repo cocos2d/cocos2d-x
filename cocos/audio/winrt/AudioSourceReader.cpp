@@ -23,8 +23,8 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 
-#include "CCWinRTUtils.h"
-#include "AudioSourceReader.h"
+#include "platform/winrt/CCWinRTUtils.h"
+#include "audio/winrt/AudioSourceReader.h"
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;

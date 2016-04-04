@@ -36,7 +36,7 @@ obtained from https://directxtk.codeplex.com
 #include <memory>
 #include <string>
 #include <wincodec.h>
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 

@@ -3838,6 +3838,12 @@
 		85505F0E1B60E3DB003F2CD4 /* SkeletonNodeReader.h in Headers */ = {isa = PBXBuildFile; fileRef = C50306741B60B5B2001E6D43 /* SkeletonNodeReader.h */; };
 		85B3743A1B204B9400C488D6 /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85B374381B204B9400C488D6 /* clipper.cpp */; };
 		85B3743B1B204B9400C488D6 /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85B374381B204B9400C488D6 /* clipper.cpp */; };
+		94A6DF051C7303FD0094AEF7 /* LocalizationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94A6DF031C7303FD0094AEF7 /* LocalizationManager.cpp */; };
+		94A6DF061C7303FD0094AEF7 /* LocalizationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 94A6DF041C7303FD0094AEF7 /* LocalizationManager.h */; };
+		94A6DF071C73040D0094AEF7 /* LocalizationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94A6DF031C7303FD0094AEF7 /* LocalizationManager.cpp */; };
+		94A6DF081C73040E0094AEF7 /* LocalizationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94A6DF031C7303FD0094AEF7 /* LocalizationManager.cpp */; };
+		94A6DF091C7304120094AEF7 /* LocalizationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 94A6DF041C7303FD0094AEF7 /* LocalizationManager.h */; };
+		94A6DF0A1C7304120094AEF7 /* LocalizationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 94A6DF041C7303FD0094AEF7 /* LocalizationManager.h */; };
 		A045F6D61BA81577005076C7 /* CCTextureCube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A045F6D41BA81577005076C7 /* CCTextureCube.cpp */; };
 		A045F6D71BA81577005076C7 /* CCTextureCube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A045F6D41BA81577005076C7 /* CCTextureCube.cpp */; };
 		A045F6D81BA81577005076C7 /* CCTextureCube.h in Headers */ = {isa = PBXBuildFile; fileRef = A045F6D51BA81577005076C7 /* CCTextureCube.h */; };
@@ -5601,6 +5607,19 @@
 		C50306771B60B5B2001E6D43 /* CSBoneBinary_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = C50306721B60B5B2001E6D43 /* CSBoneBinary_generated.h */; };
 		C50306781B60B5B2001E6D43 /* SkeletonNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C50306731B60B5B2001E6D43 /* SkeletonNodeReader.cpp */; };
 		C50306791B60B5B2001E6D43 /* SkeletonNodeReader.h in Headers */ = {isa = PBXBuildFile; fileRef = C50306741B60B5B2001E6D43 /* SkeletonNodeReader.h */; };
+		C5F516121C8216660013B695 /* UITabControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5F516101C8216660013B695 /* UITabControl.cpp */; };
+		C5F516131C8216660013B695 /* UITabControl.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516111C8216660013B695 /* UITabControl.h */; };
+		C5F516181C8216C60013B695 /* CSTabControl_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516151C8216C60013B695 /* CSTabControl_generated.h */; };
+		C5F516191C8216C60013B695 /* TabControlReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5F516161C8216C60013B695 /* TabControlReader.cpp */; };
+		C5F5161A1C8216C60013B695 /* TabControlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516171C8216C60013B695 /* TabControlReader.h */; };
+		C5F5161D1C822D400013B695 /* TabControlReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5F516161C8216C60013B695 /* TabControlReader.cpp */; };
+		C5F5161E1C822D5B0013B695 /* TabControlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516171C8216C60013B695 /* TabControlReader.h */; };
+		C5F5161F1C822D6D0013B695 /* UITabControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5F516101C8216660013B695 /* UITabControl.cpp */; };
+		C5F516201C822D900013B695 /* UITabControl.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516111C8216660013B695 /* UITabControl.h */; };
+		C5F516211C822DED0013B695 /* UITabControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5F516101C8216660013B695 /* UITabControl.cpp */; };
+		C5F516221C822E060013B695 /* TabControlReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5F516161C8216C60013B695 /* TabControlReader.cpp */; };
+		C5F516231C822E190013B695 /* UITabControl.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516111C8216660013B695 /* UITabControl.h */; };
+		C5F516251C822E470013B695 /* TabControlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516171C8216C60013B695 /* TabControlReader.h */; };
 		D0FD03491A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034A1A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034B1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */; };
@@ -6704,6 +6723,8 @@
 		5E9F61251A3FFE3D0038DE01 /* CCPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlane.h; sourceTree = "<group>"; };
 		8525E3A11B291E42008EE815 /* clipper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = clipper.hpp; sourceTree = "<group>"; };
 		85B374381B204B9400C488D6 /* clipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clipper.cpp; sourceTree = "<group>"; };
+		94A6DF031C7303FD0094AEF7 /* LocalizationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalizationManager.cpp; sourceTree = "<group>"; };
+		94A6DF041C7303FD0094AEF7 /* LocalizationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationManager.h; sourceTree = "<group>"; };
 		A045F6D41BA81577005076C7 /* CCTextureCube.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureCube.cpp; sourceTree = "<group>"; };
 		A045F6D51BA81577005076C7 /* CCTextureCube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureCube.h; sourceTree = "<group>"; };
 		A045F6DA1BA816A1005076C7 /* CCCameraBackgroundBrush.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCameraBackgroundBrush.cpp; sourceTree = "<group>"; };
@@ -7616,6 +7637,11 @@
 		C50306721B60B5B2001E6D43 /* CSBoneBinary_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSBoneBinary_generated.h; path = SkeletonReader/CSBoneBinary_generated.h; sourceTree = "<group>"; };
 		C50306731B60B5B2001E6D43 /* SkeletonNodeReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SkeletonNodeReader.cpp; path = SkeletonReader/SkeletonNodeReader.cpp; sourceTree = "<group>"; };
 		C50306741B60B5B2001E6D43 /* SkeletonNodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkeletonNodeReader.h; path = SkeletonReader/SkeletonNodeReader.h; sourceTree = "<group>"; };
+		C5F516101C8216660013B695 /* UITabControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITabControl.cpp; sourceTree = "<group>"; };
+		C5F516111C8216660013B695 /* UITabControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITabControl.h; sourceTree = "<group>"; };
+		C5F516151C8216C60013B695 /* CSTabControl_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSTabControl_generated.h; path = TabControlReader/CSTabControl_generated.h; sourceTree = "<group>"; };
+		C5F516161C8216C60013B695 /* TabControlReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TabControlReader.cpp; path = TabControlReader/TabControlReader.cpp; sourceTree = "<group>"; };
+		C5F516171C8216C60013B695 /* TabControlReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabControlReader.h; path = TabControlReader/TabControlReader.h; sourceTree = "<group>"; };
 		D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorBase.h; sourceTree = "<group>"; };
 		D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAllocatorDiagnostics.cpp; sourceTree = "<group>"; };
 		D0FD033D1A3B51AA00825BB5 /* CCAllocatorDiagnostics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorDiagnostics.h; sourceTree = "<group>"; };
@@ -8492,6 +8518,8 @@
 		1A8C5946180E930E00EF57C3 /* cocostudio */ = {
 			isa = PBXGroup;
 			children = (
+				94A6DF031C7303FD0094AEF7 /* LocalizationManager.cpp */,
+				94A6DF041C7303FD0094AEF7 /* LocalizationManager.h */,
 				382384021A259005002C4610 /* CSParseBinary_generated.h */,
 				182C5CAD1A95961600C30D34 /* CSParse3DBinary_generated.h */,
 				382384051A25900F002C4610 /* FlatBuffersSerialize.cpp */,
@@ -9020,6 +9048,8 @@
 		29CB8F531929D67D00C841D6 /* widgets */ = {
 			isa = PBXGroup;
 			children = (
+				C5F516101C8216660013B695 /* UITabControl.cpp */,
+				C5F516111C8216660013B695 /* UITabControl.h */,
 				292DB12E19B4574100A80320 /* UIEditBox */,
 				2905F9FE18CF08D000240AA3 /* UIListView.cpp */,
 				2905F9FF18CF08D000240AA3 /* UIListView.h */,
@@ -9863,6 +9893,7 @@
 		50FCEB6818C72017004AD434 /* WidgetReader */ = {
 			isa = PBXGroup;
 			children = (
+				C5F516141C8216AB0013B695 /* TabControlReader */,
 				0C261F251BE7528900707478 /* Light3DReader */,
 				A045F6EC1BA81821005076C7 /* GameNode3DReader */,
 				C503066F1B60B590001E6D43 /* SkeletonReader */,
@@ -11128,6 +11159,16 @@
 			name = SkeletonReader;
 			sourceTree = "<group>";
 		};
+		C5F516141C8216AB0013B695 /* TabControlReader */ = {
+			isa = PBXGroup;
+			children = (
+				C5F516151C8216C60013B695 /* CSTabControl_generated.h */,
+				C5F516161C8216C60013B695 /* TabControlReader.cpp */,
+				C5F516171C8216C60013B695 /* TabControlReader.h */,
+			);
+			name = TabControlReader;
+			sourceTree = "<group>";
+		};
 		D0FD03391A3B51AA00825BB5 /* allocator */ = {
 			isa = PBXGroup;
 			children = (
@@ -11308,6 +11349,7 @@
 				15AE187F19AAD33D00C27E9E /* CCBKeyframe.h in Headers */,
 				B665E2B41AA80A6500DDB1C5 /* CCPUForceField.h in Headers */,
 				1A570073180BC5A10088DEC7 /* CCActionGrid.h in Headers */,
+				94A6DF061C7303FD0094AEF7 /* LocalizationManager.h in Headers */,
 				15AE1BCC19AAE01E00C27E9E /* CCControlButton.h in Headers */,
 				B6CAB3D71AF9AA1A00B9B856 /* btSolve2LinearConstraint.h in Headers */,
 				C50306771B60B5B2001E6D43 /* CSBoneBinary_generated.h in Headers */,
@@ -11370,6 +11412,7 @@
 				B6CAB4CF1AF9AA1A00B9B856 /* SpuContactResult.h in Headers */,
 				B6CAB4E11AF9AA1A00B9B856 /* SpuSampleTask.h in Headers */,
 				50ABBDB71925AB4100A911A9 /* CCTexture2D.h in Headers */,
+				C5F516181C8216C60013B695 /* CSTabControl_generated.h in Headers */,
 				50ABBE811925AB6F00A911A9 /* CCEventType.h in Headers */,
 				B665E2B81AA80A6500DDB1C5 /* CCPUForceFieldAffector.h in Headers */,
 				1A57008F180BC5A10088DEC7 /* CCActionTiledGrid.h in Headers */,
@@ -11756,6 +11799,7 @@
 				15AE1A7919AAD40300C27E9E /* b2PolygonAndCircleContact.h in Headers */,
 				B665E2081AA80A6500DDB1C5 /* CCPUBaseCollider.h in Headers */,
 				B6CAB40D1AF9AA1A00B9B856 /* btMultiBodyJointMotor.h in Headers */,
+				C5F5161A1C8216C60013B695 /* TabControlReader.h in Headers */,
 				15AE199719AAD39600C27E9E /* ListViewReader.h in Headers */,
 				B29A7E1D19EE1B7700872B35 /* PolygonBatch.h in Headers */,
 				B665E3441AA80A6500DDB1C5 /* CCPUOnExpireObserver.h in Headers */,
@@ -11855,6 +11899,7 @@
 				B6CAB41D1AF9AA1A00B9B856 /* btDantzigSolver.h in Headers */,
 				50ABBD851925AB4100A911A9 /* CCBatchCommand.h in Headers */,
 				B6CAB3351AF9AA1A00B9B856 /* btGImpactShape.h in Headers */,
+				C5F516131C8216660013B695 /* UITabControl.h in Headers */,
 				15AE1A6F19AAD40300C27E9E /* b2CircleContact.h in Headers */,
 				B6CAB3431AF9AA1A00B9B856 /* gim_box_collision.h in Headers */,
 				B6CAB39B1AF9AA1A00B9B856 /* btVoronoiSimplexSolver.h in Headers */,
@@ -12188,6 +12233,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F516251C822E470013B695 /* TabControlReader.h in Headers */,
+				C5F516231C822E190013B695 /* UITabControl.h in Headers */,
 				507B3D121C31BDD30067B53E /* CCStdC-ios.h in Headers */,
 				507B3D131C31BDD30067B53E /* b2Math.h in Headers */,
 				507B3D141C31BDD30067B53E /* CCUITextInput.h in Headers */,
@@ -12231,6 +12278,7 @@
 				507B3D3A1C31BDD30067B53E /* CCEventListenerAssetsManagerEx.h in Headers */,
 				507B3D3B1C31BDD30067B53E /* btGpu3DGridBroadphase.h in Headers */,
 				507B3D3C1C31BDD30067B53E /* CCAllocatorGlobal.h in Headers */,
+				94A6DF0A1C7304120094AEF7 /* LocalizationManager.h in Headers */,
 				507B3D3D1C31BDD30067B53E /* btSolverConstraint.h in Headers */,
 				507B3D3E1C31BDD30067B53E /* SpuDoubleBuffer.h in Headers */,
 				507B3D3F1C31BDD30067B53E /* CCPUScriptCompiler.h in Headers */,
@@ -13226,6 +13274,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F516201C822D900013B695 /* UITabControl.h in Headers */,
+				C5F5161E1C822D5B0013B695 /* TabControlReader.h in Headers */,
 				503DD8F01926736A00CD74DD /* CCStdC-ios.h in Headers */,
 				15AE1A9A19AAD40300C27E9E /* b2Math.h in Headers */,
 				2980F0281BA9A5550059E678 /* CCUITextInput.h in Headers */,
@@ -13269,6 +13319,7 @@
 				15B3708319EE414C00ABE682 /* CCEventListenerAssetsManagerEx.h in Headers */,
 				B6CAB4361AF9AA1A00B9B856 /* btGpu3DGridBroadphase.h in Headers */,
 				D0FD03521A3B51AA00825BB5 /* CCAllocatorGlobal.h in Headers */,
+				94A6DF091C7304120094AEF7 /* LocalizationManager.h in Headers */,
 				B6CAB3DC1AF9AA1A00B9B856 /* btSolverConstraint.h in Headers */,
 				B6CAB4B61AF9AA1A00B9B856 /* SpuDoubleBuffer.h in Headers */,
 				B665E3D11AA80A6600DDB1C5 /* CCPUScriptCompiler.h in Headers */,
@@ -14421,6 +14472,7 @@
 				B665E36E1AA80A6500DDB1C5 /* CCPUOnVelocityObserverTranslator.cpp in Sources */,
 				15AE190119AAD35000C27E9E /* CCComController.cpp in Sources */,
 				B6CAB4071AF9AA1A00B9B856 /* btMultiBodyJointLimitConstraint.cpp in Sources */,
+				C5F516191C8216C60013B695 /* TabControlReader.cpp in Sources */,
 				B6CAB38F1AF9AA1A00B9B856 /* btRaycastCallback.cpp in Sources */,
 				15AE1BE619AAE01E00C27E9E /* CCTableViewCell.cpp in Sources */,
 				50ABBEBB1925AB6F00A911A9 /* ccUtils.cpp in Sources */,
@@ -14697,6 +14749,7 @@
 				B6CAB4B71AF9AA1A00B9B856 /* SpuFakeDma.cpp in Sources */,
 				B665E3361AA80A6500DDB1C5 /* CCPUOnEmissionObserverTranslator.cpp in Sources */,
 				15B3708819EE414C00ABE682 /* Manifest.cpp in Sources */,
+				C5F516121C8216660013B695 /* UITabControl.cpp in Sources */,
 				B665E27E1AA80A6500DDB1C5 /* CCPUDoScaleEventHandlerTranslator.cpp in Sources */,
 				B63990CC1A490AFE00B07923 /* CCAsyncTaskPool.cpp in Sources */,
 				182C5CE51A9D725400C30D34 /* UserCameraReader.cpp in Sources */,
@@ -14944,6 +14997,7 @@
 				1A570354180BD0B00088DEC7 /* ioapi.cpp in Sources */,
 				15B3707819EE414C00ABE682 /* AssetsManagerEx.cpp in Sources */,
 				1A570358180BD0B00088DEC7 /* unzip.cpp in Sources */,
+				94A6DF051C7303FD0094AEF7 /* LocalizationManager.cpp in Sources */,
 				B665E3861AA80A6500DDB1C5 /* CCPUPathFollowerTranslator.cpp in Sources */,
 				B29A7DCB19EE1B7700872B35 /* Skeleton.c in Sources */,
 				15AE196E19AAD35700C27E9E /* CCActionTimelineCache.cpp in Sources */,
@@ -15190,6 +15244,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F516221C822E060013B695 /* TabControlReader.cpp in Sources */,
+				C5F516211C822DED0013B695 /* UITabControl.cpp in Sources */,
 				507B39C21C31BDD30067B53E /* CCAllocatorGlobalNewDelete.cpp in Sources */,
 				507B39C31C31BDD30067B53E /* UIVideoPlayer-ios.mm in Sources */,
 				507B39C41C31BDD30067B53E /* CCPUPlaneCollider.cpp in Sources */,
@@ -15787,6 +15843,7 @@
 				507B3C141C31BDD30067B53E /* CCPUBoxCollider.cpp in Sources */,
 				507B3C151C31BDD30067B53E /* CCPUMeshSurfaceEmitter.cpp in Sources */,
 				507B3C161C31BDD30067B53E /* CCPUOnQuotaObserverTranslator.cpp in Sources */,
+				94A6DF081C73040E0094AEF7 /* LocalizationManager.cpp in Sources */,
 				507B3C171C31BDD30067B53E /* UIPageView.cpp in Sources */,
 				507B3C181C31BDD30067B53E /* CCComponentContainer.cpp in Sources */,
 				507B3C191C31BDD30067B53E /* ccCArray.cpp in Sources */,
@@ -16033,6 +16090,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F5161F1C822D6D0013B695 /* UITabControl.cpp in Sources */,
+				C5F5161D1C822D400013B695 /* TabControlReader.cpp in Sources */,
 				D0FD03541A3B51AA00825BB5 /* CCAllocatorGlobalNewDelete.cpp in Sources */,
 				15AE1B9819AADAA100C27E9E /* UIVideoPlayer-ios.mm in Sources */,
 				B665E38F1AA80A6500DDB1C5 /* CCPUPlaneCollider.cpp in Sources */,
@@ -16630,6 +16689,7 @@
 				B665E22B1AA80A6500DDB1C5 /* CCPUBoxCollider.cpp in Sources */,
 				B665E3031AA80A6500DDB1C5 /* CCPUMeshSurfaceEmitter.cpp in Sources */,
 				B665E3571AA80A6500DDB1C5 /* CCPUOnQuotaObserverTranslator.cpp in Sources */,
+				94A6DF071C73040D0094AEF7 /* LocalizationManager.cpp in Sources */,
 				15AE1B7619AADA9A00C27E9E /* UIPageView.cpp in Sources */,
 				1A570311180BCF190088DEC7 /* CCComponentContainer.cpp in Sources */,
 				50ABBE2C1925AB6F00A911A9 /* ccCArray.cpp in Sources */,

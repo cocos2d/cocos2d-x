@@ -27,9 +27,11 @@
 
  ****************************************************************************/
 
-#include "WebSocket.h"
+#include "network/WebSocket.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventListenerCustom.h"
 
 #include <thread>
 #include <mutex>
@@ -324,6 +326,13 @@ WebSocket::WebSocket()
     }
 
     __websocketInstances->push_back(this);
+    
+    std::shared_ptr<bool> isDestroyed = _isDestroyed;
+    _resetDirectorListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_RESET, [this, isDestroyed](EventCustom*){
+        if (*isDestroyed)
+            return;
+        close();
+    });
 }
 
 WebSocket::~WebSocket()
@@ -352,6 +361,9 @@ WebSocket::~WebSocket()
             LOGD("ERROR: WebSocket instance (%p) wasn't added to the container which saves websocket instances!\n", this);
         }
     }
+    
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_resetDirectorListener);
+    
     *_isDestroyed = true;
 }
 
@@ -558,7 +570,13 @@ void WebSocket::onSubThreadStarted()
         {
             "permessage-deflate",
             lws_extension_callback_pm_deflate,
+            // iOS doesn't support client_no_context_takeover extension in the current version, it will cause iOS connection fail
+            // It may be a bug of lib websocket iOS build
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+            "permessage-deflate; client_max_window_bits"
+#else 
             "permessage-deflate; client_no_context_takeover; client_max_window_bits"
+#endif
         },
         {
             "deflate-frame",
@@ -587,7 +605,7 @@ void WebSocket::onSubThreadStarted()
     info.options = 0;
     info.user = this;
 
-    int log_level = LLL_ERR | LLL_WARN | LLL_NOTICE/* | LLL_INFO | LLL_DEBUG/* | LLL_PARSER*/ | LLL_HEADER | LLL_EXT | LLL_CLIENT | LLL_LATENCY;
+    int log_level = LLL_ERR | LLL_WARN | LLL_NOTICE/* | LLL_INFO | LLL_DEBUG | LLL_PARSER*/ | LLL_HEADER | LLL_EXT | LLL_CLIENT | LLL_LATENCY;
     lws_set_log_level(log_level, printWebSocketLog);
 
     _wsContext = lws_create_context(&info);

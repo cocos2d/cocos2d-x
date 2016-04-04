@@ -1,4 +1,4 @@
-#include "CCControlButtonLoader.h"
+#include "editor-support/cocosbuilder/CCControlButtonLoader.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;

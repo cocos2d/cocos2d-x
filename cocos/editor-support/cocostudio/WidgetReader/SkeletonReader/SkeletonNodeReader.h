@@ -25,8 +25,7 @@ THE SOFTWARE.
 #ifndef _SKELETONNODEREADER_H_
 #define _SKELETONNODEREADER_H_
 
-#include "cocos2d.h"
-#include "cocostudio/WidgetReader/SkeletonReader/BoneNodeReader.h"
+#include "editor-support/cocostudio/WidgetReader/SkeletonReader/BoneNodeReader.h"
 
 class SkeletonNodeReader : public  BoneNodeReader
 {

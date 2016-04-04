@@ -23,8 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "CCUISingleLineTextField.h"
-#include "CCUITextFieldFormatter.h"
+#import "ui/UIEditBox/Mac/CCUISingleLineTextField.h"
+#include "ui/UIEditBox/Mac/CCUITextFieldFormatter.h"
 
 @interface CCUISingleLineTextField()
 @property (nonatomic, retain) NSMutableDictionary *placeholderAttributes;
@@ -45,6 +45,7 @@
                                       font, NSFontAttributeName,
                                       [NSColor grayColor], NSForegroundColorAttributeName,
                                       nil];
+        [self setLineBreakMode:NSLineBreakByTruncatingTail];
     }
     
     return self;

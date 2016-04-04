@@ -16,12 +16,12 @@
 * See the License for the specific language governing permissions and limitations under the License.
 */
 
-#include "SimpleAudioEngine.h"
-#include "Audio.h"
+#include "audio/include/SimpleAudioEngine.h"
+#include "audio/winrt/Audio.h"
 #include "cocos2d.h"
 
 #include <map>
-//#include "CCCommon.h"
+//#include "platform/CCCommon.h"
 using namespace std;
 USING_NS_CC;
 

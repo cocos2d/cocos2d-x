@@ -542,7 +542,7 @@ void TextureCache::reloadAllTextures()
 // #endif
 }
 
-const std::string TextureCache::getTextureFilePath( cocos2d::Texture2D *texture )const
+std::string TextureCache::getTextureFilePath(cocos2d::Texture2D* texture) const
 {
     for(auto& item : _textures)
     {

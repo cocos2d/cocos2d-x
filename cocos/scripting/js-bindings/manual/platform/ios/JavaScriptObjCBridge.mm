@@ -22,10 +22,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "JavaScriptObjCBridge.h"
-#include "spidermonkey_specifics.h"
-#include "ScriptingCore.h"
-#include "js_manual_conversions.h"
+#import "scripting/js-bindings/manual/platform/ios/JavaScriptObjCBridge.h"
+#include "scripting/js-bindings/manual/spidermonkey_specifics.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
 #include "cocos2d.h"
 JavaScriptObjCBridge::CallInfo::~CallInfo(void)
 {

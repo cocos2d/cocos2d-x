@@ -26,10 +26,10 @@
  */
 
 
-#include "XMLHTTPRequest.h"
+#include "scripting/js-bindings/manual/network/XMLHTTPRequest.h"
 #include <string>
 #include <algorithm>
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 
 using namespace std;
 

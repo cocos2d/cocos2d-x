@@ -25,7 +25,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #import <Foundation/Foundation.h>
 
-#include "CCFileUtils-apple.h"
+#include "platform/apple/CCFileUtils-apple.h"
 
 #include <ftw.h>
 

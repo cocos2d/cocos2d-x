@@ -33,7 +33,7 @@
 #include <map>
 #include "fmod.hpp"
 #include "fmod_errors.h"
-#include "AudioEngine.h"
+#include "audio/include/AudioEngine.h"
 
 #include "base/CCRef.h"
 

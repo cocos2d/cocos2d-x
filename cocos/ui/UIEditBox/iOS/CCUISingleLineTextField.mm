@@ -24,8 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "CCUISingleLineTextField.h"
-#import "CCUITextInput.h"
+#import "ui/UIEditBox/iOS/CCUISingleLineTextField.h"
+#import "ui/UIEditBox/iOS/CCUITextInput.h"
 
 #include "base/CCDirector.h"
 

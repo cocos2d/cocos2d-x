@@ -1,10 +1,9 @@
-#include "lua_cocos2dx_studio_auto.hpp"
-#include "CocoStudio.h"
-#include "CCComExtensionData.h"
-#include "lua-cocos-studio-conversions.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-
+#include "scripting/lua-bindings/auto/lua_cocos2dx_studio_auto.hpp"
+#include "editor-support/cocostudio/CocoStudio.h"
+#include "editor-support/cocostudio/CCComExtensionData.h"
+#include "scripting/lua-bindings/manual/cocostudio/lua-cocos-studio-conversions.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
 int lua_cocos2dx_studio_ActionFrame_getAction(lua_State* tolua_S)
 {
@@ -3192,7 +3191,7 @@ int lua_cocos2dx_studio_DisplayData_changeDisplayToTexture(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_DisplayData_changeDisplayToTexture'", nullptr);
             return 0;
         }
-        const std::string ret = cocostudio::DisplayData::changeDisplayToTexture(arg0);
+        std::string ret = cocostudio::DisplayData::changeDisplayToTexture(arg0);
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
@@ -24859,7 +24858,7 @@ int lua_cocos2dx_studio_ComExtensionData_getActionTag(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ComExtensionData_getActionTag'", nullptr);
             return 0;
         }
-        const int ret = cobj->getActionTag();
+        int ret = cobj->getActionTag();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }

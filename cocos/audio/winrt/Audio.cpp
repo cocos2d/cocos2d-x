@@ -16,9 +16,9 @@
 * See the License for the specific language governing permissions and limitations under the License.
 */
 
-#include "Audio.h"
-#include "CCCommon.h"
-#include "AudioSourceReader.h"
+#include "audio/winrt/Audio.h"
+#include "platform/CCCommon.h"
+#include "audio/winrt/AudioSourceReader.h"
 
 inline void ThrowIfFailed(HRESULT hr)
 {

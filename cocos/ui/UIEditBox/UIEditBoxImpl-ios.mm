@@ -23,13 +23,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "UIEditBoxImpl-ios.h"
+#include "ui/UIEditBox/UIEditBoxImpl-ios.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 #define kLabelZOrder  9999
 
-#include "UIEditBox.h"
+#include "ui/UIEditBox/UIEditBox.h"
 #include "base/CCDirector.h"
 #include "2d/CCLabel.h"
 #import "platform/ios/CCEAGLView-ios.h"
@@ -37,7 +37,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "iOS/CCUIEditBoxIOS.h"
+#import "ui/UIEditBox/iOS/CCUIEditBoxIOS.h"
 
 #define getEditBoxImplIOS() ((cocos2d::ui::EditBoxImplIOS *)_editBox)
 
@@ -208,6 +208,8 @@ UIFont* EditBoxImplIOS::constructFont(const char *fontName, int fontSize)
     CCEAGLView *eaglview = static_cast<CCEAGLView *>(cocos2d::Director::getInstance()->getOpenGLView()->getEAGLView());
     float retinaFactor = eaglview.contentScaleFactor;
     NSString * fntName = [NSString stringWithUTF8String:fontName];
+    
+    fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
     
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     float scaleFactor = glview->getScaleX();

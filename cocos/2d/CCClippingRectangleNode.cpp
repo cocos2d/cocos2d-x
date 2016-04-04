@@ -1,9 +1,9 @@
 
-#include "CCClippingRectangleNode.h"
+#include "2d/CCClippingRectangleNode.h"
 #include "base/CCDirector.h"
 #include "renderer/CCRenderer.h"
 #include "math/Vec2.h"
-#include "CCGLView.h"
+#include "platform/CCGLView.h"
 
 NS_CC_BEGIN
 

@@ -23,11 +23,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cddandroidAndroidJavaEngine.h"
+#include "audio/android/jni/cddandroidAndroidJavaEngine.h"
 #include <stdlib.h>
 #include <android/log.h>
 #include <sys/system_properties.h>
-#include "ccdandroidUtils.h"
+#include "audio/android/ccdandroidUtils.h"
 #include "audio/include/AudioEngine.h"
 #include "platform/android/jni/JniHelper.h"
 

@@ -1,11 +1,12 @@
 
 
-#include "ButtonReader.h"
+#include "editor-support/cocostudio/WidgetReader/ButtonReader/ButtonReader.h"
 
 #include "ui/UIButton.h"
-#include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/LocalizationManager.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -253,6 +254,7 @@ namespace cocostudio
         bool scale9Enabled = false;
         Rect capInsets;
         std::string text = "";
+        bool isLocalized = false;
         int fontSize = 14;
         std::string fontName = "";
         cocos2d::Size scale9Size;
@@ -315,6 +317,10 @@ namespace cocostudio
             else if (name == "ButtonText")
             {
                 text = value;
+            }
+            else if (name == "IsLocalized")
+            {
+                isLocalized = (value == "True") ? true : false;
             }
             else if (name == "FontSize")
             {
@@ -638,7 +644,8 @@ namespace cocostudio
                                            &f_shadowColor,
                                            shadowOffset.width,
                                            shadowOffset.height,
-                                           shadowBlurRadius);
+                                           shadowBlurRadius,
+                                           isLocalized);
         
         return *(Offset<Table>*)(&options);
     }
@@ -824,7 +831,16 @@ namespace cocostudio
         }
         
         std::string titleText = options->text()->c_str();
-        button->setTitleText(titleText);
+        bool isLocalized = options->isLocalized() != 0;
+        if (isLocalized)
+        {
+            ILocalizationManager* lm = LocalizationHelper::getCurrentManager();
+            button->setTitleText(lm->getLocalizationString(titleText));
+        }
+        else
+        {
+            button->setTitleText(titleText);
+        }
         
         auto textColor = options->textColor();
         Color3B titleColor(textColor->r(), textColor->g(), textColor->b());

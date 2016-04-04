@@ -20,7 +20,7 @@
  */
 
 
-#include "CCProperties.h"
+#include "base/CCProperties.h"
 
 #include <string.h>
 
@@ -707,7 +707,7 @@ bool Properties::exists(const char* name) const
     return false;
 }
 
-static const bool isStringNumeric(const char* str)
+static bool isStringNumeric(const char* str)
 {
     CCASSERT(str, "invalid str");
 

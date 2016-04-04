@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-#include "AudioEngine-inl.h"
+#include "audio/android/AudioEngine-inl.h"
 
 #include <unistd.h>
 // for native asset manager

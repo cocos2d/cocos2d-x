@@ -28,12 +28,12 @@
 #include <climits>
 
 #include "chipmunk/chipmunk_private.h"
-#include "CCPhysicsBody.h"
-#include "CCPhysicsShape.h"
-#include "CCPhysicsContact.h"
-#include "CCPhysicsJoint.h"
-#include "CCPhysicsContact.h"
-#include "CCPhysicsHelper.h"
+#include "physics/CCPhysicsBody.h"
+#include "physics/CCPhysicsShape.h"
+#include "physics/CCPhysicsContact.h"
+#include "physics/CCPhysicsJoint.h"
+#include "physics/CCPhysicsContact.h"
+#include "physics/CCPhysicsHelper.h"
 
 #include "2d/CCDrawNode.h"
 #include "2d/CCScene.h"

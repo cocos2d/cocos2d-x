@@ -151,7 +151,6 @@ TestTabActor.prototype = {
     let response = { type: "tabAttached", threadActor: this.threadActor.actorID};
     // this._appendExtraActors(response);
 
-    needToSendNavigation = true;
     return response;
   },
 
@@ -191,22 +190,10 @@ TestTabActor.prototype.requestTypes = {
 let conn = null;
 let transport = null;
 
+let incomingData = '';
+
 this.processInput = function (inputstr) {
     if (!inputstr) {
-      if (needToSendNavigation) {
-        transport.send({
-          from: testTab.actorID,
-          type: 'frameUpdate',
-          frames: [{
-            url: 'about:cehome',
-            title: 'cocos',
-            id: 10
-          }]
-          
-        });
-
-        needToSendNavigation = false;
-      }
 
       return;
     }
@@ -214,63 +201,56 @@ this.processInput = function (inputstr) {
     if (inputstr === "connected")
     {
     	DebuggerServer.init();
-        DebuggerServer.setRootActor(createRootActor);
-        conn = DebuggerServer._onConnection(transport);
+      DebuggerServer.setRootActor(createRootActor);
+      conn = DebuggerServer._onConnection(transport);
         
-        return;
+      return;
     }
 
-    /**
-     * Process incoming packets. Returns true if a packet has been received, either
-     * if it was properly parsed or not. Returns false if the incoming stream does
-     * not contain a full packet yet. After a proper packet is parsed, the dispatch
-     * handler DebuggerTransport.hooks.onPacket is called with the packet as a
-     * parameter.
-     */
-    function _processIncoming(inputString) {
+    
+    function extractPacket(inputString) {
       // Well this is ugly.
       let sep = inputString.indexOf(':');
       if (sep < 0) {
-        // Incoming packet length is too big anyway - drop the connection.
-        if (inputString.length > 20) {
-        }
-        return false;
+        return null;
       }
 
       let count = inputString.substring(0, sep);
       // Check for a positive number with no garbage afterwards.
       if (!/^[0-9]+$/.exec(count)) {
-        return false;
+        return null;
       }
 
       count = +count;
       if (inputString.length - (sep + 1) < count) {
         // Don't have a complete request yet.
-        return false;
+        return null;
       }
 
       // We have a complete request, pluck it out of the data and parse it.
       inputString = inputString.substring(sep + 1);
       let packet = inputString.substring(0, count);
-      inputString = inputString.substring(count);
+      incomingData = inputString.substring(count);
 
+      return packet;
+    }
+
+    function handlePacket(packet) {
       try {
         // packet = this._converter.ConvertToUnicode(packet);
         packet = DevToolsUtils.utf8to16(packet);
         var parsed = JSON.parse(packet);
+        conn.onPacket(parsed);
       } catch(e) {
         let msg = "Error parsing incoming packet: " + packet + " (" + e + " - " + e.stack + ")";
-        // if (Cu.reportError) {
-        //   Cu.reportError(msg);
-        // }
-        return true;
       }
-
-      conn.onPacket(parsed);
     }
 
-    // log('receive: ' + inputstr);
-    _processIncoming(inputstr);
+    incomingData += inputstr;
+    var packet;
+    while (packet = extractPacket(incomingData)) {
+      handlePacket(packet);
+    }
 };
 
 this._prepareDebugger = function (global) {

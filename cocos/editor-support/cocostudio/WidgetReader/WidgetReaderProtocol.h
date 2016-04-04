@@ -26,8 +26,8 @@
 #define __TestCpp__WidgetReaderProtocol__
 
 #include "cocos2d.h"
-#include "cocostudio/DictionaryHelper.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace protocolbuffers
 {

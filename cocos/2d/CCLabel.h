@@ -81,6 +81,13 @@ typedef struct _ttfConfig
     }
 } TTFConfig;
 
+enum class TextFormatter : char
+{
+    NewLine = '\n',
+    CarriageReturn = '\r',
+    NextCharNoChangeX = '\b'
+};
+
 class Sprite;
 class SpriteBatchNode;
 class DrawNode;

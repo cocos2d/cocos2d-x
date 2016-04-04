@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #import <UIKit/UIKit.h>
-#import "CCUITextInput.h"
+#import "ui/UIEditBox/iOS/CCUITextInput.h"
 
 
 @interface UITextView (CCUITextInput) <CCUITextInput>

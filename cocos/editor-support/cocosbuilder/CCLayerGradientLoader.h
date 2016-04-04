@@ -1,7 +1,7 @@
 #ifndef _CCB_CCLAYERGRADIENTLOADER_H_
 #define _CCB_CCLAYERGRADIENTLOADER_H_
 
-#include "CCLayerLoader.h"
+#include "editor-support/cocosbuilder/CCLayerLoader.h"
 
 namespace cocosbuilder {
 

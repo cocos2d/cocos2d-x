@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UILayoutManager.h"
-#include "UILayout.h"
+#include "ui/UILayoutManager.h"
+#include "ui/UILayout.h"
 
 NS_CC_BEGIN
 

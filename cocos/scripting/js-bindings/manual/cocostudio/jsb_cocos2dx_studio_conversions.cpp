@@ -21,9 +21,9 @@
  * THE SOFTWARE.
  */
 
-#include "jsb_cocos2dx_studio_conversions.h"
-#include "cocos2d_specifics.hpp"
-#include "cocostudio/CocoStudio.h"
+#include "scripting/js-bindings/manual/cocostudio/jsb_cocos2dx_studio_conversions.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "editor-support/cocostudio/CocoStudio.h"
 
 jsval animationInfo_to_jsval(JSContext* cx, const cocostudio::timeline::AnimationInfo& v)
 {
