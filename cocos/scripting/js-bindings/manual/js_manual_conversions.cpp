@@ -2300,7 +2300,7 @@ bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, FontDefinition 
     
     JSB_PRECONDITION( jsobj, "Not a valid JS object");
     
-    // defaul values
+    // default values
     const char *            defautlFontName         = "Arial";
     const int               defaultFontSize         = 32;
     TextHAlignment         defaultTextAlignment    = TextHAlignment::LEFT;
@@ -2419,7 +2419,7 @@ bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, FontDefinition 
             out->_shadow._shadowBlur    = 1;
             out->_shadow._shadowOpacity = 1;
             
-            // shado offset
+            // shadow offset
             JS_HasProperty(cx, jsobj, "shadowOffsetX", &hasProperty);
             JS_HasProperty(cx, jsobj, "shadowOffsetY", &hasSecondProp);
             if ( hasProperty && hasSecondProp )

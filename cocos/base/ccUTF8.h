@@ -42,8 +42,8 @@ namespace StringUtils {
  *  @brief Converts from UTF8 string to UTF16 string.
  *
  *  This function resizes \p outUtf16 to required size and
- *  fill its contents with result UTF16 string if convertion success.
- *  If convertion fails it guarantees not to change \p outUtf16.
+ *  fill its contents with result UTF16 string if conversion success.
+ *  If conversion fails it guarantees not to change \p outUtf16.
  *
  *  @param inUtf8 The source UTF8 string to be converted from.
  *  @param outUtf16 The output string to hold the result UTF16s.

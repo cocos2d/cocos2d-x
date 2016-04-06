@@ -220,7 +220,7 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
     _program = glCreateProgram();
     CHECK_GL_ERROR_DEBUG();
 
-    // convert defines here. If we do it in "compileShader" we will do it it twice.
+    // convert defines here. If we do it in "compileShader" we will do it twice.
     // a cache for the defines could be useful, but seems like overkill at this point
     std::string replacedDefines = "";
     replaceDefines(compileTimeDefines, replacedDefines);

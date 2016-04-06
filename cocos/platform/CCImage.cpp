@@ -400,7 +400,7 @@ namespace
         uint32_t bytesOfKeyValueData;
     };
 }
-//atittc struct end
+//atitc struct end
 
 //////////////////////////////////////////////////////////////////////////
 

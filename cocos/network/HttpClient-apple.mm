@@ -184,7 +184,7 @@ static int processTask(HttpClient* client, HttpRequest* request, NSString* reque
         }
     }
 
-    //read cookie propertities from file and set cookie
+    //read cookie properties from file and set cookie
     std::string cookieFilename = client->getCookieFilename();
     if(!cookieFilename.empty() && nullptr != client->getCookie())
     {
