@@ -1,3 +1,7 @@
+cocos2d-x-3.11 ?? 2016
+
+[REFINE]        add optional alpha parameter to Color4B and Color4F constructors
+
 cocos2d-x-3.11 Apr ? 2016
 
 [HIGHLIGHT]     Physics: upgrade chipmunk to v7.0.1
