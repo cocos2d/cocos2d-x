@@ -2218,7 +2218,7 @@ bool js_forceGC(JSContext *cx, uint32_t argc, jsval *vp) {
 bool js_cocos2dx_retain(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-#if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#if ! CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Ref* cobj = (cocos2d::Ref *)(proxy ? proxy->ptr : NULL);
@@ -2233,7 +2233,7 @@ bool js_cocos2dx_retain(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_release(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-#if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#if ! CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Ref* cobj = (cocos2d::Ref *)(proxy ? proxy->ptr : NULL);

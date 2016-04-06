@@ -216,7 +216,7 @@ void removeJSObject(JSContext* cx, cocos2d::Ref* nativeObj)
     auto proxy = jsb_get_native_proxy(nativeObj);
     if (proxy)
     {
-#if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#if ! CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         JS::RemoveObjectRoot(cx, &proxy->obj);
 #endif
         // remove the proxy here, since this was a "stack" object, not heap
@@ -2192,7 +2192,7 @@ JSObject* jsb_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t 
     JS::RootedObject jsObj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
     auto proxy = jsb_new_proxy(native, jsObj);
     
-#if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#if ! CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     JS::AddNamedObjectRoot(cx, &proxy->obj, debug);
 #else
 #if COCOS2D_DEBUG > 1
@@ -2262,7 +2262,7 @@ JSObject* jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js_type_c
     JS::RootedObject jsObj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
     proxy = jsb_new_proxy(native, jsObj);
     
-#if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#if ! CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     JS::AddNamedObjectRoot(cx, &proxy->obj, debug);
 #else
 #if COCOS2D_DEBUG > 1
