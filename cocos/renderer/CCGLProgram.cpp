@@ -44,14 +44,23 @@ THE SOFTWARE.
 static void replaceDefines(const std::string& compileTimeDefines, std::string& out)
 {
     // Replace semicolons with '#define ... \n'
-    if (compileTimeDefines.size() > 0)
+    if (!compileTimeDefines.empty())
     {
-        size_t pos;
-        out = compileTimeDefines;
-        out.insert(0, "#define ");
-        while ((pos = out.find(';')) != std::string::npos)
+        std::string currentDefine;
+        for (char itChar : compileTimeDefines)
         {
-            out.replace(pos, 1, "\n#define ");
+            if (itChar == ';')
+            {
+                if (!currentDefine.empty())
+                {
+                    out.append("\n#define " + currentDefine);
+                    currentDefine.clear();
+                }
+            }
+            else
+            {
+                currentDefine.append(1, itChar);
+            }
         }
         out += "\n";
     }
@@ -380,7 +389,7 @@ void GLProgram::parseUniforms()
                     GLenum __gl_error_code = glGetError();
                     if (__gl_error_code != GL_NO_ERROR)
                     {
-                        CCLOG("error: 0x%x", (int)__gl_error_code);
+                        CCLOG("error: 0x%x  uniformName: %s", (int)__gl_error_code, uniformName);
                     }
                     assert(__gl_error_code == GL_NO_ERROR);
 
@@ -472,8 +481,9 @@ bool GLProgram::compileShader(GLuint* shader, GLenum type, const GLchar* source,
         }
         free(src);
 
-        return false;;
+        return false;
     }
+
     return (status == GL_TRUE);
 }
 
