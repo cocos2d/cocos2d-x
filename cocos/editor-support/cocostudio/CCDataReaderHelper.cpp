@@ -2287,8 +2287,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         {
             if (movementBoneData->frameList.size() > 0)
             {
-                FrameData *frameData = new (std::nothrow) FrameData();
-                frameData = movementBoneData->frameList.at(framesizemusone);
+                auto frameData = movementBoneData->frameList.at(framesizemusone);
                 movementBoneData->addFrameData(frameData);
                 frameData->release();
                 frameData->frameID = movementBoneData->duration;
