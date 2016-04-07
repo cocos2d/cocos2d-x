@@ -164,7 +164,7 @@ cc.defineGetterSetter(_proto, "shaderProgram", _proto.getShaderProgram, _proto.s
 cc.defineGetterSetter(_proto, "glServerState", _proto.getGLServerState, _proto.setGLServerState);
 cc.defineGetterSetter(_proto, "tag", _proto.getTag, _proto.setTag);
 cc.defineGetterSetter(_proto, "userObject", _proto.getUserObject, _proto.setUserObject);
-cc.defineGetterSetter(_proto, "arrivalOrder", _proto.getArrivalOrder, _proto.setArrivalOrder);
+cc.defineGetterSetter(_proto, "arrivalOrder", _proto.getOrderOfArrival, _proto.setOrderOfArrival);
 cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
 cc.defineGetterSetter(_proto, "opacityModifyRGB", _proto.isOpacityModifyRGB, _proto.setOpacityModifyRGB);
 cc.defineGetterSetter(_proto, "cascadeOpacity", _proto.isCascadeOpacityEnabled, _proto.setCascadeOpacityEnabled);
