@@ -31,8 +31,8 @@
 var chipmunkTestSceneIdx = -1;
 
 function k_scalar_body(body, point, n) {
-    var rcn = cp.v.cross(cp.v.sub(point, body.getPosition()), n);
-    return 1.0/body.getMass() + rcn*rcn/body.getMoment();
+    var rcn = cp.v.cross(cp.v.sub(point, body.p), n);
+    return 1.0/body.m + rcn*rcn/body.i;
 }
 
 //------------------------------------------------------------------
@@ -1494,14 +1494,14 @@ var Buoyancy = ChipmunkDemo.extend( {
         var level = water.getBB().t;
 
         // Clip the polygon against the water level
-        var count = poly.getCount();
+        var count = poly.getNumVerts();
 
         var clipped = [];
 
         var j=count-1;
         for(var i=0; i<count; i++) {
-            var a = body.localToWorld(poly.getVert(j));
-            var b = body.localToWorld(poly.getVert(i));
+            var a = body.local2World(poly.getVert(j));
+            var b = body.local2World(poly.getVert(i));
 
             if(a.y < level){
                 clipped.push(a.x);
@@ -1534,7 +1534,7 @@ var Buoyancy = ChipmunkDemo.extend( {
         body.applyImpulse(cp.v.mult(g, -displacedMass*dt), centroid);
 
         // Apply linear damping for the fluid drag.
-        var v_centroid = body.getVelocityAtWorldPoint(centroid)
+        var v_centroid = body.getVelAtWorldPoint(centroid)
         var k = k_scalar_body(body, centroid, cp.v.normalize(v_centroid));
         var damping = clippedArea*FLUID_DRAG*FLUID_DENSITY;
         var v_coef = Math.exp(-damping*dt*k); // linear drag
@@ -1542,7 +1542,7 @@ var Buoyancy = ChipmunkDemo.extend( {
         body.applyImpulse(cp.v.mult(cp.v.sub(cp.v.mult(v_centroid, v_coef), v_centroid), 1.0/k), centroid);
 
         // Apply angular damping for the fluid drag.
-        var cog = body.localToWorld(body.getCenterOfGravity());
+        var cog = body.local2World(body.getCenterOfGravity());
         var w_damping = cp.momentForPoly(FLUID_DRAG*FLUID_DENSITY*clippedArea, clipped, cp.v.neg(cog), 0);
         body.w *= Math.exp(-w_damping*dt* (1/body.i));
 
@@ -1777,10 +1777,10 @@ var Query = ChipmunkDemo.extend({
         if(nearestInfo){
             // Draw a grey line to the closest shape.
             drawNode.drawDot(touch.getLocation(), 3, cc.color(128, 128, 128, 255));
-            drawNode.drawSegment(touch.getLocation(), nearestInfo.point, 1, cc.color(128, 128, 128, 255));
+            drawNode.drawSegment(touch.getLocation(), nearestInfo.p, 1, cc.color(128, 128, 128, 255));
             
             // Draw a red bounding box around the shape under the mouse.
-//            if(nearestInfo.distance < 0)
+//            if(nearestInfo.d < 0)
 //                drawNode.drawBB(cpShapeGetBB(nearestInfo.shape), RGBAColor(1,0,0,1));
         }
         
