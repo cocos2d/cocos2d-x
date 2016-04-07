@@ -81,7 +81,7 @@ void GLProgramStateCache::removeUnusedGLProgramState()
             CCLOG("cocos2d: GLProgramStateCache: removing unused GLProgramState");
 
             //value->release();
-            _glProgramStates.erase(it++);
+            it = _glProgramStates.erase(it);
         } else {
             ++it;
         }
