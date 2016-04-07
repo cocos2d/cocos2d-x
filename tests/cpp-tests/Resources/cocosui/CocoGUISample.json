@@ -1,0 +1,397 @@
+{
+    "version" : 1.0,
+    "textures" : [],
+    "designWidth" : 480.0,
+    "designHeight" : 320.0,
+    "widgetTree" :
+    {
+        "classname" : "Panel",
+        "options" :
+        {
+            "width" : 480,
+            "height" : 320
+        },
+        "children" :
+        [
+        {
+         "classname" : "ScrollView",
+         "options" :
+         {
+         "x" : 330,
+         "y" : 220,
+         "width" : 150,
+         "height" : 100,
+         "backGroundScale9Enable" : true,
+         "clipAble" : true,
+         "touchAble" : true,
+         "backGroundImage" : "scrollviewbg.png",
+         "name" : "scrollview"
+         },
+         "children" :
+         [
+          {
+          "classname" : "Label",
+          "options" : {
+          "x" : 75,
+          "y" : 260,
+          "text" : "Anchor:"
+          },
+          "children" : []
+          },
+          {
+          "classname" : "Label",
+          "options" : {
+          "x" : 75,
+          "y" : 240,
+          "text" : "Eddy"
+          },
+          "children" : []
+          },
+          {
+          "classname" : "Label",
+          "options" : {
+          "x" : 75,
+          "y" : 220,
+          "text" : "Nutty"
+          },
+          "children" : []
+          },
+          {
+          "classname" : "Label",
+          "options" : {
+          "x" : 75,
+          "y" : 200,
+          "text" : "Liam"
+          },
+          "children" : []
+          },
+          {
+          "classname" : "Label",
+          "options" : {
+          "x" : 75,
+          "y" : 180,
+          "text" : "Guanqiang"
+          },
+          "children" : []
+          },
+          {
+          "classname" : "Label",
+          "options" : {
+          "x" : 75,
+          "y" : 160,
+          "text" : "youyouyou"
+          },
+          "children" : []
+          },
+          {
+          "classname" : "Label",
+          "options" : {
+          "x" : 75,
+          "y" : 140,
+          "text" : "jxh"
+          },
+          "children" : []
+          },
+          {
+          "classname" : "Label",
+          "options" : {
+          "x" : 75,
+          "y" : 120,
+          "text" : "chengstory"
+          },
+          "children" : []
+          },
+          {
+          "classname" : "Label",
+          "options" : {
+          "x" : 75,
+          "y" : 100,
+          "text" : "houlong"
+          },
+          "children" : []
+          },
+          {
+          "classname" : "Label",
+          "options" : {
+          "x" : 75,
+          "y" : 80,
+          "text" : "pipu"
+          },
+          "children" : []
+          },
+          {
+          "classname" : "Label",
+          "options" : {
+          "x" : 75,
+          "y" : 60,
+          "text" : "huangwei"
+          },
+          "children" : []
+          },
+          {
+          "classname" : "Label",
+          "options" : {
+          "x" : 75,
+          "y" : 40,
+          "text" : "xiexin"
+          },
+          "children" : []
+          },
+          {
+          "classname" : "TextButton",
+          "options" : {
+          "x" : 75,
+          "y" : 20,
+          "text" : "返回顶部",
+          "normal" : "backtotopnormal.png",
+          "pressed" : "backtotoppressed.png",
+          "disabled" : "backtotoppressed.png",
+          "touchAble" : true,
+          "name" : "backtotopbutton"
+          },
+          "children" : []
+          }
+          ]
+        },
+//         {
+//         "classname" : "ListView",
+//         "options" :
+//         {
+//         "x" : 330,
+//         "y" : 80,
+//         "width" : 150,
+//         "height" : 100,
+//         "backGroundScale9Enable" : true,
+//         "clipAble" : true,
+//         "touchAble" : true,
+//         "backGroundImage" : "scrollviewbg.png",
+//         "name" : "listview"
+//         },
+//         "children" : []
+//         },
+         {
+         "classname" : "Label",
+         "options" :
+         {
+         "x" : 405,
+         "y" : 70,
+         "text" : "列表层",
+         "touchAble" : true,
+         "touchSacleEnable" : true
+         },
+         "children" :[]
+         },
+         {
+         "classname" : "ImageView",
+         "options" :
+         {
+         "x" : 30,
+         "y" : 290,
+         "fileName" : "ccicon.png",
+         "scale9Enable" : false,
+         "capInsetsX" : 20,
+         "capInsetsY" : 20,
+         "capInsetsWidth" : 10,
+         "capInsetsHeight" : 10,
+         "scale9Width" : 120,
+         "scale9Height" : 80,
+         "flipX" : false,
+         "flipY" : false,
+         "name" : "imageview"
+         },
+         "children" :[]
+         },         
+         {
+         "classname" : "Label",
+         "options" :
+         {
+         "x" : 70,
+         "y" : 300,
+         "gravity" : 1,
+         "text" : "name : Cocos"
+         },
+         "children" :[]
+         },
+         {
+         "classname" : "Label",
+         "options" :
+         {
+         "x" : 70,
+         "y" : 280,
+         "gravity" : 1,
+         "text" : "money : "
+         },
+         "children" :[]
+         },
+         {
+         "classname" : "LabelAtlas",
+         "options" :
+         {
+         "x" : 150,
+         "y" : 270,
+         "stringValue" : "3256",
+         "charMapFile" : "labelatlas.png",
+         "itemWidth" : 17,
+         "itemHeight" : 22,
+         "startCharMap" : "0"
+         },
+         "children" :[]
+         },
+         {
+         "classname" : "LoadingBar",
+         "options" :
+         {
+         "x" : 70,
+         "y" : 200,
+         "texture" : "loadingbar.png",
+         "percent" : 50,
+         "name" : "loadingbar"
+         },
+         "children" :[]
+         },
+         {
+         "classname" : "Slider",
+         "options" :
+         {
+         "x" : 70,
+         "y" : 160,
+         "barFileName" : "slidbar.png",
+         "ballNormal" : "sliderballnormal.png",
+         "ballPressed" :"sliderballpressed.png",
+         "percent" : 50,
+         "showProgressBar" : true,
+         "progressBarFileName" : "slider_bar_active_9patch.png",
+         "touchAble" : true,
+         "name" : "slider"
+         },
+         "children" :[]
+         },
+         {
+         "classname" : "Label",
+         "options" :
+         {
+         "x" : 70,
+         "y" : 230,
+         "text" : "播放速度",
+         "touchAble" : true,
+         "touchSacleEnable" : true
+         },
+         "children" :[]
+         },
+         {
+         "classname" : "Label",
+         "options" :
+         {
+         "x" : 405,
+         "y" : 210,
+         "text" : "滚动层",
+         "touchAble" : true,
+         "touchSacleEnable" : true
+         },
+         "children" :[]
+         },
+         {
+         "classname" : "CheckBox",
+         "options" :
+         {
+         "x" : 250,
+         "y" : 290,
+         "backGroundBox" : "check_box_normal.png",
+         "backGroundBoxSelected" : "check_box_normal_press.png",
+         "frontCross" : "check_box_active.png",
+         "backGroundBoxDisabled" : "check_box_normal_disable.png",
+         "frontCrossDisabled" : "check_box_active_disable.png",
+         "touchAble" : true,
+         "name" : "checkbox"
+         },
+         "children" :[]
+         },
+         {
+         "classname" : "Label",
+         "options" :
+         {
+         "x" : 250,
+         "y" : 268,
+         "text" : "复选框",
+         "touchAble" : true,
+         "touchSacleEnable" : true
+         },
+         "children" :[]
+         },
+         /*
+         {
+         "classname" : "Button",
+         "options" :
+         {
+         "x" : 127,
+         "y" : 96,
+         "normal" : "animationbuttonnormal.png",
+         "pressed" : "animationbuttonpressed.png",
+         "touchAble" : true,
+         "name" : "animationbutton"
+         },
+         "children" :[]
+         },
+         {
+         "classname" : "Label",
+         "options" :
+         {
+         "x" : 127,
+         "y" : 70,
+         "text" : "点我播放ui动画",
+         "touchAble" : true,
+         "touchSacleEnable" : true,
+         "name" : "animationlabel"
+         },
+         "children" :[]
+         },
+          */
+         {
+         "classname" : "TextField",
+         "options" :
+         {
+         "x" : 240,
+         "y" : 200,
+         "fontSize" : 20,
+         "placeHolder" : "TextField",
+         "touchAble" : true,
+         "colorR" : 0,
+         "colorG" : 255,
+         "colorB" : 0,
+         "name" : "textfield"
+         },
+         "children" :[]
+         },
+         {
+         "classname" : "Label",
+         "options" :
+         {
+         "x" : 240,
+         "y" : 130,
+         "text" : "",
+         "touchAble" : false,
+         "touchSacleEnable" : false
+         },
+         "children" :[]
+         },
+         {
+         "classname" : "Button",
+         "options" :
+         {
+         "x" : 430,
+         "y" : 40,
+         "colorR" : 0,
+         "colorG" : 255,
+         "colorB" : 0,
+         "touchAble" : true,
+         "touchSacleEnable" : true,
+         "name" : "exitbutton",
+         "normal" : "CloseNormal.png",
+         "pressed" : "CloseSelected.png"
+         },
+         "children" :[]
+         }
+        ]
+    }
+    
+}

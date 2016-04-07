@@ -140,9 +140,14 @@ void AssetsManagerEx::initManifests(const std::string& manifestUrl)
         _tempManifest = new (std::nothrow) Manifest();
         if (_tempManifest)
         {
-            _tempManifest->parse(_tempManifestPath);
-            if (!_tempManifest->isLoaded() && _fileUtils->isFileExist(_tempManifestPath))
+            //_tempManifest->parse(_tempManifestPath);
+            if (_fileUtils->isFileExist(_tempManifestPath)) {
                 _fileUtils->removeFile(_tempManifestPath);
+            }
+            /*
+            if (!_tempManifest->isLoaded())
+                _fileUtils->removeFile(_tempManifestPath);
+             */
         }
         else
         {
@@ -619,10 +624,17 @@ void AssetsManagerEx::startUpdate()
                 }
             }
             _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
-            this->batchDownload();
-            
-            std::string msg = StringUtils::format("Start to update %d files from remote package.", _totalToDownload);
-            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "", msg);
+            if (_totalWaitToDownload > 0)
+            {
+                this->batchDownload();
+                
+                std::string msg = StringUtils::format("Start to update %d files from remote package.", _totalToDownload);
+                dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "", msg);
+            }
+            else
+            {
+                updateSucceed();
+            }
         }
     }
 
@@ -842,6 +854,7 @@ void AssetsManagerEx::onError(const network::DownloadTask& task,
     }
     else if (task.identifier == MANIFEST_ID)
     {
+        _updateState = State::UNCHECKED;
         dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_DOWNLOAD_MANIFEST, task.identifier, errorStr, errorCode, errorCodeInternal);
     }
     else

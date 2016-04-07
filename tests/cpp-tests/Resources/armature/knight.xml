@@ -1,0 +1,194 @@
+<skeleton name="Example03" frameRate="30" version="2.0">
+ <armatures>
+  <armature name="Knight_f/Knight">
+   <b name="horseLegL2" parent="horseBody" x="-8" y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0">
+    <d name="Knight_f-horse_leg"/>
+   </b>
+   <b name="horseLegL1" parent="horseBody" x="13" y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="1">
+    <d name="Knight_f-horse_leg"/>
+   </b>
+   <b name="horseLegR2" parent="horseBody" x="-14" y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="2">
+    <d name="Knight_f-horse_leg"/>
+   </b>
+   <b name="horseLegR1" parent="horseBody" x="7" y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="3">
+    <d name="Knight_f-horse_leg"/>
+   </b>
+   <b name="horseBody" x="0" y="2" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="4">
+    <d name="Knight_f-horse_body"/>
+   </b>
+   <b name="horseTail" parent="horseBody" x="-20" y="4" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="5">
+    <d name="Knight_f-horse_tail"/>
+   </b>
+   <b name="horseHead" parent="horseBody" x="20" y="2" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="6">
+    <d name="Knight_f-horse_head"/>
+   </b>
+   <b name="armL" parent="body" x="4.1" y="-12" kX="15" kY="15" cX="1" cY="1" pX="0" pY="0" z="7">
+    <d name="Knight_f-hero_arm"/>
+   </b>
+   <b name="body" parent="horseBody" x="0" y="0" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="8">
+    <d name="Knight_f-hero_body"/>
+   </b>
+   <b name="leg" parent="body" x="-2" y="0" kX="-45" kY="-45" cX="1" cY="1" pX="0" pY="0" z="9">
+    <d name="Knight_f-hero_leg"/>
+   </b>
+   <b name="head" parent="body" x="0" y="-14" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="10">
+    <d name="Knight_f-hero_head"/>
+   </b>
+   <b name="weapon" parent="armR" x="-10.05" y="3" kX="20" kY="20" cX="1" cY="1" pX="0" pY="0" z="11">
+    <d name="Knight_f-hero_sword"/>
+   </b>
+   <b name="armR" parent="body" x="-4" y="-12" kX="120" kY="120" cX="1" cY="1" pX="0" pY="0" z="12">
+    <d name="Knight_f-hero_arm"/>
+   </b>
+  </armature>
+ </armatures>
+ <animations>
+  <animation name="Knight_f/Knight">
+   <mov name="stand" dr="21" to="6" drTW="54" lp="1" twE="2">
+    <b name="horseLegL2" sc="1" dl="0">
+     <f x="-8" y="18" cocos2d_x="-8" cocos2d_y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" twE="0" dr="10"/>
+     <f x="-8" y="18" cocos2d_x="-8" cocos2d_y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" twE="0" dr="10"/>
+     <f x="-8" y="18" cocos2d_x="-8" cocos2d_y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="horseLegL1" sc="1" dl="0">
+     <f x="13" y="18" cocos2d_x="13" cocos2d_y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" twE="0" dr="10"/>
+     <f x="13" y="18" cocos2d_x="13" cocos2d_y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" twE="0" dr="10"/>
+     <f x="13" y="18" cocos2d_x="13" cocos2d_y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="horseLegR2" sc="1" dl="0">
+     <f x="-14" y="18" cocos2d_x="-14" cocos2d_y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" twE="0" dr="10"/>
+     <f x="-14" y="18" cocos2d_x="-14" cocos2d_y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" twE="0" dr="10"/>
+     <f x="-14" y="18" cocos2d_x="-14" cocos2d_y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="horseLegR1" sc="1" dl="0">
+     <f x="7" y="18" cocos2d_x="7" cocos2d_y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" twE="0" dr="10"/>
+     <f x="7" y="18" cocos2d_x="7" cocos2d_y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" twE="0" dr="10"/>
+     <f x="7" y="18" cocos2d_x="7" cocos2d_y="18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="horseBody" sc="1" dl="0">
+     <f x="0" y="2" cocos2d_x="0" cocos2d_y="2" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="4" dI="0" twE="0" dr="10"/>
+     <f x="0" y="3" cocos2d_x="0" cocos2d_y="3" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="4" dI="0" twE="0" dr="10"/>
+     <f x="0" y="2" cocos2d_x="0" cocos2d_y="2" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="4" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="horseTail" sc="1" dl="0">
+     <f x="-20" y="4" cocos2d_x="-20" cocos2d_y="4" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="5" dI="0" twE="0" dr="10"/>
+     <f x="-20" y="4.95" cocos2d_x="-20" cocos2d_y="4.95" kX="15" kY="15" cX="1" cY="1" pX="0" pY="0" z="5" dI="0" twE="0" dr="10"/>
+     <f x="-20" y="4" cocos2d_x="-20" cocos2d_y="4" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="5" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="horseHead" sc="1" dl="0">
+     <f x="20" y="2" cocos2d_x="20" cocos2d_y="2" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="6" dI="0" twE="0" dr="10"/>
+     <f x="20.1" y="3" cocos2d_x="20.1" cocos2d_y="3" kX="5" kY="5" cX="1" cY="1" pX="0" pY="0" z="6" dI="0" twE="0" dr="10"/>
+     <f x="20" y="2" cocos2d_x="20" cocos2d_y="2" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="6" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="armL" sc="1" dl="0">
+     <f x="4.1" y="-12" cocos2d_x="4.1" cocos2d_y="-12" kX="15" kY="15" cX="1" cY="1" pX="0" pY="0" z="7" dI="0" twE="0" dr="10"/>
+     <f x="4" y="-10.95" cocos2d_x="4" cocos2d_y="-10.95" kX="24" kY="24" cX="1" cY="1" pX="0" pY="0" z="7" dI="0" twE="0" dr="10"/>
+     <f x="4.1" y="-12" cocos2d_x="4.1" cocos2d_y="-12" kX="15" kY="15" cX="1" cY="1" pX="0" pY="0" z="7" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="body" sc="1" dl="0">
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="8" dI="0" twE="0" dr="10"/>
+     <f x="0" y="1" cocos2d_x="0" cocos2d_y="1" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="8" dI="0" twE="0" dr="10"/>
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="8" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="leg" sc="1" dl="0">
+     <f x="-2" y="0" cocos2d_x="-2" cocos2d_y="0" kX="-45" kY="-45" cX="1" cY="1" pX="0" pY="0" z="9" dI="0" twE="0" dr="10"/>
+     <f x="-2" y="1" cocos2d_x="-2" cocos2d_y="1" kX="-45" kY="-45" cX="1" cY="1" pX="0" pY="0" z="9" dI="0" twE="0" dr="10"/>
+     <f x="-2" y="0" cocos2d_x="-2" cocos2d_y="0" kX="-45" kY="-45" cX="1" cY="1" pX="0" pY="0" z="9" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="head" sc="1" dl="0">
+     <f x="0" y="-14" cocos2d_x="0" cocos2d_y="-14" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="10" dI="0" twE="0" dr="10"/>
+     <f x="0" y="-11" cocos2d_x="0" cocos2d_y="-11" kX="6" kY="6" cX="1" cY="1" pX="0" pY="0" z="10" dI="0" twE="0" dr="10"/>
+     <f x="0" y="-14" cocos2d_x="0" cocos2d_y="-14" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="10" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="weapon" sc="1" dl="0">
+     <f x="-10.05" y="3" cocos2d_x="-10.05" cocos2d_y="3" kX="20" kY="20" cX="1" cY="1" pX="0" pY="0" z="11" dI="0" twE="0" dr="10"/>
+     <f x="-14.1" y="1.05" cocos2d_x="-14.1" cocos2d_y="1.05" kX="16" kY="16" cX="1" cY="1" pX="0" pY="0" z="11" dI="0" twE="0" dr="10"/>
+     <f x="-10.05" y="3" cocos2d_x="-10.05" cocos2d_y="3" kX="20" kY="20" cX="1" cY="1" pX="0" pY="0" z="11" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="armR" sc="1" dl="0">
+     <f x="-4" y="-12" cocos2d_x="-4" cocos2d_y="-12" kX="120" kY="120" cX="1" cY="1" pX="0" pY="0" z="12" dI="0" twE="0" dr="10"/>
+     <f x="-3.95" y="-11" cocos2d_x="-3.95" cocos2d_y="-11" kX="135" kY="135" cX="1" cY="1" pX="0" pY="0" z="12" dI="0" twE="0" dr="10"/>
+     <f x="-4" y="-12" cocos2d_x="-4" cocos2d_y="-12" kX="120" kY="120" cX="1" cY="1" pX="0" pY="0" z="12" dI="0" twE="0" dr="1"/>
+    </b>
+   </mov>
+   <mov name="run" dr="21" to="6" drTW="49" lp="1" twE="2">
+    <b name="horseLegL2" sc="1" dl="0.1">
+     <f x="-4.85" y="13.2" cocos2d_x="-4.85" cocos2d_y="13.2" kX="64.3" kY="64.3" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" twE="0" dr="10"/>
+     <f x="-8" y="18" cocos2d_x="-8" cocos2d_y="18" kX="-45" kY="-45" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" twE="0" dr="10"/>
+     <f x="-4.85" y="13.2" cocos2d_x="-4.85" cocos2d_y="13.2" kX="64.3" kY="64.3" cX="1" cY="1" pX="0" pY="0" z="0" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="horseLegL1" sc="1" dl="0.1">
+     <f x="15.75" y="9.3" cocos2d_x="15.75" cocos2d_y="9.3" kX="-70.7" kY="-70.7" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" twE="0" dr="10"/>
+     <f x="10.95" y="19.5" cocos2d_x="10.95" cocos2d_y="19.5" kX="52" kY="52" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" twE="0" dr="10"/>
+     <f x="15.75" y="9.3" cocos2d_x="15.75" cocos2d_y="9.3" kX="-70.7" kY="-70.7" cX="1" cY="1" pX="0" pY="0" z="1" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="horseLegR2" sc="1" dl="0">
+     <f x="-10.7" y="14.35" cocos2d_x="-10.7" cocos2d_y="14.35" kX="64.3" kY="64.3" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" twE="0" dr="10"/>
+     <f x="-15.85" y="16.2" cocos2d_x="-15.85" cocos2d_y="16.2" kX="-38" kY="-38" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" twE="0" dr="10"/>
+     <f x="-10.7" y="14.35" cocos2d_x="-10.7" cocos2d_y="14.35" kX="64.3" kY="64.3" cX="1" cY="1" pX="0" pY="0" z="2" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="horseLegR1" sc="1" dl="0">
+     <f x="9.9" y="10.45" cocos2d_x="9.9" cocos2d_y="10.45" kX="-70.7" kY="-70.7" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" twE="0" dr="10"/>
+     <f x="5" y="18.75" cocos2d_x="5" cocos2d_y="18.75" kX="52" kY="52" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" twE="0" dr="10"/>
+     <f x="9.9" y="10.45" cocos2d_x="9.9" cocos2d_y="10.45" kX="-70.7" kY="-70.7" cX="1" cY="1" pX="0" pY="0" z="3" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="horseBody" sc="1" dl="0">
+     <f x="0" y="-4" cocos2d_x="0" cocos2d_y="-4" kX="-10.7" kY="-10.7" cX="1" cY="1" pX="0" pY="0" z="4" dI="0" twE="0" dr="10"/>
+     <f x="0" y="2" cocos2d_x="0" cocos2d_y="2" kX="6.99" kY="6.99" cX="1" cY="1" pX="0" pY="0" z="4" dI="0" twE="0" dr="10"/>
+     <f x="0" y="-4" cocos2d_x="0" cocos2d_y="-4" kX="-10.7" kY="-10.7" cX="1" cY="1" pX="0" pY="0" z="4" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="horseTail" sc="1" dl="0">
+     <f x="-19.25" y="1.7" cocos2d_x="-19.25" cocos2d_y="1.7" kX="64.3" kY="64.3" cX="1" cY="1" pX="0" pY="0" z="5" dI="0" twE="0" dr="10"/>
+     <f x="-20.1" y="1.55" cocos2d_x="-20.1" cocos2d_y="1.55" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="5" dI="0" twE="0" dr="10"/>
+     <f x="-19.25" y="1.7" cocos2d_x="-19.25" cocos2d_y="1.7" kX="64.3" kY="64.3" cX="1" cY="1" pX="0" pY="0" z="5" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="horseHead" sc="1" dl="0.15">
+     <f x="19.65" y="-7.75" cocos2d_x="19.65" cocos2d_y="-7.75" kX="-20" kY="-20" cX="1" cY="1" pX="0" pY="0" z="6" dI="0" twE="0" dr="10"/>
+     <f x="19.85" y="4.45" cocos2d_x="19.85" cocos2d_y="4.45" kX="27" kY="27" cX="1" cY="1" pX="0" pY="0" z="6" dI="0" twE="0" dr="10"/>
+     <f x="19.65" y="-7.75" cocos2d_x="19.65" cocos2d_y="-7.75" kX="-20" kY="-20" cX="1" cY="1" pX="0" pY="0" z="6" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="armL" sc="1" dl="0">
+     <f x="4.1" y="-18" cocos2d_x="4.1" cocos2d_y="-18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="7" dI="0" twE="0" dr="10"/>
+     <f x="4.1" y="-12" cocos2d_x="4.1" cocos2d_y="-12" kX="30" kY="30" cX="1" cY="1" pX="0" pY="0" z="7" dI="0" twE="0" dr="10"/>
+     <f x="4.1" y="-18" cocos2d_x="4.1" cocos2d_y="-18" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="7" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="body" sc="1" dl="0">
+     <f x="0" y="-6" cocos2d_x="0" cocos2d_y="-6" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="8" dI="0" twE="0" dr="10"/>
+     <f x="0" y="0" cocos2d_x="0" cocos2d_y="0" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="8" dI="0" twE="0" dr="10"/>
+     <f x="0" y="-6" cocos2d_x="0" cocos2d_y="-6" kX="0" kY="0" cX="1" cY="1" pX="0" pY="0" z="8" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="leg" sc="1" dl="0">
+     <f x="-2" y="-6" cocos2d_x="-2" cocos2d_y="-6" kX="-45" kY="-45" cX="1" cY="1" pX="0" pY="0" z="9" dI="0" twE="0" dr="10"/>
+     <f x="-2" y="0" cocos2d_x="-2" cocos2d_y="0" kX="-45" kY="-45" cX="1" cY="1" pX="0" pY="0" z="9" dI="0" twE="0" dr="10"/>
+     <f x="-2" y="-6" cocos2d_x="-2" cocos2d_y="-6" kX="-45" kY="-45" cX="1" cY="1" pX="0" pY="0" z="9" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="head" sc="1" dl="0">
+     <f x="0" y="-20" cocos2d_x="0" cocos2d_y="-20" kX="-10" kY="-10" cX="1" cY="1" pX="0" pY="0" z="10" dI="0" twE="0" dr="10"/>
+     <f x="0" y="-12" cocos2d_x="0" cocos2d_y="-12" kX="10" kY="10" cX="1" cY="1" pX="0" pY="0" z="10" dI="0" twE="0" dr="10"/>
+     <f x="0" y="-20" cocos2d_x="0" cocos2d_y="-20" kX="-10" kY="-10" cX="1" cY="1" pX="0" pY="0" z="10" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="weapon" sc="1" dl="0.4">
+     <f x="-5.05" y="-2" cocos2d_x="-5.05" cocos2d_y="-2" kX="10" kY="10" cX="1" cY="1" pX="0" pY="0" z="11" dI="0" twE="0" dr="10"/>
+     <f x="-10.85" y="2.05" cocos2d_x="-10.85" cocos2d_y="2.05" kX="20" kY="20" cX="1" cY="1" pX="0" pY="0" z="11" dI="0" twE="0" dr="10"/>
+     <f x="-5.05" y="-2" cocos2d_x="-5.05" cocos2d_y="-2" kX="10" kY="10" cX="1" cY="1" pX="0" pY="0" z="11" dI="0" twE="0" dr="1"/>
+    </b>
+    <b name="armR" sc="1" dl="0">
+     <f x="-4" y="-18" cocos2d_x="-4" cocos2d_y="-18" kX="100" kY="100" cX="1" cY="1" pX="0" pY="0" z="12" dI="0" twE="0" dr="10"/>
+     <f x="-4" y="-12" cocos2d_x="-4" cocos2d_y="-12" kX="119.86" kY="119.85" cX="1" cY="1" pX="0" pY="0" z="12" dI="0" twE="0" dr="10"/>
+     <f x="-4" y="-18" cocos2d_x="-4" cocos2d_y="-18" kX="100" kY="100" cX="1" cY="1" pX="0" pY="0" z="12" dI="0" twE="0" dr="1"/>
+    </b>
+   </mov>
+  </animation>
+ </animations>
+ <TextureAtlas name="Example03" width="128" height="128">
+  <SubTexture name="Knight_f-hero_sword" width="90" height="30" cocos2d_pX="10" cocos2d_pY="15" x="0" y="0"/>
+  <SubTexture name="Knight_f-hero_head" width="44" height="40" cocos2d_pX="22.25" cocos2d_pY="39.05" x="42" y="32"/>
+  <SubTexture name="Knight_f-hero_leg" width="8" height="16" cocos2d_pX="4" cocos2d_pY="0" x="114" y="0"/>
+  <SubTexture name="Knight_f-hero_body" width="14" height="16" cocos2d_pX="7" cocos2d_pY="14" x="92" y="12"/>
+  <SubTexture name="Knight_f-hero_arm" width="20" height="10" cocos2d_pX="2" cocos2d_pY="4" x="92" y="0"/>
+  <SubTexture name="Knight_f-horse_head" width="40" height="45" cocos2d_pX="1.95" cocos2d_pY="45.95" x="0" y="32"/>
+  <SubTexture name="Knight_f-horse_tail" width="8" height="12" cocos2d_pX="6" cocos2d_pY="2" x="118" y="18"/>
+  <SubTexture name="Knight_f-horse_body" width="40" height="20" cocos2d_pX="20" cocos2d_pY="2" x="42" y="74"/>
+  <SubTexture name="Knight_f-horse_leg" width="8" height="14" cocos2d_pX="4" cocos2d_pY="0" x="108" y="18"/>
+ </TextureAtlas>
+</skeleton>
