@@ -3495,6 +3495,15 @@ reverse : function (
     return cc.Action;
 },
 
+/**
+ * @method Action
+ * @constructor
+ */
+Action : function (
+)
+{
+},
+
 };
 
 /**
