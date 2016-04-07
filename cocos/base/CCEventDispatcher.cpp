@@ -1484,7 +1484,8 @@ void EventDispatcher::removeCustomEventListeners(const std::string& customEventN
 void EventDispatcher::removeAllEventListeners()
 {
     bool cleanMap = true;
-    std::vector<EventListener::ListenerID> types(_listenerMap.size());
+    std::vector<EventListener::ListenerID> types;
+    types.reserve(_listenerMap.size());
     
     for (const auto& e : _listenerMap)
     {
