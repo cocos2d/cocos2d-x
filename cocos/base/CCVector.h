@@ -279,7 +279,7 @@ public:
     {
         if (!_data.empty())
         {
-            ssize_t randIdx = rand() % _data.size();
+            ssize_t randIdx = RandomHelper::random_int<int>(0,_data.size()-1);
             return *(_data.begin() + randIdx);
         }
         return nullptr;
