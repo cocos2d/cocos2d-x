@@ -443,7 +443,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultDepth(JSContext *cx, 
     cocos2d::PUParticleSystem3D* cobj = (cocos2d::PUParticleSystem3D *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultDepth : Invalid Native Object");
     if (argc == 0) {
-        const float ret = cobj->getDefaultDepth();
+        double ret = cobj->getDefaultDepth();
         jsval jsret = JSVAL_NULL;
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
@@ -645,7 +645,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultWidth(JSContext *cx, 
     cocos2d::PUParticleSystem3D* cobj = (cocos2d::PUParticleSystem3D *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultWidth : Invalid Native Object");
     if (argc == 0) {
-        const float ret = cobj->getDefaultWidth();
+        double ret = cobj->getDefaultWidth();
         jsval jsret = JSVAL_NULL;
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
@@ -835,7 +835,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultHeight(JSContext *cx,
     cocos2d::PUParticleSystem3D* cobj = (cocos2d::PUParticleSystem3D *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultHeight : Invalid Native Object");
     if (argc == 0) {
-        const float ret = cobj->getDefaultHeight();
+        double ret = cobj->getDefaultHeight();
         jsval jsret = JSVAL_NULL;
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
