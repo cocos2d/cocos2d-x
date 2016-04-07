@@ -52,15 +52,15 @@ public:
     // Iterators
     // ------------------------------------------
     
-	/** Iterator, can be used to loop the Vector. */
-	using iterator = typename std::vector<T>::iterator;
-	/** Const iterator, can be used to loop the Vector. */
-	using const_iterator = typename std::vector<T>::const_iterator;
+    /** Iterator, can be used to loop the Vector. */
+    using iterator = typename std::vector<T>::iterator;
+    /** Const iterator, can be used to loop the Vector. */
+    using const_iterator = typename std::vector<T>::const_iterator;
 
-	/** Reversed iterator, can be used to loop the Vector in reverse sequence. */
-	using reverse_iterator = typename std::vector<T>::reverse_iterator;
-	/** Reversed iterator, can be used to loop the Vector in reverse sequence. */
-	using const_reverse_iterator = typename std::vector<T>::const_reverse_iterator;
+    /** Reversed iterator, can be used to loop the Vector in reverse sequence. */
+    using reverse_iterator = typename std::vector<T>::reverse_iterator;
+    /** Reversed iterator, can be used to loop the Vector in reverse sequence. */ 
+    using const_reverse_iterator = typename std::vector<T>::const_reverse_iterator;
     
     /** Returns an iterator pointing the first element of the Vector. */
     iterator begin() { return _data.begin(); }
@@ -125,14 +125,14 @@ public:
         reserve(capacity);
     }
 
-	/** Constructor with initializer list. */
-	Vector<T>(std::initializer_list<T> list)
-	{
-		for (auto& element : list)
-		{
-			pushBack(element);
-		}
-	}
+    /** Constructor with initializer list. */
+    Vector<T>(std::initializer_list<T> list)
+    {
+        for (auto& element : list)
+        {
+	    pushBack(element);
+        }
+    }
 
     /** Destructor. */
     ~Vector<T>()
