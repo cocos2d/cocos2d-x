@@ -206,9 +206,9 @@ _p._ctor = function(value, callback, target) {
 
 _p = cc.MenuItemSprite.prototype;
 _p._ctor = function(normalSprite, selectedSprite, three, four, five) {
-    if (selectedSprite) {
+    if (normalSprite) {
         normalSprite = normalSprite;
-        selectedSprite = selectedSprite;
+        selectedSprite = selectedSprite || null;
         var disabledSprite, target, callback;
         if (five) {
             disabledSprite = three;
@@ -335,7 +335,7 @@ cc.ParticleExplosion.prototype._ctor = dummyCtor;
 cc.ParticleSmoke.prototype._ctor = dummyCtor;
 cc.ParticleRain.prototype._ctor = dummyCtor;
 cc.ParticleSnow.prototype._ctor = dummyCtor;
-                                      
+
 
 
 /************************  ProgressTimer  *************************/
@@ -351,7 +351,7 @@ _p._ctor = function(placeholder, dimensions, alignment, fontName, fontSize){
         this.initWithPlaceHolder('', dimensions, alignment, fontName, fontSize);
         if(placeholder)
             this._placeHolder = placeholder;
-    }        
+    }
     else if(fontName === undefined && alignment !== undefined){
         fontName = arguments[1];
         fontSize = arguments[2];
@@ -497,7 +497,7 @@ cc.FadeOutTRTiles.prototype._ctor = durationCtor;
 cc.FadeOutBLTiles.prototype._ctor = durationCtor;
 cc.FadeOutUpTiles.prototype._ctor = durationCtor;
 cc.FadeOutDownTiles.prototype._ctor = durationCtor;
-   
+
 
 cc.Twirl.prototype._ctor = function(duration, gridSize, position, twirls, amplitude) {
     amplitude !== undefined && this.initWithDuration(duration, gridSize, position, twirls, amplitude);
@@ -824,7 +824,7 @@ cc.GLProgram.prototype._ctor = function(vShaderFileName, fShaderFileName) {
         cc.GLProgram.prototype.init.call(this, vShaderFileName, fShaderFileName);
         cc.GLProgram.prototype.link.call(this);
         cc.GLProgram.prototype.updateUniforms.call(this);
-    } 
+    }
 };
 
 
