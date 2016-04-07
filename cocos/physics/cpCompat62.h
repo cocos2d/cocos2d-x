@@ -27,6 +27,14 @@
 //
 // Body
 //
+inline cpVect cpBodyGetVelAtWorldPoint(const cpBody *body)
+{
+    return cpBodyGetVelocityAtWorldPoint(body);
+}
+inline cpVect cpBodyGetVelAtLocalPoint(const cpBody *body)
+{
+    return cpBodyGetVelocityAtLocalPoint(body);
+}
 inline cpVect cpBodyGetVel(const cpBody *body)
 {
     return cpBodyGetVelocity(body);
