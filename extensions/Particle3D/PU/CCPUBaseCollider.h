@@ -72,7 +72,7 @@ public:
 
         /** Returns the type of intersection.
     */
-    const IntersectionType getIntersectionType() const;
+    IntersectionType getIntersectionType() const;
 
     /** Sets the type of intersection.
     */
@@ -80,7 +80,7 @@ public:
 
     /** Returns the type of collision.
     */
-    const CollisionType getCollisionType() const;
+    CollisionType getCollisionType() const;
 
     /** Sets the type of collision.
     */
@@ -88,7 +88,7 @@ public:
 
     /** Returns the friction value.
     */
-    const float getFriction() const;
+    float getFriction() const;
 
     /** Sets the friction value.
     */
@@ -96,7 +96,7 @@ public:
 
     /** Returns the bouncyness value.
     */
-    const float getBouncyness() const;
+    float getBouncyness() const;
 
     /** Sets the bouncyness value.
     */
