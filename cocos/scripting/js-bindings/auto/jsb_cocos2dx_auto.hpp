@@ -449,6 +449,7 @@ bool js_cocos2dx_Action_getTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_setTarget(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_isDone(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_reverse(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Action_Action(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_FiniteTimeAction_class;
 extern JSObject *jsb_cocos2d_FiniteTimeAction_prototype;
