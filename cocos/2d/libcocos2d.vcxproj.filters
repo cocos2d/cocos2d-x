@@ -286,6 +286,12 @@
     <Filter Include="cocostudio\reader\WidgetReader\TabControlReader">
       <UniqueIdentifier>{8686c220-18af-4bea-abce-f4797afd01f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="extension\TapRecorder">
+      <UniqueIdentifier>{c0271fb9-bc79-46ad-8220-1c29b0e44805}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extension\TapRecorder\command">
+      <UniqueIdentifier>{5b8312e6-0e45-4d61-a134-3694f91e8587}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -1952,6 +1958,45 @@
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\LocalizationManager.cpp">
       <Filter>cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\TapRecorder\CCEventListenerTapRecorder.cpp">
+      <Filter>extension\TapRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\TapRecorder\CCPlayer.cpp">
+      <Filter>extension\TapRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\TapRecorder\CCProtocol.cpp">
+      <Filter>extension\TapRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\TapRecorder\CCRecord.cpp">
+      <Filter>extension\TapRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\TapRecorder\CCRecordAdapter.cpp">
+      <Filter>extension\TapRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\TapRecorder\CCRecorder.cpp">
+      <Filter>extension\TapRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\TapRecorder\CCUrl.cpp">
+      <Filter>extension\TapRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\TapRecorder\CCCapture.cpp">
+      <Filter>extension\TapRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\TapRecorder\command\CCCommandPlayer.cpp">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\TapRecorder\command\CCCommandRecorder.cpp">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\TapRecorder\command\CCCommandTapRecorder.cpp">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\TapRecorder\command\CCCommandUrl.cpp">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\TapRecorder\command\CCCommandCapture.cpp">
+      <Filter>extension\TapRecorder\command</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3814,6 +3859,48 @@
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\LocalizationManager.h">
       <Filter>cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\TapRecorder\CCCapture.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\TapRecorder\CCEventListenerTapRecorder.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\TapRecorder\CCPlayer.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\TapRecorder\CCProtocol.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\TapRecorder\CCRecord.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\TapRecorder\CCRecordAdapter.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\TapRecorder\CCRecorder.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\TapRecorder\CCUrl.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\TapRecorder\CCUtilTapRecorder.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\TapRecorder\command\CCCommandCapture.h">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\TapRecorder\command\CCCommandPlayer.h">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\TapRecorder\command\CCCommandRecorder.h">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\TapRecorder\command\CCCommandTapRecorder.h">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\TapRecorder\command\CCCommandUrl.h">
+      <Filter>extension\TapRecorder\command</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

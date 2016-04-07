@@ -1889,6 +1889,48 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\LocalizationManager.h">
       <Filter>cocostudio\components</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCEventListenerTapRecorder.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCPlayer.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCProtocol.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCRecord.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCRecordAdapter.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCRecorder.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCUrl.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCUtilTapRecorder.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCCapture.h">
+      <Filter>extension\TapRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\command\CCCommandPlayer.h">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\command\CCCommandRecorder.h">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\command\CCCommandTapRecorder.h">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\command\CCCommandUrl.h">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\command\CCCommandCapture.h">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp">
@@ -3610,6 +3652,45 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\LocalizationManager.cpp">
       <Filter>cocostudio\components</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCPlayer.cpp">
+      <Filter>extension\TapRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCProtocol.cpp">
+      <Filter>extension\TapRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCRecord.cpp">
+      <Filter>extension\TapRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCRecordAdapter.cpp">
+      <Filter>extension\TapRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCRecorder.cpp">
+      <Filter>extension\TapRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCUrl.cpp">
+      <Filter>extension\TapRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCCapture.cpp">
+      <Filter>extension\TapRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\CCEventListenerTapRecorder.cpp">
+      <Filter>extension\TapRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\command\CCCommandPlayer.cpp">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\command\CCCommandRecorder.cpp">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\command\CCCommandTapRecorder.cpp">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\command\CCCommandUrl.cpp">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\TapRecorder\command\CCCommandCapture.cpp">
+      <Filter>extension\TapRecorder\command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2d">
@@ -3890,6 +3971,12 @@
     </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\TabControlReader">
       <UniqueIdentifier>{fe153deb-3cee-416d-bdcb-fa409ae48240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extension\TapRecorder">
+      <UniqueIdentifier>{b9888d00-158a-4463-828b-4df04471fd7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extension\TapRecorder\command">
+      <UniqueIdentifier>{92042886-5564-4bc5-b3af-895b361eda80}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
