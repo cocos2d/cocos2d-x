@@ -55,7 +55,7 @@ Menu::~Menu()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 Menu* Menu::create()
 {
-	return Menu::create(nullptr, nullptr);
+    return Menu::create(nullptr, nullptr);
 }
 
 Menu * Menu::variadicCreate(MenuItem* item, ...)
