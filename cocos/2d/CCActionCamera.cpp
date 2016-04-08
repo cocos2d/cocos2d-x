@@ -46,7 +46,6 @@ void ActionCamera::startWithTarget(Node *target)
 
 ActionCamera* ActionCamera::clone() const
 {
-	// no copy constructor
     auto action = new (std::nothrow) ActionCamera();
     if (action) {
         action->autorelease();

@@ -98,7 +98,7 @@ public:
     void startWithTarget(Node *target) override;
     void update(float dt) override;
     ActionTween* reverse() const override;
-	ActionTween *clone() const override;
+    ActionTween *clone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     /** 

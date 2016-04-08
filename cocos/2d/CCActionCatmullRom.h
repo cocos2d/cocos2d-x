@@ -232,8 +232,8 @@ protected:
     PointArray *_points;
     float _deltaT;
     float _tension;
-    Vec2	_previousPosition;
-    Vec2	_accumulatedDiff;
+    Vec2 _previousPosition;
+    Vec2 _accumulatedDiff;
 };
 
 /** @class CardinalSplineBy

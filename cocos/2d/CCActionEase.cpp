@@ -735,12 +735,11 @@ EaseBackIn* EaseBackIn::create(ActionInterval *action)
 
 EaseBackIn* EaseBackIn::clone() const
 {
-	// no copy constructor
     if (_inner) {
         return EaseBackIn::create(_inner->clone());
     }
-	
-	return nullptr;
+
+    return nullptr;
 }
 
 void EaseBackIn::update(float time)
@@ -772,12 +771,11 @@ EaseBackOut* EaseBackOut::create(ActionInterval* action)
 
 EaseBackOut* EaseBackOut::clone() const
 {
-	// no copy constructor
     if (_inner) {
         return EaseBackOut::create(_inner->clone());
     }
-	
-	return nullptr;
+
+    return nullptr;
 }
 
 void EaseBackOut::update(float time)
@@ -809,12 +807,11 @@ EaseBackInOut* EaseBackInOut::create(ActionInterval* action)
 
 EaseBackInOut* EaseBackInOut::clone() const
 {
-	// no copy constructor
     if (_inner) {
         return EaseBackInOut::create(_inner->clone());
     }
-	
-	return nullptr;
+
+    return nullptr;
 }
 
 void EaseBackInOut::update(float time)
@@ -864,7 +861,7 @@ EaseBezierAction* EaseBezierAction::clone() const
 
 void EaseBezierAction::update(float time)
 {
-	_inner->update(tweenfunc::bezieratFunction(_p0,_p1,_p2,_p3,time));
+    _inner->update(tweenfunc::bezieratFunction(_p0,_p1,_p2,_p3,time));
 }
 
 EaseBezierAction* EaseBezierAction::reverse() const
@@ -903,7 +900,7 @@ EaseQuadraticActionIn* EaseQuadraticActionIn::clone() const
 
 void EaseQuadraticActionIn::update(float time)
 {
-	_inner->update(tweenfunc::quadraticIn(time));
+    _inner->update(tweenfunc::quadraticIn(time));
 }
 
 EaseQuadraticActionIn* EaseQuadraticActionIn::reverse() const
@@ -939,7 +936,7 @@ EaseQuadraticActionOut* EaseQuadraticActionOut::clone() const
 }
 
 void EaseQuadraticActionOut::update(float time)
-{	
+{
     _inner->update(tweenfunc::quadraticOut(time));
 }
 
@@ -1258,7 +1255,7 @@ EaseCircleActionOut* EaseCircleActionOut::create(ActionInterval* action)
     }
 
     delete ret;
-	return nullptr;
+    return nullptr;
 }
 
 EaseCircleActionOut* EaseCircleActionOut::clone() const
@@ -1401,7 +1398,7 @@ EaseCubicActionInOut* EaseCubicActionInOut::create(ActionInterval* action)
     EaseCubicActionInOut *ret = new (std::nothrow) EaseCubicActionInOut();
     if (ret && ret->initWithAction(action))
     {
-    	ret->autorelease();
+        ret->autorelease();
         return ret;
     }
 
