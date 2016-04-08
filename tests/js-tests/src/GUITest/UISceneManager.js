@@ -521,6 +521,18 @@
                 func: function () {
                     return new UIPageViewDisableTouchTest();
                 }
+            },
+            {
+                title: "UIPageViewJumpToPageTest",
+                func: function () {
+                    return new UIPageViewJumpToPageTest();
+                }
+            },
+            {
+                title: "UIPageViewChildSizeTest",
+                func: function () {
+                    return new UIPageViewChildSizeTest();
+                }
             }
         ],
         "UIListView": [
