@@ -477,6 +477,12 @@
                 func: function () {
                     return new UIScrollViewTest_Vertical_Multiple();
                 }
+            },
+            {
+                title:"UIScrollView Scroll Bar Test",
+                func: function () {
+                    return new UIScrollViewTest_ScrollBar();
+                }
             }
         ],
         "UIPageView": [
