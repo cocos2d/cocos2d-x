@@ -212,6 +212,15 @@ ccui.ListView.GRAVITY_TOP = 3;
 ccui.ListView.GRAVITY_BOTTOM = 4;
 ccui.ListView.GRAVITY_CENTER_VERTICAL = 5;
 
+//list view magnetic type
+ccui.ListView.MAGNETIC_NONE = 0;
+ccui.ListView.MAGNETIC_CENTER = 1;
+ccui.ListView.MAGNETIC_BOTH_END = 2;
+ccui.ListView.MAGNETIC_LEFT = 3;
+ccui.ListView.MAGNETIC_RIGHT = 4;
+ccui.ListView.MAGNETIC_TOP = 5;
+ccui.ListView.MAGNETIC_BOTTOM = 6;
+
 /*
  * UIScrollView
  */
@@ -231,13 +240,13 @@ ccui.ScrollView.EVENT_BOUNCE_TOP = 5;
 ccui.ScrollView.EVENT_BOUNCE_BOTTOM = 6;
 ccui.ScrollView.EVENT_BOUNCE_LEFT = 7;
 ccui.ScrollView.EVENT_BOUNCE_RIGHT = 8;
+ccui.ScrollView.EVENT_CONTAINER_MOVED = 9;
+ccui.ScrollView.EVENT_AUTOSCROLL_ENDED = 10;
 
-
-ccui.ScrollView.AUTO_SCROLL_MAX_SPEED = 1000;
-ccui.ScrollView.SCROLLDIR_UP = cc.p(0, 1);
-ccui.ScrollView.SCROLLDIR_DOWN = cc.p(0, -1);
-ccui.ScrollView.SCROLLDIR_LEFT = cc.p(-1, 0);
-ccui.ScrollView.SCROLLDIR_RIGHT = cc.p(1, 0);
+ccui.ScrollView.MOVEDIR_TOP = 0;
+ccui.ScrollView.MOVEDIR_BOTTOM = 1;
+ccui.ScrollView.MOVEDIR_LEFT = 2;
+ccui.ScrollView.MOVEDIR_RIGHT = 3;
 
 /*
  * UIPageView
@@ -252,8 +261,8 @@ ccui.PageView.TOUCH_DIR_UP = 2;
 ccui.PageView.TOUCH_DIR_DOWN = 3;
 
 //PageView direction
-ccui.PageView.DIRECTION_HORIZONTAL = 0;
-ccui.PageView.DIRECTION_VERTICAL = 1;
+ccui.PageView.DIRECTION_LEFT = 0;
+ccui.PageView.DIRECTION_RIGHT = 1;
 
 /*
  * UIButton
@@ -450,7 +459,7 @@ if (ccui.WebView)
 }
 if (ccui.VideoPlayer)
 {
-    /** 
+    /**
      * The VideoPlayer support list of events
      * @type {{PLAYING: string, PAUSED: string, STOPPED: string, COMPLETED: string}}
      */
