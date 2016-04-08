@@ -945,6 +945,14 @@ int
 },
 
 /**
+ * @method genMaterial
+ */
+genMaterial : function (
+)
+{
+},
+
+/**
  * @method getMeshes
  * @return {Array}
  */
@@ -1181,11 +1189,13 @@ bool
 },
 
 /**
- * @method genMaterial
+ * @method isRootNode
+ * @return {bool}
  */
-genMaterial : function (
+isRootNode : function (
 )
 {
+    return false;
 },
 
 /**
