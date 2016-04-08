@@ -311,7 +311,8 @@ void CardinalSplineTo::update(float time)
     // Support for stacked actions
     Node *node = _target;
     Vec2 diff = node->getPosition() - _previousPosition;
-    if( diff.x !=0 || diff.y != 0 ) {
+    if( diff.x !=0 || diff.y != 0 )
+    {
         _accumulatedDiff = _accumulatedDiff + diff;
         newPos = newPos + _accumulatedDiff;
     }

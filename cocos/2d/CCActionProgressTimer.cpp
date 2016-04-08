@@ -35,7 +35,8 @@ NS_CC_BEGIN
 ProgressTo* ProgressTo::create(float duration, float percent)
 {
     ProgressTo *progressTo = new (std::nothrow) ProgressTo();
-    if (progressTo && progressTo->initWithDuration(duration, percent)) {
+    if (progressTo && progressTo->initWithDuration(duration, percent))
+    {
         progressTo->autorelease();
         return progressTo;
     }

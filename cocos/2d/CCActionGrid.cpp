@@ -186,9 +186,8 @@ bool AccelDeccelAmplitude::initWithAction(Action *action, float duration)
 AccelDeccelAmplitude* AccelDeccelAmplitude::clone() const
 {
     // no copy constructor
-    if (_other) {
+    if (_other)
         return AccelDeccelAmplitude::create(_other->clone(), _rate);
-    }
     
     return nullptr;
 }
@@ -219,9 +218,9 @@ void AccelDeccelAmplitude::update(float time)
 
 AccelDeccelAmplitude* AccelDeccelAmplitude::reverse() const
 {
-    if (_other) {
+    if (_other)
         return AccelDeccelAmplitude::create(_other->reverse(), _duration);
-    }
+    
     return nullptr;
 }
 
@@ -257,9 +256,8 @@ bool AccelAmplitude::initWithAction(Action *action, float duration)
 AccelAmplitude* AccelAmplitude::clone() const
 {
     // no copy constructor
-    if (_other) {
+    if (_other)
         return AccelAmplitude::create(_other->clone(), _duration);
-    }
     
     return nullptr;
 }
@@ -283,9 +281,9 @@ void AccelAmplitude::update(float time)
 
 AccelAmplitude* AccelAmplitude::reverse() const
 {
-    if (_other) {
+    if (_other)
         return AccelAmplitude::create(_other->reverse(), _duration);
-    }
+    
     return nullptr;
 }
 
@@ -338,9 +336,8 @@ void DeccelAmplitude::update(float time)
 DeccelAmplitude* DeccelAmplitude::clone() const
 {
     // no copy constructor
-    if (_other) {
+    if (_other)
         return DeccelAmplitude::create(_other->clone(), _duration);
-    }
     
     return nullptr;
 }
@@ -372,7 +369,8 @@ void StopGrid::cacheTargetAsGridNode()
 StopGrid* StopGrid::create()
 {
     StopGrid* action = new (std::nothrow) StopGrid();
-    if (action) {
+    if (action)
+    {
         action->autorelease();
         return action;
     }

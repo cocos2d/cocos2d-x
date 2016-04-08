@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -114,7 +114,8 @@ Speed* Speed::create(ActionInterval* action, float speed)
 bool Speed::initWithAction(ActionInterval *action, float speed)
 {
     CCASSERT(action != nullptr, "action must not be NULL");
-    if (action == nullptr) {
+    if (action == nullptr)
+    {
         log("Speed::initWithAction error: action is nullptr!");
         return false;
     }
@@ -128,16 +129,16 @@ bool Speed::initWithAction(ActionInterval *action, float speed)
 Speed *Speed::clone() const
 {
     // no copy constructor
-    if (_innerAction) {
+    if (_innerAction)
         return Speed::create(_innerAction->clone(), _speed);
-    }
     
     return nullptr;
 }
 
 void Speed::startWithTarget(Node* target)
 {
-    if (target && _innerAction) {
+    if (target && _innerAction)
+    {
         Action::startWithTarget(target);
         _innerAction->startWithTarget(target);
     }
@@ -147,9 +148,8 @@ void Speed::startWithTarget(Node* target)
 
 void Speed::stop()
 {
-    if (_innerAction) {
+    if (_innerAction)
         _innerAction->stop();
-    }
     
     Action::stop();
 }
@@ -166,9 +166,8 @@ bool Speed::isDone() const
 
 Speed *Speed::reverse() const
 {
-    if (_innerAction) {
+    if (_innerAction)
         return Speed::create(_innerAction->reverse(), _speed);
-    }
     
     return nullptr;
 }

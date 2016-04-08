@@ -45,7 +45,8 @@ bool ActionInstant::isDone() const
     return true;
 }
 
-void ActionInstant::step(float dt) {
+void ActionInstant::step(float dt)
+{
     CC_UNUSED_PARAM(dt);
     float updateDt = 1;
 #if CC_ENABLE_SCRIPT_BINDING
@@ -58,7 +59,8 @@ void ActionInstant::step(float dt) {
     update(updateDt);
 }
 
-void ActionInstant::update(float time) {
+void ActionInstant::update(float time)
+{
     CC_UNUSED_PARAM(time);
     // nothing
 }
@@ -71,14 +73,16 @@ Show* Show::create()
 {
     Show* ret = new (std::nothrow) Show();
 
-    if (ret) {
+    if (ret)
+    {
         ret->autorelease();
     }
 
     return ret;
 }
 
-void Show::update(float time) {
+void Show::update(float time)
+{
     CC_UNUSED_PARAM(time);
     _target->setVisible(true);
 }
@@ -101,14 +105,16 @@ Hide * Hide::create()
 {
     Hide *ret = new (std::nothrow) Hide();
 
-    if (ret) {
+    if (ret)
+    {
         ret->autorelease();
     }
 
     return ret;
 }
 
-void Hide::update(float time) {
+void Hide::update(float time)
+{
     CC_UNUSED_PARAM(time);
     _target->setVisible(false);
 }
@@ -163,19 +169,22 @@ RemoveSelf * RemoveSelf::create(bool isNeedCleanUp /*= true*/)
 {
     RemoveSelf *ret = new (std::nothrow) RemoveSelf();
 
-    if (ret && ret->init(isNeedCleanUp)) {
+    if (ret && ret->init(isNeedCleanUp))
+    {
         ret->autorelease();
     }
 
     return ret;
 }
 
-bool RemoveSelf::init(bool isNeedCleanUp) {
+bool RemoveSelf::init(bool isNeedCleanUp)
+{
     _isNeedCleanUp = isNeedCleanUp;
     return true;
 }
 
-void RemoveSelf::update(float time) {
+void RemoveSelf::update(float time)
+{
     CC_UNUSED_PARAM(time);
     _target->removeFromParentAndCleanup(_isNeedCleanUp);
 }
@@ -199,7 +208,8 @@ FlipX *FlipX::create(bool x)
 {
     FlipX *ret = new (std::nothrow) FlipX();
 
-    if (ret && ret->initWithFlipX(x)) {
+    if (ret && ret->initWithFlipX(x))
+    {
         ret->autorelease();
         return ret;
     }
@@ -208,12 +218,14 @@ FlipX *FlipX::create(bool x)
     return nullptr;
 }
 
-bool FlipX::initWithFlipX(bool x) {
+bool FlipX::initWithFlipX(bool x)
+{
     _flipX = x;
     return true;
 }
 
-void FlipX::update(float time) {
+void FlipX::update(float time)
+{
     CC_UNUSED_PARAM(time);
     static_cast<Sprite*>(_target)->setFlippedX(_flipX);
 }
@@ -236,7 +248,8 @@ FlipY * FlipY::create(bool y)
 {
     FlipY *ret = new (std::nothrow) FlipY();
 
-    if (ret && ret->initWithFlipY(y)) {
+    if (ret && ret->initWithFlipY(y))
+    {
         ret->autorelease();
         return ret;
     }
@@ -245,12 +258,14 @@ FlipY * FlipY::create(bool y)
     return nullptr;
 }
 
-bool FlipY::initWithFlipY(bool y) {
+bool FlipY::initWithFlipY(bool y)
+{
     _flipY = y;
     return true;
 }
 
-void FlipY::update(float time) {
+void FlipY::update(float time)
+{
     CC_UNUSED_PARAM(time);
     static_cast<Sprite*>(_target)->setFlippedY(_flipY);
 }
@@ -274,7 +289,8 @@ Place* Place::create(const Vec2& pos)
 {
     Place *ret = new (std::nothrow) Place();
 
-    if (ret && ret->initWithPosition(pos)) {
+    if (ret && ret->initWithPosition(pos))
+    {
         ret->autorelease();
         return ret;
     }
@@ -283,7 +299,8 @@ Place* Place::create(const Vec2& pos)
     return nullptr;
 }
 
-bool Place::initWithPosition(const Vec2& pos) {
+bool Place::initWithPosition(const Vec2& pos)
+{
     _position = pos;
     return true;
 }
@@ -300,7 +317,8 @@ Place * Place::reverse() const
     return this->clone();
 }
 
-void Place::update(float time) {
+void Place::update(float time)
+{
     CC_UNUSED_PARAM(time);
     _target->setPosition(_position);
 }
@@ -313,7 +331,8 @@ CallFunc * CallFunc::create(const std::function<void()> &func)
 {
     CallFunc *ret = new (std::nothrow) CallFunc();
 
-    if (ret && ret->initWithFunction(func) ) {
+    if (ret && ret->initWithFunction(func) )
+    {
         ret->autorelease();
         return ret;
     }
@@ -326,7 +345,8 @@ CallFunc * CallFunc::create(Ref* selectorTarget, SEL_CallFunc selector)
 {
     CallFunc *ret = new (std::nothrow) CallFunc();
 
-    if (ret && ret->initWithTarget(selectorTarget)) {
+    if (ret && ret->initWithTarget(selectorTarget))
+    {
         ret->_callFunc = selector;
         ret->autorelease();
         return ret;
@@ -342,7 +362,8 @@ bool CallFunc::initWithFunction(const std::function<void()> &func)
     return true;
 }
 
-bool CallFunc::initWithTarget(Ref* target) {
+bool CallFunc::initWithTarget(Ref* target)
+{
     if (target)
     {
         target->retain();
@@ -366,11 +387,13 @@ CallFunc * CallFunc::clone() const
     {
     // no copy constructor
     auto a = new (std::nothrow) CallFunc();
-    if( _selectorTarget) {
+    if( _selectorTarget)
+    {
         a->initWithTarget(_selectorTarget);
         a->_callFunc = _callFunc;
     }
-    else if( _function ){
+    else if( _function )
+    {
         a->initWithFunction(_function);
     }
 
@@ -384,15 +407,20 @@ CallFunc * CallFunc::reverse() const
     return this->clone();
 }
 
-void CallFunc::update(float time) {
+void CallFunc::update(float time)
+{
     CC_UNUSED_PARAM(time);
     this->execute();
 }
 
-void CallFunc::execute() {
-    if (_callFunc) {
+void CallFunc::execute()
+{
+    if (_callFunc)
+    {
         (_selectorTarget->*_callFunc)();
-    } else if( _function ){
+    } 
+    else if( _function )
+    {
         _function();
     }
 }
@@ -405,7 +433,8 @@ CallFuncN * CallFuncN::create(const std::function<void(Node*)> &func)
 {
     auto ret = new (std::nothrow) CallFuncN();
 
-    if (ret && ret->initWithFunction(func) ) {
+    if (ret && ret->initWithFunction(func) )
+    {
         ret->autorelease();
         return ret;
     }
@@ -429,11 +458,14 @@ CallFuncN * CallFuncN::create(Ref* selectorTarget, SEL_CallFuncN selector)
     return nullptr;
 }
 
-void CallFuncN::execute() {
-    if (_callFuncN) {
+void CallFuncN::execute()
+{
+    if (_callFuncN)
+    {
         (_selectorTarget->*_callFuncN)(_target);
     }
-    else if (_functionN) {
+    else if (_functionN)
+    {
         _functionN(_target);
     }
 }
@@ -446,7 +478,8 @@ bool CallFuncN::initWithFunction(const std::function<void (Node *)> &func)
 
 bool CallFuncN::initWithTarget(Ref* selectorTarget, SEL_CallFuncN selector)
 {
-    if (CallFunc::initWithTarget(selectorTarget)) {
+    if (CallFunc::initWithTarget(selectorTarget))
+    {
         _callFuncN = selector;
         return true;
     }
@@ -459,7 +492,8 @@ CallFuncN * CallFuncN::clone() const
     // no copy constructor
     auto a = new (std::nothrow) CallFuncN();
 
-    if( _selectorTarget) {
+    if( _selectorTarget)
+    {
         a->initWithTarget(_selectorTarget, _callFuncN);
     }
     else if( _functionN ){
@@ -478,7 +512,8 @@ __CCCallFuncND * __CCCallFuncND::create(Ref* selectorTarget, SEL_CallFuncND sele
 {
     __CCCallFuncND* ret = new (std::nothrow) __CCCallFuncND();
     
-    if (ret && ret->initWithTarget(selectorTarget, selector, d)) {
+    if (ret && ret->initWithTarget(selectorTarget, selector, d))
+    {
         ret->autorelease();
         return ret;
     }
@@ -536,7 +571,8 @@ __CCCallFuncO::~__CCCallFuncO()
 
 void __CCCallFuncO::execute()
 {
-    if (_callFuncO) {
+    if (_callFuncO)
+    {
         (_selectorTarget->*_callFuncO)(_object);
     }
 }
@@ -545,7 +581,8 @@ __CCCallFuncO * __CCCallFuncO::create(Ref* selectorTarget, SEL_CallFuncO selecto
 {
     __CCCallFuncO *ret = new (std::nothrow) __CCCallFuncO();
     
-    if (ret && ret->initWithTarget(selectorTarget, selector, object)) {
+    if (ret && ret->initWithTarget(selectorTarget, selector, object))
+    {
         ret->autorelease();
         return ret;
     }

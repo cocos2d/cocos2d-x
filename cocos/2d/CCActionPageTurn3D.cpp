@@ -52,7 +52,8 @@ PageTurn3D *PageTurn3D::clone() const
 GridBase* PageTurn3D::getGrid()
 {
     auto result = Grid3D::create(_gridSize, _gridNodeTarget->getGridRect());
-    if (result) {
+    if (result)
+    {
         result->setNeedDepthTestForBlit(true);
     }
     

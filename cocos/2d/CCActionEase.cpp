@@ -47,7 +47,8 @@ NS_CC_BEGIN
 bool ActionEase::initWithAction(ActionInterval *action)
 {
     CCASSERT(action != nullptr, "action couldn't be nullptr!");
-    if (action == nullptr) {
+    if (action == nullptr)
+    {
         return false;
     }
 
@@ -69,7 +70,8 @@ ActionEase::~ActionEase(void)
 
 void ActionEase::startWithTarget(Node *target)
 {
-    if (target && _inner) {
+    if (target && _inner)
+    {
         ActionInterval::startWithTarget(target);
         _inner->startWithTarget(_target);
     }
@@ -81,9 +83,8 @@ void ActionEase::startWithTarget(Node *target)
 
 void ActionEase::stop(void)
 {
-    if (_inner) {
+    if (_inner)
         _inner->stop();
-    }
     
     ActionInterval::stop();
 }
@@ -150,9 +151,8 @@ EaseIn* EaseIn::create(ActionInterval *action, float rate)
 EaseIn* EaseIn::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseIn::create(_inner->clone(), _rate);
-    }
     
     return nullptr;
 }
@@ -186,9 +186,8 @@ EaseOut* EaseOut::create(ActionInterval *action, float rate)
 EaseOut* EaseOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseOut::create(_inner->clone(), _rate);
-    }
     
     return nullptr;
 }
@@ -222,9 +221,8 @@ EaseInOut* EaseInOut::create(ActionInterval *action, float rate)
 EaseInOut* EaseInOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseInOut::create(_inner->clone(), _rate);
-    }
     
     return nullptr;
 }
@@ -259,9 +257,8 @@ EaseExponentialIn* EaseExponentialIn::create(ActionInterval* action)
 EaseExponentialIn* EaseExponentialIn::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseExponentialIn::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -295,9 +292,8 @@ EaseExponentialOut* EaseExponentialOut::create(ActionInterval* action)
 EaseExponentialOut* EaseExponentialOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         EaseExponentialOut::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -332,9 +328,8 @@ EaseExponentialInOut* EaseExponentialInOut::create(ActionInterval *action)
 EaseExponentialInOut* EaseExponentialInOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseExponentialInOut::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -369,9 +364,8 @@ EaseSineIn* EaseSineIn::create(ActionInterval* action)
 EaseSineIn* EaseSineIn::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseSineIn::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -406,9 +400,8 @@ EaseSineOut* EaseSineOut::create(ActionInterval* action)
 EaseSineOut* EaseSineOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseSineOut::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -443,9 +436,8 @@ EaseSineInOut* EaseSineInOut::create(ActionInterval* action)
 EaseSineInOut* EaseSineInOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseSineInOut::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -500,9 +492,8 @@ EaseElasticIn* EaseElasticIn::create(ActionInterval *action, float period/* = 0.
 EaseElasticIn* EaseElasticIn::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseElasticIn::create(_inner->clone(), _period);
-    }
     
     return nullptr;
 }
@@ -542,9 +533,8 @@ EaseElasticOut* EaseElasticOut::create(ActionInterval *action, float period/* = 
 EaseElasticOut* EaseElasticOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseElasticOut::create(_inner->clone(), _period);
-    }
     
     return nullptr;
 }
@@ -584,9 +574,8 @@ EaseElasticInOut* EaseElasticInOut::create(ActionInterval *action, float period/
 EaseElasticInOut* EaseElasticInOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseElasticInOut::create(_inner->clone(), _period);
-    }
     
     return nullptr;
 }
@@ -625,9 +614,8 @@ EaseBounceIn* EaseBounceIn::create(ActionInterval* action)
 EaseBounceIn* EaseBounceIn::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseBounceIn::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -662,9 +650,8 @@ EaseBounceOut* EaseBounceOut::create(ActionInterval* action)
 EaseBounceOut* EaseBounceOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseBounceOut::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -699,9 +686,8 @@ EaseBounceInOut* EaseBounceInOut::create(ActionInterval* action)
 EaseBounceInOut* EaseBounceInOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseBounceInOut::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -735,9 +721,8 @@ EaseBackIn* EaseBackIn::create(ActionInterval *action)
 
 EaseBackIn* EaseBackIn::clone() const
 {
-    if (_inner) {
+    if (_inner)
         return EaseBackIn::create(_inner->clone());
-    }
 
     return nullptr;
 }
@@ -771,9 +756,8 @@ EaseBackOut* EaseBackOut::create(ActionInterval* action)
 
 EaseBackOut* EaseBackOut::clone() const
 {
-    if (_inner) {
+    if (_inner)
         return EaseBackOut::create(_inner->clone());
-    }
 
     return nullptr;
 }
@@ -807,9 +791,8 @@ EaseBackInOut* EaseBackInOut::create(ActionInterval* action)
 
 EaseBackInOut* EaseBackInOut::clone() const
 {
-    if (_inner) {
+    if (_inner)
         return EaseBackInOut::create(_inner->clone());
-    }
 
     return nullptr;
 }
@@ -848,9 +831,11 @@ void EaseBezierAction::setBezierParamer( float p0, float p1, float p2, float p3)
 EaseBezierAction* EaseBezierAction::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
+    {
         auto ret = EaseBezierAction::create(_inner->clone());
-        if (ret) {
+        if (ret)
+        {
             ret->setBezierParamer(_p0,_p1,_p2,_p3);
         }
         return ret;
@@ -891,9 +876,8 @@ EaseQuadraticActionIn* EaseQuadraticActionIn::create(ActionInterval* action)
 EaseQuadraticActionIn* EaseQuadraticActionIn::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseQuadraticActionIn::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -928,9 +912,8 @@ EaseQuadraticActionOut* EaseQuadraticActionOut::create(ActionInterval* action)
 EaseQuadraticActionOut* EaseQuadraticActionOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseQuadraticActionOut::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -965,9 +948,8 @@ EaseQuadraticActionInOut* EaseQuadraticActionInOut::create(ActionInterval* actio
 EaseQuadraticActionInOut* EaseQuadraticActionInOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseQuadraticActionInOut::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -1002,9 +984,8 @@ EaseQuarticActionIn* EaseQuarticActionIn::create(ActionInterval* action)
 EaseQuarticActionIn* EaseQuarticActionIn::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseQuarticActionIn::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -1039,9 +1020,8 @@ EaseQuarticActionOut* EaseQuarticActionOut::create(ActionInterval* action)
 EaseQuarticActionOut* EaseQuarticActionOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseQuarticActionOut::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -1076,9 +1056,8 @@ EaseQuarticActionInOut* EaseQuarticActionInOut::create(ActionInterval* action)
 EaseQuarticActionInOut* EaseQuarticActionInOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseQuarticActionInOut::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -1113,9 +1092,8 @@ EaseQuinticActionIn* EaseQuinticActionIn::create(ActionInterval* action)
 EaseQuinticActionIn* EaseQuinticActionIn::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseQuinticActionIn::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -1150,9 +1128,8 @@ EaseQuinticActionOut* EaseQuinticActionOut::create(ActionInterval* action)
 EaseQuinticActionOut* EaseQuinticActionOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseQuinticActionOut::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -1187,9 +1164,8 @@ EaseQuinticActionInOut* EaseQuinticActionInOut::create(ActionInterval* action)
 EaseQuinticActionInOut* EaseQuinticActionInOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseQuinticActionInOut::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -1224,9 +1200,8 @@ EaseCircleActionIn* EaseCircleActionIn::create(ActionInterval* action)
 EaseCircleActionIn* EaseCircleActionIn::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseCircleActionIn::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -1261,9 +1236,8 @@ EaseCircleActionOut* EaseCircleActionOut::create(ActionInterval* action)
 EaseCircleActionOut* EaseCircleActionOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseCircleActionOut::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -1298,9 +1272,8 @@ EaseCircleActionInOut* EaseCircleActionInOut::create(ActionInterval* action)
 EaseCircleActionInOut* EaseCircleActionInOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseCircleActionInOut::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -1335,9 +1308,8 @@ EaseCubicActionIn* EaseCubicActionIn::create(ActionInterval* action)
 EaseCubicActionIn* EaseCubicActionIn::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseCubicActionIn::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -1372,9 +1344,8 @@ EaseCubicActionOut* EaseCubicActionOut::create(ActionInterval* action)
 EaseCubicActionOut* EaseCubicActionOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseCubicActionOut::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -1409,9 +1380,8 @@ EaseCubicActionInOut* EaseCubicActionInOut::create(ActionInterval* action)
 EaseCubicActionInOut* EaseCubicActionInOut::clone() const
 {
     // no copy constructor
-    if (_inner) {
+    if (_inner)
         return EaseCubicActionInOut::create(_inner->clone());
-    }
     
     return nullptr;
 }
@@ -1423,9 +1393,8 @@ void EaseCubicActionInOut::update(float time)
 
 EaseCubicActionInOut* EaseCubicActionInOut::reverse() const
 {
-    if (_inner) {
+    if (_inner)
         return EaseCubicActionInOut::create(_inner->reverse());
-    }
     
     return nullptr;
 }
