@@ -350,3 +350,279 @@ var UIListViewTest_TouchIntercept = UIMainLayer.extend({
         return false;
     }
 });
+
+var UIListViewTest_ScrollToItem = UIMainLayer.extend({
+    _nextIndex: 0,
+    init: function () {
+        if(this._super()) {
+            var widgetSize = this._widget.getContentSize();
+            var background = this._widget.getChildByName("background_Panel");
+            var backgroundSize = background.getContentSize();
+
+            this._topDisplayLabel.setString("");
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
+            this._bottomDisplayLabel.setString("");
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
+
+            // Create the list view
+            var listView = new ccui.ListView();
+            // set list view ex direction
+            listView.setDirection(this._getListViewDirection());
+            listView.setBounceEnabled(true);
+            listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
+            listView.setBackGroundImageScale9Enabled(true);
+            listView.setContentSize(widgetSize.width / 2, widgetSize.height / 2);
+            listView.setScrollBarPositionFromCorner(cc.p(7, 7));
+            listView.setItemsMargin(2.0);
+
+            listView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - listView.width) / 2;
+            listView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - listView.height) / 2;
+            this._mainNode.addChild(listView);
+
+            {
+                var pNode = new cc.DrawNode();
+
+                var center = cc.p(widgetSize.width / 2, widgetSize.height / 2);
+                if(this._getListViewDirection() == ccui.ScrollView.DIR_HORIZONTAL)
+                {
+                    var halfY = 110;
+                    pNode.drawSegment(cc.p(center.x, center.y - halfY), cc.p(center.x, center.y + halfY), 2, cc.color(0, 0, 0, 255));
+                }
+                else
+                {
+                    var halfX = 150;
+                    pNode.drawSegment(cc.p(center.x - halfX, center.y), cc.p(center.x + halfX, center.y), 2, cc.color(0, 0, 0, 255));
+                }
+                pNode.setContentSize(listView.getContentSize());
+                this._mainNode.addChild(pNode);
+            }
+            var NUMBER_OF_ITEMS = 31;
+            // Button
+            var pButton = new ccui.Button("ccs-res/cocosui/backtotoppressed.png", "ccs-res/cocosui/backtotopnormal.png");
+            pButton.setAnchorPoint(cc.p(0, 0.5));
+            pButton.setScale(0.8);
+            pButton.setPosition(cc.pAdd(cc.p(widgetSize.width / 2, widgetSize.height / 2), cc.p(120, -60)));
+            pButton.setTitleText("Go to '" +this._nextIndex + "'");
+            pButton.addClickEventListener(function(pButton) {
+                listView.scrollToItem(this._nextIndex, cc.p(0.5, 0.5), cc.p(0.5, 0.5));
+                this._nextIndex = (this._nextIndex + Math.floor(NUMBER_OF_ITEMS / 2)) % NUMBER_OF_ITEMS;
+                pButton.setTitleText("Go to '" + this._nextIndex+ "'");
+            }.bind(this));
+            this._mainNode.addChild(pButton);
+
+            // Add list items
+
+            var default_button = new ccui.Button();
+            default_button.setName("TextButton");
+            default_button.setTouchEnabled(true);
+            default_button.loadTextures("ccs-res/cocosui/backtotoppressed.png", "ccs-res/cocosui/backtotopnormal.png", "");
+
+            var default_item = new ccui.Layout();
+            default_item.setTouchEnabled(true);
+            default_item.setContentSize(default_button.getContentSize());
+            default_button.x = default_item.width / 2;
+            default_button.y = default_item.height / 2;
+            default_item.addChild(default_button);
+
+            // set model
+            listView.setItemModel(default_item);
+
+            // Add list items
+            for (var i = 0; i < NUMBER_OF_ITEMS; ++i)
+            {
+                var item = default_item.clone();
+                item.getChildByName("TextButton").setTitleText("Button-" + i);
+                listView.pushBackCustomItem(item);
+            }
+
+            return true;
+        }
+        return false;
+    },
+    _getListViewDirection: function()
+    {
+
+    }
+});
+
+var UIListViewTest_ScrollToItemVertical = UIListViewTest_ScrollToItem.extend({
+    _getListViewDirection: function()
+    {
+        return ccui.ScrollView.DIR_VERTICAL;
+    }
+});
+
+var UIListViewTest_ScrollToItemHorizontal = UIListViewTest_ScrollToItem.extend({
+    _getListViewDirection: function()
+    {
+        return ccui.ScrollView.DIR_HORIZONTAL;
+    }
+});
+
+var UIListViewTest_Magnetic = UIMainLayer.extend({
+    _listView: null,
+    init: function () {
+        if(this._super()) {
+            var widgetSize = this._widget.getContentSize();
+            var background = this._widget.getChildByName("background_Panel");
+            var backgroundSize = background.getContentSize();
+
+            this._topDisplayLabel.setString("1");
+            this._topDisplayLabel.setFontSize(14);
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2 + 90;
+            this._bottomDisplayLabel.setString("");
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
+
+            // Create the list view
+            this._listView = new ccui.ListView();
+            // set list view ex direction
+            this._listView.setDirection(this._getListViewDirection());
+            this._listView.setTouchEnabled(true);
+            this._listView.setBounceEnabled(true);
+            this._listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
+            this._listView.setBackGroundImageScale9Enabled(true);
+            this._listView.setContentSize(widgetSize.width / 2, widgetSize.height / 2);
+            this._listView.setScrollBarPositionFromCorner(cc.p(7, 7));
+            this._listView.setItemsMargin(2.0);
+            this._listView.setAnchorPoint(cc.p(0.5 ,0.5));
+
+            this._listView.x = widgetSize.width / 2;
+            this._listView.y = widgetSize.height / 2;
+
+            this._listView.setGravity(ccui.ListView.GRAVITY_CENTER_VERTICAL);
+
+            this._mainNode.addChild(this._listView);
+
+            {
+                var pNode = new cc.DrawNode();
+
+                var center = cc.p(widgetSize.width / 2, widgetSize.height / 2);
+                if(this._getListViewDirection() == ccui.ScrollView.DIR_HORIZONTAL)
+                {
+                    var halfY = 110;
+                    pNode.drawSegment(cc.p(center.x, center.y - halfY), cc.p(center.x, center.y + halfY), 2, cc.color(0, 0, 0, 255));
+                }
+                else
+                {
+                    var halfX = 150;
+                    pNode.drawSegment(cc.p(center.x - halfX, center.y), cc.p(center.x + halfX, center.y), 2, cc.color(0, 0, 0, 255));
+                }
+                pNode.setContentSize(this._listView.getContentSize());
+                this._mainNode.addChild(pNode);
+            }
+
+            // Initial magnetic type
+            this._listView.setMagneticType(ccui.ListView.MAGNETIC_NONE);
+            this._topDisplayLabel.setString("MagneticType - NONE");
+
+            // Magnetic change button
+            var pButton = new ccui.Button("ccs-res/cocosui/backtotoppressed.png", "ccs-res/cocosui/backtotopnormal.png");
+            pButton.setAnchorPoint(cc.p(0.5, 0.5));
+            pButton.setScale(0.8);
+            pButton.setPosition(cc.pAdd(cc.p(widgetSize.width / 2, widgetSize.height / 2), cc.p(130, -60)));
+            pButton.setTitleText("Next Magnetic");
+            pButton.addClickEventListener(function() {
+                var eCurrentType = this._listView.getMagneticType();
+                var eNextType;
+                var sString;
+                if(eCurrentType == ccui.ListView.MAGNETIC_NONE)
+                {
+                    eNextType = ccui.ListView.MAGNETIC_CENTER;
+                    sString = "CENTER";
+                }
+                else if(eCurrentType == ccui.ListView.MAGNETIC_CENTER)
+                {
+                    eNextType = ccui.ListView.MAGNETIC_BOTH_END;
+                    sString = "BOTH_END";
+                }
+                else if(eCurrentType == ccui.ListView.MAGNETIC_BOTH_END)
+                {
+                    if(this._getListViewDirection() == ccui.ScrollView.DIR_HORIZONTAL)
+                    {
+                        eNextType = ccui.ListView.MAGNETIC_LEFT;
+                        sString = "LEFT";
+                    }
+                    else
+                    {
+                        eNextType = ccui.ListView.MAGNETIC_TOP;
+                        sString = "TOP";
+                    }
+                }
+                else if(eCurrentType == ccui.ListView.MAGNETIC_LEFT)
+                {
+                    eNextType = ccui.ListView.MAGNETIC_RIGHT;
+                    sString = "RIGHT";
+                }
+                else if(eCurrentType == ccui.ListView.MAGNETIC_RIGHT)
+                {
+                    eNextType = ccui.ListView.MAGNETIC_NONE;
+                    sString = "NONE";
+                }
+                else if(eCurrentType == ccui.ListView.MAGNETIC_TOP)
+                {
+                    eNextType = ccui.ListView.MAGNETIC_BOTTOM;
+                    sString = "BOTTOM";
+                }
+                else if(eCurrentType == ccui.ListView.MAGNETIC_BOTTOM)
+                {
+                    eNextType = ccui.ListView.MAGNETIC_NONE;
+                    sString = "NONE";
+                }
+                this._listView.setMagneticType(eNextType);
+
+                this._topDisplayLabel.setString("MagneticType - " + sString);
+            }.bind(this));
+            this._mainNode.addChild(pButton);
+
+
+            var default_button = new ccui.Button();
+            default_button.setName("TextButton");
+            default_button.setTouchEnabled(true);
+            default_button.loadTextures("ccs-res/cocosui/backtotoppressed.png", "ccs-res/cocosui/backtotopnormal.png", "");
+
+            var default_item = new ccui.Layout();
+            default_item.setTouchEnabled(true);
+            default_item.setContentSize(default_button.getContentSize());
+            default_button.x = default_item.width / 2;
+            default_button.y = default_item.height / 2;
+            default_item.addChild(default_button);
+
+            // set model
+            this._listView.setItemModel(default_item);
+
+            // Add list items
+            for (var i = 0; i < 40; ++i)
+            {
+                var item = default_item.clone();
+                item.getChildByName("TextButton").setTitleText("Button-" + i);
+                this._listView.pushBackCustomItem(item);
+            }
+
+            return true;
+        }
+        return false;
+    },
+
+    _getListViewDirection: function()
+    {
+
+    }
+});
+
+var UIListViewTest_MagneticVertical = UIListViewTest_Magnetic.extend({
+    _getListViewDirection: function()
+    {
+        return ccui.ScrollView.DIR_VERTICAL;
+    }
+});
+
+var UIListViewTest_MagneticHorizontal = UIListViewTest_Magnetic.extend({
+    _getListViewDirection: function()
+    {
+        return ccui.ScrollView.DIR_HORIZONTAL;
+    }
+});
