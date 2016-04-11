@@ -1,8 +1,8 @@
-#include "jsb_cocos2dx_3d_auto.hpp"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_3d_auto.hpp"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "cocos2d.h"
-#include "CCBundle3D.h"
-#include "3d/jsb_cocos2dx_3d_manual.h"
+#include "3d/CCBundle3D.h"
+#include "scripting/js-bindings/manual/3d/jsb_cocos2dx_3d_manual.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -19,7 +19,7 @@ static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
-    return true;    
+    return true;
 }
 JSClass  *jsb_cocos2d_Animation3D_class;
 JSObject *jsb_cocos2d_Animation3D_prototype;

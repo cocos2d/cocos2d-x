@@ -27,9 +27,9 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "renderer/CCRenderer.h"
 
-#include "cocostudio/CCSkin.h"
-#include "cocostudio/CCTransformHelp.h"
-#include "cocostudio/CCArmature.h"
+#include "editor-support/cocostudio/CCSkin.h"
+#include "editor-support/cocostudio/CCTransformHelp.h"
+#include "editor-support/cocostudio/CCArmature.h"
 
 
 using namespace cocos2d;

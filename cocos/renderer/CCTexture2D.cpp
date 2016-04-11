@@ -322,6 +322,15 @@ void Texture2D::convertRGBA8888ToRGB565(const unsigned char* data, ssize_t dataL
     }
 }
 
+// RRRRRRRRGGGGGGGGBBBBBBBB -> AAAAAAAA
+void Texture2D::convertRGB888ToA8(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+{
+    for (ssize_t i = 0, l = dataLen - 2; i < l; i += 3)
+    {
+        *outData++ = (data[i] * 299 + data[i + 1] * 587 + data[i + 2] * 114 + 500) / 1000;  //A =  (R*299 + G*587 + B*114 + 500) / 1000
+    }
+}
+
 // RRRRRRRRGGGGGGGGBBBBBBBB -> IIIIIIII
 void Texture2D::convertRGB888ToI8(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
 {
@@ -917,6 +926,11 @@ Texture2D::PixelFormat Texture2D::convertRGB888ToFormat(const unsigned char* dat
         *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
         convertRGB888ToRGB565(data, dataLen, *outData);
         break;
+    case PixelFormat::A8:
+        *outDataLen = dataLen/3;
+        *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+        convertRGB888ToA8(data, dataLen, *outData);
+        break;
     case PixelFormat::I8:
         *outDataLen = dataLen/3;
         *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
@@ -1344,6 +1358,33 @@ const char* Texture2D::getStringForFormat() const
 		case Texture2D::PixelFormat::PVRTC2:
 			return  "PVRTC2";
 
+        case Texture2D::PixelFormat::PVRTC2A:
+            return "PVRTC2A";
+        
+        case Texture2D::PixelFormat::PVRTC4A:
+            return "PVRTC4A";
+            
+        case Texture2D::PixelFormat::ETC:
+            return "ETC";
+
+        case Texture2D::PixelFormat::S3TC_DXT1:
+            return "S3TC_DXT1";
+            
+        case Texture2D::PixelFormat::S3TC_DXT3:
+            return "S3TC_DXT3";
+
+        case Texture2D::PixelFormat::S3TC_DXT5:
+            return "S3TC_DXT5";
+            
+        case Texture2D::PixelFormat::ATC_RGB:
+            return "ATC_RGB";
+
+        case Texture2D::PixelFormat::ATC_EXPLICIT_ALPHA:
+            return "ATC_EXPLICIT_ALPHA";
+
+        case Texture2D::PixelFormat::ATC_INTERPOLATED_ALPHA:
+            return "ATC_INTERPOLATED_ALPHA";
+            
 		default:
 			CCASSERT(false , "unrecognized pixel format");
 			CCLOG("stringForFormat: %ld, cannot give useful result", (long)_pixelFormat);

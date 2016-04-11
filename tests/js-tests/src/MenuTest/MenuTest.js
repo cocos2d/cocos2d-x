@@ -59,6 +59,7 @@ var MenuLayerMainMenu = cc.Layer.extend({
         var item3 = new cc.MenuItemLabel(labelAtlas, this.onMenuCallbackDisabled, this );
         item3.setDisabledColor( cc.color(32,32,64) );
         item3.color = cc.color(200,200,255);
+        cc.log("test MenuItemLabel getString()" + item3.getString());
 
         // Font Item
         var item4 = new cc.MenuItemFont("I toggle enable items", function(sender) {

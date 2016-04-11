@@ -2,7 +2,7 @@
 #include "AppDelegate.h"
 #include "audio/include/SimpleAudioEngine.h"
 #include "base/CCScriptSupport.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "scripting/lua-bindings/auto/lua_cocos2dx_controller_auto.hpp"
 #include "scripting/lua-bindings/manual/controller/lua_cocos2dx_controller_manual.hpp"
 

@@ -1,5 +1,6 @@
 #include "WebSocketTest.h"
 #include "../ExtensionsTest.h"
+#include "testResource.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -7,6 +8,7 @@ USING_NS_CC_EXT;
 WebSocketTests::WebSocketTests()
 {
     ADD_TEST_CASE(WebSocketTest);
+    ADD_TEST_CASE(WebSocketCloseTest);
 }
 
 WebSocketTest::WebSocketTest()
@@ -256,3 +258,56 @@ void WebSocketTest::onMenuSendBinaryClicked(cocos2d::Ref *sender)
         _sendBinaryStatus->setString(warningStr.c_str());
     }
 }
+
+WebSocketCloseTest::WebSocketCloseTest()
+    : _wsiTest(nullptr)
+{
+    auto winSize = Director::getInstance()->getWinSize();
+
+    _wsiTest = new network::WebSocket();
+
+    if (!_wsiTest->init(*this, "ws://echo.websocket.org"))
+    {
+        CC_SAFE_DELETE(_wsiTest);
+    }
+
+    auto closeItem = MenuItemImage::create(s_pathClose, s_pathClose, [](Ref* sender){
+        Director::getInstance()->end();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        exit(0);
+#endif
+    });
+    closeItem->setPosition(VisibleRect::right().x / 2, VisibleRect::top().y * 2 / 3);
+
+    auto menu = Menu::create(closeItem, nullptr);
+    menu->setPosition(Vec2::ZERO);
+    addChild(menu, 1);
+
+    auto notifyLabel = Label::createWithTTF("See log window, when enter there's should have\n'Websocket opened' log,\nwhen close there's should have'websocket closed' log", "fonts/arial.ttf", 20);
+    notifyLabel->setPosition(VisibleRect::right().x / 2, VisibleRect::top().y / 3);
+    notifyLabel->setAlignment(TextHAlignment::CENTER);
+    addChild(notifyLabel, 1);
+}
+
+// Delegate methods
+void WebSocketCloseTest::onOpen(network::WebSocket* ws)
+{
+    log("Websocket (%p) opened", ws);
+}
+
+void WebSocketCloseTest::onMessage(network::WebSocket* ws, const network::WebSocket::Data& data)
+{
+    log("Websocket get message from %p", ws);
+}
+
+void WebSocketCloseTest::onClose(network::WebSocket* ws)
+{
+    log("websocket (%p) closed.", ws);
+    CC_SAFE_DELETE(ws);
+}
+
+void WebSocketCloseTest::onError(network::WebSocket* ws, const network::WebSocket::ErrorCode& error)
+{
+    log("Error was fired, error code: %d", error);
+}
+

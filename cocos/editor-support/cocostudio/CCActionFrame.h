@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "math/CCGeometry.h"
 #include "2d/CCActionInterval.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
     

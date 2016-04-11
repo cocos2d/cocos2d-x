@@ -27,9 +27,11 @@
 
  ****************************************************************************/
 
-#include "WebSocket.h"
+#include "network/WebSocket.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventListenerCustom.h"
 
 #include <thread>
 #include <mutex>
@@ -311,7 +313,7 @@ WebSocket::WebSocket()
 , _wsHelper(nullptr)
 , _wsInstance(nullptr)
 , _wsContext(nullptr)
-, _isDestroyed(std::make_shared<bool>(false))
+, _isDestroyed(std::make_shared<std::atomic<bool>>(false))
 , _delegate(nullptr)
 , _SSLConnection(0)
 , _wsProtocols(nullptr)
@@ -324,6 +326,13 @@ WebSocket::WebSocket()
     }
 
     __websocketInstances->push_back(this);
+    
+    std::shared_ptr<std::atomic<bool>> isDestroyed = _isDestroyed;
+    _resetDirectorListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_RESET, [this, isDestroyed](EventCustom*){
+        if (*isDestroyed)
+            return;
+        close();
+    });
 }
 
 WebSocket::~WebSocket()
@@ -352,6 +361,9 @@ WebSocket::~WebSocket()
             LOGD("ERROR: WebSocket instance (%p) wasn't added to the container which saves websocket instances!\n", this);
         }
     }
+    
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_resetDirectorListener);
+    
     *_isDestroyed = true;
 }
 
@@ -558,7 +570,13 @@ void WebSocket::onSubThreadStarted()
         {
             "permessage-deflate",
             lws_extension_callback_pm_deflate,
+            // iOS doesn't support client_no_context_takeover extension in the current version, it will cause iOS connection fail
+            // It may be a bug of lib websocket iOS build
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+            "permessage-deflate; client_max_window_bits"
+#else 
             "permessage-deflate; client_no_context_takeover; client_max_window_bits"
+#endif
         },
         {
             "deflate-frame",
@@ -803,7 +821,7 @@ void WebSocket::onClientReceivedData(void* in, ssize_t len)
             frameData->push_back('\0');
         }
 
-        std::shared_ptr<bool> isDestroyed = _isDestroyed;
+        std::shared_ptr<std::atomic<bool>> isDestroyed = _isDestroyed;
         _wsHelper->sendMessageToCocosThread([this, frameData, frameSize, isBinary, isDestroyed](){
             // In UI thread
             LOGD("Notify data len %d to Cocos thread.\n", (int)frameSize);
@@ -839,7 +857,7 @@ void WebSocket::onConnectionOpened()
     _readyState = State::OPEN;
     _readStateMutex.unlock();
 
-    std::shared_ptr<bool> isDestroyed = _isDestroyed;
+    std::shared_ptr<std::atomic<bool>> isDestroyed = _isDestroyed;
     _wsHelper->sendMessageToCocosThread([this, isDestroyed](){
         if (*isDestroyed)
         {
@@ -860,7 +878,7 @@ void WebSocket::onConnectionError()
     _readyState = State::CLOSING;
     _readStateMutex.unlock();
 
-    std::shared_ptr<bool> isDestroyed = _isDestroyed;
+    std::shared_ptr<std::atomic<bool>> isDestroyed = _isDestroyed;
     _wsHelper->sendMessageToCocosThread([this, isDestroyed](){
         if (*isDestroyed)
         {
@@ -888,7 +906,7 @@ void WebSocket::onConnectionClosed()
     _readStateMutex.unlock();
 
     _wsHelper->quitWebSocketThread();
-    std::shared_ptr<bool> isDestroyed = _isDestroyed;
+    std::shared_ptr<std::atomic<bool>> isDestroyed = _isDestroyed;
     _wsHelper->sendMessageToCocosThread([this, isDestroyed](){
         if (*isDestroyed)
         {

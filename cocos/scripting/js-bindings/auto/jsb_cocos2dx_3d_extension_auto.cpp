@@ -1,5 +1,5 @@
-#include "jsb_cocos2dx_3d_extension_auto.hpp"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_3d_extension_auto.hpp"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "cocos-ext.h"
 
 template<class T>
@@ -17,7 +17,7 @@ static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
-    return true;    
+    return true;
 }
 JSClass  *jsb_cocos2d_ParticleSystem3D_class;
 JSObject *jsb_cocos2d_ParticleSystem3D_prototype;
@@ -443,7 +443,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultDepth(JSContext *cx, 
     cocos2d::PUParticleSystem3D* cobj = (cocos2d::PUParticleSystem3D *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultDepth : Invalid Native Object");
     if (argc == 0) {
-        const float ret = cobj->getDefaultDepth();
+        double ret = cobj->getDefaultDepth();
         jsval jsret = JSVAL_NULL;
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
@@ -645,7 +645,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultWidth(JSContext *cx, 
     cocos2d::PUParticleSystem3D* cobj = (cocos2d::PUParticleSystem3D *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultWidth : Invalid Native Object");
     if (argc == 0) {
-        const float ret = cobj->getDefaultWidth();
+        double ret = cobj->getDefaultWidth();
         jsval jsret = JSVAL_NULL;
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
@@ -835,7 +835,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultHeight(JSContext *cx,
     cocos2d::PUParticleSystem3D* cobj = (cocos2d::PUParticleSystem3D *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultHeight : Invalid Native Object");
     if (argc == 0) {
-        const float ret = cobj->getDefaultHeight();
+        double ret = cobj->getDefaultHeight();
         jsval jsret = JSVAL_NULL;
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);

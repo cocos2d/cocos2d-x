@@ -20,11 +20,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-#include "js_bindings_config.h"
-#include "js_bindings_core.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/js_bindings_core.h"
 
 // cocos2d + chipmunk registration files
-#include "chipmunk/js_bindings_chipmunk_registration.h"
+#include "scripting/js-bindings/manual/chipmunk/js_bindings_chipmunk_registration.h"
 #include "cocos2d.h"
 
 //#pragma mark - Hash

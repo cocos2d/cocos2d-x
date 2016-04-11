@@ -1,7 +1,7 @@
-#include "jsb_cocos2dx_experimental_video_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_experimental_video_auto.hpp"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
-#include "cocos2d_specifics.hpp"
-#include "UIVideoPlayer.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "ui/UIVideoPlayer.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -18,7 +18,7 @@ static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
-    return true;    
+    return true;
 }
 JSClass  *jsb_cocos2d_experimental_ui_VideoPlayer_class;
 JSObject *jsb_cocos2d_experimental_ui_VideoPlayer_prototype;

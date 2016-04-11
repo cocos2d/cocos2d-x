@@ -1,8 +1,8 @@
-#include "jsb_cocos2dx_navmesh_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_navmesh_auto.hpp"
 #if CC_USE_NAVMESH
-#include "cocos2d_specifics.hpp"
-#include "CCNavMesh.h"
-#include "navmesh/jsb_cocos2dx_navmesh_conversions.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "navmesh/CCNavMesh.h"
+#include "scripting/js-bindings/manual/navmesh/jsb_cocos2dx_navmesh_conversions.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -19,7 +19,7 @@ static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
-    return true;    
+    return true;
 }
 JSClass  *jsb_cocos2d_NavMeshAgent_class;
 JSObject *jsb_cocos2d_NavMeshAgent_prototype;

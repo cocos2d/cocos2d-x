@@ -594,18 +594,22 @@ bool js_cocos2dx_ui_TextField_getPasswordStyleText(JSContext *cx, uint32_t argc,
 bool js_cocos2dx_ui_TextField_setMaxLengthEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_isPasswordEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_setDeleteBackward(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TextField_setCursorPosition(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_getTextHorizontalAlignment(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_setFontSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_setPlaceHolder(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TextField_setCursorFromPoint(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_setPlaceHolderColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_setTextHorizontalAlignment(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_setTextColor(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TextField_setCursorChar(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_getMaxLength(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_isMaxLengthEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_setDetachWithIME(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_getTextVerticalAlignment(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_setTouchAreaEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_setMaxLength(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TextField_setCursorEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_setTouchSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_getTouchSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_TextField_create(JSContext *cx, uint32_t argc, jsval *vp);
@@ -905,6 +909,53 @@ bool js_cocos2dx_ui_LayoutComponent_setSize(JSContext *cx, uint32_t argc, jsval 
 bool js_cocos2dx_ui_LayoutComponent_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_LayoutComponent_bindLayoutComponent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_LayoutComponent_LayoutComponent(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_TabHeader_class;
+extern JSObject *jsb_cocos2d_ui_TabHeader_prototype;
+
+bool js_cocos2dx_ui_TabHeader_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_TabHeader_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_TabHeader(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_ui(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_ui_TabHeader_getIndexInTabControl(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabHeader_getTitleText(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabHeader_setTitleFontSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabHeader_setTitleFontName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabHeader_getTitleFontSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabHeader_getTitleFontName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabHeader_getTitleColor(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabHeader_getTitleRenderer(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabHeader_setTitleText(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabHeader_setTitleColor(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabHeader_create(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_TabControl_class;
+extern JSObject *jsb_cocos2d_ui_TabControl_prototype;
+
+bool js_cocos2dx_ui_TabControl_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_TabControl_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_TabControl(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_ui(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_ui_TabControl_setHeaderWidth(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_removeTab(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_getTabCount(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_getHeaderDockPlace(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_getSelectedTabIndex(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_insertTab(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_ignoreHeadersTextureSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_getHeaderWidth(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_setHeaderDockPlace(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_setSelectTab(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_getTabHeader(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_isIgnoreHeadersTextureSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_setTabChangedEventListener(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_setHeaderSelectedZoom(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_setHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_indexOfTabHeader(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_getTabContainer(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_getHeaderSelectedZoom(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_getHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_TabControl_create(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_ui_ScrollViewBar_class;
 extern JSObject *jsb_cocos2d_ui_ScrollViewBar_prototype;

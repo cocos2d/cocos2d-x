@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __UIPAGEVIEWINDICATOR_H__
 #define __UIPAGEVIEWINDICATOR_H__
 
-#include "UIPageView.h"
+#include "ui/UIPageView.h"
 
 NS_CC_BEGIN
 /**

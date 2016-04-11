@@ -4,7 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include "json/document.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
     /**
@@ -13,6 +13,7 @@ namespace cocostudio {
     class ILocalizationManager
     {
     public:
+        virtual ~ILocalizationManager() = default;
         virtual bool initLanguageData(std::string file) = 0;
         virtual std::string getLocalizationString(std::string key) = 0;
     };

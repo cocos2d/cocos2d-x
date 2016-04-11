@@ -21,12 +21,12 @@
  */
  
 #include <android/log.h>
-#include "CCJavascriptJavaBridge.h"
+#include "scripting/js-bindings/manual/platform/android/CCJavascriptJavaBridge.h"
 #include "cocos2d.h"
 #include "platform/android/jni/JniHelper.h"
-#include "spidermonkey_specifics.h"
-#include "ScriptingCore.h"
-#include "js_manual_conversions.h"
+#include "scripting/js-bindings/manual/spidermonkey_specifics.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
 #include "base/ccUTF8.h"
 
 #define  LOG_TAG    "CCJavascriptJavaBridge"

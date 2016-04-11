@@ -26,10 +26,10 @@ THE SOFTWARE.
 #define __CCSGUIREADER_H__
 
 #include "ui/UILayout.h"
-#include "cocostudio/DictionaryHelper.h"
-#include "WidgetReader/WidgetReaderProtocol.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/WidgetReader/WidgetReaderProtocol.h"
 #include "base/ObjectFactory.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace protocolbuffers
 {

@@ -1,8 +1,8 @@
-#include "jsb_cocos2dx_studio_auto.hpp"
-#include "cocos2d_specifics.hpp"
-#include "CocoStudio.h"
-#include "CCComExtensionData.h"
-#include "jsb_cocos2dx_studio_conversions.h"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_studio_auto.hpp"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "editor-support/cocostudio/CocoStudio.h"
+#include "editor-support/cocostudio/CCComExtensionData.h"
+#include "scripting/js-bindings/manual/cocostudio/jsb_cocos2dx_studio_conversions.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -19,7 +19,7 @@ static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
-    return true;    
+    return true;
 }
 JSClass  *jsb_cocostudio_ActionObject_class;
 JSObject *jsb_cocostudio_ActionObject_prototype;

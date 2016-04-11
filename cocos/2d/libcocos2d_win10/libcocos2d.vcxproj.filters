@@ -143,9 +143,6 @@
     <Filter Include="cocostudio\reader\WidgetReader\Particle3DReader">
       <UniqueIdentifier>{ebca298d-3724-42b8-923f-934f2df267de}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocostudio\reader\WidgetReader\ParticleReader">
-      <UniqueIdentifier>{2e9af99e-c268-459a-9615-9f3c5b58efdc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\ProjectNodeReader">
       <UniqueIdentifier>{cdcb5464-cce7-4252-9fa9-0113c6f88731}</UniqueIdentifier>
     </Filter>
@@ -265,6 +262,12 @@
     </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\Light3DReader">
       <UniqueIdentifier>{549d5ddb-02ff-4b34-8e49-8fb7570ecff4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\TabControlReader">
+      <UniqueIdentifier>{55b041f0-d164-40f4-8dbd-a188ed9d9f6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Particle3DReader\ParticleReader">
+      <UniqueIdentifier>{2e9af99e-c268-459a-9615-9f3c5b58efdc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -901,7 +904,7 @@
       <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
     </ClCompile>
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\ParticleReader\ParticleReader.cpp">
-      <Filter>cocostudio\reader\WidgetReader\ParticleReader</Filter>
+      <Filter>cocostudio\reader\WidgetReader\Particle3DReader\ParticleReader</Filter>
     </ClCompile>
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\ProjectNodeReader\ProjectNodeReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\ProjectNodeReader</Filter>
@@ -1981,6 +1984,12 @@
     <ClCompile Include="..\..\editor-support\cocostudio\LocalizationManager.cpp">
       <Filter>cocostudio\components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\TabControlReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UITabControl.cpp">
+      <Filter>ui\UIWidgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cocos2d.h" />
@@ -2700,7 +2709,7 @@
       <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\ParticleReader\ParticleReader.h">
-      <Filter>cocostudio\reader\WidgetReader\ParticleReader</Filter>
+      <Filter>cocostudio\reader\WidgetReader\Particle3DReader\ParticleReader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\ProjectNodeReader\ProjectNodeReader.h">
       <Filter>cocostudio\reader\WidgetReader\ProjectNodeReader</Filter>
@@ -3868,6 +3877,15 @@
     </ClInclude>
     <ClInclude Include="..\..\editor-support\cocostudio\LocalizationManager.h">
       <Filter>cocostudio\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TabControlReader\CSTabControl_generated.h">
+      <Filter>cocostudio\reader\WidgetReader\TabControlReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.h">
+      <Filter>cocostudio\reader\WidgetReader\TabControlReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UITabControl.h">
+      <Filter>ui\UIWidgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

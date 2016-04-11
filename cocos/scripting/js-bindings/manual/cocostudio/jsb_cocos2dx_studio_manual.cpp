@@ -21,10 +21,10 @@
  * THE SOFTWARE.
  */
 
-#include "jsb_cocos2dx_studio_manual.h"
-#include "ScriptingCore.h"
-#include "cocos2d_specifics.hpp"
-#include "cocostudio/CocoStudio.h"
+#include "scripting/js-bindings/manual/cocostudio/jsb_cocos2dx_studio_manual.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "editor-support/cocostudio/CocoStudio.h"
 
 class JSArmatureWrapper: public JSCallbackWrapper {
 public:

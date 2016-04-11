@@ -21,21 +21,21 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "lua_cocos2dx_ui_manual.hpp"
-#include "lua_cocos2dx_ui_auto.hpp"
+#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_ui_manual.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_ui_auto.hpp"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
-#include "lua_cocos2dx_experimental_video_auto.hpp"
-#include "lua_cocos2dx_experimental_video_manual.hpp"
-#include "lua_cocos2dx_experimental_webview_auto.hpp"
-#include "lua_cocos2dx_experimental_webview_manual.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_experimental_video_auto.hpp"
+#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_experimental_video_manual.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_experimental_webview_auto.hpp"
+#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_experimental_webview_manual.hpp"
 #endif
 #include "cocos2d.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-#include "LuaScriptHandlerMgr.h"
-#include "CCLuaValue.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
+#include "scripting/lua-bindings/manual/CCLuaValue.h"
 #include "ui/CocosGUI.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 
 using namespace ui;
 

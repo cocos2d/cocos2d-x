@@ -22,10 +22,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCPrecompiledShaders.h"
-#include "CCWinRTUtils.h"
+#include "platform/winrt/CCPrecompiledShaders.h"
+#include "platform/winrt/CCWinRTUtils.h"
 #include "renderer/CCGLProgram.h"
-#include "sha1.h"
+#include "platform/winrt/sha1.h"
 
 using namespace Windows::Graphics::Display;
 using namespace Windows::Storage;
@@ -64,7 +64,7 @@ void CCPrecompiledShaders::Init(void)
     m_programs.clear();
     m_precompiledPrograms.clear();
 
-    // add existing precomiled programs to dictionary
+    // add existing precompiled programs to dictionary
     loadPrecompiledPrograms();
 }
 

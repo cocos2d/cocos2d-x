@@ -21,10 +21,10 @@
  * THE SOFTWARE.
  */
 
-#include "jsb_cocos2dx_navmesh_conversions.h"
+#include "scripting/js-bindings/manual/navmesh/jsb_cocos2dx_navmesh_conversions.h"
 #if CC_USE_NAVMESH
-#include "cocos2d_specifics.hpp"
-#include "js_manual_conversions.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
 
 bool jsval_to_NavMeshAgentParam(JSContext *cx, JS::HandleValue v, cocos2d::NavMeshAgentParam* ret)
 {

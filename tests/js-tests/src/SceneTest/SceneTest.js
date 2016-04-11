@@ -103,7 +103,8 @@ var SceneTestLayer1 = cc.Layer.extend({
 
         director.pushScene(new cc.TransitionSlideInT(1, scene));
     },
-    onQuit:function (sender) {
+    onExit:function (sender) {
+        cc.director.setNotificationNode(null);
     }
 
     //CREATE_NODE(SceneTestLayer1);

@@ -1,11 +1,11 @@
 
 
-#include "TextFieldReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextFieldReader/TextFieldReader.h"
 
 #include "ui/UITextField.h"
-#include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/LocalizationManager.h"
+#include "editor-support/cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/LocalizationManager.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -272,7 +272,6 @@ namespace cocostudio
                                               builder->CreateString(fontName),
                                               fontSize,
                                               builder->CreateString(text),
-                                              isLocalized,
                                               builder->CreateString(placeHolder),
                                               passwordEnabled,
                                               builder->CreateString(passwordStyleText),
@@ -280,8 +279,8 @@ namespace cocostudio
                                               maxLength,
                                               areaWidth,
                                               areaHeight,
-                                              isCustomSize
-                                              );
+                                              isCustomSize,
+                                              isLocalized);
         
         return *(Offset<Table>*)(&options);
     }
@@ -299,7 +298,11 @@ namespace cocostudio
         if (isLocalized)
         {
             ILocalizationManager* lm = LocalizationHelper::getCurrentManager();
-            textField->setString(lm->getLocalizationString(text));
+            std::string localizedTxt = lm->getLocalizationString(text);
+            std::string::size_type newlineIndex = localizedTxt.find("\n");
+            if (newlineIndex != std::string::npos)
+                localizedTxt = localizedTxt.substr(0, newlineIndex);
+            textField->setString(localizedTxt);
         }
         else
         {

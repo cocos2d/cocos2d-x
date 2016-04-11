@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCColliderDetector.h"
-#include "cocostudio/CCBone.h"
-#include "cocostudio/CCTransformHelp.h"
+#include "editor-support/cocostudio/CCColliderDetector.h"
+#include "editor-support/cocostudio/CCBone.h"
+#include "editor-support/cocostudio/CCTransformHelp.h"
 
 
 

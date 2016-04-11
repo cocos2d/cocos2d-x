@@ -25,10 +25,10 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMAUDIO_H__
 #define __CC_EXTENTIONS_CCCOMAUDIO_H__
 
-#include "CCComBase.h"
+#include "editor-support/cocostudio/CCComBase.h"
 #include "base/CCProtocols.h"
 #include "2d/CCComponent.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 

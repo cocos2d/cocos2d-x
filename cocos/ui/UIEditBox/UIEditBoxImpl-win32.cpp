@@ -22,12 +22,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "UIEditBoxImpl-win32.h"
+#include "ui/UIEditBox/UIEditBoxImpl-win32.h"
 
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
-#include "UIEditBox.h"
+#include "ui/UIEditBox/UIEditBox.h"
 #include <windows.h>
 #include <tchar.h>
 #include <stdio.h>

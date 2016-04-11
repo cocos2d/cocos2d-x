@@ -24,10 +24,10 @@
 
 #include <string>
 #include <vector>
-#include "jsb_helper.h"
+#include "scripting/js-bindings/manual/jsb_helper.h"
 #include "jsapi.h"
 #include "jsfriendapi.h"
-#include "js_bindings_config.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
 using namespace std;
 
 #define JSO_ERR_OK                 (0)

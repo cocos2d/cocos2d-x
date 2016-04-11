@@ -1,9 +1,9 @@
 #include "cocos2d.h"
 #include "AppDelegate.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "audio/include/SimpleAudioEngine.h"
 #include "lua_assetsmanager_test_sample.h"
-#include "lua_module_register.h"
+#include "scripting/lua-bindings/manual/lua_module_register.h"
 #include "lua_test_bindings.h"
 
 using namespace CocosDenshion;

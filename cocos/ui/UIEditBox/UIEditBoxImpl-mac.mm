@@ -26,11 +26,11 @@
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
-#include "UIEditBoxImpl-mac.h"
+#include "ui/UIEditBox/UIEditBoxImpl-mac.h"
 #include "base/CCDirector.h"
-#include "UIEditBox.h"
+#include "ui/UIEditBox/UIEditBox.h"
 #include "deprecated/CCString.h"
-#include "Mac/CCUIEditBoxMac.h"
+#include "ui/UIEditBox/Mac/CCUIEditBoxMac.h"
 
 NS_CC_BEGIN
 
@@ -75,6 +75,7 @@ void EditBoxImplMac::createNativeControl(const cocos2d::Rect &frame)
 NSFont* EditBoxImplMac::constructFont(const char *fontName, int fontSize)
 {
     NSString * fntName = [NSString stringWithUTF8String:fontName];
+    fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
     float retinaFactor = _inRetinaMode ? 2.0f : 1.0f;
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     float scaleFactor = glview->getScaleX();

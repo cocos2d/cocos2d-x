@@ -770,6 +770,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UITabControlTest</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionManagerTest\ActionManagerTest.cpp">
@@ -1720,5 +1721,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.h">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UITabControlTest</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.h" />
   </ItemGroup>
 </Project>

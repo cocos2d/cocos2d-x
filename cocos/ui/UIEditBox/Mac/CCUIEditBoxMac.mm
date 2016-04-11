@@ -23,11 +23,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "CCUIEditBoxMac.h"
+#import "ui/UIEditBox/Mac/CCUIEditBoxMac.h"
 #include "base/CCDirector.h"
-#include "CCUISingleLineTextField.h"
-#include "CCUIPasswordTextField.h"
-#include "CCUIMultilineTextField.h"
+#include "ui/UIEditBox/Mac/CCUISingleLineTextField.h"
+#include "ui/UIEditBox/Mac/CCUIPasswordTextField.h"
+#include "ui/UIEditBox/Mac/CCUIMultilineTextField.h"
 
 #define getEditBoxImplMac() ((cocos2d::ui::EditBoxImplMac *)_editBox)
 

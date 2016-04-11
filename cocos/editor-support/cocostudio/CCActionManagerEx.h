@@ -25,9 +25,9 @@ THE SOFTWARE.
 #ifndef __ActionMANAGER_H__
 #define __ActionMANAGER_H__
 
-#include "cocostudio/CCActionObject.h"
-#include "cocostudio/DictionaryHelper.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCActionObject.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
     

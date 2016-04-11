@@ -46,7 +46,7 @@ public:
 
     /** Returns the radius of the sphere
     */
-    const float getRadius(void) const;
+    float getRadius() const;
 
     /** Sets the radius of the sphere
     */

@@ -1,10 +1,9 @@
-#include "lua_cocos2dx_studio_auto.hpp"
-#include "CocoStudio.h"
-#include "CCComExtensionData.h"
-#include "lua-cocos-studio-conversions.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-
+#include "scripting/lua-bindings/auto/lua_cocos2dx_studio_auto.hpp"
+#include "editor-support/cocostudio/CocoStudio.h"
+#include "editor-support/cocostudio/CCComExtensionData.h"
+#include "scripting/lua-bindings/manual/cocostudio/lua-cocos-studio-conversions.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
 int lua_cocos2dx_studio_ActionFrame_getAction(lua_State* tolua_S)
 {

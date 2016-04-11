@@ -29,14 +29,14 @@ THE SOFTWARE.
 
 #include "tinyxml2.h"
 
-#include "cocostudio/CCDataReaderHelper.h"
-#include "cocostudio/CCArmatureDataManager.h"
-#include "cocostudio/CCTransformHelp.h"
-#include "cocostudio/CCUtilMath.h"
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CCDatas.h"
+#include "editor-support/cocostudio/CCDataReaderHelper.h"
+#include "editor-support/cocostudio/CCArmatureDataManager.h"
+#include "editor-support/cocostudio/CCTransformHelp.h"
+#include "editor-support/cocostudio/CCUtilMath.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CCDatas.h"
 
-#include "cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CocoLoader.h"
 
 
 using namespace cocos2d;
@@ -2287,8 +2287,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         {
             if (movementBoneData->frameList.size() > 0)
             {
-                FrameData *frameData = new (std::nothrow) FrameData();
-                frameData = movementBoneData->frameList.at(framesizemusone);
+                auto frameData = movementBoneData->frameList.at(framesizemusone);
                 movementBoneData->addFrameData(frameData);
                 frameData->release();
                 frameData->frameID = movementBoneData->duration;

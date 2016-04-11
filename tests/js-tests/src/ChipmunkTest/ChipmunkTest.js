@@ -30,6 +30,10 @@
 
 var chipmunkTestSceneIdx = -1;
 
+function k_scalar_body(body, point, n) {
+    var rcn = cp.v.cross(cp.v.sub(point, body.p), n);
+    return 1.0/body.m + rcn*rcn/body.i;
+}
 
 //------------------------------------------------------------------
 //
@@ -1496,12 +1500,12 @@ var Buoyancy = ChipmunkDemo.extend( {
 
         var j=count-1;
         for(var i=0; i<count; i++) {
-            var a = body.local2World( poly.getVert(j));
-            var b = body.local2World( poly.getVert(i));
+            var a = body.local2World(poly.getVert(j));
+            var b = body.local2World(poly.getVert(i));
 
             if(a.y < level){
-                clipped.push( a.x );
-                clipped.push( a.y );
+                clipped.push(a.x);
+                clipped.push(a.y);
             }
 
             var a_level = a.y - level;
@@ -1522,24 +1526,24 @@ var Buoyancy = ChipmunkDemo.extend( {
 
         var displacedMass = clippedArea*FLUID_DENSITY;
         var centroid = cp.centroidForPoly(clipped);
-        var r = cp.v.sub(centroid, body.getPos());
 
         var dt = space.getCurrentTimeStep();
         var g = space.gravity;
 
         // Apply the buoyancy force as an impulse.
-        body.applyImpulse( cp.v.mult(g, -displacedMass*dt), r);
+        body.applyImpulse(cp.v.mult(g, -displacedMass*dt), centroid);
 
         // Apply linear damping for the fluid drag.
-        var v_centroid = cp.v.add(body.getVel(), cp.v.mult(cp.v.perp(r), body.w));
-        var k = 1; //k_scalar_body(body, r, cp.v.normalize_safe(v_centroid));
+        var v_centroid = body.getVelAtWorldPoint(centroid)
+        var k = k_scalar_body(body, centroid, cp.v.normalize(v_centroid));
         var damping = clippedArea*FLUID_DRAG*FLUID_DENSITY;
         var v_coef = Math.exp(-damping*dt*k); // linear drag
 //  var v_coef = 1.0/(1.0 + damping*dt*cp.v.len(v_centroid)*k); // quadratic drag
-        body.applyImpulse( cp.v.mult(cp.v.sub(cp.v.mult(v_centroid, v_coef), v_centroid), 1.0/k), r);
+        body.applyImpulse(cp.v.mult(cp.v.sub(cp.v.mult(v_centroid, v_coef), v_centroid), 1.0/k), centroid);
 
         // Apply angular damping for the fluid drag.
-        var w_damping = cp.momentForPoly(FLUID_DRAG*FLUID_DENSITY*clippedArea, clipped, cp.v.neg(body.p));
+        var cog = body.local2World(body.getCenterOfGravity());
+        var w_damping = cp.momentForPoly(FLUID_DRAG*FLUID_DENSITY*clippedArea, clipped, cp.v.neg(cog), 0);
         body.w *= Math.exp(-w_damping*dt* (1/body.i));
 
         return true;
@@ -1773,10 +1777,10 @@ var Query = ChipmunkDemo.extend({
         if(nearestInfo){
             // Draw a grey line to the closest shape.
             drawNode.drawDot(touch.getLocation(), 3, cc.color(128, 128, 128, 255));
-            drawNode.drawSegment(touch.getLocation(), nearestInfo.point, 1, cc.color(128, 128, 128, 255));
+            drawNode.drawSegment(touch.getLocation(), nearestInfo.p, 1, cc.color(128, 128, 128, 255));
             
             // Draw a red bounding box around the shape under the mouse.
-//            if(nearestInfo.distance < 0)
+//            if(nearestInfo.d < 0)
 //                drawNode.drawBB(cpShapeGetBB(nearestInfo.shape), RGBAColor(1,0,0,1));
         }
         

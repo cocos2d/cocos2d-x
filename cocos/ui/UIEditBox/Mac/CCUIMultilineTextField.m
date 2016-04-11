@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "CCUIMultilineTextField.h"
+#import "ui/UIEditBox/Mac/CCUIMultilineTextField.h"
 
 @interface CCUIMultilineTextField()
 @property(nonatomic, copy)NSString* placeHolder;

@@ -489,6 +489,7 @@ private:
     //RGB888 to XXX
     static void convertRGB888ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGB888ToRGB565(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
+    static void convertRGB888ToA8(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGB888ToI8(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGB888ToAI88(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGB888ToRGBA4444(const unsigned char* data, ssize_t dataLen, unsigned char* outData);

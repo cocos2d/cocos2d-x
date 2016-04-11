@@ -22,10 +22,10 @@
  * THE SOFTWARE.
  */
 
-#include "ScriptingCore.h"
-#include "js_bindings_config.h"
-#include "js_manual_conversions.h"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "math/TransformUtils.h"
 #include "editor-support/cocostudio/CocosStudioExtension.h"
 
@@ -2300,7 +2300,7 @@ bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, FontDefinition 
     
     JSB_PRECONDITION( jsobj, "Not a valid JS object");
     
-    // defaul values
+    // default values
     const char *            defautlFontName         = "Arial";
     const int               defaultFontSize         = 32;
     TextHAlignment         defaultTextAlignment    = TextHAlignment::LEFT;
@@ -2419,7 +2419,7 @@ bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, FontDefinition 
             out->_shadow._shadowBlur    = 1;
             out->_shadow._shadowOpacity = 1;
             
-            // shado offset
+            // shadow offset
             JS_HasProperty(cx, jsobj, "shadowOffsetX", &hasProperty);
             JS_HasProperty(cx, jsobj, "shadowOffsetY", &hasSecondProp);
             if ( hasProperty && hasSecondProp )

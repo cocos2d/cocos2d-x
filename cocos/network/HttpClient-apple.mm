@@ -27,7 +27,7 @@
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-#include "HttpClient.h"
+#include "network/HttpClient.h"
 
 #include <queue>
 #include <errno.h>
@@ -184,7 +184,7 @@ static int processTask(HttpClient* client, HttpRequest* request, NSString* reque
         }
     }
 
-    //read cookie propertities from file and set cookie
+    //read cookie properties from file and set cookie
     std::string cookieFilename = client->getCookieFilename();
     if(!cookieFilename.empty() && nullptr != client->getCookie())
     {

@@ -478,7 +478,7 @@ void TextureCache::removeUnusedTextures()
             CCLOG("cocos2d: TextureCache: removing unused texture: %s", it->first.c_str());
 
             tex->release();
-            _textures.erase(it++);
+            it = _textures.erase(it);
         } else {
             ++it;
         }
@@ -496,7 +496,7 @@ void TextureCache::removeTexture(Texture2D* texture)
     for( auto it=_textures.cbegin(); it!=_textures.cend(); /* nothing */ ) {
         if( it->second == texture ) {
             it->second->release();
-            _textures.erase(it++);
+            it = _textures.erase(it);
             break;
         } else
             ++it;

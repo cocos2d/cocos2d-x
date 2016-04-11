@@ -1,7 +1,7 @@
 #ifndef __CCB_CCNODE_RELATIVEPOSITIONING_H__
 #define __CCB_CCNODE_RELATIVEPOSITIONING_H__
 
-#include "CCBReader.h"
+#include "editor-support/cocosbuilder/CCBReader.h"
 
 namespace cocosbuilder {
 

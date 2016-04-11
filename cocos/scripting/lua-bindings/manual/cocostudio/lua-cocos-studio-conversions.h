@@ -29,7 +29,7 @@ extern "C" {
 #include "tolua++.h"
 }
 
-#include "tolua_fix.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
 
 namespace cocostudio
 {

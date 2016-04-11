@@ -187,6 +187,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.cpp \
 ../../../Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp \
 ../../../Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest_Editor.cpp \
+../../../Classes/UITest/CocoStudioGUITest/UITabControlTest/UITabControlTest.cpp \
 ../../../Classes/UITest/UITest.cpp \
 ../../../Classes/UnitTest/RefPtrTest.cpp \
 ../../../Classes/UnitTest/UnitTest.cpp \
@@ -194,6 +195,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../Classes/VisibleRect.cpp \
 ../../../Classes/VibrateTest/VibrateTest.cpp \
 ../../../Classes/ZwoptexTest/ZwoptexTest.cpp \
+../../../Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp \
 ../../../Classes/controller.cpp \
 ../../../Classes/testBasic.cpp
 

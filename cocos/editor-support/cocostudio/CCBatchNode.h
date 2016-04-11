@@ -26,8 +26,8 @@ THE SOFTWARE.
 #define __CCBATCHNODE_H__
 
 #include "2d/CCNode.h"
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocos2d {
     class GroupCommand;

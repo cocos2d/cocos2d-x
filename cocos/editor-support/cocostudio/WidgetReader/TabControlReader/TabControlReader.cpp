@@ -25,12 +25,12 @@
 
 #include "tinyxml2/tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
-#include "cocostudio/WidgetReader/WidgetReader.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/WidgetReader/TabControlReader/TabControlReader.h"
-#include "cocostudio/FlatBuffersSerialize.h"
-#include "cocostudio/ActionTimeline/CSLoader.h"
-#include "cocos/ui/UITabControl.h"
+#include "editor-support/cocostudio/WidgetReader/WidgetReader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/WidgetReader/TabControlReader/TabControlReader.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/ActionTimeline/CSLoader.h"
+#include "ui/UITabControl.h"
 
 
 USING_NS_CC;

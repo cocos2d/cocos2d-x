@@ -24,13 +24,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "jsb_cocos2dx_navmesh_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_navmesh_auto.hpp"
 #if CC_USE_NAVMESH
-#include "ScriptingCore.h"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "cocos2d.h"
 #include "navmesh/CCNavMesh.h"
-#include "js_manual_conversions.h"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
 
 static bool jsb_cocos2dx_navmesh_NavMeshAgent_move(JSContext *cx, uint32_t argc, jsval *vp)
 {

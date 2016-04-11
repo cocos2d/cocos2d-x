@@ -45,7 +45,6 @@ include(deprecated/CMakeLists.txt)
 include(ui/CMakeLists.txt)
 include(network/CMakeLists.txt)
 include(audio/CMakeLists.txt)
-include_directories(audio/include)
 include(storage/CMakeLists.txt)
 
 if(BUILD_EDITOR_COCOSBUILDER)
@@ -112,6 +111,7 @@ elseif(MACOSX OR APPLE)
  FIND_LIBRARY(APPLICATIONSERVICES_LIBRARY ApplicationServices)
  FIND_LIBRARY(IOKIT_LIBRARY IOKit)
  FIND_LIBRARY(FOUNDATION_LIBRARY Foundation)
+ FIND_LIBRARY(ICONV_LIBRARY iconv)
 
   set(PLATFORM_SPECIFIC_LIBS
     ${COCOA_LIBRARY}
@@ -122,6 +122,7 @@ elseif(MACOSX OR APPLE)
     ${APPLICATIONSERVICES_LIBRARY}
     ${IOKIT_LIBRARY}
     ${FOUNDATION_LIBRARY}
+    ${ICONV_LIBRARY}
   )
 
 elseif(ANDROID)

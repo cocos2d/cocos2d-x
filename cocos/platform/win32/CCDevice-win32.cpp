@@ -464,7 +464,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         width    = (short)size.cx;
         height   = (short)size.cy;
 
-        // copy pixed data
+        // copy pixel data
         bi.bmiHeader.biHeight = (bi.bmiHeader.biHeight > 0)
             ? - bi.bmiHeader.biHeight : bi.bmiHeader.biHeight;
         GetDIBits(dc.getDC(), dc.getBitmap(), 0, height, dataBuf,

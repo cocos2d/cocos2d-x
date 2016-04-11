@@ -25,8 +25,8 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-#include "CCApplication-android.h"
-#include "CCGLViewImpl-android.h"
+#include "platform/android/CCApplication-android.h"
+#include "platform/android/CCGLViewImpl-android.h"
 #include "base/CCDirector.h"
 #include "base/CCEventCustom.h"
 #include "base/CCEventType.h"
