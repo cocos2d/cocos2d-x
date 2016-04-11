@@ -746,7 +746,7 @@ std::string TestActionTimelinePlayableFrame::title() const
 
 void TestActionTimelineIssueWith2SameActionInOneNode::onEnter()
 {
-    CCFileUtils::getInstance()->addSearchPath("ActionTimeline");
+    FileUtils::getInstance()->addSearchPath("ActionTimeline");
     ActionTimelineBaseTest::onEnter();
 
     Node* node = CSLoader::createNode("ani2.csb");
