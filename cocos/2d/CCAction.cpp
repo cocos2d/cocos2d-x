@@ -206,7 +206,7 @@ Follow* Follow::create(Node *followedNode, const Rect& rect/* = Rect::ZERO*/,flo
 Follow* Follow::clone() const
 {
     // no copy constructor
-    return Follow::create(_followedNode, _worldRect);
+    return Follow::create(_followedNode, _worldRect,_offsetX,_offsetY);
 
 }
 
