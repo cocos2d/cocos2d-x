@@ -38,7 +38,8 @@ _currentPageIndex(-1),
 _childFocusCancelOffset(5.0f),
 _pageViewEventListener(nullptr),
 _pageViewEventSelector(nullptr),
-_eventCallback(nullptr)
+_eventCallback(nullptr),
+_autoScrollStopEpsilon(0.001f)
 {
 }
 
@@ -177,6 +178,11 @@ bool PageView::isUsingCustomScrollThreshold()const
     return false;
 }
 
+void PageView::setAutoScrollStopEpsilon(float epsilon)
+{
+    _autoScrollStopEpsilon = epsilon;
+}
+
 void PageView::moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack)
 {
     ListView::moveInnerContainer(deltaMove, canStartBounceBack);
@@ -263,7 +269,7 @@ void PageView::handleReleaseLogic(Touch *touch)
     
 float PageView::getAutoScrollStopEpsilon() const
 {
-    return 0.001;
+    return _autoScrollStopEpsilon;
 }
 
 void PageView::pageTurningEvent()
