@@ -5018,56 +5018,6 @@ float
 },
 
 /**
- * @method setIndicatorSelectedIndexColor
- * @param {color3b_object} arg0
- */
-setIndicatorSelectedIndexColor : function (
-color3b 
-)
-{
-},
-
-/**
- * @method getIndicatorSelectedIndexColor
- * @return {color3b_object}
- */
-getIndicatorSelectedIndexColor : function (
-)
-{
-    return cc.Color3B;
-},
-
-/**
- * @method getIndicatorPositionAsAnchorPoint
- * @return {vec2_object}
- */
-getIndicatorPositionAsAnchorPoint : function (
-)
-{
-    return cc.Vec2;
-},
-
-/**
- * @method setIndicatorPosition
- * @param {vec2_object} arg0
- */
-setIndicatorPosition : function (
-vec2 
-)
-{
-},
-
-/**
- * @method getIndicatorPosition
- * @return {vec2_object}
- */
-getIndicatorPosition : function (
-)
-{
-    return cc.Vec2;
-},
-
-/**
  * @method insertPage
  * @param {ccui.Widget} arg0
  * @param {int} arg1
@@ -5080,21 +5030,31 @@ int
 },
 
 /**
- * @method getCurrentPageIndex
- * @return {long}
+ * @method setAutoScrollStopEpsilon
+ * @param {float} arg0
  */
-getCurrentPageIndex : function (
+setAutoScrollStopEpsilon : function (
+float 
 )
 {
-    return 0;
 },
 
 /**
- * @method removePage
- * @param {ccui.Widget} arg0
+ * @method setIndicatorEnabled
+ * @param {bool} arg0
  */
-removePage : function (
-widget 
+setIndicatorEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setIndicatorSelectedIndexColor
+ * @param {color3b_object} arg0
+ */
+setIndicatorSelectedIndexColor : function (
+color3b 
 )
 {
 },
@@ -5110,6 +5070,16 @@ func
 },
 
 /**
+ * @method getIndicatorPosition
+ * @return {vec2_object}
+ */
+getIndicatorPosition : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
  * @method setCurrentPageIndex
  * @param {long} arg0
  */
@@ -5120,13 +5090,23 @@ long
 },
 
 /**
- * @method getIndicatorEnabled
- * @return {bool}
+ * @method getIndicatorSelectedIndexColor
+ * @return {color3b_object}
  */
-getIndicatorEnabled : function (
+getIndicatorSelectedIndexColor : function (
 )
 {
-    return false;
+    return cc.Color3B;
+},
+
+/**
+ * @method setIndicatorPosition
+ * @param {vec2_object} arg0
+ */
+setIndicatorPosition : function (
+vec2 
+)
+{
 },
 
 /**
@@ -5160,21 +5140,59 @@ long
 },
 
 /**
- * @method setIndicatorEnabled
- * @param {bool} arg0
+ * @method removeAllPages
  */
-setIndicatorEnabled : function (
-bool 
+removeAllPages : function (
 )
 {
 },
 
 /**
- * @method addPage
+ * @method getIndicatorPositionAsAnchorPoint
+ * @return {vec2_object}
+ */
+getIndicatorPositionAsAnchorPoint : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method getCurrentPageIndex
+ * @return {long}
+ */
+getCurrentPageIndex : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method removePage
  * @param {ccui.Widget} arg0
  */
-addPage : function (
+removePage : function (
 widget 
+)
+{
+},
+
+/**
+ * @method getIndicatorEnabled
+ * @return {bool}
+ */
+getIndicatorEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method removePageAtIndex
+ * @param {long} arg0
+ */
+removePageAtIndex : function (
+long 
 )
 {
 },
@@ -5190,19 +5208,11 @@ getIndicatorSpaceBetweenIndexNodes : function (
 },
 
 /**
- * @method removeAllPages
+ * @method addPage
+ * @param {ccui.Widget} arg0
  */
-removeAllPages : function (
-)
-{
-},
-
-/**
- * @method removePageAtIndex
- * @param {long} arg0
- */
-removePageAtIndex : function (
-long 
+addPage : function (
+widget 
 )
 {
 },
