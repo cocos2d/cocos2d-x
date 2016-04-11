@@ -117,8 +117,9 @@ public:
     */
     bool initWithImageData(const unsigned char * data, ssize_t dataLen);
 
-    // @warning kFmtRawData only support RGBA8888
-    bool initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti = false, Texture2D::PixelFormat renderFormat = Texture2D::PixelFormat::RGBA8888);
+    // @warning kFmtRawData only support RGBA8888, BGRA8888 and RGB888
+    bool initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti = false);
+    bool initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti, Texture2D::PixelFormat renderFormat);
 
     // Getters
     inline unsigned char *   getData()               { return _data; }
