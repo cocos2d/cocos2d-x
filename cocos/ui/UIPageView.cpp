@@ -438,6 +438,44 @@ const Color3B& PageView::getIndicatorSelectedIndexColor() const
     return _indicator->getSelectedIndexColor();
 }
 
+void PageView::setIndicatorIndexNodesColor(const Color3B& color)
+{
+    if(_indicator != nullptr)
+    {
+        _indicator->setIndexNodesColor(color);
+    }
+}
+    
+const Color3B& PageView::getIndicatorIndexNodesColor() const
+{
+    CCASSERT(_indicator != nullptr, "");
+    return _indicator->getIndexNodesColor();
+}
+    
+void PageView::setIndicatorIndexNodesScale(float indexNodesScale)
+{
+    if(_indicator != nullptr)
+    {
+        _indicator->setIndexNodesScale(indexNodesScale);
+        _indicator->indicate(_currentPageIndex);
+    }
+}
+    
+float PageView::getIndicatorIndexNodesScale() const
+{
+    CCASSERT(_indicator != nullptr, "");
+    return _indicator->getIndexNodesScale();
+}
+  
+void PageView::setIndicatorIndexNodesTexture(const std::string& texName,Widget::TextureResType texType)
+{
+    if(_indicator != nullptr)
+    {
+        _indicator->setIndexNodesTexture(texName, texType);
+        _indicator->indicate(_currentPageIndex);
+    }
+}
+    
 void PageView::remedyLayoutParameter(Widget *item)
 {
     item->setContentSize(this->getContentSize());
