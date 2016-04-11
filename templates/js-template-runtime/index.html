@@ -29,13 +29,15 @@
         var ua = nav.userAgent.toLowerCase();
         var uaResult = /android (\d+(?:\.\d+)+)/i.exec(ua) || /android (\d+(?:\.\d+)+)/i.exec(nav.platform);
         if (uaResult) {
-            var osVersion = parseInt(uaResult[1]) || 0;
-            var browserCheck = ua.match(/(qzone|micromessenger|qqbrowser)/i);
+            var browserCheck = ua.match(/(qzone|micromessenger|qq)(mobile)?(browser)?\/?([\d.]+)/i);
             if (browserCheck) {
-                var gameCanvas = document.getElementById("gameCanvas");
-                var ctx = gameCanvas.getContext('2d');
-                ctx.fillStyle = '#000000';
-                ctx.fillRect(0, 0, 1, 1);
+                var browserVersion = parseFloat(browserCheck[4] || 0);
+                if (browserVer < 6.2) {
+                    var gameCanvas = document.getElementById("gameCanvas");
+                    var ctx = gameCanvas.getContext('2d');
+                    ctx.fillStyle = '#000000';
+                    ctx.fillRect(0, 0, 1, 1);
+                }
             }
         }
     })();
