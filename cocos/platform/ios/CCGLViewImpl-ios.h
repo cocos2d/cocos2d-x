@@ -56,6 +56,8 @@ public:
     static void convertAttrs();
     static void* _pixelFormat;
     static int _depthFormat;
+    
+    void screenSizeChanged(int newWidth, int newHeight);
 
     /** sets the content scale factor */
     virtual bool setContentScaleFactor(float contentScaleFactor) override;

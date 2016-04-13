@@ -133,3 +133,8 @@ void AppDelegate::applicationWillEnterForeground()
     
     Director::getInstance()->startAnimation();
 }
+
+// this function will be called when the app windows is resized
+void AppDelegate::applicationScreenSizeChanged(int newWidth, int newHeight)
+{
+}

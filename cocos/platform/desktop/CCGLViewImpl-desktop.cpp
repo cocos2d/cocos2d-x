@@ -838,6 +838,7 @@ void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int 
         setFrameSize(frameWidth, frameHeight);
         setDesignResolutionSize(baseDesignSize.width, baseDesignSize.height, baseResolutionPolicy);
         Director::getInstance()->setViewport();
+        Application::getInstance()->applicationScreenSizeChanged(width, height);
     }
 }
 

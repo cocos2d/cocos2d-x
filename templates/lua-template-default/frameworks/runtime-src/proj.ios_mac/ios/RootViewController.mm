@@ -68,6 +68,24 @@
     return YES;
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+
+    cocos2d::GLViewImpl *glview = static_cast<cocos2d::GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView());
+
+    if (glview)
+    {
+        CCEAGLView *eaglview = (CCEAGLView*) glview->getEAGLView();
+
+        if (eaglview)
+        {
+            CGSize s = CGSizeMake([eaglview getWidth], [eaglview getHeight]);
+            glview->screenSizeChanged((int) s.width, (int) s.height);
+            cocos2d::Application::getInstance()->applicationScreenSizeChanged((int) s.width, (int) s.height);
+        }
+    }
+}
+
 //fix not hide status on ios7
 - (BOOL)prefersStatusBarHidden
 {

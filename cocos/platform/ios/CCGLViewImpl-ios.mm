@@ -173,6 +173,11 @@ bool GLViewImpl::isOpenGLReady()
     return _eaglview != nullptr;
 }
 
+void GLViewImpl::screenSizeChanged(int newWidth, int newHeight)
+{
+    GLView::screenSizeChanged(newWidth, newHeight);
+}
+
 bool GLViewImpl::setContentScaleFactor(float contentScaleFactor)
 {
     CC_ASSERT(_resolutionPolicy == ResolutionPolicy::UNKNOWN); // cannot enable retina mode

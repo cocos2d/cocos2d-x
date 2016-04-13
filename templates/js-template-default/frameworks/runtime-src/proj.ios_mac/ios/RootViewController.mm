@@ -72,7 +72,8 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 
-    cocos2d::GLView *glview = cocos2d::Director::getInstance()->getOpenGLView();
+    cocos2d::GLViewImpl *glview = static_cast<cocos2d::GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView());
+
     if (glview)
     {
         cocos2d::CCEGLView *eaglview = (cocos2d::CCEGLView*) glview->getEAGLView();
@@ -80,6 +81,7 @@
         if (eaglview)
         {
             CGSize s = CGSizeMake([eaglview getWidth], [eaglview getHeight]);
+            glview->screenSizeChanged((int) s.width, (int) s.height);
             cocos2d::Application::getInstance()->applicationScreenSizeChanged((int) s.width, (int) s.height);
         }
     }

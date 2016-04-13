@@ -176,6 +176,13 @@ void GLView::updateDesignResolutionSize()
     }
 }
 
+void GLView::screenSizeChanged(int newWidth, int newHeight)
+{
+    setFrameSize(newWidth, newHeight);
+    updateDesignResolutionSize();
+    Director::getInstance()->setViewport();
+}
+
 void GLView::setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy)
 {
     CCASSERT(resolutionPolicy != ResolutionPolicy::UNKNOWN, "should set resolutionPolicy");

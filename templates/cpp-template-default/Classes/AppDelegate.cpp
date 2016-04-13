@@ -97,3 +97,8 @@ void AppDelegate::applicationWillEnterForeground() {
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }
+
+// this function will be called when the app windows is resized
+void AppDelegate::applicationScreenSizeChanged(int newWidth, int newHeight)
+{
+}

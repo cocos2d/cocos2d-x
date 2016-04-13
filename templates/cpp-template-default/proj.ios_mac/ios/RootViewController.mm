@@ -100,7 +100,7 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 
-    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    cocos2d::GLViewImpl *glview = static_cast<cocos2d::GLViewImpl*>(cocos2d::Director::getInstance()->getOpenGLView());
 
     if (glview)
     {
@@ -109,6 +109,7 @@
         if (eaglview)
         {
             CGSize s = CGSizeMake([eaglview getWidth], [eaglview getHeight]);
+            glview->screenSizeChanged((int) s.width, (int) s.height);
             cocos2d::Application::getInstance()->applicationScreenSizeChanged((int) s.width, (int) s.height);
         }
     }

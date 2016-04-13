@@ -409,6 +409,7 @@ public:
 
 protected:
     void updateDesignResolutionSize();
+    void screenSizeChanged(int newWidth, int newHeight);
     
     void handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, intptr_t ids[], float xs[], float ys[]);
 

@@ -151,6 +151,13 @@ public:
      * @lua NA
      */
     virtual bool openURL(const std::string &url) = 0;
+    
+    /**
+     @brief  This function will be called when the application screen size is changed.
+     @param new width
+     @param new height
+     */
+    virtual void applicationScreenSizeChanged(int newWidth, int newHeight) = 0;
 };
 
 // end of platform group
