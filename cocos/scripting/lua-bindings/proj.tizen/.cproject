@@ -11,10 +11,11 @@
 					<extension id="org.eclipse.cdt.core.MakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.tizen.nativecore.NativeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="a" artifactName="cocos2dxluabindings" buildArtefactType="org.tizen.nativecore.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.tizen.nativecore.buildArtefactType.staticLib" cleanCommand="rm -f" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.CWDLocator;org.eclipse.cdt.core.GmakeErrorParser" id="org.tizen.nativecore.config.sbi.gcc45.lib.debug.860932439" name="Debug" parent="org.tizen.nativecore.config.sbi.gcc45.lib.debug" postannouncebuildStep="" postbuildStep="" preannouncebuildStep="" prebuildStep="">
+				<configuration artifactExtension="a" artifactName="cocos2dxluabindings" buildArtefactType="org.tizen.nativecore.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.tizen.nativecore.buildArtefactType.staticLib,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -f" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.CWDLocator;org.eclipse.cdt.core.GmakeErrorParser" id="org.tizen.nativecore.config.sbi.gcc45.lib.debug.860932439" name="Debug" parent="org.tizen.nativecore.config.sbi.gcc45.lib.debug" postannouncebuildStep="" postbuildStep="" preannouncebuildStep="" prebuildStep="">
 					<folderInfo id="org.tizen.nativecore.config.sbi.gcc45.lib.debug.860932439." name="/" resourcePath="">
 						<toolChain errorParsers="" id="org.tizen.nativecore.toolchain.sbi.gcc45.lib.debug.1660768193" name="Tizen Core Toolchain" superClass="org.tizen.nativecore.toolchain.sbi.gcc45.lib.debug">
 							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="org.tizen.nativeide.target.sbi.gnu.platform.base.353998347" osList="linux,win32" superClass="org.tizen.nativeide.target.sbi.gnu.platform.base"/>
@@ -313,6 +314,7 @@
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.1881784991" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dxluabindings/lua}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dx/cocos}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dxluabindings/lua/lua}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dxluabindings/lua/tolua}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/libxml2&quot;"/>
@@ -435,10 +437,11 @@
 					<extension id="org.eclipse.cdt.core.MakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.tizen.nativecore.NativeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="a" artifactName="cocos2dxluabindings" buildArtefactType="org.tizen.nativecore.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.tizen.nativecore.buildArtefactType.staticLib" cleanCommand="rm -f" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.CWDLocator;org.eclipse.cdt.core.GmakeErrorParser" id="org.tizen.nativecore.config.sbi.gcc45.lib.release.938950614" name="Release" parent="org.tizen.nativecore.config.sbi.gcc45.lib.release" postannouncebuildStep="" postbuildStep="" preannouncebuildStep="" prebuildStep="">
+				<configuration artifactExtension="a" artifactName="cocos2dxluabindings" buildArtefactType="org.tizen.nativecore.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.tizen.nativecore.buildArtefactType.staticLib,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -f" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.CWDLocator;org.eclipse.cdt.core.GmakeErrorParser" id="org.tizen.nativecore.config.sbi.gcc45.lib.release.938950614" name="Release" parent="org.tizen.nativecore.config.sbi.gcc45.lib.release" postannouncebuildStep="" postbuildStep="" preannouncebuildStep="" prebuildStep="">
 					<folderInfo id="org.tizen.nativecore.config.sbi.gcc45.lib.release.938950614." name="/" resourcePath="">
 						<toolChain errorParsers="" id="org.tizen.nativecore.toolchain.sbi.gcc45.lib.release.224676742" name="Tizen Core Toolchain" superClass="org.tizen.nativecore.toolchain.sbi.gcc45.lib.release">
 							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="org.tizen.nativeide.target.sbi.gnu.platform.base.81049874" osList="linux,win32" superClass="org.tizen.nativeide.target.sbi.gnu.platform.base"/>
@@ -721,10 +724,11 @@
 					<extension id="org.eclipse.cdt.core.MakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.tizen.nativecore.NativeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="a" artifactName="cocos2dxluabindings" buildArtefactType="org.tizen.nativecore.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.tizen.nativecore.buildArtefactType.staticLib" cleanCommand="rm -f" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.CWDLocator;org.eclipse.cdt.core.GmakeErrorParser" id="org.tizen.nativecore.config.sbi.gcc45.lib.debug.860932439.1977030" name="Emulator" parent="org.tizen.nativecore.config.sbi.gcc45.lib.debug" postannouncebuildStep="" postbuildStep="" preannouncebuildStep="" prebuildStep="">
+				<configuration artifactExtension="a" artifactName="cocos2dxluabindings" buildArtefactType="org.tizen.nativecore.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.tizen.nativecore.buildArtefactType.staticLib,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -f" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.CWDLocator;org.eclipse.cdt.core.GmakeErrorParser" id="org.tizen.nativecore.config.sbi.gcc45.lib.debug.860932439.1977030" name="Emulator" parent="org.tizen.nativecore.config.sbi.gcc45.lib.debug" postannouncebuildStep="" postbuildStep="" preannouncebuildStep="" prebuildStep="">
 					<folderInfo id="org.tizen.nativecore.config.sbi.gcc45.lib.debug.860932439.1977030." name="/" resourcePath="">
 						<toolChain errorParsers="" id="org.tizen.nativecore.toolchain.sbi.gcc45.lib.debug.255110581" name="Tizen Core Toolchain" superClass="org.tizen.nativecore.toolchain.sbi.gcc45.lib.debug">
 							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="org.tizen.nativeide.target.sbi.gnu.platform.base.717398258" osList="linux,win32" superClass="org.tizen.nativeide.target.sbi.gnu.platform.base"/>

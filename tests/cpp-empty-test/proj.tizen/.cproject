@@ -128,7 +128,9 @@
 									<listOptionValue builtIn="false" value="COCOS2D_DEBUG=1"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.dialect.std.1989643534" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
-								<option id="gnu.cpp.compiler.option.warnings.allwarn.1244431581" superClass="gnu.cpp.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.warnings.allwarn.1244431581" name="All warnings (-Wall)" superClass="gnu.cpp.compiler.option.warnings.allwarn" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.warnings.extrawarn.463735355" superClass="gnu.cpp.compiler.option.warnings.extrawarn" value="false" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.other.other.1646026385" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -Wno-unused-function" valueType="string"/>
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.1785986060"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1967463497" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -235,6 +237,7 @@
 									<listOptionValue builtIn="false" value="_DEBUG"/>
 									<listOptionValue builtIn="false" value="TIZEN"/>
 								</option>
+								<option id="gnu.c.compiler.option.warnings.allwarn.177479281" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 								<inputType id="sbi.gnu.c.compiler.tizen.inputType.1849919139"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1214175948" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
