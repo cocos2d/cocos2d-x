@@ -56,7 +56,7 @@ public:
 
     virtual ValueVector getValueVectorFromFile(const std::string& filename) override;
 #if CC_FILEUTILS_APPLE_ENABLE_OBJC
-    CC_DEPRECATED_ATTRIBUTE void setBundle(NSBundle* bundle);
+    void setBundle(NSBundle* bundle);
 #endif
 private:
     virtual bool isFileExistInternal(const std::string& filePath) const override;
