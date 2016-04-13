@@ -130,6 +130,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/extensions}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/ConvertUTF}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/chipmunk/include/chipmunk}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/chipmunk/include/}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/edtaa3func}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/jpeg/include/tizen}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/png/include/tizen}&quot;"/>
@@ -147,10 +148,10 @@
 									<listOptionValue builtIn="false" value="Native_API"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1822971437" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
-									<listOptionValue builtIn="false" value="USE_MINICL"/>
 									<listOptionValue builtIn="false" value="TIZEN"/>
 									<listOptionValue builtIn="false" value="HAVE_PTHREAD=1"/>
 									<listOptionValue builtIn="false" value="_DEBUG"/>
+									<listOptionValue builtIn="false" value="USE_MINICL"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.dialect.std.1640297893" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
 								<option id="sbi.gnu.cpp.compiler.option.misc.pic.core.814244042" name="-fPIC option" superClass="sbi.gnu.cpp.compiler.option.misc.pic.core" value="true" valueType="boolean"/>
