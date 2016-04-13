@@ -573,6 +573,12 @@ const char * Application::getCurrentLanguageCode()
     return code;
 }
 
+std::string Application::getVersion()
+{
+	//TODO
+	return "";
+}
+
 LanguageType Application::getCurrentLanguage()
 {
     char *pLanguageName = getenv("LANG");

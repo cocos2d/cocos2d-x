@@ -128,6 +128,7 @@
 									<listOptionValue builtIn="false" value="COCOS2D_DEBUG=1"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.dialect.std.1989643534" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.warnings.allwarn.1244431581" superClass="gnu.cpp.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.1785986060"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1967463497" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -885,13 +886,14 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
-		<configuration configurationName="Release">
+		<configuration configurationName="Dynamic Analyzer">
 			<resource resourceType="PROJECT" workspacePath="/cpp-empty-test"/>
 		</configuration>
+		<configuration configurationName="Emulator"/>
 		<configuration configurationName="Debug">
 			<resource resourceType="PROJECT" workspacePath="/cpp-empty-test"/>
 		</configuration>
-		<configuration configurationName="Dynamic Analyzer">
+		<configuration configurationName="Release">
 			<resource resourceType="PROJECT" workspacePath="/cpp-empty-test"/>
 		</configuration>
 	</storageModule>

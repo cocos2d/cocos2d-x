@@ -6,6 +6,11 @@
 	</projects>
 	<buildSpec>
 		<buildCommand>
+			<name>org.tizen.nativecore.apichecker.apicheckerbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
 			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
 			<arguments>
 			</arguments>
@@ -28,6 +33,7 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 		<nature>org.tizen.nativecore.apichecker.core.tizenCppNature</nature>
+		<nature>org.tizen.nativecore.apichecker.apicheckernature</nature>
 	</natures>
 	<linkedResources>
 		<link>
@@ -38,7 +44,7 @@
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>1420687476770</id>
+			<id>1460537028087</id>
 			<name></name>
 			<type>26</type>
 			<matcher>
@@ -47,7 +53,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1420687476771</id>
+			<id>1460537028097</id>
 			<name></name>
 			<type>26</type>
 			<matcher>
