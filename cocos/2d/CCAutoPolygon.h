@@ -55,9 +55,9 @@ public:
      * @return PolygonInfo object
      */
     PolygonInfo():
-    isVertsOwner(true),
     rect(cocos2d::Rect::ZERO),
-    filename("")
+    filename(""),
+    isVertsOwner(true)
     {
         triangles.verts = nullptr;
         triangles.indices = nullptr;
