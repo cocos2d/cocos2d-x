@@ -26,6 +26,7 @@
 #ifndef __CC_FILEUTILS_APPLE_H__
 #define __CC_FILEUTILS_APPLE_H__
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -54,13 +55,15 @@ public:
     virtual bool writeToFile(const ValueMap& dict, const std::string& fullPath) override;
 
     virtual ValueVector getValueVectorFromFile(const std::string& filename) override;
+#if CC_FILEUTILS_APPLE_ENABLE_OBJC
     void setBundle(NSBundle* bundle);
+#endif
 private:
     virtual bool isFileExistInternal(const std::string& filePath) const override;
     virtual bool removeDirectory(const std::string& dirPath) override;
 
-    NSBundle* getBundle() const;
-    NSBundle* _bundle;
+    struct IMPL;
+    std::unique_ptr<IMPL> pimpl_;
 };
 
 // end of platform group

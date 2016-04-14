@@ -40,6 +40,18 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+struct FileUtilsApple::IMPL {
+    IMPL(NSBundle* bundle):bundle_([NSBundle mainBundle]) {}
+    void setBundle(NSBundle* bundle) {
+        bundle_ = bundle;
+    }
+    NSBundle* getBundle() const {
+        return bundle_;
+    }
+private:
+    NSBundle* bundle_;
+};
+
 static void addValueToDict(id nsKey, id nsValue, ValueMap& dict);
 static void addObjectToNSDict(const std::string& key, const Value& value, NSMutableDictionary *dict);
 
@@ -305,19 +317,14 @@ static void addObjectToNSDict(const std::string& key, const Value& value, NSMuta
     }
 }
 
-FileUtilsApple::FileUtilsApple() {
-    _bundle = [NSBundle mainBundle];
+FileUtilsApple::FileUtilsApple() : pimpl_(new IMPL([NSBundle mainBundle])) {
 }
 
-
+#if CC_FILEUTILS_APPLE_ENABLE_OBJC
 void FileUtilsApple::setBundle(NSBundle* bundle) {
-    _bundle = bundle;
+    pimpl_->setBundle(bundle);
 }
-
-NSBundle* FileUtilsApple::getBundle() const {
-    return _bundle;
-}
-
+#endif
 
 #pragma mark - FileUtils
 
@@ -378,7 +385,7 @@ bool FileUtilsApple::isFileExistInternal(const std::string& filePath) const
             file = filePath;
         }
 
-        NSString* fullpath = [getBundle() pathForResource:[NSString stringWithUTF8String:file.c_str()]
+        NSString* fullpath = [pimpl_->getBundle() pathForResource:[NSString stringWithUTF8String:file.c_str()]
                                                              ofType:nil
                                                         inDirectory:[NSString stringWithUTF8String:path.c_str()]];
         if (fullpath != nil) {
@@ -425,7 +432,7 @@ std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string
 {
     if (directory[0] != '/')
     {
-        NSString* fullpath = [getBundle() pathForResource:[NSString stringWithUTF8String:filename.c_str()]
+        NSString* fullpath = [pimpl_->getBundle() pathForResource:[NSString stringWithUTF8String:filename.c_str()]
                                                              ofType:nil
                                                         inDirectory:[NSString stringWithUTF8String:directory.c_str()]];
         if (fullpath != nil) {

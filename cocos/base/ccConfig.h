@@ -393,4 +393,8 @@ THE SOFTWARE.
 # define CC_ALLOCATOR_GLOBAL_NEW_DELETE cocos2d::allocator::AllocatorStrategyGlobalSmallBlock
 #endif
 
+#ifndef CC_FILEUTILS_APPLE_ENABLE_OBJC
+#define CC_FILEUTILS_APPLE_ENABLE_OBJC  1
+#endif
+
 #endif // __CCCONFIG_H__
