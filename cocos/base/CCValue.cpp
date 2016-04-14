@@ -378,8 +378,9 @@ bool Value::operator== (const Value& v) const
             {
                 if (v1[i] != v2[i]) return false;
             }
+            return true;
         }
-        return true;
+        return false;
     }
     case Type::MAP:
     {
