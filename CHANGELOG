@@ -22,14 +22,16 @@ cocos2d-x-3.11 Apr ? 2016
 [REFINE]        Renderer: TriangleCommand and QuadCommand are merged
 [REFINE]        2D: SpriteFrameCache takes pixelFormat into account if specified
 [REFINE]        UI: let ScrollView swallow touch events by default
+[REFINE]        JSB: make selectedSprite optional
 
 [FIX]           JS: firefox v30+ can not debug cocos2d-x JSB projects
 [FIX]           UI: can not get event when PageView was turning
 [FIX]           UI: bitmap font sizes are not loaded from binary .fnt files
-[FIX]           2D: TargetedAction::isDone() always return false
-[FIX]           2D: some fonts were rendered incorreclty
+[FIX]           UI: some fonts were rendered incorreclty
+[FIX]           Action: TargetedAction::isDone() always return false
+[FIX]           Action: Repeat: will run actions more than speicific times, instant action will run one frame later
 [FIX]           2D: drawing in incorrect app state on iOS
-[FIX]           2D: FileUtils::getValueVectorFromFile() returns wrong value on iOS and Mac
+[FIX]           Platform: FileUtils::getValueVectorFromFile() returns wrong value on iOS and Mac
 
 cocos2d-x-3.10 Jan 11 2016
 
