@@ -5,7 +5,4 @@
         <label>cpp-empty-test</label>
         <icon>cpp-empty-test.png</icon>
     </ui-application>
-    <privileges>
-        <privilege>http://tizen.org/privilege/systemsettings</privilege>
-    </privileges>
 </manifest>

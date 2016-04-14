@@ -5,7 +5,4 @@
         <label>lua-empty-test</label>
         <icon>lua-empty-test.png</icon>
     </ui-application>
-    <privileges>
-        <privilege>http://tizen.org/privilege/systemsettings</privilege>
-    </privileges>
 </manifest>
