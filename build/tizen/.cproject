@@ -434,6 +434,7 @@
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.693014654" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/bullet}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cocos}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cocos/editor-support}&quot;"/>
@@ -458,6 +459,9 @@
 									<listOptionValue builtIn="false" value="Native_API"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.2108436448" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CC_ENABLE_BULLET_INTEGRATION"/>
+									<listOptionValue builtIn="false" value="CC_USE_3D_PHYSICS"/>
+									<listOptionValue builtIn="false" value="USE_MINICL"/>
 									<listOptionValue builtIn="false" value="TIZEN"/>
 									<listOptionValue builtIn="false" value="HAVE_PTHREAD=1"/>
 								</option>
@@ -647,12 +651,12 @@
 									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="Release"/>
 								</outputEntries>
 							</builder>
-							<tool command="arm-linux-gnueabi-ar" id="org.tizen.nativecore.tool.sbi.gnu.archiver.549482395" name="Archiver" superClass="org.tizen.nativecore.tool.sbi.gnu.archiver"/>
-							<tool command="arm-linux-gnueabi-g++" id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.267963460" name="C++ Compiler" superClass="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler">
+							<tool command="i386-linux-gnueabi-ar" id="org.tizen.nativecore.tool.sbi.gnu.archiver.549482395" name="Archiver" superClass="org.tizen.nativecore.tool.sbi.gnu.archiver"/>
+							<tool command="i386-linux-gnueabi-g++" id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.267963460" name="C++ Compiler" superClass="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler">
 								<option id="gnu.cpp.compiler.option.optimization.level.1973675719" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="sbi.gnu.cpp.compiler.option.debugging.level.core.1333727763" name="Debug level" superClass="sbi.gnu.cpp.compiler.option.debugging.level.core" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="sbi.gnu.cpp.compiler.option.1988169721" name="Tizen-Target" superClass="sbi.gnu.cpp.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="mobile-2.4-device.core_gcc49.armel.core.staticLib"/>
+									<listOptionValue builtIn="false" value="mobile-2.4-emulator.core_gcc49.i386.core.staticLib"/>
 								</option>
 								<option id="sbi.gnu.cpp.compiler.option.frameworks_inc.core.1541588710" name="Tizen-Frameworks-Include-Path" superClass="sbi.gnu.cpp.compiler.option.frameworks_inc.core" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/libxml2&quot;"/>
@@ -738,17 +742,17 @@
 									<listOptionValue builtIn="false" value="${TC_COMPILER_MISC}"/>
 									<listOptionValue builtIn="false" value="${RS_COMPILER_MISC}"/>
 									<listOptionValue builtIn="false" value="--sysroot=&quot;${SBI_SYSROOT}&quot;"/>
-									<listOptionValue builtIn="false" value="-mthumb"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.1494054141" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/bullet}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cocos}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cocos/editor-support}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cocos/platform}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/extensions}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/ConvertUTF}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/chipmunk/include/chipmunk}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/chipmunk/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/edtaa3func}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/jpeg/include/tizen}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/png/include/tizen}&quot;"/>
@@ -767,6 +771,9 @@
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.132413730" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="TIZEN"/>
+									<listOptionValue builtIn="false" value="CC_ENABLE_BULLET_INTEGRATION"/>
+									<listOptionValue builtIn="false" value="CC_USE_3D_PHYSICS"/>
+									<listOptionValue builtIn="false" value="USE_MINICL"/>
 									<listOptionValue builtIn="false" value="HAVE_PTHREAD=1"/>
 									<listOptionValue builtIn="false" value="_DEBUG"/>
 								</option>
@@ -776,11 +783,11 @@
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.1379131477.2118627262"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.289990907" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
-							<tool command="arm-linux-gnueabi-gcc" id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.682612154" name="C Compiler" superClass="org.tizen.nativecore.tool.sbi.gnu.c.compiler">
+							<tool command="i386-linux-gnueabi-gcc" id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.682612154" name="C Compiler" superClass="org.tizen.nativecore.tool.sbi.gnu.c.compiler">
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.1415283024" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" valueType="enumerated"/>
 								<option id="sbi.gnu.c.compiler.option.debugging.level.core.1132396016" name="Debug level" superClass="sbi.gnu.c.compiler.option.debugging.level.core" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="sbi.gnu.c.compiler.option.2095729090" name="Tizen-Target" superClass="sbi.gnu.c.compiler.option" valueType="userObjs">
-									<listOptionValue builtIn="false" value="mobile-2.4-device.core_gcc49.armel.core.staticLib"/>
+									<listOptionValue builtIn="false" value="mobile-2.4-emulator.core_gcc49.i386.core.staticLib"/>
 								</option>
 								<option id="sbi.gnu.c.compiler.option.frameworks_inc.core.1794796378" name="Tizen-Frameworks-Include-Path" superClass="sbi.gnu.c.compiler.option.frameworks_inc.core" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/libxml2&quot;"/>
@@ -866,7 +873,6 @@
 									<listOptionValue builtIn="false" value="${TC_COMPILER_MISC}"/>
 									<listOptionValue builtIn="false" value="${RS_COMPILER_MISC}"/>
 									<listOptionValue builtIn="false" value="--sysroot=&quot;${SBI_SYSROOT}&quot;"/>
-									<listOptionValue builtIn="false" value="-mthumb"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.1938147790" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/chipmunk/include/chipmunk}&quot;"/>
@@ -902,7 +908,7 @@
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.276153400" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="org.tizen.nativeide.tool.sbi.gnu.c.linker.base.154958868" name="C Linker" superClass="org.tizen.nativeide.tool.sbi.gnu.c.linker.base"/>
-							<tool command="arm-linux-gnueabi-g++" id="org.tizen.nativecore.tool.sbi.gnu.cpp.linker.1796310884" name="C++ Linker" superClass="org.tizen.nativecore.tool.sbi.gnu.cpp.linker">
+							<tool command="i386-linux-gnueabi-g++" id="org.tizen.nativecore.tool.sbi.gnu.cpp.linker.1796310884" name="C++ Linker" superClass="org.tizen.nativecore.tool.sbi.gnu.cpp.linker">
 								<option id="sbi.gnu.cpp.linker.option.frameworks_lflags.core.1181541846" name="Tizen-Frameworks-Other-Lflags" superClass="sbi.gnu.cpp.linker.option.frameworks_lflags.core" valueType="stringList">
 									<listOptionValue builtIn="false" value="${TC_LINKER_MISC}"/>
 									<listOptionValue builtIn="false" value="${RS_LINKER_MISC}"/>
@@ -914,7 +920,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib}&quot;"/>
 								</option>
 							</tool>
-							<tool command="arm-linux-gnueabi-as" id="org.tizen.nativeapp.tool.sbi.gnu.assembler.base.413311545" name="Assembler" superClass="org.tizen.nativeapp.tool.sbi.gnu.assembler.base">
+							<tool command="i386-linux-gnueabi-as" id="org.tizen.nativeapp.tool.sbi.gnu.assembler.base.413311545" name="Assembler" superClass="org.tizen.nativeapp.tool.sbi.gnu.assembler.base">
 								<option id="gnu.both.asm.option.include.paths.2060573887" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.147071465" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
