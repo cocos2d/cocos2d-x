@@ -118,11 +118,12 @@
 								<option id="gnu.cpp.compiler.option.include.paths.2127199034" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../../../"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dx/extensions}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dx/external/chipmunk/include/chipmunk}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dx/external/chipmunk/include/}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Classes}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dx/cocos/editor-support}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dx/external}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dx/cocos}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dx/cocos/physics3d}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/libxml2&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SDK_PATH}/library&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include&quot;"/>
@@ -188,10 +189,13 @@
 									<listOptionValue builtIn="false" value="Native_API"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1349624852" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CC_USE_3D_PHYSICS"/>
+									<listOptionValue builtIn="false" value="CC_ENABLE_BULLET_INTEGRATION"/>
 									<listOptionValue builtIn="false" value="_DEBUG"/>
 									<listOptionValue builtIn="false" value="TIZEN"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.dialect.std.1720819373" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.other.other.890726711" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -Wno-unused-function" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.69432227" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool command="arm-linux-gnueabi-gcc" id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.751825271" name="C Compiler" superClass="org.tizen.nativecore.tool.sbi.gnu.c.compiler">
@@ -410,7 +414,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Classes"/>
+						<entry excluding="JNITest" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Classes"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
@@ -817,7 +821,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Classes"/>
+						<entry excluding="JNITest" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Classes"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
@@ -1230,7 +1234,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Classes"/>
+						<entry excluding="JNITest" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Classes"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
