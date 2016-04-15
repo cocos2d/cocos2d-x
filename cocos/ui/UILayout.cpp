@@ -209,6 +209,9 @@ void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t par
         return;
     }
     
+    if(FLAGS_TRANSFORM_DIRTY & parentFlags)
+        _clippingRectDirty = true;
+    
     adaptRenderers();
     doLayout();
     
@@ -228,7 +231,7 @@ void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t par
     }
     else
     {
-        Widget::visit(renderer, parentTransform, parentFlags);
+        ProtectedNode::visit(renderer, parentTransform, parentFlags);
     }
 }
     
@@ -452,16 +455,17 @@ const Rect& Layout::getClippingRect()
         float scissorWidth = _contentSize.width*t.a;
         float scissorHeight = _contentSize.height*t.d;
         Rect parentClippingRect;
-        Layout* parent = this;
+        Node* parent = this;
 
         while (parent)
         {
-            parent = dynamic_cast<Layout*>(parent->getParent());
-            if(parent)
+            parent = parent->getParent();
+            Layout* parentLayout = dynamic_cast<Layout*>(parent);
+            if(parentLayout)
             {
-                if (parent->isClippingEnabled())
+                if (parentLayout->isClippingEnabled())
                 {
-                    _clippingParent = parent;
+                    _clippingParent = parentLayout;
                     break;
                 }
             }
@@ -470,50 +474,20 @@ const Rect& Layout::getClippingRect()
         if (_clippingParent)
         {
             parentClippingRect = _clippingParent->getClippingRect();
-            float finalX = worldPos.x - (scissorWidth * _anchorPoint.x);
-            float finalY = worldPos.y - (scissorHeight * _anchorPoint.y);
-            float finalWidth = scissorWidth;
-            float finalHeight = scissorHeight;
             
-            float leftOffset = worldPos.x - parentClippingRect.origin.x;
-            if (leftOffset < 0.0f)
-            {
-                finalX = parentClippingRect.origin.x;
-                finalWidth += leftOffset;
-            }
-            float rightOffset = (worldPos.x + scissorWidth) - (parentClippingRect.origin.x + parentClippingRect.size.width);
-            if (rightOffset > 0.0f)
-            {
-                finalWidth -= rightOffset;
-            }
-            float topOffset = (worldPos.y + scissorHeight) - (parentClippingRect.origin.y + parentClippingRect.size.height);
-            if (topOffset > 0.0f)
-            {
-                finalHeight -= topOffset;
-            }
-            float bottomOffset = worldPos.y - parentClippingRect.origin.y;
-            if (bottomOffset < 0.0f)
-            {
-                finalY = parentClippingRect.origin.x;
-                finalHeight += bottomOffset;
-            }
-            if (finalWidth < 0.0f)
-            {
-                finalWidth = 0.0f;
-            }
-            if (finalHeight < 0.0f)
-            {
-                finalHeight = 0.0f;
-            }
-            _clippingRect.origin.x = finalX;
-            _clippingRect.origin.y = finalY;
-            _clippingRect.size.width = finalWidth;
-            _clippingRect.size.height = finalHeight;
+            _clippingRect.origin.x = std::max(parentClippingRect.origin.x, worldPos.x);
+            _clippingRect.origin.y = std::max(parentClippingRect.origin.y, worldPos.y);
+            
+            float right = std::min(parentClippingRect.origin.x + parentClippingRect.size.width, worldPos.x + scissorWidth);
+            float top = std::min(parentClippingRect.origin.y + parentClippingRect.size.height, worldPos.y + scissorHeight);
+            
+            _clippingRect.size.width = std::max(0.0f, right - _clippingRect.origin.x);
+            _clippingRect.size.height = std::max(0.0f, top - _clippingRect.origin.y);
         }
         else
         {
-            _clippingRect.origin.x = worldPos.x - (scissorWidth * _anchorPoint.x);
-            _clippingRect.origin.y = worldPos.y - (scissorHeight * _anchorPoint.y);
+            _clippingRect.origin.x = worldPos.x;
+            _clippingRect.origin.y = worldPos.y;
             _clippingRect.size.width = scissorWidth;
             _clippingRect.size.height = scissorHeight;
         }
