@@ -26,6 +26,7 @@
 
 #include "base/ObjectFactory.h"
 #include "ui/CocosGUI.h"
+#include "platform/CCFileUtils.h"
 #include "editor-support/cocostudio/CocoStudio.h"
 #include "editor-support/cocostudio/CSLanguageDataBinary_generated.h"
 #include "editor-support/cocostudio/CSParseBinary_generated.h"

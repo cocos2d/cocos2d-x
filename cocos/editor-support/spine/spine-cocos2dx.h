@@ -33,7 +33,7 @@
 #define SPINE_COCOS2DX_H_
 
 #include <spine/spine.h>
-#include "cocos2d.h"
+
 #include <spine/SkeletonRenderer.h>
 #include <spine/SkeletonAnimation.h>
 

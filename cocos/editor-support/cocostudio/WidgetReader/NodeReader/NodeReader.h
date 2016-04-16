@@ -25,7 +25,7 @@
 #ifndef __cocos2d_libs__NodeReader__
 #define __cocos2d_libs__NodeReader__
 
-#include "cocos2d.h"
+
 #include "editor-support/cocostudio/CocosStudioExport.h"
 #include "editor-support/cocostudio/WidgetReader/NodeReaderProtocol.h"
 #include "editor-support/cocostudio/WidgetReader/NodeReaderDefine.h"

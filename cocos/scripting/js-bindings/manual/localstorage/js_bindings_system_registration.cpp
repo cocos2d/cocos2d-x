@@ -24,7 +24,7 @@
 #include "scripting/js-bindings/manual/js_bindings_config.h"
 #include "scripting/js-bindings/manual/js_bindings_core.h"
 #include "storage/local-storage/LocalStorage.h"
-#include "cocos2d.h"
+#include "platform/CCFileUtils.h"
 
 // system
 #include "scripting/js-bindings/manual/localstorage/js_bindings_system_functions.h"

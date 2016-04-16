@@ -35,6 +35,14 @@
 #include <spine/PolygonBatch.h>
 #include <algorithm>
 
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/ccGLStateCache.h"
+#include "2d/CCDrawingPrimitives.h"
+#include "base/CCDirector.h"
+
 USING_NS_CC;
 using std::min;
 using std::max;

@@ -34,7 +34,7 @@
 
 #include <spine/spine.h>
 #include <spine/SkeletonRenderer.h>
-#include "cocos2d.h"
+
 
 namespace spine {
 

@@ -32,6 +32,21 @@
 #include <sys/socket.h>
 #endif
 
+#include "2d/CCMenuItem.h"
+#include "2d/CCMenu.h"
+#include "deprecated/CCBool.h"
+#include "deprecated/CCInteger.h"
+#include "deprecated/CCDeprecated.h"
+#include "base/CCEventListenerTouch.h"
+#include "base/CCEventListenerKeyboard.h"
+#include "base/CCEventListenerMouse.h"
+#include "base/CCEventDispatcher.h"
+#include "platform/CCDevice.h"
+#include "renderer/CCTextureCache.h"
+#include "2d/CCCamera.h"
+#include "base/CCProperties.h"
+#include "base/ccUtils.h"
+
 static int tolua_cocos2d_MenuItemImage_create(lua_State* tolua_S)
 {
     if (nullptr == tolua_S)
