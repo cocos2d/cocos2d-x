@@ -130,9 +130,9 @@ void SpriteFrameCache::initializePolygonInfo(const Size &textureSize,
         indexData[i] = static_cast<unsigned short>(triangleIndices[i]);
     }
 
-    info.triangles.vertCount = vertexCount;
+    info.triangles.vertCount = static_cast<int>(vertexCount);
     info.triangles.verts = vertexData;
-    info.triangles.indexCount = indexCount;
+    info.triangles.indexCount = static_cast<int>(indexCount);
     info.triangles.indices = indexData;
     info.rect = Rect(0, 0, spriteSize.width, spriteSize.height);
 }
