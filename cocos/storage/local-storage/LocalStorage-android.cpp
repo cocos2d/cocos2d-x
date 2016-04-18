@@ -46,48 +46,48 @@ static std::string className = "org/cocos2dx/lib/Cocos2dxLocalStorage";
 
 static void splitFilename (std::string& str)
 {
-	size_t found = 0;
-	found=str.find_last_of("/\\");
-	if (found != std::string::npos)
-	{
-		str = str.substr(found+1);
-	}
+    size_t found = 0;
+    found = str.find_last_of("/\\");
+    if (found != std::string::npos)
+    {
+        str = str.substr(found + 1);
+    }
 }
 
 void localStorageInit( const std::string& fullpath)
 {
-	if (fullpath.empty())
+    if (fullpath.empty())
         return;
 
-	if( ! _initialized )
+    if (!_initialized)
     {
         std::string strDBFilename = fullpath;
         splitFilename(strDBFilename);
         if (JniHelper::callStaticBooleanMethod(className, "init", strDBFilename, "data")) {
             _initialized = 1;
         }
-	}
+    }
 }
 
 void localStorageFree()
 {
-	if( _initialized ) {
+    if (_initialized) {
         JniHelper::callStaticVoidMethod(className, "destory");
-		_initialized = 0;
-	}
+        _initialized = 0;
+    }
 }
 
 /** sets an item in the LS */
 void localStorageSetItem( const std::string& key, const std::string& value)
 {
-	assert( _initialized );
+    assert( _initialized );
     JniHelper::callStaticVoidMethod(className, "setItem", key, value);
 }
 
 /** gets an item from the LS */
 bool localStorageGetItem( const std::string& key, std::string *outItem )
 {
-	assert( _initialized );
+    assert( _initialized );
     JniMethodInfo t;
 
     if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "getItem", "(Ljava/lang/String;)Ljava/lang/String;"))
@@ -109,9 +109,8 @@ bool localStorageGetItem( const std::string& key, std::string *outItem )
 /** removes an item from the LS */
 void localStorageRemoveItem( const std::string& key )
 {
-	assert( _initialized );
+    assert( _initialized );
     JniHelper::callStaticVoidMethod(className, "removeItem", key);
-
 }
 
 /** removes all items from the LS */
