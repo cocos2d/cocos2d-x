@@ -2075,15 +2075,14 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */)
 
     jsval ret = JSVAL_NULL;
 
-    int utf16_size = 0;
-    const jschar* strUTF16 = (jschar*)cc_utf8_to_utf16(v, (int)length, &utf16_size);
+    std::u16string strUTF16;
+    bool ok = StringUtils::UTF8ToUTF16(std::string(v, length), strUTF16);
 
-    if (strUTF16 && utf16_size > 0) {
-        JSString* str = JS_NewUCStringCopyN(cx, strUTF16, (size_t)utf16_size);
+    if (ok && !strUTF16.empty()) {
+        JSString* str = JS_NewUCStringCopyN(cx, reinterpret_cast<const jschar*>(strUTF16.data()), strUTF16.size());
         if (str) {
             ret = STRING_TO_JSVAL(str);
         }
-        delete[] strUTF16;
     }
 
     return ret;
