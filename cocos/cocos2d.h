@@ -302,17 +302,10 @@ THE SOFTWARE.
 #include "3d/CCTerrain.h"
 
 
-// Deprecated include
-#include "deprecated/CCArray.h"
-#include "deprecated/CCBool.h"
-#include "deprecated/CCDictionary.h"
-#include "deprecated/CCDouble.h"
-#include "deprecated/CCFloat.h"
-#include "deprecated/CCInteger.h"
-#include "deprecated/CCNotificationCenter.h"
-#include "deprecated/CCSet.h"
-#include "deprecated/CCString.h"
-// CCDeprecated.h must be included at the end
+// Deprecated
+// All deprecated features are include inside deprecated/CCDeprecated.h.
+// It is recommanded that you just inlcude what is needed.
+// eg. #include "deprecated/CCString.h" if you only need cocos2d::__String.
 #include "deprecated/CCDeprecated.h"
 
 

@@ -28,13 +28,8 @@
 #include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
 #include "scripting/lua-bindings/manual/CCLuaValue.h"
 
-#include "2d/CCLabelBMFont.h"
-#include "2d/CCLabelTTF.h"
-#include "deprecated/CCBool.h"
 #include "deprecated/CCDeprecated.h"
-#include "deprecated/CCDouble.h"
-#include "deprecated/CCFloat.h"
-#include "deprecated/CCInteger.h"
+
 
 USING_NS_CC;
 
@@ -500,7 +495,7 @@ static int tolua_Cocos2d_CCArray_create00(lua_State* tolua_S)
 #endif
     {
         {
-            __Array* tolua_ret = (__Array*)  Array::create();
+            __Array* tolua_ret = (__Array*)  __Array::create();
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
@@ -1530,7 +1525,7 @@ static int tolua_cocos2d_kmGLLoadMatrix00(lua_State* tolua_S)
     else
 #endif
     {
-        kmMat4 mat4;
+        Mat4 mat4;
         size_t len = lua_objlen(tolua_S, 1);
         for (int i = 0; i < len; i++)
         {
@@ -1871,7 +1866,7 @@ static int tolua_Cocos2d_CCString_create00(lua_State* tolua_S)
     {
         const char* pStr = ((const char*)  tolua_tostring(tolua_S,2,0));
         {
-            __String* tolua_ret = (__String*)  String::create(pStr);
+            __String* tolua_ret = (__String*)  __String::create(pStr);
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCString");
@@ -1905,7 +1900,7 @@ static int tolua_Cocos2d_CCString_createWithData00(lua_State* tolua_S)
         unsigned char* pData = ((unsigned char*)  tolua_tostring(tolua_S,2,0));
         unsigned long nLen = ((unsigned long)  tolua_tonumber(tolua_S,3,0));
         {
-            __String* tolua_ret = (__String*)  String::createWithData(pData,nLen);
+            __String* tolua_ret = (__String*)  __String::createWithData(pData,nLen);
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCString");
@@ -1937,7 +1932,7 @@ static int tolua_Cocos2d_CCString_createWithContentsOfFile00(lua_State* tolua_S)
     {
         const char* pszFileName = ((const char*)  tolua_tostring(tolua_S,2,0));
         {
-            __String* tolua_ret = (__String*)  String::createWithContentsOfFile(pszFileName);
+            __String* tolua_ret = (__String*)  __String::createWithContentsOfFile(pszFileName);
             int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
             toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCString");
