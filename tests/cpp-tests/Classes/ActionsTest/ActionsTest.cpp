@@ -1319,7 +1319,7 @@ void ActionFollowWithOffset::onEnter()
     this->addChild(drawNode);
     
     _grossini->setPosition(-200, s.height / 2);
-    auto move = MoveBy::create(2, Vec2(s.width * 3, 0));
+    auto move = MoveBy::create(2, Vec2(s.width * 3, 1));
     auto move_back = move->reverse();
     auto seq = Sequence::create(move, move_back, nullptr);
     auto rep = RepeatForever::create(seq);
@@ -1327,8 +1327,8 @@ void ActionFollowWithOffset::onEnter()
     _grossini->runAction(rep);
     
     //sample offset values set
-    float verticalOffset = _grossini->getPosition().y+500;
-    float horizontalOffset = _grossini->getPosition().x+100;
+    float verticalOffset = -900;
+    float horizontalOffset = 200;
     this->runAction(Follow::create(_grossini, Rect(0, 0, s.width * 2 - 100, s.height),horizontalOffset,verticalOffset));
 }
 
