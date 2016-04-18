@@ -29,7 +29,19 @@
 #include "jsfriendapi.h"
 #include "scripting/js-bindings/manual/js_bindings_core.h"
 #include "scripting/js-bindings/manual/js_bindings_config.h"
-#include "cocos2d.h"
+
+#include "3d/CCBundle3DData.h"
+#include "3d/CCOBB.h"
+#include "3d/CCRay.h"
+#include "base/CCEventMouse.h"
+#include "base/CCMap.h"
+#include "base/CCValue.h"
+#include "base/CCVector.h"
+#include "base/ccTypes.h"
+#include "deprecated/CCArray.h"
+#include "math/CCAffineTransform.h"
+#include "platform/CCPlatformMacros.h"
+#include "renderer/CCGLProgram.h"
 #include "scripting/js-bindings/manual/spidermonkey_specifics.h"
 #include "scripting/js-bindings/manual/js-BindingsExport.h"
 
@@ -47,14 +59,14 @@ public:
     JSStringWrapper(JSString* str, JSContext* cx = NULL);
     JSStringWrapper(jsval val, JSContext* cx = NULL);
     ~JSStringWrapper();
-    
+
     void set(jsval val, JSContext* cx);
     void set(JSString* str, JSContext* cx);
     const char* get();
-    
+
 private:
     const char* _buffer;
-    
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(JSStringWrapper);
 };
@@ -156,7 +168,7 @@ bool jsval_to_ccvector(JSContext* cx, JS::HandleValue v, cocos2d::Vector<T>* ret
     bool ok = v.isObject() && JS_ValueToObject( cx, v, &jsobj );
     JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
     JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, false, "Object must be an array");
-    
+
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsobj, &len);
 
@@ -217,7 +229,7 @@ bool jsval_to_ccmap_string_key(JSContext *cx, JS::HandleValue v, cocos2d::Map<st
     }
 
     JS::RootedObject it(cx, JS_NewPropertyIterator(cx, tmp));
-    
+
     while (true)
     {
         JS::RootedId idp(cx);
@@ -225,17 +237,17 @@ bool jsval_to_ccmap_string_key(JSContext *cx, JS::HandleValue v, cocos2d::Map<st
         if (! JS_NextProperty(cx, it, idp.address()) || ! JS_IdToValue(cx, idp, &key)) {
             return false; // error
         }
-        
+
         if (key.isUndefined()) {
             break; // end of iteration
         }
-        
+
         if (!key.isString()) {
             continue; // ignore integer properties
         }
-        
+
         JSStringWrapper keyWrapper(key.toString(), cx);
-        
+
         JS::RootedValue value(cx);
         JS_GetPropertyById(cx, tmp, idp, &value);
         if (value.isObject())
@@ -252,7 +264,7 @@ bool jsval_to_ccmap_string_key(JSContext *cx, JS::HandleValue v, cocos2d::Map<st
             CCASSERT(false, "not supported type");
         }
     }
-    
+
     return true;
 }
 
@@ -291,12 +303,12 @@ template <class T>
 jsval ccvector_to_jsval(JSContext* cx, const cocos2d::Vector<T>& v)
 {
     JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 0));
-    
+
     int i = 0;
     for (const auto& obj : v)
     {
         JS::RootedValue arrElement(cx);
-        
+
         //First, check whether object is associated with js object.
         js_type_class_t *typeClass = js_get_type_from_native(obj);
         JS::RootedObject jsobject(cx, jsb_ref_get_or_create_jsobject(cx, obj, typeClass, typeid(*obj).name()));
@@ -318,14 +330,14 @@ jsval ccmap_string_key_to_jsval(JSContext* cx, const cocos2d::Map<std::string, T
     JS::RootedObject proto(cx);
     JS::RootedObject parent(cx);
     JS::RootedObject jsRet(cx, JS_NewObject(cx, NULL, proto, parent));
-    
+
     for (auto iter = v.begin(); iter != v.end(); ++iter)
     {
         JS::RootedValue element(cx);
-        
+
         std::string key = iter->first;
         T obj = iter->second;
-        
+
         //First, check whether object is associated with js object.
         js_type_class_t *typeClass = js_get_type_from_native(obj);
         JS::RootedObject jsobject(cx, jsb_ref_get_or_create_jsobject(cx, obj, typeClass, typeid(*obj).name()));
@@ -333,7 +345,7 @@ jsval ccmap_string_key_to_jsval(JSContext* cx, const cocos2d::Map<std::string, T
         if (jsobject.get()) {
             element = OBJECT_TO_JSVAL(jsobject);
         }
-        
+
         if (!key.empty())
         {
             JS_SetProperty(cx, jsRet, key.c_str(), element);
@@ -359,4 +371,3 @@ jsval vector_vec2_to_jsval(JSContext *cx, const std::vector<cocos2d::Vec2>& v);
 jsval std_map_string_string_to_jsval(JSContext* cx, const std::map<std::string, std::string>& v);
 
 #endif /* __JS_MANUAL_CONVERSIONS_H__ */
-

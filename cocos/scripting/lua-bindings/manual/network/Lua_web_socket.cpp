@@ -27,11 +27,12 @@
 #include <map>
 #include <string>
 #include "scripting/lua-bindings/manual/tolua_fix.h"
-#include "cocos2d.h"
+
 #include "scripting/lua-bindings/manual/CCLuaStack.h"
 #include "scripting/lua-bindings/manual/CCLuaValue.h"
 #include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
+#include "deprecated/CCString.h"
 
 using namespace cocos2d;
 

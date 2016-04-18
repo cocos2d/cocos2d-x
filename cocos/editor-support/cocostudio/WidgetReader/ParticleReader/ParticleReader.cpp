@@ -24,6 +24,9 @@
 
 #include "editor-support/cocostudio/WidgetReader/ParticleReader/ParticleReader.h"
 
+#include "base/ccTypes.h"
+#include "2d/CCParticleSystemQuad.h"
+#include "platform/CCFileUtils.h"
 #include "editor-support/cocostudio/CSParseBinary_generated.h"
 #include "editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.h"
 

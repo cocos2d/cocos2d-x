@@ -28,7 +28,7 @@ THE SOFTWARE.
 #if CC_USE_NAVMESH
 #include "scripting/js-bindings/manual/ScriptingCore.h"
 #include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
-#include "cocos2d.h"
+
 #include "navmesh/CCNavMesh.h"
 #include "scripting/js-bindings/manual/js_manual_conversions.h"
 

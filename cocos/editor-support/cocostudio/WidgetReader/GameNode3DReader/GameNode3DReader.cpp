@@ -24,6 +24,8 @@
 
 #include "editor-support/cocostudio/WidgetReader/GameNode3DReader/GameNode3DReader.h"
 
+#include "platform/CCFileUtils.h"
+
 #include "editor-support/cocostudio/CCComExtensionData.h"
 #include "editor-support/cocostudio/CSParseBinary_generated.h"
 #include "editor-support/cocostudio/CSParse3DBinary_generated.h"
