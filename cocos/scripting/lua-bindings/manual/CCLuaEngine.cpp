@@ -439,13 +439,13 @@ int LuaEngine::handleCommonEvent(void* data)
         return 0;
    
     CommonScriptData* commonInfo = static_cast<CommonScriptData*>(data);
-    if (NULL == commonInfo->eventName || 0 == commonInfo->handler)
+    if ('\0' == commonInfo->eventName[0] || 0 == commonInfo->handler)
         return 0;
     
     _stack->pushString(commonInfo->eventName);
     if (NULL != commonInfo->eventSource)
     {
-        if (NULL  != commonInfo->eventSourceClassName && strlen(commonInfo->eventSourceClassName) > 0)
+        if ('\0' != commonInfo->eventSourceClassName[0])
         {
             _stack->pushObject(commonInfo->eventSource, commonInfo->eventSourceClassName);
         }
