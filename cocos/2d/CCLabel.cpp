@@ -46,7 +46,6 @@
 
 NS_CC_BEGIN
 
-static const int UNDERLINE_NODE_TAG = 0xaabbccdd;
 /**
  * LabelLetter used to update the quad in texture atlas without SpriteBatchNode.
  */
