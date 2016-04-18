@@ -49,7 +49,7 @@ struct WICConvert
 	WICPixelFormatGUID target;
 };
 
-class WICImageLoader
+class CC_DLL WICImageLoader
 {
 public:
 
