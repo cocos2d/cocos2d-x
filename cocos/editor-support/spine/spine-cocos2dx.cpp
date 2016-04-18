@@ -32,11 +32,6 @@
 #include <spine/spine-cocos2dx.h>
 #include <spine/extension.h>
 
-#include "base/CCDirector.h"
-#include "platform/CCFileUtils.h"
-#include "renderer/CCTexture2D.h"
-#include "renderer/CCTextureCache.h"
-
 USING_NS_CC;
 
 void _spAtlasPage_createTexture (spAtlasPage* self, const char* path) {
