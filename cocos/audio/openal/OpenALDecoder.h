@@ -9,7 +9,7 @@
 #else
 #include <AL/al.h>
 #endif
-#include "cocos2d.h"
+
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 #define DISABLE_VORBIS

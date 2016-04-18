@@ -4,6 +4,7 @@
 
 #include "2d/CCFontAtlasCache.h"
 #include "ui/UITextBMFont.h"
+#include "platform/CCFileUtils.h"
 #include "editor-support/cocostudio/CocoLoader.h"
 #include "editor-support/cocostudio/CSParseBinary_generated.h"
 #include "editor-support/cocostudio/LocalizationManager.h"

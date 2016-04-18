@@ -9,6 +9,9 @@
 #include "ui/UIListView.h"
 #include "editor-support/cocostudio/CSParseBinary_generated.h"
 #include "editor-support/cocostudio/FlatBuffersSerialize.h"
+#include "base/CCDirector.h"
+#include "platform/CCFileUtils.h"
+#include "2d/CCSpriteFrameCache.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"

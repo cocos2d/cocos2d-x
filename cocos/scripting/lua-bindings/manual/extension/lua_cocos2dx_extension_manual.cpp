@@ -23,7 +23,7 @@
  ****************************************************************************/
 #include "scripting/lua-bindings/manual/extension/lua_cocos2dx_extension_manual.h"
 #include "scripting/lua-bindings/auto/lua_cocos2dx_extension_auto.hpp"
-#include "cocos2d.h"
+
 #include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 #include "scripting/lua-bindings/manual/CCLuaValue.h"

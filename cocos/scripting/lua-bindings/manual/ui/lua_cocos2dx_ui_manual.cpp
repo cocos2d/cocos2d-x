@@ -29,13 +29,14 @@
 #include "scripting/lua-bindings/auto/lua_cocos2dx_experimental_webview_auto.hpp"
 #include "scripting/lua-bindings/manual/ui/lua_cocos2dx_experimental_webview_manual.hpp"
 #endif
-#include "cocos2d.h"
+
 #include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 #include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
 #include "scripting/lua-bindings/manual/CCLuaValue.h"
 #include "ui/CocosGUI.h"
 #include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "base/CCEventListenerFocus.h"
 
 using namespace ui;
 

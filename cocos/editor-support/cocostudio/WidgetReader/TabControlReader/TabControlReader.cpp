@@ -31,6 +31,8 @@
 #include "editor-support/cocostudio/FlatBuffersSerialize.h"
 #include "editor-support/cocostudio/ActionTimeline/CSLoader.h"
 #include "ui/UITabControl.h"
+#include "platform/CCFileUtils.h"
+#include "2d/CCSpriteFrameCache.h"
 
 
 USING_NS_CC;

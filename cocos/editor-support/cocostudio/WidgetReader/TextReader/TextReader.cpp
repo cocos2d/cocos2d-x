@@ -3,6 +3,8 @@
 #include "editor-support/cocostudio/WidgetReader/TextReader/TextReader.h"
 
 #include "ui/UIText.h"
+#include "platform/CCFileUtils.h"
+
 #include "editor-support/cocostudio/CocoLoader.h"
 #include "editor-support/cocostudio/CSParseBinary_generated.h"
 #include "editor-support/cocostudio/LocalizationManager.h"
