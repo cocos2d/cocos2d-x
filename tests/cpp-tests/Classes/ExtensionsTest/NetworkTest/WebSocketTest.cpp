@@ -187,11 +187,11 @@ void WebSocketTest::onClose(network::WebSocket* ws)
 
 void WebSocketTest::onError(network::WebSocket* ws, const network::WebSocket::ErrorCode& error)
 {
-    log("Error was fired, error code: %d", error);
+    log("Error was fired, error code: %d", static_cast<int>(error));
     if (ws == _wsiError)
     {
         char buf[100] = {0};
-        sprintf(buf, "an error was fired, code: %d", error);
+        sprintf(buf, "an error was fired, code: %d", static_cast<int>(error));
         _errorStatus->setString(buf);
     }
 }
@@ -308,6 +308,6 @@ void WebSocketCloseTest::onClose(network::WebSocket* ws)
 
 void WebSocketCloseTest::onError(network::WebSocket* ws, const network::WebSocket::ErrorCode& error)
 {
-    log("Error was fired, error code: %d", error);
+    log("Error was fired, error code: %d", static_cast<int>(error));
 }
 

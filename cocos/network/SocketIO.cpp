@@ -994,7 +994,7 @@ void SIOClientImpl::onClose(WebSocket* ws)
 void SIOClientImpl::onError(WebSocket* ws, const WebSocket::ErrorCode& error)
 {
     CC_UNUSED_PARAM(ws);
-    CCLOGERROR("Websocket error received: %d", error);
+    CCLOGERROR("Websocket error received: %d", static_cast<int>(error));
 }
 
 //begin SIOClient methods

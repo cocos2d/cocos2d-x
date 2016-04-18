@@ -892,7 +892,7 @@ void CameraCullingDemo::addSpriteCallback(Ref* sender)
     
     // update sprite number
     char szText[16];
-    sprintf(szText,"%ld sprits",_layer3D->getChildrenCount());
+    sprintf(szText,"%ld sprits", static_cast<long>(_layer3D->getChildrenCount()));
     _labelSprite3DCount->setString(szText);
 }
 
@@ -920,7 +920,7 @@ void CameraCullingDemo::delSpriteCallback(Ref* sender)
     
     // update sprite number
     char szText[16];
-    sprintf(szText,"%ld sprits",_layer3D->getChildrenCount());
+    sprintf(szText,"%ld sprits", static_cast<long>(_layer3D->getChildrenCount()));
     _labelSprite3DCount->setString(szText);
 }
 
