@@ -534,4 +534,16 @@ ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename)
     return ret;
 }
 
+bool FileUtilsApple::createDirectory(const std::string& path)
+{
+    CCASSERT(!path.empty(), "Invalid path");
+    
+    if (isDirectoryExist(path))
+        return true;
+    
+    NSError* error;
+    
+    return [s_fileManager createDirectoryAtPath:[NSString stringWithUTF8String:path.c_str()] withIntermediateDirectories:YES attributes:nil error:&error];
+}
+
 NS_CC_END

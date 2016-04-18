@@ -58,6 +58,8 @@ public:
 #if CC_FILEUTILS_APPLE_ENABLE_OBJC
     void setBundle(NSBundle* bundle);
 #endif
+    
+    virtual bool createDirectory(const std::string& path) override;
 private:
     virtual bool isFileExistInternal(const std::string& filePath) const override;
     virtual bool removeDirectory(const std::string& dirPath) override;
