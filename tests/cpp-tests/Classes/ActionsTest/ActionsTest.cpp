@@ -1329,7 +1329,7 @@ void ActionFollowWithOffset::onEnter()
     //sample offset values set
     float verticalOffset = -900;
     float horizontalOffset = 200;
-    this->runAction(Follow::createWithOffset(_grossini, Rect(0, 0, s.width * 2 - 100, s.height),horizontalOffset,verticalOffset));
+    this->runAction(Follow::createWithOffset(_grossini, horizontalOffset,verticalOffset,Rect(0, 0, s.width * 2 - 100, s.height)));
 }
 
 std::string ActionFollowWithOffset::subtitle() const
