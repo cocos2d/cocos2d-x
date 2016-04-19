@@ -1128,7 +1128,7 @@ void Label::enableBold()
     if (!_boldEnabled)
     {
         // bold is implemented with outline
-        enableShadow(Color4B::WHITE, Size(0.9,0), 0);
+        enableShadow(Color4B::WHITE, Size(0.9f, 0), 0);
         // add one to kerning
         setAdditionalKerning(_additionalKerning+1);
         _boldEnabled = true;

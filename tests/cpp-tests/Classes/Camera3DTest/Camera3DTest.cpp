@@ -1452,7 +1452,7 @@ void CameraFrameBufferTest::onEnter()
     fbo->attachRenderTarget(rt);
     fbo->attachDepthStencilTarget(rtDS);
     auto sprite = Sprite::createWithTexture(fbo->getRenderTarget()->getTexture());
-    sprite->setScale(0.3);
+    sprite->setScale(0.3f);
     sprite->runAction(RepeatForever::create(RotateBy::create(1, 90)));
     sprite->setPosition(size.width/2, size.height/2);
     addChild(sprite);
