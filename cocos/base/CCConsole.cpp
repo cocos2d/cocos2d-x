@@ -905,23 +905,23 @@ void Console::createCommandDebugMsg()
 {
     addCommand({"debugmsg", "Whether or not to forward the debug messages on the console. Args: [-h | help | on | off | ]",
         CC_CALLBACK_2(Console::commandDebugMsg, this)});
-    addSubCommand("debugmsg", {"on", "enable debug logging", CC_CALLBACK_2(Console::commandDebugMsg_OnOff, this)});
-    addSubCommand("debugmsg", {"off", "disable debug logging", CC_CALLBACK_2(Console::commandDebugMsg_OnOff, this)});
+    addSubCommand("debugmsg", {"on", "enable debug logging", CC_CALLBACK_2(Console::commandDebugMsgSubCommandOnOff, this)});
+    addSubCommand("debugmsg", {"off", "disable debug logging", CC_CALLBACK_2(Console::commandDebugMsgSubCommandOnOff, this)});
 }
 
 void Console::createCommandDirector()
 {
     addCommand({"director", "director commands, type -h or [director help] to list supported directives"});
     addSubCommand("director", {"pause",  "pause all scheduled timers, the draw rate will be 4 FPS to reduce CPU consumption",
-        CC_CALLBACK_2(Console::commandDirector_pause, this)});
+        CC_CALLBACK_2(Console::commandDirectorSubCommandPause, this)});
     addSubCommand("director", {"resume", "resume all scheduled timers",
-        CC_CALLBACK_2(Console::commandDirector_resume, this)});
+        CC_CALLBACK_2(Console::commandDirectorSubCommandResume, this)});
     addSubCommand("director", {"stop",   "Stops the animation. Nothing will be drawn.",
-        CC_CALLBACK_2(Console::commandDirector_stop, this)});
+        CC_CALLBACK_2(Console::commandDirectorSubCommandStop, this)});
     addSubCommand("director", {"start",  "Restart the animation again, Call this function only if [director stop] was called earlier",
-        CC_CALLBACK_2(Console::commandDirector_start, this)});
+        CC_CALLBACK_2(Console::commandDirectorSubCommandStart, this)});
     addSubCommand("director", {"end",    "exit this app.",
-        CC_CALLBACK_2(Console::commandDirector_end, this)});
+        CC_CALLBACK_2(Console::commandDirectorSubCommandEnd, this)});
 }
 
 void Console::createCommandExit()
@@ -934,14 +934,14 @@ void Console::createCommandFileUtils()
     addCommand({"fileutils", "Flush or print the FileUtils info. Args: [-h | help | flush | ]",
         CC_CALLBACK_2(Console::commandFileUtils, this)});
     addSubCommand("fileutils", {"flush", "Purges the file searching cache.",
-        CC_CALLBACK_2(Console::commandFileUtils_flush, this)});
+        CC_CALLBACK_2(Console::commandFileUtilsSubCommandFlush, this)});
 }
 
 void Console::createCommandFps()
 {
     addCommand({"fps", "Turn on / off the FPS. Args: [-h | help | on | off | ]", CC_CALLBACK_2(Console::commandFps, this)});
-    addSubCommand("fps", {"on", "Display the FPS on the bottom-left corner.", CC_CALLBACK_2(Console::commandFps_OnOff, this)});
-    addSubCommand("fps", {"off", "Hide the FPS on the bottom-left corner.", CC_CALLBACK_2(Console::commandFps_OnOff, this)});
+    addSubCommand("fps", {"on", "Display the FPS on the bottom-left corner.", CC_CALLBACK_2(Console::commandFpsSubCommandOnOff, this)});
+    addSubCommand("fps", {"off", "Hide the FPS on the bottom-left corner.", CC_CALLBACK_2(Console::commandFpsSubCommandOnOff, this)});
 }
 
 void Console::createCommandHelp()
@@ -954,16 +954,16 @@ void Console::createCommandProjection()
     addCommand({"projection", "Change or print the current projection. Args: [-h | help | 2d | 3d | ]",
         CC_CALLBACK_2(Console::commandProjection, this)});
     addSubCommand("projection", {"2d", "sets a 2D projection (orthogonal projection).",
-        CC_CALLBACK_2(Console::commandProjection_2d, this)});
+        CC_CALLBACK_2(Console::commandProjectionSubCommand2d, this)});
     addSubCommand("projection", {"3d", "sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.",
-        CC_CALLBACK_2(Console::commandProjection_3d, this)});
+        CC_CALLBACK_2(Console::commandProjectionSubCommand3d, this)});
 }
 
 void Console::createCommandResolution()
 {
     addCommand({"resolution", "Change or print the window resolution. Args: [-h | help | width height resolution_policy | ]",
         CC_CALLBACK_2(Console::commandResolution, this)});
-    addSubCommand("resolution", {"", "", CC_CALLBACK_2(Console::commandResolution_empty, this)});
+    addSubCommand("resolution", {"", "", CC_CALLBACK_2(Console::commandResolutionSubCommandEmpty, this)});
 }
 
 void Console::createCommandSceneGraph()
@@ -976,16 +976,16 @@ void Console::createCommandTexture()
     addCommand({"texture", "Flush or print the TextureCache info. Args: [-h | help | flush | ] ",
         CC_CALLBACK_2(Console::commandTextures, this)});
     addSubCommand("texture", {"flush", "Purges the dictionary of loaded textures.",
-        CC_CALLBACK_2(Console::commandTextures_flush, this)});
+        CC_CALLBACK_2(Console::commandTexturesSubCommandFlush, this)});
 }
 
 void Console::createCommandTouch()
 {
     addCommand({"touch", "simulate touch event via console, type -h or [touch help] to list supported directives"});
     addSubCommand("touch", {"tap", "touch tap x y: simulate touch tap at (x,y).",
-        CC_CALLBACK_2(Console::commandTouch_tap, this)});
+        CC_CALLBACK_2(Console::commandTouchSubCommandTap, this)});
     addSubCommand("touch", {"swipe", "touch swipe x1 y1 x2 y2: simulate touch swipe from (x1,y1) to (x2,y2).",
-        CC_CALLBACK_2(Console::commandTouch_swipe, this)});
+        CC_CALLBACK_2(Console::commandTouchSubCommandSwipe, this)});
 }
 
 void Console::createCommandUpload()
@@ -1026,12 +1026,12 @@ void Console::commandDebugMsg(int fd, const std::string& args)
     Console::Utility::mydprintf(fd, "Debug message is: %s\n", _sendDebugStrings ? "on" : "off");
 }
 
-void Console::commandDebugMsg_OnOff(int fd, const std::string& args)
+void Console::commandDebugMsgSubCommandOnOff(int fd, const std::string& args)
 {
     _sendDebugStrings = (args.compare("on") == 0);
 }
 
-void Console::commandDirector_pause(int fd, const std::string& args)
+void Console::commandDirectorSubCommandPause(int fd, const std::string& args)
 {
     auto director = Director::getInstance();
     Scheduler *sched = director->getScheduler();
@@ -1040,13 +1040,13 @@ void Console::commandDirector_pause(int fd, const std::string& args)
     });
 }
 
-void Console::commandDirector_resume(int fd, const std::string& args)
+void Console::commandDirectorSubCommandResume(int fd, const std::string& args)
 {
     auto director = Director::getInstance();
     director->resume();
 }
 
-void Console::commandDirector_stop(int fd, const std::string& args)
+void Console::commandDirectorSubCommandStop(int fd, const std::string& args)
 {
     auto director = Director::getInstance();
     Scheduler *sched = director->getScheduler();
@@ -1055,13 +1055,13 @@ void Console::commandDirector_stop(int fd, const std::string& args)
     });
 }
 
-void Console::commandDirector_start(int fd, const std::string& args)
+void Console::commandDirectorSubCommandStart(int fd, const std::string& args)
 {
     auto director = Director::getInstance();
     director->startAnimation();
 }
 
-void Console::commandDirector_end(int fd, const std::string& args)
+void Console::commandDirectorSubCommandEnd(int fd, const std::string& args)
 {
     auto director = Director::getInstance();
     director->end();
@@ -1084,7 +1084,7 @@ void Console::commandFileUtils(int fd, const std::string& args)
     sched->performFunctionInCocosThread( std::bind(&Console::printFileUtils, this, fd) );
 }
 
-void Console::commandFileUtils_flush(int fd, const std::string& args)
+void Console::commandFileUtilsSubCommandFlush(int fd, const std::string& args)
 {
     FileUtils::getInstance()->purgeCachedEntries();
 }
@@ -1094,7 +1094,7 @@ void Console::commandFps(int fd, const std::string& args)
     Console::Utility::mydprintf(fd, "FPS is: %s\n", Director::getInstance()->isDisplayStats() ? "on" : "off");
 }
 
-void Console::commandFps_OnOff(int fd, const std::string& args)
+void Console::commandFpsSubCommandOnOff(int fd, const std::string& args)
 {
     bool state = (args.compare("on") == 0);
     Director *dir = Director::getInstance();
@@ -1130,7 +1130,7 @@ void Console::commandProjection(int fd, const std::string& args)
     Console::Utility::mydprintf(fd, "Current projection: %s\n", buf);
 }
 
-void Console::commandProjection_2d(int fd, const std::string& args)
+void Console::commandProjectionSubCommand2d(int fd, const std::string& args)
 {
     auto director = Director::getInstance();
     Scheduler *sched = director->getScheduler();
@@ -1139,7 +1139,7 @@ void Console::commandProjection_2d(int fd, const std::string& args)
     } );
 }
 
-void Console::commandProjection_3d(int fd, const std::string& args)
+void Console::commandProjectionSubCommand3d(int fd, const std::string& args)
 {
     auto director = Director::getInstance();
     Scheduler *sched = director->getScheduler();
@@ -1161,7 +1161,7 @@ void Console::commandResolution(int fd, const std::string& args)
     } );
 }
 
-void Console::commandResolution_empty(int fd, const std::string& args)
+void Console::commandResolutionSubCommandEmpty(int fd, const std::string& args)
 {
     auto director = Director::getInstance();
     Size points = director->getWinSize();
@@ -1203,7 +1203,7 @@ void Console::commandTextures(int fd, const std::string& args)
     });
 }
 
-void Console::commandTextures_flush(int fd, const std::string& args)
+void Console::commandTexturesSubCommandFlush(int fd, const std::string& args)
 {
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( [](){
@@ -1211,7 +1211,7 @@ void Console::commandTextures_flush(int fd, const std::string& args)
     });
 }
 
-void Console::commandTouch_tap(int fd, const std::string& args)
+void Console::commandTouchSubCommandTap(int fd, const std::string& args)
 {
     auto argv = Console::Utility::split(args,' ');
     
@@ -1236,7 +1236,7 @@ void Console::commandTouch_tap(int fd, const std::string& args)
     }
 }
 
-void Console::commandTouch_swipe(int fd, const std::string& args)
+void Console::commandTouchSubCommandSwipe(int fd, const std::string& args)
 {
     auto argv = Console::Utility::split(args,' ');
     
