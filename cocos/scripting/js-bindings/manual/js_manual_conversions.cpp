@@ -2075,6 +2075,22 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */)
 
     jsval ret = JSVAL_NULL;
 
+#if defined(_MSC_VER) && (_MSC_VER <= 1800)
+    // NOTE: Visual Studio 2013 (Platform Toolset v120) is not fully C++11 compatible.
+    // It also doesn't provide support for char16_t and std::u16string.
+    // For more information, please see this article
+    // https://blogs.msdn.microsoft.com/vcblog/2014/11/17/c111417-features-in-vs-2015-preview/
+    int utf16_size = 0;
+    const jschar* strUTF16 = (jschar*)cc_utf8_to_utf16(v, (int)length, &utf16_size);
+
+    if (strUTF16 && utf16_size > 0) {
+        JSString* str = JS_NewUCStringCopyN(cx, strUTF16, (size_t)utf16_size);
+        if (str) {
+            ret = STRING_TO_JSVAL(str);
+        }
+        delete[] strUTF16;
+    }
+#else
     std::u16string strUTF16;
     bool ok = StringUtils::UTF8ToUTF16(std::string(v, length), strUTF16);
 
@@ -2084,6 +2100,7 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */)
             ret = STRING_TO_JSVAL(str);
         }
     }
+#endif
 
     return ret;
 }
