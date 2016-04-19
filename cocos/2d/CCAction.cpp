@@ -192,8 +192,25 @@ Follow::~Follow()
 
 Follow* Follow::create(Node *followedNode, const Rect& rect/* = Rect::ZERO*/)
 {
+    return createWithOffset(followedNode, 0.0, 0.0,rect);
+}
+
+Follow* Follow::createWithOffset(Node* followedNode,float xOffset,float yOffset,const Rect& rect/*= Rect::ZERO*/){
+    
+    
     Follow *follow = new (std::nothrow) Follow();
-    if (follow && follow->initWithTarget(followedNode, rect))
+    
+    bool valid;
+    
+    if(xOffset == 0.0 && yOffset == 0.0){
+        
+        valid = follow->initWithTarget(followedNode,rect);
+    
+    }else{
+        
+        valid = follow->initWithTargetAndOffset(followedNode, xOffset, yOffset,rect);
+    }
+    if (follow && valid)
     {
         follow->autorelease();
         return follow;
@@ -201,42 +218,13 @@ Follow* Follow::create(Node *followedNode, const Rect& rect/* = Rect::ZERO*/)
     
     delete follow;
     return nullptr;
-}
-
-Follow* Follow::createWithOffset(Node* followedNode,const Rect& rect/*= Rect::ZERO*/,float  xOffset/* =0.0*/,float yOffset/*= 0.0*/){
-    
-    if(xOffset != 0.0 || yOffset != 0.0){
-    
-    Follow *followWithOffset = new (std::nothrow) Follow();
-    
-    if (followWithOffset && followWithOffset->initWithTarget(followedNode, rect,xOffset,yOffset))
-    {
-        followWithOffset->autorelease();
-        return followWithOffset;
-    }
-    
-    delete followWithOffset;
-    
-    }else{
-        
-        Follow::create(followedNode,rect);
-    }
-    
-    return nullptr;
     
 }
 Follow* Follow::clone() const
 {
     // no copy constructor
+    return Follow::createWithOffset(_followedNode, _offsetX,_offsetY,_worldRect);
     
-    //if offsets are non-zero values,invoke the createWithOffset method
-    if(_offsetX != 0.0 || _offsetY != 0.0){
-    
-        return Follow::createWithOffset(_followedNode, _worldRect,_offsetX,_offsetY);
-    }
-    
-    //if offsets are zero,invoke the default create method
-    return Follow::create(_followedNode, _worldRect);
 }
 
 Follow* Follow::reverse() const
@@ -244,7 +232,7 @@ Follow* Follow::reverse() const
     return clone();
 }
 
-bool Follow::initWithTarget(Node *followedNode, const Rect& rect/* = Rect::ZERO*/,float xOffset/* = 0.0*/,float yOffset/* = 0.0*/)
+bool Follow::initWithTargetAndOffset(Node *followedNode, float xOffset,float yOffset,const Rect& rect)
 {
     CCASSERT(followedNode != nullptr, "FollowedNode can't be NULL");
     if(followedNode == nullptr)
@@ -296,6 +284,11 @@ bool Follow::initWithTarget(Node *followedNode, const Rect& rect/* = Rect::ZERO*
     return true;
 }
 
+bool Follow::initWithTarget(Node *followedNode, const Rect& rect /*= Rect::ZERO*/){
+    
+    return initWithTargetAndOffset(followedNode, 0.0, 0.0,rect);
+    
+}
 void Follow::step(float dt)
 {
     CC_UNUSED_PARAM(dt);
