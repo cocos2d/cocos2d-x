@@ -724,7 +724,6 @@ Image::Format Image::detectFormat(const unsigned char * data, ssize_t dataLen)
     }
     else
     {
-        CCLOG("cocos2d: can't detect image format");
         return Format::UNKNOWN;
     }
 }
