@@ -160,16 +160,12 @@ bool Manifest::versionEquals(const Manifest *b) const
 std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Manifest *b) const
 {
     std::unordered_map<std::string, AssetDiff> diff_map;
-    std::unordered_map<std::string, Asset> bAssets = b->getAssets();
-    
-    std::string key;
-    Asset valueA;
-    Asset valueB;
+    const std::unordered_map<std::string, Asset> &bAssets = b->getAssets();
     std::unordered_map<std::string, Asset>::const_iterator valueIt, it;
     for (it = _assets.begin(); it != _assets.end(); ++it)
     {
-        key = it->first;
-        valueA = it->second;
+        auto &key = it->first;
+        auto &valueA = it->second;
         
         // Deleted
         valueIt = bAssets.find(key);
@@ -182,7 +178,7 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
         }
         
         // Modified
-        valueB = valueIt->second;
+        auto &valueB = valueIt->second;
         if (valueA.md5 != valueB.md5) {
             AssetDiff diff;
             diff.asset = valueB;
@@ -193,8 +189,8 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
     
     for (it = bAssets.begin(); it != bAssets.end(); ++it)
     {
-        key = it->first;
-        valueB = it->second;
+        auto &key = it->first;
+        auto &valueB = it->second;
         
         // Added
         valueIt = _assets.find(key);
@@ -327,8 +323,7 @@ void Manifest::setAssetDownloadState(const std::string &key, const Manifest::Dow
                 {
                     for (rapidjson::Value::MemberIterator itr = assets.MemberBegin(); itr != assets.MemberEnd(); ++itr)
                     {
-                        std::string jkey = itr->name.GetString();
-                        if (jkey == key) {
+                        if (key.compare(itr->name.GetString()) == 0) {
                             rapidjson::Value &entry = itr->value;
                             if (entry.HasMember(KEY_DOWNLOAD_STATE) && entry[KEY_DOWNLOAD_STATE].IsInt())
                             {
