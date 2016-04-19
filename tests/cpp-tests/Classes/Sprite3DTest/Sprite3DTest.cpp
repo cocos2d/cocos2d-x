@@ -1490,7 +1490,7 @@ void Sprite3DWithOBBPerformanceTest::onTouchesMoved(const std::vector<Touch*>& t
 void Sprite3DWithOBBPerformanceTest::update(float dt)
 {
     char szText[16];
-    sprintf(szText,"%lu cubes",_obb.size());
+    sprintf(szText,"%lu cubes", static_cast<unsigned long>(_obb.size()));
     _labelCubeCount->setString(szText);
     
     if (_drawDebug)

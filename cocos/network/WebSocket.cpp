@@ -558,7 +558,7 @@ void WebSocket::onSubThreadLoop()
     }
     else
     {
-        LOGD("Ready state is closing or was closed, code=%d, quit websocket thread!\n", _readyState);
+        LOGD("Ready state is closing or was closed, code=%d, quit websocket thread!\n", static_cast<int>(_readyState));
         _readStateMutex.unlock();
         _wsHelper->quitWebSocketThread();
     }
