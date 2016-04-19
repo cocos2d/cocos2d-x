@@ -917,9 +917,6 @@
     <ClCompile Include="..\Classes\ZwoptexTest\ZwoptexTest.cpp">
       <Filter>Classes\ZwoptexTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.cpp">
-      <Filter>Classes\SpriteFrameCacheTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" />
     <ClCompile Include="..\..\..\cocos\platform\win8.1-universal\OpenGLES.cpp" />
     <ClCompile Include="..\..\..\cocos\platform\win8.1-universal\pch.cpp" />
@@ -960,6 +957,7 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.cpp">
       <Filter>Classes\UITest\CocoStudioGUITest\UITabContorlTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -1692,9 +1690,6 @@
     <ClInclude Include="..\Classes\ZwoptexTest\ZwoptexTest.h">
       <Filter>Classes\ZwoptexTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.h">
-      <Filter>Classes\SpriteFrameCacheTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\cocos\platform\win8.1-universal\Cocos2dRenderer.h" />
     <ClInclude Include="..\..\..\cocos\platform\win8.1-universal\OpenGLES.h" />
     <ClInclude Include="..\..\..\cocos\platform\win8.1-universal\pch.h" />
@@ -1735,6 +1730,7 @@
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.h">
       <Filter>Classes\UITest\CocoStudioGUITest\UITabContorlTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
