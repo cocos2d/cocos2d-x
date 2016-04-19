@@ -543,7 +543,14 @@ bool FileUtilsApple::createDirectory(const std::string& path)
     
     NSError* error;
     
-    return [s_fileManager createDirectoryAtPath:[NSString stringWithUTF8String:path.c_str()] withIntermediateDirectories:YES attributes:nil error:&error];
+    bool result = [s_fileManager createDirectoryAtPath:[NSString stringWithUTF8String:path.c_str()] withIntermediateDirectories:YES attributes:nil error:&error];
+    
+    if(!result && error != nil)
+    {
+        CCLOGERROR("Fail to create directory \"%s\": %s", path.c_str(), [error.localizedDescription UTF8String]);
+    }
+    
+    return result;
 }
 
 NS_CC_END
