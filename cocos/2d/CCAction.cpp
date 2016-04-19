@@ -190,10 +190,10 @@ Follow::~Follow()
     CC_SAFE_RELEASE(_followedNode);
 }
 
-Follow* Follow::create(Node *followedNode, const Rect& rect/* = Rect::ZERO*/,float xOffset/* = 0.0*/,float yOffset/* = 0.0 */)
+Follow* Follow::create(Node *followedNode, const Rect& rect/* = Rect::ZERO*/)
 {
     Follow *follow = new (std::nothrow) Follow();
-    if (follow && follow->initWithTarget(followedNode, rect,xOffset,yOffset))
+    if (follow && follow->initWithTarget(followedNode, rect))
     {
         follow->autorelease();
         return follow;
@@ -203,11 +203,40 @@ Follow* Follow::create(Node *followedNode, const Rect& rect/* = Rect::ZERO*/,flo
     return nullptr;
 }
 
+Follow* Follow::createWithOffset(Node* followedNode,const Rect& rect/*= Rect::ZERO*/,float  xOffset/* =0.0*/,float yOffset/*= 0.0*/){
+    
+    if(xOffset != 0.0 || yOffset != 0.0){
+    
+    Follow *followWithOffset = new (std::nothrow) Follow();
+    
+    if (followWithOffset && followWithOffset->initWithTarget(followedNode, rect,xOffset,yOffset))
+    {
+        followWithOffset->autorelease();
+        return followWithOffset;
+    }
+    
+    delete followWithOffset;
+    
+    }else{
+        
+        Follow::create(followedNode,rect);
+    }
+    
+    return nullptr;
+    
+}
 Follow* Follow::clone() const
 {
     // no copy constructor
-    return Follow::create(_followedNode, _worldRect,_offsetX,_offsetY);
-
+    
+    //if offsets are non-zero values,invoke the createWithOffset method
+    if(_offsetX != 0.0 || _offsetY != 0.0){
+    
+        return Follow::createWithOffset(_followedNode, _worldRect,_offsetX,_offsetY);
+    }
+    
+    //if offsets are zero,invoke the default create method
+    return Follow::create(_followedNode, _worldRect);
 }
 
 Follow* Follow::reverse() const

@@ -323,6 +323,16 @@ public:
      * @param followedNode  The node to be followed.
      * @param rect  The boundary. If \p rect is equal to Rect::ZERO, it'll work
      *              with no boundary.
+    */
+    
+    static Follow* create(Node *followedNode, const Rect& rect = Rect::ZERO);
+    
+    /**
+     * Creates the action with a set boundary or with no boundary and with offsets.
+     *
+     * @param followedNode  The node to be followed.
+     * @param rect  The boundary. If \p rect is equal to Rect::ZERO, it'll work
+     *              with no boundary.
      * @param xOffset The horizontal offset from the center of the screen from which the
      *               node  is to be followed.It can be positive,negative or zero.If
      *               set to zero the node will be horizontally centered followed.
@@ -331,7 +341,9 @@ public:
      *                 If set to zero the node will be vertically centered followed.
      *   If both xOffset and yOffset are set to zero,then the node will be horizontally and vertically centered followed.
      */
-    static Follow* create(Node *followedNode, const Rect& rect = Rect::ZERO,float xOffset=0.0,float yOffset=0.0);
+
+    static Follow* createWithOffset(Node* followedNode,const Rect& rect = Rect::ZERO,float xOffset = 0.0,float yOffset = 0.0);
+    
     /** Return boundarySet.
      *
      * @return Return boundarySet.
