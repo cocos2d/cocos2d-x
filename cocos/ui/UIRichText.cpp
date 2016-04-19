@@ -25,6 +25,7 @@
 #include "ui/UIRichText.h"
 
 #include <vector>
+#include <locale>
 
 #include "tinyxml2/tinyxml2.h"
 #include "platform/CCFileUtils.h"
@@ -705,7 +706,7 @@ static int getPrevWord(const std::string& text, int idx)
     // start from idx-1
     for (int i=idx-1; i>=0; --i)
     {
-        if (!std::isalnum(text[i]))
+		if (!std::isalnum(text[i], std::locale()))
             return i;
     }
     return -1;
@@ -715,7 +716,7 @@ static bool isWrappable(const std::string& text)
 {
     for (int i=0; i<text.length(); ++i)
     {
-        if (!std::isalnum(text[i]))
+        if (!std::isalnum(text[i], std::locale()))
             return true;
     }
     return false;
@@ -848,7 +849,7 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
 //        if (0 == leftLength) leftLength = 1;
         std::string leftWords = Helper::getSubStringOfUTF8String(text, 0, leftLength);
         int rightStart = leftLength;
-        if (std::isspace(text[rightStart]))
+        if (std::isspace(text[rightStart], std::locale()))
             rightStart++;
         std::string cutWords = Helper::getSubStringOfUTF8String(text, rightStart, text.length() - leftLength);
         if (leftLength > 0)
