@@ -435,7 +435,7 @@ std::vector<cocos2d::Vec2> AutoPolygon::rdp(std::vector<cocos2d::Vec2> v, const 
         if(cdist > dist)
         {
             dist = cdist;
-            index = i;
+            index = static_cast<int>(i);
         }
     }
     if (dist>optimization)
