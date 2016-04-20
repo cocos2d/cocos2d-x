@@ -1944,6 +1944,12 @@
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
+    <ClCompile Include="CCTouchAction.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCConsoleGestureCmd.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\TabControlReader</Filter>
     </ClCompile>
@@ -3799,6 +3805,12 @@
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h" />
     <ClInclude Include="..\ui\UIAbstractCheckButton.h">
       <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTouchAction.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCConsoleGestureCmd.h">
+      <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\CSLanguageDataBinary_generated.h">
       <Filter>cocostudio\json</Filter>

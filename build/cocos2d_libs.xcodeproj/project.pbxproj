@@ -1398,6 +1398,12 @@
 		46C02E0818E91123004B7456 /* xxhash.c in Sources */ = {isa = PBXBuildFile; fileRef = 46C02E0518E91123004B7456 /* xxhash.c */; };
 		46C02E0918E91123004B7456 /* xxhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 46C02E0618E91123004B7456 /* xxhash.h */; };
 		46C02E0A18E91123004B7456 /* xxhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 46C02E0618E91123004B7456 /* xxhash.h */; };
+		4D1CECB61C5B5F1C00779693 /* CCTouchAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D1CECB41C5B5F1C00779693 /* CCTouchAction.cpp */; };
+		4D1CECB71C5B5F1C00779693 /* CCTouchAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D1CECB41C5B5F1C00779693 /* CCTouchAction.cpp */; };
+		4D1CECB81C5B5F1C00779693 /* CCTouchAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D1CECB41C5B5F1C00779693 /* CCTouchAction.cpp */; };
+		4D1CECB91C5B5F1C00779693 /* CCTouchAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D1CECB51C5B5F1C00779693 /* CCTouchAction.h */; };
+		4D1CECBA1C5B5F1C00779693 /* CCTouchAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D1CECB51C5B5F1C00779693 /* CCTouchAction.h */; };
+		4D1CECBB1C5B5F1C00779693 /* CCTouchAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D1CECB51C5B5F1C00779693 /* CCTouchAction.h */; };
 		4D76BE3A1A4AAF0A00102962 /* CCActionTimelineNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D76BE381A4AAF0A00102962 /* CCActionTimelineNode.cpp */; };
 		4D76BE3B1A4AAF0A00102962 /* CCActionTimelineNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D76BE381A4AAF0A00102962 /* CCActionTimelineNode.cpp */; };
 		4D76BE3C1A4AAF0A00102962 /* CCActionTimelineNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D76BE391A4AAF0A00102962 /* CCActionTimelineNode.h */; };
@@ -3869,6 +3875,12 @@
 		A0E749F81BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */; };
 		A0E749F91BA8FD7F001A8332 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */; };
 		A0E749FA1BA8FD7F001A8332 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */; };
+		A55B89BF1C6851DF009B2B6F /* CCConsoleGestureCmd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A55B89BD1C6851DF009B2B6F /* CCConsoleGestureCmd.cpp */; };
+		A55B89C01C6851DF009B2B6F /* CCConsoleGestureCmd.h in Headers */ = {isa = PBXBuildFile; fileRef = A55B89BE1C6851DF009B2B6F /* CCConsoleGestureCmd.h */; };
+		A55B89C11C685207009B2B6F /* CCConsoleGestureCmd.h in Headers */ = {isa = PBXBuildFile; fileRef = A55B89BE1C6851DF009B2B6F /* CCConsoleGestureCmd.h */; };
+		A55B89C21C685210009B2B6F /* CCConsoleGestureCmd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A55B89BD1C6851DF009B2B6F /* CCConsoleGestureCmd.cpp */; };
+		A55B89C31C685212009B2B6F /* CCConsoleGestureCmd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A55B89BD1C6851DF009B2B6F /* CCConsoleGestureCmd.cpp */; };
+		A55B89C41C685212009B2B6F /* CCConsoleGestureCmd.h in Headers */ = {isa = PBXBuildFile; fileRef = A55B89BE1C6851DF009B2B6F /* CCConsoleGestureCmd.h */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
 		B21770401977ECE6009EE11B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703F1977ECE6009EE11B /* OpenGL.framework */; };
@@ -6384,6 +6396,8 @@
 		46A170781807CE7A005B8026 /* CCPhysicsWorld.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorld.h; sourceTree = "<group>"; };
 		46C02E0518E91123004B7456 /* xxhash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xxhash.c; sourceTree = "<group>"; };
 		46C02E0618E91123004B7456 /* xxhash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxhash.h; sourceTree = "<group>"; };
+		4D1CECB41C5B5F1C00779693 /* CCTouchAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouchAction.cpp; sourceTree = "<group>"; };
+		4D1CECB51C5B5F1C00779693 /* CCTouchAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchAction.h; sourceTree = "<group>"; };
 		4D76BE381A4AAF0A00102962 /* CCActionTimelineNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTimelineNode.cpp; sourceTree = "<group>"; };
 		4D76BE391A4AAF0A00102962 /* CCActionTimelineNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTimelineNode.h; sourceTree = "<group>"; };
 		5012168C1AC47380009A4BEA /* CCRenderState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCRenderState.cpp; sourceTree = "<group>"; };
@@ -6739,6 +6753,8 @@
 		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-common.cpp"; sourceTree = "<group>"; };
 		A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-common.h"; sourceTree = "<group>"; };
+		A55B89BD1C6851DF009B2B6F /* CCConsoleGestureCmd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCConsoleGestureCmd.cpp; path = ../base/CCConsoleGestureCmd.cpp; sourceTree = "<group>"; };
+		A55B89BE1C6851DF009B2B6F /* CCConsoleGestureCmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCConsoleGestureCmd.h; path = ../base/CCConsoleGestureCmd.h; sourceTree = "<group>"; };
 		B20564AA1A6E5744001C1B6E /* ccShader_PositionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
 		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B217703D1977ECC1009EE11B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -7952,6 +7968,8 @@
 				1A57005E180BC5A10088DEC7 /* CCActionTiledGrid.h */,
 				1A57005F180BC5A10088DEC7 /* CCActionTween.cpp */,
 				1A570060180BC5A10088DEC7 /* CCActionTween.h */,
+				4D1CECB41C5B5F1C00779693 /* CCTouchAction.cpp */,
+				4D1CECB51C5B5F1C00779693 /* CCTouchAction.h */,
 			);
 			name = actions;
 			sourceTree = "<group>";
@@ -8006,6 +8024,8 @@
 				50ABBDCB1925AB6E00A911A9 /* CCConfiguration.h */,
 				50ABBDCC1925AB6E00A911A9 /* CCConsole.cpp */,
 				50ABBDCD1925AB6E00A911A9 /* CCConsole.h */,
+				A55B89BD1C6851DF009B2B6F /* CCConsoleGestureCmd.cpp */,
+				A55B89BE1C6851DF009B2B6F /* CCConsoleGestureCmd.h */,
 				50ABBDCE1925AB6E00A911A9 /* CCData.cpp */,
 				50ABBDCF1925AB6E00A911A9 /* CCData.h */,
 				50ABBDD01925AB6E00A911A9 /* CCDataVisitor.cpp */,
@@ -11442,6 +11462,7 @@
 				15AE190819AAD35000C27E9E /* CCDatas.h in Headers */,
 				B665E3281AA80A6500DDB1C5 /* CCPUOnCollisionObserverTranslator.h in Headers */,
 				B29A7E1119EE1B7700872B35 /* EventData.h in Headers */,
+				4D1CECB91C5B5F1C00779693 /* CCTouchAction.h in Headers */,
 				1A5700A0180BC5D20088DEC7 /* CCNode.h in Headers */,
 				50ABC0671926664800A911A9 /* CCPlatformDefine-mac.h in Headers */,
 				B6CAB34D1AF9AA1A00B9B856 /* gim_contact.h in Headers */,
@@ -11864,6 +11885,7 @@
 				B665E24C1AA80A6500DDB1C5 /* CCPUColorAffector.h in Headers */,
 				29394CF019B01DBA00D2DE1A /* UIWebView.h in Headers */,
 				15AE186519AAD31D00C27E9E /* CDOpenALSupport.h in Headers */,
+				A55B89C01C6851DF009B2B6F /* CCConsoleGestureCmd.h in Headers */,
 				B6CAAFE81AF9A9E100B9B856 /* CCPhysics3DComponent.h in Headers */,
 				15AE1B5C19AADA9900C27E9E /* UITextAtlas.h in Headers */,
 				1A5702FC180BCE750088DEC7 /* CCTMXXMLParser.h in Headers */,
@@ -12254,6 +12276,7 @@
 				507B3D221C31BDD30067B53E /* CCLayerColorLoader.h in Headers */,
 				507B3D231C31BDD30067B53E /* CCApplication.h in Headers */,
 				507B3D241C31BDD30067B53E /* cl.h in Headers */,
+				4D1CECBB1C5B5F1C00779693 /* CCTouchAction.h in Headers */,
 				507B3D251C31BDD30067B53E /* CCAnimationCurve.h in Headers */,
 				507B3D261C31BDD30067B53E /* btCapsuleShape.h in Headers */,
 				507B3D271C31BDD30067B53E /* CCPUTextureAnimatorTranslator.h in Headers */,
@@ -12411,6 +12434,7 @@
 				507B3DBB1C31BDD30067B53E /* btDantzigLCP.h in Headers */,
 				507B3DBC1C31BDD30067B53E /* CCPUAlignAffectorTranslator.h in Headers */,
 				507B3DBD1C31BDD30067B53E /* CCActionEase.h in Headers */,
+				A55B89C41C685212009B2B6F /* CCConsoleGestureCmd.h in Headers */,
 				507B3DBE1C31BDD30067B53E /* CCActionGrid.h in Headers */,
 				507B3DBF1C31BDD30067B53E /* CCComController.h in Headers */,
 				507B3DC01C31BDD30067B53E /* NodeReaderProtocol.h in Headers */,
@@ -13295,6 +13319,7 @@
 				15AE18C219AAD33D00C27E9E /* CCLayerColorLoader.h in Headers */,
 				50643BDA19BFAF4400EF68ED /* CCApplication.h in Headers */,
 				B6CAB53A1AF9AA1A00B9B856 /* cl.h in Headers */,
+				4D1CECBA1C5B5F1C00779693 /* CCTouchAction.h in Headers */,
 				15AE181519AAD2F700C27E9E /* CCAnimationCurve.h in Headers */,
 				B6CAB28C1AF9AA1A00B9B856 /* btCapsuleShape.h in Headers */,
 				B665E4191AA80A6600DDB1C5 /* CCPUTextureAnimatorTranslator.h in Headers */,
@@ -13452,6 +13477,7 @@
 				B6CAB41C1AF9AA1A00B9B856 /* btDantzigLCP.h in Headers */,
 				B665E2051AA80A6500DDB1C5 /* CCPUAlignAffectorTranslator.h in Headers */,
 				1A570070180BC5A10088DEC7 /* CCActionEase.h in Headers */,
+				A55B89C11C685207009B2B6F /* CCConsoleGestureCmd.h in Headers */,
 				1A570074180BC5A10088DEC7 /* CCActionGrid.h in Headers */,
 				15AE194A19AAD35100C27E9E /* CCComController.h in Headers */,
 				382384161A259092002C4610 /* NodeReaderProtocol.h in Headers */,
@@ -14526,6 +14552,7 @@
 				B6CAAFE21AF9A9E100B9B856 /* CCPhysics3D.cpp in Sources */,
 				DA8C62A219E52C6400000516 /* ioapi_mem.cpp in Sources */,
 				B240C5E91B09DFB000137F50 /* CCFrameBuffer.cpp in Sources */,
+				4D1CECB61C5B5F1C00779693 /* CCTouchAction.cpp in Sources */,
 				B68779001A8CA82E00643ABF /* CCParticle3DRender.cpp in Sources */,
 				1A570069180BC5A10088DEC7 /* CCActionCatmullRom.cpp in Sources */,
 				B257B44E1989D5E800D9A687 /* CCPrimitive.cpp in Sources */,
@@ -15205,6 +15232,7 @@
 				B6CAAFFE1AF9A9E100B9B856 /* CCPhysicsSprite3D.cpp in Sources */,
 				B6CAB1ED1AF9AA1A00B9B856 /* btBroadphaseProxy.cpp in Sources */,
 				B29594B41926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */,
+				A55B89BF1C6851DF009B2B6F /* CCConsoleGestureCmd.cpp in Sources */,
 				15AE189619AAD33D00C27E9E /* CCMenuItemImageLoader.cpp in Sources */,
 				B665E23E1AA80A6500DDB1C5 /* CCPUCircleEmitterTranslator.cpp in Sources */,
 				15AE1BB719AADFEF00C27E9E /* WebSocket.cpp in Sources */,
@@ -15869,6 +15897,7 @@
 				507B3C2D1C31BDD30067B53E /* NodeReaderDefine.cpp in Sources */,
 				507B3C2E1C31BDD30067B53E /* CCSGUIReader.cpp in Sources */,
 				507B3C2F1C31BDD30067B53E /* CCCustomCommand.cpp in Sources */,
+				4D1CECB81C5B5F1C00779693 /* CCTouchAction.cpp in Sources */,
 				507B3C301C31BDD30067B53E /* btWheelInfo.cpp in Sources */,
 				507B3C311C31BDD30067B53E /* ScrollViewReader.cpp in Sources */,
 				507B3C321C31BDD30067B53E /* UITextView+CCUITextInput.mm in Sources */,
@@ -16000,6 +16029,7 @@
 				507B3CB01C31BDD30067B53E /* Node3DReader.cpp in Sources */,
 				507B3CB11C31BDD30067B53E /* CCAsyncTaskPool.cpp in Sources */,
 				507B3CB21C31BDD30067B53E /* CCConsole.cpp in Sources */,
+				A55B89C31C685212009B2B6F /* CCConsoleGestureCmd.cpp in Sources */,
 				507B3CB31C31BDD30067B53E /* Bone.c in Sources */,
 				507B3CB41C31BDD30067B53E /* Win32ThreadSupport.cpp in Sources */,
 				507B3CB51C31BDD30067B53E /* CCPUVortexAffector.cpp in Sources */,
@@ -16715,6 +16745,7 @@
 				382384101A259092002C4610 /* NodeReaderDefine.cpp in Sources */,
 				15AE195B19AAD35100C27E9E /* CCSGUIReader.cpp in Sources */,
 				50ABBD881925AB4100A911A9 /* CCCustomCommand.cpp in Sources */,
+				4D1CECB71C5B5F1C00779693 /* CCTouchAction.cpp in Sources */,
 				B6CAB4301AF9AA1A00B9B856 /* btWheelInfo.cpp in Sources */,
 				15AE19B019AAD39700C27E9E /* ScrollViewReader.cpp in Sources */,
 				2980F02C1BA9A5550059E678 /* UITextView+CCUITextInput.mm in Sources */,
@@ -16846,6 +16877,7 @@
 				182C5CB41A95964C00C30D34 /* Node3DReader.cpp in Sources */,
 				B63990CD1A490AFE00B07923 /* CCAsyncTaskPool.cpp in Sources */,
 				50ABBE361925AB6F00A911A9 /* CCConsole.cpp in Sources */,
+				A55B89C21C685210009B2B6F /* CCConsoleGestureCmd.cpp in Sources */,
 				B29A7E1419EE1B7700872B35 /* Bone.c in Sources */,
 				B6CAB4F01AF9AA1A00B9B856 /* Win32ThreadSupport.cpp in Sources */,
 				B665E4371AA80A6600DDB1C5 /* CCPUVortexAffector.cpp in Sources */,

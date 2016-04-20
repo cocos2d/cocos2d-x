@@ -89,6 +89,7 @@ cocos2d.cpp \
 2d/CCTransitionProgress.cpp \
 2d/CCTweenFunction.cpp \
 2d/CCAutoPolygon.cpp \
+2d/CCTouchAction.cpp \
 3d/CCFrustum.cpp \
 3d/CCPlane.cpp \
 platform/CCFileUtils.cpp \
@@ -112,6 +113,7 @@ base/CCAsyncTaskPool.cpp \
 base/CCAutoreleasePool.cpp \
 base/CCConfiguration.cpp \
 base/CCConsole.cpp \
+base/CCConsoleGestureCmd.cpp \
 base/CCController-android.cpp \
 base/CCController.cpp \
 base/CCData.cpp \
