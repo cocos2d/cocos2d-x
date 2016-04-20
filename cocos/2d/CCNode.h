@@ -38,6 +38,10 @@
 #include "2d/CCComponentContainer.h"
 #include "2d/CCComponent.h"
 
+#if CC_USE_PHYSICS
+#include "physics/CCPhysicsBody.h"
+#endif
+
 NS_CC_BEGIN
 
 class GridBase;
@@ -1940,9 +1944,9 @@ protected:
     ComponentContainer *_componentContainer;        ///< Dictionary of components
     
     // opacity controls
-    GLubyte         _displayedOpacity;
+    GLubyte     _displayedOpacity;
     GLubyte     _realOpacity;
-    Color3B         _displayedColor;
+    Color3B     _displayedColor;
     Color3B     _realColor;
     bool        _cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
@@ -1961,8 +1965,13 @@ protected:
 #if CC_USE_PHYSICS
     PhysicsBody* _physicsBody;
 public:
-    void setPhysicsBody(Component* physicsBody) 
-    { 
+    void setPhysicsBody(PhysicsBody* physicsBody)
+    {
+        if (_physicsBody != nullptr)
+        {
+            removeComponent(_physicsBody);
+        }
+
         addComponent(physicsBody);
     }
     PhysicsBody* getPhysicsBody() const { return _physicsBody; }
