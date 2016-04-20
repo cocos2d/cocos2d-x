@@ -2553,12 +2553,12 @@ Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
         static bool reverseDir = false;
         node->setPosition3D(Vec3(radius * cos(angle), 0.0f, radius * sin(angle)));
         if (reverseDir){
-            angle -= 0.01;
+            angle -= 0.01f;
             if (angle < 0.0)
                 reverseDir = false;
         }
         else{
-            angle += 0.01;
+            angle += 0.01f;
             if (3.14159 < angle)
                 reverseDir = true;
         }

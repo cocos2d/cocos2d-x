@@ -571,7 +571,7 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
 
         auto button4 = (ui::Button*)button3->clone();
         button4->setTitleText("Scroll to Page4");
-        button4->setNormalizedPosition(Vec2(0.85,0.5));
+        button4->setNormalizedPosition(Vec2(0.85f, 0.5f));
         button4->addClickEventListener([=](Ref* sender){
             pageView->scrollToItem(3);
             CCLOG("current page index = %zd", pageView->getCurrentPageIndex());
@@ -672,7 +672,7 @@ bool UIPageViewJumpToPageTest::init()
 
         //add buttons to jump to specific page
         auto button1 = ui::Button::create();
-        button1->setNormalizedPosition(Vec2(0.1, 0.75));
+        button1->setNormalizedPosition(Vec2(0.1f, 0.75f));
         button1->setTitleText("Jump to Page1");
         CCLOG("button1 content Size = %f, %f", button1->getContentSize().width,
               button1->getContentSize().height);
@@ -683,7 +683,7 @@ bool UIPageViewJumpToPageTest::init()
 
         auto button2 = static_cast<ui::Button*>(button1->clone());
         button2->setTitleText("Jump to Page2");
-        button2->setNormalizedPosition(Vec2(0.1, 0.65));
+        button2->setNormalizedPosition(Vec2(0.1f, 0.65f));
         CCLOG("button2 content Size = %f, %f", button2->getContentSize().width,
               button2->getContentSize().height);
         button2->addClickEventListener([=](Ref*){
@@ -693,7 +693,7 @@ bool UIPageViewJumpToPageTest::init()
 
         auto button3 = static_cast<ui::Button*>(button2->clone());
         button3->setTitleText("Jump to Page3");
-        button3->setNormalizedPosition(Vec2(0.9, 0.75));
+        button3->setNormalizedPosition(Vec2(0.9f, 0.75f));
         button3->addClickEventListener([=](Ref*){
             pageView->setCurrentPageIndex(2);
         });
@@ -701,7 +701,7 @@ bool UIPageViewJumpToPageTest::init()
 
         auto button4 = static_cast<ui::Button*>(button2->clone());
         button4->setTitleText("Jump to Page4");
-        button4->setNormalizedPosition(Vec2(0.9, 0.65));
+        button4->setNormalizedPosition(Vec2(0.9f, 0.65f));
         button4->addClickEventListener([=](Ref*){
             pageView->setCurrentPageIndex(3);
         });

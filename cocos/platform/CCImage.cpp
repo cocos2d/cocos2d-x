@@ -802,7 +802,7 @@ namespace
 #endif // CC_USE_JPEG
 }
 
-#ifdef CC_USE_WIC
+#if CC_USE_WIC
 bool Image::decodeWithWIC(const unsigned char *data, ssize_t dataLen)
 {
     bool bRet = false;

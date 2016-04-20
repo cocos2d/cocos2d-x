@@ -39,7 +39,7 @@ bool UIPageViewTest_Editor::init()
 
         auto button1 = Button::create();
         button1->setTitleText("scrollToPage 3");
-        button1->setNormalizedPosition(Vec2(0.8,0.2));
+        button1->setNormalizedPosition(Vec2(0.8f, 0.2f));
         button1->addClickEventListener([=](Ref*){
             pageView->scrollToPage(2);
         });

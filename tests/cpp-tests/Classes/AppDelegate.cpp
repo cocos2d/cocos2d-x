@@ -70,7 +70,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
 
     director->setDisplayStats(true);
-    director->setAnimationInterval(1.0 / 60);
+    director->setAnimationInterval(1.0f / 60);
 
     auto screenSize = glview->getFrameSize();
     auto designSize = Size(480, 320);
