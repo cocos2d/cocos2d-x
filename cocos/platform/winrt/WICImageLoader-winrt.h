@@ -31,7 +31,7 @@ obtained from https://directxtk.codeplex.com
 #include "base/ccConfig.h"
 
 
-#if defined(CC_USE_WIC)
+#if CC_USE_WIC
 
 #include <memory>
 #include <string>
