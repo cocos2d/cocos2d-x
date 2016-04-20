@@ -3647,6 +3647,24 @@ rect
 },
 
 /**
+ * @method initWithTargetAndOffset
+ * @param {cc.Node} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {rect_object} arg3
+ * @return {bool}
+ */
+initWithTargetAndOffset : function (
+node, 
+float, 
+float, 
+rect 
+)
+{
+    return false;
+},
+
+/**
  * @method isBoundarySet
  * @return {bool}
  */
@@ -3664,6 +3682,24 @@ isBoundarySet : function (
  */
 create : function (
 node, 
+rect 
+)
+{
+    return cc.Follow;
+},
+
+/**
+ * @method createWithOffset
+ * @param {cc.Node} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {rect_object} arg3
+ * @return {cc.Follow}
+ */
+createWithOffset : function (
+node, 
+float, 
+float, 
 rect 
 )
 {

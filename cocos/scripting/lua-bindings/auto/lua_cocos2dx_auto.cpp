@@ -17914,6 +17914,85 @@ int lua_cocos2dx_Follow_initWithTarget(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Follow_initWithTargetAndOffset(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Follow* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Follow",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Follow*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Follow_initWithTargetAndOffset'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 3) 
+    {
+        cocos2d::Node* arg0;
+        double arg1;
+        double arg2;
+
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Follow:initWithTargetAndOffset");
+
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.Follow:initWithTargetAndOffset");
+
+        ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.Follow:initWithTargetAndOffset");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Follow_initWithTargetAndOffset'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initWithTargetAndOffset(arg0, arg1, arg2);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    if (argc == 4) 
+    {
+        cocos2d::Node* arg0;
+        double arg1;
+        double arg2;
+        cocos2d::Rect arg3;
+
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Follow:initWithTargetAndOffset");
+
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.Follow:initWithTargetAndOffset");
+
+        ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.Follow:initWithTargetAndOffset");
+
+        ok &= luaval_to_rect(tolua_S, 5, &arg3, "cc.Follow:initWithTargetAndOffset");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Follow_initWithTargetAndOffset'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initWithTargetAndOffset(arg0, arg1, arg2, arg3);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Follow:initWithTargetAndOffset",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Follow_initWithTargetAndOffset'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Follow_isBoundarySet(lua_State* tolua_S)
 {
     int argc = 0;
@@ -18012,6 +18091,65 @@ int lua_cocos2dx_Follow_create(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_cocos2dx_Follow_createWithOffset(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.Follow",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 3)
+    {
+        cocos2d::Node* arg0;
+        double arg1;
+        double arg2;
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Follow:createWithOffset");
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.Follow:createWithOffset");
+        ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.Follow:createWithOffset");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Follow_createWithOffset'", nullptr);
+            return 0;
+        }
+        cocos2d::Follow* ret = cocos2d::Follow::createWithOffset(arg0, arg1, arg2);
+        object_to_luaval<cocos2d::Follow>(tolua_S, "cc.Follow",(cocos2d::Follow*)ret);
+        return 1;
+    }
+    if (argc == 4)
+    {
+        cocos2d::Node* arg0;
+        double arg1;
+        double arg2;
+        cocos2d::Rect arg3;
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Follow:createWithOffset");
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.Follow:createWithOffset");
+        ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.Follow:createWithOffset");
+        ok &= luaval_to_rect(tolua_S, 5, &arg3, "cc.Follow:createWithOffset");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Follow_createWithOffset'", nullptr);
+            return 0;
+        }
+        cocos2d::Follow* ret = cocos2d::Follow::createWithOffset(arg0, arg1, arg2, arg3);
+        object_to_luaval<cocos2d::Follow>(tolua_S, "cc.Follow",(cocos2d::Follow*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.Follow:createWithOffset",argc, 3);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Follow_createWithOffset'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_cocos2dx_Follow_constructor(lua_State* tolua_S)
 {
     int argc = 0;
@@ -18064,8 +18202,10 @@ int lua_register_cocos2dx_Follow(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_Follow_constructor);
         tolua_function(tolua_S,"setBoundarySet",lua_cocos2dx_Follow_setBoundarySet);
         tolua_function(tolua_S,"initWithTarget",lua_cocos2dx_Follow_initWithTarget);
+        tolua_function(tolua_S,"initWithTargetAndOffset",lua_cocos2dx_Follow_initWithTargetAndOffset);
         tolua_function(tolua_S,"isBoundarySet",lua_cocos2dx_Follow_isBoundarySet);
         tolua_function(tolua_S,"create", lua_cocos2dx_Follow_create);
+        tolua_function(tolua_S,"createWithOffset", lua_cocos2dx_Follow_createWithOffset);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Follow).name();
     g_luaType[typeName] = "cc.Follow";
