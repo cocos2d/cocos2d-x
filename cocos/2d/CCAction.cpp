@@ -202,14 +202,8 @@ Follow* Follow::createWithOffset(Node* followedNode,float xOffset,float yOffset,
     
     bool valid;
     
-    if(xOffset == 0.0 && yOffset == 0.0){
-        
-        valid = follow->initWithTarget(followedNode,rect);
-    
-    }else{
-        
-        valid = follow->initWithTargetAndOffset(followedNode, xOffset, yOffset,rect);
-    }
+    valid = follow->initWithTargetAndOffset(followedNode, xOffset, yOffset,rect);
+
     if (follow && valid)
     {
         follow->autorelease();
