@@ -1479,12 +1479,13 @@
 		781B06E41BD37FBE0072FB24 /* Batch.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781B06E21BD37FBE0072FB24 /* Batch.mm */; };
 		781B06E61BD37FC80072FB24 /* Heyzap.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781B06E51BD37FC80072FB24 /* Heyzap.mm */; };
 		781B06E71BD37FC80072FB24 /* Heyzap.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781B06E51BD37FC80072FB24 /* Heyzap.mm */; };
+		78357A0F1CA6D9B100F86325 /* RotateGlobalBy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78357A0D1CA6D9B100F86325 /* RotateGlobalBy.cpp */; };
+		78357A101CA6D9B100F86325 /* RotateGlobalBy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78357A0D1CA6D9B100F86325 /* RotateGlobalBy.cpp */; };
+		78357A111CA6D9B100F86325 /* RotateGlobalBy.h in Headers */ = {isa = PBXBuildFile; fileRef = 78357A0E1CA6D9B100F86325 /* RotateGlobalBy.h */; };
+		78357A121CA6D9B100F86325 /* RotateGlobalBy.h in Headers */ = {isa = PBXBuildFile; fileRef = 78357A0E1CA6D9B100F86325 /* RotateGlobalBy.h */; };
 		78382F761C2469640001B3F1 /* Vote.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78382F741C2469640001B3F1 /* Vote.cpp */; };
-		78382F771C2469640001B3F1 /* Vote.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78382F741C2469640001B3F1 /* Vote.cpp */; };
-		78382F781C2469640001B3F1 /* Vote.h in Headers */ = {isa = PBXBuildFile; fileRef = 78382F751C2469640001B3F1 /* Vote.h */; };
 		78382F791C2469640001B3F1 /* Vote.h in Headers */ = {isa = PBXBuildFile; fileRef = 78382F751C2469640001B3F1 /* Vote.h */; };
 		78382F7C1C24698E0001B3F1 /* Vote.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78382F7B1C24698E0001B3F1 /* Vote.mm */; };
-		78382F7D1C24698E0001B3F1 /* Vote.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78382F7B1C24698E0001B3F1 /* Vote.mm */; };
 		7843AB9B1C2230B80011F47C /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A57052D180BD3280088DEC7 /* libfreetype.a */; };
 		7843ACDF1C224C980011F47C /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A570346180BD0850088DEC7 /* libglfw3.a */; };
 		7845D0461C0C40BE00D7DFB7 /* Services.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7845D0451C0C40BE00D7DFB7 /* Services.cpp */; };
@@ -1497,11 +1498,8 @@
 		785C58841BD53CE200B71D89 /* BatchEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 785C58811BD53CE200B71D89 /* BatchEntity.cpp */; };
 		785C58851BD53CE200B71D89 /* BatchEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 785C58821BD53CE200B71D89 /* BatchEntity.h */; };
 		785C58861BD53CE200B71D89 /* BatchEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 785C58821BD53CE200B71D89 /* BatchEntity.h */; };
-		7892F17E1C22F1AC00C53E64 /* Vote.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7892F17C1C22F1AC00C53E64 /* Vote.cpp */; };
 		7892F1811C22F1C800C53E64 /* Vote.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7892F1801C22F1C800C53E64 /* Vote.mm */; };
 		7892F1821C22F59000C53E64 /* Vote.h in Headers */ = {isa = PBXBuildFile; fileRef = 7892F17D1C22F1AC00C53E64 /* Vote.h */; };
-		7892F1831C22F59100C53E64 /* Vote.h in Headers */ = {isa = PBXBuildFile; fileRef = 7892F17D1C22F1AC00C53E64 /* Vote.h */; };
-		7892F1841C22F59600C53E64 /* Vote.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7892F1801C22F1C800C53E64 /* Vote.mm */; };
 		7892F1851C22F59900C53E64 /* Vote.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7892F17C1C22F1AC00C53E64 /* Vote.cpp */; };
 		78938EA41BCC7E94009CB065 /* TranslateTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 78938EA31BCC7E94009CB065 /* TranslateTypes.h */; };
 		78938EA51BCC7E94009CB065 /* TranslateTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 78938EA31BCC7E94009CB065 /* TranslateTypes.h */; };
@@ -4214,6 +4212,8 @@
 		781B06DD1BD37FA80072FB24 /* Heyzap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Heyzap.h; sourceTree = "<group>"; };
 		781B06E21BD37FBE0072FB24 /* Batch.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Batch.mm; path = ../../apple/batch/Batch.mm; sourceTree = "<group>"; };
 		781B06E51BD37FC80072FB24 /* Heyzap.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Heyzap.mm; path = ../../apple/heyzap/Heyzap.mm; sourceTree = "<group>"; };
+		78357A0D1CA6D9B100F86325 /* RotateGlobalBy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RotateGlobalBy.cpp; sourceTree = "<group>"; };
+		78357A0E1CA6D9B100F86325 /* RotateGlobalBy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotateGlobalBy.h; sourceTree = "<group>"; };
 		78382F741C2469640001B3F1 /* Vote.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vote.cpp; sourceTree = "<group>"; };
 		78382F751C2469640001B3F1 /* Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vote.h; sourceTree = "<group>"; };
 		78382F7B1C24698E0001B3F1 /* Vote.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Vote.mm; path = ../../apple/vote/Vote.mm; sourceTree = "<group>"; };
@@ -7255,6 +7255,8 @@
 		78AEAC0B1BD12EE300FA8783 /* actions */ = {
 			isa = PBXGroup;
 			children = (
+				78357A0D1CA6D9B100F86325 /* RotateGlobalBy.cpp */,
+				78357A0E1CA6D9B100F86325 /* RotateGlobalBy.h */,
 				78AEAC291BD22EE300FA8783 /* Shake.cpp */,
 				78AEAC281BD22EE300FA8783 /* Shake.h */,
 			);
@@ -8651,6 +8653,7 @@
 				1A5701A3180BCB590088DEC7 /* CCFontAtlas.h in Headers */,
 				1A01C68618F57BE800EFE3A6 /* CCArray.h in Headers */,
 				1A5701A7180BCB590088DEC7 /* CCFontAtlasCache.h in Headers */,
+				78357A111CA6D9B100F86325 /* RotateGlobalBy.h in Headers */,
 				B6CAB3D31AF9AA1A00B9B856 /* btSliderConstraint.h in Headers */,
 				15AE1A7D19AAD40300C27E9E /* b2MotorJoint.h in Headers */,
 				78E5CC0C1BCA6F5E00CB036E /* Text.h in Headers */,
@@ -9151,7 +9154,6 @@
 				B665E3341AA80A6500DDB1C5 /* CCPUOnEmissionObserver.h in Headers */,
 				15AE1A7519AAD40300C27E9E /* b2EdgeAndCircleContact.h in Headers */,
 				A05DCF9E1B90584E00EE040B /* CCDownloader-curl.h in Headers */,
-				78382F781C2469640001B3F1 /* Vote.h in Headers */,
 				B665E2881AA80A6500DDB1C5 /* CCPUDoStopSystemEventHandlerTranslator.h in Headers */,
 				B665E2441AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffector.h in Headers */,
 				B665E2281AA80A6500DDB1C5 /* CCPUBillboardChain.h in Headers */,
@@ -10043,7 +10045,6 @@
 				3E6176691960F89B00DE83F5 /* CCController.h in Headers */,
 				B6CAB43E1AF9AA1A00B9B856 /* btGpuDefines.h in Headers */,
 				3E6176781960F89B00DE83F5 /* CCGameController.h in Headers */,
-				7892F1831C22F59100C53E64 /* Vote.h in Headers */,
 				B6CAB4C81AF9AA1A00B9B856 /* boxBoxDistance.h in Headers */,
 				50ABBE641925AB6F00A911A9 /* CCEventListenerAcceleration.h in Headers */,
 				15AE180B19AAD2F700C27E9E /* CCAABB.h in Headers */,
@@ -10078,6 +10079,7 @@
 				15AE1C0619AAE01E00C27E9E /* CCTableViewCell.h in Headers */,
 				B665E4251AA80A6600DDB1C5 /* CCPUTranslateManager.h in Headers */,
 				5053850F1B02819E00793096 /* CCVertexAttribBinding.h in Headers */,
+				78357A121CA6D9B100F86325 /* RotateGlobalBy.h in Headers */,
 				B6CAB4121AF9AA1A00B9B856 /* btMultiBodyLinkCollider.h in Headers */,
 				50ABBEBE1925AB6F00A911A9 /* ccUtils.h in Headers */,
 				15AE183719AAD2F700C27E9E /* CCObjLoader.h in Headers */,
@@ -10282,7 +10284,7 @@
 		1551A336158F2AB200E66CFE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "";
 			};
 			buildConfigurationList = 1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "Framework" */;
@@ -10790,6 +10792,7 @@
 				15AE1BA319AADFDF00C27E9E /* UILayoutManager.cpp in Sources */,
 				B230ED7119B417AE00364AA8 /* CCTrianglesCommand.cpp in Sources */,
 				B6CAB3991AF9AA1A00B9B856 /* btVoronoiSimplexSolver.cpp in Sources */,
+				78357A0F1CA6D9B100F86325 /* RotateGlobalBy.cpp in Sources */,
 				1A5702F2180BCE750088DEC7 /* CCTMXObjectGroup.cpp in Sources */,
 				B6CAB3011AF9AA1A00B9B856 /* btTriangleIndexVertexMaterialArray.cpp in Sources */,
 				15AE1A5B19AAD40300C27E9E /* b2Timer.cpp in Sources */,
@@ -10863,7 +10866,6 @@
 				50ABBEB51925AB6F00A911A9 /* CCUserDefault-android.cpp in Sources */,
 				5E9F61261A3FFE3D0038DE01 /* CCFrustum.cpp in Sources */,
 				B6CAB3FB1AF9AA1A00B9B856 /* btMultiBodyConstraint.cpp in Sources */,
-				7892F1841C22F59600C53E64 /* Vote.mm in Sources */,
 				B665E4221AA80A6600DDB1C5 /* CCPUTranslateManager.cpp in Sources */,
 				B665E38E1AA80A6500DDB1C5 /* CCPUPlaneCollider.cpp in Sources */,
 				B665E2021AA80A6500DDB1C5 /* CCPUAlignAffectorTranslator.cpp in Sources */,
@@ -11064,7 +11066,6 @@
 				B665E2561AA80A6500DDB1C5 /* CCPUDoAffectorEventHandlerTranslator.cpp in Sources */,
 				B6CAB2131AF9AA1A00B9B856 /* btActivatingCollisionAlgorithm.cpp in Sources */,
 				B6CAB2ED1AF9AA1A00B9B856 /* btStridingMeshInterface.cpp in Sources */,
-				7892F17E1C22F1AC00C53E64 /* Vote.cpp in Sources */,
 				B6CAB24D1AF9AA1A00B9B856 /* btDefaultCollisionConfiguration.cpp in Sources */,
 				B6CAB3A91AF9AA1A00B9B856 /* btContactConstraint.cpp in Sources */,
 				7894C0691BC9659A00363FC9 /* Sound.cpp in Sources */,
@@ -11239,6 +11240,7 @@
 				501216951AC47393009A4BEA /* CCPass.cpp in Sources */,
 				50ABBE6E1925AB6F00A911A9 /* CCEventListenerKeyboard.cpp in Sources */,
 				B665E2CB1AA80A6500DDB1C5 /* CCPUGravityAffectorTranslator.cpp in Sources */,
+				78357A101CA6D9B100F86325 /* RotateGlobalBy.cpp in Sources */,
 				50CB247C19D9C5A100687767 /* AudioEngine-inl.mm in Sources */,
 				15AE1AC819AAD40300C27E9E /* b2Joint.cpp in Sources */,
 				50ABBE461925AB6F00A911A9 /* CCEvent.cpp in Sources */,
@@ -11612,7 +11614,6 @@
 				382383FB1A258FA7002C4610 /* idl_gen_go.cpp in Sources */,
 				B665E2EF1AA80A6500DDB1C5 /* CCPULineEmitter.cpp in Sources */,
 				B6CAB2EA1AF9AA1A00B9B856 /* btStaticPlaneShape.cpp in Sources */,
-				78382F771C2469640001B3F1 /* Vote.cpp in Sources */,
 				50ABBDBA1925AB4100A911A9 /* CCTextureAtlas.cpp in Sources */,
 				1A5702FB180BCE750088DEC7 /* CCTMXXMLParser.cpp in Sources */,
 				B665E40B1AA80A6600DDB1C5 /* CCPUSphereSurfaceEmitterTranslator.cpp in Sources */,
@@ -11814,7 +11815,6 @@
 				2980F0231BA9A5550059E678 /* CCUIEditBoxIOS.mm in Sources */,
 				B665E4331AA80A6600DDB1C5 /* CCPUVertexEmitter.cpp in Sources */,
 				B677B0DA1B18492D006762CB /* CCNavMeshUtils.cpp in Sources */,
-				78382F7D1C24698E0001B3F1 /* Vote.mm in Sources */,
 				B665E3C71AA80A6600DDB1C5 /* CCPUScaleVelocityAffector.cpp in Sources */,
 				B6CAB26E1AF9AA1A00B9B856 /* btSphereSphereCollisionAlgorithm.cpp in Sources */,
 				50ABBED01925AB6F00A911A9 /* TGAlib.cpp in Sources */,

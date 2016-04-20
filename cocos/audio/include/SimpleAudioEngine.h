@@ -176,6 +176,13 @@ public:
      */
     virtual void setEffectsVolume(float volume);
 
+    /**
+     * Set the volume of sound effect.
+     *
+     * @param volume must be within the range of 0.0 as the minimum and 1.0 as the maximum.
+     */
+    virtual void setEffectVolume(int id, float volume);
+
     // 
     // for sound effects
 

@@ -72,6 +72,7 @@ Scene::Scene()
     #if CC_USE_DEFAULT_CAMERA
     //create default camera
     _defaultCamera = Camera::create();
+    _defaultCamera->setDepth(2);
     addChild(_defaultCamera);
     #endif
 

@@ -387,7 +387,7 @@ THE SOFTWARE.
  * Is using default camera for a 2D game.
  */
 #ifndef CC_USE_DEFAULT_CAMERA
-#define CC_USE_DEFAULT_CAMERA 0
+#define CC_USE_DEFAULT_CAMERA 1
 #endif
 
 #endif // __CCCONFIG_H__

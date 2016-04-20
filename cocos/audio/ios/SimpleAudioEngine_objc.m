@@ -224,7 +224,12 @@ static CDBufferManager *bufferManager = nil;
 -(void) setEffectsVolume:(float) volume
 {
     am.soundEngine.masterGain = volume;
-}    
+}   
+
+-(void) setEffectVolume:(int) soundId volume:(float) volume
+{
+  alSourcef(soundId, AL_GAIN, volume);
+}
 
 -(CDSoundSource *) soundSourceForFile:(NSString*) filePath {
     int soundId = [bufferManager bufferForFile:filePath create:YES];

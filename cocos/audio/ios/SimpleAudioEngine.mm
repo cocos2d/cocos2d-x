@@ -94,6 +94,11 @@ static void static_setEffectsVolume(float volume)
     [SimpleAudioEngine sharedEngine].effectsVolume = volume;
 }
 
+static void static_setEffectVolume(int id, float volume)
+{
+    [[SimpleAudioEngine sharedEngine] setEffectVolume: id volume: volume];
+}
+
 static unsigned int static_playEffect(const char* pszFilePath, bool bLoop, Float32 pszPitch, Float32 pszPan, Float32 pszGain)
 {
     return [[SimpleAudioEngine sharedEngine] playEffect:[NSString stringWithUTF8String: pszFilePath] loop:bLoop pitch:pszPitch pan: pszPan gain:pszGain];
@@ -236,6 +241,11 @@ float SimpleAudioEngine::getEffectsVolume()
 void SimpleAudioEngine::setEffectsVolume(float volume)
 {
     static_setEffectsVolume(volume);
+}
+
+void SimpleAudioEngine::setEffectVolume(int id, float volume)
+{
+    static_setEffectVolume(id, volume);
 }
 
 unsigned int SimpleAudioEngine::playEffect(const char *pszFilePath, bool bLoop,
