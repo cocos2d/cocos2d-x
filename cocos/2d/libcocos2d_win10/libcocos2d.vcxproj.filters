@@ -1990,6 +1990,9 @@
     <ClCompile Include="..\..\ui\UITabControl.cpp">
       <Filter>ui\UIWidgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.cpp">
+      <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cocos2d.h" />
@@ -3886,6 +3889,9 @@
     </ClInclude>
     <ClInclude Include="..\..\ui\UITabControl.h">
       <Filter>ui\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.h">
+      <Filter>ui\UIWidgets\EditBox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
