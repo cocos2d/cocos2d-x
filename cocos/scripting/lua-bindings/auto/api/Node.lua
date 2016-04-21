@@ -28,7 +28,7 @@
 -- 
 -- @function [parent=#Node] setPhysicsBody 
 -- @param self
--- @param #cc.Component physicsBody
+-- @param #cc.PhysicsBody physicsBody
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
