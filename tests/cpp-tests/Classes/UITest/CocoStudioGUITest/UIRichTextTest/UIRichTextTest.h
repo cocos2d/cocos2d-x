@@ -124,6 +124,19 @@ protected:
     cocos2d::ui::RichText* _richText;
 };
 
+class UIRichTextXMLUrlImg : public UIScene
+{
+public:
+    CREATE_FUNC(UIRichTextXMLUrlImg);
+    
+    bool init() override;
+    void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    
+protected:
+    cocos2d::ui::RichText* _richText;
+};
+
 class UIRichTextXMLFace : public UIScene
 {
 public:
@@ -161,6 +174,56 @@ protected:
     cocos2d::ui::RichText* _richText;
 };
 
+class UIRichTextXMLOutline : public UIScene
+{
+public:
+    CREATE_FUNC(UIRichTextXMLOutline);
+    
+    bool init() override;
+    void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    
+protected:
+    cocos2d::ui::RichText* _richText;
+};
 
+class UIRichTextXMLShadow : public UIScene
+{
+public:
+    CREATE_FUNC(UIRichTextXMLShadow);
+    
+    bool init() override;
+    void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    
+protected:
+    cocos2d::ui::RichText* _richText;
+};
+
+class UIRichTextXMLGlow : public UIScene
+{
+public:
+    CREATE_FUNC(UIRichTextXMLGlow);
+    
+    bool init() override;
+    void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    
+protected:
+    cocos2d::ui::RichText* _richText;
+};
+
+class UIRichTextXMLExtend : public UIScene
+{
+public:
+    CREATE_FUNC(UIRichTextXMLExtend);
+    
+    bool init() override;
+    void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    
+protected:
+    cocos2d::ui::RichText* _richText;
+};
 
 #endif /* defined(__TestCpp__UIRichTextTest__) */
