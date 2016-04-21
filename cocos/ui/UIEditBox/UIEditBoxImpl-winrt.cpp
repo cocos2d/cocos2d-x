@@ -27,7 +27,7 @@
 
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-#include "UIEditBoxImpl-winrt.h"
+#include "ui/UIEditBox/UIEditBoxImpl-winrt.h"
 #include "platform/winrt/CCWinRTUtils.h"
 #include "platform/winrt/CCGLViewImpl-winrt.h"
 #include "2d/CCFontFreeType.h"
