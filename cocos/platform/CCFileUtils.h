@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <type_traits>
 
 #include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
@@ -40,6 +41,76 @@ NS_CC_BEGIN
  * @addtogroup platform
  * @{
  */
+
+
+class ResizableBuffer {
+public:
+    virtual ~ResizableBuffer() {}
+    virtual void resize(size_t size) = 0;
+    virtual void* buffer() const = 0;
+};
+
+template<typename T>
+class ResizableBufferAdapter { };
+
+
+template<typename C, typename T, typename A>
+class ResizableBufferAdapter< std::basic_string<C, T, A> > : public ResizableBuffer {
+    typedef std::basic_string<C, T, A> BufferType;
+    BufferType* buffer_;
+public:
+    ResizableBufferAdapter(BufferType* buffer) : buffer_(buffer) {}
+    virtual void resize(size_t size) override {
+        buffer_->resize((size + sizeof(C)) / sizeof(C));
+    }
+    virtual void* buffer() const override {
+        return &buffer_->front();
+    }
+};
+
+template<typename T, typename A>
+class ResizableBufferAdapter< std::vector<T, A> > : public ResizableBuffer {
+    typedef std::vector<T, A> BufferType;
+    BufferType* buffer_;
+public:
+    ResizableBufferAdapter(BufferType* buffer) : buffer_(buffer) {}
+    virtual void resize(size_t size) override {
+        buffer_->resize((size + sizeof(T)) / sizeof(T));
+    }
+    virtual void* buffer() const override {
+        return &buffer_->front();
+    }
+};
+
+
+template<>
+class ResizableBufferAdapter<Data> : public ResizableBuffer {
+    typedef Data BufferType;
+    BufferType* buffer_;
+public:
+    ResizableBufferAdapter(BufferType* buffer) : buffer_(buffer) {}
+    virtual void resize(size_t size) override {
+        if (buffer_->getSize() < size) {
+            auto old = buffer_->getBytes();
+            void* buffer = realloc(old, size);
+            if (buffer)
+                buffer_->fastSet((unsigned char*)buffer, size);
+        }
+    }
+    virtual void* buffer() const override {
+        return buffer_->getBytes();
+    }
+};
+
+enum class FileError
+{
+    OK = 0,
+    NotExists = 0x01, /** File not exists */
+    OpenFailed = 0x02, /** Open file failed. */
+    ReadFaild = 0x03, /** Read failed */
+    NotInitialized = 0x04, /** FileUtils is not initializes */
+};
+
 
 /** Helper class to handle file operations. */
 class CC_DLL FileUtils
@@ -98,6 +169,49 @@ public:
      *  @return A data object.
      */
     virtual Data getDataFromFile(const std::string& filename);
+
+    /**
+     *  Gets whole file contents as string from a file.
+     *
+     *  Unlike getStringFromFile, these methods does not truncate the string when '\0' is found.
+     *  That is thie returned string of getContents may have '\0' in it.
+     *
+     *  The template version of can accept cocos2d::Data, std::basic_string and std::vector.
+     *  For other type of buffer, please write an adapter for it, and use the non-template version.
+     *
+     *  <pre>
+     *  {@code
+     *  std::string sbuf;
+     *  FileUtils::getInstance()->getContents("path/to/file", &sbuf);
+     *
+     *  std::vector<int> vbuf;
+     *  FileUtils::getInstance()->getContents("path/to/file", &vbuf);
+     *
+     *  Data dbuf;
+     *  FileUtils::getInstance()->getContents("path/to/file", &dbuf);
+     *  }
+     * </pre
+     *
+     *  @param[in]  filename The resource file name which contains the path.
+     *  @param[out] buffer The buffer where the file contents are store to.
+     *  @return Returns:
+     *      - FileError::OK when there is no error, the buffer is filled with the contents of file.
+     *      - FileError::NotExists when file not exists, the buffer will not changed.
+     *      - FileError::OpenFailed when cannot open file, the buffer will not changed.
+     *      - FileError::ReadFaild when read end up before read whole, the buffer will fill with already read bytes.
+     *      - FileError::NotInitialized when FileUtils is not initializes, the buffer will not changed.
+     */
+    template <
+        typename T,
+        typename std::enable_if<
+            std::is_base_of< ResizableBuffer, ResizableBufferAdapter<T> >::value
+        >::type* = nullptr
+    >
+    FileError getContents(const std::string& filename, T* buffer) {
+        ResizableBufferAdapter<T> buf(buffer);
+        return getContents(filename, &buf);
+    }
+    virtual FileError getContents(const std::string& filename, ResizableBuffer* buffer);
 
     /**
      *  Gets resource file data

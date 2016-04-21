@@ -336,6 +336,53 @@ Data FileUtilsAndroid::getData(const std::string& filename, bool forString)
     return ret;
 }
 
+
+FileError FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer)
+{
+    static const std::string apkprefix("assets/");
+    if (filename.empty())
+        return FileError::NotExists;
+
+    string fullPath = fullPathForFilename(filename);
+
+    if (fullPath[0] == '/')
+        return FileUtils::getContents(fullPath, buffer);
+
+    string relativePath = string();
+    size_t position = fullPath.find(apkprefix);
+    if (0 == position) {
+        // "assets/" is at the beginning of the path and we don't want it
+        relativePath += fullPath.substr(apkprefix.size());
+    } else {
+        relativePath = fullPath;
+    }
+
+    if (nullptr == assetmanager) {
+        LOGD("... FileUtilsAndroid::assetmanager is nullptr");
+        return FileError::NotInitialized;
+    }
+
+    AAsset* asset = AAssetManager_open(assetmanager, relativePath.data(), AASSET_MODE_UNKNOWN);
+    if (nullptr == asset) {
+        LOGD("asset is nullptr");
+        return FileError::OpenFailed;
+    }
+
+    auto size = AAsset_getLength(asset);
+    buffer->resize(size);
+
+    int readsize = AAsset_read(asset, buffer->buffer(), size);
+    AAsset_close(asset);
+
+    if (readsize < size) {
+        if (readsize >= 0)
+            buffer->resize(readsize);
+        return FileError::ReadFaild;
+    }
+
+    return FileError::OK;
+}
+
 std::string FileUtilsAndroid::getStringFromFile(const std::string& filename)
 {
     Data data = getData(filename, true);
