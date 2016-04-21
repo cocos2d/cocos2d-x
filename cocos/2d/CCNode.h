@@ -720,7 +720,7 @@ public:
      * @param ignore    true if anchor point will be (0,0) when you position this node.
      */
     virtual void setIgnoreAnchorPointForPosition(bool ignore);
-    CC_DEPRECATED_ATTRIBUTE virtual void ignoreAnchorPointForPosition(bool ignore);
+    CC_DEPRECATED_ATTRIBUTE virtual void ignoreAnchorPointForPosition(bool ignore) { return setIgnoreAnchorPointForPosition(ignore); }
     
     /**
      * Gets whether the anchor point will be (0,0) when you position this node.
