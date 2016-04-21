@@ -463,6 +463,18 @@ void GLView::handleTouchesCancel(int num, intptr_t ids[], float xs[], float ys[]
     handleTouchesOfEndOrCancel(EventTouch::EventCode::CANCELLED, num, ids, xs, ys);
 }
 
+void GLView::clearAllTouches()
+{
+    const std::vector<Touch*> &touches = getAllTouches();
+    for (auto touch : touches)
+    {
+        intptr_t id = touch->getID();
+        float x = touch->getLocationInView().x;
+        float y = touch->getLocationInView().y;
+        handleTouchesOfEndOrCancel(EventTouch::EventCode::CANCELLED, 1, &id, &x, &y);
+    }
+}
+
 const Rect& GLView::getViewPortRect() const
 {
     return _viewPortRect;

@@ -349,6 +349,8 @@ public:
      * @param ys The points of y.
      */
     virtual void handleTouchesCancel(int num, intptr_t ids[], float xs[], float ys[]);
+    
+    void clearAllTouches();
 
     /**
      * Get the opengl view port rectangle.
