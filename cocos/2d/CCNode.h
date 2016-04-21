@@ -119,6 +119,7 @@ public:
 
         FLAGS_DIRTY_MASK = (FLAGS_TRANSFORM_DIRTY | FLAGS_CONTENT_SIZE_DIRTY),
     };
+    
     /// @{
     /// @name Constructor, Destructor and Initializers
 
@@ -159,7 +160,6 @@ public:
      * @param localZOrder The local Z order value.
      */
     virtual void setLocalZOrder(int localZOrder);
-
     CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(int localZOrder) { setLocalZOrder(localZOrder); }
     
     /* 
@@ -200,6 +200,7 @@ public:
      * @param globalZOrder The global Z order value.
      */
     virtual void setGlobalZOrder(float globalZOrder);
+    
     /**
      * Returns the Node's Global Z Order.
      *
@@ -219,6 +220,7 @@ public:
      * @warning The physics body doesn't support this.
      */
     virtual void setScaleX(float scaleX);
+    
     /**
      * Returns the scale factor on X axis of this node
      *
@@ -227,7 +229,6 @@ public:
      * @return The scale factor on X axis.
      */
     virtual float getScaleX() const;
-
 
     /**
      * Sets the scale (y) of the node.
@@ -239,6 +240,7 @@ public:
      * @warning The physics body doesn't support this.
      */
     virtual void setScaleY(float scaleY);
+    
     /**
      * Returns the scale factor on Y axis of this node
      *
@@ -258,6 +260,7 @@ public:
      * @warning The physics body doesn't support this.
      */
     virtual void setScaleZ(float scaleZ);
+    
     /**
      * Returns the scale factor on Z axis of this node
      *
@@ -266,7 +269,6 @@ public:
      * @return The scale factor on Z axis.
      */
     virtual float getScaleZ() const;
-
 
     /**
      * Sets the scale (x,y,z) of the node.
@@ -278,6 +280,7 @@ public:
      * @warning The physics body doesn't support this.
      */
     virtual void setScale(float scale);
+    
     /**
      * Gets the scale factor of the node,  when X and Y have the same scale factor.
      *
@@ -363,6 +366,7 @@ public:
      * @param y     Y coordinate for position.
      */
     virtual void setPosition(float x, float y);
+    
     /**
      * Gets position in a more efficient way, returns two number instead of a Vec2 object.
      *
@@ -373,6 +377,7 @@ public:
      * @param y To receive y coordinate for position.
      */
     virtual void getPosition(float* x, float* y) const;
+    
     /**
      * Gets/Sets x or y coordinate individually for position.
      * These methods are used in Lua and Javascript Bindings
@@ -382,16 +387,19 @@ public:
      * @param x The x coordinate of the node.
      */
     virtual void  setPositionX(float x);
+    
     /** Gets the x coordinate of the node in its parent's coordinate system.
      *
      * @return The x coordinate of the node.
      */
     virtual float getPositionX(void) const;
+    
     /** Sets the y coordinate of the node in its parent's coordinate system.
      *
      * @param y The y coordinate of the node.
      */
     virtual void  setPositionY(float y);
+    
     /** Gets the y coordinate of the node in its parent's coordinate system.
      *
      * @return The y coordinate of the node.
@@ -405,6 +413,7 @@ public:
      * @js NA
      */
     virtual void setPosition3D(const Vec3& position);
+    
     /**
      * Returns the position (X,Y,Z) in its parent's coordinate system.
      *
@@ -455,6 +464,7 @@ public:
      * @warning The physics body doesn't support this.
      */
     virtual void setSkewX(float skewX);
+    
     /**
      * Returns the X skew angle of the node in degrees.
      *
@@ -463,7 +473,6 @@ public:
      * @return The X skew angle of the node in degrees.
      */
     virtual float getSkewX() const;
-
 
     /**
      * Changes the Y skew angle of the node in degrees.
@@ -480,6 +489,7 @@ public:
      * @warning The physics body doesn't support this.
      */
     virtual void setSkewY(float skewY);
+    
     /**
      * Returns the Y skew angle of the node in degrees.
      *
@@ -488,7 +498,6 @@ public:
      * @return The Y skew angle of the node in degrees.
      */
     virtual float getSkewY() const;
-
 
     /**
      * Sets the anchor point in percent.
@@ -503,6 +512,7 @@ public:
      * @param anchorPoint   The anchor point of node.
      */
     virtual void setAnchorPoint(const Vec2& anchorPoint);
+    
     /**
      * Returns the anchor point in percent.
      *
@@ -511,6 +521,7 @@ public:
      * @return The anchor point of node.
      */
     virtual const Vec2& getAnchorPoint() const;
+    
     /**
      * Returns the anchorPoint in absolute pixels.
      *
@@ -521,7 +532,6 @@ public:
      */
     virtual const Vec2& getAnchorPointInPoints() const;
 
-
     /**
      * Sets the untransformed size of the node.
      *
@@ -531,6 +541,7 @@ public:
      * @param contentSize   The untransformed size of the node.
      */
     virtual void setContentSize(const Size& contentSize);
+    
     /**
      * Returns the untransformed size of the node.
      *
@@ -540,7 +551,6 @@ public:
      */
     virtual const Size& getContentSize() const;
 
-
     /**
      * Sets whether the node is visible.
      *
@@ -549,6 +559,7 @@ public:
      * @param visible   true if the node is visible, false if the node is hidden.
      */
     virtual void setVisible(bool visible);
+    
     /**
      * Determines if the node is visible.
      *
@@ -557,7 +568,6 @@ public:
      * @return true if the node is visible, false if the node is hidden.
      */
     virtual bool isVisible() const;
-
 
     /**
      * Sets the rotation (angle) of the node in degrees.
@@ -568,6 +578,7 @@ public:
      * @param rotation     The rotation of the node in degrees.
      */
     virtual void setRotation(float rotation);
+    
     /**
      * Returns the rotation of the node in degrees.
      *
@@ -587,6 +598,7 @@ public:
      * @js NA
      */
     virtual void setRotation3D(const Vec3& rotation);
+    
     /**
      * Returns the rotation (X,Y,Z) in degrees.
      * 
@@ -679,6 +691,7 @@ public:
      * @param orderOfArrival   The arrival order.
      */
     void setOrderOfArrival(int orderOfArrival);
+    
     /**
      * Returns the arrival order, indicates which children is added previously.
      *
@@ -688,11 +701,11 @@ public:
      */
     int getOrderOfArrival() const;
 
-
     /** @deprecated No longer needed
     * @lua NA
     */
     CC_DEPRECATED_ATTRIBUTE void setGLServerState(int serverState) { /* ignore */ };
+    
     /** @deprecated No longer needed
     * @lua NA
     */
@@ -705,9 +718,10 @@ public:
      * The default value is false, while in Layer and Scene are true.
      *
      * @param ignore    true if anchor point will be (0,0) when you position this node.
-     * @todo This method should be renamed as setIgnoreAnchorPointForPosition(bool) or something with "set".
      */
-    virtual void ignoreAnchorPointForPosition(bool ignore);
+    virtual void setIgnoreAnchorPointForPosition(bool ignore);
+    CC_DEPRECATED_ATTRIBUTE virtual void ignoreAnchorPointForPosition(bool ignore);
+    
     /**
      * Gets whether the anchor point will be (0,0) when you position this node.
      *
@@ -731,6 +745,7 @@ public:
      * @param child A child node.
      */
     virtual void addChild(Node * child);
+    
     /**
      * Adds a child to the container with a local z-order.
      *
@@ -740,6 +755,7 @@ public:
      * @param localZOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`.
      */
     virtual void addChild(Node * child, int localZOrder);
+    
     /**
      * Adds a child to the container with z order and tag.
      *
@@ -752,6 +768,7 @@ public:
      * Please use `addChild(Node* child, int localZOrder, const std::string &name)` instead.
      */
      virtual void addChild(Node* child, int localZOrder, int tag);
+    
     /**
      * Adds a child to the container with z order and tag
      *
@@ -763,6 +780,7 @@ public:
      *
      */
     virtual void addChild(Node* child, int localZOrder, const std::string &name);
+    
     /**
      * Gets a child from the container with its tag.
      *
@@ -794,6 +812,7 @@ public:
      * @since v3.2
      */
     virtual Node* getChildByName(const std::string& name) const;
+    
     /**
      * Gets a child from the container with its name that can be cast to Type T.
      *
@@ -803,6 +822,7 @@ public:
     */
     template <typename T>
     inline T getChildByName(const std::string& name) const { return static_cast<T>(getChildByName(name)); }
+    
     /** Search the children of the receiving node to perform processing for nodes which share a name.
      *
      * @param name The name to search for, supports c++11 regular expression.
@@ -831,6 +851,7 @@ public:
      * @since v3.2
      */
     virtual void enumerateChildren(const std::string &name, std::function<bool(Node* node)> callback) const;
+    
     /**
      * Returns the array of the node's children.
      *
@@ -852,6 +873,7 @@ public:
      * @param parent    A pointer to the parent node.
      */
     virtual void setParent(Node* parent);
+    
     /**
      * Returns a pointer to the parent node.
      *
@@ -871,6 +893,7 @@ public:
      * @see `removeFromParentAndCleanup(bool)`
      */
     virtual void removeFromParent();
+    
     /**
      * Removes this node itself from its parent node.
      * If the node orphan, then nothing happens.
@@ -897,6 +920,7 @@ public:
      * Please use `removeChildByName` instead.
      */
      virtual void removeChildByTag(int tag, bool cleanup = true);
+    
     /**
      * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter.
      *
@@ -904,12 +928,14 @@ public:
      * @param cleanup   True if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
     virtual void removeChildByName(const std::string &name, bool cleanup = true);
+    
     /**
      * Removes all children from the container with a cleanup.
      *
      * @see `removeAllChildrenWithCleanup(bool)`
      */
     virtual void removeAllChildren();
+    
     /**
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      *
@@ -947,6 +973,7 @@ public:
      * Please use `getTag()` instead.
      */
      virtual int getTag() const;
+    
     /**
      * Changes the tag that is used to identify the node easily.
      *
@@ -964,6 +991,7 @@ public:
      * @since v3.2
      */
     virtual const std::string& getName() const;
+    
     /** Changes the name that is used to identify the node easily.
      * @param name A string that identifies the node.
      *
@@ -971,7 +999,6 @@ public:
      */
     virtual void setName(const std::string& name);
 
-    
     /**
      * Returns a custom user data pointer.
      *
@@ -981,6 +1008,7 @@ public:
      * @lua NA
      */
     virtual void* getUserData() { return _userData; }
+    
     /**
     * @lua NA
     */
@@ -1007,6 +1035,7 @@ public:
      * @lua NA
      */
     virtual Ref* getUserObject() { return _userObject; }
+    
     /**
     * @lua NA
     */
@@ -1036,6 +1065,7 @@ public:
      */
     GLProgram* getGLProgram() const;
     CC_DEPRECATED_ATTRIBUTE GLProgram* getShaderProgram() const { return getGLProgram(); }
+    
     /**
      * Sets the shader program for this node
      *
@@ -1056,6 +1086,7 @@ public:
      * @return The GLProgramState currently used for this node.
      */
     GLProgramState *getGLProgramState() const;
+    
     /**
      * Set the GLProgramState for this node.
      *
@@ -1124,7 +1155,6 @@ public:
 
     /// @} end of event callbacks.
 
-
     /**
      * Stops all running actions and schedulers
      */
@@ -1181,6 +1211,7 @@ public:
      * @param dispatcher The event dispatcher of scene.
      */
     virtual void setEventDispatcher(EventDispatcher* dispatcher);
+    
     /** Get the event dispatcher of scene.
      *
      * @return The event dispatcher of scene.
@@ -1198,6 +1229,7 @@ public:
      * @param actionManager     A ActionManager object that is used by all actions.
      */
     virtual void setActionManager(ActionManager* actionManager);
+    
     /**
      * Gets the ActionManager object that is used by all actions.
      * @see setActionManager(ActionManager*)
@@ -1264,7 +1296,6 @@ public:
      * Composable actions are counted as 1 action. Example:
      *    If you are running 1 Sequence of 7 actions, it will return 1.
      *    If you are running 7 Sequences of 2 actions, it will return 7.
-     * @todo Rename to getNumberOfRunningActions()
      *
      * @return The number of actions that are running plus the ones that are schedule to run.
      */
@@ -1286,6 +1317,7 @@ public:
      * @param scheduler     A Scheduler object that is used to schedule all "update" and timers.
      */
     virtual void setScheduler(Scheduler* scheduler);
+    
     /**
      * Gets a Scheduler object.
      *
@@ -1464,6 +1496,7 @@ public:
      * This method is called internally by onEnter.
      */
     virtual void resume(void);
+    
     /**
      * Pauses all scheduled selectors, actions and event listeners.
      * This method is called internally by onExit.
@@ -1475,6 +1508,7 @@ public:
      * This method is called internally by onEnter.
      */
     CC_DEPRECATED_ATTRIBUTE void resumeSchedulerAndActions();
+    
     /**
      * Pauses all scheduled selectors, actions and event listeners.
      * This method is called internally by onExit.
@@ -1681,6 +1715,7 @@ public:
      * @return True if removed success.
      */
     virtual bool removeComponent(Component *component);
+    
     /**
      * Removes all components
      */
@@ -1693,6 +1728,7 @@ public:
      * @return A GLubyte value.
      */
     virtual GLubyte getOpacity() const;
+    
     /**
      * Return the node's display opacity.
      * The difference between opacity and displayedOpacity is:
@@ -1700,21 +1736,25 @@ public:
      * @return A GLubyte value.
      */
     virtual GLubyte getDisplayedOpacity() const;
+    
     /**
      * Change node opacity.
      * @param opacity A GLubyte opacity value.
      */
     virtual void setOpacity(GLubyte opacity);
+    
     /**
      * Update the displayed opacity of node with it's parent opacity;
      * @param parentOpacity The opacity of parent node.
      */
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    
     /**
      * Whether cascadeOpacity is enabled or not.
      * @return A boolean value.
      */
     virtual bool isCascadeOpacityEnabled() const;
+    
     /**
      * Change node's cascadeOpacity property.
      * @param cascadeOpacityEnabled True to enable cascadeOpacity, false otherwise.
@@ -1726,26 +1766,31 @@ public:
      * @return A Color3B color value.
      */
     virtual const Color3B& getColor() const;
+    
     /**
      * Query node's displayed color.
      * @return A Color3B color value.
      */
     virtual const Color3B& getDisplayedColor() const;
+    
     /**
      * Change the color of node.
      * @param color A Color3B color value.
      */
     virtual void setColor(const Color3B& color);
+    
     /**
      * Update node's displayed color with its parent color.
      * @param parentColor A Color3B color value.
      */
     virtual void updateDisplayedColor(const Color3B& parentColor);
+    
     /**
      * Query whether cascadeColor is enabled or not.
      * @return Whether cascadeColor is enabled or not.
      */
     virtual bool isCascadeColorEnabled() const;
+    
     /**
      * If you want node's color affect the children node's color, then set it to true.
      * Otherwise, set it to false.
@@ -1758,6 +1803,7 @@ public:
      * @param value A boolean value.
      */
     virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
+    
     /**
      * If node opacity will modify the RGB color value, then you should override this method and return true.
      * @return A boolean value, true indicates that opacity will modify color; false otherwise.
@@ -1769,26 +1815,31 @@ public:
      * @param callback A std::function<void()> callback.
      */
     void setOnEnterCallback(const std::function<void()>& callback) { _onEnterCallback = callback; }
+    
     /**
      * Get the callback of event onEnter.
      * @return A std:function<void()> callback.
      */
     const std::function<void()>& getOnEnterCallback() const { return _onEnterCallback; }
+    
     /**
      * Set the callback of event onExit.
      * @param callback A std::function<void()> callback.
      */
     void setOnExitCallback(const std::function<void()>& callback) { _onExitCallback = callback; }
+    
     /**
      * Get the callback of event onExit.
      * @return A std::function<void()>.
      */
     const std::function<void()>& getOnExitCallback() const { return _onExitCallback; }
+    
     /**
      * Set the callback of event EnterTransitionDidFinish.
      * @param callback A std::function<void()> callback.
      */
     void setonEnterTransitionDidFinishCallback(const std::function<void()>& callback) { _onEnterTransitionDidFinishCallback = callback; }
+    
     /**
      * Get the callback of event EnterTransitionDidFinish.
      * @return std::function<void()>
@@ -1799,6 +1850,7 @@ public:
      * @param callback A std::function<void()> callback.
      */
     void setonExitTransitionDidStartCallback(const std::function<void()>& callback) { _onExitTransitionDidStartCallback = callback; }
+    
     /**
      * Get the callback of event ExitTransitionDidStart.
      * @return std::function<void()>
@@ -1809,6 +1861,7 @@ public:
      * get & set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true
      */
     unsigned short getCameraMask() const { return _cameraMask; }
+    
     /**
      * Modify the camera mask for current node.
      * If applyChildren is true, then it will modify the camera mask of its children recursively.

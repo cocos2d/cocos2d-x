@@ -1,5 +1,3 @@
-
-
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
@@ -480,7 +478,6 @@ void Node::setScaleY(float scaleY)
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
-
 /// position getter
 const Vec2& Node::getPosition() const
 {
@@ -653,8 +650,9 @@ bool Node::isIgnoreAnchorPointForPosition() const
 {
     return _ignoreAnchorPointForPosition;
 }
+
 /// isRelativeAnchorPoint setter
-void Node::ignoreAnchorPointForPosition(bool newValue)
+void Node::setIgnoreAnchorPointForPosition(bool newValue)
 {
     if (newValue != _ignoreAnchorPointForPosition) 
     {
@@ -738,7 +736,6 @@ void Node::setGLProgramState(cocos2d::GLProgramState* glProgramState)
             _glProgramState->setNodeBinding(this);
     }
 }
-
 
 void Node::setGLProgram(GLProgram* glProgram)
 {
@@ -850,7 +847,6 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
     {
         newName.insert(0, "[[:alnum:]]+/");
     }
-    
     
     if (searchRecursively)
     {
@@ -1127,7 +1123,6 @@ void Node::detachChild(Node *child, ssize_t childIndex, bool doCleanup)
 
     _children.erase(childIndex);
 }
-
 
 // helper used by reorderChild & add
 void Node::insertChild(Node* child, int z)
@@ -1644,7 +1639,6 @@ AffineTransform Node::getNodeToParentAffineTransform() const
     return ret;
 }
 
-
 Mat4 Node::getNodeToParentTransform(Node* ancestor) const
 {
     Mat4 t(this->getNodeToParentTransform());
@@ -1666,6 +1660,7 @@ AffineTransform Node::getNodeToParentAffineTransform(Node* ancestor) const
 
     return t;
 }
+
 const Mat4& Node::getNodeToParentTransform() const
 {
     if (_transformDirty)
@@ -1798,7 +1793,6 @@ void Node::setAdditionalTransform(Mat4* additionalTransform)
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
-
 AffineTransform Node::getParentToNodeAffineTransform() const
 {
     AffineTransform ret;
@@ -1817,7 +1811,6 @@ const Mat4& Node::getParentToNodeTransform() const
 
     return _inverse;
 }
-
 
 AffineTransform Node::getNodeToWorldAffineTransform() const
 {
@@ -1838,7 +1831,6 @@ Mat4 Node::getWorldToNodeTransform() const
 {
     return getNodeToWorldTransform().getInversed();
 }
-
 
 Vec2 Node::convertToNodeSpace(const Vec2& worldPoint) const
 {
