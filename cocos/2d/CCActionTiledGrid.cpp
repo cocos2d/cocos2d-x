@@ -70,7 +70,7 @@ bool ShakyTiles3D::initWithDuration(float duration, const Size& gridSize, int ra
 ShakyTiles3D* ShakyTiles3D::clone() const
 {
     // no copy constructor
-    return ShakyTiles3D::create(_duration, _gridSize, _randrange, -_shakeZ);
+    return ShakyTiles3D::create(_duration, _gridSize, _randrange, _shakeZ);
 }
 
 void ShakyTiles3D::update(float time)
