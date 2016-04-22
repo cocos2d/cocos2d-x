@@ -59,7 +59,7 @@ class ResizableBufferAdapter< std::basic_string<C, T, A> > : public ResizableBuf
     typedef std::basic_string<C, T, A> BufferType;
     BufferType* _buffer;
 public:
-    ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
+    explicit ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
     virtual void resize(size_t size) override {
         _buffer->resize((size + sizeof(C)) / sizeof(C));
     }
@@ -73,7 +73,7 @@ class ResizableBufferAdapter< std::vector<T, A> > : public ResizableBuffer {
     typedef std::vector<T, A> BufferType;
     BufferType* _buffer;
 public:
-    ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
+    explicit ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
     virtual void resize(size_t size) override {
         _buffer->resize((size + sizeof(T)) / sizeof(T));
     }
@@ -88,7 +88,7 @@ class ResizableBufferAdapter<Data> : public ResizableBuffer {
     typedef Data BufferType;
     BufferType* _buffer;
 public:
-    ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
+    explicit ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
     virtual void resize(size_t size) override {
         if (_buffer->getSize() < size) {
             auto old = _buffer->getBytes();
