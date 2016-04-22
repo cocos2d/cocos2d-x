@@ -197,7 +197,7 @@ public:
      *  you may get 0 ~ sizeof(T)-1 bytes padding.
      *
      *  - To write a new buffer class works with getContents, just extend ResizableBuffer.
-     *  - To write a adapter for existing class, write a for ResizableBufferAdapter, see follow code.
+     *  - To write a adapter for existing class, write a specialized ResizableBufferAdapter for that class, see follow code.
      *
      *  <pre>
      *  {@code
