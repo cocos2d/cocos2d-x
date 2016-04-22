@@ -57,28 +57,28 @@ class ResizableBufferAdapter { };
 template<typename C, typename T, typename A>
 class ResizableBufferAdapter< std::basic_string<C, T, A> > : public ResizableBuffer {
     typedef std::basic_string<C, T, A> BufferType;
-    BufferType* buffer_;
+    BufferType* _buffer;
 public:
-    ResizableBufferAdapter(BufferType* buffer) : buffer_(buffer) {}
+    ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
     virtual void resize(size_t size) override {
-        buffer_->resize((size + sizeof(C)) / sizeof(C));
+        _buffer->resize((size + sizeof(C)) / sizeof(C));
     }
     virtual void* buffer() const override {
-        return &buffer_->front();
+        return &_buffer->front();
     }
 };
 
 template<typename T, typename A>
 class ResizableBufferAdapter< std::vector<T, A> > : public ResizableBuffer {
     typedef std::vector<T, A> BufferType;
-    BufferType* buffer_;
+    BufferType* _buffer;
 public:
-    ResizableBufferAdapter(BufferType* buffer) : buffer_(buffer) {}
+    ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
     virtual void resize(size_t size) override {
-        buffer_->resize((size + sizeof(T)) / sizeof(T));
+        _buffer->resize((size + sizeof(T)) / sizeof(T));
     }
     virtual void* buffer() const override {
-        return &buffer_->front();
+        return &_buffer->front();
     }
 };
 
@@ -86,19 +86,19 @@ public:
 template<>
 class ResizableBufferAdapter<Data> : public ResizableBuffer {
     typedef Data BufferType;
-    BufferType* buffer_;
+    BufferType* _buffer;
 public:
-    ResizableBufferAdapter(BufferType* buffer) : buffer_(buffer) {}
+    ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
     virtual void resize(size_t size) override {
-        if (buffer_->getSize() < size) {
-            auto old = buffer_->getBytes();
+        if (_buffer->getSize() < size) {
+            auto old = _buffer->getBytes();
             void* buffer = realloc(old, size);
             if (buffer)
-                buffer_->fastSet((unsigned char*)buffer, size);
+                _buffer->fastSet((unsigned char*)buffer, size);
         }
     }
     virtual void* buffer() const override {
-        return buffer_->getBytes();
+        return _buffer->getBytes();
     }
 };
 
@@ -203,9 +203,9 @@ public:
      */
     template <
         typename T,
-        typename std::enable_if<
+        typename X = typename std::enable_if<
             std::is_base_of< ResizableBuffer, ResizableBufferAdapter<T> >::value
-        >::type* = nullptr
+        >::type
     >
     FileError getContents(const std::string& filename, T* buffer) {
         ResizableBufferAdapter<T> buf(buffer);
