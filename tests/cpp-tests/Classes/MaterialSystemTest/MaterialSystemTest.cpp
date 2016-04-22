@@ -422,7 +422,7 @@ void Material_parsePerformance::parsingTesting(unsigned int count)
 {
     std::clock_t begin = std::clock();
     
-    for(int i=0;i<count;i++)
+    for (unsigned int i = 0; i < count; i++)
     {
         Material::createWithFilename("Materials/2d_effects.material");
         Material::createWithFilename("Materials/3d_effects.material");
