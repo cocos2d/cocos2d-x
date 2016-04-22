@@ -329,7 +329,7 @@ Vector<Layout*>& PageView::getPages()
 
 Layout* PageView::getPage(ssize_t index)
 {
-    if (index < 0 || index >= this->getPages().size())
+    if (index < 0 || index >= this->getItems().size())
     {
         return nullptr;
     }

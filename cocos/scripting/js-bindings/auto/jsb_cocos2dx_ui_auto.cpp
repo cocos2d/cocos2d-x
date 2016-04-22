@@ -13014,6 +13014,28 @@ void js_register_cocos2dx_ui_Helper(JSContext *cx, JS::HandleObject global) {
 JSClass  *jsb_cocos2d_ui_RichElement_class;
 JSObject *jsb_cocos2d_ui_RichElement_prototype;
 
+bool js_cocos2dx_ui_RichElement_equalType(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichElement* cobj = (cocos2d::ui::RichElement *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichElement_equalType : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::ui::RichElement::Type arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElement_equalType : Error processing arguments");
+        bool ret = cobj->equalType(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichElement_equalType : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_ui_RichElement_init(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -13038,6 +13060,26 @@ bool js_cocos2dx_ui_RichElement_init(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_RichElement_init : wrong number of arguments: %d, was expecting %d", argc, 3);
+    return false;
+}
+bool js_cocos2dx_ui_RichElement_setColor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichElement* cobj = (cocos2d::ui::RichElement *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichElement_setColor : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Color3B arg0;
+        ok &= jsval_to_cccolor3b(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElement_setColor : Error processing arguments");
+        cobj->setColor(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichElement_setColor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_ui_RichElement_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -13088,7 +13130,9 @@ void js_register_cocos2dx_ui_RichElement(JSContext *cx, JS::HandleObject global)
     };
 
     static JSFunctionSpec funcs[] = {
+        JS_FN("equalType", js_cocos2dx_ui_RichElement_equalType, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_cocos2dx_ui_RichElement_init, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setColor", js_cocos2dx_ui_RichElement_setColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocos2dx_ui_RichElement_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
@@ -13145,6 +13189,192 @@ bool js_cocos2dx_ui_RichElementText_init(JSContext *cx, uint32_t argc, jsval *vp
         ok &= jsval_to_std_string(cx, args.get(7), &arg7);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    if (argc == 9) {
+        int arg0 = 0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        std::string arg3;
+        std::string arg4;
+        double arg5 = 0;
+        unsigned int arg6 = 0;
+        std::string arg7;
+        cocos2d::Color3B arg8;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        ok &= JS::ToNumber( cx, args.get(5), &arg5) && !isnan(arg5);
+        ok &= jsval_to_uint32(cx, args.get(6), &arg6);
+        ok &= jsval_to_std_string(cx, args.get(7), &arg7);
+        ok &= jsval_to_cccolor3b(cx, args.get(8), &arg8);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_init : Error processing arguments");
+        bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    if (argc == 10) {
+        int arg0 = 0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        std::string arg3;
+        std::string arg4;
+        double arg5 = 0;
+        unsigned int arg6 = 0;
+        std::string arg7;
+        cocos2d::Color3B arg8;
+        int arg9 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        ok &= JS::ToNumber( cx, args.get(5), &arg5) && !isnan(arg5);
+        ok &= jsval_to_uint32(cx, args.get(6), &arg6);
+        ok &= jsval_to_std_string(cx, args.get(7), &arg7);
+        ok &= jsval_to_cccolor3b(cx, args.get(8), &arg8);
+        ok &= jsval_to_int32(cx, args.get(9), (int32_t *)&arg9);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_init : Error processing arguments");
+        bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    if (argc == 11) {
+        int arg0 = 0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        std::string arg3;
+        std::string arg4;
+        double arg5 = 0;
+        unsigned int arg6 = 0;
+        std::string arg7;
+        cocos2d::Color3B arg8;
+        int arg9 = 0;
+        cocos2d::Color3B arg10;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        ok &= JS::ToNumber( cx, args.get(5), &arg5) && !isnan(arg5);
+        ok &= jsval_to_uint32(cx, args.get(6), &arg6);
+        ok &= jsval_to_std_string(cx, args.get(7), &arg7);
+        ok &= jsval_to_cccolor3b(cx, args.get(8), &arg8);
+        ok &= jsval_to_int32(cx, args.get(9), (int32_t *)&arg9);
+        ok &= jsval_to_cccolor3b(cx, args.get(10), &arg10);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_init : Error processing arguments");
+        bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    if (argc == 12) {
+        int arg0 = 0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        std::string arg3;
+        std::string arg4;
+        double arg5 = 0;
+        unsigned int arg6 = 0;
+        std::string arg7;
+        cocos2d::Color3B arg8;
+        int arg9 = 0;
+        cocos2d::Color3B arg10;
+        cocos2d::Size arg11;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        ok &= JS::ToNumber( cx, args.get(5), &arg5) && !isnan(arg5);
+        ok &= jsval_to_uint32(cx, args.get(6), &arg6);
+        ok &= jsval_to_std_string(cx, args.get(7), &arg7);
+        ok &= jsval_to_cccolor3b(cx, args.get(8), &arg8);
+        ok &= jsval_to_int32(cx, args.get(9), (int32_t *)&arg9);
+        ok &= jsval_to_cccolor3b(cx, args.get(10), &arg10);
+        ok &= jsval_to_ccsize(cx, args.get(11), &arg11);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_init : Error processing arguments");
+        bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    if (argc == 13) {
+        int arg0 = 0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        std::string arg3;
+        std::string arg4;
+        double arg5 = 0;
+        unsigned int arg6 = 0;
+        std::string arg7;
+        cocos2d::Color3B arg8;
+        int arg9 = 0;
+        cocos2d::Color3B arg10;
+        cocos2d::Size arg11;
+        int arg12 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        ok &= JS::ToNumber( cx, args.get(5), &arg5) && !isnan(arg5);
+        ok &= jsval_to_uint32(cx, args.get(6), &arg6);
+        ok &= jsval_to_std_string(cx, args.get(7), &arg7);
+        ok &= jsval_to_cccolor3b(cx, args.get(8), &arg8);
+        ok &= jsval_to_int32(cx, args.get(9), (int32_t *)&arg9);
+        ok &= jsval_to_cccolor3b(cx, args.get(10), &arg10);
+        ok &= jsval_to_ccsize(cx, args.get(11), &arg11);
+        ok &= jsval_to_int32(cx, args.get(12), (int32_t *)&arg12);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_init : Error processing arguments");
+        bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    if (argc == 14) {
+        int arg0 = 0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        std::string arg3;
+        std::string arg4;
+        double arg5 = 0;
+        unsigned int arg6 = 0;
+        std::string arg7;
+        cocos2d::Color3B arg8;
+        int arg9 = 0;
+        cocos2d::Color3B arg10;
+        cocos2d::Size arg11;
+        int arg12 = 0;
+        cocos2d::Color3B arg13;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        ok &= JS::ToNumber( cx, args.get(5), &arg5) && !isnan(arg5);
+        ok &= jsval_to_uint32(cx, args.get(6), &arg6);
+        ok &= jsval_to_std_string(cx, args.get(7), &arg7);
+        ok &= jsval_to_cccolor3b(cx, args.get(8), &arg8);
+        ok &= jsval_to_int32(cx, args.get(9), (int32_t *)&arg9);
+        ok &= jsval_to_cccolor3b(cx, args.get(10), &arg10);
+        ok &= jsval_to_ccsize(cx, args.get(11), &arg11);
+        ok &= jsval_to_int32(cx, args.get(12), (int32_t *)&arg12);
+        ok &= jsval_to_cccolor3b(cx, args.get(13), &arg13);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_init : Error processing arguments");
+        bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
         jsval jsret = JSVAL_NULL;
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
@@ -13222,6 +13452,198 @@ bool js_cocos2dx_ui_RichElementText_create(JSContext *cx, uint32_t argc, jsval *
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_create : Error processing arguments");
 
         auto ret = cocos2d::ui::RichElementText::create(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::ui::RichElementText>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::ui::RichElementText"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
+        return true;
+    }
+    if (argc == 9) {
+        int arg0 = 0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        std::string arg3;
+        std::string arg4;
+        double arg5 = 0;
+        unsigned int arg6 = 0;
+        std::string arg7;
+        cocos2d::Color3B arg8;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        ok &= JS::ToNumber( cx, args.get(5), &arg5) && !isnan(arg5);
+        ok &= jsval_to_uint32(cx, args.get(6), &arg6);
+        ok &= jsval_to_std_string(cx, args.get(7), &arg7);
+        ok &= jsval_to_cccolor3b(cx, args.get(8), &arg8);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_create : Error processing arguments");
+
+        auto ret = cocos2d::ui::RichElementText::create(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::ui::RichElementText>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::ui::RichElementText"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
+        return true;
+    }
+    if (argc == 10) {
+        int arg0 = 0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        std::string arg3;
+        std::string arg4;
+        double arg5 = 0;
+        unsigned int arg6 = 0;
+        std::string arg7;
+        cocos2d::Color3B arg8;
+        int arg9 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        ok &= JS::ToNumber( cx, args.get(5), &arg5) && !isnan(arg5);
+        ok &= jsval_to_uint32(cx, args.get(6), &arg6);
+        ok &= jsval_to_std_string(cx, args.get(7), &arg7);
+        ok &= jsval_to_cccolor3b(cx, args.get(8), &arg8);
+        ok &= jsval_to_int32(cx, args.get(9), (int32_t *)&arg9);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_create : Error processing arguments");
+
+        auto ret = cocos2d::ui::RichElementText::create(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::ui::RichElementText>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::ui::RichElementText"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
+        return true;
+    }
+    if (argc == 11) {
+        int arg0 = 0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        std::string arg3;
+        std::string arg4;
+        double arg5 = 0;
+        unsigned int arg6 = 0;
+        std::string arg7;
+        cocos2d::Color3B arg8;
+        int arg9 = 0;
+        cocos2d::Color3B arg10;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        ok &= JS::ToNumber( cx, args.get(5), &arg5) && !isnan(arg5);
+        ok &= jsval_to_uint32(cx, args.get(6), &arg6);
+        ok &= jsval_to_std_string(cx, args.get(7), &arg7);
+        ok &= jsval_to_cccolor3b(cx, args.get(8), &arg8);
+        ok &= jsval_to_int32(cx, args.get(9), (int32_t *)&arg9);
+        ok &= jsval_to_cccolor3b(cx, args.get(10), &arg10);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_create : Error processing arguments");
+
+        auto ret = cocos2d::ui::RichElementText::create(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::ui::RichElementText>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::ui::RichElementText"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
+        return true;
+    }
+    if (argc == 12) {
+        int arg0 = 0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        std::string arg3;
+        std::string arg4;
+        double arg5 = 0;
+        unsigned int arg6 = 0;
+        std::string arg7;
+        cocos2d::Color3B arg8;
+        int arg9 = 0;
+        cocos2d::Color3B arg10;
+        cocos2d::Size arg11;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        ok &= JS::ToNumber( cx, args.get(5), &arg5) && !isnan(arg5);
+        ok &= jsval_to_uint32(cx, args.get(6), &arg6);
+        ok &= jsval_to_std_string(cx, args.get(7), &arg7);
+        ok &= jsval_to_cccolor3b(cx, args.get(8), &arg8);
+        ok &= jsval_to_int32(cx, args.get(9), (int32_t *)&arg9);
+        ok &= jsval_to_cccolor3b(cx, args.get(10), &arg10);
+        ok &= jsval_to_ccsize(cx, args.get(11), &arg11);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_create : Error processing arguments");
+
+        auto ret = cocos2d::ui::RichElementText::create(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::ui::RichElementText>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::ui::RichElementText"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
+        return true;
+    }
+    if (argc == 13) {
+        int arg0 = 0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        std::string arg3;
+        std::string arg4;
+        double arg5 = 0;
+        unsigned int arg6 = 0;
+        std::string arg7;
+        cocos2d::Color3B arg8;
+        int arg9 = 0;
+        cocos2d::Color3B arg10;
+        cocos2d::Size arg11;
+        int arg12 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        ok &= JS::ToNumber( cx, args.get(5), &arg5) && !isnan(arg5);
+        ok &= jsval_to_uint32(cx, args.get(6), &arg6);
+        ok &= jsval_to_std_string(cx, args.get(7), &arg7);
+        ok &= jsval_to_cccolor3b(cx, args.get(8), &arg8);
+        ok &= jsval_to_int32(cx, args.get(9), (int32_t *)&arg9);
+        ok &= jsval_to_cccolor3b(cx, args.get(10), &arg10);
+        ok &= jsval_to_ccsize(cx, args.get(11), &arg11);
+        ok &= jsval_to_int32(cx, args.get(12), (int32_t *)&arg12);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_create : Error processing arguments");
+
+        auto ret = cocos2d::ui::RichElementText::create(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::ui::RichElementText>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::ui::RichElementText"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
+        return true;
+    }
+    if (argc == 14) {
+        int arg0 = 0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        std::string arg3;
+        std::string arg4;
+        double arg5 = 0;
+        unsigned int arg6 = 0;
+        std::string arg7;
+        cocos2d::Color3B arg8;
+        int arg9 = 0;
+        cocos2d::Color3B arg10;
+        cocos2d::Size arg11;
+        int arg12 = 0;
+        cocos2d::Color3B arg13;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        ok &= JS::ToNumber( cx, args.get(5), &arg5) && !isnan(arg5);
+        ok &= jsval_to_uint32(cx, args.get(6), &arg6);
+        ok &= jsval_to_std_string(cx, args.get(7), &arg7);
+        ok &= jsval_to_cccolor3b(cx, args.get(8), &arg8);
+        ok &= jsval_to_int32(cx, args.get(9), (int32_t *)&arg9);
+        ok &= jsval_to_cccolor3b(cx, args.get(10), &arg10);
+        ok &= jsval_to_ccsize(cx, args.get(11), &arg11);
+        ok &= jsval_to_int32(cx, args.get(12), (int32_t *)&arg12);
+        ok &= jsval_to_cccolor3b(cx, args.get(13), &arg13);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_create : Error processing arguments");
+
+        auto ret = cocos2d::ui::RichElementText::create(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
         js_type_class_t *typeClass = js_get_type_from_native<cocos2d::ui::RichElementText>(ret);
         JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::ui::RichElementText"));
         args.rval().set(OBJECT_TO_JSVAL(jsret));
@@ -13359,6 +13781,24 @@ bool js_cocos2dx_ui_RichElementImage_init(JSContext *cx, uint32_t argc, jsval *v
         args.rval().set(jsret);
         return true;
     }
+    if (argc == 5) {
+        int arg0 = 0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        std::string arg3;
+        std::string arg4;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementImage_init : Error processing arguments");
+        bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
 
     JS_ReportError(cx, "js_cocos2dx_ui_RichElementImage_init : wrong number of arguments: %d, was expecting %d", argc, 4);
     return false;
@@ -13383,6 +13823,26 @@ bool js_cocos2dx_ui_RichElementImage_setWidth(JSContext *cx, uint32_t argc, jsva
     JS_ReportError(cx, "js_cocos2dx_ui_RichElementImage_setWidth : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_ui_RichElementImage_setUrl(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichElementImage* cobj = (cocos2d::ui::RichElementImage *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichElementImage_setUrl : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementImage_setUrl : Error processing arguments");
+        cobj->setUrl(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichElementImage_setUrl : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_ui_RichElementImage_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -13399,6 +13859,25 @@ bool js_cocos2dx_ui_RichElementImage_create(JSContext *cx, uint32_t argc, jsval 
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementImage_create : Error processing arguments");
 
         auto ret = cocos2d::ui::RichElementImage::create(arg0, arg1, arg2, arg3);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::ui::RichElementImage>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::ui::RichElementImage"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
+        return true;
+    }
+    if (argc == 5) {
+        int arg0 = 0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        std::string arg3;
+        std::string arg4;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementImage_create : Error processing arguments");
+
+        auto ret = cocos2d::ui::RichElementImage::create(arg0, arg1, arg2, arg3, arg4);
         js_type_class_t *typeClass = js_get_type_from_native<cocos2d::ui::RichElementImage>(ret);
         JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::ui::RichElementImage"));
         args.rval().set(OBJECT_TO_JSVAL(jsret));
@@ -13461,6 +13940,7 @@ void js_register_cocos2dx_ui_RichElementImage(JSContext *cx, JS::HandleObject gl
         JS_FN("setHeight", js_cocos2dx_ui_RichElementImage_setHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_cocos2dx_ui_RichElementImage_init, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setWidth", js_cocos2dx_ui_RichElementImage_setWidth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setUrl", js_cocos2dx_ui_RichElementImage_setUrl, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocos2dx_ui_RichElementImage_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
@@ -13644,6 +14124,112 @@ void js_register_cocos2dx_ui_RichElementCustomNode(JSContext *cx, JS::HandleObje
     anonEvaluate(cx, global, "(function () { ccui.RichElementCustomNode.extend = cc.Class.extend; })()");
 }
 
+JSClass  *jsb_cocos2d_ui_RichElementNewLine_class;
+JSObject *jsb_cocos2d_ui_RichElementNewLine_prototype;
+
+bool js_cocos2dx_ui_RichElementNewLine_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 3) {
+        int arg0 = 0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementNewLine_create : Error processing arguments");
+
+        auto ret = cocos2d::ui::RichElementNewLine::create(arg0, arg1, arg2);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::ui::RichElementNewLine>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::ui::RichElementNewLine"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_ui_RichElementNewLine_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_ui_RichElementNewLine_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocos2d::ui::RichElementNewLine* cobj = new (std::nothrow) cocos2d::ui::RichElementNewLine();
+
+    js_type_class_t *typeClass = js_get_type_from_native<cocos2d::ui::RichElementNewLine>(cobj);
+
+    // link the native object with the javascript object
+    JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "cocos2d::ui::RichElementNewLine"));
+    args.rval().set(OBJECT_TO_JSVAL(jsobj));
+    if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
+    return true;
+}
+static bool js_cocos2dx_ui_RichElementNewLine_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    cocos2d::ui::RichElementNewLine *nobj = new (std::nothrow) cocos2d::ui::RichElementNewLine();
+    auto newproxy = jsb_new_proxy(nobj, obj);
+    jsb_ref_init(cx, &newproxy->obj, nobj, "cocos2d::ui::RichElementNewLine");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_cocos2d_ui_RichElement_prototype;
+
+    
+void js_register_cocos2dx_ui_RichElementNewLine(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_ui_RichElementNewLine_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_ui_RichElementNewLine_class->name = "RichElementNewLine";
+    jsb_cocos2d_ui_RichElementNewLine_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_ui_RichElementNewLine_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_ui_RichElementNewLine_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_ui_RichElementNewLine_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_ui_RichElementNewLine_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_ui_RichElementNewLine_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_ui_RichElementNewLine_class->convert = JS_ConvertStub;
+    jsb_cocos2d_ui_RichElementNewLine_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2dx_ui_RichElementNewLine_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_ui_RichElementNewLine_create, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    JS::RootedObject parent_proto(cx, jsb_cocos2d_ui_RichElement_prototype);
+    jsb_cocos2d_ui_RichElementNewLine_prototype = JS_InitClass(
+        cx, global,
+        parent_proto,
+        jsb_cocos2d_ui_RichElementNewLine_class,
+        js_cocos2dx_ui_RichElementNewLine_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+
+    JS::RootedObject proto(cx, jsb_cocos2d_ui_RichElementNewLine_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "RichElementNewLine"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
+    jsb_register_class<cocos2d::ui::RichElementNewLine>(cx, jsb_cocos2d_ui_RichElementNewLine_class, proto, parent_proto);
+    anonEvaluate(cx, global, "(function () { ccui.RichElementNewLine.extend = cc.Class.extend; })()");
+}
+
 JSClass  *jsb_cocos2d_ui_RichText_class;
 JSObject *jsb_cocos2d_ui_RichText_prototype;
 
@@ -13677,6 +14263,66 @@ bool js_cocos2dx_ui_RichText_insertElement(JSContext *cx, uint32_t argc, jsval *
     JS_ReportError(cx, "js_cocos2dx_ui_RichText_insertElement : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
+bool js_cocos2dx_ui_RichText_setAnchorTextOutline(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextOutline : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextOutline : Error processing arguments");
+        cobj->setAnchorTextOutline(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    if (argc == 2) {
+        bool arg0;
+        cocos2d::Color3B arg1;
+        arg0 = JS::ToBoolean(args.get(0));
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextOutline : Error processing arguments");
+        cobj->setAnchorTextOutline(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+    if (argc == 3) {
+        bool arg0;
+        cocos2d::Color3B arg1;
+        int arg2 = 0;
+        arg0 = JS::ToBoolean(args.get(0));
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextOutline : Error processing arguments");
+        cobj->setAnchorTextOutline(arg0, arg1, arg2);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_setAnchorTextOutline : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_getFontSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getFontSize : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getFontSize();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getFontSize : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_ui_RichText_pushBackElement(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -13705,24 +14351,542 @@ bool js_cocos2dx_ui_RichText_pushBackElement(JSContext *cx, uint32_t argc, jsval
     JS_ReportError(cx, "js_cocos2dx_ui_RichText_pushBackElement : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_ui_RichText_setWrapMode(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_ui_RichText_setAnchorTextBold(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_setWrapMode : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextBold : Invalid Native Object");
     if (argc == 1) {
-        cocos2d::ui::RichText::WrapMode arg0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setWrapMode : Error processing arguments");
-        cobj->setWrapMode(arg0);
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextBold : Error processing arguments");
+        cobj->setAnchorTextBold(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_ui_RichText_setWrapMode : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_setAnchorTextBold : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_getAnchorFontColor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getAnchorFontColor : Invalid Native Object");
+    if (argc == 0) {
+        std::string ret = cobj->getAnchorFontColor();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getAnchorFontColor : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_getAnchorTextShadowBlurRadius(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getAnchorTextShadowBlurRadius : Invalid Native Object");
+    if (argc == 0) {
+        int ret = cobj->getAnchorTextShadowBlurRadius();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getAnchorTextShadowBlurRadius : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_setAnchorTextShadow(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextShadow : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextShadow : Error processing arguments");
+        cobj->setAnchorTextShadow(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    if (argc == 2) {
+        bool arg0;
+        cocos2d::Color3B arg1;
+        arg0 = JS::ToBoolean(args.get(0));
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextShadow : Error processing arguments");
+        cobj->setAnchorTextShadow(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+    if (argc == 3) {
+        bool arg0;
+        cocos2d::Color3B arg1;
+        cocos2d::Size arg2;
+        arg0 = JS::ToBoolean(args.get(0));
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_ccsize(cx, args.get(2), &arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextShadow : Error processing arguments");
+        cobj->setAnchorTextShadow(arg0, arg1, arg2);
+        args.rval().setUndefined();
+        return true;
+    }
+    if (argc == 4) {
+        bool arg0;
+        cocos2d::Color3B arg1;
+        cocos2d::Size arg2;
+        int arg3 = 0;
+        arg0 = JS::ToBoolean(args.get(0));
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        ok &= jsval_to_ccsize(cx, args.get(2), &arg2);
+        ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextShadow : Error processing arguments");
+        cobj->setAnchorTextShadow(arg0, arg1, arg2, arg3);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_setAnchorTextShadow : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_isAnchorTextItalicEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_isAnchorTextItalicEnabled : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isAnchorTextItalicEnabled();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_isAnchorTextItalicEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_setAnchorFontColor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_setAnchorFontColor : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setAnchorFontColor : Error processing arguments");
+        cobj->setAnchorFontColor(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_setAnchorFontColor : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_setFontFace(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_setFontFace : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setFontFace : Error processing arguments");
+        cobj->setFontFace(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_setFontFace : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_setAnchorTextGlow(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextGlow : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextGlow : Error processing arguments");
+        cobj->setAnchorTextGlow(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    if (argc == 2) {
+        bool arg0;
+        cocos2d::Color3B arg1;
+        arg0 = JS::ToBoolean(args.get(0));
+        ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextGlow : Error processing arguments");
+        cobj->setAnchorTextGlow(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_setAnchorTextGlow : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_setAnchorTextDel(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextDel : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextDel : Error processing arguments");
+        cobj->setAnchorTextDel(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_setAnchorTextDel : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_getAnchorTextOutlineColor3B(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getAnchorTextOutlineColor3B : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Color3B ret = cobj->getAnchorTextOutlineColor3B();
+        jsval jsret = JSVAL_NULL;
+        jsret = cccolor3b_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getAnchorTextOutlineColor3B : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_stringWithColor4B(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_stringWithColor4B : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Color4B arg0;
+        ok &= jsval_to_cccolor4b(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_stringWithColor4B : Error processing arguments");
+        std::string ret = cobj->stringWithColor4B(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_stringWithColor4B : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_initWithXML(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_initWithXML : Invalid Native Object");
+    if (argc == 2) {
+        std::string arg0;
+        cocos2d::ValueMap arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_ccvaluemap(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_initWithXML : Error processing arguments");
+        bool ret = cobj->initWithXML(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    if (argc == 3) {
+        std::string arg0;
+        cocos2d::ValueMap arg1;
+        std::function<void (const std::basic_string<char> &)> arg2;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_ccvaluemap(cx, args.get(1), &arg1);
+        do {
+		    if(JS_TypeOfValue(cx, args.get(2)) == JSTYPE_FUNCTION)
+		    {
+		        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(2), args.thisv()));
+		        auto lambda = [=](const std::basic_string<char> & larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = std_string_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg2 = lambda;
+		    }
+		    else
+		    {
+		        arg2 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_initWithXML : Error processing arguments");
+        bool ret = cobj->initWithXML(arg0, arg1, arg2);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_initWithXML : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_getAnchorFontColor3B(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getAnchorFontColor3B : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Color3B ret = cobj->getAnchorFontColor3B();
+        jsval jsret = JSVAL_NULL;
+        jsret = cccolor3b_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getAnchorFontColor3B : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_formatText(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_formatText : Invalid Native Object");
+    if (argc == 0) {
+        cobj->formatText();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_formatText : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_getAnchorTextGlowColor3B(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getAnchorTextGlowColor3B : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Color3B ret = cobj->getAnchorTextGlowColor3B();
+        jsval jsret = JSVAL_NULL;
+        jsret = cccolor3b_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getAnchorTextGlowColor3B : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_openUrl(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_openUrl : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_openUrl : Error processing arguments");
+        cobj->openUrl(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_openUrl : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_getFontFace(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getFontFace : Invalid Native Object");
+    if (argc == 0) {
+        std::string ret = cobj->getFontFace();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getFontFace : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_setFontColor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_setFontColor : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setFontColor : Error processing arguments");
+        cobj->setFontColor(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_setFontColor : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_isAnchorTextGlowEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_isAnchorTextGlowEnabled : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isAnchorTextGlowEnabled();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_isAnchorTextGlowEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_getDefaults(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getDefaults : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::ValueMap ret = cobj->getDefaults();
+        jsval jsret = JSVAL_NULL;
+        jsret = ccvaluemap_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getDefaults : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_isAnchorTextUnderlineEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_isAnchorTextUnderlineEnabled : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isAnchorTextUnderlineEnabled();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_isAnchorTextUnderlineEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_getFontColor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getFontColor : Invalid Native Object");
+    if (argc == 0) {
+        std::string ret = cobj->getFontColor();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getFontColor : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_isAnchorTextShadowEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_isAnchorTextShadowEnabled : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isAnchorTextShadowEnabled();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_isAnchorTextShadowEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_getAnchorTextOutlineSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getAnchorTextOutlineSize : Invalid Native Object");
+    if (argc == 0) {
+        int ret = cobj->getAnchorTextOutlineSize();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getAnchorTextOutlineSize : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ui_RichText_setVerticalSpace(JSContext *cx, uint32_t argc, jsval *vp)
@@ -13745,60 +14909,82 @@ bool js_cocos2dx_ui_RichText_setVerticalSpace(JSContext *cx, uint32_t argc, jsva
     JS_ReportError(cx, "js_cocos2dx_ui_RichText_setVerticalSpace : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_ui_RichText_getWrapMode(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_ui_RichText_isAnchorTextDelEnabled(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getWrapMode : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_isAnchorTextDelEnabled : Invalid Native Object");
     if (argc == 0) {
-        int ret = (int)cobj->getWrapMode();
-        jsval jsret = JSVAL_NULL;
-        jsret = int32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getWrapMode : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_ui_RichText_formatText(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_formatText : Invalid Native Object");
-    if (argc == 0) {
-        cobj->formatText();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_ui_RichText_formatText : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_ui_RichText_initWithXML(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_initWithXML : Invalid Native Object");
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_initWithXML : Error processing arguments");
-        bool ret = cobj->initWithXML(arg0);
+        bool ret = cobj->isAnchorTextDelEnabled();
         jsval jsret = JSVAL_NULL;
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_ui_RichText_initWithXML : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_isAnchorTextDelEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_setDefaults(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_setDefaults : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::ValueMap arg0;
+        ok &= jsval_to_ccvaluemap(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setDefaults : Error processing arguments");
+        cobj->setDefaults(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_setDefaults : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_setWrapMode(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_setWrapMode : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::ui::RichText::WrapMode arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setWrapMode : Error processing arguments");
+        cobj->setWrapMode(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_setWrapMode : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_setFontSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_setFontSize : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setFontSize : Error processing arguments");
+        cobj->setFontSize(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_setFontSize : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_ui_RichText_removeElement(JSContext *cx, uint32_t argc, jsval *vp)
@@ -13845,6 +15031,198 @@ bool js_cocos2dx_ui_RichText_removeElement(JSContext *cx, uint32_t argc, jsval *
     JS_ReportError(cx, "js_cocos2dx_ui_RichText_removeElement : wrong number of arguments");
     return false;
 }
+bool js_cocos2dx_ui_RichText_setAnchorTextItalic(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextItalic : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextItalic : Error processing arguments");
+        cobj->setAnchorTextItalic(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_setAnchorTextItalic : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_getAnchorTextShadowOffset(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getAnchorTextShadowOffset : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Size ret = cobj->getAnchorTextShadowOffset();
+        jsval jsret = JSVAL_NULL;
+        jsret = ccsize_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getAnchorTextShadowOffset : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_isAnchorTextBoldEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_isAnchorTextBoldEnabled : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isAnchorTextBoldEnabled();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_isAnchorTextBoldEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_getAnchorTextShadowColor3B(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getAnchorTextShadowColor3B : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Color3B ret = cobj->getAnchorTextShadowColor3B();
+        jsval jsret = JSVAL_NULL;
+        jsret = cccolor3b_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getAnchorTextShadowColor3B : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_stringWithColor3B(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_stringWithColor3B : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Color3B arg0;
+        ok &= jsval_to_cccolor3b(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_stringWithColor3B : Error processing arguments");
+        std::string ret = cobj->stringWithColor3B(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_stringWithColor3B : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_isAnchorTextOutlineEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_isAnchorTextOutlineEnabled : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isAnchorTextOutlineEnabled();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_isAnchorTextOutlineEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_getFontColor3B(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getFontColor3B : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Color3B ret = cobj->getFontColor3B();
+        jsval jsret = JSVAL_NULL;
+        jsret = cccolor3b_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getFontColor3B : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_getWrapMode(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getWrapMode : Invalid Native Object");
+    if (argc == 0) {
+        int ret = (int)cobj->getWrapMode();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getWrapMode : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_setAnchorTextUnderline(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextUnderline : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setAnchorTextUnderline : Error processing arguments");
+        cobj->setAnchorTextUnderline(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_setAnchorTextUnderline : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_color3BWithString(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_color3BWithString : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_color3BWithString : Error processing arguments");
+        cocos2d::Color3B ret = cobj->color3BWithString(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = cccolor3b_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_color3BWithString : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_ui_RichText_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -13864,12 +15242,51 @@ bool js_cocos2dx_ui_RichText_createWithXML(JSContext *cx, uint32_t argc, jsval *
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    if (argc == 1) {
+    if (argc == 2) {
         std::string arg0;
+        cocos2d::ValueMap arg1;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_ccvaluemap(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_createWithXML : Error processing arguments");
 
-        auto ret = cocos2d::ui::RichText::createWithXML(arg0);
+        auto ret = cocos2d::ui::RichText::createWithXML(arg0, arg1);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::ui::RichText>(ret);
+        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::ui::RichText"));
+        args.rval().set(OBJECT_TO_JSVAL(jsret));
+        return true;
+    }
+    if (argc == 3) {
+        std::string arg0;
+        cocos2d::ValueMap arg1;
+        std::function<void (const std::basic_string<char> &)> arg2;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_ccvaluemap(cx, args.get(1), &arg1);
+        do {
+		    if(JS_TypeOfValue(cx, args.get(2)) == JSTYPE_FUNCTION)
+		    {
+		        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(2), args.thisv()));
+		        auto lambda = [=](const std::basic_string<char> & larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = std_string_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg2 = lambda;
+		    }
+		    else
+		    {
+		        arg2 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_createWithXML : Error processing arguments");
+
+        auto ret = cocos2d::ui::RichText::createWithXML(arg0, arg1, arg2);
         js_type_class_t *typeClass = js_get_type_from_native<cocos2d::ui::RichText>(ret);
         JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::ui::RichText"));
         args.rval().set(OBJECT_TO_JSVAL(jsret));
@@ -13930,20 +15347,56 @@ void js_register_cocos2dx_ui_RichText(JSContext *cx, JS::HandleObject global) {
 
     static JSFunctionSpec funcs[] = {
         JS_FN("insertElement", js_cocos2dx_ui_RichText_insertElement, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAnchorTextOutline", js_cocos2dx_ui_RichText_setAnchorTextOutline, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getFontSize", js_cocos2dx_ui_RichText_getFontSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("pushBackElement", js_cocos2dx_ui_RichText_pushBackElement, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setWrapMode", js_cocos2dx_ui_RichText_setWrapMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setVerticalSpace", js_cocos2dx_ui_RichText_setVerticalSpace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getWrapMode", js_cocos2dx_ui_RichText_getWrapMode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAnchorTextBold", js_cocos2dx_ui_RichText_setAnchorTextBold, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAnchorFontColor", js_cocos2dx_ui_RichText_getAnchorFontColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAnchorTextShadowBlurRadius", js_cocos2dx_ui_RichText_getAnchorTextShadowBlurRadius, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAnchorTextShadow", js_cocos2dx_ui_RichText_setAnchorTextShadow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isAnchorTextItalicEnabled", js_cocos2dx_ui_RichText_isAnchorTextItalicEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAnchorFontColor", js_cocos2dx_ui_RichText_setAnchorFontColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setFontFace", js_cocos2dx_ui_RichText_setFontFace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAnchorTextGlow", js_cocos2dx_ui_RichText_setAnchorTextGlow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAnchorTextDel", js_cocos2dx_ui_RichText_setAnchorTextDel, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAnchorTextOutlineColor3B", js_cocos2dx_ui_RichText_getAnchorTextOutlineColor3B, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("stringWithColor4B", js_cocos2dx_ui_RichText_stringWithColor4B, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithXML", js_cocos2dx_ui_RichText_initWithXML, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAnchorFontColor3B", js_cocos2dx_ui_RichText_getAnchorFontColor3B, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("formatText", js_cocos2dx_ui_RichText_formatText, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("initWithXML", js_cocos2dx_ui_RichText_initWithXML, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAnchorTextGlowColor3B", js_cocos2dx_ui_RichText_getAnchorTextGlowColor3B, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("openUrl", js_cocos2dx_ui_RichText_openUrl, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getFontFace", js_cocos2dx_ui_RichText_getFontFace, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setFontColor", js_cocos2dx_ui_RichText_setFontColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isAnchorTextGlowEnabled", js_cocos2dx_ui_RichText_isAnchorTextGlowEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getDefaults", js_cocos2dx_ui_RichText_getDefaults, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isAnchorTextUnderlineEnabled", js_cocos2dx_ui_RichText_isAnchorTextUnderlineEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getFontColor", js_cocos2dx_ui_RichText_getFontColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isAnchorTextShadowEnabled", js_cocos2dx_ui_RichText_isAnchorTextShadowEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAnchorTextOutlineSize", js_cocos2dx_ui_RichText_getAnchorTextOutlineSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setVerticalSpace", js_cocos2dx_ui_RichText_setVerticalSpace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isAnchorTextDelEnabled", js_cocos2dx_ui_RichText_isAnchorTextDelEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setDefaults", js_cocos2dx_ui_RichText_setDefaults, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setWrapMode", js_cocos2dx_ui_RichText_setWrapMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setFontSize", js_cocos2dx_ui_RichText_setFontSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeElement", js_cocos2dx_ui_RichText_removeElement, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAnchorTextItalic", js_cocos2dx_ui_RichText_setAnchorTextItalic, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAnchorTextShadowOffset", js_cocos2dx_ui_RichText_getAnchorTextShadowOffset, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isAnchorTextBoldEnabled", js_cocos2dx_ui_RichText_isAnchorTextBoldEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAnchorTextShadowColor3B", js_cocos2dx_ui_RichText_getAnchorTextShadowColor3B, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("stringWithColor3B", js_cocos2dx_ui_RichText_stringWithColor3B, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isAnchorTextOutlineEnabled", js_cocos2dx_ui_RichText_isAnchorTextOutlineEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getFontColor3B", js_cocos2dx_ui_RichText_getFontColor3B, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getWrapMode", js_cocos2dx_ui_RichText_getWrapMode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAnchorTextUnderline", js_cocos2dx_ui_RichText_setAnchorTextUnderline, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("color3BWithString", js_cocos2dx_ui_RichText_color3BWithString, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocos2dx_ui_RichText_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
     static JSFunctionSpec st_funcs[] = {
         JS_FN("create", js_cocos2dx_ui_RichText_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createWithXML", js_cocos2dx_ui_RichText_createWithXML, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithXML", js_cocos2dx_ui_RichText_createWithXML, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -18797,6 +20250,7 @@ void register_all_cocos2dx_ui(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_ui_ScrollView(cx, ns);
     js_register_cocos2dx_ui_ListView(cx, ns);
     js_register_cocos2dx_ui_TabHeader(cx, ns);
+    js_register_cocos2dx_ui_RichElementNewLine(cx, ns);
     js_register_cocos2dx_ui_LayoutComponent(cx, ns);
     js_register_cocos2dx_ui_Button(cx, ns);
     js_register_cocos2dx_ui_LayoutParameter(cx, ns);

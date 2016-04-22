@@ -27,6 +27,7 @@
 #define CC_ALLOCATOR_STRATEGY_DEFAULT_H
 /// @cond DO_NOT_SHOW
 
+#include <stdlib.h>
 #include "base/allocator/CCAllocatorMacros.h"
 #include "base/allocator/CCAllocatorBase.h"
 
