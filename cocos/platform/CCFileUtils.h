@@ -54,23 +54,23 @@ template<typename T>
 class ResizableBufferAdapter { };
 
 
-template<typename C, typename T, typename A>
-class ResizableBufferAdapter< std::basic_string<C, T, A> > : public ResizableBuffer {
-    typedef std::basic_string<C, T, A> BufferType;
+template<typename CharT, typename Traits, typename Allocator>
+class ResizableBufferAdapter< std::basic_string<CharT, Traits, Allocator> > : public ResizableBuffer {
+    typedef std::basic_string<CharT, Traits, Allocator> BufferType;
     BufferType* _buffer;
 public:
     explicit ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
     virtual void resize(size_t size) override {
-        _buffer->resize((size + sizeof(C) - 1) / sizeof(C));
+        _buffer->resize((size + sizeof(CharT) - 1) / sizeof(CharT));
     }
     virtual void* buffer() const override {
         return &_buffer->front();
     }
 };
 
-template<typename T, typename A>
-class ResizableBufferAdapter< std::vector<T, A> > : public ResizableBuffer {
-    typedef std::vector<T, A> BufferType;
+template<typename T, typename Allocator>
+class ResizableBufferAdapter< std::vector<T, Allocator> > : public ResizableBuffer {
+    typedef std::vector<T, Allocator> BufferType;
     BufferType* _buffer;
 public:
     explicit ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
@@ -230,7 +230,7 @@ public:
      */
     template <
         typename T,
-        typename X = typename std::enable_if<
+        typename Enable = typename std::enable_if<
             std::is_base_of< ResizableBuffer, ResizableBufferAdapter<T> >::value
         >::type
     >
