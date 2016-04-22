@@ -653,8 +653,9 @@ bool Node::isIgnoreAnchorPointForPosition() const
 {
     return _ignoreAnchorPointForPosition;
 }
+
 /// isRelativeAnchorPoint setter
-void Node::ignoreAnchorPointForPosition(bool newValue)
+void Node::setIgnoreAnchorPointForPosition(bool newValue)
 {
     if (newValue != _ignoreAnchorPointForPosition) 
     {
