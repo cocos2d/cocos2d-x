@@ -278,7 +278,7 @@ FileUtils::Error FileUtilsAndroid::getContents(const std::string& filename, Resi
 
 std::string FileUtilsAndroid::getStringFromFile(const std::string& filename)
 {
-    return FileUtils::getStringFromFile();
+    return FileUtils::getStringFromFile(filename);
 }
 
 Data FileUtilsAndroid::getDataFromFile(const std::string& filename)
