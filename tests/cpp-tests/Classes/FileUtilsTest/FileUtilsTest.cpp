@@ -593,6 +593,23 @@ std::string TestWriteString::subtitle() const
     return "";
 }
 
+class CustomBuffer : public ResizableBuffer {};
+
+struct AlreadyExistsBuffer {};
+
+NS_CC_BEGIN
+template<>
+class ResizableBufferAdapter<AlreadyExistsBuffer> : public ResizableBuffer {
+public:
+    explicit ResizableBufferAdapter(AlreadyExistsBuffer* buffer) {}
+    virtual void resize(size_t size) override {
+
+    }
+    virtual void* buffer() const override {
+
+    }
+};
+NS_CC_END
 
 void TestReadAll::onEnter()
 {
@@ -658,6 +675,11 @@ void TestReadAll::onEnter()
         return;
     }
 
+    auto test_if_compiles = [fullPath]() {
+        FileUtils::getInstance()->getContents(fullPath, (CustomBuffer*)(nullptr));
+        AlreadyExistsBuffer buf;
+        FileUtils::getInstance()->getContents(fullPath, &buf);
+    };
 
     if (memcmp(&sbuf.front(), &vbuf.front(), sbuf.size()) != 0)
     {
