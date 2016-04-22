@@ -67,13 +67,13 @@ namespace cocos2d { namespace network {
         {
             DLLOG("Construct DownloaderAndroid: %p", this);
             JniMethodInfo methodInfo;
-            if (JniHelper::getStaticMethodInfo(methodInfo,
-                                               JCLS_DOWNLOADER,
-                                               "createDownloader",
-                                               "(II" JARG_STR "I)" JARG_DOWNLOADER))
+            if (JniHelper::getMethodInfo(methodInfo,
+                                         JCLS_DOWNLOADER,
+                                         "<init>",
+                                         "(II" JARG_STR "I)V"))
             {
                 jobject jStr = methodInfo.env->NewStringUTF(hints.tempFileNameSuffix.c_str());
-                jobject jObj = methodInfo.env->CallStaticObjectMethod(
+                jobject jObj = methodInfo.env->NewObject(
                         methodInfo.classID,
                         methodInfo.methodID,
                         _id,
@@ -95,15 +95,14 @@ namespace cocos2d { namespace network {
             if(_impl != nullptr)
             {
                 JniMethodInfo methodInfo;
-                if (JniHelper::getStaticMethodInfo(methodInfo,
-                                                   JCLS_DOWNLOADER,
-                                                   "cancelAllRequests",
-                                                   "(" JARG_DOWNLOADER ")V"))
+                if (JniHelper::getMethodInfo(methodInfo,
+                                             JCLS_DOWNLOADER,
+                                             "cancelAllRequests",
+                                             "(V)V"))
                 {
-                    methodInfo.env->CallStaticVoidMethod(
-                            methodInfo.classID,
-                            methodInfo.methodID,
-                            _impl
+                    methodInfo.env->CallVoidMethod(
+                            _impl,
+                            methodInfo.methodID
                     );
                     methodInfo.env->DeleteLocalRef(methodInfo.classID);
                 }
@@ -119,14 +118,14 @@ namespace cocos2d { namespace network {
             coTask->task = task;
 
             JniMethodInfo methodInfo;
-            if (JniHelper::getStaticMethodInfo(methodInfo,
-                                               JCLS_DOWNLOADER,
-                                               "createTask",
-                                               "(" JARG_DOWNLOADER "I" JARG_STR JARG_STR")V"))
+            if (JniHelper::getMethodInfo(methodInfo,
+                                         JCLS_DOWNLOADER,
+                                         "createTask",
+                                         "(I" JARG_STR JARG_STR")V"))
             {
                 jstring jstrURL = methodInfo.env->NewStringUTF(task->requestURL.c_str());
                 jstring jstrPath= methodInfo.env->NewStringUTF(task->storagePath.c_str());
-                methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, _impl, coTask->id, jstrURL, jstrPath);
+                methodInfo.env->CallVoidMethod( _impl, methodInfo.methodID, coTask->id, jstrURL, jstrPath);
                 methodInfo.env->DeleteLocalRef(jstrURL);
                 methodInfo.env->DeleteLocalRef(jstrPath);
                 methodInfo.env->DeleteLocalRef(methodInfo.classID);
