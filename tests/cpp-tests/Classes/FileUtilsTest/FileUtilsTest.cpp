@@ -654,7 +654,7 @@ void TestGetContents::onEnter()
     std::string otext;
     fs->getContents(generated, &otext);
     if (text != otext) {
-        readResult->setString("getContents() failed");
+        readResult->setString("FileUtils::getContents() failed: CRLF or zero handling error");
         return;
     }
     
@@ -678,7 +678,7 @@ void TestGetContents::onEnter()
         auto serr = fs->getContents(file, &sbuf);
         if (serr != FileUtils::Error::OK)
         {
-            readResult->setString("getContents() failed: error: " + errors[(int)serr]);
+            readResult->setString("FileUtils::getContents() failed: error: " + errors[(int)serr]);
             return;
         }
         
@@ -686,7 +686,7 @@ void TestGetContents::onEnter()
         auto verr = fs->getContents(file, &vbuf);
         if (verr != FileUtils::Error::OK)
         {
-            readResult->setString("getContents() failed: error: " + errors[(int)verr]);
+            readResult->setString("FileUtils::getContents() failed: error: " + errors[(int)verr]);
             return;
         }
         
@@ -694,13 +694,13 @@ void TestGetContents::onEnter()
         auto derr = fs->getContents(file, &dbuf);
         if (derr != FileUtils::Error::OK)
         {
-            readResult->setString("getContents() failed: error: " + errors[(int)derr]);
+            readResult->setString("FileUtils::getContents() failed: error: " + errors[(int)derr]);
             return;
         }
 
         if (memcmp(&sbuf.front(), &vbuf.front(), sbuf.size()) != 0)
         {
-            readResult->setString("getContents() failed: error: sbuf != vbuf");
+            readResult->setString("FileUtils::getContents() failed: error: sbuf != vbuf");
             return;
         }
         
@@ -708,7 +708,7 @@ void TestGetContents::onEnter()
         {
             auto s1 = sbuf.size();
             auto s2 = dbuf.getSize();
-            auto s = StringUtils::format("getContents() failed: error: sbuf.size() != dbuf.getSize() (%d vs %d)",
+            auto s = StringUtils::format("FileUtils::getContents() failed: error: sbuf.size() != dbuf.getSize() (%d vs %d)",
                                 (int)s1, (int)s2);
             readResult->setString(s);
             return;
@@ -716,7 +716,7 @@ void TestGetContents::onEnter()
         
         if (memcmp(&sbuf.front(), dbuf.getBytes(), sbuf.size()) != 0)
         {
-            readResult->setString("getContents() failed: error: sbuf != dbuf");
+            readResult->setString("FileUtils::getContents() failed: error: sbuf != dbuf");
             return;
         }
         
