@@ -1097,7 +1097,7 @@ void NodeLoader::onHandlePropTypeCheck(Node * pNode, Node * pParent, const char*
     if(strcmp(pPropertyName, PROPERTY_VISIBLE) == 0) {
         pNode->setVisible(pCheck);
     } else if(strcmp(pPropertyName, PROPERTY_IGNOREANCHORPOINTFORPOSITION) == 0) {
-        pNode->ignoreAnchorPointForPosition(pCheck);
+        pNode->setIgnoreAnchorPointForPosition(pCheck);
     } else {
         //ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
         // It may be a custom property, add it to custom property dictionary.
