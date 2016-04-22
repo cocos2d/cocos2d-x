@@ -13,7 +13,7 @@ FileUtilsTests::FileUtilsTests()
     ADD_TEST_CASE(TestDirectoryFuncs);
     ADD_TEST_CASE(TextWritePlist);
     ADD_TEST_CASE(TestWriteString);
-    ADD_TEST_CASE(TestReadAll);
+    ADD_TEST_CASE(TestGetContents);
     ADD_TEST_CASE(TestWriteData);
     ADD_TEST_CASE(TestWriteValueMap);
     ADD_TEST_CASE(TestWriteValueVector);
@@ -601,48 +601,59 @@ NS_CC_BEGIN
 template<>
 class ResizableBufferAdapter<AlreadyExistsBuffer> : public ResizableBuffer {
 public:
-    explicit ResizableBufferAdapter(AlreadyExistsBuffer* buffer) {}
+    explicit ResizableBufferAdapter(AlreadyExistsBuffer* buffer) {
+    }
     virtual void resize(size_t size) override {
 
     }
     virtual void* buffer() const override {
-
+        return nullptr;
     }
 };
 NS_CC_END
 
-void TestReadAll::onEnter()
+void TestGetContents::onEnter()
 {
     FileUtilsDemo::onEnter();
+    auto fs = FileUtils::getInstance();
+    
+    auto test_if_compiles = [fs]() {
+        fs->getContents("", (CustomBuffer*)(nullptr));
+        AlreadyExistsBuffer buf;
+        fs->getContents("", &buf);
+    };
+    
+    (void)(test_if_compiles);
 
     auto winSize = Director::getInstance()->getWinSize();
-
-    auto writeResult = Label::createWithTTF("show writeResult", "fonts/Thonburi.ttf", 18);
-    this->addChild(writeResult);
-    writeResult->setPosition(winSize.width / 2, winSize.height * 3 / 4);
 
     auto readResult = Label::createWithTTF("show readResult", "fonts/Thonburi.ttf", 18);
     this->addChild(readResult);
     readResult->setPosition(winSize.width / 2, winSize.height / 3);
+    
+    std::vector<char> specialchars;
+    specialchars.push_back(0);
+    specialchars.push_back(0);
+    specialchars.push_back('\r');
+    specialchars.push_back('\n');
+    specialchars.push_back('\r');
+    specialchars.push_back('\n');
+    specialchars.push_back(0);
+    specialchars.push_back(0);
+    specialchars.push_back('\r');
+    specialchars.push_back('\n');
+    specialchars.push_back('\r');
+    specialchars.push_back('\n');
+    
+    std::string text(text.begin(), text.end());
+    
+    std::string generated(fs->getWritablePath() + "file-with-zeros-and-crlf");
 
-    std::string writablePath = FileUtils::getInstance()->getWritablePath();
-    std::string fileName = "writeStringTest.txt";
+    fs->writeStringToFile(text, generated);
+    
+    std::string files[] = {"background.wav", "fileLookup.plist", generated};
 
-    // writeTest
-    std::string writeDataStr = "the string data will be write into a file";
-    std::string fullPath = writablePath + fileName;
-    if (FileUtils::getInstance()->writeStringToFile(writeDataStr, fullPath.c_str()))
-    {
-        log("see the plist file at %s", fullPath.c_str());
-        writeResult->setString("write success:" + writeDataStr);
-    }
-    else
-    {
-        log("write plist file failed");
-        writeResult->setString("write fail");
-    }
 
-    // readTest
     const std::string errors[] = {
         "OK",
         "NotExists",
@@ -650,63 +661,76 @@ void TestReadAll::onEnter()
         "ReadFaild",
         "NotInitialized"
     };
+    
+    
+    
+    for (auto& file : files) {
+        std::string sbuf;
+        
+        auto serr = fs->getContents(file, &sbuf);
+        if (serr != FileUtils::Error::OK)
+        {
+            readResult->setString("getContents() failed: error: " + errors[(int)serr]);
+            return;
+        }
+        
+        std::vector<int> vbuf;
+        auto verr = fs->getContents(file, &vbuf);
+        if (verr != FileUtils::Error::OK)
+        {
+            readResult->setString("getContents() failed: error: " + errors[(int)verr]);
+            return;
+        }
+        
+        Data dbuf;
+        auto derr = fs->getContents(file, &dbuf);
+        if (derr != FileUtils::Error::OK)
+        {
+            readResult->setString("getContents() failed: error: " + errors[(int)derr]);
+            return;
+        }
 
-    std::string sbuf;
-    auto serr = FileUtils::getInstance()->getContents(fullPath, &sbuf);
-    if (serr != FileUtils::Error::OK)
-    {
-        readResult->setString("getContents() failed: error: " + errors[(int)serr]);
-        return;
+        if (memcmp(&sbuf.front(), &vbuf.front(), sbuf.size()) != 0)
+        {
+            readResult->setString("getContents() failed: error: sbuf != vbuf");
+            return;
+        }
+        
+        if (dbuf.getSize() != sbuf.size())
+        {
+            auto s1 = sbuf.size();
+            auto s2 = dbuf.getSize();
+            auto s = StringUtils::format("getContents() failed: error: sbuf.size() != dbuf.getSize() (%d vs %d)",
+                                (int)s1, (int)s2);
+            readResult->setString(s);
+            return;
+        }
+        
+        if (memcmp(&sbuf.front(), dbuf.getBytes(), sbuf.size()) != 0)
+        {
+            readResult->setString("getContents() failed: error: sbuf != dbuf");
+            return;
+        }
+        
     }
-
-    std::vector<int> vbuf;
-    auto verr = FileUtils::getInstance()->getContents(fullPath, &vbuf);
-    if (verr != FileUtils::Error::OK)
-    {
-        readResult->setString("getContents() failed: error: " + errors[(int)verr]);
-        return;
-    }
-
-    Data dbuf;
-    auto derr = FileUtils::getInstance()->getContents(fullPath, &dbuf);
-    if (derr != FileUtils::Error::OK)
-    {
-        readResult->setString("getContents() failed: error: " + errors[(int)derr]);
-        return;
-    }
-
-    auto test_if_compiles = [fullPath]() {
-        FileUtils::getInstance()->getContents(fullPath, (CustomBuffer*)(nullptr));
-        AlreadyExistsBuffer buf;
-        FileUtils::getInstance()->getContents(fullPath, &buf);
-    };
-
-    if (memcmp(&sbuf.front(), &vbuf.front(), sbuf.size()) != 0)
-    {
-        readResult->setString("getContents() failed: error: sbuf != vbuf");
-        return;
-    }
-
-    if (memcmp(&sbuf.front(), dbuf.getBytes(), sbuf.size()) != 0)
-    {
-        readResult->setString("getContents() failed: error: sbuf != dbuf");
-        return;
-    }
-
-    readResult->setString("read success:" + sbuf);
+    
+    readResult->setString("FileUtils::getContents() read success");
 }
 
-void TestReadAll::onExit()
+void TestGetContents::onExit()
 {
+    auto fs = FileUtils::getInstance();
+    std::string generated(fs->getWritablePath() + "file-with-zeros-and-crlf");
+    fs->removeFile(generated);
     FileUtilsDemo::onExit();
 }
 
-std::string TestReadAll::title() const
+std::string TestGetContents::title() const
 {
-    return "FileUtils: TestWriteString to files";
+    return "FileUtils: TestGetContents";
 }
 
-std::string TestReadAll::subtitle() const
+std::string TestGetContents::subtitle() const
 {
     return "";
 }

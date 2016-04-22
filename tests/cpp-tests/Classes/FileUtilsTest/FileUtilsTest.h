@@ -113,10 +113,10 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class TestReadAll : public FileUtilsDemo
+class TestGetContents : public FileUtilsDemo
 {
 public:
-    CREATE_FUNC(TestReadAll);
+    CREATE_FUNC(TestGetContents);
     
     virtual void onEnter() override;
     virtual void onExit() override;
