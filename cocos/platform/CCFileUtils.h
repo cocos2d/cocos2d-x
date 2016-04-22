@@ -102,16 +102,6 @@ public:
     }
 };
 
-enum class FileError
-{
-    OK = 0,
-    NotExists = 0x01, /** File not exists */
-    OpenFailed = 0x02, /** Open file failed. */
-    ReadFaild = 0x03, /** Read failed */
-    NotInitialized = 0x04, /** FileUtils is not initializes */
-};
-
-
 /** Helper class to handle file operations. */
 class CC_DLL FileUtils
 {
@@ -170,6 +160,16 @@ public:
      */
     virtual Data getDataFromFile(const std::string& filename);
 
+
+    enum class Error
+    {
+        OK = 0,
+        NotExists = 0x01, /** File not exists */
+        OpenFailed = 0x02, /** Open file failed. */
+        ReadFaild = 0x03, /** Read failed */
+        NotInitialized = 0x04, /** FileUtils is not initializes */
+    };
+
     /**
      *  Gets whole file contents as string from a file.
      *
@@ -219,11 +219,11 @@ public:
      *  @param[in]  filename The resource file name which contains the path.
      *  @param[out] buffer The buffer where the file contents are store to.
      *  @return Returns:
-     *      - FileError::OK when there is no error, the buffer is filled with the contents of file.
-     *      - FileError::NotExists when file not exists, the buffer will not changed.
-     *      - FileError::OpenFailed when cannot open file, the buffer will not changed.
-     *      - FileError::ReadFaild when read end up before read whole, the buffer will fill with already read bytes.
-     *      - FileError::NotInitialized when FileUtils is not initializes, the buffer will not changed.
+     *      - Error::OK when there is no error, the buffer is filled with the contents of file.
+     *      - Error::NotExists when file not exists, the buffer will not changed.
+     *      - Error::OpenFailed when cannot open file, the buffer will not changed.
+     *      - Error::ReadFaild when read end up before read whole, the buffer will fill with already read bytes.
+     *      - Error::NotInitialized when FileUtils is not initializes, the buffer will not changed.
      */
     template <
         typename T,
@@ -231,11 +231,11 @@ public:
             std::is_base_of< ResizableBuffer, ResizableBufferAdapter<T> >::value
         >::type
     >
-    FileError getContents(const std::string& filename, T* buffer) {
+    Error getContents(const std::string& filename, T* buffer) {
         ResizableBufferAdapter<T> buf(buffer);
         return getContents(filename, &buf);
     }
-    virtual FileError getContents(const std::string& filename, ResizableBuffer* buffer);
+    virtual Error getContents(const std::string& filename, ResizableBuffer* buffer);
 
     /**
      *  Gets resource file data

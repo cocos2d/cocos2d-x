@@ -653,7 +653,7 @@ void TestReadAll::onEnter()
 
     std::string sbuf;
     auto serr = FileUtils::getInstance()->getContents(fullPath, &sbuf);
-    if (serr != FileError::OK)
+    if (serr != FileUtils::Error::OK)
     {
         readResult->setString("getContents() failed: error: " + errors[(int)serr]);
         return;
@@ -661,7 +661,7 @@ void TestReadAll::onEnter()
 
     std::vector<int> vbuf;
     auto verr = FileUtils::getInstance()->getContents(fullPath, &vbuf);
-    if (verr != FileError::OK)
+    if (verr != FileUtils::Error::OK)
     {
         readResult->setString("getContents() failed: error: " + errors[(int)verr]);
         return;
@@ -669,7 +669,7 @@ void TestReadAll::onEnter()
 
     Data dbuf;
     auto derr = FileUtils::getInstance()->getContents(fullPath, &dbuf);
-    if (derr != FileError::OK)
+    if (derr != FileUtils::Error::OK)
     {
         readResult->setString("getContents() failed: error: " + errors[(int)derr]);
         return;

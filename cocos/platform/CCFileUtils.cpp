@@ -686,20 +686,20 @@ Data FileUtils::getDataFromFile(const std::string& filename)
 }
 
 
-FileError FileUtils::getContents(const std::string& filename, ResizableBuffer* buffer)
+FileUtils::Error FileUtils::getContents(const std::string& filename, ResizableBuffer* buffer)
 {
     if (filename.empty())
-        return FileError::NotExists;
+        return Error::NotExists;
 
     auto fs = FileUtils::getInstance();
 
     std::string fullPath = fs->fullPathForFilename(filename);
     if (fullPath.empty())
-        return FileError::NotExists;
+        return Error::NotExists;
 
     FILE *fp = fopen(fs->getSuitableFOpen(fullPath).c_str(), "rb");
     if (!fp)
-        return FileError::OpenFailed;
+        return Error::OpenFailed;
 
     fseek(fp, 0, SEEK_END);
     size_t size = ftell(fp);
@@ -711,10 +711,10 @@ FileError FileUtils::getContents(const std::string& filename, ResizableBuffer* b
 
     if (readsize < size) {
         buffer->resize(readsize);
-        return FileError::ReadFaild;
+        return Error::ReadFaild;
     }
 
-    return FileError::OK;
+    return Error::OK;
 }
 
 unsigned char* FileUtils::getFileData(const std::string& filename, const char* mode, ssize_t *size)

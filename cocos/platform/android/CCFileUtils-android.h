@@ -77,7 +77,7 @@ public:
      */
     virtual Data getDataFromFile(const std::string& filename) override;
 
-    virtual FileError getContents(const std::string& filename, ResizableBuffer* buffer) override;
+    virtual FileUtils::Error getContents(const std::string& filename, ResizableBuffer* buffer) override;
 
     virtual std::string getWritablePath() const override;
     virtual bool isAbsolutePath(const std::string& strPath) const override;
