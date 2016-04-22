@@ -645,11 +645,19 @@ void TestGetContents::onEnter()
     specialchars.push_back('\r');
     specialchars.push_back('\n');
     
-    std::string text(text.begin(), text.end());
+    std::string text(specialchars.begin(), specialchars.end());
     
     std::string generated(fs->getWritablePath() + "file-with-zeros-and-crlf");
 
     fs->writeStringToFile(text, generated);
+    
+    std::string otext;
+    fs->getContents(generated, &otext);
+    if (text != otext) {
+        readResult->setString("getContents() failed");
+        return;
+    }
+    
     
     std::string files[] = {"background.wav", "fileLookup.plist", generated};
 
