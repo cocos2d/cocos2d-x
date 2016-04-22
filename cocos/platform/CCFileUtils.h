@@ -173,8 +173,9 @@ public:
     /**
      *  Gets whole file contents as string from a file.
      *
-     *  Unlike getStringFromFile, these methods does not truncate the string when '\0' is found.
-     *  That is thie returned string of getContents may have '\0' in it.
+     *  Unlike getStringFromFile, these getContents methods:
+     *      - read file in binary mode (does not convert CRLF to LF).
+     *      - does not truncate the string when '\0' is found (returned string of getContents may have '\0' in the middle.).
      *
      *  The template version of can accept cocos2d::Data, std::basic_string and std::vector.
      *  For other type of buffer, please write an adapter for it, and use the non-template version.
@@ -189,6 +190,29 @@ public:
      *
      *  Data dbuf;
      *  FileUtils::getInstance()->getContents("path/to/file", &dbuf);
+     *  }
+     * </pre
+     *
+     *  - To write a new buffer class works with getContents, just extend ResizableBuffer.
+     *  - To write a adapter for existing class, write a for ResizableBufferAdapter, see follow code.
+     *
+     *  <pre>
+     *  {@code
+     *  NS_CC_BEGIN // ResizableBufferAdapter needed in cocos2d namespace.
+     *  template<>
+     *  class ResizableBufferAdapter<AlreadyExistsBuffer> : public ResizableBuffer {
+     *  public:
+     *      ResizableBufferAdapter(AlreadyExistsBuffer* buffer)  {
+     *          // your code here
+     *      }
+     *      virtual void resize(size_t size) override  {
+     *          // your code here
+     *      }
+     *      virtual void* buffer() const override {
+     *          // your code here
+     *      }
+     *  };
+     *  NS_CC_END
      *  }
      * </pre
      *
