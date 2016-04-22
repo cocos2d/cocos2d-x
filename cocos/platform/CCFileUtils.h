@@ -193,6 +193,9 @@ public:
      *  }
      * </pre
      *
+     *  Note: if you read to std::vector<T> and std::basic_string<T> where T is not 8 bit type,
+     *  you may get 0 ~ sizeof(T)-1 bytes padding.
+     *
      *  - To write a new buffer class works with getContents, just extend ResizableBuffer.
      *  - To write a adapter for existing class, write a for ResizableBufferAdapter, see follow code.
      *
