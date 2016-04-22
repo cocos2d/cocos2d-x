@@ -276,21 +276,6 @@ FileUtils::Error FileUtilsAndroid::getContents(const std::string& filename, Resi
     return FileUtils::Error::OK;
 }
 
-std::string FileUtilsAndroid::getStringFromFile(const std::string& filename)
-{
-    return FileUtils::getStringFromFile(filename);
-}
-
-Data FileUtilsAndroid::getDataFromFile(const std::string& filename)
-{
-    return FileUtils::getDataFromFile(filename);
-}
-
-unsigned char* FileUtilsAndroid::getFileData(const std::string& filename, const char* mode, ssize_t * size)
-{
-    return FileUtils::getFileData(filename, mode, size);
-}
-
 string FileUtilsAndroid::getWritablePath() const
 {
     // Fix for Nexus 10 (Android 4.2 multi-user environment)

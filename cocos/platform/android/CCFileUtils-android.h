@@ -63,20 +63,6 @@ public:
 
     virtual std::string getNewFilename(const std::string &filename) const override;
 
-    /** @deprecated Please use FileUtils::getDataFromFile or FileUtils::getStringFromFile instead. */
-    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t * size) override;
-
-    /**
-     *  Gets string from a file.
-     */
-    virtual std::string getStringFromFile(const std::string& filename) override;
-
-    /**
-     *  Creates binary data from a file.
-     *  @return A data object.
-     */
-    virtual Data getDataFromFile(const std::string& filename) override;
-
     virtual FileUtils::Error getContents(const std::string& filename, ResizableBuffer* buffer) override;
 
     virtual std::string getWritablePath() const override;
