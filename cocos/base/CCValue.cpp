@@ -53,7 +53,7 @@ Value::Value(int v)
     _field.intVal = v;
 }
 
-Value::Value(unsigned v)
+Value::Value(unsigned int v)
 : _type(Type::UNSIGNED)
 {
     _field.unsignedVal = v;
@@ -275,7 +275,7 @@ Value& Value::operator= (int v)
     return *this;
 }
 
-Value& Value::operator= (unsigned v)
+Value& Value::operator= (unsigned int v)
 {
     reset(Type::UNSIGNED);
     _field.unsignedVal = v;
@@ -534,18 +534,18 @@ unsigned int Value::asUnsignedInt() const
     if (_type == Type::INTEGER)
     {
         CCASSERT(_field.intVal >= 0, "Only values >= 0 can be converted to unsigned");
-        return static_cast<unsigned>(_field.intVal);
+        return static_cast<unsigned int>(_field.intVal);
     }
 
     if (_type == Type::BYTE)
     {
-        return static_cast<unsigned>(_field.byteVal);
+        return static_cast<unsigned int>(_field.byteVal);
     }
 
     if (_type == Type::STRING)
     {
         // NOTE: strtoul is required (need to augment on unsupported platforms)
-        return static_cast<unsigned int>(strtoul(_field.strVal->c_str(), NULL, 10));
+        return static_cast<unsigned int>(strtoul(_field.strVal->c_str(), nullptr, 10));
     }
 
     if (_type == Type::FLOAT)
