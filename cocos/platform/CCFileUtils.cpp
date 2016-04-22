@@ -610,79 +610,58 @@ void FileUtils::purgeCachedEntries()
     _fullPathCache.clear();
 }
 
-static Data getData(const std::string& filename, bool forString)
+
+// TODO: move this function to StringUtils.
+// http://stackoverflow.com/a/7724536/87021
+static inline std::string replaceAll(
+    std::string const& original,
+    std::string const& before,
+    std::string const& after
+)
 {
-    if (filename.empty())
-    {
-        return Data::Null;
+    std::string retval;
+    retval.reserve(original.size());
+    auto end = original.end();
+    auto current = original.begin();
+    auto next = std::search( current, end, before.begin(), before.end() );
+    while ( next != end ) {
+        retval.append( current, next );
+        retval.append( after );
+        current = next + before.size();
+        next = std::search( current, end, before.begin(), before.end() );
     }
-
-    Data ret;
-    unsigned char* buffer = nullptr;
-    size_t size = 0;
-    size_t readsize;
-    const char* mode = nullptr;
-
-    if (forString)
-        mode = "rt";
-    else
-        mode = "rb";
-
-    auto fileutils = FileUtils::getInstance();
-    do
-    {
-        // Read the file from hardware
-        std::string fullPath = fileutils->fullPathForFilename(filename);
-        FILE *fp = fopen(fileutils->getSuitableFOpen(fullPath).c_str(), mode);
-        CC_BREAK_IF(!fp);
-        fseek(fp,0,SEEK_END);
-        size = ftell(fp);
-        fseek(fp,0,SEEK_SET);
-
-        if (forString)
-        {
-            buffer = (unsigned char*)malloc(sizeof(unsigned char) * (size + 1));
-            buffer[size] = '\0';
-        }
-        else
-        {
-            buffer = (unsigned char*)malloc(sizeof(unsigned char) * size);
-        }
-
-        readsize = fread(buffer, sizeof(unsigned char), size, fp);
-        fclose(fp);
-
-        if (forString && readsize < size)
-        {
-            buffer[readsize] = '\0';
-        }
-    } while (0);
-
-    if (nullptr == buffer || 0 == readsize)
-    {
-        CCLOG("Get data from file %s failed", filename.c_str());
-    }
-    else
-    {
-        ret.fastSet(buffer, readsize);
-    }
-
-    return ret;
+    retval.append( current, next );
+    return retval;
 }
+
+static inline void textFormCRLF(std::string& s) {
+    static const std::string CRLF("\r\n");
+    static const std::string LF("\n");
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 // this is what getStringFromFile() does before...
+    s = replaceAll(s, CRLF, LF, result);
+#endif
+}
+
 
 std::string FileUtils::getStringFromFile(const std::string& filename)
 {
-    Data data = getData(filename, true);
-    if (data.isNull())
-        return "";
+    std::string s;
+    getContents(filename, &s);
 
-    std::string ret((const char*)data.getBytes());
-    return ret;
+    // truncated
+    s.resize(strlen(s.data()));
+
+    // simulate text mode, CRLF -> LF
+    textFormCRLF(s);
+
+    return s;
 }
 
 Data FileUtils::getDataFromFile(const std::string& filename)
 {
-    return getData(filename, false);
+    Data d;
+    getContents(filename, &d);
+    return d;
 }
 
 
@@ -719,31 +698,18 @@ FileUtils::Error FileUtils::getContents(const std::string& filename, ResizableBu
 
 unsigned char* FileUtils::getFileData(const std::string& filename, const char* mode, ssize_t *size)
 {
-    unsigned char * buffer = nullptr;
     CCASSERT(!filename.empty() && size != nullptr && mode != nullptr, "Invalid parameters.");
-    *size = 0;
-    do
-    {
-        // read the file from hardware
-        const std::string fullPath = fullPathForFilename(filename);
-        FILE *fp = fopen(getSuitableFOpen(fullPath).c_str(), mode);
-        CC_BREAK_IF(!fp);
 
-        fseek(fp,0,SEEK_END);
-        *size = ftell(fp);
-        fseek(fp,0,SEEK_SET);
-        buffer = (unsigned char*)malloc(*size);
-        *size = fread(buffer,sizeof(unsigned char), *size,fp);
-        fclose(fp);
-    } while (0);
+    std::string s;
+    getContents(filename, &s);
 
-    if (!buffer)
-    {
-        std::string msg = "Get data from file(";
-        msg.append(filename).append(") failed!");
+    bool textmode = strchr(mode, 't') != NULL;
+    if (textmode)
+        textFormCRLF(s);
 
-        CCLOG("%s", msg.c_str());
-    }
+    unsigned char * buffer = (unsigned char*)malloc(s.size());
+    memcpy(buffer, s.data(), s.size());
+
     return buffer;
 }
 
