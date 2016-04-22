@@ -610,36 +610,38 @@ void FileUtils::purgeCachedEntries()
     _fullPathCache.clear();
 }
 
-
-// TODO: move this function to StringUtils.
-// http://stackoverflow.com/a/7724536/87021
-static inline std::string replaceAll(
-    std::string const& original,
-    std::string const& before,
-    std::string const& after
-)
+namespace
 {
-    std::string retval;
-    retval.reserve(original.size());
-    auto end = original.end();
-    auto current = original.begin();
-    auto next = std::search( current, end, before.begin(), before.end() );
-    while ( next != end ) {
+    // TODO: move this function to StringUtils.
+    // http://stackoverflow.com/a/7724536/87021
+    static inline std::string replaceAll(
+                                         std::string const& original,
+                                         std::string const& before,
+                                         std::string const& after
+                                         )
+    {
+        std::string retval;
+        retval.reserve(original.size());
+        auto end = original.end();
+        auto current = original.begin();
+        auto next = std::search( current, end, before.begin(), before.end() );
+        while ( next != end ) {
+            retval.append( current, next );
+            retval.append( after );
+            current = next + before.size();
+            next = std::search( current, end, before.begin(), before.end() );
+        }
         retval.append( current, next );
-        retval.append( after );
-        current = next + before.size();
-        next = std::search( current, end, before.begin(), before.end() );
+        return retval;
     }
-    retval.append( current, next );
-    return retval;
-}
-
-static inline void textFormCRLF(std::string& s) {
-    static const std::string CRLF("\r\n");
-    static const std::string LF("\n");
+    
+    static inline void textFormCRLF(std::string& s) {
+        static const std::string CRLF("\r\n");
+        static const std::string LF("\n");
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 // this is what getStringFromFile() does before...
-    s = std::move(replaceAll(s, CRLF, LF));
+        s = std::move(replaceAll(s, CRLF, LF));
 #endif
+    }
 }
 
 
