@@ -709,6 +709,7 @@ unsigned char* FileUtils::getFileData(const std::string& filename, const char* m
 
     unsigned char * buffer = (unsigned char*)malloc(s.size());
     memcpy(buffer, s.data(), s.size());
+    *size = s.size();
 
     return buffer;
 }
