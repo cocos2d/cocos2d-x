@@ -653,9 +653,6 @@ std::string FileUtils::getStringFromFile(const std::string& filename)
     // truncated
     s.resize(strlen(s.data()));
 
-    // simulate text mode, CRLF -> LF
-    textFormCRLF(s);
-
     return s;
 }
 
