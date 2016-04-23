@@ -64,7 +64,7 @@ class TestIsDirectoryExist : public FileUtilsDemo
 {
 public:
     CREATE_FUNC(TestIsDirectoryExist);
-    
+
     virtual void onEnter() override;
     virtual void onExit() override;
     virtual std::string title() const override;
@@ -117,11 +117,13 @@ class TestGetContents : public FileUtilsDemo
 {
 public:
     CREATE_FUNC(TestGetContents);
-    
+
     virtual void onEnter() override;
     virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+private:
+    std::string generated_file;
 };
 
 class TestWriteData : public FileUtilsDemo
@@ -161,7 +163,7 @@ class TestUnicodePath : public FileUtilsDemo
 {
 public:
     CREATE_FUNC(TestUnicodePath);
-    
+
     virtual void onEnter() override;
     virtual void onExit() override;
     virtual std::string title() const override;
