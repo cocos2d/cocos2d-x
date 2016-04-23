@@ -53,7 +53,8 @@ public:
     virtual std::string getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath) const override;
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename) const override;
     virtual std::string getSuitableFOpen(const std::string& filenameUtf8) const override;
-    virtual long getFileSize(const std::string &filepath);
+    virtual long getFileSize(const std::string &filepath) override;
+	virtual FileUtils::Error getContents(const std::string& filename, ResizableBuffer* buffer) override;
 	static std::string getAppPath();
 
 private:

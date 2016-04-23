@@ -236,86 +236,37 @@ bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const
     return false;
 }
 
-// Because windows is case insensitive, so we should check the file names.
-static bool checkFileName(const std::string& fullPath, const std::string& filename)
-{
-    std::string tmpPath=convertPathFormatToUnixStyle(fullPath);
-    size_t len = tmpPath.length();
-    size_t nl = filename.length();
-    std::string realName;
-
-    while (tmpPath.length() >= len - nl && tmpPath.length()>2)
-    {
-        //CCLOG("%s", tmpPath.c_str());
-        WIN32_FIND_DATAA data;
-        HANDLE h = FindFirstFileA(tmpPath.c_str(), &data);
-        FindClose(h);
-        if (h != INVALID_HANDLE_VALUE)
-        {
-            int fl = strlen(data.cFileName);
-            if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-            {
-                realName = "/" + realName;
-            }
-            realName = data.cFileName + realName;
-            if (0 != strcmp(&tmpPath.c_str()[tmpPath.length() - fl], data.cFileName))
-            {
-                std::string msg = "File path error: \"";
-                msg.append(filename).append("\" the real name is: ").append(realName);
-
-                CCLOG("%s", msg.c_str());
-                return false;
-            }
-        }
-        else
-        {
-            break;
-        }
-
-        do
-        {
-            tmpPath = tmpPath.substr(0, tmpPath.rfind("/"));
-        } while (tmpPath.back() == '.');
-    }
-    return true;
-}
 
 FileUtils::Error FileUtilsWin32::getContents(const std::string& filename, ResizableBuffer* buffer)
 {
-	if (filename.empty())
-		return FileUtils::Error::NotExists;
+    if (filename.empty())
+        return FileUtils::Error::NotExists;
 
     // read the file from hardware
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
 
-    // check if the filename uses correct case characters
-    checkFileName(fullPath, filename);
-
     HANDLE fileHandle = ::CreateFile(StringUtf8ToWideChar(fullPath).c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, NULL, nullptr);
-	if (fileHandle == INVALID_HANDLE_VALUE)
-		return FileUtils::Error::OpenFailed;
+    if (fileHandle == INVALID_HANDLE_VALUE)
+        return FileUtils::Error::OpenFailed;
 
-    auto size = ::GetFileSize(fileHandle, nullptr);
-	buffer->resize(size);
+	DWORD hi;
+    auto size = ::GetFileSize(fileHandle, &hi);
+	if (hi > 0)
+	{
+		::CloseHandle(fileHandle);
+		return FileUtils::Error::TooLarge;
+	}
+    buffer->resize(size);
     DWORD sizeRead = 0;
-    BOOL successed = FALSE;
-    successed = ::ReadFile(fileHandle, buffer->buffer(), size, &sizeRead, nullptr);
+    BOOL successed = ::ReadFile(fileHandle, buffer->buffer(), size, &sizeRead, nullptr);
     ::CloseHandle(fileHandle);
 
-	if (!successed) {
+    if (!successed) {
+		CCLOG("Get data from file(%s) failed, error code is %s", filename.data(), std::to_string(::GetLastError()).data());
 		buffer->resize(sizeRead);
-
-		std::ostringstream ss;
-		ss	<< "Get data from file("
-			<< filename
-			<< ") failed, error code is "
-			<< ::GetLastError();
-
-		CCLOG("%s", ss.str().data());
-
 		return FileUtils::Error::ReadFaild;
-	}
-	return FileUtils::Error::OK;
+    }
+    return FileUtils::Error::OK;
 }
 
 std::string FileUtilsWin32::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath) const
@@ -543,4 +494,3 @@ bool FileUtilsWin32::removeDirectory(const std::string& dirPath)
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-

@@ -142,6 +142,38 @@ long CCFileUtilsWinRT::getFileSize(const std::string &filepath)
     return (long)size.QuadPart;
 }
 
+FileUtils::Error CCFileUtilsWinRT::getContents(const std::string& filename, ResizableBuffer* buffer)
+{
+    if (filename.empty())
+        return FileUtils::Error::NotExists;
+	
+    // read the file from hardware
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
+
+    HANDLE fileHandle = ::CreateFile2(StringUtf8ToWideChar(fullPath).c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, OPEN_EXISTING, nullptr);
+    if (fileHandle == INVALID_HANDLE_VALUE)
+        return FileUtils::Error::OpenFailed;
+
+	LARGE_INTEGER lisize;
+    ::GetFileSizeEx(fileHandle, &lisize);
+	if (lisize.HighPart > 0) {
+		::CloseHandle(fileHandle);
+		return FileUtils::Error::TooLarge;
+	}
+
+    buffer->resize(lisize.LowPart);
+    DWORD sizeRead = 0;
+    BOOL successed = ::ReadFile(fileHandle, buffer->buffer(), lisize.LowPart, &sizeRead, nullptr);
+    ::CloseHandle(fileHandle);
+
+    if (!successed) {
+        buffer->resize(sizeRead);
+		CCLOG("Get data from file(%s) failed, error code is %s", filename.data(), std::to_string(::GetLastError()).data());
+		return FileUtils::Error::ReadFaild;
+    }
+    return FileUtils::Error::OK;
+}
+
 bool CCFileUtilsWinRT::isFileExistInternal(const std::string& strFilePath) const
 {
     bool ret = false;
@@ -208,7 +240,7 @@ bool CCFileUtilsWinRT::createDirectory(const std::string& path)
     }
 
     WIN32_FILE_ATTRIBUTE_DATA wfad;
-    
+
     if (!(GetFileAttributesEx(StringUtf8ToWideChar(path).c_str(), GetFileExInfoStandard, &wfad)))
     {
         subpath = "";

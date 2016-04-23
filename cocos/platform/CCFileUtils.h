@@ -168,6 +168,7 @@ public:
         OpenFailed = 0x02, /** Open file failed. */
         ReadFaild = 0x03, /** Read failed */
         NotInitialized = 0x04, /** FileUtils is not initializes */
+		TooLarge = 0x05, // The file is too large (greate than 2^32-1)
     };
 
     /**
