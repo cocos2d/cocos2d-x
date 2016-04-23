@@ -610,6 +610,9 @@ void FileUtils::purgeCachedEntries()
     _fullPathCache.clear();
 }
 
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+// TODO: only winrt support text mode. it is possibly a bug. if true, remove the follow code for text mode.
 namespace
 {
     // TODO: move this function to StringUtils.
@@ -634,15 +637,14 @@ namespace
         retval.append( current, next );
         return retval;
     }
-    
+
     static inline void textFormCRLF(std::string& s) {
         static const std::string CRLF("\r\n");
         static const std::string LF("\n");
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 // this is what getStringFromFile() does before...
         s = std::move(replaceAll(s, CRLF, LF));
-#endif
     }
 }
+#endif
 
 
 std::string FileUtils::getStringFromFile(const std::string& filename)
@@ -702,9 +704,12 @@ unsigned char* FileUtils::getFileData(const std::string& filename, const char* m
     std::string s;
     getContents(filename, &s);
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+    // TODO: only winrt support text mode. it is possibly a bug. if true, remove the follow code for text mode.
     bool textmode = strchr(mode, 't') != NULL;
     if (textmode)
         textFormCRLF(s);
+#endif
 
     unsigned char * buffer = (unsigned char*)malloc(s.size());
     memcpy(buffer, s.data(), s.size());

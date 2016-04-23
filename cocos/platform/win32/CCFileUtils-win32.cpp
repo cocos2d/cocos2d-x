@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include <Shlobj.h>
 #include <cstdlib>
 #include <regex>
+#include <sstream>
 
 using namespace std;
 
@@ -279,136 +280,42 @@ static bool checkFileName(const std::string& fullPath, const std::string& filena
     return true;
 }
 
-static Data getData(const std::string& filename, bool forString)
+FileUtils::Error FileUtilsWin32::getContents(const std::string& filename, ResizableBuffer* buffer)
 {
-    if (filename.empty())
-    {
-        return Data::Null;
-    }
+	if (filename.empty())
+		return FileUtils::Error::NotExists;
 
-    unsigned char *buffer = nullptr;
+    // read the file from hardware
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
 
-    size_t size = 0;
-    do
-    {
-        // read the file from hardware
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
+    // check if the filename uses correct case characters
+    checkFileName(fullPath, filename);
 
-        // check if the filename uses correct case characters
-        checkFileName(fullPath, filename);
+    HANDLE fileHandle = ::CreateFile(StringUtf8ToWideChar(fullPath).c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, NULL, nullptr);
+	if (fileHandle == INVALID_HANDLE_VALUE)
+		return FileUtils::Error::OpenFailed;
 
-        HANDLE fileHandle = ::CreateFile(StringUtf8ToWideChar(fullPath).c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, NULL, nullptr);
-        CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);
+    auto size = ::GetFileSize(fileHandle, nullptr);
+	buffer->resize(size);
+    DWORD sizeRead = 0;
+    BOOL successed = FALSE;
+    successed = ::ReadFile(fileHandle, buffer->buffer(), size, &sizeRead, nullptr);
+    ::CloseHandle(fileHandle);
 
-        size = ::GetFileSize(fileHandle, nullptr);
+	if (!successed) {
+		buffer->resize(sizeRead);
 
-        if (forString)
-        {
-            buffer = (unsigned char*) malloc(size + 1);
-            buffer[size] = '\0';
-        }
-        else
-        {
-            buffer = (unsigned char*) malloc(size);
-        }
-        DWORD sizeRead = 0;
-        BOOL successed = FALSE;
-        successed = ::ReadFile(fileHandle, buffer, size, &sizeRead, nullptr);
-        ::CloseHandle(fileHandle);
+		std::ostringstream ss;
+		ss	<< "Get data from file("
+			<< filename
+			<< ") failed, error code is "
+			<< ::GetLastError();
 
-        if (!successed)
-        {
-            // should determine buffer value, or it will cause memory leak
-            if (buffer)
-            {
-                free(buffer);
-                buffer = nullptr;
-            }
-        }
-    } while (0);
+		CCLOG("%s", ss.str().data());
 
-    Data ret;
-
-    if (buffer == nullptr || size == 0)
-    {
-        std::string msg = "Get data from file(";
-        // Gets error code.
-        DWORD errorCode = ::GetLastError();
-        char errorCodeBuffer[20] = {0};
-        snprintf(errorCodeBuffer, sizeof(errorCodeBuffer), "%d", errorCode);
-
-        msg = msg + filename + ") failed, error code is " + errorCodeBuffer;
-        CCLOG("%s", msg.c_str());
-
-        if (buffer)
-            free(buffer);
-    }
-    else
-    {
-        ret.fastSet(buffer, size);
-    }
-    return ret;
-}
-
-std::string FileUtilsWin32::getStringFromFile(const std::string& filename)
-{
-    Data data = getData(filename, true);
-    if (data.isNull())
-    {
-        return "";
-    }
-
-    std::string ret((const char*)data.getBytes());
-    return ret;
-}
-
-Data FileUtilsWin32::getDataFromFile(const std::string& filename)
-{
-    return getData(filename, false);
-}
-
-unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const char* mode, ssize_t* size)
-{
-    unsigned char * pBuffer = nullptr;
-    *size = 0;
-    do
-    {
-        // read the file from hardware
-        std::string fullPath = fullPathForFilename(filename);
-
-         // check if the filename uses correct case characters
-        checkFileName(fullPath, filename);
-
-        HANDLE fileHandle = ::CreateFile(StringUtf8ToWideChar(fullPath).c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, NULL, nullptr);
-        CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);
-
-        *size = ::GetFileSize(fileHandle, nullptr);
-
-        pBuffer = (unsigned char*) malloc(*size);
-        DWORD sizeRead = 0;
-        BOOL successed = FALSE;
-        successed = ::ReadFile(fileHandle, pBuffer, *size, &sizeRead, nullptr);
-        ::CloseHandle(fileHandle);
-
-        if (!successed)
-        {
-            free(pBuffer);
-            pBuffer = nullptr;
-        }
-    } while (0);
-
-    if (! pBuffer)
-    {
-        std::string msg = "Get data from file(";
-        // Gets error code.
-        DWORD errorCode = ::GetLastError();
-        char errorCodeBuffer[20] = {0};
-        snprintf(errorCodeBuffer, sizeof(errorCodeBuffer), "%d", errorCode);
-
-        msg = msg + filename + ") failed, error code is " + errorCodeBuffer;
-        CCLOG("%s", msg.c_str());
-    }
-    return pBuffer;
+		return FileUtils::Error::ReadFaild;
+	}
+	return FileUtils::Error::OK;
 }
 
 std::string FileUtilsWin32::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath) const

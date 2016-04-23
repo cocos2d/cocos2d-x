@@ -331,16 +331,6 @@ bool CCFileUtilsWinRT::renameFile(const std::string &path, const std::string &ol
     return renameFile(oldPath, newPath);
 }
 
-std::string CCFileUtilsWinRT::getStringFromFile(const std::string& filename)
-{
-    Data data = getDataFromFile(filename);
-    if (data.isNull())
-    {
-        return "";
-    }
-    std::string ret((const char*)data.getBytes(), data.getSize());
-    return ret;
-}
 
 string CCFileUtilsWinRT::getWritablePath() const
 {

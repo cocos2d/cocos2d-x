@@ -108,27 +108,8 @@ protected:
     */
     virtual bool removeDirectory(const std::string& dirPath) override;
     
-    /**
-     *  Gets resource file data
-     *
-     *  @param[in]  filename    The resource file name which contains the path.
-     *  @param[in]  mode        The read mode of the file.
-     *  @param[out] size        If the file read operation succeeds, it will be the data size, otherwise 0.
-     *  @return Upon success, a pointer to the data is returned, otherwise NULL.
-     *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
-     */
-    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t * size) override;
 
-    /**
-     *  Gets string from a file.
-     */
-    virtual std::string getStringFromFile(const std::string& filename) override;
-    
-    /**
-     *  Creates binary data from a file.
-     *  @return A data object.
-     */
-    virtual Data getDataFromFile(const std::string& filename) override;
+	virtual FileUtils::Error getContents(const std::string& filename, ResizableBuffer* buffer) override;
 
     /**
      *  Gets full path for filename, resolution directory and search path.
