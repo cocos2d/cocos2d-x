@@ -216,7 +216,7 @@ void ControlButton::setZoomOnTouchDown(bool zoomOnTouchDown)
     _zoomOnTouchDown = zoomOnTouchDown;
 }
 
-bool ControlButton::getZoomOnTouchDown()
+bool ControlButton::getZoomOnTouchDown() const
 {
     return _zoomOnTouchDown;
 }
