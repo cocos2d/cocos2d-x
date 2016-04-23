@@ -94,6 +94,9 @@ Texture2DTests::Texture2DTests()
     ADD_TEST_CASE(TextureDrawInRect);
     
     ADD_TEST_CASE(TextureETC1);
+    ADD_TEST_CASE(TextureETC2EAC);
+    ADD_TEST_CASE(TextureETC2RGB);
+    ADD_TEST_CASE(TextureETC2RGBA1);
     
     ADD_TEST_CASE(TextureS3TCDxt1);
     ADD_TEST_CASE(TextureS3TCDxt3);
@@ -2040,6 +2043,67 @@ std::string TextureETC1::title() const
 }
 
 std::string TextureETC1::subtitle() const
+{
+    return "only supported on android";
+}
+
+// Implementation of ETC2
+TextureETC2EAC::TextureETC2EAC()
+{
+    auto sprite = Sprite::create("Images/test_image_etc2_eac.pvr");
+    
+    auto size = Director::getInstance()->getWinSize();
+    sprite->setPosition(Vec2(size.width/2, size.height/2));
+    
+    addChild(sprite);
+}
+
+std::string TextureETC2EAC::title() const
+{
+    return "ETC2 EAC texture";
+}
+
+std::string TextureETC2EAC::subtitle() const
+{
+    return "only supported on android";
+}
+
+TextureETC2RGB::TextureETC2RGB()
+{
+    auto sprite = Sprite::create("Images/test_image_etc2_rgb.pvr");
+    
+    auto size = Director::getInstance()->getWinSize();
+    sprite->setPosition(Vec2(size.width/2, size.height/2));
+    
+    addChild(sprite);
+}
+
+std::string TextureETC2RGB::title() const
+{
+    return "ETC2 RGB texture";
+}
+
+std::string TextureETC2RGB::subtitle() const
+{
+    return "only supported on android";
+}
+
+TextureETC2RGBA1::TextureETC2RGBA1()
+{
+    auto sprite = Sprite::create("Images/test_image_etc2_rgba1.pvr");
+    
+    auto size = Director::getInstance()->getWinSize();
+    sprite->setPosition(Vec2(size.width/2, size.height/2));
+    
+    addChild(sprite);
+}
+
+std::string TextureETC2RGBA1::title() const
+{
+    return "ETC2 RGBA1 texture";
+}
+
+std::string TextureETC2RGBA1::subtitle() const
 {
     return "only supported on android";
 }

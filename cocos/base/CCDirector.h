@@ -499,6 +499,11 @@ public:
      */
     const std::thread::id& getCocos2dThreadId() const { return _cocos2d_thread_id; }
 
+    /**
+     * return target OpenGLES version.
+     */
+    int getTargetOpenGLESVersion();
+
 protected:
     void reset();
     

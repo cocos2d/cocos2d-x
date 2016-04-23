@@ -55,9 +55,29 @@
     if (self)
     {
         if( ! sharegroup )
+#if (CC_TARGET_OPENGLES == CC_OPENGLES_3)
+        {
+            context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
+            if (context_ == nil)
+            {
+                context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+            }
+        }
+#else
             context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+#endif
         else
+#if (CC_TARGET_OPENGLES == CC_OPENGLES_3)
+        {
+            context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3 sharegroup:sharegroup];
+            if (context_ == nil)
+            {
+                context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:sharegroup];
+            }
+        }
+#else
             context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:sharegroup];
+#endif
 
         if (!context_ || ![EAGLContext setCurrentContext:context_] )
         {

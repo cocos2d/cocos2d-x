@@ -208,4 +208,16 @@ void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
 
 NS_CC_END
 
+// this method is called by Cocos2dxGLSurfaceView
+extern "C"
+{
+    /**
+    * this method is called by java code to init target opengles version.
+    */
+    JNIEXPORT int JNICALL Java_org_cocos2dx_lib_Cocos2dxGLSurfaceView_getTargetOpenGLESVersion()
+    {
+        return cocos2d::Director::getInstance()->getTargetOpenGLESVersion();
+    }
+};
+
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

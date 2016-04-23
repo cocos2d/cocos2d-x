@@ -33,8 +33,13 @@
 
 #import "platform/ios/CCESRenderer-ios.h"
 
+#if (CC_TARGET_OPENGLES == CC_OPENGLES_3)
+#import <OpenGLES/ES3/gl.h>
+#import <OpenGLES/ES3/glext.h>
+#else
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
+#endif
 
 #import "platform/CCPlatformMacros.h"
 

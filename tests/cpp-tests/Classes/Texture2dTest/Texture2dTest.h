@@ -530,6 +530,37 @@ public:
     virtual std::string subtitle() const override;
 };
 
+// ETC2 texture format test
+class TextureETC2EAC : public TextureDemo
+{
+public:
+    CREATE_FUNC(TextureETC2EAC);
+    TextureETC2EAC();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class TextureETC2RGB : public TextureDemo
+{
+public:
+    CREATE_FUNC(TextureETC2RGB);
+    TextureETC2RGB();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class TextureETC2RGBA1 : public TextureDemo
+{
+public:
+    CREATE_FUNC(TextureETC2RGBA1);
+    TextureETC2RGBA1();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 // S3TC Dxt1 texture format test
 class TextureS3TCDxt1 : public TextureDemo
 {

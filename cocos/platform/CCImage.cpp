@@ -68,6 +68,7 @@ extern "C"
 #if CC_USE_JPEG
 #include "jpeglib.h"
 #endif // CC_USE_JPEG
+#include "base/etc2.h"
 }
 #include "base/s3tc.h"
 #include "base/atitc.h"
@@ -232,6 +233,9 @@ namespace
         _pixel3_formathash::value_type(PVR3TexturePixelFormat::PVRTC4BPP_RGBA,      Texture2D::PixelFormat::PVRTC4A),
 
         _pixel3_formathash::value_type(PVR3TexturePixelFormat::ETC1,        Texture2D::PixelFormat::ETC),
+        _pixel3_formathash::value_type(PVR3TexturePixelFormat::ETC2_RGB,    Texture2D::PixelFormat::ETC2),
+        _pixel3_formathash::value_type(PVR3TexturePixelFormat::ETC2_RGBA1,  Texture2D::PixelFormat::ETC2A1),
+        _pixel3_formathash::value_type(PVR3TexturePixelFormat::ETC2_RGBA,   Texture2D::PixelFormat::ETC2A),
     };
         
     static const int PVR3_MAX_TABLE_ELEMENTS = sizeof(v3_pixel_formathash_value) / sizeof(v3_pixel_formathash_value[0]);
@@ -447,6 +451,17 @@ Texture2D::PixelFormat getDevicePixelFormat(Texture2D::PixelFormat format)
                 return format;
             else
                 return Texture2D::PixelFormat::RGB888;
+        case Texture2D::PixelFormat::ETC2:
+            if(Configuration::getInstance()->supportsETC2())
+                return format;
+            else
+                return Texture2D::PixelFormat::RGB888;
+        case Texture2D::PixelFormat::ETC2A1:
+        case Texture2D::PixelFormat::ETC2A:
+            if(Configuration::getInstance()->supportsETC2())
+                return format;
+            else
+                return Texture2D::PixelFormat::RGBA8888;
         default:
             return format;
     }
@@ -1363,6 +1378,9 @@ namespace
             case PVR3TexturePixelFormat::A8:
             case PVR3TexturePixelFormat::L8:
             case PVR3TexturePixelFormat::LA88:
+            case PVR3TexturePixelFormat::ETC2_RGB:
+            case PVR3TexturePixelFormat::ETC2_RGBA1:
+            case PVR3TexturePixelFormat::ETC2_RGBA:
                 return true;
                 
             default:
@@ -1649,6 +1667,37 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
                     }
                 }
                 blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
+                widthBlocks = width / 4;
+                heightBlocks = height / 4;
+                break;
+            case PVR3TexturePixelFormat::ETC2_RGB:
+            case PVR3TexturePixelFormat::ETC2_RGBA1:
+            case PVR3TexturePixelFormat::ETC2_RGBA:
+                if (!Configuration::getInstance()->supportsETC2())
+                {
+                    CCLOG("cocos2d: Hardware ETC2 decoder not present. Using software decoder");
+                    int bytePerPixel;
+                    if (pixelFormat == PVR3TexturePixelFormat::ETC2_RGB)
+                    {
+                        bytePerPixel = 3;
+                    }
+                    else
+                    {
+                        bytePerPixel = 4;
+                    }
+                    _unpack = true;
+                    _mipmaps[i].len = width*height*bytePerPixel;
+                    auto formatmap = Texture2D::getPixelFormatInfoMap().find(v3_pixel_formathash.at(pixelFormat));
+                    if (formatmap == Texture2D::getPixelFormatInfoMap().end())
+                    {
+                        return false;
+                    }
+                    if (etc2_decode_image(static_cast<const unsigned char*>(_data+dataOffset), formatmap->second.internalFormat, width, height, static_cast<unsigned char**>(&_mipmaps[i].address)) != 0)
+                    {
+                        return false;
+                    }
+                }
+                blockSize = 4 * 4;
                 widthBlocks = width / 4;
                 heightBlocks = height / 4;
                 break;
