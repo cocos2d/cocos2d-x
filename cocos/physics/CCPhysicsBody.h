@@ -261,10 +261,10 @@ public:
     virtual Vec2 getVelocity();
 
     /** Get the x-component of velocity of a body. */
-    float getVelocityX();
+    float getVelocityX() const;
 
      /** Get the x-component of velocity of a body. */
-    float getVelocityY();   
+    float getVelocityY() const;   
     
     /** 
      * Set the angular velocity of a body.

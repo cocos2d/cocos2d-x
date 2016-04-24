@@ -608,12 +608,12 @@ Vec2 PhysicsBody::getVelocity()
     return PhysicsHelper::cpv2point(cpBodyGetVel(_cpBody));
 }
 
-float PhysicsBody::getVelocityX()
+float PhysicsBody::getVelocityX() const
 {
     return PhysicsHelper::cpv2point(cpBodyGetVel(_cpBody)).x;
 }
 
-float PhysicsBody::getVelocityY()
+float PhysicsBody::getVelocityY() const
 {
     return PhysicsHelper::cpv2point(cpBodyGetVel(_cpBody)).y;
 }
