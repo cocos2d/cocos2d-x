@@ -64,6 +64,7 @@ public:
     virtual void onError(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::ErrorCode& error)override;
 
     WebSocketCloseTest();
+    virtual ~WebSocketCloseTest();
 
     virtual std::string title() const override { return "WebSocket close by resetDirector event Test"; }
     std::string subtitle() const override { return "Click close button, Program should close without crash."; }
