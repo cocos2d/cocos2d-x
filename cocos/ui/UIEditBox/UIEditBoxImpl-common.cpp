@@ -34,6 +34,12 @@
 
 static const int CC_EDIT_BOX_PADDING = 5;
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+#define PASSWORD_CHAR "*"
+#else
+#define PASSWORD_CHAR "\u25CF"
+#endif
+
 NS_CC_BEGIN
 
 namespace ui {
@@ -105,7 +111,7 @@ void EditBoxImplCommon::setInactiveText(const char* pText)
     {
         std::string passwordString;
         for(int i = 0; i < strlen(pText); ++i)
-            passwordString.append("\u25CF");
+            passwordString.append(PASSWORD_CHAR);
         _label->setString(passwordString);
     }
     else
