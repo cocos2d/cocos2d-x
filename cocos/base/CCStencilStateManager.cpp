@@ -38,7 +38,6 @@
 NS_CC_BEGIN
 
 GLint StencilStateManager::s_layer = -1;
-static GLint g_sStencilBits = -1;
 
 StencilStateManager::StencilStateManager()
 : _alphaThreshold(1.0f)
