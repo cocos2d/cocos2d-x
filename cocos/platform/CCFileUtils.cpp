@@ -701,8 +701,10 @@ unsigned char* FileUtils::getFileData(const std::string& filename, const char* m
 {
     CCASSERT(!filename.empty() && size != nullptr && mode != nullptr, "Invalid parameters.");
 
+    *size = 0;
     std::string s;
-    getContents(filename, &s);
+    if (getContents(filename, &s) != Error::OK)
+        return nullptr;
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
     // TODO: only winrt support text mode. it is possibly a bug. if true, remove the follow code for text mode.
@@ -712,6 +714,9 @@ unsigned char* FileUtils::getFileData(const std::string& filename, const char* m
 #endif
 
     unsigned char * buffer = (unsigned char*)malloc(s.size());
+    if (!buffer)
+        return nullptr;
+
     memcpy(buffer, s.data(), s.size());
     *size = s.size();
 
