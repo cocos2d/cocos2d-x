@@ -656,17 +656,12 @@ void TestGetContents::onEnter()
         std::string bs;
         fs->getContents(_generatedFile, &bs);
         if ( bs.size() != binary.size() || !std::equal( bs.begin(), bs.end(), binary.begin() ) )
-            return std::string("failed: read CRLFs and zeros in binary mode");
+            return std::string("failed: read as binary string");
 
         // Text read string in text mode
         std::string ts = fs->getStringFromFile(_generatedFile);
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-        if (ts != "\n\n")
-            return std::string("failed: read CRLFs and zeros in text mode");
-#else
         if (ts != "\r\n\r\n")
-            return std::string("failed: read CRLFs and zeros in text mode");
-#endif
+            return std::string("failed: read as zero terminated string");
 
 
         std::string files[] = {_generatedFile, "background.wav", "fileLookup.plist"};
