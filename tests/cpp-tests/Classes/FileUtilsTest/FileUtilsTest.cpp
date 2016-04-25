@@ -623,7 +623,8 @@ static const std::string FileErrors[] = {
     "NotExists",
     "OpenFailed",
     "ReadFaild",
-    "NotInitialized"
+    "NotInitialized",
+    "TooLarge"
 };
 
 
