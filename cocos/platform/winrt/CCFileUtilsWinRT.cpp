@@ -146,7 +146,7 @@ FileUtils::Status CCFileUtilsWinRT::getContents(const std::string& filename, Res
 {
     if (filename.empty())
         return FileUtils::Status::NotExists;
-	
+
     // read the file from hardware
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
 
@@ -154,22 +154,29 @@ FileUtils::Status CCFileUtilsWinRT::getContents(const std::string& filename, Res
     if (fileHandle == INVALID_HANDLE_VALUE)
         return FileUtils::Status::OpenFailed;
 
-	LARGE_INTEGER lisize;
-    ::GetFileSizeEx(fileHandle, &lisize);
-	if (lisize.HighPart > 0) {
-		::CloseHandle(fileHandle);
-		return FileUtils::Status::TooLarge;
-	}
+    FILE_STANDARD_INFO info = {0};
+    if (::GetFileInformationByHandleEx(fileHandle, FileStandardInfo, &info, sizeof(info)) == 0)
+    {
+        ::CloseHandle(hFile);
+        return FileUtils::Status::OpenFailed;
+    }
 
-    buffer->resize(lisize.LowPart);
+    if (info.EndOfFile.HighPart > 0)
+    {
+        ::CloseHandle(fileHandle);
+        return FileUtils::Status::TooLarge;
+    }
+
+    buffer->resize(info.EndOfFile.LowPart);
     DWORD sizeRead = 0;
-    BOOL successed = ::ReadFile(fileHandle, buffer->buffer(), lisize.LowPart, &sizeRead, nullptr);
+    BOOL successed = ::ReadFile(fileHandle, buffer->buffer(), info.EndOfFile.LowPart, &sizeRead, nullptr);
     ::CloseHandle(fileHandle);
 
-    if (!successed) {
+    if (!successed)
+    {
         buffer->resize(sizeRead);
-		CCLOG("Get data from file(%s) failed, error code is %s", filename.data(), std::to_string(::GetLastError()).data());
-		return FileUtils::Status::ReadFaild;
+        CCLOG("Get data from file(%s) failed, error code is %s", filename.data(), std::to_string(::GetLastError()).data());
+        return FileUtils::Status::ReadFaild;
     }
     return FileUtils::Status::OK;
 }

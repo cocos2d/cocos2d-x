@@ -168,7 +168,8 @@ public:
         OpenFailed = 0x02, /** Open file failed. */
         ReadFaild = 0x03, /** Read failed */
         NotInitialized = 0x04, /** FileUtils is not initializes */
-		TooLarge = 0x05, // The file is too large (greate than 2^32-1)
+        TooLarge = 0x05, // The file is too large (greate than 2^32-1)
+        ObtainSizeFailed = 0x06, // Failed to obtain the file size.
     };
 
     /**
@@ -228,6 +229,7 @@ public:
      *      - Status::ReadFaild when read end up before read whole, the buffer will fill with already read bytes.
      *      - Status::NotInitialized when FileUtils is not initializes, the buffer will not changed.
      *      - Status::TooLarge when there file to be read is too large (> 2^32-1), the buffer will not changed.
+     *      - Status::ObtainSizeFailed when failed to obtain the file size, the buffer will not changed.
      */
     template <
         typename T,
