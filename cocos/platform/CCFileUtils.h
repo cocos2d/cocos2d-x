@@ -161,7 +161,7 @@ public:
     virtual Data getDataFromFile(const std::string& filename);
 
 
-    enum class Error
+    enum class Status
     {
         OK = 0,
         NotExists = 0x01, /** File not exists */
@@ -222,11 +222,12 @@ public:
      *  @param[in]  filename The resource file name which contains the path.
      *  @param[out] buffer The buffer where the file contents are store to.
      *  @return Returns:
-     *      - Error::OK when there is no error, the buffer is filled with the contents of file.
-     *      - Error::NotExists when file not exists, the buffer will not changed.
-     *      - Error::OpenFailed when cannot open file, the buffer will not changed.
-     *      - Error::ReadFaild when read end up before read whole, the buffer will fill with already read bytes.
-     *      - Error::NotInitialized when FileUtils is not initializes, the buffer will not changed.
+     *      - Status::OK when there is no error, the buffer is filled with the contents of file.
+     *      - Status::NotExists when file not exists, the buffer will not changed.
+     *      - Status::OpenFailed when cannot open file, the buffer will not changed.
+     *      - Status::ReadFaild when read end up before read whole, the buffer will fill with already read bytes.
+     *      - Status::NotInitialized when FileUtils is not initializes, the buffer will not changed.
+     *      - Status::TooLarge when there file to be read is too large (> 2^32-1), the buffer will not changed.
      */
     template <
         typename T,
@@ -234,11 +235,11 @@ public:
             std::is_base_of< ResizableBuffer, ResizableBufferAdapter<T> >::value
         >::type
     >
-    Error getContents(const std::string& filename, T* buffer) {
+    Status getContents(const std::string& filename, T* buffer) {
         ResizableBufferAdapter<T> buf(buffer);
         return getContents(filename, &buf);
     }
-    virtual Error getContents(const std::string& filename, ResizableBuffer* buffer);
+    virtual Status getContents(const std::string& filename, ResizableBuffer* buffer);
 
     /**
      *  Gets resource file data

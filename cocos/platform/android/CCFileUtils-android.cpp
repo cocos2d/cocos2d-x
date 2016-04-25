@@ -230,11 +230,11 @@ bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath) const
     return false;
 }
 
-FileUtils::Error FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer)
+FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer)
 {
     static const std::string apkprefix("assets/");
     if (filename.empty())
-        return FileUtils::Error::NotExists;
+        return FileUtils::Status::NotExists;
 
     string fullPath = fullPathForFilename(filename);
 
@@ -252,13 +252,13 @@ FileUtils::Error FileUtilsAndroid::getContents(const std::string& filename, Resi
 
     if (nullptr == assetmanager) {
         LOGD("... FileUtilsAndroid::assetmanager is nullptr");
-        return FileUtils::Error::NotInitialized;
+        return FileUtils::Status::NotInitialized;
     }
 
     AAsset* asset = AAssetManager_open(assetmanager, relativePath.data(), AASSET_MODE_UNKNOWN);
     if (nullptr == asset) {
         LOGD("asset is nullptr");
-        return FileUtils::Error::OpenFailed;
+        return FileUtils::Status::OpenFailed;
     }
 
     auto size = AAsset_getLength(asset);
@@ -270,10 +270,10 @@ FileUtils::Error FileUtilsAndroid::getContents(const std::string& filename, Resi
     if (readsize < size) {
         if (readsize >= 0)
             buffer->resize(readsize);
-        return FileUtils::Error::ReadFaild;
+        return FileUtils::Status::ReadFaild;
     }
 
-    return FileUtils::Error::OK;
+    return FileUtils::Status::OK;
 }
 
 string FileUtilsAndroid::getWritablePath() const

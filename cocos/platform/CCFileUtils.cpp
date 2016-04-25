@@ -666,20 +666,20 @@ Data FileUtils::getDataFromFile(const std::string& filename)
 }
 
 
-FileUtils::Error FileUtils::getContents(const std::string& filename, ResizableBuffer* buffer)
+FileUtils::Status FileUtils::getContents(const std::string& filename, ResizableBuffer* buffer)
 {
     if (filename.empty())
-        return Error::NotExists;
+        return Status::NotExists;
 
     auto fs = FileUtils::getInstance();
 
     std::string fullPath = fs->fullPathForFilename(filename);
     if (fullPath.empty())
-        return Error::NotExists;
+        return Status::NotExists;
 
     FILE *fp = fopen(fs->getSuitableFOpen(fullPath).c_str(), "rb");
     if (!fp)
-        return Error::OpenFailed;
+        return Status::OpenFailed;
 
     fseek(fp, 0, SEEK_END);
     size_t size = ftell(fp);
@@ -691,10 +691,10 @@ FileUtils::Error FileUtils::getContents(const std::string& filename, ResizableBu
 
     if (readsize < size) {
         buffer->resize(readsize);
-        return Error::ReadFaild;
+        return Status::ReadFaild;
     }
 
-    return Error::OK;
+    return Status::OK;
 }
 
 unsigned char* FileUtils::getFileData(const std::string& filename, const char* mode, ssize_t *size)
@@ -703,7 +703,7 @@ unsigned char* FileUtils::getFileData(const std::string& filename, const char* m
 
     *size = 0;
     std::string s;
-    if (getContents(filename, &s) != Error::OK)
+    if (getContents(filename, &s) != Status::OK)
         return nullptr;
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT

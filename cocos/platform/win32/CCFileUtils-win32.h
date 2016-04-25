@@ -107,9 +107,9 @@ protected:
     *  @return True if the directory have been removed successfully, false if not.
     */
     virtual bool removeDirectory(const std::string& dirPath) override;
-    
 
-	virtual FileUtils::Error getContents(const std::string& filename, ResizableBuffer* buffer) override;
+
+	virtual FileUtils::Status getContents(const std::string& filename, ResizableBuffer* buffer) override;
 
     /**
      *  Gets full path for filename, resolution directory and search path.
@@ -142,4 +142,3 @@ NS_CC_END
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #endif    // __CC_FILEUTILS_WIN32_H__
-

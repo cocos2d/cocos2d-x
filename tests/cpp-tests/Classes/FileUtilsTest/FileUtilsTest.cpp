@@ -670,17 +670,17 @@ void TestGetContents::onEnter()
             std::string sbuf;
 
             auto serr = fs->getContents(file, &sbuf);
-            if (serr != FileUtils::Error::OK)
+            if (serr != FileUtils::Status::OK)
                 return std::string("failed: error: " + FileErrors[(int)serr]);
 
             std::vector<int> vbuf;
             auto verr = fs->getContents(file, &vbuf);
-            if (verr != FileUtils::Error::OK)
+            if (verr != FileUtils::Status::OK)
                 return std::string("failed: error: " + FileErrors[(int)verr]);
 
             Data dbuf;
             auto derr = fs->getContents(file, &dbuf);
-            if (derr != FileUtils::Error::OK)
+            if (derr != FileUtils::Status::OK)
                 return std::string("failed: error: " + FileErrors[(int)derr]);
 
             if (memcmp(&sbuf.front(), &vbuf.front(), sbuf.size()) != 0)

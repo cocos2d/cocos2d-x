@@ -237,24 +237,24 @@ bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const
 }
 
 
-FileUtils::Error FileUtilsWin32::getContents(const std::string& filename, ResizableBuffer* buffer)
+FileUtils::Status FileUtilsWin32::getContents(const std::string& filename, ResizableBuffer* buffer)
 {
     if (filename.empty())
-        return FileUtils::Error::NotExists;
+        return FileUtils::Status::NotExists;
 
     // read the file from hardware
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
 
     HANDLE fileHandle = ::CreateFile(StringUtf8ToWideChar(fullPath).c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, NULL, nullptr);
     if (fileHandle == INVALID_HANDLE_VALUE)
-        return FileUtils::Error::OpenFailed;
+        return FileUtils::Status::OpenFailed;
 
 	DWORD hi;
     auto size = ::GetFileSize(fileHandle, &hi);
 	if (hi > 0)
 	{
 		::CloseHandle(fileHandle);
-		return FileUtils::Error::TooLarge;
+		return FileUtils::Status::TooLarge;
 	}
     buffer->resize(size);
     DWORD sizeRead = 0;
@@ -264,9 +264,9 @@ FileUtils::Error FileUtilsWin32::getContents(const std::string& filename, Resiza
     if (!successed) {
 		CCLOG("Get data from file(%s) failed, error code is %s", filename.data(), std::to_string(::GetLastError()).data());
 		buffer->resize(sizeRead);
-		return FileUtils::Error::ReadFaild;
+		return FileUtils::Status::ReadFaild;
     }
-    return FileUtils::Error::OK;
+    return FileUtils::Status::OK;
 }
 
 std::string FileUtilsWin32::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath) const
