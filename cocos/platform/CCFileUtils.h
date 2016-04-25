@@ -164,12 +164,12 @@ public:
     enum class Status
     {
         OK = 0,
-        NotExists = 0x01, /** File not exists */
-        OpenFailed = 0x02, /** Open file failed. */
-        ReadFaild = 0x03, /** Read failed */
-        NotInitialized = 0x04, /** FileUtils is not initializes */
-        TooLarge = 0x05, // The file is too large (greate than 2^32-1)
-        ObtainSizeFailed = 0x06, // Failed to obtain the file size.
+        NotExists = 1, // File not exists
+        OpenFailed = 2, // Open file failed.
+        ReadFaild = 3, // Read failed
+        NotInitialized = 4, // FileUtils is not initializes
+        TooLarge = 5, // The file is too large (great than 2^32-1)
+        ObtainSizeFailed = 6 // Failed to obtain the file size.
     };
 
     /**

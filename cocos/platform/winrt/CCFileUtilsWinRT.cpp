@@ -157,7 +157,7 @@ FileUtils::Status CCFileUtilsWinRT::getContents(const std::string& filename, Res
     FILE_STANDARD_INFO info = {0};
     if (::GetFileInformationByHandleEx(fileHandle, FileStandardInfo, &info, sizeof(info)) == 0)
     {
-        ::CloseHandle(hFile);
+        ::CloseHandle(fileHandle);
         return FileUtils::Status::OpenFailed;
     }
 
