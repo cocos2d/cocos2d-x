@@ -178,7 +178,6 @@ public:
      *      - does not truncate the string when '\0' is found (returned string of getContents may have '\0' in the middle.).
      *
      *  The template version of can accept cocos2d::Data, std::basic_string and std::vector.
-     *  For other type of buffer, please write an adapter for it, and use the non-template version.
      *
      *  <pre>
      *  {@code

@@ -632,13 +632,13 @@ void TestGetContents::onEnter()
     FileUtilsDemo::onEnter();
     auto fs = FileUtils::getInstance();
 
-    auto test_if_compiles = [fs]() {
+    auto testIfCompiles = [fs]() {
         fs->getContents("", (CustomBuffer*)(nullptr));
         AlreadyExistsBuffer buf;
         fs->getContents("", &buf);
     };
 
-    (void)(test_if_compiles);
+    (void)(testIfCompiles);
 
     auto winSize = Director::getInstance()->getWinSize();
 
@@ -647,19 +647,19 @@ void TestGetContents::onEnter()
     readResult->setPosition(winSize.width / 2, winSize.height / 2);
 
     std::vector<char> binary = {'\r','\n','\r','\n','\0','\0','\r','\n'};
-    generated_file = fs->getWritablePath() + "file-with-zeros-and-crlf";
-    saveAsBinaryText(generated_file, binary);
-    
+    _generatedFile = fs->getWritablePath() + "file-with-zeros-and-crlf";
+    saveAsBinaryText(_generatedFile, binary);
+
 
     auto runTests = [&]() {
         // Test read string in binary mode
         std::string bs;
-        fs->getContents(generated_file, &bs);
+        fs->getContents(_generatedFile, &bs);
         if ( bs.size() != binary.size() || !std::equal( bs.begin(), bs.end(), binary.begin() ) )
             return std::string("failed: read CRLFs and zeros in binary mode");
 
         // Text read string in text mode
-        std::string ts = fs->getStringFromFile(generated_file);
+        std::string ts = fs->getStringFromFile(_generatedFile);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
         if (ts != "\n\n")
             return std::string("failed: read CRLFs and zeros in text mode");
@@ -669,7 +669,7 @@ void TestGetContents::onEnter()
 #endif
 
 
-        std::string files[] = {generated_file, "background.wav", "fileLookup.plist"};
+        std::string files[] = {_generatedFile, "background.wav", "fileLookup.plist"};
         for (auto& file : files) {
             std::string sbuf;
 
@@ -703,8 +703,8 @@ void TestGetContents::onEnter()
 
 void TestGetContents::onExit()
 {
-    if (!generated_file.empty())
-        FileUtils::getInstance()->removeFile(generated_file);
+    if (!_generatedFile.empty())
+        FileUtils::getInstance()->removeFile(_generatedFile);
 
     FileUtilsDemo::onExit();
 }

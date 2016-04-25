@@ -123,7 +123,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 private:
-    std::string generated_file;
+    std::string _generatedFile;
 };
 
 class TestWriteData : public FileUtilsDemo

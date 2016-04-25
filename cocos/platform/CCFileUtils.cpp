@@ -634,8 +634,8 @@ namespace
         retval.append( current, next );
         return retval;
     }
-    
-    static inline void textFormCRLF(std::string& s) {
+
+    inline void textFormCRLF(std::string& s) {
         static const std::string CRLF("\r\n");
         static const std::string LF("\n");
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 // this is what getStringFromFile() does before...
