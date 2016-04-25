@@ -47,6 +47,7 @@ _progressBarTextureSize(Size::ZERO),
 _slidBallNormalRenderer(nullptr),
 _slidBallPressedRenderer(nullptr),
 _slidBallDisabledRenderer(nullptr),
+_slidBallMouseOverRenderer(nullptr),
 _slidBallRenderer(nullptr),
 _barLength(0.0),
 _percent(0),
@@ -58,6 +59,7 @@ _sliderBallNormalTextureScaleX(1.0),
 _sliderBallNormalTextureScaleY(1.0),
 _isSliderBallPressedTextureLoaded(false),
 _isSliderBallDisabledTexturedLoaded(false),
+_isSliderBallMouseOverTexturedLoaded(false),
 _capInsetsBarRenderer(Rect::ZERO),
 _capInsetsProgressBarRenderer(Rect::ZERO),
 _sliderEventListener(nullptr),
@@ -68,6 +70,7 @@ _progressBarTexType(TextureResType::LOCAL),
 _ballNTexType(TextureResType::LOCAL),
 _ballPTexType(TextureResType::LOCAL),
 _ballDTexType(TextureResType::LOCAL),
+_ballMTexType(TextureResType::LOCAL),
 _barRendererAdaptDirty(true),
 _progressBarRendererDirty(true),
 _textureFile(""),
@@ -75,6 +78,7 @@ _progressBarTextureFile(""),
 _slidBallNormalTextureFile(""),
 _slidBallPressedTextureFile(""),
 _slidBallDisabledTextureFile(""),
+_slidBallMouseOverTextureFile(""),
 _imageScale(1.0f)
 {
     setTouchEnabled(true);
@@ -140,12 +144,15 @@ void Slider::initRenderer()
     _slidBallPressedRenderer->setVisible(false);
     _slidBallDisabledRenderer = Sprite::create();
     _slidBallDisabledRenderer->setVisible(false);
+    _slidBallMouseOverRenderer = Sprite::create();
+    _slidBallMouseOverRenderer->setVisible(false);
     
     _slidBallRenderer = Node::create();
     
     _slidBallRenderer->addChild(_slidBallNormalRenderer);
     _slidBallRenderer->addChild(_slidBallPressedRenderer);
     _slidBallRenderer->addChild(_slidBallDisabledRenderer);
+    _slidBallRenderer->addChild(_slidBallMouseOverRenderer);
     _slidBallRenderer->setCascadeColorEnabled(true);
     _slidBallRenderer->setCascadeOpacityEnabled(true);
     
@@ -315,11 +322,13 @@ const Rect& Slider::getCapInsetsProgressBarRenderer()const
 void Slider::loadSlidBallTextures(const std::string& normal,
                                       const std::string& pressed,
                                       const std::string& disabled,
+                                      const std::string& mouseOver,
                                       TextureResType texType)
 {
     loadSlidBallTextureNormal(normal, texType);
     loadSlidBallTexturePressed(pressed,texType);
     loadSlidBallTextureDisabled(disabled,texType);
+    loadSlidBallTextureMouseOver(mouseOver,texType);
 }
 
 void Slider::loadSlidBallTextureNormal(const std::string& normal,TextureResType texType)
@@ -414,6 +423,38 @@ void Slider::loadSlidBallTextureDisabled(const std::string& disabled,TextureResT
 void Slider::loadSlidBallTextureDisabled(SpriteFrame* spriteframe)
 {
     _slidBallDisabledRenderer->setSpriteFrame(spriteframe);
+    this->updateChildrenDisplayedRGBA();
+}
+    
+void Slider::loadSlidBallTextureMouseOver(const std::string& mouseOver,TextureResType texType)
+{
+    _slidBallMouseOverTextureFile = mouseOver;
+    _isSliderBallMouseOverTexturedLoaded = !mouseOver.empty();
+    _ballMTexType = texType;
+    if (mouseOver.empty())
+    {
+        _slidBallMouseOverRenderer->init();
+    }
+    else
+    {
+        switch (_ballMTexType)
+        {
+            case TextureResType::LOCAL:
+                _slidBallMouseOverRenderer->setTexture(mouseOver);
+                break;
+            case TextureResType::PLIST:
+                _slidBallMouseOverRenderer->setSpriteFrame(mouseOver);
+                break;
+            default:
+                break;
+        }
+    }
+    this->updateChildrenDisplayedRGBA();
+}
+
+void Slider::loadSlidBallTextureMouseOver(SpriteFrame* spriteframe)
+{
+    _slidBallMouseOverRenderer->setSpriteFrame(spriteframe);
     this->updateChildrenDisplayedRGBA();
 }
 
@@ -676,6 +717,7 @@ void Slider::onPressStateChangedToNormal()
     _slidBallNormalRenderer->setVisible(true);
     _slidBallPressedRenderer->setVisible(false);
     _slidBallDisabledRenderer->setVisible(false);
+    _slidBallMouseOverRenderer->setVisible(false);
     
     _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState());
     _slidBallNormalRenderer->setScale(_sliderBallNormalTextureScaleX, _sliderBallNormalTextureScaleY);
@@ -697,6 +739,7 @@ void Slider::onPressStateChangedToPressed()
         _slidBallPressedRenderer->setVisible(true);
         _slidBallDisabledRenderer->setVisible(false);
     }
+    _slidBallMouseOverRenderer->setVisible(false);
 }
 
 void Slider::onPressStateChangedToDisabled()
@@ -715,6 +758,25 @@ void Slider::onPressStateChangedToDisabled()
     _slidBallNormalRenderer->setScale(_sliderBallNormalTextureScaleX, _sliderBallNormalTextureScaleY);
     
     _slidBallPressedRenderer->setVisible(false);
+    _slidBallMouseOverRenderer->setVisible(false);
+}
+    
+void Slider::onPressStateChangedToMouseOver()
+{
+    if (!_isSliderBallMouseOverTexturedLoaded)
+    {
+        _slidBallNormalRenderer->setVisible(true);
+    }
+    else
+    {
+        _slidBallNormalRenderer->setVisible(false);
+        _slidBallMouseOverRenderer->setVisible(true);
+    }
+    
+    _slidBallNormalRenderer->setScale(_sliderBallNormalTextureScaleX, _sliderBallNormalTextureScaleY);
+    
+    _slidBallPressedRenderer->setVisible(false);
+    _slidBallDisabledRenderer->setVisible(false);
 }
     
     
@@ -759,10 +821,12 @@ void Slider::copySpecialProperties(Widget *widget)
         loadSlidBallTextureNormal(slider->_slidBallNormalRenderer->getSpriteFrame());
         loadSlidBallTexturePressed(slider->_slidBallPressedRenderer->getSpriteFrame());
         loadSlidBallTextureDisabled(slider->_slidBallDisabledRenderer->getSpriteFrame());
+        loadSlidBallTextureMouseOver(slider->_slidBallMouseOverRenderer->getSpriteFrame());
         setPercent(slider->getPercent());
         setMaxPercent(slider->getMaxPercent());
         _isSliderBallPressedTextureLoaded = slider->_isSliderBallPressedTextureLoaded;
         _isSliderBallDisabledTexturedLoaded = slider->_isSliderBallDisabledTexturedLoaded;
+        _isSliderBallMouseOverTexturedLoaded = slider->_isSliderBallMouseOverTexturedLoaded;
         _sliderEventListener = slider->_sliderEventListener;
         _sliderEventSelector = slider->_sliderEventSelector;
         _eventCallback = slider->_eventCallback;
@@ -803,6 +867,13 @@ ResourceData Slider::getBallDisabledFile()
     ResourceData rData;
     rData.type = (int)_ballDTexType;
     rData.file = _slidBallDisabledTextureFile;
+    return rData;
+}
+ResourceData Slider::getBallMouseOverFile()
+{
+    ResourceData rData;
+    rData.type = (int)_ballMTexType;
+    rData.file = _slidBallMouseOverTextureFile;
     return rData;
 }
 

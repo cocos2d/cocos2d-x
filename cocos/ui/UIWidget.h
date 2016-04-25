@@ -39,6 +39,8 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class EventListenerTouchOneByOne;
+class EventListenerMouse;
+class EventMouse;
 class Camera;
 
 namespace ui {
@@ -138,7 +140,8 @@ public:
     {
         NONE = -1,
         NORMAL,
-        HIGHLIGHT
+        HIGHLIGHT,
+        MOUSEOVER
     };
 
     
@@ -249,6 +252,21 @@ public:
      * @param highlight   true if the widget is highlighted, false if the widget is not highlighted.
      */
     void setHighlighted(bool highlight);
+    
+    /**
+     * Determines if the widget is in mouse over state
+     * @return true if thewidget if the widget is in mouse over state, false overwise.
+     */
+    bool isMouseOver() const;
+    
+    /**
+     * Sets whether the widget is in mouse over state
+     *
+     * The default value is in mouse over state, a widget is default to not in mouse over state
+     *
+     * @param pressed   true if the widget is in mouse over state, false if the widget is not in mouse over state.
+     */
+    void setMouseOver(bool mouseOver);
 
     /**
      * Gets the left boundary position of this widget in parent's coordination system.
@@ -581,6 +599,12 @@ public:
      *@param unusedEvent The touch event info.
      */
     virtual void onTouchCancelled(Touch *touch, Event *unusedEvent);
+    
+    /**
+     * A callback which will be called when mouse move.
+     *@param eventMouse The mouse event info.
+     */
+    virtual void onMouseMove(EventMouse *eventMouse);
 
     /**
      * Sets a LayoutParameter to widget.
@@ -905,6 +929,8 @@ protected:
     virtual void onPressStateChangedToPressed();
     //call back function called widget's state changed to dark.
     virtual void onPressStateChangedToDisabled();
+    //call back function called widget's state changed to mouse over.
+    virtual void onPressStateChangedToMouseOver();
 
     void pushDownEvent();
     void moveEvent();
@@ -938,6 +964,7 @@ protected:
     bool _bright;
     bool _touchEnabled;
     bool _highlight;
+    bool _mouseOver;
     bool _affectByClipping;
     bool _ignoreSize;
     bool _propagateTouchEvents;
@@ -959,6 +986,7 @@ protected:
     // it's useful in the next touch move/end events
     const Camera *_hittedByCamera;
     EventListenerTouchOneByOne* _touchListener;
+    EventListenerMouse* _mouseListener;
     Vec2 _touchBeganPosition;
     Vec2 _touchMovePosition;
     Vec2 _touchEndPosition;
@@ -997,8 +1025,10 @@ protected:
     std::string _callbackType;
     std::string _callbackName;
 private:
+    friend class ::cocos2d::Director;
     class FocusNavigationController;
     static FocusNavigationController* _focusNavigationController;
+    static Widget *_mouseOverWidget;
 };
 }
 

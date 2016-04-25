@@ -575,7 +575,7 @@ void Scene3DTestScene::createPlayerDlg()
     itemBg->setPosition(itemPos);
     _playerDlg->addChild(itemBg);
     
-    auto item = ui::Button::create("crystal.png", "", "", ui::Widget::TextureResType::PLIST);
+    auto item = ui::Button::create("crystal.png", "", "", "", ui::Widget::TextureResType::PLIST);
     item->setTitleText("Crystal");
     item->setScale(1.5);
     item->setAnchorPoint(itemAnchor);

@@ -719,7 +719,7 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(Widget*widg
         
         if (useMergedTexture)
         {
-            button->loadTextures(normalFileName, pressedFileName, disabledFileName,Widget::TextureResType::PLIST);
+            button->loadTextures(normalFileName, pressedFileName, disabledFileName, "", Widget::TextureResType::PLIST);
         }
         else
         {
@@ -739,7 +739,7 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(Widget*widg
     {
         if (useMergedTexture)
         {
-            button->loadTextures(normalFileName, pressedFileName, disabledFileName,Widget::TextureResType::PLIST);
+            button->loadTextures(normalFileName, pressedFileName, disabledFileName, "", Widget::TextureResType::PLIST);
         }
         else
         {
@@ -1079,7 +1079,7 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(Widget*widg
     const char* disabledFileName_tp =  (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():nullptr;
     if (useMergedTexture)
     {
-        slider->loadSlidBallTextures(normalFileName,pressedFileName,disabledFileName,Widget::TextureResType::PLIST);
+        slider->loadSlidBallTextures(normalFileName,pressedFileName,disabledFileName,"",Widget::TextureResType::PLIST);
     }
     else
     {

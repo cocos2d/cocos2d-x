@@ -163,6 +163,7 @@ public:
     void loadSlidBallTextures(const std::string& normal,
                               const std::string& pressed = "",
                               const std::string& disabled = "",
+                              const std::string& mouseOver = "",
                               TextureResType texType = TextureResType::LOCAL);
     
     /**
@@ -188,6 +189,14 @@ public:
      * @param resType    @see TextureResType .
      */
     void loadSlidBallTextureDisabled(const std::string& disabled,TextureResType resType = TextureResType::LOCAL);
+    
+    /**
+     * Load mouse over state texture for slider ball.
+     *
+     * @param mouseOver   Mouse over state texture.
+     * @param resType    @see TextureResType .
+     */
+    void loadSlidBallTextureMouseOver(const std::string& mouseOver,TextureResType resType = TextureResType::LOCAL);
     
     /**
      * Load dark state texture for slider progress bar.
@@ -282,6 +291,7 @@ public:
     ResourceData getBallNormalFile();
     ResourceData getBallPressedFile();
     ResourceData getBallDisabledFile();
+    ResourceData getBallMouseOverFile();
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
@@ -293,6 +303,7 @@ protected:
     virtual void onPressStateChangedToNormal() override;
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
+    virtual void onPressStateChangedToMouseOver() override;
     virtual void onSizeChanged() override;
 
     void setupBarTexture();
@@ -302,6 +313,7 @@ protected:
     void loadSlidBallTextureNormal(SpriteFrame* spriteframe);
     void loadSlidBallTexturePressed(SpriteFrame* spriteframe);
     void loadSlidBallTextureDisabled(SpriteFrame* spriteframe);
+    void loadSlidBallTextureMouseOver(SpriteFrame* spriteframe);
    
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
@@ -317,6 +329,7 @@ protected:
     Sprite* _slidBallNormalRenderer;
     Sprite* _slidBallPressedRenderer;
     Sprite* _slidBallDisabledRenderer;
+    Sprite* _slidBallMouseOverRenderer;
     Node* _slidBallRenderer;
     
     float _barLength;
@@ -332,6 +345,7 @@ protected:
 
     bool _isSliderBallPressedTextureLoaded;
     bool _isSliderBallDisabledTexturedLoaded;
+    bool _isSliderBallMouseOverTexturedLoaded;
 
     Rect _capInsetsBarRenderer;
     Rect _capInsetsProgressBarRenderer;
@@ -357,6 +371,7 @@ protected:
     TextureResType _ballNTexType;
     TextureResType _ballPTexType;
     TextureResType _ballDTexType;
+    TextureResType _ballMTexType;
     bool _barRendererAdaptDirty;
     bool _progressBarRendererDirty;
 
@@ -365,6 +380,7 @@ protected:
     std::string _slidBallNormalTextureFile;
     std::string _slidBallPressedTextureFile;
     std::string _slidBallDisabledTextureFile;
+    std::string _slidBallMouseOverTextureFile;
     
     float _imageScale;
 };

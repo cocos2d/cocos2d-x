@@ -61,6 +61,7 @@ THE SOFTWARE.
 #include "base/CCConfiguration.h"
 #include "base/CCAsyncTaskPool.h"
 #include "platform/CCApplication.h"
+#include "ui/UIWidget.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
 #include "base/CCScriptSupport.h"
@@ -261,6 +262,8 @@ void Director::drawScene()
     // calculate "global" dt
     calculateDeltaTime();
     
+    ui::Widget::_mouseOverWidget = nullptr;
+
     if (_openGLView)
     {
         _openGLView->pollEvents();

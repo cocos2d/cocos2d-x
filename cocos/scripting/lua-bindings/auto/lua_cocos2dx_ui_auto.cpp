@@ -7062,21 +7062,47 @@ int lua_cocos2dx_ui_Button_init(lua_State* tolua_S)
         std::string arg0;
         std::string arg1;
         std::string arg2;
-        cocos2d::ui::Widget::TextureResType arg3;
+        std::string arg3;
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.Button:init");
 
         ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.Button:init");
 
         ok &= luaval_to_std_string(tolua_S, 4,&arg2, "ccui.Button:init");
-
-        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "ccui.Button:init");
+        
+        ok &= luaval_to_std_string(tolua_S, 5,&arg3, "ccui.Button:init");;
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Button_init'", nullptr);
             return 0;
         }
         bool ret = cobj->init(arg0, arg1, arg2, arg3);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    if (argc == 5)
+    {
+        std::string arg0;
+        std::string arg1;
+        std::string arg2;
+        std::string arg3;
+        cocos2d::ui::Widget::TextureResType arg4;
+        
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.Button:init");
+        
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.Button:init");
+        
+        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "ccui.Button:init");
+        
+        ok &= luaval_to_std_string(tolua_S, 5,&arg3, "ccui.Button:init");;
+        
+        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg4, "ccui.Button:init");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Button_init'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4);
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
@@ -7528,7 +7554,7 @@ int lua_cocos2dx_ui_Button_loadTextures(lua_State* tolua_S)
         std::string arg0;
         std::string arg1;
         std::string arg2;
-        cocos2d::ui::Widget::TextureResType arg3;
+        std::string arg3;
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.Button:loadTextures");
 
@@ -7536,13 +7562,39 @@ int lua_cocos2dx_ui_Button_loadTextures(lua_State* tolua_S)
 
         ok &= luaval_to_std_string(tolua_S, 4,&arg2, "ccui.Button:loadTextures");
 
-        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "ccui.Button:loadTextures");
+        ok &= luaval_to_std_string(tolua_S, 5,&arg3, "ccui.Button:loadTextures");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Button_loadTextures'", nullptr);
             return 0;
         }
         cobj->loadTextures(arg0, arg1, arg2, arg3);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    if (argc == 5)
+    {
+        std::string arg0;
+        std::string arg1;
+        std::string arg2;
+        std::string arg3;
+        cocos2d::ui::Widget::TextureResType arg4;
+        
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.Button:loadTextures");
+        
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.Button:loadTextures");
+        
+        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "ccui.Button:loadTextures");
+        
+        ok &= luaval_to_std_string(tolua_S, 5,&arg2, "ccui.Button:loadTextures");
+        
+        ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4, "ccui.Button:loadTextures");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Button_loadTextures'", nullptr);
+            return 0;
+        }
+        cobj->loadTextures(arg0, arg1, arg2, arg3, arg4);
         lua_settop(tolua_S, 1);
         return 1;
     }
@@ -8130,10 +8182,35 @@ int lua_cocos2dx_ui_Button_create(lua_State* tolua_S)
             std::string arg2;
             ok &= luaval_to_std_string(tolua_S, 4,&arg2, "ccui.Button:create");
             if (!ok) { break; }
-            cocos2d::ui::Widget::TextureResType arg3;
-            ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "ccui.Button:create");
+            std::string arg3;
+            ok &= luaval_to_std_string(tolua_S, 5,&arg3, "ccui.Button:create");
             if (!ok) { break; }
             cocos2d::ui::Button* ret = cocos2d::ui::Button::create(arg0, arg1, arg2, arg3);
+            object_to_luaval<cocos2d::ui::Button>(tolua_S, "ccui.Button",(cocos2d::ui::Button*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do
+    {
+        if (argc == 5)
+        {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.Button:create");
+            if (!ok) { break; }
+            std::string arg1;
+            ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.Button:create");
+            if (!ok) { break; }
+            std::string arg2;
+            ok &= luaval_to_std_string(tolua_S, 4,&arg2, "ccui.Button:create");
+            if (!ok) { break; }
+            std::string arg3;
+            ok &= luaval_to_std_string(tolua_S, 5,&arg3, "ccui.Button:create");
+            if (!ok) { break; }
+            cocos2d::ui::Widget::TextureResType arg4;
+            ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4, "ccui.Button:create");
+            if (!ok) { break; }
+            cocos2d::ui::Button* ret = cocos2d::ui::Button::create(arg0, arg1, arg2, arg3, arg4);
             object_to_luaval<cocos2d::ui::Button>(tolua_S, "ccui.Button",(cocos2d::ui::Button*)ret);
             return 1;
         }
@@ -19404,7 +19481,7 @@ int lua_cocos2dx_ui_Slider_loadSlidBallTextures(lua_State* tolua_S)
         std::string arg0;
         std::string arg1;
         std::string arg2;
-        cocos2d::ui::Widget::TextureResType arg3;
+        std::string arg3;
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.Slider:loadSlidBallTextures");
 
@@ -19412,7 +19489,7 @@ int lua_cocos2dx_ui_Slider_loadSlidBallTextures(lua_State* tolua_S)
 
         ok &= luaval_to_std_string(tolua_S, 4,&arg2, "ccui.Slider:loadSlidBallTextures");
 
-        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "ccui.Slider:loadSlidBallTextures");
+        ok &= luaval_to_std_string(tolua_S, 5,&arg3, "ccui.Slider:loadSlidBallTextures");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Slider_loadSlidBallTextures'", nullptr);
@@ -19422,6 +19499,33 @@ int lua_cocos2dx_ui_Slider_loadSlidBallTextures(lua_State* tolua_S)
         lua_settop(tolua_S, 1);
         return 1;
     }
+    if (argc == 5)
+    {
+        std::string arg0;
+        std::string arg1;
+        std::string arg2;
+        std::string arg3;
+        cocos2d::ui::Widget::TextureResType arg4;
+        
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.Slider:loadSlidBallTextures");
+        
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.Slider:loadSlidBallTextures");
+        
+        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "ccui.Slider:loadSlidBallTextures");
+        
+        ok &= luaval_to_std_string(tolua_S, 5,&arg3, "ccui.Slider:loadSlidBallTextures");
+        
+        ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4, "ccui.Slider:loadSlidBallTextures");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Slider_loadSlidBallTextures'", nullptr);
+            return 0;
+        }
+        cobj->loadSlidBallTextures(arg0, arg1, arg2, arg3, arg4);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Slider:loadSlidBallTextures",argc, 1);
     return 0;
 

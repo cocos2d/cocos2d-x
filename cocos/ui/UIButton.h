@@ -56,7 +56,8 @@ public:
     {
         NORMAL,
         PRESSED,
-        DISABLED
+        DISABLED,
+        MOUSEOVER
     };
 
     /**
@@ -82,12 +83,14 @@ public:
      * @param normalImage normal state texture name.
      * @param pressedImage  pressed state texture name.
      * @param disableImage disabled state texture name.
+     * @param mouseOverImage mouse over state texture name.
      * @param texType    @see `TextureResType`
      * @return a Button instance.
      */
     static Button* create(const std::string& normalImage,
                           const std::string& pressedImage = "",
                           const std::string& disabledImage = "",
+                          const std::string& mouseOverImage = "",
                           TextureResType texType = TextureResType::LOCAL);
 
     /**
@@ -96,11 +99,13 @@ public:
      * @param normal    normal state texture name.
      * @param pressed    pressed state texture name.
      * @param disabled    disabled state texture name.
+     * @param mouseOver    mouse over state texture name.
      * @param texType    @see `TextureResType`
      */
     void loadTextures(const std::string& normal,
                       const std::string& pressed,
                       const std::string& disabled = "",
+                      const std::string& mouseOver = "",
                       TextureResType texType = TextureResType::LOCAL);
 
     /**
@@ -126,6 +131,14 @@ public:
      * @param texType    @see `TextureResType`
      */
     void loadTextureDisabled(const std::string& disabled, TextureResType texType = TextureResType::LOCAL);
+    
+    /**
+     * Load mouse over state texture for button.
+     *
+     * @param mouseOver    mouse over state texture.
+     * @param texType    @see `TextureResType`
+     */
+    void loadTextureMouseOver(const std::string& mouseOver, TextureResType texType = TextureResType::LOCAL);
 
     /**
      * Sets capInsets for button.
@@ -173,6 +186,19 @@ public:
      *@return The disabled scale9 renderer capInsets.
      */
     const Rect& getCapInsetsDisabledRenderer()const;
+    
+    /**
+     * Sets capInsets for button, only the highlighted state scale9 renderer will be affected.
+     *
+     * @param capInsets  capInsets in Rect.
+     */
+    void setCapInsetsMouseOverRenderer(const Rect &capInsets);
+    
+    /**
+     * Return the capInsets of highlighted state scale9sprite.
+     *@return The highlighted scale9 renderer capInsets.
+     */
+    const Rect& getCapInsetsMouseOverRenderer()const;
 
     /**
      * Enable scale9 renderer.
@@ -322,13 +348,22 @@ public:
      */
     Scale9Sprite* getRendererDisabled() const { return _buttonDisabledRenderer; }
     
+    /**
+     * @brief Return the nine-patch sprite of disabled state
+     * @return the nine-patch sprite of disabled state
+     * @since v3.10
+     */
+    Scale9Sprite* getRendererMouseOver() const { return _buttonMouseOverRenderer; }
+    
     void resetNormalRender();
     void resetPressedRender();
     void resetDisabledRender();
+    void resetMouseOverRender();
 
     ResourceData getNormalFile();
     ResourceData getPressedFile();
     ResourceData getDisabledFile();
+    ResourceData getMouseOverFile();
 
     void setNormalBackgroundColor(const Color3B &color);
     const Color3B& getNormalBackgroundColor() const;
@@ -336,6 +371,8 @@ public:
     const Color3B& getPressedBackgroundColor() const;
     void setDisabledBackgroundColor(const Color3B &color);
     const Color3B& getDisabledBackgroundColor() const;
+    void setMouseOverBackgroundColor(const Color3B &color);
+    const Color3B& getMouseOverBackgroundColor() const;
     
     void setNormalBackgroundOpacity(GLubyte opacity);
     GLubyte getNormalBackgroundOpacity() const;
@@ -343,6 +380,8 @@ public:
     GLubyte getPressedBackgroundOpacity() const;
     void setDisabledBackgroundOpacity(GLubyte opacity);
     GLubyte getDisabledBackgroundOpacity() const;
+    void setMouseOverBackgroundOpacity(GLubyte opacity);
+    GLubyte getMouseOverBackgroundOpacity() const;
     
     void setNormalTitleColor(const Color3B &color);
     const Color3B& getNormalTitleColor() const;
@@ -350,6 +389,8 @@ public:
     const Color3B& getPressedTitleColor() const;
     void setDisabledTitleColor(const Color3B &color);
     const Color3B& getDisabledTitleColor() const;
+    void setMouseOverTitleColor(const Color3B &color);
+    const Color3B& getMouseOverTitleColor() const;
     
     void setNormalTitleOpacity(GLubyte opacity);
     GLubyte getNormalTitleOpacity() const;
@@ -357,6 +398,8 @@ public:
     GLubyte getPressedTitleOpacity() const;
     void setDisabledTitleOpacity(GLubyte opacity);
     GLubyte getDisabledTitleOpacity() const;
+    void setMouseOverTitleOpacity(GLubyte opacity);
+    GLubyte getMouseOverTitleOpacity() const;
     
     State getState() const { return _state; }
     
@@ -388,6 +431,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init(const std::string& normalImage,
                       const std::string& selectedImage = "",
                       const std::string& disableImage = "",
+                      const std::string& mouseOverImage = "",
                       TextureResType texType = TextureResType::LOCAL);
 
     virtual Size getNormalTextureSize() const;
@@ -397,6 +441,7 @@ protected:
     virtual void onPressStateChangedToNormal() override;
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
+    virtual void onPressStateChangedToMouseOver() override;
     virtual void onSizeChanged() override;
 
     void loadTextureNormal(SpriteFrame* normalSpriteFrame);
@@ -405,10 +450,13 @@ protected:
     void setupPressedTexture(bool textureLoaded);
     void loadTextureDisabled(SpriteFrame* disabledSpriteFrame);
     void setupDisabledTexture(bool textureLoaded);
+    void loadTextureMouseOver(SpriteFrame* highlightedSpriteFrame);
+    void setupMouseOverTexture(bool textureLoaded);
 
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
+    void mouseOverTextureScaleChangedWithSize();
 
     virtual void adaptRenderers() override;
     void updateTitleLocation();
@@ -431,6 +479,7 @@ protected:
     Scale9Sprite* _buttonNormalRenderer;
     Scale9Sprite* _buttonPressedRenderer;
     Scale9Sprite* _buttonDisabledRenderer;
+    Scale9Sprite* _buttonMouseOverRenderer;
     Node* _buttonRenderer;
     Label* _titleRenderer;
     
@@ -444,10 +493,12 @@ protected:
     Rect _capInsetsNormal;
     Rect _capInsetsPressed;
     Rect _capInsetsDisabled;
+    Rect _capInsetsMouseOver;
 
     Size _normalTextureSize;
     Size _pressedTextureSize;
     Size _disabledTextureSize;
+    Size _mouseOverTextureSize;
 
     float _normalTextureScaleXInSize;
     float _normalTextureScaleYInSize;
@@ -460,35 +511,44 @@ protected:
     bool _normalTextureLoaded;
     bool _pressedTextureLoaded;
     bool _disabledTextureLoaded;
+    bool _mouseOverTextureLoaded;
     
     bool _normalTextureAdaptDirty;
     bool _pressedTextureAdaptDirty;
     bool _disabledTextureAdaptDirty;
+    bool _mouseOverTextureAdaptDirty;
     
     std::string _normalFileName;
     std::string _clickedFileName;
     std::string _disabledFileName;
+    std::string _mouseOverFileName;
+    
     TextureResType _normalTexType;
     TextureResType _pressedTexType;
     TextureResType _disabledTexType;
+    TextureResType _mouseOverTexType;
     
     bool _titileAdaptDirty;
     
     Color3B _normalBackgroundColor;
     Color3B _pressedBackgroundColor;
     Color3B _disabledBackgroundColor;
+    Color3B _mouseOverBackgroundColor;
     
     GLubyte _normalBackgroundOpacity;
     GLubyte _pressedBackgroundOpacity;
     GLubyte _disabledBackgroundOpacity;
+    GLubyte _mouseOverBackgroundOpacity;
 
     Color3B _normalTitleColor;
     Color3B _pressedTitleColor;
     Color3B _disabledTitleColor;
+    Color3B _mouseOverTitleColor;
     
     GLubyte _normalTitleOpacity;
     GLubyte _pressedTitleOpacity;
     GLubyte _disabledTitleOpacity;
+    GLubyte _mouseOverTitleOpacity;
     
     float _leftPadding;
     float _rightPadding;
