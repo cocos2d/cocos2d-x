@@ -83,6 +83,11 @@ if (currPlatform == cc.PLATFORM_OS_TIZEN) then
   assetManagerSupported = false;
 end
 
+local luaByteCodeSupported = true;
+if (currPlatform == cc.PLATFORM_OS_TIZEN) then
+  luaByteCodeSupported = false;
+end
+
 local _allTests = {
     { isSupported = true,  name = "Accelerometer"          , create_func=             AccelerometerMain  },
     { isSupported = true,  name = "ActionManagerTest"      , create_func   =         ActionManagerTestMain  },
@@ -96,7 +101,7 @@ local _allTests = {
     { isSupported = false,  name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },
     { isSupported = true,  name = "BillBoardTest"           , create_func=              BillBoardTestMain},
     { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },
-    { isSupported = true,  name = "ByteCodeEncryptTest"     , create_func=       ByteCodeEncryptTestMain  },
+    { isSupported = luaByteCodeSupported,  name = "ByteCodeEncryptTest"     , create_func=       ByteCodeEncryptTestMain  },
     { isSupported = true,  name = "Camera3DTest"     ,        create_func=       Camera3DTestMain  },
     { isSupported = true,  name = "CaptureScreenTest"       , create_func   =         CaptureScreenTestMain  },
     { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
