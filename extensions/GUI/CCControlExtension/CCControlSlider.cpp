@@ -122,7 +122,7 @@ bool ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressS
         CCASSERT(thumbSprite,           "Thumb sprite must be not nil");
         CCASSERT(selectedThumbSprite,   "Thumb sprite must be not nil");
 
-        ignoreAnchorPointForPosition(false);
+        setIgnoreAnchorPointForPosition(false);
 
         this->setBackgroundSprite(backgroundSprite);
         this->setProgressSprite(progressSprite);

@@ -87,7 +87,7 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, ui::Scale9Sprit
         _scaleRatio = 1.1f;
         
         // Set the default anchor point
-        ignoreAnchorPointForPosition(false);
+        setIgnoreAnchorPointForPosition(false);
         setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         
         // Set the nodes

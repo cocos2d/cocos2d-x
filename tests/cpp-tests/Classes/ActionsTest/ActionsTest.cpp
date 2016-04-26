@@ -333,7 +333,7 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     auto box = LayerColor::create(Color4B(255,255,0,255));
     box->setAnchorPoint(Vec2(0.5,0.5));
     box->setContentSize( boxSize );
-    box->ignoreAnchorPointForPosition(false);
+    box->setIgnoreAnchorPointForPosition(false);
     box->setPosition(s.width/2, s.height - 100 - box->getContentSize().height/2);
     this->addChild(box);
 
@@ -349,7 +349,7 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     box = LayerColor::create(Color4B(255,255,0,255));
     box->setAnchorPoint(Vec2(0.5,0.5));
     box->setContentSize(boxSize);
-    box->ignoreAnchorPointForPosition(false);
+    box->setIgnoreAnchorPointForPosition(false);
     box->setPosition(s.width/2, s.height - 250 - box->getContentSize().height/2);
     this->addChild(box);
 
