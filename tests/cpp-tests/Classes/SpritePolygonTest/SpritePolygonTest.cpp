@@ -13,7 +13,10 @@ SpritePolygonTest::SpritePolygonTest()
     ADD_TEST_CASE(SpritePolygonTest5);
     ADD_TEST_CASE(SpritePolygonPerformanceTestDynamic);
     ADD_TEST_CASE(SpritePerformanceTestDynamic);
+    // FIXME: Tizen will crash with this example
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_TIZEN)
     ADD_TEST_CASE(SpritePolygonTestNoCrash);
+#endif
     ADD_TEST_CASE(SpritePolygonTestTPIsland);
     ADD_TEST_CASE(SpritePolygonTestAutoPolyIsland);
     ADD_TEST_CASE(SpritePolygonTestFrameAnim);
