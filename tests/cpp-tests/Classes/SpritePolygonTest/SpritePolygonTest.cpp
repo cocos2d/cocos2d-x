@@ -115,6 +115,7 @@ void SpritePolygonTestCase::updateDrawNode()
 bool SpritePolygonTestDemo::init()
 {
     if (SpritePolygonTestCase::init()) {
+        _polygonSprite = nullptr;
         initSprites();
         initTouches();
         return true;
@@ -124,18 +125,20 @@ bool SpritePolygonTestDemo::init()
 
 void SpritePolygonTestDemo::initTouches()
 {
-    auto touchListener = EventListenerTouchOneByOne::create();
-    touchListener->onTouchBegan = [&](Touch* touch, Event* event){
-        return true;
-    };
-    touchListener->onTouchMoved = [&](Touch* touch, Event* event){
-        auto pos = touch->getDelta();
-        float newScale = clampf(_polygonSprite->getScale() + pos.x * 0.01f, 0.1f, 2.f);
-        _polygonSprite->setScale(newScale);
-        _normalSprite->setScale(newScale);
-        updateDrawNode();
-    };
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    if(_polygonSprite) {
+        auto touchListener = EventListenerTouchOneByOne::create();
+        touchListener->onTouchBegan = [&](Touch* touch, Event* event){
+            return true;
+        };
+        touchListener->onTouchMoved = [&](Touch* touch, Event* event){
+            auto pos = touch->getDelta();
+            float newScale = clampf(_polygonSprite->getScale() + pos.x * 0.01f, 0.1f, 2.f);
+            _polygonSprite->setScale(newScale);
+            _normalSprite->setScale(newScale);
+            updateDrawNode();
+        };
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    }
 }
 
 SpritePolygonTest1::SpritePolygonTest1()
