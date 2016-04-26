@@ -779,9 +779,9 @@ bool Label::alignText()
     do {
         _fontAtlas->prepareLetterDefinitions(_utf16Text);
         auto& textures = _fontAtlas->getTextures();
-        if (textures.size() > _batchNodes.size())
+        if (textures.size() > static_cast<size_t>(_batchNodes.size()))
         {
-            for (auto index = _batchNodes.size(); index < textures.size(); ++index)
+            for (auto index = static_cast<size_t>(_batchNodes.size()); index < textures.size(); ++index)
             {
                 auto batchNode = SpriteBatchNode::createWithTexture(textures.at(index));
                 if (batchNode)

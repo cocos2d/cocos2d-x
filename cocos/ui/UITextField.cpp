@@ -86,7 +86,7 @@ bool UICCTextField::onTextFieldInsertText(TextFieldTTF *pSender, const char *tex
     setInsertText(true);
     if (_maxLengthEnabled)
     {
-        if (TextFieldTTF::getCharCount() >= _maxLength)
+        if (static_cast<int>(TextFieldTTF::getCharCount()) >= _maxLength)
         {
             return true;
         }

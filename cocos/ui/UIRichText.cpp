@@ -1570,7 +1570,7 @@ int RichText::findSplitPositionForChar(cocos2d::Label* label, const std::string&
                 leftLength--;
                 break;
             }
-            else if (stringLength <= leftLength) {
+            else if (static_cast<int>(stringLength) <= leftLength) {
                 break;
             }
         }
