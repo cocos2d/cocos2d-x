@@ -14,24 +14,29 @@ static const std::string PROPERTY_MAXSIZE("maxSize");
 static const std::string PROPERTY_BACKGROUNDSPRITEFRAME_NORMAL("backgroundSpriteFrame|Normal");
 static const std::string PROPERTY_BACKGROUNDSPRITEFRAME_HIGHLIGHTED("backgroundSpriteFrame|Highlighted");
 static const std::string PROPERTY_BACKGROUNDSPRITEFRAME_DISABLED("backgroundSpriteFrame|Disabled");
+static const std::string PROPERTY_BACKGROUNDSPRITEFRAME_MOUSEOVER("backgroundSpriteFrame|MouseOver");
     
 static const std::string PROPERTY_BACKGROUNDOPACITY_NORMAL("backgroundOpacity|Normal");
 static const std::string PROPERTY_BACKGROUNDOPACITY_HIGHLIGHTED("backgroundOpacity|Highlighted");
 static const std::string PROPERTY_BACKGROUNDOPACITY_DISABLED("backgroundOpacity|Disabled");
+static const std::string PROPERTY_BACKGROUNDOPACITY_MOUSEOVER("backgroundOpacity|MouseOver");
     
 static const std::string PROPERTY_LABELOPACITY_NORMAL("labelOpacity|Normal");
 static const std::string PROPERTY_LABELOPACITY_HIGHLIGHTED("labelOpacity|Highlighted");
 static const std::string PROPERTY_LABELOPACITY_DISABLED("labelOpacity|Disabled");
+static const std::string PROPERTY_LABELOPACITY_MOUSEOVER("labelOpacity|MouseOver");
     
 static const std::string PROPERTY_TITLE("title");
     
 static const std::string PROPERTY_TITLECOLOR_NORMAL("labelColor|Normal");
 static const std::string PROPERTY_TITLECOLOR_HIGHLIGHTED("labelColor|Highlighted");
 static const std::string PROPERTY_TITLECOLOR_DISABLED("labelColor|Disabled");
+static const std::string PROPERTY_TITLECOLOR_MOUSEOVER("labelColor|MouseOver");
     
 static const std::string PROPERTY_BACKGROUNDCOLOR_NORMAL("backgroundColor|Normal");
 static const std::string PROPERTY_BACKGROUNDCOLOR_HIGHLIGHTED("backgroundColor|Highlighted");
 static const std::string PROPERTY_BACKGROUNDCOLOR_DISABLED("backgroundColor|Disabled");
+static const std::string PROPERTY_BACKGROUNDCOLOR_MOUSEOVER("backgroundColor|MouseOver");
     
 static const std::string PROPERTY_HORIZONTALPADDING("horizontalPadding");
 static const std::string PROPERTY_VERTICALPADDING("verticalPadding");
@@ -151,6 +156,27 @@ Node *ButtonLoader::createNodeInstance(const Size &parentSize, float mainScale, 
         default:
             break;
     };
+    switch(_mouseOverSpriteFrame.type)
+    {
+        case SpriteFrameDescription::TextureResType::LOCAL:
+        {
+            Size size = _mouseOverSpriteFrame.spriteFrame->getOriginalSize();
+            Rect realMargins(margin.origin.x*size.width,margin.origin.y*size.height,margin.size.width*size.width,margin.size.height*size.height);
+            button->loadTextureMouseOver(_mouseOverSpriteFrame.path, ui::Widget::TextureResType::LOCAL);
+            button->setCapInsetsMouseOverRenderer(realMargins);
+        }
+            break;
+        case SpriteFrameDescription::TextureResType::PLIST:
+        {
+            Size size = _mouseOverSpriteFrame.spriteFrame->getOriginalSize();
+            Rect realMargins(margin.origin.x*size.width,margin.origin.y*size.height,margin.size.width*size.width,margin.size.height*size.height);
+            button->loadTextureMouseOver(_mouseOverSpriteFrame.path, ui::Widget::TextureResType::PLIST);
+            button->setCapInsetsMouseOverRenderer(realMargins);
+        }
+            break;
+        default:
+            break;
+    };
     button->setScale9Enabled(true);
     button->setImageScale(getAbsoluteScale(mainScale, additionalScale, _imageScale.scale, _imageScale.type) / CCBXReader::getResolutionScale());
     return button;
@@ -178,6 +204,11 @@ void ButtonLoader::setSpecialProperties(Node* node, const Size &parentSize, floa
         button->setDisabledBackgroundColor(_disabledBackgroundColor);
         button->setDisabledTitleOpacity(_disabledLabelOpacity);
         button->setDisabledBackgroundOpacity(_disabledBackgroundOpacity);
+        
+        button->setMouseOverTitleColor(_mouseOverLabelColor);
+        button->setMouseOverBackgroundColor(_mouseOverBackgroundColor);
+        button->setMouseOverTitleOpacity(_mouseOverLabelOpacity);
+        button->setMouseOverBackgroundOpacity(_mouseOverBackgroundOpacity);
         
         button->setTitleFontName(_font);
         //button->getTitleRenderer()->setSystemFontName(_font);
@@ -210,6 +241,10 @@ ButtonLoader::ButtonLoader()
     ,_disabledBackgroundColor(Color3B::WHITE)
     ,_disabledLabelOpacity(255)
     ,_disabledBackgroundOpacity(255)
+    ,_mouseOverLabelColor(Color3B::WHITE)
+    ,_mouseOverBackgroundColor(Color3B::WHITE)
+    ,_mouseOverLabelOpacity(255)
+    ,_mouseOverBackgroundOpacity(255)
     ,_textHAlignment(TextHAlignment::LEFT)
     ,_textVAlignment(TextVAlignment::TOP)
     ,_leftPadding(FloatScaleDescription{0, 0.0f})
@@ -285,6 +320,9 @@ void ButtonLoader::onHandlePropTypeFloat(const std::string &propertyName, bool i
     } else if(propertyName == PROPERTY_BACKGROUNDOPACITY_DISABLED) {
         float opacity = value * 255.0f;
         _disabledBackgroundOpacity = (opacity<0.0f)?0:((opacity>255.0f)?255:static_cast<GLubyte>(opacity));
+    } else if(propertyName == PROPERTY_BACKGROUNDOPACITY_MOUSEOVER) {
+        float opacity = value * 255.0f;
+        _mouseOverBackgroundOpacity = (opacity<0.0f)?0:((opacity>255.0f)?255:static_cast<GLubyte>(opacity));
     } else if(propertyName == PROPERTY_LABELOPACITY_NORMAL) {
         float opacity = value * 255.0f;
         _normalLabelOpacity = (opacity<0.0f)?0:((opacity>255.0f)?255:static_cast<GLubyte>(opacity));
@@ -294,6 +332,9 @@ void ButtonLoader::onHandlePropTypeFloat(const std::string &propertyName, bool i
     } else if(propertyName == PROPERTY_LABELOPACITY_DISABLED) {
         float opacity = value * 255.0f;
         _disabledLabelOpacity = (opacity<0.0f)?0:((opacity>255.0f)?255:static_cast<GLubyte>(opacity));
+    } else if(propertyName == PROPERTY_LABELOPACITY_MOUSEOVER) {
+        float opacity = value * 255.0f;
+        _mouseOverLabelOpacity = (opacity<0.0f)?0:((opacity>255.0f)?255:static_cast<GLubyte>(opacity));
     } else if(propertyName == PROPERTY_ZOOMONCLICK) {
         _zoomOnClick = value;
     } else {
@@ -349,6 +390,8 @@ void ButtonLoader::onHandlePropTypeSpriteFrame(const std::string &propertyName, 
         _selectedSpriteFrame = value;
     } else if(propertyName == PROPERTY_BACKGROUNDSPRITEFRAME_DISABLED) {
         _disabledSpriteFrame = value;
+    } else if(propertyName == PROPERTY_BACKGROUNDSPRITEFRAME_MOUSEOVER) {
+        _mouseOverSpriteFrame = value;
     } else {
         WidgetLoader::onHandlePropTypeSpriteFrame(propertyName, isExtraProp, value);
     }
@@ -362,12 +405,16 @@ void ButtonLoader::onHandlePropTypeColor3(const std::string &propertyName, bool 
         _selectedLabelColor = value;
     } else if(propertyName == PROPERTY_TITLECOLOR_DISABLED) {
         _disabledLabelColor = value;
+    } else if(propertyName == PROPERTY_TITLECOLOR_MOUSEOVER) {
+        _mouseOverLabelColor = value;
     } else if(propertyName == PROPERTY_BACKGROUNDCOLOR_NORMAL) {
         _normalBackgroundColor = value;
     } else if(propertyName == PROPERTY_BACKGROUNDCOLOR_HIGHLIGHTED) {
         _selectedBackgroundColor = value;
     } else if(propertyName == PROPERTY_BACKGROUNDCOLOR_DISABLED) {
        _disabledBackgroundColor = value;
+    } else if(propertyName == PROPERTY_BACKGROUNDCOLOR_MOUSEOVER) {
+        _mouseOverBackgroundColor = value;
     } else {
         WidgetLoader::onHandlePropTypeColor3(propertyName, isExtraProp, value);
     }

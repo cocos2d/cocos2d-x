@@ -34,6 +34,7 @@ private:
     SpriteFrameDescription _handleNormal;
     SpriteFrameDescription _handleDisabled;
     SpriteFrameDescription _handleHiglihted;
+    SpriteFrameDescription _handleMouseOver;
     FloatScaleDescription _imageScale;
     Vec4 _margins;
     float _zoomScale;
