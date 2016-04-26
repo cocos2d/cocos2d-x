@@ -577,7 +577,7 @@ void  CCFreeTypeFont::compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox)
 }
 
 namespace {
-    inline unsigned char* takeBuffer(Data& data, ssize_t* size = nullptr) {
+    inline unsigned char* takeBuffer(Data& data, ssize_t* size) {
         auto buffer = data.getBytes();
         if (size)
             *size = data.getSize();
