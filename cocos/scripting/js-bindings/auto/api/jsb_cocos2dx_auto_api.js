@@ -1256,16 +1256,6 @@ int
 },
 
 /**
- * @method ignoreAnchorPointForPosition
- * @param {bool} arg0
- */
-ignoreAnchorPointForPosition : function (
-bool 
-)
-{
-},
-
-/**
  * @method setSkewY
  * @param {float} arg0
  */
@@ -1928,6 +1918,16 @@ getBoundingBox : function (
 )
 {
     return cc.Rect;
+},
+
+/**
+ * @method setIgnoreAnchorPointForPosition
+ * @param {bool} arg0
+ */
+setIgnoreAnchorPointForPosition : function (
+bool 
+)
+{
 },
 
 /**

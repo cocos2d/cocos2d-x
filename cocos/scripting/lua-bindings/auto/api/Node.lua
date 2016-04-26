@@ -104,7 +104,7 @@
         
 --------------------------------
 -- Gets whether the anchor point will be (0,0) when you position this node.<br>
--- see `ignoreAnchorPointForPosition(bool)`<br>
+-- see `setIgnoreAnchorPointForPosition(bool)`<br>
 -- return true if the anchor point will be (0,0) when you position this node.
 -- @function [parent=#Node] isIgnoreAnchorPointForPosition 
 -- @param self
@@ -477,17 +477,6 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
--- Sets whether the anchor point will be (0,0) when you position this node.<br>
--- This is an internal method, only used by Layer and Scene. Don't call it outside framework.<br>
--- The default value is false, while in Layer and Scene are true.<br>
--- param ignore    true if anchor point will be (0,0) when you position this node.<br>
--- todo This method should be renamed as setIgnoreAnchorPointForPosition(bool) or something with "set".
--- @function [parent=#Node] ignoreAnchorPointForPosition 
--- @param self
--- @param #bool ignore
--- @return Node#Node self (return value: cc.Node)
-        
---------------------------------
 -- Changes the Y skew angle of the node in degrees.<br>
 -- The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality<br>
 -- while the second one uses the real skew function.<br>
@@ -556,7 +545,6 @@
 -- Composable actions are counted as 1 action. Example:<br>
 -- If you are running 1 Sequence of 7 actions, it will return 1.<br>
 -- If you are running 7 Sequences of 2 actions, it will return 7.<br>
--- todo Rename to getNumberOfRunningActions()<br>
 -- return The number of actions that are running plus the ones that are schedule to run.
 -- @function [parent=#Node] getNumberOfRunningActions 
 -- @param self
@@ -1030,6 +1018,16 @@
 -- @function [parent=#Node] getBoundingBox 
 -- @param self
 -- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+-- Sets whether the anchor point will be (0,0) when you position this node.<br>
+-- This is an internal method, only used by Layer and Scene. Don't call it outside framework.<br>
+-- The default value is false, while in Layer and Scene are true.<br>
+-- param ignore    true if anchor point will be (0,0) when you position this node.
+-- @function [parent=#Node] setIgnoreAnchorPointForPosition 
+-- @param self
+-- @param #bool ignore
+-- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
 --  Set event dispatcher for scene.<br>
