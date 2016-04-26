@@ -610,43 +610,6 @@ void FileUtils::purgeCachedEntries()
     _fullPathCache.clear();
 }
 
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-// TODO: only winrt support text mode. it is possibly a bug. if true, remove the follow code for text mode.
-namespace
-{
-    // TODO: move this function to StringUtils.
-    // http://stackoverflow.com/a/7724536/87021
-    static inline std::string replaceAll(
-                                         std::string const& original,
-                                         std::string const& before,
-                                         std::string const& after
-                                         )
-    {
-        std::string retval;
-        retval.reserve(original.size());
-        auto end = original.end();
-        auto current = original.begin();
-        auto next = std::search( current, end, before.begin(), before.end() );
-        while ( next != end ) {
-            retval.append( current, next );
-            retval.append( after );
-            current = next + before.size();
-            next = std::search( current, end, before.begin(), before.end() );
-        }
-        retval.append( current, next );
-        return retval;
-    }
-
-    inline void textFormCRLF(std::string& s) {
-        static const std::string CRLF("\r\n");
-        static const std::string LF("\n");
-        s = std::move(replaceAll(s, CRLF, LF));
-    }
-}
-#endif
-
-
 std::string FileUtils::getStringFromFile(const std::string& filename)
 {
     std::string s;
@@ -700,18 +663,12 @@ FileUtils::Status FileUtils::getContents(const std::string& filename, ResizableB
 unsigned char* FileUtils::getFileData(const std::string& filename, const char* mode, ssize_t *size)
 {
     CCASSERT(!filename.empty() && size != nullptr && mode != nullptr, "Invalid parameters.");
+    (void)(mode); // mode is unused, as we do not support text mode any more...
 
     *size = 0;
     std::string s;
     if (getContents(filename, &s) != Status::OK)
         return nullptr;
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-    // TODO: only winrt support text mode. it is possibly a bug. if true, remove the follow code for text mode.
-    bool textmode = strchr(mode, 't') != NULL;
-    if (textmode)
-        textFormCRLF(s);
-#endif
 
     unsigned char * buffer = (unsigned char*)malloc(s.size());
     if (!buffer)
