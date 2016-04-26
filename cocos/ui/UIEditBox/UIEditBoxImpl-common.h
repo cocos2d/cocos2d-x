@@ -37,7 +37,7 @@ namespace ui {
 
 class EditBox;
 
-class EditBoxImplCommon : public EditBoxImpl
+class CC_GUI_DLL EditBoxImplCommon : public EditBoxImpl
 {
 public:
     /**
