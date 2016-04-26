@@ -29,8 +29,10 @@ THE SOFTWARE.
 #include "platform/android/CCFileUtils-android.h"
 #include "platform/CCCommon.h"
 #include "platform/android/jni/JniHelper.h"
+#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "android/asset_manager.h"
 #include "android/asset_manager_jni.h"
+#include "base/ZipUtils.h"
 #include <stdlib.h>
 #include <sys/stat.h>
 
@@ -42,6 +44,7 @@ using namespace std;
 NS_CC_BEGIN
 
 AAssetManager* FileUtilsAndroid::assetmanager = nullptr;
+ZipFile* FileUtilsAndroid::obbfile = nullptr;
 
 void FileUtilsAndroid::setassetmanager(AAssetManager* a) {
     if (nullptr == a) {
@@ -57,7 +60,7 @@ FileUtils* FileUtils::getInstance()
     if (s_sharedFileUtils == nullptr)
     {
         s_sharedFileUtils = new FileUtilsAndroid();
-        if(!s_sharedFileUtils->init())
+        if (!s_sharedFileUtils->init())
         {
           delete s_sharedFileUtils;
           s_sharedFileUtils = nullptr;
@@ -73,11 +76,22 @@ FileUtilsAndroid::FileUtilsAndroid()
 
 FileUtilsAndroid::~FileUtilsAndroid()
 {
+    if (obbfile)
+    {
+        delete obbfile;
+        obbfile = nullptr;
+    }
 }
 
 bool FileUtilsAndroid::init()
 {
     _defaultResRootPath = "assets/";
+    
+    std::string assetsPath(getApkPath());
+    if (assetsPath.find("/obb/") != std::string::npos)
+    {
+        obbfile = new ZipFile(assetsPath);
+    }
 
     return FileUtils::init();
 }
@@ -149,9 +163,14 @@ bool FileUtilsAndroid::isFileExistInternal(const std::string& strFilePath) const
         const char* s = strFilePath.c_str();
 
         // Found "assets/" at the beginning of the path and we don't want it
-        if (strFilePath.find(_defaultResRootPath) == 0) s += strlen("assets/");
-
-        if (FileUtilsAndroid::assetmanager) {
+        if (strFilePath.find(_defaultResRootPath) == 0) s += _defaultResRootPath.length();
+        
+        if (obbfile && obbfile->fileExists(s))
+        {
+            bFound = true;
+        }
+        else if (FileUtilsAndroid::assetmanager)
+        {
             AAsset* aa = AAssetManager_open(FileUtilsAndroid::assetmanager, s, AASSET_MODE_UNKNOWN);
             if (aa)
             {
@@ -165,7 +184,7 @@ bool FileUtilsAndroid::isFileExistInternal(const std::string& strFilePath) const
     else
     {
         FILE *fp = fopen(strFilePath.c_str(), "r");
-        if(fp)
+        if (fp)
         {
             bFound = true;
             fclose(fp);
@@ -248,6 +267,12 @@ FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, Res
         relativePath += fullPath.substr(apkprefix.size());
     } else {
         relativePath = fullPath;
+    }
+    
+    if (obbfile)
+    {
+        if (obbfile->getFileData(relativePath, buffer))
+            return FileUtils::Status::OK;
     }
 
     if (nullptr == assetmanager) {

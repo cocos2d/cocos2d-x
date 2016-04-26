@@ -29,6 +29,9 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.util.Log;
+import android.content.res.AssetFileDescriptor;
+import com.android.vending.expansion.zipfile.APKExpansionSupport;
+import com.android.vending.expansion.zipfile.ZipResourceFile;
 
 import java.io.FileInputStream;
 
@@ -134,9 +137,9 @@ public class Cocos2dxMusic {
 
     public void stopBackgroundMusic() {
         if (this.mBackgroundMediaPlayer != null) {
-        	mBackgroundMediaPlayer.release();
-        	mBackgroundMediaPlayer = createMediaplayer(mCurrentPath);
-        	
+            mBackgroundMediaPlayer.release();
+            mBackgroundMediaPlayer = createMediaplayer(mCurrentPath);
+            
             /**
              * should set the state, if not, the following sequence will be error
              * play -> pause -> stop -> resume
@@ -163,7 +166,7 @@ public class Cocos2dxMusic {
 
     public void rewindBackgroundMusic() {
         if (this.mBackgroundMediaPlayer != null) {
-        	playBackgroundMusic(mCurrentPath, mIsLoop);
+            playBackgroundMusic(mCurrentPath, mIsLoop);
         }
     }
 
@@ -250,8 +253,13 @@ public class Cocos2dxMusic {
                 mediaPlayer.setDataSource(fis.getFD());
                 fis.close();
             } else {
-                final AssetFileDescriptor assetFileDescritor = this.mContext.getAssets().openFd(path);
-                mediaPlayer.setDataSource(assetFileDescritor.getFileDescriptor(), assetFileDescritor.getStartOffset(), assetFileDescritor.getLength());
+                if (Cocos2dxHelper.getObbFile() != null) {
+                    final AssetFileDescriptor assetFileDescriptor = Cocos2dxHelper.getObbFile().getAssetFileDescriptor(path);
+                    mediaPlayer.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
+                } else {
+                    final AssetFileDescriptor assetFileDescriptor = this.mContext.getAssets().openFd(path);
+                    mediaPlayer.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
+                }
             }
 
             mediaPlayer.prepare();
