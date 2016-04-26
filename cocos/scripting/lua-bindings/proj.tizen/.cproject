@@ -210,6 +210,8 @@
 									<listOptionValue builtIn="false" value="Native_API"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1098130049" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CC_ENABLE_BULLET_INTEGRATION"/>
+									<listOptionValue builtIn="false" value="CC_USE_3D_PHYSICS"/>
 									<listOptionValue builtIn="false" value="_DEBUG"/>
 									<listOptionValue builtIn="false" value="TIZEN"/>
 									<listOptionValue builtIn="false" value="COCOS2D_DEBUG=1"/>
@@ -566,6 +568,8 @@
 									<listOptionValue builtIn="false" value="Native_API"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.808691661" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CC_ENABLE_BULLET_INTEGRATION"/>
+									<listOptionValue builtIn="false" value="CC_USE_3D_PHYSICS"/>
 									<listOptionValue builtIn="false" value="TIZEN"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.dialect.std.1354507522" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
@@ -918,6 +922,8 @@
 									<listOptionValue builtIn="false" value="Native_API"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.636822255" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CC_ENABLE_BULLET_INTEGRATION"/>
+									<listOptionValue builtIn="false" value="CC_USE_3D_PHYSICS"/>
 									<listOptionValue builtIn="false" value="_DEBUG"/>
 									<listOptionValue builtIn="false" value="TIZEN"/>
 									<listOptionValue builtIn="false" value="COCOS2D_DEBUG=1"/>
