@@ -24,14 +24,14 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
 
-#include "UIWebViewImpl-tizen.h"
+#include "ui/UIWebViewImpl-tizen.h"
 
 #include <unordered_map>
 #include <stdlib.h>
 #include <string>
 
 #include "platform/tizen/CCApplication-tizen.h"
-#include "UIWebView.h"
+#include "ui/UIWebView.h"
 #include "platform/CCGLView.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
@@ -56,43 +56,43 @@ namespace cocos2d {
             }
 
             void WebViewImpl::loadData(const Data &data, const std::string &MIMEType, const std::string &encoding, const std::string &baseURL) {
-            	const char* contents = nullptr;
-            	size_t contents_size = 0;
-            	char* mime_type = (char*)MIMEType.c_str();
-            	char* encode = (char*)encoding.c_str();
-            	char* base_uri = (char*)baseURL.c_str();
-            	ewk_view_contents_set(_ewkView, contents, contents_size, mime_type, encode, base_uri);
+                const char* contents = nullptr;
+                size_t contents_size = 0;
+                char* mime_type = (char*)MIMEType.c_str();
+                char* encode = (char*)encoding.c_str();
+                char* base_uri = (char*)baseURL.c_str();
+                ewk_view_contents_set(_ewkView, contents, contents_size, mime_type, encode, base_uri);
             }
 
             void WebViewImpl::loadHTMLString(const std::string &string, const std::string &baseURL) {
 
-            	const char* contents = string.c_str();
-            	size_t contents_size = string.length();
-            	char* mime_type = (char*)baseURL.c_str();
-            	char* encoding = nullptr;
-            	char* base_uri = nullptr;//(char*)baseURL.c_str();
-            	ewk_view_contents_set(_ewkView, contents, contents_size, mime_type, encoding, base_uri);
+                const char* contents = string.c_str();
+                size_t contents_size = string.length();
+                char* mime_type = (char*)baseURL.c_str();
+                char* encoding = nullptr;
+                char* base_uri = nullptr;//(char*)baseURL.c_str();
+                ewk_view_contents_set(_ewkView, contents, contents_size, mime_type, encoding, base_uri);
             }
 
             void WebViewImpl::loadURL(const std::string &url) {
 
-            	const char* urlchar = url.c_str();
-            	ewk_view_url_set(_ewkView, urlchar);
+                const char* urlchar = url.c_str();
+                ewk_view_url_set(_ewkView, urlchar);
             }
 
             void WebViewImpl::loadFile(const std::string &fileName) {
                 auto fileUtiles = FileUtils::getInstance();
                 auto fileFullPath = fileUtiles->fullPathForFilename(fileName);
                 auto contentsString = fileUtiles->getStringFromFile(fileFullPath);
-            	loadHTMLString(contentsString, "text/html");
+                loadHTMLString(contentsString, "text/html");
             }
 
             void WebViewImpl::stopLoading() {
-            	ewk_view_stop(_ewkView);
+                ewk_view_stop(_ewkView);
             }
 
             void WebViewImpl::reload() {
-            	ewk_view_reload(_ewkView);
+                ewk_view_reload(_ewkView);
             }
 
             bool WebViewImpl::canGoBack() {
@@ -104,19 +104,19 @@ namespace cocos2d {
             }
 
             void WebViewImpl::goBack() {
-            	ewk_view_back(_ewkView);
+                ewk_view_back(_ewkView);
             }
 
             void WebViewImpl::goForward() {
-            	ewk_view_forward(_ewkView);
+                ewk_view_forward(_ewkView);
             }
 
             void WebViewImpl::setJavascriptInterfaceScheme(const std::string &scheme) {
             }
 
             void WebViewImpl::evaluateJS(const std::string &js) {
-            	const char* script = js.c_str();
-            	Eina_Bool ret = ewk_view_script_execute(_ewkView, script, JScallback, this);
+                const char* script = js.c_str();
+                Eina_Bool ret = ewk_view_script_execute(_ewkView, script, JScallback, this);
             }
 
             void WebViewImpl::setScalesPageToFit(const bool scalesPageToFit) {
@@ -146,14 +146,14 @@ namespace cocos2d {
             }
 
             void WebViewImpl::setVisible(bool visible) {
-            	if (visible)
-            	{
-            		evas_object_show(_ewkView);
-            	}
-            	else
-            	{
-            		evas_object_hide(_ewkView);
-            	}
+                if (visible)
+                {
+                    evas_object_show(_ewkView);
+                }
+                else
+                {
+                    evas_object_hide(_ewkView);
+                }
             }
         } // namespace ui
     } // namespace experimental

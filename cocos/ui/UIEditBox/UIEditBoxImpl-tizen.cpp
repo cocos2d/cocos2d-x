@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIEditBoxImpl-tizen.h"
+#include "ui/UIEditBox/UIEditBoxImpl-tizen.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
 
@@ -31,7 +31,7 @@
 #include <Elementary.h>
 #include <efl_extension.h>
 
-#include "UIEditBox.h"
+#include "ui/UIEditBox/UIEditBox.h"
 #include "2d/CCLabel.h"
 #include "base/ccUTF8.h"
 
@@ -79,7 +79,7 @@ bool EditBoxImplTizen::initWithSize(const Size& size)
     int fontSize = size.height-12;
     _label = Label::create();
     _label->setSystemFontSize(size.height-12);
-	// align the text vertically center
+    // align the text vertically center
     _label->setAnchorPoint(Vec2(0, 0.5f));
     _label->setPosition(Vec2(CC_EDIT_BOX_PADDING, size.height / 2.0f));
     _label->setTextColor(_colText);
@@ -87,7 +87,7 @@ bool EditBoxImplTizen::initWithSize(const Size& size)
 
     _labelPlaceHolder = Label::create();
     _labelPlaceHolder->setSystemFontSize(size.height-12);
-	// align the text vertically center
+    // align the text vertically center
     _labelPlaceHolder->setAnchorPoint(Vec2(0, 0.5f));
     _labelPlaceHolder->setPosition(CC_EDIT_BOX_PADDING, size.height / 2.0f);
     _labelPlaceHolder->setVisible(false);
@@ -100,15 +100,15 @@ bool EditBoxImplTizen::initWithSize(const Size& size)
 
 void EditBoxImplTizen::setFont(const char* pFontName, int fontSize)
 {
-	if(_label != NULL) {
-		_label->setSystemFontName(pFontName);
-		_label->setSystemFontSize(fontSize);
-	}
+    if(_label != NULL) {
+        _label->setSystemFontName(pFontName);
+        _label->setSystemFontSize(fontSize);
+    }
 
-	if(_labelPlaceHolder != NULL) {
-		_labelPlaceHolder->setSystemFontName(pFontName);
-		_labelPlaceHolder->setSystemFontSize(fontSize);
-	}
+    if(_labelPlaceHolder != NULL) {
+        _labelPlaceHolder->setSystemFontName(pFontName);
+        _labelPlaceHolder->setSystemFontSize(fontSize);
+    }
 }
 
 void EditBoxImplTizen::setFontColor(const Color4B& color)
@@ -119,10 +119,10 @@ void EditBoxImplTizen::setFontColor(const Color4B& color)
 
 void EditBoxImplTizen::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-	if(_labelPlaceHolder != NULL) {
-		_labelPlaceHolder->setSystemFontName(pFontName);
-		_labelPlaceHolder->setSystemFontSize(fontSize);
-	}
+    if(_labelPlaceHolder != NULL) {
+        _labelPlaceHolder->setSystemFontName(pFontName);
+        _labelPlaceHolder->setSystemFontSize(fontSize);
+    }
 }
 
 void EditBoxImplTizen::setPlaceholderFontColor(const Color4B& color)
@@ -186,9 +186,9 @@ void EditBoxImplTizen::setText(const char* pText)
                 strToShow = _text;
             }
 
-			_label->setString(strToShow.c_str());
+            _label->setString(strToShow.c_str());
 
-			// Clip the text width to fit to the text box
+            // Clip the text width to fit to the text box
 
             float fMaxWidth = _editSize.width - CC_EDIT_BOX_PADDING * 2;
             auto labelSize = _label->getContentSize();
@@ -335,9 +335,9 @@ void EditBoxImplTizen::openKeyboard()
     elm_win_alpha_set(s_keypadWin, EINA_TRUE);
     evas_object_show(s_keypadWin);
     eext_object_event_callback_add(s_keypadWin, EEXT_CALLBACK_BACK, entry_back_cb, this);
-	int rots[2];
-	rots[0] = (int)(elm_win_rotation_get(parent));
-	rots[1] = rots[0] + 180 % 360;
+    int rots[2];
+    rots[0] = (int)(elm_win_rotation_get(parent));
+    rots[1] = rots[0] + 180 % 360;
     elm_win_wm_rotation_available_rotations_set(s_keypadWin, rots, 2);
     
     Evas_Object* bgFull = elm_bg_add(s_keypadWin);
@@ -345,85 +345,85 @@ void EditBoxImplTizen::openKeyboard()
     evas_object_resize(bgFull, frameSize.width, frameSize.height);
     evas_object_show(bgFull);
 
-	int height = frameSize.height / 10;
-	Evas_Object* rectangle = elm_bg_add(bgFull);
-	evas_object_resize(rectangle, frameSize.width, height);
-	evas_object_move(rectangle, 0, height);
-	evas_object_color_set(rectangle, 0xff, 0xff, 0xff, 0xff);
-	evas_object_show(rectangle);
+    int height = frameSize.height / 10;
+    Evas_Object* rectangle = elm_bg_add(bgFull);
+    evas_object_resize(rectangle, frameSize.width, height);
+    evas_object_move(rectangle, 0, height);
+    evas_object_color_set(rectangle, 0xff, 0xff, 0xff, 0xff);
+    evas_object_show(rectangle);
 
-	Evas_Object* title = elm_entry_add(rectangle);
-	evas_object_resize(title, frameSize.width, height);
-	auto text = _placeHolder.c_str();
-	auto richText = (char*)malloc(strlen(text) + 50);
-	sprintf(richText,"<color=#ffffff>%s</>", text);
-	elm_entry_entry_set(title, richText);
-	elm_entry_editable_set(title, EINA_FALSE);
-	//elm_entry_drag_disabled_set(title, EINA_TRUE);
-	//elm_entry_drop_disabled_set(title, EINA_TRUE);
-	evas_object_show(title);
-	free(richText);
+    Evas_Object* title = elm_entry_add(rectangle);
+    evas_object_resize(title, frameSize.width, height);
+    auto text = _placeHolder.c_str();
+    auto richText = (char*)malloc(strlen(text) + 50);
+    sprintf(richText,"<color=#ffffff>%s</>", text);
+    elm_entry_entry_set(title, richText);
+    elm_entry_editable_set(title, EINA_FALSE);
+    //elm_entry_drag_disabled_set(title, EINA_TRUE);
+    //elm_entry_drop_disabled_set(title, EINA_TRUE);
+    evas_object_show(title);
+    free(richText);
 
-	Evas_Object* entry = elm_entry_add(bgFull);
-	elm_object_focus_set(entry, EINA_TRUE);
-	evas_object_resize(entry, frameSize.width, height);
-	evas_object_move(entry, 0, height);
-	elm_entry_single_line_set(entry, EINA_TRUE);
-	elm_entry_line_wrap_set(entry, ELM_WRAP_MIXED);
-	elm_entry_entry_set(entry, _text.c_str());
-	evas_object_show(entry);
-	elm_object_focus_set(entry, EINA_TRUE);
-	eext_entry_selection_back_event_allow_set(entry, EINA_TRUE);
-	Elm_Entry_Filter_Limit_Size limit_size = { 0, };
-	limit_size.max_char_count = _maxLength;
-	elm_entry_markup_filter_append(entry, elm_entry_filter_limit_size, &limit_size);
-	elm_entry_input_panel_return_key_type_set(entry, ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE);
-	elm_entry_prediction_allow_set(entry, EINA_FALSE);
+    Evas_Object* entry = elm_entry_add(bgFull);
+    elm_object_focus_set(entry, EINA_TRUE);
+    evas_object_resize(entry, frameSize.width, height);
+    evas_object_move(entry, 0, height);
+    elm_entry_single_line_set(entry, EINA_TRUE);
+    elm_entry_line_wrap_set(entry, ELM_WRAP_MIXED);
+    elm_entry_entry_set(entry, _text.c_str());
+    evas_object_show(entry);
+    elm_object_focus_set(entry, EINA_TRUE);
+    eext_entry_selection_back_event_allow_set(entry, EINA_TRUE);
+    Elm_Entry_Filter_Limit_Size limit_size = { 0, };
+    limit_size.max_char_count = _maxLength;
+    elm_entry_markup_filter_append(entry, elm_entry_filter_limit_size, &limit_size);
+    elm_entry_input_panel_return_key_type_set(entry, ELM_INPUT_PANEL_RETURN_KEY_TYPE_DONE);
+    elm_entry_prediction_allow_set(entry, EINA_FALSE);
 
-	evas_object_smart_callback_add(entry, "activated", entry_activated_cb, this);
+    evas_object_smart_callback_add(entry, "activated", entry_activated_cb, this);
 
-	switch(_editBoxInputFlag)
-	{
-	case EditBox::InputFlag::PASSWORD:
-		elm_entry_password_set(entry, EINA_TRUE);
-		elm_entry_input_panel_layout_set(entry, ELM_INPUT_PANEL_LAYOUT_EMAIL);
-		break;
-	case EditBox::InputFlag::SENSITIVE:
-		elm_entry_input_hint_set(entry, ELM_INPUT_HINT_SENSITIVE_DATA);
-		break;
-	case EditBox::InputFlag::INITIAL_CAPS_WORD:
-		elm_entry_autocapital_type_set(entry, ELM_AUTOCAPITAL_TYPE_WORD);
-		break;
-	case EditBox::InputFlag::INITIAL_CAPS_SENTENCE:
-		elm_entry_autocapital_type_set(entry, ELM_AUTOCAPITAL_TYPE_SENTENCE);
-		break;
-	case EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS:
-		elm_entry_autocapital_type_set(entry, ELM_AUTOCAPITAL_TYPE_ALLCHARACTER);
-		break;
-	}
+    switch(_editBoxInputFlag)
+    {
+    case EditBox::InputFlag::PASSWORD:
+        elm_entry_password_set(entry, EINA_TRUE);
+        elm_entry_input_panel_layout_set(entry, ELM_INPUT_PANEL_LAYOUT_EMAIL);
+        break;
+    case EditBox::InputFlag::SENSITIVE:
+        elm_entry_input_hint_set(entry, ELM_INPUT_HINT_SENSITIVE_DATA);
+        break;
+    case EditBox::InputFlag::INITIAL_CAPS_WORD:
+        elm_entry_autocapital_type_set(entry, ELM_AUTOCAPITAL_TYPE_WORD);
+        break;
+    case EditBox::InputFlag::INITIAL_CAPS_SENTENCE:
+        elm_entry_autocapital_type_set(entry, ELM_AUTOCAPITAL_TYPE_SENTENCE);
+        break;
+    case EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS:
+        elm_entry_autocapital_type_set(entry, ELM_AUTOCAPITAL_TYPE_ALLCHARACTER);
+        break;
+    }
 
-	switch(_editBoxInputMode)
-	{
-	case EditBox::InputMode::ANY:
-		break;
-	case EditBox::InputMode::EMAIL_ADDRESS:
-		elm_entry_input_panel_layout_set(entry, ELM_INPUT_PANEL_LAYOUT_EMAIL);
-		break;
-	case EditBox::InputMode::NUMERIC:
-		elm_entry_input_panel_layout_set(entry, ELM_INPUT_PANEL_LAYOUT_NUMBER);
-		break;
-	case EditBox::InputMode::PHONE_NUMBER:
-		elm_entry_input_panel_layout_set(entry, ELM_INPUT_PANEL_LAYOUT_PHONENUMBER);
-		break;
-	case EditBox::InputMode::URL:
-		elm_entry_input_panel_layout_set(entry, ELM_INPUT_PANEL_LAYOUT_URL);
-		break;
-	case EditBox::InputMode::DECIMAL:
-		elm_entry_input_panel_layout_set(entry, ELM_INPUT_PANEL_LAYOUT_HEX); //fixme?
-		break;
-	case EditBox::InputMode::SINGLE_LINE:
-		break;
-	}
+    switch(_editBoxInputMode)
+    {
+    case EditBox::InputMode::ANY:
+        break;
+    case EditBox::InputMode::EMAIL_ADDRESS:
+        elm_entry_input_panel_layout_set(entry, ELM_INPUT_PANEL_LAYOUT_EMAIL);
+        break;
+    case EditBox::InputMode::NUMERIC:
+        elm_entry_input_panel_layout_set(entry, ELM_INPUT_PANEL_LAYOUT_NUMBER);
+        break;
+    case EditBox::InputMode::PHONE_NUMBER:
+        elm_entry_input_panel_layout_set(entry, ELM_INPUT_PANEL_LAYOUT_PHONENUMBER);
+        break;
+    case EditBox::InputMode::URL:
+        elm_entry_input_panel_layout_set(entry, ELM_INPUT_PANEL_LAYOUT_URL);
+        break;
+    case EditBox::InputMode::DECIMAL:
+        elm_entry_input_panel_layout_set(entry, ELM_INPUT_PANEL_LAYOUT_HEX); //fixme?
+        break;
+    case EditBox::InputMode::SINGLE_LINE:
+        break;
+    }
 }
 
 void EditBoxImplTizen::closeKeyboard()

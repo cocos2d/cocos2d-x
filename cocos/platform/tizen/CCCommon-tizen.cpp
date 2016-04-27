@@ -26,7 +26,7 @@
 #if CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 
 #include "platform/CCCommon.h"
-#include "CCStdC-tizen.h"
+#include "platform/tizen/CCStdC-tizen.h"
 #include "base/CCConsole.h"
 
 NS_CC_BEGIN

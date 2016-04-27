@@ -38,7 +38,7 @@
 #include "base/CCEventAcceleration.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
-#include "CCApplication-tizen.h"
+#include "platform/tizen/CCApplication-tizen.h"
 
 using namespace std;
 NS_CC_BEGIN
@@ -80,9 +80,9 @@ static void accelerometer_sensor_cb(sensor_h _sensor, sensor_event_s *sensor_dat
     _acceleration->z = sensor_data->values[2] / GRAVITY_EARTH;
     _acceleration->timestamp = sensor_data->timestamp;
 
-  	double tmp = _acceleration->x;
-  	Application *app = Application::getInstance();
-  	int oritentation = elm_win_rotation_get(app->_win);
+    double tmp = _acceleration->x;
+    Application *app = Application::getInstance();
+    int oritentation = elm_win_rotation_get(app->_win);
 
    switch (oritentation)
     {
@@ -220,11 +220,11 @@ static void getTextBitmapData(const char * text, const FontDefinition& textDefin
     std::string fontFullPath;
     if(textDefinition._fontName.empty())
     {
-    	fontFullPath = "Sans";
+        fontFullPath = "Sans";
     }
     else
     {
-    	fontFullPath= FileUtils::getInstance()->fullPathForFilename(textDefinition._fontName);
+        fontFullPath= FileUtils::getInstance()->fullPathForFilename(textDefinition._fontName);
     }
 
     const char* fontName = fontFullPath.c_str();

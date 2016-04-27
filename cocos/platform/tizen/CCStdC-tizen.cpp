@@ -25,7 +25,7 @@
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 
-#include "CCStdC-tizen.h"
+#include "platform/tizen/CCStdC-tizen.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 

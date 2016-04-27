@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIVideoPlayer.h"
+#include "ui/UIVideoPlayer.h"
 
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
@@ -49,70 +49,70 @@ using namespace cocos2d::experimental::ui;
 class _VideoPlayerTizen
 {
 public:
-	_VideoPlayerTizen(VideoPlayer* videoPlayer)
-	{
-		_videoPlayer = videoPlayer;
+    _VideoPlayerTizen(VideoPlayer* videoPlayer)
+    {
+        _videoPlayer = videoPlayer;
 
-		Application* app = Application::getInstance();
-		_layout = elm_layout_add(app->_win);
+        Application* app = Application::getInstance();
+        _layout = elm_layout_add(app->_win);
         Evas *evas = evas_object_evas_get(_layout);
         _image = evas_object_image_filled_add(evas);
         evas_object_show(_image);
         player_create(&_player);
 
         evas_object_event_callback_add(_image, EVAS_CALLBACK_MOUSE_UP, _VideoPlayerTizen::mouse_up_cb, this);
-    	eext_object_event_callback_add(app->_win, EEXT_CALLBACK_BACK, _VideoPlayerTizen::win_back_cb, this);
-	}
+        eext_object_event_callback_add(app->_win, EEXT_CALLBACK_BACK, _VideoPlayerTizen::win_back_cb, this);
+    }
 
-	virtual ~_VideoPlayerTizen()
-	{
-		Application* app = Application::getInstance();
-		eext_object_event_callback_del(app->_win, EEXT_CALLBACK_BACK, _VideoPlayerTizen::win_back_cb);
-		evas_object_event_callback_del(_image, EVAS_CALLBACK_MOUSE_UP, _VideoPlayerTizen::mouse_up_cb);
+    virtual ~_VideoPlayerTizen()
+    {
+        Application* app = Application::getInstance();
+        eext_object_event_callback_del(app->_win, EEXT_CALLBACK_BACK, _VideoPlayerTizen::win_back_cb);
+        evas_object_event_callback_del(_image, EVAS_CALLBACK_MOUSE_UP, _VideoPlayerTizen::mouse_up_cb);
 
         player_stop(_player);
         player_unprepare(_player);
         player_destroy(_player);
         evas_object_del(_image);
         evas_object_del(_layout);
-	}
+    }
 
-	static void mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-	{
-		_VideoPlayerTizen* videoPlayerTizen = (_VideoPlayerTizen*)data;
-		if (videoPlayerTizen->_videoPlayer->isPlaying())
-		{
-			videoPlayerTizen->_videoPlayer->pause();
-		}
-		else
-		{
-			videoPlayerTizen->_videoPlayer->resume();
-		}
-	}
+    static void mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+    {
+        _VideoPlayerTizen* videoPlayerTizen = (_VideoPlayerTizen*)data;
+        if (videoPlayerTizen->_videoPlayer->isPlaying())
+        {
+            videoPlayerTizen->_videoPlayer->pause();
+        }
+        else
+        {
+            videoPlayerTizen->_videoPlayer->resume();
+        }
+    }
 
-	static void win_back_cb(void *data, Evas_Object *obj, void *event_info) {
-		_VideoPlayerTizen* videoPlayerTizen = (_VideoPlayerTizen*)data;
-		videoPlayerTizen->_videoPlayer->onPlayEvent(QUIT_FULLSCREEN);
+    static void win_back_cb(void *data, Evas_Object *obj, void *event_info) {
+        _VideoPlayerTizen* videoPlayerTizen = (_VideoPlayerTizen*)data;
+        videoPlayerTizen->_videoPlayer->onPlayEvent(QUIT_FULLSCREEN);
         evas_object_resize(videoPlayerTizen->_image, videoPlayerTizen->_width, videoPlayerTizen->_height);
         evas_object_move(videoPlayerTizen->_image, videoPlayerTizen->_x, videoPlayerTizen->_y);
-	}
+    }
 
-	void setRectangle(Evas_Coord x, Evas_Coord y, Evas_Coord width, Evas_Coord height)
-	{
-		_x = x;
-		_y = y;
-		_width = width;
-		_height = height;
-	}
+    void setRectangle(Evas_Coord x, Evas_Coord y, Evas_Coord width, Evas_Coord height)
+    {
+        _x = x;
+        _y = y;
+        _width = width;
+        _height = height;
+    }
 
-	player_h _player;
-	Evas_Object* _image;
-	Evas_Object* _layout;
-	VideoPlayer* _videoPlayer;
-	Evas_Coord _x;
-	Evas_Coord _y;
-	Evas_Coord _width;
-	Evas_Coord _height;
+    player_h _player;
+    Evas_Object* _image;
+    Evas_Object* _layout;
+    VideoPlayer* _videoPlayer;
+    Evas_Coord _x;
+    Evas_Coord _y;
+    Evas_Coord _width;
+    Evas_Coord _height;
 };
 
 VideoPlayer::VideoPlayer()
@@ -122,7 +122,7 @@ VideoPlayer::VideoPlayer()
 , _fullScreenDirty(false)
 , _keepAspectRatioEnabled(false)
 {
-	_videoView = (void*) new (std::nothrow) _VideoPlayerTizen(this);
+    _videoView = (void*) new (std::nothrow) _VideoPlayerTizen(this);
 
 #if CC_VIDEOPLAYER_DEBUG_DRAW
     _debugDrawNode = DrawNode::create();
@@ -132,7 +132,7 @@ VideoPlayer::VideoPlayer()
 
 VideoPlayer::~VideoPlayer()
 {
-	delete (_VideoPlayerTizen*)_videoView;
+    delete (_VideoPlayerTizen*)_videoView;
 }
 
 void VideoPlayer::setFileName(const std::string& fileName)
@@ -224,19 +224,19 @@ bool VideoPlayer::isFullScreenEnabled()const
 
 void VideoPlayer::setKeepAspectRatioEnabled(bool enable)
 {
-	if (_keepAspectRatioEnabled != enable)
-	{
-		_keepAspectRatioEnabled = enable;
-	    _VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
-	    if (_keepAspectRatioEnabled == enable)
-	    {
-	       	player_set_display_mode(impl->_player, PLAYER_DISPLAY_MODE_LETTER_BOX);
-	    }
-	    else
-	    {
-	       	player_set_display_mode(impl->_player, PLAYER_DISPLAY_MODE_FULL_SCREEN);
-	    }
-	}
+    if (_keepAspectRatioEnabled != enable)
+    {
+        _keepAspectRatioEnabled = enable;
+        _VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
+        if (_keepAspectRatioEnabled == enable)
+        {
+                player_set_display_mode(impl->_player, PLAYER_DISPLAY_MODE_LETTER_BOX);
+        }
+        else
+        {
+                player_set_display_mode(impl->_player, PLAYER_DISPLAY_MODE_FULL_SCREEN);
+        }
+    }
 }
 
 #if CC_VIDEOPLAYER_DEBUG_DRAW
@@ -266,37 +266,37 @@ void VideoPlayer::drawDebugData()
 
 static void _player_completed_cb(void *user_data)
 {
-	VideoPlayer* player = (VideoPlayer*)user_data;
-	player->onPlayEvent((int)VideoPlayer::EventType::COMPLETED);
+    VideoPlayer* player = (VideoPlayer*)user_data;
+    player->onPlayEvent((int)VideoPlayer::EventType::COMPLETED);
 }
 
 static void _player_interrupted_cb(player_interrupted_code_e code, void *user_data)
 {
-	VideoPlayer* player = (VideoPlayer*)user_data;
-	player->onPlayEvent((int)VideoPlayer::EventType::PAUSED);
+    VideoPlayer* player = (VideoPlayer*)user_data;
+    player->onPlayEvent((int)VideoPlayer::EventType::PAUSED);
 }
 
 static void _player_video_frame_decoded_cb(unsigned char *data, int width, int height, unsigned int size, void *user_data)
 {
-	VideoPlayer* player = (VideoPlayer*)user_data;
-	player->onPlayEvent((int)VideoPlayer::EventType::PLAYING);
+    VideoPlayer* player = (VideoPlayer*)user_data;
+    player->onPlayEvent((int)VideoPlayer::EventType::PLAYING);
 }
 
 void VideoPlayer::play()
 {
     if (! _videoURL.empty())
     {
-    	_VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
+        _VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
         player_set_sound_type(impl->_player, SOUND_TYPE_MEDIA);
         player_set_display(impl->_player, PLAYER_DISPLAY_TYPE_EVAS, GET_DISPLAY(impl->_image));
 
         if (_keepAspectRatioEnabled)
         {
-        	player_set_display_mode(impl->_player, PLAYER_DISPLAY_MODE_LETTER_BOX);
+            player_set_display_mode(impl->_player, PLAYER_DISPLAY_MODE_LETTER_BOX);
         }
         else
         {
-        	player_set_display_mode(impl->_player, PLAYER_DISPLAY_MODE_FULL_SCREEN);
+            player_set_display_mode(impl->_player, PLAYER_DISPLAY_MODE_FULL_SCREEN);
         }
         player_set_display_visible(impl->_player, true);
 
@@ -307,7 +307,7 @@ void VideoPlayer::play()
         int ret = player_start(impl->_player);
         if (ret == PLAYER_ERROR_NONE)
         {
-        	this->onPlayEvent((int)VideoPlayer::EventType::PLAYING);
+            this->onPlayEvent((int)VideoPlayer::EventType::PLAYING);
         }
     }
 }
@@ -316,12 +316,12 @@ void VideoPlayer::pause()
 {
     if (! _videoURL.empty())
     {
-    	_VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
-    	int ret = player_pause(impl->_player);
-    	if (ret == PLAYER_ERROR_NONE)
-    	{
-    		this->onPlayEvent((int)VideoPlayer::EventType::PAUSED);
-    	}
+        _VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
+        int ret = player_pause(impl->_player);
+        if (ret == PLAYER_ERROR_NONE)
+        {
+            this->onPlayEvent((int)VideoPlayer::EventType::PAUSED);
+        }
     }
 }
 
@@ -329,12 +329,12 @@ void VideoPlayer::resume()
 {
     if (! _videoURL.empty())
     {
-    	_VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
-    	int ret = player_start(impl->_player);
-    	if (ret == PLAYER_ERROR_NONE)
-    	{
-    		this->onPlayEvent((int)VideoPlayer::EventType::PLAYING);
-    	}
+        _VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
+        int ret = player_start(impl->_player);
+        if (ret == PLAYER_ERROR_NONE)
+        {
+            this->onPlayEvent((int)VideoPlayer::EventType::PLAYING);
+        }
     }
 }
 
@@ -342,12 +342,12 @@ void VideoPlayer::stop()
 {
     if (! _videoURL.empty())
     {
-    	_VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
-    	int ret = player_stop(impl->_player);
-    	if (ret == PLAYER_ERROR_NONE)
-    	{
-    		this->onPlayEvent((int)VideoPlayer::EventType::STOPPED);
-    	}
+        _VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
+        int ret = player_stop(impl->_player);
+        if (ret == PLAYER_ERROR_NONE)
+        {
+            this->onPlayEvent((int)VideoPlayer::EventType::STOPPED);
+        }
     }
 }
 
@@ -355,8 +355,8 @@ void VideoPlayer::seekTo(float sec)
 {
     if (! _videoURL.empty())
     {
-    	_VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
-    	player_set_play_position(impl->_player, sec, false, NULL, NULL);
+        _VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
+        player_set_play_position(impl->_player, sec, false, NULL, NULL);
     }
 }
 
@@ -371,8 +371,8 @@ void VideoPlayer::setVisible(bool visible)
 
     if (! _videoURL.empty())
     {
-    	_VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
-    	player_set_display_visible(impl->_player, visible);
+        _VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
+        player_set_display_visible(impl->_player, visible);
     } 
 }
 

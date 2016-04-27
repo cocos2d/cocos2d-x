@@ -25,7 +25,7 @@
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 
-#include "CCFileUtils-tizen.h"
+#include "platform/tizen/CCFileUtils-tizen.h"
 #include <app.h>
 #include <sys/stat.h>
 
@@ -55,8 +55,8 @@ FileUtilsTizen::FileUtilsTizen()
 
 bool FileUtilsTizen::init()
 {
-	_defaultResRootPath = app_get_resource_path();
-	_writablePath = app_get_data_path();
+    _defaultResRootPath = app_get_resource_path();
+    _writablePath = app_get_data_path();
 
     return FileUtils::init();
 }

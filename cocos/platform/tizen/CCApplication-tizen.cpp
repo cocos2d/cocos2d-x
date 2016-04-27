@@ -25,7 +25,7 @@
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 
-#include "CCApplication-tizen.h"
+#include "platform/tizen/CCApplication-tizen.h"
 #include <unistd.h>
 #include <sys/time.h>
 #include <string>
@@ -37,7 +37,7 @@
 #include <efl_extension.h>
 #include <Evas_GL.h>
 
-#include "CCGLViewImpl-tizen.h"
+#include "platform/tizen/CCGLViewImpl-tizen.h"
 #include "base/CCDirector.h"
 #include "base/CCEventKeyboard.h"
 #include "base/CCEventDispatcher.h"
@@ -73,8 +73,8 @@ static void win_more_cb(void *data, Evas_Object *obj, void *event_info) {
 
 static void makeCurrent(void)
 {
-	Application* app = Application::getInstance();
-	evas_gl_make_current(app->_evasGL, app->_sfc, app->_ctx);
+    Application* app = Application::getInstance();
+    evas_gl_make_current(app->_evasGL, app->_sfc, app->_ctx);
 }
 
 static void draw_gl(Evas_Object *obj)
@@ -246,52 +246,52 @@ static void get_glview_mode(GLContextAttrs &attrs, char* gl_mode)
 
     if (attrs.alphaBits > 0)
     {
-    	strcat(gl_mode, ":alpha");
+        strcat(gl_mode, ":alpha");
     }
 
     if (attrs.depthBits > 0)
     {
-    	strcat(gl_mode, ":depth");
+        strcat(gl_mode, ":depth");
         if (attrs.depthBits <= 8)
         {
-        	strcat(gl_mode, "8");
+            strcat(gl_mode, "8");
         }
         else if (attrs.depthBits <= 16)
         {
-        	strcat(gl_mode, "16");
+            strcat(gl_mode, "16");
         }
         else if (attrs.depthBits <= 24)
         {
-        	strcat(gl_mode, "24");
+            strcat(gl_mode, "24");
         }
         else
         {
-        	strcat(gl_mode, "32");
+            strcat(gl_mode, "32");
         }
     }
 
     if (attrs.stencilBits > 0)
     {
-    	strcat(gl_mode, ":stencil");
+        strcat(gl_mode, ":stencil");
         if (attrs.stencilBits == 1)
         {
-        	strcat(gl_mode, "1");
+            strcat(gl_mode, "1");
         }
         else if (attrs.stencilBits == 2)
         {
-        	strcat(gl_mode, "2");
+            strcat(gl_mode, "2");
         }
         else if (attrs.stencilBits <= 4)
         {
-        	strcat(gl_mode, "4");
+            strcat(gl_mode, "4");
         }
         else if (attrs.stencilBits <= 8)
         {
-        	strcat(gl_mode, "8");
+            strcat(gl_mode, "8");
         }
         else
         {
-        	strcat(gl_mode, "16");
+            strcat(gl_mode, "16");
         }
     }
 
@@ -442,7 +442,7 @@ static void app_terminate(void *data)
         return;
     }
     stopAccelerometerSensor();
-	Director::getInstance()->end();
+    Director::getInstance()->end();
   //  Application* app = ((Application *)data);
   //  delete app;
 }
@@ -454,21 +454,21 @@ static void app_control(app_control_h app_control, void *data)
 
 int Application::run()
 {
-	ui_app_lifecycle_callback_s event_callback = {0,};
-	//app_event_handler_h handlers[5] = {NULL, };
+    ui_app_lifecycle_callback_s event_callback = {0,};
+    //app_event_handler_h handlers[5] = {NULL, };
 
-	event_callback.create = app_create;
-	event_callback.terminate = app_terminate;
-	event_callback.pause = app_pause;
-	event_callback.resume = app_resume;
-	event_callback.app_control = app_control;
+    event_callback.create = app_create;
+    event_callback.terminate = app_terminate;
+    event_callback.pause = app_pause;
+    event_callback.resume = app_resume;
+    event_callback.app_control = app_control;
 
-/*	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY], APP_EVENT_LOW_BATTERY, ui_app_low_battery, &ad);
-	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY], APP_EVENT_LOW_MEMORY, ui_app_low_memory, &ad);
-	ui_app_add_event_handler(&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED], APP_EVENT_DEVICE_ORIENTATION_CHANGED, ui_app_orient_changed, &ad);
-	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED], APP_EVENT_LANGUAGE_CHANGED, ui_app_lang_changed, &ad);
-	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED], APP_EVENT_REGION_FORMAT_CHANGED, ui_app_region_changed, &ad);
-	ui_app_remove_event_handler(handlers[APP_EVENT_LOW_MEMORY]);
+/*  ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY], APP_EVENT_LOW_BATTERY, ui_app_low_battery, &ad);
+    ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY], APP_EVENT_LOW_MEMORY, ui_app_low_memory, &ad);
+    ui_app_add_event_handler(&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED], APP_EVENT_DEVICE_ORIENTATION_CHANGED, ui_app_orient_changed, &ad);
+    ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED], APP_EVENT_LANGUAGE_CHANGED, ui_app_lang_changed, &ad);
+    ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED], APP_EVENT_REGION_FORMAT_CHANGED, ui_app_region_changed, &ad);
+    ui_app_remove_event_handler(handlers[APP_EVENT_LOW_MEMORY]);
 */
     int ret = ui_app_main(_argc, _argv, &event_callback, this);
     if (ret != APP_ERROR_NONE) {
@@ -519,29 +519,29 @@ void Application::setMainArgs(int argc, char **argv)
 }
 bool Application::openURL(const std::string &url)
 {
-	bool flag = false;
-	if(0==url.length())
-	{
-		return flag;
-	}
-	app_control_h app_control;
+    bool flag = false;
+    if(0==url.length())
+    {
+        return flag;
+    }
+    app_control_h app_control;
 
-	app_control_create(&app_control);
-	app_control_set_operation(app_control, APP_CONTROL_OPERATION_VIEW);
-	app_control_set_uri(app_control, url.c_str());
+    app_control_create(&app_control);
+    app_control_set_operation(app_control, APP_CONTROL_OPERATION_VIEW);
+    app_control_set_uri(app_control, url.c_str());
 
-	int ctrlError;
-	if ((ctrlError=app_control_send_launch_request(app_control, NULL, NULL)) == APP_CONTROL_ERROR_NONE)
-	{
-		flag = true;
-	}
-	else
-	{
-	    dlog_print(DLOG_ERROR, LOG_TAG, "open url failed, and returned %d", ctrlError);
-	}
+    int ctrlError;
+    if ((ctrlError=app_control_send_launch_request(app_control, NULL, NULL)) == APP_CONTROL_ERROR_NONE)
+    {
+        flag = true;
+    }
+    else
+    {
+        dlog_print(DLOG_ERROR, LOG_TAG, "open url failed, and returned %d", ctrlError);
+    }
 
-	app_control_destroy(app_control);
-	return flag;
+    app_control_destroy(app_control);
+    return flag;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -575,8 +575,8 @@ const char * Application::getCurrentLanguageCode()
 
 std::string Application::getVersion()
 {
-	//TODO
-	return "";
+    //TODO
+    return "";
 }
 
 LanguageType Application::getCurrentLanguage()

@@ -25,7 +25,7 @@
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 
-#include "CCGLViewImpl-tizen.h"
+#include "platform/tizen/CCGLViewImpl-tizen.h"
 #include <app.h>
 #include <Evas.h>
 #include <Elementary.h>
@@ -97,7 +97,7 @@ bool GLViewImpl::isOpenGLReady()
 
 void GLViewImpl::end()
 {
-	exit(0);
+    exit(0);
 }
 
 void GLViewImpl::swapBuffers()
@@ -129,12 +129,12 @@ static void entryKeyCallback(void *data, Evas *e, Evas_Object *obj, void *event_
 
 static void stateChangedCallback(void *data, Ecore_IMF_Context *ctx, int value)
 {
-	if (value == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
-	{
-		evas_object_del(s_keypadWin);
-		s_keypadWin = nullptr;
-		s_imf = nullptr;
-	}
+    if (value == ECORE_IMF_INPUT_PANEL_STATE_HIDE)
+    {
+        evas_object_del(s_keypadWin);
+        s_keypadWin = nullptr;
+        s_imf = nullptr;
+    }
 }
 
 static void closeKeypad()

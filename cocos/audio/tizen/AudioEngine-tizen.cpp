@@ -25,7 +25,7 @@
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 
-#include "AudioEngine-tizen.h"
+#include "audio/tizen/AudioEngine-tizen.h"
 
 // for native asset manager
 #include <condition_variable>
