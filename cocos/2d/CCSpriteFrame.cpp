@@ -188,7 +188,7 @@ void SpriteFrame::setAnchorPoint(const Vec2& anchorPoint)
 
 bool SpriteFrame::hasAnchorPoint() const
 {
-    return !isnan(_anchorPoint.x);
+    return !std::isnan(_anchorPoint.x);
 }
 
 void SpriteFrame::setTexture(Texture2D * texture)
