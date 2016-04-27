@@ -41,7 +41,7 @@ bool SceneEditorTestBase::init()
 
         return true;
     }
-	
+    
     return false;
 }
 
@@ -52,39 +52,52 @@ std::string SceneEditorTestBase::title() const
 
 void SceneEditorTestBase::changeLoadTypeCallback(cocos2d::Ref *pSender)
 {
-	_isCsbLoad = !_isCsbLoad;
-	_loadtypelb->setString(_loadtypeStr[(int)_isCsbLoad]);
-	loadFileChangeHelper(_filePath);
-	
-	if(_rootNode != nullptr)
-	{
+    _isCsbLoad = !_isCsbLoad;
+    _loadtypelb->setString(_loadtypeStr[(int)_isCsbLoad]);
+    loadFileChangeHelper(_filePath);
+    
+    if(_rootNode != nullptr)
+    {
         ActionManagerEx::getInstance()->releaseActions();
-		this->removeChild(_rootNode);
-		_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-		if (_rootNode == nullptr)
-		{
-			return ;
-		}
-		defaultPlay();
-		this->addChild(_rootNode);
-	}
+        this->removeChild(_rootNode);
+        _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
+        if (_rootNode == nullptr)
+        {
+            return ;
+        }
+        defaultPlay();
+        this->addChild(_rootNode);
+    }
+}
+
+void SceneEditorTestBase::doCleanupOnExit()
+{
+    ArmatureDataManager::destroyInstance();
+    // FIXME: Tizen will crash when call SceneReader::destroyInstance();
+    // error msg: ERR<2453>:evas_main evas_font_dir.c:70 _evas_font_init_instance() ENTER:: evas_font_init
+    // ERR<2453>:evas_main evas_font_dir.c:90 evas_font_init() DONE:: evas_font_init
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_TIZEN)
+    SceneReader::destroyInstance();
+#endif
+    ActionManagerEx::destroyInstance();
+    GUIReader::destroyInstance();
 }
 
 void SceneEditorTestBase::loadFileChangeHelper(std::string& filePathName)
 {
     std::string::size_type n = filePathName.find_last_of(".");
-	if(n == std::string::npos)
-		return;
-	filePathName = filePathName.substr(0,n);
-	if(_isCsbLoad)
-		filePathName.append(".csb");
-	else
-		filePathName.append(".json");
+    if(n == std::string::npos)
+        return;
+    filePathName = filePathName.substr(0,n);
+    if(_isCsbLoad)
+        filePathName.append(".csb");
+    else
+        filePathName.append(".json");
 }
 
 LoadSceneEdtiorFileTest::LoadSceneEdtiorFileTest()
 {
-	
+    
 }
 
 LoadSceneEdtiorFileTest::~LoadSceneEdtiorFileTest()
@@ -100,21 +113,18 @@ std::string LoadSceneEdtiorFileTest::title() const
 void LoadSceneEdtiorFileTest::onEnter()
 {
     SceneEditorTestBase::onEnter();
-	do 
-	{
+    do 
+    {
         Node *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-	} while (0);
+    } while (0);
 }
 
 void LoadSceneEdtiorFileTest::onExit()
 {
-	 ArmatureDataManager::destroyInstance();
-	 SceneReader::destroyInstance();
-	 ActionManagerEx::destroyInstance();
-	 GUIReader::destroyInstance();
-	 SceneEditorTestBase::onExit();
+    this->doCleanupOnExit();
+    SceneEditorTestBase::onExit();
 }
 
 
@@ -123,22 +133,22 @@ cocos2d::Node* LoadSceneEdtiorFileTest::createGameScene()
     _filePath = "scenetest/LoadSceneEdtiorFileTest/FishJoy2.json";  //default is json
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
     ActionManagerEx::getInstance()->playActionByName("startMenu_1.json", "Animation1");
-	if (_rootNode == nullptr)
-	{
-		return nullptr;
-	}
-	defaultPlay();
+    if (_rootNode == nullptr)
+    {
+        return nullptr;
+    }
+    defaultPlay();
     return _rootNode;
 }
 
 void LoadSceneEdtiorFileTest::defaultPlay()
 {
-	
+    
 }
 
 SpriteComponentTest::SpriteComponentTest()
 {
-	
+    
 }
 
 SpriteComponentTest::~SpriteComponentTest()
@@ -154,33 +164,30 @@ std::string SpriteComponentTest::title() const
 void SpriteComponentTest::onEnter()
 {
     SceneEditorTestBase::onEnter();
-	do 
-	{
+    do 
+    {
         Node *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-	} while (0);
+    } while (0);
 }
 
 void SpriteComponentTest::onExit()
 {
-	 ArmatureDataManager::destroyInstance();
-	 SceneReader::destroyInstance();
-	 ActionManagerEx::destroyInstance();
-	 GUIReader::destroyInstance();
-	 SceneEditorTestBase::onExit();
+    this->doCleanupOnExit();
+    SceneEditorTestBase::onExit();
 }
 
 cocos2d::Node* SpriteComponentTest::createGameScene()
 {
-	_filePath = "scenetest/SpriteComponentTest/SpriteComponentTest.json";
+    _filePath = "scenetest/SpriteComponentTest/SpriteComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == nullptr)
-	{
-		return nullptr;
-	}
+    if (_rootNode == nullptr)
+    {
+        return nullptr;
+    }
 
-	defaultPlay();
+    defaultPlay();
 
     return _rootNode;
 }
@@ -188,24 +195,24 @@ cocos2d::Node* SpriteComponentTest::createGameScene()
 
 void SpriteComponentTest::defaultPlay()
 {
-	ActionInterval*  action1 = Blink::create(2, 10);
-	ActionInterval*  action2 = Blink::create(2, 5);
+    ActionInterval*  action1 = Blink::create(2, 10);
+    ActionInterval*  action2 = Blink::create(2, 5);
 
-	ComRender *pSister1 = static_cast<ComRender*>(_rootNode->getChildByTag(10003)->getComponent("CCSprite"));
-	pSister1->getNode()->runAction(action1);
+    ComRender *pSister1 = static_cast<ComRender*>(_rootNode->getChildByTag(10003)->getComponent("CCSprite"));
+    pSister1->getNode()->runAction(action1);
 
-	ComRender *pSister2 = static_cast<ComRender*>(_rootNode->getChildByTag(10004)->getComponent("CCSprite"));
-	pSister2->getNode()->runAction(action2);
+    ComRender *pSister2 = static_cast<ComRender*>(_rootNode->getChildByTag(10004)->getComponent("CCSprite"));
+    pSister2->getNode()->runAction(action2);
 }
 
 ArmatureComponentTest::ArmatureComponentTest()
 {
-	
+    
 }
 
 ArmatureComponentTest::~ArmatureComponentTest()
 {
-	
+    
 }
 
 std::string ArmatureComponentTest::title() const
@@ -216,48 +223,45 @@ std::string ArmatureComponentTest::title() const
 void ArmatureComponentTest::onEnter()
 {
     SceneEditorTestBase::onEnter();
-	do 
-	{
+    do 
+    {
         Node *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-	} while (0);
+    } while (0);
 }
 
 void ArmatureComponentTest::onExit()
 {
-	 ArmatureDataManager::destroyInstance();
-	 SceneReader::destroyInstance();
-	 ActionManagerEx::destroyInstance();
-	 GUIReader::destroyInstance();
-	 SceneEditorTestBase::onExit();
+    this->doCleanupOnExit();
+    SceneEditorTestBase::onExit();
 }
 
 cocos2d::Node* ArmatureComponentTest::createGameScene()
 {
-	_filePath = "scenetest/ArmatureComponentTest/ArmatureComponentTest.json";
+    _filePath = "scenetest/ArmatureComponentTest/ArmatureComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == nullptr)
-	{
-		return nullptr;
-	}
-	defaultPlay();
+    if (_rootNode == nullptr)
+    {
+        return nullptr;
+    }
+    defaultPlay();
     return _rootNode;
 }
 
 void ArmatureComponentTest::defaultPlay()
 {
-	ComRender *pBlowFish = static_cast<ComRender*>(_rootNode->getChildByTag(10007)->getComponent("CCArmature"));
-	pBlowFish->getNode()->runAction(MoveBy::create(10.0f, Point(-1000.0f, 0)));
+    ComRender *pBlowFish = static_cast<ComRender*>(_rootNode->getChildByTag(10007)->getComponent("CCArmature"));
+    pBlowFish->getNode()->runAction(MoveBy::create(10.0f, Point(-1000.0f, 0)));
 
-	ComRender *pButterflyfish = static_cast<ComRender*>(_rootNode->getChildByTag(10008)->getComponent("CCArmature"));
-	pButterflyfish->getNode()->runAction(MoveBy::create(10.0f, Point(-1000.0f, 0)));
+    ComRender *pButterflyfish = static_cast<ComRender*>(_rootNode->getChildByTag(10008)->getComponent("CCArmature"));
+    pButterflyfish->getNode()->runAction(MoveBy::create(10.0f, Point(-1000.0f, 0)));
 
 }
 
 UIComponentTest::UIComponentTest()
 {
-	
+    
 }
 
 UIComponentTest::~UIComponentTest()
@@ -272,66 +276,63 @@ std::string UIComponentTest::title() const
 void UIComponentTest::onEnter()
 {
     SceneEditorTestBase::onEnter();
-	do 
-	{
+    do 
+    {
         Node *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-	} while (0);
+    } while (0);
 }
 
 void UIComponentTest::onExit()
 {
-	 ArmatureDataManager::destroyInstance();
-	 SceneReader::destroyInstance();
-	 ActionManagerEx::destroyInstance();
-	 GUIReader::destroyInstance();
-	 SceneEditorTestBase::onExit();
+    this->doCleanupOnExit();
+    SceneEditorTestBase::onExit();
 }
 
 cocos2d::Node* UIComponentTest::createGameScene()
 {
-	_filePath = "scenetest/UIComponentTest/UIComponentTest.json";
+    _filePath = "scenetest/UIComponentTest/UIComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == nullptr)
-	{
-		return nullptr;
-	}
-	defaultPlay();
+    if (_rootNode == nullptr)
+    {
+        return nullptr;
+    }
+    defaultPlay();
     
     return _rootNode;
 }
 
 void UIComponentTest::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
-	switch (type)
-	{
+    switch (type)
+    {
         case ui::Widget::TouchEventType::BEGAN:
-		{
-			ComRender *pBlowFish = static_cast<ComRender*>(_rootNode->getChildByTag(10010)->getComponent("CCArmature"));
-			pBlowFish->getNode()->runAction(MoveBy::create(10.0f, Vec2(-1000.0f, 0)));
+        {
+            ComRender *pBlowFish = static_cast<ComRender*>(_rootNode->getChildByTag(10010)->getComponent("CCArmature"));
+            pBlowFish->getNode()->runAction(MoveBy::create(10.0f, Vec2(-1000.0f, 0)));
 
-			ComRender *pButterflyfish = static_cast<ComRender*>(_rootNode->getChildByTag(10011)->getComponent("CCArmature"));
-			pButterflyfish->getNode()->runAction(MoveBy::create(10.0f, Vec2(-1000.0f, 0)));
-		}
-		break;
-	default:
-		break;
-	}
+            ComRender *pButterflyfish = static_cast<ComRender*>(_rootNode->getChildByTag(10011)->getComponent("CCArmature"));
+            pButterflyfish->getNode()->runAction(MoveBy::create(10.0f, Vec2(-1000.0f, 0)));
+        }
+        break;
+    default:
+        break;
+    }
 }
 
 void UIComponentTest::defaultPlay()
 {
 
     ComRender *render = static_cast<ComRender*>(_rootNode->getChildByTag(10025)->getComponent("GUIComponent"));
-	Widget* widget = static_cast<cocos2d::ui::Widget*>(render->getNode());
-	Button* button = static_cast<Button*>(widget->getChildByName("Button_156"));
+    Widget* widget = static_cast<cocos2d::ui::Widget*>(render->getNode());
+    Button* button = static_cast<Button*>(widget->getChildByName("Button_156"));
     button->addTouchEventListener(CC_CALLBACK_2(UIComponentTest::touchEvent, this));
 }
 
 TmxMapComponentTest::TmxMapComponentTest()
 {
-	
+    
 }
 
 TmxMapComponentTest::~TmxMapComponentTest()
@@ -347,54 +348,51 @@ std::string TmxMapComponentTest::title() const
 void TmxMapComponentTest::onEnter()
 {
     SceneEditorTestBase::onEnter();
-	do 
-	{
+    do 
+    {
         Node *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-	} while (0);
+    } while (0);
 }
 
 void TmxMapComponentTest::onExit()
 {
-    ArmatureDataManager::destroyInstance();
-    SceneReader::destroyInstance();
-    ActionManagerEx::destroyInstance();
-    GUIReader::destroyInstance();
+    this->doCleanupOnExit();
     SceneEditorTestBase::onExit();
 }
 
 cocos2d::Node* TmxMapComponentTest::createGameScene()
 {
-	_filePath = "scenetest/TmxMapComponentTest/TmxMapComponentTest.json";
+    _filePath = "scenetest/TmxMapComponentTest/TmxMapComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == nullptr)
-	{
-		return nullptr;
-	}
+    if (_rootNode == nullptr)
+    {
+        return nullptr;
+    }
     defaultPlay();
     return _rootNode;
 }
 
 void TmxMapComponentTest::defaultPlay()
 {
-	ComRender *tmxMap = static_cast<ComRender*>(_rootNode->getChildByTag(10015)->getComponent("CCTMXTiledMap"));
-	ActionInterval *actionTo = SkewTo::create(2, 0.f, 2.f);
-	ActionInterval *rotateTo = RotateTo::create(2, 61.0f);
-	ActionInterval *actionScaleTo = ScaleTo::create(2, -0.44f, 0.47f);
+    ComRender *tmxMap = static_cast<ComRender*>(_rootNode->getChildByTag(10015)->getComponent("CCTMXTiledMap"));
+    ActionInterval *actionTo = SkewTo::create(2, 0.f, 2.f);
+    ActionInterval *rotateTo = RotateTo::create(2, 61.0f);
+    ActionInterval *actionScaleTo = ScaleTo::create(2, -0.44f, 0.47f);
 
-	ActionInterval *actionScaleToBack = ScaleTo::create(2, 1.0f, 1.0f);
-	ActionInterval *rotateToBack = RotateTo::create(2, 0);
-	ActionInterval *actionToBack = SkewTo::create(2, 0, 0);
+    ActionInterval *actionScaleToBack = ScaleTo::create(2, 1.0f, 1.0f);
+    ActionInterval *rotateToBack = RotateTo::create(2, 0);
+    ActionInterval *actionToBack = SkewTo::create(2, 0, 0);
 
-	tmxMap->getNode()->runAction(Sequence::create(actionTo, actionToBack, nullptr));
-	tmxMap->getNode()->runAction(Sequence::create(rotateTo, rotateToBack, nullptr));
-	tmxMap->getNode()->runAction(Sequence::create(actionScaleTo, actionScaleToBack, nullptr));
+    tmxMap->getNode()->runAction(Sequence::create(actionTo, actionToBack, nullptr));
+    tmxMap->getNode()->runAction(Sequence::create(rotateTo, rotateToBack, nullptr));
+    tmxMap->getNode()->runAction(Sequence::create(actionScaleTo, actionScaleToBack, nullptr));
 }
 
 ParticleComponentTest::ParticleComponentTest()
 {
-	
+    
 }
 
 ParticleComponentTest::~ParticleComponentTest()
@@ -409,47 +407,44 @@ std::string ParticleComponentTest::title() const
 void ParticleComponentTest::onEnter()
 {
     SceneEditorTestBase::onEnter();
-	do 
-	{
+    do 
+    {
         Node *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-	} while (0);
+    } while (0);
 }
 
 void ParticleComponentTest::onExit()
 {
-	ArmatureDataManager::destroyInstance();
-    SceneReader::destroyInstance();
-    ActionManagerEx::destroyInstance();
-    GUIReader::destroyInstance();
+    this->doCleanupOnExit();
     SceneEditorTestBase::onExit();
 }
 
 cocos2d::Node* ParticleComponentTest::createGameScene()
 {
-	_filePath = "scenetest/ParticleComponentTest/ParticleComponentTest.json";
+    _filePath = "scenetest/ParticleComponentTest/ParticleComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == nullptr)
-	{
-		return nullptr;
-	}
-	defaultPlay();
+    if (_rootNode == nullptr)
+    {
+        return nullptr;
+    }
+    defaultPlay();
     return _rootNode;
 }
 
 void ParticleComponentTest::defaultPlay()
 {
-	ComRender* Particle = static_cast<ComRender*>(_rootNode->getChildByTag(10020)->getComponent("CCParticleSystemQuad"));
-	ActionInterval*  jump = JumpBy::create(5, Point(-500,0), 50, 4);
-	FiniteTimeAction*  action = Sequence::create( jump, jump->reverse(), nullptr);
-	Particle->getNode()->runAction(action);
+    ComRender* Particle = static_cast<ComRender*>(_rootNode->getChildByTag(10020)->getComponent("CCParticleSystemQuad"));
+    ActionInterval*  jump = JumpBy::create(5, Point(-500,0), 50, 4);
+    FiniteTimeAction*  action = Sequence::create( jump, jump->reverse(), nullptr);
+    Particle->getNode()->runAction(action);
 }
 
 
 EffectComponentTest::EffectComponentTest()
 {
-	
+    
 }
 
 EffectComponentTest::~EffectComponentTest()
@@ -464,59 +459,56 @@ std::string EffectComponentTest::title() const
 void EffectComponentTest::onEnter()
 {
     SceneEditorTestBase::onEnter();
-	do 
-	{
+    do 
+    {
         Node *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-	} while (0);
+    } while (0);
 }
 
 void EffectComponentTest::onExit()
 {
-	ArmatureDataManager::destroyInstance();
-    SceneReader::destroyInstance();
-    ActionManagerEx::destroyInstance();
-    GUIReader::destroyInstance();
+    this->doCleanupOnExit();
     SceneEditorTestBase::onExit();
 }
 
 cocos2d::Node* EffectComponentTest::createGameScene()
 {
-	_filePath = "scenetest/EffectComponentTest/EffectComponentTest.json";
+    _filePath = "scenetest/EffectComponentTest/EffectComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == nullptr)
-	{
-		return nullptr;
-	}
+    if (_rootNode == nullptr)
+    {
+        return nullptr;
+    }
     defaultPlay();  
-	return _rootNode;
+    return _rootNode;
 }
 
 void EffectComponentTest::animationEvent(Armature *armature, MovementEventType movementType, const std::string& movementID)
 {
-	 std::string id = movementID;
+     std::string id = movementID;
 
-	if (movementType == LOOP_COMPLETE)
-	{
-		if (id.compare("Fire") == 0)
-		{
-			ComAudio *pAudio = static_cast<ComAudio*>(_rootNode->getChildByTag(10015)->getComponent("CCComAudio"));
-			pAudio->playEffect();
-		}
-	}
+    if (movementType == LOOP_COMPLETE)
+    {
+        if (id.compare("Fire") == 0)
+        {
+            ComAudio *pAudio = static_cast<ComAudio*>(_rootNode->getChildByTag(10015)->getComponent("CCComAudio"));
+            pAudio->playEffect();
+        }
+    }
 }
 
 void EffectComponentTest::defaultPlay()
 {
     ComRender *render = static_cast<ComRender*>(_rootNode->getChildByTag(10015)->getComponent("CCArmature"));
-	Armature *pAr = static_cast<Armature*>(render->getNode());
-	pAr->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_0(EffectComponentTest::animationEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+    Armature *pAr = static_cast<Armature*>(render->getNode());
+    pAr->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_0(EffectComponentTest::animationEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 }
 
 BackgroundComponentTest::BackgroundComponentTest()
 {
-	
+    
 }
 
 BackgroundComponentTest::~BackgroundComponentTest()
@@ -541,10 +533,7 @@ void BackgroundComponentTest::onEnter()
 
 void BackgroundComponentTest::onExit()
 {
-    ArmatureDataManager::destroyInstance();
-    SceneReader::destroyInstance();
-    ActionManagerEx::destroyInstance();
-    GUIReader::destroyInstance();
+    this->doCleanupOnExit();
     SceneEditorTestBase::onExit();
 }
 
@@ -569,7 +558,7 @@ void BackgroundComponentTest::defaultPlay()
 
 AttributeComponentTest::AttributeComponentTest()
 {
-	
+    
 }
 
 AttributeComponentTest::~AttributeComponentTest()
@@ -595,10 +584,7 @@ void AttributeComponentTest::onEnter()
 
 void AttributeComponentTest::onExit()
 {
-	ArmatureDataManager::destroyInstance();
-    SceneReader::destroyInstance();
-    ActionManagerEx::destroyInstance();
-    GUIReader::destroyInstance();
+    this->doCleanupOnExit();
     SceneEditorTestBase::onExit();
 }
 
@@ -636,7 +622,7 @@ void AttributeComponentTest::defaultPlay()
 TriggerTest::TriggerTest()
 : _touchListener(nullptr)
 {
-	
+    
 }
 
 TriggerTest::~TriggerTest()
@@ -675,10 +661,7 @@ void TriggerTest::onExit()
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeEventListener(_touchListener);
     Device::setAccelerometerEnabled(false);
-    ArmatureDataManager::destroyInstance();
-    SceneReader::destroyInstance();
-    ActionManagerEx::destroyInstance();
-    GUIReader::destroyInstance();
+    this->doCleanupOnExit();
     SceneEditorTestBase::onExit();
 }
 

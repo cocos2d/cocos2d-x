@@ -1,4 +1,8 @@
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+
 #include "JNITest.h"
+
+
 #include "platform/android/jni/JniHelper.h"
 
 #include <string>
@@ -60,3 +64,5 @@ JNITest::JNITest()
     // should not compile
     // JniHelper::callStaticVoidMethod(classPath, "voidMethod4", std::vector<int>());
 }
+
+#endif
