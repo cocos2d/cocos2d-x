@@ -316,8 +316,8 @@ std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& 
     
     auto next = strchr(contents, '\n');
     auto base = contents;
-    int lineLength = 0;
-    int parseCount = 0;
+    size_t lineLength = 0;
+    size_t parseCount = 0;
     while (next)
     {
         lineLength = ((int)(next - base));

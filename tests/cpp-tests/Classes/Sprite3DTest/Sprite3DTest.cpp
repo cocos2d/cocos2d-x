@@ -1966,7 +1966,7 @@ NodeAnimationTest::NodeAnimationTest()
                                               _sprites[_vectorIndex]->setVisible(false);
                                               
                                               int tIndex = _vectorIndex + 1;
-                                              if(tIndex >= _sprites.size())
+                                              if(tIndex >= static_cast<int>(_sprites.size()))
                                                   _vectorIndex = 0;
                                               else
                                                   _vectorIndex++;

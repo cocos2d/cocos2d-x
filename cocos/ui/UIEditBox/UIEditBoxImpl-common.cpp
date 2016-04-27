@@ -110,7 +110,7 @@ void EditBoxImplCommon::setInactiveText(const char* pText)
     if(EditBox::InputFlag::PASSWORD == _editBoxInputFlag)
     {
         std::string passwordString;
-        for(int i = 0; i < strlen(pText); ++i)
+        for(size_t i = 0; i < strlen(pText); ++i)
             passwordString.append(PASSWORD_CHAR);
         _label->setString(passwordString);
     }
