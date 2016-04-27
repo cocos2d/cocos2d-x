@@ -38,6 +38,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.IBinder;
+import android.os.ParcelFileDescriptor;
 import android.os.Vibrator;
 import android.preference.PreferenceManager.OnActivityResultListener;
 import android.util.DisplayMetrics;
@@ -53,6 +54,8 @@ import com.enhance.gameservice.IGameTuningService;
 import java.io.IOException;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Map;
@@ -286,11 +289,20 @@ public class Cocos2dxHelper {
         long[] array = new long[3];
         if (Cocos2dxHelper.sOBBFile != null) {
             AssetFileDescriptor descriptor = Cocos2dxHelper.sOBBFile.getAssetFileDescriptor(path);
-            if (descriptor != null)
-            {
-                array[0] = descriptor.getParcelFileDescriptor().getFd();
-                array[1] = descriptor.getStartOffset();
-                array[2] = descriptor.getLength();
+            if (descriptor != null) {
+                try {
+                    ParcelFileDescriptor parcel = descriptor.getParcelFileDescriptor();
+                    Method method = parcel.getClass().getMethod("getFd", new Class[] {});
+                    array[0] = (Integer)method.invoke(parcel);
+                    array[1] = descriptor.getStartOffset();
+                    array[2] = descriptor.getLength();
+                } catch (NoSuchMethodException e) {
+                    Log.e(Cocos2dxHelper.TAG, "Accessing file descriptor directly from the OBB is only supported from Android 3.1 (API level 12) and above.");
+                } catch (IllegalAccessException e) {
+                    Log.e(Cocos2dxHelper.TAG, e.toString());
+                } catch (InvocationTargetException e) {
+                    Log.e(Cocos2dxHelper.TAG, e.toString());
+                }
             }
         }
         return array;
