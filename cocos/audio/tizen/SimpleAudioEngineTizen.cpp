@@ -37,19 +37,19 @@ static float s_effectVolume = 1.0f;
 namespace CocosDenshion {
 
 SimpleAudioEngine::SimpleAudioEngine() {
-	
+
 }
 
 SimpleAudioEngine::~SimpleAudioEngine() {
 }
 
 SimpleAudioEngine* SimpleAudioEngine::getInstance() {
-	static SimpleAudioEngine s_SharedEngine;
-	return &s_SharedEngine;
+    static SimpleAudioEngine s_SharedEngine;
+    return &s_SharedEngine;
 }
 
 void SimpleAudioEngine::end() {
-	AudioEngine::end();
+    AudioEngine::end();
 }
 
 static int s_bgAudioID = AudioEngine::INVALID_AUDIO_ID;
@@ -77,15 +77,15 @@ void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData) {
 }
 
 void SimpleAudioEngine::pauseBackgroundMusic() {
-	AudioEngine::pause(s_bgAudioID);
+    AudioEngine::pause(s_bgAudioID);
 }
 
 void SimpleAudioEngine::resumeBackgroundMusic() {
-	AudioEngine::resume(s_bgAudioID);
+    AudioEngine::resume(s_bgAudioID);
 }
 
 void SimpleAudioEngine::rewindBackgroundMusic() {
-	AudioEngine::stop(s_bgAudioID);
+    AudioEngine::stop(s_bgAudioID);
     if (!bgMusicFilePath.empty())
     {
         s_bgAudioID = AudioEngine::play2d(bgMusicFilePath);
@@ -93,7 +93,7 @@ void SimpleAudioEngine::rewindBackgroundMusic() {
 }
 
 bool SimpleAudioEngine::willPlayBackgroundMusic() {
-	return false;
+    return false;
 }
 
 bool SimpleAudioEngine::isBackgroundMusicPlaying() {
@@ -102,11 +102,11 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying() {
     {
         return true;
     }
-	return false;
+    return false;
 }
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath) {
-	bgMusicFilePath = pszFilePath;
+    bgMusicFilePath = pszFilePath;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -119,19 +119,19 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
 }
 
 void SimpleAudioEngine::stopEffect(unsigned int nSoundId) {
-	AudioEngine::stop(nSoundId);
+    AudioEngine::stop(nSoundId);
 }
 
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath) {
-	
+    // FIXME: need implementation
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath) {
-	AudioEngine::uncache(pszFilePath);
+    AudioEngine::uncache(pszFilePath);
 }
 
 void SimpleAudioEngine::pauseEffect(unsigned int uSoundId) {
-	AudioEngine::pause(uSoundId);
+    AudioEngine::pause(uSoundId);
 }
 
 void SimpleAudioEngine::pauseAllEffects() {
@@ -141,7 +141,7 @@ void SimpleAudioEngine::pauseAllEffects() {
     {
         resumeBGMusic = true;
     }
-	AudioEngine::pauseAll();
+    AudioEngine::pauseAll();
     if (resumeBGMusic)
     {
         AudioEngine::resume(s_bgAudioID);
@@ -149,7 +149,7 @@ void SimpleAudioEngine::pauseAllEffects() {
 }
 
 void SimpleAudioEngine::resumeEffect(unsigned int uSoundId) {
-	AudioEngine::resume(uSoundId);
+    AudioEngine::resume(uSoundId);
 }
 
 void SimpleAudioEngine::resumeAllEffects() {
@@ -159,7 +159,7 @@ void SimpleAudioEngine::resumeAllEffects() {
     {
         pauseBGMusic = true;
     }
-	AudioEngine::resumeAll();
+    AudioEngine::resumeAll();
     if (pauseBGMusic)
     {
         AudioEngine::pause(s_bgAudioID);
@@ -168,7 +168,7 @@ void SimpleAudioEngine::resumeAllEffects() {
 
 void SimpleAudioEngine::stopAllEffects() {
     //FIXME
-	AudioEngine::stopAll();
+    AudioEngine::stopAll();
 }
 
 
@@ -178,7 +178,7 @@ void SimpleAudioEngine::stopAllEffects() {
 //////////////////////////////////////////////////////////////////////////
 
 float SimpleAudioEngine::getBackgroundMusicVolume() {
-	return s_bgMusicVolume;
+    return s_bgMusicVolume;
 }
 
 void SimpleAudioEngine::setBackgroundMusicVolume(float volume) {
@@ -191,11 +191,11 @@ void SimpleAudioEngine::setBackgroundMusicVolume(float volume) {
         volume = 0.0f;
     }
     s_bgMusicVolume = volume;
-	AudioEngine::setVolume(s_bgAudioID,s_bgMusicVolume);
+    AudioEngine::setVolume(s_bgAudioID, s_bgMusicVolume);
 }
 
 float SimpleAudioEngine::getEffectsVolume() {
-	return s_effectVolume;
+    return s_effectVolume;
 }
 
 void SimpleAudioEngine::setEffectsVolume(float volume) {
@@ -208,7 +208,7 @@ void SimpleAudioEngine::setEffectsVolume(float volume) {
         volume = 0.0f;
     }
     s_effectVolume = volume;
-	//FIXME
+    //FIXME
 }
 
 

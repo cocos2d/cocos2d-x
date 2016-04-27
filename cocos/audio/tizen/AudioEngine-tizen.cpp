@@ -41,52 +41,52 @@
 class AudioEngineThreadPool
 {
 public:
-	AudioEngineThreadPool()
-	: _running(true) {
-		_threads = std::thread(std::bind(&AudioEngineThreadPool::threadFunc, this));
-	}
+    AudioEngineThreadPool()
+    : _running(true) {
+        _threads = std::thread(std::bind(&AudioEngineThreadPool::threadFunc, this));
+    }
 
-	~AudioEngineThreadPool()
-	{
-		_running = false;
-		_sleepCondition.notify_one();
-		_threads.join();
-	}
+    ~AudioEngineThreadPool()
+    {
+        _running = false;
+        _sleepCondition.notify_one();
+        _threads.join();
+    }
 
-	void addTask(const std::function<void()> &task) {
-		_tasks.push(task);
-		_sleepCondition.notify_one();
-	}
+    void addTask(const std::function<void()> &task) {
+        _tasks.push(task);
+        _sleepCondition.notify_one();
+    }
 private:
-	bool _running;
-	std::thread _threads;
-	std::queue< std::function<void ()> > _tasks;
+    bool _running;
+    std::thread _threads;
+    std::queue< std::function<void ()> > _tasks;
 
-	void threadFunc(void) {
-		while (true) {
-			std::function<void ()> task = nullptr;
+    void threadFunc(void) {
+        while (true) {
+            std::function<void ()> task = nullptr;
 
-			if (_tasks.empty())
-			{
-				if (!_running)
-				{
-					break;
-				}
-				std::unique_lock<std::mutex> lk(_sleepMutex);
-				_sleepCondition.wait(lk);
-				continue;
-			}
+            if (_tasks.empty())
+            {
+                if (!_running)
+                {
+                    break;
+                }
+                std::unique_lock<std::mutex> lk(_sleepMutex);
+                _sleepCondition.wait(lk);
+                continue;
+            }
 
-			task = _tasks.front();
+            task = _tasks.front();
 
-			task();
+            task();
 
-			_tasks.pop();
-		}
-	}
+            _tasks.pop();
+        }
+    }
 
-	std::mutex _sleepMutex;
-	std::condition_variable _sleepCondition;
+    std::mutex _sleepMutex;
+    std::condition_variable _sleepCondition;
 };
 
 static AudioEngineThreadPool* _threadPool = nullptr;
@@ -110,9 +110,9 @@ static void _stopPlayer(player_h player)
     player_get_state(player, &state);
     if (state == PLAYER_STATE_PLAYING || state == PLAYER_STATE_PAUSED)
     {
-    	player_stop(player);
+        player_stop(player);
     }
-	player_unprepare(player);
+    player_unprepare(player);
 }
 
 static void _pausePlayer(player_h player)
@@ -139,15 +139,15 @@ static void _resumePlayer(player_h player)
 
 AudioPlayer::~AudioPlayer()
 {
-	_taskMutex.lock();
-	_threadPool->addTask(std::bind(_stopPlayer, _playerHandle));
-	_threadPool->addTask(std::bind(player_destroy, _playerHandle));
-	_taskMutex.unlock();
+    _taskMutex.lock();
+    _threadPool->addTask(std::bind(_stopPlayer, _playerHandle));
+    _threadPool->addTask(std::bind(player_destroy, _playerHandle));
+    _taskMutex.unlock();
 }
 
 void AudioPlayer::stopPlayer()
 {
-	_playOver = true;
+    _playOver = true;
 }
 
 static void completed_callback(void* user_data)
@@ -158,7 +158,7 @@ static void completed_callback(void* user_data)
 
 void AudioPlayer::init(const std::string& fileFullPath, float volume, bool loop)
 {
-    do 
+    do
     {
         player_h player;
         auto playerRet = player_create(&player);
@@ -184,14 +184,14 @@ void AudioPlayer::init(const std::string& fileFullPath, float volume, bool loop)
         }
         playerRet = player_prepare(player);
         if(playerRet != PLAYER_ERROR_NONE){
-        	log("Fail to prepares the media player for playback.Error code:%d",playerRet);
-        	break;
+            log("Fail to prepares the media player for playback.Error code:%d",playerRet);
+            break;
         }
 
         playerRet = player_start(player);
         if(playerRet != PLAYER_ERROR_NONE){
-        	log("Fail to starts playback.Error code:%d",playerRet);
-        	break;
+            log("Fail to starts playback.Error code:%d",playerRet);
+            break;
         }
 
         _initSucceed = true;
@@ -214,7 +214,7 @@ AudioEngineImpl::AudioEngineImpl()
 
 AudioEngineImpl::~AudioEngineImpl()
 {
-	this->stopAll();
+    this->stopAll();
 
     if (_threadPool)
     {
@@ -227,15 +227,15 @@ AudioEngineImpl::~AudioEngineImpl()
 
 bool AudioEngineImpl::init()
 {
-	sound_manager_set_session_type(SOUND_SESSION_TYPE_MEDIA);
-	sound_manager_set_media_session_option(SOUND_SESSION_OPTION_MIX_WITH_OTHERS_WHEN_START,
-			SOUND_SESSION_OPTION_INTERRUPTIBLE_DURING_PLAY);
-	sound_manager_set_media_session_resumption_option(SOUND_SESSION_OPTION_RESUMPTION_BY_SYSTEM_OR_MEDIA_PAUSED);
+    sound_manager_set_session_type(SOUND_SESSION_TYPE_MEDIA);
+    sound_manager_set_media_session_option(SOUND_SESSION_OPTION_MIX_WITH_OTHERS_WHEN_START,
+            SOUND_SESSION_OPTION_INTERRUPTIBLE_DURING_PLAY);
+    sound_manager_set_media_session_resumption_option(SOUND_SESSION_OPTION_RESUMPTION_BY_SYSTEM_OR_MEDIA_PAUSED);
 
-	if (!_threadPool)
-	{
-		_threadPool = new (std::nothrow) AudioEngineThreadPool();
-	}
+    if (!_threadPool)
+    {
+        _threadPool = new (std::nothrow) AudioEngineThreadPool();
+    }
 
     return true;
 }
@@ -244,20 +244,20 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
 {
     auto audioId = AudioEngine::INVALID_AUDIO_ID;
 
-    do 
+    do
     {
-    	audioId = currentAudioID++;
+        audioId = currentAudioID++;
 
-    	auto& player = _audioPlayers[audioId];
+        auto& player = _audioPlayers[audioId];
         player._audioID = audioId;
         player._initCallback = std::bind(&AudioEngineImpl::initPlayerCallback,this,&player,audioId);
 
         player._taskMutex.lock();
         _threadPool->addTask(std::bind(&AudioPlayer::init,&player,FileUtils::getInstance()->fullPathForFilename(filePath), volume, loop));
-        
+
         if (_lazyInitLoop) {
             _lazyInitLoop = false;
-            
+
             auto scheduler = Director::getInstance()->getScheduler();
             scheduler->schedule(schedule_selector(AudioEngineImpl::update), this, 0.03f, false);
         }
@@ -306,17 +306,17 @@ void AudioEngineImpl::update(float dt)
         if(iter->second._playOver)
         {
             if (iter->second._finishCallback)
-                iter->second._finishCallback(iter->second._audioID, *AudioEngine::_audioIDInfoMap[iter->second._audioID].filePath); 
+                iter->second._finishCallback(iter->second._audioID, *AudioEngine::_audioIDInfoMap[iter->second._audioID].filePath);
 
             AudioEngine::remove(iter->second._audioID);
             _audioPlayers.erase(iter);
             break;
         }
     }
-    
+
     if(_audioPlayers.empty()){
         _lazyInitLoop = true;
-        
+
         auto scheduler = Director::getInstance()->getScheduler();
         scheduler->unschedule(schedule_selector(AudioEngineImpl::update), this);
     }
@@ -337,7 +337,7 @@ void AudioEngineImpl::setLoop(int audioID, bool loop)
 void AudioEngineImpl::pause(int audioID)
 {
     auto& player = _audioPlayers[audioID];
-	_threadPool->addTask(std::bind(_pausePlayer, player._playerHandle));
+    _threadPool->addTask(std::bind(_pausePlayer, player._playerHandle));
 }
 
 void AudioEngineImpl::resume(int audioID)
@@ -353,7 +353,7 @@ void AudioEngineImpl::stop(int audioID)
 
 void AudioEngineImpl::stopAll()
 {
-	 _audioPlayers.clear();
+     _audioPlayers.clear();
 }
 
 float AudioEngineImpl::getDuration(int audioID)
@@ -363,7 +363,7 @@ float AudioEngineImpl::getDuration(int audioID)
     auto ret = player_get_duration(player._playerHandle, &duration);
     if(ret != PLAYER_ERROR_NONE)
     {
-    	log("Fail to get duration:%d",ret);
+        log("Fail to get duration:%d",ret);
     }
     return duration / 1000.0f;
 }
@@ -375,7 +375,7 @@ float AudioEngineImpl::getCurrentTime(int audioID)
     auto ret = player_get_play_position(player._playerHandle, &currPos);
     if(ret != PLAYER_ERROR_NONE)
     {
-    	CCLOG("Fail to get position:%d",ret);
+        CCLOG("Fail to get position:%d",ret);
     }
     return currPos / 1000.0f;
 }
