@@ -25,7 +25,7 @@
 #ifndef __TestCpp__WidgetReaderProtocol__
 #define __TestCpp__WidgetReaderProtocol__
 
-#include "cocos2d.h"
+
 #include "editor-support/cocostudio/DictionaryHelper.h"
 #include "editor-support/cocostudio/CocosStudioExport.h"
 

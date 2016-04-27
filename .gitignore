@@ -150,3 +150,7 @@ tests/cpp-tests/Resources/audio
 /*/*/*/prebuilt-mk/Android.mk
 /*/*/*/*/prebuilt-mk/Android.mk
 *.xcscmblueprint
+tests/cpp-empty-test/proj.tizen/res/
+tests/cpp-tests/proj.tizen/res/
+tests/lua-empty-test/project/proj.tizen/res/
+tests/lua-tests/project/proj.tizen/res/

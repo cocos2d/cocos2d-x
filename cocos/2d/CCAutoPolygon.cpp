@@ -40,8 +40,8 @@ const static float PRECISION = 10.0f;
 
 PolygonInfo::PolygonInfo(const PolygonInfo& other):
 triangles(),
-isVertsOwner(true),
-rect()
+rect(),
+isVertsOwner(true)
 {
     filename = other.filename;
     isVertsOwner = true;
