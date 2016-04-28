@@ -1,5 +1,5 @@
 #include "scripting/lua-bindings/auto/lua_cocos2dx_audioengine_auto.hpp"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 #include "audio/include/AudioEngine.h"
 #include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
@@ -612,10 +612,10 @@ int lua_cocos2dx_audioengine_AudioEngine_preload(lua_State* tolua_S)
             if (!ok) { break; }
             std::function<void (bool)> arg1;
             do {
-			// Lambda binding for lua is not supported.
-			assert(false);
-		} while(0)
-		;
+            // Lambda binding for lua is not supported.
+            assert(false);
+        } while(0)
+        ;
             if (!ok) { break; }
             cocos2d::experimental::AudioEngine::preload(arg0, arg1);
             lua_settop(tolua_S, 1);
@@ -1039,16 +1039,16 @@ int lua_register_cocos2dx_audioengine_AudioEngine(lua_State* tolua_S)
 }
 TOLUA_API int register_all_cocos2dx_audioengine(lua_State* tolua_S)
 {
-	tolua_open(tolua_S);
-	
-	tolua_module(tolua_S,"ccexp",0);
-	tolua_beginmodule(tolua_S,"ccexp");
+    tolua_open(tolua_S);
+    
+    tolua_module(tolua_S,"ccexp",0);
+    tolua_beginmodule(tolua_S,"ccexp");
 
-	lua_register_cocos2dx_audioengine_AudioProfile(tolua_S);
-	lua_register_cocos2dx_audioengine_AudioEngine(tolua_S);
+    lua_register_cocos2dx_audioengine_AudioProfile(tolua_S);
+    lua_register_cocos2dx_audioengine_AudioEngine(tolua_S);
 
-	tolua_endmodule(tolua_S);
-	return 1;
+    tolua_endmodule(tolua_S);
+    return 1;
 }
 
 #endif

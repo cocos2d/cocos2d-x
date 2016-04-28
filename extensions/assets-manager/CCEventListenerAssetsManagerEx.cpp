@@ -25,7 +25,7 @@
 #include "CCEventListenerAssetsManagerEx.h"
 #include "CCEventAssetsManagerEx.h"
 #include "AssetsManagerEx.h"
-#include "cocos2d.h"
+#include "deprecated/CCString.h"
 
 NS_CC_EXT_BEGIN
 
