@@ -107,9 +107,7 @@ bool ClippingNode::init()
 
 bool ClippingNode::init(Node *stencil)
 {
-    CC_SAFE_RELEASE(_stencil);
     setStencil(stencil);
-    CC_SAFE_RETAIN(_stencil);
     return true;
 }
 
