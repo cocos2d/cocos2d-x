@@ -52,7 +52,7 @@
 * ndk-r10c for Android
 * Visual Studio 2013 or newer for Windows (win32)
 * Visual Studio 2013 update4 or newer for Windows 8.1 universal Apps
-* Visual Studio 2015 RC or newer and Windows 10.0 (build 10074 or higher) for Windows 10.0 UWP Apps
+* Visual Studio 2015 or newer and Windows 10.0 (build 10074 or higher) for Windows 10.0 UWP Apps
 
 ## How to run tests
 
@@ -81,16 +81,17 @@ cocos run -p android -m release
 ```
 
 ### Mac OSX & iOS
+You can run the samples by:
 
-* Enter `cocos2d-x/build` folder, open `cocos2d_test.xcodeproj`
-* Select `cpp-tests`, `lua-tests`, `js-tests` for `iOS` or `OS X` target in scheme toolbar
-* Click `run` button
+* Open __cocos2d-x/build__ folder, open __cocos2d_test.xcodeproj__
+* Select `cpp-tests`, `lua-tests`, `js-tests` for __iOS__ or __OS X__ target in scheme toolbar
+* Click __run__ button
 
 ### Android
-
-You can run the samples...
+You can run the samples by either using the command-line or Eclipse:
 
 **Using command line:**
+Perform the following steps:
 
     $ cd cocos2d-x
     $ ./setup.py
@@ -101,47 +102,49 @@ You can run the samples...
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
 **Using Eclipse:**
+Perform the following steps:
 
     $ cd cocos2d-x
     $ ./setup.py
     $ cd build
     $ ./android-build.py cpp-empty-test -p 10
 
-Then
+Next:
 
-* Import cocos2d-x Android project into Eclipse, the path used to import is `cocos/2d/platform/android`
-* Import `cpp-empty-test` Android project into Eclipse, the path used to import is `tests/cpp-empty-test/proj.android`
+* Import cocos2d-x Android project into Eclipse, the path used to import is __cocos/2d/platform/android__
+* Import `cpp-empty-test` Android project into Eclipse, the path used to import is __tests/cpp-empty-test/proj.android__
 * Build `cpp-empty-test` Android project and run
 
 ### Windows
+You can run the samples by:
 
-* For win32 project, enter `cocos2d-x/build`, and open `cocos2d-win32.sln`
-* For win 8.1 project, enter `cocos2d-x/build`, and open `cocos2d-win8.1-universal.sln`
-* For win 10 project, enter `cocos2d-x/build`, and open `cocos2d-win10.sln`
+* For win32 project, enter __cocos2d-x/build__, and open __cocos2d-win32.sln__
+* For win 8.1 project, enter __cocos2d-x/build__, and open __cocos2d-win8.1-universal.sln__
+* For win 10 project, enter __cocos2d-x/build__, and open __cocos2d-win10.sln__
 * Select running target
 * Click run button
 
 ### Linux
+You can run the samples by:
 
     $ cd cocos2d-x/build
     $ ./install-deps-linux.sh
     $ cd ../..
 
-Then
+Next:
 
     $ mkdir build
     $ cd build
     $ cmake ../cocos2d-x
     $ make -j4
 
-Run
+Then run:
 
     $ cd bin/cpp-empty-test
     $ ./cpp-empty-test
 
 ## How to start a new game
-
-Use Cocos Console to create a new game:
+Use the __cocos__ console app to create a new game:
 
 ```
 cocos new -l cpp|js|lua MyNewGame
@@ -171,16 +174,13 @@ TBD
 
 ### OpenSSL
 
-Beginning July 11, 2016, Google Play will block publishing of any new apps or updates that use older versions of OpenSSL. So coocs2d-x upgrades OpenSSL to latest version(v1.0.2g).
+Beginning July 11, 2016, Google Play will block publishing of any new apps or updates that use older versions of OpenSSL. OpenSSL has been upgraded to latest version __v1.0.2g__.
 
-If you use v2.x or use older versions of v3.x, you can just update CURL and OpenSSL. This guild shows you how to do. [TBD: Add guide link]() 
+If you use v2.x or use older versions of v3.x, you can just update CURL and OpenSSL. This guide shows you how to do. [TBD: Add guide link]()
 
 ### Tizen support
-
-TBD: doc links of Tizen
+Tizen is now supported! You can read about how to use Tizen [here](http://cocos2d-x.org/docs/static-pages/installation.html).
 
 ## Other changes
 
 You can also take a look at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
-
-    
