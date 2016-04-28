@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramState.h"
 #include "renderer/ccShaders.h"
 #include "2d/CCCamera.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
 
