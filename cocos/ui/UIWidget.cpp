@@ -1181,16 +1181,41 @@ Widget* Widget::createCloneInstance()
     return Widget::create();
 }
 
+static Node* internalCloneSpriteLevel(Sprite* sp) {
+    auto spRoot = Sprite::createWithTexture(sp->getTexture());
+
+    // Copy properties
+    spRoot->setPosition(sp->getPosition());
+    spRoot->setAnchorPoint(sp->getAnchorPoint());
+    spRoot->setScaleX(sp->getScaleX());
+    spRoot->setScaleY(sp->getScaleY());
+    spRoot->setGLProgramState(GLProgramState::getOrCreateWithGLProgram(sp->getGLProgram()));
+
+    for (auto subWidget : sp->getChildren()) {
+        if (auto widget = dynamic_cast<Widget*>(subWidget))
+        {
+            spRoot->addChild(widget->clone());
+        }
+        else if (auto sp = dynamic_cast<Sprite*>(subWidget)) {
+            spRoot->addChild(internalCloneSpriteLevel(sp));
+        }
+    }
+
+    return spRoot;
+}
+
 void Widget::copyClonedWidgetChildren(Widget* model)
 {
     auto& modelChildren = model->getChildren();
 
     for (auto& subWidget : modelChildren)
     {
-        Widget* child = dynamic_cast<Widget*>(subWidget);
-        if (child)
+        if (auto widget = dynamic_cast<Widget*>(subWidget))
         {
-            addChild(child->clone());
+            addChild(widget->clone());
+        }
+        else if (auto sp = dynamic_cast<Sprite*>(subWidget)) {
+            addChild(internalCloneSpriteLevel(sp));
         }
     }
 }
