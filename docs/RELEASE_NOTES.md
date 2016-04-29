@@ -173,14 +173,30 @@ TBD
 ```
 
 ### OpenSSL
+Cocos2d-x has upgraded __OpenSSL__ to version __1.0.2g<__.
 
-Beginning July 11, 2016, Google Play will block publishing of any new apps or updates that use older versions of OpenSSL. OpenSSL has been upgraded to latest version __v1.0.2g__.
+Beginning __July 11, 2016__, Google Play will block publishing of any new apps or updates that use older versions of __OpenSSL__. It is important that you update the use of __OpenSSL__ in your projects.
 
-If you use v2.x or use older versions of v3.x, you can just update CURL and OpenSSL. This guide shows you how to do. [TBD: Add guide link]()
+If you use v2.x or use older versions of v3.x, you can just update __CURL__ and __OpenSSL__>. To do this, just execute the __download-deps.py__ script in your __Cocos2d-x root__.
+```sh
+(jtsm @ 15 ~) $ cd cocos2d-x
+
+(jtsm @ 15 ~/cocos2d-x) $ ./download-deps.py
+
+=======================================================
+==> Prepare to download external libraries!
+==> Ready to download 'v3-deps-92.zip' from 'https://github.com/cocos2d/cocos2d-x-3rd-party-libs-bin/archive/v3-deps-92.zip'
+==> WARNING: Couldnt grab the file size from remote, use 'zip_file_size' section in '/Users/jtsm/Chukong-Inc/cocos2d-x/external/config.json'
+==> Start to download, please wait ...
+==> Downloading finished!
+==> Extracting files, please wait ...
+==> Extraction done! ==> Copying files...
+==> Cleaning...
+```
+Feel free to post on our <a href="http://discuss.cocos2d-x.org">forums</a> if you run into difficulty.
 
 ### Tizen support
 Tizen is now supported! You can read about how to use Tizen [here](http://cocos2d-x.org/docs/static-pages/installation.html).
 
 ## Other changes
-
 You can also take a look at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
