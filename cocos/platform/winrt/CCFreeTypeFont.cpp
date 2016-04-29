@@ -576,16 +576,6 @@ void  CCFreeTypeFont::compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox)
     *abbox = bbox;
 }
 
-namespace {
-    inline unsigned char* takeBuffer(Data& data, ssize_t* size) {
-        auto buffer = data.getBytes();
-        if (size)
-            *size = data.getSize();
-        data.fastSet(nullptr, 0);
-        return buffer;
-    }
-}
-
 unsigned char* CCFreeTypeFont::loadFont(const char *pFontName, ssize_t *size)
 {
 
@@ -623,7 +613,7 @@ unsigned char* CCFreeTypeFont::loadFont(const char *pFontName, ssize_t *size)
 
     Data d;
     FileUtils::getInstance()->getContents(fullpath, &d);
-    return takeBuffer(d, size);
+    return d.takeBuffer(size);
 }
 
 unsigned char* CCFreeTypeFont::loadSystemFont(const char *pFontName, ssize_t *size)

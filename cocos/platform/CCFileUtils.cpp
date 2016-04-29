@@ -665,19 +665,13 @@ unsigned char* FileUtils::getFileData(const std::string& filename, const char* m
     CCASSERT(!filename.empty() && size != nullptr && mode != nullptr, "Invalid parameters.");
     (void)(mode); // mode is unused, as we do not support text mode any more...
 
-    *size = 0;
-    std::string s;
-    if (getContents(filename, &s) != Status::OK)
+    Data d;
+    if (getContents(filename, &d) != Status::OK) {
+        *size = 0;
         return nullptr;
+    }
 
-    unsigned char * buffer = (unsigned char*)malloc(s.size());
-    if (!buffer)
-        return nullptr;
-
-    memcpy(buffer, s.data(), s.size());
-    *size = s.size();
-
-    return buffer;
+    return d.takeBuffer(size);
 }
 
 unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, ssize_t *size)
