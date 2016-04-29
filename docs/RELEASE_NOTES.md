@@ -177,7 +177,12 @@ Cocos2d-x has upgraded __OpenSSL__ to version __1.0.2g<__.
 
 Beginning __July 11, 2016__, Google Play will block publishing of any new apps or updates that use older versions of __OpenSSL__. It is important that you update the use of __OpenSSL__ in your projects.
 
-If you use v2.x or use older versions of v3.x, you can just update __CURL__ and __OpenSSL__>. To do this, just execute the __download-deps.py__ script in your __Cocos2d-x root__.
+If you use v2.x or use older versions of v3.x, you can just update __CURL__ and __OpenSSL__>.
+To do this:
+
+* modify __Cocos2d-x root/external/config.json__ to update the dependency version. For v3.x the dependency version is `v3-deps-92`, and for v2.x it is `v2-deps-5`
+* execute the __download-deps.py__ script in your __Cocos2d-x root__.
+
 ```sh
 (jtsm @ 15 ~) $ cd cocos2d-x
 
