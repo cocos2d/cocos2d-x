@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"  
+  android:orientation="horizontal" 
+  android:background="@drawable/nd3_bottom_bar_bg" 
+  android:id="@+id/nd3_bottom_layout" 
+  >
+  <LinearLayout 
+  android:id="@+id/nd3_home_layout"
+  android:layout_width="55dip"
+  android:layout_height="55dip" 
+  android:layout_weight="1"
+  android:orientation="vertical"
+  android:layout_marginTop="5dip"
+  android:gravity="center_horizontal">
+	  <ImageView android:id="@+id/nd3_home_image"
+	  android:layout_width="35dip"
+	  android:layout_height="35dip" 
+	  android:src="@drawable/nd3_mainpage_1"  
+	  android:gravity="center|bottom" 
+	  />
+	  <TextView android:id="@+id/nd3_home_text"
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"   
+	  android:text="@string/nd3_category_home"
+	  android:textColor="@color/nd3_white" 
+	  android:gravity="center|top" 
+	  />
+  </LinearLayout>
+   
+  
+  <LinearLayout 
+  android:id="@+id/nd3_friend_layout"
+  android:layout_width="55dip"
+  android:layout_height="55dip" 
+  android:layout_weight="1"
+  android:orientation="vertical"
+  android:layout_marginTop="5dip"
+  android:gravity="center_horizontal">
+	  <ImageView android:id="@+id/nd3_friend_image"
+		  android:layout_width="35dip"
+		  android:layout_height="35dip" 
+		  android:src="@drawable/nd3_mainfriend_1" 
+		  android:layout_gravity="center_horizontal" 
+		  android:gravity="center|bottom"  
+		  />
+	  <TextView android:id="@+id/nd3_friend_text"
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"   
+	  android:text="@string/nd3_category_friend"
+	  android:textColor="@color/nd3_white"
+	  android:gravity="center|top" 
+	  />
+  </LinearLayout>
+
+  
+  <RelativeLayout 
+  android:id="@+id/nd3_message_layout"
+  android:layout_width="55dip"
+  android:layout_height="55dip" 
+  android:layout_marginTop="5dip"
+  android:layout_weight="1">
+      <RelativeLayout  android:id="@+id/nd3_message_image_layout"
+		  android:layout_width="55dip"
+		  android:layout_height="35dip" 
+		  android:layout_centerHorizontal="true" >
+	      <ImageView android:id="@+id/nd3_message_image"
+			  android:layout_width="35dip"
+			  android:layout_height="35dip" 
+			  android:src="@drawable/nd3_mainmessage_1"   
+			  android:layout_centerHorizontal="true"
+			  android:gravity="center|bottom" 
+			  />
+		  <TextView android:id="@+id/nd3_message_count"
+			  android:layout_width="wrap_content"
+			  android:layout_height="20dip"     
+			  android:background="@drawable/nd3_new_message"
+			  android:layout_alignParentRight="true"
+			  android:layout_alignParentTop="true"
+			  android:visibility="invisible"
+			  android:gravity="center" 
+			  android:textColor="@color/nd3_white"
+		  	  />
+	  </RelativeLayout>	  	  
+	  <TextView android:id="@+id/nd3_message_text"
+		  android:layout_width="wrap_content"
+		  android:layout_height="wrap_content"   
+		  android:text="@string/nd3_category_message"
+		  android:textColor="@color/nd3_white"
+		  android:layout_below="@+id/nd3_message_image_layout"
+		  android:layout_centerHorizontal="true"
+	  	  />
+	  
+  </RelativeLayout>
+  
+  <RelativeLayout 
+  android:id="@+id/nd3_game_layout"
+  android:layout_width="55dip"
+  android:layout_height="55dip" 
+  android:layout_marginTop="5dip"
+  android:layout_weight="1">
+      <RelativeLayout  android:id="@+id/nd3_game_image_layout"
+		  android:layout_width="55dip"
+		  android:layout_height="35dip" 
+		  android:layout_centerHorizontal="true" >
+	      <ImageView android:id="@+id/nd3_game_image"
+			  android:layout_width="35dip"
+			  android:layout_height="35dip" 
+			  android:src="@drawable/nd3_maingame_1"   
+			  android:layout_centerHorizontal="true"
+			  android:gravity="center|bottom" 
+			  />
+		  <TextView android:id="@+id/nd3_game_count"
+			  android:layout_width="wrap_content"
+			  android:layout_height="20dip"     
+			  android:background="@drawable/nd3_new_message"
+			  android:layout_alignParentRight="true"
+			  android:layout_alignParentTop="true"
+			  android:visibility="invisible"
+			  android:gravity="center" 
+			  android:textColor="@color/nd3_white"
+		  	  />
+	  </RelativeLayout>	  	  
+	  <TextView android:id="@+id/nd3_game_text"
+		  android:layout_width="wrap_content"
+		  android:layout_height="wrap_content"   
+		  android:text="@string/nd3_category_game"
+		  android:textColor="@color/nd3_white"
+		  android:layout_below="@+id/nd3_game_image_layout"
+		  android:layout_centerHorizontal="true"
+	  	  />
+	  
+  </RelativeLayout>
+    
+  
+ 
+  <LinearLayout 
+  android:id="@+id/nd3_more_layout"
+  android:layout_width="55dip"
+  android:layout_height="55dip" 
+  android:layout_marginTop="5dip"
+  android:layout_weight="1"
+  android:orientation="vertical"
+  android:gravity="center_horizontal">
+      <ImageView android:id="@+id/nd3_more_image"
+		  android:layout_width="35dip"
+		  android:layout_height="35dip" 
+		  android:src="@drawable/nd3_mainmore_1" 
+		  android:gravity="center|bottom"   
+		  />
+	  <TextView android:id="@+id/nd3_more_text"
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"   
+	  android:text="@string/nd3_category_more"
+	  android:textColor="@color/nd3_white"
+	  android:gravity="center|top" 
+	  />
+	  
+  </LinearLayout>
+  
+ 
+</LinearLayout>

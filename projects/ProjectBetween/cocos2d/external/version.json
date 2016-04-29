@@ -1,0 +1,10 @@
+{
+    "prebuilt_libs_version":"v3-deps-89",
+    "freetype":"2.5.5",
+    "curl":"7.48.0",
+    "jpeg":"9.0",
+    "png":"1.6.16",
+    "tiff":"4.0.3",
+    "webp":"0.2.1",
+    "websockets":"v1.3-chrome37-firefox30"
+}

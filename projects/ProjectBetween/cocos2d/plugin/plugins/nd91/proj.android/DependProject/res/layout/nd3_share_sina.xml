@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:orientation="vertical" 
+android:padding="@dimen/nd3_margin_size">
+<LinearLayout
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content" 
+  android:background="@drawable/nd3_bk1"
+  android:layout_marginBottom="@dimen/nd3_option_item_marginLeft"
+  >
+  
+  <!-- 头像 -->
+	<FrameLayout
+		android:id="@+id/nd3_more_info_portrait_layout"
+		android:layout_width="57dip"
+		android:layout_height="57dip"
+		android:background="@drawable/nd3_default_portrait"
+		android:layout_marginTop="@dimen/nd3_option_margin_top"
+		style="@style/nd3_option_margin_style"
+		>
+
+		<!-- 添加头像 -->
+		<TextView
+			android:id="@+id/nd3_more_info_portrait_add"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:layout_gravity="center"
+			android:gravity="center"
+			android:text="@string/nd3_more_info_photo_add"
+			android:textSize="@dimen/nd3_portrait_add_text_size"
+			android:textColor="@color/nd3_portrait_add_color"
+			>
+		</TextView>
+				
+		<!-- 头像 -->
+		<ImageView
+			android:id="@+id/nd3_photo_share"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:visibility="gone" 
+			android:scaleType="centerInside"
+			>
+		</ImageView>
+		
+		<!-- 编辑头像 -->
+		<TextView
+			android:id="@+id/nd3_more_info_portrait_edit"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_gravity="bottom|center_horizontal"
+			android:gravity="bottom|center_horizontal"
+			android:text="@string/nd3_more_info_portrait_edit"
+			android:textColor="@color/nd3_white"
+			android:background="@drawable/nd3_portrait_edit_bg"
+			android:visibility="visible" 
+			>
+		</TextView>
+		
+	</FrameLayout>
+  <!--<ImageView 
+  	  android:id="@+id/nd3_photo_share"
+  	  android:layout_width="50dip"
+	  android:layout_height="50dip"
+	  android:layout_marginLeft="@dimen/nd3_item_divider"
+	  android:layout_marginTop="@dimen/nd3_item_divider" 
+	  android:src="@drawable/nd3_agreement_logo"
+	  android:visibility="gone" />
+  --><EditText
+  	  android:id="@+id/nd3_write_message"
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"  
+	  android:minLines="6"
+	  android:textColorHint="@color/nd3_hint" 
+	  android:layout_margin="@dimen/nd3_item_divider" 
+	  android:singleLine="false" 
+	  android:gravity="top" 
+	  android:background="@null" 
+	  android:scrollbarAlwaysDrawVerticalTrack="true"
+	  android:scrollbars="vertical" 
+	  android:scrollbarStyle="outsideOverlay" 
+	  />
+</LinearLayout>
+    <!-- 已经绑定的 -->
+	<LinearLayout
+	android:id="@+id/nd3_bind_third_account"
+	android:background="@drawable/nd3_bk1"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginBottom="@dimen/nd3_option_item_marginLeft"
+	android:orientation="vertical" >
+	</LinearLayout>
+	
+	 <!-- 超时的 -->
+	<LinearLayout
+	android:id="@+id/nd3_bind_third_account_timeout_parent"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical" >
+		<TextView
+		android:text="@string/nd3_bind_account_timeout_tip"
+		android:textColor="@color/nd3_white"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"/>
+	 
+		<LinearLayout
+		android:id="@+id/nd3_bind_third_account_timeout"
+		android:background="@drawable/nd3_bk1"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical" >
+	    </LinearLayout>
+    </LinearLayout>
+    <!-- 未绑定的 -->
+	<LinearLayout
+	android:id="@+id/nd3_unbind_third_account_parent"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical" >
+		<TextView
+		android:text="@string/nd3_bind_third_account_tip"
+		android:textColor="@color/nd3_white"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"/>
+	 
+		<LinearLayout
+		android:id="@+id/nd3_unbind_third_account"
+		android:background="@drawable/nd3_bk1"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical" >
+	    </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

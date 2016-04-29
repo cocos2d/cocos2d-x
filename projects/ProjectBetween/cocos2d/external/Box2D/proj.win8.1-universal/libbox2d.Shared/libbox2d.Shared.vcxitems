@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{4a3c6ba8-c227-498b-aa21-40bda27b461f}</ItemsProjectGuid>
+    <ItemsRootNamespace>libbox2d</ItemsRootNamespace>
+    <ItemsProjectName>libbox2d.Shared</ItemsProjectName>
+    <CodeSharingProject>248F659F-DAC5-46E8-AC09-60EC9FC95053</CodeSharingProject>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Collision\b2BroadPhase.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Collision\b2CollideCircle.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Collision\b2CollideEdge.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Collision\b2CollidePolygon.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Collision\b2Collision.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Collision\b2Distance.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Collision\b2DynamicTree.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Collision\b2TimeOfImpact.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Collision\Shapes\b2ChainShape.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Collision\Shapes\b2CircleShape.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Collision\Shapes\b2EdgeShape.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Collision\Shapes\b2PolygonShape.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Common\b2BlockAllocator.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Common\b2Draw.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Common\b2Math.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Common\b2Settings.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Common\b2StackAllocator.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Common\b2Timer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\b2Body.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\b2ContactManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\b2Fixture.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\b2Island.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\b2World.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\b2WorldCallbacks.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2ChainAndCircleContact.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2ChainAndPolygonContact.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2CircleContact.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2Contact.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2ContactSolver.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2EdgeAndCircleContact.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2EdgeAndPolygonContact.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2PolygonAndCircleContact.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2PolygonContact.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2DistanceJoint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2FrictionJoint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2GearJoint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2Joint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2MotorJoint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2MouseJoint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2PrismaticJoint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2PulleyJoint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2RevoluteJoint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2RopeJoint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2WeldJoint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2WheelJoint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Rope\b2Rope.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Box2D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Collision\b2BroadPhase.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Collision\b2Collision.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Collision\b2Distance.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Collision\b2DynamicTree.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Collision\b2TimeOfImpact.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Collision\Shapes\b2ChainShape.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Collision\Shapes\b2CircleShape.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Collision\Shapes\b2EdgeShape.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Collision\Shapes\b2PolygonShape.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Collision\Shapes\b2Shape.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Common\b2BlockAllocator.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Common\b2Draw.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Common\b2GrowableStack.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Common\b2Math.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Common\b2Settings.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Common\b2StackAllocator.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Common\b2Timer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\b2Body.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\b2ContactManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\b2Fixture.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\b2Island.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\b2TimeStep.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\b2World.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\b2WorldCallbacks.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2ChainAndCircleContact.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2ChainAndPolygonContact.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2CircleContact.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2Contact.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2ContactSolver.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2EdgeAndCircleContact.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2EdgeAndPolygonContact.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2PolygonAndCircleContact.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Contacts\b2PolygonContact.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2DistanceJoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2FrictionJoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2GearJoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2Joint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2MotorJoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2MouseJoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2PrismaticJoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2PulleyJoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2RevoluteJoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2RopeJoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2WeldJoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Dynamics\Joints\b2WheelJoint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Rope\b2Rope.h" />
+  </ItemGroup>
+</Project>

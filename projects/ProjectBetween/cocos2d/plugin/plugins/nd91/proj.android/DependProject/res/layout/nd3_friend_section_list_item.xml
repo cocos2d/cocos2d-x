@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.nd.commplatform.widget.NdFriendSectionListItem
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:background="@drawable/nd3_user_item_bg">
+  <include 
+  android:id="@+id/nd3_friend_section_rl"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  layout="@layout/nd3_friend_section"
+  />
+  <include
+  android:id="@+id/nd3_friend_list_item"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:layout_below="@id/nd3_friend_section_rl"
+  android:layout_alignWithParentIfMissing="true"
+  layout="@layout/nd3_user_item"/>
+  
+</com.nd.commplatform.widget.NdFriendSectionListItem>

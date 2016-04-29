@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  
+  xmlns:android="http://schemas.android.com/apk/res/android" 
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" 
+ >
+ 
+ <LinearLayout  android:id="@+id/nd3_game_main"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"  
+  android:layout_alignParentTop="true"/>
+ <ProgressBar 
+ android:layout_width="wrap_content"  
+ android:layout_height="wrap_content"
+ android:id="@+id/nd3_web_load_progress"
+ android:indeterminate="true" 
+ android:layout_centerInParent="true"
+ android:visibility="gone" 
+ android:indeterminateDrawable="@drawable/nd3_progress_large"
+ style="?android:attr/progressBarStyleLarge"  />
+       
+ <include    
+ android:id="@+id/nd3_game_error_layout"  
+ android:layout_width="fill_parent"  
+ android:layout_height="fill_parent"
+ android:layout_alignParentTop="true"
+ android:visibility="gone"
+ layout="@layout/nd3_network_error" /> 
+ 
+ 
+</RelativeLayout>

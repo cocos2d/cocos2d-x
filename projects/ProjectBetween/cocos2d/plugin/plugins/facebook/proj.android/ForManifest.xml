@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifestConfig xmlns:android="http://schemas.android.com/apk/res/android">
+    <applicationCfg keyword="com.facebook.LoginActivity">
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id" />
+        <activity android:name="com.facebook.LoginActivity"
+           android:theme="@android:style/Theme.Translucent.NoTitleBar"
+           android:label="@string/app_name" />
+    </applicationCfg>
+    
+    <permissionCfg>
+        <uses-permission android:name="android.permission.INTERNET" />
+    </permissionCfg>
+</manifestConfig> 

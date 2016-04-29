@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:layout_margin="@dimen/nd3_margin_size">
+               <LinearLayout 
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"   
+					android:layout_alignParentLeft="true" 
+					android:layout_centerVertical="true"
+					android:layout_toLeftOf="@+id/nd3_unbind_tip_txt"
+					android:gravity="center_vertical">
+				    
+				
+				    	<ImageView 
+					        android:id="@+id/nd_thridplatform_image"
+							android:layout_width="@dimen/nd3_platform_image_size"
+							android:layout_height="@dimen/nd3_platform_image_size" 
+							android:src="@drawable/nd3_3rd_platform_icon" 
+							/>
+				   		<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:singleLine="true"
+							android:ellipsize="end"
+							android:id="@+id/nd3_share_account_txt"
+							style="@style/nd3_option_textview_style" 
+							android:layout_marginLeft="5dip" 
+							>
+						</TextView>
+				</LinearLayout>
+                
+		        <TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/nd3_unbind_tip_txt"
+					android:text="@string/nd3_unbind_account_tip"
+					android:textSize="14sp"
+					android:textColor="#FF0000FF"
+					android:layout_toLeftOf="@+id/nd3_share_account_switch"
+					android:layout_centerVertical="true"
+					>
+				</TextView>
+				<ImageView
+					android:id="@+id/nd3_share_account_switch"
+					android:layout_alignParentRight="true"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:background="@drawable/nd3_switch_image"
+					android:layout_centerVertical="true"
+					android:layout_marginRight="@dimen/nd3_margin_size"
+					>
+				</ImageView>
+</RelativeLayout>

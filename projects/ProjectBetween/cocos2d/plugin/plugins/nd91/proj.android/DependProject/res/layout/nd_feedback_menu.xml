@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+	android:layout_height="fill_parent" 
+	android:orientation="vertical">
+	
+   <LinearLayout
+	    android:layout_width="fill_parent"
+		android:layout_height="0dip"  
+		android:layout_weight="1" 
+		android:layout_margin="5dip" >
+	
+       <ListView 
+          android:id="@+id/nd_feedback_menu_list"
+		  android:layout_width="fill_parent"
+		  android:layout_height="wrap_content" 
+		  android:headerDividersEnabled="false"
+		  android:footerDividersEnabled="false"
+		  android:divider="@drawable/nd3_horizontal_line"
+		  android:fastScrollEnabled="true"
+		  android:cacheColorHint="#00000000"
+		  android:fadingEdge="none"  
+		  android:scrollbarStyle="outsideOverlay"
+		  android:background="@drawable/nd3_bk1" 
+		  /> 
+       
+    </LinearLayout>   
+   
+   <LinearLayout
+    android:layout_width="fill_parent"
+	android:layout_height="wrap_content" 
+	android:orientation="vertical"  
+	android:layout_margin="5dip" >  
+	      <TextView 
+	        android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"  
+		    android:text="@string/nd_feedback_reply8"
+		    android:textColor="@color/nd_orange_light"
+		    android:textSize="16dip"/>
+	      <Button 
+		    android:id="@+id/nd_feedback"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"  	
+		    android:background="@drawable/nd_blue"
+		    android:text="@string/nd_feedback_i_fb"
+		    android:layout_gravity="center"
+		    android:textStyle="bold"
+		    android:textSize="@dimen/nd3_pay_tip_text_size"
+			android:textColor="@color/nd3_white"   
+		    />
+    </LinearLayout>
+    
+</LinearLayout>

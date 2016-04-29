@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:gravity="bottom" android:id="@+id/keyborad_view">
+	<RelativeLayout android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:background="@drawable/upomp_bypay_keyboard_bg">
+
+		<RelativeLayout android:id="@+id/rl_et_psw_window"
+			android:layout_marginTop="30dip" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:layout_marginLeft="5dip"
+			android:layout_marginRight="5dip" android:background="@drawable/upomp_bypay_keyboard_input_bg">
+			<EditText android:id="@+id/et_psw_window"
+				android:singleLine="true" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:editable="false"
+				android:cursorVisible="false" android:layout_marginLeft="15dip"
+				android:layout_marginRight="15dip" android:password="true"
+				android:layout_centerVertical="true"
+				android:background="#00000000" />
+		</RelativeLayout>
+		<RelativeLayout android:id="@+id/rl_bg_keyboard"
+			android:layout_below="@id/rl_et_psw_window" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:background="@drawable/upomp_bypay_keyboard_pw_bg"
+			android:layout_marginLeft="5dip" android:layout_marginRight="5dip"
+			 android:layout_marginTop="5dip">
+			<LinearLayout android:id="@+id/ll_keyboard"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:layout_centerHorizontal="true">
+
+			</LinearLayout>
+		</RelativeLayout>
+		<RelativeLayout android:id="@+id/rl_key_menu"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_below="@id/rl_bg_keyboard" android:layout_marginTop="5dip"
+			android:layout_marginLeft="5dip" android:layout_marginRight="5dip">
+			<RelativeLayout android:id="@+id/rl_line1_menu"
+				android:layout_width="225dip" android:layout_height="wrap_content"
+				android:background="@drawable/upomp_bypay_keyboard_nav_bg">
+				<Button android:id="@+id/btn_num" android:layout_width="75dip"
+					android:layout_height="40dip" android:background="@drawable/upomp_bypay_keyboard_btn1_on"
+					android:text="@string/upomp_bypay_keyboard_number"
+					android:textColor="#FFFFFF" android:layout_centerVertical="true" />
+				<Button android:id="@+id/btn_letter" android:layout_width="75dip"
+					android:layout_height="40dip" android:background="#00000000"
+					android:text="@string/upomp_bypay_keyboard_letter"
+					android:textColor="#FFFFFF" android:layout_toRightOf="@+id/btn_num"
+					android:layout_centerVertical="true" />
+				<Button android:id="@+id/btn_symbol" android:layout_width="75dip"
+					android:layout_height="40dip" android:background="#00000000"
+					android:text="@string/upomp_bypay_keyboard_symbol"
+					android:layout_centerVertical="true" android:textColor="#FFFFFF"
+					android:layout_toRightOf="@+id/btn_letter" />
+			</RelativeLayout>
+			<Button android:id="@+id/btn_enter" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:background="@drawable/upomp_bypay_keyboard_btn_enter"
+				android:text="@string/upomp_bypay_affirm" android:textColor="#FFFFFF"
+				android:layout_alignParentRight="true" android:layout_marginTop="2dip" />
+		</RelativeLayout>
+	</RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:layout_marginBottom="35dip"
+	android:layout_marginLeft="10dip" android:layout_marginRight="10dip"
+	android:layout_marginTop="35dip" android:background="@drawable/upomp_bypay_bg">
+
+
+	<RelativeLayout android:id="@+id/rl_header_protocal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:background="@drawable/upomp_bypay_title_bg">
+<Button android:id="@+id/btn_return_protocal" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:background="@drawable/upomp_bypay_btn_title_esc"
+			android:layout_alignParentRight="true" android:layout_marginRight="5dip"
+			android:layout_marginTop="5dip" android:textColor="#ffffffff"
+			android:text="@string/upomp_bypay_return" />
+	</RelativeLayout>
+	<ListView android:id="@id/android:list" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:cacheColorHint="#00000000"
+		android:layout_below="@id/rl_header_protocal" android:layout_above="@+id/rl_bot_protocal"
+		android:layout_marginLeft="5dip" android:layout_marginRight="5dip"
+		android:layout_marginTop="8dip" />
+	<RelativeLayout android:id="@+id/rl_bot_protocal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true" android:background="@drawable/upomp_bypay_bottom">
+
+	</RelativeLayout>
+
+</RelativeLayout>

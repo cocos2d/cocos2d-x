@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{f39a11fb-0d36-4b0a-91f1-345f1f0c9aa9}</ItemsProjectGuid>
+    <ItemsRootNamespace>librecast</ItemsRootNamespace>
+    <ItemsProjectName>librecast.Shared</ItemsProjectName>
+    <CodeSharingProject>248F659F-DAC5-46E8-AC09-60EC9FC95053</CodeSharingProject>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\DebugUtils\DebugDraw.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\DebugUtils\DetourDebugDraw.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\DebugUtils\RecastDebugDraw.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\DebugUtils\RecastDump.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\DetourCrowd\DetourCrowd.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\DetourCrowd\DetourLocalBoundary.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\DetourCrowd\DetourObstacleAvoidance.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\DetourCrowd\DetourPathCorridor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\DetourCrowd\DetourPathQueue.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\DetourCrowd\DetourProximityGrid.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\DetourTileCache\DetourTileCache.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\DetourTileCache\DetourTileCacheBuilder.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Detour\DetourAlloc.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Detour\DetourCommon.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Detour\DetourNavMesh.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Detour\DetourNavMeshBuilder.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Detour\DetourNavMeshQuery.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Detour\DetourNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\fastlz\fastlz.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\DebugUtils\DebugDraw.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\DebugUtils\DetourDebugDraw.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\DebugUtils\RecastDebugDraw.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\DebugUtils\RecastDump.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\DetourCrowd\DetourCrowd.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\DetourCrowd\DetourLocalBoundary.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\DetourCrowd\DetourObstacleAvoidance.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\DetourCrowd\DetourPathCorridor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\DetourCrowd\DetourPathQueue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\DetourCrowd\DetourProximityGrid.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\DetourTileCache\DetourTileCache.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\DetourTileCache\DetourTileCacheBuilder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Detour\DetourAlloc.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Detour\DetourAssert.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Detour\DetourCommon.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Detour\DetourMath.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Detour\DetourNavMesh.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Detour\DetourNavMeshBuilder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Detour\DetourNavMeshQuery.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Detour\DetourNode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Detour\DetourStatus.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\fastlz\fastlz.h" />
+  </ItemGroup>
+</Project>

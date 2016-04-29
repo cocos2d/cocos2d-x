@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/nd3_pay_template_layout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" 
+	android:orientation ="vertical"
+	>
+	
+    <!-- 购买清单 -->
+	<LinearLayout
+		android:id="@+id/nd3_pay_template_order_list"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:orientation ="vertical"
+		android:background="@drawable/nd3_bk1"
+		style="@style/nd3_option_margin_style"		
+		android:layout_marginTop="@dimen/nd3_option_margin_top"	
+		>
+		
+		<!-- 游戏 -->
+		<!-- <LinearLayout
+			android:id="@+id/nd3_pay_template_recharges"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"				
+			>
+			
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/nd3_pay_label_app"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<TextView
+				android:id="@+id/nd3_pay_template_app"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+							
+		</LinearLayout>
+
+		分隔线
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line"
+			>
+		
+		</ImageView> -->
+		
+		<!-- 物品 -->
+		<LinearLayout
+			android:id="@+id/nd3_pay_template_recharges"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"				
+			>
+			
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/nd3_pay_label_product"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<TextView
+				android:id="@+id/nd3_pay_template_product"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+							
+		</LinearLayout>
+
+		<!-- 分隔线 -->
+		<!-- <ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line"
+			>
+		
+		</ImageView> -->
+		
+		<!-- 数量 -->
+		<LinearLayout
+			android:id="@+id/nd3_pay_template_recharges"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"				
+			>
+			
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/nd3_pay_label_count"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<TextView
+				android:id="@+id/nd3_pay_template_count"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+							
+		</LinearLayout>
+		
+		<!-- 分隔线 -->
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line"
+			>
+		
+		</ImageView>
+		
+		<!-- 价值 -->
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"				
+			>
+			
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/nd3_pay_label_money"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<TextView
+				android:id="@+id/nd3_pay_template_money"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+							
+		</LinearLayout>
+				
+	</LinearLayout>
+	
+	    
+
+	<!-- 当前余额 -->
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:orientation ="vertical"
+		android:background="@drawable/nd3_bk1" 
+		style="@style/nd3_option_margin_padding_style"
+		>
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"				
+			>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/nd3_curren_account"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+	
+			<TextView
+				android:id="@+id/nd3_curren_account"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				style="@style/nd3_option_textview_style"
+				/>
+		</LinearLayout>  
+		
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"				
+			>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/nd3_pay_label_current_balance"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+	
+			<TextView
+				android:id="@+id/nd3_pay_template_current_balance"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				style="@style/nd3_option_textview_style"
+				/>
+		</LinearLayout>
+		  
+	
+	</LinearLayout>	
+	
+	<Button 
+	    android:id="@+id/nd3_confirm_pay"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" 
+	    android:layout_marginTop="@dimen/nd3_option_margin_top"		
+	    android:background="@drawable/nd_blue"
+	    android:text="@string/nd3_confrim_pay"
+	    android:layout_gravity="center"
+	    android:textStyle="bold"
+	    android:textSize="@dimen/nd3_pay_tip_text_size"
+		android:textColor="@color/nd3_white"
+	    />    
+		 
+
+	<!-- 代付提示 -->
+	<!-- <TextView
+		android:id="@+id/nd3_pay_template_pay_by_friend_tip"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:gravity="left"
+		android:text="@string/nd3_pay_cannot_pay_by_friend"
+		android:textSize="@dimen/nd3_pay_tip_text_size"
+		android:textColor="@color/nd3_pay_color"	
+		android:layout_marginTop="@dimen/nd3_option_margin_top"	
+		style="@style/nd3_option_margin_style"
+		>
+	</TextView>
+			
+	
+
+	直购提示
+	<TextView
+		android:id="@+id/nd3_pay_template_auto_buy"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:gravity="left"
+		android:text="@string/nd3_pay_label_auto_buy"
+		android:textSize="@dimen/nd3_pay_tip_text_size"
+		android:textColor="@color/nd3_pay_color"
+		style="@style/nd3_option_margin_style"
+		>
+	</TextView>
+	
+	让好朋友代付款
+	<LinearLayout
+		android:id="@+id/nd3_pay_template_pay_by_friend"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:orientation ="horizontal"
+		android:gravity="center_vertical"
+		android:background="@drawable/nd3_bk1"
+		style="@style/nd3_option_margin_padding_style"			
+		>
+		
+		<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/nd3_pay_label_pay_by_friend"
+			style="@style/nd3_option_textview_style"
+			>
+		</TextView>
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"	
+			android:src="@drawable/nd3_switch_image"			
+			>
+		</ImageView>
+												
+	</LinearLayout>
+
+	客服电话
+	<TextView
+		android:id="@+id/nd3_pay_template_service"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:text="@string/nd3_pay_label_service_format_2"
+		android:textSize="@dimen/nd3_pay_service_text_size"
+		android:textColor="@color/nd3_pay_color"
+		style="@style/nd3_option_margin_style"
+		>
+	</TextView> -->
+			
+</LinearLayout>

@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{adafd00d-a0d6-46ef-9f0b-ea2880bfe1de}</ItemsProjectGuid>
+    <ItemsRootNamespace>libSpine</ItemsRootNamespace>
+    <ItemsProjectName>libSpine.Shared</ItemsProjectName>
+    <CodeSharingProject>248F659F-DAC5-46E8-AC09-60EC9FC95053</CodeSharingProject>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Animation.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\AnimationState.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\AnimationStateData.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Atlas.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\AtlasAttachmentLoader.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Attachment.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\AttachmentLoader.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Bone.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BoneData.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BoundingBoxAttachment.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Event.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\EventData.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\extension.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\IkConstraint.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\IkConstraintData.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Json.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\MeshAttachment.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\PolygonBatch.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\RegionAttachment.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Skeleton.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\SkeletonAnimation.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\SkeletonBounds.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\SkeletonData.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\SkeletonJson.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\SkeletonRenderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Skin.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\SkinnedMeshAttachment.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Slot.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\SlotData.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\spine-cocos2dx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Animation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\AnimationState.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\AnimationStateData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Atlas.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\AtlasAttachmentLoader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Attachment.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\AttachmentLoader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Bone.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BoneData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BoundingBoxAttachment.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Event.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\EventData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\extension.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\IkConstraint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\IkConstraintData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Json.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\MeshAttachment.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\PolygonBatch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\RegionAttachment.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Skeleton.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonAnimation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonBounds.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonJson.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Skin.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkinnedMeshAttachment.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Slot.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SlotData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\spine-cocos2dx.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\spine.h" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,133 @@
+definitions:
+  # the names of the functions - we use this to generate the code and to register the functions in
+  # the javascript class
+  ifunction: "js_${generator.prefix}_${class_name}_${func_name}"
+  sfunction: "js_${generator.prefix}_${class_name}_${func_name}"
+  constructor: "js_${generator.prefix}_${class_name}_constructor"
+conversions:
+  # some times you want to use a special native type when converting from spidermonkey to native
+  # the most common case would be from JS-boolean to bool. Using "bool" will fail here since we
+  # pass the address to the conversion method, and a JSBool is defined as an integer in spidermonkey
+  native_types:
+  # JSBool was removed from Firefox v27
+#    bool: "JSBool"
+    float: "double"
+    short: "int32_t"
+    "unsigned char": "uint16_t"
+    "char": "int32_t"
+    "@std::vector<std::basic_string.*>.>.>": "std::vector<std::string>"
+    "@std::vector<int.*>.>": "std::vector<int>"
+    "@cocos2d::Map<std::basic_string.*,": "cocos2d::Map<std::string,"
+    "@std::map<std::basic_string<char>,.*std::basic_string<char>.*>": "std::map<std::string, std::string>"
+    "@std::map<std::basic_string<char>,.*std::basic_string<char>.*>*": "std::map<std::string, std::string>*"
+  ns_map:
+    "cocos2d::extension::": "cc."
+    "cocos2d::ui::": "ccui."
+    "cocos2d::": "cc."
+    "spine::": "sp."
+    "cocostudio::": "ccs."
+    "cocosbuilder::": "cc."
+    "CocosDenshion::": "cc."
+  to_native:
+    # jsval to int
+    int: "ok &= jsval_to_int32(cx, ${in_value}, (int32_t *)&${out_value})"
+    "unsigned int": "ok &= jsval_to_uint32(cx, ${in_value}, &${out_value})"
+    "unsigned char": "ok &= jsval_to_uint16(cx, ${in_value}, &${out_value})"
+    short: "ok &= jsval_to_int32(cx, ${in_value}, &${out_value})"
+    "unsigned short": "ok &= jsval_to_ushort(cx, ${in_value}, &${out_value})"
+    char: "ok &= jsval_to_int32(cx, ${in_value}, &${out_value})"
+    bool: "${out_value} = JS::ToBoolean(JS::RootedValue(cx, ${in_value}))"
+    float: "ok &= JS::ToNumber( cx, JS::RootedValue(cx, ${in_value}), &${out_value})"
+    double: "ok &= JS::ToNumber( cx, JS::RootedValue(cx, ${in_value}), &${out_value})"
+    long: "ok &= pluginx::jsval_to_long(cx, ${in_value}, &${out_value})"
+    "unsigned long": "ok &= jsval_to_ulong(cx, ${in_value}, &${out_value})"
+    "ssize_t": "ok &= jsval_to_ssize(cx, ${in_value}, &${out_value})"
+    # jsval has to be a TypedArray, a UInt32Array with 2 elements
+    "long long": "ok &= jsval_to_long_long(cx, ${in_value}, &${out_value})"
+    "std::string": "ok &= jsval_to_std_string(cx, ${in_value}, &${out_value})"
+    "char*": "std::string ${out_value}_tmp; ok &= jsval_to_std_string(cx, ${in_value}, &${out_value}_tmp); ${out_value} = ${out_value}_tmp.c_str()"
+    "@map<std::basic_string<char>,.*std::basic_string<char>.*>": "ok &= jsval_to_std_map_string_string(cx, ${in_value}, &${out_value})"
+    "@map<std::basic_string<char>,.*std::basic_string<char>.*>\\*": "std::map<std::string, std::string> ${out_value}_tmp; ok &= jsval_to_std_map_string_string(cx, ${in_value}, &${out_value}_tmp); ${out_value} = &${out_value}_tmp"
+    "Point": "ok &= jsval_to_ccpoint(cx, ${in_value}, &${out_value})"
+    "Rect": "ok &= jsval_to_ccrect(cx, ${in_value}, &${out_value})"
+    "Size": "ok &= jsval_to_ccsize(cx, ${in_value}, &${out_value})"
+    "Color4B": "ok &= jsval_to_cccolor4b(cx, ${in_value}, &${out_value})"
+    "Color4F": "ok &= jsval_to_cccolor4f(cx, ${in_value}, &${out_value})"
+    "Color3B": "ok &= jsval_to_cccolor3b(cx, ${in_value}, &${out_value})"
+    "Array*": "ok &= jsval_to_ccarray(cx, ${in_value}, &${out_value})"
+    "Dictionary*": "ok &= jsval_to_ccdictionary(cx, ${in_value}, &${out_value})"
+    "AffineTransform": "ok &= jsval_to_ccaffinetransform(cx, ${in_value}, &${out_value})"
+    "FontDefinition":  "ok &= jsval_to_FontDefinition(cx, ${in_value}, &${out_value})"
+    "String*": "std::string ${out_value}_tmp; ok &= jsval_to_std_string(cx, ${in_value}, &${out_value}_tmp); ${out_value} = cocos2d::String::create(${out_value}_tmp)"
+    "@Vector<.*>": "ok &= jsval_to_ccvector(cx, ${in_value}, &${out_value})"
+    "@Map<std::basic_string.*>": "ok &= jsval_to_ccmap_string_key(cx, ${in_value}, &${out_value})"
+    "Value": "ok &= jsval_to_ccvalue(cx, ${in_value}, &${out_value})"
+    "ValueMap": "ok &= jsval_to_ccvaluemap(cx, ${in_value}, &${out_value})"
+    "ValueMapIntKey": "ok &= jsval_to_ccvaluemapintkey(cx, ${in_value}, &${out_value})"
+    "ValueVector": "ok &= jsval_to_ccvaluevector(cx, ${in_value}, &${out_value})"
+    "@vector<std::basic_string.*>": "ok &= jsval_to_std_vector_string(cx, ${in_value}, &${out_value})"
+    "@vector<int.*>": "ok &= jsval_to_std_vector_int(cx, ${in_value}, &${out_value})"
+    "Acceleration": "ok &= jsval_to_ccacceleration(cx, ${in_value}, &${out_value})"
+    "Mat4": "ok &= jsval_to_matrix(cx, ${in_value}, &${out_value})"
+    "Vec2": "ok &= jsval_to_vector2(cx, ${in_value}, &${out_value})"
+    "Vec3": "ok &= jsval_to_vector3(cx, ${in_value}, &${out_value})"
+    "BlendFunc": "ok &= jsval_to_blendfunc(cx, ${in_value}, &${out_value})"
+    object: |
+      do {
+      ${($level + 1) * '    '}if (!${in_value}.isObject()) { ok = false; break; }
+      ${($level + 1) * '    '}js_proxy_t *jsProxy;
+      ${($level + 1) * '    '}JSObject *tmpObj = JSVAL_TO_OBJECT(${in_value});
+      ${($level + 1) * '    '}jsProxy = jsb_get_js_proxy(tmpObj);
+      ${($level + 1) * '    '}${out_value} = (${ntype})(jsProxy ? jsProxy->ptr : NULL);
+      ${($level + 1) * '    '}JSB_PRECONDITION2( ${out_value}, cx, false, "Invalid Native Object");
+      ${($level + 0) * '    '}} while (0)
+
+  from_native:
+    # int to jsval
+    int: "${out_value} = int32_to_jsval(cx, ${in_value})"
+    "unsigned int": "${out_value} = uint32_to_jsval(cx, ${in_value})"
+    "unsigned short": "${out_value} = ushort_to_jsval(cx, ${in_value})"
+    "unsigned char": "${out_value} = uint32_to_jsval(cx, ${in_value})"
+    "long long": "${out_value} = long_long_to_jsval(cx, ${in_value})"
+    "std::string": "${out_value} = std_string_to_jsval(cx, ${in_value})"
+    "basic_string<char>": "${out_value} = std_string_to_jsval(cx, ${in_value})"
+    "char*": "${out_value} = c_string_to_jsval(cx, ${in_value})"
+    bool: "${out_value} = BOOLEAN_TO_JSVAL(${in_value})"
+    float: "${out_value} = DOUBLE_TO_JSVAL(${in_value})"
+    double: "${out_value} = DOUBLE_TO_JSVAL(${in_value})"
+    long: "${out_value} = long_to_jsval(cx, ${in_value})"
+    "unsigned long": "${out_value} = ulong_to_jsval(cx, ${in_value})"
+    "ssize_t": "${out_value} = ssize_to_jsval(cx, ${in_value})"
+    "Point": "${out_value} = ccpoint_to_jsval(cx, ${in_value})"
+    "Rect": "${out_value} = ccrect_to_jsval(cx, ${in_value})"
+    "Size": "${out_value} = ccsize_to_jsval(cx, ${in_value})"
+    "Color4B": "${out_value} = cccolor4b_to_jsval(cx, ${in_value})"
+    "Color4F": "${out_value} = cccolor4f_to_jsval(cx, ${in_value})"
+    "Color3B": "${out_value} = cccolor3b_to_jsval(cx, ${in_value})"
+    "Array*": "${out_value} = ccarray_to_jsval(cx, ${in_value})"
+    "Dictionary*": "${out_value} = ccdictionary_to_jsval(cx, ${in_value})"
+    "AffineTransform": "${out_value} = ccaffinetransform_to_jsval(cx, ${in_value})"
+    "FontDefinition": "${out_value} = FontDefinition_to_jsval(cx, ${in_value})"
+    "String*": "${out_value} = std_string_to_jsval(cx, ${in_value}->getCString())"
+    "@Vector<.*>": "${out_value} = ccvector_to_jsval(cx, ${in_value})"
+    "@Map<std::basic_string.*>": "${out_value} = ccmap_string_key_to_jsval(cx, ${in_value})"
+    "Value": "${out_value} = ccvalue_to_jsval(cx, ${in_value})"
+    "ValueMap": "${out_value} = ccvaluemap_to_jsval(cx, ${in_value})"
+    "ValueMapIntKey": "${out_value} = ccvaluemapintkey_to_jsval(cx, ${in_value})"
+    "ValueVector": "${out_value} = ccvaluevector_to_jsval(cx, ${in_value})"
+    "@vector<std::basic_string.*>": "${out_value} = std_vector_string_to_jsval(cx, ${in_value})"
+    "@vector<int.*>": "${out_value} = std_vector_int_to_jsval(cx, ${in_value})"
+    "Acceleration*": "${out_value} = ccacceleration_to_jsval(cx, *${in_value})"
+    "Mat4": "${out_value} = matrix_to_jsval(cx, ${in_value})"
+    "Vec2": "${out_value} = vector2_to_jsval(cx, ${in_value})"
+    "Vec3": "${out_value} = vector3_to_jsval(cx, ${in_value})"
+    "BlendFunc": "${out_value} = blendfunc_to_jsval(cx, ${in_value})"
+    object: |
+      do {
+      ${($level + 1) * '    '}if (${in_value}) {
+      ${($level + 2) * '    '}js_proxy_t *jsProxy = js_get_or_create_proxy<${ntype.replace("*", "").replace("const ", "")}>(cx, (${ntype.replace("const ", "")})${in_value});
+      ${($level + 2) * '    '}${out_value} = OBJECT_TO_JSVAL(jsProxy->obj);
+      ${($level + 1) * '    '}} else {
+      ${($level + 2) * '    '}${out_value} = JSVAL_NULL;
+      ${($level + 1) * '    '}}
+      ${($level) * '    '}} while (0)

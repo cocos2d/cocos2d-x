@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:layout_marginLeft="10dip" android:layout_marginRight="10dip">
+	<RelativeLayout android:id="@+id/rl_head_list_title"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_marginTop="10dip">
+
+	</RelativeLayout>
+	<ImageView android:id="@+id/iv_info_top_user_list_title"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:background="@drawable/upomp_bypay_info_top2"
+		android:layout_below="@id/rl_head_list_title" />
+
+	<RelativeLayout android:id="@+id/rl_card_info_list_title"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:background="@drawable/upomp_bypay_info_bg"
+		android:layout_below="@id/iv_info_top_user_list_title">
+		<RelativeLayout android:id="@+id/rl_iv_card_user_list_title"
+			android:layout_width="40dip" android:layout_height="40dip"
+
+			android:background="@drawable/upomp_bypay_info_left">
+			<ImageView android:id="@+id/iv_card_info_list_title"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_centerHorizontal="true"
+				android:layout_centerVertical="true" android:background="@drawable/upomp_bypay_info_icon3" />
+		</RelativeLayout>
+		<RelativeLayout android:id="@+id/rl_card_info_content_list_title"
+			android:layout_width="fill_parent" android:layout_height="30dip"
+			android:layout_toRightOf="@+id/rl_iv_card_user_list_title">
+			<TextView android:id="@+id/tv_card_info_content_list_title"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:textColor="#6a7482" android:layout_marginLeft="5dip"
+				android:textSize="14sp" android:layout_centerVertical="true" 
+				/>
+
+		</RelativeLayout>
+	</RelativeLayout>
+	<ImageView android:id="@+id/iv_default_icon" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_alignParentRight="true"
+		android:background="@drawable/upomp_bypay_card_icon1"
+		android:layout_below="@id/rl_head_list_title" />
+	<!-- default -->
+	<RelativeLayout android:id="@+id/rl_default_card_list_title"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_below="@id/rl_card_info_list_title"
+		android:background="@drawable/upomp_bypay_info_bg">
+
+		<RelativeLayout android:id="@+id/rl_iv_default_card_list_title"
+			android:layout_width="40dip" android:layout_height="40dip"
+
+			android:background="@drawable/upomp_bypay_info_left">
+
+		</RelativeLayout>
+
+		<RelativeLayout android:id="@+id/rl_default_card_content_list_title"
+			android:layout_width="fill_parent" android:layout_height="40dip"
+			android:layout_toRightOf="@+id/rl_iv_default_card_list_title"
+			>
+			<ImageView android:id="@+id/iv_default_icon_list_title" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:background="@drawable/upomp_bypay_icon_card"
+			android:layout_marginLeft="5dip" android:layout_centerVertical="true"/>
+			<TextView android:id="@+id/tv_default_card_content_list_title"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/upomp_bypay_card_btn2" android:layout_marginLeft="5dip"
+				android:textColor="#6a7482" android:layout_centerVertical="true"
+				android:textSize="14sp" android:layout_toRightOf="@+id/iv_default_icon_list_title"/>
+			<ImageView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:background="@drawable/upomp_bypay_icon_jiantou"
+			android:layout_marginRight="5dip" android:layout_alignParentRight="true" android:layout_centerVertical="true"/>
+		</RelativeLayout>
+		<ImageView android:layout_width="fill_parent"
+			android:layout_height="1dip" android:background="#dbdee0"
+			android:layout_marginRight="1dip" android:layout_marginLeft="1dip" 
+			android:layout_toRightOf="@+id/rl_iv_default_card_list_title"/>
+	</RelativeLayout>
+
+	<!-- del -->
+	<RelativeLayout android:id="@+id/rl_del_card_list_title"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_below="@id/rl_default_card_list_title"
+		android:background="@drawable/upomp_bypay_info_bg">
+
+		<RelativeLayout android:id="@+id/rl_iv_del_card_list_title"
+			android:layout_width="40dip" android:layout_height="40dip"
+
+			android:background="@drawable/upomp_bypay_info_left">
+
+		</RelativeLayout>
+
+		<RelativeLayout android:id="@+id/rl_del_card_content_list_title"
+			android:layout_width="fill_parent" android:layout_height="40dip"
+			android:layout_toRightOf="@+id/rl_iv_del_card_list_title"
+			>
+			<ImageView android:id="@+id/iv_del_icon_list_title" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:background="@drawable/upomp_bypay_icon_pw"
+			android:layout_marginLeft="5dip" android:layout_centerVertical="true"/>
+			<TextView android:id="@+id/tv_del_card_content_list_title"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/upomp_bypay_card_btn3" android:layout_marginLeft="5dip"
+				android:textColor="#6a7482" android:layout_centerVertical="true"
+				android:textSize="14sp" android:layout_toRightOf="@+id/iv_del_icon_list_title"/>
+			<ImageView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:background="@drawable/upomp_bypay_icon_jiantou"
+			android:layout_marginRight="5dip" android:layout_alignParentRight="true" android:layout_centerVertical="true"/>
+		</RelativeLayout>
+		<ImageView android:layout_width="fill_parent"
+			android:layout_height="1dip" android:background="#dbdee0"
+			android:layout_marginRight="1dip" android:layout_marginLeft="1dip" 
+			android:layout_toRightOf="@+id/rl_iv_del_card_list_title"/>
+	</RelativeLayout>
+	<ImageView android:id="@+id/iv_info_bot_user_list_title"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:background="@drawable/upomp_bypay_info_bot2"
+		android:layout_below="@id/rl_del_card_list_title" />
+</RelativeLayout>
