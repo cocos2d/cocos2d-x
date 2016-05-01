@@ -380,14 +380,14 @@ THE SOFTWARE.
  * Specify audio API.
  */
 #ifndef CC_ENABLE_NEW_AUDIO_API
-#define CC_ENABLE_NEW_AUDIO_API 1
+#define CC_ENABLE_NEW_AUDIO_API 0
 #endif
 
 /** @def CC_USE_DEFAULT_CAMERA
  * Is using default camera for a 2D game.
  */
 #ifndef CC_USE_DEFAULT_CAMERA
-#define CC_USE_DEFAULT_CAMERA 1
+#define CC_USE_DEFAULT_CAMERA 0
 #endif
 
 #endif // __CCCONFIG_H__

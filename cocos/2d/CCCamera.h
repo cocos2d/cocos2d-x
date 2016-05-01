@@ -109,6 +109,7 @@ public:
     /**get & set Camera flag*/
     CameraFlag getCameraFlag() const { return (CameraFlag)_cameraFlag; }
     void setCameraFlag(CameraFlag flag) { _cameraFlag = (unsigned short)flag; }
+    void setCameraFlag(int flag) { _cameraFlag = (unsigned short)flag; }
 
     /**
     * Make Camera looks at target
@@ -322,6 +323,8 @@ protected:
 public:
     static const experimental::Viewport& getDefaultViewport() { return _defaultViewport; }
     static void setDefaultViewport(const experimental::Viewport& vp) { _defaultViewport = vp; }
+
+    virtual Camera* deepCopy();
 };
 
 NS_CC_END

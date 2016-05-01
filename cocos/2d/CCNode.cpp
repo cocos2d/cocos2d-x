@@ -2201,8 +2201,6 @@ Node* Node::_create()
 
 Node* Node::_destroy(bool action)
 {
-  this->onDestroy(action);
-
   if(this->cull->parent == nullptr && this->getParent())
   {
     this->cull->parent = this->getParent();
@@ -2220,6 +2218,8 @@ Node* Node::_destroy(bool action)
   {
     this->pool->_destroy(this->id);
   }
+
+  this->onDestroy(action);
 
   return this;
 }

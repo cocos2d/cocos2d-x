@@ -481,4 +481,14 @@ void Camera::setBackgroundBrush(CameraBackgroundBrush* clearBrush)
     _clearBrush = clearBrush;
 }
 
+/**
+ *
+ *
+ *
+ */
+Camera* Camera::deepCopy()
+{
+  return Camera::createOrthographic(_zoom[0], _zoom[1], _nearPlane, _farPlane);
+}
+
 NS_CC_END

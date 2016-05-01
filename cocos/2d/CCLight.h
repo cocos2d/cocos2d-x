@@ -75,8 +75,9 @@ public:
     void setIntensity(float intensity);
     
     /**light flag getter and setter*/
-    LightFlag getLightFlag() const { return _lightFlag; }
-    void setLightFlag(LightFlag flag) { _lightFlag = flag; }
+    unsigned short getLightFlag() const { return _lightFlag; }
+    //void setLightFlag(LightFlag flag) { _lightFlag = flag; }
+    void setLightFlag(int flag) { _lightFlag = (unsigned short)flag; }
     
     /**
      * light enabled getter and setter.
@@ -97,8 +98,11 @@ protected:
     
 protected:
     float       _intensity;
-    LightFlag   _lightFlag;
+    unsigned short   _lightFlag;
     bool        _enabled;
+
+public:
+    virtual BaseLight* deepCopy();
 };
 
 /**
@@ -139,6 +143,9 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     DirectionLight();
     virtual ~DirectionLight();
+
+public:
+    virtual DirectionLight* deepCopy();
     
 };
 
@@ -171,6 +178,9 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     float _range;
+
+public:
+    virtual PointLight* deepCopy();
 };
 
 /**
@@ -265,6 +275,9 @@ protected:
     float _cosInnerAngle;
     float _outerAngle;
     float _cosOuterAngle;
+
+public:
+    virtual SpotLight* deepCopy();
 };
 
 /**
@@ -287,6 +300,9 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     AmbientLight();
     virtual ~AmbientLight();
+
+public:
+    virtual AmbientLight* deepCopy();
 };
 
 NS_CC_END

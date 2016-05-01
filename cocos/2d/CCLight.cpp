@@ -44,7 +44,7 @@ void BaseLight::setRotationFromDirection( const Vec3 &direction )
 
 BaseLight::BaseLight()
 : _intensity(1.0f)
-, _lightFlag(LightFlag::LIGHT0)
+, _lightFlag(1)
 , _enabled(true)
 {
     
@@ -52,6 +52,11 @@ BaseLight::BaseLight()
 BaseLight::~BaseLight()
 {
     
+}
+
+BaseLight* BaseLight::deepCopy()
+{
+  return nullptr;
 }
 
 
@@ -88,6 +93,11 @@ DirectionLight::~DirectionLight()
     
 }
 
+DirectionLight* DirectionLight::deepCopy()
+{
+  return DirectionLight::create(this->getDirection(), this->getColor());
+}
+
 //////////////////////////////////////////////////////////////////
 PointLight* PointLight::create(const Vec3 &position, const Color3B &color, float range)
 {
@@ -106,6 +116,11 @@ PointLight::PointLight()
 PointLight::~PointLight()
 {
     
+}
+
+PointLight* PointLight::deepCopy()
+{
+  return PointLight::create(this->getPosition3D(), this->getColor(), this->getRange());
 }
 
 //////////////////////////////////////////////////////////////
@@ -161,6 +176,11 @@ SpotLight::~SpotLight()
 
 }
 
+SpotLight* SpotLight::deepCopy()
+{
+  return SpotLight::create(this->getDirection(), this->getPosition3D(), this->getColor(), this->getInnerAngle(), this->getOuterAngle(), this->getRange());
+}
+
 /////////////////////////////////////////////////////////////
 
 AmbientLight* AmbientLight::create( const Color3B &color )
@@ -179,6 +199,11 @@ AmbientLight::AmbientLight()
 AmbientLight::~AmbientLight()
 {
 
+}
+
+AmbientLight* AmbientLight::deepCopy()
+{
+  return AmbientLight::create(this->getColor());
 }
 
 NS_CC_END

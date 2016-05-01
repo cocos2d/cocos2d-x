@@ -1479,6 +1479,10 @@
 		781B06E41BD37FBE0072FB24 /* Batch.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781B06E21BD37FBE0072FB24 /* Batch.mm */; };
 		781B06E61BD37FC80072FB24 /* Heyzap.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781B06E51BD37FC80072FB24 /* Heyzap.mm */; };
 		781B06E71BD37FC80072FB24 /* Heyzap.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781B06E51BD37FC80072FB24 /* Heyzap.mm */; };
+		7823C8961CD4E25400703A34 /* CameraEntity3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7823C8941CD4E25400703A34 /* CameraEntity3D.cpp */; };
+		7823C8971CD4E25400703A34 /* CameraEntity3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7823C8941CD4E25400703A34 /* CameraEntity3D.cpp */; };
+		7823C8981CD4E25400703A34 /* CameraEntity3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 7823C8951CD4E25400703A34 /* CameraEntity3D.h */; };
+		7823C8991CD4E25400703A34 /* CameraEntity3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 7823C8951CD4E25400703A34 /* CameraEntity3D.h */; };
 		78357A0F1CA6D9B100F86325 /* RotateGlobalBy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78357A0D1CA6D9B100F86325 /* RotateGlobalBy.cpp */; };
 		78357A101CA6D9B100F86325 /* RotateGlobalBy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78357A0D1CA6D9B100F86325 /* RotateGlobalBy.cpp */; };
 		78357A111CA6D9B100F86325 /* RotateGlobalBy.h in Headers */ = {isa = PBXBuildFile; fileRef = 78357A0E1CA6D9B100F86325 /* RotateGlobalBy.h */; };
@@ -4212,6 +4216,8 @@
 		781B06DD1BD37FA80072FB24 /* Heyzap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Heyzap.h; sourceTree = "<group>"; };
 		781B06E21BD37FBE0072FB24 /* Batch.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Batch.mm; path = ../../apple/batch/Batch.mm; sourceTree = "<group>"; };
 		781B06E51BD37FC80072FB24 /* Heyzap.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Heyzap.mm; path = ../../apple/heyzap/Heyzap.mm; sourceTree = "<group>"; };
+		7823C8941CD4E25400703A34 /* CameraEntity3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraEntity3D.cpp; path = ../entities/CameraEntity3D.cpp; sourceTree = "<group>"; };
+		7823C8951CD4E25400703A34 /* CameraEntity3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraEntity3D.h; path = ../entities/CameraEntity3D.h; sourceTree = "<group>"; };
 		78357A0D1CA6D9B100F86325 /* RotateGlobalBy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RotateGlobalBy.cpp; sourceTree = "<group>"; };
 		78357A0E1CA6D9B100F86325 /* RotateGlobalBy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotateGlobalBy.h; sourceTree = "<group>"; };
 		78382F741C2469640001B3F1 /* Vote.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vote.cpp; sourceTree = "<group>"; };
@@ -7145,6 +7151,8 @@
 				7894BFA81BC9168700363FC9 /* Entity.h */,
 				78FEA7221BDE104E00D253A3 /* Entity3D.cpp */,
 				78FEA7231BDE104E00D253A3 /* Entity3D.h */,
+				7823C8941CD4E25400703A34 /* CameraEntity3D.cpp */,
+				7823C8951CD4E25400703A34 /* CameraEntity3D.h */,
 				7894BFAF1BC9168700363FC9 /* TiledEntity.cpp */,
 				7894BFB01BC9168700363FC9 /* TiledEntity.h */,
 				7894BFA51BC9168700363FC9 /* AnimatedEntity.cpp */,
@@ -9051,6 +9059,7 @@
 				15AE1BE319AAE01E00C27E9E /* CCScrollView.h in Headers */,
 				B665E2941AA80A6500DDB1C5 /* CCPUEmitter.h in Headers */,
 				8525E3A21B291E42008EE815 /* clipper.hpp in Headers */,
+				7823C8981CD4E25400703A34 /* CameraEntity3D.h in Headers */,
 				15FB209D1AE7C57D00C31518 /* sweep_context.h in Headers */,
 				50CB247519D9C5A100687767 /* AudioCache.h in Headers */,
 				50ABC01F1926664800A911A9 /* CCThread.h in Headers */,
@@ -10147,6 +10156,7 @@
 				15AE1BF819AAE01E00C27E9E /* CCControlStepper.h in Headers */,
 				50ABBE261925AB6F00A911A9 /* base64.h in Headers */,
 				B6CAB4E81AF9AA1A00B9B856 /* SpuSync.h in Headers */,
+				7823C8991CD4E25400703A34 /* CameraEntity3D.h in Headers */,
 				B6CAB2381AF9AA1A00B9B856 /* btCompoundCollisionAlgorithm.h in Headers */,
 				15AE1C1619AAE2C700C27E9E /* CCPhysicsDebugNode.h in Headers */,
 				15AE1BF619AAE01E00C27E9E /* CCControlSlider.h in Headers */,
@@ -10694,6 +10704,7 @@
 				15AE1A7419AAD40300C27E9E /* b2EdgeAndCircleContact.cpp in Sources */,
 				1A570282180BCC900088DEC7 /* CCSpriteBatchNode.cpp in Sources */,
 				1A570286180BCC900088DEC7 /* CCSpriteFrame.cpp in Sources */,
+				7823C8961CD4E25400703A34 /* CameraEntity3D.cpp in Sources */,
 				7894FA401BF0A50300A69ED6 /* BackgroundPages.cpp in Sources */,
 				7894BFC91BC9168700363FC9 /* Entity.cpp in Sources */,
 				B24AA989195A675C007B4522 /* CCFastTMXTiledMap.cpp in Sources */,
@@ -11334,6 +11345,7 @@
 				1A570092180BC5A10088DEC7 /* CCActionTween.cpp in Sources */,
 				1A570099180BC5C10088DEC7 /* CCAtlasNode.cpp in Sources */,
 				B6CAB1F21AF9AA1A00B9B856 /* btCollisionAlgorithm.cpp in Sources */,
+				7823C8971CD4E25400703A34 /* CameraEntity3D.cpp in Sources */,
 				B6CAAFF31AF9A9E100B9B856 /* CCPhysics3DObject.cpp in Sources */,
 				B665E2931AA80A6500DDB1C5 /* CCPUEmitter.cpp in Sources */,
 				50ABBD4D1925AB0000A911A9 /* MathUtil.cpp in Sources */,
