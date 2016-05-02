@@ -287,6 +287,51 @@ Sprite* createSpriteFromBase64(const char* base64String)
     return sprite;
 }
 
+// search Node APIs
+Node* searchNode(Node* root, const char* name, bool recursively)
+{
+    if (root == nullptr)
+        return nullptr;
+
+    // find this node
+    auto target = root->getChildByName(name);
+    if (target != nullptr)
+        return target;
+
+    if (recursively)
+        // recursively
+        for (auto& child : root->getChildren())
+        {
+            auto target = searchNode(child, name, recursively);
+            if (target != nullptr)
+                return target;
+        }
+
+    return nullptr;
+}
+
+Node* searchNode(Node* root, int tag, bool recursively)
+{
+    if (root == nullptr)
+        return nullptr;
+
+    // find this node
+    auto target = root->getChildByTag(tag);
+    if (target != nullptr)
+        return target;
+
+    if (recursively)
+        // recursively
+        for (auto& child : root->getChildren())
+        {
+            auto target = searchNode(child, tag, recursively);
+            if (target != nullptr)
+                return target;
+        }
+
+    return nullptr;
+}
+
 }
 
 NS_CC_END
