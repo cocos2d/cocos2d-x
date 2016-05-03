@@ -115,14 +115,14 @@ namespace utils
 
      * @return  Returns searched node or nullptr
      */
-    Node* CC_DLL searchNode(Node* levelRoot, const char* name, bool recursively = true);
+    Node* searchNode(Node* levelRoot, const char* name, bool recursively = true);
 
     /**
      * Search a node by name tag
 
      * @return Returns searched node or nullptr
      */
-    Node* CC_DLL searchNode(Node* levelRoot, int tag, bool recursively = true);
+    Node* searchNode(Node* levelRoot, int tag, bool recursively = true);
 
     /**
      * Search a node by name
