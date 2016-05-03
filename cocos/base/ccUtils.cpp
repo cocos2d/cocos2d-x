@@ -292,19 +292,17 @@ Node* findChild(Node* levelRoot, const char* name)
     if (levelRoot == nullptr)
         return nullptr;
 
-    // find this node
+    // Find this node
     auto target = levelRoot->getChildByName(name);
     if (target != nullptr)
         return target;
 
-    if (!levelRoot.empty()) {
-        // recursively
-        for (auto& child : levelRoot->getChildren())
-        {
-            auto target = findChild(child, name, recursively);
-            if (target != nullptr)
-                return target;
-        }
+    // Find recursively
+    for (auto& child : levelRoot->getChildren())
+    {
+        auto target = findChild(child, name);
+        if (target != nullptr)
+            return target;
     }
     return nullptr;
 }
@@ -314,19 +312,17 @@ Node* findChild(Node* levelRoot, int tag)
     if (levelRoot == nullptr)
         return nullptr;
 
-    // find this node
+    // Find this node
     auto target = levelRoot->getChildByTag(tag);
     if (target != nullptr)
         return target;
 
-    if (!levelRoot.empty()) {
-        // recursively
-        for (auto& child : levelRoot->getChildren())
-        {
-            auto target = findChild(child, tag, recursively);
-            if (target != nullptr)
-                return target;
-        }
+    // Find recursively
+    for (auto& child : levelRoot->getChildren())
+    {
+        auto target = findChild(child, tag);
+        if (target != nullptr)
+            return target;
     }
 
     return nullptr;
