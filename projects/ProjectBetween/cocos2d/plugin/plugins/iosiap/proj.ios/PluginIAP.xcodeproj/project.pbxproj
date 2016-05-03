@@ -1,0 +1,291 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		05A9358219260E2E00F08DC0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05A9358119260E2E00F08DC0 /* Foundation.framework */; };
+		05A9358719260E2E00F08DC0 /* IOSIAP.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 05A9358619260E2E00F08DC0 /* IOSIAP.h */; };
+		05A9358919260E2F00F08DC0 /* IOSIAP.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A9358819260E2E00F08DC0 /* IOSIAP.m */; };
+		05A935B119260FF000F08DC0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05A935B019260FF000F08DC0 /* StoreKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		05A9357C19260E2E00F08DC0 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				05A9358719260E2E00F08DC0 /* IOSIAP.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		05A9357E19260E2E00F08DC0 /* libPluginIAP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPluginIAP.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		05A9358119260E2E00F08DC0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		05A9358519260E2E00F08DC0 /* PluginIAP-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PluginIAP-Prefix.pch"; sourceTree = "<group>"; };
+		05A9358619260E2E00F08DC0 /* IOSIAP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOSIAP.h; sourceTree = "<group>"; };
+		05A9358819260E2E00F08DC0 /* IOSIAP.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOSIAP.m; sourceTree = "<group>"; };
+		05A9358F19260E2F00F08DC0 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		05A9359219260E2F00F08DC0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		05A935B019260FF000F08DC0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		05A9357B19260E2E00F08DC0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05A935B119260FF000F08DC0 /* StoreKit.framework in Frameworks */,
+				05A9358219260E2E00F08DC0 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		05A9357519260E2E00F08DC0 = {
+			isa = PBXGroup;
+			children = (
+				05A9358319260E2E00F08DC0 /* IOSIAP */,
+				05A9358019260E2E00F08DC0 /* Frameworks */,
+				05A9357F19260E2E00F08DC0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		05A9357F19260E2E00F08DC0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				05A9357E19260E2E00F08DC0 /* libPluginIAP.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		05A9358019260E2E00F08DC0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				05A935B019260FF000F08DC0 /* StoreKit.framework */,
+				05A9358119260E2E00F08DC0 /* Foundation.framework */,
+				05A9358F19260E2F00F08DC0 /* XCTest.framework */,
+				05A9359219260E2F00F08DC0 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		05A9358319260E2E00F08DC0 /* IOSIAP */ = {
+			isa = PBXGroup;
+			children = (
+				05A9358619260E2E00F08DC0 /* IOSIAP.h */,
+				05A9358819260E2E00F08DC0 /* IOSIAP.m */,
+				05A9358419260E2E00F08DC0 /* Supporting Files */,
+			);
+			path = IOSIAP;
+			sourceTree = "<group>";
+		};
+		05A9358419260E2E00F08DC0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				05A9358519260E2E00F08DC0 /* PluginIAP-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		05A9357D19260E2E00F08DC0 /* PluginIAP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 05A935A119260E2F00F08DC0 /* Build configuration list for PBXNativeTarget "PluginIAP" */;
+			buildPhases = (
+				05A9357A19260E2E00F08DC0 /* Sources */,
+				05A9357B19260E2E00F08DC0 /* Frameworks */,
+				05A9357C19260E2E00F08DC0 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PluginIAP;
+			productName = IOSIAP;
+			productReference = 05A9357E19260E2E00F08DC0 /* libPluginIAP.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		05A9357619260E2E00F08DC0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = cocos2dx;
+			};
+			buildConfigurationList = 05A9357919260E2E00F08DC0 /* Build configuration list for PBXProject "PluginIAP" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 05A9357519260E2E00F08DC0;
+			productRefGroup = 05A9357F19260E2E00F08DC0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				05A9357D19260E2E00F08DC0 /* PluginIAP */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		05A9357A19260E2E00F08DC0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05A9358919260E2F00F08DC0 /* IOSIAP.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		05A9359F19260E2F00F08DC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		05A935A019260E2F00F08DC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		05A935A219260E2F00F08DC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/IOSIAP.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/panda/Documents/FacebookSDK,
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IOSIAP/PluginIAP-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../../../protocols/platform/ios",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = PluginIAP;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "armv7 arm64 i386";
+			};
+			name = Debug;
+		};
+		05A935A319260E2F00F08DC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/IOSIAP.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/panda/Documents/FacebookSDK,
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IOSIAP/PluginIAP-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../../../protocols/platform/ios",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = PluginIAP;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "armv7 arm64 i386";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		05A9357919260E2E00F08DC0 /* Build configuration list for PBXProject "PluginIAP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05A9359F19260E2F00F08DC0 /* Debug */,
+				05A935A019260E2F00F08DC0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		05A935A119260E2F00F08DC0 /* Build configuration list for PBXNativeTarget "PluginIAP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05A935A219260E2F00F08DC0 /* Debug */,
+				05A935A319260E2F00F08DC0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 05A9357619260E2E00F08DC0 /* Project object */;
+}

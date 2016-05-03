@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:drawable="@drawable/nd3_title_bar_action_btn_pressed" />
+    <item android:drawable="@drawable/nd3_title_bar_action_btn" />
+</selector>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  
+	  <LinearLayout 
+	  		android:id="@+id/nd3_msge_head_layout"
+	  		android:layout_width="fill_parent"
+	  	    android:layout_height="wrap_content"
+	  	    android:orientation="vertical">
+		  <RelativeLayout 
+		      android:layout_width="fill_parent"
+		  	  android:layout_height="wrap_content"
+		  	  android:layout_margin="@dimen/nd3_option_item_marginLeft">
+		  	  
+		  	  <ImageView android:id="@+id/nd3_msge_head_image"
+			      android:layout_width="57dip"
+			  	  android:layout_height="57dip"
+			  	  android:src="@drawable/nd3_head_bg"
+			  	  android:layout_alignParentLeft="true"
+			  	  android:layout_marginRight="@dimen/nd3_option_item_marginLeft"/>
+		  	  <TextView android:id="@+id/nd3_nickname"
+		  	  	  android:layout_width="0dip"
+		  	  	  android:layout_height="wrap_content"
+		  	  	  android:textColor="@color/nd3_white"
+		  	  	  android:textSize="@dimen/nd3_btn_text_size"
+		  	  	  android:layout_toRightOf="@id/nd3_msge_head_image"
+		  	  	  android:layout_toLeftOf="@+id/nd3_head_switch_image"
+		  	  	  />
+		  	  	  
+		  	   <ImageView 
+		  	    android:id="@+id/nd3_head_switch_image"
+		        android:layout_width="wrap_content"
+		  		android:layout_height="wrap_content"
+		  		android:background="@drawable/nd3_switch_image_white"
+		  		android:layout_alignParentRight="true"
+		  		android:layout_alignTop="@id/nd3_nickname"/>
+		  		
+		  	  <TextView android:id="@+id/nd3_mood"
+		  	  	  android:layout_width="fill_parent"
+		  	  	  android:layout_height="wrap_content"
+		  	  	  android:layout_toRightOf="@+id/nd3_msge_head_image"
+		  	  	  android:layout_below="@+id/nd3_nickname"
+		  	  	  android:maxLines="5"
+		  	  	  android:ellipsize="end"
+		  	  	  android:textColor="@color/nd3_white"/>
+		  </RelativeLayout>	  
+		  <ImageView 
+		        android:layout_width="fill_parent"
+		  		android:layout_height="wrap_content"
+		  		android:background="@drawable/nd3_line"
+		  		/>
+	  </LinearLayout>	
+	  <RelativeLayout
+	  android:layout_width="fill_parent"
+	  android:layout_height="0dip"
+	  android:layout_below="@+id/nd3_msge_head_layout"
+	  android:layout_above="@+id/nd3_send_msge"
+	  android:background="@color/nd3_list_view_item_bg_1">
+		  <ListView android:id="@+id/nd3_message_listview"
+			  android:layout_width="fill_parent"
+			  android:layout_height="fill_parent"
+			  android:headerDividersEnabled="false"
+			  android:footerDividersEnabled="false" 
+			  android:drawSelectorOnTop="true" 
+			  android:cacheColorHint="#00000000"
+			  android:fadingEdge="none"
+			  android:divider="@null"
+			  android:listSelector="#00000000"
+			  android:fastScrollEnabled="true"
+			  />
+	   </RelativeLayout>
+		  
+	  <RelativeLayout android:id="@+id/nd3_send_msge"
+	  		android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentBottom="true"
+		    android:gravity="center_vertical"
+		    android:background="@drawable/nd3_input_bg"
+		    android:paddingRight="5dip"
+		    android:paddingLeft="5dip"
+		    android:paddingBottom="5dip">
+		    
+		    <EditText android:id="@+id/nd3_msge"
+		  		android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:background="@drawable/nd3_inputbox_bg1"
+			    android:layout_alignParentLeft="true"
+			    android:layout_toLeftOf="@+id/nd3_send"
+			    android:layout_marginRight="5dip"
+			    android:maxLines="5"
+			    android:maxLength="140"
+			    android:layout_centerVertical="true"/>
+		    <Button android:id="@+id/nd3_send"
+		  		android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/nd3_send"
+			    android:textColor="@color/nd3_white"
+			    android:background="@drawable/nd3_button_x"
+			    android:gravity="center"
+			    android:layout_alignParentRight="true"  
+			    android:layout_centerVertical="true"/>
+	  </RelativeLayout>	     
+	    		
+</RelativeLayout>

@@ -1,0 +1,44 @@
+The FacebookSDKResources.bundle is no longer required in order to use the SDK. You may provide a bundle in cases where you need to override strings or images (e.g. internationalization, etc.) See https://developers.facebook.com/docs/reference/ios/current/constants/FBSettings#resourceBundleName for more information.
+
+The following is a list of keys for string localization:
+
+/* FBLoginView (aka FBLV) */
+"FBLV:LogOutButton" = "Log Out";
+"FBLV:LogInButton" = "Log In";
+"FBLV:LoggedInAs" = "Logged in as: %@";
+"FBLV:LoggedInUsingFacebook" = "Logged in using Facebook";
+"FBLV:LogOutAction" = "Log Out";
+"FBLV:CancelAction" = "Cancel";
+
+/* FBPlacePickerViewController (FBPPVC) */
+"FBPPVC:NumWereHere" = "%@ were here";
+
+/* FBError (aka FBE) */
+"FBE:ReconnectApplication" = "Please log into this app again to reconnect your Facebook account.";
+"FBE:PasswordChangedDevice" = "Your Facebook password has changed. To confirm your password, open Settings > Facebook and tap your name.";
+"FBE:PasswordChanged" = "Your Facebook password has changed. Please log into this app again to reconnect your Facebook account.";
+"FBE:WebLogIn" = "Your Facebook account is locked. Please log into www.facebook.com to continue.";
+"FBE:AppNotInstalled" = "Please log into this app again to reconnect your Facebook account.";
+"FBE:GrantPermission" = "This app doesn’t have permission to do this. To change permissions, try logging into the app again.";
+"FBE:Unconfirmed" = "Your Facebook account is locked. Please log into www.facebook.com to continue.";
+"FBE:OAuthDevice" = "To use your Facebook account with this app, open Settings > Facebook and make sure this app is turned on.";
+"FBE:DeviceError"= "Something went wrong. Please make sure you're connected to the internet and try again.";
+"FBE:AlertMessageButton" = "OK";
+
+Images should be placed in a directory called FacebookSDKImages in the bundle.  Note that images will support @2x and -568h@2x.
+
+The following is a list of images supported:
+
+FacebookSDKImages\
+
+	FBDialogClose.png
+
+	FBFriendPickerViewDefault.png
+	
+	FBLoginViewLoginButtonSmall.png
+	FBLoginViewLoginButtonSmallPressed.png
+	
+	FBPlacePickerViewGenericPlace.png
+
+	FBProfilePictureViewBlankProfileSquare.png
+	FBProfilePictureViewBlankProfilePortrait.png

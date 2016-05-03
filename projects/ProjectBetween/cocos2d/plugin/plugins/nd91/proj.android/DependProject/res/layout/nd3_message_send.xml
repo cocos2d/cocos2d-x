@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="@color/nd3_white">
+  
+  <RelativeLayout 
+	  android:id="@+id/nd3_receiver_layout"
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"
+	  android:layout_alignParentTop="true"
+	  android:layout_margin="@dimen/nd3_option_item_marginLeft"
+	  >
+  		<TextView 	
+		  	  android:id="@+id/nd3_receiver_label"
+			  android:layout_width="wrap_content"
+			  android:layout_height="wrap_content"
+			  android:text="@string/nd3_receiver"
+			  android:layout_alignParentLeft="true"
+			  android:textSize="16dip"
+			  android:layout_centerVertical="true"
+			  android:textColor="@color/nd3_black"/>
+		<EditText	  
+  			  android:id="@+id/nd3_receiver"
+			  android:layout_width="fill_parent"
+			  android:layout_height="wrap_content"
+			  android:layout_toRightOf="@+id/nd3_receiver_label"
+			  android:layout_toLeftOf="@+id/nd3_add_receiver"
+			  android:layout_centerInParent="true"
+			  android:background="@null"
+			  android:layout_centerVertical="true"
+			  android:editable="false"
+			  android:cursorVisible="false"/>
+		<ImageView 	  
+			  android:id="@+id/nd3_add_receiver"
+			  android:layout_width="wrap_content"
+			  android:layout_height="wrap_content"
+			  android:layout_alignParentRight="true"
+			  android:src="@drawable/nd3_add"
+			  android:layout_centerVertical="true"/>
+  </RelativeLayout>
+  
+  <ImageView 
+  		  android:id="@+id/nd3_line"
+		  android:layout_width="fill_parent"
+		  android:layout_height="wrap_content" 
+		  android:background="@drawable/nd3_horizontal_line"
+		  android:layout_below="@+id/nd3_receiver_layout"/>
+		  
+  <EditText 
+  		  android:id="@+id/nd3_message"
+		  android:layout_width="fill_parent"
+		  android:layout_height="fill_parent" 
+		  android:background="@null"
+		  android:layout_below="@+id/nd3_line"
+		  android:hint="@string/nd3_send_message_sendhint_str"
+		  android:gravity="top"
+		  android:layout_margin="@dimen/nd3_item_divider" />
+ 	  
+</RelativeLayout>

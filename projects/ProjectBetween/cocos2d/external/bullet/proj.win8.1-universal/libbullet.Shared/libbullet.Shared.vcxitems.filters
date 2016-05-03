@@ -1,0 +1,1242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="BulletCollision">
+      <UniqueIdentifier>{55245356-8f45-4b41-aa0c-8dfa2d5e355a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BulletDynamics">
+      <UniqueIdentifier>{9e51d9cf-98c4-4edb-aa56-35ea6ace99e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BulletMultiThreaded">
+      <UniqueIdentifier>{cd8f101f-f6e7-4ecd-8659-cb8173870e88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LinearMath">
+      <UniqueIdentifier>{4c45ff5b-c703-43ef-bc8e-8199a95bd17a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MiniCL">
+      <UniqueIdentifier>{22a7db3e-a3a7-40fc-aa94-ac071f75d8a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BulletCollision\BroadphaseCollision">
+      <UniqueIdentifier>{e193a5ee-d01b-44bf-b73d-6cbc6ab90133}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BulletCollision\CollisionDispatch">
+      <UniqueIdentifier>{4e8637dd-defe-4f47-8eb8-1925090f8318}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BulletCollision\CollisionShapes">
+      <UniqueIdentifier>{2ee84537-f428-4f26-8c8c-d2ba55c6344e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BulletCollision\Gimpact">
+      <UniqueIdentifier>{12d1ab6a-4bf2-4258-9f11-5da611c43b07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BulletCollision\NarrowPhaseCollision">
+      <UniqueIdentifier>{6b71f351-faa7-4298-8e1a-2ff1052d7483}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BulletDynamics\Character">
+      <UniqueIdentifier>{e411dafd-d1c6-4f86-98d4-49db246e3ba9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BulletDynamics\ConstraintSolver">
+      <UniqueIdentifier>{e8867556-2cf6-4359-aaec-da739e233b32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BulletDynamics\Dynamics">
+      <UniqueIdentifier>{fffb7916-29b8-45e1-bc28-20c7419927ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BulletDynamics\Featherstone">
+      <UniqueIdentifier>{4a9199ba-1753-4615-b3e6-0ed9e1ad0f87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BulletDynamics\MLCPSolvers">
+      <UniqueIdentifier>{a83496fb-03a1-46e0-8c7f-89dca6824393}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BulletDynamics\Vehicle">
+      <UniqueIdentifier>{7e7f4026-2ab8-4812-9d21-a3b1277e11be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MiniCL\MiniCLTask">
+      <UniqueIdentifier>{5d28517c-1bd8-4722-a2a0-c65734a29c4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BulletMultiThreaded\SpuNarrowPhaseCollisionTask">
+      <UniqueIdentifier>{93dbb0ff-0848-4b3a-9f95-88ee43596f94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BulletMultiThreaded\SpuSampleTask">
+      <UniqueIdentifier>{34471c48-3fc1-4e30-9025-ab7fe48c529b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\btBulletCollisionCommon.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\btBulletDynamicsCommon.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Bullet-C-Api.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btAxisSweep3.h">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btBroadphaseInterface.h">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btBroadphaseProxy.h">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btCollisionAlgorithm.h">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btDbvt.h">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btDbvtBroadphase.h">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btDispatcher.h">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btMultiSapBroadphase.h">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btOverlappingPairCache.h">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btOverlappingPairCallback.h">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btQuantizedBvh.h">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btSimpleBroadphase.h">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btActivatingCollisionAlgorithm.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btBox2dBox2dCollisionAlgorithm.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btBoxBoxCollisionAlgorithm.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btBoxBoxDetector.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btCollisionConfiguration.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btCollisionCreateFunc.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btCollisionDispatcher.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btCollisionObject.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btCollisionObjectWrapper.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btCollisionWorld.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btCompoundCollisionAlgorithm.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btCompoundCompoundCollisionAlgorithm.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btConvex2dConvex2dAlgorithm.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btConvexConcaveCollisionAlgorithm.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btConvexConvexAlgorithm.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btConvexPlaneCollisionAlgorithm.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btDefaultCollisionConfiguration.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btEmptyCollisionAlgorithm.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btGhostObject.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btHashedSimplePairCache.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btInternalEdgeUtility.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btManifoldResult.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btSimulationIslandManager.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btSphereBoxCollisionAlgorithm.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btSphereSphereCollisionAlgorithm.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btSphereTriangleCollisionAlgorithm.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btUnionFind.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\SphereTriangleDetector.h">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btBox2dShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btBoxShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btBvhTriangleMeshShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btCapsuleShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btCollisionMargin.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btCollisionShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btCompoundShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConcaveShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConeShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConvex2dShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConvexHullShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConvexInternalShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConvexPointCloudShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConvexPolyhedron.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConvexShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConvexTriangleMeshShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btCylinderShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btEmptyShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btHeightfieldTerrainShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btMaterial.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btMinkowskiSumShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btMultimaterialTriangleMeshShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btMultiSphereShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btOptimizedBvh.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btPolyhedralConvexShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btScaledBvhTriangleMeshShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btShapeHull.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btSphereShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btStaticPlaneShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btStridingMeshInterface.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btTetrahedronShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btTriangleBuffer.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btTriangleCallback.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btTriangleIndexVertexArray.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btTriangleIndexVertexMaterialArray.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btTriangleInfoMap.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btTriangleMesh.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btTriangleMeshShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btTriangleShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btUniformScalingShape.h">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btBoxCollision.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btClipPolygon.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btCompoundFromGimpact.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btContactProcessing.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btGenericPoolAllocator.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btGeometryOperations.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btGImpactBvh.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btGImpactCollisionAlgorithm.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btGImpactMassUtil.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btGImpactQuantizedBvh.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btGImpactShape.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btQuantization.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btTriangleShapeEx.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_array.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_basic_geometry_operations.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_bitset.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_box_collision.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_box_set.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_clip_polygon.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_contact.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_geom_types.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_geometry.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_hash_table.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_linear_math.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_math.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_memory.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_radixsort.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_tri_collision.h">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btContinuousConvexCollision.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btConvexCast.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btConvexPenetrationDepthSolver.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btDiscreteCollisionDetectorInterface.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btGjkConvexCast.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btGjkEpa2.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btGjkEpaPenetrationDepthSolver.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btGjkPairDetector.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btManifoldPoint.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btMinkowskiPenetrationDepthSolver.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btPersistentManifold.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btPointCollector.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btPolyhedralContactClipping.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btRaycastCallback.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btSimplexSolverInterface.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btSubSimplexConvexCast.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btVoronoiSimplexSolver.h">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Character\btCharacterControllerInterface.h">
+      <Filter>BulletDynamics\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Character\btKinematicCharacterController.h">
+      <Filter>BulletDynamics\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btConeTwistConstraint.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btConstraintSolver.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btContactConstraint.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btContactSolverInfo.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btFixedConstraint.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btGearConstraint.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btGeneric6DofConstraint.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btGeneric6DofSpringConstraint.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btHinge2Constraint.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btHingeConstraint.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btJacobianEntry.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btPoint2PointConstraint.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btSliderConstraint.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btSolve2LinearConstraint.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btSolverBody.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btSolverConstraint.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btTypedConstraint.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btUniversalConstraint.h">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Dynamics\btActionInterface.h">
+      <Filter>BulletDynamics\Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Dynamics\btDiscreteDynamicsWorld.h">
+      <Filter>BulletDynamics\Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Dynamics\btDynamicsWorld.h">
+      <Filter>BulletDynamics\Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Dynamics\btRigidBody.h">
+      <Filter>BulletDynamics\Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Dynamics\btSimpleDynamicsWorld.h">
+      <Filter>BulletDynamics\Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBody.h">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBodyConstraint.h">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBodyConstraintSolver.h">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBodyDynamicsWorld.h">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBodyJointLimitConstraint.h">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBodyJointMotor.h">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBodyLink.h">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBodyLinkCollider.h">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBodyPoint2Point.h">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBodySolverConstraint.h">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\MLCPSolvers\btDantzigLCP.h">
+      <Filter>BulletDynamics\MLCPSolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\MLCPSolvers\btDantzigSolver.h">
+      <Filter>BulletDynamics\MLCPSolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\MLCPSolvers\btMLCPSolver.h">
+      <Filter>BulletDynamics\MLCPSolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\MLCPSolvers\btMLCPSolverInterface.h">
+      <Filter>BulletDynamics\MLCPSolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\MLCPSolvers\btPATHSolver.h">
+      <Filter>BulletDynamics\MLCPSolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\MLCPSolvers\btSolveProjectedGaussSeidel.h">
+      <Filter>BulletDynamics\MLCPSolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Vehicle\btRaycastVehicle.h">
+      <Filter>BulletDynamics\Vehicle</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Vehicle\btVehicleRaycaster.h">
+      <Filter>BulletDynamics\Vehicle</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Vehicle\btWheelInfo.h">
+      <Filter>BulletDynamics\Vehicle</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuSampleTask\SpuSampleTask.h">
+      <Filter>BulletMultiThreaded\SpuSampleTask</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\Box.h">
+      <Filter>BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\boxBoxDistance.h">
+      <Filter>BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuCollisionShapes.h">
+      <Filter>BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuContactResult.h">
+      <Filter>BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuConvexPenetrationDepthSolver.h">
+      <Filter>BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuGatheringCollisionTask.h">
+      <Filter>BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuLocalSupport.h">
+      <Filter>BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuMinkowskiPenetrationDepthSolver.h">
+      <Filter>BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuPreferredPenetrationDirections.h">
+      <Filter>BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\btGpu3DGridBroadphase.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\btGpu3DGridBroadphaseSharedCode.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\btGpu3DGridBroadphaseSharedDefs.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\btGpu3DGridBroadphaseSharedTypes.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\btGpuDefines.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\btGpuUtilsSharedCode.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\btGpuUtilsSharedDefs.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\btParallelConstraintSolver.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\btThreadSupportInterface.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\HeapManager.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\PlatformDefinitions.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\PpuAddressSpace.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SequentialThreadSupport.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuCollisionObjectWrapper.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuCollisionTaskProcess.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuContactManifoldCollisionAlgorithm.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuDoubleBuffer.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuFakeDma.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuGatheringCollisionDispatcher.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuLibspe2Support.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuSampleTaskProcess.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuSync.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\TrbDynBody.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\TrbStateVec.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\vectormath2bullet.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\Win32ThreadSupport.h">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btAabbUtil2.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btAlignedAllocator.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btAlignedObjectArray.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btConvexHull.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btConvexHullComputer.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btDefaultMotionState.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btGeometryUtil.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btGrahamScan2dConvexHull.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btHashMap.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btIDebugDraw.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btList.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btMatrix3x3.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btMatrixX.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btMinMax.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btMotionState.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btPolarDecomposition.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btPoolAllocator.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btQuadWord.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btQuaternion.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btQuickprof.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btRandom.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btScalar.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btSerializer.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btStackAlloc.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btTransform.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btTransformUtil.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btVector3.h">
+      <Filter>LinearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\MiniCL\cl.h">
+      <Filter>MiniCL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\MiniCL\cl_gl.h">
+      <Filter>MiniCL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\MiniCL\cl_MiniCL_Defs.h">
+      <Filter>MiniCL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\MiniCL\cl_platform.h">
+      <Filter>MiniCL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\MiniCL\MiniCLTaskScheduler.h">
+      <Filter>MiniCL</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\MiniCL\MiniCLTask\MiniCLTask.h">
+      <Filter>MiniCL\MiniCLTask</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btCollisionAlgorithm.cpp">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btDbvt.cpp">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btDbvtBroadphase.cpp">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btDispatcher.cpp">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btMultiSapBroadphase.cpp">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btOverlappingPairCache.cpp">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btQuantizedBvh.cpp">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\BroadphaseCollision\btSimpleBroadphase.cpp">
+      <Filter>BulletCollision\BroadphaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btActivatingCollisionAlgorithm.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btBox2dBox2dCollisionAlgorithm.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btBoxBoxCollisionAlgorithm.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btBoxBoxDetector.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btCollisionDispatcher.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btCollisionObject.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btCollisionWorld.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btCompoundCollisionAlgorithm.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btCompoundCompoundCollisionAlgorithm.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btConvex2dConvex2dAlgorithm.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btConvexConcaveCollisionAlgorithm.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btConvexConvexAlgorithm.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btConvexPlaneCollisionAlgorithm.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btDefaultCollisionConfiguration.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btEmptyCollisionAlgorithm.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btGhostObject.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btHashedSimplePairCache.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btInternalEdgeUtility.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btManifoldResult.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btSimulationIslandManager.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btSphereBoxCollisionAlgorithm.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btSphereSphereCollisionAlgorithm.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btSphereTriangleCollisionAlgorithm.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\btUnionFind.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionDispatch\SphereTriangleDetector.cpp">
+      <Filter>BulletCollision\CollisionDispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btBox2dShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btBoxShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btBvhTriangleMeshShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btCapsuleShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btCollisionShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btCompoundShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConcaveShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConeShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConvex2dShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConvexHullShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConvexInternalShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConvexPointCloudShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConvexPolyhedron.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConvexShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btConvexTriangleMeshShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btCylinderShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btEmptyShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btHeightfieldTerrainShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btMinkowskiSumShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btMultimaterialTriangleMeshShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btMultiSphereShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btOptimizedBvh.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btPolyhedralConvexShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btScaledBvhTriangleMeshShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btShapeHull.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btSphereShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btStaticPlaneShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btStridingMeshInterface.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btTetrahedronShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btTriangleBuffer.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btTriangleCallback.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btTriangleIndexVertexArray.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btTriangleIndexVertexMaterialArray.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btTriangleMesh.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btTriangleMeshShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\CollisionShapes\btUniformScalingShape.cpp">
+      <Filter>BulletCollision\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btContactProcessing.cpp">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btGenericPoolAllocator.cpp">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btGImpactBvh.cpp">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btGImpactCollisionAlgorithm.cpp">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btGImpactQuantizedBvh.cpp">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btGImpactShape.cpp">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\btTriangleShapeEx.cpp">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_box_set.cpp">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_contact.cpp">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_memory.cpp">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\Gimpact\gim_tri_collision.cpp">
+      <Filter>BulletCollision\Gimpact</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btContinuousConvexCollision.cpp">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btConvexCast.cpp">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btGjkConvexCast.cpp">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btGjkEpa2.cpp">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btGjkEpaPenetrationDepthSolver.cpp">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btGjkPairDetector.cpp">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btMinkowskiPenetrationDepthSolver.cpp">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btPersistentManifold.cpp">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btPolyhedralContactClipping.cpp">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btRaycastCallback.cpp">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btSubSimplexConvexCast.cpp">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletCollision\NarrowPhaseCollision\btVoronoiSimplexSolver.cpp">
+      <Filter>BulletCollision\NarrowPhaseCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Character\btKinematicCharacterController.cpp">
+      <Filter>BulletDynamics\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btConeTwistConstraint.cpp">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btContactConstraint.cpp">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btFixedConstraint.cpp">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btGearConstraint.cpp">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btGeneric6DofConstraint.cpp">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btGeneric6DofSpringConstraint.cpp">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btHinge2Constraint.cpp">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btHingeConstraint.cpp">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btPoint2PointConstraint.cpp">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.cpp">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btSliderConstraint.cpp">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btSolve2LinearConstraint.cpp">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btTypedConstraint.cpp">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\ConstraintSolver\btUniversalConstraint.cpp">
+      <Filter>BulletDynamics\ConstraintSolver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Dynamics\btDiscreteDynamicsWorld.cpp">
+      <Filter>BulletDynamics\Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Dynamics\btRigidBody.cpp">
+      <Filter>BulletDynamics\Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Dynamics\btSimpleDynamicsWorld.cpp">
+      <Filter>BulletDynamics\Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Dynamics\Bullet-C-API.cpp">
+      <Filter>BulletDynamics\Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBody.cpp">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBodyConstraint.cpp">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBodyConstraintSolver.cpp">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBodyDynamicsWorld.cpp">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBodyJointLimitConstraint.cpp">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBodyJointMotor.cpp">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Featherstone\btMultiBodyPoint2Point.cpp">
+      <Filter>BulletDynamics\Featherstone</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\MLCPSolvers\btDantzigLCP.cpp">
+      <Filter>BulletDynamics\MLCPSolvers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\MLCPSolvers\btMLCPSolver.cpp">
+      <Filter>BulletDynamics\MLCPSolvers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Vehicle\btRaycastVehicle.cpp">
+      <Filter>BulletDynamics\Vehicle</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletDynamics\Vehicle\btWheelInfo.cpp">
+      <Filter>BulletDynamics\Vehicle</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuSampleTask\SpuSampleTask.cpp">
+      <Filter>BulletMultiThreaded\SpuSampleTask</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\boxBoxDistance.cpp">
+      <Filter>BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuCollisionShapes.cpp">
+      <Filter>BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuContactResult.cpp">
+      <Filter>BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuGatheringCollisionTask.cpp">
+      <Filter>BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuMinkowskiPenetrationDepthSolver.cpp">
+      <Filter>BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\btGpu3DGridBroadphase.cpp">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\btParallelConstraintSolver.cpp">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\btThreadSupportInterface.cpp">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SequentialThreadSupport.cpp">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuCollisionObjectWrapper.cpp">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuCollisionTaskProcess.cpp">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuContactManifoldCollisionAlgorithm.cpp">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuFakeDma.cpp">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuGatheringCollisionDispatcher.cpp">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuLibspe2Support.cpp">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\SpuSampleTaskProcess.cpp">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BulletMultiThreaded\Win32ThreadSupport.cpp">
+      <Filter>BulletMultiThreaded</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btAlignedAllocator.cpp">
+      <Filter>LinearMath</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btConvexHull.cpp">
+      <Filter>LinearMath</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btConvexHullComputer.cpp">
+      <Filter>LinearMath</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btGeometryUtil.cpp">
+      <Filter>LinearMath</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btPolarDecomposition.cpp">
+      <Filter>LinearMath</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btQuickprof.cpp">
+      <Filter>LinearMath</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btSerializer.cpp">
+      <Filter>LinearMath</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\LinearMath\btVector3.cpp">
+      <Filter>LinearMath</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\MiniCL\MiniCL.cpp">
+      <Filter>MiniCL</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\MiniCL\MiniCLTaskScheduler.cpp">
+      <Filter>MiniCL</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\MiniCL\MiniCLTask\MiniCLTask.cpp">
+      <Filter>MiniCL\MiniCLTask</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

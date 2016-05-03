@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/zsht_BackgroundScrollViewStyle" >
+
+    <LinearLayout style="@style/zsht_OutmostLinearLayoutStyle" >
+
+        <FrameLayout style="@style/zsht_TitleStyle" >
+
+            <ImageView style="@style/zsht_InvisibleLineStyle" />
+
+            <ImageView style="@style/zsht_TitleBackgroundStyle" />
+
+            <RelativeLayout style="@style/zsht_TitleLayoutStyle" >
+
+                <FrameLayout
+                    android:id="@+id/zsht_fram_title"
+                    style="@style/zsht_TitleFramLayoutStyle" >
+
+                    <LinearLayout style="@style/zsht_TitleTextStyle" >
+
+                        <ImageView style="@style/zsht_TitleImageStyle" />
+
+                        <TextView style="@style/zsht_TitleTextViewStyle" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/zsht_tv_user_message_back"
+                        style="@style/zsht_TitleBackButtonStyle" />
+                </FrameLayout>
+            </RelativeLayout>
+        </FrameLayout>
+        <!-- 商品信息 -->
+
+        <LinearLayout style="@style/zsht_OrderLayoutStyle" >
+
+            <TextView
+                android:id="@+id/zsht_tv_pay_orderInfo"
+                style="@style/zsht_OrderInfoTextViewStyle" />
+
+            <ImageView style="@style/zsht_OrderInfoLineStyle" />
+
+            <TextView
+                android:id="@+id/zsht_tv_pay_orderAmt"
+                style="@style/zsht_OrderAmtTextViewStyle" />
+        </LinearLayout>
+        <!-- 填写用户支付信息 -->
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="10.0dip"
+            android:layout_marginTop="5.0dip"
+            android:gravity="center_vertical"
+            android:paddingLeft="5.0dip"
+            android:text="@string/zsht_bankcard_message_input"
+            android:textColor="#d16a0b"
+            android:textSize="18.0sp" />
+
+        <LinearLayout style="@style/zsht_InputLayoutStyle" >
+
+            <TextView
+                style="@style/zsht_InputTitleStyle"
+                android:text="@string/zsht_hint_bankcard_number" />
+
+            <EditText
+                android:id="@+id/zsht_ed_user_message_bankcard_card_number"
+                style="@style/zsht_InputEditTextStyle"
+                android:digits="0123456789"
+                android:hint="@string/zsht_bankcard_number_input"
+                android:inputType="number"
+                android:maxLength="19" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/zsht_InputLayoutStyle" >
+
+            <TextView
+                style="@style/zsht_InputTitleStyle"
+                android:text="@string/zsht_id_number" />
+
+            <EditText
+                android:id="@+id/zsht_ed_user_message_IDnumber"
+                style="@style/zsht_InputEditTextStyle"
+                android:digits="0123456789*xX"
+                android:hint="@string/zsht_hint_id_number_input"
+                android:maxLength="18" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/zsht_InputLayoutStyle" >
+
+            <TextView
+                style="@style/zsht_InputTitleStyle"
+                android:text="@string/zsht_real_name" />
+
+            <EditText
+                android:id="@+id/zsht_ed_user_message_realName"
+                style="@style/zsht_InputEditTextStyle"
+                android:hint="@string/zsht_real_name_input"
+                android:maxLength="4" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/zsht_InputLayoutStyle" >
+
+            <TextView
+                style="@style/zsht_InputTitleStyle"
+                android:text="@string/zsht_phone_number_xml" />
+
+            <EditText
+                android:id="@+id/zsht_ed_user_message_phone_number"
+                style="@style/zsht_InputEditTextStyle"
+                android:digits="0123456789"
+                android:hint="@string/zsht_phone_input"
+                android:inputType="phone"
+                android:maxLength="11" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/zsht_authcodeLayout"
+            style="@style/zsht_InputLayoutStyle"
+            android:visibility="gone" >
+
+            <Button
+                android:id="@+id/zsht_bt_user_message_getAuthCode"
+                android:layout_width="60dip"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/zsht_ed_user_message_phone_number"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="1.0dip"
+                android:layout_marginRight="1.0dip"
+                android:layout_marginTop="1.0dip"
+                android:background="@drawable/zsht_authcode_style"
+                android:text="@string/zsht_bt_get_authcode"
+                android:textColor="#8d722b"
+                android:textSize="12.0sp" />
+
+            <TextView
+                android:id="@+id/zsht_tv_user_message_authCode"
+                style="@style/zsht_InputTitleStyle"
+                android:layout_below="@id/zsht_ed_user_message_phone_number"
+                android:layout_centerVertical="true"
+                android:text="@string/zsht_authcode" />
+
+            <EditText
+                android:id="@+id/zsht_ed_user_message_authCode"
+                style="@style/zsht_InputEditTextStyle"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/zsht_bt_user_message_getAuthCode"
+                android:layout_toRightOf="@id/zsht_tv_user_message_authCode"
+                android:digits="0123456789"
+                android:hint="@string/zsht_authcode_six"
+                android:inputType="number"
+                android:maxLength="6" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/zsht_layout_agreement"
+            style="@style/zsht_InputLayoutStyle"
+            android:layout_marginLeft="8.0dip"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:paddingLeft="0dip" >
+
+            <CheckBox
+                android:id="@+id/zsht_cb_bankcard_agreement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:gravity="center"
+                android:text="@string/zsht_read_agree"
+                android:textColor="@android:color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/zsht_tv_bankcard_agreement"
+                style="@style/zsht_InputEditTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="0.0dip"
+                android:gravity="center_vertical"
+                android:text="@string/zsht_agreement"
+                android:textColor="#449eff"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/zsht_bt_user_message_confirm"
+            style="@style/zsht_ConfirmButtonStyle" />
+    </LinearLayout>
+
+</ScrollView>

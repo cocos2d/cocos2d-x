@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifestConfig xmlns:android="http://schemas.android.com/apk/res/android">
+    <applicationCfg keyword="com.flurry.android.FlurryFullscreenTakeoverActivity">
+        <activity android:name="com.flurry.android.FlurryFullscreenTakeoverActivity"
+             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode"
+             android:hardwareAccelerated="false" >
+        </activity>
+    </applicationCfg>
+    
+    <permissionCfg>
+        <uses-permission android:name="android.permission.INTERNET" />
+    </permissionCfg>
+</manifestConfig> 

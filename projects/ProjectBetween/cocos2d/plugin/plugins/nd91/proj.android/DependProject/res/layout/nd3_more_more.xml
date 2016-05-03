@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/nd3_more_more_layout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" 
+	android:orientation ="vertical"
+	>
+	
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:orientation ="vertical"
+		android:background="@drawable/nd3_bk1"
+		android:layout_marginTop="@dimen/nd3_option_margin_top"
+		style="@style/nd3_option_margin_style"				
+		>
+		
+		<!-- 个人信息管理 -->
+		<LinearLayout
+			android:id="@+id/nd3_more_more_info"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"				
+			>
+			
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"	
+				android:src="@drawable/nd3_icon_more01"		
+				>
+			</ImageView>
+			
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:layout_marginLeft="@dimen/nd3_option_item_marginLeft"
+				android:text="@string/nd3_more_more_info"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/nd3_switch_image"				
+				>
+			</ImageView>
+							
+		</LinearLayout>
+
+		<!-- 分隔线 -->
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line"
+			>
+		
+		</ImageView>
+		
+		<!-- 通行证管理 -->
+		<LinearLayout
+			android:id="@+id/nd3_more_more_account"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"					
+			>
+			
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/nd3_icon_more02"					
+				>
+			</ImageView>
+			
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:layout_marginLeft="@dimen/nd3_option_item_marginLeft"
+				android:text="@string/nd3_more_more_account"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/nd3_switch_image"			
+				>
+			</ImageView>
+							
+		</LinearLayout>
+
+		<!-- 分隔线 -->
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line"
+			>
+		
+		</ImageView>
+				
+		<!-- 权限设置 -->
+		<LinearLayout
+			android:id="@+id/nd3_more_more_permission"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"								
+			>
+			
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"		
+				android:src="@drawable/nd3_icon_more03"	
+				>
+			</ImageView>
+			
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:layout_marginLeft="@dimen/nd3_option_item_marginLeft"
+				android:text="@string/nd3_more_more_permission"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"	
+				android:src="@drawable/nd3_switch_image"		
+				>
+			</ImageView>
+							
+		</LinearLayout>
+
+		<!-- 分隔线 -->
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line"
+			>
+		
+		</ImageView>
+				
+		<!-- 91豆充值 -->
+		<LinearLayout
+			android:id="@+id/nd3_more_more_recharge"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"								
+			>
+			
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/nd3_icon_more04"			
+				>
+			</ImageView>
+			
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:layout_marginLeft="@dimen/nd3_option_item_marginLeft"
+				android:text="@string/nd3_more_more_recharge"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"	
+				android:src="@drawable/nd3_switch_image"		
+				>
+			</ImageView>
+							
+		</LinearLayout>
+
+		<!-- 分隔线 -->
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line"
+			>
+		
+		</ImageView>
+				
+		<!-- 充值消费记录 -->
+		<LinearLayout
+			android:id="@+id/nd3_more_more_records"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"								
+			>
+			
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"			
+				android:src="@drawable/nd3_icon_more05"
+				>
+			</ImageView>
+			
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:layout_marginLeft="@dimen/nd3_option_item_marginLeft"
+				android:text="@string/nd3_more_more_records"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"	
+				android:src="@drawable/nd3_switch_image"
+				>
+			</ImageView>
+							
+		</LinearLayout>	
+		<!-- 分隔线 -->
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line"
+			/> 
+		<!-- 关于我们 -->
+		<LinearLayout
+			android:id="@+id/nd3_more_change_account"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"								
+			> 
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"			
+				android:src="@drawable/nd3_game_detail"
+				>
+			</ImageView>
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1" 
+				android:text="@string/nd3_more_more_logout"
+				style="@style/nd3_option_textview_style"
+				android:layout_marginLeft="@dimen/nd3_option_item_marginLeft"
+				>
+			</TextView> 
+							
+		</LinearLayout>								
+		
+	</LinearLayout>
+	
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:orientation ="vertical"
+		android:background="@drawable/nd3_bk1" 
+		style="@style/nd3_option_margin_style"				
+		>
+		<!-- 检查更新 -->
+		<LinearLayout
+			android:id="@+id/nd3_more_more_update"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"								
+			>
+			 
+			
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1" 
+				android:text="@string/nd_checkupdate"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"	
+				android:src="@drawable/nd3_switch_image"
+				>
+			</ImageView>
+							
+		</LinearLayout>	
+		<!-- 分隔线 -->
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line"
+			/> 
+		<!-- 用户反馈 -->
+		<LinearLayout
+			android:id="@+id/nd3_more_more_feekback"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"								
+			>
+			 
+			
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1" 
+				android:text="@string/nd3_app_feedback_title"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"	
+				android:src="@drawable/nd3_switch_image"
+				>
+			</ImageView>
+							
+		</LinearLayout>	
+		<!-- 分隔线 -->
+		<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line"
+			/> 
+		<!-- 关于我们 -->
+		<LinearLayout
+			android:id="@+id/nd3_more_more_about"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation ="horizontal"
+			android:gravity="center_vertical"
+			style="@style/nd3_option_item_margin_style"								
+			>
+			
+			 
+			
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1" 
+				android:text="@string/nd3_more_more_about"
+				style="@style/nd3_option_textview_style"
+				>
+			</TextView>
+			<TextView android:id="@+id/nd3_more_more_version"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"  
+				style="@style/nd3_option_textview_style"
+				android:layout_marginRight="10dip"
+				android:visibility="gone"
+				>
+			</TextView>
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"	
+				android:src="@drawable/nd3_switch_image"
+				>
+			</ImageView>
+							
+		</LinearLayout>		
+		
+		    
+				
+	</LinearLayout>	
+
+	 
+	
+</LinearLayout>

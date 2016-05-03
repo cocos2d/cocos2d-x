@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/zsht_BackgroundScrollViewStyle" >
+
+    <LinearLayout style="@style/zsht_OutmostLinearLayoutStyle" >
+
+        <FrameLayout style="@style/zsht_TitleStyle" >
+
+            <ImageView style="@style/zsht_InvisibleLineStyle" />
+
+            <ImageView style="@style/zsht_TitleBackgroundStyle" />
+
+            <RelativeLayout style="@style/zsht_TitleLayoutStyle" >
+
+                <FrameLayout
+                    android:id="@+id/zsht_fram_title"
+                    style="@style/zsht_TitleFramLayoutStyle" >
+
+                    <LinearLayout style="@style/zsht_TitleTextStyle" >
+
+                        <ImageView style="@style/zsht_TitleImageStyle" />
+
+                        <TextView style="@style/zsht_TitleTextViewStyle" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/zsht_tv_bankcard_agreement_back"
+                        style="@style/zsht_TitleBackButtonStyle" />
+                </FrameLayout>
+            </RelativeLayout>
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="10.0dip"
+            android:layout_marginTop="15.0dip"
+            android:gravity="center"
+            android:text="@string/zsht_agreement_title"
+            android:textColor="@android:color/black"
+            android:textSize="20.0sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginLeft="7.0dip"
+            android:layout_marginRight="7.0dip"
+            android:layout_marginTop="10.0dip"
+            android:text="@string/zsht_bankcard_agreement"
+            android:textColor="@android:color/black"
+            android:textSize="16.0sp" />
+    </LinearLayout>
+
+</ScrollView>

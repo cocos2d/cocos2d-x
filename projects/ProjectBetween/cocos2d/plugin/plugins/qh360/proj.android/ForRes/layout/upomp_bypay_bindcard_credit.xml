@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:layout_marginBottom="35dip" android:layout_marginLeft="15dip"
+	android:layout_marginRight="15dip" android:layout_marginTop="35dip"
+	android:background="@drawable/upomp_bypay_bg">
+	<LinearLayout android:focusable="true"
+		android:focusableInTouchMode="true" android:layout_width="0dip"
+		android:layout_height="0dip" />
+	<RelativeLayout android:id="@+id/rl_header_bindcard_credit"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:background="@drawable/upomp_bypay_title_bg">
+		<Button android:id="@+id/btn_return_bindcard_credit"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:background="@drawable/upomp_bypay_btn_title_esc"
+			android:layout_alignParentRight="true" android:layout_marginRight="5dip"
+			android:layout_marginTop="5dip" android:textColor="#ffffffff"
+			android:text="@string/upomp_bypay_return" />
+	</RelativeLayout>
+
+
+	<ScrollView android:id="@+id/sv_credit"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:layout_below="@id/rl_header_bindcard_credit"
+		android:layout_above="@+id/rl_bottom_bindcard_credit">
+		<RelativeLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+			<ImageView android:id="@+id/iv_info_top_bindcard_credit"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:background="@drawable/upomp_bypay_info_top2"
+				android:layout_marginTop="20dip" android:layout_marginLeft="10dip"
+				android:layout_marginRight="10dip" />
+
+			<RelativeLayout android:id="@+id/rl_card_info_bindcard_credit"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:background="@drawable/upomp_bypay_info_bg"
+				android:layout_below="@id/iv_info_top_bindcard_credit"
+				android:layout_marginLeft="10dip" android:layout_marginRight="10dip">
+				<RelativeLayout android:id="@+id/rl_iv_card_bindcard_credit"
+					android:layout_width="40dip" android:layout_height="30dip"
+
+					android:background="@drawable/upomp_bypay_info_left">
+					<ImageView android:id="@+id/iv_card_info_bindcard_credit"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:layout_centerHorizontal="true"
+						android:layout_centerVertical="true" android:background="@drawable/upomp_bypay_info_icon3" />
+				</RelativeLayout>
+				<RelativeLayout android:id="@+id/rl_card_info_content_credit"
+					android:layout_width="fill_parent" android:layout_height="30dip"
+					android:layout_toRightOf="@+id/rl_iv_card_bindcard_credit">
+					<RelativeLayout android:id="@+id/rl_issuercard_bindcard_credit"
+						android:layout_width="wrap_content" android:layout_height="30dip"
+						android:gravity="center_vertical">
+
+						<TextView android:id="@+id/tv_issuercard_content_bindcard_credit"
+							android:layout_width="wrap_content" android:layout_height="wrap_content"
+							android:layout_marginLeft="5dip"
+							android:textColor="#6a7482" android:textSize="14sp" />
+					</RelativeLayout>
+				</RelativeLayout>
+			</RelativeLayout>
+
+			<RelativeLayout android:id="@+id/tv_tel_bindcard_credit"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:layout_below="@id/rl_card_info_bindcard_credit"
+				android:background="@drawable/upomp_bypay_info_bg"
+				android:layout_marginLeft="10dip" android:layout_marginRight="10dip">
+
+				<RelativeLayout android:id="@+id/rl_iv_tel_bindcard_credit"
+					android:layout_width="40dip" android:layout_height="30dip"
+
+					android:background="@drawable/upomp_bypay_info_left">
+					<ImageView android:id="@+id/iv_tel_info_bindcard_credit"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:layout_centerHorizontal="true"
+						android:layout_centerVertical="true" android:background="@drawable/upomp_bypay_info_icon5" />
+				</RelativeLayout>
+
+				<RelativeLayout android:id="@+id/rl_telnum_bindcard_credit"
+					android:layout_width="fill_parent" android:layout_height="30dip"
+					android:layout_toRightOf="@+id/rl_iv_tel_bindcard_credit"
+					android:gravity="center_vertical">
+
+
+					<TextView android:id="@+id/tv_telnum_title_bindcard_credit"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:text="@string/upomp_bypay_firstmobilenum" android:gravity="right"
+						android:textColor="#6a7482" android:layout_marginLeft="5dip"
+						android:textSize="14sp" />
+					<TextView android:id="@+id/tv_telnum_content_bindcard_credit"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						 android:layout_toRightOf="@+id/tv_telnum_title_bindcard_credit"
+						android:textColor="#6a7482" android:textSize="14sp" />
+
+				</RelativeLayout>
+				<ImageView android:layout_width="fill_parent"
+					android:layout_height="1dip" android:background="#dbdee0"
+					android:layout_marginRight="1dip" android:layout_marginLeft="1dip" />
+			</RelativeLayout>
+			<ImageView android:id="@+id/iv_info_bot_bindcard_credit"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:background="@drawable/upomp_bypay_info_bot2"
+				android:layout_below="@id/tv_tel_bindcard_credit"
+				android:layout_marginLeft="10dip" android:layout_marginRight="10dip" />
+
+
+			<RelativeLayout android:id="@+id/rl_mobilevalidcode_bindcard_credit"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:layout_below="@id/iv_info_bot_bindcard_credit"
+				android:layout_marginTop="20dip" android:background="@drawable/upomp_bypay_input_bg"
+				android:layout_marginLeft="10dip" android:layout_marginRight="10dip">
+
+				<EditText android:id="@+id/et_mobilevalidcode_content_bindcard_credit"
+					android:singleLine="true" android:layout_width="fill_parent"
+					android:layout_height="45dip" android:numeric="integer"
+					android:textSize="14sp" android:maxLength="6" android:textColor="#6a7482"
+					android:hint="@string/upomp_bypay_secondshortmessagesecuritycode"
+					android:layout_toLeftOf="@+id/btn_mobilevalidcode_content_bindcard_credit"
+					android:background="#00000000" android:layout_marginLeft="5dip" />
+				<Button android:id="@+id/btn_mobilevalidcode_content_bindcard_credit"
+					android:layout_width="wrap_content" android:layout_height="45dip"
+					android:layout_alignParentRight="true" android:background="@drawable/upomp_bypay_input_btn2"
+					android:text="@string/upomp_bypay_retry" android:textSize="14sp"
+					android:textColor="#6a7482" />
+
+			</RelativeLayout>
+
+			<RelativeLayout android:id="@+id/rl_validity_bindcard_credit"
+				android:layout_below="@id/rl_mobilevalidcode_bindcard_credit"
+				android:layout_marginTop="8dip" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:background="@drawable/upomp_bypay_input_bg"
+				android:layout_marginLeft="10dip" android:layout_marginRight="10dip">
+
+				<TextView android:id="@+id/tv_validity_title_bindcard_credit"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:layout_marginLeft="10dip" android:textColor="#6a7482"
+					android:text="@string/upomp_bypay_date" android:gravity="center_vertical"
+					android:textSize="14sp" android:layout_centerVertical="true" />
+
+				<RelativeLayout android:id="@+id/rl_validity_content_bindcard_credit"
+					android:layout_width="fill_parent" android:layout_toRightOf="@+id/tv_validity_title_bindcard_credit"
+					android:layout_marginLeft="5dip" android:layout_height="wrap_content">
+
+
+					<RelativeLayout android:id="@+id/rl_btn_mm_bindcard_credit"
+						android:layout_width="68dip" android:layout_height="45dip"
+						android:background="@drawable/upomp_bypay_btn_month">
+						<Button android:id="@+id/btn_mm_bindcard_credit"
+							android:layout_width="fill_parent" android:layout_height="45dip"
+							android:textColor="#6a7482" android:background="#00000000"
+							android:textSize="14sp" android:gravity="left|center_vertical"
+							android:layout_marginLeft="5dip" />
+					</RelativeLayout>
+					<RelativeLayout android:id="@+id/rl_btn_yy_bindcard_credit"
+						android:layout_toRightOf="@+id/rl_btn_mm_bindcard_credit"
+						android:layout_marginLeft="5dip" android:layout_width="68dip"
+						android:layout_height="45dip" android:background="@drawable/upomp_bypay_btn_year">
+						<Button android:id="@+id/btn_yy_bindcard_credit"
+							android:layout_width="fill_parent" android:layout_height="45dip"
+							android:background="#00000000" android:textColor="#6a7482"
+							android:textSize="14sp" android:gravity="left|center_vertical"
+							android:layout_marginLeft="5dip" />
+					</RelativeLayout>
+					<ImageButton android:id="@+id/ib_image_cvn2"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:background="@drawable/upomp_bypay_input_icon"
+						android:layout_alignParentRight="true" />
+				</RelativeLayout>
+			</RelativeLayout>
+			<RelativeLayout android:id="@+id/rl_cvn2_bindcard_credit"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:layout_below="@id/rl_validity_bindcard_credit"
+				android:layout_marginTop="8dip" android:background="@drawable/upomp_bypay_input_bg"
+				android:layout_marginLeft="10dip" android:layout_marginRight="10dip">
+
+
+				<Button android:id="@+id/btn_cvn2_content_bindcard_credit"
+					android:layout_width="fill_parent" android:layout_height="45dip"
+					android:textColor="#6a7482" android:gravity="left|center_vertical"
+					android:hint="@string/upomp_bypa_cvn2" android:layout_marginLeft="5dip"
+					android:password="true" android:textSize="14sp" android:background="#00000000"
+					android:layout_toLeftOf="@+id/ib_image_cvn21" />
+				<ImageButton android:id="@+id/ib_image_cvn21"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:background="@drawable/upomp_bypay_input_icon"
+					android:layout_alignParentRight="true" />
+
+			</RelativeLayout>
+
+			<Button android:id="@+id/btn_next_bindcard_credit"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/upomp_bypay_next" android:textColor="#ffffff"
+				android:layout_below="@id/rl_cvn2_bindcard_credit"
+				android:layout_marginTop="20dip" android:textSize="20sp"
+				android:background="@drawable/upomp_bypay_btn_enter2"
+				android:layout_centerHorizontal="true" />
+
+		</RelativeLayout>
+
+	</ScrollView>
+	<com.unionpay.upomp.bypay.view.About
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentRight="true" android:paddingBottom="5dip" />
+	<RelativeLayout android:id="@+id/main_dialog_bindcard_credit"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:layout_below="@id/rl_header_bindcard_credit"
+		android:layout_above="@+id/rl_bottom_bindcard_credit" />
+	<RelativeLayout android:id="@+id/rl_bottom_bindcard_credit"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:background="@drawable/upomp_bypay_bottom"
+		android:layout_alignParentBottom="true">
+	</RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.facebook.android" android:versionCode="1"
+	android:versionName="3.2.0"
+	android:installLocation="preferExternal">
+ 
+ 
+</manifest> 

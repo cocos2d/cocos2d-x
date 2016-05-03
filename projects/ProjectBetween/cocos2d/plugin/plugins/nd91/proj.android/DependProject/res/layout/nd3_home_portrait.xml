@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" 
+  android:orientation="vertical"
+  >
+  
+  <RelativeLayout	 
+  	  android:id="@+id/nd3_person_layout" 
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content" 
+	  android:layout_margin="@dimen/nd3_margin_size">
+	    <ImageView 
+			  android:id="@+id/nd3_head_image" 
+			  android:layout_width="57dip"
+		      android:layout_height="57dip" 
+		      android:src="@drawable/nd3_head_bg"
+		      android:layout_centerVertical="true" 
+		      />
+	  	 
+	  
+	    <RelativeLayout
+			  android:id="@+id/nd3_person_info_layout" 
+			  android:layout_width="fill_parent"
+			  android:layout_height="57dip"
+			  android:layout_centerInParent="true"		  
+			  android:layout_toRightOf="@+id/nd3_head_image"
+			  android:layout_marginLeft="@dimen/nd3_margin_size"
+			  android:background="@drawable/nd3_mood_bg"> 
+			  
+			  <TextView  
+				  android:id="@+id/nd3_mood" 
+				  android:layout_width="fill_parent"
+				  android:layout_height="fill_parent" 
+				  android:textColor="@color/nd3_black"
+				  android:textStyle="bold" 
+				  android:layout_alignParentLeft="true"
+				  android:gravity="center_vertical"
+				  android:layout_toLeftOf="@+id/nd3_switch_image"
+				  android:maxLines="2"
+				  android:ellipsize="end"
+				  />
+				  
+			  <ImageView  android:id="@+id/nd3_switch_image" 
+				  android:src="@drawable/nd3_switch_image"
+				  android:layout_width="wrap_content"
+			      android:layout_height="wrap_content" 
+			      android:scaleType="centerInside"
+			      android:layout_alignParentRight="true"
+			      android:layout_centerVertical="true"/> 
+				  			  
+		</RelativeLayout>
+		
+		
+  </RelativeLayout>	
+  
+  
+  <LinearLayout	  
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"
+	  android:orientation="vertical"
+	  android:background="@drawable/nd3_white_bg"
+	  android:layout_marginLeft="@dimen/nd3_margin_size"
+	  android:layout_marginRight="@dimen/nd3_margin_size">
+	  <LinearLayout	 
+	  	  android:id="@+id/nd3_top_layout"  
+		  android:layout_width="fill_parent"
+		  android:layout_height="wrap_content"  
+		  android:gravity="center_vertical"
+		  >
+		  
+		  	<ImageView  
+		  	      android:id="@+id/nd3_app_image"
+				  android:layout_width="57dip"
+			      android:layout_height="57dip" 
+			      android:background="@drawable/nd3_game_head"
+			      android:layout_marginRight="@dimen/nd3_margin_size"
+			      />
+			
+		    <ImageView 
+		    		android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:background="@drawable/nd3_vertical_line"
+					/>
+					
+		    <LinearLayout 
+				  android:layout_width="fill_parent"
+				  android:layout_height="wrap_content"
+				  android:orientation="vertical">
+				 
+                  <include 
+                  android:id="@+id/nd3_achieve_layout" 
+				  android:layout_width="fill_parent"
+				  android:layout_height="wrap_content"   
+				  android:layout_marginLeft="@dimen/nd3_margin_size"
+			      android:layout_marginBottom="@dimen/nd3_margin_size"
+			      layout="@layout/nd3_app_property"/>
+				  <!-- 
+				    <RelativeLayout
+						  android:id="@+id/nd3_achieve_layout" 
+						  android:layout_width="fill_parent"
+						  android:layout_height="wrap_content"   
+						  android:layout_marginLeft="@dimen/nd3_margin_size"
+					      android:layout_marginRight="@dimen/nd3_margin_size"
+					      android:layout_marginBottom="@dimen/nd3_margin_size"
+						  > 
+						  
+						  <ImageView  android:id="@+id/nd3_achieve_image_id"
+							  android:src="@drawable/nd3_achieve"
+							  android:layout_width="wrap_content"
+						      android:layout_height="wrap_content"  
+						      android:layout_alignParentLeft="true"
+						      android:layout_centerVertical="true"
+						      />
+							  
+						  <TextView  
+							  android:id="@+id/nd3_achieve_label" 
+							  android:layout_width="fill_parent"
+							  android:layout_height="wrap_content"
+							  android:text="@string/nd3_achieve_rank"
+							  android:textColor="@color/nd3_black"
+							  android:textStyle="bold" 
+							  android:layout_toRightOf="@+id/nd3_achieve_image_id"
+							  android:layout_centerVertical="true"
+							  android:layout_marginLeft="@dimen/nd3_margin_size"
+							  />
+						  <ImageView 
+							  android:src="@drawable/nd3_switch_image"
+							  android:layout_width="wrap_content"
+						      android:layout_height="wrap_content"  
+						      android:layout_alignParentRight="true"
+						      android:layout_centerVertical="true"
+						      />	  			  
+					</RelativeLayout>
+				 -->
+					<ImageView 
+			    		android:layout_width="fill_parent"
+						android:layout_height="fill_parent"
+						android:background="@drawable/nd3_horizontal_line"
+						/>
+					<include 
+                  android:id="@+id/nd3_rank_layout" 
+				  android:layout_width="fill_parent"
+				  android:layout_height="wrap_content"
+				
+				  android:layout_marginLeft="@dimen/nd3_margin_size"
+				  android:layout_marginTop="@dimen/nd3_margin_size"
+			      android:layout_marginBottom="@dimen/nd3_margin_size"
+			      layout="@layout/nd3_app_property"/>
+						<!-- 
+					<RelativeLayout
+						  android:id="@+id/nd3_rank_layout" 
+						  android:layout_width="fill_parent"
+						  android:layout_height="wrap_content"
+						  android:layout_margin="@dimen/nd3_margin_size"> 
+						  
+						  <ImageView  android:id="@+id/nd3_rank_image_id"
+							  android:src="@drawable/nd3_rank_image"
+							  android:layout_width="wrap_content"
+						      android:layout_height="wrap_content"  
+						      android:layout_alignParentLeft="true"
+						      android:layout_centerVertical="true" />
+							  
+						  <TextView  
+							  android:id="@+id/nd3_rank_label" 
+							  android:layout_width="fill_parent"
+							  android:layout_height="wrap_content"
+							  android:text="@string/nd3_ranking"
+							  android:textColor="@color/nd3_black"
+							  android:textStyle="bold" 
+							  android:layout_toRightOf="@+id/nd3_rank_image_id"
+							  android:layout_centerVertical="true"
+							  android:layout_marginLeft="@dimen/nd3_margin_size"
+							  />
+						  <ImageView 
+							  android:src="@drawable/nd3_switch_image"
+							  android:layout_width="wrap_content"
+						      android:layout_height="wrap_content"  
+						      android:layout_alignParentRight="true"
+						      android:layout_centerVertical="true"
+						      />	  			  
+					</RelativeLayout>
+				-->
+					
+			</LinearLayout>	 
+			
+			 
+	  </LinearLayout>  
+	  <ImageView 
+	   		android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/nd3_horizontal_line" 
+			/>
+	  <RelativeLayout
+		  android:id="@+id/nd3_bbs_detail_layout" 
+		  android:layout_width="fill_parent"
+		  android:layout_height="wrap_content"   
+		  android:layout_marginTop="@dimen/nd3_margin_size"> 
+			  
+		  <ImageView  android:id="@+id/nd3_bbs_image_id"
+			  android:src="@drawable/nd3_bbs_icon"
+			  android:layout_width="wrap_content"
+		      android:layout_height="wrap_content"  
+		      android:layout_alignParentLeft="true"
+		      android:layout_centerVertical="true"
+		      android:layout_marginRight="@dimen/nd3_margin_size"
+		      />
+				  
+		  <TextView  
+			  android:id="@+id/nd3_bbs_label" 
+			  android:layout_width="fill_parent"
+			  android:layout_height="wrap_content"
+			  android:text="@string/nd3_show_bbs_detail"
+			  android:textColor="@color/nd3_black"
+			  android:textStyle="bold" 
+			  android:layout_toRightOf="@id/nd3_bbs_image_id"
+			  android:layout_centerVertical="true"/>
+			  
+		  <ImageView 
+			  android:src="@drawable/nd3_switch_image"
+			  android:layout_width="wrap_content"
+		      android:layout_height="wrap_content"  
+		      android:layout_alignParentRight="true"
+		      android:layout_centerVertical="true"
+		      />	  
+					  
+	  </RelativeLayout>
+  </LinearLayout>
+  
+ 
+   
+   <RelativeLayout
+	  android:id="@+id/nd3_bizarre_layout" 
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"  
+	  android:background="@drawable/nd3_white_bg"
+	  android:layout_marginTop="@dimen/nd3_margin_size"
+	  android:layout_marginLeft="@dimen/nd3_margin_size"
+	  android:layout_marginRight="@dimen/nd3_margin_size"> 
+		  
+	  <ImageView  android:id="@+id/nd3_bizarre_image_id"
+		  android:src="@drawable/nd3_bizarre_image"
+		  android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"  
+	      android:layout_alignParentLeft="true"
+	      android:layout_centerVertical="true"
+	      android:layout_marginRight="@dimen/nd3_margin_size"
+	      />
+			  
+	  <TextView  
+		  android:id="@+id/nd3_bizarre_label" 
+		  android:layout_width="fill_parent"
+		  android:layout_height="wrap_content"
+		  android:text="@string/nd3_bizarre_friend"
+		  android:textColor="@color/nd3_black"
+		  android:textStyle="bold" 
+		  android:layout_toRightOf="@+id/nd3_bizarre_image_id"
+		  android:layout_centerVertical="true"/>
+		  
+	  <ImageView 
+		  	  android:id="@+id/nd3_bizarre_jump_image"
+			  android:src="@drawable/nd3_switch_image"
+			  android:layout_width="wrap_content"
+		      android:layout_height="wrap_content"  
+		      android:layout_alignParentRight="true"
+		      android:layout_centerVertical="true" 
+		      />	  
+   </RelativeLayout>
+   
+    <RelativeLayout
+	  android:id="@+id/nd3_show_player_layout" 
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"  
+	  android:background="@drawable/nd3_white_bg"
+	  android:layout_margin="@dimen/nd3_margin_size"> 
+		  
+	  <ImageView  android:id="@+id/nd3_show_image_id"
+		  android:src="@drawable/nd3_showplayer"
+		  android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"  
+	      android:layout_alignParentLeft="true"
+	      android:layout_centerVertical="true" 
+	      android:layout_marginRight="@dimen/nd3_margin_size"
+	      />
+			  
+	  <TextView  
+		  android:id="@+id/nd3_show_label" 
+		  android:layout_width="fill_parent"
+		  android:layout_height="wrap_content"
+		  android:text="@string/nd3_show_player"
+		  android:textColor="@color/nd3_black"
+		  android:textStyle="bold" 
+		  android:layout_toRightOf="@+id/nd3_show_image_id"
+		  android:layout_centerVertical="true"/>
+		  
+	  <ImageView 
+		  android:src="@drawable/nd3_switch_image"
+		  android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"  
+	      android:layout_alignParentRight="true"
+	      android:layout_centerVertical="true"
+	      />	  
+				  
+  </RelativeLayout>
+  
+  
+   <RelativeLayout
+	  android:id="@+id/nd3_invite_layout" 
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"  
+	  android:background="@drawable/nd3_white_bg"
+	  android:layout_marginLeft="@dimen/nd3_margin_size"
+	  android:layout_marginRight="@dimen/nd3_margin_size"> 
+		  
+	  <ImageView  android:id="@+id/nd3_invite_image_id"
+		  android:src="@drawable/nd3_invite_image"
+		  android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"  
+	      android:layout_alignParentLeft="true"
+	      android:layout_centerVertical="true"
+	      android:layout_marginRight="@dimen/nd3_margin_size"
+	      />
+			  
+	  <TextView  
+		  android:id="@+id/nd3_invite_label" 
+		  android:layout_width="fill_parent"
+		  android:layout_height="wrap_content"
+		  android:text="@string/nd3_invite_friend"
+		  android:textColor="@color/nd3_black"
+		  android:textStyle="bold" 
+		  android:layout_toRightOf="@+id/nd3_invite_image_id"
+		  android:layout_centerVertical="true"
+		  />
+		  
+	  <ImageView 
+		  android:src="@drawable/nd3_switch_image"
+		  android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"  
+	      android:layout_alignParentRight="true"
+	      android:layout_centerVertical="true"
+	      />	  
+				  
+   </RelativeLayout>
+  
+</LinearLayout>

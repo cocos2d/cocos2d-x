@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="40dip" 
+     >
+    
+    <TextView 
+        android:id="@+id/nd_menu_content"
+        android:layout_width="fill_parent"
+    	android:layout_height="40dip"
+    	android:layout_alignParentLeft="true"
+    	android:layout_centerVertical="true"
+    	android:ellipsize="end"
+    	android:singleLine="true" 
+    	android:textSize="18dip"
+    	android:textStyle="bold"
+    	android:textColor="@color/nd3_black" 
+    	android:gravity="center_vertical"/>
+    
+    <ImageView  
+        android:layout_width="wrap_content"
+    	android:layout_height="fill_parent"
+    	android:layout_alignParentRight="true"
+    	android:layout_centerVertical="true"  
+    	android:src="@drawable/nd3_switch_image"/>
+
+</RelativeLayout>

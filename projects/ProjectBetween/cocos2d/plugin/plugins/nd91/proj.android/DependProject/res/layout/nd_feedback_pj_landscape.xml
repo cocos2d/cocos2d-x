@@ -1,0 +1,169 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:orientation="vertical"
+        ><!-- android:visibility="gone"  -->
+        <LinearLayout 
+            android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:gravity="center" 
+        	android:orientation="vertical">
+            <TextView 
+                android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:text="@string/nd_feedback_reply1"
+        		android:textSize="14dip"
+        		android:textColor="@color/nd3_black"
+        		android:gravity="center"/>
+            
+            <TextView 
+                android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:text="@string/nd_feedback_reply2"
+        		android:textSize="14dip"
+        		android:textColor="@color/nd3_black"
+        		android:gravity="center"/>
+        </LinearLayout>
+        <ImageView
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/nd3_horizontal_line" />
+        
+        <!-- <LinearLayout 
+            android:id="@+id/nd_fb_problem_type_layout"
+            android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:gravity="center_vertical" 
+        	android:weightSum="3">
+             
+            <ImageView  
+                android:id="@+id/nd_image1"
+		        android:layout_width="48dip"
+		    	android:layout_height="48dip" 
+		    	android:src="@drawable/nd_satisfied"
+		    	android:layout_weight="1"/>
+            
+            <ImageView  
+                android:id="@+id/nd_image2"
+		        android:layout_width="48dip"
+		    	android:layout_height="48dip" 
+		    	android:src="@drawable/nd_ordinary"
+		    	android:layout_weight="1"/>
+            
+            <ImageView  
+                android:id="@+id/nd_image3"
+		        android:layout_width="48dip"
+		    	android:layout_height="48dip" 
+		    	android:src="@drawable/nd_unsatisfied"
+		    	android:layout_weight="1"/>
+        </LinearLayout> -->
+        
+        
+        <RadioGroup 
+            android:id="@+id/nd_radiogroup"
+            android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:gravity="center"
+        	android:layout_gravity="center"
+        	android:orientation="horizontal" 
+        	android:weightSum="3"
+        	android:checkedButton="@+id/nd_radio_2">
+            <LinearLayout 
+                android:layout_width="0dip"
+        		android:layout_height="wrap_content"
+        		android:layout_weight="1"
+        		android:gravity="center">
+        		<ImageView  
+	                android:id="@+id/nd_image1"
+			        android:layout_width="48dip"
+			    	android:layout_height="48dip" 
+			    	android:src="@drawable/nd_satisfied"/>
+                <RadioButton 
+	                android:id="@+id/nd_radio_1"
+	                android:layout_width="wrap_content"
+	        		android:layout_height="wrap_content"  
+	        		android:button="@null"
+	        		android:background="@null" 
+	        		android:gravity="top|center_horizontal" 
+	        		android:textSize="14dip"
+	        		android:text="@string/nd_feedback_reply3" 
+	        		android:textColor="@color/nd3_black"/>
+                <!-- android:drawableLeft="@drawable/nd3_regist_checked"  --> 
+                	
+	        	<!-- <TextView 
+	        	    android:id="@+id/nd_text1"
+	        	    android:layout_width="wrap_content"
+	        		android:layout_height="wrap_content"
+	        		android:paddingLeft="5dip"
+	        		android:textColor="@color/nd3_black"
+	        		android:text="@string/nd_feedback_reply3"/>	 --> 
+            </LinearLayout>
+            
+            <LinearLayout 
+                android:layout_width="0dip"
+        		android:layout_height="wrap_content"
+        		android:layout_weight="1"
+        		android:gravity="center">
+	        	<ImageView  
+	                android:id="@+id/nd_image2"
+			        android:layout_width="48dip"
+			    	android:layout_height="48dip" 
+			    	android:src="@drawable/nd_ordinary"/>
+	            <RadioButton 
+	                android:id="@+id/nd_radio_2"
+	                android:layout_width="wrap_content"
+	        		android:layout_height="wrap_content"  
+	        		android:button="@null"
+	        		android:background="@null" 
+	        		android:gravity="top|center_horizontal" 
+	        		android:textSize="14dip"
+	        		android:text="@string/nd_feedback_reply4" 
+	        		android:textColor="@color/nd3_black"/>
+	            <!-- android:drawableLeft="@drawable/nd3_regist_checked"  -->
+	            
+	            <!-- <TextView 
+	                android:id="@+id/nd_text2"
+	        	    android:layout_width="wrap_content"
+	        		android:layout_height="wrap_content"
+	        		android:paddingLeft="5dip"
+	        		android:textColor="@color/nd3_black"
+	        		android:text="@string/nd_feedback_reply4"/>	 -->
+	        	 	
+            </LinearLayout>
+            
+            <LinearLayout 
+                android:layout_width="0dip"
+        		android:layout_height="wrap_content"
+        		android:layout_weight="1"
+        		android:gravity="center">
+	            <ImageView  
+	                android:id="@+id/nd_image3"
+			        android:layout_width="48dip"
+			    	android:layout_height="48dip" 
+			    	android:src="@drawable/nd_unsatisfied"/>
+	            <RadioButton 
+	                android:id="@+id/nd_radio_3"
+	                android:layout_width="wrap_content"
+	        		android:layout_height="wrap_content"  
+	        		android:button="@null"
+	        		android:background="@null" 
+	        		android:gravity="top|center_horizontal"  
+	        		android:textSize="14dip"
+	        		android:text="@string/nd_feedback_reply5" 
+	        		android:textColor="@color/nd3_black"/>
+	            <!-- android:drawableLeft="@drawable/nd3_regist_checked"  -->
+	            
+	            <!-- <TextView 
+	                android:id="@+id/nd_text3"
+	        	    android:layout_width="wrap_content"
+	        		android:layout_height="wrap_content"
+	        		android:paddingLeft="5dip"
+	        		android:textColor="@color/nd3_black"
+	        		android:text="@string/nd_feedback_reply5"/> -->	
+	        		
+            </LinearLayout>
+            
+        </RadioGroup>
+        
+        
+</LinearLayout>
