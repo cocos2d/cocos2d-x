@@ -109,7 +109,22 @@ namespace utils
      * @return Returns an instance of sprite
      */
     Sprite* createSpriteFromBase64(const char* base64String);
+    
+    Node* CC_DLL searchNode(Node* root, const char* name, bool recursively = true);
 
+    Node* CC_DLL searchNode(Node* root, int tag, bool recursively = true);
+
+    template<typename _Ty> inline
+    _Ty* searchNode(Node* root, const char* name, bool recursively = true)
+    {
+        return dynamic_cast<_Ty*>(searchNode(root, name, recursively));
+    }
+
+    template<typename _Ty> inline
+    _Ty* searchNode(Node* root, int tag, bool recursively = true)
+    {
+        return dynamic_cast<_Ty*>(searchNode(root, tag, recursively));
+    }
 }
 
 NS_CC_END
