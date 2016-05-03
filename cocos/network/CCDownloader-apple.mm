@@ -553,9 +553,7 @@ namespace cocos2d { namespace network {
         
         if ('/' == [destPath characterAtIndex:0])
         {
-            // absolute path, need add prefix
-            NSString *prefix = @"file://";
-            destURL = [NSURL URLWithString:[prefix stringByAppendingString: destPath]];
+            destURL = [NSURL fileURLWithPath:destPath];
             break;
         }
         
