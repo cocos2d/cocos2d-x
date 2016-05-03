@@ -287,8 +287,7 @@ Sprite* createSpriteFromBase64(const char* base64String)
     return sprite;
 }
 
-// search Node APIs
-Node* searchNode(Node* levelRoot, const char* name, bool recursively)
+Node* findChild(Node* levelRoot, const char* name)
 {
     if (levelRoot == nullptr)
         return nullptr;
@@ -298,19 +297,19 @@ Node* searchNode(Node* levelRoot, const char* name, bool recursively)
     if (target != nullptr)
         return target;
 
-    if (recursively)
+    if (!levelRoot.empty()) {
         // recursively
         for (auto& child : levelRoot->getChildren())
         {
-            auto target = searchNode(child, name, recursively);
+            auto target = findChild(child, name, recursively);
             if (target != nullptr)
                 return target;
         }
-
+    }
     return nullptr;
 }
 
-Node* searchNode(Node* levelRoot, int tag, bool recursively)
+Node* findChild(Node* levelRoot, int tag)
 {
     if (levelRoot == nullptr)
         return nullptr;
@@ -320,14 +319,15 @@ Node* searchNode(Node* levelRoot, int tag, bool recursively)
     if (target != nullptr)
         return target;
 
-    if (recursively)
+    if (!levelRoot.empty()) {
         // recursively
         for (auto& child : levelRoot->getChildren())
         {
-            auto target = searchNode(child, tag, recursively);
+            auto target = findChild(child, tag, recursively);
             if (target != nullptr)
                 return target;
         }
+    }
 
     return nullptr;
 }

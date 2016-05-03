@@ -111,39 +111,39 @@ namespace utils
     Sprite* createSpriteFromBase64(const char* base64String);
     
     /**
-     * Search a node by name
+     * Find a child by name recursively
 
-     * @return  Returns searched node or nullptr
+     * @return  Returns found node or nullptr
      */
-    Node*  searchNode(Node* levelRoot, const char* name, bool recursively = true);
+    Node*  findChild(Node* levelRoot, const char* name);
 
     /**
-     * Search a node by name tag
+     * Find a child by tag recursively
 
-     * @return Returns searched node or nullptr
+     * @return Returns found node or nullptr
      */
-    Node*  searchNode(Node* levelRoot, int tag, bool recursively = true);
+    Node*  findChild(Node* levelRoot, int tag);
 
     /**
-     * Search a node by name
+     * Find a child by name recursively
 
-     * @return  Returns searched node or nullptr with specificed type '_Ty'
+     * @return  Returns found node or nullptr with specificed type 'T'
      */
-    template<typename _Ty> inline
-    _Ty* searchNode(Node* levelRoot, const char* name, bool recursively = true)
+    template<typename T> inline
+    T findChild(Node* levelRoot, const char* name)
     {
-        return dynamic_cast<_Ty*>(searchNode(levelRoot, name, recursively));
+        return dynamic_cast<T>(findChild(levelRoot, name));
     }
 
     /**
-     * Search a node by tag
+     * Find a child by tag recursively
 
-     * @return  Returns searched node or nullptr with specificed type '_Ty'
+     * @return  Returns found node or nullptr with specificed type 'T'
      */
-    template<typename _Ty> inline
-    _Ty* searchNode(Node* levelRoot, int tag, bool recursively = true)
+    template<typename T> inline
+    T findChild(Node* levelRoot, int tag)
     {
-        return dynamic_cast<_Ty*>(searchNode(levelRoot, tag, recursively));
+        return dynamic_cast<T>(findChild(levelRoot, tag));
     }
 }
 
