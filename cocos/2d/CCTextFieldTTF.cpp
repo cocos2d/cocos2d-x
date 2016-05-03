@@ -134,7 +134,7 @@ bool TextFieldTTF::initWithPlaceHolder(const std::string& placeholder, const std
         // If fontName is ttf file and it corrected, use TTFConfig
         if (FileUtils::getInstance()->isFileExist(fontName))
         {
-            TTFConfig ttfConfig(fontName.c_str(), fontSize, GlyphCollection::DYNAMIC);
+            TTFConfig ttfConfig(fontName, fontSize, GlyphCollection::DYNAMIC);
             if (setTTFConfig(ttfConfig))
             {
                 break;

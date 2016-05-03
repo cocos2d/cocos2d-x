@@ -389,7 +389,7 @@ void CWin32InputBox::InitDialog()
 		_hwndEditCtrl = hwndEdit1;
 
 	std::u16string utf16Result;
-	cocos2d::StringUtils::UTF8ToUTF16(_param->pstrResult->c_str(), utf16Result);
+	cocos2d::StringUtils::UTF8ToUTF16(*_param->pstrResult, utf16Result);
 	::SetWindowTextW(_hwndEditCtrl, (LPCWSTR) utf16Result.c_str());
 
 	RECT rectDlg, rectEdit1, rectEdit2;

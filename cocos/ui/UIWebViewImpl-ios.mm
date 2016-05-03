@@ -38,7 +38,7 @@
 static std::string getFixedBaseUrl(const std::string& baseUrl)
 {
     std::string fixedBaseUrl;
-    if (baseUrl.empty() || baseUrl.c_str()[0] != '/') {
+    if (baseUrl.empty() || baseUrl.at(0) != '/') {
         fixedBaseUrl = [[[NSBundle mainBundle] resourcePath] UTF8String];
         fixedBaseUrl += "/";
         fixedBaseUrl += baseUrl;
@@ -52,7 +52,7 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
         fixedBaseUrl.replace(pos, 1, "%20");
     }
     
-    if (fixedBaseUrl.c_str()[fixedBaseUrl.length() - 1] != '/') {
+    if (fixedBaseUrl.at(fixedBaseUrl.length() - 1) != '/') {
         fixedBaseUrl += "/";
     }
     
