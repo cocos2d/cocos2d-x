@@ -1280,7 +1280,7 @@ flatbuffers::Offset<flatbuffers::EasingData> FlatBuffersSerialize::createEasingD
 /* create flat buffers with XML */
 FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulator(const std::string &xmlFileName)
 {    
-    std::string inFullpath = FileUtils::getInstance()->fullPathForFilename(xmlFileName).c_str();
+    std::string inFullpath = FileUtils::getInstance()->fullPathForFilename(xmlFileName);
     
     // xml read
     if (!FileUtils::getInstance()->isFileExist(inFullpath))
