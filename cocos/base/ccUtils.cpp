@@ -33,9 +33,11 @@ THE SOFTWARE.
 #include "base/base64.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
+
 #include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
 #include "2d/CCSprite.h"
+#include "2d/CCRenderTexture.h"
 
 NS_CC_BEGIN
 
@@ -172,6 +174,49 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
         director->getRenderer()->addCommand(&s_captureScreenCommand);
         director->getRenderer()->render();
     });
+}
+
+Image* captureNode(Node* startNode, float scale)
+{ // The best snapshot API, support Scene and any Node
+    auto& size = startNode->getContentSize();
+
+    Director::getInstance()->setNextDeltaTimeZero(true);
+
+    RenderTexture* finalRtx = nullptr;
+
+    auto rtx = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
+    // rtx->setKeepMatrix(true);
+    Point savedPos = startNode->getPosition();
+    Point anchor;
+    if (!startNode->isIgnoreAnchorPointForPosition()) {
+        anchor = startNode->getAnchorPoint();
+    }
+    startNode->setPosition(Point(size.width * anchor.x, size.height * anchor.y));
+    rtx->begin(); 
+    startNode->visit();
+    rtx->end();
+    startNode->setPosition(savedPos);
+
+    if (std::abs(scale - 1.0f) < 1e-6/* no scale */)
+        finalRtx = rtx;
+    else {
+        /* scale */
+        auto finalRect = Rect(0, 0, size.width, size.height);
+        Sprite *sprite = Sprite::createWithTexture(rtx->getSprite()->getTexture(), finalRect);
+        sprite->setAnchorPoint(Point(0, 0));
+        sprite->setFlippedY(true);
+
+        finalRtx = RenderTexture::create(size.width * scale, size.height * scale, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
+
+        sprite->setScale(scale); // or use finalRtx->setKeepMatrix(true);
+        finalRtx->begin(); 
+        sprite->visit();
+        finalRtx->end();
+    }
+
+    Director::getInstance()->getRenderer()->render();
+
+    return finalRtx->newImage();
 }
 
 std::vector<Node*> findChildren(const Node &node, const std::string &name)
