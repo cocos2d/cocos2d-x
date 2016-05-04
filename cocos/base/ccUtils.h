@@ -109,7 +109,42 @@ namespace utils
      * @return Returns an instance of sprite
      */
     Sprite* createSpriteFromBase64(const char* base64String);
+    
+    /**
+     * Find a child by name recursively
 
+     * @return  Returns found node or nullptr
+     */
+    Node*  findChild(Node* levelRoot, const char* name);
+
+    /**
+     * Find a child by tag recursively
+
+     * @return Returns found node or nullptr
+     */
+    Node*  findChild(Node* levelRoot, int tag);
+
+    /**
+     * Find a child by name recursively
+
+     * @return  Returns found node or nullptr with specificed type 'T'
+     */
+    template<typename T> inline
+    T findChild(Node* levelRoot, const char* name)
+    {
+        return dynamic_cast<T>(findChild(levelRoot, name));
+    }
+
+    /**
+     * Find a child by tag recursively
+
+     * @return  Returns found node or nullptr with specificed type 'T'
+     */
+    template<typename T> inline
+    T findChild(Node* levelRoot, int tag)
+    {
+        return dynamic_cast<T>(findChild(levelRoot, tag));
+    }
 }
 
 NS_CC_END
