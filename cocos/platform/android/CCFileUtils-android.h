@@ -38,6 +38,8 @@ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 NS_CC_BEGIN
 
+class ZipFile;
+
 /**
  * @addtogroup platform
  * @{
@@ -57,6 +59,7 @@ public:
 
     static void setassetmanager(AAssetManager* a);
     static AAssetManager* getAssetManager() { return assetmanager; }
+    static ZipFile* getObbFile() { return obbfile; }
 
     /* override functions */
     bool init() override;
@@ -73,6 +76,7 @@ private:
     virtual bool isDirectoryExistInternal(const std::string& dirPath) const override;
 
     static AAssetManager* assetmanager;
+    static ZipFile* obbfile;
 };
 
 // end of platform group
