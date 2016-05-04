@@ -605,7 +605,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
     if (listener == nullptr)
         return;
     
-    // just return if listener is in _toRemovedListeners to avoid remove listeners more than onece
+    // just return if listener is in _toRemovedListeners to avoid remove listeners more than once
     if (std::find(_toRemovedListeners.begin(), _toRemovedListeners.end(), listener) != _toRemovedListeners.end())
         return;
 
