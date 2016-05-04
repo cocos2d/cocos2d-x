@@ -905,7 +905,7 @@ var ShaderOutlineEffect = OpenGLTestLayer.extend({
             }else{
                 this.sprite.shaderProgram = this.shader;
             }
-                                     
+
             this.addChild(this.sprite);
 
             this.scheduleUpdate();

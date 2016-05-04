@@ -161,11 +161,12 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
 {
     std::unordered_map<std::string, AssetDiff> diff_map;
     const std::unordered_map<std::string, Asset> &bAssets = b->getAssets();
+    
     std::unordered_map<std::string, Asset>::const_iterator valueIt, it;
     for (it = _assets.begin(); it != _assets.end(); ++it)
     {
-        auto &key = it->first;
-        auto &valueA = it->second;
+        const auto &key = it->first;
+        const auto &valueA = it->second;
         
         // Deleted
         valueIt = bAssets.find(key);
@@ -189,8 +190,8 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
     
     for (it = bAssets.begin(); it != bAssets.end(); ++it)
     {
-        auto &key = it->first;
-        auto &valueB = it->second;
+        const auto &key = it->first;
+        const auto &valueB = it->second;
         
         // Added
         valueIt = _assets.find(key);

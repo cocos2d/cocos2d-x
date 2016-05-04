@@ -992,7 +992,7 @@ var SpriteZVertex = SpriteTestDemo.extend({
             //
             // Configure shader to mimic glAlphaTest
             //
-            var alphaTestShader = cc.shaderCache.getProgram("ShaderPositionTextureColorAlphaTest");
+            var alphaTestShader = cc.shaderCache.getProgram(cc.SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST);
             var glprogram = alphaTestShader.getProgram();
             var alphaValueLocation = gl.getUniformLocation(glprogram, cc.UNIFORM_ALPHA_TEST_VALUE_S);
 
