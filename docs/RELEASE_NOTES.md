@@ -159,6 +159,7 @@ cocos new -l cpp|js|lua MyNewGame
 * support Tizen platform
 * upgrade Culr to v7.48
 * upgrade OpenSSL to 1.0.2g
+* can use VSCode and new Firefox to debug cocos2d-x JSB programs
 
 ## The main features in detail of Cocos2d-x v3.11
 
@@ -166,18 +167,22 @@ cocos new -l cpp|js|lua MyNewGame
 
 With new memory model, you don't have to care about object lifecycle. Which means you don't have to invoke `retain/release` in JS any more.
 
-Though we have finished many tests about this new memory model, we can't make sure it is too perfect to enable it by default. But you are appreciated if you can enable it to have a try. If you want to enable it, you should:
+Though we have finished many tests about this new memory model, we can't make sure it is too perfect to enable it by default. But you are appreciated if you can enable it to have a try. If you want to enable it, you should change the value of `CC_ENABLE_GC_FOR_NATIVE_OBJECTS` to 1 in `base/ccConfig.h` like this:
 
-```
-TBD
+```c++
+#ifdef CC_ENABLE_SCRIPT_BINDING
+  #ifndef CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+  #define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 1 // change to 1
+  #endif
+#endif
 ```
 
 ### OpenSSL
-Cocos2d-x has upgraded __OpenSSL__ to version __1.0.2g<__.
+Cocos2d-x has upgraded __OpenSSL__ to version __1.0.2g__.
 
-Beginning __July 11, 2016__, Google Play will block publishing of any new apps or updates that use older versions of __OpenSSL__. It is important that you update the use of __OpenSSL__ in your projects.
+Beginning __July 11, 2016__, Google Play will block publishing of any new apps or updates that use older versions of __OpenSSL__. It is important that you update the use of __OpenSSL__ in your projects. More detail information can refer to [this ticket](http://discuss.cocos2d-x.org/t/openssl-problem-again/28270).
 
-If you use v2.x or use older versions of v3.x, you can just update __CURL__ and __OpenSSL__>.
+If you use v2.x or use older versions of v3.x, you can just update __CURL__ and __OpenSSL__.
 To do this:
 
 * modify __Cocos2d-x root/external/config.json__ to update the dependency version. For v3.x the dependency version is `v3-deps-92`, and for v2.x it is `v2-deps-5`
@@ -202,6 +207,12 @@ Feel free to post on our <a href="http://discuss.cocos2d-x.org">forums</a> if yo
 
 ### Tizen support
 Tizen is now supported! You can read about how to use Tizen [here](http://cocos2d-x.org/docs/static-pages/installation.html).
+
+### Cocos2d-x JSB program debugging
+
+In previous version, can not use Firefox 30+ to debug cocos2d-x JSB programs. This limit is fixed since v3.11. And web console feature is added too. [This documentation](http://www.cocos2d-x.org/wiki/Javascript_Remote_Debugging) shows how to use Firefox to debug cocos2d-x JSB programs(this is a little difference from current usage).
+
+Of course you can use [VSCode](https://code.visualstudio.com/) to debug cocos2d-x JSB programs too. You can read about how to use VSCode to debug cocos2d-x JSB programs [here](http://discuss.cocos2d-x.org/t/use-vscode-to-debug-cocos2d-x-jsb-programs/27588).
 
 ## Other changes
 You can also take a look at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).

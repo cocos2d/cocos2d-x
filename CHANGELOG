@@ -35,6 +35,12 @@ cocos2d-x-3.11 Apr ? 2016
 [FIX]           Action: Repeat: will run actions more than speicific times, instant action will run one frame later
 [FIX]           2D: drawing in incorrect app state on iOS
 [FIX]           Platform: FileUtils::getValueVectorFromFile() returns wrong value on iOS and Mac
+[FIX]           Network: downloader crashed when storage path contains spaces on iOS
+[FIX]           Network: downloader may crash on Android
+[FIX]           HTTPAsyncConnection: crash when custom SSL certification is set on iOS
+[FIX]           AssetsManagerEX: will stuck at UPDATING forever if last task fails
+[FIX]           AssetsManagerEX: may repeatly update some assets and cause file write conflict
+[FIX]           Lua: fix display.wrapScene()
 
 cocos2d-x-3.10 Jan 11 2016
 
