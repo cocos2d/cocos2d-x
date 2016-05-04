@@ -44,14 +44,29 @@ THE SOFTWARE.
 static void replaceDefines(const std::string& compileTimeDefines, std::string& out)
 {
     // Replace semicolons with '#define ... \n'
-    if (compileTimeDefines.size() > 0)
+    if (!compileTimeDefines.empty())
     {
-        size_t pos;
-        out = compileTimeDefines;
-        out.insert(0, "#define ");
-        while ((pos = out.find(';')) != std::string::npos)
+        // append ';' if the last char doesn't have one
+        auto copyDefines = compileTimeDefines;
+        if (copyDefines[copyDefines.length()-1] != ';')
+            copyDefines.append(1, ';');
+
+        std::string currentDefine;
+
+        for (auto itChar: copyDefines)
         {
-            out.replace(pos, 1, "\n#define ");
+            if (itChar == ';')
+            {
+                if (!currentDefine.empty())
+                {
+                    out.append("\n#define " + currentDefine);
+                    currentDefine.clear();
+                }
+            }
+            else
+            {
+                currentDefine.append(1, itChar);
+            }
         }
         out += "\n";
     }
@@ -220,7 +235,7 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
     _program = glCreateProgram();
     CHECK_GL_ERROR_DEBUG();
 
-    // convert defines here. If we do it in "compileShader" we will do it it twice.
+    // convert defines here. If we do it in "compileShader" we will do it twice.
     // a cache for the defines could be useful, but seems like overkill at this point
     std::string replacedDefines = "";
     replaceDefines(compileTimeDefines, replacedDefines);
@@ -380,7 +395,7 @@ void GLProgram::parseUniforms()
                     GLenum __gl_error_code = glGetError();
                     if (__gl_error_code != GL_NO_ERROR)
                     {
-                        CCLOG("error: 0x%x", (int)__gl_error_code);
+                        CCLOG("error: 0x%x  uniformName: %s", (int)__gl_error_code, uniformName);
                     }
                     assert(__gl_error_code == GL_NO_ERROR);
 
@@ -472,8 +487,9 @@ bool GLProgram::compileShader(GLuint* shader, GLenum type, const GLchar* source,
         }
         free(src);
 
-        return false;;
+        return false;
     }
+
     return (status == GL_TRUE);
 }
 
@@ -571,17 +587,15 @@ void GLProgram::use()
 
 static std::string logForOpenGLShader(GLuint shader)
 {
-    std::string ret;
-    GLint logLength = 0, charsWritten = 0;
+    GLint logLength = 0;
 
     glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
     if (logLength < 1)
         return "";
 
-    char *logBytes = (char*)malloc(logLength + 1);
-    glGetShaderInfoLog(shader, logLength, &charsWritten, logBytes);
-    logBytes[logLength] = '\0';
-    ret = logBytes;
+    char *logBytes = (char*)malloc(sizeof(char) * logLength);
+    glGetShaderInfoLog(shader, logLength, nullptr, logBytes);
+    std::string ret(logBytes);
 
     free(logBytes);
     return ret;
@@ -589,17 +603,15 @@ static std::string logForOpenGLShader(GLuint shader)
 
 static std::string logForOpenGLProgram(GLuint program)
 {
-    std::string ret;
-    GLint logLength = 0, charsWritten = 0;
+    GLint logLength = 0;
 
     glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
     if (logLength < 1)
         return "";
 
-    char *logBytes = (char*)malloc(logLength + 1);
-    glGetProgramInfoLog(program, logLength, &charsWritten, logBytes);
-    logBytes[logLength] = '\0';
-    ret = logBytes;
+    char *logBytes = (char*)malloc(sizeof(char) * logLength);
+    glGetProgramInfoLog(program, logLength, nullptr, logBytes);
+    std::string ret(logBytes);
 
     free(logBytes);
     return ret;

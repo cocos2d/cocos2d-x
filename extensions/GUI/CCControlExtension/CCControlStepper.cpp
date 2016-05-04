@@ -82,7 +82,7 @@ bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprit
         _value                              = 0;
         _stepValue                          = 1;
         _wraps                              = false;
-        this->ignoreAnchorPointForPosition( false );
+        this->setIgnoreAnchorPointForPosition( false );
     
         // Add the minus components
         this->setMinusSprite(minusSprite);

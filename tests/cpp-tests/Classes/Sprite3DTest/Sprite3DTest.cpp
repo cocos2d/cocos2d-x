@@ -1490,7 +1490,7 @@ void Sprite3DWithOBBPerformanceTest::onTouchesMoved(const std::vector<Touch*>& t
 void Sprite3DWithOBBPerformanceTest::update(float dt)
 {
     char szText[16];
-    sprintf(szText,"%lu cubes",_obb.size());
+    sprintf(szText,"%lu cubes", static_cast<unsigned long>(_obb.size()));
     _labelCubeCount->setString(szText);
     
     if (_drawDebug)
@@ -1966,7 +1966,7 @@ NodeAnimationTest::NodeAnimationTest()
                                               _sprites[_vectorIndex]->setVisible(false);
                                               
                                               int tIndex = _vectorIndex + 1;
-                                              if(tIndex >= _sprites.size())
+                                              if(tIndex >= static_cast<int>(_sprites.size()))
                                                   _vectorIndex = 0;
                                               else
                                                   _vectorIndex++;
@@ -2553,12 +2553,12 @@ Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
         static bool reverseDir = false;
         node->setPosition3D(Vec3(radius * cos(angle), 0.0f, radius * sin(angle)));
         if (reverseDir){
-            angle -= 0.01;
+            angle -= 0.01f;
             if (angle < 0.0)
                 reverseDir = false;
         }
         else{
-            angle += 0.01;
+            angle += 0.01f;
             if (3.14159 < angle)
                 reverseDir = true;
         }

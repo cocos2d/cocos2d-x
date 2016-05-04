@@ -50,7 +50,7 @@ public:
         particle is solved in the collider and only behaviour that needs the colliders?data is taken
         into account. The fact that a particle expires for example, can be achieved by using an 
         Observer in combination with an EventHandler (DoExpireEventHandler).
-        CT_NONE means that the particle doesn do anything. This value should be set if the behaviour 
+        CT_NONE means that the particle doesn't do anything. This value should be set if the behaviour 
         of the particle is determined outside the collider (for example, expiring the particle).
         CT_BOUNCE means that the particle bounces off the collider.
         CT_FLOW means that the particle flows around the contours of the collider.
@@ -72,7 +72,7 @@ public:
 
         /** Returns the type of intersection.
     */
-    const IntersectionType getIntersectionType() const;
+    IntersectionType getIntersectionType() const;
 
     /** Sets the type of intersection.
     */
@@ -80,7 +80,7 @@ public:
 
     /** Returns the type of collision.
     */
-    const CollisionType getCollisionType() const;
+    CollisionType getCollisionType() const;
 
     /** Sets the type of collision.
     */
@@ -88,7 +88,7 @@ public:
 
     /** Returns the friction value.
     */
-    const float getFriction() const;
+    float getFriction() const;
 
     /** Sets the friction value.
     */
@@ -96,7 +96,7 @@ public:
 
     /** Returns the bouncyness value.
     */
-    const float getBouncyness() const;
+    float getBouncyness() const;
 
     /** Sets the bouncyness value.
     */

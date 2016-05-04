@@ -30,13 +30,13 @@ extern "C" {
 #include "lua.h"
 }
 
-#include "cocos2d.h"
+
 #include "base/CCScriptSupport.h"
 #include "scripting/lua-bindings/manual/CCLuaStack.h"
 #include "scripting/lua-bindings/manual/CCLuaValue.h"
 #include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
 #include "scripting/lua-bindings/manual/Lua-BindingsExport.h"
-
+#include "deprecated/CCNotificationCenter.h"
 
 /**
  * @addtogroup lua

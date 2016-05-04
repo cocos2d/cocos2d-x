@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2009      Sindesso Pty Ltd http://www.sindesso.com/
 Copyright (c) 2010-2012 cocos2d-x.org
-CopyRight (c) 2013-2014 Chukong Technologies Inc.
+CopyRight (c) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -61,7 +61,7 @@ public:
     static PageTurn3D* create(float duration, const Size& gridSize);
 
     // Overrides
-	virtual PageTurn3D* clone() const override;
+    virtual PageTurn3D* clone() const override;
     virtual void update(float time) override;
 };
 

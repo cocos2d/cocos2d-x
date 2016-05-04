@@ -212,12 +212,12 @@ void Box2DView::onTouchEnded(Touch* touch, Event* event)
 
 void Box2DView::onKeyPressed(EventKeyboard::KeyCode code, Event* event)
 {
-    log("Box2dView:onKeyPressed, keycode: %d", code);
+    log("Box2dView:onKeyPressed, keycode: %d", static_cast<int>(code));
     m_test->Keyboard(static_cast<unsigned char>(code));
 }
 
 void Box2DView::onKeyReleased(EventKeyboard::KeyCode code, Event* event)
 {
-    log("onKeyReleased, keycode: %d", code);
+    log("onKeyReleased, keycode: %d", static_cast<int>(code));
     m_test->KeyboardUp(static_cast<unsigned char>(code));
 }

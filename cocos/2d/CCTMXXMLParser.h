@@ -62,6 +62,7 @@ enum {
     TMXLayerAttribBase64 = 1 << 1,
     TMXLayerAttribGzip = 1 << 2,
     TMXLayerAttribZlib = 1 << 3,
+    TMXLayerAttribCSV = 1 << 4,
 };
 
 enum {

@@ -338,7 +338,7 @@ THE SOFTWARE.
  */
 #ifdef CC_ENABLE_SCRIPT_BINDING
   #ifndef CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-  #define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 1
+  #define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 0
   #endif
 #endif
 
@@ -391,6 +391,10 @@ THE SOFTWARE.
  */
 #ifndef CC_ALLOCATOR_GLOBAL_NEW_DELETE
 # define CC_ALLOCATOR_GLOBAL_NEW_DELETE cocos2d::allocator::AllocatorStrategyGlobalSmallBlock
+#endif
+
+#ifndef CC_FILEUTILS_APPLE_ENABLE_OBJC
+#define CC_FILEUTILS_APPLE_ENABLE_OBJC  1
 #endif
 
 #endif // __CCCONFIG_H__

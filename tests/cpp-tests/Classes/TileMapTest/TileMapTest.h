@@ -146,7 +146,13 @@ public:
     virtual std::string title() const override;
 };
 
-
+class TMXCvsFormatTest : public TileDemo
+{
+public:
+    CREATE_FUNC(TMXCvsFormatTest);
+    TMXCvsFormatTest();
+    virtual std::string title() const override;
+};
 
 class TMXOrthoObjectsTest : public TileDemo
 {

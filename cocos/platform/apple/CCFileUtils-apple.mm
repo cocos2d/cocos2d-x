@@ -40,6 +40,18 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+struct FileUtilsApple::IMPL {
+    IMPL(NSBundle* bundle):bundle_([NSBundle mainBundle]) {}
+    void setBundle(NSBundle* bundle) {
+        bundle_ = bundle;
+    }
+    NSBundle* getBundle() const {
+        return bundle_;
+    }
+private:
+    NSBundle* bundle_;
+};
+
 static void addValueToDict(id nsKey, id nsValue, ValueMap& dict);
 static void addObjectToNSDict(const std::string& key, const Value& value, NSMutableDictionary *dict);
 
@@ -305,19 +317,14 @@ static void addObjectToNSDict(const std::string& key, const Value& value, NSMuta
     }
 }
 
-FileUtilsApple::FileUtilsApple() {
-    _bundle = [NSBundle mainBundle];
+FileUtilsApple::FileUtilsApple() : pimpl_(new IMPL([NSBundle mainBundle])) {
 }
 
-
+#if CC_FILEUTILS_APPLE_ENABLE_OBJC
 void FileUtilsApple::setBundle(NSBundle* bundle) {
-    _bundle = bundle;
+    pimpl_->setBundle(bundle);
 }
-
-NSBundle* FileUtilsApple::getBundle() const {
-    return _bundle;
-}
-
+#endif
 
 #pragma mark - FileUtils
 
@@ -378,7 +385,7 @@ bool FileUtilsApple::isFileExistInternal(const std::string& filePath) const
             file = filePath;
         }
 
-        NSString* fullpath = [getBundle() pathForResource:[NSString stringWithUTF8String:file.c_str()]
+        NSString* fullpath = [pimpl_->getBundle() pathForResource:[NSString stringWithUTF8String:file.c_str()]
                                                              ofType:nil
                                                         inDirectory:[NSString stringWithUTF8String:path.c_str()]];
         if (fullpath != nil) {
@@ -403,7 +410,7 @@ static int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, str
     {
         log("Fail to remove: %s ",fpath);
     }
-    
+
     return ret;
 }
 
@@ -411,7 +418,7 @@ bool FileUtilsApple::removeDirectory(const std::string& path)
 {
     if (path.size() > 0 && path[path.size() - 1] != '/')
     {
-        CCLOGERROR("Fail to remove directory, path must termniate with '/': %s", path.c_str());
+        CCLOGERROR("Fail to remove directory, path must terminate with '/': %s", path.c_str());
         return false;
     }
 
@@ -425,7 +432,7 @@ std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string
 {
     if (directory[0] != '/')
     {
-        NSString* fullpath = [getBundle() pathForResource:[NSString stringWithUTF8String:filename.c_str()]
+        NSString* fullpath = [pimpl_->getBundle() pathForResource:[NSString stringWithUTF8String:filename.c_str()]
                                                              ofType:nil
                                                         inDirectory:[NSString stringWithUTF8String:directory.c_str()]];
         if (fullpath != nil) {
@@ -445,21 +452,8 @@ std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string
 
 ValueMap FileUtilsApple::getValueMapFromFile(const std::string& filename)
 {
-    std::string fullPath = fullPathForFilename(filename);
-    NSString* path = [NSString stringWithUTF8String:fullPath.c_str()];
-    NSDictionary* dict = [NSDictionary dictionaryWithContentsOfFile:path];
-
-    ValueMap ret;
-
-    if (dict != nil)
-    {
-        for (id key in [dict allKeys])
-        {
-            id value = [dict objectForKey:key];
-            addValueToDict(key, value, ret);
-        }
-    }
-    return ret;
+    auto d(FileUtils::getInstance()->getDataFromFile(filename));
+    return getValueMapFromData(reinterpret_cast<char*>(d.getBytes()), static_cast<int>(d.getSize()));
 }
 
 ValueMap FileUtilsApple::getValueMapFromData(const char* filedata, int filesize)
@@ -489,19 +483,19 @@ bool FileUtilsApple::writeToFile(const ValueMap& dict, const std::string &fullPa
 
 bool FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& fullPath)
 {
-    
+
     //CCLOG("iOS||Mac Dictionary %d write to file %s", dict->_ID, fullPath.c_str());
     NSMutableDictionary *nsDict = [NSMutableDictionary dictionary];
-    
+
     for (auto iter = dict.begin(); iter != dict.end(); ++iter)
     {
         addObjectToNSDict(iter->first, iter->second, nsDict);
     }
-    
+
     NSString *file = [NSString stringWithUTF8String:fullPath.c_str()];
     // do it atomically
     [nsDict writeToFile:file atomically:YES];
-    
+
     return true;
 }
 
@@ -509,14 +503,14 @@ bool FileUtils::writeValueVectorToFile(const ValueVector& vecData, const std::st
 {
     NSString* path = [NSString stringWithUTF8String:fullPath.c_str()];
     NSMutableArray* array = [NSMutableArray array];
-    
+
     for (const auto &e : vecData)
     {
         addObjectToNSArray(e, array);
     }
-    
+
     [array writeToFile:path atomically:YES];
-    
+
     return true;
 }
 ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename)
@@ -538,6 +532,25 @@ ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename)
     }
 
     return ret;
+}
+
+bool FileUtilsApple::createDirectory(const std::string& path)
+{
+    CCASSERT(!path.empty(), "Invalid path");
+    
+    if (isDirectoryExist(path))
+        return true;
+    
+    NSError* error;
+    
+    bool result = [s_fileManager createDirectoryAtPath:[NSString stringWithUTF8String:path.c_str()] withIntermediateDirectories:YES attributes:nil error:&error];
+    
+    if(!result && error != nil)
+    {
+        CCLOGERROR("Fail to create directory \"%s\": %s", path.c_str(), [error.localizedDescription UTF8String]);
+    }
+    
+    return result;
 }
 
 NS_CC_END

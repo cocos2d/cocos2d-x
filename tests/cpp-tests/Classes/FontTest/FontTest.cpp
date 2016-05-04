@@ -79,9 +79,9 @@ void FontTest::showFont(const std::string& fontFile)
     auto centerColor = LayerColor::create(Color4B(200, 100, 100, 255), blockSize.width, blockSize.height);
     auto rightColor = LayerColor::create(Color4B(100, 100, 200, 255), blockSize.width, blockSize.height);
 
-    leftColor->ignoreAnchorPointForPosition(false);
-    centerColor->ignoreAnchorPointForPosition(false);
-    rightColor->ignoreAnchorPointForPosition(false);
+    leftColor->setIgnoreAnchorPointForPosition(false);
+    centerColor->setIgnoreAnchorPointForPosition(false);
+    rightColor->setIgnoreAnchorPointForPosition(false);
 
 
     top->setAnchorPoint(Vec2(0.5, 1));

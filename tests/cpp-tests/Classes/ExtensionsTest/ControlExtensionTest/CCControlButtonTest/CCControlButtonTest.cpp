@@ -181,7 +181,7 @@ bool ControlButtonTest_Event::init()
 
 void ControlButtonTest_Event::touchBitmaskAction(Ref *senderz, Control::EventType controlEvent)
 {
-    _displayBitmaskLabel->setString(StringUtils::format("using bitmask (%d)", controlEvent));
+    _displayBitmaskLabel->setString(StringUtils::format("using bitmask (%d)", static_cast<int>(controlEvent)));
 }
 
 void ControlButtonTest_Event::touchDownAction(Ref *senderz, Control::EventType controlEvent)

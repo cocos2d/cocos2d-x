@@ -732,7 +732,7 @@ void TestActionTimelinePlayableFrame::onEnter()
     timeline_p->addFrame(frame_p2);
     action->addTimeline(timeline_p);
 
-    action->setTimeSpeed(0.2);
+    action->setTimeSpeed(0.2f);
     action->setDuration(65);
     node->runAction(action);
     action->gotoFrameAndPlay(0);
@@ -746,7 +746,7 @@ std::string TestActionTimelinePlayableFrame::title() const
 
 void TestActionTimelineIssueWith2SameActionInOneNode::onEnter()
 {
-    CCFileUtils::getInstance()->addSearchPath("ActionTimeline");
+    FileUtils::getInstance()->addSearchPath("ActionTimeline");
     ActionTimelineBaseTest::onEnter();
 
     Node* node = CSLoader::createNode("ani2.csb");

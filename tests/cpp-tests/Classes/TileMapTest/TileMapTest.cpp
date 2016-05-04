@@ -31,6 +31,7 @@ TileMapTests::TileMapTests()
     ADD_TEST_CASE(TMXIsoTest1);
     ADD_TEST_CASE(TMXIsoTest2);
     ADD_TEST_CASE(TMXUncompressedTest);
+    ADD_TEST_CASE(TMXCvsFormatTest);
     ADD_TEST_CASE(TMXHexTest);
     ADD_TEST_CASE(TMXReadWriteTest);
     ADD_TEST_CASE(TMXTilesetTest);
@@ -352,6 +353,8 @@ TMXOrthoTest4::TMXOrthoTest4()
 
     auto layer = map->getLayer("Layer 0");
     auto s = layer->getLayerSize();
+
+    layer->setOpacity(128);
     
     Sprite* sprite;
     sprite = layer->getTileAt(Vec2(0,0));
@@ -668,14 +671,14 @@ TMXTilesetTest::TMXTilesetTest()
 {
     auto map = TMXTiledMap::create("TileMaps/orthogonal-test5.tmx");
     addChild(map, 0, kTagTileMap);
-    
+
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
-    
+
     TMXLayer* layer;
     layer = map->getLayer("Layer 0");
     layer->getTexture()->setAntiAliasTexParameters();
-    
+
     layer = map->getLayer("Layer 1");
     layer->getTexture()->setAntiAliasTexParameters();
 
@@ -690,6 +693,37 @@ std::string TMXTilesetTest::title() const
 
 //------------------------------------------------------------------
 //
+// TMXCvsFormatTest
+//
+//------------------------------------------------------------------
+
+TMXCvsFormatTest::TMXCvsFormatTest()
+{
+    auto map = TMXTiledMap::create("TileMaps/orthogonal-test5-csv.tmx");
+    CCASSERT(map, "Map was not created. Probably failed to parse!");
+    addChild(map, 0, kTagTileMap);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+
+    TMXLayer* layer;
+    layer = map->getLayer("Layer 0");
+    layer->getTexture()->setAntiAliasTexParameters();
+
+    layer = map->getLayer("Layer 1");
+    layer->getTexture()->setAntiAliasTexParameters();
+
+    layer = map->getLayer("Layer 2");
+    layer->getTexture()->setAntiAliasTexParameters();
+}
+
+std::string TMXCvsFormatTest::title() const
+{
+    return "TMX CSV Parsing test";
+}
+
+//------------------------------------------------------------------
+//
 // TMXOrthoObjectsTest
 //
 //------------------------------------------------------------------
@@ -697,10 +731,10 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 {
     auto map = TMXTiledMap::create("TileMaps/ortho-objects.tmx");
     addChild(map, -1, kTagTileMap);
-    
+
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
-    
+
     auto group = map->getObjectGroup("Object Group 1");
     auto& objects = group->getObjects();
 
@@ -708,18 +742,18 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
     CCLOG("%s", objectsVal.getDescription().c_str());
 
     auto drawNode = DrawNode::create();
-    
+
     for (auto& obj : objects)
     {
         ValueMap& dict = obj.asValueMap();
-        
+
         float x = dict["x"].asFloat();
         float y = dict["y"].asFloat();
         float width = dict["width"].asFloat();
         float height = dict["height"].asFloat();
-        
+
         Color4F color(1.0, 1.0, 1.0, 1.0);
-        
+
         drawNode->drawLine( Vec2(x, y), Vec2((x+width), y), color );
         drawNode->drawLine( Vec2((x+width), y), Vec2((x+width), (y+height)), color );
         drawNode->drawLine( Vec2((x+width), (y+height)), Vec2(x, (y+height)), color );

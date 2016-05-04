@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -46,10 +46,15 @@ void ActionCamera::startWithTarget(Node *target)
 
 ActionCamera* ActionCamera::clone() const
 {
-	// no copy constructor
-	auto a = new (std::nothrow) ActionCamera();
-	a->autorelease();
-	return a;
+    auto action = new (std::nothrow) ActionCamera();
+    if (action)
+    {
+        action->autorelease();
+        return action;
+    }
+    
+    delete action;
+    return nullptr;
 }
 
 ActionCamera * ActionCamera::reverse() const
@@ -100,7 +105,8 @@ void ActionCamera::updateTransform()
 
     Mat4 mv = Mat4::IDENTITY;
 
-    if(needsTranslation) {
+    if(needsTranslation)
+    {
         Mat4 t;
         Mat4::createTranslation(anchorPoint.x, anchorPoint.y, 0, &t);
         mv = mv * t;
@@ -108,8 +114,8 @@ void ActionCamera::updateTransform()
     
     mv = mv * lookupMatrix;
 
-    if(needsTranslation) {
-        
+    if(needsTranslation)
+    {
         Mat4 t;
         Mat4::createTranslation(-anchorPoint.x, -anchorPoint.y, 0, &t);
         mv = mv * t;
@@ -148,22 +154,20 @@ OrbitCamera::~OrbitCamera()
 OrbitCamera * OrbitCamera::create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
 {
     OrbitCamera * obitCamera = new (std::nothrow) OrbitCamera();
-    if(obitCamera->initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX))
+    if(obitCamera && obitCamera->initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX))
     {
         obitCamera->autorelease();
         return obitCamera;
     }
-    CC_SAFE_DELETE(obitCamera);
+    
+    delete obitCamera;
     return nullptr;
 }
 
 OrbitCamera* OrbitCamera::clone() const
 {
-    // no copy constructor	
-    auto a = new (std::nothrow) OrbitCamera();
-    a->initWithDuration(_duration, _radius, _deltaRadius, _angleZ, _deltaAngleZ, _angleX, _deltaAngleX);
-    a->autorelease();
-    return a;
+    // no copy constructor
+    return OrbitCamera::create(_duration, _radius, _deltaRadius, _angleZ, _deltaAngleZ, _angleX, _deltaAngleX);
 }
 
 bool OrbitCamera::initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)

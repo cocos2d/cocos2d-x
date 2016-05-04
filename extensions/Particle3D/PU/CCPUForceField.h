@@ -186,7 +186,7 @@ class PUForceField
             
         /** Get/Set the Forcefield type
         */
-        const ForceFieldType getForceFieldType(void) const;
+        ForceFieldType getForceFieldType() const;
         void setForceFieldType(const ForceFieldType forceFieldType);
 
     protected:

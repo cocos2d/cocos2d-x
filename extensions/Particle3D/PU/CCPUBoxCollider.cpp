@@ -54,7 +54,7 @@ PUBoxCollider::~PUBoxCollider()
 {
 }
 //-----------------------------------------------------------------------
-const float PUBoxCollider::getWidth() const
+float PUBoxCollider::getWidth() const
 {
     return _width;
 }
@@ -64,7 +64,7 @@ void PUBoxCollider::setWidth(const float width)
     _width = width;
 }
 //-----------------------------------------------------------------------
-const float PUBoxCollider::getHeight() const
+float PUBoxCollider::getHeight() const
 {
     return _height;
 }
@@ -74,7 +74,7 @@ void PUBoxCollider::setHeight(const float height)
     _height = height;
 }
 //-----------------------------------------------------------------------
-const float PUBoxCollider::getDepth() const
+float PUBoxCollider::getDepth() const
 {
     return _depth;
 }
