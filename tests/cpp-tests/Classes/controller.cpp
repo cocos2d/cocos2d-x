@@ -41,7 +41,6 @@ public:
         addTest("Curl", []() { return new CurlTests(); });
 #endif
         addTest("Current Language", []() { return new CurrentLanguageTests(); });
-        addTest("CocosStudio3D Test", []() { return new CocosStudio3DTests(); });
         addTest("Downloader Test", []() { return new DownloaderTests(); });
         addTest("EventDispatcher", []() { return new EventDispatcherTests(); });
         addTest("Effects - Advanced", []() { return new EffectAdvanceTests(); });
