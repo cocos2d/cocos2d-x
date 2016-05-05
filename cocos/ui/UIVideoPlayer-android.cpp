@@ -240,6 +240,18 @@ void VideoPlayer::setVisible(bool visible)
     } 
 }
 
+void VideoPlayer::onEnter()
+{
+    Widget::onEnter();
+    this->setVisible(true);
+}
+
+void VideoPlayer::onExit()
+{
+    Widget::onExit();
+    this->setVisible(false);
+}
+
 void VideoPlayer::addEventListener(const VideoPlayer::ccVideoPlayerCallback& callback)
 {
     _eventCallback = callback;

@@ -1965,7 +1965,7 @@ var WrapAlgorithmTest = AtlasDemo.extend({
             LabelTTF.setString(text);
             LabelTTF.setPosition(480 + i * 25, 300);
             LabelTTF.setAnchorPoint(0,1);
-            LabelTTF.boundingWidth = 3;
+            LabelTTF.boundingWidth = 13;
             LabelTTF.boundingHeight = 0;
             LabelTTF.enableStroke(cc.color(0, 0, 0, 1), 3.0);
             if (cc.sys.os === cc.sys.OS_WP8)
