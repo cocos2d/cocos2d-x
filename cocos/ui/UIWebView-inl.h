@@ -198,6 +198,18 @@ namespace experimental{
             return _onJSCallback;
         }
         
+        void WebView::onEnter()
+        {
+            Widget::onEnter();
+            _impl->setVisible(true);
+        }
+        
+        void WebView::onExit()
+        {
+            Widget::onExit();
+            _impl->setVisible(false);
+        }
+        
     } // namespace ui
 } // namespace experimental
 } //namespace cocos2d

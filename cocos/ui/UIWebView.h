@@ -204,6 +204,9 @@ public:
      */
     virtual void setVisible(bool visible) override;
     
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
 protected:
     virtual cocos2d::ui::Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
