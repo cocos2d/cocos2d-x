@@ -127,7 +127,7 @@ namespace utils
     /**
      * Find a child by name recursively
 
-     * @return  Returns found node or nullptr with specificed type 'T'
+     * @return  Returns found node or nullptr with specified type 'T'
      */
     template<typename T> inline
     T findChild(Node* levelRoot, const char* name)
@@ -138,7 +138,7 @@ namespace utils
     /**
      * Find a child by tag recursively
 
-     * @return  Returns found node or nullptr with specificed type 'T'
+     * @return  Returns found node or nullptr with specified type 'T'
      */
     template<typename T> inline
     T findChild(Node* levelRoot, int tag)

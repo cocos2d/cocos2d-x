@@ -196,7 +196,7 @@ namespace DrawPrimitives
      * @param origin The origin of the bezier path.
      * @param control The control of the bezier path.
      * @param destination The destination of the bezier path.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @warning This function could be pretty slow. Use it only for debugging purposes.
      * @since v0.8
      */
@@ -208,7 +208,7 @@ namespace DrawPrimitives
      * @param control1 The first control of the bezier path.
      * @param control2 The second control of the bezier path.
      * @param destination The destination of the bezier path.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @warning This function could be pretty slow. Use it only for debugging purposes.
      * @since v0.8
      */
@@ -217,7 +217,7 @@ namespace DrawPrimitives
     /** Draws a Catmull Rom path.
      *
      * @param arrayOfControlPoints A point array  of control point.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @warning This function could be pretty slow. Use it only for debugging purposes.
      * @since v2.0
      */
@@ -227,7 +227,7 @@ namespace DrawPrimitives
      *
      * @param config A array point.
      * @param tension The tension of the spline.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @warning This function could be pretty slow. Use it only for debugging purposes.
      * @since v2.0
      */

@@ -44,7 +44,7 @@ NS_CC_BEGIN
 class CC_DLL FileUtilsTizen : public FileUtils
 {
 public:
-    /* override funtions */
+    /* override functions */
 	virtual bool init() override;
 
     virtual std::string getWritablePath() const override;
