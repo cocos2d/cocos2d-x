@@ -755,7 +755,7 @@ void PhysicsBody::setEnabled(bool enable)
 
 bool PhysicsBody::isResting() const
 {
-    return cpBodyIsSleeping(_cpBody);
+    return cpBodyIsSleeping(_cpBody) != cpFalse;
 }
 
 void PhysicsBody::setResting(bool rest) const
