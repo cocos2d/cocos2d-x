@@ -533,13 +533,13 @@ void CaptureNodeTest::onCaptured(Ref*)
     auto image = utils::captureNode(this, 0.5);
 
     // create a sprite with the captured image directly
-    auto sp = Sprite::createWithTexture(TextureCache::getInstance()->addImage(image, _filename));
+    auto sp = Sprite::createWithTexture(Director::getInstance()->getTextureCache()->addImage(image, _filename));
     addChild(sp, 0, childTag);
     Size s = Director::getInstance()->getWinSize();
     sp->setPosition(s.width / 2, s.height / 2);
 
     // store to disk
-    image->saveToFile(_filename, false);
+    image->saveToFile(_filename);
 
     // release the captured image
     image->release();
