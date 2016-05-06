@@ -210,7 +210,6 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIScene.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UISceneManager.cpp" />
-    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIScene_Editor.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UISliderTest\UISliderTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.cpp" />
