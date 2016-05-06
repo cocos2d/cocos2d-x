@@ -755,10 +755,10 @@ str
 
 /**
  * @method setPhysicsBody
- * @param {cc.Component} arg0
+ * @param {cc.PhysicsBody} arg0
  */
 setPhysicsBody : function (
-component 
+physicsbody 
 )
 {
 },
