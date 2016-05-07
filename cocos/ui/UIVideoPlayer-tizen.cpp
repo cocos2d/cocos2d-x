@@ -365,6 +365,18 @@ bool VideoPlayer::isPlaying() const
     return _isPlaying;
 }
 
+void VideoPlayer::onEnter()
+{
+    Widget::onEnter();
+    this->setVisible(false);
+}
+
+void VideoPlayer::onExit()
+{
+    Widget::onExit();
+    this->setVisible(true);
+}
+
 void VideoPlayer::setVisible(bool visible)
 {
     cocos2d::ui::Widget::setVisible(visible);
