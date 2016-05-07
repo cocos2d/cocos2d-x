@@ -523,7 +523,7 @@ std::string CaptureNodeTest::subtitle() const
 }
 
 void CaptureNodeTest::onCaptured(Ref*)
-{
+{ 
     Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
     removeChildByTag(childTag);
     
