@@ -35,6 +35,7 @@ NewRendererTests::NewRendererTests()
     ADD_TEST_CASE(NewCullingTest);
     ADD_TEST_CASE(VBOFullTest);
     ADD_TEST_CASE(CaptureScreenTest);
+    ADD_TEST_CASE(CaptureNodeTest);
     ADD_TEST_CASE(BugAutoCulling);
     ADD_TEST_CASE(RendererBatchQuadTri);
 };
@@ -476,6 +477,72 @@ void CaptureScreenTest::afterCaptured(bool succeed, const std::string& outputFil
     {
         log("Capture screen failed.");
     }
+}
+
+CaptureNodeTest::CaptureNodeTest()
+{
+    Size s = Director::getInstance()->getWinSize();
+    Vec2 left(s.width / 4, s.height / 2);
+    Vec2 right(s.width / 4 * 3, s.height / 2);
+
+    auto sp1 = Sprite::create("Images/grossini.png");
+    sp1->setPosition(left);
+    auto move1 = MoveBy::create(1, Vec2(s.width / 2, 0));
+    auto seq1 = RepeatForever::create(Sequence::create(move1, move1->reverse(), nullptr));
+    addChild(sp1);
+    sp1->runAction(seq1);
+    auto sp2 = Sprite::create("Images/grossinis_sister1.png");
+    sp2->setPosition(right);
+    auto move2 = MoveBy::create(1, Vec2(-s.width / 2, 0));
+    auto seq2 = RepeatForever::create(Sequence::create(move2, move2->reverse(), nullptr));
+    addChild(sp2);
+    sp2->runAction(seq2);
+
+    auto label1 = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "capture this scene");
+    auto mi1 = MenuItemLabel::create(label1, CC_CALLBACK_1(CaptureNodeTest::onCaptured, this));
+    auto menu = Menu::create(mi1, nullptr);
+    addChild(menu);
+    menu->setPosition(s.width / 2, s.height / 4);
+
+    _filename = "";
+}
+
+CaptureNodeTest::~CaptureNodeTest()
+{
+    Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
+}
+
+std::string CaptureNodeTest::title() const
+{
+    return "New Renderer";
+}
+
+std::string CaptureNodeTest::subtitle() const
+{
+    return "Capture node test, press the menu items to capture this scene with scale 0.5";
+}
+
+void CaptureNodeTest::onCaptured(Ref*)
+{ 
+    Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
+    removeChildByTag(childTag);
+    
+    _filename = FileUtils::getInstance()->getWritablePath() + "/CaptureNodeTest.png";
+
+    // capture this
+    auto image = utils::captureNode(this, 0.5);
+
+    // create a sprite with the captured image directly
+    auto sp = Sprite::createWithTexture(Director::getInstance()->getTextureCache()->addImage(image, _filename));
+    addChild(sp, 0, childTag);
+    Size s = Director::getInstance()->getWinSize();
+    sp->setPosition(s.width / 2, s.height / 2);
+
+    // store to disk
+    image->saveToFile(_filename);
+
+    // release the captured image
+    image->release();
 }
 
 BugAutoCulling::BugAutoCulling()
