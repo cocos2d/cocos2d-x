@@ -101,16 +101,19 @@ var LoaderCycleLayer = BaseTestLayer.extend({
         var index = 0;
 
         var winSize = cc.director.getWinSize();
+
+        var resultTTF = new cc.LabelTTF("result: unknown");
+        resultTTF.x = winSize.width / 2;
+        resultTTF.y = winSize.height / 2;
+
         var t = this,
             cb = function(num){
-                var labelTTF = new cc.LabelTTF(num + " file failed");
-                labelTTF.x = index++*100 + winSize.width - 150;
-                labelTTF.y = winSize.height / 2 - 20;
+                resultTTF.setString("result: " + num + " file load failed");
                 if(num === 1)
-                    labelTTF.setColor(cc.color.GREEN);
+                    resultTTF.setColor(cc.color.GREEN);
                 else
-                    labelTTF.setColor(cc.color.RED);
-                t.addChild(labelTTF);
+                    resultTTF.setColor(cc.color.RED);
+                t.addChild(resultTTF);
                 if(index < 4)
                     t.test(cb);
             };
@@ -161,24 +164,6 @@ var LoaderCycleLayer = BaseTestLayer.extend({
         this.addChild(info1);
         this.addChild(info2);
         this.addChild(info3);
-
-        var info4 = new cc.LabelTTF("test 1");
-        info4.x = winSize.width / 2 - 50;
-        info4.y = winSize.height / 2;
-        var info5 = new cc.LabelTTF("test 2");
-        info5.x = winSize.width / 2 - 150;
-        info5.y = winSize.height / 2;
-        var info6 = new cc.LabelTTF("test 3");
-        info6.x = winSize.width / 2 + 50;
-        info6.y = winSize.height / 2;
-        var info7 = new cc.LabelTTF("test 4");
-        info7.x = winSize.width / 2 + 150;
-        info7.y = winSize.height / 2;
-
-        this.addChild(info4);
-        this.addChild(info5);
-        this.addChild(info6);
-        this.addChild(info7);
     },
 
     test: function(cb){
