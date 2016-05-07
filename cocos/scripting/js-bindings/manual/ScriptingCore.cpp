@@ -384,6 +384,16 @@ bool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
     return true;
 };
 
+bool JSB_closeWindow(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    ScriptingCore::getInstance()->cleanup();
+    Director::getInstance()->end();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    exit(0);
+#endif
+    return true;
+};
+
 void registerDefaultClasses(JSContext* cx, JS::HandleObject global) {
     // first, try to get the ns
     JS::RootedValue nsval(cx);
@@ -427,6 +437,7 @@ void registerDefaultClasses(JSContext* cx, JS::HandleObject global) {
     JS_DefineFunction(cx, global, "__restartVM", JSB_core_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, global, "__cleanScript", JSB_cleanScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__isObjectValid", ScriptingCore::isObjectValid, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, global, "close", JSB_closeWindow, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 }
 
 static void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
@@ -461,6 +472,7 @@ ScriptingCore::ScriptingCore()
 : _rt(nullptr)
 , _cx(nullptr)
 , _jsInited(false)
+, _needCleanup(false)
 //, _global(nullptr)
 //, _debugGlobal(nullptr)
 , _callFromScript(false)
@@ -625,6 +637,8 @@ void ScriptingCore::createGlobalContext() {
         sc_register_sth callback = *it;
         callback(_cx, _global.ref());
     }
+    
+    _needCleanup = true;
 }
 
 static std::string RemoveFileExt(const std::string& filePath) {
@@ -820,6 +834,9 @@ ScriptingCore::~ScriptingCore()
 
 void ScriptingCore::cleanup()
 {
+    if (!_needCleanup) {
+        return;
+    }
     localStorageFree();
     removeAllRoots(_cx);
     garbageCollect();
@@ -849,6 +866,8 @@ void ScriptingCore::cleanup()
     _js_global_type_map.clear();
     filename_script.clear();
     registrationList.clear();
+    
+    _needCleanup = false;
 }
 
 void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorReport *report)
