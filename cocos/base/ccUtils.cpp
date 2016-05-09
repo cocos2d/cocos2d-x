@@ -338,9 +338,11 @@ Node* findChild(Node* levelRoot, const char* name)
         return nullptr;
 
     // Find this node
-    auto target = levelRoot->getChildByName(name);
-    if (target != nullptr)
-        return target;
+    {
+        auto target = levelRoot->getChildByName(name);
+        if (target != nullptr)
+            return target;
+    }
 
     // Find recursively
     for (auto& child : levelRoot->getChildren())
@@ -358,9 +360,11 @@ Node* findChild(Node* levelRoot, int tag)
         return nullptr;
 
     // Find this node
-    auto target = levelRoot->getChildByTag(tag);
-    if (target != nullptr)
-        return target;
+    {
+        auto target = levelRoot->getChildByTag(tag);
+        if (target != nullptr)
+            return target;
+    }
 
     // Find recursively
     for (auto& child : levelRoot->getChildren())
