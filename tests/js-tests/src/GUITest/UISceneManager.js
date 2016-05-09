@@ -673,6 +673,16 @@
             }
         ];
     }
+    else {
+        testingItems["UIRichText"] = [
+            {
+                title: "UIRichTextTest",
+                func: function () {
+                    return new UIRichTextTest();
+                }
+            }
+        ];
+    }
 
     if (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || !cc.sys.isNative)
     {

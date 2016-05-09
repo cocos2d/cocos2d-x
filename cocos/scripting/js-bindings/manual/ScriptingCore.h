@@ -85,6 +85,7 @@ private:
     mozilla::Maybe<JS::PersistentRootedObject> _debugGlobal;
     SimpleRunLoop* _runLoop;
     bool _jsInited;
+    bool _needCleanup;
 
     bool _callFromScript;
     ScriptingCore();

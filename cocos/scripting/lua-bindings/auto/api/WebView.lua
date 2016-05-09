@@ -103,10 +103,22 @@
 -- @return experimental::ui::WebView#experimental::ui::WebView ret (return value: cc.experimental::ui::WebView)
         
 --------------------------------
+-- 
+-- @function [parent=#WebView] onEnter 
+-- @param self
+-- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
+        
+--------------------------------
 -- Toggle visibility of WebView.
 -- @function [parent=#WebView] setVisible 
 -- @param self
 -- @param #bool visible
+-- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
+        
+--------------------------------
+-- 
+-- @function [parent=#WebView] onExit 
+-- @param self
 -- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
         
 --------------------------------
