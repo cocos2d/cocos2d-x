@@ -1309,19 +1309,18 @@ void NodeNameTest::test(float dt)
     });
     CCAssert(i == 1, "");
     
-    
     // enumerateChildren
     // name = node[[digit]]+/node
     
     parent = Node::create();
-    for (int i = 0; i < 100; ++i)
+    for (int i = 0; i < 10; ++i)
     {
         auto node = Node::create();
         sprintf(name, "node%d", i);
         node->setName(name);
         parent->addChild(node);
         
-        for (int j = 0; j < 100; ++j)
+        for (int j = 0; j < 10; ++j)
         {
             auto child = Node::create();
             child->setName("node");
@@ -1334,7 +1333,7 @@ void NodeNameTest::test(float dt)
         ++i;
         return false;
     });
-    CCAssert(i == 100, "");
+    CCAssert(i == 10, "");
     
     i = 0;
     parent->enumerateChildren("node1/node", [&i](Node* node) -> bool {
@@ -1345,14 +1344,14 @@ void NodeNameTest::test(float dt)
     
     // search from root
     parent = Node::create();
-    for (int i = 0; i < 100; ++i)
+    for (int i = 0; i < 10; ++i)
     {
         auto node = Node::create();
         sprintf(name, "node%d", i);
         node->setName(name);
         parent->addChild(node);
         
-        for (int j = 0; j < 100; ++j)
+        for (int j = 0; j < 10; ++j)
         {
             auto child = Node::create();
             child->setName("node");
@@ -1365,7 +1364,7 @@ void NodeNameTest::test(float dt)
         ++i;
         return false;
     });
-    CCAssert(i == 10000, "");
+    CCAssert(i == 100, "");
     
     i = 0;
     parent->enumerateChildren("node[[:digit:]]+/node", [&i](Node* node) -> bool {
@@ -1388,18 +1387,18 @@ void NodeNameTest::test(float dt)
         ++i;
         return false;
     });
-    CCAssert(i == 10000, "");
+    CCAssert(i == 100, "");
     
     // name = //xxx : search recursively
     parent = Node::create();
-    for (int j = 0; j < 100; j++)
+    for (int j = 0; j < 10; j++)
     {
         auto node = Node::create();
         sprintf(name, "node%d", j);
         node->setName(name);
         parent->addChild(node);
         
-        for (int k = 0; k < 100; ++k)
+        for (int k = 0; k < 10; ++k)
         {
             auto child = Node::create();
             sprintf(name, "node%d", k);
@@ -1413,7 +1412,7 @@ void NodeNameTest::test(float dt)
         ++i;
         return false;
     });
-    CCAssert(i == 10100, ""); // 10000(children) + 100(parent)
+    CCAssert(i == 110, ""); // 100(children) + 10(parent)
     
     i = 0;
     parent->enumerateChildren("//node[[:digit:]]+", [&i](Node* node) -> bool {
@@ -1427,7 +1426,7 @@ void NodeNameTest::test(float dt)
         ++i;
         return false;
     });
-    CCAssert(i == 10000, "");
+    CCAssert(i == 100, "");
     
     // utils::findChildren()
     
@@ -1440,5 +1439,4 @@ void NodeNameTest::test(float dt)
     }
     auto findChildren = utils::findChildren(*parent, "node");
     CCAssert(findChildren.size() == 50, "");
-    
 }
