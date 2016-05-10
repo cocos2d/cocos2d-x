@@ -156,7 +156,7 @@ cocos new -l cpp|js|lua MyNewGame
 * upgrade Chipmunk to v7.0.1
 * use new memory model in JSB, don't have to invoke `retain/release` in JS, it is disabled by default
 * support Tizen platform
-* upgrade Culr to v7.48
+* upgrade Curl to v7.48
 * upgrade OpenSSL to 1.0.2g
 * can use VSCode and new Firefox to debug cocos2d-x JSB programs
 
