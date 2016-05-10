@@ -2,8 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x 3.10 Release Notes](#cocos2d-x-
-- -release-notes)
+- [Cocos2d-x 3.11 Release Notes](#cocos2d-x-311-release-notes)
 - [Misc Information](#misc-information)
 - [Requirements](#requirements)
   - [Runtime Requirements](#runtime-requirements)
@@ -15,14 +14,14 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [v3.10](#v310)
-  - [Highlights features, improvements and API updates of v3.10](#highlights-features-improvements-and-api-updates-of-v310)
-  - [The main features in detail of Cocos2d-x v3.10:](#the-main-features-in-detail-of-cocos2d-x-v310)
-    - [UI System](#ui-system)
-    - [AudioEngine](#audioengine)
-    - [Others](#others)
+- [v3.11](#v311)
+  - [Highlights features](#highlights-features)
+  - [The main features in detail of Cocos2d-x v3.11](#the-main-features-in-detail-of-cocos2d-x-v311)
+    - [New memory model in JSB](#new-memory-model-in-jsb)
+    - [OpenSSL](#openssl)
+    - [Tizen support](#tizen-support)
+    - [Cocos2d-x JSB program debugging](#cocos2d-x-jsb-program-debugging)
   - [Other changes](#other-changes)
-  - [NEW APIS](#new-apis)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
