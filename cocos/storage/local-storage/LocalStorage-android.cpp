@@ -94,6 +94,10 @@ bool localStorageGetItem( const std::string& key, std::string *outItem )
     {
         jstring jkey = t.env->NewStringUTF(key.c_str());
         jstring jret = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, jkey);
+        if (jret == nullptr)
+        {
+            return false;
+        }
         outItem->assign(JniHelper::jstring2string(jret));
         t.env->DeleteLocalRef(jret);
         t.env->DeleteLocalRef(jkey);
