@@ -19,7 +19,6 @@
   - [The main features in detail of Cocos2d-x v3.11](#the-main-features-in-detail-of-cocos2d-x-v311)
     - [New memory model in JSB](#new-memory-model-in-jsb)
     - [OpenSSL](#openssl)
-    - [Tizen support](#tizen-support)
     - [Cocos2d-x JSB program debugging](#cocos2d-x-jsb-program-debugging)
   - [Other changes](#other-changes)
 
@@ -155,7 +154,6 @@ cocos new -l cpp|js|lua MyNewGame
 
 * upgrade Chipmunk to v7.0.1
 * use new memory model in JSB, don't have to invoke `retain/release` in JS, it is disabled by default
-* support Tizen platform
 * upgrade Curl to v7.48
 * upgrade OpenSSL to 1.0.2g
 * can use VSCode and new Firefox to debug cocos2d-x JSB programs
@@ -203,9 +201,6 @@ To do this:
 ==> Cleaning...
 ```
 Feel free to post on our <a href="http://discuss.cocos2d-x.org">forums</a> if you run into difficulty.
-
-### Tizen support
-Tizen is now supported! You can read about how to use Tizen [here](http://cocos2d-x.org/docs/static-pages/installation.html).
 
 ### Cocos2d-x JSB program debugging
 
