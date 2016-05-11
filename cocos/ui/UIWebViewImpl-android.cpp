@@ -281,6 +281,10 @@ namespace cocos2d {
             void WebViewImpl::setVisible(bool visible) {
                 JniHelper::callStaticVoidMethod(className, "setVisible", _viewTag, visible);
             }
+
+            void WebViewImpl::setBounces(bool bounces) {
+                
+            }
         } // namespace ui
     } // namespace experimental
 } //namespace cocos2d
