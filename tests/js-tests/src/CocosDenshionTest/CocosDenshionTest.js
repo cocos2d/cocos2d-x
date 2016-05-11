@@ -232,9 +232,6 @@ var soundId = null;
 var playMusic = function () {
     cc.log("play background music");
     var musicFile = MUSIC_FILE;
-    if (cc.sys.os == cc.sys.OS_ANDROID) {
-        musicFile = "res/"+musicFile;
-    }
     audioEngine.playMusic(musicFile, false);
 };
 
