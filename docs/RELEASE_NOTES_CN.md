@@ -4,7 +4,6 @@
 
 * Chipmunk升级到v7.0.1
 * JSB使用新的内存模型，在JS脚本不需要关心对象的生命周期，该特性默认关闭
-* 支持Tizen平台
 * CURL升级到v7.48
 * OpenSSL升级到v1.0.2g
 * 可以使用VSCode或者新版本的Firefox调试JSB程序
@@ -51,9 +50,6 @@ Cocos2d-x已经把__OpenSSL__升级到__1.0.2.g__。
 ==> Cleaning...
 ```
 有任何问题可以在引擎的[中文论坛](http://forum.cocos.com/)上发帖反馈。
-
-### Tizen平台支持
-引擎从v3.11版本支持Tizen平台！你可以阅读[这篇文档](http://cocos2d-x.org/docs/static-pages/installation.html)来了解如何在Tizen平台开发。
 
 ### Cocos2d-x JSB程序调试
 
