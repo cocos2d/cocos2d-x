@@ -140,6 +140,11 @@ namespace experimental{
             _impl->setVisible(visible);
         }
         
+        void WebView::setBounces(bool bounces)
+        {
+          _impl->setBounces(bounces);
+        }
+        
         cocos2d::ui::Widget* WebView::createCloneInstance()
         {
             return WebView::create();
