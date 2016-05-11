@@ -4,6 +4,7 @@ cocos2d-x-3.11 May 11 2016
 [HIGHLIGHT]     JS: new memory model, don't have to use retain/release in JS
 [HIGHLIGHT]     Curl: upgrade to v7.48
 [HIGHLIGHT]     OpenSSL: upgrade to 1.0.2g
+[HIGHLIGHT]     JS: can use Firefox 30+ and VSCode to debug cocos2d-x JSB programs
 
 [NEW]           JS: web console is enabled debugging JSB projects via firefox
 [NEW]           UI: add a setter for touch total time threshold in ScrollView
