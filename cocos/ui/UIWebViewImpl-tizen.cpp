@@ -155,6 +155,10 @@ namespace cocos2d {
                     evas_object_hide(_ewkView);
                 }
             }
+
+            void WebViewImpl::setBounces(bool bounces) {
+                
+            }
         } // namespace ui
     } // namespace experimental
 } //namespace cocos2d
