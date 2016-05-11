@@ -34,6 +34,7 @@ NS_CC_BEGIN
 
 #define CURSOR_TIME_SHOW_HIDE 0.5f
 #define CURSOR_DEFAULT_CHAR '|'
+#define PASSWORD_STYLE_TEXT_DEFAULT "\xe2\x97\x8f"
 
 static int _calcCharCount(const char * text)
 {
@@ -63,7 +64,7 @@ TextFieldTTF::TextFieldTTF()
 , _placeHolder("")   // prevent Label initWithString assertion
 , _colorText(Color4B::WHITE)
 , _secureTextEntry(false)
-,_passwordStyleText("\u25CF")
+, _passwordStyleText(PASSWORD_STYLE_TEXT_DEFAULT)
 , _cursorEnabled(false)
 , _cursorPosition(0)
 , _cursorChar(CURSOR_DEFAULT_CHAR)
