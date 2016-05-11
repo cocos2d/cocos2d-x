@@ -686,9 +686,6 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIScene.cpp">
       <Filter>Classes\UITest\CocoStudioGUITest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UISceneManager.cpp">
-      <Filter>Classes\UITest\CocoStudioGUITest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest.cpp">
       <Filter>Classes\UITest\CocoStudioGUITest\UIButtonTest</Filter>
     </ClCompile>
@@ -1318,9 +1315,6 @@
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CocosGUIScene.h">
       <Filter>Classes\UITest\CocoStudioGUITest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest.h">
-      <Filter>Classes\UITest\CocoStudioGUITest</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.h">
       <Filter>Classes\UITest\CocoStudioGUITest</Filter>
     </ClInclude>
@@ -1328,9 +1322,6 @@
       <Filter>Classes\UITest\CocoStudioGUITest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIScene.h">
-      <Filter>Classes\UITest\CocoStudioGUITest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UISceneManager.h">
       <Filter>Classes\UITest\CocoStudioGUITest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest.h">
@@ -1437,6 +1428,9 @@
       <Filter>Classes\UITest\CocoStudioGUITest\UITabContorlTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.h" />
+    <ClInclude Include="..\Classes\CocosStudio3DTest\CocosStudio3DTest.h" />
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CocoStudioGUITest.h" />
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITextTest\UITextTest_Editor.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
