@@ -197,6 +197,11 @@ public:
      */
     ccWebViewCallback getOnJSCallback()const;
 
+    /**
+     * Set whether the webview bounces at end of scroll of WebView.
+     */
+    void setBounces(bool bounce);
+
     virtual void draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) override;
 
     /**
