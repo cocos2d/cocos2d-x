@@ -423,7 +423,6 @@
     <ClInclude Include="..\Classes\TransitionsTest\TransitionsTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CocosGUIScene.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CocoStudioGUITest.h" />
-    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\GUIEditorTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.h" />
@@ -437,7 +436,6 @@
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIRichTextTest\UIRichTextTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIScene.h" />
-    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UISceneManager.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UISliderTest\UISliderTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.h" />
@@ -599,7 +597,6 @@
     <ClCompile Include="..\Classes\TouchesTest\TouchesTest.cpp" />
     <ClCompile Include="..\Classes\TransitionsTest\TransitionsTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CocosGUIScene.cpp" />
-    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\GUIEditorTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp" />
@@ -613,7 +610,6 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRichTextTest\UIRichTextTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIScene.cpp" />
-    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UISceneManager.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UISliderTest\UISliderTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITabControlTest\UITabControlTest.cpp" />
