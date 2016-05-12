@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 // 0x00 HI ME LO
 // 00   03 08 00
-#define COCOS2D_VERSION 0x00031000
+#define COCOS2D_VERSION 0x00031100
 
 //
 // all cocos2d include files
@@ -248,6 +248,13 @@ THE SOFTWARE.
 	#include "platform/winrt/CCGL.h"
 	#include "platform/winrt/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
+	#include "platform/tizen/CCApplication-tizen.h"
+	#include "platform/tizen/CCGLViewImpl-tizen.h"
+	#include "platform/tizen/CCGL-tizen.h"
+	#include "platform/tizen/CCStdC-tizen.h"
+#endif
 
 // script_support
 #include "base/CCScriptSupport.h"

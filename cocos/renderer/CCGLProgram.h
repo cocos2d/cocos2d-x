@@ -194,6 +194,18 @@ public:
         UNIFORM_MAX,
     };
 
+    /** Flags used by the uniforms */
+    struct UniformFlags {
+        unsigned int usesTime:1;
+        unsigned int usesNormal:1;
+        unsigned int usesMVP:1;
+        unsigned int usesMV:1;
+        unsigned int usesP:1;
+        unsigned int usesRandom:1;
+        // handy way to initialize the bitfield
+        UniformFlags() { memset(this, 0, sizeof(*this)); }
+    };
+
     /**
     @name Built Shader types
     @{
@@ -698,6 +710,7 @@ public:
      * 更新Shader中预先定义的Uniform,如果它们的数据有更新。
      @param modelView @~english modelView matrix applied to the built in uniform of the shader.
      * @~chinese 更新需要的ModelView矩阵。
+     @param modelView modelView matrix applied to the built in uniform of the shader.
      */
     void setUniformsForBuiltins(const Mat4 &modelView);
 
@@ -722,7 +735,10 @@ public:
     @return @~english openGL Program handle.
     @~chinese openGL Program的句柄。
     */
-    inline const GLuint getProgram() const { return _program; }
+    inline GLuint getProgram() const { return _program; }
+
+    /** returns the Uniform flags */
+    inline const UniformFlags& getUniformFlags() const { return _flags; }
 
     //DEPRECATED
     CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderByteArray(const GLchar* vertexByteArray, const GLchar* fragByteArray)
@@ -757,6 +773,7 @@ protected:
     /**@~english Compile the shader sources. @~chinese 编译Shader的源代码。*/
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source, const std::string& convertedDefines);
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
+    void clearShader();
 
     /** OpenGL handle for program. */
     GLuint            _program;
@@ -790,6 +807,9 @@ protected:
     std::unordered_map<GLint, std::pair<GLvoid*, unsigned int>> _hashForUniforms;
     //cached director pointer for calling
     Director* _director;
+
+    /*needed uniforms*/
+    UniformFlags _flags;
 };
 
 NS_CC_END

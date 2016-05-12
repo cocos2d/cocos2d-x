@@ -292,7 +292,7 @@ public:
     SIOClient(const std::string& host, int port, const std::string& path, SIOClientImpl* impl, SocketIO::SIODelegate& delegate);
 
     /**
-     * @~english Destructior of SIOClient class.
+     * @~english Destructor of SIOClient class.
      * @~chinese 析构函数。
      */
     virtual ~SIOClient();

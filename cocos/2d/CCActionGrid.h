@@ -435,6 +435,7 @@ private:
 };
 
 /**
+<<<<<<< HEAD
  @brief @~english StopGrid action.
  * @~chinese StopGrid动作。
  @warning @~english It can stop a running grid action. Example:
@@ -442,6 +443,14 @@ private:
  * @code
  * Sequence::actions(Lens::action(...), StopGrid::action(...), nullptr);
  * @endcode
+=======
+ @brief StopGrid action.
+ @warning Don't call this action if another grid action is active.
+ Call if you want to remove the grid effect. Example:
+ @code
+ Sequence::create(Lens3D::create(...), StopGrid::create(), nullptr);
+ @endcode
+>>>>>>> 794759f76d0191dab4a7e1697e6f1318f3ed6a65
  */
 class CC_DLL StopGrid : public ActionInstant
 {

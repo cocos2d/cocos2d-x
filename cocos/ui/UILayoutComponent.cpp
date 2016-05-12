@@ -21,11 +21,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "UIPageView.h"
-#include "UILayoutComponent.h"
+#include "ui/UIPageView.h"
+#include "ui/UILayoutComponent.h"
 #include "2d/CCNode.h"
-#include "GUIDefine.h"
-#include "UIHelper.h"
+#include "ui/GUIDefine.h"
+#include "ui/UIHelper.h"
 
 NS_CC_BEGIN
 

@@ -83,7 +83,7 @@ bool UIPageViewTest::init()
         
         pageView->removeItem(0);
         pageView->scrollToItem(pageCount - 2);
-        pageView->addEventListener(CC_CALLBACK_2(UIPageViewTest::pageViewEvent, this));
+        pageView->addEventListener((PageView::ccPageViewCallback)CC_CALLBACK_2(UIPageViewTest::pageViewEvent, this));
         
         _uiLayer->addChild(pageView);
         
@@ -187,7 +187,7 @@ bool UIPageViewButtonTest::init()
         
         pageView->removeItem(0);
         
-        pageView->addEventListener(CC_CALLBACK_2(UIPageViewButtonTest::pageViewEvent, this));
+        pageView->addEventListener((PageView::ccPageViewCallback)CC_CALLBACK_2(UIPageViewButtonTest::pageViewEvent, this));
         
         _uiLayer->addChild(pageView);
         
@@ -293,7 +293,7 @@ bool UIPageViewTouchPropagationTest::init()
             pageView->insertCustomItem(outerBox, i);
         }
         
-        pageView->addEventListener(CC_CALLBACK_2(UIPageViewTouchPropagationTest::pageViewEvent, this));
+        pageView->addEventListener((PageView::ccPageViewCallback)CC_CALLBACK_2(UIPageViewTouchPropagationTest::pageViewEvent, this));
         pageView->setName("pageView");
         pageView->addTouchEventListener([](Ref* sender, Widget::TouchEventType type){
             if (type == Widget::TouchEventType::BEGAN)
@@ -493,7 +493,7 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
             pageView->insertCustomItem(outerBox, i);
         }
         
-        pageView->addEventListener(CC_CALLBACK_2(UIPageViewDynamicAddAndRemoveTest::pageViewEvent, this));
+        pageView->addEventListener((PageView::ccPageViewCallback)CC_CALLBACK_2(UIPageViewDynamicAddAndRemoveTest::pageViewEvent, this));
         pageView->setName("pageView");
         _uiLayer->addChild(pageView);
         
@@ -777,7 +777,7 @@ bool UIPageViewVerticalTest::init()
             pageView->insertCustomItem(layout, i);
         }
         
-        pageView->addEventListener(CC_CALLBACK_2(UIPageViewVerticalTest::pageViewEvent, this));
+        pageView->addEventListener((PageView::ccPageViewCallback)CC_CALLBACK_2(UIPageViewVerticalTest::pageViewEvent, this));
         
         _uiLayer->addChild(pageView);
         
@@ -936,7 +936,7 @@ bool UIPageViewChildSizeTest::init()
             pageView->insertCustomItem(imageView, i);
         }
 
-        pageView->addEventListener(CC_CALLBACK_2(UIPageViewChildSizeTest::pageViewEvent, this));
+        pageView->addEventListener((PageView::ccPageViewCallback)CC_CALLBACK_2(UIPageViewChildSizeTest::pageViewEvent, this));
 
         _uiLayer->addChild(pageView);
 

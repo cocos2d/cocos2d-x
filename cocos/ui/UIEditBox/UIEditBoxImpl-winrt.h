@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <agile.h>
 #include <concrt.h>
 
-#include "UIEditBoxImpl.h"
+#include "ui/UIEditBox/UIEditBoxImpl.h"
 
 NS_CC_BEGIN
 

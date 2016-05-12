@@ -3,6 +3,7 @@
 
 #include "ProjectConfig/ProjectConfig.h"
 #include "ProjectConfig/SimulatorConfig.h"
+#include "cocostudio/LocalizationManager.h"
 
 #ifdef _MSC_VER
 #define strcasecmp _stricmp
@@ -409,7 +410,18 @@ void ProjectConfig::parseCommandLine(const vector<string> &args)
             vector<string> pathes = split((*it), ';');
             setSearchPath(pathes);
         }
-
+        else if (arg.compare("-first-search-path") == 0)
+        {
+            ++it;
+            vector<string> pathes = split((*it), ';');
+            setFirstSearchPath(pathes);
+        }
+        else if (arg.compare("-language-data-path") == 0)
+        {
+            ++it;
+            if (it == args.end()) break;
+            setLanguageDataPath(*it);
+        }
         ++it;
     }
 }
@@ -571,7 +583,23 @@ vector<string> ProjectConfig::makeCommandLineVector(unsigned int mask /* = kProj
             ret.push_back(pathArgs);
         }
     }
-       
+
+    if (mask & kProjectConfigFirstSearchPath)
+    {
+        if (_searchPath.size() > 0)
+        {
+            stringstream pathbuff;
+            for (auto &path : _searchPath)
+            {
+                pathbuff << dealWithSpaceWithPath(path) << ";";
+            }
+            string pathArgs = pathbuff.str();
+            pathArgs[pathArgs.length() - 1] = '\0';
+
+            ret.push_back("-first-search-path");
+            ret.push_back(pathArgs);
+        }
+    }
     return ret;
 }
 
@@ -613,6 +641,36 @@ void ProjectConfig::setSearchPath(const vector<string> &args)
 const vector<string> &ProjectConfig::getSearchPath() const
 {
     return _searchPath;
+}
+
+void ProjectConfig::setFirstSearchPath(const vector<string> &args)
+{
+    _firstSearchPath = args;
+}
+
+const vector<string> &ProjectConfig::getFirstSearchPath() const
+{
+    return _firstSearchPath;
+}
+
+void ProjectConfig::setLanguageDataPath(const std::string &filePath)
+{
+    bool isBinary = true;
+    string jsonExtension = ".json";
+    int exLength = jsonExtension.length();
+    if (filePath.length() >= exLength && 
+        (0 == filePath.compare(filePath.length() - exLength, exLength, jsonExtension)))
+    {
+        isBinary = false;
+    }
+
+    cocostudio::ILocalizationManager* lm;
+    if (isBinary)
+        lm = cocostudio::BinLocalizationManager::getInstance();
+    else
+        lm = cocostudio::JsonLocalizationManager::getInstance();
+    lm->initLanguageData(filePath);
+    cocostudio::LocalizationHelper::setCurrentManager(lm, isBinary);
 }
 
 bool ProjectConfig::isAppMenu() const

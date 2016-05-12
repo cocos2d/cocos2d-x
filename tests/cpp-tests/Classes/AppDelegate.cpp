@@ -27,7 +27,7 @@
 
 #include "cocos2d.h"
 #include "controller.h"
-#include "cocostudio/CocoStudio.h"
+#include "editor-support/cocostudio/CocoStudio.h"
 #include "extensions/cocos-ext.h"
 
 USING_NS_CC;
@@ -114,6 +114,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIScrollView/Both");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIScrollView/Horizontal");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIScrollView/Vertical");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIScrollView/ScrollViewAndButton");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UISlider");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UITextField");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIWidgetAddNode");
@@ -155,6 +156,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIScrollView/Both");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIScrollView/Horizontal");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIScrollView/Vertical");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIScrollView/ScrollViewAndButton");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UISlider");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UITextField");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIWidgetAddNode");

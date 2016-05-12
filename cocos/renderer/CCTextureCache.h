@@ -270,7 +270,7 @@ public:
      * @return @~english The full path of the file.
      * @~chinese 对应文件的完整路径。
      */
-    const std::string getTextureFilePath(Texture2D* texture)const;
+    std::string getTextureFilePath(Texture2D* texture) const;
 
     /** @~english Reload texture from a new file.
      * This function is mainly for editor, won't suggest use it in game for performance reason.

@@ -25,8 +25,8 @@
 #ifndef __JS_BINDINGS_CCBREADER_H__
 #define __JS_BINDINGS_CCBREADER_H__
 
-#include "cocosbuilder_specifics.hpp"
-#include "cocosbuilder/CocosBuilder.h"
+#include "scripting/js-bindings/manual/cocosbuilder/cocosbuilder_specifics.hpp"
+#include "editor-support/cocosbuilder/CocosBuilder.h"
 
 class CCBScriptCallbackProxy:  public cocos2d::Layer
 , public cocosbuilder::CCBSelectorResolver

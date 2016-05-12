@@ -20,11 +20,19 @@
  * THE SOFTWARE.
  */
 
-let promise = null;
-var globalDebuggee = null;
 
-var gTestGlobals = [];
+// const { ActorPool, appendExtraActors, createExtraActors } = require("devtools/server/actors/common");
+// const { RootActor } = require("devtools/server/actors/root");
+// const { ThreadActor } = require("devtools/server/actors/script");
+// const { DebuggerServer } = require("devtools/server/main");
+// const { TabSources } = require("devtools/server/actors/utils/TabSources");
+// const promise = require("promise");
+// const makeDebugger = require("devtools/server/actors/utils/make-debugger");
 
+
+let gTestGlobals = [];
+let needToSendNavigation = false;
+let testTab = null;
 
 // A mock tab list, for use by tests. This simply presents each global in
 // gTestGlobals as a tab, and the list is fixed: it never calls its
@@ -45,6 +53,7 @@ function TestTabList(aConnection) {
 
   for (let global of gTestGlobals) {
     let actor = new TestTabActor(aConnection, global);
+    testTab = actor;
     actor.selected = false;
     this._tabActors.push(actor);
     this._tabActorPool.addActor(actor);
@@ -59,26 +68,45 @@ function TestTabList(aConnection) {
 TestTabList.prototype = {
   constructor: TestTabList,
   getList: function () {
-    return promise.resolve([tabActor for (tabActor of this._tabActors)]);
+    return resolve([...this._tabActors]);
   }
 };
 
 function createRootActor(aConnection)
 {
-  let root = new RootActor(aConnection,
-                           { tabList: new TestTabList(aConnection) });
-  root.applicationType = "xpcshell-tests";
+  let root = new RootActor(aConnection, {
+    tabList: new TestTabList(aConnection),
+    globalActorFactories: DebuggerServer.globalActorFactories,
+  });
+
+  // root.applicationType = "xpcshell-tests";
   return root;
 }
 
 function TestTabActor(aConnection, aGlobal)
 {
+  this.makeDebugger = function() {
+    let dbg = new Debugger();
+    dbg.addDebuggee(this._global);
+    return dbg;
+  };
+
   this.conn = aConnection;
   this._global = aGlobal;
-  this._threadActor = new ThreadActor(this, this._global);
-  this.conn.addActor(this._threadActor);
+  this._global.wrappedJSObject = aGlobal;
+  this.threadActor = new ThreadActor(this, this._global);
+  this.conn.addActor(this.threadActor);
+  this.consoleActor = new WebConsoleActor(this.conn, this);
+  this.conn.addActor(this.consoleActor);
   this._attached = false;
   this._extraActors = {};
+  // this.makeDebugger = makeDebugger.bind(null, {
+  //   findDebuggees: () => [this._global],
+  //   shouldAddNewGlobalAsDebuggee: g => g.hostAnnotations &&
+  //                                      g.hostAnnotations.type == "document" &&
+  //                                      g.hostAnnotations.element === this._global
+
+  // });
 }
 
 TestTabActor.prototype = {
@@ -86,21 +114,33 @@ TestTabActor.prototype = {
   actorPrefix: "TestTabActor",
 
   get window() {
-    return { wrappedJSObject: this._global };
+    return this._global;
+  },
+
+  get url() {
+    // return "http://cocos2d-x.org";
+    return "about:cehome";
+  },
+
+  get sources() {
+    if (!this._sources) {
+      this._sources = new TabSources(this.threadActor);
+    }
+    return this._sources;
   },
 
   form: function() {
-    let response = { actor: this.actorID, title: "Hello Cocos2d-X JSB", url: "http://cocos2d-x.org" };
+    let response = { actor: this.actorID, title: "cocos project", 'consoleActor': this.consoleActor.actorID };
 
     // Walk over tab actors added by extensions and add them to a new ActorPool.
     let actorPool = new ActorPool(this.conn);
-//    this._createExtraActors(DebuggerServer.tabActorFactories, actorPool);
+    // this._createExtraActors(DebuggerServer.tabActorFactories, actorPool);
     if (!actorPool.isEmpty()) {
       this._tabActorPool = actorPool;
       this.conn.addActorPool(this._tabActorPool);
     }
 
-//    this._appendExtraActors(response);
+    // this._appendExtraActors(response);
 
     return response;
   },
@@ -108,8 +148,8 @@ TestTabActor.prototype = {
   onAttach: function(aRequest) {
     this._attached = true;
 
-    let response = { type: "tabAttached", threadActor: this._threadActor.actorID };
-//    this._appendExtraActors(response);
+    let response = { type: "tabAttached", threadActor: this.threadActor.actorID};
+    // this._appendExtraActors(response);
 
     return response;
   },
@@ -121,83 +161,121 @@ TestTabActor.prototype = {
     return { type: "detached" };
   },
 
-  /* Support for DebuggerServer.addTabActor. */
-  // _createExtraActors: CommonCreateExtraActors,
-  // _appendExtraActors: CommonAppendExtraActors,
-
-  // Hooks for use by TestTabActors.
-  addToParentPool: function(aActor) {
-    this.conn.addActor(aActor);
+  onReload: function(aRequest) {
+    this.sources.reset({ sourceMaps: true });
+    this.threadActor.clearDebuggees();
+    this.threadActor.dbg.addDebuggees();
+    return {};
   },
 
-  removeFromParentPool: function(aActor) {
-    this.conn.removeActor(aActor);
-  }
+  removeActorByName: function(aName) {
+    const actor = this._extraActors[aName];
+    if (this._tabActorPool) {
+      this._tabActorPool.removeActor(actor);
+    }
+    delete this._extraActors[aName];
+  },
+
+  /* Support for DebuggerServer.addTabActor. */
+  // _createExtraActors: createExtraActors,
+  // _appendExtraActors: appendExtraActors
 };
 
 TestTabActor.prototype.requestTypes = {
   "attach": TestTabActor.prototype.onAttach,
-  "detach": TestTabActor.prototype.onDetach
+  "detach": TestTabActor.prototype.onDetach,
+  "reload": TestTabActor.prototype.onReload
 };
+
+let conn = null;
+let transport = null;
+
+let incomingData = '';
 
 this.processInput = function (inputstr) {
     if (!inputstr) {
-        return;
+
+      return;
     }
 
     if (inputstr === "connected")
     {
-        DebuggerServer.createRootActor = (conn => {
-            return new RootActor(conn, { tabList: new TestTabList(conn) });
-        });
-        DebuggerServer.init(() => true);
-        DebuggerServer.openListener(5086);
-        if (debuggerServer && debuggerServer.onSocketAccepted)
-        {
-            var aTransport = {
-                host: "127.0.0.1",
-                port: 5086,
-                openInputStream: function() {
-                    return {
-                        close: function(){}
-                    };
-                },
-                openOutputStream: function() {
-                    return {
-                        close: function(){},
-                        write: function(){},
-                        asyncWait: function(){}
-                    };
-                },
-            };
-            debuggerServer.onSocketAccepted(null, aTransport);
-        }
-        return;
+    	DebuggerServer.init();
+      DebuggerServer.setRootActor(createRootActor);
+      conn = DebuggerServer._onConnection(transport);
+        
+      return;
     }
 
-    if (DebuggerServer && DebuggerServer._transport && DebuggerServer._transport.onDataAvailable)
-    {
-        DebuggerServer._transport.onDataAvailable(inputstr);
+    
+    function extractPacket(inputString) {
+      // Well this is ugly.
+      let sep = inputString.indexOf(':');
+      if (sep < 0) {
+        return null;
+      }
+
+      let count = inputString.substring(0, sep);
+      // Check for a positive number with no garbage afterwards.
+      if (!/^[0-9]+$/.exec(count)) {
+        return null;
+      }
+
+      count = +count;
+      if (inputString.length - (sep + 1) < count) {
+        // Don't have a complete request yet.
+        return null;
+      }
+
+      // We have a complete request, pluck it out of the data and parse it.
+      inputString = inputString.substring(sep + 1);
+      let packet = inputString.substring(0, count);
+      incomingData = inputString.substring(count);
+
+      return packet;
+    }
+
+    function handlePacket(packet) {
+      try {
+        // packet = this._converter.ConvertToUnicode(packet);
+        packet = DevToolsUtils.utf8to16(packet);
+        var parsed = JSON.parse(packet);
+        conn.onPacket(parsed);
+      } catch(e) {
+        let msg = "Error parsing incoming packet: " + packet + " (" + e + " - " + e.stack + ")";
+      }
+    }
+
+    incomingData += inputstr;
+    var packet;
+    while (packet = extractPacket(incomingData)) {
+      handlePacket(packet);
     }
 };
 
 this._prepareDebugger = function (global) {
 
-    globalDebuggee = global;
-    require = global.require;
+    this.globalDebuggee = global;
     cc = global.cc;
-
-    require('script/debugger/DevToolsUtils.js', "debug");
-    require('script/debugger/core/promise.js', "debug");
-    require('script/debugger/transport.js', "debug");
-    require('script/debugger/actors/root.js', "debug");
-    require('script/debugger/actors/script.js', "debug");
-    require('script/debugger/main.js', "debug");
-
-    promise = exports;
+    // exports = global;
+    // load all functions exported in DevToolsUtils to global(exports)
+    require('script/debugger/DevToolsUtils.js', 'debug');
+    require('script/debugger/event-emitter.js', 'debug');
+    require('script/debugger/actors/utils/ScriptStore.js', 'debug');
+    require('script/debugger/actors/common.js', 'debug');
+    require('script/debugger/core/promise.js', 'debug');
+    require('script/debugger/transport.js', 'debug');
+    require('script/debugger/main.js', 'debug');
+    require('script/debugger/actors/object.js', 'debug');
+    require('script/debugger/actors/root.js', 'debug');
+    require('script/debugger/actors/script.js', 'debug');
+    require('script/debugger/actors/webconsole.js', 'debug')
+    require('script/debugger/actors/utils/TabSources.js', 'debug');
+    
     //DebuggerServer.addTestGlobal = function(aGlobal) {
       gTestGlobals.push(global);
     //};
 
+    transport = new DebuggerTransport();
 };
 

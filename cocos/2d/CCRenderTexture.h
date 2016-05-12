@@ -387,11 +387,7 @@ public:
      * @param sprite @~english A Sprite.
      * @~chinese Sprite 实例。
      */
-    inline void setSprite(Sprite* sprite) {
-        CC_SAFE_RETAIN(sprite);
-        CC_SAFE_RELEASE(_sprite);
-        _sprite = sprite;
-    };
+    void setSprite(Sprite* sprite);
     
     // Overrides
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
@@ -475,6 +471,7 @@ protected:
     
     GLuint       _FBO;
     GLuint       _depthRenderBufffer;
+    GLuint       _stencilRenderBufffer;
     GLint        _oldFBO;
     Texture2D* _texture;
     Texture2D* _textureCopy;    // a copy of _texture

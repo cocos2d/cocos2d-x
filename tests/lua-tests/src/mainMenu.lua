@@ -78,20 +78,30 @@ if (cc.PLATFORM_OS_WINDOWS == currPlatform or cc.PLATFORM_OS_MAC == currPlatform
     audioEndineSupported = true
 end
 
+local assetManagerSupported = true;
+if (currPlatform == cc.PLATFORM_OS_TIZEN) then
+  assetManagerSupported = false;
+end
+
+local luaByteCodeSupported = true;
+if (currPlatform == cc.PLATFORM_OS_TIZEN) then
+  luaByteCodeSupported = false;
+end
+
 local _allTests = {
     { isSupported = true,  name = "Accelerometer"          , create_func=             AccelerometerMain  },
     { isSupported = true,  name = "ActionManagerTest"      , create_func   =         ActionManagerTestMain  },
     { isSupported = true,  name = "ActionsEaseTest"        , create_func   =           EaseActionsTest      },
     { isSupported = true,  name = "ActionsProgressTest"    , create_func   =       ProgressActionsTest      },
     { isSupported = true,  name = "ActionsTest"            , create_func   =               ActionsTest      },
-    { isSupported = true,  name = "AssetsManagerTest"      , create_func   =         AssetsManagerTestMain      },
+    { isSupported = assetManagerSupported,  name = "AssetsManagerTest"      , create_func   =         AssetsManagerTestMain      },
     { isSupported = true,  name = "AssetsManagerExTest"      , create_func   =         AssetsManagerExTestMain  },
     { isSupported = audioEndineSupported, name = "AudioEngineTest", create_func = AudioEngineTest},
     { isSupported = false,  name = "Box2dTest"              , create_func=                 Box2dTestMain  },
     { isSupported = false,  name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },
     { isSupported = true,  name = "BillBoardTest"           , create_func=              BillBoardTestMain},
     { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },
-    { isSupported = true,  name = "ByteCodeEncryptTest"     , create_func=       ByteCodeEncryptTestMain  },
+    { isSupported = luaByteCodeSupported,  name = "ByteCodeEncryptTest"     , create_func=       ByteCodeEncryptTestMain  },
     { isSupported = true,  name = "Camera3DTest"     ,        create_func=       Camera3DTestMain  },
     { isSupported = true,  name = "CaptureScreenTest"       , create_func   =         CaptureScreenTestMain  },
     { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },

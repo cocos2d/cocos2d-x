@@ -29,6 +29,7 @@
 #ifdef __ANDROID__
 
 #include <iosfwd>
+#include <stdint.h>
 
 namespace cocos2d {
     class Data;

@@ -27,8 +27,8 @@
 
 #include "base/ccConfig.h"
 #include "3d/CCSprite3D.h"
-#include "CCPhysics3DObject.h"
-#include "CCPhysics3DComponent.h"
+#include "physics3d/CCPhysics3DObject.h"
+#include "physics3d/CCPhysics3DComponent.h"
 
 #if CC_USE_3D_PHYSICS
 

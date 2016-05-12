@@ -62,9 +62,9 @@ public:
      * @~chinese PolygonInfo对象
      */
     PolygonInfo():
-    isVertsOwner(true),
     rect(cocos2d::Rect::ZERO),
-    filename("")
+    filename(""),
+    isVertsOwner(true)
     {
         triangles.verts = nullptr;
         triangles.indices = nullptr;
@@ -123,7 +123,7 @@ public:
      * @return @~english number of vertices
      * @~chinese 数量的顶点
      */
-    const unsigned int getVertCount() const;
+    unsigned int getVertCount() const;
     
     /**@~english
      * get triangles count
@@ -132,7 +132,10 @@ public:
      * @return @~english number of triangles
      * @~chinese 三角形的数量
      */
-    const unsigned int getTriaglesCount() const;
+    unsigned int getTrianglesCount() const;
+
+    /** @deprecated Use method getTrianglesCount() instead */
+    CC_DEPRECATED_ATTRIBUTE unsigned int getTriaglesCount() const;
     
     /**@~english
      * get sum of all triangle area size
@@ -141,7 +144,7 @@ public:
      * @return @~english sum of all triangle area size
      * @~chinese 所有三角形面积大小总和
      */
-    const float getArea() const;
+    float getArea() const;
     
     Rect rect;
     std::string filename;

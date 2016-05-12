@@ -25,7 +25,7 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
-#include "AudioEngine-win32.h"
+#include "audio/win32/AudioEngine-win32.h"
 
 #ifdef OPENAL_PLAIN_INCLUDES
 #include "alc.h"

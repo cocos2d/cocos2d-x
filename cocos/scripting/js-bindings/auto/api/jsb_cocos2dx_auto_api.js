@@ -755,10 +755,10 @@ str
 
 /**
  * @method setPhysicsBody
- * @param {cc.Component} arg0
+ * @param {cc.PhysicsBody} arg0
  */
 setPhysicsBody : function (
-component 
+physicsbody 
 )
 {
 },
@@ -3323,9 +3323,9 @@ tasktype
 },
 
 /**
- * @method destoryInstance
+ * @method destroyInstance
  */
-destoryInstance : function (
+destroyInstance : function (
 )
 {
 },
@@ -3493,6 +3493,15 @@ reverse : function (
 )
 {
     return cc.Action;
+},
+
+/**
+ * @method Action
+ * @constructor
+ */
+Action : function (
+)
+{
 },
 
 };
@@ -4219,6 +4228,16 @@ str
 cc.SpriteFrame = {
 
 /**
+ * @method setAnchorPoint
+ * @param {vec2_object} arg0
+ */
+setAnchorPoint : function (
+vec2 
+)
+{
+},
+
+/**
  * @method setTexture
  * @param {cc.Texture2D} arg0
  */
@@ -4416,6 +4435,26 @@ setOriginalSizeInPixels : function (
 size 
 )
 {
+},
+
+/**
+ * @method getAnchorPoint
+ * @return {vec2_object}
+ */
+getAnchorPoint : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method hasAnchorPoint
+ * @return {bool}
+ */
+hasAnchorPoint : function (
+)
+{
+    return false;
 },
 
 /**
@@ -6126,6 +6165,16 @@ supportsPVRTC : function (
 },
 
 /**
+ * @method supportsOESDepth24
+ * @return {bool}
+ */
+supportsOESDepth24 : function (
+)
+{
+    return false;
+},
+
+/**
  * @method getMaxModelviewStackDepth
  * @return {int}
  */
@@ -6284,6 +6333,16 @@ str
  * @return {bool}
  */
 supportsDiscardFramebuffer : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method supportsOESPackedDepthStencil
+ * @return {bool}
+ */
+supportsOESPackedDepthStencil : function (
 )
 {
     return false;
@@ -12122,6 +12181,16 @@ getShadowOffset : function (
 },
 
 /**
+ * @method getLineSpacing
+ * @return {float}
+ */
+getLineSpacing : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setClipMarginEnabled
  * @param {bool} arg0
  */
@@ -12149,6 +12218,16 @@ setSystemFontName : function (
 str 
 )
 {
+},
+
+/**
+ * @method isWrapEnabled
+ * @return {bool}
+ */
+isWrapEnabled : function (
+)
+{
+    return false;
 },
 
 /**
@@ -12230,13 +12309,11 @@ overflow
 },
 
 /**
- * @method getLineSpacing
- * @return {float}
+ * @method enableStrikethrough
  */
-getLineSpacing : function (
+enableStrikethrough : function (
 )
 {
-    return 0;
 },
 
 /**
@@ -12418,13 +12495,11 @@ getTTFConfig : function (
 },
 
 /**
- * @method getVerticalAlignment
- * @return {cc.TextVAlignment}
+ * @method enableItalics
  */
-getVerticalAlignment : function (
+enableItalics : function (
 )
 {
-    return 0;
 },
 
 /**
@@ -12484,6 +12559,16 @@ color4b
  * @return {cc.Label::Overflow}
  */
 getOverflow : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getVerticalAlignment
+ * @return {cc.TextVAlignment}
+ */
+getVerticalAlignment : function (
 )
 {
     return 0;
@@ -12550,13 +12635,19 @@ texthalignment
 },
 
 /**
- * @method isWrapEnabled
- * @return {bool}
+ * @method enableBold
  */
-isWrapEnabled : function (
+enableBold : function (
 )
 {
-    return false;
+},
+
+/**
+ * @method enableUnderline
+ */
+enableUnderline : function (
+)
+{
 },
 
 /**
@@ -13735,6 +13826,16 @@ setLabel : function (
 node 
 )
 {
+},
+
+/**
+ * @method getString
+ * @return {String}
+ */
+getString : function (
+)
+{
+    return ;
 },
 
 /**
@@ -15334,6 +15435,14 @@ vec2
 },
 
 /**
+ * @method stop
+ */
+stop : function (
+)
+{
+},
+
+/**
  * @method updateParticleQuads
  */
 updateParticleQuads : function (
@@ -15387,6 +15496,14 @@ float
  */
 setRotationIsDir : function (
 bool 
+)
+{
+},
+
+/**
+ * @method start
+ */
+start : function (
 )
 {
 },
@@ -20199,6 +20316,16 @@ int
 },
 
 /**
+ * @method getUniformFlags
+ * @return {cc.GLProgram::UniformFlags}
+ */
+getUniformFlags : function (
+)
+{
+    return cc.GLProgram::UniformFlags;
+},
+
+/**
  * @method getUniformLocationForName
  * @param {char} arg0
  * @return {int}
@@ -21868,7 +21995,7 @@ cc.TextFieldTTF = {
 
 /**
  * @method getCharCount
- * @return {int}
+ * @return {unsigned long}
  */
 getCharCount : function (
 )
@@ -21877,10 +22004,30 @@ getCharCount : function (
 },
 
 /**
+ * @method setCursorChar
+ * @param {char} arg0
+ */
+setCursorChar : function (
+char 
+)
+{
+},
+
+/**
  * @method setSecureTextEntry
  * @param {bool} arg0
  */
 setSecureTextEntry : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setCursorEnabled
+ * @param {bool} arg0
+ */
+setCursorEnabled : function (
 bool 
 )
 {
@@ -21917,6 +22064,36 @@ float
 },
 
 /**
+ * @method appendString
+ * @param {String} arg0
+ */
+appendString : function (
+str 
+)
+{
+},
+
+/**
+ * @method getPasswordTextStyle
+ * @return {String}
+ */
+getPasswordTextStyle : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setPasswordTextStyle
+ * @param {String} arg0
+ */
+setPasswordTextStyle : function (
+str 
+)
+{
+},
+
+/**
  * @method setColorSpaceHolder
 * @param {color4b_object|color3b_object} color4b
 */
@@ -21947,6 +22124,18 @@ str
 },
 
 /**
+ * @method setCursorFromPoint
+ * @param {vec2_object} arg0
+ * @param {cc.Camera} arg1
+ */
+setCursorFromPoint : function (
+vec2, 
+camera 
+)
+{
+},
+
+/**
  * @method isSecureTextEntry
  * @return {bool}
  */
@@ -21964,6 +22153,16 @@ getPlaceHolder : function (
 )
 {
     return ;
+},
+
+/**
+ * @method setCursorPosition
+ * @param {unsigned long} arg0
+ */
+setCursorPosition : function (
+long 
+)
+{
 },
 
 /**

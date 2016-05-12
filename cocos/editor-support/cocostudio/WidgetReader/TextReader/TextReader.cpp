@@ -1,13 +1,15 @@
 
 
-#include "TextReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextReader/TextReader.h"
 
 #include "ui/UIText.h"
-#include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/LocalizationManager.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
+#include "platform/CCFileUtils.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -160,6 +162,7 @@ namespace cocostudio
         std::string fontName = "";
         int fontSize = 20;
         std::string text = "Text Label";
+        bool isLocalized = false;
         int areaWidth = 0;
         int areaHeight = 0;
         int h_alignment = 0;
@@ -190,6 +193,10 @@ namespace cocostudio
             else if (name == "LabelText")
             {
                 text = value;
+            }
+            else if (name == "IsLocalized")
+            {
+                isLocalized = (value == "True") ? true : false;
             }
             else if (name == "FontSize")
             {
@@ -387,7 +394,8 @@ namespace cocostudio
                                          &f_shadowColor,
                                          shadowOffset.width,
                                          shadowOffset.height,
-                                         shadowBlurRadius);
+                                         shadowBlurRadius,
+                                         isLocalized);
         
         return *(Offset<Table>*)(&options);
     }
@@ -450,7 +458,16 @@ namespace cocostudio
         }
 
         std::string text = options->text()->c_str();
-        label->setString(text);
+        bool isLocalized = options->isLocalized() != 0;
+        if (isLocalized)
+        {
+            ILocalizationManager* lm = LocalizationHelper::getCurrentManager();
+            label->setString(lm->getLocalizationString(text));
+        }
+        else
+        {
+            label->setString(text);
+        }
 
         // Save node color before set widget properties
         auto oldColor = node->getColor();

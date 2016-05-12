@@ -163,7 +163,7 @@ namespace ui {
          * Query the percent content size value.
          * @~chinese 
          * 查询内容大小百分比值。
-         * @return @~english Percet (x,y) in Vec2.
+         * @return @~english Percent (x,y) in Vec2.
          * @~chinese Vec2类型的百分比数据(x,y)。
          */
         Vec2 getPercentContentSize()const;

@@ -55,7 +55,7 @@ bool TableView::initWithViewSize(Size size, Node* container/* = nullptr*/)
     if (ScrollView::initWithViewSize(size,container))
     {
         CC_SAFE_DELETE(_indices);
-        _indices        = new std::set<ssize_t>();
+        _indices        = new (std::nothrow) std::set<ssize_t>();
         _vordering      = VerticalFillOrder::BOTTOM_UP;
         this->setDirection(Direction::VERTICAL);
 

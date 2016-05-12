@@ -153,7 +153,7 @@ void TextureCache::addImageAsync(const std::string &path, const std::function<vo
     if (_loadingThread == nullptr)
     {
         // create a new thread to load images
-        _loadingThread = new std::thread(&TextureCache::loadImage, this);
+        _loadingThread = new (std::nothrow) std::thread(&TextureCache::loadImage, this);
         _needQuit = false;
     }
 
@@ -542,7 +542,7 @@ void TextureCache::reloadAllTextures()
 // #endif
 }
 
-const std::string TextureCache::getTextureFilePath( cocos2d::Texture2D *texture )const
+std::string TextureCache::getTextureFilePath(cocos2d::Texture2D* texture) const
 {
     for(auto& item : _textures)
     {
@@ -614,7 +614,7 @@ void TextureCache::renameTextureWithKey(const std::string srcName, const std::st
         std::string fullpath = FileUtils::getInstance()->fullPathForFilename(dstName);
         Texture2D* tex = it->second;
 
-        Image* image = new Image();
+        Image* image = new (std::nothrow) Image();
         if (image)
         {
             bool ret = image->initWithImageFile(dstName);

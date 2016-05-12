@@ -2,7 +2,7 @@
 #include "../../CustomGUIScene.h"
 #include "../../CustomWidget/CustomParticleWidget.h"
 #include "../../CustomWidget/CustomParticleWidgetReader.h"
-#include "cocostudio/CCSGUIReader.h"
+#include "editor-support/cocostudio/CCSGUIReader.h"
 
 
 USING_NS_CC;

@@ -43,8 +43,8 @@ namespace ui {
     class EditBoxImpl;
         
     /**
-     *@brief @~english Editbox delgate class.
-     * It's useful when you want to do some customization duing Editbox input event
+     *@brief @~english Editbox delegate class.
+     * It's useful when you want to do some customization during Editbox input event
      *
      * @~chinese 编辑框代理类。
      * 当你想定制编辑框输入事件时，这个类非常有用。

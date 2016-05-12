@@ -30,13 +30,13 @@
 
 #if CC_USE_3D_PHYSICS
 
-#include "CCPhysics3DShape.h"
-#include "CCPhysicsSprite3D.h"
-#include "CCPhysics3DWorld.h"
-#include "CCPhysics3DDebugDrawer.h"
-#include "CCPhysics3DObject.h"
-#include "CCPhysics3DComponent.h"
-#include "CCPhysics3DConstraint.h"
+#include "physics3d/CCPhysics3DShape.h"
+#include "physics3d/CCPhysicsSprite3D.h"
+#include "physics3d/CCPhysics3DWorld.h"
+#include "physics3d/CCPhysics3DDebugDrawer.h"
+#include "physics3d/CCPhysics3DObject.h"
+#include "physics3d/CCPhysics3DComponent.h"
+#include "physics3d/CCPhysics3DConstraint.h"
 
 NS_CC_BEGIN
 

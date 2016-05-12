@@ -66,9 +66,14 @@ var UIPageViewTest = UIMainLayer.extend({
                 text.y = layoutRect.height / 2;
                 layout.addChild(text);
 
-                pageView.addPage(layout);
+                pageView.addWidgetToPage(layout, i);
             }
+            pageView.setCurPageIndex(1);
             pageView.addEventListener(this.pageViewEvent, this);
+
+            //for test purpose only
+            cc.log(pageView.getPages());
+            cc.log(pageView.getPage(0));
             this._mainNode.addChild(pageView);
 
             return true;
@@ -579,5 +584,151 @@ var UIPageViewDisableTouchTest = UIMainLayer.extend({
             return true;
         }
         return false;
+    }
+});
+
+var UIPageViewJumpToPageTest = UIMainLayer.extend({
+    init: function () {
+        if (this._super()) {
+            var widgetSize = this._widget.getContentSize();
+            //init text
+            this._topDisplayLabel.setString("setCurrentPageIndex API Test");
+            this._topDisplayLabel.setFontSize(14);
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 4;
+            this._bottomDisplayLabel.setString("");
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
+
+            var background = this._widget.getChildByName("background_Panel");
+
+            // Create the page view
+            var pageView = new ccui.PageView();
+            pageView.setTouchEnabled(true);
+            pageView.setContentSize(cc.size(240, 130));
+            pageView.x = (widgetSize.width - background.width) / 2 + (background.width - pageView.width) / 2;
+            pageView.y = (widgetSize.height - background.height) / 2 + (background.height - pageView.height) / 2;
+            pageView.setIndicatorEnabled(true);
+            pageView.removeAllItems();
+
+            var pageCount = 4;
+            for (var i = 0; i < pageCount; ++i)
+            {
+                var layout = new ccui.Layout();
+                layout.setContentSize(cc.size(240.0, 130.0));
+
+                var imageView = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
+                imageView.setScale9Enabled(true);
+                imageView.setContentSize(cc.size(240, 130));
+                imageView.setPosition(cc.p(layout.width / 2.0, layout.height / 2.0));
+                layout.addChild(imageView);
+
+                var label = new ccui.Text("page " + (i+1), "Arial", 30);
+                label.setColor(cc.color(192, 192, 192));
+                label.setPosition(cc.p(layout.width / 2.0, layout.height / 2.0));
+                layout.addChild(label);
+
+                pageView.insertCustomItem(layout, i);
+            }
+
+            pageView.setCurrentPageIndex(1);
+            //add buttons to jump to specific page
+            var button1 = new ccui.Button();
+            button1.setPosition(cc.p(pageView.x - 50, pageView.y + pageView.height));
+            button1.setTitleText("Jump to Page1");
+
+            button1.addClickEventListener(function(){
+                pageView.setCurrentPageIndex(0);
+            });
+            this._mainNode.addChild(button1);
+
+            var button2 = button1.clone();
+            button2.setTitleText("Jump to Page2");
+            button2.setPosition(cc.p(pageView.x - 50, pageView.y + pageView.height - 50));
+            button2.addClickEventListener(function(){
+                pageView.setCurrentPageIndex(1);
+            });
+            this._mainNode.addChild(button2);
+
+            var button3 = button2.clone();
+            button3.setTitleText("Jump to Page3");
+            button3.setPosition(cc.p(pageView.x + pageView.width + 50, pageView.y + pageView.height));
+            button3.addClickEventListener(function(){
+                pageView.setCurrentPageIndex(2);
+            });
+            this._mainNode.addChild(button3);
+
+            var button4 = button3.clone();
+            button4.setTitleText("Jump to Page4");
+            button4.setPosition(cc.p(pageView.x + pageView.width + 50, pageView.y + pageView.height - 50));
+            button4.addClickEventListener(function(){
+                pageView.setCurrentPageIndex(3);
+            });
+            this._mainNode.addChild(button4);
+
+            this._mainNode.addChild(pageView);
+
+            return true;
+        }
+        return false;
+    }
+});
+
+var UIPageViewChildSizeTest = UIMainLayer.extend({
+    init: function () {
+        if (this._super()) {
+            var widgetSize = this._widget.getContentSize();
+            //init text
+            this._topDisplayLabel.setString("Move by horizontal direction");
+            this._topDisplayLabel.setFontSize(14);
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 4;
+            this._bottomDisplayLabel.setString("");
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
+
+            var background = this._widget.getChildByName("background_Panel");
+
+            // Create the page view
+            var pageView = new ccui.PageView();
+            pageView.setTouchEnabled(true);
+            pageView.setContentSize(cc.size(240, 130));
+            pageView.x = (widgetSize.width - background.width) / 2 + (background.width - pageView.width) / 2;
+            pageView.y = (widgetSize.height - background.height) / 2 + (background.height - pageView.height) / 2;
+            pageView.setIndicatorEnabled(true);
+            pageView.removeAllItems();
+
+            var pageCount = 4;
+            for (var i = 0; i < pageCount; ++i)
+            {
+                var imageView = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
+                var label = new ccui.Text("page " + (i + 1), "Arial", 30);
+
+                imageView.setScale9Enabled(true);
+                label.setColor(cc.color(192, 192, 192));
+                label.setAnchorPoint(cc.p(0,0));
+                imageView.addChild(label);
+
+                pageView.insertCustomItem(imageView, i);
+            }
+
+            pageView.addEventListener(this.pageViewEvent, this);
+
+            this._mainNode.addChild(pageView);
+
+            return true;
+        }
+        return false;
+    },
+
+    pageViewEvent: function (sender, type) {
+        switch (type) {
+            case ccui.PageView.EVENT_TURNING:
+                var pageView = sender;
+                this._topDisplayLabel.setString("page = " + (pageView.getCurPageIndex().valueOf()-0 + 1));
+                break;
+            default:
+                break;
+        }
     }
 });

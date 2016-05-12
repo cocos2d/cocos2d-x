@@ -34,6 +34,8 @@ NS_CC_BEGIN
  * @{
  */
 
+class Label;
+
 namespace ui {
     
 /** @class RichElement
@@ -106,8 +108,16 @@ public:
      * @js ctor
      * @lua new
      */
-    RichElementText(){_type = Type::TEXT;};
+    RichElementText()
+    {_type = Type::TEXT;};
 
+    enum {
+        ITALICS_FLAG = 1 << 0,
+        BOLD_FLAG = 1 << 1,
+        UNDERLINE_FLAG = 1 << 2,
+        STRIKETHROUGH_FLAG = 1 << 3,
+        URL_FLAG = 1 << 4
+    };
     
     /**
      * @~english Default destructor.
@@ -128,11 +138,11 @@ public:
      * @param fontSize @~english Content font size. @~chinese 文本字体大小。
      * @return @~english True if initialize scucess, false otherwise. @~chinese True表明初始化成功，反之失败。
      */
-    bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize);
+    bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize, uint32_t flags, const std::string& url);
 
     
     /**
-     * @~english Create a RichElementText with various arguments.
+     * @brief @~english Create a RichElementText with various arguments.
      * @~chinese 通过多个变量创建一个RichElementText类。
      * @param tag @~english A integer tag value. @~chinese 标签值。
      * @param color @~english A color in Color3B. @~chinese 颜色值。
@@ -142,11 +152,14 @@ public:
      * @param fontSize @~english Content font size. @~chinese 文本字体大小。
      * @return @~english RichElementText instance. @~chinese 富文本类实例。
      */
-    static RichElementText* create(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize);
+    static RichElementText* create(int tag, const Color3B& color, GLubyte opacity, const std::string& text,
+                                   const std::string& fontName, float fontSize, uint32_t flags=0, const std::string& url="");
 protected:
     std::string _text;
     std::string _fontName;
     float _fontSize;
+    uint32_t _flags;
+    std::string _url;
     friend class RichText;
     
 };
@@ -201,11 +214,16 @@ public:
      * @return @~english A RichElementImage instance. @~chinese 一个RichElementImage实例。
      */
     static RichElementImage* create(int tag, const Color3B& color, GLubyte opacity, const std::string& filePath);
+
+    void setWidth(int width);
+    void setHeight(int height);
 protected:
     std::string _filePath;
     Rect _textureRect;
     int _textureType;
     friend class RichText;
+    int _width;
+    int _height;
 };
     
 /** @class RichElementCustomNode
@@ -306,6 +324,11 @@ protected:
 class CC_GUI_DLL RichText : public Widget
 {
 public:
+
+    enum WrapMode {
+        WRAP_PER_WORD,
+        WRAP_PER_CHAR
+    };
     
     /**
      * @~english Default constructor.
@@ -329,7 +352,14 @@ public:
      * @return @~english RichText instance. @~chinese RichText实例。
      */
     static RichText* create();
-    
+
+    /**
+     * @brief Create a RichText from an XML
+     *
+     * @return RichText instance.
+     */
+    static RichText* createWithXML(const std::string& xml);
+
     /**
      * @~english Insert a RichElement at a given index.
      * @~chinese 在指定位置插入一个RichElement。
@@ -377,26 +407,40 @@ public:
     //override functions.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
     virtual std::string getDescription() const override;
+
+    /** @brief sets the wrapping mode: WRAP_PER_CHAR or WRAP_PER_WORD
+     */
+    void setWrapMode(WrapMode wrapMode);
+
+    /** @brief returns the current wrapping mode */
+    WrapMode getWrapMode() const;
     
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
-    
+
+    bool initWithXML(const std::string& xml);
+
 protected:
     virtual void adaptRenderers() override;
 
     virtual void initRenderer() override;
     void pushToContainer(Node* renderer);
-    void handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize, const Color3B& color, GLubyte opacity);
-    void handleImageRenderer(const std::string& fileParh, const Color3B& color, GLubyte opacity);
+    void handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize, const Color3B& color, GLubyte opacity, uint32_t flags, const std::string& url="");
+    void handleImageRenderer(const std::string& fileParh, const Color3B& color, GLubyte opacity, int width, int height);
     void handleCustomRenderer(Node* renderer);
     void formarRenderers();
     void addNewLine();
-protected:
+    int findSplitPositionForWord(cocos2d::Label* label, const std::string& text);
+    int findSplitPositionForChar(cocos2d::Label* label, const std::string& text);
+
     bool _formatTextDirty;
     Vector<RichElement*> _richElements;
     std::vector<Vector<Node*>*> _elementRenders;
     float _leftSpaceWidth;
     float _verticalSpace;
+
+    // per word, or per char
+    WrapMode _wrapMode;
 };
     
 }

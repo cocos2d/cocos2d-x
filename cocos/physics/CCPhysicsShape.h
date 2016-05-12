@@ -603,7 +603,7 @@ public:
      * @return @~english  An autoreleased PhysicsShapePolygon object pointer.
      * @~chinese 一个自释放的PhysicsShapePolygon对象指针。
      */
-    static PhysicsShapePolygon* create(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
+    static PhysicsShapePolygon* create(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO, float radius = 0.0f);
     
     /**@~english
      * Calculate the area of a polygon with specified value.
@@ -636,7 +636,7 @@ public:
      * @return @~english A float number
      * @~chinese 力矩
      */
-    static float calculateMoment(float mass, const Vec2* points, int count, const Vec2& offset = Vec2::ZERO);
+    static float calculateMoment(float mass, const Vec2* points, int count, const Vec2& offset = Vec2::ZERO, float radius = 0.0f);
     
     /**@~english
      * Calculate the moment for a polygon.
@@ -695,7 +695,7 @@ public:
      */
     virtual Vec2 getCenter() override;
 protected:
-    bool init(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
+    bool init(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO, float radius = 0.0f);
     float calculateArea() override;
     virtual void updateScale() override;
     
@@ -723,7 +723,7 @@ public:
      * @return @~english  An autoreleased PhysicsShapeBox object pointer.
      * @~chinese 一个自释放的PhysicsShapeBox对象指针。
      */
-    static PhysicsShapeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
+    static PhysicsShapeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO, float radius = 0.0f);
     
     /**@~english
      * Get this box's width and height.
@@ -748,7 +748,7 @@ public:
     virtual Vec2 getOffset() override { return getCenter(); }
     
 protected:
-    bool init(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
+    bool init(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO, float radius = 0.0f);
     
 protected:
     PhysicsShapeBox();

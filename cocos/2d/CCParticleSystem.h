@@ -235,7 +235,7 @@ It is possible to customize any of the above mentioned properties in runtime. Ex
 #endif
 #endif
 
-class CC_DLL ParticleSystem : public Node, public TextureProtocol
+class CC_DLL ParticleSystem : public Node, public TextureProtocol, public PlayableProtocol
 {
 public:
     /** @~english Mode
@@ -1056,8 +1056,14 @@ public:
     * @return @~english The resource file name.
     * @~chinese 资源文件名。
     */
-    const std::string getResourceFile() const { return _plistFile; }
+    const std::string& getResourceFile() const { return _plistFile; }
 
+    /// @{
+    /// @name implement Playable Protocol
+    virtual void start() override;
+    virtual void stop() override;
+    /// @} end of PlaybleProtocol
+    
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor

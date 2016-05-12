@@ -71,6 +71,13 @@ public:
     void dispatchDeleteBackward();
 
     /**
+    * @brief @~english Dispatches the press control key operation.
+    * @~chinese 分派control键按下操作。
+    * @lua NA
+    */
+    void dispatchControlKey(EventKeyboard::KeyCode keyCode);
+
+    /**
      * @brief @~english Get the content text from IMEDelegate, retrieved previously from IME.
      * @~chinese 从IMEDelegate获得文本的内容。
      * @lua NA

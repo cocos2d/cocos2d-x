@@ -453,7 +453,8 @@ var TestAnimationEvent = ArmatureTestLayer.extend({
             if (movementID == "Fire") {
                 var moveBy = cc.moveBy(2, cc.p(300 * this._direction, 0));
                 this._armature.stopAllActions();
-                this._armature.runAction(cc.sequence(moveBy, cc.callFunc(this.callback, this)));
+                var callFunc = cc.callFunc(this.callback, this);
+                this._armature.runAction(cc.sequence(moveBy, callFunc));
                 this._armature.getAnimation().play("Walk");
 
                 this._direction *= -1;

@@ -19,7 +19,7 @@
  This file was modified to fit the cocos2d-x project
  */
 
-#include "CCVertexAttribBinding.h"
+#include "renderer/CCVertexAttribBinding.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/ccGLStateCache.h"
 #include "platform/CCGL.h"

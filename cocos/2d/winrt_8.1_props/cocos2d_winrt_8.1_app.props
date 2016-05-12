@@ -4,6 +4,7 @@
   <PropertyGroup Label="APP_DLLS">
     <AngleBinPath Condition=" '$(AngleBinPath)' == '' ">$(EngineRoot)external\$(COCOS2D_PLATFORM)-specific\angle\prebuilt\$(Platform)\</AngleBinPath>
     <CurlBinPath Condition=" '$(CurlBinPath)' == '' ">$(EngineRoot)external\curl\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</CurlBinPath>
+    <ZLibBinPath Condition=" '$(ZLibBinPath)' == '' ">$(EngineRoot)external\$(COCOS2D_PLATFORM)-specific\zlib\prebuilt\$(Platform)\</ZLibBinPath>
     <WebsocketsBinPath Condition=" '$(WebsocketsBinPath)' == '' ">$(EngineRoot)external\websockets\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</WebsocketsBinPath>
     <SQLiteBinPath Condition=" '$(SQLiteBinPath)' == '' ">$(EngineRoot)external\sqlite3\libraries\$(COCOS2D_PLATFORM)\$(Platform)\</SQLiteBinPath>
     <OggBinPath Condition=" '$(OggBinPath)' == '' ">$(EngineRoot)external\$(COCOS2D_PLATFORM)-specific\OggDecoder\prebuilt\$(Platform)\</OggBinPath>
@@ -15,7 +16,7 @@
     <None Include="$(AngleBinPath)libGLESv2.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="$(WebsocketsBinPath)libwebsockets.dll">
+	<None Include="$(ZLibBinPath)zlib.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="$(SQLiteBinPath)sqlite3.dll">

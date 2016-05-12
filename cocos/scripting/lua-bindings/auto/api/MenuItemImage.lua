@@ -32,7 +32,7 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
---  Initializes a menu item with a normal, selected  and disabled image with a callable object. 
+--  Initializes a menu item with a normal, selected and disabled image with a callable object. 
 -- @function [parent=#MenuItemImage] initWithNormalImage 
 -- @param self
 -- @param #string normalImage

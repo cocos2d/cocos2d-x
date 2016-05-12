@@ -660,7 +660,9 @@ public:
      * @~chinese 返回素材图片文件名。
      * @since v3.10
      */
-    const std::string getResourceName() const { return _fileName; }
+    const std::string& getResourceName() const { return _fileName; }
+
+    int getResourceType() const { return _fileType; }
 
 CC_CONSTRUCTOR_ACCESS :
 	/**
@@ -669,7 +671,7 @@ CC_CONSTRUCTOR_ACCESS :
     Sprite();
     virtual ~Sprite();
 
-    /* @~english Initializes an empty sprite with nothing init.  @~chinese 初始化一个空的Sprite。*/
+    /* @~english Initializes an empty sprite with no parameters.  @~chinese 初始化一个空的Sprite。*/
     virtual bool init() override;
 
     /**@~english

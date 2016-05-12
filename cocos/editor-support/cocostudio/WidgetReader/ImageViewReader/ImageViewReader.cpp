@@ -1,14 +1,16 @@
 
 
-#include "ImageViewReader.h"
+#include "editor-support/cocostudio/WidgetReader/ImageViewReader/ImageViewReader.h"
 
 #include "ui/UIImageView.h"
-#include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
+#include "platform/CCFileUtils.h"
+#include "2d/CCSpriteFrameCache.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -353,12 +355,6 @@ namespace cocostudio
         {
             imageView->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
         }
-        //else
-        //{
-        //    auto label = Label::create();
-        //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-        //    imageView->addChild(label);
-        //}
         
         bool scale9Enabled = options->scale9Enabled() != 0;
         imageView->setScale9Enabled(scale9Enabled);

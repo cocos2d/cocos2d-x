@@ -22,12 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCActionNode.h"
-#include "cocostudio/CCActionFrameEasing.h"
+#include "editor-support/cocostudio/CCActionNode.h"
+#include "editor-support/cocostudio/CCActionFrameEasing.h"
 #include "ui/UIWidget.h"
 #include "ui/UIHelper.h"
 #include "ui/UILayout.h"
-#include "cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CocoLoader.h"
 #include "base/ccUtils.h"
 
 using namespace cocos2d;

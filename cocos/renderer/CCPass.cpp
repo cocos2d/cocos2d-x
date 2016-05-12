@@ -27,7 +27,7 @@
  - Qt3D: http://qt-project.org/
  ****************************************************************************/
 
-#include "CCPass.h"
+#include "renderer/CCPass.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCTexture2D.h"

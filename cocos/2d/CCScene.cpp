@@ -92,6 +92,14 @@ Scene::~Scene()
 #if CC_USE_PHYSICS
     delete _physicsWorld;
 #endif
+    
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        sEngine->releaseAllChildrenRecursive(this);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
 }
 
 #if CC_USE_NAVMESH

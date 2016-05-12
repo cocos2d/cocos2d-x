@@ -490,7 +490,7 @@ public:
     * @note @~english This method is used internally.
     *   @~chinese 该方法在内部使用。
     */
-    virtual bool writeToFile(ValueMap& dict, const std::string& fullPath);
+    virtual bool writeToFile(const ValueMap& dict, const std::string& fullPath);
 
     /**
      *  write a string into a file
@@ -499,17 +499,17 @@ public:
      * @param fullPath The full path to the file you want to save a string
      * @return bool True if write success
      */
-    virtual bool writeStringToFile(std::string dataStr, const std::string& fullPath);
+    virtual bool writeStringToFile(const std::string& dataStr, const std::string& fullPath);
 
 
     /**
      * write Data into a file
      *
-     *@param retData the data want to save
+     *@param data the data want to save
      *@param fullPath The full path to the file you want to save a string
      *@return bool
      */
-    virtual bool writeDataToFile(Data retData, const std::string& fullPath);
+    virtual bool writeDataToFile(const Data& data, const std::string& fullPath);
 
     /**
     * write ValueMap into a plist file
@@ -518,7 +518,7 @@ public:
     *@param fullPath The full path to the file you want to save a string
     *@return bool
     */
-    virtual bool writeValueMapToFile(ValueMap& dict, const std::string& fullPath);
+    virtual bool writeValueMapToFile(const ValueMap& dict, const std::string& fullPath);
 
     /**
     * write ValueVector into a plist file
@@ -527,7 +527,7 @@ public:
     *@param fullPath The full path to the file you want to save a string
     *@return bool
     */
-    virtual bool writeValueVectorToFile(ValueVector vecData, const std::string& fullPath);
+    virtual bool writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath);
 
     /**@~english
     * Windows fopen can't support UTF-8 filename

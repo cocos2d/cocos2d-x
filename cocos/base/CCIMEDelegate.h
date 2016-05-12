@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include <string>
 #include "math/CCGeometry.h"
+#include "base/CCEventKeyboard.h"
 
 /**
  * @addtogroup base
@@ -141,6 +142,14 @@ protected:
      * @lua NA
      */
     virtual void deleteBackward() {}
+
+    /**
+     *@brief @~english Called by IMEDispatcher after the user press control key.
+     *@~chinese 当用户按下control键时被IMEDispatcher调用
+     * @js NA
+     * @lua NA
+     */
+    virtual void controlKey(EventKeyboard::KeyCode keyCode) {}
 
     /**
      * @brief @~english get content text

@@ -321,6 +321,7 @@ function Atlas4.create()
 
     local lastChar = label2:getChildByTag(3)
     lastChar:runAction(rot_4ever:clone())
+    scheduler:scheduleScriptFunc(Atlas4.step, 0.1, false)
 
     Helper.titleLabel:setString("LabelBMFont")
     Helper.subtitleLabel:setString( "Using fonts as cc.Sprite objects. Some characters should rotate.")

@@ -25,13 +25,13 @@ THE SOFTWARE.
 #ifndef __CCARMATURE_H__
 #define __CCARMATURE_H__
 
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CCBone.h"
-#include "cocostudio/CCBatchNode.h"
-#include "cocostudio/CCArmatureAnimation.h"
-#include "cocostudio/CCSpriteFrameCacheHelper.h"
-#include "cocostudio/CCArmatureDataManager.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CCBone.h"
+#include "editor-support/cocostudio/CCBatchNode.h"
+#include "editor-support/cocostudio/CCArmatureAnimation.h"
+#include "editor-support/cocostudio/CCSpriteFrameCacheHelper.h"
+#include "editor-support/cocostudio/CCArmatureDataManager.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include "math/CCMath.h"
 
 class b2Body;

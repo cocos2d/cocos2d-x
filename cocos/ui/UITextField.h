@@ -132,8 +132,7 @@ public:
     * @~chinese 获取总共输入的字符数。
     *@return @~english Total inputed character count. @~chinese 总共输入的字符数。
     */
-    int getCharCount()const;
-    
+    std::size_t getCharCount()const; 
     
     /**
     * @~english Toggle password input mode.
@@ -222,8 +221,6 @@ public:
 protected:
     bool _maxLengthEnabled;
     int _maxLength;
-    bool _passwordEnabled;
-    std::string _passwordStyleText;
     bool _attachWithIME;
     bool _detachWithIME;
     bool _insertText;
@@ -655,6 +652,30 @@ public:
     */
     TextVAlignment getTextVerticalAlignment() const;
     
+    /**
+     * Set enable cursor use.
+     * @js NA
+     */
+    void setCursorEnabled(bool enabled);
+    
+    /**
+     * Set char showing cursor.
+     * @js NA
+     */
+    void setCursorChar(char cursor);
+    
+    /**
+     * Set cursor position, if enabled
+     * @js NA
+     */
+    void setCursorPosition(std::size_t cursorPosition);
+    
+    /**
+     * Set cursor position to hit letter, if enabled
+     * @js NA
+     */
+    void setCursorFromPoint(const Vec2 &point, const Camera* camera);
+    
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     
@@ -693,7 +714,6 @@ protected:
 #endif
     ccTextFieldCallback _eventCallback;
     
-    std::string _passwordStyleText;
     bool _textFieldRendererAdaptDirty;
 private:
     enum class FontType

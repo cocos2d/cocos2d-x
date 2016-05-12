@@ -1,5 +1,5 @@
 #include "UITest.h"
-#include "cocostudio/CCArmatureDataManager.h"
+#include "editor-support/cocostudio/CCArmatureDataManager.h"
 #include "CocoStudioGUITest/CocosGUIScene.h"
 #include "CocoStudioGUITest/GUIEditorTest.h"
 #include "CocoStudioGUITest/CustomGUIScene.h"

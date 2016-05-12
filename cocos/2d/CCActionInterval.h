@@ -73,7 +73,8 @@ class EventCustom;
  * 例子:
  * 
  * @code
- * Action *pingPongAction = Sequence::actions(action, action->reverse(), nullptr);
+ * auto action = MoveBy::create(1.0f, Vec2::ONE);
+ * auto pingPongAction = Sequence::create(action, action->reverse(), nullptr);
  * @endcode
  */
 class CC_DLL ActionInterval : public FiniteTimeAction
@@ -1965,10 +1966,6 @@ public:
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     virtual void update(float time) override;
-    //
-    // Overrides
-    //
-    virtual bool isDone(void) const override;
     
 CC_CONSTRUCTOR_ACCESS:
     TargetedAction();

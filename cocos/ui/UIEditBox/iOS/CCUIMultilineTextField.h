@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 #import <UIKit/UIKit.h>
-#import "UITextView+CCUITextInput.h"
+#import "ui/UIEditBox/iOS/UITextView+CCUITextInput.h"
 
 #pragma mark - UIMultilineTextField implementation
 

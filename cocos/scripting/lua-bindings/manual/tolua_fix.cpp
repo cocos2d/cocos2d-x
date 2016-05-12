@@ -1,7 +1,7 @@
 
-#include "tolua_fix.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "base/CCRef.h"
-#include "LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 #include <stdlib.h>
 
 using namespace cocos2d;

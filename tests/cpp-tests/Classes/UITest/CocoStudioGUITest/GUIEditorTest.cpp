@@ -1,6 +1,6 @@
 #include "GUIEditorTest.h"
 
-#include "cocostudio/ActionTimeline/CSLoader.h"
+#include "editor-support/cocostudio/ActionTimeline/CSLoader.h"
 #include "CocoStudioGUITest.h"
 
 #include "UIButtonTest/UIButtonTest_Editor.h"

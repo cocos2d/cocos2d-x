@@ -255,7 +255,7 @@ int ZipUtils::inflateGZipFile(const char *path, unsigned char **out)
     CCASSERT(out, "out can't be nullptr.");
     CCASSERT(&*out, "&*out can't be nullptr.");
     
-    gzFile inFile = gzopen(path, "rb");
+    gzFile inFile = gzopen(FileUtils::getInstance()->getSuitableFOpen(path).c_str(), "rb");
     if( inFile == nullptr ) {
         CCLOG("cocos2d: ZipUtils: error open gzip file: %s", path);
         return -1;
@@ -518,7 +518,7 @@ public:
 
 ZipFile *ZipFile::createWithBuffer(const void* buffer, uLong size)
 {
-    ZipFile *zip = new ZipFile();
+    ZipFile *zip = new (std::nothrow) ZipFile();
     if (zip && zip->initWithBuffer(buffer, size)) {
         return zip;
     } else {
@@ -536,7 +536,7 @@ ZipFile::ZipFile()
 ZipFile::ZipFile(const std::string &zipFile, const std::string &filter)
 : _data(new ZipFilePrivate)
 {
-    _data->zipFile = unzOpen(zipFile.c_str());
+    _data->zipFile = unzOpen(FileUtils::getInstance()->getSuitableFOpen(zipFile).c_str());
     setFilter(filter);
 }
 

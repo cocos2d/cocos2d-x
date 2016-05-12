@@ -1,8 +1,8 @@
 #ifndef _CCB_CCSCALE9SPRITELOADER_H_
 #define _CCB_CCSCALE9SPRITELOADER_H_
 
-#include "CCNodeLoader.h"
-#include "CCScale9SpriteLoader.h"
+#include "editor-support/cocosbuilder/CCNodeLoader.h"
+#include "editor-support/cocosbuilder/CCScale9SpriteLoader.h"
 #include "ui/UIScale9Sprite.h"
 
 namespace cocosbuilder {

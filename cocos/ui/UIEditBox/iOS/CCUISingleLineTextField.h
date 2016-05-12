@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 #import <UIKit/UIKit.h>
-#import "UITextField+CCUITextInput.h"
+#import "ui/UIEditBox/iOS/UITextField+CCUITextInput.h"
 
 /** TODO: Missing doc - Why is this subclass necessary?
  */

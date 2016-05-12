@@ -25,9 +25,10 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMAUDIO_H__
 #define __CC_EXTENTIONS_CCCOMAUDIO_H__
 
-#include "CCComBase.h"
+#include "editor-support/cocostudio/CCComBase.h"
+#include "base/CCProtocols.h"
 #include "2d/CCComponent.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
@@ -38,7 +39,7 @@ namespace cocostudio {
  * @details @~english offers a very simple interface to play background music & sound effects.
  * @~chinese 提供播放音效和背景音乐的一系列接口.
 */
-class CC_STUDIO_DLL ComAudio : public cocos2d::Component
+class CC_STUDIO_DLL ComAudio : public cocos2d::Component, public cocos2d::PlayableProtocol
 {
     DECLARE_CLASS_COMPONENT_INFO
 public:
@@ -373,9 +374,20 @@ public:
      * @~chinese 声音组件是否循环。
      */
     bool isLoop();
+    
+    /// @{
+    /// @name implement Playable Protocol
+    // play the effect sound path in _filePath
+    virtual void start() override;
+    // stop the effect sound which started with latest start()
+    virtual void stop() override;
+    /// @} end of PlaybleProtocol
+
 private:
     std::string _filePath;
     bool _loop;
+
+    unsigned int _startedSoundId; // !playing sound id from start(), not playEffect
 };
 
 }

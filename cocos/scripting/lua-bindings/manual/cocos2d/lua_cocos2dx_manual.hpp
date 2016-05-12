@@ -33,7 +33,7 @@ extern "C" {
 #endif
 
 #include "cocos2d.h"
-#include "LuaScriptHandlerMgr.h"
+#include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
 
 NS_CC_BEGIN
 class LuaEventListenerCustom

@@ -117,8 +117,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
---  Returns a new action that performs the exactly the reverse action. <br>
--- return A new action that performs the exactly the reverse action.<br>
+--  Returns a new action that performs the exact reverse of the action. <br>
+-- return A new action that performs the exact reverse of the action.<br>
 -- js NA
 -- @function [parent=#Action] reverse 
 -- @param self

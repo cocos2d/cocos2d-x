@@ -1,14 +1,16 @@
 
 
-#include "SliderReader.h"
+#include "editor-support/cocostudio/WidgetReader/SliderReader/SliderReader.h"
 
 #include "ui/UISlider.h"
-#include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
+#include "platform/CCFileUtils.h"
+#include "2d/CCSpriteFrameCache.h"
 
 USING_NS_CC;
 using namespace ui;

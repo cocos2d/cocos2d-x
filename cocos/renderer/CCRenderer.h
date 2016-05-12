@@ -42,7 +42,6 @@
 NS_CC_BEGIN
 
 class EventListenerCustom;
-class QuadCommand;
 class TrianglesCommand;
 class MeshCommand;
 
@@ -199,9 +198,9 @@ class GroupCommandManager;
 @class Renderer
 @brief @~english Class responsible for the rendering in.
 
-Whenever possible prefer to use `QuadCommand` objects since the renderer will automatically batch them.
+Whenever possible prefer to use `TrianglesCommand` objects since the renderer will automatically batch them.
 @~chinese 负责渲染的类。 
-由于可以进行batch渲染，该类更擅长处理QuadCommand。
+由于可以进行batch渲染，该类更擅长处理TrianglesCommand。
 */
 class CC_DLL Renderer
 {
@@ -313,8 +312,8 @@ public:
     */
     ssize_t getDrawnBatches() const { return _drawnBatches; }
     /* 
-    @~english RenderCommands (except) QuadCommand should update this value  
-    @~chinese 除了QuadCommand，其他渲染命令应该更新渲染batch这个统计数据值
+    @~english RenderCommands (except) TrianglesCommand should update this value  
+    @~chinese 除了TrianglesCommand，其他渲染命令应该更新渲染batch这个统计数据值
     @param number @~english the added number of draw batch
     @~chinese 增加的batch绘制的数目。
     */
@@ -327,8 +326,8 @@ public:
     */
     ssize_t getDrawnVertices() const { return _drawnVertices; }
     /* 
-    @~english RenderCommands (except) QuadCommand should update this value  
-    @~chinese 除了QuadCommand，其他渲染命令应该更新渲染的顶点个数这个统计数据值。
+    @~english RenderCommands (except) TrianglesCommand should update this value  
+    @~chinese 除了TrianglesCommand，其他渲染命令应该更新渲染的顶点个数这个统计数据值。
     @param number @~english the added number of draw vertices
     @~chinese 增加的绘制顶点的数目。
     */
@@ -372,23 +371,21 @@ protected:
     void setupVBO();
     void mapBuffers();
     void drawBatchedTriangles();
-    void drawBatchedQuads();
 
-    //Draw the previews queued quads and flush previous context
+    //Draw the previews queued triangles and flush previous context
     void flush();
     
     void flush2D();
     
     void flush3D();
 
-    void flushQuads();
     void flushTriangles();
 
     void processRenderCommand(RenderCommand* command);
     void visitRenderQueue(RenderQueue& queue);
 
     void fillVerticesAndIndices(const TrianglesCommand* cmd);
-    void fillQuads(const QuadCommand* cmd);
+
 
     /* clear color set outside be used in setGLDefaultValues() */
     Color4F _clearColor;
@@ -397,11 +394,8 @@ protected:
     
     std::vector<RenderQueue> _renderGroups;
 
-    uint32_t _lastMaterialID;
-
-    MeshCommand*              _lastBatchedMeshCommand;
-    std::vector<TrianglesCommand*> _batchedCommands;
-    std::vector<QuadCommand*> _batchQuadCommands;
+    MeshCommand* _lastBatchedMeshCommand;
+    std::vector<TrianglesCommand*> _queuedTriangleCommands;
 
     //for TrianglesCommand
     V3F_C4B_T2F _verts[VBO_SIZE];
@@ -409,16 +403,20 @@ protected:
     GLuint _buffersVAO;
     GLuint _buffersVBO[2]; //0: vertex  1: indices
 
+    // Internal structure that has the information for the batches
+    struct TriBatchToDraw {
+        TrianglesCommand* cmd;  // needed for the Material
+        GLushort indicesToDraw;
+        GLushort offset;
+    };
+    // capacity of the array of TriBatches
+    int _triBatchesToDrawCapacity;
+    // the TriBatches
+    TriBatchToDraw* _triBatchesToDraw;
+
     int _filledVertex;
     int _filledIndex;
-    
-    //for QuadCommand
-    V3F_C4B_T2F _quadVerts[VBO_SIZE];
-    GLushort _quadIndices[INDEX_VBO_SIZE];
-    GLuint _quadVAO;
-    GLuint _quadbuffersVBO[2]; //0: vertex  1: indices
-    int _numberQuads;
-    
+
     bool _glViewAssigned;
 
     // stats

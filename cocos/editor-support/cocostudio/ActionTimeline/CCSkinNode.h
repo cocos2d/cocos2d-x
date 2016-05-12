@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCSKINNODE_H__
 
 #include "2d/CCNode.h"
-#include "CCTimelineMacro.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimelineMacro.h"
 
 
 NS_TIMELINE_BEGIN

@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x 3.9 Release Notes](#cocos2d-x-39-release-notes)
+- [Cocos2d-x 3.11 Release Notes](#cocos2d-x-311-release-notes)
 - [Misc Information](#misc-information)
 - [Requirements](#requirements)
   - [Runtime Requirements](#runtime-requirements)
@@ -14,18 +14,18 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [v3.9](#v39)
-  - [Highlights features, improvements and API updates of v3.9](#highlights-features-improvements-and-api-updates-of-v39)
-  - [The main features in detail of Cocos2d-x v3.9:](#the-main-features-in-detail-of-cocos2d-x-v39)
-    - [3D Module](#3d-module)
-    - [2D Module](#2d-module)
-    - [Others](#others)
+- [v3.11](#v311)
+  - [Highlights features](#highlights-features)
+  - [The main features in detail of Cocos2d-x v3.11](#the-main-features-in-detail-of-cocos2d-x-v311)
+    - [New memory model in JSB](#new-memory-model-in-jsb)
+    - [OpenSSL](#openssl)
+    - [Cocos2d-x JSB program debugging](#cocos2d-x-jsb-program-debugging)
+    - [New WebGL renderer](#new-webgl-renderer)
   - [Other changes](#other-changes)
-  - [NEW APIS](#new-apis)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Cocos2d-x 3.9 Release Notes #
+# Cocos2d-x 3.11 Release Notes #
 
 # Misc Information
 
@@ -51,7 +51,7 @@
 * ndk-r10c for Android
 * Visual Studio 2013 or newer for Windows (win32)
 * Visual Studio 2013 update4 or newer for Windows 8.1 universal Apps
-* Visual Studio 2015 RC or newer and Windows 10.0 (build 10074 or higher) for Windows 10.0 UWP Apps
+* Visual Studio 2015 or newer and Windows 10.0 (build 10074 or higher) for Windows 10.0 UWP Apps
 
 ## How to run tests
 
@@ -80,16 +80,17 @@ cocos run -p android -m release
 ```
 
 ### Mac OSX & iOS
+You can run the samples by:
 
-* Enter `cocos2d-x/build` folder, open `cocos2d_test.xcodeproj`
-* Select `cpp-tests`, `lua-tests`, `js-tests` for `iOS` or `OS X` target in scheme toolbar
-* Click `run` button
+* Open __cocos2d-x/build__ folder, open __cocos2d_test.xcodeproj__
+* Select `cpp-tests`, `lua-tests`, `js-tests` for __iOS__ or __OS X__ target in scheme toolbar
+* Click __run__ button
 
 ### Android
-
-You can run the samples...
+You can run the samples by either using the command-line or Eclipse:
 
 **Using command line:**
+Perform the following steps:
 
     $ cd cocos2d-x
     $ ./setup.py
@@ -100,333 +101,124 @@ You can run the samples...
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
 **Using Eclipse:**
+Perform the following steps:
 
     $ cd cocos2d-x
     $ ./setup.py
     $ cd build
     $ ./android-build.py cpp-empty-test -p 10
 
-Then
+Next:
 
-* Import cocos2d-x Android project into Eclipse, the path used to import is `cocos/2d/platform/android`
-* Import `cpp-empty-test` Android project into Eclipse, the path used to import is `tests/cpp-empty-test/proj.android`
+* Import cocos2d-x Android project into Eclipse, the path used to import is __cocos/2d/platform/android__
+* Import `cpp-empty-test` Android project into Eclipse, the path used to import is __tests/cpp-empty-test/proj.android__
 * Build `cpp-empty-test` Android project and run
 
 ### Windows
+You can run the samples by:
 
-* For win32 project, enter `cocos2d-x/build`, and open `cocos2d-win32.sln`
-* For win 8.1 project, enter `cocos2d-x/build`, and open `cocos2d-win8.1-universal.sln`
-* For win 10 project, enter `cocos2d-x/build`, and open `cocos2d-win10.sln`
+* For win32 project, enter __cocos2d-x/build__, and open __cocos2d-win32.sln__
+* For win 8.1 project, enter __cocos2d-x/build__, and open __cocos2d-win8.1-universal.sln__
+* For win 10 project, enter __cocos2d-x/build__, and open __cocos2d-win10.sln__
 * Select running target
 * Click run button
 
 ### Linux
+You can run the samples by:
 
     $ cd cocos2d-x/build
     $ ./install-deps-linux.sh
     $ cd ../..
 
-Then
+Next:
 
     $ mkdir build
     $ cd build
     $ cmake ../cocos2d-x
     $ make -j4
 
-Run
+Then run:
 
     $ cd bin/cpp-empty-test
     $ ./cpp-empty-test
 
 ## How to start a new game
-
-Use Cocos Console to create a new game:
+Use the __cocos__ console app to create a new game:
 
 ```
 cocos new -l cpp|js|lua MyNewGame
 ```
 
-# v3.9
+# v3.11
 
-## Highlights features, improvements and API updates of v3.9
+## Highlights features
 
-We are happy to announce the release of Cocos2d-x v3.9. Following are the highlighted features, improvements and API updates in this version. 
+* upgrade Chipmunk to v7.0.1
+* use new memory model in JSB, don't have to invoke `retain/release` in JS, it is disabled by default
+* upgrade Curl to v7.48
+* upgrade OpenSSL to 1.0.2g
+* can use VSCode and new Firefox to debug cocos2d-x JSB programs
+* refactor WebGL renderer
 
-1. 3D Module: 
-    - Added 3D MotionStreak to support streak effect. 
-    - Refined Sprite3D to support material system. 
-2. 2D Module:
-    - Added frame callback function and animation callback function. 
-    - Added script component system. 
-    - Reconstruction of 2D physics with Component. 
-    - Improved EditBox implemention on iOS and Win32 platform.
-    - Removed dependence of libcurl on AssetsManager, AssetsManagerEx and Downloader (iOS & Android).
-    - Improved particle performance. 
-3. Others: 
-    - Supported Action inheritance, update function overwriting in JSB. 
-    - Improved ScrollView performance in Web engine. 
-    - Improved Scale9Sprite performance in Web engine. 
-    - Decoupled Sprite's setTexture and updateColor in Web engine.
-    - Added support for debugging and release on real devices with Xcode7 and iOS9.
+## The main features in detail of Cocos2d-x v3.11
 
-## The main features in detail of Cocos2d-x v3.9:
+### New memory model in JSB
 
-### 3D Module
+With new memory model, you don't have to care about object lifecycle. Which means you don't have to invoke `retain/release` in JS any more.
 
-1. 3D MotionStreak
-    
-    In this version, 3D MotionStreak is added to support streak effect. Check the testcase: [Sprite3DTest](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/Sprite3DTest/Sprite3DTest.cpp#L2472) to see how to use it.
+Though we have finished many tests about this new memory model, we can't make sure it is too perfect to enable it by default. But you are appreciated if you can enable it to have a try. If you want to enable it, you should change the value of `CC_ENABLE_GC_FOR_NATIVE_OBJECTS` to 1 in `base/ccConfig.h` like this:
 
-2. Sprite3D
+```c++
+#ifdef CC_ENABLE_SCRIPT_BINDING
+  #ifndef CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+  #define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 1 // change to 1
+  #endif
+#endif
+```
 
-    Added Sprite3D material class. It will be easy and convenient to create internal material. 
+### OpenSSL
+Cocos2d-x has upgraded __OpenSSL__ to version __1.0.2g__.
 
-### 2D Module
+Beginning __July 11, 2016__, Google Play will block publishing of any new apps or updates that use older versions of __OpenSSL__. It is important that you update the use of __OpenSSL__ in your projects. More detail information can refer to [this ticket](http://discuss.cocos2d-x.org/t/openssl-problem-again/28270).
 
-1. Frame callback function and animation callback function
+If you use v2.x or use older versions of v3.x, you can just update __CURL__ and __OpenSSL__.
+To do this:
 
-    Three interfaces are added in ActionTimelineData class, which are addFrameEndCallFunc, removeFrameEndCall and clearFrameEndCalls. It will be easy to add or remove specific frame event. 
+* modify __Cocos2d-x root/external/config.json__ to update the dependency version. For v3.x the dependency version is `v3-deps-92`, and for v2.x it is `v2-deps-5`
+* execute the __download-deps.py__ script in your __Cocos2d-x root__.
 
-2. Script Component 
+```sh
+(jtsm @ 15 ~) $ cd cocos2d-x
 
-    Script component is used to extend c++ Nodes. You can add a script component to a Node, then the script component will receive onEnter,onExit and update events. For example:
+(jtsm @ 15 ~/cocos2d-x) $ ./download-deps.py
 
-    ```c++ 
-    // create a sprite and add a lua component auto player =
-    Sprite::create("player.png");
-    
-    auto luaComponent = ComponentLua::create("player.lua");
-    player->addComponent(luaComponent);
-    ```
-    
-    ```lua
-    // player.lua
-    local player = { 
-        onEnter = function(self)
-        -- do some things in onEnter 
-        end
-        
-        onExit = function(slef) 
-        -- do some things in onExit 
-        end
-        
-        update = function(self)
-        -- do some things every frame 
-        end
-    }
-    
-    -- it is needed to return player to let c++ nodes know it 
-    return player 
-    ```
-    
-    Javascript can work as the same way, just use ComponentJS instead of ComponentLua. 
-    
-    There are some differences between lua component and Javascript component:
-    
-    Should return the object in lua component, in Javascript, you only have to extend cc.ComponentJS, and ensure the result of the last statement is the class of Component.
-    
-    Lua component can only be used in lua projects, Javascript component can only be used in Javascript projects.
-    
-    More detail usage please refer to: `tests/lua-tests/src/ComponentTest` and `tests/js-tests/src/ComponentTest`
+=======================================================
+==> Prepare to download external libraries!
+==> Ready to download 'v3-deps-92.zip' from 'https://github.com/cocos2d/cocos2d-x-3rd-party-libs-bin/archive/v3-deps-92.zip'
+==> WARNING: Couldnt grab the file size from remote, use 'zip_file_size' section in '/Users/jtsm/Chukong-Inc/cocos2d-x/external/config.json'
+==> Start to download, please wait ...
+==> Downloading finished!
+==> Extracting files, please wait ...
+==> Extraction done! ==> Copying files...
+==> Cleaning...
+```
+Feel free to post on our <a href="http://discuss.cocos2d-x.org">forums</a> if you run into difficulty.
 
+### Cocos2d-x JSB program debugging
 
-3. 2D Physics
+In previous version, can not use Firefox 30+ to debug cocos2d-x JSB programs. This limit is fixed since v3.11. And web console feature is added too. [This documentation](http://www.cocos2d-x.org/wiki/Javascript_Remote_Debugging) shows how to use Firefox to debug cocos2d-x JSB programs(this is a little difference from current usage).
 
-    Before v3.9, there are many physics related codes in Node, such as Node::setPhysicsBody(). Since v3.9, we move these codes into physics component.
+Of course you can use [VSCode](https://code.visualstudio.com/) to debug cocos2d-x JSB programs too. You can read about how to use VSCode to debug cocos2d-x JSB programs [here](http://discuss.cocos2d-x.org/t/use-vscode-to-debug-cocos2d-x-jsb-programs/27588).
 
-    After using physics component, the way to use physics is changed. Before v3.9, you can use physics like this:
-    
-    ```
-    auto node = Node::create(); 
-    node->setPhysicsBody(PhysicsBody::createEdgeBox(...));
-    ```
-    
-    Since v3.9 you should use like this:
-    
-    ```
-    auto node = Node::create();
-    node->addComponent(PhysicsBody::createEdgeBox(...));
+### New WebGL renderer
 
-    ```
+In v3.11, we have refactored the WebGL renderer in web engine, here is the detailed changes:
 
-4. EditBox implemention on iOS and Win32 platform
+1. Activate WebGL on Android by default.
+2. Add sprite auto batching in WebGL.
+3. Shared rendering buffer for Sprites.
 
-    - Specify the maximum number of characters in the dialog box. 
-    - Support password input. 
-    - Games will continue when the dialogue box pops up. 
-    - Sync the content in dialogue box. 
-
-5. Remove dependence of curl on AssetsManager, AssetsManagerEx and Downloader (iOS & Android)
-
-    From v3.9, iOS and Android version will not depend on libcurl, which make
-    the game package smaller and solve some bugs caused by libcurl. Stability has
-    been improved with the updated iOS and Android system. 
-
-6. Improved particle performance. 
-
-### Others
-
-1. Supported Action inheritance, update function overwriting in JSB
-
-    In previous version of JSB, developers cannot inherit Action class in JS script, such as Action / ActionInterval / ActionInstant, for their update function will not be called. In v3.9, developers can create subclass of Action and make extensions. More detail usage please refer to the textcase in ActionTest / ActionCustomTest.
-
-2. ScrollView performance on Web engine
-
-    ScrollView and ListView are the popular UI controls in Web engine. Their
-    performance is not perfect in previous versions, especially when there are multiple sub-controls. In v3.9, we have improved its rendering performance. They only act on the contents displayed on the current screen. Test
-    date shows that, comparing with v3.8, rendering efficiency of v3.9 have been improved for twice to four times in different devices and browsers. 
-
-3. Scale9Sprite performance on Web engine
-
-    In this version, we have changed the way to construct 9-slice sprite. The engine uses 9 rendering commands instead of the 9 nodes in previous versions. This helps to reduce memory usage and improve rendering performance. 
-
-4. Decoupled Sprite's setTexture and updateColor in Web engine.
-
-    - Organized the rendering logic in Sprite. UpdateColor is accomplished by texture instead of the Sprite. 
-    - Fixed a bug about image with alpha channel that when the image is set to black, there is color difference between previous and current version. 
-    - Improved texture update logic to reduce texture updates when changing colors.
-    - Improved the logic about the rendering function in SpriteCanvasRenderCmd.
-    - Removed some duplicate codes about updateColor.
-
-5. Support for debugging and release on real devices with Xcode7 and iOS9
-
-    In v3.8.1, we have made it possible to debug on Xcode7. However, there was a bug with iOS9 real device debuging, and in v3.9, we have fixed the bug.
-
+Compare with old version, the draw calls in your game should be significantly reduced if the textures is well managed. This improves also the CPU usage and memory usage. The above is just a first step of WebGL renderer upgrade, we will continue to investigate in this direction in the future versions.
 
 ## Other changes
-
-[NEW]           Label: Added line spacing/leading feature to Label.
-
-[NEW]           ListView: Added APIs to scroll to specific item in list.
-
-[NEW]           ListView: Added APIs to get an item in specific position like center, leftmost, rightmost, topmost and bottommost.
-
-[NEW]           ListView: Added a feature for magnetic scrolling.
-
-[NEW]           Animate: Added ActionTimeline::setAnimationEndCallBack and ActionTimeline::addFrameEndCallFunc.
-
-[NEW]           Animate: Added CSLoader::createNodeWithVisibleSize, CSLoader::createNodeWithVisibleSize and moved "ui::Helper::DoLayout" into them.
-
-[NEW]           Stuio: Added support for Cocos Studio Light3D.
-
-[NEW]           Platform: Added the missing CURL support to the Windows 10 UWP version.
-
-[NEW]           Platform: Added UIEditBox support on linux platform.
-
-[REFINE]        3D: Added non-null checks in PUScriptCompiler::visit before dereferencing.
-
-[REFINE]        3D: Refined SkyboxBrush by making the shader parameter take effect at once.
-
-[REFINE]        Label: Changed label font size type to float to support high precision when font size is small.
-
-[REFINE]        ListView: Fixed an issue that list view's Magnetic::CENTER is not working well when non-bounceable.
-
-[REFINE]        ListView: Added feature of jumping to a specific item in list view.
-
-[REFINE]        Sprite: Added a "unsupport image format!" log when creating a sprite in CCImage.cpp.
-
-[REFINE]        ScrollView: Merge logics of Scroll View for scroll by inertia and auto scroll into one.
-
-[REFINE]        Animate: Moved initialization of image to an appropriate location, because it always called twice in 
-SpriteFrameCache::addSpriteFramesWithFile().
-
-[REFINE]        Simulator: Changed the size of startFlag to 13.
-
-[REFINE]        Simulator: Show Node and Skeleton in the middle of the simulator.
-
-[REFINE]        Simulator: Removed screen direction check in simulator to avoid render error.
-
-[REFINE]        Pysics: Refined components to improve physics performance.
-
-[REFINE]        UI: Refined ComponentContainer to improve performance.
-
-[REFINE]        UI: EventListenerMouse will dispatch EventMouse events.
-
-[REFINE]        OpenGL: Added check for glfwCreateWindow.
-
-[REFINE]        Platform: Fixed a crash on xiaomi2 if Cocos2d-x is built as a dynamic library.
-
-[REFINE]        Platform: Updated libcococs2d name to v3.9 on WinRT platforms.
-
-[REFINE]        Platform: Added some support for mouse on WinRT. Include: Show/Hide mouse cursor; Mouse event 
-implemented similar Desktop version; Left button send mouse event and touch; Support other mouse button and scroll 
-wheel.
-
-[REFINE]        Platform: Correct the convertion between unicode and utf8 on WinRT.
-
-[REFINE]        Platform: Improved EditBox implement on Win32 platform.
-
-[REFINE]        JS: Add jsb.fileUtils.writeDataToFile().
-
-[REFINE]        JS: Set js templates Mac target platform from null to 10.7.
-
-[REFINE]        JS: Removed the static define of variable in headfile of ScriptingCore.
-
-[REFINE]        Lua: Added AssetsManagerEx constants UPDATE_FAILED and ERROR_DECOMPRESS in Lua.
-
-[REFINE]        Lua / JS: Refined lua/js binding tool.
-
-[REFINE]        I/O: Refined AssetsManagerEx unzipping by using async.
-
-[REFINE]        Web: Improved logic of jsb_boot.js to sync with the web engine behavior.
-
-[REFINE]        Web: Sync with CCBoot for web.
-
-[REFINE]        Build: Fixed various compiler warnings on Xcode 7.
-
-[REFINE]        Build: Fixed Wformat-security warning on Xcode.
-
-[REFINE]        Build: Fixed a compile error in __LayerRGBA.
-
-[REFINE]        Tool: Added tools for generating documents automatically.
-
-[REFINE]        Doc: Clean up the code of setRect() function.
-
-[REFINE]        Doc: Fixed a minor typo and renamed INTIAL_CAPS_ALL_CHARACTERS to INITIAL_CAPS_ALL_CHARACTERS 
-in UIEditBox.
-
 You can also take a look at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
-
-
-## NEW APIS
-
-1. JSB Module
-
-    Added jsb.fileUtils.writeDataToFile
-
-2. Sprite3D
-
-    Added Sprite3Dmaterial class to make it easy to create innate material. 
-
-3. ActionTimelineData 
-
-    Three interfaces are added in ActionTimelineData class, which are addFrameEndCallFunc, removeFrameEndCall and clearFrameEndCalls.
-
-4. ActionTimeline::removeFrameEndCallFunc 
-
-5. Improvements for ListView
-
-    - Add APIs to scroll to specific item in list.
-    - Add APIs to get an item in specific position like center, leftmost, rightmost, topmost and bottommost.
-    - Add a feature for magnetic scrolling.
-
-    For more information: https://github.com/cocos2d/cocos2d-x/pull/13723
-
-6. Node
-
-    Added the missing API getChildByTag
-
-7. Label
-
-    Added setLineSpacing, getLineSpacing
-
-8. CSLoader
-
-    Added createNodeWithVisibleSize, createNodeWithVisibleSize
-9. ComponentContainer
-
-    Removed isEmpty
-
-10. Sprite
-
-    Removed debugDraw(bool on)

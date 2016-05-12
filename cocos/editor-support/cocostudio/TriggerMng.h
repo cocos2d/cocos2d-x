@@ -24,7 +24,7 @@ THE SOFTWARE.
 #ifndef __TRIGGERMNG_H__
 #define __TRIGGERMNG_H__
 
-#include "CocoStudio.h"
+#include "editor-support/cocostudio/CocoStudio.h"
 
 namespace cocos2d {
 class EventDispatcher;

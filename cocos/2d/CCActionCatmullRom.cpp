@@ -63,7 +63,7 @@ PointArray* PointArray::create(ssize_t capacity)
 
 bool PointArray::initWithCapacity(ssize_t capacity)
 {
-    _controlPoints = new vector<Vec2*>();
+    _controlPoints = new (std::nothrow) vector<Vec2*>();
     
     return true;
 }
@@ -158,7 +158,7 @@ ssize_t PointArray::count() const
 
 PointArray* PointArray::reverse() const
 {
-    vector<Vec2*> *newArray = new vector<Vec2*>();
+    vector<Vec2*> *newArray = new (std::nothrow) vector<Vec2*>();
     vector<Vec2*>::reverse_iterator iter;
     Vec2 *point = nullptr;
     for (iter = _controlPoints->rbegin(); iter != _controlPoints->rend(); ++iter)

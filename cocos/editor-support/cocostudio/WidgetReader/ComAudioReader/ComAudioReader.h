@@ -25,9 +25,11 @@
 #ifndef __cocos2d_libs__ComAudioReader__
 #define __cocos2d_libs__ComAudioReader__
 
-#include "cocos2d.h"
-#include "cocostudio/CocosStudioExport.h"
-#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
+#include "base/CCRef.h"
+#include "2d/CCComponent.h"
+#include "2d/CCNode.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderProtocol.h"
 
 
 namespace cocostudio

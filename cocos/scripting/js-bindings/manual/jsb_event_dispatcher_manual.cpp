@@ -20,10 +20,10 @@
  * THE SOFTWARE.
  */
 
-#include "jsb_event_dispatcher_manual.h"
+#include "scripting/js-bindings/manual/jsb_event_dispatcher_manual.h"
 #include "cocos2d.h"
-#include "ScriptingCore.h"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 
 USING_NS_CC;
 

@@ -78,7 +78,7 @@ namespace ui {
         
         /**
          * @~english Builtin shader state.
-         * Currenly support Normal and Gray state.
+         * Currently support Normal and Gray state.
          * @~chinese 内建着色器状态，目前支持普通着色以及灰阶着色
          */
         enum class State
@@ -530,7 +530,7 @@ namespace ui {
          * @~chinese 决定精灵是否旋转
          * @param offset @~english The offset when slice the sprite.
          * @~chinese 分割精灵时的偏移量
-         * @param originalSize @~english The origial size of the sprite.
+         * @param originalSize @~english The original size of the sprite.
          * @~chinese 精灵的原始尺寸
          * @param capInsets @~english The Values to use for the cap insets.
          * @~chinese 指定的cap insets
@@ -730,7 +730,8 @@ namespace ui {
         virtual void updateDisplayedColor(const Color3B& parentColor) override;
         virtual void disableCascadeColor() override;
         virtual void disableCascadeOpacity() override;
-        
+        virtual void setGLProgram(GLProgram *glprogram) override;
+        virtual void setGLProgramState(GLProgramState *glProgramState) override;
         
         /**
          * @brief @~english Get the original no 9-sliced sprite

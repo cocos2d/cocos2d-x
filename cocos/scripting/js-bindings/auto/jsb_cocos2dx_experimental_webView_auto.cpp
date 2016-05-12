@@ -1,7 +1,7 @@
-#include "jsb_cocos2dx_experimental_webView_auto.hpp"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#include "cocos2d_specifics.hpp"
-#include "UIWebView.h"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_experimental_webView_auto.hpp"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "ui/UIWebView.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -18,7 +18,7 @@ static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
-    return true;    
+    return true;
 }
 JSClass  *jsb_cocos2d_experimental_ui_WebView_class;
 JSObject *jsb_cocos2d_experimental_ui_WebView_prototype;
@@ -369,11 +369,9 @@ void js_register_cocos2dx_experimental_webView_WebView(JSContext *cx, JS::Handle
     jsb_cocos2d_experimental_ui_WebView_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_experimental_ui_WebView_class->resolve = JS_ResolveStub;
     jsb_cocos2d_experimental_ui_WebView_class->convert = JS_ConvertStub;
-    jsb_cocos2d_experimental_ui_WebView_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_experimental_ui_WebView_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -413,8 +411,12 @@ void js_register_cocos2dx_experimental_webView_WebView(JSContext *cx, JS::Handle
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_experimental_ui_WebView_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "WebView"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::experimental::ui::WebView>(cx, jsb_cocos2d_experimental_ui_WebView_class, proto, parent_proto);
 }
 
@@ -426,4 +428,4 @@ void register_all_cocos2dx_experimental_webView(JSContext* cx, JS::HandleObject 
     js_register_cocos2dx_experimental_webView_WebView(cx, ns);
 }
 
-#endif //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#endif //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)

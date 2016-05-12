@@ -50,7 +50,7 @@ class Texture2D;
  *
  * You can modify the frame of a Sprite by doing:
  *  @code
- *   SpriteFrame *frame = SpriteFrame::createWithTexture(texture, rect);
+ *   SpriteFrame* frame = SpriteFrame::createWithTexture(texture, rect);
  *   sprite->setSpriteFrame(frame);
  *  @endcode
  * @~chinese 一个 SpriteFrame 包含:
@@ -61,7 +61,7 @@ class Texture2D;
  * 可以这样来修改 Sprite 使用的 SpriteFrame:
  * 
  *  @code
- *   SpriteFrame *frame = SpriteFrame::createWithTexture(texture, rect);
+ *   SpriteFrame* frame = SpriteFrame::createWithTexture(texture, rect);
  *   sprite->setSpriteFrame(frame);
  *  @endcode
  */
@@ -274,6 +274,22 @@ public:
      */
     void setOffset(const Vec2& offsets);
 
+    /** Get anchor point of the frame.
+     *
+     * @return The anchor point of the sprite frame.
+     */
+    const Vec2& getAnchorPoint() const;
+    /** Set anchor point of the frame.
+     *
+     * @param anchorPoint The anchor point of the sprite frame.
+     */
+    void setAnchorPoint(const Vec2& anchorPoint);
+    /** Check if anchor point is defined for the frame.
+     *
+     * @return true if anchor point is available.
+     */
+    bool hasAnchorPoint() const;
+
     // Overrides
 	virtual SpriteFrame *clone() const override;
 
@@ -339,6 +355,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     Vec2 _offset;
+    Vec2 _anchorPoint;
     Size _originalSize;
     Rect _rectInPixels;
     bool   _rotated;

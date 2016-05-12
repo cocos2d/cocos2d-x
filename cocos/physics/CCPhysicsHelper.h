@@ -28,7 +28,7 @@
 #include "base/ccConfig.h"
 #if CC_USE_PHYSICS
 
-#include "chipmunk.h"
+#include "chipmunk/chipmunk.h"
 #include "platform/CCPlatformMacros.h"
 #include "math/CCGeometry.h"
 

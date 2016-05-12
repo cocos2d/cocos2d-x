@@ -26,13 +26,13 @@
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#import "CCDirectorCaller-ios.h"
+#import "platform/ios/CCDirectorCaller-ios.h"
 
 #import <Foundation/Foundation.h>
 #import <OpenGLES/EAGL.h>
 
 #import "base/CCDirector.h"
-#import "CCEAGLView-ios.h"
+#import "platform/ios/CCEAGLView-ios.h"
 
 static id s_sharedDirectorCaller;
 
@@ -69,10 +69,34 @@ static id s_sharedDirectorCaller;
         interval = 1;
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        isAppActive = [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self selector:@selector(appDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+        [nc addObserver:self selector:@selector(appDidBecomeInactive) name:UIApplicationWillResignActiveNotification object:nil];
+    }
+    return self;
+}
+
 -(void) dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [displayLink release];
     [super dealloc];
+}
+
+- (void)appDidBecomeActive
+{
+    isAppActive = YES;
+}
+
+- (void)appDidBecomeInactive
+{
+    isAppActive = NO;
 }
 
 -(void) startMainLoop
@@ -105,9 +129,11 @@ static id s_sharedDirectorCaller;
                       
 -(void) doCaller: (id) sender
 {
-    cocos2d::Director* director = cocos2d::Director::getInstance();
-    [EAGLContext setCurrentContext: [(CCEAGLView*)director->getOpenGLView()->getEAGLView() context]];
-    director->mainLoop();
+    if (isAppActive) {
+        cocos2d::Director* director = cocos2d::Director::getInstance();
+        [EAGLContext setCurrentContext: [(CCEAGLView*)director->getOpenGLView()->getEAGLView() context]];
+        director->mainLoop();
+    }
 }
 
 @end

@@ -1,4 +1,4 @@
-#include "CCMenuItemLoader.h"
+#include "editor-support/cocosbuilder/CCMenuItemLoader.h"
 
 using namespace cocos2d;
 

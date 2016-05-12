@@ -986,6 +986,6 @@ NS_CC_MATH_END
 // end of base group
 /// @}
 
-#include "Vec2.inl"
+#include "math/Vec2.inl"
 
 #endif // MATH_VEC2_H

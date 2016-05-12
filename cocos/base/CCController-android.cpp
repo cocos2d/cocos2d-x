@@ -23,13 +23,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCController.h"
+#include "base/CCController.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include <functional>
-#include "ccMacros.h"
-#include "CCDirector.h"
-#include "jni/JniHelper.h"
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
+#include "platform/android/jni/JniHelper.h"
 #include "base/CCEventController.h"
 
 NS_CC_BEGIN
@@ -155,14 +155,8 @@ Controller::Controller()
     init();
 }
 
-void Controller::receiveExternalKeyEvent(int externalKeyCode,bool receive)
-{
-    JniMethodInfo t;
-    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/GameControllerHelper", "receiveExternalKeyEvent", "(IIZ)V")) {
-
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, _deviceId, externalKeyCode, receive);
-        t.env->DeleteLocalRef(t.classID);
-    }
+void Controller::receiveExternalKeyEvent(int externalKeyCode,bool receive) {
+    JniHelper::callStaticVoidMethod("org/cocos2dx/lib/GameControllerHelper", "receiveExternalKeyEvent", _deviceId, externalKeyCode, receive);
 }
 
 NS_CC_END

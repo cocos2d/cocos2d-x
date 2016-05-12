@@ -16,7 +16,7 @@
 * See the License for the specific language governing permissions and limitations under the License.
 */
 
-#include "MediaStreamer.h"
+#include "audio/winrt/MediaStreamer.h"
 
 #include <Mfidl.h>
 #include <Mfreadwrite.h>

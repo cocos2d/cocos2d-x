@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CocostudioParserJsonTest.h"
-#include "cocostudio/CCSGUIReader.h"
+#include "editor-support/cocostudio/CCSGUIReader.h"
 #include "ui/CocosGUI.h"
 #include "../CocostudioParserTest.h"
 #include "../CustomWidget/CustomImageView.h"

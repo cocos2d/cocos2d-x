@@ -136,7 +136,7 @@ public:
      * @~chinese AssetsManagerEx的构造函数，使用本地manifest文件地址和资源存储路径作为参数。
      @param manifestUrl   @~english The url for the local manifest file
      * @~chinese 本地资源manifest文件地址
-     @param storagePath   @~english The storage path for downloaded assetes
+     @param storagePath   @~english The storage path for downloaded assets
      * @~chinese 资源的存储路径
      @warning @~english   The cached manifest in your storage path have higher priority and will be searched first,
                 only if it doesn't exist, AssetsManagerEx will use the given manifestUrl.
@@ -291,6 +291,9 @@ protected:
     
 private:
     void batchDownload();
+
+    // Called when one DownloadUnits finished
+    void onDownloadUnitsFinished();
     
     //! The event of the current AssetsManagerEx in event dispatcher
     std::string _eventName;

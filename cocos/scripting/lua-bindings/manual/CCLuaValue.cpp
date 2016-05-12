@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCLuaValue.h"
+#include "scripting/lua-bindings/manual/CCLuaValue.h"
 
 
 NS_CC_BEGIN

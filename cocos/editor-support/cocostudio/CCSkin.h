@@ -28,9 +28,9 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "renderer/CCQuadCommand.h"
 
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CCBone.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CCBone.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 

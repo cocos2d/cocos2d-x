@@ -46,7 +46,6 @@ class RelativeLayoutParameter;
  * All the concrete layout manager should inherit from this class.
  * @~chinese 管理layout的基类
  * 所有layout的管理器都应该从这个类继承出去
- */
 class CC_GUI_DLL LayoutManager : public Ref
 {
 public:
@@ -129,9 +128,15 @@ private:
     
     Vector<Widget*> getAllWidgets(LayoutProtocol *layout);
     Widget* getRelativeWidget(Widget* widget);
-    bool caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout);
-    void caculateFinalPositionWithRelativeAlign();
+    bool calculateFinalPositionWithRelativeWidget(LayoutProtocol *layout);
+    void calculateFinalPositionWithRelativeAlign();
     
+    /** @deprecated Use method calculateFinalPositionWithRelativeWidget() instead */
+    CC_DEPRECATED_ATTRIBUTE bool caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout);
+
+    /** @deprecated Use method calculateFinalPositionWithRelativeAlign() instead */
+    CC_DEPRECATED_ATTRIBUTE void caculateFinalPositionWithRelativeAlign();
+
     ssize_t _unlayoutChildCount;
     Vector<Widget*> _widgetChildren;
     Widget* _widget;

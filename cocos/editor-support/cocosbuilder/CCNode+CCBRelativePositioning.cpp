@@ -1,5 +1,5 @@
-#include "CCNode+CCBRelativePositioning.h"
-#include "CCBReader.h"
+#include "editor-support/cocosbuilder/CCNode+CCBRelativePositioning.h"
+#include "editor-support/cocosbuilder/CCBReader.h"
 
 using namespace cocos2d;
 

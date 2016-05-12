@@ -93,7 +93,7 @@ void NavMeshDebugDraw::depthMask(bool state)
 void NavMeshDebugDraw::begin(duDebugDrawPrimitives prim, float size /*= 1.0f*/)
 {
     if (_currentPrimitive) return;
-    _currentPrimitive = new Primitive;
+    _currentPrimitive = new (std::nothrow) Primitive;
     _currentPrimitive->type = getPrimitiveType(prim);
     _currentPrimitive->depthMask = _currentDepthMask;
     _currentPrimitive->start = _vertices.size();
@@ -148,11 +148,11 @@ void NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t fl
         _dirtyBuffer = false;
     }
     for (auto &iter : _primitiveList){
+        if (iter->type == GL_POINTS)
+            continue;
+        
         _stateBlock->setDepthWrite(iter->depthMask);
-        if (iter->type == GL_POINTS){
-            //glPointSize(iter->size);
-        }
-        else if (iter->type == GL_LINES){
+        if (iter->type == GL_LINES){
             glLineWidth(iter->size);
         }
         _stateBlock->bind();

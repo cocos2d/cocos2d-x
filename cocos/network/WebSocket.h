@@ -32,13 +32,15 @@
 
 #include <string>
 #include <vector>
+#include <mutex>
+#include <memory>  // for std::shared_ptr
 
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCStdC.h"
 
-struct libwebsocket;
-struct libwebsocket_context;
-struct libwebsocket_protocols;
+struct lws;
+struct lws_context;
+struct lws_protocols;
 
 /**
  * @addtogroup network
@@ -47,22 +49,34 @@ struct libwebsocket_protocols;
 
 NS_CC_BEGIN
 
+class EventListenerCustom;
+
 namespace network {
 
 class WsThreadHelper;
-class WsMessage;
 
 /**
  * @ WebSocket 
  * @brief @~english WebSocket is wrapper of the libwebsockets-protocol, let the developer could call the websocket easily.
+ * Please note that all public methods of WebSocket have to be invoked on Cocos Thread.
  * @~chinese WebSocket是libwebsockets-protocol的高层封装，可以让开发者能方便的调用websocket的功能。
+ * 需要注意的是所有的public接口都需要在Cocos线程中调用。
  */
 class CC_DLL WebSocket
 {
 public:
     /**
-     * @~english Construtor of WebSocket.
+     * @~english Close all connections and wait for all websocket threads to exit
+     * @~chinese 关闭所有连接并等待websocket线程退出
+     * @note @~english This method has to be invoked on Cocos Thread
+    * @~chinese 该函数需要在Cocos线程中调用
+     */
+    static void closeAllConnections();
+    
+    /**
+     * * @~english Constructor of WebSocket.
      * @~chinese 构造函数
+     *
      * @js ctor
      */
     WebSocket();
@@ -80,10 +94,11 @@ public:
      */
     struct Data
     {
-        Data():bytes(nullptr), len(0), issued(0), isBinary(false){}
+        Data():bytes(nullptr), len(0), issued(0), isBinary(false), ext(nullptr){}
         char* bytes;
         ssize_t len, issued;
         bool isBinary;
+        void* ext;
     };
 
     /**
@@ -191,8 +206,19 @@ public:
 
     /**
      *  @~english Closes the connection to server. @~chinese 关闭到服务端的连接。
+     * @note ~english It's a synchronous method, it will not return until websocket thread exits.
+     * ~chinese 该函数是异步函数，直到websocket线程退出才会被调用。
+     * 
      */
     void close();
+    
+    /**
+     *  @brief Closes the connection to server asynchronously.
+     *  @note It's an asynchronous method, it just notifies websocket thread to exit and returns directly,
+     *        If using 'closeAsync' to close websocket connection, 
+     *        be carefull of not using destructed variables in the callback of 'onClose'.
+     */
+    void closeAsync();
 
     /**
      *  @~english Gets current state of connection. @~chinese 获取当前连接的状态。
@@ -201,36 +227,39 @@ public:
     State getReadyState();
 
 private:
-    virtual void onSubThreadStarted();
-    virtual int onSubThreadLoop();
-    virtual void onSubThreadEnded();
-    virtual void onUIThreadReceiveMessage(WsMessage* msg);
+    void onSubThreadStarted();
+    void onSubThreadLoop();
+    void onSubThreadEnded();
 
+    // The following callback functions are invoked in websocket thread
+    int onSocketCallback(struct lws *wsi, int reason, void *user, void *in, ssize_t len);
 
-    friend class WebSocketCallbackWrapper;
-    int onSocketCallback(struct libwebsocket_context *ctx,
-                         struct libwebsocket *wsi,
-                         int reason,
-                         void *user, void *in, ssize_t len);
+    void onClientWritable();
+    void onClientReceivedData(void* in, ssize_t len);
+    void onConnectionOpened();
+    void onConnectionError();
+    void onConnectionClosed();
 
 private:
+    std::mutex   _readStateMutex;
     State        _readyState;
     std::string  _host;
     unsigned int _port;
     std::string  _path;
 
-    ssize_t _pendingFrameDataLen;
-    ssize_t _currentDataLen;
-    char *_currentData;
+    std::vector<char> _receivedData;
 
     friend class WsThreadHelper;
+    friend class WebSocketCallbackWrapper;
     WsThreadHelper* _wsHelper;
 
-    struct libwebsocket*         _wsInstance;
-    struct libwebsocket_context* _wsContext;
+    struct lws*         _wsInstance;
+    struct lws_context* _wsContext;
+    std::shared_ptr<bool> _isDestroyed;
     Delegate* _delegate;
     int _SSLConnection;
-    struct libwebsocket_protocols* _wsProtocols;
+    struct lws_protocols* _wsProtocols;
+    EventListenerCustom* _resetDirectorListener;
 };
 
 }

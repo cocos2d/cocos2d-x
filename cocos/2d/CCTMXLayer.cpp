@@ -59,7 +59,7 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
     Texture2D *texture = nullptr;
     if( tilesetInfo )
     {
-        texture = Director::getInstance()->getTextureCache()->addImage(tilesetInfo->_sourceImage.c_str());
+        texture = Director::getInstance()->getTextureCache()->addImage(tilesetInfo->_sourceImage);
     }
 
     if (nullptr == texture)

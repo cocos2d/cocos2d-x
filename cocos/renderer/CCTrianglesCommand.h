@@ -57,9 +57,9 @@ public:
         /**@~english Index data pointer. @~chinese 索引数据指针。*/
         unsigned short* indices;
         /**@~english The number of vertices. @~chinese 顶点的数量。*/
-        ssize_t vertCount;
+        int vertCount;
         /**@~english The number of indices. @~chinese 索引的数量。*/
-        ssize_t indexCount;
+        int indexCount;
     };
     /**@~english Construtor. @~chinese 构造函数。*/
     TrianglesCommand();
@@ -185,8 +185,8 @@ protected:
     uint32_t _materialID;
     /** OpenGL handle for texture.*/
     GLuint _textureID;
-    /** GLprogramstate for the commmand. encapsulate shaders and uniforms. */
-    GLProgramState* _glProgramState;
+    /**The GLProgram used by GLProgramState*/
+    GLProgram* _glProgram;
     /** Blend function when rendering the triangles.*/
     BlendFunc _blendType;
     /** Rendered triangles. */
