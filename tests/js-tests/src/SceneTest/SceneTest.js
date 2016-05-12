@@ -41,7 +41,7 @@ var SceneTestLayer1 = cc.Layer.extend({
         var item1 = new cc.MenuItemFont("Test pushScene", this.onPushScene, this);
         var item2 = new cc.MenuItemFont("Test pushScene w/transition", this.onPushSceneTran, this);
         var item3 = new cc.MenuItemFont("Quit", function () {
-            cc.log("quit!")
+            cc.log("quit!");
         }, this);
         var item4 = new cc.MenuItemFont("setNotificationNode", function () {
             var layerTemp = new cc.LayerColor(cc.color(0, 255, 255, 120));
@@ -105,6 +105,7 @@ var SceneTestLayer1 = cc.Layer.extend({
     },
     onExit:function (sender) {
         cc.director.setNotificationNode(null);
+        this._super();
     }
 
     //CREATE_NODE(SceneTestLayer1);

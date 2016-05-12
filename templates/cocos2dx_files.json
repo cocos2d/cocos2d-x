@@ -1350,6 +1350,7 @@
         "docs/MainPageWhiteBook.h", 
         "docs/RELEASE_ENGINEERING.md", 
         "docs/RELEASE_NOTES.md", 
+        "docs/RELEASE_NOTES_CN.md", 
         "docs/cocos2dx_portrait.png", 
         "docs/doxygen.config", 
         "docs/doxygen_white_book.config", 

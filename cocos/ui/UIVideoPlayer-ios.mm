@@ -343,6 +343,18 @@ bool VideoPlayer::isFullScreenEnabled()const
     return [((UIVideoViewWrapperIos*)_videoView) isFullScreenEnabled];
 }
 
+void VideoPlayer::onEnter()
+{
+    Widget::onEnter();
+    [((UIVideoViewWrapperIos*)_videoView) setVisible:YES];
+}
+
+void VideoPlayer::onExit()
+{
+    Widget::onExit();
+    [((UIVideoViewWrapperIos*)_videoView) setVisible:NO];
+}
+
 void VideoPlayer::setFullScreenEnabled(bool enabled)
 {
     [((UIVideoViewWrapperIos*)_videoView) setFullScreenEnabled:enabled];

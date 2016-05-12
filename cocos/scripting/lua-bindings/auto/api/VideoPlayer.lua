@@ -120,15 +120,27 @@
         
 --------------------------------
 -- 
--- @function [parent=#VideoPlayer] setVisible 
+-- @function [parent=#VideoPlayer] onEnter 
 -- @param self
--- @param #bool visible
+-- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
+        
+--------------------------------
+-- 
+-- @function [parent=#VideoPlayer] onExit 
+-- @param self
 -- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
         
 --------------------------------
 -- Resumes playback.
 -- @function [parent=#VideoPlayer] resume 
 -- @param self
+-- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
+        
+--------------------------------
+-- 
+-- @function [parent=#VideoPlayer] setVisible 
+-- @param self
+-- @param #bool visible
 -- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
         
 --------------------------------
