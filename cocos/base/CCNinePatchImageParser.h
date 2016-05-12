@@ -108,13 +108,13 @@ public:
      * @~chinese 一个图像对象的指针。
      * @param frameRect @~english The sprite frame rect in the image atlas.
      * @~chinese 从一个地图集中创建精灵框架矩形。
-     * @param ratated @~english Whether is sprite frame is rotated in the image atlas.
+     * @param ratated @~english Whether sprite frame is rotated in the image atlas.
      * @~chinese 地图集中的精灵帧图像是否旋转
      *
      * @return @~english Been is Sprite frame is rotated in the image atlas.
      * @~chinese 在图像集合中旋转过后的Sprite frame.
      */
-    NinePatchImageParser(Image* image,  const Rect& frameRect, bool ratated);
+    NinePatchImageParser(Image* image, const Rect& frameRect, bool rotated);
 
     /**@~english
      * Change the sprite frame info.

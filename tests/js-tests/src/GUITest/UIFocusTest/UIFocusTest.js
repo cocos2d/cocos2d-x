@@ -106,6 +106,10 @@ var UIFocusTestBase = UIMainLayer.extend({
                 widget.setColor(cc.color.WHITE);
             }
         }
+    },
+    onExit:function () {
+        cc.eventManager.removeListener(this._eventListener);
+        this._super();
     }
 });
 

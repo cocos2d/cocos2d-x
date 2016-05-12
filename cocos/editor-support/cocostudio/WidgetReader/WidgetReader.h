@@ -25,12 +25,12 @@
 #ifndef __TestCpp__WidgetReader__
 #define __TestCpp__WidgetReader__
 
-#include "WidgetReaderProtocol.h"
-#include "cocostudio/CCSGUIReader.h"
+#include "editor-support/cocostudio/WidgetReader/WidgetReaderProtocol.h"
+#include "editor-support/cocostudio/CCSGUIReader.h"
 #include "ui/GUIDefine.h"
-#include "cocostudio/CocosStudioExport.h"
-#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
-#include "cocostudio/WidgetReader/NodeReaderDefine.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderProtocol.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderDefine.h"
 
 namespace cocostudio
 {

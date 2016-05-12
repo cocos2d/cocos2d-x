@@ -23,11 +23,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "UIEditBoxImpl-common.h"
+#include "ui/UIEditBox/UIEditBoxImpl-common.h"
 
 #define kLabelZOrder  9999
 
-#include "UIEditBox.h"
+#include "ui/UIEditBox/UIEditBox.h"
 #include "base/CCDirector.h"
 #include "2d/CCLabel.h"
 #include "ui/UIHelper.h"
@@ -106,7 +106,7 @@ void EditBoxImplCommon::setInactiveText(const char* pText)
         std::string passwordString;
         for(int i = 0; i < strlen(pText); ++i)
             passwordString.append("\u25CF");
-        _label->setString(passwordString.c_str());
+        _label->setString(passwordString);
     }
     else
     {
@@ -230,7 +230,7 @@ void EditBoxImplCommon::setPlaceHolder(const char* pText)
             _labelPlaceHolder->setVisible(true);
         }
 
-        _labelPlaceHolder->setString(_placeHolder.c_str());
+        _labelPlaceHolder->setString(_placeHolder);
         this->setNativePlaceHolder(pText);
     }
 }
@@ -246,13 +246,6 @@ void EditBoxImplCommon::setContentSize(const Size& size)
     _contentSize = size;
     CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
     placeInactiveLabels();
-    
-    auto director = cocos2d::Director::getInstance();
-    auto glview = director->getOpenGLView();
-    Size  controlSize = Size(size.width * glview->getScaleX() * _label->getNodeToWorldAffineTransform().a,size.height * glview->getScaleY() * _label->getNodeToWorldAffineTransform().a);
-       
-    this->setNativeContentSize(controlSize);
-
 }
 
 void EditBoxImplCommon::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)

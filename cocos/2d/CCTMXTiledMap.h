@@ -375,7 +375,7 @@ public:
     /** @~english Get the map file name.
      * @~chinese 获取地图文件名。
      */
-    const std::string getResourceFile() const { return _tmxFile; }
+    const std::string& getResourceFile() const { return _tmxFile; }
 
 CC_CONSTRUCTOR_ACCESS:
     /**

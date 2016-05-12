@@ -367,7 +367,7 @@ public:
      * @return @~english True if two vectors are equal, false if not.
      * @~chinese 如果两个Vector是相等的则返回true,如果不想等则返回false。
      */
-    bool equals(const Vector<T> &other)
+    bool equals(const Vector<T> &other) const
     {
         ssize_t s = this->size();
         if (s != other.size())

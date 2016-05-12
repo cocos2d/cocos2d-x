@@ -89,7 +89,7 @@ public:
     @return @~english Whether the clipping is enabled or not. Default is true.
      * @~chinese 裁剪是否开启，默认是开启的。
     */
-    const bool isClippingEnabled() const {
+    bool isClippingEnabled() const {
         return _clippingEnabled;
     }
 

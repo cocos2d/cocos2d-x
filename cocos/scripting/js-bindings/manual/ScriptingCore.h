@@ -30,17 +30,17 @@
 #include "jsfriendapi.h"
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "js_bindings_config.h"
-#include "js_bindings_core.h"
-#include "spidermonkey_specifics.h"
-#include "js_manual_conversions.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/js_bindings_core.h"
+#include "scripting/js-bindings/manual/spidermonkey_specifics.h"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
 #include "mozilla/Maybe.h"
-#include "js-BindingsExport.h"
+#include "scripting/js-bindings/manual/js-BindingsExport.h"
 
 #include <assert.h>
 #include <memory>
 
-#define ENGINE_VERSION "Cocos2d-JS v3.10"
+#define ENGINE_VERSION "Cocos2d-JS v3.11"
 
 void js_log(const char *format, ...);
 
@@ -98,10 +98,13 @@ private:
     mozilla::Maybe<JS::PersistentRootedObject> _global;
     mozilla::Maybe<JS::PersistentRootedObject> _debugGlobal;
     SimpleRunLoop* _runLoop;
+    bool _jsInited;
+    bool _needCleanup;
 
     bool _callFromScript;
     ScriptingCore();
 public:
+    
     ~ScriptingCore();
 
     /**@~english
@@ -121,6 +124,36 @@ public:
      */
     virtual cocos2d::ccScriptType getScriptType() override { return cocos2d::kScriptTypeJavascript; };
 
+    /**
+     * Reflect the retain relationship to script scope
+     */
+    virtual void retainScriptObject(cocos2d::Ref* owner, cocos2d::Ref* target) override;
+    
+    /**
+     * Add the script object to root object
+     */
+    virtual void rootScriptObject(cocos2d::Ref* target) override;
+    
+    /**
+     * Reflect the release relationship to script scope
+     */
+    virtual void releaseScriptObject(cocos2d::Ref* owner, cocos2d::Ref* target) override;
+    
+    /**
+     * Remove the script object from root object
+     */
+    virtual void unrootScriptObject(cocos2d::Ref* target) override;
+    
+    /**
+     * Release all children in script scope
+     */
+    virtual void releaseAllChildrenRecursive(cocos2d::Node *node) override;
+    
+    /**
+     * Release all native refs for the given owner in script scope
+     */
+    virtual void releaseAllNativeRefs(cocos2d::Ref* owner) override;
+    
     /**
      * @brief @~english Removes the C++ object's linked JavaScript proxy object from JavaScript context
      * @~chinese 从JavaScript上下文中删除指定C++对象的JavaScript代理对象
@@ -618,35 +651,8 @@ public:
      * @~chinese 参数
      */
     static bool dumpRoot(JSContext *cx, uint32_t argc, jsval *vp);
-    /**@~english
-     * Adds a js object to root so that it won't be touched by the garbage collection, it should be invoked from script environment
-     * Bound to `__jsc__.addGCRootObject`
-     * @~chinese 
-     * 添加一个js对象到根内存中，这样它就不会被垃圾回收机制所影响。它应该从脚本中被调用
-     * 绑定到`__jsc__.addGCRootObject`
-     * @param cx @~english The js context
-     * @~chinese js上下文
-     * @param argc @~english The arguments count
-     * @~chinese 参数数量
-     * @param vp @~english The arguments
-     * @~chinese 参数
-     */
-    static bool addRootJS(JSContext *cx, uint32_t argc, jsval *vp);
-    /**@~english
-     * Removes a js object from root, it should be invoked from script environment
-     * Bound to `__jsc__.removeGCRootObject`
-     * @~chinese 
-     * 从根内存中删除一个js，它应该从脚本中被调用
-     * 绑定到`__jsc__.removeGCRootObject`
-     * @param cx @~english The js context
-     * @~chinese js上下文
-     * @param argc @~english The arguments count
-     * @~chinese 参数数量
-     * @param vp @~english The arguments
-     * @~chinese 参数
-     */
-    static bool removeRootJS(JSContext *cx, uint32_t argc, jsval *vp);
-    /**@~english
+
+     /**
      * Check whether a js object's C++ proxy is still valid, it should be invoked from script environment
      * Bound to `window.__isObjectValid`
      * @~chinese 
@@ -710,7 +716,7 @@ public:
      * @~chinese 全局对象
      */
     bool isFunctionOverridedInJS(JS::HandleObject obj, const std::string& name, JSNative native);
-
+    
     /**
      * Roots the associated JSObj.
      * The GC won't collected rooted objects. This function is only called
@@ -724,6 +730,11 @@ public:
      * This function is only called when compiled with CC_ENABLE_GC_FOR_NATIVE_OBJECTS=1
      */
     virtual void unrootObject(cocos2d::Ref* ref) override;
+
+    /**
+     * Calls the Garbage Collector
+     */
+    virtual void garbageCollect() override;
 
 private:
     void string_report(JS::HandleValue val);
@@ -779,7 +790,7 @@ js_type_class_t *jsb_register_class(JSContext *cx, JSClass *jsClass, JS::HandleO
     return p;
 }
 
-/** creates two new proxies: one associaged with the nativeObj,
+/** creates two new proxies: one associated with the nativeObj,
  and another one associated with the JsObj */
 js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsObj);
 /** returns the proxy associated with the Native* */
@@ -790,6 +801,9 @@ js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
 /** removes both the native and js proxies */
 void jsb_remove_proxy(js_proxy_t* proxy);
+/** removes the native js object proxy and unroot the js object (if necessary), 
+ it's often used when JS object is created by native object */
+void removeJSObject(JSContext* cx, cocos2d::Ref* nativeObj);
 
 /**
  * Generic initialization function for subclasses of Ref
@@ -805,18 +819,13 @@ void jsb_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, cocos2d::Ref* ref, co
 void jsb_ref_autoreleased_init(JSContext* cx, JS::Heap<JSObject*> *obj, cocos2d::Ref* ref, const char* debug);
 
 /**
- * Generic finalize used by objects that are subclass of Ref
- */
-void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj);
-
-/**
- Disassociates oldRef from jsobj, and associates a new Ref.
- Useful for the EaseActions and others
+ * Disassociates oldRef from jsobj, and associates a new Ref.
+ * Useful for the EaseActions and others
  */
 void jsb_ref_rebind(JSContext* cx, JS::HandleObject jsobj, js_proxy_t *js2native_proxy, cocos2d::Ref* oldRef, cocos2d::Ref* newRef, const char* debug);
 
 /**
- Creates a new JSObject of a certain type (typeClass) and creates a proxy associated with and the Ref
+ * Creates a new JSObject of a certain type (typeClass) and creates a proxy associated with and the Ref
  */
 JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
@@ -829,17 +838,43 @@ JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_clas
 JSObject* jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
 /**
- It will try to get the associated JSObjct for ref.
- If it can't find it, it will create a new one associating it to Ref.
- Call this function for objects that were already created and initialized, when returning `getChild()`
+ * It will try to get the associated JSObjct for the native object.
+ * The reference created from JSObject to native object is weak because it won't retain it.
+ * The behavior is exactly the same with 'jsb_ref_create_jsobject' when CC_ENABLE_GC_FOR_NATIVE_OBJECTS desactivated.
+ */
+JSObject* jsb_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug);
+
+/**
+ * It will try to get the associated JSObjct for ref.
+ * If it can't find it, it will create a new one associating it to Ref.
+ * Call this function for objects that were already created and initialized, when returning `getChild()`
  */
 JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
 /**
- It will try to get the associated JSObjct for ref.
- If it can't find it, it will create a new one associating it to Ref
- Call this function for objects that might return an already existing copy when you create them. For example, `Animation3D::create()`;
+ * It will try to get the associated JSObjct for ref.
+ * If it can't find it, it will create a new one associating it to Ref
+ * Call this function for objects that might return an already existing copy when you create them. For example, `Animation3D::create()`;
  */
 JSObject* jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+
+/**
+ * It will try to get the associated JSObjct for the native object.
+ * If it can't find it, it will create a new one associating it to the native object.
+ * The reference created from JSObject to native object is weak because it won't retain it.
+ * The behavior is exactly the same with 'jsb_ref_get_or_create_jsobject' when CC_ENABLE_GC_FOR_NATIVE_OBJECTS desactivated.
+ */
+CC_JS_DLL JSObject* jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug);
+
+/**
+ * Register finalize hook and its owner as an entry in _js_hook_owner_map,
+ * so that we can find the owner of a FinalizeHook in its finalize function
+ */
+void jsb_register_finalize_hook(JSObject *hook, JSObject *owner);
+
+/**
+ * Remove the entry of finalize hook and its owner in _js_hook_owner_map
+ */
+JSObject *jsb_get_and_remove_hook_owner(JSObject *hook);
 
 #endif /* __SCRIPTING_CORE_H__ */

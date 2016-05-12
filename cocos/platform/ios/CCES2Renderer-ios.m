@@ -32,9 +32,9 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#import "CCES2Renderer-ios.h"
+#import "platform/ios/CCES2Renderer-ios.h"
 #import "platform/CCPlatformMacros.h"
-#import "OpenGL_Internal-ios.h"
+#import "platform/ios/OpenGL_Internal-ios.h"
 
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
 #define NSLog(...)       do {} while (0)

@@ -667,9 +667,9 @@ bool UIScrollViewInnerSize::init()
         scrollView->setScrollBarPositionFromCorner(Vec2(2, 2));
         scrollView->setScrollBarColor(Color3B::WHITE);
         scrollView->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
-        scrollView->setBackGroundColor(ccc3(150, 150, 100));
+        scrollView->setBackGroundColor(Color3B(150, 150, 100));
         scrollView->getInnerContainer()->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
-        scrollView->getInnerContainer()->setBackGroundColor(ccc3(50, 100, 50));
+        scrollView->getInnerContainer()->setBackGroundColor(Color3B(50, 100, 50));
         scrollView->getInnerContainer()->setBackGroundColorOpacity(100);
         scrollView->setClippingEnabled(false);
         _uiLayer->addChild(scrollView);

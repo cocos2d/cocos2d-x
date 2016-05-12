@@ -247,7 +247,7 @@ public:
      */
     void setConnectionTimeout(unsigned int timeout);
     
-    /** @brief @~english Gets connection time out in secondes
+    /** @brief @~english Gets connection time out in seconds
      * @~chinese 获取连接超时时间，以秒为单位
      * @return @~english The time out value.
      * @~chinese 连接超时时间。

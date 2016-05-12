@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "../include/SimpleAudioEngine.h"
-#include "../include/AudioEngine.h"
+#include "audio/include/SimpleAudioEngine.h"
+#include "audio/include/AudioEngine.h"
 
 using namespace CocosDenshion;
 using namespace cocos2d;

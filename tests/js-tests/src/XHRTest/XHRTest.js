@@ -35,8 +35,8 @@ function streamXHREventsToLabel ( xhr, label, textbox, method ) {
     // Simple events
     ['loadstart', 'abort', 'error', 'load', 'loadend', 'timeout'].forEach(function (eventname) {
         xhr["on" + eventname] = function () {
-            label.string += "\nEvent : " + eventname
-        }
+            label.string += "\nEvent : " + eventname;
+        };
     });
 
     // Special event
@@ -44,11 +44,11 @@ function streamXHREventsToLabel ( xhr, label, textbox, method ) {
         if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status <= 207)) {
             var httpStatus = xhr.statusText;
             var response = xhr.responseText.substring(0, 100) + "...";
-            textbox.string = method + " Response (100 chars):\n"
-            textbox.string += response
-            label.string += "\nStatus: Got " + method + " response! " + httpStatus
+            textbox.string = method + " Response (100 chars):\n";
+            textbox.string += response;
+            label.string += "\nStatus: Got " + method + " response! " + httpStatus;
         }
-    }
+    };
 }
 
 
@@ -87,7 +87,7 @@ var XHRTestLayer = cc.Layer.extend({
         var statusGetLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
         this.addChild(statusGetLabel, 1);
 
-        statusGetLabel.x = 10
+        statusGetLabel.x = 10;
         statusGetLabel.y = winSize.height - 100;
         ensureLeftAligned(statusGetLabel);
         statusGetLabel.setString("Status: Send Get Request to httpbin.org");

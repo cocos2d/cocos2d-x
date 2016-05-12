@@ -3,7 +3,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include  "tolua_fix.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
 #ifdef __cplusplus
 }
 #endif
@@ -71,8 +71,13 @@ static int lua_cocos2dx_deleteDownloadDir(lua_State* L)
         if (!tolua_isstring(L, 1, 0, &tolua_err)) goto tolua_lerror;
 #endif
         std::string pathToSave = tolua_tostring(L, 1, "");
-        
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+
+#if CC_TARGET_OS_TVOS
+        // Not implemented. "system" is not present on tvOS
+        CCLOG("'lua_cocos2dx_deleteDownloadDir' not implemented on tvOS");
+        return 0;
+
+#elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
         std::string command = "rm -r ";
         // Path may include space.
         command += "\"" + pathToSave + "\"";

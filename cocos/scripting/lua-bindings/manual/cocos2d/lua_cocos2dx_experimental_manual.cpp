@@ -1,8 +1,8 @@
-#include "lua_cocos2dx_experimental_manual.hpp"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-#include "CCLuaValue.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/cocos2d/lua_cocos2dx_experimental_manual.hpp"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/CCLuaValue.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 
 static int lua_cocos2dx_experimental_TMXLayer_getTileGIDAt(lua_State* tolua_S)
 {

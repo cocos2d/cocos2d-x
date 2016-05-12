@@ -1941,11 +1941,9 @@ direction
 },
 
 /**
- * @method setBounceable
- * @param {bool} arg0
+ * @method stopAnimatedContentOffset
  */
-setBounceable : function (
-bool 
+stopAnimatedContentOffset : function (
 )
 {
 },
@@ -2060,6 +2058,16 @@ maxContainerOffset : function (
 )
 {
     return cc.Vec2;
+},
+
+/**
+ * @method setBounceable
+ * @param {bool} arg0
+ */
+setBounceable : function (
+bool 
+)
+{
 },
 
 /**
@@ -2616,34 +2624,6 @@ str
  * @class EventListenerAssetsManagerEx
  */
 cc.EventListenerAssetsManager = {
-
-/**
- * @method init
- * @param {cc.AssetsManagerEx} arg0
- * @param {function} arg1
- * @return {bool}
- */
-init : function (
-assetsmanagerex, 
-func 
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {cc.AssetsManagerEx} arg0
- * @param {function} arg1
- * @return {cc.EventListenerAssetsManagerEx}
- */
-create : function (
-assetsmanagerex, 
-func 
-)
-{
-    return cc.EventListenerAssetsManagerEx;
-},
 
 /**
  * @method EventListenerAssetsManagerEx

@@ -28,9 +28,9 @@ extern "C" {
 #include "lua.h"
 #include "tolua++.h"
 }
-#include "tolua_fix.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "cocos2d.h"
-#include "Lua-BindingsExport.h"
+#include "scripting/lua-bindings/manual/Lua-BindingsExport.h"
 #include "editor-support/cocostudio/CocosStudioExtension.h"
 
 using namespace cocos2d;
@@ -1901,7 +1901,7 @@ void ccvector_std_string_to_luaval(lua_State* L, const std::vector<std::string>&
  * 
  * @param L @~english the current lua_State.
  * @~chinese 当前lua_State。
- * @param inValue @~english a std::vector<int> vaule.
+ * @param inValue @~english a std::vector<int> value.
  * @~chinese std::vector<int>值。
  */
 void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue);
@@ -1916,7 +1916,7 @@ void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue);
  * 
  * @param L @~english the current lua_State.
  * @~chinese 当前lua_State。
- * @param inValue @~english a std::vector<float> vaule.
+ * @param inValue @~english a std::vector<float> value.
  * @~chinese std::vector<float>值。
  */
 void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
@@ -1931,7 +1931,7 @@ void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
  * 
  * @param L @~english the current lua_State.
  * @~chinese 当前lua_State。
- * @param inValue @~english a std::vector<unsigned short> vaule.
+ * @param inValue @~english a std::vector<unsigned short> value.
  * @~chinese std::vector<unsigned short>值。
  */
 void ccvector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& inValue);
@@ -1976,7 +1976,7 @@ void texParams_to_luaval(lua_State* L, const cocos2d::Texture2D::TexParams& inVa
  * 
  * @param L @~english the current lua_State.
  * @~chinese 当前lua_State。
- * @param inValue @~english a std::vector<cocos2d::Vec3> vaule.
+ * @param inValue @~english a std::vector<cocos2d::Vec3> value.
  * @~chinese std::vector<cocos2d::Vec3>值。
  */
 void std_vector_vec3_to_luaval(lua_State* L, const std::vector<cocos2d::Vec3>& inValue);
@@ -1985,7 +1985,7 @@ void std_vector_vec3_to_luaval(lua_State* L, const std::vector<cocos2d::Vec3>& i
  * Push a Lua dict table converted from a std::map<std::string, std::string> into the Lua stack.
  *
  * @param L the current lua_State.
- * @param inValue a std::map<std::string, std::string> vaule.
+ * @param inValue a std::map<std::string, std::string> value.
  */
 void std_map_string_string_to_luaval(lua_State* L, const std::map<std::string, std::string>& inValue);
 

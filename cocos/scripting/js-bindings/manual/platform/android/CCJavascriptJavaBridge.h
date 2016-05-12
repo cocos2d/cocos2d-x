@@ -28,8 +28,8 @@
 #include <vector>
 #include "jsapi.h"
 #include "jsfriendapi.h"
-#include "js_bindings_config.h"
-#include "jsb_helper.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/jsb_helper.h"
 
 using namespace std;
 

@@ -525,13 +525,13 @@ public:
     * @param name @~english The name of material. @~chinese 材质名称。
     */
     void setMaterialName(const std::string &name) { _matName = name; };
-
+    
     /**
     * @~english Get the using material of this system(internal method).
     * @~chinese 获取粒子系统使用的材质名称(内部方法)。
     * @return @~english The name of material. @~chinese 材质名称。
     */
-    const std::string getMaterialName() const { return _matName; };
+    const std::string& getMaterialName() const { return _matName; };
 
     /**
     * @~english Forces emission of particles.

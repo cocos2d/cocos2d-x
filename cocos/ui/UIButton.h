@@ -291,7 +291,7 @@ public:
      *@return @~english Get the button's title content.
      * @~chinese 按钮的标题内容。
      */
-    const std::string getTitleText() const;
+    std::string getTitleText() const;
 
     /**@~english
      * Change the color of button's title.
@@ -345,7 +345,7 @@ public:
      *@return @~english font name in std::string
      * @~chinese std::string格式的字体名称
      */
-    const std::string getTitleFontName() const;
+    std::string getTitleFontName() const;
 
     /**@~english
      * Sets the title's text horizontal alignment.

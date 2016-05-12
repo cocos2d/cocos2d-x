@@ -24,8 +24,8 @@ THE SOFTWARE.
 Based upon code from the DirectX Tool Kit by Microsoft Corporation,
 obtained from https://directxtk.codeplex.com
 ****************************************************************************/
-#include "WICImageLoader-winrt.h"
-#include "CCWinRTUtils.h"
+#include "platform/winrt/WICImageLoader-winrt.h"
+#include "platform/winrt/CCWinRTUtils.h"
 
 NS_CC_BEGIN
 

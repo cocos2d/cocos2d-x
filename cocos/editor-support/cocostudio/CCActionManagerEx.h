@@ -25,9 +25,9 @@ THE SOFTWARE.
 #ifndef __ActionMANAGER_H__
 #define __ActionMANAGER_H__
 
-#include "cocostudio/CCActionObject.h"
-#include "cocostudio/DictionaryHelper.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCActionObject.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
     
@@ -103,13 +103,7 @@ public:
 	*
 	* @param func  @~english ui action call back @~chinese UI动作回调函数
     *
-<<<<<<< HEAD
     * @return  @~english ActionObject which named as the param name. @chinese 符合参数名称的动作对象
-=======
-    * @param actionName  action name in the UIfile.
-    *
-    * @return  ActionObject which named as the param name
->>>>>>> e6022b2a925b6d21249df71fc76a250ce05d579d
     */
 	ActionObject* playActionByName(const char* jsonName,const char* actionName, cocos2d::CallFunc* func);
 
@@ -130,6 +124,9 @@ public:
     * @~chinese 使用json字典初始化属性值
     */
 	void initWithDictionary(const char* jsonName,const rapidjson::Value &dic, Ref* root);
+
+    ActionObject* stopActionByName(const char* jsonName,const char* actionName);
+    
     /**
     * @~english init properties with binary file
     * @~chinese 使用二进制数据初始化属性值

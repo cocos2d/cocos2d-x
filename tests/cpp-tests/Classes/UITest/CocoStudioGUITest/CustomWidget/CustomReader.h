@@ -4,7 +4,7 @@
 #define __TestCpp__CustomReader__
 
 #include "extensions/cocos-ext.h"
-#include "cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
 #include "ui/CocosGUI.h"
 
 

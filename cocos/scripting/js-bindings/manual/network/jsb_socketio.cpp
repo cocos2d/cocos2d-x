@@ -21,14 +21,14 @@
  * THE SOFTWARE.
  */
 
-#include "jsb_socketio.h"
-#include "jsb_helper.h"
+#include "scripting/js-bindings/manual/network/jsb_socketio.h"
+#include "scripting/js-bindings/manual/jsb_helper.h"
 #include "cocos2d.h"
 #include "network/WebSocket.h"
 #include "network/SocketIO.h"
-#include "spidermonkey_specifics.h"
-#include "ScriptingCore.h"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/spidermonkey_specifics.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 
 using namespace cocos2d::network;
 
@@ -153,7 +153,7 @@ bool js_cocos2dx_SocketIO_connect(JSContext* cx, uint32_t argc, jsval* vp)
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
         } while (0);
         
-        JSB_SocketIODelegate* siodelegate = new JSB_SocketIODelegate();
+        JSB_SocketIODelegate* siodelegate = new (std::nothrow) JSB_SocketIODelegate();
         
         CCLOG("Calling native SocketIO.connect method");
         SIOClient* ret = SocketIO::connect(url, *siodelegate);
@@ -357,7 +357,7 @@ bool js_cocos2dx_SocketIO_on(JSContext* cx, uint32_t argc, jsval* vp)
 
         CCLOG("JSB SocketIO eventName to: '%s'", eventName.c_str());
         
-        std::shared_ptr<JSFunctionWrapper> callback(new JSFunctionWrapper(cx, obj, args.get(1)));
+        std::shared_ptr<JSFunctionWrapper> callback(new JSFunctionWrapper(cx, obj, args.get(1), args.thisv()));
 
         ((JSB_SocketIODelegate *)cobj->getDelegate())->addEvent(eventName, callback);
 

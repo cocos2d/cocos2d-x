@@ -116,7 +116,7 @@ public:
     }
         
     /** @~english
-     * To see if the HttpReqeust is returned successfully.
+     * To see if the http request is returned successfully.
      * Althrough users can judge if (http response code == 200), we want an easier way.
      * If this getter returns false, you can call getResponseCode and getErrorBuffer to find more details.
      * @~chinese 
@@ -283,7 +283,7 @@ protected:
     
     // properties
     HttpRequest*        _pHttpRequest;  /// the corresponding HttpRequest pointer who leads to this response 
-    bool                _succeed;       /// to indecate if the http request is successful simply
+    bool                _succeed;       /// to indicate if the http request is successful simply
     std::vector<char>   _responseData;  /// the returned raw data. You can also dump it as a string
     std::vector<char>   _responseHeader;  /// the returned raw header data. You can also dump it as a string
     long                _responseCode;    /// the status code returned from libcurl, e.g. 200, 404

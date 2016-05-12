@@ -23,33 +23,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cddandroidAndroidJavaEngine.h"
+#include "audio/android/jni/cddandroidAndroidJavaEngine.h"
 #include <stdlib.h>
 #include <android/log.h>
-#include <jni.h>
 #include <sys/system_properties.h>
-#include "platform/android/jni/JniHelper.h"
-#include "ccdandroidUtils.h"
+#include "audio/android/ccdandroidUtils.h"
 #include "audio/include/AudioEngine.h"
+#include "platform/android/jni/JniHelper.h"
 
 // logging
 #define  LOG_TAG    "cocosdenshion::android::AndroidJavaEngine"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 // Java class
-#define  CLASS_NAME "org/cocos2dx/lib/Cocos2dxHelper"
+static const std::string helperClassName = "org/cocos2dx/lib/Cocos2dxHelper";
 
+using namespace cocos2d;
 using namespace cocos2d::experimental;
 using namespace CocosDenshion::android;
-
-static inline bool getJNIStaticMethodInfo(cocos2d::JniMethodInfo &methodinfo,
-    const char *methodName,
-    const char *paramCode) {
-    return cocos2d::JniHelper::getStaticMethodInfo(methodinfo,
-        CLASS_NAME,
-        methodName,
-        paramCode);
-}
 
 AndroidJavaEngine::AndroidJavaEngine()
     : _implementBaseOnAudioEngine(false)
@@ -78,89 +69,35 @@ AndroidJavaEngine::~AndroidJavaEngine()
     {
         stopAllEffects();
     }
-    cocos2d::JniMethodInfo methodInfo;
 
-    if (!getJNIStaticMethodInfo(methodInfo, "end", "()V")) {
-        return;
-    }
-
-    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    JniHelper::callStaticVoidMethod(helperClassName, "end");
 }
 
 void AndroidJavaEngine::preloadBackgroundMusic(const char* filePath) {
     std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
-
-    // void playBackgroundMusic(String,boolean)
-    cocos2d::JniMethodInfo methodInfo;
-
-    if (!getJNIStaticMethodInfo(methodInfo, "preloadBackgroundMusic", "(Ljava/lang/String;)V")) {
-        return;
-    }
-
-    jstring stringArg = methodInfo.env->NewStringUTF(fullPath.c_str());
-    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, stringArg);
-    methodInfo.env->DeleteLocalRef(stringArg);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    JniHelper::callStaticVoidMethod(helperClassName, "preloadBackgroundMusic", filePath);
 }
 
 void AndroidJavaEngine::playBackgroundMusic(const char* filePath, bool loop) {
     std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
-
-    cocos2d::JniMethodInfo methodInfo;
-
-    if (!getJNIStaticMethodInfo(methodInfo, "playBackgroundMusic", "(Ljava/lang/String;Z)V")) {
-        return;
-    }
-
-    jstring stringArg = methodInfo.env->NewStringUTF(fullPath.c_str());
-    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, stringArg, loop);
-    methodInfo.env->DeleteLocalRef(stringArg);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    JniHelper::callStaticVoidMethod(helperClassName, "playBackgroundMusic", filePath, loop);
 }
 
 void AndroidJavaEngine::stopBackgroundMusic(bool releaseData) {
-    cocos2d::JniMethodInfo methodInfo;
-
-    if (!getJNIStaticMethodInfo(methodInfo, "stopBackgroundMusic", "()V")) {
-        return;
-    }
-
-    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    JniHelper::callStaticVoidMethod(helperClassName, "stopBackgroundMusic");
 }
 
 void AndroidJavaEngine::pauseBackgroundMusic() {
-    cocos2d::JniMethodInfo methodInfo;
+    JniHelper::callStaticVoidMethod(helperClassName, "pauseBackgroundMusic");
 
-    if (!getJNIStaticMethodInfo(methodInfo, "pauseBackgroundMusic", "()V")) {
-        return;
-    }
-
-    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
 }
 
 void AndroidJavaEngine::resumeBackgroundMusic() {
-    cocos2d::JniMethodInfo methodInfo;
-
-    if (!getJNIStaticMethodInfo(methodInfo, "resumeBackgroundMusic", "()V")) {
-        return;
-    }
-
-    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    JniHelper::callStaticVoidMethod(helperClassName, "resumeBackgroundMusic");
 }
 
 void AndroidJavaEngine::rewindBackgroundMusic() {
-    cocos2d::JniMethodInfo methodInfo;
-
-    if (!getJNIStaticMethodInfo(methodInfo, "rewindBackgroundMusic", "()V")) {
-        return;
-    }
-
-    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    JniHelper::callStaticVoidMethod(helperClassName, "rewindBackgroundMusic");
 }
 
 bool AndroidJavaEngine::willPlayBackgroundMusic() {
@@ -168,180 +105,16 @@ bool AndroidJavaEngine::willPlayBackgroundMusic() {
 }
 
 bool AndroidJavaEngine::isBackgroundMusicPlaying() {
-    cocos2d::JniMethodInfo methodInfo;
-    jboolean ret = false;
-
-    if (!getJNIStaticMethodInfo(methodInfo, "isBackgroundMusicPlaying", "()Z")) {
-        return ret;
-    }
-
-    ret = methodInfo.env->CallStaticBooleanMethod(methodInfo.classID, methodInfo.methodID);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
-
-    return ret;
+    return JniHelper::callStaticBooleanMethod(helperClassName, "isBackgroundMusicPlaying");
 }
 
 float AndroidJavaEngine::getBackgroundMusicVolume() {
-    cocos2d::JniMethodInfo methodInfo;
-    jfloat ret = -1.0;
-
-    if (!getJNIStaticMethodInfo(methodInfo, "getBackgroundMusicVolume", "()F")) {
-        return ret;
-    }
-
-    ret = methodInfo.env->CallStaticFloatMethod(methodInfo.classID, methodInfo.methodID);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
-
-    return ret;
+    return JniHelper::callStaticFloatMethod(helperClassName, "getBackgroundMusicVolume");
 }
 
 void AndroidJavaEngine::setBackgroundMusicVolume(float volume) {
-    cocos2d::JniMethodInfo methodInfo;
-
-    if (!getJNIStaticMethodInfo(methodInfo, "setBackgroundMusicVolume", "(F)V")) {
-        return;
-    }
-
-    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, volume);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    JniHelper::callStaticVoidMethod(helperClassName, "setBackgroundMusicVolume", volume);
 }
-
-
-static float _jni_getEffectsVolume() {
-    cocos2d::JniMethodInfo methodInfo;
-    jfloat ret = -1.0;
-
-    if (!getJNIStaticMethodInfo(methodInfo, "getEffectsVolume", "()F")) {
-        return ret;
-    }
-
-    ret = methodInfo.env->CallStaticFloatMethod(methodInfo.classID, methodInfo.methodID);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
-
-    return ret;
-}
-
-static void _jni_setEffectsVolume(float volume) {
-    cocos2d::JniMethodInfo methodInfo;
-
-    if (!getJNIStaticMethodInfo(methodInfo, "setEffectsVolume", "(F)V")) {
-        return;
-    }
-
-    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, volume);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
-}
-
-static unsigned int _jni_playEffect(const char* filePath, bool loop, float pitch, float pan, float gain)
-{
-    cocos2d::JniMethodInfo methodInfo;
-    int ret = 0;
-    std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
-
-    if (!getJNIStaticMethodInfo(methodInfo, "playEffect", "(Ljava/lang/String;ZFFF)I")) {
-        return ret;
-    }
-
-    jstring stringArg = methodInfo.env->NewStringUTF(fullPath.c_str());
-    ret = methodInfo.env->CallStaticIntMethod(methodInfo.classID,
-        methodInfo.methodID,
-        stringArg,
-        loop,
-        pitch, pan, gain);
-    methodInfo.env->DeleteLocalRef(stringArg);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
-
-    return (unsigned int)ret;
-}
-
-static void _jni_pauseEffect(unsigned int soundId) {
-    cocos2d::JniMethodInfo methodInfo;
-
-    if (!getJNIStaticMethodInfo(methodInfo, "pauseEffect", "(I)V")) {
-        return;
-    }
-
-    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, (int)soundId);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
-}
-
-static void _jni_pauseAllEffects() {
-    cocos2d::JniMethodInfo methodInfo;
-
-    if (!getJNIStaticMethodInfo(methodInfo, "pauseAllEffects", "()V")) {
-        return;
-    }
-
-    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
-}
-
-static void _jni_resumeEffect(unsigned int soundId) {
-    cocos2d::JniMethodInfo methodInfo;
-
-    if (!getJNIStaticMethodInfo(methodInfo, "resumeEffect", "(I)V")) {
-        return;
-    }
-
-    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, (int)soundId);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
-}
-
-static void _jni_resumeAllEffects() {
-    cocos2d::JniMethodInfo methodInfo;
-
-    if (!getJNIStaticMethodInfo(methodInfo, "resumeAllEffects", "()V")) {
-        return;
-    }
-
-    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
-}
-
-static void _jni_stopEffect(unsigned int soundId) {
-    cocos2d::JniMethodInfo methodInfo;
-
-    if (!getJNIStaticMethodInfo(methodInfo, "stopEffect", "(I)V")) {
-        return;
-    }
-
-    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, (int)soundId);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
-}
-
-static void _jni_stopAllEffects() {
-    cocos2d::JniMethodInfo methodInfo;
-
-    if (!getJNIStaticMethodInfo(methodInfo, "stopAllEffects", "()V")) {
-        return;
-    }
-
-    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
-}
-
-static void loadEffect(const char* filePath, char* loadEffectName) {
-    cocos2d::JniMethodInfo methodInfo;
-    std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
-
-    if (!cocos2d::JniHelper::getStaticMethodInfo(methodInfo, CLASS_NAME, loadEffectName, "(Ljava/lang/String;)V")) {
-        return;
-    }
-
-    jstring stringArg = methodInfo.env->NewStringUTF(fullPath.c_str());
-    methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, stringArg);
-    methodInfo.env->DeleteLocalRef(stringArg);
-    methodInfo.env->DeleteLocalRef(methodInfo.classID);
-}
-
-static void _jni_preloadEffect(const char* filePath) {
-    loadEffect(filePath, "preloadEffect");
-}
-
-static void _jni_unloadEffect(const char* filePath) {
-    loadEffect(filePath, "unloadEffect");
-}
-
 
 float AndroidJavaEngine::getEffectsVolume()
 {
@@ -351,7 +124,7 @@ float AndroidJavaEngine::getEffectsVolume()
     }
     else
     {
-        return _jni_getEffectsVolume();
+        return JniHelper::callStaticFloatMethod(helperClassName, "getEffectsVolume");
     }
 }
 
@@ -379,7 +152,7 @@ void AndroidJavaEngine::setEffectsVolume(float volume)
     }
     else
     {
-        _jni_setEffectsVolume(volume);
+        JniHelper::callStaticVoidMethod(helperClassName, "setEffectsVolume", volume);
     }
 }
 
@@ -402,7 +175,9 @@ unsigned int AndroidJavaEngine::playEffect(const char* filePath, bool loop,
     }
     else
     {
-        return _jni_playEffect(filePath, loop, pitch, pan, gain);
+        std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
+        int ret = JniHelper::callStaticIntMethod(helperClassName, "playEffect", fullPath, loop, pitch, pan, gain);
+        return (unsigned int)ret;
     }
 }
 
@@ -414,7 +189,7 @@ void AndroidJavaEngine::pauseEffect(unsigned int soundID)
     }
     else
     {
-        _jni_pauseEffect(soundID);
+        JniHelper::callStaticVoidMethod(helperClassName, "pauseEffect", (int)soundID);
     }
 }
 
@@ -426,7 +201,7 @@ void AndroidJavaEngine::resumeEffect(unsigned int soundID)
     }
     else
     {
-        _jni_resumeEffect(soundID);
+        JniHelper::callStaticVoidMethod(helperClassName, "resumeEffect", (int)soundID);
     }
 }
 
@@ -439,7 +214,7 @@ void AndroidJavaEngine::stopEffect(unsigned int soundID)
     }
     else
     {
-        _jni_stopEffect(soundID);
+        JniHelper::callStaticVoidMethod(helperClassName, "stopEffect", (int)soundID);
     }
 }
 
@@ -454,7 +229,7 @@ void AndroidJavaEngine::pauseAllEffects()
     }
     else
     {
-        _jni_pauseAllEffects();
+        JniHelper::callStaticVoidMethod(helperClassName, "pauseAllEffects");
     }
 }
 
@@ -469,7 +244,7 @@ void AndroidJavaEngine::resumeAllEffects()
     }
     else
     {
-        _jni_resumeAllEffects();
+        JniHelper::callStaticVoidMethod(helperClassName, "resumeAllEffects");
     }
 }
 
@@ -485,7 +260,7 @@ void AndroidJavaEngine::stopAllEffects()
     }
     else
     {
-        _jni_stopAllEffects();
+        JniHelper::callStaticVoidMethod(helperClassName, "stopAllEffects");
     }
 }
 
@@ -493,7 +268,8 @@ void AndroidJavaEngine::preloadEffect(const char* filePath)
 {
     if (!_implementBaseOnAudioEngine)
     {
-        _jni_preloadEffect(filePath);
+        std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
+        JniHelper::callStaticVoidMethod(helperClassName, "preloadEffect", fullPath);
     }
 }
 
@@ -501,6 +277,7 @@ void AndroidJavaEngine::unloadEffect(const char* filePath)
 {
     if (!_implementBaseOnAudioEngine)
     {
-        _jni_unloadEffect(filePath);
+        std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
+        JniHelper::callStaticVoidMethod(helperClassName, "unloadEffect", fullPath);
     }
 }

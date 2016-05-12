@@ -167,10 +167,10 @@ public:
      * 设置HttpRequest对象的url。
      * url的值如下:“http://httpbin.org/ip”或“https://httpbin.org/get”
      * 
-     * @param url @~english the string pointer to the url.
-     * @~chinese url字符串指针。
+     * @param url @~english url the string object
+     * @~chinese url字符串。
      */
-    inline void setUrl(const char* url)
+    inline void setUrl(const std::string& url)
     {
         _url = url;
     };
@@ -241,10 +241,10 @@ public:
      * 设置字符串标签用于识别request。
      * 这个字符串标签可以通过HttpResponse->getHttpRequest->getTag()获得。
      * 
-     * @param tag @~english the string pointer to tag
-     * @~chinese 指向标签的字符串指针。
+     * @param tag @~english the string object
+     * @~chinese 指向标签的字符串。
      */
-    inline void setTag(const char* tag)
+    inline void setTag(const std::string& tag)
     {
         _tag = tag;
     };

@@ -113,6 +113,8 @@ public:
     static const char* EVENT_BEFORE_UPDATE;
     /** @~english Director will trigger an event after Schedule::update() is invoked.  @~chinese 在调用Schedule::update()后导演会触发一个事件。*/
     static const char* EVENT_AFTER_UPDATE;
+    /** @~english Director will trigger an event while resetting Director. @~chinese* 在重置导演后将触发一个事件。*/
+    static const char* EVENT_RESET;
     /** @~english Director will trigger an event after Scene::render() is invoked.  @~chinese 在调用Scene::render()后导演将触发一个事件。*/
     static const char* EVENT_AFTER_VISIT;
     /** @~english Director will trigger an event after a scene is drawn, the data is sent to GPU.  @~chinese 当一个场景绘制,数据被发送到GPU后导演将触发一个事件。*/
@@ -605,9 +607,10 @@ public:
      * 获取指定类型的矩阵堆栈顶部的矩阵。
      * @js NA
      */
-    const Mat4& getMatrix(MATRIX_STACK_TYPE type);
+
+    const Mat4& getMatrix(MATRIX_STACK_TYPE type) const;
     /**@~english
-     * Clears all types of matrix stack, and add indentity matrix to these matrix stacks.
+     * Clear all types of matrix stack, and add identity matrix to these matrix stacks.
      * @~chinese 
      * 清除所有类型的矩阵堆栈,并添加单位矩阵到这些矩阵栈。
      * @js NA
@@ -666,7 +669,7 @@ protected:
      @since v3.0
      */
     EventDispatcher* _eventDispatcher;
-    EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventBeforeUpdate, *_eventAfterUpdate;
+    EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventBeforeUpdate, *_eventAfterUpdate, *_eventResetDirector;
         
     /* @~english delta time since last tick to main loop  @~chinese 三角洲自去年蜱虫主循环*/
 	float _deltaTime;

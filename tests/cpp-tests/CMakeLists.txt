@@ -1,4 +1,4 @@
-set(APP_NAME cpp-tests)
+set(APP_NAME cpp_tests)
 
 # Use same method as in cocos library
 cocos_find_package(CURL CURL REQUIRED)
@@ -15,6 +15,11 @@ elseif(MACOSX)
 
 elseif(LINUX)
   set(PLATFORM_SRC proj.linux/main.cpp)
+  set(RES_PREFIX "/Resources")
+elseif(ANDROID)
+  set(PLATFORM_SRC
+          Classes/JNITest/JNITest.cpp
+          proj.android/jni/main.cpp)
   set(RES_PREFIX "/Resources")
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
@@ -190,6 +195,7 @@ set(TESTS_SRC
   Classes/UITest/CocoStudioGUITest/UITextTest/UITextTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp
   Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest_Editor.cpp
+  Classes/UITest/CocoStudioGUITest/UITabControlTest/UITabControlTest.cpp
   Classes/UITest/UITest.cpp
   Classes/UnitTest/RefPtrTest.cpp
   Classes/UnitTest/UnitTest.cpp
@@ -197,6 +203,7 @@ set(TESTS_SRC
   Classes/VisibleRect.cpp
   Classes/VibrateTest/VibrateTest.cpp
   Classes/ZwoptexTest/ZwoptexTest.cpp
+  Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp
   Classes/controller.cpp
   Classes/testBasic.cpp
   ${PLATFORM_SRC}
@@ -245,21 +252,26 @@ else()
     )
 endif()
 
-
 include_directories(
   Classes
   ${CMAKE_SOURCE_DIR}/cocos/editor-support
 )
 
-# add the executable
-add_executable(${APP_NAME}
-  ${TESTS_SRC}
-  ${EXTENDED_TESTS_SRC}
-)
+if(ANDROID)
+     list(APPEND TESTS_SRC
+        Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.cpp
+        Classes/UITest/CocoStudioGUITest/UIVideoPlayerTest/UIVideoPlayerTest.cpp
+    )
+    add_library(${APP_NAME} SHARED ${TESTS_SRC} ${EXTENDED_TESTS_SRC})
+    IF(CMAKE_BUILD_TYPE MATCHES RELEASE)
+        ADD_CUSTOM_COMMAND(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
+    ENDIF()
+else()
+    # add the executable
+    add_executable(${APP_NAME} ${TESTS_SRC} ${EXTENDED_TESTS_SRC})
+endif()
 
-target_link_libraries(${APP_NAME}
-  cocos2d
-)
+target_link_libraries(${APP_NAME} cocos2d)
 
 cocos_use_pkg(${APP_NAME} CURL)
 
@@ -268,12 +280,13 @@ if(MACOSX OR APPLE)
       MACOSX_BUNDLE 1
       RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
       )
-
+ELSEIF(ANDROID)
+    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
+    set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
 else()
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
-
     set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
-
+    
     pre_build(${APP_NAME}
       COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}${RES_PREFIX}
       )

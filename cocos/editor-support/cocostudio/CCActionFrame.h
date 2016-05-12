@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "math/CCGeometry.h"
 #include "2d/CCActionInterval.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
     
@@ -178,7 +178,7 @@ public:
 	* @~english Gets the ActionInterval of ActionFrame.
     * @~chinese 获取动作帧的动作间隔
     *
-	* @parame duration   @~english the duration time of ActionFrame @~chinese 动作帧的动作持续时间
+	* @param duration   @~english the duration time of ActionFrame @~chinese 动作帧的动作持续时间
 	*
 	* @return @~english ActionInterval @~chinese 动作间隔
 	*/
@@ -187,9 +187,9 @@ public:
     * @~english Gets the ActionInterval of ActionFrame.
     * @~chinese 获取动作帧的动作间隔
     *
-    * @parame duration   @~english the duration time of ActionFrame @~chinese 动作帧的动作持续时间
+    * @param duration   @~english the duration time of ActionFrame @~chinese 动作帧的动作持续时间
     *
-	* @parame srcFrame   @~english the source ActionFrame @~chinese 源动作帧
+	* @param srcFrame   @~english the source ActionFrame @~chinese 源动作帧
 	*
     * @return @~english ActionInterval @~chinese 动作间隔
     */
@@ -199,7 +199,7 @@ public:
 	* @~english Set the ActionInterval easing parameter.
     * @~chinese 设定动作间隔缓动参数.
     *
-	* @parame parameter   @~english the parameter for frame ease @~chinese 帧缓动参数
+	* @param parameter   @~english the parameter for frame ease @~chinese 帧缓动参数
 	*
 	*/
 	virtual void setEasingParameter(std::vector<float>& parameter);
@@ -208,11 +208,22 @@ protected:
 	* @~english Gets the Easing Action of ActionFrame.
     * @~chinese 获取动作帧的缓动参数.
     *
-	* @parame action   @~english the duration time of ActionFrame @~chinese 动作帧持续时间
+	* @param action   @~english the duration time of ActionFrame @~chinese 动作帧持续时间
 	*
 	* @return @~english ActionInterval @~chinese 动作间隔
 	*/
 	virtual cocos2d::ActionInterval* getEasingAction(cocos2d::ActionInterval* action);
+protected:
+    /**
+    *@~english  Gets the Easing Action of ActionFrame.
+    *@~chinese 或者ActionFrame的Easing Action
+    *
+    * @param action  ~english the duration time of ActionFrame
+    * @~chinese  ActionFrame的持续时间
+    *
+    * @return ActionInterval
+    */
+    virtual cocos2d::ActionInterval* getEasingAction(cocos2d::ActionInterval* action);
 protected:
 	int _frameType;	
 	int _frameIndex;
@@ -261,7 +272,7 @@ public:
 	* @~english Gets the ActionInterval of ActionFrame.
     * @~chinese 获取动作帧的动作间隔.
     *
-	* @parame duration   @~english the duration time of ActionFrame @~chinese 动作帧的持续时间
+	* @param duration   @~english the duration time of ActionFrame @~chinese 动作帧的持续时间
 	*
 	* @return @~english ActionInterval @~chinese 动作间隔
 	*/
@@ -326,7 +337,7 @@ public:
 	* @~english Gets the ActionInterval of ActionFrame.
     * @~chinese 获取动作帧的动作间隔
 	*
-	* @parame duration   @~english the duration time of ActionFrame @~chinese 动作帧的持续时间
+	* @param duration   @~english the duration time of ActionFrame @~chinese 动作帧的持续时间
 	*
 	* @return @~english ActionInterval @~chinese 动作间隔
 	*/
@@ -375,7 +386,7 @@ public:
     * @~english Gets the ActionInterval of ActionFrame.
     * @~chinese 获取动作帧的动作间隔
     *
-    * @parame duration   @~english the duration time of ActionFrame @~chinese 动作帧的持续时间
+    * @param duration   @~english the duration time of ActionFrame @~chinese 动作帧的持续时间
     *
     * @return @~english ActionInterval @~chinese 动作间隔
     */
@@ -384,9 +395,9 @@ public:
     * @~english Gets the ActionInterval of ActionFrame.
     * @~chinese 获取动作帧的动作间隔
     *
-    * @parame duration   @~english the duration time of ActionFrame @~chinese 动作帧的动作持续时间
+    * @param duration   @~english the duration time of ActionFrame @~chinese 动作帧的动作持续时间
     *
-    * @parame srcFrame   @~english the source ActionFrame @~chinese 源动作帧
+    * @param srcFrame   @~english the source ActionFrame @~chinese 源动作帧
     *
     * @return @~english ActionInterval @~chinese 动作间隔
     */
@@ -434,7 +445,7 @@ public:
     * @~english Gets the ActionInterval of ActionFrame.
     * @~chinese 获取动作帧的动作间隔
     *
-    * @parame duration   @~english the duration time of ActionFrame @~chinese 动作帧的持续时间
+    * @param duration   @~english the duration time of ActionFrame @~chinese 动作帧的持续时间
     *
     * @return @~english ActionInterval @~chinese 动作间隔
     */
@@ -483,7 +494,7 @@ public:
     * @~english Gets the ActionInterval of ActionFrame.
     * @~chinese 获取动作帧的动作间隔
     *
-    * @parame duration   @~english the duration time of ActionFrame @~chinese 动作帧的持续时间
+    * @param duration   @~english the duration time of ActionFrame @~chinese 动作帧的持续时间
     *
     * @return @~english ActionInterval @~chinese 动作间隔
     */

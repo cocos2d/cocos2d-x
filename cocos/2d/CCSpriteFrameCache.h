@@ -72,6 +72,7 @@ class PolygonInfo;
     - `spriteSourceSize`: size of the original sprite
     - `textureRect`:      the position of the sprite in the sprite sheet
     - `textureRotated`:   true if the sprite is rotated clockwise
+    - `anchor`:           anchor point in normalized coordinates (optional)
    Optional values when using polygon outlines
     - `triangles`:        3 indices per triangle, pointing to vertices and verticesUV coordinates
     - `vertices`:         vertices in sprite coordinates, each vertex consists of a pair of x and y coordinates
@@ -319,11 +320,16 @@ protected:
      * @~chinese 使用指定的 ValueMap 与纹理添加多个 SpriteFrame。
      */
     void addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture);
-
+    
+    /**@~english Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
+     * @~chinese 从字典中添加多个Spriteframe。通过图片路径生成的纹理会关联到生成的Spriteframe。
+     */
+    void addSpriteFramesWithDictionary(ValueMap& dictionary, const std::string &texturePath);
+    
     /** @~english Removes multiple Sprite Frames from Dictionary.
      * @~chinese 将指定的 ValueMap 中的 SpriteFrame 从缓存中删除。
-    * @since v0.99.5
-    */
+     * @since v0.99.5
+     */
     void removeSpriteFramesFromDictionary(ValueMap& dictionary);
 
     /** Parses list of space-separated integers */

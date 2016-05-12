@@ -159,7 +159,7 @@ public:
     
     /**
      * @~english
-     * Set a item model for listview.
+     * Set an item model for listview.
      * When calling `pushBackDefaultItem`, the model will be used as a blueprint and new model copy will be inserted into ListView.
      *
      * @~chinese 
@@ -184,7 +184,7 @@ public:
      * Insert a default item(create by cloning model) into listview at a give index.
      * @~chinese 
      * 插入一个默认项（通过克隆模式创建）到ListView的指定位置。
-     * @param index  @~english A index in ssize_t.
+     * @param index  @~english An index in ssize_t.
      * @~chinese 指定的位置索引
      */
     void insertDefaultItem(ssize_t index);
@@ -194,7 +194,7 @@ public:
      * Insert a custom item into the end of ListView.
      * @~chinese 
      * 插入一个自定义项到ListView的尾部。
-     * @param item @~english A item in `Widget*`.
+     * @param item @~english An item in `Widget*`.
      * @~chinese 一个`Widget*`项目
      */
     void pushBackCustomItem(Widget* item);
@@ -222,7 +222,7 @@ public:
     
     /**
      * @~english
-     * Remove a item at given index.
+     * Remove an item at given index.
      *
      * @~chinese 
      * 在给定索引处删除一个项目
@@ -240,7 +240,7 @@ public:
     
     /**
      * @~english
-     * Return a item at a given index.
+     * Return an item at a given index.
      *
      * @~chinese 
      * 返回一个给定的索引处的项目。
@@ -346,7 +346,7 @@ public:
      *
      * @param targetPosition Specifies the target position in inner container's coordinates.
      * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
-     * @return A item instance if list view is not empty. Otherwise, returns null.
+     * @return An item instance if list view is not empty. Otherwise, returns null.
      */
     Widget* getClosestItemToPosition(const Vec2& targetPosition, const Vec2& itemAnchorPoint) const;
     
@@ -356,37 +356,37 @@ public:
      *
      * @param positionRatioInView Specifies the target position with ratio in list view's content size.
      * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
-     * @return A item instance if list view is not empty. Otherwise, returns null.
+     * @return An item instance if list view is not empty. Otherwise, returns null.
      */
     Widget* getClosestItemToPositionInCurrentView(const Vec2& positionRatioInView, const Vec2& itemAnchorPoint) const;
     
     /**
      * @brief Query the center item
-     * @return A item instance.
+     * @return An item instance.
      */
     Widget* getCenterItemInCurrentView() const;
     
     /**
      * @brief Query the leftmost item in horizontal list
-     * @return A item instance.
+     * @return An item instance.
      */
     Widget* getLeftmostItemInCurrentView() const;
     
     /**
      * @brief Query the rightmost item in horizontal list
-     * @return A item instance.
+     * @return An item instance.
      */
     Widget* getRightmostItemInCurrentView() const;
     
     /**
      * @brief Query the topmost item in horizontal list
-     * @return A item instance.
+     * @return An item instance.
      */
     Widget* getTopmostItemInCurrentView() const;
     
     /**
      * @brief Query the bottommost item in horizontal list
-     * @return A item instance.
+     * @return An item instance.
      */
     Widget* getBottommostItemInCurrentView() const;
 
@@ -423,16 +423,16 @@ public:
     void scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec);
     
     /**
-     * @brief Query current selected widget's idnex.
+     * @brief Query current selected widget's index.
      *
-     * @return @~english A index of a selected item.
+     * @return @~english An index of a selected item.
      * @~chinese 选中的控件的索引。
      */
     ssize_t getCurSelectedIndex() const;
     
     /**
      * @~english
-     * Add a event click callback to ListView, then one item of Listview is clicked, the callback will be called.
+     * Add an event click callback to ListView, then one item of Listview is clicked, the callback will be called.
      * @~chinese 
      * 添加ListView点击事件的回调，ListView中的一个项目被点击将会调用回调函数。
      * @deprecated @~english Use  `addEventListener` instead.
@@ -446,7 +446,7 @@ public:
 
     /**
      * @~english
-     * Add a event click callback to ListView, then one item of Listview is clicked, the callback will be called.
+     * Add an event click callback to ListView, then one item of Listview is clicked, the callback will be called.
      * @~chinese 
      * 添加ListView点击事件的回调，ListView中的一个项目被点击将会调用回调函数。
      * @param callback @~english A callback function with type of `ccListViewCallback`.

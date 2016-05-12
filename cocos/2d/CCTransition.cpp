@@ -71,13 +71,20 @@ TransitionScene * TransitionScene::create(float t, Scene *scene)
 
 bool TransitionScene::initWithDuration(float t, Scene *scene)
 {
-    CCASSERT( scene != nullptr, "Argument scene must be non-nil");
+    CCASSERT(scene != nullptr, "Argument scene must be non-nil");
 
     if (Scene::init())
     {
         _duration = t;
 
         // retain
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (sEngine)
+        {
+            sEngine->retainScriptObject(this, scene);
+        }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         _inScene = scene;
         _inScene->retain();
         _outScene = Director::getInstance()->getRunningScene();
@@ -147,6 +154,13 @@ void TransitionScene::setNewScene(float dt)
     _isSendCleanupToScene = director->isSendCleanupToScene();
     
     director->replaceScene(_inScene);
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        sEngine->releaseScriptObject(this, _inScene);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     
     // issue #267
     _outScene->setVisible(true);
@@ -202,6 +216,11 @@ void TransitionScene::onExit()
     // _inScene should not receive the onEnter callback
     // only the onEnterTransitionDidFinish
     _inScene->onEnterTransitionDidFinish();
+
+#if CC_ENABLE_SCRIPT_BINDING
+    if (ScriptEngineManager::getInstance()->getScriptEngine())
+        ScriptEngineManager::getInstance()->getScriptEngine()->garbageCollect();
+#endif // CC_ENABLE_SCRIPT_BINDING
 }
 
 // custom cleanup

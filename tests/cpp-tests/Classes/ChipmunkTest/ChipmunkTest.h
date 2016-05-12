@@ -5,7 +5,7 @@
 #define __CHIPMUNKTEST_H__
 
 #include "cocos2d.h"
-#include "chipmunk.h"
+#include "chipmunk/chipmunk.h"
 #include "../BaseTest.h"
 #include "extensions/cocos-ext.h"
 

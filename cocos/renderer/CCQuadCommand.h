@@ -25,7 +25,7 @@
 #ifndef _CC_QUADCOMMAND_H_
 #define _CC_QUADCOMMAND_H_
 
-#include "renderer/CCRenderCommand.h"
+#include "renderer/CCTrianglesCommand.h"
 #include "renderer/CCGLProgramState.h"
 
 /**
@@ -47,7 +47,7 @@ NS_CC_BEGIN
  * 每个QuadCommand将使用textureID glProgramState、Blend来生成材质ID
  * 如果材料ID是相同的,这些QuadCommands可以在同一批次渲染。
  */
-class CC_DLL QuadCommand : public RenderCommand
+class CC_DLL QuadCommand : public TrianglesCommand
 {
 public:
     /**
@@ -67,6 +67,8 @@ public:
      * @~chinese 命令的GlobalZOrder。
      @param textureID @~english The openGL handle of the used texture.
      * @~chinese 纹理的openGL句柄。
+     @param @~english glProgramState The glProgram with its uniform.
+     * @~chinese 包含了uniform的glProgram
      @param shader @~english The specified glProgram and its uniform.
      * @~chinese 指定的glProgram和uniform数值。
      @param blendType @~english Blend function for the command.
@@ -80,7 +82,7 @@ public:
      @param flags @~english to indicate that the command is using 3D rendering or not.
      * @~chinese 是否使用3d渲染。
      */
-    void init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
+    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const Mat4& mv, uint32_t flags);
 
     /**
@@ -103,86 +105,15 @@ public:
     */
     CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const Mat4& mv);
-    /**
-    @~english Apply the texture, shaders, programs, blend functions to GPU pipeline. 
-    @~chinese 将纹理、shader, program, 和blend应用到GPU渲染管线。
-    */
-    void useMaterial() const;
-    /**
-    @~english Get the material id of command. 
-    @~chinese 得到材质ID。
-    @return
-    @~english the material id.
-    @~chinese 材质ID。
-    */
-    inline uint32_t getMaterialID() const { return _materialID; }
-    /**
-    @~english Get the openGL texture handle. 
-    @~chinese 得到纹理的openGL句柄。
-    @return
-    @~english openGL texture handle.
-    @~chinese 纹理的openGL句柄。
-    */
-    inline GLuint getTextureID() const { return _textureID; }
-    /**
-    @~english Get the pointer of the rendered quads. 
-    @~chinese 得到四边形的数据。
-    @return 
-    @~english the pointer of the rendered quads.
-    @~chinese 四边形数据的指针。
-    */
-    inline V3F_C4B_T2F_Quad* getQuads() const { return _quads; }
-    /**
-    @~english Get the number of quads for rendering. 
-    @~chinese 获得四边形的个数。
-    @return
-    @~english the number of quads.
-    @~chinese 四边形的个数。
-    */
-    inline ssize_t getQuadCount() const { return _quadsCount; }
-    /**
-    @~english Get the glprogramstate. 
-    @~chinese 得到GLProgramState。
-    @return
-    @~english glprogramstate.
-    @~chinese GLProgramState。
-    */
-    inline GLProgramState* getGLProgramState() const { return _glProgramState; }
-    /**
-    @~english Get the blend function. 
-    @~chinese 得到混合功能。
-    @return
-    @~english blend function.
-    @~chinese 混合功能。
-    */
-    inline BlendFunc getBlendType() const { return _blendType; }
-    /**
-    @~english Get the model view matrix. 
-    @~chinese 得到模型视图矩阵。
-    @return
-    @~english model view matrix.
-    @~chinese model view矩阵。
-    */
-    inline const Mat4& getModelView() const { return _mv; }
     
 protected:
-    /**Generate the material ID by textureID, glProgramState, and blend function.*/
-    void generateMaterialID();
-    
-    /**Generated material id.*/
-    uint32_t _materialID;
-    /**OpenGL handle for texture.*/
-    GLuint _textureID;
-    /**GLprogramstate for the command. encapsulate shaders and uniforms.*/
-    GLProgramState* _glProgramState;
-    /**Blend function when rendering the triangles.*/
-    BlendFunc _blendType;
-    /**The pointer to the rendered quads.*/
-    V3F_C4B_T2F_Quad* _quads;
-    /**The number of quads for rendering.*/
-    ssize_t _quadsCount;
-    /**Model view matrix when rendering the triangles.*/
-    Mat4 _mv;
+    void reIndex(int indices);
+
+    int _indexSize;
+
+    // shared across all instances
+    static int __indexCapacity;
+    static GLushort* __indices;
 };
 
 NS_CC_END

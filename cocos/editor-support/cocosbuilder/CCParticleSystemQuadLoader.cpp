@@ -1,4 +1,4 @@
-#include "CCParticleSystemQuadLoader.h"
+#include "editor-support/cocosbuilder/CCParticleSystemQuadLoader.h"
 
 using namespace cocos2d;
 

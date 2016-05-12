@@ -1,8 +1,7 @@
-#include "lua_cocos2dx_csloader_auto.hpp"
-#include "CSLoader.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-
+#include "scripting/lua-bindings/auto/lua_cocos2dx_csloader_auto.hpp"
+#include "editor-support/cocostudio/ActionTimeline/CSLoader.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
 int lua_cocos2dx_csloader_CSLoader_createNodeFromJson(lua_State* tolua_S)
 {

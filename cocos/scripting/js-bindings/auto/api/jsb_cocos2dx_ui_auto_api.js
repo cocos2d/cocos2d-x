@@ -2986,13 +2986,11 @@ isInertiaScrollEnabled : function (
 },
 
 /**
- * @method scrollToPercentBothDirection
- * @param {vec2_object} arg0
- * @param {float} arg1
- * @param {bool} arg2
+ * @method scrollToBottom
+ * @param {float} arg0
+ * @param {bool} arg1
  */
-scrollToPercentBothDirection : function (
-vec2, 
+scrollToBottom : function (
 float, 
 bool 
 )
@@ -3090,9 +3088,15 @@ jumpToTopRight : function (
 },
 
 /**
- * @method jumpToBottomLeft
+ * @method scrollToPercentBothDirection
+ * @param {vec2_object} arg0
+ * @param {float} arg1
+ * @param {bool} arg2
  */
-jumpToBottomLeft : function (
+scrollToPercentBothDirection : function (
+vec2, 
+float, 
+bool 
 )
 {
 },
@@ -3234,6 +3238,26 @@ jumpToBottomRight : function (
 },
 
 /**
+ * @method setTouchTotalTimeThreshold
+ * @param {float} arg0
+ */
+setTouchTotalTimeThreshold : function (
+float 
+)
+{
+},
+
+/**
+ * @method getTouchTotalTimeThreshold
+ * @return {float}
+ */
+getTouchTotalTimeThreshold : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getScrollBarPositionFromCornerForHorizontal
  * @return {vec2_object}
  */
@@ -3259,6 +3283,14 @@ float
  */
 setBounceEnabled : function (
 bool 
+)
+{
+},
+
+/**
+ * @method stopAutoScroll
+ */
+stopAutoScroll : function (
 )
 {
 },
@@ -3311,18 +3343,6 @@ getScrollBarPositionFromCornerForVertical : function (
  */
 scrollToPercentVertical : function (
 float, 
-float, 
-bool 
-)
-{
-},
-
-/**
- * @method scrollToBottom
- * @param {float} arg0
- * @param {bool} arg1
- */
-scrollToBottom : function (
 float, 
 bool 
 )
@@ -3429,6 +3449,14 @@ isScrollBarAutoHideEnabled : function (
 )
 {
     return false;
+},
+
+/**
+ * @method jumpToBottomLeft
+ */
+jumpToBottomLeft : function (
+)
+{
 },
 
 /**
@@ -4225,7 +4253,7 @@ getDetachWithIME : function (
 
 /**
  * @method getCharCount
- * @return {int}
+ * @return {unsigned long}
  */
 getCharCount : function (
 )
@@ -4678,6 +4706,16 @@ bool
 },
 
 /**
+ * @method setCursorPosition
+ * @param {unsigned long} arg0
+ */
+setCursorPosition : function (
+long 
+)
+{
+},
+
+/**
  * @method getTextHorizontalAlignment
  * @return {cc.TextHAlignment}
  */
@@ -4708,6 +4746,18 @@ str
 },
 
 /**
+ * @method setCursorFromPoint
+ * @param {vec2_object} arg0
+ * @param {cc.Camera} arg1
+ */
+setCursorFromPoint : function (
+vec2, 
+camera 
+)
+{
+},
+
+/**
  * @method setPlaceHolderColor
 * @param {color4b_object|color3b_object} color4b
 */
@@ -4733,6 +4783,16 @@ texthalignment
  */
 setTextColor : function (
 color4b 
+)
+{
+},
+
+/**
+ * @method setCursorChar
+ * @param {char} arg0
+ */
+setCursorChar : function (
+char 
 )
 {
 },
@@ -4793,6 +4853,16 @@ bool
  */
 setMaxLength : function (
 int 
+)
+{
+},
+
+/**
+ * @method setCursorEnabled
+ * @param {bool} arg0
+ */
+setCursorEnabled : function (
+bool 
 )
 {
 },
@@ -4895,6 +4965,14 @@ getRenderFile : function (
  */
 setFntFile : function (
 str 
+)
+{
+},
+
+/**
+ * @method resetRender
+ */
+resetRender : function (
 )
 {
 },
@@ -5306,6 +5384,8 @@ ccui.RichElementText = {
  * @param {String} arg3
  * @param {String} arg4
  * @param {float} arg5
+ * @param {unsigned int} arg6
+ * @param {String} arg7
  * @return {bool}
  */
 init : function (
@@ -5314,7 +5394,9 @@ color3b,
 char, 
 str, 
 str, 
-float 
+float, 
+int, 
+str 
 )
 {
     return false;
@@ -5328,6 +5410,8 @@ float
  * @param {String} arg3
  * @param {String} arg4
  * @param {float} arg5
+ * @param {unsigned int} arg6
+ * @param {String} arg7
  * @return {ccui.RichElementText}
  */
 create : function (
@@ -5336,7 +5420,9 @@ color3b,
 char, 
 str, 
 str, 
-float 
+float, 
+int, 
+str 
 )
 {
     return ccui.RichElementText;
@@ -5359,6 +5445,16 @@ RichElementText : function (
 ccui.RichElementImage = {
 
 /**
+ * @method setHeight
+ * @param {int} arg0
+ */
+setHeight : function (
+int 
+)
+{
+},
+
+/**
  * @method init
  * @param {int} arg0
  * @param {color3b_object} arg1
@@ -5374,6 +5470,16 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method setWidth
+ * @param {int} arg0
+ */
+setWidth : function (
+int 
+)
+{
 },
 
 /**
@@ -5485,6 +5591,16 @@ richelement
 },
 
 /**
+ * @method setWrapMode
+ * @param {ccui.RichText::WrapMode} arg0
+ */
+setWrapMode : function (
+wrapmode 
+)
+{
+},
+
+/**
  * @method setVerticalSpace
  * @param {float} arg0
  */
@@ -5495,11 +5611,33 @@ float
 },
 
 /**
+ * @method getWrapMode
+ * @return {ccui.RichText::WrapMode}
+ */
+getWrapMode : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method formatText
  */
 formatText : function (
 )
 {
+},
+
+/**
+ * @method initWithXML
+ * @param {String} arg0
+ * @return {bool}
+ */
+initWithXML : function (
+str 
+)
+{
+    return false;
 },
 
 /**
@@ -5517,6 +5655,18 @@ int
  * @return {ccui.RichText}
  */
 create : function (
+)
+{
+    return ccui.RichText;
+},
+
+/**
+ * @method createWithXML
+ * @param {String} arg0
+ * @return {ccui.RichText}
+ */
+createWithXML : function (
+str 
 )
 {
     return ccui.RichText;
@@ -6855,6 +7005,354 @@ node
 LayoutComponent : function (
 )
 {
+},
+
+};
+
+/**
+ * @class TabHeader
+ */
+ccui.TabHeader = {
+
+/**
+ * @method getIndexInTabControl
+ * @return {int}
+ */
+getIndexInTabControl : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTitleText
+ * @return {String}
+ */
+getTitleText : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setTitleFontSize
+ * @param {float} arg0
+ */
+setTitleFontSize : function (
+float 
+)
+{
+},
+
+/**
+ * @method setTitleFontName
+ * @param {String} arg0
+ */
+setTitleFontName : function (
+str 
+)
+{
+},
+
+/**
+ * @method getTitleFontSize
+ * @return {float}
+ */
+getTitleFontSize : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTitleFontName
+ * @return {String}
+ */
+getTitleFontName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getTitleColor
+ * @return {color4b_object}
+ */
+getTitleColor : function (
+)
+{
+    return cc.Color4B;
+},
+
+/**
+ * @method getTitleRenderer
+ * @return {cc.Label}
+ */
+getTitleRenderer : function (
+)
+{
+    return cc.Label;
+},
+
+/**
+ * @method setTitleText
+ * @param {String} arg0
+ */
+setTitleText : function (
+str 
+)
+{
+},
+
+/**
+ * @method setTitleColor
+ * @param {color4b_object} arg0
+ */
+setTitleColor : function (
+color4b 
+)
+{
+},
+
+/**
+ * @method create
+* @param {String|String} str
+* @param {String|String} str
+* @param {String|String} str
+* @param {ccui.Widget::TextureResType|String} texturerestype
+* @param {String} str
+* @param {String} str
+* @param {ccui.Widget::TextureResType} texturerestype
+* @return {ccui.TabHeader|ccui.TabHeader|ccui.TabHeader}
+*/
+create : function(
+str,
+str,
+str,
+str,
+str,
+str,
+texturerestype 
+)
+{
+    return ccui.TabHeader;
+},
+
+};
+
+/**
+ * @class TabControl
+ */
+ccui.TabControl = {
+
+/**
+ * @method setHeaderWidth
+ * @param {float} arg0
+ */
+setHeaderWidth : function (
+float 
+)
+{
+},
+
+/**
+ * @method removeTab
+ * @param {int} arg0
+ */
+removeTab : function (
+int 
+)
+{
+},
+
+/**
+ * @method getTabCount
+ * @return {unsigned long}
+ */
+getTabCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getHeaderDockPlace
+ * @return {ccui.TabControl::Dock}
+ */
+getHeaderDockPlace : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getSelectedTabIndex
+ * @return {int}
+ */
+getSelectedTabIndex : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method insertTab
+ * @param {int} arg0
+ * @param {ccui.TabHeader} arg1
+ * @param {ccui.Layout} arg2
+ */
+insertTab : function (
+int, 
+tabheader, 
+layout 
+)
+{
+},
+
+/**
+ * @method ignoreHeadersTextureSize
+ * @param {bool} arg0
+ */
+ignoreHeadersTextureSize : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getHeaderWidth
+ * @return {float}
+ */
+getHeaderWidth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setHeaderDockPlace
+ * @param {ccui.TabControl::Dock} arg0
+ */
+setHeaderDockPlace : function (
+dock 
+)
+{
+},
+
+/**
+ * @method setSelectTab
+* @param {ccui.TabHeader|int} tabheader
+*/
+setSelectTab : function(
+int 
+)
+{
+},
+
+/**
+ * @method getTabHeader
+ * @param {int} arg0
+ * @return {ccui.TabHeader}
+ */
+getTabHeader : function (
+int 
+)
+{
+    return ccui.TabHeader;
+},
+
+/**
+ * @method isIgnoreHeadersTextureSize
+ * @return {bool}
+ */
+isIgnoreHeadersTextureSize : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setTabChangedEventListener
+ * @param {function} arg0
+ */
+setTabChangedEventListener : function (
+func 
+)
+{
+},
+
+/**
+ * @method setHeaderSelectedZoom
+ * @param {float} arg0
+ */
+setHeaderSelectedZoom : function (
+float 
+)
+{
+},
+
+/**
+ * @method setHeaderHeight
+ * @param {float} arg0
+ */
+setHeaderHeight : function (
+float 
+)
+{
+},
+
+/**
+ * @method indexOfTabHeader
+ * @param {ccui.TabHeader} arg0
+ * @return {int}
+ */
+indexOfTabHeader : function (
+tabheader 
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTabContainer
+ * @param {int} arg0
+ * @return {ccui.Layout}
+ */
+getTabContainer : function (
+int 
+)
+{
+    return ccui.Layout;
+},
+
+/**
+ * @method getHeaderSelectedZoom
+ * @return {float}
+ */
+getHeaderSelectedZoom : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getHeaderHeight
+ * @return {int}
+ */
+getHeaderHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method create
+ * @return {ccui.TabControl}
+ */
+create : function (
+)
+{
+    return ccui.TabControl;
 },
 
 };

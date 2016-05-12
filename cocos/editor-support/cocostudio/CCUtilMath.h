@@ -26,8 +26,8 @@ THE SOFTWARE.
 #define __CCUTILMATH_H__
 
 #include "2d/CCSprite.h"
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include <math.h>
 
 namespace cocostudio {

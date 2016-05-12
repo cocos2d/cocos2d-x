@@ -27,8 +27,8 @@ THE SOFTWARE.
 #ifndef __CC_FAST_TMX_TILEMAP_H__
 #define __CC_FAST_TMX_TILEMAP_H__
 
-#include "CCNode.h"
-#include "CCTMXObjectGroup.h"
+#include "2d/CCNode.h"
+#include "2d/CCTMXObjectGroup.h"
 
 NS_CC_BEGIN
 

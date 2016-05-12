@@ -531,9 +531,11 @@ void Layout::onSizeChanged()
     if (_backGroundImage)
     {
         _backGroundImage->setPosition(_contentSize.width/2.0f, _contentSize.height/2.0f);
-        if (_backGroundScale9Enabled && _backGroundImage)
-        {
+        if (_backGroundScale9Enabled){
             _backGroundImage->setPreferredSize(_contentSize);
+        }
+        else{
+            _backGroundImage->setPreferredSize(_backGroundImageTextureSize);
         }
     }
     if (_colorRender)
@@ -560,12 +562,10 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
     }
     if(_backGroundScale9Enabled){
         _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+        _backGroundImage->setPreferredSize(_contentSize);
     }else{
         _backGroundImage->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
-    }
-
-    if (able) {
-        _backGroundImage->setPreferredSize(_contentSize);
+        _backGroundImage->setPreferredSize(_backGroundImageTextureSize);
     }
     
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
@@ -605,12 +605,15 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
         default:
             break;
     }
-    if (_backGroundScale9Enabled) {
-        _backGroundImage->setPreferredSize(_contentSize);
-    }
     
     _backGroundImageTextureSize = _backGroundImage->getContentSize();
     _backGroundImage->setPosition(_contentSize.width/2.0f, _contentSize.height/2.0f);
+    if (_backGroundScale9Enabled) {
+        _backGroundImage->setPreferredSize(_contentSize);
+    }
+    else{
+        _backGroundImage->setPreferredSize(_backGroundImageTextureSize);
+    }
     updateBackGroundImageRGBA();
 }
 
@@ -1045,7 +1048,7 @@ Size Layout::getLayoutAccumulatedSize()const
         }
     }
     
-    //substract extra size
+    //subtract extra size
     Type type = this->getLayoutType();
     if (type == Type::HORIZONTAL)
     {
@@ -1063,7 +1066,7 @@ Vec2 Layout::getWorldCenterPoint(Widget* widget)const
     Layout *layout = dynamic_cast<Layout*>(widget);
     //FIXEDME: we don't need to calculate the content size of layout anymore
     Size widgetSize = layout ? layout->getLayoutAccumulatedSize() :  widget->getContentSize();
-//    CCLOG("contnet size : width = %f, height = %f", widgetSize.width, widgetSize.height);
+//    CCLOG("content size : width = %f, height = %f", widgetSize.width, widgetSize.height);
     return widget->convertToWorldSpace(Vec2(widgetSize.width/2, widgetSize.height/2));
 }
 
@@ -1153,7 +1156,7 @@ int Layout::findFirstFocusEnabledWidgetIndex()
         }
         index++;
     }
-    CCASSERT(0, "invalide operation");
+    CCASSERT(0, "invalid operation");
     return 0;
 }
 
@@ -1467,7 +1470,7 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection direction, Widget *curre
         }
         else
         {
-            //handling the disabled widget, there is no actual focus lose or get, so we don't need any envet
+            //handling the disabled widget, there is no actual focus lose or get, so we don't need any event
             return this->getPreviousFocusedWidget(direction, nextWidget);
         }
     }

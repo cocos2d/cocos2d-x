@@ -1,14 +1,15 @@
 
 
-#include "TextAtlasReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextAtlasReader/TextAtlasReader.h"
 
 #include "ui/UITextAtlas.h"
-#include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
+#include "platform/CCFileUtils.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -274,13 +275,6 @@ namespace cocostudio
                     errorFilePath = cmfPath;
                     fileExist = false;
                 }
-                
-                //if (!fileExist)
-                //{
-                //    auto label = Label::create();
-                //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-                //    labelAtlas->addChild(label);
-                //}
                 break;
             }
                 

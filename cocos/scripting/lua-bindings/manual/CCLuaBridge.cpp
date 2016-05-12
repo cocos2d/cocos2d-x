@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCLuaBridge.h"
+#include "scripting/lua-bindings/manual/CCLuaBridge.h"
 
 NS_CC_BEGIN
 

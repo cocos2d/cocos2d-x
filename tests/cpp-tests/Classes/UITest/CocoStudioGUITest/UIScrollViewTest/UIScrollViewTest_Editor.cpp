@@ -11,6 +11,8 @@ UIScrollViewEditorTests::UIScrollViewEditorTests()
     ADD_TEST_CASE(UIScrollViewTest_Both_Editor);
 //    ADD_TEST_CASE(UIScrollViewTest_ScrollToPercentBothDirection_Editor);
 //    ADD_TEST_CASE(UIScrollViewTest_ScrollToPercentBothDirection_Bounce_Editor);
+    ADD_TEST_CASE(UIScrollViewTest_ClippingWithNode);
+    ADD_TEST_CASE(UISscrollViewTestBar);
 }
 
 // UIScrollViewTest_Vertical_Editor
@@ -161,5 +163,50 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce_Editor::init()
         return true;
     }
     
+    return false;
+}
+
+// UIScrollViewTest_Vertical_Editor
+
+UIScrollViewTest_ClippingWithNode::UIScrollViewTest_ClippingWithNode()
+{
+
+}
+
+UIScrollViewTest_ClippingWithNode::~UIScrollViewTest_ClippingWithNode()
+{
+
+}
+
+bool UIScrollViewTest_ClippingWithNode::init()
+{
+    if (UIScene_Editor::init())
+    {
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/ScrollViewAndButton/MainScene.csb");
+        _layout = static_cast<Layout*>(node);
+        _touchGroup->addChild(_layout);
+
+        return true;
+    }
+
+    return false;
+}
+
+UISscrollViewTestBar::UISscrollViewTestBar()
+{
+}
+
+UISscrollViewTestBar::~UISscrollViewTestBar()
+{
+}
+
+bool UISscrollViewTestBar::init()
+{
+    if (UIScene_Editor::init())
+    {
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Both/ScrollBarTests.csb");
+        _touchGroup->addChild(node);
+        return true;
+    }
     return false;
 }

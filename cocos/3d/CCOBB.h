@@ -25,7 +25,7 @@
 #ifndef __CC_OBB_H__
 #define __CC_OBB_H__
 
-#include "CCAABB.h"
+#include "3d/CCAABB.h"
 
 NS_CC_BEGIN
 

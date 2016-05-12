@@ -24,7 +24,7 @@ cocos2d-x is:
   * Fast
   * Free
   * Easy to use
-  * Community Supported
+  * Community supported
 
 Git user attention
 -----------------------
@@ -110,7 +110,7 @@ Starting with Cocos2d-x v3.3, you can create Windows 8.1 Universal Apps (Windows
 Starting with Cocos2d-x v3.8 you can create Windows 10.0 UWP Apps (Windows Store and Windows Phone 10.0).
 Starting with Cocos2d-x v3.6 there will no longer be support for Windows Phone 8.0.
 
-See more info on How to install and Create games on Windows RT (Windows and Windows Phone 8.1) at http://msopentech.github.io/cocos2d-x/
+See more info on how to install and create games on Windows RT (Windows and Windows Phone 8.1) at http://msopentech.github.io/cocos2d-x/
 
 ### Build and run new project for web ###
 
@@ -128,10 +128,9 @@ Or you can publish your game to `publish/html5/` folder:
 
 Documentations and samples
 -------------
-
-* [Online API Reference](http://cocos2d-x.org/wiki/Reference) _Note that Cocos2d-x and Cocos2d-JS have different API set_
-* [Programmers Guide](http://cocos2d-x.org/programmersguide/)
-* [Temporary Cocos2d-JS documents](http://cocos2d-x.org/docs/manual/framework/html5/en)
+* [All Docs in a single place!](http://cocos2d-x.org/docs/)
+* [Online API Reference](http://cocos2d-x.org/docs/api-ref/index.html) _Note that Cocos2d-x, Cocos2d-JS and Cocos Creator have different API set_
+* [Programmers Guide](http://cocos2d-x.org/docs/programmers-guide/2/index.html)
 * [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
 * [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 * [Cocos2d sample games](https://github.com/cocos2d/cocos2d-x-samples) _More samples will be added in v3.8_
@@ -262,7 +261,7 @@ Then click item on Android device to run tests. Available value of `-p` is the A
 Learning Resources
 --------------------------------
 
-* [Programmers Guide](http://cocos2d-x.org/programmersguide/)
+* [Programmers Guide](http://cocos2d-x.org/docs/programmers-guide/2/index.html)
 * [Sonar Systems Videos](https://www.youtube.com/user/sonarsystemslimited/search?query=cocos2d-x)
 * [Android Fundamentals](https://developer.android.com/guide/components/fundamentals.html)
 * [Make School Tutorials](https://www.makeschool.com/tutorials/)
@@ -278,6 +277,12 @@ You can help us spread the word about cocos2d-x! We would surely appreciate it!
 * Read our [Blog](http://blog.cocos2d-x.org/) and promote it on your social media.
 * Become a [Regional Coordinator](http://discuss.cocos2d-x.org/t/we-need-regional-coordinators/24104)
 
+See what we are planning!
+--------------------------------
+You can see exactly what we are planning to do with the Cocos family of products.
+
+* [Cocos2d-x roadmap](https://trello.com/b/Np6obnuE/cocos2d-x-roadmap)
+
 Where to get help
 --------------------------------
 
@@ -287,23 +292,23 @@ Where to get help
 * `cpp-tests` project. This project is our basis for testing. Use this project to
 learn how we implement the functionality of the engine. This project is located in
 __cocos2d-x_root/build.__
-* [API Reference](http://cocos2d-x.org/wiki/Reference).
-* [Temporary Cocos2d-JS documents](http://cocos2d-x.org/docs/manual/framework/html5/en)
+* [API Reference](http://cocos2d-x.org/docs/api-ref/index.html).
 * [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
 * [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 
 Contributing to the Project
 --------------------------------
 
+Cocos2d-x is licensed under the [MIT License](https://opensource.org/licenses/MIT). We welcome participation!
+
 Did you find a bug? Do you have feature request? Do you want to merge a feature?
 
   * [contributing to cocos2d-x][8]
 
-
 Contact us
 ----------
 
-   * Forum: [http://forum.cocos2d-x.org][9]
+   * Forum: [http://discuss.cocos2d-x.org][9]
    * Twitter: [http://www.twitter.com/cocos2dx][10]
    * Weibo: [http://t.sina.com.cn/cocos2dx][11]
    * IRC: [https://webchat.freenode.net/][12] (#cocos2d and #cocos2d-x channels)
@@ -316,7 +321,7 @@ Contact us
 [6]: http://www.chipmunk-physics.net "Chipmunk2D"
 [7]: http://esotericsoftware.com/ "http://esotericsoftware.com/"
 [8]: https://github.com/cocos2d/cocos2d-x/blob/v3/CONTRIBUTING.md
-[9]: http://forum.cocos2d-x.org "http://forum.cocos2d-x.org"
+[9]: http://discuss.cocos2d-x.org "http://discuss.cocos2d-x.org"
 [10]: http://www.twitter.com/cocos2dx "http://www.twitter.com/cocos2dx"
 [11]: http://t.sina.com.cn/cocos2dx "http://t.sina.com.cn/cocos2dx"
 [12]: https://webchat.freenode.net/ "https://webchat.freenode.net/"

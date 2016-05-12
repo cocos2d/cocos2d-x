@@ -22,9 +22,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCFileUtilsWinRT.h"
+#include "platform/winrt/CCFileUtilsWinRT.h"
 #include <regex>
-#include "CCWinRTUtils.h"
+#include "platform/winrt/CCWinRTUtils.h"
 #include "platform/CCCommon.h"
 using namespace std;
 
@@ -127,6 +127,19 @@ std::string CCFileUtilsWinRT::getFullPathForDirectoryAndFilename(const std::stri
 std::string CCFileUtilsWinRT::getSuitableFOpen(const std::string& filenameUtf8) const
 {
     return UTF8StringToMultiByte(filenameUtf8);
+}
+
+long CCFileUtilsWinRT::getFileSize(const std::string &filepath)
+{
+    WIN32_FILE_ATTRIBUTE_DATA fad;
+    if (!GetFileAttributesEx(StringUtf8ToWideChar(filepath).c_str(), GetFileExInfoStandard, &fad))
+    {
+        return 0; // error condition, could call GetLastError to find out more
+    }
+    LARGE_INTEGER size;
+    size.HighPart = fad.nFileSizeHigh;
+    size.LowPart = fad.nFileSizeLow;
+    return (long)size.QuadPart;
 }
 
 bool CCFileUtilsWinRT::isFileExistInternal(const std::string& strFilePath) const

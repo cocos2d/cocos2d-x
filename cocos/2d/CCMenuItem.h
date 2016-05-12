@@ -205,20 +205,28 @@ public:
      * @~chinese 要显示的文本。
      */
     void setString(const std::string& text);
-
-    /**
-     * @~english Gets the color that will be used to disable the item.
-     * @~chinese 获取菜单项禁用状态下的着色。
-     * @return @~english The color that used for disable the item. @~chinese 禁用状态下的着色。
-     */
-    inline const Color3B& getDisabledColor() const { return _disabledColor; };
-
+    
     /**
      * @~english Sets the color that will be used to disable the item.
      * @~chinese 设置菜单项禁用状态下的着色。
      *
      * @param color @~english The color that will be used to disable the item.
      * @~chinese 禁用状态下的着色。
+     */
+    /** Get the inner string of the inner label. */
+    std::string getString() const;
+
+    /**
+     * @~english Gets the color that will be used when the item is disabled. 
+     * @~chinese 获取菜单项禁用状态下的着色。
+     * @return @~english The color that used for disable the item. @~chinese 禁用状态下的着色。
+     */
+    inline const Color3B& getDisabledColor() const { return _disabledColor; };
+
+    /** @~english
+     * Sets the color that will be used when the item is disabled. 
+     * @~chinese
+     * 设置菜单项禁用状态下的着色。
      */
     inline void setDisabledColor(const Color3B& color) { _disabledColor = color; };
     
@@ -476,7 +484,12 @@ public:
     static MenuItemSprite * create(Node* normalNode, Node* selectedNode, Node* disabledNode = nullptr);
     
     CC_DEPRECATED_ATTRIBUTE static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Ref* target, SEL_MenuHandler selector);
-    
+
+    /**@~english
+     * Creates a menu item with a normal, selected and disabled image with target/selector. 
+     * @~chinese
+     * 基于给定的不同状态下显示的节点创建菜单项。
+     */
     CC_DEPRECATED_ATTRIBUTE static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, Ref* target, SEL_MenuHandler selector);
 
     /** @~english Creates a menu item with a normal and selected node with a callback.  
@@ -548,8 +561,10 @@ CC_CONSTRUCTOR_ACCESS:
     ,_disabledImage(nullptr)
     {}
     
+    /** Initializes a menu item with a normal, selected and disabled image with target/selector. */
     CC_DEPRECATED_ATTRIBUTE bool initWithNormalSprite(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, Ref* target, SEL_MenuHandler selector);
-
+    
+    /** Initializes a menu item with a normal, selected and disabled image with a callable object. */
     bool initWithNormalSprite(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, const ccMenuCallback& callback);
     
 protected:
@@ -623,6 +638,7 @@ public:
      */
     static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage, const ccMenuCallback& callback);
 
+    /** Creates a menu item with a normal,selected and disabled image with target/selector. */
     CC_DEPRECATED_ATTRIBUTE static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, Ref* target, SEL_MenuHandler selector);
     
     /** @~english Creates a menu item with a normal,selected and disabled image with a callable object.  
@@ -652,8 +668,10 @@ CC_CONSTRUCTOR_ACCESS:
     
     bool init();
     
+    /** Initializes a menu item with a normal, selected and disabled image with target/selector. */
     CC_DEPRECATED_ATTRIBUTE bool initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, Ref* target, SEL_MenuHandler selector);
     
+    /** Initializes a menu item with a normal, selected and disabled image with a callable object. */
     bool initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, const ccMenuCallback& callback);
 
 private:
@@ -769,6 +787,7 @@ public:
     virtual void selected() override;
     virtual void unselected() override;
     virtual void setEnabled(bool var) override;
+    virtual void cleanup() override;
     
 CC_CONSTRUCTOR_ACCESS:
     MenuItemToggle()

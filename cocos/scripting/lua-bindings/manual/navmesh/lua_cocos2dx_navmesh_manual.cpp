@@ -24,11 +24,11 @@
 #include "platform/CCPlatformConfig.h"
 #include "base/ccConfig.h"
 #if CC_USE_NAVMESH
-#include "lua_cocos2dx_navmesh_manual.h"
-#include "lua_cocos2dx_navmesh_auto.hpp"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/navmesh/lua_cocos2dx_navmesh_manual.h"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_navmesh_auto.hpp"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "navmesh/CCNavMesh.h"
 
 

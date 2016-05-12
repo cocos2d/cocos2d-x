@@ -21,7 +21,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCFreeTypeFont.h"
+#include "platform/winrt/CCFreeTypeFont.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
 

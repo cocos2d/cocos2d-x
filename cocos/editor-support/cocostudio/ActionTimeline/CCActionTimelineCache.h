@@ -28,9 +28,9 @@ THE SOFTWARE.
 #include <unordered_map>
 #include "base/CCMap.h"
 
-#include "cocostudio/DictionaryHelper.h"
-#include "CCTimelineMacro.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimelineMacro.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include "cocos2d.h"
 
 namespace flatbuffers
@@ -104,6 +104,7 @@ public:
     * @~chinese 时间轴动画。
     */
     ActionTimeline* createActionFromJson(const std::string& fileName);
+    ActionTimeline* createActionFromContent(const std::string& fileName, const std::string& content);
 
     /** @~english Load an action time line from file.
     *   @~chinese 从文件中载入时间轴动画。
@@ -132,15 +133,10 @@ public:
     * @~chinese 时间轴动画。
     */
     ActionTimeline* createActionWithFlatBuffersFile(const std::string& fileName);
-    /** @~english Load na action time line from flatbuffer file.
-    *   @~chinese 从flatbuffer二进制文件中载入时间轴动画。
-    * @param fileName @~english File name.
-    * @~chinese 文件名。
-    * @return @~english ActionTimeline.
-    * @~chinese 时间轴动画。
-    */
+    ActionTimeline* createActionWithDataBuffer(cocos2d::Data data, const std::string &fileName);
+
     ActionTimeline* loadAnimationActionWithFlatBuffersFile(const std::string& fileName);
-    ActionTimeline* loadAnimationWithDataBuffer(const cocos2d::Data data, const std::string fileName);
+    ActionTimeline* loadAnimationWithDataBuffer(const cocos2d::Data& data, const std::string& fileName);
     
     /** @~english Create an action time line from flatbuffer file for simulator.
     *   @~chinese 从flatbuffer二进制文件中创建时间轴动画(用于模拟器)。
@@ -185,7 +181,7 @@ protected:
     Frame* loadBlendFrameWithFlatBuffers        (const flatbuffers::BlendFrame* flatbuffers);
     void loadEasingDataWithFlatBuffers(Frame* frame, const flatbuffers::EasingData* flatbuffers);
 
-    inline ActionTimeline* createActionWithDataBuffer(const cocos2d::Data data);
+    inline ActionTimeline* createActionWithDataBuffer(const cocos2d::Data& data);
 protected:
 
     typedef std::function<Frame*(const rapidjson::Value& json)> FrameCreateFunc;

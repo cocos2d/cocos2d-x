@@ -615,6 +615,7 @@ NS_CC_MATH_END
 // end of base group
 /// @}
 
-#include "Vec3.inl"
+#include "math/Vec3.inl"
+
 
 #endif // MATH_VEC3_H

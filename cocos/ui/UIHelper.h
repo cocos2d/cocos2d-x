@@ -93,7 +93,7 @@ public:
     /**
      * @~english
      * Find a widget with a specific action tag from root widget
-     * This search will be recursive throught all child widgets.
+     * This search will be recursive through all child widgets.
      * @~chinese 
      * 查找指定节点内包含具体action tag的节点
      * 此搜索将递归所有子节点（部件）。

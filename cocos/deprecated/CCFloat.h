@@ -45,7 +45,7 @@ public:
 
     static __Float* create(float v)
     {
-        __Float* pRet = new __Float(v);
+        __Float* pRet = new (std::nothrow) __Float(v);
         if (pRet)
         {
             pRet->autorelease();

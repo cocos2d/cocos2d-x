@@ -2,7 +2,7 @@
 #define __ACTIONS_H__
 
 #include "cocos2d.h"
-#include "cocostudio/TriggerBase.h"
+#include "editor-support/cocostudio/TriggerBase.h"
 
 
 class  PlayMusic: public cocostudio::BaseTriggerAction

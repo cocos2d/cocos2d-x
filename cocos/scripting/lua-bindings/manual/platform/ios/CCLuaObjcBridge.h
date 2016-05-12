@@ -2,7 +2,7 @@
 #ifndef __LUA_OBJC_BRIDGE_H_
 #define __LUA_OBJC_BRIDGE_H_
 
-#include "CCLuaBridge.h"
+#include "scripting/lua-bindings/manual/CCLuaBridge.h"
 
 /**
  * @addtogroup lua

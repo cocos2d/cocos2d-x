@@ -111,9 +111,12 @@ public:
     static Menu* createWithArray(const Vector<MenuItem*>& arrayOfItems);
 
     /**@~english
-     * Creates a Menu with it's item, then use addChild() to add other items.
+     * Creates a Menu with it's item, then use addChild() to add 
+     * other items. It is used for script, it can't be initialized with undetermined
+     * number of variables.
      * @~chinese 
      * 通过给定的一个菜单项对象创建菜单，之后可通过addChild函数添加其他菜单项。
+     * 该接口主要是被脚本调用，不支持变参。
      * @param item @~english A MenuItem object. @~chinese 一个MenuItem对象。
      * @return @~english A initialized menu which is marked as "autorelease".
      * @~chinese 一个初始化的菜单，该节点会自动被标记为“autorelease”(自动释放).
@@ -198,7 +201,7 @@ public:
     void alignItemsInRowsWithArray(const ValueVector& rows);
 
     /**@~english
-     * Determines if the menu is enable.
+     * Determines if the menu is enabled.
      * @~chinese 
      * 验证菜单是否可点击。
      * @see `setEnabled(bool)`.
@@ -208,12 +211,13 @@ public:
     virtual bool isEnabled() const { return _enabled; }
 
     /**@~english
-     * Set whether the menu is enable.
+     * Set whether the menu is visible. If set false, interacting with the menu
+     * will have no effect.
      * The default value is true, a menu is default to enable.
      * @~chinese 
-     * 设置菜单是否可点击。
+     * 设置菜单是否可点击。如果设置为false，那么该菜单没有交互功能。
      * 默认为true,可点击。
-     * @param value @~english true if menu is enable, false if menu is disable.
+     * @param value @~english true if menu is enabled, false if menu is disabled.
      * @~chinese true 菜单响应点击，false 菜单不响应点击。
      */
     virtual void setEnabled(bool value) { _enabled = value; };

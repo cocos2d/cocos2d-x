@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "2d/CCFontFreeType.h"
 #include FT_BBOX_H
 #include "edtaa3func.h"
-#include "CCFontAtlas.h"
+#include "2d/CCFontAtlas.h"
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
@@ -85,6 +85,7 @@ void FontFreeType::shutdownFreeType()
     if (_FTInitialized == true)
     {
         FT_Done_FreeType(_FTlibrary);
+        s_cacheFontData.clear();
         _FTInitialized = false;
     }
 }
@@ -141,7 +142,7 @@ bool FontFreeType::createFontObject(const std::string &fontName, float fontSize)
 
     if (FT_New_Memory_Face(getFTLibrary(), s_cacheFontData[fontName].data.getBytes(), s_cacheFontData[fontName].data.getSize(), 0, &face ))
         return false;
-    
+
     if (FT_Select_Charmap(face, FT_ENCODING_UNICODE))
     {
         int foundIndex = -1;
@@ -230,7 +231,7 @@ int * FontFreeType::getHorizontalKerningForTextUTF16(const std::u16string& text,
     if (!outNumLetters)
         return nullptr;
     
-    int *sizes = new int[outNumLetters];
+    int *sizes = new (std::nothrow) int[outNumLetters];
     if (!sizes)
         return nullptr;
     memset(sizes,0,outNumLetters * sizeof(int));
@@ -274,6 +275,14 @@ int FontFreeType::getFontAscender() const
     return (static_cast<int>(_fontRef->size->metrics.ascender >> 6));
 }
 
+const char* FontFreeType::getFontFamily() const
+{
+    if (!_fontRef)
+        return nullptr;
+
+    return _fontRef->family_name;
+}
+
 unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance)
 {
     bool invalidChar = true;
@@ -309,7 +318,7 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
 
         if (_outlineSize > 0)
         {
-            auto copyBitmap = new unsigned char[outWidth * outHeight];
+            auto copyBitmap = new (std::nothrow) unsigned char[outWidth * outHeight];
             memcpy(copyBitmap,ret,outWidth * outHeight * sizeof(unsigned char));
 
             FT_BBox bbox;
@@ -342,7 +351,7 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
             outRect.origin.y = -blendImageMaxY + _outlineSize;
 
             long index, index2;
-            auto blendImage = new unsigned char[blendWidth * blendHeight * 2];
+            auto blendImage = new (std::nothrow) unsigned char[blendWidth * blendHeight * 2];
             memset(blendImage, 0, blendWidth * blendHeight * 2);
 
             auto px = outlineMinX - blendImageMinX;
@@ -415,7 +424,7 @@ unsigned char * FontFreeType::getGlyphBitmapWithOutline(unsigned short theChar, 
                     long rows = (bbox.yMax - bbox.yMin)>>6;
 
                     FT_Bitmap bmp;
-                    bmp.buffer = new unsigned char[width * rows];
+                    bmp.buffer = new (std::nothrow) unsigned char[width * rows];
                     memset(bmp.buffer, 0, width * rows);
                     bmp.width = (int)width;
                     bmp.rows = (int)rows;
@@ -639,7 +648,7 @@ void FontFreeType::releaseFont(const std::string &fontName)
     auto item = s_cacheFontData.begin();
     while (s_cacheFontData.end() != item)
     {
-        if (item->first.find(fontName) >= 0)
+        if (item->first.find(fontName) != std::string::npos)
             item = s_cacheFontData.erase(item);
         else
             item++;

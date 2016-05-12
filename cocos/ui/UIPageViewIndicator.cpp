@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "UIPageViewIndicator.h"
+#include "ui/UIPageViewIndicator.h"
 #include "2d/CCSprite.h"
 #include "base/ccUtils.h"
 

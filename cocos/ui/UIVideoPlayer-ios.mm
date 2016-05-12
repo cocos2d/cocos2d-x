@@ -22,9 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIVideoPlayer.h"
+#include "ui/UIVideoPlayer.h"
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+// No Available on tvOS
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS && !defined(CC_TARGET_OS_TVOS)
 
 using namespace cocos2d::experimental::ui;
 //-------------------------------------------------------------------------------------
@@ -340,6 +341,18 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags
 bool VideoPlayer::isFullScreenEnabled()const
 {
     return [((UIVideoViewWrapperIos*)_videoView) isFullScreenEnabled];
+}
+
+void VideoPlayer::onEnter()
+{
+    Widget::onEnter();
+    [((UIVideoViewWrapperIos*)_videoView) setVisible:YES];
+}
+
+void VideoPlayer::onExit()
+{
+    Widget::onExit();
+    [((UIVideoViewWrapperIos*)_videoView) setVisible:NO];
 }
 
 void VideoPlayer::setFullScreenEnabled(bool enabled)

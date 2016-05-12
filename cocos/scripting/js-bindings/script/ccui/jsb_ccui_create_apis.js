@@ -125,7 +125,7 @@ ccui.TextField.prototype._ctor = function(placeholder, fontName, fontSize){
 };
 
 ccui.RichElementText.prototype._ctor = function(tag, color, opacity, text, fontName, fontSize){
-    fontSize !== undefined && this.init(tag, color, opacity, text, fontName, fontSize);
+    fontSize !== undefined && this.init(tag, color, opacity, text, fontName, fontSize, 0, "");
 };
 
 ccui.RichElementImage.prototype._ctor = function(tag, color, opacity, filePath){

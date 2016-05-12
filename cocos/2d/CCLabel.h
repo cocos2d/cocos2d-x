@@ -55,14 +55,24 @@ typedef struct _ttfConfig
     bool distanceFieldEnabled;
     int outlineSize;
 
+    bool italics;
+    bool bold;
+    bool underline;
+    bool strikethrough;
+
     _ttfConfig(const std::string& filePath = "",float size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
-        const char *customGlyphCollection = nullptr, bool useDistanceField = false, int outline = 0)
+        const char *customGlyphCollection = nullptr, bool useDistanceField = false, int outline = 0,
+               bool useItalics = false, bool useBold = false, bool useUnderline = false, bool useStrikethrough = false)
         : fontFilePath(filePath)
         , fontSize(size)
         , glyphs(glyphCollection)
         , customGlyphs(customGlyphCollection)
         , distanceFieldEnabled(useDistanceField)
         , outlineSize(outline)
+        , italics(useItalics)
+        , bold(useBold)
+        , underline(useUnderline)
+        , strikethrough(useStrikethrough)
     {
         if(outline > 0)
         {
@@ -70,6 +80,13 @@ typedef struct _ttfConfig
         }
     }
 }TTFConfig;
+
+enum class TextFormatter : char
+{
+    NewLine = '\n',
+    CarriageReturn = '\r',
+    NextCharNoChangeX = '\b'
+};
 
 class Sprite;
 class SpriteBatchNode;
@@ -110,16 +127,16 @@ class CC_DLL Label : public Node, public LabelProtocol, public BlendProtocol
 public:
     enum class Overflow
     {
-        //for keep back compatibility
-        NORMAL,
-        /**
-         * In SHRINK mode, the font size will change dynamically to adapt the content size.
-         */
-        SHRINK,
+        //In NONE mode, the dimensions is (0,0) and the content size will change dynamically to fit the label.
+        NONE,
         /**
          *In CLAMP mode, when label content goes out of the bounding box, it will be clipped.
          */
         CLAMP,
+        /**
+         * In SHRINK mode, the font size will change dynamically to adapt the content size.
+         */
+        SHRINK,
         /**
          *In RESIZE_HEIGHT mode, you can only change the width of label and the height is changed automatically.
          */
@@ -393,7 +410,7 @@ public:
     /** @~english Sets the text that this Label is to display. @~chinese 设置文本显示的字符串。*/
     virtual void setString(const std::string& text) override;
 
-    /** @~english Return the text the Label is displaying. @~chinese 返回文本显示的字符串。*/
+    /** @~english Return the text the Label is currently displaying. @~chinese 返回文本当前显示的字符串。*/
     virtual const std::string& getString() const override {  return _utf8Text; }
 
     /**
@@ -458,12 +475,42 @@ public:
     virtual void enableGlow(const Color4B& glowColor);
 
     /**@~english
-     * Disable all effect to Label.
+     * Enable italics rendering
+     * @~chinese 
+     * 激活文本的斜体效果
+     */
+    void enableItalics();
+
+    /**@~english
+     * Enable bold rendering
+     * @~chinese 
+     * 激活文本的加粗效果
+     */
+    void enableBold();
+
+    /**@~english
+     * Enable underline
+     * @~chinese 
+     * 激活文本的下划线效果
+     */
+    void enableUnderline();
+
+    /**~english
+     * Enables strikethrough.
+     * Underline and Strikethrough cannot be enabled at the same time.
+     * Strikethrough is like an underline but at the middle of the glyph
+     * @~chinese 
+     * 激活文本的删除线效果
+     * 不能同时使用下划线和删除线效果。
+     * 删除线效果和下划线效果类似，区别是下划线效果线是画在字的中间。
+     */
+    void enableStrikethrough();
+
+    /* Disable all effect applied to Label.
      * @~chinese 
      * 禁用所有文本特效。
      * @warning @~english Please use disableEffect(LabelEffect::ALL) instead of this API.
      * @~chinese 请使用disableEffect(LabelEffect:ALL)而不是这个API。
-     */
     virtual void disableEffect();
 
     /**@~english
@@ -507,7 +554,7 @@ public:
     LabelEffect getLabelEffectType() const { return _currLabelEffect; }
 
     /**
-    * Return current effect color vlaue.
+    * Return current effect color value.
     */
     Color4F getEffectColor() const { return _effectColorF; }
 
@@ -625,7 +672,7 @@ public:
      * Makes the Label exactly this untransformed height.
      *
      * The Label's height be used for text align if the value not equal zero.
-     * The text will display of incomplete when the size of Label not enough to support display all text.
+     * The text will display incomplete if the size of Label is not large enough to display all text.
      * @~chinese 
      * 设置文本的行高
      * 
@@ -665,7 +712,7 @@ public:
      */
     virtual Sprite * getLetter(int lettetIndex);
 
-    /** @~english Makes the Label to clip upper and lower margin for reduce height of Label.
+    /** @~english Clips upper and lower margin to reduce height of Label.
      *@~chinese 设置是否裁剪文本上下边距，主要用来减少文本的调试。
      */
     void setClipMarginEnabled(bool clipEnabled) { _clipEnabled = clipEnabled; }
@@ -810,7 +857,7 @@ protected:
     void computeStringNumLines();
 
     void onDraw(const Mat4& transform, bool transformUpdated);
-    void onDrawShadow(GLProgram* glProgram);
+    void onDrawShadow(GLProgram* glProgram, const Color4F& shadowColor);
     void drawSelf(bool visibleByCamera, Renderer* renderer, uint32_t flags);
 
     bool multilineTextWrapByChar();
@@ -940,6 +987,11 @@ protected:
     float _bmfontScale;
     Overflow _overflow;
     float _originalFontSize;
+
+    bool _boldEnabled;
+    DrawNode* _underlineNode;
+    bool _strikethroughEnabled;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);
 };

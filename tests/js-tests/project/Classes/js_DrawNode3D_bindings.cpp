@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "cocos2d.h"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "js_DrawNode3D_bindings.h"
 
 NS_CC_BEGIN
@@ -517,7 +517,6 @@ void js_register_cocos2dx_DrawNode3D(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_DrawNode3D_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_DrawNode3D_class->resolve = JS_ResolveStub;
     jsb_cocos2d_DrawNode3D_class->convert = JS_ConvertStub;
-    jsb_cocos2d_DrawNode3D_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_DrawNode3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {

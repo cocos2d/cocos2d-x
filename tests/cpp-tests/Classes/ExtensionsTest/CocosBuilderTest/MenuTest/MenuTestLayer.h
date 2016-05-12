@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
-#include "cocosbuilder/CocosBuilder.h"
+#include "editor-support/cocosbuilder/CocosBuilder.h"
 
 class MenuTestLayer
     : public cocos2d::Layer

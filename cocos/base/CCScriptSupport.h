@@ -699,6 +699,36 @@ public:
      * @~chinese 获取脚本引擎的类型。
      */
     virtual ccScriptType getScriptType() { return kScriptTypeNone; };
+    
+    /**
+     * Reflect the retain relationship to script scope
+     */
+    virtual void retainScriptObject(Ref* owner, Ref* target) {};
+    
+    /**
+     * Add the script object to root object
+     */
+    virtual void rootScriptObject(Ref* target) {};
+    
+    /**
+     * Reflect the release relationship to script scope
+     */
+    virtual void releaseScriptObject(Ref* owner, Ref* target) {};
+    
+    /**
+     * Remove the script object from root object
+     */
+    virtual void unrootScriptObject(Ref* target) {};
+    
+    /**
+     * Release all children native refs for the given node in script scope
+     */
+    virtual void releaseAllChildrenRecursive(Node* node) {};
+    
+    /**
+     * Release all native refs for the given owner in script scope
+     */
+    virtual void releaseAllNativeRefs(cocos2d::Ref* owner) {};
 
     /** @~english
      * Remove script object,the specific meaning should refer to the ScriptType.
@@ -707,7 +737,7 @@ public:
      * 移除脚本对象，不同的ScriptType有不同的操作。
      * 对于Lua, @see removeScriptObjectByObject of LuaEngine.
      */
-    virtual void removeScriptObjectByObject(Ref* obj) = 0;
+    virtual void removeScriptObjectByObject(Ref* obj) {};
     
     /** @~english
      * Remove script function handler, only LuaEngine class need to implement this function.
@@ -840,6 +870,9 @@ public:
      It tells the Garbage Collector that the associated Scripting object can be collected
      */
     virtual void unrootObject(Ref* obj) {}
+
+    /** Triggers the garbage collector */
+    virtual void garbageCollect() {}
 };
 
 class Node;

@@ -2,8 +2,8 @@
 #include "AppDelegate.h"
 #include "audio/include/SimpleAudioEngine.h"
 #include "base/CCScriptSupport.h"
-#include "CCLuaEngine.h"
-#include "lua_module_register.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/lua_module_register.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;

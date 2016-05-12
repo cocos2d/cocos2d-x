@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "UITextView+CCUITextInput.h"
+#import "ui/UIEditBox/iOS/UITextView+CCUITextInput.h"
 
 
 @implementation UITextView (CCUITextInput)

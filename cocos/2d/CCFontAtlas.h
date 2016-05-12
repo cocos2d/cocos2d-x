@@ -1,6 +1,6 @@
 ﻿/****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -109,7 +109,9 @@ public:
      void setAliasTexParameters();
 
 protected:
-    void relaseTextures();
+    void reset();
+    
+    void releaseTextures();
 
     void findNewCharacters(const std::u16string& u16Text, std::unordered_map<unsigned short, unsigned short>& charCodeMap);
 

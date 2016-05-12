@@ -3,7 +3,7 @@
 #include "../../CustomWidget/CustomImageView.h"
 #include "../../CustomWidget/CustomImageViewReader.h"
 #include "../../CustomWidget/CustomReader.h"
-#include "cocostudio/CCSGUIReader.h"
+#include "editor-support/cocostudio/CCSGUIReader.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;

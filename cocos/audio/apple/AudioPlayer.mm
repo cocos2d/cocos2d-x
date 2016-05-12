@@ -27,8 +27,8 @@
 
 #import <Foundation/Foundation.h>
 
-#include "AudioPlayer.h"
-#include "AudioCache.h"
+#include "audio/apple/AudioPlayer.h"
+#include "audio/apple/AudioCache.h"
 #include "platform/CCFileUtils.h"
 #import <AudioToolbox/ExtendedAudioFile.h>
 

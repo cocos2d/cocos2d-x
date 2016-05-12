@@ -28,7 +28,7 @@
 #define ERRNO         ((int)GetLastError())
 #define SET_ERRNO(x)  (SetLastError((DWORD)(x)))
 
-#include "inet_pton_winrt.h"
+#include "platform/winrt/inet_pton_winrt.h"
 
 #define ENABLE_IPV6
 

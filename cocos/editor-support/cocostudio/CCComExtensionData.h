@@ -26,9 +26,9 @@
 #define __cocos2d_libs__CCObjectExtensionData__
 
 #include <string>
-#include "CCComBase.h"
+#include "editor-support/cocostudio/CCComBase.h"
 #include "2d/CCComponent.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio
 {
@@ -85,15 +85,17 @@ namespace cocostudio
         * @param tag    @~english tag of timeline data @~chinese 间轴数据的Tag
         */
         virtual void setActionTag(int actionTag);
+        
         /**
         * @~english Get tag for timeline data
         * @~chinese 获取时间轴数据的Tag
         *
         * @return @~english tag of timeline data @~chinese 间轴数据的Tag
         */
-        virtual const int getActionTag() const;
+        virtual int getActionTag() const;
 
     CC_CONSTRUCTOR_ACCESS:
+
         ComExtensionData();
         ~ComExtensionData();
         

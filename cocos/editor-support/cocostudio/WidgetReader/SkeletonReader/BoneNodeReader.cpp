@@ -24,11 +24,11 @@ THE SOFTWARE.
 
 #include "tinyxml2/tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
-#include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/WidgetReader/SkeletonReader/CSBoneBinary_generated.h"
-#include "cocostudio/WidgetReader/SkeletonReader/BoneNodeReader.h"
-#include "cocostudio/ActionTimeline/CCBoneNode.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/WidgetReader/SkeletonReader/CSBoneBinary_generated.h"
+#include "editor-support/cocostudio/WidgetReader/SkeletonReader/BoneNodeReader.h"
+#include "editor-support/cocostudio/ActionTimeline/CCBoneNode.h"
 
 
 USING_NS_CC;

@@ -360,6 +360,9 @@ protected:
      */
     void dispatchTouchEventToListeners(EventListenerVector* listeners, const std::function<bool(EventListener*)>& onEvent);
     
+    /** @~english Release a listener. @~chinese 删除一个listener。*/
+    void releaseListener(EventListener* listener);
+    
     /** @~english Priority dirty flag @~chinese 带优先级的'脏标记'(dirty flag)*/
     enum class DirtyFlag
     {

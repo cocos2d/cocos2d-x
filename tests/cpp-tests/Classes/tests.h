@@ -18,6 +18,9 @@
 #endif
 #endif
 #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "JNITest/JNITest.h"
+#endif
 
 // sort them alphabetically. thanks
 #include "ActionManagerTest/ActionManagerTest.h"
@@ -88,5 +91,6 @@
 #include "UserDefaultTest/UserDefaultTest.h"
 #include "VibrateTest/VibrateTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
+#include "SpriteFrameCacheTest/SpriteFrameCacheTest.h"
 
 #endif

@@ -22,11 +22,11 @@
  $Id$
  */
 
-#import "CocosDenshion.h"
+#import "audio/ios/CocosDenshion.h"
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 30000
     #import <AVFoundation/AVFoundation.h>
 #else
-    #import "CDXMacOSXSupport.h"
+    #import "audio/mac/CDXMacOSXSupport.h"
 #endif
 
 /** Different modes of the engine */
@@ -146,7 +146,13 @@ typedef enum {
  - Frameworks: OpenAL, AudioToolbox, AVFoundation
  @since v0.8
  */
+
+// AVAudioSessionDelegate not available on tvOS
+#if defined(CC_TARGET_OS_TVOS)
+@interface CDAudioManager : NSObject <CDLongAudioSourceDelegate, CDAudioInterruptProtocol> {
+#else
 @interface CDAudioManager : NSObject <CDLongAudioSourceDelegate, CDAudioInterruptProtocol, AVAudioSessionDelegate> {
+#endif
     CDSoundEngine        *soundEngine;
     CDLongAudioSource    *backgroundMusic;
     NSMutableArray        *audioSourceChannels;

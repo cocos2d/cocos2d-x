@@ -31,6 +31,7 @@
 @interface CCDirectorCaller : NSObject {
         id displayLink;
         int interval;
+        BOOL isAppActive;
 }
 @property (readwrite) int interval;
 -(void) startMainLoop;

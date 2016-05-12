@@ -79,14 +79,12 @@ public:
         return nullptr;
     }
 
-    /** @~english Returns a new action that performs the exactly the reverse action. 
+    /** @~english Returns a new action that performs the exact reverse of the action. 
      *
      * @~chinese 返回一个新的动作，执行与原动作完全相反的动作。
      * 
-     * @return @~english A new action that performs the exactly the reverse action.
+     * @return @~english A new action that performs the exact reverse of the action.
      * @~chinese 一个与原动作相反的动作。
-     * @js NA
-     */
     virtual Action* reverse() const
     {
         CC_ASSERT(0);
@@ -322,7 +320,7 @@ class RepeatForever;
 
 /** @class Speed
  * @brief @~english Changes the speed of an action, making it take longer (speed>1)
- * or less (speed<1) time.
+ * or shoter (speed<1) time.
  * Useful to simulate 'slow motion' or 'fast forward' effect.
  * @~chinese 改变一个动作的速度，使它的执行使用更长的时间（speed>1）或更少（speed<1）
  * 可以有效得模拟“慢动作”或“快进”的效果。
@@ -420,7 +418,7 @@ private:
  * 与其使用相机去追踪一个动作，你可以使用这个动作达到同样的效果。
  * 例如:
  * @code
- * layer->runAction(Follow::actionWithTarget(hero));
+ * layer->runAction(Follow::create(hero));
  * @endcode
  * @since v0.99.2
  */

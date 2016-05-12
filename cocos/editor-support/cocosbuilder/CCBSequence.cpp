@@ -1,4 +1,4 @@
-#include "CCBSequence.h"
+#include "editor-support/cocosbuilder/CCBSequence.h"
 
 using namespace cocos2d;
 using namespace std;

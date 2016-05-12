@@ -1,7 +1,7 @@
 #ifndef _CCB_CCSPRITELOADER_H_
 #define _CCB_CCSPRITELOADER_H_
 
-#include "CCNodeLoader.h"
+#include "editor-support/cocosbuilder/CCNodeLoader.h"
 
 namespace cocosbuilder {
 
