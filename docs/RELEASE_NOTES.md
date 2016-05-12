@@ -20,6 +20,7 @@
     - [New memory model in JSB](#new-memory-model-in-jsb)
     - [OpenSSL](#openssl)
     - [Cocos2d-x JSB program debugging](#cocos2d-x-jsb-program-debugging)
+    - [New WebGL renderer](#new-webgl-renderer)
   - [Other changes](#other-changes)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -157,6 +158,7 @@ cocos new -l cpp|js|lua MyNewGame
 * upgrade Curl to v7.48
 * upgrade OpenSSL to 1.0.2g
 * can use VSCode and new Firefox to debug cocos2d-x JSB programs
+* refactor WebGL renderer
 
 ## The main features in detail of Cocos2d-x v3.11
 
@@ -207,6 +209,16 @@ Feel free to post on our <a href="http://discuss.cocos2d-x.org">forums</a> if yo
 In previous version, can not use Firefox 30+ to debug cocos2d-x JSB programs. This limit is fixed since v3.11. And web console feature is added too. [This documentation](http://www.cocos2d-x.org/wiki/Javascript_Remote_Debugging) shows how to use Firefox to debug cocos2d-x JSB programs(this is a little difference from current usage).
 
 Of course you can use [VSCode](https://code.visualstudio.com/) to debug cocos2d-x JSB programs too. You can read about how to use VSCode to debug cocos2d-x JSB programs [here](http://discuss.cocos2d-x.org/t/use-vscode-to-debug-cocos2d-x-jsb-programs/27588).
+
+### New WebGL renderer
+
+In v3.11, we have refactored the WebGL renderer in web engine, here is the detailed changes:
+
+1. Activate WebGL on Android by default.
+2. Add sprite auto batching in WebGL.
+3. Shared rendering buffer for Sprites.
+
+Compare with old version, the draw calls in your game should be significantly reduced if the textures is well managed. This improves also the CPU usage and memory usage. The above is just a first step of WebGL renderer upgrade, we will continue to investigate in this direction in the future versions.
 
 ## Other changes
 You can also take a look at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
