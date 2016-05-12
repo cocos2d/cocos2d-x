@@ -157,7 +157,7 @@ namespace cocos2d {
             }
 
             void WebViewImpl::setBounces(bool bounces) {
-                // empty function as this was mainly a fix for ios
+                // empty function as this was mainly a fix for iOS
             }
         } // namespace ui
     } // namespace experimental
