@@ -8,6 +8,7 @@
 * CURL升级到v7.48
 * OpenSSL升级到v1.0.2g
 * 可以使用VSCode或者新版本的Firefox调试JSB程序
+* 全面升级 WebGL 渲染器
 
 ## 主要特性的详细介绍
 
@@ -15,7 +16,7 @@
 
 使用新的内存模型后，开发者不需要关心对象的声明周期。这就意味着不需要在JS代码里手动调用`retain/release`函数。
 
-不过该内存模型默认是关闭的。虽然我们已经做了很多的测试，但是还是无法保证它没有任何问题，所以你需要手动开启该功能，开启的方法是在`base/ccConfig.h`里把`CC_ENABLE_GC_FOR_NATIVE`的值改为1：
+不过该内存模型默认是关闭的。虽然我们已经做了很多的测试，目前没有发现任何问题，但是保险起见，你需要手动开启该功能，开启的方法是在`base/ccConfig.h`里把`CC_ENABLE_GC_FOR_NATIVE`的值改为1：
 
 ```c++
 #ifdef CC_ENABLE_SCRIPT_BINDING
@@ -60,6 +61,16 @@ Cocos2d-x已经把__OpenSSL__升级到__1.0.2.g__。
 v3.11版本之前，不能使用Firefox 30+版本来调试cocos2d-x JSB程序。这个版本修复了该问题，同时支持了web console功能。如果你不了解如何使用Firefox调试cocos2d-x JSB程序，可以参考[这篇文档](This documentation](http://www.cocos2d-x.org/wiki/Javascript_Remote_Debugging)。
 
 当然你也可以使用[VSCode](https://code.visualstudio.com/)来调试，具体的使用方法参考[这篇文档](http://discuss.cocos2d-x.org/t/use-vscode-to-debug-cocos2d-x-jsb-programs/27588)。
+
+### 全面升级 WebGL 渲染器
+
+在v3.11中，为了提升性能，我们重构了WebGL渲染器，下面是几项重要的改进：
+
+1. 在 Android 浏览器上默认开启 WebGL（支持的话）
+2. WebGL 模式下自动批处理 Sprite
+3. Sprite 共享全局的渲染数据缓存，并减少 GL 函数调用
+
+在这些优化后，与旧版本相比，合并贴图后的游戏中draw call数量将得到显著的降低。不仅如此，v3.11中的CPU使用率和内存使用也都得到了降低。在我们的bunnymark测试中，v3.11相比之前的版本有4倍以上的渲染性能提升。当然，这是我们对WebGL渲染器做的第一步升级，在后续版本中，WebGL渲染器还将得到持续优化。
 
 ## 其他改动
 更完整的改动列表可以阅读[full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)。
