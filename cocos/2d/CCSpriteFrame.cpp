@@ -137,6 +137,7 @@ SpriteFrame* SpriteFrame::clone() const
     SpriteFrame *copy = new (std::nothrow) SpriteFrame();
     copy->initWithTextureFilename(_textureFilename, _rectInPixels, _rotated, _offsetInPixels, _originalSizeInPixels);
     copy->setTexture(_texture);
+    copy->setPolygonInfo(_polygonInfo);
     copy->autorelease();
     return copy;
 }
@@ -187,7 +188,7 @@ void SpriteFrame::setAnchorPoint(const Vec2& anchorPoint)
 
 bool SpriteFrame::hasAnchorPoint() const
 {
-    return !isnan(_anchorPoint.x);
+    return !std::isnan(_anchorPoint.x);
 }
 
 void SpriteFrame::setTexture(Texture2D * texture)

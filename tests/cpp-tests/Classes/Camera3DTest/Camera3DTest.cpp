@@ -892,7 +892,7 @@ void CameraCullingDemo::addSpriteCallback(Ref* sender)
     
     // update sprite number
     char szText[16];
-    sprintf(szText,"%ld sprits",_layer3D->getChildrenCount());
+    sprintf(szText,"%ld sprits", static_cast<long>(_layer3D->getChildrenCount()));
     _labelSprite3DCount->setString(szText);
 }
 
@@ -920,7 +920,7 @@ void CameraCullingDemo::delSpriteCallback(Ref* sender)
     
     // update sprite number
     char szText[16];
-    sprintf(szText,"%ld sprits",_layer3D->getChildrenCount());
+    sprintf(szText,"%ld sprits", static_cast<long>(_layer3D->getChildrenCount()));
     _labelSprite3DCount->setString(szText);
 }
 
@@ -1452,7 +1452,7 @@ void CameraFrameBufferTest::onEnter()
     fbo->attachRenderTarget(rt);
     fbo->attachDepthStencilTarget(rtDS);
     auto sprite = Sprite::createWithTexture(fbo->getRenderTarget()->getTexture());
-    sprite->setScale(0.3);
+    sprite->setScale(0.3f);
     sprite->runAction(RepeatForever::create(RotateBy::create(1, 90)));
     sprite->setPosition(size.width/2, size.height/2);
     addChild(sprite);

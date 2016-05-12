@@ -545,6 +545,11 @@ void ScrollView::processAutoScrolling(float deltaTime)
     Vec2 newPosition = _autoScrollStartPosition + (_autoScrollTargetDelta * percentage);
     bool reachedEnd = fabs(percentage - 1) <= this->getAutoScrollStopEpsilon();
     
+    if (reachedEnd)
+    {
+        newPosition = _autoScrollStartPosition + _autoScrollTargetDelta;
+    }
+
     if(_bounceEnabled)
     {
         // The new position is adjusted if out of boundary

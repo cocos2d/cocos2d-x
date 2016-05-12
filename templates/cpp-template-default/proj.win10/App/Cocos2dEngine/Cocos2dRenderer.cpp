@@ -20,7 +20,6 @@
 #include "AppDelegate.h"
 #include "platform/winrt/CCGLViewImpl-winrt.h"
 #include "platform/CCApplication.h"
-#include "cocos2d.h"
 #include "renderer/CCTextureCache.h"
 
 // These are used by the shader compilation methods.

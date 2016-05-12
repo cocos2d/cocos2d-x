@@ -84,16 +84,13 @@ public:
          Please refer to HttpRequestTest.cpp to find its usage.
      */
     HttpRequest()
+        : _requestType(Type::UNKNOWN)
+        , _pTarget(nullptr)
+        , _pSelector(nullptr)
+        , _pCallback(nullptr)
+        , _pUserData(nullptr)
     {
-        _requestType = Type::UNKNOWN;
-        _url.clear();
-        _requestData.clear();
-        _tag.clear();
-        _pTarget = nullptr;
-        _pSelector = nullptr;
-        _pCallback = nullptr;
-        _pUserData = nullptr;
-    };
+    }
     
     /** Destructor. */
     virtual ~HttpRequest()
@@ -102,7 +99,7 @@ public:
         {
             _pTarget->release();
         }
-    };
+    }
     
     /** 
      * Override autorelease method to avoid developers to call it.
@@ -110,11 +107,11 @@ public:
      *
      * @return Ref* always return nullptr.
      */
-    Ref* autorelease(void)
+    Ref* autorelease()
     {
         CCASSERT(false, "HttpResponse is used between network thread and ui thread \
                  therefore, autorelease is forbidden here");
-        return NULL;
+        return nullptr;
     }
             
     // setter/getters for properties
@@ -127,16 +124,16 @@ public:
     inline void setRequestType(Type type)
     {
         _requestType = type;
-    };
+    }
     /** 
      * Get the request type of HttpRequest object.
      *
      * @return HttpRequest::Type.
      */
-    inline Type getRequestType()
+    inline Type getRequestType() const
     {
         return _requestType;
-    };
+    }
     
     /** 
      * Set the url address of HttpRequest object.
@@ -147,16 +144,16 @@ public:
     inline void setUrl(const std::string& url)
     {
         _url = url;
-    };
+    }
     /** 
      * Get the url address of HttpRequest object.
      *
      * @return const char* the pointer of _url.
      */
-    inline const char* getUrl()
+    inline const char* getUrl() const
     {
         return _url.c_str();
-    };
+    }
     
     /** 
      * Set the request data of HttpRequest object.
@@ -167,7 +164,7 @@ public:
     inline void setRequestData(const char* buffer, size_t len)
     {
         _requestData.assign(buffer, buffer + len);
-    };
+    }
     /** 
      * Get the request data pointer of HttpRequest object.
      *
@@ -175,9 +172,9 @@ public:
      */
     inline char* getRequestData()
     {
-        if(_requestData.size() != 0)
-            return &(_requestData.front());
-
+        if (!_requestData.empty()) {
+            return _requestData.data();
+        }
         return nullptr;
     }
     /** 
@@ -185,7 +182,7 @@ public:
      *
      * @return ssize_t the size of request data
      */
-    inline ssize_t getRequestDataSize()
+    inline ssize_t getRequestDataSize() const
     {
         return _requestData.size();
     }
@@ -199,17 +196,17 @@ public:
     inline void setTag(const std::string& tag)
     {
         _tag = tag;
-    };
+    }
     /** 
      * Get the string tag to identify the request.
      * The best practice is to use it in your MyClass::onMyHttpRequestCompleted(sender, HttpResponse*) callback.
      *
      * @return const char* the pointer of _tag
      */
-    inline const char* getTag()
+    inline const char* getTag() const
     {
         return _tag.c_str();
-    };
+    }
     
     /**
      * Set user-customed data of HttpRequest object.
@@ -221,7 +218,7 @@ public:
     inline void setUserData(void* pUserData)
     {
         _pUserData = pUserData;
-    };
+    }
     /** 
      * Get the user-customed data pointer which were pre-setted.
      * Don't forget to delete it. HttpClient/HttpResponse/HttpRequest will do nothing with this pointer.
@@ -231,7 +228,7 @@ public:
     inline void* getUserData()
     {
         return _pUserData;
-    };
+    }
     
     /**
      * Set the target and related callback selector.
@@ -301,7 +298,7 @@ public:
      *
      * @return _prxy the _prxy object
      */
-    inline _prxy getSelector()
+    inline _prxy getSelector() const
     {
         return _prxy(_pSelector);
     }
@@ -311,7 +308,7 @@ public:
      *
      * @return const ccHttpRequestCallback& ccHttpRequestCallback callback function.
      */
-    inline const ccHttpRequestCallback& getCallback()
+    inline const ccHttpRequestCallback& getCallback() const
     {
         return _pCallback;
     }
@@ -322,19 +319,19 @@ public:
      * @param pHeaders the string vector of custom-defined headers.
      */
     inline void setHeaders(std::vector<std::string> pHeaders)
-   	{
-   		_headers=pHeaders;
-   	}
+    {
+        _headers = pHeaders;
+    }
    
     /** 
      * Get custom headers.
      *
      * @return std::vector<std::string> the string vector of custom-defined headers.
      */
-   	inline std::vector<std::string> getHeaders()
-   	{
-   		return _headers;
-   	}
+    inline std::vector<std::string> getHeaders() const
+    {
+        return _headers;
+    }
     
 private:
     inline void doSetResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
@@ -362,7 +359,7 @@ protected:
     SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(HttpClient *sender, HttpResponse * response)
     ccHttpRequestCallback       _pCallback;      /// C++11 style callbacks
     void*                       _pUserData;      /// You can add your customed data here 
-    std::vector<std::string>    _headers;		      /// custom http headers
+    std::vector<std::string>    _headers;        /// custom http headers
 };
 
 }

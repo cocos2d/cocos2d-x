@@ -187,11 +187,11 @@ void WebSocketTest::onClose(network::WebSocket* ws)
 
 void WebSocketTest::onError(network::WebSocket* ws, const network::WebSocket::ErrorCode& error)
 {
-    log("Error was fired, error code: %d", error);
+    log("Error was fired, error code: %d", static_cast<int>(error));
     if (ws == _wsiError)
     {
         char buf[100] = {0};
-        sprintf(buf, "an error was fired, code: %d", error);
+        sprintf(buf, "an error was fired, code: %d", static_cast<int>(error));
         _errorStatus->setString(buf);
     }
 }
@@ -260,7 +260,7 @@ void WebSocketTest::onMenuSendBinaryClicked(cocos2d::Ref *sender)
 }
 
 WebSocketCloseTest::WebSocketCloseTest()
-    : _wsiTest(nullptr)
+: _wsiTest(nullptr)
 {
     auto winSize = Director::getInstance()->getWinSize();
 
@@ -292,8 +292,10 @@ WebSocketCloseTest::WebSocketCloseTest()
 
 WebSocketCloseTest::~WebSocketCloseTest()
 {
-    if (_wsiTest)
+    if (_wsiTest != nullptr)
+    {
         _wsiTest->close();
+    }
 }
 
 // Delegate methods
@@ -310,12 +312,14 @@ void WebSocketCloseTest::onMessage(network::WebSocket* ws, const network::WebSoc
 void WebSocketCloseTest::onClose(network::WebSocket* ws)
 {
     log("websocket (%p) closed.", ws);
-    delete ws;
-    _wsiTest = nullptr;
+    if (ws == _wsiTest) {
+        _wsiTest = nullptr;
+    }
+    CC_SAFE_DELETE(ws);
 }
 
 void WebSocketCloseTest::onError(network::WebSocket* ws, const network::WebSocket::ErrorCode& error)
 {
-    log("Error was fired, error code: %d", error);
+    log("Error was fired, error code: %d", static_cast<int>(error));
 }
 

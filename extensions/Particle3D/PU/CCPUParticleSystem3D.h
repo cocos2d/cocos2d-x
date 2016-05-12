@@ -273,19 +273,19 @@ public:
     /**
      * default particle width
      */
-    const float getDefaultWidth(void) const;
+    float getDefaultWidth() const;
     void setDefaultWidth(const float width);
 
     /** 
      * default particle height
      */
-    const float getDefaultHeight(void) const;
+    float getDefaultHeight() const;
     void setDefaultHeight(const float height);
 
     /** 
      * default particle depth
      */
-    const float getDefaultDepth(void) const;
+    float getDefaultDepth() const;
     void setDefaultDepth(const float depth);
 
     Vec3 getDerivedPosition();

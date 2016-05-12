@@ -63,7 +63,7 @@ int js_module_register()
     sc->addRegisterCallback(register_all_cocos2dx_builder);
     sc->addRegisterCallback(register_CCBuilderReader);
     
-    // ui can be commented out to reduce the package, attension studio need ui module
+    // ui can be commented out to reduce the package, attention studio need ui module
     sc->addRegisterCallback(register_all_cocos2dx_ui);
     sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
     
@@ -79,7 +79,7 @@ int js_module_register()
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
     // websocket can be commented out to reduce the package
     sc->addRegisterCallback(register_jsb_websocket);
-    // sokcet io can be commented out to reduce the package
+    // socket io can be commented out to reduce the package
     sc->addRegisterCallback(register_jsb_socketio);
 
     // 3d can be commented out to reduce the package

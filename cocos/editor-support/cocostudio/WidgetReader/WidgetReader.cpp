@@ -12,6 +12,8 @@
 #include "flatbuffers/flatbuffers.h"
 #include "ui/UILayoutComponent.h"
 #include "editor-support/cocostudio/ActionTimeline/CSLoader.h"
+#include "base/ccUtils.h"
+#include "base/CCDirector.h"
 
 USING_NS_CC;
 using namespace ui;

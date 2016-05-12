@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2009      On-Core
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -31,21 +31,16 @@ NS_CC_BEGIN
 
 Waves3D* Waves3D::create(float duration, const Size& gridSize, unsigned int waves, float amplitude)
 {
-    Waves3D *pAction = new (std::nothrow) Waves3D();
+    Waves3D *action = new (std::nothrow) Waves3D();
 
-    if (pAction)
+    if (action && action->initWithDuration(duration, gridSize, waves, amplitude))
     {
-        if (pAction->initWithDuration(duration, gridSize, waves, amplitude))
-        {
-            pAction->autorelease();
-        }
-        else
-        {
-            CC_SAFE_RELEASE_NULL(pAction);
-        }
+        action->autorelease();
+        return action;
     }
 
-    return pAction;    
+    delete action;
+    return nullptr;
 }
 
 bool Waves3D::initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude)
@@ -65,10 +60,7 @@ bool Waves3D::initWithDuration(float duration, const Size& gridSize, unsigned in
 Waves3D* Waves3D::clone() const
 {
     // no copy constructor
-    auto a = new (std::nothrow) Waves3D();
-    a->initWithDuration(_duration, _gridSize, _waves, _amplitude);
-    a->autorelease();
-    return a;
+    return Waves3D::create(_duration, _gridSize, _waves, _amplitude);
 }
 
 void Waves3D::update(float time)
@@ -92,19 +84,14 @@ FlipX3D* FlipX3D::create(float duration)
 {
     FlipX3D *action = new (std::nothrow) FlipX3D();
 
-    if (action)
+    if (action && action->initWithDuration(duration))
     {
-        if (action->initWithDuration(duration))
-        {
-            action->autorelease();
-        }
-        else
-        {
-            CC_SAFE_RELEASE_NULL(action);
-        }
+        action->autorelease();
+        return action;
     }
 
-    return action;
+    delete action;
+    return nullptr;
 }
 
 bool FlipX3D::initWithDuration(float duration)

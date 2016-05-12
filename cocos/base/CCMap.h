@@ -346,7 +346,7 @@ public:
     {
         if (!_data.empty())
         {
-            ssize_t randIdx = rand() % _data.size();
+            ssize_t randIdx = RandomHelper::random_int<int>(0, static_cast<int>(_data.size()) - 1);
             const_iterator randIter = _data.begin();
             std::advance(randIter , randIdx);
             return randIter->second;

@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __COCOS2DX_LUA_LOADER_H__
 #define __COCOS2DX_LUA_LOADER_H__
 
-#include "cocos2d.h"
+
 
 extern "C"
 {

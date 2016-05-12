@@ -57,7 +57,7 @@ public:
 
     /** Get/Set Forcefield type
     */
-    const PUForceField::ForceFieldType getForceFieldType(void) const;
+    PUForceField::ForceFieldType getForceFieldType() const;
     void setForceFieldType(const PUForceField::ForceFieldType forceFieldType);
 
     /** Get/Set Delta
