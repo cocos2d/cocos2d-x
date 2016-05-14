@@ -1220,6 +1220,7 @@ public:
      * @param action An Action pointer.
      */
     virtual Action* runAction(Action* action);
+    virtual Action* runAction(Action* action, int tag);
 
     /**
      * Stops and removes all actions from the running action list .

@@ -5375,6 +5375,7 @@
 		1A5700A2180BC5E60088DEC7 /* base */ = {
 			isa = PBXGroup;
 			children = (
+				D0FD03391A3B51AA00825BB5 /* allocator */,
 				291901411B05895600F8B4BA /* CCNinePatchImageParser.h */,
 				464AD6E3197EBB1400E502D8 /* pvr.cpp */,
 				291901421B05895600F8B4BA /* CCNinePatchImageParser.cpp */,
@@ -5382,7 +5383,6 @@
 				505385011B01887A00793096 /* CCProperties.cpp */,
 				B63990CA1A490AFE00B07923 /* CCAsyncTaskPool.cpp */,
 				B63990CB1A490AFE00B07923 /* CCAsyncTaskPool.h */,
-				D0FD03391A3B51AA00825BB5 /* allocator */,
 				299CF1F919A434BC00C378C1 /* ccRandom.cpp */,
 				299CF1FA19A434BC00C378C1 /* ccRandom.h */,
 				464AD6E4197EBB1400E502D8 /* pvr.h */,

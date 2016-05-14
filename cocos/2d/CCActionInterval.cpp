@@ -1765,37 +1765,46 @@ void ScaleTo::update(float time)
 ScaleBy* ScaleBy::create(float duration, float s)
 {
     ScaleBy *scaleBy = new (std::nothrow) ScaleBy();
-    scaleBy->initWithDuration(duration, s);
-    scaleBy->autorelease();
-
-    return scaleBy;
+    if (scaleBy && scaleBy->initWithDuration(duration, s))
+    {
+        scaleBy->autorelease();
+        return scaleBy;
+    }
+    
+    delete scaleBy;
+    return nullptr;
 }
 
 ScaleBy* ScaleBy::create(float duration, float sx, float sy)
 {
     ScaleBy *scaleBy = new (std::nothrow) ScaleBy();
-    scaleBy->initWithDuration(duration, sx, sy, 1.f);
-    scaleBy->autorelease();
-
-    return scaleBy;
+    if (scaleBy && scaleBy->initWithDuration(duration, sx, sy, 1.f))
+    {
+        scaleBy->autorelease();
+        return scaleBy;
+    }
+    
+    delete scaleBy;
+    return nullptr;
 }
 
 ScaleBy* ScaleBy::create(float duration, float sx, float sy, float sz)
 {
     ScaleBy *scaleBy = new (std::nothrow) ScaleBy();
-    scaleBy->initWithDuration(duration, sx, sy, sz);
-    scaleBy->autorelease();
-
-    return scaleBy;
+    if (scaleBy && scaleBy->initWithDuration(duration, sx, sy, sz))
+    {
+        scaleBy->autorelease();
+        return scaleBy;
+    }
+    
+    delete scaleBy;
+    return nullptr;
 }
 
 ScaleBy* ScaleBy::clone() const
 {
     // no copy constructor
-    auto a = new (std::nothrow) ScaleBy();
-    a->initWithDuration(_duration, _endScaleX, _endScaleY, _endScaleZ);
-    a->autorelease();
-    return a;
+    return ScaleBy::create(_duration, _endScaleX, _endScaleY, _endScaleZ);
 }
 
 void ScaleBy::startWithTarget(Node *target)

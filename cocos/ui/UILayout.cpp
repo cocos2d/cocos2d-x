@@ -588,7 +588,7 @@ void Layout::setStencilClippingSize(const Size &size)
         rect[1].set(_contentSize.width, 0.0f);
         rect[2].set(_contentSize.width, _contentSize.height);
         rect[3].set(0.0f, _contentSize.height);
-        Color4F green(0.0f, 1.0f, 0.0f, 1.0f);
+        Color4F green(0.0f, 1.0f, 0.0f, 0.0f);
         _clippingStencil->clear();
         _clippingStencil->drawPolygon(rect, 4, green, 0, green);
     }

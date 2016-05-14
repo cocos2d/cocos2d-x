@@ -1410,6 +1410,14 @@ Action * Node::runAction(Action* action)
   return action;
 }
 
+Action * Node::runAction(Action* action, int tag)
+{
+  CCASSERT( action != nullptr, "Argument must be non-nil");
+  action->setTag(tag);
+  _actionManager->addAction(action, this, !_running);
+  return action;
+}
+
 void Node::stopAllActions()
 {
   _actionManager->removeAllActionsFromTarget(this);
@@ -2180,8 +2188,6 @@ Node* Node::_create()
   {
     this->state->create = true;
 
-    this->onCreate();
-
     if(this->cull->parent)
     {
       this->cull->parent->addChild(this);
@@ -2194,6 +2200,8 @@ Node* Node::_create()
     {
       this->scheduleUpdate();
     }
+
+    this->onCreate();
   }
 
   return this;

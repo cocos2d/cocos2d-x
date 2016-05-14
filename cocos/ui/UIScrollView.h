@@ -678,6 +678,8 @@ namespace ui {
 #elif _MSC_VER >= 1400 //vs 2005 or higher
 #pragma warning (pop)
 #endif
+
+    public:
     ccScrollViewCallback _eventCallback;
   };
   

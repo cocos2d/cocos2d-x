@@ -483,7 +483,7 @@ void Camera::setBackgroundBrush(CameraBackgroundBrush* clearBrush)
 
 /**
  *
- *
+ * TODO: Add check of camera type before clone it.
  *
  */
 Camera* Camera::deepCopy()
