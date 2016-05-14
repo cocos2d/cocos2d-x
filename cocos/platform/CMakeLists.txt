@@ -1,3 +1,26 @@
+#/****************************************************************************
+# Copyright (c) 2015 Chukong Technologies Inc.
+#
+# http://www.cocos2d-x.org
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+# ****************************************************************************/
 
 if(WINDOWS)
 
@@ -45,27 +68,31 @@ elseif(ANDROID)
 set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/android/CCApplication-android.cpp
   platform/android/CCCommon-android.cpp
-  platform/android/CCDevice-android.cpp
   platform/android/CCGLViewImpl-android.cpp
   platform/android/CCFileUtils-android.cpp
+  platform/android/CCEnhanceAPI-android.cpp
+  platform/android/jni/JniHelper.cpp
+)
+
+set(COCOS2DX_ANDROID_STATIC
+  platform/android/CCDevice-android.cpp
   platform/android/javaactivity-android.cpp
-  platform/android/jni/DPIJni.cpp
-  platform/android/jni/IMEJni.cpp
+  platform/android/jni/TouchesJni.cpp
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp
-  platform/android/jni/JniHelper.cpp
-  platform/android/jni/TouchesJni.cpp
+
 )
+
+add_library(cocos2dxandroid_static STATIC ${COCOS2DX_ANDROID_STATIC})
+set_property(TARGET cocos2dxandroid_static PROPERTY POSITION_INDEPENDENT_CODE TRUE)
 
 endif()
 
 #leave andatory external stuff here also
 
 include_directories(
-  platform/desktop
-  platform
   ../external/ConvertUTF
   ../external/edtaa3func
   ../external/poly2tri

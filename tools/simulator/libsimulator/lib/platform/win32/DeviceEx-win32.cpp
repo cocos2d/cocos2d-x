@@ -65,7 +65,7 @@ void DeviceEx::makeUILangName()
             WideCharToMultiByte(CP_UTF8, 0, pwszLanguagesBuffer, -1, dest, size, NULL, NULL);
             _uiLangName = dest;
         }
-        delete pwszLanguagesBuffer;
+        delete [] pwszLanguagesBuffer;
     }
 }
 

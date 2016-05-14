@@ -4,6 +4,8 @@
 #include "../BaseTest.h"
 #include "renderer/CCCustomCommand.h"
 #include "ui/CocosGUI.h"
+#include "extensions/cocos-ext.h"
+#include "editor-support/cocostudio/LocalizationManager.h"
 
 DEFINE_TEST_SUITE(NewLabelTests);
 
@@ -633,6 +635,229 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+};
+
+class LabelLayoutBaseTest : public AtlasDemoNew
+{
+public:
+    LabelLayoutBaseTest();
+    void updateDrawNodeSize(const cocos2d::Size &drawNodeSize);
+    cocos2d::extension::ControlStepper* makeControlStepper();
+    void valueChanged(cocos2d::Ref* sender, cocos2d::extension::Control::EventType controlEvent);
+
+protected:
+    void  setAlignmentLeft(cocos2d::Ref* sender);
+    void  setAlignmentCenter(cocos2d::Ref* sender);
+    void  setAlignmentRight(cocos2d::Ref* sender);
+    void  setAlignmentTop(cocos2d::Ref* sender);
+    void  setAlignmentMiddle(cocos2d::Ref* sender);
+    void  setAlignmentBottom(cocos2d::Ref* sender);
+    
+    void initWrapOption(const cocos2d::Size& size);
+    void initToggleLabelTypeOption(const cocos2d::Size& size);
+    void initAlignmentOption(const cocos2d::Size& size);
+    void initFontSizeChange(const cocos2d::Size& size);
+    void initSliders(const cocos2d::Size& size);
+    void initTestLabel(const cocos2d::Size& size);
+    void initDrawNode(const cocos2d::Size& size);
+    cocos2d::DrawNode* _drawNode;
+    cocos2d::Label* _label;
+    int _labelType;
+};
+
+class LabelWrapByWordTest : public LabelLayoutBaseTest
+{
+public:
+    CREATE_FUNC(LabelWrapByWordTest);
+
+    LabelWrapByWordTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelWrapByCharTest : public LabelLayoutBaseTest
+{
+public:
+    CREATE_FUNC(LabelWrapByCharTest);
+
+    LabelWrapByCharTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelShrinkByWordTest : public LabelLayoutBaseTest
+{
+public:
+    CREATE_FUNC(LabelShrinkByWordTest);
+
+    LabelShrinkByWordTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelShrinkByCharTest : public LabelLayoutBaseTest
+{
+public:
+    CREATE_FUNC(LabelShrinkByCharTest);
+
+    LabelShrinkByCharTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelResizeTest : public LabelLayoutBaseTest
+{
+public:
+    CREATE_FUNC(LabelResizeTest);
+
+    LabelResizeTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelToggleTypeTest : public LabelLayoutBaseTest
+{
+public:
+    CREATE_FUNC(LabelToggleTypeTest);
+
+    LabelToggleTypeTest();
+    void initToggleCheckboxes();
+    void onChangedRadioButtonSelect(cocos2d::ui::RadioButton* radioButton,cocos2d::ui::RadioButton::EventType type);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelSystemFontTest : public LabelLayoutBaseTest
+{
+public:
+    CREATE_FUNC(LabelSystemFontTest);
+
+    LabelSystemFontTest();
+    void initToggleCheckboxes();
+    void onChangedRadioButtonSelect(cocos2d::ui::RadioButton* radioButton,cocos2d::ui::RadioButton::EventType type);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelCharMapFontTest : public LabelSystemFontTest
+{
+public:
+    CREATE_FUNC(LabelCharMapFontTest);
+
+    LabelCharMapFontTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelIssue13846Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue13846Test);
+    
+    LabelIssue13846Test();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelRichText : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelRichText);
+
+    LabelRichText();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelItalics : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelItalics);
+
+    LabelItalics();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    cocos2d::Label* _label1a;
+    cocos2d::Label* _label2a;
+};
+
+class LabelBold : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelBold);
+
+    LabelBold();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    cocos2d::Label* _label1a;
+    cocos2d::Label* _label2a;
+};
+
+class LabelUnderline : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelUnderline);
+
+    LabelUnderline();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    cocos2d::Label* _label1a;
+    cocos2d::Label* _label2a;
+};
+
+class LabelUnderlineMultiline : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelUnderlineMultiline);
+
+    LabelUnderlineMultiline();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    cocos2d::Label* _label1a;
+    cocos2d::Label* _label2a;
+};
+
+class LabelStrikethrough : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelStrikethrough);
+
+    LabelStrikethrough();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    cocos2d::Label* _label1a;
+    cocos2d::Label* _label2a;
+};
+
+class LabelLocalizationTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelLocalizationTest);
+
+    LabelLocalizationTest();
+    void onChangedRadioButtonSelect(cocos2d::ui::RadioButton* radioButton, cocos2d::ui::RadioButton::EventType type);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    cocos2d::Label* _label1;
+    cocos2d::Label* _label2;
+    cocostudio::ILocalizationManager* _localizationJson;
+    cocostudio::ILocalizationManager* _localizationBin;
 };
 
 #endif

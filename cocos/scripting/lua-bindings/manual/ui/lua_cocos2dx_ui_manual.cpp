@@ -21,21 +21,22 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "lua_cocos2dx_ui_manual.hpp"
-#include "lua_cocos2dx_ui_auto.hpp"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#include "lua_cocos2dx_experimental_video_auto.hpp"
-#include "lua_cocos2dx_experimental_video_manual.hpp"
-#include "lua_cocos2dx_experimental_webview_auto.hpp"
-#include "lua_cocos2dx_experimental_webview_manual.hpp"
+#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_ui_manual.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_ui_auto.hpp"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
+#include "scripting/lua-bindings/auto/lua_cocos2dx_experimental_video_auto.hpp"
+#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_experimental_video_manual.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_experimental_webview_auto.hpp"
+#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_experimental_webview_manual.hpp"
 #endif
-#include "cocos2d.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-#include "LuaScriptHandlerMgr.h"
-#include "CCLuaValue.h"
+
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
+#include "scripting/lua-bindings/manual/CCLuaValue.h"
 #include "ui/CocosGUI.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "base/CCEventListenerFocus.h"
 
 using namespace ui;
 
@@ -62,16 +63,16 @@ static int lua_cocos2dx_Widget_addTouchEventListener(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"ccui.Widget",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccui.Widget",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<Widget*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
-	if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Widget_addTouchEventListener'\n", NULL);
-		return 0;
-	}
+    if (nullptr == self) {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Widget_addTouchEventListener'\n", NULL);
+        return 0;
+    }
 #endif
     
     argc = lua_gettop(L) - 1;
@@ -183,16 +184,16 @@ static int lua_cocos2dx_CheckBox_addEventListener(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"ccui.CheckBox",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccui.CheckBox",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<CheckBox*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
-	if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_CheckBox_addEventListener'\n", NULL);
-		return 0;
-	}
+    if (nullptr == self) {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_CheckBox_addEventListener'\n", NULL);
+        return 0;
+    }
 #endif
     argc = lua_gettop(L) - 1;
     if (1 == argc)
@@ -379,16 +380,16 @@ static int lua_cocos2dx_Slider_addEventListener(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"ccui.Slider",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccui.Slider",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<Slider*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
-	if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Slider_addEventListener'\n", NULL);
-		return 0;
-	}
+    if (nullptr == self) {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Slider_addEventListener'\n", NULL);
+        return 0;
+    }
 #endif
     argc = lua_gettop(L) - 1;
     if (1 == argc)
@@ -441,16 +442,16 @@ static int lua_cocos2dx_TextField_addEventListener(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"ccui.TextField",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccui.TextField",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<TextField*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
-	if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_TextField_addEventListener'\n", NULL);
-		return 0;
-	}
+    if (nullptr == self) {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_TextField_addEventListener'\n", NULL);
+        return 0;
+    }
 #endif
     argc = lua_gettop(L) - 1;
     if (1 == argc)
@@ -503,16 +504,16 @@ static int lua_cocos2dx_PageView_addEventListener(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"ccui.PageView",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccui.PageView",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<PageView*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
-	if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_PageView_addEventListener'\n", NULL);
-		return 0;
-	}
+    if (nullptr == self) {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_PageView_addEventListener'\n", NULL);
+        return 0;
+    }
 #endif
     argc = lua_gettop(L) - 1;
     if (1 == argc)
@@ -524,10 +525,10 @@ static int lua_cocos2dx_PageView_addEventListener(lua_State* L)
         }
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
-        
-        self->addEventListener([=](cocos2d::Ref* ref,PageView::EventType eventType){
+        auto pageViewHandler = [=](cocos2d::Ref* ref,PageView::EventType eventType){
             handleUIEvent(handler, ref, (int)eventType);
-        });
+        };
+        self->addEventListener((PageView::ccPageViewCallback)pageViewHandler);
         
         ScriptHandlerMgr::getInstance()->addCustomHandler((void*)self, handler);
         return 0;
@@ -565,16 +566,16 @@ static int lua_cocos2dx_ScrollView_addEventListener(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"ccui.ScrollView",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccui.ScrollView",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<ScrollView*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
-	if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_ScrollView_addEventListener'\n", NULL);
-		return 0;
-	}
+    if (nullptr == self) {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_ScrollView_addEventListener'\n", NULL);
+        return 0;
+    }
 #endif
     argc = lua_gettop(L) - 1;
     if (1 == argc)
@@ -627,16 +628,16 @@ static int lua_cocos2dx_ListView_addEventListener(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<ListView*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
-	if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_ListView_addEventListener'\n", NULL);
-		return 0;
-	}
+    if (nullptr == self) {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_ListView_addEventListener'\n", NULL);
+        return 0;
+    }
 #endif
     argc = lua_gettop(L) - 1;
     if (1 == argc)
@@ -679,16 +680,16 @@ static int lua_cocos2dx_ListView_addScrollViewEventListener(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<ListView*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
-	if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_ListView_addScrollViewEventListener'\n", NULL);
-		return 0;
-	}
+    if (nullptr == self) {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_ListView_addScrollViewEventListener'\n", NULL);
+        return 0;
+    }
 #endif
     argc = lua_gettop(L) - 1;
     if (1 == argc)
@@ -743,16 +744,16 @@ static int lua_cocos2dx_LayoutParameter_setMargin(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"ccui.LayoutParameter",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccui.LayoutParameter",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<LayoutParameter*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
-	if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_LayoutParameter_setMargin'\n", NULL);
-		return 0;
-	}
+    if (nullptr == self) {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_LayoutParameter_setMargin'\n", NULL);
+        return 0;
+    }
 #endif
     argc = lua_gettop(L) - 1;
     
@@ -811,16 +812,16 @@ static int lua_cocos2dx_LayoutParameter_getMargin(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"ccui.LayoutParameter",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccui.LayoutParameter",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<LayoutParameter*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
-	if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_LayoutParameter_getMargin'\n", NULL);
-		return 0;
-	}
+    if (nullptr == self) {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_LayoutParameter_getMargin'\n", NULL);
+        return 0;
+    }
 #endif
     argc = lua_gettop(L) - 1;
     
@@ -883,16 +884,16 @@ static int tolua_cocos2d_EditBox_registerScriptEditBoxHandler(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<EditBox*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
-	if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'tolua_cocos2d_EditBox_registerScriptEditBoxHandler'\n", NULL);
-		return 0;
-	}
+    if (nullptr == self) {
+        tolua_error(L,"invalid 'self' in function 'tolua_cocos2d_EditBox_registerScriptEditBoxHandler'\n", NULL);
+        return 0;
+    }
 #endif
     
     argc = lua_gettop(L) - 1;
@@ -932,16 +933,16 @@ static int tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<EditBox*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
-	if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler'\n", NULL);
-		return 0;
-	}
+    if (nullptr == self) {
+        tolua_error(L,"invalid 'self' in function 'tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler'\n", NULL);
+        return 0;
+    }
 #endif
     
     argc = lua_gettop(L) - 1;
@@ -1072,9 +1073,9 @@ static int tolua_cocos2dx_EventListenerFocus_clone(lua_State* L)
     self = static_cast<EventListenerFocus*>(tolua_tousertype(L,1,0));
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'tolua_cocos2dx_EventListenerFocus_clone'\n", nullptr);
-		return 0;
-	}
+        tolua_error(L,"invalid 'self' in function 'tolua_cocos2dx_EventListenerFocus_clone'\n", nullptr);
+        return 0;
+    }
 #endif
     
     argc = lua_gettop(L) - 1;
@@ -1120,9 +1121,9 @@ static int tolua_cocos2dx_EventListenerFocus_registerScriptHandler(lua_State* L)
     self = static_cast<EventListenerFocus*>(tolua_tousertype(L,1,0));
 #if COCOS2D_DEBUG >= 1
     if (nullptr == self) {
-		tolua_error(L,"invalid 'self' in function 'tolua_cocos2dx_EventListenerFocus_registerScriptHandler'\n", nullptr);
-		return 0;
-	}
+        tolua_error(L,"invalid 'self' in function 'tolua_cocos2dx_EventListenerFocus_registerScriptHandler'\n", nullptr);
+        return 0;
+    }
 #endif
     argc = lua_gettop(L) - 1;
     
@@ -1180,11 +1181,11 @@ int register_ui_moudle(lua_State* L)
     {
         register_all_cocos2dx_ui(L);
         register_all_cocos2dx_ui_manual(L);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
         register_all_cocos2dx_experimental_video(L);
         register_all_cocos2dx_experimental_video_manual(L);
-		register_all_cocos2dx_experimental_webview(L);
-		register_all_cocos2dx_experimental_webview_manual(L);
+        register_all_cocos2dx_experimental_webview(L);
+        register_all_cocos2dx_experimental_webview_manual(L);
 #endif
         extendEventListenerFocusEvent(L);
     }

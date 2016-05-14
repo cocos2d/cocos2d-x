@@ -79,14 +79,14 @@ extern "C"
 #endif // CC_USE_WEBP
 
 #include "base/ccMacros.h"
-#include "CCCommon.h"
-#include "CCStdC.h"
-#include "CCFileUtils.h"
+#include "platform/CCCommon.h"
+#include "platform/CCStdC.h"
+#include "platform/CCFileUtils.h"
 #include "base/CCConfiguration.h"
 #include "base/ccUtils.h"
 #include "base/ZipUtils.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "android/CCFileUtils-android.h"
+#include "platform/android/CCFileUtils-android.h"
 #endif
 
 #define CC_GL_ATC_RGB_AMD                                          0x8C92
@@ -400,7 +400,7 @@ namespace
         uint32_t bytesOfKeyValueData;
     };
 }
-//atittc struct end
+//atitc struct end
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -724,7 +724,6 @@ Image::Format Image::detectFormat(const unsigned char * data, ssize_t dataLen)
     }
     else
     {
-        CCLOG("cocos2d: can't detect image format");
         return Format::UNKNOWN;
     }
 }
@@ -803,7 +802,7 @@ namespace
 #endif // CC_USE_JPEG
 }
 
-#ifdef CC_USE_WIC
+#if CC_USE_WIC
 bool Image::decodeWithWIC(const unsigned char *data, ssize_t dataLen)
 {
     bool bRet = false;
@@ -869,7 +868,7 @@ bool Image::encodeWithWIC(const std::string& filePath, bool isToRGB, GUID contai
     {
         bpp = 3;
         saveLen = _width * _height * bpp;
-        pSaveData = new unsigned char[saveLen];
+        pSaveData = new (std::nothrow) unsigned char[saveLen];
         int indL = 0, indR = 0;
 
         while (indL < saveLen && indR < _dataLen)
@@ -881,7 +880,7 @@ bool Image::encodeWithWIC(const std::string& filePath, bool isToRGB, GUID contai
     }
     else
     {
-        pSaveData = new unsigned char[saveLen];
+        pSaveData = new (std::nothrow) unsigned char[saveLen];
         memcpy(pSaveData, _data, saveLen);
     }
 
@@ -1025,7 +1024,7 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         info_ptr = png_create_info_struct(png_ptr);
         CC_BREAK_IF(!info_ptr);
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_TIZEN)
         CC_BREAK_IF(setjmp(png_jmpbuf(png_ptr)));
 #endif
 
@@ -1456,7 +1455,7 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
                     CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
                     _unpack = true;
                     _mipmaps[_numberOfMipmaps].len = width*height*4;
-                    _mipmaps[_numberOfMipmaps].address = new unsigned char[width*height*4];
+                    _mipmaps[_numberOfMipmaps].address = new (std::nothrow) unsigned char[width*height*4];
                     PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[_numberOfMipmaps].address, true);
                     bpp = 2;
                 }
@@ -1470,7 +1469,7 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
                     CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
                     _unpack = true;
                     _mipmaps[_numberOfMipmaps].len = width*height*4;
-                    _mipmaps[_numberOfMipmaps].address = new unsigned char[width*height*4];
+                    _mipmaps[_numberOfMipmaps].address = new (std::nothrow) unsigned char[width*height*4];
                     PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[_numberOfMipmaps].address, false);
                     bpp = 4;
                 }
@@ -1583,6 +1582,8 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
     {
         _hasPremultipliedAlpha = true;
     }
+    else
+        _hasPremultipliedAlpha = false;
     
     // sizing
     int width = CC_SWAP_INT32_LITTLE_TO_HOST(header->width);
@@ -1610,7 +1611,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
                     CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
                     _unpack = true;
                     _mipmaps[i].len = width*height*4;
-                    _mipmaps[i].address = new unsigned char[width*height*4];
+                    _mipmaps[i].address = new (std::nothrow) unsigned char[width*height*4];
                     PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[i].address, true);
                     bpp = 2;
                 }
@@ -1625,7 +1626,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
                     CCLOG("cocos2d: Hardware PVR decoder not present. Using software decoder");
                     _unpack = true;
                     _mipmaps[i].len = width*height*4;
-                    _mipmaps[i].address = new unsigned char[width*height*4];
+                    _mipmaps[i].address = new (std::nothrow) unsigned char[width*height*4];
                     PVRTDecompressPVRTC(_data+dataOffset,width,height,_mipmaps[i].address, false);
                     bpp = 4;
                 }
@@ -1641,7 +1642,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
                     unsigned int stride = width * bytePerPixel;
                     _unpack = true;
                     _mipmaps[i].len = width*height*bytePerPixel;
-                    _mipmaps[i].address = new unsigned char[width*height*bytePerPixel];
+                    _mipmaps[i].address = new (std::nothrow) unsigned char[width*height*bytePerPixel];
                     if (etc1_decode_image(static_cast<const unsigned char*>(_data+dataOffset), static_cast<etc1_byte*>(_mipmaps[i].address), width, height, bytePerPixel, stride) != 0)
                     {
                         return false;
@@ -1836,7 +1837,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
 
 namespace
 {
-    static const uint32_t makeFourCC(char ch0, char ch1, char ch2, char ch3)
+    static uint32_t makeFourCC(char ch0, char ch1, char ch2, char ch3)
     {
         const uint32_t fourCC = ((uint32_t)(char)(ch0) | ((uint32_t)(char)(ch1) << 8) | ((uint32_t)(char)(ch2) << 16) | ((uint32_t)(char)(ch3) << 24 ));
         return fourCC;
@@ -1845,7 +1846,7 @@ namespace
 
 bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
 {
-    
+    _hasPremultipliedAlpha = false;
     const uint32_t FOURCC_DXT1 = makeFourCC('D', 'X', 'T', '1');
     const uint32_t FOURCC_DXT3 = makeFourCC('D', 'X', 'T', '3');
     const uint32_t FOURCC_DXT5 = makeFourCC('D', 'X', 'T', '5');
@@ -2119,19 +2120,19 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
         if (WebPGetFeatures(static_cast<const uint8_t*>(data), dataLen, &config.input) != VP8_STATUS_OK) break;
         if (config.input.width == 0 || config.input.height == 0) break;
         
-        config.output.colorspace = MODE_RGBA;
-        _renderFormat = Texture2D::PixelFormat::RGBA8888;
+        config.output.colorspace = config.input.has_alpha?MODE_rgbA:MODE_RGB;
+        _renderFormat = config.input.has_alpha?Texture2D::PixelFormat::RGBA8888:Texture2D::PixelFormat::RGB888;
         _width    = config.input.width;
         _height   = config.input.height;
         
-        //webp doesn't have premultipliedAlpha
-        _hasPremultipliedAlpha = false;
+        //we ask webp to give data with premultiplied alpha
+        _hasPremultipliedAlpha = config.input.has_alpha;
         
-        _dataLen = _width * _height * 4;
+        _dataLen = _width * _height * (config.input.has_alpha?4:3);
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         
         config.output.u.RGBA.rgba = static_cast<uint8_t*>(_data);
-        config.output.u.RGBA.stride = _width * 4;
+        config.output.u.RGBA.stride = _width * (config.input.has_alpha?4:3);
         config.output.u.RGBA.size = _dataLen;
         config.output.is_external_memory = 1;
         
@@ -2239,7 +2240,7 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
             png_destroy_write_struct(&png_ptr, nullptr);
             break;
         }
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_TIZEN)
         if (setjmp(png_jmpbuf(png_ptr)))
         {
             fclose(fp);

@@ -406,6 +406,7 @@ public:
     /** Get a shader program from the texture.*/
     GLProgram* getGLProgram() const;
 
+    std::string getPath()const { return _filePath; }
 
 public:
     /** Get pixel info map, the key-value pairs is PixelFormat and PixelFormatInfo.*/
@@ -488,6 +489,7 @@ private:
     //RGB888 to XXX
     static void convertRGB888ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGB888ToRGB565(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
+    static void convertRGB888ToA8(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGB888ToI8(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGB888ToAI88(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGB888ToRGBA4444(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
@@ -540,6 +542,9 @@ protected:
     friend class SpriteFrameCache;
     friend class TextureCache;
     friend class ui::Scale9Sprite;
+
+    bool _valid;
+    std::string _filePath;
 };
 
 

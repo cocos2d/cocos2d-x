@@ -213,6 +213,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class SpriteAnchorPointFromFile : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteAnchorPointFromFile);
+    
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class Sprite6 : public SpriteTestDemo
 {
 public:
@@ -330,12 +341,21 @@ public:
 class SpriteFramesFromFileContent : public SpriteTestDemo
 {
 public:
-	CREATE_FUNC(SpriteFramesFromFileContent);
+    CREATE_FUNC(SpriteFramesFromFileContent);
 
-	virtual void onEnter() override;
-	virtual void onExit() override;
-	virtual std::string title() const override;
-	virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual std::string sheetName() const;
+};
+
+class SpritePolygonFromFileContent : public SpriteFramesFromFileContent
+{
+public:
+    CREATE_FUNC(SpritePolygonFromFileContent);
+    virtual std::string subtitle() const override;
+    virtual std::string sheetName() const override;
 };
 
 class SpriteOffsetAnchorRotation: public SpriteTestDemo
@@ -343,7 +363,7 @@ class SpriteOffsetAnchorRotation: public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteOffsetAnchorRotation);
 
-    SpriteOffsetAnchorRotation();
+    virtual void onEnter() override;
     virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;

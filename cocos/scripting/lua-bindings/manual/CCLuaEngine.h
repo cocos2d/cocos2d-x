@@ -30,11 +30,13 @@ extern "C" {
 #include "lua.h"
 }
 
-#include "cocos2d.h"
+
 #include "base/CCScriptSupport.h"
-#include "CCLuaStack.h"
-#include "CCLuaValue.h"
-#include "cocos2d/LuaScriptHandlerMgr.h"
+#include "scripting/lua-bindings/manual/CCLuaStack.h"
+#include "scripting/lua-bindings/manual/CCLuaValue.h"
+#include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
+#include "scripting/lua-bindings/manual/Lua-BindingsExport.h"
+#include "deprecated/CCNotificationCenter.h"
 
 /**
  * @addtogroup lua
@@ -49,7 +51,7 @@ NS_CC_BEGIN
  * @lua NA
  * @js NA
  */
-class LuaEngine : public ScriptEngineProtocol
+class CC_LUA_DLL LuaEngine : public ScriptEngineProtocol
 {
 public:
     /**
@@ -66,7 +68,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE static LuaEngine* defaultEngine(void) { return LuaEngine::getInstance(); }
     
     /** 
-     * Destrutor of LuaEngine.
+     * Destructor of LuaEngine.
      */
     virtual ~LuaEngine(void);
     
@@ -105,17 +107,17 @@ public:
     
     /**
      * Reload script code corresponding to moduleFileName.
-     * If value of package["loaded"][moduleFileName] is existed, it would set the vaule nil.Then,it calls executeString function.
+     * If value of package["loaded"][moduleFileName] is existed, it would set the value nil.Then,it calls executeString function.
      *
      * @param moduleFileName String object holding the filename of the script file that is to be executed.
-     * @return 0 if the string is excuted correctly or other if the string is excuted wrongly.
+     * @return 0 if the string is executed correctly or other if the string is executed wrongly.
      */
     virtual int reload(const char* moduleFileName);
     
     /**
      * Remove the related reference about the Ref object stored in the Lua table by set the value of corresponding key nil:
      * The related Lua tables are toluafix_refid_ptr_mapping,toluafix_refid_type_mapping,tolua_value_root and object_Metatable["tolua_ubox"] or tolua_ubox.
-     * Meanwhile set the corresponding userdata nullptr and remove the all the lua function refrence corresponding to this object.
+     * Meanwhile set the corresponding userdata nullptr and remove the all the lua function reference corresponding to this object.
      * 
      * In current mechanism, this function is called in the destructor of Ref object, developer don't call this functions.
      *
@@ -126,14 +128,14 @@ public:
     /**
      * Remove Lua function reference by nHandler by setting toluafix_refid_function_mapping[nHandle] nil.
      *
-     * @param nHandler the function refrence index to find the correspoinding Lua function pointer.
+     * @param nHandler the function reference index to find the corresponding Lua function pointer.
      */
     virtual void removeScriptHandler(int nHandler) override;
     
     /**
-     * Reallocate Lua function reference index to the Lua function pointer to add refrence.
+     * Reallocate Lua function reference index to the Lua function pointer to add reference.
      *
-     * @param nHandler the function refrence index to find the correspoinding Lua function pointer.
+     * @param nHandler the function reference index to find the corresponding Lua function pointer.
      */
     virtual int reallocateScriptHandler(int nHandler) override;
     
@@ -141,7 +143,7 @@ public:
      * Execute script code contained in the given string.
      *
      * @param codes holding the valid script code that should be executed.
-     * @return 0 if the string is excuted correctly,other if the string is excuted wrongly.
+     * @return 0 if the string is executed correctly, other if the string is executed wrongly.
      */
     virtual int executeString(const char* codes) override;
     

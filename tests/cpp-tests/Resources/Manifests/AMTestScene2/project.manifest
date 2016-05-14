@@ -1,6 +1,6 @@
 {
-	"packageUrl" : "http://tools.itharbors.com/assets_manager/AMTestScene2/",
-	"remoteManifestUrl" : "http://tools.itharbors.com/assets_manager/AMTestScene2/project_dev.manifest",
+	"packageUrl" : "http://cocos2d-x.org/assets/cpp-tests-resources/assets_manager/AMTestScene2/",
+	"remoteManifestUrl" : "http://cocos2d-x.org/assets/cpp-tests-resources/assets_manager/AMTestScene2/project_dev.manifest",
 	"version" : "1.0.0",
 	"engineVersion" : "3.0 beta",
 

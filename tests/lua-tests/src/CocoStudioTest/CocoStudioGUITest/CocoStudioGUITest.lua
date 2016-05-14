@@ -1722,13 +1722,11 @@ add_new_testcase(function()
             local pageView = ccui.PageView:create()
             pageView:setTouchEnabled(true)
             pageView:setContentSize(cc.size(240, 130))
-            pageView:setDirection(ccui.PageViewDirection.HORIZONTAL)
             local backgroundSize = background:getContentSize()
             pageView:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
                                          (backgroundSize.width - pageView:getContentSize().width) / 2,
                                      (widgetSize.height - backgroundSize.height) / 2 +
                                          (backgroundSize.height - pageView:getContentSize().height) / 2))
-
             for i = 1 , 3 do
                 local layout = ccui.Layout:create()
                 layout:setContentSize(cc.size(240, 130))
@@ -1750,13 +1748,16 @@ add_new_testcase(function()
                 label:setPosition(cc.p(layout:getContentSize().width / 2, layout:getContentSize().height / 2))
                 layout:addChild(label)
 
-                pageView:addPage(layout)
+                pageView:addWidgetToPage(layout, i-1)
 
             end
+            pageView:setCurPageIndex(1)
 
             local function pageViewEvent(sender, eventType)
                 if eventType == ccui.PageViewEventType.turning then
                     local pageInfo = string.format("page %d " , pageView:getCurPageIndex() + 1)
+                    local pages = pageView:getPages()
+                    print("total items " .. table.getn(pages))
                     self._displayValueLabel:setString(pageInfo)
                 end
             end
@@ -1788,8 +1789,8 @@ add_new_testcase(function()
 
             local pageView = ccui.PageView:create()
             pageView:setTouchEnabled(true)
+            pageView:setDirection(ccui.ScrollViewDir.vertical)
             pageView:setContentSize(cc.size(240, 130))
-            pageView:setDirection(ccui.PageViewDirection.VERTICAL)
             local backgroundSize = background:getContentSize()
             pageView:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
                                          (backgroundSize.width - pageView:getContentSize().width) / 2,
@@ -2343,6 +2344,15 @@ add_new_testcase(function()
             local eventDispatcher = self:getEventDispatcher()
             eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
 
+            local function onExit(tag)
+                if tag == "exit" then
+                    if eventListener ~= nil then
+                        eventDispatcher:removeEventListener(eventListener)
+                    end
+                end
+            end
+            self:registerScriptHandler(onExit)
+
             local winSize = cc.Director:getInstance():getVisibleSize()
             self._horizontalLayout = ccui.HBox:create()
             self._horizontalLayout:setPosition(cc.p(20, winSize.height / 2 + 40))
@@ -2476,6 +2486,15 @@ add_new_testcase(function()
             local eventDispatcher = self:getEventDispatcher()
             eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
 
+            local function onExit(tag)
+                if tag == "exit" then
+                    if eventListener ~= nil then
+                        eventDispatcher:removeEventListener(eventListener)
+                    end
+                end
+            end
+            self:registerScriptHandler(onExit)
+
             local winSize = cc.Director:getInstance():getVisibleSize()
             self._verticalLayout = ccui.VBox:create()
             self._verticalLayout:setPosition(cc.p(winSize.width/2 - 100, winSize.height - 70))
@@ -2608,6 +2627,15 @@ add_new_testcase(function()
             eventListener:registerScriptHandler(onFocusChanged)
             local eventDispatcher = self:getEventDispatcher()
             eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
+
+            local function onExit(tag)
+                if tag == "exit" then
+                    if eventListener ~= nil then
+                        eventDispatcher:removeEventListener(eventListener)
+                    end
+                end
+            end
+            self:registerScriptHandler(onExit)
 
             local winSize = cc.Director:getInstance():getVisibleSize()
 
@@ -2774,6 +2802,15 @@ add_new_testcase(function()
             local eventDispatcher = self:getEventDispatcher()
             eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
 
+            local function onExit(tag)
+                if tag == "exit" then
+                    if eventListener ~= nil then
+                        eventDispatcher:removeEventListener(eventListener)
+                    end
+                end
+            end
+            self:registerScriptHandler(onExit)
+
             local winSize = cc.Director:getInstance():getVisibleSize()
 
             self._horizontalLayout = ccui.HBox:create()
@@ -2938,6 +2975,15 @@ add_new_testcase(function()
             eventListener:registerScriptHandler(onFocusChanged)
             local eventDispatcher = self:getEventDispatcher()
             eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
+
+            local function onExit(tag)
+                if tag == "exit" then
+                    if eventListener ~= nil then
+                        eventDispatcher:removeEventListener(eventListener)
+                    end
+                end
+            end
+            self:registerScriptHandler(onExit)
 
             local winSize = cc.Director:getInstance():getVisibleSize()
 

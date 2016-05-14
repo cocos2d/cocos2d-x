@@ -21,11 +21,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "UIPageView.h"
-#include "UILayoutComponent.h"
+#include "ui/UIPageView.h"
+#include "ui/UILayoutComponent.h"
 #include "2d/CCNode.h"
-#include "GUIDefine.h"
-#include "UIHelper.h"
+#include "ui/GUIDefine.h"
+#include "ui/UIHelper.h"
 
 NS_CC_BEGIN
 
@@ -86,7 +86,7 @@ namespace ui {
                 break;
             }
 
-            //put layout component initalized code here
+            //put layout component initialized code here
 
         } while (0);
         return ret;
@@ -184,7 +184,7 @@ namespace ui {
             else
             {
                 _positionPercentX = 0;
-                if (_usingPositionPercentX)
+                if (_usingPositionPercentX || _horizontalEdge == HorizontalEdge::Center)
                     ownerPoint.x = 0;
             }
 
@@ -193,7 +193,7 @@ namespace ui {
             else
             {
                 _positionPercentY = 0;
-                if (_usingPositionPercentY)
+                if (_usingPositionPercentY || _verticalEdge == VerticalEdge::Center)
                     ownerPoint.y = 0;
             }
 
@@ -227,11 +227,14 @@ namespace ui {
     {
         _positionPercentX = percentMargin;
 
-        Node* parent = this->getOwnerParent();
-        if (parent != nullptr)
+        if (_usingPositionPercentX || _horizontalEdge == HorizontalEdge::Center)
         {
-            _owner->setPositionX(parent->getContentSize().width * _positionPercentX);
-            this->refreshHorizontalMargin();
+            Node* parent = this->getOwnerParent();
+            if (parent != nullptr)
+            {
+                _owner->setPositionX(parent->getContentSize().width * _positionPercentX);
+                this->refreshHorizontalMargin();
+            }
         }
     }
 
@@ -256,11 +259,14 @@ namespace ui {
     {
         _positionPercentY = percentMargin;
 
-        Node* parent = this->getOwnerParent();
-        if (parent != nullptr)
+        if (_usingPositionPercentY || _verticalEdge == VerticalEdge::Center)
         {
-            _owner->setPositionY(parent->getContentSize().height * _positionPercentY);
-            this->refreshVerticalMargin();
+            Node* parent = this->getOwnerParent();
+            if (parent != nullptr)
+            {
+                _owner->setPositionY(parent->getContentSize().height * _positionPercentY);
+                this->refreshVerticalMargin();
+            }
         }
     }
 
@@ -275,24 +281,6 @@ namespace ui {
         {
             _usingPositionPercentX = false;
         }
-
-        Node* parent = this->getOwnerParent();
-        if (parent != nullptr)
-        {
-            Point ownerPoint = _owner->getPosition();
-            const Size& parentSize = parent->getContentSize();
-            if (parentSize.width != 0)
-                _positionPercentX = ownerPoint.x / parentSize.width;
-            else
-            {
-                _positionPercentX = 0;
-                ownerPoint.x = 0;
-                if (_usingPositionPercentX)
-                    _owner->setPosition(ownerPoint);
-            }
-
-            this->refreshHorizontalMargin();
-        }
     }
 
     LayoutComponent::VerticalEdge LayoutComponent::getVerticalEdge()const
@@ -305,24 +293,6 @@ namespace ui {
         if (_verticalEdge != VerticalEdge::None)
         {
             _usingPositionPercentY = false;
-        }
-
-        Node* parent = this->getOwnerParent();
-        if (parent != nullptr)
-        {
-            Point ownerPoint = _owner->getPosition();
-            const Size& parentSize = parent->getContentSize();
-            if (parentSize.height != 0)
-                _positionPercentY = ownerPoint.y / parentSize.height;
-            else
-            {
-                _positionPercentY = 0;
-                ownerPoint.y = 0;
-                if (_usingPositionPercentY)
-                    _owner->setPosition(ownerPoint);
-            }
-
-            this->refreshVerticalMargin();
         }
     }
 
@@ -380,7 +350,7 @@ namespace ui {
             else
             {
                 _percentWidth = 0;
-                if (_usingPercentWidth)
+                if (_usingPercentWidth || (this->_horizontalEdge != HorizontalEdge::Center && this->_usingStretchWidth))
                     ownerSize.width = 0;
             }
 
@@ -389,7 +359,7 @@ namespace ui {
             else
             {
                 _percentHeight = 0;
-                if (_usingPercentHeight)
+                if (_usingPercentHeight || (this->_verticalEdge != VerticalEdge::Center && this->_usingStretchHeight))
                     ownerSize.height = 0;
             }
 
@@ -451,14 +421,17 @@ namespace ui {
     {
         _percentWidth = percentWidth;
 
-        Node* parent = this->getOwnerParent();
-        if (parent != nullptr)
+        if (_usingPercentWidth)
         {
-            Size ownerSize = _owner->getContentSize();
-            ownerSize.width = parent->getContentSize().width * _percentWidth;
-            _owner->setContentSize(ownerSize);
+            Node* parent = this->getOwnerParent();
+            if (parent != nullptr)
+            {
+                Size ownerSize = _owner->getContentSize();
+                ownerSize.width = parent->getContentSize().width * _percentWidth;
+                _owner->setContentSize(ownerSize);
 
-            this->refreshHorizontalMargin();
+                this->refreshHorizontalMargin();
+            }
         }
     }
 
@@ -511,14 +484,17 @@ namespace ui {
     {
         _percentHeight = percentHeight;
 
-        Node* parent = this->getOwnerParent();
-        if (parent != nullptr)
+        if (_usingPercentHeight)
         {
-            Size ownerSize = _owner->getContentSize();
-            ownerSize.height = parent->getContentSize().height * _percentHeight;
-            _owner->setContentSize(ownerSize);
+            Node* parent = this->getOwnerParent();
+            if (parent != nullptr)
+            {
+                Size ownerSize = _owner->getContentSize();
+                ownerSize.height = parent->getContentSize().height * _percentHeight;
+                _owner->setContentSize(ownerSize);
 
-            this->refreshVerticalMargin();
+                this->refreshVerticalMargin();
+            }
         }
     }
 
@@ -672,8 +648,8 @@ namespace ui {
             PageView* page = static_cast<PageView*>(_owner);
             page->forceDoLayout();
 
-            Vector<Layout*> _layoutVector = page->getPages();
-            for(auto& item : _layoutVector)
+            Vector<Widget*> _widgetVector = page->getItems();
+            for(auto& item : _widgetVector)
             {
                 ui::Helper::doLayout(item);
             }

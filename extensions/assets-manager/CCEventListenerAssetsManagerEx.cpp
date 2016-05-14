@@ -25,7 +25,7 @@
 #include "CCEventListenerAssetsManagerEx.h"
 #include "CCEventAssetsManagerEx.h"
 #include "AssetsManagerEx.h"
-#include "cocos2d.h"
+#include "deprecated/CCString.h"
 
 NS_CC_EXT_BEGIN
 
@@ -39,7 +39,7 @@ EventListenerAssetsManagerEx::EventListenerAssetsManagerEx()
 
 EventListenerAssetsManagerEx* EventListenerAssetsManagerEx::create(cocos2d::extension::AssetsManagerEx *AssetsManagerEx, const std::function<void(EventAssetsManagerEx*)>& callback)
 {
-    EventListenerAssetsManagerEx* ret = new EventListenerAssetsManagerEx();
+    EventListenerAssetsManagerEx* ret = new (std::nothrow) EventListenerAssetsManagerEx();
     if (ret && ret->init(AssetsManagerEx, callback))
     {
         ret->autorelease();
@@ -73,7 +73,7 @@ bool EventListenerAssetsManagerEx::init(const AssetsManagerEx *AssetsManagerEx, 
 
 EventListenerAssetsManagerEx* EventListenerAssetsManagerEx::clone()
 {
-    EventListenerAssetsManagerEx* ret = new EventListenerAssetsManagerEx();
+    EventListenerAssetsManagerEx* ret = new (std::nothrow) EventListenerAssetsManagerEx();
     if (ret && ret->init(_AssetsManagerEx, _onAssetsManagerExEvent))
     {
         ret->autorelease();

@@ -106,7 +106,7 @@ void Control::sendActionsForControlEvents(EventType controlEvents)
     // For each control events
     for (int i = 0; i < kControlEventTotalNumber; i++)
     {
-        // If the given controlEvents bitmask contains the curent event
+        // If the given controlEvents bitmask contains the current event
         if (((int)controlEvents & (1 << i)))
         {
             // Call invocations
@@ -134,7 +134,7 @@ void Control::addTargetWithActionForControlEvents(Ref* target, Handler action, E
     // For each control events
     for (int i = 0; i < kControlEventTotalNumber; i++)
     {
-        // If the given controlEvents bitmask contains the curent event
+        // If the given controlEvents bitmask contains the current event
         if (((int)controlEvents & (1 << i)))
         {
             this->addTargetWithActionForControlEvent(target, action, (EventType)(1<<i));
@@ -147,7 +147,7 @@ void Control::addTargetWithActionForControlEvents(Ref* target, Handler action, E
 /**
  * Adds a target and action for a particular event to an internal dispatch 
  * table.
- * The action message may optionnaly include the sender and the event as 
+ * The action message may optionally include the sender and the event as 
  * parameters, in that order.
  * When you call this method, target is not retained.
  *
@@ -172,7 +172,7 @@ void Control::removeTargetWithActionForControlEvents(Ref* target, Handler action
      // For each control events
     for (int i = 0; i < kControlEventTotalNumber; i++)
     {
-        // If the given controlEvents bitmask contains the curent event
+        // If the given controlEvents bitmask contains the current event
         if (((int)controlEvents & (1 << i)))
         {
             this->removeTargetWithActionForControlEvent(target, action, (EventType)(1 << i));

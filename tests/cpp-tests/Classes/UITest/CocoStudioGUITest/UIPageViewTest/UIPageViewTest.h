@@ -37,11 +37,11 @@ public:
     UIPageViewTest();
     ~UIPageViewTest();
     virtual bool init() override;
-    
+
     void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
-    
+
 protected:
-    
+
     cocos2d::ui::Text* _displayValueLabel;
 };
 
@@ -56,23 +56,6 @@ public:
     
     void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
     void onButtonClicked(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
-protected:
-    
-    cocos2d::ui::Text* _displayValueLabel;
-};
-
-class UIPageViewCustomScrollThreshold : public UIScene
-{
-public:
-    CREATE_FUNC(UIPageViewCustomScrollThreshold);
-
-    UIPageViewCustomScrollThreshold();
-    ~UIPageViewCustomScrollThreshold();
-    virtual bool init() override;
-    
-    void sliderEvent(cocos2d::Ref* sender, cocos2d::ui::Slider::EventType type);
-
-    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
 protected:
     
     cocos2d::ui::Text* _displayValueLabel;
@@ -153,6 +136,22 @@ public:
         
 protected:
     
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIPageViewChildSizeTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewChildSizeTest);
+
+    UIPageViewChildSizeTest();
+    ~UIPageViewChildSizeTest();
+    virtual bool init() override;
+
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
+
+protected:
+
     cocos2d::ui::Text* _displayValueLabel;
 };
 

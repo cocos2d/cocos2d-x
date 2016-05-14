@@ -171,7 +171,7 @@ public:
     
     
     /**
-     * Default constuctor of LuaValue.
+     * Default constructor of LuaValue.
      * Set the default value for _type(LuaValueTypeInt) and _ccobjectType(nullptr),and init the _field.
      */
     LuaValue(void)
@@ -201,14 +201,14 @@ public:
      * 
      * @return the type of LuaValue object.
      */
-    const LuaValueType getType(void) const {
+    LuaValueType getType() const {
         return _type;
     }
     
     /**
      * Get the typename of the Ref object.
      *
-     * @return the refrence of _ccobjectType.
+     * @return the reference of _ccobjectType.
      */
     const std::string& getObjectTypename(void) const {
         return *_ccobjectType;
@@ -244,7 +244,7 @@ public:
     /**
      * Get the boolean value of LuaValue object.
      *
-     * @return the refrence about string value.
+     * @return the reference about string value.
      */
     const std::string& stringValue(void) const {
         return *_field.stringValue;

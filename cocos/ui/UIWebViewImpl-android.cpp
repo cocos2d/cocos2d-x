@@ -24,28 +24,27 @@
 
 #ifdef __ANDROID__
 
-#include "UIWebViewImpl-android.h"
+#include "ui/UIWebViewImpl-android.h"
 
 #include <unordered_map>
 #include <stdlib.h>
 #include <string>
-#include "jni/JniHelper.h"
-#include <jni.h>
+#include "platform/android/jni/JniHelper.h"
 
-#include "UIWebView.h"
+#include "ui/UIWebView.h"
 #include "platform/CCGLView.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
 #include "ui/UIHelper.h"
 
-#define CLASS_NAME "org/cocos2dx/lib/Cocos2dxWebViewHelper"
+static const std::string className = "org/cocos2dx/lib/Cocos2dxWebViewHelper";
 
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,"",__VA_ARGS__)
 
 static const std::string s_defaultBaseUrl = "file:///android_asset/";
 static const std::string s_sdRootBaseUrl = "file://";
 
- static std::string getFixedBaseUrl(const std::string& baseUrl)
+static std::string getFixedBaseUrl(const std::string& baseUrl)
 {
     std::string fixedBaseUrl;
     if (baseUrl.empty())
@@ -132,186 +131,13 @@ namespace {
 
 int createWebViewJNI() {
     cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "createWebView", "()I")) {
+    if (cocos2d::JniHelper::getStaticMethodInfo(t, className.c_str(), "createWebView", "()I")) {
         // LOGD("error: %s,%d",__func__,__LINE__);
         jint viewTag = t.env->CallStaticIntMethod(t.classID, t.methodID);
         t.env->DeleteLocalRef(t.classID);
         return viewTag;
     }
     return -1;
-}
-
-void removeWebViewJNI(const int index) {
-    // LOGD("error: %s,%d",__func__,__LINE__);
-    cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "removeWebView", "(I)V")) {
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
-void setWebViewRectJNI(const int index, const int left, const int top, const int width, const int height) {
-    // LOGD("error: %s,%d",__func__,__LINE__);
-    cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setWebViewRect", "(IIIII)V")) {
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, left, top, width, height);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
-void setJavascriptInterfaceSchemeJNI(const int index, const std::string &scheme) {
-    // LOGD("error: %s,%d",__func__,__LINE__);
-    cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setJavascriptInterfaceScheme", "(ILjava/lang/String;)V")) {
-        jstring jScheme = t.env->NewStringUTF(scheme.c_str());
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jScheme);
-
-        t.env->DeleteLocalRef(jScheme);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
-void loadDataJNI(const int index, const std::string &data, const std::string &MIMEType, const std::string &encoding, const std::string &baseURL) {
-    // LOGD("error: %s,%d",__func__,__LINE__);
-    cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "loadData", "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V")) {
-        jstring jData = t.env->NewStringUTF(data.c_str());
-        jstring jMIMEType = t.env->NewStringUTF(MIMEType.c_str());
-        jstring jEncoding = t.env->NewStringUTF(encoding.c_str());
-        jstring jBaseURL = t.env->NewStringUTF(getFixedBaseUrl(baseURL).c_str());
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jData, jMIMEType, jEncoding, jBaseURL);
-
-        t.env->DeleteLocalRef(jData);
-        t.env->DeleteLocalRef(jMIMEType);
-        t.env->DeleteLocalRef(jEncoding);
-        t.env->DeleteLocalRef(jBaseURL);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
-void loadHTMLStringJNI(const int index, const std::string &string, const std::string &baseURL) {
-    // LOGD("error: %s,%d",__func__,__LINE__);
-    cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "loadHTMLString", "(ILjava/lang/String;Ljava/lang/String;)V")) {
-        jstring jString = t.env->NewStringUTF(string.c_str());
-        jstring jBaseURL = t.env->NewStringUTF(getFixedBaseUrl(baseURL).c_str());
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jString, jBaseURL);
-
-        t.env->DeleteLocalRef(jString);
-        t.env->DeleteLocalRef(jBaseURL);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
-void loadUrlJNI(const int index, const std::string &url) {
-    cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "loadUrl", "(ILjava/lang/String;)V")) {
-        jstring jUrl = t.env->NewStringUTF(url.c_str());
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jUrl);
-
-        t.env->DeleteLocalRef(jUrl);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
-void loadFileJNI(const int index, const std::string &filePath) {
-    // LOGD("error: %s,%d",__func__,__LINE__);
-    cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "loadFile", "(ILjava/lang/String;)V")) {
-        jstring jFilePath = t.env->NewStringUTF(filePath.c_str());
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jFilePath);
-
-        t.env->DeleteLocalRef(jFilePath);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
-void stopLoadingJNI(const int index) {
-    // LOGD("error: %s,%d",__func__,__LINE__);
-    cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "stopLoading", "(I)V")) {
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
-void reloadJNI(const int index) {
-    // LOGD("error: %s,%d",__func__,__LINE__);
-    cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "reload", "(I)V")) {
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
-bool canGoBackJNI(const int index) {
-    // LOGD("error: %s,%d",__func__,__LINE__);
-    cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "canGoBack", "(I)Z")) {
-        jboolean ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID, index);
-        t.env->DeleteLocalRef(t.classID);
-        return ret;
-    }
-    return false;
-}
-
-bool canGoForwardJNI(const int index) {
-    // LOGD("error: %s,%d",__func__,__LINE__);
-    cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "canGoForward", "(I)Z")) {
-        jboolean ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID, index);
-        t.env->DeleteLocalRef(t.classID);
-        return ret;
-    }
-    return false;
-}
-
-void goBackJNI(const int index) {
-    // LOGD("error: %s,%d",__func__,__LINE__);
-    cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "goBack", "(I)V")) {
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
-void goForwardJNI(const int index) {
-    // LOGD("error: %s,%d",__func__,__LINE__);
-    cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "goForward", "(I)V")) {
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
-void evaluateJSJNI(const int index, const std::string &js) {
-    // LOGD("error: %s,%d",__func__,__LINE__);
-    cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "evaluateJS", "(ILjava/lang/String;)V")) {
-        jstring jjs = t.env->NewStringUTF(js.c_str());
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jjs);
-
-        t.env->DeleteLocalRef(jjs);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
-void setScalesPageToFitJNI(const int index, const bool scalesPageToFit) {
-    // LOGD("error: %s,%d",__func__,__LINE__);
-    cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setScalesPageToFit", "(IZ)V")) {
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, scalesPageToFit);
-        t.env->DeleteLocalRef(t.classID);
-  }
-}
-
-void setWebViewVisibleJNI(const int index, const bool visible) {
-    // LOGD("error: %s,%d",__func__,__LINE__);
-    cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setVisible", "(IZ)V")) {
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, visible);
-        t.env->DeleteLocalRef(t.classID);
-    }
 }
 
 std::string getUrlStringByFileName(const std::string &fileName) {
@@ -343,79 +169,80 @@ namespace cocos2d {
             }
 
             WebViewImpl::~WebViewImpl() {
-                removeWebViewJNI(_viewTag);
+                JniHelper::callStaticVoidMethod(className, "removeWebView", _viewTag);
                 s_WebViewImpls.erase(_viewTag);
             }
 
             void WebViewImpl::loadData(const Data &data, const std::string &MIMEType, const std::string &encoding, const std::string &baseURL) {
                 std::string dataString(reinterpret_cast<char *>(data.getBytes()), static_cast<unsigned int>(data.getSize()));
-                loadDataJNI(_viewTag, dataString, MIMEType, encoding, baseURL);
+                JniHelper::callStaticVoidMethod(className, "setJavascriptInterfaceScheme", _viewTag, dataString, MIMEType, encoding, baseURL);
             }
 
             void WebViewImpl::loadHTMLString(const std::string &string, const std::string &baseURL) {
-                loadHTMLStringJNI(_viewTag, string, baseURL);
+                JniHelper::callStaticVoidMethod(className, "loadHTMLString", _viewTag, string, baseURL);
             }
 
             void WebViewImpl::loadURL(const std::string &url) {
-                loadUrlJNI(_viewTag, url);
+                JniHelper::callStaticVoidMethod(className, "loadUrl", _viewTag, url);
             }
 
             void WebViewImpl::loadFile(const std::string &fileName) {
                 auto fullPath = getUrlStringByFileName(fileName);
-                loadFileJNI(_viewTag, fullPath);
+                JniHelper::callStaticVoidMethod(className, "loadFile", _viewTag, fullPath);
             }
 
             void WebViewImpl::stopLoading() {
-                stopLoadingJNI(_viewTag);
+                JniHelper::callStaticVoidMethod(className, "stopLoading", _viewTag);
             }
 
             void WebViewImpl::reload() {
-                reloadJNI(_viewTag);
+                JniHelper::callStaticVoidMethod(className, "reload", _viewTag);
             }
 
             bool WebViewImpl::canGoBack() {
-                return canGoBackJNI(_viewTag);
+                return JniHelper::callStaticBooleanMethod(className, "canGoBack", _viewTag);
             }
 
             bool WebViewImpl::canGoForward() {
-                return canGoForwardJNI(_viewTag);
+                return JniHelper::callStaticBooleanMethod(className, "canGoForward", _viewTag);
             }
 
             void WebViewImpl::goBack() {
-                goBackJNI(_viewTag);
+                JniHelper::callStaticVoidMethod(className, "goBack", _viewTag);
             }
 
             void WebViewImpl::goForward() {
-                goForwardJNI(_viewTag);
+                JniHelper::callStaticVoidMethod(className, "goForward", _viewTag);
             }
 
             void WebViewImpl::setJavascriptInterfaceScheme(const std::string &scheme) {
-                setJavascriptInterfaceSchemeJNI(_viewTag, scheme);
+                JniHelper::callStaticVoidMethod(className, "setJavascriptInterfaceScheme", _viewTag, scheme);
             }
 
             void WebViewImpl::evaluateJS(const std::string &js) {
-                evaluateJSJNI(_viewTag, js);
+                JniHelper::callStaticVoidMethod(className, "evaluateJS", _viewTag, js);
             }
 
             void WebViewImpl::setScalesPageToFit(const bool scalesPageToFit) {
-                setScalesPageToFitJNI(_viewTag, scalesPageToFit);
+                JniHelper::callStaticVoidMethod(className, "setScalesPageToFit", _viewTag, scalesPageToFit);
             }
 
             bool WebViewImpl::shouldStartLoading(const int viewTag, const std::string &url) {
+                bool allowLoad = true;
                 auto it = s_WebViewImpls.find(viewTag);
                 if (it != s_WebViewImpls.end()) {
-                    auto webView = s_WebViewImpls[viewTag]->_webView;
+                    auto webView = it->second->_webView;
                     if (webView->_onShouldStartLoading) {
-                        return webView->_onShouldStartLoading(webView, url);
+                        allowLoad = webView->_onShouldStartLoading(webView, url);
                     }
                 }
-                return true;
+                return allowLoad;
             }
 
             void WebViewImpl::didFinishLoading(const int viewTag, const std::string &url){
                 auto it = s_WebViewImpls.find(viewTag);
                 if (it != s_WebViewImpls.end()) {
-                    auto webView = s_WebViewImpls[viewTag]->_webView;
+                    auto webView = it->second->_webView;
                     if (webView->_onDidFinishLoading) {
                         webView->_onDidFinishLoading(webView, url);
                     }
@@ -425,7 +252,7 @@ namespace cocos2d {
             void WebViewImpl::didFailLoading(const int viewTag, const std::string &url){
                 auto it = s_WebViewImpls.find(viewTag);
                 if (it != s_WebViewImpls.end()) {
-                    auto webView = s_WebViewImpls[viewTag]->_webView;
+                    auto webView = it->second->_webView;
                     if (webView->_onDidFailLoading) {
                         webView->_onDidFailLoading(webView, url);
                     }
@@ -435,7 +262,7 @@ namespace cocos2d {
             void WebViewImpl::onJsCallback(const int viewTag, const std::string &message){
                 auto it = s_WebViewImpls.find(viewTag);
                 if (it != s_WebViewImpls.end()) {
-                    auto webView = s_WebViewImpls[viewTag]->_webView;
+                    auto webView = it->second->_webView;
                     if (webView->_onJSCallback) {
                         webView->_onJSCallback(webView, message);
                     }
@@ -445,14 +272,14 @@ namespace cocos2d {
             void WebViewImpl::draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) {
                 if (flags & cocos2d::Node::FLAGS_TRANSFORM_DIRTY) {
                     auto uiRect = cocos2d::ui::Helper::convertBoundingBoxToScreen(_webView);
-
-                    setWebViewRectJNI(_viewTag, uiRect.origin.x, uiRect.origin.y,
-                                      uiRect.size.width, uiRect.size.height);
+                    JniHelper::callStaticVoidMethod(className, "setWebViewRect", _viewTag, 
+                                                    (int)uiRect.origin.x, (int)uiRect.origin.y,
+                                                    (int)uiRect.size.width, (int)uiRect.size.height);
                 }
             }
 
             void WebViewImpl::setVisible(bool visible) {
-                setWebViewVisibleJNI(_viewTag, visible);
+                JniHelper::callStaticVoidMethod(className, "setVisible", _viewTag, visible);
             }
         } // namespace ui
     } // namespace experimental

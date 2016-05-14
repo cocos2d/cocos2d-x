@@ -31,73 +31,65 @@ THE SOFTWARE.
 NS_CC_BEGIN
 //
 
-#include "ccShader_Position_uColor.frag"
+#include "renderer/ccShader_Position_uColor.frag"
 
-#ifdef CC_WINDOWS_PHONE_8_1
-#include "ccShader_Position_uColor_wp81.vert"
-#else
-#include "ccShader_Position_uColor.vert"
-#endif
+#include "renderer/ccShader_Position_uColor.vert"
 
 //
-#include "ccShader_PositionColor.frag"
-#include "ccShader_PositionColor.vert"
+#include "renderer/ccShader_PositionColor.frag"
+#include "renderer/ccShader_PositionColor.vert"
 
 //
-#ifdef CC_WINDOWS_PHONE_8_1
-#include "ccShader_PositionColorTextureAsPointsize_wp81.vert"
-#else
-#include "ccShader_PositionColorTextureAsPointsize.vert"
-#endif
+#include "renderer/ccShader_PositionColorTextureAsPointsize.vert"
 
 //
-#include "ccShader_PositionTexture.frag"
-#include "ccShader_PositionTexture.vert"
+#include "renderer/ccShader_PositionTexture.frag"
+#include "renderer/ccShader_PositionTexture.vert"
 
 //
-#include "ccShader_PositionTextureA8Color.frag"
-#include "ccShader_PositionTextureA8Color.vert"
+#include "renderer/ccShader_PositionTextureA8Color.frag"
+#include "renderer/ccShader_PositionTextureA8Color.vert"
 
 //
-#include "ccShader_PositionTextureColor.frag"
-#include "ccShader_PositionTextureColor.vert"
+#include "renderer/ccShader_PositionTextureColor.frag"
+#include "renderer/ccShader_PositionTextureColor.vert"
 
 //
-#include "ccShader_PositionTextureColor_noMVP.frag"
-#include "ccShader_PositionTextureColor_noMVP.vert"
+#include "renderer/ccShader_PositionTextureColor_noMVP.frag"
+#include "renderer/ccShader_PositionTextureColor_noMVP.vert"
 
 //
-#include "ccShader_PositionTextureColorAlphaTest.frag"
+#include "renderer/ccShader_PositionTextureColorAlphaTest.frag"
 
 //
-#include "ccShader_PositionTexture_uColor.frag"
-#include "ccShader_PositionTexture_uColor.vert"
+#include "renderer/ccShader_PositionTexture_uColor.frag"
+#include "renderer/ccShader_PositionTexture_uColor.vert"
 
-#include "ccShader_PositionColorLengthTexture.frag"
-#include "ccShader_PositionColorLengthTexture.vert"
+#include "renderer/ccShader_PositionColorLengthTexture.frag"
+#include "renderer/ccShader_PositionColorLengthTexture.vert"
 
-#include "ccShader_UI_Gray.frag"
+#include "renderer/ccShader_UI_Gray.frag"
 //
-#include "ccShader_Label.vert"
-#include "ccShader_Label_df.frag"
-#include "ccShader_Label_df_glow.frag"
-#include "ccShader_Label_normal.frag"
-#include "ccShader_Label_outline.frag"
+#include "renderer/ccShader_Label.vert"
+#include "renderer/ccShader_Label_df.frag"
+#include "renderer/ccShader_Label_df_glow.frag"
+#include "renderer/ccShader_Label_normal.frag"
+#include "renderer/ccShader_Label_outline.frag"
 
 //
-#include "ccShader_3D_PositionTex.vert"
-#include "ccShader_3D_Color.frag"
-#include "ccShader_3D_ColorTex.frag"
-#include "ccShader_3D_PositionNormalTex.vert"
-#include "ccShader_3D_ColorNormal.frag"
-#include "ccShader_3D_ColorNormalTex.frag"
-#include "ccShader_3D_Particle.vert"
-#include "ccShader_3D_Particle.frag"
-#include "ccShader_3D_Skybox.vert"
-#include "ccShader_3D_Skybox.frag"
-#include "ccShader_3D_Terrain.vert"
-#include "ccShader_3D_Terrain.frag"
-#include "ccShader_CameraClear.vert"
-#include "ccShader_CameraClear.frag"
+#include "renderer/ccShader_3D_PositionTex.vert"
+#include "renderer/ccShader_3D_Color.frag"
+#include "renderer/ccShader_3D_ColorTex.frag"
+#include "renderer/ccShader_3D_PositionNormalTex.vert"
+#include "renderer/ccShader_3D_ColorNormal.frag"
+#include "renderer/ccShader_3D_ColorNormalTex.frag"
+#include "renderer/ccShader_3D_Particle.vert"
+#include "renderer/ccShader_3D_Particle.frag"
+#include "renderer/ccShader_3D_Skybox.vert"
+#include "renderer/ccShader_3D_Skybox.frag"
+#include "renderer/ccShader_3D_Terrain.vert"
+#include "renderer/ccShader_3D_Terrain.frag"
+#include "renderer/ccShader_CameraClear.vert"
+#include "renderer/ccShader_CameraClear.frag"
 
 NS_CC_END

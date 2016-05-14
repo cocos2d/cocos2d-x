@@ -20,10 +20,13 @@
  * THE SOFTWARE.
  */
 
-#include "jsb_event_dispatcher_manual.h"
-#include "cocos2d.h"
-#include "ScriptingCore.h"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/jsb_event_dispatcher_manual.h"
+
+#include "base/CCEventListenerFocus.h"
+#include "base/CCEventListenerKeyboard.h"
+#include "base/CCEventListenerMouse.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 
 USING_NS_CC;
 
@@ -32,11 +35,11 @@ bool js_EventListenerTouchOneByOne_create(JSContext *cx, uint32_t argc, jsval *v
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         auto ret = EventListenerTouchOneByOne::create();
-        
+
         ret->onTouchBegan = [cx, ret](Touch* touch, Event* event) -> bool {
             JS::RootedValue jsret(cx);
             bool ok = ScriptingCore::getInstance()->handleTouchEvent(ret, EventTouch::EventCode::BEGAN, touch, event, &jsret);
-            
+
             // Not found the method, just return false.
             if (!ok)
                 return false;
@@ -44,24 +47,24 @@ bool js_EventListenerTouchOneByOne_create(JSContext *cx, uint32_t argc, jsval *v
             CCASSERT(jsret.isBoolean(), "the return value of onTouchBegan isn't boolean");
             return jsret.toBoolean();
         };
-        
+
         ret->onTouchMoved = [ret](Touch* touch, Event* event) {
             ScriptingCore::getInstance()->handleTouchEvent(ret, EventTouch::EventCode::MOVED, touch, event);
         };
-        
+
         ret->onTouchEnded = [ret](Touch* touch, Event* event) {
             ScriptingCore::getInstance()->handleTouchEvent(ret, EventTouch::EventCode::ENDED, touch, event);
         };
-        
+
         ret->onTouchCancelled = [ret](Touch* touch, Event* event) {
             ScriptingCore::getInstance()->handleTouchEvent(ret, EventTouch::EventCode::CANCELLED, touch, event);
         };
-        
-        jsval jsret = getJSObject(cx, ret);
+
+        jsval jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<EventListenerTouchOneByOne>(cx, ret));
         args.rval().set(jsret);
         return true;
     }
-    
+
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
@@ -71,28 +74,28 @@ bool js_EventListenerTouchAllAtOnce_create(JSContext *cx, uint32_t argc, jsval *
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         auto ret = EventListenerTouchAllAtOnce::create();
-        
+
         ret->onTouchesBegan = [ret](const std::vector<Touch*>& touches, Event* event) {
             ScriptingCore::getInstance()->handleTouchesEvent(ret, EventTouch::EventCode::BEGAN, touches, event);
         };
-        
+
         ret->onTouchesMoved = [ret](const std::vector<Touch*>& touches, Event* event) {
             ScriptingCore::getInstance()->handleTouchesEvent(ret, EventTouch::EventCode::MOVED, touches, event);
         };
-        
+
         ret->onTouchesEnded = [ret](const std::vector<Touch*>& touches, Event* event) {
             ScriptingCore::getInstance()->handleTouchesEvent(ret, EventTouch::EventCode::ENDED, touches, event);
         };
-        
+
         ret->onTouchesCancelled = [ret](const std::vector<Touch*>& touches, Event* event) {
             ScriptingCore::getInstance()->handleTouchesEvent(ret, EventTouch::EventCode::CANCELLED, touches, event);
         };
-        
-        jsval jsret = getJSObject(cx, ret);
+
+        jsval jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<EventListenerTouchAllAtOnce>(cx, ret));
         args.rval().set(jsret);
         return true;
     }
-    
+
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
@@ -102,28 +105,28 @@ bool js_EventListenerMouse_create(JSContext *cx, uint32_t argc, jsval *vp)
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         auto ret = EventListenerMouse::create();
-        
+
         ret->onMouseDown = [ret](Event* event) {
             ScriptingCore::getInstance()->handleMouseEvent(ret, EventMouse::MouseEventType::MOUSE_DOWN, event);
         };
-        
+
         ret->onMouseUp = [ret](Event* event) {
             ScriptingCore::getInstance()->handleMouseEvent(ret, EventMouse::MouseEventType::MOUSE_UP, event);
         };
-        
+
         ret->onMouseMove = [ret](Event* event) {
             ScriptingCore::getInstance()->handleMouseEvent(ret, EventMouse::MouseEventType::MOUSE_MOVE, event);
         };
-        
+
         ret->onMouseScroll = [ret](Event* event) {
             ScriptingCore::getInstance()->handleMouseEvent(ret, EventMouse::MouseEventType::MOUSE_SCROLL, event);
         };
-        
-        jsval jsret = getJSObject(cx, ret);
+
+        jsval jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<EventListenerMouse>(cx, ret));
         args.rval().set(jsret);
         return true;
     }
-    
+
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
@@ -133,20 +136,20 @@ bool js_EventListenerKeyboard_create(JSContext *cx, uint32_t argc, jsval *vp)
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         auto ret = EventListenerKeyboard::create();
-        
+
         ret->onKeyPressed = [ret](EventKeyboard::KeyCode keyCode, Event* event) {
             ScriptingCore::getInstance()->handleKeybardEvent(ret, keyCode, true, event);
         };
-        
+
         ret->onKeyReleased = [ret](EventKeyboard::KeyCode keyCode, Event* event) {
             ScriptingCore::getInstance()->handleKeybardEvent(ret, keyCode, false, event);
         };
-        
-        jsval jsret = getJSObject(cx, ret);
+
+        jsval jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<EventListenerKeyboard>(cx, ret));
         args.rval().set(jsret);
         return true;
     }
-    
+
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
@@ -160,7 +163,7 @@ bool js_EventListenerFocus_create(JSContext *cx, uint32_t argc, jsval *vp)
             ScriptingCore::getInstance()->handleFocusEvent(ret, widgetLoseFocus, widgetGetFocus);
         };
 
-        jsval jsret = getJSObject(cx, ret);
+        jsval jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<EventListenerFocus>(cx, ret));
 
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
         args.rval().set(jsret);
@@ -170,4 +173,3 @@ bool js_EventListenerFocus_create(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-

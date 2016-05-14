@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCSet.h"
+#include "deprecated/CCSet.h"
 
 using namespace std;
 
@@ -31,12 +31,12 @@ NS_CC_BEGIN
 
 __Set::__Set(void)
 {
-    _set = new set<Ref *>;
+    _set = new (std::nothrow) set<Ref *>;
 }
 
 __Set::__Set(const __Set &other)
 {
-    _set = new set<Ref *>(*other._set);
+    _set = new (std::nothrow) set<Ref *>(*other._set);
 
     // call retain of members
     __SetIterator iter;
@@ -64,7 +64,7 @@ void __Set::acceptVisitor(DataVisitor &visitor)
 
 __Set * __Set::create()
 {
-    __Set * pRet = new __Set();
+    __Set * pRet = new (std::nothrow) __Set();
     
     if (pRet != nullptr)
     {
@@ -76,7 +76,7 @@ __Set * __Set::create()
 
 __Set* __Set::copy(void)
 {
-    __Set *p__Set = new __Set(*this);
+    __Set *p__Set = new (std::nothrow) __Set(*this);
 
     return p__Set;
 }

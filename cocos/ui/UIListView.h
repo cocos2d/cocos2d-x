@@ -172,11 +172,11 @@ namespace ui{
      * @param index A given index in ssize_t.
      */
     void removeItem(ssize_t index);
-    
+
     /**
      * @brief Remove all items in current ListView.
      *
-     
+     *
      */
     void removeAllItems();
     
@@ -254,7 +254,7 @@ namespace ui{
     virtual void removeAllChildren() override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void removeChild(Node* child, bool cleaup = true) override;
-    
+
     /**
      * @brief Query the closest item to a specific position in inner container.
      *
@@ -387,9 +387,7 @@ namespace ui{
     
   protected:
     virtual void handleReleaseLogic(Touch *touch) override;
-    
     virtual void onItemListChanged();
-    
     virtual void remedyLayoutParameter(Widget* item);
     void updateInnerContainerSize();
     void remedyVerticalLayoutParameter(LinearLayoutParameter* layoutParameter, ssize_t itemIndex);

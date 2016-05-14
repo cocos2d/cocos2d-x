@@ -155,7 +155,7 @@ void UniformValue::setCallback(const std::function<void(GLProgram*, Uniform*)> &
     if (_type == Type::CALLBACK_FN)
 		delete _value.callback;
 
-    _value.callback = new std::function<void(GLProgram*, Uniform*)>();
+    _value.callback = new (std::nothrow) std::function<void(GLProgram*, Uniform*)>();
 	*_value.callback = callback;
 
     _type = Type::CALLBACK_FN;
@@ -290,7 +290,7 @@ void VertexAttribValue::apply()
 
 void VertexAttribValue::setCallback(const std::function<void(VertexAttrib*)> &callback)
 {
-	_value.callback = new std::function<void(VertexAttrib*)>();
+	_value.callback = new (std::nothrow) std::function<void(VertexAttrib*)>();
 	*_value.callback = callback;
     _useCallback = true;
     _enabled = true;

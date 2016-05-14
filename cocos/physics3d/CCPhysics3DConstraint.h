@@ -44,7 +44,7 @@ NS_CC_BEGIN
 
 class Physics3DRigidBody;
 
-/** @brief Physics3DConstraint: Constraint affects the movement of physics object, it usually connet one or two physics object. There are some types of physics constraints. */
+/** @brief Physics3DConstraint: Constraint affects the movement of physics object, it usually connect one or two physics object. There are some types of physics constraints. */
 class CC_DLL Physics3DConstraint : public Ref
 {
 public:

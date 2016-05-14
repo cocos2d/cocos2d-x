@@ -1,7 +1,7 @@
 //
 // Copyright 2012-2015, Syoyo Fujita.
 //
-// Licensed under 2-clause BSD liecense.
+// Licensed under 2-clause BSD license.
 //
 
 //
@@ -38,7 +38,7 @@
 #include "platform/CCFileUtils.h"
 #include "base/ccUtils.h"
 
-#include "CCObjLoader.h"
+#include "3d/CCObjLoader.h"
 
 namespace tinyobj {
     

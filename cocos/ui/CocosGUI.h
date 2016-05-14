@@ -46,10 +46,10 @@ THE SOFTWARE.
 #include "ui/UIHBox.h"
 #include "ui/UIVBox.h"
 #include "ui/UIRelativeBox.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
 #include "ui/UIVideoPlayer.h"
 #endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
 #include "ui/UIWebView.h"
 #endif
 #include "ui/UIDeprecated.h"
@@ -57,6 +57,8 @@ THE SOFTWARE.
 #include "ui/UIScale9Sprite.h"
 #include "ui/UIEditBox/UIEditBox.h"
 #include "ui/UILayoutComponent.h"
+#include "ui/UITabControl.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 /**
  * @addtogroup ui

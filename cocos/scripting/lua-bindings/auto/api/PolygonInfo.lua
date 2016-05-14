@@ -11,16 +11,16 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- get triangles count<br>
--- return number of triangles
--- @function [parent=#PolygonInfo] getTriaglesCount 
+-- get vertex count<br>
+-- return number of vertices
+-- @function [parent=#PolygonInfo] getVertCount 
 -- @param self
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
--- get vertex count<br>
--- return number of vertices
--- @function [parent=#PolygonInfo] getVertCount 
+-- get triangles count<br>
+-- return number of triangles
+-- @function [parent=#PolygonInfo] getTrianglesCount 
 -- @param self
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
         
@@ -32,6 +32,16 @@
 -- @function [parent=#PolygonInfo] setQuad 
 -- @param self
 -- @param #cc.V3F_C4B_T2F_Quad quad
+-- @return PolygonInfo#PolygonInfo self (return value: cc.PolygonInfo)
+        
+--------------------------------
+-- set the data to be a pointer to a triangles<br>
+-- the member verts will not be released when this PolygonInfo destructs<br>
+-- as the verts memory are managed by other objects<br>
+-- param triangles  a pointer to the TrianglesCommand::Triangles object
+-- @function [parent=#PolygonInfo] setTriangles 
+-- @param self
+-- @param #cc.TrianglesCommand::Triangles triangles
 -- @return PolygonInfo#PolygonInfo self (return value: cc.PolygonInfo)
         
 --------------------------------

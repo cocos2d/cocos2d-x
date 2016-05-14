@@ -93,11 +93,14 @@ public:
 
                 if(std::get<0>(effect) >=0)
                     break;
-                QuadCommand &q = std::get<2>(effect);
-                q.init(_globalZOrder, _texture->getName(), std::get<1>(effect)->getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);
-                renderer->addCommand(&q);
+                auto glProgramState = std::get<1>(effect)->getGLProgramState();
+                if (glProgramState)
+                {
+                    QuadCommand &q = std::get<2>(effect);
+                    q.init(_globalZOrder, _texture->getName(), glProgramState, _blendFunc, &_quad, 1, transform, flags);
+                    renderer->addCommand(&q);
+                }
                 idx++;
-
             }
 
             // normal effect: order == 0
@@ -144,8 +147,8 @@ bool Effect::initGLProgramState(const std::string &fragmentFilename)
     _fragSource = fragSource;
 #endif
     
-    _glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
-    _glprogramstate->retain();
+    _glprogramstate = (glprogram == nullptr ? nullptr : GLProgramState::getOrCreateWithGLProgram(glprogram));
+    CC_SAFE_RETAIN(_glprogramstate);
 
     return _glprogramstate != nullptr;
 }
@@ -194,6 +197,9 @@ protected:
 
 void EffectBlur::setTarget(EffectSprite *sprite)
 {
+    if (_glprogramstate == nullptr)
+        return;
+    
     Size size = sprite->getTexture()->getContentSizeInPixels();
     _glprogramstate->setUniformVec2("resolution", size);
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
@@ -534,7 +540,7 @@ bool EffectSpriteLamp::init()
         this->addChild(_lightSprite);
         _lightSprite->setPosition(Vec2(pos.x, s.height- pos.y));
         Mat4 mat = _sprite->getNodeToWorldTransform();
-        Point lightPosInLocalSpace=PointApplyAffineTransform(Vec2(pos.x, pos.y),_sprite->worldToNodeTransform());
+        Point lightPosInLocalSpace = PointApplyAffineTransform(Vec2(pos.x, pos.y), _sprite->getWorldToNodeAffineTransform());
         lampEffect->setLightColor(Color4F(1,1,1,1));
         lampEffect->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
         lampEffect->setKBump(2);
@@ -561,7 +567,7 @@ void EffectSpriteLamp::onTouchesBegan(const std::vector<Touch*>& touches, Event 
         _lightSprite->setPosition(Vec2( loc_winSpace.x,  s.height - loc_winSpace.y));
         Vec3 pos(loc_winSpace.x,loc_winSpace.y, 50);
         Mat4 mat = _sprite->getNodeToWorldTransform();
-        Point lightPosInLocalSpace=PointApplyAffineTransform(Vec2(pos.x, pos.y),_sprite->worldToNodeTransform());
+        Point lightPosInLocalSpace = PointApplyAffineTransform(Vec2(pos.x, pos.y), _sprite->getWorldToNodeAffineTransform());
         ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
     }
 }
@@ -576,7 +582,7 @@ void EffectSpriteLamp::onTouchesMoved(const std::vector<Touch*>& touches, Event 
         _lightSprite->setPosition(Vec2( loc_winSpace.x, s.height - loc_winSpace.y));
         Vec3 pos(loc_winSpace.x,loc_winSpace.y, 50);
         Mat4 mat = _sprite->getNodeToWorldTransform();
-        Point lightPosInLocalSpace=PointApplyAffineTransform(Vec2(pos.x, pos.y),_sprite->worldToNodeTransform());
+        Point lightPosInLocalSpace = PointApplyAffineTransform(Vec2(pos.x, pos.y), _sprite->getWorldToNodeAffineTransform());
         ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
     }
 }
@@ -591,7 +597,7 @@ void EffectSpriteLamp::onTouchesEnded(const std::vector<Touch*>& touches, Event 
         _lightSprite->setPosition(Vec2( loc_winSpace.x, s.height - loc_winSpace.y));
         Vec3 pos(loc_winSpace.x,loc_winSpace.y, 50);
         Mat4 mat = _sprite->getNodeToWorldTransform();
-        Point lightPosInLocalSpace=PointApplyAffineTransform(Vec2(pos.x, pos.y),_sprite->worldToNodeTransform());
+        Point lightPosInLocalSpace = PointApplyAffineTransform(Vec2(pos.x, pos.y), _sprite->getWorldToNodeAffineTransform());
         ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
     }
 }

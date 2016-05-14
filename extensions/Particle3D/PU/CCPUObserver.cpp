@@ -198,7 +198,7 @@ void PUObserver::destroyEventHandler(PUEventHandler* eventHandler)
     {
         if (*it == eventHandler)
         {
-            // Detroy it
+            // Destroy it
             //ParticleSystemManager::getSingletonPtr()->destroyEventHandler(*it);
             (*it)->release();
             _eventHandlers.erase(it);

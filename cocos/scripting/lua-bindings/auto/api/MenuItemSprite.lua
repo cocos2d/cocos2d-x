@@ -33,7 +33,7 @@
 -- @return MenuItemSprite#MenuItemSprite self (return value: cc.MenuItemSprite)
         
 --------------------------------
---  Initializes a menu item with a normal, selected  and disabled image with a callable object. 
+--  Initializes a menu item with a normal, selected and disabled image with a callable object. 
 -- @function [parent=#MenuItemSprite] initWithNormalSprite 
 -- @param self
 -- @param #cc.Node normalSprite

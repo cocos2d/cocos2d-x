@@ -24,8 +24,6 @@
 
 #include "platform/CCPlatformConfig.h"
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-
 #include "audio/include/AudioEngine.h"
 #include <condition_variable>
 #include <queue>
@@ -33,13 +31,17 @@
 #include "base/ccUtils.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-#include "android/AudioEngine-inl.h"
+#include "audio/android/AudioEngine-inl.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-#include "apple/AudioEngine-inl.h"
+#include "audio/apple/AudioEngine-inl.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-#include "win32/AudioEngine-win32.h"
+#include "audio/win32/AudioEngine-win32.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-#include "winrt/AudioEngine-winrt.h"
+#include "audio/winrt/AudioEngine-winrt.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+#include "audio/linux/AudioEngine-linux.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
+#include "audio/tizen/AudioEngine-tizen.h"
 #endif
 
 #define TIME_DELAY_PRECISION 0.0001
@@ -538,5 +540,3 @@ void AudioEngine::addTask(const std::function<void()>& task)
         s_threadPool->addTask(task);
     }
 }
-
-#endif

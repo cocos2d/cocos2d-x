@@ -60,11 +60,13 @@
     <None Include="$(AngleBinPath)libEGL.dll" />
     <None Include="$(AngleBinPath)libGLESv2.dll" />
     <None Include="$(ZLibBinPath)zlib.dll" />
-    <None Include="$(WebsocketsBinPath)libwebsockets.dll" />
     <None Include="$(SQLiteBinPath)sqlite3.dll" />
     <None Include="$(OggBinPath)libogg.dll" />
     <None Include="$(OggBinPath)libvorbis.dll" />
     <None Include="$(OggBinPath)libvorbisfile.dll" />
+    <None Include="$(CurlBinPath)libcurl.dll" />
+    <None Include="$(CurlBinPath)libeay32.dll" />
+    <None Include="$(CurlBinPath)ssleay32.dll" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Cocos2dEngine\OpenGLESPage.xaml">

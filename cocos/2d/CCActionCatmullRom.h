@@ -2,7 +2,7 @@
  * Copyright (c) 2008 Radu Gruian
  * Copyright (c) 2011 Vit Valentin
  * Copyright (c) 2012 cocos2d-x.org
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -173,7 +173,7 @@ public:
      * @code
      * When this function bound to js or lua,the input params are changed.
      * In js: var create(var t,var table)
-     * In lua: lcaol create(local t, local table)
+     * In lua: local create(local t, local table)
      * @endcode
      */
     static CardinalSplineTo* create(float duration, PointArray* points, float tension);
@@ -232,8 +232,8 @@ protected:
     PointArray *_points;
     float _deltaT;
     float _tension;
-    Vec2	_previousPosition;
-    Vec2	_accumulatedDiff;
+    Vec2 _previousPosition;
+    Vec2 _accumulatedDiff;
 };
 
 /** @class CardinalSplineBy
@@ -249,7 +249,7 @@ public:
      * @code
      * When this function bound to js or lua,the input params are changed.
      * In js: var create(var t,var table).
-     * In lua: lcaol create(local t, local table).
+     * In lua: local create(local t, local table).
      * @param duration In seconds.
      * @param point An PointArray.
      * @param tension Goodness of fit.
@@ -285,7 +285,7 @@ public:
      * @code
      * When this function bound to js or lua,the input params are changed.
      * In js: var create(var dt,var table).
-     * In lua: lcaol create(local dt, local table).
+     * In lua: local create(local dt, local table).
      * @endcode
      */
     static CatmullRomTo* create(float dt, PointArray* points);
@@ -318,7 +318,7 @@ public:
      * @code
      * When this function bound to js or lua,the input params are changed.
      * In js: var create(var dt,var table).
-     * In lua: lcaol create(local dt, local table).
+     * In lua: local create(local dt, local table).
      * @endcode
      */
     static CatmullRomBy* create(float dt, PointArray* points);

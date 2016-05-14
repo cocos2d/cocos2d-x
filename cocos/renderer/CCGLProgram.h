@@ -110,6 +110,10 @@ public:
         VERTEX_ATTRIB_BLEND_WEIGHT,
         /**Index 8 will be used as Blend index.*/
         VERTEX_ATTRIB_BLEND_INDEX,
+        /**Index 9 will be used as tangent.*/
+        VERTEX_ATTRIB_TANGENT,
+        /**Index 10 will be used as Binormal.*/
+        VERTEX_ATTRIB_BINORMAL,
         VERTEX_ATTRIB_MAX,
 
         // backward compatibility
@@ -146,6 +150,18 @@ public:
         UNIFORM_SAMPLER3,
         /**@}*/
         UNIFORM_MAX,
+    };
+
+    /** Flags used by the uniforms */
+    struct UniformFlags {
+        unsigned int usesTime:1;
+        unsigned int usesNormal:1;
+        unsigned int usesMVP:1;
+        unsigned int usesMV:1;
+        unsigned int usesP:1;
+        unsigned int usesRandom:1;
+        // handy way to initialize the bitfield
+        UniformFlags() { memset(this, 0, sizeof(*this)); }
     };
 
     /**
@@ -210,6 +226,15 @@ public:
     used in lighting. with color specified by a uniform.
     */
     static const char* SHADER_3D_SKINPOSITION_NORMAL_TEXTURE;
+    /**
+    Built in shader used for 3D, support Position, Bumped Normal, Texture vertex attribute, used in lighting. with color specified by a uniform.
+    */
+    static const char* SHADER_3D_POSITION_BUMPEDNORMAL_TEXTURE;
+    /**
+    Built in shader used for 3D, support Position(skeletal animation by hardware skin), Bumped Normal, Texture vertex attribute,
+    used in lighting. with color specified by a uniform.
+    */
+    static const char* SHADER_3D_SKINPOSITION_BUMPEDNORMAL_TEXTURE;
     /**
     Built in shader for particles, support Position and Texture, with a color specified by a uniform.
     */
@@ -297,6 +322,10 @@ public:
     static const char* ATTRIBUTE_NAME_BLEND_WEIGHT;
     /**Attribute blend index.*/
     static const char* ATTRIBUTE_NAME_BLEND_INDEX;
+    /**Attribute blend tangent.*/
+    static const char* ATTRIBUTE_NAME_TANGENT;
+    /**Attribute blend binormal.*/
+    static const char* ATTRIBUTE_NAME_BINORMAL;
     /**
     end of Built Attribute names
     @}
@@ -438,13 +467,13 @@ public:
 
     /**
      Update the builtin uniforms if they are different than the previous call for this same shader program.
-     */
-    void setUniformsForBuiltins();
-    /**
-     Update the builtin uniforms if they are different than the previous call for this same shader program.
      @param modelView modelView matrix applied to the built in uniform of the shader.
      */
     void setUniformsForBuiltins(const Mat4 &modelView);
+    /**
+     Update the builtin uniforms if they are different than the previous call for this same shader program.
+     */
+    void setUniformsForBuiltins();
 
     /** returns the vertexShader error log */
     std::string getVertexShaderLog() const;
@@ -459,8 +488,11 @@ public:
     when opengl context lost, so don't call it.
     */
     void reset();
-    /*Get the built in openGL handle of the program.*/
-    inline const GLuint getProgram() const { return _program; }
+    /** returns the OpenGL Program object */
+    inline GLuint getProgram() const { return _program; }
+
+    /** returns the Uniform flags */
+    inline const UniformFlags& getUniformFlags() const { return _flags; }
 
     //DEPRECATED
     CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderByteArray(const GLchar* vertexByteArray, const GLchar* fragByteArray)
@@ -490,6 +522,7 @@ protected:
     /**Compile the shader sources.*/
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source, const std::string& convertedDefines);
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
+    void clearShader();
 
     /**OpenGL handle for program.*/
     GLuint            _program;
@@ -502,17 +535,6 @@ protected:
     /**Indicate whether it has a offline shader compiler or not.*/
     bool              _hasShaderCompiler;
 
-    struct flag_struct {
-        unsigned int usesTime:1;
-        unsigned int usesNormal:1;
-        unsigned int usesMVP:1;
-        unsigned int usesMV:1;
-        unsigned int usesP:1;
-        unsigned int usesRandom:1;
-        // handy way to initialize the bitfield
-        flag_struct() { memset(this, 0, sizeof(*this)); }
-    } _flags;
-
     /**User defined Uniforms.*/
     std::unordered_map<std::string, Uniform> _userUniforms;
     /**User defined vertex attributes.*/
@@ -521,6 +543,9 @@ protected:
     std::unordered_map<GLint, std::pair<GLvoid*, unsigned int>> _hashForUniforms;
     //cached director pointer for calling
     Director* _director;
+
+    /*needed uniforms*/
+    UniformFlags _flags;
 };
 
 NS_CC_END

@@ -116,7 +116,7 @@ namespace ui {
 
         /**
          * Query the percent content size value.
-         *@return Percet (x,y) in Vec2.
+         *@return Percent (x,y) in Vec2.
          */
         Vec2 getPercentContentSize()const;
 
@@ -146,7 +146,7 @@ namespace ui {
 
         /**
          * Whether position percentX is enabled or not. 
-         *@return True if position percertX is enable, false otherwise.
+         *@return True if position percentX is enable, false otherwise.
          */
         bool isPositionPercentXEnabled()const;
         
@@ -314,7 +314,7 @@ namespace ui {
         void setPercentWidth(float percentWidth);
 
         /**
-         * Query whehter percent height is enabled or not.
+         * Query whether percent height is enabled or not.
          *@return True if percent height is enabled, false otherwise.
          */
         bool isPercentHeightEnabled()const;
@@ -338,7 +338,7 @@ namespace ui {
         void setSizeHeight(float height);
 
         /**
-         * Query percent hieght of owner.         
+         * Query percent height of owner.         
          *@return Percent height in float.
          */
         float getPercentHeight()const;

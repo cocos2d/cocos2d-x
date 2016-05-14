@@ -548,11 +548,13 @@ getCurrentTitle : function(
  * @method initWithLabelAndBackgroundSprite
  * @param {cc.Node} arg0
  * @param {ccui.Scale9Sprite} arg1
+ * @param {bool} arg2
  * @return {bool}
  */
 initWithLabelAndBackgroundSprite : function (
 node, 
-scale9sprite 
+scale9sprite, 
+bool 
 )
 {
     return false;
@@ -582,15 +584,15 @@ state
 
 /**
  * @method create
-* @param {ccui.Scale9Sprite|cc.Node|String} scale9sprite
-* @param {ccui.Scale9Sprite|String} scale9sprite
-* @param {float} float
-* @return {cc.ControlButton|cc.ControlButton|cc.ControlButton|cc.ControlButton}
+* @param {ccui.Scale9Sprite|cc.Node|String|cc.Node} scale9sprite
+* @param {ccui.Scale9Sprite|String|ccui.Scale9Sprite} scale9sprite
+* @param {float|bool} float
+* @return {cc.ControlButton|cc.ControlButton|cc.ControlButton|cc.ControlButton|cc.ControlButton}
 */
 create : function(
-str,
-str,
-float 
+node,
+scale9sprite,
+bool 
 )
 {
     return cc.ControlButton;
@@ -1939,11 +1941,9 @@ direction
 },
 
 /**
- * @method setBounceable
- * @param {bool} arg0
+ * @method stopAnimatedContentOffset
  */
-setBounceable : function (
-bool 
+stopAnimatedContentOffset : function (
 )
 {
 },
@@ -2058,6 +2058,16 @@ maxContainerOffset : function (
 )
 {
     return cc.Vec2;
+},
+
+/**
+ * @method setBounceable
+ * @param {bool} arg0
+ */
+setBounceable : function (
+bool 
+)
+{
 },
 
 /**
@@ -2614,34 +2624,6 @@ str
  * @class EventListenerAssetsManagerEx
  */
 cc.EventListenerAssetsManager = {
-
-/**
- * @method init
- * @param {cc.AssetsManagerEx} arg0
- * @param {function} arg1
- * @return {bool}
- */
-init : function (
-assetsmanagerex, 
-func 
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {cc.AssetsManagerEx} arg0
- * @param {function} arg1
- * @return {cc.EventListenerAssetsManagerEx}
- */
-create : function (
-assetsmanagerex, 
-func 
-)
-{
-    return cc.EventListenerAssetsManagerEx;
-},
 
 /**
  * @method EventListenerAssetsManagerEx

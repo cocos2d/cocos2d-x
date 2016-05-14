@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include <string>
 #include <functional>
 #include <sstream>
-#include "CCArray.h"
+#include "deprecated/CCArray.h"
 #include "base/CCRef.h"
 
 NS_CC_BEGIN
@@ -186,7 +186,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual __String* clone() const;
+    virtual __String* clone() const override;
     
 private:
 

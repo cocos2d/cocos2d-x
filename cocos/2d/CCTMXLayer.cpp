@@ -46,6 +46,7 @@ TMXLayer * TMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo
         ret->autorelease();
         return ret;
     }
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
@@ -58,7 +59,7 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
     Texture2D *texture = nullptr;
     if( tilesetInfo )
     {
-        texture = Director::getInstance()->getTextureCache()->addImage(tilesetInfo->_sourceImage.c_str());
+        texture = Director::getInstance()->getTextureCache()->addImage(tilesetInfo->_sourceImage);
     }
 
     if (nullptr == texture)
@@ -345,7 +346,7 @@ uint32_t TMXLayer::getTileGIDAt(const Vec2& pos, TMXTileFlags* flags/* = nullptr
     CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
     CCASSERT(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
 
-    ssize_t idx = static_cast<int>((pos.x + pos.y * _layerSize.width));
+    ssize_t idx = static_cast<int>(((int) pos.x + (int) pos.y * _layerSize.width));
     // Bits on the far end of the 32-bit global tile ID are used for tile flags
     uint32_t tile = _tiles[idx];
 
@@ -366,7 +367,7 @@ Sprite * TMXLayer::insertTileForGID(uint32_t gid, const Vec2& pos)
         Rect rect = _tileSet->getRectForGID(gid);
         rect = CC_RECT_PIXELS_TO_POINTS(rect);
         
-        intptr_t z = (intptr_t)(pos.x + pos.y * _layerSize.width);
+        intptr_t z = (intptr_t)((int) pos.x + (int) pos.y * _layerSize.width);
         
         Sprite *tile = reusedTileWithRect(rect);
         
@@ -403,7 +404,7 @@ Sprite * TMXLayer::updateTileForGID(uint32_t gid, const Vec2& pos)
 {
     Rect rect = _tileSet->getRectForGID(gid);
     rect = Rect(rect.origin.x / _contentScaleFactor, rect.origin.y / _contentScaleFactor, rect.size.width/ _contentScaleFactor, rect.size.height/ _contentScaleFactor);
-    int z = (int)(pos.x + pos.y * _layerSize.width);
+    int z = (int)((int) pos.x + (int) pos.y * _layerSize.width);
 
     Sprite *tile = reusedTileWithRect(rect);
 
@@ -516,7 +517,7 @@ void TMXLayer::setTileGID(uint32_t gid, const Vec2& pos, TMXTileFlags flags)
         // modifying an existing tile with a non-empty tile
         else 
         {
-            int z = pos.x + pos.y * _layerSize.width;
+            int z = (int) pos.x + (int) pos.y * _layerSize.width;
             Sprite *sprite = static_cast<Sprite*>(getChildByTag(z));
             if (sprite)
             {

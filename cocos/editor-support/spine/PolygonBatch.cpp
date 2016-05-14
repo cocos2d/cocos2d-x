@@ -31,6 +31,11 @@
 
 #include <spine/PolygonBatch.h>
 #include <spine/extension.h>
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgram.h"
 
 USING_NS_CC;
 

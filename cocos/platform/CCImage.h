@@ -30,8 +30,8 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "renderer/CCTexture2D.h"
 
-#if defined(CC_USE_WIC)
-#include "WICImageLoader-winrt.h"
+#if CC_USE_WIC
+#include "platform/winrt/WICImageLoader-winrt.h"
 #endif
 
 // premultiply alpha, or the effect will wrong when want to use other pixel format in Texture2D,
@@ -131,6 +131,7 @@ public:
     inline MipmapInfo*       getMipmaps()            { return _mipmaps; }
     inline bool              hasPremultipliedAlpha() { return _hasPremultipliedAlpha; }
     CC_DEPRECATED_ATTRIBUTE inline bool isPremultipliedAlpha()  { return _hasPremultipliedAlpha;   }
+    inline std::string getFilePath() const { return _filePath; }
 
     int                      getBitPerPixel();
     bool                     hasAlpha();
@@ -154,7 +155,7 @@ public:
     static void setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
 
 protected:
-#if defined(CC_USE_WIC)
+#if CC_USE_WIC
     bool encodeWithWIC(const std::string& filePath, bool isToRGB, GUID containerFormat);
     bool decodeWithWIC(const unsigned char *data, ssize_t dataLen);
 #endif

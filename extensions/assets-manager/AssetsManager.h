@@ -33,7 +33,6 @@
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT && _MSC_VER < 1900)
 
 namespace cocos2d { namespace network {
     class Downloader;
@@ -56,7 +55,7 @@ public:
         // Error caused by creating a file to store downloaded data
         CREATE_FILE,
         /** Error caused by network
-         -- network unavaivable
+         -- network unavailable
          -- timeout
          -- ...
          */
@@ -160,7 +159,7 @@ public:
      */
     void setConnectionTimeout(unsigned int timeout);
     
-    /** @brief Gets connection time out in secondes
+    /** @brief Gets connection time out in seconds
      */
     unsigned int getConnectionTimeout();
 
@@ -228,5 +227,4 @@ CC_DEPRECATED_ATTRIBUTE typedef AssetsManagerDelegateProtocol CCAssetsManagerDel
 
 NS_CC_EXT_END;
 
-#endif /* #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT && _MSC_VER < 1900) */
 #endif /* defined(__AssetsManager__) */

@@ -22,11 +22,21 @@
  * THE SOFTWARE.
  */
 
-#include "ScriptingCore.h"
-#include "js_bindings_config.h"
-#include "js_manual_conversions.h"
-#include "cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
+
+#include "base/ccUTF8.h"
+#include "deprecated/CCBool.h"
+#include "deprecated/CCDictionary.h"
+#include "deprecated/CCDouble.h"
+#include "deprecated/CCFloat.h"
+#include "deprecated/CCInteger.h"
+#include "deprecated/CCString.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 #include "math/TransformUtils.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+
 
 USING_NS_CC;
 
@@ -68,20 +78,13 @@ void JSStringWrapper::set(jsval val, JSContext* cx)
 void JSStringWrapper::set(JSString* str, JSContext* cx)
 {
     CC_SAFE_DELETE_ARRAY(_buffer);
-    
+
     if (!cx)
     {
         cx = ScriptingCore::getInstance()->getGlobalContext();
     }
-    // JS_EncodeString isn't supported in SpiderMonkey ff19.0.
-    //buffer = JS_EncodeString(cx, string);
-
-    //JS_GetStringCharsZ is removed in SpiderMonkey 33
-//    unsigned short* pStrUTF16 = (unsigned short*)JS_GetStringCharsZ(cx, str);
-
-//    _buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
-
-    _buffer = JS_EncodeStringToUTF8(cx, JS::RootedString(cx, str));
+    JS::RootedString jsstr(cx, str);
+    _buffer = JS_EncodeStringToUTF8(cx, jsstr);
 }
 
 const char* JSStringWrapper::get()
@@ -90,26 +93,77 @@ const char* JSStringWrapper::get()
 }
 
 // JSFunctionWrapper
-JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JSObject *jsthis, jsval fval)
+JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval)
 : _cx(cx)
-, _jsthis(jsthis)
-, _fval(fval)
 {
-    JS::AddNamedValueRoot(cx, &this->_fval, "JSFunctionWrapper");
-    JS::AddNamedObjectRoot(cx, &this->_jsthis, "JSFunctionWrapper");
+    _jsthis = jsthis;
+    _fval = fval;
+
+    JS::RootedObject root(cx);
+    get_or_create_js_obj("jsb._root", &root);
+    JS::RootedValue valRoot(cx, OBJECT_TO_JSVAL(root));
+    _owner = valRoot;
+
+    if (!valRoot.isNullOrUndefined())
+    {
+        JS::RootedValue thisVal(cx, OBJECT_TO_JSVAL(_jsthis));
+        if (!thisVal.isNullOrUndefined())
+        {
+            js_add_object_reference(valRoot, thisVal);
+        }
+        JS::RootedValue funcVal(cx, _fval);
+        if (!funcVal.isNullOrUndefined())
+        {
+            js_add_object_reference(valRoot, funcVal);
+        }
+    }
+}
+JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval, JS::HandleValue owner)
+: _cx(cx)
+{
+    _jsthis = jsthis;
+    _fval = fval;
+    _owner = owner;
+    JS::RootedValue ownerVal(cx, owner);
+
+    JS::RootedValue thisVal(cx, OBJECT_TO_JSVAL(jsthis));
+    if (!thisVal.isNullOrUndefined())
+    {
+        js_add_object_reference(ownerVal, thisVal);
+    }
+    JS::RootedValue funcVal(cx, _fval);
+    if (!funcVal.isNullOrUndefined())
+    {
+        js_add_object_reference(ownerVal, funcVal);
+    }
 }
 
 JSFunctionWrapper::~JSFunctionWrapper()
 {
-    JS::RemoveValueRoot(this->_cx, &this->_fval);
-    JS::RemoveObjectRoot(this->_cx, &this->_jsthis);
+    JS::RootedValue ownerVal(_cx, _owner);
+
+    if (!ownerVal.isNullOrUndefined())
+    {
+        JS::RootedValue thisVal(_cx, OBJECT_TO_JSVAL(_jsthis));
+        if (!thisVal.isNullOrUndefined())
+        {
+            js_remove_object_reference(ownerVal, thisVal);
+        }
+        JS::RootedValue funcVal(_cx, _fval);
+        if (!funcVal.isNullOrUndefined())
+        {
+            js_remove_object_reference(ownerVal, funcVal);
+        }
+    }
 }
 
 bool JSFunctionWrapper::invoke(unsigned int argc, jsval *argv, JS::MutableHandleValue rval)
 {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-    
-    return JS_CallFunctionValue(this->_cx, JS::RootedObject(_cx, this->_jsthis.get()), JS::RootedValue(_cx, this->_fval.get()), JS::HandleValueArray::fromMarkedLocation(argc, argv), rval);
+
+    JS::RootedObject thisObj(_cx, _jsthis);
+    JS::RootedValue fval(_cx, _fval);
+    return JS_CallFunctionValue(_cx, thisObj, fval, JS::HandleValueArray::fromMarkedLocation(argc, argv), rval);
 }
 
 static Color3B getColorFromJSObject(JSContext *cx, JS::HandleObject colorObject)
@@ -119,20 +173,20 @@ static Color3B getColorFromJSObject(JSContext *cx, JS::HandleObject colorObject)
     JS_GetProperty(cx, colorObject, "r", &jsr);
     double fontR = 0.0;
     JS::ToNumber(cx, jsr, &fontR);
-    
+
     JS_GetProperty(cx, colorObject, "g", &jsr);
     double fontG = 0.0;
     JS::ToNumber(cx, jsr, &fontG);
-    
+
     JS_GetProperty(cx, colorObject, "b", &jsr);
     double fontB = 0.0;
     JS::ToNumber(cx, jsr, &fontB);
-    
+
     // the out
     out.r = (unsigned char)fontR;
     out.g = (unsigned char)fontG;
     out.b = (unsigned char)fontB;
-    
+
     return out;
 }
 
@@ -143,16 +197,16 @@ static Size getSizeFromJSObject(JSContext *cx, JS::HandleObject sizeObject)
     JS_GetProperty(cx, sizeObject, "width", &jsr);
     double width = 0.0;
     JS::ToNumber(cx, jsr, &width);
-    
+
     JS_GetProperty(cx, sizeObject, "height", &jsr);
     double height = 0.0;
     JS::ToNumber(cx, jsr, &height);
-    
-    
+
+
     // the out
     out.width  = width;
     out.height = height;
-    
+
     return out;
 }
 
@@ -216,7 +270,7 @@ jsval opaque_to_jsval( JSContext *cx, void *opaque )
 jsval c_class_to_jsval( JSContext *cx, void* handle, JS::HandleObject object, JSClass *klass, const char* class_name)
 {
     JS::RootedObject jsobj(cx);
-    
+
     jsobj = jsb_get_jsobject_for_proxy(handle);
     if( !jsobj ) {
         JS::RootedObject parent(cx);
@@ -225,7 +279,7 @@ jsval c_class_to_jsval( JSContext *cx, void* handle, JS::HandleObject object, JS
         jsb_set_c_proxy_for_jsobject(jsobj, handle, JSB_C_FLAG_DO_NOT_CALL_FREE);
         jsb_set_jsobject_for_proxy(jsobj, handle);
     }
-    
+
     return OBJECT_TO_JSVAL(jsobj);
 }
 
@@ -234,7 +288,7 @@ bool jsval_to_c_class( JSContext *cx, JS::HandleValue vp, void **out_native, str
     JS::RootedObject jsobj(cx);
     bool ok = JS_ValueToObject( cx, vp, &jsobj );
     JSB_PRECONDITION2(ok, cx, false, "Error converting jsval to object");
-    
+
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsobj);
     *out_native = proxy->handle;
     if( out_proxy )
@@ -276,7 +330,7 @@ jsval ulong_to_jsval( JSContext *cx, unsigned long number )
 {
 #ifdef __LP64__
     assert( sizeof(unsigned long)==8);
-    
+
     char chr[128];
     snprintf(chr, sizeof(chr)-1, "%lu", number);
     JSString *ret_obj = JS_NewStringCopyZ(cx, chr);
@@ -294,7 +348,7 @@ jsval long_long_to_jsval( JSContext *cx, long long number )
     snprintf(chr, sizeof(chr)-1, "%lld", number);
     JSString *ret_obj = JS_NewStringCopyZ(cx, chr);
     return STRING_TO_JSVAL(ret_obj);
-    
+
 #else
     CCASSERT( sizeof(long long)==8, "Error!");
     JSObject *typedArray = JS_NewUint32Array( cx, 2 );
@@ -315,9 +369,9 @@ bool jsval_to_charptr( JSContext *cx, JS::HandleValue vp, const char **ret )
 //    vp = STRING_TO_JSVAL(jsstr);
 
     JSStringWrapper strWrapper(jsstr);
-    
+
     // XXX: It is converted to String and then back to char* to autorelease the created object.
-    __String *tmp = String::create(strWrapper.get());
+    __String *tmp = __String::create(strWrapper.get());
 
     JSB_PRECONDITION2( tmp, cx, false, "Error creating string from UTF8");
 
@@ -336,36 +390,36 @@ bool JSB_jsval_typedarray_to_dataptr( JSContext *cx, JS::HandleValue vp, GLsizei
     JS::RootedObject jsobj(cx);
     bool ok = JS_ValueToObject( cx, vp, &jsobj );
     JSB_PRECONDITION2( ok && jsobj, cx, false, "Error converting value to object");
-    
+
     // WebGL supports TypedArray and sequences for some of its APIs. So when converting a TypedArray, we should
     // also check for a possible non-Typed Array JS object, like a JS Array.
-    
+
     if( JS_IsTypedArrayObject( jsobj ) ) {
-        
+
         *count = JS_GetTypedArrayLength(jsobj);
         js::Scalar::Type type = JS_GetArrayBufferViewType(jsobj);
         JSB_PRECONDITION2(t==type, cx, false, "TypedArray type different than expected type");
-        
+
         switch (t) {
             case js::Scalar::Int8:
             case js::Scalar::Uint8:
                 *data = JS_GetUint8ArrayData(jsobj);
                 break;
-                
+
             case js::Scalar::Int16:
             case js::Scalar::Uint16:
                 *data = JS_GetUint16ArrayData(jsobj);
                 break;
-                
+
             case js::Scalar::Int32:
             case js::Scalar::Uint32:
                 *data = JS_GetUint32ArrayData(jsobj);
                 break;
-                
+
             case js::Scalar::Float32:
                 *data = JS_GetFloat32ArrayData(jsobj);
                 break;
-                
+
             default:
                 JSB_PRECONDITION2(false, cx, false, "Unsupported typedarray type");
                 break;
@@ -375,12 +429,12 @@ bool JSB_jsval_typedarray_to_dataptr( JSContext *cx, JS::HandleValue vp, GLsizei
         // Sequence<> as well.
         uint32_t length;
         JS_GetArrayLength(cx, jsobj, &length);
-        
+
         for( uint32_t i=0; i<length;i++ ) {
-            
+
             JS::RootedValue valarg(cx);
             JS_GetElement(cx, jsobj, i, &valarg);
-            
+
             switch(t) {
                 case js::Scalar::Int32:
                 case js::Scalar::Uint32:
@@ -400,10 +454,10 @@ bool JSB_jsval_typedarray_to_dataptr( JSContext *cx, JS::HandleValue vp, GLsizei
                     break;
             }
         }
-        
+
     } else
         JSB_PRECONDITION2(false, cx, false, "Object shall be a TypedArray or Sequence");
-    
+
     return true;
 }
 
@@ -413,10 +467,10 @@ bool JSB_get_arraybufferview_dataptr( JSContext *cx, JS::HandleValue vp, GLsizei
     bool ok = JS_ValueToObject( cx, vp, &jsobj );
     JSB_PRECONDITION2( ok && jsobj, cx, false, "Error converting value to object");
     JSB_PRECONDITION2( JS_IsArrayBufferViewObject(jsobj), cx, false, "Not an ArrayBufferView object");
-    
+
     *data = JS_GetArrayBufferViewData(jsobj);
     *count = JS_GetArrayBufferViewByteLength(jsobj);
-    
+
     return true;
 }
 
@@ -444,9 +498,9 @@ bool jsval_to_int32( JSContext *cx, JS::HandleValue vp, int32_t *outval )
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     ok &= !isnan(dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     *outval = (int32_t)dp;
-    
+
     return ok;
 }
 
@@ -458,9 +512,9 @@ bool jsval_to_uint32( JSContext *cx, JS::HandleValue vp, uint32_t *outval )
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     ok &= !isnan(dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     *outval = (uint32_t)dp;
-    
+
     return ok;
 }
 
@@ -472,9 +526,9 @@ bool jsval_to_uint16( JSContext *cx, JS::HandleValue vp, uint16_t *outval )
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     ok &= !isnan(dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     *outval = (uint16_t)dp;
-    
+
     return ok;
 }
 
@@ -486,22 +540,22 @@ bool jsval_to_long( JSContext *cx, JS::HandleValue vp, long *r )
     assert( sizeof(long)==8);
     JSString *jsstr = JS::ToString(cx, vp);
     JSB_PRECONDITION2(jsstr, cx, false, "Error converting value to string");
-    
+
     char *str = JS_EncodeString(cx, jsstr);
     JSB_PRECONDITION2(str, cx, false, "Error encoding string");
-    
+
     char *endptr;
     long ret = strtol(str, &endptr, 10);
-    
+
     *r = ret;
     return true;
-    
+
 #else
     // compatibility check
     assert( sizeof(int)==4);
     long ret = vp.toInt32();
 #endif
-    
+
     *r = ret;
     return true;
 }
@@ -511,7 +565,7 @@ bool jsval_to_ulong( JSContext *cx, JS::HandleValue vp, unsigned long *out)
 {
     if (out == nullptr)
         return false;
-    
+
     long rval = 0;
     bool ret = false;
     ret = jsval_to_long(cx, vp, &rval);
@@ -526,17 +580,17 @@ bool jsval_to_long_long(JSContext *cx, JS::HandleValue vp, long long* r)
 {
     JSString *jsstr = JS::ToString(cx, vp);
     JSB_PRECONDITION2(jsstr, cx, false, "Error converting value to string");
-    
+
     char *str = JS_EncodeString(cx, jsstr);
     JSB_PRECONDITION2(str, cx, false, "Error encoding string");
-    
+
     char *endptr;
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     __int64 ret = _strtoi64(str, &endptr, 10);
 #else
     long long ret = strtoll(str, &endptr, 10);
 #endif
-    
+
     *r = ret;
     return true;
 }
@@ -566,9 +620,9 @@ bool jsval_to_ccpoint(JSContext *cx, JS::HandleValue v, Point* ret) {
     JS_GetProperty(cx, tmp, "y", &jsy) &&
     JS::ToNumber(cx, jsx, &x) &&
     JS::ToNumber(cx, jsy, &y);
-    
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     ret->x = (float)x;
     ret->y = (float)y;
     return true;
@@ -580,7 +634,7 @@ bool jsval_to_ccacceleration(JSContext* cx, JS::HandleValue v, Acceleration* ret
     JS::RootedValue jsy(cx);
     JS::RootedValue jsz(cx);
     JS::RootedValue jstimestamp(cx);
-    
+
     double x, y, timestamp, z;
     bool ok = v.isObject() &&
     JS_ValueToObject(cx, v, &tmp) &&
@@ -592,9 +646,9 @@ bool jsval_to_ccacceleration(JSContext* cx, JS::HandleValue v, Acceleration* ret
     JS::ToNumber(cx, jsy, &y) &&
     JS::ToNumber(cx, jsz, &z) &&
     JS::ToNumber(cx, jstimestamp, &timestamp);
-    
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     ret->x = x;
     ret->y = y;
     ret->z = z;
@@ -609,7 +663,7 @@ bool jsval_to_quaternion( JSContext *cx, JS::HandleValue v, cocos2d::Quaternion*
     JS::RootedValue y(cx);
     JS::RootedValue z(cx);
     JS::RootedValue w(cx);
-    
+
     double xx, yy, zz, ww;
     bool ok = v.isObject() &&
         JS_ValueToObject(cx, v, &tmp) &&
@@ -622,7 +676,7 @@ bool jsval_to_quaternion( JSContext *cx, JS::HandleValue v, cocos2d::Quaternion*
         JS::ToNumber(cx, z, &zz) &&
         JS::ToNumber(cx, w, &ww) &&
         !isnan(xx) && !isnan(yy) && !isnan(zz) && !isnan(ww);
-    
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
     ret->set(xx, yy, zz, ww);
@@ -641,7 +695,7 @@ bool jsval_to_obb(JSContext *cx, JS::HandleValue v, cocos2d::OBB* ret)
     JS::RootedValue jsextentx(cx);
     JS::RootedValue jsextenty(cx);
     JS::RootedValue jsextentz(cx);
-    
+
     cocos2d::Vec3 center, xAxis, yAxis, zAxis, extents, extentx, extenty, extentz;
     bool ok = v.isObject() &&
         JS_ValueToObject(cx, v, &tmp) &&
@@ -686,11 +740,11 @@ bool jsval_to_ray(JSContext *cx, JS::HandleValue v, cocos2d::Ray* ret)
         JS_ValueToObject(cx, v, &tmp) &&
         JS_GetProperty(cx, tmp, "origin", &jsorigin) &&
         JS_GetProperty(cx, tmp, "direction", &jsdirection) &&
-        jsval_to_vector3(cx, jsorigin, &origin) && 
+        jsval_to_vector3(cx, jsorigin, &origin) &&
         jsval_to_vector3(cx, jsdirection, &direction);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     ret->set(origin, direction);
     return true;
 }
@@ -698,27 +752,28 @@ bool jsval_to_ray(JSContext *cx, JS::HandleValue v, cocos2d::Ray* ret)
 bool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, __Array** ret)
 {
     bool ok = true;
-    __Array* pArray = Array::create();
+    __Array* pArray = __Array::create();
     for( int i=0; i < argc; i++ )
     {
         double num = 0.0;
         // optimization: JS::ToNumber is expensive. And can convert an string like "12" to a number
-        if (vp->isNumber()) {
-            ok &= JS::ToNumber(cx, JS::RootedValue(cx, *vp), &num );
+        JS::RootedValue jsv(cx, *vp);
+        if (jsv.isNumber()) {
+            ok &= JS::ToNumber(cx, jsv, &num );
             if (!ok) {
                 break;
             }
-            pArray->addObject(Integer::create((int)num));
+            pArray->addObject(__Integer::create((int)num));
         }
-        else if (vp->isString())
+        else if (jsv.isString())
         {
-            JSStringWrapper str(vp->toString(), cx);
-            pArray->addObject(String::create(str.get()));
+            JSStringWrapper str(jsv, cx);
+            pArray->addObject(__String::create(str.get()));
         }
         else
         {
             js_proxy_t* p;
-            JSObject* obj = vp->toObjectOrNull();
+            JS::RootedObject obj(cx, jsv.toObjectOrNull());
             p = jsb_get_js_proxy(obj);
             if (p) {
                 pArray->addObject((Ref*)p->ptr);
@@ -742,7 +797,7 @@ bool jsvals_variadic_to_ccvaluevector( JSContext *cx, jsval *vp, int argc, cocos
         {
             JS::RootedObject jsobj(cx, value.toObjectOrNull());
             CCASSERT(jsb_get_js_proxy(jsobj) == nullptr, "Native object should be added!");
-            
+
             if (!JS_IsArrayObject(cx, jsobj))
             {
                 // It's a normal js object.
@@ -789,7 +844,7 @@ bool jsvals_variadic_to_ccvaluevector( JSContext *cx, jsval *vp, int argc, cocos
         // next
         vp++;
     }
-    
+
     return true;
 }
 
@@ -799,7 +854,7 @@ bool jsval_to_ccrect(JSContext *cx, JS::HandleValue v, Rect* ret) {
     JS::RootedValue jsy(cx);
     JS::RootedValue jswidth(cx);
     JS::RootedValue jsheight(cx);
-    
+
     double x, y, width, height;
     bool ok = v.isObject() &&
     JS_ValueToObject(cx, v, &tmp) &&
@@ -811,9 +866,9 @@ bool jsval_to_ccrect(JSContext *cx, JS::HandleValue v, Rect* ret) {
     JS::ToNumber(cx, jsy, &y) &&
     JS::ToNumber(cx, jswidth, &width) &&
     JS::ToNumber(cx, jsheight, &height);
-    
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     ret->origin.x = x;
     ret->origin.y = y;
     ret->size.width = width;
@@ -832,7 +887,7 @@ bool jsval_to_ccsize(JSContext *cx, JS::HandleValue v, Size* ret) {
     JS_GetProperty(cx, tmp, "height", &jsh) &&
     JS::ToNumber(cx, jsw, &w) &&
     JS::ToNumber(cx, jsh, &h);
-    
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     ret->width = w;
     ret->height = h;
@@ -845,7 +900,7 @@ bool jsval_to_cccolor4b(JSContext *cx, JS::HandleValue v, Color4B* ret) {
     JS::RootedValue jsg(cx);
     JS::RootedValue jsb(cx);
     JS::RootedValue jsa(cx);
-    
+
     double r, g, b, a;
     bool ok = v.isObject() &&
     JS_ValueToObject(cx,  v, &tmp) &&
@@ -857,9 +912,9 @@ bool jsval_to_cccolor4b(JSContext *cx, JS::HandleValue v, Color4B* ret) {
     JS::ToNumber(cx, jsg, &g) &&
     JS::ToNumber(cx, jsb, &b) &&
     JS::ToNumber(cx, jsa, &a);
-    
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     ret->r = (GLubyte)r;
     ret->g = (GLubyte)g;
     ret->b = (GLubyte)b;
@@ -884,7 +939,7 @@ bool jsval_to_cccolor4f(JSContext *cx, JS::HandleValue v, Color4F* ret) {
     JS::ToNumber(cx, jsg, &g) &&
     JS::ToNumber(cx, jsb, &b) &&
     JS::ToNumber(cx, jsa, &a);
-    
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     ret->r = (float)r / 255;
     ret->g = (float)g / 255;
@@ -907,9 +962,9 @@ bool jsval_to_cccolor3b(JSContext *cx, JS::HandleValue v, Color3B* ret) {
     JS::ToNumber(cx, jsr, &r) &&
     JS::ToNumber(cx, jsg, &g) &&
     JS::ToNumber(cx, jsb, &b);
-    
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     ret->r = (GLubyte)r;
     ret->g = (GLubyte)g;
     ret->b = (GLubyte)b;
@@ -919,14 +974,14 @@ bool jsval_to_cccolor3b(JSContext *cx, JS::HandleValue v, Color3B* ret) {
 bool jsval_cccolor_to_opacity(JSContext *cx, JS::HandleValue v, int32_t* ret) {
     JS::RootedObject tmp(cx);
     JS::RootedValue jsa(cx);
-    
+
     double a;
     bool ok = v.isObject() &&
     JS_ValueToObject(cx, v, &tmp) &&
     JS_LookupProperty(cx, tmp, "a", &jsa) &&
     !jsa.isUndefined() &&
     JS::ToNumber(cx, jsa, &a);
-    
+
     if (ok) {
         *ret = (int32_t)a;
         return true;
@@ -940,23 +995,23 @@ bool jsval_to_ccarray_of_CCPoint(JSContext* cx, JS::HandleValue v, Point **point
     bool ok = v.isObject() && JS_ValueToObject( cx, v, &jsobj );
     JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
     JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj), cx, false, "Object must be an array");
-    
+
     uint32_t len;
     JS_GetArrayLength(cx, jsobj, &len);
-    
-    Point *array = new Point[len];
+
+    Point *array = new (std::nothrow) Point[len];
 
     for( uint32_t i=0; i< len;i++ ) {
         JS::RootedValue valarg(cx);
         JS_GetElement(cx, jsobj, i, &valarg);
-        
+
         ok = jsval_to_ccpoint(cx, valarg, &array[i]);
         JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     }
-    
+
     *numPoints = len;
     *points = array;
-    
+
     return true;
 }
 
@@ -967,7 +1022,7 @@ bool jsval_to_ccarray(JSContext* cx, JS::HandleValue v, __Array** ret)
     bool ok = v.isObject() && JS_ValueToObject( cx, v, &jsobj );
     JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
     JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, false, "Object must be an array");
-    
+
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsobj, &len);
     __Array* arr = __Array::createWithCapacity(len);
@@ -1005,21 +1060,18 @@ bool jsval_to_ccarray(JSContext* cx, JS::HandleValue v, __Array** ret)
             }
             else if (value.isString()) {
                 JSStringWrapper valueWapper(value.toString(), cx);
-                arr->addObject(String::create(valueWapper.get()));
-                //                CCLOG("iterate array: value = %s", valueWapper.get().c_str());
+                arr->addObject(__String::create(valueWapper.get()));
             }
             else if (value.isNumber()) {
                 double number = 0.0;
                 ok = JS::ToNumber(cx, value, &number);
                 if (ok) {
-                    arr->addObject(Double::create(number));
-                    //                    CCLOG("iterate array: value = %lf", number);
+                    arr->addObject(__Double::create(number));
                 }
             }
             else if (value.isBoolean()) {
                 bool boolVal = JS::ToBoolean(value);
-                arr->addObject(Bool::create(boolVal));
-                // CCLOG("iterate object: value = %d", boolVal);
+                arr->addObject(__Bool::create(boolVal));
             }
             else {
                 CCASSERT(false, "not supported type");
@@ -1087,17 +1139,17 @@ bool jsval_to_ccvaluemap(JSContext* cx, JS::HandleValue v, cocos2d::ValueMap* re
     {
         return true;
     }
-    
+
     JS::RootedObject tmp(cx, v.toObjectOrNull());
     if (!tmp) {
         CCLOG("%s", "jsval_to_ccvaluemap: the jsval is not an object.");
         return false;
     }
-    
+
     JS::RootedObject it(cx, JS_NewPropertyIterator(cx, tmp));
-    
+
     ValueMap& dict = *ret;
-    
+
     while (true)
     {
         JS::RootedId idp(cx);
@@ -1105,17 +1157,17 @@ bool jsval_to_ccvaluemap(JSContext* cx, JS::HandleValue v, cocos2d::ValueMap* re
         if (! JS_NextProperty(cx, it, idp.address()) || ! JS_IdToValue(cx, idp, &key)) {
             return false; // error
         }
-        
+
         if (key.isNullOrUndefined()) {
             break; // end of iteration
         }
-        
+
         if (!key.isString()) {
             continue; // ignore integer properties
         }
-        
+
         JSStringWrapper keyWrapper(key.toString(), cx);
-        
+
         JS::RootedValue value(cx);
         JS_GetPropertyById(cx, tmp, idp, &value);
         if (value.isObject())
@@ -1146,7 +1198,6 @@ bool jsval_to_ccvaluemap(JSContext* cx, JS::HandleValue v, cocos2d::ValueMap* re
         {
             JSStringWrapper valueWapper(value.toString(), cx);
             dict.insert(ValueMap::value_type(keyWrapper.get(), Value(valueWapper.get())));
-            //            CCLOG("iterate object: key = %s, value = %s", keyWrapper.get().c_str(), valueWapper.get().c_str());
         }
         else if (value.isNumber())
         {
@@ -1154,20 +1205,18 @@ bool jsval_to_ccvaluemap(JSContext* cx, JS::HandleValue v, cocos2d::ValueMap* re
             bool ok = JS::ToNumber(cx, value, &number);
             if (ok) {
                 dict.insert(ValueMap::value_type(keyWrapper.get(), Value(number)));
-                // CCLOG("iterate object: key = %s, value = %lf", keyWrapper.get().c_str(), number);
             }
         }
         else if (value.isBoolean())
         {
             bool boolVal = JS::ToBoolean(value);
             dict.insert(ValueMap::value_type(keyWrapper.get(), Value(boolVal)));
-            // CCLOG("iterate object: key = %s, value = %d", keyWrapper.get().c_str(), boolVal);
         }
         else {
             CCASSERT(false, "not supported type");
         }
     }
-    
+
     return true;
 }
 
@@ -1177,17 +1226,17 @@ bool jsval_to_ccvaluemapintkey(JSContext* cx, JS::HandleValue v, cocos2d::ValueM
     {
         return true;
     }
-    
+
     JS::RootedObject tmp(cx, v.toObjectOrNull());
     if (!tmp) {
         CCLOG("%s", "jsval_to_ccvaluemap: the jsval is not an object.");
         return false;
     }
-    
+
     JS::RootedObject it(cx, JS_NewPropertyIterator(cx, tmp));
-    
+
     ValueMapIntKey& dict = *ret;
-    
+
     while (true)
     {
         JS::RootedId idp(cx);
@@ -1195,17 +1244,17 @@ bool jsval_to_ccvaluemapintkey(JSContext* cx, JS::HandleValue v, cocos2d::ValueM
         if (! JS_NextProperty(cx, it, idp.address()) || ! JS_IdToValue(cx, idp, &key)) {
             return false; // error
         }
-        
+
         if (key.isNullOrUndefined()) {
             break; // end of iteration
         }
-        
+
         if (!key.isString()) {
             continue; // ignore integer properties
         }
-        
+
         int keyVal = key.toInt32();
-        
+
         JS::RootedValue value(cx);
         JS_GetPropertyById(cx, tmp, idp, &value);
         if (value.isObject())
@@ -1254,7 +1303,7 @@ bool jsval_to_ccvaluemapintkey(JSContext* cx, JS::HandleValue v, cocos2d::ValueM
             CCASSERT(false, "not supported type");
         }
     }
-    
+
     return true;
 }
 
@@ -1264,7 +1313,7 @@ bool jsval_to_ccvaluevector(JSContext* cx, JS::HandleValue v, cocos2d::ValueVect
     bool ok = v.isObject() && JS_ValueToObject( cx, v, &jsArr );
     JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
     JSB_PRECONDITION3( jsArr && JS_IsArrayObject( cx, jsArr),  cx, false, "Object must be an array");
-    
+
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsArr, &len);
 
@@ -1277,7 +1326,7 @@ bool jsval_to_ccvaluevector(JSContext* cx, JS::HandleValue v, cocos2d::ValueVect
             {
                 JS::RootedObject jsobj(cx, value.toObjectOrNull());
                 CCASSERT(jsb_get_js_proxy(jsobj) == nullptr, "Native object should be added!");
-                
+
                 if (!JS_IsArrayObject(cx, jsobj))
                 {
                     // It's a normal js object.
@@ -1342,7 +1391,7 @@ bool jsval_to_std_vector_string( JSContext *cx, JS::HandleValue vp, std::vector<
     bool ok = vp.isObject() && JS_ValueToObject( cx, vp, &jsobj );
     JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
     JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, false, "Object must be an array");
-    
+
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsobj, &len);
     ret->reserve(len);
@@ -1363,7 +1412,7 @@ bool jsval_to_std_vector_string( JSContext *cx, JS::HandleValue vp, std::vector<
             }
         }
     }
-    
+
     return true;
 }
 
@@ -1373,7 +1422,7 @@ bool jsval_to_std_vector_int( JSContext *cx, JS::HandleValue vp, std::vector<int
     bool ok = vp.isObject() && JS_ValueToObject( cx, vp, &jsobj );
     JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
     JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, false, "Object must be an array");
-    
+
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsobj, &len);
     ret->reserve(len);
@@ -1398,7 +1447,7 @@ bool jsval_to_std_vector_int( JSContext *cx, JS::HandleValue vp, std::vector<int
             }
         }
     }
-    
+
     return true;
 }
 
@@ -1443,15 +1492,15 @@ bool jsval_to_matrix(JSContext *cx, JS::HandleValue vp, cocos2d::Mat4* ret)
     bool ok = vp.isObject() && JS_ValueToObject( cx, vp, &jsobj );
     JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
     JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, false, "Object must be an matrix");
-    
+
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsobj, &len);
-    
+
     if (len != 16)
     {
         JS_ReportError(cx, "array length error: %d, was expecting 16", len);
     }
-    
+
     for (uint32_t i=0; i < len; i++)
     {
         JS::RootedValue value(cx);
@@ -1473,7 +1522,7 @@ bool jsval_to_matrix(JSContext *cx, JS::HandleValue vp, cocos2d::Mat4* ret)
             }
         }
     }
-    
+
     return true;
 }
 
@@ -1490,9 +1539,9 @@ bool jsval_to_vector2(JSContext *cx, JS::HandleValue vp, cocos2d::Vec2* ret)
     JS::ToNumber(cx, jsx, &x) &&
     JS::ToNumber(cx, jsy, &y) &&
     !isnan(x) && !isnan(y);
-    
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     ret->x = (float)x;
     ret->y = (float)y;
     return true;
@@ -1514,9 +1563,9 @@ bool jsval_to_vector3(JSContext *cx, JS::HandleValue vp, cocos2d::Vec3* ret)
     JS::ToNumber(cx, jsy, &y) &&
     JS::ToNumber(cx, jsz, &z) &&
     !isnan(x) && !isnan(y) && !isnan(z);
-    
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     ret->x = (float)x;
     ret->y = (float)y;
     ret->z = (float)z;
@@ -1542,9 +1591,9 @@ bool jsval_to_vector4(JSContext *cx, JS::HandleValue vp, cocos2d::Vec4* ret)
     JS::ToNumber(cx, jsz, &z) &&
     JS::ToNumber(cx, jsw, &w) &&
     !isnan(x) && !isnan(y) && !isnan(z) && !isnan(w);
-    
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     ret->x = (float)x;
     ret->y = (float)y;
     ret->z = (float)z;
@@ -1564,9 +1613,9 @@ bool jsval_to_blendfunc(JSContext *cx, JS::HandleValue vp, cocos2d::BlendFunc* r
     JS_GetProperty(cx, tmp, "dst", &jsdst) &&
     JS::ToNumber(cx, jssrc, &src) &&
     JS::ToNumber(cx, jsdst, &dst);
-    
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     ret->src = (unsigned int)src;
     ret->dst = (unsigned int)dst;
     return true;
@@ -1578,11 +1627,11 @@ bool jsval_to_vector_vec2(JSContext* cx, JS::HandleValue v, std::vector<cocos2d:
     bool ok = v.isObject() && JS_ValueToObject( cx, v, &jsArr );
     JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
     JSB_PRECONDITION3( jsArr && JS_IsArrayObject( cx, jsArr),  cx, false, "Object must be an array");
-    
+
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsArr, &len);
     ret->reserve(len);
-    
+
     for (uint32_t i=0; i < len; i++)
     {
         JS::RootedValue value(cx);
@@ -1609,9 +1658,9 @@ bool jsval_to_cctex2f(JSContext* cx, JS::HandleValue vp, cocos2d::Tex2F* ret)
     JS::ToNumber(cx, jsx, &x) &&
     JS::ToNumber(cx, jsy, &y) &&
     !isnan(x) && !isnan(y);
-    
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     ret->u = (GLfloat)x;
     ret->v = (GLfloat)y;
     return true;
@@ -1620,24 +1669,24 @@ bool jsval_to_cctex2f(JSContext* cx, JS::HandleValue vp, cocos2d::Tex2F* ret)
 bool jsval_to_v3fc4bt2f(JSContext* cx, JS::HandleValue v, cocos2d::V3F_C4B_T2F* ret)
 {
     JS::RootedObject object(cx, v.toObjectOrNull());
-    
+
     cocos2d::Vec3 v3;
     cocos2d::Color4B color;
     cocos2d::Tex2F t2;
-    
+
     JS::RootedValue jsv3(cx);
     JS::RootedValue jscolor(cx);
     JS::RootedValue jst2(cx);
-    
+
     bool ok = JS_GetProperty(cx, object, "v3f", &jsv3) &&
     JS_GetProperty(cx, object, "c4b", &jscolor) &&
     JS_GetProperty(cx, object, "t2f", &jst2) &&
     jsval_to_vector3(cx, jsv3, &v3) &&
     jsval_to_cccolor4b(cx, jscolor, &color) &&
     jsval_to_cctex2f(cx, jst2, &t2);
-    
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     ret->vertices = v3;
     ret->colors = color;
     ret->texCoords = t2;
@@ -1647,17 +1696,17 @@ bool jsval_to_v3fc4bt2f(JSContext* cx, JS::HandleValue v, cocos2d::V3F_C4B_T2F* 
 bool jsval_to_v3fc4bt2f_quad(JSContext* cx, JS::HandleValue v, cocos2d::V3F_C4B_T2F_Quad* ret)
 {
     JS::RootedObject object(cx, v.toObjectOrNull());
-    
+
     cocos2d::V3F_C4B_T2F tl;
     cocos2d::V3F_C4B_T2F bl;
     cocos2d::V3F_C4B_T2F tr;
     cocos2d::V3F_C4B_T2F br;
-    
+
     JS::RootedValue jstl(cx);
     JS::RootedValue jsbl(cx);
     JS::RootedValue jstr(cx);
     JS::RootedValue jsbr(cx);
-    
+
     bool ok = JS_GetProperty(cx, object, "tl", &jstl) &&
               JS_GetProperty(cx, object, "bl", &jsbl) &&
               JS_GetProperty(cx, object, "tr", &jstr) &&
@@ -1666,9 +1715,9 @@ bool jsval_to_v3fc4bt2f_quad(JSContext* cx, JS::HandleValue v, cocos2d::V3F_C4B_
               jsval_to_v3fc4bt2f(cx, jsbl, &bl) &&
               jsval_to_v3fc4bt2f(cx, jstr, &tr) &&
               jsval_to_v3fc4bt2f(cx, jsbr, &br);
-    
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     ret->tl = tl;
     ret->bl = bl;
     ret->tr = tr;
@@ -1682,11 +1731,11 @@ bool jsval_to_vector_v3fc4bt2f(JSContext* cx, JS::HandleValue v, std::vector<coc
     bool ok = v.isObject() && JS_ValueToObject( cx, v, &jsArr );
     JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
     JSB_PRECONDITION3( jsArr && JS_IsArrayObject( cx, jsArr),  cx, false, "Object must be an array");
-    
+
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsArr, &len);
     ret->reserve(len);
-    
+
     for (uint32_t i=0; i < len; i++)
     {
         JS::RootedValue value(cx);
@@ -1706,39 +1755,39 @@ bool jsval_to_std_map_string_string(JSContext* cx, JS::HandleValue v, std::map<s
     {
         return true;
     }
-    
+
     JS::RootedObject tmp(cx, v.toObjectOrNull());
-    if (!tmp) 
+    if (!tmp)
     {
         CCLOG("%s", "jsval_to_std_map_string_string: the jsval is not an object.");
         return false;
     }
-    
+
     JS::RootedObject it(cx, JS_NewPropertyIterator(cx, tmp));
-    
+
     std::map<std::string, std::string>& dict = *ret;
-    
+
     while (true)
     {
         JS::RootedId idp(cx);
         JS::RootedValue key(cx);
-        if (! JS_NextProperty(cx, it, idp.address()) || ! JS_IdToValue(cx, idp, &key)) 
+        if (! JS_NextProperty(cx, it, idp.address()) || ! JS_IdToValue(cx, idp, &key))
         {
             return false; // error
         }
-        
-        if (key.isNullOrUndefined()) 
+
+        if (key.isNullOrUndefined())
         {
             break; // end of iteration
         }
-        
-        if (!key.isString()) 
+
+        if (!key.isString())
         {
             continue; // only take account of string key
         }
-        
+
         JSStringWrapper keyWrapper(key.toString(), cx);
-        
+
         JS::RootedValue value(cx);
         JS_GetPropertyById(cx, tmp, idp, &value);
         if (value.isString())
@@ -1746,12 +1795,12 @@ bool jsval_to_std_map_string_string(JSContext* cx, JS::HandleValue v, std::map<s
             JSStringWrapper valueWapper(value.toString(), cx);
             dict[keyWrapper.get()] = valueWapper.get();
         }
-        else 
+        else
         {
             CCASSERT(false, "jsval_to_std_map_string_string: not supported map type");
         }
     }
-    
+
     return true;
 }
 
@@ -1760,17 +1809,18 @@ bool jsval_to_std_map_string_string(JSContext* cx, JS::HandleValue v, std::map<s
 jsval ccarray_to_jsval(JSContext* cx, __Array *arr)
 {
     JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 0));
-    
+
     Ref* obj;
     int i = 0;
     CCARRAY_FOREACH(arr, obj)
     {
         JS::RootedValue arrElement(cx);
-        
+
         //First, check whether object is associated with js object.
-        js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::Ref>(cx, obj);
-        if (jsproxy) {
-            arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Ref>(obj);
+        auto jsobj = jsb_ref_get_or_create_jsobject(cx, obj, typeClass, "cocos2d::Ref");
+        if (jsobj) {
+            arrElement = OBJECT_TO_JSVAL(jsobj);
         }
         else {
             __String* strVal = NULL;
@@ -1780,7 +1830,7 @@ jsval ccarray_to_jsval(JSContext* cx, __Array *arr)
             __Bool* boolVal = NULL;
             __Float* floatVal = NULL;
             __Integer* intVal = NULL;
-            
+
             if ((strVal = dynamic_cast<cocos2d::__String *>(obj))) {
                 arrElement = c_string_to_jsval(cx, strVal->getCString());
             } else if ((dictVal = dynamic_cast<cocos2d::__Dictionary*>(obj))) {
@@ -1819,9 +1869,10 @@ jsval ccdictionary_to_jsval(JSContext* cx, __Dictionary* dict)
         JS::RootedValue dictElement(cx);
         Ref* obj = pElement->getObject();
         //First, check whether object is associated with js object.
-        js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::Ref>(cx, obj);
-        if (jsproxy) {
-            dictElement = OBJECT_TO_JSVAL(jsproxy->obj);
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Ref>(obj);
+        auto jsobj = jsb_ref_get_or_create_jsobject(cx, obj, typeClass, "cocos2d::Ref");
+        if (jsobj) {
+            dictElement = OBJECT_TO_JSVAL(jsobj);
         }
         else {
             __String* strVal = NULL;
@@ -1831,7 +1882,7 @@ jsval ccdictionary_to_jsval(JSContext* cx, __Dictionary* dict)
             __Bool* boolVal = NULL;
             __Float* floatVal = NULL;
             __Integer* intVal = NULL;
-            
+
             if ((strVal = dynamic_cast<cocos2d::__String *>(obj))) {
                 dictElement = c_string_to_jsval(cx, strVal->getCString());
             } else if ((dictVal = dynamic_cast<__Dictionary*>(obj))) {
@@ -1866,16 +1917,16 @@ bool jsval_to_ccdictionary(JSContext* cx, JS::HandleValue v, __Dictionary** ret)
         *ret = NULL;
         return true;
     }
-    
+
     JS::RootedObject tmp(cx, v.toObjectOrNull());
     if (!tmp) {
         CCLOG("%s", "jsval_to_ccdictionary: the jsval is not an object.");
         return false;
     }
-    
+
     JS::RootedObject it(cx, JS_NewPropertyIterator(cx, tmp));
     __Dictionary* dict = NULL;
-    
+
     while (true)
     {
         JS::RootedId idp(cx);
@@ -1883,20 +1934,20 @@ bool jsval_to_ccdictionary(JSContext* cx, JS::HandleValue v, __Dictionary** ret)
         if (! JS_NextProperty(cx, it, idp.address()) || ! JS_IdToValue(cx, idp, &key)) {
             return false; // error
         }
-        
+
         if (key.isNullOrUndefined()) {
             break; // end of iteration
         }
-        
+
         if (!key.isString()) {
             continue; // ignore integer properties
         }
-        
+
         JSStringWrapper keyWrapper(key.toString(), cx);
         if (!dict) {
             dict = __Dictionary::create();
         }
-        
+
         JS::RootedValue value(cx);
         JS_GetPropertyById(cx, tmp, idp, &value);
         if (value.isObject())
@@ -1930,27 +1981,24 @@ bool jsval_to_ccdictionary(JSContext* cx, JS::HandleValue v, __Dictionary** ret)
         }
         else if (value.isString()) {
             JSStringWrapper valueWapper(value.toString(), cx);
-            dict->setObject(String::create(valueWapper.get()), keyWrapper.get());
-            //            CCLOG("iterate object: key = %s, value = %s", keyWrapper.get().c_str(), valueWapper.get().c_str());
+            dict->setObject(__String::create(valueWapper.get()), keyWrapper.get());
         }
         else if (value.isNumber()) {
             double number = 0.0;
             bool ok = JS::ToNumber(cx, value, &number);
             if (ok) {
-                dict->setObject(Double::create(number), keyWrapper.get());
-                //                CCLOG("iterate object: key = %s, value = %lf", keyWrapper.get().c_str(), number);
+                dict->setObject(__Double::create(number), keyWrapper.get());
             }
         }
         else if (value.isBoolean()) {
             bool boolVal = JS::ToBoolean(value);
-            dict->setObject(Bool::create(boolVal), keyWrapper.get());
-            // CCLOG("iterate object: key = %s, value = %d", keyWrapper.get().c_str(), boolVal);
+            dict->setObject(__Bool::create(boolVal), keyWrapper.get());
         }
         else {
             CCASSERT(false, "not supported type");
         }
     }
-    
+
     *ret = dict;
     return true;
 }
@@ -1978,9 +2026,9 @@ bool jsval_to_ccaffinetransform(JSContext* cx, JS::HandleValue v, AffineTransfor
     JS::ToNumber(cx, jsd, &d) &&
     JS::ToNumber(cx, jstx, &tx) &&
     JS::ToNumber(cx, jsty, &ty);
-    
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
+
     *ret = AffineTransformMake(a, b, c, d, tx, ty);
     return true;
 }
@@ -2016,20 +2064,25 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */)
     {
         length = strlen(v);
     }
-    
+
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-    
+
     if (0 == length)
     {
         auto emptyStr = JS_NewStringCopyZ(cx, "");
         return STRING_TO_JSVAL(emptyStr);
     }
-    
+
     jsval ret = JSVAL_NULL;
 
+#if defined(_MSC_VER) && (_MSC_VER <= 1800)
+    // NOTE: Visual Studio 2013 (Platform Toolset v120) is not fully C++11 compatible.
+    // It also doesn't provide support for char16_t and std::u16string.
+    // For more information, please see this article
+    // https://blogs.msdn.microsoft.com/vcblog/2014/11/17/c111417-features-in-vs-2015-preview/
     int utf16_size = 0;
     const jschar* strUTF16 = (jschar*)cc_utf8_to_utf16(v, (int)length, &utf16_size);
-    
+
     if (strUTF16 && utf16_size > 0) {
         JSString* str = JS_NewUCStringCopyN(cx, strUTF16, (size_t)utf16_size);
         if (str) {
@@ -2037,6 +2090,17 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */)
         }
         delete[] strUTF16;
     }
+#else
+    std::u16string strUTF16;
+    bool ok = StringUtils::UTF8ToUTF16(std::string(v, length), strUTF16);
+
+    if (ok && !strUTF16.empty()) {
+        JSString* str = JS_NewUCStringCopyN(cx, reinterpret_cast<const jschar*>(strUTF16.data()), strUTF16.size());
+        if (str) {
+            ret = STRING_TO_JSVAL(str);
+        }
+    }
+#endif
 
     return ret;
 }
@@ -2186,13 +2250,14 @@ jsval uniform_to_jsval(JSContext* cx, const cocos2d::Uniform* uniform)
 {
     JS::RootedObject tmp(cx, JS_NewObject(cx, nullptr, JS::NullPtr(), JS::NullPtr()));
     if(!tmp) return JSVAL_NULL;
+    JS::RootedValue jsname(cx, std_string_to_jsval(cx, uniform->name));
     bool ok = JS_DefineProperty(cx, tmp, "location", uniform->location, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "size", uniform->size, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "type", uniform->type, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "name", JS::RootedValue(cx, std_string_to_jsval(cx, uniform->name)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineProperty(cx, tmp, "name", jsname, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if(ok)
         return OBJECT_TO_JSVAL(tmp);
-    
+
     return JSVAL_NULL;
 }
 
@@ -2216,41 +2281,35 @@ jsval FontDefinition_to_jsval(JSContext* cx, const FontDefinition& t)
     JS::RootedObject proto(cx);
     JS::RootedObject parent(cx);
     JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
-//    if (!tmp) return JSVAL_NULL;
+    JS::RootedValue prop(cx);
+
     bool ok = true;
 
-    ok &= JS_DefineProperty(cx, tmp, "fontName", JS::RootedValue(cx, std_string_to_jsval(cx, t._fontName)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
+    prop.set(std_string_to_jsval(cx, t._fontName));
+    ok &= JS_DefineProperty(cx, tmp, "fontName", prop, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     ok &= JS_DefineProperty(cx, tmp, "fontSize", t._fontSize, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
     ok &= JS_DefineProperty(cx, tmp, "textAlign", (int32_t)t._alignment, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
     ok &= JS_DefineProperty(cx, tmp, "verticalAlign", (int32_t)t._vertAlignment, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
-    ok &= JS_DefineProperty(cx, tmp, "fillStyle", JS::RootedValue(cx, cccolor3b_to_jsval(cx, t._fontFillColor)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
+    prop.set(cccolor3b_to_jsval(cx, t._fontFillColor));
+    ok &= JS_DefineProperty(cx, tmp, "fillStyle", prop, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     ok &= JS_DefineProperty(cx, tmp, "boundingWidth", t._dimensions.width, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
     ok &= JS_DefineProperty(cx, tmp, "boundingHeight", t._dimensions.height, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
+
     // Shadow
-    ok &= JS_DefineProperty(cx, tmp, "shadowEnabled", JS::RootedValue(cx, BOOLEAN_TO_JSVAL(t._shadow._shadowEnabled)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
+    prop.set(BOOLEAN_TO_JSVAL(t._shadow._shadowEnabled));
+    ok &= JS_DefineProperty(cx, tmp, "shadowEnabled", prop, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     ok &= JS_DefineProperty(cx, tmp, "shadowOffsetX", t._shadow._shadowOffset.width, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
     ok &= JS_DefineProperty(cx, tmp, "shadowOffsetY", t._shadow._shadowOffset.height, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
     ok &= JS_DefineProperty(cx, tmp, "shadowBlur", t._shadow._shadowBlur, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
     ok &= JS_DefineProperty(cx, tmp, "shadowOpacity", t._shadow._shadowOpacity, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
+
     // Stroke
-    ok &= JS_DefineProperty(cx, tmp, "strokeEnabled", JS::RootedValue(cx, BOOLEAN_TO_JSVAL(t._stroke._strokeEnabled)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
-    ok &= JS_DefineProperty(cx, tmp, "strokeStyle", JS::RootedValue(cx, cccolor3b_to_jsval(cx, t._stroke._strokeColor)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
+    prop.set(BOOLEAN_TO_JSVAL(t._stroke._strokeEnabled));
+    ok &= JS_DefineProperty(cx, tmp, "strokeEnabled", prop, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    prop.set(cccolor3b_to_jsval(cx, t._stroke._strokeColor));
+    ok &= JS_DefineProperty(cx, tmp, "strokeStyle", prop, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     ok &= JS_DefineProperty(cx, tmp, "lineWidth", t._stroke._strokeSize, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
+
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }
@@ -2260,32 +2319,32 @@ jsval FontDefinition_to_jsval(JSContext* cx, const FontDefinition& t)
 bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, FontDefinition *out )
 {
     JS::RootedObject jsobj(cx);
-    
+
     if (!JS_ValueToObject( cx, vp, &jsobj ) )
         return false;
-    
+
     JSB_PRECONDITION( jsobj, "Not a valid JS object");
-    
-    // defaul values
+
+    // default values
     const char *            defautlFontName         = "Arial";
     const int               defaultFontSize         = 32;
     TextHAlignment         defaultTextAlignment    = TextHAlignment::LEFT;
     TextVAlignment defaultTextVAlignment   = TextVAlignment::TOP;
-    
+
     // by default shadow and stroke are off
     out->_shadow._shadowEnabled = false;
     out->_stroke._strokeEnabled = false;
-    
+
     // white text by default
     out->_fontFillColor = Color3B::WHITE;
-    
+
     // font name
     JS::RootedValue jsr(cx);
     JS_GetProperty(cx, jsobj, "fontName", &jsr);
     JS::ToString(cx, jsr);
     JSStringWrapper wrapper(jsr);
     const char* fontName = wrapper.get();
-    
+
     if (fontName && strlen(fontName) > 0)
     {
         out->_fontName  = fontName;
@@ -2294,7 +2353,7 @@ bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, FontDefinition 
     {
         out->_fontName  = defautlFontName;
     }
-    
+
     // font size
     bool hasProperty, hasSecondProp;
     JS_HasProperty(cx, jsobj, "fontSize", &hasProperty);
@@ -2309,7 +2368,7 @@ bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, FontDefinition 
     {
         out->_fontSize  = defaultFontSize;
     }
-    
+
     // font alignment horizontal
     JS_HasProperty(cx, jsobj, "textAlign", &hasProperty);
     if ( hasProperty )
@@ -2323,7 +2382,7 @@ bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, FontDefinition 
     {
         out->_alignment  = defaultTextAlignment;
     }
-    
+
     // font alignment vertical
     JS_HasProperty(cx, jsobj, "verticalAlign", &hasProperty);
     if ( hasProperty )
@@ -2337,20 +2396,21 @@ bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, FontDefinition 
     {
         out->_vertAlignment  = defaultTextVAlignment;
     }
-    
+
     // font fill color
     JS_HasProperty(cx, jsobj, "fillStyle", &hasProperty);
     if ( hasProperty )
     {
         JS_GetProperty(cx, jsobj, "fillStyle", &jsr);
-        
+
         JS::RootedObject jsobjColor(cx);
-        if (!JS_ValueToObject( cx, JS::RootedValue(cx, jsr), &jsobjColor ) )
+        JS::RootedValue jsvalColor(cx, jsr);
+        if (!JS_ValueToObject( cx, jsvalColor, &jsobjColor ) )
             return false;
-        
+
         out->_fontFillColor = getColorFromJSObject(cx, jsobjColor);
     }
-    
+
     // font rendering box dimensions
     JS_HasProperty(cx, jsobj, "boundingWidth", &hasProperty);
     JS_HasProperty(cx, jsobj, "boundingHeight", &hasSecondProp);
@@ -2359,32 +2419,32 @@ bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, FontDefinition 
         JS_GetProperty(cx, jsobj, "boundingWidth", &jsr);
         double boundingW = 0.0;
         JS::ToNumber(cx, jsr, &boundingW);
-        
+
         JS_GetProperty(cx, jsobj, "boundingHeight", &jsr);
         double boundingH = 0.0;
         JS::ToNumber(cx, jsr, &boundingH);
-        
+
         Size dimension;
         dimension.width = boundingW;
         dimension.height = boundingH;
         out->_dimensions = dimension;
     }
-    
+
     // shadow
     JS_HasProperty(cx, jsobj, "shadowEnabled", &hasProperty);
     if ( hasProperty )
     {
         JS_GetProperty(cx, jsobj, "shadowEnabled", &jsr);
         out->_shadow._shadowEnabled  = ToBoolean(jsr);
-        
+
         if ( out->_shadow._shadowEnabled )
         {
             // default shadow values
             out->_shadow._shadowOffset  = Size(5, 5);
             out->_shadow._shadowBlur    = 1;
             out->_shadow._shadowOpacity = 1;
-            
-            // shado offset
+
+            // shadow offset
             JS_HasProperty(cx, jsobj, "shadowOffsetX", &hasProperty);
             JS_HasProperty(cx, jsobj, "shadowOffsetY", &hasSecondProp);
             if ( hasProperty && hasSecondProp )
@@ -2392,17 +2452,17 @@ bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, FontDefinition 
                 JS_GetProperty(cx, jsobj, "shadowOffsetX", &jsr);
                 double offx = 0.0;
                 JS::ToNumber(cx, jsr, &offx);
-                
+
                 JS_GetProperty(cx, jsobj, "shadowOffsetY", &jsr);
                 double offy = 0.0;
                 JS::ToNumber(cx, jsr, &offy);
-                
+
                 Size offset;
                 offset.width = offx;
                 offset.height = offy;
                 out->_shadow._shadowOffset = offset;
             }
-            
+
             // shadow blur
             JS_HasProperty(cx, jsobj, "shadowBlur", &hasProperty);
             if ( hasProperty )
@@ -2412,7 +2472,7 @@ bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, FontDefinition 
                 JS::ToNumber(cx, jsr, &shadowBlur);
                 out->_shadow._shadowBlur = shadowBlur;
             }
-            
+
             // shadow intensity
             JS_HasProperty(cx, jsobj, "shadowOpacity", &hasProperty);
             if ( hasProperty )
@@ -2424,32 +2484,32 @@ bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, FontDefinition 
             }
         }
     }
-    
+
     // stroke
     JS_HasProperty(cx, jsobj, "strokeEnabled", &hasProperty);
     if ( hasProperty )
     {
         JS_GetProperty(cx, jsobj, "strokeEnabled", &jsr);
         out->_stroke._strokeEnabled  = ToBoolean(jsr);
-        
+
         if ( out->_stroke._strokeEnabled )
         {
             // default stroke values
             out->_stroke._strokeSize  = 1;
             out->_stroke._strokeColor = Color3B::BLUE;
-            
+
             // stroke color
             JS_HasProperty(cx, jsobj, "strokeStyle", &hasProperty);
             if ( hasProperty )
             {
                 JS_GetProperty(cx, jsobj, "strokeStyle", &jsr);
-                
+
                 JS::RootedObject jsobjStrokeColor(cx);
                 if (!JS_ValueToObject( cx, jsr, &jsobjStrokeColor ) )
                     return false;
                 out->_stroke._strokeColor = getColorFromJSObject(cx, jsobjStrokeColor);
             }
-            
+
             // stroke size
             JS_HasProperty(cx, jsobj, "lineWidth", &hasProperty);
             if ( hasProperty )
@@ -2461,7 +2521,7 @@ bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, FontDefinition 
             }
         }
     }
-    
+
     // we are done here
     return true;
 }
@@ -2469,46 +2529,46 @@ bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, FontDefinition 
 bool jsval_to_CCPoint( JSContext *cx, JS::HandleValue vp, Point *ret )
 {
 #ifdef JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-    
+
     JS::RootedObject jsobj(cx);
     if( ! JS_ValueToObject( cx, vp, &jsobj ) )
         return false;
-    
+
     JSB_PRECONDITION( jsobj, "Not a valid JS object");
-    
+
     JS::RootedValue valx(cx);
     JS::RootedValue valy(cx);
     bool ok = true;
     ok &= JS_GetProperty(cx, jsobj, "x", &valx);
     ok &= JS_GetProperty(cx, jsobj, "y", &valy);
-    
+
     if( ! ok )
         return false;
-    
+
     double x, y;
     ok &= JS::ToNumber(cx, valx, &x);
     ok &= JS::ToNumber(cx, valy, &y);
-    
+
     if( ! ok )
         return false;
-    
+
     ret->x = x;
     ret->y = y;
-    
+
     return true;
-    
+
 #else // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-    
+
     JSObject *tmp_arg;
     if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
         return false;
-    
+
     JSB_PRECONDITION( tmp_arg && JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
-    
+
     JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(cpVect), "Invalid length");
-    
+
     *ret = *(Point*)JS_GetArrayBufferViewData( tmp_arg, cx );
-    
+
     return true;
 #endif // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
@@ -2517,7 +2577,7 @@ jsval ccvalue_to_jsval(JSContext* cx, const cocos2d::Value& v)
 {
     jsval ret = JSVAL_NULL;
     const Value& obj = v;
-    
+
     switch (obj.getType())
     {
         case Value::Type::BOOLEAN:
@@ -2545,21 +2605,21 @@ jsval ccvalue_to_jsval(JSContext* cx, const cocos2d::Value& v)
         default:
             break;
     }
-    
+
     return ret;
 }
 
 jsval ccvaluemap_to_jsval(JSContext* cx, const cocos2d::ValueMap& v)
 {
     JS::RootedObject jsRet(cx, JS_NewArrayObject(cx, 0));
-    
+
     for (auto iter = v.begin(); iter != v.end(); ++iter)
     {
         JS::RootedValue dictElement(cx);
 
         std::string key = iter->first;
         const Value& obj = iter->second;
-        
+
         switch (obj.getType())
         {
             case Value::Type::BOOLEAN:
@@ -2587,7 +2647,7 @@ jsval ccvaluemap_to_jsval(JSContext* cx, const cocos2d::ValueMap& v)
             default:
                 break;
         }
-        
+
         if (!key.empty())
         {
             JS_SetProperty(cx, jsRet, key.c_str(), dictElement);
@@ -2599,16 +2659,16 @@ jsval ccvaluemap_to_jsval(JSContext* cx, const cocos2d::ValueMap& v)
 jsval ccvaluemapintkey_to_jsval(JSContext* cx, const cocos2d::ValueMapIntKey& v)
 {
     JS::RootedObject jsRet(cx, JS_NewArrayObject(cx, 0));
-    
+
     for (auto iter = v.begin(); iter != v.end(); ++iter)
     {
         JS::RootedValue dictElement(cx);
         std::stringstream keyss;
         keyss << iter->first;
         std::string key = keyss.str();
-        
+
         const Value& obj = iter->second;
-        
+
         switch (obj.getType())
         {
             case Value::Type::BOOLEAN:
@@ -2636,7 +2696,7 @@ jsval ccvaluemapintkey_to_jsval(JSContext* cx, const cocos2d::ValueMapIntKey& v)
             default:
                 break;
         }
-        
+
         if (!key.empty())
         {
             JS_SetProperty(cx, jsRet, key.c_str(), dictElement);
@@ -2648,12 +2708,12 @@ jsval ccvaluemapintkey_to_jsval(JSContext* cx, const cocos2d::ValueMapIntKey& v)
 jsval ccvaluevector_to_jsval(JSContext* cx, const cocos2d::ValueVector& v)
 {
     JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 0));
-    
+
     int i = 0;
     for (const auto& obj : v)
     {
         JS::RootedValue arrElement(cx);
-        
+
         switch (obj.getType())
         {
             case Value::Type::BOOLEAN:
@@ -2699,13 +2759,13 @@ jsval ssize_to_jsval(JSContext *cx, ssize_t v)
 jsval std_vector_string_to_jsval( JSContext *cx, const std::vector<std::string>& v)
 {
     JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, v.size()));
-    
+
     int i = 0;
     for (const std::string obj : v)
     {
         JS::RootedValue arrElement(cx);
         arrElement = std_string_to_jsval(cx, obj);
-        
+
         if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
             break;
         }
@@ -2717,13 +2777,13 @@ jsval std_vector_string_to_jsval( JSContext *cx, const std::vector<std::string>&
 jsval std_vector_int_to_jsval( JSContext *cx, const std::vector<int>& v)
 {
     JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, v.size()));
-    
+
     int i = 0;
     for (const int obj : v)
     {
         JS::RootedValue arrElement(cx);
         arrElement = int32_to_jsval(cx, obj);
-        
+
         if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
             break;
         }
@@ -2753,16 +2813,16 @@ jsval std_vector_float_to_jsval( JSContext *cx, const std::vector<float>& v)
 jsval matrix_to_jsval(JSContext *cx, const cocos2d::Mat4& v)
 {
     JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 16));
-    
+
     for (int i = 0; i < 16; i++) {
         JS::RootedValue arrElement(cx);
         arrElement = DOUBLE_TO_JSVAL(v.m[i]);
-        
+
         if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
             break;
         }
     }
-    
+
     return OBJECT_TO_JSVAL(jsretArr);
 }
 
@@ -2828,13 +2888,13 @@ jsval blendfunc_to_jsval(JSContext *cx, const cocos2d::BlendFunc& v)
 jsval vector_vec2_to_jsval(JSContext *cx, const std::vector<cocos2d::Vec2>& v)
 {
     JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, v.size()));
-    
+
     int i = 0;
     for (const cocos2d::Vec2 obj : v)
     {
         JS::RootedValue arrElement(cx);
         arrElement = vector2_to_jsval(cx, obj);
-        
+
         if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
             break;
         }
@@ -2848,20 +2908,60 @@ jsval std_map_string_string_to_jsval(JSContext* cx, const std::map<std::string, 
     JS::RootedObject proto(cx);
     JS::RootedObject parent(cx);
     JS::RootedObject jsRet(cx, JS_NewObject(cx, NULL, proto, parent));
-    
+
     for (auto iter = v.begin(); iter != v.end(); ++iter)
     {
         JS::RootedValue element(cx);
-        
+
         std::string key = iter->first;
         std::string obj = iter->second;
-        
+
         element = std_string_to_jsval(cx, obj);
-        
+
         if (!key.empty())
         {
             JS_SetProperty(cx, jsRet, key.c_str(), element);
         }
     }
     return OBJECT_TO_JSVAL(jsRet);
+}
+
+bool jsval_to_resourcedata(JSContext *cx, JS::HandleValue v, ResourceData* ret) {
+    JS::RootedObject tmp(cx);
+    JS::RootedValue jstype(cx);
+    JS::RootedValue jsfile(cx);
+    JS::RootedValue jsplist(cx);
+
+    double t = 0;
+    std::string file, plist;
+    bool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
+        JS_GetProperty(cx, tmp, "type", &jstype) &&
+        JS_GetProperty(cx, tmp, "name", &jsfile) &&
+        JS_GetProperty(cx, tmp, "plist", &jsplist) &&
+        JS::ToNumber(cx, jstype, &t) &&
+        jsval_to_std_string(cx, jsfile, &file) &&
+        jsval_to_std_string(cx, jsplist, &plist);
+
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+
+    ret->type = (int)t;
+    ret->file = file;
+    ret->plist = plist;
+    return true;
+}
+
+jsval resourcedata_to_jsval(JSContext* cx, const ResourceData& v)
+{
+    JS::RootedObject proto(cx);
+    JS::RootedObject parent(cx);
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    if (!tmp) return JSVAL_NULL;
+    bool ok = JS_DefineProperty(cx, tmp, "type", v.type, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "file", JS::RootedValue(cx, std_string_to_jsval(cx, v.file)), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "plist", JS::RootedValue(cx, std_string_to_jsval(cx, v.plist)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    if (ok) {
+        return OBJECT_TO_JSVAL(tmp);
+    }
+    return JSVAL_NULL;
 }

@@ -72,8 +72,8 @@ namespace ui {
   {
     if (ScrollView::init())
     {
-      setDirection(Direction::VERTICAL);
-      return true;
+        setDirection(Direction::VERTICAL);
+        return true;
     }
     return false;
   }
@@ -98,15 +98,15 @@ namespace ui {
     {
       startMagneticScroll();
     }
-  }
-  
-  void ListView::onItemListChanged()
-  {
+}
+
+void ListView::onItemListChanged()
+{
     _outOfBoundaryAmountDirty = true;
-  }
-  
-  void ListView::updateInnerContainerSize()
-  {
+}
+
+void ListView::updateInnerContainerSize()
+{
     switch (_direction)
     {
       case Direction::VERTICAL:
@@ -267,8 +267,8 @@ namespace ui {
     Widget* widget = dynamic_cast<Widget*>(child);
     if (nullptr != widget)
     {
-      _items.pushBack(widget);
-      onItemListChanged();
+        _items.pushBack(widget);
+        onItemListChanged();
     }
   }
   
@@ -289,8 +289,8 @@ namespace ui {
     Widget* widget = dynamic_cast<Widget*>(child);
     if (nullptr != widget)
     {
-      _items.pushBack(widget);
-      onItemListChanged();
+        _items.pushBack(widget);
+        onItemListChanged();
     }
   }
   
@@ -311,8 +311,8 @@ namespace ui {
           _curSelectedIndex = -1;
         }
       }
-      _items.eraseObject(widget);
-      onItemListChanged();
+        _items.eraseObject(widget);
+        onItemListChanged();
     }
     
     ScrollView::removeChild(child, cleaup);
@@ -329,10 +329,10 @@ namespace ui {
     _curSelectedIndex = -1;
     _items.clear();
     onItemListChanged();
-  }
-  
-  void ListView::insertCustomItem(Widget* item, ssize_t index)
-  {
+}
+
+void ListView::insertCustomItem(Widget* item, ssize_t index)
+{
     if (-1 != _curSelectedIndex)
     {
       if (_curSelectedIndex >= index)
@@ -342,7 +342,7 @@ namespace ui {
     }
     _items.insert(index, item);
     onItemListChanged();
-    
+
     ScrollView::addChild(item);
     
     remedyLayoutParameter(item);
@@ -369,9 +369,9 @@ namespace ui {
   {
     removeAllChildren();
   }
-  
-  Widget* ListView::getItem(ssize_t index) const
-  {
+
+Widget* ListView::getItem(ssize_t index) const
+{
     if (index < 0 || index >= _items.size())
     {
       return nullptr;
@@ -741,10 +741,10 @@ namespace ui {
   {
     doLayout();
     ScrollView::jumpToPercentBothDirection(percent);
-  }
-  
-  Vec2 ListView::calculateItemDestination(const Vec2& positionRatioInView, Widget* item, const Vec2& itemAnchorPoint)
-  {
+}
+
+Vec2 ListView::calculateItemDestination(const Vec2& positionRatioInView, Widget* item, const Vec2& itemAnchorPoint)
+{
     const Size& contentSize = getContentSize();
     Vec2 positionInView;
     positionInView.x += contentSize.width * positionRatioInView.x;
@@ -752,34 +752,35 @@ namespace ui {
     
     Vec2 itemPosition = calculateItemPositionWithAnchor(item, itemAnchorPoint);
     return -(itemPosition - positionInView);
-  }
-  
-  void ListView::jumpToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
-  {
+}
+
+void ListView::jumpToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
+{
     Widget* item = getItem(itemIndex);
     if (item == nullptr)
     {
       return;
     }
     doLayout();
-    
+
+
     Vec2 destination = calculateItemDestination(positionRatioInView, item, itemAnchorPoint);
     if(!_bounceEnabled)
     {
-      Vec2 delta = destination - getInnerContainerPosition();
-      Vec2 outOfBoundary = getHowMuchOutOfBoundary(delta);
-      destination += outOfBoundary;
+        Vec2 delta = destination - getInnerContainerPosition();
+        Vec2 outOfBoundary = getHowMuchOutOfBoundary(delta);
+        destination += outOfBoundary;
     }
     jumpToDestination(destination);
-  }
-  
-  void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
-  {
+}
+
+void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
+{
     scrollToItem(itemIndex, positionRatioInView, itemAnchorPoint, DEFAULT_TIME_IN_SEC_FOR_SCROLL_TO_ITEM);
-  }
-  
-  void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec)
-  {
+}
+
+void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec)
+{
     Widget* item = getItem(itemIndex);
     if (item == nullptr)
     {
@@ -855,34 +856,34 @@ namespace ui {
     float topBoundary = _topBoundary;
     float bottomBoundary = _bottomBoundary;
     {
-      ssize_t lastItemIndex = _items.size() - 1;
-      Size contentSize = getContentSize();
-      Vec2 firstItemAdjustment, lastItemAdjustment;
-      if(_magneticType == MagneticType::CENTER)
-      {
-        firstItemAdjustment = (contentSize - _items.at(0)->getContentSize()) / 2;
-        lastItemAdjustment = (contentSize - _items.at(lastItemIndex)->getContentSize()) / 2;
-      }
-      else if(_magneticType == MagneticType::LEFT)
-      {
-        lastItemAdjustment = contentSize - _items.at(lastItemIndex)->getContentSize();
-      }
-      else if(_magneticType == MagneticType::RIGHT)
-      {
-        firstItemAdjustment = contentSize - _items.at(0)->getContentSize();
-      }
-      else if(_magneticType == MagneticType::TOP)
-      {
-        lastItemAdjustment = contentSize - _items.at(lastItemIndex)->getContentSize();
-      }
-      else if(_magneticType == MagneticType::BOTTOM)
-      {
-        firstItemAdjustment = contentSize - _items.at(0)->getContentSize();
-      }
-      leftBoundary += firstItemAdjustment.x;
-      rightBoundary -= lastItemAdjustment.x;
-      topBoundary -= firstItemAdjustment.y;
-      bottomBoundary += lastItemAdjustment.y;
+        ssize_t lastItemIndex = _items.size() - 1;
+        Size contentSize = getContentSize();
+        Vec2 firstItemAdjustment, lastItemAdjustment;
+        if(_magneticType == MagneticType::CENTER)
+        {
+            firstItemAdjustment = (contentSize - _items.at(0)->getContentSize()) / 2;
+            lastItemAdjustment = (contentSize - _items.at(lastItemIndex)->getContentSize()) / 2;
+        }
+        else if(_magneticType == MagneticType::LEFT)
+        {
+            lastItemAdjustment = contentSize - _items.at(lastItemIndex)->getContentSize();
+        }
+        else if(_magneticType == MagneticType::RIGHT)
+        {
+            firstItemAdjustment = contentSize - _items.at(0)->getContentSize();
+        }
+        else if(_magneticType == MagneticType::TOP)
+        {
+            lastItemAdjustment = contentSize - _items.at(lastItemIndex)->getContentSize();
+        }
+        else if(_magneticType == MagneticType::BOTTOM)
+        {
+            firstItemAdjustment = contentSize - _items.at(0)->getContentSize();
+        }
+        leftBoundary += firstItemAdjustment.x;
+        rightBoundary -= lastItemAdjustment.x;
+        topBoundary -= firstItemAdjustment.y;
+        bottomBoundary += lastItemAdjustment.y;
     }
     
     // Calculate the actual amount

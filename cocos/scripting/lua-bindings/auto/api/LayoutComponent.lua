@@ -111,7 +111,7 @@
         
 --------------------------------
 -- Query the percent content size value.<br>
--- return Percet (x,y) in Vec2.
+-- return Percent (x,y) in Vec2.
 -- @function [parent=#LayoutComponent] getPercentContentSize 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
@@ -191,7 +191,7 @@
 -- @return LayoutComponent#LayoutComponent self (return value: ccui.LayoutComponent)
         
 --------------------------------
--- Query percent hieght of owner.         <br>
+-- Query percent height of owner.         <br>
 -- return Percent height in float.
 -- @function [parent=#LayoutComponent] getPercentHeight 
 -- @param self
@@ -301,7 +301,7 @@
         
 --------------------------------
 -- Whether position percentX is enabled or not. <br>
--- return True if position percertX is enable, false otherwise.
+-- return True if position percentX is enable, false otherwise.
 -- @function [parent=#LayoutComponent] isPositionPercentXEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -332,7 +332,7 @@
 -- @return LayoutComponent#LayoutComponent self (return value: ccui.LayoutComponent)
         
 --------------------------------
--- Query whehter percent height is enabled or not.<br>
+-- Query whether percent height is enabled or not.<br>
 -- return True if percent height is enabled, false otherwise.
 -- @function [parent=#LayoutComponent] isPercentHeightEnabled 
 -- @param self

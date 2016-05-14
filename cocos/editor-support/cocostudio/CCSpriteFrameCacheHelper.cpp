@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCSpriteFrameCacheHelper.h"
+#include "editor-support/cocostudio/CCSpriteFrameCacheHelper.h"
 #include "platform/CCFileUtils.h"
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCSpriteFrameCache.h"
@@ -105,6 +105,12 @@ SpriteFrameCacheHelper::SpriteFrameCacheHelper()
 
 SpriteFrameCacheHelper::~SpriteFrameCacheHelper()
 {
+    auto i = _usingSpriteFrames.begin();
+    while (i != _usingSpriteFrames.end())
+    {
+        auto j = i++;
+        removeSpriteFrameFromFile(j->first);
+    }
 }
 
 }

@@ -19,7 +19,7 @@
  This file was modified to fit the cocos2d-x project
  */
 
-#include "CCVertexAttribBinding.h"
+#include "renderer/CCVertexAttribBinding.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/ccGLStateCache.h"
 #include "platform/CCGL.h"
@@ -37,7 +37,9 @@ std::string s_attributeNames[] = {
     GLProgram::ATTRIBUTE_NAME_TEX_COORD3,
     GLProgram::ATTRIBUTE_NAME_NORMAL,
     GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT,
-    GLProgram::ATTRIBUTE_NAME_BLEND_INDEX
+    GLProgram::ATTRIBUTE_NAME_BLEND_INDEX,
+    GLProgram::ATTRIBUTE_NAME_TANGENT,
+    GLProgram::ATTRIBUTE_NAME_BINORMAL
 };
 
 static GLuint __maxVertexAttribs = 0;
@@ -109,7 +111,7 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, GLProgramState* glP
         if (__maxVertexAttribs <= 0)
         {
             CCLOGERROR("The maximum number of vertex attributes supported by OpenGL on the current device is 0 or less.");
-            return NULL;
+            return false;
         }
     }
 

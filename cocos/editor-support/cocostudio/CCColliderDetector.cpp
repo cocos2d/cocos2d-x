@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCColliderDetector.h"
-#include "cocostudio/CCBone.h"
-#include "cocostudio/CCTransformHelp.h"
+#include "editor-support/cocostudio/CCColliderDetector.h"
+#include "editor-support/cocostudio/CCBone.h"
+#include "editor-support/cocostudio/CCTransformHelp.h"
 
 
 
@@ -421,7 +421,7 @@ void ColliderDetector::setBody(b2Body *pBody)
 
         ContourData *contourData = colliderBody->getContourData();
         
-        b2Vec2 *b2bv = new b2Vec2[contourData->vertexList.size()];
+        b2Vec2 *b2bv = new (std::nothrow) b2Vec2[contourData->vertexList.size()];
 
         int i = 0;
         for(auto& v : contourData->vertexList)
@@ -470,7 +470,7 @@ void ColliderDetector::setBody(cpBody *pBody)
 
         ssize_t num = contourData->vertexList.size();
         auto vs = contourData->vertexList;
-        cpVect *verts = new cpVect[num];
+        cpVect *verts = new (std::nothrow) cpVect[num];
         for (int i = 0; i < num; i++)
         {
             verts[num - 1 - i].x = vs.at(i).x;

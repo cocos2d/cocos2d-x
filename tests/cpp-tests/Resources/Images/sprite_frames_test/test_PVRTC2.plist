@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>frames</key>
+	<dict>
+		<key>grossini.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteOffset</key>
+			<string>{-1,-1}</string>
+			<key>spriteSize</key>
+			<string>{77,111}</string>
+			<key>spriteSourceSize</key>
+			<string>{85,121}</string>
+			<key>textureRect</key>
+			<string>{{1,1},{77,111}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>metadata</key>
+	<dict>
+		<key>pixelFormat</key>
+		<string>PVRTC2</string>
+		<key>format</key>
+		<integer>3</integer>
+		<key>realTextureFileName</key>
+		<string>test_PVRTC2.pvr</string>
+		<key>size</key>
+		<string>{128,128}</string>
+		<key>smartupdate</key>
+		<string>$TexturePacker:SmartUpdate:a0efbcf50a4c56a8f243e4beb96a30e1:ef6b77cb31cb9547aa403602c0e428cd:4bb41f9429a45a071fc102c0fbf27f4e$</string>
+		<key>textureFileName</key>
+		<string>test_PVRTC2.pvr</string>
+	</dict>
+</dict>
+</plist>

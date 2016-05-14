@@ -30,7 +30,7 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
-#include "UIEditBoxImpl-common.h"
+#include "ui/UIEditBox/UIEditBoxImpl-common.h"
 
 NS_CC_BEGIN
 
@@ -67,16 +67,12 @@ public:
     virtual void setNativePlaceHolder(const char* pText) override;
     virtual void setNativeVisible(bool visible) override;
     virtual void updateNativeFrame(const Rect& rect) override;
-    virtual void setNativeContentSize(const Size& size) override {};
     virtual const char* getNativeDefaultFontName() override;
     virtual void nativeOpenKeyboard() override;
     virtual void nativeCloseKeyboard() override;
     virtual void setNativeMaxLength(int maxLength);
-
     
 private:
-    virtual void doAnimationWhenKeyboardMove(float duration, float distance)override {}
-
     int _editBoxIndex;
 };
 

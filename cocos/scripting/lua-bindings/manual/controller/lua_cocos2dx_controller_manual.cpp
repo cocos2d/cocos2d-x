@@ -21,16 +21,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "lua_cocos2dx_controller_manual.hpp"
+#include "scripting/lua-bindings/manual/controller/lua_cocos2dx_controller_manual.hpp"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-#include "cocos2d.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-#include "cocos2d/LuaScriptHandlerMgr.h"
-#include "CCLuaValue.h"
-#include "CCLuaEngine.h"
+
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
+#include "scripting/lua-bindings/manual/CCLuaValue.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "base/CCGameController.h"
 
 

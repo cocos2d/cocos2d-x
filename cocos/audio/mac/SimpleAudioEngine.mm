@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "audio/include/SimpleAudioEngine.h"
-#include "SimpleAudioEngine_objc.h"
+#include "audio/mac/SimpleAudioEngine_objc.h"
 #include <string>
 
 #include "platform/CCFileUtils.h"

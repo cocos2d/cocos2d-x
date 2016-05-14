@@ -24,12 +24,12 @@ THE SOFTWARE.
 Based upon code from the DirectX Tool Kit by Microsoft Corporation,
 obtained from https://directxtk.codeplex.com
 ****************************************************************************/
-#include "WICImageLoader-winrt.h"
-#include "CCWinRTUtils.h"
+#include "platform/winrt/WICImageLoader-winrt.h"
+#include "platform/winrt/CCWinRTUtils.h"
 
 NS_CC_BEGIN
 
-#if defined(CC_USE_WIC)
+#if CC_USE_WIC
 
 	IWICImagingFactory* WICImageLoader::_wicFactory = NULL;
 
@@ -94,8 +94,8 @@ WICImageLoader::~WICImageLoader()
 
 bool WICImageLoader::decodeImageData(ImageBlob blob, size_t size)
 {
-	bool bRet = false;
-	HRESULT hr = S_FALSE;
+    bool bRet = false;
+    HRESULT hr = E_FAIL;
 
 	IWICStream* pWicStream = NULL;
 	IWICImagingFactory* pWicFactory = getWICFactory();
@@ -127,7 +127,7 @@ bool WICImageLoader::decodeImageData(ImageBlob blob, size_t size)
 
 bool WICImageLoader::processImage(IWICBitmapDecoder* pDecoder)
 {
-	HRESULT hr = S_FALSE;
+    HRESULT hr = E_FAIL;
 	IWICBitmapFrameDecode* pFrame = NULL;
 
 	if(NULL != pDecoder)
@@ -240,7 +240,7 @@ HRESULT WICImageLoader::convertFormatIfRequired(IWICBitmapFrameDecode* pFrame, I
 
 size_t WICImageLoader::getBitsPerPixel(WICPixelFormatGUID format)
 {
-	HRESULT hr = S_FALSE;
+    HRESULT hr = E_FAIL;
 
 	IWICImagingFactory* pfactory = getWICFactory();
 

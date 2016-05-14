@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "SimpleAudioEngine.h"
+#include "audio/include/SimpleAudioEngine.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX)
 #include "ide-support/CodeIDESupport.h"
@@ -9,7 +9,7 @@
 #include "runtime/Runtime.h"
 #include "ide-support/RuntimeJsImpl.h"
 #else
-#include "js_module_register.h"
+#include "scripting/js-bindings/manual/js_module_register.h"
 #endif
 
 USING_NS_CC;
@@ -23,7 +23,7 @@ AppDelegate::~AppDelegate()
 {
 	SimpleAudioEngine::end();
     ScriptEngineManager::destroyInstance();
-    
+
 #if (COCOS2D_DEBUG > 0) && (CC_CODE_IDE_DEBUG_SUPPORT > 0)
     // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
     RuntimeEngine::getInstance()->end();
@@ -47,7 +47,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
 
     // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0 / 60);
+    director->setAnimationInterval(1.0f / 60);
 
 #if (COCOS2D_DEBUG > 0) && (CC_CODE_IDE_DEBUG_SUPPORT > 0)
 
@@ -61,7 +61,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto jsRuntime = RuntimeJsImpl::create();
     runtimeEngine->addRuntime(jsRuntime, kRuntimeEngineJs);
     runtimeEngine->start();
-    
+
     // js need special debug port
     if (runtimeEngine->getProjectConfig().getDebuggerType() != kCCRuntimeDebuggerNone)
     {
@@ -90,7 +90,7 @@ void AppDelegate::applicationDidEnterBackground()
     director->stopAnimation();
     director->getEventDispatcher()->dispatchCustomEvent("game_on_hide");
     SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-    SimpleAudioEngine::getInstance()->pauseAllEffects();    
+    SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
@@ -102,4 +102,3 @@ void AppDelegate::applicationWillEnterForeground()
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     SimpleAudioEngine::getInstance()->resumeAllEffects();
 }
-

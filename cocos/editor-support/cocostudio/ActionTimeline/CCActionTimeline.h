@@ -25,8 +25,9 @@ THE SOFTWARE.
 #ifndef __CCTIMELINE_ACTION_H__
 #define __CCTIMELINE_ACTION_H__
 
-#include "CCTimeLine.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimeLine.h"
+#include "base/CCProtocols.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include "2d/CCAction.h"
 
 NS_TIMELINE_BEGIN
@@ -70,7 +71,7 @@ protected:
 };
 
 
-class CC_STUDIO_DLL ActionTimeline : public cocos2d::Action
+class CC_STUDIO_DLL ActionTimeline : public cocos2d::Action, public cocos2d::PlayableProtocol
 {
 public:
     friend class Frame;
@@ -196,6 +197,13 @@ public:
     virtual void step(float delta) override; 
     virtual void startWithTarget(cocos2d::Node *target) override;  
     virtual bool isDone() const override { return false; }
+    
+    /// @{
+    /// @name implement Playable Protocol
+    virtual void start() override;
+    virtual void stop() override;
+    /// @} end of PlaybleProtocol
+
 protected:
     virtual void gotoFrame(int frameIndex);
     virtual void stepToFrame(int frameIndex);

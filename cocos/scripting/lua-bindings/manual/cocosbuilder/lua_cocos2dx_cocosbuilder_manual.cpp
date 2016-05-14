@@ -21,14 +21,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "lua_cocos2dx_cocosbuilder_manual.h"
-#include "lua_cocos2dx_cocosbuilder_auto.hpp"
-#include "cocos2d.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-#include "CCLuaEngine.h"
-#include "CCLuaValue.h"
-#include "CCBProxy.h"
+#include "scripting/lua-bindings/manual/cocosbuilder/lua_cocos2dx_cocosbuilder_manual.h"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_cocosbuilder_auto.hpp"
+
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaValue.h"
+#include "scripting/lua-bindings/manual/cocosbuilder/CCBProxy.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;

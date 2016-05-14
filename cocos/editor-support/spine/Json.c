@@ -34,7 +34,7 @@
 #define _BSD_SOURCE
 #endif
 
-#include "Json.h"
+#include "editor-support/spine/Json.h"
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h> /* strtod (C89), strtof (C99) */

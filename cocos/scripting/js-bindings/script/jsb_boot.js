@@ -686,8 +686,9 @@ cc.loader = {
         if (cached)
             return cached;
         var type = cc.path.extname(url);
+        if (!type) return cc.log("cc.loader.getRes: Invalid url");
         var loader = this._register[type.toLowerCase()];
-        if(!loader) return cc.log("loader for [" + type + "] not exists!");
+        if (!loader) return cc.log("cc.loader.getRes: loader for [" + type + "] not exists!");
         var basePath = loader.getBasePath ? loader.getBasePath() : this.resPath;
         var realUrl = this.getUrl(basePath, url);
         return loader.load(realUrl, url);
@@ -851,7 +852,7 @@ cc.TextureCache.prototype.addImage = function(url, cb, target) {
     }
     else {
         if (cb) {
-            return this._addImage(url, cb)
+            return this._addImage(url, cb);
         }
         else {
             return this._addImage(url);
@@ -1053,6 +1054,15 @@ var _initSys = function () {
      * @type {Number}
      */
     sys.LANGUAGE_POLISH = "pl";
+
+    /**
+     * Unknown language code
+     * @memberof cc.sys
+     * @name LANGUAGE_UNKNOWN
+     * @constant
+     * @type {Number}
+     */
+    sys.LANGUAGE_UNKNOWN = "unkonwn";
 
     /**
      * @memberof cc.sys
@@ -1302,6 +1312,8 @@ var _initSys = function () {
                     platform === sys.WP8 || 
                     platform === sys.TIZEN ||
                     platform === sys.BLACKBERRY) ? true : false;
+    
+    sys._application = cc.Application.getInstance();
 
     /**
      * Indicate the current language of the running system
@@ -1310,7 +1322,7 @@ var _initSys = function () {
      * @type {String}
      */
     sys.language = (function(){
-        var language = cc.Application.getInstance().getCurrentLanguage();
+        var language = sys._application.getCurrentLanguage();
         switch(language){
             case 0: return sys.LANGUAGE_ENGLISH;
             case 1: return sys.LANGUAGE_CHINESE;
@@ -1462,7 +1474,7 @@ var _initSys = function () {
         str += "os : " + self.os + "\r\n";
         str += "platform : " + self.platform + "\r\n";
         cc.log(str);
-    }
+    };
 
     /**
      * Open a url in browser
@@ -1471,8 +1483,8 @@ var _initSys = function () {
      * @param {String} url
      */
     sys.openURL = function(url){
-        cc.Application.getInstance().openURL(url);
-    }
+        sys._application.openURL(url);
+    };
 
     // JS to Native bridges
     if(window.JavascriptJavaBridge && cc.sys.os == cc.sys.OS_ANDROID){
@@ -1575,11 +1587,12 @@ cc.game = /** @lends cc.game# */{
         jsList: "jsList"
     },
 
+    // states
+    _paused: false,//whether the game is paused
     _prepareCalled: false,//whether the prepare function has been called
     _prepared: false,//whether the engine has prepared
-    _paused: true,//whether the game is paused
+
     _intervalId: null,//interval target of main
-    
 
     /**
      * Config of game
@@ -1599,6 +1612,9 @@ cc.game = /** @lends cc.game# */{
      */
     onStop: null,
 
+//@Public Methods
+
+//  @Game play control
     /**
      * Set frameRate of game.
      * @param frameRate
@@ -1620,6 +1636,7 @@ cc.game = /** @lends cc.game# */{
      * Pause the game.
      */
     pause: function () {
+        this._paused = true;
         cc.director.pause();
     },
 
@@ -1627,7 +1644,15 @@ cc.game = /** @lends cc.game# */{
      * Resume the game from pause.
      */
     resume: function () {
+        this._paused = false;
         cc.director.resume();
+    },
+
+    /**
+     * Check whether the game is paused.
+     */
+    isPaused: function () {
+        return this._paused;
     },
 
     /**
@@ -1637,6 +1662,14 @@ cc.game = /** @lends cc.game# */{
         __restartVM();
     },
 
+    /**
+     * End game, it will close the game window
+     */
+    end: function () {
+        close();
+    },
+
+//  @Game loading
     /**
      * Prepare game.
      * @param cb
@@ -1662,12 +1695,17 @@ cc.game = /** @lends cc.game# */{
             this._prepareCalled = true;
 
             // Load game scripts
-            var jsList = config[CONFIG_KEY.jsList] || [];
-            cc.loader.loadJsWithImg("", jsList, function (err) {
-                if (err) throw new Error(err);
-                self._prepared = true;
+            var jsList = config[CONFIG_KEY.jsList];
+            if (jsList) {
+                cc.loader.loadJsWithImg(jsList, function (err) {
+                    if (err) throw new Error(err);
+                    self._prepared = true;
+                    if (cb) cb();
+                });
+            }
+            else {
                 if (cb) cb();
-            });
+            }
 
             return;
         }
@@ -1679,30 +1717,61 @@ cc.game = /** @lends cc.game# */{
     },
 
     /**
-     * Run game.
+     * Run game with configuration object and onStart function.
+     * @param {Object|Function} [config] Pass configuration object or onStart function
+     * @param {onStart} [onStart] onStart function to be executed after game initialized
      */
-    run: function () {
-        this.prepare(cc.game.onStart.bind(cc.game));
-    },
-    
-    _loadConfig: function () {
-        var self = this, CONFIG_KEY = self.CONFIG_KEY;
-        var _init = function(cfg){
-            cfg[CONFIG_KEY.engineDir] = cfg[CONFIG_KEY.engineDir] || "frameworks/cocos2d-html5";
-            cfg[CONFIG_KEY.debugMode] = cfg[CONFIG_KEY.debugMode] || 0;
-            cfg[CONFIG_KEY.frameRate] = cfg[CONFIG_KEY.frameRate] || 60;
-            cfg[CONFIG_KEY.renderMode] = cfg[CONFIG_KEY.renderMode] || 0;
-            cfg[CONFIG_KEY.showFPS] = cfg[CONFIG_KEY.showFPS] === false ? false : true;
-            return cfg;
-        };
-        try{
-            var txt = jsb.fileUtils.getStringFromFile("project.json");
-            var data = JSON.parse(txt);
-            this.config = _init(data || {});
-        }catch(e){
-            cc.log("Failed to read or parse project.json");
-            this.config = _init({});
+    run: function (config, onStart) {
+        if (typeof config === 'function') {
+            cc.game.onStart = config;
         }
+        else {
+            if (config) {
+                cc.game.config = config;
+            }
+            if (typeof onStart === 'function') {
+                cc.game.onStart = onStart;
+            }
+        }
+        
+        this.prepare(cc.game.onStart && cc.game.onStart.bind(cc.game));
+    },
+
+//@Private Methods
+
+    _loadConfig: function () {
+        // Load config
+        // Already loaded
+        if (this.config) {
+            this._initConfig(this.config);
+        }
+        // Load from project.json 
+        else {
+            try {
+                var txt = jsb.fileUtils.getStringFromFile("project.json");
+                var data = JSON.parse(txt);
+                this._initConfig(data || {});
+            } catch (e) {
+                console.log("Failed to read or parse project.json");
+                this._initConfig({});
+            }
+        }
+    },
+
+    _initConfig: function (config) {
+        var CONFIG_KEY = this.CONFIG_KEY;
+
+        // Configs adjustment
+        config[CONFIG_KEY.showFPS] = typeof config[CONFIG_KEY.showFPS] === 'undefined' ? true : config[CONFIG_KEY.showFPS];
+        config[CONFIG_KEY.engineDir] = config[CONFIG_KEY.engineDir] || "frameworks/cocos2d-html5";
+        if (config[CONFIG_KEY.debugMode] == null)
+            config[CONFIG_KEY.debugMode] = 0;
+        config[CONFIG_KEY.frameRate] = config[CONFIG_KEY.frameRate] || 60;
+        if (config[CONFIG_KEY.renderMode] == null)
+            config[CONFIG_KEY.renderMode] = 0;
+
+        this.config = config;
+        
         cc.director.setDisplayStats(this.config[CONFIG_KEY.showFPS]);
         cc.director.setAnimationInterval(1.0/this.config[CONFIG_KEY.frameRate]);
     }

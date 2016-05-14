@@ -1,5 +1,3 @@
-
-
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
@@ -218,14 +216,14 @@ void Node::cleanup()
     ScriptEngineManager::sendNodeEventToLua(this, kNodeOnCleanup);
   }
 #endif // #if CC_ENABLE_SCRIPT_BINDING
-  
-  // actions
-  this->stopAllActions();
-  this->unscheduleAllCallbacks();
-
-  // timers
-  for( const auto &child: _children)
-    child->cleanup();
+    
+    // actions
+    this->stopAllActions();
+    // timers
+    this->unscheduleAllCallbacks();
+    
+    for( const auto &child: _children)
+        child->cleanup();
 }
 
 std::string Node::getDescription() const
@@ -659,8 +657,9 @@ bool Node::isIgnoreAnchorPointForPosition() const
 {
   return _ignoreAnchorPointForPosition;
 }
+
 /// isRelativeAnchorPoint setter
-void Node::ignoreAnchorPointForPosition(bool newValue)
+void Node::setIgnoreAnchorPointForPosition(bool newValue)
 {
   if (newValue != _ignoreAnchorPointForPosition) 
   {
@@ -712,9 +711,19 @@ void Node::setOrderOfArrival(int orderOfArrival)
 
 void Node::setUserObject(Ref* userObject)
 {
-  CC_SAFE_RETAIN(userObject);
-  CC_SAFE_RELEASE(_userObject);
-  _userObject = userObject;
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        if (userObject)
+            sEngine->retainScriptObject(this, userObject);
+        if (_userObject)
+            sEngine->releaseScriptObject(this, _userObject);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    CC_SAFE_RETAIN(userObject);
+    CC_SAFE_RELEASE(_userObject);
+    _userObject = userObject;
 }
 
 GLProgramState* Node::getGLProgramState() const
@@ -887,41 +896,41 @@ bool Node::doEnumerateRecursive(const Node* node, const std::string &name, std::
 
 bool Node::doEnumerate(std::string name, std::function<bool (Node *)> callback) const
 {
-  // name may be xxx/yyy, should find its parent
-  size_t pos = name.find('/');
-  std::string searchName = name;
-  bool needRecursive = false;
-  if (pos != name.npos)
-  {
-    searchName = name.substr(0, pos);
-    name.erase(0, pos+1);
-    needRecursive = true;
-  }
-  
-  bool ret = false;
-  for (const auto& child : _children)
-  {
-    if (std::regex_match(child->_name, std::regex(searchName)))
+    // name may be xxx/yyy, should find its parent
+    size_t pos = name.find('/');
+    std::string searchName = name;
+    bool needRecursive = false;
+    if (pos != name.npos)
     {
-      if (!needRecursive)
-      {
-        // terminate enumeration if callback return true
-        if (callback(child))
-        {
-          ret = true;
-          break;
-        }
-      }
-      else
-      {
-        ret = child->doEnumerate(name, callback);
-        if (ret)
-          break;
-      }
+        searchName = name.substr(0, pos);
+        name.erase(0, pos+1);
+        needRecursive = true;
     }
-  }
-  
-  return ret;
+    
+    bool ret = false;
+    for (const auto& child : getChildren())
+    {
+        if (std::regex_match(child->_name, std::regex(searchName)))
+        {
+            if (!needRecursive)
+            {
+                // terminate enumeration if callback return true
+                if (callback(child))
+                {
+                    ret = true;
+                    break;
+                }
+            }
+            else
+            {
+                ret = child->doEnumerate(name, callback);
+                if (ret)
+                    break;
+            }
+        }
+    }
+    
+    return ret;
 }
 
 /* "add" logic MUST only be on this method
@@ -1063,61 +1072,81 @@ void Node::removeAllChildren()
 
 void Node::removeAllChildrenWithCleanup(bool cleanup)
 {
-  // not using detachChild improves speed here
-  for (const auto& child : _children)
-  {
-    // IMPORTANT:
-    //  -1st do onExit
-    //  -2nd cleanup
-    if(_running)
+    // not using detachChild improves speed here
+    for (const auto& child : _children)
     {
-      child->onExitTransitionDidStart();
-      child->onExit();
-    }
+        // IMPORTANT:
+        //  -1st do onExit
+        //  -2nd cleanup
+        if(_running)
+        {
+            child->onExitTransitionDidStart();
+            child->onExit();
+        }
 
-    if (cleanup)
-    {
-      child->cleanup();
+        if (cleanup)
+        {
+            child->cleanup();
+        }
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (sEngine)
+        {
+            sEngine->releaseScriptObject(this, child);
+        }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        // set parent nil at the end
+        child->setParent(nullptr);
     }
-    // set parent nil at the end
-    child->setParent(nullptr);
-  }
-  
-  _children.clear();
+    
+    _children.clear();
 }
 
 void Node::detachChild(Node *child, ssize_t childIndex, bool doCleanup)
 {
-  // IMPORTANT:
-  //  -1st do onExit
-  //  -2nd cleanup
-  if (_running)
-  {
-    child->onExitTransitionDidStart();
-    child->onExit();
-  }
+    // IMPORTANT:
+    //  -1st do onExit
+    //  -2nd cleanup
+    if (_running)
+    {
+        child->onExitTransitionDidStart();
+        child->onExit();
+    }
 
-  // If you don't do cleanup, the child's actions will not get removed and the
-  // its scheduledSelectors_ dict will not get released!
-  if (doCleanup)
-  {
-    child->cleanup();
-  }
+    // If you don't do cleanup, the child's actions will not get removed and the
+    // its scheduledSelectors_ dict will not get released!
+    if (doCleanup)
+    {
+        child->cleanup();
+    }
+    
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        sEngine->releaseScriptObject(this, child);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    // set parent nil at the end
+    child->setParent(nullptr);
 
-  // set parent nil at the end
-  child->setParent(nullptr);
-
-  _children.erase(childIndex);
+    _children.erase(childIndex);
 }
-
 
 // helper used by reorderChild & add
 void Node::insertChild(Node* child, int z)
 {
-  _transformUpdated = true;
-  _reorderChildDirty = true;
-  _children.pushBack(child);
-  child->_localZOrder = z;
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        sEngine->retainScriptObject(this, child);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    _transformUpdated = true;
+    _reorderChildDirty = true;
+    _children.pushBack(child);
+    child->_localZOrder = z;
 }
 
 void Node::reorderChild(Node *child, int zOrder)

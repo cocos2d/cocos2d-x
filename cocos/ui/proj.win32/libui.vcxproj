@@ -40,9 +40,7 @@
     <ClInclude Include="..\UIVBox.h" />
     <ClInclude Include="..\UIWebView-inl.h" />
     <ClInclude Include="..\UIWebView.h" />
-    <ClInclude Include="..\UIWebViewImpl-win32.h" />
     <ClInclude Include="..\UIWidget.h" />
-    <ClInclude Include="Win32InputBox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CocosGUI.cpp" />
@@ -62,6 +60,7 @@
     <ClCompile Include="..\UIListView.cpp" />
     <ClCompile Include="..\UILoadingBar.cpp" />
     <ClCompile Include="..\UIPageView.cpp" />
+    <ClCompile Include="..\UIPageViewIndicator.cpp" />
     <ClCompile Include="..\UIRelativeBox.cpp" />
     <ClCompile Include="..\UIRichText.cpp" />
     <ClCompile Include="..\UIScale9Sprite.cpp" />
@@ -74,14 +73,9 @@
     <ClCompile Include="..\UITextField.cpp" />
     <ClCompile Include="..\UIVBox.cpp" />
     <ClCompile Include="..\UIWebView.cpp" />
-    <ClCompile Include="..\UIWebViewImpl-win32.cpp" />
     <ClCompile Include="..\UIWidget.cpp" />
-    <ClCompile Include="Win32InputBox.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\extensions\proj.win32\libextension.vcxproj">
-      <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\2d\libcocos2d.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
     </ProjectReference>
@@ -133,7 +127,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>
       </SDLCheck>
-      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)external;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USEGUIDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -155,7 +149,7 @@
       <SDLCheck>
       </SDLCheck>
       <PreprocessorDefinitions>WIN32;_WINDOWS;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USEGUIDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)external;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>

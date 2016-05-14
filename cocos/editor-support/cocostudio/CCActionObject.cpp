@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCActionObject.h"
-#include "cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CCActionObject.h"
+#include "editor-support/cocostudio/CocoLoader.h"
 
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
@@ -51,6 +51,8 @@ ActionObject::ActionObject()
 
 ActionObject::~ActionObject()
 {
+    _loop = false;
+    _pScheduler->unscheduleAllForTarget(this);
     _actionNodeList.clear();
     CC_SAFE_RELEASE(_pScheduler);
     CC_SAFE_RELEASE(_CallBack);

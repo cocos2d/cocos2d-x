@@ -286,6 +286,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccMacros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCMap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCStencilStateManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNS.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProfiling.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProperties.h" />
@@ -398,6 +399,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CSParse3DBinary_generated.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\DictionaryHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\FlatBuffersSerialize.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\LocalizationManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\TriggerBase.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\TriggerMng.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\TriggerObj.h" />
@@ -411,6 +413,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReaderDefine.h" />
@@ -427,6 +430,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SkeletonReader\SkeletonNodeReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TabControlReader\CSTabControl_generated.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TextAtlasReader\TextAtlasReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.h" />
@@ -561,6 +566,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIScale9Sprite.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIScrollView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UISlider.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UITabControl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIText.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UITextAtlas.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UITextBMFont.h" />
@@ -916,6 +922,7 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCIMEDispatcher.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCStencilStateManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNS.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProfiling.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProperties.cpp" />
@@ -1008,6 +1015,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CocoStudio.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\DictionaryHelper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\FlatBuffersSerialize.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\LocalizationManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\TriggerBase.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\TriggerMng.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\TriggerObj.cpp" />
@@ -1020,6 +1028,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReaderDefine.cpp" />
@@ -1034,6 +1043,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SkeletonReader\SkeletonNodeReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TextAtlasReader\TextAtlasReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.cpp" />
@@ -1137,6 +1147,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIButton.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIAbstractCheckButton.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UICheckBox.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIEditBox\UIEditBoxImpl-common.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIRadioButton.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIDeprecated.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIEditBox\UIEditBox.cpp" />
@@ -1151,12 +1162,14 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIListView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UILoadingBar.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIPageView.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIPageViewIndicator.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIRelativeBox.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIRichText.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIScale9Sprite.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIScrollView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIScrollViewBar.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UISlider.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UITabControl.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIText.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UITextAtlas.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UITextBMFont.cpp" />

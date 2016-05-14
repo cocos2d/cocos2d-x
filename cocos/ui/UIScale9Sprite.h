@@ -30,12 +30,15 @@
 #include "2d/CCSpriteBatchNode.h"
 #include "platform/CCPlatformMacros.h"
 #include "ui/GUIExport.h"
+#include "renderer/CCTrianglesCommand.h"
 
 /**
  * @addtogroup ui
  * @{
  */
 NS_CC_BEGIN
+class DrawNode;
+
 namespace ui {
     
     /**
@@ -69,12 +72,18 @@ namespace ui {
         
         /**
          * Builtin shader state.
-         * Currenly support Normal and Gray state.
+         * Currently support Normal and Gray state.
          */
         enum class State
         {
             NORMAL,
             GRAY
+        };
+        
+        enum class RenderingType
+        {
+            SIMPLE,
+            SLICE
         };
         
     public:
@@ -418,7 +427,7 @@ namespace ui {
          * @param rect A delimitation zone.
          * @param rotated Whether the sprite is rotated or not.
          * @param offset The offset when slice the sprite.
-         * @param originalSize The origial size of the sprite.
+         * @param originalSize The original size of the sprite.
          * @param capInsets The Values to use for the cap insets.
          * @return True if update success, false otherwise.
          * @js NA
@@ -457,7 +466,7 @@ namespace ui {
         // overrides
         virtual void setContentSize(const Size & size) override;
         virtual void setAnchorPoint(const Vec2& anchorPoint) override;
-        
+
         /**
          * Change the state of 9-slice sprite.
          * @see `State`
@@ -568,6 +577,8 @@ namespace ui {
         /**
          * @brief Toggle 9-slice feature.
          * If Scale9Sprite is 9-slice disabled, the Scale9Sprite will rendered as a normal sprite.
+         * @warning: Don't use setScale9Enabled(false), use setRenderingType(RenderingType::SIMPLE) instead.
+         *        The setScale9Enabled(false) is kept only for back back compatibility.
          * @param enabled True to enable 9-slice, false otherwise.
          * @js NA
          */
@@ -583,45 +594,15 @@ namespace ui {
         
         /// @} end of Children and Parent
         
+        virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
         virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
-        virtual void cleanup() override;
-        
-        /**
-         * @lua NA
-         */
-        virtual void onEnter() override;
-        
-        /** Event callback that is invoked when the Node enters in the 'stage'.
-         * If the Node enters the 'stage' with a transition, this event is called when the transition finishes.
-         * If you override onEnterTransitionDidFinish, you shall call its parent's one, e.g. Node::onEnterTransitionDidFinish()
-         * @js NA
-         * @lua NA
-         */
-        virtual void onEnterTransitionDidFinish() override;
-        
-        /**
-         * Event callback that is invoked every time the Node leaves the 'stage'.
-         * If the Node leaves the 'stage' with a transition, this event is called when the transition finishes.
-         * During onExit you can't access a sibling node.
-         * If you override onExit, you shall call its parent's one, e.g., Node::onExit().
-         * @js NA
-         * @lua NA
-         */
-        virtual void onExit() override;
-        
-        /**
-         * Event callback that is called every time the Node leaves the 'stage'.
-         * If the Node leaves the 'stage' with a transition, this callback is called when the transition starts.
-         * @js NA
-         * @lua NA
-         */
-        virtual void onExitTransitionDidStart() override;
         
         virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
         virtual void updateDisplayedColor(const Color3B& parentColor) override;
         virtual void disableCascadeColor() override;
         virtual void disableCascadeOpacity() override;
-        
+        virtual void setGLProgram(GLProgram *glprogram) override;
+        virtual void setGLProgramState(GLProgramState *glProgramState) override;
         
         /**
          * @brief Get the original no 9-sliced sprite
@@ -679,45 +660,45 @@ namespace ui {
         virtual float getScale() const override;
         using Node::getScaleZ;
         virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
+        virtual void setGlobalZOrder(float globalZOrder) override;
+
+        /**
+         * Set the slice sprite rendering type.
+         * When setting to SIMPLE, only 4 vertexes is used to rendering.
+         * otherwise 16 vertexes will be used to rendering.
+         * @see RenderingType
+         */
+        void setRenderingType(RenderingType type);
+        
+        /**
+         * Return the slice sprite rendering type.
+         */
+        RenderingType getRenderingType()const;
+
+        void resetRender();
+
     protected:
         void updateCapInset();
-        void updatePositions();
         void createSlicedSprites();
         void cleanupSlicedSprites();
-        void adjustScale9ImagePosition();
+        void adjustNoneScale9ImagePosition();
+        void configureSimpleModeRendering();
         void applyBlendFunc();
         void updateBlendFunc(Texture2D *texture);
-        /**
-         * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
-         * This approach can improves the performance massively.
-         * @note Don't call this manually unless a child added needs to be removed in the same frame
-         */
-        virtual void sortAllProtectedChildren();
+        std::vector<Vec2> calculateUV(Texture2D *tex, const Rect& capInsets,
+                                     const Size& originalSize, const Vec4& offsets);
+        std::vector<Vec2> calculateVertices(const Rect& capInsets, const Size& originalSize, const Vec4& offsets);
+        TrianglesCommand::Triangles calculateTriangles(const std::vector<Vec2>& uv,
+                                                      const std::vector<Vec2>& vertices);
         
-        bool _spritesGenerated;
         Rect _spriteRect;
         bool   _spriteFrameRotated;
         Rect _capInsetsInternal;
-        bool _positionsAreDirty;
         
         Sprite* _scale9Image; //the original sprite
-        Sprite* _topLeftSprite;
-        Sprite* _topSprite;
-        Sprite* _topRightSprite;
-        Sprite* _leftSprite;
-        Sprite* _centerSprite;
-        Sprite* _rightSprite;
-        Sprite* _bottomLeftSprite;
-        Sprite* _bottomSprite;
-        Sprite* _bottomRightSprite;
         
         bool _scale9Enabled;
         BlendFunc _blendFunc;
-        
-        Size _topLeftSize;
-        Size _centerSize;
-        Size _bottomRightSize;
-        Vec2 _centerOffset;
         
         /** Original sprite's size. */
         Size _originalSize;
@@ -726,12 +707,7 @@ namespace ui {
         
         //if the preferredSize component is given as -1, it is ignored
         Size _preferredSize;
-        /**
-         * The end-cap insets.
-         * On a non-resizeable sprite, this property is set to CGRect::ZERO; the sprite
-         * does not use end caps and the entire sprite is subject to stretching.
-         */
-        Rect _capInsets;
+        
         /** Sets the left side inset */
         float _insetLeft;
         /** Sets the top side inset */
@@ -741,16 +717,22 @@ namespace ui {
         /** Sets the bottom side inset */
         float _insetBottom;
         
-        /// helper that reorder a child
-        void addProtectedChild(Node* child);
-        
-        Vector<Node*> _protectedChildren;        ///holds the 9 sprites
-        bool _reorderProtectedChildDirty;
-        
         bool _flippedX;
         bool _flippedY;
         bool _isPatch9;
         State _brightState;
+        Vec2 _nonSliceSpriteAnchor;
+
+        V3F_C4B_T2F* _sliceVertices;
+        unsigned short* _sliceIndices;
+        bool _sliceSpriteDirty;
+        RenderingType _renderingType;
+        
+#if CC_SPRITE_DEBUG_DRAW
+        DrawNode *_debugDrawNode;
+#endif //CC_SPRITE_DEBUG_DRAW
+        bool _insideBounds;   /// whether or not the sprite was inside bounds the previous frame
+        TrianglesCommand _trianglesCommand;     ///
     };
     
 }}  //end of namespace

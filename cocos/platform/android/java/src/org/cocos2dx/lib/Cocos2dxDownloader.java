@@ -99,6 +99,7 @@ class FileTaskHandler extends FileAsyncHttpResponseHandler {
     @Override
     public void onFinish() {
         // onFinish called after onSuccess/onFailure
+        _downloader.runNextTaskIfExists();
     }
 
     @Override
@@ -166,7 +167,10 @@ public class Cocos2dxDownloader {
     private int _id;
     private AsyncHttpClient _httpClient = new AsyncHttpClient();
     private String _tempFileNameSufix;
+    private int _countOfMaxProcessingTasks;
     private HashMap _taskMap = new HashMap();
+    private Queue<Runnable> _taskQueue = new LinkedList<Runnable>();
+    private int _runningTaskCount = 0;
 
     void onProgress(final int id, final long downloadBytes, final long downloadNow, final long downloadTotal) {
         DownloadTask task = (DownloadTask)_taskMap.get(id);
@@ -202,7 +206,7 @@ public class Cocos2dxDownloader {
         });
     }
 
-    public static Cocos2dxDownloader createDownloader(int id, int timeoutInSeconds, String tempFileNameSufix) {
+    public static Cocos2dxDownloader createDownloader(int id, int timeoutInSeconds, String tempFileNameSufix, int countOfMaxProcessingTasks) {
         Cocos2dxDownloader downloader = new Cocos2dxDownloader();
         downloader._id = id;
 
@@ -214,6 +218,7 @@ public class Cocos2dxDownloader {
         downloader._httpClient.allowRetryExceptionClass(javax.net.ssl.SSLException.class);
 
         downloader._tempFileNameSufix = tempFileNameSufix;
+        downloader._countOfMaxProcessingTasks = countOfMaxProcessingTasks;
         return downloader;
     }
 
@@ -222,7 +227,7 @@ public class Cocos2dxDownloader {
         final String url = url_;
         final String path = path_;
 
-        Cocos2dxHelper.getActivity().runOnUiThread(new Runnable() {
+        Runnable taskRunnable = new Runnable() {
             @Override
             public void run() {
                 DownloadTask task = new DownloadTask();
@@ -269,7 +274,8 @@ public class Cocos2dxDownloader {
                     downloader._taskMap.put(id, task);
                 }
             }
-        });
+        };
+        downloader.enqueueTask(taskRunnable);
     }
 
     public static void cancelAllRequests(final Cocos2dxDownloader downloader) {
@@ -289,6 +295,29 @@ public class Cocos2dxDownloader {
                 }
             }
         });
+    }
+
+
+    public void enqueueTask(Runnable taskRunnable) {
+        synchronized (_taskQueue) {
+            if (_runningTaskCount < _countOfMaxProcessingTasks) {
+                Cocos2dxHelper.getActivity().runOnUiThread(taskRunnable);
+                _runningTaskCount++;
+            } else {
+                _taskQueue.add(taskRunnable);
+            }
+        }
+    }
+
+    public void runNextTaskIfExists() {
+        synchronized (_taskQueue) {
+            Runnable taskRunnable = Cocos2dxDownloader.this._taskQueue.poll();
+            if (taskRunnable != null) {
+                Cocos2dxHelper.getActivity().runOnUiThread(taskRunnable);
+            } else {
+                _runningTaskCount--;
+            }
+        }
     }
 
     native void nativeOnProgress(int id, int taskId, long dl, long dlnow, long dltotal);

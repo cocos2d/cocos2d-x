@@ -491,4 +491,9 @@ Camera* Camera::deepCopy()
   return Camera::createOrthographic(_zoom[0], _zoom[1], _nearPlane, _farPlane);
 }
 
+bool Camera::isBrushValid()
+{
+    return _clearBrush != nullptr && _clearBrush->isValid();
+}
+
 NS_CC_END

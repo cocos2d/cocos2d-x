@@ -1,8 +1,7 @@
-#include "lua_cocos2dx_extension_auto.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_extension_auto.hpp"
 #include "cocos-ext.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
 int lua_cocos2dx_extension_Control_setEnabled(lua_State* tolua_S)
 {
@@ -2466,24 +2465,27 @@ int lua_cocos2dx_extension_ControlButton_initWithLabelAndBackgroundSprite(lua_St
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
+    if (argc == 3) 
     {
         cocos2d::Node* arg0;
         cocos2d::ui::Scale9Sprite* arg1;
+        bool arg2;
 
         ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ControlButton:initWithLabelAndBackgroundSprite");
 
         ok &= luaval_to_object<cocos2d::ui::Scale9Sprite>(tolua_S, 3, "ccui.Scale9Sprite",&arg1, "cc.ControlButton:initWithLabelAndBackgroundSprite");
+
+        ok &= luaval_to_boolean(tolua_S, 4,&arg2, "cc.ControlButton:initWithLabelAndBackgroundSprite");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_ControlButton_initWithLabelAndBackgroundSprite'", nullptr);
             return 0;
         }
-        bool ret = cobj->initWithLabelAndBackgroundSprite(arg0, arg1);
+        bool ret = cobj->initWithLabelAndBackgroundSprite(arg0, arg1, arg2);
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:initWithLabelAndBackgroundSprite",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:initWithLabelAndBackgroundSprite",argc, 3);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -2655,6 +2657,25 @@ int lua_cocos2dx_extension_ControlButton_create(lua_State* tolua_S)
             if (!ok) { break; }
             double arg2;
             ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.ControlButton:create");
+            if (!ok) { break; }
+            cocos2d::extension::ControlButton* ret = cocos2d::extension::ControlButton::create(arg0, arg1, arg2);
+            object_to_luaval<cocos2d::extension::ControlButton>(tolua_S, "cc.ControlButton",(cocos2d::extension::ControlButton*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 3)
+        {
+            cocos2d::Node* arg0;
+            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ControlButton:create");
+            if (!ok) { break; }
+            cocos2d::ui::Scale9Sprite* arg1;
+            ok &= luaval_to_object<cocos2d::ui::Scale9Sprite>(tolua_S, 3, "ccui.Scale9Sprite",&arg1, "cc.ControlButton:create");
+            if (!ok) { break; }
+            bool arg2;
+            ok &= luaval_to_boolean(tolua_S, 4,&arg2, "cc.ControlButton:create");
             if (!ok) { break; }
             cocos2d::extension::ControlButton* ret = cocos2d::extension::ControlButton::create(arg0, arg1, arg2);
             object_to_luaval<cocos2d::extension::ControlButton>(tolua_S, "cc.ControlButton",(cocos2d::extension::ControlButton*)ret);
@@ -8820,7 +8841,7 @@ int lua_cocos2dx_extension_ScrollView_setDirection(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_extension_ScrollView_setBounceable(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_stopAnimatedContentOffset(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -8840,32 +8861,29 @@ int lua_cocos2dx_extension_ScrollView_setBounceable(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ScrollView_setBounceable'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ScrollView_stopAnimatedContentOffset'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 0) 
     {
-        bool arg0;
-
-        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.ScrollView:setBounceable");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_ScrollView_setBounceable'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_ScrollView_stopAnimatedContentOffset'", nullptr);
             return 0;
         }
-        cobj->setBounceable(arg0);
+        cobj->stopAnimatedContentOffset();
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setBounceable",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:stopAnimatedContentOffset",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_ScrollView_setBounceable'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_ScrollView_stopAnimatedContentOffset'.",&tolua_err);
 #endif
 
     return 0;
@@ -9419,6 +9437,56 @@ int lua_cocos2dx_extension_ScrollView_maxContainerOffset(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_extension_ScrollView_setBounceable(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::ScrollView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::ScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ScrollView_setBounceable'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        bool arg0;
+
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.ScrollView:setBounceable");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_ScrollView_setBounceable'", nullptr);
+            return 0;
+        }
+        cobj->setBounceable(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setBounceable",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_ScrollView_setBounceable'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_extension_ScrollView_isTouchMoved(lua_State* tolua_S)
 {
     int argc = 0;
@@ -9748,7 +9816,7 @@ int lua_register_cocos2dx_extension_ScrollView(lua_State* tolua_S)
         tolua_function(tolua_S,"initWithViewSize",lua_cocos2dx_extension_ScrollView_initWithViewSize);
         tolua_function(tolua_S,"pause",lua_cocos2dx_extension_ScrollView_pause);
         tolua_function(tolua_S,"setDirection",lua_cocos2dx_extension_ScrollView_setDirection);
-        tolua_function(tolua_S,"setBounceable",lua_cocos2dx_extension_ScrollView_setBounceable);
+        tolua_function(tolua_S,"stopAnimatedContentOffset",lua_cocos2dx_extension_ScrollView_stopAnimatedContentOffset);
         tolua_function(tolua_S,"setContentOffset",lua_cocos2dx_extension_ScrollView_setContentOffset);
         tolua_function(tolua_S,"isDragging",lua_cocos2dx_extension_ScrollView_isDragging);
         tolua_function(tolua_S,"isTouchEnabled",lua_cocos2dx_extension_ScrollView_isTouchEnabled);
@@ -9760,6 +9828,7 @@ int lua_register_cocos2dx_extension_ScrollView(lua_State* tolua_S)
         tolua_function(tolua_S,"setViewSize",lua_cocos2dx_extension_ScrollView_setViewSize);
         tolua_function(tolua_S,"getViewSize",lua_cocos2dx_extension_ScrollView_getViewSize);
         tolua_function(tolua_S,"maxContainerOffset",lua_cocos2dx_extension_ScrollView_maxContainerOffset);
+        tolua_function(tolua_S,"setBounceable",lua_cocos2dx_extension_ScrollView_setBounceable);
         tolua_function(tolua_S,"isTouchMoved",lua_cocos2dx_extension_ScrollView_isTouchMoved);
         tolua_function(tolua_S,"isNodeVisible",lua_cocos2dx_extension_ScrollView_isNodeVisible);
         tolua_function(tolua_S,"minContainerOffset",lua_cocos2dx_extension_ScrollView_minContainerOffset);
@@ -13296,6 +13365,53 @@ int lua_cocos2dx_extension_ParticleSystem3D_isEnabled(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_extension_ParticleSystem3D_getRender(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ParticleSystem3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ParticleSystem3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ParticleSystem3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ParticleSystem3D_getRender'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_ParticleSystem3D_getRender'", nullptr);
+            return 0;
+        }
+        cocos2d::Particle3DRender* ret = cobj->getRender();
+        object_to_luaval<cocos2d::Particle3DRender>(tolua_S, "cc.Particle3DRender",(cocos2d::Particle3DRender*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ParticleSystem3D:getRender",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_ParticleSystem3D_getRender'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_extension_ParticleSystem3D_setEmitter(lua_State* tolua_S)
 {
     int argc = 0;
@@ -13981,6 +14097,7 @@ int lua_register_cocos2dx_extension_ParticleSystem3D(lua_State* tolua_S)
         tolua_function(tolua_S,"addAffector",lua_cocos2dx_extension_ParticleSystem3D_addAffector);
         tolua_function(tolua_S,"startParticleSystem",lua_cocos2dx_extension_ParticleSystem3D_startParticleSystem);
         tolua_function(tolua_S,"isEnabled",lua_cocos2dx_extension_ParticleSystem3D_isEnabled);
+        tolua_function(tolua_S,"getRender",lua_cocos2dx_extension_ParticleSystem3D_getRender);
         tolua_function(tolua_S,"setEmitter",lua_cocos2dx_extension_ParticleSystem3D_setEmitter);
         tolua_function(tolua_S,"isKeepLocal",lua_cocos2dx_extension_ParticleSystem3D_isKeepLocal);
         tolua_function(tolua_S,"setEnabled",lua_cocos2dx_extension_ParticleSystem3D_setEnabled);
@@ -14181,7 +14298,7 @@ int lua_cocos2dx_extension_PUParticleSystem3D_getDefaultDepth(lua_State* tolua_S
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_PUParticleSystem3D_getDefaultDepth'", nullptr);
             return 0;
         }
-        const float ret = cobj->getDefaultDepth();
+        double ret = cobj->getDefaultDepth();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -14375,7 +14492,7 @@ int lua_cocos2dx_extension_PUParticleSystem3D_getMaterialName(lua_State* tolua_S
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_PUParticleSystem3D_getMaterialName'", nullptr);
             return 0;
         }
-        const std::string ret = cobj->getMaterialName();
+        const std::string& ret = cobj->getMaterialName();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
@@ -14857,7 +14974,7 @@ int lua_cocos2dx_extension_PUParticleSystem3D_getDefaultWidth(lua_State* tolua_S
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_PUParticleSystem3D_getDefaultWidth'", nullptr);
             return 0;
         }
-        const float ret = cobj->getDefaultWidth();
+        double ret = cobj->getDefaultWidth();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -15448,7 +15565,7 @@ int lua_cocos2dx_extension_PUParticleSystem3D_getDefaultHeight(lua_State* tolua_
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_PUParticleSystem3D_getDefaultHeight'", nullptr);
             return 0;
         }
-        const float ret = cobj->getDefaultHeight();
+        double ret = cobj->getDefaultHeight();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -15800,6 +15917,56 @@ int lua_cocos2dx_extension_PUParticleSystem3D_removeAllListener(lua_State* tolua
 
     return 0;
 }
+int lua_cocos2dx_extension_PUParticleSystem3D_initSystem(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PUParticleSystem3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PUParticleSystem3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PUParticleSystem3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_PUParticleSystem3D_initSystem'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.PUParticleSystem3D:initSystem");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_PUParticleSystem3D_initSystem'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initSystem(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PUParticleSystem3D:initSystem",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_PUParticleSystem3D_initSystem'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_extension_PUParticleSystem3D_makeParticleLocal(lua_State* tolua_S)
 {
     int argc = 0;
@@ -16146,6 +16313,7 @@ int lua_register_cocos2dx_extension_PUParticleSystem3D(lua_State* tolua_S)
         tolua_function(tolua_S,"getDerivedScale",lua_cocos2dx_extension_PUParticleSystem3D_getDerivedScale);
         tolua_function(tolua_S,"setDefaultHeight",lua_cocos2dx_extension_PUParticleSystem3D_setDefaultHeight);
         tolua_function(tolua_S,"removeAllListener",lua_cocos2dx_extension_PUParticleSystem3D_removeAllListener);
+        tolua_function(tolua_S,"initSystem",lua_cocos2dx_extension_PUParticleSystem3D_initSystem);
         tolua_function(tolua_S,"makeParticleLocal",lua_cocos2dx_extension_PUParticleSystem3D_makeParticleLocal);
         tolua_function(tolua_S,"removerAllObserver",lua_cocos2dx_extension_PUParticleSystem3D_removerAllObserver);
         tolua_function(tolua_S,"setDefaultDepth",lua_cocos2dx_extension_PUParticleSystem3D_setDefaultDepth);

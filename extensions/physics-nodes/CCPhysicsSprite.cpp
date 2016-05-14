@@ -31,7 +31,7 @@
 #endif
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
-#include "chipmunk.h"
+#include "chipmunk/chipmunk.h"
 #elif CC_ENABLE_BOX2D_INTEGRATION
 #include "Box2D/Box2D.h"
 #endif
@@ -195,6 +195,12 @@ float PhysicsSprite::getPositionY() const
     return getPosFromPhysics().y;
 }
 
+Vec3 PhysicsSprite::getPosition3D() const
+{
+    Vec2 pos = getPosFromPhysics();
+    return Vec3(pos.x, pos.y, 0);
+}
+
 //
 // Chipmunk only
 //
@@ -267,8 +273,8 @@ const Vec2& PhysicsSprite::getPosFromPhysics() const
     static Vec2 s_physicPosion;
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
-    cpVect cpPos = cpBodyGetPos(_CPBody);
-    s_physicPosion.set(cpPos.x, cpPos.y);
+    cpVect cpPos = cpBodyGetPosition(_CPBody);
+    s_physicPosion = Vec2(cpPos.x, cpPos.y);
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
 
@@ -280,19 +286,38 @@ const Vec2& PhysicsSprite::getPosFromPhysics() const
     return s_physicPosion;
 }
 
-void PhysicsSprite::setPosition(const Vec2 &pos)
+void PhysicsSprite::setPosition(float x, float y)
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
-    cpVect cpPos = cpv(pos.x, pos.y);
-    cpBodySetPos(_CPBody, cpPos);
+    cpVect cpPos = cpv(x, y);
+    cpBodySetPosition(_CPBody, cpPos);
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
-
+    
     float angle = _pB2Body->GetAngle();
-    _pB2Body->SetTransform(b2Vec2(pos.x / _PTMRatio, pos.y / _PTMRatio), angle);
+    _pB2Body->SetTransform(b2Vec2(x / _PTMRatio, y / _PTMRatio), angle);
 #endif
+}
 
+void PhysicsSprite::setPosition(const Vec2 &pos)
+{
+    setPosition(pos.x, pos.y);
+}
+
+void PhysicsSprite::setPositionX(float x)
+{
+    setPosition(x, getPositionY());
+}
+
+void PhysicsSprite::setPositionY(float y)
+{
+    setPosition(getPositionX(), y);
+}
+
+void PhysicsSprite::setPosition3D(const Vec3& position)
+{
+    setPosition(position.x, position.y);
 }
 
 float PhysicsSprite::getRotation() const
@@ -343,9 +368,9 @@ void PhysicsSprite::syncPhysicsTransform() const
     
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
     
-	cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(_rotationX)) : _CPBody->rot);
-	float x = _CPBody->p.x + rot.x * -_anchorPointInPoints.x * _scaleX - rot.y * -_anchorPointInPoints.y * _scaleY;
-	float y = _CPBody->p.y + rot.y * -_anchorPointInPoints.x * _scaleX + rot.x * -_anchorPointInPoints.y * _scaleY;
+	cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(_rotationX)) : cpBodyGetRotation(_CPBody));
+	float x = cpBodyGetPosition(_CPBody).x + rot.x * -_anchorPointInPoints.x * _scaleX - rot.y * -_anchorPointInPoints.y * _scaleY;
+	float y = cpBodyGetPosition(_CPBody).y + rot.y * -_anchorPointInPoints.x * _scaleX + rot.x * -_anchorPointInPoints.y * _scaleY;
     
 	if (_ignoreAnchorPointForPosition)
     {

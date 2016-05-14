@@ -36,6 +36,7 @@ NS_CC_BEGIN
  */
 
 class Label;
+struct CC_DLL ResourceData;
 
 namespace ui {
     
@@ -138,6 +139,9 @@ public:
      * @js NA
      */
     virtual void adaptRenderers() override;
+
+    ResourceData getRenderFile();
+
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;

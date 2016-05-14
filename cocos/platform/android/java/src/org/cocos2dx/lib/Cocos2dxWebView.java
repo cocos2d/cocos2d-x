@@ -11,6 +11,27 @@ import android.widget.FrameLayout;
 
 import java.lang.reflect.Method;
 import java.net.URI;
+import java.util.concurrent.CountDownLatch;
+
+class ShouldStartLoadingWorker implements Runnable {
+    private CountDownLatch mLatch;
+    private boolean[] mResult;
+    private final int mViewTag;
+    private final String mUrlString;
+
+    ShouldStartLoadingWorker(CountDownLatch latch, boolean[] result, int viewTag, String urlString) {
+        this.mLatch = latch;
+        this.mResult = result;
+        this.mViewTag = viewTag;
+        this.mUrlString = urlString;
+    }
+
+    @Override
+    public void run() {
+        this.mResult[0] = Cocos2dxWebViewHelper._shouldStartLoading(mViewTag, mUrlString);
+        this.mLatch.countDown(); // notify that result is ready
+    }
+}
 
 public class Cocos2dxWebView extends WebView {
     private static final String TAG = Cocos2dxWebViewHelper.class.getSimpleName();
@@ -75,7 +96,20 @@ public class Cocos2dxWebView extends WebView {
                 Log.d(TAG, "Failed to create URI from url");
             }
 
-            return Cocos2dxWebViewHelper._shouldStartLoading(mViewTag, urlString);
+            boolean[] result = new boolean[] { true };
+            CountDownLatch latch = new CountDownLatch(1);
+
+            // run worker on cocos thread
+            activity.runOnGLThread(new ShouldStartLoadingWorker(latch, result, mViewTag, urlString));
+
+            // wait for result from cocos thread
+            try {
+                latch.await();
+            } catch (InterruptedException ex) {
+                Log.d(TAG, "'shouldOverrideUrlLoading' failed");
+            }
+
+            return result[0];
         }
 
         @Override
@@ -102,7 +136,7 @@ public class Cocos2dxWebView extends WebView {
             });
         }
     }
-    
+
     public void setWebViewRect(int left, int top, int maxWidth, int maxHeight) {
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT);

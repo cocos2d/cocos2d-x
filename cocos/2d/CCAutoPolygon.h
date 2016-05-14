@@ -55,9 +55,9 @@ public:
      * @return PolygonInfo object
      */
     PolygonInfo():
-    isVertsOwner(true),
     rect(cocos2d::Rect::ZERO),
-    filename("")
+    filename(""),
+    isVertsOwner(true)
     {
         triangles.verts = nullptr;
         triangles.indices = nullptr;
@@ -90,27 +90,37 @@ public:
     void setQuad(V3F_C4B_T2F_Quad *quad);
 
     /**
+     * set the data to be a pointer to a triangles
+     * the member verts will not be released when this PolygonInfo destructs
+     * as the verts memory are managed by other objects
+     * @param triangles  a pointer to the TrianglesCommand::Triangles object
+     */
+    void setTriangles(TrianglesCommand::Triangles triangles);
+
+    /**
      * get vertex count
      * @return number of vertices
      */
-    const unsigned int getVertCount() const;
+    unsigned int getVertCount() const;
     
     /**
      * get triangles count
      * @return number of triangles
      */
-    const unsigned int getTriaglesCount() const;
+    unsigned int getTrianglesCount() const;
+
+    /** @deprecated Use method getTrianglesCount() instead */
+    CC_DEPRECATED_ATTRIBUTE unsigned int getTriaglesCount() const;
     
     /**
      * get sum of all triangle area size
      * @return sum of all triangle area size
      */
-    const float getArea() const;
+    float getArea() const;
     
     Rect rect;
     std::string filename;
     TrianglesCommand::Triangles triangles;
-    
 protected:
     bool isVertsOwner;
     

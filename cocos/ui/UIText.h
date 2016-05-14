@@ -205,7 +205,7 @@ public:
     /**
      * Sets the rendering size of the text, you should call this method
      * along with calling `ignoreContentAdaptWithSize(false)`, otherwise the text area
-     * size is caculated by the real size of the text content.
+     * size is calculated by the real size of the text content.
      *
      * @param size The text rendering area size.
      *
@@ -293,6 +293,35 @@ public:
      * @see `LabelEffect`
      */
     void disableEffect(LabelEffect effect);
+
+    /**
+    * Return whether the shadow effect is enabled.
+    */
+    bool isShadowEnabled() const;
+    /**
+    * Return shadow effect offset value.
+    */
+    Size getShadowOffset() const;
+    /**
+    * Return the shadow effect blur radius.
+    */
+    float getShadowBlurRadius() const;
+    /**
+    * Return the shadow effect color value.
+    */
+    Color4B getShadowColor() const;
+    /**
+    * Return the outline effect size value.
+    */
+    int getOutlineSize() const;
+    /**
+    * Return current effect type.
+    */
+    LabelEffect getLabelEffectType() const;
+    /**
+    * Return current effect color value.
+    */
+    Color4B getEffectColor() const;
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;

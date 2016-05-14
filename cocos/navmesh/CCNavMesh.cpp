@@ -183,9 +183,9 @@ bool NavMesh::loadNavMeshFile()
         return false;
     }
 
-    _allocator = new LinearAllocator(32000);
-    _compressor = new FastLZCompressor;
-    _meshProcess = new MeshProcess(_geomData);
+    _allocator = new (std::nothrow) LinearAllocator(32000);
+    _compressor = new (std::nothrow) FastLZCompressor;
+    _meshProcess = new (std::nothrow) MeshProcess(_geomData);
     status = _tileCache->init(&header.cacheParams, _allocator, _compressor, _meshProcess);
 
     if (dtStatusFailed(status))
@@ -233,7 +233,7 @@ bool NavMesh::loadGeomFile()
     auto data = FileUtils::getInstance()->getDataFromFile(_geomFilePath);
     if (data.isNull()) return false;
     buf = data.getBytes();
-    _geomData = new GeomData;
+    _geomData = new (std::nothrow) GeomData;
     _geomData->offMeshConCount = 0;
 
     unsigned char* src = buf;

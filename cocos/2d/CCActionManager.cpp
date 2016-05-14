@@ -3,7 +3,7 @@ Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-CopyRight (c) 2013-2014 Chukong Technologies Inc.
+CopyRight (c) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -161,7 +161,8 @@ Vector<Node*> ActionManager::pauseAllRunningActions()
 
 void ActionManager::resumeTargets(const Vector<Node*>& targetsToResume)
 {
-    for(const auto &node : targetsToResume) {
+    for(const auto &node : targetsToResume)
+    {
         this->resumeTarget(node);
     }
 }
@@ -172,6 +173,8 @@ void ActionManager::addAction(Action *action, Node *target, bool paused)
 {
     CCASSERT(action != nullptr, "action can't be nullptr!");
     CCASSERT(target != nullptr, "target can't be nullptr!");
+    if(action == nullptr || target == nullptr)
+        return;
 
     tHashElement *element = nullptr;
     // we should convert it to Ref*, because we save it as Ref*
@@ -234,10 +237,6 @@ void ActionManager::removeAllActionsFromTarget(Node *target)
             deleteHashElement(element);
         }
     }
-    else
-    {
-//        CCLOG("cocos2d: removeAllActionsFromTarget: Target not found");
-    }
 }
 
 void ActionManager::removeAction(Action *action)
@@ -259,16 +258,16 @@ void ActionManager::removeAction(Action *action)
             removeActionAtIndex(i, element);
         }
     }
-    else
-    {
-        CCLOG("cocos2d: removeAction: Target not found");
-    }
 }
 
 void ActionManager::removeActionByTag(int tag, Node *target)
 {
     CCASSERT(tag != Action::INVALID_TAG, "Invalid tag value!");
     CCASSERT(target != nullptr, "target can't be nullptr!");
+    if (target == nullptr)
+    {
+        return;
+    }
 
     tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
@@ -293,6 +292,10 @@ void ActionManager::removeAllActionsByTag(int tag, Node *target)
 {
     CCASSERT(tag != Action::INVALID_TAG, "Invalid tag value!");
     CCASSERT(target != nullptr, "target can't be nullptr!");
+    if (target == nullptr)
+    {
+        return;
+    }
     
     tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
@@ -324,6 +327,10 @@ void ActionManager::removeActionsByFlags(unsigned int flags, Node *target)
         return;
     }
     CCASSERT(target != nullptr, "target can't be nullptr!");
+    if (target == nullptr)
+    {
+        return;
+    }
 
     tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
@@ -374,11 +381,6 @@ Action* ActionManager::getActionByTag(int tag, const Node *target) const
                 }
             }
         }
-        //CCLOG("cocos2d : getActionByTag(tag = %d): Action not found", tag);
-    }
-    else
-    {
-        // CCLOG("cocos2d : getActionByTag: Target not found");
     }
 
     return nullptr;
@@ -453,6 +455,11 @@ void ActionManager::update(float dt)
 
         // only delete currentTarget if no actions were scheduled during the cycle (issue #481)
         if (_currentTargetSalvaged && _currentTarget->actions->num == 0)
+        {
+            deleteHashElement(_currentTarget);
+        }
+        //if some node reference 'target', it's reference count >= 2 (issues #14050)
+        else if (_currentTarget->target->getReferenceCount() == 1)
         {
             deleteHashElement(_currentTarget);
         }

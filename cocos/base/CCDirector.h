@@ -97,9 +97,13 @@ class CC_DLL Director : public Ref
 {
 public:
     /** Director will trigger an event when projection type is changed. */
-    static const char *EVENT_PROJECTION_CHANGED;
+    static const char* EVENT_PROJECTION_CHANGED;
+    /** Director will trigger an event before Schedule::update() is invoked. */
+    static const char* EVENT_BEFORE_UPDATE;
     /** Director will trigger an event after Schedule::update() is invoked. */
     static const char* EVENT_AFTER_UPDATE;
+    /** Director will trigger an event while resetting Director */
+    static const char* EVENT_RESET;
     /** Director will trigger an event after Scene::render() is invoked. */
     static const char* EVENT_AFTER_VISIT;
     /** Director will trigger an event after a scene is drawn, the data is sent to GPU. */
@@ -497,7 +501,7 @@ public:
      * Gets the top matrix of specified type of matrix stack.
      * @js NA
      */
-    const Mat4& getMatrix(MATRIX_STACK_TYPE type);
+    const Mat4& getMatrix(MATRIX_STACK_TYPE type) const;
     /**
      * Clear all types of matrix stack, and add identity matrix to these matrix stacks.
      * @js NA
@@ -553,7 +557,7 @@ protected:
      @since v3.0
      */
     EventDispatcher* _eventDispatcher;
-    EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventAfterUpdate;
+    EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventBeforeUpdate, *_eventAfterUpdate, *_eventResetDirector;
         
     /* delta time since last tick to main loop */
 	float _deltaTime;

@@ -361,6 +361,12 @@ SpriteBlur::~SpriteBlur()
 SpriteBlur* SpriteBlur::create(const char *pszFileName)
 {
     SpriteBlur* pRet = new (std::nothrow) SpriteBlur();
+    if (pRet)
+    {
+        bool result = pRet->initWithFile("");
+        log("Test call Sprite::initWithFile with bad file name result is : %s", result ? "true" : "false");
+    }
+
     if (pRet && pRet->initWithFile(pszFileName))
     {
         pRet->autorelease();
@@ -396,15 +402,14 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
 
 void SpriteBlur::initGLProgram()
 {
-    GLchar * fragSource = nullptr;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    fragSource = (GLchar*) String::createWithContentsOfFile(
-                                FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
+    std::string fragSource = FileUtils::getInstance()->getStringFromFile(
+        FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh"));
 #else
-    fragSource = (GLchar*)String::createWithContentsOfFile(
-								FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur_winrt.fsh").c_str())->getCString();
+    std::string fragSource = FileUtils::getInstance()->getStringFromFile(
+        FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur_winrt.fsh"));
 #endif
-    auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource);
+    auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.data());
 
     auto glProgramState = GLProgramState::getOrCreateWithGLProgram(program);
     setGLProgramState(glProgramState);

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Cocos2d-html5 Hello World test</title>
     <link rel="icon" type="image/GIF" href="res/favicon.ico"/>
-    <meta name="viewport" content="width=480, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="full-screen" content="yes"/>
     <meta name="screen-orientation" content="portrait"/>
@@ -23,6 +23,25 @@
 <body style="padding:0; margin: 0; background: #000;">
 <script src="res/loading.js"></script>
 <canvas id="gameCanvas" width="480" height="720"></canvas>
+<script>
+    (function () {
+        var nav = window.navigator;
+        var ua = nav.userAgent.toLowerCase();
+        var uaResult = /android (\d+(?:\.\d+)+)/i.exec(ua) || /android (\d+(?:\.\d+)+)/i.exec(nav.platform);
+        if (uaResult) {
+            var browserCheck = ua.match(/(qzone|micromessenger|qq)(mobile)?(browser)?\/?([\d.]+)/i);
+            if (browserCheck) {
+                var browserVersion = parseFloat(browserCheck[4] || 0);
+                if (browserVer < 6.2) {
+                    var gameCanvas = document.getElementById("gameCanvas");
+                    var ctx = gameCanvas.getContext('2d');
+                    ctx.fillStyle = '#000000';
+                    ctx.fillRect(0, 0, 1, 1);
+                }
+            }
+        }
+    })();
+</script>
 <script src="frameworks/cocos2d-html5/CCBoot.js"></script>
 <script cocos src="main.js"></script>
 </body>

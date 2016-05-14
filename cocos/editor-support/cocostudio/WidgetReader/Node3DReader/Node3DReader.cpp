@@ -22,13 +22,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Node3DReader.h"
+#include "editor-support/cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
 
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/CSParse3DBinary_generated.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/CSParse3DBinary_generated.h"
 
-#include "cocostudio/FlatBuffersSerialize.h"
-#include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -56,7 +56,7 @@ namespace cocostudio
     {
         if (!_instanceNode3DReader)
         {
-            _instanceNode3DReader = new Node3DReader();
+            _instanceNode3DReader = new (std::nothrow) Node3DReader();
         }
         
         return _instanceNode3DReader;

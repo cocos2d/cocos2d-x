@@ -27,7 +27,7 @@
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
-#include "HttpClient.h"
+#include "network/HttpClient.h"
 
 #include <queue>
 #include <sstream>

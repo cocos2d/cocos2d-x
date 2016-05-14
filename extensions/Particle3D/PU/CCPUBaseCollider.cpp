@@ -48,7 +48,7 @@ PUBaseCollider::~PUBaseCollider()
 {
 }
 
-const PUBaseCollider::IntersectionType PUBaseCollider::getIntersectionType() const
+PUBaseCollider::IntersectionType PUBaseCollider::getIntersectionType() const
 {
     return _intersectionType;
 }
@@ -58,7 +58,7 @@ void PUBaseCollider::setIntersectionType( const IntersectionType& intersectionTy
     _intersectionType = intersectionType;
 }
 
-const PUBaseCollider::CollisionType PUBaseCollider::getCollisionType() const
+PUBaseCollider::CollisionType PUBaseCollider::getCollisionType() const
 {
     return _collisionType;
 }
@@ -68,7 +68,7 @@ void PUBaseCollider::setCollisionType( const CollisionType& collisionType )
     _collisionType = collisionType;
 }
 
-const float PUBaseCollider::getFriction() const
+float PUBaseCollider::getFriction() const
 {
     return _friction;
 }
@@ -78,7 +78,7 @@ void PUBaseCollider::setFriction( const float friction )
     _friction = friction;
 }
 
-const float PUBaseCollider::getBouncyness() const
+float PUBaseCollider::getBouncyness() const
 {
     return _bouncyness;
 }

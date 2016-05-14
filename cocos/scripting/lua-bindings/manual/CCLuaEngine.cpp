@@ -23,15 +23,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCLuaEngine.h"
-#include "tolua_fix.h"
-#include "cocos2d.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+
 #include "extensions/GUI/CCControlExtension/CCControl.h"
-#include "LuaOpengl.h"
-#include "lua_cocos2dx_manual.hpp"
-#include "lua_cocos2dx_extension_manual.h"
-#include "lua_cocos2dx_coco_studio_manual.hpp"
-#include "lua_cocos2dx_ui_manual.hpp"
+#include "scripting/lua-bindings/manual/cocos2d/LuaOpengl.h"
+#include "scripting/lua-bindings/manual/cocos2d/lua_cocos2dx_manual.hpp"
+#include "scripting/lua-bindings/manual/extension/lua_cocos2dx_extension_manual.h"
+#include "scripting/lua-bindings/manual/cocostudio/lua_cocos2dx_coco_studio_manual.hpp"
+#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_ui_manual.hpp"
+#include "2d/CCMenuItem.h"
+#include "base/CCDirector.h"
+#include "base/CCEventCustom.h"
 
 #if _MSC_VER > 1800
 #pragma comment(lib,"lua51-2015.lib")
@@ -436,13 +439,13 @@ int LuaEngine::handleCommonEvent(void* data)
         return 0;
    
     CommonScriptData* commonInfo = static_cast<CommonScriptData*>(data);
-    if (NULL == commonInfo->eventName || 0 == commonInfo->handler)
+    if ('\0' == commonInfo->eventName[0] || 0 == commonInfo->handler)
         return 0;
     
     _stack->pushString(commonInfo->eventName);
     if (NULL != commonInfo->eventSource)
     {
-        if (NULL  != commonInfo->eventSourceClassName && strlen(commonInfo->eventSourceClassName) > 0)
+        if ('\0' != commonInfo->eventSourceClassName[0])
         {
             _stack->pushObject(commonInfo->eventSource, commonInfo->eventSourceClassName);
         }

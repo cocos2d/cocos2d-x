@@ -39,7 +39,8 @@ NS_CC_BEGIN
 class DrawNode;
 class LayerColor;
 class LayerGradient;
-
+class StencilStateManager;
+struct CC_DLL ResourceData;
 
 namespace ui {
     
@@ -209,7 +210,7 @@ public:
     
     /**
      * Query background image scale9 enable status.
-     *@return Whehter background image is scale9 enabled or not.
+     *@return Whether background image is scale9 enabled or not.
      */
     bool isBackGroundImageScale9Enabled()const;
     
@@ -458,6 +459,8 @@ public:
      */
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
 
+    ResourceData getRenderFile();
+
 CC_CONSTRUCTOR_ACCESS:
     //override "init" method of widget.
     virtual bool init() override;
@@ -486,12 +489,6 @@ protected:
     virtual const Vector<Node*>& getLayoutElements()const override;
     
     //clipping
-    void onBeforeVisitStencil();
-    void onAfterDrawStencil();
-    void onAfterVisitStencil();
-    /**draw fullscreen quad to clear stencil bits
-     */
-    void drawFullScreenQuadClearStencil();
     
     void onBeforeVisitScissor();
     void onAfterVisitScissor();
@@ -521,15 +518,15 @@ protected:
     int findFarthestChildWidgetIndex(FocusDirection direction, Widget* baseWidget);
     
     /**
-     * caculate the nearest distance between the baseWidget and the children of the layout
-     *@param the base widget which will be used to caculate the distance between the layout's children and itself
+     * calculate the nearest distance between the baseWidget and the children of the layout
+     *@param the base widget which will be used to calculate the distance between the layout's children and itself
      *@return return the nearest distance between the baseWidget and the layout's children
      */
     float calculateNearestDistance(Widget* baseWidget);
     
     /**
-     * caculate the farthest distance between the baseWidget and the children of the layout
-     *@param the base widget which will be used to caculate the distance between the layout's children and itself
+     * calculate the farthest distance between the baseWidget and the children of the layout
+     *@param the base widget which will be used to calculate the distance between the layout's children and itself
      *@return return the farthest distance between the baseWidget and the layout's children
      */
 
@@ -546,7 +543,7 @@ protected:
     Widget *findFirstNonLayoutWidget();
     
     /**
-     * find the fisrt focus enabled widget index in the layout, it will recusive searching the child widget
+     * find the first focus enabled widget index in the layout, it will recursive searching the child widget
      */
     int findFirstFocusEnabledWidgetIndex();
     
@@ -577,7 +574,7 @@ protected:
     Widget* getPreviousFocusedWidget(FocusDirection direction, Widget *current);
     
     /**
-     * find the nth elment in the _children array. Only the Widget descendant object will be returned
+     * find the nth element in the _children array. Only the Widget descendant object will be returned
      *@param index  The index of a element in the _children array
      */
     Widget* getChildWidgetByIndex(ssize_t index)const;
@@ -635,23 +632,8 @@ protected:
     bool _clippingRectDirty;
     
     //clipping
+    StencilStateManager *_stencileStateManager;
 
-    GLboolean _currentStencilEnabled;
-    GLuint _currentStencilWriteMask;
-    GLenum _currentStencilFunc;
-    GLint _currentStencilRef;
-    GLuint _currentStencilValueMask;
-    GLenum _currentStencilFail;
-    GLenum _currentStencilPassDepthFail;
-    GLenum _currentStencilPassDepthPass;
-    GLboolean _currentDepthWriteMask;
-    
-    GLboolean _currentAlphaTestEnabled;
-    GLenum _currentAlphaTestFunc;
-    GLclampf _currentAlphaTestRef;
- 
-    
-    GLint _mask_layer_le;
     GroupCommand _groupCommand;
     CustomCommand _beforeVisitCmdStencil;
     CustomCommand _afterDrawStencilCmd;

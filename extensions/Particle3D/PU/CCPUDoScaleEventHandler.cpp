@@ -50,7 +50,7 @@ void PUDoScaleEventHandler::setScaleType(const PUDoScaleEventHandler::ScaleType&
     _scaleType = scaleType;
 }
 //-----------------------------------------------------------------------
-const float PUDoScaleEventHandler::getScaleFraction(void) const
+float PUDoScaleEventHandler::getScaleFraction() const
 {
     return _scaleFraction;
 }

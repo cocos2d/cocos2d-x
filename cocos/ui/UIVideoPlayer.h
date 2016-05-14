@@ -25,7 +25,7 @@
 #ifndef __COCOS2D_UI_VIDEOWEIGTH_H_
 #define __COCOS2D_UI_VIDEOWEIGTH_H_
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) && !defined(CC_PLATFORM_OS_TVOS)
 
 #include "ui/UIWidget.h"
 
@@ -76,7 +76,7 @@ namespace experimental{
             virtual void setFileName(const std::string& videoPath);
             
             /**
-             * @brief Get the local video filie name.
+             * @brief Get the local video file name.
              *
              * @return The video file name.
              */
@@ -172,6 +172,8 @@ namespace experimental{
             virtual void onPlayEvent(int event);
             virtual void setVisible(bool visible) override;
             virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags) override;
+            virtual void onEnter() override;
+            virtual void onExit() override;
 
         protected:
             virtual cocos2d::ui::Widget* createCloneInstance() override;

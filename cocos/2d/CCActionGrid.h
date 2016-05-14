@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2009      On-Core
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -366,7 +366,9 @@ private:
  @brief StopGrid action.
  @warning Don't call this action if another grid action is active.
  Call if you want to remove the grid effect. Example:
- Sequence::actions(Lens::action(...), StopGrid::action(...), nullptr);
+ @code
+ Sequence::create(Lens3D::create(...), StopGrid::create(), nullptr);
+ @endcode
  */
 class CC_DLL StopGrid : public ActionInstant
 {

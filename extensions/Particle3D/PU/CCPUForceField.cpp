@@ -259,7 +259,7 @@ PUForceFieldCalculationFactory* PUForceField::createForceFieldCalculationFactory
     }
 }
 //-----------------------------------------------------------------------
-const PUForceField::ForceFieldType PUForceField::getForceFieldType(void) const
+PUForceField::ForceFieldType PUForceField::getForceFieldType() const
 {
     return _forceFieldType;
 }

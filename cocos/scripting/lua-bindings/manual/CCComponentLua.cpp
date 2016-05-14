@@ -22,11 +22,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCComponentLua.h"
+#include "scripting/lua-bindings/manual/CCComponentLua.h"
 #include <string>
 #include "base/CCScriptSupport.h"
-#include "CCLuaEngine.h"
-#include "LuaBasicConversions.h"
+#include "platform/CCFileUtils.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
 NS_CC_BEGIN
 
@@ -139,7 +140,12 @@ bool ComponentLua::loadAndExecuteScript()
     lua_State *l = engine->getLuaStack()->getLuaState();
     
     // load script
-    int error = luaL_loadfile(l, _scriptFileName.c_str());
+    auto fileUtils = FileUtils::getInstance();
+    std::string fullPathOfScript = fileUtils->fullPathForFilename(_scriptFileName);
+    Data data = fileUtils->getDataFromFile(fullPathOfScript);
+    int error = LUA_ERRFILE;
+    if(data.getSize() > 0)
+        error = engine->getLuaStack()->luaLoadBuffer(l, (const char*)data.getBytes(), (int)data.getSize(), fullPathOfScript.c_str());
     if (error)
     {
         CCLOG("ComponentLua::loadAndExecuteScript: %s", lua_tostring(l, -1));

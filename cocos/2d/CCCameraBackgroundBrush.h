@@ -103,8 +103,10 @@ public:
      * draw the background
      */
     virtual void drawBackground(Camera* camera) {}
-    
-CC_CONSTRUCTOR_ACCESS:
+
+    virtual bool isValid() { return true; }
+
+CC_CONSTRUCTOR_ACCESS :
     CameraBackgroundBrush();
     virtual ~CameraBackgroundBrush();
 
@@ -227,7 +229,7 @@ public:
      */
     static CameraBackgroundSkyBoxBrush* create();
     /**
-     * Set skybox texutre 
+     * Set skybox texture 
      * @param texture Skybox texture
      */
     void setTexture(TextureCube*  texture);
@@ -236,8 +238,13 @@ public:
      * Draw background
      */
     virtual void drawBackground(Camera* camera) override;
-    
-CC_CONSTRUCTOR_ACCESS:
+
+    bool isActived() const;
+    void setActived(bool actived);
+    virtual void setTextureValid(bool valid);
+    virtual bool isValid()override;
+
+CC_CONSTRUCTOR_ACCESS :
     CameraBackgroundSkyBoxBrush();
     virtual ~CameraBackgroundSkyBoxBrush();
     
@@ -258,6 +265,10 @@ protected:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _backToForegroundListener;
 #endif
+
+private:
+    bool _actived;
+    bool _textureValid;
 };
 
 NS_CC_END

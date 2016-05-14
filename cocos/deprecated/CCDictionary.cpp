@@ -23,16 +23,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCDictionary.h"
+#include "deprecated/CCDictionary.h"
+#include <type_traits>
 #include "deprecated/CCString.h"
-#include "CCInteger.h"
+#include "deprecated/CCInteger.h"
 #include "platform/CCFileUtils.h"
 #include "deprecated/CCString.h"
-#include "CCBool.h"
-#include "CCInteger.h"
-#include "CCFloat.h"
-#include "CCDouble.h"
-#include "CCArray.h"
+#include "deprecated/CCBool.h"
+#include "deprecated/CCInteger.h"
+#include "deprecated/CCFloat.h"
+#include "deprecated/CCDouble.h"
+#include "deprecated/CCArray.h"
 
 using namespace std;
 
@@ -106,7 +107,7 @@ __Array* __Dictionary::allKeys()
     {
         HASH_ITER(hh, _elements, pElement, tmp) 
         {
-            __String* pOneKey = new __String(pElement->_strKey);
+            __String* pOneKey = new (std::nothrow) __String(pElement->_strKey);
             array->addObject(pOneKey);
             CC_SAFE_RELEASE(pOneKey);
         }
@@ -115,7 +116,7 @@ __Array* __Dictionary::allKeys()
     {
         HASH_ITER(hh, _elements, pElement, tmp) 
         {
-            __Integer* pOneKey = new __Integer(static_cast<int>(pElement->_intKey));
+            __Integer* pOneKey = new (std::nothrow) __Integer(static_cast<int>(pElement->_intKey));
             array->addObject(pOneKey);
             CC_SAFE_RELEASE(pOneKey);
         }
@@ -138,7 +139,7 @@ __Array* __Dictionary::allKeysForObject(Ref* object)
         {
             if (object == pElement->_object)
             {
-                __String* pOneKey = new __String(pElement->_strKey);
+                __String* pOneKey = new (std::nothrow) __String(pElement->_strKey);
                 array->addObject(pOneKey);
                 CC_SAFE_RELEASE(pOneKey);
             }
@@ -150,7 +151,7 @@ __Array* __Dictionary::allKeysForObject(Ref* object)
         {
             if (object == pElement->_object)
             {
-                __Integer* pOneKey = new __Integer(static_cast<int>(pElement->_intKey));
+                __Integer* pOneKey = new (std::nothrow) __Integer(static_cast<int>(pElement->_intKey));
                 array->addObject(pOneKey);
                 CC_SAFE_RELEASE(pOneKey);
             }
@@ -366,7 +367,7 @@ Ref* __Dictionary::randomObject()
 
 __Dictionary* __Dictionary::create()
 {
-    __Dictionary* ret = new __Dictionary();
+    __Dictionary* ret = new (std::nothrow) __Dictionary();
     if (ret && ret->init() )
     {
         ret->autorelease();
@@ -388,7 +389,7 @@ static __Array* visitArray(const ValueVector& array);
 
 static __Dictionary* visitDict(const ValueMap& dict)
 {
-    __Dictionary* ret = new __Dictionary();
+    __Dictionary* ret = new (std::nothrow) __Dictionary();
     ret->init();
     
     for (auto iter = dict.begin(); iter != dict.end(); ++iter)
@@ -409,7 +410,7 @@ static __Dictionary* visitDict(const ValueMap& dict)
         }
         else
         {
-            auto str = new __String(iter->second.asString());
+            auto str = new (std::nothrow) __String(iter->second.asString());
             ret->setObject(str, iter->first);
             str->release();
         }
@@ -419,7 +420,7 @@ static __Dictionary* visitDict(const ValueMap& dict)
 
 static __Array* visitArray(const ValueVector& array)
 {
-    __Array* ret = new __Array();
+    __Array* ret = new (std::nothrow) __Array();
     ret->init();
 
     for(const auto &value : array) {
@@ -439,7 +440,7 @@ static __Array* visitArray(const ValueVector& array)
         }
         else
         {
-            auto str = new __String(value.asString());
+            auto str = new (std::nothrow) __String(value.asString());
             ret->addObject(str);
             str->release();
         }
@@ -584,7 +585,7 @@ __Dictionary* __Dictionary::clone() const
             }
             else
             {
-                CCLOGWARN("%s isn't clonable.", typeid(*element->getObject()).name());
+                CCLOGWARN("%s isn't clonable.", typeid(std::remove_pointer<decltype(element->getObject())>::type).name());
             }
         }
     }
@@ -603,7 +604,7 @@ __Dictionary* __Dictionary::clone() const
             }
             else
             {
-                CCLOGWARN("%s isn't clonable.", typeid(*element->getObject()).name());
+                CCLOGWARN("%s isn't clonable.", typeid(std::remove_pointer<decltype(element->getObject())>::type).name());
             }
         }
     }

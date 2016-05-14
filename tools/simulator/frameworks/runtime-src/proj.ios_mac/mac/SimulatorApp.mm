@@ -118,6 +118,7 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     }
     else
     {
+        _project.setProjectDir([path cStringUsingEncoding:NSUTF8StringEncoding]);
         _entryPath = [path cStringUsingEncoding:NSUTF8StringEncoding];
     }
     
@@ -205,6 +206,7 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     
     // set project directory as search root path
     string solutionDir = tmpConfig.getProjectDir();
+    string spath = solutionDir;
     if (!solutionDir.empty())
     {
         for (int i = 0; i < solutionDir.size(); ++i)
@@ -214,13 +216,24 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
                 solutionDir[i] = '/';
             }
         }
-        int nPos = -1;
-        if (solutionDir[solutionDir.length() - 1] == '/')
-            nPos = solutionDir.rfind('/', solutionDir.length() - 2);
-        else
-            nPos = solutionDir.rfind('/');
-        if (nPos > 0)
-            solutionDir = solutionDir.substr(0, nPos + 1);
+
+        spath = solutionDir;
+        if (spath[spath.length() - 1] == '/') {
+            spath = spath.substr(0, spath.length() - 1);
+        }
+        string strExtention = FileUtils::getInstance()->getFileExtension(spath);
+        int pos = -1;
+        if(strExtention.compare(".csd") == 0)
+        {
+            pos = spath.rfind('/');
+            if(pos > 0)
+                spath = spath.substr(0, pos);
+        }
+        pos = spath.rfind('/');
+        if(pos > 0)
+            spath = spath.substr(0, pos+1);
+        FileUtils::getInstance()->addSearchPath(spath);
+
         FileUtils::getInstance()->setDefaultResourceRootPath(solutionDir);
         FileUtils::getInstance()->addSearchPath(solutionDir);
         FileUtils::getInstance()->addSearchPath(tmpConfig.getProjectDir());
@@ -232,7 +245,9 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
 
     // parse config.json
     auto parser = ConfigParser::getInstance();
-    auto configPath = solutionDir.append(CONFIG_FILE);
+    auto configPath = spath.append(CONFIG_FILE);
+    if(!FileUtils::getInstance()->isFileExist(configPath))
+        configPath = solutionDir.append(CONFIG_FILE);
     parser->readConfig(configPath);
     
     // set information
@@ -437,6 +452,7 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     
     RuntimeEngine::getInstance()->setProjectConfig(_project);
     Application::getInstance()->run();
+    CC_SAFE_DELETE(_app);
     // After run, application needs to be terminated immediately.
     [NSApp terminate: self];
 }
@@ -690,6 +706,7 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
 
 -(IBAction)onFileClose:(id)sender
 {
+    CC_SAFE_DELETE(_app);
     [[NSApplication sharedApplication] terminate:self];
 }
 
@@ -707,6 +724,12 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
         [_window setLevel:NSNormalWindowLevel];
         [sender setState:NSOffState];
     }
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification
+{
+    CC_SAFE_DELETE(_app);
+    [[NSApplication sharedApplication] terminate:self];
 }
 
 @end

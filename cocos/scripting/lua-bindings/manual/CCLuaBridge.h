@@ -27,7 +27,7 @@
 
 #include <string>
 #include <map>
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 
 extern "C" {
 #include "lua.h"
@@ -90,9 +90,9 @@ public:
     
     /**
      *
-     * The retain count woulde be reduced by 1 corresponding to functionId in the `lua_bridge_function_id_retain` table if it could be found.
+     * The retain count would be reduced by 1 corresponding to functionId in the `lua_bridge_function_id_retain` table if it could be found.
      * If `lua_bridge_function_id` table or `lua_bridge_function_id_retain` aren't found, it would return 0.
-     * If the vaule of retain count is 0 after reducing, it would update the `lua_bridge_function_id_retain` table and `lua_bridge_function_id_retain` table to remove the  reference corresponding to this functionId
+     * If the value of retain count is 0 after reducing, it would update the `lua_bridge_function_id_retain` table and `lua_bridge_function_id_retain` table to remove the  reference corresponding to this functionId
      *
      * @param functionId the value used to search the `lua_bridge_function_id` table and `lua_bridge_function_id` table.
      * @return the retain count or 0.

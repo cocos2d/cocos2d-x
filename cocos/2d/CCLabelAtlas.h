@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __CCLABEL_ATLAS_H__
 #define __CCLABEL_ATLAS_H__
 
-#include "CCAtlasNode.h"
+#include "2d/CCAtlasNode.h"
 #if CC_LABELATLAS_DEBUG_DRAW
 #include "renderer/CCCustomCommand.h"
 #include "2d/CCDrawNode.h"

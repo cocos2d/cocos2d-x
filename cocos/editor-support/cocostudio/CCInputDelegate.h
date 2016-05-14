@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "base/ccTypes.h"
 #include "base/CCEventKeyboard.h"
 #include "base/CCEventListener.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocos2d {
     class __Set;
@@ -162,4 +162,4 @@ private:
 
 }
 
-#endif  // __FUNDATION__CCCOMPONENT_H__
+#endif  // __CC_EXTENTIONS_CCINPUTDELEGATE_H__

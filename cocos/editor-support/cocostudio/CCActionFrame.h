@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "math/CCGeometry.h"
 #include "2d/CCActionInterval.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
     
@@ -167,7 +167,7 @@ public:
     /**
     * Gets the ActionInterval of ActionFrame.
     *
-    * @parame duration   the duration time of ActionFrame
+    * @param duration   the duration time of ActionFrame
     *
     * @return ActionInterval
     */
@@ -175,9 +175,9 @@ public:
     /**
     * Gets the ActionInterval of ActionFrame.
     *
-    * @parame duration   the duration time of ActionFrame
+    * @param duration   the duration time of ActionFrame
     *
-    * @parame duration   the source ActionFrame
+    * @param duration   the source ActionFrame
     *
     * @return ActionInterval
     */
@@ -186,7 +186,7 @@ public:
     /**
     *Set the ActionInterval easing parameter.
     *
-    *@parame parameter   the parameter for frame ease
+    *@param parameter   the parameter for frame ease
     *
     */
     virtual void setEasingParameter(std::vector<float>& parameter);
@@ -194,7 +194,7 @@ protected:
     /**
     * Gets the Easing Action of ActionFrame.
     *
-    * @parame action   the duration time of ActionFrame
+    * @param action   the duration time of ActionFrame
     *
     * @return ActionInterval
     */
@@ -242,7 +242,7 @@ public:
     /**
     * Gets the ActionInterval of ActionFrame.
     *
-    * @parame duration   the duration time of ActionFrame
+    * @param duration   the duration time of ActionFrame
     *
     * @return ActionInterval
     */
@@ -293,14 +293,14 @@ public:
     /**
     * Gets the scale action scaleY.
     *
-    * @return the the scale action scaleY.
+    * @return the scale action scaleY.
     */
     float getScaleY();
 
     /**
     * Gets the ActionInterval of ActionFrame.
     *
-    * @parame duration   the duration time of ActionFrame
+    * @param duration   the duration time of ActionFrame
     *
     * @return ActionInterval
     */
@@ -344,7 +344,7 @@ public:
     /**
     * Gets the ActionInterval of ActionFrame.
     *
-    * @parame duration   the duration time of ActionFrame
+    * @param duration   the duration time of ActionFrame
     *
     * @return ActionInterval
     */
@@ -352,9 +352,9 @@ public:
     /**
     * Gets the ActionInterval of ActionFrame.
     *
-    * @parame duration   the duration time of ActionFrame
+    * @param duration   the duration time of ActionFrame
     *
-    * @parame duration   the source ActionFrame
+    * @param duration   the source ActionFrame
     *
     * @return ActionInterval
     */
@@ -397,7 +397,7 @@ public:
     /**
     * Gets the ActionInterval of ActionFrame.
     *
-    * @parame duration   the duration time of ActionFrame
+    * @param duration   the duration time of ActionFrame
     *
     * @return ActionInterval
     */
@@ -441,7 +441,7 @@ public:
     /**
     * Gets the ActionInterval of ActionFrame.
     *
-    * @parame duration   the duration time of ActionFrame
+    * @param duration   the duration time of ActionFrame
     *
     * @return ActionInterval
     */

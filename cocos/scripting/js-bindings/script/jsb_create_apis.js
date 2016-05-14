@@ -30,6 +30,10 @@ var _p;
 
 /************************  Layers  *************************/
 
+var dummyCtor = function(){
+    this.init();
+};
+
 _p = cc.Layer.prototype;
 _p._ctor = function() {
     cc.Layer.prototype.init.call(this);
@@ -55,14 +59,14 @@ _p._ctor = function(start, end, v, colorStops) {
     this.initWithColor(start, end, v);
 
     if (colorStops instanceof Array) {
-        cc.log("Warning: Color stops parameter is not supported in JSB.");
+        cc.log('Warning: Color stops parameter is not supported in JSB.');
     }
 };
 
 
 _p = cc.LayerMultiplex.prototype;
 _p._ctor = function(layers) {
-    if(layers != undefined){
+    if(layers !== undefined){
         if (layers instanceof Array)
             cc.LayerMultiplex.prototype.initWithArray.call(this, layers);
         else
@@ -80,8 +84,8 @@ _p._ctor = function(fileName, rect) {
     if (fileName === undefined) {
         cc.Sprite.prototype.init.call(this);
     }
-    else if (typeof(fileName) === "string") {
-        if (fileName[0] === "#") {
+    else if (typeof(fileName) === 'string') {
+        if (fileName[0] === '#') {
             //init with a sprite frame name
             var frameName = fileName.substr(1, fileName.length - 1);
             this.initWithSpriteFrameName(frameName);
@@ -90,7 +94,7 @@ _p._ctor = function(fileName, rect) {
             rect ? this.initWithFile(fileName, rect) : this.initWithFile(fileName);
         }
     }
-    else if (typeof(fileName) === "object") {
+    else if (typeof(fileName) === 'object') {
         if (fileName instanceof cc.Texture2D) {
             //init with texture and rect
             rect ? this.initWithTexture(fileName, rect) : this.initWithTexture(fileName);
@@ -107,7 +111,7 @@ _p._ctor = function(fileName, rect) {
 _p = cc.SpriteBatchNode.prototype;
 _p._ctor = function(fileImage, capacity) {
     capacity = capacity || cc.SpriteBatchNode.DEFAULT_CAPACITY;
-    if (typeof(fileImage) == "string")
+    if (typeof(fileImage) == 'string')
         this.initWithFile(fileImage, capacity);
     else
         this.initWithTexture(fileImage, capacity);
@@ -115,12 +119,12 @@ _p._ctor = function(fileImage, capacity) {
 
 _p = cc.SpriteFrame.prototype;
 _p._ctor = function(filename, rect, rotated, offset, originalSize){
-    if(originalSize != undefined){
+    if(originalSize !== undefined){
         if(filename instanceof cc.Texture2D)
             this.initWithTexture(filename, rect, rotated, offset, originalSize);
         else
             this.initWithTexture(filename, rect, rotated, offset, originalSize);
-    }else if(rect != undefined){
+    }else if(rect !== undefined){
         if(filename instanceof cc.Texture2D)
             this.initWithTexture(filename, rect);
         else
@@ -151,7 +155,7 @@ _p._ctor = function(gridSize, texture, flipped){
 _p = cc.Menu.prototype;
 _p._ctor = function(menuItems) {
     if((arguments.length > 0) && (arguments[arguments.length-1] == null))
-        cc.log("parameters should not be ending with null in Javascript");
+        cc.log('parameters should not be ending with null in Javascript');
 
     var argc = arguments.length,
         items = [];
@@ -202,18 +206,18 @@ _p._ctor = function(value, callback, target) {
 
 _p = cc.MenuItemSprite.prototype;
 _p._ctor = function(normalSprite, selectedSprite, three, four, five) {
-    if (selectedSprite) {
+    if (normalSprite) {
         normalSprite = normalSprite;
-        selectedSprite = selectedSprite;
+        selectedSprite = selectedSprite || null;
         var disabledSprite, target, callback;
         if (five) {
             disabledSprite = three;
             callback = four;
             target = five;
-        } else if (four && typeof four === "function") {
+        } else if (four && typeof four === 'function') {
             disabledSprite = three;
             callback = four;
-        } else if (four && typeof three === "function") {
+        } else if (four && typeof three === 'function') {
             target = four;
             callback = three;
             disabledSprite = normalSprite;
@@ -239,7 +243,7 @@ _p._ctor = function(normalImage, selectedImage, three, four, five) {
             callback = three;
         }
         else if (five === undefined) {
-            if (typeof three === "function") {
+            if (typeof three === 'function') {
                 callback = three;
                 target = four;
             }
@@ -254,7 +258,10 @@ _p._ctor = function(normalImage, selectedImage, three, four, five) {
             target = five;
         }
         callback = callback ? callback.bind(target) : null;
-        this.initWithNormalSprite(new cc.Sprite(normalImage), new cc.Sprite(selectedImage), disabledImage ? new cc.Sprite(disabledImage) : new cc.Sprite(normalImage), callback);
+        var normalSprite = new cc.Sprite(normalImage);
+        var selectedSprite = new cc.Sprite(selectedImage);
+        var disabledSprite = disabledImage ? new cc.Sprite(disabledImage) : new cc.Sprite(normalImage);
+        this.initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, callback);
     }
 };
 
@@ -298,7 +305,7 @@ _p._ctor = function(fade, minSeg, stroke, color, texture){
 _p = cc.ParticleBatchNode.prototype;
 _p._ctor = function(fileImage, capacity){
     capacity = capacity || cc.PARTICLE_DEFAULT_CAPACITY;
-    if (typeof(fileImage) == "string") {
+    if (typeof(fileImage) == 'string') {
         cc.ParticleBatchNode.prototype.init.call(this, fileImage, capacity);
     } else if (fileImage instanceof cc.Texture2D) {
         this.initWithTexture(fileImage, capacity);
@@ -307,29 +314,28 @@ _p._ctor = function(fileImage, capacity){
 
 _p = cc.ParticleSystem.prototype;
 _p._ctor = function(plistFile){
-    if (!plistFile || typeof(plistFile) === "number") {
+    if (!plistFile || typeof(plistFile) === 'number') {
         var ton = plistFile || 100;
         this.initWithTotalParticles(ton);
-    } else if ( typeof plistFile === "string") {
+    } else if ( typeof plistFile === 'string') {
         this.initWithFile(plistFile);
     } else if(plistFile){
         this.initWithDictionary(plistFile);
     }
 };
 
-cc.ParticleFire.prototype._ctor  = cc.ParticleFireworks.prototype._ctor
-                                      = cc.ParticleSun.prototype._ctor
-                                      = cc.ParticleGalaxy.prototype._ctor
-                                      = cc.ParticleMeteor.prototype._ctor
-                                      = cc.ParticleFlower.prototype._ctor
-                                      = cc.ParticleSpiral.prototype._ctor
-                                      = cc.ParticleExplosion.prototype._ctor
-                                      = cc.ParticleSmoke.prototype._ctor
-                                      = cc.ParticleRain.prototype._ctor
-                                      = cc.ParticleSnow.prototype._ctor
-                                      = function(){
-                                            this.init();
-                                      };
+cc.ParticleFire.prototype._ctor = dummyCtor;
+cc.ParticleFireworks.prototype._ctor = dummyCtor;
+cc.ParticleSun.prototype._ctor = dummyCtor;
+cc.ParticleGalaxy.prototype._ctor = dummyCtor;
+cc.ParticleMeteor.prototype._ctor = dummyCtor;
+cc.ParticleFlower.prototype._ctor = dummyCtor;
+cc.ParticleSpiral.prototype._ctor = dummyCtor;
+cc.ParticleExplosion.prototype._ctor = dummyCtor;
+cc.ParticleSmoke.prototype._ctor = dummyCtor;
+cc.ParticleRain.prototype._ctor = dummyCtor;
+cc.ParticleSnow.prototype._ctor = dummyCtor;
+
 
 
 /************************  ProgressTimer  *************************/
@@ -342,14 +348,14 @@ _p._ctor = function(sprite){
 _p = cc.TextFieldTTF.prototype;
 _p._ctor = function(placeholder, dimensions, alignment, fontName, fontSize){
     if(fontSize !== undefined){
-        this.initWithPlaceHolder("", dimensions, alignment, fontName, fontSize);
+        this.initWithPlaceHolder('', dimensions, alignment, fontName, fontSize);
         if(placeholder)
             this._placeHolder = placeholder;
-    }        
+    }
     else if(fontName === undefined && alignment !== undefined){
         fontName = arguments[1];
         fontSize = arguments[2];
-        this.initWithString("", fontName, fontSize);
+        this.initWithString('', fontName, fontSize);
         if(placeholder)
             this._placeHolder = placeholder;
     }
@@ -379,7 +385,7 @@ _p._ctor = function(tilesetInfo, layerInfo, mapInfo){
 };
 
 _p = cc.TMXTiledMap.prototype;
-_p._ctor = function(tmxFile,resourcePath){
+_p._ctor = function(tmxFile, resourcePath){
     if(resourcePath !== undefined){
         this.initWithXML(tmxFile,resourcePath);
     }else if(tmxFile !== undefined){
@@ -437,62 +443,61 @@ cc.CatmullRomTo.prototype._ctor = cc.CatmullRomBy.prototype._ctor = function(dt,
     points !== undefined && this.initWithDuration(dt, points);
 };
 
-_p = cc.ActionEase.prototype;
-_p._ctor = function(action) {
+var easeCtor = function(action) {
     action !== undefined && this.initWithAction(action);
 };
-cc.EaseExponentialIn._ctor
-    = cc.EaseExponentialOut._ctor
-    = cc.EaseExponentialInOut._ctor
-    = cc.EaseSineIn._ctor
-    = cc.EaseSineOut._ctor
-    = cc.EaseSineInOut._ctor
-    = cc.EaseBounce._ctor
-    = cc.EaseBounceIn._ctor
-    = cc.EaseBounceOut._ctor
-    = cc.EaseBounceInOut._ctor
-    = cc.EaseBackIn._ctor
-    = cc.EaseBackOut._ctor
-    = cc.EaseBackInOut._ctor
-    = _p._ctor;
 
-_p = cc.EaseRateAction.prototype;
-_p._ctor = function(action, rate) {
+cc.ActionEase.prototype._ctor = easeCtor;
+cc.EaseExponentialIn.prototype._ctor = easeCtor;
+cc.EaseExponentialOut.prototype._ctor = easeCtor;
+cc.EaseExponentialInOut.prototype._ctor = easeCtor;
+cc.EaseSineIn.prototype._ctor = easeCtor;
+cc.EaseSineOut.prototype._ctor = easeCtor;
+cc.EaseSineInOut.prototype._ctor = easeCtor;
+cc.EaseBounce.prototype._ctor = easeCtor;
+cc.EaseBounceIn.prototype._ctor = easeCtor;
+cc.EaseBounceOut.prototype._ctor = easeCtor;
+cc.EaseBounceInOut.prototype._ctor = easeCtor;
+cc.EaseBackIn.prototype._ctor = easeCtor;
+cc.EaseBackOut.prototype._ctor = easeCtor;
+cc.EaseBackInOut.prototype._ctor = easeCtor;
+
+var easeRateCtor = function(action, rate) {
     rate !== undefined && this.initWithAction(action, rate);
 };
-cc.EaseIn.prototype._ctor
-    = cc.EaseOut.prototype._ctor
-    = cc.EaseInOut.prototype._ctor
-    = _p._ctor;
+cc.EaseRateAction.prototype._ctor = easeRateCtor;
+cc.EaseIn.prototype._ctor = easeRateCtor;
+cc.EaseOut.prototype._ctor = easeRateCtor;
+cc.EaseInOut.prototype._ctor = easeRateCtor;
 
-_p = cc.EaseElastic.prototype;
-_p._ctor = function(action, period) {
+var easeElasticCtor = function(action, period) {
     if( action ) {
         period !== undefined ? this.initWithAction(action, period)
                              : this.initWithAction(action);
     }
 };
-cc.EaseElasticIn._ctor
-    = cc.EaseElasticOut._ctor
-    = cc.EaseElasticInOut._ctor
-    = _p._ctor;
-
+cc.EaseElastic.prototype._ctor = easeElasticCtor;
+cc.EaseElasticIn.prototype._ctor = easeElasticCtor;
+cc.EaseElasticOut.prototype._ctor = easeElasticCtor;
+cc.EaseElasticInOut.prototype._ctor = easeElasticCtor;
 
 cc.ReuseGrid.prototype._ctor = function(times) {
     times !== undefined && this.initWithTimes(times);
 };
 
-cc.GridAction.prototype._ctor
-    = cc.Grid3DAction.prototype._ctor
-    = cc.TiledGrid3DAction.prototype._ctor
-    = cc.PageTurn3D.prototype._ctor
-    = cc.FadeOutTRTiles.prototype._ctor
-    = cc.FadeOutBLTiles.prototype._ctor
-    = cc.FadeOutUpTiles.prototype._ctor
-    = cc.FadeOutDownTiles.prototype._ctor
-    = function(duration, gridSize) {
+var durationCtor = function(duration, gridSize) {
     gridSize && this.initWithDuration(duration, gridSize);
 };
+
+cc.GridAction.prototype._ctor = durationCtor;
+cc.Grid3DAction.prototype._ctor = durationCtor;
+cc.TiledGrid3DAction.prototype._ctor = durationCtor;
+cc.PageTurn3D.prototype._ctor = durationCtor;
+cc.FadeOutTRTiles.prototype._ctor = durationCtor;
+cc.FadeOutBLTiles.prototype._ctor = durationCtor;
+cc.FadeOutUpTiles.prototype._ctor = durationCtor;
+cc.FadeOutDownTiles.prototype._ctor = durationCtor;
+
 
 cc.Twirl.prototype._ctor = function(duration, gridSize, position, twirls, amplitude) {
     amplitude !== undefined && this.initWithDuration(duration, gridSize, position, twirls, amplitude);
@@ -518,9 +523,7 @@ cc.Lens3D.prototype._ctor = function(duration, gridSize, position, radius) {
     radius !== undefined && this.initWithDuration(duration, gridSize, position, radius);
 };
 
-cc.FlipY3D.prototype._ctor
-    = cc.FlipX3D.prototype._ctor
-    = function(duration) {
+cc.FlipY3D.prototype._ctor = cc.FlipX3D.prototype._ctor = function(duration) {
     duration !== undefined && this.initWithDuration(duration, cc.size(1, 1));
 };
 
@@ -566,7 +569,7 @@ cc.Sequence.prototype._ctor = function(tempArray) {
     var paramArray = (tempArray instanceof Array) ? tempArray : arguments;
     var last = paramArray.length - 1;
     if ((last >= 0) && (paramArray[last] == null))
-        cc.log("parameters should not be ending with null in Javascript");
+        cc.log('parameters should not be ending with null in Javascript');
 
     if (last >= 0) {
         var prev = paramArray[0];
@@ -591,7 +594,7 @@ cc.Spawn.prototype._ctor = function(tempArray) {
     var paramArray = (tempArray instanceof Array) ? tempArray : arguments;
     var last = paramArray.length - 1;
     if ((last >= 0) && (paramArray[last] == null))
-        cc.log("parameters should not be ending with null in Javascript");
+        cc.log('parameters should not be ending with null in Javascript');
 
     if (last >= 0) {
         var prev = paramArray[0];
@@ -782,7 +785,7 @@ cc.LabelAtlas.prototype._ctor = function(strText, charMapFile, itemWidth, itemHe
 };
 
 cc.LabelBMFont.prototype._ctor = function(str, fntFile, width, alignment, imageOffset) {
-    str = str || "";
+    str = str || '';
     if( fntFile ) {
         width = width || 0;
         alignment = alignment === undefined ? cc.TEXT_ALIGNMENT_LEFT : alignment;
@@ -792,12 +795,12 @@ cc.LabelBMFont.prototype._ctor = function(str, fntFile, width, alignment, imageO
 };
 
 cc.LabelTTF.prototype._ctor = function(text, fontName, fontSize, dimensions, hAlignment, vAlignment) {
-    text = text || "";
+    text = text || '';
     if (fontName && fontName instanceof cc.FontDefinition) {
         this.initWithStringAndTextDefinition(text, fontName);
     }
     else {
-        fontName = fontName || "";
+        fontName = fontName || '';
         fontSize = fontSize || 16;
         dimensions = dimensions || cc.size(0,0);
         hAlignment = hAlignment === undefined ? cc.TEXT_ALIGNMENT_LEFT : hAlignment;
@@ -821,7 +824,7 @@ cc.GLProgram.prototype._ctor = function(vShaderFileName, fShaderFileName) {
         cc.GLProgram.prototype.init.call(this, vShaderFileName, fShaderFileName);
         cc.GLProgram.prototype.link.call(this);
         cc.GLProgram.prototype.updateUniforms.call(this);
-    } 
+    }
 };
 
 
@@ -833,73 +836,36 @@ cc.GLProgram.prototype._ctor = function(vShaderFileName, fShaderFileName) {
  *
  ************************************************************/
 
-cc.Sprite._create = cc.Sprite.create;
 /**
  * Create a sprite with image path or frame name or texture or spriteFrame.
  * @constructs
- * @param {String|cc.Texture2D|cc.SpriteFrame} fileName  The string which indicates a path to image file, e.g., "scene1/monster.png".
+ * @param {String|cc.Texture2D|cc.SpriteFrame} fileName  The string which indicates a path to image file, e.g., 'scene1/monster.png'.
  * @param {cc.Rect} rect  Only the contents inside rect of pszFileName's texture will be applied for this sprite.
  * @return {cc.Sprite} A valid sprite object
  * @example
  *
  * 1.Create a sprite with image path and rect
- * var sprite1 = cc.Sprite.create("res/HelloHTML5World.png");
- * var sprite2 = cc.Sprite.create("res/HelloHTML5World.png",cc.rect(0,0,480,320));
+ * var sprite1 = cc.Sprite.create('res/HelloHTML5World.png');
+ * var sprite2 = cc.Sprite.create('res/HelloHTML5World.png',cc.rect(0,0,480,320));
  *
- * 2.Create a sprite with a sprite frame name. Must add "#" before frame name.
+ * 2.Create a sprite with a sprite frame name. Must add '#' before frame name.
  * var sprite = cc.Sprite.create('#grossini_dance_01.png');
  *
  * 3.Create a sprite with a sprite frame
- * var spriteFrame = cc.spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
+ * var spriteFrame = cc.spriteFrameCache.getSpriteFrame('grossini_dance_01.png');
  * var sprite = cc.Sprite.create(spriteFrame);
  *
  * 4.Create a sprite with an exsiting texture contained in a CCTexture2D object
  *      After creation, the rect will be the size of the texture, and the offset will be (0,0).
- * var texture = cc.textureCache.addImage("HelloHTML5World.png");
+ * var texture = cc.textureCache.addImage('HelloHTML5World.png');
  * var sprite1 = cc.Sprite.create(texture);
  * var sprite2 = cc.Sprite.create(texture, cc.rect(0,0,480,320));
  *
  */
 cc.Sprite.create = function (fileName, rect) {
-    var sprite;
-    
-    if (arguments.length == 0) {
-        sprite = cc.Sprite._create();
-        return sprite;
-    }
-    
-    if (typeof(fileName) === "string") {
-        if (fileName[0] === "#") {
-            //init with a sprite frame name
-            var frameName = fileName.substr(1, fileName.length - 1);
-            var spriteFrame = cc.spriteFrameCache.getSpriteFrame(frameName);
-            sprite = cc.Sprite.createWithSpriteFrame(spriteFrame);
-        } else {
-            // Create with filename and rect
-            sprite = rect ? cc.Sprite._create(fileName, rect) : cc.Sprite._create(fileName);
-        }
-        if (sprite)
-            return sprite;
-        else return null;
-    }
-    
-    if (typeof(fileName) === "object") {
-        if (fileName instanceof cc.Texture2D) {
-            //init  with texture and rect
-            sprite = rect ? cc.Sprite.createWithTexture(fileName, rect) : cc.Sprite.createWithTexture(fileName);
-        } else if (fileName instanceof cc.SpriteFrame) {
-            //init with a sprite frame
-            sprite = cc.Sprite.createWithSpriteFrame(fileName);
-        }
-        if (sprite)
-            return  sprite;
-        else return null;
-    }
-    
-    return null;
+    return new cc.Sprite(fileName, rect);
 };
 
-cc.LabelTTF._create = cc.LabelTTF.create;
 /**
  * creates a cc.LabelTTF from a font name, alignment, dimension and font size
  * @param {String} text
@@ -915,30 +881,15 @@ cc.LabelTTF._create = cc.LabelTTF.create;
  * var myLabel = cc.LabelTTF.create('label text',  'Times New Roman', 32, cc.size(320,32), cc.TEXT_ALIGNMENT_LEFT);
  * 2.
  * var fontDef = new cc.FontDefinition();
- * fontDef.fontName = "Arial";
- * fontDef.fontSize = "32";
+ * fontDef.fontName = 'Arial';
+ * fontDef.fontSize = '32';
  * var myLabel = cc.LabelTTF.create('label text',  fontDef);
  */
 cc.LabelTTF.create = function (text, fontName, fontSize, dimensions, hAlignment, vAlignment) {
-    var label;
-    if (fontName && fontName instanceof cc.FontDefinition) {
-        label = cc.LabelTTF.createWithFontDefinition(text, fontName);
-    }
-    else {
-        fontName = fontName || "";
-        fontSize = fontSize || 16;
-        dimensions = dimensions || cc.size(0, 0);
-        hAlignment = hAlignment == undefined ? cc.TEXT_ALIGNMENT_CENTER : hAlignment;
-        vAlignment = vAlignment == undefined ? cc.VERTICAL_TEXT_ALIGNMENT_TOP : vAlignment;
-        label = cc.LabelTTF._create(text, fontName, fontSize, dimensions, hAlignment, vAlignment);
-    }
-    if (label)
-        return label;
-    else return null;
+    return new cc.LabelTTF(text, fontName, fontSize, dimensions, hAlignment, vAlignment);
 };
 
 
-cc.SpriteBatchNode._create = cc.SpriteBatchNode.create;
 /**
  * <p>
  *    creates a cc.SpriteBatchNodeCanvas with a file image (.png, .jpg etc) with a default capacity of 29 children.<br/>
@@ -951,23 +902,17 @@ cc.SpriteBatchNode._create = cc.SpriteBatchNode.create;
  * @example
  * 1.
  * //create a SpriteBatchNode with image path
- * var spriteBatchNode = cc.SpriteBatchNode.create("res/animations/grossini.png", 50);
+ * var spriteBatchNode = cc.SpriteBatchNode.create('res/animations/grossini.png', 50);
  * 2.
  * //create a SpriteBatchNode with texture
- * var texture = cc.textureCache.addImage("res/animations/grossini.png");
+ * var texture = cc.textureCache.addImage('res/animations/grossini.png');
  * var spriteBatchNode = cc.SpriteBatchNode.create(texture,50);
  */
 cc.SpriteBatchNode.create = function(fileName, capacity){
-    if (typeof(fileName) == "string")
-        return cc.SpriteBatchNode._create(fileName);
-    else if (fileName instanceof cc.Texture2D) {
-        return isNaN(capacity) ? cc.SpriteBatchNode.createWithTexture(fileName) :  cc.SpriteBatchNode.createWithTexture(fileName,capacity);
-    }
-    return null;
+    return new cc.SpriteBatchNode(fileName, capacity);
 };
 
 
-cc.SpriteFrame._create = cc.SpriteFrame.create;
 /**
  * <p>
  *    Create a cc.SpriteFrame with a texture filename, rect, rotated, offset and originalSize in pixels.<br/>
@@ -982,31 +927,17 @@ cc.SpriteFrame._create = cc.SpriteFrame.create;
  * @example
  * 1.
  * //Create a cc.SpriteFrame with image path
- * var frame1 = cc.SpriteFrame.create("res/grossini_dance.png",cc.rect(0,0,90,128));
- * var frame2 = cc.SpriteFrame.create("res/grossini_dance.png",cc.rect(0,0,90,128),false,0,cc.size(90,128));
+ * var frame1 = cc.SpriteFrame.create('res/grossini_dance.png',cc.rect(0,0,90,128));
+ * var frame2 = cc.SpriteFrame.create('res/grossini_dance.png',cc.rect(0,0,90,128),false,0,cc.size(90,128));
  *
  * 2.
  * //Create a cc.SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
- * var texture = cc.textureCache.addImage("res/grossini_dance.png");
+ * var texture = cc.textureCache.addImage('res/grossini_dance.png');
  * var frame1 = cc.SpriteFrame.create(texture, cc.rect(0,0,90,128));
  * var frame2 = cc.SpriteFrame.create(texture, cc.rect(0,0,90,128),false,0,cc.size(90,128));
  */
 cc.SpriteFrame.create = function(fileName, rect, rotated, offset, originalSize){
-    var spriteFrame = null;
-    switch (arguments.length) {
-        case 2:
-            if (fileName instanceof cc.Texture2D)
-                spriteFrame = cc.SpriteFrame.createWithTexture(fileName, rect);
-            else spriteFrame = cc.SpriteFrame._create(fileName, rect);
-            break;
-        case 5:
-            spriteFrame = cc.SpriteFrame._create(fileName, rect, rotated, offset, originalSize);
-            break;
-        default:
-            throw "Argument must be non-nil ";
-            break;
-    }
-    return spriteFrame;
+    return new cc.SpriteFrame(fileName, rect, rotated, offset, originalSize);
 };
 
 
@@ -1020,17 +951,10 @@ cc.ParticleSystem._create = cc.ParticleSystem.create;
  * @return {cc.ParticleSystem}
  */
 cc.ParticleSystem.create = function(plistFile){
-    var particleSystem =null;
-    if (typeof(plistFile) === "number") {
-        particleSystem = cc.ParticleSystem.createWithTotalParticles(plistFile);
-    }else if(typeof(plistFile) === "string" || typeof(plistFile) === "object"){
-        particleSystem = cc.ParticleSystem._create(plistFile);
-    }
-    return particleSystem;
+    return new cc.ParticleSystem(plistFile);
 };
 
 
-cc.ParticleBatchNode._create = cc.ParticleBatchNode.create;
 /**
  * initializes the particle system with the name of a file on disk (for a list of supported formats look at the cc.Texture2D class), a capacity of particles
  * @param {String|cc.Texture2D} fileImage
@@ -1039,24 +963,18 @@ cc.ParticleBatchNode._create = cc.ParticleBatchNode.create;
  * @example
  * 1.
  * //Create a cc.ParticleBatchNode with image path  and capacity
- * var particleBatchNode = cc.ParticleBatchNode.create("res/grossini_dance.png",30);
+ * var particleBatchNode = cc.ParticleBatchNode.create('res/grossini_dance.png',30);
  *
  * 2.
  * //Create a cc.ParticleBatchNode with a texture and capacity
- * var texture = cc.TextureCache.getInstance().addImage("res/grossini_dance.png");
+ * var texture = cc.TextureCache.getInstance().addImage('res/grossini_dance.png');
  * var particleBatchNode = cc.ParticleBatchNode.create(texture, 30);
  */
 cc.ParticleBatchNode.create = function(fileImage, capacity){
-    if (typeof(fileImage) == "string")
-        return cc.ParticleBatchNode._create(fileImage);
-    else if (fileImage instanceof cc.Texture2D) {
-        return isNaN(capacity) ? cc.ParticleBatchNode.createWithTexture(fileImage) :  cc.ParticleBatchNode.createWithTexture(fileImage, capacity);
-    }
-    return null;
+    return new cc.ParticleBatchNode(fileImage, capacity);
 };
 
 
-cc.TMXTiledMap._create = cc.TMXTiledMap.create;
 /**
  * Creates a TMX Tiled Map with a TMX file  or content string.
  * Implementation cc.TMXTiledMap
@@ -1067,31 +985,37 @@ cc.TMXTiledMap._create = cc.TMXTiledMap.create;
  * //example
  * 1.
  * //create a TMXTiledMap with file name
- * var tmxTiledMap = cc.TMXTiledMap.create("res/orthogonal-test1.tmx");
+ * var tmxTiledMap = cc.TMXTiledMap.create('res/orthogonal-test1.tmx');
  * 2.
  * //create a TMXTiledMap with content string and resource path
- * var resources = "res/TileMaps";
- * var filePath = "res/TileMaps/orthogonal-test1.tmx";
+ * var resources = 'res/TileMaps';
+ * var filePath = 'res/TileMaps/orthogonal-test1.tmx';
  * var xmlStr = cc.loader.getRes(filePath);
  * var tmxTiledMap = cc.TMXTiledMap.create(xmlStr, resources);
  */
 cc.TMXTiledMap.create = function (tmxFile, resourcePath) {
-    if(resourcePath != undefined){
-        return cc.TMXTiledMap.createWithXML(tmxFile, resourcePath);
-    } else if (tmxFile != undefined) {
-        return cc.TMXTiledMap._create(tmxFile);
-    }
-    return null;
+    return new cc.TMXTiledMap(tmxFile, resourcePath);
 };
 
-
-// MenuItemImage
+// MenuItems
+cc.MenuItem.create = function (callback, target) {
+    return new cc.MenuItem(callback, target);
+};
+cc.MenuItemLabel.create = function (label, selector, target) {
+    return new cc.MenuItemLabel(label, selector, target);
+};
+cc.MenuItemAtlasFont.create = function (value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
+    return new cc.MenuItemAtlasFont(value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target);
+};
+cc.MenuItemFont.create = function (value, callback, target) {
+    return new cc.MenuItemFont(value, callback, target);
+};
+cc.MenuItemSprite.create = function (normalSprite, selectedSprite, three, four, five) {
+    return new cc.MenuItemSprite(normalSprite, selectedSprite, three, four, five || undefined);
+};
 cc.MenuItemImage.create = function(normalImage, selectedImage, three, four, five) {
     return new cc.MenuItemImage(normalImage, selectedImage, three, four, five);
-}
-
-
-// MenuItemToggle
+};
 cc.MenuItemToggle.create = function(/* var args */) {
     var n = arguments.length;
 
@@ -1119,20 +1043,24 @@ cc.MenuItemToggle.create = function(/* var args */) {
 
 
 // LabelAtlas
-cc.LabelAtlas.create = function( a,b,c,d,e ) {
-
-    var n = arguments.length;
-
-    if ( n == 5) {
-        return cc.LabelAtlas._create(a,b,c,d,e.charCodeAt(0));
-    } else {
-        return cc.LabelAtlas._create.apply(this, arguments);
-    }
+cc.LabelAtlas.create = function(strText, charMapFile, itemWidth, itemHeight, startCharMap) {
+    return new cc.LabelAtlas(strText, charMapFile, itemWidth, itemHeight, startCharMap);
 };
 
 
 // LayerMultiplex
-cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
+cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray = function (layers) {
+    var result = new cc.LayerMultiplex();
+    if(layers !== undefined){
+        if (layers instanceof Array)
+            cc.LayerMultiplex.prototype.initWithArray.call(result, layers);
+        else
+            cc.LayerMultiplex.prototype.initWithArray.call(result, Array.prototype.slice.call(arguments));
+    }else{
+        cc.LayerMultiplex.prototype.init.call(result);
+    }
+    return result;
+};
 
 /**
  * Creates an animation.
@@ -1147,7 +1075,7 @@ cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
  *
  * 2.Create an animation with sprite frames , delay and loops.
  * var spriteFrames = [];
- * var frame = cache.getSpriteFrame("grossini_dance_01.png");
+ * var frame = cache.getSpriteFrame('grossini_dance_01.png');
  * spriteFrames.push(frame);
  * var animation1 = cc.Animation.create(spriteFrames);
  * var animation2 = cc.Animation.create(spriteFrames, 0.2);
@@ -1176,7 +1104,7 @@ cc.Animation.create = function (frames, delay, loops) {
 
 cc.Menu.create = function(menuItems) {
     if((arguments.length > 0) && (arguments[arguments.length-1] == null))
-        cc.log("parameters should not be ending with null in Javascript");
+        cc.log('parameters should not be ending with null in Javascript');
 
     var argc = arguments.length,
         items = [];
@@ -1195,6 +1123,16 @@ cc.Menu.create = function(menuItems) {
         }
     }
     return cc.Menu._create.apply(null, items);
+};
+
+cc.GLProgram.create = function (vShaderFileName, fShaderFileName) {
+    return new cc.GLProgram(vShaderFileName, fShaderFileName);
+};
+
+cc.GLProgram.createWithString = function (vShader, fShader) {
+    var program = new cc.GLProgram();
+    program.initWithByteArrays(vShader, fShader);
+    return program;
 };
 
 cc.TMXLayer.prototype.tileFlagsAt = cc.TMXLayer.prototype.getTileFlagsAt;

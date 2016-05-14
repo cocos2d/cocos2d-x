@@ -21,15 +21,16 @@
  * THE SOFTWARE.
  */
 
-#include "jsb_cocos2dx_studio_conversions.h"
-#include "cocos2d_specifics.hpp"
-#include "cocostudio/CocoStudio.h"
+#include "scripting/js-bindings/manual/cocostudio/jsb_cocos2dx_studio_conversions.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "editor-support/cocostudio/CocoStudio.h"
 
 jsval animationInfo_to_jsval(JSContext* cx, const cocostudio::timeline::AnimationInfo& v)
 {
     JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
-    bool ok = JS_DefineProperty(cx, tmp, "name", JS::RootedValue(cx, std_string_to_jsval(cx, v.name)), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS::RootedValue jsname(cx, std_string_to_jsval(cx, v.name));
+    bool ok = JS_DefineProperty(cx, tmp, "name", jsname, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "startIndex", v.startIndex, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "endIndex", v.endIndex, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if (ok) {

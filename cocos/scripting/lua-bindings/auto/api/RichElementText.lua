@@ -12,7 +12,15 @@
 -- param text Content string.<br>
 -- param fontName Content font name.<br>
 -- param fontSize Content font size.<br>
--- return True if initialize scucess, false otherwise.
+-- param flags: italics, bold, underline, strikethrough, url, outline, shadow or glow<br>
+-- param url uniform resource locator<br>
+-- param outlineColor the color of the outline<br>
+-- param outlineSize the outline effect size value<br>
+-- param shadowColor the shadow effect color value<br>
+-- param shadowOffset shadow effect offset value<br>
+-- param shadowBlurRadius the shadow effect blur radius<br>
+-- param glowColor glow color<br>
+-- return True if initialize success, false otherwise.
 -- @function [parent=#RichElementText] init 
 -- @param self
 -- @param #int tag
@@ -21,6 +29,14 @@
 -- @param #string text
 -- @param #string fontName
 -- @param #float fontSize
+-- @param #unsigned int flags
+-- @param #string url
+-- @param #color3b_table outlineColor
+-- @param #int outlineSize
+-- @param #color3b_table shadowColor
+-- @param #size_table shadowOffset
+-- @param #int shadowBlurRadius
+-- @param #color3b_table glowColor
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -31,6 +47,14 @@
 -- param text Content string.<br>
 -- param fontName Content font name.<br>
 -- param fontSize Content font size.<br>
+-- param flags: italics, bold, underline, strikethrough, url, outline, shadow or glow<br>
+-- param url uniform resource locator<br>
+-- param outlineColor the color of the outline<br>
+-- param outlineSize the outline effect size value<br>
+-- param shadowColor the shadow effect color value<br>
+-- param shadowOffset shadow effect offset value<br>
+-- param shadowBlurRadius the shadow effect blur radius<br>
+-- param glowColor glow color<br>
 -- return RichElementText instance.
 -- @function [parent=#RichElementText] create 
 -- @param self
@@ -40,6 +64,14 @@
 -- @param #string text
 -- @param #string fontName
 -- @param #float fontSize
+-- @param #unsigned int flags
+-- @param #string url
+-- @param #color3b_table outlineColor
+-- @param #int outlineSize
+-- @param #color3b_table shadowColor
+-- @param #size_table shadowOffset
+-- @param #int shadowBlurRadius
+-- @param #color3b_table glowColor
 -- @return RichElementText#RichElementText ret (return value: ccui.RichElementText)
         
 --------------------------------

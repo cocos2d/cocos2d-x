@@ -255,7 +255,7 @@ int ZipUtils::inflateGZipFile(const char *path, unsigned char **out)
     CCASSERT(out, "out can't be nullptr.");
     CCASSERT(&*out, "&*out can't be nullptr.");
     
-    gzFile inFile = gzopen(path, "rb");
+    gzFile inFile = gzopen(FileUtils::getInstance()->getSuitableFOpen(path).c_str(), "rb");
     if( inFile == nullptr ) {
         CCLOG("cocos2d: ZipUtils: error open gzip file: %s", path);
         return -1;
@@ -518,7 +518,7 @@ public:
 
 ZipFile *ZipFile::createWithBuffer(const void* buffer, uLong size)
 {
-    ZipFile *zip = new ZipFile();
+    ZipFile *zip = new (std::nothrow) ZipFile();
     if (zip && zip->initWithBuffer(buffer, size)) {
         return zip;
     } else {
@@ -536,7 +536,7 @@ ZipFile::ZipFile()
 ZipFile::ZipFile(const std::string &zipFile, const std::string &filter)
 : _data(new ZipFilePrivate)
 {
-    _data->zipFile = unzOpen(zipFile.c_str());
+    _data->zipFile = unzOpen(FileUtils::getInstance()->getSuitableFOpen(zipFile).c_str());
     setFilter(filter);
 }
 
@@ -643,6 +643,35 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, ssize_t *size)
     } while (0);
     
     return buffer;
+}
+
+bool ZipFile::getFileData(const std::string &fileName, ResizableBuffer* buffer)
+{
+    bool res = false;
+    do
+    {
+        CC_BREAK_IF(!_data->zipFile);
+        CC_BREAK_IF(fileName.empty());
+        
+        ZipFilePrivate::FileListContainer::const_iterator it = _data->fileList.find(fileName);
+        CC_BREAK_IF(it ==  _data->fileList.end());
+        
+        ZipEntryInfo fileInfo = it->second;
+        
+        int nRet = unzGoToFilePos(_data->zipFile, &fileInfo.pos);
+        CC_BREAK_IF(UNZ_OK != nRet);
+        
+        nRet = unzOpenCurrentFile(_data->zipFile);
+        CC_BREAK_IF(UNZ_OK != nRet);
+        
+        buffer->resize(fileInfo.uncompressed_size);
+        int CC_UNUSED nSize = unzReadCurrentFile(_data->zipFile, buffer->buffer(), static_cast<unsigned int>(fileInfo.uncompressed_size));
+        CCASSERT(nSize == 0 || nSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
+        unzCloseCurrentFile(_data->zipFile);
+        res = true;
+    } while (0);
+    
+    return res;
 }
 
 std::string ZipFile::getFirstFilename()

@@ -53,11 +53,15 @@ static AppDelegate s_sharedApplication;
                                        multiSampling: NO
                                      numberOfSamples: 0 ];
 
+#if !defined(CC_TARGET_OS_TVOS)
     [eaglView setMultipleTouchEnabled:YES];
+#endif
     
     // Use RootViewController manage CCEAGLView
     viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+#if !defined(CC_TARGET_OS_TVOS)
     viewController.wantsFullScreenLayout = YES;
+#endif
     viewController.view = eaglView;
 
     // Set RootViewController to window
@@ -74,7 +78,9 @@ static AppDelegate s_sharedApplication;
     
     [window makeKeyAndVisible];
 
+#if !defined(CC_TARGET_OS_TVOS)
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
+#endif
 
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView(eaglView);
@@ -94,13 +100,13 @@ static AppDelegate s_sharedApplication;
 //{
 //    return [FBSession.activeSession handleOpenURL:url];
 //}
-//- (void)applicationDidBecomeActive:(UIApplication *)application {
-//    /*
-//     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-//     */
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    /*
+     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+     */
 //     [FBAppCall handleDidBecomeActive];
-//    cocos2d::Director::getInstance()->resume();
-//}
+    cocos2d::Director::getInstance()->resume();
+}
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     /*

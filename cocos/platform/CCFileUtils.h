@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <type_traits>
 
 #include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
@@ -40,6 +41,66 @@ NS_CC_BEGIN
  * @addtogroup platform
  * @{
  */
+
+
+class ResizableBuffer {
+public:
+    virtual ~ResizableBuffer() {}
+    virtual void resize(size_t size) = 0;
+    virtual void* buffer() const = 0;
+};
+
+template<typename T>
+class ResizableBufferAdapter { };
+
+
+template<typename CharT, typename Traits, typename Allocator>
+class ResizableBufferAdapter< std::basic_string<CharT, Traits, Allocator> > : public ResizableBuffer {
+    typedef std::basic_string<CharT, Traits, Allocator> BufferType;
+    BufferType* _buffer;
+public:
+    explicit ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
+    virtual void resize(size_t size) override {
+        _buffer->resize((size + sizeof(CharT) - 1) / sizeof(CharT));
+    }
+    virtual void* buffer() const override {
+        return &_buffer->front();
+    }
+};
+
+template<typename T, typename Allocator>
+class ResizableBufferAdapter< std::vector<T, Allocator> > : public ResizableBuffer {
+    typedef std::vector<T, Allocator> BufferType;
+    BufferType* _buffer;
+public:
+    explicit ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
+    virtual void resize(size_t size) override {
+        _buffer->resize((size + sizeof(T) - 1) / sizeof(T));
+    }
+    virtual void* buffer() const override {
+        return &_buffer->front();
+    }
+};
+
+
+template<>
+class ResizableBufferAdapter<Data> : public ResizableBuffer {
+    typedef Data BufferType;
+    BufferType* _buffer;
+public:
+    explicit ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
+    virtual void resize(size_t size) override {
+        if (static_cast<size_t>(_buffer->getSize()) < size) {
+            auto old = _buffer->getBytes();
+            void* buffer = realloc(old, size);
+            if (buffer)
+                _buffer->fastSet((unsigned char*)buffer, size);
+        }
+    }
+    virtual void* buffer() const override {
+        return _buffer->getBytes();
+    }
+};
 
 /** Helper class to handle file operations. */
 class CC_DLL FileUtils
@@ -58,7 +119,7 @@ public:
     /**
      * You can inherit from platform dependent implementation of FileUtils, such as FileUtilsAndroid,
      * and use this function to set delegate, then FileUtils will invoke delegate's implementation.
-     * Fox example, your resources are encrypted, so you need to decrypt it after reading data from
+     * For example, your resources are encrypted, so you need to decrypt it after reading data from
      * resources, then you can implement all getXXX functions, and engine will invoke your own getXX
      * functions when reading data of resources.
      *
@@ -98,6 +159,89 @@ public:
      *  @return A data object.
      */
     virtual Data getDataFromFile(const std::string& filename);
+
+
+    enum class Status
+    {
+        OK = 0,
+        NotExists = 1, // File not exists
+        OpenFailed = 2, // Open file failed.
+        ReadFaild = 3, // Read failed
+        NotInitialized = 4, // FileUtils is not initializes
+        TooLarge = 5, // The file is too large (great than 2^32-1)
+        ObtainSizeFailed = 6 // Failed to obtain the file size.
+    };
+
+    /**
+     *  Gets whole file contents as string from a file.
+     *
+     *  Unlike getStringFromFile, these getContents methods:
+     *      - read file in binary mode (does not convert CRLF to LF).
+     *      - does not truncate the string when '\0' is found (returned string of getContents may have '\0' in the middle.).
+     *
+     *  The template version of can accept cocos2d::Data, std::basic_string and std::vector.
+     *
+     *  <pre>
+     *  {@code
+     *  std::string sbuf;
+     *  FileUtils::getInstance()->getContents("path/to/file", &sbuf);
+     *
+     *  std::vector<int> vbuf;
+     *  FileUtils::getInstance()->getContents("path/to/file", &vbuf);
+     *
+     *  Data dbuf;
+     *  FileUtils::getInstance()->getContents("path/to/file", &dbuf);
+     *  }
+     * </pre
+     *
+     *  Note: if you read to std::vector<T> and std::basic_string<T> where T is not 8 bit type,
+     *  you may get 0 ~ sizeof(T)-1 bytes padding.
+     *
+     *  - To write a new buffer class works with getContents, just extend ResizableBuffer.
+     *  - To write a adapter for existing class, write a specialized ResizableBufferAdapter for that class, see follow code.
+     *
+     *  <pre>
+     *  {@code
+     *  NS_CC_BEGIN // ResizableBufferAdapter needed in cocos2d namespace.
+     *  template<>
+     *  class ResizableBufferAdapter<AlreadyExistsBuffer> : public ResizableBuffer {
+     *  public:
+     *      ResizableBufferAdapter(AlreadyExistsBuffer* buffer)  {
+     *          // your code here
+     *      }
+     *      virtual void resize(size_t size) override  {
+     *          // your code here
+     *      }
+     *      virtual void* buffer() const override {
+     *          // your code here
+     *      }
+     *  };
+     *  NS_CC_END
+     *  }
+     * </pre
+     *
+     *  @param[in]  filename The resource file name which contains the path.
+     *  @param[out] buffer The buffer where the file contents are store to.
+     *  @return Returns:
+     *      - Status::OK when there is no error, the buffer is filled with the contents of file.
+     *      - Status::NotExists when file not exists, the buffer will not changed.
+     *      - Status::OpenFailed when cannot open file, the buffer will not changed.
+     *      - Status::ReadFaild when read end up before read whole, the buffer will fill with already read bytes.
+     *      - Status::NotInitialized when FileUtils is not initializes, the buffer will not changed.
+     *      - Status::TooLarge when there file to be read is too large (> 2^32-1), the buffer will not changed.
+     *      - Status::ObtainSizeFailed when failed to obtain the file size, the buffer will not changed.
+     */
+    template <
+        typename T,
+        typename Enable = typename std::enable_if<
+            std::is_base_of< ResizableBuffer, ResizableBufferAdapter<T> >::value
+        >::type
+    >
+    Status getContents(const std::string& filename, T* buffer) {
+        ResizableBufferAdapter<T> buf(buffer);
+        return getContents(filename, &buf);
+    }
+    virtual Status getContents(const std::string& filename, ResizableBuffer* buffer);
 
     /**
      *  Gets resource file data
@@ -334,7 +478,7 @@ public:
     *@param fullPath The full path to the file you want to save a string
     *@return bool
     */
-    virtual bool writeToFile(ValueMap& dict, const std::string& fullPath);
+    virtual bool writeToFile(const ValueMap& dict, const std::string& fullPath);
 
     /**
      *  write a string into a file
@@ -343,17 +487,17 @@ public:
      * @param fullPath The full path to the file you want to save a string
      * @return bool True if write success
      */
-    virtual bool writeStringToFile(std::string dataStr, const std::string& fullPath);
+    virtual bool writeStringToFile(const std::string& dataStr, const std::string& fullPath);
 
 
     /**
      * write Data into a file
      *
-     *@param retData the data want to save
+     *@param data the data want to save
      *@param fullPath The full path to the file you want to save a string
      *@return bool
      */
-    virtual bool writeDataToFile(Data retData, const std::string& fullPath);
+    virtual bool writeDataToFile(const Data& data, const std::string& fullPath);
 
     /**
     * write ValueMap into a plist file
@@ -362,7 +506,7 @@ public:
     *@param fullPath The full path to the file you want to save a string
     *@return bool
     */
-    virtual bool writeValueMapToFile(ValueMap& dict, const std::string& fullPath);
+    virtual bool writeValueMapToFile(const ValueMap& dict, const std::string& fullPath);
 
     /**
     * write ValueVector into a plist file
@@ -371,7 +515,7 @@ public:
     *@param fullPath The full path to the file you want to save a string
     *@return bool
     */
-    virtual bool writeValueVectorToFile(ValueVector vecData, const std::string& fullPath);
+    virtual bool writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath);
 
     /**
     * Windows fopen can't support UTF-8 filename

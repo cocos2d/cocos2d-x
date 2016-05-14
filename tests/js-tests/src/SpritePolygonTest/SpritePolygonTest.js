@@ -429,7 +429,7 @@ var SpritePolygonPerformanceTestDynamic = SpritePolygonPerformance.extend({
     },
     initIncrementStats: function () {
         this._incVert = this._polygons.getVertCount();
-        this._incTri = this._polygons.getTriaglesCount();
+        this._incTri = this._polygons.getTrianglesCount();
         this._incPix = this._polygons.getArea();
     },
     makeSprite: function () {

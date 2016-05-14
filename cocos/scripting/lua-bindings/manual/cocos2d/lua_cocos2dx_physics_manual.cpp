@@ -1,10 +1,11 @@
-#include "lua_cocos2dx_manual.hpp"
+#include "scripting/lua-bindings/manual/cocos2d/lua_cocos2dx_manual.hpp"
 
 #if CC_USE_PHYSICS
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-#include "CCLuaValue.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/CCLuaValue.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "2d/CCScene.h"
 
 #ifndef CC_SAFE_DELETE_ARRAY
 #define do { if(p) { delete[] (p); (p) = nullptr; } } while(0)
@@ -849,7 +850,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_getPoints(lua_State* tolua_S)
     if (argc == 0)
     {
         int count = cobj->getPointsCount();
-        cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
+        cocos2d::Vec2* arg0 = new (std::nothrow) cocos2d::Vec2[count];
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_DELETE_ARRAY(arg0);
@@ -1090,7 +1091,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPoints(lua_State* tolua_S)
     if (argc == 0)
     {
         int count = cobj->getPointsCount();
-        cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
+        cocos2d::Vec2* arg0 = new (std::nothrow) cocos2d::Vec2[count];
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_DELETE_ARRAY(arg0);
@@ -1134,7 +1135,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPoints(lua_State* tolua_S)
     if (argc == 0)
     {
         int count = cobj->getPointsCount();
-        cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
+        cocos2d::Vec2* arg0 = new (std::nothrow) cocos2d::Vec2[count];
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_DELETE_ARRAY(arg0);
@@ -1178,7 +1179,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPoints(lua_State* tolua_S)
     if (argc == 0)
     {
         int count = cobj->getPointsCount();
-        cocos2d::Vec2* arg0 = new cocos2d::Vec2[count];
+        cocos2d::Vec2* arg0 = new (std::nothrow) cocos2d::Vec2[count];
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_DELETE_ARRAY(arg0);

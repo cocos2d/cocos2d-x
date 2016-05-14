@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module ParticleSystem
--- @extend Node,TextureProtocol
+-- @extend Node,TextureProtocol,PlayableProtocol
 -- @parent_module cc
 
 --------------------------------
@@ -381,6 +381,12 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- 
+-- @function [parent=#ParticleSystem] getResourceFile 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 --  Gets the number of degrees to rotate a particle around the source pos per second.<br>
 -- return The number of degrees to rotate a particle around the source pos per second.
 -- @function [parent=#ParticleSystem] getRotatePerSecond 
@@ -408,6 +414,12 @@
 -- @function [parent=#ParticleSystem] setSourcePosition 
 -- @param self
 -- @param #vec2_table pos
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleSystem] stop 
+-- @param self
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
@@ -454,6 +466,12 @@
 -- @function [parent=#ParticleSystem] setRotationIsDir 
 -- @param self
 -- @param #bool t
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+-- / @{/ @name implement Playable Protocol
+-- @function [parent=#ParticleSystem] start 
+-- @param self
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------

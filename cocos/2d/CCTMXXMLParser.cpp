@@ -157,7 +157,7 @@ bool TMXMapInfo::initWithXML(const std::string& tmxString, const std::string& re
 bool TMXMapInfo::initWithTMXFile(const std::string& tmxFile)
 {
     internalInit(tmxFile, "");
-    return parseXMLFile(_TMXFileName.c_str());
+    return parseXMLFile(_TMXFileName);
 }
 
 TMXMapInfo::TMXMapInfo()
@@ -205,7 +205,7 @@ bool TMXMapInfo::parseXMLFile(const std::string& xmlFilename)
     
     parser.setDelegator(this);
 
-    return parser.parse(FileUtils::getInstance()->fullPathForFilename(xmlFilename).c_str());
+    return parser.parse(FileUtils::getInstance()->fullPathForFilename(xmlFilename));
 }
 
 // the XML parser calls here with all the elements
@@ -266,6 +266,8 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         std::string externalTilesetFilename = attributeDict["source"].asString();
         if (externalTilesetFilename != "")
         {
+            _externalTilesetFilename = externalTilesetFilename;
+
             // Tileset file will be relative to the map file. So we need to convert it to an absolute path
             if (_TMXFileName.find_last_of("/") != string::npos)
             {
@@ -276,7 +278,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             {
                 externalTilesetFilename = _resources + "/" + externalTilesetFilename;
             }
-            externalTilesetFilename = FileUtils::getInstance()->fullPathForFilename(externalTilesetFilename.c_str());
+            externalTilesetFilename = FileUtils::getInstance()->fullPathForFilename(externalTilesetFilename);
             
             _currentFirstGID = attributeDict["firstgid"].asInt();
             if (_currentFirstGID < 0)
@@ -285,7 +287,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             }
             _recordFirstGID = false;
             
-            tmxMapInfo->parseXMLFile(externalTilesetFilename.c_str());
+            tmxMapInfo->parseXMLFile(externalTilesetFilename);
         }
         else
         {
@@ -388,6 +390,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
         // build full path
         std::string imagename = attributeDict["source"].asString();
+        tileset->_originSourceImage = imagename;
 
         if (_TMXFileName.find_last_of("/") != string::npos)
         {
@@ -436,7 +439,13 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             }
             CCASSERT( compression == "" || compression == "gzip" || compression == "zlib", "TMX: unsupported compression method" );
         }
-    } 
+        else if (encoding == "csv")
+        {
+            int layerAttribs = tmxMapInfo->getLayerAttribs();
+            tmxMapInfo->setLayerAttribs(layerAttribs | TMXLayerAttribCSV);
+            tmxMapInfo->setStoringCharacters(true);
+        }
+    }
     else if (elementName == "object")
     {
         TMXObjectGroup* objectGroup = tmxMapInfo->getObjectGroups().back();
@@ -445,7 +454,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         // Create an instance of TMXObjectInfo to store the object and its properties
         ValueMap dict;
         // Parse everything automatically
-        const char* keys[] = {"name", "type", "width", "height", "gid"};
+        const char* keys[] = {"name", "type", "width", "height", "gid", "id"};
         
         for (const auto& key : keys)
         {
@@ -668,6 +677,45 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
             
             tmxMapInfo->setCurrentString("");
         }
+        else if (tmxMapInfo->getLayerAttribs() & TMXLayerAttribCSV)
+        {
+            unsigned char *buffer;
+
+            TMXLayerInfo* layer = tmxMapInfo->getLayers().back();
+
+            tmxMapInfo->setStoringCharacters(false);
+            std::string currentString = tmxMapInfo->getCurrentString();
+
+            vector<string> gidTokens;
+            istringstream filestr(currentString);
+            string sRow;
+            while(getline(filestr, sRow, '\n')) {
+                string sGID;
+                istringstream rowstr(sRow);
+                while (getline(rowstr, sGID, ',')) {
+                    gidTokens.push_back(sGID);
+                }
+            }
+
+            // 32-bits per gid
+            buffer = (unsigned char*)malloc(gidTokens.size() * 4);
+            if (!buffer)
+            {
+                CCLOG("cocos2d: TiledMap: CSV buffer not allocated.");
+                return;
+            }
+
+            uint32_t* bufferPtr = reinterpret_cast<uint32_t*>(buffer);
+            for(auto gidToken : gidTokens) {
+                auto tileGid = (uint32_t)strtol(gidToken.c_str(), nullptr, 10);
+                *bufferPtr = tileGid;
+                bufferPtr++;
+            }
+
+            layer->_tiles = reinterpret_cast<uint32_t*>(buffer);
+
+            tmxMapInfo->setCurrentString("");
+        }
         else if (tmxMapInfo->getLayerAttribs() & TMXLayerAttribNone)
         {
             _xmlTileIndex = 0;
@@ -709,7 +757,7 @@ void TMXMapInfo::textHandler(void *ctx, const char *ch, int len)
     {
         std::string currentString = tmxMapInfo->getCurrentString();
         currentString += text;
-        tmxMapInfo->setCurrentString(currentString.c_str());
+        tmxMapInfo->setCurrentString(currentString);
     }
 }
 

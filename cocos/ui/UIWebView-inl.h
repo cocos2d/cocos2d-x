@@ -24,10 +24,11 @@
 
 /// @cond DO_NOT_SHOW
 
-#include "UIWebView.h"
+#include "ui/UIWebView.h"
 #include "platform/CCGLView.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
+#include "ui/UIWebViewImpl-tizen.h"
 
 NS_CC_BEGIN
 namespace experimental{
@@ -195,6 +196,18 @@ namespace experimental{
         WebView::ccWebViewCallback WebView::getOnJSCallback()const
         {
             return _onJSCallback;
+        }
+        
+        void WebView::onEnter()
+        {
+            Widget::onEnter();
+            _impl->setVisible(true);
+        }
+        
+        void WebView::onExit()
+        {
+            Widget::onExit();
+            _impl->setVisible(false);
         }
         
     } // namespace ui

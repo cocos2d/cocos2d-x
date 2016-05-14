@@ -22,7 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "JniHelper.h"
+#include "platform/android/jni/JniHelper.h"
 #include <android/log.h>
 #include <string.h>
 #include <pthread.h>
@@ -67,6 +67,7 @@ namespace cocos2d {
     JavaVM* JniHelper::_psJavaVM = nullptr;
     jmethodID JniHelper::loadclassMethod_methodID = nullptr;
     jobject JniHelper::classloader = nullptr;
+    std::unordered_map<JNIEnv*, std::vector<jobject>> JniHelper::localRefs;
 
     JavaVM* JniHelper::getJavaVM() {
         pthread_t thisthread = pthread_self();
@@ -273,6 +274,31 @@ namespace cocos2d {
         std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(env, jstr);
 
         return strValue;
+    }
+
+    jstring JniHelper::convert(cocos2d::JniMethodInfo& t, const char* x) {
+        jstring ret = cocos2d::StringUtils::newStringUTFJNI(t.env, x ? x : "");
+        localRefs[t.env].push_back(ret);
+        return ret;
+    }
+
+    jstring JniHelper::convert(cocos2d::JniMethodInfo& t, const std::string& x) {
+        return convert(t, x.c_str());
+    }
+
+    void JniHelper::deleteLocalRefs(JNIEnv* env) {
+        if (!env) {
+            return;
+        }
+
+        for (const auto& ref : localRefs[env]) {
+            env->DeleteLocalRef(ref);
+        }
+        localRefs[env].clear();
+    }
+
+    void JniHelper::reportError(const std::string& className, const std::string& methodName, const std::string& signature) {
+        LOGE("Failed to find static java method. Class name: %s, method name: %s, signature: %s ",  className.c_str(), methodName.c_str(), signature.c_str());
     }
 
 } //namespace cocos2d

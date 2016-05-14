@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,12 +24,30 @@
 #ifndef __COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__
 #define __COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__
 
+#include <unordered_map>
+#include <string>
+
 extern "C" {
 #include "lua.h"
 #include "tolua++.h"
 }
-#include "tolua_fix.h"
-#include "cocos2d.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+
+#include "scripting/lua-bindings/manual/Lua-BindingsExport.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
+#include "2d/CCLabel.h"
+#include "2d/CCSprite.h"
+#include "3d/CCBundle3D.h"
+#include "base/CCValue.h"
+#include "base/ccTypes.h"
+#include "deprecated/CCArray.h"
+#include "deprecated/CCDictionary.h"
+#include "physics/CCPhysicsContact.h"
+#include "physics/CCPhysicsJoint.h"
+#include "physics/CCPhysicsShape.h"
+#include "physics/CCPhysicsWorld.h"
+#include "renderer/CCGLProgram.h"
+
 
 using namespace cocos2d;
 
@@ -53,7 +71,7 @@ cocos2d::log(__VA_ARGS__);                                                  \
 /**
  * If the typename of userdata at the given accepteable index of stack is equal to type it return true,otherwise return false .
  * If def != 0, lo could greater than the top index of stack, return value is true.
- * If the value of the given index is nil, retrun value also is true.
+ * If the value of the given index is nil, return value also is true.
  *
  * @param L the current lua_State.
  * @param lo the given accpetable index of stack.
@@ -68,7 +86,7 @@ extern bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def);
  * @name luaval_to_native
  * The following function are all used to convert the Lua values at the given acceptable index to the corresponding c++ values.
  * If the Lua values can be converted the return value is true, otherwise return false.
- * If it happens error during the conversion process, it outputs the error msg in the console to provide infromation about the name of calling function, the typename of value at the given acceptable index, and so on.
+ * If it happens error during the conversion process, it outputs the error msg in the console to provide information about the name of calling function, the typename of value at the given acceptable index, and so on.
  * @{
  **/
 
@@ -145,7 +163,7 @@ extern bool luaval_to_uint16(lua_State* L,int lo,uint16_t* outValue, const char*
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
  */
-extern bool luaval_to_boolean(lua_State* L,int lo,bool* outValue, const char* funcName = "");
+extern CC_LUA_DLL bool luaval_to_boolean(lua_State* L,int lo,bool* outValue, const char* funcName = "");
 
 /**
  * Get a double value from the given accpetable index of stack.
@@ -179,9 +197,9 @@ extern bool luaval_to_long_long(lua_State* L,int lo,long long* outValue, const c
  * @param lo the given accpetable index of stack.
  * @param outValue the pointer to store std::string value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is is a string or a number convertible to a string, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a string or a number convertible to a string, otherwise return false.
  */
-extern bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, const char* funcName = "");
+extern CC_LUA_DLL bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, const char* funcName = "");
 
 /**
  * Get a long value from the given accpetable index of stack.
@@ -244,7 +262,7 @@ extern bool luaval_to_rect(lua_State* L,int lo,Rect* outValue, const char* funcN
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
  */
-extern bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue, const char* funcName = "");
+extern CC_LUA_DLL bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue, const char* funcName = "");
 
 /**
  * Get a Color4B object value from the given accpetable index of stack.
@@ -326,7 +344,7 @@ extern bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outVa
 extern bool luaval_to_mat4(lua_State* L, int lo, cocos2d::Mat4* outValue , const char* funcName = "");
 
 /**
- * Get a __Array object value frome the given accpetable index of stack.
+ * Get a __Array object value from the given accpetable index of stack.
  * Because __Array is deprecated, so this function would be not called anymore.
  */
 extern bool luaval_to_array(lua_State* L,int lo, __Array** outValue, const char* funcName = "");
@@ -490,15 +508,15 @@ bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* r
 {
     if (nullptr == L || argc == 0 )
         return false;
-    
+
     bool ok = true;
-    
+
     for (int i = 0; i < argc; i++)
     {
         if (lua_isuserdata(L, i + 2))
         {
             tolua_Error err;
-            
+
             if (!tolua_isusertype(L, i + 2, "cc.Ref", 0, &err))
             {
                 ok = false;
@@ -508,7 +526,7 @@ bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* r
             ret->pushBack(obj);
         }
     }
-    
+
     return ok;
 }
 
@@ -527,13 +545,13 @@ bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret, const ch
 {
     if (nullptr == L || nullptr == ret)
         return false;
-    
+
     bool ok = true;
-    
+
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
         ok = false;
-    
+
     if (ok)
     {
         size_t len = lua_objlen(L, lo);
@@ -541,22 +559,22 @@ bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret, const ch
         {
             lua_pushnumber(L, i + 1);
             lua_gettable(L, lo);
-            
+
             if (lua_isnil(L, -1) || !lua_isuserdata(L, -1))
             {
                 lua_pop(L, 1);
                 continue;
             }
-            
+
 
             T cobj = static_cast<T>(tolua_tousertype(L, -1, NULL) );
             if (NULL != cobj)
                 ret->pushBack(cobj);
-            
+
             lua_pop(L, 1);
         }
     }
-    
+
     return ok;
 }
 
@@ -569,7 +587,7 @@ bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret, const ch
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
  */
-bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
+CC_LUA_DLL bool   luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
 
 /**
  * Get a pointer points to a std::vector<std::int> from a Lua array table in the stack.
@@ -597,7 +615,7 @@ bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, 
 {
     if(nullptr == L || nullptr == ret || lua_gettop(L) < lo)
         return false;
-    
+
     tolua_Error tolua_err;
     bool ok = true;
     if (!tolua_istable(L, lo, 0, &tolua_err))
@@ -607,7 +625,7 @@ bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, 
 #endif
         ok = false;
     }
-    
+
     if (ok)
     {
         std::string stringKey = "";
@@ -619,22 +637,22 @@ bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, 
                 lua_pop(L, 1);                                      /* removes 'value'; keep 'key' for next iteration*/
                 continue;
             }
-            
+
             if (lua_isnil(L, -1) || !lua_isuserdata(L, -1))
             {
                 lua_pop(L, 1);
                 continue;
             }
-            
+
             luaval_to_std_string(L, -2, &stringKey);
             T obj = static_cast<T>(tolua_tousertype(L, -1, NULL) );
             if (nullptr != obj)
                 ret->insert(stringKey, obj);
-                
+
             lua_pop(L, 1);                                          /* L: lotable ..... key */
         }
     }
-    
+
     return ok;
 }
 
@@ -701,15 +719,15 @@ bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret, const cha
 {
     if(nullptr == L || lua_gettop(L) < lo)
         return false;
-    
+
     if (!luaval_is_usertype(L, lo, type, 0))
         return false;
-    
+
     *ret = static_cast<T*>(tolua_tousertype(L, lo, 0));
-    
+
     if (nullptr == *ret)
         CCLOG("Warning: %s argument %d is invalid native object(nullptr)", funcName, lo);
-    
+
     return true;
 }
 
@@ -837,7 +855,7 @@ extern bool luaval_to_std_map_string_string(lua_State* L, int lo, std::map<std::
 
 /**
  * @name native_to_luaval
- * The following function are all used to convert native c++ values to the the corresponding Lua values,then push it into the Lua stack.
+ * The following function are all used to convert native c++ values to the corresponding Lua values, then push it into the Lua stack.
  *
  * @{
  **/
@@ -905,7 +923,7 @@ extern void rect_to_luaval(lua_State* L,const Rect& rt);
  * @param L the current lua_State.
  * @param cc  a cocos2d::Color3B object.
  */
-extern void color3b_to_luaval(lua_State* L,const Color3B& cc);
+extern CC_LUA_DLL void color3b_to_luaval(lua_State* L,const Color3B& cc);
 
 /**
  * Push a table converted from a cocos2d::Color4B object into the Lua stack.
@@ -1045,16 +1063,16 @@ template <class T>
 void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
 {
     lua_newtable(L);
-    
+
     if (nullptr == L)
         return;
-    
+
     int indexTable = 1;
     for (const auto& obj : inValue)
     {
         if (nullptr == obj)
             continue;
-        
+
 
         if (nullptr != dynamic_cast<cocos2d::Ref *>(obj))
         {
@@ -1085,10 +1103,10 @@ template <class T>
 void ccmap_string_key_to_luaval(lua_State* L, const cocos2d::Map<std::string, T>& v)
 {
     lua_newtable(L);
-    
+
     if(nullptr == L)
         return;
-    
+
     for (auto iter = v.begin(); iter != v.end(); ++iter)
     {
         std::string key = iter->first;
@@ -1178,7 +1196,7 @@ const char* getLuaTypeName(T* ret,const char* type)
             return type;
         }
     }
-    
+
     return nullptr;
 }
 
@@ -1236,7 +1254,7 @@ void ccvector_std_string_to_luaval(lua_State* L, const std::vector<std::string>&
  * The format of table as follows: {numberValue1, numberValue2, ..., numberVectorSize}
  *
  * @param L the current lua_State.
- * @param inValue a std::vector<int> vaule.
+ * @param inValue a std::vector<int> value.
  */
 void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue);
 
@@ -1245,7 +1263,7 @@ void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue);
  * The format of table as follows: {numberValue1, numberValue2, ..., numberVectorSize}
  *
  * @param L the current lua_State.
- * @param inValue a std::vector<float> vaule.
+ * @param inValue a std::vector<float> value.
  */
 void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
 
@@ -1254,7 +1272,7 @@ void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
  * The format of table as follows: {numberValue1, numberValue2, ..., numberVectorSize}
  *
  * @param L the current lua_State.
- * @param inValue a std::vector<float> vaule.
+ * @param inValue a std::vector<float> value.
  */
 void ccvector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& inValue);
 
@@ -1281,7 +1299,7 @@ void texParams_to_luaval(lua_State* L, const cocos2d::Texture2D::TexParams& inVa
  * The format of table as follows: {vec3Value1, vec3Value2, ..., vec3ValueSize}
  *
  * @param L the current lua_State.
- * @param inValue a std::vector<cocos2d::Vec3> vaule.
+ * @param inValue a std::vector<cocos2d::Vec3> value.
  */
 void std_vector_vec3_to_luaval(lua_State* L, const std::vector<cocos2d::Vec3>& inValue);
 
@@ -1289,9 +1307,13 @@ void std_vector_vec3_to_luaval(lua_State* L, const std::vector<cocos2d::Vec3>& i
  * Push a Lua dict table converted from a std::map<std::string, std::string> into the Lua stack.
  *
  * @param L the current lua_State.
- * @param inValue a std::map<std::string, std::string> vaule.
+ * @param inValue a std::map<std::string, std::string> value.
  */
 void std_map_string_string_to_luaval(lua_State* L, const std::map<std::string, std::string>& inValue);
+
+// Follow 2 function is added for Cocos Studio to make lua lib can be compile as dynamic library
+CC_LUA_DLL extern bool luaval_to_node(lua_State* L, int lo, const char* type, cocos2d::Node** node);
+CC_LUA_DLL extern void node_to_luaval(lua_State* L, const char* type, cocos2d::Node* node);
 
 // end group
 /// @}

@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCArray.h"
+#include "deprecated/CCArray.h"
 #include "deprecated/CCString.h"
 #include "platform/CCFileUtils.h"
 
@@ -44,7 +44,7 @@ __Array::__Array()
 
 __Array* __Array::create()
 {
-    __Array* array = new __Array();
+    __Array* array = new (std::nothrow) __Array();
 
     if (array && array->initWithCapacity(7))
     {
@@ -60,7 +60,7 @@ __Array* __Array::create()
 
 __Array* __Array::createWithObject(Ref* object)
 {
-    __Array* array = new __Array();
+    __Array* array = new (std::nothrow) __Array();
 
     if (array && array->initWithObject(object))
     {
@@ -109,7 +109,7 @@ __Array* __Array::createWithCapacity(int capacity)
 {
     CCASSERT(capacity>=0, "Invalid capacity");
 
-    __Array* array = new __Array();
+    __Array* array = new (std::nothrow) __Array();
     
     if (array && array->initWithCapacity(capacity))
     {
@@ -342,7 +342,7 @@ __Array::~Array()
 
 __Array* __Array::clone() const
 {
-    __Array* ret = new __Array();
+    __Array* ret = new (std::nothrow) __Array();
     ret->autorelease();
     ret->initWithCapacity(this->data.size() > 0 ? this->data.size() : 1);
 
@@ -387,7 +387,7 @@ __Array::__Array()
 
 __Array* __Array::create()
 {
-    __Array* array = new __Array();
+    __Array* array = new (std::nothrow) __Array();
 
     if (array && array->initWithCapacity(7))
     {
@@ -403,7 +403,7 @@ __Array* __Array::create()
 
 __Array* __Array::createWithObject(Ref* object)
 {
-    __Array* array = new __Array();
+    __Array* array = new (std::nothrow) __Array();
 
     if (array && array->initWithObject(object))
     {
@@ -452,7 +452,7 @@ __Array* __Array::createWithCapacity(ssize_t capacity)
 {
     CCASSERT(capacity>=0, "Invalid capacity");
 
-    __Array* array = new __Array();
+    __Array* array = new (std::nothrow) __Array();
 
     if (array && array->initWithCapacity(capacity))
     {
@@ -728,7 +728,7 @@ __Array::~__Array()
 
 __Array* __Array::clone() const
 {
-    __Array* ret = new __Array();
+    __Array* ret = new (std::nothrow) __Array();
     ret->autorelease();
     ret->initWithCapacity(this->data->num > 0 ? this->data->num : 1);
 

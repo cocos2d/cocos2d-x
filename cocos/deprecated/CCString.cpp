@@ -28,7 +28,7 @@ Copyright (c) 2013-2014 Chukong Technologies
 #include "base/ccMacros.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "CCArray.h"
+#include "deprecated/CCArray.h"
 #include "base/ccUtils.h"
 
 NS_CC_BEGIN
@@ -220,7 +220,7 @@ bool __String::isEqual(const Ref* pObject)
 
 __String* __String::create(const std::string& str)
 {
-    __String* ret = new __String(str);
+    __String* ret = new (std::nothrow) __String(str);
     ret->autorelease();
     return ret;
 }

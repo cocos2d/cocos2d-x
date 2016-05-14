@@ -266,7 +266,7 @@
             handle: function(options){
                 var frame = new ccs.BlendFuncFrame();
                 var blendFunc = options["BlendFunc"];
-                if(blendFunc)
+                if(blendFunc && blendFunc["Src"] !== undefined && blendFunc["Dst"] !== undefined)
                     frame.setBlendFunc(new cc.BlendFunc(blendFunc["Src"], blendFunc["Dst"]));
                 return frame;
             }
@@ -310,6 +310,6 @@
         });
     });
 
-    load.registerParser("action", "2.*", parser);
+    load.registerParser("action", "*", parser);
 
 })(ccs._load, ccs._parser);

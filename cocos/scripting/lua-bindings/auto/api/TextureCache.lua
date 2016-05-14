@@ -95,6 +95,18 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+--  Reload texture from a new file.<br>
+-- This function is mainly for editor, won't suggest use it in game for performance reason.<br>
+-- param srcName Original texture file name.<br>
+-- param dstName New texture file name.<br>
+-- since v3.10
+-- @function [parent=#TextureCache] renameTextureWithKey 
+-- @param self
+-- @param #string srcName
+-- @param #string dstName
+-- @return TextureCache#TextureCache self (return value: cc.TextureCache)
+        
+--------------------------------
 --  Removes unused textures.<br>
 -- Textures that have a retain count of 1 will be deleted.<br>
 -- It is convenient to call this method after when starting a new Scene.<br>

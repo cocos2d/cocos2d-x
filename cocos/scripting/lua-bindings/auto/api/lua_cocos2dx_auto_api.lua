@@ -97,6 +97,26 @@
 
 
 --------------------------------------------------------
+-- the cc Image
+-- @field [parent=#cc] Image#Image Image preloaded module
+
+
+--------------------------------------------------------
+-- the cc GLProgramState
+-- @field [parent=#cc] GLProgramState#GLProgramState GLProgramState preloaded module
+
+
+--------------------------------------------------------
+-- the cc PolygonInfo
+-- @field [parent=#cc] PolygonInfo#PolygonInfo PolygonInfo preloaded module
+
+
+--------------------------------------------------------
+-- the cc AutoPolygon
+-- @field [parent=#cc] AutoPolygon#AutoPolygon AutoPolygon preloaded module
+
+
+--------------------------------------------------------
 -- the cc SpriteFrame
 -- @field [parent=#cc] SpriteFrame#SpriteFrame SpriteFrame preloaded module
 
@@ -747,11 +767,6 @@
 
 
 --------------------------------------------------------
--- the cc GLProgramState
--- @field [parent=#cc] GLProgramState#GLProgramState GLProgramState preloaded module
-
-
---------------------------------------------------------
 -- the cc AtlasNode
 -- @field [parent=#cc] AtlasNode#AtlasNode AtlasNode preloaded module
 
@@ -934,21 +949,6 @@
 --------------------------------------------------------
 -- the cc ProtectedNode
 -- @field [parent=#cc] ProtectedNode#ProtectedNode ProtectedNode preloaded module
-
-
---------------------------------------------------------
--- the cc Image
--- @field [parent=#cc] Image#Image Image preloaded module
-
-
---------------------------------------------------------
--- the cc PolygonInfo
--- @field [parent=#cc] PolygonInfo#PolygonInfo PolygonInfo preloaded module
-
-
---------------------------------------------------------
--- the cc AutoPolygon
--- @field [parent=#cc] AutoPolygon#AutoPolygon AutoPolygon preloaded module
 
 
 --------------------------------------------------------
@@ -1319,11 +1319,6 @@
 --------------------------------------------------------
 -- the cc MotionStreak3D
 -- @field [parent=#cc] MotionStreak3D#MotionStreak3D MotionStreak3D preloaded module
-
-
---------------------------------------------------------
--- the cc Sprite3DMaterial
--- @field [parent=#cc] Sprite3DMaterial#Sprite3DMaterial Sprite3DMaterial preloaded module
 
 
 --------------------------------------------------------

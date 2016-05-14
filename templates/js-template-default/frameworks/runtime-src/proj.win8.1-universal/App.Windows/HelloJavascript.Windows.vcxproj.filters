@@ -10,9 +10,6 @@
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="HelloJavascript.Windows_TemporaryKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="Assets\Logo.scale-100.png">
       <Filter>Assets</Filter>
     </Image>
@@ -25,5 +22,8 @@
     <Image Include="Assets\SplashScreen.scale-100.png">
       <Filter>Assets</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TemporaryKey.pfx" />
   </ItemGroup>
 </Project>

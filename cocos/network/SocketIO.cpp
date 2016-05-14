@@ -27,14 +27,14 @@
 
  ****************************************************************************/
 
-#include "SocketIO.h"
+#include "network/SocketIO.h"
 #include <algorithm>
 #include <sstream>
 #include <iterator>
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
-#include "WebSocket.h"
-#include "HttpClient.h"
+#include "network/WebSocket.h"
+#include "network/HttpClient.h"
 
 #include "json/rapidjson.h"
 #include "json/document.h"
@@ -308,10 +308,10 @@ SocketIOPacket * SocketIOPacket::createPacketWithType(std::string type, SocketIO
     switch (version)
     {
     case SocketIOPacket::SocketIOVersion::V09x:
-        ret = new SocketIOPacket;
+        ret = new (std::nothrow) SocketIOPacket;
         break;
     case SocketIOPacket::SocketIOVersion::V10x:
-        ret = new SocketIOPacketV10x;
+        ret = new (std::nothrow) SocketIOPacketV10x;
         break;
     }
     ret->initWithType(type);
@@ -325,10 +325,10 @@ SocketIOPacket * SocketIOPacket::createPacketWithTypeIndex(int type, SocketIOPac
     switch (version)
     {
     case SocketIOPacket::SocketIOVersion::V09x:
-        ret = new SocketIOPacket;
+        ret = new (std::nothrow) SocketIOPacket;
         break;
     case SocketIOPacket::SocketIOVersion::V10x:
-        return new SocketIOPacketV10x;
+        return new (std::nothrow) SocketIOPacketV10x;
         break;
     }
     ret->initWithTypeIndex(type);
@@ -417,7 +417,7 @@ void SIOClientImpl::handshake()
     pre << "http://" << _uri << "/socket.io/1/?EIO=2&transport=polling&b64=true";
 
     HttpRequest* request = new (std::nothrow) HttpRequest();
-    request->setUrl(pre.str().c_str());
+    request->setUrl(pre.str());
     request->setRequestType(HttpRequest::Type::GET);
 
     request->setResponseCallback(CC_CALLBACK_2(SIOClientImpl::handshakeResponse, this));
@@ -865,7 +865,7 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
             case 2:
                 CCLOGINFO("Ping received, send pong");
                 payload = "3" + payload;
-                _ws->send(payload.c_str());
+                _ws->send(payload);
                 break;
             case 3:
                 CCLOGINFO("Pong received");
@@ -986,6 +986,10 @@ void SIOClientImpl::onClose(WebSocket* ws)
         {
             iter->second->socketClosed();
         }
+        // discard this client
+        _connected = false;
+        Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
+        SocketIO::getInstance()->removeSocket(_uri);
     }
 
     this->release();
@@ -994,7 +998,7 @@ void SIOClientImpl::onClose(WebSocket* ws)
 void SIOClientImpl::onError(WebSocket* ws, const WebSocket::ErrorCode& error)
 {
     CC_UNUSED_PARAM(ws);
-    CCLOGERROR("Websocket error received: %d", error);
+    CCLOGERROR("Websocket error received: %d", static_cast<int>(error));
 }
 
 //begin SIOClient methods

@@ -22,13 +22,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Light3DReader.h"
+#include "editor-support/cocostudio/WidgetReader/Light3DReader/Light3DReader.h"
+#include "2d/CCLight.h"
 
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/CSParse3DBinary_generated.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/CSParse3DBinary_generated.h"
 
-#include "cocostudio/FlatBuffersSerialize.h"
-#include "cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -56,7 +57,7 @@ namespace cocostudio
     {
         if (!_instanceLight3DReader)
         {
-            _instanceLight3DReader = new Light3DReader();
+            _instanceLight3DReader = new (std::nothrow) Light3DReader();
         }
         
         return _instanceLight3DReader;
@@ -78,7 +79,7 @@ namespace cocostudio
         auto temp = Node3DReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
         auto node3DOptions = *(Offset<Node3DOption>*)(&temp);
         
-        bool enabled = false;
+        bool enabled = true;
         int type = 0;
         int flag = 0;
         float intensity = 1.0f;
@@ -182,6 +183,7 @@ namespace cocostudio
         {
             light->setIntensity(intensity);
             light->setEnabled(enabled);
+            light->setLightFlag(flag);
         }
         lightNode->addChild(light);
 

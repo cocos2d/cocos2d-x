@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-CopyRight (c) 2013-2014 Chukong Technologies Inc.
+CopyRight (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -121,7 +121,7 @@ public:
     }
     
     // Overrides
-	virtual AnimationFrame *clone() const override;
+    virtual AnimationFrame *clone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     /**
@@ -183,7 +183,7 @@ public:
     /* Creates an animation with an array of AnimationFrame, the delay per units in seconds and and how many times it should be executed.
      * @since v2.0
      * @param arrayOfAnimationFrameNames An animation with an array of AnimationFrame.
-     * @param delayPerUnit The delay per units in seconds and and how many times it should be executed.
+     * @param delayPerUnit The delay per units in seconds and how many times it should be executed.
      * @param loops The times the animation is going to loop.
      */
     static Animation* create(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops = 1);
@@ -202,7 +202,7 @@ public:
     void addSpriteFrameWithFile(const std::string& filename);
     /**
      * @deprecated. Use addSpriteFrameWithFile() instead.
-	 @js NA
+     @js NA
      */
     CC_DEPRECATED_ATTRIBUTE void addSpriteFrameWithFileName(const std::string& filename){ addSpriteFrameWithFile(filename);}
 
@@ -279,7 +279,7 @@ public:
     void setLoops(unsigned int loops) { _loops = loops; };
     
     // overrides
-	virtual Animation *clone() const override;
+    virtual Animation *clone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     Animation();

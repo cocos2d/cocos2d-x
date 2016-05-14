@@ -43,6 +43,12 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
+-- / @}
+-- @function [parent=#Sprite] getResourceType 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 -- @overload self, cc.Texture2D, rect_table         
 -- @overload self, cc.Texture2D         
 -- @overload self, cc.Texture2D, rect_table, bool         
@@ -88,7 +94,7 @@
 -- Initializes a sprite with an sprite frame name.<br>
 -- A SpriteFrame will be fetched from the SpriteFrameCache by name.<br>
 -- If the SpriteFrame doesn't exist it will raise an exception.<br>
--- param   spriteFrameName  A key string that can fected a volid SpriteFrame from SpriteFrameCache.<br>
+-- param   spriteFrameName  A key string that can fected a valid SpriteFrame from SpriteFrameCache.<br>
 -- return  True if the sprite is initialized properly, false otherwise.
 -- @function [parent=#Sprite] initWithSpriteFrameName 
 -- @param self
@@ -151,6 +157,12 @@
 -- @function [parent=#Sprite] getSpriteFrame 
 -- @param self
 -- @return SpriteFrame#SpriteFrame ret (return value: cc.SpriteFrame)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite] getResourceName 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- Whether or not the Sprite needs to be updated in the Atlas.<br>
@@ -352,6 +364,13 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Sprite] setIgnoreAnchorPointForPosition 
+-- @param self
+-- @param #bool value
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- 
 -- @function [parent=#Sprite] draw 
 -- @param self
 -- @param #cc.Renderer renderer
@@ -391,13 +410,6 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #int zOrder
--- @return Sprite#Sprite self (return value: cc.Sprite)
-        
---------------------------------
--- 
--- @function [parent=#Sprite] ignoreAnchorPointForPosition 
--- @param self
--- @param #bool value
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------

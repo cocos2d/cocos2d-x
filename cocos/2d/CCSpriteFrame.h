@@ -29,6 +29,7 @@ THE SOFTWARE.
 #define __SPRITE_CCSPRITE_FRAME_H__
 
 #include "2d/CCNode.h"
+#include "2d/CCAutoPolygon.h"
 #include "base/CCRef.h"
 #include "math/CCGeometry.h"
 
@@ -49,8 +50,10 @@ class Texture2D;
 
  You can modify the frame of a Sprite by doing:
  
-    SpriteFrame *frame = SpriteFrame::frameWithTexture(texture, rect, offset);
-    sprite->setDisplayFrame(frame);
+ @code
+    SpriteFrame* frame = SpriteFrame::createWithTexture(texture, rect);
+    sprite->setSpriteFrame(frame);
+ @endcode
  */
 class CC_DLL SpriteFrame : public Ref, public Clonable
 {
@@ -185,9 +188,43 @@ public:
      */
     void setOffset(const Vec2& offsets);
 
+    /** Get anchor point of the frame.
+     *
+     * @return The anchor point of the sprite frame.
+     */
+    const Vec2& getAnchorPoint() const;
+    /** Set anchor point of the frame.
+     *
+     * @param anchorPoint The anchor point of the sprite frame.
+     */
+    void setAnchorPoint(const Vec2& anchorPoint);
+    /** Check if anchor point is defined for the frame.
+     *
+     * @return true if anchor point is available.
+     */
+    bool hasAnchorPoint() const;
+
     // Overrides
 	virtual SpriteFrame *clone() const override;
-    
+
+    /** Set the polygon info for polygon mesh sprites
+     *
+     * @param polygonInfo triangle mesh of the sprite
+     */
+    void setPolygonInfo(const PolygonInfo &polygonInfo);
+
+    /** Get the polygonInfo for this sprite
+     *
+     * @return polygonInfo structure
+     */
+    const PolygonInfo &getPolygonInfo() const;
+
+    /** Check if sprite frame is a polygon sprite
+     *
+     * @return true if polygonInfo is available
+     */
+    bool hasPolygonInfo() const;
+
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @lua NA
@@ -223,6 +260,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     Vec2 _offset;
+    Vec2 _anchorPoint;
     Size _originalSize;
     Rect _rectInPixels;
     bool   _rotated;
@@ -231,6 +269,7 @@ protected:
     Size _originalSizeInPixels;
     Texture2D *_texture;
     std::string  _textureFilename;
+    PolygonInfo _polygonInfo;
 };
 
 // end of _2d group

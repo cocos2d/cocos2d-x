@@ -25,9 +25,9 @@ THE SOFTWARE.
 #ifndef __ActionNODE_H__
 #define __ActionNODE_H__
 
-#include "cocostudio/CCActionFrame.h"
-#include "cocostudio/DictionaryHelper.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCActionFrame.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
     

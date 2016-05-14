@@ -54,8 +54,10 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(ActionAnimate);
     ADD_TEST_CASE(ActionSequence);
     ADD_TEST_CASE(ActionSequence2);
-	ADD_TEST_CASE(ActionRemoveSelf);
+    ADD_TEST_CASE(ActionSequence3);
+    ADD_TEST_CASE(ActionRemoveSelf);
     ADD_TEST_CASE(ActionSpawn);
+    ADD_TEST_CASE(ActionSpawn2);
     ADD_TEST_CASE(ActionReverse);
     ADD_TEST_CASE(ActionDelayTime);
     ADD_TEST_CASE(ActionRepeat);
@@ -68,6 +70,7 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(ActionReverseSequence2);
     ADD_TEST_CASE(ActionOrbit);
     ADD_TEST_CASE(ActionFollow);
+    ADD_TEST_CASE(ActionFollowWithOffset);
     ADD_TEST_CASE(ActionTargeted);
     ADD_TEST_CASE(ActionTargetedReverse);
     ADD_TEST_CASE(ActionMoveStacked);
@@ -330,7 +333,7 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     auto box = LayerColor::create(Color4B(255,255,0,255));
     box->setAnchorPoint(Vec2(0.5,0.5));
     box->setContentSize( boxSize );
-    box->ignoreAnchorPointForPosition(false);
+    box->setIgnoreAnchorPointForPosition(false);
     box->setPosition(s.width/2, s.height - 100 - box->getContentSize().height/2);
     this->addChild(box);
 
@@ -346,7 +349,7 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     box = LayerColor::create(Color4B(255,255,0,255));
     box->setAnchorPoint(Vec2(0.5,0.5));
     box->setContentSize(boxSize);
-    box->ignoreAnchorPointForPosition(false);
+    box->setIgnoreAnchorPointForPosition(false);
     box->setPosition(s.width/2, s.height - 250 - box->getContentSize().height/2);
     this->addChild(box);
 
@@ -778,6 +781,37 @@ std::string ActionSequence2::subtitle() const
 
 //------------------------------------------------------------------
 //
+//    ActionSequence3
+//
+//------------------------------------------------------------------
+void ActionSequence3::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    alignSpritesLeft(1);
+
+    // Uses Array API
+    auto action1 = MoveBy::create(2, Vec2(240,0));
+    auto action2 = RotateBy::create(2, 540);
+    auto action3 = action1->reverse();
+    auto action4 = action2->reverse();
+
+    Vector<FiniteTimeAction*> array;
+    array.pushBack(action1);
+    array.pushBack(action2);
+    array.pushBack(action3);
+    array.pushBack(action4);
+    auto action = Sequence::create(array);
+    _grossini->runAction(action);
+}
+
+std::string ActionSequence3::subtitle() const
+{
+    return "Sequence: Using Array API";
+}
+
+//------------------------------------------------------------------
+//
 // ActionCallFuncN
 //
 //------------------------------------------------------------------
@@ -947,6 +981,33 @@ std::string ActionSpawn::subtitle() const
     return "Spawn: Jump + Rotate";
 }
 
+//------------------------------------------------------------------
+//
+// ActionSpawn2
+//
+//------------------------------------------------------------------
+
+void ActionSpawn2::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    alignSpritesLeft(1);
+
+    auto action1 = JumpBy::create(2, Vec2(300,0), 50, 4);
+    auto action2 = RotateBy::create( 2,  720);
+
+    Vector<FiniteTimeAction*> array;
+    array.pushBack(action1);
+    array.pushBack(action2);
+
+    auto action = Spawn::create(array);
+    _grossini->runAction(action);
+}
+
+std::string ActionSpawn2::subtitle() const
+{
+    return "Spawn: using the Array API";
+}
 
 //------------------------------------------------------------------
 //
@@ -1235,6 +1296,47 @@ std::string ActionFollow::subtitle() const
 {
     return "Follow action";
 }
+
+//------------------------------------------------------------------
+//
+// ActionFollowWithOffset
+//
+//------------------------------------------------------------------
+void ActionFollowWithOffset::onEnter()
+{
+    ActionsDemo::onEnter();
+    
+    centerSprites(1);
+    auto s = Director::getInstance()->getWinSize();
+    
+    DrawNode* drawNode = DrawNode::create();
+    float x = s.width*2 - 100;
+    float y = s.height;
+    
+    Vec2 vertices[] = { Vec2(5,5), Vec2(x-5,5), Vec2(x-5,y-5), Vec2(5,y-5) };
+    drawNode->drawPoly(vertices, 4, true,  Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+    
+    this->addChild(drawNode);
+    
+    _grossini->setPosition(-200, s.height / 2);
+    auto move = MoveBy::create(2, Vec2(s.width * 3, 1));
+    auto move_back = move->reverse();
+    auto seq = Sequence::create(move, move_back, nullptr);
+    auto rep = RepeatForever::create(seq);
+    
+    _grossini->runAction(rep);
+    
+    //sample offset values set
+    float verticalOffset = -900;
+    float horizontalOffset = 200;
+    this->runAction(Follow::createWithOffset(_grossini, horizontalOffset,verticalOffset,Rect(0, 0, s.width * 2 - 100, s.height)));
+}
+
+std::string ActionFollowWithOffset::subtitle() const
+{
+    return "Follow action with horizontal and vertical offset";
+}
+
 
 void ActionTargeted::onEnter()
 {

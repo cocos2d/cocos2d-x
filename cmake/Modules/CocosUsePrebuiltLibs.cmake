@@ -2,12 +2,13 @@
 
 # START CONFIG
 
-set(_chipmunk_inc chipmunk.h)
-set(_chipmunk_inc_paths chipmunk)
+set(_chipmunk_inc chipmunk/chipmunk.h)
+set(_chipmunk_inc_paths include)
 set(_chipmunk_libs chipmunk libchipmunk)
 
 set(_curl_inc curl/curl.h)
-set(_curl_libs crypto ssl libeay32 ssleay32 curl libcurl_imp libcurl)
+# order: curl, ssl, crypto
+set(_curl_libs curl libcurl_imp libcurl ssl libeay32 ssleay32 crypto)
 
 set(_freetype2_prefix FREETYPE)
 set(_freetype2_inc ft2build.h freetype/freetype.h)
@@ -60,9 +61,9 @@ set(_OpenalSoft_libs OpenAL32)
 set(_zlib_inc zlib.h)
 set(_zlib_libs z libzlib libz)
 
-set(_fmod_prefix FMODEX)
-set(_fmod_inc fmod.h)
-set(_fmod_libs fmodex fmodex64 fmodexL fmodexL64)
+set(_fmod_prefix FMOD)
+set(_fmod_inc fmod.hpp)
+set(_fmod_libs fmod fmod64 fmod fmod64)
 
 set(all_prebuilt_libs
   chipmunk
@@ -88,6 +89,11 @@ endif()
 if(LINUX)
   list(APPEND all_prebuilt_libs fmod)
 endif()
+
+if(ANDROID)
+  list(APPEND all_prebuilt_libs zlib)
+endif()
+
 
 # END CONFIG
 
@@ -122,6 +128,7 @@ foreach(_lib ${all_prebuilt_libs})
           endif()
           foreach(_inc_name ${_${_lib}_inc})
             unset(_inc_tmp CACHE)
+            set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE NEVER)
             find_path(_inc_tmp ${_inc_name} PATH_SUFFIXES ${_suffixes} PATHS ${_dir} NO_DEFAULT_PATH)
             if(_inc_tmp)
               list(APPEND include_dirs ${_inc_tmp})
@@ -135,6 +142,7 @@ foreach(_lib ${all_prebuilt_libs})
       #message(STATUS "${_lib} ${_prefix}_INCLUDE_DIRS: ${${_prefix}_INCLUDE_DIRS}")
 
       set(lib_dir_candidates
+        ${_root}/prebuilt/${PLATFORM_FOLDER}/${ANDROID_ABI}
         ${_root}/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
         ${_root}/prebuilt/${PLATFORM_FOLDER}
         ${_root}/prebuilt/${PLATFORM_FOLDER}/release-lib
@@ -148,6 +156,7 @@ foreach(_lib ${all_prebuilt_libs})
           # find all libs
           foreach(_lib_name ${_${_lib}_libs})
             unset(_lib_tmp CACHE)
+            set( CMAKE_FIND_ROOT_PATH_MODE_LIBRARY NEVER )
             find_library(_lib_tmp ${_lib_name} PATHS ${_dir} NO_DEFAULT_PATH)
             if(_lib_tmp)
               list(APPEND libs ${_lib_tmp})

@@ -26,9 +26,9 @@ THE SOFTWARE.
 #ifndef __CCANIMATION_H__
 #define __CCANIMATION_H__
 
-#include "cocostudio/CCProcessBase.h"
-#include "cocostudio/CCTween.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCProcessBase.h"
+#include "editor-support/cocostudio/CCTween.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include <queue>
 
 namespace cocostudio {
@@ -279,11 +279,11 @@ protected:
 
     Armature *_armature;                        //! A weak reference of armature
 
-    std::string _movementID;                //! Current movment's name
+    std::string _movementID;                //! Current movement's name
 
     int _toIndex;                                //! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
-    cocos2d::Vector<Tween*> _tweenList;
+    std::vector<Tween*> _tweenList;
 
     bool _ignoreFrameEvent;
     

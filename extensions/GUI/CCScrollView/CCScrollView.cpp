@@ -64,6 +64,7 @@ ScrollView::ScrollView()
 , _maxScale(0.0f)
 , _scissorRestored(false)
 , _touchListener(nullptr)
+, _animatedScrollAction(nullptr)
 {
 
 }
@@ -111,7 +112,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = nullptr*/)
         if (!this->_container)
         {
             _container = Layer::create();
-            _container->ignoreAnchorPointForPosition(false);
+            _container->setIgnoreAnchorPointForPosition(false);
             _container->setAnchorPoint(Vec2(0.0f, 0.0f));
         }
 
@@ -189,6 +190,7 @@ void ScrollView::setTouchEnabled(bool enabled)
     if (enabled)
     {
         _touchListener = EventListenerTouchOneByOne::create();
+        _touchListener->setSwallowTouches(true);
         _touchListener->onTouchBegan = CC_CALLBACK_2(ScrollView::onTouchBegan, this);
         _touchListener->onTouchMoved = CC_CALLBACK_2(ScrollView::onTouchMoved, this);
         _touchListener->onTouchEnded = CC_CALLBACK_2(ScrollView::onTouchEnded, this);
@@ -234,10 +236,19 @@ void ScrollView::setContentOffsetInDuration(Vec2 offset, float dt)
 {
     FiniteTimeAction *scroll, *expire;
     
+    if (_animatedScrollAction) {
+        stopAnimatedContentOffset();
+    }
     scroll = MoveTo::create(dt, offset);
     expire = CallFuncN::create(CC_CALLBACK_1(ScrollView::stoppedAnimatedScroll,this));
-    _container->runAction(Sequence::create(scroll, expire, nullptr));
+    _animatedScrollAction = _container->runAction(Sequence::create(scroll, expire, nullptr));
     this->schedule(CC_SCHEDULE_SELECTOR(ScrollView::performedAnimatedScroll));
+}
+
+void ScrollView::stopAnimatedContentOffset() {
+    stopAction(_animatedScrollAction);
+    _animatedScrollAction = nullptr;
+    stoppedAnimatedScroll(this);
 }
 
 Vec2 ScrollView::getContentOffset()
@@ -335,7 +346,7 @@ void ScrollView::setContainer(Node * pContainer)
     this->removeAllChildrenWithCleanup(true);
     this->_container = pContainer;
 
-    this->_container->ignoreAnchorPointForPosition(false);
+    this->_container->setIgnoreAnchorPointForPosition(false);
     this->_container->setAnchorPoint(Vec2(0.0f, 0.0f));
 
     this->addChild(this->_container);

@@ -37,7 +37,7 @@
         
 --------------------------------
 -- Find a widget with a specific action tag from root widget<br>
--- This search will be recursive throught all child widgets.<br>
+-- This search will be recursive through all child widgets.<br>
 -- param root The be searched root widget.<br>
 -- param tag The widget action's tag.<br>
 -- return Widget instance pointer.
@@ -49,10 +49,10 @@
         
 --------------------------------
 -- Find a widget with a specific name from root widget.<br>
--- This search will be recursive throught all child widgets.<br>
+-- This search will be recursive through all child widgets.<br>
 -- param root      The be searched root widget.<br>
 -- param name      The widget name.<br>
--- return Widget isntance pointer.
+-- return Widget instance pointer.
 -- @function [parent=#Helper] seekWidgetByName 
 -- @param self
 -- @param #ccui.Widget root
@@ -61,8 +61,8 @@
         
 --------------------------------
 -- Find a widget with a specific tag from root widget.<br>
--- This search will be recursive throught all child widgets.<br>
--- param root      The be seached root widget.<br>
+-- This search will be recursive through all child widgets.<br>
+-- param root      The be searched root widget.<br>
 -- param tag       The widget tag.<br>
 -- return Widget instance pointer.
 -- @function [parent=#Helper] seekWidgetByTag 

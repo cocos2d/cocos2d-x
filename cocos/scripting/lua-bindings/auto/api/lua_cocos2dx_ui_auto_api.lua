@@ -127,6 +127,11 @@
 
 
 --------------------------------------------------------
+-- the ccui RichElementNewLine
+-- @field [parent=#ccui] RichElementNewLine#RichElementNewLine RichElementNewLine preloaded module
+
+
+--------------------------------------------------------
 -- the ccui RichText
 -- @field [parent=#ccui] RichText#RichText RichText preloaded module
 
@@ -159,6 +164,16 @@
 --------------------------------------------------------
 -- the ccui LayoutComponent
 -- @field [parent=#ccui] LayoutComponent#LayoutComponent LayoutComponent preloaded module
+
+
+--------------------------------------------------------
+-- the ccui TabHeader
+-- @field [parent=#ccui] TabHeader#TabHeader TabHeader preloaded module
+
+
+--------------------------------------------------------
+-- the ccui TabControl
+-- @field [parent=#ccui] TabControl#TabControl TabControl preloaded module
 
 
 return nil

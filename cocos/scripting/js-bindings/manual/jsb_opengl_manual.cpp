@@ -21,13 +21,14 @@
  * THE SOFTWARE.
  */
 
-#include "js_bindings_config.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
 #ifdef JSB_INCLUDE_OPENGL
 
-#include "jsb_opengl_manual.h"
-#include "js_manual_conversions.h"
-#include "js_bindings_core.h"
-#include "jsb_opengl_functions.h"
+#include "scripting/js-bindings/manual/jsb_opengl_manual.h"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
+#include "scripting/js-bindings/manual/js_bindings_core.h"
+#include "scripting/js-bindings/manual/jsb_opengl_functions.h"
+#include "platform/CCGL.h"
 
 
 // Helper functions that link "glGenXXXs" (OpenGL ES 2.0 spec), with "gl.createXXX" (WebGL spec)
@@ -194,7 +195,7 @@ bool JSB_glGetProgramInfoLog(JSContext *cx, uint32_t argc, jsval *vp)
 
     GLsizei length;
     glGetProgramiv(arg0, GL_INFO_LOG_LENGTH, &length);
-    GLchar* src = new GLchar[length];
+    GLchar* src = new (std::nothrow) GLchar[length];
     glGetProgramInfoLog(arg0, length, NULL, src);
     
     args.rval().set(charptr_to_jsval(cx, src));
@@ -215,7 +216,7 @@ bool JSB_glGetShaderInfoLog(JSContext *cx, uint32_t argc, jsval *vp)
 
     GLsizei length;
     glGetShaderiv(arg0, GL_INFO_LOG_LENGTH, &length);
-    GLchar* src = new GLchar[length];
+    GLchar* src = new (std::nothrow) GLchar[length];
     glGetShaderInfoLog(arg0, length, NULL, src);
     
     args.rval().set(charptr_to_jsval(cx, src));
@@ -236,7 +237,7 @@ bool JSB_glGetShaderSource(JSContext *cx, uint32_t argc, jsval *vp)
 
     GLsizei length;
     glGetShaderiv(arg0, GL_SHADER_SOURCE_LENGTH, &length);
-    GLchar* src = new GLchar[length];
+    GLchar* src = new (std::nothrow) GLchar[length];
     glGetShaderSource(arg0, length, NULL, src);
 
     args.rval().set(charptr_to_jsval(cx, src));
@@ -262,7 +263,7 @@ bool JSB_glGetActiveAttrib(JSContext *cx, uint32_t argc, jsval *vp)
 
     GLsizei length;
     glGetProgramiv(arg0, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &length);
-    GLchar* buffer = new GLchar[length];
+    GLchar* buffer = new (std::nothrow) GLchar[length];
     GLint size = -1;
     GLenum type = -1;
 
@@ -273,9 +274,10 @@ bool JSB_glGetActiveAttrib(JSContext *cx, uint32_t argc, jsval *vp)
     JS::RootedObject object(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr() ));
     JSB_PRECONDITION2(ok, cx, false, "Error creating JS Object");
 
+    JS::RootedValue jsname(cx, charptr_to_jsval(cx, buffer));
     if (!JS_DefineProperty(cx, object, "size", (int32_t)size, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
         !JS_DefineProperty(cx, object, "type", (int32_t)type, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
-        !JS_DefineProperty(cx, object, "name", JS::RootedValue(cx, charptr_to_jsval(cx, buffer)), JSPROP_ENUMERATE | JSPROP_PERMANENT) )
+        !JS_DefineProperty(cx, object, "name", jsname, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
         return false;
 
     retval = OBJECT_TO_JSVAL(object);
@@ -305,7 +307,7 @@ bool JSB_glGetActiveUniform(JSContext *cx, uint32_t argc, jsval *vp)
 
     GLsizei length;
     glGetProgramiv(arg0, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &length);
-    GLchar* buffer = new GLchar[length];
+    GLchar* buffer = new (std::nothrow) GLchar[length];
     GLint size = -1;
     GLenum type = -1;
 
@@ -317,9 +319,10 @@ bool JSB_glGetActiveUniform(JSContext *cx, uint32_t argc, jsval *vp)
     JS::RootedObject object(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr() ));
     JSB_PRECONDITION2(ok, cx, false, "Error creating JS Object");
 
+    JS::RootedValue jsname(cx, charptr_to_jsval(cx, buffer));
     if (!JS_DefineProperty(cx, object, "size", (int32_t)size, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
         !JS_DefineProperty(cx, object, "type", (int32_t)type, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
-        !JS_DefineProperty(cx, object, "name", JS::RootedValue(cx, charptr_to_jsval(cx, buffer)), JSPROP_ENUMERATE | JSPROP_PERMANENT) )
+        !JS_DefineProperty(cx, object, "name", jsname, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
         return false;
 
     retval = OBJECT_TO_JSVAL(object);
@@ -342,7 +345,7 @@ bool JSB_glGetAttachedShaders(JSContext *cx, uint32_t argc, jsval *vp)
 
     GLsizei length;
     glGetProgramiv(arg0, GL_ATTACHED_SHADERS, &length);
-    GLuint* buffer = new GLuint[length];
+    GLuint* buffer = new (std::nothrow) GLuint[length];
     memset(buffer, 0, length * sizeof(GLuint));
     //Fix bug 2448, it seems that glGetAttachedShaders will crash if we send NULL to the third parameter (eg Windows), same as in lua binding
     GLsizei realShaderCount = 0;
@@ -374,7 +377,7 @@ bool JSB_glGetSupportedExtensions(JSContext *cx, uint32_t argc, jsval *vp)
 
     // copy, to be able to add '\0'
     size_t len = strlen((char*)extensions);
-    GLubyte* copy = new GLubyte[len+1];
+    GLubyte* copy = new (std::nothrow) GLubyte[len+1];
     strncpy((char*)copy, (const char*)extensions, len );
 
     int start_extension=0;
@@ -436,7 +439,7 @@ bool JSB_glGetUniformfv(JSContext *cx, uint32_t argc, jsval *vp)
     
     GLsizei length;
     glGetProgramiv(arg0, GL_ACTIVE_UNIFORM_MAX_LENGTH, &length);
-    GLchar* namebuffer = new GLchar[length+1];
+    GLchar* namebuffer = new (std::nothrow) GLchar[length+1];
     GLint size = -1;
     GLenum type = -1;
 
@@ -516,9 +519,9 @@ bool JSB_glGetUniformfv(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject *typedArray = NULL;
     if( utype == GL_FLOAT) {
         // FIXME: glew on windows will cause array overflow after invoking glGetUniformfv.
-        // It seems that glGetUniformfv re-assign the memeroy with a wrong size which is 4x than we pass in.
+        // It seems that glGetUniformfv re-assign the memory with a wrong size which is 4x than we pass in.
         // For temporary solution, we allocate 4x array. 
-        GLfloat* param = new GLfloat[usize*4];
+        GLfloat* param = new (std::nothrow) GLfloat[usize*4];
         glGetUniformfv(arg0, arg1, param);
 
         typedArray = JS_NewFloat32Array(cx, usize);
@@ -527,9 +530,9 @@ bool JSB_glGetUniformfv(JSContext *cx, uint32_t argc, jsval *vp)
         CC_SAFE_DELETE_ARRAY(param);
     } else if( utype == GL_INT ) {
         // FIXME: glew on windows will cause array overflow after invoking glGetUniformfv.
-        // It seems that glGetUniformfv re-assign the memeroy with a wrong size which is 4x than we pass in.
+        // It seems that glGetUniformfv re-assign the memory with a wrong size which is 4x than we pass in.
         // For temporary solution, we allocate 4x array. 
-        GLint* param = new GLint[usize*4];
+        GLint* param = new (std::nothrow) GLint[usize*4];
         glGetUniformiv(arg0, arg1, param);
 
         typedArray = JS_NewInt32Array(cx, usize);

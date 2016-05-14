@@ -28,7 +28,7 @@
 
 /// @cond DO_NOT_SHOW
 
-#include "CCFont.h"
+#include "2d/CCFont.h"
 
 #include <string>
 #include <ft2build.h>
@@ -53,7 +53,7 @@ class CC_DLL FontFreeType : public Font
 public:
     static const int DistanceMapSpread;
 
-    static FontFreeType* create(const std::string &fontName, int fontSize, GlyphCollection glyphs, 
+    static FontFreeType* create(const std::string &fontName, float fontSize, GlyphCollection glyphs,
         const char *customGlyphs,bool distanceFieldEnabled = false,int outline = 0);
 
     static void shutdownFreeType();
@@ -71,9 +71,13 @@ public:
     unsigned char* getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance);
     
     int getFontAscender() const;
+    const char* getFontFamily() const;
 
     virtual FontAtlas* createFontAtlas() override;
     virtual int getFontMaxHeight() const override { return _lineHeight; }
+
+    static void releaseFont(const std::string &fontName);
+
 private:
     static const char* _glyphASCII;
     static const char* _glyphNEHE;
@@ -83,7 +87,7 @@ private:
     FontFreeType(bool distanceFieldEnabled = false, int outline = 0);
     virtual ~FontFreeType();
 
-    bool createFontObject(const std::string &fontName, int fontSize);
+    bool createFontObject(const std::string &fontName, float fontSize);
 
     bool initFreeType();
     FT_Library getFTLibrary();

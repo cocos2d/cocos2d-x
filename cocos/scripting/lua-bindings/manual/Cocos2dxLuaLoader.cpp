@@ -22,12 +22,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "Cocos2dxLuaLoader.h"
+#include "scripting/lua-bindings/manual/Cocos2dxLuaLoader.h"
 #include <string>
 #include <algorithm>
 
-#include "CCLuaStack.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaStack.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "platform/CCFileUtils.h"
 
 using namespace cocos2d;
 
@@ -37,7 +38,7 @@ extern "C"
     {
         static const std::string BYTECODE_FILE_EXT    = ".luac";
         static const std::string NOT_BYTECODE_FILE_EXT = ".lua";
-        
+
         std::string filename(luaL_checkstring(L, 1));
         size_t pos = filename.rfind(BYTECODE_FILE_EXT);
         if (pos != std::string::npos)
@@ -52,27 +53,26 @@ extern "C"
                 filename = filename.substr(0, pos);
             }
         }
-        
+
         pos = filename.find_first_of(".");
         while (pos != std::string::npos)
         {
             filename.replace(pos, 1, "/");
             pos = filename.find_first_of(".");
         }
-        
+
         // search file in package.path
-        unsigned char* chunk = nullptr;
-        ssize_t chunkSize = 0;
+        Data chunk;
         std::string chunkName;
         FileUtils* utils = FileUtils::getInstance();
-        
+
         lua_getglobal(L, "package");
         lua_getfield(L, -1, "path");
         std::string searchpath(lua_tostring(L, -1));
         lua_pop(L, 1);
         size_t begin = 0;
         size_t next = searchpath.find_first_of(";", 0);
-        
+
         do
         {
             if (next == std::string::npos)
@@ -82,12 +82,12 @@ extern "C"
             {
                 prefix = prefix.substr(2);
             }
-            
+
             pos = prefix.find("?.lua");
             chunkName = prefix.substr(0, pos) + filename + BYTECODE_FILE_EXT;
             if (utils->isFileExist(chunkName))
             {
-                chunk = utils->getFileData(chunkName.c_str(), "rb", &chunkSize);
+                chunk = utils->getDataFromFile(chunkName);
                 break;
             }
             else
@@ -95,27 +95,27 @@ extern "C"
                 chunkName = prefix.substr(0, pos) + filename + NOT_BYTECODE_FILE_EXT;
                 if (utils->isFileExist(chunkName))
                 {
-                    chunk = utils->getFileData(chunkName.c_str(), "rb", &chunkSize);
+                    chunk = utils->getDataFromFile(chunkName);
                     break;
                 }
             }
-            
+
             begin = next + 1;
             next = searchpath.find_first_of(";", begin);
         } while (begin < (int)searchpath.length());
-        
-        if (chunk)
+
+        if (chunk.getSize() > 0)
         {
             LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
-            stack->luaLoadBuffer(L, (char*)chunk, (int)chunkSize, chunkName.c_str());
-            free(chunk);
+            stack->luaLoadBuffer(L, reinterpret_cast<const char*>(chunk.getBytes()),
+                                 static_cast<int>(chunk.getSize()), chunkName.c_str());
         }
         else
         {
             CCLOG("can not get file data of %s", chunkName.c_str());
             return 0;
         }
-        
+
         return 1;
     }
 }

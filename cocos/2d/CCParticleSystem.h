@@ -194,7 +194,7 @@ emitter.startSpin = 0;
 #endif
 #endif
 
-class CC_DLL ParticleSystem : public Node, public TextureProtocol
+class CC_DLL ParticleSystem : public Node, public TextureProtocol, public PlayableProtocol
 {
 public:
     /** Mode
@@ -760,6 +760,14 @@ public:
     * @lua NA
     */
     virtual const BlendFunc &getBlendFunc() const override;
+
+    const std::string& getResourceFile() const { return _plistFile; }
+
+    /// @{
+    /// @name implement Playable Protocol
+    virtual void start() override;
+    virtual void stop() override;
+    /// @} end of PlaybleProtocol
     
 CC_CONSTRUCTOR_ACCESS:
     /**

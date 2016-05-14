@@ -143,9 +143,6 @@
     <Filter Include="cocostudio\reader\WidgetReader\Particle3DReader">
       <UniqueIdentifier>{ebca298d-3724-42b8-923f-934f2df267de}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocostudio\reader\WidgetReader\ParticleReader">
-      <UniqueIdentifier>{2e9af99e-c268-459a-9615-9f3c5b58efdc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\ProjectNodeReader">
       <UniqueIdentifier>{cdcb5464-cce7-4252-9fa9-0113c6f88731}</UniqueIdentifier>
     </Filter>
@@ -262,6 +259,15 @@
     </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\GameNodeDReader">
       <UniqueIdentifier>{0760e708-a93e-41f5-abaf-a7e422882920}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Light3DReader">
+      <UniqueIdentifier>{549d5ddb-02ff-4b34-8e49-8fb7570ecff4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\TabControlReader">
+      <UniqueIdentifier>{55b041f0-d164-40f4-8dbd-a188ed9d9f6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Particle3DReader\ParticleReader">
+      <UniqueIdentifier>{2e9af99e-c268-459a-9615-9f3c5b58efdc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -898,7 +904,7 @@
       <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
     </ClCompile>
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\ParticleReader\ParticleReader.cpp">
-      <Filter>cocostudio\reader\WidgetReader\ParticleReader</Filter>
+      <Filter>cocostudio\reader\WidgetReader\Particle3DReader\ParticleReader</Filter>
     </ClCompile>
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\ProjectNodeReader\ProjectNodeReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\ProjectNodeReader</Filter>
@@ -1686,6 +1692,9 @@
     <ClCompile Include="..\..\ui\UIPageView.cpp">
       <Filter>ui\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ui\UIPageViewIndicator.cpp">
+      <Filter>ui\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\ui\UIScrollView.cpp">
       <Filter>ui\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
@@ -1759,6 +1768,9 @@
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\base\CCNinePatchImageParser.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\CCStencilStateManager.cpp">
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\renderer\CCMaterial.cpp">
@@ -1944,6 +1956,42 @@
     </ClCompile>
     <ClCompile Include="..\..\3d\CCTerrain.cpp">
       <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\assets-manager\AssetsManager.cpp">
+      <Filter>extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\assets-manager\AssetsManagerEx.cpp">
+      <Filter>extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\assets-manager\CCEventAssetsManagerEx.cpp">
+      <Filter>extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.cpp">
+      <Filter>extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\assets-manager\Manifest.cpp">
+      <Filter>extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\network\CCDownloader.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\network\CCDownloader-curl.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\Light3DReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\LocalizationManager.cpp">
+      <Filter>cocostudio\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\TabControlReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UITabControl.cpp">
+      <Filter>ui\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.cpp">
+      <Filter>ui\UIWidgets\EditBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2664,7 +2712,7 @@
       <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\ParticleReader\ParticleReader.h">
-      <Filter>cocostudio\reader\WidgetReader\ParticleReader</Filter>
+      <Filter>cocostudio\reader\WidgetReader\Particle3DReader\ParticleReader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\ProjectNodeReader\ProjectNodeReader.h">
       <Filter>cocostudio\reader\WidgetReader\ProjectNodeReader</Filter>
@@ -3605,6 +3653,9 @@
     <ClInclude Include="..\..\base\CCNinePatchImageParser.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\base\CCStencilStateManager.h">
+      <Filter>base</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\renderer\CCMaterial.h">
       <Filter>renderer</Filter>
     </ClInclude>
@@ -3799,6 +3850,48 @@
     </ClInclude>
     <ClInclude Include="..\..\3d\cocos3d.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\assets-manager\AssetsManager.h">
+      <Filter>extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\assets-manager\AssetsManagerEx.h">
+      <Filter>extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\assets-manager\CCEventAssetsManagerEx.h">
+      <Filter>extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.h">
+      <Filter>extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\assets-manager\Manifest.h">
+      <Filter>extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\network\CCDownloader.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\network\CCDownloader-curl.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\network\CCIDownloaderImpl.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\Light3DReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\LocalizationManager.h">
+      <Filter>cocostudio\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TabControlReader\CSTabControl_generated.h">
+      <Filter>cocostudio\reader\WidgetReader\TabControlReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.h">
+      <Filter>cocostudio\reader\WidgetReader\TabControlReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UITabControl.h">
+      <Filter>ui\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.h">
+      <Filter>ui\UIWidgets\EditBox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

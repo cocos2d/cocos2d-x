@@ -81,6 +81,7 @@ Texture2DTests::Texture2DTests()
     ADD_TEST_CASE(TextureTGA);
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     ADD_TEST_CASE(TextureWEBP);
+    ADD_TEST_CASE(TextureWEBPNoAlpha)
 #endif
     ADD_TEST_CASE(TexturePixelFormat);
     ADD_TEST_CASE(TextureBlend);
@@ -261,11 +262,36 @@ void TextureWEBP::onEnter()
     img->setPosition(Vec2( s.width/2.0f, s.height/2.0f));
     addChild(img);
     log("%s\n", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
+    Texture2D* texture = Director::getInstance()->getTextureCache()->getTextureForKey("Images/test_image.webp");
+    log("pixel format:%d, premultiplied alpha:%d\n", static_cast<int>(texture->getPixelFormat()), texture->hasPremultipliedAlpha());
 }
 
 std::string TextureWEBP::title() const
 {
-    return "WEBP Test";
+    return "WEBP with alpha Test";
+}
+
+//------------------------------------------------------------------
+//
+// TextureWEBPNoAlpha
+//
+//------------------------------------------------------------------
+void TextureWEBPNoAlpha::onEnter()
+{
+    TextureDemo::onEnter();
+    auto s = Director::getInstance()->getWinSize();
+    
+    auto img = Sprite::create("Images/test_image_no_alpha.webp");
+    img->setPosition(Vec2( s.width/2.0f, s.height/2.0f));
+    addChild(img);
+    log("%s\n", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
+    Texture2D* texture = Director::getInstance()->getTextureCache()->getTextureForKey("Images/test_image_no_alpha.webp");
+    log("pixel format:%d, premultiplied alpha:%d\n", static_cast<int>(texture->getPixelFormat()), texture->hasPremultipliedAlpha());
+}
+
+std::string TextureWEBPNoAlpha::title() const
+{
+    return "WEBP without alpha Test";
 }
 
 //------------------------------------------------------------------

@@ -453,7 +453,8 @@ var TestAnimationEvent = ArmatureTestLayer.extend({
             if (movementID == "Fire") {
                 var moveBy = cc.moveBy(2, cc.p(300 * this._direction, 0));
                 this._armature.stopAllActions();
-                this._armature.runAction(cc.sequence(moveBy, cc.callFunc(this.callback, this)));
+                var callFunc = cc.callFunc(this.callback, this);
+                this._armature.runAction(cc.sequence(moveBy, callFunc));
                 this._armature.getAnimation().play("Walk");
 
                 this._direction *= -1;
@@ -1234,11 +1235,13 @@ var TestChangeAnimationInternal = ArmatureTestLayer.extend({
         return "Touch to change animation internal";
     },
     onTouchesEnded: function (touch, event) {
-        if (cc.director.getAnimationInterval() == 1 / 30) {
+        if (cc.director.getAnimationInterval() >= 1 / 40) {
             cc.director.setAnimationInterval(1 / 60);
+            cc.log("Change to 60 fps");
         }
         else {
             cc.director.setAnimationInterval(1 / 30);
+            cc.log("Change to 30 fps");
         }
         return false;
     },

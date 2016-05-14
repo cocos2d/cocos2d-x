@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-#include "AudioEngine-inl.h"
+#include "audio/android/AudioEngine-inl.h"
 
 #include <unistd.h>
 // for native asset manager
@@ -38,7 +38,7 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "platform/android/CCFileUtils-android.h"
-#include "platform/android/jni/CocosPlayClient.h"
+#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;
@@ -105,27 +105,31 @@ bool AudioPlayer::init(SLEngineItf engineEngine, SLObjectItf outputMixObject,con
         SLDataFormat_MIME format_mime = {SL_DATAFORMAT_MIME, NULL, SL_CONTAINERTYPE_UNSPECIFIED};
         audioSrc.pFormat = &format_mime;
 
-        if (fileFullPath[0] != '/'){
-            std::string relativePath = "";
-
+        if (fileFullPath[0] != '/') {
+            off_t start, length;
+            std::string relativePath;
             size_t position = fileFullPath.find("assets/");
+
             if (0 == position) {
                 // "assets/" is at the beginning of the path and we don't want it
-                relativePath += fileFullPath.substr(strlen("assets/"));
+                relativePath = fileFullPath.substr(strlen("assets/"));
             } else {
-                relativePath += fileFullPath;
+                relativePath = fileFullPath;
             }
 
-            auto asset = AAssetManager_open(cocos2d::FileUtilsAndroid::getAssetManager(), relativePath.c_str(), AASSET_MODE_UNKNOWN);
-
-            // open asset as file descriptor
-            off_t start, length;
-            _assetFd = AAsset_openFileDescriptor(asset, &start, &length);
-            if (_assetFd <= 0){
+            if (cocos2d::FileUtilsAndroid::getObbFile() != nullptr) {
+              _assetFd = getObbAssetFileDescriptorJNI(relativePath.c_str(), &start, &length);
+            } else {
+                auto asset = AAssetManager_open(cocos2d::FileUtilsAndroid::getAssetManager(), relativePath.c_str(), AASSET_MODE_UNKNOWN);
+                // open asset as file descriptor
+                _assetFd = AAsset_openFileDescriptor(asset, &start, &length);
                 AAsset_close(asset);
+            }
+
+            if (_assetFd <= 0) {
+                CCLOGERROR("Failed to open file descriptor for '%s'", fileFullPath.c_str());
                 break;
             }
-            AAsset_close(asset);
 
             // configure audio source
             loc_fd = {SL_DATALOCATOR_ANDROIDFD, _assetFd, start, length};
@@ -249,14 +253,12 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
 
         auto& player = _audioPlayers[currentAudioID];
         auto fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-        cocosplay::updateAssets(fullPath);
         auto initPlayer = player.init(_engineEngine, _outputMixObject, fullPath, volume, loop);
         if (!initPlayer){
             _audioPlayers.erase(currentAudioID);
             log("%s,%d message:create player for %s fail", __func__, __LINE__, filePath.c_str());
             break;
         }
-        cocosplay::notifyFileLoaded(fullPath);
 
         audioId = currentAudioID++;
         player._audioID = audioId;
@@ -324,7 +326,7 @@ void AudioEngineImpl::setVolume(int audioID,float volume)
     }
     auto result = (*player._fdPlayerVolume)->SetVolumeLevel(player._fdPlayerVolume, dbVolume);
     if(SL_RESULT_SUCCESS != result){
-        log("%s error:%u",__func__, result);
+        log("%s error:%lu", __func__, result);
     }
 }
 
@@ -344,7 +346,7 @@ void AudioEngineImpl::pause(int audioID)
     auto& player = _audioPlayers[audioID];
     auto result = (*player._fdPlayerPlay)->SetPlayState(player._fdPlayerPlay, SL_PLAYSTATE_PAUSED);
     if(SL_RESULT_SUCCESS != result){
-        log("%s error:%u",__func__, result);
+        log("%s error:%lu", __func__, result);
     }
 }
 
@@ -353,7 +355,7 @@ void AudioEngineImpl::resume(int audioID)
     auto& player = _audioPlayers[audioID];
     auto result = (*player._fdPlayerPlay)->SetPlayState(player._fdPlayerPlay, SL_PLAYSTATE_PLAYING);
     if(SL_RESULT_SUCCESS != result){
-        log("%s error:%u",__func__, result);
+        log("%s error:%lu", __func__, result);
     }
 }
 
@@ -362,7 +364,7 @@ void AudioEngineImpl::stop(int audioID)
     auto& player = _audioPlayers[audioID];
     auto result = (*player._fdPlayerPlay)->SetPlayState(player._fdPlayerPlay, SL_PLAYSTATE_STOPPED);
     if(SL_RESULT_SUCCESS != result){
-        log("%s error:%u",__func__, result);
+        log("%s error:%lu", __func__, result);
     }
 
     /*If destroy openSL object immediately,it may cause dead lock.

@@ -64,7 +64,7 @@ namespace cocos2d { namespace network {
         
         virtual ~DownloadTaskCURL()
         {
-            // if task destoried unnormally, we should release WritenFileName stored in set.
+            // if task destroyed unnormally, we should release WritenFileName stored in set.
             // Normally, this action should done when task finished.
             if (_tempFileName.length() && _sStoragePathSet.end() != _sStoragePathSet.find(_tempFileName))
             {
@@ -94,7 +94,7 @@ namespace cocos2d { namespace network {
             
             if (_sStoragePathSet.end() != _sStoragePathSet.find(_tempFileName))
             {
-                // there is another task uses this storate path
+                // there is another task uses this storage path
                 _errCode = DownloadTask::ERROR_FILE_OP_FAILED;
                 _errCodeInternal = 0;
                 _errDescription = "More than one download file task write to same file:";
@@ -740,7 +740,7 @@ namespace cocos2d { namespace network {
     
     IDownloadTask *DownloaderCURL::createCoTask(std::shared_ptr<const DownloadTask>& task)
     {
-        DownloadTaskCURL *coTask = new DownloadTaskCURL;
+        DownloadTaskCURL *coTask = new (std::nothrow) DownloadTaskCURL;
         coTask->init(task->storagePath, _impl->hints.tempFileNameSuffix);
         
         DLLOG("    DownloaderCURL: createTask: Id(%d)", coTask->serialId);
@@ -779,6 +779,12 @@ namespace cocos2d { namespace network {
         
         // update finished tasks
         _impl->getFinishedTasks(tasks);
+
+        if (_impl->stoped())
+        {
+            _scheduler->pauseTarget(this);
+        }
+
         for (auto& wrapper : tasks)
         {
             const DownloadTask& task = *wrapper.first;
@@ -843,11 +849,6 @@ namespace cocos2d { namespace network {
             // needn't lock coTask here, because tasks has removed form _impl
             onTaskFinish(task, coTask._errCode, coTask._errCodeInternal, coTask._errDescription, coTask._buf);
             DLLOG("    DownloaderCURL: finish Task: Id(%d)", coTask.serialId);
-        }
-        
-        if (_impl->stoped())
-        {
-            _scheduler->pauseTarget(this);
         }
     }
     
