@@ -82,8 +82,8 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
     frameSize = frameSize * glView->getFrameZoomFactor() * glView->getRetinaFactor();
 #endif
 
-    int width = static_cast<int>(frameSize.width);
-    int height = static_cast<int>(frameSize.height);
+    int width = static_cast<int>(frameSize.width/2);
+    int height = static_cast<int>(frameSize.height/2);
 
     bool succeed = false;
     std::string outputFile = "";

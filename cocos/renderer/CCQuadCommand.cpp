@@ -32,6 +32,9 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCPass.h"
 
+#include "CCDirector.h"
+#include "CCEventDispatcher.h"
+
 #include "xxhash.h"
 
 NS_CC_BEGIN
@@ -70,7 +73,32 @@ void QuadCommand::reIndex(int indicesCount)
     if (indicesCount > __indexCapacity)
     {
         CCLOG("cocos2d: QuadCommand: resizing index size from [%d] to [%d]", __indexCapacity, indicesCount);
-        __indices = (GLushort*) realloc(__indices, indicesCount * sizeof(__indices[0]));
+        //__indices = (GLushort*) realloc(__indices, indicesCount * sizeof(__indices[0]));
+        // TODO - Oren Hack fix for this bug - Will cause some leak but won't crash
+        auto tmpindices = __indices;
+        __indices = (GLushort*)malloc(indicesCount * sizeof(__indices[0]));
+
+        void** listenerHolder = new void*();
+
+        EventListenerCustom* listener = cocos2d::Director::getInstance()->getEventDispatcher()->addCustomEventListener(cocos2d::Director::EVENT_AFTER_DRAW, [=] (cocos2d::EventCustom *event) {
+
+            if (tmpindices)
+            {
+                free(tmpindices);
+            }
+
+            // unregister event listener
+            cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener((EventListener*)*listenerHolder);
+
+            if (listenerHolder)
+            {
+                delete listenerHolder;
+            }
+
+        });
+
+        *listenerHolder = listener;
+
         __indexCapacity = indicesCount;
     }
 
