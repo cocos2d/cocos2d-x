@@ -2126,7 +2126,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
         _height   = config.input.height;
         
         //we ask webp to give data with premultiplied alpha
-        _hasPremultipliedAlpha = config.input.has_alpha;
+        _hasPremultipliedAlpha = (config.input.has_alpha != 0);
         
         _dataLen = _width * _height * (config.input.has_alpha?4:3);
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
