@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2009      lhunath (Maarten Billemont)
 Copyright (c) 2010-2012 cocos2d-x.org
-CopyRight (c) 2013-2014 Chukong Technologies Inc.
+CopyRight (c) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -34,12 +34,11 @@ ActionTween* ActionTween::create(float duration, const std::string& key, float f
     if (ret && ret->initWithDuration(duration, key, from, to))
     {
         ret->autorelease();
+        return ret;
     }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-    }
-    return ret;
+    
+    delete ret;
+    return nullptr;
 }
 
 bool ActionTween::initWithDuration(float duration, const std::string& key, float from, float to)
@@ -57,11 +56,7 @@ bool ActionTween::initWithDuration(float duration, const std::string& key, float
 
 ActionTween *ActionTween::clone() const
 {
-    // no copy constructor    
-    auto a = new (std::nothrow) ActionTween();
-    a->initWithDuration(_duration, _key, _from, _to);
-    a->autorelease();
-    return a;
+    return ActionTween::create(_duration, _key, _from, _to);
 }
 
 void ActionTween::startWithTarget(Node *target)

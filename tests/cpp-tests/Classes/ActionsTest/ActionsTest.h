@@ -363,6 +363,16 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class ActionFollowWithOffset : public ActionsDemo
+{
+    
+public:
+    CREATE_FUNC(ActionFollowWithOffset);
+    
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 class ActionTargeted : public ActionsDemo
 {
 public:

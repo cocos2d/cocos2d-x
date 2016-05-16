@@ -60,6 +60,10 @@ function ListView:onScroll(callback)
             event.name = "BOUNCE_LEFT"
         elseif eventType == 8 then
             event.name = "BOUNCE_RIGHT"
+        elseif eventType == 9 then
+            event.name = "CONTAINER_MOVED"
+        elseif eventType == 10 then
+            event.name = "AUTOSCROLL_ENDED"
         end
         event.target = sender
         callback(event)

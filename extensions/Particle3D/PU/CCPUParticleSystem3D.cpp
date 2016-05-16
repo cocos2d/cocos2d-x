@@ -731,7 +731,7 @@ void PUParticleSystem3D::emitParticles( float elapsedTime )
 
 }
 
-const float PUParticleSystem3D::getDefaultWidth( void ) const
+float PUParticleSystem3D::getDefaultWidth() const
 {
     return _defaultWidth;
 }
@@ -741,7 +741,7 @@ void PUParticleSystem3D::setDefaultWidth( const float width )
     _defaultWidth = width;
 }
 
-const float PUParticleSystem3D::getDefaultHeight( void ) const
+float PUParticleSystem3D::getDefaultHeight() const
 {
     return _defaultHeight;
 }
@@ -751,7 +751,7 @@ void PUParticleSystem3D::setDefaultHeight( const float height )
     _defaultHeight = height;
 }
 
-const float PUParticleSystem3D::getDefaultDepth( void ) const
+float PUParticleSystem3D::getDefaultDepth() const
 {
     return _defaultDepth;
 }

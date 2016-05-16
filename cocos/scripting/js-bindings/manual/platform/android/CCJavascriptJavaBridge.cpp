@@ -22,7 +22,7 @@
  
 #include <android/log.h>
 #include "scripting/js-bindings/manual/platform/android/CCJavascriptJavaBridge.h"
-#include "cocos2d.h"
+
 #include "platform/android/jni/JniHelper.h"
 #include "scripting/js-bindings/manual/spidermonkey_specifics.h"
 #include "scripting/js-bindings/manual/ScriptingCore.h"

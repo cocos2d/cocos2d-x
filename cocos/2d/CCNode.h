@@ -705,13 +705,14 @@ public:
      * The default value is false, while in Layer and Scene are true.
      *
      * @param ignore    true if anchor point will be (0,0) when you position this node.
-     * @todo This method should be renamed as setIgnoreAnchorPointForPosition(bool) or something with "set".
      */
-    virtual void ignoreAnchorPointForPosition(bool ignore);
+    virtual void setIgnoreAnchorPointForPosition(bool ignore);
+    CC_DEPRECATED_ATTRIBUTE virtual void ignoreAnchorPointForPosition(bool ignore) { setIgnoreAnchorPointForPosition(ignore); }
+    
     /**
      * Gets whether the anchor point will be (0,0) when you position this node.
      *
-     * @see `ignoreAnchorPointForPosition(bool)`
+     * @see `setIgnoreAnchorPointForPosition(bool)`
      *
      * @return true if the anchor point will be (0,0) when you position this node.
      */
@@ -1264,7 +1265,6 @@ public:
      * Composable actions are counted as 1 action. Example:
      *    If you are running 1 Sequence of 7 actions, it will return 1.
      *    If you are running 7 Sequences of 2 actions, it will return 7.
-     * @todo Rename to getNumberOfRunningActions()
      *
      * @return The number of actions that are running plus the ones that are schedule to run.
      */

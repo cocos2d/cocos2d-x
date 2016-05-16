@@ -316,8 +316,8 @@ std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& 
     
     auto next = strchr(contents, '\n');
     auto base = contents;
-    int lineLength = 0;
-    int parseCount = 0;
+    size_t lineLength = 0;
+    size_t parseCount = 0;
     while (next)
     {
         lineLength = ((int)(next - base));
@@ -809,7 +809,11 @@ FontAtlas * FontFNT::createFontAtlas()
         tempDefinition.validDefinition = true;
         tempDefinition.xAdvance = fontDef.xAdvance;
         // add the new definition
-        tempAtlas->addLetterDefinition(fontDef.charID,tempDefinition);
+        if (65535 < fontDef.charID) {
+            CCLOGWARN("Warning: 65535 < fontDef.charID (%u), ignored", fontDef.charID);
+        } else {
+            tempAtlas->addLetterDefinition(fontDef.charID,tempDefinition);
+        }
     }
     
     // add the texture (only one texture for now)

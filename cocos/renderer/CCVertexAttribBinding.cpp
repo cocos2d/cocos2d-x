@@ -111,7 +111,7 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, GLProgramState* glP
         if (__maxVertexAttribs <= 0)
         {
             CCLOGERROR("The maximum number of vertex attributes supported by OpenGL on the current device is 0 or less.");
-            return NULL;
+            return false;
         }
     }
 

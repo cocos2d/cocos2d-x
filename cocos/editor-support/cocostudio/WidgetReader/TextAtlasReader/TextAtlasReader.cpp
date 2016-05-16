@@ -3,6 +3,8 @@
 #include "editor-support/cocostudio/WidgetReader/TextAtlasReader/TextAtlasReader.h"
 
 #include "ui/UITextAtlas.h"
+#include "platform/CCFileUtils.h"
+
 #include "editor-support/cocostudio/CocoLoader.h"
 #include "editor-support/cocostudio/CSParseBinary_generated.h"
 #include "editor-support/cocostudio/FlatBuffersSerialize.h"

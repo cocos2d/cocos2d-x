@@ -24,6 +24,8 @@
 
 #include "editor-support/cocostudio/WidgetReader/GameNode3DReader/GameNode3DReader.h"
 
+#include "platform/CCFileUtils.h"
+
 #include "editor-support/cocostudio/CCComExtensionData.h"
 #include "editor-support/cocostudio/CSParseBinary_generated.h"
 #include "editor-support/cocostudio/CSParse3DBinary_generated.h"
@@ -159,26 +161,26 @@ namespace cocostudio
         const tinyxml2::XMLElement* child = objectData->FirstChildElement();
         while (child)
         {
-            std::string name = child->Name();
+            std::string childName = child->Name();
 
-            if (name == "LeftImage")
+            if (childName == "LeftImage")
             {
                 attribute = child->FirstAttribute();
 
                 while (attribute)
                 {
-                    name = attribute->Name();
+                    std::string attributeName = attribute->Name();
                     std::string value = attribute->Value();
 
-                    if (name == "Path")
+                    if (attributeName == "Path")
                     {
                         leftPath = value;
                     }
-                    else if (name == "Type")
+                    else if (attributeName == "Type")
                     {
                         leftResourceType = getResourceType(value);;
                     }
-                    else if (name == "Plist")
+                    else if (attributeName == "Plist")
                     {
                         leftPlistFile = value;
                     }
@@ -192,24 +194,24 @@ namespace cocostudio
                     fbs->_textures.push_back(builder->CreateString(leftPlistFile));
                 }
             }
-            else if (name == "RightImage")
+            else if (childName == "RightImage")
             {
                 attribute = child->FirstAttribute();
 
                 while (attribute)
                 {
-                    name = attribute->Name();
+                    std::string attributeName = attribute->Name();
                     std::string value = attribute->Value();
 
-                    if (name == "Path")
+                    if (attributeName == "Path")
                     {
                         rightPath = value;
                     }
-                    else if (name == "Type")
+                    else if (attributeName == "Type")
                     {
                         rightResourceType = getResourceType(value);;
                     }
-                    else if (name == "Plist")
+                    else if (attributeName == "Plist")
                     {
                         rightPlistFile = value;
                     }
@@ -223,24 +225,24 @@ namespace cocostudio
                     fbs->_textures.push_back(builder->CreateString(rightPlistFile));
                 }
             }
-            else if (name == "UpImage")
+            else if (childName == "UpImage")
             {
                 attribute = child->FirstAttribute();
 
                 while (attribute)
                 {
-                    name = attribute->Name();
+                    std::string attributeName = attribute->Name();
                     std::string value = attribute->Value();
 
-                    if (name == "Path")
+                    if (attributeName == "Path")
                     {
                         upPath = value;
                     }
-                    else if (name == "Type")
+                    else if (attributeName == "Type")
                     {
                         upResourceType = getResourceType(value);;
                     }
-                    else if (name == "Plist")
+                    else if (attributeName == "Plist")
                     {
                         upPlistFile = value;
                     }
@@ -254,24 +256,24 @@ namespace cocostudio
                     fbs->_textures.push_back(builder->CreateString(upPlistFile));
                 }
             }
-            else if (name == "DownImage")
+            else if (childName == "DownImage")
             {
                 attribute = child->FirstAttribute();
 
                 while (attribute)
                 {
-                    name = attribute->Name();
+                    std::string attributeName = attribute->Name();
                     std::string value = attribute->Value();
 
-                    if (name == "Path")
+                    if (attributeName == "Path")
                     {
                         downPath = value;
                     }
-                    else if (name == "Type")
+                    else if (attributeName == "Type")
                     {
                         downResourceType = getResourceType(value);;
                     }
-                    else if (name == "Plist")
+                    else if (attributeName == "Plist")
                     {
                         downPlistFile = value;
                     }
@@ -285,24 +287,24 @@ namespace cocostudio
                     fbs->_textures.push_back(builder->CreateString(downPlistFile));
                 }
             }
-            else if (name == "ForwardImage")
+            else if (childName == "ForwardImage")
             {
                 attribute = child->FirstAttribute();
 
                 while (attribute)
                 {
-                    name = attribute->Name();
+                    std::string attributeName = attribute->Name();
                     std::string value = attribute->Value();
 
-                    if (name == "Path")
+                    if (attributeName == "Path")
                     {
                         forwardPath = value;
                     }
-                    else if (name == "Type")
+                    else if (attributeName == "Type")
                     {
                         forwardResourceType = getResourceType(value);;
                     }
-                    else if (name == "Plist")
+                    else if (attributeName == "Plist")
                     {
                         forwardPlistFile = value;
                     }
@@ -316,24 +318,24 @@ namespace cocostudio
                     fbs->_textures.push_back(builder->CreateString(forwardPlistFile));
                 }
             }
-            else if (name == "BackImage")
+            else if (childName == "BackImage")
             {
                 attribute = child->FirstAttribute();
 
                 while (attribute)
                 {
-                    name = attribute->Name();
+                    std::string attributeName = attribute->Name();
                     std::string value = attribute->Value();
 
-                    if (name == "Path")
+                    if (attributeName == "Path")
                     {
                         backPath = value;
                     }
-                    else if (name == "Type")
+                    else if (attributeName == "Type")
                     {
                         backResourceType = getResourceType(value);;
                     }
-                    else if (name == "Plist")
+                    else if (attributeName == "Plist")
                     {
                         backPlistFile = value;
                     }

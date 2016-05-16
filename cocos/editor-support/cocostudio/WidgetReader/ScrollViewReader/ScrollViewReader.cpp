@@ -3,6 +3,8 @@
 #include "editor-support/cocostudio/WidgetReader/ScrollViewReader/ScrollViewReader.h"
 
 #include "ui/UIScrollView.h"
+#include "platform/CCFileUtils.h"
+#include "2d/CCSpriteFrameCache.h"
 #include "editor-support/cocostudio/CocoLoader.h"
 #include "editor-support/cocostudio/CSParseBinary_generated.h"
 #include "editor-support/cocostudio/FlatBuffersSerialize.h"

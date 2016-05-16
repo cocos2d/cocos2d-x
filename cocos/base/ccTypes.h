@@ -91,7 +91,7 @@ struct CC_DLL Color4B
 {
     Color4B();
     Color4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a);
-    explicit Color4B(const Color3B& color);
+    explicit Color4B(const Color3B& color, GLubyte _a = 255);
     explicit Color4B(const Color4F& color);
     
     inline void set(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a)
@@ -134,7 +134,7 @@ struct CC_DLL Color4F
 {
     Color4F();
     Color4F(float _r, float _g, float _b, float _a);
-    explicit Color4F(const Color3B& color);
+    explicit Color4F(const Color3B& color, float _a = 1.0f);
     explicit Color4F(const Color4B& color);
 
     bool operator==(const Color4F& right) const;

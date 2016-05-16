@@ -59,7 +59,6 @@ static const char* Property_AnchorPoint     = "AnchorPoint";
 static const char* Property_ZOrder          = "ZOrder";
 static const char* Property_ActionValue     = "ActionValue";
 static const char* Property_BlendValue      = "BlendFunc";
-static const char* Property_PlayableAct     = "PlayableAct";
 
 static const char* ACTION           = "action";
 static const char* DURATION         = "duration";
@@ -76,7 +75,6 @@ static const char* START_FRAME      = "startFrame";
 static const char* X                = "x";
 static const char* Y                = "y";
 static const char* ROTATION         = "rotation";
-static const char* ALPHA            = "alpha";
 static const char* RED              = "red";
 static const char* GREEN            = "green";
 static const char* BLUE             = "blue";

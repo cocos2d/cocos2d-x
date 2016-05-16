@@ -341,6 +341,8 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE bool isUsingCustomScrollThreshold()const;
 
+    void setAutoScrollStopEpsilon(float epsilon);
+
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
@@ -384,6 +386,7 @@ protected:
 #pragma warning (pop)
 #endif
     ccPageViewCallback _eventCallback;
+    float _autoScrollStopEpsilon;
 };
 
 }

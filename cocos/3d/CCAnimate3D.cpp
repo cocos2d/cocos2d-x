@@ -248,7 +248,7 @@ void Animate3D::startWithTarget(Node *target)
                 action->_accTransTime = 0.0f;
                 action->_weight = 1.0f;
                 action->_lastTime = 0.f;
-                
+                s_runningAnimates.erase(target);
                 s_fadeInAnimates[target] = this;
                 _accTransTime = 0.0f;
                 _state = Animate3D::Animate3DState::FadeIn;
