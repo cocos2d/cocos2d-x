@@ -22,7 +22,7 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-set(APP_NAME js_tests)
+set(APP_NAME js-tests)
 
 if(WIN32)
 

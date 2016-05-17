@@ -383,7 +383,7 @@ public:
         return header;
     }
     
-    const std::string getCookieFileName()
+    const std::string& getCookieFileName() const
     {
         return _cookieFileName;
     }
@@ -608,7 +608,7 @@ private:
         return len;
     }
 
-    const std::string getCookieString()
+    const std::string& getCookieString() const
     {
         return _responseCookies;
     }

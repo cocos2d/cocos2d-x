@@ -455,6 +455,7 @@ Texture2D::PixelFormat getDevicePixelFormat(Texture2D::PixelFormat format)
 //////////////////////////////////////////////////////////////////////////
 // Implement Image
 //////////////////////////////////////////////////////////////////////////
+bool Image::PNG_PREMULTIPLIED_ALPHA_ENABLED = true;
 
 Image::Image()
 : _data(nullptr)
@@ -1124,7 +1125,7 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         png_read_end(png_ptr, nullptr);
 
         // premultiplied alpha for RGBA8888
-        if (color_type == PNG_COLOR_TYPE_RGB_ALPHA)
+        if (PNG_PREMULTIPLIED_ALPHA_ENABLED && color_type == PNG_COLOR_TYPE_RGB_ALPHA)
         {
             premultipliedAlpha();
         }
@@ -2126,7 +2127,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
         _height   = config.input.height;
         
         //we ask webp to give data with premultiplied alpha
-        _hasPremultipliedAlpha = config.input.has_alpha;
+        _hasPremultipliedAlpha = (config.input.has_alpha != 0);
         
         _dataLen = _width * _height * (config.input.has_alpha?4:3);
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));

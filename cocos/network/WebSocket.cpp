@@ -811,7 +811,7 @@ void WebSocket::onClientReceivedData(void* in, ssize_t len)
 
         ssize_t frameSize = frameData->size();
 
-        bool isBinary = lws_frame_is_binary(_wsInstance);
+        bool isBinary = (lws_frame_is_binary(_wsInstance) != 0);
 
         if (!isBinary)
         {
