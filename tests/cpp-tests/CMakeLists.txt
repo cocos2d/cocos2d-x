@@ -1,4 +1,4 @@
-set(APP_NAME cpp_tests)
+set(APP_NAME cpp-tests)
 
 # Use same method as in cocos library
 cocos_find_package(CURL CURL REQUIRED)
