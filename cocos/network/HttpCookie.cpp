@@ -152,7 +152,7 @@ void HttpCookie::writeFile()
     fclose(out);
 }
 
-void HttpCookie::setCookieFileName(std::string filename)
+void HttpCookie::setCookieFileName(const std::string& filename)
 {
     _cookieFileName = filename;
 }
