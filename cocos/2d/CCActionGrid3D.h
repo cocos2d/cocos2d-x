@@ -545,7 +545,7 @@ public:
     @param amplitude Specify the amplitude of the Twirl action.
     @return If the creation success, return a pointer of Twirl action; otherwise, return nil.
     */
-    static Twirl* create(float duration, const Size& gridSize, Vec2 position, unsigned int twirls, float amplitude);
+    static Twirl* create(float duration, const Size& gridSize, const Vec2& position, unsigned int twirls, float amplitude);
 
     /**
     @brief Get the center position of twirl action.
@@ -598,7 +598,7 @@ CC_CONSTRUCTOR_ACCESS:
     @param amplitude Specify the amplitude of the Twirl action.
     @return If the initialization success, return true; otherwise, return false.
     */
-    bool initWithDuration(float duration, const Size& gridSize, Vec2 position, unsigned int twirls, float amplitude);
+    bool initWithDuration(float duration, const Size& gridSize, const Vec2& position, unsigned int twirls, float amplitude);
 
 protected:
     /* twirl center */

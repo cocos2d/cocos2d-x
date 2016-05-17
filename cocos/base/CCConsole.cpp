@@ -247,7 +247,7 @@ std::vector<std::string> Console::Utility::split(const std::string& s, char deli
 }
 
 //isFloat taken from http://stackoverflow.com/questions/447206/c-isfloat-function
-bool Console::Utility::isFloat(std::string myString) {
+bool Console::Utility::isFloat(const std::string& myString) {
     std::istringstream iss(myString);
     float f;
     iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid

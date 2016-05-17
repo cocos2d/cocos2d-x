@@ -61,7 +61,7 @@ GLViewImpl* GLViewImpl::create(const std::string& viewName)
     return nullptr;
 }
 
-GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, const Rect& rect, float frameZoomFactor)
 {
     auto ret = new (std::nothrow) GLViewImpl;
     if(ret && ret->initWithRect(viewName, rect, frameZoomFactor)) {
@@ -130,7 +130,7 @@ bool GLViewImpl::initWithEAGLView(void *eaglview)
     return true;
 }
 
-bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+bool GLViewImpl::initWithRect(const std::string& viewName, const Rect& rect, float frameZoomFactor)
 {
     CGRect r = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
     convertAttrs();

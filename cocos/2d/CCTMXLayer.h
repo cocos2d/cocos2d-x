@@ -307,8 +307,8 @@ protected:
 
     /* The layer recognizes some special properties, like cc_vertexz */
     void parseInternalProperties();
-    void setupTileSprite(Sprite* sprite, Vec2 pos, int gid);
-    Sprite* reusedTileWithRect(Rect rect);
+    void setupTileSprite(Sprite* sprite, const Vec2& pos, int gid);
+    Sprite* reusedTileWithRect(const Rect& rect);
     int getVertexZForPos(const Vec2& pos);
 
     // index
