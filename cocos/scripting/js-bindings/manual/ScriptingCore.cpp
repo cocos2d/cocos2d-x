@@ -1886,7 +1886,7 @@ static void serverEntryPoint(unsigned int port)
     struct addrinfo hints, *result = nullptr, *rp = nullptr;
     int s = 0;
     memset(&hints, 0, sizeof(struct addrinfo));
-    hints.ai_family = AF_INET;       // IPv4
+    hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
     hints.ai_flags = AI_PASSIVE;     // fill in my IP for me
 
