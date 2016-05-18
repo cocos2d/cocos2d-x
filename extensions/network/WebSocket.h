@@ -144,9 +144,8 @@ private:
     
 
     friend class WebSocketCallbackWrapper;
-    int onSocketCallback(struct libwebsocket_context *ctx,
-                         struct libwebsocket *wsi,
-                         enum libwebsocket_callback_reasons reason,
+    int onSocketCallback(struct lws *wsi,
+                         enum lws_callback_reasons reason,
                          void *user, void *in, size_t len);
     
 private:
@@ -158,11 +157,11 @@ private:
     friend class WsThreadHelper;
     WsThreadHelper* _wsHelper;
     
-    struct libwebsocket*         _wsInstance;
-    struct libwebsocket_context* _wsContext;
+    struct lws*         _wsInstance;
+    struct lws_context* _wsContext;
     Delegate* _delegate;
     int _SSLConnection;
-    struct libwebsocket_protocols* _wsProtocols;
+    struct lws_protocols* _wsProtocols;
 };
 
 NS_CC_EXT_END

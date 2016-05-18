@@ -89,16 +89,16 @@ private:
 class WebSocketCallbackWrapper {
 public:
     
-    static int onSocketCallback(struct libwebsocket_context *ctx,
-                                struct libwebsocket *wsi,
-                                enum libwebsocket_callback_reasons reason,
+    static int onSocketCallback(struct lws *wsi,
+                                enum lws_callback_reasons reason,
                                 void *user, void *in, size_t len)
     {
         // Gets the user data from context. We know that it's a 'WebSocket' instance.
-        WebSocket* wsInstance = (WebSocket*)libwebsocket_context_user(ctx);
+        lws_context* context = lws_get_context(wsi);
+        WebSocket* wsInstance = (WebSocket*)lws_context_user(context);
         if (wsInstance)
         {
-            return wsInstance->onSocketCallback(ctx, wsi, reason, user, in, len);
+            return wsInstance->onSocketCallback(wsi, reason, user, in, len);
         }
         return 0;
     }
@@ -308,8 +308,8 @@ bool WebSocket::init(const Delegate& delegate,
         protocolCount = 1;
     }
     
-	_wsProtocols = new libwebsocket_protocols[protocolCount+1];
-	memset(_wsProtocols, 0, sizeof(libwebsocket_protocols)*(protocolCount+1));
+	_wsProtocols = new lws_protocols[protocolCount+1];
+	memset(_wsProtocols, 0, sizeof(lws_protocols)*(protocolCount+1));
 
     if (protocols)
     {
@@ -396,14 +396,14 @@ int WebSocket::onSubThreadLoop()
 {
     if (_readyState == kStateClosed || _readyState == kStateClosing)
     {
-        libwebsocket_context_destroy(_wsContext);
+        lws_context_destroy(_wsContext);
         // return 1 to exit the loop.
         return 1;
     }
     
     if (_wsContext && _readyState != kStateClosed && _readyState != kStateClosing)
     {
-        libwebsocket_service(_wsContext, 0);
+        lws_service(_wsContext, 0);
     }
     
     // Sleep 50 ms
@@ -432,13 +432,13 @@ void WebSocket::onSubThreadStarted()
 	info.port = CONTEXT_PORT_NO_LISTEN;
 	info.protocols = _wsProtocols;
 #ifndef LWS_NO_EXTENSIONS
-	info.extensions = libwebsocket_get_internal_extensions();
+	info.extensions = lws_get_internal_extensions();
 #endif
 	info.gid = -1;
 	info.uid = -1;
     info.user = (void*)this;
     
-	_wsContext = libwebsocket_create_context(&info);
+	_wsContext = lws_create_context(&info);
     
 	if(NULL != _wsContext){
         _readyState = kStateConnecting;
@@ -450,7 +450,7 @@ void WebSocket::onSubThreadStarted()
                 name += ", ";
             }
         }
-        _wsInstance = libwebsocket_client_connect(_wsContext, _host.c_str(), _port, _SSLConnection,
+        _wsInstance = lws_client_connect(_wsContext, _host.c_str(), _port, _SSLConnection,
                                              _path.c_str(), _host.c_str(), _host.c_str(),
                                              name.c_str(), -1);
 	}
@@ -461,15 +461,10 @@ void WebSocket::onSubThreadEnded()
 
 }
 
-int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
-                     struct libwebsocket *wsi,
-                     enum libwebsocket_callback_reasons reason,
+int WebSocket::onSocketCallback(struct lws *wsi,
+                     enum lws_callback_reasons reason,
                      void *user, void *in, size_t len)
 {
-	//CCLOG("socket callback for %d reason", reason);
-    CCAssert(_wsContext == NULL || ctx == _wsContext, "Invalid context.");
-    CCAssert(_wsInstance == NULL || wsi == NULL || wsi == _wsInstance, "Invaild websocket instance.");
-
 	switch (reason)
     {
         case LWS_CALLBACK_DEL_POLL_FD:
@@ -507,7 +502,7 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                  * start the ball rolling,
                  * LWS_CALLBACK_CLIENT_WRITEABLE will come next service
                  */
-                libwebsocket_callback_on_writable(ctx, wsi);
+                lws_callback_on_writable(wsi);
                 _wsHelper->sendMessageToUIThread(msg);
             }
             break;
@@ -533,7 +528,7 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                         memset(&buf[LWS_SEND_BUFFER_PRE_PADDING], 0, data->len);
                         memcpy((char*)&buf[LWS_SEND_BUFFER_PRE_PADDING], data->bytes, data->len);
                         
-                        enum libwebsocket_write_protocol writeProtocol;
+                        enum lws_write_protocol writeProtocol;
                         
                         if (WS_MSG_TO_SUBTRHEAD_SENDING_STRING == subThreadMsg->what)
                         {
@@ -544,7 +539,7 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                             writeProtocol = LWS_WRITE_BINARY;
                         }
                         
-                        bytesWrite = libwebsocket_write(wsi,  &buf[LWS_SEND_BUFFER_PRE_PADDING], data->len, writeProtocol);
+                        bytesWrite = lws_write(wsi,  &buf[LWS_SEND_BUFFER_PRE_PADDING], data->len, writeProtocol);
                         
                         if (bytesWrite < 0) {
                             CCLOGERROR("%s", "libwebsocket_write error...");
@@ -567,7 +562,7 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                 
                 /* get notified as soon as we can write again */
                 
-                libwebsocket_callback_on_writable(ctx, wsi);
+                lws_callback_on_writable(wsi);
             }
             break;
             

@@ -224,6 +224,8 @@
 		375BD561186846090024609E /* TriggerMng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD55B186846090024609E /* TriggerMng.cpp */; };
 		375BD562186846090024609E /* TriggerObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD55D186846090024609E /* TriggerObj.cpp */; };
 		43B91F111949BB2C00F7F815 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43B91F0F1949BB2C00F7F815 /* CocoLoader.cpp */; };
+		46A960351CEC4A2D00B46271 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A960331CEC4A2D00B46271 /* libcrypto.a */; };
+		46A960361CEC4A2D00B46271 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A960341CEC4A2D00B46271 /* libssl.a */; };
 		46C1008C16BF786A00F74D54 /* CCLuaBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46C1007A16BF786A00F74D54 /* CCLuaBridge.cpp */; };
 		46C1008D16BF786A00F74D54 /* CCLuaEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46C1007C16BF786A00F74D54 /* CCLuaEngine.cpp */; };
 		46C1008E16BF786A00F74D54 /* CCLuaStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46C1007E16BF786A00F74D54 /* CCLuaStack.cpp */; };
@@ -749,6 +751,8 @@
 		37C62D1818E158D200D16FC4 /* ExtensionExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionExport.h; sourceTree = "<group>"; };
 		43B91F0F1949BB2C00F7F815 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
 		43B91F101949BB2C00F7F815 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
+		46A960331CEC4A2D00B46271 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../../cocos2dx/platform/third_party/ios/libraries/libcrypto.a; sourceTree = "<group>"; };
+		46A960341CEC4A2D00B46271 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../../cocos2dx/platform/third_party/ios/libraries/libssl.a; sourceTree = "<group>"; };
 		46C1007A16BF786A00F74D54 /* CCLuaBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaBridge.cpp; sourceTree = "<group>"; };
 		46C1007B16BF786A00F74D54 /* CCLuaBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaBridge.h; sourceTree = "<group>"; };
 		46C1007C16BF786A00F74D54 /* CCLuaEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaEngine.cpp; sourceTree = "<group>"; };
@@ -876,6 +880,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46A960351CEC4A2D00B46271 /* libcrypto.a in Frameworks */,
+				46A960361CEC4A2D00B46271 /* libssl.a in Frameworks */,
 				15C1568E1683131500D239F2 /* libcurl.a in Frameworks */,
 				15C1568C168311EC00D239F2 /* libcocos2dx.a in Frameworks */,
 				F293B3CD15EB7BE500256477 /* QuartzCore.framework in Frameworks */,
@@ -2073,6 +2079,8 @@
 		F293B3CB15EB7BE500256477 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				46A960331CEC4A2D00B46271 /* libcrypto.a */,
+				46A960341CEC4A2D00B46271 /* libssl.a */,
 				15C1568D1683131500D239F2 /* libcurl.a */,
 				F293B3CC15EB7BE500256477 /* QuartzCore.framework */,
 				F293B3CE15EB7BE500256477 /* OpenGLES.framework */,
