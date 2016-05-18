@@ -421,7 +421,7 @@ float AutoPolygon::perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::
     }
     return res;
 }
-std::vector<cocos2d::Vec2> AutoPolygon::rdp(std::vector<cocos2d::Vec2> v, const float& optimization)
+std::vector<cocos2d::Vec2> AutoPolygon::rdp(const std::vector<cocos2d::Vec2>& v, float optimization)
 {
     if(v.size() < 3)
         return v;

@@ -399,7 +399,7 @@ public:
     }
     
 private:
-    void createHttpURLConnection(std::string url)
+    void createHttpURLConnection(const std::string& url)
     {
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,

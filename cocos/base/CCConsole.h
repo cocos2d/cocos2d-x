@@ -88,7 +88,7 @@ public:
         static std::vector<std::string> split(const std::string& s, char delim);
         
         /** Checks myString is a floating-point type. */
-        static bool isFloat(std::string myString);
+        static bool isFloat(const std::string& myString);
         
         /** send a message to console */
         static ssize_t sendToConsole(int fd, const void* buffer, size_t length, int flags = 0);
