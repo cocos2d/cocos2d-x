@@ -7,7 +7,7 @@ using namespace CocosDenshion;
 using namespace cocos2d;
 using namespace cocos2d::experimental;
 
-struct SimpleAudioEngineLinux{
+struct SimpleAudioEngineLinux {
     SimpleAudioEngine * engine = nullptr;
     int musicid;
     float effectsvolume;
@@ -16,65 +16,76 @@ struct SimpleAudioEngineLinux{
 
 SimpleAudioEngineLinux * g_SimpleAudioEngineLinux = nullptr;
 
-SimpleAudioEngine* SimpleAudioEngine::getInstance(){
-    if(!g_SimpleAudioEngineLinux){
+SimpleAudioEngine* SimpleAudioEngine::getInstance()
+{
+    if (!g_SimpleAudioEngineLinux) {
         g_SimpleAudioEngineLinux = new SimpleAudioEngineLinux();
         g_SimpleAudioEngineLinux->engine = new SimpleAudioEngine();
     }
     return g_SimpleAudioEngineLinux->engine;
 }
 
-void SimpleAudioEngine::end(){
-    if(g_SimpleAudioEngineLinux){
+void SimpleAudioEngine::end()
+{
+    if (g_SimpleAudioEngineLinux) {
         delete g_SimpleAudioEngineLinux->engine;
         delete g_SimpleAudioEngineLinux;
     }
     g_SimpleAudioEngineLinux = nullptr;
 }
 
-SimpleAudioEngine::SimpleAudioEngine(){
+SimpleAudioEngine::SimpleAudioEngine()
+{
     g_SimpleAudioEngineLinux->musicid = -1;
     g_SimpleAudioEngineLinux->effectsvolume = 1.0f;
 }
 
-SimpleAudioEngine::~SimpleAudioEngine(){
-
+SimpleAudioEngine::~SimpleAudioEngine()
+{
 }
 
-void SimpleAudioEngine::preloadBackgroundMusic(const char* filePath){
+void SimpleAudioEngine::preloadBackgroundMusic(const char* filePath)
+{
     g_SimpleAudioEngineLinux->musicpath = filePath;
     AudioEngine::preload(filePath);
 }
 
-void SimpleAudioEngine::playBackgroundMusic(const char* filePath, bool loop){
+void SimpleAudioEngine::playBackgroundMusic(const char* filePath, bool loop)
+{
     g_SimpleAudioEngineLinux->musicpath = filePath;
     g_SimpleAudioEngineLinux->musicid = AudioEngine::play2d(filePath, loop);
 }
 
-void SimpleAudioEngine::stopBackgroundMusic(bool releaseData){
+void SimpleAudioEngine::stopBackgroundMusic(bool releaseData)
+{
     AudioEngine::stop(g_SimpleAudioEngineLinux->musicid);
-    if(releaseData){
+    if (releaseData) {
         AudioEngine::uncache(g_SimpleAudioEngineLinux->musicpath.c_str());
     }
 }
 
-void SimpleAudioEngine::pauseBackgroundMusic(){
+void SimpleAudioEngine::pauseBackgroundMusic()
+{
     AudioEngine::pause(g_SimpleAudioEngineLinux->musicid);
 }
 
-void SimpleAudioEngine::resumeBackgroundMusic(){
+void SimpleAudioEngine::resumeBackgroundMusic()
+{
     AudioEngine::resume(g_SimpleAudioEngineLinux->musicid);
 }
 
-void SimpleAudioEngine::rewindBackgroundMusic(){
+void SimpleAudioEngine::rewindBackgroundMusic()
+{
     AudioEngine::setCurrentTime(g_SimpleAudioEngineLinux->musicid, 0);
 }
 
-bool SimpleAudioEngine::willPlayBackgroundMusic(){
+bool SimpleAudioEngine::willPlayBackgroundMusic()
+{
     return g_SimpleAudioEngineLinux->musicid != -1;
 }
 
-bool SimpleAudioEngine::isBackgroundMusicPlaying(){
+bool SimpleAudioEngine::isBackgroundMusicPlaying()
+{
     return AudioEngine::getState(g_SimpleAudioEngineLinux->musicid) == AudioEngine::AudioState::PLAYING;
 }
 
@@ -87,7 +98,8 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying(){
  * @js getMusicVolume
  * @lua getMusicVolume
  */
-float SimpleAudioEngine::getBackgroundMusicVolume(){
+float SimpleAudioEngine::getBackgroundMusicVolume()
+{
     return AudioEngine::getVolume(g_SimpleAudioEngineLinux->musicid);
 }
 
@@ -98,14 +110,16 @@ float SimpleAudioEngine::getBackgroundMusicVolume(){
  * @js setMusicVolume
  * @lua setMusicVolume
  */
-void SimpleAudioEngine::setBackgroundMusicVolume(float volume){
+void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
+{
     AudioEngine::setVolume(g_SimpleAudioEngineLinux->musicid, volume);
 }
 
 /**
  * The volume of the effects within the range of 0.0 as the minimum and 1.0 as the maximum.
  */
-float SimpleAudioEngine::getEffectsVolume(){
+float SimpleAudioEngine::getEffectsVolume()
+{
     return g_SimpleAudioEngineLinux->effectsvolume;
 }
 
@@ -114,7 +128,8 @@ float SimpleAudioEngine::getEffectsVolume(){
  *
  * @param volume must be within the range of 0.0 as the minimum and 1.0 as the maximum.
  */
-void SimpleAudioEngine::setEffectsVolume(float volume){
+void SimpleAudioEngine::setEffectsVolume(float volume)
+{
     g_SimpleAudioEngineLinux->effectsvolume = volume;
 }
 
@@ -132,7 +147,8 @@ void SimpleAudioEngine::setEffectsVolume(float volume){
  *     - no pitch effect on Samsung Galaxy S2 with OpenSL backend enabled;
  *     - no pitch/pan/gain on win32.
  */
-unsigned int SimpleAudioEngine::playEffect(const char* filePath, bool loop, float pitch, float pan, float gain){
+unsigned int SimpleAudioEngine::playEffect(const char* filePath, bool loop, float pitch, float pan, float gain)
+{
     return AudioEngine::play2d(filePath, loop, gain);
 }
 
@@ -141,14 +157,16 @@ unsigned int SimpleAudioEngine::playEffect(const char* filePath, bool loop, floa
  *
  * @param soundId The return value of function playEffect.
  */
-void SimpleAudioEngine::pauseEffect(unsigned int soundId){
+void SimpleAudioEngine::pauseEffect(unsigned int soundId)
+{
     AudioEngine::pause(soundId);
 }
 
 /**
  * Pause all playing sound effect.
  */
-void SimpleAudioEngine::pauseAllEffects(){
+void SimpleAudioEngine::pauseAllEffects()
+{
     AudioEngine::pauseAll();
 }
 
@@ -157,14 +175,16 @@ void SimpleAudioEngine::pauseAllEffects(){
  *
  * @param soundId The return value of function playEffect.
  */
-void SimpleAudioEngine::resumeEffect(unsigned int soundId){
+void SimpleAudioEngine::resumeEffect(unsigned int soundId)
+{
     AudioEngine::resume(soundId);
 }
 
 /**
  * Resume all playing sound effect.
  */
-void SimpleAudioEngine::resumeAllEffects(){
+void SimpleAudioEngine::resumeAllEffects()
+{
     AudioEngine::resumeAll();
 }
 
@@ -173,14 +193,16 @@ void SimpleAudioEngine::resumeAllEffects(){
  *
  * @param soundId The return value of function playEffect.
  */
-void SimpleAudioEngine::stopEffect(unsigned int soundId){
+void SimpleAudioEngine::stopEffect(unsigned int soundId)
+{
     AudioEngine::stop(soundId);
 }
 
 /**
  * Stop all playing sound effects.
  */
-void SimpleAudioEngine::stopAllEffects(){
+void SimpleAudioEngine::stopAllEffects()
+{
     AudioEngine::stopAll();
 }
 
@@ -192,7 +214,8 @@ void SimpleAudioEngine::stopAllEffects(){
  * @param filePath The path of the effect file.
  * @js NA
  */
-void SimpleAudioEngine::preloadEffect(const char* filePath){
+void SimpleAudioEngine::preloadEffect(const char* filePath)
+{
     AudioEngine::preload(filePath);
 }
 
@@ -201,6 +224,7 @@ void SimpleAudioEngine::preloadEffect(const char* filePath){
  *
  * @param filePath The path of the effect file.
  */
-void SimpleAudioEngine::unloadEffect(const char* filePath){
+void SimpleAudioEngine::unloadEffect(const char* filePath)
+{
     AudioEngine::uncache(filePath);
 }
