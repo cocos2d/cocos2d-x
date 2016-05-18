@@ -844,7 +844,7 @@ bool Image::decodeWithWIC(const unsigned char *data, ssize_t dataLen)
 
         _dataLen = img.getImageDataSize();
 
-        CCAssert(_dataLen > 0, "Image: Decompressed data length is invalid");
+        CCASSERT(_dataLen > 0, "Image: Decompressed data length is invalid");
 
         _data = new (std::nothrow) unsigned char[_dataLen];
         bRet = (img.getImageData(_data, _dataLen) > 0);
@@ -1599,7 +1599,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
     memcpy(_data, static_cast<const unsigned char*>(data) + sizeof(PVRv3TexHeader) + header->metadataLength, _dataLen);
     
     _numberOfMipmaps = header->numberOfMipmaps;
-    CCAssert(_numberOfMipmaps < MIPMAP_MAX, "Image: Maximum number of mimpaps reached. Increase the CC_MIPMAP_MAX value");
+    CCASSERT(_numberOfMipmaps < MIPMAP_MAX, "Image: Maximum number of mimpaps reached. Increase the CC_MIPMAP_MAX value");
     
     for (int i = 0; i < _numberOfMipmaps; i++)
     {
@@ -1687,7 +1687,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
         }
         
         dataOffset += packetLength;
-        CCAssert(dataOffset <= _dataLen, "CCTexurePVR: Invalid length");
+        CCASSERT(dataOffset <= _dataLen, "Image: Invalid length");
         
         
         width = MAX(width >> 1, 1);
