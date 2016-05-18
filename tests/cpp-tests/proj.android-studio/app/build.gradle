@@ -11,14 +11,26 @@ android {
         versionCode 1
         versionName "1.0"
 
+        externalNativeBuild {
+            ndkBuild {
+                targets 'cpp_tests'
+                arguments 'NDK_MODULE_PATH=../../../..:../../../../cocos:../../../../external'
+                abiFilters 'x86', 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            }
+        }
     }
 
     sourceSets.main {
         java.srcDir "src"
         res.srcDir "res"
-        jniLibs.srcDir "libs"
         manifest.srcFile "AndroidManifest.xml"
-        assets.srcDir "assets"
+        assets.srcDir "../../Resources"
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path "jni/Android.mk"
+        }
     }
 
     signingConfigs {
