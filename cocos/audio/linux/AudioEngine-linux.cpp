@@ -42,7 +42,7 @@ FMOD_RESULT F_CALLBACK channelCallback(FMOD_CHANNELCONTROL *channelcontrol,
 
 
 AudioEngineImpl::AudioEngineImpl(){
-};
+}
 
 AudioEngineImpl::~AudioEngineImpl(){
   FMOD_RESULT result;
@@ -50,7 +50,7 @@ AudioEngineImpl::~AudioEngineImpl(){
   ERRCHECKWITHEXIT(result);
   result = pSystem->release();
   ERRCHECKWITHEXIT(result);
-};
+}
 
     
 bool AudioEngineImpl::init(){
@@ -76,7 +76,7 @@ bool AudioEngineImpl::init(){
   g_AudioEngineImpl = this; 
   
   return true;
-};
+}
 
 int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float volume){
   int id = preload(fileFullPath, nullptr); 
@@ -88,7 +88,7 @@ int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float vo
     resume(id); 
   }
   return id; 
-};
+}
 
 void AudioEngineImpl::setVolume(int audioID,float volume){
   try{
@@ -96,7 +96,7 @@ void AudioEngineImpl::setVolume(int audioID,float volume){
   }catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::setVolume: invalid audioID: %d\n", audioID);
   }
-};
+}
 
 void AudioEngineImpl::setLoop(int audioID, bool loop){
   try{
@@ -104,7 +104,7 @@ void AudioEngineImpl::setLoop(int audioID, bool loop){
   }catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::setLoop: invalid audioID: %d\n", audioID);
   }
-};
+}
 
 bool AudioEngineImpl::pause(int audioID){
   try{
@@ -115,7 +115,7 @@ bool AudioEngineImpl::pause(int audioID){
       printf("AudioEngineImpl::pause: invalid audioID: %d\n", audioID);
       return false;
   }
-};
+}
 
 bool AudioEngineImpl::resume(int audioID){
 try{
@@ -143,7 +143,7 @@ try{
       printf("AudioEngineImpl::resume: invalid audioID: %d\n", audioID);
       return false;
   }
-};
+}
 
 bool AudioEngineImpl::stop(int audioID){
   try{
@@ -154,7 +154,7 @@ bool AudioEngineImpl::stop(int audioID){
       printf("AudioEngineImpl::stop: invalid audioID: %d\n", audioID);
       return false;
   }
-};
+}
 
 void AudioEngineImpl::stopAll(){
   for (auto it = mapChannelInfo.begin(); it != mapChannelInfo.end(); ++it) {
@@ -162,7 +162,7 @@ void AudioEngineImpl::stopAll(){
     audioRef.channel->stop();
     audioRef.channel = nullptr;
   }
-};
+}
 
 float AudioEngineImpl::getDuration(int audioID){
   try{
@@ -176,7 +176,7 @@ float AudioEngineImpl::getDuration(int audioID){
       printf("AudioEngineImpl::getDuration: invalid audioID: %d\n", audioID);
     return AudioEngine::TIME_UNKNOWN;
   }
-};
+}
 
 float AudioEngineImpl::getCurrentTime(int audioID){
  try{
@@ -189,7 +189,7 @@ float AudioEngineImpl::getCurrentTime(int audioID){
       printf("AudioEngineImpl::getCurrentTime: invalid audioID: %d\n", audioID);
     return AudioEngine::TIME_UNKNOWN;
   }
-};
+}
 
 bool AudioEngineImpl::setCurrentTime(int audioID, float time){
  try{
@@ -199,7 +199,7 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time){
     }catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::setCurrentTime: invalid audioID: %d\n", audioID);
   }
-};
+}
 
 void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback){
  try{
@@ -210,7 +210,7 @@ void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (i
     }catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::setFinishCallback: invalid audioID: %d\n", audioID);
   }
-};
+}
 
 
 void AudioEngineImpl::onSoundFinished(FMOD::Channel * channel){
@@ -226,7 +226,7 @@ void AudioEngineImpl::onSoundFinished(FMOD::Channel * channel){
     }catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::onSoundFinished: invalid audioID: %d\n", id);
   }
-}; 
+}
     
 
 void AudioEngineImpl::uncache(const std::string& path){
@@ -239,7 +239,7 @@ void AudioEngineImpl::uncache(const std::string& path){
     }
     mapSound.erase(it);
   }
-};
+}
 
 
 void AudioEngineImpl::uncacheAll(){
@@ -250,7 +250,7 @@ for (auto it = mapSound.cbegin(); it != mapSound.cend(); ++it) {
     }
   }
   mapSound.clear();
-};
+}
 
     
 int AudioEngineImpl::preload(const std::string& filePath, std::function<void(bool isSuccess)> callback){
@@ -282,12 +282,12 @@ int AudioEngineImpl::preload(const std::string& filePath, std::function<void(boo
    callback(true); 
   }
   return id; 
-};
+}
 
 
 void AudioEngineImpl::update(float dt){
   pSystem->update();
-};
+}
 
 
 FMOD::Sound * AudioEngineImpl::findSound(const std::string &path){
@@ -303,4 +303,4 @@ FMOD::Channel * AudioEngineImpl::getChannel(FMOD::Sound *sound){
   sound->getUserData(&data);
   id = (size_t) data; 
   return mapChannelInfo[id].channel; 
-};
+}
