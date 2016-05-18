@@ -1262,6 +1262,11 @@ void NodeNameTest::onEnter()
     this->scheduleOnce(CC_CALLBACK_1(NodeNameTest::test, this), 0.05f, "test_key");
 }
 
+void NodeNameTest::onExit()
+{
+    TestCocosNodeDemo::onExit();
+}
+
 void NodeNameTest::test(float dt)
 {
     auto parent = Node::create();
