@@ -1,6 +1,6 @@
 /**
  * @author cesarpachon
- */ 
+ */
 #include <cstring>
 #include "audio/linux/AudioEngine-linux.h"
 
@@ -27,19 +27,17 @@ bool ERRCHECK(FMOD_RESULT result) {
     return false;
 }
 
-FMOD_RESULT F_CALLBACK channelCallback(FMOD_CHANNELCONTROL *channelcontrol, 
-                                       FMOD_CHANNELCONTROL_TYPE controltype, 
-                                       FMOD_CHANNELCONTROL_CALLBACK_TYPE callbacktype, 
+FMOD_RESULT F_CALLBACK channelCallback(FMOD_CHANNELCONTROL *channelcontrol,
+                                       FMOD_CHANNELCONTROL_TYPE controltype,
+                                       FMOD_CHANNELCONTROL_CALLBACK_TYPE callbacktype,
                                        void *commandData1, void *commandData2)
 {
-  
     if(controltype == FMOD_CHANNELCONTROL_CHANNEL && callbacktype == FMOD_CHANNELCONTROL_CALLBACK_END){
         g_AudioEngineImpl->onSoundFinished((FMOD::Channel *)channelcontrol);
     }else{
     }
     return FMOD_OK;
 }
-
 
 AudioEngineImpl::AudioEngineImpl(){
 }
@@ -52,7 +50,6 @@ AudioEngineImpl::~AudioEngineImpl(){
     ERRCHECKWITHEXIT(result);
 }
 
-    
 bool AudioEngineImpl::init(){
     FMOD_RESULT result;
     /*
@@ -60,7 +57,7 @@ bool AudioEngineImpl::init(){
     */
     result = FMOD::System_Create(&pSystem);
     ERRCHECKWITHEXIT(result);
-  
+
     result = pSystem->setOutput(FMOD_OUTPUTTYPE_PULSEAUDIO);
     ERRCHECKWITHEXIT(result);
 
@@ -69,12 +66,12 @@ bool AudioEngineImpl::init(){
 
     mapChannelInfo.clear();
     mapSound.clear();
-  
+
     auto scheduler = cocos2d::Director::getInstance()->getScheduler();
     scheduler->schedule(schedule_selector(AudioEngineImpl::update), this, 0.05f, false);
-  
+
     g_AudioEngineImpl = this;
-  
+
     return true;
 }
 
@@ -119,7 +116,6 @@ bool AudioEngineImpl::pause(int audioID){
 
 bool AudioEngineImpl::resume(int audioID){
     try{
-
         if(!mapChannelInfo[audioID].channel){
             FMOD::Channel *channel = nullptr;
             FMOD::ChannelGroup *channelgroup = nullptr;
@@ -134,10 +130,10 @@ bool AudioEngineImpl::resume(int audioID){
             channel->setUserData((void *)mapChannelInfo[audioID].id);
             mapChannelInfo[audioID].channel = channel;
         }
-    
+
         mapChannelInfo[audioID].channel->setPaused(false);
         AudioEngine::_audioIDInfoMap[audioID].state = AudioEngine::AudioState::PLAYING;
-    
+
         return true;
     }catch(const std::out_of_range& oor){
         printf("AudioEngineImpl::resume: invalid audioID: %d\n", audioID);
@@ -212,7 +208,6 @@ void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (i
     }
 }
 
-
 void AudioEngineImpl::onSoundFinished(FMOD::Channel * channel){
     size_t id;
     try{
@@ -227,7 +222,6 @@ void AudioEngineImpl::onSoundFinished(FMOD::Channel * channel){
         printf("AudioEngineImpl::onSoundFinished: invalid audioID: %d\n", id);
     }
 }
-    
 
 void AudioEngineImpl::uncache(const std::string& path){
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
@@ -237,10 +231,9 @@ void AudioEngineImpl::uncache(const std::string& path){
         if(sound){
             sound->release();
         }
-    mapSound.erase(it);
-  }
+        mapSound.erase(it);
+    }
 }
-
 
 void AudioEngineImpl::uncacheAll(){
     for (auto it = mapSound.cbegin(); it != mapSound.cend(); ++it) {
@@ -248,11 +241,10 @@ void AudioEngineImpl::uncacheAll(){
         if(sound){
             sound->release();
         }
-  }
-  mapSound.clear();
+    }
+    mapSound.clear();
 }
 
-    
 int AudioEngineImpl::preload(const std::string& filePath, std::function<void(bool isSuccess)> callback){
     FMOD::Sound * sound = findSound(filePath);
     if(!sound){
@@ -267,7 +259,7 @@ int AudioEngineImpl::preload(const std::string& filePath, std::function<void(boo
         }
         mapSound[fullPath] = sound;
     }
-  
+
     int id = mapChannelInfo.size() + 1;
     auto& chanelInfo = mapChannelInfo[id];
     chanelInfo.sound = sound;
@@ -277,25 +269,22 @@ int AudioEngineImpl::preload(const std::string& filePath, std::function<void(boo
     chanelInfo.path = filePath;
     //we are going to use UserData to store pointer to Channel when playing
     chanelInfo.sound->setUserData((void *)id);
-  
+
     if(callback){
         callback(true);
     }
     return id;
 }
 
-
 void AudioEngineImpl::update(float dt){
     pSystem->update();
 }
-
 
 FMOD::Sound * AudioEngineImpl::findSound(const std::string &path){
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
     std::map<std::string, FMOD::Sound *>::const_iterator it = mapSound.find(fullPath);
     return (it!=mapSound.end())?(it->second):nullptr;
 }
-
 
 FMOD::Channel * AudioEngineImpl::getChannel(FMOD::Sound *sound){
     size_t id;
