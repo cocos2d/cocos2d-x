@@ -352,6 +352,8 @@
 		38FA2E98194E930700FF2BE4 /* ActionTimelineTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E96194E930700FF2BE4 /* ActionTimelineTestScene.cpp */; };
 		38FA2E9A194E94FC00FF2BE4 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E99194E94FC00FF2BE4 /* ActionTimeline */; };
 		43B91ED81949B84200F7F815 /* CocoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43B91ED61949B84200F7F815 /* CocoLoader.cpp */; };
+		46A960261CEC481F00B46271 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A960241CEC481F00B46271 /* libcrypto.a */; };
+		46A960271CEC481F00B46271 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A960251CEC481F00B46271 /* libssl.a */; };
 		50181AE1185FEBAE0051CA1C /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50181ADF185FEBAE0051CA1C /* CCActionEaseEx.cpp */; };
 		50D36120186AED6100828878 /* UITouchGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D3611E186AED6100828878 /* UITouchGroup.cpp */; };
 		50D6A4CD17E2C91100523A82 /* GUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D6A4CB17E2C91100523A82 /* GUIReader.cpp */; };
@@ -1192,6 +1194,8 @@
 		38FA2E99194E94FC00FF2BE4 /* ActionTimeline */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ActionTimeline; sourceTree = "<group>"; };
 		43B91ED61949B84200F7F815 /* CocoLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoLoader.cpp; sourceTree = "<group>"; };
 		43B91ED71949B84200F7F815 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
+		46A960241CEC481F00B46271 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../../../cocos2dx/platform/third_party/ios/libraries/libcrypto.a; sourceTree = "<group>"; };
+		46A960251CEC481F00B46271 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../../../cocos2dx/platform/third_party/ios/libraries/libssl.a; sourceTree = "<group>"; };
 		50181ADF185FEBAE0051CA1C /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
 		50181AE0185FEBAE0051CA1C /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
 		50D3611E186AED6100828878 /* UITouchGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITouchGroup.cpp; sourceTree = "<group>"; };
@@ -1347,6 +1351,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46A960261CEC481F00B46271 /* libcrypto.a in Frameworks */,
+				46A960271CEC481F00B46271 /* libssl.a in Frameworks */,
 				15A3DA6A1682F886002FB0C5 /* libcocos2dx.a in Frameworks */,
 				1ACB3244164770DE00914215 /* libcurl.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
@@ -2797,6 +2803,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				46A960241CEC481F00B46271 /* libcrypto.a */,
+				46A960251CEC481F00B46271 /* libssl.a */,
 				1ACB3243164770DE00914215 /* libcurl.a */,
 				BF170DB212928DE900B8313A /* libxml2.dylib */,
 				BF170DB412928DE900B8313A /* libz.dylib */,
@@ -4168,6 +4176,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -4195,7 +4204,7 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios/Simulation\"",
 				);
 				INFOPLIST_FILE = "Test-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/lib\"",
@@ -4215,6 +4224,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iphone_Prefix.pch;
@@ -4239,7 +4249,7 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios/Simulation\"",
 				);
 				INFOPLIST_FILE = "Test-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/lib\"",
