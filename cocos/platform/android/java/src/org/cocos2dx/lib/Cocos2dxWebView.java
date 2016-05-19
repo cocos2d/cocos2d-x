@@ -2,6 +2,8 @@ package org.cocos2dx.lib;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.os.Build;
 import android.util.Log;
 import android.view.Gravity;
 import android.webkit.WebChromeClient;
@@ -66,6 +68,13 @@ public class Cocos2dxWebView extends WebView {
 
         this.setWebViewClient(new Cocos2dxWebViewClient());
         this.setWebChromeClient(new WebChromeClient());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            boolean isDebug = (0 != (context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE));
+            if (isDebug) {
+                Log.d(TAG, "Attempting to enable WebView.setWebContentsDebuggingEnabled");
+                WebView.setWebContentsDebuggingEnabled(true);
+            }
+        }
     }
 
     public void setJavascriptInterfaceScheme(String scheme) {
