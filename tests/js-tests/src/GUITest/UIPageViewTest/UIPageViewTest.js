@@ -732,3 +732,59 @@ var UIPageViewChildSizeTest = UIMainLayer.extend({
         }
     }
 });
+
+var UIPageViewIndicatorTest = UIMainLayer.extend({
+    init: function () {
+        if(this._super()){
+            var widgetSize = this._widget.getContentSize();
+
+            this._topDisplayLabel.setString("PageView indidcator custom texture\nscale : 0.5, index color: RED");
+            this._topDisplayLabel.setFontSize(14);
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height;
+
+            this._bottomDisplayLabel.setString("PageView");
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
+
+            var background = this._widget.getChildByName("background_Panel");
+            var backgroundSize = background.getContentSize();
+
+            var pageView = new ccui.PageView();
+            pageView.setContentSize(cc.size(240, 130));
+            pageView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - pageView.width) / 2;
+            pageView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - pageView.height) / 2;
+            pageView.removeAllPages();
+
+            pageView.setIndicatorEnabled(true);
+            pageView.setIndicatorSpaceBetweenIndexNodes(5);
+            pageView.setIndicatorIndexNodesScale(0.5);
+            pageView.setIndicatorIndexNodesTexture("ccs-res/cocosui/green_edit.png");
+            pageView.setIndicatorIndexNodesColor(cc.color.RED);
+
+            var pageCount = 4;
+            for(var i = 0; i < pageCount; i++){
+                var layout = new ccui.Layout();
+                layout.setContentSize(cc.size(240, 130));
+
+                var imageView = new ccui.ImageView();
+                imageView.setScale9Enabled(true);
+                imageView.loadTexture("ccs-res/cocosui/scrollviewbg.png");
+                imageView.setContentSize(cc.size(240, 130));
+                imageView.x = layout.getContentSize().width / 2;
+                imageView.y = layout.getContentSize().height / 2;
+                layout.addChild(imageView);
+                var pageNumber = i+1;
+                var label = new ccui.Text("page" + pageNumber, "Marker Felt",30);
+                label.setColor(cc.color(192, 192, 192));
+                label.setPosition(cc.p(layout.getContentSize().width / 2, layout.getContentSize().height / 2));
+                layout.addChild(label);
+
+                pageView.insertPage(layout, i);
+            }
+            this._mainNode.addChild(pageView);
+            return true;
+        }
+        return false;
+    }
+});
