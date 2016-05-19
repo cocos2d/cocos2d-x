@@ -29,10 +29,18 @@ var g_guisTests = [
             var pScene = new CustomImageScene();
             pScene.runThisTest();
         }
-    },{
+    },
+	{
         title: "custom gui particle widget Test",
         test: function(){
             var pScene = new CustomParticleWidgetScene();
+            pScene.runThisTest();
+        }
+    },
+	{
+        title: "Custom Gui Issue: Animations With Only One Frame Test",
+        test: function(){
+            var pScene = new CustomIssueAnimationsWithOnlyOneFrameScene();
             pScene.runThisTest();
         }
     }
