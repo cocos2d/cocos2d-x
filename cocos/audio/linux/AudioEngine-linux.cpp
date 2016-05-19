@@ -2,6 +2,7 @@
  * @author cesarpachon
  */
 #include <cstring>
+#include <cstdint>
 #include "audio/linux/AudioEngine-linux.h"
 
 #include "base/CCDirector.h"
@@ -139,7 +140,7 @@ bool AudioEngineImpl::resume(int audioID)
             channel->setMode(mapChannelInfo[audioID].loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF);
             channel->setLoopCount(mapChannelInfo[audioID].loop ? -1 : 0);
             channel->setVolume(mapChannelInfo[audioID].volume);
-            channel->setUserData((void *)mapChannelInfo[audioID].id);
+            channel->setUserData(reinterpret_cast<void *>(static_cast<std::intptr_t>(mapChannelInfo[audioID].id)));
             mapChannelInfo[audioID].channel = channel;
         }
 
@@ -234,11 +235,11 @@ void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (i
 
 void AudioEngineImpl::onSoundFinished(FMOD::Channel * channel)
 {
-    size_t id;
+    int id = 0;
     try {
         void * data;
         channel->getUserData(&data);
-        id = (size_t) data;
+        id = static_cast<int>(reinterpret_cast<std::intptr_t>(data));
         if (mapChannelInfo[id].callback) {
             mapChannelInfo[id].callback(id, mapChannelInfo[id].path);
         }
@@ -289,15 +290,15 @@ int AudioEngineImpl::preload(const std::string& filePath, std::function<void(boo
         mapSound[fullPath] = sound;
     }
 
-    int id = mapChannelInfo.size() + 1;
+    int id = static_cast<int>(mapChannelInfo.size()) + 1;
     auto& chanelInfo = mapChannelInfo[id];
     chanelInfo.sound = sound;
-    chanelInfo.id = (size_t) id;
+    chanelInfo.id = id;
     chanelInfo.channel = nullptr;
     chanelInfo.callback = nullptr;
     chanelInfo.path = filePath;
     //we are going to use UserData to store pointer to Channel when playing
-    chanelInfo.sound->setUserData((void *)id);
+    chanelInfo.sound->setUserData(reinterpret_cast<void *>(static_cast<std::intptr_t>(id)));
 
     if (callback) {
         callback(true);
@@ -319,9 +320,8 @@ FMOD::Sound * AudioEngineImpl::findSound(const std::string &path)
 
 FMOD::Channel * AudioEngineImpl::getChannel(FMOD::Sound *sound)
 {
-    size_t id;
     void * data;
     sound->getUserData(&data);
-    id = (size_t) data;
+    int id = static_cast<int>(reinterpret_cast<std::intptr_t>(data));
     return mapChannelInfo[id].channel;
 }
