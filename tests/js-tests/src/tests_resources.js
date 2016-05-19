@@ -110,6 +110,10 @@ var s_testEasing_json = "ccs-res/armature/testEasing.ExportJson";
 var s_testEasing0_plist = "ccs-res/armature/testEasing0.plist";
 var s_testEasing0_png = "ccs-res/armature/testEasing0.png";
 
+// Issue CustomIssueAnimationsWithOnlyOneFrame
+var s_testIssueAnimationsWithOnlyOneFrame_json = "ccs-res/cocosui/CustomIssueAnimationsWithOnlyOneFrame/AnimationsWithOnlyOneFrame.json";
+var s_testIssueAnimationsWithOnlyOneFrame_png = "ccs-res/cocosui/CustomIssueAnimationsWithOnlyOneFrame/TheDigitalSpell.png";
+
 var s_s9s_blocks9 = "Images/blocks9ss.png";
 var s_s9s_blocks9_plist = "Images/blocks9ss.plist";
 var s_blocks9 = "Images/blocks9.png";
@@ -237,6 +241,7 @@ var g_resources = [
     s_pathF1,
     s_pathF2,
     s_pathBlock,
+    s_back2,
     s_back3,
     s_fire,
     s_pathClose,
@@ -399,8 +404,7 @@ var g_label = [
 ];
 
 var g_transitions = [
-    s_back1,
-    s_back2
+    s_back1
 ];
 
 var g_box2d = [
@@ -595,7 +599,9 @@ var g_cocoStudio = [
     s_testEasing_json ,
     s_testEasing0_plist ,
     s_testEasing0_png ,
-
+	// Issue CustomIssueAnimationsWithOnlyOneFrame
+	s_testIssueAnimationsWithOnlyOneFrame_json,
+	s_testIssueAnimationsWithOnlyOneFrame_png,
 //GUI
     "Particles/SmallSun.plist",
     "Images/b1.png",
@@ -774,8 +780,6 @@ var g_cocoStudio = [
     "ccs-res/cocosui/UIEditorTest/UIScrollView/Vertical/selected01.png",
     "ccs-res/cocosui/UIEditorTest/UIScrollView/Vertical/selected02.png",
     "ccs-res/cocosui/UIEditorTest/UIScrollView/Vertical/vertical_1.json",
-    "ccs-res/cocosui/UIEditorTest/UISlider/2014-1-26 11-42-09.png",
-    "ccs-res/cocosui/UIEditorTest/UISlider/2014-1-26 11-43-52.png",
     "ccs-res/cocosui/UIEditorTest/UISlider/background.png",
     "ccs-res/cocosui/UIEditorTest/UISlider/buttonBackground.png",
     "ccs-res/cocosui/UIEditorTest/UISlider/ribbon.png",
@@ -897,8 +901,6 @@ var g_cocoStudio = [
     "ccs-res/cocosui/UIEditorTest/2.1/plist1/Plist.plist",
     "ccs-res/cocosui/UIEditorTest/2.1/Plist/ui.plist",
     "ccs-res/cocosui/UIEditorTest/2.1/LoadingBar/pipe2.png",
-    "ccs-res/cocosui/UIEditorTest/2.1/Slider/2013-8-13 15-44-11.png",
-    "ccs-res/cocosui/UIEditorTest/2.1/Slider/teehanlax - iOS 6 - iPhone_slider01.png",
     "ccs-res/cocosui/UIEditorTest/2.1/particle/blue.plist",
     "ccs-res/cocosui/UIEditorTest/2.1/Default/Slider_Back.png",
     "ccs-res/cocosui/UIEditorTest/2.1/Default/SliderNode_Normal.png",
@@ -917,7 +919,7 @@ var g_cocoStudio = [
     "ccs-res/cocosui/CustomImageViewTest/NewProject_20.plist",
     "ccs-res/cocosui/CustomImageViewTest/NewProject_20.png",
 
-    "ActionTimeline/DemoPlayer_skeleton.json"
+    "ActionTimeline/DemoPlayer_skeleton.json"	
 ];
 
 var g_ui = [
