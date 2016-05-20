@@ -280,6 +280,21 @@ const Manifest* AssetsManagerEx::getRemoteManifest() const
     return _remoteManifest;
 }
 
+void AssetsManagerEx::suspend()
+{
+    _downloader->suspend();
+}
+
+void AssetsManagerEx::resume()
+{
+    _downloader->resume();
+}
+
+bool AssetsManagerEx::isSuspended() const
+{
+    return _downloader->isSuspended();
+}
+
 const std::string& AssetsManagerEx::getStoragePath() const
 {
     return _storagePath;

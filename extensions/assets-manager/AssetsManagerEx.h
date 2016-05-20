@@ -124,6 +124,18 @@ public:
     /** @brief Function for retrieve the remote manifest object
      */
     const Manifest* getRemoteManifest() const;
+    
+    /** @brief Suspend the download progress
+     */
+    void suspend();
+
+    /** @brief Resume the download progress
+     */
+    void resume();
+
+    /** @brief Whether download progress is suspended
+     */
+    bool isSuspended() const;
 
 CC_CONSTRUCTOR_ACCESS:
     
