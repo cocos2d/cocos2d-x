@@ -140,10 +140,21 @@ protected:
      */
     std::unordered_map<std::string, AssetDiff> genDiff(const Manifest *b) const;
     
-    /** @brief Generate resuming download assets list
-     * @param units   The download units reference to be modified by the generation result
+    /** @brief Generate difference between this Manifest and another, calling relevant callbacks on each asset.
+     * @param b           The other manifest
+     * @param onDiff      Callback for each changed asset, ignored if nullptr
+     * @param onUnchanged Callback for each unchanged asset, ignored if nullptr
      */
-    void genResumeAssetsList(DownloadUnits *units) const;
+    void yieldDiff(const Manifest *b,
+                   const std::function<void(const std::string&, const AssetDiff&)>& onDiff,
+                   const std::function<void(const std::string&)>& onUnchanged) const;
+
+    /** @brief Generate resuming download assets list
+     * @param units               The download units reference to be modified by the generation result
+     * @param getAssetStoragePath Function used to calculate the storage path of each asset
+     */
+    void genResumeAssetsList(DownloadUnits *units,
+                             const std::function<std::string(const std::string& key, const Asset& asset)>& getAssetStoragePath) const;
     
     /** @brief Prepend all search paths to the FileUtils.
      */

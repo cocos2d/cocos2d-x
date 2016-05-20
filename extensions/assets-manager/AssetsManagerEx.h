@@ -67,16 +67,33 @@ public:
         FAIL_TO_UPDATE
     };
     
+    struct Config {
+        /** @brief  Function used to calculate the storage path of each asset
+         */
+        std::function<std::string(const std::string& key, const Manifest::Asset& asset)> getAssetStoragePath;
+
+        /** @brief  Hints for configuring downloader
+         */
+        network::DownloaderHints downloaderHints;
+
+        /** @brief  Default configuration for AssetsManagerEx
+         */
+        static const Config& defaultConfig();
+    };
+
     const static std::string VERSION_ID;
     const static std::string MANIFEST_ID;
     
     /** @brief Create function for creating a new AssetsManagerEx
      @param manifestUrl   The url for the local manifest file
      @param storagePath   The storage path for downloaded assets
+     @param config        AssetsManagerEx configuartion
      @warning   The cached manifest in your storage path have higher priority and will be searched first,
                 only if it doesn't exist, AssetsManagerEx will use the given manifestUrl.
      */
-    static AssetsManagerEx* create(const std::string &manifestUrl, const std::string &storagePath);
+    static AssetsManagerEx* create(const std::string &manifestUrl,
+                                   const std::string &storagePath,
+                                   const Config& config = Config::defaultConfig());
     
     /** @brief  Check out if there is a new version of manifest.
      *          You may use this method before updating, then let user determine whether
@@ -107,10 +124,12 @@ public:
     /** @brief Function for retrieve the remote manifest object
      */
     const Manifest* getRemoteManifest() const;
-    
+
 CC_CONSTRUCTOR_ACCESS:
     
-    AssetsManagerEx(const std::string& manifestUrl, const std::string& storagePath);
+    AssetsManagerEx(const std::string& manifestUrl,
+                    const std::string& storagePath,
+                    const Config& config = Config::defaultConfig());
     
     virtual ~AssetsManagerEx();
     
@@ -271,6 +290,9 @@ private:
     
     //! Marker for whether the assets manager is inited
     bool _inited;
+
+    //! AssetsManagerEx Configuration
+    Config _config;
 };
 
 NS_CC_EXT_END
