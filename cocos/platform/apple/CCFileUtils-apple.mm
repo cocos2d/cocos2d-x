@@ -55,14 +55,15 @@ private:
 static id convertCCValueToNSObject(const cocos2d::Value &value);
 static cocos2d::Value convertNSObjectToCCValue(id object);
 
-static void addValueToDict(id nsKey, id nsValue, ValueMap& dict);
-static void addObjectToNSDict(const std::string& key, const Value& value, NSMutableDictionary *dict);
-static void addValueToArray(id item, ValueVector& array);
-static void addObjectToNSArray(const Value& value, NSMutableArray *array);
+static void addNSObjectToCCMap(id nsKey, id nsValue, ValueMap& dict);
+static void addCCValueToNSDictionary(const std::string& key, const Value& value, NSMutableDictionary *dict);
+static void addNSObjectToCCVector(id item, ValueVector& array);
+static void addCCValueToNSArray(const Value& value, NSMutableArray *array);
 
 static id convertCCValueToNSObject(const cocos2d::Value &value)
 {
-    switch (value.getType()) {
+    switch (value.getType())
+    {
         case Value::Type::NONE:
             return [NSNull null];
             
@@ -91,7 +92,7 @@ static id convertCCValueToNSObject(const cocos2d::Value &value)
             NSMutableArray *array = [NSMutableArray array];
             const ValueVector &vector = value.asValueVector();
             for (const auto &e : vector) {
-                addObjectToNSArray(e, array);
+                addCCValueToNSArray(e, array);
             }
             return array;
         }
@@ -100,7 +101,7 @@ static id convertCCValueToNSObject(const cocos2d::Value &value)
             NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
             const ValueMap &map = value.asValueMap();
             for (auto iter = map.begin(); iter != map.end(); ++iter) {
-                addObjectToNSDict(iter->first, iter->second, dictionary);
+                addCCValueToNSDictionary(iter->first, iter->second, dictionary);
             }
             return dictionary;
         }
@@ -153,7 +154,7 @@ static cocos2d::Value convertNSObjectToCCValue(id item)
         for (id subKey in [item allKeys])
         {
             id subValue = [item objectForKey:subKey];
-            addValueToDict(subKey, subValue, dict);
+            addNSObjectToCCMap(subKey, subValue, dict);
         }
         
         return Value(dict);
@@ -165,7 +166,7 @@ static cocos2d::Value convertNSObjectToCCValue(id item)
         ValueVector subArray;
         for (id subItem in item)
         {
-            addValueToArray(subItem, subArray);
+            addNSObjectToCCVector(subItem, subArray);
         }
         return Value(subArray);
     }
@@ -173,17 +174,17 @@ static cocos2d::Value convertNSObjectToCCValue(id item)
     return Value::Null;
 }
 
-static void addValueToArray(id item, ValueVector& array)
+static void addNSObjectToCCVector(id item, ValueVector& array)
 {
     array.push_back(convertNSObjectToCCValue(item));
 }
 
-static void addObjectToNSArray(const Value& value, NSMutableArray *array)
+static void addCCValueToNSArray(const Value& value, NSMutableArray *array)
 {
     [array addObject:convertCCValueToNSObject(value)];
 }
 
-static void addValueToDict(id nsKey, id nsValue, ValueMap& dict)
+static void addNSObjectToCCMap(id nsKey, id nsValue, ValueMap& dict)
 {
     // the key must be a string
     CCASSERT([nsKey isKindOfClass:[NSString class]], "The key should be a string!");
@@ -191,7 +192,7 @@ static void addValueToDict(id nsKey, id nsValue, ValueMap& dict)
     dict[key] = convertNSObjectToCCValue(nsValue);
 }
 
-static void addObjectToNSDict(const std::string& key, const Value& value, NSMutableDictionary *dict)
+static void addCCValueToNSDictionary(const std::string& key, const Value& value, NSMutableDictionary *dict)
 {
     NSString *NSkey = [NSString stringWithCString:key.c_str() encoding:NSUTF8StringEncoding];
     [dict setObject:convertCCValueToNSObject(value) forKey:NSkey];
@@ -353,7 +354,7 @@ ValueMap FileUtilsApple::getValueMapFromData(const char* filedata, int filesize)
         for (id key in [dict allKeys])
         {
             id value = [dict objectForKey:key];
-            addValueToDict(key, value, ret);
+            addNSObjectToCCMap(key, value, ret);
         }
     }
     return ret;
@@ -372,7 +373,7 @@ bool FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& ful
 
     for (auto iter = dict.begin(); iter != dict.end(); ++iter)
     {
-        addObjectToNSDict(iter->first, iter->second, nsDict);
+        addCCValueToNSDictionary(iter->first, iter->second, nsDict);
     }
 
     NSString *file = [NSString stringWithUTF8String:fullPath.c_str()];
@@ -389,7 +390,7 @@ bool FileUtils::writeValueVectorToFile(const ValueVector& vecData, const std::st
 
     for (const auto &e : vecData)
     {
-        addObjectToNSArray(e, array);
+        addCCValueToNSArray(e, array);
     }
 
     [array writeToFile:path atomically:YES];
@@ -411,7 +412,7 @@ ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename)
 
     for (id value in array)
     {
-        addValueToArray(value, ret);
+        addNSObjectToCCVector(value, ret);
     }
 
     return ret;
