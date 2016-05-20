@@ -137,6 +137,38 @@ namespace cocos2d { namespace network {
             return coTask;
         }
 
+        void DownloaderAndroid::suspend()
+        {
+            JniMethodInfo methodInfo;
+            if (JniHelper::getMethodInfo(methodInfo, JCLS_DOWNLOADER, "suspend", "()V")) {
+                methodInfo.env->CallVoidMethod(_impl, methodInfo.methodID);
+                methodInfo.env->DeleteLocalRef(methodInfo.classID);
+            }
+            DLLOG("DownloaderAndroid::suspend");
+        }
+
+        void DownloaderAndroid::resume()
+        {
+            JniMethodInfo methodInfo;
+            if (JniHelper::getMethodInfo(methodInfo, JCLS_DOWNLOADER, "resume", "()V")) {
+                methodInfo.env->CallVoidMethod(_impl, methodInfo.methodID);
+                methodInfo.env->DeleteLocalRef(methodInfo.classID);
+            }
+            DLLOG("DownloaderAndroid::resume");
+        }
+
+        bool DownloaderAndroid::isSuspended() const
+        {
+            JniMethodInfo methodInfo;
+            jboolean ret = false;
+            if (JniHelper::getMethodInfo(methodInfo, JCLS_DOWNLOADER, "isSuspended", "()Z")) {
+                ret = methodInfo.env->CallBooleanMethod(_impl, methodInfo.methodID);
+                methodInfo.env->DeleteLocalRef(methodInfo.classID);
+            }
+            DLLOG("DownloaderAndroid::isSuspended");
+            return ret;
+        }
+
         void DownloaderAndroid::_onProcess(int taskId, int64_t dl, int64_t dlNow, int64_t dlTotal)
         {
             DLLOG("DownloaderAndroid::onProgress(taskId: %d, dl: %lld, dlnow: %lld, dltotal: %lld)", taskId, dl, dlNow, dlTotal);
