@@ -435,7 +435,8 @@ unsigned short* cc_utf8_to_utf16(const char* str_old, int length/* = -1*/, int* 
     unsigned short* ret = nullptr;
     
     std::u16string outUtf16;
-    bool succeed = StringUtils::UTF8ToUTF16(str_old, outUtf16);
+    std::string inUtf8 = length == -1 ? std::string(str_old) : std::string(str_old, length);
+    bool succeed = StringUtils::UTF8ToUTF16(inUtf8, outUtf16);
     
     if (succeed)
     {
