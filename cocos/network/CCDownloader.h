@@ -86,7 +86,11 @@ namespace cocos2d { namespace network {
                            int errorCode,
                            int errorCodeInternal,
                            const std::string& errorStr)> onTaskError;
-        
+
+        void suspend();
+        void resume();
+        bool isSuspended() const;
+
         std::shared_ptr<const DownloadTask> createDownloadDataTask(const std::string& srcUrl, const std::string& identifier = "");
         
         std::shared_ptr<const DownloadTask> createDownloadFileTask(const std::string& srcUrl, const std::string& storagePath, const std::string& identifier = "");
