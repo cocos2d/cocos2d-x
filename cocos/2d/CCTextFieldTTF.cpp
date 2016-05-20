@@ -34,8 +34,7 @@ NS_CC_BEGIN
 
 #define CURSOR_TIME_SHOW_HIDE 0.5f
 #define CURSOR_DEFAULT_CHAR '|'
-#define PASSWORD_STYLE_TEXT_DEFAULT "\xe2\x97\x8f"
-
+#define PASSWORD_STYLE_TEXT_DEFAULT "\xe2\x80\xa2"
 static int _calcCharCount(const char * text)
 {
     int n = 0;
