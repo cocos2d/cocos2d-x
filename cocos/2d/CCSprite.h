@@ -470,9 +470,6 @@ public:
     
     virtual void setIgnoreAnchorPointForPosition(bool value) override;
     
-    // @deprecated Use setIgnoreAnchorPointForPosition() instead.
-    CC_DEPRECATED_ATTRIBUTE virtual void ignoreAnchorPointForPosition(bool value) override { setIgnoreAnchorPointForPosition(value); }
-    
     virtual void setVisible(bool bVisible) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual void setOpacityModifyRGB(bool modify) override;
