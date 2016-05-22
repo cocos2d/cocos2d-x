@@ -1359,9 +1359,9 @@ void Director::createStatsLabel()
     Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
     const int height_spacing = 22 / CC_CONTENT_SCALE_FACTOR();
-    _drawnVerticesLabel->setPosition(Vec2(0, height_spacing*2) + CC_DIRECTOR_STATS_POSITION);
-    _drawnBatchesLabel->setPosition(Vec2(0, height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
-    _FPSLabel->setPosition(Vec2(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
+    _drawnVerticesLabel->setPosition(Vec2(0, 1200 + height_spacing*2) + CC_DIRECTOR_STATS_POSITION);
+    _drawnBatchesLabel->setPosition(Vec2(0, 1200 + height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
+    _FPSLabel->setPosition(Vec2(0, 1200 + height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
 }
 
 void Director::setContentScaleFactor(float scaleFactor)

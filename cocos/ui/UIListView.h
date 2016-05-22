@@ -403,10 +403,11 @@ namespace ui{
     virtual Vec2 getHowMuchOutOfBoundary(const Vec2& addition = Vec2::ZERO) override;
     
     virtual void startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity) override;
+
+    Vec2 calculateItemDestination(const Vec2& positionRatioInView, Widget* item, const Vec2& itemAnchorPoint);
+    public:
     
     void startMagneticScroll();
-    Vec2 calculateItemDestination(const Vec2& positionRatioInView, Widget* item, const Vec2& itemAnchorPoint);
-    
   protected:
     Widget* _model;
     

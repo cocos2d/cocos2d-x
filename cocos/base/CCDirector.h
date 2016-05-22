@@ -96,6 +96,12 @@ enum class MATRIX_STACK_TYPE
 class CC_DLL Director : public Ref
 {
 public:
+    /* Renderer for the Director */
+    Renderer *_renderer;
+
+    /* whether or not the next delta time will be zero */
+    bool _nextDeltaTimeZero;
+
     /** Director will trigger an event when projection type is changed. */
     static const char* EVENT_PROJECTION_CHANGED;
     /** Director will trigger an event before Schedule::update() is invoked. */
@@ -605,9 +611,6 @@ protected:
     
     /* last time the main loop was updated */
     struct timeval *_lastUpdate;
-
-    /* whether or not the next delta time will be zero */
-    bool _nextDeltaTimeZero;
     
     /* projection used */
     Projection _projection;
@@ -620,9 +623,6 @@ protected:
 
     /* This object will be visited after the scene. Useful to hook a notification node */
     Node *_notificationNode;
-
-    /* Renderer for the Director */
-    Renderer *_renderer;
     
     /* Default FrameBufferObject*/
     experimental::FrameBuffer* _defaultFBO;

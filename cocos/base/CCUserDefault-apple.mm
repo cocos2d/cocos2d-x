@@ -146,6 +146,18 @@ UserDefault::UserDefault()
 {
 }
 
+void UserDefault::clear()
+{
+    remove(UserDefault::getInstance()->getXMLFilePath().c_str());
+
+    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+    NSDictionary * dict = [defs dictionaryRepresentation];
+    for (id key in dict) {
+        [defs removeObjectForKey:key];
+    }
+    [defs synchronize];
+}
+
 bool UserDefault::getBoolForKey(const char* pKey)
 {
     return getBoolForKey(pKey, false);

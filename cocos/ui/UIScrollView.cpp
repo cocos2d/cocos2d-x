@@ -197,7 +197,7 @@ void ScrollView::setInnerContainerSize(const Size &size)
     {
         pos.y = _contentSize.height - (1.0f - _innerContainer->getAnchorPoint().y) * _innerContainer->getContentSize().height;
     }
-    setInnerContainerPosition(pos);
+    //setInnerContainerPosition(pos);
     
     updateScrollBar(Vec2::ZERO);
 }
