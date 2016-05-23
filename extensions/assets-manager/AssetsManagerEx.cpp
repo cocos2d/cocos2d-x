@@ -53,7 +53,7 @@ const std::string AssetsManagerEx::VERSION_ID = "@version";
 const std::string AssetsManagerEx::MANIFEST_ID = "@manifest";
 
 // Default Config for AssetsManagerEx
-static const AssetsManagerEx::Config& defaultConfig() {
+static const AssetsManagerEx::Config& getDefaultConfig() {
     static const AssetsManagerEx::Config config {
         /* getAssetStoragePath */
         [](const std::string& key, const Manifest::Asset& asset)
@@ -71,7 +71,7 @@ static const AssetsManagerEx::Config& defaultConfig() {
 }
 
 // Implementation of AssetsManagerEx
-AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::string& storagePath): AssetsManagerEx(manifestUrl, storagePath, defaultConfig())
+AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::string& storagePath): AssetsManagerEx(manifestUrl, storagePath, getDefaultConfig())
 {
 }
 
@@ -96,7 +96,7 @@ AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::stri
 {
     // Init variables
     if (_config.getAssetStoragePath == nullptr) {
-        _config.getAssetStoragePath = defaultConfig().getAssetStoragePath;
+        _config.getAssetStoragePath = getDefaultConfig().getAssetStoragePath;
     }
     _eventDispatcher = Director::getInstance()->getEventDispatcher();
     std::string pointer = StringUtils::format("%p", this);
@@ -140,7 +140,7 @@ AssetsManagerEx::~AssetsManagerEx()
 
 AssetsManagerEx* AssetsManagerEx::create(const std::string& manifestUrl, const std::string& storagePath)
 {
-    return create(manifestUrl, storagePath, defaultConfig());
+    return create(manifestUrl, storagePath, getDefaultConfig());
 }
 
 AssetsManagerEx* AssetsManagerEx::create(const std::string& manifestUrl, const std::string& storagePath, const Config& config)

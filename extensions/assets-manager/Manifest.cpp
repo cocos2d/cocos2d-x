@@ -212,53 +212,61 @@ void Manifest::yieldDiff(const Manifest *b,
 {
     const std::unordered_map<std::string, Asset> &bAssets = b->getAssets();
 
-    std::unordered_map<std::string, Asset>::const_iterator valueIt, it;
-    for (it = _assets.begin(); it != _assets.end(); ++it)
+    std::unordered_map<std::string, Asset>::const_iterator valueIt;
+    if (onDiff)
     {
-        const auto &key = it->first;
-        const auto &valueA = it->second;
-
-        // Deleted
-        valueIt = bAssets.find(key);
-        if (valueIt == bAssets.cend())
+        for (const auto& asset : _assets)
         {
-            AssetDiff diff;
-            diff.asset = valueA;
-            diff.type = DiffType::DELETED;
-            onDiff(key, diff);
-            continue;
-        }
+            const auto &key = asset.first;
+            const auto &valueA = asset.second;
 
-        // Modified
-        const auto &valueB = valueIt->second;
-        if (valueA.md5 != valueB.md5)
-        {
-            AssetDiff diff;
-            diff.asset = valueB;
-            diff.type = DiffType::MODIFIED;
-            onDiff(key, diff);
+            // Deleted
+            valueIt = bAssets.find(key);
+            if (valueIt == bAssets.cend())
+            {
+                AssetDiff diff;
+                diff.asset = valueA;
+                diff.type = DiffType::DELETED;
+                onDiff(key, diff);
+                continue;
+            }
+
+            // Modified
+            const auto &valueB = valueIt->second;
+            if (valueA.md5 != valueB.md5)
+            {
+                AssetDiff diff;
+                diff.asset = valueB;
+                diff.type = DiffType::MODIFIED;
+                onDiff(key, diff);
+            }
         }
     }
-
-    for (it = bAssets.begin(); it != bAssets.end(); ++it)
+    if (onDiff || onUnchanged)
     {
-        const auto &key = it->first;
-        const auto &valueB = it->second;
-
-        // Added
-        valueIt = _assets.find(key);
-        if (valueIt == _assets.cend())
+        for (const auto& asset : bAssets)
         {
-            AssetDiff diff;
-            diff.asset = valueB;
-            diff.type = DiffType::ADDED;
-            onDiff(key, diff);
-        }
+            const auto &key = asset.first;
+            const auto &valueB = asset.second;
 
-        // Unchanged
-        else if (onUnchanged)
-        {
-            onUnchanged(key);
+            // Added
+            valueIt = _assets.find(key);
+            if (valueIt == _assets.cend())
+            {
+                if (onDiff)
+                {
+                    AssetDiff diff;
+                    diff.asset = valueB;
+                    diff.type = DiffType::ADDED;
+                    onDiff(key, diff);
+                }
+            }
+
+            // Unchanged
+            else if (onUnchanged)
+            {
+                onUnchanged(key);
+            }
         }
     }
 }
