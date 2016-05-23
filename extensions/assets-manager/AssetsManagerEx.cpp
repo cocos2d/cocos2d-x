@@ -52,10 +52,9 @@ NS_CC_EXT_BEGIN
 const std::string AssetsManagerEx::VERSION_ID = "@version";
 const std::string AssetsManagerEx::MANIFEST_ID = "@manifest";
 
-// Implementation of AssetsManagerEx
-
-const AssetsManagerEx::Config& AssetsManagerEx::Config::defaultConfig() {
-    static const Config config = {
+// Default Config for AssetsManagerEx
+static const AssetsManagerEx::Config& defaultConfig() {
+    static const AssetsManagerEx::Config config {
         /* getAssetStoragePath */
         [](const std::string& key, const Manifest::Asset& asset)
         {
@@ -69,6 +68,11 @@ const AssetsManagerEx::Config& AssetsManagerEx::Config::defaultConfig() {
         }
     };
     return config;
+}
+
+// Implementation of AssetsManagerEx
+AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::string& storagePath): AssetsManagerEx(manifestUrl, storagePath, defaultConfig())
+{
 }
 
 AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::string& storagePath, const Config& config)
@@ -92,7 +96,7 @@ AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::stri
 {
     // Init variables
     if (_config.getAssetStoragePath == nullptr) {
-        _config.getAssetStoragePath = Config::defaultConfig().getAssetStoragePath;
+        _config.getAssetStoragePath = defaultConfig().getAssetStoragePath;
     }
     _eventDispatcher = Director::getInstance()->getEventDispatcher();
     std::string pointer = StringUtils::format("%p", this);
@@ -132,6 +136,11 @@ AssetsManagerEx::~AssetsManagerEx()
     if (_tempManifest != _localManifest && _tempManifest != _remoteManifest)
         CC_SAFE_RELEASE(_tempManifest);
     CC_SAFE_RELEASE(_remoteManifest);
+}
+
+AssetsManagerEx* AssetsManagerEx::create(const std::string& manifestUrl, const std::string& storagePath)
+{
+    return create(manifestUrl, storagePath, defaultConfig());
 }
 
 AssetsManagerEx* AssetsManagerEx::create(const std::string& manifestUrl, const std::string& storagePath, const Config& config)
