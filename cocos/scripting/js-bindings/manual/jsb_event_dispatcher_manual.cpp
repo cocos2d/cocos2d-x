@@ -138,11 +138,11 @@ bool js_EventListenerKeyboard_create(JSContext *cx, uint32_t argc, jsval *vp)
         auto ret = EventListenerKeyboard::create();
 
         ret->onKeyPressed = [ret](EventKeyboard::KeyCode keyCode, Event* event) {
-            ScriptingCore::getInstance()->handleKeybardEvent(ret, keyCode, true, event);
+            ScriptingCore::getInstance()->handleKeyboardEvent(ret, keyCode, true, event);
         };
 
         ret->onKeyReleased = [ret](EventKeyboard::KeyCode keyCode, Event* event) {
-            ScriptingCore::getInstance()->handleKeybardEvent(ret, keyCode, false, event);
+            ScriptingCore::getInstance()->handleKeyboardEvent(ret, keyCode, false, event);
         };
 
         jsval jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<EventListenerKeyboard>(cx, ret));
