@@ -598,10 +598,10 @@ var g_cocoStudio = [
     s_weapon_xml ,
     s_testEasing_json ,
     s_testEasing0_plist ,
-    s_testEasing0_png ,,
+    s_testEasing0_png ,
  	// Issue CustomIssueAnimationsWithOnlyOneFrame
- 	s_testIssueAnimationsWithOnlyOneFrame_json,
- 	s_testIssueAnimationsWithOnlyOneFrame_png,
+ 	s_testIssueAnimationsWithOnlyOneFrame_json ,
+ 	s_testIssueAnimationsWithOnlyOneFrame_png ,
 
 //GUI
     "Particles/SmallSun.plist",
