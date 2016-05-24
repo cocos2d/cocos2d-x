@@ -84,6 +84,8 @@ namespace cocos2d {
 
                 virtual void setVisible(bool visible);
 
+                void setBounces(bool bounces);
+
                 Evas_Object* _ewkWin;;
                 Evas_Object* _ewkView;
             private:
