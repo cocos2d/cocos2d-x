@@ -91,23 +91,23 @@ void SpritePolygonTestCase::updateDrawNode()
                 auto drawnode = _drawNodes.at(i);
                 auto sp = (Sprite*)drawnode->getParent();
                 if(!sp) return;
-                auto polygoninfo = sp->getPolygonInfo();
+                const auto& polygoninfo = sp->getPolygonInfo();
                 drawnode->clear();
-                auto count = polygoninfo.triangles.indexCount/3;
-                auto indices = polygoninfo.triangles.indices;
-                auto verts = polygoninfo.triangles.verts;
+                const auto count = polygoninfo.triangles.indexCount/3;
+                const auto indices = polygoninfo.triangles.indices;
+                const auto verts = polygoninfo.triangles.verts;
                 for(ssize_t i = 0; i < count; i++)
                 {
                     //draw 3 lines
-                    Vec3 from =verts[indices[i*3]].vertices;
+                    Vec3 from = verts[indices[i*3]].vertices;
                     Vec3 to = verts[indices[i*3+1]].vertices;
                     drawnode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
                     
-                    from =verts[indices[i*3+1]].vertices;
+                    from = verts[indices[i*3+1]].vertices;
                     to = verts[indices[i*3+2]].vertices;
                     drawnode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
                     
-                    from =verts[indices[i*3+2]].vertices;
+                    from = verts[indices[i*3+2]].vertices;
                     to = verts[indices[i*3]].vertices;
                     drawnode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
                 }

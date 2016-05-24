@@ -406,9 +406,9 @@ public:
     /**
      * returns a reference of the polygon information associated with this sprite
      *
-     * @return a copy of PolygonInfo
+     * @return a reference of PolygonInfo
      */
-    PolygonInfo& getPolygonInfo();
+    const PolygonInfo& getPolygonInfo() const;
 
     /**
      * set the sprite to use this new PolygonInfo

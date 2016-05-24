@@ -54,17 +54,8 @@ public:
      * @memberof PolygonInfo
      * @return PolygonInfo object
      */
-    PolygonInfo():
-    rect(cocos2d::Rect::ZERO),
-    filename(""),
-    isVertsOwner(true)
-    {
-        triangles.verts = nullptr;
-        triangles.indices = nullptr;
-        triangles.vertCount = 0;
-        triangles.indexCount = 0;
-    };
-    
+    PolygonInfo();
+
     /**
      * Create an polygoninfo from the data of another Polygoninfo
      * @param other     another PolygonInfo to be copied
@@ -95,7 +86,7 @@ public:
      * as the verts memory are managed by other objects
      * @param triangles  a pointer to the TrianglesCommand::Triangles object
      */
-    void setTriangles(TrianglesCommand::Triangles triangles);
+    void setTriangles(const TrianglesCommand::Triangles& triangles);
 
     /**
      * get vertex count

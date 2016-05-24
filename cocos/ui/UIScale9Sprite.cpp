@@ -552,7 +552,9 @@ namespace ui {
             auto vertices = this->calculateVertices(capInsets, originalSize, offsets);
             auto triangles = this->calculateTriangles(uv, vertices);
 
-            _scale9Image->getPolygonInfo().setTriangles(triangles);
+            auto polyInfo = _scale9Image->getPolygonInfo();
+            polyInfo.setTriangles(triangles);
+            _scale9Image->setPolygonInfo(polyInfo);
         }
     }
 
