@@ -25,6 +25,8 @@
 #ifndef _CC_QUADCOMMAND_H_
 #define _CC_QUADCOMMAND_H_
 
+#include <vector>
+
 #include "renderer/CCTrianglesCommand.h"
 #include "renderer/CCGLProgramState.h"
 
@@ -69,6 +71,7 @@ protected:
     void reIndex(int indices);
 
     int _indexSize;
+    std::vector<GLushort*> _ownedIndices;
 
     // shared across all instances
     static int __indexCapacity;
