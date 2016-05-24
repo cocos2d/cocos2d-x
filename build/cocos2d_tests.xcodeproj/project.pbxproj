@@ -773,6 +773,9 @@
 		4B5C5BB61CA114E100D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5C5BB41CA114DB00D55A14 /* Security.framework */; };
 		4B5C5BB71CA114E700D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5C5BB41CA114DB00D55A14 /* Security.framework */; };
 		4B5C5BB81CA114EE00D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5C5BB41CA114DB00D55A14 /* Security.framework */; };
+		500D1CD31CF4A48B00535D35 /* Bug-15594.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500D1CD11CF4A48B00535D35 /* Bug-15594.cpp */; };
+		500D1CD41CF4A48B00535D35 /* Bug-15594.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500D1CD11CF4A48B00535D35 /* Bug-15594.cpp */; };
+		500D1CD51CF4A48B00535D35 /* Bug-15594.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500D1CD11CF4A48B00535D35 /* Bug-15594.cpp */; };
 		5046AB4A1AF2A8D80060550B /* MaterialSystemTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5046AB481AF2A8D80060550B /* MaterialSystemTest.cpp */; };
 		5046AB4B1AF2A8D80060550B /* MaterialSystemTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5046AB481AF2A8D80060550B /* MaterialSystemTest.cpp */; };
 		5046AB5B1AF2C4180060550B /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 5046AB5A1AF2C4180060550B /* Materials */; };
@@ -2407,6 +2410,8 @@
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		4B5C5BAA1CA1149900D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		4B5C5BB41CA114DB00D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		500D1CD11CF4A48B00535D35 /* Bug-15594.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-15594.cpp"; sourceTree = "<group>"; };
+		500D1CD21CF4A48B00535D35 /* Bug-15594.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-15594.h"; sourceTree = "<group>"; };
 		5046AB481AF2A8D80060550B /* MaterialSystemTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialSystemTest.cpp; sourceTree = "<group>"; };
 		5046AB491AF2A8D80060550B /* MaterialSystemTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialSystemTest.h; sourceTree = "<group>"; };
 		5046AB5A1AF2C4180060550B /* Materials */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Materials; path = "../tests/cpp-tests/Resources/Materials"; sourceTree = "<group>"; };
@@ -3572,6 +3577,8 @@
 				59620E8E1921E5CF002021B6 /* Bug-Child.h */,
 				850F8A221B5F3A4F00780603 /* Bug-12847.cpp */,
 				850F8A231B5F3A4F00780603 /* Bug-12847.h */,
+				500D1CD11CF4A48B00535D35 /* Bug-15594.cpp */,
+				500D1CD21CF4A48B00535D35 /* Bug-15594.h */,
 			);
 			path = BugsTest;
 			sourceTree = "<group>";
@@ -6875,6 +6882,7 @@
 				1AC35BF518CECF0C00F37B72 /* HttpClientTest.cpp in Sources */,
 				1AC35B4F18CECF0C00F37B72 /* ClickAndMoveTest.cpp in Sources */,
 				29080DCF191B595E0066F8DF /* UISliderTest.cpp in Sources */,
+				500D1CD31CF4A48B00535D35 /* Bug-15594.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7050,6 +7058,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				507B42851C31E6070067B53E /* AppController.mm in Sources */,
+				500D1CD51CF4A48B00535D35 /* Bug-15594.cpp in Sources */,
 				507B42861C31E6070067B53E /* main.m in Sources */,
 				507B42871C31E6070067B53E /* NativeOcClass.m in Sources */,
 				507B42881C31E6070067B53E /* js_Effect3D_bindings.cpp in Sources */,
@@ -7180,6 +7189,7 @@
 				1AC35C0418CECF0C00F37B72 /* FileUtilsTest.cpp in Sources */,
 				1AC35B5C18CECF0C00F37B72 /* CurlTest.cpp in Sources */,
 				1AC35C0018CECF0C00F37B72 /* CustomTableViewCell.cpp in Sources */,
+				500D1CD41CF4A48B00535D35 /* Bug-15594.cpp in Sources */,
 				1AC35BF018CECF0C00F37B72 /* CCControlSwitchTest.cpp in Sources */,
 				1AC35B2C18CECF0C00F37B72 /* BaseTest.cpp in Sources */,
 				1AC35C9818CECF1400F37B72 /* main.m in Sources */,
