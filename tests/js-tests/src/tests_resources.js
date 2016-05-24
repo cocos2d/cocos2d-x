@@ -237,6 +237,7 @@ var g_resources = [
     s_pathF1,
     s_pathF2,
     s_pathBlock,
+    s_back2,
     s_back3,
     s_fire,
     s_pathClose,
@@ -399,8 +400,7 @@ var g_label = [
 ];
 
 var g_transitions = [
-    s_back1,
-    s_back2
+    s_back1
 ];
 
 var g_box2d = [

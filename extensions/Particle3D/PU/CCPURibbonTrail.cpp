@@ -58,7 +58,7 @@ void PURibbonTrail::addNode(Node* n)
 {
     if (_nodeList.size() == _chainCount)
     {
-        CCAssert(false, " cannot monitor any more nodes, chain count exceeded");
+        CCASSERT(false, " cannot monitor any more nodes, chain count exceeded");
     }
 
     //if (n->getListener())
@@ -87,7 +87,7 @@ size_t PURibbonTrail::getChainIndexForNode(const Node* n)
     NodeToChainSegmentMap::const_iterator i = _nodeToSegMap.find(n);
     if (i == _nodeToSegMap.end())
     {
-        CCAssert(false, "This node is not being tracked");
+        CCASSERT(false, "This node is not being tracked");
     }
     return i->second;
 }
@@ -130,7 +130,7 @@ void PURibbonTrail::setMaxChainElements(size_t maxElements)
 //-----------------------------------------------------------------------
 void PURibbonTrail::setNumberOfChains(size_t numChains)
 {
-    CCAssert(numChains >= _nodeList.size(), "Can't shrink the number of chains less than number of tracking nodes");
+    CCASSERT(numChains >= _nodeList.size(), "Can't shrink the number of chains less than number of tracking nodes");
 
     size_t oldChains = getNumberOfChains();
 
@@ -181,7 +181,7 @@ void PURibbonTrail::setInitialColour(size_t chainIndex, const Vec4& col)
 //-----------------------------------------------------------------------
 void PURibbonTrail::setInitialColour(size_t chainIndex, float r, float g, float b, float a)
 {
-    CCAssert(chainIndex < _chainCount, "chainIndex out of bounds");
+    CCASSERT(chainIndex < _chainCount, "chainIndex out of bounds");
     _initialColor[chainIndex].x = r;
     _initialColor[chainIndex].y = g;
     _initialColor[chainIndex].z = b;
@@ -190,19 +190,19 @@ void PURibbonTrail::setInitialColour(size_t chainIndex, float r, float g, float 
 //-----------------------------------------------------------------------
 const Vec4& PURibbonTrail::getInitialColour(size_t chainIndex) const
 {
-    CCAssert(chainIndex < _chainCount, "chainIndex out of bounds");
+    CCASSERT(chainIndex < _chainCount, "chainIndex out of bounds");
     return _initialColor[chainIndex];
 }
 //-----------------------------------------------------------------------
 void PURibbonTrail::setInitialWidth(size_t chainIndex, float width)
 {
-    CCAssert(chainIndex < _chainCount, "chainIndex out of bounds");
+    CCASSERT(chainIndex < _chainCount, "chainIndex out of bounds");
     _initialWidth[chainIndex] = width;
 }
 //-----------------------------------------------------------------------
 float PURibbonTrail::getInitialWidth(size_t chainIndex) const
 {
-    CCAssert(chainIndex < _chainCount, "chainIndex out of bounds");
+    CCASSERT(chainIndex < _chainCount, "chainIndex out of bounds");
     return _initialWidth[chainIndex];
 }
 //-----------------------------------------------------------------------
@@ -214,7 +214,7 @@ void PURibbonTrail::setColourChange(size_t chainIndex, const Vec4& valuePerSecon
 //-----------------------------------------------------------------------
 void PURibbonTrail::setColourChange(size_t chainIndex, float r, float g, float b, float a)
 {
-    CCAssert(chainIndex < _chainCount, "chainIndex out of bounds");
+    CCASSERT(chainIndex < _chainCount, "chainIndex out of bounds");
     _deltaColor[chainIndex].x = r;
     _deltaColor[chainIndex].y = g;
     _deltaColor[chainIndex].z = b;
@@ -226,20 +226,20 @@ void PURibbonTrail::setColourChange(size_t chainIndex, float r, float g, float b
 //-----------------------------------------------------------------------
 const Vec4& PURibbonTrail::getColourChange(size_t chainIndex) const
 {
-    CCAssert(chainIndex < _chainCount, "chainIndex out of bounds");
+    CCASSERT(chainIndex < _chainCount, "chainIndex out of bounds");
     return _deltaColor[chainIndex];
 }
 //-----------------------------------------------------------------------
 void PURibbonTrail::setWidthChange(size_t chainIndex, float widthDeltaPerSecond)
 {
-    CCAssert(chainIndex < _chainCount, "chainIndex out of bounds");
+    CCASSERT(chainIndex < _chainCount, "chainIndex out of bounds");
     _deltaWidth[chainIndex] = widthDeltaPerSecond;
     manageController();
 }
 //-----------------------------------------------------------------------
 float PURibbonTrail::getWidthChange(size_t chainIndex) const
 {
-    CCAssert(chainIndex < _chainCount, "chainIndex out of bounds");
+    CCASSERT(chainIndex < _chainCount, "chainIndex out of bounds");
     return _deltaWidth[chainIndex];
 
 }

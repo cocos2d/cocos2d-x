@@ -318,7 +318,7 @@ public:
      *
      * @param pHeaders the string vector of custom-defined headers.
      */
-    inline void setHeaders(std::vector<std::string> pHeaders)
+    inline void setHeaders(const std::vector<std::string>& pHeaders)
     {
         _headers = pHeaders;
     }

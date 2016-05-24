@@ -247,7 +247,7 @@ std::vector<std::string> Console::Utility::split(const std::string& s, char deli
 }
 
 //isFloat taken from http://stackoverflow.com/questions/447206/c-isfloat-function
-bool Console::Utility::isFloat(std::string myString) {
+bool Console::Utility::isFloat(const std::string& myString) {
     std::istringstream iss(myString);
     float f;
     iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid
@@ -422,7 +422,7 @@ bool Console::listenOnTCP(int port)
 
     bzero(&hints, sizeof(struct addrinfo));
     hints.ai_flags = AI_PASSIVE;
-    hints.ai_family = AF_INET; // AF_UNSPEC: Do we need IPv6 ?
+    hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)

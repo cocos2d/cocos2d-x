@@ -260,7 +260,7 @@ protected:
     int getIndexFromPos(const unsigned int& x, const unsigned int& y){return y*_width+x;};
     cocos2d::Vec2 getPosFromIndex(const unsigned int& i){return cocos2d::Vec2(i%_width, i/_width);};
 
-    std::vector<cocos2d::Vec2> rdp(std::vector<cocos2d::Vec2> v, const float& optimization);
+    std::vector<cocos2d::Vec2> rdp(const std::vector<cocos2d::Vec2>& v, float optimization);
     float perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::Vec2& start, const cocos2d::Vec2& end);
 
     //real rect is the size that is in scale with the texture file

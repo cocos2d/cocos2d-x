@@ -215,7 +215,7 @@ var TestController = cc.LayerGradient.extend({
     onCloseCallback:function () {
         if (cc.sys.isNative)
         {
-            cc.director.end();
+            cc.game.end();
         }
         else {
             window.history && window.history.go(-1);

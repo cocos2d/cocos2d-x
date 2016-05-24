@@ -234,10 +234,25 @@ void VideoPlayer::setVisible(bool visible)
 {
     cocos2d::ui::Widget::setVisible(visible);
 
-    if (! _videoURL.empty())
+    if (!visible || isRunning())
     {
         JniHelper::callStaticVoidMethod(videoHelperClassName, "setVideoVisible", _videoPlayerIndex, visible);
-    } 
+    }
+}
+
+void VideoPlayer::onEnter()
+{
+    Widget::onEnter();
+    if (isVisible() && !_videoURL.empty())
+    {
+        JniHelper::callStaticVoidMethod(videoHelperClassName, "setVideoVisible", _videoPlayerIndex, true);
+    }
+}
+
+void VideoPlayer::onExit()
+{
+    Widget::onExit();
+    JniHelper::callStaticVoidMethod(videoHelperClassName, "setVideoVisible", _videoPlayerIndex, false);
 }
 
 void VideoPlayer::addEventListener(const VideoPlayer::ccVideoPlayerCallback& callback)

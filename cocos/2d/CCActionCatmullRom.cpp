@@ -112,7 +112,7 @@ void PointArray::setControlPoints(vector<Vec2*> *controlPoints)
     _controlPoints = controlPoints;
 }
 
-void PointArray::addControlPoint(Vec2 controlPoint)
+void PointArray::addControlPoint(const Vec2& controlPoint)
 {    
     _controlPoints->push_back(new Vec2(controlPoint.x, controlPoint.y));
 }

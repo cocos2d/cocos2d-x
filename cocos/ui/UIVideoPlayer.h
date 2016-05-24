@@ -172,6 +172,8 @@ namespace experimental{
             virtual void onPlayEvent(int event);
             virtual void setVisible(bool visible) override;
             virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags) override;
+            virtual void onEnter() override;
+            virtual void onExit() override;
 
         protected:
             virtual cocos2d::ui::Widget* createCloneInstance() override;

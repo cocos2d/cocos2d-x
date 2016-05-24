@@ -2,8 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x 3.10 Release Notes](#cocos2d-x-
-- -release-notes)
+- [Cocos2d-x 3.11 Release Notes](#cocos2d-x-311-release-notes)
 - [Misc Information](#misc-information)
 - [Requirements](#requirements)
   - [Runtime Requirements](#runtime-requirements)
@@ -15,14 +14,14 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [v3.10](#v310)
-  - [Highlights features, improvements and API updates of v3.10](#highlights-features-improvements-and-api-updates-of-v310)
-  - [The main features in detail of Cocos2d-x v3.10:](#the-main-features-in-detail-of-cocos2d-x-v310)
-    - [UI System](#ui-system)
-    - [AudioEngine](#audioengine)
-    - [Others](#others)
+- [v3.11](#v311)
+  - [Highlights features](#highlights-features)
+  - [The main features in detail of Cocos2d-x v3.11](#the-main-features-in-detail-of-cocos2d-x-v311)
+    - [New memory model in JSB](#new-memory-model-in-jsb)
+    - [OpenSSL](#openssl)
+    - [Cocos2d-x JSB program debugging](#cocos2d-x-jsb-program-debugging)
+    - [New WebGL renderer](#new-webgl-renderer)
   - [Other changes](#other-changes)
-  - [NEW APIS](#new-apis)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -156,10 +155,10 @@ cocos new -l cpp|js|lua MyNewGame
 
 * upgrade Chipmunk to v7.0.1
 * use new memory model in JSB, don't have to invoke `retain/release` in JS, it is disabled by default
-* support Tizen platform
-* upgrade Culr to v7.48
+* upgrade Curl to v7.48
 * upgrade OpenSSL to 1.0.2g
 * can use VSCode and new Firefox to debug cocos2d-x JSB programs
+* refactor WebGL renderer
 
 ## The main features in detail of Cocos2d-x v3.11
 
@@ -205,14 +204,21 @@ To do this:
 ```
 Feel free to post on our <a href="http://discuss.cocos2d-x.org">forums</a> if you run into difficulty.
 
-### Tizen support
-Tizen is now supported! You can read about how to use Tizen [here](http://cocos2d-x.org/docs/static-pages/installation.html).
-
 ### Cocos2d-x JSB program debugging
 
 In previous version, can not use Firefox 30+ to debug cocos2d-x JSB programs. This limit is fixed since v3.11. And web console feature is added too. [This documentation](http://www.cocos2d-x.org/wiki/Javascript_Remote_Debugging) shows how to use Firefox to debug cocos2d-x JSB programs(this is a little difference from current usage).
 
 Of course you can use [VSCode](https://code.visualstudio.com/) to debug cocos2d-x JSB programs too. You can read about how to use VSCode to debug cocos2d-x JSB programs [here](http://discuss.cocos2d-x.org/t/use-vscode-to-debug-cocos2d-x-jsb-programs/27588).
+
+### New WebGL renderer
+
+In v3.11, we have refactored the WebGL renderer in web engine, here is the detailed changes:
+
+1. Activate WebGL on Android by default.
+2. Add sprite auto batching in WebGL.
+3. Shared rendering buffer for Sprites.
+
+Compare with old version, the draw calls in your game should be significantly reduced if the textures is well managed. This improves also the CPU usage and memory usage. The above is just a first step of WebGL renderer upgrade, we will continue to investigate in this direction in the future versions.
 
 ## Other changes
 You can also take a look at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
