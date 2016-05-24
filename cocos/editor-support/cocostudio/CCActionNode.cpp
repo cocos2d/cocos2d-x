@@ -492,26 +492,6 @@ Spawn * ActionNode::refreshActionProperty()
  		{
  			cSpawnArray.pushBack(cSequence);
  		}
-        for (int i = 0; i < frameCount; i++)
-        {
-            auto frame = cArray->at(i);
-            if (i == 0)
-            {
-            }
-            else
-            {
-                auto srcFrame = cArray->at(i-1);
-                float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex()) * getUnitTime();
-                Action* cAction = frame->getAction(duration);
-                if(cAction != nullptr)
-                cSequenceArray.pushBack(static_cast<FiniteTimeAction*>(cAction));
-            }
-        }
-        Sequence* cSequence = Sequence::create(cSequenceArray);
-        if (cSequence != nullptr)
-        {
-            cSpawnArray.pushBack(cSequence);
-        }
     }
 
     if (_action == nullptr)
