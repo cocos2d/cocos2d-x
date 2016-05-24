@@ -141,6 +141,7 @@
         "src/CocoStudioTest/CustomTest/CustomImageView/CustomReader.js",
         "src/CocoStudioTest/CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.js",
         "src/CocoStudioTest/CustomTest/CustomImageScene/CustomImageScene.js",
+        "src/CocoStudioTest/CustomTest/CustomIssueAnimationsWithOnlyOneFrame/CustomIssueAnimationsWithOnlyOneFrame.js",
         "src/CocoStudioTest/CustomTest/CustomGUIScene.js",
         "src/CocoStudioTest/ActionTimelineTest/ActionTimelineTest.js",
         "src/GUITest/UIScene.js",

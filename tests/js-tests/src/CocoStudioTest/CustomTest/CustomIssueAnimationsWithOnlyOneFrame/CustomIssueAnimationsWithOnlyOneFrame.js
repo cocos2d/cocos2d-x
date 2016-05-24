@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /****************************************************************************
  Copyright (c) 2013-2014 Chukong Technologies Inc.
 
@@ -22,63 +23,60 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var g_guisTests = [
-    {
-        title: "custom gui image Test",
-        test: function(){
-            var pScene = new CustomImageScene();
-            pScene.runThisTest();
-        }
-    },{
-        title: "custom gui particle widget Test",
-        test: function(){
-            var pScene = new CustomParticleWidgetScene();
-            pScene.runThisTest();
-        }
-    },{
-        title: "Custom Gui Issue: Animations With Only One Frame Test",
-        test: function(){
-            var pScene = new CustomIssueAnimationsWithOnlyOneFrameScene();
-            pScene.runThisTest();
-        }
-    }
-];
+var CustomIssueAnimationsWithOnlyOneFrameLayer = cc.Layer.extend({
 
-var CustomGUITestMainLayer = cc.Layer.extend({
     onEnter: function(){
         cc.Layer.prototype.onEnter.call(this);
 
-        var winSize = cc.director.getWinSize();
+		var json = ccs.load(s_testIssueAnimationsWithOnlyOneFrame_json);
+		var jsonNode = json.node;
+		jsonNode.x = this.getContentSize().width * 0.5 - jsonNode.getContentSize().width * 0.5;
+		jsonNode.y = this.getContentSize().height * 0.5 - jsonNode.getContentSize().height * 0.5;
+		
+        this.addChild(jsonNode);
 
-        var pMenu = new cc.Menu();
-        pMenu.x = 0;
-        pMenu.y = 0;
-        cc.MenuItemFont.setFontName("fonts/arial.ttf");
-        cc.MenuItemFont.setFontSize(24);
-
-        for (var i = 0; i < g_guisTests.length; ++i) {
-            var selItem = g_guisTests[i];
-            var pItem = new cc.MenuItemFont(selItem.title,
-                selItem.test, this);
-            pItem.x = winSize.width / 2;
-            pItem.y = winSize.height - (i + 1) * LINE_SPACE;
-            pMenu.addChild(pItem, ITEM_TAG_BASIC + i);
-        }
-        this.addChild(pMenu);
-
-    },
-    onTouchesBegan: function(touches, event){
-        var touch = touches[0];
-
-        this._beginPos = touch.getLocation();
-    },
-    touchEvent: function(){
-
+		var winSize = director.getWinSize();
+        var logLabel = new cc.LabelTTF("Issue #15366: Animations with only one frame are allowed now", "Thonburi", 16);
+        this.addChild(logLabel);
+        logLabel.x = winSize.width / 2;
+	    logLabel.y = winSize.height / 3;
+		
+		var animationOneFramePosition = ccs.actionManager.getActionByName(
+		  s_testIssueAnimationsWithOnlyOneFrame_json,
+		  "AnimationOneFramePosition"
+		);
+		
+		var animationOneFrameRotation = ccs.actionManager.getActionByName(
+		  s_testIssueAnimationsWithOnlyOneFrame_json,
+		  "AnimationOneFrameRotation"
+		);
+		
+		var delayTime = 5;
+		var that = this;
+		this.runAction(cc.sequence(
+			cc.delayTime(delayTime),
+			cc.callFunc(function(target) {
+				if(animationOneFramePosition != null)
+				{
+					animationOneFramePosition.play();
+					logLabel.setString("Animation with only one frame played: Image position should change");
+				}
+			}, this),
+			cc.delayTime(delayTime),
+			cc.callFunc(function(target) {
+				if(animationOneFrameRotation != null)
+				{
+					animationOneFrameRotation.play();
+					logLabel.setString("Animation with only one frame played: Image rotation should change");
+				}
+			}, this)
+		));
+		
     }
-
 });
 
-var CustomGUITestScene = cc.Scene.extend({
+var CustomIssueAnimationsWithOnlyOneFrameScene = cc.Scene.extend({
+
     onEnter: function(){
         cc.Scene.prototype.onEnter.call(this);
 
@@ -89,25 +87,17 @@ var CustomGUITestScene = cc.Scene.extend({
         var pMenu = new cc.Menu(pMenuItem);
 
         pMenu.setPosition( cc.p(0, 0) );
-        pMenuItem.setPosition(cc.pAdd(cc.visibleRect.bottomRight,cc.p(-50,25)));
+        pMenuItem.setPosition( cc.p( 750, 25) );
 
         this.addChild(pMenu, 1);
-
     },
     runThisTest: function(){
-        var pLayer = new CustomGUITestMainLayer();
+        var pLayer = new CustomIssueAnimationsWithOnlyOneFrameLayer();
         this.addChild(pLayer);
-
         cc.director.runScene(this);
     },
     BackCallback: function(pSender){
-        var pScene = new CocoStudioTestScene();
+        var pScene = new CustomGUITestScene();
         pScene.runThisTest();
-
     }
 });
-
-var runCustomGUITest = function(){
-    var scene = new CustomGUITestScene();
-    scene.runThisTest();
-};
