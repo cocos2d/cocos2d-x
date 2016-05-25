@@ -1757,20 +1757,26 @@ void ScriptingCore::garbageCollect()
 
 void SimpleRunLoop::update(float dt)
 {
-    g_qMutex.lock();
-    size_t size = g_queue.size();
-    g_qMutex.unlock();
-
-    while (size > 0)
+    std::string message;
+    size_t messageCount = 0;
+    while (true)
     {
         g_qMutex.lock();
-        auto first = g_queue.begin();
-        std::string str = *first;
-        g_queue.erase(first);
-        size = g_queue.size();
+        messageCount = g_queue.size();
+        if (messageCount > 0)
+        {
+            auto first = g_queue.begin();
+            message = *first;
+            g_queue.erase(first);
+            --messageCount;
+        }
         g_qMutex.unlock();
-
-        ScriptingCore::getInstance()->debugProcessInput(str);
+        
+        if (messageCount == 0)
+            break;
+        
+        if (!message.empty())
+            ScriptingCore::getInstance()->debugProcessInput(message);
     }
 }
 
@@ -1788,20 +1794,26 @@ void ScriptingCore::debugProcessInput(const std::string& str)
 
 static bool NS_ProcessNextEvent()
 {
-    g_qMutex.lock();
-    size_t size = g_queue.size();
-    g_qMutex.unlock();
-
-    while (size > 0)
+    std::string message;
+    size_t messageCount = 0;
+    while (true)
     {
         g_qMutex.lock();
-        auto first = g_queue.begin();
-        std::string str = *first;
-        g_queue.erase(first);
-        size = g_queue.size();
+        messageCount = g_queue.size();
+        if (messageCount > 0)
+        {
+            auto first = g_queue.begin();
+            message = *first;
+            g_queue.erase(first);
+            --messageCount;
+        }
         g_qMutex.unlock();
-
-        ScriptingCore::getInstance()->debugProcessInput(str);
+        
+        if (messageCount == 0)
+            break;
+        
+        if (!message.empty())
+            ScriptingCore::getInstance()->debugProcessInput(message);
     }
 //    std::this_thread::yield();
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
