@@ -71,7 +71,7 @@ enum {
     kShaderType_MAX,
 };
 
-static GLProgramCache *_sharedGLProgramCache = 0;
+static GLProgramCache *_sharedGLProgramCache = nullptr;
 
 GLProgramCache* GLProgramCache::getInstance()
 {

@@ -349,7 +349,7 @@ void GLProgram::parseVertexAttribs()
     else
     {
         GLchar ErrorLog[1024];
-        glGetProgramInfoLog(_program, sizeof(ErrorLog), NULL, ErrorLog);
+        glGetProgramInfoLog(_program, sizeof(ErrorLog), nullptr, ErrorLog);
         CCLOG("Error linking shader program: '%s'\n", ErrorLog);
     }
 }
@@ -407,7 +407,7 @@ void GLProgram::parseUniforms()
     else
     {
         GLchar ErrorLog[1024];
-        glGetProgramInfoLog(_program, sizeof(ErrorLog), NULL, ErrorLog);
+        glGetProgramInfoLog(_program, sizeof(ErrorLog), nullptr, ErrorLog);
         CCLOG("Error linking shader program: '%s'\n", ErrorLog);
 
     }
