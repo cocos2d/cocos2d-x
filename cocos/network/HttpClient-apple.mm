@@ -27,7 +27,7 @@
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-#include "HttpClient.h"
+#include "network/HttpClient.h"
 
 #include <queue>
 #include <errno.h>

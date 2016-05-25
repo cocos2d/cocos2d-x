@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "HttpCookie.h"
-#include "CCFileUtils.h"
+#include "network/HttpCookie.h"
+#include "platform/CCFileUtils.h"
 #include <sstream>
 #include <stdio.h>
 
