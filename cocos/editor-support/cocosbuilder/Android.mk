@@ -5,6 +5,10 @@ LOCAL_MODULE := cocosbuilder_static
 
 LOCAL_MODULE_FILENAME := libcocosbuilder
 
+ifeq ($(USE_ARM_MODE),1)
+LOCAL_ARM_MODE := arm
+endif
+
 LOCAL_SRC_FILES := CCBAnimationManager.cpp \
 CCBFileLoader.cpp \
 CCBKeyframe.cpp \
