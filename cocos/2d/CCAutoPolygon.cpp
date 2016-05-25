@@ -632,7 +632,7 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
 
     // Triangles should really use std::vector and not arrays for verts and indices. 
     // Then the above memcpy would not be necessary
-    TrianglesCommand::Triangles triangles = { vertsBuf, indicesBuf, verts.size(), indices.size() };
+    TrianglesCommand::Triangles triangles = { vertsBuf, indicesBuf, static_cast<int>(verts.size()), static_cast<int>(indices.size()) };
     return triangles;
 }
 
