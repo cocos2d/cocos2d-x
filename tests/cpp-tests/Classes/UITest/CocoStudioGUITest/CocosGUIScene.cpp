@@ -19,7 +19,7 @@
 #include "UIFocusTest/UIFocusTest.h"
 #include "UITabControlTest/UITabControlTest.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) && !defined(CC_TARGET_OS_TVOS)
 #include "UIVideoPlayerTest/UIVideoPlayerTest.h"
 #include "UIWebViewTest/UIWebViewTest.h"
 #endif
@@ -30,7 +30,7 @@
 
 GUIDynamicCreateTests::GUIDynamicCreateTests()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) && !defined(CC_TARGET_OS_TVOS)
     addTest("VideoPlayer Test", [](){ return new (std::nothrow) VideoPlayerTests; });
     addTest("WebView Test", [](){ return new (std::nothrow) WebViewTests; });
 #endif

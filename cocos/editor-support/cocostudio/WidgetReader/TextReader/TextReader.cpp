@@ -3,12 +3,15 @@
 #include "editor-support/cocostudio/WidgetReader/TextReader/TextReader.h"
 
 #include "ui/UIText.h"
+#include "platform/CCFileUtils.h"
+
 #include "editor-support/cocostudio/CocoLoader.h"
 #include "editor-support/cocostudio/CSParseBinary_generated.h"
 #include "editor-support/cocostudio/LocalizationManager.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
+#include "platform/CCFileUtils.h"
 
 USING_NS_CC;
 using namespace ui;

@@ -130,9 +130,9 @@ void SpriteFrameCache::initializePolygonInfo(const Size &textureSize,
         indexData[i] = static_cast<unsigned short>(triangleIndices[i]);
     }
 
-    info.triangles.vertCount = vertexCount;
+    info.triangles.vertCount = static_cast<int>(vertexCount);
     info.triangles.verts = vertexData;
-    info.triangles.indexCount = indexCount;
+    info.triangles.indexCount = static_cast<int>(indexCount);
     info.triangles.indices = indexData;
     info.rect = Rect(0, 0, spriteSize.width, spriteSize.height);
 }
@@ -322,7 +322,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dict, const std::
         {"I8", Texture2D::PixelFormat::I8},
         {"AI88", Texture2D::PixelFormat::AI88},
         {"ALPHA_INTENSITY", Texture2D::PixelFormat::AI88},
-        //{"BGRA8888", Texture2D::PixelFormat::BGRA8888}, no Image convertion RGBA -> BGRA
+        //{"BGRA8888", Texture2D::PixelFormat::BGRA8888}, no Image conversion RGBA -> BGRA
         {"RGB888", Texture2D::PixelFormat::RGB888}
     };
 

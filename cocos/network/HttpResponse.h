@@ -51,17 +51,14 @@ public:
      * @param request the corresponding HttpRequest which leads to this response.
      */
     HttpResponse(HttpRequest* request)
-    : _pHttpRequest(request)
-    , _succeed(false)
-    , _responseDataString("")
+        : _pHttpRequest(request)
+        , _succeed(false)
+        , _responseDataString("")
     {
         if (_pHttpRequest)
         {
             _pHttpRequest->retain();
         }
-        
-        _responseData.clear();
-        _errorBuffer.clear();
     }
 
     /**
@@ -109,7 +106,7 @@ public:
     inline bool isSucceed() const
     {
         return _succeed;
-    };
+    }
 
     /**
      * Get the http response data.

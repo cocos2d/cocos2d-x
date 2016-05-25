@@ -464,7 +464,7 @@ void Sprite3D::setMaterial(Material *material, int meshIndex)
 
     if (meshIndex == -1)
     {
-        for (size_t i = 0; i < _meshes.size(); i++)
+        for (ssize_t i = 0; i < _meshes.size(); i++)
         {
             _meshes.at(i)->setMaterial(i == 0 ? material : material->clone());
         }
@@ -774,7 +774,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         const auto lights = scene->getLights();
         bool usingLight = false;
         for (const auto light : lights) {
-            usingLight = (light->isEnabled() && (unsigned int)light->getLightFlag() & _lightMask) > 0;
+            usingLight = light->isEnabled() && ((static_cast<unsigned int>(light->getLightFlag()) & _lightMask) > 0);
             if (usingLight)
                 break;
         }
@@ -974,8 +974,8 @@ void Sprite3DCache::removeSprite3DData(const std::string& key)
     if (it != _spriteDatas.end())
     {
         delete it->second;
+        _spriteDatas.erase(it);
     }
-    _spriteDatas.erase(it);
 }
 
 void Sprite3DCache::removeAllSprite3DData()

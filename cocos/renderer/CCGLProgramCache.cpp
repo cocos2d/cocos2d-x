@@ -71,7 +71,7 @@ enum {
     kShaderType_MAX,
 };
 
-static GLProgramCache *_sharedGLProgramCache = 0;
+static GLProgramCache *_sharedGLProgramCache = nullptr;
 
 GLProgramCache* GLProgramCache::getInstance()
 {
@@ -361,6 +361,10 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_LabelDistanceFieldGlow);
+
+    p = getGLProgram(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_UIGrayScale);
 
     p = getGLProgram(GLProgram::SHADER_NAME_LABEL_NORMAL);
     p->reset();

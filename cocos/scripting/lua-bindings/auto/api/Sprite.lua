@@ -364,6 +364,13 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Sprite] setIgnoreAnchorPointForPosition 
+-- @param self
+-- @param #bool value
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- 
 -- @function [parent=#Sprite] draw 
 -- @param self
 -- @param #cc.Renderer renderer
@@ -403,13 +410,6 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #int zOrder
--- @return Sprite#Sprite self (return value: cc.Sprite)
-        
---------------------------------
--- 
--- @function [parent=#Sprite] ignoreAnchorPointForPosition 
--- @param self
--- @param #bool value
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------

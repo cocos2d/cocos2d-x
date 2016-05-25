@@ -170,12 +170,7 @@ static int processTask(HttpClient* client, HttpRequest* request, NSString* reque
 
     //if request type is post or put,set header and data
     if([requestType  isEqual: @"POST"] || [requestType isEqual: @"PUT"])
-    {
-        if ([requestType isEqual: @"PUT"])
-        {
-            [nsrequest setValue: @"application/x-www-form-urlencoded" forHTTPHeaderField: @"Content-Type"];
-        }
-        
+    {   
         char* requestDataBuffer = request->getRequestData();
         if (nullptr !=  requestDataBuffer && 0 != request->getRequestDataSize())
         {
@@ -385,7 +380,7 @@ HttpClient::HttpClient()
 
 HttpClient::~HttpClient()
 {
-    CC_SAFE_DELETE(_requestSentinel);
+    CC_SAFE_RELEASE(_requestSentinel);
     if (!_cookieFilename.empty() && nullptr != _cookie)
     {
         _cookie->writeFile();

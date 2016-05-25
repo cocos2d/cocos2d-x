@@ -107,9 +107,7 @@ bool ClippingNode::init()
 
 bool ClippingNode::init(Node *stencil)
 {
-    CC_SAFE_RELEASE(_stencil);
     setStencil(stencil);
-    CC_SAFE_RETAIN(_stencil);
     return true;
 }
 
@@ -292,6 +290,9 @@ Node* ClippingNode::getStencil() const
 
 void ClippingNode::setStencil(Node *stencil)
 {
+    if (_stencil == stencil)
+        return;
+    
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
     if (sEngine)

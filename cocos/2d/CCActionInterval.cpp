@@ -304,6 +304,7 @@ Sequence* Sequence::clone() const
 }
 
 Sequence::Sequence()
+: _split(0)
 {
     _actions[0] = nullptr;
     _actions[1] = nullptr;
@@ -327,11 +328,10 @@ void Sequence::startWithTarget(Node *target)
         log("Sequence::startWithTarget error: _actions[0] or _actions[1] is nullptr!");
         return;
     }
-    if (_duration <= FLT_EPSILON)
-        return;
+    if (_duration > FLT_EPSILON)
+        _split = _actions[0]->getDuration() / _duration;
     
     ActionInterval::startWithTarget(target);
-    _split = _actions[0]->getDuration() / _duration;
     _last = -1;
 }
 
@@ -1958,7 +1958,7 @@ bool Blink::initWithDuration(float duration, int blinks)
 
 void Blink::stop()
 {
-    if(NULL != _target)
+    if (nullptr != _target)
         _target->setVisible(_originalState);
     ActionInterval::stop();
 }

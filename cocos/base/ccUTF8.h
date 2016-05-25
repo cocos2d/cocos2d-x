@@ -118,7 +118,7 @@ CC_DLL std::string getStringUTFCharsJNI(JNIEnv* env, jstring srcjStr, bool* ret 
 *  @param ret     True if the conversion succeeds and the ret pointer isn't null
 *  @returns the result of jstring,the jstring need to DeleteLocalRef(jstring);
 */
-CC_DLL jstring newStringUTFJNI(JNIEnv* env, std::string utf8Str, bool* ret = nullptr);
+CC_DLL jstring newStringUTFJNI(JNIEnv* env, const std::string& utf8Str, bool* ret = nullptr);
 #endif
 
 /**

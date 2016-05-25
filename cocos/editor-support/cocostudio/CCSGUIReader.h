@@ -29,7 +29,9 @@ THE SOFTWARE.
 #include "editor-support/cocostudio/DictionaryHelper.h"
 #include "editor-support/cocostudio/WidgetReader/WidgetReaderProtocol.h"
 #include "base/ObjectFactory.h"
+#include "base/CCValue.h"
 #include "editor-support/cocostudio/CocosStudioExport.h"
+#include "base/CCValue.h"
 
 namespace protocolbuffers
 {

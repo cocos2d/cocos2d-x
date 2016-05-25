@@ -88,7 +88,7 @@ public:
      * @js NA
      * @param controlPoint A control point.
      */
-    void addControlPoint(Vec2 controlPoint);
+    void addControlPoint(const Vec2& controlPoint);
 
     /** Inserts a controlPoint at index.
      *

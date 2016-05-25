@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
 #include "platform/CCSAXParser.h"
-#include "base/ccUtils.h"
+//#include "base/ccUtils.h"
 
 #include "tinyxml2.h"
 #ifdef MINIZIP_FROM_SYSTEM
@@ -274,7 +274,7 @@ public:
                 else if (sName == "integer")
                     _curArray->push_back(Value(atoi(_curValue.c_str())));
                 else
-                    _curArray->push_back(Value(utils::atof(_curValue.c_str())));
+                    _curArray->push_back(Value(std::atof(_curValue.c_str())));
             }
             else if (SAX_DICT == curState)
             {
@@ -283,7 +283,7 @@ public:
                 else if (sName == "integer")
                     (*_curDict)[_curKey] = Value(atoi(_curValue.c_str()));
                 else
-                    (*_curDict)[_curKey] = Value(utils::atof(_curValue.c_str()));
+                    (*_curDict)[_curKey] = Value(std::atof(_curValue.c_str()));
             }
 
             _curValue.clear();
@@ -610,109 +610,68 @@ void FileUtils::purgeCachedEntries()
     _fullPathCache.clear();
 }
 
-static Data getData(const std::string& filename, bool forString)
-{
-    if (filename.empty())
-    {
-        return Data::Null;
-    }
-
-    Data ret;
-    unsigned char* buffer = nullptr;
-    size_t size = 0;
-    size_t readsize;
-    const char* mode = nullptr;
-
-    if (forString)
-        mode = "rt";
-    else
-        mode = "rb";
-
-    auto fileutils = FileUtils::getInstance();
-    do
-    {
-        // Read the file from hardware
-        std::string fullPath = fileutils->fullPathForFilename(filename);
-        FILE *fp = fopen(fileutils->getSuitableFOpen(fullPath).c_str(), mode);
-        CC_BREAK_IF(!fp);
-        fseek(fp,0,SEEK_END);
-        size = ftell(fp);
-        fseek(fp,0,SEEK_SET);
-
-        if (forString)
-        {
-            buffer = (unsigned char*)malloc(sizeof(unsigned char) * (size + 1));
-            buffer[size] = '\0';
-        }
-        else
-        {
-            buffer = (unsigned char*)malloc(sizeof(unsigned char) * size);
-        }
-
-        readsize = fread(buffer, sizeof(unsigned char), size, fp);
-        fclose(fp);
-
-        if (forString && readsize < size)
-        {
-            buffer[readsize] = '\0';
-        }
-    } while (0);
-
-    if (nullptr == buffer || 0 == readsize)
-    {
-        CCLOG("Get data from file %s failed", filename.c_str());
-    }
-    else
-    {
-        ret.fastSet(buffer, readsize);
-    }
-
-    return ret;
-}
-
 std::string FileUtils::getStringFromFile(const std::string& filename)
 {
-    Data data = getData(filename, true);
-    if (data.isNull())
-        return "";
+    std::string s;
+    getContents(filename, &s);
 
-    std::string ret((const char*)data.getBytes());
-    return ret;
+    // truncated
+    s.resize(strlen(s.data()));
+
+    return s;
 }
 
 Data FileUtils::getDataFromFile(const std::string& filename)
 {
-    return getData(filename, false);
+    Data d;
+    getContents(filename, &d);
+    return d;
+}
+
+
+FileUtils::Status FileUtils::getContents(const std::string& filename, ResizableBuffer* buffer)
+{
+    if (filename.empty())
+        return Status::NotExists;
+
+    auto fs = FileUtils::getInstance();
+
+    std::string fullPath = fs->fullPathForFilename(filename);
+    if (fullPath.empty())
+        return Status::NotExists;
+
+    FILE *fp = fopen(fs->getSuitableFOpen(fullPath).c_str(), "rb");
+    if (!fp)
+        return Status::OpenFailed;
+
+    fseek(fp, 0, SEEK_END);
+    size_t size = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    buffer->resize(size);
+    size_t readsize = fread(buffer->buffer(), 1, size, fp);
+    fclose(fp);
+
+    if (readsize < size) {
+        buffer->resize(readsize);
+        return Status::ReadFaild;
+    }
+
+    return Status::OK;
 }
 
 unsigned char* FileUtils::getFileData(const std::string& filename, const char* mode, ssize_t *size)
 {
-    unsigned char * buffer = nullptr;
     CCASSERT(!filename.empty() && size != nullptr && mode != nullptr, "Invalid parameters.");
-    *size = 0;
-    do
-    {
-        // read the file from hardware
-        const std::string fullPath = fullPathForFilename(filename);
-        FILE *fp = fopen(getSuitableFOpen(fullPath).c_str(), mode);
-        CC_BREAK_IF(!fp);
+    (void)(mode); // mode is unused, as we do not support text mode any more...
 
-        fseek(fp,0,SEEK_END);
-        *size = ftell(fp);
-        fseek(fp,0,SEEK_SET);
-        buffer = (unsigned char*)malloc(*size);
-        *size = fread(buffer,sizeof(unsigned char), *size,fp);
-        fclose(fp);
-    } while (0);
-
-    if (!buffer)
-    {
-        std::string msg = "Get data from file(";
-        msg.append(filename).append(") failed!");
-
-        CCLOG("%s", msg.c_str());
+    Data d;
+    if (getContents(filename, &d) != Status::OK) {
+        *size = 0;
+        return nullptr;
     }
-    return buffer;
+
+    return d.takeBuffer(size);
 }
 
 unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, ssize_t *size)

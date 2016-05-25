@@ -31,7 +31,7 @@ obtained from https://directxtk.codeplex.com
 #include "base/ccConfig.h"
 
 
-#if defined(CC_USE_WIC)
+#if CC_USE_WIC
 
 #include <memory>
 #include <string>
@@ -49,7 +49,7 @@ struct WICConvert
 	WICPixelFormatGUID target;
 };
 
-class WICImageLoader
+class CC_DLL WICImageLoader
 {
 public:
 

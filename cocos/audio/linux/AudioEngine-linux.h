@@ -83,7 +83,7 @@ private:
     FMOD::Channel * getChannel(FMOD::Sound *);
   
     struct ChannelInfo{
-        size_t id; 
+        int id;
         std::string path; 
         FMOD::Sound * sound;
         FMOD::Channel * channel; 

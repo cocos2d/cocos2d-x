@@ -40,8 +40,8 @@ const static float PRECISION = 10.0f;
 
 PolygonInfo::PolygonInfo(const PolygonInfo& other):
 triangles(),
-isVertsOwner(true),
-rect()
+rect(),
+isVertsOwner(true)
 {
     filename = other.filename;
     isVertsOwner = true;
@@ -421,7 +421,7 @@ float AutoPolygon::perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::
     }
     return res;
 }
-std::vector<cocos2d::Vec2> AutoPolygon::rdp(std::vector<cocos2d::Vec2> v, const float& optimization)
+std::vector<cocos2d::Vec2> AutoPolygon::rdp(const std::vector<cocos2d::Vec2>& v, float optimization)
 {
     if(v.size() < 3)
         return v;
@@ -435,7 +435,7 @@ std::vector<cocos2d::Vec2> AutoPolygon::rdp(std::vector<cocos2d::Vec2> v, const 
         if(cdist > dist)
         {
             dist = cdist;
-            index = i;
+            index = static_cast<int>(i);
         }
     }
     if (dist>optimization)

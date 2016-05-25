@@ -84,15 +84,12 @@ public:
          Please refer to HttpRequestTest.cpp to find its usage.
      */
     HttpRequest()
-    : _requestType(Type::UNKNOWN)
-    , _pTarget(nullptr)
-    , _pSelector(nullptr)
-    , _pCallback(nullptr)
-    , _pUserData(nullptr)
+        : _requestType(Type::UNKNOWN)
+        , _pTarget(nullptr)
+        , _pSelector(nullptr)
+        , _pCallback(nullptr)
+        , _pUserData(nullptr)
     {
-        _url.clear();
-        _requestData.clear();
-        _tag.clear();
     }
 
     /** Destructor. */

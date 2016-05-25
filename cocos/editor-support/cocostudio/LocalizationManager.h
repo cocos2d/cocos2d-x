@@ -10,7 +10,7 @@ namespace cocostudio {
     /**
     *@brief Localization string manager interface template.
     */
-    class ILocalizationManager
+    class CC_STUDIO_DLL ILocalizationManager
     {
     public:
         virtual ~ILocalizationManager() = default;

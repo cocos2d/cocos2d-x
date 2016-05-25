@@ -725,7 +725,6 @@ Image::Format Image::detectFormat(const unsigned char * data, ssize_t dataLen)
     }
     else
     {
-        CCLOG("cocos2d: can't detect image format");
         return Format::UNKNOWN;
     }
 }
@@ -804,7 +803,7 @@ namespace
 #endif // CC_USE_JPEG
 }
 
-#ifdef CC_USE_WIC
+#if CC_USE_WIC
 bool Image::decodeWithWIC(const unsigned char *data, ssize_t dataLen)
 {
     bool bRet = false;
@@ -845,7 +844,7 @@ bool Image::decodeWithWIC(const unsigned char *data, ssize_t dataLen)
 
         _dataLen = img.getImageDataSize();
 
-        CCAssert(_dataLen > 0, "Image: Decompressed data length is invalid");
+        CCASSERT(_dataLen > 0, "Image: Decompressed data length is invalid");
 
         _data = new (std::nothrow) unsigned char[_dataLen];
         bRet = (img.getImageData(_data, _dataLen) > 0);
@@ -1026,7 +1025,7 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         info_ptr = png_create_info_struct(png_ptr);
         CC_BREAK_IF(!info_ptr);
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_TIZEN)
         CC_BREAK_IF(setjmp(png_jmpbuf(png_ptr)));
 #endif
 
@@ -1600,7 +1599,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
     memcpy(_data, static_cast<const unsigned char*>(data) + sizeof(PVRv3TexHeader) + header->metadataLength, _dataLen);
     
     _numberOfMipmaps = header->numberOfMipmaps;
-    CCAssert(_numberOfMipmaps < MIPMAP_MAX, "Image: Maximum number of mimpaps reached. Increase the CC_MIPMAP_MAX value");
+    CCASSERT(_numberOfMipmaps < MIPMAP_MAX, "Image: Maximum number of mimpaps reached. Increase the CC_MIPMAP_MAX value");
     
     for (int i = 0; i < _numberOfMipmaps; i++)
     {
@@ -1688,7 +1687,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
         }
         
         dataOffset += packetLength;
-        CCAssert(dataOffset <= _dataLen, "CCTexurePVR: Invalid length");
+        CCASSERT(dataOffset <= _dataLen, "Image: Invalid length");
         
         
         width = MAX(width >> 1, 1);
@@ -2128,7 +2127,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
         _height   = config.input.height;
         
         //we ask webp to give data with premultiplied alpha
-        _hasPremultipliedAlpha = config.input.has_alpha;
+        _hasPremultipliedAlpha = (config.input.has_alpha != 0);
         
         _dataLen = _width * _height * (config.input.has_alpha?4:3);
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
@@ -2242,7 +2241,7 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
             png_destroy_write_struct(&png_ptr, nullptr);
             break;
         }
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_TIZEN)
         if (setjmp(png_jmpbuf(png_ptr)))
         {
             fclose(fp);

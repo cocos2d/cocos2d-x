@@ -228,7 +228,7 @@ std::string getStringUTFCharsJNI(JNIEnv* env, jstring srcjStr, bool* ret)
     return utf8Str;
 }
 
-jstring newStringUTFJNI(JNIEnv* env, std::string utf8Str, bool* ret)
+jstring newStringUTFJNI(JNIEnv* env, const std::string& utf8Str, bool* ret)
 {
     std::u16string utf16Str;
     bool flag = cocos2d::StringUtils::UTF8ToUTF16(utf8Str, utf16Str);
@@ -354,14 +354,21 @@ bool StringUTF8::insert(std::size_t pos, const StringUTF8& insertStr)
 
 } //namespace StringUtils {
 
+namespace {
+    inline int wcslen_internal(const unsigned short* str)
+    {
+        if (str == nullptr)
+            return -1;
+        int i=0;
+        while(*str++) i++;
+        return i;
+    }
+}
+
 
 int cc_wcslen(const unsigned short* str)
 {
-    if (str == nullptr)
-        return -1;
-    int i=0;
-    while(*str++) i++;
-    return i;
+    return wcslen_internal(str);
 }
 
 void cc_utf8_trim_ws(std::vector<unsigned short>* str)
@@ -411,7 +418,7 @@ std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* st
     if (str == nullptr)
         return str_new;
     
-    int len = cc_wcslen(str);
+    int len = wcslen_internal(str);
     
     for (int i = 0; i < len; ++i)
     {
@@ -428,7 +435,8 @@ unsigned short* cc_utf8_to_utf16(const char* str_old, int length/* = -1*/, int* 
     unsigned short* ret = nullptr;
     
     std::u16string outUtf16;
-    bool succeed = StringUtils::UTF8ToUTF16(str_old, outUtf16);
+    std::string inUtf8 = length == -1 ? std::string(str_old) : std::string(str_old, length);
+    bool succeed = StringUtils::UTF8ToUTF16(inUtf8, outUtf16);
     
     if (succeed)
     {
@@ -454,7 +462,7 @@ char * cc_utf16_to_utf8 (const unsigned short  *str,
     
     
     std::u16string utf16;
-    int utf16Len = len < 0 ? cc_wcslen(str) : len;
+    int utf16Len = len < 0 ? wcslen_internal(str) : len;
     
     for (int i = 0; i < utf16Len; ++i)
     {

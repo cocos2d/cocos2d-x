@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,14 +24,30 @@
 #ifndef __COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__
 #define __COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__
 
+#include <unordered_map>
+#include <string>
+
 extern "C" {
 #include "lua.h"
 #include "tolua++.h"
 }
 #include "scripting/lua-bindings/manual/tolua_fix.h"
-#include "cocos2d.h"
+
 #include "scripting/lua-bindings/manual/Lua-BindingsExport.h"
 #include "editor-support/cocostudio/CocosStudioExtension.h"
+#include "2d/CCLabel.h"
+#include "2d/CCSprite.h"
+#include "3d/CCBundle3D.h"
+#include "base/CCValue.h"
+#include "base/ccTypes.h"
+#include "deprecated/CCArray.h"
+#include "deprecated/CCDictionary.h"
+#include "physics/CCPhysicsContact.h"
+#include "physics/CCPhysicsJoint.h"
+#include "physics/CCPhysicsShape.h"
+#include "physics/CCPhysicsWorld.h"
+#include "renderer/CCGLProgram.h"
+
 
 using namespace cocos2d;
 
@@ -492,15 +508,15 @@ bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* r
 {
     if (nullptr == L || argc == 0 )
         return false;
-    
+
     bool ok = true;
-    
+
     for (int i = 0; i < argc; i++)
     {
         if (lua_isuserdata(L, i + 2))
         {
             tolua_Error err;
-            
+
             if (!tolua_isusertype(L, i + 2, "cc.Ref", 0, &err))
             {
                 ok = false;
@@ -510,7 +526,7 @@ bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* r
             ret->pushBack(obj);
         }
     }
-    
+
     return ok;
 }
 
@@ -529,13 +545,13 @@ bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret, const ch
 {
     if (nullptr == L || nullptr == ret)
         return false;
-    
+
     bool ok = true;
-    
+
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
         ok = false;
-    
+
     if (ok)
     {
         size_t len = lua_objlen(L, lo);
@@ -543,22 +559,22 @@ bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret, const ch
         {
             lua_pushnumber(L, i + 1);
             lua_gettable(L, lo);
-            
+
             if (lua_isnil(L, -1) || !lua_isuserdata(L, -1))
             {
                 lua_pop(L, 1);
                 continue;
             }
-            
+
 
             T cobj = static_cast<T>(tolua_tousertype(L, -1, NULL) );
             if (NULL != cobj)
                 ret->pushBack(cobj);
-            
+
             lua_pop(L, 1);
         }
     }
-    
+
     return ok;
 }
 
@@ -599,7 +615,7 @@ bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, 
 {
     if(nullptr == L || nullptr == ret || lua_gettop(L) < lo)
         return false;
-    
+
     tolua_Error tolua_err;
     bool ok = true;
     if (!tolua_istable(L, lo, 0, &tolua_err))
@@ -609,7 +625,7 @@ bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, 
 #endif
         ok = false;
     }
-    
+
     if (ok)
     {
         std::string stringKey = "";
@@ -621,22 +637,22 @@ bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, 
                 lua_pop(L, 1);                                      /* removes 'value'; keep 'key' for next iteration*/
                 continue;
             }
-            
+
             if (lua_isnil(L, -1) || !lua_isuserdata(L, -1))
             {
                 lua_pop(L, 1);
                 continue;
             }
-            
+
             luaval_to_std_string(L, -2, &stringKey);
             T obj = static_cast<T>(tolua_tousertype(L, -1, NULL) );
             if (nullptr != obj)
                 ret->insert(stringKey, obj);
-                
+
             lua_pop(L, 1);                                          /* L: lotable ..... key */
         }
     }
-    
+
     return ok;
 }
 
@@ -703,15 +719,15 @@ bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret, const cha
 {
     if(nullptr == L || lua_gettop(L) < lo)
         return false;
-    
+
     if (!luaval_is_usertype(L, lo, type, 0))
         return false;
-    
+
     *ret = static_cast<T*>(tolua_tousertype(L, lo, 0));
-    
+
     if (nullptr == *ret)
         CCLOG("Warning: %s argument %d is invalid native object(nullptr)", funcName, lo);
-    
+
     return true;
 }
 
@@ -1047,16 +1063,16 @@ template <class T>
 void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
 {
     lua_newtable(L);
-    
+
     if (nullptr == L)
         return;
-    
+
     int indexTable = 1;
     for (const auto& obj : inValue)
     {
         if (nullptr == obj)
             continue;
-        
+
 
         if (nullptr != dynamic_cast<cocos2d::Ref *>(obj))
         {
@@ -1087,10 +1103,10 @@ template <class T>
 void ccmap_string_key_to_luaval(lua_State* L, const cocos2d::Map<std::string, T>& v)
 {
     lua_newtable(L);
-    
+
     if(nullptr == L)
         return;
-    
+
     for (auto iter = v.begin(); iter != v.end(); ++iter)
     {
         std::string key = iter->first;
@@ -1180,7 +1196,7 @@ const char* getLuaTypeName(T* ret,const char* type)
             return type;
         }
     }
-    
+
     return nullptr;
 }
 

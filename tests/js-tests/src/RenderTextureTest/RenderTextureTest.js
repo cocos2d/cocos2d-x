@@ -154,10 +154,10 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
         var distance = cc.pDistance(location, this._lastLocation);
 
         if (distance > 1) {
-            var locLastLocation = this._lastLocation;
+            var locLastLocation = this._lastLocation, i;
             this._target.begin();
             this._brushs = [];
-            for(var i = 0; i < distance; ++i) {
+            for(i = 0; i < distance; ++i) {
                 var diffX = locLastLocation.x - location.x;
                 var diffY = locLastLocation.y - location.y;
                 var delta = i / distance;
@@ -170,10 +170,11 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
                     scale: Math.random() + 0.25,
                     opacity: 20
                 });
+                sprite.parent = this;
                 sprite.retain();
                 this._brushs.push(sprite);
             }
-            for (var i = 0; i < distance; i++) {
+            for (i = 0; i < distance; i++) {
                 this._brushs[i].visit();
             }
             this._target.end();
@@ -530,8 +531,6 @@ var RenderTextureTargetNode = RenderTextureBaseLayer.extend({
 
         renderTexture.x = winSize.width / 2;
         renderTexture.y = winSize.height / 2;
-        //      [renderTexture setPosition:cc.p(s.width, s.height)];
-        //      renderTexture.scale = 2;
 
         /* add the sprites to the render texture */
         renderTexture.addChild(this._sprite1);

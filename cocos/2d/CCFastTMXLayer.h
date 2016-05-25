@@ -261,7 +261,7 @@ public:
      * @param pos The tile coordinate.
      * @param gid The tile gid.
      */
-    void setupTileSprite(Sprite* sprite, Vec2 pos, int gid);
+    void setupTileSprite(Sprite* sprite, const Vec2& pos, int gid);
 
     //
     // Override

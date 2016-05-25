@@ -2,8 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x 3.10 Release Notes](#cocos2d-x-
-- -release-notes)
+- [Cocos2d-x 3.11 Release Notes](#cocos2d-x-311-release-notes)
 - [Misc Information](#misc-information)
 - [Requirements](#requirements)
   - [Runtime Requirements](#runtime-requirements)
@@ -15,18 +14,18 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [v3.10](#v310)
-  - [Highlights features, improvements and API updates of v3.10](#highlights-features-improvements-and-api-updates-of-v310)
-  - [The main features in detail of Cocos2d-x v3.10:](#the-main-features-in-detail-of-cocos2d-x-v310)
-    - [UI System](#ui-system)
-    - [AudioEngine](#audioengine)
-    - [Others](#others)
+- [v3.11](#v311)
+  - [Highlights features](#highlights-features)
+  - [The main features in detail of Cocos2d-x v3.11](#the-main-features-in-detail-of-cocos2d-x-v311)
+    - [New memory model in JSB](#new-memory-model-in-jsb)
+    - [OpenSSL](#openssl)
+    - [Cocos2d-x JSB program debugging](#cocos2d-x-jsb-program-debugging)
+    - [New WebGL renderer](#new-webgl-renderer)
   - [Other changes](#other-changes)
-  - [NEW APIS](#new-apis)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Cocos2d-x 3.10 Release Notes #
+# Cocos2d-x 3.11 Release Notes #
 
 # Misc Information
 
@@ -52,7 +51,7 @@
 * ndk-r10c for Android
 * Visual Studio 2013 or newer for Windows (win32)
 * Visual Studio 2013 update4 or newer for Windows 8.1 universal Apps
-* Visual Studio 2015 RC or newer and Windows 10.0 (build 10074 or higher) for Windows 10.0 UWP Apps
+* Visual Studio 2015 or newer and Windows 10.0 (build 10074 or higher) for Windows 10.0 UWP Apps
 
 ## How to run tests
 
@@ -81,16 +80,17 @@ cocos run -p android -m release
 ```
 
 ### Mac OSX & iOS
+You can run the samples by:
 
-* Enter `cocos2d-x/build` folder, open `cocos2d_test.xcodeproj`
-* Select `cpp-tests`, `lua-tests`, `js-tests` for `iOS` or `OS X` target in scheme toolbar
-* Click `run` button
+* Open __cocos2d-x/build__ folder, open __cocos2d_test.xcodeproj__
+* Select `cpp-tests`, `lua-tests`, `js-tests` for __iOS__ or __OS X__ target in scheme toolbar
+* Click __run__ button
 
 ### Android
-
-You can run the samples...
+You can run the samples by either using the command-line or Eclipse:
 
 **Using command line:**
+Perform the following steps:
 
     $ cd cocos2d-x
     $ ./setup.py
@@ -101,302 +101,124 @@ You can run the samples...
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
 **Using Eclipse:**
+Perform the following steps:
 
     $ cd cocos2d-x
     $ ./setup.py
     $ cd build
     $ ./android-build.py cpp-empty-test -p 10
 
-Then
+Next:
 
-* Import cocos2d-x Android project into Eclipse, the path used to import is `cocos/2d/platform/android`
-* Import `cpp-empty-test` Android project into Eclipse, the path used to import is `tests/cpp-empty-test/proj.android`
+* Import cocos2d-x Android project into Eclipse, the path used to import is __cocos/2d/platform/android__
+* Import `cpp-empty-test` Android project into Eclipse, the path used to import is __tests/cpp-empty-test/proj.android__
 * Build `cpp-empty-test` Android project and run
 
 ### Windows
+You can run the samples by:
 
-* For win32 project, enter `cocos2d-x/build`, and open `cocos2d-win32.sln`
-* For win 8.1 project, enter `cocos2d-x/build`, and open `cocos2d-win8.1-universal.sln`
-* For win 10 project, enter `cocos2d-x/build`, and open `cocos2d-win10.sln`
+* For win32 project, enter __cocos2d-x/build__, and open __cocos2d-win32.sln__
+* For win 8.1 project, enter __cocos2d-x/build__, and open __cocos2d-win8.1-universal.sln__
+* For win 10 project, enter __cocos2d-x/build__, and open __cocos2d-win10.sln__
 * Select running target
 * Click run button
 
 ### Linux
+You can run the samples by:
 
     $ cd cocos2d-x/build
     $ ./install-deps-linux.sh
     $ cd ../..
 
-Then
+Next:
 
     $ mkdir build
     $ cd build
     $ cmake ../cocos2d-x
     $ make -j4
 
-Run
+Then run:
 
     $ cd bin/cpp-empty-test
     $ ./cpp-empty-test
 
 ## How to start a new game
-
-Use Cocos Console to create a new game:
+Use the __cocos__ console app to create a new game:
 
 ```
 cocos new -l cpp|js|lua MyNewGame
 ```
 
-# v3.10
+# v3.11
 
-## Highlights features, improvements and API updates of v3.10
+## Highlights features
 
-We are happy to announce the release of Cocos2d-x v3.10. Following are the highlighted features, improvements and API updates in this version. 
+* upgrade Chipmunk to v7.0.1
+* use new memory model in JSB, don't have to invoke `retain/release` in JS, it is disabled by default
+* upgrade Curl to v7.48
+* upgrade OpenSSL to 1.0.2g
+* can use VSCode and new Firefox to debug cocos2d-x JSB programs
+* refactor WebGL renderer
 
-1. Provides a unified setup for both Cocos2d-x and Cocos. This allows you to stay up to date with the latest Cocos2d-x releases. This includes using precompiled binaries and source code, in a single place. As always the source code is available from [GitHub](https://github.com/cocos2d/cocos2d-x) but, there is no longer a `.zip` file available containing the source code. 
-2. New __Cocos Launcher__ tool! __Cocos Launcher__ allows:
-  * One step to create a new project with the engine, by using precompiled libraries or source code.
-  * Easy integration with SDKBOX for 3rd party services: Facebook, IAP and many more.
-  * Developers to provide feedback and get support, directly within __Cocos Launcher__, making it simple to contact the engine team for help.　
-3. UI System:
-  * Reimplemented `Scale9Sprite` to improve performance and reduce memory consumption.
-  * Changed `PageView` to derive from `ListView`. `PageView` can add any widget as a child.
-  * Added three new *overflow types* to `Label`: **CLAMP**，**SHRINK**, **RESIZE_HEIGHT**.
-  * Fixed a bug in `ClippingNode` that corrects its behavior when being set as a child.
-4. Improved **JavaScript Bindings**: follows [SpiderMonkey GC best practices](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/GC_Rooting_Guide) making it more robust.
+## The main features in detail of Cocos2d-x v3.11
 
-## The main features in detail of Cocos2d-x v3.10:
+### New memory model in JSB
 
-### UI System
+With new memory model, you don't have to care about object lifecycle. Which means you don't have to invoke `retain/release` in JS any more.
 
-1. Reimplemented `Scale9Sprite` and improve the scale9sprite performance and reduce memory consumption.
-    
-    Reimplemented ui::Scale9Sprite, now the Slice sprite uses 16 vertices and 54 indices instead of the old 9 sprites way, The memory consumption is much lower than the previous implementation, and it is also more efficient.
+Though we have finished many tests about this new memory model, we can't make sure it is too perfect to enable it by default. But you are appreciated if you can enable it to have a try. If you want to enable it, you should change the value of `CC_ENABLE_GC_FOR_NATIVE_OBJECTS` to 1 in `base/ccConfig.h` like this:
 
-    In SIMPLE mode, the 4 borders are all 0 and the whole sprite will scale horizontally and vertically. In this mode only 1 quad is used for rendering, for example:
+```c++
+#ifdef CC_ENABLE_SCRIPT_BINDING
+  #ifndef CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+  #define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 1 // change to 1
+  #endif
+#endif
+```
 
-        auto blocks = ui::Scale9Sprite::createWithSpriteFrameName("blocks9c.png");
-        //When setting to SIMPLE, only 4 vertexes is used to rendering.
-        blocks->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+### OpenSSL
+Cocos2d-x has upgraded __OpenSSL__ to version __1.0.2g__.
 
-    In SLICE mode, it will use 18 triangles to rendering the slice 9 sprite. If the 4 borders are 0, there still be 18 triangles computed. So choose your RenderingType wisely, for example:
+Beginning __July 11, 2016__, Google Play will block publishing of any new apps or updates that use older versions of __OpenSSL__. It is important that you update the use of __OpenSSL__ in your projects. More detail information can refer to [this ticket](http://discuss.cocos2d-x.org/t/openssl-problem-again/28270).
 
-		auto sprite = ui::Scale9Sprite::createWithSpriteFrameName("blocks9c.png");
-        //When setting to SLICE, 16 vertexes will be used to rendering.
-        sprite->setRenderingType(Scale9Sprite::RenderingType::SLICE);
-    
-2. Changed `PageView` to derived from ListView, PageView can add any type of widget as child.
+If you use v2.x or use older versions of v3.x, you can just update __CURL__ and __OpenSSL__.
+To do this:
 
-    PageView was derived from Layout and it implemented the features of scrolling and item arrangement from scratch. But the features are already there in ListView. So remove those duplicated implementations from PageView and make it inherit from ListView.
+* modify __Cocos2d-x root/external/config.json__ to update the dependency version. For v3.x the dependency version is `v3-deps-92`, and for v2.x it is `v2-deps-5`
+* execute the __download-deps.py__ script in your __Cocos2d-x root__.
 
-    By consequence, PageView becomes simpler and easier to maintain because it considers only paging implementation. for example:
+```sh
+(jtsm @ 15 ~) $ cd cocos2d-x
 
-        // Create the page view
-        Size size(240, 130);
-        PageView* pageView = PageView::create();
-        pageView->setDirection(PageView::Direction::HORIZONTAL);
-        pageView->setContentSize(size);
-        Size backgroundSize = background->getContentSize();
-        //"removeAllPages" is changed to "removeAllItems"
-        pageView->removeAllItems();
-        pageView->setIndicatorEnabled(true);
+(jtsm @ 15 ~/cocos2d-x) $ ./download-deps.py
 
-        int pageCount = 4;
-        for (int i = 0; i < pageCount; ++i)
-        {
-            Layout* layout = Layout::create();
-            layout->setContentSize(size);
-            
-            ImageView* imageView = ImageView::create("cocosui/scrollviewbg.png");
-            imageView->setScale9Enabled(true);
-            imageView->setContentSize(size);
-            imageView->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
-            layout->addChild(imageView);
-            
-            Text* label = Text::create(StringUtils::format("page %d",(i+1)), "fonts/Marker Felt.ttf", 30);
-            label->setColor(Color3B(192, 192, 192));
-            label->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
-            layout->addChild(label);
-            //"insertPage" is changed to "insertCustomItem"
-            pageView->insertCustomItem(layout, i);
-        }
-        //"removePageAtIndex" is changed to "removeItem"
-        pageView->removeItem(0);
-        //"scrollToPage" is changed to "scrollToItem"
-        pageView->scrollToItem(pageCount - 2);
+=======================================================
+==> Prepare to download external libraries!
+==> Ready to download 'v3-deps-92.zip' from 'https://github.com/cocos2d/cocos2d-x-3rd-party-libs-bin/archive/v3-deps-92.zip'
+==> WARNING: Couldnt grab the file size from remote, use 'zip_file_size' section in '/Users/jtsm/Chukong-Inc/cocos2d-x/external/config.json'
+==> Start to download, please wait ...
+==> Downloading finished!
+==> Extracting files, please wait ...
+==> Extraction done! ==> Copying files...
+==> Cleaning...
+```
+Feel free to post on our <a href="http://discuss.cocos2d-x.org">forums</a> if you run into difficulty.
 
-     More detail usage please refer to: tests/cpp-tests/Classes/UITest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp.
-    
-   
-3. Added three overflow type to new label: CLAMP, SHRINK, RESIZE_HEIGHT.
-  
-     Overflow type is used to control label overflow result, In SHRINK mode, the font size will change dynamically to adapt the content size. In CLAMP mode, when label content goes out of the bounding box, it will be clipped, In RESIZE_HEIGHT mode, you can only change the width of label and the height is changed automatically. For example:
-       
-        //Change the label's Overflow type
-        label->setOverflow(Label::Overflow::RESIZE_HEIGHT);
+### Cocos2d-x JSB program debugging
 
-     More detail usage please refer to: tests/cpp-tests/Classes/LabelTest/LabelTestNew.cpp.
+In previous version, can not use Firefox 30+ to debug cocos2d-x JSB programs. This limit is fixed since v3.11. And web console feature is added too. [This documentation](http://www.cocos2d-x.org/wiki/Javascript_Remote_Debugging) shows how to use Firefox to debug cocos2d-x JSB programs(this is a little difference from current usage).
 
-     Limitations:
+Of course you can use [VSCode](https://code.visualstudio.com/) to debug cocos2d-x JSB programs too. You can read about how to use VSCode to debug cocos2d-x JSB programs [here](http://discuss.cocos2d-x.org/t/use-vscode-to-debug-cocos2d-x-jsb-programs/27588).
 
+### New WebGL renderer
 
-     currently only TTF and BMFont support all the valid Overflow type. Char Map font supports all the Overflow type except for SHRINK, because we can't measure its font size. System font only support Overflow::Normal and Overflow::RESIZE_HEIGHT.
+In v3.11, we have refactored the WebGL renderer in web engine, here is the detailed changes:
+
+1. Activate WebGL on Android by default.
+2. Add sprite auto batching in WebGL.
+3. Shared rendering buffer for Sprites.
+
+Compare with old version, the draw calls in your game should be significantly reduced if the textures is well managed. This improves also the CPU usage and memory usage. The above is just a first step of WebGL renderer upgrade, we will continue to investigate in this direction in the future versions.
 
 ## Other changes
-[NEW]           RichText supported new line element.
-
-[NEW]           UIText::clone supports clone the text effect.
-
-[NEW]           UI: Added methods to query label effect state.
-    
-[REFINE]        IOS: Added virtual keyword for some render related function.
-
-[REFINE]        UI: Fixed boring deprecated warning in HttpRequest.
-
-[REFINE]        Network: Fixed Downloader bug on iOS & Android platform.
-
-[REFINE]        Studio: Fixed deprecation warning in SkeletonRenderer.
-
-[REFINE]        JS: Added js test case for fix, improve template.
-
-[REFINE]        Network: Permit http access to cocos2d-x.org in test projects on iOS.
-
-[REFINE]        Network: Crash when removing a remotely downloaded image from texture 
-cache in js-binding.
-
-[REFINE]        Win10: WinRT project update version to v3.10.
-
-[REFINE]        Console: Added quiet option for Cocos Toolkit.
-
-[REFINE]        JS: New GC model for js-binding.
-
-[REFINE]        Doc: Fixed typos in documentation and comments.
-
-[REFINE]        UI: Updated controlButton size calculate with new Scale9Sprite logic.
-
-[REFINE]        Win10: Added missing _USRJSSTATIC preprocessor define for ARM builds.
-
-[REFINE]        JS: Added ccvector_to / ccmap_to converted to new js-binding API.
-
-[REFINE]        UI: Slider misprint fix.
-
-[FIX]           Core: Fixed premultiplyAlpha for mipmaps and compressed textures.
-
-[FIX]           UI: Fixed Scale9sprite rendering error when content size smaller than the sum of leftInset and rightInset.
-
-[FIX]           Win32: Fixed EditBox crash when removing an EditBox in a scheduler.
-
-[FIX]           Android: Fixed cannot add view to mFrameLayout when extends Cocos2dxActivity.
-
-[FIX]           2D: Fixed actionNode set at wrong position bug.
-
-[FIX]           3D: Fixed the movement of PUParticle lags one frame.
-
-[FIX]           UI: Fixed the wront argument of setPlaceholderFontName in EditBox.
-
-[FIX]           UI: Fixed EditBox editBoxEditingDidEnd may use the original text after change the text of EditBox in user script.
-
-[FIX]           Audio: Fixed `FinishCallback` never be called in Windows.
-
-[FIX]           UI: Fixed Layout stencil clipping nested with Clipping Node rendering issue.
-
-[FIX]           UI: Keyboard doesn't hide when click the screen outside of EditBox on iOS platform.
-
-[FIX]           UI: Fixed a fatal bug in EditBox implement on Windows platform.
-
-[FIX]           UI: Fixed edit box setPlaceholderFontName and scale font size issue.
-
-[FIX]           Core: Fixed memory leak when initWithImage() failed.
-
-[FIX]           Network: CCDownloader on iOS is broken in v3.9 js-binding.
-
-[FIX]           JS: Bindings fixes for Menu, Sprite and Label.
-
-[FIX]           Studio: Removed weak reference in ActionNode.
-
-[FIX]           UI: shouldStartLoading method should return value to js in js-binding.
-
-[FIX]           UI: Fixed scrollview render error.
-
-[FIX]           JS: Fixed win32 js project crash issue.
-
-[FIX]           UI: Button touch doesn't work with scale9 enabled.
-
-[FIX]           JS: Fixed evalString doesn't return result issue.
-
-[FIX]           JS: Fixed ComponentJS proxy management issue in JSB.
-
-[FIX]           Android: Fixed include in cocos network module.
-
-[FIX]           Network: Fixed web socket crash.
-
-[FIX]           UI: Fixed TextField missing default password style text setting.
-
-[TEST]          S9SpriteTest: Scale9Sprite fade actions with cascade opacity.
-
-[TEST]          Web: Removed default focus block from UIFocusTestVertical.
-
-[TEST]          Lua: Fixed pageViewTest Horizontal scroll won't work in Lua-test.
-
 You can also take a look at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
-
-## NEW APIS
-
-1. RichText
-
-    Added RichElementNewLine class to create new RichText Element.
-
-    For more information: [https://github.com/cocos2d/cocos2d-x/pull/14033](https://github.com/cocos2d/cocos2d-x/pull/14033 "https://github.com/cocos2d/cocos2d-x/pull/14033")
-
-2. PageViewIndicator
-
-    Added PageViewIndicator class to create PageViewIndicator.
-
-    For more information: [https://github.com/cocos2d/cocos2d-x/blob/v3/cocos/ui/UIPageViewIndicator.h](https://github.com/cocos2d/cocos2d-x/blob/v3/cocos/ui/UIPageViewIndicator.h "https://github.com/cocos2d/cocos2d-x/blob/v3/cocos/ui/UIPageViewIndicator.h")
-
-3. PageView 
-
-    Changed PageView to derived from ListView.
-    For more information: [https://github.com/cocos2d/cocos2d-x/pull/14252](https://github.com/cocos2d/cocos2d-x/pull/14252 "https://github.com/cocos2d/cocos2d-x/pull/14252")
-
-4. ApplicationProtocol
-
-    Added the API getVersion.
-
-
-5. PolygonInfo
-
-    Added the API setTriangles.
-
-6. Scale9Sprite
-
-    Added setRenderingType, getRenderingType.
-
-9. FontFNT
-
-    Added setFontSize, getOriginalFontSize.
-
-10. Label
-
-    Added setBMFontSize, getBMFontSize, enableWrap, isWrapEnabled, setOverflow, getOverflow, initWithTTF, isShadowEnabled, getShadowOffset, getShadowBlurRadius, getShadowColor, getOutlineSize, getLabelEffectType, getEffectColor.
-
-11. AudioEngineImpl
-
-    Added AudioEngineImpl to implement FMOD.
-
-12. Lua Module
-
-    Added luaval_to_node, node_to_luaval.
-
-13. JS Module
-
-    Added js_cocos2dx_ComponentJS_create
-
-14. ui::Text
-
-    Added isShadowEnabled, getShadowOffset, getShadowBlurRadius, getShadowColor,  getOutlineSize, getLabelEffectType, getEffectColor.
-
-15. UITextTest_Clone 
-
-    Added UITextTest_Clone class.
-    

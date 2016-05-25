@@ -22,10 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "editor-support/cocostudio/CCSGUIReader.h"
-#include "ui/CocosGUI.h"
-#include "editor-support/cocostudio/CCActionManagerEx.h"
+
 #include <fstream>
 #include <iostream>
+#include "ui/CocosGUI.h"
+#include "platform/CCFileUtils.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "base/CCDirector.h"
+#include "base/ccUtils.h"
+
+#include "editor-support/cocostudio/CCActionManagerEx.h"
 #include "editor-support/cocostudio/WidgetReader/ButtonReader/ButtonReader.h"
 #include "editor-support/cocostudio/WidgetReader/CheckBoxReader/CheckBoxReader.h"
 #include "editor-support/cocostudio/WidgetReader/SliderReader/SliderReader.h"
@@ -41,6 +47,11 @@ THE SOFTWARE.
 #include "editor-support/cocostudio/WidgetReader/ListViewReader/ListViewReader.h"
 #include "editor-support/cocostudio/CocoLoader.h"
 #include "tinyxml2.h"
+
+#include "platform/CCFileUtils.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "base/CCDirector.h"
+#include "base/ccUtils.h"
 
 using namespace cocos2d;
 using namespace cocos2d::ui;
