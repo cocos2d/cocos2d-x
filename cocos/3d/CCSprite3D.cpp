@@ -589,6 +589,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                     setScaleY(scale.y);
                     setScaleZ(scale.z);
                     
+                    node = this;
                 }
             }
             else
