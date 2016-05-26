@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include "ui/UILayout.h"
 #include "editor-support/cocostudio/CocoLoader.h"
 #include "base/ccUtils.h"
+#include "cocostudio/CCActionManagerEx.h"
+
 
 using namespace cocos2d;
 using namespace ui;
@@ -107,7 +109,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
         {
             float positionX = DICTOOL->getFloatValue_json(actionFrameDic, "positionx");
             float positionY = DICTOOL->getFloatValue_json(actionFrameDic, "positiony");
-            if (positionOffset && (nullptr != node->getParent()))
+            if (positionOffset && (nullptr != node->getParent()) && ActionManagerEx::getInstance()->getStudioVersionNumber() < 1600)
             {
                 Vec2 AnchorPointIn = node->getParent()->getAnchorPointInPoints();
                 positionX += AnchorPointIn.x;
@@ -136,7 +138,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
             actionFrame->setScaleY(scaleY);
             auto cActionArray = _frameArray.at((int)kKeyframeScale);
             cActionArray->pushBack(actionFrame);
-            actionFrame->release();			
+            actionFrame->release();             
         }
 
         bool existRotation = DICTOOL->checkObjectExist_json(actionFrameDic,"rotation");
@@ -637,7 +639,7 @@ void ActionNode::easingToFrame(float duration,float delayTime,ActionFrame* srcFr
     if (cAction == nullptr || cNode == nullptr)
     {
         return;
-    }	
+    }   
     cAction->startWithTarget(cNode);
     cAction->update(delayTime);
 }
