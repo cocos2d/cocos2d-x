@@ -1,3 +1,9 @@
+cocos2d-x-3.11.1 May 27 2016
+
+[HIGHLIGHT]     Supports IPv6-only network
+
+[FIX]           Fix `cocos gen-libs` compiling issue
+
 cocos2d-x-3.11 May 11 2016
 
 [HIGHLIGHT]     Physics: upgrade chipmunk to v7.0.1
