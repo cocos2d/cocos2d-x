@@ -1,18 +1,18 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
- 
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -82,12 +82,12 @@ namespace cocos2d { namespace network {
         {
             DLLOG("Construct DownloadTaskApple %p", this);
         }
-        
+
         virtual ~DownloadTaskApple()
         {
             DLLOG("Destruct DownloadTaskApple %p", this);
         }
-        
+
         NSURLSessionDataTask *dataTask;
         NSURLSessionDownloadTask *downloadTask;
         std::shared_ptr<const DownloadTask> retainedTask = nullptr; // for retaining DownloadTask for asynchronous task creation
@@ -100,7 +100,7 @@ namespace cocos2d { namespace network {
         DLLOG("Construct DownloaderApple %p", this);
         _impl = (__bridge void*)[[DownloaderAppleImpl alloc] init: this hints:hints];
     }
-    
+
     DownloaderApple::~DownloaderApple()
     {
         DeclareDownloaderImplVar;
@@ -351,7 +351,7 @@ namespace {
         }
     }
     _outer = nullptr;
-    
+
     [self.downloadSession invalidateAndCancel];
     [self release];
 }
@@ -451,7 +451,7 @@ namespace {
           , (error ? (int)error.code: 0)
           , [error.localizedDescription cStringUsingEncoding:NSUTF8StringEncoding]
           , _taskQueue.size());
-    
+
     if(_outer)
     {
         if(error)
@@ -487,7 +487,7 @@ namespace {
         else
         {
             NSInteger statusCode = ((NSHTTPURLResponse*)task.response).statusCode;
-            
+
             // Check for error status code
             if (statusCode >= 400)
             {
@@ -554,10 +554,10 @@ namespace {
     {
         return;
     }
-    
+
     auto &wrapper = _taskDict[dataTask];
     wrapper->appendData(data);
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         std::function<int64_t(void *, int64_t)> transferDataToBuffer =
         [wrapper](void *buffer, int64_t bufLen)->int64_t
@@ -620,27 +620,27 @@ namespace {
         {
             break;
         }
-        
+
         if ('/' == [destPath characterAtIndex:0])
         {
             destURL = [NSURL fileURLWithPath:destPath];
             break;
         }
-        
+
         // relative path, store to user domain default
         NSArray *URLs = [fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
         NSURL *documentsDirectory = URLs[0];
         destURL = [documentsDirectory URLByAppendingPathComponent:destPath];
     } while (0);
-    
+
     // Make sure we overwrite anything that's already there
     [fileManager removeItemAtURL:destURL error:NULL];
-    
+
     // copy file to dest location
     int errorCode = cocos2d::network::DownloadTask::ERROR_NO_ERROR;
     int errorCodeInternal = 0;
     std::string errorString;
-    
+
     NSError *error = nil;
     if ([fileManager copyItemAtURL:location toURL:destURL error:&error])
     {
@@ -680,6 +680,7 @@ namespace {
     {
         return;
     }
+
     dispatch_async(dispatch_get_main_queue(), ^{
         std::function<int64_t(void *, int64_t)> transferDataToBuffer;   // just a placeholder
         _outer->onTaskProgress(*_taskDict[downloadTask]->cppTask, bytesWritten, totalBytesWritten, totalBytesExpectedToWrite, transferDataToBuffer);
@@ -701,3 +702,4 @@ namespace {
 }
 
 @end
+

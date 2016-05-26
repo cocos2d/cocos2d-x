@@ -38,20 +38,32 @@ USING_NS_CC;
 static unsigned short quadIndices[]={0,1,2, 3,2,1};
 const static float PRECISION = 10.0f;
 
-PolygonInfo::PolygonInfo(const PolygonInfo& other):
-triangles(),
-rect(),
-isVertsOwner(true)
+PolygonInfo::PolygonInfo()
+: rect(cocos2d::Rect::ZERO)
+, filename("")
+, isVertsOwner(true)
+{
+    triangles.verts = nullptr;
+    triangles.indices = nullptr;
+    triangles.vertCount = 0;
+    triangles.indexCount = 0;
+};
+
+PolygonInfo::PolygonInfo(const PolygonInfo& other)
+: triangles()
+, rect()
+, isVertsOwner(true)
 {
     filename = other.filename;
     isVertsOwner = true;
     rect = other.rect;
     triangles.verts = new (std::nothrow) V3F_C4B_T2F[other.triangles.vertCount];
     triangles.indices = new (std::nothrow) unsigned short[other.triangles.indexCount];
+    CCASSERT(triangles.verts && triangles.indices, "not enough memory");
     triangles.vertCount = other.triangles.vertCount;
     triangles.indexCount = other.triangles.indexCount;
-    memcpy(triangles.verts, other.triangles.verts, other.triangles.vertCount*sizeof(V3F_C4B_T2F));
-    memcpy(triangles.indices, other.triangles.indices, other.triangles.indexCount*sizeof(unsigned short));
+    memcpy(triangles.verts, other.triangles.verts, other.triangles.vertCount * sizeof(other.triangles.verts[0]));
+    memcpy(triangles.indices, other.triangles.indices, other.triangles.indexCount * sizeof(other.triangles.indices[0]));
 };
 
 PolygonInfo& PolygonInfo::operator= (const PolygonInfo& other)
@@ -64,10 +76,11 @@ PolygonInfo& PolygonInfo::operator= (const PolygonInfo& other)
         rect = other.rect;
         triangles.verts = new (std::nothrow) V3F_C4B_T2F[other.triangles.vertCount];
         triangles.indices = new (std::nothrow) unsigned short[other.triangles.indexCount];
+        CCASSERT(triangles.verts && triangles.indices, "not enough memory");
         triangles.vertCount = other.triangles.vertCount;
         triangles.indexCount = other.triangles.indexCount;
-        memcpy(triangles.verts, other.triangles.verts, other.triangles.vertCount*sizeof(V3F_C4B_T2F));
-        memcpy(triangles.indices, other.triangles.indices, other.triangles.indexCount*sizeof(unsigned short));
+        memcpy(triangles.verts, other.triangles.verts, other.triangles.vertCount * sizeof(other.triangles.verts[0]));
+        memcpy(triangles.indices, other.triangles.indices, other.triangles.indexCount * sizeof(other.triangles.indices[0]));
     }
     return *this;
 }
@@ -87,7 +100,7 @@ void PolygonInfo::setQuad(V3F_C4B_T2F_Quad *quad)
     triangles.verts = (V3F_C4B_T2F*)quad;
 }
 
-void PolygonInfo::setTriangles(TrianglesCommand::Triangles other)
+void PolygonInfo::setTriangles(const TrianglesCommand::Triangles& other)
 {
     this->releaseVertsAndIndices();
     isVertsOwner = false;
@@ -562,12 +575,14 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
     cdt.Triangulate();
     std::vector<p2t::Triangle*> tris = cdt.GetTriangles();
     
-    V3F_C4B_T2F* verts= new (std::nothrow) V3F_C4B_T2F[points.size()];
-    unsigned short* indices = new (std::nothrow) unsigned short[tris.size()*3];
+    // we won't know the size of verts and indices until we process all of the triangles!
+    std::vector<V3F_C4B_T2F> verts;
+    std::vector<unsigned short> indices;
+
     unsigned short idx = 0;
     unsigned short vdx = 0;
 
-    for(std::vector<p2t::Triangle*>::const_iterator ite = tris.begin(); ite < tris.end(); ite++)
+    for(std::vector<p2t::Triangle*>::const_iterator ite = tris.begin(); ite != tris.end(); ite++)
     {
         for(int i = 0; i < 3; i++)
         {
@@ -587,7 +602,7 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
             if(found)
             {
                 //if we found the same vertex, don't add to verts, but use the same vertex with indices
-                indices[idx] = j;
+                indices.push_back(j);
                 idx++;
             }
             else
@@ -596,8 +611,8 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
                 auto c4b = Color4B::WHITE;
                 auto t2f = Tex2F(0,0); // don't worry about tex coords now, we calculate that later
                 V3F_C4B_T2F vert = {v3,c4b,t2f};
-                verts[vdx] = vert;
-                indices[idx] = vdx;
+                verts.push_back(vert);
+                indices.push_back(vdx);
                 idx++;
                 vdx++;
             }
@@ -607,7 +622,17 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
     {
         delete j;
     };
-    TrianglesCommand::Triangles triangles = {verts, indices, vdx, idx};
+
+    // now that we know the size of verts and indices we can create the buffers
+    V3F_C4B_T2F* vertsBuf = new (std::nothrow) V3F_C4B_T2F[verts.size()];
+    memcpy(vertsBuf, verts.data(), verts.size() * sizeof(V3F_C4B_T2F));
+
+    unsigned short* indicesBuf = new (std::nothrow) unsigned short[indices.size()];
+    memcpy(indicesBuf, indices.data(), indices.size() * sizeof(short));
+
+    // Triangles should really use std::vector and not arrays for verts and indices. 
+    // Then the above memcpy would not be necessary
+    TrianglesCommand::Triangles triangles = { vertsBuf, indicesBuf, static_cast<int>(verts.size()), static_cast<int>(indices.size()) };
     return triangles;
 }
 
@@ -679,6 +704,5 @@ PolygonInfo AutoPolygon::generateTriangles(const Rect& rect, const float& epsilo
 PolygonInfo AutoPolygon::generatePolygon(const std::string& filename, const Rect& rect, const float epsilon, const float threshold)
 {
     AutoPolygon ap(filename);
-    auto ret = ap.generateTriangles(rect, epsilon, threshold);
-    return ret;
+    return ap.generateTriangles(rect, epsilon, threshold);
 }

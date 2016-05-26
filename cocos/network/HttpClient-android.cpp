@@ -892,7 +892,7 @@ HttpClient::HttpClient()
 HttpClient::~HttpClient()
 {
     CCLOG("In the destructor of HttpClient!");
-    CC_SAFE_DELETE(_requestSentinel);
+    CC_SAFE_RELEASE(_requestSentinel);
 }
 
 //Lazy create semaphore & mutex & thread

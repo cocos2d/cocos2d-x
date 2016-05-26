@@ -1332,12 +1332,10 @@ int ScriptingCore::handleComponentEvent(void* data)
     else if (action == kComponentOnEnter)
     {
         ret = executeFunctionWithOwner(nodeValue, "onEnter", 1, &dataVal, &retval);
-        resumeSchedulesAndActions(p);
     }
     else if (action == kComponentOnExit)
     {
         ret = executeFunctionWithOwner(nodeValue, "onExit", 1, &dataVal, &retval);
-        pauseSchedulesAndActions(p);
     }
     else if (action == kComponentOnUpdate)
     {
@@ -1525,7 +1523,7 @@ bool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, cons
     return bRet;
 }
 
-bool ScriptingCore::handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event)
+bool ScriptingCore::handleKeyboardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event)
 {
     JSAutoCompartment ac(_cx, _global.ref());
 
@@ -1757,20 +1755,26 @@ void ScriptingCore::garbageCollect()
 
 void SimpleRunLoop::update(float dt)
 {
-    g_qMutex.lock();
-    size_t size = g_queue.size();
-    g_qMutex.unlock();
-
-    while (size > 0)
+    std::string message;
+    size_t messageCount = 0;
+    while (true)
     {
         g_qMutex.lock();
-        auto first = g_queue.begin();
-        std::string str = *first;
-        g_queue.erase(first);
-        size = g_queue.size();
+        messageCount = g_queue.size();
+        if (messageCount > 0)
+        {
+            auto first = g_queue.begin();
+            message = *first;
+            g_queue.erase(first);
+            --messageCount;
+        }
         g_qMutex.unlock();
-
-        ScriptingCore::getInstance()->debugProcessInput(str);
+        
+        if (messageCount == 0)
+            break;
+        
+        if (!message.empty())
+            ScriptingCore::getInstance()->debugProcessInput(message);
     }
 }
 
@@ -1788,20 +1792,26 @@ void ScriptingCore::debugProcessInput(const std::string& str)
 
 static bool NS_ProcessNextEvent()
 {
-    g_qMutex.lock();
-    size_t size = g_queue.size();
-    g_qMutex.unlock();
-
-    while (size > 0)
+    std::string message;
+    size_t messageCount = 0;
+    while (true)
     {
         g_qMutex.lock();
-        auto first = g_queue.begin();
-        std::string str = *first;
-        g_queue.erase(first);
-        size = g_queue.size();
+        messageCount = g_queue.size();
+        if (messageCount > 0)
+        {
+            auto first = g_queue.begin();
+            message = *first;
+            g_queue.erase(first);
+            --messageCount;
+        }
         g_qMutex.unlock();
-
-        ScriptingCore::getInstance()->debugProcessInput(str);
+        
+        if (messageCount == 0)
+            break;
+        
+        if (!message.empty())
+            ScriptingCore::getInstance()->debugProcessInput(message);
     }
 //    std::this_thread::yield();
     std::this_thread::sleep_for(std::chrono::milliseconds(10));

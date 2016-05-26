@@ -229,7 +229,7 @@ bool NavMesh::loadNavMeshFile()
 
 bool NavMesh::loadGeomFile()
 {
-    unsigned char* buf = 0;
+    unsigned char* buf = nullptr;
     auto data = FileUtils::getInstance()->getDataFromFile(_geomFilePath);
     if (data.isNull()) return false;
     buf = data.getBytes();

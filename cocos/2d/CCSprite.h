@@ -406,9 +406,9 @@ public:
     /**
      * returns a reference of the polygon information associated with this sprite
      *
-     * @return a copy of PolygonInfo
+     * @return a reference of PolygonInfo
      */
-    PolygonInfo& getPolygonInfo();
+    const PolygonInfo& getPolygonInfo() const;
 
     /**
      * set the sprite to use this new PolygonInfo
@@ -469,9 +469,6 @@ public:
     virtual void setAnchorPoint(const Vec2& anchor) override;
     
     virtual void setIgnoreAnchorPointForPosition(bool value) override;
-    
-    // @deprecated Use setIgnoreAnchorPointForPosition() instead.
-    CC_DEPRECATED_ATTRIBUTE virtual void ignoreAnchorPointForPosition(bool value) override { setIgnoreAnchorPointForPosition(value); }
     
     virtual void setVisible(bool bVisible) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;

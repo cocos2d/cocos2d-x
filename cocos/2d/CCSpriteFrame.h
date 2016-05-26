@@ -215,9 +215,9 @@ public:
 
     /** Get the polygonInfo for this sprite
      *
-     * @return polygonInfo structure
+     * @return a reference to the polygonInfo structure
      */
-    const PolygonInfo &getPolygonInfo() const;
+    const PolygonInfo& getPolygonInfo() const;
 
     /** Check if sprite frame is a polygon sprite
      *
