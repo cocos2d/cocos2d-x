@@ -863,6 +863,9 @@ void ScrollView::gatherTouchMove(const Vec2& delta)
 
 void ScrollView::handlePressLogic(Touch *touch)
 {
+    this->stopAllActions();
+    this->getInnerContainer()->stopAllActions();
+
     _bePressed = true;
     _autoScrolling = false;
     

@@ -83,6 +83,16 @@ static void static_setBackgroundMusicVolume(float volume)
     volume = MAX( MIN(volume, 1.0), 0 );
     [SimpleAudioEngine sharedEngine].backgroundMusicVolume = volume;
 }
+
+static float static_getBackgroundMusicSpeed()
+{
+    return [[SimpleAudioEngine sharedEngine] backgroundMusicSpeed];
+}
+
+static void static_setBackgroundMusicSpeed(float speed)
+{
+    [SimpleAudioEngine sharedEngine].backgroundMusicSpeed = speed;
+}
      
 static float static_getEffectsVolume()
 {
@@ -232,6 +242,16 @@ float SimpleAudioEngine::getBackgroundMusicVolume()
 void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 {
     static_setBackgroundMusicVolume(volume);
+}
+
+float SimpleAudioEngine::getBackgroundMusicSpeed()
+{
+    return static_getBackgroundMusicSpeed();
+}
+
+void SimpleAudioEngine::setBackgroundMusicSpeed(float speed)
+{
+    static_setBackgroundMusicSpeed(speed);
 }
 
 float SimpleAudioEngine::getEffectsVolume()

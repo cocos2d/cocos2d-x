@@ -165,6 +165,22 @@ public:
     virtual void setBackgroundMusicVolume(float volume);
 
     /**
+     *
+     *
+     *
+     */
+    virtual float getBackgroundMusicSpeed();
+
+    /**
+     * Set the volume of background speed.
+     *
+     * @param speed must be within the range of 0.0 as the minimum and 1.0 as the maximum.
+     *
+     *
+     */
+    virtual void setBackgroundMusicSpeed(float speed);
+
+    /**
      * The volume of the effects within the range of 0.0 as the minimum and 1.0 as the maximum.
      */
     virtual float getEffectsVolume();

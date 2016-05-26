@@ -1492,8 +1492,6 @@
 		78382F7C1C24698E0001B3F1 /* Vote.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78382F7B1C24698E0001B3F1 /* Vote.mm */; };
 		7843AB9B1C2230B80011F47C /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A57052D180BD3280088DEC7 /* libfreetype.a */; };
 		7843ACDF1C224C980011F47C /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A570346180BD0850088DEC7 /* libglfw3.a */; };
-		78456FCC1CF132C50050A832 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A570363180BD1120088DEC7 /* libpng.a */; };
-		78456FCD1CF134000050A832 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A57052D180BD3280088DEC7 /* libfreetype.a */; };
 		78456FCF1CF134130050A832 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78456FCE1CF134130050A832 /* Foundation.framework */; };
 		7845D0461C0C40BE00D7DFB7 /* Services.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7845D0451C0C40BE00D7DFB7 /* Services.cpp */; };
 		7845D0471C0C40BE00D7DFB7 /* Services.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7845D0451C0C40BE00D7DFB7 /* Services.cpp */; };
@@ -1596,6 +1594,8 @@
 		78AEAC2B1BD22EE300FA8783 /* Shake.h in Headers */ = {isa = PBXBuildFile; fileRef = 78AEAC281BD22EE300FA8783 /* Shake.h */; };
 		78AEAC2C1BD22EE300FA8783 /* Shake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78AEAC291BD22EE300FA8783 /* Shake.cpp */; };
 		78AEAC2D1BD22EE300FA8783 /* Shake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78AEAC291BD22EE300FA8783 /* Shake.cpp */; };
+		78BF8F7F1CF140E900DBBF62 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78BF8F7E1CF140E900DBBF62 /* libfreetype.a */; };
+		78BF8F811CF140F800DBBF62 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78BF8F801CF140F800DBBF62 /* libpng.a */; };
 		78C3536C1CEE7F6500F10068 /* CCAllocatorGlobalNewDelete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD03401A3B51AA00825BB5 /* CCAllocatorGlobalNewDelete.cpp */; };
 		78C3536D1CEE7F6500F10068 /* UIVideoPlayer-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB6A191C841D00B170C8 /* UIVideoPlayer-ios.mm */; };
 		78C3536E1CEE7F6500F10068 /* CCPUPlaneCollider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E19A1AA80A6500DDB1C5 /* CCPUPlaneCollider.cpp */; };
@@ -5990,6 +5990,8 @@
 		7894FA3F1BF0A50300A69ED6 /* BackgroundScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundScroll.h; sourceTree = "<group>"; };
 		78AEAC281BD22EE300FA8783 /* Shake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shake.h; sourceTree = "<group>"; };
 		78AEAC291BD22EE300FA8783 /* Shake.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shake.cpp; sourceTree = "<group>"; };
+		78BF8F7E1CF140E900DBBF62 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../external/freetype2/prebuilt/tv/libfreetype.a; sourceTree = "<group>"; };
+		78BF8F801CF140F800DBBF62 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../external/png/prebuilt/tv/libpng.a; sourceTree = "<group>"; };
 		78C35A1B1CEE7F6500F10068 /* libcocos2d TV.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d TV.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78D822201C41681A000D99EA /* Internal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Internal.cpp; sourceTree = "<group>"; };
 		78E5CBFA1BCA446B00CB036E /* Storage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Storage.h; path = ../support/Storage.h; sourceTree = "<group>"; };
@@ -6930,8 +6932,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				78456FCF1CF134130050A832 /* Foundation.framework in Frameworks */,
-				78456FCC1CF132C50050A832 /* libpng.a in Frameworks */,
-				78456FCD1CF134000050A832 /* libfreetype.a in Frameworks */,
+				78BF8F811CF140F800DBBF62 /* libpng.a in Frameworks */,
+				78BF8F7F1CF140E900DBBF62 /* libfreetype.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6950,7 +6952,6 @@
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
-				78456FCE1CF134130050A832 /* Foundation.framework */,
 				50272539190BF1B900AAF4ED /* cocos2d.cpp */,
 				50272538190BF1B900AAF4ED /* cocos2d.h */,
 				46A169A11807B037005B8026 /* 2d */,
@@ -7399,6 +7400,9 @@
 		1A57033E180BD0490088DEC7 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				78BF8F801CF140F800DBBF62 /* libpng.a */,
+				78BF8F7E1CF140E900DBBF62 /* libfreetype.a */,
+				78456FCE1CF134130050A832 /* Foundation.framework */,
 				68B39B391B1C5C670084F72C /* clipper */,
 				B6DD2F731B04820C00E47F5F /* recast */,
 				B6CAB0021AF9A9EE00B9B856 /* bullet */,
@@ -8840,8 +8844,8 @@
 		78382F731C2469640001B3F1 /* vote */ = {
 			isa = PBXGroup;
 			children = (
-				78382F741C2469640001B3F1 /* Vote.cpp */,
 				78382F7B1C24698E0001B3F1 /* Vote.mm */,
+				78382F741C2469640001B3F1 /* Vote.cpp */,
 				78382F751C2469640001B3F1 /* Vote.h */,
 			);
 			name = vote;
@@ -13004,8 +13008,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1551A33E158F2AB200E66CFE /* libcocos2d Mac */,
 				A07A4C241783777C0073F6A7 /* libcocos2d iOS */,
+				1551A33E158F2AB200E66CFE /* libcocos2d Mac */,
 				78C3536A1CEE7F6500F10068 /* libcocos2d TV */,
 			);
 		};
@@ -15508,14 +15512,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../external/png/prebuilt/ios",
-					"$(SRCROOT)/../external/jpeg/prebuilt/ios",
-					"$(SRCROOT)/../external/tiff/prebuilt/ios",
-					"$(SRCROOT)/../external/webp/prebuilt/ios",
-					"$(SRCROOT)/../external/freetype2/prebuilt/ios",
-					"$(SRCROOT)/../external/curl/prebuilt/ios",
-					"$(SRCROOT)/../external/websockets/prebuilt/ios",
-					"$(SRCROOT)/../external/chipmunk/prebuilt/ios",
+					"$(SRCROOT)/../external/png/prebuilt/tv",
+					"$(SRCROOT)/../external/freetype2/prebuilt/tv",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -15553,14 +15551,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../external/png/prebuilt/ios",
-					"$(SRCROOT)/../external/jpeg/prebuilt/ios",
-					"$(SRCROOT)/../external/tiff/prebuilt/ios",
-					"$(SRCROOT)/../external/webp/prebuilt/ios",
-					"$(SRCROOT)/../external/freetype2/prebuilt/ios",
-					"$(SRCROOT)/../external/curl/prebuilt/ios",
-					"$(SRCROOT)/../external/websockets/prebuilt/ios",
-					"$(SRCROOT)/../external/chipmunk/prebuilt/ios",
+					"$(SRCROOT)/../external/png/prebuilt/tv",
+					"$(SRCROOT)/../external/freetype2/prebuilt/tv",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";

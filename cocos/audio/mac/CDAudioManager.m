@@ -45,6 +45,7 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
     if ((self = [super init])) {
         state = kLAS_Init;
         volume = 1.0f;
+        speed = 1.0f;
         mute = NO;
         enabled_ = YES;
         paused = NO;
@@ -142,6 +143,19 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 -(float) volume 
 {
     return volume;
+}
+
+-(void) setSpeed:(float) newSpeed
+{
+    speed = newSpeed;
+    if (state != kLAS_Init && !mute) {
+        audioSourcePlayer.speed = newSpeed;
+    }    
+}
+
+-(float) speed
+{
+    return speed;
 }
 
 #pragma mark Audio Interrupt Protocol

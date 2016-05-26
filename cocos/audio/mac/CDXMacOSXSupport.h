@@ -71,6 +71,7 @@ extern OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *o
 	NSData *data;
 	float pan;
 	float volume;
+	float speed;
 	NSTimeInterval currentTime;
 	NSTimeInterval deviceCurrentTime; 
 	NSInteger numberOfLoops;
@@ -112,6 +113,7 @@ extern OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *o
 @property(readonly) NSData *data; /* returns nil if object was not created with a data object */
 @property float pan; /* set panning. -1.0 is left, 0.0 is center, 1.0 is right. */
 @property float volume; /* The volume for the sound. The nominal range is from 0.0 to 1.0. */
+@property float speed;
 
 /*  If the sound is playing, currentTime is the offset into the sound of the current playback position.  
  If the sound is not playing, currentTime is the offset into the sound where playing would start. */

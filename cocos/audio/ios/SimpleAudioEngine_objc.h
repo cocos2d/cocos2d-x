@@ -45,6 +45,8 @@
 
 /** Background music volume. Range is 0.0f to 1.0f. This will only have an effect if willPlayBackgroundMusic returns YES */
 @property (readwrite) float backgroundMusicVolume;
+/** Background music speed. */
+@property (readwrite) float backgroundMusicSpeed;
 /** Effects volume. Range is 0.0f to 1.0f */
 @property (readwrite) float effectsVolume;
 /** If NO it indicates background music will not be played either because no background music is loaded or the audio session does not permit it.*/

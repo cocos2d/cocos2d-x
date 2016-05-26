@@ -116,6 +116,15 @@ OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *outData)
 	return [_player volume];
 }	
 
+-(void) setSpeed:(float) speed {
+	[_player setSpeed: speed];
+  [_player set]
+}
+
+-(float) speed {
+	return [_player speed];
+}
+
 -(void) setNumberOfLoops:(NSInteger) nOfLoops {
 	if (nOfLoops < 0) {
 		[_player setLoops:YES];

@@ -213,7 +213,19 @@ static CDBufferManager *bufferManager = nil;
 -(void) setBackgroundMusicVolume:(float) volume
 {
     am.backgroundMusic.volume = volume;
+}  
+
+
+#pragma mark SimpleAudioEngine - BackgroundMusicSpeed
+-(float) backgroundMusicSpeed
+{
+    return am.backgroundMusic.speed;
 }    
+
+-(void) setBackgroundMusicSpeed:(float) speed
+{
+    am.backgroundMusic.speed = speed;
+}
 
 #pragma mark SimpleAudioEngine - EffectsVolume
 -(float) effectsVolume
