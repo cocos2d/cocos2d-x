@@ -218,7 +218,7 @@ void SpriteFrame::setPolygonInfo(const PolygonInfo &polygonInfo)
     _polygonInfo = polygonInfo;
 }
 
-const PolygonInfo &SpriteFrame::getPolygonInfo() const
+const PolygonInfo& SpriteFrame::getPolygonInfo() const
 {
     return _polygonInfo;
 }
