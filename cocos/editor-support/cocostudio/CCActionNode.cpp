@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "ui/UILayout.h"
 #include "editor-support/cocostudio/CocoLoader.h"
 #include "base/ccUtils.h"
-#include "cocostudio/CCActionManagerEx.h"
+#include "editor-support/cocostudio/CCActionManagerEx.h"
 
 
 using namespace cocos2d;
