@@ -251,7 +251,12 @@ static bool js_cocos2dx_studio_ActionManagerEx_initWithDictionaryEx(JSContext *c
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocostudio::ActionManagerEx* cobj = (cocostudio::ActionManagerEx *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionManagerEx_initWithDictionaryEx : Invalid Native Object");
-    if (argc == 3) {
+
+    int version = 0;
+    if (argc == 4) {
+        ok &= jsval_to_int(cx, args.get(3), &version);
+    }
+    if (argc >= 3) {
         const char* arg0;
         const char* arg1;
         cocos2d::Ref* arg2;
@@ -271,7 +276,7 @@ static bool js_cocos2dx_studio_ActionManagerEx_initWithDictionaryEx(JSContext *c
             JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionManagerEx_initWithDictionaryEx : Error processing arguments");
-        cobj->initWithDictionary(arg0, arg1Jsondoc, arg2);
+        cobj->initWithDictionary(arg0, arg1Jsondoc, arg2, version);
         args.rval().setUndefined();
         return true;
     }
