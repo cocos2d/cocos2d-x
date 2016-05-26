@@ -132,14 +132,17 @@ public class Cocos2dxEditBoxHelper {
                     }
 
                     @Override
-                    public void onTextChanged(final CharSequence s, int start, int before, int count) {
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
                         //The optimization can't be turn on due to unknown keyboard hide in some custom keyboard
 //                        mFrameLayout.setEnableForceDoLayout(false);
 
+                        // Note that we must to copy a string to prevent string content is modified
+                        // on UI thread while 's.toString' is invoked at the same time.
+                        final String text = new String(s.toString());
                         mCocos2dxActivity.runOnGLThread(new Runnable() {
                             @Override
                             public void run() {
-                                Cocos2dxEditBoxHelper.__editBoxEditingChanged(index, s.toString());
+                                Cocos2dxEditBoxHelper.__editBoxEditingChanged(index, text);
                             }
                         });
                     }
@@ -168,10 +171,13 @@ public class Cocos2dxEditBoxHelper {
                             Log.d(TAG, "edit box get focus");
                         } else {
                             editBox.setVisibility(View.GONE);
+                            // Note that we must to copy a string to prevent string content is modified
+                            // on UI thread while 's.toString' is invoked at the same time.
+                            final String text = new String(editBox.getText().toString());
                             mCocos2dxActivity.runOnGLThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Cocos2dxEditBoxHelper.__editBoxEditingDidEnd(index, editBox.getText().toString());
+                                    Cocos2dxEditBoxHelper.__editBoxEditingDidEnd(index, text);
                                 }
                             });
                             mFrameLayout.setEnableForceDoLayout(false);
