@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "2d/CCAtlasNode.h"
 #include "renderer/CCTextureAtlas.h"
 #include "base/CCDirector.h"
-#include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgram.h"

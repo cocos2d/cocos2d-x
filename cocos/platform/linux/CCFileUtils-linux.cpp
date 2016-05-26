@@ -35,7 +35,6 @@ THE SOFTWARE.
 #include <sys/stat.h>
 #include <stdio.h>
 #include <errno.h>
-#include <sys/stat.h>
 
 #ifndef CC_RESOURCE_FOLDER_LINUX
 #define CC_RESOURCE_FOLDER_LINUX ("/Resources/")

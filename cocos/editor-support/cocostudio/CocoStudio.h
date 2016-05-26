@@ -64,9 +64,7 @@ THE SOFTWARE.
 #include "editor-support/cocostudio/ActionTimeline/CCActionTimelineNode.h"
 #include "editor-support/cocostudio/ActionTimeline/CCBoneNode.h"
 #include "editor-support/cocostudio/ActionTimeline/CCSkeletonNode.h"
-#include "editor-support/cocostudio/CocosStudioExport.h"
 #include "editor-support/cocostudio/ActionTimeline/CSLoader.h"
-
 #include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio

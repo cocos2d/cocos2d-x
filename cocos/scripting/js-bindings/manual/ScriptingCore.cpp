@@ -68,8 +68,6 @@
 #define  LOGD(...) js_log(__VA_ARGS__)
 #endif
 
-#include "scripting/js-bindings/manual/js_bindings_config.h"
-
 #if COCOS2D_DEBUG
 #define TRACE_DEBUGGER_SERVER(...) CCLOG(__VA_ARGS__)
 #else

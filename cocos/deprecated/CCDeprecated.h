@@ -90,7 +90,6 @@
 #include "platform/CCFileUtils.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"
-#include "renderer/CCGLProgramCache.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/ccGLStateCache.h"
 
