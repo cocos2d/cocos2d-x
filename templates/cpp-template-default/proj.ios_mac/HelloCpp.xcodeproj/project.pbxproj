@@ -7,10 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */; };
-		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		254335421CAEF401004A57D9 /* Intro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2543353E1CAEF401004A57D9 /* Intro.cpp */; };
+		254335431CAEF401004A57D9 /* Level1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 254335401CAEF401004A57D9 /* Level1.cpp */; };
+		254335571CAEF410004A57D9 /* bgm_main.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 254335441CAEF410004A57D9 /* bgm_main.mp3 */; };
+		254335581CAEF410004A57D9 /* Blue_Back1.png in Resources */ = {isa = PBXBuildFile; fileRef = 254335451CAEF410004A57D9 /* Blue_Back1.png */; };
+		254335591CAEF410004A57D9 /* Blue_Back2.png in Resources */ = {isa = PBXBuildFile; fileRef = 254335461CAEF410004A57D9 /* Blue_Back2.png */; };
+		2543355A1CAEF410004A57D9 /* Blue_Back3.png in Resources */ = {isa = PBXBuildFile; fileRef = 254335471CAEF410004A57D9 /* Blue_Back3.png */; };
+		2543355B1CAEF410004A57D9 /* Blue_Front1.png in Resources */ = {isa = PBXBuildFile; fileRef = 254335481CAEF410004A57D9 /* Blue_Front1.png */; };
+		2543355C1CAEF410004A57D9 /* Blue_Front2.png in Resources */ = {isa = PBXBuildFile; fileRef = 254335491CAEF410004A57D9 /* Blue_Front2.png */; };
+		2543355D1CAEF410004A57D9 /* Blue_Front3.png in Resources */ = {isa = PBXBuildFile; fileRef = 2543354A1CAEF410004A57D9 /* Blue_Front3.png */; };
+		2543355E1CAEF410004A57D9 /* Blue_Left1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2543354B1CAEF410004A57D9 /* Blue_Left1.png */; };
+		2543355F1CAEF410004A57D9 /* Blue_Left2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2543354C1CAEF410004A57D9 /* Blue_Left2.png */; };
+		254335601CAEF410004A57D9 /* Blue_Left3.png in Resources */ = {isa = PBXBuildFile; fileRef = 2543354D1CAEF410004A57D9 /* Blue_Left3.png */; };
+		254335611CAEF410004A57D9 /* Blue_Right1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2543354E1CAEF410004A57D9 /* Blue_Right1.png */; };
+		254335621CAEF410004A57D9 /* Blue_Right2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2543354F1CAEF410004A57D9 /* Blue_Right2.png */; };
+		254335631CAEF410004A57D9 /* Blue_Right3.png in Resources */ = {isa = PBXBuildFile; fileRef = 254335501CAEF410004A57D9 /* Blue_Right3.png */; };
+		254335641CAEF410004A57D9 /* Brown_Front1.png in Resources */ = {isa = PBXBuildFile; fileRef = 254335511CAEF410004A57D9 /* Brown_Front1.png */; };
+		254335651CAEF410004A57D9 /* Green_Front1.png in Resources */ = {isa = PBXBuildFile; fileRef = 254335521CAEF410004A57D9 /* Green_Front1.png */; };
+		254335661CAEF410004A57D9 /* LightBlue_Front1.png in Resources */ = {isa = PBXBuildFile; fileRef = 254335531CAEF410004A57D9 /* LightBlue_Front1.png */; };
+		254335671CAEF410004A57D9 /* Pink_Front1.png in Resources */ = {isa = PBXBuildFile; fileRef = 254335541CAEF410004A57D9 /* Pink_Front1.png */; };
+		254335681CAEF410004A57D9 /* ZigzagForest_Square.png in Resources */ = {isa = PBXBuildFile; fileRef = 254335551CAEF410004A57D9 /* ZigzagForest_Square.png */; };
+		254335691CAEF410004A57D9 /* ZigzagGrass_Mud_Round.png in Resources */ = {isa = PBXBuildFile; fileRef = 254335561CAEF410004A57D9 /* ZigzagGrass_Mud_Round.png */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
@@ -22,8 +41,6 @@
 		46880B8219C43A67006E1F66 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7A19C43A67006E1F66 /* HelloWorld.png */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
-		46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
-		46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -72,42 +89,58 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1AC6FAF8180E9839004C840B /* PBXContainerItemProxy */ = {
+		254335341CAEF329004A57D9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 1551A33F158F2AB200E66CFE;
-			remoteInfo = "cocos2dx Mac";
+			remoteInfo = "libcocos2d Mac";
 		};
-		1AC6FB06180E9839004C840B /* PBXContainerItemProxy */ = {
+		254335361CAEF329004A57D9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = A07A4D641783777C0073F6A7;
-			remoteInfo = "cocos2dx iOS";
+			remoteInfo = "libcocos2d iOS";
 		};
-		1AC6FB15180E9959004C840B /* PBXContainerItemProxy */ = {
+		254335381CAEF329004A57D9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
-			remoteInfo = "cocos2dx Mac";
-		};
-		1AC6FB24180E99E1004C840B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A07A4C241783777C0073F6A7;
-			remoteInfo = "cocos2dx iOS";
+			proxyType = 2;
+			remoteGlobalIDString = 507B40FD1C31BDD30067B53E;
+			remoteInfo = "libcocos2d tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
+		1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../../../build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* HelloCpp-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HelloCpp-mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2543353E1CAEF401004A57D9 /* Intro.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Intro.cpp; sourceTree = "<group>"; };
+		2543353F1CAEF401004A57D9 /* Intro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Intro.h; sourceTree = "<group>"; };
+		254335401CAEF401004A57D9 /* Level1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Level1.cpp; sourceTree = "<group>"; };
+		254335411CAEF401004A57D9 /* Level1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Level1.h; sourceTree = "<group>"; };
+		254335441CAEF410004A57D9 /* bgm_main.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bgm_main.mp3; sourceTree = "<group>"; };
+		254335451CAEF410004A57D9 /* Blue_Back1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Back1.png; sourceTree = "<group>"; };
+		254335461CAEF410004A57D9 /* Blue_Back2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Back2.png; sourceTree = "<group>"; };
+		254335471CAEF410004A57D9 /* Blue_Back3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Back3.png; sourceTree = "<group>"; };
+		254335481CAEF410004A57D9 /* Blue_Front1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Front1.png; sourceTree = "<group>"; };
+		254335491CAEF410004A57D9 /* Blue_Front2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Front2.png; sourceTree = "<group>"; };
+		2543354A1CAEF410004A57D9 /* Blue_Front3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Front3.png; sourceTree = "<group>"; };
+		2543354B1CAEF410004A57D9 /* Blue_Left1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Left1.png; sourceTree = "<group>"; };
+		2543354C1CAEF410004A57D9 /* Blue_Left2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Left2.png; sourceTree = "<group>"; };
+		2543354D1CAEF410004A57D9 /* Blue_Left3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Left3.png; sourceTree = "<group>"; };
+		2543354E1CAEF410004A57D9 /* Blue_Right1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Right1.png; sourceTree = "<group>"; };
+		2543354F1CAEF410004A57D9 /* Blue_Right2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Right2.png; sourceTree = "<group>"; };
+		254335501CAEF410004A57D9 /* Blue_Right3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Right3.png; sourceTree = "<group>"; };
+		254335511CAEF410004A57D9 /* Brown_Front1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Brown_Front1.png; sourceTree = "<group>"; };
+		254335521CAEF410004A57D9 /* Green_Front1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Green_Front1.png; sourceTree = "<group>"; };
+		254335531CAEF410004A57D9 /* LightBlue_Front1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LightBlue_Front1.png; sourceTree = "<group>"; };
+		254335541CAEF410004A57D9 /* Pink_Front1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pink_Front1.png; sourceTree = "<group>"; };
+		254335551CAEF410004A57D9 /* ZigzagForest_Square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZigzagForest_Square.png; sourceTree = "<group>"; };
+		254335561CAEF410004A57D9 /* ZigzagGrass_Mud_Round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZigzagGrass_Mud_Round.png; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B7619C43A67006E1F66 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
@@ -115,8 +148,6 @@
 		46880B7A19C43A67006E1F66 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
-		46880B8719C43A87006E1F66 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE0FA17EB989F00D1A890 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = SOURCE_ROOT; };
@@ -172,7 +203,6 @@
 			files = (
 				ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */,
 				52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */,
-				1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */,
 				D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -191,7 +221,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED545A7E1B68A1FA00C3958E /* libiconv.dylib in Frameworks */,
-				1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */,
 				5087E76717EB910900C73F5D /* libz.dylib in Frameworks */,
 				8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */,
 				503AE11B17EB9C5A00D1A890 /* IOKit.framework in Frameworks */,
@@ -232,11 +261,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1AC6FAE6180E9839004C840B /* Products */ = {
+		2543352F1CAEF329004A57D9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */,
-				1AC6FB07180E9839004C840B /* libcocos2d iOS.a */,
+				254335351CAEF329004A57D9 /* libcocos2d Mac.a */,
+				254335371CAEF329004A57D9 /* libcocos2d iOS.a */,
+				254335391CAEF329004A57D9 /* libcocos2d tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -284,6 +314,25 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				254335441CAEF410004A57D9 /* bgm_main.mp3 */,
+				254335451CAEF410004A57D9 /* Blue_Back1.png */,
+				254335461CAEF410004A57D9 /* Blue_Back2.png */,
+				254335471CAEF410004A57D9 /* Blue_Back3.png */,
+				254335481CAEF410004A57D9 /* Blue_Front1.png */,
+				254335491CAEF410004A57D9 /* Blue_Front2.png */,
+				2543354A1CAEF410004A57D9 /* Blue_Front3.png */,
+				2543354B1CAEF410004A57D9 /* Blue_Left1.png */,
+				2543354C1CAEF410004A57D9 /* Blue_Left2.png */,
+				2543354D1CAEF410004A57D9 /* Blue_Left3.png */,
+				2543354E1CAEF410004A57D9 /* Blue_Right1.png */,
+				2543354F1CAEF410004A57D9 /* Blue_Right2.png */,
+				254335501CAEF410004A57D9 /* Blue_Right3.png */,
+				254335511CAEF410004A57D9 /* Brown_Front1.png */,
+				254335521CAEF410004A57D9 /* Green_Front1.png */,
+				254335531CAEF410004A57D9 /* LightBlue_Front1.png */,
+				254335541CAEF410004A57D9 /* Pink_Front1.png */,
+				254335551CAEF410004A57D9 /* ZigzagForest_Square.png */,
+				254335561CAEF410004A57D9 /* ZigzagGrass_Mud_Round.png */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
 				46880B7619C43A67006E1F66 /* CloseNormal.png */,
@@ -297,10 +346,12 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2543353E1CAEF401004A57D9 /* Intro.cpp */,
+				2543353F1CAEF401004A57D9 /* Intro.h */,
+				254335401CAEF401004A57D9 /* Level1.cpp */,
+				254335411CAEF401004A57D9 /* Level1.h */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
-				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
-				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -367,7 +418,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				1AC6FB25180E99E1004C840B /* PBXTargetDependency */,
 			);
 			name = "HelloCpp-mobile";
 			productName = iphone;
@@ -385,7 +435,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				1AC6FB16180E9959004C840B /* PBXTargetDependency */,
 			);
 			name = "HelloCpp-desktop";
 			productName = iphone;
@@ -414,7 +463,7 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 1AC6FAE6180E9839004C840B /* Products */;
+					ProductGroup = 2543352F1CAEF329004A57D9 /* Products */;
 					ProjectRef = 1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */;
 				},
 			);
@@ -427,18 +476,25 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */ = {
+		254335351CAEF329004A57D9 /* libcocos2d Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libcocos2d Mac.a";
-			remoteRef = 1AC6FAF8180E9839004C840B /* PBXContainerItemProxy */;
+			remoteRef = 254335341CAEF329004A57D9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1AC6FB07180E9839004C840B /* libcocos2d iOS.a */ = {
+		254335371CAEF329004A57D9 /* libcocos2d iOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libcocos2d iOS.a";
-			remoteRef = 1AC6FB06180E9839004C840B /* PBXContainerItemProxy */;
+			remoteRef = 254335361CAEF329004A57D9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		254335391CAEF329004A57D9 /* libcocos2d tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libcocos2d tvOS.a";
+			remoteRef = 254335381CAEF329004A57D9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -448,27 +504,46 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				254335691CAEF410004A57D9 /* ZigzagGrass_Mud_Round.png in Resources */,
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
+				254335601CAEF410004A57D9 /* Blue_Left3.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
+				254335641CAEF410004A57D9 /* Brown_Front1.png in Resources */,
+				2543355F1CAEF410004A57D9 /* Blue_Left2.png in Resources */,
+				254335681CAEF410004A57D9 /* ZigzagForest_Square.png in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
+				254335611CAEF410004A57D9 /* Blue_Right1.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
+				254335651CAEF410004A57D9 /* Green_Front1.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
+				254335571CAEF410004A57D9 /* bgm_main.mp3 in Resources */,
+				254335661CAEF410004A57D9 /* LightBlue_Front1.png in Resources */,
+				2543355E1CAEF410004A57D9 /* Blue_Left1.png in Resources */,
+				254335591CAEF410004A57D9 /* Blue_Back2.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
+				2543355D1CAEF410004A57D9 /* Blue_Front3.png in Resources */,
+				2543355B1CAEF410004A57D9 /* Blue_Front1.png in Resources */,
+				254335621CAEF410004A57D9 /* Blue_Right2.png in Resources */,
+				254335631CAEF410004A57D9 /* Blue_Right3.png in Resources */,
+				2543355C1CAEF410004A57D9 /* Blue_Front2.png in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
+				254335581CAEF410004A57D9 /* Blue_Back1.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
+				2543355A1CAEF410004A57D9 /* Blue_Back3.png in Resources */,
+				254335671CAEF410004A57D9 /* Pink_Front1.png in Resources */,
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 			);
@@ -495,10 +570,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
-				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				254335431CAEF401004A57D9 /* Level1.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				254335421CAEF401004A57D9 /* Intro.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,24 +584,10 @@
 			files = (
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
-				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		1AC6FB16180E9959004C840B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "cocos2dx Mac";
-			targetProxy = 1AC6FB15180E9959004C840B /* PBXContainerItemProxy */;
-		};
-		1AC6FB25180E99E1004C840B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "cocos2dx iOS";
-			targetProxy = 1AC6FB24180E99E1004C840B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
