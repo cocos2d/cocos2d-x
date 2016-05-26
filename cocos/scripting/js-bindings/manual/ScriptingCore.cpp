@@ -1332,12 +1332,10 @@ int ScriptingCore::handleComponentEvent(void* data)
     else if (action == kComponentOnEnter)
     {
         ret = executeFunctionWithOwner(nodeValue, "onEnter", 1, &dataVal, &retval);
-        resumeSchedulesAndActions(p);
     }
     else if (action == kComponentOnExit)
     {
         ret = executeFunctionWithOwner(nodeValue, "onExit", 1, &dataVal, &retval);
-        pauseSchedulesAndActions(p);
     }
     else if (action == kComponentOnUpdate)
     {
