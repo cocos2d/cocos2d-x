@@ -1770,11 +1770,11 @@ void SimpleRunLoop::update(float dt)
         }
         g_qMutex.unlock();
         
-        if (messageCount == 0)
-            break;
-        
         if (!message.empty())
             ScriptingCore::getInstance()->debugProcessInput(message);
+        
+        if (messageCount == 0)
+            break;
     }
 }
 
@@ -1807,11 +1807,11 @@ static bool NS_ProcessNextEvent()
         }
         g_qMutex.unlock();
         
-        if (messageCount == 0)
-            break;
-        
         if (!message.empty())
             ScriptingCore::getInstance()->debugProcessInput(message);
+        
+        if (messageCount == 0)
+            break;
     }
 //    std::this_thread::yield();
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
