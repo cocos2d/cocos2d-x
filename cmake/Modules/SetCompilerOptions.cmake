@@ -23,7 +23,7 @@ macro (SetCompilerOptions)
     # definitions for bullet
 	if (USE_BULLET)
 		add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=1)
-        add_definitions(-DCC_USE_PHYSICS=1)
+        add_definitions(-DCC_USE_3D_PHYSICS=1)
 	else()
 		add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=0)
         add_definitions(-DCC_USE_3D_PHYSICS=0)
