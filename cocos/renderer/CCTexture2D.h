@@ -211,11 +211,11 @@ public:
      */
     virtual std::string getDescription() const;
 
-	/** Release only the gl texture.
+    /** Release only the gl texture.
      * @js NA
      * @lua NA
      */
-	void releaseGLTexture();
+    void releaseGLTexture();
 
     /** Initializes with a texture2d with data.
      
@@ -262,16 +262,16 @@ public:
     Extensions to make it easy to create a Texture2D object from an image file.
     */
     /** 
-	Initializes a texture from a UIImage object.
+    Initializes a texture from a UIImage object.
 
     We will use the format you specified with setDefaultAlphaPixelFormat to convert the image for texture.
     NOTE: It will not convert the pvr image file.
     @param image An UIImage object.
-	*/
+    */
     bool initWithImage(Image * image);
     
     /** 
-	Initializes a texture from a UIImage object.
+    Initializes a texture from a UIImage object.
 
     We will use the format you passed to the function to convert the image format to the texture format.
     If you pass PixelFormat::Automatic, we will auto detect the image render type and use that type for texture to render.
@@ -288,8 +288,10 @@ public:
      @param dimensions The font dimension.
      @param hAlignment The font horizontal text alignment type.
      @param vAlignment The font vertical text alignment type.
+     @param enableWrap Whether enable text wrap or not.
+     @param shrinkFontSize Whether shrink font size when content larger than the dimensions.
      */
-    bool initWithString(const char *text,  const std::string &fontName, float fontSize, const Size& dimensions = Size(0, 0), TextHAlignment hAlignment = TextHAlignment::CENTER, TextVAlignment vAlignment = TextVAlignment::TOP);
+    bool initWithString(const char *text,  const std::string &fontName, float fontSize, const Size& dimensions = Size(0, 0), TextHAlignment hAlignment = TextHAlignment::CENTER, TextVAlignment vAlignment = TextVAlignment::TOP, bool enableWrap = true, int overflow = 0);
 
     /** Initializes a texture from a string using a text definition.
      
