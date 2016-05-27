@@ -478,7 +478,7 @@ void TextureCache::removeUnusedTextures()
             CCLOG("cocos2d: TextureCache: removing unused texture: %s", it->first.c_str());
 
             tex->release();
-            _textures.erase(it++);
+            it = _textures.erase(it);
         } else {
             ++it;
         }
@@ -496,7 +496,7 @@ void TextureCache::removeTexture(Texture2D* texture)
     for( auto it=_textures.cbegin(); it!=_textures.cend(); /* nothing */ ) {
         if( it->second == texture ) {
             it->second->release();
-            _textures.erase(it++);
+            it = _textures.erase(it);
             break;
         } else
             ++it;
@@ -600,7 +600,7 @@ std::string TextureCache::getCachedTextureInfo() const
     return buffer;
 }
 
-void TextureCache::renameTextureWithKey(const std::string srcName, const std::string dstName)
+void TextureCache::renameTextureWithKey(const std::string& srcName, const std::string& dstName)
 {
     std::string key = srcName;
     auto it = _textures.find(key);
@@ -679,7 +679,7 @@ void VolatileTextureMgr::addImage(Texture2D *tt, Image *image)
 
 VolatileTexture* VolatileTextureMgr::findVolotileTexture(Texture2D *tt)
 {
-    VolatileTexture *vt = 0;
+    VolatileTexture *vt = nullptr;
     auto i = _textures.begin();
     while (i != _textures.end())
     {

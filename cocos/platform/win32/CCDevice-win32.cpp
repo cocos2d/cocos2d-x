@@ -99,7 +99,7 @@ public:
 
     }
 
-    bool setFont(const char * pFontName = nullptr, int nSize = 0)
+    bool setFont(const char * pFontName = "", int nSize = 0)
     {
         bool bRet = false;
         do
@@ -110,7 +110,7 @@ public:
             LOGFONTA    tNewFont = {0};
             LOGFONTA    tOldFont = {0};
             GetObjectA(hDefFont, sizeof(tNewFont), &tNewFont);
-            if (fontName.c_str())
+            if (!fontName.empty())
             {
                 // create font from ttf file
                 if (FileUtils::getInstance()->getFileExtension(fontName) == ".ttf")
@@ -464,7 +464,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         width    = (short)size.cx;
         height   = (short)size.cy;
 
-        // copy pixed data
+        // copy pixel data
         bi.bmiHeader.biHeight = (bi.bmiHeader.biHeight > 0)
             ? - bi.bmiHeader.biHeight : bi.bmiHeader.biHeight;
         GetDIBits(dc.getDC(), dc.getBitmap(), 0, height, dataBuf,

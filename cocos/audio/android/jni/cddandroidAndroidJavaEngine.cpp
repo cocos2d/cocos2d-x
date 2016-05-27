@@ -75,12 +75,12 @@ AndroidJavaEngine::~AndroidJavaEngine()
 
 void AndroidJavaEngine::preloadBackgroundMusic(const char* filePath) {
     std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
-    JniHelper::callStaticVoidMethod(helperClassName, "preloadBackgroundMusic", filePath);
+    JniHelper::callStaticVoidMethod(helperClassName, "preloadBackgroundMusic", fullPath);
 }
 
 void AndroidJavaEngine::playBackgroundMusic(const char* filePath, bool loop) {
     std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
-    JniHelper::callStaticVoidMethod(helperClassName, "playBackgroundMusic", filePath, loop);
+    JniHelper::callStaticVoidMethod(helperClassName, "playBackgroundMusic", fullPath, loop);
 }
 
 void AndroidJavaEngine::stopBackgroundMusic(bool releaseData) {

@@ -26,6 +26,7 @@
 
 #include "base/ObjectFactory.h"
 #include "ui/CocosGUI.h"
+#include "platform/CCFileUtils.h"
 #include "editor-support/cocostudio/CocoStudio.h"
 #include "editor-support/cocostudio/CSLanguageDataBinary_generated.h"
 #include "editor-support/cocostudio/CSParseBinary_generated.h"
@@ -156,7 +157,7 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
     // xml read
     if (!FileUtils::getInstance()->isFileExist(inFullpath))
     {
-        return ".csd file doesn not exists ";
+        return ".csd file does not exist.";
     }
     
     std::string content = FileUtils::getInstance()->getStringFromFile(inFullpath);
@@ -1279,12 +1280,12 @@ flatbuffers::Offset<flatbuffers::EasingData> FlatBuffersSerialize::createEasingD
 /* create flat buffers with XML */
 FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulator(const std::string &xmlFileName)
 {    
-    std::string inFullpath = FileUtils::getInstance()->fullPathForFilename(xmlFileName).c_str();
+    std::string inFullpath = FileUtils::getInstance()->fullPathForFilename(xmlFileName);
     
     // xml read
     if (!FileUtils::getInstance()->isFileExist(inFullpath))
     {
-//        CCLOG(".csd file doesn not exists ");
+//        CCLOG(".csd file does not exist.");
     }
     
     std::string content = FileUtils::getInstance()->getStringFromFile(inFullpath);
@@ -1579,7 +1580,7 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFileForLanguageData
 {
     //Read and parse XML data file.
     if (!FileUtils::getInstance()->isFileExist(xmlFilePath))
-        return "Language XML file doesn not exists.";
+        return "Language XML file does not exist.";
     std::string content = FileUtils::getInstance()->getStringFromFile(xmlFilePath);
     tinyxml2::XMLDocument* document = new (std::nothrow) tinyxml2::XMLDocument();
     document->Parse(content.c_str());

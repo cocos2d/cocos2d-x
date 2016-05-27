@@ -34,6 +34,7 @@
 #include <vector>
 #include <mutex>
 #include <memory>  // for std::shared_ptr
+#include <atomic>
 
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCStdC.h"
@@ -199,7 +200,7 @@ public:
      *  @brief Closes the connection to server asynchronously.
      *  @note It's an asynchronous method, it just notifies websocket thread to exit and returns directly,
      *        If using 'closeAsync' to close websocket connection, 
-     *        be carefull of not using destructed variables in the callback of 'onClose'.
+     *        be careful of not using destructed variables in the callback of 'onClose'.
      */
     void closeAsync();
 
@@ -238,7 +239,7 @@ private:
 
     struct lws*         _wsInstance;
     struct lws_context* _wsContext;
-    std::shared_ptr<bool> _isDestroyed;
+    std::shared_ptr<std::atomic<bool>> _isDestroyed;
     Delegate* _delegate;
     int _SSLConnection;
     struct lws_protocols* _wsProtocols;

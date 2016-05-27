@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "ui/UILayoutParameter.h"
 #include "ui/GUIDefine.h"
 #include "ui/GUIExport.h"
+#include "ui/UIWidget.h"
 #include "base/CCMap.h"
 
 /**

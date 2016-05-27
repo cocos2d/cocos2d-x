@@ -55,7 +55,7 @@ RenderState::~RenderState()
 
 void RenderState::initialize()
 {
-    if (StateBlock::_defaultState == NULL)
+    if (StateBlock::_defaultState == nullptr)
     {
         StateBlock::_defaultState = StateBlock::create();
         CC_SAFE_RETAIN(StateBlock::_defaultState);
@@ -121,7 +121,7 @@ void RenderState::bind(Pass* pass)
     StateBlock::restore(stateOverrideBits);
 
     // Apply renderer state for the entire hierarchy, top-down.
-    rs = NULL;
+    rs = nullptr;
     while ((rs = getTopmost(rs)))
     {
         if (rs->_state)
@@ -137,12 +137,12 @@ RenderState* RenderState::getTopmost(RenderState* below)
     if (rs == below)
     {
         // Nothing below ourself.
-        return NULL;
+        return nullptr;
     }
 
     while (rs)
     {
-        if (rs->_parent == below || rs->_parent == NULL)
+        if (rs->_parent == below || rs->_parent == nullptr)
         {
             // Stop traversing up here.
             return rs;
@@ -150,7 +150,7 @@ RenderState* RenderState::getTopmost(RenderState* below)
         rs = rs->_parent;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 RenderState::StateBlock* RenderState::getStateBlock() const

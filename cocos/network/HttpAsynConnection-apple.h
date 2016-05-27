@@ -1,18 +1,18 @@
 /****************************************************************************
- Copyright (c) 2013-2015 Chukong Technologies Inc.
- 
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,18 +34,6 @@
 /// @cond
 @interface HttpAsynConnection : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 {
-    NSString *srcURL;
-    NSString *sslFile;
-    NSDictionary *responseHeader;
-    NSMutableData *responseData;
-    NSInteger getDataTime;
-    NSInteger responseCode;
-    NSString *statusString;
-    NSError *responseError;
-    NSError *connError;
-    NSURLConnection *conn;
-    bool finish;
-    NSRunLoop *runLoop;
 }
 
 // The original URL to download.  Due to redirects the actual content may come from another URL
@@ -80,3 +68,4 @@
 
 /// @endcond
 #endif //__HTTPASYNCONNECTION_H__
+

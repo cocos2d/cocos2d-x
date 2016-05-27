@@ -25,7 +25,7 @@
 #ifndef __cocos2d_libs__WidgetCallBackHandlerProtocol__
 #define __cocos2d_libs__WidgetCallBackHandlerProtocol__
 
-#include "cocos2d.h"
+
 #include "editor-support/cocostudio/CocosStudioExport.h"
 #include "ui/UIWidget.h"
 

@@ -411,7 +411,7 @@ HttpClient::HttpClient()
 
 HttpClient::~HttpClient()
 {
-	CC_SAFE_DELETE(_requestSentinel);
+	CC_SAFE_RELEASE(_requestSentinel);
 	CCLOG("HttpClient destructor");
 }
 

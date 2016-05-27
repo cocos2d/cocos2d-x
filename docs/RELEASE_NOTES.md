@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x 3.11.1 Release Notes](#cocos2d-x-3111-release-notes)
+- [Cocos2d-x 3.11 Release Notes](#cocos2d-x-311-release-notes)
 - [Misc Information](#misc-information)
 - [Requirements](#requirements)
   - [Runtime Requirements](#runtime-requirements)
@@ -14,15 +14,18 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [v3.11.1](#v3111)
+- [v3.11](#v311)
   - [Highlights features](#highlights-features)
-  - [The main features in detail of Cocos2d-x v3.11.1](#the-main-features-in-detail-of-cocos2d-x-v3111)
-    - [support IPv6-only network](#support-ipv6-only-network)
+  - [The main features in detail of Cocos2d-x v3.11](#the-main-features-in-detail-of-cocos2d-x-v311)
+    - [New memory model in JSB](#new-memory-model-in-jsb)
+    - [OpenSSL](#openssl)
+    - [Cocos2d-x JSB program debugging](#cocos2d-x-jsb-program-debugging)
+    - [New WebGL renderer](#new-webgl-renderer)
   - [Other changes](#other-changes)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Cocos2d-x 3.11.1 Release Notes #
+# Cocos2d-x 3.11 Release Notes #
 
 # Misc Information
 
@@ -146,17 +149,76 @@ Use the __cocos__ console app to create a new game:
 cocos new -l cpp|js|lua MyNewGame
 ```
 
-# v3.11.1
+# v3.11
 
 ## Highlights features
 
-* support IPv6-only network
+* upgrade Chipmunk to v7.0.1
+* use new memory model in JSB, don't have to invoke `retain/release` in JS, it is disabled by default
+* upgrade Curl to v7.48
+* upgrade OpenSSL to 1.0.2g
+* can use VSCode and new Firefox to debug cocos2d-x JSB programs
+* refactor WebGL renderer
 
+## The main features in detail of Cocos2d-x v3.11
 
-## The main features in detail of Cocos2d-x v3.11.1
+### New memory model in JSB
 
-### support IPv6-only network
-[Apple required to support IPv6-only Networks](https://developer.apple.com/news/?id=05042016a) since June 1, 2016. And this version supports IPv6-only network.
+With new memory model, you don't have to care about object lifecycle. Which means you don't have to invoke `retain/release` in JS any more.
+
+Though we have finished many tests about this new memory model, we can't make sure it is too perfect to enable it by default. But you are appreciated if you can enable it to have a try. If you want to enable it, you should change the value of `CC_ENABLE_GC_FOR_NATIVE_OBJECTS` to 1 in `base/ccConfig.h` like this:
+
+```c++
+#ifdef CC_ENABLE_SCRIPT_BINDING
+  #ifndef CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+  #define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 1 // change to 1
+  #endif
+#endif
+```
+
+### OpenSSL
+Cocos2d-x has upgraded __OpenSSL__ to version __1.0.2g__.
+
+Beginning __July 11, 2016__, Google Play will block publishing of any new apps or updates that use older versions of __OpenSSL__. It is important that you update the use of __OpenSSL__ in your projects. More detail information can refer to [this ticket](http://discuss.cocos2d-x.org/t/openssl-problem-again/28270).
+
+If you use v2.x or use older versions of v3.x, you can just update __CURL__ and __OpenSSL__.
+To do this:
+
+* modify __Cocos2d-x root/external/config.json__ to update the dependency version. For v3.x the dependency version is `v3-deps-92`, and for v2.x it is `v2-deps-5`
+* execute the __download-deps.py__ script in your __Cocos2d-x root__.
+
+```sh
+(jtsm @ 15 ~) $ cd cocos2d-x
+
+(jtsm @ 15 ~/cocos2d-x) $ ./download-deps.py
+
+=======================================================
+==> Prepare to download external libraries!
+==> Ready to download 'v3-deps-92.zip' from 'https://github.com/cocos2d/cocos2d-x-3rd-party-libs-bin/archive/v3-deps-92.zip'
+==> WARNING: Couldnt grab the file size from remote, use 'zip_file_size' section in '/Users/jtsm/Chukong-Inc/cocos2d-x/external/config.json'
+==> Start to download, please wait ...
+==> Downloading finished!
+==> Extracting files, please wait ...
+==> Extraction done! ==> Copying files...
+==> Cleaning...
+```
+Feel free to post on our <a href="http://discuss.cocos2d-x.org">forums</a> if you run into difficulty.
+
+### Cocos2d-x JSB program debugging
+
+In previous version, can not use Firefox 30+ to debug cocos2d-x JSB programs. This limit is fixed since v3.11. And web console feature is added too. [This documentation](http://www.cocos2d-x.org/wiki/Javascript_Remote_Debugging) shows how to use Firefox to debug cocos2d-x JSB programs(this is a little difference from current usage).
+
+Of course you can use [VSCode](https://code.visualstudio.com/) to debug cocos2d-x JSB programs too. You can read about how to use VSCode to debug cocos2d-x JSB programs [here](http://discuss.cocos2d-x.org/t/use-vscode-to-debug-cocos2d-x-jsb-programs/27588).
+
+### New WebGL renderer
+
+In v3.11, we have refactored the WebGL renderer in web engine, here is the detailed changes:
+
+1. Activate WebGL on Android by default.
+2. Add sprite auto batching in WebGL.
+3. Shared rendering buffer for Sprites.
+
+Compare with old version, the draw calls in your game should be significantly reduced if the textures is well managed. This improves also the CPU usage and memory usage. The above is just a first step of WebGL renderer upgrade, we will continue to investigate in this direction in the future versions.
 
 ## Other changes
 You can also take a look at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).

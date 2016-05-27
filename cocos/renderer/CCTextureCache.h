@@ -212,7 +212,7 @@ public:
     *
     * @since v3.10
     */
-    void renameTextureWithKey(const std::string srcName, const std::string dstName);
+    void renameTextureWithKey(const std::string& srcName, const std::string& dstName);
 
 
 private:

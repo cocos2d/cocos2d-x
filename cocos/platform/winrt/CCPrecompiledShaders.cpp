@@ -64,7 +64,7 @@ void CCPrecompiledShaders::Init(void)
     m_programs.clear();
     m_precompiledPrograms.clear();
 
-    // add existing precomiled programs to dictionary
+    // add existing precompiled programs to dictionary
     loadPrecompiledPrograms();
 }
 

@@ -1189,7 +1189,7 @@ Sprite6::Sprite6()
     // Don't use capacity=1 in your real game. It is expensive to resize the capacity
     auto batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 1);
     addChild(batch, 0, kTagSpriteBatchNode);
-    batch->ignoreAnchorPointForPosition( true );
+    batch->setIgnoreAnchorPointForPosition( true );
 
     auto s = Director::getInstance()->getWinSize();
 

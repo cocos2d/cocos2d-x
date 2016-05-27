@@ -811,7 +811,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         end.size.height -= offestY;
     }
     
-    // Convert to desigin coordinate
+    // Convert to design coordinate
     begin = CGRectApplyAffineTransform(begin, CGAffineTransformScale(CGAffineTransformIdentity, 1.0f/scaleX, 1.0f/scaleY));
     end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, 1.0f/scaleX, 1.0f/scaleY));
 

@@ -12,6 +12,7 @@
 #include "Bug-Child.h"
 #include "Bug-CCDrawNode.h"
 #include "Bug-PageViewLayout.h"
+#include "Bug-15594.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "Bug-14327.h"
@@ -33,6 +34,7 @@ BugsTests::BugsTests()
     ADD_TEST_CASE(BugDrawNodeLayer);
     ADD_TEST_CASE(BugPageViewLayer);
     ADD_TEST_CASE(Bug12847Layer);
+    ADD_TEST_CASE(Bug15594Layer);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     ADD_TEST_CASE(Bug14327Layer);

@@ -14,7 +14,7 @@ void RefPtrTest::onEnter()
         CC_ASSERT(nullptr == ref1.get());
 
         // Parameter constructor
-        RefPtr<__String> ref2(cocos2d::String::create("Hello"));
+        RefPtr<__String> ref2(__String::create("Hello"));
         CC_ASSERT(strcmp("Hello", ref2->getCString()) == 0);
         CC_ASSERT(2 == ref2->getReferenceCount());
 
@@ -201,7 +201,7 @@ void RefPtrTest::onEnter()
     
     // TEST(dynamicPointerCast)
     {
-        RefPtr<__String> ref1 = cocos2d::String::create("Hello");
+        RefPtr<__String> ref1 = __String::create("Hello");
         CC_ASSERT(2 == ref1->getReferenceCount());
         
         RefPtr<Ref> ref2 = dynamic_pointer_cast<Ref>(ref1);

@@ -52,7 +52,7 @@ PUCircleEmitter::PUCircleEmitter(void) :
 {
 }
 //-----------------------------------------------------------------------
-const float PUCircleEmitter::getRadius(void) const
+float PUCircleEmitter::getRadius() const
 {
     return _radius;
 }
@@ -62,7 +62,7 @@ void PUCircleEmitter::setRadius(const float radius)
     _radius = radius;
 }
 //-----------------------------------------------------------------------
-const float PUCircleEmitter::getCircleAngle(void) const
+float PUCircleEmitter::getCircleAngle() const
 {
     return _originalCircleAngle;
 }
@@ -73,7 +73,7 @@ void PUCircleEmitter::setCircleAngle(const float circleAngle)
     _circleAngle = circleAngle;
 }
 //-----------------------------------------------------------------------
-const float PUCircleEmitter::getStep(void) const
+float PUCircleEmitter::getStep() const
 {
     return _step;
 }
@@ -83,7 +83,7 @@ void PUCircleEmitter::setStep(const float step)
     _step = step;
 }
 //-----------------------------------------------------------------------
-const bool PUCircleEmitter::isRandom(void) const
+bool PUCircleEmitter::isRandom() const
 {
     return _random;
 }
