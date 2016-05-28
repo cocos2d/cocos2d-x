@@ -264,6 +264,10 @@ void RefPtrTest::onEnter()
         CC_ASSERT(false == (ref1 > nullptr));
         CC_ASSERT(true == (ref1 <= nullptr));
         CC_ASSERT(true == (ref1 >= nullptr));
+        CC_ASSERT(false == (nullptr < ref1));
+        CC_ASSERT(false == (nullptr > ref1));
+        CC_ASSERT(true == (nullptr <= ref1));
+        CC_ASSERT(true == (nullptr >= ref1));
         
         CC_ASSERT(false == (ref1 == __String::create("Hello")));
         CC_ASSERT(true == (ref1 != __String::create("Hello")));
@@ -280,6 +284,17 @@ void RefPtrTest::onEnter()
         CC_ASSERT(true == (ref1 > ref2));
         CC_ASSERT(false == (ref1 <= ref2));
         CC_ASSERT(true == (ref1 >= ref2));
+
+        CC_ASSERT(false == (ref1 == nullptr));
+        CC_ASSERT(true == (ref1 != nullptr));
+        CC_ASSERT(false == (ref1 < nullptr));
+        CC_ASSERT(true == (ref1 > nullptr));
+        CC_ASSERT(false == (ref1 <= nullptr));
+        CC_ASSERT(true == (ref1 >= nullptr));
+        CC_ASSERT(true == (nullptr < ref1));
+        CC_ASSERT(false == (nullptr > ref1));
+        CC_ASSERT(true == (nullptr <= ref1));
+        CC_ASSERT(false == (nullptr >= ref1));
     }
     
     // TEST(moveConstructor)
