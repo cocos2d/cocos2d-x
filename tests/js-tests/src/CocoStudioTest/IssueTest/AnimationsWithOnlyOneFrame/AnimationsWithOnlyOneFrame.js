@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var CustomIssueAnimationsWithOnlyOneFrameLayer = cc.Layer.extend({
+var CCSIssueAnimationsWithOnlyOneFrameLayer = cc.Layer.extend({
 
     onEnter: function(){
         cc.Layer.prototype.onEnter.call(this);
@@ -35,7 +35,7 @@ var CustomIssueAnimationsWithOnlyOneFrameLayer = cc.Layer.extend({
         this.addChild(jsonNode);
 
 		var winSize = director.getWinSize();
-        var logLabel = new cc.LabelTTF("Issue #15366: Animations with only one frame are allowed now", "Thonburi", 16);
+        var logLabel = new cc.LabelTTF("Issue #15714: Animations with only one frame are allowed now", "Thonburi", 16);
         this.addChild(logLabel);
         logLabel.x = winSize.width / 2;
 	    logLabel.y = winSize.height / 3;
@@ -58,7 +58,7 @@ var CustomIssueAnimationsWithOnlyOneFrameLayer = cc.Layer.extend({
 				if(animationOneFramePosition != null)
 				{
 					animationOneFramePosition.play();
-					logLabel.setString("Animation with only one frame played: Image position should change");
+					logLabel.setString("Animation with only one frame played! Image position should change");
 				}
 			}, this),
 			cc.delayTime(delayTime),
@@ -66,7 +66,7 @@ var CustomIssueAnimationsWithOnlyOneFrameLayer = cc.Layer.extend({
 				if(animationOneFrameRotation != null)
 				{
 					animationOneFrameRotation.play();
-					logLabel.setString("Animation with only one frame played: Image rotation should change");
+					logLabel.setString("Animation with only one frame played! Image rotation should change");
 				}
 			}, this)
 		));
@@ -74,7 +74,7 @@ var CustomIssueAnimationsWithOnlyOneFrameLayer = cc.Layer.extend({
     }
 });
 
-var CustomIssueAnimationsWithOnlyOneFrameScene = cc.Scene.extend({
+var CCSIssueAnimationsWithOnlyOneFrameScene = cc.Scene.extend({
 
     onEnter: function(){
         cc.Scene.prototype.onEnter.call(this);
@@ -91,12 +91,12 @@ var CustomIssueAnimationsWithOnlyOneFrameScene = cc.Scene.extend({
         this.addChild(pMenu, 1);
     },
     runThisTest: function(){
-        var pLayer = new CustomIssueAnimationsWithOnlyOneFrameLayer();
+        var pLayer = new CCSIssueAnimationsWithOnlyOneFrameLayer();
         this.addChild(pLayer);
         cc.director.runScene(this);
     },
     BackCallback: function(pSender){
-        var pScene = new CustomGUITestScene();
+        var pScene = new CCSIssueTestScene();
         pScene.runThisTest();
     }
 });

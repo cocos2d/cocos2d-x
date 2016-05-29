@@ -22,23 +22,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var g_guisTests = [
+var g_ccsIssuesTests = [
     {
-        title: "custom gui image Test",
+        title: "Cocos Studio 1.x Issue: Animations With Only One Frame Test",
         test: function(){
-            var pScene = new CustomImageScene();
-            pScene.runThisTest();
-        }
-    },{
-        title: "custom gui particle widget Test",
-        test: function(){
-            var pScene = new CustomParticleWidgetScene();
+            var pScene = new CCSIssueAnimationsWithOnlyOneFrameScene();
             pScene.runThisTest();
         }
     }
 ];
 
-var CustomGUITestMainLayer = cc.Layer.extend({
+var CCSIssueTestMainLayer = cc.Layer.extend({
     onEnter: function(){
         cc.Layer.prototype.onEnter.call(this);
 
@@ -50,8 +44,8 @@ var CustomGUITestMainLayer = cc.Layer.extend({
         cc.MenuItemFont.setFontName("fonts/arial.ttf");
         cc.MenuItemFont.setFontSize(24);
 
-        for (var i = 0; i < g_guisTests.length; ++i) {
-            var selItem = g_guisTests[i];
+        for (var i = 0; i < g_ccsIssuesTests.length; ++i) {
+            var selItem = g_ccsIssuesTests[i];
             var pItem = new cc.MenuItemFont(selItem.title,
                 selItem.test, this);
             pItem.x = winSize.width / 2;
@@ -72,7 +66,7 @@ var CustomGUITestMainLayer = cc.Layer.extend({
 
 });
 
-var CustomGUITestScene = cc.Scene.extend({
+var CCSIssueTestScene = cc.Scene.extend({
     onEnter: function(){
         cc.Scene.prototype.onEnter.call(this);
 
@@ -89,7 +83,7 @@ var CustomGUITestScene = cc.Scene.extend({
 
     },
     runThisTest: function(){
-        var pLayer = new CustomGUITestMainLayer();
+        var pLayer = new CCSIssueTestMainLayer();
         this.addChild(pLayer);
 
         cc.director.runScene(this);
@@ -101,7 +95,7 @@ var CustomGUITestScene = cc.Scene.extend({
     }
 });
 
-var runCustomGUITest = function(){
-    var scene = new CustomGUITestScene();
+var runCCSIssueTest = function(){
+    var scene = new CCSIssueTestScene();
     scene.runThisTest();
 };
