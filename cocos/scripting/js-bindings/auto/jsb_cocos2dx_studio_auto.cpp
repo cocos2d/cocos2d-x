@@ -34,7 +34,7 @@ bool js_cocos2dx_studio_ActionObject_setCurrentTime(JSContext *cx, uint32_t argc
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionObject_setCurrentTime : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionObject_setCurrentTime : Error processing arguments");
         cobj->setCurrentTime(arg0);
         args.rval().setUndefined();
@@ -90,7 +90,7 @@ bool js_cocos2dx_studio_ActionObject_setUnitTime(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionObject_setUnitTime : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionObject_setUnitTime : Error processing arguments");
         cobj->setUnitTime(arg0);
         args.rval().setUndefined();
@@ -372,7 +372,7 @@ bool js_cocos2dx_studio_ActionObject_updateToFrameByTime(JSContext *cx, uint32_t
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionObject_updateToFrameByTime : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionObject_updateToFrameByTime : Error processing arguments");
         cobj->updateToFrameByTime(arg0);
         args.rval().setUndefined();
@@ -412,7 +412,7 @@ bool js_cocos2dx_studio_ActionObject_simulationActionUpdate(JSContext *cx, uint3
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionObject_simulationActionUpdate : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionObject_simulationActionUpdate : Error processing arguments");
         cobj->simulationActionUpdate(arg0);
         args.rval().setUndefined();
@@ -555,6 +555,24 @@ bool js_cocos2dx_studio_ActionManagerEx_getActionByName(JSContext *cx, uint32_t 
     }
 
     JS_ReportError(cx, "js_cocos2dx_studio_ActionManagerEx_getActionByName : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_cocos2dx_studio_ActionManagerEx_getStudioVersionNumber(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::ActionManagerEx* cobj = (cocostudio::ActionManagerEx *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionManagerEx_getStudioVersionNumber : Invalid Native Object");
+    if (argc == 0) {
+        int ret = cobj->getStudioVersionNumber();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_ActionManagerEx_getStudioVersionNumber : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_studio_ActionManagerEx_initWithBinary(JSContext *cx, uint32_t argc, jsval *vp)
@@ -728,6 +746,7 @@ void js_register_cocos2dx_studio_ActionManagerEx(JSContext *cx, JS::HandleObject
     static JSFunctionSpec funcs[] = {
         JS_FN("stopActionByName", js_cocos2dx_studio_ActionManagerEx_stopActionByName, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getActionByName", js_cocos2dx_studio_ActionManagerEx_getActionByName, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getStudioVersionNumber", js_cocos2dx_studio_ActionManagerEx_getStudioVersionNumber, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithBinary", js_cocos2dx_studio_ActionManagerEx_initWithBinary, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("playActionByName", js_cocos2dx_studio_ActionManagerEx_playActionByName, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("releaseActions", js_cocos2dx_studio_ActionManagerEx_releaseActions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -1565,7 +1584,7 @@ bool js_cocos2dx_studio_ProcessBase_update(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ProcessBase_update : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ProcessBase_update : Error processing arguments");
         cobj->update(arg0);
         args.rval().setUndefined();
@@ -1713,7 +1732,7 @@ bool js_cocos2dx_studio_ProcessBase_setProcessScale(JSContext *cx, uint32_t argc
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ProcessBase_setProcessScale : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ProcessBase_setProcessScale : Error processing arguments");
         cobj->setProcessScale(arg0);
         args.rval().setUndefined();
@@ -2979,10 +2998,10 @@ bool js_cocos2dx_studio_DisplayManager_containPoint(JSContext *cx, uint32_t argc
     do {
         if (argc == 2) {
             double arg0 = 0;
-            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
             if (!ok) { ok = true; break; }
             double arg1 = 0;
-            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !std::isnan(arg1);
             if (!ok) { ok = true; break; }
             bool ret = cobj->containPoint(arg0, arg1);
             jsval jsret = JSVAL_NULL;
@@ -4422,7 +4441,7 @@ bool js_cocos2dx_studio_ArmatureAnimation_setSpeedScale(JSContext *cx, uint32_t 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ArmatureAnimation_setSpeedScale : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ArmatureAnimation_setSpeedScale : Error processing arguments");
         cobj->setSpeedScale(arg0);
         args.rval().setUndefined();
@@ -5374,8 +5393,8 @@ bool js_cocos2dx_studio_Armature_getBoneAtPoint(JSContext *cx, uint32_t argc, js
     if (argc == 2) {
         double arg0 = 0;
         double arg1 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !std::isnan(arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Armature_getBoneAtPoint : Error processing arguments");
         cocostudio::Bone* ret = cobj->getBoneAtPoint(arg0, arg1);
         jsval jsret = JSVAL_NULL;
@@ -5419,7 +5438,7 @@ bool js_cocos2dx_studio_Armature_setVersion(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Armature_setVersion : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Armature_setVersion : Error processing arguments");
         cobj->setVersion(arg0);
         args.rval().setUndefined();
@@ -6264,7 +6283,7 @@ bool js_cocos2dx_studio_ComAttribute_getFloat(JSContext *cx, uint32_t argc, jsva
         std::string arg0;
         double arg1 = 0;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !std::isnan(arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ComAttribute_getFloat : Error processing arguments");
         double ret = cobj->getFloat(arg0, arg1);
         jsval jsret = JSVAL_NULL;
@@ -6356,7 +6375,7 @@ bool js_cocos2dx_studio_ComAttribute_setFloat(JSContext *cx, uint32_t argc, jsva
         std::string arg0;
         double arg1 = 0;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !std::isnan(arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ComAttribute_setFloat : Error processing arguments");
         cobj->setFloat(arg0, arg1);
         args.rval().setUndefined();
@@ -6679,7 +6698,7 @@ bool js_cocos2dx_studio_ComAudio_setBackgroundMusicVolume(JSContext *cx, uint32_
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ComAudio_setBackgroundMusicVolume : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ComAudio_setBackgroundMusicVolume : Error processing arguments");
         cobj->setBackgroundMusicVolume(arg0);
         args.rval().setUndefined();
@@ -7113,7 +7132,7 @@ bool js_cocos2dx_studio_ComAudio_setEffectsVolume(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ComAudio_setEffectsVolume : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ComAudio_setEffectsVolume : Error processing arguments");
         cobj->setEffectsVolume(arg0);
         args.rval().setUndefined();
@@ -7986,7 +8005,7 @@ bool js_cocos2dx_studio_Frame_apply(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Frame_apply : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_Frame_apply : Error processing arguments");
         cobj->apply(arg0);
         args.rval().setUndefined();
@@ -8410,7 +8429,7 @@ bool js_cocos2dx_studio_RotationFrame_setRotation(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_RotationFrame_setRotation : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_RotationFrame_setRotation : Error processing arguments");
         cobj->setRotation(arg0);
         args.rval().setUndefined();
@@ -8550,7 +8569,7 @@ bool js_cocos2dx_studio_SkewFrame_setSkewX(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_SkewFrame_setSkewX : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_SkewFrame_setSkewX : Error processing arguments");
         cobj->setSkewX(arg0);
         args.rval().setUndefined();
@@ -8570,7 +8589,7 @@ bool js_cocos2dx_studio_SkewFrame_setSkewY(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_SkewFrame_setSkewY : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_SkewFrame_setSkewY : Error processing arguments");
         cobj->setSkewY(arg0);
         args.rval().setUndefined();
@@ -8832,7 +8851,7 @@ bool js_cocos2dx_studio_PositionFrame_setX(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_PositionFrame_setX : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_PositionFrame_setX : Error processing arguments");
         cobj->setX(arg0);
         args.rval().setUndefined();
@@ -8852,7 +8871,7 @@ bool js_cocos2dx_studio_PositionFrame_setY(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_PositionFrame_setY : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_PositionFrame_setY : Error processing arguments");
         cobj->setY(arg0);
         args.rval().setUndefined();
@@ -8978,7 +8997,7 @@ bool js_cocos2dx_studio_ScaleFrame_setScaleY(JSContext *cx, uint32_t argc, jsval
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ScaleFrame_setScaleY : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ScaleFrame_setScaleY : Error processing arguments");
         cobj->setScaleY(arg0);
         args.rval().setUndefined();
@@ -8998,7 +9017,7 @@ bool js_cocos2dx_studio_ScaleFrame_setScaleX(JSContext *cx, uint32_t argc, jsval
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ScaleFrame_setScaleX : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ScaleFrame_setScaleX : Error processing arguments");
         cobj->setScaleX(arg0);
         args.rval().setUndefined();
@@ -9054,7 +9073,7 @@ bool js_cocos2dx_studio_ScaleFrame_setScale(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ScaleFrame_setScale : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ScaleFrame_setScale : Error processing arguments");
         cobj->setScale(arg0);
         args.rval().setUndefined();
@@ -11407,7 +11426,7 @@ bool js_cocos2dx_studio_ActionTimeline_setTimeSpeed(JSContext *cx, uint32_t argc
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionTimeline_setTimeSpeed : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionTimeline_setTimeSpeed : Error processing arguments");
         cobj->setTimeSpeed(arg0);
         args.rval().setUndefined();
@@ -11929,7 +11948,7 @@ bool js_cocos2dx_studio_BoneNode_setDebugDrawLength(JSContext *cx, uint32_t argc
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_setDebugDrawLength : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_BoneNode_setDebugDrawLength : Error processing arguments");
         cobj->setDebugDrawLength(arg0);
         args.rval().setUndefined();
@@ -12001,7 +12020,7 @@ bool js_cocos2dx_studio_BoneNode_setDebugDrawWidth(JSContext *cx, uint32_t argc,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_setDebugDrawWidth : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_BoneNode_setDebugDrawWidth : Error processing arguments");
         cobj->setDebugDrawWidth(arg0);
         args.rval().setUndefined();

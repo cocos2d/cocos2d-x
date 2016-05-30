@@ -2175,7 +2175,7 @@ int
 
 /**
  * @method getNumberOfRadioButtons
- * @return {long}
+ * @return {int}
  */
 getNumberOfRadioButtons : function (
 )
@@ -2521,7 +2521,7 @@ size
 
 /**
  * @method getStringLength
- * @return {long}
+ * @return {int}
  */
 getStringLength : function (
 )
@@ -2695,7 +2695,7 @@ ccui.TextAtlas = {
 
 /**
  * @method getStringLength
- * @return {long}
+ * @return {int}
  */
 getStringLength : function (
 )
@@ -3535,7 +3535,7 @@ getCenterItemInCurrentView : function (
 
 /**
  * @method getCurSelectedIndex
- * @return {long}
+ * @return {int}
  */
 getCurSelectedIndex : function (
 )
@@ -3555,12 +3555,12 @@ getItemsMargin : function (
 
 /**
  * @method jumpToItem
- * @param {long} arg0
+ * @param {int} arg0
  * @param {vec2_object} arg1
  * @param {vec2_object} arg2
  */
 jumpToItem : function (
-long, 
+int, 
 vec2, 
 vec2 
 )
@@ -3580,7 +3580,7 @@ magnetictype
 /**
  * @method getIndex
  * @param {ccui.Widget} arg0
- * @return {long}
+ * @return {int}
  */
 getIndex : function (
 widget 
@@ -3601,10 +3601,10 @@ widget
 
 /**
  * @method insertDefaultItem
- * @param {long} arg0
+ * @param {int} arg0
  */
 insertDefaultItem : function (
-long 
+int 
 )
 {
 },
@@ -3707,11 +3707,11 @@ getMagneticType : function (
 
 /**
  * @method getItem
- * @param {long} arg0
+ * @param {int} arg0
  * @return {ccui.Widget}
  */
 getItem : function (
-long 
+int 
 )
 {
     return ccui.Widget;
@@ -3719,23 +3719,23 @@ long
 
 /**
  * @method removeItem
- * @param {long} arg0
+ * @param {int} arg0
  */
 removeItem : function (
-long 
+int 
 )
 {
 },
 
 /**
  * @method scrollToItem
-* @param {long|long} long
+* @param {int|int} int
 * @param {vec2_object|vec2_object} vec2
 * @param {vec2_object|vec2_object} vec2
 * @param {float} float
 */
 scrollToItem : function(
-long,
+int,
 vec2,
 vec2,
 float 
@@ -3812,11 +3812,11 @@ widget
 /**
  * @method insertCustomItem
  * @param {ccui.Widget} arg0
- * @param {long} arg1
+ * @param {int} arg1
  */
 insertCustomItem : function (
 widget, 
-long 
+int 
 )
 {
 },
@@ -4921,7 +4921,7 @@ ccui.TextBMFont = {
 
 /**
  * @method getStringLength
- * @return {long}
+ * @return {int}
  */
 getStringLength : function (
 )
@@ -5030,10 +5030,28 @@ int
 },
 
 /**
+ * @method removeAllPages
+ */
+removeAllPages : function (
+)
+{
+},
+
+/**
  * @method setAutoScrollStopEpsilon
  * @param {float} arg0
  */
 setAutoScrollStopEpsilon : function (
+float 
+)
+{
+},
+
+/**
+ * @method setIndicatorIndexNodesScale
+ * @param {float} arg0
+ */
+setIndicatorIndexNodesScale : function (
 float 
 )
 {
@@ -5081,12 +5099,22 @@ getIndicatorPosition : function (
 
 /**
  * @method setCurrentPageIndex
- * @param {long} arg0
+ * @param {int} arg0
  */
 setCurrentPageIndex : function (
-long 
+int 
 )
 {
+},
+
+/**
+ * @method getIndicatorIndexNodesColor
+ * @return {color3b_object}
+ */
+getIndicatorIndexNodesColor : function (
+)
+{
+    return cc.Color3B;
 },
 
 /**
@@ -5097,6 +5125,16 @@ getIndicatorSelectedIndexColor : function (
 )
 {
     return cc.Color3B;
+},
+
+/**
+ * @method getIndicatorIndexNodesScale
+ * @return {float}
+ */
+getIndicatorIndexNodesScale : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -5111,10 +5149,10 @@ vec2
 
 /**
  * @method scrollToPage
- * @param {long} arg0
+ * @param {int} arg0
  */
 scrollToPage : function (
-long 
+int 
 )
 {
 },
@@ -5131,18 +5169,20 @@ vec2
 
 /**
  * @method scrollToItem
- * @param {long} arg0
+ * @param {int} arg0
  */
 scrollToItem : function (
-long 
+int 
 )
 {
 },
 
 /**
- * @method removeAllPages
+ * @method setIndicatorIndexNodesColor
+ * @param {color3b_object} arg0
  */
-removeAllPages : function (
+setIndicatorIndexNodesColor : function (
+color3b 
 )
 {
 },
@@ -5159,7 +5199,7 @@ getIndicatorPositionAsAnchorPoint : function (
 
 /**
  * @method getCurrentPageIndex
- * @return {long}
+ * @return {int}
  */
 getCurrentPageIndex : function (
 )
@@ -5178,6 +5218,18 @@ widget
 },
 
 /**
+ * @method setIndicatorIndexNodesTexture
+ * @param {String} arg0
+ * @param {ccui.Widget::TextureResType} arg1
+ */
+setIndicatorIndexNodesTexture : function (
+str, 
+texturerestype 
+)
+{
+},
+
+/**
  * @method getIndicatorEnabled
  * @return {bool}
  */
@@ -5189,10 +5241,10 @@ getIndicatorEnabled : function (
 
 /**
  * @method removePageAtIndex
- * @param {long} arg0
+ * @param {int} arg0
  */
 removePageAtIndex : function (
-long 
+int 
 )
 {
 },

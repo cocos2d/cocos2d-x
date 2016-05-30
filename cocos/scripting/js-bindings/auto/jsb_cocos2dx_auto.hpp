@@ -515,6 +515,7 @@ bool js_cocos2dx_Image_getData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Image_getMipmaps(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Image_initWithRawData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Image_setPVRImagesHavePremultipliedAlpha(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_setPNGPremultipliedAlphaEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Image_Image(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_GLProgramState_class;
