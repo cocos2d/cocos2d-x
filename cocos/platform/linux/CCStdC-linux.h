@@ -50,12 +50,6 @@ THE SOFTWARE.
 #define MAX(x,y) (((x) < (y)) ? (y) : (x))
 #endif  // MAX
 
-// some function linux do not have
-#define tanf tan
-#define sqrtf sqrt
-#define cosf cos
-#define sinf sin
-
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #endif  // __CC_STD_C_H__
