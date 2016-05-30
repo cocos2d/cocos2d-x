@@ -233,6 +233,16 @@ char
 },
 
 /**
+ * @method getStudioVersionNumber
+ * @return {int}
+ */
+getStudioVersionNumber : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method initWithBinary
  * @param {char} arg0
  * @param {cc.Ref} arg1

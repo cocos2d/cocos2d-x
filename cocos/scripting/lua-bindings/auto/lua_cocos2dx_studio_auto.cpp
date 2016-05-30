@@ -2719,6 +2719,53 @@ int lua_cocos2dx_studio_ActionManagerEx_getActionByName(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_studio_ActionManagerEx_getStudioVersionNumber(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ActionManagerEx* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ActionManagerEx",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ActionManagerEx*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ActionManagerEx_getStudioVersionNumber'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ActionManagerEx_getStudioVersionNumber'", nullptr);
+            return 0;
+        }
+        int ret = cobj->getStudioVersionNumber();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ActionManagerEx:getStudioVersionNumber",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ActionManagerEx_getStudioVersionNumber'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_studio_ActionManagerEx_playActionByName(lua_State* tolua_S)
 {
     int argc = 0;
@@ -2915,6 +2962,7 @@ int lua_register_cocos2dx_studio_ActionManagerEx(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"ActionManagerEx");
         tolua_function(tolua_S,"stopActionByName",lua_cocos2dx_studio_ActionManagerEx_stopActionByName);
         tolua_function(tolua_S,"getActionByName",lua_cocos2dx_studio_ActionManagerEx_getActionByName);
+        tolua_function(tolua_S,"getStudioVersionNumber",lua_cocos2dx_studio_ActionManagerEx_getStudioVersionNumber);
         tolua_function(tolua_S,"playActionByName",lua_cocos2dx_studio_ActionManagerEx_playActionByName);
         tolua_function(tolua_S,"releaseActions",lua_cocos2dx_studio_ActionManagerEx_releaseActions);
         tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_studio_ActionManagerEx_destroyInstance);

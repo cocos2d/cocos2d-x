@@ -3911,6 +3911,16 @@ bool
 },
 
 /**
+ * @method setPNGPremultipliedAlphaEnabled
+ * @param {bool} arg0
+ */
+setPNGPremultipliedAlphaEnabled : function (
+bool 
+)
+{
+},
+
+/**
  * @method Image
  * @constructor
  */

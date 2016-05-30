@@ -57,6 +57,13 @@
 -- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
         
 --------------------------------
+-- Set whether the webview bounces at end of scroll of WebView.
+-- @function [parent=#WebView] setBounces 
+-- @param self
+-- @param #bool bounce
+-- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
+        
+--------------------------------
 -- Evaluates JavaScript in the context of the currently displayed page.
 -- @function [parent=#WebView] evaluateJS 
 -- @param self
