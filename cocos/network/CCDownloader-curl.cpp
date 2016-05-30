@@ -108,7 +108,7 @@ namespace cocos2d { namespace network {
             do
             {
                 string dir;
-                unsigned long found = _tempFileName.find_last_of("/\\");
+                size_t found = _tempFileName.find_last_of("/\\");
                 if (found == string::npos)
                 {
                     _errCode = DownloadTask::ERROR_INVALID_PARAMS;
