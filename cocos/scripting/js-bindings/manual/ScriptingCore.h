@@ -28,7 +28,7 @@
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
-#include "cocos2d.h"
+
 #include "ui/CocosGUI.h"
 #include "scripting/js-bindings/manual/js_bindings_config.h"
 #include "scripting/js-bindings/manual/js_bindings_core.h"
@@ -85,6 +85,7 @@ private:
     mozilla::Maybe<JS::PersistentRootedObject> _debugGlobal;
     SimpleRunLoop* _runLoop;
     bool _jsInited;
+    bool _needCleanup;
 
     bool _callFromScript;
     ScriptingCore();
@@ -547,7 +548,7 @@ public:
     bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event);
     bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event, JS::MutableHandleValue jsvalRet);
 
-    bool handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
+    bool handleKeyboardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
     bool handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widgetLoseFocus, cocos2d::ui::Widget* widgetGetFocus);
 
     void restartVM();

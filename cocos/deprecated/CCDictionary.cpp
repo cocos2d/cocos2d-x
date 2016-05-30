@@ -24,8 +24,7 @@
  ****************************************************************************/
 
 #include "deprecated/CCDictionary.h"
-#include "deprecated/CCString.h"
-#include "deprecated/CCInteger.h"
+#include <type_traits>
 #include "platform/CCFileUtils.h"
 #include "deprecated/CCString.h"
 #include "deprecated/CCBool.h"
@@ -584,7 +583,7 @@ __Dictionary* __Dictionary::clone() const
             }
             else
             {
-                CCLOGWARN("%s isn't clonable.", typeid(*element->getObject()).name());
+                CCLOGWARN("%s isn't clonable.", typeid(std::remove_pointer<decltype(element->getObject())>::type).name());
             }
         }
     }
@@ -603,7 +602,7 @@ __Dictionary* __Dictionary::clone() const
             }
             else
             {
-                CCLOGWARN("%s isn't clonable.", typeid(*element->getObject()).name());
+                CCLOGWARN("%s isn't clonable.", typeid(std::remove_pointer<decltype(element->getObject())>::type).name());
             }
         }
     }

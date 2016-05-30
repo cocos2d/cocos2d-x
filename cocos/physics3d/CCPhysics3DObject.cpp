@@ -379,7 +379,7 @@ public:
     ~btCollider(){};
 
     ///this method is mainly for expert/internal use only.
-    virtual void	addOverlappingObjectInternal(btBroadphaseProxy* otherProxy, btBroadphaseProxy* thisProxy = 0) override
+    virtual void addOverlappingObjectInternal(btBroadphaseProxy* otherProxy, btBroadphaseProxy* thisProxy = nullptr) override
     {
         btCollisionObject* otherObject = (btCollisionObject*)otherProxy->m_clientObject;
         btAssert(otherObject);
@@ -395,7 +395,7 @@ public:
     }
 
     ///this method is mainly for expert/internal use only.
-    virtual void	removeOverlappingObjectInternal(btBroadphaseProxy* otherProxy, btDispatcher* dispatcher, btBroadphaseProxy* thisProxy = 0) override
+    virtual void removeOverlappingObjectInternal(btBroadphaseProxy* otherProxy, btDispatcher* dispatcher, btBroadphaseProxy* thisProxy = nullptr) override
     {
         btCollisionObject* otherObject = (btCollisionObject*)otherProxy->m_clientObject;
         btAssert(otherObject);

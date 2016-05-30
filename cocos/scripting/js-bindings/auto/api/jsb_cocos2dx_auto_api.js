@@ -755,10 +755,10 @@ str
 
 /**
  * @method setPhysicsBody
- * @param {cc.Component} arg0
+ * @param {cc.PhysicsBody} arg0
  */
 setPhysicsBody : function (
-component 
+physicsbody 
 )
 {
 },
@@ -1251,16 +1251,6 @@ int
 reorderChild : function (
 node, 
 int 
-)
-{
-},
-
-/**
- * @method ignoreAnchorPointForPosition
- * @param {bool} arg0
- */
-ignoreAnchorPointForPosition : function (
-bool 
 )
 {
 },
@@ -1928,6 +1918,16 @@ getBoundingBox : function (
 )
 {
     return cc.Rect;
+},
+
+/**
+ * @method setIgnoreAnchorPointForPosition
+ * @param {bool} arg0
+ */
+setIgnoreAnchorPointForPosition : function (
+bool 
+)
+{
 },
 
 /**
@@ -3647,6 +3647,24 @@ rect
 },
 
 /**
+ * @method initWithTargetAndOffset
+ * @param {cc.Node} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {rect_object} arg3
+ * @return {bool}
+ */
+initWithTargetAndOffset : function (
+node, 
+float, 
+float, 
+rect 
+)
+{
+    return false;
+},
+
+/**
  * @method isBoundarySet
  * @return {bool}
  */
@@ -3664,6 +3682,24 @@ isBoundarySet : function (
  */
 create : function (
 node, 
+rect 
+)
+{
+    return cc.Follow;
+},
+
+/**
+ * @method createWithOffset
+ * @param {cc.Node} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {rect_object} arg3
+ * @return {cc.Follow}
+ */
+createWithOffset : function (
+node, 
+float, 
+float, 
 rect 
 )
 {
@@ -3869,6 +3905,16 @@ bool
  * @param {bool} arg0
  */
 setPVRImagesHavePremultipliedAlpha : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setPNGPremultipliedAlphaEnabled
+ * @param {bool} arg0
+ */
+setPNGPremultipliedAlphaEnabled : function (
 bool 
 )
 {

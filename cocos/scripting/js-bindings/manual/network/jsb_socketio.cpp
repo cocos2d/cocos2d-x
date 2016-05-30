@@ -23,7 +23,7 @@
 
 #include "scripting/js-bindings/manual/network/jsb_socketio.h"
 #include "scripting/js-bindings/manual/jsb_helper.h"
-#include "cocos2d.h"
+
 #include "network/WebSocket.h"
 #include "network/SocketIO.h"
 #include "scripting/js-bindings/manual/spidermonkey_specifics.h"

@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 // 0x00 HI ME LO
 // 00   03 08 00
-#define COCOS2D_VERSION 0x00031100
+#define COCOS2D_VERSION 0x00031101
 
 //
 // all cocos2d include files
@@ -249,6 +249,13 @@ THE SOFTWARE.
 	#include "platform/winrt/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
+	#include "platform/tizen/CCApplication-tizen.h"
+	#include "platform/tizen/CCGLViewImpl-tizen.h"
+	#include "platform/tizen/CCGL-tizen.h"
+	#include "platform/tizen/CCStdC-tizen.h"
+#endif
+
 // script_support
 #include "base/CCScriptSupport.h"
 
@@ -302,17 +309,10 @@ THE SOFTWARE.
 #include "3d/CCTerrain.h"
 
 
-// Deprecated include
-#include "deprecated/CCArray.h"
-#include "deprecated/CCBool.h"
-#include "deprecated/CCDictionary.h"
-#include "deprecated/CCDouble.h"
-#include "deprecated/CCFloat.h"
-#include "deprecated/CCInteger.h"
-#include "deprecated/CCNotificationCenter.h"
-#include "deprecated/CCSet.h"
-#include "deprecated/CCString.h"
-// CCDeprecated.h must be included at the end
+// Deprecated
+// All deprecated features are include inside deprecated/CCDeprecated.h.
+// It is recommanded that you just inlcude what is needed.
+// eg. #include "deprecated/CCString.h" if you only need cocos2d::__String.
 #include "deprecated/CCDeprecated.h"
 
 

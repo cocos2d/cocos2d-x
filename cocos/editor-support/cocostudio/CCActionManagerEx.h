@@ -110,7 +110,7 @@ public:
     ActionObject* stopActionByName(const char* jsonName,const char* actionName);
 
     /*init properties with json dictionary*/
-    void initWithDictionary(const char* jsonName,const rapidjson::Value &dic, Ref* root);
+    void initWithDictionary(const char* jsonName,const rapidjson::Value &dic, Ref* root, int version = 1600);
     void initWithBinary(const char* file, Ref* root,  CocoLoader* cocoLoader, stExpCocoNode*    pCocoNode);
 
     /**
@@ -119,8 +119,11 @@ public:
     */
     void releaseActions();
 
+    int getStudioVersionNumber() const;
+
 protected:
     std::unordered_map<std::string, cocos2d::Vector<ActionObject*>> _actionDic;
+    int _studioVersionNumber;
 };
 
 }

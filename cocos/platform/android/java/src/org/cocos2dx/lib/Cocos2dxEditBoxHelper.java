@@ -28,6 +28,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -132,14 +133,17 @@ public class Cocos2dxEditBoxHelper {
                     }
 
                     @Override
-                    public void onTextChanged(final CharSequence s, int start, int before, int count) {
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
                         //The optimization can't be turn on due to unknown keyboard hide in some custom keyboard
 //                        mFrameLayout.setEnableForceDoLayout(false);
 
+                        // Note that we must to copy a string to prevent string content is modified
+                        // on UI thread while 's.toString' is invoked at the same time.
+                        final String text = new String(s.toString());
                         mCocos2dxActivity.runOnGLThread(new Runnable() {
                             @Override
                             public void run() {
-                                Cocos2dxEditBoxHelper.__editBoxEditingChanged(index, s.toString());
+                                Cocos2dxEditBoxHelper.__editBoxEditingChanged(index, text);
                             }
                         });
                     }
@@ -168,10 +172,13 @@ public class Cocos2dxEditBoxHelper {
                             Log.d(TAG, "edit box get focus");
                         } else {
                             editBox.setVisibility(View.GONE);
+                            // Note that we must to copy a string to prevent string content is modified
+                            // on UI thread while 's.toString' is invoked at the same time.
+                            final String text = new String(editBox.getText().toString());
                             mCocos2dxActivity.runOnGLThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Cocos2dxEditBoxHelper.__editBoxEditingDidEnd(index, editBox.getText().toString());
+                                    Cocos2dxEditBoxHelper.__editBoxEditingDidEnd(index, text);
                                 }
                             });
                             mFrameLayout.setEnableForceDoLayout(false);
@@ -187,7 +194,7 @@ public class Cocos2dxEditBoxHelper {
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
                             //if editbox doesn't support multiline, just hide the keyboard
                             if ((editBox.getInputType() & InputType.TYPE_TEXT_FLAG_MULTI_LINE) != InputType.TYPE_TEXT_FLAG_MULTI_LINE) {
-                                Cocos2dxEditBoxHelper.closeKeyboard(index);
+                                Cocos2dxEditBoxHelper.closeKeyboardOnUiThread(index);
                                 mCocos2dxActivity.getGLSurfaceView().requestFocus();
                                 return true;
                             }
@@ -201,7 +208,7 @@ public class Cocos2dxEditBoxHelper {
                     @Override
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                         if (actionId == EditorInfo.IME_ACTION_DONE) {
-                            Cocos2dxEditBoxHelper.closeKeyboard(index);
+                            Cocos2dxEditBoxHelper.closeKeyboardOnUiThread(index);
                             mCocos2dxActivity.getGLSurfaceView().requestFocus();
                         }
                         return false;
@@ -313,7 +320,7 @@ public class Cocos2dxEditBoxHelper {
                         Cocos2dxEditBoxHelper.openKeyboard(index);
                     }else{
                         mCocos2dxActivity.getGLSurfaceView().requestFocus();
-                        Cocos2dxEditBoxHelper.closeKeyboard(index);
+                        Cocos2dxEditBoxHelper.closeKeyboardOnUiThread(index);
                     }
                 }
             }
@@ -393,12 +400,27 @@ public class Cocos2dxEditBoxHelper {
         }
     }
 
-    public static void closeKeyboard(int index) {
+    private static void closeKeyboardOnUiThread(int index) {
+        if (Looper.myLooper() != Looper.getMainLooper()) {
+            Log.e(TAG, "closeKeyboardOnUiThread doesn't run on UI thread!");
+            return;
+        }
+        
         final InputMethodManager imm = (InputMethodManager) mCocos2dxActivity.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         Cocos2dxEditBox editBox = mEditBoxArray.get(index);
         if (null != editBox) {
             imm.hideSoftInputFromWindow(editBox.getWindowToken(), 0);
             mCocos2dxActivity.getGLSurfaceView().setSoftKeyboardShown(false);
         }
+    }
+
+    // Note that closeKeyboard will be invoked on GL thread
+    public static void closeKeyboard(final int index) {
+        mCocos2dxActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                closeKeyboardOnUiThread(index);
+            }
+        });
     }
 }

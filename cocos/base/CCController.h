@@ -56,6 +56,8 @@ public:
      */
     enum Key
     {
+        KEY_NONE = 0,
+        
         JOYSTICK_LEFT_X = 1000,
         JOYSTICK_LEFT_Y,
         JOYSTICK_RIGHT_X,

@@ -176,7 +176,6 @@ bool js_cocos2dx_Node_getOnEnterCallback(JSContext *cx, uint32_t argc, jsval *vp
 bool js_cocos2dx_Node_isOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_stopActionByTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_reorderChild(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_ignoreAnchorPointForPosition(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setSkewY(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setRotation3D(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setPositionX(JSContext *cx, uint32_t argc, jsval *vp);
@@ -241,6 +240,7 @@ bool js_cocos2dx_Node_getComponent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getContentSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_stopAllActionsByTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getBoundingBox(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Node_setIgnoreAnchorPointForPosition(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setEventDispatcher(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getGlobalZOrder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_draw(JSContext *cx, uint32_t argc, jsval *vp);
@@ -485,8 +485,10 @@ void js_register_cocos2dx_Follow(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_Follow_setBoundarySet(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Follow_initWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Follow_initWithTargetAndOffset(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Follow_isBoundarySet(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Follow_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Follow_createWithOffset(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Follow_Follow(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_Image_class;
@@ -513,6 +515,7 @@ bool js_cocos2dx_Image_getData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Image_getMipmaps(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Image_initWithRawData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Image_setPVRImagesHavePremultipliedAlpha(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_setPNGPremultipliedAlphaEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Image_Image(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_GLProgramState_class;

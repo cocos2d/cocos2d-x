@@ -17,6 +17,7 @@
 -- param color A color in Color3B.<br>
 -- param opacity A opacity in GLubyte.<br>
 -- param filePath A image file name.<br>
+-- param url uniform resource locator<br>
 -- return True if initialize success, false otherwise.
 -- @function [parent=#RichElementImage] init 
 -- @param self
@@ -24,6 +25,7 @@
 -- @param #color3b_table color
 -- @param #unsigned char opacity
 -- @param #string filePath
+-- @param #string url
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -34,11 +36,19 @@
 -- @return RichElementImage#RichElementImage self (return value: ccui.RichElementImage)
         
 --------------------------------
+-- 
+-- @function [parent=#RichElementImage] setUrl 
+-- @param self
+-- @param #string url
+-- @return RichElementImage#RichElementImage self (return value: ccui.RichElementImage)
+        
+--------------------------------
 -- brief Create a RichElementImage with various arguments.<br>
 -- param tag A integer tag value.<br>
 -- param color A color in Color3B.<br>
 -- param opacity A opacity in GLubyte.<br>
 -- param filePath A image file name.<br>
+-- param url uniform resource locator<br>
 -- return A RichElementImage instance.
 -- @function [parent=#RichElementImage] create 
 -- @param self
@@ -46,6 +56,7 @@
 -- @param #color3b_table color
 -- @param #unsigned char opacity
 -- @param #string filePath
+-- @param #string url
 -- @return RichElementImage#RichElementImage ret (return value: ccui.RichElementImage)
         
 --------------------------------

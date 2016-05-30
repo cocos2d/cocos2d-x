@@ -600,7 +600,7 @@ std::string TextureCache::getCachedTextureInfo() const
     return buffer;
 }
 
-void TextureCache::renameTextureWithKey(const std::string srcName, const std::string dstName)
+void TextureCache::renameTextureWithKey(const std::string& srcName, const std::string& dstName)
 {
     std::string key = srcName;
     auto it = _textures.find(key);
@@ -679,7 +679,7 @@ void VolatileTextureMgr::addImage(Texture2D *tt, Image *image)
 
 VolatileTexture* VolatileTextureMgr::findVolotileTexture(Texture2D *tt)
 {
-    VolatileTexture *vt = 0;
+    VolatileTexture *vt = nullptr;
     auto i = _textures.begin();
     while (i != _textures.end())
     {

@@ -39,7 +39,9 @@
 
         deferred: function(json, resourcePath, node, file){
             if(node){
-                ccs.actionManager.initWithDictionary(file, json["animation"], node);
+                var version = json["Version"] || json["version"];
+                var versionNum = ccs.uiReader.getVersionInteger(version);
+                ccs.actionManager.initWithDictionary(file, json["animation"], node, versionNum);
                 node.setContentSize(cc.size(json["designWidth"], json["designHeight"]));
             }
         }

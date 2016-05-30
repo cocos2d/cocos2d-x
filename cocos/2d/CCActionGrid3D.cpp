@@ -653,7 +653,7 @@ void Waves::update(float time)
 
 // implementation of Twirl
 
-Twirl* Twirl::create(float duration, const Size& gridSize, Vec2 position, unsigned int twirls, float amplitude)
+Twirl* Twirl::create(float duration, const Size& gridSize, const Vec2& position, unsigned int twirls, float amplitude)
 {
     Twirl *action = new (std::nothrow) Twirl();
 
@@ -672,7 +672,7 @@ Twirl* Twirl::create(float duration, const Size& gridSize, Vec2 position, unsign
     return action;
 }
 
-bool Twirl::initWithDuration(float duration, const Size& gridSize, Vec2 position, unsigned int twirls, float amplitude)
+bool Twirl::initWithDuration(float duration, const Size& gridSize, const Vec2& position, unsigned int twirls, float amplitude)
 {
     if (Grid3DAction::initWithDuration(duration, gridSize))
     {

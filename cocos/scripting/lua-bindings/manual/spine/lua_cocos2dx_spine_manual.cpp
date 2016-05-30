@@ -23,7 +23,7 @@
  ****************************************************************************/
 #include "scripting/lua-bindings/manual/spine/lua_cocos2dx_spine_manual.hpp"
 #include "scripting/lua-bindings/auto/lua_cocos2dx_spine_auto.hpp"
-#include "cocos2d.h"
+
 #include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 #include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"

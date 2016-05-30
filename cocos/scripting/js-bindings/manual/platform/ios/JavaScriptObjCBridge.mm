@@ -26,7 +26,7 @@
 #include "scripting/js-bindings/manual/spidermonkey_specifics.h"
 #include "scripting/js-bindings/manual/ScriptingCore.h"
 #include "scripting/js-bindings/manual/js_manual_conversions.h"
-#include "cocos2d.h"
+
 JavaScriptObjCBridge::CallInfo::~CallInfo(void)
 {
     if (m_returnType == TypeString)

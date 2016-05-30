@@ -31,6 +31,8 @@
 #include "editor-support/cocostudio/FlatBuffersSerialize.h"
 #include "editor-support/cocostudio/ActionTimeline/CSLoader.h"
 #include "ui/UITabControl.h"
+#include "platform/CCFileUtils.h"
+#include "2d/CCSpriteFrameCache.h"
 
 
 USING_NS_CC;
@@ -178,7 +180,7 @@ void TabControlReader::setPropsWithFlatBuffers(cocos2d::Node* node, const flatbu
     auto options = (flatbuffers::TabControlOption*)nodeOption;
     
     int headerPlace = options->headerPlace();
-    tabControl->ignoreHeadersTextureSize((bool)options->ignoreHeaderTextureSize());
+    tabControl->ignoreHeadersTextureSize(options->ignoreHeaderTextureSize() != 0);
     tabControl->setHeaderDockPlace((cocos2d::ui::TabControl::Dock)headerPlace);
     tabControl->setHeaderWidth(options->headerWidth());
     tabControl->setHeaderHeight(options->headerHeight());

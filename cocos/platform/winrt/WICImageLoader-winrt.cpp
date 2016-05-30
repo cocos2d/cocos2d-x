@@ -29,7 +29,7 @@ obtained from https://directxtk.codeplex.com
 
 NS_CC_BEGIN
 
-#if defined(CC_USE_WIC)
+#if CC_USE_WIC
 
 	IWICImagingFactory* WICImageLoader::_wicFactory = NULL;
 

@@ -114,7 +114,7 @@
     <PackageCertificateKeyFile>TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>7BE2570D98E1798E21D435C4F19076AFEB9AE074</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>78049EAB4980D535620EA948E9C4A302EAA34D2E</PackageCertificateThumbprint>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>

@@ -32,7 +32,6 @@
 #include "physics/CCPhysicsShape.h"
 #include "physics/CCPhysicsContact.h"
 #include "physics/CCPhysicsJoint.h"
-#include "physics/CCPhysicsContact.h"
 #include "physics/CCPhysicsHelper.h"
 
 #include "2d/CCDrawNode.h"

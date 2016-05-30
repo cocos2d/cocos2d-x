@@ -479,7 +479,7 @@ namespace ui
         TabHeader* tabcell = new (std::nothrow) TabHeader();
         if (tabcell != nullptr && tabcell->init())
         {
-            tabcell->_frontCrossRenderer->setVisible(false); // _isSelected == fales
+            tabcell->_frontCrossRenderer->setVisible(false); // _isSelected == false
             tabcell->_anchorPoint = Vec2(.5f, 0);
             tabcell->autorelease();
             return tabcell;

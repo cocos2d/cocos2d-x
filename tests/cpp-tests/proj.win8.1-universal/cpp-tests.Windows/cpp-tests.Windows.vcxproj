@@ -89,7 +89,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>cpp-tests.Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>88B5B02E2DF4494198EB4805409CFE69EEFDD17E</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>CB329DAE6650A73BBE00580645DD9D1272F29555</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86</AppxBundlePlatforms>
   </PropertyGroup>

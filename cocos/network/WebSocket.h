@@ -200,7 +200,7 @@ public:
      *  @brief Closes the connection to server asynchronously.
      *  @note It's an asynchronous method, it just notifies websocket thread to exit and returns directly,
      *        If using 'closeAsync' to close websocket connection, 
-     *        be carefull of not using destructed variables in the callback of 'onClose'.
+     *        be careful of not using destructed variables in the callback of 'onClose'.
      */
     void closeAsync();
 

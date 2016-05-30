@@ -34,7 +34,6 @@ THE SOFTWARE.
 
 #if CC_LABELATLAS_DEBUG_DRAW
 #include "renderer/CCRenderer.h"
-#include "base/CCDirector.h"
 #endif
 
 NS_CC_BEGIN

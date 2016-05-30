@@ -27,10 +27,8 @@ THE SOFTWARE.
 
 #include "editor-support/cocostudio/CocoStudio.h"
 #include "base/CCVector.h"
+#include "base/CCEventListenerCustom.h"
 
-namespace cocos2d {
-class EventListenerCustom;
-}
 
 namespace cocostudio {
 

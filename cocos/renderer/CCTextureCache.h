@@ -28,7 +28,6 @@ THE SOFTWARE.
 #ifndef __CCTEXTURE_CACHE_H__
 #define __CCTEXTURE_CACHE_H__
 
-#include <string>
 #include <mutex>
 #include <thread>
 #include <condition_variable>
@@ -42,7 +41,6 @@ THE SOFTWARE.
 #include "platform/CCImage.h"
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    #include "platform/CCImage.h"
     #include <list>
 #endif
 
@@ -212,7 +210,7 @@ public:
     *
     * @since v3.10
     */
-    void renameTextureWithKey(const std::string srcName, const std::string dstName);
+    void renameTextureWithKey(const std::string& srcName, const std::string& dstName);
 
 
 private:

@@ -533,6 +533,12 @@
                 func: function () {
                     return new UIPageViewChildSizeTest();
                 }
+            },
+            {
+                title: "UIPageViewIndicatorTest",
+                func: function () {
+                    return new UIPageViewIndicatorTest();
+                }
             }
         ],
         "UIListView": [
@@ -669,6 +675,16 @@
                 title: "UIS9NinePatchTest",
                 func: function () {
                     return new UIS9NinePatchTest();
+                }
+            }
+        ];
+    }
+    else {
+        testingItems["UIRichText"] = [
+            {
+                title: "UIRichTextTest",
+                func: function () {
+                    return new UIRichTextTest();
                 }
             }
         ];

@@ -40,6 +40,8 @@
 #include "audio/winrt/AudioEngine-winrt.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 #include "audio/linux/AudioEngine-linux.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
+#include "audio/tizen/AudioEngine-tizen.h"
 #endif
 
 #define TIME_DELAY_PRECISION 0.0001

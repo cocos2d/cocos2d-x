@@ -924,10 +924,10 @@ void Sprite::setAnchorPoint(const Vec2& anchor)
     SET_DIRTY_RECURSIVELY();
 }
 
-void Sprite::ignoreAnchorPointForPosition(bool value)
+void Sprite::setIgnoreAnchorPointForPosition(bool value)
 {
-    CCASSERT(! _batchNode, "ignoreAnchorPointForPosition is invalid in Sprite");
-    Node::ignoreAnchorPointForPosition(value);
+    CCASSERT(! _batchNode, "setIgnoreAnchorPointForPosition is invalid in Sprite");
+    Node::setIgnoreAnchorPointForPosition(value);
 }
 
 void Sprite::setVisible(bool bVisible)
@@ -1183,7 +1183,7 @@ std::string Sprite::getDescription() const
     return StringUtils::format("<Sprite | Tag = %d, TextureID = %d>", _tag, texture_id );
 }
 
-PolygonInfo& Sprite::getPolygonInfo()
+const PolygonInfo& Sprite::getPolygonInfo() const
 {
     return _polyInfo;
 }

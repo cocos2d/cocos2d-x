@@ -26,7 +26,11 @@
 #include "scripting/js-bindings/manual/3d/jsb_cocos2dx_3d_manual.h"
 #include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "scripting/js-bindings/auto/jsb_cocos2dx_3d_auto.hpp"
+#include "3d/CCAnimate3D.h"
 #include "3d/CCBundle3D.h"
+#include "3d/CCMesh.h"
+#include "3d/CCSprite3D.h"
+#include "renderer/CCTextureCube.h"
 
 using namespace cocos2d;
 
@@ -38,7 +42,7 @@ public:
         _data = value;
         js_add_object_root(value);
     }
-    
+
     ~JSB_HeapValueWrapper(){
         JS::RootedValue value(_cx, _data);
         js_remove_object_root(value);
@@ -406,7 +410,7 @@ void register_all_cocos2dx_3d_manual(JSContext *cx, JS::HandleObject global)
 
     tmpObj.set(jsb_cocos2d_Sprite3D_prototype);
     JS_DefineFunction(cx, tmpObj, "getAABB", js_cocos2dx_Sprite3D_getAABB, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    
+
     tmpObj.set(jsb_cocos2d_Mesh_prototype);
     JS_DefineFunction(cx, tmpObj, "getMeshVertexAttribute", js_cocos2dx_Mesh_getMeshVertexAttribute, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 

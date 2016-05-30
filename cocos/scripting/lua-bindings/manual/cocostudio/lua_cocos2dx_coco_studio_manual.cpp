@@ -25,7 +25,7 @@
 #include "scripting/lua-bindings/auto/lua_cocos2dx_studio_auto.hpp"
 #include "scripting/lua-bindings/auto/lua_cocos2dx_csloader_auto.hpp"
 #include "scripting/lua-bindings/manual/cocostudio/lua_cocos2dx_csloader_manual.hpp"
-#include "cocos2d.h"
+
 #include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 #include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
