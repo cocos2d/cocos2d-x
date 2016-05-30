@@ -2501,7 +2501,9 @@ void Animate::stop()
 {
     if (_animation->getRestoreOriginalFrame() && _target)
     {
+        auto blend = static_cast<Sprite*>(_target)->getBlendFunc();
         static_cast<Sprite*>(_target)->setSpriteFrame(_origFrame);
+        static_cast<Sprite*>(_target)->setBlendFunc(blend);
     }
 
     ActionInterval::stop();
@@ -2536,10 +2538,12 @@ void Animate::update(float t)
 
         if( splitTime <= t )
         {
+            auto blend = static_cast<Sprite*>(_target)->getBlendFunc();
             _currFrameIndex = i;
             AnimationFrame* frame = frames.at(_currFrameIndex);
             frameToDisplay = frame->getSpriteFrame();
             static_cast<Sprite*>(_target)->setSpriteFrame(frameToDisplay);
+            static_cast<Sprite*>(_target)->setBlendFunc(blend);
 
             const ValueMap& dict = frame->getUserInfo();
             if ( !dict.empty() )
