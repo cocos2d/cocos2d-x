@@ -87,6 +87,16 @@ str
 },
 
 /**
+ * @method setBounces
+ * @param {bool} arg0
+ */
+setBounces : function (
+bool 
+)
+{
+},
+
+/**
  * @method evaluateJS
  * @param {String} arg0
  */
