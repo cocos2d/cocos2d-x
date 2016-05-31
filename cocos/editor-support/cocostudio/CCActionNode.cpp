@@ -461,6 +461,12 @@ Spawn * ActionNode::refreshActionProperty()
             auto frame = cArray->at(i);
             if (i == 0)
             {
+				if (frame->getFrameIndex() > 0)
+				{
+					DelayTime* cDelayTime = DelayTime::create(frame->getFrameIndex() * getUnitTime());
+					if (cDelayTime != nullptr)
+						cSequenceArray.pushBack(static_cast<FiniteTimeAction*>(cDelayTime));
+				}
             }
             else
             {
@@ -468,7 +474,7 @@ Spawn * ActionNode::refreshActionProperty()
                 float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex()) * getUnitTime();
                 Action* cAction = frame->getAction(duration);
                 if(cAction != nullptr)
-                cSequenceArray.pushBack(static_cast<FiniteTimeAction*>(cAction));
+	                cSequenceArray.pushBack(static_cast<FiniteTimeAction*>(cAction));
             }
         }
         Sequence* cSequence = Sequence::create(cSequenceArray);
