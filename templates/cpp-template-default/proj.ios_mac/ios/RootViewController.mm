@@ -27,6 +27,15 @@
 #import "cocos2d.h"
 #import "platform/ios/CCEAGLView-ios.h"
 
+@interface RootViewController()
+
+
+@property(strong,nonatomic) CCEAGLView *eaglView;
+
+//dismisses the game scene and moves to native iOS screen
+
+//-(void)closeGameScene;
+@end
 @implementation RootViewController
 
 /*
@@ -45,13 +54,63 @@
 }
 */
 
-/*
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    cocos2d::Application *app = cocos2d::Application::getInstance();
+    
+    //initialize the GLView attributes
+    app->initGLContextAttrs();
+    cocos2d::GLViewImpl::convertAttrs();
+    
+    //initialize the CCEAGLView
+    self.eaglView = [CCEAGLView viewWithFrame: [UIScreen mainScreen].bounds
+                                         pixelFormat: (NSString*)cocos2d::GLViewImpl::_pixelFormat
+                                         depthFormat: cocos2d::GLViewImpl::_depthFormat
+                                  preserveBackbuffer: NO
+                                          sharegroup: nil
+                                       multiSampling: NO
+                                     numberOfSamples: 0 ];
+    
+    // Enable or disable multiple touches
+    [self.eaglView setMultipleTouchEnabled:NO];
+
+    /*Use the RootViewController to manage the CCEAGLView*/
+    
+    //insert EAGLView as subview of RootViewController
+    [self.view insertSubview:self.eaglView atIndex:0];
+    
+    //Create a custom event listener to listen to the custom event triggered by HelloWorldScene.cpp and add the event listener to the Director to close the game scene and move to native iOS screen(if present) without quitting the application 
+    /*
+    cocos2d::EventListenerCustom *_listener = cocos2d::EventListenerCustom::create("game_scene_close_event", [=](cocos2d::EventCustom *gameCustomEvent){
+        
+        printf("game_scene_close_event\n");
+        
+        [self closeGameScene];
+        
+        
+    });
+    
+    cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_listener, 1);
+     
+     */
+    
+    // IMPORTANT: Setting the GLView should be done after creating the RootViewController
+    
+    cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView(self.eaglView);
+    
+    //set the GLView as OpenGLView of the Director
+    cocos2d::Director::getInstance()->setOpenGLView(glview);
+    
+    //run the cocos2d-x game scene
+    app->run();
+    
+    
 }
 
-*/
+
 // Override to allow orientations other than the default portrait orientation.
 // This method is deprecated on ios6
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -99,6 +158,21 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+//dismisses the game scene without quitting the application and navigates to native iOS screen 
+
+/*
+-(void)closeGameScene{
+    
+    cocos2d::Director::getInstance()->end();
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+*/
+- (void)viewDidDisappear:(BOOL)animated{
+    
+    //manually release the CCEAGLView when closing the RootViewController
+    self.eaglView = nil;
+}
 - (void)viewDidUnload {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
