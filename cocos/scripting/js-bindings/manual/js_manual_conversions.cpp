@@ -482,7 +482,7 @@ bool jsval_to_ushort( JSContext *cx, JS::HandleValue vp, unsigned short *outval 
     double dp;
     ok &= JS::ToNumber(cx, vp, &dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    ok &= !isnan(dp);
+    ok &= !std::isnan(dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
     *outval = (unsigned short)dp;
@@ -496,7 +496,7 @@ bool jsval_to_int32( JSContext *cx, JS::HandleValue vp, int32_t *outval )
     double dp;
     ok &= JS::ToNumber(cx, vp, &dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    ok &= !isnan(dp);
+    ok &= !std::isnan(dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
     *outval = (int32_t)dp;
@@ -510,7 +510,7 @@ bool jsval_to_uint32( JSContext *cx, JS::HandleValue vp, uint32_t *outval )
     double dp;
     ok &= JS::ToNumber(cx, vp, &dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    ok &= !isnan(dp);
+    ok &= !std::isnan(dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
     *outval = (uint32_t)dp;
@@ -524,7 +524,7 @@ bool jsval_to_uint16( JSContext *cx, JS::HandleValue vp, uint16_t *outval )
     double dp;
     ok &= JS::ToNumber(cx, vp, &dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    ok &= !isnan(dp);
+    ok &= !std::isnan(dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
     *outval = (uint16_t)dp;
@@ -675,7 +675,8 @@ bool jsval_to_quaternion( JSContext *cx, JS::HandleValue v, cocos2d::Quaternion*
         JS::ToNumber(cx, y, &yy) &&
         JS::ToNumber(cx, z, &zz) &&
         JS::ToNumber(cx, w, &ww) &&
-        !isnan(xx) && !isnan(yy) && !isnan(zz) && !isnan(ww);
+        !std::isnan(xx) && !std::isnan(yy) && !std::isnan(zz) && !std::
+isnan(ww);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
@@ -1538,7 +1539,7 @@ bool jsval_to_vector2(JSContext *cx, JS::HandleValue vp, cocos2d::Vec2* ret)
     JS_GetProperty(cx, tmp, "y", &jsy) &&
     JS::ToNumber(cx, jsx, &x) &&
     JS::ToNumber(cx, jsy, &y) &&
-    !isnan(x) && !isnan(y);
+    !std::isnan(x) && !std::isnan(y);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
@@ -1562,7 +1563,7 @@ bool jsval_to_vector3(JSContext *cx, JS::HandleValue vp, cocos2d::Vec3* ret)
     JS::ToNumber(cx, jsx, &x) &&
     JS::ToNumber(cx, jsy, &y) &&
     JS::ToNumber(cx, jsz, &z) &&
-    !isnan(x) && !isnan(y) && !isnan(z);
+    !std::isnan(x) && !std::isnan(y) && !std::isnan(z);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
@@ -1590,7 +1591,7 @@ bool jsval_to_vector4(JSContext *cx, JS::HandleValue vp, cocos2d::Vec4* ret)
     JS::ToNumber(cx, jsy, &y) &&
     JS::ToNumber(cx, jsz, &z) &&
     JS::ToNumber(cx, jsw, &w) &&
-    !isnan(x) && !isnan(y) && !isnan(z) && !isnan(w);
+    !std::isnan(x) && !std::isnan(y) && !std::isnan(z) && !std::isnan(w);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
@@ -1657,7 +1658,7 @@ bool jsval_to_cctex2f(JSContext* cx, JS::HandleValue vp, cocos2d::Tex2F* ret)
     JS_GetProperty(cx, tmp, "y", &jsy) &&
     JS::ToNumber(cx, jsx, &x) &&
     JS::ToNumber(cx, jsy, &y) &&
-    !isnan(x) && !isnan(y);
+    !std::isnan(x) && !std::isnan(y);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
