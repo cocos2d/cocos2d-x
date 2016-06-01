@@ -119,7 +119,7 @@ static void SetBlending(GLenum sfactor, GLenum dfactor)
 
         RenderState::StateBlock::_defaultState->setBlend(true);
         RenderState::StateBlock::_defaultState->setBlendSrc((RenderState::Blend)sfactor);
-        RenderState::StateBlock::_defaultState->setBlendSrc((RenderState::Blend)dfactor);
+        RenderState::StateBlock::_defaultState->setBlendDst((RenderState::Blend)dfactor);
     }
 }
 
