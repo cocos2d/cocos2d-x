@@ -7,11 +7,11 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2007, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2015, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
- * are also available at http://curl.haxx.se/docs/copyright.html.
+ * are also available at https://curl.haxx.se/docs/copyright.html.
  *
  * You may opt to use, copy, modify, merge, publish, distribute and/or sell
  * copies of the Software, and permit persons to whom the Software is
@@ -64,6 +64,8 @@ typedef enum {
   CURLM_INTERNAL_ERROR,  /* this is a libcurl bug */
   CURLM_BAD_SOCKET,      /* the passed in socket argument did not match */
   CURLM_UNKNOWN_OPTION,  /* curl_multi_setopt() with unsupported option */
+  CURLM_ADDED_ALREADY,   /* an easy handle already added to a multi handle was
+                            attempted to get added - again */
   CURLM_LAST
 } CURLMcode;
 
@@ -71,6 +73,11 @@ typedef enum {
    for CURLM_CALL_MULTI_SOCKET too in the same style it works for
    curl_multi_perform() and CURLM_CALL_MULTI_PERFORM */
 #define CURLM_CALL_MULTI_SOCKET CURLM_CALL_MULTI_PERFORM
+
+/* bitmask bits for CURLMOPT_PIPELINING */
+#define CURLPIPE_NOTHING   0L
+#define CURLPIPE_HTTP1     1L
+#define CURLPIPE_MULTIPLEX 2L
 
 typedef enum {
   CURLMSG_NONE, /* first, not used */
@@ -88,6 +95,19 @@ struct CURLMsg {
   } data;
 };
 typedef struct CURLMsg CURLMsg;
+
+/* Based on poll(2) structure and values.
+ * We don't use pollfd and POLL* constants explicitly
+ * to cover platforms without poll(). */
+#define CURL_WAIT_POLLIN    0x0001
+#define CURL_WAIT_POLLPRI   0x0002
+#define CURL_WAIT_POLLOUT   0x0004
+
+struct curl_waitfd {
+  curl_socket_t fd;
+  short events;
+  short revents; /* not supported yet */
+};
 
 /*
  * Name:    curl_multi_init()
@@ -132,6 +152,20 @@ CURL_EXTERN CURLMcode curl_multi_fdset(CURLM *multi_handle,
                                        fd_set *write_fd_set,
                                        fd_set *exc_fd_set,
                                        int *max_fd);
+
+/*
+ * Name:     curl_multi_wait()
+ *
+ * Desc:     Poll on all fds within a CURLM set as well as any
+ *           additional fds passed to the function.
+ *
+ * Returns:  CURLMcode type, general multi error code.
+ */
+CURL_EXTERN CURLMcode curl_multi_wait(CURLM *multi_handle,
+                                      struct curl_waitfd extra_fds[],
+                                      unsigned int extra_nfds,
+                                      int timeout_ms,
+                                      int *ret);
 
  /*
   * Name:    curl_multi_perform()
@@ -311,6 +345,37 @@ typedef enum {
   /* maximum number of entries in the connection cache */
   CINIT(MAXCONNECTS, LONG, 6),
 
+  /* maximum number of (pipelining) connections to one host */
+  CINIT(MAX_HOST_CONNECTIONS, LONG, 7),
+
+  /* maximum number of requests in a pipeline */
+  CINIT(MAX_PIPELINE_LENGTH, LONG, 8),
+
+  /* a connection with a content-length longer than this
+     will not be considered for pipelining */
+  CINIT(CONTENT_LENGTH_PENALTY_SIZE, OFF_T, 9),
+
+  /* a connection with a chunk length longer than this
+     will not be considered for pipelining */
+  CINIT(CHUNK_LENGTH_PENALTY_SIZE, OFF_T, 10),
+
+  /* a list of site names(+port) that are blacklisted from
+     pipelining */
+  CINIT(PIPELINING_SITE_BL, OBJECTPOINT, 11),
+
+  /* a list of server types that are blacklisted from
+     pipelining */
+  CINIT(PIPELINING_SERVER_BL, OBJECTPOINT, 12),
+
+  /* maximum number of open connections in total */
+  CINIT(MAX_TOTAL_CONNECTIONS, LONG, 13),
+
+   /* This is the server push callback function pointer */
+  CINIT(PUSHFUNCTION, FUNCTIONPOINT, 14),
+
+  /* This is the argument passed to the server push callback */
+  CINIT(PUSHDATA, OBJECTPOINT, 15),
+
   CURLMOPT_LASTENTRY /* the last unused */
 } CURLMoption;
 
@@ -337,6 +402,31 @@ CURL_EXTERN CURLMcode curl_multi_setopt(CURLM *multi_handle,
  */
 CURL_EXTERN CURLMcode curl_multi_assign(CURLM *multi_handle,
                                         curl_socket_t sockfd, void *sockp);
+
+
+/*
+ * Name: curl_push_callback
+ *
+ * Desc: This callback gets called when a new stream is being pushed by the
+ *       server. It approves or denies the new stream.
+ *
+ * Returns: CURL_PUSH_OK or CURL_PUSH_DENY.
+ */
+#define CURL_PUSH_OK   0
+#define CURL_PUSH_DENY 1
+
+struct curl_pushheaders;  /* forward declaration only */
+
+CURL_EXTERN char *curl_pushheader_bynum(struct curl_pushheaders *h,
+                                        size_t num);
+CURL_EXTERN char *curl_pushheader_byname(struct curl_pushheaders *h,
+                                         const char *name);
+
+typedef int (*curl_push_callback)(CURL *parent,
+                                  CURL *easy,
+                                  size_t num_headers,
+                                  struct curl_pushheaders *headers,
+                                  void *userp);
 
 #ifdef __cplusplus
 } /* end of extern "C" */
