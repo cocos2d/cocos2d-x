@@ -14,13 +14,21 @@
 #include "jsprototypes.h"
 #include "jstypes.h"
 
+
+namespace JS {
+
 /*
  * Allow headers to reference JS::Value without #including the whole jsapi.h.
  * Unfortunately, typedefs (hence jsval) cannot be declared.
  */
-#ifdef __cplusplus
-namespace JS { class Value; }
-#endif
+class Value;
+
+template <typename T>
+class Rooted;
+
+struct Zone;
+
+} /* namespace JS */
 
 /*
  * In release builds, jsid is defined to be an integral type. This
@@ -41,7 +49,7 @@ namespace JS { class Value; }
 
 // Needed for cocos2d-js
 #define JS_NO_JSVAL_JSID_STRUCT_TYPES 
-
+ 
 # if defined(DEBUG) && !defined(JS_NO_JSVAL_JSID_STRUCT_TYPES)
 #  define JS_USE_JSID_STRUCT_TYPES
 # endif
@@ -213,9 +221,6 @@ namespace js {
 
 class Allocator;
 
-template <typename T>
-class Rooted;
-
 class SkipRoot;
 
 enum ThingRootKind
@@ -225,6 +230,7 @@ enum ThingRootKind
     THING_ROOT_BASE_SHAPE,
     THING_ROOT_TYPE_OBJECT,
     THING_ROOT_STRING,
+    THING_ROOT_ION_CODE,
     THING_ROOT_SCRIPT,
     THING_ROOT_ID,
     THING_ROOT_PROPERTY_ID,
@@ -261,8 +267,11 @@ struct ContextFriendFields {
     /* The current compartment. */
     JSCompartment       *compartment;
 
+    /* The current zone. */
+    JS::Zone            *zone_;
+
     explicit ContextFriendFields(JSRuntime *rt)
-      : runtime(rt), compartment(NULL)
+      : runtime(rt), compartment(NULL), zone_(NULL)
     { }
 
     static const ContextFriendFields *get(const JSContext *cx) {
@@ -278,7 +287,7 @@ struct ContextFriendFields {
      * Stack allocated GC roots for stack GC heap pointers, which may be
      * overwritten if moved during a GC.
      */
-    Rooted<void*> *thingGCRooters[THING_ROOT_LIMIT];
+    JS::Rooted<void*> *thingGCRooters[THING_ROOT_LIMIT];
 #endif
 
 #if defined(DEBUG) && defined(JS_GC_ZEAL) && defined(JSGC_ROOT_ANALYSIS) && !defined(JS_THREADSAFE)
@@ -337,7 +346,7 @@ struct PerThreadDataFriendFields
      * Stack allocated GC roots for stack GC heap pointers, which may be
      * overwritten if moved during a GC.
      */
-    Rooted<void*> *thingGCRooters[THING_ROOT_LIMIT];
+    JS::Rooted<void*> *thingGCRooters[THING_ROOT_LIMIT];
 #endif
 
 #if defined(DEBUG) && defined(JS_GC_ZEAL) && defined(JSGC_ROOT_ANALYSIS) && !defined(JS_THREADSAFE)
