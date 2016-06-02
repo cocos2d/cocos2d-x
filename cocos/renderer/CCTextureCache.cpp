@@ -93,11 +93,12 @@ std::string TextureCache::getDescription() const
 struct TextureCache::AsyncStruct
 {
 public:
-    AsyncStruct(const std::string& fn, std::function<void(Texture2D*)> f) : filename(fn), callback(f), loadSuccess(false) {}
+    AsyncStruct(const std::string& fn, std::function<void(Texture2D*)> f) : filename(fn), callback(f), pixelFormat(Texture2D::getDefaultAlphaPixelFormat()), loadSuccess(false) {}
     
     std::string filename;
     std::function<void(Texture2D*)> callback;
     Image image;
+    Texture2D::PixelFormat pixelFormat;
     bool loadSuccess;
 };
 
@@ -280,7 +281,7 @@ void TextureCache::addImageAsyncCallBack(float dt)
                 // generate texture in render thread
                 texture = new (std::nothrow) Texture2D();
                 
-                texture->initWithImage(image);
+                texture->initWithImage(image, asyncStruct->pixelFormat);
                 //parse 9-patch info
                 this->parseNinePatchImage(image, texture, asyncStruct->filename);
 #if CC_ENABLE_CACHE_TEXTURE_DATA
