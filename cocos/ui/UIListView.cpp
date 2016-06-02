@@ -794,6 +794,17 @@ ssize_t ListView::getCurSelectedIndex() const
     return _curSelectedIndex;
 }
 
+void ListView::setCurSelectedIndex(int itemIndex)
+{
+    Widget* item = getItem(itemIndex);
+    if (item == nullptr)
+    {
+        return;
+    }
+    _curSelectedIndex = itemIndex;
+    this->selectedItemEvent(cocos2d::ui::Widget::TouchEventType::ENDED);
+}
+
 void ListView::onSizeChanged()
 {
     ScrollView::onSizeChanged();
