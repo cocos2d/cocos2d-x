@@ -345,6 +345,12 @@ public:
     ssize_t getCurSelectedIndex() const;
     
     /**
+     +     * @brief Set current selected widget's index and call TouchEventType::ENDED event.
+     +     * @param A index of a selected item.
+     +     */
+     void setCurSelectedIndex(int itemIndex);
+    
+    /**
      * Add an event click callback to ListView, then one item of Listview is clicked, the callback will be called.
      *@deprecated Use  `addEventListener` instead.
      *@param target A pointer of `Ref*` type.
