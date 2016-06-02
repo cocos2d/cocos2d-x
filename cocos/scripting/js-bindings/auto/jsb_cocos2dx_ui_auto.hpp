@@ -466,6 +466,7 @@ bool js_cocos2dx_ui_ListView_jumpToItem(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_ui_ListView_setMagneticType(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_ListView_getIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_ListView_pushBackCustomItem(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_ListView_setCurSelectedIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_ListView_insertDefaultItem(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_ListView_setMagneticAllowedOutOfBoundary(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_ListView_addEventListener(JSContext *cx, uint32_t argc, jsval *vp);
