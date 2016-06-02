@@ -129,7 +129,7 @@ cc.isUndefined = function(obj) {
  * @returns {boolean}
  */
 cc.isObject = function(obj) {
-    return return ( obj !== null && typeof obj === "object" );
+    return ( obj !== null && typeof obj === "object" );
 };
 
 /**
