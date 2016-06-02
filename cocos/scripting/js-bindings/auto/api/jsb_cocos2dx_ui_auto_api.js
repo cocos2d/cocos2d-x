@@ -3600,6 +3600,16 @@ widget
 },
 
 /**
+ * @method setCurSelectedIndex
+ * @param {int} arg0
+ */
+setCurSelectedIndex : function (
+int 
+)
+{
+},
+
+/**
  * @method insertDefaultItem
  * @param {long} arg0
  */
