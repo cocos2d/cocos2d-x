@@ -148,8 +148,6 @@ public:
     const jsval getJSCallbackFunc() const;
     const jsval getJSCallbackThis() const;
     const jsval getJSExtraData() const;
-    
-    void reset();
 protected:
     JS::Heap<JS::Value> _owner;
     JS::Heap<JS::Value> _jsCallback;
