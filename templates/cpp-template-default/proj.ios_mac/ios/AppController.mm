@@ -144,6 +144,7 @@ static AppDelegate s_sharedApplication;
 #else
 - (void)dealloc {
     [window release];
+    [_viewController release];
     [super dealloc];
 }
 #endif
