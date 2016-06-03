@@ -732,10 +732,16 @@ __Array* __Array::clone() const
     ret->autorelease();
     ret->initWithCapacity(this->data->num > 0 ? this->data->num : 1);
 
+    if (data->num <= 0) {
+        return ret;
+    }
+
     Ref* obj = nullptr;
     Ref* tmpObj = nullptr;
     Clonable* clonable = nullptr;
-    CCARRAY_FOREACH(this, obj)
+    CC_ASSERT(data->num > 0);
+    for (Ref** arr = data->arr, **end = data->arr + data->num - 1;
+        arr <= end && ((obj = *arr) != nullptr); arr++)
     {
         clonable = dynamic_cast<Clonable*>(obj);
         if (clonable)
