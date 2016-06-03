@@ -734,7 +734,26 @@ JSCallbackWrapper::JSCallbackWrapper(JS::HandleValue owner)
 
 JSCallbackWrapper::~JSCallbackWrapper()
 {
-    reset();
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    JS::RootedValue ownerVal(cx, _owner);
+    if (!ownerVal.isNullOrUndefined())
+    {
+        JS::RootedValue target(cx, _jsCallback);
+        if (!target.isNullOrUndefined())
+        {
+            js_remove_object_reference(ownerVal, target);
+        }
+        target.set(_jsThisObj);
+        if (!target.isNullOrUndefined())
+        {
+            js_remove_object_reference(ownerVal, target);
+        }
+        target.set(_extraData);
+        if (!target.isNullOrUndefined())
+        {
+            js_remove_object_reference(ownerVal, target);
+        }
+    }
 }
 
 void JSCallbackWrapper::setJSCallbackFunc(JS::HandleValue func) {
@@ -804,33 +823,6 @@ const jsval JSCallbackWrapper::getJSCallbackThis() const
 const jsval JSCallbackWrapper::getJSExtraData() const
 {
     return _extraData;
-}
-
-void JSCallbackWrapper::reset()
-{
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-    JS::RootedValue ownerVal(cx, _owner);
-    if (!ownerVal.isNullOrUndefined())
-    {
-        JS::RootedValue target(cx, _jsCallback);
-        if (!target.isNullOrUndefined())
-        {
-            js_remove_object_reference(ownerVal, target);
-        }
-        target.set(_jsThisObj);
-        if (!target.isNullOrUndefined())
-        {
-            js_remove_object_reference(ownerVal, target);
-        }
-        target.set(_extraData);
-        if (!target.isNullOrUndefined())
-        {
-            js_remove_object_reference(ownerVal, target);
-        }
-    }
-    _jsCallback = JS::NullValue();
-    _jsThisObj = JS::NullValue();
-    _extraData = JS::NullValue();
 }
 
 // cc.CallFunc.create( func, this, [data])
@@ -1225,7 +1217,6 @@ void JSScheduleWrapper::removeTargetForJSObject(JS::HandleObject jsTargetObj, JS
             free(removed);
         }
     }
-    target->reset();
     dump();
     CCLOGINFO("removeTargetForJSObject end");
 }
@@ -1272,12 +1263,14 @@ void JSScheduleWrapper::scheduleFunc(float dt)
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 
     JS::RootedValue callback(cx, getJSCallbackFunc());
-    if(!callback.isNullOrUndefined()) {
-        JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(1, &data);
-        JS::RootedValue retval(cx);
-        JS::RootedValue targetVal(cx, getJSCallbackThis());
-        if (!targetVal.isNullOrUndefined()) {
-            JS::RootedObject target(cx, targetVal.toObjectOrNull());
+    if(!callback.isNullOrUndefined()) 
+    {
+        auto exist = JSScheduleWrapper::getTargetForSchedule(callback);
+        if (exist)
+        {
+            JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(1, &data);
+            JS::RootedValue retval(cx);
+            JS::RootedObject target(cx, getJSCallbackThis().toObjectOrNull());
             JS_CallFunctionValue(cx, target, callback, args, &retval);
         }
     }
