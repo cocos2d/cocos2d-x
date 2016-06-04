@@ -695,7 +695,7 @@ void __Array::exchangeObjectAtIndex(ssize_t index1, ssize_t index2)
 void __Array::replaceObjectAtIndex(ssize_t index, Ref* object, bool releaseObject/* = true*/)
 {
     ccArrayInsertObjectAtIndex(data, object, index);
-    ccArrayRemoveObjectAtIndex(data, index + 1);
+    ccArrayRemoveObjectAtIndex(data, index + 1, releaseObject);
 }
 
 void __Array::reverseObjects()
