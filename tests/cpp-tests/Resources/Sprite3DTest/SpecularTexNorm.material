@@ -1,0 +1,15 @@
+// A "Material" file can contain one or more materials
+material SpecularTexNorm
+{
+    technique normal
+    {
+        pass 0
+        {
+            shader
+            {
+                vertexShader = Sprite3DTest/SpecularNorm.vert
+                fragmentShader = Sprite3DTest/SpecularTexNorm.frag
+            }
+        }
+    }
+}

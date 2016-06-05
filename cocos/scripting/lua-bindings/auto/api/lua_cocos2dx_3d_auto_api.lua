@@ -52,6 +52,11 @@
 
 
 --------------------------------------------------------
+-- the cc Sprite3DMaterial
+-- @field [parent=#cc] Sprite3DMaterial#Sprite3DMaterial Sprite3DMaterial preloaded module
+
+
+--------------------------------------------------------
 -- the cc Terrain
 -- @field [parent=#cc] Terrain#Terrain Terrain preloaded module
 
