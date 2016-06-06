@@ -110,6 +110,10 @@ var s_testEasing_json = "ccs-res/armature/testEasing.ExportJson";
 var s_testEasing0_plist = "ccs-res/armature/testEasing0.plist";
 var s_testEasing0_png = "ccs-res/armature/testEasing0.png";
 
+// Issue CustomIssueAnimationsWithOnlyOneFrame
+var s_testIssueAnimationsWithOnlyOneFrame_json = "ccs-res/cocosui/CustomIssueAnimationsWithOnlyOneFrame/AnimationsWithOnlyOneFrame.json";
+var s_testIssueAnimationsWithOnlyOneFrame_png = "ccs-res/cocosui/CustomIssueAnimationsWithOnlyOneFrame/TheDigitalSpell.png";
+
 var s_s9s_blocks9 = "Images/blocks9ss.png";
 var s_s9s_blocks9_plist = "Images/blocks9ss.plist";
 var s_blocks9 = "Images/blocks9.png";
@@ -595,6 +599,9 @@ var g_cocoStudio = [
     s_testEasing_json ,
     s_testEasing0_plist ,
     s_testEasing0_png ,
+ 	// Issue CustomIssueAnimationsWithOnlyOneFrame
+ 	s_testIssueAnimationsWithOnlyOneFrame_json ,
+ 	s_testIssueAnimationsWithOnlyOneFrame_png ,
 
 //GUI
     "Particles/SmallSun.plist",

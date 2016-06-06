@@ -456,26 +456,44 @@ Spawn * ActionNode::refreshActionProperty()
 
         Vector<FiniteTimeAction*> cSequenceArray;
         auto frameCount = cArray->size();
-        for (int i = 0; i < frameCount; i++)
-        {
-            auto frame = cArray->at(i);
-            if (i == 0)
-            {
-            }
-            else
-            {
-                auto srcFrame = cArray->at(i-1);
-                float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex()) * getUnitTime();
-                Action* cAction = frame->getAction(duration);
-                if(cAction != nullptr)
-                cSequenceArray.pushBack(static_cast<FiniteTimeAction*>(cAction));
-            }
-        }
-        Sequence* cSequence = Sequence::create(cSequenceArray);
-        if (cSequence != nullptr)
-        {
-            cSpawnArray.pushBack(cSequence);
-        }
+		if(frameCount > 1)
+ 		{ 
+ 			for (int i = 0; i < frameCount; i++)
+ 			{
+ 				auto frame = cArray->at(i);
+ 				if (i == 0)
+ 				{
+// #11173 Fixed every node of UI animation(json) is starting at frame 0.                     
+//                  if (frame->getFrameIndex() > 0)
+//				    {
+//					    DelayTime* cDelayTime = DelayTime::create(frame->getFrameIndex() * getUnitTime());
+//					    if (cDelayTime != nullptr)
+//						    cSequenceArray.pushBack(static_cast<FiniteTimeAction*>(cDelayTime));
+//				    }
+ 				}
+ 				else
+ 				{
+ 					auto srcFrame = cArray->at(i-1);
+ 					float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex()) * getUnitTime();
+ 					Action* cAction = frame->getAction(duration);
+ 					if(cAction != nullptr)
+ 					cSequenceArray.pushBack(static_cast<FiniteTimeAction*>(cAction));
+ 				}
+ 			}
+ 		}
+ 		else if (frameCount == 1)
+ 		{
+ 			auto frame = cArray->at(0);
+ 			float duration = 0.0f;
+ 			Action* cAction = frame->getAction(duration);
+ 			if (cAction != nullptr)
+ 				cSequenceArray.pushBack(static_cast<FiniteTimeAction*>(cAction));
+ 		}
+ 		Sequence* cSequence = Sequence::create(cSequenceArray);
+ 		if (cSequence != nullptr)
+ 		{
+ 			cSpawnArray.pushBack(cSequence);
+ 		}
     }
 
     if (_action == nullptr)
