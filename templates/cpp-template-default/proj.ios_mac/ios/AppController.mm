@@ -23,7 +23,6 @@
  ****************************************************************************/
 
 #import "AppController.h"
-#import "platform/ios/CCEAGLView-ios.h"
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
@@ -46,7 +45,6 @@ static AppDelegate s_sharedApplication;
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
 
-    
     // Use RootViewController to manage CCEAGLView
     _viewController = [[RootViewController alloc]init];
     _viewController.wantsFullScreenLayout = YES;
@@ -67,6 +65,7 @@ static AppDelegate s_sharedApplication;
     [window makeKeyAndVisible];
 
     [[UIApplication sharedApplication] setStatusBarHidden:true];
+
 
     return YES;
 }
@@ -122,10 +121,14 @@ static AppDelegate s_sharedApplication;
 }
 
 
+#if __has_feature(objc_arc)
+#else
 - (void)dealloc {
     [window release];
+    [_viewController release];
     [super dealloc];
 }
+#endif
 
 
 @end

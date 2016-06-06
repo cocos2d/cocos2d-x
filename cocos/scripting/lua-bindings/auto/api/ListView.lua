@@ -77,6 +77,15 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
+-- +     * @brief Set current selected widget's index and call TouchEventType::ENDED event.<br>
+-- +     * @param A index of a selected item.<br>
+-- +     
+-- @function [parent=#ListView] setCurSelectedIndex 
+-- @param self
+-- @param #int itemIndex
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
 -- Insert a default item(create by cloning model) into listview at a give index.<br>
 -- param index  An index in ssize_t.
 -- @function [parent=#ListView] insertDefaultItem 

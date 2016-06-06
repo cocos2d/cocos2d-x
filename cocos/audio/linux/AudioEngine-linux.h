@@ -93,6 +93,8 @@ private:
     };
     
     std::map<int, ChannelInfo> mapChannelInfo;
+
+    std::map<std::string, int> mapId;
     
     std::map<std::string, FMOD::Sound *> mapSound;  
     

@@ -143,6 +143,8 @@
         "src/CocoStudioTest/CustomTest/CustomImageScene/CustomImageScene.js",
         "src/CocoStudioTest/CustomTest/CustomGUIScene.js",
         "src/CocoStudioTest/ActionTimelineTest/ActionTimelineTest.js",
+        "src/CocoStudioTest/IssueTest/AnimationsWithOnlyOneFrame/AnimationsWithOnlyOneFrame.js",
+        "src/CocoStudioTest/IssueTest/CCSIssueTest.js",
         "src/GUITest/UIScene.js",
         "src/GUITest/UIButtonTest/UIButtonTest.js",
         "src/GUITest/UICheckBoxTest/UICheckBoxTest.js",

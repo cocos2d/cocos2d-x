@@ -75,6 +75,13 @@ if(!cc.sys.isNative){
     });
 }
 
+cocoStudioTestItemNames.push({
+    itemTitle:"CCSIssueTest",
+    testScene:function () {
+        runCCSIssueTest();
+    }
+});
+
 var CocoStudioMainLayer = cc.Layer.extend({
     onEnter:function () {
         this._super();

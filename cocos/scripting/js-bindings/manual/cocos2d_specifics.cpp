@@ -1263,11 +1263,16 @@ void JSScheduleWrapper::scheduleFunc(float dt)
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 
     JS::RootedValue callback(cx, getJSCallbackFunc());
-    if(!callback.isNullOrUndefined()) {
-        JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(1, &data);
-        JS::RootedValue retval(cx);
-        JS::RootedObject callbackTarget(cx, getJSCallbackThis().toObjectOrNull());
-        JS_CallFunctionValue(cx, callbackTarget, callback, args, &retval);
+    if(!callback.isNullOrUndefined()) 
+    {
+        auto exist = JSScheduleWrapper::getTargetForSchedule(callback);
+        if (exist)
+        {
+            JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(1, &data);
+            JS::RootedValue retval(cx);
+            JS::RootedObject target(cx, getJSCallbackThis().toObjectOrNull());
+            JS_CallFunctionValue(cx, target, callback, args, &retval);
+        }
     }
 }
 
@@ -5712,7 +5717,7 @@ bool js_cocos2dx_AutoPolygon_generatePolygon(JSContext *cx, uint32_t argc, jsval
         double arg2;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
-        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !std::isnan(arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_AutoPolygon_generatePolygon : Error processing arguments");
         cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2));
         jsval jsret = JSVAL_NULL;
@@ -5729,8 +5734,8 @@ bool js_cocos2dx_AutoPolygon_generatePolygon(JSContext *cx, uint32_t argc, jsval
         double arg3;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
-        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
-        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !std::isnan(arg2);
+        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !std::isnan(arg3);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_AutoPolygon_generatePolygon : Error processing arguments");
         cocos2d::PolygonInfo* ret = new (std::nothrow) cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2, arg3));
         jsval jsret = JSVAL_NULL;
