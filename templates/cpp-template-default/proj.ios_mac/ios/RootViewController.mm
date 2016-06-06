@@ -76,7 +76,7 @@
 
     if (glview)
     {
-        CCEAGLView *eaglview = (CCEAGLView*) glview->getEAGLView();
+        CCEAGLView *eaglview = (__bridge CCEAGLView *)glview->getEAGLView();
 
         if (eaglview)
         {
@@ -104,11 +104,5 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
-
-
-- (void)dealloc {
-    [super dealloc];
-}
-
 
 @end

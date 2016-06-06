@@ -51,7 +51,7 @@ static AppDelegate s_sharedApplication;
 
     // Init the CCEAGLView
     CCEAGLView *eaglView = [CCEAGLView viewWithFrame: [window bounds]
-                                         pixelFormat: (NSString*)cocos2d::GLViewImpl::_pixelFormat
+                                         pixelFormat: (__bridge NSString *)cocos2d::GLViewImpl::_pixelFormat
                                          depthFormat: cocos2d::GLViewImpl::_depthFormat
                                   preserveBackbuffer: NO
                                           sharegroup: nil
@@ -83,7 +83,7 @@ static AppDelegate s_sharedApplication;
     [[UIApplication sharedApplication] setStatusBarHidden:true];
 
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
-    cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView(eaglView);
+    cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView((__bridge void *)eaglView);
     cocos2d::Director::getInstance()->setOpenGLView(glview);
 
     app->run();
@@ -142,10 +142,14 @@ static AppDelegate s_sharedApplication;
 }
 
 
+#if __has_feature(objc_arc)
+#else
 - (void)dealloc {
     [window release];
+    [_viewController release];
     [super dealloc];
 }
+#endif
 
 
 @end
