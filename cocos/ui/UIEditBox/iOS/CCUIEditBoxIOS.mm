@@ -204,6 +204,7 @@
             
         case cocos2d::ui::EditBox::InputFlag::SENSITIVE:
             self.textInput.autocorrectionType = UITextAutocorrectionTypeNo;
+            self.textInput.autocapitalizationType = UITextAutocapitalizationTypeNone;
             break;
             
         default:
