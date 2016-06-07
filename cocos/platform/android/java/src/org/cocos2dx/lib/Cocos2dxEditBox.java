@@ -99,6 +99,11 @@ public class Cocos2dxEditBox extends EditText {
      */
     private final int kEditBoxInputFlagInitialCapsAllCharacters = 4;
 
+    /**
+     *  Lowercase all characters automatically.
+     */
+    private final int kEditBoxInputFlagLowercaseAllCharacters = 5;
+
     private final int kKeyboardReturnTypeDefault = 0;
     private final int kKeyboardReturnTypeDone = 1;
     private final int kKeyboardReturnTypeSend = 2;
@@ -242,6 +247,9 @@ public class Cocos2dxEditBox extends EditText {
                 break;
             case kEditBoxInputFlagInitialCapsAllCharacters:
                 this.mInputFlagConstraints = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
+                break;
+            case kEditBoxInputFlagLowercaseAllCharacters:
+                this.mInputFlagConstraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
                 break;
             default:
                 break;
