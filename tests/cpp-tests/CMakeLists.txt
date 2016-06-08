@@ -35,7 +35,6 @@ set(TESTS_SRC
   Classes/BaseTest.cpp
   Classes/BillBoardTest/BillBoardTest.cpp
   Classes/BugsTest/Bug-CCDrawNode.cpp
-  Classes/BugsTest/Bug-PageViewLayout.cpp
   Classes/BugsTest/Bug-1159.cpp
   Classes/BugsTest/Bug-1174.cpp
   Classes/BugsTest/Bug-350.cpp

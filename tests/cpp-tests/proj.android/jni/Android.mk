@@ -21,7 +21,6 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/Box2DTestBed/Test.cpp \
 ../../Classes/Box2DTestBed/TestEntries.cpp \
 ../../Classes/BugsTest/Bug-CCDrawNode.cpp \
-../../Classes/BugsTest/Bug-PageViewLayout.cpp \
 ../../Classes/BugsTest/Bug-1159.cpp \
 ../../Classes/BugsTest/Bug-1174.cpp \
 ../../Classes/BugsTest/Bug-350.cpp \

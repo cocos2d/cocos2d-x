@@ -896,7 +896,6 @@
 		507B41831C31BEA60067B53E /* ActionsTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3593218CECF0A00F37B72 /* ActionsTest.cpp */; };
 		507B41841C31BEA60067B53E /* ShaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AED18CECF0C00F37B72 /* ShaderTest.cpp */; };
 		507B41851C31BEA60067B53E /* BillBoardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B609E67119C18DAD003D0074 /* BillBoardTest.cpp */; };
-		507B41861C31BEA60067B53E /* Bug-PageViewLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94D793D71B4B7A3600F60F10 /* Bug-PageViewLayout.cpp */; };
 		507B41871C31BEA60067B53E /* TileMapTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C04F93581941B05400E9FEAB /* TileMapTest2.cpp */; };
 		507B41881C31BEA60067B53E /* Bug-624.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3598418CECF0B00F37B72 /* Bug-624.cpp */; };
 		507B41891C31BEA60067B53E /* SocketIOTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8018CECF0B00F37B72 /* SocketIOTest.cpp */; };
@@ -1235,8 +1234,6 @@
 		850F8A251B5F3A4F00780603 /* Bug-12847.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 850F8A221B5F3A4F00780603 /* Bug-12847.cpp */; };
 		94D793D91B4B7A3600F60F10 /* Bug-CCDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94D793D51B4B7A3600F60F10 /* Bug-CCDrawNode.cpp */; };
 		94D793DA1B4B7A3600F60F10 /* Bug-CCDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94D793D51B4B7A3600F60F10 /* Bug-CCDrawNode.cpp */; };
-		94D793DB1B4B7A3600F60F10 /* Bug-PageViewLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94D793D71B4B7A3600F60F10 /* Bug-PageViewLayout.cpp */; };
-		94D793DC1B4B7A3600F60F10 /* Bug-PageViewLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94D793D71B4B7A3600F60F10 /* Bug-PageViewLayout.cpp */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A07A521F1783A1D20073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
@@ -2481,8 +2478,6 @@
 		850F8A231B5F3A4F00780603 /* Bug-12847.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-12847.h"; sourceTree = "<group>"; };
 		94D793D51B4B7A3600F60F10 /* Bug-CCDrawNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-CCDrawNode.cpp"; sourceTree = "<group>"; };
 		94D793D61B4B7A3600F60F10 /* Bug-CCDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-CCDrawNode.h"; sourceTree = "<group>"; };
-		94D793D71B4B7A3600F60F10 /* Bug-PageViewLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-PageViewLayout.cpp"; sourceTree = "<group>"; };
-		94D793D81B4B7A3600F60F10 /* Bug-PageViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-PageViewLayout.h"; sourceTree = "<group>"; };
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A07A52291783A1D20073F6A7 /* cpp-tests iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A52B71783AE6D0073F6A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -3552,8 +3547,6 @@
 			children = (
 				94D793D51B4B7A3600F60F10 /* Bug-CCDrawNode.cpp */,
 				94D793D61B4B7A3600F60F10 /* Bug-CCDrawNode.h */,
-				94D793D71B4B7A3600F60F10 /* Bug-PageViewLayout.cpp */,
-				94D793D81B4B7A3600F60F10 /* Bug-PageViewLayout.h */,
 				1AC3597718CECF0B00F37B72 /* Bug-1159.cpp */,
 				1AC3597818CECF0B00F37B72 /* Bug-1159.h */,
 				1AC3597918CECF0B00F37B72 /* Bug-1174.cpp */,
@@ -6745,7 +6738,6 @@
 				1AC35BEB18CECF0C00F37B72 /* CCControlSliderTest.cpp in Sources */,
 				1AC35C4D18CECF0C00F37B72 /* SpineTest.cpp in Sources */,
 				3E92EA821921A1400094CD21 /* Sprite3DTest.cpp in Sources */,
-				94D793DB1B4B7A3600F60F10 /* Bug-PageViewLayout.cpp in Sources */,
 				1AC35C1D18CECF0C00F37B72 /* NewRendererTest.cpp in Sources */,
 				50921EAF1B746D5F00C085CC /* DownloaderTest.cpp in Sources */,
 				1AC35B6718CECF0C00F37B72 /* AnimationsTestLayer.cpp in Sources */,
@@ -6963,7 +6955,6 @@
 				507B41831C31BEA60067B53E /* ActionsTest.cpp in Sources */,
 				507B41841C31BEA60067B53E /* ShaderTest.cpp in Sources */,
 				507B41851C31BEA60067B53E /* BillBoardTest.cpp in Sources */,
-				507B41861C31BEA60067B53E /* Bug-PageViewLayout.cpp in Sources */,
 				507B41871C31BEA60067B53E /* TileMapTest2.cpp in Sources */,
 				507B41881C31BEA60067B53E /* Bug-624.cpp in Sources */,
 				507B41891C31BEA60067B53E /* SocketIOTest.cpp in Sources */,
@@ -7180,7 +7171,6 @@
 				1AC35B2818CECF0C00F37B72 /* ActionsTest.cpp in Sources */,
 				1AC35C4A18CECF0C00F37B72 /* ShaderTest.cpp in Sources */,
 				B609E67419C18DAD003D0074 /* BillBoardTest.cpp in Sources */,
-				94D793DC1B4B7A3600F60F10 /* Bug-PageViewLayout.cpp in Sources */,
 				C04F935B1941B05400E9FEAB /* TileMapTest2.cpp in Sources */,
 				1AC35B4418CECF0C00F37B72 /* Bug-624.cpp in Sources */,
 				1AC35BF818CECF0C00F37B72 /* SocketIOTest.cpp in Sources */,
