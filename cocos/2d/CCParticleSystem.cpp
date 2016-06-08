@@ -51,6 +51,7 @@ THE SOFTWARE.
 #include "base/base64.h"
 #include "base/ZipUtils.h"
 #include "base/CCDirector.h"
+#include "base/CCProfiling.h"
 #include "renderer/CCTextureCache.h"
 #include "deprecated/CCString.h"
 #include "platform/CCFileUtils.h"
