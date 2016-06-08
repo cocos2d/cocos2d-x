@@ -664,8 +664,8 @@ void AssetsManagerEx::updateSucceed()
     _compressedFiles.clear();
 
     std::function<void(void*)> mainThread = [this](void* param) {
-        AsyncData* asyncData = (AsyncData*)param;
-        if (asyncData->errorCompressedFile.empty())
+        auto asyncDataInner = reinterpret_cast<AsyncData*>(param);
+        if (asyncDataInner->errorCompressedFile.empty())
         {
             // 5. Set update state
             _updateState = State::UP_TO_DATE;
@@ -675,10 +675,10 @@ void AssetsManagerEx::updateSucceed()
         else
         {
             _updateState = State::FAIL_TO_UPDATE;
-            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_DECOMPRESS, "", "Unable to decompress file " + asyncData->errorCompressedFile);
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_DECOMPRESS, "", "Unable to decompress file " + asyncDataInner->errorCompressedFile);
         }
 
-        delete asyncData;
+        delete asyncDataInner;
     };
     AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_OTHER, mainThread, (void*)asyncData, [this, asyncData]() {
         // Decompress all compressed files
