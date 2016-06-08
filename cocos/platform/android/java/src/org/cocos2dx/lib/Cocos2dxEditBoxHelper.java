@@ -94,7 +94,7 @@ public class Cocos2dxEditBoxHelper {
                 final Cocos2dxEditBox editBox = new Cocos2dxEditBox(mCocos2dxActivity);
                 editBox.setFocusable(true);
                 editBox.setFocusableInTouchMode(true);
-                editBox.setInputFlag(4); //kEditBoxInputFlagInitialCapsAllCharacters
+                editBox.setInputFlag(5); //kEditBoxInputFlagLowercaseAllCharacters
                 editBox.setInputMode(6); //kEditBoxInputModeSingleLine
                 editBox.setReturnType(0);  //kKeyboardReturnTypeDefault
                 editBox.setHintTextColor(Color.GRAY);
