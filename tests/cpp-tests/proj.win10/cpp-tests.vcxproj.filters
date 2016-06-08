@@ -431,9 +431,6 @@
     <ClCompile Include="..\Classes\BugsTest\Bug-CCDrawNode.cpp">
       <Filter>Classes\BugsTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\BugsTest\Bug-PageViewLayout.cpp">
-      <Filter>Classes\BugsTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\BugsTest\Bug-Child.cpp">
       <Filter>Classes\BugsTest</Filter>
     </ClCompile>
@@ -1022,9 +1019,6 @@
       <Filter>Classes\BugsTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\BugsTest\Bug-CCDrawNode.h">
-      <Filter>Classes\BugsTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\BugsTest\Bug-PageViewLayout.h">
       <Filter>Classes\BugsTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\BugsTest\Bug-Child.h">
