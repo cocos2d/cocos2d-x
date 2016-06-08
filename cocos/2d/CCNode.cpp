@@ -940,6 +940,21 @@ void Node::addChild(Node* child, int localZOrder, const std::string &name)
 
 void Node::addChildHelper(Node* child, int localZOrder, int tag, const std::string &name, bool setTag)
 {
+    auto assertNotSelfChild
+        ( [ this, child ]() -> bool
+          {
+              for ( Node* parent( getParent() ); parent != nullptr;
+                    parent = parent->getParent() )
+                  if ( parent == child )
+                      return false;
+              
+              return true;
+          } );
+    (void)assertNotSelfChild;
+    
+    CCASSERT( assertNotSelfChild(),
+              "A node cannot be the child of his own children" );
+    
     if (_children.empty())
     {
         this->childrenAlloc();
