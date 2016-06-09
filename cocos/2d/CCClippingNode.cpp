@@ -303,9 +303,16 @@ void ClippingNode::setStencil(Node *stencil)
             sEngine->retainScriptObject(this, stencil);
     }
 #endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-    CC_SAFE_RETAIN(stencil);
+
+    if(_stencil != nullptr && _stencil->isRunning())
+    {
+        _stencil->onExitTransitionDidStart();
+        _stencil->onExit();
+    }
+    
     CC_SAFE_RELEASE(_stencil);
     _stencil = stencil;
+    CC_SAFE_RETAIN(_stencil);
 }
 
 bool ClippingNode::hasContent() const
