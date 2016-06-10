@@ -1032,7 +1032,7 @@ void Label::enableGlow(const Color4B& glowColor)
     }
 }
 
-void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */)
+void Label::enableOutline(const Color4B& outlineColor, float outlineSize /* = -1 */)
 {
     CCASSERT(_currentLabelType == LabelType::STRING_TEXTURE || _currentLabelType == LabelType::TTF, "Only supported system font and TTF!");
 

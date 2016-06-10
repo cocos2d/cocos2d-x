@@ -54,7 +54,7 @@ public:
     static const int DistanceMapSpread;
 
     static FontFreeType* create(const std::string &fontName, float fontSize, GlyphCollection glyphs,
-        const char *customGlyphs,bool distanceFieldEnabled = false,int outline = 0);
+        const char *customGlyphs,bool distanceFieldEnabled = false, float outline = 0);
 
     static void shutdownFreeType();
 
@@ -84,7 +84,7 @@ private:
     static FT_Library _FTlibrary;
     static bool _FTInitialized;
 
-    FontFreeType(bool distanceFieldEnabled = false, int outline = 0);
+    FontFreeType(bool distanceFieldEnabled = false, float outline = 0);
     virtual ~FontFreeType();
 
     bool createFontObject(const std::string &fontName, float fontSize);
